@@ -38,42 +38,42 @@ class WorkflowsConnectionIdempotencyPolicy {
   /// Create a new copy of this object.
   virtual std::unique_ptr<WorkflowsConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency ListWorkflows(
-      google::cloud::workflows::v1::ListWorkflowsRequest request);
+  virtual google::cloud::Idempotency
+  ListWorkflows(google::cloud::workflows::v1::ListWorkflowsRequest request);
 
-  virtual google::cloud::Idempotency GetWorkflow(
-      google::cloud::workflows::v1::GetWorkflowRequest const& request);
+  virtual google::cloud::Idempotency
+  GetWorkflow(google::cloud::workflows::v1::GetWorkflowRequest const& request);
 
-  virtual google::cloud::Idempotency CreateWorkflow(
-      google::cloud::workflows::v1::CreateWorkflowRequest const& request);
+  virtual google::cloud::Idempotency
+  CreateWorkflow(google::cloud::workflows::v1::CreateWorkflowRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteWorkflow(
-      google::cloud::workflows::v1::DeleteWorkflowRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteWorkflow(google::cloud::workflows::v1::DeleteWorkflowRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateWorkflow(
-      google::cloud::workflows::v1::UpdateWorkflowRequest const& request);
+  virtual google::cloud::Idempotency
+  UpdateWorkflow(google::cloud::workflows::v1::UpdateWorkflowRequest const& request);
 
-  virtual google::cloud::Idempotency ListWorkflowRevisions(
-      google::cloud::workflows::v1::ListWorkflowRevisionsRequest request);
+  virtual google::cloud::Idempotency
+  ListWorkflowRevisions(google::cloud::workflows::v1::ListWorkflowRevisionsRequest request);
 
-  virtual google::cloud::Idempotency ListLocations(
-      google::cloud::location::ListLocationsRequest request);
+  virtual google::cloud::Idempotency
+  ListLocations(google::cloud::location::ListLocationsRequest request);
 
-  virtual google::cloud::Idempotency GetLocation(
-      google::cloud::location::GetLocationRequest const& request);
+  virtual google::cloud::Idempotency
+  GetLocation(google::cloud::location::GetLocationRequest const& request);
 
-  virtual google::cloud::Idempotency ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual google::cloud::Idempotency
+  ListOperations(google::longrunning::ListOperationsRequest request);
 
-  virtual google::cloud::Idempotency GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
 };
 
 std::unique_ptr<WorkflowsConnectionIdempotencyPolicy>
-MakeDefaultWorkflowsConnectionIdempotencyPolicy();
+    MakeDefaultWorkflowsConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace workflows_v1

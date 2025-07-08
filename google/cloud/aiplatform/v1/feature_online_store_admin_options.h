@@ -55,8 +55,7 @@ struct FeatureOnlineStoreAdminServiceBackoffPolicyOption {
  * @ingroup google-cloud-aiplatform-options
  */
 struct FeatureOnlineStoreAdminServiceConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<
-      FeatureOnlineStoreAdminServiceConnectionIdempotencyPolicy>;
+  using Type = std::shared_ptr<FeatureOnlineStoreAdminServiceConnectionIdempotencyPolicy>;
 };
 
 /**

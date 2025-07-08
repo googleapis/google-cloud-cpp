@@ -30,88 +30,94 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-class LustreTracingConnection : public lustre_v1::LustreConnection {
+class LustreTracingConnection
+    : public lustre_v1::LustreConnection {
  public:
   ~LustreTracingConnection() override = default;
 
   explicit LustreTracingConnection(
-      std::shared_ptr<lustre_v1::LustreConnection> child);
+    std::shared_ptr<lustre_v1::LustreConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StreamRange<google::cloud::lustre::v1::Instance> ListInstances(
-      google::cloud::lustre::v1::ListInstancesRequest request) override;
+  StreamRange<google::cloud::lustre::v1::Instance>
+  ListInstances(google::cloud::lustre::v1::ListInstancesRequest request) override;
 
-  StatusOr<google::cloud::lustre::v1::Instance> GetInstance(
-      google::cloud::lustre::v1::GetInstanceRequest const& request) override;
+  StatusOr<google::cloud::lustre::v1::Instance>
+  GetInstance(google::cloud::lustre::v1::GetInstanceRequest const& request) override;
 
-  future<StatusOr<google::cloud::lustre::v1::Instance>> CreateInstance(
+  future<StatusOr<google::cloud::lustre::v1::Instance>>
+  CreateInstance(google::cloud::lustre::v1::CreateInstanceRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  CreateInstance(NoAwaitTag,
       google::cloud::lustre::v1::CreateInstanceRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> CreateInstance(
-      NoAwaitTag,
-      google::cloud::lustre::v1::CreateInstanceRequest const& request) override;
-
-  future<StatusOr<google::cloud::lustre::v1::Instance>> CreateInstance(
+  future<StatusOr<google::cloud::lustre::v1::Instance>>
+  CreateInstance(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::lustre::v1::Instance>> UpdateInstance(
+  future<StatusOr<google::cloud::lustre::v1::Instance>>
+  UpdateInstance(google::cloud::lustre::v1::UpdateInstanceRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  UpdateInstance(NoAwaitTag,
       google::cloud::lustre::v1::UpdateInstanceRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> UpdateInstance(
-      NoAwaitTag,
-      google::cloud::lustre::v1::UpdateInstanceRequest const& request) override;
-
-  future<StatusOr<google::cloud::lustre::v1::Instance>> UpdateInstance(
+  future<StatusOr<google::cloud::lustre::v1::Instance>>
+  UpdateInstance(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::lustre::v1::OperationMetadata>> DeleteInstance(
+  future<StatusOr<google::cloud::lustre::v1::OperationMetadata>>
+  DeleteInstance(google::cloud::lustre::v1::DeleteInstanceRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  DeleteInstance(NoAwaitTag,
       google::cloud::lustre::v1::DeleteInstanceRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> DeleteInstance(
-      NoAwaitTag,
-      google::cloud::lustre::v1::DeleteInstanceRequest const& request) override;
-
-  future<StatusOr<google::cloud::lustre::v1::OperationMetadata>> DeleteInstance(
+  future<StatusOr<google::cloud::lustre::v1::OperationMetadata>>
+  DeleteInstance(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::lustre::v1::ImportDataResponse>> ImportData(
+  future<StatusOr<google::cloud::lustre::v1::ImportDataResponse>>
+  ImportData(google::cloud::lustre::v1::ImportDataRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  ImportData(NoAwaitTag,
       google::cloud::lustre::v1::ImportDataRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> ImportData(
-      NoAwaitTag,
-      google::cloud::lustre::v1::ImportDataRequest const& request) override;
-
-  future<StatusOr<google::cloud::lustre::v1::ImportDataResponse>> ImportData(
+  future<StatusOr<google::cloud::lustre::v1::ImportDataResponse>>
+  ImportData(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::lustre::v1::ExportDataResponse>> ExportData(
+  future<StatusOr<google::cloud::lustre::v1::ExportDataResponse>>
+  ExportData(google::cloud::lustre::v1::ExportDataRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  ExportData(NoAwaitTag,
       google::cloud::lustre::v1::ExportDataRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> ExportData(
-      NoAwaitTag,
-      google::cloud::lustre::v1::ExportDataRequest const& request) override;
-
-  future<StatusOr<google::cloud::lustre::v1::ExportDataResponse>> ExportData(
+  future<StatusOr<google::cloud::lustre::v1::ExportDataResponse>>
+  ExportData(
       google::longrunning::Operation const& operation) override;
 
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request) override;
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request) override;
 
-  StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request) override;
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request) override;
 
-  Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request) override;
+  Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request) override;
 
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request) override;
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::shared_ptr<lustre_v1::LustreConnection> child_;
@@ -125,7 +131,8 @@ class LustreTracingConnection : public lustre_v1::LustreConnection {
  * The connection is only decorated if tracing is enabled (as determined by the
  * connection's options).
  */
-std::shared_ptr<lustre_v1::LustreConnection> MakeLustreTracingConnection(
+std::shared_ptr<lustre_v1::LustreConnection>
+MakeLustreTracingConnection(
     std::shared_ptr<lustre_v1::LustreConnection> conn);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

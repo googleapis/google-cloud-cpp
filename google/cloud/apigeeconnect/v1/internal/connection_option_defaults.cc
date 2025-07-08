@@ -42,22 +42,16 @@ Options ConnectionServiceDefaultOptions(Options options) {
   if (!options.has<apigeeconnect_v1::ConnectionServiceRetryPolicyOption>()) {
     options.set<apigeeconnect_v1::ConnectionServiceRetryPolicyOption>(
         apigeeconnect_v1::ConnectionServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
-            .clone());
+            std::chrono::minutes(30)).clone());
   }
   if (!options.has<apigeeconnect_v1::ConnectionServiceBackoffPolicyOption>()) {
     options.set<apigeeconnect_v1::ConnectionServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(
-            std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
-            .clone());
+        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
   }
-  if (!options.has<apigeeconnect_v1::
-                       ConnectionServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<
-        apigeeconnect_v1::ConnectionServiceConnectionIdempotencyPolicyOption>(
-        apigeeconnect_v1::
-            MakeDefaultConnectionServiceConnectionIdempotencyPolicy());
+  if (!options.has<apigeeconnect_v1::ConnectionServiceConnectionIdempotencyPolicyOption>()) {
+    options.set<apigeeconnect_v1::ConnectionServiceConnectionIdempotencyPolicyOption>(
+        apigeeconnect_v1::MakeDefaultConnectionServiceConnectionIdempotencyPolicy());
   }
 
   return options;

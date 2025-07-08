@@ -42,50 +42,37 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockLanguageServiceConnection
-    : public language_v1::LanguageServiceConnection {
+class MockLanguageServiceConnection : public language_v1::LanguageServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::language::v1::AnalyzeSentimentResponse>,
-      AnalyzeSentiment,
-      (google::cloud::language::v1::AnalyzeSentimentRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::language::v1::AnalyzeSentimentResponse>,
+  AnalyzeSentiment,
+  (google::cloud::language::v1::AnalyzeSentimentRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::language::v1::AnalyzeEntitiesResponse>,
-      AnalyzeEntities,
-      (google::cloud::language::v1::AnalyzeEntitiesRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::language::v1::AnalyzeEntitiesResponse>,
+  AnalyzeEntities,
+  (google::cloud::language::v1::AnalyzeEntitiesRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::language::v1::AnalyzeEntitySentimentResponse>,
-      AnalyzeEntitySentiment,
-      (google::cloud::language::v1::AnalyzeEntitySentimentRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::language::v1::AnalyzeEntitySentimentResponse>,
+  AnalyzeEntitySentiment,
+  (google::cloud::language::v1::AnalyzeEntitySentimentRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::language::v1::AnalyzeSyntaxResponse>,
-      AnalyzeSyntax,
-      (google::cloud::language::v1::AnalyzeSyntaxRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::language::v1::AnalyzeSyntaxResponse>,
+  AnalyzeSyntax,
+  (google::cloud::language::v1::AnalyzeSyntaxRequest const& request), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::language::v1::ClassifyTextResponse>,
-              ClassifyText,
-              (google::cloud::language::v1::ClassifyTextRequest const& request),
-              (override));
+  ClassifyText,
+  (google::cloud::language::v1::ClassifyTextRequest const& request), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::language::v1::ModerateTextResponse>,
-              ModerateText,
-              (google::cloud::language::v1::ModerateTextRequest const& request),
-              (override));
+  ModerateText,
+  (google::cloud::language::v1::ModerateTextRequest const& request), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::language::v1::AnnotateTextResponse>,
-              AnnotateText,
-              (google::cloud::language::v1::AnnotateTextRequest const& request),
-              (override));
+  AnnotateText,
+  (google::cloud::language::v1::AnnotateTextRequest const& request), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

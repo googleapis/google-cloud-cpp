@@ -29,135 +29,89 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-CloudControlsPartnerCoreTracingConnection::
-    CloudControlsPartnerCoreTracingConnection(
-        std::shared_ptr<
-            cloudcontrolspartner_v1::CloudControlsPartnerCoreConnection>
-            child)
+CloudControlsPartnerCoreTracingConnection::CloudControlsPartnerCoreTracingConnection(
+    std::shared_ptr<cloudcontrolspartner_v1::CloudControlsPartnerCoreConnection> child)
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::cloudcontrolspartner::v1::Workload>
-CloudControlsPartnerCoreTracingConnection::GetWorkload(
-    google::cloud::cloudcontrolspartner::v1::GetWorkloadRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "cloudcontrolspartner_v1::CloudControlsPartnerCoreConnection::"
-      "GetWorkload");
+CloudControlsPartnerCoreTracingConnection::GetWorkload(google::cloud::cloudcontrolspartner::v1::GetWorkloadRequest const& request) {
+  auto span = internal::MakeSpan("cloudcontrolspartner_v1::CloudControlsPartnerCoreConnection::GetWorkload");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetWorkload(request));
 }
 
 StreamRange<google::cloud::cloudcontrolspartner::v1::Workload>
-CloudControlsPartnerCoreTracingConnection::ListWorkloads(
-    google::cloud::cloudcontrolspartner::v1::ListWorkloadsRequest request) {
-  auto span = internal::MakeSpan(
-      "cloudcontrolspartner_v1::CloudControlsPartnerCoreConnection::"
-      "ListWorkloads");
+CloudControlsPartnerCoreTracingConnection::ListWorkloads(google::cloud::cloudcontrolspartner::v1::ListWorkloadsRequest request) {
+  auto span = internal::MakeSpan("cloudcontrolspartner_v1::CloudControlsPartnerCoreConnection::ListWorkloads");
   internal::OTelScope scope(span);
   auto sr = child_->ListWorkloads(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::cloudcontrolspartner::v1::Workload>(std::move(span),
-                                                         std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::cloudcontrolspartner::v1::Workload>(
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::cloudcontrolspartner::v1::Customer>
-CloudControlsPartnerCoreTracingConnection::GetCustomer(
-    google::cloud::cloudcontrolspartner::v1::GetCustomerRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "cloudcontrolspartner_v1::CloudControlsPartnerCoreConnection::"
-      "GetCustomer");
+CloudControlsPartnerCoreTracingConnection::GetCustomer(google::cloud::cloudcontrolspartner::v1::GetCustomerRequest const& request) {
+  auto span = internal::MakeSpan("cloudcontrolspartner_v1::CloudControlsPartnerCoreConnection::GetCustomer");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetCustomer(request));
 }
 
 StreamRange<google::cloud::cloudcontrolspartner::v1::Customer>
-CloudControlsPartnerCoreTracingConnection::ListCustomers(
-    google::cloud::cloudcontrolspartner::v1::ListCustomersRequest request) {
-  auto span = internal::MakeSpan(
-      "cloudcontrolspartner_v1::CloudControlsPartnerCoreConnection::"
-      "ListCustomers");
+CloudControlsPartnerCoreTracingConnection::ListCustomers(google::cloud::cloudcontrolspartner::v1::ListCustomersRequest request) {
+  auto span = internal::MakeSpan("cloudcontrolspartner_v1::CloudControlsPartnerCoreConnection::ListCustomers");
   internal::OTelScope scope(span);
   auto sr = child_->ListCustomers(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::cloudcontrolspartner::v1::Customer>(std::move(span),
-                                                         std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::cloudcontrolspartner::v1::Customer>(
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::cloudcontrolspartner::v1::EkmConnections>
-CloudControlsPartnerCoreTracingConnection::GetEkmConnections(
-    google::cloud::cloudcontrolspartner::v1::GetEkmConnectionsRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "cloudcontrolspartner_v1::CloudControlsPartnerCoreConnection::"
-      "GetEkmConnections");
+CloudControlsPartnerCoreTracingConnection::GetEkmConnections(google::cloud::cloudcontrolspartner::v1::GetEkmConnectionsRequest const& request) {
+  auto span = internal::MakeSpan("cloudcontrolspartner_v1::CloudControlsPartnerCoreConnection::GetEkmConnections");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetEkmConnections(request));
 }
 
 StatusOr<google::cloud::cloudcontrolspartner::v1::PartnerPermissions>
-CloudControlsPartnerCoreTracingConnection::GetPartnerPermissions(
-    google::cloud::cloudcontrolspartner::v1::GetPartnerPermissionsRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "cloudcontrolspartner_v1::CloudControlsPartnerCoreConnection::"
-      "GetPartnerPermissions");
+CloudControlsPartnerCoreTracingConnection::GetPartnerPermissions(google::cloud::cloudcontrolspartner::v1::GetPartnerPermissionsRequest const& request) {
+  auto span = internal::MakeSpan("cloudcontrolspartner_v1::CloudControlsPartnerCoreConnection::GetPartnerPermissions");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetPartnerPermissions(request));
 }
 
 StreamRange<google::cloud::cloudcontrolspartner::v1::AccessApprovalRequest>
-CloudControlsPartnerCoreTracingConnection::ListAccessApprovalRequests(
-    google::cloud::cloudcontrolspartner::v1::ListAccessApprovalRequestsRequest
-        request) {
-  auto span = internal::MakeSpan(
-      "cloudcontrolspartner_v1::CloudControlsPartnerCoreConnection::"
-      "ListAccessApprovalRequests");
+CloudControlsPartnerCoreTracingConnection::ListAccessApprovalRequests(google::cloud::cloudcontrolspartner::v1::ListAccessApprovalRequestsRequest request) {
+  auto span = internal::MakeSpan("cloudcontrolspartner_v1::CloudControlsPartnerCoreConnection::ListAccessApprovalRequests");
   internal::OTelScope scope(span);
   auto sr = child_->ListAccessApprovalRequests(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::cloudcontrolspartner::v1::AccessApprovalRequest>(
-      std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::cloudcontrolspartner::v1::AccessApprovalRequest>(
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::cloudcontrolspartner::v1::Partner>
-CloudControlsPartnerCoreTracingConnection::GetPartner(
-    google::cloud::cloudcontrolspartner::v1::GetPartnerRequest const& request) {
-  auto span = internal::MakeSpan(
-      "cloudcontrolspartner_v1::CloudControlsPartnerCoreConnection::"
-      "GetPartner");
+CloudControlsPartnerCoreTracingConnection::GetPartner(google::cloud::cloudcontrolspartner::v1::GetPartnerRequest const& request) {
+  auto span = internal::MakeSpan("cloudcontrolspartner_v1::CloudControlsPartnerCoreConnection::GetPartner");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetPartner(request));
 }
 
 StatusOr<google::cloud::cloudcontrolspartner::v1::Customer>
-CloudControlsPartnerCoreTracingConnection::CreateCustomer(
-    google::cloud::cloudcontrolspartner::v1::CreateCustomerRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "cloudcontrolspartner_v1::CloudControlsPartnerCoreConnection::"
-      "CreateCustomer");
+CloudControlsPartnerCoreTracingConnection::CreateCustomer(google::cloud::cloudcontrolspartner::v1::CreateCustomerRequest const& request) {
+  auto span = internal::MakeSpan("cloudcontrolspartner_v1::CloudControlsPartnerCoreConnection::CreateCustomer");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateCustomer(request));
 }
 
 StatusOr<google::cloud::cloudcontrolspartner::v1::Customer>
-CloudControlsPartnerCoreTracingConnection::UpdateCustomer(
-    google::cloud::cloudcontrolspartner::v1::UpdateCustomerRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "cloudcontrolspartner_v1::CloudControlsPartnerCoreConnection::"
-      "UpdateCustomer");
+CloudControlsPartnerCoreTracingConnection::UpdateCustomer(google::cloud::cloudcontrolspartner::v1::UpdateCustomerRequest const& request) {
+  auto span = internal::MakeSpan("cloudcontrolspartner_v1::CloudControlsPartnerCoreConnection::UpdateCustomer");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateCustomer(request));
 }
 
-Status CloudControlsPartnerCoreTracingConnection::DeleteCustomer(
-    google::cloud::cloudcontrolspartner::v1::DeleteCustomerRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "cloudcontrolspartner_v1::CloudControlsPartnerCoreConnection::"
-      "DeleteCustomer");
+Status
+CloudControlsPartnerCoreTracingConnection::DeleteCustomer(google::cloud::cloudcontrolspartner::v1::DeleteCustomerRequest const& request) {
+  auto span = internal::MakeSpan("cloudcontrolspartner_v1::CloudControlsPartnerCoreConnection::DeleteCustomer");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteCustomer(request));
 }
@@ -166,12 +120,10 @@ Status CloudControlsPartnerCoreTracingConnection::DeleteCustomer(
 
 std::shared_ptr<cloudcontrolspartner_v1::CloudControlsPartnerCoreConnection>
 MakeCloudControlsPartnerCoreTracingConnection(
-    std::shared_ptr<cloudcontrolspartner_v1::CloudControlsPartnerCoreConnection>
-        conn) {
+    std::shared_ptr<cloudcontrolspartner_v1::CloudControlsPartnerCoreConnection> conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
-    conn = std::make_shared<CloudControlsPartnerCoreTracingConnection>(
-        std::move(conn));
+    conn = std::make_shared<CloudControlsPartnerCoreTracingConnection>(std::move(conn));
   }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;

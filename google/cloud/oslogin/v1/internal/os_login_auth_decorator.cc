@@ -31,9 +31,9 @@ OsLoginServiceAuth::OsLoginServiceAuth(
     std::shared_ptr<OsLoginServiceStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::oslogin::common::SshPublicKey>
-OsLoginServiceAuth::CreateSshPublicKey(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::oslogin::common::SshPublicKey> OsLoginServiceAuth::CreateSshPublicKey(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::oslogin::v1::CreateSshPublicKeyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -41,7 +41,8 @@ OsLoginServiceAuth::CreateSshPublicKey(
 }
 
 Status OsLoginServiceAuth::DeletePosixAccount(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::oslogin::v1::DeletePosixAccountRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -49,43 +50,44 @@ Status OsLoginServiceAuth::DeletePosixAccount(
 }
 
 Status OsLoginServiceAuth::DeleteSshPublicKey(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::oslogin::v1::DeleteSshPublicKeyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteSshPublicKey(context, options, request);
 }
 
-StatusOr<google::cloud::oslogin::v1::LoginProfile>
-OsLoginServiceAuth::GetLoginProfile(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::oslogin::v1::LoginProfile> OsLoginServiceAuth::GetLoginProfile(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::oslogin::v1::GetLoginProfileRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetLoginProfile(context, options, request);
 }
 
-StatusOr<google::cloud::oslogin::common::SshPublicKey>
-OsLoginServiceAuth::GetSshPublicKey(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::oslogin::common::SshPublicKey> OsLoginServiceAuth::GetSshPublicKey(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::oslogin::v1::GetSshPublicKeyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetSshPublicKey(context, options, request);
 }
 
-StatusOr<google::cloud::oslogin::v1::ImportSshPublicKeyResponse>
-OsLoginServiceAuth::ImportSshPublicKey(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::oslogin::v1::ImportSshPublicKeyResponse> OsLoginServiceAuth::ImportSshPublicKey(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::oslogin::v1::ImportSshPublicKeyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ImportSshPublicKey(context, options, request);
 }
 
-StatusOr<google::cloud::oslogin::common::SshPublicKey>
-OsLoginServiceAuth::UpdateSshPublicKey(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::oslogin::common::SshPublicKey> OsLoginServiceAuth::UpdateSshPublicKey(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::oslogin::v1::UpdateSshPublicKeyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;

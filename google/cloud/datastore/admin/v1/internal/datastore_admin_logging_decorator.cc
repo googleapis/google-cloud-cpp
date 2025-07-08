@@ -31,36 +31,39 @@ namespace datastore_admin_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 DatastoreAdminLogging::DatastoreAdminLogging(
-    std::shared_ptr<DatastoreAdminStub> child, TracingOptions tracing_options,
+    std::shared_ptr<DatastoreAdminStub> child,
+    TracingOptions tracing_options,
     std::set<std::string> const&)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)) {}
 
 future<StatusOr<google::longrunning::Operation>>
 DatastoreAdminLogging::AsyncExportEntities(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::datastore::admin::v1::ExportEntitiesRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::datastore::admin::v1::ExportEntitiesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::datastore::admin::v1::ExportEntitiesRequest const& request) {
-        return child_->AsyncExportEntities(cq, std::move(context),
-                                           std::move(options), request);
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::datastore::admin::v1::ExportEntitiesRequest const& request) {
+        return child_->AsyncExportEntities(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> DatastoreAdminLogging::ExportEntities(
-    grpc::ClientContext& context, Options options,
-    google::datastore::admin::v1::ExportEntitiesRequest const& request) {
+StatusOr<google::longrunning::Operation>
+DatastoreAdminLogging::ExportEntities(
+      grpc::ClientContext& context,
+      Options options,
+      google::datastore::admin::v1::ExportEntitiesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::datastore::admin::v1::ExportEntitiesRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::datastore::admin::v1::ExportEntitiesRequest const& request) {
         return child_->ExportEntities(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -68,30 +71,31 @@ StatusOr<google::longrunning::Operation> DatastoreAdminLogging::ExportEntities(
 
 future<StatusOr<google::longrunning::Operation>>
 DatastoreAdminLogging::AsyncImportEntities(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::datastore::admin::v1::ImportEntitiesRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::datastore::admin::v1::ImportEntitiesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::datastore::admin::v1::ImportEntitiesRequest const& request) {
-        return child_->AsyncImportEntities(cq, std::move(context),
-                                           std::move(options), request);
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::datastore::admin::v1::ImportEntitiesRequest const& request) {
+        return child_->AsyncImportEntities(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> DatastoreAdminLogging::ImportEntities(
-    grpc::ClientContext& context, Options options,
-    google::datastore::admin::v1::ImportEntitiesRequest const& request) {
+StatusOr<google::longrunning::Operation>
+DatastoreAdminLogging::ImportEntities(
+      grpc::ClientContext& context,
+      Options options,
+      google::datastore::admin::v1::ImportEntitiesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::datastore::admin::v1::ImportEntitiesRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::datastore::admin::v1::ImportEntitiesRequest const& request) {
         return child_->ImportEntities(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -99,27 +103,30 @@ StatusOr<google::longrunning::Operation> DatastoreAdminLogging::ImportEntities(
 
 future<StatusOr<google::longrunning::Operation>>
 DatastoreAdminLogging::AsyncCreateIndex(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::datastore::admin::v1::CreateIndexRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::datastore::admin::v1::CreateIndexRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::datastore::admin::v1::CreateIndexRequest const& request) {
-        return child_->AsyncCreateIndex(cq, std::move(context),
-                                        std::move(options), request);
+        return child_->AsyncCreateIndex(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> DatastoreAdminLogging::CreateIndex(
-    grpc::ClientContext& context, Options options,
-    google::datastore::admin::v1::CreateIndexRequest const& request) {
+StatusOr<google::longrunning::Operation>
+DatastoreAdminLogging::CreateIndex(
+      grpc::ClientContext& context,
+      Options options,
+      google::datastore::admin::v1::CreateIndexRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::datastore::admin::v1::CreateIndexRequest const& request) {
         return child_->CreateIndex(context, options, request);
       },
@@ -128,38 +135,44 @@ StatusOr<google::longrunning::Operation> DatastoreAdminLogging::CreateIndex(
 
 future<StatusOr<google::longrunning::Operation>>
 DatastoreAdminLogging::AsyncDeleteIndex(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::datastore::admin::v1::DeleteIndexRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::datastore::admin::v1::DeleteIndexRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::datastore::admin::v1::DeleteIndexRequest const& request) {
-        return child_->AsyncDeleteIndex(cq, std::move(context),
-                                        std::move(options), request);
+        return child_->AsyncDeleteIndex(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> DatastoreAdminLogging::DeleteIndex(
-    grpc::ClientContext& context, Options options,
-    google::datastore::admin::v1::DeleteIndexRequest const& request) {
+StatusOr<google::longrunning::Operation>
+DatastoreAdminLogging::DeleteIndex(
+      grpc::ClientContext& context,
+      Options options,
+      google::datastore::admin::v1::DeleteIndexRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::datastore::admin::v1::DeleteIndexRequest const& request) {
         return child_->DeleteIndex(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::datastore::admin::v1::Index> DatastoreAdminLogging::GetIndex(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::datastore::admin::v1::Index>
+DatastoreAdminLogging::GetIndex(
+    grpc::ClientContext& context,
+    Options const& options,
     google::datastore::admin::v1::GetIndexRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::datastore::admin::v1::GetIndexRequest const& request) {
         return child_->GetIndex(context, options, request);
       },
@@ -168,10 +181,12 @@ StatusOr<google::datastore::admin::v1::Index> DatastoreAdminLogging::GetIndex(
 
 StatusOr<google::datastore::admin::v1::ListIndexesResponse>
 DatastoreAdminLogging::ListIndexes(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::datastore::admin::v1::ListIndexesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::datastore::admin::v1::ListIndexesRequest const& request) {
         return child_->ListIndexes(context, options, request);
       },
@@ -180,43 +195,54 @@ DatastoreAdminLogging::ListIndexes(
 
 StatusOr<google::longrunning::ListOperationsResponse>
 DatastoreAdminLogging::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::ListOperationsRequest const& request) {
         return child_->ListOperations(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> DatastoreAdminLogging::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::Operation>
+DatastoreAdminLogging::GetOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::GetOperationRequest const& request) {
         return child_->GetOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status DatastoreAdminLogging::DeleteOperation(
-    grpc::ClientContext& context, Options const& options,
+Status
+DatastoreAdminLogging::DeleteOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::DeleteOperationRequest const& request) {
         return child_->DeleteOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status DatastoreAdminLogging::CancelOperation(
-    grpc::ClientContext& context, Options const& options,
+Status
+DatastoreAdminLogging::CancelOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::CancelOperationRequest const& request) {
         return child_->CancelOperation(context, options, request);
       },
@@ -234,8 +260,8 @@ DatastoreAdminLogging::AsyncGetOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(cq, std::move(context),
-                                         std::move(options), request);
+        return child_->AsyncGetOperation(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -251,8 +277,8 @@ future<Status> DatastoreAdminLogging::AsyncCancelOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::CancelOperationRequest const& request) {
-        return child_->AsyncCancelOperation(cq, std::move(context),
-                                            std::move(options), request);
+        return child_->AsyncCancelOperation(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);

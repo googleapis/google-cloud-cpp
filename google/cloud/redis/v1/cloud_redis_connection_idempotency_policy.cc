@@ -26,101 +26,83 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-CloudRedisConnectionIdempotencyPolicy::
-    ~CloudRedisConnectionIdempotencyPolicy() = default;
+CloudRedisConnectionIdempotencyPolicy::~CloudRedisConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<CloudRedisConnectionIdempotencyPolicy>
 CloudRedisConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<CloudRedisConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency CloudRedisConnectionIdempotencyPolicy::ListInstances(
-    google::cloud::redis::v1::ListInstancesRequest) {  // NOLINT
+Idempotency CloudRedisConnectionIdempotencyPolicy::ListInstances(google::cloud::redis::v1::ListInstancesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency CloudRedisConnectionIdempotencyPolicy::GetInstance(
-    google::cloud::redis::v1::GetInstanceRequest const&) {
+Idempotency CloudRedisConnectionIdempotencyPolicy::GetInstance(google::cloud::redis::v1::GetInstanceRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency CloudRedisConnectionIdempotencyPolicy::GetInstanceAuthString(
-    google::cloud::redis::v1::GetInstanceAuthStringRequest const&) {
+Idempotency CloudRedisConnectionIdempotencyPolicy::GetInstanceAuthString(google::cloud::redis::v1::GetInstanceAuthStringRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency CloudRedisConnectionIdempotencyPolicy::CreateInstance(
-    google::cloud::redis::v1::CreateInstanceRequest const&) {
+Idempotency CloudRedisConnectionIdempotencyPolicy::CreateInstance(google::cloud::redis::v1::CreateInstanceRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CloudRedisConnectionIdempotencyPolicy::UpdateInstance(
-    google::cloud::redis::v1::UpdateInstanceRequest const&) {
+Idempotency CloudRedisConnectionIdempotencyPolicy::UpdateInstance(google::cloud::redis::v1::UpdateInstanceRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CloudRedisConnectionIdempotencyPolicy::UpgradeInstance(
-    google::cloud::redis::v1::UpgradeInstanceRequest const&) {
+Idempotency CloudRedisConnectionIdempotencyPolicy::UpgradeInstance(google::cloud::redis::v1::UpgradeInstanceRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CloudRedisConnectionIdempotencyPolicy::ImportInstance(
-    google::cloud::redis::v1::ImportInstanceRequest const&) {
+Idempotency CloudRedisConnectionIdempotencyPolicy::ImportInstance(google::cloud::redis::v1::ImportInstanceRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CloudRedisConnectionIdempotencyPolicy::ExportInstance(
-    google::cloud::redis::v1::ExportInstanceRequest const&) {
+Idempotency CloudRedisConnectionIdempotencyPolicy::ExportInstance(google::cloud::redis::v1::ExportInstanceRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CloudRedisConnectionIdempotencyPolicy::FailoverInstance(
-    google::cloud::redis::v1::FailoverInstanceRequest const&) {
+Idempotency CloudRedisConnectionIdempotencyPolicy::FailoverInstance(google::cloud::redis::v1::FailoverInstanceRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CloudRedisConnectionIdempotencyPolicy::DeleteInstance(
-    google::cloud::redis::v1::DeleteInstanceRequest const&) {
+Idempotency CloudRedisConnectionIdempotencyPolicy::DeleteInstance(google::cloud::redis::v1::DeleteInstanceRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CloudRedisConnectionIdempotencyPolicy::RescheduleMaintenance(
-    google::cloud::redis::v1::RescheduleMaintenanceRequest const&) {
+Idempotency CloudRedisConnectionIdempotencyPolicy::RescheduleMaintenance(google::cloud::redis::v1::RescheduleMaintenanceRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CloudRedisConnectionIdempotencyPolicy::ListLocations(
-    google::cloud::location::ListLocationsRequest) {  // NOLINT
+Idempotency CloudRedisConnectionIdempotencyPolicy::ListLocations(google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency CloudRedisConnectionIdempotencyPolicy::GetLocation(
-    google::cloud::location::GetLocationRequest const&) {
+Idempotency CloudRedisConnectionIdempotencyPolicy::GetLocation(google::cloud::location::GetLocationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency CloudRedisConnectionIdempotencyPolicy::ListOperations(
-    google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency CloudRedisConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency CloudRedisConnectionIdempotencyPolicy::GetOperation(
-    google::longrunning::GetOperationRequest const&) {
+Idempotency CloudRedisConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency CloudRedisConnectionIdempotencyPolicy::DeleteOperation(
-    google::longrunning::DeleteOperationRequest const&) {
+Idempotency CloudRedisConnectionIdempotencyPolicy::DeleteOperation(google::longrunning::DeleteOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CloudRedisConnectionIdempotencyPolicy::CancelOperation(
-    google::longrunning::CancelOperationRequest const&) {
+Idempotency CloudRedisConnectionIdempotencyPolicy::CancelOperation(google::longrunning::CancelOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<CloudRedisConnectionIdempotencyPolicy>
-MakeDefaultCloudRedisConnectionIdempotencyPolicy() {
+    MakeDefaultCloudRedisConnectionIdempotencyPolicy() {
   return std::make_unique<CloudRedisConnectionIdempotencyPolicy>();
 }
 

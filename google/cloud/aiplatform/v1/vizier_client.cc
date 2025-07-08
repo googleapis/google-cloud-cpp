@@ -28,13 +28,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 VizierServiceClient::VizierServiceClient(
     std::shared_ptr<VizierServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 VizierServiceClient::~VizierServiceClient() = default;
 
-StatusOr<google::cloud::aiplatform::v1::Study> VizierServiceClient::CreateStudy(
-    std::string const& parent,
-    google::cloud::aiplatform::v1::Study const& study, Options opts) {
+StatusOr<google::cloud::aiplatform::v1::Study>
+VizierServiceClient::CreateStudy(std::string const& parent, google::cloud::aiplatform::v1::Study const& study, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::CreateStudyRequest request;
   request.set_parent(parent);
@@ -42,24 +41,22 @@ StatusOr<google::cloud::aiplatform::v1::Study> VizierServiceClient::CreateStudy(
   return connection_->CreateStudy(request);
 }
 
-StatusOr<google::cloud::aiplatform::v1::Study> VizierServiceClient::CreateStudy(
-    google::cloud::aiplatform::v1::CreateStudyRequest const& request,
-    Options opts) {
+StatusOr<google::cloud::aiplatform::v1::Study>
+VizierServiceClient::CreateStudy(google::cloud::aiplatform::v1::CreateStudyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateStudy(request);
 }
 
-StatusOr<google::cloud::aiplatform::v1::Study> VizierServiceClient::GetStudy(
-    std::string const& name, Options opts) {
+StatusOr<google::cloud::aiplatform::v1::Study>
+VizierServiceClient::GetStudy(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::GetStudyRequest request;
   request.set_name(name);
   return connection_->GetStudy(request);
 }
 
-StatusOr<google::cloud::aiplatform::v1::Study> VizierServiceClient::GetStudy(
-    google::cloud::aiplatform::v1::GetStudyRequest const& request,
-    Options opts) {
+StatusOr<google::cloud::aiplatform::v1::Study>
+VizierServiceClient::GetStudy(google::cloud::aiplatform::v1::GetStudyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetStudy(request);
 }
@@ -73,67 +70,59 @@ VizierServiceClient::ListStudies(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::aiplatform::v1::Study>
-VizierServiceClient::ListStudies(
-    google::cloud::aiplatform::v1::ListStudiesRequest request, Options opts) {
+VizierServiceClient::ListStudies(google::cloud::aiplatform::v1::ListStudiesRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListStudies(std::move(request));
 }
 
-Status VizierServiceClient::DeleteStudy(std::string const& name, Options opts) {
+Status
+VizierServiceClient::DeleteStudy(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::DeleteStudyRequest request;
   request.set_name(name);
   return connection_->DeleteStudy(request);
 }
 
-Status VizierServiceClient::DeleteStudy(
-    google::cloud::aiplatform::v1::DeleteStudyRequest const& request,
-    Options opts) {
+Status
+VizierServiceClient::DeleteStudy(google::cloud::aiplatform::v1::DeleteStudyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteStudy(request);
 }
 
-StatusOr<google::cloud::aiplatform::v1::Study> VizierServiceClient::LookupStudy(
-    std::string const& parent, Options opts) {
+StatusOr<google::cloud::aiplatform::v1::Study>
+VizierServiceClient::LookupStudy(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::LookupStudyRequest request;
   request.set_parent(parent);
   return connection_->LookupStudy(request);
 }
 
-StatusOr<google::cloud::aiplatform::v1::Study> VizierServiceClient::LookupStudy(
-    google::cloud::aiplatform::v1::LookupStudyRequest const& request,
-    Options opts) {
+StatusOr<google::cloud::aiplatform::v1::Study>
+VizierServiceClient::LookupStudy(google::cloud::aiplatform::v1::LookupStudyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->LookupStudy(request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::SuggestTrialsResponse>>
-VizierServiceClient::SuggestTrials(
-    google::cloud::aiplatform::v1::SuggestTrialsRequest const& request,
-    Options opts) {
+VizierServiceClient::SuggestTrials(google::cloud::aiplatform::v1::SuggestTrialsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SuggestTrials(request);
 }
 
-StatusOr<google::longrunning::Operation> VizierServiceClient::SuggestTrials(
-    NoAwaitTag,
-    google::cloud::aiplatform::v1::SuggestTrialsRequest const& request,
-    Options opts) {
+StatusOr<google::longrunning::Operation>
+VizierServiceClient::SuggestTrials(NoAwaitTag, google::cloud::aiplatform::v1::SuggestTrialsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SuggestTrials(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::SuggestTrialsResponse>>
-VizierServiceClient::SuggestTrials(
-    google::longrunning::Operation const& operation, Options opts) {
+VizierServiceClient::SuggestTrials(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SuggestTrials(operation);
 }
 
-StatusOr<google::cloud::aiplatform::v1::Trial> VizierServiceClient::CreateTrial(
-    std::string const& parent,
-    google::cloud::aiplatform::v1::Trial const& trial, Options opts) {
+StatusOr<google::cloud::aiplatform::v1::Trial>
+VizierServiceClient::CreateTrial(std::string const& parent, google::cloud::aiplatform::v1::Trial const& trial, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::CreateTrialRequest request;
   request.set_parent(parent);
@@ -141,24 +130,22 @@ StatusOr<google::cloud::aiplatform::v1::Trial> VizierServiceClient::CreateTrial(
   return connection_->CreateTrial(request);
 }
 
-StatusOr<google::cloud::aiplatform::v1::Trial> VizierServiceClient::CreateTrial(
-    google::cloud::aiplatform::v1::CreateTrialRequest const& request,
-    Options opts) {
+StatusOr<google::cloud::aiplatform::v1::Trial>
+VizierServiceClient::CreateTrial(google::cloud::aiplatform::v1::CreateTrialRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateTrial(request);
 }
 
-StatusOr<google::cloud::aiplatform::v1::Trial> VizierServiceClient::GetTrial(
-    std::string const& name, Options opts) {
+StatusOr<google::cloud::aiplatform::v1::Trial>
+VizierServiceClient::GetTrial(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::GetTrialRequest request;
   request.set_name(name);
   return connection_->GetTrial(request);
 }
 
-StatusOr<google::cloud::aiplatform::v1::Trial> VizierServiceClient::GetTrial(
-    google::cloud::aiplatform::v1::GetTrialRequest const& request,
-    Options opts) {
+StatusOr<google::cloud::aiplatform::v1::Trial>
+VizierServiceClient::GetTrial(google::cloud::aiplatform::v1::GetTrialRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetTrial(request);
 }
@@ -172,80 +159,63 @@ VizierServiceClient::ListTrials(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::aiplatform::v1::Trial>
-VizierServiceClient::ListTrials(
-    google::cloud::aiplatform::v1::ListTrialsRequest request, Options opts) {
+VizierServiceClient::ListTrials(google::cloud::aiplatform::v1::ListTrialsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListTrials(std::move(request));
 }
 
 StatusOr<google::cloud::aiplatform::v1::Trial>
-VizierServiceClient::AddTrialMeasurement(
-    google::cloud::aiplatform::v1::AddTrialMeasurementRequest const& request,
-    Options opts) {
+VizierServiceClient::AddTrialMeasurement(google::cloud::aiplatform::v1::AddTrialMeasurementRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->AddTrialMeasurement(request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::Trial>
-VizierServiceClient::CompleteTrial(
-    google::cloud::aiplatform::v1::CompleteTrialRequest const& request,
-    Options opts) {
+VizierServiceClient::CompleteTrial(google::cloud::aiplatform::v1::CompleteTrialRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CompleteTrial(request);
 }
 
-Status VizierServiceClient::DeleteTrial(std::string const& name, Options opts) {
+Status
+VizierServiceClient::DeleteTrial(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::DeleteTrialRequest request;
   request.set_name(name);
   return connection_->DeleteTrial(request);
 }
 
-Status VizierServiceClient::DeleteTrial(
-    google::cloud::aiplatform::v1::DeleteTrialRequest const& request,
-    Options opts) {
+Status
+VizierServiceClient::DeleteTrial(google::cloud::aiplatform::v1::DeleteTrialRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteTrial(request);
 }
 
-future<StatusOr<
-    google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateResponse>>
-VizierServiceClient::CheckTrialEarlyStoppingState(
-    google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateRequest const&
-        request,
-    Options opts) {
+future<StatusOr<google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateResponse>>
+VizierServiceClient::CheckTrialEarlyStoppingState(google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CheckTrialEarlyStoppingState(request);
 }
 
 StatusOr<google::longrunning::Operation>
-VizierServiceClient::CheckTrialEarlyStoppingState(
-    NoAwaitTag,
-    google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateRequest const&
-        request,
-    Options opts) {
+VizierServiceClient::CheckTrialEarlyStoppingState(NoAwaitTag, google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CheckTrialEarlyStoppingState(NoAwaitTag{}, request);
 }
 
-future<StatusOr<
-    google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateResponse>>
-VizierServiceClient::CheckTrialEarlyStoppingState(
-    google::longrunning::Operation const& operation, Options opts) {
+future<StatusOr<google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateResponse>>
+VizierServiceClient::CheckTrialEarlyStoppingState(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CheckTrialEarlyStoppingState(operation);
 }
 
-StatusOr<google::cloud::aiplatform::v1::Trial> VizierServiceClient::StopTrial(
-    google::cloud::aiplatform::v1::StopTrialRequest const& request,
-    Options opts) {
+StatusOr<google::cloud::aiplatform::v1::Trial>
+VizierServiceClient::StopTrial(google::cloud::aiplatform::v1::StopTrialRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->StopTrial(request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ListOptimalTrialsResponse>
-VizierServiceClient::ListOptimalTrials(std::string const& parent,
-                                       Options opts) {
+VizierServiceClient::ListOptimalTrials(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::ListOptimalTrialsRequest request;
   request.set_parent(parent);
@@ -253,47 +223,43 @@ VizierServiceClient::ListOptimalTrials(std::string const& parent,
 }
 
 StatusOr<google::cloud::aiplatform::v1::ListOptimalTrialsResponse>
-VizierServiceClient::ListOptimalTrials(
-    google::cloud::aiplatform::v1::ListOptimalTrialsRequest const& request,
-    Options opts) {
+VizierServiceClient::ListOptimalTrials(google::cloud::aiplatform::v1::ListOptimalTrialsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOptimalTrials(request);
 }
 
 StreamRange<google::cloud::location::Location>
-VizierServiceClient::ListLocations(
-    google::cloud::location::ListLocationsRequest request, Options opts) {
+VizierServiceClient::ListLocations(google::cloud::location::ListLocationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListLocations(std::move(request));
 }
 
-StatusOr<google::cloud::location::Location> VizierServiceClient::GetLocation(
-    google::cloud::location::GetLocationRequest const& request, Options opts) {
+StatusOr<google::cloud::location::Location>
+VizierServiceClient::GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetLocation(request);
 }
 
-StatusOr<google::iam::v1::Policy> VizierServiceClient::SetIamPolicy(
-    google::iam::v1::SetIamPolicyRequest const& request, Options opts) {
+StatusOr<google::iam::v1::Policy>
+VizierServiceClient::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetIamPolicy(request);
 }
 
-StatusOr<google::iam::v1::Policy> VizierServiceClient::GetIamPolicy(
-    google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
+StatusOr<google::iam::v1::Policy>
+VizierServiceClient::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetIamPolicy(request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-VizierServiceClient::TestIamPermissions(
-    google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
+VizierServiceClient::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->TestIamPermissions(request);
 }
 
-StreamRange<google::longrunning::Operation> VizierServiceClient::ListOperations(
-    std::string const& name, std::string const& filter, Options opts) {
+StreamRange<google::longrunning::Operation>
+VizierServiceClient::ListOperations(std::string const& name, std::string const& filter, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::ListOperationsRequest request;
   request.set_name(name);
@@ -301,56 +267,56 @@ StreamRange<google::longrunning::Operation> VizierServiceClient::ListOperations(
   return connection_->ListOperations(request);
 }
 
-StreamRange<google::longrunning::Operation> VizierServiceClient::ListOperations(
-    google::longrunning::ListOperationsRequest request, Options opts) {
+StreamRange<google::longrunning::Operation>
+VizierServiceClient::ListOperations(google::longrunning::ListOperationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOperations(std::move(request));
 }
 
-StatusOr<google::longrunning::Operation> VizierServiceClient::GetOperation(
-    std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation>
+VizierServiceClient::GetOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
   return connection_->GetOperation(request);
 }
 
-StatusOr<google::longrunning::Operation> VizierServiceClient::GetOperation(
-    google::longrunning::GetOperationRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation>
+VizierServiceClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }
 
-Status VizierServiceClient::DeleteOperation(std::string const& name,
-                                            Options opts) {
+Status
+VizierServiceClient::DeleteOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::DeleteOperationRequest request;
   request.set_name(name);
   return connection_->DeleteOperation(request);
 }
 
-Status VizierServiceClient::DeleteOperation(
-    google::longrunning::DeleteOperationRequest const& request, Options opts) {
+Status
+VizierServiceClient::DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteOperation(request);
 }
 
-Status VizierServiceClient::CancelOperation(std::string const& name,
-                                            Options opts) {
+Status
+VizierServiceClient::CancelOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::CancelOperationRequest request;
   request.set_name(name);
   return connection_->CancelOperation(request);
 }
 
-Status VizierServiceClient::CancelOperation(
-    google::longrunning::CancelOperationRequest const& request, Options opts) {
+Status
+VizierServiceClient::CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelOperation(request);
 }
 
-StatusOr<google::longrunning::Operation> VizierServiceClient::WaitOperation(
-    google::longrunning::WaitOperationRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation>
+VizierServiceClient::WaitOperation(google::longrunning::WaitOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->WaitOperation(request);
 }

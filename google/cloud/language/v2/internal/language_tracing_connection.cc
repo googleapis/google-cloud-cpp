@@ -33,46 +33,36 @@ LanguageServiceTracingConnection::LanguageServiceTracingConnection(
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::language::v2::AnalyzeSentimentResponse>
-LanguageServiceTracingConnection::AnalyzeSentiment(
-    google::cloud::language::v2::AnalyzeSentimentRequest const& request) {
-  auto span = internal::MakeSpan(
-      "language_v2::LanguageServiceConnection::AnalyzeSentiment");
+LanguageServiceTracingConnection::AnalyzeSentiment(google::cloud::language::v2::AnalyzeSentimentRequest const& request) {
+  auto span = internal::MakeSpan("language_v2::LanguageServiceConnection::AnalyzeSentiment");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->AnalyzeSentiment(request));
 }
 
 StatusOr<google::cloud::language::v2::AnalyzeEntitiesResponse>
-LanguageServiceTracingConnection::AnalyzeEntities(
-    google::cloud::language::v2::AnalyzeEntitiesRequest const& request) {
-  auto span = internal::MakeSpan(
-      "language_v2::LanguageServiceConnection::AnalyzeEntities");
+LanguageServiceTracingConnection::AnalyzeEntities(google::cloud::language::v2::AnalyzeEntitiesRequest const& request) {
+  auto span = internal::MakeSpan("language_v2::LanguageServiceConnection::AnalyzeEntities");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->AnalyzeEntities(request));
 }
 
 StatusOr<google::cloud::language::v2::ClassifyTextResponse>
-LanguageServiceTracingConnection::ClassifyText(
-    google::cloud::language::v2::ClassifyTextRequest const& request) {
-  auto span = internal::MakeSpan(
-      "language_v2::LanguageServiceConnection::ClassifyText");
+LanguageServiceTracingConnection::ClassifyText(google::cloud::language::v2::ClassifyTextRequest const& request) {
+  auto span = internal::MakeSpan("language_v2::LanguageServiceConnection::ClassifyText");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->ClassifyText(request));
 }
 
 StatusOr<google::cloud::language::v2::ModerateTextResponse>
-LanguageServiceTracingConnection::ModerateText(
-    google::cloud::language::v2::ModerateTextRequest const& request) {
-  auto span = internal::MakeSpan(
-      "language_v2::LanguageServiceConnection::ModerateText");
+LanguageServiceTracingConnection::ModerateText(google::cloud::language::v2::ModerateTextRequest const& request) {
+  auto span = internal::MakeSpan("language_v2::LanguageServiceConnection::ModerateText");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->ModerateText(request));
 }
 
 StatusOr<google::cloud::language::v2::AnnotateTextResponse>
-LanguageServiceTracingConnection::AnnotateText(
-    google::cloud::language::v2::AnnotateTextRequest const& request) {
-  auto span = internal::MakeSpan(
-      "language_v2::LanguageServiceConnection::AnnotateText");
+LanguageServiceTracingConnection::AnnotateText(google::cloud::language::v2::AnnotateTextRequest const& request) {
+  auto span = internal::MakeSpan("language_v2::LanguageServiceConnection::AnnotateText");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->AnnotateText(request));
 }

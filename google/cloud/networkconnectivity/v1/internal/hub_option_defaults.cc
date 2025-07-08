@@ -17,10 +17,10 @@
 // source: google/cloud/networkconnectivity/v1/hub.proto
 
 #include "google/cloud/networkconnectivity/v1/internal/hub_option_defaults.h"
-#include "google/cloud/networkconnectivity/v1/hub_connection.h"
-#include "google/cloud/networkconnectivity/v1/hub_options.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
+#include "google/cloud/networkconnectivity/v1/hub_connection.h"
+#include "google/cloud/networkconnectivity/v1/hub_options.h"
 #include <memory>
 #include <utility>
 
@@ -35,41 +35,32 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options HubServiceDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_HUB_SERVICE_ENDPOINT", "",
-      "GOOGLE_CLOUD_CPP_HUB_SERVICE_AUTHORITY",
+      std::move(options), "GOOGLE_CLOUD_CPP_HUB_SERVICE_ENDPOINT",
+      "", "GOOGLE_CLOUD_CPP_HUB_SERVICE_AUTHORITY",
       "networkconnectivity.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<networkconnectivity_v1::HubServiceRetryPolicyOption>()) {
     options.set<networkconnectivity_v1::HubServiceRetryPolicyOption>(
         networkconnectivity_v1::HubServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
-            .clone());
+            std::chrono::minutes(30)).clone());
   }
   if (!options.has<networkconnectivity_v1::HubServiceBackoffPolicyOption>()) {
     options.set<networkconnectivity_v1::HubServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(
-            std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
-            .clone());
+        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
   }
   if (!options.has<networkconnectivity_v1::HubServicePollingPolicyOption>()) {
     options.set<networkconnectivity_v1::HubServicePollingPolicyOption>(
         GenericPollingPolicy<
             networkconnectivity_v1::HubServiceRetryPolicyOption::Type,
             networkconnectivity_v1::HubServiceBackoffPolicyOption::Type>(
-            options.get<networkconnectivity_v1::HubServiceRetryPolicyOption>()
-                ->clone(),
+            options.get<networkconnectivity_v1::HubServiceRetryPolicyOption>()->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                     std::chrono::minutes(5), kBackoffScaling)
-                .clone())
-            .clone());
+            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
   }
-  if (!options.has<networkconnectivity_v1::
-                       HubServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<
-        networkconnectivity_v1::HubServiceConnectionIdempotencyPolicyOption>(
-        networkconnectivity_v1::
-            MakeDefaultHubServiceConnectionIdempotencyPolicy());
+  if (!options.has<networkconnectivity_v1::HubServiceConnectionIdempotencyPolicyOption>()) {
+    options.set<networkconnectivity_v1::HubServiceConnectionIdempotencyPolicyOption>(
+        networkconnectivity_v1::MakeDefaultHubServiceConnectionIdempotencyPolicy());
   }
 
   return options;

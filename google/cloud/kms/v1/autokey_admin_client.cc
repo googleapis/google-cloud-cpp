@@ -28,14 +28,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 AutokeyAdminClient::AutokeyAdminClient(
     std::shared_ptr<AutokeyAdminConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 AutokeyAdminClient::~AutokeyAdminClient() = default;
 
 StatusOr<google::cloud::kms::v1::AutokeyConfig>
-AutokeyAdminClient::UpdateAutokeyConfig(
-    google::cloud::kms::v1::AutokeyConfig const& autokey_config,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+AutokeyAdminClient::UpdateAutokeyConfig(google::cloud::kms::v1::AutokeyConfig const& autokey_config, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::kms::v1::UpdateAutokeyConfigRequest request;
   *request.mutable_autokey_config() = autokey_config;
@@ -44,9 +42,7 @@ AutokeyAdminClient::UpdateAutokeyConfig(
 }
 
 StatusOr<google::cloud::kms::v1::AutokeyConfig>
-AutokeyAdminClient::UpdateAutokeyConfig(
-    google::cloud::kms::v1::UpdateAutokeyConfigRequest const& request,
-    Options opts) {
+AutokeyAdminClient::UpdateAutokeyConfig(google::cloud::kms::v1::UpdateAutokeyConfigRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateAutokeyConfig(request);
 }
@@ -60,16 +56,13 @@ AutokeyAdminClient::GetAutokeyConfig(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::kms::v1::AutokeyConfig>
-AutokeyAdminClient::GetAutokeyConfig(
-    google::cloud::kms::v1::GetAutokeyConfigRequest const& request,
-    Options opts) {
+AutokeyAdminClient::GetAutokeyConfig(google::cloud::kms::v1::GetAutokeyConfigRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetAutokeyConfig(request);
 }
 
 StatusOr<google::cloud::kms::v1::ShowEffectiveAutokeyConfigResponse>
-AutokeyAdminClient::ShowEffectiveAutokeyConfig(std::string const& parent,
-                                               Options opts) {
+AutokeyAdminClient::ShowEffectiveAutokeyConfig(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::kms::v1::ShowEffectiveAutokeyConfigRequest request;
   request.set_parent(parent);
@@ -77,55 +70,51 @@ AutokeyAdminClient::ShowEffectiveAutokeyConfig(std::string const& parent,
 }
 
 StatusOr<google::cloud::kms::v1::ShowEffectiveAutokeyConfigResponse>
-AutokeyAdminClient::ShowEffectiveAutokeyConfig(
-    google::cloud::kms::v1::ShowEffectiveAutokeyConfigRequest const& request,
-    Options opts) {
+AutokeyAdminClient::ShowEffectiveAutokeyConfig(google::cloud::kms::v1::ShowEffectiveAutokeyConfigRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ShowEffectiveAutokeyConfig(request);
 }
 
 StreamRange<google::cloud::location::Location>
-AutokeyAdminClient::ListLocations(
-    google::cloud::location::ListLocationsRequest request, Options opts) {
+AutokeyAdminClient::ListLocations(google::cloud::location::ListLocationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListLocations(std::move(request));
 }
 
-StatusOr<google::cloud::location::Location> AutokeyAdminClient::GetLocation(
-    google::cloud::location::GetLocationRequest const& request, Options opts) {
+StatusOr<google::cloud::location::Location>
+AutokeyAdminClient::GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetLocation(request);
 }
 
-StatusOr<google::iam::v1::Policy> AutokeyAdminClient::SetIamPolicy(
-    google::iam::v1::SetIamPolicyRequest const& request, Options opts) {
+StatusOr<google::iam::v1::Policy>
+AutokeyAdminClient::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetIamPolicy(request);
 }
 
-StatusOr<google::iam::v1::Policy> AutokeyAdminClient::GetIamPolicy(
-    google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
+StatusOr<google::iam::v1::Policy>
+AutokeyAdminClient::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetIamPolicy(request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-AutokeyAdminClient::TestIamPermissions(
-    google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
+AutokeyAdminClient::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->TestIamPermissions(request);
 }
 
-StatusOr<google::longrunning::Operation> AutokeyAdminClient::GetOperation(
-    std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation>
+AutokeyAdminClient::GetOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
   return connection_->GetOperation(request);
 }
 
-StatusOr<google::longrunning::Operation> AutokeyAdminClient::GetOperation(
-    google::longrunning::GetOperationRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation>
+AutokeyAdminClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }

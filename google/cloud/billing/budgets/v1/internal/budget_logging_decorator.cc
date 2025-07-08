@@ -31,18 +31,21 @@ namespace billing_budgets_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 BudgetServiceLogging::BudgetServiceLogging(
-    std::shared_ptr<BudgetServiceStub> child, TracingOptions tracing_options,
+    std::shared_ptr<BudgetServiceStub> child,
+    TracingOptions tracing_options,
     std::set<std::string> const&)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::cloud::billing::budgets::v1::Budget>
 BudgetServiceLogging::CreateBudget(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::billing::budgets::v1::CreateBudgetRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::billing::budgets::v1::CreateBudgetRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::billing::budgets::v1::CreateBudgetRequest const& request) {
         return child_->CreateBudget(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -50,12 +53,13 @@ BudgetServiceLogging::CreateBudget(
 
 StatusOr<google::cloud::billing::budgets::v1::Budget>
 BudgetServiceLogging::UpdateBudget(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::billing::budgets::v1::UpdateBudgetRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::billing::budgets::v1::UpdateBudgetRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::billing::budgets::v1::UpdateBudgetRequest const& request) {
         return child_->UpdateBudget(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -63,12 +67,13 @@ BudgetServiceLogging::UpdateBudget(
 
 StatusOr<google::cloud::billing::budgets::v1::Budget>
 BudgetServiceLogging::GetBudget(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::billing::budgets::v1::GetBudgetRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::billing::budgets::v1::GetBudgetRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::billing::budgets::v1::GetBudgetRequest const& request) {
         return child_->GetBudget(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -76,24 +81,27 @@ BudgetServiceLogging::GetBudget(
 
 StatusOr<google::cloud::billing::budgets::v1::ListBudgetsResponse>
 BudgetServiceLogging::ListBudgets(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::billing::budgets::v1::ListBudgetsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::billing::budgets::v1::ListBudgetsRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::billing::budgets::v1::ListBudgetsRequest const& request) {
         return child_->ListBudgets(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status BudgetServiceLogging::DeleteBudget(
-    grpc::ClientContext& context, Options const& options,
+Status
+BudgetServiceLogging::DeleteBudget(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::billing::budgets::v1::DeleteBudgetRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::billing::budgets::v1::DeleteBudgetRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::billing::budgets::v1::DeleteBudgetRequest const& request) {
         return child_->DeleteBudget(context, options, request);
       },
       context, options, request, __func__, tracing_options_);

@@ -35,71 +35,65 @@ class DashboardsServiceStub {
  public:
   virtual ~DashboardsServiceStub() = 0;
 
-  virtual StatusOr<google::monitoring::dashboard::v1::Dashboard>
-  CreateDashboard(
-      grpc::ClientContext& context, Options const& options,
-      google::monitoring::dashboard::v1::CreateDashboardRequest const&
-          request) = 0;
+  virtual StatusOr<google::monitoring::dashboard::v1::Dashboard> CreateDashboard(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::monitoring::dashboard::v1::CreateDashboardRequest const& request) = 0;
 
-  virtual StatusOr<google::monitoring::dashboard::v1::ListDashboardsResponse>
-  ListDashboards(grpc::ClientContext& context, Options const& options,
-                 google::monitoring::dashboard::v1::ListDashboardsRequest const&
-                     request) = 0;
+  virtual StatusOr<google::monitoring::dashboard::v1::ListDashboardsResponse> ListDashboards(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::monitoring::dashboard::v1::ListDashboardsRequest const& request) = 0;
 
   virtual StatusOr<google::monitoring::dashboard::v1::Dashboard> GetDashboard(
-      grpc::ClientContext& context, Options const& options,
-      google::monitoring::dashboard::v1::GetDashboardRequest const&
-          request) = 0;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::monitoring::dashboard::v1::GetDashboardRequest const& request) = 0;
 
   virtual Status DeleteDashboard(
-      grpc::ClientContext& context, Options const& options,
-      google::monitoring::dashboard::v1::DeleteDashboardRequest const&
-          request) = 0;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::monitoring::dashboard::v1::DeleteDashboardRequest const& request) = 0;
 
-  virtual StatusOr<google::monitoring::dashboard::v1::Dashboard>
-  UpdateDashboard(
-      grpc::ClientContext& context, Options const& options,
-      google::monitoring::dashboard::v1::UpdateDashboardRequest const&
-          request) = 0;
+  virtual StatusOr<google::monitoring::dashboard::v1::Dashboard> UpdateDashboard(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::monitoring::dashboard::v1::UpdateDashboardRequest const& request) = 0;
 };
 
 class DefaultDashboardsServiceStub : public DashboardsServiceStub {
  public:
   explicit DefaultDashboardsServiceStub(
-      std::unique_ptr<
-          google::monitoring::dashboard::v1::DashboardsService::StubInterface>
-          grpc_stub)
+      std::unique_ptr<google::monitoring::dashboard::v1::DashboardsService::StubInterface> grpc_stub)
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::monitoring::dashboard::v1::Dashboard> CreateDashboard(
-      grpc::ClientContext& context, Options const& options,
-      google::monitoring::dashboard::v1::CreateDashboardRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::monitoring::dashboard::v1::CreateDashboardRequest const& request) override;
 
-  StatusOr<google::monitoring::dashboard::v1::ListDashboardsResponse>
-  ListDashboards(grpc::ClientContext& context, Options const& options,
-                 google::monitoring::dashboard::v1::ListDashboardsRequest const&
-                     request) override;
+  StatusOr<google::monitoring::dashboard::v1::ListDashboardsResponse> ListDashboards(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::monitoring::dashboard::v1::ListDashboardsRequest const& request) override;
 
   StatusOr<google::monitoring::dashboard::v1::Dashboard> GetDashboard(
-      grpc::ClientContext& context, Options const& options,
-      google::monitoring::dashboard::v1::GetDashboardRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::monitoring::dashboard::v1::GetDashboardRequest const& request) override;
 
   Status DeleteDashboard(
-      grpc::ClientContext& context, Options const& options,
-      google::monitoring::dashboard::v1::DeleteDashboardRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::monitoring::dashboard::v1::DeleteDashboardRequest const& request) override;
 
   StatusOr<google::monitoring::dashboard::v1::Dashboard> UpdateDashboard(
-      grpc::ClientContext& context, Options const& options,
-      google::monitoring::dashboard::v1::UpdateDashboardRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::monitoring::dashboard::v1::UpdateDashboardRequest const& request) override;
 
  private:
-  std::unique_ptr<
-      google::monitoring::dashboard::v1::DashboardsService::StubInterface>
-      grpc_stub_;
+  std::unique_ptr<google::monitoring::dashboard::v1::DashboardsService::StubInterface> grpc_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

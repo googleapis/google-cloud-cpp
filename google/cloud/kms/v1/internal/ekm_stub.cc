@@ -32,154 +32,171 @@ EkmServiceStub::~EkmServiceStub() = default;
 
 StatusOr<google::cloud::kms::v1::ListEkmConnectionsResponse>
 DefaultEkmServiceStub::ListEkmConnections(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::kms::v1::ListEkmConnectionsRequest const& request) {
-  google::cloud::kms::v1::ListEkmConnectionsResponse response;
-  auto status = grpc_stub_->ListEkmConnections(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::kms::v1::ListEkmConnectionsRequest const& request) {
+    google::cloud::kms::v1::ListEkmConnectionsResponse response;
+    auto status =
+        grpc_stub_->ListEkmConnections(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::kms::v1::EkmConnection>
 DefaultEkmServiceStub::GetEkmConnection(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::kms::v1::GetEkmConnectionRequest const& request) {
-  google::cloud::kms::v1::EkmConnection response;
-  auto status = grpc_stub_->GetEkmConnection(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::kms::v1::GetEkmConnectionRequest const& request) {
+    google::cloud::kms::v1::EkmConnection response;
+    auto status =
+        grpc_stub_->GetEkmConnection(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::kms::v1::EkmConnection>
 DefaultEkmServiceStub::CreateEkmConnection(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::kms::v1::CreateEkmConnectionRequest const& request) {
-  google::cloud::kms::v1::EkmConnection response;
-  auto status = grpc_stub_->CreateEkmConnection(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::kms::v1::CreateEkmConnectionRequest const& request) {
+    google::cloud::kms::v1::EkmConnection response;
+    auto status =
+        grpc_stub_->CreateEkmConnection(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::kms::v1::EkmConnection>
 DefaultEkmServiceStub::UpdateEkmConnection(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::kms::v1::UpdateEkmConnectionRequest const& request) {
-  google::cloud::kms::v1::EkmConnection response;
-  auto status = grpc_stub_->UpdateEkmConnection(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::kms::v1::UpdateEkmConnectionRequest const& request) {
+    google::cloud::kms::v1::EkmConnection response;
+    auto status =
+        grpc_stub_->UpdateEkmConnection(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-StatusOr<google::cloud::kms::v1::EkmConfig> DefaultEkmServiceStub::GetEkmConfig(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::kms::v1::GetEkmConfigRequest const& request) {
-  google::cloud::kms::v1::EkmConfig response;
-  auto status = grpc_stub_->GetEkmConfig(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::cloud::kms::v1::EkmConfig>
+DefaultEkmServiceStub::GetEkmConfig(
+  grpc::ClientContext& context, Options const&,
+  google::cloud::kms::v1::GetEkmConfigRequest const& request) {
+    google::cloud::kms::v1::EkmConfig response;
+    auto status =
+        grpc_stub_->GetEkmConfig(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::kms::v1::EkmConfig>
 DefaultEkmServiceStub::UpdateEkmConfig(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::kms::v1::UpdateEkmConfigRequest const& request) {
-  google::cloud::kms::v1::EkmConfig response;
-  auto status = grpc_stub_->UpdateEkmConfig(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::kms::v1::UpdateEkmConfigRequest const& request) {
+    google::cloud::kms::v1::EkmConfig response;
+    auto status =
+        grpc_stub_->UpdateEkmConfig(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::kms::v1::VerifyConnectivityResponse>
 DefaultEkmServiceStub::VerifyConnectivity(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::kms::v1::VerifyConnectivityRequest const& request) {
-  google::cloud::kms::v1::VerifyConnectivityResponse response;
-  auto status = grpc_stub_->VerifyConnectivity(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::kms::v1::VerifyConnectivityRequest const& request) {
+    google::cloud::kms::v1::VerifyConnectivityResponse response;
+    auto status =
+        grpc_stub_->VerifyConnectivity(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 DefaultEkmServiceStub::ListLocations(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::location::ListLocationsRequest const& request) {
-  google::cloud::location::ListLocationsResponse response;
-  auto status = locations_stub_->ListLocations(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::location::ListLocationsRequest const& request) {
+    google::cloud::location::ListLocationsResponse response;
+    auto status =
+        locations_stub_->ListLocations(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-StatusOr<google::cloud::location::Location> DefaultEkmServiceStub::GetLocation(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::location::GetLocationRequest const& request) {
-  google::cloud::location::Location response;
-  auto status = locations_stub_->GetLocation(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::cloud::location::Location>
+DefaultEkmServiceStub::GetLocation(
+  grpc::ClientContext& context, Options const&,
+  google::cloud::location::GetLocationRequest const& request) {
+    google::cloud::location::Location response;
+    auto status =
+        locations_stub_->GetLocation(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-StatusOr<google::iam::v1::Policy> DefaultEkmServiceStub::SetIamPolicy(
-    grpc::ClientContext& context, Options const&,
-    google::iam::v1::SetIamPolicyRequest const& request) {
-  google::iam::v1::Policy response;
-  auto status = iampolicy_stub_->SetIamPolicy(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::iam::v1::Policy>
+DefaultEkmServiceStub::SetIamPolicy(
+  grpc::ClientContext& context, Options const&,
+  google::iam::v1::SetIamPolicyRequest const& request) {
+    google::iam::v1::Policy response;
+    auto status =
+        iampolicy_stub_->SetIamPolicy(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-StatusOr<google::iam::v1::Policy> DefaultEkmServiceStub::GetIamPolicy(
-    grpc::ClientContext& context, Options const&,
-    google::iam::v1::GetIamPolicyRequest const& request) {
-  google::iam::v1::Policy response;
-  auto status = iampolicy_stub_->GetIamPolicy(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::iam::v1::Policy>
+DefaultEkmServiceStub::GetIamPolicy(
+  grpc::ClientContext& context, Options const&,
+  google::iam::v1::GetIamPolicyRequest const& request) {
+    google::iam::v1::Policy response;
+    auto status =
+        iampolicy_stub_->GetIamPolicy(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 DefaultEkmServiceStub::TestIamPermissions(
-    grpc::ClientContext& context, Options const&,
-    google::iam::v1::TestIamPermissionsRequest const& request) {
-  google::iam::v1::TestIamPermissionsResponse response;
-  auto status =
-      iampolicy_stub_->TestIamPermissions(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::iam::v1::TestIamPermissionsRequest const& request) {
+    google::iam::v1::TestIamPermissionsResponse response;
+    auto status =
+        iampolicy_stub_->TestIamPermissions(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-StatusOr<google::longrunning::Operation> DefaultEkmServiceStub::GetOperation(
-    grpc::ClientContext& context, Options const&,
-    google::longrunning::GetOperationRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = operations_stub_->GetOperation(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::longrunning::Operation>
+DefaultEkmServiceStub::GetOperation(
+  grpc::ClientContext& context, Options const&,
+  google::longrunning::GetOperationRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        operations_stub_->GetOperation(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

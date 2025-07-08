@@ -32,17 +32,20 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 SessionTemplateControllerLogging::SessionTemplateControllerLogging(
     std::shared_ptr<SessionTemplateControllerStub> child,
-    TracingOptions tracing_options, std::set<std::string> const&)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
+    TracingOptions tracing_options,
+    std::set<std::string> const&)
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::cloud::dataproc::v1::SessionTemplate>
 SessionTemplateControllerLogging::CreateSessionTemplate(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dataproc::v1::CreateSessionTemplateRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dataproc::v1::CreateSessionTemplateRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::dataproc::v1::CreateSessionTemplateRequest const& request) {
         return child_->CreateSessionTemplate(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -50,12 +53,13 @@ SessionTemplateControllerLogging::CreateSessionTemplate(
 
 StatusOr<google::cloud::dataproc::v1::SessionTemplate>
 SessionTemplateControllerLogging::UpdateSessionTemplate(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dataproc::v1::UpdateSessionTemplateRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dataproc::v1::UpdateSessionTemplateRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::dataproc::v1::UpdateSessionTemplateRequest const& request) {
         return child_->UpdateSessionTemplate(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -63,12 +67,13 @@ SessionTemplateControllerLogging::UpdateSessionTemplate(
 
 StatusOr<google::cloud::dataproc::v1::SessionTemplate>
 SessionTemplateControllerLogging::GetSessionTemplate(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dataproc::v1::GetSessionTemplateRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dataproc::v1::GetSessionTemplateRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::dataproc::v1::GetSessionTemplateRequest const& request) {
         return child_->GetSessionTemplate(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -76,24 +81,27 @@ SessionTemplateControllerLogging::GetSessionTemplate(
 
 StatusOr<google::cloud::dataproc::v1::ListSessionTemplatesResponse>
 SessionTemplateControllerLogging::ListSessionTemplates(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dataproc::v1::ListSessionTemplatesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dataproc::v1::ListSessionTemplatesRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::dataproc::v1::ListSessionTemplatesRequest const& request) {
         return child_->ListSessionTemplates(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status SessionTemplateControllerLogging::DeleteSessionTemplate(
-    grpc::ClientContext& context, Options const& options,
+Status
+SessionTemplateControllerLogging::DeleteSessionTemplate(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dataproc::v1::DeleteSessionTemplateRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dataproc::v1::DeleteSessionTemplateRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::dataproc::v1::DeleteSessionTemplateRequest const& request) {
         return child_->DeleteSessionTemplate(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -101,10 +109,12 @@ Status SessionTemplateControllerLogging::DeleteSessionTemplate(
 
 StatusOr<google::iam::v1::Policy>
 SessionTemplateControllerLogging::SetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::iam::v1::SetIamPolicyRequest const& request) {
         return child_->SetIamPolicy(context, options, request);
       },
@@ -113,10 +123,12 @@ SessionTemplateControllerLogging::SetIamPolicy(
 
 StatusOr<google::iam::v1::Policy>
 SessionTemplateControllerLogging::GetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::iam::v1::GetIamPolicyRequest const& request) {
         return child_->GetIamPolicy(context, options, request);
       },
@@ -125,10 +137,12 @@ SessionTemplateControllerLogging::GetIamPolicy(
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 SessionTemplateControllerLogging::TestIamPermissions(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::iam::v1::TestIamPermissionsRequest const& request) {
         return child_->TestIamPermissions(context, options, request);
       },
@@ -137,10 +151,12 @@ SessionTemplateControllerLogging::TestIamPermissions(
 
 StatusOr<google::longrunning::ListOperationsResponse>
 SessionTemplateControllerLogging::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::ListOperationsRequest const& request) {
         return child_->ListOperations(context, options, request);
       },
@@ -149,32 +165,40 @@ SessionTemplateControllerLogging::ListOperations(
 
 StatusOr<google::longrunning::Operation>
 SessionTemplateControllerLogging::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::GetOperationRequest const& request) {
         return child_->GetOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status SessionTemplateControllerLogging::DeleteOperation(
-    grpc::ClientContext& context, Options const& options,
+Status
+SessionTemplateControllerLogging::DeleteOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::DeleteOperationRequest const& request) {
         return child_->DeleteOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status SessionTemplateControllerLogging::CancelOperation(
-    grpc::ClientContext& context, Options const& options,
+Status
+SessionTemplateControllerLogging::CancelOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::CancelOperationRequest const& request) {
         return child_->CancelOperation(context, options, request);
       },

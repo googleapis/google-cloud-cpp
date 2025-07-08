@@ -42,24 +42,26 @@ class ProjectServiceTracingStub : public ProjectServiceStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::discoveryengine::v1::ProvisionProjectRequest const&
-          request) override;
+      google::cloud::discoveryengine::v1::ProvisionProjectRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> ProvisionProject(
-      grpc::ClientContext& context, Options options,
-      google::cloud::discoveryengine::v1::ProvisionProjectRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::discoveryengine::v1::ProvisionProjectRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -76,8 +78,7 @@ class ProjectServiceTracingStub : public ProjectServiceStub {
 
  private:
   std::shared_ptr<ProjectServiceStub> child_;
-  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
-      propagator_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

@@ -17,17 +17,17 @@
 // source: google/cloud/retail/v2/model_service.proto
 
 #include "google/cloud/retail/v2/model_connection.h"
-#include "google/cloud/retail/v2/internal/model_connection_impl.h"
-#include "google/cloud/retail/v2/internal/model_option_defaults.h"
-#include "google/cloud/retail/v2/internal/model_stub_factory.h"
-#include "google/cloud/retail/v2/internal/model_tracing_connection.h"
-#include "google/cloud/retail/v2/model_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/retail/v2/internal/model_connection_impl.h"
+#include "google/cloud/retail/v2/internal/model_option_defaults.h"
+#include "google/cloud/retail/v2/internal/model_stub_factory.h"
+#include "google/cloud/retail/v2/internal/model_tracing_connection.h"
+#include "google/cloud/retail/v2/model_options.h"
 #include <memory>
 #include <utility>
 
@@ -42,52 +42,58 @@ future<StatusOr<google::cloud::retail::v2::Model>>
 ModelServiceConnection::CreateModel(
     google::cloud::retail::v2::CreateModelRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::retail::v2::Model>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::retail::v2::Model>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation> ModelServiceConnection::CreateModel(
-    NoAwaitTag, google::cloud::retail::v2::CreateModelRequest const&) {
+StatusOr<google::longrunning::Operation>
+ModelServiceConnection::CreateModel(
+    NoAwaitTag,
+    google::cloud::retail::v2::CreateModelRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::retail::v2::Model>>
-ModelServiceConnection::CreateModel(google::longrunning::Operation const&) {
+ModelServiceConnection::CreateModel(
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::retail::v2::Model>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::retail::v2::Model>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::cloud::retail::v2::Model> ModelServiceConnection::GetModel(
+StatusOr<google::cloud::retail::v2::Model>
+ModelServiceConnection::GetModel(
     google::cloud::retail::v2::GetModelRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::cloud::retail::v2::Model> ModelServiceConnection::PauseModel(
+StatusOr<google::cloud::retail::v2::Model>
+ModelServiceConnection::PauseModel(
     google::cloud::retail::v2::PauseModelRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::cloud::retail::v2::Model> ModelServiceConnection::ResumeModel(
+StatusOr<google::cloud::retail::v2::Model>
+ModelServiceConnection::ResumeModel(
     google::cloud::retail::v2::ResumeModelRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status ModelServiceConnection::DeleteModel(
+Status
+ModelServiceConnection::DeleteModel(
     google::cloud::retail::v2::DeleteModelRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::retail::v2::Model>
-ModelServiceConnection::ListModels(
-    google::cloud::retail::v2::
-        ListModelsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::retail::v2::Model> ModelServiceConnection::ListModels(
+    google::cloud::retail::v2::ListModelsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::retail::v2::Model>>();
 }
 
-StatusOr<google::cloud::retail::v2::Model> ModelServiceConnection::UpdateModel(
+StatusOr<google::cloud::retail::v2::Model>
+ModelServiceConnection::UpdateModel(
     google::cloud::retail::v2::UpdateModelRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -96,32 +102,34 @@ future<StatusOr<google::cloud::retail::v2::TuneModelResponse>>
 ModelServiceConnection::TuneModel(
     google::cloud::retail::v2::TuneModelRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::retail::v2::TuneModelResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::retail::v2::TuneModelResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation> ModelServiceConnection::TuneModel(
-    NoAwaitTag, google::cloud::retail::v2::TuneModelRequest const&) {
+StatusOr<google::longrunning::Operation>
+ModelServiceConnection::TuneModel(
+    NoAwaitTag,
+    google::cloud::retail::v2::TuneModelRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::retail::v2::TuneModelResponse>>
-ModelServiceConnection::TuneModel(google::longrunning::Operation const&) {
+ModelServiceConnection::TuneModel(
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::retail::v2::TuneModelResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::retail::v2::TuneModelResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StreamRange<google::longrunning::Operation>
-ModelServiceConnection::ListOperations(
-    google::longrunning::
-        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::longrunning::Operation> ModelServiceConnection::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }
 
-StatusOr<google::longrunning::Operation> ModelServiceConnection::GetOperation(
+StatusOr<google::longrunning::Operation>
+ModelServiceConnection::GetOperation(
     google::longrunning::GetOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -129,17 +137,17 @@ StatusOr<google::longrunning::Operation> ModelServiceConnection::GetOperation(
 std::shared_ptr<ModelServiceConnection> MakeModelServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 ModelServicePolicyOptionList>(options,
-                                                               __func__);
-  options = retail_v2_internal::ModelServiceDefaultOptions(std::move(options));
+      UnifiedCredentialsOptionList,
+      ModelServicePolicyOptionList>(options, __func__);
+  options = retail_v2_internal::ModelServiceDefaultOptions(
+      std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
-  auto stub = retail_v2_internal::CreateDefaultModelServiceStub(std::move(auth),
-                                                                options);
+  auto stub = retail_v2_internal::CreateDefaultModelServiceStub(
+    std::move(auth), options);
   return retail_v2_internal::MakeModelServiceTracingConnection(
       std::make_shared<retail_v2_internal::ModelServiceConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options)));
+      std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

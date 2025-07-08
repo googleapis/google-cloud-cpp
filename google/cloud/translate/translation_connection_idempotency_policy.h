@@ -26,16 +26,11 @@ namespace cloud {
 namespace translate {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use
-/// translate_v3::MakeDefaultTranslationServiceConnectionIdempotencyPolicy
-/// directly.
-using ::google::cloud::translate_v3::
-    MakeDefaultTranslationServiceConnectionIdempotencyPolicy;
+/// @deprecated Use translate_v3::MakeDefaultTranslationServiceConnectionIdempotencyPolicy directly.
+using ::google::cloud::translate_v3::MakeDefaultTranslationServiceConnectionIdempotencyPolicy;
 
-/// @deprecated Use translate_v3::TranslationServiceConnectionIdempotencyPolicy
-/// directly.
-using ::google::cloud::translate_v3::
-    TranslationServiceConnectionIdempotencyPolicy;
+/// @deprecated Use translate_v3::TranslationServiceConnectionIdempotencyPolicy directly.
+using ::google::cloud::translate_v3::TranslationServiceConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace translate

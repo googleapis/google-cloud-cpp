@@ -36,165 +36,137 @@ class TelcoAutomationConnectionIdempotencyPolicy {
   virtual ~TelcoAutomationConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<TelcoAutomationConnectionIdempotencyPolicy> clone()
-      const;
+  virtual std::unique_ptr<TelcoAutomationConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency ListOrchestrationClusters(
-      google::cloud::telcoautomation::v1::ListOrchestrationClustersRequest
-          request);
+  virtual google::cloud::Idempotency
+  ListOrchestrationClusters(google::cloud::telcoautomation::v1::ListOrchestrationClustersRequest request);
 
-  virtual google::cloud::Idempotency GetOrchestrationCluster(
-      google::cloud::telcoautomation::v1::GetOrchestrationClusterRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  GetOrchestrationCluster(google::cloud::telcoautomation::v1::GetOrchestrationClusterRequest const& request);
 
-  virtual google::cloud::Idempotency CreateOrchestrationCluster(
-      google::cloud::telcoautomation::v1::
-          CreateOrchestrationClusterRequest const& request);
+  virtual google::cloud::Idempotency
+  CreateOrchestrationCluster(google::cloud::telcoautomation::v1::CreateOrchestrationClusterRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteOrchestrationCluster(
-      google::cloud::telcoautomation::v1::
-          DeleteOrchestrationClusterRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteOrchestrationCluster(google::cloud::telcoautomation::v1::DeleteOrchestrationClusterRequest const& request);
 
-  virtual google::cloud::Idempotency ListEdgeSlms(
-      google::cloud::telcoautomation::v1::ListEdgeSlmsRequest request);
+  virtual google::cloud::Idempotency
+  ListEdgeSlms(google::cloud::telcoautomation::v1::ListEdgeSlmsRequest request);
 
-  virtual google::cloud::Idempotency GetEdgeSlm(
-      google::cloud::telcoautomation::v1::GetEdgeSlmRequest const& request);
+  virtual google::cloud::Idempotency
+  GetEdgeSlm(google::cloud::telcoautomation::v1::GetEdgeSlmRequest const& request);
 
-  virtual google::cloud::Idempotency CreateEdgeSlm(
-      google::cloud::telcoautomation::v1::CreateEdgeSlmRequest const& request);
+  virtual google::cloud::Idempotency
+  CreateEdgeSlm(google::cloud::telcoautomation::v1::CreateEdgeSlmRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteEdgeSlm(
-      google::cloud::telcoautomation::v1::DeleteEdgeSlmRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteEdgeSlm(google::cloud::telcoautomation::v1::DeleteEdgeSlmRequest const& request);
 
-  virtual google::cloud::Idempotency CreateBlueprint(
-      google::cloud::telcoautomation::v1::CreateBlueprintRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  CreateBlueprint(google::cloud::telcoautomation::v1::CreateBlueprintRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateBlueprint(
-      google::cloud::telcoautomation::v1::UpdateBlueprintRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  UpdateBlueprint(google::cloud::telcoautomation::v1::UpdateBlueprintRequest const& request);
 
-  virtual google::cloud::Idempotency GetBlueprint(
-      google::cloud::telcoautomation::v1::GetBlueprintRequest const& request);
+  virtual google::cloud::Idempotency
+  GetBlueprint(google::cloud::telcoautomation::v1::GetBlueprintRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteBlueprint(
-      google::cloud::telcoautomation::v1::DeleteBlueprintRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  DeleteBlueprint(google::cloud::telcoautomation::v1::DeleteBlueprintRequest const& request);
 
-  virtual google::cloud::Idempotency ListBlueprints(
-      google::cloud::telcoautomation::v1::ListBlueprintsRequest request);
+  virtual google::cloud::Idempotency
+  ListBlueprints(google::cloud::telcoautomation::v1::ListBlueprintsRequest request);
 
-  virtual google::cloud::Idempotency ApproveBlueprint(
-      google::cloud::telcoautomation::v1::ApproveBlueprintRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  ApproveBlueprint(google::cloud::telcoautomation::v1::ApproveBlueprintRequest const& request);
 
-  virtual google::cloud::Idempotency ProposeBlueprint(
-      google::cloud::telcoautomation::v1::ProposeBlueprintRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  ProposeBlueprint(google::cloud::telcoautomation::v1::ProposeBlueprintRequest const& request);
 
-  virtual google::cloud::Idempotency RejectBlueprint(
-      google::cloud::telcoautomation::v1::RejectBlueprintRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  RejectBlueprint(google::cloud::telcoautomation::v1::RejectBlueprintRequest const& request);
 
-  virtual google::cloud::Idempotency ListBlueprintRevisions(
-      google::cloud::telcoautomation::v1::ListBlueprintRevisionsRequest
-          request);
+  virtual google::cloud::Idempotency
+  ListBlueprintRevisions(google::cloud::telcoautomation::v1::ListBlueprintRevisionsRequest request);
 
-  virtual google::cloud::Idempotency SearchBlueprintRevisions(
-      google::cloud::telcoautomation::v1::SearchBlueprintRevisionsRequest
-          request);
+  virtual google::cloud::Idempotency
+  SearchBlueprintRevisions(google::cloud::telcoautomation::v1::SearchBlueprintRevisionsRequest request);
 
-  virtual google::cloud::Idempotency SearchDeploymentRevisions(
-      google::cloud::telcoautomation::v1::SearchDeploymentRevisionsRequest
-          request);
+  virtual google::cloud::Idempotency
+  SearchDeploymentRevisions(google::cloud::telcoautomation::v1::SearchDeploymentRevisionsRequest request);
 
-  virtual google::cloud::Idempotency DiscardBlueprintChanges(
-      google::cloud::telcoautomation::v1::DiscardBlueprintChangesRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  DiscardBlueprintChanges(google::cloud::telcoautomation::v1::DiscardBlueprintChangesRequest const& request);
 
-  virtual google::cloud::Idempotency ListPublicBlueprints(
-      google::cloud::telcoautomation::v1::ListPublicBlueprintsRequest request);
+  virtual google::cloud::Idempotency
+  ListPublicBlueprints(google::cloud::telcoautomation::v1::ListPublicBlueprintsRequest request);
 
-  virtual google::cloud::Idempotency GetPublicBlueprint(
-      google::cloud::telcoautomation::v1::GetPublicBlueprintRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  GetPublicBlueprint(google::cloud::telcoautomation::v1::GetPublicBlueprintRequest const& request);
 
-  virtual google::cloud::Idempotency CreateDeployment(
-      google::cloud::telcoautomation::v1::CreateDeploymentRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  CreateDeployment(google::cloud::telcoautomation::v1::CreateDeploymentRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateDeployment(
-      google::cloud::telcoautomation::v1::UpdateDeploymentRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  UpdateDeployment(google::cloud::telcoautomation::v1::UpdateDeploymentRequest const& request);
 
-  virtual google::cloud::Idempotency GetDeployment(
-      google::cloud::telcoautomation::v1::GetDeploymentRequest const& request);
+  virtual google::cloud::Idempotency
+  GetDeployment(google::cloud::telcoautomation::v1::GetDeploymentRequest const& request);
 
-  virtual google::cloud::Idempotency RemoveDeployment(
-      google::cloud::telcoautomation::v1::RemoveDeploymentRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  RemoveDeployment(google::cloud::telcoautomation::v1::RemoveDeploymentRequest const& request);
 
-  virtual google::cloud::Idempotency ListDeployments(
-      google::cloud::telcoautomation::v1::ListDeploymentsRequest request);
+  virtual google::cloud::Idempotency
+  ListDeployments(google::cloud::telcoautomation::v1::ListDeploymentsRequest request);
 
-  virtual google::cloud::Idempotency ListDeploymentRevisions(
-      google::cloud::telcoautomation::v1::ListDeploymentRevisionsRequest
-          request);
+  virtual google::cloud::Idempotency
+  ListDeploymentRevisions(google::cloud::telcoautomation::v1::ListDeploymentRevisionsRequest request);
 
-  virtual google::cloud::Idempotency DiscardDeploymentChanges(
-      google::cloud::telcoautomation::v1::DiscardDeploymentChangesRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  DiscardDeploymentChanges(google::cloud::telcoautomation::v1::DiscardDeploymentChangesRequest const& request);
 
-  virtual google::cloud::Idempotency ApplyDeployment(
-      google::cloud::telcoautomation::v1::ApplyDeploymentRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  ApplyDeployment(google::cloud::telcoautomation::v1::ApplyDeploymentRequest const& request);
 
-  virtual google::cloud::Idempotency ComputeDeploymentStatus(
-      google::cloud::telcoautomation::v1::ComputeDeploymentStatusRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  ComputeDeploymentStatus(google::cloud::telcoautomation::v1::ComputeDeploymentStatusRequest const& request);
 
-  virtual google::cloud::Idempotency RollbackDeployment(
-      google::cloud::telcoautomation::v1::RollbackDeploymentRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  RollbackDeployment(google::cloud::telcoautomation::v1::RollbackDeploymentRequest const& request);
 
-  virtual google::cloud::Idempotency GetHydratedDeployment(
-      google::cloud::telcoautomation::v1::GetHydratedDeploymentRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  GetHydratedDeployment(google::cloud::telcoautomation::v1::GetHydratedDeploymentRequest const& request);
 
-  virtual google::cloud::Idempotency ListHydratedDeployments(
-      google::cloud::telcoautomation::v1::ListHydratedDeploymentsRequest
-          request);
+  virtual google::cloud::Idempotency
+  ListHydratedDeployments(google::cloud::telcoautomation::v1::ListHydratedDeploymentsRequest request);
 
-  virtual google::cloud::Idempotency UpdateHydratedDeployment(
-      google::cloud::telcoautomation::v1::UpdateHydratedDeploymentRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  UpdateHydratedDeployment(google::cloud::telcoautomation::v1::UpdateHydratedDeploymentRequest const& request);
 
-  virtual google::cloud::Idempotency ApplyHydratedDeployment(
-      google::cloud::telcoautomation::v1::ApplyHydratedDeploymentRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  ApplyHydratedDeployment(google::cloud::telcoautomation::v1::ApplyHydratedDeploymentRequest const& request);
 
-  virtual google::cloud::Idempotency ListLocations(
-      google::cloud::location::ListLocationsRequest request);
+  virtual google::cloud::Idempotency
+  ListLocations(google::cloud::location::ListLocationsRequest request);
 
-  virtual google::cloud::Idempotency GetLocation(
-      google::cloud::location::GetLocationRequest const& request);
+  virtual google::cloud::Idempotency
+  GetLocation(google::cloud::location::GetLocationRequest const& request);
 
-  virtual google::cloud::Idempotency ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual google::cloud::Idempotency
+  ListOperations(google::longrunning::ListOperationsRequest request);
 
-  virtual google::cloud::Idempotency GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
 
-  virtual google::cloud::Idempotency CancelOperation(
-      google::longrunning::CancelOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  CancelOperation(google::longrunning::CancelOperationRequest const& request);
 };
 
 std::unique_ptr<TelcoAutomationConnectionIdempotencyPolicy>
-MakeDefaultTelcoAutomationConnectionIdempotencyPolicy();
+    MakeDefaultTelcoAutomationConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace telcoautomation_v1

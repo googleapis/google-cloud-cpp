@@ -17,12 +17,12 @@
 // source: google/cloud/beyondcorp/appconnectors/v1/app_connectors_service.proto
 
 #include "google/cloud/beyondcorp/appconnectors/v1/app_connectors_connection.h"
+#include "google/cloud/background_threads.h"
 #include "google/cloud/beyondcorp/appconnectors/v1/app_connectors_options.h"
 #include "google/cloud/beyondcorp/appconnectors/v1/internal/app_connectors_connection_impl.h"
 #include "google/cloud/beyondcorp/appconnectors/v1/internal/app_connectors_option_defaults.h"
 #include "google/cloud/beyondcorp/appconnectors/v1/internal/app_connectors_stub_factory.h"
 #include "google/cloud/beyondcorp/appconnectors/v1/internal/app_connectors_tracing_connection.h"
-#include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
@@ -38,106 +38,96 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 AppConnectorsServiceConnection::~AppConnectorsServiceConnection() = default;
 
-StreamRange<google::cloud::beyondcorp::appconnectors::v1::AppConnector>
-AppConnectorsServiceConnection::ListAppConnectors(
-    google::cloud::beyondcorp::appconnectors::v1::
-        ListAppConnectorsRequest) {  // NOLINT(performance-unnecessary-value-param)
-  return google::cloud::internal::MakeUnimplementedPaginationRange<StreamRange<
-      google::cloud::beyondcorp::appconnectors::v1::AppConnector>>();
+StreamRange<google::cloud::beyondcorp::appconnectors::v1::AppConnector> AppConnectorsServiceConnection::ListAppConnectors(
+    google::cloud::beyondcorp::appconnectors::v1::ListAppConnectorsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>();
 }
 
 StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>
 AppConnectorsServiceConnection::GetAppConnector(
-    google::cloud::beyondcorp::appconnectors::v1::
-        GetAppConnectorRequest const&) {
+    google::cloud::beyondcorp::appconnectors::v1::GetAppConnectorRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
 AppConnectorsServiceConnection::CreateAppConnector(
-    google::cloud::beyondcorp::appconnectors::v1::
-        CreateAppConnectorRequest const&) {
+    google::cloud::beyondcorp::appconnectors::v1::CreateAppConnectorRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 AppConnectorsServiceConnection::CreateAppConnector(
-    NoAwaitTag, google::cloud::beyondcorp::appconnectors::v1::
-                    CreateAppConnectorRequest const&) {
+    NoAwaitTag,
+    google::cloud::beyondcorp::appconnectors::v1::CreateAppConnectorRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
 AppConnectorsServiceConnection::CreateAppConnector(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
 AppConnectorsServiceConnection::UpdateAppConnector(
-    google::cloud::beyondcorp::appconnectors::v1::
-        UpdateAppConnectorRequest const&) {
+    google::cloud::beyondcorp::appconnectors::v1::UpdateAppConnectorRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 AppConnectorsServiceConnection::UpdateAppConnector(
-    NoAwaitTag, google::cloud::beyondcorp::appconnectors::v1::
-                    UpdateAppConnectorRequest const&) {
+    NoAwaitTag,
+    google::cloud::beyondcorp::appconnectors::v1::UpdateAppConnectorRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
 AppConnectorsServiceConnection::UpdateAppConnector(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::
-                    AppConnectorOperationMetadata>>
+future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnectorOperationMetadata>>
 AppConnectorsServiceConnection::DeleteAppConnector(
-    google::cloud::beyondcorp::appconnectors::v1::
-        DeleteAppConnectorRequest const&) {
+    google::cloud::beyondcorp::appconnectors::v1::DeleteAppConnectorRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::beyondcorp::appconnectors::v1::
-                   AppConnectorOperationMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnectorOperationMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 AppConnectorsServiceConnection::DeleteAppConnector(
-    NoAwaitTag, google::cloud::beyondcorp::appconnectors::v1::
-                    DeleteAppConnectorRequest const&) {
+    NoAwaitTag,
+    google::cloud::beyondcorp::appconnectors::v1::DeleteAppConnectorRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::
-                    AppConnectorOperationMetadata>>
+future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnectorOperationMetadata>>
 AppConnectorsServiceConnection::DeleteAppConnector(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::beyondcorp::appconnectors::v1::
-                   AppConnectorOperationMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnectorOperationMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
 AppConnectorsServiceConnection::ReportStatus(
     google::cloud::beyondcorp::appconnectors::v1::ReportStatusRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -145,21 +135,19 @@ AppConnectorsServiceConnection::ReportStatus(
     NoAwaitTag,
     google::cloud::beyondcorp::appconnectors::v1::ReportStatusRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
 AppConnectorsServiceConnection::ReportStatus(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StreamRange<google::cloud::location::Location>
-AppConnectorsServiceConnection::ListLocations(
-    google::cloud::location::
-        ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::location::Location> AppConnectorsServiceConnection::ListLocations(
+    google::cloud::location::ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::location::Location>>();
 }
@@ -170,12 +158,14 @@ AppConnectorsServiceConnection::GetLocation(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::iam::v1::Policy> AppConnectorsServiceConnection::SetIamPolicy(
+StatusOr<google::iam::v1::Policy>
+AppConnectorsServiceConnection::SetIamPolicy(
     google::iam::v1::SetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::iam::v1::Policy> AppConnectorsServiceConnection::GetIamPolicy(
+StatusOr<google::iam::v1::Policy>
+AppConnectorsServiceConnection::GetIamPolicy(
     google::iam::v1::GetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -186,10 +176,8 @@ AppConnectorsServiceConnection::TestIamPermissions(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::longrunning::Operation>
-AppConnectorsServiceConnection::ListOperations(
-    google::longrunning::
-        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::longrunning::Operation> AppConnectorsServiceConnection::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }
@@ -200,34 +188,32 @@ AppConnectorsServiceConnection::GetOperation(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status AppConnectorsServiceConnection::DeleteOperation(
+Status
+AppConnectorsServiceConnection::DeleteOperation(
     google::longrunning::DeleteOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status AppConnectorsServiceConnection::CancelOperation(
+Status
+AppConnectorsServiceConnection::CancelOperation(
     google::longrunning::CancelOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-std::shared_ptr<AppConnectorsServiceConnection>
-MakeAppConnectorsServiceConnection(Options options) {
+std::shared_ptr<AppConnectorsServiceConnection> MakeAppConnectorsServiceConnection(
+    Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 AppConnectorsServicePolicyOptionList>(
-      options, __func__);
-  options =
-      beyondcorp_appconnectors_v1_internal::AppConnectorsServiceDefaultOptions(
-          std::move(options));
+      UnifiedCredentialsOptionList,
+      AppConnectorsServicePolicyOptionList>(options, __func__);
+  options = beyondcorp_appconnectors_v1_internal::AppConnectorsServiceDefaultOptions(
+      std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
-  auto stub = beyondcorp_appconnectors_v1_internal::
-      CreateDefaultAppConnectorsServiceStub(std::move(auth), options);
-  return beyondcorp_appconnectors_v1_internal::
-      MakeAppConnectorsServiceTracingConnection(
-          std::make_shared<beyondcorp_appconnectors_v1_internal::
-                               AppConnectorsServiceConnectionImpl>(
-              std::move(background), std::move(stub), std::move(options)));
+  auto stub = beyondcorp_appconnectors_v1_internal::CreateDefaultAppConnectorsServiceStub(
+    std::move(auth), options);
+  return beyondcorp_appconnectors_v1_internal::MakeAppConnectorsServiceTracingConnection(
+      std::make_shared<beyondcorp_appconnectors_v1_internal::AppConnectorsServiceConnectionImpl>(
+      std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

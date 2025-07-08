@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_SERVICE_ATTACHMENTS_V1_SERVICE_ATTACHMENTS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_SERVICE_ATTACHMENTS_V1_SERVICE_ATTACHMENTS_CONNECTION_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/service_attachments/v1/internal/service_attachments_retry_traits.h"
 #include "google/cloud/compute/service_attachments/v1/service_attachments_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -55,8 +55,7 @@ class ServiceAttachmentsRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class ServiceAttachmentsLimitedErrorCountRetryPolicy
-    : public ServiceAttachmentsRetryPolicy {
+class ServiceAttachmentsLimitedErrorCountRetryPolicy : public ServiceAttachmentsRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -66,16 +65,14 @@ class ServiceAttachmentsLimitedErrorCountRetryPolicy
    *     @p maximum_failures == 0.
    */
   explicit ServiceAttachmentsLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   ServiceAttachmentsLimitedErrorCountRetryPolicy(
       ServiceAttachmentsLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : ServiceAttachmentsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {
-  }
+    : ServiceAttachmentsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   ServiceAttachmentsLimitedErrorCountRetryPolicy(
       ServiceAttachmentsLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : ServiceAttachmentsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {
-  }
+    : ServiceAttachmentsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -95,9 +92,7 @@ class ServiceAttachmentsLimitedErrorCountRetryPolicy
   using BaseType = ServiceAttachmentsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      compute_service_attachments_v1_internal::ServiceAttachmentsRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<compute_service_attachments_v1_internal::ServiceAttachmentsRetryTraits> impl_;
 };
 
 /**
@@ -110,8 +105,7 @@ class ServiceAttachmentsLimitedErrorCountRetryPolicy
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class ServiceAttachmentsLimitedTimeRetryPolicy
-    : public ServiceAttachmentsRetryPolicy {
+class ServiceAttachmentsLimitedTimeRetryPolicy : public ServiceAttachmentsRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -136,14 +130,12 @@ class ServiceAttachmentsLimitedTimeRetryPolicy
   template <typename DurationRep, typename DurationPeriod>
   explicit ServiceAttachmentsLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  ServiceAttachmentsLimitedTimeRetryPolicy(
-      ServiceAttachmentsLimitedTimeRetryPolicy&& rhs) noexcept
-      : ServiceAttachmentsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  ServiceAttachmentsLimitedTimeRetryPolicy(
-      ServiceAttachmentsLimitedTimeRetryPolicy const& rhs) noexcept
-      : ServiceAttachmentsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  ServiceAttachmentsLimitedTimeRetryPolicy(ServiceAttachmentsLimitedTimeRetryPolicy&& rhs) noexcept
+    : ServiceAttachmentsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  ServiceAttachmentsLimitedTimeRetryPolicy(ServiceAttachmentsLimitedTimeRetryPolicy const& rhs) noexcept
+    : ServiceAttachmentsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -165,23 +157,20 @@ class ServiceAttachmentsLimitedTimeRetryPolicy
   using BaseType = ServiceAttachmentsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      compute_service_attachments_v1_internal::ServiceAttachmentsRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<compute_service_attachments_v1_internal::ServiceAttachmentsRetryTraits> impl_;
 };
 
 /**
  * The `ServiceAttachmentsConnection` object for `ServiceAttachmentsClient`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `ServiceAttachmentsClient`. This allows users to inject custom
- * behavior (e.g., with a Google Mock object) when writing tests that use
- * objects of type `ServiceAttachmentsClient`.
+ * sets in `ServiceAttachmentsClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `ServiceAttachmentsClient`.
  *
  * To create a concrete instance, see `MakeServiceAttachmentsConnection()`.
  *
- * For mocking, see
- * `compute_service_attachments_v1_mocks::MockServiceAttachmentsConnection`.
+ * For mocking, see `compute_service_attachments_v1_mocks::MockServiceAttachmentsConnection`.
  */
 class ServiceAttachmentsConnection {
  public:
@@ -189,71 +178,50 @@ class ServiceAttachmentsConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StreamRange<
-      std::pair<std::string,
-                google::cloud::cpp::compute::v1::ServiceAttachmentsScopedList>>
-  AggregatedListServiceAttachments(
-      google::cloud::cpp::compute::service_attachments::v1::
-          AggregatedListServiceAttachmentsRequest request);
+  virtual StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::ServiceAttachmentsScopedList>>
+  AggregatedListServiceAttachments(google::cloud::cpp::compute::service_attachments::v1::AggregatedListServiceAttachmentsRequest request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteServiceAttachment(google::cloud::cpp::compute::service_attachments::v1::
-                              DeleteServiceAttachmentRequest const& request);
+  DeleteServiceAttachment(google::cloud::cpp::compute::service_attachments::v1::DeleteServiceAttachmentRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteServiceAttachment(NoAwaitTag,
-                          google::cloud::cpp::compute::service_attachments::v1::
-                              DeleteServiceAttachmentRequest const& request);
+  DeleteServiceAttachment(NoAwaitTag, google::cloud::cpp::compute::service_attachments::v1::DeleteServiceAttachmentRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteServiceAttachment(
-      google::cloud::cpp::compute::v1::Operation const& operation);
+  DeleteServiceAttachment( google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::ServiceAttachment>
-  GetServiceAttachment(google::cloud::cpp::compute::service_attachments::v1::
-                           GetServiceAttachmentRequest const& request);
+  GetServiceAttachment(google::cloud::cpp::compute::service_attachments::v1::GetServiceAttachmentRequest const& request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
-      google::cloud::cpp::compute::service_attachments::v1::
-          GetIamPolicyRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Policy>
+  GetIamPolicy(google::cloud::cpp::compute::service_attachments::v1::GetIamPolicyRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertServiceAttachment(google::cloud::cpp::compute::service_attachments::v1::
-                              InsertServiceAttachmentRequest const& request);
+  InsertServiceAttachment(google::cloud::cpp::compute::service_attachments::v1::InsertServiceAttachmentRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertServiceAttachment(NoAwaitTag,
-                          google::cloud::cpp::compute::service_attachments::v1::
-                              InsertServiceAttachmentRequest const& request);
+  InsertServiceAttachment(NoAwaitTag, google::cloud::cpp::compute::service_attachments::v1::InsertServiceAttachmentRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertServiceAttachment(
-      google::cloud::cpp::compute::v1::Operation const& operation);
+  InsertServiceAttachment( google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::ServiceAttachment>
-  ListServiceAttachments(google::cloud::cpp::compute::service_attachments::v1::
-                             ListServiceAttachmentsRequest request);
+  ListServiceAttachments(google::cloud::cpp::compute::service_attachments::v1::ListServiceAttachmentsRequest request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchServiceAttachment(google::cloud::cpp::compute::service_attachments::v1::
-                             PatchServiceAttachmentRequest const& request);
+  PatchServiceAttachment(google::cloud::cpp::compute::service_attachments::v1::PatchServiceAttachmentRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  PatchServiceAttachment(NoAwaitTag,
-                         google::cloud::cpp::compute::service_attachments::v1::
-                             PatchServiceAttachmentRequest const& request);
+  PatchServiceAttachment(NoAwaitTag, google::cloud::cpp::compute::service_attachments::v1::PatchServiceAttachmentRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchServiceAttachment(
-      google::cloud::cpp::compute::v1::Operation const& operation);
+  PatchServiceAttachment( google::cloud::cpp::compute::v1::Operation const& operation);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
-      google::cloud::cpp::compute::service_attachments::v1::
-          SetIamPolicyRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Policy>
+  SetIamPolicy(google::cloud::cpp::compute::service_attachments::v1::SetIamPolicyRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(google::cloud::cpp::compute::service_attachments::v1::
-                         TestIamPermissionsRequest const& request);
+  TestIamPermissions(google::cloud::cpp::compute::service_attachments::v1::TestIamPermissionsRequest const& request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

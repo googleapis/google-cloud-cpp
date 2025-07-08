@@ -26,10 +26,8 @@ namespace cloud {
 namespace deploy {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use deploy_v1::MakeDefaultCloudDeployConnectionIdempotencyPolicy
-/// directly.
-using ::google::cloud::deploy_v1::
-    MakeDefaultCloudDeployConnectionIdempotencyPolicy;
+/// @deprecated Use deploy_v1::MakeDefaultCloudDeployConnectionIdempotencyPolicy directly.
+using ::google::cloud::deploy_v1::MakeDefaultCloudDeployConnectionIdempotencyPolicy;
 
 /// @deprecated Use deploy_v1::CloudDeployConnectionIdempotencyPolicy directly.
 using ::google::cloud::deploy_v1::CloudDeployConnectionIdempotencyPolicy;

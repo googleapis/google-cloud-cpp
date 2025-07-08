@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_ADMIN_DATABASE_ADMIN_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_ADMIN_DATABASE_ADMIN_OPTIONS_H
 
-#include "google/cloud/spanner/admin/database_admin_connection.h"
-#include "google/cloud/spanner/admin/database_admin_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
+#include "google/cloud/spanner/admin/database_admin_connection.h"
+#include "google/cloud/spanner/admin/database_admin_connection_idempotency_policy.h"
 #include "google/cloud/version.h"
 #include <memory>
 
@@ -74,7 +74,8 @@ struct DatabaseAdminPollingPolicyOption {
  * @ingroup google-cloud-spanner-options
  */
 using DatabaseAdminPolicyOptionList =
-    OptionList<DatabaseAdminRetryPolicyOption, DatabaseAdminBackoffPolicyOption,
+    OptionList<DatabaseAdminRetryPolicyOption,
+               DatabaseAdminBackoffPolicyOption,
                DatabaseAdminPollingPolicyOption,
                DatabaseAdminConnectionIdempotencyPolicyOption>;
 

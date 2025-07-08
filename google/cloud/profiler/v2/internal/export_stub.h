@@ -35,29 +35,25 @@ class ExportServiceStub {
  public:
   virtual ~ExportServiceStub() = 0;
 
-  virtual StatusOr<google::devtools::cloudprofiler::v2::ListProfilesResponse>
-  ListProfiles(grpc::ClientContext& context, Options const& options,
-               google::devtools::cloudprofiler::v2::ListProfilesRequest const&
-                   request) = 0;
+  virtual StatusOr<google::devtools::cloudprofiler::v2::ListProfilesResponse> ListProfiles(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::devtools::cloudprofiler::v2::ListProfilesRequest const& request) = 0;
 };
 
 class DefaultExportServiceStub : public ExportServiceStub {
  public:
   explicit DefaultExportServiceStub(
-      std::unique_ptr<
-          google::devtools::cloudprofiler::v2::ExportService::StubInterface>
-          grpc_stub)
+      std::unique_ptr<google::devtools::cloudprofiler::v2::ExportService::StubInterface> grpc_stub)
       : grpc_stub_(std::move(grpc_stub)) {}
 
-  StatusOr<google::devtools::cloudprofiler::v2::ListProfilesResponse>
-  ListProfiles(grpc::ClientContext& context, Options const& options,
-               google::devtools::cloudprofiler::v2::ListProfilesRequest const&
-                   request) override;
+  StatusOr<google::devtools::cloudprofiler::v2::ListProfilesResponse> ListProfiles(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::devtools::cloudprofiler::v2::ListProfilesRequest const& request) override;
 
  private:
-  std::unique_ptr<
-      google::devtools::cloudprofiler::v2::ExportService::StubInterface>
-      grpc_stub_;
+  std::unique_ptr<google::devtools::cloudprofiler::v2::ExportService::StubInterface> grpc_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

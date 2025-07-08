@@ -55,8 +55,7 @@ struct FeatureRegistryServiceBackoffPolicyOption {
  * @ingroup google-cloud-aiplatform-options
  */
 struct FeatureRegistryServiceConnectionIdempotencyPolicyOption {
-  using Type =
-      std::shared_ptr<FeatureRegistryServiceConnectionIdempotencyPolicy>;
+  using Type = std::shared_ptr<FeatureRegistryServiceConnectionIdempotencyPolicy>;
 };
 
 /**

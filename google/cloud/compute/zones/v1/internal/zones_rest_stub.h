@@ -38,15 +38,11 @@ class ZonesRestStub {
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Zone> GetZone(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::zones::v1::GetZoneRequest const&
-          request) = 0;
+      Options const& options, google::cloud::cpp::compute::zones::v1::GetZoneRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::ZoneList> ListZones(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::zones::v1::ListZonesRequest const&
-          request) = 0;
+      Options const& options, google::cloud::cpp::compute::zones::v1::ListZonesRequest const& request) = 0;
 };
 
 class DefaultZonesRestStub : public ZonesRestStub {
@@ -54,20 +50,17 @@ class DefaultZonesRestStub : public ZonesRestStub {
   ~DefaultZonesRestStub() override = default;
 
   explicit DefaultZonesRestStub(Options options);
-  DefaultZonesRestStub(std::shared_ptr<rest_internal::RestClient> service,
-                       Options options);
+  DefaultZonesRestStub(
+      std::shared_ptr<rest_internal::RestClient> service,
+      Options options);
 
   StatusOr<google::cloud::cpp::compute::v1::Zone> GetZone(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::zones::v1::GetZoneRequest const& request)
-      override;
+      Options const& options, google::cloud::cpp::compute::zones::v1::GetZoneRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::ZoneList> ListZones(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::zones::v1::ListZonesRequest const& request)
-      override;
+      Options const& options, google::cloud::cpp::compute::zones::v1::ListZonesRequest const& request) override;
 
  private:
   std::shared_ptr<rest_internal::RestClient> service_;

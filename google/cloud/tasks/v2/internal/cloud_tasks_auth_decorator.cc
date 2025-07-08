@@ -31,9 +31,9 @@ CloudTasksAuth::CloudTasksAuth(
     std::shared_ptr<CloudTasksStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::tasks::v2::ListQueuesResponse>
-CloudTasksAuth::ListQueues(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::tasks::v2::ListQueuesResponse> CloudTasksAuth::ListQueues(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::tasks::v2::ListQueuesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -41,7 +41,8 @@ CloudTasksAuth::ListQueues(
 }
 
 StatusOr<google::cloud::tasks::v2::Queue> CloudTasksAuth::GetQueue(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::tasks::v2::GetQueueRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -49,7 +50,8 @@ StatusOr<google::cloud::tasks::v2::Queue> CloudTasksAuth::GetQueue(
 }
 
 StatusOr<google::cloud::tasks::v2::Queue> CloudTasksAuth::CreateQueue(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::tasks::v2::CreateQueueRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -57,7 +59,8 @@ StatusOr<google::cloud::tasks::v2::Queue> CloudTasksAuth::CreateQueue(
 }
 
 StatusOr<google::cloud::tasks::v2::Queue> CloudTasksAuth::UpdateQueue(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::tasks::v2::UpdateQueueRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -65,7 +68,8 @@ StatusOr<google::cloud::tasks::v2::Queue> CloudTasksAuth::UpdateQueue(
 }
 
 Status CloudTasksAuth::DeleteQueue(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::tasks::v2::DeleteQueueRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -73,7 +77,8 @@ Status CloudTasksAuth::DeleteQueue(
 }
 
 StatusOr<google::cloud::tasks::v2::Queue> CloudTasksAuth::PurgeQueue(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::tasks::v2::PurgeQueueRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -81,7 +86,8 @@ StatusOr<google::cloud::tasks::v2::Queue> CloudTasksAuth::PurgeQueue(
 }
 
 StatusOr<google::cloud::tasks::v2::Queue> CloudTasksAuth::PauseQueue(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::tasks::v2::PauseQueueRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -89,7 +95,8 @@ StatusOr<google::cloud::tasks::v2::Queue> CloudTasksAuth::PauseQueue(
 }
 
 StatusOr<google::cloud::tasks::v2::Queue> CloudTasksAuth::ResumeQueue(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::tasks::v2::ResumeQueueRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -97,7 +104,8 @@ StatusOr<google::cloud::tasks::v2::Queue> CloudTasksAuth::ResumeQueue(
 }
 
 StatusOr<google::iam::v1::Policy> CloudTasksAuth::GetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -105,16 +113,17 @@ StatusOr<google::iam::v1::Policy> CloudTasksAuth::GetIamPolicy(
 }
 
 StatusOr<google::iam::v1::Policy> CloudTasksAuth::SetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->SetIamPolicy(context, options, request);
 }
 
-StatusOr<google::iam::v1::TestIamPermissionsResponse>
-CloudTasksAuth::TestIamPermissions(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::iam::v1::TestIamPermissionsResponse> CloudTasksAuth::TestIamPermissions(
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -122,7 +131,8 @@ CloudTasksAuth::TestIamPermissions(
 }
 
 StatusOr<google::cloud::tasks::v2::ListTasksResponse> CloudTasksAuth::ListTasks(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::tasks::v2::ListTasksRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -130,7 +140,8 @@ StatusOr<google::cloud::tasks::v2::ListTasksResponse> CloudTasksAuth::ListTasks(
 }
 
 StatusOr<google::cloud::tasks::v2::Task> CloudTasksAuth::GetTask(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::tasks::v2::GetTaskRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -138,7 +149,8 @@ StatusOr<google::cloud::tasks::v2::Task> CloudTasksAuth::GetTask(
 }
 
 StatusOr<google::cloud::tasks::v2::Task> CloudTasksAuth::CreateTask(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::tasks::v2::CreateTaskRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -146,7 +158,8 @@ StatusOr<google::cloud::tasks::v2::Task> CloudTasksAuth::CreateTask(
 }
 
 Status CloudTasksAuth::DeleteTask(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::tasks::v2::DeleteTaskRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -154,16 +167,17 @@ Status CloudTasksAuth::DeleteTask(
 }
 
 StatusOr<google::cloud::tasks::v2::Task> CloudTasksAuth::RunTask(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::tasks::v2::RunTaskRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->RunTask(context, options, request);
 }
 
-StatusOr<google::cloud::location::ListLocationsResponse>
-CloudTasksAuth::ListLocations(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::location::ListLocationsResponse> CloudTasksAuth::ListLocations(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -171,7 +185,8 @@ CloudTasksAuth::ListLocations(
 }
 
 StatusOr<google::cloud::location::Location> CloudTasksAuth::GetLocation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;

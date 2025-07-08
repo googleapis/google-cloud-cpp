@@ -68,8 +68,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class DataplexServiceClient {
  public:
-  explicit DataplexServiceClient(
-      std::shared_ptr<DataplexServiceConnection> connection, Options opts = {});
+  explicit DataplexServiceClient(std::shared_ptr<DataplexServiceConnection> connection, Options opts = {});
   ~DataplexServiceClient();
 
   ///@{
@@ -82,12 +81,10 @@ class DataplexServiceClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(DataplexServiceClient const& a,
-                         DataplexServiceClient const& b) {
+  friend bool operator==(DataplexServiceClient const& a, DataplexServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(DataplexServiceClient const& a,
-                         DataplexServiceClient const& b) {
+  friend bool operator!=(DataplexServiceClient const& a, DataplexServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -132,9 +129,8 @@ class DataplexServiceClient {
   /// [google.cloud.dataplex.v1.Lake]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L37}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dataplex::v1::Lake>> CreateLake(
-      std::string const& parent, google::cloud::dataplex::v1::Lake const& lake,
-      std::string const& lake_id, Options opts = {});
+  future<StatusOr<google::cloud::dataplex::v1::Lake>>
+  CreateLake(std::string const& parent, google::cloud::dataplex::v1::Lake const& lake, std::string const& lake_id, Options opts = {});
 
   // clang-format off
   ///
@@ -147,10 +143,8 @@ class DataplexServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateLake(
-      NoAwaitTag, std::string const& parent,
-      google::cloud::dataplex::v1::Lake const& lake, std::string const& lake_id,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateLake(NoAwaitTag, std::string const& parent, google::cloud::dataplex::v1::Lake const& lake, std::string const& lake_id, Options opts = {});
 
   // clang-format off
   ///
@@ -186,9 +180,8 @@ class DataplexServiceClient {
   /// [google.cloud.dataplex.v1.Lake]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L37}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dataplex::v1::Lake>> CreateLake(
-      google::cloud::dataplex::v1::CreateLakeRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::dataplex::v1::Lake>>
+  CreateLake(google::cloud::dataplex::v1::CreateLakeRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -201,9 +194,8 @@ class DataplexServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateLake(
-      NoAwaitTag, google::cloud::dataplex::v1::CreateLakeRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateLake(NoAwaitTag, google::cloud::dataplex::v1::CreateLakeRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -214,8 +206,8 @@ class DataplexServiceClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dataplex::v1::Lake>> CreateLake(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::dataplex::v1::Lake>>
+  CreateLake(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -248,9 +240,8 @@ class DataplexServiceClient {
   /// [google.cloud.dataplex.v1.UpdateLakeRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L422}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dataplex::v1::Lake>> UpdateLake(
-      google::cloud::dataplex::v1::Lake const& lake,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  future<StatusOr<google::cloud::dataplex::v1::Lake>>
+  UpdateLake(google::cloud::dataplex::v1::Lake const& lake, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -263,9 +254,8 @@ class DataplexServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateLake(
-      NoAwaitTag, google::cloud::dataplex::v1::Lake const& lake,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateLake(NoAwaitTag, google::cloud::dataplex::v1::Lake const& lake, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -301,9 +291,8 @@ class DataplexServiceClient {
   /// [google.cloud.dataplex.v1.UpdateLakeRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L422}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dataplex::v1::Lake>> UpdateLake(
-      google::cloud::dataplex::v1::UpdateLakeRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::dataplex::v1::Lake>>
+  UpdateLake(google::cloud::dataplex::v1::UpdateLakeRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -316,9 +305,8 @@ class DataplexServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateLake(
-      NoAwaitTag, google::cloud::dataplex::v1::UpdateLakeRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateLake(NoAwaitTag, google::cloud::dataplex::v1::UpdateLakeRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -329,8 +317,8 @@ class DataplexServiceClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dataplex::v1::Lake>> UpdateLake(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::dataplex::v1::Lake>>
+  UpdateLake(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -363,8 +351,8 @@ class DataplexServiceClient {
   /// [google.cloud.dataplex.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L770}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>> DeleteLake(
-      std::string const& name, Options opts = {});
+  future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
+  DeleteLake(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -377,9 +365,8 @@ class DataplexServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteLake(NoAwaitTag,
-                                                      std::string const& name,
-                                                      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteLake(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -416,9 +403,8 @@ class DataplexServiceClient {
   /// [google.cloud.dataplex.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L770}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>> DeleteLake(
-      google::cloud::dataplex::v1::DeleteLakeRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
+  DeleteLake(google::cloud::dataplex::v1::DeleteLakeRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -431,9 +417,8 @@ class DataplexServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteLake(
-      NoAwaitTag, google::cloud::dataplex::v1::DeleteLakeRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteLake(NoAwaitTag, google::cloud::dataplex::v1::DeleteLakeRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -444,8 +429,8 @@ class DataplexServiceClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>> DeleteLake(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
+  DeleteLake(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -480,8 +465,8 @@ class DataplexServiceClient {
   /// [google.cloud.dataplex.v1.ListLakesRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L447}
   ///
   // clang-format on
-  StreamRange<google::cloud::dataplex::v1::Lake> ListLakes(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::dataplex::v1::Lake>
+  ListLakes(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -519,8 +504,8 @@ class DataplexServiceClient {
   /// [google.cloud.dataplex.v1.ListLakesRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L447}
   ///
   // clang-format on
-  StreamRange<google::cloud::dataplex::v1::Lake> ListLakes(
-      google::cloud::dataplex::v1::ListLakesRequest request, Options opts = {});
+  StreamRange<google::cloud::dataplex::v1::Lake>
+  ListLakes(google::cloud::dataplex::v1::ListLakesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -545,8 +530,8 @@ class DataplexServiceClient {
   /// [google.cloud.dataplex.v1.Lake]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L37}
   ///
   // clang-format on
-  StatusOr<google::cloud::dataplex::v1::Lake> GetLake(std::string const& name,
-                                                      Options opts = {});
+  StatusOr<google::cloud::dataplex::v1::Lake>
+  GetLake(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -575,9 +560,8 @@ class DataplexServiceClient {
   /// [google.cloud.dataplex.v1.Lake]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L37}
   ///
   // clang-format on
-  StatusOr<google::cloud::dataplex::v1::Lake> GetLake(
-      google::cloud::dataplex::v1::GetLakeRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::dataplex::v1::Lake>
+  GetLake(google::cloud::dataplex::v1::GetLakeRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -611,8 +595,8 @@ class DataplexServiceClient {
   /// [google.cloud.dataplex.v1.ListLakeActionsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L489}
   ///
   // clang-format on
-  StreamRange<google::cloud::dataplex::v1::Action> ListLakeActions(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::dataplex::v1::Action>
+  ListLakeActions(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -650,9 +634,8 @@ class DataplexServiceClient {
   /// [google.cloud.dataplex.v1.ListLakeActionsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L489}
   ///
   // clang-format on
-  StreamRange<google::cloud::dataplex::v1::Action> ListLakeActions(
-      google::cloud::dataplex::v1::ListLakeActionsRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::dataplex::v1::Action>
+  ListLakeActions(google::cloud::dataplex::v1::ListLakeActionsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -694,9 +677,8 @@ class DataplexServiceClient {
   /// [google.cloud.dataplex.v1.Zone]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L150}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dataplex::v1::Zone>> CreateZone(
-      std::string const& parent, google::cloud::dataplex::v1::Zone const& zone,
-      std::string const& zone_id, Options opts = {});
+  future<StatusOr<google::cloud::dataplex::v1::Zone>>
+  CreateZone(std::string const& parent, google::cloud::dataplex::v1::Zone const& zone, std::string const& zone_id, Options opts = {});
 
   // clang-format off
   ///
@@ -709,10 +691,8 @@ class DataplexServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateZone(
-      NoAwaitTag, std::string const& parent,
-      google::cloud::dataplex::v1::Zone const& zone, std::string const& zone_id,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateZone(NoAwaitTag, std::string const& parent, google::cloud::dataplex::v1::Zone const& zone, std::string const& zone_id, Options opts = {});
 
   // clang-format off
   ///
@@ -748,9 +728,8 @@ class DataplexServiceClient {
   /// [google.cloud.dataplex.v1.Zone]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L150}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dataplex::v1::Zone>> CreateZone(
-      google::cloud::dataplex::v1::CreateZoneRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::dataplex::v1::Zone>>
+  CreateZone(google::cloud::dataplex::v1::CreateZoneRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -763,9 +742,8 @@ class DataplexServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateZone(
-      NoAwaitTag, google::cloud::dataplex::v1::CreateZoneRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateZone(NoAwaitTag, google::cloud::dataplex::v1::CreateZoneRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -776,8 +754,8 @@ class DataplexServiceClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dataplex::v1::Zone>> CreateZone(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::dataplex::v1::Zone>>
+  CreateZone(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -810,9 +788,8 @@ class DataplexServiceClient {
   /// [google.cloud.dataplex.v1.Zone]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L150}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dataplex::v1::Zone>> UpdateZone(
-      google::cloud::dataplex::v1::Zone const& zone,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  future<StatusOr<google::cloud::dataplex::v1::Zone>>
+  UpdateZone(google::cloud::dataplex::v1::Zone const& zone, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -825,9 +802,8 @@ class DataplexServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateZone(
-      NoAwaitTag, google::cloud::dataplex::v1::Zone const& zone,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateZone(NoAwaitTag, google::cloud::dataplex::v1::Zone const& zone, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -863,9 +839,8 @@ class DataplexServiceClient {
   /// [google.cloud.dataplex.v1.Zone]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L150}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dataplex::v1::Zone>> UpdateZone(
-      google::cloud::dataplex::v1::UpdateZoneRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::dataplex::v1::Zone>>
+  UpdateZone(google::cloud::dataplex::v1::UpdateZoneRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -878,9 +853,8 @@ class DataplexServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateZone(
-      NoAwaitTag, google::cloud::dataplex::v1::UpdateZoneRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateZone(NoAwaitTag, google::cloud::dataplex::v1::UpdateZoneRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -891,8 +865,8 @@ class DataplexServiceClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dataplex::v1::Zone>> UpdateZone(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::dataplex::v1::Zone>>
+  UpdateZone(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -925,8 +899,8 @@ class DataplexServiceClient {
   /// [google.cloud.dataplex.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L770}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>> DeleteZone(
-      std::string const& name, Options opts = {});
+  future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
+  DeleteZone(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -939,9 +913,8 @@ class DataplexServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteZone(NoAwaitTag,
-                                                      std::string const& name,
-                                                      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteZone(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -978,9 +951,8 @@ class DataplexServiceClient {
   /// [google.cloud.dataplex.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L770}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>> DeleteZone(
-      google::cloud::dataplex::v1::DeleteZoneRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
+  DeleteZone(google::cloud::dataplex::v1::DeleteZoneRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -993,9 +965,8 @@ class DataplexServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteZone(
-      NoAwaitTag, google::cloud::dataplex::v1::DeleteZoneRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteZone(NoAwaitTag, google::cloud::dataplex::v1::DeleteZoneRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1006,8 +977,8 @@ class DataplexServiceClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>> DeleteZone(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
+  DeleteZone(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1041,8 +1012,8 @@ class DataplexServiceClient {
   /// [google.cloud.dataplex.v1.Zone]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L150}
   ///
   // clang-format on
-  StreamRange<google::cloud::dataplex::v1::Zone> ListZones(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::dataplex::v1::Zone>
+  ListZones(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -1080,8 +1051,8 @@ class DataplexServiceClient {
   /// [google.cloud.dataplex.v1.Zone]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L150}
   ///
   // clang-format on
-  StreamRange<google::cloud::dataplex::v1::Zone> ListZones(
-      google::cloud::dataplex::v1::ListZonesRequest request, Options opts = {});
+  StreamRange<google::cloud::dataplex::v1::Zone>
+  ListZones(google::cloud::dataplex::v1::ListZonesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1106,8 +1077,8 @@ class DataplexServiceClient {
   /// [google.cloud.dataplex.v1.Zone]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L150}
   ///
   // clang-format on
-  StatusOr<google::cloud::dataplex::v1::Zone> GetZone(std::string const& name,
-                                                      Options opts = {});
+  StatusOr<google::cloud::dataplex::v1::Zone>
+  GetZone(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1136,9 +1107,8 @@ class DataplexServiceClient {
   /// [google.cloud.dataplex.v1.Zone]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L150}
   ///
   // clang-format on
-  StatusOr<google::cloud::dataplex::v1::Zone> GetZone(
-      google::cloud::dataplex::v1::GetZoneRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::dataplex::v1::Zone>
+  GetZone(google::cloud::dataplex::v1::GetZoneRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1172,8 +1142,8 @@ class DataplexServiceClient {
   /// [google.cloud.dataplex.v1.ListZoneActionsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L619}
   ///
   // clang-format on
-  StreamRange<google::cloud::dataplex::v1::Action> ListZoneActions(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::dataplex::v1::Action>
+  ListZoneActions(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -1211,9 +1181,8 @@ class DataplexServiceClient {
   /// [google.cloud.dataplex.v1.ListZoneActionsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L619}
   ///
   // clang-format on
-  StreamRange<google::cloud::dataplex::v1::Action> ListZoneActions(
-      google::cloud::dataplex::v1::ListZoneActionsRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::dataplex::v1::Action>
+  ListZoneActions(google::cloud::dataplex::v1::ListZoneActionsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1254,10 +1223,8 @@ class DataplexServiceClient {
   /// [google.cloud.dataplex.v1.CreateAssetRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L650}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dataplex::v1::Asset>> CreateAsset(
-      std::string const& parent,
-      google::cloud::dataplex::v1::Asset const& asset,
-      std::string const& asset_id, Options opts = {});
+  future<StatusOr<google::cloud::dataplex::v1::Asset>>
+  CreateAsset(std::string const& parent, google::cloud::dataplex::v1::Asset const& asset, std::string const& asset_id, Options opts = {});
 
   // clang-format off
   ///
@@ -1270,10 +1237,8 @@ class DataplexServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateAsset(
-      NoAwaitTag, std::string const& parent,
-      google::cloud::dataplex::v1::Asset const& asset,
-      std::string const& asset_id, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateAsset(NoAwaitTag, std::string const& parent, google::cloud::dataplex::v1::Asset const& asset, std::string const& asset_id, Options opts = {});
 
   // clang-format off
   ///
@@ -1309,9 +1274,8 @@ class DataplexServiceClient {
   /// [google.cloud.dataplex.v1.CreateAssetRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L650}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dataplex::v1::Asset>> CreateAsset(
-      google::cloud::dataplex::v1::CreateAssetRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::dataplex::v1::Asset>>
+  CreateAsset(google::cloud::dataplex::v1::CreateAssetRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1324,10 +1288,8 @@ class DataplexServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateAsset(
-      NoAwaitTag,
-      google::cloud::dataplex::v1::CreateAssetRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateAsset(NoAwaitTag, google::cloud::dataplex::v1::CreateAssetRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1338,8 +1300,8 @@ class DataplexServiceClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dataplex::v1::Asset>> CreateAsset(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::dataplex::v1::Asset>>
+  CreateAsset(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1372,9 +1334,8 @@ class DataplexServiceClient {
   /// [google.cloud.dataplex.v1.UpdateAssetRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L677}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dataplex::v1::Asset>> UpdateAsset(
-      google::cloud::dataplex::v1::Asset const& asset,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  future<StatusOr<google::cloud::dataplex::v1::Asset>>
+  UpdateAsset(google::cloud::dataplex::v1::Asset const& asset, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -1387,9 +1348,8 @@ class DataplexServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateAsset(
-      NoAwaitTag, google::cloud::dataplex::v1::Asset const& asset,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateAsset(NoAwaitTag, google::cloud::dataplex::v1::Asset const& asset, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -1425,9 +1385,8 @@ class DataplexServiceClient {
   /// [google.cloud.dataplex.v1.UpdateAssetRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L677}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dataplex::v1::Asset>> UpdateAsset(
-      google::cloud::dataplex::v1::UpdateAssetRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::dataplex::v1::Asset>>
+  UpdateAsset(google::cloud::dataplex::v1::UpdateAssetRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1440,10 +1399,8 @@ class DataplexServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateAsset(
-      NoAwaitTag,
-      google::cloud::dataplex::v1::UpdateAssetRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateAsset(NoAwaitTag, google::cloud::dataplex::v1::UpdateAssetRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1454,8 +1411,8 @@ class DataplexServiceClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dataplex::v1::Asset>> UpdateAsset(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::dataplex::v1::Asset>>
+  UpdateAsset(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1488,8 +1445,8 @@ class DataplexServiceClient {
   /// [google.cloud.dataplex.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L770}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>> DeleteAsset(
-      std::string const& name, Options opts = {});
+  future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
+  DeleteAsset(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1502,9 +1459,8 @@ class DataplexServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteAsset(NoAwaitTag,
-                                                       std::string const& name,
-                                                       Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteAsset(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1541,9 +1497,8 @@ class DataplexServiceClient {
   /// [google.cloud.dataplex.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L770}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>> DeleteAsset(
-      google::cloud::dataplex::v1::DeleteAssetRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
+  DeleteAsset(google::cloud::dataplex::v1::DeleteAssetRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1556,10 +1511,8 @@ class DataplexServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteAsset(
-      NoAwaitTag,
-      google::cloud::dataplex::v1::DeleteAssetRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteAsset(NoAwaitTag, google::cloud::dataplex::v1::DeleteAssetRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1570,8 +1523,8 @@ class DataplexServiceClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>> DeleteAsset(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
+  DeleteAsset(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1605,8 +1558,8 @@ class DataplexServiceClient {
   /// [google.cloud.dataplex.v1.ListAssetsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L702}
   ///
   // clang-format on
-  StreamRange<google::cloud::dataplex::v1::Asset> ListAssets(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::dataplex::v1::Asset>
+  ListAssets(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -1644,9 +1597,8 @@ class DataplexServiceClient {
   /// [google.cloud.dataplex.v1.ListAssetsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L702}
   ///
   // clang-format on
-  StreamRange<google::cloud::dataplex::v1::Asset> ListAssets(
-      google::cloud::dataplex::v1::ListAssetsRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::dataplex::v1::Asset>
+  ListAssets(google::cloud::dataplex::v1::ListAssetsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1671,8 +1623,8 @@ class DataplexServiceClient {
   /// [google.cloud.dataplex.v1.GetAssetRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L760}
   ///
   // clang-format on
-  StatusOr<google::cloud::dataplex::v1::Asset> GetAsset(std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::cloud::dataplex::v1::Asset>
+  GetAsset(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1701,9 +1653,8 @@ class DataplexServiceClient {
   /// [google.cloud.dataplex.v1.GetAssetRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L760}
   ///
   // clang-format on
-  StatusOr<google::cloud::dataplex::v1::Asset> GetAsset(
-      google::cloud::dataplex::v1::GetAssetRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::dataplex::v1::Asset>
+  GetAsset(google::cloud::dataplex::v1::GetAssetRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1737,8 +1688,8 @@ class DataplexServiceClient {
   /// [google.cloud.dataplex.v1.ListAssetActionsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L739}
   ///
   // clang-format on
-  StreamRange<google::cloud::dataplex::v1::Action> ListAssetActions(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::dataplex::v1::Action>
+  ListAssetActions(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -1776,9 +1727,8 @@ class DataplexServiceClient {
   /// [google.cloud.dataplex.v1.ListAssetActionsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L739}
   ///
   // clang-format on
-  StreamRange<google::cloud::dataplex::v1::Action> ListAssetActions(
-      google::cloud::dataplex::v1::ListAssetActionsRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::dataplex::v1::Action>
+  ListAssetActions(google::cloud::dataplex::v1::ListAssetActionsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1812,9 +1762,8 @@ class DataplexServiceClient {
   /// [google.cloud.dataplex.v1.Task]: @googleapis_reference_link{google/cloud/dataplex/v1/tasks.proto#L31}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dataplex::v1::Task>> CreateTask(
-      std::string const& parent, google::cloud::dataplex::v1::Task const& task,
-      std::string const& task_id, Options opts = {});
+  future<StatusOr<google::cloud::dataplex::v1::Task>>
+  CreateTask(std::string const& parent, google::cloud::dataplex::v1::Task const& task, std::string const& task_id, Options opts = {});
 
   // clang-format off
   ///
@@ -1827,10 +1776,8 @@ class DataplexServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateTask(
-      NoAwaitTag, std::string const& parent,
-      google::cloud::dataplex::v1::Task const& task, std::string const& task_id,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateTask(NoAwaitTag, std::string const& parent, google::cloud::dataplex::v1::Task const& task, std::string const& task_id, Options opts = {});
 
   // clang-format off
   ///
@@ -1866,9 +1813,8 @@ class DataplexServiceClient {
   /// [google.cloud.dataplex.v1.Task]: @googleapis_reference_link{google/cloud/dataplex/v1/tasks.proto#L31}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dataplex::v1::Task>> CreateTask(
-      google::cloud::dataplex::v1::CreateTaskRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::dataplex::v1::Task>>
+  CreateTask(google::cloud::dataplex::v1::CreateTaskRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1881,9 +1827,8 @@ class DataplexServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateTask(
-      NoAwaitTag, google::cloud::dataplex::v1::CreateTaskRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateTask(NoAwaitTag, google::cloud::dataplex::v1::CreateTaskRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1894,8 +1839,8 @@ class DataplexServiceClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dataplex::v1::Task>> CreateTask(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::dataplex::v1::Task>>
+  CreateTask(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1928,9 +1873,8 @@ class DataplexServiceClient {
   /// [google.cloud.dataplex.v1.UpdateTaskRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L820}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dataplex::v1::Task>> UpdateTask(
-      google::cloud::dataplex::v1::Task const& task,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  future<StatusOr<google::cloud::dataplex::v1::Task>>
+  UpdateTask(google::cloud::dataplex::v1::Task const& task, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -1943,9 +1887,8 @@ class DataplexServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateTask(
-      NoAwaitTag, google::cloud::dataplex::v1::Task const& task,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateTask(NoAwaitTag, google::cloud::dataplex::v1::Task const& task, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -1981,9 +1924,8 @@ class DataplexServiceClient {
   /// [google.cloud.dataplex.v1.UpdateTaskRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L820}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dataplex::v1::Task>> UpdateTask(
-      google::cloud::dataplex::v1::UpdateTaskRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::dataplex::v1::Task>>
+  UpdateTask(google::cloud::dataplex::v1::UpdateTaskRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1996,9 +1938,8 @@ class DataplexServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateTask(
-      NoAwaitTag, google::cloud::dataplex::v1::UpdateTaskRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateTask(NoAwaitTag, google::cloud::dataplex::v1::UpdateTaskRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2009,8 +1950,8 @@ class DataplexServiceClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dataplex::v1::Task>> UpdateTask(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::dataplex::v1::Task>>
+  UpdateTask(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -2042,8 +1983,8 @@ class DataplexServiceClient {
   /// [google.cloud.dataplex.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L770}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>> DeleteTask(
-      std::string const& name, Options opts = {});
+  future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
+  DeleteTask(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2056,9 +1997,8 @@ class DataplexServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteTask(NoAwaitTag,
-                                                      std::string const& name,
-                                                      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteTask(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2094,9 +2034,8 @@ class DataplexServiceClient {
   /// [google.cloud.dataplex.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L770}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>> DeleteTask(
-      google::cloud::dataplex::v1::DeleteTaskRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
+  DeleteTask(google::cloud::dataplex::v1::DeleteTaskRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2109,9 +2048,8 @@ class DataplexServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteTask(
-      NoAwaitTag, google::cloud::dataplex::v1::DeleteTaskRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteTask(NoAwaitTag, google::cloud::dataplex::v1::DeleteTaskRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2122,8 +2060,8 @@ class DataplexServiceClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>> DeleteTask(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
+  DeleteTask(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -2157,8 +2095,8 @@ class DataplexServiceClient {
   /// [google.cloud.dataplex.v1.Task]: @googleapis_reference_link{google/cloud/dataplex/v1/tasks.proto#L31}
   ///
   // clang-format on
-  StreamRange<google::cloud::dataplex::v1::Task> ListTasks(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::dataplex::v1::Task>
+  ListTasks(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -2196,8 +2134,8 @@ class DataplexServiceClient {
   /// [google.cloud.dataplex.v1.Task]: @googleapis_reference_link{google/cloud/dataplex/v1/tasks.proto#L31}
   ///
   // clang-format on
-  StreamRange<google::cloud::dataplex::v1::Task> ListTasks(
-      google::cloud::dataplex::v1::ListTasksRequest request, Options opts = {});
+  StreamRange<google::cloud::dataplex::v1::Task>
+  ListTasks(google::cloud::dataplex::v1::ListTasksRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -2222,8 +2160,8 @@ class DataplexServiceClient {
   /// [google.cloud.dataplex.v1.Task]: @googleapis_reference_link{google/cloud/dataplex/v1/tasks.proto#L31}
   ///
   // clang-format on
-  StatusOr<google::cloud::dataplex::v1::Task> GetTask(std::string const& name,
-                                                      Options opts = {});
+  StatusOr<google::cloud::dataplex::v1::Task>
+  GetTask(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2252,9 +2190,8 @@ class DataplexServiceClient {
   /// [google.cloud.dataplex.v1.Task]: @googleapis_reference_link{google/cloud/dataplex/v1/tasks.proto#L31}
   ///
   // clang-format on
-  StatusOr<google::cloud::dataplex::v1::Task> GetTask(
-      google::cloud::dataplex::v1::GetTaskRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::dataplex::v1::Task>
+  GetTask(google::cloud::dataplex::v1::GetTaskRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2288,8 +2225,8 @@ class DataplexServiceClient {
   /// [google.cloud.dataplex.v1.ListJobsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L936}
   ///
   // clang-format on
-  StreamRange<google::cloud::dataplex::v1::Job> ListJobs(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::dataplex::v1::Job>
+  ListJobs(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -2327,8 +2264,8 @@ class DataplexServiceClient {
   /// [google.cloud.dataplex.v1.ListJobsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L936}
   ///
   // clang-format on
-  StreamRange<google::cloud::dataplex::v1::Job> ListJobs(
-      google::cloud::dataplex::v1::ListJobsRequest request, Options opts = {});
+  StreamRange<google::cloud::dataplex::v1::Job>
+  ListJobs(google::cloud::dataplex::v1::ListJobsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -2353,8 +2290,8 @@ class DataplexServiceClient {
   /// [google.cloud.dataplex.v1.RunTaskResponse]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L930}
   ///
   // clang-format on
-  StatusOr<google::cloud::dataplex::v1::RunTaskResponse> RunTask(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::dataplex::v1::RunTaskResponse>
+  RunTask(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2383,9 +2320,8 @@ class DataplexServiceClient {
   /// [google.cloud.dataplex.v1.RunTaskResponse]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L930}
   ///
   // clang-format on
-  StatusOr<google::cloud::dataplex::v1::RunTaskResponse> RunTask(
-      google::cloud::dataplex::v1::RunTaskRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::dataplex::v1::RunTaskResponse>
+  RunTask(google::cloud::dataplex::v1::RunTaskRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2410,8 +2346,8 @@ class DataplexServiceClient {
   /// [google.cloud.dataplex.v1.Job]: @googleapis_reference_link{google/cloud/dataplex/v1/tasks.proto#L328}
   ///
   // clang-format on
-  StatusOr<google::cloud::dataplex::v1::Job> GetJob(std::string const& name,
-                                                    Options opts = {});
+  StatusOr<google::cloud::dataplex::v1::Job>
+  GetJob(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2440,9 +2376,8 @@ class DataplexServiceClient {
   /// [google.cloud.dataplex.v1.Job]: @googleapis_reference_link{google/cloud/dataplex/v1/tasks.proto#L328}
   ///
   // clang-format on
-  StatusOr<google::cloud::dataplex::v1::Job> GetJob(
-      google::cloud::dataplex::v1::GetJobRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::dataplex::v1::Job>
+  GetJob(google::cloud::dataplex::v1::GetJobRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2464,7 +2399,8 @@ class DataplexServiceClient {
   /// [google.cloud.dataplex.v1.CancelJobRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L967}
   ///
   // clang-format on
-  Status CancelJob(std::string const& name, Options opts = {});
+  Status
+  CancelJob(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2490,8 +2426,8 @@ class DataplexServiceClient {
   /// [google.cloud.dataplex.v1.CancelJobRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L967}
   ///
   // clang-format on
-  Status CancelJob(google::cloud::dataplex::v1::CancelJobRequest const& request,
-                   Options opts = {});
+  Status
+  CancelJob(google::cloud::dataplex::v1::CancelJobRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2530,10 +2466,8 @@ class DataplexServiceClient {
   /// [google.cloud.dataplex.v1.Environment]: @googleapis_reference_link{google/cloud/dataplex/v1/analyze.proto#L32}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dataplex::v1::Environment>> CreateEnvironment(
-      std::string const& parent,
-      google::cloud::dataplex::v1::Environment const& environment,
-      std::string const& environment_id, Options opts = {});
+  future<StatusOr<google::cloud::dataplex::v1::Environment>>
+  CreateEnvironment(std::string const& parent, google::cloud::dataplex::v1::Environment const& environment, std::string const& environment_id, Options opts = {});
 
   // clang-format off
   ///
@@ -2546,10 +2480,8 @@ class DataplexServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateEnvironment(
-      NoAwaitTag, std::string const& parent,
-      google::cloud::dataplex::v1::Environment const& environment,
-      std::string const& environment_id, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateEnvironment(NoAwaitTag, std::string const& parent, google::cloud::dataplex::v1::Environment const& environment, std::string const& environment_id, Options opts = {});
 
   // clang-format off
   ///
@@ -2585,9 +2517,8 @@ class DataplexServiceClient {
   /// [google.cloud.dataplex.v1.Environment]: @googleapis_reference_link{google/cloud/dataplex/v1/analyze.proto#L32}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dataplex::v1::Environment>> CreateEnvironment(
-      google::cloud::dataplex::v1::CreateEnvironmentRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::dataplex::v1::Environment>>
+  CreateEnvironment(google::cloud::dataplex::v1::CreateEnvironmentRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2600,10 +2531,8 @@ class DataplexServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateEnvironment(
-      NoAwaitTag,
-      google::cloud::dataplex::v1::CreateEnvironmentRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateEnvironment(NoAwaitTag, google::cloud::dataplex::v1::CreateEnvironmentRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2614,8 +2543,8 @@ class DataplexServiceClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dataplex::v1::Environment>> CreateEnvironment(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::dataplex::v1::Environment>>
+  CreateEnvironment(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -2648,9 +2577,8 @@ class DataplexServiceClient {
   /// [google.cloud.dataplex.v1.UpdateEnvironmentRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L1002}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dataplex::v1::Environment>> UpdateEnvironment(
-      google::cloud::dataplex::v1::Environment const& environment,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  future<StatusOr<google::cloud::dataplex::v1::Environment>>
+  UpdateEnvironment(google::cloud::dataplex::v1::Environment const& environment, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -2663,9 +2591,8 @@ class DataplexServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateEnvironment(
-      NoAwaitTag, google::cloud::dataplex::v1::Environment const& environment,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateEnvironment(NoAwaitTag, google::cloud::dataplex::v1::Environment const& environment, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -2701,9 +2628,8 @@ class DataplexServiceClient {
   /// [google.cloud.dataplex.v1.UpdateEnvironmentRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L1002}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dataplex::v1::Environment>> UpdateEnvironment(
-      google::cloud::dataplex::v1::UpdateEnvironmentRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::dataplex::v1::Environment>>
+  UpdateEnvironment(google::cloud::dataplex::v1::UpdateEnvironmentRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2716,10 +2642,8 @@ class DataplexServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateEnvironment(
-      NoAwaitTag,
-      google::cloud::dataplex::v1::UpdateEnvironmentRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateEnvironment(NoAwaitTag, google::cloud::dataplex::v1::UpdateEnvironmentRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2730,8 +2654,8 @@ class DataplexServiceClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dataplex::v1::Environment>> UpdateEnvironment(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::dataplex::v1::Environment>>
+  UpdateEnvironment(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -2778,8 +2702,8 @@ class DataplexServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteEnvironment(
-      NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteEnvironment(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2817,9 +2741,7 @@ class DataplexServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
-  DeleteEnvironment(
-      google::cloud::dataplex::v1::DeleteEnvironmentRequest const& request,
-      Options opts = {});
+  DeleteEnvironment(google::cloud::dataplex::v1::DeleteEnvironmentRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2832,10 +2754,8 @@ class DataplexServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteEnvironment(
-      NoAwaitTag,
-      google::cloud::dataplex::v1::DeleteEnvironmentRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteEnvironment(NoAwaitTag, google::cloud::dataplex::v1::DeleteEnvironmentRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2847,8 +2767,7 @@ class DataplexServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
-  DeleteEnvironment(google::longrunning::Operation const& operation,
-                    Options opts = {});
+  DeleteEnvironment(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -2882,8 +2801,8 @@ class DataplexServiceClient {
   /// [google.cloud.dataplex.v1.ListEnvironmentsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L1029}
   ///
   // clang-format on
-  StreamRange<google::cloud::dataplex::v1::Environment> ListEnvironments(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::dataplex::v1::Environment>
+  ListEnvironments(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -2921,9 +2840,8 @@ class DataplexServiceClient {
   /// [google.cloud.dataplex.v1.ListEnvironmentsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L1029}
   ///
   // clang-format on
-  StreamRange<google::cloud::dataplex::v1::Environment> ListEnvironments(
-      google::cloud::dataplex::v1::ListEnvironmentsRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::dataplex::v1::Environment>
+  ListEnvironments(google::cloud::dataplex::v1::ListEnvironmentsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -2948,8 +2866,8 @@ class DataplexServiceClient {
   /// [google.cloud.dataplex.v1.GetEnvironmentRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L1067}
   ///
   // clang-format on
-  StatusOr<google::cloud::dataplex::v1::Environment> GetEnvironment(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::dataplex::v1::Environment>
+  GetEnvironment(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2978,9 +2896,8 @@ class DataplexServiceClient {
   /// [google.cloud.dataplex.v1.GetEnvironmentRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L1067}
   ///
   // clang-format on
-  StatusOr<google::cloud::dataplex::v1::Environment> GetEnvironment(
-      google::cloud::dataplex::v1::GetEnvironmentRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::dataplex::v1::Environment>
+  GetEnvironment(google::cloud::dataplex::v1::GetEnvironmentRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -3014,8 +2931,8 @@ class DataplexServiceClient {
   /// [google.cloud.dataplex.v1.Session]: @googleapis_reference_link{google/cloud/dataplex/v1/analyze.proto#L261}
   ///
   // clang-format on
-  StreamRange<google::cloud::dataplex::v1::Session> ListSessions(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::dataplex::v1::Session>
+  ListSessions(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -3053,9 +2970,8 @@ class DataplexServiceClient {
   /// [google.cloud.dataplex.v1.Session]: @googleapis_reference_link{google/cloud/dataplex/v1/analyze.proto#L261}
   ///
   // clang-format on
-  StreamRange<google::cloud::dataplex::v1::Session> ListSessions(
-      google::cloud::dataplex::v1::ListSessionsRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::dataplex::v1::Session>
+  ListSessions(google::cloud::dataplex::v1::ListSessionsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -3093,8 +3009,8 @@ class DataplexServiceClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request, Options opts = {});
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -3123,9 +3039,8 @@ class DataplexServiceClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -3157,8 +3072,8 @@ class DataplexServiceClient {
   /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L100}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -3189,8 +3104,8 @@ class DataplexServiceClient {
   /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -3225,9 +3140,8 @@ class DataplexServiceClient {
   /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L153}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request,
-      Options opts = {});
+  StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -3262,8 +3176,8 @@ class DataplexServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -3302,8 +3216,8 @@ class DataplexServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -3329,8 +3243,8 @@ class DataplexServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -3361,9 +3275,8 @@ class DataplexServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -3387,7 +3300,8 @@ class DataplexServiceClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status DeleteOperation(std::string const& name, Options opts = {});
+  Status
+  DeleteOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -3416,9 +3330,8 @@ class DataplexServiceClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request,
-      Options opts = {});
+  Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -3452,7 +3365,8 @@ class DataplexServiceClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(std::string const& name, Options opts = {});
+  Status
+  CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -3491,9 +3405,8 @@ class DataplexServiceClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request,
-      Options opts = {});
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<DataplexServiceConnection> connection_;

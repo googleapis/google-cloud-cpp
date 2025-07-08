@@ -32,7 +32,8 @@ TopicAdminAuth::TopicAdminAuth(
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
 StatusOr<google::pubsub::v1::Topic> TopicAdminAuth::CreateTopic(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::pubsub::v1::Topic const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -40,7 +41,8 @@ StatusOr<google::pubsub::v1::Topic> TopicAdminAuth::CreateTopic(
 }
 
 StatusOr<google::pubsub::v1::Topic> TopicAdminAuth::UpdateTopic(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::pubsub::v1::UpdateTopicRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -48,7 +50,8 @@ StatusOr<google::pubsub::v1::Topic> TopicAdminAuth::UpdateTopic(
 }
 
 StatusOr<google::pubsub::v1::Topic> TopicAdminAuth::GetTopic(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::pubsub::v1::GetTopicRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -56,25 +59,26 @@ StatusOr<google::pubsub::v1::Topic> TopicAdminAuth::GetTopic(
 }
 
 StatusOr<google::pubsub::v1::ListTopicsResponse> TopicAdminAuth::ListTopics(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::pubsub::v1::ListTopicsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListTopics(context, options, request);
 }
 
-StatusOr<google::pubsub::v1::ListTopicSubscriptionsResponse>
-TopicAdminAuth::ListTopicSubscriptions(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::pubsub::v1::ListTopicSubscriptionsResponse> TopicAdminAuth::ListTopicSubscriptions(
+    grpc::ClientContext& context,
+    Options const& options,
     google::pubsub::v1::ListTopicSubscriptionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListTopicSubscriptions(context, options, request);
 }
 
-StatusOr<google::pubsub::v1::ListTopicSnapshotsResponse>
-TopicAdminAuth::ListTopicSnapshots(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::pubsub::v1::ListTopicSnapshotsResponse> TopicAdminAuth::ListTopicSnapshots(
+    grpc::ClientContext& context,
+    Options const& options,
     google::pubsub::v1::ListTopicSnapshotsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -82,16 +86,17 @@ TopicAdminAuth::ListTopicSnapshots(
 }
 
 Status TopicAdminAuth::DeleteTopic(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::pubsub::v1::DeleteTopicRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteTopic(context, options, request);
 }
 
-StatusOr<google::pubsub::v1::DetachSubscriptionResponse>
-TopicAdminAuth::DetachSubscription(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::pubsub::v1::DetachSubscriptionResponse> TopicAdminAuth::DetachSubscription(
+    grpc::ClientContext& context,
+    Options const& options,
     google::pubsub::v1::DetachSubscriptionRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -99,7 +104,8 @@ TopicAdminAuth::DetachSubscription(
 }
 
 StatusOr<google::iam::v1::Policy> TopicAdminAuth::SetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -107,16 +113,17 @@ StatusOr<google::iam::v1::Policy> TopicAdminAuth::SetIamPolicy(
 }
 
 StatusOr<google::iam::v1::Policy> TopicAdminAuth::GetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetIamPolicy(context, options, request);
 }
 
-StatusOr<google::iam::v1::TestIamPermissionsResponse>
-TopicAdminAuth::TestIamPermissions(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::iam::v1::TestIamPermissionsResponse> TopicAdminAuth::TestIamPermissions(
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;

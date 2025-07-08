@@ -22,8 +22,8 @@
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/cloud/datacatalog/v1/policytagmanager.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
+#include <google/cloud/datacatalog/v1/policytagmanager.grpc.pb.h>
 #include <memory>
 #include <utility>
 
@@ -37,175 +37,188 @@ class PolicyTagManagerStub {
   virtual ~PolicyTagManagerStub() = 0;
 
   virtual StatusOr<google::cloud::datacatalog::v1::Taxonomy> CreateTaxonomy(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::datacatalog::v1::CreateTaxonomyRequest const& request) = 0;
 
   virtual Status DeleteTaxonomy(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::datacatalog::v1::DeleteTaxonomyRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::datacatalog::v1::Taxonomy> UpdateTaxonomy(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::datacatalog::v1::UpdateTaxonomyRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::datacatalog::v1::ListTaxonomiesResponse>
-  ListTaxonomies(
-      grpc::ClientContext& context, Options const& options,
+  virtual StatusOr<google::cloud::datacatalog::v1::ListTaxonomiesResponse> ListTaxonomies(
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::datacatalog::v1::ListTaxonomiesRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::datacatalog::v1::Taxonomy> GetTaxonomy(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::datacatalog::v1::GetTaxonomyRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::datacatalog::v1::PolicyTag> CreatePolicyTag(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::datacatalog::v1::CreatePolicyTagRequest const&
-          request) = 0;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::datacatalog::v1::CreatePolicyTagRequest const& request) = 0;
 
   virtual Status DeletePolicyTag(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::datacatalog::v1::DeletePolicyTagRequest const&
-          request) = 0;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::datacatalog::v1::DeletePolicyTagRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::datacatalog::v1::PolicyTag> UpdatePolicyTag(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::datacatalog::v1::UpdatePolicyTagRequest const&
-          request) = 0;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::datacatalog::v1::UpdatePolicyTagRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::datacatalog::v1::ListPolicyTagsResponse>
-  ListPolicyTags(
-      grpc::ClientContext& context, Options const& options,
+  virtual StatusOr<google::cloud::datacatalog::v1::ListPolicyTagsResponse> ListPolicyTags(
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::datacatalog::v1::ListPolicyTagsRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::datacatalog::v1::PolicyTag> GetPolicyTag(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::datacatalog::v1::GetPolicyTagRequest const& request) = 0;
 
   virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) = 0;
 
   virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) = 0;
 
-  virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
-  TestIamPermissions(
-      grpc::ClientContext& context, Options const& options,
+  virtual StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::ListOperationsRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual Status DeleteOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::DeleteOperationRequest const& request) = 0;
 
   virtual Status CancelOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::CancelOperationRequest const& request) = 0;
 };
 
 class DefaultPolicyTagManagerStub : public PolicyTagManagerStub {
  public:
   explicit DefaultPolicyTagManagerStub(
-      std::unique_ptr<
-          google::cloud::datacatalog::v1::PolicyTagManager::StubInterface>
-          grpc_stub,
-      std::unique_ptr<google::longrunning::Operations::StubInterface>
-          operations_stub)
+      std::unique_ptr<google::cloud::datacatalog::v1::PolicyTagManager::StubInterface> grpc_stub,
+      std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub
+)
       : grpc_stub_(std::move(grpc_stub)),
         operations_stub_(std::move(operations_stub)) {}
 
   StatusOr<google::cloud::datacatalog::v1::Taxonomy> CreateTaxonomy(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::datacatalog::v1::CreateTaxonomyRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::datacatalog::v1::CreateTaxonomyRequest const& request) override;
 
   Status DeleteTaxonomy(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::datacatalog::v1::DeleteTaxonomyRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::datacatalog::v1::DeleteTaxonomyRequest const& request) override;
 
   StatusOr<google::cloud::datacatalog::v1::Taxonomy> UpdateTaxonomy(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::datacatalog::v1::UpdateTaxonomyRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::datacatalog::v1::UpdateTaxonomyRequest const& request) override;
 
-  StatusOr<google::cloud::datacatalog::v1::ListTaxonomiesResponse>
-  ListTaxonomies(grpc::ClientContext& context, Options const& options,
-                 google::cloud::datacatalog::v1::ListTaxonomiesRequest const&
-                     request) override;
+  StatusOr<google::cloud::datacatalog::v1::ListTaxonomiesResponse> ListTaxonomies(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::datacatalog::v1::ListTaxonomiesRequest const& request) override;
 
   StatusOr<google::cloud::datacatalog::v1::Taxonomy> GetTaxonomy(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::datacatalog::v1::GetTaxonomyRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::datacatalog::v1::GetTaxonomyRequest const& request) override;
 
   StatusOr<google::cloud::datacatalog::v1::PolicyTag> CreatePolicyTag(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::datacatalog::v1::CreatePolicyTagRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::datacatalog::v1::CreatePolicyTagRequest const& request) override;
 
   Status DeletePolicyTag(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::datacatalog::v1::DeletePolicyTagRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::datacatalog::v1::DeletePolicyTagRequest const& request) override;
 
   StatusOr<google::cloud::datacatalog::v1::PolicyTag> UpdatePolicyTag(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::datacatalog::v1::UpdatePolicyTagRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::datacatalog::v1::UpdatePolicyTagRequest const& request) override;
 
-  StatusOr<google::cloud::datacatalog::v1::ListPolicyTagsResponse>
-  ListPolicyTags(grpc::ClientContext& context, Options const& options,
-                 google::cloud::datacatalog::v1::ListPolicyTagsRequest const&
-                     request) override;
+  StatusOr<google::cloud::datacatalog::v1::ListPolicyTagsResponse> ListPolicyTags(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::datacatalog::v1::ListPolicyTagsRequest const& request) override;
 
   StatusOr<google::cloud::datacatalog::v1::PolicyTag> GetPolicyTag(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::datacatalog::v1::GetPolicyTagRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::datacatalog::v1::GetPolicyTagRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status DeleteOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::DeleteOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  std::unique_ptr<
-      google::cloud::datacatalog::v1::PolicyTagManager::StubInterface>
-      grpc_stub_;
-  std::unique_ptr<google::longrunning::Operations::StubInterface>
-      operations_stub_;
+  std::unique_ptr<google::cloud::datacatalog::v1::PolicyTagManager::StubInterface> grpc_stub_;
+  std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

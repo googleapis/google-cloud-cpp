@@ -17,14 +17,14 @@
 // source: google/cloud/dataplex/v1/data_taxonomy.proto
 
 #include "google/cloud/dataplex/v1/data_taxonomy_connection.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/dataplex/v1/data_taxonomy_options.h"
 #include "google/cloud/dataplex/v1/internal/data_taxonomy_connection_impl.h"
 #include "google/cloud/dataplex/v1/internal/data_taxonomy_option_defaults.h"
 #include "google/cloud/dataplex/v1/internal/data_taxonomy_stub_factory.h"
 #include "google/cloud/dataplex/v1/internal/data_taxonomy_tracing_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
-#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
@@ -42,75 +42,76 @@ future<StatusOr<google::cloud::dataplex::v1::DataTaxonomy>>
 DataTaxonomyServiceConnection::CreateDataTaxonomy(
     google::cloud::dataplex::v1::CreateDataTaxonomyRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::dataplex::v1::DataTaxonomy>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::dataplex::v1::DataTaxonomy>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 DataTaxonomyServiceConnection::CreateDataTaxonomy(
-    NoAwaitTag, google::cloud::dataplex::v1::CreateDataTaxonomyRequest const&) {
+    NoAwaitTag,
+    google::cloud::dataplex::v1::CreateDataTaxonomyRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::dataplex::v1::DataTaxonomy>>
 DataTaxonomyServiceConnection::CreateDataTaxonomy(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::dataplex::v1::DataTaxonomy>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::dataplex::v1::DataTaxonomy>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::dataplex::v1::DataTaxonomy>>
 DataTaxonomyServiceConnection::UpdateDataTaxonomy(
     google::cloud::dataplex::v1::UpdateDataTaxonomyRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::dataplex::v1::DataTaxonomy>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::dataplex::v1::DataTaxonomy>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 DataTaxonomyServiceConnection::UpdateDataTaxonomy(
-    NoAwaitTag, google::cloud::dataplex::v1::UpdateDataTaxonomyRequest const&) {
+    NoAwaitTag,
+    google::cloud::dataplex::v1::UpdateDataTaxonomyRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::dataplex::v1::DataTaxonomy>>
 DataTaxonomyServiceConnection::UpdateDataTaxonomy(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::dataplex::v1::DataTaxonomy>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::dataplex::v1::DataTaxonomy>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
 DataTaxonomyServiceConnection::DeleteDataTaxonomy(
     google::cloud::dataplex::v1::DeleteDataTaxonomyRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::dataplex::v1::OperationMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::dataplex::v1::OperationMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 DataTaxonomyServiceConnection::DeleteDataTaxonomy(
-    NoAwaitTag, google::cloud::dataplex::v1::DeleteDataTaxonomyRequest const&) {
+    NoAwaitTag,
+    google::cloud::dataplex::v1::DeleteDataTaxonomyRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
 DataTaxonomyServiceConnection::DeleteDataTaxonomy(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::dataplex::v1::OperationMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::dataplex::v1::OperationMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StreamRange<google::cloud::dataplex::v1::DataTaxonomy>
-DataTaxonomyServiceConnection::ListDataTaxonomies(
-    google::cloud::dataplex::v1::
-        ListDataTaxonomiesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::dataplex::v1::DataTaxonomy> DataTaxonomyServiceConnection::ListDataTaxonomies(
+    google::cloud::dataplex::v1::ListDataTaxonomiesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::dataplex::v1::DataTaxonomy>>();
 }
@@ -125,8 +126,8 @@ future<StatusOr<google::cloud::dataplex::v1::DataAttributeBinding>>
 DataTaxonomyServiceConnection::CreateDataAttributeBinding(
     google::cloud::dataplex::v1::CreateDataAttributeBindingRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::dataplex::v1::DataAttributeBinding>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::dataplex::v1::DataAttributeBinding>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -134,23 +135,23 @@ DataTaxonomyServiceConnection::CreateDataAttributeBinding(
     NoAwaitTag,
     google::cloud::dataplex::v1::CreateDataAttributeBindingRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::dataplex::v1::DataAttributeBinding>>
 DataTaxonomyServiceConnection::CreateDataAttributeBinding(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::dataplex::v1::DataAttributeBinding>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::dataplex::v1::DataAttributeBinding>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::dataplex::v1::DataAttributeBinding>>
 DataTaxonomyServiceConnection::UpdateDataAttributeBinding(
     google::cloud::dataplex::v1::UpdateDataAttributeBindingRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::dataplex::v1::DataAttributeBinding>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::dataplex::v1::DataAttributeBinding>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -158,23 +159,23 @@ DataTaxonomyServiceConnection::UpdateDataAttributeBinding(
     NoAwaitTag,
     google::cloud::dataplex::v1::UpdateDataAttributeBindingRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::dataplex::v1::DataAttributeBinding>>
 DataTaxonomyServiceConnection::UpdateDataAttributeBinding(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::dataplex::v1::DataAttributeBinding>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::dataplex::v1::DataAttributeBinding>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
 DataTaxonomyServiceConnection::DeleteDataAttributeBinding(
     google::cloud::dataplex::v1::DeleteDataAttributeBindingRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::dataplex::v1::OperationMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::dataplex::v1::OperationMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -182,21 +183,19 @@ DataTaxonomyServiceConnection::DeleteDataAttributeBinding(
     NoAwaitTag,
     google::cloud::dataplex::v1::DeleteDataAttributeBindingRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
 DataTaxonomyServiceConnection::DeleteDataAttributeBinding(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::dataplex::v1::OperationMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::dataplex::v1::OperationMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StreamRange<google::cloud::dataplex::v1::DataAttributeBinding>
-DataTaxonomyServiceConnection::ListDataAttributeBindings(
-    google::cloud::dataplex::v1::
-        ListDataAttributeBindingsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::dataplex::v1::DataAttributeBinding> DataTaxonomyServiceConnection::ListDataAttributeBindings(
+    google::cloud::dataplex::v1::ListDataAttributeBindingsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::dataplex::v1::DataAttributeBinding>>();
 }
@@ -211,8 +210,8 @@ future<StatusOr<google::cloud::dataplex::v1::DataAttribute>>
 DataTaxonomyServiceConnection::CreateDataAttribute(
     google::cloud::dataplex::v1::CreateDataAttributeRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::dataplex::v1::DataAttribute>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::dataplex::v1::DataAttribute>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -220,23 +219,23 @@ DataTaxonomyServiceConnection::CreateDataAttribute(
     NoAwaitTag,
     google::cloud::dataplex::v1::CreateDataAttributeRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::dataplex::v1::DataAttribute>>
 DataTaxonomyServiceConnection::CreateDataAttribute(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::dataplex::v1::DataAttribute>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::dataplex::v1::DataAttribute>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::dataplex::v1::DataAttribute>>
 DataTaxonomyServiceConnection::UpdateDataAttribute(
     google::cloud::dataplex::v1::UpdateDataAttributeRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::dataplex::v1::DataAttribute>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::dataplex::v1::DataAttribute>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -244,23 +243,23 @@ DataTaxonomyServiceConnection::UpdateDataAttribute(
     NoAwaitTag,
     google::cloud::dataplex::v1::UpdateDataAttributeRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::dataplex::v1::DataAttribute>>
 DataTaxonomyServiceConnection::UpdateDataAttribute(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::dataplex::v1::DataAttribute>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::dataplex::v1::DataAttribute>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
 DataTaxonomyServiceConnection::DeleteDataAttribute(
     google::cloud::dataplex::v1::DeleteDataAttributeRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::dataplex::v1::OperationMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::dataplex::v1::OperationMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -268,21 +267,19 @@ DataTaxonomyServiceConnection::DeleteDataAttribute(
     NoAwaitTag,
     google::cloud::dataplex::v1::DeleteDataAttributeRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
 DataTaxonomyServiceConnection::DeleteDataAttribute(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::dataplex::v1::OperationMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::dataplex::v1::OperationMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StreamRange<google::cloud::dataplex::v1::DataAttribute>
-DataTaxonomyServiceConnection::ListDataAttributes(
-    google::cloud::dataplex::v1::
-        ListDataAttributesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::dataplex::v1::DataAttribute> DataTaxonomyServiceConnection::ListDataAttributes(
+    google::cloud::dataplex::v1::ListDataAttributesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::dataplex::v1::DataAttribute>>();
 }
@@ -293,10 +290,8 @@ DataTaxonomyServiceConnection::GetDataAttribute(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::location::Location>
-DataTaxonomyServiceConnection::ListLocations(
-    google::cloud::location::
-        ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::location::Location> DataTaxonomyServiceConnection::ListLocations(
+    google::cloud::location::ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::location::Location>>();
 }
@@ -307,12 +302,14 @@ DataTaxonomyServiceConnection::GetLocation(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::iam::v1::Policy> DataTaxonomyServiceConnection::SetIamPolicy(
+StatusOr<google::iam::v1::Policy>
+DataTaxonomyServiceConnection::SetIamPolicy(
     google::iam::v1::SetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::iam::v1::Policy> DataTaxonomyServiceConnection::GetIamPolicy(
+StatusOr<google::iam::v1::Policy>
+DataTaxonomyServiceConnection::GetIamPolicy(
     google::iam::v1::GetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -323,10 +320,8 @@ DataTaxonomyServiceConnection::TestIamPermissions(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::longrunning::Operation>
-DataTaxonomyServiceConnection::ListOperations(
-    google::longrunning::
-        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::longrunning::Operation> DataTaxonomyServiceConnection::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }
@@ -337,31 +332,32 @@ DataTaxonomyServiceConnection::GetOperation(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status DataTaxonomyServiceConnection::DeleteOperation(
+Status
+DataTaxonomyServiceConnection::DeleteOperation(
     google::longrunning::DeleteOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status DataTaxonomyServiceConnection::CancelOperation(
+Status
+DataTaxonomyServiceConnection::CancelOperation(
     google::longrunning::CancelOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-std::shared_ptr<DataTaxonomyServiceConnection>
-MakeDataTaxonomyServiceConnection(Options options) {
+std::shared_ptr<DataTaxonomyServiceConnection> MakeDataTaxonomyServiceConnection(
+    Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 DataTaxonomyServicePolicyOptionList>(options,
-                                                                      __func__);
+      UnifiedCredentialsOptionList,
+      DataTaxonomyServicePolicyOptionList>(options, __func__);
   options = dataplex_v1_internal::DataTaxonomyServiceDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = dataplex_v1_internal::CreateDefaultDataTaxonomyServiceStub(
-      std::move(auth), options);
+    std::move(auth), options);
   return dataplex_v1_internal::MakeDataTaxonomyServiceTracingConnection(
       std::make_shared<dataplex_v1_internal::DataTaxonomyServiceConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options)));
+      std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

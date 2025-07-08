@@ -17,9 +17,9 @@
 // source: google/cloud/dialogflow/v2/agent.proto
 
 #include "google/cloud/dialogflow_es/internal/agents_connection_impl.h"
-#include "google/cloud/dialogflow_es/internal/agents_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/dialogflow_es/internal/agents_option_defaults.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/async_long_running_operation.h"
 #include "google/cloud/internal/pagination_range.h"
@@ -33,37 +33,38 @@ namespace dialogflow_es_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<dialogflow_es::AgentsRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<dialogflow_es::AgentsRetryPolicy>
+retry_policy(Options const& options) {
   return options.get<dialogflow_es::AgentsRetryPolicyOption>()->clone();
 }
 
-std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+std::unique_ptr<BackoffPolicy>
+backoff_policy(Options const& options) {
   return options.get<dialogflow_es::AgentsBackoffPolicyOption>()->clone();
 }
 
 std::unique_ptr<dialogflow_es::AgentsConnectionIdempotencyPolicy>
 idempotency_policy(Options const& options) {
-  return options.get<dialogflow_es::AgentsConnectionIdempotencyPolicyOption>()
-      ->clone();
+  return options.get<dialogflow_es::AgentsConnectionIdempotencyPolicyOption>()->clone();
 }
 
 std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
   return options.get<dialogflow_es::AgentsPollingPolicyOption>()->clone();
 }
 
-}  // namespace
+} // namespace
 
 AgentsConnectionImpl::AgentsConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<dialogflow_es_internal::AgentsStub> stub, Options options)
-    : background_(std::move(background)),
-      stub_(std::move(stub)),
-      options_(internal::MergeOptions(std::move(options),
-                                      AgentsConnection::options())) {}
+    std::shared_ptr<dialogflow_es_internal::AgentsStub> stub,
+    Options options)
+  : background_(std::move(background)), stub_(std::move(stub)),
+    options_(internal::MergeOptions(
+        std::move(options),
+        AgentsConnection::options())) {}
 
-StatusOr<google::cloud::dialogflow::v2::Agent> AgentsConnectionImpl::GetAgent(
-    google::cloud::dialogflow::v2::GetAgentRequest const& request) {
+StatusOr<google::cloud::dialogflow::v2::Agent>
+AgentsConnectionImpl::GetAgent(google::cloud::dialogflow::v2::GetAgentRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -75,8 +76,8 @@ StatusOr<google::cloud::dialogflow::v2::Agent> AgentsConnectionImpl::GetAgent(
       *current, request, __func__);
 }
 
-StatusOr<google::cloud::dialogflow::v2::Agent> AgentsConnectionImpl::SetAgent(
-    google::cloud::dialogflow::v2::SetAgentRequest const& request) {
+StatusOr<google::cloud::dialogflow::v2::Agent>
+AgentsConnectionImpl::SetAgent(google::cloud::dialogflow::v2::SetAgentRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -88,8 +89,8 @@ StatusOr<google::cloud::dialogflow::v2::Agent> AgentsConnectionImpl::SetAgent(
       *current, request, __func__);
 }
 
-Status AgentsConnectionImpl::DeleteAgent(
-    google::cloud::dialogflow::v2::DeleteAgentRequest const& request) {
+Status
+AgentsConnectionImpl::DeleteAgent(google::cloud::dialogflow::v2::DeleteAgentRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -102,173 +103,156 @@ Status AgentsConnectionImpl::DeleteAgent(
 }
 
 StreamRange<google::cloud::dialogflow::v2::Agent>
-AgentsConnectionImpl::SearchAgents(
-    google::cloud::dialogflow::v2::SearchAgentsRequest request) {
+AgentsConnectionImpl::SearchAgents(google::cloud::dialogflow::v2::SearchAgentsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->SearchAgents(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::dialogflow::v2::Agent>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::dialogflow::v2::Agent>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<dialogflow_es::AgentsRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<dialogflow_es::AgentsRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::dialogflow::v2::SearchAgentsRequest const& r) {
+          Options const& options, google::cloud::dialogflow::v2::SearchAgentsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::dialogflow::v2::SearchAgentsRequest const&
-                       request) {
+                   google::cloud::dialogflow::v2::SearchAgentsRequest const& request) {
               return stub->SearchAgents(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::dialogflow::v2::SearchAgentsResponse r) {
-        std::vector<google::cloud::dialogflow::v2::Agent> result(
-            r.agents().size());
+        std::vector<google::cloud::dialogflow::v2::Agent> result(r.agents().size());
         auto& messages = *r.mutable_agents();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
       });
 }
 
-future<StatusOr<google::protobuf::Struct>> AgentsConnectionImpl::TrainAgent(
-    google::cloud::dialogflow::v2::TrainAgentRequest const& request) {
+future<StatusOr<google::protobuf::Struct>>
+AgentsConnectionImpl::TrainAgent(google::cloud::dialogflow::v2::TrainAgentRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->TrainAgent(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<
-      google::protobuf::Struct>(
-      background_->cq(), current, std::move(request_copy),
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::dialogflow::v2::TrainAgentRequest const& request) {
-        return stub->AsyncTrainAgent(cq, std::move(context), std::move(options),
-                                     request);
-      },
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultMetadata<
-          google::protobuf::Struct>,
-      retry_policy(*current), backoff_policy(*current), idempotent,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<google::protobuf::Struct>(
+    background_->cq(), current, std::move(request_copy),
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::cloud::dialogflow::v2::TrainAgentRequest const& request) {
+     return stub->AsyncTrainAgent(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultMetadata<google::protobuf::Struct>,
+    retry_policy(*current), backoff_policy(*current), idempotent,
+    polling_policy(*current), __func__);
 }
 
-StatusOr<google::longrunning::Operation> AgentsConnectionImpl::TrainAgent(
-    NoAwaitTag,
-    google::cloud::dialogflow::v2::TrainAgentRequest const& request) {
+StatusOr<google::longrunning::Operation>
+AgentsConnectionImpl::TrainAgent(
+      NoAwaitTag, google::cloud::dialogflow::v2::TrainAgentRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->TrainAgent(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dialogflow::v2::TrainAgentRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dialogflow::v2::TrainAgentRequest const& request) {
         return stub_->TrainAgent(context, options, request);
       },
       *current, request, __func__);
 }
 
-future<StatusOr<google::protobuf::Struct>> AgentsConnectionImpl::TrainAgent(
-    google::longrunning::Operation const& operation) {
+future<StatusOr<google::protobuf::Struct>>
+AgentsConnectionImpl::TrainAgent(
+      google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata().Is<typename google::protobuf::Struct>()) {
     return make_ready_future<StatusOr<google::protobuf::Struct>>(
-        internal::InvalidArgumentError(
-            "operation does not correspond to TrainAgent",
-            GCP_ERROR_INFO().WithMetadata("operation",
-                                          operation.metadata().DebugString())));
+        internal::InvalidArgumentError("operation does not correspond to TrainAgent",
+                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<
-      google::protobuf::Struct>(
-      background_->cq(), current, operation,
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultMetadata<
-          google::protobuf::Struct>,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::protobuf::Struct>(
+    background_->cq(), current, operation,
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultMetadata<google::protobuf::Struct>,
+    polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::dialogflow::v2::ExportAgentResponse>>
-AgentsConnectionImpl::ExportAgent(
-    google::cloud::dialogflow::v2::ExportAgentRequest const& request) {
+AgentsConnectionImpl::ExportAgent(google::cloud::dialogflow::v2::ExportAgentRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->ExportAgent(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<
-      google::cloud::dialogflow::v2::ExportAgentResponse>(
-      background_->cq(), current, std::move(request_copy),
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::dialogflow::v2::ExportAgentRequest const& request) {
-        return stub->AsyncExportAgent(cq, std::move(context),
-                                      std::move(options), request);
-      },
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::dialogflow::v2::ExportAgentResponse>,
-      retry_policy(*current), backoff_policy(*current), idempotent,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::dialogflow::v2::ExportAgentResponse>(
+    background_->cq(), current, std::move(request_copy),
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::cloud::dialogflow::v2::ExportAgentRequest const& request) {
+     return stub->AsyncExportAgent(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::dialogflow::v2::ExportAgentResponse>,
+    retry_policy(*current), backoff_policy(*current), idempotent,
+    polling_policy(*current), __func__);
 }
 
-StatusOr<google::longrunning::Operation> AgentsConnectionImpl::ExportAgent(
-    NoAwaitTag,
-    google::cloud::dialogflow::v2::ExportAgentRequest const& request) {
+StatusOr<google::longrunning::Operation>
+AgentsConnectionImpl::ExportAgent(
+      NoAwaitTag, google::cloud::dialogflow::v2::ExportAgentRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->ExportAgent(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dialogflow::v2::ExportAgentRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dialogflow::v2::ExportAgentRequest const& request) {
         return stub_->ExportAgent(context, options, request);
       },
       *current, request, __func__);
@@ -276,167 +260,150 @@ StatusOr<google::longrunning::Operation> AgentsConnectionImpl::ExportAgent(
 
 future<StatusOr<google::cloud::dialogflow::v2::ExportAgentResponse>>
 AgentsConnectionImpl::ExportAgent(
-    google::longrunning::Operation const& operation) {
+      google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata().Is<typename google::protobuf::Struct>()) {
-    return make_ready_future<
-        StatusOr<google::cloud::dialogflow::v2::ExportAgentResponse>>(
-        internal::InvalidArgumentError(
-            "operation does not correspond to ExportAgent",
-            GCP_ERROR_INFO().WithMetadata("operation",
-                                          operation.metadata().DebugString())));
+    return make_ready_future<StatusOr<google::cloud::dialogflow::v2::ExportAgentResponse>>(
+        internal::InvalidArgumentError("operation does not correspond to ExportAgent",
+                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<
-      google::cloud::dialogflow::v2::ExportAgentResponse>(
-      background_->cq(), current, operation,
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::dialogflow::v2::ExportAgentResponse>,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::dialogflow::v2::ExportAgentResponse>(
+    background_->cq(), current, operation,
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::dialogflow::v2::ExportAgentResponse>,
+    polling_policy(*current), __func__);
 }
 
-future<StatusOr<google::protobuf::Struct>> AgentsConnectionImpl::ImportAgent(
-    google::cloud::dialogflow::v2::ImportAgentRequest const& request) {
+future<StatusOr<google::protobuf::Struct>>
+AgentsConnectionImpl::ImportAgent(google::cloud::dialogflow::v2::ImportAgentRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->ImportAgent(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<
-      google::protobuf::Struct>(
-      background_->cq(), current, std::move(request_copy),
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::dialogflow::v2::ImportAgentRequest const& request) {
-        return stub->AsyncImportAgent(cq, std::move(context),
-                                      std::move(options), request);
-      },
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultMetadata<
-          google::protobuf::Struct>,
-      retry_policy(*current), backoff_policy(*current), idempotent,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<google::protobuf::Struct>(
+    background_->cq(), current, std::move(request_copy),
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::cloud::dialogflow::v2::ImportAgentRequest const& request) {
+     return stub->AsyncImportAgent(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultMetadata<google::protobuf::Struct>,
+    retry_policy(*current), backoff_policy(*current), idempotent,
+    polling_policy(*current), __func__);
 }
 
-StatusOr<google::longrunning::Operation> AgentsConnectionImpl::ImportAgent(
-    NoAwaitTag,
-    google::cloud::dialogflow::v2::ImportAgentRequest const& request) {
+StatusOr<google::longrunning::Operation>
+AgentsConnectionImpl::ImportAgent(
+      NoAwaitTag, google::cloud::dialogflow::v2::ImportAgentRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->ImportAgent(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dialogflow::v2::ImportAgentRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dialogflow::v2::ImportAgentRequest const& request) {
         return stub_->ImportAgent(context, options, request);
       },
       *current, request, __func__);
 }
 
-future<StatusOr<google::protobuf::Struct>> AgentsConnectionImpl::ImportAgent(
-    google::longrunning::Operation const& operation) {
+future<StatusOr<google::protobuf::Struct>>
+AgentsConnectionImpl::ImportAgent(
+      google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata().Is<typename google::protobuf::Struct>()) {
     return make_ready_future<StatusOr<google::protobuf::Struct>>(
-        internal::InvalidArgumentError(
-            "operation does not correspond to ImportAgent",
-            GCP_ERROR_INFO().WithMetadata("operation",
-                                          operation.metadata().DebugString())));
+        internal::InvalidArgumentError("operation does not correspond to ImportAgent",
+                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<
-      google::protobuf::Struct>(
-      background_->cq(), current, operation,
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultMetadata<
-          google::protobuf::Struct>,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::protobuf::Struct>(
+    background_->cq(), current, operation,
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultMetadata<google::protobuf::Struct>,
+    polling_policy(*current), __func__);
 }
 
-future<StatusOr<google::protobuf::Struct>> AgentsConnectionImpl::RestoreAgent(
-    google::cloud::dialogflow::v2::RestoreAgentRequest const& request) {
+future<StatusOr<google::protobuf::Struct>>
+AgentsConnectionImpl::RestoreAgent(google::cloud::dialogflow::v2::RestoreAgentRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->RestoreAgent(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<
-      google::protobuf::Struct>(
-      background_->cq(), current, std::move(request_copy),
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::dialogflow::v2::RestoreAgentRequest const& request) {
-        return stub->AsyncRestoreAgent(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultMetadata<
-          google::protobuf::Struct>,
-      retry_policy(*current), backoff_policy(*current), idempotent,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<google::protobuf::Struct>(
+    background_->cq(), current, std::move(request_copy),
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::cloud::dialogflow::v2::RestoreAgentRequest const& request) {
+     return stub->AsyncRestoreAgent(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultMetadata<google::protobuf::Struct>,
+    retry_policy(*current), backoff_policy(*current), idempotent,
+    polling_policy(*current), __func__);
 }
 
-StatusOr<google::longrunning::Operation> AgentsConnectionImpl::RestoreAgent(
-    NoAwaitTag,
-    google::cloud::dialogflow::v2::RestoreAgentRequest const& request) {
+StatusOr<google::longrunning::Operation>
+AgentsConnectionImpl::RestoreAgent(
+      NoAwaitTag, google::cloud::dialogflow::v2::RestoreAgentRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -449,91 +416,79 @@ StatusOr<google::longrunning::Operation> AgentsConnectionImpl::RestoreAgent(
       *current, request, __func__);
 }
 
-future<StatusOr<google::protobuf::Struct>> AgentsConnectionImpl::RestoreAgent(
-    google::longrunning::Operation const& operation) {
+future<StatusOr<google::protobuf::Struct>>
+AgentsConnectionImpl::RestoreAgent(
+      google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata().Is<typename google::protobuf::Struct>()) {
     return make_ready_future<StatusOr<google::protobuf::Struct>>(
-        internal::InvalidArgumentError(
-            "operation does not correspond to RestoreAgent",
-            GCP_ERROR_INFO().WithMetadata("operation",
-                                          operation.metadata().DebugString())));
+        internal::InvalidArgumentError("operation does not correspond to RestoreAgent",
+                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<
-      google::protobuf::Struct>(
-      background_->cq(), current, operation,
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultMetadata<
-          google::protobuf::Struct>,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::protobuf::Struct>(
+    background_->cq(), current, operation,
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultMetadata<google::protobuf::Struct>,
+    polling_policy(*current), __func__);
 }
 
 StatusOr<google::cloud::dialogflow::v2::ValidationResult>
-AgentsConnectionImpl::GetValidationResult(
-    google::cloud::dialogflow::v2::GetValidationResultRequest const& request) {
+AgentsConnectionImpl::GetValidationResult(google::cloud::dialogflow::v2::GetValidationResultRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetValidationResult(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dialogflow::v2::GetValidationResultRequest const&
-                 request) {
+             google::cloud::dialogflow::v2::GetValidationResultRequest const& request) {
         return stub_->GetValidationResult(context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::cloud::location::Location>
-AgentsConnectionImpl::ListLocations(
-    google::cloud::location::ListLocationsRequest request) {
+AgentsConnectionImpl::ListLocations(google::cloud::location::ListLocationsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListLocations(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::location::Location>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::location::Location>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<dialogflow_es::AgentsRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<dialogflow_es::AgentsRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::location::ListLocationsRequest const& r) {
+          Options const& options, google::cloud::location::ListLocationsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](
-                grpc::ClientContext& context, Options const& options,
-                google::cloud::location::ListLocationsRequest const& request) {
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::cloud::location::ListLocationsRequest const& request) {
               return stub->ListLocations(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::location::ListLocationsResponse r) {
-        std::vector<google::cloud::location::Location> result(
-            r.locations().size());
+        std::vector<google::cloud::location::Location> result(r.locations().size());
         auto& messages = *r.mutable_locations();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
       });
 }
 
-StatusOr<google::cloud::location::Location> AgentsConnectionImpl::GetLocation(
-    google::cloud::location::GetLocationRequest const& request) {
+StatusOr<google::cloud::location::Location>
+AgentsConnectionImpl::GetLocation(google::cloud::location::GetLocationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -546,21 +501,17 @@ StatusOr<google::cloud::location::Location> AgentsConnectionImpl::GetLocation(
 }
 
 StreamRange<google::longrunning::Operation>
-AgentsConnectionImpl::ListOperations(
-    google::longrunning::ListOperationsRequest request) {
+AgentsConnectionImpl::ListOperations(google::longrunning::ListOperationsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListOperations(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::longrunning::Operation>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::longrunning::Operation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<dialogflow_es::AgentsRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<dialogflow_es::AgentsRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::longrunning::ListOperationsRequest const& r) {
+          Options const& options, google::longrunning::ListOperationsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
@@ -570,16 +521,15 @@ AgentsConnectionImpl::ListOperations(
             options, r, function_name);
       },
       [](google::longrunning::ListOperationsResponse r) {
-        std::vector<google::longrunning::Operation> result(
-            r.operations().size());
+        std::vector<google::longrunning::Operation> result(r.operations().size());
         auto& messages = *r.mutable_operations();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
       });
 }
 
-StatusOr<google::longrunning::Operation> AgentsConnectionImpl::GetOperation(
-    google::longrunning::GetOperationRequest const& request) {
+StatusOr<google::longrunning::Operation>
+AgentsConnectionImpl::GetOperation(google::longrunning::GetOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -591,8 +541,8 @@ StatusOr<google::longrunning::Operation> AgentsConnectionImpl::GetOperation(
       *current, request, __func__);
 }
 
-Status AgentsConnectionImpl::CancelOperation(
-    google::longrunning::CancelOperationRequest const& request) {
+Status
+AgentsConnectionImpl::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),

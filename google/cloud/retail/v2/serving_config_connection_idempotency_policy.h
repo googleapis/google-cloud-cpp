@@ -35,39 +35,38 @@ class ServingConfigServiceConnectionIdempotencyPolicy {
   virtual ~ServingConfigServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<ServingConfigServiceConnectionIdempotencyPolicy>
-  clone() const;
+  virtual std::unique_ptr<ServingConfigServiceConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency CreateServingConfig(
-      google::cloud::retail::v2::CreateServingConfigRequest const& request);
+  virtual google::cloud::Idempotency
+  CreateServingConfig(google::cloud::retail::v2::CreateServingConfigRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteServingConfig(
-      google::cloud::retail::v2::DeleteServingConfigRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteServingConfig(google::cloud::retail::v2::DeleteServingConfigRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateServingConfig(
-      google::cloud::retail::v2::UpdateServingConfigRequest const& request);
+  virtual google::cloud::Idempotency
+  UpdateServingConfig(google::cloud::retail::v2::UpdateServingConfigRequest const& request);
 
-  virtual google::cloud::Idempotency GetServingConfig(
-      google::cloud::retail::v2::GetServingConfigRequest const& request);
+  virtual google::cloud::Idempotency
+  GetServingConfig(google::cloud::retail::v2::GetServingConfigRequest const& request);
 
-  virtual google::cloud::Idempotency ListServingConfigs(
-      google::cloud::retail::v2::ListServingConfigsRequest request);
+  virtual google::cloud::Idempotency
+  ListServingConfigs(google::cloud::retail::v2::ListServingConfigsRequest request);
 
-  virtual google::cloud::Idempotency AddControl(
-      google::cloud::retail::v2::AddControlRequest const& request);
+  virtual google::cloud::Idempotency
+  AddControl(google::cloud::retail::v2::AddControlRequest const& request);
 
-  virtual google::cloud::Idempotency RemoveControl(
-      google::cloud::retail::v2::RemoveControlRequest const& request);
+  virtual google::cloud::Idempotency
+  RemoveControl(google::cloud::retail::v2::RemoveControlRequest const& request);
 
-  virtual google::cloud::Idempotency ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual google::cloud::Idempotency
+  ListOperations(google::longrunning::ListOperationsRequest request);
 
-  virtual google::cloud::Idempotency GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 };
 
 std::unique_ptr<ServingConfigServiceConnectionIdempotencyPolicy>
-MakeDefaultServingConfigServiceConnectionIdempotencyPolicy();
+    MakeDefaultServingConfigServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace retail_v2

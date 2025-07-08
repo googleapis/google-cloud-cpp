@@ -36,12 +36,12 @@ class CaseAttachmentServiceTracingConnection
   ~CaseAttachmentServiceTracingConnection() override = default;
 
   explicit CaseAttachmentServiceTracingConnection(
-      std::shared_ptr<support_v2::CaseAttachmentServiceConnection> child);
+    std::shared_ptr<support_v2::CaseAttachmentServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StreamRange<google::cloud::support::v2::Attachment> ListAttachments(
-      google::cloud::support::v2::ListAttachmentsRequest request) override;
+  StreamRange<google::cloud::support::v2::Attachment>
+  ListAttachments(google::cloud::support::v2::ListAttachmentsRequest request) override;
 
  private:
   std::shared_ptr<support_v2::CaseAttachmentServiceConnection> child_;

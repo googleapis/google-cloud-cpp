@@ -17,9 +17,9 @@
 // source: google/cloud/discoveryengine/v1/control_service.proto
 
 #include "google/cloud/discoveryengine/v1/internal/control_connection_impl.h"
-#include "google/cloud/discoveryengine/v1/internal/control_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/discoveryengine/v1/internal/control_option_defaults.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
@@ -32,124 +32,106 @@ namespace discoveryengine_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<discoveryengine_v1::ControlServiceRetryPolicy> retry_policy(
-    Options const& options) {
-  return options.get<discoveryengine_v1::ControlServiceRetryPolicyOption>()
-      ->clone();
+std::unique_ptr<discoveryengine_v1::ControlServiceRetryPolicy>
+retry_policy(Options const& options) {
+  return options.get<discoveryengine_v1::ControlServiceRetryPolicyOption>()->clone();
 }
 
-std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-  return options.get<discoveryengine_v1::ControlServiceBackoffPolicyOption>()
-      ->clone();
+std::unique_ptr<BackoffPolicy>
+backoff_policy(Options const& options) {
+  return options.get<discoveryengine_v1::ControlServiceBackoffPolicyOption>()->clone();
 }
 
 std::unique_ptr<discoveryengine_v1::ControlServiceConnectionIdempotencyPolicy>
 idempotency_policy(Options const& options) {
-  return options
-      .get<
-          discoveryengine_v1::ControlServiceConnectionIdempotencyPolicyOption>()
-      ->clone();
+  return options.get<discoveryengine_v1::ControlServiceConnectionIdempotencyPolicyOption>()->clone();
 }
 
-}  // namespace
+} // namespace
 
 ControlServiceConnectionImpl::ControlServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<discoveryengine_v1_internal::ControlServiceStub> stub,
     Options options)
-    : background_(std::move(background)),
-      stub_(std::move(stub)),
-      options_(internal::MergeOptions(std::move(options),
-                                      ControlServiceConnection::options())) {}
+  : background_(std::move(background)), stub_(std::move(stub)),
+    options_(internal::MergeOptions(
+        std::move(options),
+        ControlServiceConnection::options())) {}
 
 StatusOr<google::cloud::discoveryengine::v1::Control>
-ControlServiceConnectionImpl::CreateControl(
-    google::cloud::discoveryengine::v1::CreateControlRequest const& request) {
+ControlServiceConnectionImpl::CreateControl(google::cloud::discoveryengine::v1::CreateControlRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateControl(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::discoveryengine::v1::CreateControlRequest const&
-                 request) {
+             google::cloud::discoveryengine::v1::CreateControlRequest const& request) {
         return stub_->CreateControl(context, options, request);
       },
       *current, request, __func__);
 }
 
-Status ControlServiceConnectionImpl::DeleteControl(
-    google::cloud::discoveryengine::v1::DeleteControlRequest const& request) {
+Status
+ControlServiceConnectionImpl::DeleteControl(google::cloud::discoveryengine::v1::DeleteControlRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteControl(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::discoveryengine::v1::DeleteControlRequest const&
-                 request) {
+             google::cloud::discoveryengine::v1::DeleteControlRequest const& request) {
         return stub_->DeleteControl(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::discoveryengine::v1::Control>
-ControlServiceConnectionImpl::UpdateControl(
-    google::cloud::discoveryengine::v1::UpdateControlRequest const& request) {
+ControlServiceConnectionImpl::UpdateControl(google::cloud::discoveryengine::v1::UpdateControlRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateControl(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::discoveryengine::v1::UpdateControlRequest const&
-                 request) {
+             google::cloud::discoveryengine::v1::UpdateControlRequest const& request) {
         return stub_->UpdateControl(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::discoveryengine::v1::Control>
-ControlServiceConnectionImpl::GetControl(
-    google::cloud::discoveryengine::v1::GetControlRequest const& request) {
+ControlServiceConnectionImpl::GetControl(google::cloud::discoveryengine::v1::GetControlRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetControl(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::discoveryengine::v1::GetControlRequest const&
-                 request) {
+             google::cloud::discoveryengine::v1::GetControlRequest const& request) {
         return stub_->GetControl(context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::cloud::discoveryengine::v1::Control>
-ControlServiceConnectionImpl::ListControls(
-    google::cloud::discoveryengine::v1::ListControlsRequest request) {
+ControlServiceConnectionImpl::ListControls(google::cloud::discoveryengine::v1::ListControlsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListControls(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::discoveryengine::v1::Control>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::discoveryengine::v1::Control>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<discoveryengine_v1::ControlServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<discoveryengine_v1::ControlServiceRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::discoveryengine::v1::ListControlsRequest const& r) {
+          Options const& options, google::cloud::discoveryengine::v1::ListControlsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](
-                grpc::ClientContext& context, Options const& options,
-                google::cloud::discoveryengine::v1::ListControlsRequest const&
-                    request) {
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::cloud::discoveryengine::v1::ListControlsRequest const& request) {
               return stub->ListControls(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::discoveryengine::v1::ListControlsResponse r) {
-        std::vector<google::cloud::discoveryengine::v1::Control> result(
-            r.controls().size());
+        std::vector<google::cloud::discoveryengine::v1::Control> result(r.controls().size());
         auto& messages = *r.mutable_controls();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -157,21 +139,17 @@ ControlServiceConnectionImpl::ListControls(
 }
 
 StreamRange<google::longrunning::Operation>
-ControlServiceConnectionImpl::ListOperations(
-    google::longrunning::ListOperationsRequest request) {
+ControlServiceConnectionImpl::ListOperations(google::longrunning::ListOperationsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListOperations(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::longrunning::Operation>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::longrunning::Operation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<discoveryengine_v1::ControlServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<discoveryengine_v1::ControlServiceRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::longrunning::ListOperationsRequest const& r) {
+          Options const& options, google::longrunning::ListOperationsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
@@ -181,8 +159,7 @@ ControlServiceConnectionImpl::ListOperations(
             options, r, function_name);
       },
       [](google::longrunning::ListOperationsResponse r) {
-        std::vector<google::longrunning::Operation> result(
-            r.operations().size());
+        std::vector<google::longrunning::Operation> result(r.operations().size());
         auto& messages = *r.mutable_operations();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -190,8 +167,7 @@ ControlServiceConnectionImpl::ListOperations(
 }
 
 StatusOr<google::longrunning::Operation>
-ControlServiceConnectionImpl::GetOperation(
-    google::longrunning::GetOperationRequest const& request) {
+ControlServiceConnectionImpl::GetOperation(google::longrunning::GetOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -203,8 +179,8 @@ ControlServiceConnectionImpl::GetOperation(
       *current, request, __func__);
 }
 
-Status ControlServiceConnectionImpl::CancelOperation(
-    google::longrunning::CancelOperationRequest const& request) {
+Status
+ControlServiceConnectionImpl::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),

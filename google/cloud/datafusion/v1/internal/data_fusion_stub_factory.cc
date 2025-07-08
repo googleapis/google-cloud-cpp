@@ -17,12 +17,12 @@
 // source: google/cloud/datafusion/v1/datafusion.proto
 
 #include "google/cloud/datafusion/v1/internal/data_fusion_stub_factory.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/datafusion/v1/internal/data_fusion_auth_decorator.h"
 #include "google/cloud/datafusion/v1/internal/data_fusion_logging_decorator.h"
 #include "google/cloud/datafusion/v1/internal/data_fusion_metadata_decorator.h"
 #include "google/cloud/datafusion/v1/internal/data_fusion_stub.h"
 #include "google/cloud/datafusion/v1/internal/data_fusion_tracing_stub.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/opentelemetry.h"
@@ -37,27 +37,30 @@ namespace cloud {
 namespace datafusion_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<DataFusionStub> CreateDefaultDataFusionStub(
+std::shared_ptr<DataFusionStub>
+CreateDefaultDataFusionStub(
     std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
     Options const& options) {
-  auto channel = auth->CreateChannel(options.get<EndpointOption>(),
-                                     internal::MakeChannelArguments(options));
-  auto service_grpc_stub =
-      google::cloud::datafusion::v1::DataFusion::NewStub(channel);
+  auto channel = auth->CreateChannel(
+    options.get<EndpointOption>(), internal::MakeChannelArguments(options));
+  auto service_grpc_stub = google::cloud::datafusion::v1::DataFusion::NewStub(channel);
   std::shared_ptr<DataFusionStub> stub =
-      std::make_shared<DefaultDataFusionStub>(
-          std::move(service_grpc_stub),
-          google::longrunning::Operations::NewStub(channel));
+    std::make_shared<DefaultDataFusionStub>(
+      std::move(service_grpc_stub),
+      google::longrunning::Operations::NewStub(channel));
 
   if (auth->RequiresConfigureContext()) {
-    stub = std::make_shared<DataFusionAuth>(std::move(auth), std::move(stub));
+    stub = std::make_shared<DataFusionAuth>(
+        std::move(auth), std::move(stub));
   }
   stub = std::make_shared<DataFusionMetadata>(
       std::move(stub), std::multimap<std::string, std::string>{});
-  if (internal::Contains(options.get<LoggingComponentsOption>(), "rpc")) {
+  if (internal::Contains(
+      options.get<LoggingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<DataFusionLogging>(
-        std::move(stub), options.get<GrpcTracingOptionsOption>(),
+        std::move(stub),
+        options.get<GrpcTracingOptionsOption>(),
         options.get<LoggingComponentsOption>());
   }
   if (internal::TracingEnabled(options)) {

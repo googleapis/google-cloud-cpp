@@ -34,117 +34,96 @@ SchemaServiceTracingConnection::SchemaServiceTracingConnection(
     : child_(std::move(child)) {}
 
 StatusOr<google::pubsub::v1::Schema>
-SchemaServiceTracingConnection::CreateSchema(
-    google::pubsub::v1::CreateSchemaRequest const& request) {
-  auto span =
-      internal::MakeSpan("pubsub::SchemaServiceConnection::CreateSchema");
+SchemaServiceTracingConnection::CreateSchema(google::pubsub::v1::CreateSchemaRequest const& request) {
+  auto span = internal::MakeSpan("pubsub::SchemaServiceConnection::CreateSchema");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateSchema(request));
 }
 
-StatusOr<google::pubsub::v1::Schema> SchemaServiceTracingConnection::GetSchema(
-    google::pubsub::v1::GetSchemaRequest const& request) {
+StatusOr<google::pubsub::v1::Schema>
+SchemaServiceTracingConnection::GetSchema(google::pubsub::v1::GetSchemaRequest const& request) {
   auto span = internal::MakeSpan("pubsub::SchemaServiceConnection::GetSchema");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetSchema(request));
 }
 
 StreamRange<google::pubsub::v1::Schema>
-SchemaServiceTracingConnection::ListSchemas(
-    google::pubsub::v1::ListSchemasRequest request) {
-  auto span =
-      internal::MakeSpan("pubsub::SchemaServiceConnection::ListSchemas");
+SchemaServiceTracingConnection::ListSchemas(google::pubsub::v1::ListSchemasRequest request) {
+  auto span = internal::MakeSpan("pubsub::SchemaServiceConnection::ListSchemas");
   internal::OTelScope scope(span);
   auto sr = child_->ListSchemas(std::move(request));
   return internal::MakeTracedStreamRange<google::pubsub::v1::Schema>(
-      std::move(span), std::move(sr));
+        std::move(span), std::move(sr));
 }
 
 StreamRange<google::pubsub::v1::Schema>
-SchemaServiceTracingConnection::ListSchemaRevisions(
-    google::pubsub::v1::ListSchemaRevisionsRequest request) {
-  auto span = internal::MakeSpan(
-      "pubsub::SchemaServiceConnection::ListSchemaRevisions");
+SchemaServiceTracingConnection::ListSchemaRevisions(google::pubsub::v1::ListSchemaRevisionsRequest request) {
+  auto span = internal::MakeSpan("pubsub::SchemaServiceConnection::ListSchemaRevisions");
   internal::OTelScope scope(span);
   auto sr = child_->ListSchemaRevisions(std::move(request));
   return internal::MakeTracedStreamRange<google::pubsub::v1::Schema>(
-      std::move(span), std::move(sr));
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::pubsub::v1::Schema>
-SchemaServiceTracingConnection::CommitSchema(
-    google::pubsub::v1::CommitSchemaRequest const& request) {
-  auto span =
-      internal::MakeSpan("pubsub::SchemaServiceConnection::CommitSchema");
+SchemaServiceTracingConnection::CommitSchema(google::pubsub::v1::CommitSchemaRequest const& request) {
+  auto span = internal::MakeSpan("pubsub::SchemaServiceConnection::CommitSchema");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CommitSchema(request));
 }
 
 StatusOr<google::pubsub::v1::Schema>
-SchemaServiceTracingConnection::RollbackSchema(
-    google::pubsub::v1::RollbackSchemaRequest const& request) {
-  auto span =
-      internal::MakeSpan("pubsub::SchemaServiceConnection::RollbackSchema");
+SchemaServiceTracingConnection::RollbackSchema(google::pubsub::v1::RollbackSchemaRequest const& request) {
+  auto span = internal::MakeSpan("pubsub::SchemaServiceConnection::RollbackSchema");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->RollbackSchema(request));
 }
 
 StatusOr<google::pubsub::v1::Schema>
-SchemaServiceTracingConnection::DeleteSchemaRevision(
-    google::pubsub::v1::DeleteSchemaRevisionRequest const& request) {
-  auto span = internal::MakeSpan(
-      "pubsub::SchemaServiceConnection::DeleteSchemaRevision");
+SchemaServiceTracingConnection::DeleteSchemaRevision(google::pubsub::v1::DeleteSchemaRevisionRequest const& request) {
+  auto span = internal::MakeSpan("pubsub::SchemaServiceConnection::DeleteSchemaRevision");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteSchemaRevision(request));
 }
 
-Status SchemaServiceTracingConnection::DeleteSchema(
-    google::pubsub::v1::DeleteSchemaRequest const& request) {
-  auto span =
-      internal::MakeSpan("pubsub::SchemaServiceConnection::DeleteSchema");
+Status
+SchemaServiceTracingConnection::DeleteSchema(google::pubsub::v1::DeleteSchemaRequest const& request) {
+  auto span = internal::MakeSpan("pubsub::SchemaServiceConnection::DeleteSchema");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteSchema(request));
 }
 
 StatusOr<google::pubsub::v1::ValidateSchemaResponse>
-SchemaServiceTracingConnection::ValidateSchema(
-    google::pubsub::v1::ValidateSchemaRequest const& request) {
-  auto span =
-      internal::MakeSpan("pubsub::SchemaServiceConnection::ValidateSchema");
+SchemaServiceTracingConnection::ValidateSchema(google::pubsub::v1::ValidateSchemaRequest const& request) {
+  auto span = internal::MakeSpan("pubsub::SchemaServiceConnection::ValidateSchema");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->ValidateSchema(request));
 }
 
 StatusOr<google::pubsub::v1::ValidateMessageResponse>
-SchemaServiceTracingConnection::ValidateMessage(
-    google::pubsub::v1::ValidateMessageRequest const& request) {
-  auto span =
-      internal::MakeSpan("pubsub::SchemaServiceConnection::ValidateMessage");
+SchemaServiceTracingConnection::ValidateMessage(google::pubsub::v1::ValidateMessageRequest const& request) {
+  auto span = internal::MakeSpan("pubsub::SchemaServiceConnection::ValidateMessage");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->ValidateMessage(request));
 }
 
-StatusOr<google::iam::v1::Policy> SchemaServiceTracingConnection::SetIamPolicy(
-    google::iam::v1::SetIamPolicyRequest const& request) {
-  auto span =
-      internal::MakeSpan("pubsub::SchemaServiceConnection::SetIamPolicy");
+StatusOr<google::iam::v1::Policy>
+SchemaServiceTracingConnection::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) {
+  auto span = internal::MakeSpan("pubsub::SchemaServiceConnection::SetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->SetIamPolicy(request));
 }
 
-StatusOr<google::iam::v1::Policy> SchemaServiceTracingConnection::GetIamPolicy(
-    google::iam::v1::GetIamPolicyRequest const& request) {
-  auto span =
-      internal::MakeSpan("pubsub::SchemaServiceConnection::GetIamPolicy");
+StatusOr<google::iam::v1::Policy>
+SchemaServiceTracingConnection::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) {
+  auto span = internal::MakeSpan("pubsub::SchemaServiceConnection::GetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetIamPolicy(request));
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-SchemaServiceTracingConnection::TestIamPermissions(
-    google::iam::v1::TestIamPermissionsRequest const& request) {
-  auto span =
-      internal::MakeSpan("pubsub::SchemaServiceConnection::TestIamPermissions");
+SchemaServiceTracingConnection::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) {
+  auto span = internal::MakeSpan("pubsub::SchemaServiceConnection::TestIamPermissions");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->TestIamPermissions(request));
 }

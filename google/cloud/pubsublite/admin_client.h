@@ -19,11 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_ADMIN_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_ADMIN_CLIENT_H
 
-#include "google/cloud/pubsublite/admin_connection.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
+#include "google/cloud/pubsublite/admin_connection.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
@@ -37,8 +37,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ///
 /// The service that a client application uses to manage topics and
-/// subscriptions, such creating, listing, and deleting topics and
-/// subscriptions.
+/// subscriptions, such creating, listing, and deleting topics and subscriptions.
 ///
 /// @par Equality
 ///
@@ -65,8 +64,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class AdminServiceClient {
  public:
-  explicit AdminServiceClient(
-      std::shared_ptr<AdminServiceConnection> connection, Options opts = {});
+  explicit AdminServiceClient(std::shared_ptr<AdminServiceConnection> connection, Options opts = {});
   ~AdminServiceClient();
 
   ///@{
@@ -79,12 +77,10 @@ class AdminServiceClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(AdminServiceClient const& a,
-                         AdminServiceClient const& b) {
+  friend bool operator==(AdminServiceClient const& a, AdminServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(AdminServiceClient const& a,
-                         AdminServiceClient const& b) {
+  friend bool operator!=(AdminServiceClient const& a, AdminServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -118,10 +114,8 @@ class AdminServiceClient {
   /// [google.cloud.pubsublite.v1.Topic]: @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L102}
   ///
   // clang-format on
-  StatusOr<google::cloud::pubsublite::v1::Topic> CreateTopic(
-      std::string const& parent,
-      google::cloud::pubsublite::v1::Topic const& topic,
-      std::string const& topic_id, Options opts = {});
+  StatusOr<google::cloud::pubsublite::v1::Topic>
+  CreateTopic(std::string const& parent, google::cloud::pubsublite::v1::Topic const& topic, std::string const& topic_id, Options opts = {});
 
   // clang-format off
   ///
@@ -150,9 +144,8 @@ class AdminServiceClient {
   /// [google.cloud.pubsublite.v1.Topic]: @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L102}
   ///
   // clang-format on
-  StatusOr<google::cloud::pubsublite::v1::Topic> CreateTopic(
-      google::cloud::pubsublite::v1::CreateTopicRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::pubsublite::v1::Topic>
+  CreateTopic(google::cloud::pubsublite::v1::CreateTopicRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -176,8 +169,8 @@ class AdminServiceClient {
   /// [google.cloud.pubsublite.v1.Topic]: @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L102}
   ///
   // clang-format on
-  StatusOr<google::cloud::pubsublite::v1::Topic> GetTopic(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::pubsublite::v1::Topic>
+  GetTopic(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -206,9 +199,8 @@ class AdminServiceClient {
   /// [google.cloud.pubsublite.v1.Topic]: @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L102}
   ///
   // clang-format on
-  StatusOr<google::cloud::pubsublite::v1::Topic> GetTopic(
-      google::cloud::pubsublite::v1::GetTopicRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::pubsublite::v1::Topic>
+  GetTopic(google::cloud::pubsublite::v1::GetTopicRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -232,8 +224,8 @@ class AdminServiceClient {
   /// [google.cloud.pubsublite.v1.TopicPartitions]: @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L280}
   ///
   // clang-format on
-  StatusOr<google::cloud::pubsublite::v1::TopicPartitions> GetTopicPartitions(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::pubsublite::v1::TopicPartitions>
+  GetTopicPartitions(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -262,9 +254,8 @@ class AdminServiceClient {
   /// [google.cloud.pubsublite.v1.TopicPartitions]: @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L280}
   ///
   // clang-format on
-  StatusOr<google::cloud::pubsublite::v1::TopicPartitions> GetTopicPartitions(
-      google::cloud::pubsublite::v1::GetTopicPartitionsRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::pubsublite::v1::TopicPartitions>
+  GetTopicPartitions(google::cloud::pubsublite::v1::GetTopicPartitionsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -298,8 +289,8 @@ class AdminServiceClient {
   /// [google.cloud.pubsublite.v1.Topic]: @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L102}
   ///
   // clang-format on
-  StreamRange<google::cloud::pubsublite::v1::Topic> ListTopics(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::pubsublite::v1::Topic>
+  ListTopics(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -337,9 +328,8 @@ class AdminServiceClient {
   /// [google.cloud.pubsublite.v1.Topic]: @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L102}
   ///
   // clang-format on
-  StreamRange<google::cloud::pubsublite::v1::Topic> ListTopics(
-      google::cloud::pubsublite::v1::ListTopicsRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::pubsublite::v1::Topic>
+  ListTopics(google::cloud::pubsublite::v1::ListTopicsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -364,9 +354,8 @@ class AdminServiceClient {
   /// [google.cloud.pubsublite.v1.UpdateTopicRequest]: @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L321}
   ///
   // clang-format on
-  StatusOr<google::cloud::pubsublite::v1::Topic> UpdateTopic(
-      google::cloud::pubsublite::v1::Topic const& topic,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::cloud::pubsublite::v1::Topic>
+  UpdateTopic(google::cloud::pubsublite::v1::Topic const& topic, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -395,9 +384,8 @@ class AdminServiceClient {
   /// [google.cloud.pubsublite.v1.UpdateTopicRequest]: @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L321}
   ///
   // clang-format on
-  StatusOr<google::cloud::pubsublite::v1::Topic> UpdateTopic(
-      google::cloud::pubsublite::v1::UpdateTopicRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::pubsublite::v1::Topic>
+  UpdateTopic(google::cloud::pubsublite::v1::UpdateTopicRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -418,7 +406,8 @@ class AdminServiceClient {
   /// [google.cloud.pubsublite.v1.DeleteTopicRequest]: @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L331}
   ///
   // clang-format on
-  Status DeleteTopic(std::string const& name, Options opts = {});
+  Status
+  DeleteTopic(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -444,9 +433,8 @@ class AdminServiceClient {
   /// [google.cloud.pubsublite.v1.DeleteTopicRequest]: @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L331}
   ///
   // clang-format on
-  Status DeleteTopic(
-      google::cloud::pubsublite::v1::DeleteTopicRequest const& request,
-      Options opts = {});
+  Status
+  DeleteTopic(google::cloud::pubsublite::v1::DeleteTopicRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -476,8 +464,8 @@ class AdminServiceClient {
   /// [google.cloud.pubsublite.v1.ListTopicSubscriptionsRequest]: @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L342}
   ///
   // clang-format on
-  StreamRange<std::string> ListTopicSubscriptions(std::string const& name,
-                                                  Options opts = {});
+  StreamRange<std::string>
+  ListTopicSubscriptions(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -512,9 +500,8 @@ class AdminServiceClient {
   /// [google.cloud.pubsublite.v1.ListTopicSubscriptionsRequest]: @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L342}
   ///
   // clang-format on
-  StreamRange<std::string> ListTopicSubscriptions(
-      google::cloud::pubsublite::v1::ListTopicSubscriptionsRequest request,
-      Options opts = {});
+  StreamRange<std::string>
+  ListTopicSubscriptions(google::cloud::pubsublite::v1::ListTopicSubscriptionsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -545,10 +532,8 @@ class AdminServiceClient {
   /// [google.cloud.pubsublite.v1.Subscription]: @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L186}
   ///
   // clang-format on
-  StatusOr<google::cloud::pubsublite::v1::Subscription> CreateSubscription(
-      std::string const& parent,
-      google::cloud::pubsublite::v1::Subscription const& subscription,
-      std::string const& subscription_id, Options opts = {});
+  StatusOr<google::cloud::pubsublite::v1::Subscription>
+  CreateSubscription(std::string const& parent, google::cloud::pubsublite::v1::Subscription const& subscription, std::string const& subscription_id, Options opts = {});
 
   // clang-format off
   ///
@@ -577,9 +562,8 @@ class AdminServiceClient {
   /// [google.cloud.pubsublite.v1.Subscription]: @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L186}
   ///
   // clang-format on
-  StatusOr<google::cloud::pubsublite::v1::Subscription> CreateSubscription(
-      google::cloud::pubsublite::v1::CreateSubscriptionRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::pubsublite::v1::Subscription>
+  CreateSubscription(google::cloud::pubsublite::v1::CreateSubscriptionRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -603,8 +587,8 @@ class AdminServiceClient {
   /// [google.cloud.pubsublite.v1.Subscription]: @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L186}
   ///
   // clang-format on
-  StatusOr<google::cloud::pubsublite::v1::Subscription> GetSubscription(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::pubsublite::v1::Subscription>
+  GetSubscription(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -633,9 +617,8 @@ class AdminServiceClient {
   /// [google.cloud.pubsublite.v1.Subscription]: @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L186}
   ///
   // clang-format on
-  StatusOr<google::cloud::pubsublite::v1::Subscription> GetSubscription(
-      google::cloud::pubsublite::v1::GetSubscriptionRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::pubsublite::v1::Subscription>
+  GetSubscription(google::cloud::pubsublite::v1::GetSubscriptionRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -669,8 +652,8 @@ class AdminServiceClient {
   /// [google.cloud.pubsublite.v1.Subscription]: @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L186}
   ///
   // clang-format on
-  StreamRange<google::cloud::pubsublite::v1::Subscription> ListSubscriptions(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::pubsublite::v1::Subscription>
+  ListSubscriptions(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -708,9 +691,8 @@ class AdminServiceClient {
   /// [google.cloud.pubsublite.v1.Subscription]: @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L186}
   ///
   // clang-format on
-  StreamRange<google::cloud::pubsublite::v1::Subscription> ListSubscriptions(
-      google::cloud::pubsublite::v1::ListSubscriptionsRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::pubsublite::v1::Subscription>
+  ListSubscriptions(google::cloud::pubsublite::v1::ListSubscriptionsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -736,9 +718,8 @@ class AdminServiceClient {
   /// [google.cloud.pubsublite.v1.UpdateSubscriptionRequest]: @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L449}
   ///
   // clang-format on
-  StatusOr<google::cloud::pubsublite::v1::Subscription> UpdateSubscription(
-      google::cloud::pubsublite::v1::Subscription const& subscription,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::cloud::pubsublite::v1::Subscription>
+  UpdateSubscription(google::cloud::pubsublite::v1::Subscription const& subscription, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -767,9 +748,8 @@ class AdminServiceClient {
   /// [google.cloud.pubsublite.v1.UpdateSubscriptionRequest]: @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L449}
   ///
   // clang-format on
-  StatusOr<google::cloud::pubsublite::v1::Subscription> UpdateSubscription(
-      google::cloud::pubsublite::v1::UpdateSubscriptionRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::pubsublite::v1::Subscription>
+  UpdateSubscription(google::cloud::pubsublite::v1::UpdateSubscriptionRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -790,7 +770,8 @@ class AdminServiceClient {
   /// [google.cloud.pubsublite.v1.DeleteSubscriptionRequest]: @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L460}
   ///
   // clang-format on
-  Status DeleteSubscription(std::string const& name, Options opts = {});
+  Status
+  DeleteSubscription(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -816,9 +797,8 @@ class AdminServiceClient {
   /// [google.cloud.pubsublite.v1.DeleteSubscriptionRequest]: @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L460}
   ///
   // clang-format on
-  Status DeleteSubscription(
-      google::cloud::pubsublite::v1::DeleteSubscriptionRequest const& request,
-      Options opts = {});
+  Status
+  DeleteSubscription(google::cloud::pubsublite::v1::DeleteSubscriptionRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -875,9 +855,7 @@ class AdminServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::pubsublite::v1::SeekSubscriptionResponse>>
-  SeekSubscription(
-      google::cloud::pubsublite::v1::SeekSubscriptionRequest const& request,
-      Options opts = {});
+  SeekSubscription(google::cloud::pubsublite::v1::SeekSubscriptionRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -890,10 +868,8 @@ class AdminServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> SeekSubscription(
-      NoAwaitTag,
-      google::cloud::pubsublite::v1::SeekSubscriptionRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  SeekSubscription(NoAwaitTag, google::cloud::pubsublite::v1::SeekSubscriptionRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -905,8 +881,7 @@ class AdminServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::pubsublite::v1::SeekSubscriptionResponse>>
-  SeekSubscription(google::longrunning::Operation const& operation,
-                   Options opts = {});
+  SeekSubscription(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -937,10 +912,8 @@ class AdminServiceClient {
   /// [google.cloud.pubsublite.v1.Reservation]: @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L80}
   ///
   // clang-format on
-  StatusOr<google::cloud::pubsublite::v1::Reservation> CreateReservation(
-      std::string const& parent,
-      google::cloud::pubsublite::v1::Reservation const& reservation,
-      std::string const& reservation_id, Options opts = {});
+  StatusOr<google::cloud::pubsublite::v1::Reservation>
+  CreateReservation(std::string const& parent, google::cloud::pubsublite::v1::Reservation const& reservation, std::string const& reservation_id, Options opts = {});
 
   // clang-format off
   ///
@@ -969,9 +942,8 @@ class AdminServiceClient {
   /// [google.cloud.pubsublite.v1.Reservation]: @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L80}
   ///
   // clang-format on
-  StatusOr<google::cloud::pubsublite::v1::Reservation> CreateReservation(
-      google::cloud::pubsublite::v1::CreateReservationRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::pubsublite::v1::Reservation>
+  CreateReservation(google::cloud::pubsublite::v1::CreateReservationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -997,8 +969,8 @@ class AdminServiceClient {
   /// [google.cloud.pubsublite.v1.Reservation]: @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L80}
   ///
   // clang-format on
-  StatusOr<google::cloud::pubsublite::v1::Reservation> GetReservation(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::pubsublite::v1::Reservation>
+  GetReservation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1027,9 +999,8 @@ class AdminServiceClient {
   /// [google.cloud.pubsublite.v1.Reservation]: @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L80}
   ///
   // clang-format on
-  StatusOr<google::cloud::pubsublite::v1::Reservation> GetReservation(
-      google::cloud::pubsublite::v1::GetReservationRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::pubsublite::v1::Reservation>
+  GetReservation(google::cloud::pubsublite::v1::GetReservationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1063,8 +1034,8 @@ class AdminServiceClient {
   /// [google.cloud.pubsublite.v1.Reservation]: @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L80}
   ///
   // clang-format on
-  StreamRange<google::cloud::pubsublite::v1::Reservation> ListReservations(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::pubsublite::v1::Reservation>
+  ListReservations(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -1102,9 +1073,8 @@ class AdminServiceClient {
   /// [google.cloud.pubsublite.v1.Reservation]: @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L80}
   ///
   // clang-format on
-  StreamRange<google::cloud::pubsublite::v1::Reservation> ListReservations(
-      google::cloud::pubsublite::v1::ListReservationsRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::pubsublite::v1::Reservation>
+  ListReservations(google::cloud::pubsublite::v1::ListReservationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1129,9 +1099,8 @@ class AdminServiceClient {
   /// [google.cloud.pubsublite.v1.UpdateReservationRequest]: @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L597}
   ///
   // clang-format on
-  StatusOr<google::cloud::pubsublite::v1::Reservation> UpdateReservation(
-      google::cloud::pubsublite::v1::Reservation const& reservation,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::cloud::pubsublite::v1::Reservation>
+  UpdateReservation(google::cloud::pubsublite::v1::Reservation const& reservation, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -1160,9 +1129,8 @@ class AdminServiceClient {
   /// [google.cloud.pubsublite.v1.UpdateReservationRequest]: @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L597}
   ///
   // clang-format on
-  StatusOr<google::cloud::pubsublite::v1::Reservation> UpdateReservation(
-      google::cloud::pubsublite::v1::UpdateReservationRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::pubsublite::v1::Reservation>
+  UpdateReservation(google::cloud::pubsublite::v1::UpdateReservationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1185,7 +1153,8 @@ class AdminServiceClient {
   /// [google.cloud.pubsublite.v1.DeleteReservationRequest]: @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L607}
   ///
   // clang-format on
-  Status DeleteReservation(std::string const& name, Options opts = {});
+  Status
+  DeleteReservation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1211,9 +1180,8 @@ class AdminServiceClient {
   /// [google.cloud.pubsublite.v1.DeleteReservationRequest]: @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L607}
   ///
   // clang-format on
-  Status DeleteReservation(
-      google::cloud::pubsublite::v1::DeleteReservationRequest const& request,
-      Options opts = {});
+  Status
+  DeleteReservation(google::cloud::pubsublite::v1::DeleteReservationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1245,8 +1213,8 @@ class AdminServiceClient {
   /// [google.cloud.pubsublite.v1.ListReservationTopicsRequest]: @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L620}
   ///
   // clang-format on
-  StreamRange<std::string> ListReservationTopics(std::string const& name,
-                                                 Options opts = {});
+  StreamRange<std::string>
+  ListReservationTopics(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1281,9 +1249,8 @@ class AdminServiceClient {
   /// [google.cloud.pubsublite.v1.ListReservationTopicsRequest]: @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L620}
   ///
   // clang-format on
-  StreamRange<std::string> ListReservationTopics(
-      google::cloud::pubsublite::v1::ListReservationTopicsRequest request,
-      Options opts = {});
+  StreamRange<std::string>
+  ListReservationTopics(google::cloud::pubsublite::v1::ListReservationTopicsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1318,8 +1285,8 @@ class AdminServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -1358,8 +1325,8 @@ class AdminServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1385,8 +1352,8 @@ class AdminServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1417,9 +1384,8 @@ class AdminServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1443,7 +1409,8 @@ class AdminServiceClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status DeleteOperation(std::string const& name, Options opts = {});
+  Status
+  DeleteOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1472,9 +1439,8 @@ class AdminServiceClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request,
-      Options opts = {});
+  Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1508,7 +1474,8 @@ class AdminServiceClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(std::string const& name, Options opts = {});
+  Status
+  CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1547,9 +1514,8 @@ class AdminServiceClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request,
-      Options opts = {});
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1604,9 +1570,7 @@ class AdminServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::pubsublite::v1::TopicPartitions>>
-  AsyncGetTopicPartitions(
-      google::cloud::pubsublite::v1::GetTopicPartitionsRequest const& request,
-      Options opts = {});
+  AsyncGetTopicPartitions(google::cloud::pubsublite::v1::GetTopicPartitionsRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<AdminServiceConnection> connection_;

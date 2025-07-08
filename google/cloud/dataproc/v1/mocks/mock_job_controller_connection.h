@@ -42,28 +42,25 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockJobControllerConnection
-    : public dataproc_v1::JobControllerConnection {
+class MockJobControllerConnection : public dataproc_v1::JobControllerConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::dataproc::v1::Job>, SubmitJob,
-              (google::cloud::dataproc::v1::SubmitJobRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::dataproc::v1::Job>,
+  SubmitJob,
+  (google::cloud::dataproc::v1::SubmitJobRequest const& request), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// SubmitJobAsOperation(Matcher<google::cloud::dataproc::v1::SubmitJobRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, SubmitJobAsOperation(Matcher<google::cloud::dataproc::v1::SubmitJobRequest const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::dataproc::v1::Job>>,
-              SubmitJobAsOperation,
-              (google::cloud::dataproc::v1::SubmitJobRequest const& request),
-              (override));
+  SubmitJobAsOperation,
+  (google::cloud::dataproc::v1::SubmitJobRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -71,70 +68,69 @@ class MockJobControllerConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, SubmitJobAsOperation(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, SubmitJobAsOperation,
-              (NoAwaitTag,
-               google::cloud::dataproc::v1::SubmitJobRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  SubmitJobAsOperation, (NoAwaitTag,
+    google::cloud::dataproc::v1::SubmitJobRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// SubmitJobAsOperation(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock, SubmitJobAsOperation(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::dataproc::v1::Job>>,
-              SubmitJobAsOperation,
-              (google::longrunning::Operation const& operation), (override));
+  SubmitJobAsOperation, (
+    google::longrunning::Operation const& operation), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::dataproc::v1::Job>, GetJob,
-              (google::cloud::dataproc::v1::GetJobRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::dataproc::v1::Job>,
+  GetJob,
+  (google::cloud::dataproc::v1::GetJobRequest const& request), (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::dataproc::v1::Job>), ListJobs,
-              (google::cloud::dataproc::v1::ListJobsRequest request),
-              (override));
+  MOCK_METHOD((StreamRange<google::cloud::dataproc::v1::Job>),
+  ListJobs,
+  (google::cloud::dataproc::v1::ListJobsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::dataproc::v1::Job>, UpdateJob,
-              (google::cloud::dataproc::v1::UpdateJobRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::dataproc::v1::Job>,
+  UpdateJob,
+  (google::cloud::dataproc::v1::UpdateJobRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::dataproc::v1::Job>, CancelJob,
-              (google::cloud::dataproc::v1::CancelJobRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::dataproc::v1::Job>,
+  CancelJob,
+  (google::cloud::dataproc::v1::CancelJobRequest const& request), (override));
 
-  MOCK_METHOD(Status, DeleteJob,
-              (google::cloud::dataproc::v1::DeleteJobRequest const& request),
-              (override));
+  MOCK_METHOD(Status,
+  DeleteJob,
+  (google::cloud::dataproc::v1::DeleteJobRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, SetIamPolicy,
-              (google::iam::v1::SetIamPolicyRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::iam::v1::Policy>,
+  SetIamPolicy,
+  (google::iam::v1::SetIamPolicyRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, GetIamPolicy,
-              (google::iam::v1::GetIamPolicyRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::iam::v1::Policy>,
+  GetIamPolicy,
+  (google::iam::v1::GetIamPolicyRequest const& request), (override));
 
   MOCK_METHOD(StatusOr<google::iam::v1::TestIamPermissionsResponse>,
-              TestIamPermissions,
-              (google::iam::v1::TestIamPermissionsRequest const& request),
-              (override));
+  TestIamPermissions,
+  (google::iam::v1::TestIamPermissionsRequest const& request), (override));
 
-  MOCK_METHOD((StreamRange<google::longrunning::Operation>), ListOperations,
-              (google::longrunning::ListOperationsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::longrunning::Operation>),
+  ListOperations,
+  (google::longrunning::ListOperationsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
-              (google::longrunning::GetOperationRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  GetOperation,
+  (google::longrunning::GetOperationRequest const& request), (override));
 
-  MOCK_METHOD(Status, DeleteOperation,
-              (google::longrunning::DeleteOperationRequest const& request),
-              (override));
+  MOCK_METHOD(Status,
+  DeleteOperation,
+  (google::longrunning::DeleteOperationRequest const& request), (override));
 
-  MOCK_METHOD(Status, CancelOperation,
-              (google::longrunning::CancelOperationRequest const& request),
-              (override));
+  MOCK_METHOD(Status,
+  CancelOperation,
+  (google::longrunning::CancelOperationRequest const& request), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

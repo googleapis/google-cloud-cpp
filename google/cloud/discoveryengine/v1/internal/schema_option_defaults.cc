@@ -35,41 +35,32 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options SchemaServiceDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_SCHEMA_SERVICE_ENDPOINT", "",
-      "GOOGLE_CLOUD_CPP_SCHEMA_SERVICE_AUTHORITY",
+      std::move(options), "GOOGLE_CLOUD_CPP_SCHEMA_SERVICE_ENDPOINT",
+      "", "GOOGLE_CLOUD_CPP_SCHEMA_SERVICE_AUTHORITY",
       "discoveryengine.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<discoveryengine_v1::SchemaServiceRetryPolicyOption>()) {
     options.set<discoveryengine_v1::SchemaServiceRetryPolicyOption>(
         discoveryengine_v1::SchemaServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
-            .clone());
+            std::chrono::minutes(30)).clone());
   }
   if (!options.has<discoveryengine_v1::SchemaServiceBackoffPolicyOption>()) {
     options.set<discoveryengine_v1::SchemaServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(
-            std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
-            .clone());
+        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
   }
   if (!options.has<discoveryengine_v1::SchemaServicePollingPolicyOption>()) {
     options.set<discoveryengine_v1::SchemaServicePollingPolicyOption>(
         GenericPollingPolicy<
             discoveryengine_v1::SchemaServiceRetryPolicyOption::Type,
             discoveryengine_v1::SchemaServiceBackoffPolicyOption::Type>(
-            options.get<discoveryengine_v1::SchemaServiceRetryPolicyOption>()
-                ->clone(),
+            options.get<discoveryengine_v1::SchemaServiceRetryPolicyOption>()->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                     std::chrono::minutes(5), kBackoffScaling)
-                .clone())
-            .clone());
+            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
   }
-  if (!options.has<discoveryengine_v1::
-                       SchemaServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<
-        discoveryengine_v1::SchemaServiceConnectionIdempotencyPolicyOption>(
-        discoveryengine_v1::
-            MakeDefaultSchemaServiceConnectionIdempotencyPolicy());
+  if (!options.has<discoveryengine_v1::SchemaServiceConnectionIdempotencyPolicyOption>()) {
+    options.set<discoveryengine_v1::SchemaServiceConnectionIdempotencyPolicyOption>(
+        discoveryengine_v1::MakeDefaultSchemaServiceConnectionIdempotencyPolicy());
   }
 
   return options;

@@ -28,26 +28,19 @@ namespace cloud {
 namespace artifactregistry {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use artifactregistry_v1::ArtifactRegistryPollingPolicyOption
-/// directly.
+/// @deprecated Use artifactregistry_v1::ArtifactRegistryPollingPolicyOption directly.
 using ::google::cloud::artifactregistry_v1::ArtifactRegistryPollingPolicyOption;
 
-/// @deprecated Use artifactregistry_v1::ArtifactRegistryBackoffPolicyOption
-/// directly.
+/// @deprecated Use artifactregistry_v1::ArtifactRegistryBackoffPolicyOption directly.
 using ::google::cloud::artifactregistry_v1::ArtifactRegistryBackoffPolicyOption;
 
-/// @deprecated Use
-/// artifactregistry_v1::ArtifactRegistryConnectionIdempotencyPolicyOption
-/// directly.
-using ::google::cloud::artifactregistry_v1::
-    ArtifactRegistryConnectionIdempotencyPolicyOption;
+/// @deprecated Use artifactregistry_v1::ArtifactRegistryConnectionIdempotencyPolicyOption directly.
+using ::google::cloud::artifactregistry_v1::ArtifactRegistryConnectionIdempotencyPolicyOption;
 
-/// @deprecated Use artifactregistry_v1::ArtifactRegistryPolicyOptionList
-/// directly.
+/// @deprecated Use artifactregistry_v1::ArtifactRegistryPolicyOptionList directly.
 using ::google::cloud::artifactregistry_v1::ArtifactRegistryPolicyOptionList;
 
-/// @deprecated Use artifactregistry_v1::ArtifactRegistryRetryPolicyOption
-/// directly.
+/// @deprecated Use artifactregistry_v1::ArtifactRegistryRetryPolicyOption directly.
 using ::google::cloud::artifactregistry_v1::ArtifactRegistryRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -25,23 +25,23 @@ namespace cloud {
 namespace dialogflow_es {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-IntentsClient::IntentsClient(std::shared_ptr<IntentsConnection> connection,
-                             Options opts)
+IntentsClient::IntentsClient(
+    std::shared_ptr<IntentsConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 IntentsClient::~IntentsClient() = default;
 
-StreamRange<google::cloud::dialogflow::v2::Intent> IntentsClient::ListIntents(
-    std::string const& parent, Options opts) {
+StreamRange<google::cloud::dialogflow::v2::Intent>
+IntentsClient::ListIntents(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dialogflow::v2::ListIntentsRequest request;
   request.set_parent(parent);
   return connection_->ListIntents(request);
 }
 
-StreamRange<google::cloud::dialogflow::v2::Intent> IntentsClient::ListIntents(
-    std::string const& parent, std::string const& language_code, Options opts) {
+StreamRange<google::cloud::dialogflow::v2::Intent>
+IntentsClient::ListIntents(std::string const& parent, std::string const& language_code, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dialogflow::v2::ListIntentsRequest request;
   request.set_parent(parent);
@@ -49,22 +49,22 @@ StreamRange<google::cloud::dialogflow::v2::Intent> IntentsClient::ListIntents(
   return connection_->ListIntents(request);
 }
 
-StreamRange<google::cloud::dialogflow::v2::Intent> IntentsClient::ListIntents(
-    google::cloud::dialogflow::v2::ListIntentsRequest request, Options opts) {
+StreamRange<google::cloud::dialogflow::v2::Intent>
+IntentsClient::ListIntents(google::cloud::dialogflow::v2::ListIntentsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListIntents(std::move(request));
 }
 
-StatusOr<google::cloud::dialogflow::v2::Intent> IntentsClient::GetIntent(
-    std::string const& name, Options opts) {
+StatusOr<google::cloud::dialogflow::v2::Intent>
+IntentsClient::GetIntent(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dialogflow::v2::GetIntentRequest request;
   request.set_name(name);
   return connection_->GetIntent(request);
 }
 
-StatusOr<google::cloud::dialogflow::v2::Intent> IntentsClient::GetIntent(
-    std::string const& name, std::string const& language_code, Options opts) {
+StatusOr<google::cloud::dialogflow::v2::Intent>
+IntentsClient::GetIntent(std::string const& name, std::string const& language_code, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dialogflow::v2::GetIntentRequest request;
   request.set_name(name);
@@ -72,16 +72,14 @@ StatusOr<google::cloud::dialogflow::v2::Intent> IntentsClient::GetIntent(
   return connection_->GetIntent(request);
 }
 
-StatusOr<google::cloud::dialogflow::v2::Intent> IntentsClient::GetIntent(
-    google::cloud::dialogflow::v2::GetIntentRequest const& request,
-    Options opts) {
+StatusOr<google::cloud::dialogflow::v2::Intent>
+IntentsClient::GetIntent(google::cloud::dialogflow::v2::GetIntentRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetIntent(request);
 }
 
-StatusOr<google::cloud::dialogflow::v2::Intent> IntentsClient::CreateIntent(
-    std::string const& parent,
-    google::cloud::dialogflow::v2::Intent const& intent, Options opts) {
+StatusOr<google::cloud::dialogflow::v2::Intent>
+IntentsClient::CreateIntent(std::string const& parent, google::cloud::dialogflow::v2::Intent const& intent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dialogflow::v2::CreateIntentRequest request;
   request.set_parent(parent);
@@ -89,10 +87,8 @@ StatusOr<google::cloud::dialogflow::v2::Intent> IntentsClient::CreateIntent(
   return connection_->CreateIntent(request);
 }
 
-StatusOr<google::cloud::dialogflow::v2::Intent> IntentsClient::CreateIntent(
-    std::string const& parent,
-    google::cloud::dialogflow::v2::Intent const& intent,
-    std::string const& language_code, Options opts) {
+StatusOr<google::cloud::dialogflow::v2::Intent>
+IntentsClient::CreateIntent(std::string const& parent, google::cloud::dialogflow::v2::Intent const& intent, std::string const& language_code, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dialogflow::v2::CreateIntentRequest request;
   request.set_parent(parent);
@@ -101,16 +97,14 @@ StatusOr<google::cloud::dialogflow::v2::Intent> IntentsClient::CreateIntent(
   return connection_->CreateIntent(request);
 }
 
-StatusOr<google::cloud::dialogflow::v2::Intent> IntentsClient::CreateIntent(
-    google::cloud::dialogflow::v2::CreateIntentRequest const& request,
-    Options opts) {
+StatusOr<google::cloud::dialogflow::v2::Intent>
+IntentsClient::CreateIntent(google::cloud::dialogflow::v2::CreateIntentRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateIntent(request);
 }
 
-StatusOr<google::cloud::dialogflow::v2::Intent> IntentsClient::UpdateIntent(
-    google::cloud::dialogflow::v2::Intent const& intent,
-    std::string const& language_code, Options opts) {
+StatusOr<google::cloud::dialogflow::v2::Intent>
+IntentsClient::UpdateIntent(google::cloud::dialogflow::v2::Intent const& intent, std::string const& language_code, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dialogflow::v2::UpdateIntentRequest request;
   *request.mutable_intent() = intent;
@@ -118,10 +112,8 @@ StatusOr<google::cloud::dialogflow::v2::Intent> IntentsClient::UpdateIntent(
   return connection_->UpdateIntent(request);
 }
 
-StatusOr<google::cloud::dialogflow::v2::Intent> IntentsClient::UpdateIntent(
-    google::cloud::dialogflow::v2::Intent const& intent,
-    std::string const& language_code,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+StatusOr<google::cloud::dialogflow::v2::Intent>
+IntentsClient::UpdateIntent(google::cloud::dialogflow::v2::Intent const& intent, std::string const& language_code, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dialogflow::v2::UpdateIntentRequest request;
   *request.mutable_intent() = intent;
@@ -130,31 +122,28 @@ StatusOr<google::cloud::dialogflow::v2::Intent> IntentsClient::UpdateIntent(
   return connection_->UpdateIntent(request);
 }
 
-StatusOr<google::cloud::dialogflow::v2::Intent> IntentsClient::UpdateIntent(
-    google::cloud::dialogflow::v2::UpdateIntentRequest const& request,
-    Options opts) {
+StatusOr<google::cloud::dialogflow::v2::Intent>
+IntentsClient::UpdateIntent(google::cloud::dialogflow::v2::UpdateIntentRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateIntent(request);
 }
 
-Status IntentsClient::DeleteIntent(std::string const& name, Options opts) {
+Status
+IntentsClient::DeleteIntent(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dialogflow::v2::DeleteIntentRequest request;
   request.set_name(name);
   return connection_->DeleteIntent(request);
 }
 
-Status IntentsClient::DeleteIntent(
-    google::cloud::dialogflow::v2::DeleteIntentRequest const& request,
-    Options opts) {
+Status
+IntentsClient::DeleteIntent(google::cloud::dialogflow::v2::DeleteIntentRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteIntent(request);
 }
 
 future<StatusOr<google::cloud::dialogflow::v2::BatchUpdateIntentsResponse>>
-IntentsClient::BatchUpdateIntents(std::string const& parent,
-                                  std::string const& intent_batch_uri,
-                                  Options opts) {
+IntentsClient::BatchUpdateIntents(std::string const& parent, std::string const& intent_batch_uri, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dialogflow::v2::BatchUpdateIntentsRequest request;
   request.set_parent(parent);
@@ -162,9 +151,8 @@ IntentsClient::BatchUpdateIntents(std::string const& parent,
   return connection_->BatchUpdateIntents(request);
 }
 
-StatusOr<google::longrunning::Operation> IntentsClient::BatchUpdateIntents(
-    NoAwaitTag, std::string const& parent, std::string const& intent_batch_uri,
-    Options opts) {
+StatusOr<google::longrunning::Operation>
+IntentsClient::BatchUpdateIntents(NoAwaitTag, std::string const& parent, std::string const& intent_batch_uri, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dialogflow::v2::BatchUpdateIntentsRequest request;
   request.set_parent(parent);
@@ -173,10 +161,7 @@ StatusOr<google::longrunning::Operation> IntentsClient::BatchUpdateIntents(
 }
 
 future<StatusOr<google::cloud::dialogflow::v2::BatchUpdateIntentsResponse>>
-IntentsClient::BatchUpdateIntents(
-    std::string const& parent,
-    google::cloud::dialogflow::v2::IntentBatch const& intent_batch_inline,
-    Options opts) {
+IntentsClient::BatchUpdateIntents(std::string const& parent, google::cloud::dialogflow::v2::IntentBatch const& intent_batch_inline, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dialogflow::v2::BatchUpdateIntentsRequest request;
   request.set_parent(parent);
@@ -184,10 +169,8 @@ IntentsClient::BatchUpdateIntents(
   return connection_->BatchUpdateIntents(request);
 }
 
-StatusOr<google::longrunning::Operation> IntentsClient::BatchUpdateIntents(
-    NoAwaitTag, std::string const& parent,
-    google::cloud::dialogflow::v2::IntentBatch const& intent_batch_inline,
-    Options opts) {
+StatusOr<google::longrunning::Operation>
+IntentsClient::BatchUpdateIntents(NoAwaitTag, std::string const& parent, google::cloud::dialogflow::v2::IntentBatch const& intent_batch_inline, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dialogflow::v2::BatchUpdateIntentsRequest request;
   request.set_parent(parent);
@@ -196,32 +179,25 @@ StatusOr<google::longrunning::Operation> IntentsClient::BatchUpdateIntents(
 }
 
 future<StatusOr<google::cloud::dialogflow::v2::BatchUpdateIntentsResponse>>
-IntentsClient::BatchUpdateIntents(
-    google::cloud::dialogflow::v2::BatchUpdateIntentsRequest const& request,
-    Options opts) {
+IntentsClient::BatchUpdateIntents(google::cloud::dialogflow::v2::BatchUpdateIntentsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->BatchUpdateIntents(request);
 }
 
-StatusOr<google::longrunning::Operation> IntentsClient::BatchUpdateIntents(
-    NoAwaitTag,
-    google::cloud::dialogflow::v2::BatchUpdateIntentsRequest const& request,
-    Options opts) {
+StatusOr<google::longrunning::Operation>
+IntentsClient::BatchUpdateIntents(NoAwaitTag, google::cloud::dialogflow::v2::BatchUpdateIntentsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->BatchUpdateIntents(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::dialogflow::v2::BatchUpdateIntentsResponse>>
-IntentsClient::BatchUpdateIntents(
-    google::longrunning::Operation const& operation, Options opts) {
+IntentsClient::BatchUpdateIntents(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->BatchUpdateIntents(operation);
 }
 
-future<StatusOr<google::protobuf::Struct>> IntentsClient::BatchDeleteIntents(
-    std::string const& parent,
-    std::vector<google::cloud::dialogflow::v2::Intent> const& intents,
-    Options opts) {
+future<StatusOr<google::protobuf::Struct>>
+IntentsClient::BatchDeleteIntents(std::string const& parent, std::vector<google::cloud::dialogflow::v2::Intent> const& intents, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dialogflow::v2::BatchDeleteIntentsRequest request;
   request.set_parent(parent);
@@ -229,10 +205,8 @@ future<StatusOr<google::protobuf::Struct>> IntentsClient::BatchDeleteIntents(
   return connection_->BatchDeleteIntents(request);
 }
 
-StatusOr<google::longrunning::Operation> IntentsClient::BatchDeleteIntents(
-    NoAwaitTag, std::string const& parent,
-    std::vector<google::cloud::dialogflow::v2::Intent> const& intents,
-    Options opts) {
+StatusOr<google::longrunning::Operation>
+IntentsClient::BatchDeleteIntents(NoAwaitTag, std::string const& parent, std::vector<google::cloud::dialogflow::v2::Intent> const& intents, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dialogflow::v2::BatchDeleteIntentsRequest request;
   request.set_parent(parent);
@@ -240,41 +214,38 @@ StatusOr<google::longrunning::Operation> IntentsClient::BatchDeleteIntents(
   return connection_->BatchDeleteIntents(NoAwaitTag{}, request);
 }
 
-future<StatusOr<google::protobuf::Struct>> IntentsClient::BatchDeleteIntents(
-    google::cloud::dialogflow::v2::BatchDeleteIntentsRequest const& request,
-    Options opts) {
+future<StatusOr<google::protobuf::Struct>>
+IntentsClient::BatchDeleteIntents(google::cloud::dialogflow::v2::BatchDeleteIntentsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->BatchDeleteIntents(request);
 }
 
-StatusOr<google::longrunning::Operation> IntentsClient::BatchDeleteIntents(
-    NoAwaitTag,
-    google::cloud::dialogflow::v2::BatchDeleteIntentsRequest const& request,
-    Options opts) {
+StatusOr<google::longrunning::Operation>
+IntentsClient::BatchDeleteIntents(NoAwaitTag, google::cloud::dialogflow::v2::BatchDeleteIntentsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->BatchDeleteIntents(NoAwaitTag{}, request);
 }
 
-future<StatusOr<google::protobuf::Struct>> IntentsClient::BatchDeleteIntents(
-    google::longrunning::Operation const& operation, Options opts) {
+future<StatusOr<google::protobuf::Struct>>
+IntentsClient::BatchDeleteIntents(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->BatchDeleteIntents(operation);
 }
 
-StreamRange<google::cloud::location::Location> IntentsClient::ListLocations(
-    google::cloud::location::ListLocationsRequest request, Options opts) {
+StreamRange<google::cloud::location::Location>
+IntentsClient::ListLocations(google::cloud::location::ListLocationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListLocations(std::move(request));
 }
 
-StatusOr<google::cloud::location::Location> IntentsClient::GetLocation(
-    google::cloud::location::GetLocationRequest const& request, Options opts) {
+StatusOr<google::cloud::location::Location>
+IntentsClient::GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetLocation(request);
 }
 
-StreamRange<google::longrunning::Operation> IntentsClient::ListOperations(
-    std::string const& name, std::string const& filter, Options opts) {
+StreamRange<google::longrunning::Operation>
+IntentsClient::ListOperations(std::string const& name, std::string const& filter, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::ListOperationsRequest request;
   request.set_name(name);
@@ -282,35 +253,36 @@ StreamRange<google::longrunning::Operation> IntentsClient::ListOperations(
   return connection_->ListOperations(request);
 }
 
-StreamRange<google::longrunning::Operation> IntentsClient::ListOperations(
-    google::longrunning::ListOperationsRequest request, Options opts) {
+StreamRange<google::longrunning::Operation>
+IntentsClient::ListOperations(google::longrunning::ListOperationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOperations(std::move(request));
 }
 
-StatusOr<google::longrunning::Operation> IntentsClient::GetOperation(
-    std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation>
+IntentsClient::GetOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
   return connection_->GetOperation(request);
 }
 
-StatusOr<google::longrunning::Operation> IntentsClient::GetOperation(
-    google::longrunning::GetOperationRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation>
+IntentsClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }
 
-Status IntentsClient::CancelOperation(std::string const& name, Options opts) {
+Status
+IntentsClient::CancelOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::CancelOperationRequest request;
   request.set_name(name);
   return connection_->CancelOperation(request);
 }
 
-Status IntentsClient::CancelOperation(
-    google::longrunning::CancelOperationRequest const& request, Options opts) {
+Status
+IntentsClient::CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelOperation(request);
 }

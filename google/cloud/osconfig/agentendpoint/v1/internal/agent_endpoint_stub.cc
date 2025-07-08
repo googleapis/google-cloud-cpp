@@ -30,85 +30,80 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 AgentEndpointServiceStub::~AgentEndpointServiceStub() = default;
 
-std::unique_ptr<google::cloud::internal::StreamingReadRpc<
-    google::cloud::osconfig::agentendpoint::v1::
-        ReceiveTaskNotificationResponse>>
+std::unique_ptr<google::cloud::internal::StreamingReadRpc<google::cloud::osconfig::agentendpoint::v1::ReceiveTaskNotificationResponse>>
 DefaultAgentEndpointServiceStub::ReceiveTaskNotification(
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
-    google::cloud::osconfig::agentendpoint::v1::
-        ReceiveTaskNotificationRequest const& request) {
+    std::shared_ptr<grpc::ClientContext> context,
+    Options const&,
+    google::cloud::osconfig::agentendpoint::v1::ReceiveTaskNotificationRequest const& request) {
   auto stream = grpc_stub_->ReceiveTaskNotification(context.get(), request);
   return std::make_unique<google::cloud::internal::StreamingReadRpcImpl<
-      google::cloud::osconfig::agentendpoint::v1::
-          ReceiveTaskNotificationResponse>>(std::move(context),
-                                            std::move(stream));
+      google::cloud::osconfig::agentendpoint::v1::ReceiveTaskNotificationResponse>>(
+      std::move(context), std::move(stream));
 }
 
 StatusOr<google::cloud::osconfig::agentendpoint::v1::StartNextTaskResponse>
 DefaultAgentEndpointServiceStub::StartNextTask(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::osconfig::agentendpoint::v1::StartNextTaskRequest const&
-        request) {
-  google::cloud::osconfig::agentendpoint::v1::StartNextTaskResponse response;
-  auto status = grpc_stub_->StartNextTask(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::osconfig::agentendpoint::v1::StartNextTaskRequest const& request) {
+    google::cloud::osconfig::agentendpoint::v1::StartNextTaskResponse response;
+    auto status =
+        grpc_stub_->StartNextTask(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::osconfig::agentendpoint::v1::ReportTaskProgressResponse>
 DefaultAgentEndpointServiceStub::ReportTaskProgress(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::osconfig::agentendpoint::v1::ReportTaskProgressRequest const&
-        request) {
-  google::cloud::osconfig::agentendpoint::v1::ReportTaskProgressResponse
-      response;
-  auto status = grpc_stub_->ReportTaskProgress(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::osconfig::agentendpoint::v1::ReportTaskProgressRequest const& request) {
+    google::cloud::osconfig::agentendpoint::v1::ReportTaskProgressResponse response;
+    auto status =
+        grpc_stub_->ReportTaskProgress(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::osconfig::agentendpoint::v1::ReportTaskCompleteResponse>
 DefaultAgentEndpointServiceStub::ReportTaskComplete(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::osconfig::agentendpoint::v1::ReportTaskCompleteRequest const&
-        request) {
-  google::cloud::osconfig::agentendpoint::v1::ReportTaskCompleteResponse
-      response;
-  auto status = grpc_stub_->ReportTaskComplete(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::osconfig::agentendpoint::v1::ReportTaskCompleteRequest const& request) {
+    google::cloud::osconfig::agentendpoint::v1::ReportTaskCompleteResponse response;
+    auto status =
+        grpc_stub_->ReportTaskComplete(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::osconfig::agentendpoint::v1::RegisterAgentResponse>
 DefaultAgentEndpointServiceStub::RegisterAgent(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::osconfig::agentendpoint::v1::RegisterAgentRequest const&
-        request) {
-  google::cloud::osconfig::agentendpoint::v1::RegisterAgentResponse response;
-  auto status = grpc_stub_->RegisterAgent(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::osconfig::agentendpoint::v1::RegisterAgentRequest const& request) {
+    google::cloud::osconfig::agentendpoint::v1::RegisterAgentResponse response;
+    auto status =
+        grpc_stub_->RegisterAgent(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::osconfig::agentendpoint::v1::ReportInventoryResponse>
 DefaultAgentEndpointServiceStub::ReportInventory(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::osconfig::agentendpoint::v1::ReportInventoryRequest const&
-        request) {
-  google::cloud::osconfig::agentendpoint::v1::ReportInventoryResponse response;
-  auto status = grpc_stub_->ReportInventory(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::osconfig::agentendpoint::v1::ReportInventoryRequest const& request) {
+    google::cloud::osconfig::agentendpoint::v1::ReportInventoryResponse response;
+    auto status =
+        grpc_stub_->ReportInventory(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

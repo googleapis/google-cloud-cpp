@@ -32,19 +32,20 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 PrivilegedAccessManagerLogging::PrivilegedAccessManagerLogging(
     std::shared_ptr<PrivilegedAccessManagerStub> child,
-    TracingOptions tracing_options, std::set<std::string> const&)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
+    TracingOptions tracing_options,
+    std::set<std::string> const&)
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)) {}
 
-StatusOr<
-    google::cloud::privilegedaccessmanager::v1::CheckOnboardingStatusResponse>
+StatusOr<google::cloud::privilegedaccessmanager::v1::CheckOnboardingStatusResponse>
 PrivilegedAccessManagerLogging::CheckOnboardingStatus(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::privilegedaccessmanager::v1::
-        CheckOnboardingStatusRequest const& request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::privilegedaccessmanager::v1::CheckOnboardingStatusRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::privilegedaccessmanager::v1::
-                 CheckOnboardingStatusRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::privilegedaccessmanager::v1::CheckOnboardingStatusRequest const& request) {
         return child_->CheckOnboardingStatus(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -52,13 +53,13 @@ PrivilegedAccessManagerLogging::CheckOnboardingStatus(
 
 StatusOr<google::cloud::privilegedaccessmanager::v1::ListEntitlementsResponse>
 PrivilegedAccessManagerLogging::ListEntitlements(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::privilegedaccessmanager::v1::ListEntitlementsRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::privilegedaccessmanager::v1::ListEntitlementsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::privilegedaccessmanager::v1::
-                 ListEntitlementsRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::privilegedaccessmanager::v1::ListEntitlementsRequest const& request) {
         return child_->ListEntitlements(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -66,13 +67,13 @@ PrivilegedAccessManagerLogging::ListEntitlements(
 
 StatusOr<google::cloud::privilegedaccessmanager::v1::SearchEntitlementsResponse>
 PrivilegedAccessManagerLogging::SearchEntitlements(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::privilegedaccessmanager::v1::SearchEntitlementsRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::privilegedaccessmanager::v1::SearchEntitlementsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::privilegedaccessmanager::v1::
-                 SearchEntitlementsRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::privilegedaccessmanager::v1::SearchEntitlementsRequest const& request) {
         return child_->SearchEntitlements(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -80,13 +81,13 @@ PrivilegedAccessManagerLogging::SearchEntitlements(
 
 StatusOr<google::cloud::privilegedaccessmanager::v1::Entitlement>
 PrivilegedAccessManagerLogging::GetEntitlement(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::privilegedaccessmanager::v1::GetEntitlementRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::privilegedaccessmanager::v1::GetEntitlementRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::privilegedaccessmanager::v1::
-                 GetEntitlementRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::privilegedaccessmanager::v1::GetEntitlementRequest const& request) {
         return child_->GetEntitlement(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -94,19 +95,17 @@ PrivilegedAccessManagerLogging::GetEntitlement(
 
 future<StatusOr<google::longrunning::Operation>>
 PrivilegedAccessManagerLogging::AsyncCreateEntitlement(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::privilegedaccessmanager::v1::CreateEntitlementRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::privilegedaccessmanager::v1::CreateEntitlementRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::privilegedaccessmanager::v1::
-                 CreateEntitlementRequest const& request) {
-        return child_->AsyncCreateEntitlement(cq, std::move(context),
-                                              std::move(options), request);
+             google::cloud::privilegedaccessmanager::v1::CreateEntitlementRequest const& request) {
+        return child_->AsyncCreateEntitlement(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -114,13 +113,13 @@ PrivilegedAccessManagerLogging::AsyncCreateEntitlement(
 
 StatusOr<google::longrunning::Operation>
 PrivilegedAccessManagerLogging::CreateEntitlement(
-    grpc::ClientContext& context, Options options,
-    google::cloud::privilegedaccessmanager::v1::CreateEntitlementRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::privilegedaccessmanager::v1::CreateEntitlementRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::privilegedaccessmanager::v1::
-                 CreateEntitlementRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::privilegedaccessmanager::v1::CreateEntitlementRequest const& request) {
         return child_->CreateEntitlement(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -128,19 +127,17 @@ PrivilegedAccessManagerLogging::CreateEntitlement(
 
 future<StatusOr<google::longrunning::Operation>>
 PrivilegedAccessManagerLogging::AsyncDeleteEntitlement(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::privilegedaccessmanager::v1::DeleteEntitlementRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::privilegedaccessmanager::v1::DeleteEntitlementRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::privilegedaccessmanager::v1::
-                 DeleteEntitlementRequest const& request) {
-        return child_->AsyncDeleteEntitlement(cq, std::move(context),
-                                              std::move(options), request);
+             google::cloud::privilegedaccessmanager::v1::DeleteEntitlementRequest const& request) {
+        return child_->AsyncDeleteEntitlement(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -148,13 +145,13 @@ PrivilegedAccessManagerLogging::AsyncDeleteEntitlement(
 
 StatusOr<google::longrunning::Operation>
 PrivilegedAccessManagerLogging::DeleteEntitlement(
-    grpc::ClientContext& context, Options options,
-    google::cloud::privilegedaccessmanager::v1::DeleteEntitlementRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::privilegedaccessmanager::v1::DeleteEntitlementRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::privilegedaccessmanager::v1::
-                 DeleteEntitlementRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::privilegedaccessmanager::v1::DeleteEntitlementRequest const& request) {
         return child_->DeleteEntitlement(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -162,19 +159,17 @@ PrivilegedAccessManagerLogging::DeleteEntitlement(
 
 future<StatusOr<google::longrunning::Operation>>
 PrivilegedAccessManagerLogging::AsyncUpdateEntitlement(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::privilegedaccessmanager::v1::UpdateEntitlementRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::privilegedaccessmanager::v1::UpdateEntitlementRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::privilegedaccessmanager::v1::
-                 UpdateEntitlementRequest const& request) {
-        return child_->AsyncUpdateEntitlement(cq, std::move(context),
-                                              std::move(options), request);
+             google::cloud::privilegedaccessmanager::v1::UpdateEntitlementRequest const& request) {
+        return child_->AsyncUpdateEntitlement(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -182,13 +177,13 @@ PrivilegedAccessManagerLogging::AsyncUpdateEntitlement(
 
 StatusOr<google::longrunning::Operation>
 PrivilegedAccessManagerLogging::UpdateEntitlement(
-    grpc::ClientContext& context, Options options,
-    google::cloud::privilegedaccessmanager::v1::UpdateEntitlementRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::privilegedaccessmanager::v1::UpdateEntitlementRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::privilegedaccessmanager::v1::
-                 UpdateEntitlementRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::privilegedaccessmanager::v1::UpdateEntitlementRequest const& request) {
         return child_->UpdateEntitlement(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -196,14 +191,13 @@ PrivilegedAccessManagerLogging::UpdateEntitlement(
 
 StatusOr<google::cloud::privilegedaccessmanager::v1::ListGrantsResponse>
 PrivilegedAccessManagerLogging::ListGrants(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::privilegedaccessmanager::v1::ListGrantsRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::privilegedaccessmanager::v1::ListGrantsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::privilegedaccessmanager::v1::ListGrantsRequest const&
-              request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::privilegedaccessmanager::v1::ListGrantsRequest const& request) {
         return child_->ListGrants(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -211,14 +205,13 @@ PrivilegedAccessManagerLogging::ListGrants(
 
 StatusOr<google::cloud::privilegedaccessmanager::v1::SearchGrantsResponse>
 PrivilegedAccessManagerLogging::SearchGrants(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::privilegedaccessmanager::v1::SearchGrantsRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::privilegedaccessmanager::v1::SearchGrantsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::privilegedaccessmanager::v1::SearchGrantsRequest const&
-              request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::privilegedaccessmanager::v1::SearchGrantsRequest const& request) {
         return child_->SearchGrants(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -226,13 +219,13 @@ PrivilegedAccessManagerLogging::SearchGrants(
 
 StatusOr<google::cloud::privilegedaccessmanager::v1::Grant>
 PrivilegedAccessManagerLogging::GetGrant(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::privilegedaccessmanager::v1::GetGrantRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::privilegedaccessmanager::v1::GetGrantRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::privilegedaccessmanager::v1::GetGrantRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::privilegedaccessmanager::v1::GetGrantRequest const& request) {
         return child_->GetGrant(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -240,14 +233,13 @@ PrivilegedAccessManagerLogging::GetGrant(
 
 StatusOr<google::cloud::privilegedaccessmanager::v1::Grant>
 PrivilegedAccessManagerLogging::CreateGrant(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::privilegedaccessmanager::v1::CreateGrantRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::privilegedaccessmanager::v1::CreateGrantRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::privilegedaccessmanager::v1::CreateGrantRequest const&
-              request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::privilegedaccessmanager::v1::CreateGrantRequest const& request) {
         return child_->CreateGrant(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -255,14 +247,13 @@ PrivilegedAccessManagerLogging::CreateGrant(
 
 StatusOr<google::cloud::privilegedaccessmanager::v1::Grant>
 PrivilegedAccessManagerLogging::ApproveGrant(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::privilegedaccessmanager::v1::ApproveGrantRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::privilegedaccessmanager::v1::ApproveGrantRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::privilegedaccessmanager::v1::ApproveGrantRequest const&
-              request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::privilegedaccessmanager::v1::ApproveGrantRequest const& request) {
         return child_->ApproveGrant(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -270,13 +261,13 @@ PrivilegedAccessManagerLogging::ApproveGrant(
 
 StatusOr<google::cloud::privilegedaccessmanager::v1::Grant>
 PrivilegedAccessManagerLogging::DenyGrant(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::privilegedaccessmanager::v1::DenyGrantRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::privilegedaccessmanager::v1::DenyGrantRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::privilegedaccessmanager::v1::DenyGrantRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::privilegedaccessmanager::v1::DenyGrantRequest const& request) {
         return child_->DenyGrant(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -284,20 +275,17 @@ PrivilegedAccessManagerLogging::DenyGrant(
 
 future<StatusOr<google::longrunning::Operation>>
 PrivilegedAccessManagerLogging::AsyncRevokeGrant(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::privilegedaccessmanager::v1::RevokeGrantRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::privilegedaccessmanager::v1::RevokeGrantRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::privilegedaccessmanager::v1::RevokeGrantRequest const&
-              request) {
-        return child_->AsyncRevokeGrant(cq, std::move(context),
-                                        std::move(options), request);
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::privilegedaccessmanager::v1::RevokeGrantRequest const& request) {
+        return child_->AsyncRevokeGrant(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -305,14 +293,13 @@ PrivilegedAccessManagerLogging::AsyncRevokeGrant(
 
 StatusOr<google::longrunning::Operation>
 PrivilegedAccessManagerLogging::RevokeGrant(
-    grpc::ClientContext& context, Options options,
-    google::cloud::privilegedaccessmanager::v1::RevokeGrantRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::privilegedaccessmanager::v1::RevokeGrantRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::privilegedaccessmanager::v1::RevokeGrantRequest const&
-              request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::privilegedaccessmanager::v1::RevokeGrantRequest const& request) {
         return child_->RevokeGrant(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -320,10 +307,12 @@ PrivilegedAccessManagerLogging::RevokeGrant(
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 PrivilegedAccessManagerLogging::ListLocations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::location::ListLocationsRequest const& request) {
         return child_->ListLocations(context, options, request);
       },
@@ -332,10 +321,12 @@ PrivilegedAccessManagerLogging::ListLocations(
 
 StatusOr<google::cloud::location::Location>
 PrivilegedAccessManagerLogging::GetLocation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::location::GetLocationRequest const& request) {
         return child_->GetLocation(context, options, request);
       },
@@ -344,10 +335,12 @@ PrivilegedAccessManagerLogging::GetLocation(
 
 StatusOr<google::longrunning::ListOperationsResponse>
 PrivilegedAccessManagerLogging::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::ListOperationsRequest const& request) {
         return child_->ListOperations(context, options, request);
       },
@@ -356,21 +349,26 @@ PrivilegedAccessManagerLogging::ListOperations(
 
 StatusOr<google::longrunning::Operation>
 PrivilegedAccessManagerLogging::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::GetOperationRequest const& request) {
         return child_->GetOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status PrivilegedAccessManagerLogging::DeleteOperation(
-    grpc::ClientContext& context, Options const& options,
+Status
+PrivilegedAccessManagerLogging::DeleteOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::DeleteOperationRequest const& request) {
         return child_->DeleteOperation(context, options, request);
       },
@@ -388,8 +386,8 @@ PrivilegedAccessManagerLogging::AsyncGetOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(cq, std::move(context),
-                                         std::move(options), request);
+        return child_->AsyncGetOperation(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -405,8 +403,8 @@ future<Status> PrivilegedAccessManagerLogging::AsyncCancelOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::CancelOperationRequest const& request) {
-        return child_->AsyncCancelOperation(cq, std::move(context),
-                                            std::move(options), request);
+        return child_->AsyncCancelOperation(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);

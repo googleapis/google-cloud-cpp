@@ -17,10 +17,10 @@
 // source: google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto
 
 #include "google/cloud/osconfig/agentendpoint/v1/internal/agent_endpoint_option_defaults.h"
-#include "google/cloud/osconfig/agentendpoint/v1/agent_endpoint_connection.h"
-#include "google/cloud/osconfig/agentendpoint/v1/agent_endpoint_options.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
+#include "google/cloud/osconfig/agentendpoint/v1/agent_endpoint_connection.h"
+#include "google/cloud/osconfig/agentendpoint/v1/agent_endpoint_options.h"
 #include <memory>
 #include <utility>
 
@@ -39,30 +39,19 @@ Options AgentEndpointServiceDefaultOptions(Options options) {
       "", "GOOGLE_CLOUD_CPP_AGENT_ENDPOINT_SERVICE_AUTHORITY",
       "osconfig.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
-  if (!options.has<
-          osconfig_agentendpoint_v1::AgentEndpointServiceRetryPolicyOption>()) {
-    options.set<
-        osconfig_agentendpoint_v1::AgentEndpointServiceRetryPolicyOption>(
+  if (!options.has<osconfig_agentendpoint_v1::AgentEndpointServiceRetryPolicyOption>()) {
+    options.set<osconfig_agentendpoint_v1::AgentEndpointServiceRetryPolicyOption>(
         osconfig_agentendpoint_v1::AgentEndpointServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
-            .clone());
+            std::chrono::minutes(30)).clone());
   }
-  if (!options.has<osconfig_agentendpoint_v1::
-                       AgentEndpointServiceBackoffPolicyOption>()) {
-    options.set<
-        osconfig_agentendpoint_v1::AgentEndpointServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(
-            std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
-            .clone());
+  if (!options.has<osconfig_agentendpoint_v1::AgentEndpointServiceBackoffPolicyOption>()) {
+    options.set<osconfig_agentendpoint_v1::AgentEndpointServiceBackoffPolicyOption>(
+        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
   }
-  if (!options
-           .has<osconfig_agentendpoint_v1::
-                    AgentEndpointServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<osconfig_agentendpoint_v1::
-                    AgentEndpointServiceConnectionIdempotencyPolicyOption>(
-        osconfig_agentendpoint_v1::
-            MakeDefaultAgentEndpointServiceConnectionIdempotencyPolicy());
+  if (!options.has<osconfig_agentendpoint_v1::AgentEndpointServiceConnectionIdempotencyPolicyOption>()) {
+    options.set<osconfig_agentendpoint_v1::AgentEndpointServiceConnectionIdempotencyPolicyOption>(
+        osconfig_agentendpoint_v1::MakeDefaultAgentEndpointServiceConnectionIdempotencyPolicy());
   }
 
   return options;

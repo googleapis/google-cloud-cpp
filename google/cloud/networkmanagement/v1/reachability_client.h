@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_NETWORKMANAGEMENT_V1_REACHABILITY_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_NETWORKMANAGEMENT_V1_REACHABILITY_CLIENT_H
 
-#include "google/cloud/networkmanagement/v1/reachability_connection.h"
 #include "google/cloud/future.h"
+#include "google/cloud/networkmanagement/v1/reachability_connection.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -38,10 +38,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ///
 /// The Reachability service in the Google Cloud Network Management API provides
-/// services that analyze the reachability within a single Google Virtual
-/// Private Cloud (VPC) network, between peered VPC networks, between VPC and
-/// on-premises networks, or between VPC networks and internet hosts. A
-/// reachability analysis is based on Google Cloud network configurations.
+/// services that analyze the reachability within a single Google Virtual Private
+/// Cloud (VPC) network, between peered VPC networks, between VPC and on-premises
+/// networks, or between VPC networks and internet hosts. A reachability analysis
+/// is based on Google Cloud network configurations.
 ///
 /// You can use the analysis results to verify these configurations and
 /// to troubleshoot connectivity issues.
@@ -71,28 +71,23 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class ReachabilityServiceClient {
  public:
-  explicit ReachabilityServiceClient(
-      std::shared_ptr<ReachabilityServiceConnection> connection,
-      Options opts = {});
+  explicit ReachabilityServiceClient(std::shared_ptr<ReachabilityServiceConnection> connection, Options opts = {});
   ~ReachabilityServiceClient();
 
   ///@{
   /// @name Copy and move support
   ReachabilityServiceClient(ReachabilityServiceClient const&) = default;
-  ReachabilityServiceClient& operator=(ReachabilityServiceClient const&) =
-      default;
+  ReachabilityServiceClient& operator=(ReachabilityServiceClient const&) = default;
   ReachabilityServiceClient(ReachabilityServiceClient&&) = default;
   ReachabilityServiceClient& operator=(ReachabilityServiceClient&&) = default;
   ///@}
 
   ///@{
   /// @name Equality
-  friend bool operator==(ReachabilityServiceClient const& a,
-                         ReachabilityServiceClient const& b) {
+  friend bool operator==(ReachabilityServiceClient const& a, ReachabilityServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(ReachabilityServiceClient const& a,
-                         ReachabilityServiceClient const& b) {
+  friend bool operator!=(ReachabilityServiceClient const& a, ReachabilityServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -169,10 +164,7 @@ class ReachabilityServiceClient {
   ///
   // clang-format on
   StreamRange<google::cloud::networkmanagement::v1::ConnectivityTest>
-  ListConnectivityTests(
-      google::cloud::networkmanagement::v1::ListConnectivityTestsRequest
-          request,
-      Options opts = {});
+  ListConnectivityTests(google::cloud::networkmanagement::v1::ListConnectivityTestsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -228,10 +220,7 @@ class ReachabilityServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>
-  GetConnectivityTest(
-      google::cloud::networkmanagement::v1::GetConnectivityTestRequest const&
-          request,
-      Options opts = {});
+  GetConnectivityTest(google::cloud::networkmanagement::v1::GetConnectivityTestRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -285,10 +274,7 @@ class ReachabilityServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>
-  CreateConnectivityTest(
-      std::string const& parent, std::string const& test_id,
-      google::cloud::networkmanagement::v1::ConnectivityTest const& resource,
-      Options opts = {});
+  CreateConnectivityTest(std::string const& parent, std::string const& test_id, google::cloud::networkmanagement::v1::ConnectivityTest const& resource, Options opts = {});
 
   // clang-format off
   ///
@@ -301,10 +287,8 @@ class ReachabilityServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateConnectivityTest(
-      NoAwaitTag, std::string const& parent, std::string const& test_id,
-      google::cloud::networkmanagement::v1::ConnectivityTest const& resource,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateConnectivityTest(NoAwaitTag, std::string const& parent, std::string const& test_id, google::cloud::networkmanagement::v1::ConnectivityTest const& resource, Options opts = {});
 
   // clang-format off
   ///
@@ -353,10 +337,7 @@ class ReachabilityServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>
-  CreateConnectivityTest(
-      google::cloud::networkmanagement::v1::CreateConnectivityTestRequest const&
-          request,
-      Options opts = {});
+  CreateConnectivityTest(google::cloud::networkmanagement::v1::CreateConnectivityTestRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -369,11 +350,8 @@ class ReachabilityServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateConnectivityTest(
-      NoAwaitTag,
-      google::cloud::networkmanagement::v1::CreateConnectivityTestRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateConnectivityTest(NoAwaitTag, google::cloud::networkmanagement::v1::CreateConnectivityTestRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -385,8 +363,7 @@ class ReachabilityServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>
-  CreateConnectivityTest(google::longrunning::Operation const& operation,
-                         Options opts = {});
+  CreateConnectivityTest(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -433,10 +410,7 @@ class ReachabilityServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>
-  UpdateConnectivityTest(
-      google::protobuf::FieldMask const& update_mask,
-      google::cloud::networkmanagement::v1::ConnectivityTest const& resource,
-      Options opts = {});
+  UpdateConnectivityTest(google::protobuf::FieldMask const& update_mask, google::cloud::networkmanagement::v1::ConnectivityTest const& resource, Options opts = {});
 
   // clang-format off
   ///
@@ -449,10 +423,8 @@ class ReachabilityServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateConnectivityTest(
-      NoAwaitTag, google::protobuf::FieldMask const& update_mask,
-      google::cloud::networkmanagement::v1::ConnectivityTest const& resource,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateConnectivityTest(NoAwaitTag, google::protobuf::FieldMask const& update_mask, google::cloud::networkmanagement::v1::ConnectivityTest const& resource, Options opts = {});
 
   // clang-format off
   ///
@@ -502,10 +474,7 @@ class ReachabilityServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>
-  UpdateConnectivityTest(
-      google::cloud::networkmanagement::v1::UpdateConnectivityTestRequest const&
-          request,
-      Options opts = {});
+  UpdateConnectivityTest(google::cloud::networkmanagement::v1::UpdateConnectivityTestRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -518,11 +487,8 @@ class ReachabilityServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateConnectivityTest(
-      NoAwaitTag,
-      google::cloud::networkmanagement::v1::UpdateConnectivityTestRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateConnectivityTest(NoAwaitTag, google::cloud::networkmanagement::v1::UpdateConnectivityTestRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -534,8 +500,7 @@ class ReachabilityServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>
-  UpdateConnectivityTest(google::longrunning::Operation const& operation,
-                         Options opts = {});
+  UpdateConnectivityTest(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -583,10 +548,7 @@ class ReachabilityServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>
-  RerunConnectivityTest(
-      google::cloud::networkmanagement::v1::RerunConnectivityTestRequest const&
-          request,
-      Options opts = {});
+  RerunConnectivityTest(google::cloud::networkmanagement::v1::RerunConnectivityTestRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -599,11 +561,8 @@ class ReachabilityServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> RerunConnectivityTest(
-      NoAwaitTag,
-      google::cloud::networkmanagement::v1::RerunConnectivityTestRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  RerunConnectivityTest(NoAwaitTag, google::cloud::networkmanagement::v1::RerunConnectivityTestRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -615,8 +574,7 @@ class ReachabilityServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>
-  RerunConnectivityTest(google::longrunning::Operation const& operation,
-                        Options opts = {});
+  RerunConnectivityTest(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -662,8 +620,8 @@ class ReachabilityServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteConnectivityTest(
-      NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteConnectivityTest(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -700,10 +658,7 @@ class ReachabilityServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkmanagement::v1::OperationMetadata>>
-  DeleteConnectivityTest(
-      google::cloud::networkmanagement::v1::DeleteConnectivityTestRequest const&
-          request,
-      Options opts = {});
+  DeleteConnectivityTest(google::cloud::networkmanagement::v1::DeleteConnectivityTestRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -716,11 +671,8 @@ class ReachabilityServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteConnectivityTest(
-      NoAwaitTag,
-      google::cloud::networkmanagement::v1::DeleteConnectivityTestRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteConnectivityTest(NoAwaitTag, google::cloud::networkmanagement::v1::DeleteConnectivityTestRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -732,8 +684,7 @@ class ReachabilityServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkmanagement::v1::OperationMetadata>>
-  DeleteConnectivityTest(google::longrunning::Operation const& operation,
-                         Options opts = {});
+  DeleteConnectivityTest(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -771,8 +722,8 @@ class ReachabilityServiceClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request, Options opts = {});
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -801,9 +752,8 @@ class ReachabilityServiceClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -835,8 +785,8 @@ class ReachabilityServiceClient {
   /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L100}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -867,8 +817,8 @@ class ReachabilityServiceClient {
   /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -903,9 +853,8 @@ class ReachabilityServiceClient {
   /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L153}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request,
-      Options opts = {});
+  StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -940,8 +889,8 @@ class ReachabilityServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -980,8 +929,8 @@ class ReachabilityServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1007,8 +956,8 @@ class ReachabilityServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1039,9 +988,8 @@ class ReachabilityServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1065,7 +1013,8 @@ class ReachabilityServiceClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status DeleteOperation(std::string const& name, Options opts = {});
+  Status
+  DeleteOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1094,9 +1043,8 @@ class ReachabilityServiceClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request,
-      Options opts = {});
+  Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1130,7 +1078,8 @@ class ReachabilityServiceClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(std::string const& name, Options opts = {});
+  Status
+  CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1169,9 +1118,8 @@ class ReachabilityServiceClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request,
-      Options opts = {});
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<ReachabilityServiceConnection> connection_;

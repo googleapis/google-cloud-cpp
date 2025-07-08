@@ -31,81 +31,81 @@ DlpServiceAuth::DlpServiceAuth(
     std::shared_ptr<DlpServiceStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::privacy::dlp::v2::InspectContentResponse>
-DlpServiceAuth::InspectContent(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::privacy::dlp::v2::InspectContentResponse> DlpServiceAuth::InspectContent(
+    grpc::ClientContext& context,
+    Options const& options,
     google::privacy::dlp::v2::InspectContentRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->InspectContent(context, options, request);
 }
 
-StatusOr<google::privacy::dlp::v2::RedactImageResponse>
-DlpServiceAuth::RedactImage(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::privacy::dlp::v2::RedactImageResponse> DlpServiceAuth::RedactImage(
+    grpc::ClientContext& context,
+    Options const& options,
     google::privacy::dlp::v2::RedactImageRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->RedactImage(context, options, request);
 }
 
-StatusOr<google::privacy::dlp::v2::DeidentifyContentResponse>
-DlpServiceAuth::DeidentifyContent(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::privacy::dlp::v2::DeidentifyContentResponse> DlpServiceAuth::DeidentifyContent(
+    grpc::ClientContext& context,
+    Options const& options,
     google::privacy::dlp::v2::DeidentifyContentRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeidentifyContent(context, options, request);
 }
 
-StatusOr<google::privacy::dlp::v2::ReidentifyContentResponse>
-DlpServiceAuth::ReidentifyContent(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::privacy::dlp::v2::ReidentifyContentResponse> DlpServiceAuth::ReidentifyContent(
+    grpc::ClientContext& context,
+    Options const& options,
     google::privacy::dlp::v2::ReidentifyContentRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ReidentifyContent(context, options, request);
 }
 
-StatusOr<google::privacy::dlp::v2::ListInfoTypesResponse>
-DlpServiceAuth::ListInfoTypes(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::privacy::dlp::v2::ListInfoTypesResponse> DlpServiceAuth::ListInfoTypes(
+    grpc::ClientContext& context,
+    Options const& options,
     google::privacy::dlp::v2::ListInfoTypesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListInfoTypes(context, options, request);
 }
 
-StatusOr<google::privacy::dlp::v2::InspectTemplate>
-DlpServiceAuth::CreateInspectTemplate(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::privacy::dlp::v2::InspectTemplate> DlpServiceAuth::CreateInspectTemplate(
+    grpc::ClientContext& context,
+    Options const& options,
     google::privacy::dlp::v2::CreateInspectTemplateRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateInspectTemplate(context, options, request);
 }
 
-StatusOr<google::privacy::dlp::v2::InspectTemplate>
-DlpServiceAuth::UpdateInspectTemplate(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::privacy::dlp::v2::InspectTemplate> DlpServiceAuth::UpdateInspectTemplate(
+    grpc::ClientContext& context,
+    Options const& options,
     google::privacy::dlp::v2::UpdateInspectTemplateRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateInspectTemplate(context, options, request);
 }
 
-StatusOr<google::privacy::dlp::v2::InspectTemplate>
-DlpServiceAuth::GetInspectTemplate(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::privacy::dlp::v2::InspectTemplate> DlpServiceAuth::GetInspectTemplate(
+    grpc::ClientContext& context,
+    Options const& options,
     google::privacy::dlp::v2::GetInspectTemplateRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetInspectTemplate(context, options, request);
 }
 
-StatusOr<google::privacy::dlp::v2::ListInspectTemplatesResponse>
-DlpServiceAuth::ListInspectTemplates(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::privacy::dlp::v2::ListInspectTemplatesResponse> DlpServiceAuth::ListInspectTemplates(
+    grpc::ClientContext& context,
+    Options const& options,
     google::privacy::dlp::v2::ListInspectTemplatesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -113,43 +113,44 @@ DlpServiceAuth::ListInspectTemplates(
 }
 
 Status DlpServiceAuth::DeleteInspectTemplate(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::privacy::dlp::v2::DeleteInspectTemplateRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteInspectTemplate(context, options, request);
 }
 
-StatusOr<google::privacy::dlp::v2::DeidentifyTemplate>
-DlpServiceAuth::CreateDeidentifyTemplate(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::privacy::dlp::v2::DeidentifyTemplate> DlpServiceAuth::CreateDeidentifyTemplate(
+    grpc::ClientContext& context,
+    Options const& options,
     google::privacy::dlp::v2::CreateDeidentifyTemplateRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateDeidentifyTemplate(context, options, request);
 }
 
-StatusOr<google::privacy::dlp::v2::DeidentifyTemplate>
-DlpServiceAuth::UpdateDeidentifyTemplate(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::privacy::dlp::v2::DeidentifyTemplate> DlpServiceAuth::UpdateDeidentifyTemplate(
+    grpc::ClientContext& context,
+    Options const& options,
     google::privacy::dlp::v2::UpdateDeidentifyTemplateRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateDeidentifyTemplate(context, options, request);
 }
 
-StatusOr<google::privacy::dlp::v2::DeidentifyTemplate>
-DlpServiceAuth::GetDeidentifyTemplate(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::privacy::dlp::v2::DeidentifyTemplate> DlpServiceAuth::GetDeidentifyTemplate(
+    grpc::ClientContext& context,
+    Options const& options,
     google::privacy::dlp::v2::GetDeidentifyTemplateRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetDeidentifyTemplate(context, options, request);
 }
 
-StatusOr<google::privacy::dlp::v2::ListDeidentifyTemplatesResponse>
-DlpServiceAuth::ListDeidentifyTemplates(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::privacy::dlp::v2::ListDeidentifyTemplatesResponse> DlpServiceAuth::ListDeidentifyTemplates(
+    grpc::ClientContext& context,
+    Options const& options,
     google::privacy::dlp::v2::ListDeidentifyTemplatesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -157,7 +158,8 @@ DlpServiceAuth::ListDeidentifyTemplates(
 }
 
 Status DlpServiceAuth::DeleteDeidentifyTemplate(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::privacy::dlp::v2::DeleteDeidentifyTemplateRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -165,7 +167,8 @@ Status DlpServiceAuth::DeleteDeidentifyTemplate(
 }
 
 StatusOr<google::privacy::dlp::v2::JobTrigger> DlpServiceAuth::CreateJobTrigger(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::privacy::dlp::v2::CreateJobTriggerRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -173,16 +176,17 @@ StatusOr<google::privacy::dlp::v2::JobTrigger> DlpServiceAuth::CreateJobTrigger(
 }
 
 StatusOr<google::privacy::dlp::v2::JobTrigger> DlpServiceAuth::UpdateJobTrigger(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::privacy::dlp::v2::UpdateJobTriggerRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateJobTrigger(context, options, request);
 }
 
-StatusOr<google::privacy::dlp::v2::HybridInspectResponse>
-DlpServiceAuth::HybridInspectJobTrigger(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::privacy::dlp::v2::HybridInspectResponse> DlpServiceAuth::HybridInspectJobTrigger(
+    grpc::ClientContext& context,
+    Options const& options,
     google::privacy::dlp::v2::HybridInspectJobTriggerRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -190,16 +194,17 @@ DlpServiceAuth::HybridInspectJobTrigger(
 }
 
 StatusOr<google::privacy::dlp::v2::JobTrigger> DlpServiceAuth::GetJobTrigger(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::privacy::dlp::v2::GetJobTriggerRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetJobTrigger(context, options, request);
 }
 
-StatusOr<google::privacy::dlp::v2::ListJobTriggersResponse>
-DlpServiceAuth::ListJobTriggers(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::privacy::dlp::v2::ListJobTriggersResponse> DlpServiceAuth::ListJobTriggers(
+    grpc::ClientContext& context,
+    Options const& options,
     google::privacy::dlp::v2::ListJobTriggersRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -207,7 +212,8 @@ DlpServiceAuth::ListJobTriggers(
 }
 
 Status DlpServiceAuth::DeleteJobTrigger(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::privacy::dlp::v2::DeleteJobTriggerRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -215,43 +221,44 @@ Status DlpServiceAuth::DeleteJobTrigger(
 }
 
 StatusOr<google::privacy::dlp::v2::DlpJob> DlpServiceAuth::ActivateJobTrigger(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::privacy::dlp::v2::ActivateJobTriggerRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ActivateJobTrigger(context, options, request);
 }
 
-StatusOr<google::privacy::dlp::v2::DiscoveryConfig>
-DlpServiceAuth::CreateDiscoveryConfig(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::privacy::dlp::v2::DiscoveryConfig> DlpServiceAuth::CreateDiscoveryConfig(
+    grpc::ClientContext& context,
+    Options const& options,
     google::privacy::dlp::v2::CreateDiscoveryConfigRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateDiscoveryConfig(context, options, request);
 }
 
-StatusOr<google::privacy::dlp::v2::DiscoveryConfig>
-DlpServiceAuth::UpdateDiscoveryConfig(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::privacy::dlp::v2::DiscoveryConfig> DlpServiceAuth::UpdateDiscoveryConfig(
+    grpc::ClientContext& context,
+    Options const& options,
     google::privacy::dlp::v2::UpdateDiscoveryConfigRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateDiscoveryConfig(context, options, request);
 }
 
-StatusOr<google::privacy::dlp::v2::DiscoveryConfig>
-DlpServiceAuth::GetDiscoveryConfig(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::privacy::dlp::v2::DiscoveryConfig> DlpServiceAuth::GetDiscoveryConfig(
+    grpc::ClientContext& context,
+    Options const& options,
     google::privacy::dlp::v2::GetDiscoveryConfigRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetDiscoveryConfig(context, options, request);
 }
 
-StatusOr<google::privacy::dlp::v2::ListDiscoveryConfigsResponse>
-DlpServiceAuth::ListDiscoveryConfigs(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::privacy::dlp::v2::ListDiscoveryConfigsResponse> DlpServiceAuth::ListDiscoveryConfigs(
+    grpc::ClientContext& context,
+    Options const& options,
     google::privacy::dlp::v2::ListDiscoveryConfigsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -259,7 +266,8 @@ DlpServiceAuth::ListDiscoveryConfigs(
 }
 
 Status DlpServiceAuth::DeleteDiscoveryConfig(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::privacy::dlp::v2::DeleteDiscoveryConfigRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -267,16 +275,17 @@ Status DlpServiceAuth::DeleteDiscoveryConfig(
 }
 
 StatusOr<google::privacy::dlp::v2::DlpJob> DlpServiceAuth::CreateDlpJob(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::privacy::dlp::v2::CreateDlpJobRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateDlpJob(context, options, request);
 }
 
-StatusOr<google::privacy::dlp::v2::ListDlpJobsResponse>
-DlpServiceAuth::ListDlpJobs(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::privacy::dlp::v2::ListDlpJobsResponse> DlpServiceAuth::ListDlpJobs(
+    grpc::ClientContext& context,
+    Options const& options,
     google::privacy::dlp::v2::ListDlpJobsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -284,7 +293,8 @@ DlpServiceAuth::ListDlpJobs(
 }
 
 StatusOr<google::privacy::dlp::v2::DlpJob> DlpServiceAuth::GetDlpJob(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::privacy::dlp::v2::GetDlpJobRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -292,7 +302,8 @@ StatusOr<google::privacy::dlp::v2::DlpJob> DlpServiceAuth::GetDlpJob(
 }
 
 Status DlpServiceAuth::DeleteDlpJob(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::privacy::dlp::v2::DeleteDlpJobRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -300,43 +311,44 @@ Status DlpServiceAuth::DeleteDlpJob(
 }
 
 Status DlpServiceAuth::CancelDlpJob(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::privacy::dlp::v2::CancelDlpJobRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CancelDlpJob(context, options, request);
 }
 
-StatusOr<google::privacy::dlp::v2::StoredInfoType>
-DlpServiceAuth::CreateStoredInfoType(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::privacy::dlp::v2::StoredInfoType> DlpServiceAuth::CreateStoredInfoType(
+    grpc::ClientContext& context,
+    Options const& options,
     google::privacy::dlp::v2::CreateStoredInfoTypeRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateStoredInfoType(context, options, request);
 }
 
-StatusOr<google::privacy::dlp::v2::StoredInfoType>
-DlpServiceAuth::UpdateStoredInfoType(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::privacy::dlp::v2::StoredInfoType> DlpServiceAuth::UpdateStoredInfoType(
+    grpc::ClientContext& context,
+    Options const& options,
     google::privacy::dlp::v2::UpdateStoredInfoTypeRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateStoredInfoType(context, options, request);
 }
 
-StatusOr<google::privacy::dlp::v2::StoredInfoType>
-DlpServiceAuth::GetStoredInfoType(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::privacy::dlp::v2::StoredInfoType> DlpServiceAuth::GetStoredInfoType(
+    grpc::ClientContext& context,
+    Options const& options,
     google::privacy::dlp::v2::GetStoredInfoTypeRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetStoredInfoType(context, options, request);
 }
 
-StatusOr<google::privacy::dlp::v2::ListStoredInfoTypesResponse>
-DlpServiceAuth::ListStoredInfoTypes(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::privacy::dlp::v2::ListStoredInfoTypesResponse> DlpServiceAuth::ListStoredInfoTypes(
+    grpc::ClientContext& context,
+    Options const& options,
     google::privacy::dlp::v2::ListStoredInfoTypesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -344,61 +356,62 @@ DlpServiceAuth::ListStoredInfoTypes(
 }
 
 Status DlpServiceAuth::DeleteStoredInfoType(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::privacy::dlp::v2::DeleteStoredInfoTypeRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteStoredInfoType(context, options, request);
 }
 
-StatusOr<google::privacy::dlp::v2::ListProjectDataProfilesResponse>
-DlpServiceAuth::ListProjectDataProfiles(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::privacy::dlp::v2::ListProjectDataProfilesResponse> DlpServiceAuth::ListProjectDataProfiles(
+    grpc::ClientContext& context,
+    Options const& options,
     google::privacy::dlp::v2::ListProjectDataProfilesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListProjectDataProfiles(context, options, request);
 }
 
-StatusOr<google::privacy::dlp::v2::ListTableDataProfilesResponse>
-DlpServiceAuth::ListTableDataProfiles(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::privacy::dlp::v2::ListTableDataProfilesResponse> DlpServiceAuth::ListTableDataProfiles(
+    grpc::ClientContext& context,
+    Options const& options,
     google::privacy::dlp::v2::ListTableDataProfilesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListTableDataProfiles(context, options, request);
 }
 
-StatusOr<google::privacy::dlp::v2::ListColumnDataProfilesResponse>
-DlpServiceAuth::ListColumnDataProfiles(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::privacy::dlp::v2::ListColumnDataProfilesResponse> DlpServiceAuth::ListColumnDataProfiles(
+    grpc::ClientContext& context,
+    Options const& options,
     google::privacy::dlp::v2::ListColumnDataProfilesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListColumnDataProfiles(context, options, request);
 }
 
-StatusOr<google::privacy::dlp::v2::ProjectDataProfile>
-DlpServiceAuth::GetProjectDataProfile(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::privacy::dlp::v2::ProjectDataProfile> DlpServiceAuth::GetProjectDataProfile(
+    grpc::ClientContext& context,
+    Options const& options,
     google::privacy::dlp::v2::GetProjectDataProfileRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetProjectDataProfile(context, options, request);
 }
 
-StatusOr<google::privacy::dlp::v2::ListFileStoreDataProfilesResponse>
-DlpServiceAuth::ListFileStoreDataProfiles(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::privacy::dlp::v2::ListFileStoreDataProfilesResponse> DlpServiceAuth::ListFileStoreDataProfiles(
+    grpc::ClientContext& context,
+    Options const& options,
     google::privacy::dlp::v2::ListFileStoreDataProfilesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListFileStoreDataProfiles(context, options, request);
 }
 
-StatusOr<google::privacy::dlp::v2::FileStoreDataProfile>
-DlpServiceAuth::GetFileStoreDataProfile(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::privacy::dlp::v2::FileStoreDataProfile> DlpServiceAuth::GetFileStoreDataProfile(
+    grpc::ClientContext& context,
+    Options const& options,
     google::privacy::dlp::v2::GetFileStoreDataProfileRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -406,26 +419,26 @@ DlpServiceAuth::GetFileStoreDataProfile(
 }
 
 Status DlpServiceAuth::DeleteFileStoreDataProfile(
-    grpc::ClientContext& context, Options const& options,
-    google::privacy::dlp::v2::DeleteFileStoreDataProfileRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::privacy::dlp::v2::DeleteFileStoreDataProfileRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteFileStoreDataProfile(context, options, request);
 }
 
-StatusOr<google::privacy::dlp::v2::TableDataProfile>
-DlpServiceAuth::GetTableDataProfile(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::privacy::dlp::v2::TableDataProfile> DlpServiceAuth::GetTableDataProfile(
+    grpc::ClientContext& context,
+    Options const& options,
     google::privacy::dlp::v2::GetTableDataProfileRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetTableDataProfile(context, options, request);
 }
 
-StatusOr<google::privacy::dlp::v2::ColumnDataProfile>
-DlpServiceAuth::GetColumnDataProfile(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::privacy::dlp::v2::ColumnDataProfile> DlpServiceAuth::GetColumnDataProfile(
+    grpc::ClientContext& context,
+    Options const& options,
     google::privacy::dlp::v2::GetColumnDataProfileRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -433,16 +446,17 @@ DlpServiceAuth::GetColumnDataProfile(
 }
 
 Status DlpServiceAuth::DeleteTableDataProfile(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::privacy::dlp::v2::DeleteTableDataProfileRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteTableDataProfile(context, options, request);
 }
 
-StatusOr<google::privacy::dlp::v2::HybridInspectResponse>
-DlpServiceAuth::HybridInspectDlpJob(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::privacy::dlp::v2::HybridInspectResponse> DlpServiceAuth::HybridInspectDlpJob(
+    grpc::ClientContext& context,
+    Options const& options,
     google::privacy::dlp::v2::HybridInspectDlpJobRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -450,7 +464,8 @@ DlpServiceAuth::HybridInspectDlpJob(
 }
 
 Status DlpServiceAuth::FinishDlpJob(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::privacy::dlp::v2::FinishDlpJobRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -458,7 +473,8 @@ Status DlpServiceAuth::FinishDlpJob(
 }
 
 StatusOr<google::privacy::dlp::v2::Connection> DlpServiceAuth::CreateConnection(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::privacy::dlp::v2::CreateConnectionRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -466,25 +482,26 @@ StatusOr<google::privacy::dlp::v2::Connection> DlpServiceAuth::CreateConnection(
 }
 
 StatusOr<google::privacy::dlp::v2::Connection> DlpServiceAuth::GetConnection(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::privacy::dlp::v2::GetConnectionRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetConnection(context, options, request);
 }
 
-StatusOr<google::privacy::dlp::v2::ListConnectionsResponse>
-DlpServiceAuth::ListConnections(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::privacy::dlp::v2::ListConnectionsResponse> DlpServiceAuth::ListConnections(
+    grpc::ClientContext& context,
+    Options const& options,
     google::privacy::dlp::v2::ListConnectionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListConnections(context, options, request);
 }
 
-StatusOr<google::privacy::dlp::v2::SearchConnectionsResponse>
-DlpServiceAuth::SearchConnections(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::privacy::dlp::v2::SearchConnectionsResponse> DlpServiceAuth::SearchConnections(
+    grpc::ClientContext& context,
+    Options const& options,
     google::privacy::dlp::v2::SearchConnectionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -492,7 +509,8 @@ DlpServiceAuth::SearchConnections(
 }
 
 Status DlpServiceAuth::DeleteConnection(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::privacy::dlp::v2::DeleteConnectionRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -500,7 +518,8 @@ Status DlpServiceAuth::DeleteConnection(
 }
 
 StatusOr<google::privacy::dlp::v2::Connection> DlpServiceAuth::UpdateConnection(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::privacy::dlp::v2::UpdateConnectionRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;

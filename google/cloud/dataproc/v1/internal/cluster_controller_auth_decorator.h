@@ -43,25 +43,23 @@ class ClusterControllerAuth : public ClusterControllerStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::dataproc::v1::CreateClusterRequest const& request)
-      override;
+      google::cloud::dataproc::v1::CreateClusterRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateCluster(
-      grpc::ClientContext& context, Options options,
-      google::cloud::dataproc::v1::CreateClusterRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::dataproc::v1::CreateClusterRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateCluster(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::dataproc::v1::UpdateClusterRequest const& request)
-      override;
+      google::cloud::dataproc::v1::UpdateClusterRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateCluster(
-      grpc::ClientContext& context, Options options,
-      google::cloud::dataproc::v1::UpdateClusterRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::dataproc::v1::UpdateClusterRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncStopCluster(
       google::cloud::CompletionQueue& cq,
@@ -70,7 +68,8 @@ class ClusterControllerAuth : public ClusterControllerStub {
       google::cloud::dataproc::v1::StopClusterRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> StopCluster(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::cloud::dataproc::v1::StopClusterRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncStartCluster(
@@ -80,67 +79,75 @@ class ClusterControllerAuth : public ClusterControllerStub {
       google::cloud::dataproc::v1::StartClusterRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> StartCluster(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::cloud::dataproc::v1::StartClusterRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteCluster(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::dataproc::v1::DeleteClusterRequest const& request)
-      override;
+      google::cloud::dataproc::v1::DeleteClusterRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteCluster(
-      grpc::ClientContext& context, Options options,
-      google::cloud::dataproc::v1::DeleteClusterRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::dataproc::v1::DeleteClusterRequest const& request) override;
 
   StatusOr<google::cloud::dataproc::v1::Cluster> GetCluster(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::dataproc::v1::GetClusterRequest const& request) override;
 
   StatusOr<google::cloud::dataproc::v1::ListClustersResponse> ListClusters(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::dataproc::v1::ListClustersRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDiagnoseCluster(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::dataproc::v1::DiagnoseClusterRequest const& request)
-      override;
+      google::cloud::dataproc::v1::DiagnoseClusterRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DiagnoseCluster(
-      grpc::ClientContext& context, Options options,
-      google::cloud::dataproc::v1::DiagnoseClusterRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::dataproc::v1::DiagnoseClusterRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status DeleteOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::DeleteOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(

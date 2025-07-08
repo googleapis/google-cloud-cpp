@@ -26,41 +26,35 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-CloudShellServiceConnectionIdempotencyPolicy::
-    ~CloudShellServiceConnectionIdempotencyPolicy() = default;
+CloudShellServiceConnectionIdempotencyPolicy::~CloudShellServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<CloudShellServiceConnectionIdempotencyPolicy>
 CloudShellServiceConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<CloudShellServiceConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency CloudShellServiceConnectionIdempotencyPolicy::GetEnvironment(
-    google::cloud::shell::v1::GetEnvironmentRequest const&) {
+Idempotency CloudShellServiceConnectionIdempotencyPolicy::GetEnvironment(google::cloud::shell::v1::GetEnvironmentRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency CloudShellServiceConnectionIdempotencyPolicy::StartEnvironment(
-    google::cloud::shell::v1::StartEnvironmentRequest const&) {
+Idempotency CloudShellServiceConnectionIdempotencyPolicy::StartEnvironment(google::cloud::shell::v1::StartEnvironmentRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CloudShellServiceConnectionIdempotencyPolicy::AuthorizeEnvironment(
-    google::cloud::shell::v1::AuthorizeEnvironmentRequest const&) {
+Idempotency CloudShellServiceConnectionIdempotencyPolicy::AuthorizeEnvironment(google::cloud::shell::v1::AuthorizeEnvironmentRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CloudShellServiceConnectionIdempotencyPolicy::AddPublicKey(
-    google::cloud::shell::v1::AddPublicKeyRequest const&) {
+Idempotency CloudShellServiceConnectionIdempotencyPolicy::AddPublicKey(google::cloud::shell::v1::AddPublicKeyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CloudShellServiceConnectionIdempotencyPolicy::RemovePublicKey(
-    google::cloud::shell::v1::RemovePublicKeyRequest const&) {
+Idempotency CloudShellServiceConnectionIdempotencyPolicy::RemovePublicKey(google::cloud::shell::v1::RemovePublicKeyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<CloudShellServiceConnectionIdempotencyPolicy>
-MakeDefaultCloudShellServiceConnectionIdempotencyPolicy() {
+    MakeDefaultCloudShellServiceConnectionIdempotencyPolicy() {
   return std::make_unique<CloudShellServiceConnectionIdempotencyPolicy>();
 }
 

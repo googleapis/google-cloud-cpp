@@ -26,46 +26,39 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-GroupServiceConnectionIdempotencyPolicy::
-    ~GroupServiceConnectionIdempotencyPolicy() = default;
+GroupServiceConnectionIdempotencyPolicy::~GroupServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<GroupServiceConnectionIdempotencyPolicy>
 GroupServiceConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<GroupServiceConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency GroupServiceConnectionIdempotencyPolicy::ListGroups(
-    google::monitoring::v3::ListGroupsRequest) {  // NOLINT
+Idempotency GroupServiceConnectionIdempotencyPolicy::ListGroups(google::monitoring::v3::ListGroupsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency GroupServiceConnectionIdempotencyPolicy::GetGroup(
-    google::monitoring::v3::GetGroupRequest const&) {
+Idempotency GroupServiceConnectionIdempotencyPolicy::GetGroup(google::monitoring::v3::GetGroupRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency GroupServiceConnectionIdempotencyPolicy::CreateGroup(
-    google::monitoring::v3::CreateGroupRequest const&) {
+Idempotency GroupServiceConnectionIdempotencyPolicy::CreateGroup(google::monitoring::v3::CreateGroupRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency GroupServiceConnectionIdempotencyPolicy::UpdateGroup(
-    google::monitoring::v3::UpdateGroupRequest const&) {
+Idempotency GroupServiceConnectionIdempotencyPolicy::UpdateGroup(google::monitoring::v3::UpdateGroupRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency GroupServiceConnectionIdempotencyPolicy::DeleteGroup(
-    google::monitoring::v3::DeleteGroupRequest const&) {
+Idempotency GroupServiceConnectionIdempotencyPolicy::DeleteGroup(google::monitoring::v3::DeleteGroupRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency GroupServiceConnectionIdempotencyPolicy::ListGroupMembers(
-    google::monitoring::v3::ListGroupMembersRequest) {  // NOLINT
+Idempotency GroupServiceConnectionIdempotencyPolicy::ListGroupMembers(google::monitoring::v3::ListGroupMembersRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<GroupServiceConnectionIdempotencyPolicy>
-MakeDefaultGroupServiceConnectionIdempotencyPolicy() {
+    MakeDefaultGroupServiceConnectionIdempotencyPolicy() {
   return std::make_unique<GroupServiceConnectionIdempotencyPolicy>();
 }
 

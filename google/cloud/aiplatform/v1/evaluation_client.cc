@@ -28,55 +28,48 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 EvaluationServiceClient::EvaluationServiceClient(
     std::shared_ptr<EvaluationServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 EvaluationServiceClient::~EvaluationServiceClient() = default;
 
 StatusOr<google::cloud::aiplatform::v1::EvaluateInstancesResponse>
-EvaluationServiceClient::EvaluateInstances(
-    google::cloud::aiplatform::v1::EvaluateInstancesRequest const& request,
-    Options opts) {
+EvaluationServiceClient::EvaluateInstances(google::cloud::aiplatform::v1::EvaluateInstancesRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->EvaluateInstances(request);
 }
 
 StreamRange<google::cloud::location::Location>
-EvaluationServiceClient::ListLocations(
-    google::cloud::location::ListLocationsRequest request, Options opts) {
+EvaluationServiceClient::ListLocations(google::cloud::location::ListLocationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListLocations(std::move(request));
 }
 
 StatusOr<google::cloud::location::Location>
-EvaluationServiceClient::GetLocation(
-    google::cloud::location::GetLocationRequest const& request, Options opts) {
+EvaluationServiceClient::GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetLocation(request);
 }
 
-StatusOr<google::iam::v1::Policy> EvaluationServiceClient::SetIamPolicy(
-    google::iam::v1::SetIamPolicyRequest const& request, Options opts) {
+StatusOr<google::iam::v1::Policy>
+EvaluationServiceClient::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetIamPolicy(request);
 }
 
-StatusOr<google::iam::v1::Policy> EvaluationServiceClient::GetIamPolicy(
-    google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
+StatusOr<google::iam::v1::Policy>
+EvaluationServiceClient::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetIamPolicy(request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-EvaluationServiceClient::TestIamPermissions(
-    google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
+EvaluationServiceClient::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->TestIamPermissions(request);
 }
 
 StreamRange<google::longrunning::Operation>
-EvaluationServiceClient::ListOperations(std::string const& name,
-                                        std::string const& filter,
-                                        Options opts) {
+EvaluationServiceClient::ListOperations(std::string const& name, std::string const& filter, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::ListOperationsRequest request;
   request.set_name(name);
@@ -85,56 +78,55 @@ EvaluationServiceClient::ListOperations(std::string const& name,
 }
 
 StreamRange<google::longrunning::Operation>
-EvaluationServiceClient::ListOperations(
-    google::longrunning::ListOperationsRequest request, Options opts) {
+EvaluationServiceClient::ListOperations(google::longrunning::ListOperationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOperations(std::move(request));
 }
 
-StatusOr<google::longrunning::Operation> EvaluationServiceClient::GetOperation(
-    std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation>
+EvaluationServiceClient::GetOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
   return connection_->GetOperation(request);
 }
 
-StatusOr<google::longrunning::Operation> EvaluationServiceClient::GetOperation(
-    google::longrunning::GetOperationRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation>
+EvaluationServiceClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }
 
-Status EvaluationServiceClient::DeleteOperation(std::string const& name,
-                                                Options opts) {
+Status
+EvaluationServiceClient::DeleteOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::DeleteOperationRequest request;
   request.set_name(name);
   return connection_->DeleteOperation(request);
 }
 
-Status EvaluationServiceClient::DeleteOperation(
-    google::longrunning::DeleteOperationRequest const& request, Options opts) {
+Status
+EvaluationServiceClient::DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteOperation(request);
 }
 
-Status EvaluationServiceClient::CancelOperation(std::string const& name,
-                                                Options opts) {
+Status
+EvaluationServiceClient::CancelOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::CancelOperationRequest request;
   request.set_name(name);
   return connection_->CancelOperation(request);
 }
 
-Status EvaluationServiceClient::CancelOperation(
-    google::longrunning::CancelOperationRequest const& request, Options opts) {
+Status
+EvaluationServiceClient::CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelOperation(request);
 }
 
-StatusOr<google::longrunning::Operation> EvaluationServiceClient::WaitOperation(
-    google::longrunning::WaitOperationRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation>
+EvaluationServiceClient::WaitOperation(google::longrunning::WaitOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->WaitOperation(request);
 }

@@ -35,39 +35,35 @@ class DataStoreServiceConnectionIdempotencyPolicy {
   virtual ~DataStoreServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<DataStoreServiceConnectionIdempotencyPolicy> clone()
-      const;
+  virtual std::unique_ptr<DataStoreServiceConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency CreateDataStore(
-      google::cloud::discoveryengine::v1::CreateDataStoreRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  CreateDataStore(google::cloud::discoveryengine::v1::CreateDataStoreRequest const& request);
 
-  virtual google::cloud::Idempotency GetDataStore(
-      google::cloud::discoveryengine::v1::GetDataStoreRequest const& request);
+  virtual google::cloud::Idempotency
+  GetDataStore(google::cloud::discoveryengine::v1::GetDataStoreRequest const& request);
 
-  virtual google::cloud::Idempotency ListDataStores(
-      google::cloud::discoveryengine::v1::ListDataStoresRequest request);
+  virtual google::cloud::Idempotency
+  ListDataStores(google::cloud::discoveryengine::v1::ListDataStoresRequest request);
 
-  virtual google::cloud::Idempotency DeleteDataStore(
-      google::cloud::discoveryengine::v1::DeleteDataStoreRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  DeleteDataStore(google::cloud::discoveryengine::v1::DeleteDataStoreRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateDataStore(
-      google::cloud::discoveryengine::v1::UpdateDataStoreRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  UpdateDataStore(google::cloud::discoveryengine::v1::UpdateDataStoreRequest const& request);
 
-  virtual google::cloud::Idempotency ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual google::cloud::Idempotency
+  ListOperations(google::longrunning::ListOperationsRequest request);
 
-  virtual google::cloud::Idempotency GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 
-  virtual google::cloud::Idempotency CancelOperation(
-      google::longrunning::CancelOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  CancelOperation(google::longrunning::CancelOperationRequest const& request);
 };
 
 std::unique_ptr<DataStoreServiceConnectionIdempotencyPolicy>
-MakeDefaultDataStoreServiceConnectionIdempotencyPolicy();
+    MakeDefaultDataStoreServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace discoveryengine_v1

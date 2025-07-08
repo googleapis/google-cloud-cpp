@@ -19,14 +19,14 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_ES_INTERNAL_SESSIONS_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_ES_INTERNAL_SESSIONS_CONNECTION_IMPL_H
 
+#include "google/cloud/async_streaming_read_write_rpc.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/dialogflow_es/internal/sessions_retry_traits.h"
 #include "google/cloud/dialogflow_es/internal/sessions_stub.h"
 #include "google/cloud/dialogflow_es/sessions_connection.h"
 #include "google/cloud/dialogflow_es/sessions_connection_idempotency_policy.h"
 #include "google/cloud/dialogflow_es/sessions_options.h"
-#include "google/cloud/async_streaming_read_write_rpc.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -38,40 +38,40 @@ namespace cloud {
 namespace dialogflow_es_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class SessionsConnectionImpl : public dialogflow_es::SessionsConnection {
+class SessionsConnectionImpl
+    : public dialogflow_es::SessionsConnection {
  public:
   ~SessionsConnectionImpl() override = default;
 
   SessionsConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<dialogflow_es_internal::SessionsStub> stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<dialogflow_es_internal::SessionsStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
-  StatusOr<google::cloud::dialogflow::v2::DetectIntentResponse> DetectIntent(
-      google::cloud::dialogflow::v2::DetectIntentRequest const& request)
-      override;
+  StatusOr<google::cloud::dialogflow::v2::DetectIntentResponse>
+  DetectIntent(google::cloud::dialogflow::v2::DetectIntentRequest const& request) override;
 
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::dialogflow::v2::StreamingDetectIntentRequest,
       google::cloud::dialogflow::v2::StreamingDetectIntentResponse>>
   AsyncStreamingDetectIntent() override;
 
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request) override;
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request) override;
 
-  StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request) override;
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request) override;
 
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request) override;
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

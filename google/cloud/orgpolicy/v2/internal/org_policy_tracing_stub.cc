@@ -28,27 +28,26 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-OrgPolicyTracingStub::OrgPolicyTracingStub(std::shared_ptr<OrgPolicyStub> child)
+OrgPolicyTracingStub::OrgPolicyTracingStub(
+    std::shared_ptr<OrgPolicyStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
-StatusOr<google::cloud::orgpolicy::v2::ListConstraintsResponse>
-OrgPolicyTracingStub::ListConstraints(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::orgpolicy::v2::ListConstraintsResponse> OrgPolicyTracingStub::ListConstraints(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::orgpolicy::v2::ListConstraintsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.orgpolicy.v2.OrgPolicy",
-                                     "ListConstraints");
+  auto span = internal::MakeSpanGrpc("google.cloud.orgpolicy.v2.OrgPolicy", "ListConstraints");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListConstraints(context, options, request));
 }
 
-StatusOr<google::cloud::orgpolicy::v2::ListPoliciesResponse>
-OrgPolicyTracingStub::ListPolicies(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::orgpolicy::v2::ListPoliciesResponse> OrgPolicyTracingStub::ListPolicies(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::orgpolicy::v2::ListPoliciesRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.orgpolicy.v2.OrgPolicy",
-                                     "ListPolicies");
+  auto span = internal::MakeSpanGrpc("google.cloud.orgpolicy.v2.OrgPolicy", "ListPolicies");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -56,46 +55,43 @@ OrgPolicyTracingStub::ListPolicies(
 }
 
 StatusOr<google::cloud::orgpolicy::v2::Policy> OrgPolicyTracingStub::GetPolicy(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::orgpolicy::v2::GetPolicyRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.orgpolicy.v2.OrgPolicy",
-                                     "GetPolicy");
+  auto span = internal::MakeSpanGrpc("google.cloud.orgpolicy.v2.OrgPolicy", "GetPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetPolicy(context, options, request));
 }
 
-StatusOr<google::cloud::orgpolicy::v2::Policy>
-OrgPolicyTracingStub::GetEffectivePolicy(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::orgpolicy::v2::Policy> OrgPolicyTracingStub::GetEffectivePolicy(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::orgpolicy::v2::GetEffectivePolicyRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.orgpolicy.v2.OrgPolicy",
-                                     "GetEffectivePolicy");
+  auto span = internal::MakeSpanGrpc("google.cloud.orgpolicy.v2.OrgPolicy", "GetEffectivePolicy");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->GetEffectivePolicy(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->GetEffectivePolicy(context, options, request));
 }
 
-StatusOr<google::cloud::orgpolicy::v2::Policy>
-OrgPolicyTracingStub::CreatePolicy(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::orgpolicy::v2::Policy> OrgPolicyTracingStub::CreatePolicy(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::orgpolicy::v2::CreatePolicyRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.orgpolicy.v2.OrgPolicy",
-                                     "CreatePolicy");
+  auto span = internal::MakeSpanGrpc("google.cloud.orgpolicy.v2.OrgPolicy", "CreatePolicy");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreatePolicy(context, options, request));
 }
 
-StatusOr<google::cloud::orgpolicy::v2::Policy>
-OrgPolicyTracingStub::UpdatePolicy(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::orgpolicy::v2::Policy> OrgPolicyTracingStub::UpdatePolicy(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::orgpolicy::v2::UpdatePolicyRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.orgpolicy.v2.OrgPolicy",
-                                     "UpdatePolicy");
+  auto span = internal::MakeSpanGrpc("google.cloud.orgpolicy.v2.OrgPolicy", "UpdatePolicy");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -103,79 +99,69 @@ OrgPolicyTracingStub::UpdatePolicy(
 }
 
 Status OrgPolicyTracingStub::DeletePolicy(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::orgpolicy::v2::DeletePolicyRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.orgpolicy.v2.OrgPolicy",
-                                     "DeletePolicy");
+  auto span = internal::MakeSpanGrpc("google.cloud.orgpolicy.v2.OrgPolicy", "DeletePolicy");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeletePolicy(context, options, request));
 }
 
-StatusOr<google::cloud::orgpolicy::v2::CustomConstraint>
-OrgPolicyTracingStub::CreateCustomConstraint(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::orgpolicy::v2::CreateCustomConstraintRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.orgpolicy.v2.OrgPolicy",
-                                     "CreateCustomConstraint");
+StatusOr<google::cloud::orgpolicy::v2::CustomConstraint> OrgPolicyTracingStub::CreateCustomConstraint(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::orgpolicy::v2::CreateCustomConstraintRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.orgpolicy.v2.OrgPolicy", "CreateCustomConstraint");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span,
-      child_->CreateCustomConstraint(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->CreateCustomConstraint(context, options, request));
 }
 
-StatusOr<google::cloud::orgpolicy::v2::CustomConstraint>
-OrgPolicyTracingStub::UpdateCustomConstraint(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::orgpolicy::v2::UpdateCustomConstraintRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.orgpolicy.v2.OrgPolicy",
-                                     "UpdateCustomConstraint");
+StatusOr<google::cloud::orgpolicy::v2::CustomConstraint> OrgPolicyTracingStub::UpdateCustomConstraint(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::orgpolicy::v2::UpdateCustomConstraintRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.orgpolicy.v2.OrgPolicy", "UpdateCustomConstraint");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span,
-      child_->UpdateCustomConstraint(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->UpdateCustomConstraint(context, options, request));
 }
 
-StatusOr<google::cloud::orgpolicy::v2::CustomConstraint>
-OrgPolicyTracingStub::GetCustomConstraint(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::orgpolicy::v2::CustomConstraint> OrgPolicyTracingStub::GetCustomConstraint(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::orgpolicy::v2::GetCustomConstraintRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.orgpolicy.v2.OrgPolicy",
-                                     "GetCustomConstraint");
+  auto span = internal::MakeSpanGrpc("google.cloud.orgpolicy.v2.OrgPolicy", "GetCustomConstraint");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->GetCustomConstraint(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->GetCustomConstraint(context, options, request));
 }
 
-StatusOr<google::cloud::orgpolicy::v2::ListCustomConstraintsResponse>
-OrgPolicyTracingStub::ListCustomConstraints(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::orgpolicy::v2::ListCustomConstraintsResponse> OrgPolicyTracingStub::ListCustomConstraints(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::orgpolicy::v2::ListCustomConstraintsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.orgpolicy.v2.OrgPolicy",
-                                     "ListCustomConstraints");
+  auto span = internal::MakeSpanGrpc("google.cloud.orgpolicy.v2.OrgPolicy", "ListCustomConstraints");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->ListCustomConstraints(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->ListCustomConstraints(context, options, request));
 }
 
 Status OrgPolicyTracingStub::DeleteCustomConstraint(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::orgpolicy::v2::DeleteCustomConstraintRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.orgpolicy.v2.OrgPolicy",
-                                     "DeleteCustomConstraint");
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::orgpolicy::v2::DeleteCustomConstraintRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.orgpolicy.v2.OrgPolicy", "DeleteCustomConstraint");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span,
-      child_->DeleteCustomConstraint(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->DeleteCustomConstraint(context, options, request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

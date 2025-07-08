@@ -29,17 +29,19 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 RoutineServiceRestLogging::RoutineServiceRestLogging(
     std::shared_ptr<RoutineServiceRestStub> child,
-    TracingOptions tracing_options, std::set<std::string> components)
-    : child_(std::move(child)),
-      tracing_options_(std::move(tracing_options)),
+    TracingOptions tracing_options,
+    std::set<std::string> components)
+    : child_(std::move(child)), tracing_options_(std::move(tracing_options)),
       components_(std::move(components)) {}
 
 StatusOr<google::cloud::bigquery::v2::Routine>
 RoutineServiceRestLogging::GetRoutine(
-    rest_internal::RestContext& rest_context, Options const& options,
+    rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::bigquery::v2::GetRoutineRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context, Options const& options,
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
              google::cloud::bigquery::v2::GetRoutineRequest const& request) {
         return child_->GetRoutine(rest_context, options, request);
       },
@@ -48,10 +50,12 @@ RoutineServiceRestLogging::GetRoutine(
 
 StatusOr<google::cloud::bigquery::v2::Routine>
 RoutineServiceRestLogging::InsertRoutine(
-    rest_internal::RestContext& rest_context, Options const& options,
+    rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::bigquery::v2::InsertRoutineRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context, Options const& options,
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
              google::cloud::bigquery::v2::InsertRoutineRequest const& request) {
         return child_->InsertRoutine(rest_context, options, request);
       },
@@ -60,21 +64,26 @@ RoutineServiceRestLogging::InsertRoutine(
 
 StatusOr<google::cloud::bigquery::v2::Routine>
 RoutineServiceRestLogging::UpdateRoutine(
-    rest_internal::RestContext& rest_context, Options const& options,
+    rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::bigquery::v2::UpdateRoutineRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context, Options const& options,
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
              google::cloud::bigquery::v2::UpdateRoutineRequest const& request) {
         return child_->UpdateRoutine(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
 }
 
-Status RoutineServiceRestLogging::DeleteRoutine(
-    rest_internal::RestContext& rest_context, Options const& options,
+Status
+RoutineServiceRestLogging::DeleteRoutine(
+    rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::bigquery::v2::DeleteRoutineRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context, Options const& options,
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
              google::cloud::bigquery::v2::DeleteRoutineRequest const& request) {
         return child_->DeleteRoutine(rest_context, options, request);
       },
@@ -83,10 +92,12 @@ Status RoutineServiceRestLogging::DeleteRoutine(
 
 StatusOr<google::cloud::bigquery::v2::ListRoutinesResponse>
 RoutineServiceRestLogging::ListRoutines(
-    rest_internal::RestContext& rest_context, Options const& options,
+    rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::bigquery::v2::ListRoutinesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context, Options const& options,
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
              google::cloud::bigquery::v2::ListRoutinesRequest const& request) {
         return child_->ListRoutines(rest_context, options, request);
       },

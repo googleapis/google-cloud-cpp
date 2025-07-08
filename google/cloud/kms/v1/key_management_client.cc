@@ -28,13 +28,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 KeyManagementServiceClient::KeyManagementServiceClient(
     std::shared_ptr<KeyManagementServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 KeyManagementServiceClient::~KeyManagementServiceClient() = default;
 
 StreamRange<google::cloud::kms::v1::KeyRing>
-KeyManagementServiceClient::ListKeyRings(std::string const& parent,
-                                         Options opts) {
+KeyManagementServiceClient::ListKeyRings(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::kms::v1::ListKeyRingsRequest request;
   request.set_parent(parent);
@@ -42,15 +41,13 @@ KeyManagementServiceClient::ListKeyRings(std::string const& parent,
 }
 
 StreamRange<google::cloud::kms::v1::KeyRing>
-KeyManagementServiceClient::ListKeyRings(
-    google::cloud::kms::v1::ListKeyRingsRequest request, Options opts) {
+KeyManagementServiceClient::ListKeyRings(google::cloud::kms::v1::ListKeyRingsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListKeyRings(std::move(request));
 }
 
 StreamRange<google::cloud::kms::v1::CryptoKey>
-KeyManagementServiceClient::ListCryptoKeys(std::string const& parent,
-                                           Options opts) {
+KeyManagementServiceClient::ListCryptoKeys(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::kms::v1::ListCryptoKeysRequest request;
   request.set_parent(parent);
@@ -58,15 +55,13 @@ KeyManagementServiceClient::ListCryptoKeys(std::string const& parent,
 }
 
 StreamRange<google::cloud::kms::v1::CryptoKey>
-KeyManagementServiceClient::ListCryptoKeys(
-    google::cloud::kms::v1::ListCryptoKeysRequest request, Options opts) {
+KeyManagementServiceClient::ListCryptoKeys(google::cloud::kms::v1::ListCryptoKeysRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListCryptoKeys(std::move(request));
 }
 
 StreamRange<google::cloud::kms::v1::CryptoKeyVersion>
-KeyManagementServiceClient::ListCryptoKeyVersions(std::string const& parent,
-                                                  Options opts) {
+KeyManagementServiceClient::ListCryptoKeyVersions(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::kms::v1::ListCryptoKeyVersionsRequest request;
   request.set_parent(parent);
@@ -74,16 +69,13 @@ KeyManagementServiceClient::ListCryptoKeyVersions(std::string const& parent,
 }
 
 StreamRange<google::cloud::kms::v1::CryptoKeyVersion>
-KeyManagementServiceClient::ListCryptoKeyVersions(
-    google::cloud::kms::v1::ListCryptoKeyVersionsRequest request,
-    Options opts) {
+KeyManagementServiceClient::ListCryptoKeyVersions(google::cloud::kms::v1::ListCryptoKeyVersionsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListCryptoKeyVersions(std::move(request));
 }
 
 StreamRange<google::cloud::kms::v1::ImportJob>
-KeyManagementServiceClient::ListImportJobs(std::string const& parent,
-                                           Options opts) {
+KeyManagementServiceClient::ListImportJobs(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::kms::v1::ListImportJobsRequest request;
   request.set_parent(parent);
@@ -91,8 +83,7 @@ KeyManagementServiceClient::ListImportJobs(std::string const& parent,
 }
 
 StreamRange<google::cloud::kms::v1::ImportJob>
-KeyManagementServiceClient::ListImportJobs(
-    google::cloud::kms::v1::ListImportJobsRequest request, Options opts) {
+KeyManagementServiceClient::ListImportJobs(google::cloud::kms::v1::ListImportJobsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListImportJobs(std::move(request));
 }
@@ -106,15 +97,13 @@ KeyManagementServiceClient::GetKeyRing(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::kms::v1::KeyRing>
-KeyManagementServiceClient::GetKeyRing(
-    google::cloud::kms::v1::GetKeyRingRequest const& request, Options opts) {
+KeyManagementServiceClient::GetKeyRing(google::cloud::kms::v1::GetKeyRingRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetKeyRing(request);
 }
 
 StatusOr<google::cloud::kms::v1::CryptoKey>
-KeyManagementServiceClient::GetCryptoKey(std::string const& name,
-                                         Options opts) {
+KeyManagementServiceClient::GetCryptoKey(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::kms::v1::GetCryptoKeyRequest request;
   request.set_name(name);
@@ -122,15 +111,13 @@ KeyManagementServiceClient::GetCryptoKey(std::string const& name,
 }
 
 StatusOr<google::cloud::kms::v1::CryptoKey>
-KeyManagementServiceClient::GetCryptoKey(
-    google::cloud::kms::v1::GetCryptoKeyRequest const& request, Options opts) {
+KeyManagementServiceClient::GetCryptoKey(google::cloud::kms::v1::GetCryptoKeyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetCryptoKey(request);
 }
 
 StatusOr<google::cloud::kms::v1::CryptoKeyVersion>
-KeyManagementServiceClient::GetCryptoKeyVersion(std::string const& name,
-                                                Options opts) {
+KeyManagementServiceClient::GetCryptoKeyVersion(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::kms::v1::GetCryptoKeyVersionRequest request;
   request.set_name(name);
@@ -138,16 +125,13 @@ KeyManagementServiceClient::GetCryptoKeyVersion(std::string const& name,
 }
 
 StatusOr<google::cloud::kms::v1::CryptoKeyVersion>
-KeyManagementServiceClient::GetCryptoKeyVersion(
-    google::cloud::kms::v1::GetCryptoKeyVersionRequest const& request,
-    Options opts) {
+KeyManagementServiceClient::GetCryptoKeyVersion(google::cloud::kms::v1::GetCryptoKeyVersionRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetCryptoKeyVersion(request);
 }
 
 StatusOr<google::cloud::kms::v1::PublicKey>
-KeyManagementServiceClient::GetPublicKey(std::string const& name,
-                                         Options opts) {
+KeyManagementServiceClient::GetPublicKey(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::kms::v1::GetPublicKeyRequest request;
   request.set_name(name);
@@ -155,15 +139,13 @@ KeyManagementServiceClient::GetPublicKey(std::string const& name,
 }
 
 StatusOr<google::cloud::kms::v1::PublicKey>
-KeyManagementServiceClient::GetPublicKey(
-    google::cloud::kms::v1::GetPublicKeyRequest const& request, Options opts) {
+KeyManagementServiceClient::GetPublicKey(google::cloud::kms::v1::GetPublicKeyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetPublicKey(request);
 }
 
 StatusOr<google::cloud::kms::v1::ImportJob>
-KeyManagementServiceClient::GetImportJob(std::string const& name,
-                                         Options opts) {
+KeyManagementServiceClient::GetImportJob(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::kms::v1::GetImportJobRequest request;
   request.set_name(name);
@@ -171,16 +153,13 @@ KeyManagementServiceClient::GetImportJob(std::string const& name,
 }
 
 StatusOr<google::cloud::kms::v1::ImportJob>
-KeyManagementServiceClient::GetImportJob(
-    google::cloud::kms::v1::GetImportJobRequest const& request, Options opts) {
+KeyManagementServiceClient::GetImportJob(google::cloud::kms::v1::GetImportJobRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetImportJob(request);
 }
 
 StatusOr<google::cloud::kms::v1::KeyRing>
-KeyManagementServiceClient::CreateKeyRing(
-    std::string const& parent, std::string const& key_ring_id,
-    google::cloud::kms::v1::KeyRing const& key_ring, Options opts) {
+KeyManagementServiceClient::CreateKeyRing(std::string const& parent, std::string const& key_ring_id, google::cloud::kms::v1::KeyRing const& key_ring, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::kms::v1::CreateKeyRingRequest request;
   request.set_parent(parent);
@@ -190,16 +169,13 @@ KeyManagementServiceClient::CreateKeyRing(
 }
 
 StatusOr<google::cloud::kms::v1::KeyRing>
-KeyManagementServiceClient::CreateKeyRing(
-    google::cloud::kms::v1::CreateKeyRingRequest const& request, Options opts) {
+KeyManagementServiceClient::CreateKeyRing(google::cloud::kms::v1::CreateKeyRingRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateKeyRing(request);
 }
 
 StatusOr<google::cloud::kms::v1::CryptoKey>
-KeyManagementServiceClient::CreateCryptoKey(
-    std::string const& parent, std::string const& crypto_key_id,
-    google::cloud::kms::v1::CryptoKey const& crypto_key, Options opts) {
+KeyManagementServiceClient::CreateCryptoKey(std::string const& parent, std::string const& crypto_key_id, google::cloud::kms::v1::CryptoKey const& crypto_key, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::kms::v1::CreateCryptoKeyRequest request;
   request.set_parent(parent);
@@ -209,18 +185,13 @@ KeyManagementServiceClient::CreateCryptoKey(
 }
 
 StatusOr<google::cloud::kms::v1::CryptoKey>
-KeyManagementServiceClient::CreateCryptoKey(
-    google::cloud::kms::v1::CreateCryptoKeyRequest const& request,
-    Options opts) {
+KeyManagementServiceClient::CreateCryptoKey(google::cloud::kms::v1::CreateCryptoKeyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateCryptoKey(request);
 }
 
 StatusOr<google::cloud::kms::v1::CryptoKeyVersion>
-KeyManagementServiceClient::CreateCryptoKeyVersion(
-    std::string const& parent,
-    google::cloud::kms::v1::CryptoKeyVersion const& crypto_key_version,
-    Options opts) {
+KeyManagementServiceClient::CreateCryptoKeyVersion(std::string const& parent, google::cloud::kms::v1::CryptoKeyVersion const& crypto_key_version, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::kms::v1::CreateCryptoKeyVersionRequest request;
   request.set_parent(parent);
@@ -229,25 +200,19 @@ KeyManagementServiceClient::CreateCryptoKeyVersion(
 }
 
 StatusOr<google::cloud::kms::v1::CryptoKeyVersion>
-KeyManagementServiceClient::CreateCryptoKeyVersion(
-    google::cloud::kms::v1::CreateCryptoKeyVersionRequest const& request,
-    Options opts) {
+KeyManagementServiceClient::CreateCryptoKeyVersion(google::cloud::kms::v1::CreateCryptoKeyVersionRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateCryptoKeyVersion(request);
 }
 
 StatusOr<google::cloud::kms::v1::CryptoKeyVersion>
-KeyManagementServiceClient::ImportCryptoKeyVersion(
-    google::cloud::kms::v1::ImportCryptoKeyVersionRequest const& request,
-    Options opts) {
+KeyManagementServiceClient::ImportCryptoKeyVersion(google::cloud::kms::v1::ImportCryptoKeyVersionRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ImportCryptoKeyVersion(request);
 }
 
 StatusOr<google::cloud::kms::v1::ImportJob>
-KeyManagementServiceClient::CreateImportJob(
-    std::string const& parent, std::string const& import_job_id,
-    google::cloud::kms::v1::ImportJob const& import_job, Options opts) {
+KeyManagementServiceClient::CreateImportJob(std::string const& parent, std::string const& import_job_id, google::cloud::kms::v1::ImportJob const& import_job, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::kms::v1::CreateImportJobRequest request;
   request.set_parent(parent);
@@ -257,17 +222,13 @@ KeyManagementServiceClient::CreateImportJob(
 }
 
 StatusOr<google::cloud::kms::v1::ImportJob>
-KeyManagementServiceClient::CreateImportJob(
-    google::cloud::kms::v1::CreateImportJobRequest const& request,
-    Options opts) {
+KeyManagementServiceClient::CreateImportJob(google::cloud::kms::v1::CreateImportJobRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateImportJob(request);
 }
 
 StatusOr<google::cloud::kms::v1::CryptoKey>
-KeyManagementServiceClient::UpdateCryptoKey(
-    google::cloud::kms::v1::CryptoKey const& crypto_key,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+KeyManagementServiceClient::UpdateCryptoKey(google::cloud::kms::v1::CryptoKey const& crypto_key, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::kms::v1::UpdateCryptoKeyRequest request;
   *request.mutable_crypto_key() = crypto_key;
@@ -276,17 +237,13 @@ KeyManagementServiceClient::UpdateCryptoKey(
 }
 
 StatusOr<google::cloud::kms::v1::CryptoKey>
-KeyManagementServiceClient::UpdateCryptoKey(
-    google::cloud::kms::v1::UpdateCryptoKeyRequest const& request,
-    Options opts) {
+KeyManagementServiceClient::UpdateCryptoKey(google::cloud::kms::v1::UpdateCryptoKeyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateCryptoKey(request);
 }
 
 StatusOr<google::cloud::kms::v1::CryptoKeyVersion>
-KeyManagementServiceClient::UpdateCryptoKeyVersion(
-    google::cloud::kms::v1::CryptoKeyVersion const& crypto_key_version,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+KeyManagementServiceClient::UpdateCryptoKeyVersion(google::cloud::kms::v1::CryptoKeyVersion const& crypto_key_version, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::kms::v1::UpdateCryptoKeyVersionRequest request;
   *request.mutable_crypto_key_version() = crypto_key_version;
@@ -295,17 +252,13 @@ KeyManagementServiceClient::UpdateCryptoKeyVersion(
 }
 
 StatusOr<google::cloud::kms::v1::CryptoKeyVersion>
-KeyManagementServiceClient::UpdateCryptoKeyVersion(
-    google::cloud::kms::v1::UpdateCryptoKeyVersionRequest const& request,
-    Options opts) {
+KeyManagementServiceClient::UpdateCryptoKeyVersion(google::cloud::kms::v1::UpdateCryptoKeyVersionRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateCryptoKeyVersion(request);
 }
 
 StatusOr<google::cloud::kms::v1::CryptoKey>
-KeyManagementServiceClient::UpdateCryptoKeyPrimaryVersion(
-    std::string const& name, std::string const& crypto_key_version_id,
-    Options opts) {
+KeyManagementServiceClient::UpdateCryptoKeyPrimaryVersion(std::string const& name, std::string const& crypto_key_version_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::kms::v1::UpdateCryptoKeyPrimaryVersionRequest request;
   request.set_name(name);
@@ -314,16 +267,13 @@ KeyManagementServiceClient::UpdateCryptoKeyPrimaryVersion(
 }
 
 StatusOr<google::cloud::kms::v1::CryptoKey>
-KeyManagementServiceClient::UpdateCryptoKeyPrimaryVersion(
-    google::cloud::kms::v1::UpdateCryptoKeyPrimaryVersionRequest const& request,
-    Options opts) {
+KeyManagementServiceClient::UpdateCryptoKeyPrimaryVersion(google::cloud::kms::v1::UpdateCryptoKeyPrimaryVersionRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateCryptoKeyPrimaryVersion(request);
 }
 
 StatusOr<google::cloud::kms::v1::CryptoKeyVersion>
-KeyManagementServiceClient::DestroyCryptoKeyVersion(std::string const& name,
-                                                    Options opts) {
+KeyManagementServiceClient::DestroyCryptoKeyVersion(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::kms::v1::DestroyCryptoKeyVersionRequest request;
   request.set_name(name);
@@ -331,16 +281,13 @@ KeyManagementServiceClient::DestroyCryptoKeyVersion(std::string const& name,
 }
 
 StatusOr<google::cloud::kms::v1::CryptoKeyVersion>
-KeyManagementServiceClient::DestroyCryptoKeyVersion(
-    google::cloud::kms::v1::DestroyCryptoKeyVersionRequest const& request,
-    Options opts) {
+KeyManagementServiceClient::DestroyCryptoKeyVersion(google::cloud::kms::v1::DestroyCryptoKeyVersionRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DestroyCryptoKeyVersion(request);
 }
 
 StatusOr<google::cloud::kms::v1::CryptoKeyVersion>
-KeyManagementServiceClient::RestoreCryptoKeyVersion(std::string const& name,
-                                                    Options opts) {
+KeyManagementServiceClient::RestoreCryptoKeyVersion(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::kms::v1::RestoreCryptoKeyVersionRequest request;
   request.set_name(name);
@@ -348,17 +295,13 @@ KeyManagementServiceClient::RestoreCryptoKeyVersion(std::string const& name,
 }
 
 StatusOr<google::cloud::kms::v1::CryptoKeyVersion>
-KeyManagementServiceClient::RestoreCryptoKeyVersion(
-    google::cloud::kms::v1::RestoreCryptoKeyVersionRequest const& request,
-    Options opts) {
+KeyManagementServiceClient::RestoreCryptoKeyVersion(google::cloud::kms::v1::RestoreCryptoKeyVersionRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RestoreCryptoKeyVersion(request);
 }
 
 StatusOr<google::cloud::kms::v1::EncryptResponse>
-KeyManagementServiceClient::Encrypt(std::string const& name,
-                                    std::string const& plaintext,
-                                    Options opts) {
+KeyManagementServiceClient::Encrypt(std::string const& name, std::string const& plaintext, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::kms::v1::EncryptRequest request;
   request.set_name(name);
@@ -367,16 +310,13 @@ KeyManagementServiceClient::Encrypt(std::string const& name,
 }
 
 StatusOr<google::cloud::kms::v1::EncryptResponse>
-KeyManagementServiceClient::Encrypt(
-    google::cloud::kms::v1::EncryptRequest const& request, Options opts) {
+KeyManagementServiceClient::Encrypt(google::cloud::kms::v1::EncryptRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->Encrypt(request);
 }
 
 StatusOr<google::cloud::kms::v1::DecryptResponse>
-KeyManagementServiceClient::Decrypt(std::string const& name,
-                                    std::string const& ciphertext,
-                                    Options opts) {
+KeyManagementServiceClient::Decrypt(std::string const& name, std::string const& ciphertext, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::kms::v1::DecryptRequest request;
   request.set_name(name);
@@ -385,30 +325,25 @@ KeyManagementServiceClient::Decrypt(std::string const& name,
 }
 
 StatusOr<google::cloud::kms::v1::DecryptResponse>
-KeyManagementServiceClient::Decrypt(
-    google::cloud::kms::v1::DecryptRequest const& request, Options opts) {
+KeyManagementServiceClient::Decrypt(google::cloud::kms::v1::DecryptRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->Decrypt(request);
 }
 
 StatusOr<google::cloud::kms::v1::RawEncryptResponse>
-KeyManagementServiceClient::RawEncrypt(
-    google::cloud::kms::v1::RawEncryptRequest const& request, Options opts) {
+KeyManagementServiceClient::RawEncrypt(google::cloud::kms::v1::RawEncryptRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RawEncrypt(request);
 }
 
 StatusOr<google::cloud::kms::v1::RawDecryptResponse>
-KeyManagementServiceClient::RawDecrypt(
-    google::cloud::kms::v1::RawDecryptRequest const& request, Options opts) {
+KeyManagementServiceClient::RawDecrypt(google::cloud::kms::v1::RawDecryptRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RawDecrypt(request);
 }
 
 StatusOr<google::cloud::kms::v1::AsymmetricSignResponse>
-KeyManagementServiceClient::AsymmetricSign(
-    std::string const& name, google::cloud::kms::v1::Digest const& digest,
-    Options opts) {
+KeyManagementServiceClient::AsymmetricSign(std::string const& name, google::cloud::kms::v1::Digest const& digest, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::kms::v1::AsymmetricSignRequest request;
   request.set_name(name);
@@ -417,17 +352,13 @@ KeyManagementServiceClient::AsymmetricSign(
 }
 
 StatusOr<google::cloud::kms::v1::AsymmetricSignResponse>
-KeyManagementServiceClient::AsymmetricSign(
-    google::cloud::kms::v1::AsymmetricSignRequest const& request,
-    Options opts) {
+KeyManagementServiceClient::AsymmetricSign(google::cloud::kms::v1::AsymmetricSignRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->AsymmetricSign(request);
 }
 
 StatusOr<google::cloud::kms::v1::AsymmetricDecryptResponse>
-KeyManagementServiceClient::AsymmetricDecrypt(std::string const& name,
-                                              std::string const& ciphertext,
-                                              Options opts) {
+KeyManagementServiceClient::AsymmetricDecrypt(std::string const& name, std::string const& ciphertext, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::kms::v1::AsymmetricDecryptRequest request;
   request.set_name(name);
@@ -436,16 +367,13 @@ KeyManagementServiceClient::AsymmetricDecrypt(std::string const& name,
 }
 
 StatusOr<google::cloud::kms::v1::AsymmetricDecryptResponse>
-KeyManagementServiceClient::AsymmetricDecrypt(
-    google::cloud::kms::v1::AsymmetricDecryptRequest const& request,
-    Options opts) {
+KeyManagementServiceClient::AsymmetricDecrypt(google::cloud::kms::v1::AsymmetricDecryptRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->AsymmetricDecrypt(request);
 }
 
 StatusOr<google::cloud::kms::v1::MacSignResponse>
-KeyManagementServiceClient::MacSign(std::string const& name,
-                                    std::string const& data, Options opts) {
+KeyManagementServiceClient::MacSign(std::string const& name, std::string const& data, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::kms::v1::MacSignRequest request;
   request.set_name(name);
@@ -454,16 +382,13 @@ KeyManagementServiceClient::MacSign(std::string const& name,
 }
 
 StatusOr<google::cloud::kms::v1::MacSignResponse>
-KeyManagementServiceClient::MacSign(
-    google::cloud::kms::v1::MacSignRequest const& request, Options opts) {
+KeyManagementServiceClient::MacSign(google::cloud::kms::v1::MacSignRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->MacSign(request);
 }
 
 StatusOr<google::cloud::kms::v1::MacVerifyResponse>
-KeyManagementServiceClient::MacVerify(std::string const& name,
-                                      std::string const& data,
-                                      std::string const& mac, Options opts) {
+KeyManagementServiceClient::MacVerify(std::string const& name, std::string const& data, std::string const& mac, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::kms::v1::MacVerifyRequest request;
   request.set_name(name);
@@ -473,16 +398,13 @@ KeyManagementServiceClient::MacVerify(std::string const& name,
 }
 
 StatusOr<google::cloud::kms::v1::MacVerifyResponse>
-KeyManagementServiceClient::MacVerify(
-    google::cloud::kms::v1::MacVerifyRequest const& request, Options opts) {
+KeyManagementServiceClient::MacVerify(google::cloud::kms::v1::MacVerifyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->MacVerify(request);
 }
 
 StatusOr<google::cloud::kms::v1::GenerateRandomBytesResponse>
-KeyManagementServiceClient::GenerateRandomBytes(
-    std::string const& location, std::int32_t length_bytes,
-    google::cloud::kms::v1::ProtectionLevel protection_level, Options opts) {
+KeyManagementServiceClient::GenerateRandomBytes(std::string const& location, std::int32_t length_bytes, google::cloud::kms::v1::ProtectionLevel protection_level, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::kms::v1::GenerateRandomBytesRequest request;
   request.set_location(location);
@@ -492,49 +414,43 @@ KeyManagementServiceClient::GenerateRandomBytes(
 }
 
 StatusOr<google::cloud::kms::v1::GenerateRandomBytesResponse>
-KeyManagementServiceClient::GenerateRandomBytes(
-    google::cloud::kms::v1::GenerateRandomBytesRequest const& request,
-    Options opts) {
+KeyManagementServiceClient::GenerateRandomBytes(google::cloud::kms::v1::GenerateRandomBytesRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GenerateRandomBytes(request);
 }
 
 StreamRange<google::cloud::location::Location>
-KeyManagementServiceClient::ListLocations(
-    google::cloud::location::ListLocationsRequest request, Options opts) {
+KeyManagementServiceClient::ListLocations(google::cloud::location::ListLocationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListLocations(std::move(request));
 }
 
 StatusOr<google::cloud::location::Location>
-KeyManagementServiceClient::GetLocation(
-    google::cloud::location::GetLocationRequest const& request, Options opts) {
+KeyManagementServiceClient::GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetLocation(request);
 }
 
-StatusOr<google::iam::v1::Policy> KeyManagementServiceClient::SetIamPolicy(
-    google::iam::v1::SetIamPolicyRequest const& request, Options opts) {
+StatusOr<google::iam::v1::Policy>
+KeyManagementServiceClient::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetIamPolicy(request);
 }
 
-StatusOr<google::iam::v1::Policy> KeyManagementServiceClient::GetIamPolicy(
-    google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
+StatusOr<google::iam::v1::Policy>
+KeyManagementServiceClient::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetIamPolicy(request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-KeyManagementServiceClient::TestIamPermissions(
-    google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
+KeyManagementServiceClient::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->TestIamPermissions(request);
 }
 
 StatusOr<google::longrunning::Operation>
-KeyManagementServiceClient::GetOperation(std::string const& name,
-                                         Options opts) {
+KeyManagementServiceClient::GetOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
@@ -542,8 +458,7 @@ KeyManagementServiceClient::GetOperation(std::string const& name,
 }
 
 StatusOr<google::longrunning::Operation>
-KeyManagementServiceClient::GetOperation(
-    google::longrunning::GetOperationRequest const& request, Options opts) {
+KeyManagementServiceClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }

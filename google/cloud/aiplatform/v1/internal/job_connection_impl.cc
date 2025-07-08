@@ -33,95 +33,84 @@ namespace aiplatform_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<aiplatform_v1::JobServiceRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<aiplatform_v1::JobServiceRetryPolicy>
+retry_policy(Options const& options) {
   return options.get<aiplatform_v1::JobServiceRetryPolicyOption>()->clone();
 }
 
-std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+std::unique_ptr<BackoffPolicy>
+backoff_policy(Options const& options) {
   return options.get<aiplatform_v1::JobServiceBackoffPolicyOption>()->clone();
 }
 
 std::unique_ptr<aiplatform_v1::JobServiceConnectionIdempotencyPolicy>
 idempotency_policy(Options const& options) {
-  return options
-      .get<aiplatform_v1::JobServiceConnectionIdempotencyPolicyOption>()
-      ->clone();
+  return options.get<aiplatform_v1::JobServiceConnectionIdempotencyPolicyOption>()->clone();
 }
 
 std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
   return options.get<aiplatform_v1::JobServicePollingPolicyOption>()->clone();
 }
 
-}  // namespace
+} // namespace
 
 JobServiceConnectionImpl::JobServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<aiplatform_v1_internal::JobServiceStub> stub,
     Options options)
-    : background_(std::move(background)),
-      stub_(std::move(stub)),
-      options_(internal::MergeOptions(std::move(options),
-                                      JobServiceConnection::options())) {}
+  : background_(std::move(background)), stub_(std::move(stub)),
+    options_(internal::MergeOptions(
+        std::move(options),
+        JobServiceConnection::options())) {}
 
 StatusOr<google::cloud::aiplatform::v1::CustomJob>
-JobServiceConnectionImpl::CreateCustomJob(
-    google::cloud::aiplatform::v1::CreateCustomJobRequest const& request) {
+JobServiceConnectionImpl::CreateCustomJob(google::cloud::aiplatform::v1::CreateCustomJobRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateCustomJob(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::aiplatform::v1::CreateCustomJobRequest const&
-                 request) {
+             google::cloud::aiplatform::v1::CreateCustomJobRequest const& request) {
         return stub_->CreateCustomJob(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::aiplatform::v1::CustomJob>
-JobServiceConnectionImpl::GetCustomJob(
-    google::cloud::aiplatform::v1::GetCustomJobRequest const& request) {
+JobServiceConnectionImpl::GetCustomJob(google::cloud::aiplatform::v1::GetCustomJobRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetCustomJob(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::aiplatform::v1::GetCustomJobRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::aiplatform::v1::GetCustomJobRequest const& request) {
         return stub_->GetCustomJob(context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::cloud::aiplatform::v1::CustomJob>
-JobServiceConnectionImpl::ListCustomJobs(
-    google::cloud::aiplatform::v1::ListCustomJobsRequest request) {
+JobServiceConnectionImpl::ListCustomJobs(google::cloud::aiplatform::v1::ListCustomJobsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListCustomJobs(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::aiplatform::v1::CustomJob>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::aiplatform::v1::CustomJob>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<aiplatform_v1::JobServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<aiplatform_v1::JobServiceRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::aiplatform::v1::ListCustomJobsRequest const& r) {
+          Options const& options, google::cloud::aiplatform::v1::ListCustomJobsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::aiplatform::v1::ListCustomJobsRequest const&
-                       request) {
+                   google::cloud::aiplatform::v1::ListCustomJobsRequest const& request) {
               return stub->ListCustomJobs(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::aiplatform::v1::ListCustomJobsResponse r) {
-        std::vector<google::cloud::aiplatform::v1::CustomJob> result(
-            r.custom_jobs().size());
+        std::vector<google::cloud::aiplatform::v1::CustomJob> result(r.custom_jobs().size());
         auto& messages = *r.mutable_custom_jobs();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -129,56 +118,49 @@ JobServiceConnectionImpl::ListCustomJobs(
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-JobServiceConnectionImpl::DeleteCustomJob(
-    google::cloud::aiplatform::v1::DeleteCustomJobRequest const& request) {
+JobServiceConnectionImpl::DeleteCustomJob(google::cloud::aiplatform::v1::DeleteCustomJobRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->DeleteCustomJob(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<
-      google::cloud::aiplatform::v1::DeleteOperationMetadata>(
-      background_->cq(), current, std::move(request_copy),
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::aiplatform::v1::DeleteCustomJobRequest const&
-              request) {
-        return stub->AsyncDeleteCustomJob(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultMetadata<
-          google::cloud::aiplatform::v1::DeleteOperationMetadata>,
-      retry_policy(*current), backoff_policy(*current), idempotent,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::aiplatform::v1::DeleteOperationMetadata>(
+    background_->cq(), current, std::move(request_copy),
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::cloud::aiplatform::v1::DeleteCustomJobRequest const& request) {
+     return stub->AsyncDeleteCustomJob(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultMetadata<google::cloud::aiplatform::v1::DeleteOperationMetadata>,
+    retry_policy(*current), backoff_policy(*current), idempotent,
+    polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 JobServiceConnectionImpl::DeleteCustomJob(
-    NoAwaitTag,
-    google::cloud::aiplatform::v1::DeleteCustomJobRequest const& request) {
+      NoAwaitTag, google::cloud::aiplatform::v1::DeleteCustomJobRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteCustomJob(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::aiplatform::v1::DeleteCustomJobRequest const&
-                 request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::aiplatform::v1::DeleteCustomJobRequest const& request) {
         return stub_->DeleteCustomJob(context, options, request);
       },
       *current, request, __func__);
@@ -186,116 +168,95 @@ JobServiceConnectionImpl::DeleteCustomJob(
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 JobServiceConnectionImpl::DeleteCustomJob(
-    google::longrunning::Operation const& operation) {
+      google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata()
-           .Is<typename google::cloud::aiplatform::v1::
-                   DeleteOperationMetadata>()) {
-    return make_ready_future<
-        StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
-        internal::InvalidArgumentError(
-            "operation does not correspond to DeleteCustomJob",
-            GCP_ERROR_INFO().WithMetadata("operation",
-                                          operation.metadata().DebugString())));
+  if (!operation.metadata().Is<typename google::cloud::aiplatform::v1::DeleteOperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
+        internal::InvalidArgumentError("operation does not correspond to DeleteCustomJob",
+                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<
-      google::cloud::aiplatform::v1::DeleteOperationMetadata>(
-      background_->cq(), current, operation,
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultMetadata<
-          google::cloud::aiplatform::v1::DeleteOperationMetadata>,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::aiplatform::v1::DeleteOperationMetadata>(
+    background_->cq(), current, operation,
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultMetadata<google::cloud::aiplatform::v1::DeleteOperationMetadata>,
+    polling_policy(*current), __func__);
 }
 
-Status JobServiceConnectionImpl::CancelCustomJob(
-    google::cloud::aiplatform::v1::CancelCustomJobRequest const& request) {
+Status
+JobServiceConnectionImpl::CancelCustomJob(google::cloud::aiplatform::v1::CancelCustomJobRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CancelCustomJob(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::aiplatform::v1::CancelCustomJobRequest const&
-                 request) {
+             google::cloud::aiplatform::v1::CancelCustomJobRequest const& request) {
         return stub_->CancelCustomJob(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::aiplatform::v1::DataLabelingJob>
-JobServiceConnectionImpl::CreateDataLabelingJob(
-    google::cloud::aiplatform::v1::CreateDataLabelingJobRequest const&
-        request) {
+JobServiceConnectionImpl::CreateDataLabelingJob(google::cloud::aiplatform::v1::CreateDataLabelingJobRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateDataLabelingJob(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::aiplatform::v1::CreateDataLabelingJobRequest const&
-                 request) {
+             google::cloud::aiplatform::v1::CreateDataLabelingJobRequest const& request) {
         return stub_->CreateDataLabelingJob(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::aiplatform::v1::DataLabelingJob>
-JobServiceConnectionImpl::GetDataLabelingJob(
-    google::cloud::aiplatform::v1::GetDataLabelingJobRequest const& request) {
+JobServiceConnectionImpl::GetDataLabelingJob(google::cloud::aiplatform::v1::GetDataLabelingJobRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetDataLabelingJob(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::aiplatform::v1::GetDataLabelingJobRequest const&
-                 request) {
+             google::cloud::aiplatform::v1::GetDataLabelingJobRequest const& request) {
         return stub_->GetDataLabelingJob(context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::cloud::aiplatform::v1::DataLabelingJob>
-JobServiceConnectionImpl::ListDataLabelingJobs(
-    google::cloud::aiplatform::v1::ListDataLabelingJobsRequest request) {
+JobServiceConnectionImpl::ListDataLabelingJobs(google::cloud::aiplatform::v1::ListDataLabelingJobsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
-  auto idempotency =
-      idempotency_policy(*current)->ListDataLabelingJobs(request);
+  auto idempotency = idempotency_policy(*current)->ListDataLabelingJobs(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::aiplatform::v1::DataLabelingJob>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::aiplatform::v1::DataLabelingJob>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<aiplatform_v1::JobServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<aiplatform_v1::JobServiceRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::aiplatform::v1::ListDataLabelingJobsRequest const& r) {
+          Options const& options, google::cloud::aiplatform::v1::ListDataLabelingJobsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::aiplatform::v1::
-                       ListDataLabelingJobsRequest const& request) {
+                   google::cloud::aiplatform::v1::ListDataLabelingJobsRequest const& request) {
               return stub->ListDataLabelingJobs(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::aiplatform::v1::ListDataLabelingJobsResponse r) {
-        std::vector<google::cloud::aiplatform::v1::DataLabelingJob> result(
-            r.data_labeling_jobs().size());
+        std::vector<google::cloud::aiplatform::v1::DataLabelingJob> result(r.data_labeling_jobs().size());
         auto& messages = *r.mutable_data_labeling_jobs();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -303,58 +264,49 @@ JobServiceConnectionImpl::ListDataLabelingJobs(
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-JobServiceConnectionImpl::DeleteDataLabelingJob(
-    google::cloud::aiplatform::v1::DeleteDataLabelingJobRequest const&
-        request) {
+JobServiceConnectionImpl::DeleteDataLabelingJob(google::cloud::aiplatform::v1::DeleteDataLabelingJobRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->DeleteDataLabelingJob(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<
-      google::cloud::aiplatform::v1::DeleteOperationMetadata>(
-      background_->cq(), current, std::move(request_copy),
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::aiplatform::v1::DeleteDataLabelingJobRequest const&
-              request) {
-        return stub->AsyncDeleteDataLabelingJob(cq, std::move(context),
-                                                std::move(options), request);
-      },
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultMetadata<
-          google::cloud::aiplatform::v1::DeleteOperationMetadata>,
-      retry_policy(*current), backoff_policy(*current), idempotent,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::aiplatform::v1::DeleteOperationMetadata>(
+    background_->cq(), current, std::move(request_copy),
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::cloud::aiplatform::v1::DeleteDataLabelingJobRequest const& request) {
+     return stub->AsyncDeleteDataLabelingJob(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultMetadata<google::cloud::aiplatform::v1::DeleteOperationMetadata>,
+    retry_policy(*current), backoff_policy(*current), idempotent,
+    polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 JobServiceConnectionImpl::DeleteDataLabelingJob(
-    NoAwaitTag,
-    google::cloud::aiplatform::v1::DeleteDataLabelingJobRequest const&
-        request) {
+      NoAwaitTag, google::cloud::aiplatform::v1::DeleteDataLabelingJobRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteDataLabelingJob(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::aiplatform::v1::DeleteDataLabelingJobRequest const&
-                 request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::aiplatform::v1::DeleteDataLabelingJobRequest const& request) {
         return stub_->DeleteDataLabelingJob(context, options, request);
       },
       *current, request, __func__);
@@ -362,122 +314,95 @@ JobServiceConnectionImpl::DeleteDataLabelingJob(
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 JobServiceConnectionImpl::DeleteDataLabelingJob(
-    google::longrunning::Operation const& operation) {
+      google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata()
-           .Is<typename google::cloud::aiplatform::v1::
-                   DeleteOperationMetadata>()) {
-    return make_ready_future<
-        StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
-        internal::InvalidArgumentError(
-            "operation does not correspond to DeleteDataLabelingJob",
-            GCP_ERROR_INFO().WithMetadata("operation",
-                                          operation.metadata().DebugString())));
+  if (!operation.metadata().Is<typename google::cloud::aiplatform::v1::DeleteOperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
+        internal::InvalidArgumentError("operation does not correspond to DeleteDataLabelingJob",
+                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<
-      google::cloud::aiplatform::v1::DeleteOperationMetadata>(
-      background_->cq(), current, operation,
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultMetadata<
-          google::cloud::aiplatform::v1::DeleteOperationMetadata>,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::aiplatform::v1::DeleteOperationMetadata>(
+    background_->cq(), current, operation,
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultMetadata<google::cloud::aiplatform::v1::DeleteOperationMetadata>,
+    polling_policy(*current), __func__);
 }
 
-Status JobServiceConnectionImpl::CancelDataLabelingJob(
-    google::cloud::aiplatform::v1::CancelDataLabelingJobRequest const&
-        request) {
+Status
+JobServiceConnectionImpl::CancelDataLabelingJob(google::cloud::aiplatform::v1::CancelDataLabelingJobRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CancelDataLabelingJob(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::aiplatform::v1::CancelDataLabelingJobRequest const&
-                 request) {
+             google::cloud::aiplatform::v1::CancelDataLabelingJobRequest const& request) {
         return stub_->CancelDataLabelingJob(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::aiplatform::v1::HyperparameterTuningJob>
-JobServiceConnectionImpl::CreateHyperparameterTuningJob(
-    google::cloud::aiplatform::v1::CreateHyperparameterTuningJobRequest const&
-        request) {
+JobServiceConnectionImpl::CreateHyperparameterTuningJob(google::cloud::aiplatform::v1::CreateHyperparameterTuningJobRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateHyperparameterTuningJob(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::aiplatform::v1::
-                 CreateHyperparameterTuningJobRequest const& request) {
+             google::cloud::aiplatform::v1::CreateHyperparameterTuningJobRequest const& request) {
         return stub_->CreateHyperparameterTuningJob(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::aiplatform::v1::HyperparameterTuningJob>
-JobServiceConnectionImpl::GetHyperparameterTuningJob(
-    google::cloud::aiplatform::v1::GetHyperparameterTuningJobRequest const&
-        request) {
+JobServiceConnectionImpl::GetHyperparameterTuningJob(google::cloud::aiplatform::v1::GetHyperparameterTuningJobRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetHyperparameterTuningJob(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::aiplatform::v1::
-                 GetHyperparameterTuningJobRequest const& request) {
+             google::cloud::aiplatform::v1::GetHyperparameterTuningJobRequest const& request) {
         return stub_->GetHyperparameterTuningJob(context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::cloud::aiplatform::v1::HyperparameterTuningJob>
-JobServiceConnectionImpl::ListHyperparameterTuningJobs(
-    google::cloud::aiplatform::v1::ListHyperparameterTuningJobsRequest
-        request) {
+JobServiceConnectionImpl::ListHyperparameterTuningJobs(google::cloud::aiplatform::v1::ListHyperparameterTuningJobsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
-  auto idempotency =
-      idempotency_policy(*current)->ListHyperparameterTuningJobs(request);
+  auto idempotency = idempotency_policy(*current)->ListHyperparameterTuningJobs(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::aiplatform::v1::HyperparameterTuningJob>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::aiplatform::v1::HyperparameterTuningJob>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<aiplatform_v1::JobServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<aiplatform_v1::JobServiceRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::aiplatform::v1::
-              ListHyperparameterTuningJobsRequest const& r) {
+          Options const& options, google::cloud::aiplatform::v1::ListHyperparameterTuningJobsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::aiplatform::v1::
-                       ListHyperparameterTuningJobsRequest const& request) {
-              return stub->ListHyperparameterTuningJobs(context, options,
-                                                        request);
+                   google::cloud::aiplatform::v1::ListHyperparameterTuningJobsRequest const& request) {
+              return stub->ListHyperparameterTuningJobs(context, options, request);
             },
             options, r, function_name);
       },
-      [](google::cloud::aiplatform::v1::ListHyperparameterTuningJobsResponse
-             r) {
-        std::vector<google::cloud::aiplatform::v1::HyperparameterTuningJob>
-            result(r.hyperparameter_tuning_jobs().size());
+      [](google::cloud::aiplatform::v1::ListHyperparameterTuningJobsResponse r) {
+        std::vector<google::cloud::aiplatform::v1::HyperparameterTuningJob> result(r.hyperparameter_tuning_jobs().size());
         auto& messages = *r.mutable_hyperparameter_tuning_jobs();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -485,57 +410,49 @@ JobServiceConnectionImpl::ListHyperparameterTuningJobs(
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-JobServiceConnectionImpl::DeleteHyperparameterTuningJob(
-    google::cloud::aiplatform::v1::DeleteHyperparameterTuningJobRequest const&
-        request) {
+JobServiceConnectionImpl::DeleteHyperparameterTuningJob(google::cloud::aiplatform::v1::DeleteHyperparameterTuningJobRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->DeleteHyperparameterTuningJob(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<
-      google::cloud::aiplatform::v1::DeleteOperationMetadata>(
-      background_->cq(), current, std::move(request_copy),
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::cloud::aiplatform::v1::
-                         DeleteHyperparameterTuningJobRequest const& request) {
-        return stub->AsyncDeleteHyperparameterTuningJob(
-            cq, std::move(context), std::move(options), request);
-      },
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultMetadata<
-          google::cloud::aiplatform::v1::DeleteOperationMetadata>,
-      retry_policy(*current), backoff_policy(*current), idempotent,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::aiplatform::v1::DeleteOperationMetadata>(
+    background_->cq(), current, std::move(request_copy),
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::cloud::aiplatform::v1::DeleteHyperparameterTuningJobRequest const& request) {
+     return stub->AsyncDeleteHyperparameterTuningJob(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultMetadata<google::cloud::aiplatform::v1::DeleteOperationMetadata>,
+    retry_policy(*current), backoff_policy(*current), idempotent,
+    polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 JobServiceConnectionImpl::DeleteHyperparameterTuningJob(
-    NoAwaitTag,
-    google::cloud::aiplatform::v1::DeleteHyperparameterTuningJobRequest const&
-        request) {
+      NoAwaitTag, google::cloud::aiplatform::v1::DeleteHyperparameterTuningJobRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteHyperparameterTuningJob(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::aiplatform::v1::
-                 DeleteHyperparameterTuningJobRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::aiplatform::v1::DeleteHyperparameterTuningJobRequest const& request) {
         return stub_->DeleteHyperparameterTuningJob(context, options, request);
       },
       *current, request, __func__);
@@ -543,75 +460,62 @@ JobServiceConnectionImpl::DeleteHyperparameterTuningJob(
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 JobServiceConnectionImpl::DeleteHyperparameterTuningJob(
-    google::longrunning::Operation const& operation) {
+      google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata()
-           .Is<typename google::cloud::aiplatform::v1::
-                   DeleteOperationMetadata>()) {
-    return make_ready_future<
-        StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
-        internal::InvalidArgumentError(
-            "operation does not correspond to DeleteHyperparameterTuningJob",
-            GCP_ERROR_INFO().WithMetadata("operation",
-                                          operation.metadata().DebugString())));
+  if (!operation.metadata().Is<typename google::cloud::aiplatform::v1::DeleteOperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
+        internal::InvalidArgumentError("operation does not correspond to DeleteHyperparameterTuningJob",
+                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<
-      google::cloud::aiplatform::v1::DeleteOperationMetadata>(
-      background_->cq(), current, operation,
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultMetadata<
-          google::cloud::aiplatform::v1::DeleteOperationMetadata>,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::aiplatform::v1::DeleteOperationMetadata>(
+    background_->cq(), current, operation,
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultMetadata<google::cloud::aiplatform::v1::DeleteOperationMetadata>,
+    polling_policy(*current), __func__);
 }
 
-Status JobServiceConnectionImpl::CancelHyperparameterTuningJob(
-    google::cloud::aiplatform::v1::CancelHyperparameterTuningJobRequest const&
-        request) {
+Status
+JobServiceConnectionImpl::CancelHyperparameterTuningJob(google::cloud::aiplatform::v1::CancelHyperparameterTuningJobRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CancelHyperparameterTuningJob(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::aiplatform::v1::
-                 CancelHyperparameterTuningJobRequest const& request) {
+             google::cloud::aiplatform::v1::CancelHyperparameterTuningJobRequest const& request) {
         return stub_->CancelHyperparameterTuningJob(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::aiplatform::v1::NasJob>
-JobServiceConnectionImpl::CreateNasJob(
-    google::cloud::aiplatform::v1::CreateNasJobRequest const& request) {
+JobServiceConnectionImpl::CreateNasJob(google::cloud::aiplatform::v1::CreateNasJobRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateNasJob(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::aiplatform::v1::CreateNasJobRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::aiplatform::v1::CreateNasJobRequest const& request) {
         return stub_->CreateNasJob(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::aiplatform::v1::NasJob>
-JobServiceConnectionImpl::GetNasJob(
-    google::cloud::aiplatform::v1::GetNasJobRequest const& request) {
+JobServiceConnectionImpl::GetNasJob(google::cloud::aiplatform::v1::GetNasJobRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -624,33 +528,27 @@ JobServiceConnectionImpl::GetNasJob(
 }
 
 StreamRange<google::cloud::aiplatform::v1::NasJob>
-JobServiceConnectionImpl::ListNasJobs(
-    google::cloud::aiplatform::v1::ListNasJobsRequest request) {
+JobServiceConnectionImpl::ListNasJobs(google::cloud::aiplatform::v1::ListNasJobsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListNasJobs(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::aiplatform::v1::NasJob>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::aiplatform::v1::NasJob>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<aiplatform_v1::JobServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<aiplatform_v1::JobServiceRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::aiplatform::v1::ListNasJobsRequest const& r) {
+          Options const& options, google::cloud::aiplatform::v1::ListNasJobsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::aiplatform::v1::ListNasJobsRequest const&
-                       request) {
+                   google::cloud::aiplatform::v1::ListNasJobsRequest const& request) {
               return stub->ListNasJobs(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::aiplatform::v1::ListNasJobsResponse r) {
-        std::vector<google::cloud::aiplatform::v1::NasJob> result(
-            r.nas_jobs().size());
+        std::vector<google::cloud::aiplatform::v1::NasJob> result(r.nas_jobs().size());
         auto& messages = *r.mutable_nas_jobs();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -658,47 +556,42 @@ JobServiceConnectionImpl::ListNasJobs(
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-JobServiceConnectionImpl::DeleteNasJob(
-    google::cloud::aiplatform::v1::DeleteNasJobRequest const& request) {
+JobServiceConnectionImpl::DeleteNasJob(google::cloud::aiplatform::v1::DeleteNasJobRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->DeleteNasJob(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<
-      google::cloud::aiplatform::v1::DeleteOperationMetadata>(
-      background_->cq(), current, std::move(request_copy),
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::aiplatform::v1::DeleteNasJobRequest const& request) {
-        return stub->AsyncDeleteNasJob(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultMetadata<
-          google::cloud::aiplatform::v1::DeleteOperationMetadata>,
-      retry_policy(*current), backoff_policy(*current), idempotent,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::aiplatform::v1::DeleteOperationMetadata>(
+    background_->cq(), current, std::move(request_copy),
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::cloud::aiplatform::v1::DeleteNasJobRequest const& request) {
+     return stub->AsyncDeleteNasJob(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultMetadata<google::cloud::aiplatform::v1::DeleteOperationMetadata>,
+    retry_policy(*current), backoff_policy(*current), idempotent,
+    polling_policy(*current), __func__);
 }
 
-StatusOr<google::longrunning::Operation> JobServiceConnectionImpl::DeleteNasJob(
-    NoAwaitTag,
-    google::cloud::aiplatform::v1::DeleteNasJobRequest const& request) {
+StatusOr<google::longrunning::Operation>
+JobServiceConnectionImpl::DeleteNasJob(
+      NoAwaitTag, google::cloud::aiplatform::v1::DeleteNasJobRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -713,100 +606,82 @@ StatusOr<google::longrunning::Operation> JobServiceConnectionImpl::DeleteNasJob(
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 JobServiceConnectionImpl::DeleteNasJob(
-    google::longrunning::Operation const& operation) {
+      google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata()
-           .Is<typename google::cloud::aiplatform::v1::
-                   DeleteOperationMetadata>()) {
-    return make_ready_future<
-        StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
-        internal::InvalidArgumentError(
-            "operation does not correspond to DeleteNasJob",
-            GCP_ERROR_INFO().WithMetadata("operation",
-                                          operation.metadata().DebugString())));
+  if (!operation.metadata().Is<typename google::cloud::aiplatform::v1::DeleteOperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
+        internal::InvalidArgumentError("operation does not correspond to DeleteNasJob",
+                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<
-      google::cloud::aiplatform::v1::DeleteOperationMetadata>(
-      background_->cq(), current, operation,
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultMetadata<
-          google::cloud::aiplatform::v1::DeleteOperationMetadata>,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::aiplatform::v1::DeleteOperationMetadata>(
+    background_->cq(), current, operation,
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultMetadata<google::cloud::aiplatform::v1::DeleteOperationMetadata>,
+    polling_policy(*current), __func__);
 }
 
-Status JobServiceConnectionImpl::CancelNasJob(
-    google::cloud::aiplatform::v1::CancelNasJobRequest const& request) {
+Status
+JobServiceConnectionImpl::CancelNasJob(google::cloud::aiplatform::v1::CancelNasJobRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CancelNasJob(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::aiplatform::v1::CancelNasJobRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::aiplatform::v1::CancelNasJobRequest const& request) {
         return stub_->CancelNasJob(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::aiplatform::v1::NasTrialDetail>
-JobServiceConnectionImpl::GetNasTrialDetail(
-    google::cloud::aiplatform::v1::GetNasTrialDetailRequest const& request) {
+JobServiceConnectionImpl::GetNasTrialDetail(google::cloud::aiplatform::v1::GetNasTrialDetailRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetNasTrialDetail(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::aiplatform::v1::GetNasTrialDetailRequest const&
-                 request) {
+             google::cloud::aiplatform::v1::GetNasTrialDetailRequest const& request) {
         return stub_->GetNasTrialDetail(context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::cloud::aiplatform::v1::NasTrialDetail>
-JobServiceConnectionImpl::ListNasTrialDetails(
-    google::cloud::aiplatform::v1::ListNasTrialDetailsRequest request) {
+JobServiceConnectionImpl::ListNasTrialDetails(google::cloud::aiplatform::v1::ListNasTrialDetailsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListNasTrialDetails(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::aiplatform::v1::NasTrialDetail>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::aiplatform::v1::NasTrialDetail>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<aiplatform_v1::JobServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<aiplatform_v1::JobServiceRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::aiplatform::v1::ListNasTrialDetailsRequest const& r) {
+          Options const& options, google::cloud::aiplatform::v1::ListNasTrialDetailsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](
-                grpc::ClientContext& context, Options const& options,
-                google::cloud::aiplatform::v1::ListNasTrialDetailsRequest const&
-                    request) {
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::cloud::aiplatform::v1::ListNasTrialDetailsRequest const& request) {
               return stub->ListNasTrialDetails(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::aiplatform::v1::ListNasTrialDetailsResponse r) {
-        std::vector<google::cloud::aiplatform::v1::NasTrialDetail> result(
-            r.nas_trial_details().size());
+        std::vector<google::cloud::aiplatform::v1::NasTrialDetail> result(r.nas_trial_details().size());
         auto& messages = *r.mutable_nas_trial_details();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -814,68 +689,53 @@ JobServiceConnectionImpl::ListNasTrialDetails(
 }
 
 StatusOr<google::cloud::aiplatform::v1::BatchPredictionJob>
-JobServiceConnectionImpl::CreateBatchPredictionJob(
-    google::cloud::aiplatform::v1::CreateBatchPredictionJobRequest const&
-        request) {
+JobServiceConnectionImpl::CreateBatchPredictionJob(google::cloud::aiplatform::v1::CreateBatchPredictionJobRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateBatchPredictionJob(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::aiplatform::v1::CreateBatchPredictionJobRequest const&
-              request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::aiplatform::v1::CreateBatchPredictionJobRequest const& request) {
         return stub_->CreateBatchPredictionJob(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::aiplatform::v1::BatchPredictionJob>
-JobServiceConnectionImpl::GetBatchPredictionJob(
-    google::cloud::aiplatform::v1::GetBatchPredictionJobRequest const&
-        request) {
+JobServiceConnectionImpl::GetBatchPredictionJob(google::cloud::aiplatform::v1::GetBatchPredictionJobRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetBatchPredictionJob(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::aiplatform::v1::GetBatchPredictionJobRequest const&
-                 request) {
+             google::cloud::aiplatform::v1::GetBatchPredictionJobRequest const& request) {
         return stub_->GetBatchPredictionJob(context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::cloud::aiplatform::v1::BatchPredictionJob>
-JobServiceConnectionImpl::ListBatchPredictionJobs(
-    google::cloud::aiplatform::v1::ListBatchPredictionJobsRequest request) {
+JobServiceConnectionImpl::ListBatchPredictionJobs(google::cloud::aiplatform::v1::ListBatchPredictionJobsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
-  auto idempotency =
-      idempotency_policy(*current)->ListBatchPredictionJobs(request);
+  auto idempotency = idempotency_policy(*current)->ListBatchPredictionJobs(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::aiplatform::v1::BatchPredictionJob>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::aiplatform::v1::BatchPredictionJob>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<aiplatform_v1::JobServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<aiplatform_v1::JobServiceRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::aiplatform::v1::ListBatchPredictionJobsRequest const&
-              r) {
+          Options const& options, google::cloud::aiplatform::v1::ListBatchPredictionJobsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::aiplatform::v1::
-                       ListBatchPredictionJobsRequest const& request) {
+                   google::cloud::aiplatform::v1::ListBatchPredictionJobsRequest const& request) {
               return stub->ListBatchPredictionJobs(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::aiplatform::v1::ListBatchPredictionJobsResponse r) {
-        std::vector<google::cloud::aiplatform::v1::BatchPredictionJob> result(
-            r.batch_prediction_jobs().size());
+        std::vector<google::cloud::aiplatform::v1::BatchPredictionJob> result(r.batch_prediction_jobs().size());
         auto& messages = *r.mutable_batch_prediction_jobs();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -883,59 +743,49 @@ JobServiceConnectionImpl::ListBatchPredictionJobs(
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-JobServiceConnectionImpl::DeleteBatchPredictionJob(
-    google::cloud::aiplatform::v1::DeleteBatchPredictionJobRequest const&
-        request) {
+JobServiceConnectionImpl::DeleteBatchPredictionJob(google::cloud::aiplatform::v1::DeleteBatchPredictionJobRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->DeleteBatchPredictionJob(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<
-      google::cloud::aiplatform::v1::DeleteOperationMetadata>(
-      background_->cq(), current, std::move(request_copy),
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::aiplatform::v1::DeleteBatchPredictionJobRequest const&
-              request) {
-        return stub->AsyncDeleteBatchPredictionJob(cq, std::move(context),
-                                                   std::move(options), request);
-      },
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultMetadata<
-          google::cloud::aiplatform::v1::DeleteOperationMetadata>,
-      retry_policy(*current), backoff_policy(*current), idempotent,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::aiplatform::v1::DeleteOperationMetadata>(
+    background_->cq(), current, std::move(request_copy),
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::cloud::aiplatform::v1::DeleteBatchPredictionJobRequest const& request) {
+     return stub->AsyncDeleteBatchPredictionJob(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultMetadata<google::cloud::aiplatform::v1::DeleteOperationMetadata>,
+    retry_policy(*current), backoff_policy(*current), idempotent,
+    polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 JobServiceConnectionImpl::DeleteBatchPredictionJob(
-    NoAwaitTag,
-    google::cloud::aiplatform::v1::DeleteBatchPredictionJobRequest const&
-        request) {
+      NoAwaitTag, google::cloud::aiplatform::v1::DeleteBatchPredictionJobRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteBatchPredictionJob(request),
       [this](
           grpc::ClientContext& context, Options const& options,
-          google::cloud::aiplatform::v1::DeleteBatchPredictionJobRequest const&
-              request) {
+          google::cloud::aiplatform::v1::DeleteBatchPredictionJobRequest const& request) {
         return stub_->DeleteBatchPredictionJob(context, options, request);
       },
       *current, request, __func__);
@@ -943,112 +793,82 @@ JobServiceConnectionImpl::DeleteBatchPredictionJob(
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 JobServiceConnectionImpl::DeleteBatchPredictionJob(
-    google::longrunning::Operation const& operation) {
+      google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata()
-           .Is<typename google::cloud::aiplatform::v1::
-                   DeleteOperationMetadata>()) {
-    return make_ready_future<
-        StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
-        internal::InvalidArgumentError(
-            "operation does not correspond to DeleteBatchPredictionJob",
-            GCP_ERROR_INFO().WithMetadata("operation",
-                                          operation.metadata().DebugString())));
+  if (!operation.metadata().Is<typename google::cloud::aiplatform::v1::DeleteOperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
+        internal::InvalidArgumentError("operation does not correspond to DeleteBatchPredictionJob",
+                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<
-      google::cloud::aiplatform::v1::DeleteOperationMetadata>(
-      background_->cq(), current, operation,
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultMetadata<
-          google::cloud::aiplatform::v1::DeleteOperationMetadata>,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::aiplatform::v1::DeleteOperationMetadata>(
+    background_->cq(), current, operation,
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultMetadata<google::cloud::aiplatform::v1::DeleteOperationMetadata>,
+    polling_policy(*current), __func__);
 }
 
-Status JobServiceConnectionImpl::CancelBatchPredictionJob(
-    google::cloud::aiplatform::v1::CancelBatchPredictionJobRequest const&
-        request) {
+Status
+JobServiceConnectionImpl::CancelBatchPredictionJob(google::cloud::aiplatform::v1::CancelBatchPredictionJobRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CancelBatchPredictionJob(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::aiplatform::v1::CancelBatchPredictionJobRequest const&
-              request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::aiplatform::v1::CancelBatchPredictionJobRequest const& request) {
         return stub_->CancelBatchPredictionJob(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ModelDeploymentMonitoringJob>
-JobServiceConnectionImpl::CreateModelDeploymentMonitoringJob(
-    google::cloud::aiplatform::v1::
-        CreateModelDeploymentMonitoringJobRequest const& request) {
+JobServiceConnectionImpl::CreateModelDeploymentMonitoringJob(google::cloud::aiplatform::v1::CreateModelDeploymentMonitoringJobRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateModelDeploymentMonitoringJob(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::aiplatform::v1::
-                 CreateModelDeploymentMonitoringJobRequest const& request) {
-        return stub_->CreateModelDeploymentMonitoringJob(context, options,
-                                                         request);
+             google::cloud::aiplatform::v1::CreateModelDeploymentMonitoringJobRequest const& request) {
+        return stub_->CreateModelDeploymentMonitoringJob(context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::cloud::aiplatform::v1::ModelMonitoringStatsAnomalies>
-JobServiceConnectionImpl::SearchModelDeploymentMonitoringStatsAnomalies(
-    google::cloud::aiplatform::v1::
-        SearchModelDeploymentMonitoringStatsAnomaliesRequest request) {
+JobServiceConnectionImpl::SearchModelDeploymentMonitoringStatsAnomalies(google::cloud::aiplatform::v1::SearchModelDeploymentMonitoringStatsAnomaliesRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
-  auto idempotency =
-      idempotency_policy(*current)
-          ->SearchModelDeploymentMonitoringStatsAnomalies(request);
+  auto idempotency = idempotency_policy(*current)->SearchModelDeploymentMonitoringStatsAnomalies(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<
-      google::cloud::aiplatform::v1::ModelMonitoringStatsAnomalies>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::aiplatform::v1::ModelMonitoringStatsAnomalies>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<aiplatform_v1::JobServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<aiplatform_v1::JobServiceRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::aiplatform::v1::
-              SearchModelDeploymentMonitoringStatsAnomaliesRequest const& r) {
+          Options const& options, google::cloud::aiplatform::v1::SearchModelDeploymentMonitoringStatsAnomaliesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](
-                grpc::ClientContext& context, Options const& options,
-                google::cloud::aiplatform::v1::
-                    SearchModelDeploymentMonitoringStatsAnomaliesRequest const&
-                        request) {
-              return stub->SearchModelDeploymentMonitoringStatsAnomalies(
-                  context, options, request);
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::cloud::aiplatform::v1::SearchModelDeploymentMonitoringStatsAnomaliesRequest const& request) {
+              return stub->SearchModelDeploymentMonitoringStatsAnomalies(context, options, request);
             },
             options, r, function_name);
       },
-      [](google::cloud::aiplatform::v1::
-             SearchModelDeploymentMonitoringStatsAnomaliesResponse r) {
-        std::vector<
-            google::cloud::aiplatform::v1::ModelMonitoringStatsAnomalies>
-            result(r.monitoring_stats().size());
+      [](google::cloud::aiplatform::v1::SearchModelDeploymentMonitoringStatsAnomaliesResponse r) {
+        std::vector<google::cloud::aiplatform::v1::ModelMonitoringStatsAnomalies> result(r.monitoring_stats().size());
         auto& messages = *r.mutable_monitoring_stats();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -1056,56 +876,40 @@ JobServiceConnectionImpl::SearchModelDeploymentMonitoringStatsAnomalies(
 }
 
 StatusOr<google::cloud::aiplatform::v1::ModelDeploymentMonitoringJob>
-JobServiceConnectionImpl::GetModelDeploymentMonitoringJob(
-    google::cloud::aiplatform::v1::GetModelDeploymentMonitoringJobRequest const&
-        request) {
+JobServiceConnectionImpl::GetModelDeploymentMonitoringJob(google::cloud::aiplatform::v1::GetModelDeploymentMonitoringJobRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetModelDeploymentMonitoringJob(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::aiplatform::v1::
-                 GetModelDeploymentMonitoringJobRequest const& request) {
-        return stub_->GetModelDeploymentMonitoringJob(context, options,
-                                                      request);
+             google::cloud::aiplatform::v1::GetModelDeploymentMonitoringJobRequest const& request) {
+        return stub_->GetModelDeploymentMonitoringJob(context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::cloud::aiplatform::v1::ModelDeploymentMonitoringJob>
-JobServiceConnectionImpl::ListModelDeploymentMonitoringJobs(
-    google::cloud::aiplatform::v1::ListModelDeploymentMonitoringJobsRequest
-        request) {
+JobServiceConnectionImpl::ListModelDeploymentMonitoringJobs(google::cloud::aiplatform::v1::ListModelDeploymentMonitoringJobsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
-  auto idempotency =
-      idempotency_policy(*current)->ListModelDeploymentMonitoringJobs(request);
+  auto idempotency = idempotency_policy(*current)->ListModelDeploymentMonitoringJobs(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::aiplatform::v1::ModelDeploymentMonitoringJob>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::aiplatform::v1::ModelDeploymentMonitoringJob>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<aiplatform_v1::JobServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<aiplatform_v1::JobServiceRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::aiplatform::v1::
-              ListModelDeploymentMonitoringJobsRequest const& r) {
+          Options const& options, google::cloud::aiplatform::v1::ListModelDeploymentMonitoringJobsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](
-                grpc::ClientContext& context, Options const& options,
-                google::cloud::aiplatform::v1::
-                    ListModelDeploymentMonitoringJobsRequest const& request) {
-              return stub->ListModelDeploymentMonitoringJobs(context, options,
-                                                             request);
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::cloud::aiplatform::v1::ListModelDeploymentMonitoringJobsRequest const& request) {
+              return stub->ListModelDeploymentMonitoringJobs(context, options, request);
             },
             options, r, function_name);
       },
-      [](google::cloud::aiplatform::v1::
-             ListModelDeploymentMonitoringJobsResponse r) {
-        std::vector<google::cloud::aiplatform::v1::ModelDeploymentMonitoringJob>
-            result(r.model_deployment_monitoring_jobs().size());
+      [](google::cloud::aiplatform::v1::ListModelDeploymentMonitoringJobsResponse r) {
+        std::vector<google::cloud::aiplatform::v1::ModelDeploymentMonitoringJob> result(r.model_deployment_monitoring_jobs().size());
         auto& messages = *r.mutable_model_deployment_monitoring_jobs();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -1113,261 +917,211 @@ JobServiceConnectionImpl::ListModelDeploymentMonitoringJobs(
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::ModelDeploymentMonitoringJob>>
-JobServiceConnectionImpl::UpdateModelDeploymentMonitoringJob(
-    google::cloud::aiplatform::v1::
-        UpdateModelDeploymentMonitoringJobRequest const& request) {
+JobServiceConnectionImpl::UpdateModelDeploymentMonitoringJob(google::cloud::aiplatform::v1::UpdateModelDeploymentMonitoringJobRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
-      idempotency_policy(*current)->UpdateModelDeploymentMonitoringJob(
-          request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<
-      google::cloud::aiplatform::v1::ModelDeploymentMonitoringJob>(
-      background_->cq(), current, std::move(request_copy),
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::aiplatform::v1::
-              UpdateModelDeploymentMonitoringJobRequest const& request) {
-        return stub->AsyncUpdateModelDeploymentMonitoringJob(
-            cq, std::move(context), std::move(options), request);
-      },
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::aiplatform::v1::ModelDeploymentMonitoringJob>,
-      retry_policy(*current), backoff_policy(*current), idempotent,
-      polling_policy(*current), __func__);
+      idempotency_policy(*current)->UpdateModelDeploymentMonitoringJob(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::aiplatform::v1::ModelDeploymentMonitoringJob>(
+    background_->cq(), current, std::move(request_copy),
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::cloud::aiplatform::v1::UpdateModelDeploymentMonitoringJobRequest const& request) {
+     return stub->AsyncUpdateModelDeploymentMonitoringJob(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::aiplatform::v1::ModelDeploymentMonitoringJob>,
+    retry_policy(*current), backoff_policy(*current), idempotent,
+    polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 JobServiceConnectionImpl::UpdateModelDeploymentMonitoringJob(
-    NoAwaitTag, google::cloud::aiplatform::v1::
-                    UpdateModelDeploymentMonitoringJobRequest const& request) {
+      NoAwaitTag, google::cloud::aiplatform::v1::UpdateModelDeploymentMonitoringJobRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateModelDeploymentMonitoringJob(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::aiplatform::v1::
-                 UpdateModelDeploymentMonitoringJobRequest const& request) {
-        return stub_->UpdateModelDeploymentMonitoringJob(context, options,
-                                                         request);
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::aiplatform::v1::UpdateModelDeploymentMonitoringJobRequest const& request) {
+        return stub_->UpdateModelDeploymentMonitoringJob(context, options, request);
       },
       *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::ModelDeploymentMonitoringJob>>
 JobServiceConnectionImpl::UpdateModelDeploymentMonitoringJob(
-    google::longrunning::Operation const& operation) {
+      google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata()
-           .Is<typename google::cloud::aiplatform::v1::
-                   UpdateModelDeploymentMonitoringJobOperationMetadata>()) {
-    return make_ready_future<
-        StatusOr<google::cloud::aiplatform::v1::ModelDeploymentMonitoringJob>>(
-        internal::InvalidArgumentError(
-            "operation does not correspond to "
-            "UpdateModelDeploymentMonitoringJob",
-            GCP_ERROR_INFO().WithMetadata("operation",
-                                          operation.metadata().DebugString())));
+  if (!operation.metadata().Is<typename google::cloud::aiplatform::v1::UpdateModelDeploymentMonitoringJobOperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::aiplatform::v1::ModelDeploymentMonitoringJob>>(
+        internal::InvalidArgumentError("operation does not correspond to UpdateModelDeploymentMonitoringJob",
+                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<
-      google::cloud::aiplatform::v1::ModelDeploymentMonitoringJob>(
-      background_->cq(), current, operation,
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::aiplatform::v1::ModelDeploymentMonitoringJob>,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::aiplatform::v1::ModelDeploymentMonitoringJob>(
+    background_->cq(), current, operation,
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::aiplatform::v1::ModelDeploymentMonitoringJob>,
+    polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-JobServiceConnectionImpl::DeleteModelDeploymentMonitoringJob(
-    google::cloud::aiplatform::v1::
-        DeleteModelDeploymentMonitoringJobRequest const& request) {
+JobServiceConnectionImpl::DeleteModelDeploymentMonitoringJob(google::cloud::aiplatform::v1::DeleteModelDeploymentMonitoringJobRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
-      idempotency_policy(*current)->DeleteModelDeploymentMonitoringJob(
-          request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<
-      google::cloud::aiplatform::v1::DeleteOperationMetadata>(
-      background_->cq(), current, std::move(request_copy),
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::aiplatform::v1::
-              DeleteModelDeploymentMonitoringJobRequest const& request) {
-        return stub->AsyncDeleteModelDeploymentMonitoringJob(
-            cq, std::move(context), std::move(options), request);
-      },
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultMetadata<
-          google::cloud::aiplatform::v1::DeleteOperationMetadata>,
-      retry_policy(*current), backoff_policy(*current), idempotent,
-      polling_policy(*current), __func__);
+      idempotency_policy(*current)->DeleteModelDeploymentMonitoringJob(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::aiplatform::v1::DeleteOperationMetadata>(
+    background_->cq(), current, std::move(request_copy),
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::cloud::aiplatform::v1::DeleteModelDeploymentMonitoringJobRequest const& request) {
+     return stub->AsyncDeleteModelDeploymentMonitoringJob(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultMetadata<google::cloud::aiplatform::v1::DeleteOperationMetadata>,
+    retry_policy(*current), backoff_policy(*current), idempotent,
+    polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 JobServiceConnectionImpl::DeleteModelDeploymentMonitoringJob(
-    NoAwaitTag, google::cloud::aiplatform::v1::
-                    DeleteModelDeploymentMonitoringJobRequest const& request) {
+      NoAwaitTag, google::cloud::aiplatform::v1::DeleteModelDeploymentMonitoringJobRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteModelDeploymentMonitoringJob(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::aiplatform::v1::
-                 DeleteModelDeploymentMonitoringJobRequest const& request) {
-        return stub_->DeleteModelDeploymentMonitoringJob(context, options,
-                                                         request);
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::aiplatform::v1::DeleteModelDeploymentMonitoringJobRequest const& request) {
+        return stub_->DeleteModelDeploymentMonitoringJob(context, options, request);
       },
       *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 JobServiceConnectionImpl::DeleteModelDeploymentMonitoringJob(
-    google::longrunning::Operation const& operation) {
+      google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata()
-           .Is<typename google::cloud::aiplatform::v1::
-                   DeleteOperationMetadata>()) {
-    return make_ready_future<
-        StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
-        internal::InvalidArgumentError(
-            "operation does not correspond to "
-            "DeleteModelDeploymentMonitoringJob",
-            GCP_ERROR_INFO().WithMetadata("operation",
-                                          operation.metadata().DebugString())));
+  if (!operation.metadata().Is<typename google::cloud::aiplatform::v1::DeleteOperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
+        internal::InvalidArgumentError("operation does not correspond to DeleteModelDeploymentMonitoringJob",
+                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<
-      google::cloud::aiplatform::v1::DeleteOperationMetadata>(
-      background_->cq(), current, operation,
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultMetadata<
-          google::cloud::aiplatform::v1::DeleteOperationMetadata>,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::aiplatform::v1::DeleteOperationMetadata>(
+    background_->cq(), current, operation,
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultMetadata<google::cloud::aiplatform::v1::DeleteOperationMetadata>,
+    polling_policy(*current), __func__);
 }
 
-Status JobServiceConnectionImpl::PauseModelDeploymentMonitoringJob(
-    google::cloud::aiplatform::v1::
-        PauseModelDeploymentMonitoringJobRequest const& request) {
+Status
+JobServiceConnectionImpl::PauseModelDeploymentMonitoringJob(google::cloud::aiplatform::v1::PauseModelDeploymentMonitoringJobRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->PauseModelDeploymentMonitoringJob(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::aiplatform::v1::
-                 PauseModelDeploymentMonitoringJobRequest const& request) {
-        return stub_->PauseModelDeploymentMonitoringJob(context, options,
-                                                        request);
+             google::cloud::aiplatform::v1::PauseModelDeploymentMonitoringJobRequest const& request) {
+        return stub_->PauseModelDeploymentMonitoringJob(context, options, request);
       },
       *current, request, __func__);
 }
 
-Status JobServiceConnectionImpl::ResumeModelDeploymentMonitoringJob(
-    google::cloud::aiplatform::v1::
-        ResumeModelDeploymentMonitoringJobRequest const& request) {
+Status
+JobServiceConnectionImpl::ResumeModelDeploymentMonitoringJob(google::cloud::aiplatform::v1::ResumeModelDeploymentMonitoringJobRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->ResumeModelDeploymentMonitoringJob(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::aiplatform::v1::
-                 ResumeModelDeploymentMonitoringJobRequest const& request) {
-        return stub_->ResumeModelDeploymentMonitoringJob(context, options,
-                                                         request);
+             google::cloud::aiplatform::v1::ResumeModelDeploymentMonitoringJobRequest const& request) {
+        return stub_->ResumeModelDeploymentMonitoringJob(context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::cloud::location::Location>
-JobServiceConnectionImpl::ListLocations(
-    google::cloud::location::ListLocationsRequest request) {
+JobServiceConnectionImpl::ListLocations(google::cloud::location::ListLocationsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListLocations(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::location::Location>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::location::Location>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<aiplatform_v1::JobServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<aiplatform_v1::JobServiceRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::location::ListLocationsRequest const& r) {
+          Options const& options, google::cloud::location::ListLocationsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](
-                grpc::ClientContext& context, Options const& options,
-                google::cloud::location::ListLocationsRequest const& request) {
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::cloud::location::ListLocationsRequest const& request) {
               return stub->ListLocations(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::location::ListLocationsResponse r) {
-        std::vector<google::cloud::location::Location> result(
-            r.locations().size());
+        std::vector<google::cloud::location::Location> result(r.locations().size());
         auto& messages = *r.mutable_locations();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -1375,8 +1129,7 @@ JobServiceConnectionImpl::ListLocations(
 }
 
 StatusOr<google::cloud::location::Location>
-JobServiceConnectionImpl::GetLocation(
-    google::cloud::location::GetLocationRequest const& request) {
+JobServiceConnectionImpl::GetLocation(google::cloud::location::GetLocationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -1388,8 +1141,8 @@ JobServiceConnectionImpl::GetLocation(
       *current, request, __func__);
 }
 
-StatusOr<google::iam::v1::Policy> JobServiceConnectionImpl::SetIamPolicy(
-    google::iam::v1::SetIamPolicyRequest const& request) {
+StatusOr<google::iam::v1::Policy>
+JobServiceConnectionImpl::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -1401,8 +1154,8 @@ StatusOr<google::iam::v1::Policy> JobServiceConnectionImpl::SetIamPolicy(
       *current, request, __func__);
 }
 
-StatusOr<google::iam::v1::Policy> JobServiceConnectionImpl::GetIamPolicy(
-    google::iam::v1::GetIamPolicyRequest const& request) {
+StatusOr<google::iam::v1::Policy>
+JobServiceConnectionImpl::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -1415,8 +1168,7 @@ StatusOr<google::iam::v1::Policy> JobServiceConnectionImpl::GetIamPolicy(
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-JobServiceConnectionImpl::TestIamPermissions(
-    google::iam::v1::TestIamPermissionsRequest const& request) {
+JobServiceConnectionImpl::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -1429,21 +1181,17 @@ JobServiceConnectionImpl::TestIamPermissions(
 }
 
 StreamRange<google::longrunning::Operation>
-JobServiceConnectionImpl::ListOperations(
-    google::longrunning::ListOperationsRequest request) {
+JobServiceConnectionImpl::ListOperations(google::longrunning::ListOperationsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListOperations(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::longrunning::Operation>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::longrunning::Operation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<aiplatform_v1::JobServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<aiplatform_v1::JobServiceRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::longrunning::ListOperationsRequest const& r) {
+          Options const& options, google::longrunning::ListOperationsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
@@ -1453,16 +1201,15 @@ JobServiceConnectionImpl::ListOperations(
             options, r, function_name);
       },
       [](google::longrunning::ListOperationsResponse r) {
-        std::vector<google::longrunning::Operation> result(
-            r.operations().size());
+        std::vector<google::longrunning::Operation> result(r.operations().size());
         auto& messages = *r.mutable_operations();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
       });
 }
 
-StatusOr<google::longrunning::Operation> JobServiceConnectionImpl::GetOperation(
-    google::longrunning::GetOperationRequest const& request) {
+StatusOr<google::longrunning::Operation>
+JobServiceConnectionImpl::GetOperation(google::longrunning::GetOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -1474,8 +1221,8 @@ StatusOr<google::longrunning::Operation> JobServiceConnectionImpl::GetOperation(
       *current, request, __func__);
 }
 
-Status JobServiceConnectionImpl::DeleteOperation(
-    google::longrunning::DeleteOperationRequest const& request) {
+Status
+JobServiceConnectionImpl::DeleteOperation(google::longrunning::DeleteOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -1487,8 +1234,8 @@ Status JobServiceConnectionImpl::DeleteOperation(
       *current, request, __func__);
 }
 
-Status JobServiceConnectionImpl::CancelOperation(
-    google::longrunning::CancelOperationRequest const& request) {
+Status
+JobServiceConnectionImpl::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -1501,8 +1248,7 @@ Status JobServiceConnectionImpl::CancelOperation(
 }
 
 StatusOr<google::longrunning::Operation>
-JobServiceConnectionImpl::WaitOperation(
-    google::longrunning::WaitOperationRequest const& request) {
+JobServiceConnectionImpl::WaitOperation(google::longrunning::WaitOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),

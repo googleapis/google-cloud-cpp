@@ -32,14 +32,15 @@ KeyDashboardServiceStub::~KeyDashboardServiceStub() = default;
 
 StatusOr<google::cloud::kms::inventory::v1::ListCryptoKeysResponse>
 DefaultKeyDashboardServiceStub::ListCryptoKeys(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::kms::inventory::v1::ListCryptoKeysRequest const& request) {
-  google::cloud::kms::inventory::v1::ListCryptoKeysResponse response;
-  auto status = grpc_stub_->ListCryptoKeys(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::kms::inventory::v1::ListCryptoKeysRequest const& request) {
+    google::cloud::kms::inventory::v1::ListCryptoKeysResponse response;
+    auto status =
+        grpc_stub_->ListCryptoKeys(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

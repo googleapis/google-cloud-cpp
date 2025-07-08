@@ -26,18 +26,14 @@ namespace essentialcontacts_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 EssentialContactsServiceClient::EssentialContactsServiceClient(
-    std::shared_ptr<EssentialContactsServiceConnection> connection,
-    Options opts)
+    std::shared_ptr<EssentialContactsServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 EssentialContactsServiceClient::~EssentialContactsServiceClient() = default;
 
 StatusOr<google::cloud::essentialcontacts::v1::Contact>
-EssentialContactsServiceClient::CreateContact(
-    std::string const& parent,
-    google::cloud::essentialcontacts::v1::Contact const& contact,
-    Options opts) {
+EssentialContactsServiceClient::CreateContact(std::string const& parent, google::cloud::essentialcontacts::v1::Contact const& contact, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::essentialcontacts::v1::CreateContactRequest request;
   request.set_parent(parent);
@@ -46,17 +42,13 @@ EssentialContactsServiceClient::CreateContact(
 }
 
 StatusOr<google::cloud::essentialcontacts::v1::Contact>
-EssentialContactsServiceClient::CreateContact(
-    google::cloud::essentialcontacts::v1::CreateContactRequest const& request,
-    Options opts) {
+EssentialContactsServiceClient::CreateContact(google::cloud::essentialcontacts::v1::CreateContactRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateContact(request);
 }
 
 StatusOr<google::cloud::essentialcontacts::v1::Contact>
-EssentialContactsServiceClient::UpdateContact(
-    google::cloud::essentialcontacts::v1::Contact const& contact,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+EssentialContactsServiceClient::UpdateContact(google::cloud::essentialcontacts::v1::Contact const& contact, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::essentialcontacts::v1::UpdateContactRequest request;
   *request.mutable_contact() = contact;
@@ -65,16 +57,13 @@ EssentialContactsServiceClient::UpdateContact(
 }
 
 StatusOr<google::cloud::essentialcontacts::v1::Contact>
-EssentialContactsServiceClient::UpdateContact(
-    google::cloud::essentialcontacts::v1::UpdateContactRequest const& request,
-    Options opts) {
+EssentialContactsServiceClient::UpdateContact(google::cloud::essentialcontacts::v1::UpdateContactRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateContact(request);
 }
 
 StreamRange<google::cloud::essentialcontacts::v1::Contact>
-EssentialContactsServiceClient::ListContacts(std::string const& parent,
-                                             Options opts) {
+EssentialContactsServiceClient::ListContacts(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::essentialcontacts::v1::ListContactsRequest request;
   request.set_parent(parent);
@@ -82,16 +71,13 @@ EssentialContactsServiceClient::ListContacts(std::string const& parent,
 }
 
 StreamRange<google::cloud::essentialcontacts::v1::Contact>
-EssentialContactsServiceClient::ListContacts(
-    google::cloud::essentialcontacts::v1::ListContactsRequest request,
-    Options opts) {
+EssentialContactsServiceClient::ListContacts(google::cloud::essentialcontacts::v1::ListContactsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListContacts(std::move(request));
 }
 
 StatusOr<google::cloud::essentialcontacts::v1::Contact>
-EssentialContactsServiceClient::GetContact(std::string const& name,
-                                           Options opts) {
+EssentialContactsServiceClient::GetContact(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::essentialcontacts::v1::GetContactRequest request;
   request.set_name(name);
@@ -99,39 +85,33 @@ EssentialContactsServiceClient::GetContact(std::string const& name,
 }
 
 StatusOr<google::cloud::essentialcontacts::v1::Contact>
-EssentialContactsServiceClient::GetContact(
-    google::cloud::essentialcontacts::v1::GetContactRequest const& request,
-    Options opts) {
+EssentialContactsServiceClient::GetContact(google::cloud::essentialcontacts::v1::GetContactRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetContact(request);
 }
 
-Status EssentialContactsServiceClient::DeleteContact(std::string const& name,
-                                                     Options opts) {
+Status
+EssentialContactsServiceClient::DeleteContact(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::essentialcontacts::v1::DeleteContactRequest request;
   request.set_name(name);
   return connection_->DeleteContact(request);
 }
 
-Status EssentialContactsServiceClient::DeleteContact(
-    google::cloud::essentialcontacts::v1::DeleteContactRequest const& request,
-    Options opts) {
+Status
+EssentialContactsServiceClient::DeleteContact(google::cloud::essentialcontacts::v1::DeleteContactRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteContact(request);
 }
 
 StreamRange<google::cloud::essentialcontacts::v1::Contact>
-EssentialContactsServiceClient::ComputeContacts(
-    google::cloud::essentialcontacts::v1::ComputeContactsRequest request,
-    Options opts) {
+EssentialContactsServiceClient::ComputeContacts(google::cloud::essentialcontacts::v1::ComputeContactsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ComputeContacts(std::move(request));
 }
 
-Status EssentialContactsServiceClient::SendTestMessage(
-    google::cloud::essentialcontacts::v1::SendTestMessageRequest const& request,
-    Options opts) {
+Status
+EssentialContactsServiceClient::SendTestMessage(google::cloud::essentialcontacts::v1::SendTestMessageRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SendTestMessage(request);
 }

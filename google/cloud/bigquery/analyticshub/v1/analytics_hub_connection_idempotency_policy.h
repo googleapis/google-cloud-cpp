@@ -34,96 +34,77 @@ class AnalyticsHubServiceConnectionIdempotencyPolicy {
   virtual ~AnalyticsHubServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<AnalyticsHubServiceConnectionIdempotencyPolicy>
-  clone() const;
+  virtual std::unique_ptr<AnalyticsHubServiceConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency ListDataExchanges(
-      google::cloud::bigquery::analyticshub::v1::ListDataExchangesRequest
-          request);
+  virtual google::cloud::Idempotency
+  ListDataExchanges(google::cloud::bigquery::analyticshub::v1::ListDataExchangesRequest request);
 
-  virtual google::cloud::Idempotency ListOrgDataExchanges(
-      google::cloud::bigquery::analyticshub::v1::ListOrgDataExchangesRequest
-          request);
+  virtual google::cloud::Idempotency
+  ListOrgDataExchanges(google::cloud::bigquery::analyticshub::v1::ListOrgDataExchangesRequest request);
 
-  virtual google::cloud::Idempotency GetDataExchange(
-      google::cloud::bigquery::analyticshub::v1::GetDataExchangeRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  GetDataExchange(google::cloud::bigquery::analyticshub::v1::GetDataExchangeRequest const& request);
 
-  virtual google::cloud::Idempotency CreateDataExchange(
-      google::cloud::bigquery::analyticshub::v1::
-          CreateDataExchangeRequest const& request);
+  virtual google::cloud::Idempotency
+  CreateDataExchange(google::cloud::bigquery::analyticshub::v1::CreateDataExchangeRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateDataExchange(
-      google::cloud::bigquery::analyticshub::v1::
-          UpdateDataExchangeRequest const& request);
+  virtual google::cloud::Idempotency
+  UpdateDataExchange(google::cloud::bigquery::analyticshub::v1::UpdateDataExchangeRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteDataExchange(
-      google::cloud::bigquery::analyticshub::v1::
-          DeleteDataExchangeRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteDataExchange(google::cloud::bigquery::analyticshub::v1::DeleteDataExchangeRequest const& request);
 
-  virtual google::cloud::Idempotency ListListings(
-      google::cloud::bigquery::analyticshub::v1::ListListingsRequest request);
+  virtual google::cloud::Idempotency
+  ListListings(google::cloud::bigquery::analyticshub::v1::ListListingsRequest request);
 
-  virtual google::cloud::Idempotency GetListing(
-      google::cloud::bigquery::analyticshub::v1::GetListingRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  GetListing(google::cloud::bigquery::analyticshub::v1::GetListingRequest const& request);
 
-  virtual google::cloud::Idempotency CreateListing(
-      google::cloud::bigquery::analyticshub::v1::CreateListingRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  CreateListing(google::cloud::bigquery::analyticshub::v1::CreateListingRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateListing(
-      google::cloud::bigquery::analyticshub::v1::UpdateListingRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  UpdateListing(google::cloud::bigquery::analyticshub::v1::UpdateListingRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteListing(
-      google::cloud::bigquery::analyticshub::v1::DeleteListingRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  DeleteListing(google::cloud::bigquery::analyticshub::v1::DeleteListingRequest const& request);
 
-  virtual google::cloud::Idempotency SubscribeListing(
-      google::cloud::bigquery::analyticshub::v1::SubscribeListingRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  SubscribeListing(google::cloud::bigquery::analyticshub::v1::SubscribeListingRequest const& request);
 
-  virtual google::cloud::Idempotency SubscribeDataExchange(
-      google::cloud::bigquery::analyticshub::v1::
-          SubscribeDataExchangeRequest const& request);
+  virtual google::cloud::Idempotency
+  SubscribeDataExchange(google::cloud::bigquery::analyticshub::v1::SubscribeDataExchangeRequest const& request);
 
-  virtual google::cloud::Idempotency RefreshSubscription(
-      google::cloud::bigquery::analyticshub::v1::
-          RefreshSubscriptionRequest const& request);
+  virtual google::cloud::Idempotency
+  RefreshSubscription(google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionRequest const& request);
 
-  virtual google::cloud::Idempotency GetSubscription(
-      google::cloud::bigquery::analyticshub::v1::GetSubscriptionRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  GetSubscription(google::cloud::bigquery::analyticshub::v1::GetSubscriptionRequest const& request);
 
-  virtual google::cloud::Idempotency ListSubscriptions(
-      google::cloud::bigquery::analyticshub::v1::ListSubscriptionsRequest
-          request);
+  virtual google::cloud::Idempotency
+  ListSubscriptions(google::cloud::bigquery::analyticshub::v1::ListSubscriptionsRequest request);
 
-  virtual google::cloud::Idempotency ListSharedResourceSubscriptions(
-      google::cloud::bigquery::analyticshub::v1::
-          ListSharedResourceSubscriptionsRequest request);
+  virtual google::cloud::Idempotency
+  ListSharedResourceSubscriptions(google::cloud::bigquery::analyticshub::v1::ListSharedResourceSubscriptionsRequest request);
 
-  virtual google::cloud::Idempotency RevokeSubscription(
-      google::cloud::bigquery::analyticshub::v1::
-          RevokeSubscriptionRequest const& request);
+  virtual google::cloud::Idempotency
+  RevokeSubscription(google::cloud::bigquery::analyticshub::v1::RevokeSubscriptionRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteSubscription(
-      google::cloud::bigquery::analyticshub::v1::
-          DeleteSubscriptionRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteSubscription(google::cloud::bigquery::analyticshub::v1::DeleteSubscriptionRequest const& request);
 
-  virtual google::cloud::Idempotency GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request);
+  virtual google::cloud::Idempotency
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
 };
 
 std::unique_ptr<AnalyticsHubServiceConnectionIdempotencyPolicy>
-MakeDefaultAnalyticsHubServiceConnectionIdempotencyPolicy();
+    MakeDefaultAnalyticsHubServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_analyticshub_v1

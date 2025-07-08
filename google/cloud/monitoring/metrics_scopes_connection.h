@@ -27,27 +27,19 @@ namespace cloud {
 namespace monitoring {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use monitoring_metricsscope_v1::MakeMetricsScopesConnection
-/// directly.
+/// @deprecated Use monitoring_metricsscope_v1::MakeMetricsScopesConnection directly.
 using ::google::cloud::monitoring_metricsscope_v1::MakeMetricsScopesConnection;
 
-/// @deprecated Use monitoring_metricsscope_v1::MetricsScopesConnection
-/// directly.
+/// @deprecated Use monitoring_metricsscope_v1::MetricsScopesConnection directly.
 using ::google::cloud::monitoring_metricsscope_v1::MetricsScopesConnection;
 
-/// @deprecated Use
-/// monitoring_metricsscope_v1::MetricsScopesLimitedErrorCountRetryPolicy
-/// directly.
-using ::google::cloud::monitoring_metricsscope_v1::
-    MetricsScopesLimitedErrorCountRetryPolicy;
+/// @deprecated Use monitoring_metricsscope_v1::MetricsScopesLimitedErrorCountRetryPolicy directly.
+using ::google::cloud::monitoring_metricsscope_v1::MetricsScopesLimitedErrorCountRetryPolicy;
 
-/// @deprecated Use
-/// monitoring_metricsscope_v1::MetricsScopesLimitedTimeRetryPolicy directly.
-using ::google::cloud::monitoring_metricsscope_v1::
-    MetricsScopesLimitedTimeRetryPolicy;
+/// @deprecated Use monitoring_metricsscope_v1::MetricsScopesLimitedTimeRetryPolicy directly.
+using ::google::cloud::monitoring_metricsscope_v1::MetricsScopesLimitedTimeRetryPolicy;
 
-/// @deprecated Use monitoring_metricsscope_v1::MetricsScopesRetryPolicy
-/// directly.
+/// @deprecated Use monitoring_metricsscope_v1::MetricsScopesRetryPolicy directly.
 using ::google::cloud::monitoring_metricsscope_v1::MetricsScopesRetryPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

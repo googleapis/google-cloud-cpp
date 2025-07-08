@@ -26,75 +26,59 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-AssuredWorkloadsServiceConnectionIdempotencyPolicy::
-    ~AssuredWorkloadsServiceConnectionIdempotencyPolicy() = default;
+AssuredWorkloadsServiceConnectionIdempotencyPolicy::~AssuredWorkloadsServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<AssuredWorkloadsServiceConnectionIdempotencyPolicy>
 AssuredWorkloadsServiceConnectionIdempotencyPolicy::clone() const {
-  return std::make_unique<AssuredWorkloadsServiceConnectionIdempotencyPolicy>(
-      *this);
+  return std::make_unique<AssuredWorkloadsServiceConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency AssuredWorkloadsServiceConnectionIdempotencyPolicy::CreateWorkload(
-    google::cloud::assuredworkloads::v1::CreateWorkloadRequest const&) {
+Idempotency AssuredWorkloadsServiceConnectionIdempotencyPolicy::CreateWorkload(google::cloud::assuredworkloads::v1::CreateWorkloadRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency AssuredWorkloadsServiceConnectionIdempotencyPolicy::UpdateWorkload(
-    google::cloud::assuredworkloads::v1::UpdateWorkloadRequest const&) {
+Idempotency AssuredWorkloadsServiceConnectionIdempotencyPolicy::UpdateWorkload(google::cloud::assuredworkloads::v1::UpdateWorkloadRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency
-AssuredWorkloadsServiceConnectionIdempotencyPolicy::RestrictAllowedResources(
-    google::cloud::assuredworkloads::v1::
-        RestrictAllowedResourcesRequest const&) {
+Idempotency AssuredWorkloadsServiceConnectionIdempotencyPolicy::RestrictAllowedResources(google::cloud::assuredworkloads::v1::RestrictAllowedResourcesRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency AssuredWorkloadsServiceConnectionIdempotencyPolicy::DeleteWorkload(
-    google::cloud::assuredworkloads::v1::DeleteWorkloadRequest const&) {
+Idempotency AssuredWorkloadsServiceConnectionIdempotencyPolicy::DeleteWorkload(google::cloud::assuredworkloads::v1::DeleteWorkloadRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency AssuredWorkloadsServiceConnectionIdempotencyPolicy::GetWorkload(
-    google::cloud::assuredworkloads::v1::GetWorkloadRequest const&) {
+Idempotency AssuredWorkloadsServiceConnectionIdempotencyPolicy::GetWorkload(google::cloud::assuredworkloads::v1::GetWorkloadRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency AssuredWorkloadsServiceConnectionIdempotencyPolicy::ListWorkloads(
-    google::cloud::assuredworkloads::v1::ListWorkloadsRequest) {  // NOLINT
+Idempotency AssuredWorkloadsServiceConnectionIdempotencyPolicy::ListWorkloads(google::cloud::assuredworkloads::v1::ListWorkloadsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency AssuredWorkloadsServiceConnectionIdempotencyPolicy::ListViolations(
-    google::cloud::assuredworkloads::v1::ListViolationsRequest) {  // NOLINT
+Idempotency AssuredWorkloadsServiceConnectionIdempotencyPolicy::ListViolations(google::cloud::assuredworkloads::v1::ListViolationsRequest) {  // NOLINT
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency AssuredWorkloadsServiceConnectionIdempotencyPolicy::GetViolation(
-    google::cloud::assuredworkloads::v1::GetViolationRequest const&) {
+Idempotency AssuredWorkloadsServiceConnectionIdempotencyPolicy::GetViolation(google::cloud::assuredworkloads::v1::GetViolationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency
-AssuredWorkloadsServiceConnectionIdempotencyPolicy::AcknowledgeViolation(
-    google::cloud::assuredworkloads::v1::AcknowledgeViolationRequest const&) {
+Idempotency AssuredWorkloadsServiceConnectionIdempotencyPolicy::AcknowledgeViolation(google::cloud::assuredworkloads::v1::AcknowledgeViolationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency AssuredWorkloadsServiceConnectionIdempotencyPolicy::ListOperations(
-    google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency AssuredWorkloadsServiceConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency AssuredWorkloadsServiceConnectionIdempotencyPolicy::GetOperation(
-    google::longrunning::GetOperationRequest const&) {
+Idempotency AssuredWorkloadsServiceConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<AssuredWorkloadsServiceConnectionIdempotencyPolicy>
-MakeDefaultAssuredWorkloadsServiceConnectionIdempotencyPolicy() {
+    MakeDefaultAssuredWorkloadsServiceConnectionIdempotencyPolicy() {
   return std::make_unique<AssuredWorkloadsServiceConnectionIdempotencyPolicy>();
 }
 

@@ -34,27 +34,26 @@ class LanguageServiceConnectionIdempotencyPolicy {
   virtual ~LanguageServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<LanguageServiceConnectionIdempotencyPolicy> clone()
-      const;
+  virtual std::unique_ptr<LanguageServiceConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency AnalyzeSentiment(
-      google::cloud::language::v2::AnalyzeSentimentRequest const& request);
+  virtual google::cloud::Idempotency
+  AnalyzeSentiment(google::cloud::language::v2::AnalyzeSentimentRequest const& request);
 
-  virtual google::cloud::Idempotency AnalyzeEntities(
-      google::cloud::language::v2::AnalyzeEntitiesRequest const& request);
+  virtual google::cloud::Idempotency
+  AnalyzeEntities(google::cloud::language::v2::AnalyzeEntitiesRequest const& request);
 
-  virtual google::cloud::Idempotency ClassifyText(
-      google::cloud::language::v2::ClassifyTextRequest const& request);
+  virtual google::cloud::Idempotency
+  ClassifyText(google::cloud::language::v2::ClassifyTextRequest const& request);
 
-  virtual google::cloud::Idempotency ModerateText(
-      google::cloud::language::v2::ModerateTextRequest const& request);
+  virtual google::cloud::Idempotency
+  ModerateText(google::cloud::language::v2::ModerateTextRequest const& request);
 
-  virtual google::cloud::Idempotency AnnotateText(
-      google::cloud::language::v2::AnnotateTextRequest const& request);
+  virtual google::cloud::Idempotency
+  AnnotateText(google::cloud::language::v2::AnnotateTextRequest const& request);
 };
 
 std::unique_ptr<LanguageServiceConnectionIdempotencyPolicy>
-MakeDefaultLanguageServiceConnectionIdempotencyPolicy();
+    MakeDefaultLanguageServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace language_v2

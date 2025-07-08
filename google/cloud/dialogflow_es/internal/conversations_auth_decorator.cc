@@ -31,112 +31,108 @@ ConversationsAuth::ConversationsAuth(
     std::shared_ptr<ConversationsStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::dialogflow::v2::Conversation>
-ConversationsAuth::CreateConversation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::dialogflow::v2::Conversation> ConversationsAuth::CreateConversation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dialogflow::v2::CreateConversationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateConversation(context, options, request);
 }
 
-StatusOr<google::cloud::dialogflow::v2::ListConversationsResponse>
-ConversationsAuth::ListConversations(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::dialogflow::v2::ListConversationsResponse> ConversationsAuth::ListConversations(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dialogflow::v2::ListConversationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListConversations(context, options, request);
 }
 
-StatusOr<google::cloud::dialogflow::v2::Conversation>
-ConversationsAuth::GetConversation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::dialogflow::v2::Conversation> ConversationsAuth::GetConversation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dialogflow::v2::GetConversationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetConversation(context, options, request);
 }
 
-StatusOr<google::cloud::dialogflow::v2::Conversation>
-ConversationsAuth::CompleteConversation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::dialogflow::v2::Conversation> ConversationsAuth::CompleteConversation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dialogflow::v2::CompleteConversationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CompleteConversation(context, options, request);
 }
 
-StatusOr<google::cloud::dialogflow::v2::IngestContextReferencesResponse>
-ConversationsAuth::IngestContextReferences(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::dialogflow::v2::IngestContextReferencesRequest const&
-        request) {
+StatusOr<google::cloud::dialogflow::v2::IngestContextReferencesResponse> ConversationsAuth::IngestContextReferences(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::dialogflow::v2::IngestContextReferencesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->IngestContextReferences(context, options, request);
 }
 
-StatusOr<google::cloud::dialogflow::v2::ListMessagesResponse>
-ConversationsAuth::ListMessages(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::dialogflow::v2::ListMessagesResponse> ConversationsAuth::ListMessages(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dialogflow::v2::ListMessagesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListMessages(context, options, request);
 }
 
-StatusOr<google::cloud::dialogflow::v2::SuggestConversationSummaryResponse>
-ConversationsAuth::SuggestConversationSummary(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::dialogflow::v2::SuggestConversationSummaryRequest const&
-        request) {
+StatusOr<google::cloud::dialogflow::v2::SuggestConversationSummaryResponse> ConversationsAuth::SuggestConversationSummary(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::dialogflow::v2::SuggestConversationSummaryRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->SuggestConversationSummary(context, options, request);
 }
 
-StatusOr<google::cloud::dialogflow::v2::GenerateStatelessSummaryResponse>
-ConversationsAuth::GenerateStatelessSummary(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::dialogflow::v2::GenerateStatelessSummaryRequest const&
-        request) {
+StatusOr<google::cloud::dialogflow::v2::GenerateStatelessSummaryResponse> ConversationsAuth::GenerateStatelessSummary(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::dialogflow::v2::GenerateStatelessSummaryRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GenerateStatelessSummary(context, options, request);
 }
 
-StatusOr<google::cloud::dialogflow::v2::GenerateStatelessSuggestionResponse>
-ConversationsAuth::GenerateStatelessSuggestion(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::dialogflow::v2::GenerateStatelessSuggestionRequest const&
-        request) {
+StatusOr<google::cloud::dialogflow::v2::GenerateStatelessSuggestionResponse> ConversationsAuth::GenerateStatelessSuggestion(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::dialogflow::v2::GenerateStatelessSuggestionRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GenerateStatelessSuggestion(context, options, request);
 }
 
-StatusOr<google::cloud::dialogflow::v2::SearchKnowledgeResponse>
-ConversationsAuth::SearchKnowledge(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::dialogflow::v2::SearchKnowledgeResponse> ConversationsAuth::SearchKnowledge(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dialogflow::v2::SearchKnowledgeRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->SearchKnowledge(context, options, request);
 }
 
-StatusOr<google::cloud::dialogflow::v2::GenerateSuggestionsResponse>
-ConversationsAuth::GenerateSuggestions(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::dialogflow::v2::GenerateSuggestionsResponse> ConversationsAuth::GenerateSuggestions(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dialogflow::v2::GenerateSuggestionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GenerateSuggestions(context, options, request);
 }
 
-StatusOr<google::cloud::location::ListLocationsResponse>
-ConversationsAuth::ListLocations(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::location::ListLocationsResponse> ConversationsAuth::ListLocations(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -144,16 +140,17 @@ ConversationsAuth::ListLocations(
 }
 
 StatusOr<google::cloud::location::Location> ConversationsAuth::GetLocation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetLocation(context, options, request);
 }
 
-StatusOr<google::longrunning::ListOperationsResponse>
-ConversationsAuth::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse> ConversationsAuth::ListOperations(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -161,7 +158,8 @@ ConversationsAuth::ListOperations(
 }
 
 StatusOr<google::longrunning::Operation> ConversationsAuth::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -169,7 +167,8 @@ StatusOr<google::longrunning::Operation> ConversationsAuth::GetOperation(
 }
 
 Status ConversationsAuth::CancelOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;

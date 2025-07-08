@@ -46,27 +46,25 @@ class MockLustreConnection : public lustre_v1::LustreConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::lustre::v1::Instance>), ListInstances,
-              (google::cloud::lustre::v1::ListInstancesRequest request),
-              (override));
+  MOCK_METHOD((StreamRange<google::cloud::lustre::v1::Instance>),
+  ListInstances,
+  (google::cloud::lustre::v1::ListInstancesRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::lustre::v1::Instance>, GetInstance,
-              (google::cloud::lustre::v1::GetInstanceRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::lustre::v1::Instance>,
+  GetInstance,
+  (google::cloud::lustre::v1::GetInstanceRequest const& request), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// CreateInstance(Matcher<google::cloud::lustre::v1::CreateInstanceRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, CreateInstance(Matcher<google::cloud::lustre::v1::CreateInstanceRequest const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::lustre::v1::Instance>>,
-              CreateInstance,
-              (google::cloud::lustre::v1::CreateInstanceRequest const& request),
-              (override));
+  CreateInstance,
+  (google::cloud::lustre::v1::CreateInstanceRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -74,36 +72,33 @@ class MockLustreConnection : public lustre_v1::LustreConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, CreateInstance(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateInstance,
-              (NoAwaitTag,
-               google::cloud::lustre::v1::CreateInstanceRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  CreateInstance, (NoAwaitTag,
+    google::cloud::lustre::v1::CreateInstanceRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateInstance(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, CreateInstance(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::lustre::v1::Instance>>,
-              CreateInstance, (google::longrunning::Operation const& operation),
-              (override));
+  CreateInstance, (
+    google::longrunning::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// UpdateInstance(Matcher<google::cloud::lustre::v1::UpdateInstanceRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, UpdateInstance(Matcher<google::cloud::lustre::v1::UpdateInstanceRequest const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::lustre::v1::Instance>>,
-              UpdateInstance,
-              (google::cloud::lustre::v1::UpdateInstanceRequest const& request),
-              (override));
+  UpdateInstance,
+  (google::cloud::lustre::v1::UpdateInstanceRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -111,36 +106,33 @@ class MockLustreConnection : public lustre_v1::LustreConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, UpdateInstance(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, UpdateInstance,
-              (NoAwaitTag,
-               google::cloud::lustre::v1::UpdateInstanceRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  UpdateInstance, (NoAwaitTag,
+    google::cloud::lustre::v1::UpdateInstanceRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UpdateInstance(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, UpdateInstance(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::lustre::v1::Instance>>,
-              UpdateInstance, (google::longrunning::Operation const& operation),
-              (override));
+  UpdateInstance, (
+    google::longrunning::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteInstance(Matcher<google::cloud::lustre::v1::DeleteInstanceRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteInstance(Matcher<google::cloud::lustre::v1::DeleteInstanceRequest const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::lustre::v1::OperationMetadata>>,
-              DeleteInstance,
-              (google::cloud::lustre::v1::DeleteInstanceRequest const& request),
-              (override));
+  DeleteInstance,
+  (google::cloud::lustre::v1::DeleteInstanceRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -148,36 +140,33 @@ class MockLustreConnection : public lustre_v1::LustreConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, DeleteInstance(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteInstance,
-              (NoAwaitTag,
-               google::cloud::lustre::v1::DeleteInstanceRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  DeleteInstance, (NoAwaitTag,
+    google::cloud::lustre::v1::DeleteInstanceRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteInstance(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteInstance(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::lustre::v1::OperationMetadata>>,
-              DeleteInstance, (google::longrunning::Operation const& operation),
-              (override));
+  DeleteInstance, (
+    google::longrunning::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// ImportData(Matcher<google::cloud::lustre::v1::ImportDataRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, ImportData(Matcher<google::cloud::lustre::v1::ImportDataRequest const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::lustre::v1::ImportDataResponse>>,
-              ImportData,
-              (google::cloud::lustre::v1::ImportDataRequest const& request),
-              (override));
+  ImportData,
+  (google::cloud::lustre::v1::ImportDataRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -185,36 +174,33 @@ class MockLustreConnection : public lustre_v1::LustreConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, ImportData(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, ImportData,
-              (NoAwaitTag,
-               google::cloud::lustre::v1::ImportDataRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  ImportData, (NoAwaitTag,
+    google::cloud::lustre::v1::ImportDataRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, ImportData(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, ImportData(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::lustre::v1::ImportDataResponse>>,
-              ImportData, (google::longrunning::Operation const& operation),
-              (override));
+  ImportData, (
+    google::longrunning::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// ExportData(Matcher<google::cloud::lustre::v1::ExportDataRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, ExportData(Matcher<google::cloud::lustre::v1::ExportDataRequest const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::lustre::v1::ExportDataResponse>>,
-              ExportData,
-              (google::cloud::lustre::v1::ExportDataRequest const& request),
-              (override));
+  ExportData,
+  (google::cloud::lustre::v1::ExportDataRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -222,45 +208,45 @@ class MockLustreConnection : public lustre_v1::LustreConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, ExportData(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, ExportData,
-              (NoAwaitTag,
-               google::cloud::lustre::v1::ExportDataRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  ExportData, (NoAwaitTag,
+    google::cloud::lustre::v1::ExportDataRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, ExportData(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, ExportData(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::lustre::v1::ExportDataResponse>>,
-              ExportData, (google::longrunning::Operation const& operation),
-              (override));
+  ExportData, (
+    google::longrunning::Operation const& operation), (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::location::Location>), ListLocations,
-              (google::cloud::location::ListLocationsRequest request),
-              (override));
+  MOCK_METHOD((StreamRange<google::cloud::location::Location>),
+  ListLocations,
+  (google::cloud::location::ListLocationsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::location::Location>, GetLocation,
-              (google::cloud::location::GetLocationRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::location::Location>,
+  GetLocation,
+  (google::cloud::location::GetLocationRequest const& request), (override));
 
-  MOCK_METHOD((StreamRange<google::longrunning::Operation>), ListOperations,
-              (google::longrunning::ListOperationsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::longrunning::Operation>),
+  ListOperations,
+  (google::longrunning::ListOperationsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
-              (google::longrunning::GetOperationRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  GetOperation,
+  (google::longrunning::GetOperationRequest const& request), (override));
 
-  MOCK_METHOD(Status, DeleteOperation,
-              (google::longrunning::DeleteOperationRequest const& request),
-              (override));
+  MOCK_METHOD(Status,
+  DeleteOperation,
+  (google::longrunning::DeleteOperationRequest const& request), (override));
 
-  MOCK_METHOD(Status, CancelOperation,
-              (google::longrunning::CancelOperationRequest const& request),
-              (override));
+  MOCK_METHOD(Status,
+  CancelOperation,
+  (google::longrunning::CancelOperationRequest const& request), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

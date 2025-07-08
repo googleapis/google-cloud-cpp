@@ -17,8 +17,8 @@
 // source: google/cloud/compute/ssl_policies/v1/ssl_policies.proto
 
 #include "google/cloud/compute/ssl_policies/v1/internal/ssl_policies_rest_connection_impl.h"
-#include "google/cloud/compute/ssl_policies/v1/internal/ssl_policies_rest_stub_factory.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/compute/ssl_policies/v1/internal/ssl_policies_rest_stub_factory.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/async_rest_long_running_operation_custom.h"
 #include "google/cloud/internal/extract_long_running_result.h"
@@ -38,47 +38,34 @@ SslPoliciesRestConnectionImpl::SslPoliciesRestConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<compute_ssl_policies_v1_internal::SslPoliciesRestStub> stub,
     Options options)
-    : background_(std::move(background)),
-      stub_(std::move(stub)),
-      options_(internal::MergeOptions(std::move(options),
-                                      SslPoliciesConnection::options())) {}
+  : background_(std::move(background)), stub_(std::move(stub)),
+    options_(internal::MergeOptions(
+        std::move(options),
+        SslPoliciesConnection::options())) {}
 
-StreamRange<std::pair<std::string,
-                      google::cloud::cpp::compute::v1::SslPoliciesScopedList>>
-SslPoliciesRestConnectionImpl::AggregatedListSslPolicies(
-    google::cloud::cpp::compute::ssl_policies::v1::
-        AggregatedListSslPoliciesRequest request) {
+StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::SslPoliciesScopedList>>
+SslPoliciesRestConnectionImpl::AggregatedListSslPolicies(google::cloud::cpp::compute::ssl_policies::v1::AggregatedListSslPoliciesRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
-  auto idempotency =
-      idempotency_policy(*current)->AggregatedListSslPolicies(request);
+  auto idempotency = idempotency_policy(*current)->AggregatedListSslPolicies(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<std::pair<
-      std::string, google::cloud::cpp::compute::v1::SslPoliciesScopedList>>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::SslPoliciesScopedList>>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<compute_ssl_policies_v1::SslPoliciesRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<compute_ssl_policies_v1::SslPoliciesRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::cpp::compute::ssl_policies::v1::
-              AggregatedListSslPoliciesRequest const& r) {
+          Options const& options, google::cloud::cpp::compute::ssl_policies::v1::AggregatedListSslPoliciesRequest const& r) {
         return google::cloud::rest_internal::RestRetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](rest_internal::RestContext& rest_context,
                    Options const& options,
-                   google::cloud::cpp::compute::ssl_policies::v1::
-                       AggregatedListSslPoliciesRequest const& request) {
-              return stub->AggregatedListSslPolicies(rest_context, options,
-                                                     request);
+                   google::cloud::cpp::compute::ssl_policies::v1::AggregatedListSslPoliciesRequest const& request) {
+              return stub->AggregatedListSslPolicies(rest_context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::cpp::compute::v1::SslPoliciesAggregatedList r) {
-        std::vector<
-            std::pair<std::string,
-                      google::cloud::cpp::compute::v1::SslPoliciesScopedList>>
-            result(r.items().size());
+        std::vector<std::pair<std::string, google::cloud::cpp::compute::v1::SslPoliciesScopedList>> result(r.items().size());
         auto& messages = *r.mutable_items();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -86,75 +73,66 @@ SslPoliciesRestConnectionImpl::AggregatedListSslPolicies(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-SslPoliciesRestConnectionImpl::DeleteSslPolicy(
-    google::cloud::cpp::compute::ssl_policies::v1::DeleteSslPolicyRequest const&
-        request) {
+SslPoliciesRestConnectionImpl::DeleteSslPolicy(google::cloud::cpp::compute::ssl_policies::v1::DeleteSslPolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestLongRunningOperation<
-      google::cloud::cpp::compute::v1::Operation,
-      google::cloud::cpp::compute::v1::Operation,
-      google::cloud::cpp::compute::global_operations::v1::GetOperationRequest,
-      google::cloud::cpp::compute::global_operations::v1::
-          DeleteOperationRequest>(
-      background_->cq(), current, request,
-      [stub = stub_](CompletionQueue& cq,
-                     std::unique_ptr<rest_internal::RestContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::cloud::cpp::compute::ssl_policies::v1::
-                         DeleteSslPolicyRequest const& request) {
-        return stub->AsyncDeleteSslPolicy(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      [stub = stub_](CompletionQueue& cq,
-                     std::unique_ptr<rest_internal::RestContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::cloud::cpp::compute::global_operations::v1::
-                         GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](CompletionQueue& cq,
-                     std::unique_ptr<rest_internal::RestContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::cloud::cpp::compute::global_operations::v1::
-                         DeleteOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
-         std::string const&) { return op; },
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteSslPolicy(request),
-      polling_policy(*current), __func__,
-      [](google::cloud::cpp::compute::v1::Operation const& op) {
+    google::cloud::cpp::compute::v1::Operation,
+    google::cloud::cpp::compute::v1::Operation,
+    google::cloud::cpp::compute::global_operations::v1::GetOperationRequest,
+    google::cloud::cpp::compute::global_operations::v1::DeleteOperationRequest>(
+    background_->cq(), current, request,
+    [stub = stub_](CompletionQueue& cq,
+                   std::unique_ptr<rest_internal::RestContext> context,
+                   google::cloud::internal::ImmutableOptions options, google::cloud::cpp::compute::ssl_policies::v1::DeleteSslPolicyRequest const& request) {
+      return stub->AsyncDeleteSslPolicy(
+          cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](CompletionQueue& cq,
+                   std::unique_ptr<rest_internal::RestContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::cloud::cpp::compute::global_operations::v1::GetOperationRequest const& request) {
+      return stub->AsyncGetOperation(
+          cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](CompletionQueue& cq,
+                   std::unique_ptr<rest_internal::RestContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::cloud::cpp::compute::global_operations::v1::DeleteOperationRequest const& request) {
+      return stub->AsyncCancelOperation(
+          cq, std::move(context), std::move(options), request);
+    },
+    [](StatusOr<google::cloud::cpp::compute::v1::Operation> op, std::string const&) {
+        return op;
+    },
+    retry_policy(*current), backoff_policy(*current),
+    idempotency_policy(*current)->DeleteSslPolicy(request),
+    polling_policy(*current), __func__,
+    [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
-      },
-      [request](std::string const& op,
-                google::cloud::cpp::compute::global_operations::v1::
-                    GetOperationRequest& r) {
-        r.set_project(request.project());
-        r.set_operation(op);
-      },
-      [request](std::string const& op,
-                google::cloud::cpp::compute::global_operations::v1::
-                    DeleteOperationRequest& r) {
-        r.set_project(request.project());
-        r.set_operation(op);
-      });
+    },
+    [request](std::string const& op, google::cloud::cpp::compute::global_operations::v1::GetOperationRequest& r) {
+
+      r.set_project(request.project());
+      r.set_operation(op);
+
+    },
+    [request](std::string const& op, google::cloud::cpp::compute::global_operations::v1::DeleteOperationRequest& r) {
+
+      r.set_project(request.project());
+      r.set_operation(op);
+
+    });
+
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-SslPoliciesRestConnectionImpl::DeleteSslPolicy(
-    NoAwaitTag,
-    google::cloud::cpp::compute::ssl_policies::v1::DeleteSslPolicyRequest const&
-        request) {
+SslPoliciesRestConnectionImpl::DeleteSslPolicy(NoAwaitTag, google::cloud::cpp::compute::ssl_policies::v1::DeleteSslPolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteSslPolicy(request),
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::cloud::cpp::compute::ssl_policies::v1::
-                 DeleteSslPolicyRequest const& request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options, google::cloud::cpp::compute::ssl_policies::v1::DeleteSslPolicyRequest const& request) {
         return stub_->DeleteSslPolicy(rest_context, options, request);
       },
       *current, request, __func__);
@@ -165,140 +143,123 @@ SslPoliciesRestConnectionImpl::DeleteSslPolicy(
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
-      google::cloud::cpp::compute::v1::Operation,
-      google::cloud::cpp::compute::v1::Operation,
-      google::cloud::cpp::compute::global_operations::v1::GetOperationRequest,
-      google::cloud::cpp::compute::global_operations::v1::
-          DeleteOperationRequest>(
-      background_->cq(), current, operation,
-      [stub = stub_](CompletionQueue& cq,
-                     std::unique_ptr<rest_internal::RestContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::cloud::cpp::compute::global_operations::v1::
-                         GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](CompletionQueue& cq,
-                     std::unique_ptr<rest_internal::RestContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::cloud::cpp::compute::global_operations::v1::
-                         DeleteOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
-         std::string const&) { return op; },
-      polling_policy(*current), __func__,
-      [](google::cloud::cpp::compute::v1::Operation const& op) {
+    google::cloud::cpp::compute::v1::Operation,
+    google::cloud::cpp::compute::v1::Operation,
+    google::cloud::cpp::compute::global_operations::v1::GetOperationRequest,
+    google::cloud::cpp::compute::global_operations::v1::DeleteOperationRequest>(
+    background_->cq(), current, operation,
+    [stub = stub_](CompletionQueue& cq,
+                   std::unique_ptr<rest_internal::RestContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::cloud::cpp::compute::global_operations::v1::GetOperationRequest const& request) {
+      return stub->AsyncGetOperation(
+          cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](CompletionQueue& cq,
+                   std::unique_ptr<rest_internal::RestContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::cloud::cpp::compute::global_operations::v1::DeleteOperationRequest const& request) {
+      return stub->AsyncCancelOperation(
+          cq, std::move(context), std::move(options), request);
+    },
+    [](StatusOr<google::cloud::cpp::compute::v1::Operation> op, std::string const&) {
+        return op;
+    },
+    polling_policy(*current), __func__,
+    [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
-      },
-      [operation](std::string const&,
-                  google::cloud::cpp::compute::global_operations::v1::
-                      GetOperationRequest& r) {
-        auto info = google::cloud::rest_internal::ParseComputeOperationInfo(
-            operation.self_link());
+    },
+    [operation](std::string const&, google::cloud::cpp::compute::global_operations::v1::GetOperationRequest& r) {
+        auto info = google::cloud::rest_internal::ParseComputeOperationInfo(operation.self_link());
 
-        r.set_project(info.project);
-        r.set_operation(info.operation);
-      },
-      [operation](std::string const&,
-                  google::cloud::cpp::compute::global_operations::v1::
-                      DeleteOperationRequest& r) {
-        auto info = google::cloud::rest_internal::ParseComputeOperationInfo(
-            operation.self_link());
+      r.set_project(info.project);
+      r.set_operation(info.operation);
 
-        r.set_project(info.project);
-        r.set_operation(info.operation);
-      });
+    },
+    [operation](std::string const&, google::cloud::cpp::compute::global_operations::v1::DeleteOperationRequest& r) {
+        auto info = google::cloud::rest_internal::ParseComputeOperationInfo(operation.self_link());
+
+      r.set_project(info.project);
+      r.set_operation(info.operation);
+
+    });
+
 }
 
 StatusOr<google::cloud::cpp::compute::v1::SslPolicy>
-SslPoliciesRestConnectionImpl::GetSslPolicy(
-    google::cloud::cpp::compute::ssl_policies::v1::GetSslPolicyRequest const&
-        request) {
+SslPoliciesRestConnectionImpl::GetSslPolicy(google::cloud::cpp::compute::ssl_policies::v1::GetSslPolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetSslPolicy(request),
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::cloud::cpp::compute::ssl_policies::v1::
-                 GetSslPolicyRequest const& request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options, google::cloud::cpp::compute::ssl_policies::v1::GetSslPolicyRequest const& request) {
         return stub_->GetSslPolicy(rest_context, options, request);
       },
       *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-SslPoliciesRestConnectionImpl::InsertSslPolicy(
-    google::cloud::cpp::compute::ssl_policies::v1::InsertSslPolicyRequest const&
-        request) {
+SslPoliciesRestConnectionImpl::InsertSslPolicy(google::cloud::cpp::compute::ssl_policies::v1::InsertSslPolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestLongRunningOperation<
-      google::cloud::cpp::compute::v1::Operation,
-      google::cloud::cpp::compute::v1::Operation,
-      google::cloud::cpp::compute::global_operations::v1::GetOperationRequest,
-      google::cloud::cpp::compute::global_operations::v1::
-          DeleteOperationRequest>(
-      background_->cq(), current, request,
-      [stub = stub_](CompletionQueue& cq,
-                     std::unique_ptr<rest_internal::RestContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::cloud::cpp::compute::ssl_policies::v1::
-                         InsertSslPolicyRequest const& request) {
-        return stub->AsyncInsertSslPolicy(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      [stub = stub_](CompletionQueue& cq,
-                     std::unique_ptr<rest_internal::RestContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::cloud::cpp::compute::global_operations::v1::
-                         GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](CompletionQueue& cq,
-                     std::unique_ptr<rest_internal::RestContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::cloud::cpp::compute::global_operations::v1::
-                         DeleteOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
-         std::string const&) { return op; },
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->InsertSslPolicy(request),
-      polling_policy(*current), __func__,
-      [](google::cloud::cpp::compute::v1::Operation const& op) {
+    google::cloud::cpp::compute::v1::Operation,
+    google::cloud::cpp::compute::v1::Operation,
+    google::cloud::cpp::compute::global_operations::v1::GetOperationRequest,
+    google::cloud::cpp::compute::global_operations::v1::DeleteOperationRequest>(
+    background_->cq(), current, request,
+    [stub = stub_](CompletionQueue& cq,
+                   std::unique_ptr<rest_internal::RestContext> context,
+                   google::cloud::internal::ImmutableOptions options, google::cloud::cpp::compute::ssl_policies::v1::InsertSslPolicyRequest const& request) {
+      return stub->AsyncInsertSslPolicy(
+          cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](CompletionQueue& cq,
+                   std::unique_ptr<rest_internal::RestContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::cloud::cpp::compute::global_operations::v1::GetOperationRequest const& request) {
+      return stub->AsyncGetOperation(
+          cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](CompletionQueue& cq,
+                   std::unique_ptr<rest_internal::RestContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::cloud::cpp::compute::global_operations::v1::DeleteOperationRequest const& request) {
+      return stub->AsyncCancelOperation(
+          cq, std::move(context), std::move(options), request);
+    },
+    [](StatusOr<google::cloud::cpp::compute::v1::Operation> op, std::string const&) {
+        return op;
+    },
+    retry_policy(*current), backoff_policy(*current),
+    idempotency_policy(*current)->InsertSslPolicy(request),
+    polling_policy(*current), __func__,
+    [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
-      },
-      [request](std::string const& op,
-                google::cloud::cpp::compute::global_operations::v1::
-                    GetOperationRequest& r) {
-        r.set_project(request.project());
-        r.set_operation(op);
-      },
-      [request](std::string const& op,
-                google::cloud::cpp::compute::global_operations::v1::
-                    DeleteOperationRequest& r) {
-        r.set_project(request.project());
-        r.set_operation(op);
-      });
+    },
+    [request](std::string const& op, google::cloud::cpp::compute::global_operations::v1::GetOperationRequest& r) {
+
+      r.set_project(request.project());
+      r.set_operation(op);
+
+    },
+    [request](std::string const& op, google::cloud::cpp::compute::global_operations::v1::DeleteOperationRequest& r) {
+
+      r.set_project(request.project());
+      r.set_operation(op);
+
+    });
+
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-SslPoliciesRestConnectionImpl::InsertSslPolicy(
-    NoAwaitTag,
-    google::cloud::cpp::compute::ssl_policies::v1::InsertSslPolicyRequest const&
-        request) {
+SslPoliciesRestConnectionImpl::InsertSslPolicy(NoAwaitTag, google::cloud::cpp::compute::ssl_policies::v1::InsertSslPolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->InsertSslPolicy(request),
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::cloud::cpp::compute::ssl_policies::v1::
-                 InsertSslPolicyRequest const& request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options, google::cloud::cpp::compute::ssl_policies::v1::InsertSslPolicyRequest const& request) {
         return stub_->InsertSslPolicy(rest_context, options, request);
       },
       *current, request, __func__);
@@ -309,177 +270,152 @@ SslPoliciesRestConnectionImpl::InsertSslPolicy(
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
-      google::cloud::cpp::compute::v1::Operation,
-      google::cloud::cpp::compute::v1::Operation,
-      google::cloud::cpp::compute::global_operations::v1::GetOperationRequest,
-      google::cloud::cpp::compute::global_operations::v1::
-          DeleteOperationRequest>(
-      background_->cq(), current, operation,
-      [stub = stub_](CompletionQueue& cq,
-                     std::unique_ptr<rest_internal::RestContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::cloud::cpp::compute::global_operations::v1::
-                         GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](CompletionQueue& cq,
-                     std::unique_ptr<rest_internal::RestContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::cloud::cpp::compute::global_operations::v1::
-                         DeleteOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
-         std::string const&) { return op; },
-      polling_policy(*current), __func__,
-      [](google::cloud::cpp::compute::v1::Operation const& op) {
+    google::cloud::cpp::compute::v1::Operation,
+    google::cloud::cpp::compute::v1::Operation,
+    google::cloud::cpp::compute::global_operations::v1::GetOperationRequest,
+    google::cloud::cpp::compute::global_operations::v1::DeleteOperationRequest>(
+    background_->cq(), current, operation,
+    [stub = stub_](CompletionQueue& cq,
+                   std::unique_ptr<rest_internal::RestContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::cloud::cpp::compute::global_operations::v1::GetOperationRequest const& request) {
+      return stub->AsyncGetOperation(
+          cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](CompletionQueue& cq,
+                   std::unique_ptr<rest_internal::RestContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::cloud::cpp::compute::global_operations::v1::DeleteOperationRequest const& request) {
+      return stub->AsyncCancelOperation(
+          cq, std::move(context), std::move(options), request);
+    },
+    [](StatusOr<google::cloud::cpp::compute::v1::Operation> op, std::string const&) {
+        return op;
+    },
+    polling_policy(*current), __func__,
+    [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
-      },
-      [operation](std::string const&,
-                  google::cloud::cpp::compute::global_operations::v1::
-                      GetOperationRequest& r) {
-        auto info = google::cloud::rest_internal::ParseComputeOperationInfo(
-            operation.self_link());
+    },
+    [operation](std::string const&, google::cloud::cpp::compute::global_operations::v1::GetOperationRequest& r) {
+        auto info = google::cloud::rest_internal::ParseComputeOperationInfo(operation.self_link());
 
-        r.set_project(info.project);
-        r.set_operation(info.operation);
-      },
-      [operation](std::string const&,
-                  google::cloud::cpp::compute::global_operations::v1::
-                      DeleteOperationRequest& r) {
-        auto info = google::cloud::rest_internal::ParseComputeOperationInfo(
-            operation.self_link());
+      r.set_project(info.project);
+      r.set_operation(info.operation);
 
-        r.set_project(info.project);
-        r.set_operation(info.operation);
-      });
+    },
+    [operation](std::string const&, google::cloud::cpp::compute::global_operations::v1::DeleteOperationRequest& r) {
+        auto info = google::cloud::rest_internal::ParseComputeOperationInfo(operation.self_link());
+
+      r.set_project(info.project);
+      r.set_operation(info.operation);
+
+    });
+
 }
 
 StreamRange<google::cloud::cpp::compute::v1::SslPolicy>
-SslPoliciesRestConnectionImpl::ListSslPolicies(
-    google::cloud::cpp::compute::ssl_policies::v1::ListSslPoliciesRequest
-        request) {
+SslPoliciesRestConnectionImpl::ListSslPolicies(google::cloud::cpp::compute::ssl_policies::v1::ListSslPoliciesRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListSslPolicies(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::cpp::compute::v1::SslPolicy>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::cpp::compute::v1::SslPolicy>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<compute_ssl_policies_v1::SslPoliciesRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<compute_ssl_policies_v1::SslPoliciesRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::cpp::compute::ssl_policies::
-                                      v1::ListSslPoliciesRequest const& r) {
+          Options const& options, google::cloud::cpp::compute::ssl_policies::v1::ListSslPoliciesRequest const& r) {
         return google::cloud::rest_internal::RestRetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](rest_internal::RestContext& rest_context,
                    Options const& options,
-                   google::cloud::cpp::compute::ssl_policies::v1::
-                       ListSslPoliciesRequest const& request) {
+                   google::cloud::cpp::compute::ssl_policies::v1::ListSslPoliciesRequest const& request) {
               return stub->ListSslPolicies(rest_context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::cpp::compute::v1::SslPoliciesList r) {
-        std::vector<google::cloud::cpp::compute::v1::SslPolicy> result(
-            r.items().size());
+        std::vector<google::cloud::cpp::compute::v1::SslPolicy> result(r.items().size());
         auto& messages = *r.mutable_items();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
       });
 }
 
-StatusOr<
-    google::cloud::cpp::compute::v1::SslPoliciesListAvailableFeaturesResponse>
-SslPoliciesRestConnectionImpl::ListAvailableFeatures(
-    google::cloud::cpp::compute::ssl_policies::v1::
-        ListAvailableFeaturesRequest const& request) {
+StatusOr<google::cloud::cpp::compute::v1::SslPoliciesListAvailableFeaturesResponse>
+SslPoliciesRestConnectionImpl::ListAvailableFeatures(google::cloud::cpp::compute::ssl_policies::v1::ListAvailableFeaturesRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->ListAvailableFeatures(request),
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::cloud::cpp::compute::ssl_policies::v1::
-                 ListAvailableFeaturesRequest const& request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options, google::cloud::cpp::compute::ssl_policies::v1::ListAvailableFeaturesRequest const& request) {
         return stub_->ListAvailableFeatures(rest_context, options, request);
       },
       *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-SslPoliciesRestConnectionImpl::PatchSslPolicy(
-    google::cloud::cpp::compute::ssl_policies::v1::PatchSslPolicyRequest const&
-        request) {
+SslPoliciesRestConnectionImpl::PatchSslPolicy(google::cloud::cpp::compute::ssl_policies::v1::PatchSslPolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestLongRunningOperation<
-      google::cloud::cpp::compute::v1::Operation,
-      google::cloud::cpp::compute::v1::Operation,
-      google::cloud::cpp::compute::global_operations::v1::GetOperationRequest,
-      google::cloud::cpp::compute::global_operations::v1::
-          DeleteOperationRequest>(
-      background_->cq(), current, request,
-      [stub = stub_](CompletionQueue& cq,
-                     std::unique_ptr<rest_internal::RestContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::cloud::cpp::compute::ssl_policies::v1::
-                         PatchSslPolicyRequest const& request) {
-        return stub->AsyncPatchSslPolicy(cq, std::move(context),
-                                         std::move(options), request);
-      },
-      [stub = stub_](CompletionQueue& cq,
-                     std::unique_ptr<rest_internal::RestContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::cloud::cpp::compute::global_operations::v1::
-                         GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](CompletionQueue& cq,
-                     std::unique_ptr<rest_internal::RestContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::cloud::cpp::compute::global_operations::v1::
-                         DeleteOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
-         std::string const&) { return op; },
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->PatchSslPolicy(request),
-      polling_policy(*current), __func__,
-      [](google::cloud::cpp::compute::v1::Operation const& op) {
+    google::cloud::cpp::compute::v1::Operation,
+    google::cloud::cpp::compute::v1::Operation,
+    google::cloud::cpp::compute::global_operations::v1::GetOperationRequest,
+    google::cloud::cpp::compute::global_operations::v1::DeleteOperationRequest>(
+    background_->cq(), current, request,
+    [stub = stub_](CompletionQueue& cq,
+                   std::unique_ptr<rest_internal::RestContext> context,
+                   google::cloud::internal::ImmutableOptions options, google::cloud::cpp::compute::ssl_policies::v1::PatchSslPolicyRequest const& request) {
+      return stub->AsyncPatchSslPolicy(
+          cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](CompletionQueue& cq,
+                   std::unique_ptr<rest_internal::RestContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::cloud::cpp::compute::global_operations::v1::GetOperationRequest const& request) {
+      return stub->AsyncGetOperation(
+          cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](CompletionQueue& cq,
+                   std::unique_ptr<rest_internal::RestContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::cloud::cpp::compute::global_operations::v1::DeleteOperationRequest const& request) {
+      return stub->AsyncCancelOperation(
+          cq, std::move(context), std::move(options), request);
+    },
+    [](StatusOr<google::cloud::cpp::compute::v1::Operation> op, std::string const&) {
+        return op;
+    },
+    retry_policy(*current), backoff_policy(*current),
+    idempotency_policy(*current)->PatchSslPolicy(request),
+    polling_policy(*current), __func__,
+    [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
-      },
-      [request](std::string const& op,
-                google::cloud::cpp::compute::global_operations::v1::
-                    GetOperationRequest& r) {
-        r.set_project(request.project());
-        r.set_operation(op);
-      },
-      [request](std::string const& op,
-                google::cloud::cpp::compute::global_operations::v1::
-                    DeleteOperationRequest& r) {
-        r.set_project(request.project());
-        r.set_operation(op);
-      });
+    },
+    [request](std::string const& op, google::cloud::cpp::compute::global_operations::v1::GetOperationRequest& r) {
+
+      r.set_project(request.project());
+      r.set_operation(op);
+
+    },
+    [request](std::string const& op, google::cloud::cpp::compute::global_operations::v1::DeleteOperationRequest& r) {
+
+      r.set_project(request.project());
+      r.set_operation(op);
+
+    });
+
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-SslPoliciesRestConnectionImpl::PatchSslPolicy(
-    NoAwaitTag,
-    google::cloud::cpp::compute::ssl_policies::v1::PatchSslPolicyRequest const&
-        request) {
+SslPoliciesRestConnectionImpl::PatchSslPolicy(NoAwaitTag, google::cloud::cpp::compute::ssl_policies::v1::PatchSslPolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->PatchSslPolicy(request),
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::cloud::cpp::compute::ssl_policies::v1::
-                 PatchSslPolicyRequest const& request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options, google::cloud::cpp::compute::ssl_policies::v1::PatchSslPolicyRequest const& request) {
         return stub_->PatchSslPolicy(rest_context, options, request);
       },
       *current, request, __func__);
@@ -490,52 +426,47 @@ SslPoliciesRestConnectionImpl::PatchSslPolicy(
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
-      google::cloud::cpp::compute::v1::Operation,
-      google::cloud::cpp::compute::v1::Operation,
-      google::cloud::cpp::compute::global_operations::v1::GetOperationRequest,
-      google::cloud::cpp::compute::global_operations::v1::
-          DeleteOperationRequest>(
-      background_->cq(), current, operation,
-      [stub = stub_](CompletionQueue& cq,
-                     std::unique_ptr<rest_internal::RestContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::cloud::cpp::compute::global_operations::v1::
-                         GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](CompletionQueue& cq,
-                     std::unique_ptr<rest_internal::RestContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::cloud::cpp::compute::global_operations::v1::
-                         DeleteOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
-         std::string const&) { return op; },
-      polling_policy(*current), __func__,
-      [](google::cloud::cpp::compute::v1::Operation const& op) {
+    google::cloud::cpp::compute::v1::Operation,
+    google::cloud::cpp::compute::v1::Operation,
+    google::cloud::cpp::compute::global_operations::v1::GetOperationRequest,
+    google::cloud::cpp::compute::global_operations::v1::DeleteOperationRequest>(
+    background_->cq(), current, operation,
+    [stub = stub_](CompletionQueue& cq,
+                   std::unique_ptr<rest_internal::RestContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::cloud::cpp::compute::global_operations::v1::GetOperationRequest const& request) {
+      return stub->AsyncGetOperation(
+          cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](CompletionQueue& cq,
+                   std::unique_ptr<rest_internal::RestContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::cloud::cpp::compute::global_operations::v1::DeleteOperationRequest const& request) {
+      return stub->AsyncCancelOperation(
+          cq, std::move(context), std::move(options), request);
+    },
+    [](StatusOr<google::cloud::cpp::compute::v1::Operation> op, std::string const&) {
+        return op;
+    },
+    polling_policy(*current), __func__,
+    [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
-      },
-      [operation](std::string const&,
-                  google::cloud::cpp::compute::global_operations::v1::
-                      GetOperationRequest& r) {
-        auto info = google::cloud::rest_internal::ParseComputeOperationInfo(
-            operation.self_link());
+    },
+    [operation](std::string const&, google::cloud::cpp::compute::global_operations::v1::GetOperationRequest& r) {
+        auto info = google::cloud::rest_internal::ParseComputeOperationInfo(operation.self_link());
 
-        r.set_project(info.project);
-        r.set_operation(info.operation);
-      },
-      [operation](std::string const&,
-                  google::cloud::cpp::compute::global_operations::v1::
-                      DeleteOperationRequest& r) {
-        auto info = google::cloud::rest_internal::ParseComputeOperationInfo(
-            operation.self_link());
+      r.set_project(info.project);
+      r.set_operation(info.operation);
 
-        r.set_project(info.project);
-        r.set_operation(info.operation);
-      });
+    },
+    [operation](std::string const&, google::cloud::cpp::compute::global_operations::v1::DeleteOperationRequest& r) {
+        auto info = google::cloud::rest_internal::ParseComputeOperationInfo(operation.self_link());
+
+      r.set_project(info.project);
+      r.set_operation(info.operation);
+
+    });
+
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

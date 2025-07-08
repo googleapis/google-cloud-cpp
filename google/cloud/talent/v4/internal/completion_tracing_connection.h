@@ -30,20 +30,21 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-class CompletionTracingConnection : public talent_v4::CompletionConnection {
+class CompletionTracingConnection
+    : public talent_v4::CompletionConnection {
  public:
   ~CompletionTracingConnection() override = default;
 
   explicit CompletionTracingConnection(
-      std::shared_ptr<talent_v4::CompletionConnection> child);
+    std::shared_ptr<talent_v4::CompletionConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::talent::v4::CompleteQueryResponse> CompleteQuery(
-      google::cloud::talent::v4::CompleteQueryRequest const& request) override;
+  StatusOr<google::cloud::talent::v4::CompleteQueryResponse>
+  CompleteQuery(google::cloud::talent::v4::CompleteQueryRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request) override;
 
  private:
   std::shared_ptr<talent_v4::CompletionConnection> child_;

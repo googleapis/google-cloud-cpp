@@ -26,17 +26,11 @@ namespace cloud {
 namespace networkmanagement {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use
-/// networkmanagement_v1::MakeDefaultReachabilityServiceConnectionIdempotencyPolicy
-/// directly.
-using ::google::cloud::networkmanagement_v1::
-    MakeDefaultReachabilityServiceConnectionIdempotencyPolicy;
+/// @deprecated Use networkmanagement_v1::MakeDefaultReachabilityServiceConnectionIdempotencyPolicy directly.
+using ::google::cloud::networkmanagement_v1::MakeDefaultReachabilityServiceConnectionIdempotencyPolicy;
 
-/// @deprecated Use
-/// networkmanagement_v1::ReachabilityServiceConnectionIdempotencyPolicy
-/// directly.
-using ::google::cloud::networkmanagement_v1::
-    ReachabilityServiceConnectionIdempotencyPolicy;
+/// @deprecated Use networkmanagement_v1::ReachabilityServiceConnectionIdempotencyPolicy directly.
+using ::google::cloud::networkmanagement_v1::ReachabilityServiceConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace networkmanagement

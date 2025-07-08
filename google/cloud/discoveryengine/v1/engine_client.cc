@@ -28,15 +28,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 EngineServiceClient::EngineServiceClient(
     std::shared_ptr<EngineServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 EngineServiceClient::~EngineServiceClient() = default;
 
 future<StatusOr<google::cloud::discoveryengine::v1::Engine>>
-EngineServiceClient::CreateEngine(
-    std::string const& parent,
-    google::cloud::discoveryengine::v1::Engine const& engine,
-    std::string const& engine_id, Options opts) {
+EngineServiceClient::CreateEngine(std::string const& parent, google::cloud::discoveryengine::v1::Engine const& engine, std::string const& engine_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::discoveryengine::v1::CreateEngineRequest request;
   request.set_parent(parent);
@@ -45,10 +42,8 @@ EngineServiceClient::CreateEngine(
   return connection_->CreateEngine(request);
 }
 
-StatusOr<google::longrunning::Operation> EngineServiceClient::CreateEngine(
-    NoAwaitTag, std::string const& parent,
-    google::cloud::discoveryengine::v1::Engine const& engine,
-    std::string const& engine_id, Options opts) {
+StatusOr<google::longrunning::Operation>
+EngineServiceClient::CreateEngine(NoAwaitTag, std::string const& parent, google::cloud::discoveryengine::v1::Engine const& engine, std::string const& engine_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::discoveryengine::v1::CreateEngineRequest request;
   request.set_parent(parent);
@@ -58,24 +53,19 @@ StatusOr<google::longrunning::Operation> EngineServiceClient::CreateEngine(
 }
 
 future<StatusOr<google::cloud::discoveryengine::v1::Engine>>
-EngineServiceClient::CreateEngine(
-    google::cloud::discoveryengine::v1::CreateEngineRequest const& request,
-    Options opts) {
+EngineServiceClient::CreateEngine(google::cloud::discoveryengine::v1::CreateEngineRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateEngine(request);
 }
 
-StatusOr<google::longrunning::Operation> EngineServiceClient::CreateEngine(
-    NoAwaitTag,
-    google::cloud::discoveryengine::v1::CreateEngineRequest const& request,
-    Options opts) {
+StatusOr<google::longrunning::Operation>
+EngineServiceClient::CreateEngine(NoAwaitTag, google::cloud::discoveryengine::v1::CreateEngineRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateEngine(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::discoveryengine::v1::Engine>>
-EngineServiceClient::CreateEngine(
-    google::longrunning::Operation const& operation, Options opts) {
+EngineServiceClient::CreateEngine(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateEngine(operation);
 }
@@ -88,8 +78,8 @@ EngineServiceClient::DeleteEngine(std::string const& name, Options opts) {
   return connection_->DeleteEngine(request);
 }
 
-StatusOr<google::longrunning::Operation> EngineServiceClient::DeleteEngine(
-    NoAwaitTag, std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation>
+EngineServiceClient::DeleteEngine(NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::discoveryengine::v1::DeleteEngineRequest request;
   request.set_name(name);
@@ -97,32 +87,25 @@ StatusOr<google::longrunning::Operation> EngineServiceClient::DeleteEngine(
 }
 
 future<StatusOr<google::cloud::discoveryengine::v1::DeleteEngineMetadata>>
-EngineServiceClient::DeleteEngine(
-    google::cloud::discoveryengine::v1::DeleteEngineRequest const& request,
-    Options opts) {
+EngineServiceClient::DeleteEngine(google::cloud::discoveryengine::v1::DeleteEngineRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteEngine(request);
 }
 
-StatusOr<google::longrunning::Operation> EngineServiceClient::DeleteEngine(
-    NoAwaitTag,
-    google::cloud::discoveryengine::v1::DeleteEngineRequest const& request,
-    Options opts) {
+StatusOr<google::longrunning::Operation>
+EngineServiceClient::DeleteEngine(NoAwaitTag, google::cloud::discoveryengine::v1::DeleteEngineRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteEngine(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::discoveryengine::v1::DeleteEngineMetadata>>
-EngineServiceClient::DeleteEngine(
-    google::longrunning::Operation const& operation, Options opts) {
+EngineServiceClient::DeleteEngine(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteEngine(operation);
 }
 
 StatusOr<google::cloud::discoveryengine::v1::Engine>
-EngineServiceClient::UpdateEngine(
-    google::cloud::discoveryengine::v1::Engine const& engine,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+EngineServiceClient::UpdateEngine(google::cloud::discoveryengine::v1::Engine const& engine, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::discoveryengine::v1::UpdateEngineRequest request;
   *request.mutable_engine() = engine;
@@ -131,9 +114,7 @@ EngineServiceClient::UpdateEngine(
 }
 
 StatusOr<google::cloud::discoveryengine::v1::Engine>
-EngineServiceClient::UpdateEngine(
-    google::cloud::discoveryengine::v1::UpdateEngineRequest const& request,
-    Options opts) {
+EngineServiceClient::UpdateEngine(google::cloud::discoveryengine::v1::UpdateEngineRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateEngine(request);
 }
@@ -147,9 +128,7 @@ EngineServiceClient::GetEngine(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::discoveryengine::v1::Engine>
-EngineServiceClient::GetEngine(
-    google::cloud::discoveryengine::v1::GetEngineRequest const& request,
-    Options opts) {
+EngineServiceClient::GetEngine(google::cloud::discoveryengine::v1::GetEngineRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetEngine(request);
 }
@@ -163,15 +142,13 @@ EngineServiceClient::ListEngines(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::discoveryengine::v1::Engine>
-EngineServiceClient::ListEngines(
-    google::cloud::discoveryengine::v1::ListEnginesRequest request,
-    Options opts) {
+EngineServiceClient::ListEngines(google::cloud::discoveryengine::v1::ListEnginesRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListEngines(std::move(request));
 }
 
-StreamRange<google::longrunning::Operation> EngineServiceClient::ListOperations(
-    std::string const& name, std::string const& filter, Options opts) {
+StreamRange<google::longrunning::Operation>
+EngineServiceClient::ListOperations(std::string const& name, std::string const& filter, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::ListOperationsRequest request;
   request.set_name(name);
@@ -179,36 +156,36 @@ StreamRange<google::longrunning::Operation> EngineServiceClient::ListOperations(
   return connection_->ListOperations(request);
 }
 
-StreamRange<google::longrunning::Operation> EngineServiceClient::ListOperations(
-    google::longrunning::ListOperationsRequest request, Options opts) {
+StreamRange<google::longrunning::Operation>
+EngineServiceClient::ListOperations(google::longrunning::ListOperationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOperations(std::move(request));
 }
 
-StatusOr<google::longrunning::Operation> EngineServiceClient::GetOperation(
-    std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation>
+EngineServiceClient::GetOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
   return connection_->GetOperation(request);
 }
 
-StatusOr<google::longrunning::Operation> EngineServiceClient::GetOperation(
-    google::longrunning::GetOperationRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation>
+EngineServiceClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }
 
-Status EngineServiceClient::CancelOperation(std::string const& name,
-                                            Options opts) {
+Status
+EngineServiceClient::CancelOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::CancelOperationRequest request;
   request.set_name(name);
   return connection_->CancelOperation(request);
 }
 
-Status EngineServiceClient::CancelOperation(
-    google::longrunning::CancelOperationRequest const& request, Options opts) {
+Status
+EngineServiceClient::CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelOperation(request);
 }

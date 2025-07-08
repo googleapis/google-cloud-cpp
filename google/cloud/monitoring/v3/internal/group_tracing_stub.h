@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_V3_INTERNAL_GROUP_TRACING_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_V3_INTERNAL_GROUP_TRACING_STUB_H
 
-#include "google/cloud/monitoring/v3/internal/group_stub.h"
 #include "google/cloud/internal/trace_propagator.h"
+#include "google/cloud/monitoring/v3/internal/group_stub.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -39,33 +39,38 @@ class GroupServiceTracingStub : public GroupServiceStub {
   explicit GroupServiceTracingStub(std::shared_ptr<GroupServiceStub> child);
 
   StatusOr<google::monitoring::v3::ListGroupsResponse> ListGroups(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::monitoring::v3::ListGroupsRequest const& request) override;
 
   StatusOr<google::monitoring::v3::Group> GetGroup(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::monitoring::v3::GetGroupRequest const& request) override;
 
   StatusOr<google::monitoring::v3::Group> CreateGroup(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::monitoring::v3::CreateGroupRequest const& request) override;
 
   StatusOr<google::monitoring::v3::Group> UpdateGroup(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::monitoring::v3::UpdateGroupRequest const& request) override;
 
   Status DeleteGroup(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::monitoring::v3::DeleteGroupRequest const& request) override;
 
   StatusOr<google::monitoring::v3::ListGroupMembersResponse> ListGroupMembers(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::monitoring::v3::ListGroupMembersRequest const& request) override;
 
  private:
   std::shared_ptr<GroupServiceStub> child_;
-  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
-      propagator_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

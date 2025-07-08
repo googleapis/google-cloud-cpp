@@ -30,150 +30,107 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 InstanceTemplatesTracingConnection::InstanceTemplatesTracingConnection(
-    std::shared_ptr<compute_instance_templates_v1::InstanceTemplatesConnection>
-        child)
+    std::shared_ptr<compute_instance_templates_v1::InstanceTemplatesConnection> child)
     : child_(std::move(child)) {}
 
-StreamRange<std::pair<
-    std::string, google::cloud::cpp::compute::v1::InstanceTemplatesScopedList>>
-InstanceTemplatesTracingConnection::AggregatedListInstanceTemplates(
-    google::cloud::cpp::compute::instance_templates::v1::
-        AggregatedListInstanceTemplatesRequest request) {
-  auto span = internal::MakeSpan(
-      "compute_instance_templates_v1::InstanceTemplatesConnection::"
-      "AggregatedListInstanceTemplates");
+StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::InstanceTemplatesScopedList>>
+InstanceTemplatesTracingConnection::AggregatedListInstanceTemplates(google::cloud::cpp::compute::instance_templates::v1::AggregatedListInstanceTemplatesRequest request) {
+  auto span = internal::MakeSpan("compute_instance_templates_v1::InstanceTemplatesConnection::AggregatedListInstanceTemplates");
   internal::OTelScope scope(span);
   auto sr = child_->AggregatedListInstanceTemplates(std::move(request));
-  return internal::MakeTracedStreamRange<
-      std::pair<std::string,
-                google::cloud::cpp::compute::v1::InstanceTemplatesScopedList>>(
-      std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::InstanceTemplatesScopedList>>(
+        std::move(span), std::move(sr));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InstanceTemplatesTracingConnection::DeleteInstanceTemplate(
-    google::cloud::cpp::compute::instance_templates::v1::
-        DeleteInstanceTemplateRequest const& request) {
+InstanceTemplatesTracingConnection::DeleteInstanceTemplate(google::cloud::cpp::compute::instance_templates::v1::DeleteInstanceTemplateRequest const& request) {
   auto span = internal::MakeSpan(
-      "compute_instance_templates_v1::InstanceTemplatesConnection::"
-      "DeleteInstanceTemplate");
+      "compute_instance_templates_v1::InstanceTemplatesConnection::DeleteInstanceTemplate");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->DeleteInstanceTemplate(request));
+  return internal::EndSpan(std::move(span), child_->DeleteInstanceTemplate(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstanceTemplatesTracingConnection::DeleteInstanceTemplate(
-    NoAwaitTag, google::cloud::cpp::compute::instance_templates::v1::
-                    DeleteInstanceTemplateRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::instance_templates::v1::DeleteInstanceTemplateRequest const& request) {
   auto span = internal::MakeSpan(
-      "compute_instance_templates_v1::InstanceTemplatesConnection::"
-      "DeleteInstanceTemplate");
+      "compute_instance_templates_v1::InstanceTemplatesConnection::DeleteInstanceTemplate");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->DeleteInstanceTemplate(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->DeleteInstanceTemplate(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstanceTemplatesTracingConnection::DeleteInstanceTemplate(
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
-      "compute_instance_templates_v1::InstanceTemplatesConnection::"
-      "DeleteInstanceTemplate");
+      "compute_instance_templates_v1::InstanceTemplatesConnection::DeleteInstanceTemplate");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->DeleteInstanceTemplate(operation));
+      child_->DeleteInstanceTemplate(operation));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InstanceTemplate>
-InstanceTemplatesTracingConnection::GetInstanceTemplate(
-    google::cloud::cpp::compute::instance_templates::v1::
-        GetInstanceTemplateRequest const& request) {
-  auto span = internal::MakeSpan(
-      "compute_instance_templates_v1::InstanceTemplatesConnection::"
-      "GetInstanceTemplate");
+InstanceTemplatesTracingConnection::GetInstanceTemplate(google::cloud::cpp::compute::instance_templates::v1::GetInstanceTemplateRequest const& request) {
+  auto span = internal::MakeSpan("compute_instance_templates_v1::InstanceTemplatesConnection::GetInstanceTemplate");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetInstanceTemplate(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
-InstanceTemplatesTracingConnection::GetIamPolicy(
-    google::cloud::cpp::compute::instance_templates::v1::
-        GetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpan(
-      "compute_instance_templates_v1::InstanceTemplatesConnection::"
-      "GetIamPolicy");
+InstanceTemplatesTracingConnection::GetIamPolicy(google::cloud::cpp::compute::instance_templates::v1::GetIamPolicyRequest const& request) {
+  auto span = internal::MakeSpan("compute_instance_templates_v1::InstanceTemplatesConnection::GetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetIamPolicy(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InstanceTemplatesTracingConnection::InsertInstanceTemplate(
-    google::cloud::cpp::compute::instance_templates::v1::
-        InsertInstanceTemplateRequest const& request) {
+InstanceTemplatesTracingConnection::InsertInstanceTemplate(google::cloud::cpp::compute::instance_templates::v1::InsertInstanceTemplateRequest const& request) {
   auto span = internal::MakeSpan(
-      "compute_instance_templates_v1::InstanceTemplatesConnection::"
-      "InsertInstanceTemplate");
+      "compute_instance_templates_v1::InstanceTemplatesConnection::InsertInstanceTemplate");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->InsertInstanceTemplate(request));
+  return internal::EndSpan(std::move(span), child_->InsertInstanceTemplate(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstanceTemplatesTracingConnection::InsertInstanceTemplate(
-    NoAwaitTag, google::cloud::cpp::compute::instance_templates::v1::
-                    InsertInstanceTemplateRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::instance_templates::v1::InsertInstanceTemplateRequest const& request) {
   auto span = internal::MakeSpan(
-      "compute_instance_templates_v1::InstanceTemplatesConnection::"
-      "InsertInstanceTemplate");
+      "compute_instance_templates_v1::InstanceTemplatesConnection::InsertInstanceTemplate");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->InsertInstanceTemplate(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->InsertInstanceTemplate(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstanceTemplatesTracingConnection::InsertInstanceTemplate(
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
-      "compute_instance_templates_v1::InstanceTemplatesConnection::"
-      "InsertInstanceTemplate");
+      "compute_instance_templates_v1::InstanceTemplatesConnection::InsertInstanceTemplate");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->InsertInstanceTemplate(operation));
+      child_->InsertInstanceTemplate(operation));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::InstanceTemplate>
-InstanceTemplatesTracingConnection::ListInstanceTemplates(
-    google::cloud::cpp::compute::instance_templates::v1::
-        ListInstanceTemplatesRequest request) {
-  auto span = internal::MakeSpan(
-      "compute_instance_templates_v1::InstanceTemplatesConnection::"
-      "ListInstanceTemplates");
+InstanceTemplatesTracingConnection::ListInstanceTemplates(google::cloud::cpp::compute::instance_templates::v1::ListInstanceTemplatesRequest request) {
+  auto span = internal::MakeSpan("compute_instance_templates_v1::InstanceTemplatesConnection::ListInstanceTemplates");
   internal::OTelScope scope(span);
   auto sr = child_->ListInstanceTemplates(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::cpp::compute::v1::InstanceTemplate>(std::move(span),
-                                                         std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::cpp::compute::v1::InstanceTemplate>(
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
-InstanceTemplatesTracingConnection::SetIamPolicy(
-    google::cloud::cpp::compute::instance_templates::v1::
-        SetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpan(
-      "compute_instance_templates_v1::InstanceTemplatesConnection::"
-      "SetIamPolicy");
+InstanceTemplatesTracingConnection::SetIamPolicy(google::cloud::cpp::compute::instance_templates::v1::SetIamPolicyRequest const& request) {
+  auto span = internal::MakeSpan("compute_instance_templates_v1::InstanceTemplatesConnection::SetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->SetIamPolicy(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-InstanceTemplatesTracingConnection::TestIamPermissions(
-    google::cloud::cpp::compute::instance_templates::v1::
-        TestIamPermissionsRequest const& request) {
-  auto span = internal::MakeSpan(
-      "compute_instance_templates_v1::InstanceTemplatesConnection::"
-      "TestIamPermissions");
+InstanceTemplatesTracingConnection::TestIamPermissions(google::cloud::cpp::compute::instance_templates::v1::TestIamPermissionsRequest const& request) {
+  auto span = internal::MakeSpan("compute_instance_templates_v1::InstanceTemplatesConnection::TestIamPermissions");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->TestIamPermissions(request));
 }
@@ -182,12 +139,10 @@ InstanceTemplatesTracingConnection::TestIamPermissions(
 
 std::shared_ptr<compute_instance_templates_v1::InstanceTemplatesConnection>
 MakeInstanceTemplatesTracingConnection(
-    std::shared_ptr<compute_instance_templates_v1::InstanceTemplatesConnection>
-        conn) {
+    std::shared_ptr<compute_instance_templates_v1::InstanceTemplatesConnection> conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
-    conn =
-        std::make_shared<InstanceTemplatesTracingConnection>(std::move(conn));
+    conn = std::make_shared<InstanceTemplatesTracingConnection>(std::move(conn));
   }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;

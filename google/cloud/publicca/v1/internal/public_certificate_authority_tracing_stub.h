@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBLICCA_V1_INTERNAL_PUBLIC_CERTIFICATE_AUTHORITY_TRACING_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBLICCA_V1_INTERNAL_PUBLIC_CERTIFICATE_AUTHORITY_TRACING_STUB_H
 
-#include "google/cloud/publicca/v1/internal/public_certificate_authority_stub.h"
 #include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/options.h"
+#include "google/cloud/publicca/v1/internal/public_certificate_authority_stub.h"
 #include "google/cloud/version.h"
 #include <memory>
 
@@ -32,24 +32,20 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-class PublicCertificateAuthorityServiceTracingStub
-    : public PublicCertificateAuthorityServiceStub {
+class PublicCertificateAuthorityServiceTracingStub : public PublicCertificateAuthorityServiceStub {
  public:
   ~PublicCertificateAuthorityServiceTracingStub() override = default;
 
-  explicit PublicCertificateAuthorityServiceTracingStub(
-      std::shared_ptr<PublicCertificateAuthorityServiceStub> child);
+  explicit PublicCertificateAuthorityServiceTracingStub(std::shared_ptr<PublicCertificateAuthorityServiceStub> child);
 
-  StatusOr<google::cloud::security::publicca::v1::ExternalAccountKey>
-  CreateExternalAccountKey(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::security::publicca::v1::
-          CreateExternalAccountKeyRequest const& request) override;
+  StatusOr<google::cloud::security::publicca::v1::ExternalAccountKey> CreateExternalAccountKey(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::security::publicca::v1::CreateExternalAccountKeyRequest const& request) override;
 
  private:
   std::shared_ptr<PublicCertificateAuthorityServiceStub> child_;
-  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
-      propagator_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -60,8 +56,7 @@ class PublicCertificateAuthorityServiceTracingStub
  * The stub is only decorated if the library has been compiled with
  * OpenTelemetry.
  */
-std::shared_ptr<PublicCertificateAuthorityServiceStub>
-MakePublicCertificateAuthorityServiceTracingStub(
+std::shared_ptr<PublicCertificateAuthorityServiceStub> MakePublicCertificateAuthorityServiceTracingStub(
     std::shared_ptr<PublicCertificateAuthorityServiceStub> stub);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

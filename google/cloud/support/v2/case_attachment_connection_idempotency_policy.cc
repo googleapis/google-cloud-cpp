@@ -26,22 +26,19 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-CaseAttachmentServiceConnectionIdempotencyPolicy::
-    ~CaseAttachmentServiceConnectionIdempotencyPolicy() = default;
+CaseAttachmentServiceConnectionIdempotencyPolicy::~CaseAttachmentServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<CaseAttachmentServiceConnectionIdempotencyPolicy>
 CaseAttachmentServiceConnectionIdempotencyPolicy::clone() const {
-  return std::make_unique<CaseAttachmentServiceConnectionIdempotencyPolicy>(
-      *this);
+  return std::make_unique<CaseAttachmentServiceConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency CaseAttachmentServiceConnectionIdempotencyPolicy::ListAttachments(
-    google::cloud::support::v2::ListAttachmentsRequest) {  // NOLINT
+Idempotency CaseAttachmentServiceConnectionIdempotencyPolicy::ListAttachments(google::cloud::support::v2::ListAttachmentsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<CaseAttachmentServiceConnectionIdempotencyPolicy>
-MakeDefaultCaseAttachmentServiceConnectionIdempotencyPolicy() {
+    MakeDefaultCaseAttachmentServiceConnectionIdempotencyPolicy() {
   return std::make_unique<CaseAttachmentServiceConnectionIdempotencyPolicy>();
 }
 

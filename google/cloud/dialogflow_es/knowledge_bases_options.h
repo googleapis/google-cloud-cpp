@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_ES_KNOWLEDGE_BASES_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_ES_KNOWLEDGE_BASES_OPTIONS_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/dialogflow_es/knowledge_bases_connection.h"
 #include "google/cloud/dialogflow_es/knowledge_bases_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>

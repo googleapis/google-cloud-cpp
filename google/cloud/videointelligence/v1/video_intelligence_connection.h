@@ -19,8 +19,6 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VIDEOINTELLIGENCE_V1_VIDEO_INTELLIGENCE_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VIDEOINTELLIGENCE_V1_VIDEO_INTELLIGENCE_CONNECTION_H
 
-#include "google/cloud/videointelligence/v1/internal/video_intelligence_retry_traits.h"
-#include "google/cloud/videointelligence/v1/video_intelligence_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
@@ -29,6 +27,8 @@
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
+#include "google/cloud/videointelligence/v1/internal/video_intelligence_retry_traits.h"
+#include "google/cloud/videointelligence/v1/video_intelligence_connection_idempotency_policy.h"
 #include <google/cloud/videointelligence/v1/video_intelligence.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
@@ -39,17 +39,14 @@ namespace videointelligence_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `VideoIntelligenceServiceConnection`.
-class VideoIntelligenceServiceRetryPolicy
-    : public ::google::cloud::RetryPolicy {
+class VideoIntelligenceServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  public:
   /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<VideoIntelligenceServiceRetryPolicy> clone()
-      const = 0;
+  virtual std::unique_ptr<VideoIntelligenceServiceRetryPolicy> clone() const = 0;
 };
 
 /**
- * A retry policy for `VideoIntelligenceServiceConnection` based on counting
- * errors.
+ * A retry policy for `VideoIntelligenceServiceConnection` based on counting errors.
  *
  * This policy stops retrying if:
  * - An RPC returns a non-transient error.
@@ -58,8 +55,7 @@ class VideoIntelligenceServiceRetryPolicy
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class VideoIntelligenceServiceLimitedErrorCountRetryPolicy
-    : public VideoIntelligenceServiceRetryPolicy {
+class VideoIntelligenceServiceLimitedErrorCountRetryPolicy : public VideoIntelligenceServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -68,18 +64,15 @@ class VideoIntelligenceServiceLimitedErrorCountRetryPolicy
    * @note Disable the retry loop by providing an instance of this policy with
    *     @p maximum_failures == 0.
    */
-  explicit VideoIntelligenceServiceLimitedErrorCountRetryPolicy(
-      int maximum_failures)
-      : impl_(maximum_failures) {}
+  explicit VideoIntelligenceServiceLimitedErrorCountRetryPolicy(int maximum_failures)
+    : impl_(maximum_failures) {}
 
   VideoIntelligenceServiceLimitedErrorCountRetryPolicy(
       VideoIntelligenceServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : VideoIntelligenceServiceLimitedErrorCountRetryPolicy(
-            rhs.maximum_failures()) {}
+    : VideoIntelligenceServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   VideoIntelligenceServiceLimitedErrorCountRetryPolicy(
       VideoIntelligenceServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : VideoIntelligenceServiceLimitedErrorCountRetryPolicy(
-            rhs.maximum_failures()) {}
+    : VideoIntelligenceServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -91,8 +84,7 @@ class VideoIntelligenceServiceLimitedErrorCountRetryPolicy
     return impl_.IsPermanentFailure(status);
   }
   std::unique_ptr<VideoIntelligenceServiceRetryPolicy> clone() const override {
-    return std::make_unique<
-        VideoIntelligenceServiceLimitedErrorCountRetryPolicy>(
+    return std::make_unique<VideoIntelligenceServiceLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
 
@@ -100,14 +92,11 @@ class VideoIntelligenceServiceLimitedErrorCountRetryPolicy
   using BaseType = VideoIntelligenceServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      videointelligence_v1_internal::VideoIntelligenceServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<videointelligence_v1_internal::VideoIntelligenceServiceRetryTraits> impl_;
 };
 
 /**
- * A retry policy for `VideoIntelligenceServiceConnection` based on elapsed
- * time.
+ * A retry policy for `VideoIntelligenceServiceConnection` based on elapsed time.
  *
  * This policy stops retrying if:
  * - An RPC returns a non-transient error.
@@ -116,8 +105,7 @@ class VideoIntelligenceServiceLimitedErrorCountRetryPolicy
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class VideoIntelligenceServiceLimitedTimeRetryPolicy
-    : public VideoIntelligenceServiceRetryPolicy {
+class VideoIntelligenceServiceLimitedTimeRetryPolicy : public VideoIntelligenceServiceRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -142,16 +130,12 @@ class VideoIntelligenceServiceLimitedTimeRetryPolicy
   template <typename DurationRep, typename DurationPeriod>
   explicit VideoIntelligenceServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  VideoIntelligenceServiceLimitedTimeRetryPolicy(
-      VideoIntelligenceServiceLimitedTimeRetryPolicy&& rhs) noexcept
-      : VideoIntelligenceServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {
-  }
-  VideoIntelligenceServiceLimitedTimeRetryPolicy(
-      VideoIntelligenceServiceLimitedTimeRetryPolicy const& rhs) noexcept
-      : VideoIntelligenceServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {
-  }
+  VideoIntelligenceServiceLimitedTimeRetryPolicy(VideoIntelligenceServiceLimitedTimeRetryPolicy&& rhs) noexcept
+    : VideoIntelligenceServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  VideoIntelligenceServiceLimitedTimeRetryPolicy(VideoIntelligenceServiceLimitedTimeRetryPolicy const& rhs) noexcept
+    : VideoIntelligenceServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -173,25 +157,20 @@ class VideoIntelligenceServiceLimitedTimeRetryPolicy
   using BaseType = VideoIntelligenceServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      videointelligence_v1_internal::VideoIntelligenceServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<videointelligence_v1_internal::VideoIntelligenceServiceRetryTraits> impl_;
 };
 
 /**
- * The `VideoIntelligenceServiceConnection` object for
- * `VideoIntelligenceServiceClient`.
+ * The `VideoIntelligenceServiceConnection` object for `VideoIntelligenceServiceClient`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `VideoIntelligenceServiceClient`. This allows users to inject custom
- * behavior (e.g., with a Google Mock object) when writing tests that use
- * objects of type `VideoIntelligenceServiceClient`.
+ * sets in `VideoIntelligenceServiceClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `VideoIntelligenceServiceClient`.
  *
- * To create a concrete instance, see
- * `MakeVideoIntelligenceServiceConnection()`.
+ * To create a concrete instance, see `MakeVideoIntelligenceServiceConnection()`.
  *
- * For mocking, see
- * `videointelligence_v1_mocks::MockVideoIntelligenceServiceConnection`.
+ * For mocking, see `videointelligence_v1_mocks::MockVideoIntelligenceServiceConnection`.
  */
 class VideoIntelligenceServiceConnection {
  public:
@@ -199,48 +178,39 @@ class VideoIntelligenceServiceConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual future<
-      StatusOr<google::cloud::videointelligence::v1::AnnotateVideoResponse>>
-  AnnotateVideo(
-      google::cloud::videointelligence::v1::AnnotateVideoRequest const&
-          request);
+  virtual future<StatusOr<google::cloud::videointelligence::v1::AnnotateVideoResponse>>
+  AnnotateVideo(google::cloud::videointelligence::v1::AnnotateVideoRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> AnnotateVideo(
-      NoAwaitTag,
-      google::cloud::videointelligence::v1::AnnotateVideoRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  AnnotateVideo(NoAwaitTag, google::cloud::videointelligence::v1::AnnotateVideoRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::videointelligence::v1::AnnotateVideoResponse>>
-  AnnotateVideo(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::videointelligence::v1::AnnotateVideoResponse>>
+  AnnotateVideo( google::longrunning::Operation const& operation);
 };
 
 /**
- * A factory function to construct an object of type
- * `VideoIntelligenceServiceConnection`.
+ * A factory function to construct an object of type `VideoIntelligenceServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of
- * VideoIntelligenceServiceClient.
+ * should be passed as an argument to the constructor of VideoIntelligenceServiceClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `VideoIntelligenceServiceConnection`. Expected options are any of
- * the types in the following option lists:
+ * returned `VideoIntelligenceServiceConnection`. Expected options are any of the types in
+ * the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * -
- * `google::cloud::videointelligence_v1::VideoIntelligenceServicePolicyOptionList`
+ * - `google::cloud::videointelligence_v1::VideoIntelligenceServicePolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
- * @param options (optional) Configure the `VideoIntelligenceServiceConnection`
- * created by this function.
+ * @param options (optional) Configure the `VideoIntelligenceServiceConnection` created by
+ * this function.
  */
-std::shared_ptr<VideoIntelligenceServiceConnection>
-MakeVideoIntelligenceServiceConnection(Options options = {});
+std::shared_ptr<VideoIntelligenceServiceConnection> MakeVideoIntelligenceServiceConnection(
+    Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace videointelligence_v1

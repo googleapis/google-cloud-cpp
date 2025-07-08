@@ -33,8 +33,7 @@ using ::google::cloud::workflows_v1::MakeWorkflowsConnection;
 /// @deprecated Use workflows_v1::WorkflowsConnection directly.
 using ::google::cloud::workflows_v1::WorkflowsConnection;
 
-/// @deprecated Use workflows_v1::WorkflowsLimitedErrorCountRetryPolicy
-/// directly.
+/// @deprecated Use workflows_v1::WorkflowsLimitedErrorCountRetryPolicy directly.
 using ::google::cloud::workflows_v1::WorkflowsLimitedErrorCountRetryPolicy;
 
 /// @deprecated Use workflows_v1::WorkflowsLimitedTimeRetryPolicy directly.

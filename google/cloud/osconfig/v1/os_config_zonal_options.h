@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_OSCONFIG_V1_OS_CONFIG_ZONAL_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_OSCONFIG_V1_OS_CONFIG_ZONAL_OPTIONS_H
 
-#include "google/cloud/osconfig/v1/os_config_zonal_connection.h"
-#include "google/cloud/osconfig/v1/os_config_zonal_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
+#include "google/cloud/osconfig/v1/os_config_zonal_connection.h"
+#include "google/cloud/osconfig/v1/os_config_zonal_connection_idempotency_policy.h"
 #include "google/cloud/version.h"
 #include <memory>
 

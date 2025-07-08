@@ -62,31 +62,23 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class ConversationalSearchServiceClient {
  public:
-  explicit ConversationalSearchServiceClient(
-      std::shared_ptr<ConversationalSearchServiceConnection> connection,
-      Options opts = {});
+  explicit ConversationalSearchServiceClient(std::shared_ptr<ConversationalSearchServiceConnection> connection, Options opts = {});
   ~ConversationalSearchServiceClient();
 
   ///@{
   /// @name Copy and move support
-  ConversationalSearchServiceClient(ConversationalSearchServiceClient const&) =
-      default;
-  ConversationalSearchServiceClient& operator=(
-      ConversationalSearchServiceClient const&) = default;
-  ConversationalSearchServiceClient(ConversationalSearchServiceClient&&) =
-      default;
-  ConversationalSearchServiceClient& operator=(
-      ConversationalSearchServiceClient&&) = default;
+  ConversationalSearchServiceClient(ConversationalSearchServiceClient const&) = default;
+  ConversationalSearchServiceClient& operator=(ConversationalSearchServiceClient const&) = default;
+  ConversationalSearchServiceClient(ConversationalSearchServiceClient&&) = default;
+  ConversationalSearchServiceClient& operator=(ConversationalSearchServiceClient&&) = default;
   ///@}
 
   ///@{
   /// @name Equality
-  friend bool operator==(ConversationalSearchServiceClient const& a,
-                         ConversationalSearchServiceClient const& b) {
+  friend bool operator==(ConversationalSearchServiceClient const& a, ConversationalSearchServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(ConversationalSearchServiceClient const& a,
-                         ConversationalSearchServiceClient const& b) {
+  friend bool operator!=(ConversationalSearchServiceClient const& a, ConversationalSearchServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -120,10 +112,7 @@ class ConversationalSearchServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::discoveryengine::v1::ConverseConversationResponse>
-  ConverseConversation(
-      std::string const& name,
-      google::cloud::discoveryengine::v1::TextInput const& query,
-      Options opts = {});
+  ConverseConversation(std::string const& name, google::cloud::discoveryengine::v1::TextInput const& query, Options opts = {});
 
   // clang-format off
   ///
@@ -153,10 +142,7 @@ class ConversationalSearchServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::discoveryengine::v1::ConverseConversationResponse>
-  ConverseConversation(
-      google::cloud::discoveryengine::v1::ConverseConversationRequest const&
-          request,
-      Options opts = {});
+  ConverseConversation(google::cloud::discoveryengine::v1::ConverseConversationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -185,10 +171,8 @@ class ConversationalSearchServiceClient {
   /// [google.cloud.discoveryengine.v1.CreateConversationRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L391}
   ///
   // clang-format on
-  StatusOr<google::cloud::discoveryengine::v1::Conversation> CreateConversation(
-      std::string const& parent,
-      google::cloud::discoveryengine::v1::Conversation const& conversation,
-      Options opts = {});
+  StatusOr<google::cloud::discoveryengine::v1::Conversation>
+  CreateConversation(std::string const& parent, google::cloud::discoveryengine::v1::Conversation const& conversation, Options opts = {});
 
   // clang-format off
   ///
@@ -220,10 +204,8 @@ class ConversationalSearchServiceClient {
   /// [google.cloud.discoveryengine.v1.CreateConversationRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L391}
   ///
   // clang-format on
-  StatusOr<google::cloud::discoveryengine::v1::Conversation> CreateConversation(
-      google::cloud::discoveryengine::v1::CreateConversationRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::cloud::discoveryengine::v1::Conversation>
+  CreateConversation(google::cloud::discoveryengine::v1::CreateConversationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -249,7 +231,8 @@ class ConversationalSearchServiceClient {
   /// [google.cloud.discoveryengine.v1.DeleteConversationRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L421}
   ///
   // clang-format on
-  Status DeleteConversation(std::string const& name, Options opts = {});
+  Status
+  DeleteConversation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -279,10 +262,8 @@ class ConversationalSearchServiceClient {
   /// [google.cloud.discoveryengine.v1.DeleteConversationRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L421}
   ///
   // clang-format on
-  Status DeleteConversation(
-      google::cloud::discoveryengine::v1::DeleteConversationRequest const&
-          request,
-      Options opts = {});
+  Status
+  DeleteConversation(google::cloud::discoveryengine::v1::DeleteConversationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -319,9 +300,8 @@ class ConversationalSearchServiceClient {
   /// [google.cloud.discoveryengine.v1.UpdateConversationRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L406}
   ///
   // clang-format on
-  StatusOr<google::cloud::discoveryengine::v1::Conversation> UpdateConversation(
-      google::cloud::discoveryengine::v1::Conversation const& conversation,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::cloud::discoveryengine::v1::Conversation>
+  UpdateConversation(google::cloud::discoveryengine::v1::Conversation const& conversation, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -355,10 +335,8 @@ class ConversationalSearchServiceClient {
   /// [google.cloud.discoveryengine.v1.UpdateConversationRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L406}
   ///
   // clang-format on
-  StatusOr<google::cloud::discoveryengine::v1::Conversation> UpdateConversation(
-      google::cloud::discoveryengine::v1::UpdateConversationRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::cloud::discoveryengine::v1::Conversation>
+  UpdateConversation(google::cloud::discoveryengine::v1::UpdateConversationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -383,8 +361,8 @@ class ConversationalSearchServiceClient {
   /// [google.cloud.discoveryengine.v1.GetConversationRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L433}
   ///
   // clang-format on
-  StatusOr<google::cloud::discoveryengine::v1::Conversation> GetConversation(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::discoveryengine::v1::Conversation>
+  GetConversation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -413,9 +391,8 @@ class ConversationalSearchServiceClient {
   /// [google.cloud.discoveryengine.v1.GetConversationRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L433}
   ///
   // clang-format on
-  StatusOr<google::cloud::discoveryengine::v1::Conversation> GetConversation(
-      google::cloud::discoveryengine::v1::GetConversationRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::discoveryengine::v1::Conversation>
+  GetConversation(google::cloud::discoveryengine::v1::GetConversationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -491,9 +468,7 @@ class ConversationalSearchServiceClient {
   ///
   // clang-format on
   StreamRange<google::cloud::discoveryengine::v1::Conversation>
-  ListConversations(
-      google::cloud::discoveryengine::v1::ListConversationsRequest request,
-      Options opts = {});
+  ListConversations(google::cloud::discoveryengine::v1::ListConversationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -522,9 +497,8 @@ class ConversationalSearchServiceClient {
   /// [google.cloud.discoveryengine.v1.AnswerQueryResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L1018}
   ///
   // clang-format on
-  StatusOr<google::cloud::discoveryengine::v1::AnswerQueryResponse> AnswerQuery(
-      google::cloud::discoveryengine::v1::AnswerQueryRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::discoveryengine::v1::AnswerQueryResponse>
+  AnswerQuery(google::cloud::discoveryengine::v1::AnswerQueryRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -560,9 +534,7 @@ class ConversationalSearchServiceClient {
   ///
   // clang-format on
   StreamRange<google::cloud::discoveryengine::v1::AnswerQueryResponse>
-  StreamAnswerQuery(
-      google::cloud::discoveryengine::v1::AnswerQueryRequest const& request,
-      Options opts = {});
+  StreamAnswerQuery(google::cloud::discoveryengine::v1::AnswerQueryRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -587,8 +559,8 @@ class ConversationalSearchServiceClient {
   /// [google.cloud.discoveryengine.v1.GetAnswerRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L1040}
   ///
   // clang-format on
-  StatusOr<google::cloud::discoveryengine::v1::Answer> GetAnswer(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::discoveryengine::v1::Answer>
+  GetAnswer(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -617,9 +589,8 @@ class ConversationalSearchServiceClient {
   /// [google.cloud.discoveryengine.v1.GetAnswerRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L1040}
   ///
   // clang-format on
-  StatusOr<google::cloud::discoveryengine::v1::Answer> GetAnswer(
-      google::cloud::discoveryengine::v1::GetAnswerRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::discoveryengine::v1::Answer>
+  GetAnswer(google::cloud::discoveryengine::v1::GetAnswerRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -648,10 +619,8 @@ class ConversationalSearchServiceClient {
   /// [google.cloud.discoveryengine.v1.Session]: @googleapis_reference_link{google/cloud/discoveryengine/v1/session.proto#L34}
   ///
   // clang-format on
-  StatusOr<google::cloud::discoveryengine::v1::Session> CreateSession(
-      std::string const& parent,
-      google::cloud::discoveryengine::v1::Session const& session,
-      Options opts = {});
+  StatusOr<google::cloud::discoveryengine::v1::Session>
+  CreateSession(std::string const& parent, google::cloud::discoveryengine::v1::Session const& session, Options opts = {});
 
   // clang-format off
   ///
@@ -683,9 +652,8 @@ class ConversationalSearchServiceClient {
   /// [google.cloud.discoveryengine.v1.Session]: @googleapis_reference_link{google/cloud/discoveryengine/v1/session.proto#L34}
   ///
   // clang-format on
-  StatusOr<google::cloud::discoveryengine::v1::Session> CreateSession(
-      google::cloud::discoveryengine::v1::CreateSessionRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::discoveryengine::v1::Session>
+  CreateSession(google::cloud::discoveryengine::v1::CreateSessionRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -711,7 +679,8 @@ class ConversationalSearchServiceClient {
   /// [google.cloud.discoveryengine.v1.Session]: @googleapis_reference_link{google/cloud/discoveryengine/v1/session.proto#L34}
   ///
   // clang-format on
-  Status DeleteSession(std::string const& name, Options opts = {});
+  Status
+  DeleteSession(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -741,9 +710,8 @@ class ConversationalSearchServiceClient {
   /// [google.cloud.discoveryengine.v1.Session]: @googleapis_reference_link{google/cloud/discoveryengine/v1/session.proto#L34}
   ///
   // clang-format on
-  Status DeleteSession(
-      google::cloud::discoveryengine::v1::DeleteSessionRequest const& request,
-      Options opts = {});
+  Status
+  DeleteSession(google::cloud::discoveryengine::v1::DeleteSessionRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -779,9 +747,8 @@ class ConversationalSearchServiceClient {
   /// [google.cloud.discoveryengine.v1.UpdateSessionRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L1067}
   ///
   // clang-format on
-  StatusOr<google::cloud::discoveryengine::v1::Session> UpdateSession(
-      google::cloud::discoveryengine::v1::Session const& session,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::cloud::discoveryengine::v1::Session>
+  UpdateSession(google::cloud::discoveryengine::v1::Session const& session, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -814,9 +781,8 @@ class ConversationalSearchServiceClient {
   /// [google.cloud.discoveryengine.v1.UpdateSessionRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L1067}
   ///
   // clang-format on
-  StatusOr<google::cloud::discoveryengine::v1::Session> UpdateSession(
-      google::cloud::discoveryengine::v1::UpdateSessionRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::discoveryengine::v1::Session>
+  UpdateSession(google::cloud::discoveryengine::v1::UpdateSessionRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -841,8 +807,8 @@ class ConversationalSearchServiceClient {
   /// [google.cloud.discoveryengine.v1.Session]: @googleapis_reference_link{google/cloud/discoveryengine/v1/session.proto#L34}
   ///
   // clang-format on
-  StatusOr<google::cloud::discoveryengine::v1::Session> GetSession(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::discoveryengine::v1::Session>
+  GetSession(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -871,9 +837,8 @@ class ConversationalSearchServiceClient {
   /// [google.cloud.discoveryengine.v1.Session]: @googleapis_reference_link{google/cloud/discoveryengine/v1/session.proto#L34}
   ///
   // clang-format on
-  StatusOr<google::cloud::discoveryengine::v1::Session> GetSession(
-      google::cloud::discoveryengine::v1::GetSessionRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::discoveryengine::v1::Session>
+  GetSession(google::cloud::discoveryengine::v1::GetSessionRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -908,8 +873,8 @@ class ConversationalSearchServiceClient {
   /// [google.cloud.discoveryengine.v1.Session]: @googleapis_reference_link{google/cloud/discoveryengine/v1/session.proto#L34}
   ///
   // clang-format on
-  StreamRange<google::cloud::discoveryengine::v1::Session> ListSessions(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::discoveryengine::v1::Session>
+  ListSessions(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -948,9 +913,8 @@ class ConversationalSearchServiceClient {
   /// [google.cloud.discoveryengine.v1.Session]: @googleapis_reference_link{google/cloud/discoveryengine/v1/session.proto#L34}
   ///
   // clang-format on
-  StreamRange<google::cloud::discoveryengine::v1::Session> ListSessions(
-      google::cloud::discoveryengine::v1::ListSessionsRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::discoveryengine::v1::Session>
+  ListSessions(google::cloud::discoveryengine::v1::ListSessionsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -985,8 +949,8 @@ class ConversationalSearchServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -1025,8 +989,8 @@ class ConversationalSearchServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1052,8 +1016,8 @@ class ConversationalSearchServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1084,9 +1048,8 @@ class ConversationalSearchServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1120,7 +1083,8 @@ class ConversationalSearchServiceClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(std::string const& name, Options opts = {});
+  Status
+  CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1159,9 +1123,8 @@ class ConversationalSearchServiceClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request,
-      Options opts = {});
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<ConversationalSearchServiceConnection> connection_;

@@ -62,31 +62,23 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class AdvisoryNotificationsServiceClient {
  public:
-  explicit AdvisoryNotificationsServiceClient(
-      std::shared_ptr<AdvisoryNotificationsServiceConnection> connection,
-      Options opts = {});
+  explicit AdvisoryNotificationsServiceClient(std::shared_ptr<AdvisoryNotificationsServiceConnection> connection, Options opts = {});
   ~AdvisoryNotificationsServiceClient();
 
   ///@{
   /// @name Copy and move support
-  AdvisoryNotificationsServiceClient(
-      AdvisoryNotificationsServiceClient const&) = default;
-  AdvisoryNotificationsServiceClient& operator=(
-      AdvisoryNotificationsServiceClient const&) = default;
-  AdvisoryNotificationsServiceClient(AdvisoryNotificationsServiceClient&&) =
-      default;
-  AdvisoryNotificationsServiceClient& operator=(
-      AdvisoryNotificationsServiceClient&&) = default;
+  AdvisoryNotificationsServiceClient(AdvisoryNotificationsServiceClient const&) = default;
+  AdvisoryNotificationsServiceClient& operator=(AdvisoryNotificationsServiceClient const&) = default;
+  AdvisoryNotificationsServiceClient(AdvisoryNotificationsServiceClient&&) = default;
+  AdvisoryNotificationsServiceClient& operator=(AdvisoryNotificationsServiceClient&&) = default;
   ///@}
 
   ///@{
   /// @name Equality
-  friend bool operator==(AdvisoryNotificationsServiceClient const& a,
-                         AdvisoryNotificationsServiceClient const& b) {
+  friend bool operator==(AdvisoryNotificationsServiceClient const& a, AdvisoryNotificationsServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(AdvisoryNotificationsServiceClient const& a,
-                         AdvisoryNotificationsServiceClient const& b) {
+  friend bool operator!=(AdvisoryNotificationsServiceClient const& a, AdvisoryNotificationsServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -164,10 +156,7 @@ class AdvisoryNotificationsServiceClient {
   ///
   // clang-format on
   StreamRange<google::cloud::advisorynotifications::v1::Notification>
-  ListNotifications(
-      google::cloud::advisorynotifications::v1::ListNotificationsRequest
-          request,
-      Options opts = {});
+  ListNotifications(google::cloud::advisorynotifications::v1::ListNotificationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -225,10 +214,7 @@ class AdvisoryNotificationsServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::advisorynotifications::v1::Notification>
-  GetNotification(
-      google::cloud::advisorynotifications::v1::GetNotificationRequest const&
-          request,
-      Options opts = {});
+  GetNotification(google::cloud::advisorynotifications::v1::GetNotificationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -255,8 +241,8 @@ class AdvisoryNotificationsServiceClient {
   /// [google.cloud.advisorynotifications.v1.Settings]: @googleapis_reference_link{google/cloud/advisorynotifications/v1/service.proto#L312}
   ///
   // clang-format on
-  StatusOr<google::cloud::advisorynotifications::v1::Settings> GetSettings(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::advisorynotifications::v1::Settings>
+  GetSettings(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -285,10 +271,8 @@ class AdvisoryNotificationsServiceClient {
   /// [google.cloud.advisorynotifications.v1.Settings]: @googleapis_reference_link{google/cloud/advisorynotifications/v1/service.proto#L312}
   ///
   // clang-format on
-  StatusOr<google::cloud::advisorynotifications::v1::Settings> GetSettings(
-      google::cloud::advisorynotifications::v1::GetSettingsRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::cloud::advisorynotifications::v1::Settings>
+  GetSettings(google::cloud::advisorynotifications::v1::GetSettingsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -312,9 +296,8 @@ class AdvisoryNotificationsServiceClient {
   /// [google.cloud.advisorynotifications.v1.UpdateSettingsRequest]: @googleapis_reference_link{google/cloud/advisorynotifications/v1/service.proto#L361}
   ///
   // clang-format on
-  StatusOr<google::cloud::advisorynotifications::v1::Settings> UpdateSettings(
-      google::cloud::advisorynotifications::v1::Settings const& settings,
-      Options opts = {});
+  StatusOr<google::cloud::advisorynotifications::v1::Settings>
+  UpdateSettings(google::cloud::advisorynotifications::v1::Settings const& settings, Options opts = {});
 
   // clang-format off
   ///
@@ -343,10 +326,8 @@ class AdvisoryNotificationsServiceClient {
   /// [google.cloud.advisorynotifications.v1.UpdateSettingsRequest]: @googleapis_reference_link{google/cloud/advisorynotifications/v1/service.proto#L361}
   ///
   // clang-format on
-  StatusOr<google::cloud::advisorynotifications::v1::Settings> UpdateSettings(
-      google::cloud::advisorynotifications::v1::UpdateSettingsRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::cloud::advisorynotifications::v1::Settings>
+  UpdateSettings(google::cloud::advisorynotifications::v1::UpdateSettingsRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<AdvisoryNotificationsServiceConnection> connection_;

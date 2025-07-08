@@ -36,23 +36,23 @@ class PipelineServiceLogging : public PipelineServiceStub {
  public:
   ~PipelineServiceLogging() override = default;
   PipelineServiceLogging(std::shared_ptr<PipelineServiceStub> child,
-                         TracingOptions tracing_options,
-                         std::set<std::string> const& components);
+                       TracingOptions tracing_options,
+                       std::set<std::string> const& components);
 
   future<StatusOr<google::longrunning::Operation>> AsyncRunPipeline(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::contentwarehouse::v1::RunPipelineRequest const& request)
-      override;
+      google::cloud::contentwarehouse::v1::RunPipelineRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> RunPipeline(
-      grpc::ClientContext& context, Options options,
-      google::cloud::contentwarehouse::v1::RunPipelineRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::contentwarehouse::v1::RunPipelineRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(

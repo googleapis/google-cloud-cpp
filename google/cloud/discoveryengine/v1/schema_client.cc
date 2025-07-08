@@ -28,8 +28,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 SchemaServiceClient::SchemaServiceClient(
     std::shared_ptr<SchemaServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 SchemaServiceClient::~SchemaServiceClient() = default;
 
 StatusOr<google::cloud::discoveryengine::v1::Schema>
@@ -41,9 +41,7 @@ SchemaServiceClient::GetSchema(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::discoveryengine::v1::Schema>
-SchemaServiceClient::GetSchema(
-    google::cloud::discoveryengine::v1::GetSchemaRequest const& request,
-    Options opts) {
+SchemaServiceClient::GetSchema(google::cloud::discoveryengine::v1::GetSchemaRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetSchema(request);
 }
@@ -57,18 +55,13 @@ SchemaServiceClient::ListSchemas(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::discoveryengine::v1::Schema>
-SchemaServiceClient::ListSchemas(
-    google::cloud::discoveryengine::v1::ListSchemasRequest request,
-    Options opts) {
+SchemaServiceClient::ListSchemas(google::cloud::discoveryengine::v1::ListSchemasRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListSchemas(std::move(request));
 }
 
 future<StatusOr<google::cloud::discoveryengine::v1::Schema>>
-SchemaServiceClient::CreateSchema(
-    std::string const& parent,
-    google::cloud::discoveryengine::v1::Schema const& schema,
-    std::string const& schema_id, Options opts) {
+SchemaServiceClient::CreateSchema(std::string const& parent, google::cloud::discoveryengine::v1::Schema const& schema, std::string const& schema_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::discoveryengine::v1::CreateSchemaRequest request;
   request.set_parent(parent);
@@ -77,10 +70,8 @@ SchemaServiceClient::CreateSchema(
   return connection_->CreateSchema(request);
 }
 
-StatusOr<google::longrunning::Operation> SchemaServiceClient::CreateSchema(
-    NoAwaitTag, std::string const& parent,
-    google::cloud::discoveryengine::v1::Schema const& schema,
-    std::string const& schema_id, Options opts) {
+StatusOr<google::longrunning::Operation>
+SchemaServiceClient::CreateSchema(NoAwaitTag, std::string const& parent, google::cloud::discoveryengine::v1::Schema const& schema, std::string const& schema_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::discoveryengine::v1::CreateSchemaRequest request;
   request.set_parent(parent);
@@ -90,47 +81,37 @@ StatusOr<google::longrunning::Operation> SchemaServiceClient::CreateSchema(
 }
 
 future<StatusOr<google::cloud::discoveryengine::v1::Schema>>
-SchemaServiceClient::CreateSchema(
-    google::cloud::discoveryengine::v1::CreateSchemaRequest const& request,
-    Options opts) {
+SchemaServiceClient::CreateSchema(google::cloud::discoveryengine::v1::CreateSchemaRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateSchema(request);
 }
 
-StatusOr<google::longrunning::Operation> SchemaServiceClient::CreateSchema(
-    NoAwaitTag,
-    google::cloud::discoveryengine::v1::CreateSchemaRequest const& request,
-    Options opts) {
+StatusOr<google::longrunning::Operation>
+SchemaServiceClient::CreateSchema(NoAwaitTag, google::cloud::discoveryengine::v1::CreateSchemaRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateSchema(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::discoveryengine::v1::Schema>>
-SchemaServiceClient::CreateSchema(
-    google::longrunning::Operation const& operation, Options opts) {
+SchemaServiceClient::CreateSchema(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateSchema(operation);
 }
 
 future<StatusOr<google::cloud::discoveryengine::v1::Schema>>
-SchemaServiceClient::UpdateSchema(
-    google::cloud::discoveryengine::v1::UpdateSchemaRequest const& request,
-    Options opts) {
+SchemaServiceClient::UpdateSchema(google::cloud::discoveryengine::v1::UpdateSchemaRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateSchema(request);
 }
 
-StatusOr<google::longrunning::Operation> SchemaServiceClient::UpdateSchema(
-    NoAwaitTag,
-    google::cloud::discoveryengine::v1::UpdateSchemaRequest const& request,
-    Options opts) {
+StatusOr<google::longrunning::Operation>
+SchemaServiceClient::UpdateSchema(NoAwaitTag, google::cloud::discoveryengine::v1::UpdateSchemaRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateSchema(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::discoveryengine::v1::Schema>>
-SchemaServiceClient::UpdateSchema(
-    google::longrunning::Operation const& operation, Options opts) {
+SchemaServiceClient::UpdateSchema(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateSchema(operation);
 }
@@ -143,8 +124,8 @@ SchemaServiceClient::DeleteSchema(std::string const& name, Options opts) {
   return connection_->DeleteSchema(request);
 }
 
-StatusOr<google::longrunning::Operation> SchemaServiceClient::DeleteSchema(
-    NoAwaitTag, std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation>
+SchemaServiceClient::DeleteSchema(NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::discoveryengine::v1::DeleteSchemaRequest request;
   request.set_name(name);
@@ -152,30 +133,25 @@ StatusOr<google::longrunning::Operation> SchemaServiceClient::DeleteSchema(
 }
 
 future<StatusOr<google::cloud::discoveryengine::v1::DeleteSchemaMetadata>>
-SchemaServiceClient::DeleteSchema(
-    google::cloud::discoveryengine::v1::DeleteSchemaRequest const& request,
-    Options opts) {
+SchemaServiceClient::DeleteSchema(google::cloud::discoveryengine::v1::DeleteSchemaRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteSchema(request);
 }
 
-StatusOr<google::longrunning::Operation> SchemaServiceClient::DeleteSchema(
-    NoAwaitTag,
-    google::cloud::discoveryengine::v1::DeleteSchemaRequest const& request,
-    Options opts) {
+StatusOr<google::longrunning::Operation>
+SchemaServiceClient::DeleteSchema(NoAwaitTag, google::cloud::discoveryengine::v1::DeleteSchemaRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteSchema(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::discoveryengine::v1::DeleteSchemaMetadata>>
-SchemaServiceClient::DeleteSchema(
-    google::longrunning::Operation const& operation, Options opts) {
+SchemaServiceClient::DeleteSchema(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteSchema(operation);
 }
 
-StreamRange<google::longrunning::Operation> SchemaServiceClient::ListOperations(
-    std::string const& name, std::string const& filter, Options opts) {
+StreamRange<google::longrunning::Operation>
+SchemaServiceClient::ListOperations(std::string const& name, std::string const& filter, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::ListOperationsRequest request;
   request.set_name(name);
@@ -183,36 +159,36 @@ StreamRange<google::longrunning::Operation> SchemaServiceClient::ListOperations(
   return connection_->ListOperations(request);
 }
 
-StreamRange<google::longrunning::Operation> SchemaServiceClient::ListOperations(
-    google::longrunning::ListOperationsRequest request, Options opts) {
+StreamRange<google::longrunning::Operation>
+SchemaServiceClient::ListOperations(google::longrunning::ListOperationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOperations(std::move(request));
 }
 
-StatusOr<google::longrunning::Operation> SchemaServiceClient::GetOperation(
-    std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation>
+SchemaServiceClient::GetOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
   return connection_->GetOperation(request);
 }
 
-StatusOr<google::longrunning::Operation> SchemaServiceClient::GetOperation(
-    google::longrunning::GetOperationRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation>
+SchemaServiceClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }
 
-Status SchemaServiceClient::CancelOperation(std::string const& name,
-                                            Options opts) {
+Status
+SchemaServiceClient::CancelOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::CancelOperationRequest request;
   request.set_name(name);
   return connection_->CancelOperation(request);
 }
 
-Status SchemaServiceClient::CancelOperation(
-    google::longrunning::CancelOperationRequest const& request, Options opts) {
+Status
+SchemaServiceClient::CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelOperation(request);
 }

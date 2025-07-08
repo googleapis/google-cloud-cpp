@@ -25,35 +25,24 @@ namespace cloud {
 namespace publicca_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-PublicCertificateAuthorityServiceClient::
-    PublicCertificateAuthorityServiceClient(
-        std::shared_ptr<PublicCertificateAuthorityServiceConnection> connection,
-        Options opts)
+PublicCertificateAuthorityServiceClient::PublicCertificateAuthorityServiceClient(
+    std::shared_ptr<PublicCertificateAuthorityServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
-PublicCertificateAuthorityServiceClient::
-    ~PublicCertificateAuthorityServiceClient() = default;
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
+PublicCertificateAuthorityServiceClient::~PublicCertificateAuthorityServiceClient() = default;
 
 StatusOr<google::cloud::security::publicca::v1::ExternalAccountKey>
-PublicCertificateAuthorityServiceClient::CreateExternalAccountKey(
-    std::string const& parent,
-    google::cloud::security::publicca::v1::ExternalAccountKey const&
-        external_account_key,
-    Options opts) {
+PublicCertificateAuthorityServiceClient::CreateExternalAccountKey(std::string const& parent, google::cloud::security::publicca::v1::ExternalAccountKey const& external_account_key, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::security::publicca::v1::CreateExternalAccountKeyRequest
-      request;
+  google::cloud::security::publicca::v1::CreateExternalAccountKeyRequest request;
   request.set_parent(parent);
   *request.mutable_external_account_key() = external_account_key;
   return connection_->CreateExternalAccountKey(request);
 }
 
 StatusOr<google::cloud::security::publicca::v1::ExternalAccountKey>
-PublicCertificateAuthorityServiceClient::CreateExternalAccountKey(
-    google::cloud::security::publicca::v1::
-        CreateExternalAccountKeyRequest const& request,
-    Options opts) {
+PublicCertificateAuthorityServiceClient::CreateExternalAccountKey(google::cloud::security::publicca::v1::CreateExternalAccountKeyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateExternalAccountKey(request);
 }

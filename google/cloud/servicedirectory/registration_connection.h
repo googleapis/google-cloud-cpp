@@ -27,26 +27,19 @@ namespace cloud {
 namespace servicedirectory {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use servicedirectory_v1::MakeRegistrationServiceConnection
-/// directly.
+/// @deprecated Use servicedirectory_v1::MakeRegistrationServiceConnection directly.
 using ::google::cloud::servicedirectory_v1::MakeRegistrationServiceConnection;
 
 /// @deprecated Use servicedirectory_v1::RegistrationServiceConnection directly.
 using ::google::cloud::servicedirectory_v1::RegistrationServiceConnection;
 
-/// @deprecated Use
-/// servicedirectory_v1::RegistrationServiceLimitedErrorCountRetryPolicy
-/// directly.
-using ::google::cloud::servicedirectory_v1::
-    RegistrationServiceLimitedErrorCountRetryPolicy;
+/// @deprecated Use servicedirectory_v1::RegistrationServiceLimitedErrorCountRetryPolicy directly.
+using ::google::cloud::servicedirectory_v1::RegistrationServiceLimitedErrorCountRetryPolicy;
 
-/// @deprecated Use
-/// servicedirectory_v1::RegistrationServiceLimitedTimeRetryPolicy directly.
-using ::google::cloud::servicedirectory_v1::
-    RegistrationServiceLimitedTimeRetryPolicy;
+/// @deprecated Use servicedirectory_v1::RegistrationServiceLimitedTimeRetryPolicy directly.
+using ::google::cloud::servicedirectory_v1::RegistrationServiceLimitedTimeRetryPolicy;
 
-/// @deprecated Use servicedirectory_v1::RegistrationServiceRetryPolicy
-/// directly.
+/// @deprecated Use servicedirectory_v1::RegistrationServiceRetryPolicy directly.
 using ::google::cloud::servicedirectory_v1::RegistrationServiceRetryPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

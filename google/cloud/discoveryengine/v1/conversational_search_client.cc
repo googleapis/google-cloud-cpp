@@ -26,18 +26,14 @@ namespace discoveryengine_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ConversationalSearchServiceClient::ConversationalSearchServiceClient(
-    std::shared_ptr<ConversationalSearchServiceConnection> connection,
-    Options opts)
+    std::shared_ptr<ConversationalSearchServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
-ConversationalSearchServiceClient::~ConversationalSearchServiceClient() =
-    default;
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
+ConversationalSearchServiceClient::~ConversationalSearchServiceClient() = default;
 
 StatusOr<google::cloud::discoveryengine::v1::ConverseConversationResponse>
-ConversationalSearchServiceClient::ConverseConversation(
-    std::string const& name,
-    google::cloud::discoveryengine::v1::TextInput const& query, Options opts) {
+ConversationalSearchServiceClient::ConverseConversation(std::string const& name, google::cloud::discoveryengine::v1::TextInput const& query, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::discoveryengine::v1::ConverseConversationRequest request;
   request.set_name(name);
@@ -46,19 +42,13 @@ ConversationalSearchServiceClient::ConverseConversation(
 }
 
 StatusOr<google::cloud::discoveryengine::v1::ConverseConversationResponse>
-ConversationalSearchServiceClient::ConverseConversation(
-    google::cloud::discoveryengine::v1::ConverseConversationRequest const&
-        request,
-    Options opts) {
+ConversationalSearchServiceClient::ConverseConversation(google::cloud::discoveryengine::v1::ConverseConversationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ConverseConversation(request);
 }
 
 StatusOr<google::cloud::discoveryengine::v1::Conversation>
-ConversationalSearchServiceClient::CreateConversation(
-    std::string const& parent,
-    google::cloud::discoveryengine::v1::Conversation const& conversation,
-    Options opts) {
+ConversationalSearchServiceClient::CreateConversation(std::string const& parent, google::cloud::discoveryengine::v1::Conversation const& conversation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::discoveryengine::v1::CreateConversationRequest request;
   request.set_parent(parent);
@@ -67,34 +57,27 @@ ConversationalSearchServiceClient::CreateConversation(
 }
 
 StatusOr<google::cloud::discoveryengine::v1::Conversation>
-ConversationalSearchServiceClient::CreateConversation(
-    google::cloud::discoveryengine::v1::CreateConversationRequest const&
-        request,
-    Options opts) {
+ConversationalSearchServiceClient::CreateConversation(google::cloud::discoveryengine::v1::CreateConversationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateConversation(request);
 }
 
-Status ConversationalSearchServiceClient::DeleteConversation(
-    std::string const& name, Options opts) {
+Status
+ConversationalSearchServiceClient::DeleteConversation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::discoveryengine::v1::DeleteConversationRequest request;
   request.set_name(name);
   return connection_->DeleteConversation(request);
 }
 
-Status ConversationalSearchServiceClient::DeleteConversation(
-    google::cloud::discoveryengine::v1::DeleteConversationRequest const&
-        request,
-    Options opts) {
+Status
+ConversationalSearchServiceClient::DeleteConversation(google::cloud::discoveryengine::v1::DeleteConversationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteConversation(request);
 }
 
 StatusOr<google::cloud::discoveryengine::v1::Conversation>
-ConversationalSearchServiceClient::UpdateConversation(
-    google::cloud::discoveryengine::v1::Conversation const& conversation,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+ConversationalSearchServiceClient::UpdateConversation(google::cloud::discoveryengine::v1::Conversation const& conversation, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::discoveryengine::v1::UpdateConversationRequest request;
   *request.mutable_conversation() = conversation;
@@ -103,17 +86,13 @@ ConversationalSearchServiceClient::UpdateConversation(
 }
 
 StatusOr<google::cloud::discoveryengine::v1::Conversation>
-ConversationalSearchServiceClient::UpdateConversation(
-    google::cloud::discoveryengine::v1::UpdateConversationRequest const&
-        request,
-    Options opts) {
+ConversationalSearchServiceClient::UpdateConversation(google::cloud::discoveryengine::v1::UpdateConversationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateConversation(request);
 }
 
 StatusOr<google::cloud::discoveryengine::v1::Conversation>
-ConversationalSearchServiceClient::GetConversation(std::string const& name,
-                                                   Options opts) {
+ConversationalSearchServiceClient::GetConversation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::discoveryengine::v1::GetConversationRequest request;
   request.set_name(name);
@@ -121,16 +100,13 @@ ConversationalSearchServiceClient::GetConversation(std::string const& name,
 }
 
 StatusOr<google::cloud::discoveryengine::v1::Conversation>
-ConversationalSearchServiceClient::GetConversation(
-    google::cloud::discoveryengine::v1::GetConversationRequest const& request,
-    Options opts) {
+ConversationalSearchServiceClient::GetConversation(google::cloud::discoveryengine::v1::GetConversationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetConversation(request);
 }
 
 StreamRange<google::cloud::discoveryengine::v1::Conversation>
-ConversationalSearchServiceClient::ListConversations(std::string const& parent,
-                                                     Options opts) {
+ConversationalSearchServiceClient::ListConversations(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::discoveryengine::v1::ListConversationsRequest request;
   request.set_parent(parent);
@@ -138,32 +114,25 @@ ConversationalSearchServiceClient::ListConversations(std::string const& parent,
 }
 
 StreamRange<google::cloud::discoveryengine::v1::Conversation>
-ConversationalSearchServiceClient::ListConversations(
-    google::cloud::discoveryengine::v1::ListConversationsRequest request,
-    Options opts) {
+ConversationalSearchServiceClient::ListConversations(google::cloud::discoveryengine::v1::ListConversationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListConversations(std::move(request));
 }
 
 StatusOr<google::cloud::discoveryengine::v1::AnswerQueryResponse>
-ConversationalSearchServiceClient::AnswerQuery(
-    google::cloud::discoveryengine::v1::AnswerQueryRequest const& request,
-    Options opts) {
+ConversationalSearchServiceClient::AnswerQuery(google::cloud::discoveryengine::v1::AnswerQueryRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->AnswerQuery(request);
 }
 
 StreamRange<google::cloud::discoveryengine::v1::AnswerQueryResponse>
-ConversationalSearchServiceClient::StreamAnswerQuery(
-    google::cloud::discoveryengine::v1::AnswerQueryRequest const& request,
-    Options opts) {
+ConversationalSearchServiceClient::StreamAnswerQuery(google::cloud::discoveryengine::v1::AnswerQueryRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->StreamAnswerQuery(request);
 }
 
 StatusOr<google::cloud::discoveryengine::v1::Answer>
-ConversationalSearchServiceClient::GetAnswer(std::string const& name,
-                                             Options opts) {
+ConversationalSearchServiceClient::GetAnswer(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::discoveryengine::v1::GetAnswerRequest request;
   request.set_name(name);
@@ -171,17 +140,13 @@ ConversationalSearchServiceClient::GetAnswer(std::string const& name,
 }
 
 StatusOr<google::cloud::discoveryengine::v1::Answer>
-ConversationalSearchServiceClient::GetAnswer(
-    google::cloud::discoveryengine::v1::GetAnswerRequest const& request,
-    Options opts) {
+ConversationalSearchServiceClient::GetAnswer(google::cloud::discoveryengine::v1::GetAnswerRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetAnswer(request);
 }
 
 StatusOr<google::cloud::discoveryengine::v1::Session>
-ConversationalSearchServiceClient::CreateSession(
-    std::string const& parent,
-    google::cloud::discoveryengine::v1::Session const& session, Options opts) {
+ConversationalSearchServiceClient::CreateSession(std::string const& parent, google::cloud::discoveryengine::v1::Session const& session, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::discoveryengine::v1::CreateSessionRequest request;
   request.set_parent(parent);
@@ -190,32 +155,27 @@ ConversationalSearchServiceClient::CreateSession(
 }
 
 StatusOr<google::cloud::discoveryengine::v1::Session>
-ConversationalSearchServiceClient::CreateSession(
-    google::cloud::discoveryengine::v1::CreateSessionRequest const& request,
-    Options opts) {
+ConversationalSearchServiceClient::CreateSession(google::cloud::discoveryengine::v1::CreateSessionRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateSession(request);
 }
 
-Status ConversationalSearchServiceClient::DeleteSession(std::string const& name,
-                                                        Options opts) {
+Status
+ConversationalSearchServiceClient::DeleteSession(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::discoveryengine::v1::DeleteSessionRequest request;
   request.set_name(name);
   return connection_->DeleteSession(request);
 }
 
-Status ConversationalSearchServiceClient::DeleteSession(
-    google::cloud::discoveryengine::v1::DeleteSessionRequest const& request,
-    Options opts) {
+Status
+ConversationalSearchServiceClient::DeleteSession(google::cloud::discoveryengine::v1::DeleteSessionRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteSession(request);
 }
 
 StatusOr<google::cloud::discoveryengine::v1::Session>
-ConversationalSearchServiceClient::UpdateSession(
-    google::cloud::discoveryengine::v1::Session const& session,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+ConversationalSearchServiceClient::UpdateSession(google::cloud::discoveryengine::v1::Session const& session, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::discoveryengine::v1::UpdateSessionRequest request;
   *request.mutable_session() = session;
@@ -224,16 +184,13 @@ ConversationalSearchServiceClient::UpdateSession(
 }
 
 StatusOr<google::cloud::discoveryengine::v1::Session>
-ConversationalSearchServiceClient::UpdateSession(
-    google::cloud::discoveryengine::v1::UpdateSessionRequest const& request,
-    Options opts) {
+ConversationalSearchServiceClient::UpdateSession(google::cloud::discoveryengine::v1::UpdateSessionRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateSession(request);
 }
 
 StatusOr<google::cloud::discoveryengine::v1::Session>
-ConversationalSearchServiceClient::GetSession(std::string const& name,
-                                              Options opts) {
+ConversationalSearchServiceClient::GetSession(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::discoveryengine::v1::GetSessionRequest request;
   request.set_name(name);
@@ -241,16 +198,13 @@ ConversationalSearchServiceClient::GetSession(std::string const& name,
 }
 
 StatusOr<google::cloud::discoveryengine::v1::Session>
-ConversationalSearchServiceClient::GetSession(
-    google::cloud::discoveryengine::v1::GetSessionRequest const& request,
-    Options opts) {
+ConversationalSearchServiceClient::GetSession(google::cloud::discoveryengine::v1::GetSessionRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetSession(request);
 }
 
 StreamRange<google::cloud::discoveryengine::v1::Session>
-ConversationalSearchServiceClient::ListSessions(std::string const& parent,
-                                                Options opts) {
+ConversationalSearchServiceClient::ListSessions(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::discoveryengine::v1::ListSessionsRequest request;
   request.set_parent(parent);
@@ -258,17 +212,13 @@ ConversationalSearchServiceClient::ListSessions(std::string const& parent,
 }
 
 StreamRange<google::cloud::discoveryengine::v1::Session>
-ConversationalSearchServiceClient::ListSessions(
-    google::cloud::discoveryengine::v1::ListSessionsRequest request,
-    Options opts) {
+ConversationalSearchServiceClient::ListSessions(google::cloud::discoveryengine::v1::ListSessionsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListSessions(std::move(request));
 }
 
 StreamRange<google::longrunning::Operation>
-ConversationalSearchServiceClient::ListOperations(std::string const& name,
-                                                  std::string const& filter,
-                                                  Options opts) {
+ConversationalSearchServiceClient::ListOperations(std::string const& name, std::string const& filter, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::ListOperationsRequest request;
   request.set_name(name);
@@ -277,15 +227,13 @@ ConversationalSearchServiceClient::ListOperations(std::string const& name,
 }
 
 StreamRange<google::longrunning::Operation>
-ConversationalSearchServiceClient::ListOperations(
-    google::longrunning::ListOperationsRequest request, Options opts) {
+ConversationalSearchServiceClient::ListOperations(google::longrunning::ListOperationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOperations(std::move(request));
 }
 
 StatusOr<google::longrunning::Operation>
-ConversationalSearchServiceClient::GetOperation(std::string const& name,
-                                                Options opts) {
+ConversationalSearchServiceClient::GetOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
@@ -293,22 +241,21 @@ ConversationalSearchServiceClient::GetOperation(std::string const& name,
 }
 
 StatusOr<google::longrunning::Operation>
-ConversationalSearchServiceClient::GetOperation(
-    google::longrunning::GetOperationRequest const& request, Options opts) {
+ConversationalSearchServiceClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }
 
-Status ConversationalSearchServiceClient::CancelOperation(
-    std::string const& name, Options opts) {
+Status
+ConversationalSearchServiceClient::CancelOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::CancelOperationRequest request;
   request.set_name(name);
   return connection_->CancelOperation(request);
 }
 
-Status ConversationalSearchServiceClient::CancelOperation(
-    google::longrunning::CancelOperationRequest const& request, Options opts) {
+Status
+ConversationalSearchServiceClient::CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelOperation(request);
 }

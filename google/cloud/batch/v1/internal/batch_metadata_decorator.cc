@@ -44,19 +44,21 @@ BatchServiceMetadata::BatchServiceMetadata(
               ? google::cloud::internal::GeneratedLibClientHeader()
               : std::move(api_client_header)) {}
 
-StatusOr<google::cloud::batch::v1::Job> BatchServiceMetadata::CreateJob(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::batch::v1::Job>
+BatchServiceMetadata::CreateJob(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::batch::v1::CreateJobRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateJob(context, options, request);
 }
 
-StatusOr<google::cloud::batch::v1::Job> BatchServiceMetadata::GetJob(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::batch::v1::Job>
+BatchServiceMetadata::GetJob(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::batch::v1::GetJobRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetJob(context, options, request);
 }
 
@@ -66,17 +68,17 @@ BatchServiceMetadata::AsyncDeleteJob(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::batch::v1::DeleteJobRequest const& request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteJob(cq, std::move(context), std::move(options),
-                                request);
+  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteJob(
+      cq, std::move(context), std::move(options), request);
 }
 
-StatusOr<google::longrunning::Operation> BatchServiceMetadata::DeleteJob(
-    grpc::ClientContext& context, Options options,
+StatusOr<google::longrunning::Operation>
+BatchServiceMetadata::DeleteJob(
+    grpc::ClientContext& context,
+    Options options,
     google::cloud::batch::v1::DeleteJobRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteJob(context, options, request);
 }
 
@@ -86,93 +88,98 @@ BatchServiceMetadata::AsyncCancelJob(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::batch::v1::CancelJobRequest const& request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelJob(cq, std::move(context), std::move(options),
-                                request);
+  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncCancelJob(
+      cq, std::move(context), std::move(options), request);
 }
 
-StatusOr<google::longrunning::Operation> BatchServiceMetadata::CancelJob(
-    grpc::ClientContext& context, Options options,
+StatusOr<google::longrunning::Operation>
+BatchServiceMetadata::CancelJob(
+    grpc::ClientContext& context,
+    Options options,
     google::cloud::batch::v1::CancelJobRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->CancelJob(context, options, request);
 }
 
 StatusOr<google::cloud::batch::v1::ListJobsResponse>
 BatchServiceMetadata::ListJobs(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::batch::v1::ListJobsRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListJobs(context, options, request);
 }
 
-StatusOr<google::cloud::batch::v1::Task> BatchServiceMetadata::GetTask(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::batch::v1::Task>
+BatchServiceMetadata::GetTask(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::batch::v1::GetTaskRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetTask(context, options, request);
 }
 
 StatusOr<google::cloud::batch::v1::ListTasksResponse>
 BatchServiceMetadata::ListTasks(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::batch::v1::ListTasksRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListTasks(context, options, request);
 }
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 BatchServiceMetadata::ListLocations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ListLocations(context, options, request);
 }
 
-StatusOr<google::cloud::location::Location> BatchServiceMetadata::GetLocation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::location::Location>
+BatchServiceMetadata::GetLocation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetLocation(context, options, request);
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
 BatchServiceMetadata::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ListOperations(context, options, request);
 }
 
-StatusOr<google::longrunning::Operation> BatchServiceMetadata::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::Operation>
+BatchServiceMetadata::GetOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetOperation(context, options, request);
 }
 
-Status BatchServiceMetadata::DeleteOperation(
-    grpc::ClientContext& context, Options const& options,
+Status
+BatchServiceMetadata::DeleteOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteOperation(context, options, request);
 }
 
-Status BatchServiceMetadata::CancelOperation(
-    grpc::ClientContext& context, Options const& options,
+Status
+BatchServiceMetadata::CancelOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->CancelOperation(context, options, request);
 }
 
@@ -184,8 +191,8 @@ BatchServiceMetadata::AsyncGetOperation(
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(cq, std::move(context), std::move(options),
-                                   request);
+  return child_->AsyncGetOperation(
+      cq, std::move(context), std::move(options), request);
 }
 
 future<Status> BatchServiceMetadata::AsyncCancelOperation(
@@ -195,21 +202,21 @@ future<Status> BatchServiceMetadata::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(cq, std::move(context),
-                                      std::move(options), request);
+  return child_->AsyncCancelOperation(
+      cq, std::move(context), std::move(options), request);
 }
 
 void BatchServiceMetadata::SetMetadata(grpc::ClientContext& context,
-                                       Options const& options,
-                                       std::string const& request_params) {
+                                        Options const& options,
+                                        std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
 void BatchServiceMetadata::SetMetadata(grpc::ClientContext& context,
-                                       Options const& options) {
-  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
-                                       api_client_header_);
+                                        Options const& options) {
+  google::cloud::internal::SetMetadata(
+      context, options, fixed_metadata_, api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

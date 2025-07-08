@@ -31,10 +31,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * A class to mock `DocumentLinkServiceConnection`.
  *
  * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `DocumentLinkServiceClient`. To do
- * so, construct an object of type `DocumentLinkServiceClient` with an instance
- * of this class. Then use the Google Test framework functions to program the
- * behavior of this mock.
+ * including errors, from an object of type `DocumentLinkServiceClient`. To do so,
+ * construct an object of type `DocumentLinkServiceClient` with an instance of this
+ * class. Then use the Google Test framework functions to program the behavior
+ * of this mock.
  *
  * @see [This example][bq-mock] for how to test your application with GoogleTest.
  * While the example showcases types from the BigQuery library, the underlying
@@ -42,40 +42,29 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockDocumentLinkServiceConnection
-    : public contentwarehouse_v1::DocumentLinkServiceConnection {
+class MockDocumentLinkServiceConnection : public contentwarehouse_v1::DocumentLinkServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::contentwarehouse::v1::ListLinkedTargetsResponse>,
-      ListLinkedTargets,
-      (google::cloud::contentwarehouse::v1::ListLinkedTargetsRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::contentwarehouse::v1::ListLinkedTargetsResponse>,
+  ListLinkedTargets,
+  (google::cloud::contentwarehouse::v1::ListLinkedTargetsRequest const& request), (override));
 
-  MOCK_METHOD(
-      (StreamRange<google::cloud::contentwarehouse::v1::DocumentLink>),
-      ListLinkedSources,
-      (google::cloud::contentwarehouse::v1::ListLinkedSourcesRequest request),
-      (override));
+  MOCK_METHOD((StreamRange<google::cloud::contentwarehouse::v1::DocumentLink>),
+  ListLinkedSources,
+  (google::cloud::contentwarehouse::v1::ListLinkedSourcesRequest request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::contentwarehouse::v1::DocumentLink>,
-      CreateDocumentLink,
-      (google::cloud::contentwarehouse::v1::CreateDocumentLinkRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::contentwarehouse::v1::DocumentLink>,
+  CreateDocumentLink,
+  (google::cloud::contentwarehouse::v1::CreateDocumentLinkRequest const& request), (override));
 
-  MOCK_METHOD(
-      Status, DeleteDocumentLink,
-      (google::cloud::contentwarehouse::v1::DeleteDocumentLinkRequest const&
-           request),
-      (override));
+  MOCK_METHOD(Status,
+  DeleteDocumentLink,
+  (google::cloud::contentwarehouse::v1::DeleteDocumentLinkRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
-              (google::longrunning::GetOperationRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  GetOperation,
+  (google::longrunning::GetOperationRequest const& request), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

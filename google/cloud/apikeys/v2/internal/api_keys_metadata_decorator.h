@@ -35,9 +35,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class ApiKeysMetadata : public ApiKeysStub {
  public:
   ~ApiKeysMetadata() override = default;
-  ApiKeysMetadata(std::shared_ptr<ApiKeysStub> child,
-                  std::multimap<std::string, std::string> fixed_metadata,
-                  std::string api_client_header = "");
+  ApiKeysMetadata(
+      std::shared_ptr<ApiKeysStub> child,
+      std::multimap<std::string, std::string> fixed_metadata,
+      std::string api_client_header = "");
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateKey(
       google::cloud::CompletionQueue& cq,
@@ -46,19 +47,23 @@ class ApiKeysMetadata : public ApiKeysStub {
       google::api::apikeys::v2::CreateKeyRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateKey(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::api::apikeys::v2::CreateKeyRequest const& request) override;
 
   StatusOr<google::api::apikeys::v2::ListKeysResponse> ListKeys(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::api::apikeys::v2::ListKeysRequest const& request) override;
 
   StatusOr<google::api::apikeys::v2::Key> GetKey(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::api::apikeys::v2::GetKeyRequest const& request) override;
 
   StatusOr<google::api::apikeys::v2::GetKeyStringResponse> GetKeyString(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::api::apikeys::v2::GetKeyStringRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateKey(
@@ -68,7 +73,8 @@ class ApiKeysMetadata : public ApiKeysStub {
       google::api::apikeys::v2::UpdateKeyRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateKey(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::api::apikeys::v2::UpdateKeyRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteKey(
@@ -78,7 +84,8 @@ class ApiKeysMetadata : public ApiKeysStub {
       google::api::apikeys::v2::DeleteKeyRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteKey(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::api::apikeys::v2::DeleteKeyRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUndeleteKey(
@@ -88,15 +95,18 @@ class ApiKeysMetadata : public ApiKeysStub {
       google::api::apikeys::v2::UndeleteKeyRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UndeleteKey(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::api::apikeys::v2::UndeleteKeyRequest const& request) override;
 
   StatusOr<google::api::apikeys::v2::LookupKeyResponse> LookupKey(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::api::apikeys::v2::LookupKeyRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -112,7 +122,8 @@ class ApiKeysMetadata : public ApiKeysStub {
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context, Options const& options,
+  void SetMetadata(grpc::ClientContext& context,
+                   Options const& options,
                    std::string const& request_params);
   void SetMetadata(grpc::ClientContext& context, Options const& options);
 

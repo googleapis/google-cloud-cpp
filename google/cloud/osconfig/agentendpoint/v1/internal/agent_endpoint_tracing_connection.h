@@ -36,45 +36,30 @@ class AgentEndpointServiceTracingConnection
   ~AgentEndpointServiceTracingConnection() override = default;
 
   explicit AgentEndpointServiceTracingConnection(
-      std::shared_ptr<osconfig_agentendpoint_v1::AgentEndpointServiceConnection>
-          child);
+    std::shared_ptr<osconfig_agentendpoint_v1::AgentEndpointServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StreamRange<google::cloud::osconfig::agentendpoint::v1::
-                  ReceiveTaskNotificationResponse>
-  ReceiveTaskNotification(
-      google::cloud::osconfig::agentendpoint::v1::
-          ReceiveTaskNotificationRequest const& request) override;
+  StreamRange<google::cloud::osconfig::agentendpoint::v1::ReceiveTaskNotificationResponse>
+  ReceiveTaskNotification(google::cloud::osconfig::agentendpoint::v1::ReceiveTaskNotificationRequest const& request) override;
 
   StatusOr<google::cloud::osconfig::agentendpoint::v1::StartNextTaskResponse>
-  StartNextTask(
-      google::cloud::osconfig::agentendpoint::v1::StartNextTaskRequest const&
-          request) override;
+  StartNextTask(google::cloud::osconfig::agentendpoint::v1::StartNextTaskRequest const& request) override;
 
-  StatusOr<
-      google::cloud::osconfig::agentendpoint::v1::ReportTaskProgressResponse>
-  ReportTaskProgress(google::cloud::osconfig::agentendpoint::v1::
-                         ReportTaskProgressRequest const& request) override;
+  StatusOr<google::cloud::osconfig::agentendpoint::v1::ReportTaskProgressResponse>
+  ReportTaskProgress(google::cloud::osconfig::agentendpoint::v1::ReportTaskProgressRequest const& request) override;
 
-  StatusOr<
-      google::cloud::osconfig::agentendpoint::v1::ReportTaskCompleteResponse>
-  ReportTaskComplete(google::cloud::osconfig::agentendpoint::v1::
-                         ReportTaskCompleteRequest const& request) override;
+  StatusOr<google::cloud::osconfig::agentendpoint::v1::ReportTaskCompleteResponse>
+  ReportTaskComplete(google::cloud::osconfig::agentendpoint::v1::ReportTaskCompleteRequest const& request) override;
 
   StatusOr<google::cloud::osconfig::agentendpoint::v1::RegisterAgentResponse>
-  RegisterAgent(
-      google::cloud::osconfig::agentendpoint::v1::RegisterAgentRequest const&
-          request) override;
+  RegisterAgent(google::cloud::osconfig::agentendpoint::v1::RegisterAgentRequest const& request) override;
 
   StatusOr<google::cloud::osconfig::agentendpoint::v1::ReportInventoryResponse>
-  ReportInventory(
-      google::cloud::osconfig::agentendpoint::v1::ReportInventoryRequest const&
-          request) override;
+  ReportInventory(google::cloud::osconfig::agentendpoint::v1::ReportInventoryRequest const& request) override;
 
  private:
-  std::shared_ptr<osconfig_agentendpoint_v1::AgentEndpointServiceConnection>
-      child_;
+  std::shared_ptr<osconfig_agentendpoint_v1::AgentEndpointServiceConnection> child_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -87,8 +72,7 @@ class AgentEndpointServiceTracingConnection
  */
 std::shared_ptr<osconfig_agentendpoint_v1::AgentEndpointServiceConnection>
 MakeAgentEndpointServiceTracingConnection(
-    std::shared_ptr<osconfig_agentendpoint_v1::AgentEndpointServiceConnection>
-        conn);
+    std::shared_ptr<osconfig_agentendpoint_v1::AgentEndpointServiceConnection> conn);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace osconfig_agentendpoint_v1_internal

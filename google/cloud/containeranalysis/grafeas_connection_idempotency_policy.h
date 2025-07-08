@@ -26,14 +26,10 @@ namespace cloud {
 namespace containeranalysis {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use
-/// containeranalysis_v1::MakeDefaultGrafeasConnectionIdempotencyPolicy
-/// directly.
-using ::google::cloud::containeranalysis_v1::
-    MakeDefaultGrafeasConnectionIdempotencyPolicy;
+/// @deprecated Use containeranalysis_v1::MakeDefaultGrafeasConnectionIdempotencyPolicy directly.
+using ::google::cloud::containeranalysis_v1::MakeDefaultGrafeasConnectionIdempotencyPolicy;
 
-/// @deprecated Use containeranalysis_v1::GrafeasConnectionIdempotencyPolicy
-/// directly.
+/// @deprecated Use containeranalysis_v1::GrafeasConnectionIdempotencyPolicy directly.
 using ::google::cloud::containeranalysis_v1::GrafeasConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

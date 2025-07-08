@@ -42,40 +42,41 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockMetricsServiceV2Connection
-    : public logging_v2::MetricsServiceV2Connection {
+class MockMetricsServiceV2Connection : public logging_v2::MetricsServiceV2Connection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD((StreamRange<google::logging::v2::LogMetric>), ListLogMetrics,
-              (google::logging::v2::ListLogMetricsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::logging::v2::LogMetric>),
+  ListLogMetrics,
+  (google::logging::v2::ListLogMetricsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::logging::v2::LogMetric>, GetLogMetric,
-              (google::logging::v2::GetLogMetricRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::logging::v2::LogMetric>,
+  GetLogMetric,
+  (google::logging::v2::GetLogMetricRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::logging::v2::LogMetric>, CreateLogMetric,
-              (google::logging::v2::CreateLogMetricRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::logging::v2::LogMetric>,
+  CreateLogMetric,
+  (google::logging::v2::CreateLogMetricRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::logging::v2::LogMetric>, UpdateLogMetric,
-              (google::logging::v2::UpdateLogMetricRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::logging::v2::LogMetric>,
+  UpdateLogMetric,
+  (google::logging::v2::UpdateLogMetricRequest const& request), (override));
 
-  MOCK_METHOD(Status, DeleteLogMetric,
-              (google::logging::v2::DeleteLogMetricRequest const& request),
-              (override));
+  MOCK_METHOD(Status,
+  DeleteLogMetric,
+  (google::logging::v2::DeleteLogMetricRequest const& request), (override));
 
-  MOCK_METHOD((StreamRange<google::longrunning::Operation>), ListOperations,
-              (google::longrunning::ListOperationsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::longrunning::Operation>),
+  ListOperations,
+  (google::longrunning::ListOperationsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
-              (google::longrunning::GetOperationRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  GetOperation,
+  (google::longrunning::GetOperationRequest const& request), (override));
 
-  MOCK_METHOD(Status, CancelOperation,
-              (google::longrunning::CancelOperationRequest const& request),
-              (override));
+  MOCK_METHOD(Status,
+  CancelOperation,
+  (google::longrunning::CancelOperationRequest const& request), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

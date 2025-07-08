@@ -33,8 +33,7 @@ using ::google::cloud::appengine_v1::MakeApplicationsConnection;
 /// @deprecated Use appengine_v1::ApplicationsConnection directly.
 using ::google::cloud::appengine_v1::ApplicationsConnection;
 
-/// @deprecated Use appengine_v1::ApplicationsLimitedErrorCountRetryPolicy
-/// directly.
+/// @deprecated Use appengine_v1::ApplicationsLimitedErrorCountRetryPolicy directly.
 using ::google::cloud::appengine_v1::ApplicationsLimitedErrorCountRetryPolicy;
 
 /// @deprecated Use appengine_v1::ApplicationsLimitedTimeRetryPolicy directly.

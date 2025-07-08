@@ -33,19 +33,15 @@ CompletionTracingConnection::CompletionTracingConnection(
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::talent::v4::CompleteQueryResponse>
-CompletionTracingConnection::CompleteQuery(
-    google::cloud::talent::v4::CompleteQueryRequest const& request) {
-  auto span =
-      internal::MakeSpan("talent_v4::CompletionConnection::CompleteQuery");
+CompletionTracingConnection::CompleteQuery(google::cloud::talent::v4::CompleteQueryRequest const& request) {
+  auto span = internal::MakeSpan("talent_v4::CompletionConnection::CompleteQuery");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CompleteQuery(request));
 }
 
 StatusOr<google::longrunning::Operation>
-CompletionTracingConnection::GetOperation(
-    google::longrunning::GetOperationRequest const& request) {
-  auto span =
-      internal::MakeSpan("talent_v4::CompletionConnection::GetOperation");
+CompletionTracingConnection::GetOperation(google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpan("talent_v4::CompletionConnection::GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOperation(request));
 }

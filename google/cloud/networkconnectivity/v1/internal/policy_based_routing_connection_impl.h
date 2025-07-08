@@ -19,14 +19,14 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_NETWORKCONNECTIVITY_V1_INTERNAL_POLICY_BASED_ROUTING_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_NETWORKCONNECTIVITY_V1_INTERNAL_POLICY_BASED_ROUTING_CONNECTION_IMPL_H
 
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/future.h"
 #include "google/cloud/networkconnectivity/v1/internal/policy_based_routing_retry_traits.h"
 #include "google/cloud/networkconnectivity/v1/internal/policy_based_routing_stub.h"
 #include "google/cloud/networkconnectivity/v1/policy_based_routing_connection.h"
 #include "google/cloud/networkconnectivity/v1/policy_based_routing_connection_idempotency_policy.h"
 #include "google/cloud/networkconnectivity/v1/policy_based_routing_options.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -46,82 +46,70 @@ class PolicyBasedRoutingServiceConnectionImpl
   ~PolicyBasedRoutingServiceConnectionImpl() override = default;
 
   PolicyBasedRoutingServiceConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<
-          networkconnectivity_v1_internal::PolicyBasedRoutingServiceStub>
-          stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<networkconnectivity_v1_internal::PolicyBasedRoutingServiceStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
   StreamRange<google::cloud::networkconnectivity::v1::PolicyBasedRoute>
-  ListPolicyBasedRoutes(
-      google::cloud::networkconnectivity::v1::ListPolicyBasedRoutesRequest
-          request) override;
+  ListPolicyBasedRoutes(google::cloud::networkconnectivity::v1::ListPolicyBasedRoutesRequest request) override;
 
   StatusOr<google::cloud::networkconnectivity::v1::PolicyBasedRoute>
-  GetPolicyBasedRoute(
-      google::cloud::networkconnectivity::v1::GetPolicyBasedRouteRequest const&
-          request) override;
+  GetPolicyBasedRoute(google::cloud::networkconnectivity::v1::GetPolicyBasedRouteRequest const& request) override;
 
   future<StatusOr<google::cloud::networkconnectivity::v1::PolicyBasedRoute>>
-  CreatePolicyBasedRoute(
-      google::cloud::networkconnectivity::v1::
-          CreatePolicyBasedRouteRequest const& request) override;
+  CreatePolicyBasedRoute(google::cloud::networkconnectivity::v1::CreatePolicyBasedRouteRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> CreatePolicyBasedRoute(
-      NoAwaitTag, google::cloud::networkconnectivity::v1::
-                      CreatePolicyBasedRouteRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  CreatePolicyBasedRoute(NoAwaitTag,
+      google::cloud::networkconnectivity::v1::CreatePolicyBasedRouteRequest const& request) override;
 
   future<StatusOr<google::cloud::networkconnectivity::v1::PolicyBasedRoute>>
   CreatePolicyBasedRoute(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
-  DeletePolicyBasedRoute(
-      google::cloud::networkconnectivity::v1::
-          DeletePolicyBasedRouteRequest const& request) override;
+  DeletePolicyBasedRoute(google::cloud::networkconnectivity::v1::DeletePolicyBasedRouteRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> DeletePolicyBasedRoute(
-      NoAwaitTag, google::cloud::networkconnectivity::v1::
-                      DeletePolicyBasedRouteRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  DeletePolicyBasedRoute(NoAwaitTag,
+      google::cloud::networkconnectivity::v1::DeletePolicyBasedRouteRequest const& request) override;
 
   future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
   DeletePolicyBasedRoute(
       google::longrunning::Operation const& operation) override;
 
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request) override;
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request) override;
 
-  StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request) override;
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request) override;
+  StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request) override;
 
-  Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request) override;
+  Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request) override;
 
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request) override;
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<
-      networkconnectivity_v1_internal::PolicyBasedRoutingServiceStub>
-      stub_;
+  std::shared_ptr<networkconnectivity_v1_internal::PolicyBasedRoutingServiceStub> stub_;
   Options options_;
 };
 

@@ -17,12 +17,12 @@
 // source: google/cloud/contentwarehouse/v1/pipeline_service.proto
 
 #include "google/cloud/contentwarehouse/v1/internal/pipeline_stub_factory.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/contentwarehouse/v1/internal/pipeline_auth_decorator.h"
 #include "google/cloud/contentwarehouse/v1/internal/pipeline_logging_decorator.h"
 #include "google/cloud/contentwarehouse/v1/internal/pipeline_metadata_decorator.h"
 #include "google/cloud/contentwarehouse/v1/internal/pipeline_stub.h"
 #include "google/cloud/contentwarehouse/v1/internal/pipeline_tracing_stub.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/opentelemetry.h"
@@ -38,28 +38,30 @@ namespace cloud {
 namespace contentwarehouse_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<PipelineServiceStub> CreateDefaultPipelineServiceStub(
+std::shared_ptr<PipelineServiceStub>
+CreateDefaultPipelineServiceStub(
     std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
     Options const& options) {
-  auto channel = auth->CreateChannel(options.get<EndpointOption>(),
-                                     internal::MakeChannelArguments(options));
-  auto service_grpc_stub =
-      google::cloud::contentwarehouse::v1::PipelineService::NewStub(channel);
+  auto channel = auth->CreateChannel(
+    options.get<EndpointOption>(), internal::MakeChannelArguments(options));
+  auto service_grpc_stub = google::cloud::contentwarehouse::v1::PipelineService::NewStub(channel);
   std::shared_ptr<PipelineServiceStub> stub =
-      std::make_shared<DefaultPipelineServiceStub>(
-          std::move(service_grpc_stub),
-          google::longrunning::Operations::NewStub(channel));
+    std::make_shared<DefaultPipelineServiceStub>(
+      std::move(service_grpc_stub),
+      google::longrunning::Operations::NewStub(channel));
 
   if (auth->RequiresConfigureContext()) {
-    stub =
-        std::make_shared<PipelineServiceAuth>(std::move(auth), std::move(stub));
+    stub = std::make_shared<PipelineServiceAuth>(
+        std::move(auth), std::move(stub));
   }
   stub = std::make_shared<PipelineServiceMetadata>(
       std::move(stub), std::multimap<std::string, std::string>{});
-  if (internal::Contains(options.get<LoggingComponentsOption>(), "rpc")) {
+  if (internal::Contains(
+      options.get<LoggingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<PipelineServiceLogging>(
-        std::move(stub), options.get<GrpcTracingOptionsOption>(),
+        std::move(stub),
+        options.get<GrpcTracingOptionsOption>(),
         options.get<LoggingComponentsOption>());
   }
   if (internal::TracingEnabled(options)) {

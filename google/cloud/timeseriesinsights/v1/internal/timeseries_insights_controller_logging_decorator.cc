@@ -32,17 +32,20 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 TimeseriesInsightsControllerLogging::TimeseriesInsightsControllerLogging(
     std::shared_ptr<TimeseriesInsightsControllerStub> child,
-    TracingOptions tracing_options, std::set<std::string> const&)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
+    TracingOptions tracing_options,
+    std::set<std::string> const&)
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::cloud::timeseriesinsights::v1::ListDataSetsResponse>
 TimeseriesInsightsControllerLogging::ListDataSets(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::timeseriesinsights::v1::ListDataSetsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::timeseriesinsights::v1::ListDataSetsRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::timeseriesinsights::v1::ListDataSetsRequest const& request) {
         return child_->ListDataSets(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -50,26 +53,27 @@ TimeseriesInsightsControllerLogging::ListDataSets(
 
 StatusOr<google::cloud::timeseriesinsights::v1::DataSet>
 TimeseriesInsightsControllerLogging::CreateDataSet(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::timeseriesinsights::v1::CreateDataSetRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::timeseriesinsights::v1::CreateDataSetRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::timeseriesinsights::v1::CreateDataSetRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::timeseriesinsights::v1::CreateDataSetRequest const& request) {
         return child_->CreateDataSet(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status TimeseriesInsightsControllerLogging::DeleteDataSet(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::timeseriesinsights::v1::DeleteDataSetRequest const&
-        request) {
+Status
+TimeseriesInsightsControllerLogging::DeleteDataSet(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::timeseriesinsights::v1::DeleteDataSetRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::timeseriesinsights::v1::DeleteDataSetRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::timeseriesinsights::v1::DeleteDataSetRequest const& request) {
         return child_->DeleteDataSet(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -77,12 +81,13 @@ Status TimeseriesInsightsControllerLogging::DeleteDataSet(
 
 StatusOr<google::cloud::timeseriesinsights::v1::AppendEventsResponse>
 TimeseriesInsightsControllerLogging::AppendEvents(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::timeseriesinsights::v1::AppendEventsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::timeseriesinsights::v1::AppendEventsRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::timeseriesinsights::v1::AppendEventsRequest const& request) {
         return child_->AppendEvents(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -90,12 +95,13 @@ TimeseriesInsightsControllerLogging::AppendEvents(
 
 StatusOr<google::cloud::timeseriesinsights::v1::QueryDataSetResponse>
 TimeseriesInsightsControllerLogging::QueryDataSet(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::timeseriesinsights::v1::QueryDataSetRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::timeseriesinsights::v1::QueryDataSetRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::timeseriesinsights::v1::QueryDataSetRequest const& request) {
         return child_->QueryDataSet(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -103,13 +109,13 @@ TimeseriesInsightsControllerLogging::QueryDataSet(
 
 StatusOr<google::cloud::timeseriesinsights::v1::EvaluatedSlice>
 TimeseriesInsightsControllerLogging::EvaluateSlice(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::timeseriesinsights::v1::EvaluateSliceRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::timeseriesinsights::v1::EvaluateSliceRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::timeseriesinsights::v1::EvaluateSliceRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::timeseriesinsights::v1::EvaluateSliceRequest const& request) {
         return child_->EvaluateSlice(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -117,13 +123,13 @@ TimeseriesInsightsControllerLogging::EvaluateSlice(
 
 StatusOr<google::cloud::timeseriesinsights::v1::EvaluatedSlice>
 TimeseriesInsightsControllerLogging::EvaluateTimeseries(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::timeseriesinsights::v1::EvaluateTimeseriesRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::timeseriesinsights::v1::EvaluateTimeseriesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::timeseriesinsights::v1::
-                 EvaluateTimeseriesRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::timeseriesinsights::v1::EvaluateTimeseriesRequest const& request) {
         return child_->EvaluateTimeseries(context, options, request);
       },
       context, options, request, __func__, tracing_options_);

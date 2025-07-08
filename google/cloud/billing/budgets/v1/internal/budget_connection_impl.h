@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BILLING_BUDGETS_V1_INTERNAL_BUDGET_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BILLING_BUDGETS_V1_INTERNAL_BUDGET_CONNECTION_IMPL_H
 
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/billing/budgets/v1/budget_connection.h"
 #include "google/cloud/billing/budgets/v1/budget_connection_idempotency_policy.h"
 #include "google/cloud/billing/budgets/v1/budget_options.h"
 #include "google/cloud/billing/budgets/v1/internal/budget_retry_traits.h"
 #include "google/cloud/billing/budgets/v1/internal/budget_stub.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -43,30 +43,26 @@ class BudgetServiceConnectionImpl
   ~BudgetServiceConnectionImpl() override = default;
 
   BudgetServiceConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<billing_budgets_v1_internal::BudgetServiceStub> stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<billing_budgets_v1_internal::BudgetServiceStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
-  StatusOr<google::cloud::billing::budgets::v1::Budget> CreateBudget(
-      google::cloud::billing::budgets::v1::CreateBudgetRequest const& request)
-      override;
+  StatusOr<google::cloud::billing::budgets::v1::Budget>
+  CreateBudget(google::cloud::billing::budgets::v1::CreateBudgetRequest const& request) override;
 
-  StatusOr<google::cloud::billing::budgets::v1::Budget> UpdateBudget(
-      google::cloud::billing::budgets::v1::UpdateBudgetRequest const& request)
-      override;
+  StatusOr<google::cloud::billing::budgets::v1::Budget>
+  UpdateBudget(google::cloud::billing::budgets::v1::UpdateBudgetRequest const& request) override;
 
-  StatusOr<google::cloud::billing::budgets::v1::Budget> GetBudget(
-      google::cloud::billing::budgets::v1::GetBudgetRequest const& request)
-      override;
+  StatusOr<google::cloud::billing::budgets::v1::Budget>
+  GetBudget(google::cloud::billing::budgets::v1::GetBudgetRequest const& request) override;
 
-  StreamRange<google::cloud::billing::budgets::v1::Budget> ListBudgets(
-      google::cloud::billing::budgets::v1::ListBudgetsRequest request) override;
+  StreamRange<google::cloud::billing::budgets::v1::Budget>
+  ListBudgets(google::cloud::billing::budgets::v1::ListBudgetsRequest request) override;
 
-  Status DeleteBudget(
-      google::cloud::billing::budgets::v1::DeleteBudgetRequest const& request)
-      override;
+  Status
+  DeleteBudget(google::cloud::billing::budgets::v1::DeleteBudgetRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

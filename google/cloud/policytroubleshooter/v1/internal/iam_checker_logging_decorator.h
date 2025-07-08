@@ -35,15 +35,13 @@ class IamCheckerLogging : public IamCheckerStub {
  public:
   ~IamCheckerLogging() override = default;
   IamCheckerLogging(std::shared_ptr<IamCheckerStub> child,
-                    TracingOptions tracing_options,
-                    std::set<std::string> const& components);
+                       TracingOptions tracing_options,
+                       std::set<std::string> const& components);
 
-  StatusOr<
-      google::cloud::policytroubleshooter::v1::TroubleshootIamPolicyResponse>
-  TroubleshootIamPolicy(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::policytroubleshooter::v1::
-          TroubleshootIamPolicyRequest const& request) override;
+  StatusOr<google::cloud::policytroubleshooter::v1::TroubleshootIamPolicyResponse> TroubleshootIamPolicy(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::policytroubleshooter::v1::TroubleshootIamPolicyRequest const& request) override;
 
  private:
   std::shared_ptr<IamCheckerStub> child_;

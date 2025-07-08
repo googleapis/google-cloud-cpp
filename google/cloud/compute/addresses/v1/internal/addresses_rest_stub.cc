@@ -40,308 +40,221 @@ DefaultAddressesRestStub::DefaultAddressesRestStub(Options options)
 
 DefaultAddressesRestStub::DefaultAddressesRestStub(
     std::shared_ptr<rest_internal::RestClient> service,
-    std::shared_ptr<rest_internal::RestClient> operations, Options options)
+    std::shared_ptr<rest_internal::RestClient> operations,
+    Options options)
     : service_(std::move(service)),
       operations_(std::move(operations)),
       options_(std::move(options)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::AddressAggregatedList>
 DefaultAddressesRestStub::AggregatedListAddresses(
-    google::cloud::rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::compute::addresses::v1::
-        AggregatedListAddressesRequest const& request) {
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::addresses::v1::AggregatedListAddressesRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"filter", request.filter()});
-  query_params.push_back(
-      {"include_all_scopes", (request.include_all_scopes() ? "1" : "0")});
-  query_params.push_back(
-      {"max_results", std::to_string(request.max_results())});
+  query_params.push_back({"include_all_scopes", (request.include_all_scopes() ? "1" : "0")});
+  query_params.push_back({"max_results", std::to_string(request.max_results())});
   query_params.push_back({"order_by", request.order_by()});
   query_params.push_back({"page_token", request.page_token()});
-  query_params.push_back({"return_partial_success",
-                          (request.return_partial_success() ? "1" : "0")});
-  query_params.push_back(
-      {"service_project_number", request.service_project_number()});
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
-  return rest_internal::Get<
-      google::cloud::cpp::compute::v1::AddressAggregatedList>(
+  query_params.push_back({"return_partial_success", (request.return_partial_success() ? "1" : "0")});
+  query_params.push_back({"service_project_number", request.service_project_number()});
+  query_params = rest_internal::TrimEmptyQueryParameters(std::move(query_params));
+  return rest_internal::Get<google::cloud::cpp::compute::v1::AddressAggregatedList>(
       *service_, rest_context, request, false,
-      absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "aggregated", "/",
-                   "addresses"),
-      std::move(query_params));
+      absl::StrCat("/", "compute", "/", rest_internal::DetermineApiVersion("v1", options), "/", "projects", "/", request.project(), "/", "aggregated", "/", "addresses"), std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultAddressesRestStub::AsyncDeleteAddress(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::addresses::v1::DeleteAddressRequest const&
-        request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::addresses::v1::DeleteAddressRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
-      p.get_future();
-  std::thread t{
-      [](auto p, auto service, auto request, auto rest_context, auto options) {
-        std::vector<std::pair<std::string, std::string>> query_params;
-        query_params.push_back({"request_id", request.request_id()});
-        query_params =
-            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
-        p.set_value(
-            rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request, false,
-                absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", *options),
-                             "/", "projects", "/", request.project(), "/",
-                             "regions", "/", request.region(), "/", "addresses",
-                             "/", request.address()),
-                std::move(query_params)));
-      },
-      std::move(p),
-      service_,
-      request,
-      std::move(rest_context),
-      std::move(options)};
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f = p.get_future();
+  std::thread t{[](
+          auto p, auto service, auto request, auto rest_context, auto options) {
+      std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"request_id", request.request_id()});
+  query_params = rest_internal::TrimEmptyQueryParameters(std::move(query_params));
+      p.set_value(rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
+          *service, *rest_context, request,
+          false,
+          absl::StrCat("/", "compute", "/", rest_internal::DetermineApiVersion("v1", *options), "/", "projects", "/", request.project(), "/", "regions", "/", request.region(), "/", "addresses", "/", request.address()), std::move(query_params)));
+    },
+    std::move(p), service_, request, std::move(rest_context),
+    std::move(options)};
   return f.then([t = std::move(t), cq](auto f) mutable {
-    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
+    cq.RunAsync([t = std::move(t)]() mutable {
+      t.join();
+    });
     return f.get();
   });
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultAddressesRestStub::DeleteAddress(
-    google::cloud::rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::compute::addresses::v1::DeleteAddressRequest const&
-        request) {
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::addresses::v1::DeleteAddressRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"request_id", request.request_id()});
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
+  query_params = rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request, false,
-      absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "regions", "/",
-                   request.region(), "/", "addresses", "/", request.address()),
-      std::move(query_params));
+      absl::StrCat("/", "compute", "/", rest_internal::DetermineApiVersion("v1", options), "/", "projects", "/", request.project(), "/", "regions", "/", request.region(), "/", "addresses", "/", request.address()), std::move(query_params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Address>
 DefaultAddressesRestStub::GetAddress(
-    google::cloud::rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::compute::addresses::v1::GetAddressRequest const&
-        request) {
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::addresses::v1::GetAddressRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Get<google::cloud::cpp::compute::v1::Address>(
       *service_, rest_context, request, false,
-      absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "regions", "/",
-                   request.region(), "/", "addresses", "/", request.address()),
-      std::move(query_params));
+      absl::StrCat("/", "compute", "/", rest_internal::DetermineApiVersion("v1", options), "/", "projects", "/", request.project(), "/", "regions", "/", request.region(), "/", "addresses", "/", request.address()), std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultAddressesRestStub::AsyncInsertAddress(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::addresses::v1::InsertAddressRequest const&
-        request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::addresses::v1::InsertAddressRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
-      p.get_future();
-  std::thread t{
-      [](auto p, auto service, auto request, auto rest_context, auto options) {
-        std::vector<std::pair<std::string, std::string>> query_params;
-        query_params.push_back({"request_id", request.request_id()});
-        query_params =
-            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
-        p.set_value(
-            rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request.address_resource(), false,
-                absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", *options),
-                             "/", "projects", "/", request.project(), "/",
-                             "regions", "/", request.region(), "/",
-                             "addresses"),
-                std::move(query_params)));
-      },
-      std::move(p),
-      service_,
-      request,
-      std::move(rest_context),
-      std::move(options)};
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f = p.get_future();
+  std::thread t{[](
+          auto p, auto service, auto request, auto rest_context, auto options) {
+      std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"request_id", request.request_id()});
+  query_params = rest_internal::TrimEmptyQueryParameters(std::move(query_params));
+      p.set_value(rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+          *service, *rest_context, request.address_resource(),
+          false,
+          absl::StrCat("/", "compute", "/", rest_internal::DetermineApiVersion("v1", *options), "/", "projects", "/", request.project(), "/", "regions", "/", request.region(), "/", "addresses"), std::move(query_params)));
+    },
+    std::move(p), service_, request, std::move(rest_context),
+    std::move(options)};
   return f.then([t = std::move(t), cq](auto f) mutable {
-    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
+    cq.RunAsync([t = std::move(t)]() mutable {
+      t.join();
+    });
     return f.get();
   });
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultAddressesRestStub::InsertAddress(
-    google::cloud::rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::compute::addresses::v1::InsertAddressRequest const&
-        request) {
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::addresses::v1::InsertAddressRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"request_id", request.request_id()});
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
+  query_params = rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request.address_resource(), false,
-      absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "regions", "/",
-                   request.region(), "/", "addresses"),
-      std::move(query_params));
+      absl::StrCat("/", "compute", "/", rest_internal::DetermineApiVersion("v1", options), "/", "projects", "/", request.project(), "/", "regions", "/", request.region(), "/", "addresses"), std::move(query_params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::AddressList>
 DefaultAddressesRestStub::ListAddresses(
-    google::cloud::rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::compute::addresses::v1::ListAddressesRequest const&
-        request) {
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::addresses::v1::ListAddressesRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"filter", request.filter()});
-  query_params.push_back(
-      {"max_results", std::to_string(request.max_results())});
+  query_params.push_back({"max_results", std::to_string(request.max_results())});
   query_params.push_back({"order_by", request.order_by()});
   query_params.push_back({"page_token", request.page_token()});
-  query_params.push_back({"return_partial_success",
-                          (request.return_partial_success() ? "1" : "0")});
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
+  query_params.push_back({"return_partial_success", (request.return_partial_success() ? "1" : "0")});
+  query_params = rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<google::cloud::cpp::compute::v1::AddressList>(
       *service_, rest_context, request, false,
-      absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "regions", "/",
-                   request.region(), "/", "addresses"),
-      std::move(query_params));
+      absl::StrCat("/", "compute", "/", rest_internal::DetermineApiVersion("v1", options), "/", "projects", "/", request.project(), "/", "regions", "/", request.region(), "/", "addresses"), std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultAddressesRestStub::AsyncMove(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::addresses::v1::MoveRequest const& request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::addresses::v1::MoveRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
-      p.get_future();
-  std::thread t{
-      [](auto p, auto service, auto request, auto rest_context, auto options) {
-        std::vector<std::pair<std::string, std::string>> query_params;
-        query_params.push_back({"request_id", request.request_id()});
-        query_params =
-            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
-        p.set_value(
-            rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context,
-                request.region_addresses_move_request_resource(), false,
-                absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", *options),
-                             "/", "projects", "/", request.project(), "/",
-                             "regions", "/", request.region(), "/", "addresses",
-                             "/", request.address(), "/", "move"),
-                std::move(query_params)));
-      },
-      std::move(p),
-      service_,
-      request,
-      std::move(rest_context),
-      std::move(options)};
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f = p.get_future();
+  std::thread t{[](
+          auto p, auto service, auto request, auto rest_context, auto options) {
+      std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"request_id", request.request_id()});
+  query_params = rest_internal::TrimEmptyQueryParameters(std::move(query_params));
+      p.set_value(rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+          *service, *rest_context, request.region_addresses_move_request_resource(),
+          false,
+          absl::StrCat("/", "compute", "/", rest_internal::DetermineApiVersion("v1", *options), "/", "projects", "/", request.project(), "/", "regions", "/", request.region(), "/", "addresses", "/", request.address(), "/", "move"), std::move(query_params)));
+    },
+    std::move(p), service_, request, std::move(rest_context),
+    std::move(options)};
   return f.then([t = std::move(t), cq](auto f) mutable {
-    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
+    cq.RunAsync([t = std::move(t)]() mutable {
+      t.join();
+    });
     return f.get();
   });
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultAddressesRestStub::Move(
-    google::cloud::rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::compute::addresses::v1::MoveRequest const& request) {
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::addresses::v1::MoveRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"request_id", request.request_id()});
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
+  query_params = rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
-      *service_, rest_context, request.region_addresses_move_request_resource(),
-      false,
-      absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "regions", "/",
-                   request.region(), "/", "addresses", "/", request.address(),
-                   "/", "move"),
-      std::move(query_params));
+      *service_, rest_context, request.region_addresses_move_request_resource(), false,
+      absl::StrCat("/", "compute", "/", rest_internal::DetermineApiVersion("v1", options), "/", "projects", "/", request.project(), "/", "regions", "/", request.region(), "/", "addresses", "/", request.address(), "/", "move"), std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultAddressesRestStub::AsyncSetLabels(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::addresses::v1::SetLabelsRequest const&
-        request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::addresses::v1::SetLabelsRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
-      p.get_future();
-  std::thread t{
-      [](auto p, auto service, auto request, auto rest_context, auto options) {
-        std::vector<std::pair<std::string, std::string>> query_params;
-        query_params.push_back({"request_id", request.request_id()});
-        query_params =
-            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
-        p.set_value(
-            rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context,
-                request.region_set_labels_request_resource(), false,
-                absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", *options),
-                             "/", "projects", "/", request.project(), "/",
-                             "regions", "/", request.region(), "/", "addresses",
-                             "/", request.resource(), "/", "setLabels"),
-                std::move(query_params)));
-      },
-      std::move(p),
-      service_,
-      request,
-      std::move(rest_context),
-      std::move(options)};
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f = p.get_future();
+  std::thread t{[](
+          auto p, auto service, auto request, auto rest_context, auto options) {
+      std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"request_id", request.request_id()});
+  query_params = rest_internal::TrimEmptyQueryParameters(std::move(query_params));
+      p.set_value(rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+          *service, *rest_context, request.region_set_labels_request_resource(),
+          false,
+          absl::StrCat("/", "compute", "/", rest_internal::DetermineApiVersion("v1", *options), "/", "projects", "/", request.project(), "/", "regions", "/", request.region(), "/", "addresses", "/", request.resource(), "/", "setLabels"), std::move(query_params)));
+    },
+    std::move(p), service_, request, std::move(rest_context),
+    std::move(options)};
   return f.then([t = std::move(t), cq](auto f) mutable {
-    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
+    cq.RunAsync([t = std::move(t)]() mutable {
+      t.join();
+    });
     return f.get();
   });
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultAddressesRestStub::SetLabels(
-    google::cloud::rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::compute::addresses::v1::SetLabelsRequest const&
-        request) {
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::addresses::v1::SetLabelsRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"request_id", request.request_id()});
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
+  query_params = rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
-      *service_, rest_context, request.region_set_labels_request_resource(),
-      false,
-      absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "regions", "/",
-                   request.region(), "/", "addresses", "/", request.resource(),
-                   "/", "setLabels"),
-      std::move(query_params));
+      *service_, rest_context, request.region_set_labels_request_resource(), false,
+      absl::StrCat("/", "compute", "/", rest_internal::DetermineApiVersion("v1", options), "/", "projects", "/", request.project(), "/", "regions", "/", request.region(), "/", "addresses", "/", request.resource(), "/", "setLabels"), std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -349,59 +262,51 @@ DefaultAddressesRestStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::region_operations::v1::
-        GetOperationRequest const& request) {
+    google::cloud::cpp::compute::region_operations::v1::GetOperationRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
-      p.get_future();
-  std::thread t{
-      [](auto p, auto operations, auto request, auto rest_context,
-         auto options) {
-        p.set_value(
-            rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
-                *operations, *rest_context, request, false,
-                absl::StrCat("/compute/",
-                             rest_internal::DetermineApiVersion("v1", *options),
-                             "/projects/", request.project(), "/regions/",
-                             request.region(), "/operations/",
-                             request.operation())));
-      },
-      std::move(p),
-      operations_,
-      request,
-      std::move(rest_context),
-      std::move(options)};
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f = p.get_future();
+  std::thread t{[](auto p, auto operations, auto request, auto rest_context, auto options) {
+      p.set_value(rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
+          *operations, *rest_context, request, false,
+          absl::StrCat("/compute/",
+                              rest_internal::DetermineApiVersion("v1", *options),
+                              "/projects/", request.project(),
+                              "/regions/", request.region(),
+                              "/operations/", request.operation())));
+    },
+    std::move(p), operations_, request, std::move(rest_context),
+    std::move(options)};
   return f.then([t = std::move(t), cq](auto f) mutable {
-    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
+    cq.RunAsync([t = std::move(t)]() mutable {
+      t.join();
+    });
     return f.get();
   });
 }
 
-future<Status> DefaultAddressesRestStub::AsyncCancelOperation(
+future<Status>
+DefaultAddressesRestStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::region_operations::v1::
-        DeleteOperationRequest const& request) {
+    google::cloud::cpp::compute::region_operations::v1::DeleteOperationRequest const& request) {
   promise<StatusOr<google::protobuf::Empty>> p;
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
-  std::thread t{
-      [](auto p, auto operations, auto request, auto rest_context,
-         auto options) {
-        p.set_value(rest_internal::Post<google::protobuf::Empty>(
-            *operations, *rest_context, request, false,
-            absl::StrCat(
-                "/compute/", rest_internal::DetermineApiVersion("v1", *options),
-                "/projects/", request.project(), "/regions/", request.region(),
-                "/operations/", request.operation())));
-      },
-      std::move(p),
-      operations_,
-      request,
-      std::move(rest_context),
-      std::move(options)};
+  std::thread t{[](auto p, auto operations, auto request, auto rest_context, auto options) {
+      p.set_value(rest_internal::Post<google::protobuf::Empty>(
+          *operations, *rest_context, request, false,
+          absl::StrCat("/compute/",
+                              rest_internal::DetermineApiVersion("v1", *options),
+                              "/projects/", request.project(),
+                              "/regions/", request.region(),
+                              "/operations/", request.operation())));
+    },
+    std::move(p), operations_, request, std::move(rest_context),
+    std::move(options)};
   return f.then([t = std::move(t), cq](auto f) mutable {
-    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
+    cq.RunAsync([t = std::move(t)]() mutable {
+      t.join();
+    });
     return f.get().status();
   });
 }

@@ -26,37 +26,31 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-ImageVersionsConnectionIdempotencyPolicy::
-    ~ImageVersionsConnectionIdempotencyPolicy() = default;
+ImageVersionsConnectionIdempotencyPolicy::~ImageVersionsConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<ImageVersionsConnectionIdempotencyPolicy>
 ImageVersionsConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<ImageVersionsConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency ImageVersionsConnectionIdempotencyPolicy::ListImageVersions(
-    google::cloud::orchestration::airflow::service::v1::
-        ListImageVersionsRequest) {  // NOLINT
+Idempotency ImageVersionsConnectionIdempotencyPolicy::ListImageVersions(google::cloud::orchestration::airflow::service::v1::ListImageVersionsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency ImageVersionsConnectionIdempotencyPolicy::ListOperations(
-    google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency ImageVersionsConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency ImageVersionsConnectionIdempotencyPolicy::GetOperation(
-    google::longrunning::GetOperationRequest const&) {
+Idempotency ImageVersionsConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ImageVersionsConnectionIdempotencyPolicy::DeleteOperation(
-    google::longrunning::DeleteOperationRequest const&) {
+Idempotency ImageVersionsConnectionIdempotencyPolicy::DeleteOperation(google::longrunning::DeleteOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<ImageVersionsConnectionIdempotencyPolicy>
-MakeDefaultImageVersionsConnectionIdempotencyPolicy() {
+    MakeDefaultImageVersionsConnectionIdempotencyPolicy() {
   return std::make_unique<ImageVersionsConnectionIdempotencyPolicy>();
 }
 

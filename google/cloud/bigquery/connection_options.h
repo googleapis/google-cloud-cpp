@@ -28,26 +28,17 @@ namespace cloud {
 namespace bigquery {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use bigquery_connection_v1::ConnectionServiceBackoffPolicyOption
-/// directly.
-using ::google::cloud::bigquery_connection_v1::
-    ConnectionServiceBackoffPolicyOption;
+/// @deprecated Use bigquery_connection_v1::ConnectionServiceBackoffPolicyOption directly.
+using ::google::cloud::bigquery_connection_v1::ConnectionServiceBackoffPolicyOption;
 
-/// @deprecated Use
-/// bigquery_connection_v1::ConnectionServiceConnectionIdempotencyPolicyOption
-/// directly.
-using ::google::cloud::bigquery_connection_v1::
-    ConnectionServiceConnectionIdempotencyPolicyOption;
+/// @deprecated Use bigquery_connection_v1::ConnectionServiceConnectionIdempotencyPolicyOption directly.
+using ::google::cloud::bigquery_connection_v1::ConnectionServiceConnectionIdempotencyPolicyOption;
 
-/// @deprecated Use bigquery_connection_v1::ConnectionServicePolicyOptionList
-/// directly.
-using ::google::cloud::bigquery_connection_v1::
-    ConnectionServicePolicyOptionList;
+/// @deprecated Use bigquery_connection_v1::ConnectionServicePolicyOptionList directly.
+using ::google::cloud::bigquery_connection_v1::ConnectionServicePolicyOptionList;
 
-/// @deprecated Use bigquery_connection_v1::ConnectionServiceRetryPolicyOption
-/// directly.
-using ::google::cloud::bigquery_connection_v1::
-    ConnectionServiceRetryPolicyOption;
+/// @deprecated Use bigquery_connection_v1::ConnectionServiceRetryPolicyOption directly.
+using ::google::cloud::bigquery_connection_v1::ConnectionServiceRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery

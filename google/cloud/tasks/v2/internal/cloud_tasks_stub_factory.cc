@@ -17,17 +17,17 @@
 // source: google/cloud/tasks/v2/cloudtasks.proto
 
 #include "google/cloud/tasks/v2/internal/cloud_tasks_stub_factory.h"
-#include "google/cloud/tasks/v2/internal/cloud_tasks_auth_decorator.h"
-#include "google/cloud/tasks/v2/internal/cloud_tasks_logging_decorator.h"
-#include "google/cloud/tasks/v2/internal/cloud_tasks_metadata_decorator.h"
-#include "google/cloud/tasks/v2/internal/cloud_tasks_stub.h"
-#include "google/cloud/tasks/v2/internal/cloud_tasks_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
+#include "google/cloud/tasks/v2/internal/cloud_tasks_auth_decorator.h"
+#include "google/cloud/tasks/v2/internal/cloud_tasks_logging_decorator.h"
+#include "google/cloud/tasks/v2/internal/cloud_tasks_metadata_decorator.h"
+#include "google/cloud/tasks/v2/internal/cloud_tasks_stub.h"
+#include "google/cloud/tasks/v2/internal/cloud_tasks_tracing_stub.h"
 #include <google/cloud/location/locations.grpc.pb.h>
 #include <google/cloud/tasks/v2/cloudtasks.grpc.pb.h>
 #include <memory>
@@ -38,28 +38,29 @@ namespace cloud {
 namespace tasks_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<CloudTasksStub> CreateDefaultCloudTasksStub(
+std::shared_ptr<CloudTasksStub>
+CreateDefaultCloudTasksStub(
     std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
     Options const& options) {
-  auto channel = auth->CreateChannel(options.get<EndpointOption>(),
-                                     internal::MakeChannelArguments(options));
-  auto service_grpc_stub =
-      google::cloud::tasks::v2::CloudTasks::NewStub(channel);
-  auto service_locations_stub =
-      google::cloud::location::Locations::NewStub(channel);
+  auto channel = auth->CreateChannel(
+    options.get<EndpointOption>(), internal::MakeChannelArguments(options));
+  auto service_grpc_stub = google::cloud::tasks::v2::CloudTasks::NewStub(channel);
+  auto service_locations_stub = google::cloud::location::Locations::NewStub(channel);
   std::shared_ptr<CloudTasksStub> stub =
-      std::make_shared<DefaultCloudTasksStub>(
-          std::move(service_grpc_stub), std::move(service_locations_stub));
+    std::make_shared<DefaultCloudTasksStub>(std::move(service_grpc_stub), std::move(service_locations_stub));
 
   if (auth->RequiresConfigureContext()) {
-    stub = std::make_shared<CloudTasksAuth>(std::move(auth), std::move(stub));
+    stub = std::make_shared<CloudTasksAuth>(
+        std::move(auth), std::move(stub));
   }
   stub = std::make_shared<CloudTasksMetadata>(
       std::move(stub), std::multimap<std::string, std::string>{});
-  if (internal::Contains(options.get<LoggingComponentsOption>(), "rpc")) {
+  if (internal::Contains(
+      options.get<LoggingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<CloudTasksLogging>(
-        std::move(stub), options.get<GrpcTracingOptionsOption>(),
+        std::move(stub),
+        options.get<GrpcTracingOptionsOption>(),
         options.get<LoggingComponentsOption>());
   }
   if (internal::TracingEnabled(options)) {

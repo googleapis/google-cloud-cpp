@@ -29,18 +29,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 PolicyTroubleshooterTracingConnection::PolicyTroubleshooterTracingConnection(
-    std::shared_ptr<policytroubleshooter_iam_v3::PolicyTroubleshooterConnection>
-        child)
+    std::shared_ptr<policytroubleshooter_iam_v3::PolicyTroubleshooterConnection> child)
     : child_(std::move(child)) {}
 
-StatusOr<
-    google::cloud::policytroubleshooter::iam::v3::TroubleshootIamPolicyResponse>
-PolicyTroubleshooterTracingConnection::TroubleshootIamPolicy(
-    google::cloud::policytroubleshooter::iam::v3::
-        TroubleshootIamPolicyRequest const& request) {
-  auto span = internal::MakeSpan(
-      "policytroubleshooter_iam_v3::PolicyTroubleshooterConnection::"
-      "TroubleshootIamPolicy");
+StatusOr<google::cloud::policytroubleshooter::iam::v3::TroubleshootIamPolicyResponse>
+PolicyTroubleshooterTracingConnection::TroubleshootIamPolicy(google::cloud::policytroubleshooter::iam::v3::TroubleshootIamPolicyRequest const& request) {
+  auto span = internal::MakeSpan("policytroubleshooter_iam_v3::PolicyTroubleshooterConnection::TroubleshootIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->TroubleshootIamPolicy(request));
 }
@@ -49,12 +43,10 @@ PolicyTroubleshooterTracingConnection::TroubleshootIamPolicy(
 
 std::shared_ptr<policytroubleshooter_iam_v3::PolicyTroubleshooterConnection>
 MakePolicyTroubleshooterTracingConnection(
-    std::shared_ptr<policytroubleshooter_iam_v3::PolicyTroubleshooterConnection>
-        conn) {
+    std::shared_ptr<policytroubleshooter_iam_v3::PolicyTroubleshooterConnection> conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
-    conn = std::make_shared<PolicyTroubleshooterTracingConnection>(
-        std::move(conn));
+    conn = std::make_shared<PolicyTroubleshooterTracingConnection>(std::move(conn));
   }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;

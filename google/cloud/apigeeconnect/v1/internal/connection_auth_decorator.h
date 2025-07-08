@@ -38,11 +38,10 @@ class ConnectionServiceAuth : public ConnectionServiceStub {
       std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth,
       std::shared_ptr<ConnectionServiceStub> child);
 
-  StatusOr<google::cloud::apigeeconnect::v1::ListConnectionsResponse>
-  ListConnections(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::apigeeconnect::v1::ListConnectionsRequest const& request)
-      override;
+  StatusOr<google::cloud::apigeeconnect::v1::ListConnectionsResponse> ListConnections(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::apigeeconnect::v1::ListConnectionsRequest const& request) override;
 
  private:
   std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth_;

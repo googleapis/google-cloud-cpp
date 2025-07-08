@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_POLICYTROUBLESHOOTER_IAM_V3_INTERNAL_POLICY_TROUBLESHOOTER_METADATA_DECORATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_POLICYTROUBLESHOOTER_IAM_V3_INTERNAL_POLICY_TROUBLESHOOTER_METADATA_DECORATOR_H
 
-#include "google/cloud/policytroubleshooter/iam/v3/internal/policy_troubleshooter_stub.h"
 #include "google/cloud/options.h"
+#include "google/cloud/policytroubleshooter/iam/v3/internal/policy_troubleshooter_stub.h"
 #include "google/cloud/version.h"
 #include <map>
 #include <memory>
@@ -39,15 +39,14 @@ class PolicyTroubleshooterMetadata : public PolicyTroubleshooterStub {
       std::multimap<std::string, std::string> fixed_metadata,
       std::string api_client_header = "");
 
-  StatusOr<google::cloud::policytroubleshooter::iam::v3::
-               TroubleshootIamPolicyResponse>
-  TroubleshootIamPolicy(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::policytroubleshooter::iam::v3::
-          TroubleshootIamPolicyRequest const& request) override;
+  StatusOr<google::cloud::policytroubleshooter::iam::v3::TroubleshootIamPolicyResponse> TroubleshootIamPolicy(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::policytroubleshooter::iam::v3::TroubleshootIamPolicyRequest const& request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context, Options const& options,
+  void SetMetadata(grpc::ClientContext& context,
+                   Options const& options,
                    std::string const& request_params);
   void SetMetadata(grpc::ClientContext& context, Options const& options);
 

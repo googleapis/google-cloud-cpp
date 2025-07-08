@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_PACKET_MIRRORINGS_V1_PACKET_MIRRORINGS_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_PACKET_MIRRORINGS_V1_PACKET_MIRRORINGS_OPTIONS_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/packet_mirrorings/v1/packet_mirrorings_connection.h"
 #include "google/cloud/compute/packet_mirrorings/v1/packet_mirrorings_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>

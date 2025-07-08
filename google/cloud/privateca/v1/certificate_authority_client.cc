@@ -26,19 +26,14 @@ namespace privateca_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 CertificateAuthorityServiceClient::CertificateAuthorityServiceClient(
-    std::shared_ptr<CertificateAuthorityServiceConnection> connection,
-    Options opts)
+    std::shared_ptr<CertificateAuthorityServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
-CertificateAuthorityServiceClient::~CertificateAuthorityServiceClient() =
-    default;
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
+CertificateAuthorityServiceClient::~CertificateAuthorityServiceClient() = default;
 
 StatusOr<google::cloud::security::privateca::v1::Certificate>
-CertificateAuthorityServiceClient::CreateCertificate(
-    std::string const& parent,
-    google::cloud::security::privateca::v1::Certificate const& certificate,
-    std::string const& certificate_id, Options opts) {
+CertificateAuthorityServiceClient::CreateCertificate(std::string const& parent, google::cloud::security::privateca::v1::Certificate const& certificate, std::string const& certificate_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::security::privateca::v1::CreateCertificateRequest request;
   request.set_parent(parent);
@@ -48,17 +43,13 @@ CertificateAuthorityServiceClient::CreateCertificate(
 }
 
 StatusOr<google::cloud::security::privateca::v1::Certificate>
-CertificateAuthorityServiceClient::CreateCertificate(
-    google::cloud::security::privateca::v1::CreateCertificateRequest const&
-        request,
-    Options opts) {
+CertificateAuthorityServiceClient::CreateCertificate(google::cloud::security::privateca::v1::CreateCertificateRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateCertificate(request);
 }
 
 StatusOr<google::cloud::security::privateca::v1::Certificate>
-CertificateAuthorityServiceClient::GetCertificate(std::string const& name,
-                                                  Options opts) {
+CertificateAuthorityServiceClient::GetCertificate(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::security::privateca::v1::GetCertificateRequest request;
   request.set_name(name);
@@ -66,17 +57,13 @@ CertificateAuthorityServiceClient::GetCertificate(std::string const& name,
 }
 
 StatusOr<google::cloud::security::privateca::v1::Certificate>
-CertificateAuthorityServiceClient::GetCertificate(
-    google::cloud::security::privateca::v1::GetCertificateRequest const&
-        request,
-    Options opts) {
+CertificateAuthorityServiceClient::GetCertificate(google::cloud::security::privateca::v1::GetCertificateRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetCertificate(request);
 }
 
 StreamRange<google::cloud::security::privateca::v1::Certificate>
-CertificateAuthorityServiceClient::ListCertificates(std::string const& parent,
-                                                    Options opts) {
+CertificateAuthorityServiceClient::ListCertificates(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::security::privateca::v1::ListCertificatesRequest request;
   request.set_parent(parent);
@@ -84,16 +71,13 @@ CertificateAuthorityServiceClient::ListCertificates(std::string const& parent,
 }
 
 StreamRange<google::cloud::security::privateca::v1::Certificate>
-CertificateAuthorityServiceClient::ListCertificates(
-    google::cloud::security::privateca::v1::ListCertificatesRequest request,
-    Options opts) {
+CertificateAuthorityServiceClient::ListCertificates(google::cloud::security::privateca::v1::ListCertificatesRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListCertificates(std::move(request));
 }
 
 StatusOr<google::cloud::security::privateca::v1::Certificate>
-CertificateAuthorityServiceClient::RevokeCertificate(std::string const& name,
-                                                     Options opts) {
+CertificateAuthorityServiceClient::RevokeCertificate(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::security::privateca::v1::RevokeCertificateRequest request;
   request.set_name(name);
@@ -101,18 +85,13 @@ CertificateAuthorityServiceClient::RevokeCertificate(std::string const& name,
 }
 
 StatusOr<google::cloud::security::privateca::v1::Certificate>
-CertificateAuthorityServiceClient::RevokeCertificate(
-    google::cloud::security::privateca::v1::RevokeCertificateRequest const&
-        request,
-    Options opts) {
+CertificateAuthorityServiceClient::RevokeCertificate(google::cloud::security::privateca::v1::RevokeCertificateRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RevokeCertificate(request);
 }
 
 StatusOr<google::cloud::security::privateca::v1::Certificate>
-CertificateAuthorityServiceClient::UpdateCertificate(
-    google::cloud::security::privateca::v1::Certificate const& certificate,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+CertificateAuthorityServiceClient::UpdateCertificate(google::cloud::security::privateca::v1::Certificate const& certificate, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::security::privateca::v1::UpdateCertificateRequest request;
   *request.mutable_certificate() = certificate;
@@ -121,69 +100,49 @@ CertificateAuthorityServiceClient::UpdateCertificate(
 }
 
 StatusOr<google::cloud::security::privateca::v1::Certificate>
-CertificateAuthorityServiceClient::UpdateCertificate(
-    google::cloud::security::privateca::v1::UpdateCertificateRequest const&
-        request,
-    Options opts) {
+CertificateAuthorityServiceClient::UpdateCertificate(google::cloud::security::privateca::v1::UpdateCertificateRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateCertificate(request);
 }
 
 future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
-CertificateAuthorityServiceClient::ActivateCertificateAuthority(
-    std::string const& name, Options opts) {
+CertificateAuthorityServiceClient::ActivateCertificateAuthority(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::security::privateca::v1::ActivateCertificateAuthorityRequest
-      request;
+  google::cloud::security::privateca::v1::ActivateCertificateAuthorityRequest request;
   request.set_name(name);
   return connection_->ActivateCertificateAuthority(request);
 }
 
 StatusOr<google::longrunning::Operation>
-CertificateAuthorityServiceClient::ActivateCertificateAuthority(
-    NoAwaitTag, std::string const& name, Options opts) {
+CertificateAuthorityServiceClient::ActivateCertificateAuthority(NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::security::privateca::v1::ActivateCertificateAuthorityRequest
-      request;
+  google::cloud::security::privateca::v1::ActivateCertificateAuthorityRequest request;
   request.set_name(name);
   return connection_->ActivateCertificateAuthority(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
-CertificateAuthorityServiceClient::ActivateCertificateAuthority(
-    google::cloud::security::privateca::v1::
-        ActivateCertificateAuthorityRequest const& request,
-    Options opts) {
+CertificateAuthorityServiceClient::ActivateCertificateAuthority(google::cloud::security::privateca::v1::ActivateCertificateAuthorityRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ActivateCertificateAuthority(request);
 }
 
 StatusOr<google::longrunning::Operation>
-CertificateAuthorityServiceClient::ActivateCertificateAuthority(
-    NoAwaitTag,
-    google::cloud::security::privateca::v1::
-        ActivateCertificateAuthorityRequest const& request,
-    Options opts) {
+CertificateAuthorityServiceClient::ActivateCertificateAuthority(NoAwaitTag, google::cloud::security::privateca::v1::ActivateCertificateAuthorityRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ActivateCertificateAuthority(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
-CertificateAuthorityServiceClient::ActivateCertificateAuthority(
-    google::longrunning::Operation const& operation, Options opts) {
+CertificateAuthorityServiceClient::ActivateCertificateAuthority(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ActivateCertificateAuthority(operation);
 }
 
 future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
-CertificateAuthorityServiceClient::CreateCertificateAuthority(
-    std::string const& parent,
-    google::cloud::security::privateca::v1::CertificateAuthority const&
-        certificate_authority,
-    std::string const& certificate_authority_id, Options opts) {
+CertificateAuthorityServiceClient::CreateCertificateAuthority(std::string const& parent, google::cloud::security::privateca::v1::CertificateAuthority const& certificate_authority, std::string const& certificate_authority_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::security::privateca::v1::CreateCertificateAuthorityRequest
-      request;
+  google::cloud::security::privateca::v1::CreateCertificateAuthorityRequest request;
   request.set_parent(parent);
   *request.mutable_certificate_authority() = certificate_authority;
   request.set_certificate_authority_id(certificate_authority_id);
@@ -191,14 +150,9 @@ CertificateAuthorityServiceClient::CreateCertificateAuthority(
 }
 
 StatusOr<google::longrunning::Operation>
-CertificateAuthorityServiceClient::CreateCertificateAuthority(
-    NoAwaitTag, std::string const& parent,
-    google::cloud::security::privateca::v1::CertificateAuthority const&
-        certificate_authority,
-    std::string const& certificate_authority_id, Options opts) {
+CertificateAuthorityServiceClient::CreateCertificateAuthority(NoAwaitTag, std::string const& parent, google::cloud::security::privateca::v1::CertificateAuthority const& certificate_authority, std::string const& certificate_authority_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::security::privateca::v1::CreateCertificateAuthorityRequest
-      request;
+  google::cloud::security::privateca::v1::CreateCertificateAuthorityRequest request;
   request.set_parent(parent);
   *request.mutable_certificate_authority() = certificate_authority;
   request.set_certificate_authority_id(certificate_authority_id);
@@ -206,332 +160,239 @@ CertificateAuthorityServiceClient::CreateCertificateAuthority(
 }
 
 future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
-CertificateAuthorityServiceClient::CreateCertificateAuthority(
-    google::cloud::security::privateca::v1::
-        CreateCertificateAuthorityRequest const& request,
-    Options opts) {
+CertificateAuthorityServiceClient::CreateCertificateAuthority(google::cloud::security::privateca::v1::CreateCertificateAuthorityRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateCertificateAuthority(request);
 }
 
 StatusOr<google::longrunning::Operation>
-CertificateAuthorityServiceClient::CreateCertificateAuthority(
-    NoAwaitTag,
-    google::cloud::security::privateca::v1::
-        CreateCertificateAuthorityRequest const& request,
-    Options opts) {
+CertificateAuthorityServiceClient::CreateCertificateAuthority(NoAwaitTag, google::cloud::security::privateca::v1::CreateCertificateAuthorityRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateCertificateAuthority(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
-CertificateAuthorityServiceClient::CreateCertificateAuthority(
-    google::longrunning::Operation const& operation, Options opts) {
+CertificateAuthorityServiceClient::CreateCertificateAuthority(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateCertificateAuthority(operation);
 }
 
 future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
-CertificateAuthorityServiceClient::DisableCertificateAuthority(
-    std::string const& name, Options opts) {
+CertificateAuthorityServiceClient::DisableCertificateAuthority(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::security::privateca::v1::DisableCertificateAuthorityRequest
-      request;
+  google::cloud::security::privateca::v1::DisableCertificateAuthorityRequest request;
   request.set_name(name);
   return connection_->DisableCertificateAuthority(request);
 }
 
 StatusOr<google::longrunning::Operation>
-CertificateAuthorityServiceClient::DisableCertificateAuthority(
-    NoAwaitTag, std::string const& name, Options opts) {
+CertificateAuthorityServiceClient::DisableCertificateAuthority(NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::security::privateca::v1::DisableCertificateAuthorityRequest
-      request;
+  google::cloud::security::privateca::v1::DisableCertificateAuthorityRequest request;
   request.set_name(name);
   return connection_->DisableCertificateAuthority(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
-CertificateAuthorityServiceClient::DisableCertificateAuthority(
-    google::cloud::security::privateca::v1::
-        DisableCertificateAuthorityRequest const& request,
-    Options opts) {
+CertificateAuthorityServiceClient::DisableCertificateAuthority(google::cloud::security::privateca::v1::DisableCertificateAuthorityRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DisableCertificateAuthority(request);
 }
 
 StatusOr<google::longrunning::Operation>
-CertificateAuthorityServiceClient::DisableCertificateAuthority(
-    NoAwaitTag,
-    google::cloud::security::privateca::v1::
-        DisableCertificateAuthorityRequest const& request,
-    Options opts) {
+CertificateAuthorityServiceClient::DisableCertificateAuthority(NoAwaitTag, google::cloud::security::privateca::v1::DisableCertificateAuthorityRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DisableCertificateAuthority(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
-CertificateAuthorityServiceClient::DisableCertificateAuthority(
-    google::longrunning::Operation const& operation, Options opts) {
+CertificateAuthorityServiceClient::DisableCertificateAuthority(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DisableCertificateAuthority(operation);
 }
 
 future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
-CertificateAuthorityServiceClient::EnableCertificateAuthority(
-    std::string const& name, Options opts) {
+CertificateAuthorityServiceClient::EnableCertificateAuthority(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::security::privateca::v1::EnableCertificateAuthorityRequest
-      request;
+  google::cloud::security::privateca::v1::EnableCertificateAuthorityRequest request;
   request.set_name(name);
   return connection_->EnableCertificateAuthority(request);
 }
 
 StatusOr<google::longrunning::Operation>
-CertificateAuthorityServiceClient::EnableCertificateAuthority(
-    NoAwaitTag, std::string const& name, Options opts) {
+CertificateAuthorityServiceClient::EnableCertificateAuthority(NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::security::privateca::v1::EnableCertificateAuthorityRequest
-      request;
+  google::cloud::security::privateca::v1::EnableCertificateAuthorityRequest request;
   request.set_name(name);
   return connection_->EnableCertificateAuthority(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
-CertificateAuthorityServiceClient::EnableCertificateAuthority(
-    google::cloud::security::privateca::v1::
-        EnableCertificateAuthorityRequest const& request,
-    Options opts) {
+CertificateAuthorityServiceClient::EnableCertificateAuthority(google::cloud::security::privateca::v1::EnableCertificateAuthorityRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->EnableCertificateAuthority(request);
 }
 
 StatusOr<google::longrunning::Operation>
-CertificateAuthorityServiceClient::EnableCertificateAuthority(
-    NoAwaitTag,
-    google::cloud::security::privateca::v1::
-        EnableCertificateAuthorityRequest const& request,
-    Options opts) {
+CertificateAuthorityServiceClient::EnableCertificateAuthority(NoAwaitTag, google::cloud::security::privateca::v1::EnableCertificateAuthorityRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->EnableCertificateAuthority(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
-CertificateAuthorityServiceClient::EnableCertificateAuthority(
-    google::longrunning::Operation const& operation, Options opts) {
+CertificateAuthorityServiceClient::EnableCertificateAuthority(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->EnableCertificateAuthority(operation);
 }
 
-StatusOr<google::cloud::security::privateca::v1::
-             FetchCertificateAuthorityCsrResponse>
-CertificateAuthorityServiceClient::FetchCertificateAuthorityCsr(
-    std::string const& name, Options opts) {
+StatusOr<google::cloud::security::privateca::v1::FetchCertificateAuthorityCsrResponse>
+CertificateAuthorityServiceClient::FetchCertificateAuthorityCsr(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::security::privateca::v1::FetchCertificateAuthorityCsrRequest
-      request;
+  google::cloud::security::privateca::v1::FetchCertificateAuthorityCsrRequest request;
   request.set_name(name);
   return connection_->FetchCertificateAuthorityCsr(request);
 }
 
-StatusOr<google::cloud::security::privateca::v1::
-             FetchCertificateAuthorityCsrResponse>
-CertificateAuthorityServiceClient::FetchCertificateAuthorityCsr(
-    google::cloud::security::privateca::v1::
-        FetchCertificateAuthorityCsrRequest const& request,
-    Options opts) {
+StatusOr<google::cloud::security::privateca::v1::FetchCertificateAuthorityCsrResponse>
+CertificateAuthorityServiceClient::FetchCertificateAuthorityCsr(google::cloud::security::privateca::v1::FetchCertificateAuthorityCsrRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->FetchCertificateAuthorityCsr(request);
 }
 
 StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>
-CertificateAuthorityServiceClient::GetCertificateAuthority(
-    std::string const& name, Options opts) {
+CertificateAuthorityServiceClient::GetCertificateAuthority(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::security::privateca::v1::GetCertificateAuthorityRequest
-      request;
+  google::cloud::security::privateca::v1::GetCertificateAuthorityRequest request;
   request.set_name(name);
   return connection_->GetCertificateAuthority(request);
 }
 
 StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>
-CertificateAuthorityServiceClient::GetCertificateAuthority(
-    google::cloud::security::privateca::v1::
-        GetCertificateAuthorityRequest const& request,
-    Options opts) {
+CertificateAuthorityServiceClient::GetCertificateAuthority(google::cloud::security::privateca::v1::GetCertificateAuthorityRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetCertificateAuthority(request);
 }
 
 StreamRange<google::cloud::security::privateca::v1::CertificateAuthority>
-CertificateAuthorityServiceClient::ListCertificateAuthorities(
-    std::string const& parent, Options opts) {
+CertificateAuthorityServiceClient::ListCertificateAuthorities(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::security::privateca::v1::ListCertificateAuthoritiesRequest
-      request;
+  google::cloud::security::privateca::v1::ListCertificateAuthoritiesRequest request;
   request.set_parent(parent);
   return connection_->ListCertificateAuthorities(request);
 }
 
 StreamRange<google::cloud::security::privateca::v1::CertificateAuthority>
-CertificateAuthorityServiceClient::ListCertificateAuthorities(
-    google::cloud::security::privateca::v1::ListCertificateAuthoritiesRequest
-        request,
-    Options opts) {
+CertificateAuthorityServiceClient::ListCertificateAuthorities(google::cloud::security::privateca::v1::ListCertificateAuthoritiesRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListCertificateAuthorities(std::move(request));
 }
 
 future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
-CertificateAuthorityServiceClient::UndeleteCertificateAuthority(
-    std::string const& name, Options opts) {
+CertificateAuthorityServiceClient::UndeleteCertificateAuthority(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::security::privateca::v1::UndeleteCertificateAuthorityRequest
-      request;
+  google::cloud::security::privateca::v1::UndeleteCertificateAuthorityRequest request;
   request.set_name(name);
   return connection_->UndeleteCertificateAuthority(request);
 }
 
 StatusOr<google::longrunning::Operation>
-CertificateAuthorityServiceClient::UndeleteCertificateAuthority(
-    NoAwaitTag, std::string const& name, Options opts) {
+CertificateAuthorityServiceClient::UndeleteCertificateAuthority(NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::security::privateca::v1::UndeleteCertificateAuthorityRequest
-      request;
+  google::cloud::security::privateca::v1::UndeleteCertificateAuthorityRequest request;
   request.set_name(name);
   return connection_->UndeleteCertificateAuthority(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
-CertificateAuthorityServiceClient::UndeleteCertificateAuthority(
-    google::cloud::security::privateca::v1::
-        UndeleteCertificateAuthorityRequest const& request,
-    Options opts) {
+CertificateAuthorityServiceClient::UndeleteCertificateAuthority(google::cloud::security::privateca::v1::UndeleteCertificateAuthorityRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UndeleteCertificateAuthority(request);
 }
 
 StatusOr<google::longrunning::Operation>
-CertificateAuthorityServiceClient::UndeleteCertificateAuthority(
-    NoAwaitTag,
-    google::cloud::security::privateca::v1::
-        UndeleteCertificateAuthorityRequest const& request,
-    Options opts) {
+CertificateAuthorityServiceClient::UndeleteCertificateAuthority(NoAwaitTag, google::cloud::security::privateca::v1::UndeleteCertificateAuthorityRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UndeleteCertificateAuthority(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
-CertificateAuthorityServiceClient::UndeleteCertificateAuthority(
-    google::longrunning::Operation const& operation, Options opts) {
+CertificateAuthorityServiceClient::UndeleteCertificateAuthority(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UndeleteCertificateAuthority(operation);
 }
 
 future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
-CertificateAuthorityServiceClient::DeleteCertificateAuthority(
-    std::string const& name, Options opts) {
+CertificateAuthorityServiceClient::DeleteCertificateAuthority(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::security::privateca::v1::DeleteCertificateAuthorityRequest
-      request;
+  google::cloud::security::privateca::v1::DeleteCertificateAuthorityRequest request;
   request.set_name(name);
   return connection_->DeleteCertificateAuthority(request);
 }
 
 StatusOr<google::longrunning::Operation>
-CertificateAuthorityServiceClient::DeleteCertificateAuthority(
-    NoAwaitTag, std::string const& name, Options opts) {
+CertificateAuthorityServiceClient::DeleteCertificateAuthority(NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::security::privateca::v1::DeleteCertificateAuthorityRequest
-      request;
+  google::cloud::security::privateca::v1::DeleteCertificateAuthorityRequest request;
   request.set_name(name);
   return connection_->DeleteCertificateAuthority(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
-CertificateAuthorityServiceClient::DeleteCertificateAuthority(
-    google::cloud::security::privateca::v1::
-        DeleteCertificateAuthorityRequest const& request,
-    Options opts) {
+CertificateAuthorityServiceClient::DeleteCertificateAuthority(google::cloud::security::privateca::v1::DeleteCertificateAuthorityRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteCertificateAuthority(request);
 }
 
 StatusOr<google::longrunning::Operation>
-CertificateAuthorityServiceClient::DeleteCertificateAuthority(
-    NoAwaitTag,
-    google::cloud::security::privateca::v1::
-        DeleteCertificateAuthorityRequest const& request,
-    Options opts) {
+CertificateAuthorityServiceClient::DeleteCertificateAuthority(NoAwaitTag, google::cloud::security::privateca::v1::DeleteCertificateAuthorityRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteCertificateAuthority(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
-CertificateAuthorityServiceClient::DeleteCertificateAuthority(
-    google::longrunning::Operation const& operation, Options opts) {
+CertificateAuthorityServiceClient::DeleteCertificateAuthority(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteCertificateAuthority(operation);
 }
 
 future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
-CertificateAuthorityServiceClient::UpdateCertificateAuthority(
-    google::cloud::security::privateca::v1::CertificateAuthority const&
-        certificate_authority,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+CertificateAuthorityServiceClient::UpdateCertificateAuthority(google::cloud::security::privateca::v1::CertificateAuthority const& certificate_authority, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::security::privateca::v1::UpdateCertificateAuthorityRequest
-      request;
+  google::cloud::security::privateca::v1::UpdateCertificateAuthorityRequest request;
   *request.mutable_certificate_authority() = certificate_authority;
   *request.mutable_update_mask() = update_mask;
   return connection_->UpdateCertificateAuthority(request);
 }
 
 StatusOr<google::longrunning::Operation>
-CertificateAuthorityServiceClient::UpdateCertificateAuthority(
-    NoAwaitTag,
-    google::cloud::security::privateca::v1::CertificateAuthority const&
-        certificate_authority,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+CertificateAuthorityServiceClient::UpdateCertificateAuthority(NoAwaitTag, google::cloud::security::privateca::v1::CertificateAuthority const& certificate_authority, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::security::privateca::v1::UpdateCertificateAuthorityRequest
-      request;
+  google::cloud::security::privateca::v1::UpdateCertificateAuthorityRequest request;
   *request.mutable_certificate_authority() = certificate_authority;
   *request.mutable_update_mask() = update_mask;
   return connection_->UpdateCertificateAuthority(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
-CertificateAuthorityServiceClient::UpdateCertificateAuthority(
-    google::cloud::security::privateca::v1::
-        UpdateCertificateAuthorityRequest const& request,
-    Options opts) {
+CertificateAuthorityServiceClient::UpdateCertificateAuthority(google::cloud::security::privateca::v1::UpdateCertificateAuthorityRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateCertificateAuthority(request);
 }
 
 StatusOr<google::longrunning::Operation>
-CertificateAuthorityServiceClient::UpdateCertificateAuthority(
-    NoAwaitTag,
-    google::cloud::security::privateca::v1::
-        UpdateCertificateAuthorityRequest const& request,
-    Options opts) {
+CertificateAuthorityServiceClient::UpdateCertificateAuthority(NoAwaitTag, google::cloud::security::privateca::v1::UpdateCertificateAuthorityRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateCertificateAuthority(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
-CertificateAuthorityServiceClient::UpdateCertificateAuthority(
-    google::longrunning::Operation const& operation, Options opts) {
+CertificateAuthorityServiceClient::UpdateCertificateAuthority(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateCertificateAuthority(operation);
 }
 
 future<StatusOr<google::cloud::security::privateca::v1::CaPool>>
-CertificateAuthorityServiceClient::CreateCaPool(
-    std::string const& parent,
-    google::cloud::security::privateca::v1::CaPool const& ca_pool,
-    std::string const& ca_pool_id, Options opts) {
+CertificateAuthorityServiceClient::CreateCaPool(std::string const& parent, google::cloud::security::privateca::v1::CaPool const& ca_pool, std::string const& ca_pool_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::security::privateca::v1::CreateCaPoolRequest request;
   request.set_parent(parent);
@@ -541,10 +402,7 @@ CertificateAuthorityServiceClient::CreateCaPool(
 }
 
 StatusOr<google::longrunning::Operation>
-CertificateAuthorityServiceClient::CreateCaPool(
-    NoAwaitTag, std::string const& parent,
-    google::cloud::security::privateca::v1::CaPool const& ca_pool,
-    std::string const& ca_pool_id, Options opts) {
+CertificateAuthorityServiceClient::CreateCaPool(NoAwaitTag, std::string const& parent, google::cloud::security::privateca::v1::CaPool const& ca_pool, std::string const& ca_pool_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::security::privateca::v1::CreateCaPoolRequest request;
   request.set_parent(parent);
@@ -554,33 +412,25 @@ CertificateAuthorityServiceClient::CreateCaPool(
 }
 
 future<StatusOr<google::cloud::security::privateca::v1::CaPool>>
-CertificateAuthorityServiceClient::CreateCaPool(
-    google::cloud::security::privateca::v1::CreateCaPoolRequest const& request,
-    Options opts) {
+CertificateAuthorityServiceClient::CreateCaPool(google::cloud::security::privateca::v1::CreateCaPoolRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateCaPool(request);
 }
 
 StatusOr<google::longrunning::Operation>
-CertificateAuthorityServiceClient::CreateCaPool(
-    NoAwaitTag,
-    google::cloud::security::privateca::v1::CreateCaPoolRequest const& request,
-    Options opts) {
+CertificateAuthorityServiceClient::CreateCaPool(NoAwaitTag, google::cloud::security::privateca::v1::CreateCaPoolRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateCaPool(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::security::privateca::v1::CaPool>>
-CertificateAuthorityServiceClient::CreateCaPool(
-    google::longrunning::Operation const& operation, Options opts) {
+CertificateAuthorityServiceClient::CreateCaPool(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateCaPool(operation);
 }
 
 future<StatusOr<google::cloud::security::privateca::v1::CaPool>>
-CertificateAuthorityServiceClient::UpdateCaPool(
-    google::cloud::security::privateca::v1::CaPool const& ca_pool,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+CertificateAuthorityServiceClient::UpdateCaPool(google::cloud::security::privateca::v1::CaPool const& ca_pool, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::security::privateca::v1::UpdateCaPoolRequest request;
   *request.mutable_ca_pool() = ca_pool;
@@ -589,9 +439,7 @@ CertificateAuthorityServiceClient::UpdateCaPool(
 }
 
 StatusOr<google::longrunning::Operation>
-CertificateAuthorityServiceClient::UpdateCaPool(
-    NoAwaitTag, google::cloud::security::privateca::v1::CaPool const& ca_pool,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+CertificateAuthorityServiceClient::UpdateCaPool(NoAwaitTag, google::cloud::security::privateca::v1::CaPool const& ca_pool, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::security::privateca::v1::UpdateCaPoolRequest request;
   *request.mutable_ca_pool() = ca_pool;
@@ -600,32 +448,25 @@ CertificateAuthorityServiceClient::UpdateCaPool(
 }
 
 future<StatusOr<google::cloud::security::privateca::v1::CaPool>>
-CertificateAuthorityServiceClient::UpdateCaPool(
-    google::cloud::security::privateca::v1::UpdateCaPoolRequest const& request,
-    Options opts) {
+CertificateAuthorityServiceClient::UpdateCaPool(google::cloud::security::privateca::v1::UpdateCaPoolRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateCaPool(request);
 }
 
 StatusOr<google::longrunning::Operation>
-CertificateAuthorityServiceClient::UpdateCaPool(
-    NoAwaitTag,
-    google::cloud::security::privateca::v1::UpdateCaPoolRequest const& request,
-    Options opts) {
+CertificateAuthorityServiceClient::UpdateCaPool(NoAwaitTag, google::cloud::security::privateca::v1::UpdateCaPoolRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateCaPool(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::security::privateca::v1::CaPool>>
-CertificateAuthorityServiceClient::UpdateCaPool(
-    google::longrunning::Operation const& operation, Options opts) {
+CertificateAuthorityServiceClient::UpdateCaPool(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateCaPool(operation);
 }
 
 StatusOr<google::cloud::security::privateca::v1::CaPool>
-CertificateAuthorityServiceClient::GetCaPool(std::string const& name,
-                                             Options opts) {
+CertificateAuthorityServiceClient::GetCaPool(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::security::privateca::v1::GetCaPoolRequest request;
   request.set_name(name);
@@ -633,16 +474,13 @@ CertificateAuthorityServiceClient::GetCaPool(std::string const& name,
 }
 
 StatusOr<google::cloud::security::privateca::v1::CaPool>
-CertificateAuthorityServiceClient::GetCaPool(
-    google::cloud::security::privateca::v1::GetCaPoolRequest const& request,
-    Options opts) {
+CertificateAuthorityServiceClient::GetCaPool(google::cloud::security::privateca::v1::GetCaPoolRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetCaPool(request);
 }
 
 StreamRange<google::cloud::security::privateca::v1::CaPool>
-CertificateAuthorityServiceClient::ListCaPools(std::string const& parent,
-                                               Options opts) {
+CertificateAuthorityServiceClient::ListCaPools(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::security::privateca::v1::ListCaPoolsRequest request;
   request.set_parent(parent);
@@ -650,16 +488,13 @@ CertificateAuthorityServiceClient::ListCaPools(std::string const& parent,
 }
 
 StreamRange<google::cloud::security::privateca::v1::CaPool>
-CertificateAuthorityServiceClient::ListCaPools(
-    google::cloud::security::privateca::v1::ListCaPoolsRequest request,
-    Options opts) {
+CertificateAuthorityServiceClient::ListCaPools(google::cloud::security::privateca::v1::ListCaPoolsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListCaPools(std::move(request));
 }
 
 future<StatusOr<google::cloud::security::privateca::v1::OperationMetadata>>
-CertificateAuthorityServiceClient::DeleteCaPool(std::string const& name,
-                                                Options opts) {
+CertificateAuthorityServiceClient::DeleteCaPool(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::security::privateca::v1::DeleteCaPoolRequest request;
   request.set_name(name);
@@ -667,9 +502,7 @@ CertificateAuthorityServiceClient::DeleteCaPool(std::string const& name,
 }
 
 StatusOr<google::longrunning::Operation>
-CertificateAuthorityServiceClient::DeleteCaPool(NoAwaitTag,
-                                                std::string const& name,
-                                                Options opts) {
+CertificateAuthorityServiceClient::DeleteCaPool(NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::security::privateca::v1::DeleteCaPoolRequest request;
   request.set_name(name);
@@ -677,32 +510,25 @@ CertificateAuthorityServiceClient::DeleteCaPool(NoAwaitTag,
 }
 
 future<StatusOr<google::cloud::security::privateca::v1::OperationMetadata>>
-CertificateAuthorityServiceClient::DeleteCaPool(
-    google::cloud::security::privateca::v1::DeleteCaPoolRequest const& request,
-    Options opts) {
+CertificateAuthorityServiceClient::DeleteCaPool(google::cloud::security::privateca::v1::DeleteCaPoolRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteCaPool(request);
 }
 
 StatusOr<google::longrunning::Operation>
-CertificateAuthorityServiceClient::DeleteCaPool(
-    NoAwaitTag,
-    google::cloud::security::privateca::v1::DeleteCaPoolRequest const& request,
-    Options opts) {
+CertificateAuthorityServiceClient::DeleteCaPool(NoAwaitTag, google::cloud::security::privateca::v1::DeleteCaPoolRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteCaPool(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::security::privateca::v1::OperationMetadata>>
-CertificateAuthorityServiceClient::DeleteCaPool(
-    google::longrunning::Operation const& operation, Options opts) {
+CertificateAuthorityServiceClient::DeleteCaPool(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteCaPool(operation);
 }
 
 StatusOr<google::cloud::security::privateca::v1::FetchCaCertsResponse>
-CertificateAuthorityServiceClient::FetchCaCerts(std::string const& ca_pool,
-                                                Options opts) {
+CertificateAuthorityServiceClient::FetchCaCerts(std::string const& ca_pool, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::security::privateca::v1::FetchCaCertsRequest request;
   request.set_ca_pool(ca_pool);
@@ -710,116 +536,79 @@ CertificateAuthorityServiceClient::FetchCaCerts(std::string const& ca_pool,
 }
 
 StatusOr<google::cloud::security::privateca::v1::FetchCaCertsResponse>
-CertificateAuthorityServiceClient::FetchCaCerts(
-    google::cloud::security::privateca::v1::FetchCaCertsRequest const& request,
-    Options opts) {
+CertificateAuthorityServiceClient::FetchCaCerts(google::cloud::security::privateca::v1::FetchCaCertsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->FetchCaCerts(request);
 }
 
 StatusOr<google::cloud::security::privateca::v1::CertificateRevocationList>
-CertificateAuthorityServiceClient::GetCertificateRevocationList(
-    std::string const& name, Options opts) {
+CertificateAuthorityServiceClient::GetCertificateRevocationList(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::security::privateca::v1::GetCertificateRevocationListRequest
-      request;
+  google::cloud::security::privateca::v1::GetCertificateRevocationListRequest request;
   request.set_name(name);
   return connection_->GetCertificateRevocationList(request);
 }
 
 StatusOr<google::cloud::security::privateca::v1::CertificateRevocationList>
-CertificateAuthorityServiceClient::GetCertificateRevocationList(
-    google::cloud::security::privateca::v1::
-        GetCertificateRevocationListRequest const& request,
-    Options opts) {
+CertificateAuthorityServiceClient::GetCertificateRevocationList(google::cloud::security::privateca::v1::GetCertificateRevocationListRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetCertificateRevocationList(request);
 }
 
 StreamRange<google::cloud::security::privateca::v1::CertificateRevocationList>
-CertificateAuthorityServiceClient::ListCertificateRevocationLists(
-    std::string const& parent, Options opts) {
+CertificateAuthorityServiceClient::ListCertificateRevocationLists(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::security::privateca::v1::ListCertificateRevocationListsRequest
-      request;
+  google::cloud::security::privateca::v1::ListCertificateRevocationListsRequest request;
   request.set_parent(parent);
   return connection_->ListCertificateRevocationLists(request);
 }
 
 StreamRange<google::cloud::security::privateca::v1::CertificateRevocationList>
-CertificateAuthorityServiceClient::ListCertificateRevocationLists(
-    google::cloud::security::privateca::v1::
-        ListCertificateRevocationListsRequest request,
-    Options opts) {
+CertificateAuthorityServiceClient::ListCertificateRevocationLists(google::cloud::security::privateca::v1::ListCertificateRevocationListsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListCertificateRevocationLists(std::move(request));
 }
 
-future<
-    StatusOr<google::cloud::security::privateca::v1::CertificateRevocationList>>
-CertificateAuthorityServiceClient::UpdateCertificateRevocationList(
-    google::cloud::security::privateca::v1::CertificateRevocationList const&
-        certificate_revocation_list,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+future<StatusOr<google::cloud::security::privateca::v1::CertificateRevocationList>>
+CertificateAuthorityServiceClient::UpdateCertificateRevocationList(google::cloud::security::privateca::v1::CertificateRevocationList const& certificate_revocation_list, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::security::privateca::v1::UpdateCertificateRevocationListRequest
-      request;
+  google::cloud::security::privateca::v1::UpdateCertificateRevocationListRequest request;
   *request.mutable_certificate_revocation_list() = certificate_revocation_list;
   *request.mutable_update_mask() = update_mask;
   return connection_->UpdateCertificateRevocationList(request);
 }
 
 StatusOr<google::longrunning::Operation>
-CertificateAuthorityServiceClient::UpdateCertificateRevocationList(
-    NoAwaitTag,
-    google::cloud::security::privateca::v1::CertificateRevocationList const&
-        certificate_revocation_list,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+CertificateAuthorityServiceClient::UpdateCertificateRevocationList(NoAwaitTag, google::cloud::security::privateca::v1::CertificateRevocationList const& certificate_revocation_list, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::security::privateca::v1::UpdateCertificateRevocationListRequest
-      request;
+  google::cloud::security::privateca::v1::UpdateCertificateRevocationListRequest request;
   *request.mutable_certificate_revocation_list() = certificate_revocation_list;
   *request.mutable_update_mask() = update_mask;
   return connection_->UpdateCertificateRevocationList(NoAwaitTag{}, request);
 }
 
-future<
-    StatusOr<google::cloud::security::privateca::v1::CertificateRevocationList>>
-CertificateAuthorityServiceClient::UpdateCertificateRevocationList(
-    google::cloud::security::privateca::v1::
-        UpdateCertificateRevocationListRequest const& request,
-    Options opts) {
+future<StatusOr<google::cloud::security::privateca::v1::CertificateRevocationList>>
+CertificateAuthorityServiceClient::UpdateCertificateRevocationList(google::cloud::security::privateca::v1::UpdateCertificateRevocationListRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateCertificateRevocationList(request);
 }
 
 StatusOr<google::longrunning::Operation>
-CertificateAuthorityServiceClient::UpdateCertificateRevocationList(
-    NoAwaitTag,
-    google::cloud::security::privateca::v1::
-        UpdateCertificateRevocationListRequest const& request,
-    Options opts) {
+CertificateAuthorityServiceClient::UpdateCertificateRevocationList(NoAwaitTag, google::cloud::security::privateca::v1::UpdateCertificateRevocationListRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateCertificateRevocationList(NoAwaitTag{}, request);
 }
 
-future<
-    StatusOr<google::cloud::security::privateca::v1::CertificateRevocationList>>
-CertificateAuthorityServiceClient::UpdateCertificateRevocationList(
-    google::longrunning::Operation const& operation, Options opts) {
+future<StatusOr<google::cloud::security::privateca::v1::CertificateRevocationList>>
+CertificateAuthorityServiceClient::UpdateCertificateRevocationList(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateCertificateRevocationList(operation);
 }
 
 future<StatusOr<google::cloud::security::privateca::v1::CertificateTemplate>>
-CertificateAuthorityServiceClient::CreateCertificateTemplate(
-    std::string const& parent,
-    google::cloud::security::privateca::v1::CertificateTemplate const&
-        certificate_template,
-    std::string const& certificate_template_id, Options opts) {
+CertificateAuthorityServiceClient::CreateCertificateTemplate(std::string const& parent, google::cloud::security::privateca::v1::CertificateTemplate const& certificate_template, std::string const& certificate_template_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::security::privateca::v1::CreateCertificateTemplateRequest
-      request;
+  google::cloud::security::privateca::v1::CreateCertificateTemplateRequest request;
   request.set_parent(parent);
   *request.mutable_certificate_template() = certificate_template;
   request.set_certificate_template_id(certificate_template_id);
@@ -827,14 +616,9 @@ CertificateAuthorityServiceClient::CreateCertificateTemplate(
 }
 
 StatusOr<google::longrunning::Operation>
-CertificateAuthorityServiceClient::CreateCertificateTemplate(
-    NoAwaitTag, std::string const& parent,
-    google::cloud::security::privateca::v1::CertificateTemplate const&
-        certificate_template,
-    std::string const& certificate_template_id, Options opts) {
+CertificateAuthorityServiceClient::CreateCertificateTemplate(NoAwaitTag, std::string const& parent, google::cloud::security::privateca::v1::CertificateTemplate const& certificate_template, std::string const& certificate_template_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::security::privateca::v1::CreateCertificateTemplateRequest
-      request;
+  google::cloud::security::privateca::v1::CreateCertificateTemplateRequest request;
   request.set_parent(parent);
   *request.mutable_certificate_template() = certificate_template;
   request.set_certificate_template_id(certificate_template_id);
@@ -842,80 +626,59 @@ CertificateAuthorityServiceClient::CreateCertificateTemplate(
 }
 
 future<StatusOr<google::cloud::security::privateca::v1::CertificateTemplate>>
-CertificateAuthorityServiceClient::CreateCertificateTemplate(
-    google::cloud::security::privateca::v1::
-        CreateCertificateTemplateRequest const& request,
-    Options opts) {
+CertificateAuthorityServiceClient::CreateCertificateTemplate(google::cloud::security::privateca::v1::CreateCertificateTemplateRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateCertificateTemplate(request);
 }
 
 StatusOr<google::longrunning::Operation>
-CertificateAuthorityServiceClient::CreateCertificateTemplate(
-    NoAwaitTag,
-    google::cloud::security::privateca::v1::
-        CreateCertificateTemplateRequest const& request,
-    Options opts) {
+CertificateAuthorityServiceClient::CreateCertificateTemplate(NoAwaitTag, google::cloud::security::privateca::v1::CreateCertificateTemplateRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateCertificateTemplate(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::security::privateca::v1::CertificateTemplate>>
-CertificateAuthorityServiceClient::CreateCertificateTemplate(
-    google::longrunning::Operation const& operation, Options opts) {
+CertificateAuthorityServiceClient::CreateCertificateTemplate(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateCertificateTemplate(operation);
 }
 
 future<StatusOr<google::cloud::security::privateca::v1::OperationMetadata>>
-CertificateAuthorityServiceClient::DeleteCertificateTemplate(
-    std::string const& name, Options opts) {
+CertificateAuthorityServiceClient::DeleteCertificateTemplate(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::security::privateca::v1::DeleteCertificateTemplateRequest
-      request;
+  google::cloud::security::privateca::v1::DeleteCertificateTemplateRequest request;
   request.set_name(name);
   return connection_->DeleteCertificateTemplate(request);
 }
 
 StatusOr<google::longrunning::Operation>
-CertificateAuthorityServiceClient::DeleteCertificateTemplate(
-    NoAwaitTag, std::string const& name, Options opts) {
+CertificateAuthorityServiceClient::DeleteCertificateTemplate(NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::security::privateca::v1::DeleteCertificateTemplateRequest
-      request;
+  google::cloud::security::privateca::v1::DeleteCertificateTemplateRequest request;
   request.set_name(name);
   return connection_->DeleteCertificateTemplate(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::security::privateca::v1::OperationMetadata>>
-CertificateAuthorityServiceClient::DeleteCertificateTemplate(
-    google::cloud::security::privateca::v1::
-        DeleteCertificateTemplateRequest const& request,
-    Options opts) {
+CertificateAuthorityServiceClient::DeleteCertificateTemplate(google::cloud::security::privateca::v1::DeleteCertificateTemplateRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteCertificateTemplate(request);
 }
 
 StatusOr<google::longrunning::Operation>
-CertificateAuthorityServiceClient::DeleteCertificateTemplate(
-    NoAwaitTag,
-    google::cloud::security::privateca::v1::
-        DeleteCertificateTemplateRequest const& request,
-    Options opts) {
+CertificateAuthorityServiceClient::DeleteCertificateTemplate(NoAwaitTag, google::cloud::security::privateca::v1::DeleteCertificateTemplateRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteCertificateTemplate(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::security::privateca::v1::OperationMetadata>>
-CertificateAuthorityServiceClient::DeleteCertificateTemplate(
-    google::longrunning::Operation const& operation, Options opts) {
+CertificateAuthorityServiceClient::DeleteCertificateTemplate(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteCertificateTemplate(operation);
 }
 
 StatusOr<google::cloud::security::privateca::v1::CertificateTemplate>
-CertificateAuthorityServiceClient::GetCertificateTemplate(
-    std::string const& name, Options opts) {
+CertificateAuthorityServiceClient::GetCertificateTemplate(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::security::privateca::v1::GetCertificateTemplateRequest request;
   request.set_name(name);
@@ -923,125 +686,93 @@ CertificateAuthorityServiceClient::GetCertificateTemplate(
 }
 
 StatusOr<google::cloud::security::privateca::v1::CertificateTemplate>
-CertificateAuthorityServiceClient::GetCertificateTemplate(
-    google::cloud::security::privateca::v1::GetCertificateTemplateRequest const&
-        request,
-    Options opts) {
+CertificateAuthorityServiceClient::GetCertificateTemplate(google::cloud::security::privateca::v1::GetCertificateTemplateRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetCertificateTemplate(request);
 }
 
 StreamRange<google::cloud::security::privateca::v1::CertificateTemplate>
-CertificateAuthorityServiceClient::ListCertificateTemplates(
-    std::string const& parent, Options opts) {
+CertificateAuthorityServiceClient::ListCertificateTemplates(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::security::privateca::v1::ListCertificateTemplatesRequest
-      request;
+  google::cloud::security::privateca::v1::ListCertificateTemplatesRequest request;
   request.set_parent(parent);
   return connection_->ListCertificateTemplates(request);
 }
 
 StreamRange<google::cloud::security::privateca::v1::CertificateTemplate>
-CertificateAuthorityServiceClient::ListCertificateTemplates(
-    google::cloud::security::privateca::v1::ListCertificateTemplatesRequest
-        request,
-    Options opts) {
+CertificateAuthorityServiceClient::ListCertificateTemplates(google::cloud::security::privateca::v1::ListCertificateTemplatesRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListCertificateTemplates(std::move(request));
 }
 
 future<StatusOr<google::cloud::security::privateca::v1::CertificateTemplate>>
-CertificateAuthorityServiceClient::UpdateCertificateTemplate(
-    google::cloud::security::privateca::v1::CertificateTemplate const&
-        certificate_template,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+CertificateAuthorityServiceClient::UpdateCertificateTemplate(google::cloud::security::privateca::v1::CertificateTemplate const& certificate_template, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::security::privateca::v1::UpdateCertificateTemplateRequest
-      request;
+  google::cloud::security::privateca::v1::UpdateCertificateTemplateRequest request;
   *request.mutable_certificate_template() = certificate_template;
   *request.mutable_update_mask() = update_mask;
   return connection_->UpdateCertificateTemplate(request);
 }
 
 StatusOr<google::longrunning::Operation>
-CertificateAuthorityServiceClient::UpdateCertificateTemplate(
-    NoAwaitTag,
-    google::cloud::security::privateca::v1::CertificateTemplate const&
-        certificate_template,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+CertificateAuthorityServiceClient::UpdateCertificateTemplate(NoAwaitTag, google::cloud::security::privateca::v1::CertificateTemplate const& certificate_template, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::security::privateca::v1::UpdateCertificateTemplateRequest
-      request;
+  google::cloud::security::privateca::v1::UpdateCertificateTemplateRequest request;
   *request.mutable_certificate_template() = certificate_template;
   *request.mutable_update_mask() = update_mask;
   return connection_->UpdateCertificateTemplate(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::security::privateca::v1::CertificateTemplate>>
-CertificateAuthorityServiceClient::UpdateCertificateTemplate(
-    google::cloud::security::privateca::v1::
-        UpdateCertificateTemplateRequest const& request,
-    Options opts) {
+CertificateAuthorityServiceClient::UpdateCertificateTemplate(google::cloud::security::privateca::v1::UpdateCertificateTemplateRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateCertificateTemplate(request);
 }
 
 StatusOr<google::longrunning::Operation>
-CertificateAuthorityServiceClient::UpdateCertificateTemplate(
-    NoAwaitTag,
-    google::cloud::security::privateca::v1::
-        UpdateCertificateTemplateRequest const& request,
-    Options opts) {
+CertificateAuthorityServiceClient::UpdateCertificateTemplate(NoAwaitTag, google::cloud::security::privateca::v1::UpdateCertificateTemplateRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateCertificateTemplate(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::security::privateca::v1::CertificateTemplate>>
-CertificateAuthorityServiceClient::UpdateCertificateTemplate(
-    google::longrunning::Operation const& operation, Options opts) {
+CertificateAuthorityServiceClient::UpdateCertificateTemplate(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateCertificateTemplate(operation);
 }
 
 StreamRange<google::cloud::location::Location>
-CertificateAuthorityServiceClient::ListLocations(
-    google::cloud::location::ListLocationsRequest request, Options opts) {
+CertificateAuthorityServiceClient::ListLocations(google::cloud::location::ListLocationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListLocations(std::move(request));
 }
 
 StatusOr<google::cloud::location::Location>
-CertificateAuthorityServiceClient::GetLocation(
-    google::cloud::location::GetLocationRequest const& request, Options opts) {
+CertificateAuthorityServiceClient::GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetLocation(request);
 }
 
 StatusOr<google::iam::v1::Policy>
-CertificateAuthorityServiceClient::SetIamPolicy(
-    google::iam::v1::SetIamPolicyRequest const& request, Options opts) {
+CertificateAuthorityServiceClient::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetIamPolicy(request);
 }
 
 StatusOr<google::iam::v1::Policy>
-CertificateAuthorityServiceClient::GetIamPolicy(
-    google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
+CertificateAuthorityServiceClient::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetIamPolicy(request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-CertificateAuthorityServiceClient::TestIamPermissions(
-    google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
+CertificateAuthorityServiceClient::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->TestIamPermissions(request);
 }
 
 StreamRange<google::longrunning::Operation>
-CertificateAuthorityServiceClient::ListOperations(std::string const& name,
-                                                  std::string const& filter,
-                                                  Options opts) {
+CertificateAuthorityServiceClient::ListOperations(std::string const& name, std::string const& filter, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::ListOperationsRequest request;
   request.set_name(name);
@@ -1050,15 +781,13 @@ CertificateAuthorityServiceClient::ListOperations(std::string const& name,
 }
 
 StreamRange<google::longrunning::Operation>
-CertificateAuthorityServiceClient::ListOperations(
-    google::longrunning::ListOperationsRequest request, Options opts) {
+CertificateAuthorityServiceClient::ListOperations(google::longrunning::ListOperationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOperations(std::move(request));
 }
 
 StatusOr<google::longrunning::Operation>
-CertificateAuthorityServiceClient::GetOperation(std::string const& name,
-                                                Options opts) {
+CertificateAuthorityServiceClient::GetOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
@@ -1066,36 +795,35 @@ CertificateAuthorityServiceClient::GetOperation(std::string const& name,
 }
 
 StatusOr<google::longrunning::Operation>
-CertificateAuthorityServiceClient::GetOperation(
-    google::longrunning::GetOperationRequest const& request, Options opts) {
+CertificateAuthorityServiceClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }
 
-Status CertificateAuthorityServiceClient::DeleteOperation(
-    std::string const& name, Options opts) {
+Status
+CertificateAuthorityServiceClient::DeleteOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::DeleteOperationRequest request;
   request.set_name(name);
   return connection_->DeleteOperation(request);
 }
 
-Status CertificateAuthorityServiceClient::DeleteOperation(
-    google::longrunning::DeleteOperationRequest const& request, Options opts) {
+Status
+CertificateAuthorityServiceClient::DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteOperation(request);
 }
 
-Status CertificateAuthorityServiceClient::CancelOperation(
-    std::string const& name, Options opts) {
+Status
+CertificateAuthorityServiceClient::CancelOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::CancelOperationRequest request;
   request.set_name(name);
   return connection_->CancelOperation(request);
 }
 
-Status CertificateAuthorityServiceClient::CancelOperation(
-    google::longrunning::CancelOperationRequest const& request, Options opts) {
+Status
+CertificateAuthorityServiceClient::CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelOperation(request);
 }

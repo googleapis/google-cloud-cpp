@@ -42,37 +42,25 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockExecutionsConnection
-    : public workflows_executions_v1::ExecutionsConnection {
+class MockExecutionsConnection : public workflows_executions_v1::ExecutionsConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(
-      (StreamRange<google::cloud::workflows::executions::v1::Execution>),
-      ListExecutions,
-      (google::cloud::workflows::executions::v1::ListExecutionsRequest request),
-      (override));
+  MOCK_METHOD((StreamRange<google::cloud::workflows::executions::v1::Execution>),
+  ListExecutions,
+  (google::cloud::workflows::executions::v1::ListExecutionsRequest request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::workflows::executions::v1::Execution>,
-      CreateExecution,
-      (google::cloud::workflows::executions::v1::CreateExecutionRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::workflows::executions::v1::Execution>,
+  CreateExecution,
+  (google::cloud::workflows::executions::v1::CreateExecutionRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::workflows::executions::v1::Execution>,
-      GetExecution,
-      (google::cloud::workflows::executions::v1::GetExecutionRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::workflows::executions::v1::Execution>,
+  GetExecution,
+  (google::cloud::workflows::executions::v1::GetExecutionRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::workflows::executions::v1::Execution>,
-      CancelExecution,
-      (google::cloud::workflows::executions::v1::CancelExecutionRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::workflows::executions::v1::Execution>,
+  CancelExecution,
+  (google::cloud::workflows::executions::v1::CancelExecutionRequest const& request), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

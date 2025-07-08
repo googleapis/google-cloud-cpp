@@ -31,9 +31,9 @@ VersionsAuth::VersionsAuth(
     std::shared_ptr<VersionsStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::dialogflow::v2::ListVersionsResponse>
-VersionsAuth::ListVersions(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::dialogflow::v2::ListVersionsResponse> VersionsAuth::ListVersions(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dialogflow::v2::ListVersionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -41,7 +41,8 @@ VersionsAuth::ListVersions(
 }
 
 StatusOr<google::cloud::dialogflow::v2::Version> VersionsAuth::GetVersion(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dialogflow::v2::GetVersionRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -49,7 +50,8 @@ StatusOr<google::cloud::dialogflow::v2::Version> VersionsAuth::GetVersion(
 }
 
 StatusOr<google::cloud::dialogflow::v2::Version> VersionsAuth::CreateVersion(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dialogflow::v2::CreateVersionRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -57,7 +59,8 @@ StatusOr<google::cloud::dialogflow::v2::Version> VersionsAuth::CreateVersion(
 }
 
 StatusOr<google::cloud::dialogflow::v2::Version> VersionsAuth::UpdateVersion(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dialogflow::v2::UpdateVersionRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -65,16 +68,17 @@ StatusOr<google::cloud::dialogflow::v2::Version> VersionsAuth::UpdateVersion(
 }
 
 Status VersionsAuth::DeleteVersion(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dialogflow::v2::DeleteVersionRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteVersion(context, options, request);
 }
 
-StatusOr<google::cloud::location::ListLocationsResponse>
-VersionsAuth::ListLocations(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::location::ListLocationsResponse> VersionsAuth::ListLocations(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -82,16 +86,17 @@ VersionsAuth::ListLocations(
 }
 
 StatusOr<google::cloud::location::Location> VersionsAuth::GetLocation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetLocation(context, options, request);
 }
 
-StatusOr<google::longrunning::ListOperationsResponse>
-VersionsAuth::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse> VersionsAuth::ListOperations(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -99,7 +104,8 @@ VersionsAuth::ListOperations(
 }
 
 StatusOr<google::longrunning::Operation> VersionsAuth::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -107,7 +113,8 @@ StatusOr<google::longrunning::Operation> VersionsAuth::GetOperation(
 }
 
 Status VersionsAuth::CancelOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;

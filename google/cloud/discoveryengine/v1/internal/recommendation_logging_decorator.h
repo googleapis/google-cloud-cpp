@@ -35,24 +35,27 @@ class RecommendationServiceLogging : public RecommendationServiceStub {
  public:
   ~RecommendationServiceLogging() override = default;
   RecommendationServiceLogging(std::shared_ptr<RecommendationServiceStub> child,
-                               TracingOptions tracing_options,
-                               std::set<std::string> const& components);
+                       TracingOptions tracing_options,
+                       std::set<std::string> const& components);
 
   StatusOr<google::cloud::discoveryengine::v1::RecommendResponse> Recommend(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::discoveryengine::v1::RecommendRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::discoveryengine::v1::RecommendRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:

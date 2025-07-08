@@ -74,7 +74,8 @@ struct AutoMlPollingPolicyOption {
  * @ingroup google-cloud-automl-options
  */
 using AutoMlPolicyOptionList =
-    OptionList<AutoMlRetryPolicyOption, AutoMlBackoffPolicyOption,
+    OptionList<AutoMlRetryPolicyOption,
+               AutoMlBackoffPolicyOption,
                AutoMlPollingPolicyOption,
                AutoMlConnectionIdempotencyPolicyOption>;
 

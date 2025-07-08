@@ -31,18 +31,18 @@ ContentServiceAuth::ContentServiceAuth(
     std::shared_ptr<ContentServiceStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::dataplex::v1::Content>
-ContentServiceAuth::CreateContent(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::dataplex::v1::Content> ContentServiceAuth::CreateContent(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dataplex::v1::CreateContentRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateContent(context, options, request);
 }
 
-StatusOr<google::cloud::dataplex::v1::Content>
-ContentServiceAuth::UpdateContent(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::dataplex::v1::Content> ContentServiceAuth::UpdateContent(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dataplex::v1::UpdateContentRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -50,7 +50,8 @@ ContentServiceAuth::UpdateContent(
 }
 
 Status ContentServiceAuth::DeleteContent(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dataplex::v1::DeleteContentRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -58,7 +59,8 @@ Status ContentServiceAuth::DeleteContent(
 }
 
 StatusOr<google::cloud::dataplex::v1::Content> ContentServiceAuth::GetContent(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dataplex::v1::GetContentRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -66,7 +68,8 @@ StatusOr<google::cloud::dataplex::v1::Content> ContentServiceAuth::GetContent(
 }
 
 StatusOr<google::iam::v1::Policy> ContentServiceAuth::GetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -74,34 +77,35 @@ StatusOr<google::iam::v1::Policy> ContentServiceAuth::GetIamPolicy(
 }
 
 StatusOr<google::iam::v1::Policy> ContentServiceAuth::SetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->SetIamPolicy(context, options, request);
 }
 
-StatusOr<google::iam::v1::TestIamPermissionsResponse>
-ContentServiceAuth::TestIamPermissions(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::iam::v1::TestIamPermissionsResponse> ContentServiceAuth::TestIamPermissions(
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->TestIamPermissions(context, options, request);
 }
 
-StatusOr<google::cloud::dataplex::v1::ListContentResponse>
-ContentServiceAuth::ListContent(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::dataplex::v1::ListContentResponse> ContentServiceAuth::ListContent(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dataplex::v1::ListContentRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListContent(context, options, request);
 }
 
-StatusOr<google::cloud::location::ListLocationsResponse>
-ContentServiceAuth::ListLocations(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::location::ListLocationsResponse> ContentServiceAuth::ListLocations(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -109,16 +113,17 @@ ContentServiceAuth::ListLocations(
 }
 
 StatusOr<google::cloud::location::Location> ContentServiceAuth::GetLocation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetLocation(context, options, request);
 }
 
-StatusOr<google::longrunning::ListOperationsResponse>
-ContentServiceAuth::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse> ContentServiceAuth::ListOperations(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -126,7 +131,8 @@ ContentServiceAuth::ListOperations(
 }
 
 StatusOr<google::longrunning::Operation> ContentServiceAuth::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -134,7 +140,8 @@ StatusOr<google::longrunning::Operation> ContentServiceAuth::GetOperation(
 }
 
 Status ContentServiceAuth::DeleteOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -142,7 +149,8 @@ Status ContentServiceAuth::DeleteOperation(
 }
 
 Status ContentServiceAuth::CancelOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;

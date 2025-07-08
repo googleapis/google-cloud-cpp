@@ -26,297 +26,234 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-DataformConnectionIdempotencyPolicy::~DataformConnectionIdempotencyPolicy() =
-    default;
+DataformConnectionIdempotencyPolicy::~DataformConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<DataformConnectionIdempotencyPolicy>
 DataformConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<DataformConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency DataformConnectionIdempotencyPolicy::ListRepositories(
-    google::cloud::dataform::v1::ListRepositoriesRequest) {  // NOLINT
+Idempotency DataformConnectionIdempotencyPolicy::ListRepositories(google::cloud::dataform::v1::ListRepositoriesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency DataformConnectionIdempotencyPolicy::GetRepository(
-    google::cloud::dataform::v1::GetRepositoryRequest const&) {
+Idempotency DataformConnectionIdempotencyPolicy::GetRepository(google::cloud::dataform::v1::GetRepositoryRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DataformConnectionIdempotencyPolicy::CreateRepository(
-    google::cloud::dataform::v1::CreateRepositoryRequest const&) {
+Idempotency DataformConnectionIdempotencyPolicy::CreateRepository(google::cloud::dataform::v1::CreateRepositoryRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DataformConnectionIdempotencyPolicy::UpdateRepository(
-    google::cloud::dataform::v1::UpdateRepositoryRequest const&) {
+Idempotency DataformConnectionIdempotencyPolicy::UpdateRepository(google::cloud::dataform::v1::UpdateRepositoryRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DataformConnectionIdempotencyPolicy::DeleteRepository(
-    google::cloud::dataform::v1::DeleteRepositoryRequest const&) {
+Idempotency DataformConnectionIdempotencyPolicy::DeleteRepository(google::cloud::dataform::v1::DeleteRepositoryRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DataformConnectionIdempotencyPolicy::CommitRepositoryChanges(
-    google::cloud::dataform::v1::CommitRepositoryChangesRequest const&) {
+Idempotency DataformConnectionIdempotencyPolicy::CommitRepositoryChanges(google::cloud::dataform::v1::CommitRepositoryChangesRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DataformConnectionIdempotencyPolicy::ReadRepositoryFile(
-    google::cloud::dataform::v1::ReadRepositoryFileRequest const&) {
+Idempotency DataformConnectionIdempotencyPolicy::ReadRepositoryFile(google::cloud::dataform::v1::ReadRepositoryFileRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency
-DataformConnectionIdempotencyPolicy::QueryRepositoryDirectoryContents(
-    google::cloud::dataform::v1::
-        QueryRepositoryDirectoryContentsRequest) {  // NOLINT
+Idempotency DataformConnectionIdempotencyPolicy::QueryRepositoryDirectoryContents(google::cloud::dataform::v1::QueryRepositoryDirectoryContentsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency DataformConnectionIdempotencyPolicy::FetchRepositoryHistory(
-    google::cloud::dataform::v1::FetchRepositoryHistoryRequest) {  // NOLINT
+Idempotency DataformConnectionIdempotencyPolicy::FetchRepositoryHistory(google::cloud::dataform::v1::FetchRepositoryHistoryRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency
-DataformConnectionIdempotencyPolicy::ComputeRepositoryAccessTokenStatus(
-    google::cloud::dataform::v1::
-        ComputeRepositoryAccessTokenStatusRequest const&) {
+Idempotency DataformConnectionIdempotencyPolicy::ComputeRepositoryAccessTokenStatus(google::cloud::dataform::v1::ComputeRepositoryAccessTokenStatusRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DataformConnectionIdempotencyPolicy::FetchRemoteBranches(
-    google::cloud::dataform::v1::FetchRemoteBranchesRequest const&) {
+Idempotency DataformConnectionIdempotencyPolicy::FetchRemoteBranches(google::cloud::dataform::v1::FetchRemoteBranchesRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DataformConnectionIdempotencyPolicy::ListWorkspaces(
-    google::cloud::dataform::v1::ListWorkspacesRequest) {  // NOLINT
+Idempotency DataformConnectionIdempotencyPolicy::ListWorkspaces(google::cloud::dataform::v1::ListWorkspacesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency DataformConnectionIdempotencyPolicy::GetWorkspace(
-    google::cloud::dataform::v1::GetWorkspaceRequest const&) {
+Idempotency DataformConnectionIdempotencyPolicy::GetWorkspace(google::cloud::dataform::v1::GetWorkspaceRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DataformConnectionIdempotencyPolicy::CreateWorkspace(
-    google::cloud::dataform::v1::CreateWorkspaceRequest const&) {
+Idempotency DataformConnectionIdempotencyPolicy::CreateWorkspace(google::cloud::dataform::v1::CreateWorkspaceRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DataformConnectionIdempotencyPolicy::DeleteWorkspace(
-    google::cloud::dataform::v1::DeleteWorkspaceRequest const&) {
+Idempotency DataformConnectionIdempotencyPolicy::DeleteWorkspace(google::cloud::dataform::v1::DeleteWorkspaceRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DataformConnectionIdempotencyPolicy::InstallNpmPackages(
-    google::cloud::dataform::v1::InstallNpmPackagesRequest const&) {
+Idempotency DataformConnectionIdempotencyPolicy::InstallNpmPackages(google::cloud::dataform::v1::InstallNpmPackagesRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DataformConnectionIdempotencyPolicy::PullGitCommits(
-    google::cloud::dataform::v1::PullGitCommitsRequest const&) {
+Idempotency DataformConnectionIdempotencyPolicy::PullGitCommits(google::cloud::dataform::v1::PullGitCommitsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DataformConnectionIdempotencyPolicy::PushGitCommits(
-    google::cloud::dataform::v1::PushGitCommitsRequest const&) {
+Idempotency DataformConnectionIdempotencyPolicy::PushGitCommits(google::cloud::dataform::v1::PushGitCommitsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DataformConnectionIdempotencyPolicy::FetchFileGitStatuses(
-    google::cloud::dataform::v1::FetchFileGitStatusesRequest const&) {
+Idempotency DataformConnectionIdempotencyPolicy::FetchFileGitStatuses(google::cloud::dataform::v1::FetchFileGitStatusesRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DataformConnectionIdempotencyPolicy::FetchGitAheadBehind(
-    google::cloud::dataform::v1::FetchGitAheadBehindRequest const&) {
+Idempotency DataformConnectionIdempotencyPolicy::FetchGitAheadBehind(google::cloud::dataform::v1::FetchGitAheadBehindRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DataformConnectionIdempotencyPolicy::CommitWorkspaceChanges(
-    google::cloud::dataform::v1::CommitWorkspaceChangesRequest const&) {
+Idempotency DataformConnectionIdempotencyPolicy::CommitWorkspaceChanges(google::cloud::dataform::v1::CommitWorkspaceChangesRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DataformConnectionIdempotencyPolicy::ResetWorkspaceChanges(
-    google::cloud::dataform::v1::ResetWorkspaceChangesRequest const&) {
+Idempotency DataformConnectionIdempotencyPolicy::ResetWorkspaceChanges(google::cloud::dataform::v1::ResetWorkspaceChangesRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DataformConnectionIdempotencyPolicy::FetchFileDiff(
-    google::cloud::dataform::v1::FetchFileDiffRequest const&) {
+Idempotency DataformConnectionIdempotencyPolicy::FetchFileDiff(google::cloud::dataform::v1::FetchFileDiffRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DataformConnectionIdempotencyPolicy::QueryDirectoryContents(
-    google::cloud::dataform::v1::QueryDirectoryContentsRequest) {  // NOLINT
+Idempotency DataformConnectionIdempotencyPolicy::QueryDirectoryContents(google::cloud::dataform::v1::QueryDirectoryContentsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency DataformConnectionIdempotencyPolicy::SearchFiles(
-    google::cloud::dataform::v1::SearchFilesRequest) {  // NOLINT
+Idempotency DataformConnectionIdempotencyPolicy::SearchFiles(google::cloud::dataform::v1::SearchFilesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency DataformConnectionIdempotencyPolicy::MakeDirectory(
-    google::cloud::dataform::v1::MakeDirectoryRequest const&) {
+Idempotency DataformConnectionIdempotencyPolicy::MakeDirectory(google::cloud::dataform::v1::MakeDirectoryRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DataformConnectionIdempotencyPolicy::RemoveDirectory(
-    google::cloud::dataform::v1::RemoveDirectoryRequest const&) {
+Idempotency DataformConnectionIdempotencyPolicy::RemoveDirectory(google::cloud::dataform::v1::RemoveDirectoryRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DataformConnectionIdempotencyPolicy::MoveDirectory(
-    google::cloud::dataform::v1::MoveDirectoryRequest const&) {
+Idempotency DataformConnectionIdempotencyPolicy::MoveDirectory(google::cloud::dataform::v1::MoveDirectoryRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DataformConnectionIdempotencyPolicy::ReadFile(
-    google::cloud::dataform::v1::ReadFileRequest const&) {
+Idempotency DataformConnectionIdempotencyPolicy::ReadFile(google::cloud::dataform::v1::ReadFileRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DataformConnectionIdempotencyPolicy::RemoveFile(
-    google::cloud::dataform::v1::RemoveFileRequest const&) {
+Idempotency DataformConnectionIdempotencyPolicy::RemoveFile(google::cloud::dataform::v1::RemoveFileRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DataformConnectionIdempotencyPolicy::MoveFile(
-    google::cloud::dataform::v1::MoveFileRequest const&) {
+Idempotency DataformConnectionIdempotencyPolicy::MoveFile(google::cloud::dataform::v1::MoveFileRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DataformConnectionIdempotencyPolicy::WriteFile(
-    google::cloud::dataform::v1::WriteFileRequest const&) {
+Idempotency DataformConnectionIdempotencyPolicy::WriteFile(google::cloud::dataform::v1::WriteFileRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DataformConnectionIdempotencyPolicy::ListReleaseConfigs(
-    google::cloud::dataform::v1::ListReleaseConfigsRequest) {  // NOLINT
+Idempotency DataformConnectionIdempotencyPolicy::ListReleaseConfigs(google::cloud::dataform::v1::ListReleaseConfigsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency DataformConnectionIdempotencyPolicy::GetReleaseConfig(
-    google::cloud::dataform::v1::GetReleaseConfigRequest const&) {
+Idempotency DataformConnectionIdempotencyPolicy::GetReleaseConfig(google::cloud::dataform::v1::GetReleaseConfigRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DataformConnectionIdempotencyPolicy::CreateReleaseConfig(
-    google::cloud::dataform::v1::CreateReleaseConfigRequest const&) {
+Idempotency DataformConnectionIdempotencyPolicy::CreateReleaseConfig(google::cloud::dataform::v1::CreateReleaseConfigRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DataformConnectionIdempotencyPolicy::UpdateReleaseConfig(
-    google::cloud::dataform::v1::UpdateReleaseConfigRequest const&) {
+Idempotency DataformConnectionIdempotencyPolicy::UpdateReleaseConfig(google::cloud::dataform::v1::UpdateReleaseConfigRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DataformConnectionIdempotencyPolicy::DeleteReleaseConfig(
-    google::cloud::dataform::v1::DeleteReleaseConfigRequest const&) {
+Idempotency DataformConnectionIdempotencyPolicy::DeleteReleaseConfig(google::cloud::dataform::v1::DeleteReleaseConfigRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DataformConnectionIdempotencyPolicy::ListCompilationResults(
-    google::cloud::dataform::v1::ListCompilationResultsRequest) {  // NOLINT
+Idempotency DataformConnectionIdempotencyPolicy::ListCompilationResults(google::cloud::dataform::v1::ListCompilationResultsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency DataformConnectionIdempotencyPolicy::GetCompilationResult(
-    google::cloud::dataform::v1::GetCompilationResultRequest const&) {
+Idempotency DataformConnectionIdempotencyPolicy::GetCompilationResult(google::cloud::dataform::v1::GetCompilationResultRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DataformConnectionIdempotencyPolicy::CreateCompilationResult(
-    google::cloud::dataform::v1::CreateCompilationResultRequest const&) {
+Idempotency DataformConnectionIdempotencyPolicy::CreateCompilationResult(google::cloud::dataform::v1::CreateCompilationResultRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DataformConnectionIdempotencyPolicy::QueryCompilationResultActions(
-    google::cloud::dataform::v1::
-        QueryCompilationResultActionsRequest) {  // NOLINT
+Idempotency DataformConnectionIdempotencyPolicy::QueryCompilationResultActions(google::cloud::dataform::v1::QueryCompilationResultActionsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency DataformConnectionIdempotencyPolicy::ListWorkflowConfigs(
-    google::cloud::dataform::v1::ListWorkflowConfigsRequest) {  // NOLINT
+Idempotency DataformConnectionIdempotencyPolicy::ListWorkflowConfigs(google::cloud::dataform::v1::ListWorkflowConfigsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency DataformConnectionIdempotencyPolicy::GetWorkflowConfig(
-    google::cloud::dataform::v1::GetWorkflowConfigRequest const&) {
+Idempotency DataformConnectionIdempotencyPolicy::GetWorkflowConfig(google::cloud::dataform::v1::GetWorkflowConfigRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DataformConnectionIdempotencyPolicy::CreateWorkflowConfig(
-    google::cloud::dataform::v1::CreateWorkflowConfigRequest const&) {
+Idempotency DataformConnectionIdempotencyPolicy::CreateWorkflowConfig(google::cloud::dataform::v1::CreateWorkflowConfigRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DataformConnectionIdempotencyPolicy::UpdateWorkflowConfig(
-    google::cloud::dataform::v1::UpdateWorkflowConfigRequest const&) {
+Idempotency DataformConnectionIdempotencyPolicy::UpdateWorkflowConfig(google::cloud::dataform::v1::UpdateWorkflowConfigRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DataformConnectionIdempotencyPolicy::DeleteWorkflowConfig(
-    google::cloud::dataform::v1::DeleteWorkflowConfigRequest const&) {
+Idempotency DataformConnectionIdempotencyPolicy::DeleteWorkflowConfig(google::cloud::dataform::v1::DeleteWorkflowConfigRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DataformConnectionIdempotencyPolicy::ListWorkflowInvocations(
-    google::cloud::dataform::v1::ListWorkflowInvocationsRequest) {  // NOLINT
+Idempotency DataformConnectionIdempotencyPolicy::ListWorkflowInvocations(google::cloud::dataform::v1::ListWorkflowInvocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency DataformConnectionIdempotencyPolicy::GetWorkflowInvocation(
-    google::cloud::dataform::v1::GetWorkflowInvocationRequest const&) {
+Idempotency DataformConnectionIdempotencyPolicy::GetWorkflowInvocation(google::cloud::dataform::v1::GetWorkflowInvocationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DataformConnectionIdempotencyPolicy::CreateWorkflowInvocation(
-    google::cloud::dataform::v1::CreateWorkflowInvocationRequest const&) {
+Idempotency DataformConnectionIdempotencyPolicy::CreateWorkflowInvocation(google::cloud::dataform::v1::CreateWorkflowInvocationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DataformConnectionIdempotencyPolicy::DeleteWorkflowInvocation(
-    google::cloud::dataform::v1::DeleteWorkflowInvocationRequest const&) {
+Idempotency DataformConnectionIdempotencyPolicy::DeleteWorkflowInvocation(google::cloud::dataform::v1::DeleteWorkflowInvocationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DataformConnectionIdempotencyPolicy::CancelWorkflowInvocation(
-    google::cloud::dataform::v1::CancelWorkflowInvocationRequest const&) {
+Idempotency DataformConnectionIdempotencyPolicy::CancelWorkflowInvocation(google::cloud::dataform::v1::CancelWorkflowInvocationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DataformConnectionIdempotencyPolicy::QueryWorkflowInvocationActions(
-    google::cloud::dataform::v1::
-        QueryWorkflowInvocationActionsRequest) {  // NOLINT
+Idempotency DataformConnectionIdempotencyPolicy::QueryWorkflowInvocationActions(google::cloud::dataform::v1::QueryWorkflowInvocationActionsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency DataformConnectionIdempotencyPolicy::GetConfig(
-    google::cloud::dataform::v1::GetConfigRequest const&) {
+Idempotency DataformConnectionIdempotencyPolicy::GetConfig(google::cloud::dataform::v1::GetConfigRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DataformConnectionIdempotencyPolicy::UpdateConfig(
-    google::cloud::dataform::v1::UpdateConfigRequest const&) {
+Idempotency DataformConnectionIdempotencyPolicy::UpdateConfig(google::cloud::dataform::v1::UpdateConfigRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DataformConnectionIdempotencyPolicy::ListLocations(
-    google::cloud::location::ListLocationsRequest) {  // NOLINT
+Idempotency DataformConnectionIdempotencyPolicy::ListLocations(google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency DataformConnectionIdempotencyPolicy::GetLocation(
-    google::cloud::location::GetLocationRequest const&) {
+Idempotency DataformConnectionIdempotencyPolicy::GetLocation(google::cloud::location::GetLocationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
@@ -326,18 +263,16 @@ Idempotency DataformConnectionIdempotencyPolicy::SetIamPolicy(
                                          : Idempotency::kIdempotent;
 }
 
-Idempotency DataformConnectionIdempotencyPolicy::GetIamPolicy(
-    google::iam::v1::GetIamPolicyRequest const&) {
+Idempotency DataformConnectionIdempotencyPolicy::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DataformConnectionIdempotencyPolicy::TestIamPermissions(
-    google::iam::v1::TestIamPermissionsRequest const&) {
+Idempotency DataformConnectionIdempotencyPolicy::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const&) {
   return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<DataformConnectionIdempotencyPolicy>
-MakeDefaultDataformConnectionIdempotencyPolicy() {
+    MakeDefaultDataformConnectionIdempotencyPolicy() {
   return std::make_unique<DataformConnectionIdempotencyPolicy>();
 }
 

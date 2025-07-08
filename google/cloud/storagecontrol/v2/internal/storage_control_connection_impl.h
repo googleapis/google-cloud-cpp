@@ -19,11 +19,6 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGECONTROL_V2_INTERNAL_STORAGE_CONTROL_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGECONTROL_V2_INTERNAL_STORAGE_CONTROL_CONNECTION_IMPL_H
 
-#include "google/cloud/storagecontrol/v2/internal/storage_control_retry_traits.h"
-#include "google/cloud/storagecontrol/v2/internal/storage_control_stub.h"
-#include "google/cloud/storagecontrol/v2/storage_control_connection.h"
-#include "google/cloud/storagecontrol/v2/storage_control_connection_idempotency_policy.h"
-#include "google/cloud/storagecontrol/v2/storage_control_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
@@ -31,6 +26,11 @@
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
+#include "google/cloud/storagecontrol/v2/internal/storage_control_retry_traits.h"
+#include "google/cloud/storagecontrol/v2/internal/storage_control_stub.h"
+#include "google/cloud/storagecontrol/v2/storage_control_connection.h"
+#include "google/cloud/storagecontrol/v2/storage_control_connection_idempotency_policy.h"
+#include "google/cloud/storagecontrol/v2/storage_control_options.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
@@ -47,130 +47,104 @@ class StorageControlConnectionImpl
   ~StorageControlConnectionImpl() override = default;
 
   StorageControlConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<storagecontrol_v2_internal::StorageControlStub> stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<storagecontrol_v2_internal::StorageControlStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
-  StatusOr<google::storage::control::v2::Folder> CreateFolder(
-      google::storage::control::v2::CreateFolderRequest const& request)
-      override;
+  StatusOr<google::storage::control::v2::Folder>
+  CreateFolder(google::storage::control::v2::CreateFolderRequest const& request) override;
 
-  Status DeleteFolder(google::storage::control::v2::DeleteFolderRequest const&
-                          request) override;
+  Status
+  DeleteFolder(google::storage::control::v2::DeleteFolderRequest const& request) override;
 
-  StatusOr<google::storage::control::v2::Folder> GetFolder(
-      google::storage::control::v2::GetFolderRequest const& request) override;
+  StatusOr<google::storage::control::v2::Folder>
+  GetFolder(google::storage::control::v2::GetFolderRequest const& request) override;
 
-  StreamRange<google::storage::control::v2::Folder> ListFolders(
-      google::storage::control::v2::ListFoldersRequest request) override;
+  StreamRange<google::storage::control::v2::Folder>
+  ListFolders(google::storage::control::v2::ListFoldersRequest request) override;
 
-  future<StatusOr<google::storage::control::v2::Folder>> RenameFolder(
-      google::storage::control::v2::RenameFolderRequest const& request)
-      override;
+  future<StatusOr<google::storage::control::v2::Folder>>
+  RenameFolder(google::storage::control::v2::RenameFolderRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> RenameFolder(
-      NoAwaitTag,
-      google::storage::control::v2::RenameFolderRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  RenameFolder(NoAwaitTag,
+      google::storage::control::v2::RenameFolderRequest const& request) override;
 
-  future<StatusOr<google::storage::control::v2::Folder>> RenameFolder(
+  future<StatusOr<google::storage::control::v2::Folder>>
+  RenameFolder(
       google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::storage::control::v2::StorageLayout> GetStorageLayout(
-      google::storage::control::v2::GetStorageLayoutRequest const& request)
-      override;
+  StatusOr<google::storage::control::v2::StorageLayout>
+  GetStorageLayout(google::storage::control::v2::GetStorageLayoutRequest const& request) override;
 
-  StatusOr<google::storage::control::v2::ManagedFolder> CreateManagedFolder(
-      google::storage::control::v2::CreateManagedFolderRequest const& request)
-      override;
+  StatusOr<google::storage::control::v2::ManagedFolder>
+  CreateManagedFolder(google::storage::control::v2::CreateManagedFolderRequest const& request) override;
 
-  Status DeleteManagedFolder(
-      google::storage::control::v2::DeleteManagedFolderRequest const& request)
-      override;
+  Status
+  DeleteManagedFolder(google::storage::control::v2::DeleteManagedFolderRequest const& request) override;
 
-  StatusOr<google::storage::control::v2::ManagedFolder> GetManagedFolder(
-      google::storage::control::v2::GetManagedFolderRequest const& request)
-      override;
+  StatusOr<google::storage::control::v2::ManagedFolder>
+  GetManagedFolder(google::storage::control::v2::GetManagedFolderRequest const& request) override;
 
-  StreamRange<google::storage::control::v2::ManagedFolder> ListManagedFolders(
-      google::storage::control::v2::ListManagedFoldersRequest request) override;
+  StreamRange<google::storage::control::v2::ManagedFolder>
+  ListManagedFolders(google::storage::control::v2::ListManagedFoldersRequest request) override;
+
+  future<StatusOr<google::storage::control::v2::AnywhereCache>>
+  CreateAnywhereCache(google::storage::control::v2::CreateAnywhereCacheRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  CreateAnywhereCache(NoAwaitTag,
+      google::storage::control::v2::CreateAnywhereCacheRequest const& request) override;
 
   future<StatusOr<google::storage::control::v2::AnywhereCache>>
   CreateAnywhereCache(
-      google::storage::control::v2::CreateAnywhereCacheRequest const& request)
-      override;
-
-  StatusOr<google::longrunning::Operation> CreateAnywhereCache(
-      NoAwaitTag,
-      google::storage::control::v2::CreateAnywhereCacheRequest const& request)
-      override;
+      google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::storage::control::v2::AnywhereCache>>
-  CreateAnywhereCache(google::longrunning::Operation const& operation) override;
+  UpdateAnywhereCache(google::storage::control::v2::UpdateAnywhereCacheRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  UpdateAnywhereCache(NoAwaitTag,
+      google::storage::control::v2::UpdateAnywhereCacheRequest const& request) override;
 
   future<StatusOr<google::storage::control::v2::AnywhereCache>>
   UpdateAnywhereCache(
-      google::storage::control::v2::UpdateAnywhereCacheRequest const& request)
-      override;
+      google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::longrunning::Operation> UpdateAnywhereCache(
-      NoAwaitTag,
-      google::storage::control::v2::UpdateAnywhereCacheRequest const& request)
-      override;
+  StatusOr<google::storage::control::v2::AnywhereCache>
+  DisableAnywhereCache(google::storage::control::v2::DisableAnywhereCacheRequest const& request) override;
 
-  future<StatusOr<google::storage::control::v2::AnywhereCache>>
-  UpdateAnywhereCache(google::longrunning::Operation const& operation) override;
+  StatusOr<google::storage::control::v2::AnywhereCache>
+  PauseAnywhereCache(google::storage::control::v2::PauseAnywhereCacheRequest const& request) override;
 
-  StatusOr<google::storage::control::v2::AnywhereCache> DisableAnywhereCache(
-      google::storage::control::v2::DisableAnywhereCacheRequest const& request)
-      override;
+  StatusOr<google::storage::control::v2::AnywhereCache>
+  ResumeAnywhereCache(google::storage::control::v2::ResumeAnywhereCacheRequest const& request) override;
 
-  StatusOr<google::storage::control::v2::AnywhereCache> PauseAnywhereCache(
-      google::storage::control::v2::PauseAnywhereCacheRequest const& request)
-      override;
+  StatusOr<google::storage::control::v2::AnywhereCache>
+  GetAnywhereCache(google::storage::control::v2::GetAnywhereCacheRequest const& request) override;
 
-  StatusOr<google::storage::control::v2::AnywhereCache> ResumeAnywhereCache(
-      google::storage::control::v2::ResumeAnywhereCacheRequest const& request)
-      override;
-
-  StatusOr<google::storage::control::v2::AnywhereCache> GetAnywhereCache(
-      google::storage::control::v2::GetAnywhereCacheRequest const& request)
-      override;
-
-  StreamRange<google::storage::control::v2::AnywhereCache> ListAnywhereCaches(
-      google::storage::control::v2::ListAnywhereCachesRequest request) override;
+  StreamRange<google::storage::control::v2::AnywhereCache>
+  ListAnywhereCaches(google::storage::control::v2::ListAnywhereCachesRequest request) override;
 
   StatusOr<google::storage::control::v2::IntelligenceConfig>
-  GetProjectIntelligenceConfig(
-      google::storage::control::v2::GetProjectIntelligenceConfigRequest const&
-          request) override;
+  GetProjectIntelligenceConfig(google::storage::control::v2::GetProjectIntelligenceConfigRequest const& request) override;
 
   StatusOr<google::storage::control::v2::IntelligenceConfig>
-  UpdateProjectIntelligenceConfig(
-      google::storage::control::v2::
-          UpdateProjectIntelligenceConfigRequest const& request) override;
+  UpdateProjectIntelligenceConfig(google::storage::control::v2::UpdateProjectIntelligenceConfigRequest const& request) override;
 
   StatusOr<google::storage::control::v2::IntelligenceConfig>
-  GetFolderIntelligenceConfig(
-      google::storage::control::v2::GetFolderIntelligenceConfigRequest const&
-          request) override;
+  GetFolderIntelligenceConfig(google::storage::control::v2::GetFolderIntelligenceConfigRequest const& request) override;
 
   StatusOr<google::storage::control::v2::IntelligenceConfig>
-  UpdateFolderIntelligenceConfig(
-      google::storage::control::v2::UpdateFolderIntelligenceConfigRequest const&
-          request) override;
+  UpdateFolderIntelligenceConfig(google::storage::control::v2::UpdateFolderIntelligenceConfigRequest const& request) override;
 
   StatusOr<google::storage::control::v2::IntelligenceConfig>
-  GetOrganizationIntelligenceConfig(
-      google::storage::control::v2::
-          GetOrganizationIntelligenceConfigRequest const& request) override;
+  GetOrganizationIntelligenceConfig(google::storage::control::v2::GetOrganizationIntelligenceConfigRequest const& request) override;
 
   StatusOr<google::storage::control::v2::IntelligenceConfig>
-  UpdateOrganizationIntelligenceConfig(
-      google::storage::control::v2::
-          UpdateOrganizationIntelligenceConfigRequest const& request) override;
+  UpdateOrganizationIntelligenceConfig(google::storage::control::v2::UpdateOrganizationIntelligenceConfigRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

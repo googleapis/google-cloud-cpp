@@ -32,7 +32,8 @@ IAMPolicyAuth::IAMPolicyAuth(
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
 StatusOr<google::iam::v1::Policy> IAMPolicyAuth::SetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -40,16 +41,17 @@ StatusOr<google::iam::v1::Policy> IAMPolicyAuth::SetIamPolicy(
 }
 
 StatusOr<google::iam::v1::Policy> IAMPolicyAuth::GetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetIamPolicy(context, options, request);
 }
 
-StatusOr<google::iam::v1::TestIamPermissionsResponse>
-IAMPolicyAuth::TestIamPermissions(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::iam::v1::TestIamPermissionsResponse> IAMPolicyAuth::TestIamPermissions(
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;

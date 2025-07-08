@@ -34,41 +34,44 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class RuleSetServiceMetadata : public RuleSetServiceStub {
  public:
   ~RuleSetServiceMetadata() override = default;
-  RuleSetServiceMetadata(std::shared_ptr<RuleSetServiceStub> child,
-                         std::multimap<std::string, std::string> fixed_metadata,
-                         std::string api_client_header = "");
+  RuleSetServiceMetadata(
+      std::shared_ptr<RuleSetServiceStub> child,
+      std::multimap<std::string, std::string> fixed_metadata,
+      std::string api_client_header = "");
 
   StatusOr<google::cloud::contentwarehouse::v1::RuleSet> CreateRuleSet(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::contentwarehouse::v1::CreateRuleSetRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::contentwarehouse::v1::CreateRuleSetRequest const& request) override;
 
   StatusOr<google::cloud::contentwarehouse::v1::RuleSet> GetRuleSet(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::contentwarehouse::v1::GetRuleSetRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::contentwarehouse::v1::GetRuleSetRequest const& request) override;
 
   StatusOr<google::cloud::contentwarehouse::v1::RuleSet> UpdateRuleSet(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::contentwarehouse::v1::UpdateRuleSetRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::contentwarehouse::v1::UpdateRuleSetRequest const& request) override;
 
   Status DeleteRuleSet(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::contentwarehouse::v1::DeleteRuleSetRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::contentwarehouse::v1::DeleteRuleSetRequest const& request) override;
 
-  StatusOr<google::cloud::contentwarehouse::v1::ListRuleSetsResponse>
-  ListRuleSets(grpc::ClientContext& context, Options const& options,
-               google::cloud::contentwarehouse::v1::ListRuleSetsRequest const&
-                   request) override;
+  StatusOr<google::cloud::contentwarehouse::v1::ListRuleSetsResponse> ListRuleSets(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::contentwarehouse::v1::ListRuleSetsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context, Options const& options,
+  void SetMetadata(grpc::ClientContext& context,
+                   Options const& options,
                    std::string const& request_params);
   void SetMetadata(grpc::ClientContext& context, Options const& options);
 

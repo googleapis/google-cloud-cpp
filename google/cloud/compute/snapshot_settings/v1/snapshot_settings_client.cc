@@ -28,38 +28,28 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 SnapshotSettingsClient::SnapshotSettingsClient(
     std::shared_ptr<SnapshotSettingsConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 SnapshotSettingsClient::~SnapshotSettingsClient() = default;
 
 StatusOr<google::cloud::cpp::compute::v1::SnapshotSettings>
-SnapshotSettingsClient::GetSnapshotSettings(std::string const& project,
-                                            Options opts) {
+SnapshotSettingsClient::GetSnapshotSettings(std::string const& project, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::snapshot_settings::v1::GetSnapshotSettingsRequest
-      request;
+  google::cloud::cpp::compute::snapshot_settings::v1::GetSnapshotSettingsRequest request;
   request.set_project(project);
   return connection_->GetSnapshotSettings(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::SnapshotSettings>
-SnapshotSettingsClient::GetSnapshotSettings(
-    google::cloud::cpp::compute::snapshot_settings::v1::
-        GetSnapshotSettingsRequest const& request,
-    Options opts) {
+SnapshotSettingsClient::GetSnapshotSettings(google::cloud::cpp::compute::snapshot_settings::v1::GetSnapshotSettingsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetSnapshotSettings(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-SnapshotSettingsClient::PatchSnapshotSettings(
-    std::string const& project, std::string const& update_mask,
-    google::cloud::cpp::compute::v1::SnapshotSettings const&
-        snapshot_settings_resource,
-    Options opts) {
+SnapshotSettingsClient::PatchSnapshotSettings(std::string const& project, std::string const& update_mask, google::cloud::cpp::compute::v1::SnapshotSettings const& snapshot_settings_resource, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::snapshot_settings::v1::
-      PatchSnapshotSettingsRequest request;
+  google::cloud::cpp::compute::snapshot_settings::v1::PatchSnapshotSettingsRequest request;
   request.set_project(project);
   request.set_update_mask(update_mask);
   *request.mutable_snapshot_settings_resource() = snapshot_settings_resource;
@@ -67,14 +57,9 @@ SnapshotSettingsClient::PatchSnapshotSettings(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-SnapshotSettingsClient::PatchSnapshotSettings(
-    NoAwaitTag, std::string const& project, std::string const& update_mask,
-    google::cloud::cpp::compute::v1::SnapshotSettings const&
-        snapshot_settings_resource,
-    Options opts) {
+SnapshotSettingsClient::PatchSnapshotSettings(NoAwaitTag, std::string const& project, std::string const& update_mask, google::cloud::cpp::compute::v1::SnapshotSettings const& snapshot_settings_resource, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::snapshot_settings::v1::
-      PatchSnapshotSettingsRequest request;
+  google::cloud::cpp::compute::snapshot_settings::v1::PatchSnapshotSettingsRequest request;
   request.set_project(project);
   request.set_update_mask(update_mask);
   *request.mutable_snapshot_settings_resource() = snapshot_settings_resource;
@@ -82,27 +67,19 @@ SnapshotSettingsClient::PatchSnapshotSettings(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-SnapshotSettingsClient::PatchSnapshotSettings(
-    google::cloud::cpp::compute::snapshot_settings::v1::
-        PatchSnapshotSettingsRequest const& request,
-    Options opts) {
+SnapshotSettingsClient::PatchSnapshotSettings(google::cloud::cpp::compute::snapshot_settings::v1::PatchSnapshotSettingsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PatchSnapshotSettings(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-SnapshotSettingsClient::PatchSnapshotSettings(
-    NoAwaitTag,
-    google::cloud::cpp::compute::snapshot_settings::v1::
-        PatchSnapshotSettingsRequest const& request,
-    Options opts) {
+SnapshotSettingsClient::PatchSnapshotSettings(NoAwaitTag, google::cloud::cpp::compute::snapshot_settings::v1::PatchSnapshotSettingsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PatchSnapshotSettings(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-SnapshotSettingsClient::PatchSnapshotSettings(
-    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+SnapshotSettingsClient::PatchSnapshotSettings(google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PatchSnapshotSettings(operation);
 }

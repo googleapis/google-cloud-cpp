@@ -28,42 +28,39 @@ namespace compute_vpn_gateways_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 VpnGatewaysRestLogging::VpnGatewaysRestLogging(
-    std::shared_ptr<VpnGatewaysRestStub> child, TracingOptions tracing_options,
+    std::shared_ptr<VpnGatewaysRestStub> child,
+    TracingOptions tracing_options,
     std::set<std::string> components)
-    : child_(std::move(child)),
-      tracing_options_(std::move(tracing_options)),
+    : child_(std::move(child)), tracing_options_(std::move(tracing_options)),
       components_(std::move(components)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::VpnGatewayAggregatedList>
 VpnGatewaysRestLogging::AggregatedListVpnGateways(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::vpn_gateways::v1::
-        AggregatedListVpnGatewaysRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::vpn_gateways::v1::AggregatedListVpnGatewaysRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::cloud::cpp::compute::vpn_gateways::v1::
-                 AggregatedListVpnGatewaysRequest const& request) {
-        return child_->AggregatedListVpnGateways(rest_context, options,
-                                                 request);
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
+             google::cloud::cpp::compute::vpn_gateways::v1::AggregatedListVpnGatewaysRequest const& request) {
+        return child_->AggregatedListVpnGateways(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 VpnGatewaysRestLogging::AsyncDeleteVpnGateway(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::vpn_gateways::v1::
-        DeleteVpnGatewayRequest const& request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::vpn_gateways::v1::DeleteVpnGatewayRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::cpp::compute::vpn_gateways::v1::
-                 DeleteVpnGatewayRequest const& request) {
-        return child_->AsyncDeleteVpnGateway(cq, std::move(rest_context),
-                                             std::move(options), request);
+             google::cloud::cpp::compute::vpn_gateways::v1::DeleteVpnGatewayRequest const& request) {
+        return child_->AsyncDeleteVpnGateway(
+            cq, std::move(rest_context), std::move(options), request);
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
@@ -71,13 +68,13 @@ VpnGatewaysRestLogging::AsyncDeleteVpnGateway(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 VpnGatewaysRestLogging::DeleteVpnGateway(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::vpn_gateways::v1::
-        DeleteVpnGatewayRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::vpn_gateways::v1::DeleteVpnGatewayRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::cloud::cpp::compute::vpn_gateways::v1::
-                 DeleteVpnGatewayRequest const& request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
+             google::cloud::cpp::compute::vpn_gateways::v1::DeleteVpnGatewayRequest const& request) {
         return child_->DeleteVpnGateway(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -85,13 +82,13 @@ VpnGatewaysRestLogging::DeleteVpnGateway(
 
 StatusOr<google::cloud::cpp::compute::v1::VpnGateway>
 VpnGatewaysRestLogging::GetVpnGateway(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::vpn_gateways::v1::GetVpnGatewayRequest const&
-        request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::vpn_gateways::v1::GetVpnGatewayRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::cloud::cpp::compute::vpn_gateways::v1::
-                 GetVpnGatewayRequest const& request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
+             google::cloud::cpp::compute::vpn_gateways::v1::GetVpnGatewayRequest const& request) {
         return child_->GetVpnGateway(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -99,14 +96,13 @@ VpnGatewaysRestLogging::GetVpnGateway(
 
 StatusOr<google::cloud::cpp::compute::v1::VpnGatewaysGetStatusResponse>
 VpnGatewaysRestLogging::GetStatus(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::vpn_gateways::v1::GetStatusRequest const&
-        request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::vpn_gateways::v1::GetStatusRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          rest_internal::RestContext& rest_context, Options const& options,
-          google::cloud::cpp::compute::vpn_gateways::v1::GetStatusRequest const&
-              request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
+             google::cloud::cpp::compute::vpn_gateways::v1::GetStatusRequest const& request) {
         return child_->GetStatus(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -114,19 +110,17 @@ VpnGatewaysRestLogging::GetStatus(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 VpnGatewaysRestLogging::AsyncInsertVpnGateway(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::vpn_gateways::v1::
-        InsertVpnGatewayRequest const& request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::vpn_gateways::v1::InsertVpnGatewayRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::cpp::compute::vpn_gateways::v1::
-                 InsertVpnGatewayRequest const& request) {
-        return child_->AsyncInsertVpnGateway(cq, std::move(rest_context),
-                                             std::move(options), request);
+             google::cloud::cpp::compute::vpn_gateways::v1::InsertVpnGatewayRequest const& request) {
+        return child_->AsyncInsertVpnGateway(
+            cq, std::move(rest_context), std::move(options), request);
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
@@ -134,13 +128,13 @@ VpnGatewaysRestLogging::AsyncInsertVpnGateway(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 VpnGatewaysRestLogging::InsertVpnGateway(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::vpn_gateways::v1::
-        InsertVpnGatewayRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::vpn_gateways::v1::InsertVpnGatewayRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::cloud::cpp::compute::vpn_gateways::v1::
-                 InsertVpnGatewayRequest const& request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
+             google::cloud::cpp::compute::vpn_gateways::v1::InsertVpnGatewayRequest const& request) {
         return child_->InsertVpnGateway(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -148,13 +142,13 @@ VpnGatewaysRestLogging::InsertVpnGateway(
 
 StatusOr<google::cloud::cpp::compute::v1::VpnGatewayList>
 VpnGatewaysRestLogging::ListVpnGateways(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::vpn_gateways::v1::ListVpnGatewaysRequest const&
-        request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::vpn_gateways::v1::ListVpnGatewaysRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::cloud::cpp::compute::vpn_gateways::v1::
-                 ListVpnGatewaysRequest const& request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
+             google::cloud::cpp::compute::vpn_gateways::v1::ListVpnGatewaysRequest const& request) {
         return child_->ListVpnGateways(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -162,20 +156,17 @@ VpnGatewaysRestLogging::ListVpnGateways(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 VpnGatewaysRestLogging::AsyncSetLabels(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::vpn_gateways::v1::SetLabelsRequest const&
-        request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::vpn_gateways::v1::SetLabelsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          CompletionQueue& cq,
-          std::unique_ptr<rest_internal::RestContext> rest_context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::cpp::compute::vpn_gateways::v1::SetLabelsRequest const&
-              request) {
-        return child_->AsyncSetLabels(cq, std::move(rest_context),
-                                      std::move(options), request);
+      [this](CompletionQueue& cq,
+             std::unique_ptr<rest_internal::RestContext> rest_context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::cpp::compute::vpn_gateways::v1::SetLabelsRequest const& request) {
+        return child_->AsyncSetLabels(
+            cq, std::move(rest_context), std::move(options), request);
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
@@ -183,14 +174,13 @@ VpnGatewaysRestLogging::AsyncSetLabels(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 VpnGatewaysRestLogging::SetLabels(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::vpn_gateways::v1::SetLabelsRequest const&
-        request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::vpn_gateways::v1::SetLabelsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          rest_internal::RestContext& rest_context, Options const& options,
-          google::cloud::cpp::compute::vpn_gateways::v1::SetLabelsRequest const&
-              request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
+             google::cloud::cpp::compute::vpn_gateways::v1::SetLabelsRequest const& request) {
         return child_->SetLabels(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -198,13 +188,13 @@ VpnGatewaysRestLogging::SetLabels(
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
 VpnGatewaysRestLogging::TestIamPermissions(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::vpn_gateways::v1::
-        TestIamPermissionsRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::vpn_gateways::v1::TestIamPermissionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::cloud::cpp::compute::vpn_gateways::v1::
-                 TestIamPermissionsRequest const& request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
+             google::cloud::cpp::compute::vpn_gateways::v1::TestIamPermissionsRequest const& request) {
         return child_->TestIamPermissions(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -215,35 +205,32 @@ VpnGatewaysRestLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::region_operations::v1::
-        GetOperationRequest const& request) {
+    google::cloud::cpp::compute::region_operations::v1::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::cpp::compute::region_operations::v1::
-                 GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(cq, std::move(rest_context),
-                                         std::move(options), request);
+             google::cloud::cpp::compute::region_operations::v1::GetOperationRequest const& request) {
+        return child_->AsyncGetOperation(
+            cq, std::move(rest_context), std::move(options), request);
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-future<Status> VpnGatewaysRestLogging::AsyncCancelOperation(
+future<Status>
+VpnGatewaysRestLogging::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::region_operations::v1::
-        DeleteOperationRequest const& request) {
+    google::cloud::cpp::compute::region_operations::v1::DeleteOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::cpp::compute::region_operations::v1::
-                 DeleteOperationRequest const& request) {
-        return child_->AsyncCancelOperation(cq, std::move(rest_context),
-                                            std::move(options), request);
+             google::cloud::cpp::compute::region_operations::v1::DeleteOperationRequest const& request) {
+        return child_->AsyncCancelOperation(
+            cq, std::move(rest_context), std::move(options), request);
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);

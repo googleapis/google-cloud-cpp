@@ -17,12 +17,12 @@
 // source: google/cloud/binaryauthorization/v1/service.proto
 
 #include "google/cloud/binaryauthorization/v1/system_policy_v1_connection.h"
+#include "google/cloud/background_threads.h"
 #include "google/cloud/binaryauthorization/v1/internal/system_policy_v1_connection_impl.h"
 #include "google/cloud/binaryauthorization/v1/internal/system_policy_v1_option_defaults.h"
 #include "google/cloud/binaryauthorization/v1/internal/system_policy_v1_stub_factory.h"
 #include "google/cloud/binaryauthorization/v1/internal/system_policy_v1_tracing_connection.h"
 #include "google/cloud/binaryauthorization/v1/system_policy_v1_options.h"
-#include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
@@ -46,19 +46,17 @@ SystemPolicyV1Connection::GetSystemPolicy(
 std::shared_ptr<SystemPolicyV1Connection> MakeSystemPolicyV1Connection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 SystemPolicyV1PolicyOptionList>(options,
-                                                                 __func__);
+      UnifiedCredentialsOptionList,
+      SystemPolicyV1PolicyOptionList>(options, __func__);
   options = binaryauthorization_v1_internal::SystemPolicyV1DefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = binaryauthorization_v1_internal::CreateDefaultSystemPolicyV1Stub(
-      std::move(auth), options);
+    std::move(auth), options);
   return binaryauthorization_v1_internal::MakeSystemPolicyV1TracingConnection(
-      std::make_shared<
-          binaryauthorization_v1_internal::SystemPolicyV1ConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options)));
+      std::make_shared<binaryauthorization_v1_internal::SystemPolicyV1ConnectionImpl>(
+      std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

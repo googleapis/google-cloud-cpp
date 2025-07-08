@@ -37,25 +37,30 @@ namespace cloud {
 namespace appengine_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<InstancesStub> CreateDefaultInstancesStub(
+std::shared_ptr<InstancesStub>
+CreateDefaultInstancesStub(
     std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
     Options const& options) {
-  auto channel = auth->CreateChannel(options.get<EndpointOption>(),
-                                     internal::MakeChannelArguments(options));
+  auto channel = auth->CreateChannel(
+    options.get<EndpointOption>(), internal::MakeChannelArguments(options));
   auto service_grpc_stub = google::appengine::v1::Instances::NewStub(channel);
-  std::shared_ptr<InstancesStub> stub = std::make_shared<DefaultInstancesStub>(
+  std::shared_ptr<InstancesStub> stub =
+    std::make_shared<DefaultInstancesStub>(
       std::move(service_grpc_stub),
       google::longrunning::Operations::NewStub(channel));
 
   if (auth->RequiresConfigureContext()) {
-    stub = std::make_shared<InstancesAuth>(std::move(auth), std::move(stub));
+    stub = std::make_shared<InstancesAuth>(
+        std::move(auth), std::move(stub));
   }
   stub = std::make_shared<InstancesMetadata>(
       std::move(stub), std::multimap<std::string, std::string>{});
-  if (internal::Contains(options.get<LoggingComponentsOption>(), "rpc")) {
+  if (internal::Contains(
+      options.get<LoggingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<InstancesLogging>(
-        std::move(stub), options.get<GrpcTracingOptionsOption>(),
+        std::move(stub),
+        options.get<GrpcTracingOptionsOption>(),
         options.get<LoggingComponentsOption>());
   }
   if (internal::TracingEnabled(options)) {

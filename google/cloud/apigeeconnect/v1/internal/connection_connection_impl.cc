@@ -32,65 +32,54 @@ namespace apigeeconnect_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<apigeeconnect_v1::ConnectionServiceRetryPolicy> retry_policy(
-    Options const& options) {
-  return options.get<apigeeconnect_v1::ConnectionServiceRetryPolicyOption>()
-      ->clone();
+std::unique_ptr<apigeeconnect_v1::ConnectionServiceRetryPolicy>
+retry_policy(Options const& options) {
+  return options.get<apigeeconnect_v1::ConnectionServiceRetryPolicyOption>()->clone();
 }
 
-std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-  return options.get<apigeeconnect_v1::ConnectionServiceBackoffPolicyOption>()
-      ->clone();
+std::unique_ptr<BackoffPolicy>
+backoff_policy(Options const& options) {
+  return options.get<apigeeconnect_v1::ConnectionServiceBackoffPolicyOption>()->clone();
 }
 
 std::unique_ptr<apigeeconnect_v1::ConnectionServiceConnectionIdempotencyPolicy>
 idempotency_policy(Options const& options) {
-  return options
-      .get<apigeeconnect_v1::
-               ConnectionServiceConnectionIdempotencyPolicyOption>()
-      ->clone();
+  return options.get<apigeeconnect_v1::ConnectionServiceConnectionIdempotencyPolicyOption>()->clone();
 }
 
-}  // namespace
+} // namespace
 
 ConnectionServiceConnectionImpl::ConnectionServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<apigeeconnect_v1_internal::ConnectionServiceStub> stub,
     Options options)
-    : background_(std::move(background)),
-      stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options), ConnectionServiceConnection::options())) {}
+  : background_(std::move(background)), stub_(std::move(stub)),
+    options_(internal::MergeOptions(
+        std::move(options),
+        ConnectionServiceConnection::options())) {}
 
 StreamRange<google::cloud::apigeeconnect::v1::Connection>
-ConnectionServiceConnectionImpl::ListConnections(
-    google::cloud::apigeeconnect::v1::ListConnectionsRequest request) {
+ConnectionServiceConnectionImpl::ListConnections(google::cloud::apigeeconnect::v1::ListConnectionsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListConnections(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::apigeeconnect::v1::Connection>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::apigeeconnect::v1::Connection>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<apigeeconnect_v1::ConnectionServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<apigeeconnect_v1::ConnectionServiceRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::apigeeconnect::v1::ListConnectionsRequest const& r) {
+          Options const& options, google::cloud::apigeeconnect::v1::ListConnectionsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](
-                grpc::ClientContext& context, Options const& options,
-                google::cloud::apigeeconnect::v1::ListConnectionsRequest const&
-                    request) {
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::cloud::apigeeconnect::v1::ListConnectionsRequest const& request) {
               return stub->ListConnections(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::apigeeconnect::v1::ListConnectionsResponse r) {
-        std::vector<google::cloud::apigeeconnect::v1::Connection> result(
-            r.connections().size());
+        std::vector<google::cloud::apigeeconnect::v1::Connection> result(r.connections().size());
         auto& messages = *r.mutable_connections();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;

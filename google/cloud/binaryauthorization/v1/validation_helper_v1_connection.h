@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BINARYAUTHORIZATION_V1_VALIDATION_HELPER_V1_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BINARYAUTHORIZATION_V1_VALIDATION_HELPER_V1_CONNECTION_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/binaryauthorization/v1/internal/validation_helper_v1_retry_traits.h"
 #include "google/cloud/binaryauthorization/v1/validation_helper_v1_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -51,8 +51,7 @@ class ValidationHelperV1RetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class ValidationHelperV1LimitedErrorCountRetryPolicy
-    : public ValidationHelperV1RetryPolicy {
+class ValidationHelperV1LimitedErrorCountRetryPolicy : public ValidationHelperV1RetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -62,16 +61,14 @@ class ValidationHelperV1LimitedErrorCountRetryPolicy
    *     @p maximum_failures == 0.
    */
   explicit ValidationHelperV1LimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   ValidationHelperV1LimitedErrorCountRetryPolicy(
       ValidationHelperV1LimitedErrorCountRetryPolicy&& rhs) noexcept
-      : ValidationHelperV1LimitedErrorCountRetryPolicy(rhs.maximum_failures()) {
-  }
+    : ValidationHelperV1LimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   ValidationHelperV1LimitedErrorCountRetryPolicy(
       ValidationHelperV1LimitedErrorCountRetryPolicy const& rhs) noexcept
-      : ValidationHelperV1LimitedErrorCountRetryPolicy(rhs.maximum_failures()) {
-  }
+    : ValidationHelperV1LimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -91,9 +88,7 @@ class ValidationHelperV1LimitedErrorCountRetryPolicy
   using BaseType = ValidationHelperV1RetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      binaryauthorization_v1_internal::ValidationHelperV1RetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<binaryauthorization_v1_internal::ValidationHelperV1RetryTraits> impl_;
 };
 
 /**
@@ -106,8 +101,7 @@ class ValidationHelperV1LimitedErrorCountRetryPolicy
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class ValidationHelperV1LimitedTimeRetryPolicy
-    : public ValidationHelperV1RetryPolicy {
+class ValidationHelperV1LimitedTimeRetryPolicy : public ValidationHelperV1RetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -132,14 +126,12 @@ class ValidationHelperV1LimitedTimeRetryPolicy
   template <typename DurationRep, typename DurationPeriod>
   explicit ValidationHelperV1LimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  ValidationHelperV1LimitedTimeRetryPolicy(
-      ValidationHelperV1LimitedTimeRetryPolicy&& rhs) noexcept
-      : ValidationHelperV1LimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  ValidationHelperV1LimitedTimeRetryPolicy(
-      ValidationHelperV1LimitedTimeRetryPolicy const& rhs) noexcept
-      : ValidationHelperV1LimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  ValidationHelperV1LimitedTimeRetryPolicy(ValidationHelperV1LimitedTimeRetryPolicy&& rhs) noexcept
+    : ValidationHelperV1LimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  ValidationHelperV1LimitedTimeRetryPolicy(ValidationHelperV1LimitedTimeRetryPolicy const& rhs) noexcept
+    : ValidationHelperV1LimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -161,23 +153,20 @@ class ValidationHelperV1LimitedTimeRetryPolicy
   using BaseType = ValidationHelperV1RetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      binaryauthorization_v1_internal::ValidationHelperV1RetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<binaryauthorization_v1_internal::ValidationHelperV1RetryTraits> impl_;
 };
 
 /**
  * The `ValidationHelperV1Connection` object for `ValidationHelperV1Client`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `ValidationHelperV1Client`. This allows users to inject custom
- * behavior (e.g., with a Google Mock object) when writing tests that use
- * objects of type `ValidationHelperV1Client`.
+ * sets in `ValidationHelperV1Client`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `ValidationHelperV1Client`.
  *
  * To create a concrete instance, see `MakeValidationHelperV1Connection()`.
  *
- * For mocking, see
- * `binaryauthorization_v1_mocks::MockValidationHelperV1Connection`.
+ * For mocking, see `binaryauthorization_v1_mocks::MockValidationHelperV1Connection`.
  */
 class ValidationHelperV1Connection {
  public:
@@ -185,24 +174,19 @@ class ValidationHelperV1Connection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<google::cloud::binaryauthorization::v1::
-                       ValidateAttestationOccurrenceResponse>
-  ValidateAttestationOccurrence(
-      google::cloud::binaryauthorization::v1::
-          ValidateAttestationOccurrenceRequest const& request);
+  virtual StatusOr<google::cloud::binaryauthorization::v1::ValidateAttestationOccurrenceResponse>
+  ValidateAttestationOccurrence(google::cloud::binaryauthorization::v1::ValidateAttestationOccurrenceRequest const& request);
 };
 
 /**
- * A factory function to construct an object of type
- * `ValidationHelperV1Connection`.
+ * A factory function to construct an object of type `ValidationHelperV1Connection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of
- * ValidationHelperV1Client.
+ * should be passed as an argument to the constructor of ValidationHelperV1Client.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `ValidationHelperV1Connection`. Expected options are any of the
- * types in the following option lists:
+ * returned `ValidationHelperV1Connection`. Expected options are any of the types in
+ * the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
@@ -212,8 +196,8 @@ class ValidationHelperV1Connection {
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
- * @param options (optional) Configure the `ValidationHelperV1Connection`
- * created by this function.
+ * @param options (optional) Configure the `ValidationHelperV1Connection` created by
+ * this function.
  */
 std::shared_ptr<ValidationHelperV1Connection> MakeValidationHelperV1Connection(
     Options options = {});

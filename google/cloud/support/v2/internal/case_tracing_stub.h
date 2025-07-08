@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SUPPORT_V2_INTERNAL_CASE_TRACING_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SUPPORT_V2_INTERNAL_CASE_TRACING_STUB_H
 
-#include "google/cloud/support/v2/internal/case_stub.h"
 #include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/options.h"
+#include "google/cloud/support/v2/internal/case_stub.h"
 #include "google/cloud/version.h"
 #include <memory>
 
@@ -39,43 +39,48 @@ class CaseServiceTracingStub : public CaseServiceStub {
   explicit CaseServiceTracingStub(std::shared_ptr<CaseServiceStub> child);
 
   StatusOr<google::cloud::support::v2::Case> GetCase(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::support::v2::GetCaseRequest const& request) override;
 
   StatusOr<google::cloud::support::v2::ListCasesResponse> ListCases(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::support::v2::ListCasesRequest const& request) override;
 
   StatusOr<google::cloud::support::v2::SearchCasesResponse> SearchCases(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::support::v2::SearchCasesRequest const& request) override;
 
   StatusOr<google::cloud::support::v2::Case> CreateCase(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::support::v2::CreateCaseRequest const& request) override;
 
   StatusOr<google::cloud::support::v2::Case> UpdateCase(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::support::v2::UpdateCaseRequest const& request) override;
 
   StatusOr<google::cloud::support::v2::Case> EscalateCase(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::support::v2::EscalateCaseRequest const& request) override;
 
   StatusOr<google::cloud::support::v2::Case> CloseCase(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::support::v2::CloseCaseRequest const& request) override;
 
-  StatusOr<google::cloud::support::v2::SearchCaseClassificationsResponse>
-  SearchCaseClassifications(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::support::v2::SearchCaseClassificationsRequest const&
-          request) override;
+  StatusOr<google::cloud::support::v2::SearchCaseClassificationsResponse> SearchCaseClassifications(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::support::v2::SearchCaseClassificationsRequest const& request) override;
 
  private:
   std::shared_ptr<CaseServiceStub> child_;
-  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
-      propagator_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

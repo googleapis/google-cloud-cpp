@@ -35,103 +35,107 @@ class RegistrationServiceLogging : public RegistrationServiceStub {
  public:
   ~RegistrationServiceLogging() override = default;
   RegistrationServiceLogging(std::shared_ptr<RegistrationServiceStub> child,
-                             TracingOptions tracing_options,
-                             std::set<std::string> const& components);
+                       TracingOptions tracing_options,
+                       std::set<std::string> const& components);
 
   StatusOr<google::cloud::servicedirectory::v1::Namespace> CreateNamespace(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::servicedirectory::v1::CreateNamespaceRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::servicedirectory::v1::CreateNamespaceRequest const& request) override;
 
-  StatusOr<google::cloud::servicedirectory::v1::ListNamespacesResponse>
-  ListNamespaces(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::servicedirectory::v1::ListNamespacesRequest const& request)
-      override;
+  StatusOr<google::cloud::servicedirectory::v1::ListNamespacesResponse> ListNamespaces(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::servicedirectory::v1::ListNamespacesRequest const& request) override;
 
   StatusOr<google::cloud::servicedirectory::v1::Namespace> GetNamespace(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::servicedirectory::v1::GetNamespaceRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::servicedirectory::v1::GetNamespaceRequest const& request) override;
 
   StatusOr<google::cloud::servicedirectory::v1::Namespace> UpdateNamespace(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::servicedirectory::v1::UpdateNamespaceRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::servicedirectory::v1::UpdateNamespaceRequest const& request) override;
 
   Status DeleteNamespace(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::servicedirectory::v1::DeleteNamespaceRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::servicedirectory::v1::DeleteNamespaceRequest const& request) override;
 
   StatusOr<google::cloud::servicedirectory::v1::Service> CreateService(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::servicedirectory::v1::CreateServiceRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::servicedirectory::v1::CreateServiceRequest const& request) override;
 
-  StatusOr<google::cloud::servicedirectory::v1::ListServicesResponse>
-  ListServices(grpc::ClientContext& context, Options const& options,
-               google::cloud::servicedirectory::v1::ListServicesRequest const&
-                   request) override;
+  StatusOr<google::cloud::servicedirectory::v1::ListServicesResponse> ListServices(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::servicedirectory::v1::ListServicesRequest const& request) override;
 
   StatusOr<google::cloud::servicedirectory::v1::Service> GetService(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::servicedirectory::v1::GetServiceRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::servicedirectory::v1::GetServiceRequest const& request) override;
 
   StatusOr<google::cloud::servicedirectory::v1::Service> UpdateService(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::servicedirectory::v1::UpdateServiceRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::servicedirectory::v1::UpdateServiceRequest const& request) override;
 
   Status DeleteService(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::servicedirectory::v1::DeleteServiceRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::servicedirectory::v1::DeleteServiceRequest const& request) override;
 
   StatusOr<google::cloud::servicedirectory::v1::Endpoint> CreateEndpoint(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::servicedirectory::v1::CreateEndpointRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::servicedirectory::v1::CreateEndpointRequest const& request) override;
 
-  StatusOr<google::cloud::servicedirectory::v1::ListEndpointsResponse>
-  ListEndpoints(grpc::ClientContext& context, Options const& options,
-                google::cloud::servicedirectory::v1::ListEndpointsRequest const&
-                    request) override;
+  StatusOr<google::cloud::servicedirectory::v1::ListEndpointsResponse> ListEndpoints(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::servicedirectory::v1::ListEndpointsRequest const& request) override;
 
   StatusOr<google::cloud::servicedirectory::v1::Endpoint> GetEndpoint(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::servicedirectory::v1::GetEndpointRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::servicedirectory::v1::GetEndpointRequest const& request) override;
 
   StatusOr<google::cloud::servicedirectory::v1::Endpoint> UpdateEndpoint(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::servicedirectory::v1::UpdateEndpointRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::servicedirectory::v1::UpdateEndpointRequest const& request) override;
 
   Status DeleteEndpoint(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::servicedirectory::v1::DeleteEndpointRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::servicedirectory::v1::DeleteEndpointRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::location::ListLocationsRequest const& request) override;
 
   StatusOr<google::cloud::location::Location> GetLocation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::location::GetLocationRequest const& request) override;
 
  private:

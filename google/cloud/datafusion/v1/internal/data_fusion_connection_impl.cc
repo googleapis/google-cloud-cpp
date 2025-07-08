@@ -17,9 +17,9 @@
 // source: google/cloud/datafusion/v1/datafusion.proto
 
 #include "google/cloud/datafusion/v1/internal/data_fusion_connection_impl.h"
-#include "google/cloud/datafusion/v1/internal/data_fusion_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/datafusion/v1/internal/data_fusion_option_defaults.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/async_long_running_operation.h"
 #include "google/cloud/internal/pagination_range.h"
@@ -33,67 +33,58 @@ namespace datafusion_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<datafusion_v1::DataFusionRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<datafusion_v1::DataFusionRetryPolicy>
+retry_policy(Options const& options) {
   return options.get<datafusion_v1::DataFusionRetryPolicyOption>()->clone();
 }
 
-std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+std::unique_ptr<BackoffPolicy>
+backoff_policy(Options const& options) {
   return options.get<datafusion_v1::DataFusionBackoffPolicyOption>()->clone();
 }
 
 std::unique_ptr<datafusion_v1::DataFusionConnectionIdempotencyPolicy>
 idempotency_policy(Options const& options) {
-  return options
-      .get<datafusion_v1::DataFusionConnectionIdempotencyPolicyOption>()
-      ->clone();
+  return options.get<datafusion_v1::DataFusionConnectionIdempotencyPolicyOption>()->clone();
 }
 
 std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
   return options.get<datafusion_v1::DataFusionPollingPolicyOption>()->clone();
 }
 
-}  // namespace
+} // namespace
 
 DataFusionConnectionImpl::DataFusionConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<datafusion_v1_internal::DataFusionStub> stub,
     Options options)
-    : background_(std::move(background)),
-      stub_(std::move(stub)),
-      options_(internal::MergeOptions(std::move(options),
-                                      DataFusionConnection::options())) {}
+  : background_(std::move(background)), stub_(std::move(stub)),
+    options_(internal::MergeOptions(
+        std::move(options),
+        DataFusionConnection::options())) {}
 
 StreamRange<google::cloud::datafusion::v1::Version>
-DataFusionConnectionImpl::ListAvailableVersions(
-    google::cloud::datafusion::v1::ListAvailableVersionsRequest request) {
+DataFusionConnectionImpl::ListAvailableVersions(google::cloud::datafusion::v1::ListAvailableVersionsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
-  auto idempotency =
-      idempotency_policy(*current)->ListAvailableVersions(request);
+  auto idempotency = idempotency_policy(*current)->ListAvailableVersions(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::datafusion::v1::Version>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::datafusion::v1::Version>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<datafusion_v1::DataFusionRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<datafusion_v1::DataFusionRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::datafusion::v1::ListAvailableVersionsRequest const&
-              r) {
+          Options const& options, google::cloud::datafusion::v1::ListAvailableVersionsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::datafusion::v1::
-                       ListAvailableVersionsRequest const& request) {
+                   google::cloud::datafusion::v1::ListAvailableVersionsRequest const& request) {
               return stub->ListAvailableVersions(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::datafusion::v1::ListAvailableVersionsResponse r) {
-        std::vector<google::cloud::datafusion::v1::Version> result(
-            r.available_versions().size());
+        std::vector<google::cloud::datafusion::v1::Version> result(r.available_versions().size());
         auto& messages = *r.mutable_available_versions();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -101,33 +92,27 @@ DataFusionConnectionImpl::ListAvailableVersions(
 }
 
 StreamRange<google::cloud::datafusion::v1::Instance>
-DataFusionConnectionImpl::ListInstances(
-    google::cloud::datafusion::v1::ListInstancesRequest request) {
+DataFusionConnectionImpl::ListInstances(google::cloud::datafusion::v1::ListInstancesRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListInstances(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::datafusion::v1::Instance>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::datafusion::v1::Instance>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<datafusion_v1::DataFusionRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<datafusion_v1::DataFusionRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::datafusion::v1::ListInstancesRequest const& r) {
+          Options const& options, google::cloud::datafusion::v1::ListInstancesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::datafusion::v1::ListInstancesRequest const&
-                       request) {
+                   google::cloud::datafusion::v1::ListInstancesRequest const& request) {
               return stub->ListInstances(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::datafusion::v1::ListInstancesResponse r) {
-        std::vector<google::cloud::datafusion::v1::Instance> result(
-            r.instances().size());
+        std::vector<google::cloud::datafusion::v1::Instance> result(r.instances().size());
         auto& messages = *r.mutable_instances();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -135,8 +120,7 @@ DataFusionConnectionImpl::ListInstances(
 }
 
 StatusOr<google::cloud::datafusion::v1::Instance>
-DataFusionConnectionImpl::GetInstance(
-    google::cloud::datafusion::v1::GetInstanceRequest const& request) {
+DataFusionConnectionImpl::GetInstance(google::cloud::datafusion::v1::GetInstanceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -149,48 +133,42 @@ DataFusionConnectionImpl::GetInstance(
 }
 
 future<StatusOr<google::cloud::datafusion::v1::Instance>>
-DataFusionConnectionImpl::CreateInstance(
-    google::cloud::datafusion::v1::CreateInstanceRequest const& request) {
+DataFusionConnectionImpl::CreateInstance(google::cloud::datafusion::v1::CreateInstanceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->CreateInstance(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<
-      google::cloud::datafusion::v1::Instance>(
-      background_->cq(), current, std::move(request_copy),
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::datafusion::v1::CreateInstanceRequest const& request) {
-        return stub->AsyncCreateInstance(cq, std::move(context),
-                                         std::move(options), request);
-      },
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::datafusion::v1::Instance>,
-      retry_policy(*current), backoff_policy(*current), idempotent,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::datafusion::v1::Instance>(
+    background_->cq(), current, std::move(request_copy),
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::cloud::datafusion::v1::CreateInstanceRequest const& request) {
+     return stub->AsyncCreateInstance(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::datafusion::v1::Instance>,
+    retry_policy(*current), backoff_policy(*current), idempotent,
+    polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 DataFusionConnectionImpl::CreateInstance(
-    NoAwaitTag,
-    google::cloud::datafusion::v1::CreateInstanceRequest const& request) {
+      NoAwaitTag, google::cloud::datafusion::v1::CreateInstanceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -205,83 +183,71 @@ DataFusionConnectionImpl::CreateInstance(
 
 future<StatusOr<google::cloud::datafusion::v1::Instance>>
 DataFusionConnectionImpl::CreateInstance(
-    google::longrunning::Operation const& operation) {
+      google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata()
-           .Is<typename google::cloud::datafusion::v1::OperationMetadata>()) {
+  if (!operation.metadata().Is<typename google::cloud::datafusion::v1::OperationMetadata>()) {
     return make_ready_future<StatusOr<google::cloud::datafusion::v1::Instance>>(
-        internal::InvalidArgumentError(
-            "operation does not correspond to CreateInstance",
-            GCP_ERROR_INFO().WithMetadata("operation",
-                                          operation.metadata().DebugString())));
+        internal::InvalidArgumentError("operation does not correspond to CreateInstance",
+                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<
-      google::cloud::datafusion::v1::Instance>(
-      background_->cq(), current, operation,
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::datafusion::v1::Instance>,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::datafusion::v1::Instance>(
+    background_->cq(), current, operation,
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::datafusion::v1::Instance>,
+    polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::datafusion::v1::OperationMetadata>>
-DataFusionConnectionImpl::DeleteInstance(
-    google::cloud::datafusion::v1::DeleteInstanceRequest const& request) {
+DataFusionConnectionImpl::DeleteInstance(google::cloud::datafusion::v1::DeleteInstanceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->DeleteInstance(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<
-      google::cloud::datafusion::v1::OperationMetadata>(
-      background_->cq(), current, std::move(request_copy),
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::datafusion::v1::DeleteInstanceRequest const& request) {
-        return stub->AsyncDeleteInstance(cq, std::move(context),
-                                         std::move(options), request);
-      },
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultMetadata<
-          google::cloud::datafusion::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current), idempotent,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::datafusion::v1::OperationMetadata>(
+    background_->cq(), current, std::move(request_copy),
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::cloud::datafusion::v1::DeleteInstanceRequest const& request) {
+     return stub->AsyncDeleteInstance(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultMetadata<google::cloud::datafusion::v1::OperationMetadata>,
+    retry_policy(*current), backoff_policy(*current), idempotent,
+    polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 DataFusionConnectionImpl::DeleteInstance(
-    NoAwaitTag,
-    google::cloud::datafusion::v1::DeleteInstanceRequest const& request) {
+      NoAwaitTag, google::cloud::datafusion::v1::DeleteInstanceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -296,84 +262,71 @@ DataFusionConnectionImpl::DeleteInstance(
 
 future<StatusOr<google::cloud::datafusion::v1::OperationMetadata>>
 DataFusionConnectionImpl::DeleteInstance(
-    google::longrunning::Operation const& operation) {
+      google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata()
-           .Is<typename google::cloud::datafusion::v1::OperationMetadata>()) {
-    return make_ready_future<
-        StatusOr<google::cloud::datafusion::v1::OperationMetadata>>(
-        internal::InvalidArgumentError(
-            "operation does not correspond to DeleteInstance",
-            GCP_ERROR_INFO().WithMetadata("operation",
-                                          operation.metadata().DebugString())));
+  if (!operation.metadata().Is<typename google::cloud::datafusion::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::datafusion::v1::OperationMetadata>>(
+        internal::InvalidArgumentError("operation does not correspond to DeleteInstance",
+                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<
-      google::cloud::datafusion::v1::OperationMetadata>(
-      background_->cq(), current, operation,
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultMetadata<
-          google::cloud::datafusion::v1::OperationMetadata>,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::datafusion::v1::OperationMetadata>(
+    background_->cq(), current, operation,
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultMetadata<google::cloud::datafusion::v1::OperationMetadata>,
+    polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::datafusion::v1::Instance>>
-DataFusionConnectionImpl::UpdateInstance(
-    google::cloud::datafusion::v1::UpdateInstanceRequest const& request) {
+DataFusionConnectionImpl::UpdateInstance(google::cloud::datafusion::v1::UpdateInstanceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->UpdateInstance(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<
-      google::cloud::datafusion::v1::Instance>(
-      background_->cq(), current, std::move(request_copy),
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::datafusion::v1::UpdateInstanceRequest const& request) {
-        return stub->AsyncUpdateInstance(cq, std::move(context),
-                                         std::move(options), request);
-      },
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::datafusion::v1::Instance>,
-      retry_policy(*current), backoff_policy(*current), idempotent,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::datafusion::v1::Instance>(
+    background_->cq(), current, std::move(request_copy),
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::cloud::datafusion::v1::UpdateInstanceRequest const& request) {
+     return stub->AsyncUpdateInstance(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::datafusion::v1::Instance>,
+    retry_policy(*current), backoff_policy(*current), idempotent,
+    polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 DataFusionConnectionImpl::UpdateInstance(
-    NoAwaitTag,
-    google::cloud::datafusion::v1::UpdateInstanceRequest const& request) {
+      NoAwaitTag, google::cloud::datafusion::v1::UpdateInstanceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -388,91 +341,78 @@ DataFusionConnectionImpl::UpdateInstance(
 
 future<StatusOr<google::cloud::datafusion::v1::Instance>>
 DataFusionConnectionImpl::UpdateInstance(
-    google::longrunning::Operation const& operation) {
+      google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata()
-           .Is<typename google::cloud::datafusion::v1::OperationMetadata>()) {
+  if (!operation.metadata().Is<typename google::cloud::datafusion::v1::OperationMetadata>()) {
     return make_ready_future<StatusOr<google::cloud::datafusion::v1::Instance>>(
-        internal::InvalidArgumentError(
-            "operation does not correspond to UpdateInstance",
-            GCP_ERROR_INFO().WithMetadata("operation",
-                                          operation.metadata().DebugString())));
+        internal::InvalidArgumentError("operation does not correspond to UpdateInstance",
+                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<
-      google::cloud::datafusion::v1::Instance>(
-      background_->cq(), current, operation,
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::datafusion::v1::Instance>,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::datafusion::v1::Instance>(
+    background_->cq(), current, operation,
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::datafusion::v1::Instance>,
+    polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::datafusion::v1::Instance>>
-DataFusionConnectionImpl::RestartInstance(
-    google::cloud::datafusion::v1::RestartInstanceRequest const& request) {
+DataFusionConnectionImpl::RestartInstance(google::cloud::datafusion::v1::RestartInstanceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->RestartInstance(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<
-      google::cloud::datafusion::v1::Instance>(
-      background_->cq(), current, std::move(request_copy),
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::datafusion::v1::RestartInstanceRequest const&
-              request) {
-        return stub->AsyncRestartInstance(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::datafusion::v1::Instance>,
-      retry_policy(*current), backoff_policy(*current), idempotent,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::datafusion::v1::Instance>(
+    background_->cq(), current, std::move(request_copy),
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::cloud::datafusion::v1::RestartInstanceRequest const& request) {
+     return stub->AsyncRestartInstance(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::datafusion::v1::Instance>,
+    retry_policy(*current), backoff_policy(*current), idempotent,
+    polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 DataFusionConnectionImpl::RestartInstance(
-    NoAwaitTag,
-    google::cloud::datafusion::v1::RestartInstanceRequest const& request) {
+      NoAwaitTag, google::cloud::datafusion::v1::RestartInstanceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->RestartInstance(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::datafusion::v1::RestartInstanceRequest const&
-                 request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::datafusion::v1::RestartInstanceRequest const& request) {
         return stub_->RestartInstance(context, options, request);
       },
       *current, request, __func__);
@@ -480,38 +420,32 @@ DataFusionConnectionImpl::RestartInstance(
 
 future<StatusOr<google::cloud::datafusion::v1::Instance>>
 DataFusionConnectionImpl::RestartInstance(
-    google::longrunning::Operation const& operation) {
+      google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata()
-           .Is<typename google::cloud::datafusion::v1::OperationMetadata>()) {
+  if (!operation.metadata().Is<typename google::cloud::datafusion::v1::OperationMetadata>()) {
     return make_ready_future<StatusOr<google::cloud::datafusion::v1::Instance>>(
-        internal::InvalidArgumentError(
-            "operation does not correspond to RestartInstance",
-            GCP_ERROR_INFO().WithMetadata("operation",
-                                          operation.metadata().DebugString())));
+        internal::InvalidArgumentError("operation does not correspond to RestartInstance",
+                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<
-      google::cloud::datafusion::v1::Instance>(
-      background_->cq(), current, operation,
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::datafusion::v1::Instance>,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::datafusion::v1::Instance>(
+    background_->cq(), current, operation,
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::datafusion::v1::Instance>,
+    polling_policy(*current), __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

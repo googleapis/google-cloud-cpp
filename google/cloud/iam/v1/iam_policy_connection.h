@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAM_V1_IAM_POLICY_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAM_V1_IAM_POLICY_CONNECTION_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/iam/v1/iam_policy_connection_idempotency_policy.h"
 #include "google/cloud/iam/v1/internal/iam_policy_retry_traits.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -61,14 +61,14 @@ class IAMPolicyLimitedErrorCountRetryPolicy : public IAMPolicyRetryPolicy {
    *     @p maximum_failures == 0.
    */
   explicit IAMPolicyLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   IAMPolicyLimitedErrorCountRetryPolicy(
       IAMPolicyLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : IAMPolicyLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : IAMPolicyLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   IAMPolicyLimitedErrorCountRetryPolicy(
       IAMPolicyLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : IAMPolicyLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : IAMPolicyLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -88,9 +88,7 @@ class IAMPolicyLimitedErrorCountRetryPolicy : public IAMPolicyRetryPolicy {
   using BaseType = IAMPolicyRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      iam_v1_internal::IAMPolicyRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<iam_v1_internal::IAMPolicyRetryTraits> impl_;
 };
 
 /**
@@ -128,14 +126,12 @@ class IAMPolicyLimitedTimeRetryPolicy : public IAMPolicyRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit IAMPolicyLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  IAMPolicyLimitedTimeRetryPolicy(
-      IAMPolicyLimitedTimeRetryPolicy&& rhs) noexcept
-      : IAMPolicyLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  IAMPolicyLimitedTimeRetryPolicy(
-      IAMPolicyLimitedTimeRetryPolicy const& rhs) noexcept
-      : IAMPolicyLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  IAMPolicyLimitedTimeRetryPolicy(IAMPolicyLimitedTimeRetryPolicy&& rhs) noexcept
+    : IAMPolicyLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  IAMPolicyLimitedTimeRetryPolicy(IAMPolicyLimitedTimeRetryPolicy const& rhs) noexcept
+    : IAMPolicyLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -157,9 +153,7 @@ class IAMPolicyLimitedTimeRetryPolicy : public IAMPolicyRetryPolicy {
   using BaseType = IAMPolicyRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      iam_v1_internal::IAMPolicyRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<iam_v1_internal::IAMPolicyRetryTraits> impl_;
 };
 
 /**
@@ -180,11 +174,11 @@ class IAMPolicyConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
 
   virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
   TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);

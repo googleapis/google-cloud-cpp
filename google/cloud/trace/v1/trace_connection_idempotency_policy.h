@@ -34,21 +34,20 @@ class TraceServiceConnectionIdempotencyPolicy {
   virtual ~TraceServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<TraceServiceConnectionIdempotencyPolicy> clone()
-      const;
+  virtual std::unique_ptr<TraceServiceConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency ListTraces(
-      google::devtools::cloudtrace::v1::ListTracesRequest request);
+  virtual google::cloud::Idempotency
+  ListTraces(google::devtools::cloudtrace::v1::ListTracesRequest request);
 
-  virtual google::cloud::Idempotency GetTrace(
-      google::devtools::cloudtrace::v1::GetTraceRequest const& request);
+  virtual google::cloud::Idempotency
+  GetTrace(google::devtools::cloudtrace::v1::GetTraceRequest const& request);
 
-  virtual google::cloud::Idempotency PatchTraces(
-      google::devtools::cloudtrace::v1::PatchTracesRequest const& request);
+  virtual google::cloud::Idempotency
+  PatchTraces(google::devtools::cloudtrace::v1::PatchTracesRequest const& request);
 };
 
 std::unique_ptr<TraceServiceConnectionIdempotencyPolicy>
-MakeDefaultTraceServiceConnectionIdempotencyPolicy();
+    MakeDefaultTraceServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace trace_v1

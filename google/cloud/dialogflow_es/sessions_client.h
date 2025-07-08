@@ -65,8 +65,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class SessionsClient {
  public:
-  explicit SessionsClient(std::shared_ptr<SessionsConnection> connection,
-                          Options opts = {});
+  explicit SessionsClient(std::shared_ptr<SessionsConnection> connection, Options opts = {});
   ~SessionsClient();
 
   ///@{
@@ -146,10 +145,8 @@ class SessionsClient {
   /// [google.cloud.dialogflow.v2.DetectIntentResponse]: @googleapis_reference_link{google/cloud/dialogflow/v2/session.proto#L171}
   ///
   // clang-format on
-  StatusOr<google::cloud::dialogflow::v2::DetectIntentResponse> DetectIntent(
-      std::string const& session,
-      google::cloud::dialogflow::v2::QueryInput const& query_input,
-      Options opts = {});
+  StatusOr<google::cloud::dialogflow::v2::DetectIntentResponse>
+  DetectIntent(std::string const& session, google::cloud::dialogflow::v2::QueryInput const& query_input, Options opts = {});
 
   // clang-format off
   ///
@@ -192,9 +189,8 @@ class SessionsClient {
   /// [google.cloud.dialogflow.v2.DetectIntentResponse]: @googleapis_reference_link{google/cloud/dialogflow/v2/session.proto#L171}
   ///
   // clang-format on
-  StatusOr<google::cloud::dialogflow::v2::DetectIntentResponse> DetectIntent(
-      google::cloud::dialogflow::v2::DetectIntentRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::dialogflow::v2::DetectIntentResponse>
+  DetectIntent(google::cloud::dialogflow::v2::DetectIntentRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -275,8 +271,8 @@ class SessionsClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request, Options opts = {});
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -305,9 +301,8 @@ class SessionsClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -342,8 +337,8 @@ class SessionsClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -382,8 +377,8 @@ class SessionsClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -409,8 +404,8 @@ class SessionsClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -441,9 +436,8 @@ class SessionsClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -477,7 +471,8 @@ class SessionsClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(std::string const& name, Options opts = {});
+  Status
+  CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -516,9 +511,8 @@ class SessionsClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request,
-      Options opts = {});
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<SessionsConnection> connection_;

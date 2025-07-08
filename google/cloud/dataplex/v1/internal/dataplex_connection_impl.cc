@@ -17,9 +17,9 @@
 // source: google/cloud/dataplex/v1/service.proto
 
 #include "google/cloud/dataplex/v1/internal/dataplex_connection_impl.h"
-#include "google/cloud/dataplex/v1/internal/dataplex_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/dataplex/v1/internal/dataplex_option_defaults.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/async_long_running_operation.h"
 #include "google/cloud/internal/pagination_range.h"
@@ -33,87 +33,80 @@ namespace dataplex_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<dataplex_v1::DataplexServiceRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<dataplex_v1::DataplexServiceRetryPolicy>
+retry_policy(Options const& options) {
   return options.get<dataplex_v1::DataplexServiceRetryPolicyOption>()->clone();
 }
 
-std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-  return options.get<dataplex_v1::DataplexServiceBackoffPolicyOption>()
-      ->clone();
+std::unique_ptr<BackoffPolicy>
+backoff_policy(Options const& options) {
+  return options.get<dataplex_v1::DataplexServiceBackoffPolicyOption>()->clone();
 }
 
 std::unique_ptr<dataplex_v1::DataplexServiceConnectionIdempotencyPolicy>
 idempotency_policy(Options const& options) {
-  return options
-      .get<dataplex_v1::DataplexServiceConnectionIdempotencyPolicyOption>()
-      ->clone();
+  return options.get<dataplex_v1::DataplexServiceConnectionIdempotencyPolicyOption>()->clone();
 }
 
 std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-  return options.get<dataplex_v1::DataplexServicePollingPolicyOption>()
-      ->clone();
+  return options.get<dataplex_v1::DataplexServicePollingPolicyOption>()->clone();
 }
 
-}  // namespace
+} // namespace
 
 DataplexServiceConnectionImpl::DataplexServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<dataplex_v1_internal::DataplexServiceStub> stub,
     Options options)
-    : background_(std::move(background)),
-      stub_(std::move(stub)),
-      options_(internal::MergeOptions(std::move(options),
-                                      DataplexServiceConnection::options())) {}
+  : background_(std::move(background)), stub_(std::move(stub)),
+    options_(internal::MergeOptions(
+        std::move(options),
+        DataplexServiceConnection::options())) {}
 
 future<StatusOr<google::cloud::dataplex::v1::Lake>>
-DataplexServiceConnectionImpl::CreateLake(
-    google::cloud::dataplex::v1::CreateLakeRequest const& request) {
+DataplexServiceConnectionImpl::CreateLake(google::cloud::dataplex::v1::CreateLakeRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->CreateLake(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<
-      google::cloud::dataplex::v1::Lake>(
-      background_->cq(), current, std::move(request_copy),
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::dataplex::v1::CreateLakeRequest const& request) {
-        return stub->AsyncCreateLake(cq, std::move(context), std::move(options),
-                                     request);
-      },
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::dataplex::v1::Lake>,
-      retry_policy(*current), backoff_policy(*current), idempotent,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::dataplex::v1::Lake>(
+    background_->cq(), current, std::move(request_copy),
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::cloud::dataplex::v1::CreateLakeRequest const& request) {
+     return stub->AsyncCreateLake(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::dataplex::v1::Lake>,
+    retry_policy(*current), backoff_policy(*current), idempotent,
+    polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 DataplexServiceConnectionImpl::CreateLake(
-    NoAwaitTag, google::cloud::dataplex::v1::CreateLakeRequest const& request) {
+      NoAwaitTag, google::cloud::dataplex::v1::CreateLakeRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateLake(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dataplex::v1::CreateLakeRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dataplex::v1::CreateLakeRequest const& request) {
         return stub_->CreateLake(context, options, request);
       },
       *current, request, __func__);
@@ -121,88 +114,78 @@ DataplexServiceConnectionImpl::CreateLake(
 
 future<StatusOr<google::cloud::dataplex::v1::Lake>>
 DataplexServiceConnectionImpl::CreateLake(
-    google::longrunning::Operation const& operation) {
+      google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata()
-           .Is<typename google::cloud::dataplex::v1::OperationMetadata>()) {
+  if (!operation.metadata().Is<typename google::cloud::dataplex::v1::OperationMetadata>()) {
     return make_ready_future<StatusOr<google::cloud::dataplex::v1::Lake>>(
-        internal::InvalidArgumentError(
-            "operation does not correspond to CreateLake",
-            GCP_ERROR_INFO().WithMetadata("operation",
-                                          operation.metadata().DebugString())));
+        internal::InvalidArgumentError("operation does not correspond to CreateLake",
+                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<
-      google::cloud::dataplex::v1::Lake>(
-      background_->cq(), current, operation,
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::dataplex::v1::Lake>,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::dataplex::v1::Lake>(
+    background_->cq(), current, operation,
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::dataplex::v1::Lake>,
+    polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::dataplex::v1::Lake>>
-DataplexServiceConnectionImpl::UpdateLake(
-    google::cloud::dataplex::v1::UpdateLakeRequest const& request) {
+DataplexServiceConnectionImpl::UpdateLake(google::cloud::dataplex::v1::UpdateLakeRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->UpdateLake(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<
-      google::cloud::dataplex::v1::Lake>(
-      background_->cq(), current, std::move(request_copy),
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::dataplex::v1::UpdateLakeRequest const& request) {
-        return stub->AsyncUpdateLake(cq, std::move(context), std::move(options),
-                                     request);
-      },
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::dataplex::v1::Lake>,
-      retry_policy(*current), backoff_policy(*current), idempotent,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::dataplex::v1::Lake>(
+    background_->cq(), current, std::move(request_copy),
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::cloud::dataplex::v1::UpdateLakeRequest const& request) {
+     return stub->AsyncUpdateLake(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::dataplex::v1::Lake>,
+    retry_policy(*current), backoff_policy(*current), idempotent,
+    polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 DataplexServiceConnectionImpl::UpdateLake(
-    NoAwaitTag, google::cloud::dataplex::v1::UpdateLakeRequest const& request) {
+      NoAwaitTag, google::cloud::dataplex::v1::UpdateLakeRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateLake(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dataplex::v1::UpdateLakeRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dataplex::v1::UpdateLakeRequest const& request) {
         return stub_->UpdateLake(context, options, request);
       },
       *current, request, __func__);
@@ -210,88 +193,78 @@ DataplexServiceConnectionImpl::UpdateLake(
 
 future<StatusOr<google::cloud::dataplex::v1::Lake>>
 DataplexServiceConnectionImpl::UpdateLake(
-    google::longrunning::Operation const& operation) {
+      google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata()
-           .Is<typename google::cloud::dataplex::v1::OperationMetadata>()) {
+  if (!operation.metadata().Is<typename google::cloud::dataplex::v1::OperationMetadata>()) {
     return make_ready_future<StatusOr<google::cloud::dataplex::v1::Lake>>(
-        internal::InvalidArgumentError(
-            "operation does not correspond to UpdateLake",
-            GCP_ERROR_INFO().WithMetadata("operation",
-                                          operation.metadata().DebugString())));
+        internal::InvalidArgumentError("operation does not correspond to UpdateLake",
+                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<
-      google::cloud::dataplex::v1::Lake>(
-      background_->cq(), current, operation,
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::dataplex::v1::Lake>,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::dataplex::v1::Lake>(
+    background_->cq(), current, operation,
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::dataplex::v1::Lake>,
+    polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
-DataplexServiceConnectionImpl::DeleteLake(
-    google::cloud::dataplex::v1::DeleteLakeRequest const& request) {
+DataplexServiceConnectionImpl::DeleteLake(google::cloud::dataplex::v1::DeleteLakeRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->DeleteLake(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<
-      google::cloud::dataplex::v1::OperationMetadata>(
-      background_->cq(), current, std::move(request_copy),
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::dataplex::v1::DeleteLakeRequest const& request) {
-        return stub->AsyncDeleteLake(cq, std::move(context), std::move(options),
-                                     request);
-      },
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultMetadata<
-          google::cloud::dataplex::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current), idempotent,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::dataplex::v1::OperationMetadata>(
+    background_->cq(), current, std::move(request_copy),
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::cloud::dataplex::v1::DeleteLakeRequest const& request) {
+     return stub->AsyncDeleteLake(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultMetadata<google::cloud::dataplex::v1::OperationMetadata>,
+    retry_policy(*current), backoff_policy(*current), idempotent,
+    polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 DataplexServiceConnectionImpl::DeleteLake(
-    NoAwaitTag, google::cloud::dataplex::v1::DeleteLakeRequest const& request) {
+      NoAwaitTag, google::cloud::dataplex::v1::DeleteLakeRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteLake(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dataplex::v1::DeleteLakeRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dataplex::v1::DeleteLakeRequest const& request) {
         return stub_->DeleteLake(context, options, request);
       },
       *current, request, __func__);
@@ -299,62 +272,50 @@ DataplexServiceConnectionImpl::DeleteLake(
 
 future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
 DataplexServiceConnectionImpl::DeleteLake(
-    google::longrunning::Operation const& operation) {
+      google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata()
-           .Is<typename google::cloud::dataplex::v1::OperationMetadata>()) {
-    return make_ready_future<
-        StatusOr<google::cloud::dataplex::v1::OperationMetadata>>(
-        internal::InvalidArgumentError(
-            "operation does not correspond to DeleteLake",
-            GCP_ERROR_INFO().WithMetadata("operation",
-                                          operation.metadata().DebugString())));
+  if (!operation.metadata().Is<typename google::cloud::dataplex::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>(
+        internal::InvalidArgumentError("operation does not correspond to DeleteLake",
+                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<
-      google::cloud::dataplex::v1::OperationMetadata>(
-      background_->cq(), current, operation,
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultMetadata<
-          google::cloud::dataplex::v1::OperationMetadata>,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::dataplex::v1::OperationMetadata>(
+    background_->cq(), current, operation,
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultMetadata<google::cloud::dataplex::v1::OperationMetadata>,
+    polling_policy(*current), __func__);
 }
 
 StreamRange<google::cloud::dataplex::v1::Lake>
-DataplexServiceConnectionImpl::ListLakes(
-    google::cloud::dataplex::v1::ListLakesRequest request) {
+DataplexServiceConnectionImpl::ListLakes(google::cloud::dataplex::v1::ListLakesRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListLakes(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::dataplex::v1::Lake>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::dataplex::v1::Lake>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<dataplex_v1::DataplexServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<dataplex_v1::DataplexServiceRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::dataplex::v1::ListLakesRequest const& r) {
+          Options const& options, google::cloud::dataplex::v1::ListLakesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](
-                grpc::ClientContext& context, Options const& options,
-                google::cloud::dataplex::v1::ListLakesRequest const& request) {
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::cloud::dataplex::v1::ListLakesRequest const& request) {
               return stub->ListLakes(context, options, request);
             },
             options, r, function_name);
@@ -368,8 +329,7 @@ DataplexServiceConnectionImpl::ListLakes(
 }
 
 StatusOr<google::cloud::dataplex::v1::Lake>
-DataplexServiceConnectionImpl::GetLake(
-    google::cloud::dataplex::v1::GetLakeRequest const& request) {
+DataplexServiceConnectionImpl::GetLake(google::cloud::dataplex::v1::GetLakeRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -382,33 +342,27 @@ DataplexServiceConnectionImpl::GetLake(
 }
 
 StreamRange<google::cloud::dataplex::v1::Action>
-DataplexServiceConnectionImpl::ListLakeActions(
-    google::cloud::dataplex::v1::ListLakeActionsRequest request) {
+DataplexServiceConnectionImpl::ListLakeActions(google::cloud::dataplex::v1::ListLakeActionsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListLakeActions(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::dataplex::v1::Action>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::dataplex::v1::Action>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<dataplex_v1::DataplexServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<dataplex_v1::DataplexServiceRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::dataplex::v1::ListLakeActionsRequest const& r) {
+          Options const& options, google::cloud::dataplex::v1::ListLakeActionsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::dataplex::v1::ListLakeActionsRequest const&
-                       request) {
+                   google::cloud::dataplex::v1::ListLakeActionsRequest const& request) {
               return stub->ListLakeActions(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::dataplex::v1::ListActionsResponse r) {
-        std::vector<google::cloud::dataplex::v1::Action> result(
-            r.actions().size());
+        std::vector<google::cloud::dataplex::v1::Action> result(r.actions().size());
         auto& messages = *r.mutable_actions();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -416,53 +370,49 @@ DataplexServiceConnectionImpl::ListLakeActions(
 }
 
 future<StatusOr<google::cloud::dataplex::v1::Zone>>
-DataplexServiceConnectionImpl::CreateZone(
-    google::cloud::dataplex::v1::CreateZoneRequest const& request) {
+DataplexServiceConnectionImpl::CreateZone(google::cloud::dataplex::v1::CreateZoneRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->CreateZone(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<
-      google::cloud::dataplex::v1::Zone>(
-      background_->cq(), current, std::move(request_copy),
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::dataplex::v1::CreateZoneRequest const& request) {
-        return stub->AsyncCreateZone(cq, std::move(context), std::move(options),
-                                     request);
-      },
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::dataplex::v1::Zone>,
-      retry_policy(*current), backoff_policy(*current), idempotent,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::dataplex::v1::Zone>(
+    background_->cq(), current, std::move(request_copy),
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::cloud::dataplex::v1::CreateZoneRequest const& request) {
+     return stub->AsyncCreateZone(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::dataplex::v1::Zone>,
+    retry_policy(*current), backoff_policy(*current), idempotent,
+    polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 DataplexServiceConnectionImpl::CreateZone(
-    NoAwaitTag, google::cloud::dataplex::v1::CreateZoneRequest const& request) {
+      NoAwaitTag, google::cloud::dataplex::v1::CreateZoneRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateZone(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dataplex::v1::CreateZoneRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dataplex::v1::CreateZoneRequest const& request) {
         return stub_->CreateZone(context, options, request);
       },
       *current, request, __func__);
@@ -470,88 +420,78 @@ DataplexServiceConnectionImpl::CreateZone(
 
 future<StatusOr<google::cloud::dataplex::v1::Zone>>
 DataplexServiceConnectionImpl::CreateZone(
-    google::longrunning::Operation const& operation) {
+      google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata()
-           .Is<typename google::cloud::dataplex::v1::OperationMetadata>()) {
+  if (!operation.metadata().Is<typename google::cloud::dataplex::v1::OperationMetadata>()) {
     return make_ready_future<StatusOr<google::cloud::dataplex::v1::Zone>>(
-        internal::InvalidArgumentError(
-            "operation does not correspond to CreateZone",
-            GCP_ERROR_INFO().WithMetadata("operation",
-                                          operation.metadata().DebugString())));
+        internal::InvalidArgumentError("operation does not correspond to CreateZone",
+                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<
-      google::cloud::dataplex::v1::Zone>(
-      background_->cq(), current, operation,
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::dataplex::v1::Zone>,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::dataplex::v1::Zone>(
+    background_->cq(), current, operation,
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::dataplex::v1::Zone>,
+    polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::dataplex::v1::Zone>>
-DataplexServiceConnectionImpl::UpdateZone(
-    google::cloud::dataplex::v1::UpdateZoneRequest const& request) {
+DataplexServiceConnectionImpl::UpdateZone(google::cloud::dataplex::v1::UpdateZoneRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->UpdateZone(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<
-      google::cloud::dataplex::v1::Zone>(
-      background_->cq(), current, std::move(request_copy),
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::dataplex::v1::UpdateZoneRequest const& request) {
-        return stub->AsyncUpdateZone(cq, std::move(context), std::move(options),
-                                     request);
-      },
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::dataplex::v1::Zone>,
-      retry_policy(*current), backoff_policy(*current), idempotent,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::dataplex::v1::Zone>(
+    background_->cq(), current, std::move(request_copy),
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::cloud::dataplex::v1::UpdateZoneRequest const& request) {
+     return stub->AsyncUpdateZone(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::dataplex::v1::Zone>,
+    retry_policy(*current), backoff_policy(*current), idempotent,
+    polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 DataplexServiceConnectionImpl::UpdateZone(
-    NoAwaitTag, google::cloud::dataplex::v1::UpdateZoneRequest const& request) {
+      NoAwaitTag, google::cloud::dataplex::v1::UpdateZoneRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateZone(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dataplex::v1::UpdateZoneRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dataplex::v1::UpdateZoneRequest const& request) {
         return stub_->UpdateZone(context, options, request);
       },
       *current, request, __func__);
@@ -559,88 +499,78 @@ DataplexServiceConnectionImpl::UpdateZone(
 
 future<StatusOr<google::cloud::dataplex::v1::Zone>>
 DataplexServiceConnectionImpl::UpdateZone(
-    google::longrunning::Operation const& operation) {
+      google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata()
-           .Is<typename google::cloud::dataplex::v1::OperationMetadata>()) {
+  if (!operation.metadata().Is<typename google::cloud::dataplex::v1::OperationMetadata>()) {
     return make_ready_future<StatusOr<google::cloud::dataplex::v1::Zone>>(
-        internal::InvalidArgumentError(
-            "operation does not correspond to UpdateZone",
-            GCP_ERROR_INFO().WithMetadata("operation",
-                                          operation.metadata().DebugString())));
+        internal::InvalidArgumentError("operation does not correspond to UpdateZone",
+                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<
-      google::cloud::dataplex::v1::Zone>(
-      background_->cq(), current, operation,
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::dataplex::v1::Zone>,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::dataplex::v1::Zone>(
+    background_->cq(), current, operation,
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::dataplex::v1::Zone>,
+    polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
-DataplexServiceConnectionImpl::DeleteZone(
-    google::cloud::dataplex::v1::DeleteZoneRequest const& request) {
+DataplexServiceConnectionImpl::DeleteZone(google::cloud::dataplex::v1::DeleteZoneRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->DeleteZone(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<
-      google::cloud::dataplex::v1::OperationMetadata>(
-      background_->cq(), current, std::move(request_copy),
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::dataplex::v1::DeleteZoneRequest const& request) {
-        return stub->AsyncDeleteZone(cq, std::move(context), std::move(options),
-                                     request);
-      },
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultMetadata<
-          google::cloud::dataplex::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current), idempotent,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::dataplex::v1::OperationMetadata>(
+    background_->cq(), current, std::move(request_copy),
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::cloud::dataplex::v1::DeleteZoneRequest const& request) {
+     return stub->AsyncDeleteZone(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultMetadata<google::cloud::dataplex::v1::OperationMetadata>,
+    retry_policy(*current), backoff_policy(*current), idempotent,
+    polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 DataplexServiceConnectionImpl::DeleteZone(
-    NoAwaitTag, google::cloud::dataplex::v1::DeleteZoneRequest const& request) {
+      NoAwaitTag, google::cloud::dataplex::v1::DeleteZoneRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteZone(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dataplex::v1::DeleteZoneRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dataplex::v1::DeleteZoneRequest const& request) {
         return stub_->DeleteZone(context, options, request);
       },
       *current, request, __func__);
@@ -648,62 +578,50 @@ DataplexServiceConnectionImpl::DeleteZone(
 
 future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
 DataplexServiceConnectionImpl::DeleteZone(
-    google::longrunning::Operation const& operation) {
+      google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata()
-           .Is<typename google::cloud::dataplex::v1::OperationMetadata>()) {
-    return make_ready_future<
-        StatusOr<google::cloud::dataplex::v1::OperationMetadata>>(
-        internal::InvalidArgumentError(
-            "operation does not correspond to DeleteZone",
-            GCP_ERROR_INFO().WithMetadata("operation",
-                                          operation.metadata().DebugString())));
+  if (!operation.metadata().Is<typename google::cloud::dataplex::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>(
+        internal::InvalidArgumentError("operation does not correspond to DeleteZone",
+                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<
-      google::cloud::dataplex::v1::OperationMetadata>(
-      background_->cq(), current, operation,
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultMetadata<
-          google::cloud::dataplex::v1::OperationMetadata>,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::dataplex::v1::OperationMetadata>(
+    background_->cq(), current, operation,
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultMetadata<google::cloud::dataplex::v1::OperationMetadata>,
+    polling_policy(*current), __func__);
 }
 
 StreamRange<google::cloud::dataplex::v1::Zone>
-DataplexServiceConnectionImpl::ListZones(
-    google::cloud::dataplex::v1::ListZonesRequest request) {
+DataplexServiceConnectionImpl::ListZones(google::cloud::dataplex::v1::ListZonesRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListZones(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::dataplex::v1::Zone>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::dataplex::v1::Zone>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<dataplex_v1::DataplexServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<dataplex_v1::DataplexServiceRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::dataplex::v1::ListZonesRequest const& r) {
+          Options const& options, google::cloud::dataplex::v1::ListZonesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](
-                grpc::ClientContext& context, Options const& options,
-                google::cloud::dataplex::v1::ListZonesRequest const& request) {
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::cloud::dataplex::v1::ListZonesRequest const& request) {
               return stub->ListZones(context, options, request);
             },
             options, r, function_name);
@@ -717,8 +635,7 @@ DataplexServiceConnectionImpl::ListZones(
 }
 
 StatusOr<google::cloud::dataplex::v1::Zone>
-DataplexServiceConnectionImpl::GetZone(
-    google::cloud::dataplex::v1::GetZoneRequest const& request) {
+DataplexServiceConnectionImpl::GetZone(google::cloud::dataplex::v1::GetZoneRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -731,33 +648,27 @@ DataplexServiceConnectionImpl::GetZone(
 }
 
 StreamRange<google::cloud::dataplex::v1::Action>
-DataplexServiceConnectionImpl::ListZoneActions(
-    google::cloud::dataplex::v1::ListZoneActionsRequest request) {
+DataplexServiceConnectionImpl::ListZoneActions(google::cloud::dataplex::v1::ListZoneActionsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListZoneActions(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::dataplex::v1::Action>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::dataplex::v1::Action>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<dataplex_v1::DataplexServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<dataplex_v1::DataplexServiceRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::dataplex::v1::ListZoneActionsRequest const& r) {
+          Options const& options, google::cloud::dataplex::v1::ListZoneActionsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::dataplex::v1::ListZoneActionsRequest const&
-                       request) {
+                   google::cloud::dataplex::v1::ListZoneActionsRequest const& request) {
               return stub->ListZoneActions(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::dataplex::v1::ListActionsResponse r) {
-        std::vector<google::cloud::dataplex::v1::Action> result(
-            r.actions().size());
+        std::vector<google::cloud::dataplex::v1::Action> result(r.actions().size());
         auto& messages = *r.mutable_actions();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -765,54 +676,49 @@ DataplexServiceConnectionImpl::ListZoneActions(
 }
 
 future<StatusOr<google::cloud::dataplex::v1::Asset>>
-DataplexServiceConnectionImpl::CreateAsset(
-    google::cloud::dataplex::v1::CreateAssetRequest const& request) {
+DataplexServiceConnectionImpl::CreateAsset(google::cloud::dataplex::v1::CreateAssetRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->CreateAsset(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<
-      google::cloud::dataplex::v1::Asset>(
-      background_->cq(), current, std::move(request_copy),
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::dataplex::v1::CreateAssetRequest const& request) {
-        return stub->AsyncCreateAsset(cq, std::move(context),
-                                      std::move(options), request);
-      },
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::dataplex::v1::Asset>,
-      retry_policy(*current), backoff_policy(*current), idempotent,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::dataplex::v1::Asset>(
+    background_->cq(), current, std::move(request_copy),
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::cloud::dataplex::v1::CreateAssetRequest const& request) {
+     return stub->AsyncCreateAsset(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::dataplex::v1::Asset>,
+    retry_policy(*current), backoff_policy(*current), idempotent,
+    polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 DataplexServiceConnectionImpl::CreateAsset(
-    NoAwaitTag,
-    google::cloud::dataplex::v1::CreateAssetRequest const& request) {
+      NoAwaitTag, google::cloud::dataplex::v1::CreateAssetRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateAsset(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dataplex::v1::CreateAssetRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dataplex::v1::CreateAssetRequest const& request) {
         return stub_->CreateAsset(context, options, request);
       },
       *current, request, __func__);
@@ -820,89 +726,78 @@ DataplexServiceConnectionImpl::CreateAsset(
 
 future<StatusOr<google::cloud::dataplex::v1::Asset>>
 DataplexServiceConnectionImpl::CreateAsset(
-    google::longrunning::Operation const& operation) {
+      google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata()
-           .Is<typename google::cloud::dataplex::v1::OperationMetadata>()) {
+  if (!operation.metadata().Is<typename google::cloud::dataplex::v1::OperationMetadata>()) {
     return make_ready_future<StatusOr<google::cloud::dataplex::v1::Asset>>(
-        internal::InvalidArgumentError(
-            "operation does not correspond to CreateAsset",
-            GCP_ERROR_INFO().WithMetadata("operation",
-                                          operation.metadata().DebugString())));
+        internal::InvalidArgumentError("operation does not correspond to CreateAsset",
+                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<
-      google::cloud::dataplex::v1::Asset>(
-      background_->cq(), current, operation,
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::dataplex::v1::Asset>,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::dataplex::v1::Asset>(
+    background_->cq(), current, operation,
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::dataplex::v1::Asset>,
+    polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::dataplex::v1::Asset>>
-DataplexServiceConnectionImpl::UpdateAsset(
-    google::cloud::dataplex::v1::UpdateAssetRequest const& request) {
+DataplexServiceConnectionImpl::UpdateAsset(google::cloud::dataplex::v1::UpdateAssetRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->UpdateAsset(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<
-      google::cloud::dataplex::v1::Asset>(
-      background_->cq(), current, std::move(request_copy),
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::dataplex::v1::UpdateAssetRequest const& request) {
-        return stub->AsyncUpdateAsset(cq, std::move(context),
-                                      std::move(options), request);
-      },
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::dataplex::v1::Asset>,
-      retry_policy(*current), backoff_policy(*current), idempotent,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::dataplex::v1::Asset>(
+    background_->cq(), current, std::move(request_copy),
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::cloud::dataplex::v1::UpdateAssetRequest const& request) {
+     return stub->AsyncUpdateAsset(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::dataplex::v1::Asset>,
+    retry_policy(*current), backoff_policy(*current), idempotent,
+    polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 DataplexServiceConnectionImpl::UpdateAsset(
-    NoAwaitTag,
-    google::cloud::dataplex::v1::UpdateAssetRequest const& request) {
+      NoAwaitTag, google::cloud::dataplex::v1::UpdateAssetRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateAsset(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dataplex::v1::UpdateAssetRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dataplex::v1::UpdateAssetRequest const& request) {
         return stub_->UpdateAsset(context, options, request);
       },
       *current, request, __func__);
@@ -910,89 +805,78 @@ DataplexServiceConnectionImpl::UpdateAsset(
 
 future<StatusOr<google::cloud::dataplex::v1::Asset>>
 DataplexServiceConnectionImpl::UpdateAsset(
-    google::longrunning::Operation const& operation) {
+      google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata()
-           .Is<typename google::cloud::dataplex::v1::OperationMetadata>()) {
+  if (!operation.metadata().Is<typename google::cloud::dataplex::v1::OperationMetadata>()) {
     return make_ready_future<StatusOr<google::cloud::dataplex::v1::Asset>>(
-        internal::InvalidArgumentError(
-            "operation does not correspond to UpdateAsset",
-            GCP_ERROR_INFO().WithMetadata("operation",
-                                          operation.metadata().DebugString())));
+        internal::InvalidArgumentError("operation does not correspond to UpdateAsset",
+                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<
-      google::cloud::dataplex::v1::Asset>(
-      background_->cq(), current, operation,
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::dataplex::v1::Asset>,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::dataplex::v1::Asset>(
+    background_->cq(), current, operation,
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::dataplex::v1::Asset>,
+    polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
-DataplexServiceConnectionImpl::DeleteAsset(
-    google::cloud::dataplex::v1::DeleteAssetRequest const& request) {
+DataplexServiceConnectionImpl::DeleteAsset(google::cloud::dataplex::v1::DeleteAssetRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->DeleteAsset(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<
-      google::cloud::dataplex::v1::OperationMetadata>(
-      background_->cq(), current, std::move(request_copy),
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::dataplex::v1::DeleteAssetRequest const& request) {
-        return stub->AsyncDeleteAsset(cq, std::move(context),
-                                      std::move(options), request);
-      },
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultMetadata<
-          google::cloud::dataplex::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current), idempotent,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::dataplex::v1::OperationMetadata>(
+    background_->cq(), current, std::move(request_copy),
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::cloud::dataplex::v1::DeleteAssetRequest const& request) {
+     return stub->AsyncDeleteAsset(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultMetadata<google::cloud::dataplex::v1::OperationMetadata>,
+    retry_policy(*current), backoff_policy(*current), idempotent,
+    polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 DataplexServiceConnectionImpl::DeleteAsset(
-    NoAwaitTag,
-    google::cloud::dataplex::v1::DeleteAssetRequest const& request) {
+      NoAwaitTag, google::cloud::dataplex::v1::DeleteAssetRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteAsset(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dataplex::v1::DeleteAssetRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dataplex::v1::DeleteAssetRequest const& request) {
         return stub_->DeleteAsset(context, options, request);
       },
       *current, request, __func__);
@@ -1000,69 +884,56 @@ DataplexServiceConnectionImpl::DeleteAsset(
 
 future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
 DataplexServiceConnectionImpl::DeleteAsset(
-    google::longrunning::Operation const& operation) {
+      google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata()
-           .Is<typename google::cloud::dataplex::v1::OperationMetadata>()) {
-    return make_ready_future<
-        StatusOr<google::cloud::dataplex::v1::OperationMetadata>>(
-        internal::InvalidArgumentError(
-            "operation does not correspond to DeleteAsset",
-            GCP_ERROR_INFO().WithMetadata("operation",
-                                          operation.metadata().DebugString())));
+  if (!operation.metadata().Is<typename google::cloud::dataplex::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>(
+        internal::InvalidArgumentError("operation does not correspond to DeleteAsset",
+                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<
-      google::cloud::dataplex::v1::OperationMetadata>(
-      background_->cq(), current, operation,
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultMetadata<
-          google::cloud::dataplex::v1::OperationMetadata>,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::dataplex::v1::OperationMetadata>(
+    background_->cq(), current, operation,
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultMetadata<google::cloud::dataplex::v1::OperationMetadata>,
+    polling_policy(*current), __func__);
 }
 
 StreamRange<google::cloud::dataplex::v1::Asset>
-DataplexServiceConnectionImpl::ListAssets(
-    google::cloud::dataplex::v1::ListAssetsRequest request) {
+DataplexServiceConnectionImpl::ListAssets(google::cloud::dataplex::v1::ListAssetsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListAssets(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::dataplex::v1::Asset>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::dataplex::v1::Asset>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<dataplex_v1::DataplexServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<dataplex_v1::DataplexServiceRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::dataplex::v1::ListAssetsRequest const& r) {
+          Options const& options, google::cloud::dataplex::v1::ListAssetsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](
-                grpc::ClientContext& context, Options const& options,
-                google::cloud::dataplex::v1::ListAssetsRequest const& request) {
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::cloud::dataplex::v1::ListAssetsRequest const& request) {
               return stub->ListAssets(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::dataplex::v1::ListAssetsResponse r) {
-        std::vector<google::cloud::dataplex::v1::Asset> result(
-            r.assets().size());
+        std::vector<google::cloud::dataplex::v1::Asset> result(r.assets().size());
         auto& messages = *r.mutable_assets();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -1070,8 +941,7 @@ DataplexServiceConnectionImpl::ListAssets(
 }
 
 StatusOr<google::cloud::dataplex::v1::Asset>
-DataplexServiceConnectionImpl::GetAsset(
-    google::cloud::dataplex::v1::GetAssetRequest const& request) {
+DataplexServiceConnectionImpl::GetAsset(google::cloud::dataplex::v1::GetAssetRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -1084,33 +954,27 @@ DataplexServiceConnectionImpl::GetAsset(
 }
 
 StreamRange<google::cloud::dataplex::v1::Action>
-DataplexServiceConnectionImpl::ListAssetActions(
-    google::cloud::dataplex::v1::ListAssetActionsRequest request) {
+DataplexServiceConnectionImpl::ListAssetActions(google::cloud::dataplex::v1::ListAssetActionsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListAssetActions(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::dataplex::v1::Action>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::dataplex::v1::Action>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<dataplex_v1::DataplexServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<dataplex_v1::DataplexServiceRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::dataplex::v1::ListAssetActionsRequest const& r) {
+          Options const& options, google::cloud::dataplex::v1::ListAssetActionsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::dataplex::v1::ListAssetActionsRequest const&
-                       request) {
+                   google::cloud::dataplex::v1::ListAssetActionsRequest const& request) {
               return stub->ListAssetActions(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::dataplex::v1::ListActionsResponse r) {
-        std::vector<google::cloud::dataplex::v1::Action> result(
-            r.actions().size());
+        std::vector<google::cloud::dataplex::v1::Action> result(r.actions().size());
         auto& messages = *r.mutable_actions();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -1118,53 +982,49 @@ DataplexServiceConnectionImpl::ListAssetActions(
 }
 
 future<StatusOr<google::cloud::dataplex::v1::Task>>
-DataplexServiceConnectionImpl::CreateTask(
-    google::cloud::dataplex::v1::CreateTaskRequest const& request) {
+DataplexServiceConnectionImpl::CreateTask(google::cloud::dataplex::v1::CreateTaskRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->CreateTask(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<
-      google::cloud::dataplex::v1::Task>(
-      background_->cq(), current, std::move(request_copy),
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::dataplex::v1::CreateTaskRequest const& request) {
-        return stub->AsyncCreateTask(cq, std::move(context), std::move(options),
-                                     request);
-      },
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::dataplex::v1::Task>,
-      retry_policy(*current), backoff_policy(*current), idempotent,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::dataplex::v1::Task>(
+    background_->cq(), current, std::move(request_copy),
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::cloud::dataplex::v1::CreateTaskRequest const& request) {
+     return stub->AsyncCreateTask(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::dataplex::v1::Task>,
+    retry_policy(*current), backoff_policy(*current), idempotent,
+    polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 DataplexServiceConnectionImpl::CreateTask(
-    NoAwaitTag, google::cloud::dataplex::v1::CreateTaskRequest const& request) {
+      NoAwaitTag, google::cloud::dataplex::v1::CreateTaskRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateTask(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dataplex::v1::CreateTaskRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dataplex::v1::CreateTaskRequest const& request) {
         return stub_->CreateTask(context, options, request);
       },
       *current, request, __func__);
@@ -1172,88 +1032,78 @@ DataplexServiceConnectionImpl::CreateTask(
 
 future<StatusOr<google::cloud::dataplex::v1::Task>>
 DataplexServiceConnectionImpl::CreateTask(
-    google::longrunning::Operation const& operation) {
+      google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata()
-           .Is<typename google::cloud::dataplex::v1::OperationMetadata>()) {
+  if (!operation.metadata().Is<typename google::cloud::dataplex::v1::OperationMetadata>()) {
     return make_ready_future<StatusOr<google::cloud::dataplex::v1::Task>>(
-        internal::InvalidArgumentError(
-            "operation does not correspond to CreateTask",
-            GCP_ERROR_INFO().WithMetadata("operation",
-                                          operation.metadata().DebugString())));
+        internal::InvalidArgumentError("operation does not correspond to CreateTask",
+                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<
-      google::cloud::dataplex::v1::Task>(
-      background_->cq(), current, operation,
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::dataplex::v1::Task>,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::dataplex::v1::Task>(
+    background_->cq(), current, operation,
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::dataplex::v1::Task>,
+    polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::dataplex::v1::Task>>
-DataplexServiceConnectionImpl::UpdateTask(
-    google::cloud::dataplex::v1::UpdateTaskRequest const& request) {
+DataplexServiceConnectionImpl::UpdateTask(google::cloud::dataplex::v1::UpdateTaskRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->UpdateTask(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<
-      google::cloud::dataplex::v1::Task>(
-      background_->cq(), current, std::move(request_copy),
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::dataplex::v1::UpdateTaskRequest const& request) {
-        return stub->AsyncUpdateTask(cq, std::move(context), std::move(options),
-                                     request);
-      },
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::dataplex::v1::Task>,
-      retry_policy(*current), backoff_policy(*current), idempotent,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::dataplex::v1::Task>(
+    background_->cq(), current, std::move(request_copy),
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::cloud::dataplex::v1::UpdateTaskRequest const& request) {
+     return stub->AsyncUpdateTask(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::dataplex::v1::Task>,
+    retry_policy(*current), backoff_policy(*current), idempotent,
+    polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 DataplexServiceConnectionImpl::UpdateTask(
-    NoAwaitTag, google::cloud::dataplex::v1::UpdateTaskRequest const& request) {
+      NoAwaitTag, google::cloud::dataplex::v1::UpdateTaskRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateTask(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dataplex::v1::UpdateTaskRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dataplex::v1::UpdateTaskRequest const& request) {
         return stub_->UpdateTask(context, options, request);
       },
       *current, request, __func__);
@@ -1261,88 +1111,78 @@ DataplexServiceConnectionImpl::UpdateTask(
 
 future<StatusOr<google::cloud::dataplex::v1::Task>>
 DataplexServiceConnectionImpl::UpdateTask(
-    google::longrunning::Operation const& operation) {
+      google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata()
-           .Is<typename google::cloud::dataplex::v1::OperationMetadata>()) {
+  if (!operation.metadata().Is<typename google::cloud::dataplex::v1::OperationMetadata>()) {
     return make_ready_future<StatusOr<google::cloud::dataplex::v1::Task>>(
-        internal::InvalidArgumentError(
-            "operation does not correspond to UpdateTask",
-            GCP_ERROR_INFO().WithMetadata("operation",
-                                          operation.metadata().DebugString())));
+        internal::InvalidArgumentError("operation does not correspond to UpdateTask",
+                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<
-      google::cloud::dataplex::v1::Task>(
-      background_->cq(), current, operation,
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::dataplex::v1::Task>,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::dataplex::v1::Task>(
+    background_->cq(), current, operation,
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::dataplex::v1::Task>,
+    polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
-DataplexServiceConnectionImpl::DeleteTask(
-    google::cloud::dataplex::v1::DeleteTaskRequest const& request) {
+DataplexServiceConnectionImpl::DeleteTask(google::cloud::dataplex::v1::DeleteTaskRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->DeleteTask(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<
-      google::cloud::dataplex::v1::OperationMetadata>(
-      background_->cq(), current, std::move(request_copy),
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::dataplex::v1::DeleteTaskRequest const& request) {
-        return stub->AsyncDeleteTask(cq, std::move(context), std::move(options),
-                                     request);
-      },
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultMetadata<
-          google::cloud::dataplex::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current), idempotent,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::dataplex::v1::OperationMetadata>(
+    background_->cq(), current, std::move(request_copy),
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::cloud::dataplex::v1::DeleteTaskRequest const& request) {
+     return stub->AsyncDeleteTask(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultMetadata<google::cloud::dataplex::v1::OperationMetadata>,
+    retry_policy(*current), backoff_policy(*current), idempotent,
+    polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 DataplexServiceConnectionImpl::DeleteTask(
-    NoAwaitTag, google::cloud::dataplex::v1::DeleteTaskRequest const& request) {
+      NoAwaitTag, google::cloud::dataplex::v1::DeleteTaskRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteTask(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dataplex::v1::DeleteTaskRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dataplex::v1::DeleteTaskRequest const& request) {
         return stub_->DeleteTask(context, options, request);
       },
       *current, request, __func__);
@@ -1350,62 +1190,50 @@ DataplexServiceConnectionImpl::DeleteTask(
 
 future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
 DataplexServiceConnectionImpl::DeleteTask(
-    google::longrunning::Operation const& operation) {
+      google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata()
-           .Is<typename google::cloud::dataplex::v1::OperationMetadata>()) {
-    return make_ready_future<
-        StatusOr<google::cloud::dataplex::v1::OperationMetadata>>(
-        internal::InvalidArgumentError(
-            "operation does not correspond to DeleteTask",
-            GCP_ERROR_INFO().WithMetadata("operation",
-                                          operation.metadata().DebugString())));
+  if (!operation.metadata().Is<typename google::cloud::dataplex::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>(
+        internal::InvalidArgumentError("operation does not correspond to DeleteTask",
+                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<
-      google::cloud::dataplex::v1::OperationMetadata>(
-      background_->cq(), current, operation,
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultMetadata<
-          google::cloud::dataplex::v1::OperationMetadata>,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::dataplex::v1::OperationMetadata>(
+    background_->cq(), current, operation,
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultMetadata<google::cloud::dataplex::v1::OperationMetadata>,
+    polling_policy(*current), __func__);
 }
 
 StreamRange<google::cloud::dataplex::v1::Task>
-DataplexServiceConnectionImpl::ListTasks(
-    google::cloud::dataplex::v1::ListTasksRequest request) {
+DataplexServiceConnectionImpl::ListTasks(google::cloud::dataplex::v1::ListTasksRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListTasks(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::dataplex::v1::Task>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::dataplex::v1::Task>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<dataplex_v1::DataplexServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<dataplex_v1::DataplexServiceRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::dataplex::v1::ListTasksRequest const& r) {
+          Options const& options, google::cloud::dataplex::v1::ListTasksRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](
-                grpc::ClientContext& context, Options const& options,
-                google::cloud::dataplex::v1::ListTasksRequest const& request) {
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::cloud::dataplex::v1::ListTasksRequest const& request) {
               return stub->ListTasks(context, options, request);
             },
             options, r, function_name);
@@ -1419,8 +1247,7 @@ DataplexServiceConnectionImpl::ListTasks(
 }
 
 StatusOr<google::cloud::dataplex::v1::Task>
-DataplexServiceConnectionImpl::GetTask(
-    google::cloud::dataplex::v1::GetTaskRequest const& request) {
+DataplexServiceConnectionImpl::GetTask(google::cloud::dataplex::v1::GetTaskRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -1433,26 +1260,21 @@ DataplexServiceConnectionImpl::GetTask(
 }
 
 StreamRange<google::cloud::dataplex::v1::Job>
-DataplexServiceConnectionImpl::ListJobs(
-    google::cloud::dataplex::v1::ListJobsRequest request) {
+DataplexServiceConnectionImpl::ListJobs(google::cloud::dataplex::v1::ListJobsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListJobs(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::dataplex::v1::Job>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::dataplex::v1::Job>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<dataplex_v1::DataplexServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<dataplex_v1::DataplexServiceRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::dataplex::v1::ListJobsRequest const& r) {
+          Options const& options, google::cloud::dataplex::v1::ListJobsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](
-                grpc::ClientContext& context, Options const& options,
-                google::cloud::dataplex::v1::ListJobsRequest const& request) {
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::cloud::dataplex::v1::ListJobsRequest const& request) {
               return stub->ListJobs(context, options, request);
             },
             options, r, function_name);
@@ -1466,8 +1288,7 @@ DataplexServiceConnectionImpl::ListJobs(
 }
 
 StatusOr<google::cloud::dataplex::v1::RunTaskResponse>
-DataplexServiceConnectionImpl::RunTask(
-    google::cloud::dataplex::v1::RunTaskRequest const& request) {
+DataplexServiceConnectionImpl::RunTask(google::cloud::dataplex::v1::RunTaskRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -1480,8 +1301,7 @@ DataplexServiceConnectionImpl::RunTask(
 }
 
 StatusOr<google::cloud::dataplex::v1::Job>
-DataplexServiceConnectionImpl::GetJob(
-    google::cloud::dataplex::v1::GetJobRequest const& request) {
+DataplexServiceConnectionImpl::GetJob(google::cloud::dataplex::v1::GetJobRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -1493,8 +1313,8 @@ DataplexServiceConnectionImpl::GetJob(
       *current, request, __func__);
 }
 
-Status DataplexServiceConnectionImpl::CancelJob(
-    google::cloud::dataplex::v1::CancelJobRequest const& request) {
+Status
+DataplexServiceConnectionImpl::CancelJob(google::cloud::dataplex::v1::CancelJobRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -1507,56 +1327,49 @@ Status DataplexServiceConnectionImpl::CancelJob(
 }
 
 future<StatusOr<google::cloud::dataplex::v1::Environment>>
-DataplexServiceConnectionImpl::CreateEnvironment(
-    google::cloud::dataplex::v1::CreateEnvironmentRequest const& request) {
+DataplexServiceConnectionImpl::CreateEnvironment(google::cloud::dataplex::v1::CreateEnvironmentRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->CreateEnvironment(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<
-      google::cloud::dataplex::v1::Environment>(
-      background_->cq(), current, std::move(request_copy),
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::dataplex::v1::CreateEnvironmentRequest const&
-              request) {
-        return stub->AsyncCreateEnvironment(cq, std::move(context),
-                                            std::move(options), request);
-      },
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::dataplex::v1::Environment>,
-      retry_policy(*current), backoff_policy(*current), idempotent,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::dataplex::v1::Environment>(
+    background_->cq(), current, std::move(request_copy),
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::cloud::dataplex::v1::CreateEnvironmentRequest const& request) {
+     return stub->AsyncCreateEnvironment(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::dataplex::v1::Environment>,
+    retry_policy(*current), backoff_policy(*current), idempotent,
+    polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 DataplexServiceConnectionImpl::CreateEnvironment(
-    NoAwaitTag,
-    google::cloud::dataplex::v1::CreateEnvironmentRequest const& request) {
+      NoAwaitTag, google::cloud::dataplex::v1::CreateEnvironmentRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateEnvironment(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dataplex::v1::CreateEnvironmentRequest const&
-                 request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dataplex::v1::CreateEnvironmentRequest const& request) {
         return stub_->CreateEnvironment(context, options, request);
       },
       *current, request, __func__);
@@ -1564,92 +1377,78 @@ DataplexServiceConnectionImpl::CreateEnvironment(
 
 future<StatusOr<google::cloud::dataplex::v1::Environment>>
 DataplexServiceConnectionImpl::CreateEnvironment(
-    google::longrunning::Operation const& operation) {
+      google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata()
-           .Is<typename google::cloud::dataplex::v1::OperationMetadata>()) {
-    return make_ready_future<
-        StatusOr<google::cloud::dataplex::v1::Environment>>(
-        internal::InvalidArgumentError(
-            "operation does not correspond to CreateEnvironment",
-            GCP_ERROR_INFO().WithMetadata("operation",
-                                          operation.metadata().DebugString())));
+  if (!operation.metadata().Is<typename google::cloud::dataplex::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::dataplex::v1::Environment>>(
+        internal::InvalidArgumentError("operation does not correspond to CreateEnvironment",
+                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<
-      google::cloud::dataplex::v1::Environment>(
-      background_->cq(), current, operation,
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::dataplex::v1::Environment>,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::dataplex::v1::Environment>(
+    background_->cq(), current, operation,
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::dataplex::v1::Environment>,
+    polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::dataplex::v1::Environment>>
-DataplexServiceConnectionImpl::UpdateEnvironment(
-    google::cloud::dataplex::v1::UpdateEnvironmentRequest const& request) {
+DataplexServiceConnectionImpl::UpdateEnvironment(google::cloud::dataplex::v1::UpdateEnvironmentRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->UpdateEnvironment(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<
-      google::cloud::dataplex::v1::Environment>(
-      background_->cq(), current, std::move(request_copy),
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::dataplex::v1::UpdateEnvironmentRequest const&
-              request) {
-        return stub->AsyncUpdateEnvironment(cq, std::move(context),
-                                            std::move(options), request);
-      },
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::dataplex::v1::Environment>,
-      retry_policy(*current), backoff_policy(*current), idempotent,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::dataplex::v1::Environment>(
+    background_->cq(), current, std::move(request_copy),
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::cloud::dataplex::v1::UpdateEnvironmentRequest const& request) {
+     return stub->AsyncUpdateEnvironment(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::dataplex::v1::Environment>,
+    retry_policy(*current), backoff_policy(*current), idempotent,
+    polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 DataplexServiceConnectionImpl::UpdateEnvironment(
-    NoAwaitTag,
-    google::cloud::dataplex::v1::UpdateEnvironmentRequest const& request) {
+      NoAwaitTag, google::cloud::dataplex::v1::UpdateEnvironmentRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateEnvironment(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dataplex::v1::UpdateEnvironmentRequest const&
-                 request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dataplex::v1::UpdateEnvironmentRequest const& request) {
         return stub_->UpdateEnvironment(context, options, request);
       },
       *current, request, __func__);
@@ -1657,92 +1456,78 @@ DataplexServiceConnectionImpl::UpdateEnvironment(
 
 future<StatusOr<google::cloud::dataplex::v1::Environment>>
 DataplexServiceConnectionImpl::UpdateEnvironment(
-    google::longrunning::Operation const& operation) {
+      google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata()
-           .Is<typename google::cloud::dataplex::v1::OperationMetadata>()) {
-    return make_ready_future<
-        StatusOr<google::cloud::dataplex::v1::Environment>>(
-        internal::InvalidArgumentError(
-            "operation does not correspond to UpdateEnvironment",
-            GCP_ERROR_INFO().WithMetadata("operation",
-                                          operation.metadata().DebugString())));
+  if (!operation.metadata().Is<typename google::cloud::dataplex::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::dataplex::v1::Environment>>(
+        internal::InvalidArgumentError("operation does not correspond to UpdateEnvironment",
+                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<
-      google::cloud::dataplex::v1::Environment>(
-      background_->cq(), current, operation,
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::dataplex::v1::Environment>,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::dataplex::v1::Environment>(
+    background_->cq(), current, operation,
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::dataplex::v1::Environment>,
+    polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
-DataplexServiceConnectionImpl::DeleteEnvironment(
-    google::cloud::dataplex::v1::DeleteEnvironmentRequest const& request) {
+DataplexServiceConnectionImpl::DeleteEnvironment(google::cloud::dataplex::v1::DeleteEnvironmentRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->DeleteEnvironment(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<
-      google::cloud::dataplex::v1::OperationMetadata>(
-      background_->cq(), current, std::move(request_copy),
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::dataplex::v1::DeleteEnvironmentRequest const&
-              request) {
-        return stub->AsyncDeleteEnvironment(cq, std::move(context),
-                                            std::move(options), request);
-      },
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultMetadata<
-          google::cloud::dataplex::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current), idempotent,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::dataplex::v1::OperationMetadata>(
+    background_->cq(), current, std::move(request_copy),
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::cloud::dataplex::v1::DeleteEnvironmentRequest const& request) {
+     return stub->AsyncDeleteEnvironment(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultMetadata<google::cloud::dataplex::v1::OperationMetadata>,
+    retry_policy(*current), backoff_policy(*current), idempotent,
+    polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 DataplexServiceConnectionImpl::DeleteEnvironment(
-    NoAwaitTag,
-    google::cloud::dataplex::v1::DeleteEnvironmentRequest const& request) {
+      NoAwaitTag, google::cloud::dataplex::v1::DeleteEnvironmentRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteEnvironment(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dataplex::v1::DeleteEnvironmentRequest const&
-                 request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dataplex::v1::DeleteEnvironmentRequest const& request) {
         return stub_->DeleteEnvironment(context, options, request);
       },
       *current, request, __func__);
@@ -1750,69 +1535,56 @@ DataplexServiceConnectionImpl::DeleteEnvironment(
 
 future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
 DataplexServiceConnectionImpl::DeleteEnvironment(
-    google::longrunning::Operation const& operation) {
+      google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata()
-           .Is<typename google::cloud::dataplex::v1::OperationMetadata>()) {
-    return make_ready_future<
-        StatusOr<google::cloud::dataplex::v1::OperationMetadata>>(
-        internal::InvalidArgumentError(
-            "operation does not correspond to DeleteEnvironment",
-            GCP_ERROR_INFO().WithMetadata("operation",
-                                          operation.metadata().DebugString())));
+  if (!operation.metadata().Is<typename google::cloud::dataplex::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>(
+        internal::InvalidArgumentError("operation does not correspond to DeleteEnvironment",
+                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<
-      google::cloud::dataplex::v1::OperationMetadata>(
-      background_->cq(), current, operation,
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultMetadata<
-          google::cloud::dataplex::v1::OperationMetadata>,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::dataplex::v1::OperationMetadata>(
+    background_->cq(), current, operation,
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultMetadata<google::cloud::dataplex::v1::OperationMetadata>,
+    polling_policy(*current), __func__);
 }
 
 StreamRange<google::cloud::dataplex::v1::Environment>
-DataplexServiceConnectionImpl::ListEnvironments(
-    google::cloud::dataplex::v1::ListEnvironmentsRequest request) {
+DataplexServiceConnectionImpl::ListEnvironments(google::cloud::dataplex::v1::ListEnvironmentsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListEnvironments(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::dataplex::v1::Environment>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::dataplex::v1::Environment>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<dataplex_v1::DataplexServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<dataplex_v1::DataplexServiceRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::dataplex::v1::ListEnvironmentsRequest const& r) {
+          Options const& options, google::cloud::dataplex::v1::ListEnvironmentsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::dataplex::v1::ListEnvironmentsRequest const&
-                       request) {
+                   google::cloud::dataplex::v1::ListEnvironmentsRequest const& request) {
               return stub->ListEnvironments(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::dataplex::v1::ListEnvironmentsResponse r) {
-        std::vector<google::cloud::dataplex::v1::Environment> result(
-            r.environments().size());
+        std::vector<google::cloud::dataplex::v1::Environment> result(r.environments().size());
         auto& messages = *r.mutable_environments();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -1820,48 +1592,40 @@ DataplexServiceConnectionImpl::ListEnvironments(
 }
 
 StatusOr<google::cloud::dataplex::v1::Environment>
-DataplexServiceConnectionImpl::GetEnvironment(
-    google::cloud::dataplex::v1::GetEnvironmentRequest const& request) {
+DataplexServiceConnectionImpl::GetEnvironment(google::cloud::dataplex::v1::GetEnvironmentRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetEnvironment(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::dataplex::v1::GetEnvironmentRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dataplex::v1::GetEnvironmentRequest const& request) {
         return stub_->GetEnvironment(context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::cloud::dataplex::v1::Session>
-DataplexServiceConnectionImpl::ListSessions(
-    google::cloud::dataplex::v1::ListSessionsRequest request) {
+DataplexServiceConnectionImpl::ListSessions(google::cloud::dataplex::v1::ListSessionsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListSessions(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::dataplex::v1::Session>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::dataplex::v1::Session>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<dataplex_v1::DataplexServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<dataplex_v1::DataplexServiceRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::dataplex::v1::ListSessionsRequest const& r) {
+          Options const& options, google::cloud::dataplex::v1::ListSessionsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::dataplex::v1::ListSessionsRequest const&
-                       request) {
+                   google::cloud::dataplex::v1::ListSessionsRequest const& request) {
               return stub->ListSessions(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::dataplex::v1::ListSessionsResponse r) {
-        std::vector<google::cloud::dataplex::v1::Session> result(
-            r.sessions().size());
+        std::vector<google::cloud::dataplex::v1::Session> result(r.sessions().size());
         auto& messages = *r.mutable_sessions();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -1869,33 +1633,27 @@ DataplexServiceConnectionImpl::ListSessions(
 }
 
 StreamRange<google::cloud::location::Location>
-DataplexServiceConnectionImpl::ListLocations(
-    google::cloud::location::ListLocationsRequest request) {
+DataplexServiceConnectionImpl::ListLocations(google::cloud::location::ListLocationsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListLocations(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::location::Location>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::location::Location>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<dataplex_v1::DataplexServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<dataplex_v1::DataplexServiceRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::location::ListLocationsRequest const& r) {
+          Options const& options, google::cloud::location::ListLocationsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](
-                grpc::ClientContext& context, Options const& options,
-                google::cloud::location::ListLocationsRequest const& request) {
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::cloud::location::ListLocationsRequest const& request) {
               return stub->ListLocations(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::location::ListLocationsResponse r) {
-        std::vector<google::cloud::location::Location> result(
-            r.locations().size());
+        std::vector<google::cloud::location::Location> result(r.locations().size());
         auto& messages = *r.mutable_locations();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -1903,8 +1661,7 @@ DataplexServiceConnectionImpl::ListLocations(
 }
 
 StatusOr<google::cloud::location::Location>
-DataplexServiceConnectionImpl::GetLocation(
-    google::cloud::location::GetLocationRequest const& request) {
+DataplexServiceConnectionImpl::GetLocation(google::cloud::location::GetLocationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -1916,8 +1673,8 @@ DataplexServiceConnectionImpl::GetLocation(
       *current, request, __func__);
 }
 
-StatusOr<google::iam::v1::Policy> DataplexServiceConnectionImpl::SetIamPolicy(
-    google::iam::v1::SetIamPolicyRequest const& request) {
+StatusOr<google::iam::v1::Policy>
+DataplexServiceConnectionImpl::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -1929,8 +1686,8 @@ StatusOr<google::iam::v1::Policy> DataplexServiceConnectionImpl::SetIamPolicy(
       *current, request, __func__);
 }
 
-StatusOr<google::iam::v1::Policy> DataplexServiceConnectionImpl::GetIamPolicy(
-    google::iam::v1::GetIamPolicyRequest const& request) {
+StatusOr<google::iam::v1::Policy>
+DataplexServiceConnectionImpl::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -1943,8 +1700,7 @@ StatusOr<google::iam::v1::Policy> DataplexServiceConnectionImpl::GetIamPolicy(
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-DataplexServiceConnectionImpl::TestIamPermissions(
-    google::iam::v1::TestIamPermissionsRequest const& request) {
+DataplexServiceConnectionImpl::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -1957,21 +1713,17 @@ DataplexServiceConnectionImpl::TestIamPermissions(
 }
 
 StreamRange<google::longrunning::Operation>
-DataplexServiceConnectionImpl::ListOperations(
-    google::longrunning::ListOperationsRequest request) {
+DataplexServiceConnectionImpl::ListOperations(google::longrunning::ListOperationsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListOperations(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::longrunning::Operation>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::longrunning::Operation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<dataplex_v1::DataplexServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<dataplex_v1::DataplexServiceRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::longrunning::ListOperationsRequest const& r) {
+          Options const& options, google::longrunning::ListOperationsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
@@ -1981,8 +1733,7 @@ DataplexServiceConnectionImpl::ListOperations(
             options, r, function_name);
       },
       [](google::longrunning::ListOperationsResponse r) {
-        std::vector<google::longrunning::Operation> result(
-            r.operations().size());
+        std::vector<google::longrunning::Operation> result(r.operations().size());
         auto& messages = *r.mutable_operations();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -1990,8 +1741,7 @@ DataplexServiceConnectionImpl::ListOperations(
 }
 
 StatusOr<google::longrunning::Operation>
-DataplexServiceConnectionImpl::GetOperation(
-    google::longrunning::GetOperationRequest const& request) {
+DataplexServiceConnectionImpl::GetOperation(google::longrunning::GetOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -2003,8 +1753,8 @@ DataplexServiceConnectionImpl::GetOperation(
       *current, request, __func__);
 }
 
-Status DataplexServiceConnectionImpl::DeleteOperation(
-    google::longrunning::DeleteOperationRequest const& request) {
+Status
+DataplexServiceConnectionImpl::DeleteOperation(google::longrunning::DeleteOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -2016,8 +1766,8 @@ Status DataplexServiceConnectionImpl::DeleteOperation(
       *current, request, __func__);
 }
 
-Status DataplexServiceConnectionImpl::CancelOperation(
-    google::longrunning::CancelOperationRequest const& request) {
+Status
+DataplexServiceConnectionImpl::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),

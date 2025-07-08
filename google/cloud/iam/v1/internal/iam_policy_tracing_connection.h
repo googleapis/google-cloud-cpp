@@ -30,23 +30,24 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-class IAMPolicyTracingConnection : public iam_v1::IAMPolicyConnection {
+class IAMPolicyTracingConnection
+    : public iam_v1::IAMPolicyConnection {
  public:
   ~IAMPolicyTracingConnection() override = default;
 
   explicit IAMPolicyTracingConnection(
-      std::shared_ptr<iam_v1::IAMPolicyConnection> child);
+    std::shared_ptr<iam_v1::IAMPolicyConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request) override;
+  StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) override;
 
  private:
   std::shared_ptr<iam_v1::IAMPolicyConnection> child_;
@@ -60,7 +61,8 @@ class IAMPolicyTracingConnection : public iam_v1::IAMPolicyConnection {
  * The connection is only decorated if tracing is enabled (as determined by the
  * connection's options).
  */
-std::shared_ptr<iam_v1::IAMPolicyConnection> MakeIAMPolicyTracingConnection(
+std::shared_ptr<iam_v1::IAMPolicyConnection>
+MakeIAMPolicyTracingConnection(
     std::shared_ptr<iam_v1::IAMPolicyConnection> conn);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

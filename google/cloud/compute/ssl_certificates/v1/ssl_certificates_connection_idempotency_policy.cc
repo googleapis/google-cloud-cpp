@@ -26,47 +26,35 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-SslCertificatesConnectionIdempotencyPolicy::
-    ~SslCertificatesConnectionIdempotencyPolicy() = default;
+SslCertificatesConnectionIdempotencyPolicy::~SslCertificatesConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<SslCertificatesConnectionIdempotencyPolicy>
 SslCertificatesConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<SslCertificatesConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency
-SslCertificatesConnectionIdempotencyPolicy::AggregatedListSslCertificates(
-    google::cloud::cpp::compute::ssl_certificates::v1::
-        AggregatedListSslCertificatesRequest) {  // NOLINT
+Idempotency SslCertificatesConnectionIdempotencyPolicy::AggregatedListSslCertificates(google::cloud::cpp::compute::ssl_certificates::v1::AggregatedListSslCertificatesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency SslCertificatesConnectionIdempotencyPolicy::DeleteSslCertificate(
-    google::cloud::cpp::compute::ssl_certificates::v1::
-        DeleteSslCertificateRequest const&) {
+Idempotency SslCertificatesConnectionIdempotencyPolicy::DeleteSslCertificate(google::cloud::cpp::compute::ssl_certificates::v1::DeleteSslCertificateRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SslCertificatesConnectionIdempotencyPolicy::GetSslCertificate(
-    google::cloud::cpp::compute::ssl_certificates::v1::
-        GetSslCertificateRequest const&) {
+Idempotency SslCertificatesConnectionIdempotencyPolicy::GetSslCertificate(google::cloud::cpp::compute::ssl_certificates::v1::GetSslCertificateRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency SslCertificatesConnectionIdempotencyPolicy::InsertSslCertificate(
-    google::cloud::cpp::compute::ssl_certificates::v1::
-        InsertSslCertificateRequest const&) {
+Idempotency SslCertificatesConnectionIdempotencyPolicy::InsertSslCertificate(google::cloud::cpp::compute::ssl_certificates::v1::InsertSslCertificateRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SslCertificatesConnectionIdempotencyPolicy::ListSslCertificates(
-    google::cloud::cpp::compute::ssl_certificates::v1::
-        ListSslCertificatesRequest) {  // NOLINT
+Idempotency SslCertificatesConnectionIdempotencyPolicy::ListSslCertificates(google::cloud::cpp::compute::ssl_certificates::v1::ListSslCertificatesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<SslCertificatesConnectionIdempotencyPolicy>
-MakeDefaultSslCertificatesConnectionIdempotencyPolicy() {
+    MakeDefaultSslCertificatesConnectionIdempotencyPolicy() {
   return std::make_unique<SslCertificatesConnectionIdempotencyPolicy>();
 }
 

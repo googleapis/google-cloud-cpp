@@ -19,9 +19,9 @@
 #include "google/cloud/aiplatform/v1/internal/metadata_option_defaults.h"
 #include "google/cloud/aiplatform/v1/metadata_connection.h"
 #include "google/cloud/aiplatform/v1/metadata_options.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include <memory>
 #include <utility>
 
@@ -34,42 +34,33 @@ namespace {
 auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
-Options MetadataServiceDefaultOptions(std::string const& location,
-                                      Options options) {
+Options MetadataServiceDefaultOptions(std::string const& location, Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_METADATA_SERVICE_ENDPOINT", "",
-      "GOOGLE_CLOUD_CPP_METADATA_SERVICE_AUTHORITY",
+      std::move(options), "GOOGLE_CLOUD_CPP_METADATA_SERVICE_ENDPOINT",
+      "", "GOOGLE_CLOUD_CPP_METADATA_SERVICE_AUTHORITY",
       absl::StrCat(location, "-", "aiplatform.googleapis.com"));
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<aiplatform_v1::MetadataServiceRetryPolicyOption>()) {
     options.set<aiplatform_v1::MetadataServiceRetryPolicyOption>(
         aiplatform_v1::MetadataServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
-            .clone());
+            std::chrono::minutes(30)).clone());
   }
   if (!options.has<aiplatform_v1::MetadataServiceBackoffPolicyOption>()) {
     options.set<aiplatform_v1::MetadataServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(
-            std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
-            .clone());
+        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
   }
   if (!options.has<aiplatform_v1::MetadataServicePollingPolicyOption>()) {
     options.set<aiplatform_v1::MetadataServicePollingPolicyOption>(
         GenericPollingPolicy<
             aiplatform_v1::MetadataServiceRetryPolicyOption::Type,
             aiplatform_v1::MetadataServiceBackoffPolicyOption::Type>(
-            options.get<aiplatform_v1::MetadataServiceRetryPolicyOption>()
-                ->clone(),
+            options.get<aiplatform_v1::MetadataServiceRetryPolicyOption>()->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                     std::chrono::minutes(5), kBackoffScaling)
-                .clone())
-            .clone());
+            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
   }
-  if (!options.has<
-          aiplatform_v1::MetadataServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<
-        aiplatform_v1::MetadataServiceConnectionIdempotencyPolicyOption>(
+  if (!options.has<aiplatform_v1::MetadataServiceConnectionIdempotencyPolicyOption>()) {
+    options.set<aiplatform_v1::MetadataServiceConnectionIdempotencyPolicyOption>(
         aiplatform_v1::MakeDefaultMetadataServiceConnectionIdempotencyPolicy());
   }
 

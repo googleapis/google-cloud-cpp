@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_KMS_INVENTORY_V1_KEY_DASHBOARD_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_KMS_INVENTORY_V1_KEY_DASHBOARD_CONNECTION_H
 
-#include "google/cloud/kms/inventory/v1/internal/key_dashboard_retry_traits.h"
-#include "google/cloud/kms/inventory/v1/key_dashboard_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/kms/inventory/v1/internal/key_dashboard_retry_traits.h"
+#include "google/cloud/kms/inventory/v1/key_dashboard_connection_idempotency_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -52,8 +52,7 @@ class KeyDashboardServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class KeyDashboardServiceLimitedErrorCountRetryPolicy
-    : public KeyDashboardServiceRetryPolicy {
+class KeyDashboardServiceLimitedErrorCountRetryPolicy : public KeyDashboardServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -63,16 +62,14 @@ class KeyDashboardServiceLimitedErrorCountRetryPolicy
    *     @p maximum_failures == 0.
    */
   explicit KeyDashboardServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   KeyDashboardServiceLimitedErrorCountRetryPolicy(
       KeyDashboardServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : KeyDashboardServiceLimitedErrorCountRetryPolicy(
-            rhs.maximum_failures()) {}
+    : KeyDashboardServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   KeyDashboardServiceLimitedErrorCountRetryPolicy(
       KeyDashboardServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : KeyDashboardServiceLimitedErrorCountRetryPolicy(
-            rhs.maximum_failures()) {}
+    : KeyDashboardServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -92,9 +89,7 @@ class KeyDashboardServiceLimitedErrorCountRetryPolicy
   using BaseType = KeyDashboardServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      kms_inventory_v1_internal::KeyDashboardServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<kms_inventory_v1_internal::KeyDashboardServiceRetryTraits> impl_;
 };
 
 /**
@@ -107,8 +102,7 @@ class KeyDashboardServiceLimitedErrorCountRetryPolicy
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class KeyDashboardServiceLimitedTimeRetryPolicy
-    : public KeyDashboardServiceRetryPolicy {
+class KeyDashboardServiceLimitedTimeRetryPolicy : public KeyDashboardServiceRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -133,14 +127,12 @@ class KeyDashboardServiceLimitedTimeRetryPolicy
   template <typename DurationRep, typename DurationPeriod>
   explicit KeyDashboardServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  KeyDashboardServiceLimitedTimeRetryPolicy(
-      KeyDashboardServiceLimitedTimeRetryPolicy&& rhs) noexcept
-      : KeyDashboardServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  KeyDashboardServiceLimitedTimeRetryPolicy(
-      KeyDashboardServiceLimitedTimeRetryPolicy const& rhs) noexcept
-      : KeyDashboardServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  KeyDashboardServiceLimitedTimeRetryPolicy(KeyDashboardServiceLimitedTimeRetryPolicy&& rhs) noexcept
+    : KeyDashboardServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  KeyDashboardServiceLimitedTimeRetryPolicy(KeyDashboardServiceLimitedTimeRetryPolicy const& rhs) noexcept
+    : KeyDashboardServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -162,18 +154,16 @@ class KeyDashboardServiceLimitedTimeRetryPolicy
   using BaseType = KeyDashboardServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      kms_inventory_v1_internal::KeyDashboardServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<kms_inventory_v1_internal::KeyDashboardServiceRetryTraits> impl_;
 };
 
 /**
  * The `KeyDashboardServiceConnection` object for `KeyDashboardServiceClient`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `KeyDashboardServiceClient`. This allows users to inject custom
- * behavior (e.g., with a Google Mock object) when writing tests that use
- * objects of type `KeyDashboardServiceClient`.
+ * sets in `KeyDashboardServiceClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `KeyDashboardServiceClient`.
  *
  * To create a concrete instance, see `MakeKeyDashboardServiceConnection()`.
  *
@@ -185,21 +175,19 @@ class KeyDashboardServiceConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StreamRange<google::cloud::kms::v1::CryptoKey> ListCryptoKeys(
-      google::cloud::kms::inventory::v1::ListCryptoKeysRequest request);
+  virtual StreamRange<google::cloud::kms::v1::CryptoKey>
+  ListCryptoKeys(google::cloud::kms::inventory::v1::ListCryptoKeysRequest request);
 };
 
 /**
- * A factory function to construct an object of type
- * `KeyDashboardServiceConnection`.
+ * A factory function to construct an object of type `KeyDashboardServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of
- * KeyDashboardServiceClient.
+ * should be passed as an argument to the constructor of KeyDashboardServiceClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `KeyDashboardServiceConnection`. Expected options are any of the
- * types in the following option lists:
+ * returned `KeyDashboardServiceConnection`. Expected options are any of the types in
+ * the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
@@ -209,11 +197,11 @@ class KeyDashboardServiceConnection {
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
- * @param options (optional) Configure the `KeyDashboardServiceConnection`
- * created by this function.
+ * @param options (optional) Configure the `KeyDashboardServiceConnection` created by
+ * this function.
  */
-std::shared_ptr<KeyDashboardServiceConnection>
-MakeKeyDashboardServiceConnection(Options options = {});
+std::shared_ptr<KeyDashboardServiceConnection> MakeKeyDashboardServiceConnection(
+    Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace kms_inventory_v1

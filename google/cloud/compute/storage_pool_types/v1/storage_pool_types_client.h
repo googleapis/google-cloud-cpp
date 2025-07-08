@@ -63,9 +63,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class StoragePoolTypesClient {
  public:
-  explicit StoragePoolTypesClient(
-      std::shared_ptr<StoragePoolTypesConnection> connection,
-      Options opts = {});
+  explicit StoragePoolTypesClient(std::shared_ptr<StoragePoolTypesConnection> connection, Options opts = {});
   ~StoragePoolTypesClient();
 
   ///@{
@@ -78,12 +76,10 @@ class StoragePoolTypesClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(StoragePoolTypesClient const& a,
-                         StoragePoolTypesClient const& b) {
+  friend bool operator==(StoragePoolTypesClient const& a, StoragePoolTypesClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(StoragePoolTypesClient const& a,
-                         StoragePoolTypesClient const& b) {
+  friend bool operator!=(StoragePoolTypesClient const& a, StoragePoolTypesClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -122,8 +118,7 @@ class StoragePoolTypesClient {
   /// [google.cloud.cpp.compute.v1.StoragePoolTypesScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_131.proto#L308}
   ///
   // clang-format on
-  StreamRange<std::pair<
-      std::string, google::cloud::cpp::compute::v1::StoragePoolTypesScopedList>>
+  StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::StoragePoolTypesScopedList>>
   AggregatedListStoragePoolTypes(std::string const& project, Options opts = {});
 
   // clang-format off
@@ -165,12 +160,8 @@ class StoragePoolTypesClient {
   /// [google.cloud.cpp.compute.v1.StoragePoolTypesScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_131.proto#L308}
   ///
   // clang-format on
-  StreamRange<std::pair<
-      std::string, google::cloud::cpp::compute::v1::StoragePoolTypesScopedList>>
-  AggregatedListStoragePoolTypes(
-      google::cloud::cpp::compute::storage_pool_types::v1::
-          AggregatedListStoragePoolTypesRequest request,
-      Options opts = {});
+  StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::StoragePoolTypesScopedList>>
+  AggregatedListStoragePoolTypes(google::cloud::cpp::compute::storage_pool_types::v1::AggregatedListStoragePoolTypesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -197,9 +188,8 @@ class StoragePoolTypesClient {
   /// [google.cloud.cpp.compute.v1.StoragePoolType]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_131.proto#L26}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::StoragePoolType> GetStoragePoolType(
-      std::string const& project, std::string const& zone,
-      std::string const& storage_pool_type, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::StoragePoolType>
+  GetStoragePoolType(std::string const& project, std::string const& zone, std::string const& storage_pool_type, Options opts = {});
 
   // clang-format off
   ///
@@ -229,10 +219,8 @@ class StoragePoolTypesClient {
   /// [google.cloud.cpp.compute.v1.StoragePoolType]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_131.proto#L26}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::StoragePoolType> GetStoragePoolType(
-      google::cloud::cpp::compute::storage_pool_types::v1::
-          GetStoragePoolTypeRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::StoragePoolType>
+  GetStoragePoolType(google::cloud::cpp::compute::storage_pool_types::v1::GetStoragePoolTypeRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -268,8 +256,7 @@ class StoragePoolTypesClient {
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::StoragePoolType>
-  ListStoragePoolTypes(std::string const& project, std::string const& zone,
-                       Options opts = {});
+  ListStoragePoolTypes(std::string const& project, std::string const& zone, Options opts = {});
 
   // clang-format off
   ///
@@ -309,9 +296,7 @@ class StoragePoolTypesClient {
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::StoragePoolType>
-  ListStoragePoolTypes(google::cloud::cpp::compute::storage_pool_types::v1::
-                           ListStoragePoolTypesRequest request,
-                       Options opts = {});
+  ListStoragePoolTypes(google::cloud::cpp::compute::storage_pool_types::v1::ListStoragePoolTypesRequest request, Options opts = {});
 
  private:
   std::shared_ptr<StoragePoolTypesConnection> connection_;

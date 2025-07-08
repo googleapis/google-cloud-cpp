@@ -19,11 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TRACE_V1_TRACE_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TRACE_V1_TRACE_CLIENT_H
 
-#include "google/cloud/trace/v1/trace_connection.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
+#include "google/cloud/trace/v1/trace_connection.h"
 #include "google/cloud/version.h"
 #include <memory>
 #include <string>
@@ -65,8 +65,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class TraceServiceClient {
  public:
-  explicit TraceServiceClient(
-      std::shared_ptr<TraceServiceConnection> connection, Options opts = {});
+  explicit TraceServiceClient(std::shared_ptr<TraceServiceConnection> connection, Options opts = {});
   ~TraceServiceClient();
 
   ///@{
@@ -79,12 +78,10 @@ class TraceServiceClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(TraceServiceClient const& a,
-                         TraceServiceClient const& b) {
+  friend bool operator==(TraceServiceClient const& a, TraceServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(TraceServiceClient const& a,
-                         TraceServiceClient const& b) {
+  friend bool operator!=(TraceServiceClient const& a, TraceServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -120,8 +117,8 @@ class TraceServiceClient {
   /// [google.devtools.cloudtrace.v1.Trace]: @googleapis_reference_link{google/devtools/cloudtrace/v1/trace.proto#L78}
   ///
   // clang-format on
-  StreamRange<google::devtools::cloudtrace::v1::Trace> ListTraces(
-      std::string const& project_id, Options opts = {});
+  StreamRange<google::devtools::cloudtrace::v1::Trace>
+  ListTraces(std::string const& project_id, Options opts = {});
 
   // clang-format off
   ///
@@ -159,9 +156,8 @@ class TraceServiceClient {
   /// [google.devtools.cloudtrace.v1.Trace]: @googleapis_reference_link{google/devtools/cloudtrace/v1/trace.proto#L78}
   ///
   // clang-format on
-  StreamRange<google::devtools::cloudtrace::v1::Trace> ListTraces(
-      google::devtools::cloudtrace::v1::ListTracesRequest request,
-      Options opts = {});
+  StreamRange<google::devtools::cloudtrace::v1::Trace>
+  ListTraces(google::devtools::cloudtrace::v1::ListTracesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -186,9 +182,8 @@ class TraceServiceClient {
   /// [google.devtools.cloudtrace.v1.Trace]: @googleapis_reference_link{google/devtools/cloudtrace/v1/trace.proto#L78}
   ///
   // clang-format on
-  StatusOr<google::devtools::cloudtrace::v1::Trace> GetTrace(
-      std::string const& project_id, std::string const& trace_id,
-      Options opts = {});
+  StatusOr<google::devtools::cloudtrace::v1::Trace>
+  GetTrace(std::string const& project_id, std::string const& trace_id, Options opts = {});
 
   // clang-format off
   ///
@@ -217,9 +212,8 @@ class TraceServiceClient {
   /// [google.devtools.cloudtrace.v1.Trace]: @googleapis_reference_link{google/devtools/cloudtrace/v1/trace.proto#L78}
   ///
   // clang-format on
-  StatusOr<google::devtools::cloudtrace::v1::Trace> GetTrace(
-      google::devtools::cloudtrace::v1::GetTraceRequest const& request,
-      Options opts = {});
+  StatusOr<google::devtools::cloudtrace::v1::Trace>
+  GetTrace(google::devtools::cloudtrace::v1::GetTraceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -245,9 +239,8 @@ class TraceServiceClient {
   /// [google.devtools.cloudtrace.v1.PatchTracesRequest]: @googleapis_reference_link{google/devtools/cloudtrace/v1/trace.proto#L298}
   ///
   // clang-format on
-  Status PatchTraces(std::string const& project_id,
-                     google::devtools::cloudtrace::v1::Traces const& traces,
-                     Options opts = {});
+  Status
+  PatchTraces(std::string const& project_id, google::devtools::cloudtrace::v1::Traces const& traces, Options opts = {});
 
   // clang-format off
   ///
@@ -277,9 +270,8 @@ class TraceServiceClient {
   /// [google.devtools.cloudtrace.v1.PatchTracesRequest]: @googleapis_reference_link{google/devtools/cloudtrace/v1/trace.proto#L298}
   ///
   // clang-format on
-  Status PatchTraces(
-      google::devtools::cloudtrace::v1::PatchTracesRequest const& request,
-      Options opts = {});
+  Status
+  PatchTraces(google::devtools::cloudtrace::v1::PatchTracesRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<TraceServiceConnection> connection_;

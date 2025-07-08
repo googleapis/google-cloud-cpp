@@ -17,12 +17,12 @@
 // source: google/cloud/compute/interconnect_groups/v1/interconnect_groups.proto
 
 #include "google/cloud/compute/interconnect_groups/v1/interconnect_groups_rest_connection.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/compute/interconnect_groups/v1/interconnect_groups_options.h"
 #include "google/cloud/compute/interconnect_groups/v1/internal/interconnect_groups_option_defaults.h"
 #include "google/cloud/compute/interconnect_groups/v1/internal/interconnect_groups_rest_connection_impl.h"
 #include "google/cloud/compute/interconnect_groups/v1/internal/interconnect_groups_rest_stub_factory.h"
 #include "google/cloud/compute/interconnect_groups/v1/internal/interconnect_groups_tracing_connection.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/rest_background_threads_impl.h"
 #include "google/cloud/internal/rest_options.h"
@@ -34,25 +34,21 @@ namespace cloud {
 namespace compute_interconnect_groups_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<InterconnectGroupsConnection>
-MakeInterconnectGroupsConnectionRest(Options options) {
+std::shared_ptr<InterconnectGroupsConnection> MakeInterconnectGroupsConnectionRest(
+    Options options) {
   internal::CheckExpectedOptions<CommonOptionList, RestOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 rest_internal::TargetApiVersionOption,
-                                 InterconnectGroupsPolicyOptionList>(options,
-                                                                     __func__);
-  options =
-      compute_interconnect_groups_v1_internal::InterconnectGroupsDefaultOptions(
-          std::move(options));
+      UnifiedCredentialsOptionList, rest_internal::TargetApiVersionOption,
+      InterconnectGroupsPolicyOptionList>(options, __func__);
+  options = compute_interconnect_groups_v1_internal::InterconnectGroupsDefaultOptions(
+      std::move(options));
   auto background = std::make_unique<
       rest_internal::AutomaticallyCreatedRestBackgroundThreads>();
-  auto stub = compute_interconnect_groups_v1_internal::
-      CreateDefaultInterconnectGroupsRestStub(options);
-  return compute_interconnect_groups_v1_internal::
-      MakeInterconnectGroupsTracingConnection(
-          std::make_shared<compute_interconnect_groups_v1_internal::
-                               InterconnectGroupsRestConnectionImpl>(
-              std::move(background), std::move(stub), std::move(options)));
+  auto stub = compute_interconnect_groups_v1_internal::CreateDefaultInterconnectGroupsRestStub(
+      options);
+  return compute_interconnect_groups_v1_internal::MakeInterconnectGroupsTracingConnection(
+      std::make_shared<
+          compute_interconnect_groups_v1_internal::InterconnectGroupsRestConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

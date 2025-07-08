@@ -19,14 +19,14 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RETAIL_V2_MODEL_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RETAIL_V2_MODEL_CONNECTION_H
 
-#include "google/cloud/retail/v2/internal/model_retry_traits.h"
-#include "google/cloud/retail/v2/model_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
+#include "google/cloud/retail/v2/internal/model_retry_traits.h"
+#include "google/cloud/retail/v2/model_connection_idempotency_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
@@ -56,8 +56,7 @@ class ModelServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class ModelServiceLimitedErrorCountRetryPolicy
-    : public ModelServiceRetryPolicy {
+class ModelServiceLimitedErrorCountRetryPolicy : public ModelServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -67,14 +66,14 @@ class ModelServiceLimitedErrorCountRetryPolicy
    *     @p maximum_failures == 0.
    */
   explicit ModelServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   ModelServiceLimitedErrorCountRetryPolicy(
       ModelServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : ModelServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : ModelServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   ModelServiceLimitedErrorCountRetryPolicy(
       ModelServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : ModelServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : ModelServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -94,9 +93,7 @@ class ModelServiceLimitedErrorCountRetryPolicy
   using BaseType = ModelServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      retail_v2_internal::ModelServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<retail_v2_internal::ModelServiceRetryTraits> impl_;
 };
 
 /**
@@ -134,14 +131,12 @@ class ModelServiceLimitedTimeRetryPolicy : public ModelServiceRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit ModelServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  ModelServiceLimitedTimeRetryPolicy(
-      ModelServiceLimitedTimeRetryPolicy&& rhs) noexcept
-      : ModelServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  ModelServiceLimitedTimeRetryPolicy(
-      ModelServiceLimitedTimeRetryPolicy const& rhs) noexcept
-      : ModelServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  ModelServiceLimitedTimeRetryPolicy(ModelServiceLimitedTimeRetryPolicy&& rhs) noexcept
+    : ModelServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  ModelServiceLimitedTimeRetryPolicy(ModelServiceLimitedTimeRetryPolicy const& rhs) noexcept
+    : ModelServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -163,9 +158,7 @@ class ModelServiceLimitedTimeRetryPolicy : public ModelServiceRetryPolicy {
   using BaseType = ModelServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      retail_v2_internal::ModelServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<retail_v2_internal::ModelServiceRetryTraits> impl_;
 };
 
 /**
@@ -186,47 +179,47 @@ class ModelServiceConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual future<StatusOr<google::cloud::retail::v2::Model>> CreateModel(
-      google::cloud::retail::v2::CreateModelRequest const& request);
+  virtual future<StatusOr<google::cloud::retail::v2::Model>>
+  CreateModel(google::cloud::retail::v2::CreateModelRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> CreateModel(
-      NoAwaitTag, google::cloud::retail::v2::CreateModelRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  CreateModel(NoAwaitTag, google::cloud::retail::v2::CreateModelRequest const& request);
 
-  virtual future<StatusOr<google::cloud::retail::v2::Model>> CreateModel(
-      google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::retail::v2::Model>>
+  CreateModel( google::longrunning::Operation const& operation);
 
-  virtual StatusOr<google::cloud::retail::v2::Model> GetModel(
-      google::cloud::retail::v2::GetModelRequest const& request);
+  virtual StatusOr<google::cloud::retail::v2::Model>
+  GetModel(google::cloud::retail::v2::GetModelRequest const& request);
 
-  virtual StatusOr<google::cloud::retail::v2::Model> PauseModel(
-      google::cloud::retail::v2::PauseModelRequest const& request);
+  virtual StatusOr<google::cloud::retail::v2::Model>
+  PauseModel(google::cloud::retail::v2::PauseModelRequest const& request);
 
-  virtual StatusOr<google::cloud::retail::v2::Model> ResumeModel(
-      google::cloud::retail::v2::ResumeModelRequest const& request);
+  virtual StatusOr<google::cloud::retail::v2::Model>
+  ResumeModel(google::cloud::retail::v2::ResumeModelRequest const& request);
 
-  virtual Status DeleteModel(
-      google::cloud::retail::v2::DeleteModelRequest const& request);
+  virtual Status
+  DeleteModel(google::cloud::retail::v2::DeleteModelRequest const& request);
 
-  virtual StreamRange<google::cloud::retail::v2::Model> ListModels(
-      google::cloud::retail::v2::ListModelsRequest request);
+  virtual StreamRange<google::cloud::retail::v2::Model>
+  ListModels(google::cloud::retail::v2::ListModelsRequest request);
 
-  virtual StatusOr<google::cloud::retail::v2::Model> UpdateModel(
-      google::cloud::retail::v2::UpdateModelRequest const& request);
+  virtual StatusOr<google::cloud::retail::v2::Model>
+  UpdateModel(google::cloud::retail::v2::UpdateModelRequest const& request);
 
   virtual future<StatusOr<google::cloud::retail::v2::TuneModelResponse>>
   TuneModel(google::cloud::retail::v2::TuneModelRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> TuneModel(
-      NoAwaitTag, google::cloud::retail::v2::TuneModelRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  TuneModel(NoAwaitTag, google::cloud::retail::v2::TuneModelRequest const& request);
 
   virtual future<StatusOr<google::cloud::retail::v2::TuneModelResponse>>
-  TuneModel(google::longrunning::Operation const& operation);
+  TuneModel( google::longrunning::Operation const& operation);
 
-  virtual StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 };
 
 /**

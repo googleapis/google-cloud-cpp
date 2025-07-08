@@ -35,30 +35,29 @@ class RuleSetServiceConnectionIdempotencyPolicy {
   virtual ~RuleSetServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<RuleSetServiceConnectionIdempotencyPolicy> clone()
-      const;
+  virtual std::unique_ptr<RuleSetServiceConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency CreateRuleSet(
-      google::cloud::contentwarehouse::v1::CreateRuleSetRequest const& request);
+  virtual google::cloud::Idempotency
+  CreateRuleSet(google::cloud::contentwarehouse::v1::CreateRuleSetRequest const& request);
 
-  virtual google::cloud::Idempotency GetRuleSet(
-      google::cloud::contentwarehouse::v1::GetRuleSetRequest const& request);
+  virtual google::cloud::Idempotency
+  GetRuleSet(google::cloud::contentwarehouse::v1::GetRuleSetRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateRuleSet(
-      google::cloud::contentwarehouse::v1::UpdateRuleSetRequest const& request);
+  virtual google::cloud::Idempotency
+  UpdateRuleSet(google::cloud::contentwarehouse::v1::UpdateRuleSetRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteRuleSet(
-      google::cloud::contentwarehouse::v1::DeleteRuleSetRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteRuleSet(google::cloud::contentwarehouse::v1::DeleteRuleSetRequest const& request);
 
-  virtual google::cloud::Idempotency ListRuleSets(
-      google::cloud::contentwarehouse::v1::ListRuleSetsRequest request);
+  virtual google::cloud::Idempotency
+  ListRuleSets(google::cloud::contentwarehouse::v1::ListRuleSetsRequest request);
 
-  virtual google::cloud::Idempotency GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 };
 
 std::unique_ptr<RuleSetServiceConnectionIdempotencyPolicy>
-MakeDefaultRuleSetServiceConnectionIdempotencyPolicy();
+    MakeDefaultRuleSetServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace contentwarehouse_v1

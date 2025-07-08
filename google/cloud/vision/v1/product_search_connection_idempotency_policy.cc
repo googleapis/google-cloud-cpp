@@ -26,117 +26,95 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-ProductSearchConnectionIdempotencyPolicy::
-    ~ProductSearchConnectionIdempotencyPolicy() = default;
+ProductSearchConnectionIdempotencyPolicy::~ProductSearchConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<ProductSearchConnectionIdempotencyPolicy>
 ProductSearchConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<ProductSearchConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency ProductSearchConnectionIdempotencyPolicy::CreateProductSet(
-    google::cloud::vision::v1::CreateProductSetRequest const&) {
+Idempotency ProductSearchConnectionIdempotencyPolicy::CreateProductSet(google::cloud::vision::v1::CreateProductSetRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ProductSearchConnectionIdempotencyPolicy::ListProductSets(
-    google::cloud::vision::v1::ListProductSetsRequest) {  // NOLINT
+Idempotency ProductSearchConnectionIdempotencyPolicy::ListProductSets(google::cloud::vision::v1::ListProductSetsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency ProductSearchConnectionIdempotencyPolicy::GetProductSet(
-    google::cloud::vision::v1::GetProductSetRequest const&) {
+Idempotency ProductSearchConnectionIdempotencyPolicy::GetProductSet(google::cloud::vision::v1::GetProductSetRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ProductSearchConnectionIdempotencyPolicy::UpdateProductSet(
-    google::cloud::vision::v1::UpdateProductSetRequest const&) {
+Idempotency ProductSearchConnectionIdempotencyPolicy::UpdateProductSet(google::cloud::vision::v1::UpdateProductSetRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ProductSearchConnectionIdempotencyPolicy::DeleteProductSet(
-    google::cloud::vision::v1::DeleteProductSetRequest const&) {
+Idempotency ProductSearchConnectionIdempotencyPolicy::DeleteProductSet(google::cloud::vision::v1::DeleteProductSetRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ProductSearchConnectionIdempotencyPolicy::CreateProduct(
-    google::cloud::vision::v1::CreateProductRequest const&) {
+Idempotency ProductSearchConnectionIdempotencyPolicy::CreateProduct(google::cloud::vision::v1::CreateProductRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ProductSearchConnectionIdempotencyPolicy::ListProducts(
-    google::cloud::vision::v1::ListProductsRequest) {  // NOLINT
+Idempotency ProductSearchConnectionIdempotencyPolicy::ListProducts(google::cloud::vision::v1::ListProductsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency ProductSearchConnectionIdempotencyPolicy::GetProduct(
-    google::cloud::vision::v1::GetProductRequest const&) {
+Idempotency ProductSearchConnectionIdempotencyPolicy::GetProduct(google::cloud::vision::v1::GetProductRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ProductSearchConnectionIdempotencyPolicy::UpdateProduct(
-    google::cloud::vision::v1::UpdateProductRequest const&) {
+Idempotency ProductSearchConnectionIdempotencyPolicy::UpdateProduct(google::cloud::vision::v1::UpdateProductRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ProductSearchConnectionIdempotencyPolicy::DeleteProduct(
-    google::cloud::vision::v1::DeleteProductRequest const&) {
+Idempotency ProductSearchConnectionIdempotencyPolicy::DeleteProduct(google::cloud::vision::v1::DeleteProductRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ProductSearchConnectionIdempotencyPolicy::CreateReferenceImage(
-    google::cloud::vision::v1::CreateReferenceImageRequest const&) {
+Idempotency ProductSearchConnectionIdempotencyPolicy::CreateReferenceImage(google::cloud::vision::v1::CreateReferenceImageRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ProductSearchConnectionIdempotencyPolicy::DeleteReferenceImage(
-    google::cloud::vision::v1::DeleteReferenceImageRequest const&) {
+Idempotency ProductSearchConnectionIdempotencyPolicy::DeleteReferenceImage(google::cloud::vision::v1::DeleteReferenceImageRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ProductSearchConnectionIdempotencyPolicy::ListReferenceImages(
-    google::cloud::vision::v1::ListReferenceImagesRequest) {  // NOLINT
+Idempotency ProductSearchConnectionIdempotencyPolicy::ListReferenceImages(google::cloud::vision::v1::ListReferenceImagesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency ProductSearchConnectionIdempotencyPolicy::GetReferenceImage(
-    google::cloud::vision::v1::GetReferenceImageRequest const&) {
+Idempotency ProductSearchConnectionIdempotencyPolicy::GetReferenceImage(google::cloud::vision::v1::GetReferenceImageRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ProductSearchConnectionIdempotencyPolicy::AddProductToProductSet(
-    google::cloud::vision::v1::AddProductToProductSetRequest const&) {
+Idempotency ProductSearchConnectionIdempotencyPolicy::AddProductToProductSet(google::cloud::vision::v1::AddProductToProductSetRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency
-ProductSearchConnectionIdempotencyPolicy::RemoveProductFromProductSet(
-    google::cloud::vision::v1::RemoveProductFromProductSetRequest const&) {
+Idempotency ProductSearchConnectionIdempotencyPolicy::RemoveProductFromProductSet(google::cloud::vision::v1::RemoveProductFromProductSetRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ProductSearchConnectionIdempotencyPolicy::ListProductsInProductSet(
-    google::cloud::vision::v1::ListProductsInProductSetRequest) {  // NOLINT
+Idempotency ProductSearchConnectionIdempotencyPolicy::ListProductsInProductSet(google::cloud::vision::v1::ListProductsInProductSetRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency ProductSearchConnectionIdempotencyPolicy::ImportProductSets(
-    google::cloud::vision::v1::ImportProductSetsRequest const&) {
+Idempotency ProductSearchConnectionIdempotencyPolicy::ImportProductSets(google::cloud::vision::v1::ImportProductSetsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ProductSearchConnectionIdempotencyPolicy::PurgeProducts(
-    google::cloud::vision::v1::PurgeProductsRequest const&) {
+Idempotency ProductSearchConnectionIdempotencyPolicy::PurgeProducts(google::cloud::vision::v1::PurgeProductsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ProductSearchConnectionIdempotencyPolicy::GetOperation(
-    google::longrunning::GetOperationRequest const&) {
+Idempotency ProductSearchConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<ProductSearchConnectionIdempotencyPolicy>
-MakeDefaultProductSearchConnectionIdempotencyPolicy() {
+    MakeDefaultProductSearchConnectionIdempotencyPolicy() {
   return std::make_unique<ProductSearchConnectionIdempotencyPolicy>();
 }
 

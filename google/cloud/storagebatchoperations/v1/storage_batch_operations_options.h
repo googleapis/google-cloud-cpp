@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGEBATCHOPERATIONS_V1_STORAGE_BATCH_OPERATIONS_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGEBATCHOPERATIONS_V1_STORAGE_BATCH_OPERATIONS_OPTIONS_H
 
-#include "google/cloud/storagebatchoperations/v1/storage_batch_operations_connection.h"
-#include "google/cloud/storagebatchoperations/v1/storage_batch_operations_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
+#include "google/cloud/storagebatchoperations/v1/storage_batch_operations_connection.h"
+#include "google/cloud/storagebatchoperations/v1/storage_batch_operations_connection_idempotency_policy.h"
 #include "google/cloud/version.h"
 #include <memory>
 
@@ -55,8 +55,7 @@ struct StorageBatchOperationsBackoffPolicyOption {
  * @ingroup google-cloud-storagebatchoperations-options
  */
 struct StorageBatchOperationsConnectionIdempotencyPolicyOption {
-  using Type =
-      std::shared_ptr<StorageBatchOperationsConnectionIdempotencyPolicy>;
+  using Type = std::shared_ptr<StorageBatchOperationsConnectionIdempotencyPolicy>;
 };
 
 /**

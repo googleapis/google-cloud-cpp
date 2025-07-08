@@ -19,12 +19,12 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_WORKFLOWS_EXECUTIONS_V1_EXECUTIONS_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_WORKFLOWS_EXECUTIONS_V1_EXECUTIONS_CLIENT_H
 
-#include "google/cloud/workflows/executions/v1/executions_connection.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
+#include "google/cloud/workflows/executions/v1/executions_connection.h"
 #include <map>
 #include <memory>
 #include <string>
@@ -63,8 +63,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class ExecutionsClient {
  public:
-  explicit ExecutionsClient(std::shared_ptr<ExecutionsConnection> connection,
-                            Options opts = {});
+  explicit ExecutionsClient(std::shared_ptr<ExecutionsConnection> connection, Options opts = {});
   ~ExecutionsClient();
 
   ///@{
@@ -163,9 +162,7 @@ class ExecutionsClient {
   ///
   // clang-format on
   StreamRange<google::cloud::workflows::executions::v1::Execution>
-  ListExecutions(
-      google::cloud::workflows::executions::v1::ListExecutionsRequest request,
-      Options opts = {});
+  ListExecutions(google::cloud::workflows::executions::v1::ListExecutionsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -192,10 +189,8 @@ class ExecutionsClient {
   /// [google.cloud.workflows.executions.v1.Execution]: @googleapis_reference_link{google/cloud/workflows/executions/v1/executions.proto#L82}
   ///
   // clang-format on
-  StatusOr<google::cloud::workflows::executions::v1::Execution> CreateExecution(
-      std::string const& parent,
-      google::cloud::workflows::executions::v1::Execution const& execution,
-      Options opts = {});
+  StatusOr<google::cloud::workflows::executions::v1::Execution>
+  CreateExecution(std::string const& parent, google::cloud::workflows::executions::v1::Execution const& execution, Options opts = {});
 
   // clang-format off
   ///
@@ -224,10 +219,8 @@ class ExecutionsClient {
   /// [google.cloud.workflows.executions.v1.Execution]: @googleapis_reference_link{google/cloud/workflows/executions/v1/executions.proto#L82}
   ///
   // clang-format on
-  StatusOr<google::cloud::workflows::executions::v1::Execution> CreateExecution(
-      google::cloud::workflows::executions::v1::CreateExecutionRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::cloud::workflows::executions::v1::Execution>
+  CreateExecution(google::cloud::workflows::executions::v1::CreateExecutionRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -253,8 +246,8 @@ class ExecutionsClient {
   /// [google.cloud.workflows.executions.v1.GetExecutionRequest]: @googleapis_reference_link{google/cloud/workflows/executions/v1/executions.proto#L356}
   ///
   // clang-format on
-  StatusOr<google::cloud::workflows::executions::v1::Execution> GetExecution(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::workflows::executions::v1::Execution>
+  GetExecution(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -283,10 +276,8 @@ class ExecutionsClient {
   /// [google.cloud.workflows.executions.v1.GetExecutionRequest]: @googleapis_reference_link{google/cloud/workflows/executions/v1/executions.proto#L356}
   ///
   // clang-format on
-  StatusOr<google::cloud::workflows::executions::v1::Execution> GetExecution(
-      google::cloud::workflows::executions::v1::GetExecutionRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::cloud::workflows::executions::v1::Execution>
+  GetExecution(google::cloud::workflows::executions::v1::GetExecutionRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -312,8 +303,8 @@ class ExecutionsClient {
   /// [google.cloud.workflows.executions.v1.Execution]: @googleapis_reference_link{google/cloud/workflows/executions/v1/executions.proto#L82}
   ///
   // clang-format on
-  StatusOr<google::cloud::workflows::executions::v1::Execution> CancelExecution(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::workflows::executions::v1::Execution>
+  CancelExecution(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -342,10 +333,8 @@ class ExecutionsClient {
   /// [google.cloud.workflows.executions.v1.Execution]: @googleapis_reference_link{google/cloud/workflows/executions/v1/executions.proto#L82}
   ///
   // clang-format on
-  StatusOr<google::cloud::workflows::executions::v1::Execution> CancelExecution(
-      google::cloud::workflows::executions::v1::CancelExecutionRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::cloud::workflows::executions::v1::Execution>
+  CancelExecution(google::cloud::workflows::executions::v1::CancelExecutionRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<ExecutionsConnection> connection_;

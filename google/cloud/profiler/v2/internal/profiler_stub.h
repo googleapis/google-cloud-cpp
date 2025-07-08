@@ -36,49 +36,44 @@ class ProfilerServiceStub {
   virtual ~ProfilerServiceStub() = 0;
 
   virtual StatusOr<google::devtools::cloudprofiler::v2::Profile> CreateProfile(
-      grpc::ClientContext& context, Options const& options,
-      google::devtools::cloudprofiler::v2::CreateProfileRequest const&
-          request) = 0;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::devtools::cloudprofiler::v2::CreateProfileRequest const& request) = 0;
 
-  virtual StatusOr<google::devtools::cloudprofiler::v2::Profile>
-  CreateOfflineProfile(
-      grpc::ClientContext& context, Options const& options,
-      google::devtools::cloudprofiler::v2::CreateOfflineProfileRequest const&
-          request) = 0;
+  virtual StatusOr<google::devtools::cloudprofiler::v2::Profile> CreateOfflineProfile(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::devtools::cloudprofiler::v2::CreateOfflineProfileRequest const& request) = 0;
 
   virtual StatusOr<google::devtools::cloudprofiler::v2::Profile> UpdateProfile(
-      grpc::ClientContext& context, Options const& options,
-      google::devtools::cloudprofiler::v2::UpdateProfileRequest const&
-          request) = 0;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::devtools::cloudprofiler::v2::UpdateProfileRequest const& request) = 0;
 };
 
 class DefaultProfilerServiceStub : public ProfilerServiceStub {
  public:
   explicit DefaultProfilerServiceStub(
-      std::unique_ptr<
-          google::devtools::cloudprofiler::v2::ProfilerService::StubInterface>
-          grpc_stub)
+      std::unique_ptr<google::devtools::cloudprofiler::v2::ProfilerService::StubInterface> grpc_stub)
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::devtools::cloudprofiler::v2::Profile> CreateProfile(
-      grpc::ClientContext& context, Options const& options,
-      google::devtools::cloudprofiler::v2::CreateProfileRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::devtools::cloudprofiler::v2::CreateProfileRequest const& request) override;
 
   StatusOr<google::devtools::cloudprofiler::v2::Profile> CreateOfflineProfile(
-      grpc::ClientContext& context, Options const& options,
-      google::devtools::cloudprofiler::v2::CreateOfflineProfileRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::devtools::cloudprofiler::v2::CreateOfflineProfileRequest const& request) override;
 
   StatusOr<google::devtools::cloudprofiler::v2::Profile> UpdateProfile(
-      grpc::ClientContext& context, Options const& options,
-      google::devtools::cloudprofiler::v2::UpdateProfileRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::devtools::cloudprofiler::v2::UpdateProfileRequest const& request) override;
 
  private:
-  std::unique_ptr<
-      google::devtools::cloudprofiler::v2::ProfilerService::StubInterface>
-      grpc_stub_;
+  std::unique_ptr<google::devtools::cloudprofiler::v2::ProfilerService::StubInterface> grpc_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -33,13 +33,10 @@ using ::google::cloud::networkconnectivity_v1::MakeHubServiceConnection;
 /// @deprecated Use networkconnectivity_v1::HubServiceConnection directly.
 using ::google::cloud::networkconnectivity_v1::HubServiceConnection;
 
-/// @deprecated Use
-/// networkconnectivity_v1::HubServiceLimitedErrorCountRetryPolicy directly.
-using ::google::cloud::networkconnectivity_v1::
-    HubServiceLimitedErrorCountRetryPolicy;
+/// @deprecated Use networkconnectivity_v1::HubServiceLimitedErrorCountRetryPolicy directly.
+using ::google::cloud::networkconnectivity_v1::HubServiceLimitedErrorCountRetryPolicy;
 
-/// @deprecated Use networkconnectivity_v1::HubServiceLimitedTimeRetryPolicy
-/// directly.
+/// @deprecated Use networkconnectivity_v1::HubServiceLimitedTimeRetryPolicy directly.
 using ::google::cloud::networkconnectivity_v1::HubServiceLimitedTimeRetryPolicy;
 
 /// @deprecated Use networkconnectivity_v1::HubServiceRetryPolicy directly.

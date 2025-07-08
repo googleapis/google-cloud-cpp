@@ -17,10 +17,10 @@
 // source: google/cloud/parametermanager/v1/service.proto
 
 #include "google/cloud/parametermanager/v1/internal/parameter_manager_option_defaults.h"
-#include "google/cloud/parametermanager/v1/parameter_manager_connection.h"
-#include "google/cloud/parametermanager/v1/parameter_manager_options.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
+#include "google/cloud/parametermanager/v1/parameter_manager_connection.h"
+#include "google/cloud/parametermanager/v1/parameter_manager_options.h"
 #include <memory>
 #include <utility>
 
@@ -35,30 +35,23 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options ParameterManagerDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_PARAMETER_MANAGER_ENDPOINT", "",
-      "GOOGLE_CLOUD_CPP_PARAMETER_MANAGER_AUTHORITY",
+      std::move(options), "GOOGLE_CLOUD_CPP_PARAMETER_MANAGER_ENDPOINT",
+      "", "GOOGLE_CLOUD_CPP_PARAMETER_MANAGER_AUTHORITY",
       "parametermanager.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<parametermanager_v1::ParameterManagerRetryPolicyOption>()) {
     options.set<parametermanager_v1::ParameterManagerRetryPolicyOption>(
         parametermanager_v1::ParameterManagerLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
-            .clone());
+            std::chrono::minutes(30)).clone());
   }
-  if (!options
-           .has<parametermanager_v1::ParameterManagerBackoffPolicyOption>()) {
+  if (!options.has<parametermanager_v1::ParameterManagerBackoffPolicyOption>()) {
     options.set<parametermanager_v1::ParameterManagerBackoffPolicyOption>(
-        ExponentialBackoffPolicy(
-            std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
-            .clone());
+        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
   }
-  if (!options.has<parametermanager_v1::
-                       ParameterManagerConnectionIdempotencyPolicyOption>()) {
-    options.set<
-        parametermanager_v1::ParameterManagerConnectionIdempotencyPolicyOption>(
-        parametermanager_v1::
-            MakeDefaultParameterManagerConnectionIdempotencyPolicy());
+  if (!options.has<parametermanager_v1::ParameterManagerConnectionIdempotencyPolicyOption>()) {
+    options.set<parametermanager_v1::ParameterManagerConnectionIdempotencyPolicyOption>(
+        parametermanager_v1::MakeDefaultParameterManagerConnectionIdempotencyPolicy());
   }
 
   return options;

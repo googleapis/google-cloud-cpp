@@ -31,49 +31,62 @@ namespace container_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ClusterManagerLogging::ClusterManagerLogging(
-    std::shared_ptr<ClusterManagerStub> child, TracingOptions tracing_options,
+    std::shared_ptr<ClusterManagerStub> child,
+    TracingOptions tracing_options,
     std::set<std::string> const&)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::container::v1::ListClustersResponse>
 ClusterManagerLogging::ListClusters(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::container::v1::ListClustersRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::container::v1::ListClustersRequest const& request) {
         return child_->ListClusters(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::container::v1::Cluster> ClusterManagerLogging::GetCluster(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::container::v1::Cluster>
+ClusterManagerLogging::GetCluster(
+    grpc::ClientContext& context,
+    Options const& options,
     google::container::v1::GetClusterRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::container::v1::GetClusterRequest const& request) {
         return child_->GetCluster(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::container::v1::Operation> ClusterManagerLogging::CreateCluster(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::container::v1::Operation>
+ClusterManagerLogging::CreateCluster(
+    grpc::ClientContext& context,
+    Options const& options,
     google::container::v1::CreateClusterRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::container::v1::CreateClusterRequest const& request) {
         return child_->CreateCluster(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::container::v1::Operation> ClusterManagerLogging::UpdateCluster(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::container::v1::Operation>
+ClusterManagerLogging::UpdateCluster(
+    grpc::ClientContext& context,
+    Options const& options,
     google::container::v1::UpdateClusterRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::container::v1::UpdateClusterRequest const& request) {
         return child_->UpdateCluster(context, options, request);
       },
@@ -82,10 +95,12 @@ StatusOr<google::container::v1::Operation> ClusterManagerLogging::UpdateCluster(
 
 StatusOr<google::container::v1::Operation>
 ClusterManagerLogging::UpdateNodePool(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::container::v1::UpdateNodePoolRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::container::v1::UpdateNodePoolRequest const& request) {
         return child_->UpdateNodePool(context, options, request);
       },
@@ -94,12 +109,13 @@ ClusterManagerLogging::UpdateNodePool(
 
 StatusOr<google::container::v1::Operation>
 ClusterManagerLogging::SetNodePoolAutoscaling(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::container::v1::SetNodePoolAutoscalingRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::container::v1::SetNodePoolAutoscalingRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::container::v1::SetNodePoolAutoscalingRequest const& request) {
         return child_->SetNodePoolAutoscaling(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -107,10 +123,12 @@ ClusterManagerLogging::SetNodePoolAutoscaling(
 
 StatusOr<google::container::v1::Operation>
 ClusterManagerLogging::SetLoggingService(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::container::v1::SetLoggingServiceRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::container::v1::SetLoggingServiceRequest const& request) {
         return child_->SetLoggingService(context, options, request);
       },
@@ -119,12 +137,13 @@ ClusterManagerLogging::SetLoggingService(
 
 StatusOr<google::container::v1::Operation>
 ClusterManagerLogging::SetMonitoringService(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::container::v1::SetMonitoringServiceRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::container::v1::SetMonitoringServiceRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::container::v1::SetMonitoringServiceRequest const& request) {
         return child_->SetMonitoringService(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -132,54 +151,68 @@ ClusterManagerLogging::SetMonitoringService(
 
 StatusOr<google::container::v1::Operation>
 ClusterManagerLogging::SetAddonsConfig(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::container::v1::SetAddonsConfigRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::container::v1::SetAddonsConfigRequest const& request) {
         return child_->SetAddonsConfig(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::container::v1::Operation> ClusterManagerLogging::SetLocations(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::container::v1::Operation>
+ClusterManagerLogging::SetLocations(
+    grpc::ClientContext& context,
+    Options const& options,
     google::container::v1::SetLocationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::container::v1::SetLocationsRequest const& request) {
         return child_->SetLocations(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::container::v1::Operation> ClusterManagerLogging::UpdateMaster(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::container::v1::Operation>
+ClusterManagerLogging::UpdateMaster(
+    grpc::ClientContext& context,
+    Options const& options,
     google::container::v1::UpdateMasterRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::container::v1::UpdateMasterRequest const& request) {
         return child_->UpdateMaster(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::container::v1::Operation> ClusterManagerLogging::SetMasterAuth(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::container::v1::Operation>
+ClusterManagerLogging::SetMasterAuth(
+    grpc::ClientContext& context,
+    Options const& options,
     google::container::v1::SetMasterAuthRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::container::v1::SetMasterAuthRequest const& request) {
         return child_->SetMasterAuth(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::container::v1::Operation> ClusterManagerLogging::DeleteCluster(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::container::v1::Operation>
+ClusterManagerLogging::DeleteCluster(
+    grpc::ClientContext& context,
+    Options const& options,
     google::container::v1::DeleteClusterRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::container::v1::DeleteClusterRequest const& request) {
         return child_->DeleteCluster(context, options, request);
       },
@@ -188,32 +221,40 @@ StatusOr<google::container::v1::Operation> ClusterManagerLogging::DeleteCluster(
 
 StatusOr<google::container::v1::ListOperationsResponse>
 ClusterManagerLogging::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::container::v1::ListOperationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::container::v1::ListOperationsRequest const& request) {
         return child_->ListOperations(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::container::v1::Operation> ClusterManagerLogging::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::container::v1::Operation>
+ClusterManagerLogging::GetOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::container::v1::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::container::v1::GetOperationRequest const& request) {
         return child_->GetOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status ClusterManagerLogging::CancelOperation(
-    grpc::ClientContext& context, Options const& options,
+Status
+ClusterManagerLogging::CancelOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::container::v1::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::container::v1::CancelOperationRequest const& request) {
         return child_->CancelOperation(context, options, request);
       },
@@ -222,10 +263,12 @@ Status ClusterManagerLogging::CancelOperation(
 
 StatusOr<google::container::v1::ServerConfig>
 ClusterManagerLogging::GetServerConfig(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::container::v1::GetServerConfigRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::container::v1::GetServerConfigRequest const& request) {
         return child_->GetServerConfig(context, options, request);
       },
@@ -234,10 +277,12 @@ ClusterManagerLogging::GetServerConfig(
 
 StatusOr<google::container::v1::GetJSONWebKeysResponse>
 ClusterManagerLogging::GetJSONWebKeys(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::container::v1::GetJSONWebKeysRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::container::v1::GetJSONWebKeysRequest const& request) {
         return child_->GetJSONWebKeys(context, options, request);
       },
@@ -246,21 +291,26 @@ ClusterManagerLogging::GetJSONWebKeys(
 
 StatusOr<google::container::v1::ListNodePoolsResponse>
 ClusterManagerLogging::ListNodePools(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::container::v1::ListNodePoolsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::container::v1::ListNodePoolsRequest const& request) {
         return child_->ListNodePools(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::container::v1::NodePool> ClusterManagerLogging::GetNodePool(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::container::v1::NodePool>
+ClusterManagerLogging::GetNodePool(
+    grpc::ClientContext& context,
+    Options const& options,
     google::container::v1::GetNodePoolRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::container::v1::GetNodePoolRequest const& request) {
         return child_->GetNodePool(context, options, request);
       },
@@ -269,10 +319,12 @@ StatusOr<google::container::v1::NodePool> ClusterManagerLogging::GetNodePool(
 
 StatusOr<google::container::v1::Operation>
 ClusterManagerLogging::CreateNodePool(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::container::v1::CreateNodePoolRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::container::v1::CreateNodePoolRequest const& request) {
         return child_->CreateNodePool(context, options, request);
       },
@@ -281,23 +333,27 @@ ClusterManagerLogging::CreateNodePool(
 
 StatusOr<google::container::v1::Operation>
 ClusterManagerLogging::DeleteNodePool(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::container::v1::DeleteNodePoolRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::container::v1::DeleteNodePoolRequest const& request) {
         return child_->DeleteNodePool(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status ClusterManagerLogging::CompleteNodePoolUpgrade(
-    grpc::ClientContext& context, Options const& options,
+Status
+ClusterManagerLogging::CompleteNodePoolUpgrade(
+    grpc::ClientContext& context,
+    Options const& options,
     google::container::v1::CompleteNodePoolUpgradeRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::container::v1::CompleteNodePoolUpgradeRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::container::v1::CompleteNodePoolUpgradeRequest const& request) {
         return child_->CompleteNodePoolUpgrade(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -305,12 +361,13 @@ Status ClusterManagerLogging::CompleteNodePoolUpgrade(
 
 StatusOr<google::container::v1::Operation>
 ClusterManagerLogging::RollbackNodePoolUpgrade(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::container::v1::RollbackNodePoolUpgradeRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::container::v1::RollbackNodePoolUpgradeRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::container::v1::RollbackNodePoolUpgradeRequest const& request) {
         return child_->RollbackNodePoolUpgrade(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -318,33 +375,40 @@ ClusterManagerLogging::RollbackNodePoolUpgrade(
 
 StatusOr<google::container::v1::Operation>
 ClusterManagerLogging::SetNodePoolManagement(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::container::v1::SetNodePoolManagementRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::container::v1::SetNodePoolManagementRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::container::v1::SetNodePoolManagementRequest const& request) {
         return child_->SetNodePoolManagement(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::container::v1::Operation> ClusterManagerLogging::SetLabels(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::container::v1::Operation>
+ClusterManagerLogging::SetLabels(
+    grpc::ClientContext& context,
+    Options const& options,
     google::container::v1::SetLabelsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::container::v1::SetLabelsRequest const& request) {
         return child_->SetLabels(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::container::v1::Operation> ClusterManagerLogging::SetLegacyAbac(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::container::v1::Operation>
+ClusterManagerLogging::SetLegacyAbac(
+    grpc::ClientContext& context,
+    Options const& options,
     google::container::v1::SetLegacyAbacRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::container::v1::SetLegacyAbacRequest const& request) {
         return child_->SetLegacyAbac(context, options, request);
       },
@@ -353,10 +417,12 @@ StatusOr<google::container::v1::Operation> ClusterManagerLogging::SetLegacyAbac(
 
 StatusOr<google::container::v1::Operation>
 ClusterManagerLogging::StartIPRotation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::container::v1::StartIPRotationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::container::v1::StartIPRotationRequest const& request) {
         return child_->StartIPRotation(context, options, request);
       },
@@ -365,10 +431,12 @@ ClusterManagerLogging::StartIPRotation(
 
 StatusOr<google::container::v1::Operation>
 ClusterManagerLogging::CompleteIPRotation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::container::v1::CompleteIPRotationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::container::v1::CompleteIPRotationRequest const& request) {
         return child_->CompleteIPRotation(context, options, request);
       },
@@ -377,10 +445,12 @@ ClusterManagerLogging::CompleteIPRotation(
 
 StatusOr<google::container::v1::Operation>
 ClusterManagerLogging::SetNodePoolSize(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::container::v1::SetNodePoolSizeRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::container::v1::SetNodePoolSizeRequest const& request) {
         return child_->SetNodePoolSize(context, options, request);
       },
@@ -389,10 +459,12 @@ ClusterManagerLogging::SetNodePoolSize(
 
 StatusOr<google::container::v1::Operation>
 ClusterManagerLogging::SetNetworkPolicy(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::container::v1::SetNetworkPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::container::v1::SetNetworkPolicyRequest const& request) {
         return child_->SetNetworkPolicy(context, options, request);
       },
@@ -401,12 +473,13 @@ ClusterManagerLogging::SetNetworkPolicy(
 
 StatusOr<google::container::v1::Operation>
 ClusterManagerLogging::SetMaintenancePolicy(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::container::v1::SetMaintenancePolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::container::v1::SetMaintenancePolicyRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::container::v1::SetMaintenancePolicyRequest const& request) {
         return child_->SetMaintenancePolicy(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -414,12 +487,13 @@ ClusterManagerLogging::SetMaintenancePolicy(
 
 StatusOr<google::container::v1::ListUsableSubnetworksResponse>
 ClusterManagerLogging::ListUsableSubnetworks(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::container::v1::ListUsableSubnetworksRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::container::v1::ListUsableSubnetworksRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::container::v1::ListUsableSubnetworksRequest const& request) {
         return child_->ListUsableSubnetworks(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -427,12 +501,13 @@ ClusterManagerLogging::ListUsableSubnetworks(
 
 StatusOr<google::container::v1::CheckAutopilotCompatibilityResponse>
 ClusterManagerLogging::CheckAutopilotCompatibility(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::container::v1::CheckAutopilotCompatibilityRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::container::v1::CheckAutopilotCompatibilityRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::container::v1::CheckAutopilotCompatibilityRequest const& request) {
         return child_->CheckAutopilotCompatibility(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -440,12 +515,13 @@ ClusterManagerLogging::CheckAutopilotCompatibility(
 
 StatusOr<google::container::v1::ClusterUpgradeInfo>
 ClusterManagerLogging::FetchClusterUpgradeInfo(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::container::v1::FetchClusterUpgradeInfoRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::container::v1::FetchClusterUpgradeInfoRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::container::v1::FetchClusterUpgradeInfoRequest const& request) {
         return child_->FetchClusterUpgradeInfo(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -453,12 +529,13 @@ ClusterManagerLogging::FetchClusterUpgradeInfo(
 
 StatusOr<google::container::v1::NodePoolUpgradeInfo>
 ClusterManagerLogging::FetchNodePoolUpgradeInfo(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::container::v1::FetchNodePoolUpgradeInfoRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::container::v1::FetchNodePoolUpgradeInfoRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::container::v1::FetchNodePoolUpgradeInfoRequest const& request) {
         return child_->FetchNodePoolUpgradeInfo(context, options, request);
       },
       context, options, request, __func__, tracing_options_);

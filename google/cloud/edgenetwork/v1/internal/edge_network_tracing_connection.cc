@@ -34,66 +34,53 @@ EdgeNetworkTracingConnection::EdgeNetworkTracingConnection(
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::edgenetwork::v1::InitializeZoneResponse>
-EdgeNetworkTracingConnection::InitializeZone(
-    google::cloud::edgenetwork::v1::InitializeZoneRequest const& request) {
-  auto span = internal::MakeSpan(
-      "edgenetwork_v1::EdgeNetworkConnection::InitializeZone");
+EdgeNetworkTracingConnection::InitializeZone(google::cloud::edgenetwork::v1::InitializeZoneRequest const& request) {
+  auto span = internal::MakeSpan("edgenetwork_v1::EdgeNetworkConnection::InitializeZone");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->InitializeZone(request));
 }
 
 StreamRange<google::cloud::edgenetwork::v1::Zone>
-EdgeNetworkTracingConnection::ListZones(
-    google::cloud::edgenetwork::v1::ListZonesRequest request) {
-  auto span =
-      internal::MakeSpan("edgenetwork_v1::EdgeNetworkConnection::ListZones");
+EdgeNetworkTracingConnection::ListZones(google::cloud::edgenetwork::v1::ListZonesRequest request) {
+  auto span = internal::MakeSpan("edgenetwork_v1::EdgeNetworkConnection::ListZones");
   internal::OTelScope scope(span);
   auto sr = child_->ListZones(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::edgenetwork::v1::Zone>(
-      std::move(span), std::move(sr));
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::edgenetwork::v1::Zone>
-EdgeNetworkTracingConnection::GetZone(
-    google::cloud::edgenetwork::v1::GetZoneRequest const& request) {
-  auto span =
-      internal::MakeSpan("edgenetwork_v1::EdgeNetworkConnection::GetZone");
+EdgeNetworkTracingConnection::GetZone(google::cloud::edgenetwork::v1::GetZoneRequest const& request) {
+  auto span = internal::MakeSpan("edgenetwork_v1::EdgeNetworkConnection::GetZone");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetZone(request));
 }
 
 StreamRange<google::cloud::edgenetwork::v1::Network>
-EdgeNetworkTracingConnection::ListNetworks(
-    google::cloud::edgenetwork::v1::ListNetworksRequest request) {
-  auto span =
-      internal::MakeSpan("edgenetwork_v1::EdgeNetworkConnection::ListNetworks");
+EdgeNetworkTracingConnection::ListNetworks(google::cloud::edgenetwork::v1::ListNetworksRequest request) {
+  auto span = internal::MakeSpan("edgenetwork_v1::EdgeNetworkConnection::ListNetworks");
   internal::OTelScope scope(span);
   auto sr = child_->ListNetworks(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::edgenetwork::v1::Network>(std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::edgenetwork::v1::Network>(
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::edgenetwork::v1::Network>
-EdgeNetworkTracingConnection::GetNetwork(
-    google::cloud::edgenetwork::v1::GetNetworkRequest const& request) {
-  auto span =
-      internal::MakeSpan("edgenetwork_v1::EdgeNetworkConnection::GetNetwork");
+EdgeNetworkTracingConnection::GetNetwork(google::cloud::edgenetwork::v1::GetNetworkRequest const& request) {
+  auto span = internal::MakeSpan("edgenetwork_v1::EdgeNetworkConnection::GetNetwork");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetNetwork(request));
 }
 
 StatusOr<google::cloud::edgenetwork::v1::DiagnoseNetworkResponse>
-EdgeNetworkTracingConnection::DiagnoseNetwork(
-    google::cloud::edgenetwork::v1::DiagnoseNetworkRequest const& request) {
-  auto span = internal::MakeSpan(
-      "edgenetwork_v1::EdgeNetworkConnection::DiagnoseNetwork");
+EdgeNetworkTracingConnection::DiagnoseNetwork(google::cloud::edgenetwork::v1::DiagnoseNetworkRequest const& request) {
+  auto span = internal::MakeSpan("edgenetwork_v1::EdgeNetworkConnection::DiagnoseNetwork");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DiagnoseNetwork(request));
 }
 
 future<StatusOr<google::cloud::edgenetwork::v1::Network>>
-EdgeNetworkTracingConnection::CreateNetwork(
-    google::cloud::edgenetwork::v1::CreateNetworkRequest const& request) {
+EdgeNetworkTracingConnection::CreateNetwork(google::cloud::edgenetwork::v1::CreateNetworkRequest const& request) {
   auto span = internal::MakeSpan(
       "edgenetwork_v1::EdgeNetworkConnection::CreateNetwork");
   internal::OTelScope scope(span);
@@ -102,12 +89,12 @@ EdgeNetworkTracingConnection::CreateNetwork(
 
 StatusOr<google::longrunning::Operation>
 EdgeNetworkTracingConnection::CreateNetwork(
-    NoAwaitTag,
-    google::cloud::edgenetwork::v1::CreateNetworkRequest const& request) {
+    NoAwaitTag, google::cloud::edgenetwork::v1::CreateNetworkRequest const& request) {
   auto span = internal::MakeSpan(
       "edgenetwork_v1::EdgeNetworkConnection::CreateNetwork");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->CreateNetwork(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->CreateNetwork(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::edgenetwork::v1::Network>>
@@ -116,12 +103,12 @@ EdgeNetworkTracingConnection::CreateNetwork(
   auto span = internal::MakeSpan(
       "edgenetwork_v1::EdgeNetworkConnection::CreateNetwork");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->CreateNetwork(operation));
+  return internal::EndSpan(std::move(span),
+      child_->CreateNetwork(operation));
 }
 
 future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>
-EdgeNetworkTracingConnection::DeleteNetwork(
-    google::cloud::edgenetwork::v1::DeleteNetworkRequest const& request) {
+EdgeNetworkTracingConnection::DeleteNetwork(google::cloud::edgenetwork::v1::DeleteNetworkRequest const& request) {
   auto span = internal::MakeSpan(
       "edgenetwork_v1::EdgeNetworkConnection::DeleteNetwork");
   internal::OTelScope scope(span);
@@ -130,12 +117,12 @@ EdgeNetworkTracingConnection::DeleteNetwork(
 
 StatusOr<google::longrunning::Operation>
 EdgeNetworkTracingConnection::DeleteNetwork(
-    NoAwaitTag,
-    google::cloud::edgenetwork::v1::DeleteNetworkRequest const& request) {
+    NoAwaitTag, google::cloud::edgenetwork::v1::DeleteNetworkRequest const& request) {
   auto span = internal::MakeSpan(
       "edgenetwork_v1::EdgeNetworkConnection::DeleteNetwork");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->DeleteNetwork(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->DeleteNetwork(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>
@@ -144,188 +131,165 @@ EdgeNetworkTracingConnection::DeleteNetwork(
   auto span = internal::MakeSpan(
       "edgenetwork_v1::EdgeNetworkConnection::DeleteNetwork");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->DeleteNetwork(operation));
+  return internal::EndSpan(std::move(span),
+      child_->DeleteNetwork(operation));
 }
 
 StreamRange<google::cloud::edgenetwork::v1::Subnet>
-EdgeNetworkTracingConnection::ListSubnets(
-    google::cloud::edgenetwork::v1::ListSubnetsRequest request) {
-  auto span =
-      internal::MakeSpan("edgenetwork_v1::EdgeNetworkConnection::ListSubnets");
+EdgeNetworkTracingConnection::ListSubnets(google::cloud::edgenetwork::v1::ListSubnetsRequest request) {
+  auto span = internal::MakeSpan("edgenetwork_v1::EdgeNetworkConnection::ListSubnets");
   internal::OTelScope scope(span);
   auto sr = child_->ListSubnets(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::edgenetwork::v1::Subnet>(std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::edgenetwork::v1::Subnet>(
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::edgenetwork::v1::Subnet>
-EdgeNetworkTracingConnection::GetSubnet(
-    google::cloud::edgenetwork::v1::GetSubnetRequest const& request) {
-  auto span =
-      internal::MakeSpan("edgenetwork_v1::EdgeNetworkConnection::GetSubnet");
+EdgeNetworkTracingConnection::GetSubnet(google::cloud::edgenetwork::v1::GetSubnetRequest const& request) {
+  auto span = internal::MakeSpan("edgenetwork_v1::EdgeNetworkConnection::GetSubnet");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetSubnet(request));
 }
 
 future<StatusOr<google::cloud::edgenetwork::v1::Subnet>>
-EdgeNetworkTracingConnection::CreateSubnet(
-    google::cloud::edgenetwork::v1::CreateSubnetRequest const& request) {
-  auto span =
-      internal::MakeSpan("edgenetwork_v1::EdgeNetworkConnection::CreateSubnet");
+EdgeNetworkTracingConnection::CreateSubnet(google::cloud::edgenetwork::v1::CreateSubnetRequest const& request) {
+  auto span = internal::MakeSpan(
+      "edgenetwork_v1::EdgeNetworkConnection::CreateSubnet");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateSubnet(request));
 }
 
 StatusOr<google::longrunning::Operation>
 EdgeNetworkTracingConnection::CreateSubnet(
-    NoAwaitTag,
-    google::cloud::edgenetwork::v1::CreateSubnetRequest const& request) {
-  auto span =
-      internal::MakeSpan("edgenetwork_v1::EdgeNetworkConnection::CreateSubnet");
+    NoAwaitTag, google::cloud::edgenetwork::v1::CreateSubnetRequest const& request) {
+  auto span = internal::MakeSpan(
+      "edgenetwork_v1::EdgeNetworkConnection::CreateSubnet");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->CreateSubnet(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->CreateSubnet(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::edgenetwork::v1::Subnet>>
 EdgeNetworkTracingConnection::CreateSubnet(
     google::longrunning::Operation const& operation) {
-  auto span =
-      internal::MakeSpan("edgenetwork_v1::EdgeNetworkConnection::CreateSubnet");
+  auto span = internal::MakeSpan(
+      "edgenetwork_v1::EdgeNetworkConnection::CreateSubnet");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->CreateSubnet(operation));
+  return internal::EndSpan(std::move(span),
+      child_->CreateSubnet(operation));
 }
 
 future<StatusOr<google::cloud::edgenetwork::v1::Subnet>>
-EdgeNetworkTracingConnection::UpdateSubnet(
-    google::cloud::edgenetwork::v1::UpdateSubnetRequest const& request) {
-  auto span =
-      internal::MakeSpan("edgenetwork_v1::EdgeNetworkConnection::UpdateSubnet");
+EdgeNetworkTracingConnection::UpdateSubnet(google::cloud::edgenetwork::v1::UpdateSubnetRequest const& request) {
+  auto span = internal::MakeSpan(
+      "edgenetwork_v1::EdgeNetworkConnection::UpdateSubnet");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateSubnet(request));
 }
 
 StatusOr<google::longrunning::Operation>
 EdgeNetworkTracingConnection::UpdateSubnet(
-    NoAwaitTag,
-    google::cloud::edgenetwork::v1::UpdateSubnetRequest const& request) {
-  auto span =
-      internal::MakeSpan("edgenetwork_v1::EdgeNetworkConnection::UpdateSubnet");
+    NoAwaitTag, google::cloud::edgenetwork::v1::UpdateSubnetRequest const& request) {
+  auto span = internal::MakeSpan(
+      "edgenetwork_v1::EdgeNetworkConnection::UpdateSubnet");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->UpdateSubnet(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->UpdateSubnet(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::edgenetwork::v1::Subnet>>
 EdgeNetworkTracingConnection::UpdateSubnet(
     google::longrunning::Operation const& operation) {
-  auto span =
-      internal::MakeSpan("edgenetwork_v1::EdgeNetworkConnection::UpdateSubnet");
+  auto span = internal::MakeSpan(
+      "edgenetwork_v1::EdgeNetworkConnection::UpdateSubnet");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->UpdateSubnet(operation));
+  return internal::EndSpan(std::move(span),
+      child_->UpdateSubnet(operation));
 }
 
 future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>
-EdgeNetworkTracingConnection::DeleteSubnet(
-    google::cloud::edgenetwork::v1::DeleteSubnetRequest const& request) {
-  auto span =
-      internal::MakeSpan("edgenetwork_v1::EdgeNetworkConnection::DeleteSubnet");
+EdgeNetworkTracingConnection::DeleteSubnet(google::cloud::edgenetwork::v1::DeleteSubnetRequest const& request) {
+  auto span = internal::MakeSpan(
+      "edgenetwork_v1::EdgeNetworkConnection::DeleteSubnet");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteSubnet(request));
 }
 
 StatusOr<google::longrunning::Operation>
 EdgeNetworkTracingConnection::DeleteSubnet(
-    NoAwaitTag,
-    google::cloud::edgenetwork::v1::DeleteSubnetRequest const& request) {
-  auto span =
-      internal::MakeSpan("edgenetwork_v1::EdgeNetworkConnection::DeleteSubnet");
+    NoAwaitTag, google::cloud::edgenetwork::v1::DeleteSubnetRequest const& request) {
+  auto span = internal::MakeSpan(
+      "edgenetwork_v1::EdgeNetworkConnection::DeleteSubnet");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->DeleteSubnet(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->DeleteSubnet(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>
 EdgeNetworkTracingConnection::DeleteSubnet(
     google::longrunning::Operation const& operation) {
-  auto span =
-      internal::MakeSpan("edgenetwork_v1::EdgeNetworkConnection::DeleteSubnet");
+  auto span = internal::MakeSpan(
+      "edgenetwork_v1::EdgeNetworkConnection::DeleteSubnet");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->DeleteSubnet(operation));
+  return internal::EndSpan(std::move(span),
+      child_->DeleteSubnet(operation));
 }
 
 StreamRange<google::cloud::edgenetwork::v1::Interconnect>
-EdgeNetworkTracingConnection::ListInterconnects(
-    google::cloud::edgenetwork::v1::ListInterconnectsRequest request) {
-  auto span = internal::MakeSpan(
-      "edgenetwork_v1::EdgeNetworkConnection::ListInterconnects");
+EdgeNetworkTracingConnection::ListInterconnects(google::cloud::edgenetwork::v1::ListInterconnectsRequest request) {
+  auto span = internal::MakeSpan("edgenetwork_v1::EdgeNetworkConnection::ListInterconnects");
   internal::OTelScope scope(span);
   auto sr = child_->ListInterconnects(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::edgenetwork::v1::Interconnect>(std::move(span),
-                                                    std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::edgenetwork::v1::Interconnect>(
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::edgenetwork::v1::Interconnect>
-EdgeNetworkTracingConnection::GetInterconnect(
-    google::cloud::edgenetwork::v1::GetInterconnectRequest const& request) {
-  auto span = internal::MakeSpan(
-      "edgenetwork_v1::EdgeNetworkConnection::GetInterconnect");
+EdgeNetworkTracingConnection::GetInterconnect(google::cloud::edgenetwork::v1::GetInterconnectRequest const& request) {
+  auto span = internal::MakeSpan("edgenetwork_v1::EdgeNetworkConnection::GetInterconnect");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetInterconnect(request));
 }
 
 StatusOr<google::cloud::edgenetwork::v1::DiagnoseInterconnectResponse>
-EdgeNetworkTracingConnection::DiagnoseInterconnect(
-    google::cloud::edgenetwork::v1::DiagnoseInterconnectRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "edgenetwork_v1::EdgeNetworkConnection::DiagnoseInterconnect");
+EdgeNetworkTracingConnection::DiagnoseInterconnect(google::cloud::edgenetwork::v1::DiagnoseInterconnectRequest const& request) {
+  auto span = internal::MakeSpan("edgenetwork_v1::EdgeNetworkConnection::DiagnoseInterconnect");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DiagnoseInterconnect(request));
 }
 
 StreamRange<google::cloud::edgenetwork::v1::InterconnectAttachment>
-EdgeNetworkTracingConnection::ListInterconnectAttachments(
-    google::cloud::edgenetwork::v1::ListInterconnectAttachmentsRequest
-        request) {
-  auto span = internal::MakeSpan(
-      "edgenetwork_v1::EdgeNetworkConnection::ListInterconnectAttachments");
+EdgeNetworkTracingConnection::ListInterconnectAttachments(google::cloud::edgenetwork::v1::ListInterconnectAttachmentsRequest request) {
+  auto span = internal::MakeSpan("edgenetwork_v1::EdgeNetworkConnection::ListInterconnectAttachments");
   internal::OTelScope scope(span);
   auto sr = child_->ListInterconnectAttachments(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::edgenetwork::v1::InterconnectAttachment>(std::move(span),
-                                                              std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::edgenetwork::v1::InterconnectAttachment>(
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::edgenetwork::v1::InterconnectAttachment>
-EdgeNetworkTracingConnection::GetInterconnectAttachment(
-    google::cloud::edgenetwork::v1::GetInterconnectAttachmentRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "edgenetwork_v1::EdgeNetworkConnection::GetInterconnectAttachment");
+EdgeNetworkTracingConnection::GetInterconnectAttachment(google::cloud::edgenetwork::v1::GetInterconnectAttachmentRequest const& request) {
+  auto span = internal::MakeSpan("edgenetwork_v1::EdgeNetworkConnection::GetInterconnectAttachment");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetInterconnectAttachment(request));
 }
 
 future<StatusOr<google::cloud::edgenetwork::v1::InterconnectAttachment>>
-EdgeNetworkTracingConnection::CreateInterconnectAttachment(
-    google::cloud::edgenetwork::v1::CreateInterconnectAttachmentRequest const&
-        request) {
+EdgeNetworkTracingConnection::CreateInterconnectAttachment(google::cloud::edgenetwork::v1::CreateInterconnectAttachmentRequest const& request) {
   auto span = internal::MakeSpan(
       "edgenetwork_v1::EdgeNetworkConnection::CreateInterconnectAttachment");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->CreateInterconnectAttachment(request));
+  return internal::EndSpan(std::move(span), child_->CreateInterconnectAttachment(request));
 }
 
 StatusOr<google::longrunning::Operation>
 EdgeNetworkTracingConnection::CreateInterconnectAttachment(
-    NoAwaitTag,
-    google::cloud::edgenetwork::v1::CreateInterconnectAttachmentRequest const&
-        request) {
+    NoAwaitTag, google::cloud::edgenetwork::v1::CreateInterconnectAttachmentRequest const& request) {
   auto span = internal::MakeSpan(
       "edgenetwork_v1::EdgeNetworkConnection::CreateInterconnectAttachment");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->CreateInterconnectAttachment(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->CreateInterconnectAttachment(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::edgenetwork::v1::InterconnectAttachment>>
@@ -335,30 +299,25 @@ EdgeNetworkTracingConnection::CreateInterconnectAttachment(
       "edgenetwork_v1::EdgeNetworkConnection::CreateInterconnectAttachment");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->CreateInterconnectAttachment(operation));
+      child_->CreateInterconnectAttachment(operation));
 }
 
 future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>
-EdgeNetworkTracingConnection::DeleteInterconnectAttachment(
-    google::cloud::edgenetwork::v1::DeleteInterconnectAttachmentRequest const&
-        request) {
+EdgeNetworkTracingConnection::DeleteInterconnectAttachment(google::cloud::edgenetwork::v1::DeleteInterconnectAttachmentRequest const& request) {
   auto span = internal::MakeSpan(
       "edgenetwork_v1::EdgeNetworkConnection::DeleteInterconnectAttachment");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->DeleteInterconnectAttachment(request));
+  return internal::EndSpan(std::move(span), child_->DeleteInterconnectAttachment(request));
 }
 
 StatusOr<google::longrunning::Operation>
 EdgeNetworkTracingConnection::DeleteInterconnectAttachment(
-    NoAwaitTag,
-    google::cloud::edgenetwork::v1::DeleteInterconnectAttachmentRequest const&
-        request) {
+    NoAwaitTag, google::cloud::edgenetwork::v1::DeleteInterconnectAttachmentRequest const& request) {
   auto span = internal::MakeSpan(
       "edgenetwork_v1::EdgeNetworkConnection::DeleteInterconnectAttachment");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->DeleteInterconnectAttachment(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->DeleteInterconnectAttachment(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>
@@ -368,174 +327,158 @@ EdgeNetworkTracingConnection::DeleteInterconnectAttachment(
       "edgenetwork_v1::EdgeNetworkConnection::DeleteInterconnectAttachment");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->DeleteInterconnectAttachment(operation));
+      child_->DeleteInterconnectAttachment(operation));
 }
 
 StreamRange<google::cloud::edgenetwork::v1::Router>
-EdgeNetworkTracingConnection::ListRouters(
-    google::cloud::edgenetwork::v1::ListRoutersRequest request) {
-  auto span =
-      internal::MakeSpan("edgenetwork_v1::EdgeNetworkConnection::ListRouters");
+EdgeNetworkTracingConnection::ListRouters(google::cloud::edgenetwork::v1::ListRoutersRequest request) {
+  auto span = internal::MakeSpan("edgenetwork_v1::EdgeNetworkConnection::ListRouters");
   internal::OTelScope scope(span);
   auto sr = child_->ListRouters(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::edgenetwork::v1::Router>(std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::edgenetwork::v1::Router>(
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::edgenetwork::v1::Router>
-EdgeNetworkTracingConnection::GetRouter(
-    google::cloud::edgenetwork::v1::GetRouterRequest const& request) {
-  auto span =
-      internal::MakeSpan("edgenetwork_v1::EdgeNetworkConnection::GetRouter");
+EdgeNetworkTracingConnection::GetRouter(google::cloud::edgenetwork::v1::GetRouterRequest const& request) {
+  auto span = internal::MakeSpan("edgenetwork_v1::EdgeNetworkConnection::GetRouter");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetRouter(request));
 }
 
 StatusOr<google::cloud::edgenetwork::v1::DiagnoseRouterResponse>
-EdgeNetworkTracingConnection::DiagnoseRouter(
-    google::cloud::edgenetwork::v1::DiagnoseRouterRequest const& request) {
-  auto span = internal::MakeSpan(
-      "edgenetwork_v1::EdgeNetworkConnection::DiagnoseRouter");
+EdgeNetworkTracingConnection::DiagnoseRouter(google::cloud::edgenetwork::v1::DiagnoseRouterRequest const& request) {
+  auto span = internal::MakeSpan("edgenetwork_v1::EdgeNetworkConnection::DiagnoseRouter");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DiagnoseRouter(request));
 }
 
 future<StatusOr<google::cloud::edgenetwork::v1::Router>>
-EdgeNetworkTracingConnection::CreateRouter(
-    google::cloud::edgenetwork::v1::CreateRouterRequest const& request) {
-  auto span =
-      internal::MakeSpan("edgenetwork_v1::EdgeNetworkConnection::CreateRouter");
+EdgeNetworkTracingConnection::CreateRouter(google::cloud::edgenetwork::v1::CreateRouterRequest const& request) {
+  auto span = internal::MakeSpan(
+      "edgenetwork_v1::EdgeNetworkConnection::CreateRouter");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateRouter(request));
 }
 
 StatusOr<google::longrunning::Operation>
 EdgeNetworkTracingConnection::CreateRouter(
-    NoAwaitTag,
-    google::cloud::edgenetwork::v1::CreateRouterRequest const& request) {
-  auto span =
-      internal::MakeSpan("edgenetwork_v1::EdgeNetworkConnection::CreateRouter");
+    NoAwaitTag, google::cloud::edgenetwork::v1::CreateRouterRequest const& request) {
+  auto span = internal::MakeSpan(
+      "edgenetwork_v1::EdgeNetworkConnection::CreateRouter");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->CreateRouter(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->CreateRouter(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::edgenetwork::v1::Router>>
 EdgeNetworkTracingConnection::CreateRouter(
     google::longrunning::Operation const& operation) {
-  auto span =
-      internal::MakeSpan("edgenetwork_v1::EdgeNetworkConnection::CreateRouter");
+  auto span = internal::MakeSpan(
+      "edgenetwork_v1::EdgeNetworkConnection::CreateRouter");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->CreateRouter(operation));
+  return internal::EndSpan(std::move(span),
+      child_->CreateRouter(operation));
 }
 
 future<StatusOr<google::cloud::edgenetwork::v1::Router>>
-EdgeNetworkTracingConnection::UpdateRouter(
-    google::cloud::edgenetwork::v1::UpdateRouterRequest const& request) {
-  auto span =
-      internal::MakeSpan("edgenetwork_v1::EdgeNetworkConnection::UpdateRouter");
+EdgeNetworkTracingConnection::UpdateRouter(google::cloud::edgenetwork::v1::UpdateRouterRequest const& request) {
+  auto span = internal::MakeSpan(
+      "edgenetwork_v1::EdgeNetworkConnection::UpdateRouter");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateRouter(request));
 }
 
 StatusOr<google::longrunning::Operation>
 EdgeNetworkTracingConnection::UpdateRouter(
-    NoAwaitTag,
-    google::cloud::edgenetwork::v1::UpdateRouterRequest const& request) {
-  auto span =
-      internal::MakeSpan("edgenetwork_v1::EdgeNetworkConnection::UpdateRouter");
+    NoAwaitTag, google::cloud::edgenetwork::v1::UpdateRouterRequest const& request) {
+  auto span = internal::MakeSpan(
+      "edgenetwork_v1::EdgeNetworkConnection::UpdateRouter");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->UpdateRouter(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->UpdateRouter(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::edgenetwork::v1::Router>>
 EdgeNetworkTracingConnection::UpdateRouter(
     google::longrunning::Operation const& operation) {
-  auto span =
-      internal::MakeSpan("edgenetwork_v1::EdgeNetworkConnection::UpdateRouter");
+  auto span = internal::MakeSpan(
+      "edgenetwork_v1::EdgeNetworkConnection::UpdateRouter");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->UpdateRouter(operation));
+  return internal::EndSpan(std::move(span),
+      child_->UpdateRouter(operation));
 }
 
 future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>
-EdgeNetworkTracingConnection::DeleteRouter(
-    google::cloud::edgenetwork::v1::DeleteRouterRequest const& request) {
-  auto span =
-      internal::MakeSpan("edgenetwork_v1::EdgeNetworkConnection::DeleteRouter");
+EdgeNetworkTracingConnection::DeleteRouter(google::cloud::edgenetwork::v1::DeleteRouterRequest const& request) {
+  auto span = internal::MakeSpan(
+      "edgenetwork_v1::EdgeNetworkConnection::DeleteRouter");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteRouter(request));
 }
 
 StatusOr<google::longrunning::Operation>
 EdgeNetworkTracingConnection::DeleteRouter(
-    NoAwaitTag,
-    google::cloud::edgenetwork::v1::DeleteRouterRequest const& request) {
-  auto span =
-      internal::MakeSpan("edgenetwork_v1::EdgeNetworkConnection::DeleteRouter");
+    NoAwaitTag, google::cloud::edgenetwork::v1::DeleteRouterRequest const& request) {
+  auto span = internal::MakeSpan(
+      "edgenetwork_v1::EdgeNetworkConnection::DeleteRouter");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->DeleteRouter(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->DeleteRouter(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>
 EdgeNetworkTracingConnection::DeleteRouter(
     google::longrunning::Operation const& operation) {
-  auto span =
-      internal::MakeSpan("edgenetwork_v1::EdgeNetworkConnection::DeleteRouter");
+  auto span = internal::MakeSpan(
+      "edgenetwork_v1::EdgeNetworkConnection::DeleteRouter");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->DeleteRouter(operation));
+  return internal::EndSpan(std::move(span),
+      child_->DeleteRouter(operation));
 }
 
 StreamRange<google::cloud::location::Location>
-EdgeNetworkTracingConnection::ListLocations(
-    google::cloud::location::ListLocationsRequest request) {
-  auto span = internal::MakeSpan(
-      "edgenetwork_v1::EdgeNetworkConnection::ListLocations");
+EdgeNetworkTracingConnection::ListLocations(google::cloud::location::ListLocationsRequest request) {
+  auto span = internal::MakeSpan("edgenetwork_v1::EdgeNetworkConnection::ListLocations");
   internal::OTelScope scope(span);
   auto sr = child_->ListLocations(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::location::Location>(
-      std::move(span), std::move(sr));
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::location::Location>
-EdgeNetworkTracingConnection::GetLocation(
-    google::cloud::location::GetLocationRequest const& request) {
-  auto span =
-      internal::MakeSpan("edgenetwork_v1::EdgeNetworkConnection::GetLocation");
+EdgeNetworkTracingConnection::GetLocation(google::cloud::location::GetLocationRequest const& request) {
+  auto span = internal::MakeSpan("edgenetwork_v1::EdgeNetworkConnection::GetLocation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetLocation(request));
 }
 
 StreamRange<google::longrunning::Operation>
-EdgeNetworkTracingConnection::ListOperations(
-    google::longrunning::ListOperationsRequest request) {
-  auto span = internal::MakeSpan(
-      "edgenetwork_v1::EdgeNetworkConnection::ListOperations");
+EdgeNetworkTracingConnection::ListOperations(google::longrunning::ListOperationsRequest request) {
+  auto span = internal::MakeSpan("edgenetwork_v1::EdgeNetworkConnection::ListOperations");
   internal::OTelScope scope(span);
   auto sr = child_->ListOperations(std::move(request));
   return internal::MakeTracedStreamRange<google::longrunning::Operation>(
-      std::move(span), std::move(sr));
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::longrunning::Operation>
-EdgeNetworkTracingConnection::GetOperation(
-    google::longrunning::GetOperationRequest const& request) {
-  auto span =
-      internal::MakeSpan("edgenetwork_v1::EdgeNetworkConnection::GetOperation");
+EdgeNetworkTracingConnection::GetOperation(google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpan("edgenetwork_v1::EdgeNetworkConnection::GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOperation(request));
 }
 
-Status EdgeNetworkTracingConnection::DeleteOperation(
-    google::longrunning::DeleteOperationRequest const& request) {
-  auto span = internal::MakeSpan(
-      "edgenetwork_v1::EdgeNetworkConnection::DeleteOperation");
+Status
+EdgeNetworkTracingConnection::DeleteOperation(google::longrunning::DeleteOperationRequest const& request) {
+  auto span = internal::MakeSpan("edgenetwork_v1::EdgeNetworkConnection::DeleteOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteOperation(request));
 }
 
-Status EdgeNetworkTracingConnection::CancelOperation(
-    google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpan(
-      "edgenetwork_v1::EdgeNetworkConnection::CancelOperation");
+Status
+EdgeNetworkTracingConnection::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
+  auto span = internal::MakeSpan("edgenetwork_v1::EdgeNetworkConnection::CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CancelOperation(request));
 }

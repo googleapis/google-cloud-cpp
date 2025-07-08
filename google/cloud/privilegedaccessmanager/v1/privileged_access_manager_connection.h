@@ -19,14 +19,14 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PRIVILEGEDACCESSMANAGER_V1_PRIVILEGED_ACCESS_MANAGER_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PRIVILEGEDACCESSMANAGER_V1_PRIVILEGED_ACCESS_MANAGER_CONNECTION_H
 
-#include "google/cloud/privilegedaccessmanager/v1/internal/privileged_access_manager_retry_traits.h"
-#include "google/cloud/privilegedaccessmanager/v1/privileged_access_manager_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
+#include "google/cloud/privilegedaccessmanager/v1/internal/privileged_access_manager_retry_traits.h"
+#include "google/cloud/privilegedaccessmanager/v1/privileged_access_manager_connection_idempotency_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
@@ -47,8 +47,7 @@ class PrivilegedAccessManagerRetryPolicy : public ::google::cloud::RetryPolicy {
 };
 
 /**
- * A retry policy for `PrivilegedAccessManagerConnection` based on counting
- * errors.
+ * A retry policy for `PrivilegedAccessManagerConnection` based on counting errors.
  *
  * This policy stops retrying if:
  * - An RPC returns a non-transient error.
@@ -57,8 +56,7 @@ class PrivilegedAccessManagerRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class PrivilegedAccessManagerLimitedErrorCountRetryPolicy
-    : public PrivilegedAccessManagerRetryPolicy {
+class PrivilegedAccessManagerLimitedErrorCountRetryPolicy : public PrivilegedAccessManagerRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -67,18 +65,15 @@ class PrivilegedAccessManagerLimitedErrorCountRetryPolicy
    * @note Disable the retry loop by providing an instance of this policy with
    *     @p maximum_failures == 0.
    */
-  explicit PrivilegedAccessManagerLimitedErrorCountRetryPolicy(
-      int maximum_failures)
-      : impl_(maximum_failures) {}
+  explicit PrivilegedAccessManagerLimitedErrorCountRetryPolicy(int maximum_failures)
+    : impl_(maximum_failures) {}
 
   PrivilegedAccessManagerLimitedErrorCountRetryPolicy(
       PrivilegedAccessManagerLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : PrivilegedAccessManagerLimitedErrorCountRetryPolicy(
-            rhs.maximum_failures()) {}
+    : PrivilegedAccessManagerLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   PrivilegedAccessManagerLimitedErrorCountRetryPolicy(
       PrivilegedAccessManagerLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : PrivilegedAccessManagerLimitedErrorCountRetryPolicy(
-            rhs.maximum_failures()) {}
+    : PrivilegedAccessManagerLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -90,8 +85,7 @@ class PrivilegedAccessManagerLimitedErrorCountRetryPolicy
     return impl_.IsPermanentFailure(status);
   }
   std::unique_ptr<PrivilegedAccessManagerRetryPolicy> clone() const override {
-    return std::make_unique<
-        PrivilegedAccessManagerLimitedErrorCountRetryPolicy>(
+    return std::make_unique<PrivilegedAccessManagerLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
 
@@ -99,9 +93,7 @@ class PrivilegedAccessManagerLimitedErrorCountRetryPolicy
   using BaseType = PrivilegedAccessManagerRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      privilegedaccessmanager_v1_internal::PrivilegedAccessManagerRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<privilegedaccessmanager_v1_internal::PrivilegedAccessManagerRetryTraits> impl_;
 };
 
 /**
@@ -114,8 +106,7 @@ class PrivilegedAccessManagerLimitedErrorCountRetryPolicy
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class PrivilegedAccessManagerLimitedTimeRetryPolicy
-    : public PrivilegedAccessManagerRetryPolicy {
+class PrivilegedAccessManagerLimitedTimeRetryPolicy : public PrivilegedAccessManagerRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -140,14 +131,12 @@ class PrivilegedAccessManagerLimitedTimeRetryPolicy
   template <typename DurationRep, typename DurationPeriod>
   explicit PrivilegedAccessManagerLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  PrivilegedAccessManagerLimitedTimeRetryPolicy(
-      PrivilegedAccessManagerLimitedTimeRetryPolicy&& rhs) noexcept
-      : PrivilegedAccessManagerLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  PrivilegedAccessManagerLimitedTimeRetryPolicy(
-      PrivilegedAccessManagerLimitedTimeRetryPolicy const& rhs) noexcept
-      : PrivilegedAccessManagerLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  PrivilegedAccessManagerLimitedTimeRetryPolicy(PrivilegedAccessManagerLimitedTimeRetryPolicy&& rhs) noexcept
+    : PrivilegedAccessManagerLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  PrivilegedAccessManagerLimitedTimeRetryPolicy(PrivilegedAccessManagerLimitedTimeRetryPolicy const& rhs) noexcept
+    : PrivilegedAccessManagerLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -169,24 +158,20 @@ class PrivilegedAccessManagerLimitedTimeRetryPolicy
   using BaseType = PrivilegedAccessManagerRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      privilegedaccessmanager_v1_internal::PrivilegedAccessManagerRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<privilegedaccessmanager_v1_internal::PrivilegedAccessManagerRetryTraits> impl_;
 };
 
 /**
- * The `PrivilegedAccessManagerConnection` object for
- * `PrivilegedAccessManagerClient`.
+ * The `PrivilegedAccessManagerConnection` object for `PrivilegedAccessManagerClient`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `PrivilegedAccessManagerClient`. This allows users to inject custom
- * behavior (e.g., with a Google Mock object) when writing tests that use
- * objects of type `PrivilegedAccessManagerClient`.
+ * sets in `PrivilegedAccessManagerClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `PrivilegedAccessManagerClient`.
  *
  * To create a concrete instance, see `MakePrivilegedAccessManagerConnection()`.
  *
- * For mocking, see
- * `privilegedaccessmanager_v1_mocks::MockPrivilegedAccessManagerConnection`.
+ * For mocking, see `privilegedaccessmanager_v1_mocks::MockPrivilegedAccessManagerConnection`.
  */
 class PrivilegedAccessManagerConnection {
  public:
@@ -194,146 +179,111 @@ class PrivilegedAccessManagerConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<
-      google::cloud::privilegedaccessmanager::v1::CheckOnboardingStatusResponse>
-  CheckOnboardingStatus(google::cloud::privilegedaccessmanager::v1::
-                            CheckOnboardingStatusRequest const& request);
+  virtual StatusOr<google::cloud::privilegedaccessmanager::v1::CheckOnboardingStatusResponse>
+  CheckOnboardingStatus(google::cloud::privilegedaccessmanager::v1::CheckOnboardingStatusRequest const& request);
 
   virtual StreamRange<google::cloud::privilegedaccessmanager::v1::Entitlement>
-  ListEntitlements(
-      google::cloud::privilegedaccessmanager::v1::ListEntitlementsRequest
-          request);
+  ListEntitlements(google::cloud::privilegedaccessmanager::v1::ListEntitlementsRequest request);
 
   virtual StreamRange<google::cloud::privilegedaccessmanager::v1::Entitlement>
-  SearchEntitlements(
-      google::cloud::privilegedaccessmanager::v1::SearchEntitlementsRequest
-          request);
+  SearchEntitlements(google::cloud::privilegedaccessmanager::v1::SearchEntitlementsRequest request);
 
   virtual StatusOr<google::cloud::privilegedaccessmanager::v1::Entitlement>
-  GetEntitlement(
-      google::cloud::privilegedaccessmanager::v1::GetEntitlementRequest const&
-          request);
+  GetEntitlement(google::cloud::privilegedaccessmanager::v1::GetEntitlementRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::privilegedaccessmanager::v1::Entitlement>>
-  CreateEntitlement(google::cloud::privilegedaccessmanager::v1::
-                        CreateEntitlementRequest const& request);
+  virtual future<StatusOr<google::cloud::privilegedaccessmanager::v1::Entitlement>>
+  CreateEntitlement(google::cloud::privilegedaccessmanager::v1::CreateEntitlementRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> CreateEntitlement(
-      NoAwaitTag, google::cloud::privilegedaccessmanager::v1::
-                      CreateEntitlementRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  CreateEntitlement(NoAwaitTag, google::cloud::privilegedaccessmanager::v1::CreateEntitlementRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::privilegedaccessmanager::v1::Entitlement>>
-  CreateEntitlement(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::privilegedaccessmanager::v1::Entitlement>>
+  CreateEntitlement( google::longrunning::Operation const& operation);
 
-  virtual future<
-      StatusOr<google::cloud::privilegedaccessmanager::v1::Entitlement>>
-  DeleteEntitlement(google::cloud::privilegedaccessmanager::v1::
-                        DeleteEntitlementRequest const& request);
+  virtual future<StatusOr<google::cloud::privilegedaccessmanager::v1::Entitlement>>
+  DeleteEntitlement(google::cloud::privilegedaccessmanager::v1::DeleteEntitlementRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> DeleteEntitlement(
-      NoAwaitTag, google::cloud::privilegedaccessmanager::v1::
-                      DeleteEntitlementRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  DeleteEntitlement(NoAwaitTag, google::cloud::privilegedaccessmanager::v1::DeleteEntitlementRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::privilegedaccessmanager::v1::Entitlement>>
-  DeleteEntitlement(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::privilegedaccessmanager::v1::Entitlement>>
+  DeleteEntitlement( google::longrunning::Operation const& operation);
 
-  virtual future<
-      StatusOr<google::cloud::privilegedaccessmanager::v1::Entitlement>>
-  UpdateEntitlement(google::cloud::privilegedaccessmanager::v1::
-                        UpdateEntitlementRequest const& request);
+  virtual future<StatusOr<google::cloud::privilegedaccessmanager::v1::Entitlement>>
+  UpdateEntitlement(google::cloud::privilegedaccessmanager::v1::UpdateEntitlementRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> UpdateEntitlement(
-      NoAwaitTag, google::cloud::privilegedaccessmanager::v1::
-                      UpdateEntitlementRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  UpdateEntitlement(NoAwaitTag, google::cloud::privilegedaccessmanager::v1::UpdateEntitlementRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::privilegedaccessmanager::v1::Entitlement>>
-  UpdateEntitlement(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::privilegedaccessmanager::v1::Entitlement>>
+  UpdateEntitlement( google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::privilegedaccessmanager::v1::Grant>
-  ListGrants(
-      google::cloud::privilegedaccessmanager::v1::ListGrantsRequest request);
+  ListGrants(google::cloud::privilegedaccessmanager::v1::ListGrantsRequest request);
 
   virtual StreamRange<google::cloud::privilegedaccessmanager::v1::Grant>
-  SearchGrants(
-      google::cloud::privilegedaccessmanager::v1::SearchGrantsRequest request);
-
-  virtual StatusOr<google::cloud::privilegedaccessmanager::v1::Grant> GetGrant(
-      google::cloud::privilegedaccessmanager::v1::GetGrantRequest const&
-          request);
+  SearchGrants(google::cloud::privilegedaccessmanager::v1::SearchGrantsRequest request);
 
   virtual StatusOr<google::cloud::privilegedaccessmanager::v1::Grant>
-  CreateGrant(
-      google::cloud::privilegedaccessmanager::v1::CreateGrantRequest const&
-          request);
+  GetGrant(google::cloud::privilegedaccessmanager::v1::GetGrantRequest const& request);
 
   virtual StatusOr<google::cloud::privilegedaccessmanager::v1::Grant>
-  ApproveGrant(
-      google::cloud::privilegedaccessmanager::v1::ApproveGrantRequest const&
-          request);
+  CreateGrant(google::cloud::privilegedaccessmanager::v1::CreateGrantRequest const& request);
 
-  virtual StatusOr<google::cloud::privilegedaccessmanager::v1::Grant> DenyGrant(
-      google::cloud::privilegedaccessmanager::v1::DenyGrantRequest const&
-          request);
+  virtual StatusOr<google::cloud::privilegedaccessmanager::v1::Grant>
+  ApproveGrant(google::cloud::privilegedaccessmanager::v1::ApproveGrantRequest const& request);
 
-  virtual future<StatusOr<google::cloud::privilegedaccessmanager::v1::Grant>>
-  RevokeGrant(
-      google::cloud::privilegedaccessmanager::v1::RevokeGrantRequest const&
-          request);
-
-  virtual StatusOr<google::longrunning::Operation> RevokeGrant(
-      NoAwaitTag,
-      google::cloud::privilegedaccessmanager::v1::RevokeGrantRequest const&
-          request);
+  virtual StatusOr<google::cloud::privilegedaccessmanager::v1::Grant>
+  DenyGrant(google::cloud::privilegedaccessmanager::v1::DenyGrantRequest const& request);
 
   virtual future<StatusOr<google::cloud::privilegedaccessmanager::v1::Grant>>
-  RevokeGrant(google::longrunning::Operation const& operation);
+  RevokeGrant(google::cloud::privilegedaccessmanager::v1::RevokeGrantRequest const& request);
 
-  virtual StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request);
+  virtual StatusOr<google::longrunning::Operation>
+  RevokeGrant(NoAwaitTag, google::cloud::privilegedaccessmanager::v1::RevokeGrantRequest const& request);
 
-  virtual StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request);
+  virtual future<StatusOr<google::cloud::privilegedaccessmanager::v1::Grant>>
+  RevokeGrant( google::longrunning::Operation const& operation);
 
-  virtual StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request);
 
-  virtual Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request);
+  virtual StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request);
+
+  virtual StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request);
+
+  virtual Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
 };
 
 /**
- * A factory function to construct an object of type
- * `PrivilegedAccessManagerConnection`.
+ * A factory function to construct an object of type `PrivilegedAccessManagerConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of
- * PrivilegedAccessManagerClient.
+ * should be passed as an argument to the constructor of PrivilegedAccessManagerClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `PrivilegedAccessManagerConnection`. Expected options are any of the
- * types in the following option lists:
+ * returned `PrivilegedAccessManagerConnection`. Expected options are any of the types in
+ * the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * -
- * `google::cloud::privilegedaccessmanager_v1::PrivilegedAccessManagerPolicyOptionList`
+ * - `google::cloud::privilegedaccessmanager_v1::PrivilegedAccessManagerPolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
- * @param options (optional) Configure the `PrivilegedAccessManagerConnection`
- * created by this function.
+ * @param options (optional) Configure the `PrivilegedAccessManagerConnection` created by
+ * this function.
  */
-std::shared_ptr<PrivilegedAccessManagerConnection>
-MakePrivilegedAccessManagerConnection(Options options = {});
+std::shared_ptr<PrivilegedAccessManagerConnection> MakePrivilegedAccessManagerConnection(
+    Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace privilegedaccessmanager_v1

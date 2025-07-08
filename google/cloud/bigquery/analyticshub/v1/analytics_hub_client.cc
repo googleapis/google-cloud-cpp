@@ -28,13 +28,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 AnalyticsHubServiceClient::AnalyticsHubServiceClient(
     std::shared_ptr<AnalyticsHubServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 AnalyticsHubServiceClient::~AnalyticsHubServiceClient() = default;
 
 StreamRange<google::cloud::bigquery::analyticshub::v1::DataExchange>
-AnalyticsHubServiceClient::ListDataExchanges(std::string const& parent,
-                                             Options opts) {
+AnalyticsHubServiceClient::ListDataExchanges(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::bigquery::analyticshub::v1::ListDataExchangesRequest request;
   request.set_parent(parent);
@@ -42,35 +41,27 @@ AnalyticsHubServiceClient::ListDataExchanges(std::string const& parent,
 }
 
 StreamRange<google::cloud::bigquery::analyticshub::v1::DataExchange>
-AnalyticsHubServiceClient::ListDataExchanges(
-    google::cloud::bigquery::analyticshub::v1::ListDataExchangesRequest request,
-    Options opts) {
+AnalyticsHubServiceClient::ListDataExchanges(google::cloud::bigquery::analyticshub::v1::ListDataExchangesRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListDataExchanges(std::move(request));
 }
 
 StreamRange<google::cloud::bigquery::analyticshub::v1::DataExchange>
-AnalyticsHubServiceClient::ListOrgDataExchanges(std::string const& organization,
-                                                Options opts) {
+AnalyticsHubServiceClient::ListOrgDataExchanges(std::string const& organization, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::bigquery::analyticshub::v1::ListOrgDataExchangesRequest
-      request;
+  google::cloud::bigquery::analyticshub::v1::ListOrgDataExchangesRequest request;
   request.set_organization(organization);
   return connection_->ListOrgDataExchanges(request);
 }
 
 StreamRange<google::cloud::bigquery::analyticshub::v1::DataExchange>
-AnalyticsHubServiceClient::ListOrgDataExchanges(
-    google::cloud::bigquery::analyticshub::v1::ListOrgDataExchangesRequest
-        request,
-    Options opts) {
+AnalyticsHubServiceClient::ListOrgDataExchanges(google::cloud::bigquery::analyticshub::v1::ListOrgDataExchangesRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOrgDataExchanges(std::move(request));
 }
 
 StatusOr<google::cloud::bigquery::analyticshub::v1::DataExchange>
-AnalyticsHubServiceClient::GetDataExchange(std::string const& name,
-                                           Options opts) {
+AnalyticsHubServiceClient::GetDataExchange(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::bigquery::analyticshub::v1::GetDataExchangeRequest request;
   request.set_name(name);
@@ -78,20 +69,13 @@ AnalyticsHubServiceClient::GetDataExchange(std::string const& name,
 }
 
 StatusOr<google::cloud::bigquery::analyticshub::v1::DataExchange>
-AnalyticsHubServiceClient::GetDataExchange(
-    google::cloud::bigquery::analyticshub::v1::GetDataExchangeRequest const&
-        request,
-    Options opts) {
+AnalyticsHubServiceClient::GetDataExchange(google::cloud::bigquery::analyticshub::v1::GetDataExchangeRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetDataExchange(request);
 }
 
 StatusOr<google::cloud::bigquery::analyticshub::v1::DataExchange>
-AnalyticsHubServiceClient::CreateDataExchange(
-    std::string const& parent,
-    google::cloud::bigquery::analyticshub::v1::DataExchange const&
-        data_exchange,
-    Options opts) {
+AnalyticsHubServiceClient::CreateDataExchange(std::string const& parent, google::cloud::bigquery::analyticshub::v1::DataExchange const& data_exchange, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::bigquery::analyticshub::v1::CreateDataExchangeRequest request;
   request.set_parent(parent);
@@ -100,19 +84,13 @@ AnalyticsHubServiceClient::CreateDataExchange(
 }
 
 StatusOr<google::cloud::bigquery::analyticshub::v1::DataExchange>
-AnalyticsHubServiceClient::CreateDataExchange(
-    google::cloud::bigquery::analyticshub::v1::CreateDataExchangeRequest const&
-        request,
-    Options opts) {
+AnalyticsHubServiceClient::CreateDataExchange(google::cloud::bigquery::analyticshub::v1::CreateDataExchangeRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateDataExchange(request);
 }
 
 StatusOr<google::cloud::bigquery::analyticshub::v1::DataExchange>
-AnalyticsHubServiceClient::UpdateDataExchange(
-    google::cloud::bigquery::analyticshub::v1::DataExchange const&
-        data_exchange,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+AnalyticsHubServiceClient::UpdateDataExchange(google::cloud::bigquery::analyticshub::v1::DataExchange const& data_exchange, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::bigquery::analyticshub::v1::UpdateDataExchangeRequest request;
   *request.mutable_data_exchange() = data_exchange;
@@ -121,33 +99,27 @@ AnalyticsHubServiceClient::UpdateDataExchange(
 }
 
 StatusOr<google::cloud::bigquery::analyticshub::v1::DataExchange>
-AnalyticsHubServiceClient::UpdateDataExchange(
-    google::cloud::bigquery::analyticshub::v1::UpdateDataExchangeRequest const&
-        request,
-    Options opts) {
+AnalyticsHubServiceClient::UpdateDataExchange(google::cloud::bigquery::analyticshub::v1::UpdateDataExchangeRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateDataExchange(request);
 }
 
-Status AnalyticsHubServiceClient::DeleteDataExchange(std::string const& name,
-                                                     Options opts) {
+Status
+AnalyticsHubServiceClient::DeleteDataExchange(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::bigquery::analyticshub::v1::DeleteDataExchangeRequest request;
   request.set_name(name);
   return connection_->DeleteDataExchange(request);
 }
 
-Status AnalyticsHubServiceClient::DeleteDataExchange(
-    google::cloud::bigquery::analyticshub::v1::DeleteDataExchangeRequest const&
-        request,
-    Options opts) {
+Status
+AnalyticsHubServiceClient::DeleteDataExchange(google::cloud::bigquery::analyticshub::v1::DeleteDataExchangeRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteDataExchange(request);
 }
 
 StreamRange<google::cloud::bigquery::analyticshub::v1::Listing>
-AnalyticsHubServiceClient::ListListings(std::string const& parent,
-                                        Options opts) {
+AnalyticsHubServiceClient::ListListings(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::bigquery::analyticshub::v1::ListListingsRequest request;
   request.set_parent(parent);
@@ -155,9 +127,7 @@ AnalyticsHubServiceClient::ListListings(std::string const& parent,
 }
 
 StreamRange<google::cloud::bigquery::analyticshub::v1::Listing>
-AnalyticsHubServiceClient::ListListings(
-    google::cloud::bigquery::analyticshub::v1::ListListingsRequest request,
-    Options opts) {
+AnalyticsHubServiceClient::ListListings(google::cloud::bigquery::analyticshub::v1::ListListingsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListListings(std::move(request));
 }
@@ -171,18 +141,13 @@ AnalyticsHubServiceClient::GetListing(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::bigquery::analyticshub::v1::Listing>
-AnalyticsHubServiceClient::GetListing(
-    google::cloud::bigquery::analyticshub::v1::GetListingRequest const& request,
-    Options opts) {
+AnalyticsHubServiceClient::GetListing(google::cloud::bigquery::analyticshub::v1::GetListingRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetListing(request);
 }
 
 StatusOr<google::cloud::bigquery::analyticshub::v1::Listing>
-AnalyticsHubServiceClient::CreateListing(
-    std::string const& parent,
-    google::cloud::bigquery::analyticshub::v1::Listing const& listing,
-    Options opts) {
+AnalyticsHubServiceClient::CreateListing(std::string const& parent, google::cloud::bigquery::analyticshub::v1::Listing const& listing, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::bigquery::analyticshub::v1::CreateListingRequest request;
   request.set_parent(parent);
@@ -191,18 +156,13 @@ AnalyticsHubServiceClient::CreateListing(
 }
 
 StatusOr<google::cloud::bigquery::analyticshub::v1::Listing>
-AnalyticsHubServiceClient::CreateListing(
-    google::cloud::bigquery::analyticshub::v1::CreateListingRequest const&
-        request,
-    Options opts) {
+AnalyticsHubServiceClient::CreateListing(google::cloud::bigquery::analyticshub::v1::CreateListingRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateListing(request);
 }
 
 StatusOr<google::cloud::bigquery::analyticshub::v1::Listing>
-AnalyticsHubServiceClient::UpdateListing(
-    google::cloud::bigquery::analyticshub::v1::Listing const& listing,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+AnalyticsHubServiceClient::UpdateListing(google::cloud::bigquery::analyticshub::v1::Listing const& listing, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::bigquery::analyticshub::v1::UpdateListingRequest request;
   *request.mutable_listing() = listing;
@@ -211,33 +171,27 @@ AnalyticsHubServiceClient::UpdateListing(
 }
 
 StatusOr<google::cloud::bigquery::analyticshub::v1::Listing>
-AnalyticsHubServiceClient::UpdateListing(
-    google::cloud::bigquery::analyticshub::v1::UpdateListingRequest const&
-        request,
-    Options opts) {
+AnalyticsHubServiceClient::UpdateListing(google::cloud::bigquery::analyticshub::v1::UpdateListingRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateListing(request);
 }
 
-Status AnalyticsHubServiceClient::DeleteListing(std::string const& name,
-                                                Options opts) {
+Status
+AnalyticsHubServiceClient::DeleteListing(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::bigquery::analyticshub::v1::DeleteListingRequest request;
   request.set_name(name);
   return connection_->DeleteListing(request);
 }
 
-Status AnalyticsHubServiceClient::DeleteListing(
-    google::cloud::bigquery::analyticshub::v1::DeleteListingRequest const&
-        request,
-    Options opts) {
+Status
+AnalyticsHubServiceClient::DeleteListing(google::cloud::bigquery::analyticshub::v1::DeleteListingRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteListing(request);
 }
 
 StatusOr<google::cloud::bigquery::analyticshub::v1::SubscribeListingResponse>
-AnalyticsHubServiceClient::SubscribeListing(std::string const& name,
-                                            Options opts) {
+AnalyticsHubServiceClient::SubscribeListing(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::bigquery::analyticshub::v1::SubscribeListingRequest request;
   request.set_name(name);
@@ -245,68 +199,47 @@ AnalyticsHubServiceClient::SubscribeListing(std::string const& name,
 }
 
 StatusOr<google::cloud::bigquery::analyticshub::v1::SubscribeListingResponse>
-AnalyticsHubServiceClient::SubscribeListing(
-    google::cloud::bigquery::analyticshub::v1::SubscribeListingRequest const&
-        request,
-    Options opts) {
+AnalyticsHubServiceClient::SubscribeListing(google::cloud::bigquery::analyticshub::v1::SubscribeListingRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SubscribeListing(request);
 }
 
-future<StatusOr<
-    google::cloud::bigquery::analyticshub::v1::SubscribeDataExchangeResponse>>
-AnalyticsHubServiceClient::SubscribeDataExchange(std::string const& name,
-                                                 Options opts) {
+future<StatusOr<google::cloud::bigquery::analyticshub::v1::SubscribeDataExchangeResponse>>
+AnalyticsHubServiceClient::SubscribeDataExchange(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::bigquery::analyticshub::v1::SubscribeDataExchangeRequest
-      request;
+  google::cloud::bigquery::analyticshub::v1::SubscribeDataExchangeRequest request;
   request.set_name(name);
   return connection_->SubscribeDataExchange(request);
 }
 
 StatusOr<google::longrunning::Operation>
-AnalyticsHubServiceClient::SubscribeDataExchange(NoAwaitTag,
-                                                 std::string const& name,
-                                                 Options opts) {
+AnalyticsHubServiceClient::SubscribeDataExchange(NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::bigquery::analyticshub::v1::SubscribeDataExchangeRequest
-      request;
+  google::cloud::bigquery::analyticshub::v1::SubscribeDataExchangeRequest request;
   request.set_name(name);
   return connection_->SubscribeDataExchange(NoAwaitTag{}, request);
 }
 
-future<StatusOr<
-    google::cloud::bigquery::analyticshub::v1::SubscribeDataExchangeResponse>>
-AnalyticsHubServiceClient::SubscribeDataExchange(
-    google::cloud::bigquery::analyticshub::v1::
-        SubscribeDataExchangeRequest const& request,
-    Options opts) {
+future<StatusOr<google::cloud::bigquery::analyticshub::v1::SubscribeDataExchangeResponse>>
+AnalyticsHubServiceClient::SubscribeDataExchange(google::cloud::bigquery::analyticshub::v1::SubscribeDataExchangeRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SubscribeDataExchange(request);
 }
 
 StatusOr<google::longrunning::Operation>
-AnalyticsHubServiceClient::SubscribeDataExchange(
-    NoAwaitTag,
-    google::cloud::bigquery::analyticshub::v1::
-        SubscribeDataExchangeRequest const& request,
-    Options opts) {
+AnalyticsHubServiceClient::SubscribeDataExchange(NoAwaitTag, google::cloud::bigquery::analyticshub::v1::SubscribeDataExchangeRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SubscribeDataExchange(NoAwaitTag{}, request);
 }
 
-future<StatusOr<
-    google::cloud::bigquery::analyticshub::v1::SubscribeDataExchangeResponse>>
-AnalyticsHubServiceClient::SubscribeDataExchange(
-    google::longrunning::Operation const& operation, Options opts) {
+future<StatusOr<google::cloud::bigquery::analyticshub::v1::SubscribeDataExchangeResponse>>
+AnalyticsHubServiceClient::SubscribeDataExchange(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SubscribeDataExchange(operation);
 }
 
-future<StatusOr<
-    google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionResponse>>
-AnalyticsHubServiceClient::RefreshSubscription(std::string const& name,
-                                               Options opts) {
+future<StatusOr<google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionResponse>>
+AnalyticsHubServiceClient::RefreshSubscription(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionRequest request;
   request.set_name(name);
@@ -314,46 +247,33 @@ AnalyticsHubServiceClient::RefreshSubscription(std::string const& name,
 }
 
 StatusOr<google::longrunning::Operation>
-AnalyticsHubServiceClient::RefreshSubscription(NoAwaitTag,
-                                               std::string const& name,
-                                               Options opts) {
+AnalyticsHubServiceClient::RefreshSubscription(NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionRequest request;
   request.set_name(name);
   return connection_->RefreshSubscription(NoAwaitTag{}, request);
 }
 
-future<StatusOr<
-    google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionResponse>>
-AnalyticsHubServiceClient::RefreshSubscription(
-    google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionRequest const&
-        request,
-    Options opts) {
+future<StatusOr<google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionResponse>>
+AnalyticsHubServiceClient::RefreshSubscription(google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RefreshSubscription(request);
 }
 
 StatusOr<google::longrunning::Operation>
-AnalyticsHubServiceClient::RefreshSubscription(
-    NoAwaitTag,
-    google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionRequest const&
-        request,
-    Options opts) {
+AnalyticsHubServiceClient::RefreshSubscription(NoAwaitTag, google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RefreshSubscription(NoAwaitTag{}, request);
 }
 
-future<StatusOr<
-    google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionResponse>>
-AnalyticsHubServiceClient::RefreshSubscription(
-    google::longrunning::Operation const& operation, Options opts) {
+future<StatusOr<google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionResponse>>
+AnalyticsHubServiceClient::RefreshSubscription(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RefreshSubscription(operation);
 }
 
 StatusOr<google::cloud::bigquery::analyticshub::v1::Subscription>
-AnalyticsHubServiceClient::GetSubscription(std::string const& name,
-                                           Options opts) {
+AnalyticsHubServiceClient::GetSubscription(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::bigquery::analyticshub::v1::GetSubscriptionRequest request;
   request.set_name(name);
@@ -361,17 +281,13 @@ AnalyticsHubServiceClient::GetSubscription(std::string const& name,
 }
 
 StatusOr<google::cloud::bigquery::analyticshub::v1::Subscription>
-AnalyticsHubServiceClient::GetSubscription(
-    google::cloud::bigquery::analyticshub::v1::GetSubscriptionRequest const&
-        request,
-    Options opts) {
+AnalyticsHubServiceClient::GetSubscription(google::cloud::bigquery::analyticshub::v1::GetSubscriptionRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetSubscription(request);
 }
 
 StreamRange<google::cloud::bigquery::analyticshub::v1::Subscription>
-AnalyticsHubServiceClient::ListSubscriptions(std::string const& parent,
-                                             Options opts) {
+AnalyticsHubServiceClient::ListSubscriptions(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::bigquery::analyticshub::v1::ListSubscriptionsRequest request;
   request.set_parent(parent);
@@ -379,35 +295,27 @@ AnalyticsHubServiceClient::ListSubscriptions(std::string const& parent,
 }
 
 StreamRange<google::cloud::bigquery::analyticshub::v1::Subscription>
-AnalyticsHubServiceClient::ListSubscriptions(
-    google::cloud::bigquery::analyticshub::v1::ListSubscriptionsRequest request,
-    Options opts) {
+AnalyticsHubServiceClient::ListSubscriptions(google::cloud::bigquery::analyticshub::v1::ListSubscriptionsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListSubscriptions(std::move(request));
 }
 
 StreamRange<google::cloud::bigquery::analyticshub::v1::Subscription>
-AnalyticsHubServiceClient::ListSharedResourceSubscriptions(
-    std::string const& resource, Options opts) {
+AnalyticsHubServiceClient::ListSharedResourceSubscriptions(std::string const& resource, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::bigquery::analyticshub::v1::
-      ListSharedResourceSubscriptionsRequest request;
+  google::cloud::bigquery::analyticshub::v1::ListSharedResourceSubscriptionsRequest request;
   request.set_resource(resource);
   return connection_->ListSharedResourceSubscriptions(request);
 }
 
 StreamRange<google::cloud::bigquery::analyticshub::v1::Subscription>
-AnalyticsHubServiceClient::ListSharedResourceSubscriptions(
-    google::cloud::bigquery::analyticshub::v1::
-        ListSharedResourceSubscriptionsRequest request,
-    Options opts) {
+AnalyticsHubServiceClient::ListSharedResourceSubscriptions(google::cloud::bigquery::analyticshub::v1::ListSharedResourceSubscriptionsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListSharedResourceSubscriptions(std::move(request));
 }
 
 StatusOr<google::cloud::bigquery::analyticshub::v1::RevokeSubscriptionResponse>
-AnalyticsHubServiceClient::RevokeSubscription(std::string const& name,
-                                              Options opts) {
+AnalyticsHubServiceClient::RevokeSubscription(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::bigquery::analyticshub::v1::RevokeSubscriptionRequest request;
   request.set_name(name);
@@ -415,17 +323,13 @@ AnalyticsHubServiceClient::RevokeSubscription(std::string const& name,
 }
 
 StatusOr<google::cloud::bigquery::analyticshub::v1::RevokeSubscriptionResponse>
-AnalyticsHubServiceClient::RevokeSubscription(
-    google::cloud::bigquery::analyticshub::v1::RevokeSubscriptionRequest const&
-        request,
-    Options opts) {
+AnalyticsHubServiceClient::RevokeSubscription(google::cloud::bigquery::analyticshub::v1::RevokeSubscriptionRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RevokeSubscription(request);
 }
 
 future<StatusOr<google::cloud::bigquery::analyticshub::v1::OperationMetadata>>
-AnalyticsHubServiceClient::DeleteSubscription(std::string const& name,
-                                              Options opts) {
+AnalyticsHubServiceClient::DeleteSubscription(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::bigquery::analyticshub::v1::DeleteSubscriptionRequest request;
   request.set_name(name);
@@ -433,9 +337,7 @@ AnalyticsHubServiceClient::DeleteSubscription(std::string const& name,
 }
 
 StatusOr<google::longrunning::Operation>
-AnalyticsHubServiceClient::DeleteSubscription(NoAwaitTag,
-                                              std::string const& name,
-                                              Options opts) {
+AnalyticsHubServiceClient::DeleteSubscription(NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::bigquery::analyticshub::v1::DeleteSubscriptionRequest request;
   request.set_name(name);
@@ -443,46 +345,37 @@ AnalyticsHubServiceClient::DeleteSubscription(NoAwaitTag,
 }
 
 future<StatusOr<google::cloud::bigquery::analyticshub::v1::OperationMetadata>>
-AnalyticsHubServiceClient::DeleteSubscription(
-    google::cloud::bigquery::analyticshub::v1::DeleteSubscriptionRequest const&
-        request,
-    Options opts) {
+AnalyticsHubServiceClient::DeleteSubscription(google::cloud::bigquery::analyticshub::v1::DeleteSubscriptionRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteSubscription(request);
 }
 
 StatusOr<google::longrunning::Operation>
-AnalyticsHubServiceClient::DeleteSubscription(
-    NoAwaitTag,
-    google::cloud::bigquery::analyticshub::v1::DeleteSubscriptionRequest const&
-        request,
-    Options opts) {
+AnalyticsHubServiceClient::DeleteSubscription(NoAwaitTag, google::cloud::bigquery::analyticshub::v1::DeleteSubscriptionRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteSubscription(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::bigquery::analyticshub::v1::OperationMetadata>>
-AnalyticsHubServiceClient::DeleteSubscription(
-    google::longrunning::Operation const& operation, Options opts) {
+AnalyticsHubServiceClient::DeleteSubscription(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteSubscription(operation);
 }
 
-StatusOr<google::iam::v1::Policy> AnalyticsHubServiceClient::GetIamPolicy(
-    google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
+StatusOr<google::iam::v1::Policy>
+AnalyticsHubServiceClient::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetIamPolicy(request);
 }
 
-StatusOr<google::iam::v1::Policy> AnalyticsHubServiceClient::SetIamPolicy(
-    google::iam::v1::SetIamPolicyRequest const& request, Options opts) {
+StatusOr<google::iam::v1::Policy>
+AnalyticsHubServiceClient::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetIamPolicy(request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-AnalyticsHubServiceClient::TestIamPermissions(
-    google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
+AnalyticsHubServiceClient::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->TestIamPermissions(request);
 }

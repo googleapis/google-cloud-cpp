@@ -22,8 +22,8 @@
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/appengine/v1/appengine.grpc.pb.h>
 #include <google/appengine/v1/operation.pb.h>
+#include <google/appengine/v1/appengine.grpc.pb.h>
 #include <memory>
 #include <utility>
 
@@ -36,28 +36,25 @@ class AuthorizedDomainsStub {
  public:
   virtual ~AuthorizedDomainsStub() = 0;
 
-  virtual StatusOr<google::appengine::v1::ListAuthorizedDomainsResponse>
-  ListAuthorizedDomains(
-      grpc::ClientContext& context, Options const& options,
+  virtual StatusOr<google::appengine::v1::ListAuthorizedDomainsResponse> ListAuthorizedDomains(
+      grpc::ClientContext& context,
+      Options const& options,
       google::appengine::v1::ListAuthorizedDomainsRequest const& request) = 0;
 };
 
 class DefaultAuthorizedDomainsStub : public AuthorizedDomainsStub {
  public:
   explicit DefaultAuthorizedDomainsStub(
-      std::unique_ptr<google::appengine::v1::AuthorizedDomains::StubInterface>
-          grpc_stub)
+      std::unique_ptr<google::appengine::v1::AuthorizedDomains::StubInterface> grpc_stub)
       : grpc_stub_(std::move(grpc_stub)) {}
 
-  StatusOr<google::appengine::v1::ListAuthorizedDomainsResponse>
-  ListAuthorizedDomains(
-      grpc::ClientContext& context, Options const& options,
-      google::appengine::v1::ListAuthorizedDomainsRequest const& request)
-      override;
+  StatusOr<google::appengine::v1::ListAuthorizedDomainsResponse> ListAuthorizedDomains(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::appengine::v1::ListAuthorizedDomainsRequest const& request) override;
 
  private:
-  std::unique_ptr<google::appengine::v1::AuthorizedDomains::StubInterface>
-      grpc_stub_;
+  std::unique_ptr<google::appengine::v1::AuthorizedDomains::StubInterface> grpc_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

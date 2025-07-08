@@ -26,39 +26,31 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-RegionOperationsConnectionIdempotencyPolicy::
-    ~RegionOperationsConnectionIdempotencyPolicy() = default;
+RegionOperationsConnectionIdempotencyPolicy::~RegionOperationsConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<RegionOperationsConnectionIdempotencyPolicy>
 RegionOperationsConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<RegionOperationsConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency RegionOperationsConnectionIdempotencyPolicy::DeleteOperation(
-    google::cloud::cpp::compute::region_operations::v1::
-        DeleteOperationRequest const&) {
+Idempotency RegionOperationsConnectionIdempotencyPolicy::DeleteOperation(google::cloud::cpp::compute::region_operations::v1::DeleteOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency RegionOperationsConnectionIdempotencyPolicy::GetOperation(
-    google::cloud::cpp::compute::region_operations::v1::
-        GetOperationRequest const&) {
+Idempotency RegionOperationsConnectionIdempotencyPolicy::GetOperation(google::cloud::cpp::compute::region_operations::v1::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency RegionOperationsConnectionIdempotencyPolicy::ListRegionOperations(
-    google::cloud::cpp::compute::region_operations::v1::
-        ListRegionOperationsRequest) {  // NOLINT
+Idempotency RegionOperationsConnectionIdempotencyPolicy::ListRegionOperations(google::cloud::cpp::compute::region_operations::v1::ListRegionOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency RegionOperationsConnectionIdempotencyPolicy::Wait(
-    google::cloud::cpp::compute::region_operations::v1::WaitRequest const&) {
+Idempotency RegionOperationsConnectionIdempotencyPolicy::Wait(google::cloud::cpp::compute::region_operations::v1::WaitRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<RegionOperationsConnectionIdempotencyPolicy>
-MakeDefaultRegionOperationsConnectionIdempotencyPolicy() {
+    MakeDefaultRegionOperationsConnectionIdempotencyPolicy() {
   return std::make_unique<RegionOperationsConnectionIdempotencyPolicy>();
 }
 

@@ -26,31 +26,24 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-CloudControlsPartnerMonitoringConnectionIdempotencyPolicy::
-    ~CloudControlsPartnerMonitoringConnectionIdempotencyPolicy() = default;
+CloudControlsPartnerMonitoringConnectionIdempotencyPolicy::~CloudControlsPartnerMonitoringConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<CloudControlsPartnerMonitoringConnectionIdempotencyPolicy>
 CloudControlsPartnerMonitoringConnectionIdempotencyPolicy::clone() const {
-  return std::make_unique<
-      CloudControlsPartnerMonitoringConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<CloudControlsPartnerMonitoringConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency
-CloudControlsPartnerMonitoringConnectionIdempotencyPolicy::ListViolations(
-    google::cloud::cloudcontrolspartner::v1::ListViolationsRequest) {  // NOLINT
+Idempotency CloudControlsPartnerMonitoringConnectionIdempotencyPolicy::ListViolations(google::cloud::cloudcontrolspartner::v1::ListViolationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency
-CloudControlsPartnerMonitoringConnectionIdempotencyPolicy::GetViolation(
-    google::cloud::cloudcontrolspartner::v1::GetViolationRequest const&) {
+Idempotency CloudControlsPartnerMonitoringConnectionIdempotencyPolicy::GetViolation(google::cloud::cloudcontrolspartner::v1::GetViolationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<CloudControlsPartnerMonitoringConnectionIdempotencyPolicy>
-MakeDefaultCloudControlsPartnerMonitoringConnectionIdempotencyPolicy() {
-  return std::make_unique<
-      CloudControlsPartnerMonitoringConnectionIdempotencyPolicy>();
+    MakeDefaultCloudControlsPartnerMonitoringConnectionIdempotencyPolicy() {
+  return std::make_unique<CloudControlsPartnerMonitoringConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

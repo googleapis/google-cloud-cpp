@@ -42,34 +42,29 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockHubServiceConnection
-    : public networkconnectivity_v1::HubServiceConnection {
+class MockHubServiceConnection : public networkconnectivity_v1::HubServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD((StreamRange<google::cloud::networkconnectivity::v1::Hub>),
-              ListHubs,
-              (google::cloud::networkconnectivity::v1::ListHubsRequest request),
-              (override));
+  ListHubs,
+  (google::cloud::networkconnectivity::v1::ListHubsRequest request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::networkconnectivity::v1::Hub>, GetHub,
-      (google::cloud::networkconnectivity::v1::GetHubRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::networkconnectivity::v1::Hub>,
+  GetHub,
+  (google::cloud::networkconnectivity::v1::GetHubRequest const& request), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// CreateHub(Matcher<google::cloud::networkconnectivity::v1::CreateHubRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, CreateHub(Matcher<google::cloud::networkconnectivity::v1::CreateHubRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::networkconnectivity::v1::Hub>>, CreateHub,
-      (google::cloud::networkconnectivity::v1::CreateHubRequest const& request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::networkconnectivity::v1::Hub>>,
+  CreateHub,
+  (google::cloud::networkconnectivity::v1::CreateHubRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -77,37 +72,33 @@ class MockHubServiceConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, CreateHub(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, CreateHub,
-      (NoAwaitTag,
-       google::cloud::networkconnectivity::v1::CreateHubRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  CreateHub, (NoAwaitTag,
+    google::cloud::networkconnectivity::v1::CreateHubRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateHub(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, CreateHub(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::networkconnectivity::v1::Hub>>,
-              CreateHub, (google::longrunning::Operation const& operation),
-              (override));
+  CreateHub, (
+    google::longrunning::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// UpdateHub(Matcher<google::cloud::networkconnectivity::v1::UpdateHubRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, UpdateHub(Matcher<google::cloud::networkconnectivity::v1::UpdateHubRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::networkconnectivity::v1::Hub>>, UpdateHub,
-      (google::cloud::networkconnectivity::v1::UpdateHubRequest const& request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::networkconnectivity::v1::Hub>>,
+  UpdateHub,
+  (google::cloud::networkconnectivity::v1::UpdateHubRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -115,39 +106,33 @@ class MockHubServiceConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, UpdateHub(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, UpdateHub,
-      (NoAwaitTag,
-       google::cloud::networkconnectivity::v1::UpdateHubRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  UpdateHub, (NoAwaitTag,
+    google::cloud::networkconnectivity::v1::UpdateHubRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UpdateHub(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, UpdateHub(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::networkconnectivity::v1::Hub>>,
-              UpdateHub, (google::longrunning::Operation const& operation),
-              (override));
+  UpdateHub, (
+    google::longrunning::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteHub(Matcher<google::cloud::networkconnectivity::v1::DeleteHubRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteHub(Matcher<google::cloud::networkconnectivity::v1::DeleteHubRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<
-          StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>,
-      DeleteHub,
-      (google::cloud::networkconnectivity::v1::DeleteHubRequest const& request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>,
+  DeleteHub,
+  (google::cloud::networkconnectivity::v1::DeleteHubRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -155,61 +140,49 @@ class MockHubServiceConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, DeleteHub(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, DeleteHub,
-      (NoAwaitTag,
-       google::cloud::networkconnectivity::v1::DeleteHubRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  DeleteHub, (NoAwaitTag,
+    google::cloud::networkconnectivity::v1::DeleteHubRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteHub(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteHub(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<
-          StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>,
-      DeleteHub, (google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>,
+  DeleteHub, (
+    google::longrunning::Operation const& operation), (override));
 
-  MOCK_METHOD(
-      (StreamRange<google::cloud::networkconnectivity::v1::Spoke>),
-      ListHubSpokes,
-      (google::cloud::networkconnectivity::v1::ListHubSpokesRequest request),
-      (override));
+  MOCK_METHOD((StreamRange<google::cloud::networkconnectivity::v1::Spoke>),
+  ListHubSpokes,
+  (google::cloud::networkconnectivity::v1::ListHubSpokesRequest request), (override));
 
-  MOCK_METHOD(
-      (StreamRange<google::cloud::networkconnectivity::v1::HubStatusEntry>),
-      QueryHubStatus,
-      (google::cloud::networkconnectivity::v1::QueryHubStatusRequest request),
-      (override));
+  MOCK_METHOD((StreamRange<google::cloud::networkconnectivity::v1::HubStatusEntry>),
+  QueryHubStatus,
+  (google::cloud::networkconnectivity::v1::QueryHubStatusRequest request), (override));
 
-  MOCK_METHOD(
-      (StreamRange<google::cloud::networkconnectivity::v1::Spoke>), ListSpokes,
-      (google::cloud::networkconnectivity::v1::ListSpokesRequest request),
-      (override));
+  MOCK_METHOD((StreamRange<google::cloud::networkconnectivity::v1::Spoke>),
+  ListSpokes,
+  (google::cloud::networkconnectivity::v1::ListSpokesRequest request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::networkconnectivity::v1::Spoke>, GetSpoke,
-      (google::cloud::networkconnectivity::v1::GetSpokeRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::networkconnectivity::v1::Spoke>,
+  GetSpoke,
+  (google::cloud::networkconnectivity::v1::GetSpokeRequest const& request), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// CreateSpoke(Matcher<google::cloud::networkconnectivity::v1::CreateSpokeRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, CreateSpoke(Matcher<google::cloud::networkconnectivity::v1::CreateSpokeRequest const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::networkconnectivity::v1::Spoke>>,
-              CreateSpoke,
-              (google::cloud::networkconnectivity::v1::CreateSpokeRequest const&
-                   request),
-              (override));
+  CreateSpoke,
+  (google::cloud::networkconnectivity::v1::CreateSpokeRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -217,38 +190,33 @@ class MockHubServiceConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, CreateSpoke(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateSpoke,
-              (NoAwaitTag,
-               google::cloud::networkconnectivity::v1::CreateSpokeRequest const&
-                   request),
-              (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  CreateSpoke, (NoAwaitTag,
+    google::cloud::networkconnectivity::v1::CreateSpokeRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateSpoke(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, CreateSpoke(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::networkconnectivity::v1::Spoke>>,
-              CreateSpoke, (google::longrunning::Operation const& operation),
-              (override));
+  CreateSpoke, (
+    google::longrunning::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// UpdateSpoke(Matcher<google::cloud::networkconnectivity::v1::UpdateSpokeRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, UpdateSpoke(Matcher<google::cloud::networkconnectivity::v1::UpdateSpokeRequest const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::networkconnectivity::v1::Spoke>>,
-              UpdateSpoke,
-              (google::cloud::networkconnectivity::v1::UpdateSpokeRequest const&
-                   request),
-              (override));
+  UpdateSpoke,
+  (google::cloud::networkconnectivity::v1::UpdateSpokeRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -256,40 +224,33 @@ class MockHubServiceConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, UpdateSpoke(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, UpdateSpoke,
-              (NoAwaitTag,
-               google::cloud::networkconnectivity::v1::UpdateSpokeRequest const&
-                   request),
-              (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  UpdateSpoke, (NoAwaitTag,
+    google::cloud::networkconnectivity::v1::UpdateSpokeRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UpdateSpoke(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, UpdateSpoke(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::networkconnectivity::v1::Spoke>>,
-              UpdateSpoke, (google::longrunning::Operation const& operation),
-              (override));
+  UpdateSpoke, (
+    google::longrunning::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// RejectHubSpoke(Matcher<google::cloud::networkconnectivity::v1::RejectHubSpokeRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, RejectHubSpoke(Matcher<google::cloud::networkconnectivity::v1::RejectHubSpokeRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<
-          google::cloud::networkconnectivity::v1::RejectHubSpokeResponse>>,
-      RejectHubSpoke,
-      (google::cloud::networkconnectivity::v1::RejectHubSpokeRequest const&
-           request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::networkconnectivity::v1::RejectHubSpokeResponse>>,
+  RejectHubSpoke,
+  (google::cloud::networkconnectivity::v1::RejectHubSpokeRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -297,43 +258,33 @@ class MockHubServiceConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, RejectHubSpoke(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, RejectHubSpoke,
-      (NoAwaitTag,
-       google::cloud::networkconnectivity::v1::RejectHubSpokeRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  RejectHubSpoke, (NoAwaitTag,
+    google::cloud::networkconnectivity::v1::RejectHubSpokeRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, RejectHubSpoke(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, RejectHubSpoke(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<
-          google::cloud::networkconnectivity::v1::RejectHubSpokeResponse>>,
-      RejectHubSpoke, (google::longrunning::Operation const& operation),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::networkconnectivity::v1::RejectHubSpokeResponse>>,
+  RejectHubSpoke, (
+    google::longrunning::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// AcceptHubSpoke(Matcher<google::cloud::networkconnectivity::v1::AcceptHubSpokeRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, AcceptHubSpoke(Matcher<google::cloud::networkconnectivity::v1::AcceptHubSpokeRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<
-          google::cloud::networkconnectivity::v1::AcceptHubSpokeResponse>>,
-      AcceptHubSpoke,
-      (google::cloud::networkconnectivity::v1::AcceptHubSpokeRequest const&
-           request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::networkconnectivity::v1::AcceptHubSpokeResponse>>,
+  AcceptHubSpoke,
+  (google::cloud::networkconnectivity::v1::AcceptHubSpokeRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -341,43 +292,33 @@ class MockHubServiceConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, AcceptHubSpoke(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, AcceptHubSpoke,
-      (NoAwaitTag,
-       google::cloud::networkconnectivity::v1::AcceptHubSpokeRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  AcceptHubSpoke, (NoAwaitTag,
+    google::cloud::networkconnectivity::v1::AcceptHubSpokeRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, AcceptHubSpoke(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, AcceptHubSpoke(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<
-          google::cloud::networkconnectivity::v1::AcceptHubSpokeResponse>>,
-      AcceptHubSpoke, (google::longrunning::Operation const& operation),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::networkconnectivity::v1::AcceptHubSpokeResponse>>,
+  AcceptHubSpoke, (
+    google::longrunning::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// AcceptSpokeUpdate(Matcher<google::cloud::networkconnectivity::v1::AcceptSpokeUpdateRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, AcceptSpokeUpdate(Matcher<google::cloud::networkconnectivity::v1::AcceptSpokeUpdateRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<
-          google::cloud::networkconnectivity::v1::AcceptSpokeUpdateResponse>>,
-      AcceptSpokeUpdate,
-      (google::cloud::networkconnectivity::v1::AcceptSpokeUpdateRequest const&
-           request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::networkconnectivity::v1::AcceptSpokeUpdateResponse>>,
+  AcceptSpokeUpdate,
+  (google::cloud::networkconnectivity::v1::AcceptSpokeUpdateRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -385,43 +326,33 @@ class MockHubServiceConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, AcceptSpokeUpdate(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, AcceptSpokeUpdate,
-      (NoAwaitTag,
-       google::cloud::networkconnectivity::v1::AcceptSpokeUpdateRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  AcceptSpokeUpdate, (NoAwaitTag,
+    google::cloud::networkconnectivity::v1::AcceptSpokeUpdateRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// AcceptSpokeUpdate(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock, AcceptSpokeUpdate(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<
-          google::cloud::networkconnectivity::v1::AcceptSpokeUpdateResponse>>,
-      AcceptSpokeUpdate, (google::longrunning::Operation const& operation),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::networkconnectivity::v1::AcceptSpokeUpdateResponse>>,
+  AcceptSpokeUpdate, (
+    google::longrunning::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// RejectSpokeUpdate(Matcher<google::cloud::networkconnectivity::v1::RejectSpokeUpdateRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, RejectSpokeUpdate(Matcher<google::cloud::networkconnectivity::v1::RejectSpokeUpdateRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<
-          google::cloud::networkconnectivity::v1::RejectSpokeUpdateResponse>>,
-      RejectSpokeUpdate,
-      (google::cloud::networkconnectivity::v1::RejectSpokeUpdateRequest const&
-           request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::networkconnectivity::v1::RejectSpokeUpdateResponse>>,
+  RejectSpokeUpdate,
+  (google::cloud::networkconnectivity::v1::RejectSpokeUpdateRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -429,43 +360,33 @@ class MockHubServiceConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, RejectSpokeUpdate(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, RejectSpokeUpdate,
-      (NoAwaitTag,
-       google::cloud::networkconnectivity::v1::RejectSpokeUpdateRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  RejectSpokeUpdate, (NoAwaitTag,
+    google::cloud::networkconnectivity::v1::RejectSpokeUpdateRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// RejectSpokeUpdate(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock, RejectSpokeUpdate(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<
-          google::cloud::networkconnectivity::v1::RejectSpokeUpdateResponse>>,
-      RejectSpokeUpdate, (google::longrunning::Operation const& operation),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::networkconnectivity::v1::RejectSpokeUpdateResponse>>,
+  RejectSpokeUpdate, (
+    google::longrunning::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteSpoke(Matcher<google::cloud::networkconnectivity::v1::DeleteSpokeRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteSpoke(Matcher<google::cloud::networkconnectivity::v1::DeleteSpokeRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<
-          StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>,
-      DeleteSpoke,
-      (google::cloud::networkconnectivity::v1::DeleteSpokeRequest const&
-           request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>,
+  DeleteSpoke,
+  (google::cloud::networkconnectivity::v1::DeleteSpokeRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -473,73 +394,57 @@ class MockHubServiceConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, DeleteSpoke(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteSpoke,
-              (NoAwaitTag,
-               google::cloud::networkconnectivity::v1::DeleteSpokeRequest const&
-                   request),
-              (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  DeleteSpoke, (NoAwaitTag,
+    google::cloud::networkconnectivity::v1::DeleteSpokeRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteSpoke(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteSpoke(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<
-          StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>,
-      DeleteSpoke, (google::longrunning::Operation const& operation),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>,
+  DeleteSpoke, (
+    google::longrunning::Operation const& operation), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::networkconnectivity::v1::RouteTable>,
-      GetRouteTable,
-      (google::cloud::networkconnectivity::v1::GetRouteTableRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::networkconnectivity::v1::RouteTable>,
+  GetRouteTable,
+  (google::cloud::networkconnectivity::v1::GetRouteTableRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::networkconnectivity::v1::Route>, GetRoute,
-      (google::cloud::networkconnectivity::v1::GetRouteRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::networkconnectivity::v1::Route>,
+  GetRoute,
+  (google::cloud::networkconnectivity::v1::GetRouteRequest const& request), (override));
 
-  MOCK_METHOD(
-      (StreamRange<google::cloud::networkconnectivity::v1::Route>), ListRoutes,
-      (google::cloud::networkconnectivity::v1::ListRoutesRequest request),
-      (override));
+  MOCK_METHOD((StreamRange<google::cloud::networkconnectivity::v1::Route>),
+  ListRoutes,
+  (google::cloud::networkconnectivity::v1::ListRoutesRequest request), (override));
 
-  MOCK_METHOD(
-      (StreamRange<google::cloud::networkconnectivity::v1::RouteTable>),
-      ListRouteTables,
-      (google::cloud::networkconnectivity::v1::ListRouteTablesRequest request),
-      (override));
+  MOCK_METHOD((StreamRange<google::cloud::networkconnectivity::v1::RouteTable>),
+  ListRouteTables,
+  (google::cloud::networkconnectivity::v1::ListRouteTablesRequest request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::networkconnectivity::v1::Group>, GetGroup,
-      (google::cloud::networkconnectivity::v1::GetGroupRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::networkconnectivity::v1::Group>,
+  GetGroup,
+  (google::cloud::networkconnectivity::v1::GetGroupRequest const& request), (override));
 
-  MOCK_METHOD(
-      (StreamRange<google::cloud::networkconnectivity::v1::Group>), ListGroups,
-      (google::cloud::networkconnectivity::v1::ListGroupsRequest request),
-      (override));
+  MOCK_METHOD((StreamRange<google::cloud::networkconnectivity::v1::Group>),
+  ListGroups,
+  (google::cloud::networkconnectivity::v1::ListGroupsRequest request), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// UpdateGroup(Matcher<google::cloud::networkconnectivity::v1::UpdateGroupRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, UpdateGroup(Matcher<google::cloud::networkconnectivity::v1::UpdateGroupRequest const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::networkconnectivity::v1::Group>>,
-              UpdateGroup,
-              (google::cloud::networkconnectivity::v1::UpdateGroupRequest const&
-                   request),
-              (override));
+  UpdateGroup,
+  (google::cloud::networkconnectivity::v1::UpdateGroupRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -547,59 +452,57 @@ class MockHubServiceConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, UpdateGroup(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, UpdateGroup,
-              (NoAwaitTag,
-               google::cloud::networkconnectivity::v1::UpdateGroupRequest const&
-                   request),
-              (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  UpdateGroup, (NoAwaitTag,
+    google::cloud::networkconnectivity::v1::UpdateGroupRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UpdateGroup(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, UpdateGroup(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::networkconnectivity::v1::Group>>,
-              UpdateGroup, (google::longrunning::Operation const& operation),
-              (override));
+  UpdateGroup, (
+    google::longrunning::Operation const& operation), (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::location::Location>), ListLocations,
-              (google::cloud::location::ListLocationsRequest request),
-              (override));
+  MOCK_METHOD((StreamRange<google::cloud::location::Location>),
+  ListLocations,
+  (google::cloud::location::ListLocationsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::location::Location>, GetLocation,
-              (google::cloud::location::GetLocationRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::location::Location>,
+  GetLocation,
+  (google::cloud::location::GetLocationRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, SetIamPolicy,
-              (google::iam::v1::SetIamPolicyRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::iam::v1::Policy>,
+  SetIamPolicy,
+  (google::iam::v1::SetIamPolicyRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, GetIamPolicy,
-              (google::iam::v1::GetIamPolicyRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::iam::v1::Policy>,
+  GetIamPolicy,
+  (google::iam::v1::GetIamPolicyRequest const& request), (override));
 
   MOCK_METHOD(StatusOr<google::iam::v1::TestIamPermissionsResponse>,
-              TestIamPermissions,
-              (google::iam::v1::TestIamPermissionsRequest const& request),
-              (override));
+  TestIamPermissions,
+  (google::iam::v1::TestIamPermissionsRequest const& request), (override));
 
-  MOCK_METHOD((StreamRange<google::longrunning::Operation>), ListOperations,
-              (google::longrunning::ListOperationsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::longrunning::Operation>),
+  ListOperations,
+  (google::longrunning::ListOperationsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
-              (google::longrunning::GetOperationRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  GetOperation,
+  (google::longrunning::GetOperationRequest const& request), (override));
 
-  MOCK_METHOD(Status, DeleteOperation,
-              (google::longrunning::DeleteOperationRequest const& request),
-              (override));
+  MOCK_METHOD(Status,
+  DeleteOperation,
+  (google::longrunning::DeleteOperationRequest const& request), (override));
 
-  MOCK_METHOD(Status, CancelOperation,
-              (google::longrunning::CancelOperationRequest const& request),
-              (override));
+  MOCK_METHOD(Status,
+  CancelOperation,
+  (google::longrunning::CancelOperationRequest const& request), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

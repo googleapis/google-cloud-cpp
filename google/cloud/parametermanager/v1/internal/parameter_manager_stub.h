@@ -36,167 +36,149 @@ class ParameterManagerStub {
  public:
   virtual ~ParameterManagerStub() = 0;
 
-  virtual StatusOr<google::cloud::parametermanager::v1::ListParametersResponse>
-  ListParameters(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::parametermanager::v1::ListParametersRequest const&
-          request) = 0;
+  virtual StatusOr<google::cloud::parametermanager::v1::ListParametersResponse> ListParameters(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::parametermanager::v1::ListParametersRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::parametermanager::v1::Parameter> GetParameter(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::parametermanager::v1::GetParameterRequest const&
-          request) = 0;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::parametermanager::v1::GetParameterRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::parametermanager::v1::Parameter>
-  CreateParameter(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::parametermanager::v1::CreateParameterRequest const&
-          request) = 0;
+  virtual StatusOr<google::cloud::parametermanager::v1::Parameter> CreateParameter(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::parametermanager::v1::CreateParameterRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::parametermanager::v1::Parameter>
-  UpdateParameter(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::parametermanager::v1::UpdateParameterRequest const&
-          request) = 0;
+  virtual StatusOr<google::cloud::parametermanager::v1::Parameter> UpdateParameter(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::parametermanager::v1::UpdateParameterRequest const& request) = 0;
 
   virtual Status DeleteParameter(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::parametermanager::v1::DeleteParameterRequest const&
-          request) = 0;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::parametermanager::v1::DeleteParameterRequest const& request) = 0;
 
-  virtual StatusOr<
-      google::cloud::parametermanager::v1::ListParameterVersionsResponse>
-  ListParameterVersions(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::parametermanager::v1::ListParameterVersionsRequest const&
-          request) = 0;
+  virtual StatusOr<google::cloud::parametermanager::v1::ListParameterVersionsResponse> ListParameterVersions(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::parametermanager::v1::ListParameterVersionsRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::parametermanager::v1::ParameterVersion>
-  GetParameterVersion(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::parametermanager::v1::GetParameterVersionRequest const&
-          request) = 0;
+  virtual StatusOr<google::cloud::parametermanager::v1::ParameterVersion> GetParameterVersion(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::parametermanager::v1::GetParameterVersionRequest const& request) = 0;
 
-  virtual StatusOr<
-      google::cloud::parametermanager::v1::RenderParameterVersionResponse>
-  RenderParameterVersion(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::parametermanager::v1::RenderParameterVersionRequest const&
-          request) = 0;
+  virtual StatusOr<google::cloud::parametermanager::v1::RenderParameterVersionResponse> RenderParameterVersion(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::parametermanager::v1::RenderParameterVersionRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::parametermanager::v1::ParameterVersion>
-  CreateParameterVersion(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::parametermanager::v1::CreateParameterVersionRequest const&
-          request) = 0;
+  virtual StatusOr<google::cloud::parametermanager::v1::ParameterVersion> CreateParameterVersion(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::parametermanager::v1::CreateParameterVersionRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::parametermanager::v1::ParameterVersion>
-  UpdateParameterVersion(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::parametermanager::v1::UpdateParameterVersionRequest const&
-          request) = 0;
+  virtual StatusOr<google::cloud::parametermanager::v1::ParameterVersion> UpdateParameterVersion(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::parametermanager::v1::UpdateParameterVersionRequest const& request) = 0;
 
   virtual Status DeleteParameterVersion(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::parametermanager::v1::DeleteParameterVersionRequest const&
-          request) = 0;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::parametermanager::v1::DeleteParameterVersionRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::location::ListLocationsResponse>
-  ListLocations(
-      grpc::ClientContext& context, Options const& options,
+  virtual StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::location::ListLocationsRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::location::Location> GetLocation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::location::GetLocationRequest const& request) = 0;
 };
 
 class DefaultParameterManagerStub : public ParameterManagerStub {
  public:
   explicit DefaultParameterManagerStub(
-      std::unique_ptr<
-          google::cloud::parametermanager::v1::ParameterManager::StubInterface>
-          grpc_stub,
-      std::unique_ptr<google::cloud::location::Locations::StubInterface>
-          locations_stub)
+      std::unique_ptr<google::cloud::parametermanager::v1::ParameterManager::StubInterface> grpc_stub,
+      std::unique_ptr<google::cloud::location::Locations::StubInterface> locations_stub
+)
       : grpc_stub_(std::move(grpc_stub)),
         locations_stub_(std::move(locations_stub)) {}
 
-  StatusOr<google::cloud::parametermanager::v1::ListParametersResponse>
-  ListParameters(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::parametermanager::v1::ListParametersRequest const& request)
-      override;
+  StatusOr<google::cloud::parametermanager::v1::ListParametersResponse> ListParameters(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::parametermanager::v1::ListParametersRequest const& request) override;
 
   StatusOr<google::cloud::parametermanager::v1::Parameter> GetParameter(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::parametermanager::v1::GetParameterRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::parametermanager::v1::GetParameterRequest const& request) override;
 
   StatusOr<google::cloud::parametermanager::v1::Parameter> CreateParameter(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::parametermanager::v1::CreateParameterRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::parametermanager::v1::CreateParameterRequest const& request) override;
 
   StatusOr<google::cloud::parametermanager::v1::Parameter> UpdateParameter(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::parametermanager::v1::UpdateParameterRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::parametermanager::v1::UpdateParameterRequest const& request) override;
 
   Status DeleteParameter(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::parametermanager::v1::DeleteParameterRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::parametermanager::v1::DeleteParameterRequest const& request) override;
 
-  StatusOr<google::cloud::parametermanager::v1::ListParameterVersionsResponse>
-  ListParameterVersions(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::parametermanager::v1::ListParameterVersionsRequest const&
-          request) override;
+  StatusOr<google::cloud::parametermanager::v1::ListParameterVersionsResponse> ListParameterVersions(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::parametermanager::v1::ListParameterVersionsRequest const& request) override;
 
-  StatusOr<google::cloud::parametermanager::v1::ParameterVersion>
-  GetParameterVersion(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::parametermanager::v1::GetParameterVersionRequest const&
-          request) override;
+  StatusOr<google::cloud::parametermanager::v1::ParameterVersion> GetParameterVersion(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::parametermanager::v1::GetParameterVersionRequest const& request) override;
 
-  StatusOr<google::cloud::parametermanager::v1::RenderParameterVersionResponse>
-  RenderParameterVersion(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::parametermanager::v1::RenderParameterVersionRequest const&
-          request) override;
+  StatusOr<google::cloud::parametermanager::v1::RenderParameterVersionResponse> RenderParameterVersion(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::parametermanager::v1::RenderParameterVersionRequest const& request) override;
 
-  StatusOr<google::cloud::parametermanager::v1::ParameterVersion>
-  CreateParameterVersion(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::parametermanager::v1::CreateParameterVersionRequest const&
-          request) override;
+  StatusOr<google::cloud::parametermanager::v1::ParameterVersion> CreateParameterVersion(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::parametermanager::v1::CreateParameterVersionRequest const& request) override;
 
-  StatusOr<google::cloud::parametermanager::v1::ParameterVersion>
-  UpdateParameterVersion(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::parametermanager::v1::UpdateParameterVersionRequest const&
-          request) override;
+  StatusOr<google::cloud::parametermanager::v1::ParameterVersion> UpdateParameterVersion(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::parametermanager::v1::UpdateParameterVersionRequest const& request) override;
 
   Status DeleteParameterVersion(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::parametermanager::v1::DeleteParameterVersionRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::parametermanager::v1::DeleteParameterVersionRequest const& request) override;
 
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::location::ListLocationsRequest const& request) override;
 
   StatusOr<google::cloud::location::Location> GetLocation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::location::GetLocationRequest const& request) override;
 
  private:
-  std::unique_ptr<
-      google::cloud::parametermanager::v1::ParameterManager::StubInterface>
-      grpc_stub_;
-  std::unique_ptr<google::cloud::location::Locations::StubInterface>
-      locations_stub_;
+  std::unique_ptr<google::cloud::parametermanager::v1::ParameterManager::StubInterface> grpc_stub_;
+  std::unique_ptr<google::cloud::location::Locations::StubInterface> locations_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

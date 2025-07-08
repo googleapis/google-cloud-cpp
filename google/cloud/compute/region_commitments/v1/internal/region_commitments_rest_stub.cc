@@ -31,8 +31,7 @@ namespace cloud {
 namespace compute_region_commitments_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-DefaultRegionCommitmentsRestStub::DefaultRegionCommitmentsRestStub(
-    Options options)
+DefaultRegionCommitmentsRestStub::DefaultRegionCommitmentsRestStub(Options options)
     : service_(rest_internal::MakePooledRestClient(
           options.get<EndpointOption>(), options)),
       operations_(rest_internal::MakePooledRestClient(
@@ -41,198 +40,143 @@ DefaultRegionCommitmentsRestStub::DefaultRegionCommitmentsRestStub(
 
 DefaultRegionCommitmentsRestStub::DefaultRegionCommitmentsRestStub(
     std::shared_ptr<rest_internal::RestClient> service,
-    std::shared_ptr<rest_internal::RestClient> operations, Options options)
+    std::shared_ptr<rest_internal::RestClient> operations,
+    Options options)
     : service_(std::move(service)),
       operations_(std::move(operations)),
       options_(std::move(options)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::CommitmentAggregatedList>
 DefaultRegionCommitmentsRestStub::AggregatedListRegionCommitments(
-    google::cloud::rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::compute::region_commitments::v1::
-        AggregatedListRegionCommitmentsRequest const& request) {
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::region_commitments::v1::AggregatedListRegionCommitmentsRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"filter", request.filter()});
-  query_params.push_back(
-      {"include_all_scopes", (request.include_all_scopes() ? "1" : "0")});
-  query_params.push_back(
-      {"max_results", std::to_string(request.max_results())});
+  query_params.push_back({"include_all_scopes", (request.include_all_scopes() ? "1" : "0")});
+  query_params.push_back({"max_results", std::to_string(request.max_results())});
   query_params.push_back({"order_by", request.order_by()});
   query_params.push_back({"page_token", request.page_token()});
-  query_params.push_back({"return_partial_success",
-                          (request.return_partial_success() ? "1" : "0")});
-  query_params.push_back(
-      {"service_project_number", request.service_project_number()});
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
-  return rest_internal::Get<
-      google::cloud::cpp::compute::v1::CommitmentAggregatedList>(
+  query_params.push_back({"return_partial_success", (request.return_partial_success() ? "1" : "0")});
+  query_params.push_back({"service_project_number", request.service_project_number()});
+  query_params = rest_internal::TrimEmptyQueryParameters(std::move(query_params));
+  return rest_internal::Get<google::cloud::cpp::compute::v1::CommitmentAggregatedList>(
       *service_, rest_context, request, false,
-      absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "aggregated", "/",
-                   "commitments"),
-      std::move(query_params));
+      absl::StrCat("/", "compute", "/", rest_internal::DetermineApiVersion("v1", options), "/", "projects", "/", request.project(), "/", "aggregated", "/", "commitments"), std::move(query_params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Commitment>
 DefaultRegionCommitmentsRestStub::GetCommitment(
-    google::cloud::rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::compute::region_commitments::v1::
-        GetCommitmentRequest const& request) {
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::region_commitments::v1::GetCommitmentRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Get<google::cloud::cpp::compute::v1::Commitment>(
       *service_, rest_context, request, false,
-      absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "regions", "/",
-                   request.region(), "/", "commitments", "/",
-                   request.commitment()),
-      std::move(query_params));
+      absl::StrCat("/", "compute", "/", rest_internal::DetermineApiVersion("v1", options), "/", "projects", "/", request.project(), "/", "regions", "/", request.region(), "/", "commitments", "/", request.commitment()), std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultRegionCommitmentsRestStub::AsyncInsertCommitment(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::region_commitments::v1::
-        InsertCommitmentRequest const& request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::region_commitments::v1::InsertCommitmentRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
-      p.get_future();
-  std::thread t{
-      [](auto p, auto service, auto request, auto rest_context, auto options) {
-        std::vector<std::pair<std::string, std::string>> query_params;
-        query_params.push_back({"request_id", request.request_id()});
-        query_params =
-            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
-        p.set_value(
-            rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request.commitment_resource(), false,
-                absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", *options),
-                             "/", "projects", "/", request.project(), "/",
-                             "regions", "/", request.region(), "/",
-                             "commitments"),
-                std::move(query_params)));
-      },
-      std::move(p),
-      service_,
-      request,
-      std::move(rest_context),
-      std::move(options)};
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f = p.get_future();
+  std::thread t{[](
+          auto p, auto service, auto request, auto rest_context, auto options) {
+      std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"request_id", request.request_id()});
+  query_params = rest_internal::TrimEmptyQueryParameters(std::move(query_params));
+      p.set_value(rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+          *service, *rest_context, request.commitment_resource(),
+          false,
+          absl::StrCat("/", "compute", "/", rest_internal::DetermineApiVersion("v1", *options), "/", "projects", "/", request.project(), "/", "regions", "/", request.region(), "/", "commitments"), std::move(query_params)));
+    },
+    std::move(p), service_, request, std::move(rest_context),
+    std::move(options)};
   return f.then([t = std::move(t), cq](auto f) mutable {
-    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
+    cq.RunAsync([t = std::move(t)]() mutable {
+      t.join();
+    });
     return f.get();
   });
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultRegionCommitmentsRestStub::InsertCommitment(
-    google::cloud::rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::compute::region_commitments::v1::
-        InsertCommitmentRequest const& request) {
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::region_commitments::v1::InsertCommitmentRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"request_id", request.request_id()});
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
+  query_params = rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request.commitment_resource(), false,
-      absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "regions", "/",
-                   request.region(), "/", "commitments"),
-      std::move(query_params));
+      absl::StrCat("/", "compute", "/", rest_internal::DetermineApiVersion("v1", options), "/", "projects", "/", request.project(), "/", "regions", "/", request.region(), "/", "commitments"), std::move(query_params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::CommitmentList>
 DefaultRegionCommitmentsRestStub::ListRegionCommitments(
-    google::cloud::rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::compute::region_commitments::v1::
-        ListRegionCommitmentsRequest const& request) {
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::region_commitments::v1::ListRegionCommitmentsRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"filter", request.filter()});
-  query_params.push_back(
-      {"max_results", std::to_string(request.max_results())});
+  query_params.push_back({"max_results", std::to_string(request.max_results())});
   query_params.push_back({"order_by", request.order_by()});
   query_params.push_back({"page_token", request.page_token()});
-  query_params.push_back({"return_partial_success",
-                          (request.return_partial_success() ? "1" : "0")});
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
+  query_params.push_back({"return_partial_success", (request.return_partial_success() ? "1" : "0")});
+  query_params = rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<google::cloud::cpp::compute::v1::CommitmentList>(
       *service_, rest_context, request, false,
-      absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "regions", "/",
-                   request.region(), "/", "commitments"),
-      std::move(query_params));
+      absl::StrCat("/", "compute", "/", rest_internal::DetermineApiVersion("v1", options), "/", "projects", "/", request.project(), "/", "regions", "/", request.region(), "/", "commitments"), std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultRegionCommitmentsRestStub::AsyncUpdateCommitment(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::region_commitments::v1::
-        UpdateCommitmentRequest const& request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::region_commitments::v1::UpdateCommitmentRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
-      p.get_future();
-  std::thread t{
-      [](auto p, auto service, auto request, auto rest_context, auto options) {
-        std::vector<std::pair<std::string, std::string>> query_params;
-        query_params.push_back({"paths", request.paths()});
-        query_params.push_back({"request_id", request.request_id()});
-        query_params.push_back({"update_mask", request.update_mask()});
-        query_params =
-            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
-        p.set_value(
-            rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request.commitment_resource(), false,
-                absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", *options),
-                             "/", "projects", "/", request.project(), "/",
-                             "regions", "/", request.region(), "/",
-                             "commitments", "/", request.commitment()),
-                std::move(query_params)));
-      },
-      std::move(p),
-      service_,
-      request,
-      std::move(rest_context),
-      std::move(options)};
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f = p.get_future();
+  std::thread t{[](
+          auto p, auto service, auto request, auto rest_context, auto options) {
+      std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"paths", request.paths()});
+  query_params.push_back({"request_id", request.request_id()});
+  query_params.push_back({"update_mask", request.update_mask()});
+  query_params = rest_internal::TrimEmptyQueryParameters(std::move(query_params));
+      p.set_value(rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
+          *service, *rest_context, request.commitment_resource(),
+          false,
+          absl::StrCat("/", "compute", "/", rest_internal::DetermineApiVersion("v1", *options), "/", "projects", "/", request.project(), "/", "regions", "/", request.region(), "/", "commitments", "/", request.commitment()), std::move(query_params)));
+    },
+    std::move(p), service_, request, std::move(rest_context),
+    std::move(options)};
   return f.then([t = std::move(t), cq](auto f) mutable {
-    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
+    cq.RunAsync([t = std::move(t)]() mutable {
+      t.join();
+    });
     return f.get();
   });
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultRegionCommitmentsRestStub::UpdateCommitment(
-    google::cloud::rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::compute::region_commitments::v1::
-        UpdateCommitmentRequest const& request) {
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::region_commitments::v1::UpdateCommitmentRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"paths", request.paths()});
   query_params.push_back({"request_id", request.request_id()});
   query_params.push_back({"update_mask", request.update_mask()});
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
+  query_params = rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request.commitment_resource(), false,
-      absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "regions", "/",
-                   request.region(), "/", "commitments", "/",
-                   request.commitment()),
-      std::move(query_params));
+      absl::StrCat("/", "compute", "/", rest_internal::DetermineApiVersion("v1", options), "/", "projects", "/", request.project(), "/", "regions", "/", request.region(), "/", "commitments", "/", request.commitment()), std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -240,59 +184,51 @@ DefaultRegionCommitmentsRestStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::region_operations::v1::
-        GetOperationRequest const& request) {
+    google::cloud::cpp::compute::region_operations::v1::GetOperationRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
-      p.get_future();
-  std::thread t{
-      [](auto p, auto operations, auto request, auto rest_context,
-         auto options) {
-        p.set_value(
-            rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
-                *operations, *rest_context, request, false,
-                absl::StrCat("/compute/",
-                             rest_internal::DetermineApiVersion("v1", *options),
-                             "/projects/", request.project(), "/regions/",
-                             request.region(), "/operations/",
-                             request.operation())));
-      },
-      std::move(p),
-      operations_,
-      request,
-      std::move(rest_context),
-      std::move(options)};
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f = p.get_future();
+  std::thread t{[](auto p, auto operations, auto request, auto rest_context, auto options) {
+      p.set_value(rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
+          *operations, *rest_context, request, false,
+          absl::StrCat("/compute/",
+                              rest_internal::DetermineApiVersion("v1", *options),
+                              "/projects/", request.project(),
+                              "/regions/", request.region(),
+                              "/operations/", request.operation())));
+    },
+    std::move(p), operations_, request, std::move(rest_context),
+    std::move(options)};
   return f.then([t = std::move(t), cq](auto f) mutable {
-    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
+    cq.RunAsync([t = std::move(t)]() mutable {
+      t.join();
+    });
     return f.get();
   });
 }
 
-future<Status> DefaultRegionCommitmentsRestStub::AsyncCancelOperation(
+future<Status>
+DefaultRegionCommitmentsRestStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::region_operations::v1::
-        DeleteOperationRequest const& request) {
+    google::cloud::cpp::compute::region_operations::v1::DeleteOperationRequest const& request) {
   promise<StatusOr<google::protobuf::Empty>> p;
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
-  std::thread t{
-      [](auto p, auto operations, auto request, auto rest_context,
-         auto options) {
-        p.set_value(rest_internal::Post<google::protobuf::Empty>(
-            *operations, *rest_context, request, false,
-            absl::StrCat(
-                "/compute/", rest_internal::DetermineApiVersion("v1", *options),
-                "/projects/", request.project(), "/regions/", request.region(),
-                "/operations/", request.operation())));
-      },
-      std::move(p),
-      operations_,
-      request,
-      std::move(rest_context),
-      std::move(options)};
+  std::thread t{[](auto p, auto operations, auto request, auto rest_context, auto options) {
+      p.set_value(rest_internal::Post<google::protobuf::Empty>(
+          *operations, *rest_context, request, false,
+          absl::StrCat("/compute/",
+                              rest_internal::DetermineApiVersion("v1", *options),
+                              "/projects/", request.project(),
+                              "/regions/", request.region(),
+                              "/operations/", request.operation())));
+    },
+    std::move(p), operations_, request, std::move(rest_context),
+    std::move(options)};
   return f.then([t = std::move(t), cq](auto f) mutable {
-    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
+    cq.RunAsync([t = std::move(t)]() mutable {
+      t.join();
+    });
     return f.get().status();
   });
 }

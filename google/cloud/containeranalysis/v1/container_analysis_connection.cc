@@ -17,13 +17,13 @@
 // source: google/devtools/containeranalysis/v1/containeranalysis.proto
 
 #include "google/cloud/containeranalysis/v1/container_analysis_connection.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/containeranalysis/v1/container_analysis_options.h"
 #include "google/cloud/containeranalysis/v1/internal/container_analysis_connection_impl.h"
 #include "google/cloud/containeranalysis/v1/internal/container_analysis_option_defaults.h"
 #include "google/cloud/containeranalysis/v1/internal/container_analysis_stub_factory.h"
 #include "google/cloud/containeranalysis/v1/internal/container_analysis_tracing_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
@@ -37,12 +37,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ContainerAnalysisConnection::~ContainerAnalysisConnection() = default;
 
-StatusOr<google::iam::v1::Policy> ContainerAnalysisConnection::SetIamPolicy(
+StatusOr<google::iam::v1::Policy>
+ContainerAnalysisConnection::SetIamPolicy(
     google::iam::v1::SetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::iam::v1::Policy> ContainerAnalysisConnection::GetIamPolicy(
+StatusOr<google::iam::v1::Policy>
+ContainerAnalysisConnection::GetIamPolicy(
     google::iam::v1::GetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -53,11 +55,9 @@ ContainerAnalysisConnection::TestIamPermissions(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<
-    google::devtools::containeranalysis::v1::VulnerabilityOccurrencesSummary>
+StatusOr<google::devtools::containeranalysis::v1::VulnerabilityOccurrencesSummary>
 ContainerAnalysisConnection::GetVulnerabilityOccurrencesSummary(
-    google::devtools::containeranalysis::v1::
-        GetVulnerabilityOccurrencesSummaryRequest const&) {
+    google::devtools::containeranalysis::v1::GetVulnerabilityOccurrencesSummaryRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
@@ -70,19 +70,17 @@ ContainerAnalysisConnection::ExportSBOM(
 std::shared_ptr<ContainerAnalysisConnection> MakeContainerAnalysisConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 ContainerAnalysisPolicyOptionList>(options,
-                                                                    __func__);
+      UnifiedCredentialsOptionList,
+      ContainerAnalysisPolicyOptionList>(options, __func__);
   options = containeranalysis_v1_internal::ContainerAnalysisDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = containeranalysis_v1_internal::CreateDefaultContainerAnalysisStub(
-      std::move(auth), options);
+    std::move(auth), options);
   return containeranalysis_v1_internal::MakeContainerAnalysisTracingConnection(
-      std::make_shared<
-          containeranalysis_v1_internal::ContainerAnalysisConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options)));
+      std::make_shared<containeranalysis_v1_internal::ContainerAnalysisConnectionImpl>(
+      std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

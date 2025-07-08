@@ -36,48 +36,42 @@ class EnvironmentsTracingConnection
   ~EnvironmentsTracingConnection() override = default;
 
   explicit EnvironmentsTracingConnection(
-      std::shared_ptr<dialogflow_es::EnvironmentsConnection> child);
+    std::shared_ptr<dialogflow_es::EnvironmentsConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StreamRange<google::cloud::dialogflow::v2::Environment> ListEnvironments(
-      google::cloud::dialogflow::v2::ListEnvironmentsRequest request) override;
+  StreamRange<google::cloud::dialogflow::v2::Environment>
+  ListEnvironments(google::cloud::dialogflow::v2::ListEnvironmentsRequest request) override;
 
-  StatusOr<google::cloud::dialogflow::v2::Environment> GetEnvironment(
-      google::cloud::dialogflow::v2::GetEnvironmentRequest const& request)
-      override;
+  StatusOr<google::cloud::dialogflow::v2::Environment>
+  GetEnvironment(google::cloud::dialogflow::v2::GetEnvironmentRequest const& request) override;
 
-  StatusOr<google::cloud::dialogflow::v2::Environment> CreateEnvironment(
-      google::cloud::dialogflow::v2::CreateEnvironmentRequest const& request)
-      override;
+  StatusOr<google::cloud::dialogflow::v2::Environment>
+  CreateEnvironment(google::cloud::dialogflow::v2::CreateEnvironmentRequest const& request) override;
 
-  StatusOr<google::cloud::dialogflow::v2::Environment> UpdateEnvironment(
-      google::cloud::dialogflow::v2::UpdateEnvironmentRequest const& request)
-      override;
+  StatusOr<google::cloud::dialogflow::v2::Environment>
+  UpdateEnvironment(google::cloud::dialogflow::v2::UpdateEnvironmentRequest const& request) override;
 
-  Status DeleteEnvironment(
-      google::cloud::dialogflow::v2::DeleteEnvironmentRequest const& request)
-      override;
+  Status
+  DeleteEnvironment(google::cloud::dialogflow::v2::DeleteEnvironmentRequest const& request) override;
 
   StreamRange<google::cloud::dialogflow::v2::EnvironmentHistory::Entry>
-  GetEnvironmentHistory(
-      google::cloud::dialogflow::v2::GetEnvironmentHistoryRequest request)
-      override;
+  GetEnvironmentHistory(google::cloud::dialogflow::v2::GetEnvironmentHistoryRequest request) override;
 
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request) override;
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request) override;
 
-  StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request) override;
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request) override;
 
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request) override;
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::shared_ptr<dialogflow_es::EnvironmentsConnection> child_;

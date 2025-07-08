@@ -38,64 +38,60 @@ class TestCasesConnectionIdempotencyPolicy {
   /// Create a new copy of this object.
   virtual std::unique_ptr<TestCasesConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency ListTestCases(
-      google::cloud::dialogflow::cx::v3::ListTestCasesRequest request);
+  virtual google::cloud::Idempotency
+  ListTestCases(google::cloud::dialogflow::cx::v3::ListTestCasesRequest request);
 
-  virtual google::cloud::Idempotency BatchDeleteTestCases(
-      google::cloud::dialogflow::cx::v3::BatchDeleteTestCasesRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  BatchDeleteTestCases(google::cloud::dialogflow::cx::v3::BatchDeleteTestCasesRequest const& request);
 
-  virtual google::cloud::Idempotency GetTestCase(
-      google::cloud::dialogflow::cx::v3::GetTestCaseRequest const& request);
+  virtual google::cloud::Idempotency
+  GetTestCase(google::cloud::dialogflow::cx::v3::GetTestCaseRequest const& request);
 
-  virtual google::cloud::Idempotency CreateTestCase(
-      google::cloud::dialogflow::cx::v3::CreateTestCaseRequest const& request);
+  virtual google::cloud::Idempotency
+  CreateTestCase(google::cloud::dialogflow::cx::v3::CreateTestCaseRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateTestCase(
-      google::cloud::dialogflow::cx::v3::UpdateTestCaseRequest const& request);
+  virtual google::cloud::Idempotency
+  UpdateTestCase(google::cloud::dialogflow::cx::v3::UpdateTestCaseRequest const& request);
 
-  virtual google::cloud::Idempotency RunTestCase(
-      google::cloud::dialogflow::cx::v3::RunTestCaseRequest const& request);
+  virtual google::cloud::Idempotency
+  RunTestCase(google::cloud::dialogflow::cx::v3::RunTestCaseRequest const& request);
 
-  virtual google::cloud::Idempotency BatchRunTestCases(
-      google::cloud::dialogflow::cx::v3::BatchRunTestCasesRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  BatchRunTestCases(google::cloud::dialogflow::cx::v3::BatchRunTestCasesRequest const& request);
 
-  virtual google::cloud::Idempotency CalculateCoverage(
-      google::cloud::dialogflow::cx::v3::CalculateCoverageRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  CalculateCoverage(google::cloud::dialogflow::cx::v3::CalculateCoverageRequest const& request);
 
-  virtual google::cloud::Idempotency ImportTestCases(
-      google::cloud::dialogflow::cx::v3::ImportTestCasesRequest const& request);
+  virtual google::cloud::Idempotency
+  ImportTestCases(google::cloud::dialogflow::cx::v3::ImportTestCasesRequest const& request);
 
-  virtual google::cloud::Idempotency ExportTestCases(
-      google::cloud::dialogflow::cx::v3::ExportTestCasesRequest const& request);
+  virtual google::cloud::Idempotency
+  ExportTestCases(google::cloud::dialogflow::cx::v3::ExportTestCasesRequest const& request);
 
-  virtual google::cloud::Idempotency ListTestCaseResults(
-      google::cloud::dialogflow::cx::v3::ListTestCaseResultsRequest request);
+  virtual google::cloud::Idempotency
+  ListTestCaseResults(google::cloud::dialogflow::cx::v3::ListTestCaseResultsRequest request);
 
-  virtual google::cloud::Idempotency GetTestCaseResult(
-      google::cloud::dialogflow::cx::v3::GetTestCaseResultRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  GetTestCaseResult(google::cloud::dialogflow::cx::v3::GetTestCaseResultRequest const& request);
 
-  virtual google::cloud::Idempotency ListLocations(
-      google::cloud::location::ListLocationsRequest request);
+  virtual google::cloud::Idempotency
+  ListLocations(google::cloud::location::ListLocationsRequest request);
 
-  virtual google::cloud::Idempotency GetLocation(
-      google::cloud::location::GetLocationRequest const& request);
+  virtual google::cloud::Idempotency
+  GetLocation(google::cloud::location::GetLocationRequest const& request);
 
-  virtual google::cloud::Idempotency ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual google::cloud::Idempotency
+  ListOperations(google::longrunning::ListOperationsRequest request);
 
-  virtual google::cloud::Idempotency GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 
-  virtual google::cloud::Idempotency CancelOperation(
-      google::longrunning::CancelOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  CancelOperation(google::longrunning::CancelOperationRequest const& request);
 };
 
 std::unique_ptr<TestCasesConnectionIdempotencyPolicy>
-MakeDefaultTestCasesConnectionIdempotencyPolicy();
+    MakeDefaultTestCasesConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_cx

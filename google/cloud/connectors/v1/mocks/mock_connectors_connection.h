@@ -47,29 +47,24 @@ class MockConnectorsConnection : public connectors_v1::ConnectorsConnection {
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD((StreamRange<google::cloud::connectors::v1::Connection>),
-              ListConnections,
-              (google::cloud::connectors::v1::ListConnectionsRequest request),
-              (override));
+  ListConnections,
+  (google::cloud::connectors::v1::ListConnectionsRequest request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::connectors::v1::Connection>, GetConnection,
-      (google::cloud::connectors::v1::GetConnectionRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::connectors::v1::Connection>,
+  GetConnection,
+  (google::cloud::connectors::v1::GetConnectionRequest const& request), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// CreateConnection(Matcher<google::cloud::connectors::v1::CreateConnectionRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, CreateConnection(Matcher<google::cloud::connectors::v1::CreateConnectionRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::connectors::v1::Connection>>,
-      CreateConnection,
-      (google::cloud::connectors::v1::CreateConnectionRequest const& request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::connectors::v1::Connection>>,
+  CreateConnection,
+  (google::cloud::connectors::v1::CreateConnectionRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -77,38 +72,33 @@ class MockConnectorsConnection : public connectors_v1::ConnectorsConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, CreateConnection(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, CreateConnection,
-      (NoAwaitTag,
-       google::cloud::connectors::v1::CreateConnectionRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  CreateConnection, (NoAwaitTag,
+    google::cloud::connectors::v1::CreateConnectionRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateConnection(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, CreateConnection(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::connectors::v1::Connection>>,
-              CreateConnection,
-              (google::longrunning::Operation const& operation), (override));
+  CreateConnection, (
+    google::longrunning::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// UpdateConnection(Matcher<google::cloud::connectors::v1::UpdateConnectionRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, UpdateConnection(Matcher<google::cloud::connectors::v1::UpdateConnectionRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::connectors::v1::Connection>>,
-      UpdateConnection,
-      (google::cloud::connectors::v1::UpdateConnectionRequest const& request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::connectors::v1::Connection>>,
+  UpdateConnection,
+  (google::cloud::connectors::v1::UpdateConnectionRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -116,38 +106,33 @@ class MockConnectorsConnection : public connectors_v1::ConnectorsConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, UpdateConnection(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, UpdateConnection,
-      (NoAwaitTag,
-       google::cloud::connectors::v1::UpdateConnectionRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  UpdateConnection, (NoAwaitTag,
+    google::cloud::connectors::v1::UpdateConnectionRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UpdateConnection(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, UpdateConnection(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::connectors::v1::Connection>>,
-              UpdateConnection,
-              (google::longrunning::Operation const& operation), (override));
+  UpdateConnection, (
+    google::longrunning::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteConnection(Matcher<google::cloud::connectors::v1::DeleteConnectionRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteConnection(Matcher<google::cloud::connectors::v1::DeleteConnectionRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::connectors::v1::OperationMetadata>>,
-      DeleteConnection,
-      (google::cloud::connectors::v1::DeleteConnectionRequest const& request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::connectors::v1::OperationMetadata>>,
+  DeleteConnection,
+  (google::cloud::connectors::v1::DeleteConnectionRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -155,79 +140,61 @@ class MockConnectorsConnection : public connectors_v1::ConnectorsConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, DeleteConnection(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, DeleteConnection,
-      (NoAwaitTag,
-       google::cloud::connectors::v1::DeleteConnectionRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  DeleteConnection, (NoAwaitTag,
+    google::cloud::connectors::v1::DeleteConnectionRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteConnection(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteConnection(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::connectors::v1::OperationMetadata>>,
-      DeleteConnection, (google::longrunning::Operation const& operation),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::connectors::v1::OperationMetadata>>,
+  DeleteConnection, (
+    google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD((StreamRange<google::cloud::connectors::v1::Provider>),
-              ListProviders,
-              (google::cloud::connectors::v1::ListProvidersRequest request),
-              (override));
+  ListProviders,
+  (google::cloud::connectors::v1::ListProvidersRequest request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::connectors::v1::Provider>, GetProvider,
-      (google::cloud::connectors::v1::GetProviderRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::connectors::v1::Provider>,
+  GetProvider,
+  (google::cloud::connectors::v1::GetProviderRequest const& request), (override));
 
   MOCK_METHOD((StreamRange<google::cloud::connectors::v1::Connector>),
-              ListConnectors,
-              (google::cloud::connectors::v1::ListConnectorsRequest request),
-              (override));
+  ListConnectors,
+  (google::cloud::connectors::v1::ListConnectorsRequest request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::connectors::v1::Connector>, GetConnector,
-      (google::cloud::connectors::v1::GetConnectorRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::connectors::v1::Connector>,
+  GetConnector,
+  (google::cloud::connectors::v1::GetConnectorRequest const& request), (override));
 
-  MOCK_METHOD(
-      (StreamRange<google::cloud::connectors::v1::ConnectorVersion>),
-      ListConnectorVersions,
-      (google::cloud::connectors::v1::ListConnectorVersionsRequest request),
-      (override));
+  MOCK_METHOD((StreamRange<google::cloud::connectors::v1::ConnectorVersion>),
+  ListConnectorVersions,
+  (google::cloud::connectors::v1::ListConnectorVersionsRequest request), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::connectors::v1::ConnectorVersion>,
-              GetConnectorVersion,
-              (google::cloud::connectors::v1::GetConnectorVersionRequest const&
-                   request),
-              (override));
+  GetConnectorVersion,
+  (google::cloud::connectors::v1::GetConnectorVersionRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::connectors::v1::ConnectionSchemaMetadata>,
-      GetConnectionSchemaMetadata,
-      (google::cloud::connectors::v1::GetConnectionSchemaMetadataRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::connectors::v1::ConnectionSchemaMetadata>,
+  GetConnectionSchemaMetadata,
+  (google::cloud::connectors::v1::GetConnectionSchemaMetadataRequest const& request), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// RefreshConnectionSchemaMetadata(Matcher<google::cloud::connectors::v1::RefreshConnectionSchemaMetadataRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, RefreshConnectionSchemaMetadata(Matcher<google::cloud::connectors::v1::RefreshConnectionSchemaMetadataRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::connectors::v1::ConnectionSchemaMetadata>>,
-      RefreshConnectionSchemaMetadata,
-      (google::cloud::connectors::v1::
-           RefreshConnectionSchemaMetadataRequest const& request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::connectors::v1::ConnectionSchemaMetadata>>,
+  RefreshConnectionSchemaMetadata,
+  (google::cloud::connectors::v1::RefreshConnectionSchemaMetadataRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -236,83 +203,72 @@ class MockConnectorsConnection : public connectors_v1::ConnectorsConnection {
   /// EXPECT_CALL(*mock, RefreshConnectionSchemaMetadata(_, _))
   /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-              RefreshConnectionSchemaMetadata,
-              (NoAwaitTag,
-               google::cloud::connectors::v1::
-                   RefreshConnectionSchemaMetadataRequest const& request),
-              (override));
+  RefreshConnectionSchemaMetadata, (NoAwaitTag,
+    google::cloud::connectors::v1::RefreshConnectionSchemaMetadataRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// RefreshConnectionSchemaMetadata(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, RefreshConnectionSchemaMetadata(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::connectors::v1::ConnectionSchemaMetadata>>,
-      RefreshConnectionSchemaMetadata,
-      (google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::connectors::v1::ConnectionSchemaMetadata>>,
+  RefreshConnectionSchemaMetadata, (
+    google::longrunning::Operation const& operation), (override));
 
-  MOCK_METHOD(
-      (StreamRange<google::cloud::connectors::v1::RuntimeEntitySchema>),
-      ListRuntimeEntitySchemas,
-      (google::cloud::connectors::v1::ListRuntimeEntitySchemasRequest request),
-      (override));
+  MOCK_METHOD((StreamRange<google::cloud::connectors::v1::RuntimeEntitySchema>),
+  ListRuntimeEntitySchemas,
+  (google::cloud::connectors::v1::ListRuntimeEntitySchemasRequest request), (override));
 
-  MOCK_METHOD(
-      (StreamRange<google::cloud::connectors::v1::RuntimeActionSchema>),
-      ListRuntimeActionSchemas,
-      (google::cloud::connectors::v1::ListRuntimeActionSchemasRequest request),
-      (override));
+  MOCK_METHOD((StreamRange<google::cloud::connectors::v1::RuntimeActionSchema>),
+  ListRuntimeActionSchemas,
+  (google::cloud::connectors::v1::ListRuntimeActionSchemasRequest request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::connectors::v1::RuntimeConfig>, GetRuntimeConfig,
-      (google::cloud::connectors::v1::GetRuntimeConfigRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::connectors::v1::RuntimeConfig>,
+  GetRuntimeConfig,
+  (google::cloud::connectors::v1::GetRuntimeConfigRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::connectors::v1::Settings>, GetGlobalSettings,
-      (google::cloud::connectors::v1::GetGlobalSettingsRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::connectors::v1::Settings>,
+  GetGlobalSettings,
+  (google::cloud::connectors::v1::GetGlobalSettingsRequest const& request), (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::location::Location>), ListLocations,
-              (google::cloud::location::ListLocationsRequest request),
-              (override));
+  MOCK_METHOD((StreamRange<google::cloud::location::Location>),
+  ListLocations,
+  (google::cloud::location::ListLocationsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::location::Location>, GetLocation,
-              (google::cloud::location::GetLocationRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::location::Location>,
+  GetLocation,
+  (google::cloud::location::GetLocationRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, SetIamPolicy,
-              (google::iam::v1::SetIamPolicyRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::iam::v1::Policy>,
+  SetIamPolicy,
+  (google::iam::v1::SetIamPolicyRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, GetIamPolicy,
-              (google::iam::v1::GetIamPolicyRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::iam::v1::Policy>,
+  GetIamPolicy,
+  (google::iam::v1::GetIamPolicyRequest const& request), (override));
 
   MOCK_METHOD(StatusOr<google::iam::v1::TestIamPermissionsResponse>,
-              TestIamPermissions,
-              (google::iam::v1::TestIamPermissionsRequest const& request),
-              (override));
+  TestIamPermissions,
+  (google::iam::v1::TestIamPermissionsRequest const& request), (override));
 
-  MOCK_METHOD((StreamRange<google::longrunning::Operation>), ListOperations,
-              (google::longrunning::ListOperationsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::longrunning::Operation>),
+  ListOperations,
+  (google::longrunning::ListOperationsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
-              (google::longrunning::GetOperationRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  GetOperation,
+  (google::longrunning::GetOperationRequest const& request), (override));
 
-  MOCK_METHOD(Status, DeleteOperation,
-              (google::longrunning::DeleteOperationRequest const& request),
-              (override));
+  MOCK_METHOD(Status,
+  DeleteOperation,
+  (google::longrunning::DeleteOperationRequest const& request), (override));
 
-  MOCK_METHOD(Status, CancelOperation,
-              (google::longrunning::CancelOperationRequest const& request),
-              (override));
+  MOCK_METHOD(Status,
+  CancelOperation,
+  (google::longrunning::CancelOperationRequest const& request), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

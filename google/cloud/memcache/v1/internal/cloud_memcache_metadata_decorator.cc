@@ -46,19 +46,19 @@ CloudMemcacheMetadata::CloudMemcacheMetadata(
 
 StatusOr<google::cloud::memcache::v1::ListInstancesResponse>
 CloudMemcacheMetadata::ListInstances(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::memcache::v1::ListInstancesRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListInstances(context, options, request);
 }
 
 StatusOr<google::cloud::memcache::v1::Instance>
 CloudMemcacheMetadata::GetInstance(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::memcache::v1::GetInstanceRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetInstance(context, options, request);
 }
 
@@ -68,17 +68,17 @@ CloudMemcacheMetadata::AsyncCreateInstance(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::memcache::v1::CreateInstanceRequest const& request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateInstance(cq, std::move(context), std::move(options),
-                                     request);
+  SetMetadata(*context, *options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateInstance(
+      cq, std::move(context), std::move(options), request);
 }
 
-StatusOr<google::longrunning::Operation> CloudMemcacheMetadata::CreateInstance(
-    grpc::ClientContext& context, Options options,
+StatusOr<google::longrunning::Operation>
+CloudMemcacheMetadata::CreateInstance(
+    grpc::ClientContext& context,
+    Options options,
     google::cloud::memcache::v1::CreateInstanceRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateInstance(context, options, request);
 }
 
@@ -88,19 +88,17 @@ CloudMemcacheMetadata::AsyncUpdateInstance(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::memcache::v1::UpdateInstanceRequest const& request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("instance.name=",
-                           internal::UrlEncode(request.instance().name())));
-  return child_->AsyncUpdateInstance(cq, std::move(context), std::move(options),
-                                     request);
+  SetMetadata(*context, *options, absl::StrCat("instance.name=", internal::UrlEncode(request.instance().name())));
+  return child_->AsyncUpdateInstance(
+      cq, std::move(context), std::move(options), request);
 }
 
-StatusOr<google::longrunning::Operation> CloudMemcacheMetadata::UpdateInstance(
-    grpc::ClientContext& context, Options options,
+StatusOr<google::longrunning::Operation>
+CloudMemcacheMetadata::UpdateInstance(
+    grpc::ClientContext& context,
+    Options options,
     google::cloud::memcache::v1::UpdateInstanceRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("instance.name=",
-                           internal::UrlEncode(request.instance().name())));
+  SetMetadata(context, options, absl::StrCat("instance.name=", internal::UrlEncode(request.instance().name())));
   return child_->UpdateInstance(context, options, request);
 }
 
@@ -110,18 +108,17 @@ CloudMemcacheMetadata::AsyncUpdateParameters(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::memcache::v1::UpdateParametersRequest const& request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncUpdateParameters(cq, std::move(context),
-                                       std::move(options), request);
+  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncUpdateParameters(
+      cq, std::move(context), std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 CloudMemcacheMetadata::UpdateParameters(
-    grpc::ClientContext& context, Options options,
+    grpc::ClientContext& context,
+    Options options,
     google::cloud::memcache::v1::UpdateParametersRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->UpdateParameters(context, options, request);
 }
 
@@ -131,17 +128,17 @@ CloudMemcacheMetadata::AsyncDeleteInstance(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::memcache::v1::DeleteInstanceRequest const& request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteInstance(cq, std::move(context), std::move(options),
-                                     request);
+  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteInstance(
+      cq, std::move(context), std::move(options), request);
 }
 
-StatusOr<google::longrunning::Operation> CloudMemcacheMetadata::DeleteInstance(
-    grpc::ClientContext& context, Options options,
+StatusOr<google::longrunning::Operation>
+CloudMemcacheMetadata::DeleteInstance(
+    grpc::ClientContext& context,
+    Options options,
     google::cloud::memcache::v1::DeleteInstanceRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteInstance(context, options, request);
 }
 
@@ -151,17 +148,17 @@ CloudMemcacheMetadata::AsyncApplyParameters(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::memcache::v1::ApplyParametersRequest const& request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncApplyParameters(cq, std::move(context),
-                                      std::move(options), request);
+  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncApplyParameters(
+      cq, std::move(context), std::move(options), request);
 }
 
-StatusOr<google::longrunning::Operation> CloudMemcacheMetadata::ApplyParameters(
-    grpc::ClientContext& context, Options options,
+StatusOr<google::longrunning::Operation>
+CloudMemcacheMetadata::ApplyParameters(
+    grpc::ClientContext& context,
+    Options options,
     google::cloud::memcache::v1::ApplyParametersRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ApplyParameters(context, options, request);
 }
 
@@ -171,70 +168,71 @@ CloudMemcacheMetadata::AsyncRescheduleMaintenance(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::memcache::v1::RescheduleMaintenanceRequest const& request) {
-  SetMetadata(
-      *context, *options,
-      absl::StrCat("instance=", internal::UrlEncode(request.instance())));
-  return child_->AsyncRescheduleMaintenance(cq, std::move(context),
-                                            std::move(options), request);
+  SetMetadata(*context, *options, absl::StrCat("instance=", internal::UrlEncode(request.instance())));
+  return child_->AsyncRescheduleMaintenance(
+      cq, std::move(context), std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 CloudMemcacheMetadata::RescheduleMaintenance(
-    grpc::ClientContext& context, Options options,
+    grpc::ClientContext& context,
+    Options options,
     google::cloud::memcache::v1::RescheduleMaintenanceRequest const& request) {
-  SetMetadata(
-      context, options,
-      absl::StrCat("instance=", internal::UrlEncode(request.instance())));
+  SetMetadata(context, options, absl::StrCat("instance=", internal::UrlEncode(request.instance())));
   return child_->RescheduleMaintenance(context, options, request);
 }
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 CloudMemcacheMetadata::ListLocations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ListLocations(context, options, request);
 }
 
-StatusOr<google::cloud::location::Location> CloudMemcacheMetadata::GetLocation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::location::Location>
+CloudMemcacheMetadata::GetLocation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetLocation(context, options, request);
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
 CloudMemcacheMetadata::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ListOperations(context, options, request);
 }
 
-StatusOr<google::longrunning::Operation> CloudMemcacheMetadata::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::Operation>
+CloudMemcacheMetadata::GetOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetOperation(context, options, request);
 }
 
-Status CloudMemcacheMetadata::DeleteOperation(
-    grpc::ClientContext& context, Options const& options,
+Status
+CloudMemcacheMetadata::DeleteOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteOperation(context, options, request);
 }
 
-Status CloudMemcacheMetadata::CancelOperation(
-    grpc::ClientContext& context, Options const& options,
+Status
+CloudMemcacheMetadata::CancelOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->CancelOperation(context, options, request);
 }
 
@@ -246,8 +244,8 @@ CloudMemcacheMetadata::AsyncGetOperation(
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(cq, std::move(context), std::move(options),
-                                   request);
+  return child_->AsyncGetOperation(
+      cq, std::move(context), std::move(options), request);
 }
 
 future<Status> CloudMemcacheMetadata::AsyncCancelOperation(
@@ -257,8 +255,8 @@ future<Status> CloudMemcacheMetadata::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(cq, std::move(context),
-                                      std::move(options), request);
+  return child_->AsyncCancelOperation(
+      cq, std::move(context), std::move(options), request);
 }
 
 void CloudMemcacheMetadata::SetMetadata(grpc::ClientContext& context,
@@ -270,8 +268,8 @@ void CloudMemcacheMetadata::SetMetadata(grpc::ClientContext& context,
 
 void CloudMemcacheMetadata::SetMetadata(grpc::ClientContext& context,
                                         Options const& options) {
-  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
-                                       api_client_header_);
+  google::cloud::internal::SetMetadata(
+      context, options, fixed_metadata_, api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

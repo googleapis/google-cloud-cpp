@@ -19,11 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TEXTTOSPEECH_V1_TEXT_TO_SPEECH_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TEXTTOSPEECH_V1_TEXT_TO_SPEECH_CLIENT_H
 
-#include "google/cloud/texttospeech/v1/text_to_speech_connection.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
+#include "google/cloud/texttospeech/v1/text_to_speech_connection.h"
 #include "google/cloud/version.h"
 #include <memory>
 #include <string>
@@ -61,8 +61,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class TextToSpeechClient {
  public:
-  explicit TextToSpeechClient(
-      std::shared_ptr<TextToSpeechConnection> connection, Options opts = {});
+  explicit TextToSpeechClient(std::shared_ptr<TextToSpeechConnection> connection, Options opts = {});
   ~TextToSpeechClient();
 
   ///@{
@@ -75,12 +74,10 @@ class TextToSpeechClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(TextToSpeechClient const& a,
-                         TextToSpeechClient const& b) {
+  friend bool operator==(TextToSpeechClient const& a, TextToSpeechClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(TextToSpeechClient const& a,
-                         TextToSpeechClient const& b) {
+  friend bool operator!=(TextToSpeechClient const& a, TextToSpeechClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -114,8 +111,8 @@ class TextToSpeechClient {
   /// [google.cloud.texttospeech.v1.ListVoicesResponse]: @googleapis_reference_link{google/cloud/texttospeech/v1/cloud_tts.proto#L136}
   ///
   // clang-format on
-  StatusOr<google::cloud::texttospeech::v1::ListVoicesResponse> ListVoices(
-      std::string const& language_code, Options opts = {});
+  StatusOr<google::cloud::texttospeech::v1::ListVoicesResponse>
+  ListVoices(std::string const& language_code, Options opts = {});
 
   // clang-format off
   ///
@@ -144,9 +141,8 @@ class TextToSpeechClient {
   /// [google.cloud.texttospeech.v1.ListVoicesResponse]: @googleapis_reference_link{google/cloud/texttospeech/v1/cloud_tts.proto#L136}
   ///
   // clang-format on
-  StatusOr<google::cloud::texttospeech::v1::ListVoicesResponse> ListVoices(
-      google::cloud::texttospeech::v1::ListVoicesRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::texttospeech::v1::ListVoicesResponse>
+  ListVoices(google::cloud::texttospeech::v1::ListVoicesRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -174,11 +170,7 @@ class TextToSpeechClient {
   ///
   // clang-format on
   StatusOr<google::cloud::texttospeech::v1::SynthesizeSpeechResponse>
-  SynthesizeSpeech(
-      google::cloud::texttospeech::v1::SynthesisInput const& input,
-      google::cloud::texttospeech::v1::VoiceSelectionParams const& voice,
-      google::cloud::texttospeech::v1::AudioConfig const& audio_config,
-      Options opts = {});
+  SynthesizeSpeech(google::cloud::texttospeech::v1::SynthesisInput const& input, google::cloud::texttospeech::v1::VoiceSelectionParams const& voice, google::cloud::texttospeech::v1::AudioConfig const& audio_config, Options opts = {});
 
   // clang-format off
   ///
@@ -209,9 +201,7 @@ class TextToSpeechClient {
   ///
   // clang-format on
   StatusOr<google::cloud::texttospeech::v1::SynthesizeSpeechResponse>
-  SynthesizeSpeech(
-      google::cloud::texttospeech::v1::SynthesizeSpeechRequest const& request,
-      Options opts = {});
+  SynthesizeSpeech(google::cloud::texttospeech::v1::SynthesizeSpeechRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -277,8 +267,8 @@ class TextToSpeechClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -317,8 +307,8 @@ class TextToSpeechClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -344,8 +334,8 @@ class TextToSpeechClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -376,9 +366,8 @@ class TextToSpeechClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<TextToSpeechConnection> connection_;

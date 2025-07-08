@@ -32,7 +32,8 @@ namespace texttospeech_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 TextToSpeechLogging::TextToSpeechLogging(
-    std::shared_ptr<TextToSpeechStub> child, TracingOptions tracing_options,
+    std::shared_ptr<TextToSpeechStub> child,
+    TracingOptions tracing_options,
     std::set<std::string> const& components)
     : child_(std::move(child)),
       tracing_options_(std::move(tracing_options)),
@@ -40,12 +41,13 @@ TextToSpeechLogging::TextToSpeechLogging(
 
 StatusOr<google::cloud::texttospeech::v1::ListVoicesResponse>
 TextToSpeechLogging::ListVoices(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::texttospeech::v1::ListVoicesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::texttospeech::v1::ListVoicesRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::texttospeech::v1::ListVoicesRequest const& request) {
         return child_->ListVoices(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -53,12 +55,13 @@ TextToSpeechLogging::ListVoices(
 
 StatusOr<google::cloud::texttospeech::v1::SynthesizeSpeechResponse>
 TextToSpeechLogging::SynthesizeSpeech(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::texttospeech::v1::SynthesizeSpeechRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::texttospeech::v1::SynthesizeSpeechRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::texttospeech::v1::SynthesizeSpeechRequest const& request) {
         return child_->SynthesizeSpeech(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -72,14 +75,12 @@ TextToSpeechLogging::AsyncStreamingSynthesize(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options) {
   using LoggingStream =
-      ::google::cloud::internal::AsyncStreamingReadWriteRpcLogging<
-          google::cloud::texttospeech::v1::StreamingSynthesizeRequest,
-          google::cloud::texttospeech::v1::StreamingSynthesizeResponse>;
+     ::google::cloud::internal::AsyncStreamingReadWriteRpcLogging<google::cloud::texttospeech::v1::StreamingSynthesizeRequest, google::cloud::texttospeech::v1::StreamingSynthesizeResponse>;
 
   auto request_id = google::cloud::internal::RequestIdForLogging();
   GCP_LOG(DEBUG) << __func__ << "(" << request_id << ")";
-  auto stream = child_->AsyncStreamingSynthesize(cq, std::move(context),
-                                                 std::move(options));
+  auto stream = child_->AsyncStreamingSynthesize(
+      cq, std::move(context), std::move(options));
   if (stream_logging_) {
     stream = std::make_unique<LoggingStream>(
         std::move(stream), tracing_options_, std::move(request_id));
@@ -89,21 +90,26 @@ TextToSpeechLogging::AsyncStreamingSynthesize(
 
 StatusOr<google::longrunning::ListOperationsResponse>
 TextToSpeechLogging::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::ListOperationsRequest const& request) {
         return child_->ListOperations(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> TextToSpeechLogging::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::Operation>
+TextToSpeechLogging::GetOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::GetOperationRequest const& request) {
         return child_->GetOperation(context, options, request);
       },

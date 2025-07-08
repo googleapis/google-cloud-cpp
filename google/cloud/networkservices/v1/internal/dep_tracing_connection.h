@@ -36,140 +36,153 @@ class DepServiceTracingConnection
   ~DepServiceTracingConnection() override = default;
 
   explicit DepServiceTracingConnection(
-      std::shared_ptr<networkservices_v1::DepServiceConnection> child);
+    std::shared_ptr<networkservices_v1::DepServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
   StreamRange<google::cloud::networkservices::v1::LbTrafficExtension>
-  ListLbTrafficExtensions(
-      google::cloud::networkservices::v1::ListLbTrafficExtensionsRequest
-          request) override;
+  ListLbTrafficExtensions(google::cloud::networkservices::v1::ListLbTrafficExtensionsRequest request) override;
 
   StatusOr<google::cloud::networkservices::v1::LbTrafficExtension>
-  GetLbTrafficExtension(
-      google::cloud::networkservices::v1::GetLbTrafficExtensionRequest const&
-          request) override;
+  GetLbTrafficExtension(google::cloud::networkservices::v1::GetLbTrafficExtensionRequest const& request) override;
 
   future<StatusOr<google::cloud::networkservices::v1::LbTrafficExtension>>
-  CreateLbTrafficExtension(
-      google::cloud::networkservices::v1::CreateLbTrafficExtensionRequest const&
-          request) override;
+  CreateLbTrafficExtension(google::cloud::networkservices::v1::CreateLbTrafficExtensionRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> CreateLbTrafficExtension(
-      NoAwaitTag,
-      google::cloud::networkservices::v1::CreateLbTrafficExtensionRequest const&
-          request) override;
+  StatusOr<google::longrunning::Operation>
+  CreateLbTrafficExtension(NoAwaitTag,
+      google::cloud::networkservices::v1::CreateLbTrafficExtensionRequest const& request) override;
 
   future<StatusOr<google::cloud::networkservices::v1::LbTrafficExtension>>
   CreateLbTrafficExtension(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::networkservices::v1::LbTrafficExtension>>
-  UpdateLbTrafficExtension(
-      google::cloud::networkservices::v1::UpdateLbTrafficExtensionRequest const&
-          request) override;
+  UpdateLbTrafficExtension(google::cloud::networkservices::v1::UpdateLbTrafficExtensionRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> UpdateLbTrafficExtension(
-      NoAwaitTag,
-      google::cloud::networkservices::v1::UpdateLbTrafficExtensionRequest const&
-          request) override;
+  StatusOr<google::longrunning::Operation>
+  UpdateLbTrafficExtension(NoAwaitTag,
+      google::cloud::networkservices::v1::UpdateLbTrafficExtensionRequest const& request) override;
 
   future<StatusOr<google::cloud::networkservices::v1::LbTrafficExtension>>
   UpdateLbTrafficExtension(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
-  DeleteLbTrafficExtension(
-      google::cloud::networkservices::v1::DeleteLbTrafficExtensionRequest const&
-          request) override;
+  DeleteLbTrafficExtension(google::cloud::networkservices::v1::DeleteLbTrafficExtensionRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> DeleteLbTrafficExtension(
-      NoAwaitTag,
-      google::cloud::networkservices::v1::DeleteLbTrafficExtensionRequest const&
-          request) override;
+  StatusOr<google::longrunning::Operation>
+  DeleteLbTrafficExtension(NoAwaitTag,
+      google::cloud::networkservices::v1::DeleteLbTrafficExtensionRequest const& request) override;
 
   future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
   DeleteLbTrafficExtension(
       google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::networkservices::v1::LbRouteExtension>
-  ListLbRouteExtensions(
-      google::cloud::networkservices::v1::ListLbRouteExtensionsRequest request)
-      override;
+  ListLbRouteExtensions(google::cloud::networkservices::v1::ListLbRouteExtensionsRequest request) override;
 
   StatusOr<google::cloud::networkservices::v1::LbRouteExtension>
-  GetLbRouteExtension(
-      google::cloud::networkservices::v1::GetLbRouteExtensionRequest const&
-          request) override;
+  GetLbRouteExtension(google::cloud::networkservices::v1::GetLbRouteExtensionRequest const& request) override;
 
   future<StatusOr<google::cloud::networkservices::v1::LbRouteExtension>>
-  CreateLbRouteExtension(
-      google::cloud::networkservices::v1::CreateLbRouteExtensionRequest const&
-          request) override;
+  CreateLbRouteExtension(google::cloud::networkservices::v1::CreateLbRouteExtensionRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> CreateLbRouteExtension(
-      NoAwaitTag,
-      google::cloud::networkservices::v1::CreateLbRouteExtensionRequest const&
-          request) override;
+  StatusOr<google::longrunning::Operation>
+  CreateLbRouteExtension(NoAwaitTag,
+      google::cloud::networkservices::v1::CreateLbRouteExtensionRequest const& request) override;
 
   future<StatusOr<google::cloud::networkservices::v1::LbRouteExtension>>
   CreateLbRouteExtension(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::networkservices::v1::LbRouteExtension>>
-  UpdateLbRouteExtension(
-      google::cloud::networkservices::v1::UpdateLbRouteExtensionRequest const&
-          request) override;
+  UpdateLbRouteExtension(google::cloud::networkservices::v1::UpdateLbRouteExtensionRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> UpdateLbRouteExtension(
-      NoAwaitTag,
-      google::cloud::networkservices::v1::UpdateLbRouteExtensionRequest const&
-          request) override;
+  StatusOr<google::longrunning::Operation>
+  UpdateLbRouteExtension(NoAwaitTag,
+      google::cloud::networkservices::v1::UpdateLbRouteExtensionRequest const& request) override;
 
   future<StatusOr<google::cloud::networkservices::v1::LbRouteExtension>>
   UpdateLbRouteExtension(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
-  DeleteLbRouteExtension(
-      google::cloud::networkservices::v1::DeleteLbRouteExtensionRequest const&
-          request) override;
+  DeleteLbRouteExtension(google::cloud::networkservices::v1::DeleteLbRouteExtensionRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> DeleteLbRouteExtension(
-      NoAwaitTag,
-      google::cloud::networkservices::v1::DeleteLbRouteExtensionRequest const&
-          request) override;
+  StatusOr<google::longrunning::Operation>
+  DeleteLbRouteExtension(NoAwaitTag,
+      google::cloud::networkservices::v1::DeleteLbRouteExtensionRequest const& request) override;
 
   future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
   DeleteLbRouteExtension(
       google::longrunning::Operation const& operation) override;
 
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request) override;
+  StreamRange<google::cloud::networkservices::v1::AuthzExtension>
+  ListAuthzExtensions(google::cloud::networkservices::v1::ListAuthzExtensionsRequest request) override;
 
-  StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request) override;
+  StatusOr<google::cloud::networkservices::v1::AuthzExtension>
+  GetAuthzExtension(google::cloud::networkservices::v1::GetAuthzExtensionRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request) override;
+  future<StatusOr<google::cloud::networkservices::v1::AuthzExtension>>
+  CreateAuthzExtension(google::cloud::networkservices::v1::CreateAuthzExtensionRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  CreateAuthzExtension(NoAwaitTag,
+      google::cloud::networkservices::v1::CreateAuthzExtensionRequest const& request) override;
 
-  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request) override;
+  future<StatusOr<google::cloud::networkservices::v1::AuthzExtension>>
+  CreateAuthzExtension(
+      google::longrunning::Operation const& operation) override;
 
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request) override;
+  future<StatusOr<google::cloud::networkservices::v1::AuthzExtension>>
+  UpdateAuthzExtension(google::cloud::networkservices::v1::UpdateAuthzExtensionRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  UpdateAuthzExtension(NoAwaitTag,
+      google::cloud::networkservices::v1::UpdateAuthzExtensionRequest const& request) override;
 
-  Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request) override;
+  future<StatusOr<google::cloud::networkservices::v1::AuthzExtension>>
+  UpdateAuthzExtension(
+      google::longrunning::Operation const& operation) override;
 
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request) override;
+  future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
+  DeleteAuthzExtension(google::cloud::networkservices::v1::DeleteAuthzExtensionRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  DeleteAuthzExtension(NoAwaitTag,
+      google::cloud::networkservices::v1::DeleteAuthzExtensionRequest const& request) override;
+
+  future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
+  DeleteAuthzExtension(
+      google::longrunning::Operation const& operation) override;
+
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request) override;
+
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request) override;
+
+  StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) override;
+
+  StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) override;
+
+  StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) override;
+
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request) override;
+
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request) override;
+
+  Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request) override;
+
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::shared_ptr<networkservices_v1::DepServiceConnection> child_;

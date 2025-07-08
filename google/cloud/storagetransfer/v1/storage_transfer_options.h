@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGETRANSFER_V1_STORAGE_TRANSFER_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGETRANSFER_V1_STORAGE_TRANSFER_OPTIONS_H
 
-#include "google/cloud/storagetransfer/v1/storage_transfer_connection.h"
-#include "google/cloud/storagetransfer/v1/storage_transfer_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
+#include "google/cloud/storagetransfer/v1/storage_transfer_connection.h"
+#include "google/cloud/storagetransfer/v1/storage_transfer_connection_idempotency_policy.h"
 #include "google/cloud/version.h"
 #include <memory>
 
@@ -55,8 +55,7 @@ struct StorageTransferServiceBackoffPolicyOption {
  * @ingroup google-cloud-storagetransfer-options
  */
 struct StorageTransferServiceConnectionIdempotencyPolicyOption {
-  using Type =
-      std::shared_ptr<StorageTransferServiceConnectionIdempotencyPolicy>;
+  using Type = std::shared_ptr<StorageTransferServiceConnectionIdempotencyPolicy>;
 };
 
 /**

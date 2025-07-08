@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VISION_V1_INTERNAL_IMAGE_ANNOTATOR_TRACING_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VISION_V1_INTERNAL_IMAGE_ANNOTATOR_TRACING_CONNECTION_H
 
-#include "google/cloud/vision/v1/image_annotator_connection.h"
 #include "google/cloud/version.h"
+#include "google/cloud/vision/v1/image_annotator_connection.h"
 #include <memory>
 
 namespace google {
@@ -36,49 +36,40 @@ class ImageAnnotatorTracingConnection
   ~ImageAnnotatorTracingConnection() override = default;
 
   explicit ImageAnnotatorTracingConnection(
-      std::shared_ptr<vision_v1::ImageAnnotatorConnection> child);
+    std::shared_ptr<vision_v1::ImageAnnotatorConnection> child);
 
   Options options() override { return child_->options(); }
 
   StatusOr<google::cloud::vision::v1::BatchAnnotateImagesResponse>
-  BatchAnnotateImages(
-      google::cloud::vision::v1::BatchAnnotateImagesRequest const& request)
-      override;
+  BatchAnnotateImages(google::cloud::vision::v1::BatchAnnotateImagesRequest const& request) override;
 
   StatusOr<google::cloud::vision::v1::BatchAnnotateFilesResponse>
-  BatchAnnotateFiles(google::cloud::vision::v1::BatchAnnotateFilesRequest const&
-                         request) override;
+  BatchAnnotateFiles(google::cloud::vision::v1::BatchAnnotateFilesRequest const& request) override;
 
   future<StatusOr<google::cloud::vision::v1::AsyncBatchAnnotateImagesResponse>>
-  AsyncBatchAnnotateImages(
-      google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest const& request)
-      override;
+  AsyncBatchAnnotateImages(google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> AsyncBatchAnnotateImages(
-      NoAwaitTag,
-      google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  AsyncBatchAnnotateImages(NoAwaitTag,
+      google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest const& request) override;
 
   future<StatusOr<google::cloud::vision::v1::AsyncBatchAnnotateImagesResponse>>
   AsyncBatchAnnotateImages(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::vision::v1::AsyncBatchAnnotateFilesResponse>>
-  AsyncBatchAnnotateFiles(
-      google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const& request)
-      override;
+  AsyncBatchAnnotateFiles(google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> AsyncBatchAnnotateFiles(
-      NoAwaitTag,
-      google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  AsyncBatchAnnotateFiles(NoAwaitTag,
+      google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const& request) override;
 
   future<StatusOr<google::cloud::vision::v1::AsyncBatchAnnotateFilesResponse>>
   AsyncBatchAnnotateFiles(
       google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request) override;
 
  private:
   std::shared_ptr<vision_v1::ImageAnnotatorConnection> child_;

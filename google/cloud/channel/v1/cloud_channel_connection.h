@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CHANNEL_V1_CLOUD_CHANNEL_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CHANNEL_V1_CLOUD_CHANNEL_CONNECTION_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/channel/v1/cloud_channel_connection_idempotency_policy.h"
 #include "google/cloud/channel/v1/internal/cloud_channel_retry_traits.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -57,8 +57,7 @@ class CloudChannelServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class CloudChannelServiceLimitedErrorCountRetryPolicy
-    : public CloudChannelServiceRetryPolicy {
+class CloudChannelServiceLimitedErrorCountRetryPolicy : public CloudChannelServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -68,16 +67,14 @@ class CloudChannelServiceLimitedErrorCountRetryPolicy
    *     @p maximum_failures == 0.
    */
   explicit CloudChannelServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   CloudChannelServiceLimitedErrorCountRetryPolicy(
       CloudChannelServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : CloudChannelServiceLimitedErrorCountRetryPolicy(
-            rhs.maximum_failures()) {}
+    : CloudChannelServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   CloudChannelServiceLimitedErrorCountRetryPolicy(
       CloudChannelServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : CloudChannelServiceLimitedErrorCountRetryPolicy(
-            rhs.maximum_failures()) {}
+    : CloudChannelServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -97,9 +94,7 @@ class CloudChannelServiceLimitedErrorCountRetryPolicy
   using BaseType = CloudChannelServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      channel_v1_internal::CloudChannelServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<channel_v1_internal::CloudChannelServiceRetryTraits> impl_;
 };
 
 /**
@@ -112,8 +107,7 @@ class CloudChannelServiceLimitedErrorCountRetryPolicy
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class CloudChannelServiceLimitedTimeRetryPolicy
-    : public CloudChannelServiceRetryPolicy {
+class CloudChannelServiceLimitedTimeRetryPolicy : public CloudChannelServiceRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -138,14 +132,12 @@ class CloudChannelServiceLimitedTimeRetryPolicy
   template <typename DurationRep, typename DurationPeriod>
   explicit CloudChannelServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  CloudChannelServiceLimitedTimeRetryPolicy(
-      CloudChannelServiceLimitedTimeRetryPolicy&& rhs) noexcept
-      : CloudChannelServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  CloudChannelServiceLimitedTimeRetryPolicy(
-      CloudChannelServiceLimitedTimeRetryPolicy const& rhs) noexcept
-      : CloudChannelServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  CloudChannelServiceLimitedTimeRetryPolicy(CloudChannelServiceLimitedTimeRetryPolicy&& rhs) noexcept
+    : CloudChannelServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  CloudChannelServiceLimitedTimeRetryPolicy(CloudChannelServiceLimitedTimeRetryPolicy const& rhs) noexcept
+    : CloudChannelServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -167,18 +159,16 @@ class CloudChannelServiceLimitedTimeRetryPolicy
   using BaseType = CloudChannelServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      channel_v1_internal::CloudChannelServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<channel_v1_internal::CloudChannelServiceRetryTraits> impl_;
 };
 
 /**
  * The `CloudChannelServiceConnection` object for `CloudChannelServiceClient`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `CloudChannelServiceClient`. This allows users to inject custom
- * behavior (e.g., with a Google Mock object) when writing tests that use
- * objects of type `CloudChannelServiceClient`.
+ * sets in `CloudChannelServiceClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `CloudChannelServiceClient`.
  *
  * To create a concrete instance, see `MakeCloudChannelServiceConnection()`.
  *
@@ -190,305 +180,241 @@ class CloudChannelServiceConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StreamRange<google::cloud::channel::v1::Customer> ListCustomers(
-      google::cloud::channel::v1::ListCustomersRequest request);
+  virtual StreamRange<google::cloud::channel::v1::Customer>
+  ListCustomers(google::cloud::channel::v1::ListCustomersRequest request);
 
-  virtual StatusOr<google::cloud::channel::v1::Customer> GetCustomer(
-      google::cloud::channel::v1::GetCustomerRequest const& request);
+  virtual StatusOr<google::cloud::channel::v1::Customer>
+  GetCustomer(google::cloud::channel::v1::GetCustomerRequest const& request);
 
-  virtual StatusOr<
-      google::cloud::channel::v1::CheckCloudIdentityAccountsExistResponse>
-  CheckCloudIdentityAccountsExist(
-      google::cloud::channel::v1::CheckCloudIdentityAccountsExistRequest const&
-          request);
+  virtual StatusOr<google::cloud::channel::v1::CheckCloudIdentityAccountsExistResponse>
+  CheckCloudIdentityAccountsExist(google::cloud::channel::v1::CheckCloudIdentityAccountsExistRequest const& request);
 
-  virtual StatusOr<google::cloud::channel::v1::Customer> CreateCustomer(
-      google::cloud::channel::v1::CreateCustomerRequest const& request);
+  virtual StatusOr<google::cloud::channel::v1::Customer>
+  CreateCustomer(google::cloud::channel::v1::CreateCustomerRequest const& request);
 
-  virtual StatusOr<google::cloud::channel::v1::Customer> UpdateCustomer(
-      google::cloud::channel::v1::UpdateCustomerRequest const& request);
+  virtual StatusOr<google::cloud::channel::v1::Customer>
+  UpdateCustomer(google::cloud::channel::v1::UpdateCustomerRequest const& request);
 
-  virtual Status DeleteCustomer(
-      google::cloud::channel::v1::DeleteCustomerRequest const& request);
+  virtual Status
+  DeleteCustomer(google::cloud::channel::v1::DeleteCustomerRequest const& request);
 
-  virtual StatusOr<google::cloud::channel::v1::Customer> ImportCustomer(
-      google::cloud::channel::v1::ImportCustomerRequest const& request);
+  virtual StatusOr<google::cloud::channel::v1::Customer>
+  ImportCustomer(google::cloud::channel::v1::ImportCustomerRequest const& request);
 
   virtual future<StatusOr<google::cloud::channel::v1::Customer>>
-  ProvisionCloudIdentity(
-      google::cloud::channel::v1::ProvisionCloudIdentityRequest const& request);
+  ProvisionCloudIdentity(google::cloud::channel::v1::ProvisionCloudIdentityRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> ProvisionCloudIdentity(
-      NoAwaitTag,
-      google::cloud::channel::v1::ProvisionCloudIdentityRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  ProvisionCloudIdentity(NoAwaitTag, google::cloud::channel::v1::ProvisionCloudIdentityRequest const& request);
 
   virtual future<StatusOr<google::cloud::channel::v1::Customer>>
-  ProvisionCloudIdentity(google::longrunning::Operation const& operation);
+  ProvisionCloudIdentity( google::longrunning::Operation const& operation);
 
-  virtual StreamRange<google::cloud::channel::v1::Entitlement> ListEntitlements(
-      google::cloud::channel::v1::ListEntitlementsRequest request);
+  virtual StreamRange<google::cloud::channel::v1::Entitlement>
+  ListEntitlements(google::cloud::channel::v1::ListEntitlementsRequest request);
 
   virtual StreamRange<google::cloud::channel::v1::TransferableSku>
-  ListTransferableSkus(
-      google::cloud::channel::v1::ListTransferableSkusRequest request);
+  ListTransferableSkus(google::cloud::channel::v1::ListTransferableSkusRequest request);
 
   virtual StreamRange<google::cloud::channel::v1::TransferableOffer>
-  ListTransferableOffers(
-      google::cloud::channel::v1::ListTransferableOffersRequest request);
+  ListTransferableOffers(google::cloud::channel::v1::ListTransferableOffersRequest request);
 
-  virtual StatusOr<google::cloud::channel::v1::Entitlement> GetEntitlement(
-      google::cloud::channel::v1::GetEntitlementRequest const& request);
-
-  virtual future<StatusOr<google::cloud::channel::v1::Entitlement>>
-  CreateEntitlement(
-      google::cloud::channel::v1::CreateEntitlementRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation> CreateEntitlement(
-      NoAwaitTag,
-      google::cloud::channel::v1::CreateEntitlementRequest const& request);
+  virtual StatusOr<google::cloud::channel::v1::Entitlement>
+  GetEntitlement(google::cloud::channel::v1::GetEntitlementRequest const& request);
 
   virtual future<StatusOr<google::cloud::channel::v1::Entitlement>>
-  CreateEntitlement(google::longrunning::Operation const& operation);
+  CreateEntitlement(google::cloud::channel::v1::CreateEntitlementRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation>
+  CreateEntitlement(NoAwaitTag, google::cloud::channel::v1::CreateEntitlementRequest const& request);
 
   virtual future<StatusOr<google::cloud::channel::v1::Entitlement>>
-  ChangeParameters(
-      google::cloud::channel::v1::ChangeParametersRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation> ChangeParameters(
-      NoAwaitTag,
-      google::cloud::channel::v1::ChangeParametersRequest const& request);
+  CreateEntitlement( google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::channel::v1::Entitlement>>
-  ChangeParameters(google::longrunning::Operation const& operation);
+  ChangeParameters(google::cloud::channel::v1::ChangeParametersRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation>
+  ChangeParameters(NoAwaitTag, google::cloud::channel::v1::ChangeParametersRequest const& request);
 
   virtual future<StatusOr<google::cloud::channel::v1::Entitlement>>
-  ChangeRenewalSettings(
-      google::cloud::channel::v1::ChangeRenewalSettingsRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation> ChangeRenewalSettings(
-      NoAwaitTag,
-      google::cloud::channel::v1::ChangeRenewalSettingsRequest const& request);
+  ChangeParameters( google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::channel::v1::Entitlement>>
-  ChangeRenewalSettings(google::longrunning::Operation const& operation);
+  ChangeRenewalSettings(google::cloud::channel::v1::ChangeRenewalSettingsRequest const& request);
 
-  virtual future<StatusOr<google::cloud::channel::v1::Entitlement>> ChangeOffer(
-      google::cloud::channel::v1::ChangeOfferRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation> ChangeOffer(
-      NoAwaitTag,
-      google::cloud::channel::v1::ChangeOfferRequest const& request);
-
-  virtual future<StatusOr<google::cloud::channel::v1::Entitlement>> ChangeOffer(
-      google::longrunning::Operation const& operation);
+  virtual StatusOr<google::longrunning::Operation>
+  ChangeRenewalSettings(NoAwaitTag, google::cloud::channel::v1::ChangeRenewalSettingsRequest const& request);
 
   virtual future<StatusOr<google::cloud::channel::v1::Entitlement>>
-  StartPaidService(
-      google::cloud::channel::v1::StartPaidServiceRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation> StartPaidService(
-      NoAwaitTag,
-      google::cloud::channel::v1::StartPaidServiceRequest const& request);
+  ChangeRenewalSettings( google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::channel::v1::Entitlement>>
-  StartPaidService(google::longrunning::Operation const& operation);
+  ChangeOffer(google::cloud::channel::v1::ChangeOfferRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation>
+  ChangeOffer(NoAwaitTag, google::cloud::channel::v1::ChangeOfferRequest const& request);
 
   virtual future<StatusOr<google::cloud::channel::v1::Entitlement>>
-  SuspendEntitlement(
-      google::cloud::channel::v1::SuspendEntitlementRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation> SuspendEntitlement(
-      NoAwaitTag,
-      google::cloud::channel::v1::SuspendEntitlementRequest const& request);
+  ChangeOffer( google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::channel::v1::Entitlement>>
-  SuspendEntitlement(google::longrunning::Operation const& operation);
+  StartPaidService(google::cloud::channel::v1::StartPaidServiceRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation>
+  StartPaidService(NoAwaitTag, google::cloud::channel::v1::StartPaidServiceRequest const& request);
+
+  virtual future<StatusOr<google::cloud::channel::v1::Entitlement>>
+  StartPaidService( google::longrunning::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::channel::v1::Entitlement>>
+  SuspendEntitlement(google::cloud::channel::v1::SuspendEntitlementRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation>
+  SuspendEntitlement(NoAwaitTag, google::cloud::channel::v1::SuspendEntitlementRequest const& request);
+
+  virtual future<StatusOr<google::cloud::channel::v1::Entitlement>>
+  SuspendEntitlement( google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::channel::v1::OperationMetadata>>
-  CancelEntitlement(
-      google::cloud::channel::v1::CancelEntitlementRequest const& request);
+  CancelEntitlement(google::cloud::channel::v1::CancelEntitlementRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> CancelEntitlement(
-      NoAwaitTag,
-      google::cloud::channel::v1::CancelEntitlementRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  CancelEntitlement(NoAwaitTag, google::cloud::channel::v1::CancelEntitlementRequest const& request);
 
   virtual future<StatusOr<google::cloud::channel::v1::OperationMetadata>>
-  CancelEntitlement(google::longrunning::Operation const& operation);
+  CancelEntitlement( google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::channel::v1::Entitlement>>
-  ActivateEntitlement(
-      google::cloud::channel::v1::ActivateEntitlementRequest const& request);
+  ActivateEntitlement(google::cloud::channel::v1::ActivateEntitlementRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> ActivateEntitlement(
-      NoAwaitTag,
-      google::cloud::channel::v1::ActivateEntitlementRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  ActivateEntitlement(NoAwaitTag, google::cloud::channel::v1::ActivateEntitlementRequest const& request);
 
   virtual future<StatusOr<google::cloud::channel::v1::Entitlement>>
-  ActivateEntitlement(google::longrunning::Operation const& operation);
+  ActivateEntitlement( google::longrunning::Operation const& operation);
 
-  virtual future<
-      StatusOr<google::cloud::channel::v1::TransferEntitlementsResponse>>
-  TransferEntitlements(
-      google::cloud::channel::v1::TransferEntitlementsRequest const& request);
+  virtual future<StatusOr<google::cloud::channel::v1::TransferEntitlementsResponse>>
+  TransferEntitlements(google::cloud::channel::v1::TransferEntitlementsRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> TransferEntitlements(
-      NoAwaitTag,
-      google::cloud::channel::v1::TransferEntitlementsRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  TransferEntitlements(NoAwaitTag, google::cloud::channel::v1::TransferEntitlementsRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::channel::v1::TransferEntitlementsResponse>>
-  TransferEntitlements(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::channel::v1::TransferEntitlementsResponse>>
+  TransferEntitlements( google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::channel::v1::OperationMetadata>>
-  TransferEntitlementsToGoogle(
-      google::cloud::channel::v1::TransferEntitlementsToGoogleRequest const&
-          request);
+  TransferEntitlementsToGoogle(google::cloud::channel::v1::TransferEntitlementsToGoogleRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> TransferEntitlementsToGoogle(
-      NoAwaitTag,
-      google::cloud::channel::v1::TransferEntitlementsToGoogleRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  TransferEntitlementsToGoogle(NoAwaitTag, google::cloud::channel::v1::TransferEntitlementsToGoogleRequest const& request);
 
   virtual future<StatusOr<google::cloud::channel::v1::OperationMetadata>>
-  TransferEntitlementsToGoogle(google::longrunning::Operation const& operation);
+  TransferEntitlementsToGoogle( google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::channel::v1::ChannelPartnerLink>
-  ListChannelPartnerLinks(
-      google::cloud::channel::v1::ListChannelPartnerLinksRequest request);
+  ListChannelPartnerLinks(google::cloud::channel::v1::ListChannelPartnerLinksRequest request);
 
   virtual StatusOr<google::cloud::channel::v1::ChannelPartnerLink>
-  GetChannelPartnerLink(
-      google::cloud::channel::v1::GetChannelPartnerLinkRequest const& request);
+  GetChannelPartnerLink(google::cloud::channel::v1::GetChannelPartnerLinkRequest const& request);
 
   virtual StatusOr<google::cloud::channel::v1::ChannelPartnerLink>
-  CreateChannelPartnerLink(
-      google::cloud::channel::v1::CreateChannelPartnerLinkRequest const&
-          request);
+  CreateChannelPartnerLink(google::cloud::channel::v1::CreateChannelPartnerLinkRequest const& request);
 
   virtual StatusOr<google::cloud::channel::v1::ChannelPartnerLink>
-  UpdateChannelPartnerLink(
-      google::cloud::channel::v1::UpdateChannelPartnerLinkRequest const&
-          request);
+  UpdateChannelPartnerLink(google::cloud::channel::v1::UpdateChannelPartnerLinkRequest const& request);
 
   virtual StatusOr<google::cloud::channel::v1::CustomerRepricingConfig>
-  GetCustomerRepricingConfig(
-      google::cloud::channel::v1::GetCustomerRepricingConfigRequest const&
-          request);
+  GetCustomerRepricingConfig(google::cloud::channel::v1::GetCustomerRepricingConfigRequest const& request);
 
   virtual StreamRange<google::cloud::channel::v1::CustomerRepricingConfig>
-  ListCustomerRepricingConfigs(
-      google::cloud::channel::v1::ListCustomerRepricingConfigsRequest request);
+  ListCustomerRepricingConfigs(google::cloud::channel::v1::ListCustomerRepricingConfigsRequest request);
 
   virtual StatusOr<google::cloud::channel::v1::CustomerRepricingConfig>
-  CreateCustomerRepricingConfig(
-      google::cloud::channel::v1::CreateCustomerRepricingConfigRequest const&
-          request);
+  CreateCustomerRepricingConfig(google::cloud::channel::v1::CreateCustomerRepricingConfigRequest const& request);
 
   virtual StatusOr<google::cloud::channel::v1::CustomerRepricingConfig>
-  UpdateCustomerRepricingConfig(
-      google::cloud::channel::v1::UpdateCustomerRepricingConfigRequest const&
-          request);
+  UpdateCustomerRepricingConfig(google::cloud::channel::v1::UpdateCustomerRepricingConfigRequest const& request);
 
-  virtual Status DeleteCustomerRepricingConfig(
-      google::cloud::channel::v1::DeleteCustomerRepricingConfigRequest const&
-          request);
+  virtual Status
+  DeleteCustomerRepricingConfig(google::cloud::channel::v1::DeleteCustomerRepricingConfigRequest const& request);
 
   virtual StatusOr<google::cloud::channel::v1::ChannelPartnerRepricingConfig>
-  GetChannelPartnerRepricingConfig(
-      google::cloud::channel::v1::GetChannelPartnerRepricingConfigRequest const&
-          request);
+  GetChannelPartnerRepricingConfig(google::cloud::channel::v1::GetChannelPartnerRepricingConfigRequest const& request);
 
   virtual StreamRange<google::cloud::channel::v1::ChannelPartnerRepricingConfig>
-  ListChannelPartnerRepricingConfigs(
-      google::cloud::channel::v1::ListChannelPartnerRepricingConfigsRequest
-          request);
+  ListChannelPartnerRepricingConfigs(google::cloud::channel::v1::ListChannelPartnerRepricingConfigsRequest request);
 
   virtual StatusOr<google::cloud::channel::v1::ChannelPartnerRepricingConfig>
-  CreateChannelPartnerRepricingConfig(
-      google::cloud::channel::v1::
-          CreateChannelPartnerRepricingConfigRequest const& request);
+  CreateChannelPartnerRepricingConfig(google::cloud::channel::v1::CreateChannelPartnerRepricingConfigRequest const& request);
 
   virtual StatusOr<google::cloud::channel::v1::ChannelPartnerRepricingConfig>
-  UpdateChannelPartnerRepricingConfig(
-      google::cloud::channel::v1::
-          UpdateChannelPartnerRepricingConfigRequest const& request);
+  UpdateChannelPartnerRepricingConfig(google::cloud::channel::v1::UpdateChannelPartnerRepricingConfigRequest const& request);
 
-  virtual Status DeleteChannelPartnerRepricingConfig(
-      google::cloud::channel::v1::
-          DeleteChannelPartnerRepricingConfigRequest const& request);
+  virtual Status
+  DeleteChannelPartnerRepricingConfig(google::cloud::channel::v1::DeleteChannelPartnerRepricingConfigRequest const& request);
 
-  virtual StreamRange<google::cloud::channel::v1::SkuGroup> ListSkuGroups(
-      google::cloud::channel::v1::ListSkuGroupsRequest request);
+  virtual StreamRange<google::cloud::channel::v1::SkuGroup>
+  ListSkuGroups(google::cloud::channel::v1::ListSkuGroupsRequest request);
 
   virtual StreamRange<google::cloud::channel::v1::BillableSku>
-  ListSkuGroupBillableSkus(
-      google::cloud::channel::v1::ListSkuGroupBillableSkusRequest request);
+  ListSkuGroupBillableSkus(google::cloud::channel::v1::ListSkuGroupBillableSkusRequest request);
 
-  virtual StatusOr<google::cloud::channel::v1::Offer> LookupOffer(
-      google::cloud::channel::v1::LookupOfferRequest const& request);
+  virtual StatusOr<google::cloud::channel::v1::Offer>
+  LookupOffer(google::cloud::channel::v1::LookupOfferRequest const& request);
 
-  virtual StreamRange<google::cloud::channel::v1::Product> ListProducts(
-      google::cloud::channel::v1::ListProductsRequest request);
+  virtual StreamRange<google::cloud::channel::v1::Product>
+  ListProducts(google::cloud::channel::v1::ListProductsRequest request);
 
-  virtual StreamRange<google::cloud::channel::v1::Sku> ListSkus(
-      google::cloud::channel::v1::ListSkusRequest request);
+  virtual StreamRange<google::cloud::channel::v1::Sku>
+  ListSkus(google::cloud::channel::v1::ListSkusRequest request);
 
-  virtual StreamRange<google::cloud::channel::v1::Offer> ListOffers(
-      google::cloud::channel::v1::ListOffersRequest request);
+  virtual StreamRange<google::cloud::channel::v1::Offer>
+  ListOffers(google::cloud::channel::v1::ListOffersRequest request);
 
   virtual StreamRange<google::cloud::channel::v1::PurchasableSku>
-  ListPurchasableSkus(
-      google::cloud::channel::v1::ListPurchasableSkusRequest request);
+  ListPurchasableSkus(google::cloud::channel::v1::ListPurchasableSkusRequest request);
 
   virtual StreamRange<google::cloud::channel::v1::PurchasableOffer>
-  ListPurchasableOffers(
-      google::cloud::channel::v1::ListPurchasableOffersRequest request);
+  ListPurchasableOffers(google::cloud::channel::v1::ListPurchasableOffersRequest request);
 
-  virtual StatusOr<
-      google::cloud::channel::v1::QueryEligibleBillingAccountsResponse>
-  QueryEligibleBillingAccounts(
-      google::cloud::channel::v1::QueryEligibleBillingAccountsRequest const&
-          request);
+  virtual StatusOr<google::cloud::channel::v1::QueryEligibleBillingAccountsResponse>
+  QueryEligibleBillingAccounts(google::cloud::channel::v1::QueryEligibleBillingAccountsRequest const& request);
 
   virtual StatusOr<google::cloud::channel::v1::RegisterSubscriberResponse>
-  RegisterSubscriber(
-      google::cloud::channel::v1::RegisterSubscriberRequest const& request);
+  RegisterSubscriber(google::cloud::channel::v1::RegisterSubscriberRequest const& request);
 
   virtual StatusOr<google::cloud::channel::v1::UnregisterSubscriberResponse>
-  UnregisterSubscriber(
-      google::cloud::channel::v1::UnregisterSubscriberRequest const& request);
+  UnregisterSubscriber(google::cloud::channel::v1::UnregisterSubscriberRequest const& request);
 
-  virtual StreamRange<std::string> ListSubscribers(
-      google::cloud::channel::v1::ListSubscribersRequest request);
+  virtual StreamRange<std::string>
+  ListSubscribers(google::cloud::channel::v1::ListSubscribersRequest request);
 
   virtual StreamRange<google::cloud::channel::v1::EntitlementChange>
-  ListEntitlementChanges(
-      google::cloud::channel::v1::ListEntitlementChangesRequest request);
+  ListEntitlementChanges(google::cloud::channel::v1::ListEntitlementChangesRequest request);
 
-  virtual StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 
-  virtual Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request);
+  virtual Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
 
-  virtual Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request);
+  virtual Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request);
 };
 
 /**
- * A factory function to construct an object of type
- * `CloudChannelServiceConnection`.
+ * A factory function to construct an object of type `CloudChannelServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of
- * CloudChannelServiceClient.
+ * should be passed as an argument to the constructor of CloudChannelServiceClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `CloudChannelServiceConnection`. Expected options are any of the
- * types in the following option lists:
+ * returned `CloudChannelServiceConnection`. Expected options are any of the types in
+ * the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
@@ -498,11 +424,11 @@ class CloudChannelServiceConnection {
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
- * @param options (optional) Configure the `CloudChannelServiceConnection`
- * created by this function.
+ * @param options (optional) Configure the `CloudChannelServiceConnection` created by
+ * this function.
  */
-std::shared_ptr<CloudChannelServiceConnection>
-MakeCloudChannelServiceConnection(Options options = {});
+std::shared_ptr<CloudChannelServiceConnection> MakeCloudChannelServiceConnection(
+    Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace channel_v1

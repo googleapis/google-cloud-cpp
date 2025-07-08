@@ -42,8 +42,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockAnalyticsServiceConnection
-    : public retail_v2::AnalyticsServiceConnection {
+class MockAnalyticsServiceConnection : public retail_v2::AnalyticsServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
@@ -52,16 +51,12 @@ class MockAnalyticsServiceConnection
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// ExportAnalyticsMetrics(Matcher<google::cloud::retail::v2::ExportAnalyticsMetricsRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, ExportAnalyticsMetrics(Matcher<google::cloud::retail::v2::ExportAnalyticsMetricsRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<
-          StatusOr<google::cloud::retail::v2::ExportAnalyticsMetricsResponse>>,
-      ExportAnalyticsMetrics,
-      (google::cloud::retail::v2::ExportAnalyticsMetricsRequest const& request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::retail::v2::ExportAnalyticsMetricsResponse>>,
+  ExportAnalyticsMetrics,
+  (google::cloud::retail::v2::ExportAnalyticsMetricsRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -69,32 +64,29 @@ class MockAnalyticsServiceConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, ExportAnalyticsMetrics(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, ExportAnalyticsMetrics,
-      (NoAwaitTag,
-       google::cloud::retail::v2::ExportAnalyticsMetricsRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  ExportAnalyticsMetrics, (NoAwaitTag,
+    google::cloud::retail::v2::ExportAnalyticsMetricsRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// ExportAnalyticsMetrics(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock, ExportAnalyticsMetrics(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<
-          StatusOr<google::cloud::retail::v2::ExportAnalyticsMetricsResponse>>,
-      ExportAnalyticsMetrics, (google::longrunning::Operation const& operation),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::retail::v2::ExportAnalyticsMetricsResponse>>,
+  ExportAnalyticsMetrics, (
+    google::longrunning::Operation const& operation), (override));
 
-  MOCK_METHOD((StreamRange<google::longrunning::Operation>), ListOperations,
-              (google::longrunning::ListOperationsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::longrunning::Operation>),
+  ListOperations,
+  (google::longrunning::ListOperationsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
-              (google::longrunning::GetOperationRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  GetOperation,
+  (google::longrunning::GetOperationRequest const& request), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

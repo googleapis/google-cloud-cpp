@@ -36,29 +36,26 @@ class AnalyticsServiceTracingConnection
   ~AnalyticsServiceTracingConnection() override = default;
 
   explicit AnalyticsServiceTracingConnection(
-      std::shared_ptr<retail_v2::AnalyticsServiceConnection> child);
+    std::shared_ptr<retail_v2::AnalyticsServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
   future<StatusOr<google::cloud::retail::v2::ExportAnalyticsMetricsResponse>>
-  ExportAnalyticsMetrics(
-      google::cloud::retail::v2::ExportAnalyticsMetricsRequest const& request)
-      override;
+  ExportAnalyticsMetrics(google::cloud::retail::v2::ExportAnalyticsMetricsRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> ExportAnalyticsMetrics(
-      NoAwaitTag,
-      google::cloud::retail::v2::ExportAnalyticsMetricsRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  ExportAnalyticsMetrics(NoAwaitTag,
+      google::cloud::retail::v2::ExportAnalyticsMetricsRequest const& request) override;
 
   future<StatusOr<google::cloud::retail::v2::ExportAnalyticsMetricsResponse>>
   ExportAnalyticsMetrics(
       google::longrunning::Operation const& operation) override;
 
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request) override;
 
  private:
   std::shared_ptr<retail_v2::AnalyticsServiceConnection> child_;

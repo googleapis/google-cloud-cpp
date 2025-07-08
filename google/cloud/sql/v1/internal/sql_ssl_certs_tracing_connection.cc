@@ -33,34 +33,28 @@ SqlSslCertsServiceTracingConnection::SqlSslCertsServiceTracingConnection(
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::sql::v1::Operation>
-SqlSslCertsServiceTracingConnection::Delete(
-    google::cloud::sql::v1::SqlSslCertsDeleteRequest const& request) {
-  auto span =
-      internal::MakeSpan("sql_v1::SqlSslCertsServiceConnection::Delete");
+SqlSslCertsServiceTracingConnection::Delete(google::cloud::sql::v1::SqlSslCertsDeleteRequest const& request) {
+  auto span = internal::MakeSpan("sql_v1::SqlSslCertsServiceConnection::Delete");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->Delete(request));
 }
 
 StatusOr<google::cloud::sql::v1::SslCert>
-SqlSslCertsServiceTracingConnection::Get(
-    google::cloud::sql::v1::SqlSslCertsGetRequest const& request) {
+SqlSslCertsServiceTracingConnection::Get(google::cloud::sql::v1::SqlSslCertsGetRequest const& request) {
   auto span = internal::MakeSpan("sql_v1::SqlSslCertsServiceConnection::Get");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->Get(request));
 }
 
 StatusOr<google::cloud::sql::v1::SslCertsInsertResponse>
-SqlSslCertsServiceTracingConnection::Insert(
-    google::cloud::sql::v1::SqlSslCertsInsertRequest const& request) {
-  auto span =
-      internal::MakeSpan("sql_v1::SqlSslCertsServiceConnection::Insert");
+SqlSslCertsServiceTracingConnection::Insert(google::cloud::sql::v1::SqlSslCertsInsertRequest const& request) {
+  auto span = internal::MakeSpan("sql_v1::SqlSslCertsServiceConnection::Insert");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->Insert(request));
 }
 
 StatusOr<google::cloud::sql::v1::SslCertsListResponse>
-SqlSslCertsServiceTracingConnection::List(
-    google::cloud::sql::v1::SqlSslCertsListRequest const& request) {
+SqlSslCertsServiceTracingConnection::List(google::cloud::sql::v1::SqlSslCertsListRequest const& request) {
   auto span = internal::MakeSpan("sql_v1::SqlSslCertsServiceConnection::List");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->List(request));
@@ -73,8 +67,7 @@ MakeSqlSslCertsServiceTracingConnection(
     std::shared_ptr<sql_v1::SqlSslCertsServiceConnection> conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
-    conn =
-        std::make_shared<SqlSslCertsServiceTracingConnection>(std::move(conn));
+    conn = std::make_shared<SqlSslCertsServiceTracingConnection>(std::move(conn));
   }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;

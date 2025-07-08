@@ -32,26 +32,22 @@ StorageBatchOperationsTracingStub::StorageBatchOperationsTracingStub(
     std::shared_ptr<StorageBatchOperationsStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
-StatusOr<google::cloud::storagebatchoperations::v1::ListJobsResponse>
-StorageBatchOperationsTracingStub::ListJobs(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::storagebatchoperations::v1::ListJobsResponse> StorageBatchOperationsTracingStub::ListJobs(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::storagebatchoperations::v1::ListJobsRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.storagebatchoperations.v1.StorageBatchOperations",
-      "ListJobs");
+  auto span = internal::MakeSpanGrpc("google.cloud.storagebatchoperations.v1.StorageBatchOperations", "ListJobs");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListJobs(context, options, request));
 }
 
-StatusOr<google::cloud::storagebatchoperations::v1::Job>
-StorageBatchOperationsTracingStub::GetJob(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::storagebatchoperations::v1::Job> StorageBatchOperationsTracingStub::GetJob(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::storagebatchoperations::v1::GetJobRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.storagebatchoperations.v1.StorageBatchOperations",
-      "GetJob");
+  auto span = internal::MakeSpanGrpc("google.cloud.storagebatchoperations.v1.StorageBatchOperations", "GetJob");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -60,14 +56,11 @@ StorageBatchOperationsTracingStub::GetJob(
 
 future<StatusOr<google::longrunning::Operation>>
 StorageBatchOperationsTracingStub::AsyncCreateJob(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::storagebatchoperations::v1::CreateJobRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.storagebatchoperations.v1.StorageBatchOperations",
-      "CreateJob");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::storagebatchoperations::v1::CreateJobRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.storagebatchoperations.v1.StorageBatchOperations", "CreateJob");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCreateJob(cq, context, std::move(options), request);
@@ -76,12 +69,10 @@ StorageBatchOperationsTracingStub::AsyncCreateJob(
 
 StatusOr<google::longrunning::Operation>
 StorageBatchOperationsTracingStub::CreateJob(
-    grpc::ClientContext& context, Options options,
-    google::cloud::storagebatchoperations::v1::CreateJobRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.storagebatchoperations.v1.StorageBatchOperations",
-      "CreateJob");
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::storagebatchoperations::v1::CreateJobRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.storagebatchoperations.v1.StorageBatchOperations", "CreateJob");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -89,78 +80,65 @@ StorageBatchOperationsTracingStub::CreateJob(
 }
 
 Status StorageBatchOperationsTracingStub::DeleteJob(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::storagebatchoperations::v1::DeleteJobRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.storagebatchoperations.v1.StorageBatchOperations",
-      "DeleteJob");
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::storagebatchoperations::v1::DeleteJobRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.storagebatchoperations.v1.StorageBatchOperations", "DeleteJob");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeleteJob(context, options, request));
 }
 
-StatusOr<google::cloud::storagebatchoperations::v1::CancelJobResponse>
-StorageBatchOperationsTracingStub::CancelJob(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::storagebatchoperations::v1::CancelJobRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.storagebatchoperations.v1.StorageBatchOperations",
-      "CancelJob");
+StatusOr<google::cloud::storagebatchoperations::v1::CancelJobResponse> StorageBatchOperationsTracingStub::CancelJob(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::storagebatchoperations::v1::CancelJobRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.storagebatchoperations.v1.StorageBatchOperations", "CancelJob");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CancelJob(context, options, request));
 }
 
-StatusOr<google::cloud::location::ListLocationsResponse>
-StorageBatchOperationsTracingStub::ListLocations(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::location::ListLocationsResponse> StorageBatchOperationsTracingStub::ListLocations(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.storagebatchoperations.v1.StorageBatchOperations",
-      "ListLocations");
+  auto span = internal::MakeSpanGrpc("google.cloud.storagebatchoperations.v1.StorageBatchOperations", "ListLocations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListLocations(context, options, request));
 }
 
-StatusOr<google::cloud::location::Location>
-StorageBatchOperationsTracingStub::GetLocation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::location::Location> StorageBatchOperationsTracingStub::GetLocation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.storagebatchoperations.v1.StorageBatchOperations",
-      "GetLocation");
+  auto span = internal::MakeSpanGrpc("google.cloud.storagebatchoperations.v1.StorageBatchOperations", "GetLocation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetLocation(context, options, request));
 }
 
-StatusOr<google::longrunning::ListOperationsResponse>
-StorageBatchOperationsTracingStub::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse> StorageBatchOperationsTracingStub::ListOperations(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.storagebatchoperations.v1.StorageBatchOperations",
-      "ListOperations");
+  auto span = internal::MakeSpanGrpc("google.cloud.storagebatchoperations.v1.StorageBatchOperations", "ListOperations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListOperations(context, options, request));
 }
 
-StatusOr<google::longrunning::Operation>
-StorageBatchOperationsTracingStub::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::Operation> StorageBatchOperationsTracingStub::GetOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.storagebatchoperations.v1.StorageBatchOperations",
-      "GetOperation");
+  auto span = internal::MakeSpanGrpc("google.cloud.storagebatchoperations.v1.StorageBatchOperations", "GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -168,11 +146,10 @@ StorageBatchOperationsTracingStub::GetOperation(
 }
 
 Status StorageBatchOperationsTracingStub::DeleteOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.storagebatchoperations.v1.StorageBatchOperations",
-      "DeleteOperation");
+  auto span = internal::MakeSpanGrpc("google.cloud.storagebatchoperations.v1.StorageBatchOperations", "DeleteOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -180,11 +157,10 @@ Status StorageBatchOperationsTracingStub::DeleteOperation(
 }
 
 Status StorageBatchOperationsTracingStub::CancelOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.storagebatchoperations.v1.StorageBatchOperations",
-      "CancelOperation");
+  auto span = internal::MakeSpanGrpc("google.cloud.storagebatchoperations.v1.StorageBatchOperations", "CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -201,7 +177,8 @@ StorageBatchOperationsTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncGetOperation(cq, context, std::move(options), request);
+  auto f = child_->AsyncGetOperation(
+      cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -214,15 +191,14 @@ future<Status> StorageBatchOperationsTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f =
-      child_->AsyncCancelOperation(cq, context, std::move(options), request);
+  auto f = child_->AsyncCancelOperation(
+      cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-std::shared_ptr<StorageBatchOperationsStub>
-MakeStorageBatchOperationsTracingStub(
+std::shared_ptr<StorageBatchOperationsStub> MakeStorageBatchOperationsTracingStub(
     std::shared_ptr<StorageBatchOperationsStub> stub) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return std::make_shared<StorageBatchOperationsTracingStub>(std::move(stub));

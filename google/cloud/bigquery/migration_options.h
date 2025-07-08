@@ -28,23 +28,16 @@ namespace cloud {
 namespace bigquery {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use bigquery_migration_v2::MigrationServiceBackoffPolicyOption
-/// directly.
-using ::google::cloud::bigquery_migration_v2::
-    MigrationServiceBackoffPolicyOption;
+/// @deprecated Use bigquery_migration_v2::MigrationServiceBackoffPolicyOption directly.
+using ::google::cloud::bigquery_migration_v2::MigrationServiceBackoffPolicyOption;
 
-/// @deprecated Use
-/// bigquery_migration_v2::MigrationServiceConnectionIdempotencyPolicyOption
-/// directly.
-using ::google::cloud::bigquery_migration_v2::
-    MigrationServiceConnectionIdempotencyPolicyOption;
+/// @deprecated Use bigquery_migration_v2::MigrationServiceConnectionIdempotencyPolicyOption directly.
+using ::google::cloud::bigquery_migration_v2::MigrationServiceConnectionIdempotencyPolicyOption;
 
-/// @deprecated Use bigquery_migration_v2::MigrationServicePolicyOptionList
-/// directly.
+/// @deprecated Use bigquery_migration_v2::MigrationServicePolicyOptionList directly.
 using ::google::cloud::bigquery_migration_v2::MigrationServicePolicyOptionList;
 
-/// @deprecated Use bigquery_migration_v2::MigrationServiceRetryPolicyOption
-/// directly.
+/// @deprecated Use bigquery_migration_v2::MigrationServiceRetryPolicyOption directly.
 using ::google::cloud::bigquery_migration_v2::MigrationServiceRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

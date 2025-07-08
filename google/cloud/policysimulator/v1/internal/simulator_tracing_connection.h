@@ -36,35 +36,32 @@ class SimulatorTracingConnection
   ~SimulatorTracingConnection() override = default;
 
   explicit SimulatorTracingConnection(
-      std::shared_ptr<policysimulator_v1::SimulatorConnection> child);
+    std::shared_ptr<policysimulator_v1::SimulatorConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::policysimulator::v1::Replay> GetReplay(
-      google::cloud::policysimulator::v1::GetReplayRequest const& request)
-      override;
+  StatusOr<google::cloud::policysimulator::v1::Replay>
+  GetReplay(google::cloud::policysimulator::v1::GetReplayRequest const& request) override;
 
-  future<StatusOr<google::cloud::policysimulator::v1::Replay>> CreateReplay(
-      google::cloud::policysimulator::v1::CreateReplayRequest const& request)
-      override;
+  future<StatusOr<google::cloud::policysimulator::v1::Replay>>
+  CreateReplay(google::cloud::policysimulator::v1::CreateReplayRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> CreateReplay(
-      NoAwaitTag,
-      google::cloud::policysimulator::v1::CreateReplayRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  CreateReplay(NoAwaitTag,
+      google::cloud::policysimulator::v1::CreateReplayRequest const& request) override;
 
-  future<StatusOr<google::cloud::policysimulator::v1::Replay>> CreateReplay(
+  future<StatusOr<google::cloud::policysimulator::v1::Replay>>
+  CreateReplay(
       google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::policysimulator::v1::ReplayResult>
-  ListReplayResults(google::cloud::policysimulator::v1::ListReplayResultsRequest
-                        request) override;
+  ListReplayResults(google::cloud::policysimulator::v1::ListReplayResultsRequest request) override;
 
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request) override;
 
  private:
   std::shared_ptr<policysimulator_v1::SimulatorConnection> child_;

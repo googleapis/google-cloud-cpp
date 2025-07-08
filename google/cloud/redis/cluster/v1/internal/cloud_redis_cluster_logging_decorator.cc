@@ -32,17 +32,20 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 CloudRedisClusterLogging::CloudRedisClusterLogging(
     std::shared_ptr<CloudRedisClusterStub> child,
-    TracingOptions tracing_options, std::set<std::string> const&)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
+    TracingOptions tracing_options,
+    std::set<std::string> const&)
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::cloud::redis::cluster::v1::ListClustersResponse>
 CloudRedisClusterLogging::ListClusters(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::redis::cluster::v1::ListClustersRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::redis::cluster::v1::ListClustersRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::redis::cluster::v1::ListClustersRequest const& request) {
         return child_->ListClusters(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -50,12 +53,13 @@ CloudRedisClusterLogging::ListClusters(
 
 StatusOr<google::cloud::redis::cluster::v1::Cluster>
 CloudRedisClusterLogging::GetCluster(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::redis::cluster::v1::GetClusterRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::redis::cluster::v1::GetClusterRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::redis::cluster::v1::GetClusterRequest const& request) {
         return child_->GetCluster(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -63,18 +67,17 @@ CloudRedisClusterLogging::GetCluster(
 
 future<StatusOr<google::longrunning::Operation>>
 CloudRedisClusterLogging::AsyncUpdateCluster(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::redis::cluster::v1::UpdateClusterRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::redis::cluster::v1::UpdateClusterRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::redis::cluster::v1::UpdateClusterRequest const&
-                 request) {
-        return child_->AsyncUpdateCluster(cq, std::move(context),
-                                          std::move(options), request);
+             google::cloud::redis::cluster::v1::UpdateClusterRequest const& request) {
+        return child_->AsyncUpdateCluster(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -82,12 +85,13 @@ CloudRedisClusterLogging::AsyncUpdateCluster(
 
 StatusOr<google::longrunning::Operation>
 CloudRedisClusterLogging::UpdateCluster(
-    grpc::ClientContext& context, Options options,
-    google::cloud::redis::cluster::v1::UpdateClusterRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::redis::cluster::v1::UpdateClusterRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::redis::cluster::v1::UpdateClusterRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::redis::cluster::v1::UpdateClusterRequest const& request) {
         return child_->UpdateCluster(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -95,18 +99,17 @@ CloudRedisClusterLogging::UpdateCluster(
 
 future<StatusOr<google::longrunning::Operation>>
 CloudRedisClusterLogging::AsyncDeleteCluster(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::redis::cluster::v1::DeleteClusterRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::redis::cluster::v1::DeleteClusterRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::redis::cluster::v1::DeleteClusterRequest const&
-                 request) {
-        return child_->AsyncDeleteCluster(cq, std::move(context),
-                                          std::move(options), request);
+             google::cloud::redis::cluster::v1::DeleteClusterRequest const& request) {
+        return child_->AsyncDeleteCluster(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -114,12 +117,13 @@ CloudRedisClusterLogging::AsyncDeleteCluster(
 
 StatusOr<google::longrunning::Operation>
 CloudRedisClusterLogging::DeleteCluster(
-    grpc::ClientContext& context, Options options,
-    google::cloud::redis::cluster::v1::DeleteClusterRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::redis::cluster::v1::DeleteClusterRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::redis::cluster::v1::DeleteClusterRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::redis::cluster::v1::DeleteClusterRequest const& request) {
         return child_->DeleteCluster(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -127,18 +131,17 @@ CloudRedisClusterLogging::DeleteCluster(
 
 future<StatusOr<google::longrunning::Operation>>
 CloudRedisClusterLogging::AsyncCreateCluster(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::redis::cluster::v1::CreateClusterRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::redis::cluster::v1::CreateClusterRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::redis::cluster::v1::CreateClusterRequest const&
-                 request) {
-        return child_->AsyncCreateCluster(cq, std::move(context),
-                                          std::move(options), request);
+             google::cloud::redis::cluster::v1::CreateClusterRequest const& request) {
+        return child_->AsyncCreateCluster(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -146,12 +149,13 @@ CloudRedisClusterLogging::AsyncCreateCluster(
 
 StatusOr<google::longrunning::Operation>
 CloudRedisClusterLogging::CreateCluster(
-    grpc::ClientContext& context, Options options,
-    google::cloud::redis::cluster::v1::CreateClusterRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::redis::cluster::v1::CreateClusterRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::redis::cluster::v1::CreateClusterRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::redis::cluster::v1::CreateClusterRequest const& request) {
         return child_->CreateCluster(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -159,32 +163,29 @@ CloudRedisClusterLogging::CreateCluster(
 
 StatusOr<google::cloud::redis::cluster::v1::CertificateAuthority>
 CloudRedisClusterLogging::GetClusterCertificateAuthority(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::redis::cluster::v1::
-        GetClusterCertificateAuthorityRequest const& request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::redis::cluster::v1::GetClusterCertificateAuthorityRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::redis::cluster::v1::
-                 GetClusterCertificateAuthorityRequest const& request) {
-        return child_->GetClusterCertificateAuthority(context, options,
-                                                      request);
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::redis::cluster::v1::GetClusterCertificateAuthorityRequest const& request) {
+        return child_->GetClusterCertificateAuthority(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 CloudRedisClusterLogging::AsyncRescheduleClusterMaintenance(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::redis::cluster::v1::
-        RescheduleClusterMaintenanceRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::redis::cluster::v1::RescheduleClusterMaintenanceRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::redis::cluster::v1::
-                 RescheduleClusterMaintenanceRequest const& request) {
+             google::cloud::redis::cluster::v1::RescheduleClusterMaintenanceRequest const& request) {
         return child_->AsyncRescheduleClusterMaintenance(
             cq, std::move(context), std::move(options), request);
       },
@@ -194,13 +195,13 @@ CloudRedisClusterLogging::AsyncRescheduleClusterMaintenance(
 
 StatusOr<google::longrunning::Operation>
 CloudRedisClusterLogging::RescheduleClusterMaintenance(
-    grpc::ClientContext& context, Options options,
-    google::cloud::redis::cluster::v1::
-        RescheduleClusterMaintenanceRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::redis::cluster::v1::RescheduleClusterMaintenanceRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::redis::cluster::v1::
-                 RescheduleClusterMaintenanceRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::redis::cluster::v1::RescheduleClusterMaintenanceRequest const& request) {
         return child_->RescheduleClusterMaintenance(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -208,14 +209,13 @@ CloudRedisClusterLogging::RescheduleClusterMaintenance(
 
 StatusOr<google::cloud::redis::cluster::v1::ListBackupCollectionsResponse>
 CloudRedisClusterLogging::ListBackupCollections(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::redis::cluster::v1::ListBackupCollectionsRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::redis::cluster::v1::ListBackupCollectionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::redis::cluster::v1::ListBackupCollectionsRequest const&
-              request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::redis::cluster::v1::ListBackupCollectionsRequest const& request) {
         return child_->ListBackupCollections(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -223,14 +223,13 @@ CloudRedisClusterLogging::ListBackupCollections(
 
 StatusOr<google::cloud::redis::cluster::v1::BackupCollection>
 CloudRedisClusterLogging::GetBackupCollection(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::redis::cluster::v1::GetBackupCollectionRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::redis::cluster::v1::GetBackupCollectionRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::redis::cluster::v1::GetBackupCollectionRequest const&
-              request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::redis::cluster::v1::GetBackupCollectionRequest const& request) {
         return child_->GetBackupCollection(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -238,12 +237,13 @@ CloudRedisClusterLogging::GetBackupCollection(
 
 StatusOr<google::cloud::redis::cluster::v1::ListBackupsResponse>
 CloudRedisClusterLogging::ListBackups(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::redis::cluster::v1::ListBackupsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::redis::cluster::v1::ListBackupsRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::redis::cluster::v1::ListBackupsRequest const& request) {
         return child_->ListBackups(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -251,12 +251,13 @@ CloudRedisClusterLogging::ListBackups(
 
 StatusOr<google::cloud::redis::cluster::v1::Backup>
 CloudRedisClusterLogging::GetBackup(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::redis::cluster::v1::GetBackupRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::redis::cluster::v1::GetBackupRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::redis::cluster::v1::GetBackupRequest const& request) {
         return child_->GetBackup(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -264,30 +265,31 @@ CloudRedisClusterLogging::GetBackup(
 
 future<StatusOr<google::longrunning::Operation>>
 CloudRedisClusterLogging::AsyncDeleteBackup(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::redis::cluster::v1::DeleteBackupRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::redis::cluster::v1::DeleteBackupRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::redis::cluster::v1::DeleteBackupRequest const&
-                 request) {
-        return child_->AsyncDeleteBackup(cq, std::move(context),
-                                         std::move(options), request);
+             google::cloud::redis::cluster::v1::DeleteBackupRequest const& request) {
+        return child_->AsyncDeleteBackup(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> CloudRedisClusterLogging::DeleteBackup(
-    grpc::ClientContext& context, Options options,
-    google::cloud::redis::cluster::v1::DeleteBackupRequest const& request) {
+StatusOr<google::longrunning::Operation>
+CloudRedisClusterLogging::DeleteBackup(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::redis::cluster::v1::DeleteBackupRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::redis::cluster::v1::DeleteBackupRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::redis::cluster::v1::DeleteBackupRequest const& request) {
         return child_->DeleteBackup(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -295,30 +297,31 @@ StatusOr<google::longrunning::Operation> CloudRedisClusterLogging::DeleteBackup(
 
 future<StatusOr<google::longrunning::Operation>>
 CloudRedisClusterLogging::AsyncExportBackup(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::redis::cluster::v1::ExportBackupRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::redis::cluster::v1::ExportBackupRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::redis::cluster::v1::ExportBackupRequest const&
-                 request) {
-        return child_->AsyncExportBackup(cq, std::move(context),
-                                         std::move(options), request);
+             google::cloud::redis::cluster::v1::ExportBackupRequest const& request) {
+        return child_->AsyncExportBackup(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> CloudRedisClusterLogging::ExportBackup(
-    grpc::ClientContext& context, Options options,
-    google::cloud::redis::cluster::v1::ExportBackupRequest const& request) {
+StatusOr<google::longrunning::Operation>
+CloudRedisClusterLogging::ExportBackup(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::redis::cluster::v1::ExportBackupRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::redis::cluster::v1::ExportBackupRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::redis::cluster::v1::ExportBackupRequest const& request) {
         return child_->ExportBackup(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -326,18 +329,17 @@ StatusOr<google::longrunning::Operation> CloudRedisClusterLogging::ExportBackup(
 
 future<StatusOr<google::longrunning::Operation>>
 CloudRedisClusterLogging::AsyncBackupCluster(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::redis::cluster::v1::BackupClusterRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::redis::cluster::v1::BackupClusterRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::redis::cluster::v1::BackupClusterRequest const&
-                 request) {
-        return child_->AsyncBackupCluster(cq, std::move(context),
-                                          std::move(options), request);
+             google::cloud::redis::cluster::v1::BackupClusterRequest const& request) {
+        return child_->AsyncBackupCluster(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -345,12 +347,13 @@ CloudRedisClusterLogging::AsyncBackupCluster(
 
 StatusOr<google::longrunning::Operation>
 CloudRedisClusterLogging::BackupCluster(
-    grpc::ClientContext& context, Options options,
-    google::cloud::redis::cluster::v1::BackupClusterRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::redis::cluster::v1::BackupClusterRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::redis::cluster::v1::BackupClusterRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::redis::cluster::v1::BackupClusterRequest const& request) {
         return child_->BackupCluster(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -358,10 +361,12 @@ CloudRedisClusterLogging::BackupCluster(
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 CloudRedisClusterLogging::ListLocations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::location::ListLocationsRequest const& request) {
         return child_->ListLocations(context, options, request);
       },
@@ -370,10 +375,12 @@ CloudRedisClusterLogging::ListLocations(
 
 StatusOr<google::cloud::location::Location>
 CloudRedisClusterLogging::GetLocation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::location::GetLocationRequest const& request) {
         return child_->GetLocation(context, options, request);
       },
@@ -382,43 +389,54 @@ CloudRedisClusterLogging::GetLocation(
 
 StatusOr<google::longrunning::ListOperationsResponse>
 CloudRedisClusterLogging::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::ListOperationsRequest const& request) {
         return child_->ListOperations(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> CloudRedisClusterLogging::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::Operation>
+CloudRedisClusterLogging::GetOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::GetOperationRequest const& request) {
         return child_->GetOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status CloudRedisClusterLogging::DeleteOperation(
-    grpc::ClientContext& context, Options const& options,
+Status
+CloudRedisClusterLogging::DeleteOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::DeleteOperationRequest const& request) {
         return child_->DeleteOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status CloudRedisClusterLogging::CancelOperation(
-    grpc::ClientContext& context, Options const& options,
+Status
+CloudRedisClusterLogging::CancelOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::CancelOperationRequest const& request) {
         return child_->CancelOperation(context, options, request);
       },
@@ -436,8 +454,8 @@ CloudRedisClusterLogging::AsyncGetOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(cq, std::move(context),
-                                         std::move(options), request);
+        return child_->AsyncGetOperation(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -453,8 +471,8 @@ future<Status> CloudRedisClusterLogging::AsyncCancelOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::CancelOperationRequest const& request) {
-        return child_->AsyncCancelOperation(cq, std::move(context),
-                                            std::move(options), request);
+        return child_->AsyncCancelOperation(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);

@@ -61,30 +61,23 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class CloudControlsPartnerCoreClient {
  public:
-  explicit CloudControlsPartnerCoreClient(
-      std::shared_ptr<CloudControlsPartnerCoreConnection> connection,
-      Options opts = {});
+  explicit CloudControlsPartnerCoreClient(std::shared_ptr<CloudControlsPartnerCoreConnection> connection, Options opts = {});
   ~CloudControlsPartnerCoreClient();
 
   ///@{
   /// @name Copy and move support
-  CloudControlsPartnerCoreClient(CloudControlsPartnerCoreClient const&) =
-      default;
-  CloudControlsPartnerCoreClient& operator=(
-      CloudControlsPartnerCoreClient const&) = default;
+  CloudControlsPartnerCoreClient(CloudControlsPartnerCoreClient const&) = default;
+  CloudControlsPartnerCoreClient& operator=(CloudControlsPartnerCoreClient const&) = default;
   CloudControlsPartnerCoreClient(CloudControlsPartnerCoreClient&&) = default;
-  CloudControlsPartnerCoreClient& operator=(CloudControlsPartnerCoreClient&&) =
-      default;
+  CloudControlsPartnerCoreClient& operator=(CloudControlsPartnerCoreClient&&) = default;
   ///@}
 
   ///@{
   /// @name Equality
-  friend bool operator==(CloudControlsPartnerCoreClient const& a,
-                         CloudControlsPartnerCoreClient const& b) {
+  friend bool operator==(CloudControlsPartnerCoreClient const& a, CloudControlsPartnerCoreClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(CloudControlsPartnerCoreClient const& a,
-                         CloudControlsPartnerCoreClient const& b) {
+  friend bool operator!=(CloudControlsPartnerCoreClient const& a, CloudControlsPartnerCoreClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -112,8 +105,8 @@ class CloudControlsPartnerCoreClient {
   /// [google.cloud.cloudcontrolspartner.v1.Workload]: @googleapis_reference_link{google/cloud/cloudcontrolspartner/v1/customer_workloads.proto#L35}
   ///
   // clang-format on
-  StatusOr<google::cloud::cloudcontrolspartner::v1::Workload> GetWorkload(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::cloudcontrolspartner::v1::Workload>
+  GetWorkload(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -142,10 +135,8 @@ class CloudControlsPartnerCoreClient {
   /// [google.cloud.cloudcontrolspartner.v1.Workload]: @googleapis_reference_link{google/cloud/cloudcontrolspartner/v1/customer_workloads.proto#L35}
   ///
   // clang-format on
-  StatusOr<google::cloud::cloudcontrolspartner::v1::Workload> GetWorkload(
-      google::cloud::cloudcontrolspartner::v1::GetWorkloadRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::cloud::cloudcontrolspartner::v1::Workload>
+  GetWorkload(google::cloud::cloudcontrolspartner::v1::GetWorkloadRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -180,8 +171,8 @@ class CloudControlsPartnerCoreClient {
   /// [google.cloud.cloudcontrolspartner.v1.Workload]: @googleapis_reference_link{google/cloud/cloudcontrolspartner/v1/customer_workloads.proto#L35}
   ///
   // clang-format on
-  StreamRange<google::cloud::cloudcontrolspartner::v1::Workload> ListWorkloads(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::cloudcontrolspartner::v1::Workload>
+  ListWorkloads(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -219,9 +210,8 @@ class CloudControlsPartnerCoreClient {
   /// [google.cloud.cloudcontrolspartner.v1.Workload]: @googleapis_reference_link{google/cloud/cloudcontrolspartner/v1/customer_workloads.proto#L35}
   ///
   // clang-format on
-  StreamRange<google::cloud::cloudcontrolspartner::v1::Workload> ListWorkloads(
-      google::cloud::cloudcontrolspartner::v1::ListWorkloadsRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::cloudcontrolspartner::v1::Workload>
+  ListWorkloads(google::cloud::cloudcontrolspartner::v1::ListWorkloadsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -246,8 +236,8 @@ class CloudControlsPartnerCoreClient {
   /// [google.cloud.cloudcontrolspartner.v1.GetCustomerRequest]: @googleapis_reference_link{google/cloud/cloudcontrolspartner/v1/customers.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::cloud::cloudcontrolspartner::v1::Customer> GetCustomer(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::cloudcontrolspartner::v1::Customer>
+  GetCustomer(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -276,10 +266,8 @@ class CloudControlsPartnerCoreClient {
   /// [google.cloud.cloudcontrolspartner.v1.GetCustomerRequest]: @googleapis_reference_link{google/cloud/cloudcontrolspartner/v1/customers.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::cloud::cloudcontrolspartner::v1::Customer> GetCustomer(
-      google::cloud::cloudcontrolspartner::v1::GetCustomerRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::cloud::cloudcontrolspartner::v1::Customer>
+  GetCustomer(google::cloud::cloudcontrolspartner::v1::GetCustomerRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -313,8 +301,8 @@ class CloudControlsPartnerCoreClient {
   /// [google.cloud.cloudcontrolspartner.v1.ListCustomersRequest]: @googleapis_reference_link{google/cloud/cloudcontrolspartner/v1/customers.proto#L62}
   ///
   // clang-format on
-  StreamRange<google::cloud::cloudcontrolspartner::v1::Customer> ListCustomers(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::cloudcontrolspartner::v1::Customer>
+  ListCustomers(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -352,9 +340,8 @@ class CloudControlsPartnerCoreClient {
   /// [google.cloud.cloudcontrolspartner.v1.ListCustomersRequest]: @googleapis_reference_link{google/cloud/cloudcontrolspartner/v1/customers.proto#L62}
   ///
   // clang-format on
-  StreamRange<google::cloud::cloudcontrolspartner::v1::Customer> ListCustomers(
-      google::cloud::cloudcontrolspartner::v1::ListCustomersRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::cloudcontrolspartner::v1::Customer>
+  ListCustomers(google::cloud::cloudcontrolspartner::v1::ListCustomersRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -410,10 +397,7 @@ class CloudControlsPartnerCoreClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cloudcontrolspartner::v1::EkmConnections>
-  GetEkmConnections(
-      google::cloud::cloudcontrolspartner::v1::GetEkmConnectionsRequest const&
-          request,
-      Options opts = {});
+  GetEkmConnections(google::cloud::cloudcontrolspartner::v1::GetEkmConnectionsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -469,9 +453,7 @@ class CloudControlsPartnerCoreClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cloudcontrolspartner::v1::PartnerPermissions>
-  GetPartnerPermissions(google::cloud::cloudcontrolspartner::v1::
-                            GetPartnerPermissionsRequest const& request,
-                        Options opts = {});
+  GetPartnerPermissions(google::cloud::cloudcontrolspartner::v1::GetPartnerPermissionsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -554,10 +536,7 @@ class CloudControlsPartnerCoreClient {
   // clang-format on
   GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StreamRange<google::cloud::cloudcontrolspartner::v1::AccessApprovalRequest>
-  ListAccessApprovalRequests(
-      google::cloud::cloudcontrolspartner::v1::ListAccessApprovalRequestsRequest
-          request,
-      Options opts = {});
+  ListAccessApprovalRequests(google::cloud::cloudcontrolspartner::v1::ListAccessApprovalRequestsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -582,8 +561,8 @@ class CloudControlsPartnerCoreClient {
   /// [google.cloud.cloudcontrolspartner.v1.Partner]: @googleapis_reference_link{google/cloud/cloudcontrolspartner/v1/partners.proto#L32}
   ///
   // clang-format on
-  StatusOr<google::cloud::cloudcontrolspartner::v1::Partner> GetPartner(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::cloudcontrolspartner::v1::Partner>
+  GetPartner(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -612,9 +591,8 @@ class CloudControlsPartnerCoreClient {
   /// [google.cloud.cloudcontrolspartner.v1.Partner]: @googleapis_reference_link{google/cloud/cloudcontrolspartner/v1/partners.proto#L32}
   ///
   // clang-format on
-  StatusOr<google::cloud::cloudcontrolspartner::v1::Partner> GetPartner(
-      google::cloud::cloudcontrolspartner::v1::GetPartnerRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::cloudcontrolspartner::v1::Partner>
+  GetPartner(google::cloud::cloudcontrolspartner::v1::GetPartnerRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -643,10 +621,8 @@ class CloudControlsPartnerCoreClient {
   /// [google.cloud.cloudcontrolspartner.v1.Customer]: @googleapis_reference_link{google/cloud/cloudcontrolspartner/v1/customers.proto#L34}
   ///
   // clang-format on
-  StatusOr<google::cloud::cloudcontrolspartner::v1::Customer> CreateCustomer(
-      std::string const& parent,
-      google::cloud::cloudcontrolspartner::v1::Customer const& customer,
-      std::string const& customer_id, Options opts = {});
+  StatusOr<google::cloud::cloudcontrolspartner::v1::Customer>
+  CreateCustomer(std::string const& parent, google::cloud::cloudcontrolspartner::v1::Customer const& customer, std::string const& customer_id, Options opts = {});
 
   // clang-format off
   ///
@@ -675,10 +651,8 @@ class CloudControlsPartnerCoreClient {
   /// [google.cloud.cloudcontrolspartner.v1.Customer]: @googleapis_reference_link{google/cloud/cloudcontrolspartner/v1/customers.proto#L34}
   ///
   // clang-format on
-  StatusOr<google::cloud::cloudcontrolspartner::v1::Customer> CreateCustomer(
-      google::cloud::cloudcontrolspartner::v1::CreateCustomerRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::cloud::cloudcontrolspartner::v1::Customer>
+  CreateCustomer(google::cloud::cloudcontrolspartner::v1::CreateCustomerRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -705,9 +679,8 @@ class CloudControlsPartnerCoreClient {
   /// [google.cloud.cloudcontrolspartner.v1.UpdateCustomerRequest]: @googleapis_reference_link{google/cloud/cloudcontrolspartner/v1/customers.proto#L167}
   ///
   // clang-format on
-  StatusOr<google::cloud::cloudcontrolspartner::v1::Customer> UpdateCustomer(
-      google::cloud::cloudcontrolspartner::v1::Customer const& customer,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::cloud::cloudcontrolspartner::v1::Customer>
+  UpdateCustomer(google::cloud::cloudcontrolspartner::v1::Customer const& customer, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -736,10 +709,8 @@ class CloudControlsPartnerCoreClient {
   /// [google.cloud.cloudcontrolspartner.v1.UpdateCustomerRequest]: @googleapis_reference_link{google/cloud/cloudcontrolspartner/v1/customers.proto#L167}
   ///
   // clang-format on
-  StatusOr<google::cloud::cloudcontrolspartner::v1::Customer> UpdateCustomer(
-      google::cloud::cloudcontrolspartner::v1::UpdateCustomerRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::cloud::cloudcontrolspartner::v1::Customer>
+  UpdateCustomer(google::cloud::cloudcontrolspartner::v1::UpdateCustomerRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -761,7 +732,8 @@ class CloudControlsPartnerCoreClient {
   /// [google.cloud.cloudcontrolspartner.v1.DeleteCustomerRequest]: @googleapis_reference_link{google/cloud/cloudcontrolspartner/v1/customers.proto#L179}
   ///
   // clang-format on
-  Status DeleteCustomer(std::string const& name, Options opts = {});
+  Status
+  DeleteCustomer(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -787,10 +759,8 @@ class CloudControlsPartnerCoreClient {
   /// [google.cloud.cloudcontrolspartner.v1.DeleteCustomerRequest]: @googleapis_reference_link{google/cloud/cloudcontrolspartner/v1/customers.proto#L179}
   ///
   // clang-format on
-  Status DeleteCustomer(
-      google::cloud::cloudcontrolspartner::v1::DeleteCustomerRequest const&
-          request,
-      Options opts = {});
+  Status
+  DeleteCustomer(google::cloud::cloudcontrolspartner::v1::DeleteCustomerRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<CloudControlsPartnerCoreConnection> connection_;

@@ -31,9 +31,9 @@ VersionsAuth::VersionsAuth(
     std::shared_ptr<VersionsStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::appengine::v1::ListVersionsResponse>
-VersionsAuth::ListVersions(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::appengine::v1::ListVersionsResponse> VersionsAuth::ListVersions(
+    grpc::ClientContext& context,
+    Options const& options,
     google::appengine::v1::ListVersionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -41,7 +41,8 @@ VersionsAuth::ListVersions(
 }
 
 StatusOr<google::appengine::v1::Version> VersionsAuth::GetVersion(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::appengine::v1::GetVersionRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -50,27 +51,28 @@ StatusOr<google::appengine::v1::Version> VersionsAuth::GetVersion(
 
 future<StatusOr<google::longrunning::Operation>>
 VersionsAuth::AsyncCreateVersion(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::appengine::v1::CreateVersionRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::appengine::v1::CreateVersionRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreateVersion(cq, *std::move(context),
-                                         std::move(options), request);
+        return child->AsyncCreateVersion(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation> VersionsAuth::CreateVersion(
-    grpc::ClientContext& context, Options options,
-    google::appengine::v1::CreateVersionRequest const& request) {
+StatusOr<google::longrunning::Operation>
+VersionsAuth::CreateVersion(
+      grpc::ClientContext& context,
+      Options options,
+      google::appengine::v1::CreateVersionRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateVersion(context, options, request);
@@ -78,27 +80,28 @@ StatusOr<google::longrunning::Operation> VersionsAuth::CreateVersion(
 
 future<StatusOr<google::longrunning::Operation>>
 VersionsAuth::AsyncUpdateVersion(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::appengine::v1::UpdateVersionRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::appengine::v1::UpdateVersionRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncUpdateVersion(cq, *std::move(context),
-                                         std::move(options), request);
+        return child->AsyncUpdateVersion(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation> VersionsAuth::UpdateVersion(
-    grpc::ClientContext& context, Options options,
-    google::appengine::v1::UpdateVersionRequest const& request) {
+StatusOr<google::longrunning::Operation>
+VersionsAuth::UpdateVersion(
+      grpc::ClientContext& context,
+      Options options,
+      google::appengine::v1::UpdateVersionRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateVersion(context, options, request);
@@ -106,27 +109,28 @@ StatusOr<google::longrunning::Operation> VersionsAuth::UpdateVersion(
 
 future<StatusOr<google::longrunning::Operation>>
 VersionsAuth::AsyncDeleteVersion(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::appengine::v1::DeleteVersionRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::appengine::v1::DeleteVersionRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDeleteVersion(cq, *std::move(context),
-                                         std::move(options), request);
+        return child->AsyncDeleteVersion(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation> VersionsAuth::DeleteVersion(
-    grpc::ClientContext& context, Options options,
-    google::appengine::v1::DeleteVersionRequest const& request) {
+StatusOr<google::longrunning::Operation>
+VersionsAuth::DeleteVersion(
+      grpc::ClientContext& context,
+      Options options,
+      google::appengine::v1::DeleteVersionRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteVersion(context, options, request);
@@ -139,16 +143,15 @@ VersionsAuth::AsyncGetOperation(
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncGetOperation(cq, *std::move(context),
-                                        std::move(options), request);
+        return child->AsyncGetOperation(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
@@ -157,14 +160,13 @@ future<Status> VersionsAuth::AsyncCancelOperation(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) return make_ready_future(std::move(context).status());
-        return child->AsyncCancelOperation(cq, *std::move(context),
-                                           std::move(options), request);
+        return child->AsyncCancelOperation(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 

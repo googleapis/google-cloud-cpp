@@ -50,17 +50,17 @@ ServiceUsageMetadata::AsyncEnableService(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::api::serviceusage::v1::EnableServiceRequest const& request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncEnableService(cq, std::move(context), std::move(options),
-                                    request);
+  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncEnableService(
+      cq, std::move(context), std::move(options), request);
 }
 
-StatusOr<google::longrunning::Operation> ServiceUsageMetadata::EnableService(
-    grpc::ClientContext& context, Options options,
+StatusOr<google::longrunning::Operation>
+ServiceUsageMetadata::EnableService(
+    grpc::ClientContext& context,
+    Options options,
     google::api::serviceusage::v1::EnableServiceRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->EnableService(context, options, request);
 }
 
@@ -70,35 +70,35 @@ ServiceUsageMetadata::AsyncDisableService(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::api::serviceusage::v1::DisableServiceRequest const& request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDisableService(cq, std::move(context), std::move(options),
-                                     request);
+  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDisableService(
+      cq, std::move(context), std::move(options), request);
 }
 
-StatusOr<google::longrunning::Operation> ServiceUsageMetadata::DisableService(
-    grpc::ClientContext& context, Options options,
+StatusOr<google::longrunning::Operation>
+ServiceUsageMetadata::DisableService(
+    grpc::ClientContext& context,
+    Options options,
     google::api::serviceusage::v1::DisableServiceRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DisableService(context, options, request);
 }
 
 StatusOr<google::api::serviceusage::v1::Service>
 ServiceUsageMetadata::GetService(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::api::serviceusage::v1::GetServiceRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetService(context, options, request);
 }
 
 StatusOr<google::api::serviceusage::v1::ListServicesResponse>
 ServiceUsageMetadata::ListServices(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::api::serviceusage::v1::ListServicesRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListServices(context, options, request);
 }
 
@@ -108,43 +108,44 @@ ServiceUsageMetadata::AsyncBatchEnableServices(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::api::serviceusage::v1::BatchEnableServicesRequest const& request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncBatchEnableServices(cq, std::move(context),
-                                          std::move(options), request);
+  SetMetadata(*context, *options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncBatchEnableServices(
+      cq, std::move(context), std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 ServiceUsageMetadata::BatchEnableServices(
-    grpc::ClientContext& context, Options options,
+    grpc::ClientContext& context,
+    Options options,
     google::api::serviceusage::v1::BatchEnableServicesRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->BatchEnableServices(context, options, request);
 }
 
 StatusOr<google::api::serviceusage::v1::BatchGetServicesResponse>
 ServiceUsageMetadata::BatchGetServices(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::api::serviceusage::v1::BatchGetServicesRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->BatchGetServices(context, options, request);
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
 ServiceUsageMetadata::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   SetMetadata(context, options, absl::StrCat());
   return child_->ListOperations(context, options, request);
 }
 
-StatusOr<google::longrunning::Operation> ServiceUsageMetadata::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::Operation>
+ServiceUsageMetadata::GetOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetOperation(context, options, request);
 }
 
@@ -156,8 +157,8 @@ ServiceUsageMetadata::AsyncGetOperation(
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(cq, std::move(context), std::move(options),
-                                   request);
+  return child_->AsyncGetOperation(
+      cq, std::move(context), std::move(options), request);
 }
 
 future<Status> ServiceUsageMetadata::AsyncCancelOperation(
@@ -167,21 +168,21 @@ future<Status> ServiceUsageMetadata::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(cq, std::move(context),
-                                      std::move(options), request);
+  return child_->AsyncCancelOperation(
+      cq, std::move(context), std::move(options), request);
 }
 
 void ServiceUsageMetadata::SetMetadata(grpc::ClientContext& context,
-                                       Options const& options,
-                                       std::string const& request_params) {
+                                        Options const& options,
+                                        std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
 void ServiceUsageMetadata::SetMetadata(grpc::ClientContext& context,
-                                       Options const& options) {
-  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
-                                       api_client_header_);
+                                        Options const& options) {
+  google::cloud::internal::SetMetadata(
+      context, options, fixed_metadata_, api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

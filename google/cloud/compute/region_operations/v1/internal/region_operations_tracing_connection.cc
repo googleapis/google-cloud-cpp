@@ -30,50 +30,35 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 RegionOperationsTracingConnection::RegionOperationsTracingConnection(
-    std::shared_ptr<compute_region_operations_v1::RegionOperationsConnection>
-        child)
+    std::shared_ptr<compute_region_operations_v1::RegionOperationsConnection> child)
     : child_(std::move(child)) {}
 
-Status RegionOperationsTracingConnection::DeleteOperation(
-    google::cloud::cpp::compute::region_operations::v1::
-        DeleteOperationRequest const& request) {
-  auto span = internal::MakeSpan(
-      "compute_region_operations_v1::RegionOperationsConnection::"
-      "DeleteOperation");
+Status
+RegionOperationsTracingConnection::DeleteOperation(google::cloud::cpp::compute::region_operations::v1::DeleteOperationRequest const& request) {
+  auto span = internal::MakeSpan("compute_region_operations_v1::RegionOperationsConnection::DeleteOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteOperation(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-RegionOperationsTracingConnection::GetOperation(
-    google::cloud::cpp::compute::region_operations::v1::
-        GetOperationRequest const& request) {
-  auto span = internal::MakeSpan(
-      "compute_region_operations_v1::RegionOperationsConnection::GetOperation");
+RegionOperationsTracingConnection::GetOperation(google::cloud::cpp::compute::region_operations::v1::GetOperationRequest const& request) {
+  auto span = internal::MakeSpan("compute_region_operations_v1::RegionOperationsConnection::GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOperation(request));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::Operation>
-RegionOperationsTracingConnection::ListRegionOperations(
-    google::cloud::cpp::compute::region_operations::v1::
-        ListRegionOperationsRequest request) {
-  auto span = internal::MakeSpan(
-      "compute_region_operations_v1::RegionOperationsConnection::"
-      "ListRegionOperations");
+RegionOperationsTracingConnection::ListRegionOperations(google::cloud::cpp::compute::region_operations::v1::ListRegionOperationsRequest request) {
+  auto span = internal::MakeSpan("compute_region_operations_v1::RegionOperationsConnection::ListRegionOperations");
   internal::OTelScope scope(span);
   auto sr = child_->ListRegionOperations(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::cpp::compute::v1::Operation>(std::move(span),
-                                                  std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::cpp::compute::v1::Operation>(
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-RegionOperationsTracingConnection::Wait(
-    google::cloud::cpp::compute::region_operations::v1::WaitRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "compute_region_operations_v1::RegionOperationsConnection::Wait");
+RegionOperationsTracingConnection::Wait(google::cloud::cpp::compute::region_operations::v1::WaitRequest const& request) {
+  auto span = internal::MakeSpan("compute_region_operations_v1::RegionOperationsConnection::Wait");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->Wait(request));
 }
@@ -82,8 +67,7 @@ RegionOperationsTracingConnection::Wait(
 
 std::shared_ptr<compute_region_operations_v1::RegionOperationsConnection>
 MakeRegionOperationsTracingConnection(
-    std::shared_ptr<compute_region_operations_v1::RegionOperationsConnection>
-        conn) {
+    std::shared_ptr<compute_region_operations_v1::RegionOperationsConnection> conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<RegionOperationsTracingConnection>(std::move(conn));

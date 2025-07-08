@@ -37,8 +37,8 @@ namespace dialogflow_cx {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ///
-/// Service for managing [Test Cases][google.cloud.dialogflow.cx.v3.TestCase]
-/// and [Test Case Results][google.cloud.dialogflow.cx.v3.TestCaseResult].
+/// Service for managing [Test Cases][google.cloud.dialogflow.cx.v3.TestCase] and
+/// [Test Case Results][google.cloud.dialogflow.cx.v3.TestCaseResult].
 ///
 /// @par Equality
 ///
@@ -63,15 +63,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// and move-construction is a relatively efficient operation, consider using
 /// such a copy when using this class from multiple threads.
 ///
-/// [google.cloud.dialogflow.cx.v3.TestCase]:
-/// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L214}
-/// [google.cloud.dialogflow.cx.v3.TestCaseResult]:
-/// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L255}
+/// [google.cloud.dialogflow.cx.v3.TestCase]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L214}
+/// [google.cloud.dialogflow.cx.v3.TestCaseResult]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L255}
 ///
 class TestCasesClient {
  public:
-  explicit TestCasesClient(std::shared_ptr<TestCasesConnection> connection,
-                           Options opts = {});
+  explicit TestCasesClient(std::shared_ptr<TestCasesConnection> connection, Options opts = {});
   ~TestCasesClient();
 
   ///@{
@@ -124,8 +121,8 @@ class TestCasesClient {
   /// [google.cloud.dialogflow.cx.v3.TestCase]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L214}
   ///
   // clang-format on
-  StreamRange<google::cloud::dialogflow::cx::v3::TestCase> ListTestCases(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::dialogflow::cx::v3::TestCase>
+  ListTestCases(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -163,9 +160,8 @@ class TestCasesClient {
   /// [google.cloud.dialogflow.cx.v3.TestCase]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L214}
   ///
   // clang-format on
-  StreamRange<google::cloud::dialogflow::cx::v3::TestCase> ListTestCases(
-      google::cloud::dialogflow::cx::v3::ListTestCasesRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::dialogflow::cx::v3::TestCase>
+  ListTestCases(google::cloud::dialogflow::cx::v3::ListTestCasesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -187,7 +183,8 @@ class TestCasesClient {
   /// [google.cloud.dialogflow.cx.v3.BatchDeleteTestCasesRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L619}
   ///
   // clang-format on
-  Status BatchDeleteTestCases(std::string const& parent, Options opts = {});
+  Status
+  BatchDeleteTestCases(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -213,10 +210,8 @@ class TestCasesClient {
   /// [google.cloud.dialogflow.cx.v3.BatchDeleteTestCasesRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L619}
   ///
   // clang-format on
-  Status BatchDeleteTestCases(
-      google::cloud::dialogflow::cx::v3::BatchDeleteTestCasesRequest const&
-          request,
-      Options opts = {});
+  Status
+  BatchDeleteTestCases(google::cloud::dialogflow::cx::v3::BatchDeleteTestCasesRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -242,8 +237,8 @@ class TestCasesClient {
   /// [google.cloud.dialogflow.cx.v3.TestCase]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L214}
   ///
   // clang-format on
-  StatusOr<google::cloud::dialogflow::cx::v3::TestCase> GetTestCase(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::dialogflow::cx::v3::TestCase>
+  GetTestCase(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -272,9 +267,8 @@ class TestCasesClient {
   /// [google.cloud.dialogflow.cx.v3.TestCase]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L214}
   ///
   // clang-format on
-  StatusOr<google::cloud::dialogflow::cx::v3::TestCase> GetTestCase(
-      google::cloud::dialogflow::cx::v3::GetTestCaseRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::dialogflow::cx::v3::TestCase>
+  GetTestCase(google::cloud::dialogflow::cx::v3::GetTestCaseRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -300,10 +294,8 @@ class TestCasesClient {
   /// [google.cloud.dialogflow.cx.v3.TestCase]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L214}
   ///
   // clang-format on
-  StatusOr<google::cloud::dialogflow::cx::v3::TestCase> CreateTestCase(
-      std::string const& parent,
-      google::cloud::dialogflow::cx::v3::TestCase const& test_case,
-      Options opts = {});
+  StatusOr<google::cloud::dialogflow::cx::v3::TestCase>
+  CreateTestCase(std::string const& parent, google::cloud::dialogflow::cx::v3::TestCase const& test_case, Options opts = {});
 
   // clang-format off
   ///
@@ -332,9 +324,8 @@ class TestCasesClient {
   /// [google.cloud.dialogflow.cx.v3.TestCase]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L214}
   ///
   // clang-format on
-  StatusOr<google::cloud::dialogflow::cx::v3::TestCase> CreateTestCase(
-      google::cloud::dialogflow::cx::v3::CreateTestCaseRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::dialogflow::cx::v3::TestCase>
+  CreateTestCase(google::cloud::dialogflow::cx::v3::CreateTestCaseRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -364,9 +355,8 @@ class TestCasesClient {
   /// [google.cloud.dialogflow.cx.v3.UpdateTestCaseRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L657}
   ///
   // clang-format on
-  StatusOr<google::cloud::dialogflow::cx::v3::TestCase> UpdateTestCase(
-      google::cloud::dialogflow::cx::v3::TestCase const& test_case,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::cloud::dialogflow::cx::v3::TestCase>
+  UpdateTestCase(google::cloud::dialogflow::cx::v3::TestCase const& test_case, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -395,9 +385,8 @@ class TestCasesClient {
   /// [google.cloud.dialogflow.cx.v3.UpdateTestCaseRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L657}
   ///
   // clang-format on
-  StatusOr<google::cloud::dialogflow::cx::v3::TestCase> UpdateTestCase(
-      google::cloud::dialogflow::cx::v3::UpdateTestCaseRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::dialogflow::cx::v3::TestCase>
+  UpdateTestCase(google::cloud::dialogflow::cx::v3::UpdateTestCaseRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -444,9 +433,7 @@ class TestCasesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dialogflow::cx::v3::RunTestCaseResponse>>
-  RunTestCase(
-      google::cloud::dialogflow::cx::v3::RunTestCaseRequest const& request,
-      Options opts = {});
+  RunTestCase(google::cloud::dialogflow::cx::v3::RunTestCaseRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -459,10 +446,8 @@ class TestCasesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> RunTestCase(
-      NoAwaitTag,
-      google::cloud::dialogflow::cx::v3::RunTestCaseRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  RunTestCase(NoAwaitTag, google::cloud::dialogflow::cx::v3::RunTestCaseRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -474,8 +459,7 @@ class TestCasesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dialogflow::cx::v3::RunTestCaseResponse>>
-  RunTestCase(google::longrunning::Operation const& operation,
-              Options opts = {});
+  RunTestCase(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -522,10 +506,7 @@ class TestCasesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dialogflow::cx::v3::BatchRunTestCasesResponse>>
-  BatchRunTestCases(
-      google::cloud::dialogflow::cx::v3::BatchRunTestCasesRequest const&
-          request,
-      Options opts = {});
+  BatchRunTestCases(google::cloud::dialogflow::cx::v3::BatchRunTestCasesRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -538,11 +519,8 @@ class TestCasesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> BatchRunTestCases(
-      NoAwaitTag,
-      google::cloud::dialogflow::cx::v3::BatchRunTestCasesRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  BatchRunTestCases(NoAwaitTag, google::cloud::dialogflow::cx::v3::BatchRunTestCasesRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -554,8 +532,7 @@ class TestCasesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dialogflow::cx::v3::BatchRunTestCasesResponse>>
-  BatchRunTestCases(google::longrunning::Operation const& operation,
-                    Options opts = {});
+  BatchRunTestCases(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -585,10 +562,7 @@ class TestCasesClient {
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::CalculateCoverageResponse>
-  CalculateCoverage(
-      google::cloud::dialogflow::cx::v3::CalculateCoverageRequest const&
-          request,
-      Options opts = {});
+  CalculateCoverage(google::cloud::dialogflow::cx::v3::CalculateCoverageRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -637,9 +611,7 @@ class TestCasesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dialogflow::cx::v3::ImportTestCasesResponse>>
-  ImportTestCases(
-      google::cloud::dialogflow::cx::v3::ImportTestCasesRequest const& request,
-      Options opts = {});
+  ImportTestCases(google::cloud::dialogflow::cx::v3::ImportTestCasesRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -652,10 +624,8 @@ class TestCasesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> ImportTestCases(
-      NoAwaitTag,
-      google::cloud::dialogflow::cx::v3::ImportTestCasesRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  ImportTestCases(NoAwaitTag, google::cloud::dialogflow::cx::v3::ImportTestCasesRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -667,8 +637,7 @@ class TestCasesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dialogflow::cx::v3::ImportTestCasesResponse>>
-  ImportTestCases(google::longrunning::Operation const& operation,
-                  Options opts = {});
+  ImportTestCases(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -716,9 +685,7 @@ class TestCasesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dialogflow::cx::v3::ExportTestCasesResponse>>
-  ExportTestCases(
-      google::cloud::dialogflow::cx::v3::ExportTestCasesRequest const& request,
-      Options opts = {});
+  ExportTestCases(google::cloud::dialogflow::cx::v3::ExportTestCasesRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -731,10 +698,8 @@ class TestCasesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> ExportTestCases(
-      NoAwaitTag,
-      google::cloud::dialogflow::cx::v3::ExportTestCasesRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  ExportTestCases(NoAwaitTag, google::cloud::dialogflow::cx::v3::ExportTestCasesRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -746,8 +711,7 @@ class TestCasesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dialogflow::cx::v3::ExportTestCasesResponse>>
-  ExportTestCases(google::longrunning::Operation const& operation,
-                  Options opts = {});
+  ExportTestCases(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -826,9 +790,7 @@ class TestCasesClient {
   ///
   // clang-format on
   StreamRange<google::cloud::dialogflow::cx::v3::TestCaseResult>
-  ListTestCaseResults(
-      google::cloud::dialogflow::cx::v3::ListTestCaseResultsRequest request,
-      Options opts = {});
+  ListTestCaseResults(google::cloud::dialogflow::cx::v3::ListTestCaseResultsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -854,8 +816,8 @@ class TestCasesClient {
   /// [google.cloud.dialogflow.cx.v3.TestCaseResult]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L255}
   ///
   // clang-format on
-  StatusOr<google::cloud::dialogflow::cx::v3::TestCaseResult> GetTestCaseResult(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::dialogflow::cx::v3::TestCaseResult>
+  GetTestCaseResult(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -884,10 +846,8 @@ class TestCasesClient {
   /// [google.cloud.dialogflow.cx.v3.TestCaseResult]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L255}
   ///
   // clang-format on
-  StatusOr<google::cloud::dialogflow::cx::v3::TestCaseResult> GetTestCaseResult(
-      google::cloud::dialogflow::cx::v3::GetTestCaseResultRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::cloud::dialogflow::cx::v3::TestCaseResult>
+  GetTestCaseResult(google::cloud::dialogflow::cx::v3::GetTestCaseResultRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -925,8 +885,8 @@ class TestCasesClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request, Options opts = {});
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -955,9 +915,8 @@ class TestCasesClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -992,8 +951,8 @@ class TestCasesClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -1032,8 +991,8 @@ class TestCasesClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1059,8 +1018,8 @@ class TestCasesClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1091,9 +1050,8 @@ class TestCasesClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1127,7 +1085,8 @@ class TestCasesClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(std::string const& name, Options opts = {});
+  Status
+  CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1166,9 +1125,8 @@ class TestCasesClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request,
-      Options opts = {});
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<TestCasesConnection> connection_;

@@ -26,13 +26,10 @@ namespace cloud {
 namespace osconfig {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use
-/// osconfig_v1::MakeDefaultOsConfigServiceConnectionIdempotencyPolicy directly.
-using ::google::cloud::osconfig_v1::
-    MakeDefaultOsConfigServiceConnectionIdempotencyPolicy;
+/// @deprecated Use osconfig_v1::MakeDefaultOsConfigServiceConnectionIdempotencyPolicy directly.
+using ::google::cloud::osconfig_v1::MakeDefaultOsConfigServiceConnectionIdempotencyPolicy;
 
-/// @deprecated Use osconfig_v1::OsConfigServiceConnectionIdempotencyPolicy
-/// directly.
+/// @deprecated Use osconfig_v1::OsConfigServiceConnectionIdempotencyPolicy directly.
 using ::google::cloud::osconfig_v1::OsConfigServiceConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

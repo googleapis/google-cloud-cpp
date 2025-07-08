@@ -17,11 +17,11 @@
 // source: google/cloud/compute/service_attachments/v1/service_attachments.proto
 
 #include "google/cloud/compute/service_attachments/v1/service_attachments_connection.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/compute/service_attachments/v1/internal/service_attachments_option_defaults.h"
 #include "google/cloud/compute/service_attachments/v1/internal/service_attachments_tracing_connection.h"
 #include "google/cloud/compute/service_attachments/v1/service_attachments_options.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
@@ -36,124 +36,111 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ServiceAttachmentsConnection::~ServiceAttachmentsConnection() = default;
 
-StreamRange<std::pair<
-    std::string, google::cloud::cpp::compute::v1::ServiceAttachmentsScopedList>>
-ServiceAttachmentsConnection::AggregatedListServiceAttachments(
-    google::cloud::cpp::compute::service_attachments::v1::
-        AggregatedListServiceAttachmentsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::ServiceAttachmentsScopedList>> ServiceAttachmentsConnection::AggregatedListServiceAttachments(
+    google::cloud::cpp::compute::service_attachments::v1::AggregatedListServiceAttachmentsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
-      StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::
-                                             ServiceAttachmentsScopedList>>>();
+      StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::ServiceAttachmentsScopedList>>>();
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ServiceAttachmentsConnection::DeleteServiceAttachment(
-    google::cloud::cpp::compute::service_attachments::v1::
-        DeleteServiceAttachmentRequest const&) {
+    google::cloud::cpp::compute::service_attachments::v1::DeleteServiceAttachmentRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ServiceAttachmentsConnection::DeleteServiceAttachment(
-    NoAwaitTag, google::cloud::cpp::compute::service_attachments::v1::
-                    DeleteServiceAttachmentRequest const&) {
+    NoAwaitTag,
+    google::cloud::cpp::compute::service_attachments::v1::DeleteServiceAttachmentRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ServiceAttachmentsConnection::DeleteServiceAttachment(
     google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::ServiceAttachment>
 ServiceAttachmentsConnection::GetServiceAttachment(
-    google::cloud::cpp::compute::service_attachments::v1::
-        GetServiceAttachmentRequest const&) {
+    google::cloud::cpp::compute::service_attachments::v1::GetServiceAttachmentRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 ServiceAttachmentsConnection::GetIamPolicy(
-    google::cloud::cpp::compute::service_attachments::v1::
-        GetIamPolicyRequest const&) {
+    google::cloud::cpp::compute::service_attachments::v1::GetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ServiceAttachmentsConnection::InsertServiceAttachment(
-    google::cloud::cpp::compute::service_attachments::v1::
-        InsertServiceAttachmentRequest const&) {
+    google::cloud::cpp::compute::service_attachments::v1::InsertServiceAttachmentRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ServiceAttachmentsConnection::InsertServiceAttachment(
-    NoAwaitTag, google::cloud::cpp::compute::service_attachments::v1::
-                    InsertServiceAttachmentRequest const&) {
+    NoAwaitTag,
+    google::cloud::cpp::compute::service_attachments::v1::InsertServiceAttachmentRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ServiceAttachmentsConnection::InsertServiceAttachment(
     google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StreamRange<google::cloud::cpp::compute::v1::ServiceAttachment>
-ServiceAttachmentsConnection::ListServiceAttachments(
-    google::cloud::cpp::compute::service_attachments::v1::
-        ListServiceAttachmentsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::cpp::compute::v1::ServiceAttachment> ServiceAttachmentsConnection::ListServiceAttachments(
+    google::cloud::cpp::compute::service_attachments::v1::ListServiceAttachmentsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::cpp::compute::v1::ServiceAttachment>>();
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ServiceAttachmentsConnection::PatchServiceAttachment(
-    google::cloud::cpp::compute::service_attachments::v1::
-        PatchServiceAttachmentRequest const&) {
+    google::cloud::cpp::compute::service_attachments::v1::PatchServiceAttachmentRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ServiceAttachmentsConnection::PatchServiceAttachment(
-    NoAwaitTag, google::cloud::cpp::compute::service_attachments::v1::
-                    PatchServiceAttachmentRequest const&) {
+    NoAwaitTag,
+    google::cloud::cpp::compute::service_attachments::v1::PatchServiceAttachmentRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ServiceAttachmentsConnection::PatchServiceAttachment(
     google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 ServiceAttachmentsConnection::SetIamPolicy(
-    google::cloud::cpp::compute::service_attachments::v1::
-        SetIamPolicyRequest const&) {
+    google::cloud::cpp::compute::service_attachments::v1::SetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
 ServiceAttachmentsConnection::TestIamPermissions(
-    google::cloud::cpp::compute::service_attachments::v1::
-        TestIamPermissionsRequest const&) {
+    google::cloud::cpp::compute::service_attachments::v1::TestIamPermissionsRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 

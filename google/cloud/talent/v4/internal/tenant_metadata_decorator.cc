@@ -44,53 +44,57 @@ TenantServiceMetadata::TenantServiceMetadata(
               ? google::cloud::internal::GeneratedLibClientHeader()
               : std::move(api_client_header)) {}
 
-StatusOr<google::cloud::talent::v4::Tenant> TenantServiceMetadata::CreateTenant(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::talent::v4::Tenant>
+TenantServiceMetadata::CreateTenant(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::talent::v4::CreateTenantRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateTenant(context, options, request);
 }
 
-StatusOr<google::cloud::talent::v4::Tenant> TenantServiceMetadata::GetTenant(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::talent::v4::Tenant>
+TenantServiceMetadata::GetTenant(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::talent::v4::GetTenantRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetTenant(context, options, request);
 }
 
-StatusOr<google::cloud::talent::v4::Tenant> TenantServiceMetadata::UpdateTenant(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::talent::v4::Tenant>
+TenantServiceMetadata::UpdateTenant(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::talent::v4::UpdateTenantRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("tenant.name=",
-                           internal::UrlEncode(request.tenant().name())));
+  SetMetadata(context, options, absl::StrCat("tenant.name=", internal::UrlEncode(request.tenant().name())));
   return child_->UpdateTenant(context, options, request);
 }
 
-Status TenantServiceMetadata::DeleteTenant(
-    grpc::ClientContext& context, Options const& options,
+Status
+TenantServiceMetadata::DeleteTenant(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::talent::v4::DeleteTenantRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteTenant(context, options, request);
 }
 
 StatusOr<google::cloud::talent::v4::ListTenantsResponse>
 TenantServiceMetadata::ListTenants(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::talent::v4::ListTenantsRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListTenants(context, options, request);
 }
 
-StatusOr<google::longrunning::Operation> TenantServiceMetadata::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::Operation>
+TenantServiceMetadata::GetOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetOperation(context, options, request);
 }
 
@@ -103,8 +107,8 @@ void TenantServiceMetadata::SetMetadata(grpc::ClientContext& context,
 
 void TenantServiceMetadata::SetMetadata(grpc::ClientContext& context,
                                         Options const& options) {
-  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
-                                       api_client_header_);
+  google::cloud::internal::SetMetadata(
+      context, options, fixed_metadata_, api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

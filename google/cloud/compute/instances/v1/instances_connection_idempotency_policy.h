@@ -36,199 +36,156 @@ class InstancesConnectionIdempotencyPolicy {
   /// Create a new copy of this object.
   virtual std::unique_ptr<InstancesConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency AddAccessConfig(
-      google::cloud::cpp::compute::instances::v1::AddAccessConfigRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  AddAccessConfig(google::cloud::cpp::compute::instances::v1::AddAccessConfigRequest const& request);
 
-  virtual google::cloud::Idempotency AddResourcePolicies(
-      google::cloud::cpp::compute::instances::v1::
-          AddResourcePoliciesRequest const& request);
+  virtual google::cloud::Idempotency
+  AddResourcePolicies(google::cloud::cpp::compute::instances::v1::AddResourcePoliciesRequest const& request);
 
-  virtual google::cloud::Idempotency AggregatedListInstances(
-      google::cloud::cpp::compute::instances::v1::AggregatedListInstancesRequest
-          request);
+  virtual google::cloud::Idempotency
+  AggregatedListInstances(google::cloud::cpp::compute::instances::v1::AggregatedListInstancesRequest request);
 
-  virtual google::cloud::Idempotency AttachDisk(
-      google::cloud::cpp::compute::instances::v1::AttachDiskRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  AttachDisk(google::cloud::cpp::compute::instances::v1::AttachDiskRequest const& request);
 
-  virtual google::cloud::Idempotency BulkInsert(
-      google::cloud::cpp::compute::instances::v1::BulkInsertRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  BulkInsert(google::cloud::cpp::compute::instances::v1::BulkInsertRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteInstance(
-      google::cloud::cpp::compute::instances::v1::DeleteInstanceRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  DeleteInstance(google::cloud::cpp::compute::instances::v1::DeleteInstanceRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteAccessConfig(
-      google::cloud::cpp::compute::instances::v1::
-          DeleteAccessConfigRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteAccessConfig(google::cloud::cpp::compute::instances::v1::DeleteAccessConfigRequest const& request);
 
-  virtual google::cloud::Idempotency DetachDisk(
-      google::cloud::cpp::compute::instances::v1::DetachDiskRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  DetachDisk(google::cloud::cpp::compute::instances::v1::DetachDiskRequest const& request);
 
-  virtual google::cloud::Idempotency GetInstance(
-      google::cloud::cpp::compute::instances::v1::GetInstanceRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  GetInstance(google::cloud::cpp::compute::instances::v1::GetInstanceRequest const& request);
 
-  virtual google::cloud::Idempotency GetEffectiveFirewalls(
-      google::cloud::cpp::compute::instances::v1::
-          GetEffectiveFirewallsRequest const& request);
+  virtual google::cloud::Idempotency
+  GetEffectiveFirewalls(google::cloud::cpp::compute::instances::v1::GetEffectiveFirewallsRequest const& request);
 
-  virtual google::cloud::Idempotency GetGuestAttributes(
-      google::cloud::cpp::compute::instances::v1::
-          GetGuestAttributesRequest const& request);
+  virtual google::cloud::Idempotency
+  GetGuestAttributes(google::cloud::cpp::compute::instances::v1::GetGuestAttributesRequest const& request);
 
-  virtual google::cloud::Idempotency GetIamPolicy(
-      google::cloud::cpp::compute::instances::v1::GetIamPolicyRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  GetIamPolicy(google::cloud::cpp::compute::instances::v1::GetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency GetScreenshot(
-      google::cloud::cpp::compute::instances::v1::GetScreenshotRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  GetScreenshot(google::cloud::cpp::compute::instances::v1::GetScreenshotRequest const& request);
 
-  virtual google::cloud::Idempotency GetSerialPortOutput(
-      google::cloud::cpp::compute::instances::v1::
-          GetSerialPortOutputRequest const& request);
+  virtual google::cloud::Idempotency
+  GetSerialPortOutput(google::cloud::cpp::compute::instances::v1::GetSerialPortOutputRequest const& request);
 
-  virtual google::cloud::Idempotency GetShieldedInstanceIdentity(
-      google::cloud::cpp::compute::instances::v1::
-          GetShieldedInstanceIdentityRequest const& request);
+  virtual google::cloud::Idempotency
+  GetShieldedInstanceIdentity(google::cloud::cpp::compute::instances::v1::GetShieldedInstanceIdentityRequest const& request);
 
-  virtual google::cloud::Idempotency InsertInstance(
-      google::cloud::cpp::compute::instances::v1::InsertInstanceRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  InsertInstance(google::cloud::cpp::compute::instances::v1::InsertInstanceRequest const& request);
 
-  virtual google::cloud::Idempotency ListInstances(
-      google::cloud::cpp::compute::instances::v1::ListInstancesRequest request);
+  virtual google::cloud::Idempotency
+  ListInstances(google::cloud::cpp::compute::instances::v1::ListInstancesRequest request);
 
-  virtual google::cloud::Idempotency ListReferrers(
-      google::cloud::cpp::compute::instances::v1::ListReferrersRequest request);
+  virtual google::cloud::Idempotency
+  ListReferrers(google::cloud::cpp::compute::instances::v1::ListReferrersRequest request);
 
-  virtual google::cloud::Idempotency PerformMaintenance(
-      google::cloud::cpp::compute::instances::v1::
-          PerformMaintenanceRequest const& request);
+  virtual google::cloud::Idempotency
+  PerformMaintenance(google::cloud::cpp::compute::instances::v1::PerformMaintenanceRequest const& request);
 
-  virtual google::cloud::Idempotency RemoveResourcePolicies(
-      google::cloud::cpp::compute::instances::v1::
-          RemoveResourcePoliciesRequest const& request);
+  virtual google::cloud::Idempotency
+  RemoveResourcePolicies(google::cloud::cpp::compute::instances::v1::RemoveResourcePoliciesRequest const& request);
 
-  virtual google::cloud::Idempotency ReportHostAsFaulty(
-      google::cloud::cpp::compute::instances::v1::
-          ReportHostAsFaultyRequest const& request);
+  virtual google::cloud::Idempotency
+  ReportHostAsFaulty(google::cloud::cpp::compute::instances::v1::ReportHostAsFaultyRequest const& request);
 
-  virtual google::cloud::Idempotency Reset(
-      google::cloud::cpp::compute::instances::v1::ResetRequest const& request);
+  virtual google::cloud::Idempotency
+  Reset(google::cloud::cpp::compute::instances::v1::ResetRequest const& request);
 
-  virtual google::cloud::Idempotency Resume(
-      google::cloud::cpp::compute::instances::v1::ResumeRequest const& request);
+  virtual google::cloud::Idempotency
+  Resume(google::cloud::cpp::compute::instances::v1::ResumeRequest const& request);
 
-  virtual google::cloud::Idempotency SendDiagnosticInterrupt(
-      google::cloud::cpp::compute::instances::v1::
-          SendDiagnosticInterruptRequest const& request);
+  virtual google::cloud::Idempotency
+  SendDiagnosticInterrupt(google::cloud::cpp::compute::instances::v1::SendDiagnosticInterruptRequest const& request);
 
-  virtual google::cloud::Idempotency SetDeletionProtection(
-      google::cloud::cpp::compute::instances::v1::
-          SetDeletionProtectionRequest const& request);
+  virtual google::cloud::Idempotency
+  SetDeletionProtection(google::cloud::cpp::compute::instances::v1::SetDeletionProtectionRequest const& request);
 
-  virtual google::cloud::Idempotency SetDiskAutoDelete(
-      google::cloud::cpp::compute::instances::v1::
-          SetDiskAutoDeleteRequest const& request);
+  virtual google::cloud::Idempotency
+  SetDiskAutoDelete(google::cloud::cpp::compute::instances::v1::SetDiskAutoDeleteRequest const& request);
 
-  virtual google::cloud::Idempotency SetIamPolicy(
-      google::cloud::cpp::compute::instances::v1::SetIamPolicyRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  SetIamPolicy(google::cloud::cpp::compute::instances::v1::SetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency SetLabels(
-      google::cloud::cpp::compute::instances::v1::SetLabelsRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  SetLabels(google::cloud::cpp::compute::instances::v1::SetLabelsRequest const& request);
 
-  virtual google::cloud::Idempotency SetMachineResources(
-      google::cloud::cpp::compute::instances::v1::
-          SetMachineResourcesRequest const& request);
+  virtual google::cloud::Idempotency
+  SetMachineResources(google::cloud::cpp::compute::instances::v1::SetMachineResourcesRequest const& request);
 
-  virtual google::cloud::Idempotency SetMachineType(
-      google::cloud::cpp::compute::instances::v1::SetMachineTypeRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  SetMachineType(google::cloud::cpp::compute::instances::v1::SetMachineTypeRequest const& request);
 
-  virtual google::cloud::Idempotency SetMetadata(
-      google::cloud::cpp::compute::instances::v1::SetMetadataRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  SetMetadata(google::cloud::cpp::compute::instances::v1::SetMetadataRequest const& request);
 
-  virtual google::cloud::Idempotency SetMinCpuPlatform(
-      google::cloud::cpp::compute::instances::v1::
-          SetMinCpuPlatformRequest const& request);
+  virtual google::cloud::Idempotency
+  SetMinCpuPlatform(google::cloud::cpp::compute::instances::v1::SetMinCpuPlatformRequest const& request);
 
-  virtual google::cloud::Idempotency SetName(
-      google::cloud::cpp::compute::instances::v1::SetNameRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  SetName(google::cloud::cpp::compute::instances::v1::SetNameRequest const& request);
 
-  virtual google::cloud::Idempotency SetScheduling(
-      google::cloud::cpp::compute::instances::v1::SetSchedulingRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  SetScheduling(google::cloud::cpp::compute::instances::v1::SetSchedulingRequest const& request);
 
-  virtual google::cloud::Idempotency SetSecurityPolicy(
-      google::cloud::cpp::compute::instances::v1::
-          SetSecurityPolicyRequest const& request);
+  virtual google::cloud::Idempotency
+  SetSecurityPolicy(google::cloud::cpp::compute::instances::v1::SetSecurityPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency SetServiceAccount(
-      google::cloud::cpp::compute::instances::v1::
-          SetServiceAccountRequest const& request);
+  virtual google::cloud::Idempotency
+  SetServiceAccount(google::cloud::cpp::compute::instances::v1::SetServiceAccountRequest const& request);
 
-  virtual google::cloud::Idempotency SetShieldedInstanceIntegrityPolicy(
-      google::cloud::cpp::compute::instances::v1::
-          SetShieldedInstanceIntegrityPolicyRequest const& request);
+  virtual google::cloud::Idempotency
+  SetShieldedInstanceIntegrityPolicy(google::cloud::cpp::compute::instances::v1::SetShieldedInstanceIntegrityPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency SetTags(
-      google::cloud::cpp::compute::instances::v1::SetTagsRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  SetTags(google::cloud::cpp::compute::instances::v1::SetTagsRequest const& request);
 
-  virtual google::cloud::Idempotency SimulateMaintenanceEvent(
-      google::cloud::cpp::compute::instances::v1::
-          SimulateMaintenanceEventRequest const& request);
+  virtual google::cloud::Idempotency
+  SimulateMaintenanceEvent(google::cloud::cpp::compute::instances::v1::SimulateMaintenanceEventRequest const& request);
 
-  virtual google::cloud::Idempotency Start(
-      google::cloud::cpp::compute::instances::v1::StartRequest const& request);
+  virtual google::cloud::Idempotency
+  Start(google::cloud::cpp::compute::instances::v1::StartRequest const& request);
 
-  virtual google::cloud::Idempotency StartWithEncryptionKey(
-      google::cloud::cpp::compute::instances::v1::
-          StartWithEncryptionKeyRequest const& request);
+  virtual google::cloud::Idempotency
+  StartWithEncryptionKey(google::cloud::cpp::compute::instances::v1::StartWithEncryptionKeyRequest const& request);
 
-  virtual google::cloud::Idempotency Stop(
-      google::cloud::cpp::compute::instances::v1::StopRequest const& request);
+  virtual google::cloud::Idempotency
+  Stop(google::cloud::cpp::compute::instances::v1::StopRequest const& request);
 
-  virtual google::cloud::Idempotency Suspend(
-      google::cloud::cpp::compute::instances::v1::SuspendRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  Suspend(google::cloud::cpp::compute::instances::v1::SuspendRequest const& request);
 
-  virtual google::cloud::Idempotency TestIamPermissions(
-      google::cloud::cpp::compute::instances::v1::
-          TestIamPermissionsRequest const& request);
+  virtual google::cloud::Idempotency
+  TestIamPermissions(google::cloud::cpp::compute::instances::v1::TestIamPermissionsRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateInstance(
-      google::cloud::cpp::compute::instances::v1::UpdateInstanceRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  UpdateInstance(google::cloud::cpp::compute::instances::v1::UpdateInstanceRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateAccessConfig(
-      google::cloud::cpp::compute::instances::v1::
-          UpdateAccessConfigRequest const& request);
+  virtual google::cloud::Idempotency
+  UpdateAccessConfig(google::cloud::cpp::compute::instances::v1::UpdateAccessConfigRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateDisplayDevice(
-      google::cloud::cpp::compute::instances::v1::
-          UpdateDisplayDeviceRequest const& request);
+  virtual google::cloud::Idempotency
+  UpdateDisplayDevice(google::cloud::cpp::compute::instances::v1::UpdateDisplayDeviceRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateNetworkInterface(
-      google::cloud::cpp::compute::instances::v1::
-          UpdateNetworkInterfaceRequest const& request);
+  virtual google::cloud::Idempotency
+  UpdateNetworkInterface(google::cloud::cpp::compute::instances::v1::UpdateNetworkInterfaceRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateShieldedInstanceConfig(
-      google::cloud::cpp::compute::instances::v1::
-          UpdateShieldedInstanceConfigRequest const& request);
+  virtual google::cloud::Idempotency
+  UpdateShieldedInstanceConfig(google::cloud::cpp::compute::instances::v1::UpdateShieldedInstanceConfigRequest const& request);
 };
 
 std::unique_ptr<InstancesConnectionIdempotencyPolicy>
-MakeDefaultInstancesConnectionIdempotencyPolicy();
+    MakeDefaultInstancesConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_instances_v1

@@ -28,19 +28,18 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 SearchServiceClient::SearchServiceClient(
     std::shared_ptr<SearchServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 SearchServiceClient::~SearchServiceClient() = default;
 
 StreamRange<google::cloud::retail::v2::SearchResponse::SearchResult>
-SearchServiceClient::Search(google::cloud::retail::v2::SearchRequest request,
-                            Options opts) {
+SearchServiceClient::Search(google::cloud::retail::v2::SearchRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->Search(std::move(request));
 }
 
-StreamRange<google::longrunning::Operation> SearchServiceClient::ListOperations(
-    std::string const& name, std::string const& filter, Options opts) {
+StreamRange<google::longrunning::Operation>
+SearchServiceClient::ListOperations(std::string const& name, std::string const& filter, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::ListOperationsRequest request;
   request.set_name(name);
@@ -48,22 +47,22 @@ StreamRange<google::longrunning::Operation> SearchServiceClient::ListOperations(
   return connection_->ListOperations(request);
 }
 
-StreamRange<google::longrunning::Operation> SearchServiceClient::ListOperations(
-    google::longrunning::ListOperationsRequest request, Options opts) {
+StreamRange<google::longrunning::Operation>
+SearchServiceClient::ListOperations(google::longrunning::ListOperationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOperations(std::move(request));
 }
 
-StatusOr<google::longrunning::Operation> SearchServiceClient::GetOperation(
-    std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation>
+SearchServiceClient::GetOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
   return connection_->GetOperation(request);
 }
 
-StatusOr<google::longrunning::Operation> SearchServiceClient::GetOperation(
-    google::longrunning::GetOperationRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation>
+SearchServiceClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }

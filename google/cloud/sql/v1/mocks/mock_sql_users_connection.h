@@ -46,25 +46,25 @@ class MockSqlUsersServiceConnection : public sql_v1::SqlUsersServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::sql::v1::Operation>, Delete,
-              (google::cloud::sql::v1::SqlUsersDeleteRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::sql::v1::Operation>,
+  Delete,
+  (google::cloud::sql::v1::SqlUsersDeleteRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::sql::v1::User>, Get,
-              (google::cloud::sql::v1::SqlUsersGetRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::sql::v1::User>,
+  Get,
+  (google::cloud::sql::v1::SqlUsersGetRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::sql::v1::Operation>, Insert,
-              (google::cloud::sql::v1::SqlUsersInsertRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::sql::v1::Operation>,
+  Insert,
+  (google::cloud::sql::v1::SqlUsersInsertRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::sql::v1::UsersListResponse>, List,
-              (google::cloud::sql::v1::SqlUsersListRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::sql::v1::UsersListResponse>,
+  List,
+  (google::cloud::sql::v1::SqlUsersListRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::sql::v1::Operation>, Update,
-              (google::cloud::sql::v1::SqlUsersUpdateRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::sql::v1::Operation>,
+  Update,
+  (google::cloud::sql::v1::SqlUsersUpdateRequest const& request), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

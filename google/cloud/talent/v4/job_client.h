@@ -19,12 +19,12 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TALENT_V4_JOB_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TALENT_V4_JOB_CLIENT_H
 
-#include "google/cloud/talent/v4/job_connection.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
+#include "google/cloud/talent/v4/job_connection.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
 #include <map>
@@ -37,8 +37,7 @@ namespace talent_v4 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ///
-/// A service handles job management, including job CRUD, enumeration and
-/// search.
+/// A service handles job management, including job CRUD, enumeration and search.
 ///
 /// @par Equality
 ///
@@ -65,8 +64,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class JobServiceClient {
  public:
-  explicit JobServiceClient(std::shared_ptr<JobServiceConnection> connection,
-                            Options opts = {});
+  explicit JobServiceClient(std::shared_ptr<JobServiceConnection> connection, Options opts = {});
   ~JobServiceClient();
 
   ///@{
@@ -116,9 +114,8 @@ class JobServiceClient {
   /// [google.cloud.talent.v4.Job]: @googleapis_reference_link{google/cloud/talent/v4/job.proto#L34}
   ///
   // clang-format on
-  StatusOr<google::cloud::talent::v4::Job> CreateJob(
-      std::string const& parent, google::cloud::talent::v4::Job const& job,
-      Options opts = {});
+  StatusOr<google::cloud::talent::v4::Job>
+  CreateJob(std::string const& parent, google::cloud::talent::v4::Job const& job, Options opts = {});
 
   // clang-format off
   ///
@@ -150,9 +147,8 @@ class JobServiceClient {
   /// [google.cloud.talent.v4.Job]: @googleapis_reference_link{google/cloud/talent/v4/job.proto#L34}
   ///
   // clang-format on
-  StatusOr<google::cloud::talent::v4::Job> CreateJob(
-      google::cloud::talent::v4::CreateJobRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::talent::v4::Job>
+  CreateJob(google::cloud::talent::v4::CreateJobRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -189,9 +185,7 @@ class JobServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::talent::v4::BatchCreateJobsResponse>>
-  BatchCreateJobs(std::string const& parent,
-                  std::vector<google::cloud::talent::v4::Job> const& jobs,
-                  Options opts = {});
+  BatchCreateJobs(std::string const& parent, std::vector<google::cloud::talent::v4::Job> const& jobs, Options opts = {});
 
   // clang-format off
   ///
@@ -204,10 +198,8 @@ class JobServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> BatchCreateJobs(
-      NoAwaitTag, std::string const& parent,
-      std::vector<google::cloud::talent::v4::Job> const& jobs,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  BatchCreateJobs(NoAwaitTag, std::string const& parent, std::vector<google::cloud::talent::v4::Job> const& jobs, Options opts = {});
 
   // clang-format off
   ///
@@ -244,9 +236,7 @@ class JobServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::talent::v4::BatchCreateJobsResponse>>
-  BatchCreateJobs(
-      google::cloud::talent::v4::BatchCreateJobsRequest const& request,
-      Options opts = {});
+  BatchCreateJobs(google::cloud::talent::v4::BatchCreateJobsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -259,10 +249,8 @@ class JobServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> BatchCreateJobs(
-      NoAwaitTag,
-      google::cloud::talent::v4::BatchCreateJobsRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  BatchCreateJobs(NoAwaitTag, google::cloud::talent::v4::BatchCreateJobsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -274,8 +262,7 @@ class JobServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::talent::v4::BatchCreateJobsResponse>>
-  BatchCreateJobs(google::longrunning::Operation const& operation,
-                  Options opts = {});
+  BatchCreateJobs(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -304,8 +291,8 @@ class JobServiceClient {
   /// [google.cloud.talent.v4.Job]: @googleapis_reference_link{google/cloud/talent/v4/job.proto#L34}
   ///
   // clang-format on
-  StatusOr<google::cloud::talent::v4::Job> GetJob(std::string const& name,
-                                                  Options opts = {});
+  StatusOr<google::cloud::talent::v4::Job>
+  GetJob(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -335,9 +322,8 @@ class JobServiceClient {
   /// [google.cloud.talent.v4.Job]: @googleapis_reference_link{google/cloud/talent/v4/job.proto#L34}
   ///
   // clang-format on
-  StatusOr<google::cloud::talent::v4::Job> GetJob(
-      google::cloud::talent::v4::GetJobRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::talent::v4::Job>
+  GetJob(google::cloud::talent::v4::GetJobRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -375,9 +361,8 @@ class JobServiceClient {
   /// [google.cloud.talent.v4.UpdateJobRequest.update_mask]: @googleapis_reference_link{google/cloud/talent/v4/job_service.proto#L216}
   ///
   // clang-format on
-  StatusOr<google::cloud::talent::v4::Job> UpdateJob(
-      google::cloud::talent::v4::Job const& job,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::cloud::talent::v4::Job>
+  UpdateJob(google::cloud::talent::v4::Job const& job, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -409,9 +394,8 @@ class JobServiceClient {
   /// [google.cloud.talent.v4.UpdateJobRequest]: @googleapis_reference_link{google/cloud/talent/v4/job_service.proto#L203}
   ///
   // clang-format on
-  StatusOr<google::cloud::talent::v4::Job> UpdateJob(
-      google::cloud::talent::v4::UpdateJobRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::talent::v4::Job>
+  UpdateJob(google::cloud::talent::v4::UpdateJobRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -448,9 +432,7 @@ class JobServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::talent::v4::BatchUpdateJobsResponse>>
-  BatchUpdateJobs(std::string const& parent,
-                  std::vector<google::cloud::talent::v4::Job> const& jobs,
-                  Options opts = {});
+  BatchUpdateJobs(std::string const& parent, std::vector<google::cloud::talent::v4::Job> const& jobs, Options opts = {});
 
   // clang-format off
   ///
@@ -463,10 +445,8 @@ class JobServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> BatchUpdateJobs(
-      NoAwaitTag, std::string const& parent,
-      std::vector<google::cloud::talent::v4::Job> const& jobs,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  BatchUpdateJobs(NoAwaitTag, std::string const& parent, std::vector<google::cloud::talent::v4::Job> const& jobs, Options opts = {});
 
   // clang-format off
   ///
@@ -503,9 +483,7 @@ class JobServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::talent::v4::BatchUpdateJobsResponse>>
-  BatchUpdateJobs(
-      google::cloud::talent::v4::BatchUpdateJobsRequest const& request,
-      Options opts = {});
+  BatchUpdateJobs(google::cloud::talent::v4::BatchUpdateJobsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -518,10 +496,8 @@ class JobServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> BatchUpdateJobs(
-      NoAwaitTag,
-      google::cloud::talent::v4::BatchUpdateJobsRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  BatchUpdateJobs(NoAwaitTag, google::cloud::talent::v4::BatchUpdateJobsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -533,8 +509,7 @@ class JobServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::talent::v4::BatchUpdateJobsResponse>>
-  BatchUpdateJobs(google::longrunning::Operation const& operation,
-                  Options opts = {});
+  BatchUpdateJobs(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -562,7 +537,8 @@ class JobServiceClient {
   /// [google.cloud.talent.v4.DeleteJobRequest]: @googleapis_reference_link{google/cloud/talent/v4/job_service.proto#L220}
   ///
   // clang-format on
-  Status DeleteJob(std::string const& name, Options opts = {});
+  Status
+  DeleteJob(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -591,8 +567,8 @@ class JobServiceClient {
   /// [google.cloud.talent.v4.DeleteJobRequest]: @googleapis_reference_link{google/cloud/talent/v4/job_service.proto#L220}
   ///
   // clang-format on
-  Status DeleteJob(google::cloud::talent::v4::DeleteJobRequest const& request,
-                   Options opts = {});
+  Status
+  DeleteJob(google::cloud::talent::v4::DeleteJobRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -635,8 +611,7 @@ class JobServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::talent::v4::BatchDeleteJobsResponse>>
-  BatchDeleteJobs(std::string const& parent,
-                  std::vector<std::string> const& names, Options opts = {});
+  BatchDeleteJobs(std::string const& parent, std::vector<std::string> const& names, Options opts = {});
 
   // clang-format off
   ///
@@ -649,9 +624,8 @@ class JobServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> BatchDeleteJobs(
-      NoAwaitTag, std::string const& parent,
-      std::vector<std::string> const& names, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  BatchDeleteJobs(NoAwaitTag, std::string const& parent, std::vector<std::string> const& names, Options opts = {});
 
   // clang-format off
   ///
@@ -688,9 +662,7 @@ class JobServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::talent::v4::BatchDeleteJobsResponse>>
-  BatchDeleteJobs(
-      google::cloud::talent::v4::BatchDeleteJobsRequest const& request,
-      Options opts = {});
+  BatchDeleteJobs(google::cloud::talent::v4::BatchDeleteJobsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -703,10 +675,8 @@ class JobServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> BatchDeleteJobs(
-      NoAwaitTag,
-      google::cloud::talent::v4::BatchDeleteJobsRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  BatchDeleteJobs(NoAwaitTag, google::cloud::talent::v4::BatchDeleteJobsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -718,8 +688,7 @@ class JobServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::talent::v4::BatchDeleteJobsResponse>>
-  BatchDeleteJobs(google::longrunning::Operation const& operation,
-                  Options opts = {});
+  BatchDeleteJobs(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -758,8 +727,8 @@ class JobServiceClient {
   /// [google.cloud.talent.v4.ListJobsRequest]: @googleapis_reference_link{google/cloud/talent/v4/job_service.proto#L271}
   ///
   // clang-format on
-  StreamRange<google::cloud::talent::v4::Job> ListJobs(
-      std::string const& parent, std::string const& filter, Options opts = {});
+  StreamRange<google::cloud::talent::v4::Job>
+  ListJobs(std::string const& parent, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -797,8 +766,8 @@ class JobServiceClient {
   /// [google.cloud.talent.v4.ListJobsRequest]: @googleapis_reference_link{google/cloud/talent/v4/job_service.proto#L271}
   ///
   // clang-format on
-  StreamRange<google::cloud::talent::v4::Job> ListJobs(
-      google::cloud::talent::v4::ListJobsRequest request, Options opts = {});
+  StreamRange<google::cloud::talent::v4::Job>
+  ListJobs(google::cloud::talent::v4::ListJobsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -834,9 +803,8 @@ class JobServiceClient {
   /// [google.cloud.talent.v4.SearchJobsResponse]: @googleapis_reference_link{google/cloud/talent/v4/job_service.proto#L846}
   ///
   // clang-format on
-  StatusOr<google::cloud::talent::v4::SearchJobsResponse> SearchJobs(
-      google::cloud::talent::v4::SearchJobsRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::talent::v4::SearchJobsResponse>
+  SearchJobs(google::cloud::talent::v4::SearchJobsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -877,9 +845,8 @@ class JobServiceClient {
   /// [google.cloud.talent.v4.SearchJobsResponse]: @googleapis_reference_link{google/cloud/talent/v4/job_service.proto#L846}
   ///
   // clang-format on
-  StatusOr<google::cloud::talent::v4::SearchJobsResponse> SearchJobsForAlert(
-      google::cloud::talent::v4::SearchJobsRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::talent::v4::SearchJobsResponse>
+  SearchJobsForAlert(google::cloud::talent::v4::SearchJobsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -905,8 +872,8 @@ class JobServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -937,9 +904,8 @@ class JobServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<JobServiceConnection> connection_;

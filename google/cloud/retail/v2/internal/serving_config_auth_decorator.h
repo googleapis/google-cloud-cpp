@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RETAIL_V2_INTERNAL_SERVING_CONFIG_AUTH_DECORATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RETAIL_V2_INTERNAL_SERVING_CONFIG_AUTH_DECORATOR_H
 
-#include "google/cloud/retail/v2/internal/serving_config_stub.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/retail/v2/internal/serving_config_stub.h"
 #include "google/cloud/version.h"
 #include <memory>
 #include <set>
@@ -39,44 +39,48 @@ class ServingConfigServiceAuth : public ServingConfigServiceStub {
       std::shared_ptr<ServingConfigServiceStub> child);
 
   StatusOr<google::cloud::retail::v2::ServingConfig> CreateServingConfig(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::retail::v2::CreateServingConfigRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::retail::v2::CreateServingConfigRequest const& request) override;
 
   Status DeleteServingConfig(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::retail::v2::DeleteServingConfigRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::retail::v2::DeleteServingConfigRequest const& request) override;
 
   StatusOr<google::cloud::retail::v2::ServingConfig> UpdateServingConfig(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::retail::v2::UpdateServingConfigRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::retail::v2::UpdateServingConfigRequest const& request) override;
 
   StatusOr<google::cloud::retail::v2::ServingConfig> GetServingConfig(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::retail::v2::GetServingConfigRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::retail::v2::GetServingConfigRequest const& request) override;
 
-  StatusOr<google::cloud::retail::v2::ListServingConfigsResponse>
-  ListServingConfigs(grpc::ClientContext& context, Options const& options,
-                     google::cloud::retail::v2::ListServingConfigsRequest const&
-                         request) override;
+  StatusOr<google::cloud::retail::v2::ListServingConfigsResponse> ListServingConfigs(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::retail::v2::ListServingConfigsRequest const& request) override;
 
   StatusOr<google::cloud::retail::v2::ServingConfig> AddControl(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::retail::v2::AddControlRequest const& request) override;
 
   StatusOr<google::cloud::retail::v2::ServingConfig> RemoveControl(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::retail::v2::RemoveControlRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
  private:

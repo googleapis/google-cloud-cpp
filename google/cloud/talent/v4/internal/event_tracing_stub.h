@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TALENT_V4_INTERNAL_EVENT_TRACING_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TALENT_V4_INTERNAL_EVENT_TRACING_STUB_H
 
-#include "google/cloud/talent/v4/internal/event_stub.h"
 #include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/options.h"
+#include "google/cloud/talent/v4/internal/event_stub.h"
 #include "google/cloud/version.h"
 #include <memory>
 
@@ -39,18 +39,18 @@ class EventServiceTracingStub : public EventServiceStub {
   explicit EventServiceTracingStub(std::shared_ptr<EventServiceStub> child);
 
   StatusOr<google::cloud::talent::v4::ClientEvent> CreateClientEvent(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::talent::v4::CreateClientEventRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::talent::v4::CreateClientEventRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
  private:
   std::shared_ptr<EventServiceStub> child_;
-  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
-      propagator_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

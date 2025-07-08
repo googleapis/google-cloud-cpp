@@ -46,132 +46,132 @@ EkmServiceMetadata::EkmServiceMetadata(
 
 StatusOr<google::cloud::kms::v1::ListEkmConnectionsResponse>
 EkmServiceMetadata::ListEkmConnections(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::kms::v1::ListEkmConnectionsRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListEkmConnections(context, options, request);
 }
 
 StatusOr<google::cloud::kms::v1::EkmConnection>
 EkmServiceMetadata::GetEkmConnection(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::kms::v1::GetEkmConnectionRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetEkmConnection(context, options, request);
 }
 
 StatusOr<google::cloud::kms::v1::EkmConnection>
 EkmServiceMetadata::CreateEkmConnection(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::kms::v1::CreateEkmConnectionRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateEkmConnection(context, options, request);
 }
 
 StatusOr<google::cloud::kms::v1::EkmConnection>
 EkmServiceMetadata::UpdateEkmConnection(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::kms::v1::UpdateEkmConnectionRequest const& request) {
-  SetMetadata(
-      context, options,
-      absl::StrCat("ekm_connection.name=",
-                   internal::UrlEncode(request.ekm_connection().name())));
+  SetMetadata(context, options, absl::StrCat("ekm_connection.name=", internal::UrlEncode(request.ekm_connection().name())));
   return child_->UpdateEkmConnection(context, options, request);
 }
 
-StatusOr<google::cloud::kms::v1::EkmConfig> EkmServiceMetadata::GetEkmConfig(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::kms::v1::EkmConfig>
+EkmServiceMetadata::GetEkmConfig(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::kms::v1::GetEkmConfigRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetEkmConfig(context, options, request);
 }
 
-StatusOr<google::cloud::kms::v1::EkmConfig> EkmServiceMetadata::UpdateEkmConfig(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::kms::v1::EkmConfig>
+EkmServiceMetadata::UpdateEkmConfig(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::kms::v1::UpdateEkmConfigRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("ekm_config.name=",
-                           internal::UrlEncode(request.ekm_config().name())));
+  SetMetadata(context, options, absl::StrCat("ekm_config.name=", internal::UrlEncode(request.ekm_config().name())));
   return child_->UpdateEkmConfig(context, options, request);
 }
 
 StatusOr<google::cloud::kms::v1::VerifyConnectivityResponse>
 EkmServiceMetadata::VerifyConnectivity(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::kms::v1::VerifyConnectivityRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->VerifyConnectivity(context, options, request);
 }
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 EkmServiceMetadata::ListLocations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ListLocations(context, options, request);
 }
 
-StatusOr<google::cloud::location::Location> EkmServiceMetadata::GetLocation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::location::Location>
+EkmServiceMetadata::GetLocation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetLocation(context, options, request);
 }
 
-StatusOr<google::iam::v1::Policy> EkmServiceMetadata::SetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::iam::v1::Policy>
+EkmServiceMetadata::SetIamPolicy(
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
-  SetMetadata(
-      context, options,
-      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
+  SetMetadata(context, options, absl::StrCat("resource=", internal::UrlEncode(request.resource())));
   return child_->SetIamPolicy(context, options, request);
 }
 
-StatusOr<google::iam::v1::Policy> EkmServiceMetadata::GetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::iam::v1::Policy>
+EkmServiceMetadata::GetIamPolicy(
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
-  SetMetadata(
-      context, options,
-      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
+  SetMetadata(context, options, absl::StrCat("resource=", internal::UrlEncode(request.resource())));
   return child_->GetIamPolicy(context, options, request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 EkmServiceMetadata::TestIamPermissions(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  SetMetadata(
-      context, options,
-      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
+  SetMetadata(context, options, absl::StrCat("resource=", internal::UrlEncode(request.resource())));
   return child_->TestIamPermissions(context, options, request);
 }
 
-StatusOr<google::longrunning::Operation> EkmServiceMetadata::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::Operation>
+EkmServiceMetadata::GetOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetOperation(context, options, request);
 }
 
 void EkmServiceMetadata::SetMetadata(grpc::ClientContext& context,
-                                     Options const& options,
-                                     std::string const& request_params) {
+                                        Options const& options,
+                                        std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
 void EkmServiceMetadata::SetMetadata(grpc::ClientContext& context,
-                                     Options const& options) {
-  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
-                                       api_client_header_);
+                                        Options const& options) {
+  google::cloud::internal::SetMetadata(
+      context, options, fixed_metadata_, api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

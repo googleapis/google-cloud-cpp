@@ -57,8 +57,7 @@ class DatasetServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class DatasetServiceLimitedErrorCountRetryPolicy
-    : public DatasetServiceRetryPolicy {
+class DatasetServiceLimitedErrorCountRetryPolicy : public DatasetServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -68,14 +67,14 @@ class DatasetServiceLimitedErrorCountRetryPolicy
    *     @p maximum_failures == 0.
    */
   explicit DatasetServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   DatasetServiceLimitedErrorCountRetryPolicy(
       DatasetServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : DatasetServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : DatasetServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   DatasetServiceLimitedErrorCountRetryPolicy(
       DatasetServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : DatasetServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : DatasetServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -95,9 +94,7 @@ class DatasetServiceLimitedErrorCountRetryPolicy
   using BaseType = DatasetServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      aiplatform_v1_internal::DatasetServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<aiplatform_v1_internal::DatasetServiceRetryTraits> impl_;
 };
 
 /**
@@ -135,14 +132,12 @@ class DatasetServiceLimitedTimeRetryPolicy : public DatasetServiceRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit DatasetServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  DatasetServiceLimitedTimeRetryPolicy(
-      DatasetServiceLimitedTimeRetryPolicy&& rhs) noexcept
-      : DatasetServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  DatasetServiceLimitedTimeRetryPolicy(
-      DatasetServiceLimitedTimeRetryPolicy const& rhs) noexcept
-      : DatasetServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  DatasetServiceLimitedTimeRetryPolicy(DatasetServiceLimitedTimeRetryPolicy&& rhs) noexcept
+    : DatasetServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  DatasetServiceLimitedTimeRetryPolicy(DatasetServiceLimitedTimeRetryPolicy const& rhs) noexcept
+    : DatasetServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -164,9 +159,7 @@ class DatasetServiceLimitedTimeRetryPolicy : public DatasetServiceRetryPolicy {
   using BaseType = DatasetServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      aiplatform_v1_internal::DatasetServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<aiplatform_v1_internal::DatasetServiceRetryTraits> impl_;
 };
 
 /**
@@ -188,173 +181,139 @@ class DatasetServiceConnection {
   virtual Options options() { return Options{}; }
 
   virtual future<StatusOr<google::cloud::aiplatform::v1::Dataset>>
-  CreateDataset(
-      google::cloud::aiplatform::v1::CreateDatasetRequest const& request);
+  CreateDataset(google::cloud::aiplatform::v1::CreateDatasetRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> CreateDataset(
-      NoAwaitTag,
-      google::cloud::aiplatform::v1::CreateDatasetRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  CreateDataset(NoAwaitTag, google::cloud::aiplatform::v1::CreateDatasetRequest const& request);
 
   virtual future<StatusOr<google::cloud::aiplatform::v1::Dataset>>
-  CreateDataset(google::longrunning::Operation const& operation);
+  CreateDataset( google::longrunning::Operation const& operation);
 
-  virtual StatusOr<google::cloud::aiplatform::v1::Dataset> GetDataset(
-      google::cloud::aiplatform::v1::GetDatasetRequest const& request);
+  virtual StatusOr<google::cloud::aiplatform::v1::Dataset>
+  GetDataset(google::cloud::aiplatform::v1::GetDatasetRequest const& request);
 
-  virtual StatusOr<google::cloud::aiplatform::v1::Dataset> UpdateDataset(
-      google::cloud::aiplatform::v1::UpdateDatasetRequest const& request);
+  virtual StatusOr<google::cloud::aiplatform::v1::Dataset>
+  UpdateDataset(google::cloud::aiplatform::v1::UpdateDatasetRequest const& request);
 
-  virtual StreamRange<google::cloud::aiplatform::v1::Dataset> ListDatasets(
-      google::cloud::aiplatform::v1::ListDatasetsRequest request);
+  virtual StreamRange<google::cloud::aiplatform::v1::Dataset>
+  ListDatasets(google::cloud::aiplatform::v1::ListDatasetsRequest request);
 
-  virtual future<
-      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteDataset(
-      google::cloud::aiplatform::v1::DeleteDatasetRequest const& request);
+  virtual future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteDataset(google::cloud::aiplatform::v1::DeleteDatasetRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> DeleteDataset(
-      NoAwaitTag,
-      google::cloud::aiplatform::v1::DeleteDatasetRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  DeleteDataset(NoAwaitTag, google::cloud::aiplatform::v1::DeleteDatasetRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteDataset(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteDataset( google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::aiplatform::v1::ImportDataResponse>>
   ImportData(google::cloud::aiplatform::v1::ImportDataRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> ImportData(
-      NoAwaitTag,
-      google::cloud::aiplatform::v1::ImportDataRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  ImportData(NoAwaitTag, google::cloud::aiplatform::v1::ImportDataRequest const& request);
 
   virtual future<StatusOr<google::cloud::aiplatform::v1::ImportDataResponse>>
-  ImportData(google::longrunning::Operation const& operation);
+  ImportData( google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::aiplatform::v1::ExportDataResponse>>
   ExportData(google::cloud::aiplatform::v1::ExportDataRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> ExportData(
-      NoAwaitTag,
-      google::cloud::aiplatform::v1::ExportDataRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  ExportData(NoAwaitTag, google::cloud::aiplatform::v1::ExportDataRequest const& request);
 
   virtual future<StatusOr<google::cloud::aiplatform::v1::ExportDataResponse>>
-  ExportData(google::longrunning::Operation const& operation);
+  ExportData( google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::aiplatform::v1::DatasetVersion>>
-  CreateDatasetVersion(
-      google::cloud::aiplatform::v1::CreateDatasetVersionRequest const&
-          request);
+  CreateDatasetVersion(google::cloud::aiplatform::v1::CreateDatasetVersionRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> CreateDatasetVersion(
-      NoAwaitTag,
-      google::cloud::aiplatform::v1::CreateDatasetVersionRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  CreateDatasetVersion(NoAwaitTag, google::cloud::aiplatform::v1::CreateDatasetVersionRequest const& request);
 
   virtual future<StatusOr<google::cloud::aiplatform::v1::DatasetVersion>>
-  CreateDatasetVersion(google::longrunning::Operation const& operation);
+  CreateDatasetVersion( google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::aiplatform::v1::DatasetVersion>
-  UpdateDatasetVersion(
-      google::cloud::aiplatform::v1::UpdateDatasetVersionRequest const&
-          request);
+  UpdateDatasetVersion(google::cloud::aiplatform::v1::UpdateDatasetVersionRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteDatasetVersion(
-      google::cloud::aiplatform::v1::DeleteDatasetVersionRequest const&
-          request);
+  virtual future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteDatasetVersion(google::cloud::aiplatform::v1::DeleteDatasetVersionRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> DeleteDatasetVersion(
-      NoAwaitTag,
-      google::cloud::aiplatform::v1::DeleteDatasetVersionRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  DeleteDatasetVersion(NoAwaitTag, google::cloud::aiplatform::v1::DeleteDatasetVersionRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteDatasetVersion(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteDatasetVersion( google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::aiplatform::v1::DatasetVersion>
-  GetDatasetVersion(
-      google::cloud::aiplatform::v1::GetDatasetVersionRequest const& request);
+  GetDatasetVersion(google::cloud::aiplatform::v1::GetDatasetVersionRequest const& request);
 
   virtual StreamRange<google::cloud::aiplatform::v1::DatasetVersion>
-  ListDatasetVersions(
-      google::cloud::aiplatform::v1::ListDatasetVersionsRequest request);
+  ListDatasetVersions(google::cloud::aiplatform::v1::ListDatasetVersionsRequest request);
 
   virtual future<StatusOr<google::cloud::aiplatform::v1::DatasetVersion>>
-  RestoreDatasetVersion(
-      google::cloud::aiplatform::v1::RestoreDatasetVersionRequest const&
-          request);
+  RestoreDatasetVersion(google::cloud::aiplatform::v1::RestoreDatasetVersionRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> RestoreDatasetVersion(
-      NoAwaitTag,
-      google::cloud::aiplatform::v1::RestoreDatasetVersionRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  RestoreDatasetVersion(NoAwaitTag, google::cloud::aiplatform::v1::RestoreDatasetVersionRequest const& request);
 
   virtual future<StatusOr<google::cloud::aiplatform::v1::DatasetVersion>>
-  RestoreDatasetVersion(google::longrunning::Operation const& operation);
+  RestoreDatasetVersion( google::longrunning::Operation const& operation);
 
-  virtual StreamRange<google::cloud::aiplatform::v1::DataItem> ListDataItems(
-      google::cloud::aiplatform::v1::ListDataItemsRequest request);
+  virtual StreamRange<google::cloud::aiplatform::v1::DataItem>
+  ListDataItems(google::cloud::aiplatform::v1::ListDataItemsRequest request);
 
   virtual StreamRange<google::cloud::aiplatform::v1::DataItemView>
-  SearchDataItems(
-      google::cloud::aiplatform::v1::SearchDataItemsRequest request);
+  SearchDataItems(google::cloud::aiplatform::v1::SearchDataItemsRequest request);
 
   virtual StreamRange<google::cloud::aiplatform::v1::SavedQuery>
-  ListSavedQueries(
-      google::cloud::aiplatform::v1::ListSavedQueriesRequest request);
+  ListSavedQueries(google::cloud::aiplatform::v1::ListSavedQueriesRequest request);
 
-  virtual future<
-      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteSavedQuery(
-      google::cloud::aiplatform::v1::DeleteSavedQueryRequest const& request);
+  virtual future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteSavedQuery(google::cloud::aiplatform::v1::DeleteSavedQueryRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> DeleteSavedQuery(
-      NoAwaitTag,
-      google::cloud::aiplatform::v1::DeleteSavedQueryRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  DeleteSavedQuery(NoAwaitTag, google::cloud::aiplatform::v1::DeleteSavedQueryRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteSavedQuery(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteSavedQuery( google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::aiplatform::v1::AnnotationSpec>
-  GetAnnotationSpec(
-      google::cloud::aiplatform::v1::GetAnnotationSpecRequest const& request);
+  GetAnnotationSpec(google::cloud::aiplatform::v1::GetAnnotationSpecRequest const& request);
 
   virtual StreamRange<google::cloud::aiplatform::v1::Annotation>
-  ListAnnotations(
-      google::cloud::aiplatform::v1::ListAnnotationsRequest request);
+  ListAnnotations(google::cloud::aiplatform::v1::ListAnnotationsRequest request);
 
-  virtual StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request);
+  virtual StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request);
 
-  virtual StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request);
+  virtual StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
 
   virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
   TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
 
-  virtual StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 
-  virtual Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request);
+  virtual Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
 
-  virtual Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request);
+  virtual Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> WaitOperation(
-      google::longrunning::WaitOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  WaitOperation(google::longrunning::WaitOperationRequest const& request);
 };
 
 /**

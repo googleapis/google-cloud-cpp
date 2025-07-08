@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CHANNEL_V1_INTERNAL_CLOUD_CHANNEL_REPORTS_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CHANNEL_V1_INTERNAL_CLOUD_CHANNEL_REPORTS_CONNECTION_IMPL_H
 
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/channel/v1/cloud_channel_reports_connection.h"
 #include "google/cloud/channel/v1/cloud_channel_reports_connection_idempotency_policy.h"
 #include "google/cloud/channel/v1/cloud_channel_reports_options.h"
 #include "google/cloud/channel/v1/internal/cloud_channel_reports_retry_traits.h"
 #include "google/cloud/channel/v1/internal/cloud_channel_reports_stub.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -46,40 +46,40 @@ class CloudChannelReportsServiceConnectionImpl
   ~CloudChannelReportsServiceConnectionImpl() override = default;
 
   CloudChannelReportsServiceConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<channel_v1_internal::CloudChannelReportsServiceStub> stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<channel_v1_internal::CloudChannelReportsServiceStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
   future<StatusOr<google::cloud::channel::v1::RunReportJobResponse>>
-  RunReportJob(
-      google::cloud::channel::v1::RunReportJobRequest const& request) override;
+  RunReportJob(google::cloud::channel::v1::RunReportJobRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> RunReportJob(
-      NoAwaitTag,
+  StatusOr<google::longrunning::Operation>
+  RunReportJob(NoAwaitTag,
       google::cloud::channel::v1::RunReportJobRequest const& request) override;
 
   future<StatusOr<google::cloud::channel::v1::RunReportJobResponse>>
-  RunReportJob(google::longrunning::Operation const& operation) override;
+  RunReportJob(
+      google::longrunning::Operation const& operation) override;
 
-  StreamRange<google::cloud::channel::v1::Row> FetchReportResults(
-      google::cloud::channel::v1::FetchReportResultsRequest request) override;
+  StreamRange<google::cloud::channel::v1::Row>
+  FetchReportResults(google::cloud::channel::v1::FetchReportResultsRequest request) override;
 
-  StreamRange<google::cloud::channel::v1::Report> ListReports(
-      google::cloud::channel::v1::ListReportsRequest request) override;
+  StreamRange<google::cloud::channel::v1::Report>
+  ListReports(google::cloud::channel::v1::ListReportsRequest request) override;
 
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request) override;
 
-  Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request) override;
+  Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request) override;
 
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request) override;
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

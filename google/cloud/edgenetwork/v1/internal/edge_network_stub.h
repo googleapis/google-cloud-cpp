@@ -24,9 +24,9 @@
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/cloud/edgenetwork/v1/service.grpc.pb.h>
 #include <google/cloud/location/locations.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
+#include <google/cloud/edgenetwork/v1/service.grpc.pb.h>
 #include <memory>
 #include <utility>
 
@@ -39,32 +39,35 @@ class EdgeNetworkStub {
  public:
   virtual ~EdgeNetworkStub() = 0;
 
-  virtual StatusOr<google::cloud::edgenetwork::v1::InitializeZoneResponse>
-  InitializeZone(
-      grpc::ClientContext& context, Options const& options,
+  virtual StatusOr<google::cloud::edgenetwork::v1::InitializeZoneResponse> InitializeZone(
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::edgenetwork::v1::InitializeZoneRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::edgenetwork::v1::ListZonesResponse> ListZones(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::edgenetwork::v1::ListZonesRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::edgenetwork::v1::Zone> GetZone(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::edgenetwork::v1::GetZoneRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::edgenetwork::v1::ListNetworksResponse>
-  ListNetworks(
-      grpc::ClientContext& context, Options const& options,
+  virtual StatusOr<google::cloud::edgenetwork::v1::ListNetworksResponse> ListNetworks(
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::edgenetwork::v1::ListNetworksRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::edgenetwork::v1::Network> GetNetwork(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::edgenetwork::v1::GetNetworkRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::edgenetwork::v1::DiagnoseNetworkResponse>
-  DiagnoseNetwork(grpc::ClientContext& context, Options const& options,
-                  google::cloud::edgenetwork::v1::DiagnoseNetworkRequest const&
-                      request) = 0;
+  virtual StatusOr<google::cloud::edgenetwork::v1::DiagnoseNetworkResponse> DiagnoseNetwork(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::edgenetwork::v1::DiagnoseNetworkRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateNetwork(
       google::cloud::CompletionQueue& cq,
@@ -73,7 +76,8 @@ class EdgeNetworkStub {
       google::cloud::edgenetwork::v1::CreateNetworkRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> CreateNetwork(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::cloud::edgenetwork::v1::CreateNetworkRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteNetwork(
@@ -83,16 +87,18 @@ class EdgeNetworkStub {
       google::cloud::edgenetwork::v1::DeleteNetworkRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> DeleteNetwork(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::cloud::edgenetwork::v1::DeleteNetworkRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::edgenetwork::v1::ListSubnetsResponse>
-  ListSubnets(
-      grpc::ClientContext& context, Options const& options,
+  virtual StatusOr<google::cloud::edgenetwork::v1::ListSubnetsResponse> ListSubnets(
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::edgenetwork::v1::ListSubnetsRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::edgenetwork::v1::Subnet> GetSubnet(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::edgenetwork::v1::GetSubnetRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateSubnet(
@@ -102,7 +108,8 @@ class EdgeNetworkStub {
       google::cloud::edgenetwork::v1::CreateSubnetRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> CreateSubnet(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::cloud::edgenetwork::v1::CreateSubnetRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncUpdateSubnet(
@@ -112,7 +119,8 @@ class EdgeNetworkStub {
       google::cloud::edgenetwork::v1::UpdateSubnetRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> UpdateSubnet(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::cloud::edgenetwork::v1::UpdateSubnetRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteSubnet(
@@ -122,77 +130,70 @@ class EdgeNetworkStub {
       google::cloud::edgenetwork::v1::DeleteSubnetRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> DeleteSubnet(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::cloud::edgenetwork::v1::DeleteSubnetRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::edgenetwork::v1::ListInterconnectsResponse>
-  ListInterconnects(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::edgenetwork::v1::ListInterconnectsRequest const&
-          request) = 0;
+  virtual StatusOr<google::cloud::edgenetwork::v1::ListInterconnectsResponse> ListInterconnects(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::edgenetwork::v1::ListInterconnectsRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::edgenetwork::v1::Interconnect>
-  GetInterconnect(grpc::ClientContext& context, Options const& options,
-                  google::cloud::edgenetwork::v1::GetInterconnectRequest const&
-                      request) = 0;
+  virtual StatusOr<google::cloud::edgenetwork::v1::Interconnect> GetInterconnect(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::edgenetwork::v1::GetInterconnectRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::edgenetwork::v1::DiagnoseInterconnectResponse>
-  DiagnoseInterconnect(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::edgenetwork::v1::DiagnoseInterconnectRequest const&
-          request) = 0;
+  virtual StatusOr<google::cloud::edgenetwork::v1::DiagnoseInterconnectResponse> DiagnoseInterconnect(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::edgenetwork::v1::DiagnoseInterconnectRequest const& request) = 0;
 
-  virtual StatusOr<
-      google::cloud::edgenetwork::v1::ListInterconnectAttachmentsResponse>
-  ListInterconnectAttachments(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::edgenetwork::v1::ListInterconnectAttachmentsRequest const&
-          request) = 0;
+  virtual StatusOr<google::cloud::edgenetwork::v1::ListInterconnectAttachmentsResponse> ListInterconnectAttachments(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::edgenetwork::v1::ListInterconnectAttachmentsRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::edgenetwork::v1::InterconnectAttachment>
-  GetInterconnectAttachment(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::edgenetwork::v1::GetInterconnectAttachmentRequest const&
-          request) = 0;
+  virtual StatusOr<google::cloud::edgenetwork::v1::InterconnectAttachment> GetInterconnectAttachment(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::edgenetwork::v1::GetInterconnectAttachmentRequest const& request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>>
-  AsyncCreateInterconnectAttachment(
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateInterconnectAttachment(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::edgenetwork::v1::CreateInterconnectAttachmentRequest const&
-          request) = 0;
+      google::cloud::edgenetwork::v1::CreateInterconnectAttachmentRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> CreateInterconnectAttachment(
-      grpc::ClientContext& context, Options options,
-      google::cloud::edgenetwork::v1::CreateInterconnectAttachmentRequest const&
-          request) = 0;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::edgenetwork::v1::CreateInterconnectAttachmentRequest const& request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>>
-  AsyncDeleteInterconnectAttachment(
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteInterconnectAttachment(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::edgenetwork::v1::DeleteInterconnectAttachmentRequest const&
-          request) = 0;
+      google::cloud::edgenetwork::v1::DeleteInterconnectAttachmentRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> DeleteInterconnectAttachment(
-      grpc::ClientContext& context, Options options,
-      google::cloud::edgenetwork::v1::DeleteInterconnectAttachmentRequest const&
-          request) = 0;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::edgenetwork::v1::DeleteInterconnectAttachmentRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::edgenetwork::v1::ListRoutersResponse>
-  ListRouters(
-      grpc::ClientContext& context, Options const& options,
+  virtual StatusOr<google::cloud::edgenetwork::v1::ListRoutersResponse> ListRouters(
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::edgenetwork::v1::ListRoutersRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::edgenetwork::v1::Router> GetRouter(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::edgenetwork::v1::GetRouterRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::edgenetwork::v1::DiagnoseRouterResponse>
-  DiagnoseRouter(
-      grpc::ClientContext& context, Options const& options,
+  virtual StatusOr<google::cloud::edgenetwork::v1::DiagnoseRouterResponse> DiagnoseRouter(
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::edgenetwork::v1::DiagnoseRouterRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateRouter(
@@ -202,7 +203,8 @@ class EdgeNetworkStub {
       google::cloud::edgenetwork::v1::CreateRouterRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> CreateRouter(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::cloud::edgenetwork::v1::CreateRouterRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncUpdateRouter(
@@ -212,7 +214,8 @@ class EdgeNetworkStub {
       google::cloud::edgenetwork::v1::UpdateRouterRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> UpdateRouter(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::cloud::edgenetwork::v1::UpdateRouterRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteRouter(
@@ -222,38 +225,44 @@ class EdgeNetworkStub {
       google::cloud::edgenetwork::v1::DeleteRouterRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> DeleteRouter(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::cloud::edgenetwork::v1::DeleteRouterRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::location::ListLocationsResponse>
-  ListLocations(
-      grpc::ClientContext& context, Options const& options,
+  virtual StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::location::ListLocationsRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::location::Location> GetLocation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::location::GetLocationRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::ListOperationsRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual Status DeleteOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::DeleteOperationRequest const& request) = 0;
 
   virtual Status CancelOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::CancelOperationRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
+    google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
@@ -266,241 +275,231 @@ class EdgeNetworkStub {
 class DefaultEdgeNetworkStub : public EdgeNetworkStub {
  public:
   DefaultEdgeNetworkStub(
-      std::unique_ptr<
-          google::cloud::edgenetwork::v1::EdgeNetwork::StubInterface>
-          grpc_stub,
-      std::unique_ptr<google::cloud::location::Locations::StubInterface>
-          locations_stub,
-      std::unique_ptr<google::longrunning::Operations::StubInterface>
-          operations_stub)
+      std::unique_ptr<google::cloud::edgenetwork::v1::EdgeNetwork::StubInterface> grpc_stub,
+      std::unique_ptr<google::cloud::location::Locations::StubInterface> locations_stub,
+      std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub)
       : grpc_stub_(std::move(grpc_stub)),
         locations_stub_(std::move(locations_stub)),
         operations_stub_(std::move(operations_stub)) {}
 
-  StatusOr<google::cloud::edgenetwork::v1::InitializeZoneResponse>
-  InitializeZone(grpc::ClientContext& context, Options const& options,
-                 google::cloud::edgenetwork::v1::InitializeZoneRequest const&
-                     request) override;
+  StatusOr<google::cloud::edgenetwork::v1::InitializeZoneResponse> InitializeZone(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::edgenetwork::v1::InitializeZoneRequest const& request) override;
 
   StatusOr<google::cloud::edgenetwork::v1::ListZonesResponse> ListZones(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::edgenetwork::v1::ListZonesRequest const& request) override;
 
   StatusOr<google::cloud::edgenetwork::v1::Zone> GetZone(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::edgenetwork::v1::GetZoneRequest const& request) override;
 
   StatusOr<google::cloud::edgenetwork::v1::ListNetworksResponse> ListNetworks(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::edgenetwork::v1::ListNetworksRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::edgenetwork::v1::ListNetworksRequest const& request) override;
 
   StatusOr<google::cloud::edgenetwork::v1::Network> GetNetwork(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::edgenetwork::v1::GetNetworkRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::edgenetwork::v1::GetNetworkRequest const& request) override;
 
-  StatusOr<google::cloud::edgenetwork::v1::DiagnoseNetworkResponse>
-  DiagnoseNetwork(grpc::ClientContext& context, Options const& options,
-                  google::cloud::edgenetwork::v1::DiagnoseNetworkRequest const&
-                      request) override;
+  StatusOr<google::cloud::edgenetwork::v1::DiagnoseNetworkResponse> DiagnoseNetwork(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::edgenetwork::v1::DiagnoseNetworkRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateNetwork(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::edgenetwork::v1::CreateNetworkRequest const& request)
-      override;
+      google::cloud::edgenetwork::v1::CreateNetworkRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateNetwork(
-      grpc::ClientContext& context, Options options,
-      google::cloud::edgenetwork::v1::CreateNetworkRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::edgenetwork::v1::CreateNetworkRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteNetwork(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::edgenetwork::v1::DeleteNetworkRequest const& request)
-      override;
+      google::cloud::edgenetwork::v1::DeleteNetworkRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteNetwork(
-      grpc::ClientContext& context, Options options,
-      google::cloud::edgenetwork::v1::DeleteNetworkRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::edgenetwork::v1::DeleteNetworkRequest const& request) override;
 
   StatusOr<google::cloud::edgenetwork::v1::ListSubnetsResponse> ListSubnets(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::edgenetwork::v1::ListSubnetsRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::edgenetwork::v1::ListSubnetsRequest const& request) override;
 
   StatusOr<google::cloud::edgenetwork::v1::Subnet> GetSubnet(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::edgenetwork::v1::GetSubnetRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateSubnet(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::edgenetwork::v1::CreateSubnetRequest const& request)
-      override;
+      google::cloud::edgenetwork::v1::CreateSubnetRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateSubnet(
-      grpc::ClientContext& context, Options options,
-      google::cloud::edgenetwork::v1::CreateSubnetRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::edgenetwork::v1::CreateSubnetRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateSubnet(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::edgenetwork::v1::UpdateSubnetRequest const& request)
-      override;
+      google::cloud::edgenetwork::v1::UpdateSubnetRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateSubnet(
-      grpc::ClientContext& context, Options options,
-      google::cloud::edgenetwork::v1::UpdateSubnetRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::edgenetwork::v1::UpdateSubnetRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteSubnet(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::edgenetwork::v1::DeleteSubnetRequest const& request)
-      override;
+      google::cloud::edgenetwork::v1::DeleteSubnetRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteSubnet(
-      grpc::ClientContext& context, Options options,
-      google::cloud::edgenetwork::v1::DeleteSubnetRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::edgenetwork::v1::DeleteSubnetRequest const& request) override;
 
-  StatusOr<google::cloud::edgenetwork::v1::ListInterconnectsResponse>
-  ListInterconnects(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::edgenetwork::v1::ListInterconnectsRequest const& request)
-      override;
+  StatusOr<google::cloud::edgenetwork::v1::ListInterconnectsResponse> ListInterconnects(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::edgenetwork::v1::ListInterconnectsRequest const& request) override;
 
   StatusOr<google::cloud::edgenetwork::v1::Interconnect> GetInterconnect(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::edgenetwork::v1::GetInterconnectRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::edgenetwork::v1::GetInterconnectRequest const& request) override;
 
-  StatusOr<google::cloud::edgenetwork::v1::DiagnoseInterconnectResponse>
-  DiagnoseInterconnect(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::edgenetwork::v1::DiagnoseInterconnectRequest const&
-          request) override;
+  StatusOr<google::cloud::edgenetwork::v1::DiagnoseInterconnectResponse> DiagnoseInterconnect(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::edgenetwork::v1::DiagnoseInterconnectRequest const& request) override;
 
-  StatusOr<google::cloud::edgenetwork::v1::ListInterconnectAttachmentsResponse>
-  ListInterconnectAttachments(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::edgenetwork::v1::ListInterconnectAttachmentsRequest const&
-          request) override;
+  StatusOr<google::cloud::edgenetwork::v1::ListInterconnectAttachmentsResponse> ListInterconnectAttachments(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::edgenetwork::v1::ListInterconnectAttachmentsRequest const& request) override;
 
-  StatusOr<google::cloud::edgenetwork::v1::InterconnectAttachment>
-  GetInterconnectAttachment(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::edgenetwork::v1::GetInterconnectAttachmentRequest const&
-          request) override;
+  StatusOr<google::cloud::edgenetwork::v1::InterconnectAttachment> GetInterconnectAttachment(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::edgenetwork::v1::GetInterconnectAttachmentRequest const& request) override;
 
-  future<StatusOr<google::longrunning::Operation>>
-  AsyncCreateInterconnectAttachment(
+  future<StatusOr<google::longrunning::Operation>> AsyncCreateInterconnectAttachment(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::edgenetwork::v1::CreateInterconnectAttachmentRequest const&
-          request) override;
+      google::cloud::edgenetwork::v1::CreateInterconnectAttachmentRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateInterconnectAttachment(
-      grpc::ClientContext& context, Options options,
-      google::cloud::edgenetwork::v1::CreateInterconnectAttachmentRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::edgenetwork::v1::CreateInterconnectAttachmentRequest const& request) override;
 
-  future<StatusOr<google::longrunning::Operation>>
-  AsyncDeleteInterconnectAttachment(
+  future<StatusOr<google::longrunning::Operation>> AsyncDeleteInterconnectAttachment(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::edgenetwork::v1::DeleteInterconnectAttachmentRequest const&
-          request) override;
+      google::cloud::edgenetwork::v1::DeleteInterconnectAttachmentRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteInterconnectAttachment(
-      grpc::ClientContext& context, Options options,
-      google::cloud::edgenetwork::v1::DeleteInterconnectAttachmentRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::edgenetwork::v1::DeleteInterconnectAttachmentRequest const& request) override;
 
   StatusOr<google::cloud::edgenetwork::v1::ListRoutersResponse> ListRouters(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::edgenetwork::v1::ListRoutersRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::edgenetwork::v1::ListRoutersRequest const& request) override;
 
   StatusOr<google::cloud::edgenetwork::v1::Router> GetRouter(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::edgenetwork::v1::GetRouterRequest const& request) override;
 
-  StatusOr<google::cloud::edgenetwork::v1::DiagnoseRouterResponse>
-  DiagnoseRouter(grpc::ClientContext& context, Options const& options,
-                 google::cloud::edgenetwork::v1::DiagnoseRouterRequest const&
-                     request) override;
+  StatusOr<google::cloud::edgenetwork::v1::DiagnoseRouterResponse> DiagnoseRouter(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::edgenetwork::v1::DiagnoseRouterRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateRouter(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::edgenetwork::v1::CreateRouterRequest const& request)
-      override;
+      google::cloud::edgenetwork::v1::CreateRouterRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateRouter(
-      grpc::ClientContext& context, Options options,
-      google::cloud::edgenetwork::v1::CreateRouterRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::edgenetwork::v1::CreateRouterRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateRouter(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::edgenetwork::v1::UpdateRouterRequest const& request)
-      override;
+      google::cloud::edgenetwork::v1::UpdateRouterRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateRouter(
-      grpc::ClientContext& context, Options options,
-      google::cloud::edgenetwork::v1::UpdateRouterRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::edgenetwork::v1::UpdateRouterRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteRouter(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::edgenetwork::v1::DeleteRouterRequest const& request)
-      override;
+      google::cloud::edgenetwork::v1::DeleteRouterRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteRouter(
-      grpc::ClientContext& context, Options options,
-      google::cloud::edgenetwork::v1::DeleteRouterRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::edgenetwork::v1::DeleteRouterRequest const& request) override;
 
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::location::ListLocationsRequest const& request) override;
 
   StatusOr<google::cloud::location::Location> GetLocation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::location::GetLocationRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status DeleteOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::DeleteOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -516,12 +515,9 @@ class DefaultEdgeNetworkStub : public EdgeNetworkStub {
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  std::unique_ptr<google::cloud::edgenetwork::v1::EdgeNetwork::StubInterface>
-      grpc_stub_;
-  std::unique_ptr<google::cloud::location::Locations::StubInterface>
-      locations_stub_;
-  std::unique_ptr<google::longrunning::Operations::StubInterface>
-      operations_stub_;
+  std::unique_ptr<google::cloud::edgenetwork::v1::EdgeNetwork::StubInterface> grpc_stub_;
+  std::unique_ptr<google::cloud::location::Locations::StubInterface> locations_stub_;
+  std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

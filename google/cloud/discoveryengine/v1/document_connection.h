@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DISCOVERYENGINE_V1_DOCUMENT_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DISCOVERYENGINE_V1_DOCUMENT_CONNECTION_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/discoveryengine/v1/document_connection_idempotency_policy.h"
 #include "google/cloud/discoveryengine/v1/internal/document_retry_traits.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -56,8 +56,7 @@ class DocumentServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class DocumentServiceLimitedErrorCountRetryPolicy
-    : public DocumentServiceRetryPolicy {
+class DocumentServiceLimitedErrorCountRetryPolicy : public DocumentServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -67,14 +66,14 @@ class DocumentServiceLimitedErrorCountRetryPolicy
    *     @p maximum_failures == 0.
    */
   explicit DocumentServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   DocumentServiceLimitedErrorCountRetryPolicy(
       DocumentServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : DocumentServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : DocumentServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   DocumentServiceLimitedErrorCountRetryPolicy(
       DocumentServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : DocumentServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : DocumentServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -94,9 +93,7 @@ class DocumentServiceLimitedErrorCountRetryPolicy
   using BaseType = DocumentServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      discoveryengine_v1_internal::DocumentServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<discoveryengine_v1_internal::DocumentServiceRetryTraits> impl_;
 };
 
 /**
@@ -109,8 +106,7 @@ class DocumentServiceLimitedErrorCountRetryPolicy
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class DocumentServiceLimitedTimeRetryPolicy
-    : public DocumentServiceRetryPolicy {
+class DocumentServiceLimitedTimeRetryPolicy : public DocumentServiceRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -135,14 +131,12 @@ class DocumentServiceLimitedTimeRetryPolicy
   template <typename DurationRep, typename DurationPeriod>
   explicit DocumentServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  DocumentServiceLimitedTimeRetryPolicy(
-      DocumentServiceLimitedTimeRetryPolicy&& rhs) noexcept
-      : DocumentServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  DocumentServiceLimitedTimeRetryPolicy(
-      DocumentServiceLimitedTimeRetryPolicy const& rhs) noexcept
-      : DocumentServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  DocumentServiceLimitedTimeRetryPolicy(DocumentServiceLimitedTimeRetryPolicy&& rhs) noexcept
+    : DocumentServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  DocumentServiceLimitedTimeRetryPolicy(DocumentServiceLimitedTimeRetryPolicy const& rhs) noexcept
+    : DocumentServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -164,9 +158,7 @@ class DocumentServiceLimitedTimeRetryPolicy
   using BaseType = DocumentServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      discoveryengine_v1_internal::DocumentServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<discoveryengine_v1_internal::DocumentServiceRetryTraits> impl_;
 };
 
 /**
@@ -187,76 +179,61 @@ class DocumentServiceConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<google::cloud::discoveryengine::v1::Document> GetDocument(
-      google::cloud::discoveryengine::v1::GetDocumentRequest const& request);
+  virtual StatusOr<google::cloud::discoveryengine::v1::Document>
+  GetDocument(google::cloud::discoveryengine::v1::GetDocumentRequest const& request);
 
   virtual StreamRange<google::cloud::discoveryengine::v1::Document>
-  ListDocuments(
-      google::cloud::discoveryengine::v1::ListDocumentsRequest request);
+  ListDocuments(google::cloud::discoveryengine::v1::ListDocumentsRequest request);
 
-  virtual StatusOr<google::cloud::discoveryengine::v1::Document> CreateDocument(
-      google::cloud::discoveryengine::v1::CreateDocumentRequest const& request);
+  virtual StatusOr<google::cloud::discoveryengine::v1::Document>
+  CreateDocument(google::cloud::discoveryengine::v1::CreateDocumentRequest const& request);
 
-  virtual StatusOr<google::cloud::discoveryengine::v1::Document> UpdateDocument(
-      google::cloud::discoveryengine::v1::UpdateDocumentRequest const& request);
+  virtual StatusOr<google::cloud::discoveryengine::v1::Document>
+  UpdateDocument(google::cloud::discoveryengine::v1::UpdateDocumentRequest const& request);
 
-  virtual Status DeleteDocument(
-      google::cloud::discoveryengine::v1::DeleteDocumentRequest const& request);
+  virtual Status
+  DeleteDocument(google::cloud::discoveryengine::v1::DeleteDocumentRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::discoveryengine::v1::ImportDocumentsResponse>>
-  ImportDocuments(
-      google::cloud::discoveryengine::v1::ImportDocumentsRequest const&
-          request);
+  virtual future<StatusOr<google::cloud::discoveryengine::v1::ImportDocumentsResponse>>
+  ImportDocuments(google::cloud::discoveryengine::v1::ImportDocumentsRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> ImportDocuments(
-      NoAwaitTag,
-      google::cloud::discoveryengine::v1::ImportDocumentsRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  ImportDocuments(NoAwaitTag, google::cloud::discoveryengine::v1::ImportDocumentsRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::discoveryengine::v1::ImportDocumentsResponse>>
-  ImportDocuments(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::discoveryengine::v1::ImportDocumentsResponse>>
+  ImportDocuments( google::longrunning::Operation const& operation);
 
-  virtual future<
-      StatusOr<google::cloud::discoveryengine::v1::PurgeDocumentsResponse>>
-  PurgeDocuments(
-      google::cloud::discoveryengine::v1::PurgeDocumentsRequest const& request);
+  virtual future<StatusOr<google::cloud::discoveryengine::v1::PurgeDocumentsResponse>>
+  PurgeDocuments(google::cloud::discoveryengine::v1::PurgeDocumentsRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> PurgeDocuments(
-      NoAwaitTag,
-      google::cloud::discoveryengine::v1::PurgeDocumentsRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  PurgeDocuments(NoAwaitTag, google::cloud::discoveryengine::v1::PurgeDocumentsRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::discoveryengine::v1::PurgeDocumentsResponse>>
-  PurgeDocuments(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::discoveryengine::v1::PurgeDocumentsResponse>>
+  PurgeDocuments( google::longrunning::Operation const& operation);
 
-  virtual StatusOr<
-      google::cloud::discoveryengine::v1::BatchGetDocumentsMetadataResponse>
-  BatchGetDocumentsMetadata(
-      google::cloud::discoveryengine::v1::
-          BatchGetDocumentsMetadataRequest const& request);
+  virtual StatusOr<google::cloud::discoveryengine::v1::BatchGetDocumentsMetadataResponse>
+  BatchGetDocumentsMetadata(google::cloud::discoveryengine::v1::BatchGetDocumentsMetadataRequest const& request);
 
-  virtual StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 
-  virtual Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request);
+  virtual Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request);
 };
 
 /**
- * A factory function to construct an object of type
- * `DocumentServiceConnection`.
+ * A factory function to construct an object of type `DocumentServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
  * should be passed as an argument to the constructor of DocumentServiceClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `DocumentServiceConnection`. Expected options are any of the types
- * in the following option lists:
+ * returned `DocumentServiceConnection`. Expected options are any of the types in
+ * the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
@@ -266,8 +243,8 @@ class DocumentServiceConnection {
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
- * @param options (optional) Configure the `DocumentServiceConnection` created
- * by this function.
+ * @param options (optional) Configure the `DocumentServiceConnection` created by
+ * this function.
  */
 std::shared_ptr<DocumentServiceConnection> MakeDocumentServiceConnection(
     Options options = {});

@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_SNAPSHOTS_V1_SNAPSHOTS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_SNAPSHOTS_V1_SNAPSHOTS_CONNECTION_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/snapshots/v1/internal/snapshots_retry_traits.h"
 #include "google/cloud/compute/snapshots/v1/snapshots_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -65,14 +65,14 @@ class SnapshotsLimitedErrorCountRetryPolicy : public SnapshotsRetryPolicy {
    *     @p maximum_failures == 0.
    */
   explicit SnapshotsLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   SnapshotsLimitedErrorCountRetryPolicy(
       SnapshotsLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : SnapshotsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : SnapshotsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   SnapshotsLimitedErrorCountRetryPolicy(
       SnapshotsLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : SnapshotsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : SnapshotsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -92,9 +92,7 @@ class SnapshotsLimitedErrorCountRetryPolicy : public SnapshotsRetryPolicy {
   using BaseType = SnapshotsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      compute_snapshots_v1_internal::SnapshotsRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<compute_snapshots_v1_internal::SnapshotsRetryTraits> impl_;
 };
 
 /**
@@ -132,14 +130,12 @@ class SnapshotsLimitedTimeRetryPolicy : public SnapshotsRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit SnapshotsLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  SnapshotsLimitedTimeRetryPolicy(
-      SnapshotsLimitedTimeRetryPolicy&& rhs) noexcept
-      : SnapshotsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  SnapshotsLimitedTimeRetryPolicy(
-      SnapshotsLimitedTimeRetryPolicy const& rhs) noexcept
-      : SnapshotsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  SnapshotsLimitedTimeRetryPolicy(SnapshotsLimitedTimeRetryPolicy&& rhs) noexcept
+    : SnapshotsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  SnapshotsLimitedTimeRetryPolicy(SnapshotsLimitedTimeRetryPolicy const& rhs) noexcept
+    : SnapshotsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -161,9 +157,7 @@ class SnapshotsLimitedTimeRetryPolicy : public SnapshotsRetryPolicy {
   using BaseType = SnapshotsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      compute_snapshots_v1_internal::SnapshotsRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<compute_snapshots_v1_internal::SnapshotsRetryTraits> impl_;
 };
 
 /**
@@ -185,61 +179,46 @@ class SnapshotsConnection {
   virtual Options options() { return Options{}; }
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteSnapshot(
-      google::cloud::cpp::compute::snapshots::v1::DeleteSnapshotRequest const&
-          request);
+  DeleteSnapshot(google::cloud::cpp::compute::snapshots::v1::DeleteSnapshotRequest const& request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteSnapshot(
-      NoAwaitTag,
-      google::cloud::cpp::compute::snapshots::v1::DeleteSnapshotRequest const&
-          request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeleteSnapshot(NoAwaitTag, google::cloud::cpp::compute::snapshots::v1::DeleteSnapshotRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteSnapshot(google::cloud::cpp::compute::v1::Operation const& operation);
+  DeleteSnapshot( google::cloud::cpp::compute::v1::Operation const& operation);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Snapshot> GetSnapshot(
-      google::cloud::cpp::compute::snapshots::v1::GetSnapshotRequest const&
-          request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Snapshot>
+  GetSnapshot(google::cloud::cpp::compute::snapshots::v1::GetSnapshotRequest const& request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
-      google::cloud::cpp::compute::snapshots::v1::GetIamPolicyRequest const&
-          request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Policy>
+  GetIamPolicy(google::cloud::cpp::compute::snapshots::v1::GetIamPolicyRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertSnapshot(
-      google::cloud::cpp::compute::snapshots::v1::InsertSnapshotRequest const&
-          request);
+  InsertSnapshot(google::cloud::cpp::compute::snapshots::v1::InsertSnapshotRequest const& request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> InsertSnapshot(
-      NoAwaitTag,
-      google::cloud::cpp::compute::snapshots::v1::InsertSnapshotRequest const&
-          request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  InsertSnapshot(NoAwaitTag, google::cloud::cpp::compute::snapshots::v1::InsertSnapshotRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertSnapshot(google::cloud::cpp::compute::v1::Operation const& operation);
+  InsertSnapshot( google::cloud::cpp::compute::v1::Operation const& operation);
 
-  virtual StreamRange<google::cloud::cpp::compute::v1::Snapshot> ListSnapshots(
-      google::cloud::cpp::compute::snapshots::v1::ListSnapshotsRequest request);
+  virtual StreamRange<google::cloud::cpp::compute::v1::Snapshot>
+  ListSnapshots(google::cloud::cpp::compute::snapshots::v1::ListSnapshotsRequest request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
-      google::cloud::cpp::compute::snapshots::v1::SetIamPolicyRequest const&
-          request);
-
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetLabels(google::cloud::cpp::compute::snapshots::v1::SetLabelsRequest const&
-                request);
-
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
-      NoAwaitTag,
-      google::cloud::cpp::compute::snapshots::v1::SetLabelsRequest const&
-          request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Policy>
+  SetIamPolicy(google::cloud::cpp::compute::snapshots::v1::SetIamPolicyRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetLabels(google::cloud::cpp::compute::v1::Operation const& operation);
+  SetLabels(google::cloud::cpp::compute::snapshots::v1::SetLabelsRequest const& request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  SetLabels(NoAwaitTag, google::cloud::cpp::compute::snapshots::v1::SetLabelsRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  SetLabels( google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(google::cloud::cpp::compute::snapshots::v1::
-                         TestIamPermissionsRequest const& request);
+  TestIamPermissions(google::cloud::cpp::compute::snapshots::v1::TestIamPermissionsRequest const& request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

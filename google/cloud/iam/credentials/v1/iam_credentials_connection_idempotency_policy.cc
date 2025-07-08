@@ -26,36 +26,31 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-IAMCredentialsConnectionIdempotencyPolicy::
-    ~IAMCredentialsConnectionIdempotencyPolicy() = default;
+IAMCredentialsConnectionIdempotencyPolicy::~IAMCredentialsConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<IAMCredentialsConnectionIdempotencyPolicy>
 IAMCredentialsConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<IAMCredentialsConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency IAMCredentialsConnectionIdempotencyPolicy::GenerateAccessToken(
-    google::iam::credentials::v1::GenerateAccessTokenRequest const&) {
+Idempotency IAMCredentialsConnectionIdempotencyPolicy::GenerateAccessToken(google::iam::credentials::v1::GenerateAccessTokenRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency IAMCredentialsConnectionIdempotencyPolicy::GenerateIdToken(
-    google::iam::credentials::v1::GenerateIdTokenRequest const&) {
+Idempotency IAMCredentialsConnectionIdempotencyPolicy::GenerateIdToken(google::iam::credentials::v1::GenerateIdTokenRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency IAMCredentialsConnectionIdempotencyPolicy::SignBlob(
-    google::iam::credentials::v1::SignBlobRequest const&) {
+Idempotency IAMCredentialsConnectionIdempotencyPolicy::SignBlob(google::iam::credentials::v1::SignBlobRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency IAMCredentialsConnectionIdempotencyPolicy::SignJwt(
-    google::iam::credentials::v1::SignJwtRequest const&) {
+Idempotency IAMCredentialsConnectionIdempotencyPolicy::SignJwt(google::iam::credentials::v1::SignJwtRequest const&) {
   return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<IAMCredentialsConnectionIdempotencyPolicy>
-MakeDefaultIAMCredentialsConnectionIdempotencyPolicy() {
+    MakeDefaultIAMCredentialsConnectionIdempotencyPolicy() {
   return std::make_unique<IAMCredentialsConnectionIdempotencyPolicy>();
 }
 

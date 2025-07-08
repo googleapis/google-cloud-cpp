@@ -36,30 +36,27 @@ class OrganizationsTracingConnection
   ~OrganizationsTracingConnection() override = default;
 
   explicit OrganizationsTracingConnection(
-      std::shared_ptr<resourcemanager_v3::OrganizationsConnection> child);
+    std::shared_ptr<resourcemanager_v3::OrganizationsConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::resourcemanager::v3::Organization> GetOrganization(
-      google::cloud::resourcemanager::v3::GetOrganizationRequest const& request)
-      override;
+  StatusOr<google::cloud::resourcemanager::v3::Organization>
+  GetOrganization(google::cloud::resourcemanager::v3::GetOrganizationRequest const& request) override;
 
   StreamRange<google::cloud::resourcemanager::v3::Organization>
-  SearchOrganizations(
-      google::cloud::resourcemanager::v3::SearchOrganizationsRequest request)
-      override;
+  SearchOrganizations(google::cloud::resourcemanager::v3::SearchOrganizationsRequest request) override;
 
-  StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request) override;
+  StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request) override;
 
  private:
   std::shared_ptr<resourcemanager_v3::OrganizationsConnection> child_;

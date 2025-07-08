@@ -35,28 +35,26 @@ class ImageAnnotatorConnectionIdempotencyPolicy {
   virtual ~ImageAnnotatorConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<ImageAnnotatorConnectionIdempotencyPolicy> clone()
-      const;
+  virtual std::unique_ptr<ImageAnnotatorConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency BatchAnnotateImages(
-      google::cloud::vision::v1::BatchAnnotateImagesRequest const& request);
+  virtual google::cloud::Idempotency
+  BatchAnnotateImages(google::cloud::vision::v1::BatchAnnotateImagesRequest const& request);
 
-  virtual google::cloud::Idempotency BatchAnnotateFiles(
-      google::cloud::vision::v1::BatchAnnotateFilesRequest const& request);
+  virtual google::cloud::Idempotency
+  BatchAnnotateFiles(google::cloud::vision::v1::BatchAnnotateFilesRequest const& request);
 
-  virtual google::cloud::Idempotency AsyncBatchAnnotateImages(
-      google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  AsyncBatchAnnotateImages(google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest const& request);
 
-  virtual google::cloud::Idempotency AsyncBatchAnnotateFiles(
-      google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const& request);
+  virtual google::cloud::Idempotency
+  AsyncBatchAnnotateFiles(google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const& request);
 
-  virtual google::cloud::Idempotency GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 };
 
 std::unique_ptr<ImageAnnotatorConnectionIdempotencyPolicy>
-MakeDefaultImageAnnotatorConnectionIdempotencyPolicy();
+    MakeDefaultImageAnnotatorConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace vision_v1

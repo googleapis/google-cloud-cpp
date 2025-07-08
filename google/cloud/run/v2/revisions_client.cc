@@ -28,34 +28,34 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 RevisionsClient::RevisionsClient(
     std::shared_ptr<RevisionsConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 RevisionsClient::~RevisionsClient() = default;
 
-StatusOr<google::cloud::run::v2::Revision> RevisionsClient::GetRevision(
-    std::string const& name, Options opts) {
+StatusOr<google::cloud::run::v2::Revision>
+RevisionsClient::GetRevision(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::run::v2::GetRevisionRequest request;
   request.set_name(name);
   return connection_->GetRevision(request);
 }
 
-StatusOr<google::cloud::run::v2::Revision> RevisionsClient::GetRevision(
-    google::cloud::run::v2::GetRevisionRequest const& request, Options opts) {
+StatusOr<google::cloud::run::v2::Revision>
+RevisionsClient::GetRevision(google::cloud::run::v2::GetRevisionRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetRevision(request);
 }
 
-StreamRange<google::cloud::run::v2::Revision> RevisionsClient::ListRevisions(
-    std::string const& parent, Options opts) {
+StreamRange<google::cloud::run::v2::Revision>
+RevisionsClient::ListRevisions(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::run::v2::ListRevisionsRequest request;
   request.set_parent(parent);
   return connection_->ListRevisions(request);
 }
 
-StreamRange<google::cloud::run::v2::Revision> RevisionsClient::ListRevisions(
-    google::cloud::run::v2::ListRevisionsRequest request, Options opts) {
+StreamRange<google::cloud::run::v2::Revision>
+RevisionsClient::ListRevisions(google::cloud::run::v2::ListRevisionsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListRevisions(std::move(request));
 }
@@ -68,8 +68,8 @@ RevisionsClient::DeleteRevision(std::string const& name, Options opts) {
   return connection_->DeleteRevision(request);
 }
 
-StatusOr<google::longrunning::Operation> RevisionsClient::DeleteRevision(
-    NoAwaitTag, std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation>
+RevisionsClient::DeleteRevision(NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::run::v2::DeleteRevisionRequest request;
   request.set_name(name);
@@ -77,29 +77,25 @@ StatusOr<google::longrunning::Operation> RevisionsClient::DeleteRevision(
 }
 
 future<StatusOr<google::cloud::run::v2::Revision>>
-RevisionsClient::DeleteRevision(
-    google::cloud::run::v2::DeleteRevisionRequest const& request,
-    Options opts) {
+RevisionsClient::DeleteRevision(google::cloud::run::v2::DeleteRevisionRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteRevision(request);
 }
 
-StatusOr<google::longrunning::Operation> RevisionsClient::DeleteRevision(
-    NoAwaitTag, google::cloud::run::v2::DeleteRevisionRequest const& request,
-    Options opts) {
+StatusOr<google::longrunning::Operation>
+RevisionsClient::DeleteRevision(NoAwaitTag, google::cloud::run::v2::DeleteRevisionRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteRevision(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::run::v2::Revision>>
-RevisionsClient::DeleteRevision(google::longrunning::Operation const& operation,
-                                Options opts) {
+RevisionsClient::DeleteRevision(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteRevision(operation);
 }
 
-StreamRange<google::longrunning::Operation> RevisionsClient::ListOperations(
-    std::string const& name, std::string const& filter, Options opts) {
+StreamRange<google::longrunning::Operation>
+RevisionsClient::ListOperations(std::string const& name, std::string const& filter, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::ListOperationsRequest request;
   request.set_name(name);
@@ -107,41 +103,42 @@ StreamRange<google::longrunning::Operation> RevisionsClient::ListOperations(
   return connection_->ListOperations(request);
 }
 
-StreamRange<google::longrunning::Operation> RevisionsClient::ListOperations(
-    google::longrunning::ListOperationsRequest request, Options opts) {
+StreamRange<google::longrunning::Operation>
+RevisionsClient::ListOperations(google::longrunning::ListOperationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOperations(std::move(request));
 }
 
-StatusOr<google::longrunning::Operation> RevisionsClient::GetOperation(
-    std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation>
+RevisionsClient::GetOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
   return connection_->GetOperation(request);
 }
 
-StatusOr<google::longrunning::Operation> RevisionsClient::GetOperation(
-    google::longrunning::GetOperationRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation>
+RevisionsClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }
 
-Status RevisionsClient::DeleteOperation(std::string const& name, Options opts) {
+Status
+RevisionsClient::DeleteOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::DeleteOperationRequest request;
   request.set_name(name);
   return connection_->DeleteOperation(request);
 }
 
-Status RevisionsClient::DeleteOperation(
-    google::longrunning::DeleteOperationRequest const& request, Options opts) {
+Status
+RevisionsClient::DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteOperation(request);
 }
 
-StatusOr<google::longrunning::Operation> RevisionsClient::WaitOperation(
-    google::longrunning::WaitOperationRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation>
+RevisionsClient::WaitOperation(google::longrunning::WaitOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->WaitOperation(request);
 }

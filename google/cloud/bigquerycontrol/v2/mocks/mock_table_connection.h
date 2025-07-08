@@ -42,37 +42,33 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockTableServiceConnection
-    : public bigquerycontrol_v2::TableServiceConnection {
+class MockTableServiceConnection : public bigquerycontrol_v2::TableServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::bigquery::v2::Table>, GetTable,
-              (google::cloud::bigquery::v2::GetTableRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::bigquery::v2::Table>,
+  GetTable,
+  (google::cloud::bigquery::v2::GetTableRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::bigquery::v2::Table>, InsertTable,
-              (google::cloud::bigquery::v2::InsertTableRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::bigquery::v2::Table>,
+  InsertTable,
+  (google::cloud::bigquery::v2::InsertTableRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::bigquery::v2::Table>, PatchTable,
-      (google::cloud::bigquery::v2::UpdateOrPatchTableRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::bigquery::v2::Table>,
+  PatchTable,
+  (google::cloud::bigquery::v2::UpdateOrPatchTableRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::bigquery::v2::Table>, UpdateTable,
-      (google::cloud::bigquery::v2::UpdateOrPatchTableRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::bigquery::v2::Table>,
+  UpdateTable,
+  (google::cloud::bigquery::v2::UpdateOrPatchTableRequest const& request), (override));
 
-  MOCK_METHOD(Status, DeleteTable,
-              (google::cloud::bigquery::v2::DeleteTableRequest const& request),
-              (override));
+  MOCK_METHOD(Status,
+  DeleteTable,
+  (google::cloud::bigquery::v2::DeleteTableRequest const& request), (override));
 
   MOCK_METHOD((StreamRange<google::cloud::bigquery::v2::ListFormatTable>),
-              ListTables,
-              (google::cloud::bigquery::v2::ListTablesRequest request),
-              (override));
+  ListTables,
+  (google::cloud::bigquery::v2::ListTablesRequest request), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAM_V1_IAM_POLICY_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAM_V1_IAM_POLICY_CLIENT_H
 
-#include "google/cloud/iam/v1/iam_policy_connection.h"
 #include "google/cloud/future.h"
+#include "google/cloud/iam/v1/iam_policy_connection.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -49,8 +49,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// implementations can choose the granularity of access control and the
 /// supported permissions for their resources.
 /// For example one database service may allow access control to be
-/// specified only at the Table level, whereas another might allow access
-/// control to also be specified at the Column level.
+/// specified only at the Table level, whereas another might allow access control
+/// to also be specified at the Column level.
 ///
 /// ## Policy Structure
 ///
@@ -85,8 +85,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class IAMPolicyClient {
  public:
-  explicit IAMPolicyClient(std::shared_ptr<IAMPolicyConnection> connection,
-                           Options opts = {});
+  explicit IAMPolicyClient(std::shared_ptr<IAMPolicyConnection> connection, Options opts = {});
   ~IAMPolicyClient();
 
   ///@{
@@ -137,8 +136,8 @@ class IAMPolicyClient {
   /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L100}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -169,8 +168,8 @@ class IAMPolicyClient {
   /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -205,9 +204,8 @@ class IAMPolicyClient {
   /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L153}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request,
-      Options opts = {});
+  StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<IAMPolicyConnection> connection_;

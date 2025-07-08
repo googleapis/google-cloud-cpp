@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_V3_INTERNAL_QUERY_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_V3_INTERNAL_QUERY_CONNECTION_IMPL_H
 
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/monitoring/v3/internal/query_retry_traits.h"
 #include "google/cloud/monitoring/v3/internal/query_stub.h"
 #include "google/cloud/monitoring/v3/query_connection.h"
 #include "google/cloud/monitoring/v3/query_connection_idempotency_policy.h"
 #include "google/cloud/monitoring/v3/query_options.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -43,14 +43,14 @@ class QueryServiceConnectionImpl
   ~QueryServiceConnectionImpl() override = default;
 
   QueryServiceConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<monitoring_v3_internal::QueryServiceStub> stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<monitoring_v3_internal::QueryServiceStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
-  StreamRange<google::monitoring::v3::TimeSeriesData> QueryTimeSeries(
-      google::monitoring::v3::QueryTimeSeriesRequest request) override;
+  StreamRange<google::monitoring::v3::TimeSeriesData>
+  QueryTimeSeries(google::monitoring::v3::QueryTimeSeriesRequest request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

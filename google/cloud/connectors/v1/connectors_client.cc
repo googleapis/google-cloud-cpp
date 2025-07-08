@@ -28,8 +28,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ConnectorsClient::ConnectorsClient(
     std::shared_ptr<ConnectorsConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 ConnectorsClient::~ConnectorsClient() = default;
 
 StreamRange<google::cloud::connectors::v1::Connection>
@@ -41,9 +41,7 @@ ConnectorsClient::ListConnections(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::connectors::v1::Connection>
-ConnectorsClient::ListConnections(
-    google::cloud::connectors::v1::ListConnectionsRequest request,
-    Options opts) {
+ConnectorsClient::ListConnections(google::cloud::connectors::v1::ListConnectionsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListConnections(std::move(request));
 }
@@ -57,18 +55,13 @@ ConnectorsClient::GetConnection(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::connectors::v1::Connection>
-ConnectorsClient::GetConnection(
-    google::cloud::connectors::v1::GetConnectionRequest const& request,
-    Options opts) {
+ConnectorsClient::GetConnection(google::cloud::connectors::v1::GetConnectionRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetConnection(request);
 }
 
 future<StatusOr<google::cloud::connectors::v1::Connection>>
-ConnectorsClient::CreateConnection(
-    std::string const& parent,
-    google::cloud::connectors::v1::Connection const& connection,
-    std::string const& connection_id, Options opts) {
+ConnectorsClient::CreateConnection(std::string const& parent, google::cloud::connectors::v1::Connection const& connection, std::string const& connection_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::connectors::v1::CreateConnectionRequest request;
   request.set_parent(parent);
@@ -77,10 +70,8 @@ ConnectorsClient::CreateConnection(
   return connection_->CreateConnection(request);
 }
 
-StatusOr<google::longrunning::Operation> ConnectorsClient::CreateConnection(
-    NoAwaitTag, std::string const& parent,
-    google::cloud::connectors::v1::Connection const& connection,
-    std::string const& connection_id, Options opts) {
+StatusOr<google::longrunning::Operation>
+ConnectorsClient::CreateConnection(NoAwaitTag, std::string const& parent, google::cloud::connectors::v1::Connection const& connection, std::string const& connection_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::connectors::v1::CreateConnectionRequest request;
   request.set_parent(parent);
@@ -90,32 +81,25 @@ StatusOr<google::longrunning::Operation> ConnectorsClient::CreateConnection(
 }
 
 future<StatusOr<google::cloud::connectors::v1::Connection>>
-ConnectorsClient::CreateConnection(
-    google::cloud::connectors::v1::CreateConnectionRequest const& request,
-    Options opts) {
+ConnectorsClient::CreateConnection(google::cloud::connectors::v1::CreateConnectionRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateConnection(request);
 }
 
-StatusOr<google::longrunning::Operation> ConnectorsClient::CreateConnection(
-    NoAwaitTag,
-    google::cloud::connectors::v1::CreateConnectionRequest const& request,
-    Options opts) {
+StatusOr<google::longrunning::Operation>
+ConnectorsClient::CreateConnection(NoAwaitTag, google::cloud::connectors::v1::CreateConnectionRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateConnection(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::connectors::v1::Connection>>
-ConnectorsClient::CreateConnection(
-    google::longrunning::Operation const& operation, Options opts) {
+ConnectorsClient::CreateConnection(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateConnection(operation);
 }
 
 future<StatusOr<google::cloud::connectors::v1::Connection>>
-ConnectorsClient::UpdateConnection(
-    google::cloud::connectors::v1::Connection const& connection,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+ConnectorsClient::UpdateConnection(google::cloud::connectors::v1::Connection const& connection, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::connectors::v1::UpdateConnectionRequest request;
   *request.mutable_connection() = connection;
@@ -123,9 +107,8 @@ ConnectorsClient::UpdateConnection(
   return connection_->UpdateConnection(request);
 }
 
-StatusOr<google::longrunning::Operation> ConnectorsClient::UpdateConnection(
-    NoAwaitTag, google::cloud::connectors::v1::Connection const& connection,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+StatusOr<google::longrunning::Operation>
+ConnectorsClient::UpdateConnection(NoAwaitTag, google::cloud::connectors::v1::Connection const& connection, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::connectors::v1::UpdateConnectionRequest request;
   *request.mutable_connection() = connection;
@@ -134,24 +117,19 @@ StatusOr<google::longrunning::Operation> ConnectorsClient::UpdateConnection(
 }
 
 future<StatusOr<google::cloud::connectors::v1::Connection>>
-ConnectorsClient::UpdateConnection(
-    google::cloud::connectors::v1::UpdateConnectionRequest const& request,
-    Options opts) {
+ConnectorsClient::UpdateConnection(google::cloud::connectors::v1::UpdateConnectionRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateConnection(request);
 }
 
-StatusOr<google::longrunning::Operation> ConnectorsClient::UpdateConnection(
-    NoAwaitTag,
-    google::cloud::connectors::v1::UpdateConnectionRequest const& request,
-    Options opts) {
+StatusOr<google::longrunning::Operation>
+ConnectorsClient::UpdateConnection(NoAwaitTag, google::cloud::connectors::v1::UpdateConnectionRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateConnection(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::connectors::v1::Connection>>
-ConnectorsClient::UpdateConnection(
-    google::longrunning::Operation const& operation, Options opts) {
+ConnectorsClient::UpdateConnection(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateConnection(operation);
 }
@@ -164,8 +142,8 @@ ConnectorsClient::DeleteConnection(std::string const& name, Options opts) {
   return connection_->DeleteConnection(request);
 }
 
-StatusOr<google::longrunning::Operation> ConnectorsClient::DeleteConnection(
-    NoAwaitTag, std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation>
+ConnectorsClient::DeleteConnection(NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::connectors::v1::DeleteConnectionRequest request;
   request.set_name(name);
@@ -173,24 +151,19 @@ StatusOr<google::longrunning::Operation> ConnectorsClient::DeleteConnection(
 }
 
 future<StatusOr<google::cloud::connectors::v1::OperationMetadata>>
-ConnectorsClient::DeleteConnection(
-    google::cloud::connectors::v1::DeleteConnectionRequest const& request,
-    Options opts) {
+ConnectorsClient::DeleteConnection(google::cloud::connectors::v1::DeleteConnectionRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteConnection(request);
 }
 
-StatusOr<google::longrunning::Operation> ConnectorsClient::DeleteConnection(
-    NoAwaitTag,
-    google::cloud::connectors::v1::DeleteConnectionRequest const& request,
-    Options opts) {
+StatusOr<google::longrunning::Operation>
+ConnectorsClient::DeleteConnection(NoAwaitTag, google::cloud::connectors::v1::DeleteConnectionRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteConnection(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::connectors::v1::OperationMetadata>>
-ConnectorsClient::DeleteConnection(
-    google::longrunning::Operation const& operation, Options opts) {
+ConnectorsClient::DeleteConnection(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteConnection(operation);
 }
@@ -204,23 +177,21 @@ ConnectorsClient::ListProviders(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::connectors::v1::Provider>
-ConnectorsClient::ListProviders(
-    google::cloud::connectors::v1::ListProvidersRequest request, Options opts) {
+ConnectorsClient::ListProviders(google::cloud::connectors::v1::ListProvidersRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListProviders(std::move(request));
 }
 
-StatusOr<google::cloud::connectors::v1::Provider> ConnectorsClient::GetProvider(
-    std::string const& name, Options opts) {
+StatusOr<google::cloud::connectors::v1::Provider>
+ConnectorsClient::GetProvider(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::connectors::v1::GetProviderRequest request;
   request.set_name(name);
   return connection_->GetProvider(request);
 }
 
-StatusOr<google::cloud::connectors::v1::Provider> ConnectorsClient::GetProvider(
-    google::cloud::connectors::v1::GetProviderRequest const& request,
-    Options opts) {
+StatusOr<google::cloud::connectors::v1::Provider>
+ConnectorsClient::GetProvider(google::cloud::connectors::v1::GetProviderRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetProvider(request);
 }
@@ -234,9 +205,7 @@ ConnectorsClient::ListConnectors(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::connectors::v1::Connector>
-ConnectorsClient::ListConnectors(
-    google::cloud::connectors::v1::ListConnectorsRequest request,
-    Options opts) {
+ConnectorsClient::ListConnectors(google::cloud::connectors::v1::ListConnectorsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListConnectors(std::move(request));
 }
@@ -250,16 +219,13 @@ ConnectorsClient::GetConnector(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::connectors::v1::Connector>
-ConnectorsClient::GetConnector(
-    google::cloud::connectors::v1::GetConnectorRequest const& request,
-    Options opts) {
+ConnectorsClient::GetConnector(google::cloud::connectors::v1::GetConnectorRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetConnector(request);
 }
 
 StreamRange<google::cloud::connectors::v1::ConnectorVersion>
-ConnectorsClient::ListConnectorVersions(std::string const& parent,
-                                        Options opts) {
+ConnectorsClient::ListConnectorVersions(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::connectors::v1::ListConnectorVersionsRequest request;
   request.set_parent(parent);
@@ -267,9 +233,7 @@ ConnectorsClient::ListConnectorVersions(std::string const& parent,
 }
 
 StreamRange<google::cloud::connectors::v1::ConnectorVersion>
-ConnectorsClient::ListConnectorVersions(
-    google::cloud::connectors::v1::ListConnectorVersionsRequest request,
-    Options opts) {
+ConnectorsClient::ListConnectorVersions(google::cloud::connectors::v1::ListConnectorVersionsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListConnectorVersions(std::move(request));
 }
@@ -283,16 +247,13 @@ ConnectorsClient::GetConnectorVersion(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::connectors::v1::ConnectorVersion>
-ConnectorsClient::GetConnectorVersion(
-    google::cloud::connectors::v1::GetConnectorVersionRequest const& request,
-    Options opts) {
+ConnectorsClient::GetConnectorVersion(google::cloud::connectors::v1::GetConnectorVersionRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetConnectorVersion(request);
 }
 
 StatusOr<google::cloud::connectors::v1::ConnectionSchemaMetadata>
-ConnectorsClient::GetConnectionSchemaMetadata(std::string const& name,
-                                              Options opts) {
+ConnectorsClient::GetConnectionSchemaMetadata(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::connectors::v1::GetConnectionSchemaMetadataRequest request;
   request.set_name(name);
@@ -300,17 +261,13 @@ ConnectorsClient::GetConnectionSchemaMetadata(std::string const& name,
 }
 
 StatusOr<google::cloud::connectors::v1::ConnectionSchemaMetadata>
-ConnectorsClient::GetConnectionSchemaMetadata(
-    google::cloud::connectors::v1::GetConnectionSchemaMetadataRequest const&
-        request,
-    Options opts) {
+ConnectorsClient::GetConnectionSchemaMetadata(google::cloud::connectors::v1::GetConnectionSchemaMetadataRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetConnectionSchemaMetadata(request);
 }
 
 future<StatusOr<google::cloud::connectors::v1::ConnectionSchemaMetadata>>
-ConnectorsClient::RefreshConnectionSchemaMetadata(std::string const& name,
-                                                  Options opts) {
+ConnectorsClient::RefreshConnectionSchemaMetadata(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::connectors::v1::RefreshConnectionSchemaMetadataRequest request;
   request.set_name(name);
@@ -318,9 +275,7 @@ ConnectorsClient::RefreshConnectionSchemaMetadata(std::string const& name,
 }
 
 StatusOr<google::longrunning::Operation>
-ConnectorsClient::RefreshConnectionSchemaMetadata(NoAwaitTag,
-                                                  std::string const& name,
-                                                  Options opts) {
+ConnectorsClient::RefreshConnectionSchemaMetadata(NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::connectors::v1::RefreshConnectionSchemaMetadataRequest request;
   request.set_name(name);
@@ -328,34 +283,25 @@ ConnectorsClient::RefreshConnectionSchemaMetadata(NoAwaitTag,
 }
 
 future<StatusOr<google::cloud::connectors::v1::ConnectionSchemaMetadata>>
-ConnectorsClient::RefreshConnectionSchemaMetadata(
-    google::cloud::connectors::v1::RefreshConnectionSchemaMetadataRequest const&
-        request,
-    Options opts) {
+ConnectorsClient::RefreshConnectionSchemaMetadata(google::cloud::connectors::v1::RefreshConnectionSchemaMetadataRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RefreshConnectionSchemaMetadata(request);
 }
 
 StatusOr<google::longrunning::Operation>
-ConnectorsClient::RefreshConnectionSchemaMetadata(
-    NoAwaitTag,
-    google::cloud::connectors::v1::RefreshConnectionSchemaMetadataRequest const&
-        request,
-    Options opts) {
+ConnectorsClient::RefreshConnectionSchemaMetadata(NoAwaitTag, google::cloud::connectors::v1::RefreshConnectionSchemaMetadataRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RefreshConnectionSchemaMetadata(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::connectors::v1::ConnectionSchemaMetadata>>
-ConnectorsClient::RefreshConnectionSchemaMetadata(
-    google::longrunning::Operation const& operation, Options opts) {
+ConnectorsClient::RefreshConnectionSchemaMetadata(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RefreshConnectionSchemaMetadata(operation);
 }
 
 StreamRange<google::cloud::connectors::v1::RuntimeEntitySchema>
-ConnectorsClient::ListRuntimeEntitySchemas(std::string const& parent,
-                                           Options opts) {
+ConnectorsClient::ListRuntimeEntitySchemas(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::connectors::v1::ListRuntimeEntitySchemasRequest request;
   request.set_parent(parent);
@@ -363,16 +309,13 @@ ConnectorsClient::ListRuntimeEntitySchemas(std::string const& parent,
 }
 
 StreamRange<google::cloud::connectors::v1::RuntimeEntitySchema>
-ConnectorsClient::ListRuntimeEntitySchemas(
-    google::cloud::connectors::v1::ListRuntimeEntitySchemasRequest request,
-    Options opts) {
+ConnectorsClient::ListRuntimeEntitySchemas(google::cloud::connectors::v1::ListRuntimeEntitySchemasRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListRuntimeEntitySchemas(std::move(request));
 }
 
 StreamRange<google::cloud::connectors::v1::RuntimeActionSchema>
-ConnectorsClient::ListRuntimeActionSchemas(std::string const& parent,
-                                           Options opts) {
+ConnectorsClient::ListRuntimeActionSchemas(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::connectors::v1::ListRuntimeActionSchemasRequest request;
   request.set_parent(parent);
@@ -380,9 +323,7 @@ ConnectorsClient::ListRuntimeActionSchemas(std::string const& parent,
 }
 
 StreamRange<google::cloud::connectors::v1::RuntimeActionSchema>
-ConnectorsClient::ListRuntimeActionSchemas(
-    google::cloud::connectors::v1::ListRuntimeActionSchemasRequest request,
-    Options opts) {
+ConnectorsClient::ListRuntimeActionSchemas(google::cloud::connectors::v1::ListRuntimeActionSchemasRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListRuntimeActionSchemas(std::move(request));
 }
@@ -396,9 +337,7 @@ ConnectorsClient::GetRuntimeConfig(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::connectors::v1::RuntimeConfig>
-ConnectorsClient::GetRuntimeConfig(
-    google::cloud::connectors::v1::GetRuntimeConfigRequest const& request,
-    Options opts) {
+ConnectorsClient::GetRuntimeConfig(google::cloud::connectors::v1::GetRuntimeConfigRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetRuntimeConfig(request);
 }
@@ -412,46 +351,43 @@ ConnectorsClient::GetGlobalSettings(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::connectors::v1::Settings>
-ConnectorsClient::GetGlobalSettings(
-    google::cloud::connectors::v1::GetGlobalSettingsRequest const& request,
-    Options opts) {
+ConnectorsClient::GetGlobalSettings(google::cloud::connectors::v1::GetGlobalSettingsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetGlobalSettings(request);
 }
 
-StreamRange<google::cloud::location::Location> ConnectorsClient::ListLocations(
-    google::cloud::location::ListLocationsRequest request, Options opts) {
+StreamRange<google::cloud::location::Location>
+ConnectorsClient::ListLocations(google::cloud::location::ListLocationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListLocations(std::move(request));
 }
 
-StatusOr<google::cloud::location::Location> ConnectorsClient::GetLocation(
-    google::cloud::location::GetLocationRequest const& request, Options opts) {
+StatusOr<google::cloud::location::Location>
+ConnectorsClient::GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetLocation(request);
 }
 
-StatusOr<google::iam::v1::Policy> ConnectorsClient::SetIamPolicy(
-    google::iam::v1::SetIamPolicyRequest const& request, Options opts) {
+StatusOr<google::iam::v1::Policy>
+ConnectorsClient::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetIamPolicy(request);
 }
 
-StatusOr<google::iam::v1::Policy> ConnectorsClient::GetIamPolicy(
-    google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
+StatusOr<google::iam::v1::Policy>
+ConnectorsClient::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetIamPolicy(request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-ConnectorsClient::TestIamPermissions(
-    google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
+ConnectorsClient::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->TestIamPermissions(request);
 }
 
-StreamRange<google::longrunning::Operation> ConnectorsClient::ListOperations(
-    std::string const& name, std::string const& filter, Options opts) {
+StreamRange<google::longrunning::Operation>
+ConnectorsClient::ListOperations(std::string const& name, std::string const& filter, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::ListOperationsRequest request;
   request.set_name(name);
@@ -459,50 +395,50 @@ StreamRange<google::longrunning::Operation> ConnectorsClient::ListOperations(
   return connection_->ListOperations(request);
 }
 
-StreamRange<google::longrunning::Operation> ConnectorsClient::ListOperations(
-    google::longrunning::ListOperationsRequest request, Options opts) {
+StreamRange<google::longrunning::Operation>
+ConnectorsClient::ListOperations(google::longrunning::ListOperationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOperations(std::move(request));
 }
 
-StatusOr<google::longrunning::Operation> ConnectorsClient::GetOperation(
-    std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation>
+ConnectorsClient::GetOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
   return connection_->GetOperation(request);
 }
 
-StatusOr<google::longrunning::Operation> ConnectorsClient::GetOperation(
-    google::longrunning::GetOperationRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation>
+ConnectorsClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }
 
-Status ConnectorsClient::DeleteOperation(std::string const& name,
-                                         Options opts) {
+Status
+ConnectorsClient::DeleteOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::DeleteOperationRequest request;
   request.set_name(name);
   return connection_->DeleteOperation(request);
 }
 
-Status ConnectorsClient::DeleteOperation(
-    google::longrunning::DeleteOperationRequest const& request, Options opts) {
+Status
+ConnectorsClient::DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteOperation(request);
 }
 
-Status ConnectorsClient::CancelOperation(std::string const& name,
-                                         Options opts) {
+Status
+ConnectorsClient::CancelOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::CancelOperationRequest request;
   request.set_name(name);
   return connection_->CancelOperation(request);
 }
 
-Status ConnectorsClient::CancelOperation(
-    google::longrunning::CancelOperationRequest const& request, Options opts) {
+Status
+ConnectorsClient::CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelOperation(request);
 }

@@ -25,11 +25,11 @@ namespace cloud {
 namespace dialogflow_es {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-ContextsClient::ContextsClient(std::shared_ptr<ContextsConnection> connection,
-                               Options opts)
+ContextsClient::ContextsClient(
+    std::shared_ptr<ContextsConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 ContextsClient::~ContextsClient() = default;
 
 StreamRange<google::cloud::dialogflow::v2::Context>
@@ -41,30 +41,27 @@ ContextsClient::ListContexts(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::dialogflow::v2::Context>
-ContextsClient::ListContexts(
-    google::cloud::dialogflow::v2::ListContextsRequest request, Options opts) {
+ContextsClient::ListContexts(google::cloud::dialogflow::v2::ListContextsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListContexts(std::move(request));
 }
 
-StatusOr<google::cloud::dialogflow::v2::Context> ContextsClient::GetContext(
-    std::string const& name, Options opts) {
+StatusOr<google::cloud::dialogflow::v2::Context>
+ContextsClient::GetContext(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dialogflow::v2::GetContextRequest request;
   request.set_name(name);
   return connection_->GetContext(request);
 }
 
-StatusOr<google::cloud::dialogflow::v2::Context> ContextsClient::GetContext(
-    google::cloud::dialogflow::v2::GetContextRequest const& request,
-    Options opts) {
+StatusOr<google::cloud::dialogflow::v2::Context>
+ContextsClient::GetContext(google::cloud::dialogflow::v2::GetContextRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetContext(request);
 }
 
-StatusOr<google::cloud::dialogflow::v2::Context> ContextsClient::CreateContext(
-    std::string const& parent,
-    google::cloud::dialogflow::v2::Context const& context, Options opts) {
+StatusOr<google::cloud::dialogflow::v2::Context>
+ContextsClient::CreateContext(std::string const& parent, google::cloud::dialogflow::v2::Context const& context, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dialogflow::v2::CreateContextRequest request;
   request.set_parent(parent);
@@ -72,16 +69,14 @@ StatusOr<google::cloud::dialogflow::v2::Context> ContextsClient::CreateContext(
   return connection_->CreateContext(request);
 }
 
-StatusOr<google::cloud::dialogflow::v2::Context> ContextsClient::CreateContext(
-    google::cloud::dialogflow::v2::CreateContextRequest const& request,
-    Options opts) {
+StatusOr<google::cloud::dialogflow::v2::Context>
+ContextsClient::CreateContext(google::cloud::dialogflow::v2::CreateContextRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateContext(request);
 }
 
-StatusOr<google::cloud::dialogflow::v2::Context> ContextsClient::UpdateContext(
-    google::cloud::dialogflow::v2::Context const& context,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+StatusOr<google::cloud::dialogflow::v2::Context>
+ContextsClient::UpdateContext(google::cloud::dialogflow::v2::Context const& context, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dialogflow::v2::UpdateContextRequest request;
   *request.mutable_context() = context;
@@ -89,56 +84,54 @@ StatusOr<google::cloud::dialogflow::v2::Context> ContextsClient::UpdateContext(
   return connection_->UpdateContext(request);
 }
 
-StatusOr<google::cloud::dialogflow::v2::Context> ContextsClient::UpdateContext(
-    google::cloud::dialogflow::v2::UpdateContextRequest const& request,
-    Options opts) {
+StatusOr<google::cloud::dialogflow::v2::Context>
+ContextsClient::UpdateContext(google::cloud::dialogflow::v2::UpdateContextRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateContext(request);
 }
 
-Status ContextsClient::DeleteContext(std::string const& name, Options opts) {
+Status
+ContextsClient::DeleteContext(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dialogflow::v2::DeleteContextRequest request;
   request.set_name(name);
   return connection_->DeleteContext(request);
 }
 
-Status ContextsClient::DeleteContext(
-    google::cloud::dialogflow::v2::DeleteContextRequest const& request,
-    Options opts) {
+Status
+ContextsClient::DeleteContext(google::cloud::dialogflow::v2::DeleteContextRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteContext(request);
 }
 
-Status ContextsClient::DeleteAllContexts(std::string const& parent,
-                                         Options opts) {
+Status
+ContextsClient::DeleteAllContexts(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dialogflow::v2::DeleteAllContextsRequest request;
   request.set_parent(parent);
   return connection_->DeleteAllContexts(request);
 }
 
-Status ContextsClient::DeleteAllContexts(
-    google::cloud::dialogflow::v2::DeleteAllContextsRequest const& request,
-    Options opts) {
+Status
+ContextsClient::DeleteAllContexts(google::cloud::dialogflow::v2::DeleteAllContextsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteAllContexts(request);
 }
 
-StreamRange<google::cloud::location::Location> ContextsClient::ListLocations(
-    google::cloud::location::ListLocationsRequest request, Options opts) {
+StreamRange<google::cloud::location::Location>
+ContextsClient::ListLocations(google::cloud::location::ListLocationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListLocations(std::move(request));
 }
 
-StatusOr<google::cloud::location::Location> ContextsClient::GetLocation(
-    google::cloud::location::GetLocationRequest const& request, Options opts) {
+StatusOr<google::cloud::location::Location>
+ContextsClient::GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetLocation(request);
 }
 
-StreamRange<google::longrunning::Operation> ContextsClient::ListOperations(
-    std::string const& name, std::string const& filter, Options opts) {
+StreamRange<google::longrunning::Operation>
+ContextsClient::ListOperations(std::string const& name, std::string const& filter, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::ListOperationsRequest request;
   request.set_name(name);
@@ -146,35 +139,36 @@ StreamRange<google::longrunning::Operation> ContextsClient::ListOperations(
   return connection_->ListOperations(request);
 }
 
-StreamRange<google::longrunning::Operation> ContextsClient::ListOperations(
-    google::longrunning::ListOperationsRequest request, Options opts) {
+StreamRange<google::longrunning::Operation>
+ContextsClient::ListOperations(google::longrunning::ListOperationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOperations(std::move(request));
 }
 
-StatusOr<google::longrunning::Operation> ContextsClient::GetOperation(
-    std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation>
+ContextsClient::GetOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
   return connection_->GetOperation(request);
 }
 
-StatusOr<google::longrunning::Operation> ContextsClient::GetOperation(
-    google::longrunning::GetOperationRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation>
+ContextsClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }
 
-Status ContextsClient::CancelOperation(std::string const& name, Options opts) {
+Status
+ContextsClient::CancelOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::CancelOperationRequest request;
   request.set_name(name);
   return connection_->CancelOperation(request);
 }
 
-Status ContextsClient::CancelOperation(
-    google::longrunning::CancelOperationRequest const& request, Options opts) {
+Status
+ContextsClient::CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelOperation(request);
 }

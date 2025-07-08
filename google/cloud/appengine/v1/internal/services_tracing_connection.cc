@@ -34,29 +34,25 @@ ServicesTracingConnection::ServicesTracingConnection(
     : child_(std::move(child)) {}
 
 StreamRange<google::appengine::v1::Service>
-ServicesTracingConnection::ListServices(
-    google::appengine::v1::ListServicesRequest request) {
-  auto span =
-      internal::MakeSpan("appengine_v1::ServicesConnection::ListServices");
+ServicesTracingConnection::ListServices(google::appengine::v1::ListServicesRequest request) {
+  auto span = internal::MakeSpan("appengine_v1::ServicesConnection::ListServices");
   internal::OTelScope scope(span);
   auto sr = child_->ListServices(std::move(request));
   return internal::MakeTracedStreamRange<google::appengine::v1::Service>(
-      std::move(span), std::move(sr));
+        std::move(span), std::move(sr));
 }
 
-StatusOr<google::appengine::v1::Service> ServicesTracingConnection::GetService(
-    google::appengine::v1::GetServiceRequest const& request) {
-  auto span =
-      internal::MakeSpan("appengine_v1::ServicesConnection::GetService");
+StatusOr<google::appengine::v1::Service>
+ServicesTracingConnection::GetService(google::appengine::v1::GetServiceRequest const& request) {
+  auto span = internal::MakeSpan("appengine_v1::ServicesConnection::GetService");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetService(request));
 }
 
 future<StatusOr<google::appengine::v1::Service>>
-ServicesTracingConnection::UpdateService(
-    google::appengine::v1::UpdateServiceRequest const& request) {
-  auto span =
-      internal::MakeSpan("appengine_v1::ServicesConnection::UpdateService");
+ServicesTracingConnection::UpdateService(google::appengine::v1::UpdateServiceRequest const& request) {
+  auto span = internal::MakeSpan(
+      "appengine_v1::ServicesConnection::UpdateService");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateService(request));
 }
@@ -64,26 +60,27 @@ ServicesTracingConnection::UpdateService(
 StatusOr<google::longrunning::Operation>
 ServicesTracingConnection::UpdateService(
     NoAwaitTag, google::appengine::v1::UpdateServiceRequest const& request) {
-  auto span =
-      internal::MakeSpan("appengine_v1::ServicesConnection::UpdateService");
+  auto span = internal::MakeSpan(
+      "appengine_v1::ServicesConnection::UpdateService");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->UpdateService(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->UpdateService(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::appengine::v1::Service>>
 ServicesTracingConnection::UpdateService(
     google::longrunning::Operation const& operation) {
-  auto span =
-      internal::MakeSpan("appengine_v1::ServicesConnection::UpdateService");
+  auto span = internal::MakeSpan(
+      "appengine_v1::ServicesConnection::UpdateService");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->UpdateService(operation));
+  return internal::EndSpan(std::move(span),
+      child_->UpdateService(operation));
 }
 
 future<StatusOr<google::appengine::v1::OperationMetadataV1>>
-ServicesTracingConnection::DeleteService(
-    google::appengine::v1::DeleteServiceRequest const& request) {
-  auto span =
-      internal::MakeSpan("appengine_v1::ServicesConnection::DeleteService");
+ServicesTracingConnection::DeleteService(google::appengine::v1::DeleteServiceRequest const& request) {
+  auto span = internal::MakeSpan(
+      "appengine_v1::ServicesConnection::DeleteService");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteService(request));
 }
@@ -91,24 +88,27 @@ ServicesTracingConnection::DeleteService(
 StatusOr<google::longrunning::Operation>
 ServicesTracingConnection::DeleteService(
     NoAwaitTag, google::appengine::v1::DeleteServiceRequest const& request) {
-  auto span =
-      internal::MakeSpan("appengine_v1::ServicesConnection::DeleteService");
+  auto span = internal::MakeSpan(
+      "appengine_v1::ServicesConnection::DeleteService");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->DeleteService(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->DeleteService(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::appengine::v1::OperationMetadataV1>>
 ServicesTracingConnection::DeleteService(
     google::longrunning::Operation const& operation) {
-  auto span =
-      internal::MakeSpan("appengine_v1::ServicesConnection::DeleteService");
+  auto span = internal::MakeSpan(
+      "appengine_v1::ServicesConnection::DeleteService");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->DeleteService(operation));
+  return internal::EndSpan(std::move(span),
+      child_->DeleteService(operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-std::shared_ptr<appengine_v1::ServicesConnection> MakeServicesTracingConnection(
+std::shared_ptr<appengine_v1::ServicesConnection>
+MakeServicesTracingConnection(
     std::shared_ptr<appengine_v1::ServicesConnection> conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {

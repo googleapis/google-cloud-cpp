@@ -35,15 +35,17 @@ class CloudCatalogLogging : public CloudCatalogStub {
  public:
   ~CloudCatalogLogging() override = default;
   CloudCatalogLogging(std::shared_ptr<CloudCatalogStub> child,
-                      TracingOptions tracing_options,
-                      std::set<std::string> const& components);
+                       TracingOptions tracing_options,
+                       std::set<std::string> const& components);
 
   StatusOr<google::cloud::billing::v1::ListServicesResponse> ListServices(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::billing::v1::ListServicesRequest const& request) override;
 
   StatusOr<google::cloud::billing::v1::ListSkusResponse> ListSkus(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::billing::v1::ListSkusRequest const& request) override;
 
  private:

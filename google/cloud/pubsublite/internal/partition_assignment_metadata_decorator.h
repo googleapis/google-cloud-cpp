@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_PARTITION_ASSIGNMENT_METADATA_DECORATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_PARTITION_ASSIGNMENT_METADATA_DECORATOR_H
 
-#include "google/cloud/pubsublite/internal/partition_assignment_stub.h"
 #include "google/cloud/options.h"
+#include "google/cloud/pubsublite/internal/partition_assignment_stub.h"
 #include "google/cloud/version.h"
 #include <map>
 #include <memory>
@@ -31,8 +31,7 @@ namespace cloud {
 namespace pubsublite_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class PartitionAssignmentServiceMetadata
-    : public PartitionAssignmentServiceStub {
+class PartitionAssignmentServiceMetadata : public PartitionAssignmentServiceStub {
  public:
   ~PartitionAssignmentServiceMetadata() override = default;
   PartitionAssignmentServiceMetadata(
@@ -49,23 +48,28 @@ class PartitionAssignmentServiceMetadata
       google::cloud::internal::ImmutableOptions options) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status DeleteOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::DeleteOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context, Options const& options,
+  void SetMetadata(grpc::ClientContext& context,
+                   Options const& options,
                    std::string const& request_params);
   void SetMetadata(grpc::ClientContext& context, Options const& options);
 

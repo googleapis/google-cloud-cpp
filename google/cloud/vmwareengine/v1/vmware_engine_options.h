@@ -19,11 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VMWAREENGINE_V1_VMWARE_ENGINE_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VMWAREENGINE_V1_VMWARE_ENGINE_OPTIONS_H
 
-#include "google/cloud/vmwareengine/v1/vmware_engine_connection.h"
-#include "google/cloud/vmwareengine/v1/vmware_engine_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
+#include "google/cloud/vmwareengine/v1/vmware_engine_connection.h"
+#include "google/cloud/vmwareengine/v1/vmware_engine_connection_idempotency_policy.h"
 #include <memory>
 
 namespace google {
@@ -74,7 +74,8 @@ struct VmwareEnginePollingPolicyOption {
  * @ingroup google-cloud-vmwareengine-options
  */
 using VmwareEnginePolicyOptionList =
-    OptionList<VmwareEngineRetryPolicyOption, VmwareEngineBackoffPolicyOption,
+    OptionList<VmwareEngineRetryPolicyOption,
+               VmwareEngineBackoffPolicyOption,
                VmwareEnginePollingPolicyOption,
                VmwareEngineConnectionIdempotencyPolicyOption>;
 

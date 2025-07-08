@@ -26,116 +26,94 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-DatasetServiceConnectionIdempotencyPolicy::
-    ~DatasetServiceConnectionIdempotencyPolicy() = default;
+DatasetServiceConnectionIdempotencyPolicy::~DatasetServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<DatasetServiceConnectionIdempotencyPolicy>
 DatasetServiceConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<DatasetServiceConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency DatasetServiceConnectionIdempotencyPolicy::CreateDataset(
-    google::cloud::aiplatform::v1::CreateDatasetRequest const&) {
+Idempotency DatasetServiceConnectionIdempotencyPolicy::CreateDataset(google::cloud::aiplatform::v1::CreateDatasetRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DatasetServiceConnectionIdempotencyPolicy::GetDataset(
-    google::cloud::aiplatform::v1::GetDatasetRequest const&) {
+Idempotency DatasetServiceConnectionIdempotencyPolicy::GetDataset(google::cloud::aiplatform::v1::GetDatasetRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DatasetServiceConnectionIdempotencyPolicy::UpdateDataset(
-    google::cloud::aiplatform::v1::UpdateDatasetRequest const&) {
+Idempotency DatasetServiceConnectionIdempotencyPolicy::UpdateDataset(google::cloud::aiplatform::v1::UpdateDatasetRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DatasetServiceConnectionIdempotencyPolicy::ListDatasets(
-    google::cloud::aiplatform::v1::ListDatasetsRequest) {  // NOLINT
+Idempotency DatasetServiceConnectionIdempotencyPolicy::ListDatasets(google::cloud::aiplatform::v1::ListDatasetsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency DatasetServiceConnectionIdempotencyPolicy::DeleteDataset(
-    google::cloud::aiplatform::v1::DeleteDatasetRequest const&) {
+Idempotency DatasetServiceConnectionIdempotencyPolicy::DeleteDataset(google::cloud::aiplatform::v1::DeleteDatasetRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DatasetServiceConnectionIdempotencyPolicy::ImportData(
-    google::cloud::aiplatform::v1::ImportDataRequest const&) {
+Idempotency DatasetServiceConnectionIdempotencyPolicy::ImportData(google::cloud::aiplatform::v1::ImportDataRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DatasetServiceConnectionIdempotencyPolicy::ExportData(
-    google::cloud::aiplatform::v1::ExportDataRequest const&) {
+Idempotency DatasetServiceConnectionIdempotencyPolicy::ExportData(google::cloud::aiplatform::v1::ExportDataRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DatasetServiceConnectionIdempotencyPolicy::CreateDatasetVersion(
-    google::cloud::aiplatform::v1::CreateDatasetVersionRequest const&) {
+Idempotency DatasetServiceConnectionIdempotencyPolicy::CreateDatasetVersion(google::cloud::aiplatform::v1::CreateDatasetVersionRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DatasetServiceConnectionIdempotencyPolicy::UpdateDatasetVersion(
-    google::cloud::aiplatform::v1::UpdateDatasetVersionRequest const&) {
+Idempotency DatasetServiceConnectionIdempotencyPolicy::UpdateDatasetVersion(google::cloud::aiplatform::v1::UpdateDatasetVersionRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DatasetServiceConnectionIdempotencyPolicy::DeleteDatasetVersion(
-    google::cloud::aiplatform::v1::DeleteDatasetVersionRequest const&) {
+Idempotency DatasetServiceConnectionIdempotencyPolicy::DeleteDatasetVersion(google::cloud::aiplatform::v1::DeleteDatasetVersionRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DatasetServiceConnectionIdempotencyPolicy::GetDatasetVersion(
-    google::cloud::aiplatform::v1::GetDatasetVersionRequest const&) {
+Idempotency DatasetServiceConnectionIdempotencyPolicy::GetDatasetVersion(google::cloud::aiplatform::v1::GetDatasetVersionRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DatasetServiceConnectionIdempotencyPolicy::ListDatasetVersions(
-    google::cloud::aiplatform::v1::ListDatasetVersionsRequest) {  // NOLINT
+Idempotency DatasetServiceConnectionIdempotencyPolicy::ListDatasetVersions(google::cloud::aiplatform::v1::ListDatasetVersionsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency DatasetServiceConnectionIdempotencyPolicy::RestoreDatasetVersion(
-    google::cloud::aiplatform::v1::RestoreDatasetVersionRequest const&) {
+Idempotency DatasetServiceConnectionIdempotencyPolicy::RestoreDatasetVersion(google::cloud::aiplatform::v1::RestoreDatasetVersionRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DatasetServiceConnectionIdempotencyPolicy::ListDataItems(
-    google::cloud::aiplatform::v1::ListDataItemsRequest) {  // NOLINT
+Idempotency DatasetServiceConnectionIdempotencyPolicy::ListDataItems(google::cloud::aiplatform::v1::ListDataItemsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency DatasetServiceConnectionIdempotencyPolicy::SearchDataItems(
-    google::cloud::aiplatform::v1::SearchDataItemsRequest) {  // NOLINT
+Idempotency DatasetServiceConnectionIdempotencyPolicy::SearchDataItems(google::cloud::aiplatform::v1::SearchDataItemsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency DatasetServiceConnectionIdempotencyPolicy::ListSavedQueries(
-    google::cloud::aiplatform::v1::ListSavedQueriesRequest) {  // NOLINT
+Idempotency DatasetServiceConnectionIdempotencyPolicy::ListSavedQueries(google::cloud::aiplatform::v1::ListSavedQueriesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency DatasetServiceConnectionIdempotencyPolicy::DeleteSavedQuery(
-    google::cloud::aiplatform::v1::DeleteSavedQueryRequest const&) {
+Idempotency DatasetServiceConnectionIdempotencyPolicy::DeleteSavedQuery(google::cloud::aiplatform::v1::DeleteSavedQueryRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DatasetServiceConnectionIdempotencyPolicy::GetAnnotationSpec(
-    google::cloud::aiplatform::v1::GetAnnotationSpecRequest const&) {
+Idempotency DatasetServiceConnectionIdempotencyPolicy::GetAnnotationSpec(google::cloud::aiplatform::v1::GetAnnotationSpecRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DatasetServiceConnectionIdempotencyPolicy::ListAnnotations(
-    google::cloud::aiplatform::v1::ListAnnotationsRequest) {  // NOLINT
+Idempotency DatasetServiceConnectionIdempotencyPolicy::ListAnnotations(google::cloud::aiplatform::v1::ListAnnotationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency DatasetServiceConnectionIdempotencyPolicy::ListLocations(
-    google::cloud::location::ListLocationsRequest) {  // NOLINT
+Idempotency DatasetServiceConnectionIdempotencyPolicy::ListLocations(google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency DatasetServiceConnectionIdempotencyPolicy::GetLocation(
-    google::cloud::location::GetLocationRequest const&) {
+Idempotency DatasetServiceConnectionIdempotencyPolicy::GetLocation(google::cloud::location::GetLocationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
@@ -145,43 +123,36 @@ Idempotency DatasetServiceConnectionIdempotencyPolicy::SetIamPolicy(
                                          : Idempotency::kIdempotent;
 }
 
-Idempotency DatasetServiceConnectionIdempotencyPolicy::GetIamPolicy(
-    google::iam::v1::GetIamPolicyRequest const&) {
+Idempotency DatasetServiceConnectionIdempotencyPolicy::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DatasetServiceConnectionIdempotencyPolicy::TestIamPermissions(
-    google::iam::v1::TestIamPermissionsRequest const&) {
+Idempotency DatasetServiceConnectionIdempotencyPolicy::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DatasetServiceConnectionIdempotencyPolicy::ListOperations(
-    google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency DatasetServiceConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency DatasetServiceConnectionIdempotencyPolicy::GetOperation(
-    google::longrunning::GetOperationRequest const&) {
+Idempotency DatasetServiceConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DatasetServiceConnectionIdempotencyPolicy::DeleteOperation(
-    google::longrunning::DeleteOperationRequest const&) {
+Idempotency DatasetServiceConnectionIdempotencyPolicy::DeleteOperation(google::longrunning::DeleteOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DatasetServiceConnectionIdempotencyPolicy::CancelOperation(
-    google::longrunning::CancelOperationRequest const&) {
+Idempotency DatasetServiceConnectionIdempotencyPolicy::CancelOperation(google::longrunning::CancelOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DatasetServiceConnectionIdempotencyPolicy::WaitOperation(
-    google::longrunning::WaitOperationRequest const&) {
+Idempotency DatasetServiceConnectionIdempotencyPolicy::WaitOperation(google::longrunning::WaitOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<DatasetServiceConnectionIdempotencyPolicy>
-MakeDefaultDatasetServiceConnectionIdempotencyPolicy() {
+    MakeDefaultDatasetServiceConnectionIdempotencyPolicy() {
   return std::make_unique<DatasetServiceConnectionIdempotencyPolicy>();
 }
 

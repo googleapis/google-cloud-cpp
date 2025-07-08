@@ -30,48 +30,45 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-class GeneratorsTracingConnection : public dialogflow_es::GeneratorsConnection {
+class GeneratorsTracingConnection
+    : public dialogflow_es::GeneratorsConnection {
  public:
   ~GeneratorsTracingConnection() override = default;
 
   explicit GeneratorsTracingConnection(
-      std::shared_ptr<dialogflow_es::GeneratorsConnection> child);
+    std::shared_ptr<dialogflow_es::GeneratorsConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::dialogflow::v2::Generator> CreateGenerator(
-      google::cloud::dialogflow::v2::CreateGeneratorRequest const& request)
-      override;
+  StatusOr<google::cloud::dialogflow::v2::Generator>
+  CreateGenerator(google::cloud::dialogflow::v2::CreateGeneratorRequest const& request) override;
 
-  StatusOr<google::cloud::dialogflow::v2::Generator> GetGenerator(
-      google::cloud::dialogflow::v2::GetGeneratorRequest const& request)
-      override;
+  StatusOr<google::cloud::dialogflow::v2::Generator>
+  GetGenerator(google::cloud::dialogflow::v2::GetGeneratorRequest const& request) override;
 
-  StreamRange<google::cloud::dialogflow::v2::Generator> ListGenerators(
-      google::cloud::dialogflow::v2::ListGeneratorsRequest request) override;
+  StreamRange<google::cloud::dialogflow::v2::Generator>
+  ListGenerators(google::cloud::dialogflow::v2::ListGeneratorsRequest request) override;
 
-  Status DeleteGenerator(
-      google::cloud::dialogflow::v2::DeleteGeneratorRequest const& request)
-      override;
+  Status
+  DeleteGenerator(google::cloud::dialogflow::v2::DeleteGeneratorRequest const& request) override;
 
-  StatusOr<google::cloud::dialogflow::v2::Generator> UpdateGenerator(
-      google::cloud::dialogflow::v2::UpdateGeneratorRequest const& request)
-      override;
+  StatusOr<google::cloud::dialogflow::v2::Generator>
+  UpdateGenerator(google::cloud::dialogflow::v2::UpdateGeneratorRequest const& request) override;
 
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request) override;
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request) override;
 
-  StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request) override;
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request) override;
 
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request) override;
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::shared_ptr<dialogflow_es::GeneratorsConnection> child_;

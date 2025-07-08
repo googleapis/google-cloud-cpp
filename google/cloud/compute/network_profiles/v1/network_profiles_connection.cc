@@ -17,11 +17,11 @@
 // source: google/cloud/compute/network_profiles/v1/network_profiles.proto
 
 #include "google/cloud/compute/network_profiles/v1/network_profiles_connection.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/compute/network_profiles/v1/internal/network_profiles_option_defaults.h"
 #include "google/cloud/compute/network_profiles/v1/internal/network_profiles_tracing_connection.h"
 #include "google/cloud/compute/network_profiles/v1/network_profiles_options.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
@@ -38,15 +38,12 @@ NetworkProfilesConnection::~NetworkProfilesConnection() = default;
 
 StatusOr<google::cloud::cpp::compute::v1::NetworkProfile>
 NetworkProfilesConnection::GetNetworkProfile(
-    google::cloud::cpp::compute::network_profiles::v1::
-        GetNetworkProfileRequest const&) {
+    google::cloud::cpp::compute::network_profiles::v1::GetNetworkProfileRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::cpp::compute::v1::NetworkProfile>
-NetworkProfilesConnection::ListNetworkProfiles(
-    google::cloud::cpp::compute::network_profiles::v1::
-        ListNetworkProfilesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::cpp::compute::v1::NetworkProfile> NetworkProfilesConnection::ListNetworkProfiles(
+    google::cloud::cpp::compute::network_profiles::v1::ListNetworkProfilesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::cpp::compute::v1::NetworkProfile>>();
 }

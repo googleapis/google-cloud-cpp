@@ -17,12 +17,12 @@
 // source: google/cloud/datacatalog/v1/datacatalog.proto
 
 #include "google/cloud/datacatalog/v1/internal/data_catalog_stub_factory.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/datacatalog/v1/internal/data_catalog_auth_decorator.h"
 #include "google/cloud/datacatalog/v1/internal/data_catalog_logging_decorator.h"
 #include "google/cloud/datacatalog/v1/internal/data_catalog_metadata_decorator.h"
 #include "google/cloud/datacatalog/v1/internal/data_catalog_stub.h"
 #include "google/cloud/datacatalog/v1/internal/data_catalog_tracing_stub.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/opentelemetry.h"
@@ -38,27 +38,30 @@ namespace cloud {
 namespace datacatalog_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<DataCatalogStub> CreateDefaultDataCatalogStub(
+std::shared_ptr<DataCatalogStub>
+CreateDefaultDataCatalogStub(
     std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
     Options const& options) {
-  auto channel = auth->CreateChannel(options.get<EndpointOption>(),
-                                     internal::MakeChannelArguments(options));
-  auto service_grpc_stub =
-      google::cloud::datacatalog::v1::DataCatalog::NewStub(channel);
+  auto channel = auth->CreateChannel(
+    options.get<EndpointOption>(), internal::MakeChannelArguments(options));
+  auto service_grpc_stub = google::cloud::datacatalog::v1::DataCatalog::NewStub(channel);
   std::shared_ptr<DataCatalogStub> stub =
-      std::make_shared<DefaultDataCatalogStub>(
-          std::move(service_grpc_stub),
-          google::longrunning::Operations::NewStub(channel));
+    std::make_shared<DefaultDataCatalogStub>(
+      std::move(service_grpc_stub),
+      google::longrunning::Operations::NewStub(channel));
 
   if (auth->RequiresConfigureContext()) {
-    stub = std::make_shared<DataCatalogAuth>(std::move(auth), std::move(stub));
+    stub = std::make_shared<DataCatalogAuth>(
+        std::move(auth), std::move(stub));
   }
   stub = std::make_shared<DataCatalogMetadata>(
       std::move(stub), std::multimap<std::string, std::string>{});
-  if (internal::Contains(options.get<LoggingComponentsOption>(), "rpc")) {
+  if (internal::Contains(
+      options.get<LoggingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<DataCatalogLogging>(
-        std::move(stub), options.get<GrpcTracingOptionsOption>(),
+        std::move(stub),
+        options.get<GrpcTracingOptionsOption>(),
         options.get<LoggingComponentsOption>());
   }
   if (internal::TracingEnabled(options)) {

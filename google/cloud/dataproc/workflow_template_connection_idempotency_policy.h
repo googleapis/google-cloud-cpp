@@ -26,16 +26,11 @@ namespace cloud {
 namespace dataproc {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use
-/// dataproc_v1::MakeDefaultWorkflowTemplateServiceConnectionIdempotencyPolicy
-/// directly.
-using ::google::cloud::dataproc_v1::
-    MakeDefaultWorkflowTemplateServiceConnectionIdempotencyPolicy;
+/// @deprecated Use dataproc_v1::MakeDefaultWorkflowTemplateServiceConnectionIdempotencyPolicy directly.
+using ::google::cloud::dataproc_v1::MakeDefaultWorkflowTemplateServiceConnectionIdempotencyPolicy;
 
-/// @deprecated Use
-/// dataproc_v1::WorkflowTemplateServiceConnectionIdempotencyPolicy directly.
-using ::google::cloud::dataproc_v1::
-    WorkflowTemplateServiceConnectionIdempotencyPolicy;
+/// @deprecated Use dataproc_v1::WorkflowTemplateServiceConnectionIdempotencyPolicy directly.
+using ::google::cloud::dataproc_v1::WorkflowTemplateServiceConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataproc

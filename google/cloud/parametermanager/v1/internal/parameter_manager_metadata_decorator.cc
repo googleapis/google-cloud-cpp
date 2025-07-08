@@ -46,142 +46,132 @@ ParameterManagerMetadata::ParameterManagerMetadata(
 
 StatusOr<google::cloud::parametermanager::v1::ListParametersResponse>
 ParameterManagerMetadata::ListParameters(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::parametermanager::v1::ListParametersRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListParameters(context, options, request);
 }
 
 StatusOr<google::cloud::parametermanager::v1::Parameter>
 ParameterManagerMetadata::GetParameter(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::parametermanager::v1::GetParameterRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetParameter(context, options, request);
 }
 
 StatusOr<google::cloud::parametermanager::v1::Parameter>
 ParameterManagerMetadata::CreateParameter(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::parametermanager::v1::CreateParameterRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::parametermanager::v1::CreateParameterRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateParameter(context, options, request);
 }
 
 StatusOr<google::cloud::parametermanager::v1::Parameter>
 ParameterManagerMetadata::UpdateParameter(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::parametermanager::v1::UpdateParameterRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("parameter.name=",
-                           internal::UrlEncode(request.parameter().name())));
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::parametermanager::v1::UpdateParameterRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("parameter.name=", internal::UrlEncode(request.parameter().name())));
   return child_->UpdateParameter(context, options, request);
 }
 
-Status ParameterManagerMetadata::DeleteParameter(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::parametermanager::v1::DeleteParameterRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+Status
+ParameterManagerMetadata::DeleteParameter(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::parametermanager::v1::DeleteParameterRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteParameter(context, options, request);
 }
 
 StatusOr<google::cloud::parametermanager::v1::ListParameterVersionsResponse>
 ParameterManagerMetadata::ListParameterVersions(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::parametermanager::v1::ListParameterVersionsRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::parametermanager::v1::ListParameterVersionsRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListParameterVersions(context, options, request);
 }
 
 StatusOr<google::cloud::parametermanager::v1::ParameterVersion>
 ParameterManagerMetadata::GetParameterVersion(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::parametermanager::v1::GetParameterVersionRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::parametermanager::v1::GetParameterVersionRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetParameterVersion(context, options, request);
 }
 
 StatusOr<google::cloud::parametermanager::v1::RenderParameterVersionResponse>
 ParameterManagerMetadata::RenderParameterVersion(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::parametermanager::v1::RenderParameterVersionRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::parametermanager::v1::RenderParameterVersionRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->RenderParameterVersion(context, options, request);
 }
 
 StatusOr<google::cloud::parametermanager::v1::ParameterVersion>
 ParameterManagerMetadata::CreateParameterVersion(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::parametermanager::v1::CreateParameterVersionRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::parametermanager::v1::CreateParameterVersionRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateParameterVersion(context, options, request);
 }
 
 StatusOr<google::cloud::parametermanager::v1::ParameterVersion>
 ParameterManagerMetadata::UpdateParameterVersion(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::parametermanager::v1::UpdateParameterVersionRequest const&
-        request) {
-  SetMetadata(
-      context, options,
-      absl::StrCat("parameter_version.name=",
-                   internal::UrlEncode(request.parameter_version().name())));
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::parametermanager::v1::UpdateParameterVersionRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("parameter_version.name=", internal::UrlEncode(request.parameter_version().name())));
   return child_->UpdateParameterVersion(context, options, request);
 }
 
-Status ParameterManagerMetadata::DeleteParameterVersion(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::parametermanager::v1::DeleteParameterVersionRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+Status
+ParameterManagerMetadata::DeleteParameterVersion(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::parametermanager::v1::DeleteParameterVersionRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteParameterVersion(context, options, request);
 }
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 ParameterManagerMetadata::ListLocations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ListLocations(context, options, request);
 }
 
 StatusOr<google::cloud::location::Location>
 ParameterManagerMetadata::GetLocation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetLocation(context, options, request);
 }
 
 void ParameterManagerMetadata::SetMetadata(grpc::ClientContext& context,
-                                           Options const& options,
-                                           std::string const& request_params) {
+                                        Options const& options,
+                                        std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
 void ParameterManagerMetadata::SetMetadata(grpc::ClientContext& context,
-                                           Options const& options) {
-  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
-                                       api_client_header_);
+                                        Options const& options) {
+  google::cloud::internal::SetMetadata(
+      context, options, fixed_metadata_, api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

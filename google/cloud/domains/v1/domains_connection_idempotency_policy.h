@@ -36,59 +36,54 @@ class DomainsConnectionIdempotencyPolicy {
   /// Create a new copy of this object.
   virtual std::unique_ptr<DomainsConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency SearchDomains(
-      google::cloud::domains::v1::SearchDomainsRequest const& request);
+  virtual google::cloud::Idempotency
+  SearchDomains(google::cloud::domains::v1::SearchDomainsRequest const& request);
 
-  virtual google::cloud::Idempotency RetrieveRegisterParameters(
-      google::cloud::domains::v1::RetrieveRegisterParametersRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  RetrieveRegisterParameters(google::cloud::domains::v1::RetrieveRegisterParametersRequest const& request);
 
-  virtual google::cloud::Idempotency RegisterDomain(
-      google::cloud::domains::v1::RegisterDomainRequest const& request);
+  virtual google::cloud::Idempotency
+  RegisterDomain(google::cloud::domains::v1::RegisterDomainRequest const& request);
 
-  virtual google::cloud::Idempotency RetrieveTransferParameters(
-      google::cloud::domains::v1::RetrieveTransferParametersRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  RetrieveTransferParameters(google::cloud::domains::v1::RetrieveTransferParametersRequest const& request);
 
-  virtual google::cloud::Idempotency TransferDomain(
-      google::cloud::domains::v1::TransferDomainRequest const& request);
+  virtual google::cloud::Idempotency
+  TransferDomain(google::cloud::domains::v1::TransferDomainRequest const& request);
 
-  virtual google::cloud::Idempotency ListRegistrations(
-      google::cloud::domains::v1::ListRegistrationsRequest request);
+  virtual google::cloud::Idempotency
+  ListRegistrations(google::cloud::domains::v1::ListRegistrationsRequest request);
 
-  virtual google::cloud::Idempotency GetRegistration(
-      google::cloud::domains::v1::GetRegistrationRequest const& request);
+  virtual google::cloud::Idempotency
+  GetRegistration(google::cloud::domains::v1::GetRegistrationRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateRegistration(
-      google::cloud::domains::v1::UpdateRegistrationRequest const& request);
+  virtual google::cloud::Idempotency
+  UpdateRegistration(google::cloud::domains::v1::UpdateRegistrationRequest const& request);
 
-  virtual google::cloud::Idempotency ConfigureManagementSettings(
-      google::cloud::domains::v1::ConfigureManagementSettingsRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  ConfigureManagementSettings(google::cloud::domains::v1::ConfigureManagementSettingsRequest const& request);
 
-  virtual google::cloud::Idempotency ConfigureDnsSettings(
-      google::cloud::domains::v1::ConfigureDnsSettingsRequest const& request);
+  virtual google::cloud::Idempotency
+  ConfigureDnsSettings(google::cloud::domains::v1::ConfigureDnsSettingsRequest const& request);
 
-  virtual google::cloud::Idempotency ConfigureContactSettings(
-      google::cloud::domains::v1::ConfigureContactSettingsRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  ConfigureContactSettings(google::cloud::domains::v1::ConfigureContactSettingsRequest const& request);
 
-  virtual google::cloud::Idempotency ExportRegistration(
-      google::cloud::domains::v1::ExportRegistrationRequest const& request);
+  virtual google::cloud::Idempotency
+  ExportRegistration(google::cloud::domains::v1::ExportRegistrationRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteRegistration(
-      google::cloud::domains::v1::DeleteRegistrationRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteRegistration(google::cloud::domains::v1::DeleteRegistrationRequest const& request);
 
-  virtual google::cloud::Idempotency RetrieveAuthorizationCode(
-      google::cloud::domains::v1::RetrieveAuthorizationCodeRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  RetrieveAuthorizationCode(google::cloud::domains::v1::RetrieveAuthorizationCodeRequest const& request);
 
-  virtual google::cloud::Idempotency ResetAuthorizationCode(
-      google::cloud::domains::v1::ResetAuthorizationCodeRequest const& request);
+  virtual google::cloud::Idempotency
+  ResetAuthorizationCode(google::cloud::domains::v1::ResetAuthorizationCodeRequest const& request);
 };
 
 std::unique_ptr<DomainsConnectionIdempotencyPolicy>
-MakeDefaultDomainsConnectionIdempotencyPolicy();
+    MakeDefaultDomainsConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace domains_v1

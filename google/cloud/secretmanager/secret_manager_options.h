@@ -28,23 +28,16 @@ namespace cloud {
 namespace secretmanager {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use secretmanager_v1::SecretManagerServiceBackoffPolicyOption
-/// directly.
-using ::google::cloud::secretmanager_v1::
-    SecretManagerServiceBackoffPolicyOption;
+/// @deprecated Use secretmanager_v1::SecretManagerServiceBackoffPolicyOption directly.
+using ::google::cloud::secretmanager_v1::SecretManagerServiceBackoffPolicyOption;
 
-/// @deprecated Use
-/// secretmanager_v1::SecretManagerServiceConnectionIdempotencyPolicyOption
-/// directly.
-using ::google::cloud::secretmanager_v1::
-    SecretManagerServiceConnectionIdempotencyPolicyOption;
+/// @deprecated Use secretmanager_v1::SecretManagerServiceConnectionIdempotencyPolicyOption directly.
+using ::google::cloud::secretmanager_v1::SecretManagerServiceConnectionIdempotencyPolicyOption;
 
-/// @deprecated Use secretmanager_v1::SecretManagerServicePolicyOptionList
-/// directly.
+/// @deprecated Use secretmanager_v1::SecretManagerServicePolicyOptionList directly.
 using ::google::cloud::secretmanager_v1::SecretManagerServicePolicyOptionList;
 
-/// @deprecated Use secretmanager_v1::SecretManagerServiceRetryPolicyOption
-/// directly.
+/// @deprecated Use secretmanager_v1::SecretManagerServiceRetryPolicyOption directly.
 using ::google::cloud::secretmanager_v1::SecretManagerServiceRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

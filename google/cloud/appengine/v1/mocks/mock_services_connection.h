@@ -46,25 +46,25 @@ class MockServicesConnection : public appengine_v1::ServicesConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD((StreamRange<google::appengine::v1::Service>), ListServices,
-              (google::appengine::v1::ListServicesRequest request), (override));
+  MOCK_METHOD((StreamRange<google::appengine::v1::Service>),
+  ListServices,
+  (google::appengine::v1::ListServicesRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::appengine::v1::Service>, GetService,
-              (google::appengine::v1::GetServiceRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::appengine::v1::Service>,
+  GetService,
+  (google::appengine::v1::GetServiceRequest const& request), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// UpdateService(Matcher<google::appengine::v1::UpdateServiceRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, UpdateService(Matcher<google::appengine::v1::UpdateServiceRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::appengine::v1::Service>>, UpdateService,
-              (google::appengine::v1::UpdateServiceRequest const& request),
-              (override));
+  MOCK_METHOD(future<StatusOr<google::appengine::v1::Service>>,
+  UpdateService,
+  (google::appengine::v1::UpdateServiceRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -72,35 +72,33 @@ class MockServicesConnection : public appengine_v1::ServicesConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, UpdateService(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, UpdateService,
-              (NoAwaitTag,
-               google::appengine::v1::UpdateServiceRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  UpdateService, (NoAwaitTag,
+    google::appengine::v1::UpdateServiceRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UpdateService(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, UpdateService(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::appengine::v1::Service>>, UpdateService,
-              (google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(future<StatusOr<google::appengine::v1::Service>>,
+  UpdateService, (
+    google::longrunning::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteService(Matcher<google::appengine::v1::DeleteServiceRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteService(Matcher<google::appengine::v1::DeleteServiceRequest const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::appengine::v1::OperationMetadataV1>>,
-              DeleteService,
-              (google::appengine::v1::DeleteServiceRequest const& request),
-              (override));
+  DeleteService,
+  (google::appengine::v1::DeleteServiceRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -108,22 +106,21 @@ class MockServicesConnection : public appengine_v1::ServicesConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, DeleteService(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteService,
-              (NoAwaitTag,
-               google::appengine::v1::DeleteServiceRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  DeleteService, (NoAwaitTag,
+    google::appengine::v1::DeleteServiceRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteService(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteService(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::appengine::v1::OperationMetadataV1>>,
-              DeleteService, (google::longrunning::Operation const& operation),
-              (override));
+  DeleteService, (
+    google::longrunning::Operation const& operation), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

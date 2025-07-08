@@ -38,12 +38,10 @@ class ValidationHelperV1Auth : public ValidationHelperV1Stub {
       std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth,
       std::shared_ptr<ValidationHelperV1Stub> child);
 
-  StatusOr<google::cloud::binaryauthorization::v1::
-               ValidateAttestationOccurrenceResponse>
-  ValidateAttestationOccurrence(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::binaryauthorization::v1::
-          ValidateAttestationOccurrenceRequest const& request) override;
+  StatusOr<google::cloud::binaryauthorization::v1::ValidateAttestationOccurrenceResponse> ValidateAttestationOccurrence(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::binaryauthorization::v1::ValidateAttestationOccurrenceRequest const& request) override;
 
  private:
   std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth_;

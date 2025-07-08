@@ -27,29 +27,19 @@ namespace cloud {
 namespace beyondcorp {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use beyondcorp_appgateways_v1::MakeAppGatewaysServiceConnection
-/// directly.
-using ::google::cloud::beyondcorp_appgateways_v1::
-    MakeAppGatewaysServiceConnection;
+/// @deprecated Use beyondcorp_appgateways_v1::MakeAppGatewaysServiceConnection directly.
+using ::google::cloud::beyondcorp_appgateways_v1::MakeAppGatewaysServiceConnection;
 
-/// @deprecated Use beyondcorp_appgateways_v1::AppGatewaysServiceConnection
-/// directly.
+/// @deprecated Use beyondcorp_appgateways_v1::AppGatewaysServiceConnection directly.
 using ::google::cloud::beyondcorp_appgateways_v1::AppGatewaysServiceConnection;
 
-/// @deprecated Use
-/// beyondcorp_appgateways_v1::AppGatewaysServiceLimitedErrorCountRetryPolicy
-/// directly.
-using ::google::cloud::beyondcorp_appgateways_v1::
-    AppGatewaysServiceLimitedErrorCountRetryPolicy;
+/// @deprecated Use beyondcorp_appgateways_v1::AppGatewaysServiceLimitedErrorCountRetryPolicy directly.
+using ::google::cloud::beyondcorp_appgateways_v1::AppGatewaysServiceLimitedErrorCountRetryPolicy;
 
-/// @deprecated Use
-/// beyondcorp_appgateways_v1::AppGatewaysServiceLimitedTimeRetryPolicy
-/// directly.
-using ::google::cloud::beyondcorp_appgateways_v1::
-    AppGatewaysServiceLimitedTimeRetryPolicy;
+/// @deprecated Use beyondcorp_appgateways_v1::AppGatewaysServiceLimitedTimeRetryPolicy directly.
+using ::google::cloud::beyondcorp_appgateways_v1::AppGatewaysServiceLimitedTimeRetryPolicy;
 
-/// @deprecated Use beyondcorp_appgateways_v1::AppGatewaysServiceRetryPolicy
-/// directly.
+/// @deprecated Use beyondcorp_appgateways_v1::AppGatewaysServiceRetryPolicy directly.
 using ::google::cloud::beyondcorp_appgateways_v1::AppGatewaysServiceRetryPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

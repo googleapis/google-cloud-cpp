@@ -30,147 +30,124 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-class DomainsTracingConnection : public domains_v1::DomainsConnection {
+class DomainsTracingConnection
+    : public domains_v1::DomainsConnection {
  public:
   ~DomainsTracingConnection() override = default;
 
   explicit DomainsTracingConnection(
-      std::shared_ptr<domains_v1::DomainsConnection> child);
+    std::shared_ptr<domains_v1::DomainsConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::domains::v1::SearchDomainsResponse> SearchDomains(
-      google::cloud::domains::v1::SearchDomainsRequest const& request) override;
+  StatusOr<google::cloud::domains::v1::SearchDomainsResponse>
+  SearchDomains(google::cloud::domains::v1::SearchDomainsRequest const& request) override;
 
   StatusOr<google::cloud::domains::v1::RetrieveRegisterParametersResponse>
-  RetrieveRegisterParameters(
-      google::cloud::domains::v1::RetrieveRegisterParametersRequest const&
-          request) override;
+  RetrieveRegisterParameters(google::cloud::domains::v1::RetrieveRegisterParametersRequest const& request) override;
 
-  future<StatusOr<google::cloud::domains::v1::Registration>> RegisterDomain(
-      google::cloud::domains::v1::RegisterDomainRequest const& request)
-      override;
+  future<StatusOr<google::cloud::domains::v1::Registration>>
+  RegisterDomain(google::cloud::domains::v1::RegisterDomainRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> RegisterDomain(
-      NoAwaitTag,
-      google::cloud::domains::v1::RegisterDomainRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  RegisterDomain(NoAwaitTag,
+      google::cloud::domains::v1::RegisterDomainRequest const& request) override;
 
-  future<StatusOr<google::cloud::domains::v1::Registration>> RegisterDomain(
+  future<StatusOr<google::cloud::domains::v1::Registration>>
+  RegisterDomain(
       google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::domains::v1::RetrieveTransferParametersResponse>
-  RetrieveTransferParameters(
-      google::cloud::domains::v1::RetrieveTransferParametersRequest const&
-          request) override;
+  RetrieveTransferParameters(google::cloud::domains::v1::RetrieveTransferParametersRequest const& request) override;
 
-  future<StatusOr<google::cloud::domains::v1::Registration>> TransferDomain(
-      google::cloud::domains::v1::TransferDomainRequest const& request)
-      override;
+  future<StatusOr<google::cloud::domains::v1::Registration>>
+  TransferDomain(google::cloud::domains::v1::TransferDomainRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> TransferDomain(
-      NoAwaitTag,
-      google::cloud::domains::v1::TransferDomainRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  TransferDomain(NoAwaitTag,
+      google::cloud::domains::v1::TransferDomainRequest const& request) override;
 
-  future<StatusOr<google::cloud::domains::v1::Registration>> TransferDomain(
+  future<StatusOr<google::cloud::domains::v1::Registration>>
+  TransferDomain(
       google::longrunning::Operation const& operation) override;
 
-  StreamRange<google::cloud::domains::v1::Registration> ListRegistrations(
-      google::cloud::domains::v1::ListRegistrationsRequest request) override;
+  StreamRange<google::cloud::domains::v1::Registration>
+  ListRegistrations(google::cloud::domains::v1::ListRegistrationsRequest request) override;
 
-  StatusOr<google::cloud::domains::v1::Registration> GetRegistration(
-      google::cloud::domains::v1::GetRegistrationRequest const& request)
-      override;
+  StatusOr<google::cloud::domains::v1::Registration>
+  GetRegistration(google::cloud::domains::v1::GetRegistrationRequest const& request) override;
 
-  future<StatusOr<google::cloud::domains::v1::Registration>> UpdateRegistration(
-      google::cloud::domains::v1::UpdateRegistrationRequest const& request)
-      override;
+  future<StatusOr<google::cloud::domains::v1::Registration>>
+  UpdateRegistration(google::cloud::domains::v1::UpdateRegistrationRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> UpdateRegistration(
-      NoAwaitTag,
-      google::cloud::domains::v1::UpdateRegistrationRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  UpdateRegistration(NoAwaitTag,
+      google::cloud::domains::v1::UpdateRegistrationRequest const& request) override;
 
-  future<StatusOr<google::cloud::domains::v1::Registration>> UpdateRegistration(
+  future<StatusOr<google::cloud::domains::v1::Registration>>
+  UpdateRegistration(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::domains::v1::Registration>>
-  ConfigureManagementSettings(
-      google::cloud::domains::v1::ConfigureManagementSettingsRequest const&
-          request) override;
+  ConfigureManagementSettings(google::cloud::domains::v1::ConfigureManagementSettingsRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> ConfigureManagementSettings(
-      NoAwaitTag,
-      google::cloud::domains::v1::ConfigureManagementSettingsRequest const&
-          request) override;
+  StatusOr<google::longrunning::Operation>
+  ConfigureManagementSettings(NoAwaitTag,
+      google::cloud::domains::v1::ConfigureManagementSettingsRequest const& request) override;
 
   future<StatusOr<google::cloud::domains::v1::Registration>>
   ConfigureManagementSettings(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::domains::v1::Registration>>
-  ConfigureDnsSettings(
-      google::cloud::domains::v1::ConfigureDnsSettingsRequest const& request)
-      override;
+  ConfigureDnsSettings(google::cloud::domains::v1::ConfigureDnsSettingsRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> ConfigureDnsSettings(
-      NoAwaitTag,
-      google::cloud::domains::v1::ConfigureDnsSettingsRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  ConfigureDnsSettings(NoAwaitTag,
+      google::cloud::domains::v1::ConfigureDnsSettingsRequest const& request) override;
 
   future<StatusOr<google::cloud::domains::v1::Registration>>
   ConfigureDnsSettings(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::domains::v1::Registration>>
-  ConfigureContactSettings(
-      google::cloud::domains::v1::ConfigureContactSettingsRequest const&
-          request) override;
+  ConfigureContactSettings(google::cloud::domains::v1::ConfigureContactSettingsRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> ConfigureContactSettings(
-      NoAwaitTag,
-      google::cloud::domains::v1::ConfigureContactSettingsRequest const&
-          request) override;
+  StatusOr<google::longrunning::Operation>
+  ConfigureContactSettings(NoAwaitTag,
+      google::cloud::domains::v1::ConfigureContactSettingsRequest const& request) override;
 
   future<StatusOr<google::cloud::domains::v1::Registration>>
   ConfigureContactSettings(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::domains::v1::Registration>> ExportRegistration(
-      google::cloud::domains::v1::ExportRegistrationRequest const& request)
-      override;
+  future<StatusOr<google::cloud::domains::v1::Registration>>
+  ExportRegistration(google::cloud::domains::v1::ExportRegistrationRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> ExportRegistration(
-      NoAwaitTag,
-      google::cloud::domains::v1::ExportRegistrationRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  ExportRegistration(NoAwaitTag,
+      google::cloud::domains::v1::ExportRegistrationRequest const& request) override;
 
-  future<StatusOr<google::cloud::domains::v1::Registration>> ExportRegistration(
+  future<StatusOr<google::cloud::domains::v1::Registration>>
+  ExportRegistration(
       google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::domains::v1::OperationMetadata>>
+  DeleteRegistration(google::cloud::domains::v1::DeleteRegistrationRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  DeleteRegistration(NoAwaitTag,
+      google::cloud::domains::v1::DeleteRegistrationRequest const& request) override;
 
   future<StatusOr<google::cloud::domains::v1::OperationMetadata>>
   DeleteRegistration(
-      google::cloud::domains::v1::DeleteRegistrationRequest const& request)
-      override;
-
-  StatusOr<google::longrunning::Operation> DeleteRegistration(
-      NoAwaitTag,
-      google::cloud::domains::v1::DeleteRegistrationRequest const& request)
-      override;
-
-  future<StatusOr<google::cloud::domains::v1::OperationMetadata>>
-  DeleteRegistration(google::longrunning::Operation const& operation) override;
+      google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::domains::v1::AuthorizationCode>
-  RetrieveAuthorizationCode(
-      google::cloud::domains::v1::RetrieveAuthorizationCodeRequest const&
-          request) override;
+  RetrieveAuthorizationCode(google::cloud::domains::v1::RetrieveAuthorizationCodeRequest const& request) override;
 
   StatusOr<google::cloud::domains::v1::AuthorizationCode>
-  ResetAuthorizationCode(
-      google::cloud::domains::v1::ResetAuthorizationCodeRequest const& request)
-      override;
+  ResetAuthorizationCode(google::cloud::domains::v1::ResetAuthorizationCodeRequest const& request) override;
 
  private:
   std::shared_ptr<domains_v1::DomainsConnection> child_;
@@ -184,7 +161,8 @@ class DomainsTracingConnection : public domains_v1::DomainsConnection {
  * The connection is only decorated if tracing is enabled (as determined by the
  * connection's options).
  */
-std::shared_ptr<domains_v1::DomainsConnection> MakeDomainsTracingConnection(
+std::shared_ptr<domains_v1::DomainsConnection>
+MakeDomainsTracingConnection(
     std::shared_ptr<domains_v1::DomainsConnection> conn);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VIDEOINTELLIGENCE_V1_INTERNAL_VIDEO_INTELLIGENCE_TRACING_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VIDEOINTELLIGENCE_V1_INTERNAL_VIDEO_INTELLIGENCE_TRACING_STUB_H
 
-#include "google/cloud/videointelligence/v1/internal/video_intelligence_stub.h"
 #include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
+#include "google/cloud/videointelligence/v1/internal/video_intelligence_stub.h"
 #include <memory>
 
 namespace google {
@@ -32,25 +32,22 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-class VideoIntelligenceServiceTracingStub
-    : public VideoIntelligenceServiceStub {
+class VideoIntelligenceServiceTracingStub : public VideoIntelligenceServiceStub {
  public:
   ~VideoIntelligenceServiceTracingStub() override = default;
 
-  explicit VideoIntelligenceServiceTracingStub(
-      std::shared_ptr<VideoIntelligenceServiceStub> child);
+  explicit VideoIntelligenceServiceTracingStub(std::shared_ptr<VideoIntelligenceServiceStub> child);
 
   future<StatusOr<google::longrunning::Operation>> AsyncAnnotateVideo(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::videointelligence::v1::AnnotateVideoRequest const& request)
-      override;
+      google::cloud::videointelligence::v1::AnnotateVideoRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> AnnotateVideo(
-      grpc::ClientContext& context, Options options,
-      google::cloud::videointelligence::v1::AnnotateVideoRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::videointelligence::v1::AnnotateVideoRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
@@ -66,8 +63,7 @@ class VideoIntelligenceServiceTracingStub
 
  private:
   std::shared_ptr<VideoIntelligenceServiceStub> child_;
-  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
-      propagator_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -78,8 +74,7 @@ class VideoIntelligenceServiceTracingStub
  * The stub is only decorated if the library has been compiled with
  * OpenTelemetry.
  */
-std::shared_ptr<VideoIntelligenceServiceStub>
-MakeVideoIntelligenceServiceTracingStub(
+std::shared_ptr<VideoIntelligenceServiceStub> MakeVideoIntelligenceServiceTracingStub(
     std::shared_ptr<VideoIntelligenceServiceStub> stub);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

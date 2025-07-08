@@ -35,42 +35,32 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options UserEventServiceDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_USER_EVENT_SERVICE_ENDPOINT", "",
-      "GOOGLE_CLOUD_CPP_USER_EVENT_SERVICE_AUTHORITY",
+      std::move(options), "GOOGLE_CLOUD_CPP_USER_EVENT_SERVICE_ENDPOINT",
+      "", "GOOGLE_CLOUD_CPP_USER_EVENT_SERVICE_AUTHORITY",
       "discoveryengine.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<discoveryengine_v1::UserEventServiceRetryPolicyOption>()) {
     options.set<discoveryengine_v1::UserEventServiceRetryPolicyOption>(
         discoveryengine_v1::UserEventServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
-            .clone());
+            std::chrono::minutes(30)).clone());
   }
   if (!options.has<discoveryengine_v1::UserEventServiceBackoffPolicyOption>()) {
     options.set<discoveryengine_v1::UserEventServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(
-            std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
-            .clone());
+        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
   }
   if (!options.has<discoveryengine_v1::UserEventServicePollingPolicyOption>()) {
     options.set<discoveryengine_v1::UserEventServicePollingPolicyOption>(
         GenericPollingPolicy<
             discoveryengine_v1::UserEventServiceRetryPolicyOption::Type,
             discoveryengine_v1::UserEventServiceBackoffPolicyOption::Type>(
-            options
-                .get<discoveryengine_v1::UserEventServiceRetryPolicyOption>()
-                ->clone(),
+            options.get<discoveryengine_v1::UserEventServiceRetryPolicyOption>()->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                     std::chrono::minutes(5), kBackoffScaling)
-                .clone())
-            .clone());
+            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
   }
-  if (!options.has<discoveryengine_v1::
-                       UserEventServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<
-        discoveryengine_v1::UserEventServiceConnectionIdempotencyPolicyOption>(
-        discoveryengine_v1::
-            MakeDefaultUserEventServiceConnectionIdempotencyPolicy());
+  if (!options.has<discoveryengine_v1::UserEventServiceConnectionIdempotencyPolicyOption>()) {
+    options.set<discoveryengine_v1::UserEventServiceConnectionIdempotencyPolicyOption>(
+        discoveryengine_v1::MakeDefaultUserEventServiceConnectionIdempotencyPolicy());
   }
 
   return options;

@@ -31,10 +31,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// @deprecated Use logging_v2::LoggingServiceV2BackoffPolicyOption directly.
 using ::google::cloud::logging_v2::LoggingServiceV2BackoffPolicyOption;
 
-/// @deprecated Use
-/// logging_v2::LoggingServiceV2ConnectionIdempotencyPolicyOption directly.
-using ::google::cloud::logging_v2::
-    LoggingServiceV2ConnectionIdempotencyPolicyOption;
+/// @deprecated Use logging_v2::LoggingServiceV2ConnectionIdempotencyPolicyOption directly.
+using ::google::cloud::logging_v2::LoggingServiceV2ConnectionIdempotencyPolicyOption;
 
 /// @deprecated Use logging_v2::LoggingServiceV2PolicyOptionList directly.
 using ::google::cloud::logging_v2::LoggingServiceV2PolicyOptionList;

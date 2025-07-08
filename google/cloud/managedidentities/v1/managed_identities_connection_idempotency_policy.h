@@ -34,46 +34,41 @@ class ManagedIdentitiesServiceConnectionIdempotencyPolicy {
   virtual ~ManagedIdentitiesServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<ManagedIdentitiesServiceConnectionIdempotencyPolicy>
-  clone() const;
+  virtual std::unique_ptr<ManagedIdentitiesServiceConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency CreateMicrosoftAdDomain(
-      google::cloud::managedidentities::v1::
-          CreateMicrosoftAdDomainRequest const& request);
+  virtual google::cloud::Idempotency
+  CreateMicrosoftAdDomain(google::cloud::managedidentities::v1::CreateMicrosoftAdDomainRequest const& request);
 
-  virtual google::cloud::Idempotency ResetAdminPassword(
-      google::cloud::managedidentities::v1::ResetAdminPasswordRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  ResetAdminPassword(google::cloud::managedidentities::v1::ResetAdminPasswordRequest const& request);
 
-  virtual google::cloud::Idempotency ListDomains(
-      google::cloud::managedidentities::v1::ListDomainsRequest request);
+  virtual google::cloud::Idempotency
+  ListDomains(google::cloud::managedidentities::v1::ListDomainsRequest request);
 
-  virtual google::cloud::Idempotency GetDomain(
-      google::cloud::managedidentities::v1::GetDomainRequest const& request);
+  virtual google::cloud::Idempotency
+  GetDomain(google::cloud::managedidentities::v1::GetDomainRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateDomain(
-      google::cloud::managedidentities::v1::UpdateDomainRequest const& request);
+  virtual google::cloud::Idempotency
+  UpdateDomain(google::cloud::managedidentities::v1::UpdateDomainRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteDomain(
-      google::cloud::managedidentities::v1::DeleteDomainRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteDomain(google::cloud::managedidentities::v1::DeleteDomainRequest const& request);
 
-  virtual google::cloud::Idempotency AttachTrust(
-      google::cloud::managedidentities::v1::AttachTrustRequest const& request);
+  virtual google::cloud::Idempotency
+  AttachTrust(google::cloud::managedidentities::v1::AttachTrustRequest const& request);
 
-  virtual google::cloud::Idempotency ReconfigureTrust(
-      google::cloud::managedidentities::v1::ReconfigureTrustRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  ReconfigureTrust(google::cloud::managedidentities::v1::ReconfigureTrustRequest const& request);
 
-  virtual google::cloud::Idempotency DetachTrust(
-      google::cloud::managedidentities::v1::DetachTrustRequest const& request);
+  virtual google::cloud::Idempotency
+  DetachTrust(google::cloud::managedidentities::v1::DetachTrustRequest const& request);
 
-  virtual google::cloud::Idempotency ValidateTrust(
-      google::cloud::managedidentities::v1::ValidateTrustRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  ValidateTrust(google::cloud::managedidentities::v1::ValidateTrustRequest const& request);
 };
 
 std::unique_ptr<ManagedIdentitiesServiceConnectionIdempotencyPolicy>
-MakeDefaultManagedIdentitiesServiceConnectionIdempotencyPolicy();
+    MakeDefaultManagedIdentitiesServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace managedidentities_v1

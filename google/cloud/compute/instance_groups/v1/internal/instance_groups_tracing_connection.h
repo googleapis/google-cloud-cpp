@@ -36,85 +36,75 @@ class InstanceGroupsTracingConnection
   ~InstanceGroupsTracingConnection() override = default;
 
   explicit InstanceGroupsTracingConnection(
-      std::shared_ptr<compute_instance_groups_v1::InstanceGroupsConnection>
-          child);
+    std::shared_ptr<compute_instance_groups_v1::InstanceGroupsConnection> child);
 
   Options options() override { return child_->options(); }
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddInstances(
-      google::cloud::cpp::compute::instance_groups::v1::
-          AddInstancesRequest const& request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AddInstances(google::cloud::cpp::compute::instance_groups::v1::AddInstancesRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation> AddInstances(
-      NoAwaitTag, google::cloud::cpp::compute::instance_groups::v1::
-                      AddInstancesRequest const& request) override;
-
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddInstances(
-      google::cloud::cpp::compute::v1::Operation const& operation) override;
-
-  StreamRange<std::pair<
-      std::string, google::cloud::cpp::compute::v1::InstanceGroupsScopedList>>
-  AggregatedListInstanceGroups(
-      google::cloud::cpp::compute::instance_groups::v1::
-          AggregatedListInstanceGroupsRequest request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  AddInstances(NoAwaitTag,
+      google::cloud::cpp::compute::instance_groups::v1::AddInstancesRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteInstanceGroup(google::cloud::cpp::compute::instance_groups::v1::
-                          DeleteInstanceGroupRequest const& request) override;
+  AddInstances(
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteInstanceGroup(
-      NoAwaitTag, google::cloud::cpp::compute::instance_groups::v1::
-                      DeleteInstanceGroupRequest const& request) override;
+  StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::InstanceGroupsScopedList>>
+  AggregatedListInstanceGroups(google::cloud::cpp::compute::instance_groups::v1::AggregatedListInstanceGroupsRequest request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteInstanceGroup(google::cloud::cpp::compute::instance_groups::v1::DeleteInstanceGroupRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeleteInstanceGroup(NoAwaitTag,
+      google::cloud::cpp::compute::instance_groups::v1::DeleteInstanceGroupRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteInstanceGroup(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::InstanceGroup> GetInstanceGroup(
-      google::cloud::cpp::compute::instance_groups::v1::
-          GetInstanceGroupRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::InstanceGroup>
+  GetInstanceGroup(google::cloud::cpp::compute::instance_groups::v1::GetInstanceGroupRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertInstanceGroup(google::cloud::cpp::compute::instance_groups::v1::
-                          InsertInstanceGroupRequest const& request) override;
+  InsertInstanceGroup(google::cloud::cpp::compute::instance_groups::v1::InsertInstanceGroupRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertInstanceGroup(
-      NoAwaitTag, google::cloud::cpp::compute::instance_groups::v1::
-                      InsertInstanceGroupRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  InsertInstanceGroup(NoAwaitTag,
+      google::cloud::cpp::compute::instance_groups::v1::InsertInstanceGroupRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertInstanceGroup(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StreamRange<google::cloud::cpp::compute::v1::InstanceGroup>
-  ListInstanceGroups(google::cloud::cpp::compute::instance_groups::v1::
-                         ListInstanceGroupsRequest request) override;
+  ListInstanceGroups(google::cloud::cpp::compute::instance_groups::v1::ListInstanceGroupsRequest request) override;
 
   StreamRange<google::cloud::cpp::compute::v1::InstanceWithNamedPorts>
-  ListInstances(
-      google::cloud::cpp::compute::instance_groups::v1::ListInstancesRequest
-          request) override;
+  ListInstances(google::cloud::cpp::compute::instance_groups::v1::ListInstancesRequest request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> RemoveInstances(
-      google::cloud::cpp::compute::instance_groups::v1::
-          RemoveInstancesRequest const& request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  RemoveInstances(google::cloud::cpp::compute::instance_groups::v1::RemoveInstancesRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation> RemoveInstances(
-      NoAwaitTag, google::cloud::cpp::compute::instance_groups::v1::
-                      RemoveInstancesRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  RemoveInstances(NoAwaitTag,
+      google::cloud::cpp::compute::instance_groups::v1::RemoveInstancesRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> RemoveInstances(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  RemoveInstances(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetNamedPorts(
-      google::cloud::cpp::compute::instance_groups::v1::
-          SetNamedPortsRequest const& request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  SetNamedPorts(google::cloud::cpp::compute::instance_groups::v1::SetNamedPortsRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation> SetNamedPorts(
-      NoAwaitTag, google::cloud::cpp::compute::instance_groups::v1::
-                      SetNamedPortsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  SetNamedPorts(NoAwaitTag,
+      google::cloud::cpp::compute::instance_groups::v1::SetNamedPortsRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetNamedPorts(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  SetNamedPorts(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
  private:

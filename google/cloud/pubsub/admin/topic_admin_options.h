@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_ADMIN_TOPIC_ADMIN_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_ADMIN_TOPIC_ADMIN_OPTIONS_H
 
-#include "google/cloud/pubsub/admin/topic_admin_connection.h"
-#include "google/cloud/pubsub/admin/topic_admin_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
+#include "google/cloud/pubsub/admin/topic_admin_connection.h"
+#include "google/cloud/pubsub/admin/topic_admin_connection_idempotency_policy.h"
 #include "google/cloud/version.h"
 #include <memory>
 
@@ -64,7 +64,8 @@ struct TopicAdminConnectionIdempotencyPolicyOption {
  * @ingroup google-cloud-pubsub-options
  */
 using TopicAdminPolicyOptionList =
-    OptionList<TopicAdminRetryPolicyOption, TopicAdminBackoffPolicyOption,
+    OptionList<TopicAdminRetryPolicyOption,
+               TopicAdminBackoffPolicyOption,
                TopicAdminConnectionIdempotencyPolicyOption>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

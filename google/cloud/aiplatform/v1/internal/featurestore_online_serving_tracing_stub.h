@@ -32,77 +32,81 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-class FeaturestoreOnlineServingServiceTracingStub
-    : public FeaturestoreOnlineServingServiceStub {
+class FeaturestoreOnlineServingServiceTracingStub : public FeaturestoreOnlineServingServiceStub {
  public:
   ~FeaturestoreOnlineServingServiceTracingStub() override = default;
 
-  explicit FeaturestoreOnlineServingServiceTracingStub(
-      std::shared_ptr<FeaturestoreOnlineServingServiceStub> child);
+  explicit FeaturestoreOnlineServingServiceTracingStub(std::shared_ptr<FeaturestoreOnlineServingServiceStub> child);
 
-  StatusOr<google::cloud::aiplatform::v1::ReadFeatureValuesResponse>
-  ReadFeatureValues(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::aiplatform::v1::ReadFeatureValuesRequest const& request)
-      override;
+  StatusOr<google::cloud::aiplatform::v1::ReadFeatureValuesResponse> ReadFeatureValues(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::aiplatform::v1::ReadFeatureValuesRequest const& request) override;
 
-  std::unique_ptr<google::cloud::internal::StreamingReadRpc<
-      google::cloud::aiplatform::v1::ReadFeatureValuesResponse>>
+  std::unique_ptr<google::cloud::internal::StreamingReadRpc<google::cloud::aiplatform::v1::ReadFeatureValuesResponse>>
   StreamingReadFeatureValues(
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
-      google::cloud::aiplatform::v1::StreamingReadFeatureValuesRequest const&
-          request) override;
+      std::shared_ptr<grpc::ClientContext> context,
+      Options const& options,
+      google::cloud::aiplatform::v1::StreamingReadFeatureValuesRequest const& request) override;
 
-  StatusOr<google::cloud::aiplatform::v1::WriteFeatureValuesResponse>
-  WriteFeatureValues(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::aiplatform::v1::WriteFeatureValuesRequest const& request)
-      override;
+  StatusOr<google::cloud::aiplatform::v1::WriteFeatureValuesResponse> WriteFeatureValues(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::aiplatform::v1::WriteFeatureValuesRequest const& request) override;
 
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::location::ListLocationsRequest const& request) override;
 
   StatusOr<google::cloud::location::Location> GetLocation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::location::GetLocationRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status DeleteOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::DeleteOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> WaitOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::WaitOperationRequest const& request) override;
 
  private:
   std::shared_ptr<FeaturestoreOnlineServingServiceStub> child_;
-  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
-      propagator_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -113,8 +117,7 @@ class FeaturestoreOnlineServingServiceTracingStub
  * The stub is only decorated if the library has been compiled with
  * OpenTelemetry.
  */
-std::shared_ptr<FeaturestoreOnlineServingServiceStub>
-MakeFeaturestoreOnlineServingServiceTracingStub(
+std::shared_ptr<FeaturestoreOnlineServingServiceStub> MakeFeaturestoreOnlineServingServiceTracingStub(
     std::shared_ptr<FeaturestoreOnlineServingServiceStub> stub);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

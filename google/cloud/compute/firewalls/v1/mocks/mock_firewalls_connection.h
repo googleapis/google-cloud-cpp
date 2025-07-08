@@ -42,8 +42,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockFirewallsConnection
-    : public compute_firewalls_v1::FirewallsConnection {
+class MockFirewallsConnection : public compute_firewalls_v1::FirewallsConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
@@ -52,16 +51,12 @@ class MockFirewallsConnection
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteFirewall(Matcher<google::cloud::cpp::compute::firewalls::v1::DeleteFirewallRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteFirewall(Matcher<google::cloud::cpp::compute::firewalls::v1::DeleteFirewallRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-      DeleteFirewall,
-      (google::cloud::cpp::compute::firewalls::v1::DeleteFirewallRequest const&
-           request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  DeleteFirewall,
+  (google::cloud::cpp::compute::firewalls::v1::DeleteFirewallRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -69,48 +64,37 @@ class MockFirewallsConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, DeleteFirewall(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::Operation>, DeleteFirewall,
-      (NoAwaitTag,
-       google::cloud::cpp::compute::firewalls::v1::DeleteFirewallRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+  DeleteFirewall, (NoAwaitTag,
+    google::cloud::cpp::compute::firewalls::v1::DeleteFirewallRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteFirewall(Matcher<google::cloud::cpp::compute::v1::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteFirewall(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              DeleteFirewall,
-              (google::cloud::cpp::compute::v1::Operation const& operation),
-              (override));
+  DeleteFirewall, (
+    google::cloud::cpp::compute::v1::Operation const& operation), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::Firewall>, GetFirewall,
-      (google::cloud::cpp::compute::firewalls::v1::GetFirewallRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Firewall>,
+  GetFirewall,
+  (google::cloud::cpp::compute::firewalls::v1::GetFirewallRequest const& request), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// InsertFirewall(Matcher<google::cloud::cpp::compute::firewalls::v1::InsertFirewallRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, InsertFirewall(Matcher<google::cloud::cpp::compute::firewalls::v1::InsertFirewallRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-      InsertFirewall,
-      (google::cloud::cpp::compute::firewalls::v1::InsertFirewallRequest const&
-           request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  InsertFirewall,
+  (google::cloud::cpp::compute::firewalls::v1::InsertFirewallRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -118,48 +102,37 @@ class MockFirewallsConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, InsertFirewall(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::Operation>, InsertFirewall,
-      (NoAwaitTag,
-       google::cloud::cpp::compute::firewalls::v1::InsertFirewallRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+  InsertFirewall, (NoAwaitTag,
+    google::cloud::cpp::compute::firewalls::v1::InsertFirewallRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// InsertFirewall(Matcher<google::cloud::cpp::compute::v1::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, InsertFirewall(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              InsertFirewall,
-              (google::cloud::cpp::compute::v1::Operation const& operation),
-              (override));
+  InsertFirewall, (
+    google::cloud::cpp::compute::v1::Operation const& operation), (override));
 
   MOCK_METHOD((StreamRange<google::cloud::cpp::compute::v1::Firewall>),
-              ListFirewalls,
-              (google::cloud::cpp::compute::firewalls::v1::ListFirewallsRequest
-                   request),
-              (override));
+  ListFirewalls,
+  (google::cloud::cpp::compute::firewalls::v1::ListFirewallsRequest request), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// PatchFirewall(Matcher<google::cloud::cpp::compute::firewalls::v1::PatchFirewallRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, PatchFirewall(Matcher<google::cloud::cpp::compute::firewalls::v1::PatchFirewallRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-      PatchFirewall,
-      (google::cloud::cpp::compute::firewalls::v1::PatchFirewallRequest const&
-           request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  PatchFirewall,
+  (google::cloud::cpp::compute::firewalls::v1::PatchFirewallRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -167,42 +140,33 @@ class MockFirewallsConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, PatchFirewall(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::Operation>, PatchFirewall,
-      (NoAwaitTag,
-       google::cloud::cpp::compute::firewalls::v1::PatchFirewallRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+  PatchFirewall, (NoAwaitTag,
+    google::cloud::cpp::compute::firewalls::v1::PatchFirewallRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// PatchFirewall(Matcher<google::cloud::cpp::compute::v1::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, PatchFirewall(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              PatchFirewall,
-              (google::cloud::cpp::compute::v1::Operation const& operation),
-              (override));
+  PatchFirewall, (
+    google::cloud::cpp::compute::v1::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// UpdateFirewall(Matcher<google::cloud::cpp::compute::firewalls::v1::UpdateFirewallRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, UpdateFirewall(Matcher<google::cloud::cpp::compute::firewalls::v1::UpdateFirewallRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-      UpdateFirewall,
-      (google::cloud::cpp::compute::firewalls::v1::UpdateFirewallRequest const&
-           request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  UpdateFirewall,
+  (google::cloud::cpp::compute::firewalls::v1::UpdateFirewallRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -210,26 +174,21 @@ class MockFirewallsConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, UpdateFirewall(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::Operation>, UpdateFirewall,
-      (NoAwaitTag,
-       google::cloud::cpp::compute::firewalls::v1::UpdateFirewallRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+  UpdateFirewall, (NoAwaitTag,
+    google::cloud::cpp::compute::firewalls::v1::UpdateFirewallRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// UpdateFirewall(Matcher<google::cloud::cpp::compute::v1::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, UpdateFirewall(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              UpdateFirewall,
-              (google::cloud::cpp::compute::v1::Operation const& operation),
-              (override));
+  UpdateFirewall, (
+    google::cloud::cpp::compute::v1::Operation const& operation), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -33,27 +33,28 @@ DataScanServiceAuth::DataScanServiceAuth(
 
 future<StatusOr<google::longrunning::Operation>>
 DataScanServiceAuth::AsyncCreateDataScan(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::dataplex::v1::CreateDataScanRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::dataplex::v1::CreateDataScanRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreateDataScan(cq, *std::move(context),
-                                          std::move(options), request);
+        return child->AsyncCreateDataScan(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation> DataScanServiceAuth::CreateDataScan(
-    grpc::ClientContext& context, Options options,
-    google::cloud::dataplex::v1::CreateDataScanRequest const& request) {
+StatusOr<google::longrunning::Operation>
+DataScanServiceAuth::CreateDataScan(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::dataplex::v1::CreateDataScanRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateDataScan(context, options, request);
@@ -61,27 +62,28 @@ StatusOr<google::longrunning::Operation> DataScanServiceAuth::CreateDataScan(
 
 future<StatusOr<google::longrunning::Operation>>
 DataScanServiceAuth::AsyncUpdateDataScan(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::dataplex::v1::UpdateDataScanRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::dataplex::v1::UpdateDataScanRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncUpdateDataScan(cq, *std::move(context),
-                                          std::move(options), request);
+        return child->AsyncUpdateDataScan(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation> DataScanServiceAuth::UpdateDataScan(
-    grpc::ClientContext& context, Options options,
-    google::cloud::dataplex::v1::UpdateDataScanRequest const& request) {
+StatusOr<google::longrunning::Operation>
+DataScanServiceAuth::UpdateDataScan(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::dataplex::v1::UpdateDataScanRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateDataScan(context, options, request);
@@ -89,90 +91,90 @@ StatusOr<google::longrunning::Operation> DataScanServiceAuth::UpdateDataScan(
 
 future<StatusOr<google::longrunning::Operation>>
 DataScanServiceAuth::AsyncDeleteDataScan(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::dataplex::v1::DeleteDataScanRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::dataplex::v1::DeleteDataScanRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDeleteDataScan(cq, *std::move(context),
-                                          std::move(options), request);
+        return child->AsyncDeleteDataScan(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation> DataScanServiceAuth::DeleteDataScan(
-    grpc::ClientContext& context, Options options,
-    google::cloud::dataplex::v1::DeleteDataScanRequest const& request) {
+StatusOr<google::longrunning::Operation>
+DataScanServiceAuth::DeleteDataScan(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::dataplex::v1::DeleteDataScanRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteDataScan(context, options, request);
 }
 
-StatusOr<google::cloud::dataplex::v1::DataScan>
-DataScanServiceAuth::GetDataScan(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::dataplex::v1::DataScan> DataScanServiceAuth::GetDataScan(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dataplex::v1::GetDataScanRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetDataScan(context, options, request);
 }
 
-StatusOr<google::cloud::dataplex::v1::ListDataScansResponse>
-DataScanServiceAuth::ListDataScans(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::dataplex::v1::ListDataScansResponse> DataScanServiceAuth::ListDataScans(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dataplex::v1::ListDataScansRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListDataScans(context, options, request);
 }
 
-StatusOr<google::cloud::dataplex::v1::RunDataScanResponse>
-DataScanServiceAuth::RunDataScan(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::dataplex::v1::RunDataScanResponse> DataScanServiceAuth::RunDataScan(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dataplex::v1::RunDataScanRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->RunDataScan(context, options, request);
 }
 
-StatusOr<google::cloud::dataplex::v1::DataScanJob>
-DataScanServiceAuth::GetDataScanJob(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::dataplex::v1::DataScanJob> DataScanServiceAuth::GetDataScanJob(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dataplex::v1::GetDataScanJobRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetDataScanJob(context, options, request);
 }
 
-StatusOr<google::cloud::dataplex::v1::ListDataScanJobsResponse>
-DataScanServiceAuth::ListDataScanJobs(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::dataplex::v1::ListDataScanJobsResponse> DataScanServiceAuth::ListDataScanJobs(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dataplex::v1::ListDataScanJobsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListDataScanJobs(context, options, request);
 }
 
-StatusOr<google::cloud::dataplex::v1::GenerateDataQualityRulesResponse>
-DataScanServiceAuth::GenerateDataQualityRules(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::dataplex::v1::GenerateDataQualityRulesRequest const&
-        request) {
+StatusOr<google::cloud::dataplex::v1::GenerateDataQualityRulesResponse> DataScanServiceAuth::GenerateDataQualityRules(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::dataplex::v1::GenerateDataQualityRulesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GenerateDataQualityRules(context, options, request);
 }
 
-StatusOr<google::cloud::location::ListLocationsResponse>
-DataScanServiceAuth::ListLocations(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::location::ListLocationsResponse> DataScanServiceAuth::ListLocations(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -180,7 +182,8 @@ DataScanServiceAuth::ListLocations(
 }
 
 StatusOr<google::cloud::location::Location> DataScanServiceAuth::GetLocation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -188,7 +191,8 @@ StatusOr<google::cloud::location::Location> DataScanServiceAuth::GetLocation(
 }
 
 StatusOr<google::iam::v1::Policy> DataScanServiceAuth::SetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -196,25 +200,26 @@ StatusOr<google::iam::v1::Policy> DataScanServiceAuth::SetIamPolicy(
 }
 
 StatusOr<google::iam::v1::Policy> DataScanServiceAuth::GetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetIamPolicy(context, options, request);
 }
 
-StatusOr<google::iam::v1::TestIamPermissionsResponse>
-DataScanServiceAuth::TestIamPermissions(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::iam::v1::TestIamPermissionsResponse> DataScanServiceAuth::TestIamPermissions(
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->TestIamPermissions(context, options, request);
 }
 
-StatusOr<google::longrunning::ListOperationsResponse>
-DataScanServiceAuth::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse> DataScanServiceAuth::ListOperations(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -222,7 +227,8 @@ DataScanServiceAuth::ListOperations(
 }
 
 StatusOr<google::longrunning::Operation> DataScanServiceAuth::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -230,7 +236,8 @@ StatusOr<google::longrunning::Operation> DataScanServiceAuth::GetOperation(
 }
 
 Status DataScanServiceAuth::DeleteOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -238,7 +245,8 @@ Status DataScanServiceAuth::DeleteOperation(
 }
 
 Status DataScanServiceAuth::CancelOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -252,16 +260,15 @@ DataScanServiceAuth::AsyncGetOperation(
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncGetOperation(cq, *std::move(context),
-                                        std::move(options), request);
+        return child->AsyncGetOperation(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
@@ -270,14 +277,13 @@ future<Status> DataScanServiceAuth::AsyncCancelOperation(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) return make_ready_future(std::move(context).status());
-        return child->AsyncCancelOperation(cq, *std::move(context),
-                                           std::move(options), request);
+        return child->AsyncCancelOperation(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 

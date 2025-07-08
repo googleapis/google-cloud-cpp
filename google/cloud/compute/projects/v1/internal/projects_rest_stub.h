@@ -37,188 +37,133 @@ class ProjectsRestStub {
  public:
   virtual ~ProjectsRestStub() = default;
 
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncDisableXpnHost(
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncDisableXpnHost(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::projects::v1::DisableXpnHostRequest const&
-          request) = 0;
+      google::cloud::cpp::compute::projects::v1::DisableXpnHostRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> DisableXpnHost(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::projects::v1::DisableXpnHostRequest const&
-          request) = 0;
+      Options const& options, google::cloud::cpp::compute::projects::v1::DisableXpnHostRequest const& request) = 0;
 
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncDisableXpnResource(
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncDisableXpnResource(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::projects::v1::
-          DisableXpnResourceRequest const& request) = 0;
+      google::cloud::cpp::compute::projects::v1::DisableXpnResourceRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DisableXpnResource(google::cloud::rest_internal::RestContext& rest_context,
-                     Options const& options,
-                     google::cloud::cpp::compute::projects::v1::
-                         DisableXpnResourceRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> DisableXpnResource(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options, google::cloud::cpp::compute::projects::v1::DisableXpnResourceRequest const& request) = 0;
 
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncEnableXpnHost(
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncEnableXpnHost(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::projects::v1::EnableXpnHostRequest const&
-          request) = 0;
+      google::cloud::cpp::compute::projects::v1::EnableXpnHostRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> EnableXpnHost(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::projects::v1::EnableXpnHostRequest const&
-          request) = 0;
+      Options const& options, google::cloud::cpp::compute::projects::v1::EnableXpnHostRequest const& request) = 0;
 
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncEnableXpnResource(
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncEnableXpnResource(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::projects::v1::EnableXpnResourceRequest const&
-          request) = 0;
+      google::cloud::cpp::compute::projects::v1::EnableXpnResourceRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  EnableXpnResource(
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> EnableXpnResource(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::projects::v1::EnableXpnResourceRequest const&
-          request) = 0;
+      Options const& options, google::cloud::cpp::compute::projects::v1::EnableXpnResourceRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Project> GetProject(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::projects::v1::GetProjectRequest const&
-          request) = 0;
+      Options const& options, google::cloud::cpp::compute::projects::v1::GetProjectRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Project> GetXpnHost(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::projects::v1::GetXpnHostRequest const&
-          request) = 0;
+      Options const& options, google::cloud::cpp::compute::projects::v1::GetXpnHostRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::ProjectsGetXpnResources>
-  GetXpnResources(
+  virtual StatusOr<google::cloud::cpp::compute::v1::ProjectsGetXpnResources> GetXpnResources(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::projects::v1::GetXpnResourcesRequest const&
-          request) = 0;
+      Options const& options, google::cloud::cpp::compute::projects::v1::GetXpnResourcesRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::XpnHostList> ListXpnHosts(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::projects::v1::ListXpnHostsRequest const&
-          request) = 0;
+      Options const& options, google::cloud::cpp::compute::projects::v1::ListXpnHostsRequest const& request) = 0;
 
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncMoveDisk(
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncMoveDisk(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::projects::v1::MoveDiskRequest const&
-          request) = 0;
+      google::cloud::cpp::compute::projects::v1::MoveDiskRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> MoveDisk(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::projects::v1::MoveDiskRequest const&
-          request) = 0;
+      Options const& options, google::cloud::cpp::compute::projects::v1::MoveDiskRequest const& request) = 0;
 
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncMoveInstance(
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncMoveInstance(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::projects::v1::MoveInstanceRequest const&
-          request) = 0;
+      google::cloud::cpp::compute::projects::v1::MoveInstanceRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> MoveInstance(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::projects::v1::MoveInstanceRequest const&
-          request) = 0;
+      Options const& options, google::cloud::cpp::compute::projects::v1::MoveInstanceRequest const& request) = 0;
 
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncSetCloudArmorTier(
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncSetCloudArmorTier(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::projects::v1::SetCloudArmorTierRequest const&
-          request) = 0;
+      google::cloud::cpp::compute::projects::v1::SetCloudArmorTierRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetCloudArmorTier(
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> SetCloudArmorTier(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::projects::v1::SetCloudArmorTierRequest const&
-          request) = 0;
+      Options const& options, google::cloud::cpp::compute::projects::v1::SetCloudArmorTierRequest const& request) = 0;
 
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncSetCommonInstanceMetadata(
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncSetCommonInstanceMetadata(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::projects::v1::
-          SetCommonInstanceMetadataRequest const& request) = 0;
+      google::cloud::cpp::compute::projects::v1::SetCommonInstanceMetadataRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetCommonInstanceMetadata(
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> SetCommonInstanceMetadata(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::projects::v1::
-          SetCommonInstanceMetadataRequest const& request) = 0;
+      Options const& options, google::cloud::cpp::compute::projects::v1::SetCommonInstanceMetadataRequest const& request) = 0;
 
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncSetDefaultNetworkTier(
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncSetDefaultNetworkTier(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::projects::v1::
-          SetDefaultNetworkTierRequest const& request) = 0;
+      google::cloud::cpp::compute::projects::v1::SetDefaultNetworkTierRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetDefaultNetworkTier(google::cloud::rest_internal::RestContext& rest_context,
-                        Options const& options,
-                        google::cloud::cpp::compute::projects::v1::
-                            SetDefaultNetworkTierRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> SetDefaultNetworkTier(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options, google::cloud::cpp::compute::projects::v1::SetDefaultNetworkTierRequest const& request) = 0;
 
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncSetUsageExportBucket(
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncSetUsageExportBucket(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::projects::v1::
-          SetUsageExportBucketRequest const& request) = 0;
+      google::cloud::cpp::compute::projects::v1::SetUsageExportBucketRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetUsageExportBucket(google::cloud::rest_internal::RestContext& rest_context,
-                       Options const& options,
-                       google::cloud::cpp::compute::projects::v1::
-                           SetUsageExportBucketRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> SetUsageExportBucket(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options, google::cloud::cpp::compute::projects::v1::SetUsageExportBucketRequest const& request) = 0;
 
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncGetOperation(
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::global_operations::v1::
-          GetOperationRequest const& request) = 0;
+      google::cloud::cpp::compute::global_operations::v1::GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::global_operations::v1::
-          DeleteOperationRequest const& request) = 0;
+      google::cloud::cpp::compute::global_operations::v1::DeleteOperationRequest const& request) = 0;
 };
 
 class DefaultProjectsRestStub : public ProjectsRestStub {
@@ -226,189 +171,138 @@ class DefaultProjectsRestStub : public ProjectsRestStub {
   ~DefaultProjectsRestStub() override = default;
 
   explicit DefaultProjectsRestStub(Options options);
-  DefaultProjectsRestStub(std::shared_ptr<rest_internal::RestClient> service,
-                          std::shared_ptr<rest_internal::RestClient> operations,
-                          Options options);
+  DefaultProjectsRestStub(
+      std::shared_ptr<rest_internal::RestClient> service,
+      std::shared_ptr<rest_internal::RestClient> operations,
+      Options options);
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncDisableXpnHost(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncDisableXpnHost(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::projects::v1::DisableXpnHostRequest const&
-          request) override;
+      google::cloud::cpp::compute::projects::v1::DisableXpnHostRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DisableXpnHost(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::projects::v1::DisableXpnHostRequest const&
-          request) override;
+      Options const& options, google::cloud::cpp::compute::projects::v1::DisableXpnHostRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncDisableXpnResource(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncDisableXpnResource(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::projects::v1::
-          DisableXpnResourceRequest const& request) override;
+      google::cloud::cpp::compute::projects::v1::DisableXpnResourceRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DisableXpnResource(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::projects::v1::
-          DisableXpnResourceRequest const& request) override;
+      Options const& options, google::cloud::cpp::compute::projects::v1::DisableXpnResourceRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncEnableXpnHost(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncEnableXpnHost(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::projects::v1::EnableXpnHostRequest const&
-          request) override;
+      google::cloud::cpp::compute::projects::v1::EnableXpnHostRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> EnableXpnHost(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::projects::v1::EnableXpnHostRequest const&
-          request) override;
+      Options const& options, google::cloud::cpp::compute::projects::v1::EnableXpnHostRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncEnableXpnResource(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncEnableXpnResource(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::projects::v1::EnableXpnResourceRequest const&
-          request) override;
+      google::cloud::cpp::compute::projects::v1::EnableXpnResourceRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> EnableXpnResource(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::projects::v1::EnableXpnResourceRequest const&
-          request) override;
+      Options const& options, google::cloud::cpp::compute::projects::v1::EnableXpnResourceRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Project> GetProject(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::projects::v1::GetProjectRequest const&
-          request) override;
+      Options const& options, google::cloud::cpp::compute::projects::v1::GetProjectRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Project> GetXpnHost(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::projects::v1::GetXpnHostRequest const&
-          request) override;
+      Options const& options, google::cloud::cpp::compute::projects::v1::GetXpnHostRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::ProjectsGetXpnResources>
-  GetXpnResources(
+  StatusOr<google::cloud::cpp::compute::v1::ProjectsGetXpnResources> GetXpnResources(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::projects::v1::GetXpnResourcesRequest const&
-          request) override;
+      Options const& options, google::cloud::cpp::compute::projects::v1::GetXpnResourcesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::XpnHostList> ListXpnHosts(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::projects::v1::ListXpnHostsRequest const&
-          request) override;
+      Options const& options, google::cloud::cpp::compute::projects::v1::ListXpnHostsRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncMoveDisk(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::projects::v1::MoveDiskRequest const& request)
-      override;
+      google::cloud::cpp::compute::projects::v1::MoveDiskRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> MoveDisk(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::projects::v1::MoveDiskRequest const& request)
-      override;
+      Options const& options, google::cloud::cpp::compute::projects::v1::MoveDiskRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncMoveInstance(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncMoveInstance(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::projects::v1::MoveInstanceRequest const&
-          request) override;
+      google::cloud::cpp::compute::projects::v1::MoveInstanceRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> MoveInstance(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::projects::v1::MoveInstanceRequest const&
-          request) override;
+      Options const& options, google::cloud::cpp::compute::projects::v1::MoveInstanceRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncSetCloudArmorTier(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncSetCloudArmorTier(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::projects::v1::SetCloudArmorTierRequest const&
-          request) override;
+      google::cloud::cpp::compute::projects::v1::SetCloudArmorTierRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetCloudArmorTier(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::projects::v1::SetCloudArmorTierRequest const&
-          request) override;
+      Options const& options, google::cloud::cpp::compute::projects::v1::SetCloudArmorTierRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncSetCommonInstanceMetadata(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncSetCommonInstanceMetadata(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::projects::v1::
-          SetCommonInstanceMetadataRequest const& request) override;
+      google::cloud::cpp::compute::projects::v1::SetCommonInstanceMetadataRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetCommonInstanceMetadata(
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetCommonInstanceMetadata(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::projects::v1::
-          SetCommonInstanceMetadataRequest const& request) override;
+      Options const& options, google::cloud::cpp::compute::projects::v1::SetCommonInstanceMetadataRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncSetDefaultNetworkTier(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncSetDefaultNetworkTier(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::projects::v1::
-          SetDefaultNetworkTierRequest const& request) override;
+      google::cloud::cpp::compute::projects::v1::SetDefaultNetworkTierRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetDefaultNetworkTier(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::projects::v1::
-          SetDefaultNetworkTierRequest const& request) override;
+      Options const& options, google::cloud::cpp::compute::projects::v1::SetDefaultNetworkTierRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncSetUsageExportBucket(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncSetUsageExportBucket(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::projects::v1::
-          SetUsageExportBucketRequest const& request) override;
+      google::cloud::cpp::compute::projects::v1::SetUsageExportBucketRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetUsageExportBucket(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::projects::v1::
-          SetUsageExportBucketRequest const& request) override;
+      Options const& options, google::cloud::cpp::compute::projects::v1::SetUsageExportBucketRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncGetOperation(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::global_operations::v1::
-          GetOperationRequest const& request) override;
+      google::cloud::cpp::compute::global_operations::v1::GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::global_operations::v1::
-          DeleteOperationRequest const& request) override;
+      google::cloud::cpp::compute::global_operations::v1::DeleteOperationRequest const& request) override;
 
  private:
   std::shared_ptr<rest_internal::RestClient> service_;

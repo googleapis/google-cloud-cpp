@@ -36,29 +36,26 @@ class FleetRoutingTracingConnection
   ~FleetRoutingTracingConnection() override = default;
 
   explicit FleetRoutingTracingConnection(
-      std::shared_ptr<optimization_v1::FleetRoutingConnection> child);
+    std::shared_ptr<optimization_v1::FleetRoutingConnection> child);
 
   Options options() override { return child_->options(); }
 
   StatusOr<google::cloud::optimization::v1::OptimizeToursResponse>
-  OptimizeTours(google::cloud::optimization::v1::OptimizeToursRequest const&
-                    request) override;
+  OptimizeTours(google::cloud::optimization::v1::OptimizeToursRequest const& request) override;
+
+  future<StatusOr<google::cloud::optimization::v1::BatchOptimizeToursResponse>>
+  BatchOptimizeTours(google::cloud::optimization::v1::BatchOptimizeToursRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  BatchOptimizeTours(NoAwaitTag,
+      google::cloud::optimization::v1::BatchOptimizeToursRequest const& request) override;
 
   future<StatusOr<google::cloud::optimization::v1::BatchOptimizeToursResponse>>
   BatchOptimizeTours(
-      google::cloud::optimization::v1::BatchOptimizeToursRequest const& request)
-      override;
+      google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::longrunning::Operation> BatchOptimizeTours(
-      NoAwaitTag,
-      google::cloud::optimization::v1::BatchOptimizeToursRequest const& request)
-      override;
-
-  future<StatusOr<google::cloud::optimization::v1::BatchOptimizeToursResponse>>
-  BatchOptimizeTours(google::longrunning::Operation const& operation) override;
-
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request) override;
 
  private:
   std::shared_ptr<optimization_v1::FleetRoutingConnection> child_;

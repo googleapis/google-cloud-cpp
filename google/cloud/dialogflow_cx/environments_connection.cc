@@ -17,14 +17,14 @@
 // source: google/cloud/dialogflow/cx/v3/environment.proto
 
 #include "google/cloud/dialogflow_cx/environments_connection.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/dialogflow_cx/environments_options.h"
 #include "google/cloud/dialogflow_cx/internal/environments_connection_impl.h"
 #include "google/cloud/dialogflow_cx/internal/environments_option_defaults.h"
 #include "google/cloud/dialogflow_cx/internal/environments_stub_factory.h"
 #include "google/cloud/dialogflow_cx/internal/environments_tracing_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
-#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
@@ -38,10 +38,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 EnvironmentsConnection::~EnvironmentsConnection() = default;
 
-StreamRange<google::cloud::dialogflow::cx::v3::Environment>
-EnvironmentsConnection::ListEnvironments(
-    google::cloud::dialogflow::cx::v3::
-        ListEnvironmentsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::dialogflow::cx::v3::Environment> EnvironmentsConnection::ListEnvironments(
+    google::cloud::dialogflow::cx::v3::ListEnvironmentsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::dialogflow::cx::v3::Environment>>();
 }
@@ -56,8 +54,8 @@ future<StatusOr<google::cloud::dialogflow::cx::v3::Environment>>
 EnvironmentsConnection::CreateEnvironment(
     google::cloud::dialogflow::cx::v3::CreateEnvironmentRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::dialogflow::cx::v3::Environment>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::dialogflow::cx::v3::Environment>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -65,23 +63,23 @@ EnvironmentsConnection::CreateEnvironment(
     NoAwaitTag,
     google::cloud::dialogflow::cx::v3::CreateEnvironmentRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::dialogflow::cx::v3::Environment>>
 EnvironmentsConnection::CreateEnvironment(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::dialogflow::cx::v3::Environment>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::dialogflow::cx::v3::Environment>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::dialogflow::cx::v3::Environment>>
 EnvironmentsConnection::UpdateEnvironment(
     google::cloud::dialogflow::cx::v3::UpdateEnvironmentRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::dialogflow::cx::v3::Environment>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::dialogflow::cx::v3::Environment>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -89,26 +87,25 @@ EnvironmentsConnection::UpdateEnvironment(
     NoAwaitTag,
     google::cloud::dialogflow::cx::v3::UpdateEnvironmentRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::dialogflow::cx::v3::Environment>>
 EnvironmentsConnection::UpdateEnvironment(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::dialogflow::cx::v3::Environment>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::dialogflow::cx::v3::Environment>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-Status EnvironmentsConnection::DeleteEnvironment(
+Status
+EnvironmentsConnection::DeleteEnvironment(
     google::cloud::dialogflow::cx::v3::DeleteEnvironmentRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::dialogflow::cx::v3::Environment>
-EnvironmentsConnection::LookupEnvironmentHistory(
-    google::cloud::dialogflow::cx::v3::
-        LookupEnvironmentHistoryRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::dialogflow::cx::v3::Environment> EnvironmentsConnection::LookupEnvironmentHistory(
+    google::cloud::dialogflow::cx::v3::LookupEnvironmentHistoryRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::dialogflow::cx::v3::Environment>>();
 }
@@ -117,8 +114,8 @@ future<StatusOr<google::cloud::dialogflow::cx::v3::RunContinuousTestResponse>>
 EnvironmentsConnection::RunContinuousTest(
     google::cloud::dialogflow::cx::v3::RunContinuousTestRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::dialogflow::cx::v3::RunContinuousTestResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::dialogflow::cx::v3::RunContinuousTestResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -126,21 +123,19 @@ EnvironmentsConnection::RunContinuousTest(
     NoAwaitTag,
     google::cloud::dialogflow::cx::v3::RunContinuousTestRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::dialogflow::cx::v3::RunContinuousTestResponse>>
 EnvironmentsConnection::RunContinuousTest(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::dialogflow::cx::v3::RunContinuousTestResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::dialogflow::cx::v3::RunContinuousTestResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StreamRange<google::cloud::dialogflow::cx::v3::ContinuousTestResult>
-EnvironmentsConnection::ListContinuousTestResults(
-    google::cloud::dialogflow::cx::v3::
-        ListContinuousTestResultsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::dialogflow::cx::v3::ContinuousTestResult> EnvironmentsConnection::ListContinuousTestResults(
+    google::cloud::dialogflow::cx::v3::ListContinuousTestResultsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::dialogflow::cx::v3::ContinuousTestResult>>();
 }
@@ -149,50 +144,52 @@ future<StatusOr<google::cloud::dialogflow::cx::v3::DeployFlowResponse>>
 EnvironmentsConnection::DeployFlow(
     google::cloud::dialogflow::cx::v3::DeployFlowRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::dialogflow::cx::v3::DeployFlowResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::dialogflow::cx::v3::DeployFlowResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation> EnvironmentsConnection::DeployFlow(
-    NoAwaitTag, google::cloud::dialogflow::cx::v3::DeployFlowRequest const&) {
+StatusOr<google::longrunning::Operation>
+EnvironmentsConnection::DeployFlow(
+    NoAwaitTag,
+    google::cloud::dialogflow::cx::v3::DeployFlowRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::dialogflow::cx::v3::DeployFlowResponse>>
-EnvironmentsConnection::DeployFlow(google::longrunning::Operation const&) {
+EnvironmentsConnection::DeployFlow(
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::dialogflow::cx::v3::DeployFlowResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::dialogflow::cx::v3::DeployFlowResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StreamRange<google::cloud::location::Location>
-EnvironmentsConnection::ListLocations(
-    google::cloud::location::
-        ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::location::Location> EnvironmentsConnection::ListLocations(
+    google::cloud::location::ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::location::Location>>();
 }
 
-StatusOr<google::cloud::location::Location> EnvironmentsConnection::GetLocation(
+StatusOr<google::cloud::location::Location>
+EnvironmentsConnection::GetLocation(
     google::cloud::location::GetLocationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::longrunning::Operation>
-EnvironmentsConnection::ListOperations(
-    google::longrunning::
-        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::longrunning::Operation> EnvironmentsConnection::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }
 
-StatusOr<google::longrunning::Operation> EnvironmentsConnection::GetOperation(
+StatusOr<google::longrunning::Operation>
+EnvironmentsConnection::GetOperation(
     google::longrunning::GetOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status EnvironmentsConnection::CancelOperation(
+Status
+EnvironmentsConnection::CancelOperation(
     google::longrunning::CancelOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -200,18 +197,17 @@ Status EnvironmentsConnection::CancelOperation(
 std::shared_ptr<EnvironmentsConnection> MakeEnvironmentsConnection(
     std::string const& location, Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 EnvironmentsPolicyOptionList>(options,
-                                                               __func__);
+      UnifiedCredentialsOptionList,
+      EnvironmentsPolicyOptionList>(options, __func__);
   options = dialogflow_cx_internal::EnvironmentsDefaultOptions(
       location, std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = dialogflow_cx_internal::CreateDefaultEnvironmentsStub(
-      std::move(auth), options);
+    std::move(auth), options);
   return dialogflow_cx_internal::MakeEnvironmentsTracingConnection(
       std::make_shared<dialogflow_cx_internal::EnvironmentsConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options)));
+      std::move(background), std::move(stub), std::move(options)));
 }
 
 std::shared_ptr<EnvironmentsConnection> MakeEnvironmentsConnection(

@@ -31,18 +31,21 @@ namespace dialogflow_es_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 KnowledgeBasesLogging::KnowledgeBasesLogging(
-    std::shared_ptr<KnowledgeBasesStub> child, TracingOptions tracing_options,
+    std::shared_ptr<KnowledgeBasesStub> child,
+    TracingOptions tracing_options,
     std::set<std::string> const&)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::cloud::dialogflow::v2::ListKnowledgeBasesResponse>
 KnowledgeBasesLogging::ListKnowledgeBases(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dialogflow::v2::ListKnowledgeBasesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dialogflow::v2::ListKnowledgeBasesRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::dialogflow::v2::ListKnowledgeBasesRequest const& request) {
         return child_->ListKnowledgeBases(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -50,12 +53,13 @@ KnowledgeBasesLogging::ListKnowledgeBases(
 
 StatusOr<google::cloud::dialogflow::v2::KnowledgeBase>
 KnowledgeBasesLogging::GetKnowledgeBase(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dialogflow::v2::GetKnowledgeBaseRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dialogflow::v2::GetKnowledgeBaseRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::dialogflow::v2::GetKnowledgeBaseRequest const& request) {
         return child_->GetKnowledgeBase(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -63,24 +67,27 @@ KnowledgeBasesLogging::GetKnowledgeBase(
 
 StatusOr<google::cloud::dialogflow::v2::KnowledgeBase>
 KnowledgeBasesLogging::CreateKnowledgeBase(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dialogflow::v2::CreateKnowledgeBaseRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dialogflow::v2::CreateKnowledgeBaseRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::dialogflow::v2::CreateKnowledgeBaseRequest const& request) {
         return child_->CreateKnowledgeBase(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status KnowledgeBasesLogging::DeleteKnowledgeBase(
-    grpc::ClientContext& context, Options const& options,
+Status
+KnowledgeBasesLogging::DeleteKnowledgeBase(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dialogflow::v2::DeleteKnowledgeBaseRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dialogflow::v2::DeleteKnowledgeBaseRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::dialogflow::v2::DeleteKnowledgeBaseRequest const& request) {
         return child_->DeleteKnowledgeBase(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -88,12 +95,13 @@ Status KnowledgeBasesLogging::DeleteKnowledgeBase(
 
 StatusOr<google::cloud::dialogflow::v2::KnowledgeBase>
 KnowledgeBasesLogging::UpdateKnowledgeBase(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dialogflow::v2::UpdateKnowledgeBaseRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dialogflow::v2::UpdateKnowledgeBaseRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::dialogflow::v2::UpdateKnowledgeBaseRequest const& request) {
         return child_->UpdateKnowledgeBase(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -101,21 +109,26 @@ KnowledgeBasesLogging::UpdateKnowledgeBase(
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 KnowledgeBasesLogging::ListLocations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::location::ListLocationsRequest const& request) {
         return child_->ListLocations(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::cloud::location::Location> KnowledgeBasesLogging::GetLocation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::location::Location>
+KnowledgeBasesLogging::GetLocation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::location::GetLocationRequest const& request) {
         return child_->GetLocation(context, options, request);
       },
@@ -124,32 +137,40 @@ StatusOr<google::cloud::location::Location> KnowledgeBasesLogging::GetLocation(
 
 StatusOr<google::longrunning::ListOperationsResponse>
 KnowledgeBasesLogging::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::ListOperationsRequest const& request) {
         return child_->ListOperations(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> KnowledgeBasesLogging::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::Operation>
+KnowledgeBasesLogging::GetOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::GetOperationRequest const& request) {
         return child_->GetOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status KnowledgeBasesLogging::CancelOperation(
-    grpc::ClientContext& context, Options const& options,
+Status
+KnowledgeBasesLogging::CancelOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::CancelOperationRequest const& request) {
         return child_->CancelOperation(context, options, request);
       },

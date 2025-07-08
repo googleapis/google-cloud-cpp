@@ -31,36 +31,36 @@ EssentialContactsServiceAuth::EssentialContactsServiceAuth(
     std::shared_ptr<EssentialContactsServiceStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::essentialcontacts::v1::Contact>
-EssentialContactsServiceAuth::CreateContact(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::essentialcontacts::v1::Contact> EssentialContactsServiceAuth::CreateContact(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::essentialcontacts::v1::CreateContactRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateContact(context, options, request);
 }
 
-StatusOr<google::cloud::essentialcontacts::v1::Contact>
-EssentialContactsServiceAuth::UpdateContact(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::essentialcontacts::v1::Contact> EssentialContactsServiceAuth::UpdateContact(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::essentialcontacts::v1::UpdateContactRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateContact(context, options, request);
 }
 
-StatusOr<google::cloud::essentialcontacts::v1::ListContactsResponse>
-EssentialContactsServiceAuth::ListContacts(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::essentialcontacts::v1::ListContactsResponse> EssentialContactsServiceAuth::ListContacts(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::essentialcontacts::v1::ListContactsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListContacts(context, options, request);
 }
 
-StatusOr<google::cloud::essentialcontacts::v1::Contact>
-EssentialContactsServiceAuth::GetContact(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::essentialcontacts::v1::Contact> EssentialContactsServiceAuth::GetContact(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::essentialcontacts::v1::GetContactRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -68,27 +68,27 @@ EssentialContactsServiceAuth::GetContact(
 }
 
 Status EssentialContactsServiceAuth::DeleteContact(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::essentialcontacts::v1::DeleteContactRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteContact(context, options, request);
 }
 
-StatusOr<google::cloud::essentialcontacts::v1::ComputeContactsResponse>
-EssentialContactsServiceAuth::ComputeContacts(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::essentialcontacts::v1::ComputeContactsRequest const&
-        request) {
+StatusOr<google::cloud::essentialcontacts::v1::ComputeContactsResponse> EssentialContactsServiceAuth::ComputeContacts(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::essentialcontacts::v1::ComputeContactsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ComputeContacts(context, options, request);
 }
 
 Status EssentialContactsServiceAuth::SendTestMessage(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::essentialcontacts::v1::SendTestMessageRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::essentialcontacts::v1::SendTestMessageRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->SendTestMessage(context, options, request);

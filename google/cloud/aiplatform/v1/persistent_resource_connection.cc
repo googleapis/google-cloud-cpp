@@ -36,15 +36,14 @@ namespace cloud {
 namespace aiplatform_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-PersistentResourceServiceConnection::~PersistentResourceServiceConnection() =
-    default;
+PersistentResourceServiceConnection::~PersistentResourceServiceConnection() = default;
 
 future<StatusOr<google::cloud::aiplatform::v1::PersistentResource>>
 PersistentResourceServiceConnection::CreatePersistentResource(
     google::cloud::aiplatform::v1::CreatePersistentResourceRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::aiplatform::v1::PersistentResource>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::aiplatform::v1::PersistentResource>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -52,15 +51,15 @@ PersistentResourceServiceConnection::CreatePersistentResource(
     NoAwaitTag,
     google::cloud::aiplatform::v1::CreatePersistentResourceRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::PersistentResource>>
 PersistentResourceServiceConnection::CreatePersistentResource(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::aiplatform::v1::PersistentResource>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::aiplatform::v1::PersistentResource>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::aiplatform::v1::PersistentResource>
@@ -69,10 +68,8 @@ PersistentResourceServiceConnection::GetPersistentResource(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::aiplatform::v1::PersistentResource>
-PersistentResourceServiceConnection::ListPersistentResources(
-    google::cloud::aiplatform::v1::
-        ListPersistentResourcesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::aiplatform::v1::PersistentResource> PersistentResourceServiceConnection::ListPersistentResources(
+    google::cloud::aiplatform::v1::ListPersistentResourcesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::aiplatform::v1::PersistentResource>>();
 }
@@ -81,8 +78,8 @@ future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 PersistentResourceServiceConnection::DeletePersistentResource(
     google::cloud::aiplatform::v1::DeletePersistentResourceRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -90,23 +87,23 @@ PersistentResourceServiceConnection::DeletePersistentResource(
     NoAwaitTag,
     google::cloud::aiplatform::v1::DeletePersistentResourceRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 PersistentResourceServiceConnection::DeletePersistentResource(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::PersistentResource>>
 PersistentResourceServiceConnection::UpdatePersistentResource(
     google::cloud::aiplatform::v1::UpdatePersistentResourceRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::aiplatform::v1::PersistentResource>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::aiplatform::v1::PersistentResource>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -114,23 +111,23 @@ PersistentResourceServiceConnection::UpdatePersistentResource(
     NoAwaitTag,
     google::cloud::aiplatform::v1::UpdatePersistentResourceRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::PersistentResource>>
 PersistentResourceServiceConnection::UpdatePersistentResource(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::aiplatform::v1::PersistentResource>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::aiplatform::v1::PersistentResource>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::PersistentResource>>
 PersistentResourceServiceConnection::RebootPersistentResource(
     google::cloud::aiplatform::v1::RebootPersistentResourceRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::aiplatform::v1::PersistentResource>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::aiplatform::v1::PersistentResource>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -138,21 +135,19 @@ PersistentResourceServiceConnection::RebootPersistentResource(
     NoAwaitTag,
     google::cloud::aiplatform::v1::RebootPersistentResourceRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::PersistentResource>>
 PersistentResourceServiceConnection::RebootPersistentResource(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::aiplatform::v1::PersistentResource>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::aiplatform::v1::PersistentResource>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StreamRange<google::cloud::location::Location>
-PersistentResourceServiceConnection::ListLocations(
-    google::cloud::location::
-        ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::location::Location> PersistentResourceServiceConnection::ListLocations(
+    google::cloud::location::ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::location::Location>>();
 }
@@ -181,10 +176,8 @@ PersistentResourceServiceConnection::TestIamPermissions(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::longrunning::Operation>
-PersistentResourceServiceConnection::ListOperations(
-    google::longrunning::
-        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::longrunning::Operation> PersistentResourceServiceConnection::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }
@@ -195,12 +188,14 @@ PersistentResourceServiceConnection::GetOperation(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status PersistentResourceServiceConnection::DeleteOperation(
+Status
+PersistentResourceServiceConnection::DeleteOperation(
     google::longrunning::DeleteOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status PersistentResourceServiceConnection::CancelOperation(
+Status
+PersistentResourceServiceConnection::CancelOperation(
     google::longrunning::CancelOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -211,24 +206,20 @@ PersistentResourceServiceConnection::WaitOperation(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-std::shared_ptr<PersistentResourceServiceConnection>
-MakePersistentResourceServiceConnection(std::string const& location,
-                                        Options options) {
+std::shared_ptr<PersistentResourceServiceConnection> MakePersistentResourceServiceConnection(
+    std::string const& location, Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 PersistentResourceServicePolicyOptionList>(
-      options, __func__);
+      UnifiedCredentialsOptionList,
+      PersistentResourceServicePolicyOptionList>(options, __func__);
   options = aiplatform_v1_internal::PersistentResourceServiceDefaultOptions(
       location, std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
-  auto stub =
-      aiplatform_v1_internal::CreateDefaultPersistentResourceServiceStub(
-          std::move(auth), options);
+  auto stub = aiplatform_v1_internal::CreateDefaultPersistentResourceServiceStub(
+    std::move(auth), options);
   return aiplatform_v1_internal::MakePersistentResourceServiceTracingConnection(
-      std::make_shared<
-          aiplatform_v1_internal::PersistentResourceServiceConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options)));
+      std::make_shared<aiplatform_v1_internal::PersistentResourceServiceConnectionImpl>(
+      std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -32,152 +32,132 @@ DataAccessControlServiceTracingStub::DataAccessControlServiceTracingStub(
     std::shared_ptr<DataAccessControlServiceStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
-StatusOr<google::cloud::chronicle::v1::DataAccessLabel>
-DataAccessControlServiceTracingStub::CreateDataAccessLabel(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::chronicle::v1::DataAccessLabel> DataAccessControlServiceTracingStub::CreateDataAccessLabel(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::chronicle::v1::CreateDataAccessLabelRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.chronicle.v1.DataAccessControlService",
-      "CreateDataAccessLabel");
+  auto span = internal::MakeSpanGrpc("google.cloud.chronicle.v1.DataAccessControlService", "CreateDataAccessLabel");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->CreateDataAccessLabel(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->CreateDataAccessLabel(context, options, request));
 }
 
-StatusOr<google::cloud::chronicle::v1::DataAccessLabel>
-DataAccessControlServiceTracingStub::GetDataAccessLabel(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::chronicle::v1::DataAccessLabel> DataAccessControlServiceTracingStub::GetDataAccessLabel(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::chronicle::v1::GetDataAccessLabelRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.chronicle.v1.DataAccessControlService",
-      "GetDataAccessLabel");
+  auto span = internal::MakeSpanGrpc("google.cloud.chronicle.v1.DataAccessControlService", "GetDataAccessLabel");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->GetDataAccessLabel(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->GetDataAccessLabel(context, options, request));
 }
 
-StatusOr<google::cloud::chronicle::v1::ListDataAccessLabelsResponse>
-DataAccessControlServiceTracingStub::ListDataAccessLabels(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::chronicle::v1::ListDataAccessLabelsResponse> DataAccessControlServiceTracingStub::ListDataAccessLabels(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::chronicle::v1::ListDataAccessLabelsRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.chronicle.v1.DataAccessControlService",
-      "ListDataAccessLabels");
+  auto span = internal::MakeSpanGrpc("google.cloud.chronicle.v1.DataAccessControlService", "ListDataAccessLabels");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->ListDataAccessLabels(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->ListDataAccessLabels(context, options, request));
 }
 
-StatusOr<google::cloud::chronicle::v1::DataAccessLabel>
-DataAccessControlServiceTracingStub::UpdateDataAccessLabel(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::chronicle::v1::DataAccessLabel> DataAccessControlServiceTracingStub::UpdateDataAccessLabel(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::chronicle::v1::UpdateDataAccessLabelRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.chronicle.v1.DataAccessControlService",
-      "UpdateDataAccessLabel");
+  auto span = internal::MakeSpanGrpc("google.cloud.chronicle.v1.DataAccessControlService", "UpdateDataAccessLabel");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->UpdateDataAccessLabel(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->UpdateDataAccessLabel(context, options, request));
 }
 
 Status DataAccessControlServiceTracingStub::DeleteDataAccessLabel(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::chronicle::v1::DeleteDataAccessLabelRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.chronicle.v1.DataAccessControlService",
-      "DeleteDataAccessLabel");
+  auto span = internal::MakeSpanGrpc("google.cloud.chronicle.v1.DataAccessControlService", "DeleteDataAccessLabel");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->DeleteDataAccessLabel(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->DeleteDataAccessLabel(context, options, request));
 }
 
-StatusOr<google::cloud::chronicle::v1::DataAccessScope>
-DataAccessControlServiceTracingStub::CreateDataAccessScope(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::chronicle::v1::DataAccessScope> DataAccessControlServiceTracingStub::CreateDataAccessScope(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::chronicle::v1::CreateDataAccessScopeRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.chronicle.v1.DataAccessControlService",
-      "CreateDataAccessScope");
+  auto span = internal::MakeSpanGrpc("google.cloud.chronicle.v1.DataAccessControlService", "CreateDataAccessScope");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->CreateDataAccessScope(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->CreateDataAccessScope(context, options, request));
 }
 
-StatusOr<google::cloud::chronicle::v1::DataAccessScope>
-DataAccessControlServiceTracingStub::GetDataAccessScope(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::chronicle::v1::DataAccessScope> DataAccessControlServiceTracingStub::GetDataAccessScope(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::chronicle::v1::GetDataAccessScopeRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.chronicle.v1.DataAccessControlService",
-      "GetDataAccessScope");
+  auto span = internal::MakeSpanGrpc("google.cloud.chronicle.v1.DataAccessControlService", "GetDataAccessScope");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->GetDataAccessScope(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->GetDataAccessScope(context, options, request));
 }
 
-StatusOr<google::cloud::chronicle::v1::ListDataAccessScopesResponse>
-DataAccessControlServiceTracingStub::ListDataAccessScopes(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::chronicle::v1::ListDataAccessScopesResponse> DataAccessControlServiceTracingStub::ListDataAccessScopes(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::chronicle::v1::ListDataAccessScopesRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.chronicle.v1.DataAccessControlService",
-      "ListDataAccessScopes");
+  auto span = internal::MakeSpanGrpc("google.cloud.chronicle.v1.DataAccessControlService", "ListDataAccessScopes");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->ListDataAccessScopes(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->ListDataAccessScopes(context, options, request));
 }
 
-StatusOr<google::cloud::chronicle::v1::DataAccessScope>
-DataAccessControlServiceTracingStub::UpdateDataAccessScope(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::chronicle::v1::DataAccessScope> DataAccessControlServiceTracingStub::UpdateDataAccessScope(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::chronicle::v1::UpdateDataAccessScopeRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.chronicle.v1.DataAccessControlService",
-      "UpdateDataAccessScope");
+  auto span = internal::MakeSpanGrpc("google.cloud.chronicle.v1.DataAccessControlService", "UpdateDataAccessScope");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->UpdateDataAccessScope(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->UpdateDataAccessScope(context, options, request));
 }
 
 Status DataAccessControlServiceTracingStub::DeleteDataAccessScope(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::chronicle::v1::DeleteDataAccessScopeRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.chronicle.v1.DataAccessControlService",
-      "DeleteDataAccessScope");
+  auto span = internal::MakeSpanGrpc("google.cloud.chronicle.v1.DataAccessControlService", "DeleteDataAccessScope");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->DeleteDataAccessScope(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->DeleteDataAccessScope(context, options, request));
 }
 
-StatusOr<google::longrunning::ListOperationsResponse>
-DataAccessControlServiceTracingStub::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse> DataAccessControlServiceTracingStub::ListOperations(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.chronicle.v1.DataAccessControlService", "ListOperations");
+  auto span = internal::MakeSpanGrpc("google.cloud.chronicle.v1.DataAccessControlService", "ListOperations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListOperations(context, options, request));
 }
 
-StatusOr<google::longrunning::Operation>
-DataAccessControlServiceTracingStub::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::Operation> DataAccessControlServiceTracingStub::GetOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.chronicle.v1.DataAccessControlService", "GetOperation");
+  auto span = internal::MakeSpanGrpc("google.cloud.chronicle.v1.DataAccessControlService", "GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -185,10 +165,10 @@ DataAccessControlServiceTracingStub::GetOperation(
 }
 
 Status DataAccessControlServiceTracingStub::DeleteOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.chronicle.v1.DataAccessControlService", "DeleteOperation");
+  auto span = internal::MakeSpanGrpc("google.cloud.chronicle.v1.DataAccessControlService", "DeleteOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -196,10 +176,10 @@ Status DataAccessControlServiceTracingStub::DeleteOperation(
 }
 
 Status DataAccessControlServiceTracingStub::CancelOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.chronicle.v1.DataAccessControlService", "CancelOperation");
+  auto span = internal::MakeSpanGrpc("google.cloud.chronicle.v1.DataAccessControlService", "CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -208,8 +188,7 @@ Status DataAccessControlServiceTracingStub::CancelOperation(
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-std::shared_ptr<DataAccessControlServiceStub>
-MakeDataAccessControlServiceTracingStub(
+std::shared_ptr<DataAccessControlServiceStub> MakeDataAccessControlServiceTracingStub(
     std::shared_ptr<DataAccessControlServiceStub> stub) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return std::make_shared<DataAccessControlServiceTracingStub>(std::move(stub));

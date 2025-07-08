@@ -36,21 +36,18 @@ class ProfilerServiceTracingConnection
   ~ProfilerServiceTracingConnection() override = default;
 
   explicit ProfilerServiceTracingConnection(
-      std::shared_ptr<profiler_v2::ProfilerServiceConnection> child);
+    std::shared_ptr<profiler_v2::ProfilerServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::devtools::cloudprofiler::v2::Profile> CreateProfile(
-      google::devtools::cloudprofiler::v2::CreateProfileRequest const& request)
-      override;
+  StatusOr<google::devtools::cloudprofiler::v2::Profile>
+  CreateProfile(google::devtools::cloudprofiler::v2::CreateProfileRequest const& request) override;
 
-  StatusOr<google::devtools::cloudprofiler::v2::Profile> CreateOfflineProfile(
-      google::devtools::cloudprofiler::v2::CreateOfflineProfileRequest const&
-          request) override;
+  StatusOr<google::devtools::cloudprofiler::v2::Profile>
+  CreateOfflineProfile(google::devtools::cloudprofiler::v2::CreateOfflineProfileRequest const& request) override;
 
-  StatusOr<google::devtools::cloudprofiler::v2::Profile> UpdateProfile(
-      google::devtools::cloudprofiler::v2::UpdateProfileRequest const& request)
-      override;
+  StatusOr<google::devtools::cloudprofiler::v2::Profile>
+  UpdateProfile(google::devtools::cloudprofiler::v2::UpdateProfileRequest const& request) override;
 
  private:
   std::shared_ptr<profiler_v2::ProfilerServiceConnection> child_;

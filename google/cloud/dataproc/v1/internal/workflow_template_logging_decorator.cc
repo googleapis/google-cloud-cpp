@@ -32,17 +32,20 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 WorkflowTemplateServiceLogging::WorkflowTemplateServiceLogging(
     std::shared_ptr<WorkflowTemplateServiceStub> child,
-    TracingOptions tracing_options, std::set<std::string> const&)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
+    TracingOptions tracing_options,
+    std::set<std::string> const&)
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::cloud::dataproc::v1::WorkflowTemplate>
 WorkflowTemplateServiceLogging::CreateWorkflowTemplate(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dataproc::v1::CreateWorkflowTemplateRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dataproc::v1::CreateWorkflowTemplateRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::dataproc::v1::CreateWorkflowTemplateRequest const& request) {
         return child_->CreateWorkflowTemplate(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -50,12 +53,13 @@ WorkflowTemplateServiceLogging::CreateWorkflowTemplate(
 
 StatusOr<google::cloud::dataproc::v1::WorkflowTemplate>
 WorkflowTemplateServiceLogging::GetWorkflowTemplate(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dataproc::v1::GetWorkflowTemplateRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dataproc::v1::GetWorkflowTemplateRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::dataproc::v1::GetWorkflowTemplateRequest const& request) {
         return child_->GetWorkflowTemplate(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -63,18 +67,15 @@ WorkflowTemplateServiceLogging::GetWorkflowTemplate(
 
 future<StatusOr<google::longrunning::Operation>>
 WorkflowTemplateServiceLogging::AsyncInstantiateWorkflowTemplate(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::dataproc::v1::InstantiateWorkflowTemplateRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::dataproc::v1::InstantiateWorkflowTemplateRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::dataproc::v1::InstantiateWorkflowTemplateRequest const&
-              request) {
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::dataproc::v1::InstantiateWorkflowTemplateRequest const& request) {
         return child_->AsyncInstantiateWorkflowTemplate(
             cq, std::move(context), std::move(options), request);
       },
@@ -84,14 +85,13 @@ WorkflowTemplateServiceLogging::AsyncInstantiateWorkflowTemplate(
 
 StatusOr<google::longrunning::Operation>
 WorkflowTemplateServiceLogging::InstantiateWorkflowTemplate(
-    grpc::ClientContext& context, Options options,
-    google::cloud::dataproc::v1::InstantiateWorkflowTemplateRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::dataproc::v1::InstantiateWorkflowTemplateRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::dataproc::v1::InstantiateWorkflowTemplateRequest const&
-              request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::dataproc::v1::InstantiateWorkflowTemplateRequest const& request) {
         return child_->InstantiateWorkflowTemplate(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -99,17 +99,15 @@ WorkflowTemplateServiceLogging::InstantiateWorkflowTemplate(
 
 future<StatusOr<google::longrunning::Operation>>
 WorkflowTemplateServiceLogging::AsyncInstantiateInlineWorkflowTemplate(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::dataproc::v1::InstantiateInlineWorkflowTemplateRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::dataproc::v1::InstantiateInlineWorkflowTemplateRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::dataproc::v1::
-                 InstantiateInlineWorkflowTemplateRequest const& request) {
+             google::cloud::dataproc::v1::InstantiateInlineWorkflowTemplateRequest const& request) {
         return child_->AsyncInstantiateInlineWorkflowTemplate(
             cq, std::move(context), std::move(options), request);
       },
@@ -119,27 +117,27 @@ WorkflowTemplateServiceLogging::AsyncInstantiateInlineWorkflowTemplate(
 
 StatusOr<google::longrunning::Operation>
 WorkflowTemplateServiceLogging::InstantiateInlineWorkflowTemplate(
-    grpc::ClientContext& context, Options options,
-    google::cloud::dataproc::v1::InstantiateInlineWorkflowTemplateRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::dataproc::v1::InstantiateInlineWorkflowTemplateRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dataproc::v1::
-                 InstantiateInlineWorkflowTemplateRequest const& request) {
-        return child_->InstantiateInlineWorkflowTemplate(context, options,
-                                                         request);
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::dataproc::v1::InstantiateInlineWorkflowTemplateRequest const& request) {
+        return child_->InstantiateInlineWorkflowTemplate(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::dataproc::v1::WorkflowTemplate>
 WorkflowTemplateServiceLogging::UpdateWorkflowTemplate(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dataproc::v1::UpdateWorkflowTemplateRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dataproc::v1::UpdateWorkflowTemplateRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::dataproc::v1::UpdateWorkflowTemplateRequest const& request) {
         return child_->UpdateWorkflowTemplate(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -147,45 +145,54 @@ WorkflowTemplateServiceLogging::UpdateWorkflowTemplate(
 
 StatusOr<google::cloud::dataproc::v1::ListWorkflowTemplatesResponse>
 WorkflowTemplateServiceLogging::ListWorkflowTemplates(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dataproc::v1::ListWorkflowTemplatesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dataproc::v1::ListWorkflowTemplatesRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::dataproc::v1::ListWorkflowTemplatesRequest const& request) {
         return child_->ListWorkflowTemplates(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status WorkflowTemplateServiceLogging::DeleteWorkflowTemplate(
-    grpc::ClientContext& context, Options const& options,
+Status
+WorkflowTemplateServiceLogging::DeleteWorkflowTemplate(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dataproc::v1::DeleteWorkflowTemplateRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dataproc::v1::DeleteWorkflowTemplateRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::dataproc::v1::DeleteWorkflowTemplateRequest const& request) {
         return child_->DeleteWorkflowTemplate(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::iam::v1::Policy> WorkflowTemplateServiceLogging::SetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::iam::v1::Policy>
+WorkflowTemplateServiceLogging::SetIamPolicy(
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::iam::v1::SetIamPolicyRequest const& request) {
         return child_->SetIamPolicy(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::iam::v1::Policy> WorkflowTemplateServiceLogging::GetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::iam::v1::Policy>
+WorkflowTemplateServiceLogging::GetIamPolicy(
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::iam::v1::GetIamPolicyRequest const& request) {
         return child_->GetIamPolicy(context, options, request);
       },
@@ -194,10 +201,12 @@ StatusOr<google::iam::v1::Policy> WorkflowTemplateServiceLogging::GetIamPolicy(
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 WorkflowTemplateServiceLogging::TestIamPermissions(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::iam::v1::TestIamPermissionsRequest const& request) {
         return child_->TestIamPermissions(context, options, request);
       },
@@ -206,10 +215,12 @@ WorkflowTemplateServiceLogging::TestIamPermissions(
 
 StatusOr<google::longrunning::ListOperationsResponse>
 WorkflowTemplateServiceLogging::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::ListOperationsRequest const& request) {
         return child_->ListOperations(context, options, request);
       },
@@ -218,32 +229,40 @@ WorkflowTemplateServiceLogging::ListOperations(
 
 StatusOr<google::longrunning::Operation>
 WorkflowTemplateServiceLogging::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::GetOperationRequest const& request) {
         return child_->GetOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status WorkflowTemplateServiceLogging::DeleteOperation(
-    grpc::ClientContext& context, Options const& options,
+Status
+WorkflowTemplateServiceLogging::DeleteOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::DeleteOperationRequest const& request) {
         return child_->DeleteOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status WorkflowTemplateServiceLogging::CancelOperation(
-    grpc::ClientContext& context, Options const& options,
+Status
+WorkflowTemplateServiceLogging::CancelOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::CancelOperationRequest const& request) {
         return child_->CancelOperation(context, options, request);
       },
@@ -261,8 +280,8 @@ WorkflowTemplateServiceLogging::AsyncGetOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(cq, std::move(context),
-                                         std::move(options), request);
+        return child_->AsyncGetOperation(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -278,8 +297,8 @@ future<Status> WorkflowTemplateServiceLogging::AsyncCancelOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::CancelOperationRequest const& request) {
-        return child_->AsyncCancelOperation(cq, std::move(context),
-                                            std::move(options), request);
+        return child_->AsyncCancelOperation(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);

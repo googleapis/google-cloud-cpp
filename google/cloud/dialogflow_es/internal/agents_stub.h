@@ -24,10 +24,10 @@
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/cloud/dialogflow/v2/agent.grpc.pb.h>
+#include <google/protobuf/struct.pb.h>
 #include <google/cloud/location/locations.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
-#include <google/protobuf/struct.pb.h>
+#include <google/cloud/dialogflow/v2/agent.grpc.pb.h>
 #include <memory>
 #include <utility>
 
@@ -41,20 +41,23 @@ class AgentsStub {
   virtual ~AgentsStub() = 0;
 
   virtual StatusOr<google::cloud::dialogflow::v2::Agent> GetAgent(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::dialogflow::v2::GetAgentRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::dialogflow::v2::Agent> SetAgent(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::dialogflow::v2::SetAgentRequest const& request) = 0;
 
   virtual Status DeleteAgent(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::dialogflow::v2::DeleteAgentRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::dialogflow::v2::SearchAgentsResponse>
-  SearchAgents(
-      grpc::ClientContext& context, Options const& options,
+  virtual StatusOr<google::cloud::dialogflow::v2::SearchAgentsResponse> SearchAgents(
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::dialogflow::v2::SearchAgentsRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncTrainAgent(
@@ -64,7 +67,8 @@ class AgentsStub {
       google::cloud::dialogflow::v2::TrainAgentRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> TrainAgent(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::cloud::dialogflow::v2::TrainAgentRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncExportAgent(
@@ -74,7 +78,8 @@ class AgentsStub {
       google::cloud::dialogflow::v2::ExportAgentRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> ExportAgent(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::cloud::dialogflow::v2::ExportAgentRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncImportAgent(
@@ -84,7 +89,8 @@ class AgentsStub {
       google::cloud::dialogflow::v2::ImportAgentRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> ImportAgent(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::cloud::dialogflow::v2::ImportAgentRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncRestoreAgent(
@@ -94,40 +100,44 @@ class AgentsStub {
       google::cloud::dialogflow::v2::RestoreAgentRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> RestoreAgent(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::cloud::dialogflow::v2::RestoreAgentRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::dialogflow::v2::ValidationResult>
-  GetValidationResult(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::dialogflow::v2::GetValidationResultRequest const&
-          request) = 0;
+  virtual StatusOr<google::cloud::dialogflow::v2::ValidationResult> GetValidationResult(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::dialogflow::v2::GetValidationResultRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::location::ListLocationsResponse>
-  ListLocations(
-      grpc::ClientContext& context, Options const& options,
+  virtual StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::location::ListLocationsRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::location::Location> GetLocation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::location::GetLocationRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::ListOperationsRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual Status CancelOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::CancelOperationRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
+    google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
@@ -140,32 +150,32 @@ class AgentsStub {
 class DefaultAgentsStub : public AgentsStub {
  public:
   DefaultAgentsStub(
-      std::unique_ptr<google::cloud::dialogflow::v2::Agents::StubInterface>
-          grpc_stub,
-      std::unique_ptr<google::cloud::location::Locations::StubInterface>
-          locations_stub,
-      std::unique_ptr<google::longrunning::Operations::StubInterface>
-          operations_stub)
+      std::unique_ptr<google::cloud::dialogflow::v2::Agents::StubInterface> grpc_stub,
+      std::unique_ptr<google::cloud::location::Locations::StubInterface> locations_stub,
+      std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub)
       : grpc_stub_(std::move(grpc_stub)),
         locations_stub_(std::move(locations_stub)),
         operations_stub_(std::move(operations_stub)) {}
 
   StatusOr<google::cloud::dialogflow::v2::Agent> GetAgent(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::dialogflow::v2::GetAgentRequest const& request) override;
 
   StatusOr<google::cloud::dialogflow::v2::Agent> SetAgent(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::dialogflow::v2::SetAgentRequest const& request) override;
 
-  Status DeleteAgent(grpc::ClientContext& context, Options const& options,
-                     google::cloud::dialogflow::v2::DeleteAgentRequest const&
-                         request) override;
+  Status DeleteAgent(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::dialogflow::v2::DeleteAgentRequest const& request) override;
 
   StatusOr<google::cloud::dialogflow::v2::SearchAgentsResponse> SearchAgents(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::dialogflow::v2::SearchAgentsRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::dialogflow::v2::SearchAgentsRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncTrainAgent(
       google::cloud::CompletionQueue& cq,
@@ -174,68 +184,71 @@ class DefaultAgentsStub : public AgentsStub {
       google::cloud::dialogflow::v2::TrainAgentRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> TrainAgent(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::cloud::dialogflow::v2::TrainAgentRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncExportAgent(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::dialogflow::v2::ExportAgentRequest const& request)
-      override;
+      google::cloud::dialogflow::v2::ExportAgentRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> ExportAgent(
-      grpc::ClientContext& context, Options options,
-      google::cloud::dialogflow::v2::ExportAgentRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::dialogflow::v2::ExportAgentRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncImportAgent(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::dialogflow::v2::ImportAgentRequest const& request)
-      override;
+      google::cloud::dialogflow::v2::ImportAgentRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> ImportAgent(
-      grpc::ClientContext& context, Options options,
-      google::cloud::dialogflow::v2::ImportAgentRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::dialogflow::v2::ImportAgentRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncRestoreAgent(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::dialogflow::v2::RestoreAgentRequest const& request)
-      override;
+      google::cloud::dialogflow::v2::RestoreAgentRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> RestoreAgent(
-      grpc::ClientContext& context, Options options,
-      google::cloud::dialogflow::v2::RestoreAgentRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::dialogflow::v2::RestoreAgentRequest const& request) override;
 
   StatusOr<google::cloud::dialogflow::v2::ValidationResult> GetValidationResult(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::dialogflow::v2::GetValidationResultRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::dialogflow::v2::GetValidationResultRequest const& request) override;
 
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::location::ListLocationsRequest const& request) override;
 
   StatusOr<google::cloud::location::Location> GetLocation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::location::GetLocationRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -251,12 +264,9 @@ class DefaultAgentsStub : public AgentsStub {
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  std::unique_ptr<google::cloud::dialogflow::v2::Agents::StubInterface>
-      grpc_stub_;
-  std::unique_ptr<google::cloud::location::Locations::StubInterface>
-      locations_stub_;
-  std::unique_ptr<google::longrunning::Operations::StubInterface>
-      operations_stub_;
+  std::unique_ptr<google::cloud::dialogflow::v2::Agents::StubInterface> grpc_stub_;
+  std::unique_ptr<google::cloud::location::Locations::StubInterface> locations_stub_;
+  std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -32,141 +32,110 @@ CloudControlsPartnerCoreTracingStub::CloudControlsPartnerCoreTracingStub(
     std::shared_ptr<CloudControlsPartnerCoreStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
-StatusOr<google::cloud::cloudcontrolspartner::v1::Workload>
-CloudControlsPartnerCoreTracingStub::GetWorkload(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::cloudcontrolspartner::v1::GetWorkloadRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.cloudcontrolspartner.v1.CloudControlsPartnerCore",
-      "GetWorkload");
+StatusOr<google::cloud::cloudcontrolspartner::v1::Workload> CloudControlsPartnerCoreTracingStub::GetWorkload(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::cloudcontrolspartner::v1::GetWorkloadRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.cloudcontrolspartner.v1.CloudControlsPartnerCore", "GetWorkload");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetWorkload(context, options, request));
 }
 
-StatusOr<google::cloud::cloudcontrolspartner::v1::ListWorkloadsResponse>
-CloudControlsPartnerCoreTracingStub::ListWorkloads(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::cloudcontrolspartner::v1::ListWorkloadsRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.cloudcontrolspartner.v1.CloudControlsPartnerCore",
-      "ListWorkloads");
+StatusOr<google::cloud::cloudcontrolspartner::v1::ListWorkloadsResponse> CloudControlsPartnerCoreTracingStub::ListWorkloads(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::cloudcontrolspartner::v1::ListWorkloadsRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.cloudcontrolspartner.v1.CloudControlsPartnerCore", "ListWorkloads");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListWorkloads(context, options, request));
 }
 
-StatusOr<google::cloud::cloudcontrolspartner::v1::Customer>
-CloudControlsPartnerCoreTracingStub::GetCustomer(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::cloudcontrolspartner::v1::GetCustomerRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.cloudcontrolspartner.v1.CloudControlsPartnerCore",
-      "GetCustomer");
+StatusOr<google::cloud::cloudcontrolspartner::v1::Customer> CloudControlsPartnerCoreTracingStub::GetCustomer(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::cloudcontrolspartner::v1::GetCustomerRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.cloudcontrolspartner.v1.CloudControlsPartnerCore", "GetCustomer");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetCustomer(context, options, request));
 }
 
-StatusOr<google::cloud::cloudcontrolspartner::v1::ListCustomersResponse>
-CloudControlsPartnerCoreTracingStub::ListCustomers(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::cloudcontrolspartner::v1::ListCustomersRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.cloudcontrolspartner.v1.CloudControlsPartnerCore",
-      "ListCustomers");
+StatusOr<google::cloud::cloudcontrolspartner::v1::ListCustomersResponse> CloudControlsPartnerCoreTracingStub::ListCustomers(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::cloudcontrolspartner::v1::ListCustomersRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.cloudcontrolspartner.v1.CloudControlsPartnerCore", "ListCustomers");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListCustomers(context, options, request));
 }
 
-StatusOr<google::cloud::cloudcontrolspartner::v1::EkmConnections>
-CloudControlsPartnerCoreTracingStub::GetEkmConnections(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::cloudcontrolspartner::v1::GetEkmConnectionsRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.cloudcontrolspartner.v1.CloudControlsPartnerCore",
-      "GetEkmConnections");
+StatusOr<google::cloud::cloudcontrolspartner::v1::EkmConnections> CloudControlsPartnerCoreTracingStub::GetEkmConnections(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::cloudcontrolspartner::v1::GetEkmConnectionsRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.cloudcontrolspartner.v1.CloudControlsPartnerCore", "GetEkmConnections");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->GetEkmConnections(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->GetEkmConnections(context, options, request));
 }
 
-StatusOr<google::cloud::cloudcontrolspartner::v1::PartnerPermissions>
-CloudControlsPartnerCoreTracingStub::GetPartnerPermissions(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::cloudcontrolspartner::v1::GetPartnerPermissionsRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.cloudcontrolspartner.v1.CloudControlsPartnerCore",
-      "GetPartnerPermissions");
+StatusOr<google::cloud::cloudcontrolspartner::v1::PartnerPermissions> CloudControlsPartnerCoreTracingStub::GetPartnerPermissions(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::cloudcontrolspartner::v1::GetPartnerPermissionsRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.cloudcontrolspartner.v1.CloudControlsPartnerCore", "GetPartnerPermissions");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->GetPartnerPermissions(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->GetPartnerPermissions(context, options, request));
 }
 
-StatusOr<
-    google::cloud::cloudcontrolspartner::v1::ListAccessApprovalRequestsResponse>
-CloudControlsPartnerCoreTracingStub::ListAccessApprovalRequests(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::cloudcontrolspartner::v1::
-        ListAccessApprovalRequestsRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.cloudcontrolspartner.v1.CloudControlsPartnerCore",
-      "ListAccessApprovalRequests");
+StatusOr<google::cloud::cloudcontrolspartner::v1::ListAccessApprovalRequestsResponse> CloudControlsPartnerCoreTracingStub::ListAccessApprovalRequests(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::cloudcontrolspartner::v1::ListAccessApprovalRequestsRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.cloudcontrolspartner.v1.CloudControlsPartnerCore", "ListAccessApprovalRequests");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span,
-      child_->ListAccessApprovalRequests(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->ListAccessApprovalRequests(context, options, request));
 }
 
-StatusOr<google::cloud::cloudcontrolspartner::v1::Partner>
-CloudControlsPartnerCoreTracingStub::GetPartner(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::cloudcontrolspartner::v1::Partner> CloudControlsPartnerCoreTracingStub::GetPartner(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::cloudcontrolspartner::v1::GetPartnerRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.cloudcontrolspartner.v1.CloudControlsPartnerCore",
-      "GetPartner");
+  auto span = internal::MakeSpanGrpc("google.cloud.cloudcontrolspartner.v1.CloudControlsPartnerCore", "GetPartner");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetPartner(context, options, request));
 }
 
-StatusOr<google::cloud::cloudcontrolspartner::v1::Customer>
-CloudControlsPartnerCoreTracingStub::CreateCustomer(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::cloudcontrolspartner::v1::CreateCustomerRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.cloudcontrolspartner.v1.CloudControlsPartnerCore",
-      "CreateCustomer");
+StatusOr<google::cloud::cloudcontrolspartner::v1::Customer> CloudControlsPartnerCoreTracingStub::CreateCustomer(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::cloudcontrolspartner::v1::CreateCustomerRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.cloudcontrolspartner.v1.CloudControlsPartnerCore", "CreateCustomer");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateCustomer(context, options, request));
 }
 
-StatusOr<google::cloud::cloudcontrolspartner::v1::Customer>
-CloudControlsPartnerCoreTracingStub::UpdateCustomer(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::cloudcontrolspartner::v1::UpdateCustomerRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.cloudcontrolspartner.v1.CloudControlsPartnerCore",
-      "UpdateCustomer");
+StatusOr<google::cloud::cloudcontrolspartner::v1::Customer> CloudControlsPartnerCoreTracingStub::UpdateCustomer(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::cloudcontrolspartner::v1::UpdateCustomerRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.cloudcontrolspartner.v1.CloudControlsPartnerCore", "UpdateCustomer");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -174,12 +143,10 @@ CloudControlsPartnerCoreTracingStub::UpdateCustomer(
 }
 
 Status CloudControlsPartnerCoreTracingStub::DeleteCustomer(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::cloudcontrolspartner::v1::DeleteCustomerRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.cloudcontrolspartner.v1.CloudControlsPartnerCore",
-      "DeleteCustomer");
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::cloudcontrolspartner::v1::DeleteCustomerRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.cloudcontrolspartner.v1.CloudControlsPartnerCore", "DeleteCustomer");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -188,8 +155,7 @@ Status CloudControlsPartnerCoreTracingStub::DeleteCustomer(
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-std::shared_ptr<CloudControlsPartnerCoreStub>
-MakeCloudControlsPartnerCoreTracingStub(
+std::shared_ptr<CloudControlsPartnerCoreStub> MakeCloudControlsPartnerCoreTracingStub(
     std::shared_ptr<CloudControlsPartnerCoreStub> stub) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return std::make_shared<CloudControlsPartnerCoreTracingStub>(std::move(stub));

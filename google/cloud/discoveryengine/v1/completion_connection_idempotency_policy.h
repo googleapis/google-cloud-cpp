@@ -35,40 +35,35 @@ class CompletionServiceConnectionIdempotencyPolicy {
   virtual ~CompletionServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<CompletionServiceConnectionIdempotencyPolicy> clone()
-      const;
+  virtual std::unique_ptr<CompletionServiceConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency CompleteQuery(
-      google::cloud::discoveryengine::v1::CompleteQueryRequest const& request);
+  virtual google::cloud::Idempotency
+  CompleteQuery(google::cloud::discoveryengine::v1::CompleteQueryRequest const& request);
 
-  virtual google::cloud::Idempotency ImportSuggestionDenyListEntries(
-      google::cloud::discoveryengine::v1::
-          ImportSuggestionDenyListEntriesRequest const& request);
+  virtual google::cloud::Idempotency
+  ImportSuggestionDenyListEntries(google::cloud::discoveryengine::v1::ImportSuggestionDenyListEntriesRequest const& request);
 
-  virtual google::cloud::Idempotency PurgeSuggestionDenyListEntries(
-      google::cloud::discoveryengine::v1::
-          PurgeSuggestionDenyListEntriesRequest const& request);
+  virtual google::cloud::Idempotency
+  PurgeSuggestionDenyListEntries(google::cloud::discoveryengine::v1::PurgeSuggestionDenyListEntriesRequest const& request);
 
-  virtual google::cloud::Idempotency ImportCompletionSuggestions(
-      google::cloud::discoveryengine::v1::
-          ImportCompletionSuggestionsRequest const& request);
+  virtual google::cloud::Idempotency
+  ImportCompletionSuggestions(google::cloud::discoveryengine::v1::ImportCompletionSuggestionsRequest const& request);
 
-  virtual google::cloud::Idempotency PurgeCompletionSuggestions(
-      google::cloud::discoveryengine::v1::
-          PurgeCompletionSuggestionsRequest const& request);
+  virtual google::cloud::Idempotency
+  PurgeCompletionSuggestions(google::cloud::discoveryengine::v1::PurgeCompletionSuggestionsRequest const& request);
 
-  virtual google::cloud::Idempotency ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual google::cloud::Idempotency
+  ListOperations(google::longrunning::ListOperationsRequest request);
 
-  virtual google::cloud::Idempotency GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 
-  virtual google::cloud::Idempotency CancelOperation(
-      google::longrunning::CancelOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  CancelOperation(google::longrunning::CancelOperationRequest const& request);
 };
 
 std::unique_ptr<CompletionServiceConnectionIdempotencyPolicy>
-MakeDefaultCompletionServiceConnectionIdempotencyPolicy();
+    MakeDefaultCompletionServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace discoveryengine_v1

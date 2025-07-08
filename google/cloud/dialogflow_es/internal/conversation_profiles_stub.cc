@@ -33,200 +33,194 @@ ConversationProfilesStub::~ConversationProfilesStub() = default;
 
 StatusOr<google::cloud::dialogflow::v2::ListConversationProfilesResponse>
 DefaultConversationProfilesStub::ListConversationProfiles(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::dialogflow::v2::ListConversationProfilesRequest const&
-        request) {
-  google::cloud::dialogflow::v2::ListConversationProfilesResponse response;
-  auto status =
-      grpc_stub_->ListConversationProfiles(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::dialogflow::v2::ListConversationProfilesRequest const& request) {
+    google::cloud::dialogflow::v2::ListConversationProfilesResponse response;
+    auto status =
+        grpc_stub_->ListConversationProfiles(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::dialogflow::v2::ConversationProfile>
 DefaultConversationProfilesStub::GetConversationProfile(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::dialogflow::v2::GetConversationProfileRequest const&
-        request) {
-  google::cloud::dialogflow::v2::ConversationProfile response;
-  auto status =
-      grpc_stub_->GetConversationProfile(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::dialogflow::v2::GetConversationProfileRequest const& request) {
+    google::cloud::dialogflow::v2::ConversationProfile response;
+    auto status =
+        grpc_stub_->GetConversationProfile(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::dialogflow::v2::ConversationProfile>
 DefaultConversationProfilesStub::CreateConversationProfile(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::dialogflow::v2::CreateConversationProfileRequest const&
-        request) {
-  google::cloud::dialogflow::v2::ConversationProfile response;
-  auto status =
-      grpc_stub_->CreateConversationProfile(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::dialogflow::v2::CreateConversationProfileRequest const& request) {
+    google::cloud::dialogflow::v2::ConversationProfile response;
+    auto status =
+        grpc_stub_->CreateConversationProfile(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::dialogflow::v2::ConversationProfile>
 DefaultConversationProfilesStub::UpdateConversationProfile(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::dialogflow::v2::UpdateConversationProfileRequest const&
-        request) {
-  google::cloud::dialogflow::v2::ConversationProfile response;
-  auto status =
-      grpc_stub_->UpdateConversationProfile(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::dialogflow::v2::UpdateConversationProfileRequest const& request) {
+    google::cloud::dialogflow::v2::ConversationProfile response;
+    auto status =
+        grpc_stub_->UpdateConversationProfile(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-Status DefaultConversationProfilesStub::DeleteConversationProfile(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::dialogflow::v2::DeleteConversationProfileRequest const&
-        request) {
-  google::protobuf::Empty response;
-  auto status =
-      grpc_stub_->DeleteConversationProfile(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return google::cloud::Status();
+Status
+DefaultConversationProfilesStub::DeleteConversationProfile(
+  grpc::ClientContext& context, Options const&,
+  google::cloud::dialogflow::v2::DeleteConversationProfileRequest const& request) {
+    google::protobuf::Empty response;
+    auto status =
+        grpc_stub_->DeleteConversationProfile(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return google::cloud::Status();
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultConversationProfilesStub::AsyncSetSuggestionFeatureConfig(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::dialogflow::v2::SetSuggestionFeatureConfigRequest const&
-        request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::dialogflow::v2::SetSuggestionFeatureConfigRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::dialogflow::v2::SetSuggestionFeatureConfigRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::dialogflow::v2::SetSuggestionFeatureConfigRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::dialogflow::v2::
-                 SetSuggestionFeatureConfigRequest const& request,
+             google::cloud::dialogflow::v2::SetSuggestionFeatureConfigRequest const& request,
              grpc::CompletionQueue* cq) {
-        return grpc_stub_->AsyncSetSuggestionFeatureConfig(context, request,
-                                                           cq);
+        return grpc_stub_->AsyncSetSuggestionFeatureConfig(context, request, cq);
       },
       request, std::move(context));
 }
 
 StatusOr<google::longrunning::Operation>
 DefaultConversationProfilesStub::SetSuggestionFeatureConfig(
-    grpc::ClientContext& context, Options,
-    google::cloud::dialogflow::v2::SetSuggestionFeatureConfigRequest const&
-        request) {
-  google::longrunning::Operation response;
-  auto status =
-      grpc_stub_->SetSuggestionFeatureConfig(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::dialogflow::v2::SetSuggestionFeatureConfigRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->SetSuggestionFeatureConfig(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultConversationProfilesStub::AsyncClearSuggestionFeatureConfig(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::dialogflow::v2::ClearSuggestionFeatureConfigRequest const&
-        request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::dialogflow::v2::ClearSuggestionFeatureConfigRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::dialogflow::v2::ClearSuggestionFeatureConfigRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::dialogflow::v2::ClearSuggestionFeatureConfigRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::dialogflow::v2::
-                 ClearSuggestionFeatureConfigRequest const& request,
+             google::cloud::dialogflow::v2::ClearSuggestionFeatureConfigRequest const& request,
              grpc::CompletionQueue* cq) {
-        return grpc_stub_->AsyncClearSuggestionFeatureConfig(context, request,
-                                                             cq);
+        return grpc_stub_->AsyncClearSuggestionFeatureConfig(context, request, cq);
       },
       request, std::move(context));
 }
 
 StatusOr<google::longrunning::Operation>
 DefaultConversationProfilesStub::ClearSuggestionFeatureConfig(
-    grpc::ClientContext& context, Options,
-    google::cloud::dialogflow::v2::ClearSuggestionFeatureConfigRequest const&
-        request) {
-  google::longrunning::Operation response;
-  auto status =
-      grpc_stub_->ClearSuggestionFeatureConfig(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::dialogflow::v2::ClearSuggestionFeatureConfigRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->ClearSuggestionFeatureConfig(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 DefaultConversationProfilesStub::ListLocations(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::location::ListLocationsRequest const& request) {
-  google::cloud::location::ListLocationsResponse response;
-  auto status = locations_stub_->ListLocations(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::location::ListLocationsRequest const& request) {
+    google::cloud::location::ListLocationsResponse response;
+    auto status =
+        locations_stub_->ListLocations(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::location::Location>
 DefaultConversationProfilesStub::GetLocation(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::location::GetLocationRequest const& request) {
-  google::cloud::location::Location response;
-  auto status = locations_stub_->GetLocation(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::location::GetLocationRequest const& request) {
+    google::cloud::location::Location response;
+    auto status =
+        locations_stub_->GetLocation(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
 DefaultConversationProfilesStub::ListOperations(
-    grpc::ClientContext& context, Options const&,
-    google::longrunning::ListOperationsRequest const& request) {
-  google::longrunning::ListOperationsResponse response;
-  auto status = operations_stub_->ListOperations(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::longrunning::ListOperationsRequest const& request) {
+    google::longrunning::ListOperationsResponse response;
+    auto status =
+        operations_stub_->ListOperations(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::longrunning::Operation>
 DefaultConversationProfilesStub::GetOperation(
-    grpc::ClientContext& context, Options const&,
-    google::longrunning::GetOperationRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = operations_stub_->GetOperation(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::longrunning::GetOperationRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        operations_stub_->GetOperation(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-Status DefaultConversationProfilesStub::CancelOperation(
-    grpc::ClientContext& context, Options const&,
-    google::longrunning::CancelOperationRequest const& request) {
-  google::protobuf::Empty response;
-  auto status = operations_stub_->CancelOperation(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return google::cloud::Status();
+Status
+DefaultConversationProfilesStub::CancelOperation(
+  grpc::ClientContext& context, Options const&,
+  google::longrunning::CancelOperationRequest const& request) {
+    google::protobuf::Empty response;
+    auto status =
+        operations_stub_->CancelOperation(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return google::cloud::Status();
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -255,14 +249,13 @@ future<Status> DefaultConversationProfilesStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(
-             cq,
-             [this](grpc::ClientContext* context,
-                    google::longrunning::CancelOperationRequest const& request,
-                    grpc::CompletionQueue* cq) {
-               return operations_stub_->AsyncCancelOperation(context, request,
-                                                             cq);
-             },
-             request, std::move(context))
+      cq,
+      [this](grpc::ClientContext* context,
+             google::longrunning::CancelOperationRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return operations_stub_->AsyncCancelOperation(context, request, cq);
+      },
+      request, std::move(context))
       .then([](future<StatusOr<google::protobuf::Empty>> f) {
         return f.get().status();
       });

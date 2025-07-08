@@ -31,18 +31,21 @@ namespace iam_credentials_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 IAMCredentialsLogging::IAMCredentialsLogging(
-    std::shared_ptr<IAMCredentialsStub> child, TracingOptions tracing_options,
+    std::shared_ptr<IAMCredentialsStub> child,
+    TracingOptions tracing_options,
     std::set<std::string> const&)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::iam::credentials::v1::GenerateAccessTokenResponse>
 IAMCredentialsLogging::GenerateAccessToken(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::credentials::v1::GenerateAccessTokenRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::iam::credentials::v1::GenerateAccessTokenRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::iam::credentials::v1::GenerateAccessTokenRequest const& request) {
         return child_->GenerateAccessToken(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -50,12 +53,13 @@ IAMCredentialsLogging::GenerateAccessToken(
 
 StatusOr<google::iam::credentials::v1::GenerateIdTokenResponse>
 IAMCredentialsLogging::GenerateIdToken(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::credentials::v1::GenerateIdTokenRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::iam::credentials::v1::GenerateIdTokenRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::iam::credentials::v1::GenerateIdTokenRequest const& request) {
         return child_->GenerateIdToken(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -63,10 +67,12 @@ IAMCredentialsLogging::GenerateIdToken(
 
 StatusOr<google::iam::credentials::v1::SignBlobResponse>
 IAMCredentialsLogging::SignBlob(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::credentials::v1::SignBlobRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::iam::credentials::v1::SignBlobRequest const& request) {
         return child_->SignBlob(context, options, request);
       },
@@ -75,10 +81,12 @@ IAMCredentialsLogging::SignBlob(
 
 StatusOr<google::iam::credentials::v1::SignJwtResponse>
 IAMCredentialsLogging::SignJwt(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::credentials::v1::SignJwtRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::iam::credentials::v1::SignJwtRequest const& request) {
         return child_->SignJwt(context, options, request);
       },

@@ -34,64 +34,52 @@ TopicStatsServiceTracingConnection::TopicStatsServiceTracingConnection(
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::pubsublite::v1::ComputeMessageStatsResponse>
-TopicStatsServiceTracingConnection::ComputeMessageStats(
-    google::cloud::pubsublite::v1::ComputeMessageStatsRequest const& request) {
-  auto span = internal::MakeSpan(
-      "pubsublite::TopicStatsServiceConnection::ComputeMessageStats");
+TopicStatsServiceTracingConnection::ComputeMessageStats(google::cloud::pubsublite::v1::ComputeMessageStatsRequest const& request) {
+  auto span = internal::MakeSpan("pubsublite::TopicStatsServiceConnection::ComputeMessageStats");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->ComputeMessageStats(request));
 }
 
 StatusOr<google::cloud::pubsublite::v1::ComputeHeadCursorResponse>
-TopicStatsServiceTracingConnection::ComputeHeadCursor(
-    google::cloud::pubsublite::v1::ComputeHeadCursorRequest const& request) {
-  auto span = internal::MakeSpan(
-      "pubsublite::TopicStatsServiceConnection::ComputeHeadCursor");
+TopicStatsServiceTracingConnection::ComputeHeadCursor(google::cloud::pubsublite::v1::ComputeHeadCursorRequest const& request) {
+  auto span = internal::MakeSpan("pubsublite::TopicStatsServiceConnection::ComputeHeadCursor");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->ComputeHeadCursor(request));
 }
 
 StatusOr<google::cloud::pubsublite::v1::ComputeTimeCursorResponse>
-TopicStatsServiceTracingConnection::ComputeTimeCursor(
-    google::cloud::pubsublite::v1::ComputeTimeCursorRequest const& request) {
-  auto span = internal::MakeSpan(
-      "pubsublite::TopicStatsServiceConnection::ComputeTimeCursor");
+TopicStatsServiceTracingConnection::ComputeTimeCursor(google::cloud::pubsublite::v1::ComputeTimeCursorRequest const& request) {
+  auto span = internal::MakeSpan("pubsublite::TopicStatsServiceConnection::ComputeTimeCursor");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->ComputeTimeCursor(request));
 }
 
 StreamRange<google::longrunning::Operation>
-TopicStatsServiceTracingConnection::ListOperations(
-    google::longrunning::ListOperationsRequest request) {
-  auto span = internal::MakeSpan(
-      "pubsublite::TopicStatsServiceConnection::ListOperations");
+TopicStatsServiceTracingConnection::ListOperations(google::longrunning::ListOperationsRequest request) {
+  auto span = internal::MakeSpan("pubsublite::TopicStatsServiceConnection::ListOperations");
   internal::OTelScope scope(span);
   auto sr = child_->ListOperations(std::move(request));
   return internal::MakeTracedStreamRange<google::longrunning::Operation>(
-      std::move(span), std::move(sr));
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::longrunning::Operation>
-TopicStatsServiceTracingConnection::GetOperation(
-    google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpan(
-      "pubsublite::TopicStatsServiceConnection::GetOperation");
+TopicStatsServiceTracingConnection::GetOperation(google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpan("pubsublite::TopicStatsServiceConnection::GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOperation(request));
 }
 
-Status TopicStatsServiceTracingConnection::DeleteOperation(
-    google::longrunning::DeleteOperationRequest const& request) {
-  auto span = internal::MakeSpan(
-      "pubsublite::TopicStatsServiceConnection::DeleteOperation");
+Status
+TopicStatsServiceTracingConnection::DeleteOperation(google::longrunning::DeleteOperationRequest const& request) {
+  auto span = internal::MakeSpan("pubsublite::TopicStatsServiceConnection::DeleteOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteOperation(request));
 }
 
-Status TopicStatsServiceTracingConnection::CancelOperation(
-    google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpan(
-      "pubsublite::TopicStatsServiceConnection::CancelOperation");
+Status
+TopicStatsServiceTracingConnection::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
+  auto span = internal::MakeSpan("pubsublite::TopicStatsServiceConnection::CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CancelOperation(request));
 }
@@ -103,8 +91,7 @@ MakeTopicStatsServiceTracingConnection(
     std::shared_ptr<pubsublite::TopicStatsServiceConnection> conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
-    conn =
-        std::make_shared<TopicStatsServiceTracingConnection>(std::move(conn));
+    conn = std::make_shared<TopicStatsServiceTracingConnection>(std::move(conn));
   }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;

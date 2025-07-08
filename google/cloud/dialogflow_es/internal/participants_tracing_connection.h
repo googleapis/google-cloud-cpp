@@ -36,28 +36,24 @@ class ParticipantsTracingConnection
   ~ParticipantsTracingConnection() override = default;
 
   explicit ParticipantsTracingConnection(
-      std::shared_ptr<dialogflow_es::ParticipantsConnection> child);
+    std::shared_ptr<dialogflow_es::ParticipantsConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::dialogflow::v2::Participant> CreateParticipant(
-      google::cloud::dialogflow::v2::CreateParticipantRequest const& request)
-      override;
+  StatusOr<google::cloud::dialogflow::v2::Participant>
+  CreateParticipant(google::cloud::dialogflow::v2::CreateParticipantRequest const& request) override;
 
-  StatusOr<google::cloud::dialogflow::v2::Participant> GetParticipant(
-      google::cloud::dialogflow::v2::GetParticipantRequest const& request)
-      override;
+  StatusOr<google::cloud::dialogflow::v2::Participant>
+  GetParticipant(google::cloud::dialogflow::v2::GetParticipantRequest const& request) override;
 
-  StreamRange<google::cloud::dialogflow::v2::Participant> ListParticipants(
-      google::cloud::dialogflow::v2::ListParticipantsRequest request) override;
+  StreamRange<google::cloud::dialogflow::v2::Participant>
+  ListParticipants(google::cloud::dialogflow::v2::ListParticipantsRequest request) override;
 
-  StatusOr<google::cloud::dialogflow::v2::Participant> UpdateParticipant(
-      google::cloud::dialogflow::v2::UpdateParticipantRequest const& request)
-      override;
+  StatusOr<google::cloud::dialogflow::v2::Participant>
+  UpdateParticipant(google::cloud::dialogflow::v2::UpdateParticipantRequest const& request) override;
 
   StatusOr<google::cloud::dialogflow::v2::AnalyzeContentResponse>
-  AnalyzeContent(google::cloud::dialogflow::v2::AnalyzeContentRequest const&
-                     request) override;
+  AnalyzeContent(google::cloud::dialogflow::v2::AnalyzeContentRequest const& request) override;
 
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::dialogflow::v2::StreamingAnalyzeContentRequest,
@@ -65,38 +61,31 @@ class ParticipantsTracingConnection
   AsyncStreamingAnalyzeContent() override;
 
   StatusOr<google::cloud::dialogflow::v2::SuggestArticlesResponse>
-  SuggestArticles(google::cloud::dialogflow::v2::SuggestArticlesRequest const&
-                      request) override;
+  SuggestArticles(google::cloud::dialogflow::v2::SuggestArticlesRequest const& request) override;
 
   StatusOr<google::cloud::dialogflow::v2::SuggestFaqAnswersResponse>
-  SuggestFaqAnswers(
-      google::cloud::dialogflow::v2::SuggestFaqAnswersRequest const& request)
-      override;
+  SuggestFaqAnswers(google::cloud::dialogflow::v2::SuggestFaqAnswersRequest const& request) override;
 
   StatusOr<google::cloud::dialogflow::v2::SuggestSmartRepliesResponse>
-  SuggestSmartReplies(
-      google::cloud::dialogflow::v2::SuggestSmartRepliesRequest const& request)
-      override;
+  SuggestSmartReplies(google::cloud::dialogflow::v2::SuggestSmartRepliesRequest const& request) override;
 
   StatusOr<google::cloud::dialogflow::v2::SuggestKnowledgeAssistResponse>
-  SuggestKnowledgeAssist(
-      google::cloud::dialogflow::v2::SuggestKnowledgeAssistRequest const&
-          request) override;
+  SuggestKnowledgeAssist(google::cloud::dialogflow::v2::SuggestKnowledgeAssistRequest const& request) override;
 
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request) override;
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request) override;
 
-  StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request) override;
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request) override;
 
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request) override;
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::shared_ptr<dialogflow_es::ParticipantsConnection> child_;

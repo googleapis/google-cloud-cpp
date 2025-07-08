@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_SSL_CERTIFICATES_V1_SSL_CERTIFICATES_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_SSL_CERTIFICATES_V1_SSL_CERTIFICATES_OPTIONS_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/ssl_certificates/v1/ssl_certificates_connection.h"
 #include "google/cloud/compute/ssl_certificates/v1/ssl_certificates_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>

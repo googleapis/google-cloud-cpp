@@ -19,11 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PROFILER_V2_EXPORT_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PROFILER_V2_EXPORT_CONNECTION_H
 
-#include "google/cloud/profiler/v2/export_connection_idempotency_policy.h"
-#include "google/cloud/profiler/v2/internal/export_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
+#include "google/cloud/profiler/v2/export_connection_idempotency_policy.h"
+#include "google/cloud/profiler/v2/internal/export_retry_traits.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
@@ -52,8 +52,7 @@ class ExportServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class ExportServiceLimitedErrorCountRetryPolicy
-    : public ExportServiceRetryPolicy {
+class ExportServiceLimitedErrorCountRetryPolicy : public ExportServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -63,14 +62,14 @@ class ExportServiceLimitedErrorCountRetryPolicy
    *     @p maximum_failures == 0.
    */
   explicit ExportServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   ExportServiceLimitedErrorCountRetryPolicy(
       ExportServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : ExportServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : ExportServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   ExportServiceLimitedErrorCountRetryPolicy(
       ExportServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : ExportServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : ExportServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -90,9 +89,7 @@ class ExportServiceLimitedErrorCountRetryPolicy
   using BaseType = ExportServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      profiler_v2_internal::ExportServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<profiler_v2_internal::ExportServiceRetryTraits> impl_;
 };
 
 /**
@@ -130,14 +127,12 @@ class ExportServiceLimitedTimeRetryPolicy : public ExportServiceRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit ExportServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  ExportServiceLimitedTimeRetryPolicy(
-      ExportServiceLimitedTimeRetryPolicy&& rhs) noexcept
-      : ExportServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  ExportServiceLimitedTimeRetryPolicy(
-      ExportServiceLimitedTimeRetryPolicy const& rhs) noexcept
-      : ExportServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  ExportServiceLimitedTimeRetryPolicy(ExportServiceLimitedTimeRetryPolicy&& rhs) noexcept
+    : ExportServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  ExportServiceLimitedTimeRetryPolicy(ExportServiceLimitedTimeRetryPolicy const& rhs) noexcept
+    : ExportServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -159,9 +154,7 @@ class ExportServiceLimitedTimeRetryPolicy : public ExportServiceRetryPolicy {
   using BaseType = ExportServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      profiler_v2_internal::ExportServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<profiler_v2_internal::ExportServiceRetryTraits> impl_;
 };
 
 /**
@@ -183,8 +176,7 @@ class ExportServiceConnection {
   virtual Options options() { return Options{}; }
 
   virtual StreamRange<google::devtools::cloudprofiler::v2::Profile>
-  ListProfiles(
-      google::devtools::cloudprofiler::v2::ListProfilesRequest request);
+  ListProfiles(google::devtools::cloudprofiler::v2::ListProfilesRequest request);
 };
 
 /**

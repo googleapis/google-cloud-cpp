@@ -17,16 +17,16 @@
 // source: google/cloud/managedidentities/v1/managed_identities_service.proto
 
 #include "google/cloud/managedidentities/v1/internal/managed_identities_stub_factory.h"
-#include "google/cloud/managedidentities/v1/internal/managed_identities_auth_decorator.h"
-#include "google/cloud/managedidentities/v1/internal/managed_identities_logging_decorator.h"
-#include "google/cloud/managedidentities/v1/internal/managed_identities_metadata_decorator.h"
-#include "google/cloud/managedidentities/v1/internal/managed_identities_stub.h"
-#include "google/cloud/managedidentities/v1/internal/managed_identities_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
+#include "google/cloud/managedidentities/v1/internal/managed_identities_auth_decorator.h"
+#include "google/cloud/managedidentities/v1/internal/managed_identities_logging_decorator.h"
+#include "google/cloud/managedidentities/v1/internal/managed_identities_metadata_decorator.h"
+#include "google/cloud/managedidentities/v1/internal/managed_identities_stub.h"
+#include "google/cloud/managedidentities/v1/internal/managed_identities_tracing_stub.h"
 #include "google/cloud/options.h"
 #include <google/cloud/managedidentities/v1/managed_identities_service.grpc.pb.h>
 #include <memory>
@@ -41,26 +41,26 @@ std::shared_ptr<ManagedIdentitiesServiceStub>
 CreateDefaultManagedIdentitiesServiceStub(
     std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
     Options const& options) {
-  auto channel = auth->CreateChannel(options.get<EndpointOption>(),
-                                     internal::MakeChannelArguments(options));
-  auto service_grpc_stub =
-      google::cloud::managedidentities::v1::ManagedIdentitiesService::NewStub(
-          channel);
+  auto channel = auth->CreateChannel(
+    options.get<EndpointOption>(), internal::MakeChannelArguments(options));
+  auto service_grpc_stub = google::cloud::managedidentities::v1::ManagedIdentitiesService::NewStub(channel);
   std::shared_ptr<ManagedIdentitiesServiceStub> stub =
-      std::make_shared<DefaultManagedIdentitiesServiceStub>(
-          std::move(service_grpc_stub),
-          google::longrunning::Operations::NewStub(channel));
+    std::make_shared<DefaultManagedIdentitiesServiceStub>(
+      std::move(service_grpc_stub),
+      google::longrunning::Operations::NewStub(channel));
 
   if (auth->RequiresConfigureContext()) {
-    stub = std::make_shared<ManagedIdentitiesServiceAuth>(std::move(auth),
-                                                          std::move(stub));
+    stub = std::make_shared<ManagedIdentitiesServiceAuth>(
+        std::move(auth), std::move(stub));
   }
   stub = std::make_shared<ManagedIdentitiesServiceMetadata>(
       std::move(stub), std::multimap<std::string, std::string>{});
-  if (internal::Contains(options.get<LoggingComponentsOption>(), "rpc")) {
+  if (internal::Contains(
+      options.get<LoggingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<ManagedIdentitiesServiceLogging>(
-        std::move(stub), options.get<GrpcTracingOptionsOption>(),
+        std::move(stub),
+        options.get<GrpcTracingOptionsOption>(),
         options.get<LoggingComponentsOption>());
   }
   if (internal::TracingEnabled(options)) {

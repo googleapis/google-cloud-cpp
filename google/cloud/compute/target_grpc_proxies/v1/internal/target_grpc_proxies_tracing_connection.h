@@ -36,61 +36,51 @@ class TargetGrpcProxiesTracingConnection
   ~TargetGrpcProxiesTracingConnection() override = default;
 
   explicit TargetGrpcProxiesTracingConnection(
-      std::shared_ptr<
-          compute_target_grpc_proxies_v1::TargetGrpcProxiesConnection>
-          child);
+    std::shared_ptr<compute_target_grpc_proxies_v1::TargetGrpcProxiesConnection> child);
 
   Options options() override { return child_->options(); }
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteTargetGrpcProxy(
-      google::cloud::cpp::compute::target_grpc_proxies::v1::
-          DeleteTargetGrpcProxyRequest const& request) override;
+  DeleteTargetGrpcProxy(google::cloud::cpp::compute::target_grpc_proxies::v1::DeleteTargetGrpcProxyRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteTargetGrpcProxy(
-      NoAwaitTag, google::cloud::cpp::compute::target_grpc_proxies::v1::
-                      DeleteTargetGrpcProxyRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeleteTargetGrpcProxy(NoAwaitTag,
+      google::cloud::cpp::compute::target_grpc_proxies::v1::DeleteTargetGrpcProxyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteTargetGrpcProxy(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::TargetGrpcProxy> GetTargetGrpcProxy(
-      google::cloud::cpp::compute::target_grpc_proxies::v1::
-          GetTargetGrpcProxyRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::TargetGrpcProxy>
+  GetTargetGrpcProxy(google::cloud::cpp::compute::target_grpc_proxies::v1::GetTargetGrpcProxyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertTargetGrpcProxy(
-      google::cloud::cpp::compute::target_grpc_proxies::v1::
-          InsertTargetGrpcProxyRequest const& request) override;
+  InsertTargetGrpcProxy(google::cloud::cpp::compute::target_grpc_proxies::v1::InsertTargetGrpcProxyRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertTargetGrpcProxy(
-      NoAwaitTag, google::cloud::cpp::compute::target_grpc_proxies::v1::
-                      InsertTargetGrpcProxyRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  InsertTargetGrpcProxy(NoAwaitTag,
+      google::cloud::cpp::compute::target_grpc_proxies::v1::InsertTargetGrpcProxyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertTargetGrpcProxy(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StreamRange<google::cloud::cpp::compute::v1::TargetGrpcProxy>
-  ListTargetGrpcProxies(google::cloud::cpp::compute::target_grpc_proxies::v1::
-                            ListTargetGrpcProxiesRequest request) override;
+  ListTargetGrpcProxies(google::cloud::cpp::compute::target_grpc_proxies::v1::ListTargetGrpcProxiesRequest request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchTargetGrpcProxy(google::cloud::cpp::compute::target_grpc_proxies::v1::
-                           PatchTargetGrpcProxyRequest const& request) override;
+  PatchTargetGrpcProxy(google::cloud::cpp::compute::target_grpc_proxies::v1::PatchTargetGrpcProxyRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchTargetGrpcProxy(
-      NoAwaitTag, google::cloud::cpp::compute::target_grpc_proxies::v1::
-                      PatchTargetGrpcProxyRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  PatchTargetGrpcProxy(NoAwaitTag,
+      google::cloud::cpp::compute::target_grpc_proxies::v1::PatchTargetGrpcProxyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   PatchTargetGrpcProxy(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
  private:
-  std::shared_ptr<compute_target_grpc_proxies_v1::TargetGrpcProxiesConnection>
-      child_;
+  std::shared_ptr<compute_target_grpc_proxies_v1::TargetGrpcProxiesConnection> child_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -103,8 +93,7 @@ class TargetGrpcProxiesTracingConnection
  */
 std::shared_ptr<compute_target_grpc_proxies_v1::TargetGrpcProxiesConnection>
 MakeTargetGrpcProxiesTracingConnection(
-    std::shared_ptr<compute_target_grpc_proxies_v1::TargetGrpcProxiesConnection>
-        conn);
+    std::shared_ptr<compute_target_grpc_proxies_v1::TargetGrpcProxiesConnection> conn);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_target_grpc_proxies_v1_internal

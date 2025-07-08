@@ -19,11 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_KMS_V1_AUTOKEY_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_KMS_V1_AUTOKEY_CONNECTION_H
 
-#include "google/cloud/kms/v1/autokey_connection_idempotency_policy.h"
-#include "google/cloud/kms/v1/internal/autokey_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/kms/v1/autokey_connection_idempotency_policy.h"
+#include "google/cloud/kms/v1/internal/autokey_retry_traits.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -66,14 +66,14 @@ class AutokeyLimitedErrorCountRetryPolicy : public AutokeyRetryPolicy {
    *     @p maximum_failures == 0.
    */
   explicit AutokeyLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   AutokeyLimitedErrorCountRetryPolicy(
       AutokeyLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : AutokeyLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : AutokeyLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   AutokeyLimitedErrorCountRetryPolicy(
       AutokeyLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : AutokeyLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : AutokeyLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -93,9 +93,7 @@ class AutokeyLimitedErrorCountRetryPolicy : public AutokeyRetryPolicy {
   using BaseType = AutokeyRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      kms_v1_internal::AutokeyRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<kms_v1_internal::AutokeyRetryTraits> impl_;
 };
 
 /**
@@ -133,13 +131,12 @@ class AutokeyLimitedTimeRetryPolicy : public AutokeyRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit AutokeyLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
   AutokeyLimitedTimeRetryPolicy(AutokeyLimitedTimeRetryPolicy&& rhs) noexcept
-      : AutokeyLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  AutokeyLimitedTimeRetryPolicy(
-      AutokeyLimitedTimeRetryPolicy const& rhs) noexcept
-      : AutokeyLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+    : AutokeyLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  AutokeyLimitedTimeRetryPolicy(AutokeyLimitedTimeRetryPolicy const& rhs) noexcept
+    : AutokeyLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -153,16 +150,15 @@ class AutokeyLimitedTimeRetryPolicy : public AutokeyRetryPolicy {
     return impl_.IsPermanentFailure(status);
   }
   std::unique_ptr<AutokeyRetryPolicy> clone() const override {
-    return std::make_unique<AutokeyLimitedTimeRetryPolicy>(maximum_duration());
+    return std::make_unique<AutokeyLimitedTimeRetryPolicy>(
+        maximum_duration());
   }
 
   // This is provided only for backwards compatibility.
   using BaseType = AutokeyRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      kms_v1_internal::AutokeyRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<kms_v1_internal::AutokeyRetryTraits> impl_;
 };
 
 /**
@@ -183,39 +179,38 @@ class AutokeyConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual future<StatusOr<google::cloud::kms::v1::KeyHandle>> CreateKeyHandle(
-      google::cloud::kms::v1::CreateKeyHandleRequest const& request);
+  virtual future<StatusOr<google::cloud::kms::v1::KeyHandle>>
+  CreateKeyHandle(google::cloud::kms::v1::CreateKeyHandleRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> CreateKeyHandle(
-      NoAwaitTag,
-      google::cloud::kms::v1::CreateKeyHandleRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  CreateKeyHandle(NoAwaitTag, google::cloud::kms::v1::CreateKeyHandleRequest const& request);
 
-  virtual future<StatusOr<google::cloud::kms::v1::KeyHandle>> CreateKeyHandle(
-      google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::kms::v1::KeyHandle>>
+  CreateKeyHandle( google::longrunning::Operation const& operation);
 
-  virtual StatusOr<google::cloud::kms::v1::KeyHandle> GetKeyHandle(
-      google::cloud::kms::v1::GetKeyHandleRequest const& request);
+  virtual StatusOr<google::cloud::kms::v1::KeyHandle>
+  GetKeyHandle(google::cloud::kms::v1::GetKeyHandleRequest const& request);
 
-  virtual StreamRange<google::cloud::kms::v1::KeyHandle> ListKeyHandles(
-      google::cloud::kms::v1::ListKeyHandlesRequest request);
+  virtual StreamRange<google::cloud::kms::v1::KeyHandle>
+  ListKeyHandles(google::cloud::kms::v1::ListKeyHandlesRequest request);
 
-  virtual StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request);
+  virtual StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request);
 
-  virtual StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request);
+  virtual StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
 
   virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
   TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 };
 
 /**
@@ -239,7 +234,8 @@ class AutokeyConnection {
  * @param options (optional) Configure the `AutokeyConnection` created by
  * this function.
  */
-std::shared_ptr<AutokeyConnection> MakeAutokeyConnection(Options options = {});
+std::shared_ptr<AutokeyConnection> MakeAutokeyConnection(
+    Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace kms_v1

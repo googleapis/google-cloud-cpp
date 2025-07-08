@@ -46,27 +46,25 @@ class MockRevisionsConnection : public run_v2::RevisionsConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::run::v2::Revision>, GetRevision,
-              (google::cloud::run::v2::GetRevisionRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::run::v2::Revision>,
+  GetRevision,
+  (google::cloud::run::v2::GetRevisionRequest const& request), (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::run::v2::Revision>), ListRevisions,
-              (google::cloud::run::v2::ListRevisionsRequest request),
-              (override));
+  MOCK_METHOD((StreamRange<google::cloud::run::v2::Revision>),
+  ListRevisions,
+  (google::cloud::run::v2::ListRevisionsRequest request), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteRevision(Matcher<google::cloud::run::v2::DeleteRevisionRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteRevision(Matcher<google::cloud::run::v2::DeleteRevisionRequest const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::run::v2::Revision>>,
-              DeleteRevision,
-              (google::cloud::run::v2::DeleteRevisionRequest const& request),
-              (override));
+  DeleteRevision,
+  (google::cloud::run::v2::DeleteRevisionRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -74,37 +72,37 @@ class MockRevisionsConnection : public run_v2::RevisionsConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, DeleteRevision(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteRevision,
-              (NoAwaitTag,
-               google::cloud::run::v2::DeleteRevisionRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  DeleteRevision, (NoAwaitTag,
+    google::cloud::run::v2::DeleteRevisionRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteRevision(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteRevision(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::run::v2::Revision>>,
-              DeleteRevision, (google::longrunning::Operation const& operation),
-              (override));
+  DeleteRevision, (
+    google::longrunning::Operation const& operation), (override));
 
-  MOCK_METHOD((StreamRange<google::longrunning::Operation>), ListOperations,
-              (google::longrunning::ListOperationsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::longrunning::Operation>),
+  ListOperations,
+  (google::longrunning::ListOperationsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
-              (google::longrunning::GetOperationRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  GetOperation,
+  (google::longrunning::GetOperationRequest const& request), (override));
 
-  MOCK_METHOD(Status, DeleteOperation,
-              (google::longrunning::DeleteOperationRequest const& request),
-              (override));
+  MOCK_METHOD(Status,
+  DeleteOperation,
+  (google::longrunning::DeleteOperationRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, WaitOperation,
-              (google::longrunning::WaitOperationRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  WaitOperation,
+  (google::longrunning::WaitOperationRequest const& request), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

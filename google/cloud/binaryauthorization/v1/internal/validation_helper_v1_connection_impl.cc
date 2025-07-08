@@ -17,8 +17,8 @@
 // source: google/cloud/binaryauthorization/v1/service.proto
 
 #include "google/cloud/binaryauthorization/v1/internal/validation_helper_v1_connection_impl.h"
-#include "google/cloud/binaryauthorization/v1/internal/validation_helper_v1_option_defaults.h"
 #include "google/cloud/background_threads.h"
+#include "google/cloud/binaryauthorization/v1/internal/validation_helper_v1_option_defaults.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/retry_loop.h"
@@ -33,50 +33,38 @@ namespace {
 
 std::unique_ptr<binaryauthorization_v1::ValidationHelperV1RetryPolicy>
 retry_policy(Options const& options) {
-  return options
-      .get<binaryauthorization_v1::ValidationHelperV1RetryPolicyOption>()
-      ->clone();
+  return options.get<binaryauthorization_v1::ValidationHelperV1RetryPolicyOption>()->clone();
 }
 
-std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-  return options
-      .get<binaryauthorization_v1::ValidationHelperV1BackoffPolicyOption>()
-      ->clone();
+std::unique_ptr<BackoffPolicy>
+backoff_policy(Options const& options) {
+  return options.get<binaryauthorization_v1::ValidationHelperV1BackoffPolicyOption>()->clone();
 }
 
-std::unique_ptr<
-    binaryauthorization_v1::ValidationHelperV1ConnectionIdempotencyPolicy>
+std::unique_ptr<binaryauthorization_v1::ValidationHelperV1ConnectionIdempotencyPolicy>
 idempotency_policy(Options const& options) {
-  return options
-      .get<binaryauthorization_v1::
-               ValidationHelperV1ConnectionIdempotencyPolicyOption>()
-      ->clone();
+  return options.get<binaryauthorization_v1::ValidationHelperV1ConnectionIdempotencyPolicyOption>()->clone();
 }
 
-}  // namespace
+} // namespace
 
 ValidationHelperV1ConnectionImpl::ValidationHelperV1ConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<binaryauthorization_v1_internal::ValidationHelperV1Stub>
-        stub,
+    std::shared_ptr<binaryauthorization_v1_internal::ValidationHelperV1Stub> stub,
     Options options)
-    : background_(std::move(background)),
-      stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options), ValidationHelperV1Connection::options())) {}
+  : background_(std::move(background)), stub_(std::move(stub)),
+    options_(internal::MergeOptions(
+        std::move(options),
+        ValidationHelperV1Connection::options())) {}
 
-StatusOr<google::cloud::binaryauthorization::v1::
-             ValidateAttestationOccurrenceResponse>
-ValidationHelperV1ConnectionImpl::ValidateAttestationOccurrence(
-    google::cloud::binaryauthorization::v1::
-        ValidateAttestationOccurrenceRequest const& request) {
+StatusOr<google::cloud::binaryauthorization::v1::ValidateAttestationOccurrenceResponse>
+ValidationHelperV1ConnectionImpl::ValidateAttestationOccurrence(google::cloud::binaryauthorization::v1::ValidateAttestationOccurrenceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->ValidateAttestationOccurrence(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::binaryauthorization::v1::
-                 ValidateAttestationOccurrenceRequest const& request) {
+             google::cloud::binaryauthorization::v1::ValidateAttestationOccurrenceRequest const& request) {
         return stub_->ValidateAttestationOccurrence(context, options, request);
       },
       *current, request, __func__);

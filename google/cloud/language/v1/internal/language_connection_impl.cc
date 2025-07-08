@@ -17,11 +17,11 @@
 // source: google/cloud/language/v1/language_service.proto
 
 #include "google/cloud/language/v1/internal/language_connection_impl.h"
-#include "google/cloud/language/v1/internal/language_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/retry_loop.h"
+#include "google/cloud/language/v1/internal/language_option_defaults.h"
 #include <memory>
 #include <utility>
 
@@ -31,82 +31,73 @@ namespace language_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<language_v1::LanguageServiceRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<language_v1::LanguageServiceRetryPolicy>
+retry_policy(Options const& options) {
   return options.get<language_v1::LanguageServiceRetryPolicyOption>()->clone();
 }
 
-std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-  return options.get<language_v1::LanguageServiceBackoffPolicyOption>()
-      ->clone();
+std::unique_ptr<BackoffPolicy>
+backoff_policy(Options const& options) {
+  return options.get<language_v1::LanguageServiceBackoffPolicyOption>()->clone();
 }
 
 std::unique_ptr<language_v1::LanguageServiceConnectionIdempotencyPolicy>
 idempotency_policy(Options const& options) {
-  return options
-      .get<language_v1::LanguageServiceConnectionIdempotencyPolicyOption>()
-      ->clone();
+  return options.get<language_v1::LanguageServiceConnectionIdempotencyPolicyOption>()->clone();
 }
 
-}  // namespace
+} // namespace
 
 LanguageServiceConnectionImpl::LanguageServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<language_v1_internal::LanguageServiceStub> stub,
     Options options)
-    : background_(std::move(background)),
-      stub_(std::move(stub)),
-      options_(internal::MergeOptions(std::move(options),
-                                      LanguageServiceConnection::options())) {}
+  : background_(std::move(background)), stub_(std::move(stub)),
+    options_(internal::MergeOptions(
+        std::move(options),
+        LanguageServiceConnection::options())) {}
 
 StatusOr<google::cloud::language::v1::AnalyzeSentimentResponse>
-LanguageServiceConnectionImpl::AnalyzeSentiment(
-    google::cloud::language::v1::AnalyzeSentimentRequest const& request) {
+LanguageServiceConnectionImpl::AnalyzeSentiment(google::cloud::language::v1::AnalyzeSentimentRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->AnalyzeSentiment(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::language::v1::AnalyzeSentimentRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::language::v1::AnalyzeSentimentRequest const& request) {
         return stub_->AnalyzeSentiment(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::language::v1::AnalyzeEntitiesResponse>
-LanguageServiceConnectionImpl::AnalyzeEntities(
-    google::cloud::language::v1::AnalyzeEntitiesRequest const& request) {
+LanguageServiceConnectionImpl::AnalyzeEntities(google::cloud::language::v1::AnalyzeEntitiesRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->AnalyzeEntities(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::language::v1::AnalyzeEntitiesRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::language::v1::AnalyzeEntitiesRequest const& request) {
         return stub_->AnalyzeEntities(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::language::v1::AnalyzeEntitySentimentResponse>
-LanguageServiceConnectionImpl::AnalyzeEntitySentiment(
-    google::cloud::language::v1::AnalyzeEntitySentimentRequest const& request) {
+LanguageServiceConnectionImpl::AnalyzeEntitySentiment(google::cloud::language::v1::AnalyzeEntitySentimentRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->AnalyzeEntitySentiment(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::language::v1::AnalyzeEntitySentimentRequest const&
-                 request) {
+             google::cloud::language::v1::AnalyzeEntitySentimentRequest const& request) {
         return stub_->AnalyzeEntitySentiment(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::language::v1::AnalyzeSyntaxResponse>
-LanguageServiceConnectionImpl::AnalyzeSyntax(
-    google::cloud::language::v1::AnalyzeSyntaxRequest const& request) {
+LanguageServiceConnectionImpl::AnalyzeSyntax(google::cloud::language::v1::AnalyzeSyntaxRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -119,8 +110,7 @@ LanguageServiceConnectionImpl::AnalyzeSyntax(
 }
 
 StatusOr<google::cloud::language::v1::ClassifyTextResponse>
-LanguageServiceConnectionImpl::ClassifyText(
-    google::cloud::language::v1::ClassifyTextRequest const& request) {
+LanguageServiceConnectionImpl::ClassifyText(google::cloud::language::v1::ClassifyTextRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -133,8 +123,7 @@ LanguageServiceConnectionImpl::ClassifyText(
 }
 
 StatusOr<google::cloud::language::v1::ModerateTextResponse>
-LanguageServiceConnectionImpl::ModerateText(
-    google::cloud::language::v1::ModerateTextRequest const& request) {
+LanguageServiceConnectionImpl::ModerateText(google::cloud::language::v1::ModerateTextRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -147,8 +136,7 @@ LanguageServiceConnectionImpl::ModerateText(
 }
 
 StatusOr<google::cloud::language::v1::AnnotateTextResponse>
-LanguageServiceConnectionImpl::AnnotateText(
-    google::cloud::language::v1::AnnotateTextRequest const& request) {
+LanguageServiceConnectionImpl::AnnotateText(google::cloud::language::v1::AnnotateTextRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),

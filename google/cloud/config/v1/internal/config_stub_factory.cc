@@ -17,12 +17,12 @@
 // source: google/cloud/config/v1/config.proto
 
 #include "google/cloud/config/v1/internal/config_stub_factory.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/config/v1/internal/config_auth_decorator.h"
 #include "google/cloud/config/v1/internal/config_logging_decorator.h"
 #include "google/cloud/config/v1/internal/config_metadata_decorator.h"
 #include "google/cloud/config/v1/internal/config_stub.h"
 #include "google/cloud/config/v1/internal/config_tracing_stub.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/opentelemetry.h"
@@ -40,29 +40,32 @@ namespace cloud {
 namespace config_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<ConfigStub> CreateDefaultConfigStub(
+std::shared_ptr<ConfigStub>
+CreateDefaultConfigStub(
     std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
     Options const& options) {
-  auto channel = auth->CreateChannel(options.get<EndpointOption>(),
-                                     internal::MakeChannelArguments(options));
+  auto channel = auth->CreateChannel(
+    options.get<EndpointOption>(), internal::MakeChannelArguments(options));
   auto service_grpc_stub = google::cloud::config::v1::Config::NewStub(channel);
   auto service_iampolicy_stub = google::iam::v1::IAMPolicy::NewStub(channel);
-  auto service_locations_stub =
-      google::cloud::location::Locations::NewStub(channel);
-  std::shared_ptr<ConfigStub> stub = std::make_shared<DefaultConfigStub>(
-      std::move(service_grpc_stub), std::move(service_iampolicy_stub),
-      std::move(service_locations_stub),
+  auto service_locations_stub = google::cloud::location::Locations::NewStub(channel);
+  std::shared_ptr<ConfigStub> stub =
+    std::make_shared<DefaultConfigStub>(
+      std::move(service_grpc_stub), std::move(service_iampolicy_stub), std::move(service_locations_stub),
       google::longrunning::Operations::NewStub(channel));
 
   if (auth->RequiresConfigureContext()) {
-    stub = std::make_shared<ConfigAuth>(std::move(auth), std::move(stub));
+    stub = std::make_shared<ConfigAuth>(
+        std::move(auth), std::move(stub));
   }
   stub = std::make_shared<ConfigMetadata>(
       std::move(stub), std::multimap<std::string, std::string>{});
-  if (internal::Contains(options.get<LoggingComponentsOption>(), "rpc")) {
+  if (internal::Contains(
+      options.get<LoggingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<ConfigLogging>(
-        std::move(stub), options.get<GrpcTracingOptionsOption>(),
+        std::move(stub),
+        options.get<GrpcTracingOptionsOption>(),
         options.get<LoggingComponentsOption>());
   }
   if (internal::TracingEnabled(options)) {

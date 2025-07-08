@@ -42,8 +42,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockServiceUsageConnection
-    : public serviceusage_v1::ServiceUsageConnection {
+class MockServiceUsageConnection : public serviceusage_v1::ServiceUsageConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
@@ -52,15 +51,12 @@ class MockServiceUsageConnection
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// EnableService(Matcher<google::api::serviceusage::v1::EnableServiceRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, EnableService(Matcher<google::api::serviceusage::v1::EnableServiceRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::api::serviceusage::v1::EnableServiceResponse>>,
-      EnableService,
-      (google::api::serviceusage::v1::EnableServiceRequest const& request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::api::serviceusage::v1::EnableServiceResponse>>,
+  EnableService,
+  (google::api::serviceusage::v1::EnableServiceRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -68,39 +64,33 @@ class MockServiceUsageConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, EnableService(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, EnableService,
-      (NoAwaitTag,
-       google::api::serviceusage::v1::EnableServiceRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  EnableService, (NoAwaitTag,
+    google::api::serviceusage::v1::EnableServiceRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, EnableService(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, EnableService(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::api::serviceusage::v1::EnableServiceResponse>>,
-      EnableService, (google::longrunning::Operation const& operation),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::api::serviceusage::v1::EnableServiceResponse>>,
+  EnableService, (
+    google::longrunning::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DisableService(Matcher<google::api::serviceusage::v1::DisableServiceRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, DisableService(Matcher<google::api::serviceusage::v1::DisableServiceRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::api::serviceusage::v1::DisableServiceResponse>>,
-      DisableService,
-      (google::api::serviceusage::v1::DisableServiceRequest const& request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::api::serviceusage::v1::DisableServiceResponse>>,
+  DisableService,
+  (google::api::serviceusage::v1::DisableServiceRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -108,50 +98,41 @@ class MockServiceUsageConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, DisableService(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, DisableService,
-      (NoAwaitTag,
-       google::api::serviceusage::v1::DisableServiceRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  DisableService, (NoAwaitTag,
+    google::api::serviceusage::v1::DisableServiceRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DisableService(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, DisableService(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::api::serviceusage::v1::DisableServiceResponse>>,
-      DisableService, (google::longrunning::Operation const& operation),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::api::serviceusage::v1::DisableServiceResponse>>,
+  DisableService, (
+    google::longrunning::Operation const& operation), (override));
 
-  MOCK_METHOD(StatusOr<google::api::serviceusage::v1::Service>, GetService,
-              (google::api::serviceusage::v1::GetServiceRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::api::serviceusage::v1::Service>,
+  GetService,
+  (google::api::serviceusage::v1::GetServiceRequest const& request), (override));
 
   MOCK_METHOD((StreamRange<google::api::serviceusage::v1::Service>),
-              ListServices,
-              (google::api::serviceusage::v1::ListServicesRequest request),
-              (override));
+  ListServices,
+  (google::api::serviceusage::v1::ListServicesRequest request), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// BatchEnableServices(Matcher<google::api::serviceusage::v1::BatchEnableServicesRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, BatchEnableServices(Matcher<google::api::serviceusage::v1::BatchEnableServicesRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<
-          StatusOr<google::api::serviceusage::v1::BatchEnableServicesResponse>>,
-      BatchEnableServices,
-      (google::api::serviceusage::v1::BatchEnableServicesRequest const&
-           request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::api::serviceusage::v1::BatchEnableServicesResponse>>,
+  BatchEnableServices,
+  (google::api::serviceusage::v1::BatchEnableServicesRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -159,38 +140,33 @@ class MockServiceUsageConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, BatchEnableServices(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, BatchEnableServices,
-              (NoAwaitTag,
-               google::api::serviceusage::v1::BatchEnableServicesRequest const&
-                   request),
-              (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  BatchEnableServices, (NoAwaitTag,
+    google::api::serviceusage::v1::BatchEnableServicesRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// BatchEnableServices(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock, BatchEnableServices(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<
-          StatusOr<google::api::serviceusage::v1::BatchEnableServicesResponse>>,
-      BatchEnableServices, (google::longrunning::Operation const& operation),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::api::serviceusage::v1::BatchEnableServicesResponse>>,
+  BatchEnableServices, (
+    google::longrunning::Operation const& operation), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::api::serviceusage::v1::BatchGetServicesResponse>,
-      BatchGetServices,
-      (google::api::serviceusage::v1::BatchGetServicesRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::api::serviceusage::v1::BatchGetServicesResponse>,
+  BatchGetServices,
+  (google::api::serviceusage::v1::BatchGetServicesRequest const& request), (override));
 
-  MOCK_METHOD((StreamRange<google::longrunning::Operation>), ListOperations,
-              (google::longrunning::ListOperationsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::longrunning::Operation>),
+  ListOperations,
+  (google::longrunning::ListOperationsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
-              (google::longrunning::GetOperationRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  GetOperation,
+  (google::longrunning::GetOperationRequest const& request), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

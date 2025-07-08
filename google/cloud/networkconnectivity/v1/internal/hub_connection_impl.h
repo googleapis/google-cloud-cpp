@@ -19,14 +19,14 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_NETWORKCONNECTIVITY_V1_INTERNAL_HUB_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_NETWORKCONNECTIVITY_V1_INTERNAL_HUB_CONNECTION_IMPL_H
 
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/future.h"
 #include "google/cloud/networkconnectivity/v1/hub_connection.h"
 #include "google/cloud/networkconnectivity/v1/hub_connection_idempotency_policy.h"
 #include "google/cloud/networkconnectivity/v1/hub_options.h"
 #include "google/cloud/networkconnectivity/v1/internal/hub_retry_traits.h"
 #include "google/cloud/networkconnectivity/v1/internal/hub_stub.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -46,229 +46,195 @@ class HubServiceConnectionImpl
   ~HubServiceConnectionImpl() override = default;
 
   HubServiceConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<networkconnectivity_v1_internal::HubServiceStub> stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<networkconnectivity_v1_internal::HubServiceStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
-  StreamRange<google::cloud::networkconnectivity::v1::Hub> ListHubs(
-      google::cloud::networkconnectivity::v1::ListHubsRequest request) override;
+  StreamRange<google::cloud::networkconnectivity::v1::Hub>
+  ListHubs(google::cloud::networkconnectivity::v1::ListHubsRequest request) override;
 
-  StatusOr<google::cloud::networkconnectivity::v1::Hub> GetHub(
-      google::cloud::networkconnectivity::v1::GetHubRequest const& request)
-      override;
+  StatusOr<google::cloud::networkconnectivity::v1::Hub>
+  GetHub(google::cloud::networkconnectivity::v1::GetHubRequest const& request) override;
 
-  future<StatusOr<google::cloud::networkconnectivity::v1::Hub>> CreateHub(
-      google::cloud::networkconnectivity::v1::CreateHubRequest const& request)
-      override;
+  future<StatusOr<google::cloud::networkconnectivity::v1::Hub>>
+  CreateHub(google::cloud::networkconnectivity::v1::CreateHubRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> CreateHub(
-      NoAwaitTag,
-      google::cloud::networkconnectivity::v1::CreateHubRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  CreateHub(NoAwaitTag,
+      google::cloud::networkconnectivity::v1::CreateHubRequest const& request) override;
 
-  future<StatusOr<google::cloud::networkconnectivity::v1::Hub>> CreateHub(
+  future<StatusOr<google::cloud::networkconnectivity::v1::Hub>>
+  CreateHub(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::networkconnectivity::v1::Hub>> UpdateHub(
-      google::cloud::networkconnectivity::v1::UpdateHubRequest const& request)
-      override;
+  future<StatusOr<google::cloud::networkconnectivity::v1::Hub>>
+  UpdateHub(google::cloud::networkconnectivity::v1::UpdateHubRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> UpdateHub(
-      NoAwaitTag,
-      google::cloud::networkconnectivity::v1::UpdateHubRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  UpdateHub(NoAwaitTag,
+      google::cloud::networkconnectivity::v1::UpdateHubRequest const& request) override;
 
-  future<StatusOr<google::cloud::networkconnectivity::v1::Hub>> UpdateHub(
+  future<StatusOr<google::cloud::networkconnectivity::v1::Hub>>
+  UpdateHub(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
-  DeleteHub(google::cloud::networkconnectivity::v1::DeleteHubRequest const&
-                request) override;
+  DeleteHub(google::cloud::networkconnectivity::v1::DeleteHubRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> DeleteHub(
-      NoAwaitTag,
-      google::cloud::networkconnectivity::v1::DeleteHubRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  DeleteHub(NoAwaitTag,
+      google::cloud::networkconnectivity::v1::DeleteHubRequest const& request) override;
 
   future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
-  DeleteHub(google::longrunning::Operation const& operation) override;
+  DeleteHub(
+      google::longrunning::Operation const& operation) override;
 
-  StreamRange<google::cloud::networkconnectivity::v1::Spoke> ListHubSpokes(
-      google::cloud::networkconnectivity::v1::ListHubSpokesRequest request)
-      override;
+  StreamRange<google::cloud::networkconnectivity::v1::Spoke>
+  ListHubSpokes(google::cloud::networkconnectivity::v1::ListHubSpokesRequest request) override;
 
   StreamRange<google::cloud::networkconnectivity::v1::HubStatusEntry>
-  QueryHubStatus(google::cloud::networkconnectivity::v1::QueryHubStatusRequest
-                     request) override;
+  QueryHubStatus(google::cloud::networkconnectivity::v1::QueryHubStatusRequest request) override;
 
-  StreamRange<google::cloud::networkconnectivity::v1::Spoke> ListSpokes(
-      google::cloud::networkconnectivity::v1::ListSpokesRequest request)
-      override;
+  StreamRange<google::cloud::networkconnectivity::v1::Spoke>
+  ListSpokes(google::cloud::networkconnectivity::v1::ListSpokesRequest request) override;
 
-  StatusOr<google::cloud::networkconnectivity::v1::Spoke> GetSpoke(
-      google::cloud::networkconnectivity::v1::GetSpokeRequest const& request)
-      override;
+  StatusOr<google::cloud::networkconnectivity::v1::Spoke>
+  GetSpoke(google::cloud::networkconnectivity::v1::GetSpokeRequest const& request) override;
 
-  future<StatusOr<google::cloud::networkconnectivity::v1::Spoke>> CreateSpoke(
-      google::cloud::networkconnectivity::v1::CreateSpokeRequest const& request)
-      override;
+  future<StatusOr<google::cloud::networkconnectivity::v1::Spoke>>
+  CreateSpoke(google::cloud::networkconnectivity::v1::CreateSpokeRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> CreateSpoke(
-      NoAwaitTag,
-      google::cloud::networkconnectivity::v1::CreateSpokeRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  CreateSpoke(NoAwaitTag,
+      google::cloud::networkconnectivity::v1::CreateSpokeRequest const& request) override;
 
-  future<StatusOr<google::cloud::networkconnectivity::v1::Spoke>> CreateSpoke(
+  future<StatusOr<google::cloud::networkconnectivity::v1::Spoke>>
+  CreateSpoke(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::networkconnectivity::v1::Spoke>> UpdateSpoke(
-      google::cloud::networkconnectivity::v1::UpdateSpokeRequest const& request)
-      override;
+  future<StatusOr<google::cloud::networkconnectivity::v1::Spoke>>
+  UpdateSpoke(google::cloud::networkconnectivity::v1::UpdateSpokeRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> UpdateSpoke(
-      NoAwaitTag,
-      google::cloud::networkconnectivity::v1::UpdateSpokeRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  UpdateSpoke(NoAwaitTag,
+      google::cloud::networkconnectivity::v1::UpdateSpokeRequest const& request) override;
 
-  future<StatusOr<google::cloud::networkconnectivity::v1::Spoke>> UpdateSpoke(
+  future<StatusOr<google::cloud::networkconnectivity::v1::Spoke>>
+  UpdateSpoke(
       google::longrunning::Operation const& operation) override;
 
-  future<
-      StatusOr<google::cloud::networkconnectivity::v1::RejectHubSpokeResponse>>
+  future<StatusOr<google::cloud::networkconnectivity::v1::RejectHubSpokeResponse>>
+  RejectHubSpoke(google::cloud::networkconnectivity::v1::RejectHubSpokeRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  RejectHubSpoke(NoAwaitTag,
+      google::cloud::networkconnectivity::v1::RejectHubSpokeRequest const& request) override;
+
+  future<StatusOr<google::cloud::networkconnectivity::v1::RejectHubSpokeResponse>>
   RejectHubSpoke(
-      google::cloud::networkconnectivity::v1::RejectHubSpokeRequest const&
-          request) override;
+      google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::longrunning::Operation> RejectHubSpoke(
-      NoAwaitTag,
-      google::cloud::networkconnectivity::v1::RejectHubSpokeRequest const&
-          request) override;
+  future<StatusOr<google::cloud::networkconnectivity::v1::AcceptHubSpokeResponse>>
+  AcceptHubSpoke(google::cloud::networkconnectivity::v1::AcceptHubSpokeRequest const& request) override;
 
-  future<
-      StatusOr<google::cloud::networkconnectivity::v1::RejectHubSpokeResponse>>
-  RejectHubSpoke(google::longrunning::Operation const& operation) override;
+  StatusOr<google::longrunning::Operation>
+  AcceptHubSpoke(NoAwaitTag,
+      google::cloud::networkconnectivity::v1::AcceptHubSpokeRequest const& request) override;
 
-  future<
-      StatusOr<google::cloud::networkconnectivity::v1::AcceptHubSpokeResponse>>
+  future<StatusOr<google::cloud::networkconnectivity::v1::AcceptHubSpokeResponse>>
   AcceptHubSpoke(
-      google::cloud::networkconnectivity::v1::AcceptHubSpokeRequest const&
-          request) override;
+      google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::longrunning::Operation> AcceptHubSpoke(
-      NoAwaitTag,
-      google::cloud::networkconnectivity::v1::AcceptHubSpokeRequest const&
-          request) override;
+  future<StatusOr<google::cloud::networkconnectivity::v1::AcceptSpokeUpdateResponse>>
+  AcceptSpokeUpdate(google::cloud::networkconnectivity::v1::AcceptSpokeUpdateRequest const& request) override;
 
-  future<
-      StatusOr<google::cloud::networkconnectivity::v1::AcceptHubSpokeResponse>>
-  AcceptHubSpoke(google::longrunning::Operation const& operation) override;
+  StatusOr<google::longrunning::Operation>
+  AcceptSpokeUpdate(NoAwaitTag,
+      google::cloud::networkconnectivity::v1::AcceptSpokeUpdateRequest const& request) override;
 
-  future<StatusOr<
-      google::cloud::networkconnectivity::v1::AcceptSpokeUpdateResponse>>
+  future<StatusOr<google::cloud::networkconnectivity::v1::AcceptSpokeUpdateResponse>>
   AcceptSpokeUpdate(
-      google::cloud::networkconnectivity::v1::AcceptSpokeUpdateRequest const&
-          request) override;
+      google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::longrunning::Operation> AcceptSpokeUpdate(
-      NoAwaitTag,
-      google::cloud::networkconnectivity::v1::AcceptSpokeUpdateRequest const&
-          request) override;
+  future<StatusOr<google::cloud::networkconnectivity::v1::RejectSpokeUpdateResponse>>
+  RejectSpokeUpdate(google::cloud::networkconnectivity::v1::RejectSpokeUpdateRequest const& request) override;
 
-  future<StatusOr<
-      google::cloud::networkconnectivity::v1::AcceptSpokeUpdateResponse>>
-  AcceptSpokeUpdate(google::longrunning::Operation const& operation) override;
+  StatusOr<google::longrunning::Operation>
+  RejectSpokeUpdate(NoAwaitTag,
+      google::cloud::networkconnectivity::v1::RejectSpokeUpdateRequest const& request) override;
 
-  future<StatusOr<
-      google::cloud::networkconnectivity::v1::RejectSpokeUpdateResponse>>
+  future<StatusOr<google::cloud::networkconnectivity::v1::RejectSpokeUpdateResponse>>
   RejectSpokeUpdate(
-      google::cloud::networkconnectivity::v1::RejectSpokeUpdateRequest const&
-          request) override;
-
-  StatusOr<google::longrunning::Operation> RejectSpokeUpdate(
-      NoAwaitTag,
-      google::cloud::networkconnectivity::v1::RejectSpokeUpdateRequest const&
-          request) override;
-
-  future<StatusOr<
-      google::cloud::networkconnectivity::v1::RejectSpokeUpdateResponse>>
-  RejectSpokeUpdate(google::longrunning::Operation const& operation) override;
+      google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
-  DeleteSpoke(google::cloud::networkconnectivity::v1::DeleteSpokeRequest const&
-                  request) override;
+  DeleteSpoke(google::cloud::networkconnectivity::v1::DeleteSpokeRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> DeleteSpoke(
-      NoAwaitTag,
-      google::cloud::networkconnectivity::v1::DeleteSpokeRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  DeleteSpoke(NoAwaitTag,
+      google::cloud::networkconnectivity::v1::DeleteSpokeRequest const& request) override;
 
   future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
-  DeleteSpoke(google::longrunning::Operation const& operation) override;
+  DeleteSpoke(
+      google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::cloud::networkconnectivity::v1::RouteTable> GetRouteTable(
-      google::cloud::networkconnectivity::v1::GetRouteTableRequest const&
-          request) override;
+  StatusOr<google::cloud::networkconnectivity::v1::RouteTable>
+  GetRouteTable(google::cloud::networkconnectivity::v1::GetRouteTableRequest const& request) override;
 
-  StatusOr<google::cloud::networkconnectivity::v1::Route> GetRoute(
-      google::cloud::networkconnectivity::v1::GetRouteRequest const& request)
-      override;
+  StatusOr<google::cloud::networkconnectivity::v1::Route>
+  GetRoute(google::cloud::networkconnectivity::v1::GetRouteRequest const& request) override;
 
-  StreamRange<google::cloud::networkconnectivity::v1::Route> ListRoutes(
-      google::cloud::networkconnectivity::v1::ListRoutesRequest request)
-      override;
+  StreamRange<google::cloud::networkconnectivity::v1::Route>
+  ListRoutes(google::cloud::networkconnectivity::v1::ListRoutesRequest request) override;
 
   StreamRange<google::cloud::networkconnectivity::v1::RouteTable>
-  ListRouteTables(google::cloud::networkconnectivity::v1::ListRouteTablesRequest
-                      request) override;
+  ListRouteTables(google::cloud::networkconnectivity::v1::ListRouteTablesRequest request) override;
 
-  StatusOr<google::cloud::networkconnectivity::v1::Group> GetGroup(
-      google::cloud::networkconnectivity::v1::GetGroupRequest const& request)
-      override;
+  StatusOr<google::cloud::networkconnectivity::v1::Group>
+  GetGroup(google::cloud::networkconnectivity::v1::GetGroupRequest const& request) override;
 
-  StreamRange<google::cloud::networkconnectivity::v1::Group> ListGroups(
-      google::cloud::networkconnectivity::v1::ListGroupsRequest request)
-      override;
+  StreamRange<google::cloud::networkconnectivity::v1::Group>
+  ListGroups(google::cloud::networkconnectivity::v1::ListGroupsRequest request) override;
 
-  future<StatusOr<google::cloud::networkconnectivity::v1::Group>> UpdateGroup(
-      google::cloud::networkconnectivity::v1::UpdateGroupRequest const& request)
-      override;
+  future<StatusOr<google::cloud::networkconnectivity::v1::Group>>
+  UpdateGroup(google::cloud::networkconnectivity::v1::UpdateGroupRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> UpdateGroup(
-      NoAwaitTag,
-      google::cloud::networkconnectivity::v1::UpdateGroupRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  UpdateGroup(NoAwaitTag,
+      google::cloud::networkconnectivity::v1::UpdateGroupRequest const& request) override;
 
-  future<StatusOr<google::cloud::networkconnectivity::v1::Group>> UpdateGroup(
+  future<StatusOr<google::cloud::networkconnectivity::v1::Group>>
+  UpdateGroup(
       google::longrunning::Operation const& operation) override;
 
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request) override;
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request) override;
 
-  StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request) override;
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request) override;
+  StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request) override;
 
-  Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request) override;
+  Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request) override;
 
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request) override;
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

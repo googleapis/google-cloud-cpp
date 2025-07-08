@@ -17,10 +17,10 @@
 // source: google/cloud/shell/v1/cloudshell.proto
 
 #include "google/cloud/shell/v1/internal/cloud_shell_option_defaults.h"
-#include "google/cloud/shell/v1/cloud_shell_connection.h"
-#include "google/cloud/shell/v1/cloud_shell_options.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
+#include "google/cloud/shell/v1/cloud_shell_connection.h"
+#include "google/cloud/shell/v1/cloud_shell_options.h"
 #include <memory>
 #include <utility>
 
@@ -35,37 +35,30 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options CloudShellServiceDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_CLOUD_SHELL_SERVICE_ENDPOINT", "",
-      "GOOGLE_CLOUD_CPP_CLOUD_SHELL_SERVICE_AUTHORITY",
+      std::move(options), "GOOGLE_CLOUD_CPP_CLOUD_SHELL_SERVICE_ENDPOINT",
+      "", "GOOGLE_CLOUD_CPP_CLOUD_SHELL_SERVICE_AUTHORITY",
       "cloudshell.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<shell_v1::CloudShellServiceRetryPolicyOption>()) {
     options.set<shell_v1::CloudShellServiceRetryPolicyOption>(
         shell_v1::CloudShellServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
-            .clone());
+            std::chrono::minutes(30)).clone());
   }
   if (!options.has<shell_v1::CloudShellServiceBackoffPolicyOption>()) {
     options.set<shell_v1::CloudShellServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(
-            std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
-            .clone());
+        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
   }
   if (!options.has<shell_v1::CloudShellServicePollingPolicyOption>()) {
     options.set<shell_v1::CloudShellServicePollingPolicyOption>(
         GenericPollingPolicy<
             shell_v1::CloudShellServiceRetryPolicyOption::Type,
             shell_v1::CloudShellServiceBackoffPolicyOption::Type>(
-            options.get<shell_v1::CloudShellServiceRetryPolicyOption>()
-                ->clone(),
+            options.get<shell_v1::CloudShellServiceRetryPolicyOption>()->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                     std::chrono::minutes(5), kBackoffScaling)
-                .clone())
-            .clone());
+            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
   }
-  if (!options.has<
-          shell_v1::CloudShellServiceConnectionIdempotencyPolicyOption>()) {
+  if (!options.has<shell_v1::CloudShellServiceConnectionIdempotencyPolicyOption>()) {
     options.set<shell_v1::CloudShellServiceConnectionIdempotencyPolicyOption>(
         shell_v1::MakeDefaultCloudShellServiceConnectionIdempotencyPolicy());
   }

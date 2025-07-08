@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_SQL_TIERS_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_SQL_TIERS_CLIENT_H
 
-#include "google/cloud/sql/v1/sql_tiers_rest_connection.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
+#include "google/cloud/sql/v1/sql_tiers_rest_connection.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -61,8 +61,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class SqlTiersServiceClient {
  public:
-  explicit SqlTiersServiceClient(
-      std::shared_ptr<SqlTiersServiceConnection> connection, Options opts = {});
+  explicit SqlTiersServiceClient(std::shared_ptr<SqlTiersServiceConnection> connection, Options opts = {});
   ~SqlTiersServiceClient();
 
   ///@{
@@ -75,12 +74,10 @@ class SqlTiersServiceClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(SqlTiersServiceClient const& a,
-                         SqlTiersServiceClient const& b) {
+  friend bool operator==(SqlTiersServiceClient const& a, SqlTiersServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(SqlTiersServiceClient const& a,
-                         SqlTiersServiceClient const& b) {
+  friend bool operator!=(SqlTiersServiceClient const& a, SqlTiersServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -114,9 +111,8 @@ class SqlTiersServiceClient {
   /// [google.cloud.sql.v1.TiersListResponse]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_tiers.proto#L53}
   ///
   // clang-format on
-  StatusOr<google::cloud::sql::v1::TiersListResponse> List(
-      google::cloud::sql::v1::SqlTiersListRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::sql::v1::TiersListResponse>
+  List(google::cloud::sql::v1::SqlTiersListRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<SqlTiersServiceConnection> connection_;

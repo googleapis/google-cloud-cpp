@@ -76,9 +76,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class ArtifactRegistryClient {
  public:
-  explicit ArtifactRegistryClient(
-      std::shared_ptr<ArtifactRegistryConnection> connection,
-      Options opts = {});
+  explicit ArtifactRegistryClient(std::shared_ptr<ArtifactRegistryConnection> connection, Options opts = {});
   ~ArtifactRegistryClient();
 
   ///@{
@@ -91,12 +89,10 @@ class ArtifactRegistryClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(ArtifactRegistryClient const& a,
-                         ArtifactRegistryClient const& b) {
+  friend bool operator==(ArtifactRegistryClient const& a, ArtifactRegistryClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(ArtifactRegistryClient const& a,
-                         ArtifactRegistryClient const& b) {
+  friend bool operator!=(ArtifactRegistryClient const& a, ArtifactRegistryClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -173,9 +169,7 @@ class ArtifactRegistryClient {
   ///
   // clang-format on
   StreamRange<google::devtools::artifactregistry::v1::DockerImage>
-  ListDockerImages(
-      google::devtools::artifactregistry::v1::ListDockerImagesRequest request,
-      Options opts = {});
+  ListDockerImages(google::devtools::artifactregistry::v1::ListDockerImagesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -199,8 +193,8 @@ class ArtifactRegistryClient {
   /// [google.devtools.artifactregistry.v1.GetDockerImageRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/artifact.proto#L116}
   ///
   // clang-format on
-  StatusOr<google::devtools::artifactregistry::v1::DockerImage> GetDockerImage(
-      std::string const& name, Options opts = {});
+  StatusOr<google::devtools::artifactregistry::v1::DockerImage>
+  GetDockerImage(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -229,10 +223,8 @@ class ArtifactRegistryClient {
   /// [google.devtools.artifactregistry.v1.GetDockerImageRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/artifact.proto#L116}
   ///
   // clang-format on
-  StatusOr<google::devtools::artifactregistry::v1::DockerImage> GetDockerImage(
-      google::devtools::artifactregistry::v1::GetDockerImageRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::devtools::artifactregistry::v1::DockerImage>
+  GetDockerImage(google::devtools::artifactregistry::v1::GetDockerImageRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -306,9 +298,7 @@ class ArtifactRegistryClient {
   ///
   // clang-format on
   StreamRange<google::devtools::artifactregistry::v1::MavenArtifact>
-  ListMavenArtifacts(
-      google::devtools::artifactregistry::v1::ListMavenArtifactsRequest request,
-      Options opts = {});
+  ListMavenArtifacts(google::devtools::artifactregistry::v1::ListMavenArtifactsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -363,10 +353,7 @@ class ArtifactRegistryClient {
   ///
   // clang-format on
   StatusOr<google::devtools::artifactregistry::v1::MavenArtifact>
-  GetMavenArtifact(
-      google::devtools::artifactregistry::v1::GetMavenArtifactRequest const&
-          request,
-      Options opts = {});
+  GetMavenArtifact(google::devtools::artifactregistry::v1::GetMavenArtifactRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -440,9 +427,7 @@ class ArtifactRegistryClient {
   ///
   // clang-format on
   StreamRange<google::devtools::artifactregistry::v1::NpmPackage>
-  ListNpmPackages(
-      google::devtools::artifactregistry::v1::ListNpmPackagesRequest request,
-      Options opts = {});
+  ListNpmPackages(google::devtools::artifactregistry::v1::ListNpmPackagesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -466,8 +451,8 @@ class ArtifactRegistryClient {
   /// [google.devtools.artifactregistry.v1.NpmPackage]: @googleapis_reference_link{google/devtools/artifactregistry/v1/artifact.proto#L208}
   ///
   // clang-format on
-  StatusOr<google::devtools::artifactregistry::v1::NpmPackage> GetNpmPackage(
-      std::string const& name, Options opts = {});
+  StatusOr<google::devtools::artifactregistry::v1::NpmPackage>
+  GetNpmPackage(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -496,10 +481,8 @@ class ArtifactRegistryClient {
   /// [google.devtools.artifactregistry.v1.NpmPackage]: @googleapis_reference_link{google/devtools/artifactregistry/v1/artifact.proto#L208}
   ///
   // clang-format on
-  StatusOr<google::devtools::artifactregistry::v1::NpmPackage> GetNpmPackage(
-      google::devtools::artifactregistry::v1::GetNpmPackageRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::devtools::artifactregistry::v1::NpmPackage>
+  GetNpmPackage(google::devtools::artifactregistry::v1::GetNpmPackageRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -573,9 +556,7 @@ class ArtifactRegistryClient {
   ///
   // clang-format on
   StreamRange<google::devtools::artifactregistry::v1::PythonPackage>
-  ListPythonPackages(
-      google::devtools::artifactregistry::v1::ListPythonPackagesRequest request,
-      Options opts = {});
+  ListPythonPackages(google::devtools::artifactregistry::v1::ListPythonPackagesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -630,10 +611,7 @@ class ArtifactRegistryClient {
   ///
   // clang-format on
   StatusOr<google::devtools::artifactregistry::v1::PythonPackage>
-  GetPythonPackage(
-      google::devtools::artifactregistry::v1::GetPythonPackageRequest const&
-          request,
-      Options opts = {});
+  GetPythonPackage(google::devtools::artifactregistry::v1::GetPythonPackageRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -672,12 +650,8 @@ class ArtifactRegistryClient {
   /// [google.devtools.artifactregistry.v1.ImportAptArtifactsResponse]: @googleapis_reference_link{google/devtools/artifactregistry/v1/apt_artifact.proto#L105}
   ///
   // clang-format on
-  future<StatusOr<
-      google::devtools::artifactregistry::v1::ImportAptArtifactsResponse>>
-  ImportAptArtifacts(
-      google::devtools::artifactregistry::v1::ImportAptArtifactsRequest const&
-          request,
-      Options opts = {});
+  future<StatusOr<google::devtools::artifactregistry::v1::ImportAptArtifactsResponse>>
+  ImportAptArtifacts(google::devtools::artifactregistry::v1::ImportAptArtifactsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -690,11 +664,8 @@ class ArtifactRegistryClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> ImportAptArtifacts(
-      NoAwaitTag,
-      google::devtools::artifactregistry::v1::ImportAptArtifactsRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  ImportAptArtifacts(NoAwaitTag, google::devtools::artifactregistry::v1::ImportAptArtifactsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -705,10 +676,8 @@ class ArtifactRegistryClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<
-      google::devtools::artifactregistry::v1::ImportAptArtifactsResponse>>
-  ImportAptArtifacts(google::longrunning::Operation const& operation,
-                     Options opts = {});
+  future<StatusOr<google::devtools::artifactregistry::v1::ImportAptArtifactsResponse>>
+  ImportAptArtifacts(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -747,12 +716,8 @@ class ArtifactRegistryClient {
   /// [google.devtools.artifactregistry.v1.ImportYumArtifactsResponse]: @googleapis_reference_link{google/devtools/artifactregistry/v1/yum_artifact.proto#L97}
   ///
   // clang-format on
-  future<StatusOr<
-      google::devtools::artifactregistry::v1::ImportYumArtifactsResponse>>
-  ImportYumArtifacts(
-      google::devtools::artifactregistry::v1::ImportYumArtifactsRequest const&
-          request,
-      Options opts = {});
+  future<StatusOr<google::devtools::artifactregistry::v1::ImportYumArtifactsResponse>>
+  ImportYumArtifacts(google::devtools::artifactregistry::v1::ImportYumArtifactsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -765,11 +730,8 @@ class ArtifactRegistryClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> ImportYumArtifacts(
-      NoAwaitTag,
-      google::devtools::artifactregistry::v1::ImportYumArtifactsRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  ImportYumArtifacts(NoAwaitTag, google::devtools::artifactregistry::v1::ImportYumArtifactsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -780,10 +742,8 @@ class ArtifactRegistryClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<
-      google::devtools::artifactregistry::v1::ImportYumArtifactsResponse>>
-  ImportYumArtifacts(google::longrunning::Operation const& operation,
-                     Options opts = {});
+  future<StatusOr<google::devtools::artifactregistry::v1::ImportYumArtifactsResponse>>
+  ImportYumArtifacts(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -857,9 +817,7 @@ class ArtifactRegistryClient {
   ///
   // clang-format on
   StreamRange<google::devtools::artifactregistry::v1::Repository>
-  ListRepositories(
-      google::devtools::artifactregistry::v1::ListRepositoriesRequest request,
-      Options opts = {});
+  ListRepositories(google::devtools::artifactregistry::v1::ListRepositoriesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -883,8 +841,8 @@ class ArtifactRegistryClient {
   /// [google.devtools.artifactregistry.v1.Repository]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L426}
   ///
   // clang-format on
-  StatusOr<google::devtools::artifactregistry::v1::Repository> GetRepository(
-      std::string const& name, Options opts = {});
+  StatusOr<google::devtools::artifactregistry::v1::Repository>
+  GetRepository(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -913,10 +871,8 @@ class ArtifactRegistryClient {
   /// [google.devtools.artifactregistry.v1.Repository]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L426}
   ///
   // clang-format on
-  StatusOr<google::devtools::artifactregistry::v1::Repository> GetRepository(
-      google::devtools::artifactregistry::v1::GetRepositoryRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::devtools::artifactregistry::v1::Repository>
+  GetRepository(google::devtools::artifactregistry::v1::GetRepositoryRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -952,10 +908,7 @@ class ArtifactRegistryClient {
   ///
   // clang-format on
   future<StatusOr<google::devtools::artifactregistry::v1::Repository>>
-  CreateRepository(
-      std::string const& parent,
-      google::devtools::artifactregistry::v1::Repository const& repository,
-      std::string const& repository_id, Options opts = {});
+  CreateRepository(std::string const& parent, google::devtools::artifactregistry::v1::Repository const& repository, std::string const& repository_id, Options opts = {});
 
   // clang-format off
   ///
@@ -968,10 +921,8 @@ class ArtifactRegistryClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateRepository(
-      NoAwaitTag, std::string const& parent,
-      google::devtools::artifactregistry::v1::Repository const& repository,
-      std::string const& repository_id, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateRepository(NoAwaitTag, std::string const& parent, google::devtools::artifactregistry::v1::Repository const& repository, std::string const& repository_id, Options opts = {});
 
   // clang-format off
   ///
@@ -1009,10 +960,7 @@ class ArtifactRegistryClient {
   ///
   // clang-format on
   future<StatusOr<google::devtools::artifactregistry::v1::Repository>>
-  CreateRepository(
-      google::devtools::artifactregistry::v1::CreateRepositoryRequest const&
-          request,
-      Options opts = {});
+  CreateRepository(google::devtools::artifactregistry::v1::CreateRepositoryRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1025,11 +973,8 @@ class ArtifactRegistryClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateRepository(
-      NoAwaitTag,
-      google::devtools::artifactregistry::v1::CreateRepositoryRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateRepository(NoAwaitTag, google::devtools::artifactregistry::v1::CreateRepositoryRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1041,8 +986,7 @@ class ArtifactRegistryClient {
   ///
   // clang-format on
   future<StatusOr<google::devtools::artifactregistry::v1::Repository>>
-  CreateRepository(google::longrunning::Operation const& operation,
-                   Options opts = {});
+  CreateRepository(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1069,9 +1013,8 @@ class ArtifactRegistryClient {
   /// [google.devtools.artifactregistry.v1.UpdateRepositoryRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L742}
   ///
   // clang-format on
-  StatusOr<google::devtools::artifactregistry::v1::Repository> UpdateRepository(
-      google::devtools::artifactregistry::v1::Repository const& repository,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::devtools::artifactregistry::v1::Repository>
+  UpdateRepository(google::devtools::artifactregistry::v1::Repository const& repository, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -1100,10 +1043,8 @@ class ArtifactRegistryClient {
   /// [google.devtools.artifactregistry.v1.UpdateRepositoryRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L742}
   ///
   // clang-format on
-  StatusOr<google::devtools::artifactregistry::v1::Repository> UpdateRepository(
-      google::devtools::artifactregistry::v1::UpdateRepositoryRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::devtools::artifactregistry::v1::Repository>
+  UpdateRepository(google::devtools::artifactregistry::v1::UpdateRepositoryRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1150,8 +1091,8 @@ class ArtifactRegistryClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteRepository(
-      NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteRepository(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1190,10 +1131,7 @@ class ArtifactRegistryClient {
   ///
   // clang-format on
   future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
-  DeleteRepository(
-      google::devtools::artifactregistry::v1::DeleteRepositoryRequest const&
-          request,
-      Options opts = {});
+  DeleteRepository(google::devtools::artifactregistry::v1::DeleteRepositoryRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1206,11 +1144,8 @@ class ArtifactRegistryClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteRepository(
-      NoAwaitTag,
-      google::devtools::artifactregistry::v1::DeleteRepositoryRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteRepository(NoAwaitTag, google::devtools::artifactregistry::v1::DeleteRepositoryRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1222,8 +1157,7 @@ class ArtifactRegistryClient {
   ///
   // clang-format on
   future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
-  DeleteRepository(google::longrunning::Operation const& operation,
-                   Options opts = {});
+  DeleteRepository(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1256,8 +1190,8 @@ class ArtifactRegistryClient {
   /// [google.devtools.artifactregistry.v1.Package]: @googleapis_reference_link{google/devtools/artifactregistry/v1/package.proto#L33}
   ///
   // clang-format on
-  StreamRange<google::devtools::artifactregistry::v1::Package> ListPackages(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::devtools::artifactregistry::v1::Package>
+  ListPackages(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -1295,9 +1229,8 @@ class ArtifactRegistryClient {
   /// [google.devtools.artifactregistry.v1.Package]: @googleapis_reference_link{google/devtools/artifactregistry/v1/package.proto#L33}
   ///
   // clang-format on
-  StreamRange<google::devtools::artifactregistry::v1::Package> ListPackages(
-      google::devtools::artifactregistry::v1::ListPackagesRequest request,
-      Options opts = {});
+  StreamRange<google::devtools::artifactregistry::v1::Package>
+  ListPackages(google::devtools::artifactregistry::v1::ListPackagesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1321,8 +1254,8 @@ class ArtifactRegistryClient {
   /// [google.devtools.artifactregistry.v1.Package]: @googleapis_reference_link{google/devtools/artifactregistry/v1/package.proto#L33}
   ///
   // clang-format on
-  StatusOr<google::devtools::artifactregistry::v1::Package> GetPackage(
-      std::string const& name, Options opts = {});
+  StatusOr<google::devtools::artifactregistry::v1::Package>
+  GetPackage(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1351,9 +1284,8 @@ class ArtifactRegistryClient {
   /// [google.devtools.artifactregistry.v1.Package]: @googleapis_reference_link{google/devtools/artifactregistry/v1/package.proto#L33}
   ///
   // clang-format on
-  StatusOr<google::devtools::artifactregistry::v1::Package> GetPackage(
-      google::devtools::artifactregistry::v1::GetPackageRequest const& request,
-      Options opts = {});
+  StatusOr<google::devtools::artifactregistry::v1::Package>
+  GetPackage(google::devtools::artifactregistry::v1::GetPackageRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1399,8 +1331,8 @@ class ArtifactRegistryClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeletePackage(
-      NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeletePackage(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1438,10 +1370,7 @@ class ArtifactRegistryClient {
   ///
   // clang-format on
   future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
-  DeletePackage(
-      google::devtools::artifactregistry::v1::DeletePackageRequest const&
-          request,
-      Options opts = {});
+  DeletePackage(google::devtools::artifactregistry::v1::DeletePackageRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1454,11 +1383,8 @@ class ArtifactRegistryClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeletePackage(
-      NoAwaitTag,
-      google::devtools::artifactregistry::v1::DeletePackageRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeletePackage(NoAwaitTag, google::devtools::artifactregistry::v1::DeletePackageRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1470,8 +1396,7 @@ class ArtifactRegistryClient {
   ///
   // clang-format on
   future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
-  DeletePackage(google::longrunning::Operation const& operation,
-                Options opts = {});
+  DeletePackage(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1504,8 +1429,8 @@ class ArtifactRegistryClient {
   /// [google.devtools.artifactregistry.v1.Version]: @googleapis_reference_link{google/devtools/artifactregistry/v1/version.proto#L51}
   ///
   // clang-format on
-  StreamRange<google::devtools::artifactregistry::v1::Version> ListVersions(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::devtools::artifactregistry::v1::Version>
+  ListVersions(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -1543,9 +1468,8 @@ class ArtifactRegistryClient {
   /// [google.devtools.artifactregistry.v1.Version]: @googleapis_reference_link{google/devtools/artifactregistry/v1/version.proto#L51}
   ///
   // clang-format on
-  StreamRange<google::devtools::artifactregistry::v1::Version> ListVersions(
-      google::devtools::artifactregistry::v1::ListVersionsRequest request,
-      Options opts = {});
+  StreamRange<google::devtools::artifactregistry::v1::Version>
+  ListVersions(google::devtools::artifactregistry::v1::ListVersionsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1569,8 +1493,8 @@ class ArtifactRegistryClient {
   /// [google.devtools.artifactregistry.v1.Version]: @googleapis_reference_link{google/devtools/artifactregistry/v1/version.proto#L51}
   ///
   // clang-format on
-  StatusOr<google::devtools::artifactregistry::v1::Version> GetVersion(
-      std::string const& name, Options opts = {});
+  StatusOr<google::devtools::artifactregistry::v1::Version>
+  GetVersion(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1599,9 +1523,8 @@ class ArtifactRegistryClient {
   /// [google.devtools.artifactregistry.v1.Version]: @googleapis_reference_link{google/devtools/artifactregistry/v1/version.proto#L51}
   ///
   // clang-format on
-  StatusOr<google::devtools::artifactregistry::v1::Version> GetVersion(
-      google::devtools::artifactregistry::v1::GetVersionRequest const& request,
-      Options opts = {});
+  StatusOr<google::devtools::artifactregistry::v1::Version>
+  GetVersion(google::devtools::artifactregistry::v1::GetVersionRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1647,8 +1570,8 @@ class ArtifactRegistryClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteVersion(
-      NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteVersion(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1686,10 +1609,7 @@ class ArtifactRegistryClient {
   ///
   // clang-format on
   future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
-  DeleteVersion(
-      google::devtools::artifactregistry::v1::DeleteVersionRequest const&
-          request,
-      Options opts = {});
+  DeleteVersion(google::devtools::artifactregistry::v1::DeleteVersionRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1702,11 +1622,8 @@ class ArtifactRegistryClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteVersion(
-      NoAwaitTag,
-      google::devtools::artifactregistry::v1::DeleteVersionRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteVersion(NoAwaitTag, google::devtools::artifactregistry::v1::DeleteVersionRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1718,8 +1635,7 @@ class ArtifactRegistryClient {
   ///
   // clang-format on
   future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
-  DeleteVersion(google::longrunning::Operation const& operation,
-                Options opts = {});
+  DeleteVersion(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1754,10 +1670,8 @@ class ArtifactRegistryClient {
   /// [google.devtools.artifactregistry.v1.BatchDeleteVersionsRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/version.proto#L183}
   ///
   // clang-format on
-  future<StatusOr<
-      google::devtools::artifactregistry::v1::BatchDeleteVersionsMetadata>>
-  BatchDeleteVersions(std::string const& parent,
-                      std::vector<std::string> const& names, Options opts = {});
+  future<StatusOr<google::devtools::artifactregistry::v1::BatchDeleteVersionsMetadata>>
+  BatchDeleteVersions(std::string const& parent, std::vector<std::string> const& names, Options opts = {});
 
   // clang-format off
   ///
@@ -1770,9 +1684,8 @@ class ArtifactRegistryClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> BatchDeleteVersions(
-      NoAwaitTag, std::string const& parent,
-      std::vector<std::string> const& names, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  BatchDeleteVersions(NoAwaitTag, std::string const& parent, std::vector<std::string> const& names, Options opts = {});
 
   // clang-format off
   ///
@@ -1809,12 +1722,8 @@ class ArtifactRegistryClient {
   /// [google.devtools.artifactregistry.v1.BatchDeleteVersionsRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/version.proto#L183}
   ///
   // clang-format on
-  future<StatusOr<
-      google::devtools::artifactregistry::v1::BatchDeleteVersionsMetadata>>
-  BatchDeleteVersions(
-      google::devtools::artifactregistry::v1::BatchDeleteVersionsRequest const&
-          request,
-      Options opts = {});
+  future<StatusOr<google::devtools::artifactregistry::v1::BatchDeleteVersionsMetadata>>
+  BatchDeleteVersions(google::devtools::artifactregistry::v1::BatchDeleteVersionsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1827,11 +1736,8 @@ class ArtifactRegistryClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> BatchDeleteVersions(
-      NoAwaitTag,
-      google::devtools::artifactregistry::v1::BatchDeleteVersionsRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  BatchDeleteVersions(NoAwaitTag, google::devtools::artifactregistry::v1::BatchDeleteVersionsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1842,10 +1748,8 @@ class ArtifactRegistryClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<
-      google::devtools::artifactregistry::v1::BatchDeleteVersionsMetadata>>
-  BatchDeleteVersions(google::longrunning::Operation const& operation,
-                      Options opts = {});
+  future<StatusOr<google::devtools::artifactregistry::v1::BatchDeleteVersionsMetadata>>
+  BatchDeleteVersions(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1872,9 +1776,8 @@ class ArtifactRegistryClient {
   /// [google.devtools.artifactregistry.v1.Version]: @googleapis_reference_link{google/devtools/artifactregistry/v1/version.proto#L51}
   ///
   // clang-format on
-  StatusOr<google::devtools::artifactregistry::v1::Version> UpdateVersion(
-      google::devtools::artifactregistry::v1::Version const& version,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::devtools::artifactregistry::v1::Version>
+  UpdateVersion(google::devtools::artifactregistry::v1::Version const& version, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -1903,10 +1806,8 @@ class ArtifactRegistryClient {
   /// [google.devtools.artifactregistry.v1.Version]: @googleapis_reference_link{google/devtools/artifactregistry/v1/version.proto#L51}
   ///
   // clang-format on
-  StatusOr<google::devtools::artifactregistry::v1::Version> UpdateVersion(
-      google::devtools::artifactregistry::v1::UpdateVersionRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::devtools::artifactregistry::v1::Version>
+  UpdateVersion(google::devtools::artifactregistry::v1::UpdateVersionRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1940,8 +1841,8 @@ class ArtifactRegistryClient {
   /// [google.devtools.artifactregistry.v1.ListFilesRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/file.proto#L92}
   ///
   // clang-format on
-  StreamRange<google::devtools::artifactregistry::v1::File> ListFiles(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::devtools::artifactregistry::v1::File>
+  ListFiles(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -1979,9 +1880,8 @@ class ArtifactRegistryClient {
   /// [google.devtools.artifactregistry.v1.ListFilesRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/file.proto#L92}
   ///
   // clang-format on
-  StreamRange<google::devtools::artifactregistry::v1::File> ListFiles(
-      google::devtools::artifactregistry::v1::ListFilesRequest request,
-      Options opts = {});
+  StreamRange<google::devtools::artifactregistry::v1::File>
+  ListFiles(google::devtools::artifactregistry::v1::ListFilesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -2005,8 +1905,8 @@ class ArtifactRegistryClient {
   /// [google.devtools.artifactregistry.v1.GetFileRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/file.proto#L175}
   ///
   // clang-format on
-  StatusOr<google::devtools::artifactregistry::v1::File> GetFile(
-      std::string const& name, Options opts = {});
+  StatusOr<google::devtools::artifactregistry::v1::File>
+  GetFile(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2035,9 +1935,8 @@ class ArtifactRegistryClient {
   /// [google.devtools.artifactregistry.v1.GetFileRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/file.proto#L175}
   ///
   // clang-format on
-  StatusOr<google::devtools::artifactregistry::v1::File> GetFile(
-      google::devtools::artifactregistry::v1::GetFileRequest const& request,
-      Options opts = {});
+  StatusOr<google::devtools::artifactregistry::v1::File>
+  GetFile(google::devtools::artifactregistry::v1::GetFileRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2084,9 +1983,8 @@ class ArtifactRegistryClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteFile(NoAwaitTag,
-                                                      std::string const& name,
-                                                      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteFile(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2125,9 +2023,7 @@ class ArtifactRegistryClient {
   ///
   // clang-format on
   future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
-  DeleteFile(
-      google::devtools::artifactregistry::v1::DeleteFileRequest const& request,
-      Options opts = {});
+  DeleteFile(google::devtools::artifactregistry::v1::DeleteFileRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2140,10 +2036,8 @@ class ArtifactRegistryClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteFile(
-      NoAwaitTag,
-      google::devtools::artifactregistry::v1::DeleteFileRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteFile(NoAwaitTag, google::devtools::artifactregistry::v1::DeleteFileRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2155,8 +2049,7 @@ class ArtifactRegistryClient {
   ///
   // clang-format on
   future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
-  DeleteFile(google::longrunning::Operation const& operation,
-             Options opts = {});
+  DeleteFile(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -2183,9 +2076,8 @@ class ArtifactRegistryClient {
   /// [google.devtools.artifactregistry.v1.UpdateFileRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/file.proto#L197}
   ///
   // clang-format on
-  StatusOr<google::devtools::artifactregistry::v1::File> UpdateFile(
-      google::devtools::artifactregistry::v1::File const& file,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::devtools::artifactregistry::v1::File>
+  UpdateFile(google::devtools::artifactregistry::v1::File const& file, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -2214,9 +2106,8 @@ class ArtifactRegistryClient {
   /// [google.devtools.artifactregistry.v1.UpdateFileRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/file.proto#L197}
   ///
   // clang-format on
-  StatusOr<google::devtools::artifactregistry::v1::File> UpdateFile(
-      google::devtools::artifactregistry::v1::UpdateFileRequest const& request,
-      Options opts = {});
+  StatusOr<google::devtools::artifactregistry::v1::File>
+  UpdateFile(google::devtools::artifactregistry::v1::UpdateFileRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2251,8 +2142,8 @@ class ArtifactRegistryClient {
   /// [google.devtools.artifactregistry.v1.Tag]: @googleapis_reference_link{google/devtools/artifactregistry/v1/tag.proto#L32}
   ///
   // clang-format on
-  StreamRange<google::devtools::artifactregistry::v1::Tag> ListTags(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::devtools::artifactregistry::v1::Tag>
+  ListTags(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -2290,9 +2181,8 @@ class ArtifactRegistryClient {
   /// [google.devtools.artifactregistry.v1.Tag]: @googleapis_reference_link{google/devtools/artifactregistry/v1/tag.proto#L32}
   ///
   // clang-format on
-  StreamRange<google::devtools::artifactregistry::v1::Tag> ListTags(
-      google::devtools::artifactregistry::v1::ListTagsRequest request,
-      Options opts = {});
+  StreamRange<google::devtools::artifactregistry::v1::Tag>
+  ListTags(google::devtools::artifactregistry::v1::ListTagsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -2316,8 +2206,8 @@ class ArtifactRegistryClient {
   /// [google.devtools.artifactregistry.v1.Tag]: @googleapis_reference_link{google/devtools/artifactregistry/v1/tag.proto#L32}
   ///
   // clang-format on
-  StatusOr<google::devtools::artifactregistry::v1::Tag> GetTag(
-      std::string const& name, Options opts = {});
+  StatusOr<google::devtools::artifactregistry::v1::Tag>
+  GetTag(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2346,9 +2236,8 @@ class ArtifactRegistryClient {
   /// [google.devtools.artifactregistry.v1.Tag]: @googleapis_reference_link{google/devtools/artifactregistry/v1/tag.proto#L32}
   ///
   // clang-format on
-  StatusOr<google::devtools::artifactregistry::v1::Tag> GetTag(
-      google::devtools::artifactregistry::v1::GetTagRequest const& request,
-      Options opts = {});
+  StatusOr<google::devtools::artifactregistry::v1::Tag>
+  GetTag(google::devtools::artifactregistry::v1::GetTagRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2374,10 +2263,8 @@ class ArtifactRegistryClient {
   /// [google.devtools.artifactregistry.v1.Tag]: @googleapis_reference_link{google/devtools/artifactregistry/v1/tag.proto#L32}
   ///
   // clang-format on
-  StatusOr<google::devtools::artifactregistry::v1::Tag> CreateTag(
-      std::string const& parent,
-      google::devtools::artifactregistry::v1::Tag const& tag,
-      std::string const& tag_id, Options opts = {});
+  StatusOr<google::devtools::artifactregistry::v1::Tag>
+  CreateTag(std::string const& parent, google::devtools::artifactregistry::v1::Tag const& tag, std::string const& tag_id, Options opts = {});
 
   // clang-format off
   ///
@@ -2406,9 +2293,8 @@ class ArtifactRegistryClient {
   /// [google.devtools.artifactregistry.v1.Tag]: @googleapis_reference_link{google/devtools/artifactregistry/v1/tag.proto#L32}
   ///
   // clang-format on
-  StatusOr<google::devtools::artifactregistry::v1::Tag> CreateTag(
-      google::devtools::artifactregistry::v1::CreateTagRequest const& request,
-      Options opts = {});
+  StatusOr<google::devtools::artifactregistry::v1::Tag>
+  CreateTag(google::devtools::artifactregistry::v1::CreateTagRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2435,9 +2321,8 @@ class ArtifactRegistryClient {
   /// [google.devtools.artifactregistry.v1.UpdateTagRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/tag.proto#L124}
   ///
   // clang-format on
-  StatusOr<google::devtools::artifactregistry::v1::Tag> UpdateTag(
-      google::devtools::artifactregistry::v1::Tag const& tag,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::devtools::artifactregistry::v1::Tag>
+  UpdateTag(google::devtools::artifactregistry::v1::Tag const& tag, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -2466,9 +2351,8 @@ class ArtifactRegistryClient {
   /// [google.devtools.artifactregistry.v1.UpdateTagRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/tag.proto#L124}
   ///
   // clang-format on
-  StatusOr<google::devtools::artifactregistry::v1::Tag> UpdateTag(
-      google::devtools::artifactregistry::v1::UpdateTagRequest const& request,
-      Options opts = {});
+  StatusOr<google::devtools::artifactregistry::v1::Tag>
+  UpdateTag(google::devtools::artifactregistry::v1::UpdateTagRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2489,7 +2373,8 @@ class ArtifactRegistryClient {
   /// [google.devtools.artifactregistry.v1.DeleteTagRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/tag.proto#L135}
   ///
   // clang-format on
-  Status DeleteTag(std::string const& name, Options opts = {});
+  Status
+  DeleteTag(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2515,9 +2400,8 @@ class ArtifactRegistryClient {
   /// [google.devtools.artifactregistry.v1.DeleteTagRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/tag.proto#L135}
   ///
   // clang-format on
-  Status DeleteTag(
-      google::devtools::artifactregistry::v1::DeleteTagRequest const& request,
-      Options opts = {});
+  Status
+  DeleteTag(google::devtools::artifactregistry::v1::DeleteTagRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2543,10 +2427,8 @@ class ArtifactRegistryClient {
   /// [google.devtools.artifactregistry.v1.Rule]: @googleapis_reference_link{google/devtools/artifactregistry/v1/rule.proto#L35}
   ///
   // clang-format on
-  StatusOr<google::devtools::artifactregistry::v1::Rule> CreateRule(
-      std::string const& parent,
-      google::devtools::artifactregistry::v1::Rule const& rule,
-      std::string const& rule_id, Options opts = {});
+  StatusOr<google::devtools::artifactregistry::v1::Rule>
+  CreateRule(std::string const& parent, google::devtools::artifactregistry::v1::Rule const& rule, std::string const& rule_id, Options opts = {});
 
   // clang-format off
   ///
@@ -2575,9 +2457,8 @@ class ArtifactRegistryClient {
   /// [google.devtools.artifactregistry.v1.Rule]: @googleapis_reference_link{google/devtools/artifactregistry/v1/rule.proto#L35}
   ///
   // clang-format on
-  StatusOr<google::devtools::artifactregistry::v1::Rule> CreateRule(
-      google::devtools::artifactregistry::v1::CreateRuleRequest const& request,
-      Options opts = {});
+  StatusOr<google::devtools::artifactregistry::v1::Rule>
+  CreateRule(google::devtools::artifactregistry::v1::CreateRuleRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2612,8 +2493,8 @@ class ArtifactRegistryClient {
   /// [google.devtools.artifactregistry.v1.Rule]: @googleapis_reference_link{google/devtools/artifactregistry/v1/rule.proto#L35}
   ///
   // clang-format on
-  StreamRange<google::devtools::artifactregistry::v1::Rule> ListRules(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::devtools::artifactregistry::v1::Rule>
+  ListRules(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -2651,9 +2532,8 @@ class ArtifactRegistryClient {
   /// [google.devtools.artifactregistry.v1.Rule]: @googleapis_reference_link{google/devtools/artifactregistry/v1/rule.proto#L35}
   ///
   // clang-format on
-  StreamRange<google::devtools::artifactregistry::v1::Rule> ListRules(
-      google::devtools::artifactregistry::v1::ListRulesRequest request,
-      Options opts = {});
+  StreamRange<google::devtools::artifactregistry::v1::Rule>
+  ListRules(google::devtools::artifactregistry::v1::ListRulesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -2677,8 +2557,8 @@ class ArtifactRegistryClient {
   /// [google.devtools.artifactregistry.v1.Rule]: @googleapis_reference_link{google/devtools/artifactregistry/v1/rule.proto#L35}
   ///
   // clang-format on
-  StatusOr<google::devtools::artifactregistry::v1::Rule> GetRule(
-      std::string const& name, Options opts = {});
+  StatusOr<google::devtools::artifactregistry::v1::Rule>
+  GetRule(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2707,9 +2587,8 @@ class ArtifactRegistryClient {
   /// [google.devtools.artifactregistry.v1.Rule]: @googleapis_reference_link{google/devtools/artifactregistry/v1/rule.proto#L35}
   ///
   // clang-format on
-  StatusOr<google::devtools::artifactregistry::v1::Rule> GetRule(
-      google::devtools::artifactregistry::v1::GetRuleRequest const& request,
-      Options opts = {});
+  StatusOr<google::devtools::artifactregistry::v1::Rule>
+  GetRule(google::devtools::artifactregistry::v1::GetRuleRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2736,9 +2615,8 @@ class ArtifactRegistryClient {
   /// [google.devtools.artifactregistry.v1.UpdateRuleRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/rule.proto#L138}
   ///
   // clang-format on
-  StatusOr<google::devtools::artifactregistry::v1::Rule> UpdateRule(
-      google::devtools::artifactregistry::v1::Rule const& rule,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::devtools::artifactregistry::v1::Rule>
+  UpdateRule(google::devtools::artifactregistry::v1::Rule const& rule, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -2767,9 +2645,8 @@ class ArtifactRegistryClient {
   /// [google.devtools.artifactregistry.v1.UpdateRuleRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/rule.proto#L138}
   ///
   // clang-format on
-  StatusOr<google::devtools::artifactregistry::v1::Rule> UpdateRule(
-      google::devtools::artifactregistry::v1::UpdateRuleRequest const& request,
-      Options opts = {});
+  StatusOr<google::devtools::artifactregistry::v1::Rule>
+  UpdateRule(google::devtools::artifactregistry::v1::UpdateRuleRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2790,7 +2667,8 @@ class ArtifactRegistryClient {
   /// [google.devtools.artifactregistry.v1.DeleteRuleRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/rule.proto#L149}
   ///
   // clang-format on
-  Status DeleteRule(std::string const& name, Options opts = {});
+  Status
+  DeleteRule(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2816,9 +2694,8 @@ class ArtifactRegistryClient {
   /// [google.devtools.artifactregistry.v1.DeleteRuleRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/rule.proto#L149}
   ///
   // clang-format on
-  Status DeleteRule(
-      google::devtools::artifactregistry::v1::DeleteRuleRequest const& request,
-      Options opts = {});
+  Status
+  DeleteRule(google::devtools::artifactregistry::v1::DeleteRuleRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2847,8 +2724,8 @@ class ArtifactRegistryClient {
   /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L100}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2877,8 +2754,8 @@ class ArtifactRegistryClient {
   /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2907,9 +2784,8 @@ class ArtifactRegistryClient {
   /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L153}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request,
-      Options opts = {});
+  StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2964,10 +2840,7 @@ class ArtifactRegistryClient {
   ///
   // clang-format on
   StatusOr<google::devtools::artifactregistry::v1::ProjectSettings>
-  GetProjectSettings(
-      google::devtools::artifactregistry::v1::GetProjectSettingsRequest const&
-          request,
-      Options opts = {});
+  GetProjectSettings(google::devtools::artifactregistry::v1::GetProjectSettingsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2993,10 +2866,7 @@ class ArtifactRegistryClient {
   ///
   // clang-format on
   StatusOr<google::devtools::artifactregistry::v1::ProjectSettings>
-  UpdateProjectSettings(
-      google::devtools::artifactregistry::v1::ProjectSettings const&
-          project_settings,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  UpdateProjectSettings(google::devtools::artifactregistry::v1::ProjectSettings const& project_settings, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -3026,9 +2896,7 @@ class ArtifactRegistryClient {
   ///
   // clang-format on
   StatusOr<google::devtools::artifactregistry::v1::ProjectSettings>
-  UpdateProjectSettings(google::devtools::artifactregistry::v1::
-                            UpdateProjectSettingsRequest const& request,
-                        Options opts = {});
+  UpdateProjectSettings(google::devtools::artifactregistry::v1::UpdateProjectSettingsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -3052,8 +2920,8 @@ class ArtifactRegistryClient {
   /// [google.devtools.artifactregistry.v1.VPCSCConfig]: @googleapis_reference_link{google/devtools/artifactregistry/v1/vpcsc_config.proto#L32}
   ///
   // clang-format on
-  StatusOr<google::devtools::artifactregistry::v1::VPCSCConfig> GetVPCSCConfig(
-      std::string const& name, Options opts = {});
+  StatusOr<google::devtools::artifactregistry::v1::VPCSCConfig>
+  GetVPCSCConfig(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -3082,10 +2950,8 @@ class ArtifactRegistryClient {
   /// [google.devtools.artifactregistry.v1.VPCSCConfig]: @googleapis_reference_link{google/devtools/artifactregistry/v1/vpcsc_config.proto#L32}
   ///
   // clang-format on
-  StatusOr<google::devtools::artifactregistry::v1::VPCSCConfig> GetVPCSCConfig(
-      google::devtools::artifactregistry::v1::GetVPCSCConfigRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::devtools::artifactregistry::v1::VPCSCConfig>
+  GetVPCSCConfig(google::devtools::artifactregistry::v1::GetVPCSCConfigRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -3111,9 +2977,7 @@ class ArtifactRegistryClient {
   ///
   // clang-format on
   StatusOr<google::devtools::artifactregistry::v1::VPCSCConfig>
-  UpdateVPCSCConfig(
-      google::devtools::artifactregistry::v1::VPCSCConfig const& vpcsc_config,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  UpdateVPCSCConfig(google::devtools::artifactregistry::v1::VPCSCConfig const& vpcsc_config, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -3143,10 +3007,7 @@ class ArtifactRegistryClient {
   ///
   // clang-format on
   StatusOr<google::devtools::artifactregistry::v1::VPCSCConfig>
-  UpdateVPCSCConfig(
-      google::devtools::artifactregistry::v1::UpdateVPCSCConfigRequest const&
-          request,
-      Options opts = {});
+  UpdateVPCSCConfig(google::devtools::artifactregistry::v1::UpdateVPCSCConfigRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -3173,9 +3034,8 @@ class ArtifactRegistryClient {
   /// [google.devtools.artifactregistry.v1.UpdatePackageRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/package.proto#L158}
   ///
   // clang-format on
-  StatusOr<google::devtools::artifactregistry::v1::Package> UpdatePackage(
-      google::devtools::artifactregistry::v1::Package const& package,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::devtools::artifactregistry::v1::Package>
+  UpdatePackage(google::devtools::artifactregistry::v1::Package const& package, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -3204,10 +3064,8 @@ class ArtifactRegistryClient {
   /// [google.devtools.artifactregistry.v1.UpdatePackageRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/package.proto#L158}
   ///
   // clang-format on
-  StatusOr<google::devtools::artifactregistry::v1::Package> UpdatePackage(
-      google::devtools::artifactregistry::v1::UpdatePackageRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::devtools::artifactregistry::v1::Package>
+  UpdatePackage(google::devtools::artifactregistry::v1::UpdatePackageRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -3280,9 +3138,7 @@ class ArtifactRegistryClient {
   ///
   // clang-format on
   StreamRange<google::devtools::artifactregistry::v1::Attachment>
-  ListAttachments(
-      google::devtools::artifactregistry::v1::ListAttachmentsRequest request,
-      Options opts = {});
+  ListAttachments(google::devtools::artifactregistry::v1::ListAttachmentsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -3306,8 +3162,8 @@ class ArtifactRegistryClient {
   /// [google.devtools.artifactregistry.v1.GetAttachmentRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/attachment.proto#L123}
   ///
   // clang-format on
-  StatusOr<google::devtools::artifactregistry::v1::Attachment> GetAttachment(
-      std::string const& name, Options opts = {});
+  StatusOr<google::devtools::artifactregistry::v1::Attachment>
+  GetAttachment(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -3336,10 +3192,8 @@ class ArtifactRegistryClient {
   /// [google.devtools.artifactregistry.v1.GetAttachmentRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/attachment.proto#L123}
   ///
   // clang-format on
-  StatusOr<google::devtools::artifactregistry::v1::Attachment> GetAttachment(
-      google::devtools::artifactregistry::v1::GetAttachmentRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::devtools::artifactregistry::v1::Attachment>
+  GetAttachment(google::devtools::artifactregistry::v1::GetAttachmentRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -3375,10 +3229,7 @@ class ArtifactRegistryClient {
   ///
   // clang-format on
   future<StatusOr<google::devtools::artifactregistry::v1::Attachment>>
-  CreateAttachment(
-      std::string const& parent,
-      google::devtools::artifactregistry::v1::Attachment const& attachment,
-      std::string const& attachment_id, Options opts = {});
+  CreateAttachment(std::string const& parent, google::devtools::artifactregistry::v1::Attachment const& attachment, std::string const& attachment_id, Options opts = {});
 
   // clang-format off
   ///
@@ -3391,10 +3242,8 @@ class ArtifactRegistryClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateAttachment(
-      NoAwaitTag, std::string const& parent,
-      google::devtools::artifactregistry::v1::Attachment const& attachment,
-      std::string const& attachment_id, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateAttachment(NoAwaitTag, std::string const& parent, google::devtools::artifactregistry::v1::Attachment const& attachment, std::string const& attachment_id, Options opts = {});
 
   // clang-format off
   ///
@@ -3432,10 +3281,7 @@ class ArtifactRegistryClient {
   ///
   // clang-format on
   future<StatusOr<google::devtools::artifactregistry::v1::Attachment>>
-  CreateAttachment(
-      google::devtools::artifactregistry::v1::CreateAttachmentRequest const&
-          request,
-      Options opts = {});
+  CreateAttachment(google::devtools::artifactregistry::v1::CreateAttachmentRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -3448,11 +3294,8 @@ class ArtifactRegistryClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateAttachment(
-      NoAwaitTag,
-      google::devtools::artifactregistry::v1::CreateAttachmentRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateAttachment(NoAwaitTag, google::devtools::artifactregistry::v1::CreateAttachmentRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -3464,8 +3307,7 @@ class ArtifactRegistryClient {
   ///
   // clang-format on
   future<StatusOr<google::devtools::artifactregistry::v1::Attachment>>
-  CreateAttachment(google::longrunning::Operation const& operation,
-                   Options opts = {});
+  CreateAttachment(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -3512,8 +3354,8 @@ class ArtifactRegistryClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteAttachment(
-      NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteAttachment(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -3552,10 +3394,7 @@ class ArtifactRegistryClient {
   ///
   // clang-format on
   future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
-  DeleteAttachment(
-      google::devtools::artifactregistry::v1::DeleteAttachmentRequest const&
-          request,
-      Options opts = {});
+  DeleteAttachment(google::devtools::artifactregistry::v1::DeleteAttachmentRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -3568,11 +3407,8 @@ class ArtifactRegistryClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteAttachment(
-      NoAwaitTag,
-      google::devtools::artifactregistry::v1::DeleteAttachmentRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteAttachment(NoAwaitTag, google::devtools::artifactregistry::v1::DeleteAttachmentRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -3584,8 +3420,7 @@ class ArtifactRegistryClient {
   ///
   // clang-format on
   future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
-  DeleteAttachment(google::longrunning::Operation const& operation,
-                   Options opts = {});
+  DeleteAttachment(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -3623,8 +3458,8 @@ class ArtifactRegistryClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request, Options opts = {});
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -3653,9 +3488,8 @@ class ArtifactRegistryClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -3681,8 +3515,8 @@ class ArtifactRegistryClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -3713,9 +3547,8 @@ class ArtifactRegistryClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<ArtifactRegistryConnection> connection_;

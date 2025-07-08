@@ -17,10 +17,10 @@
 // source: google/cloud/security/publicca/v1/service.proto
 
 #include "google/cloud/publicca/v1/internal/public_certificate_authority_option_defaults.h"
-#include "google/cloud/publicca/v1/public_certificate_authority_connection.h"
-#include "google/cloud/publicca/v1/public_certificate_authority_options.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
+#include "google/cloud/publicca/v1/public_certificate_authority_connection.h"
+#include "google/cloud/publicca/v1/public_certificate_authority_options.h"
 #include <memory>
 #include <utility>
 
@@ -35,37 +35,23 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options PublicCertificateAuthorityServiceDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options),
-      "GOOGLE_CLOUD_CPP_PUBLIC_CERTIFICATE_AUTHORITY_SERVICE_ENDPOINT", "",
-      "GOOGLE_CLOUD_CPP_PUBLIC_CERTIFICATE_AUTHORITY_SERVICE_AUTHORITY",
+      std::move(options), "GOOGLE_CLOUD_CPP_PUBLIC_CERTIFICATE_AUTHORITY_SERVICE_ENDPOINT",
+      "", "GOOGLE_CLOUD_CPP_PUBLIC_CERTIFICATE_AUTHORITY_SERVICE_AUTHORITY",
       "publicca.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
-  if (!options.has<
-          publicca_v1::PublicCertificateAuthorityServiceRetryPolicyOption>()) {
-    options.set<
-        publicca_v1::PublicCertificateAuthorityServiceRetryPolicyOption>(
+  if (!options.has<publicca_v1::PublicCertificateAuthorityServiceRetryPolicyOption>()) {
+    options.set<publicca_v1::PublicCertificateAuthorityServiceRetryPolicyOption>(
         publicca_v1::PublicCertificateAuthorityServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
-            .clone());
+            std::chrono::minutes(30)).clone());
   }
-  if (!options
-           .has<publicca_v1::
-                    PublicCertificateAuthorityServiceBackoffPolicyOption>()) {
-    options
-        .set<publicca_v1::PublicCertificateAuthorityServiceBackoffPolicyOption>(
-            ExponentialBackoffPolicy(
-                std::chrono::seconds(0), std::chrono::seconds(1),
-                std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
-                .clone());
+  if (!options.has<publicca_v1::PublicCertificateAuthorityServiceBackoffPolicyOption>()) {
+    options.set<publicca_v1::PublicCertificateAuthorityServiceBackoffPolicyOption>(
+        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
   }
-  if (!options.has<
-          publicca_v1::
-              PublicCertificateAuthorityServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<
-        publicca_v1::
-            PublicCertificateAuthorityServiceConnectionIdempotencyPolicyOption>(
-        publicca_v1::
-            MakeDefaultPublicCertificateAuthorityServiceConnectionIdempotencyPolicy());
+  if (!options.has<publicca_v1::PublicCertificateAuthorityServiceConnectionIdempotencyPolicyOption>()) {
+    options.set<publicca_v1::PublicCertificateAuthorityServiceConnectionIdempotencyPolicyOption>(
+        publicca_v1::MakeDefaultPublicCertificateAuthorityServiceConnectionIdempotencyPolicy());
   }
 
   return options;

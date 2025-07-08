@@ -30,51 +30,48 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-class ContextsTracingConnection : public dialogflow_es::ContextsConnection {
+class ContextsTracingConnection
+    : public dialogflow_es::ContextsConnection {
  public:
   ~ContextsTracingConnection() override = default;
 
   explicit ContextsTracingConnection(
-      std::shared_ptr<dialogflow_es::ContextsConnection> child);
+    std::shared_ptr<dialogflow_es::ContextsConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StreamRange<google::cloud::dialogflow::v2::Context> ListContexts(
-      google::cloud::dialogflow::v2::ListContextsRequest request) override;
+  StreamRange<google::cloud::dialogflow::v2::Context>
+  ListContexts(google::cloud::dialogflow::v2::ListContextsRequest request) override;
 
-  StatusOr<google::cloud::dialogflow::v2::Context> GetContext(
-      google::cloud::dialogflow::v2::GetContextRequest const& request) override;
+  StatusOr<google::cloud::dialogflow::v2::Context>
+  GetContext(google::cloud::dialogflow::v2::GetContextRequest const& request) override;
 
-  StatusOr<google::cloud::dialogflow::v2::Context> CreateContext(
-      google::cloud::dialogflow::v2::CreateContextRequest const& request)
-      override;
+  StatusOr<google::cloud::dialogflow::v2::Context>
+  CreateContext(google::cloud::dialogflow::v2::CreateContextRequest const& request) override;
 
-  StatusOr<google::cloud::dialogflow::v2::Context> UpdateContext(
-      google::cloud::dialogflow::v2::UpdateContextRequest const& request)
-      override;
+  StatusOr<google::cloud::dialogflow::v2::Context>
+  UpdateContext(google::cloud::dialogflow::v2::UpdateContextRequest const& request) override;
 
-  Status DeleteContext(
-      google::cloud::dialogflow::v2::DeleteContextRequest const& request)
-      override;
+  Status
+  DeleteContext(google::cloud::dialogflow::v2::DeleteContextRequest const& request) override;
 
-  Status DeleteAllContexts(
-      google::cloud::dialogflow::v2::DeleteAllContextsRequest const& request)
-      override;
+  Status
+  DeleteAllContexts(google::cloud::dialogflow::v2::DeleteAllContextsRequest const& request) override;
 
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request) override;
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request) override;
 
-  StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request) override;
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request) override;
 
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request) override;
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::shared_ptr<dialogflow_es::ContextsConnection> child_;

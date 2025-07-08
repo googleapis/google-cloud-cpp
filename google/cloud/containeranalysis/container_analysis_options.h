@@ -28,23 +28,16 @@ namespace cloud {
 namespace containeranalysis {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use containeranalysis_v1::ContainerAnalysisBackoffPolicyOption
-/// directly.
-using ::google::cloud::containeranalysis_v1::
-    ContainerAnalysisBackoffPolicyOption;
+/// @deprecated Use containeranalysis_v1::ContainerAnalysisBackoffPolicyOption directly.
+using ::google::cloud::containeranalysis_v1::ContainerAnalysisBackoffPolicyOption;
 
-/// @deprecated Use
-/// containeranalysis_v1::ContainerAnalysisConnectionIdempotencyPolicyOption
-/// directly.
-using ::google::cloud::containeranalysis_v1::
-    ContainerAnalysisConnectionIdempotencyPolicyOption;
+/// @deprecated Use containeranalysis_v1::ContainerAnalysisConnectionIdempotencyPolicyOption directly.
+using ::google::cloud::containeranalysis_v1::ContainerAnalysisConnectionIdempotencyPolicyOption;
 
-/// @deprecated Use containeranalysis_v1::ContainerAnalysisPolicyOptionList
-/// directly.
+/// @deprecated Use containeranalysis_v1::ContainerAnalysisPolicyOptionList directly.
 using ::google::cloud::containeranalysis_v1::ContainerAnalysisPolicyOptionList;
 
-/// @deprecated Use containeranalysis_v1::ContainerAnalysisRetryPolicyOption
-/// directly.
+/// @deprecated Use containeranalysis_v1::ContainerAnalysisRetryPolicyOption directly.
 using ::google::cloud::containeranalysis_v1::ContainerAnalysisRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

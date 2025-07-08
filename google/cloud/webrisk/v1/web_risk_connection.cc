@@ -17,17 +17,17 @@
 // source: google/cloud/webrisk/v1/webrisk.proto
 
 #include "google/cloud/webrisk/v1/web_risk_connection.h"
-#include "google/cloud/webrisk/v1/internal/web_risk_connection_impl.h"
-#include "google/cloud/webrisk/v1/internal/web_risk_option_defaults.h"
-#include "google/cloud/webrisk/v1/internal/web_risk_stub_factory.h"
-#include "google/cloud/webrisk/v1/internal/web_risk_tracing_connection.h"
-#include "google/cloud/webrisk/v1/web_risk_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/webrisk/v1/internal/web_risk_connection_impl.h"
+#include "google/cloud/webrisk/v1/internal/web_risk_option_defaults.h"
+#include "google/cloud/webrisk/v1/internal/web_risk_stub_factory.h"
+#include "google/cloud/webrisk/v1/internal/web_risk_tracing_connection.h"
+#include "google/cloud/webrisk/v1/web_risk_options.h"
 #include <memory>
 #include <utility>
 
@@ -66,42 +66,46 @@ future<StatusOr<google::cloud::webrisk::v1::Submission>>
 WebRiskServiceConnection::SubmitUri(
     google::cloud::webrisk::v1::SubmitUriRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::webrisk::v1::Submission>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::webrisk::v1::Submission>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation> WebRiskServiceConnection::SubmitUri(
-    NoAwaitTag, google::cloud::webrisk::v1::SubmitUriRequest const&) {
+StatusOr<google::longrunning::Operation>
+WebRiskServiceConnection::SubmitUri(
+    NoAwaitTag,
+    google::cloud::webrisk::v1::SubmitUriRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::webrisk::v1::Submission>>
-WebRiskServiceConnection::SubmitUri(google::longrunning::Operation const&) {
+WebRiskServiceConnection::SubmitUri(
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::webrisk::v1::Submission>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::webrisk::v1::Submission>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StreamRange<google::longrunning::Operation>
-WebRiskServiceConnection::ListOperations(
-    google::longrunning::
-        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::longrunning::Operation> WebRiskServiceConnection::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }
 
-StatusOr<google::longrunning::Operation> WebRiskServiceConnection::GetOperation(
+StatusOr<google::longrunning::Operation>
+WebRiskServiceConnection::GetOperation(
     google::longrunning::GetOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status WebRiskServiceConnection::DeleteOperation(
+Status
+WebRiskServiceConnection::DeleteOperation(
     google::longrunning::DeleteOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status WebRiskServiceConnection::CancelOperation(
+Status
+WebRiskServiceConnection::CancelOperation(
     google::longrunning::CancelOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -109,18 +113,17 @@ Status WebRiskServiceConnection::CancelOperation(
 std::shared_ptr<WebRiskServiceConnection> MakeWebRiskServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 WebRiskServicePolicyOptionList>(options,
-                                                                 __func__);
-  options =
-      webrisk_v1_internal::WebRiskServiceDefaultOptions(std::move(options));
+      UnifiedCredentialsOptionList,
+      WebRiskServicePolicyOptionList>(options, __func__);
+  options = webrisk_v1_internal::WebRiskServiceDefaultOptions(
+      std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = webrisk_v1_internal::CreateDefaultWebRiskServiceStub(
-      std::move(auth), options);
+    std::move(auth), options);
   return webrisk_v1_internal::MakeWebRiskServiceTracingConnection(
       std::make_shared<webrisk_v1_internal::WebRiskServiceConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options)));
+      std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

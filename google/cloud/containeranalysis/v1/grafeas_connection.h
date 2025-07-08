@@ -19,14 +19,15 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTAINERANALYSIS_V1_GRAFEAS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTAINERANALYSIS_V1_GRAFEAS_CONNECTION_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/containeranalysis/v1/grafeas_connection_idempotency_policy.h"
 #include "google/cloud/containeranalysis/v1/internal/grafeas_retry_traits.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
+#include <grafeas/v1/grafeas.pb.h>
 #include <grafeas/v1/grafeas.pb.h>
 #include <memory>
 
@@ -62,14 +63,14 @@ class GrafeasLimitedErrorCountRetryPolicy : public GrafeasRetryPolicy {
    *     @p maximum_failures == 0.
    */
   explicit GrafeasLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   GrafeasLimitedErrorCountRetryPolicy(
       GrafeasLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : GrafeasLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : GrafeasLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   GrafeasLimitedErrorCountRetryPolicy(
       GrafeasLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : GrafeasLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : GrafeasLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -89,9 +90,7 @@ class GrafeasLimitedErrorCountRetryPolicy : public GrafeasRetryPolicy {
   using BaseType = GrafeasRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      containeranalysis_v1_internal::GrafeasRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<containeranalysis_v1_internal::GrafeasRetryTraits> impl_;
 };
 
 /**
@@ -129,13 +128,12 @@ class GrafeasLimitedTimeRetryPolicy : public GrafeasRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit GrafeasLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
   GrafeasLimitedTimeRetryPolicy(GrafeasLimitedTimeRetryPolicy&& rhs) noexcept
-      : GrafeasLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  GrafeasLimitedTimeRetryPolicy(
-      GrafeasLimitedTimeRetryPolicy const& rhs) noexcept
-      : GrafeasLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+    : GrafeasLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  GrafeasLimitedTimeRetryPolicy(GrafeasLimitedTimeRetryPolicy const& rhs) noexcept
+    : GrafeasLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -149,16 +147,15 @@ class GrafeasLimitedTimeRetryPolicy : public GrafeasRetryPolicy {
     return impl_.IsPermanentFailure(status);
   }
   std::unique_ptr<GrafeasRetryPolicy> clone() const override {
-    return std::make_unique<GrafeasLimitedTimeRetryPolicy>(maximum_duration());
+    return std::make_unique<GrafeasLimitedTimeRetryPolicy>(
+        maximum_duration());
   }
 
   // This is provided only for backwards compatibility.
   using BaseType = GrafeasRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      containeranalysis_v1_internal::GrafeasRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<containeranalysis_v1_internal::GrafeasRetryTraits> impl_;
 };
 
 /**
@@ -179,47 +176,47 @@ class GrafeasConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<grafeas::v1::Occurrence> GetOccurrence(
-      grafeas::v1::GetOccurrenceRequest const& request);
+  virtual StatusOr<grafeas::v1::Occurrence>
+  GetOccurrence(grafeas::v1::GetOccurrenceRequest const& request);
 
-  virtual StreamRange<grafeas::v1::Occurrence> ListOccurrences(
-      grafeas::v1::ListOccurrencesRequest request);
+  virtual StreamRange<grafeas::v1::Occurrence>
+  ListOccurrences(grafeas::v1::ListOccurrencesRequest request);
 
-  virtual Status DeleteOccurrence(
-      grafeas::v1::DeleteOccurrenceRequest const& request);
+  virtual Status
+  DeleteOccurrence(grafeas::v1::DeleteOccurrenceRequest const& request);
 
-  virtual StatusOr<grafeas::v1::Occurrence> CreateOccurrence(
-      grafeas::v1::CreateOccurrenceRequest const& request);
+  virtual StatusOr<grafeas::v1::Occurrence>
+  CreateOccurrence(grafeas::v1::CreateOccurrenceRequest const& request);
 
   virtual StatusOr<grafeas::v1::BatchCreateOccurrencesResponse>
-  BatchCreateOccurrences(
-      grafeas::v1::BatchCreateOccurrencesRequest const& request);
+  BatchCreateOccurrences(grafeas::v1::BatchCreateOccurrencesRequest const& request);
 
-  virtual StatusOr<grafeas::v1::Occurrence> UpdateOccurrence(
-      grafeas::v1::UpdateOccurrenceRequest const& request);
+  virtual StatusOr<grafeas::v1::Occurrence>
+  UpdateOccurrence(grafeas::v1::UpdateOccurrenceRequest const& request);
 
-  virtual StatusOr<grafeas::v1::Note> GetOccurrenceNote(
-      grafeas::v1::GetOccurrenceNoteRequest const& request);
+  virtual StatusOr<grafeas::v1::Note>
+  GetOccurrenceNote(grafeas::v1::GetOccurrenceNoteRequest const& request);
 
-  virtual StatusOr<grafeas::v1::Note> GetNote(
-      grafeas::v1::GetNoteRequest const& request);
+  virtual StatusOr<grafeas::v1::Note>
+  GetNote(grafeas::v1::GetNoteRequest const& request);
 
-  virtual StreamRange<grafeas::v1::Note> ListNotes(
-      grafeas::v1::ListNotesRequest request);
+  virtual StreamRange<grafeas::v1::Note>
+  ListNotes(grafeas::v1::ListNotesRequest request);
 
-  virtual Status DeleteNote(grafeas::v1::DeleteNoteRequest const& request);
+  virtual Status
+  DeleteNote(grafeas::v1::DeleteNoteRequest const& request);
 
-  virtual StatusOr<grafeas::v1::Note> CreateNote(
-      grafeas::v1::CreateNoteRequest const& request);
+  virtual StatusOr<grafeas::v1::Note>
+  CreateNote(grafeas::v1::CreateNoteRequest const& request);
 
-  virtual StatusOr<grafeas::v1::BatchCreateNotesResponse> BatchCreateNotes(
-      grafeas::v1::BatchCreateNotesRequest const& request);
+  virtual StatusOr<grafeas::v1::BatchCreateNotesResponse>
+  BatchCreateNotes(grafeas::v1::BatchCreateNotesRequest const& request);
 
-  virtual StatusOr<grafeas::v1::Note> UpdateNote(
-      grafeas::v1::UpdateNoteRequest const& request);
+  virtual StatusOr<grafeas::v1::Note>
+  UpdateNote(grafeas::v1::UpdateNoteRequest const& request);
 
-  virtual StreamRange<grafeas::v1::Occurrence> ListNoteOccurrences(
-      grafeas::v1::ListNoteOccurrencesRequest request);
+  virtual StreamRange<grafeas::v1::Occurrence>
+  ListNoteOccurrences(grafeas::v1::ListNoteOccurrencesRequest request);
 };
 
 /**
@@ -243,7 +240,8 @@ class GrafeasConnection {
  * @param options (optional) Configure the `GrafeasConnection` created by
  * this function.
  */
-std::shared_ptr<GrafeasConnection> MakeGrafeasConnection(Options options = {});
+std::shared_ptr<GrafeasConnection> MakeGrafeasConnection(
+    Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace containeranalysis_v1

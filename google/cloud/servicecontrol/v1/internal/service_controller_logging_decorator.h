@@ -35,15 +35,17 @@ class ServiceControllerLogging : public ServiceControllerStub {
  public:
   ~ServiceControllerLogging() override = default;
   ServiceControllerLogging(std::shared_ptr<ServiceControllerStub> child,
-                           TracingOptions tracing_options,
-                           std::set<std::string> const& components);
+                       TracingOptions tracing_options,
+                       std::set<std::string> const& components);
 
   StatusOr<google::api::servicecontrol::v1::CheckResponse> Check(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::api::servicecontrol::v1::CheckRequest const& request) override;
 
   StatusOr<google::api::servicecontrol::v1::ReportResponse> Report(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::api::servicecontrol::v1::ReportRequest const& request) override;
 
  private:

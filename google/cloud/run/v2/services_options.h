@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RUN_V2_SERVICES_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RUN_V2_SERVICES_OPTIONS_H
 
-#include "google/cloud/run/v2/services_connection.h"
-#include "google/cloud/run/v2/services_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
+#include "google/cloud/run/v2/services_connection.h"
+#include "google/cloud/run/v2/services_connection_idempotency_policy.h"
 #include "google/cloud/version.h"
 #include <memory>
 
@@ -74,7 +74,8 @@ struct ServicesPollingPolicyOption {
  * @ingroup google-cloud-run-options
  */
 using ServicesPolicyOptionList =
-    OptionList<ServicesRetryPolicyOption, ServicesBackoffPolicyOption,
+    OptionList<ServicesRetryPolicyOption,
+               ServicesBackoffPolicyOption,
                ServicesPollingPolicyOption,
                ServicesConnectionIdempotencyPolicyOption>;
 

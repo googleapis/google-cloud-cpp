@@ -19,11 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VIDEO_LIVESTREAM_V1_LIVESTREAM_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VIDEO_LIVESTREAM_V1_LIVESTREAM_OPTIONS_H
 
-#include "google/cloud/video/livestream/v1/livestream_connection.h"
-#include "google/cloud/video/livestream/v1/livestream_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
+#include "google/cloud/video/livestream/v1/livestream_connection.h"
+#include "google/cloud/video/livestream/v1/livestream_connection_idempotency_policy.h"
 #include <memory>
 
 namespace google {

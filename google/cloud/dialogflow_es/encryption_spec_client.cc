@@ -28,13 +28,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 EncryptionSpecServiceClient::EncryptionSpecServiceClient(
     std::shared_ptr<EncryptionSpecServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 EncryptionSpecServiceClient::~EncryptionSpecServiceClient() = default;
 
 StatusOr<google::cloud::dialogflow::v2::EncryptionSpec>
-EncryptionSpecServiceClient::GetEncryptionSpec(std::string const& name,
-                                               Options opts) {
+EncryptionSpecServiceClient::GetEncryptionSpec(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dialogflow::v2::GetEncryptionSpecRequest request;
   request.set_name(name);
@@ -42,18 +41,13 @@ EncryptionSpecServiceClient::GetEncryptionSpec(std::string const& name,
 }
 
 StatusOr<google::cloud::dialogflow::v2::EncryptionSpec>
-EncryptionSpecServiceClient::GetEncryptionSpec(
-    google::cloud::dialogflow::v2::GetEncryptionSpecRequest const& request,
-    Options opts) {
+EncryptionSpecServiceClient::GetEncryptionSpec(google::cloud::dialogflow::v2::GetEncryptionSpecRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetEncryptionSpec(request);
 }
 
-future<
-    StatusOr<google::cloud::dialogflow::v2::InitializeEncryptionSpecResponse>>
-EncryptionSpecServiceClient::InitializeEncryptionSpec(
-    google::cloud::dialogflow::v2::EncryptionSpec const& encryption_spec,
-    Options opts) {
+future<StatusOr<google::cloud::dialogflow::v2::InitializeEncryptionSpecResponse>>
+EncryptionSpecServiceClient::InitializeEncryptionSpec(google::cloud::dialogflow::v2::EncryptionSpec const& encryption_spec, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dialogflow::v2::InitializeEncryptionSpecRequest request;
   *request.mutable_encryption_spec() = encryption_spec;
@@ -61,62 +55,45 @@ EncryptionSpecServiceClient::InitializeEncryptionSpec(
 }
 
 StatusOr<google::longrunning::Operation>
-EncryptionSpecServiceClient::InitializeEncryptionSpec(
-    NoAwaitTag,
-    google::cloud::dialogflow::v2::EncryptionSpec const& encryption_spec,
-    Options opts) {
+EncryptionSpecServiceClient::InitializeEncryptionSpec(NoAwaitTag, google::cloud::dialogflow::v2::EncryptionSpec const& encryption_spec, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dialogflow::v2::InitializeEncryptionSpecRequest request;
   *request.mutable_encryption_spec() = encryption_spec;
   return connection_->InitializeEncryptionSpec(NoAwaitTag{}, request);
 }
 
-future<
-    StatusOr<google::cloud::dialogflow::v2::InitializeEncryptionSpecResponse>>
-EncryptionSpecServiceClient::InitializeEncryptionSpec(
-    google::cloud::dialogflow::v2::InitializeEncryptionSpecRequest const&
-        request,
-    Options opts) {
+future<StatusOr<google::cloud::dialogflow::v2::InitializeEncryptionSpecResponse>>
+EncryptionSpecServiceClient::InitializeEncryptionSpec(google::cloud::dialogflow::v2::InitializeEncryptionSpecRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->InitializeEncryptionSpec(request);
 }
 
 StatusOr<google::longrunning::Operation>
-EncryptionSpecServiceClient::InitializeEncryptionSpec(
-    NoAwaitTag,
-    google::cloud::dialogflow::v2::InitializeEncryptionSpecRequest const&
-        request,
-    Options opts) {
+EncryptionSpecServiceClient::InitializeEncryptionSpec(NoAwaitTag, google::cloud::dialogflow::v2::InitializeEncryptionSpecRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->InitializeEncryptionSpec(NoAwaitTag{}, request);
 }
 
-future<
-    StatusOr<google::cloud::dialogflow::v2::InitializeEncryptionSpecResponse>>
-EncryptionSpecServiceClient::InitializeEncryptionSpec(
-    google::longrunning::Operation const& operation, Options opts) {
+future<StatusOr<google::cloud::dialogflow::v2::InitializeEncryptionSpecResponse>>
+EncryptionSpecServiceClient::InitializeEncryptionSpec(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->InitializeEncryptionSpec(operation);
 }
 
 StreamRange<google::cloud::location::Location>
-EncryptionSpecServiceClient::ListLocations(
-    google::cloud::location::ListLocationsRequest request, Options opts) {
+EncryptionSpecServiceClient::ListLocations(google::cloud::location::ListLocationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListLocations(std::move(request));
 }
 
 StatusOr<google::cloud::location::Location>
-EncryptionSpecServiceClient::GetLocation(
-    google::cloud::location::GetLocationRequest const& request, Options opts) {
+EncryptionSpecServiceClient::GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetLocation(request);
 }
 
 StreamRange<google::longrunning::Operation>
-EncryptionSpecServiceClient::ListOperations(std::string const& name,
-                                            std::string const& filter,
-                                            Options opts) {
+EncryptionSpecServiceClient::ListOperations(std::string const& name, std::string const& filter, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::ListOperationsRequest request;
   request.set_name(name);
@@ -125,15 +102,13 @@ EncryptionSpecServiceClient::ListOperations(std::string const& name,
 }
 
 StreamRange<google::longrunning::Operation>
-EncryptionSpecServiceClient::ListOperations(
-    google::longrunning::ListOperationsRequest request, Options opts) {
+EncryptionSpecServiceClient::ListOperations(google::longrunning::ListOperationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOperations(std::move(request));
 }
 
 StatusOr<google::longrunning::Operation>
-EncryptionSpecServiceClient::GetOperation(std::string const& name,
-                                          Options opts) {
+EncryptionSpecServiceClient::GetOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
@@ -141,22 +116,21 @@ EncryptionSpecServiceClient::GetOperation(std::string const& name,
 }
 
 StatusOr<google::longrunning::Operation>
-EncryptionSpecServiceClient::GetOperation(
-    google::longrunning::GetOperationRequest const& request, Options opts) {
+EncryptionSpecServiceClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }
 
-Status EncryptionSpecServiceClient::CancelOperation(std::string const& name,
-                                                    Options opts) {
+Status
+EncryptionSpecServiceClient::CancelOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::CancelOperationRequest request;
   request.set_name(name);
   return connection_->CancelOperation(request);
 }
 
-Status EncryptionSpecServiceClient::CancelOperation(
-    google::longrunning::CancelOperationRequest const& request, Options opts) {
+Status
+EncryptionSpecServiceClient::CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelOperation(request);
 }

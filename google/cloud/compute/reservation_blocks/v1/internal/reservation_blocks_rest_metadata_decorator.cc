@@ -17,11 +17,11 @@
 // source: google/cloud/compute/reservation_blocks/v1/reservation_blocks.proto
 
 #include "google/cloud/compute/reservation_blocks/v1/internal/reservation_blocks_rest_metadata_decorator.h"
+#include "absl/strings/str_format.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/internal/rest_set_metadata.h"
 #include "google/cloud/status_or.h"
-#include "absl/strings/str_format.h"
 #include <memory>
 #include <utility>
 
@@ -41,40 +41,35 @@ ReservationBlocksRestMetadata::ReservationBlocksRestMetadata(
 
 StatusOr<google::cloud::cpp::compute::v1::ReservationBlocksGetResponse>
 ReservationBlocksRestMetadata::GetReservationBlocksGetResponse(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::reservation_blocks::v1::
-        GetReservationBlocksGetResponseRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::reservation_blocks::v1::GetReservationBlocksGetResponseRequest const& request) {
   SetMetadata(rest_context, options);
-  return child_->GetReservationBlocksGetResponse(rest_context, options,
-                                                 request);
+  return child_->GetReservationBlocksGetResponse(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::ReservationBlocksListResponse>
 ReservationBlocksRestMetadata::ListReservationBlocks(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::reservation_blocks::v1::
-        ListReservationBlocksRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::reservation_blocks::v1::ListReservationBlocksRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->ListReservationBlocks(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ReservationBlocksRestMetadata::AsyncPerformMaintenance(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::reservation_blocks::v1::
-        PerformMaintenanceRequest const& request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::reservation_blocks::v1::PerformMaintenanceRequest const& request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncPerformMaintenance(cq, std::move(rest_context),
-                                         std::move(options), request);
+  return child_->AsyncPerformMaintenance(
+      cq, std::move(rest_context), std::move(options), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ReservationBlocksRestMetadata::PerformMaintenance(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::reservation_blocks::v1::
-        PerformMaintenanceRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::reservation_blocks::v1::PerformMaintenanceRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->PerformMaintenance(rest_context, options, request);
 }
@@ -84,29 +79,28 @@ ReservationBlocksRestMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::zone_operations::v1::GetOperationRequest const&
-        request) {
+    google::cloud::cpp::compute::zone_operations::v1::GetOperationRequest const& request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncGetOperation(cq, std::move(rest_context),
-                                   std::move(options), request);
+  return child_->AsyncGetOperation(
+      cq, std::move(rest_context), std::move(options), request);
 }
 
-future<Status> ReservationBlocksRestMetadata::AsyncCancelOperation(
+future<Status>
+ReservationBlocksRestMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::zone_operations::v1::
-        DeleteOperationRequest const& request) {
+    google::cloud::cpp::compute::zone_operations::v1::DeleteOperationRequest const& request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncCancelOperation(cq, std::move(rest_context),
-                                      std::move(options), request);
+  return child_->AsyncCancelOperation(
+      cq, std::move(rest_context), std::move(options), request);
 }
 
 void ReservationBlocksRestMetadata::SetMetadata(
-    rest_internal::RestContext& rest_context, Options const& options,
-    std::vector<std::string> const& params) {
-  google::cloud::rest_internal::SetMetadata(rest_context, options, params,
-                                            api_client_header_);
+      rest_internal::RestContext& rest_context,
+      Options const& options, std::vector<std::string> const& params) {
+  google::cloud::rest_internal::SetMetadata(
+      rest_context, options, params, api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

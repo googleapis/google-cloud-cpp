@@ -34,30 +34,23 @@ DeveloperConnectTracingConnection::DeveloperConnectTracingConnection(
     : child_(std::move(child)) {}
 
 StreamRange<google::cloud::developerconnect::v1::Connection>
-DeveloperConnectTracingConnection::ListConnections(
-    google::cloud::developerconnect::v1::ListConnectionsRequest request) {
-  auto span = internal::MakeSpan(
-      "developerconnect_v1::DeveloperConnectConnection::ListConnections");
+DeveloperConnectTracingConnection::ListConnections(google::cloud::developerconnect::v1::ListConnectionsRequest request) {
+  auto span = internal::MakeSpan("developerconnect_v1::DeveloperConnectConnection::ListConnections");
   internal::OTelScope scope(span);
   auto sr = child_->ListConnections(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::developerconnect::v1::Connection>(std::move(span),
-                                                       std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::developerconnect::v1::Connection>(
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::developerconnect::v1::Connection>
-DeveloperConnectTracingConnection::GetConnection(
-    google::cloud::developerconnect::v1::GetConnectionRequest const& request) {
-  auto span = internal::MakeSpan(
-      "developerconnect_v1::DeveloperConnectConnection::GetConnection");
+DeveloperConnectTracingConnection::GetConnection(google::cloud::developerconnect::v1::GetConnectionRequest const& request) {
+  auto span = internal::MakeSpan("developerconnect_v1::DeveloperConnectConnection::GetConnection");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetConnection(request));
 }
 
 future<StatusOr<google::cloud::developerconnect::v1::Connection>>
-DeveloperConnectTracingConnection::CreateConnection(
-    google::cloud::developerconnect::v1::CreateConnectionRequest const&
-        request) {
+DeveloperConnectTracingConnection::CreateConnection(google::cloud::developerconnect::v1::CreateConnectionRequest const& request) {
   auto span = internal::MakeSpan(
       "developerconnect_v1::DeveloperConnectConnection::CreateConnection");
   internal::OTelScope scope(span);
@@ -66,14 +59,12 @@ DeveloperConnectTracingConnection::CreateConnection(
 
 StatusOr<google::longrunning::Operation>
 DeveloperConnectTracingConnection::CreateConnection(
-    NoAwaitTag,
-    google::cloud::developerconnect::v1::CreateConnectionRequest const&
-        request) {
+    NoAwaitTag, google::cloud::developerconnect::v1::CreateConnectionRequest const& request) {
   auto span = internal::MakeSpan(
       "developerconnect_v1::DeveloperConnectConnection::CreateConnection");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span,
-                           child_->CreateConnection(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->CreateConnection(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::developerconnect::v1::Connection>>
@@ -83,13 +74,11 @@ DeveloperConnectTracingConnection::CreateConnection(
       "developerconnect_v1::DeveloperConnectConnection::CreateConnection");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->CreateConnection(operation));
+      child_->CreateConnection(operation));
 }
 
 future<StatusOr<google::cloud::developerconnect::v1::Connection>>
-DeveloperConnectTracingConnection::UpdateConnection(
-    google::cloud::developerconnect::v1::UpdateConnectionRequest const&
-        request) {
+DeveloperConnectTracingConnection::UpdateConnection(google::cloud::developerconnect::v1::UpdateConnectionRequest const& request) {
   auto span = internal::MakeSpan(
       "developerconnect_v1::DeveloperConnectConnection::UpdateConnection");
   internal::OTelScope scope(span);
@@ -98,14 +87,12 @@ DeveloperConnectTracingConnection::UpdateConnection(
 
 StatusOr<google::longrunning::Operation>
 DeveloperConnectTracingConnection::UpdateConnection(
-    NoAwaitTag,
-    google::cloud::developerconnect::v1::UpdateConnectionRequest const&
-        request) {
+    NoAwaitTag, google::cloud::developerconnect::v1::UpdateConnectionRequest const& request) {
   auto span = internal::MakeSpan(
       "developerconnect_v1::DeveloperConnectConnection::UpdateConnection");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span,
-                           child_->UpdateConnection(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->UpdateConnection(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::developerconnect::v1::Connection>>
@@ -115,13 +102,11 @@ DeveloperConnectTracingConnection::UpdateConnection(
       "developerconnect_v1::DeveloperConnectConnection::UpdateConnection");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->UpdateConnection(operation));
+      child_->UpdateConnection(operation));
 }
 
 future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
-DeveloperConnectTracingConnection::DeleteConnection(
-    google::cloud::developerconnect::v1::DeleteConnectionRequest const&
-        request) {
+DeveloperConnectTracingConnection::DeleteConnection(google::cloud::developerconnect::v1::DeleteConnectionRequest const& request) {
   auto span = internal::MakeSpan(
       "developerconnect_v1::DeveloperConnectConnection::DeleteConnection");
   internal::OTelScope scope(span);
@@ -130,14 +115,12 @@ DeveloperConnectTracingConnection::DeleteConnection(
 
 StatusOr<google::longrunning::Operation>
 DeveloperConnectTracingConnection::DeleteConnection(
-    NoAwaitTag,
-    google::cloud::developerconnect::v1::DeleteConnectionRequest const&
-        request) {
+    NoAwaitTag, google::cloud::developerconnect::v1::DeleteConnectionRequest const& request) {
   auto span = internal::MakeSpan(
       "developerconnect_v1::DeveloperConnectConnection::DeleteConnection");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span,
-                           child_->DeleteConnection(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->DeleteConnection(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
@@ -147,211 +130,341 @@ DeveloperConnectTracingConnection::DeleteConnection(
       "developerconnect_v1::DeveloperConnectConnection::DeleteConnection");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->DeleteConnection(operation));
+      child_->DeleteConnection(operation));
 }
 
 future<StatusOr<google::cloud::developerconnect::v1::GitRepositoryLink>>
-DeveloperConnectTracingConnection::CreateGitRepositoryLink(
-    google::cloud::developerconnect::v1::CreateGitRepositoryLinkRequest const&
-        request) {
+DeveloperConnectTracingConnection::CreateGitRepositoryLink(google::cloud::developerconnect::v1::CreateGitRepositoryLinkRequest const& request) {
   auto span = internal::MakeSpan(
-      "developerconnect_v1::DeveloperConnectConnection::"
-      "CreateGitRepositoryLink");
+      "developerconnect_v1::DeveloperConnectConnection::CreateGitRepositoryLink");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->CreateGitRepositoryLink(request));
+  return internal::EndSpan(std::move(span), child_->CreateGitRepositoryLink(request));
 }
 
 StatusOr<google::longrunning::Operation>
 DeveloperConnectTracingConnection::CreateGitRepositoryLink(
-    NoAwaitTag,
-    google::cloud::developerconnect::v1::CreateGitRepositoryLinkRequest const&
-        request) {
+    NoAwaitTag, google::cloud::developerconnect::v1::CreateGitRepositoryLinkRequest const& request) {
   auto span = internal::MakeSpan(
-      "developerconnect_v1::DeveloperConnectConnection::"
-      "CreateGitRepositoryLink");
+      "developerconnect_v1::DeveloperConnectConnection::CreateGitRepositoryLink");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->CreateGitRepositoryLink(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->CreateGitRepositoryLink(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::developerconnect::v1::GitRepositoryLink>>
 DeveloperConnectTracingConnection::CreateGitRepositoryLink(
     google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
-      "developerconnect_v1::DeveloperConnectConnection::"
-      "CreateGitRepositoryLink");
+      "developerconnect_v1::DeveloperConnectConnection::CreateGitRepositoryLink");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->CreateGitRepositoryLink(operation));
+      child_->CreateGitRepositoryLink(operation));
 }
 
 future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
-DeveloperConnectTracingConnection::DeleteGitRepositoryLink(
-    google::cloud::developerconnect::v1::DeleteGitRepositoryLinkRequest const&
-        request) {
+DeveloperConnectTracingConnection::DeleteGitRepositoryLink(google::cloud::developerconnect::v1::DeleteGitRepositoryLinkRequest const& request) {
   auto span = internal::MakeSpan(
-      "developerconnect_v1::DeveloperConnectConnection::"
-      "DeleteGitRepositoryLink");
+      "developerconnect_v1::DeveloperConnectConnection::DeleteGitRepositoryLink");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->DeleteGitRepositoryLink(request));
+  return internal::EndSpan(std::move(span), child_->DeleteGitRepositoryLink(request));
 }
 
 StatusOr<google::longrunning::Operation>
 DeveloperConnectTracingConnection::DeleteGitRepositoryLink(
-    NoAwaitTag,
-    google::cloud::developerconnect::v1::DeleteGitRepositoryLinkRequest const&
-        request) {
+    NoAwaitTag, google::cloud::developerconnect::v1::DeleteGitRepositoryLinkRequest const& request) {
   auto span = internal::MakeSpan(
-      "developerconnect_v1::DeveloperConnectConnection::"
-      "DeleteGitRepositoryLink");
+      "developerconnect_v1::DeveloperConnectConnection::DeleteGitRepositoryLink");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->DeleteGitRepositoryLink(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->DeleteGitRepositoryLink(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
 DeveloperConnectTracingConnection::DeleteGitRepositoryLink(
     google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
-      "developerconnect_v1::DeveloperConnectConnection::"
-      "DeleteGitRepositoryLink");
+      "developerconnect_v1::DeveloperConnectConnection::DeleteGitRepositoryLink");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->DeleteGitRepositoryLink(operation));
+      child_->DeleteGitRepositoryLink(operation));
 }
 
 StreamRange<google::cloud::developerconnect::v1::GitRepositoryLink>
-DeveloperConnectTracingConnection::ListGitRepositoryLinks(
-    google::cloud::developerconnect::v1::ListGitRepositoryLinksRequest
-        request) {
-  auto span = internal::MakeSpan(
-      "developerconnect_v1::DeveloperConnectConnection::"
-      "ListGitRepositoryLinks");
+DeveloperConnectTracingConnection::ListGitRepositoryLinks(google::cloud::developerconnect::v1::ListGitRepositoryLinksRequest request) {
+  auto span = internal::MakeSpan("developerconnect_v1::DeveloperConnectConnection::ListGitRepositoryLinks");
   internal::OTelScope scope(span);
   auto sr = child_->ListGitRepositoryLinks(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::developerconnect::v1::GitRepositoryLink>(std::move(span),
-                                                              std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::developerconnect::v1::GitRepositoryLink>(
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::developerconnect::v1::GitRepositoryLink>
-DeveloperConnectTracingConnection::GetGitRepositoryLink(
-    google::cloud::developerconnect::v1::GetGitRepositoryLinkRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "developerconnect_v1::DeveloperConnectConnection::GetGitRepositoryLink");
+DeveloperConnectTracingConnection::GetGitRepositoryLink(google::cloud::developerconnect::v1::GetGitRepositoryLinkRequest const& request) {
+  auto span = internal::MakeSpan("developerconnect_v1::DeveloperConnectConnection::GetGitRepositoryLink");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetGitRepositoryLink(request));
 }
 
 StatusOr<google::cloud::developerconnect::v1::FetchReadWriteTokenResponse>
-DeveloperConnectTracingConnection::FetchReadWriteToken(
-    google::cloud::developerconnect::v1::FetchReadWriteTokenRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "developerconnect_v1::DeveloperConnectConnection::FetchReadWriteToken");
+DeveloperConnectTracingConnection::FetchReadWriteToken(google::cloud::developerconnect::v1::FetchReadWriteTokenRequest const& request) {
+  auto span = internal::MakeSpan("developerconnect_v1::DeveloperConnectConnection::FetchReadWriteToken");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->FetchReadWriteToken(request));
 }
 
 StatusOr<google::cloud::developerconnect::v1::FetchReadTokenResponse>
-DeveloperConnectTracingConnection::FetchReadToken(
-    google::cloud::developerconnect::v1::FetchReadTokenRequest const& request) {
-  auto span = internal::MakeSpan(
-      "developerconnect_v1::DeveloperConnectConnection::FetchReadToken");
+DeveloperConnectTracingConnection::FetchReadToken(google::cloud::developerconnect::v1::FetchReadTokenRequest const& request) {
+  auto span = internal::MakeSpan("developerconnect_v1::DeveloperConnectConnection::FetchReadToken");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->FetchReadToken(request));
 }
 
 StreamRange<google::cloud::developerconnect::v1::LinkableGitRepository>
-DeveloperConnectTracingConnection::FetchLinkableGitRepositories(
-    google::cloud::developerconnect::v1::FetchLinkableGitRepositoriesRequest
-        request) {
-  auto span = internal::MakeSpan(
-      "developerconnect_v1::DeveloperConnectConnection::"
-      "FetchLinkableGitRepositories");
+DeveloperConnectTracingConnection::FetchLinkableGitRepositories(google::cloud::developerconnect::v1::FetchLinkableGitRepositoriesRequest request) {
+  auto span = internal::MakeSpan("developerconnect_v1::DeveloperConnectConnection::FetchLinkableGitRepositories");
   internal::OTelScope scope(span);
   auto sr = child_->FetchLinkableGitRepositories(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::developerconnect::v1::LinkableGitRepository>(
-      std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::developerconnect::v1::LinkableGitRepository>(
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::developerconnect::v1::FetchGitHubInstallationsResponse>
-DeveloperConnectTracingConnection::FetchGitHubInstallations(
-    google::cloud::developerconnect::v1::FetchGitHubInstallationsRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "developerconnect_v1::DeveloperConnectConnection::"
-      "FetchGitHubInstallations");
+DeveloperConnectTracingConnection::FetchGitHubInstallations(google::cloud::developerconnect::v1::FetchGitHubInstallationsRequest const& request) {
+  auto span = internal::MakeSpan("developerconnect_v1::DeveloperConnectConnection::FetchGitHubInstallations");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->FetchGitHubInstallations(request));
 }
 
-StreamRange<std::string> DeveloperConnectTracingConnection::FetchGitRefs(
-    google::cloud::developerconnect::v1::FetchGitRefsRequest request) {
-  auto span = internal::MakeSpan(
-      "developerconnect_v1::DeveloperConnectConnection::FetchGitRefs");
+StreamRange<std::string>
+DeveloperConnectTracingConnection::FetchGitRefs(google::cloud::developerconnect::v1::FetchGitRefsRequest request) {
+  auto span = internal::MakeSpan("developerconnect_v1::DeveloperConnectConnection::FetchGitRefs");
   internal::OTelScope scope(span);
   auto sr = child_->FetchGitRefs(std::move(request));
-  return internal::MakeTracedStreamRange<std::string>(std::move(span),
-                                                      std::move(sr));
+  return internal::MakeTracedStreamRange<std::string>(
+        std::move(span), std::move(sr));
+}
+
+StreamRange<google::cloud::developerconnect::v1::AccountConnector>
+DeveloperConnectTracingConnection::ListAccountConnectors(google::cloud::developerconnect::v1::ListAccountConnectorsRequest request) {
+  auto span = internal::MakeSpan("developerconnect_v1::DeveloperConnectConnection::ListAccountConnectors");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListAccountConnectors(std::move(request));
+  return internal::MakeTracedStreamRange<google::cloud::developerconnect::v1::AccountConnector>(
+        std::move(span), std::move(sr));
+}
+
+StatusOr<google::cloud::developerconnect::v1::AccountConnector>
+DeveloperConnectTracingConnection::GetAccountConnector(google::cloud::developerconnect::v1::GetAccountConnectorRequest const& request) {
+  auto span = internal::MakeSpan("developerconnect_v1::DeveloperConnectConnection::GetAccountConnector");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetAccountConnector(request));
+}
+
+future<StatusOr<google::cloud::developerconnect::v1::AccountConnector>>
+DeveloperConnectTracingConnection::CreateAccountConnector(google::cloud::developerconnect::v1::CreateAccountConnectorRequest const& request) {
+  auto span = internal::MakeSpan(
+      "developerconnect_v1::DeveloperConnectConnection::CreateAccountConnector");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->CreateAccountConnector(request));
+}
+
+StatusOr<google::longrunning::Operation>
+DeveloperConnectTracingConnection::CreateAccountConnector(
+    NoAwaitTag, google::cloud::developerconnect::v1::CreateAccountConnectorRequest const& request) {
+  auto span = internal::MakeSpan(
+      "developerconnect_v1::DeveloperConnectConnection::CreateAccountConnector");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span, child_->CreateAccountConnector(
+      NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::developerconnect::v1::AccountConnector>>
+DeveloperConnectTracingConnection::CreateAccountConnector(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "developerconnect_v1::DeveloperConnectConnection::CreateAccountConnector");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+      child_->CreateAccountConnector(operation));
+}
+
+future<StatusOr<google::cloud::developerconnect::v1::AccountConnector>>
+DeveloperConnectTracingConnection::UpdateAccountConnector(google::cloud::developerconnect::v1::UpdateAccountConnectorRequest const& request) {
+  auto span = internal::MakeSpan(
+      "developerconnect_v1::DeveloperConnectConnection::UpdateAccountConnector");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->UpdateAccountConnector(request));
+}
+
+StatusOr<google::longrunning::Operation>
+DeveloperConnectTracingConnection::UpdateAccountConnector(
+    NoAwaitTag, google::cloud::developerconnect::v1::UpdateAccountConnectorRequest const& request) {
+  auto span = internal::MakeSpan(
+      "developerconnect_v1::DeveloperConnectConnection::UpdateAccountConnector");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span, child_->UpdateAccountConnector(
+      NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::developerconnect::v1::AccountConnector>>
+DeveloperConnectTracingConnection::UpdateAccountConnector(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "developerconnect_v1::DeveloperConnectConnection::UpdateAccountConnector");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+      child_->UpdateAccountConnector(operation));
+}
+
+future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
+DeveloperConnectTracingConnection::DeleteAccountConnector(google::cloud::developerconnect::v1::DeleteAccountConnectorRequest const& request) {
+  auto span = internal::MakeSpan(
+      "developerconnect_v1::DeveloperConnectConnection::DeleteAccountConnector");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->DeleteAccountConnector(request));
+}
+
+StatusOr<google::longrunning::Operation>
+DeveloperConnectTracingConnection::DeleteAccountConnector(
+    NoAwaitTag, google::cloud::developerconnect::v1::DeleteAccountConnectorRequest const& request) {
+  auto span = internal::MakeSpan(
+      "developerconnect_v1::DeveloperConnectConnection::DeleteAccountConnector");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span, child_->DeleteAccountConnector(
+      NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
+DeveloperConnectTracingConnection::DeleteAccountConnector(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "developerconnect_v1::DeveloperConnectConnection::DeleteAccountConnector");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+      child_->DeleteAccountConnector(operation));
+}
+
+StatusOr<google::cloud::developerconnect::v1::FetchAccessTokenResponse>
+DeveloperConnectTracingConnection::FetchAccessToken(google::cloud::developerconnect::v1::FetchAccessTokenRequest const& request) {
+  auto span = internal::MakeSpan("developerconnect_v1::DeveloperConnectConnection::FetchAccessToken");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->FetchAccessToken(request));
+}
+
+StreamRange<google::cloud::developerconnect::v1::User>
+DeveloperConnectTracingConnection::ListUsers(google::cloud::developerconnect::v1::ListUsersRequest request) {
+  auto span = internal::MakeSpan("developerconnect_v1::DeveloperConnectConnection::ListUsers");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListUsers(std::move(request));
+  return internal::MakeTracedStreamRange<google::cloud::developerconnect::v1::User>(
+        std::move(span), std::move(sr));
+}
+
+future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
+DeveloperConnectTracingConnection::DeleteUser(google::cloud::developerconnect::v1::DeleteUserRequest const& request) {
+  auto span = internal::MakeSpan(
+      "developerconnect_v1::DeveloperConnectConnection::DeleteUser");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->DeleteUser(request));
+}
+
+StatusOr<google::longrunning::Operation>
+DeveloperConnectTracingConnection::DeleteUser(
+    NoAwaitTag, google::cloud::developerconnect::v1::DeleteUserRequest const& request) {
+  auto span = internal::MakeSpan(
+      "developerconnect_v1::DeveloperConnectConnection::DeleteUser");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span, child_->DeleteUser(
+      NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
+DeveloperConnectTracingConnection::DeleteUser(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "developerconnect_v1::DeveloperConnectConnection::DeleteUser");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+      child_->DeleteUser(operation));
+}
+
+StatusOr<google::cloud::developerconnect::v1::User>
+DeveloperConnectTracingConnection::FetchSelf(google::cloud::developerconnect::v1::FetchSelfRequest const& request) {
+  auto span = internal::MakeSpan("developerconnect_v1::DeveloperConnectConnection::FetchSelf");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->FetchSelf(request));
+}
+
+future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
+DeveloperConnectTracingConnection::DeleteSelf(google::cloud::developerconnect::v1::DeleteSelfRequest const& request) {
+  auto span = internal::MakeSpan(
+      "developerconnect_v1::DeveloperConnectConnection::DeleteSelf");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->DeleteSelf(request));
+}
+
+StatusOr<google::longrunning::Operation>
+DeveloperConnectTracingConnection::DeleteSelf(
+    NoAwaitTag, google::cloud::developerconnect::v1::DeleteSelfRequest const& request) {
+  auto span = internal::MakeSpan(
+      "developerconnect_v1::DeveloperConnectConnection::DeleteSelf");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span, child_->DeleteSelf(
+      NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
+DeveloperConnectTracingConnection::DeleteSelf(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "developerconnect_v1::DeveloperConnectConnection::DeleteSelf");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+      child_->DeleteSelf(operation));
 }
 
 StreamRange<google::cloud::location::Location>
-DeveloperConnectTracingConnection::ListLocations(
-    google::cloud::location::ListLocationsRequest request) {
-  auto span = internal::MakeSpan(
-      "developerconnect_v1::DeveloperConnectConnection::ListLocations");
+DeveloperConnectTracingConnection::ListLocations(google::cloud::location::ListLocationsRequest request) {
+  auto span = internal::MakeSpan("developerconnect_v1::DeveloperConnectConnection::ListLocations");
   internal::OTelScope scope(span);
   auto sr = child_->ListLocations(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::location::Location>(
-      std::move(span), std::move(sr));
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::location::Location>
-DeveloperConnectTracingConnection::GetLocation(
-    google::cloud::location::GetLocationRequest const& request) {
-  auto span = internal::MakeSpan(
-      "developerconnect_v1::DeveloperConnectConnection::GetLocation");
+DeveloperConnectTracingConnection::GetLocation(google::cloud::location::GetLocationRequest const& request) {
+  auto span = internal::MakeSpan("developerconnect_v1::DeveloperConnectConnection::GetLocation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetLocation(request));
 }
 
 StreamRange<google::longrunning::Operation>
-DeveloperConnectTracingConnection::ListOperations(
-    google::longrunning::ListOperationsRequest request) {
-  auto span = internal::MakeSpan(
-      "developerconnect_v1::DeveloperConnectConnection::ListOperations");
+DeveloperConnectTracingConnection::ListOperations(google::longrunning::ListOperationsRequest request) {
+  auto span = internal::MakeSpan("developerconnect_v1::DeveloperConnectConnection::ListOperations");
   internal::OTelScope scope(span);
   auto sr = child_->ListOperations(std::move(request));
   return internal::MakeTracedStreamRange<google::longrunning::Operation>(
-      std::move(span), std::move(sr));
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::longrunning::Operation>
-DeveloperConnectTracingConnection::GetOperation(
-    google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpan(
-      "developerconnect_v1::DeveloperConnectConnection::GetOperation");
+DeveloperConnectTracingConnection::GetOperation(google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpan("developerconnect_v1::DeveloperConnectConnection::GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOperation(request));
 }
 
-Status DeveloperConnectTracingConnection::DeleteOperation(
-    google::longrunning::DeleteOperationRequest const& request) {
-  auto span = internal::MakeSpan(
-      "developerconnect_v1::DeveloperConnectConnection::DeleteOperation");
+Status
+DeveloperConnectTracingConnection::DeleteOperation(google::longrunning::DeleteOperationRequest const& request) {
+  auto span = internal::MakeSpan("developerconnect_v1::DeveloperConnectConnection::DeleteOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteOperation(request));
 }
 
-Status DeveloperConnectTracingConnection::CancelOperation(
-    google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpan(
-      "developerconnect_v1::DeveloperConnectConnection::CancelOperation");
+Status
+DeveloperConnectTracingConnection::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
+  auto span = internal::MakeSpan("developerconnect_v1::DeveloperConnectConnection::CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CancelOperation(request));
 }

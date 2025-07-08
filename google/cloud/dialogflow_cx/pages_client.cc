@@ -25,45 +25,43 @@ namespace cloud {
 namespace dialogflow_cx {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-PagesClient::PagesClient(std::shared_ptr<PagesConnection> connection,
-                         Options opts)
+PagesClient::PagesClient(
+    std::shared_ptr<PagesConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 PagesClient::~PagesClient() = default;
 
-StreamRange<google::cloud::dialogflow::cx::v3::Page> PagesClient::ListPages(
-    std::string const& parent, Options opts) {
+StreamRange<google::cloud::dialogflow::cx::v3::Page>
+PagesClient::ListPages(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dialogflow::cx::v3::ListPagesRequest request;
   request.set_parent(parent);
   return connection_->ListPages(request);
 }
 
-StreamRange<google::cloud::dialogflow::cx::v3::Page> PagesClient::ListPages(
-    google::cloud::dialogflow::cx::v3::ListPagesRequest request, Options opts) {
+StreamRange<google::cloud::dialogflow::cx::v3::Page>
+PagesClient::ListPages(google::cloud::dialogflow::cx::v3::ListPagesRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListPages(std::move(request));
 }
 
-StatusOr<google::cloud::dialogflow::cx::v3::Page> PagesClient::GetPage(
-    std::string const& name, Options opts) {
+StatusOr<google::cloud::dialogflow::cx::v3::Page>
+PagesClient::GetPage(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dialogflow::cx::v3::GetPageRequest request;
   request.set_name(name);
   return connection_->GetPage(request);
 }
 
-StatusOr<google::cloud::dialogflow::cx::v3::Page> PagesClient::GetPage(
-    google::cloud::dialogflow::cx::v3::GetPageRequest const& request,
-    Options opts) {
+StatusOr<google::cloud::dialogflow::cx::v3::Page>
+PagesClient::GetPage(google::cloud::dialogflow::cx::v3::GetPageRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetPage(request);
 }
 
-StatusOr<google::cloud::dialogflow::cx::v3::Page> PagesClient::CreatePage(
-    std::string const& parent,
-    google::cloud::dialogflow::cx::v3::Page const& page, Options opts) {
+StatusOr<google::cloud::dialogflow::cx::v3::Page>
+PagesClient::CreatePage(std::string const& parent, google::cloud::dialogflow::cx::v3::Page const& page, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dialogflow::cx::v3::CreatePageRequest request;
   request.set_parent(parent);
@@ -71,16 +69,14 @@ StatusOr<google::cloud::dialogflow::cx::v3::Page> PagesClient::CreatePage(
   return connection_->CreatePage(request);
 }
 
-StatusOr<google::cloud::dialogflow::cx::v3::Page> PagesClient::CreatePage(
-    google::cloud::dialogflow::cx::v3::CreatePageRequest const& request,
-    Options opts) {
+StatusOr<google::cloud::dialogflow::cx::v3::Page>
+PagesClient::CreatePage(google::cloud::dialogflow::cx::v3::CreatePageRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreatePage(request);
 }
 
-StatusOr<google::cloud::dialogflow::cx::v3::Page> PagesClient::UpdatePage(
-    google::cloud::dialogflow::cx::v3::Page const& page,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+StatusOr<google::cloud::dialogflow::cx::v3::Page>
+PagesClient::UpdatePage(google::cloud::dialogflow::cx::v3::Page const& page, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dialogflow::cx::v3::UpdatePageRequest request;
   *request.mutable_page() = page;
@@ -88,41 +84,40 @@ StatusOr<google::cloud::dialogflow::cx::v3::Page> PagesClient::UpdatePage(
   return connection_->UpdatePage(request);
 }
 
-StatusOr<google::cloud::dialogflow::cx::v3::Page> PagesClient::UpdatePage(
-    google::cloud::dialogflow::cx::v3::UpdatePageRequest const& request,
-    Options opts) {
+StatusOr<google::cloud::dialogflow::cx::v3::Page>
+PagesClient::UpdatePage(google::cloud::dialogflow::cx::v3::UpdatePageRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdatePage(request);
 }
 
-Status PagesClient::DeletePage(std::string const& name, Options opts) {
+Status
+PagesClient::DeletePage(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dialogflow::cx::v3::DeletePageRequest request;
   request.set_name(name);
   return connection_->DeletePage(request);
 }
 
-Status PagesClient::DeletePage(
-    google::cloud::dialogflow::cx::v3::DeletePageRequest const& request,
-    Options opts) {
+Status
+PagesClient::DeletePage(google::cloud::dialogflow::cx::v3::DeletePageRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeletePage(request);
 }
 
-StreamRange<google::cloud::location::Location> PagesClient::ListLocations(
-    google::cloud::location::ListLocationsRequest request, Options opts) {
+StreamRange<google::cloud::location::Location>
+PagesClient::ListLocations(google::cloud::location::ListLocationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListLocations(std::move(request));
 }
 
-StatusOr<google::cloud::location::Location> PagesClient::GetLocation(
-    google::cloud::location::GetLocationRequest const& request, Options opts) {
+StatusOr<google::cloud::location::Location>
+PagesClient::GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetLocation(request);
 }
 
-StreamRange<google::longrunning::Operation> PagesClient::ListOperations(
-    std::string const& name, std::string const& filter, Options opts) {
+StreamRange<google::longrunning::Operation>
+PagesClient::ListOperations(std::string const& name, std::string const& filter, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::ListOperationsRequest request;
   request.set_name(name);
@@ -130,35 +125,36 @@ StreamRange<google::longrunning::Operation> PagesClient::ListOperations(
   return connection_->ListOperations(request);
 }
 
-StreamRange<google::longrunning::Operation> PagesClient::ListOperations(
-    google::longrunning::ListOperationsRequest request, Options opts) {
+StreamRange<google::longrunning::Operation>
+PagesClient::ListOperations(google::longrunning::ListOperationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOperations(std::move(request));
 }
 
-StatusOr<google::longrunning::Operation> PagesClient::GetOperation(
-    std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation>
+PagesClient::GetOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
   return connection_->GetOperation(request);
 }
 
-StatusOr<google::longrunning::Operation> PagesClient::GetOperation(
-    google::longrunning::GetOperationRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation>
+PagesClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }
 
-Status PagesClient::CancelOperation(std::string const& name, Options opts) {
+Status
+PagesClient::CancelOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::CancelOperationRequest request;
   request.set_name(name);
   return connection_->CancelOperation(request);
 }
 
-Status PagesClient::CancelOperation(
-    google::longrunning::CancelOperationRequest const& request, Options opts) {
+Status
+PagesClient::CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelOperation(request);
 }

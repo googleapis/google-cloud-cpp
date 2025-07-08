@@ -17,12 +17,12 @@
 // source: google/cloud/baremetalsolution/v2/baremetalsolution.proto
 
 #include "google/cloud/baremetalsolution/v2/bare_metal_solution_connection.h"
+#include "google/cloud/background_threads.h"
 #include "google/cloud/baremetalsolution/v2/bare_metal_solution_options.h"
 #include "google/cloud/baremetalsolution/v2/internal/bare_metal_solution_connection_impl.h"
 #include "google/cloud/baremetalsolution/v2/internal/bare_metal_solution_option_defaults.h"
 #include "google/cloud/baremetalsolution/v2/internal/bare_metal_solution_stub_factory.h"
 #include "google/cloud/baremetalsolution/v2/internal/bare_metal_solution_tracing_connection.h"
-#include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
@@ -38,10 +38,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 BareMetalSolutionConnection::~BareMetalSolutionConnection() = default;
 
-StreamRange<google::cloud::baremetalsolution::v2::Instance>
-BareMetalSolutionConnection::ListInstances(
-    google::cloud::baremetalsolution::v2::
-        ListInstancesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::baremetalsolution::v2::Instance> BareMetalSolutionConnection::ListInstances(
+    google::cloud::baremetalsolution::v2::ListInstancesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::baremetalsolution::v2::Instance>>();
 }
@@ -56,8 +54,8 @@ future<StatusOr<google::cloud::baremetalsolution::v2::Instance>>
 BareMetalSolutionConnection::UpdateInstance(
     google::cloud::baremetalsolution::v2::UpdateInstanceRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::baremetalsolution::v2::Instance>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::baremetalsolution::v2::Instance>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -65,15 +63,15 @@ BareMetalSolutionConnection::UpdateInstance(
     NoAwaitTag,
     google::cloud::baremetalsolution::v2::UpdateInstanceRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::baremetalsolution::v2::Instance>>
 BareMetalSolutionConnection::UpdateInstance(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::baremetalsolution::v2::Instance>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::baremetalsolution::v2::Instance>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::Instance>
@@ -86,8 +84,8 @@ future<StatusOr<google::cloud::baremetalsolution::v2::ResetInstanceResponse>>
 BareMetalSolutionConnection::ResetInstance(
     google::cloud::baremetalsolution::v2::ResetInstanceRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::baremetalsolution::v2::ResetInstanceResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::baremetalsolution::v2::ResetInstanceResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -95,23 +93,23 @@ BareMetalSolutionConnection::ResetInstance(
     NoAwaitTag,
     google::cloud::baremetalsolution::v2::ResetInstanceRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::baremetalsolution::v2::ResetInstanceResponse>>
 BareMetalSolutionConnection::ResetInstance(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::baremetalsolution::v2::ResetInstanceResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::baremetalsolution::v2::ResetInstanceResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::baremetalsolution::v2::StartInstanceResponse>>
 BareMetalSolutionConnection::StartInstance(
     google::cloud::baremetalsolution::v2::StartInstanceRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::baremetalsolution::v2::StartInstanceResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::baremetalsolution::v2::StartInstanceResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -119,23 +117,23 @@ BareMetalSolutionConnection::StartInstance(
     NoAwaitTag,
     google::cloud::baremetalsolution::v2::StartInstanceRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::baremetalsolution::v2::StartInstanceResponse>>
 BareMetalSolutionConnection::StartInstance(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::baremetalsolution::v2::StartInstanceResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::baremetalsolution::v2::StartInstanceResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::baremetalsolution::v2::StopInstanceResponse>>
 BareMetalSolutionConnection::StopInstance(
     google::cloud::baremetalsolution::v2::StopInstanceRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::baremetalsolution::v2::StopInstanceResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::baremetalsolution::v2::StopInstanceResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -143,100 +141,91 @@ BareMetalSolutionConnection::StopInstance(
     NoAwaitTag,
     google::cloud::baremetalsolution::v2::StopInstanceRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::baremetalsolution::v2::StopInstanceResponse>>
 BareMetalSolutionConnection::StopInstance(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::baremetalsolution::v2::StopInstanceResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::baremetalsolution::v2::StopInstanceResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<StatusOr<google::cloud::baremetalsolution::v2::
-                    EnableInteractiveSerialConsoleResponse>>
+future<StatusOr<google::cloud::baremetalsolution::v2::EnableInteractiveSerialConsoleResponse>>
 BareMetalSolutionConnection::EnableInteractiveSerialConsole(
-    google::cloud::baremetalsolution::v2::
-        EnableInteractiveSerialConsoleRequest const&) {
+    google::cloud::baremetalsolution::v2::EnableInteractiveSerialConsoleRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::baremetalsolution::v2::
-                   EnableInteractiveSerialConsoleResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::baremetalsolution::v2::EnableInteractiveSerialConsoleResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 BareMetalSolutionConnection::EnableInteractiveSerialConsole(
-    NoAwaitTag, google::cloud::baremetalsolution::v2::
-                    EnableInteractiveSerialConsoleRequest const&) {
+    NoAwaitTag,
+    google::cloud::baremetalsolution::v2::EnableInteractiveSerialConsoleRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<StatusOr<google::cloud::baremetalsolution::v2::
-                    EnableInteractiveSerialConsoleResponse>>
+future<StatusOr<google::cloud::baremetalsolution::v2::EnableInteractiveSerialConsoleResponse>>
 BareMetalSolutionConnection::EnableInteractiveSerialConsole(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::baremetalsolution::v2::
-                   EnableInteractiveSerialConsoleResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::baremetalsolution::v2::EnableInteractiveSerialConsoleResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<StatusOr<google::cloud::baremetalsolution::v2::
-                    DisableInteractiveSerialConsoleResponse>>
+future<StatusOr<google::cloud::baremetalsolution::v2::DisableInteractiveSerialConsoleResponse>>
 BareMetalSolutionConnection::DisableInteractiveSerialConsole(
-    google::cloud::baremetalsolution::v2::
-        DisableInteractiveSerialConsoleRequest const&) {
+    google::cloud::baremetalsolution::v2::DisableInteractiveSerialConsoleRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::baremetalsolution::v2::
-                   DisableInteractiveSerialConsoleResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::baremetalsolution::v2::DisableInteractiveSerialConsoleResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 BareMetalSolutionConnection::DisableInteractiveSerialConsole(
-    NoAwaitTag, google::cloud::baremetalsolution::v2::
-                    DisableInteractiveSerialConsoleRequest const&) {
+    NoAwaitTag,
+    google::cloud::baremetalsolution::v2::DisableInteractiveSerialConsoleRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<StatusOr<google::cloud::baremetalsolution::v2::
-                    DisableInteractiveSerialConsoleResponse>>
+future<StatusOr<google::cloud::baremetalsolution::v2::DisableInteractiveSerialConsoleResponse>>
 BareMetalSolutionConnection::DisableInteractiveSerialConsole(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::baremetalsolution::v2::
-                   DisableInteractiveSerialConsoleResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::baremetalsolution::v2::DisableInteractiveSerialConsoleResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::baremetalsolution::v2::Instance>>
 BareMetalSolutionConnection::DetachLun(
     google::cloud::baremetalsolution::v2::DetachLunRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::baremetalsolution::v2::Instance>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::baremetalsolution::v2::Instance>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation> BareMetalSolutionConnection::DetachLun(
-    NoAwaitTag, google::cloud::baremetalsolution::v2::DetachLunRequest const&) {
+StatusOr<google::longrunning::Operation>
+BareMetalSolutionConnection::DetachLun(
+    NoAwaitTag,
+    google::cloud::baremetalsolution::v2::DetachLunRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::baremetalsolution::v2::Instance>>
-BareMetalSolutionConnection::DetachLun(google::longrunning::Operation const&) {
+BareMetalSolutionConnection::DetachLun(
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::baremetalsolution::v2::Instance>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::baremetalsolution::v2::Instance>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StreamRange<google::cloud::baremetalsolution::v2::SSHKey>
-BareMetalSolutionConnection::ListSSHKeys(
-    google::cloud::baremetalsolution::v2::
-        ListSSHKeysRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::baremetalsolution::v2::SSHKey> BareMetalSolutionConnection::ListSSHKeys(
+    google::cloud::baremetalsolution::v2::ListSSHKeysRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::baremetalsolution::v2::SSHKey>>();
 }
@@ -247,15 +236,14 @@ BareMetalSolutionConnection::CreateSSHKey(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status BareMetalSolutionConnection::DeleteSSHKey(
+Status
+BareMetalSolutionConnection::DeleteSSHKey(
     google::cloud::baremetalsolution::v2::DeleteSSHKeyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::baremetalsolution::v2::Volume>
-BareMetalSolutionConnection::ListVolumes(
-    google::cloud::baremetalsolution::v2::
-        ListVolumesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::baremetalsolution::v2::Volume> BareMetalSolutionConnection::ListVolumes(
+    google::cloud::baremetalsolution::v2::ListVolumesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::baremetalsolution::v2::Volume>>();
 }
@@ -270,8 +258,8 @@ future<StatusOr<google::cloud::baremetalsolution::v2::Volume>>
 BareMetalSolutionConnection::UpdateVolume(
     google::cloud::baremetalsolution::v2::UpdateVolumeRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::baremetalsolution::v2::Volume>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::baremetalsolution::v2::Volume>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -279,15 +267,15 @@ BareMetalSolutionConnection::UpdateVolume(
     NoAwaitTag,
     google::cloud::baremetalsolution::v2::UpdateVolumeRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::baremetalsolution::v2::Volume>>
 BareMetalSolutionConnection::UpdateVolume(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::baremetalsolution::v2::Volume>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::baremetalsolution::v2::Volume>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::Volume>
@@ -300,8 +288,8 @@ future<StatusOr<google::cloud::baremetalsolution::v2::OperationMetadata>>
 BareMetalSolutionConnection::EvictVolume(
     google::cloud::baremetalsolution::v2::EvictVolumeRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::baremetalsolution::v2::OperationMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::baremetalsolution::v2::OperationMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -309,23 +297,23 @@ BareMetalSolutionConnection::EvictVolume(
     NoAwaitTag,
     google::cloud::baremetalsolution::v2::EvictVolumeRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::baremetalsolution::v2::OperationMetadata>>
 BareMetalSolutionConnection::EvictVolume(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::baremetalsolution::v2::OperationMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::baremetalsolution::v2::OperationMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::baremetalsolution::v2::Volume>>
 BareMetalSolutionConnection::ResizeVolume(
     google::cloud::baremetalsolution::v2::ResizeVolumeRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::baremetalsolution::v2::Volume>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::baremetalsolution::v2::Volume>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -333,21 +321,19 @@ BareMetalSolutionConnection::ResizeVolume(
     NoAwaitTag,
     google::cloud::baremetalsolution::v2::ResizeVolumeRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::baremetalsolution::v2::Volume>>
 BareMetalSolutionConnection::ResizeVolume(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::baremetalsolution::v2::Volume>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::baremetalsolution::v2::Volume>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StreamRange<google::cloud::baremetalsolution::v2::Network>
-BareMetalSolutionConnection::ListNetworks(
-    google::cloud::baremetalsolution::v2::
-        ListNetworksRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::baremetalsolution::v2::Network> BareMetalSolutionConnection::ListNetworks(
+    google::cloud::baremetalsolution::v2::ListNetworksRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::baremetalsolution::v2::Network>>();
 }
@@ -368,8 +354,8 @@ future<StatusOr<google::cloud::baremetalsolution::v2::Network>>
 BareMetalSolutionConnection::UpdateNetwork(
     google::cloud::baremetalsolution::v2::UpdateNetworkRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::baremetalsolution::v2::Network>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::baremetalsolution::v2::Network>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -377,15 +363,15 @@ BareMetalSolutionConnection::UpdateNetwork(
     NoAwaitTag,
     google::cloud::baremetalsolution::v2::UpdateNetworkRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::baremetalsolution::v2::Network>>
 BareMetalSolutionConnection::UpdateNetwork(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::baremetalsolution::v2::Network>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::baremetalsolution::v2::Network>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::VolumeSnapshot>
@@ -398,8 +384,8 @@ future<StatusOr<google::cloud::baremetalsolution::v2::VolumeSnapshot>>
 BareMetalSolutionConnection::RestoreVolumeSnapshot(
     google::cloud::baremetalsolution::v2::RestoreVolumeSnapshotRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::baremetalsolution::v2::VolumeSnapshot>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::baremetalsolution::v2::VolumeSnapshot>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -407,18 +393,19 @@ BareMetalSolutionConnection::RestoreVolumeSnapshot(
     NoAwaitTag,
     google::cloud::baremetalsolution::v2::RestoreVolumeSnapshotRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::baremetalsolution::v2::VolumeSnapshot>>
 BareMetalSolutionConnection::RestoreVolumeSnapshot(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::baremetalsolution::v2::VolumeSnapshot>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::baremetalsolution::v2::VolumeSnapshot>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-Status BareMetalSolutionConnection::DeleteVolumeSnapshot(
+Status
+BareMetalSolutionConnection::DeleteVolumeSnapshot(
     google::cloud::baremetalsolution::v2::DeleteVolumeSnapshotRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -429,10 +416,8 @@ BareMetalSolutionConnection::GetVolumeSnapshot(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::baremetalsolution::v2::VolumeSnapshot>
-BareMetalSolutionConnection::ListVolumeSnapshots(
-    google::cloud::baremetalsolution::v2::
-        ListVolumeSnapshotsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::baremetalsolution::v2::VolumeSnapshot> BareMetalSolutionConnection::ListVolumeSnapshots(
+    google::cloud::baremetalsolution::v2::ListVolumeSnapshotsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::baremetalsolution::v2::VolumeSnapshot>>();
 }
@@ -443,10 +428,8 @@ BareMetalSolutionConnection::GetLun(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::baremetalsolution::v2::Lun>
-BareMetalSolutionConnection::ListLuns(
-    google::cloud::baremetalsolution::v2::
-        ListLunsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::baremetalsolution::v2::Lun> BareMetalSolutionConnection::ListLuns(
+    google::cloud::baremetalsolution::v2::ListLunsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::baremetalsolution::v2::Lun>>();
 }
@@ -455,21 +438,24 @@ future<StatusOr<google::cloud::baremetalsolution::v2::OperationMetadata>>
 BareMetalSolutionConnection::EvictLun(
     google::cloud::baremetalsolution::v2::EvictLunRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::baremetalsolution::v2::OperationMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::baremetalsolution::v2::OperationMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation> BareMetalSolutionConnection::EvictLun(
-    NoAwaitTag, google::cloud::baremetalsolution::v2::EvictLunRequest const&) {
+StatusOr<google::longrunning::Operation>
+BareMetalSolutionConnection::EvictLun(
+    NoAwaitTag,
+    google::cloud::baremetalsolution::v2::EvictLunRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::baremetalsolution::v2::OperationMetadata>>
-BareMetalSolutionConnection::EvictLun(google::longrunning::Operation const&) {
+BareMetalSolutionConnection::EvictLun(
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::baremetalsolution::v2::OperationMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::baremetalsolution::v2::OperationMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::NfsShare>
@@ -478,10 +464,8 @@ BareMetalSolutionConnection::GetNfsShare(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::baremetalsolution::v2::NfsShare>
-BareMetalSolutionConnection::ListNfsShares(
-    google::cloud::baremetalsolution::v2::
-        ListNfsSharesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::baremetalsolution::v2::NfsShare> BareMetalSolutionConnection::ListNfsShares(
+    google::cloud::baremetalsolution::v2::ListNfsSharesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::baremetalsolution::v2::NfsShare>>();
 }
@@ -490,8 +474,8 @@ future<StatusOr<google::cloud::baremetalsolution::v2::NfsShare>>
 BareMetalSolutionConnection::UpdateNfsShare(
     google::cloud::baremetalsolution::v2::UpdateNfsShareRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::baremetalsolution::v2::NfsShare>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::baremetalsolution::v2::NfsShare>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -499,23 +483,23 @@ BareMetalSolutionConnection::UpdateNfsShare(
     NoAwaitTag,
     google::cloud::baremetalsolution::v2::UpdateNfsShareRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::baremetalsolution::v2::NfsShare>>
 BareMetalSolutionConnection::UpdateNfsShare(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::baremetalsolution::v2::NfsShare>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::baremetalsolution::v2::NfsShare>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::baremetalsolution::v2::NfsShare>>
 BareMetalSolutionConnection::CreateNfsShare(
     google::cloud::baremetalsolution::v2::CreateNfsShareRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::baremetalsolution::v2::NfsShare>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::baremetalsolution::v2::NfsShare>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -523,15 +507,15 @@ BareMetalSolutionConnection::CreateNfsShare(
     NoAwaitTag,
     google::cloud::baremetalsolution::v2::CreateNfsShareRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::baremetalsolution::v2::NfsShare>>
 BareMetalSolutionConnection::CreateNfsShare(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::baremetalsolution::v2::NfsShare>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::baremetalsolution::v2::NfsShare>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::NfsShare>
@@ -544,8 +528,8 @@ future<StatusOr<google::cloud::baremetalsolution::v2::OperationMetadata>>
 BareMetalSolutionConnection::DeleteNfsShare(
     google::cloud::baremetalsolution::v2::DeleteNfsShareRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::baremetalsolution::v2::OperationMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::baremetalsolution::v2::OperationMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -553,29 +537,26 @@ BareMetalSolutionConnection::DeleteNfsShare(
     NoAwaitTag,
     google::cloud::baremetalsolution::v2::DeleteNfsShareRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::baremetalsolution::v2::OperationMetadata>>
 BareMetalSolutionConnection::DeleteNfsShare(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::baremetalsolution::v2::OperationMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::baremetalsolution::v2::OperationMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StreamRange<google::cloud::baremetalsolution::v2::ProvisioningQuota>
-BareMetalSolutionConnection::ListProvisioningQuotas(
-    google::cloud::baremetalsolution::v2::
-        ListProvisioningQuotasRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::baremetalsolution::v2::ProvisioningQuota> BareMetalSolutionConnection::ListProvisioningQuotas(
+    google::cloud::baremetalsolution::v2::ListProvisioningQuotasRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::baremetalsolution::v2::ProvisioningQuota>>();
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::SubmitProvisioningConfigResponse>
 BareMetalSolutionConnection::SubmitProvisioningConfig(
-    google::cloud::baremetalsolution::v2::
-        SubmitProvisioningConfigRequest const&) {
+    google::cloud::baremetalsolution::v2::SubmitProvisioningConfigRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
@@ -587,15 +568,13 @@ BareMetalSolutionConnection::GetProvisioningConfig(
 
 StatusOr<google::cloud::baremetalsolution::v2::ProvisioningConfig>
 BareMetalSolutionConnection::CreateProvisioningConfig(
-    google::cloud::baremetalsolution::v2::
-        CreateProvisioningConfigRequest const&) {
+    google::cloud::baremetalsolution::v2::CreateProvisioningConfigRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::ProvisioningConfig>
 BareMetalSolutionConnection::UpdateProvisioningConfig(
-    google::cloud::baremetalsolution::v2::
-        UpdateProvisioningConfigRequest const&) {
+    google::cloud::baremetalsolution::v2::UpdateProvisioningConfigRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
@@ -605,18 +584,14 @@ BareMetalSolutionConnection::RenameNetwork(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::baremetalsolution::v2::OSImage>
-BareMetalSolutionConnection::ListOSImages(
-    google::cloud::baremetalsolution::v2::
-        ListOSImagesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::baremetalsolution::v2::OSImage> BareMetalSolutionConnection::ListOSImages(
+    google::cloud::baremetalsolution::v2::ListOSImagesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::baremetalsolution::v2::OSImage>>();
 }
 
-StreamRange<google::cloud::location::Location>
-BareMetalSolutionConnection::ListLocations(
-    google::cloud::location::
-        ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::location::Location> BareMetalSolutionConnection::ListLocations(
+    google::cloud::location::ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::location::Location>>();
 }
@@ -630,19 +605,17 @@ BareMetalSolutionConnection::GetLocation(
 std::shared_ptr<BareMetalSolutionConnection> MakeBareMetalSolutionConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 BareMetalSolutionPolicyOptionList>(options,
-                                                                    __func__);
+      UnifiedCredentialsOptionList,
+      BareMetalSolutionPolicyOptionList>(options, __func__);
   options = baremetalsolution_v2_internal::BareMetalSolutionDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = baremetalsolution_v2_internal::CreateDefaultBareMetalSolutionStub(
-      std::move(auth), options);
+    std::move(auth), options);
   return baremetalsolution_v2_internal::MakeBareMetalSolutionTracingConnection(
-      std::make_shared<
-          baremetalsolution_v2_internal::BareMetalSolutionConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options)));
+      std::make_shared<baremetalsolution_v2_internal::BareMetalSolutionConnectionImpl>(
+      std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

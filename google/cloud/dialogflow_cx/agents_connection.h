@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_AGENTS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_AGENTS_CONNECTION_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/dialogflow_cx/agents_connection_idempotency_policy.h"
 #include "google/cloud/dialogflow_cx/internal/agents_retry_traits.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -30,9 +30,9 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
+#include <google/protobuf/struct.pb.h>
 #include <google/cloud/dialogflow/cx/v3/agent.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
-#include <google/protobuf/struct.pb.h>
 #include <memory>
 #include <string>
 
@@ -68,14 +68,14 @@ class AgentsLimitedErrorCountRetryPolicy : public AgentsRetryPolicy {
    *     @p maximum_failures == 0.
    */
   explicit AgentsLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   AgentsLimitedErrorCountRetryPolicy(
       AgentsLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : AgentsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : AgentsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   AgentsLimitedErrorCountRetryPolicy(
       AgentsLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : AgentsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : AgentsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -95,9 +95,7 @@ class AgentsLimitedErrorCountRetryPolicy : public AgentsRetryPolicy {
   using BaseType = AgentsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      dialogflow_cx_internal::AgentsRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<dialogflow_cx_internal::AgentsRetryTraits> impl_;
 };
 
 /**
@@ -135,12 +133,12 @@ class AgentsLimitedTimeRetryPolicy : public AgentsRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit AgentsLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
   AgentsLimitedTimeRetryPolicy(AgentsLimitedTimeRetryPolicy&& rhs) noexcept
-      : AgentsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+    : AgentsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
   AgentsLimitedTimeRetryPolicy(AgentsLimitedTimeRetryPolicy const& rhs) noexcept
-      : AgentsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+    : AgentsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -154,16 +152,15 @@ class AgentsLimitedTimeRetryPolicy : public AgentsRetryPolicy {
     return impl_.IsPermanentFailure(status);
   }
   std::unique_ptr<AgentsRetryPolicy> clone() const override {
-    return std::make_unique<AgentsLimitedTimeRetryPolicy>(maximum_duration());
+    return std::make_unique<AgentsLimitedTimeRetryPolicy>(
+        maximum_duration());
   }
 
   // This is provided only for backwards compatibility.
   using BaseType = AgentsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      dialogflow_cx_internal::AgentsRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<dialogflow_cx_internal::AgentsRetryTraits> impl_;
 };
 
 /**
@@ -184,77 +181,65 @@ class AgentsConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StreamRange<google::cloud::dialogflow::cx::v3::Agent> ListAgents(
-      google::cloud::dialogflow::cx::v3::ListAgentsRequest request);
+  virtual StreamRange<google::cloud::dialogflow::cx::v3::Agent>
+  ListAgents(google::cloud::dialogflow::cx::v3::ListAgentsRequest request);
 
-  virtual StatusOr<google::cloud::dialogflow::cx::v3::Agent> GetAgent(
-      google::cloud::dialogflow::cx::v3::GetAgentRequest const& request);
+  virtual StatusOr<google::cloud::dialogflow::cx::v3::Agent>
+  GetAgent(google::cloud::dialogflow::cx::v3::GetAgentRequest const& request);
 
-  virtual StatusOr<google::cloud::dialogflow::cx::v3::Agent> CreateAgent(
-      google::cloud::dialogflow::cx::v3::CreateAgentRequest const& request);
+  virtual StatusOr<google::cloud::dialogflow::cx::v3::Agent>
+  CreateAgent(google::cloud::dialogflow::cx::v3::CreateAgentRequest const& request);
 
-  virtual StatusOr<google::cloud::dialogflow::cx::v3::Agent> UpdateAgent(
-      google::cloud::dialogflow::cx::v3::UpdateAgentRequest const& request);
+  virtual StatusOr<google::cloud::dialogflow::cx::v3::Agent>
+  UpdateAgent(google::cloud::dialogflow::cx::v3::UpdateAgentRequest const& request);
 
-  virtual Status DeleteAgent(
-      google::cloud::dialogflow::cx::v3::DeleteAgentRequest const& request);
+  virtual Status
+  DeleteAgent(google::cloud::dialogflow::cx::v3::DeleteAgentRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::dialogflow::cx::v3::ExportAgentResponse>>
-  ExportAgent(
-      google::cloud::dialogflow::cx::v3::ExportAgentRequest const& request);
+  virtual future<StatusOr<google::cloud::dialogflow::cx::v3::ExportAgentResponse>>
+  ExportAgent(google::cloud::dialogflow::cx::v3::ExportAgentRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> ExportAgent(
-      NoAwaitTag,
-      google::cloud::dialogflow::cx::v3::ExportAgentRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  ExportAgent(NoAwaitTag, google::cloud::dialogflow::cx::v3::ExportAgentRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::dialogflow::cx::v3::ExportAgentResponse>>
-  ExportAgent(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::dialogflow::cx::v3::ExportAgentResponse>>
+  ExportAgent( google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<google::protobuf::Struct>> RestoreAgent(
-      google::cloud::dialogflow::cx::v3::RestoreAgentRequest const& request);
+  virtual future<StatusOr<google::protobuf::Struct>>
+  RestoreAgent(google::cloud::dialogflow::cx::v3::RestoreAgentRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> RestoreAgent(
-      NoAwaitTag,
-      google::cloud::dialogflow::cx::v3::RestoreAgentRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  RestoreAgent(NoAwaitTag, google::cloud::dialogflow::cx::v3::RestoreAgentRequest const& request);
 
-  virtual future<StatusOr<google::protobuf::Struct>> RestoreAgent(
-      google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::protobuf::Struct>>
+  RestoreAgent( google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::dialogflow::cx::v3::AgentValidationResult>
-  ValidateAgent(
-      google::cloud::dialogflow::cx::v3::ValidateAgentRequest const& request);
+  ValidateAgent(google::cloud::dialogflow::cx::v3::ValidateAgentRequest const& request);
 
   virtual StatusOr<google::cloud::dialogflow::cx::v3::AgentValidationResult>
-  GetAgentValidationResult(
-      google::cloud::dialogflow::cx::v3::GetAgentValidationResultRequest const&
-          request);
+  GetAgentValidationResult(google::cloud::dialogflow::cx::v3::GetAgentValidationResultRequest const& request);
 
   virtual StatusOr<google::cloud::dialogflow::cx::v3::GenerativeSettings>
-  GetGenerativeSettings(
-      google::cloud::dialogflow::cx::v3::GetGenerativeSettingsRequest const&
-          request);
+  GetGenerativeSettings(google::cloud::dialogflow::cx::v3::GetGenerativeSettingsRequest const& request);
 
   virtual StatusOr<google::cloud::dialogflow::cx::v3::GenerativeSettings>
-  UpdateGenerativeSettings(
-      google::cloud::dialogflow::cx::v3::UpdateGenerativeSettingsRequest const&
-          request);
+  UpdateGenerativeSettings(google::cloud::dialogflow::cx::v3::UpdateGenerativeSettingsRequest const& request);
 
-  virtual StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request);
+  virtual StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request);
 
-  virtual StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request);
+  virtual StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request);
 
-  virtual StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 
-  virtual Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request);
+  virtual Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request);
 };
 
 /**
@@ -289,7 +274,8 @@ std::shared_ptr<AgentsConnection> MakeAgentsConnection(
  *
  * @deprecated Please use the `location` overload instead.
  */
-std::shared_ptr<AgentsConnection> MakeAgentsConnection(Options options = {});
+std::shared_ptr<AgentsConnection> MakeAgentsConnection(
+    Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_cx

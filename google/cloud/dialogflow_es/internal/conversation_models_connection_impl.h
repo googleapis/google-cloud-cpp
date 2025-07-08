@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_ES_INTERNAL_CONVERSATION_MODELS_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_ES_INTERNAL_CONVERSATION_MODELS_CONNECTION_IMPL_H
 
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/dialogflow_es/conversation_models_connection.h"
 #include "google/cloud/dialogflow_es/conversation_models_connection_idempotency_policy.h"
 #include "google/cloud/dialogflow_es/conversation_models_options.h"
 #include "google/cloud/dialogflow_es/internal/conversation_models_retry_traits.h"
 #include "google/cloud/dialogflow_es/internal/conversation_models_stub.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -46,122 +46,93 @@ class ConversationModelsConnectionImpl
   ~ConversationModelsConnectionImpl() override = default;
 
   ConversationModelsConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<dialogflow_es_internal::ConversationModelsStub> stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<dialogflow_es_internal::ConversationModelsStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
   future<StatusOr<google::cloud::dialogflow::v2::ConversationModel>>
-  CreateConversationModel(
-      google::cloud::dialogflow::v2::CreateConversationModelRequest const&
-          request) override;
+  CreateConversationModel(google::cloud::dialogflow::v2::CreateConversationModelRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> CreateConversationModel(
-      NoAwaitTag,
-      google::cloud::dialogflow::v2::CreateConversationModelRequest const&
-          request) override;
+  StatusOr<google::longrunning::Operation>
+  CreateConversationModel(NoAwaitTag,
+      google::cloud::dialogflow::v2::CreateConversationModelRequest const& request) override;
 
   future<StatusOr<google::cloud::dialogflow::v2::ConversationModel>>
   CreateConversationModel(
       google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::dialogflow::v2::ConversationModel>
-  GetConversationModel(
-      google::cloud::dialogflow::v2::GetConversationModelRequest const& request)
-      override;
+  GetConversationModel(google::cloud::dialogflow::v2::GetConversationModelRequest const& request) override;
 
   StreamRange<google::cloud::dialogflow::v2::ConversationModel>
-  ListConversationModels(
-      google::cloud::dialogflow::v2::ListConversationModelsRequest request)
-      override;
+  ListConversationModels(google::cloud::dialogflow::v2::ListConversationModelsRequest request) override;
 
-  future<StatusOr<
-      google::cloud::dialogflow::v2::DeleteConversationModelOperationMetadata>>
-  DeleteConversationModel(
-      google::cloud::dialogflow::v2::DeleteConversationModelRequest const&
-          request) override;
+  future<StatusOr<google::cloud::dialogflow::v2::DeleteConversationModelOperationMetadata>>
+  DeleteConversationModel(google::cloud::dialogflow::v2::DeleteConversationModelRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> DeleteConversationModel(
-      NoAwaitTag,
-      google::cloud::dialogflow::v2::DeleteConversationModelRequest const&
-          request) override;
+  StatusOr<google::longrunning::Operation>
+  DeleteConversationModel(NoAwaitTag,
+      google::cloud::dialogflow::v2::DeleteConversationModelRequest const& request) override;
 
-  future<StatusOr<
-      google::cloud::dialogflow::v2::DeleteConversationModelOperationMetadata>>
+  future<StatusOr<google::cloud::dialogflow::v2::DeleteConversationModelOperationMetadata>>
   DeleteConversationModel(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<
-      google::cloud::dialogflow::v2::DeployConversationModelOperationMetadata>>
-  DeployConversationModel(
-      google::cloud::dialogflow::v2::DeployConversationModelRequest const&
-          request) override;
+  future<StatusOr<google::cloud::dialogflow::v2::DeployConversationModelOperationMetadata>>
+  DeployConversationModel(google::cloud::dialogflow::v2::DeployConversationModelRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> DeployConversationModel(
-      NoAwaitTag,
-      google::cloud::dialogflow::v2::DeployConversationModelRequest const&
-          request) override;
+  StatusOr<google::longrunning::Operation>
+  DeployConversationModel(NoAwaitTag,
+      google::cloud::dialogflow::v2::DeployConversationModelRequest const& request) override;
 
-  future<StatusOr<
-      google::cloud::dialogflow::v2::DeployConversationModelOperationMetadata>>
+  future<StatusOr<google::cloud::dialogflow::v2::DeployConversationModelOperationMetadata>>
   DeployConversationModel(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::dialogflow::v2::
-                      UndeployConversationModelOperationMetadata>>
-  UndeployConversationModel(
-      google::cloud::dialogflow::v2::UndeployConversationModelRequest const&
-          request) override;
+  future<StatusOr<google::cloud::dialogflow::v2::UndeployConversationModelOperationMetadata>>
+  UndeployConversationModel(google::cloud::dialogflow::v2::UndeployConversationModelRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> UndeployConversationModel(
-      NoAwaitTag,
-      google::cloud::dialogflow::v2::UndeployConversationModelRequest const&
-          request) override;
+  StatusOr<google::longrunning::Operation>
+  UndeployConversationModel(NoAwaitTag,
+      google::cloud::dialogflow::v2::UndeployConversationModelRequest const& request) override;
 
-  future<StatusOr<google::cloud::dialogflow::v2::
-                      UndeployConversationModelOperationMetadata>>
+  future<StatusOr<google::cloud::dialogflow::v2::UndeployConversationModelOperationMetadata>>
   UndeployConversationModel(
       google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::dialogflow::v2::ConversationModelEvaluation>
-  GetConversationModelEvaluation(
-      google::cloud::dialogflow::v2::
-          GetConversationModelEvaluationRequest const& request) override;
+  GetConversationModelEvaluation(google::cloud::dialogflow::v2::GetConversationModelEvaluationRequest const& request) override;
 
   StreamRange<google::cloud::dialogflow::v2::ConversationModelEvaluation>
-  ListConversationModelEvaluations(
-      google::cloud::dialogflow::v2::ListConversationModelEvaluationsRequest
-          request) override;
+  ListConversationModelEvaluations(google::cloud::dialogflow::v2::ListConversationModelEvaluationsRequest request) override;
 
   future<StatusOr<google::cloud::dialogflow::v2::ConversationModelEvaluation>>
-  CreateConversationModelEvaluation(
-      google::cloud::dialogflow::v2::
-          CreateConversationModelEvaluationRequest const& request) override;
+  CreateConversationModelEvaluation(google::cloud::dialogflow::v2::CreateConversationModelEvaluationRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> CreateConversationModelEvaluation(
-      NoAwaitTag,
-      google::cloud::dialogflow::v2::
-          CreateConversationModelEvaluationRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  CreateConversationModelEvaluation(NoAwaitTag,
+      google::cloud::dialogflow::v2::CreateConversationModelEvaluationRequest const& request) override;
 
   future<StatusOr<google::cloud::dialogflow::v2::ConversationModelEvaluation>>
   CreateConversationModelEvaluation(
       google::longrunning::Operation const& operation) override;
 
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request) override;
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request) override;
 
-  StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request) override;
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request) override;
 
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request) override;
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

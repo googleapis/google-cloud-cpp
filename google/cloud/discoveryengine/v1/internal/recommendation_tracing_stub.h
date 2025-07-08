@@ -36,30 +36,31 @@ class RecommendationServiceTracingStub : public RecommendationServiceStub {
  public:
   ~RecommendationServiceTracingStub() override = default;
 
-  explicit RecommendationServiceTracingStub(
-      std::shared_ptr<RecommendationServiceStub> child);
+  explicit RecommendationServiceTracingStub(std::shared_ptr<RecommendationServiceStub> child);
 
   StatusOr<google::cloud::discoveryengine::v1::RecommendResponse> Recommend(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::discoveryengine::v1::RecommendRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::discoveryengine::v1::RecommendRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::shared_ptr<RecommendationServiceStub> child_;
-  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
-      propagator_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

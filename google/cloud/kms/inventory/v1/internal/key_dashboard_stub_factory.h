@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_KMS_INVENTORY_V1_INTERNAL_KEY_DASHBOARD_STUB_FACTORY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_KMS_INVENTORY_V1_INTERNAL_KEY_DASHBOARD_STUB_FACTORY_H
 
-#include "google/cloud/kms/inventory/v1/internal/key_dashboard_stub.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/kms/inventory/v1/internal/key_dashboard_stub.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>

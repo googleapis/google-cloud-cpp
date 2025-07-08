@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TALENT_V4_COMPANY_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TALENT_V4_COMPANY_OPTIONS_H
 
-#include "google/cloud/talent/v4/company_connection.h"
-#include "google/cloud/talent/v4/company_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
+#include "google/cloud/talent/v4/company_connection.h"
+#include "google/cloud/talent/v4/company_connection_idempotency_policy.h"
 #include "google/cloud/version.h"
 #include <memory>
 

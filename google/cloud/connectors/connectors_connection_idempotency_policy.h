@@ -26,13 +26,10 @@ namespace cloud {
 namespace connectors {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use
-/// connectors_v1::MakeDefaultConnectorsConnectionIdempotencyPolicy directly.
-using ::google::cloud::connectors_v1::
-    MakeDefaultConnectorsConnectionIdempotencyPolicy;
+/// @deprecated Use connectors_v1::MakeDefaultConnectorsConnectionIdempotencyPolicy directly.
+using ::google::cloud::connectors_v1::MakeDefaultConnectorsConnectionIdempotencyPolicy;
 
-/// @deprecated Use connectors_v1::ConnectorsConnectionIdempotencyPolicy
-/// directly.
+/// @deprecated Use connectors_v1::ConnectorsConnectionIdempotencyPolicy directly.
 using ::google::cloud::connectors_v1::ConnectorsConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -36,36 +36,29 @@ class ReservationBlocksTracingConnection
   ~ReservationBlocksTracingConnection() override = default;
 
   explicit ReservationBlocksTracingConnection(
-      std::shared_ptr<
-          compute_reservation_blocks_v1::ReservationBlocksConnection>
-          child);
+    std::shared_ptr<compute_reservation_blocks_v1::ReservationBlocksConnection> child);
 
   Options options() override { return child_->options(); }
 
   StatusOr<google::cloud::cpp::compute::v1::ReservationBlocksGetResponse>
-  GetReservationBlocksGetResponse(
-      google::cloud::cpp::compute::reservation_blocks::v1::
-          GetReservationBlocksGetResponseRequest const& request) override;
+  GetReservationBlocksGetResponse(google::cloud::cpp::compute::reservation_blocks::v1::GetReservationBlocksGetResponseRequest const& request) override;
 
   StreamRange<google::cloud::cpp::compute::v1::ReservationBlock>
-  ListReservationBlocks(google::cloud::cpp::compute::reservation_blocks::v1::
-                            ListReservationBlocksRequest request) override;
+  ListReservationBlocks(google::cloud::cpp::compute::reservation_blocks::v1::ListReservationBlocksRequest request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PerformMaintenance(google::cloud::cpp::compute::reservation_blocks::v1::
-                         PerformMaintenanceRequest const& request) override;
+  PerformMaintenance(google::cloud::cpp::compute::reservation_blocks::v1::PerformMaintenanceRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation> PerformMaintenance(
-      NoAwaitTag, google::cloud::cpp::compute::reservation_blocks::v1::
-                      PerformMaintenanceRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  PerformMaintenance(NoAwaitTag,
+      google::cloud::cpp::compute::reservation_blocks::v1::PerformMaintenanceRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   PerformMaintenance(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
  private:
-  std::shared_ptr<compute_reservation_blocks_v1::ReservationBlocksConnection>
-      child_;
+  std::shared_ptr<compute_reservation_blocks_v1::ReservationBlocksConnection> child_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -78,8 +71,7 @@ class ReservationBlocksTracingConnection
  */
 std::shared_ptr<compute_reservation_blocks_v1::ReservationBlocksConnection>
 MakeReservationBlocksTracingConnection(
-    std::shared_ptr<compute_reservation_blocks_v1::ReservationBlocksConnection>
-        conn);
+    std::shared_ptr<compute_reservation_blocks_v1::ReservationBlocksConnection> conn);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_reservation_blocks_v1_internal

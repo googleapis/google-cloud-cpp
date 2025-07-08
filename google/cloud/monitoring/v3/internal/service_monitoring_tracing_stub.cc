@@ -32,48 +32,44 @@ ServiceMonitoringServiceTracingStub::ServiceMonitoringServiceTracingStub(
     std::shared_ptr<ServiceMonitoringServiceStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
-StatusOr<google::monitoring::v3::Service>
-ServiceMonitoringServiceTracingStub::CreateService(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::monitoring::v3::Service> ServiceMonitoringServiceTracingStub::CreateService(
+    grpc::ClientContext& context,
+    Options const& options,
     google::monitoring::v3::CreateServiceRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.monitoring.v3.ServiceMonitoringService", "CreateService");
+  auto span = internal::MakeSpanGrpc("google.monitoring.v3.ServiceMonitoringService", "CreateService");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateService(context, options, request));
 }
 
-StatusOr<google::monitoring::v3::Service>
-ServiceMonitoringServiceTracingStub::GetService(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::monitoring::v3::Service> ServiceMonitoringServiceTracingStub::GetService(
+    grpc::ClientContext& context,
+    Options const& options,
     google::monitoring::v3::GetServiceRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.monitoring.v3.ServiceMonitoringService", "GetService");
+  auto span = internal::MakeSpanGrpc("google.monitoring.v3.ServiceMonitoringService", "GetService");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetService(context, options, request));
 }
 
-StatusOr<google::monitoring::v3::ListServicesResponse>
-ServiceMonitoringServiceTracingStub::ListServices(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::monitoring::v3::ListServicesResponse> ServiceMonitoringServiceTracingStub::ListServices(
+    grpc::ClientContext& context,
+    Options const& options,
     google::monitoring::v3::ListServicesRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.monitoring.v3.ServiceMonitoringService", "ListServices");
+  auto span = internal::MakeSpanGrpc("google.monitoring.v3.ServiceMonitoringService", "ListServices");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListServices(context, options, request));
 }
 
-StatusOr<google::monitoring::v3::Service>
-ServiceMonitoringServiceTracingStub::UpdateService(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::monitoring::v3::Service> ServiceMonitoringServiceTracingStub::UpdateService(
+    grpc::ClientContext& context,
+    Options const& options,
     google::monitoring::v3::UpdateServiceRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.monitoring.v3.ServiceMonitoringService", "UpdateService");
+  auto span = internal::MakeSpanGrpc("google.monitoring.v3.ServiceMonitoringService", "UpdateService");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -81,89 +77,74 @@ ServiceMonitoringServiceTracingStub::UpdateService(
 }
 
 Status ServiceMonitoringServiceTracingStub::DeleteService(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::monitoring::v3::DeleteServiceRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.monitoring.v3.ServiceMonitoringService", "DeleteService");
+  auto span = internal::MakeSpanGrpc("google.monitoring.v3.ServiceMonitoringService", "DeleteService");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeleteService(context, options, request));
 }
 
-StatusOr<google::monitoring::v3::ServiceLevelObjective>
-ServiceMonitoringServiceTracingStub::CreateServiceLevelObjective(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::monitoring::v3::ServiceLevelObjective> ServiceMonitoringServiceTracingStub::CreateServiceLevelObjective(
+    grpc::ClientContext& context,
+    Options const& options,
     google::monitoring::v3::CreateServiceLevelObjectiveRequest const& request) {
-  auto span =
-      internal::MakeSpanGrpc("google.monitoring.v3.ServiceMonitoringService",
-                             "CreateServiceLevelObjective");
+  auto span = internal::MakeSpanGrpc("google.monitoring.v3.ServiceMonitoringService", "CreateServiceLevelObjective");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span,
-      child_->CreateServiceLevelObjective(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->CreateServiceLevelObjective(context, options, request));
 }
 
-StatusOr<google::monitoring::v3::ServiceLevelObjective>
-ServiceMonitoringServiceTracingStub::GetServiceLevelObjective(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::monitoring::v3::ServiceLevelObjective> ServiceMonitoringServiceTracingStub::GetServiceLevelObjective(
+    grpc::ClientContext& context,
+    Options const& options,
     google::monitoring::v3::GetServiceLevelObjectiveRequest const& request) {
-  auto span =
-      internal::MakeSpanGrpc("google.monitoring.v3.ServiceMonitoringService",
-                             "GetServiceLevelObjective");
+  auto span = internal::MakeSpanGrpc("google.monitoring.v3.ServiceMonitoringService", "GetServiceLevelObjective");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span,
-      child_->GetServiceLevelObjective(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->GetServiceLevelObjective(context, options, request));
 }
 
-StatusOr<google::monitoring::v3::ListServiceLevelObjectivesResponse>
-ServiceMonitoringServiceTracingStub::ListServiceLevelObjectives(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::monitoring::v3::ListServiceLevelObjectivesResponse> ServiceMonitoringServiceTracingStub::ListServiceLevelObjectives(
+    grpc::ClientContext& context,
+    Options const& options,
     google::monitoring::v3::ListServiceLevelObjectivesRequest const& request) {
-  auto span =
-      internal::MakeSpanGrpc("google.monitoring.v3.ServiceMonitoringService",
-                             "ListServiceLevelObjectives");
+  auto span = internal::MakeSpanGrpc("google.monitoring.v3.ServiceMonitoringService", "ListServiceLevelObjectives");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span,
-      child_->ListServiceLevelObjectives(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->ListServiceLevelObjectives(context, options, request));
 }
 
-StatusOr<google::monitoring::v3::ServiceLevelObjective>
-ServiceMonitoringServiceTracingStub::UpdateServiceLevelObjective(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::monitoring::v3::ServiceLevelObjective> ServiceMonitoringServiceTracingStub::UpdateServiceLevelObjective(
+    grpc::ClientContext& context,
+    Options const& options,
     google::monitoring::v3::UpdateServiceLevelObjectiveRequest const& request) {
-  auto span =
-      internal::MakeSpanGrpc("google.monitoring.v3.ServiceMonitoringService",
-                             "UpdateServiceLevelObjective");
+  auto span = internal::MakeSpanGrpc("google.monitoring.v3.ServiceMonitoringService", "UpdateServiceLevelObjective");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span,
-      child_->UpdateServiceLevelObjective(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->UpdateServiceLevelObjective(context, options, request));
 }
 
 Status ServiceMonitoringServiceTracingStub::DeleteServiceLevelObjective(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::monitoring::v3::DeleteServiceLevelObjectiveRequest const& request) {
-  auto span =
-      internal::MakeSpanGrpc("google.monitoring.v3.ServiceMonitoringService",
-                             "DeleteServiceLevelObjective");
+  auto span = internal::MakeSpanGrpc("google.monitoring.v3.ServiceMonitoringService", "DeleteServiceLevelObjective");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span,
-      child_->DeleteServiceLevelObjective(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->DeleteServiceLevelObjective(context, options, request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-std::shared_ptr<ServiceMonitoringServiceStub>
-MakeServiceMonitoringServiceTracingStub(
+std::shared_ptr<ServiceMonitoringServiceStub> MakeServiceMonitoringServiceTracingStub(
     std::shared_ptr<ServiceMonitoringServiceStub> stub) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return std::make_shared<ServiceMonitoringServiceTracingStub>(std::move(stub));

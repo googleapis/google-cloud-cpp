@@ -31,18 +31,18 @@ ConnectorsAuth::ConnectorsAuth(
     std::shared_ptr<ConnectorsStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::connectors::v1::ListConnectionsResponse>
-ConnectorsAuth::ListConnections(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::connectors::v1::ListConnectionsResponse> ConnectorsAuth::ListConnections(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::connectors::v1::ListConnectionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListConnections(context, options, request);
 }
 
-StatusOr<google::cloud::connectors::v1::Connection>
-ConnectorsAuth::GetConnection(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::connectors::v1::Connection> ConnectorsAuth::GetConnection(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::connectors::v1::GetConnectionRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -51,27 +51,28 @@ ConnectorsAuth::GetConnection(
 
 future<StatusOr<google::longrunning::Operation>>
 ConnectorsAuth::AsyncCreateConnection(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::connectors::v1::CreateConnectionRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::connectors::v1::CreateConnectionRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreateConnection(cq, *std::move(context),
-                                            std::move(options), request);
+        return child->AsyncCreateConnection(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation> ConnectorsAuth::CreateConnection(
-    grpc::ClientContext& context, Options options,
-    google::cloud::connectors::v1::CreateConnectionRequest const& request) {
+StatusOr<google::longrunning::Operation>
+ConnectorsAuth::CreateConnection(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::connectors::v1::CreateConnectionRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateConnection(context, options, request);
@@ -79,27 +80,28 @@ StatusOr<google::longrunning::Operation> ConnectorsAuth::CreateConnection(
 
 future<StatusOr<google::longrunning::Operation>>
 ConnectorsAuth::AsyncUpdateConnection(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::connectors::v1::UpdateConnectionRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::connectors::v1::UpdateConnectionRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncUpdateConnection(cq, *std::move(context),
-                                            std::move(options), request);
+        return child->AsyncUpdateConnection(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation> ConnectorsAuth::UpdateConnection(
-    grpc::ClientContext& context, Options options,
-    google::cloud::connectors::v1::UpdateConnectionRequest const& request) {
+StatusOr<google::longrunning::Operation>
+ConnectorsAuth::UpdateConnection(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::connectors::v1::UpdateConnectionRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateConnection(context, options, request);
@@ -107,35 +109,36 @@ StatusOr<google::longrunning::Operation> ConnectorsAuth::UpdateConnection(
 
 future<StatusOr<google::longrunning::Operation>>
 ConnectorsAuth::AsyncDeleteConnection(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::connectors::v1::DeleteConnectionRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::connectors::v1::DeleteConnectionRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDeleteConnection(cq, *std::move(context),
-                                            std::move(options), request);
+        return child->AsyncDeleteConnection(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation> ConnectorsAuth::DeleteConnection(
-    grpc::ClientContext& context, Options options,
-    google::cloud::connectors::v1::DeleteConnectionRequest const& request) {
+StatusOr<google::longrunning::Operation>
+ConnectorsAuth::DeleteConnection(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::connectors::v1::DeleteConnectionRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteConnection(context, options, request);
 }
 
-StatusOr<google::cloud::connectors::v1::ListProvidersResponse>
-ConnectorsAuth::ListProviders(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::connectors::v1::ListProvidersResponse> ConnectorsAuth::ListProviders(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::connectors::v1::ListProvidersRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -143,16 +146,17 @@ ConnectorsAuth::ListProviders(
 }
 
 StatusOr<google::cloud::connectors::v1::Provider> ConnectorsAuth::GetProvider(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::connectors::v1::GetProviderRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetProvider(context, options, request);
 }
 
-StatusOr<google::cloud::connectors::v1::ListConnectorsResponse>
-ConnectorsAuth::ListConnectors(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::connectors::v1::ListConnectorsResponse> ConnectorsAuth::ListConnectors(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::connectors::v1::ListConnectorsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -160,37 +164,36 @@ ConnectorsAuth::ListConnectors(
 }
 
 StatusOr<google::cloud::connectors::v1::Connector> ConnectorsAuth::GetConnector(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::connectors::v1::GetConnectorRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetConnector(context, options, request);
 }
 
-StatusOr<google::cloud::connectors::v1::ListConnectorVersionsResponse>
-ConnectorsAuth::ListConnectorVersions(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::connectors::v1::ListConnectorVersionsRequest const&
-        request) {
+StatusOr<google::cloud::connectors::v1::ListConnectorVersionsResponse> ConnectorsAuth::ListConnectorVersions(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::connectors::v1::ListConnectorVersionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListConnectorVersions(context, options, request);
 }
 
-StatusOr<google::cloud::connectors::v1::ConnectorVersion>
-ConnectorsAuth::GetConnectorVersion(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::connectors::v1::ConnectorVersion> ConnectorsAuth::GetConnectorVersion(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::connectors::v1::GetConnectorVersionRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetConnectorVersion(context, options, request);
 }
 
-StatusOr<google::cloud::connectors::v1::ConnectionSchemaMetadata>
-ConnectorsAuth::GetConnectionSchemaMetadata(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::connectors::v1::GetConnectionSchemaMetadataRequest const&
-        request) {
+StatusOr<google::cloud::connectors::v1::ConnectionSchemaMetadata> ConnectorsAuth::GetConnectionSchemaMetadata(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::connectors::v1::GetConnectionSchemaMetadataRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetConnectionSchemaMetadata(context, options, request);
@@ -198,16 +201,14 @@ ConnectorsAuth::GetConnectionSchemaMetadata(
 
 future<StatusOr<google::longrunning::Operation>>
 ConnectorsAuth::AsyncRefreshConnectionSchemaMetadata(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::connectors::v1::RefreshConnectionSchemaMetadataRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::connectors::v1::RefreshConnectionSchemaMetadataRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
@@ -219,55 +220,53 @@ ConnectorsAuth::AsyncRefreshConnectionSchemaMetadata(
 
 StatusOr<google::longrunning::Operation>
 ConnectorsAuth::RefreshConnectionSchemaMetadata(
-    grpc::ClientContext& context, Options options,
-    google::cloud::connectors::v1::RefreshConnectionSchemaMetadataRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::connectors::v1::RefreshConnectionSchemaMetadataRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->RefreshConnectionSchemaMetadata(context, options, request);
 }
 
-StatusOr<google::cloud::connectors::v1::ListRuntimeEntitySchemasResponse>
-ConnectorsAuth::ListRuntimeEntitySchemas(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::connectors::v1::ListRuntimeEntitySchemasRequest const&
-        request) {
+StatusOr<google::cloud::connectors::v1::ListRuntimeEntitySchemasResponse> ConnectorsAuth::ListRuntimeEntitySchemas(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::connectors::v1::ListRuntimeEntitySchemasRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListRuntimeEntitySchemas(context, options, request);
 }
 
-StatusOr<google::cloud::connectors::v1::ListRuntimeActionSchemasResponse>
-ConnectorsAuth::ListRuntimeActionSchemas(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::connectors::v1::ListRuntimeActionSchemasRequest const&
-        request) {
+StatusOr<google::cloud::connectors::v1::ListRuntimeActionSchemasResponse> ConnectorsAuth::ListRuntimeActionSchemas(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::connectors::v1::ListRuntimeActionSchemasRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListRuntimeActionSchemas(context, options, request);
 }
 
-StatusOr<google::cloud::connectors::v1::RuntimeConfig>
-ConnectorsAuth::GetRuntimeConfig(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::connectors::v1::RuntimeConfig> ConnectorsAuth::GetRuntimeConfig(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::connectors::v1::GetRuntimeConfigRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetRuntimeConfig(context, options, request);
 }
 
-StatusOr<google::cloud::connectors::v1::Settings>
-ConnectorsAuth::GetGlobalSettings(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::connectors::v1::Settings> ConnectorsAuth::GetGlobalSettings(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::connectors::v1::GetGlobalSettingsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetGlobalSettings(context, options, request);
 }
 
-StatusOr<google::cloud::location::ListLocationsResponse>
-ConnectorsAuth::ListLocations(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::location::ListLocationsResponse> ConnectorsAuth::ListLocations(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -275,7 +274,8 @@ ConnectorsAuth::ListLocations(
 }
 
 StatusOr<google::cloud::location::Location> ConnectorsAuth::GetLocation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -283,7 +283,8 @@ StatusOr<google::cloud::location::Location> ConnectorsAuth::GetLocation(
 }
 
 StatusOr<google::iam::v1::Policy> ConnectorsAuth::SetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -291,25 +292,26 @@ StatusOr<google::iam::v1::Policy> ConnectorsAuth::SetIamPolicy(
 }
 
 StatusOr<google::iam::v1::Policy> ConnectorsAuth::GetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetIamPolicy(context, options, request);
 }
 
-StatusOr<google::iam::v1::TestIamPermissionsResponse>
-ConnectorsAuth::TestIamPermissions(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::iam::v1::TestIamPermissionsResponse> ConnectorsAuth::TestIamPermissions(
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->TestIamPermissions(context, options, request);
 }
 
-StatusOr<google::longrunning::ListOperationsResponse>
-ConnectorsAuth::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse> ConnectorsAuth::ListOperations(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -317,7 +319,8 @@ ConnectorsAuth::ListOperations(
 }
 
 StatusOr<google::longrunning::Operation> ConnectorsAuth::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -325,7 +328,8 @@ StatusOr<google::longrunning::Operation> ConnectorsAuth::GetOperation(
 }
 
 Status ConnectorsAuth::DeleteOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -333,7 +337,8 @@ Status ConnectorsAuth::DeleteOperation(
 }
 
 Status ConnectorsAuth::CancelOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -347,16 +352,15 @@ ConnectorsAuth::AsyncGetOperation(
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncGetOperation(cq, *std::move(context),
-                                        std::move(options), request);
+        return child->AsyncGetOperation(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
@@ -365,14 +369,13 @@ future<Status> ConnectorsAuth::AsyncCancelOperation(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) return make_ready_future(std::move(context).status());
-        return child->AsyncCancelOperation(cq, *std::move(context),
-                                           std::move(options), request);
+        return child->AsyncCancelOperation(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 

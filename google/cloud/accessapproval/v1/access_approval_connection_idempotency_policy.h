@@ -34,47 +34,38 @@ class AccessApprovalConnectionIdempotencyPolicy {
   virtual ~AccessApprovalConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<AccessApprovalConnectionIdempotencyPolicy> clone()
-      const;
+  virtual std::unique_ptr<AccessApprovalConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency ListApprovalRequests(
-      google::cloud::accessapproval::v1::ListApprovalRequestsMessage request);
+  virtual google::cloud::Idempotency
+  ListApprovalRequests(google::cloud::accessapproval::v1::ListApprovalRequestsMessage request);
 
-  virtual google::cloud::Idempotency GetApprovalRequest(
-      google::cloud::accessapproval::v1::GetApprovalRequestMessage const&
-          request);
+  virtual google::cloud::Idempotency
+  GetApprovalRequest(google::cloud::accessapproval::v1::GetApprovalRequestMessage const& request);
 
-  virtual google::cloud::Idempotency ApproveApprovalRequest(
-      google::cloud::accessapproval::v1::ApproveApprovalRequestMessage const&
-          request);
+  virtual google::cloud::Idempotency
+  ApproveApprovalRequest(google::cloud::accessapproval::v1::ApproveApprovalRequestMessage const& request);
 
-  virtual google::cloud::Idempotency DismissApprovalRequest(
-      google::cloud::accessapproval::v1::DismissApprovalRequestMessage const&
-          request);
+  virtual google::cloud::Idempotency
+  DismissApprovalRequest(google::cloud::accessapproval::v1::DismissApprovalRequestMessage const& request);
 
-  virtual google::cloud::Idempotency InvalidateApprovalRequest(
-      google::cloud::accessapproval::v1::InvalidateApprovalRequestMessage const&
-          request);
+  virtual google::cloud::Idempotency
+  InvalidateApprovalRequest(google::cloud::accessapproval::v1::InvalidateApprovalRequestMessage const& request);
 
-  virtual google::cloud::Idempotency GetAccessApprovalSettings(
-      google::cloud::accessapproval::v1::GetAccessApprovalSettingsMessage const&
-          request);
+  virtual google::cloud::Idempotency
+  GetAccessApprovalSettings(google::cloud::accessapproval::v1::GetAccessApprovalSettingsMessage const& request);
 
-  virtual google::cloud::Idempotency UpdateAccessApprovalSettings(
-      google::cloud::accessapproval::v1::
-          UpdateAccessApprovalSettingsMessage const& request);
+  virtual google::cloud::Idempotency
+  UpdateAccessApprovalSettings(google::cloud::accessapproval::v1::UpdateAccessApprovalSettingsMessage const& request);
 
-  virtual google::cloud::Idempotency DeleteAccessApprovalSettings(
-      google::cloud::accessapproval::v1::
-          DeleteAccessApprovalSettingsMessage const& request);
+  virtual google::cloud::Idempotency
+  DeleteAccessApprovalSettings(google::cloud::accessapproval::v1::DeleteAccessApprovalSettingsMessage const& request);
 
-  virtual google::cloud::Idempotency GetAccessApprovalServiceAccount(
-      google::cloud::accessapproval::v1::
-          GetAccessApprovalServiceAccountMessage const& request);
+  virtual google::cloud::Idempotency
+  GetAccessApprovalServiceAccount(google::cloud::accessapproval::v1::GetAccessApprovalServiceAccountMessage const& request);
 };
 
 std::unique_ptr<AccessApprovalConnectionIdempotencyPolicy>
-MakeDefaultAccessApprovalConnectionIdempotencyPolicy();
+    MakeDefaultAccessApprovalConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace accessapproval_v1

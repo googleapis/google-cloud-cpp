@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAPROC_V1_INTERNAL_NODE_GROUP_CONTROLLER_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAPROC_V1_INTERNAL_NODE_GROUP_CONTROLLER_CONNECTION_IMPL_H
 
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/dataproc/v1/internal/node_group_controller_retry_traits.h"
 #include "google/cloud/dataproc/v1/internal/node_group_controller_stub.h"
 #include "google/cloud/dataproc/v1/node_group_controller_connection.h"
 #include "google/cloud/dataproc/v1/node_group_controller_connection_idempotency_policy.h"
 #include "google/cloud/dataproc/v1/node_group_controller_options.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -46,59 +46,57 @@ class NodeGroupControllerConnectionImpl
   ~NodeGroupControllerConnectionImpl() override = default;
 
   NodeGroupControllerConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<dataproc_v1_internal::NodeGroupControllerStub> stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<dataproc_v1_internal::NodeGroupControllerStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
-  future<StatusOr<google::cloud::dataproc::v1::NodeGroup>> CreateNodeGroup(
-      google::cloud::dataproc::v1::CreateNodeGroupRequest const& request)
-      override;
+  future<StatusOr<google::cloud::dataproc::v1::NodeGroup>>
+  CreateNodeGroup(google::cloud::dataproc::v1::CreateNodeGroupRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> CreateNodeGroup(
-      NoAwaitTag,
-      google::cloud::dataproc::v1::CreateNodeGroupRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  CreateNodeGroup(NoAwaitTag,
+      google::cloud::dataproc::v1::CreateNodeGroupRequest const& request) override;
 
-  future<StatusOr<google::cloud::dataproc::v1::NodeGroup>> CreateNodeGroup(
+  future<StatusOr<google::cloud::dataproc::v1::NodeGroup>>
+  CreateNodeGroup(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::dataproc::v1::NodeGroup>> ResizeNodeGroup(
-      google::cloud::dataproc::v1::ResizeNodeGroupRequest const& request)
-      override;
+  future<StatusOr<google::cloud::dataproc::v1::NodeGroup>>
+  ResizeNodeGroup(google::cloud::dataproc::v1::ResizeNodeGroupRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> ResizeNodeGroup(
-      NoAwaitTag,
-      google::cloud::dataproc::v1::ResizeNodeGroupRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  ResizeNodeGroup(NoAwaitTag,
+      google::cloud::dataproc::v1::ResizeNodeGroupRequest const& request) override;
 
-  future<StatusOr<google::cloud::dataproc::v1::NodeGroup>> ResizeNodeGroup(
+  future<StatusOr<google::cloud::dataproc::v1::NodeGroup>>
+  ResizeNodeGroup(
       google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::cloud::dataproc::v1::NodeGroup> GetNodeGroup(
-      google::cloud::dataproc::v1::GetNodeGroupRequest const& request) override;
+  StatusOr<google::cloud::dataproc::v1::NodeGroup>
+  GetNodeGroup(google::cloud::dataproc::v1::GetNodeGroupRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request) override;
+  StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request) override;
 
-  Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request) override;
+  Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request) override;
 
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request) override;
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

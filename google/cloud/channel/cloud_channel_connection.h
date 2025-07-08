@@ -33,13 +33,10 @@ using ::google::cloud::channel_v1::MakeCloudChannelServiceConnection;
 /// @deprecated Use channel_v1::CloudChannelServiceConnection directly.
 using ::google::cloud::channel_v1::CloudChannelServiceConnection;
 
-/// @deprecated Use channel_v1::CloudChannelServiceLimitedErrorCountRetryPolicy
-/// directly.
-using ::google::cloud::channel_v1::
-    CloudChannelServiceLimitedErrorCountRetryPolicy;
+/// @deprecated Use channel_v1::CloudChannelServiceLimitedErrorCountRetryPolicy directly.
+using ::google::cloud::channel_v1::CloudChannelServiceLimitedErrorCountRetryPolicy;
 
-/// @deprecated Use channel_v1::CloudChannelServiceLimitedTimeRetryPolicy
-/// directly.
+/// @deprecated Use channel_v1::CloudChannelServiceLimitedTimeRetryPolicy directly.
 using ::google::cloud::channel_v1::CloudChannelServiceLimitedTimeRetryPolicy;
 
 /// @deprecated Use channel_v1::CloudChannelServiceRetryPolicy directly.

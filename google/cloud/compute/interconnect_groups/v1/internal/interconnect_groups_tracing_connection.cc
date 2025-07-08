@@ -30,214 +30,161 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 InterconnectGroupsTracingConnection::InterconnectGroupsTracingConnection(
-    std::shared_ptr<
-        compute_interconnect_groups_v1::InterconnectGroupsConnection>
-        child)
+    std::shared_ptr<compute_interconnect_groups_v1::InterconnectGroupsConnection> child)
     : child_(std::move(child)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InterconnectGroupsTracingConnection::CreateMembers(
-    google::cloud::cpp::compute::interconnect_groups::v1::
-        CreateMembersRequest const& request) {
+InterconnectGroupsTracingConnection::CreateMembers(google::cloud::cpp::compute::interconnect_groups::v1::CreateMembersRequest const& request) {
   auto span = internal::MakeSpan(
-      "compute_interconnect_groups_v1::InterconnectGroupsConnection::"
-      "CreateMembers");
+      "compute_interconnect_groups_v1::InterconnectGroupsConnection::CreateMembers");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateMembers(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InterconnectGroupsTracingConnection::CreateMembers(
-    NoAwaitTag, google::cloud::cpp::compute::interconnect_groups::v1::
-                    CreateMembersRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::interconnect_groups::v1::CreateMembersRequest const& request) {
   auto span = internal::MakeSpan(
-      "compute_interconnect_groups_v1::InterconnectGroupsConnection::"
-      "CreateMembers");
+      "compute_interconnect_groups_v1::InterconnectGroupsConnection::CreateMembers");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->CreateMembers(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->CreateMembers(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InterconnectGroupsTracingConnection::CreateMembers(
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
-      "compute_interconnect_groups_v1::InterconnectGroupsConnection::"
-      "CreateMembers");
+      "compute_interconnect_groups_v1::InterconnectGroupsConnection::CreateMembers");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->CreateMembers(operation));
+  return internal::EndSpan(std::move(span),
+      child_->CreateMembers(operation));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InterconnectGroupsTracingConnection::DeleteInterconnectGroup(
-    google::cloud::cpp::compute::interconnect_groups::v1::
-        DeleteInterconnectGroupRequest const& request) {
+InterconnectGroupsTracingConnection::DeleteInterconnectGroup(google::cloud::cpp::compute::interconnect_groups::v1::DeleteInterconnectGroupRequest const& request) {
   auto span = internal::MakeSpan(
-      "compute_interconnect_groups_v1::InterconnectGroupsConnection::"
-      "DeleteInterconnectGroup");
+      "compute_interconnect_groups_v1::InterconnectGroupsConnection::DeleteInterconnectGroup");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->DeleteInterconnectGroup(request));
+  return internal::EndSpan(std::move(span), child_->DeleteInterconnectGroup(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InterconnectGroupsTracingConnection::DeleteInterconnectGroup(
-    NoAwaitTag, google::cloud::cpp::compute::interconnect_groups::v1::
-                    DeleteInterconnectGroupRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::interconnect_groups::v1::DeleteInterconnectGroupRequest const& request) {
   auto span = internal::MakeSpan(
-      "compute_interconnect_groups_v1::InterconnectGroupsConnection::"
-      "DeleteInterconnectGroup");
+      "compute_interconnect_groups_v1::InterconnectGroupsConnection::DeleteInterconnectGroup");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->DeleteInterconnectGroup(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->DeleteInterconnectGroup(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InterconnectGroupsTracingConnection::DeleteInterconnectGroup(
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
-      "compute_interconnect_groups_v1::InterconnectGroupsConnection::"
-      "DeleteInterconnectGroup");
+      "compute_interconnect_groups_v1::InterconnectGroupsConnection::DeleteInterconnectGroup");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->DeleteInterconnectGroup(operation));
+      child_->DeleteInterconnectGroup(operation));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InterconnectGroup>
-InterconnectGroupsTracingConnection::GetInterconnectGroup(
-    google::cloud::cpp::compute::interconnect_groups::v1::
-        GetInterconnectGroupRequest const& request) {
-  auto span = internal::MakeSpan(
-      "compute_interconnect_groups_v1::InterconnectGroupsConnection::"
-      "GetInterconnectGroup");
+InterconnectGroupsTracingConnection::GetInterconnectGroup(google::cloud::cpp::compute::interconnect_groups::v1::GetInterconnectGroupRequest const& request) {
+  auto span = internal::MakeSpan("compute_interconnect_groups_v1::InterconnectGroupsConnection::GetInterconnectGroup");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetInterconnectGroup(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
-InterconnectGroupsTracingConnection::GetIamPolicy(
-    google::cloud::cpp::compute::interconnect_groups::v1::
-        GetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpan(
-      "compute_interconnect_groups_v1::InterconnectGroupsConnection::"
-      "GetIamPolicy");
+InterconnectGroupsTracingConnection::GetIamPolicy(google::cloud::cpp::compute::interconnect_groups::v1::GetIamPolicyRequest const& request) {
+  auto span = internal::MakeSpan("compute_interconnect_groups_v1::InterconnectGroupsConnection::GetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetIamPolicy(request));
 }
 
-StatusOr<google::cloud::cpp::compute::v1::
-             InterconnectGroupsGetOperationalStatusResponse>
-InterconnectGroupsTracingConnection::GetOperationalStatus(
-    google::cloud::cpp::compute::interconnect_groups::v1::
-        GetOperationalStatusRequest const& request) {
-  auto span = internal::MakeSpan(
-      "compute_interconnect_groups_v1::InterconnectGroupsConnection::"
-      "GetOperationalStatus");
+StatusOr<google::cloud::cpp::compute::v1::InterconnectGroupsGetOperationalStatusResponse>
+InterconnectGroupsTracingConnection::GetOperationalStatus(google::cloud::cpp::compute::interconnect_groups::v1::GetOperationalStatusRequest const& request) {
+  auto span = internal::MakeSpan("compute_interconnect_groups_v1::InterconnectGroupsConnection::GetOperationalStatus");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOperationalStatus(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InterconnectGroupsTracingConnection::InsertInterconnectGroup(
-    google::cloud::cpp::compute::interconnect_groups::v1::
-        InsertInterconnectGroupRequest const& request) {
+InterconnectGroupsTracingConnection::InsertInterconnectGroup(google::cloud::cpp::compute::interconnect_groups::v1::InsertInterconnectGroupRequest const& request) {
   auto span = internal::MakeSpan(
-      "compute_interconnect_groups_v1::InterconnectGroupsConnection::"
-      "InsertInterconnectGroup");
+      "compute_interconnect_groups_v1::InterconnectGroupsConnection::InsertInterconnectGroup");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->InsertInterconnectGroup(request));
+  return internal::EndSpan(std::move(span), child_->InsertInterconnectGroup(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InterconnectGroupsTracingConnection::InsertInterconnectGroup(
-    NoAwaitTag, google::cloud::cpp::compute::interconnect_groups::v1::
-                    InsertInterconnectGroupRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::interconnect_groups::v1::InsertInterconnectGroupRequest const& request) {
   auto span = internal::MakeSpan(
-      "compute_interconnect_groups_v1::InterconnectGroupsConnection::"
-      "InsertInterconnectGroup");
+      "compute_interconnect_groups_v1::InterconnectGroupsConnection::InsertInterconnectGroup");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->InsertInterconnectGroup(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->InsertInterconnectGroup(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InterconnectGroupsTracingConnection::InsertInterconnectGroup(
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
-      "compute_interconnect_groups_v1::InterconnectGroupsConnection::"
-      "InsertInterconnectGroup");
+      "compute_interconnect_groups_v1::InterconnectGroupsConnection::InsertInterconnectGroup");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->InsertInterconnectGroup(operation));
+      child_->InsertInterconnectGroup(operation));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::InterconnectGroup>
-InterconnectGroupsTracingConnection::ListInterconnectGroups(
-    google::cloud::cpp::compute::interconnect_groups::v1::
-        ListInterconnectGroupsRequest request) {
-  auto span = internal::MakeSpan(
-      "compute_interconnect_groups_v1::InterconnectGroupsConnection::"
-      "ListInterconnectGroups");
+InterconnectGroupsTracingConnection::ListInterconnectGroups(google::cloud::cpp::compute::interconnect_groups::v1::ListInterconnectGroupsRequest request) {
+  auto span = internal::MakeSpan("compute_interconnect_groups_v1::InterconnectGroupsConnection::ListInterconnectGroups");
   internal::OTelScope scope(span);
   auto sr = child_->ListInterconnectGroups(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::cpp::compute::v1::InterconnectGroup>(std::move(span),
-                                                          std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::cpp::compute::v1::InterconnectGroup>(
+        std::move(span), std::move(sr));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InterconnectGroupsTracingConnection::PatchInterconnectGroup(
-    google::cloud::cpp::compute::interconnect_groups::v1::
-        PatchInterconnectGroupRequest const& request) {
+InterconnectGroupsTracingConnection::PatchInterconnectGroup(google::cloud::cpp::compute::interconnect_groups::v1::PatchInterconnectGroupRequest const& request) {
   auto span = internal::MakeSpan(
-      "compute_interconnect_groups_v1::InterconnectGroupsConnection::"
-      "PatchInterconnectGroup");
+      "compute_interconnect_groups_v1::InterconnectGroupsConnection::PatchInterconnectGroup");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->PatchInterconnectGroup(request));
+  return internal::EndSpan(std::move(span), child_->PatchInterconnectGroup(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InterconnectGroupsTracingConnection::PatchInterconnectGroup(
-    NoAwaitTag, google::cloud::cpp::compute::interconnect_groups::v1::
-                    PatchInterconnectGroupRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::interconnect_groups::v1::PatchInterconnectGroupRequest const& request) {
   auto span = internal::MakeSpan(
-      "compute_interconnect_groups_v1::InterconnectGroupsConnection::"
-      "PatchInterconnectGroup");
+      "compute_interconnect_groups_v1::InterconnectGroupsConnection::PatchInterconnectGroup");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->PatchInterconnectGroup(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->PatchInterconnectGroup(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InterconnectGroupsTracingConnection::PatchInterconnectGroup(
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
-      "compute_interconnect_groups_v1::InterconnectGroupsConnection::"
-      "PatchInterconnectGroup");
+      "compute_interconnect_groups_v1::InterconnectGroupsConnection::PatchInterconnectGroup");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->PatchInterconnectGroup(operation));
+      child_->PatchInterconnectGroup(operation));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
-InterconnectGroupsTracingConnection::SetIamPolicy(
-    google::cloud::cpp::compute::interconnect_groups::v1::
-        SetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpan(
-      "compute_interconnect_groups_v1::InterconnectGroupsConnection::"
-      "SetIamPolicy");
+InterconnectGroupsTracingConnection::SetIamPolicy(google::cloud::cpp::compute::interconnect_groups::v1::SetIamPolicyRequest const& request) {
+  auto span = internal::MakeSpan("compute_interconnect_groups_v1::InterconnectGroupsConnection::SetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->SetIamPolicy(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-InterconnectGroupsTracingConnection::TestIamPermissions(
-    google::cloud::cpp::compute::interconnect_groups::v1::
-        TestIamPermissionsRequest const& request) {
-  auto span = internal::MakeSpan(
-      "compute_interconnect_groups_v1::InterconnectGroupsConnection::"
-      "TestIamPermissions");
+InterconnectGroupsTracingConnection::TestIamPermissions(google::cloud::cpp::compute::interconnect_groups::v1::TestIamPermissionsRequest const& request) {
+  auto span = internal::MakeSpan("compute_interconnect_groups_v1::InterconnectGroupsConnection::TestIamPermissions");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->TestIamPermissions(request));
 }
@@ -246,13 +193,10 @@ InterconnectGroupsTracingConnection::TestIamPermissions(
 
 std::shared_ptr<compute_interconnect_groups_v1::InterconnectGroupsConnection>
 MakeInterconnectGroupsTracingConnection(
-    std::shared_ptr<
-        compute_interconnect_groups_v1::InterconnectGroupsConnection>
-        conn) {
+    std::shared_ptr<compute_interconnect_groups_v1::InterconnectGroupsConnection> conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
-    conn =
-        std::make_shared<InterconnectGroupsTracingConnection>(std::move(conn));
+    conn = std::make_shared<InterconnectGroupsTracingConnection>(std::move(conn));
   }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;

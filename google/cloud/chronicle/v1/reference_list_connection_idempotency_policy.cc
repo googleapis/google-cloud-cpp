@@ -26,59 +26,47 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-ReferenceListServiceConnectionIdempotencyPolicy::
-    ~ReferenceListServiceConnectionIdempotencyPolicy() = default;
+ReferenceListServiceConnectionIdempotencyPolicy::~ReferenceListServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<ReferenceListServiceConnectionIdempotencyPolicy>
 ReferenceListServiceConnectionIdempotencyPolicy::clone() const {
-  return std::make_unique<ReferenceListServiceConnectionIdempotencyPolicy>(
-      *this);
+  return std::make_unique<ReferenceListServiceConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency ReferenceListServiceConnectionIdempotencyPolicy::GetReferenceList(
-    google::cloud::chronicle::v1::GetReferenceListRequest const&) {
+Idempotency ReferenceListServiceConnectionIdempotencyPolicy::GetReferenceList(google::cloud::chronicle::v1::GetReferenceListRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ReferenceListServiceConnectionIdempotencyPolicy::ListReferenceLists(
-    google::cloud::chronicle::v1::ListReferenceListsRequest) {  // NOLINT
+Idempotency ReferenceListServiceConnectionIdempotencyPolicy::ListReferenceLists(google::cloud::chronicle::v1::ListReferenceListsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency
-ReferenceListServiceConnectionIdempotencyPolicy::CreateReferenceList(
-    google::cloud::chronicle::v1::CreateReferenceListRequest const&) {
+Idempotency ReferenceListServiceConnectionIdempotencyPolicy::CreateReferenceList(google::cloud::chronicle::v1::CreateReferenceListRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency
-ReferenceListServiceConnectionIdempotencyPolicy::UpdateReferenceList(
-    google::cloud::chronicle::v1::UpdateReferenceListRequest const&) {
+Idempotency ReferenceListServiceConnectionIdempotencyPolicy::UpdateReferenceList(google::cloud::chronicle::v1::UpdateReferenceListRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ReferenceListServiceConnectionIdempotencyPolicy::ListOperations(
-    google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency ReferenceListServiceConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency ReferenceListServiceConnectionIdempotencyPolicy::GetOperation(
-    google::longrunning::GetOperationRequest const&) {
+Idempotency ReferenceListServiceConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ReferenceListServiceConnectionIdempotencyPolicy::DeleteOperation(
-    google::longrunning::DeleteOperationRequest const&) {
+Idempotency ReferenceListServiceConnectionIdempotencyPolicy::DeleteOperation(google::longrunning::DeleteOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ReferenceListServiceConnectionIdempotencyPolicy::CancelOperation(
-    google::longrunning::CancelOperationRequest const&) {
+Idempotency ReferenceListServiceConnectionIdempotencyPolicy::CancelOperation(google::longrunning::CancelOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<ReferenceListServiceConnectionIdempotencyPolicy>
-MakeDefaultReferenceListServiceConnectionIdempotencyPolicy() {
+    MakeDefaultReferenceListServiceConnectionIdempotencyPolicy() {
   return std::make_unique<ReferenceListServiceConnectionIdempotencyPolicy>();
 }
 

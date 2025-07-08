@@ -36,34 +36,34 @@ class ServiceControllerStub {
   virtual ~ServiceControllerStub() = 0;
 
   virtual StatusOr<google::api::servicecontrol::v2::CheckResponse> Check(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::api::servicecontrol::v2::CheckRequest const& request) = 0;
 
   virtual StatusOr<google::api::servicecontrol::v2::ReportResponse> Report(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::api::servicecontrol::v2::ReportRequest const& request) = 0;
 };
 
 class DefaultServiceControllerStub : public ServiceControllerStub {
  public:
   explicit DefaultServiceControllerStub(
-      std::unique_ptr<
-          google::api::servicecontrol::v2::ServiceController::StubInterface>
-          grpc_stub)
+      std::unique_ptr<google::api::servicecontrol::v2::ServiceController::StubInterface> grpc_stub)
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::api::servicecontrol::v2::CheckResponse> Check(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::api::servicecontrol::v2::CheckRequest const& request) override;
 
   StatusOr<google::api::servicecontrol::v2::ReportResponse> Report(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::api::servicecontrol::v2::ReportRequest const& request) override;
 
  private:
-  std::unique_ptr<
-      google::api::servicecontrol::v2::ServiceController::StubInterface>
-      grpc_stub_;
+  std::unique_ptr<google::api::servicecontrol::v2::ServiceController::StubInterface> grpc_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

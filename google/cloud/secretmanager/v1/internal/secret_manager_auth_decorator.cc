@@ -31,45 +31,45 @@ SecretManagerServiceAuth::SecretManagerServiceAuth(
     std::shared_ptr<SecretManagerServiceStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::secretmanager::v1::ListSecretsResponse>
-SecretManagerServiceAuth::ListSecrets(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::secretmanager::v1::ListSecretsResponse> SecretManagerServiceAuth::ListSecrets(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::secretmanager::v1::ListSecretsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListSecrets(context, options, request);
 }
 
-StatusOr<google::cloud::secretmanager::v1::Secret>
-SecretManagerServiceAuth::CreateSecret(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::secretmanager::v1::Secret> SecretManagerServiceAuth::CreateSecret(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::secretmanager::v1::CreateSecretRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateSecret(context, options, request);
 }
 
-StatusOr<google::cloud::secretmanager::v1::SecretVersion>
-SecretManagerServiceAuth::AddSecretVersion(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::secretmanager::v1::SecretVersion> SecretManagerServiceAuth::AddSecretVersion(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::secretmanager::v1::AddSecretVersionRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->AddSecretVersion(context, options, request);
 }
 
-StatusOr<google::cloud::secretmanager::v1::Secret>
-SecretManagerServiceAuth::GetSecret(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::secretmanager::v1::Secret> SecretManagerServiceAuth::GetSecret(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::secretmanager::v1::GetSecretRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetSecret(context, options, request);
 }
 
-StatusOr<google::cloud::secretmanager::v1::Secret>
-SecretManagerServiceAuth::UpdateSecret(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::secretmanager::v1::Secret> SecretManagerServiceAuth::UpdateSecret(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::secretmanager::v1::UpdateSecretRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -77,74 +77,71 @@ SecretManagerServiceAuth::UpdateSecret(
 }
 
 Status SecretManagerServiceAuth::DeleteSecret(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::secretmanager::v1::DeleteSecretRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteSecret(context, options, request);
 }
 
-StatusOr<google::cloud::secretmanager::v1::ListSecretVersionsResponse>
-SecretManagerServiceAuth::ListSecretVersions(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::secretmanager::v1::ListSecretVersionsRequest const&
-        request) {
+StatusOr<google::cloud::secretmanager::v1::ListSecretVersionsResponse> SecretManagerServiceAuth::ListSecretVersions(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::secretmanager::v1::ListSecretVersionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListSecretVersions(context, options, request);
 }
 
-StatusOr<google::cloud::secretmanager::v1::SecretVersion>
-SecretManagerServiceAuth::GetSecretVersion(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::secretmanager::v1::SecretVersion> SecretManagerServiceAuth::GetSecretVersion(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::secretmanager::v1::GetSecretVersionRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetSecretVersion(context, options, request);
 }
 
-StatusOr<google::cloud::secretmanager::v1::AccessSecretVersionResponse>
-SecretManagerServiceAuth::AccessSecretVersion(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::secretmanager::v1::AccessSecretVersionRequest const&
-        request) {
+StatusOr<google::cloud::secretmanager::v1::AccessSecretVersionResponse> SecretManagerServiceAuth::AccessSecretVersion(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::secretmanager::v1::AccessSecretVersionRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->AccessSecretVersion(context, options, request);
 }
 
-StatusOr<google::cloud::secretmanager::v1::SecretVersion>
-SecretManagerServiceAuth::DisableSecretVersion(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::secretmanager::v1::DisableSecretVersionRequest const&
-        request) {
+StatusOr<google::cloud::secretmanager::v1::SecretVersion> SecretManagerServiceAuth::DisableSecretVersion(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::secretmanager::v1::DisableSecretVersionRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DisableSecretVersion(context, options, request);
 }
 
-StatusOr<google::cloud::secretmanager::v1::SecretVersion>
-SecretManagerServiceAuth::EnableSecretVersion(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::secretmanager::v1::EnableSecretVersionRequest const&
-        request) {
+StatusOr<google::cloud::secretmanager::v1::SecretVersion> SecretManagerServiceAuth::EnableSecretVersion(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::secretmanager::v1::EnableSecretVersionRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->EnableSecretVersion(context, options, request);
 }
 
-StatusOr<google::cloud::secretmanager::v1::SecretVersion>
-SecretManagerServiceAuth::DestroySecretVersion(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::secretmanager::v1::DestroySecretVersionRequest const&
-        request) {
+StatusOr<google::cloud::secretmanager::v1::SecretVersion> SecretManagerServiceAuth::DestroySecretVersion(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::secretmanager::v1::DestroySecretVersionRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DestroySecretVersion(context, options, request);
 }
 
 StatusOr<google::iam::v1::Policy> SecretManagerServiceAuth::SetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -152,34 +149,35 @@ StatusOr<google::iam::v1::Policy> SecretManagerServiceAuth::SetIamPolicy(
 }
 
 StatusOr<google::iam::v1::Policy> SecretManagerServiceAuth::GetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetIamPolicy(context, options, request);
 }
 
-StatusOr<google::iam::v1::TestIamPermissionsResponse>
-SecretManagerServiceAuth::TestIamPermissions(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::iam::v1::TestIamPermissionsResponse> SecretManagerServiceAuth::TestIamPermissions(
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->TestIamPermissions(context, options, request);
 }
 
-StatusOr<google::cloud::location::ListLocationsResponse>
-SecretManagerServiceAuth::ListLocations(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::location::ListLocationsResponse> SecretManagerServiceAuth::ListLocations(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListLocations(context, options, request);
 }
 
-StatusOr<google::cloud::location::Location>
-SecretManagerServiceAuth::GetLocation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::location::Location> SecretManagerServiceAuth::GetLocation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;

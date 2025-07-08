@@ -40,121 +40,145 @@ class SubscriberStub {
   virtual ~SubscriberStub() = 0;
 
   virtual StatusOr<google::pubsub::v1::Subscription> CreateSubscription(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::pubsub::v1::Subscription const& request) = 0;
 
   virtual StatusOr<google::pubsub::v1::Subscription> GetSubscription(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::pubsub::v1::GetSubscriptionRequest const& request) = 0;
 
   virtual StatusOr<google::pubsub::v1::Subscription> UpdateSubscription(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::pubsub::v1::UpdateSubscriptionRequest const& request) = 0;
 
-  virtual StatusOr<google::pubsub::v1::ListSubscriptionsResponse>
-  ListSubscriptions(
-      grpc::ClientContext& context, Options const& options,
+  virtual StatusOr<google::pubsub::v1::ListSubscriptionsResponse> ListSubscriptions(
+      grpc::ClientContext& context,
+      Options const& options,
       google::pubsub::v1::ListSubscriptionsRequest const& request) = 0;
 
   virtual Status DeleteSubscription(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::pubsub::v1::DeleteSubscriptionRequest const& request) = 0;
 
   virtual StatusOr<google::pubsub::v1::PullResponse> Pull(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::pubsub::v1::PullRequest const& request) = 0;
 
   virtual std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::pubsub::v1::StreamingPullRequest,
       google::pubsub::v1::StreamingPullResponse>>
-  AsyncStreamingPull(google::cloud::CompletionQueue const& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options) = 0;
+  AsyncStreamingPull(
+      google::cloud::CompletionQueue const& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options) = 0;
 
   virtual Status ModifyPushConfig(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::pubsub::v1::ModifyPushConfigRequest const& request) = 0;
 
   virtual StatusOr<google::pubsub::v1::Snapshot> GetSnapshot(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::pubsub::v1::GetSnapshotRequest const& request) = 0;
 
   virtual StatusOr<google::pubsub::v1::ListSnapshotsResponse> ListSnapshots(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::pubsub::v1::ListSnapshotsRequest const& request) = 0;
 
   virtual StatusOr<google::pubsub::v1::Snapshot> CreateSnapshot(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::pubsub::v1::CreateSnapshotRequest const& request) = 0;
 
   virtual StatusOr<google::pubsub::v1::Snapshot> UpdateSnapshot(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::pubsub::v1::UpdateSnapshotRequest const& request) = 0;
 
   virtual Status DeleteSnapshot(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::pubsub::v1::DeleteSnapshotRequest const& request) = 0;
 
   virtual StatusOr<google::pubsub::v1::SeekResponse> Seek(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::pubsub::v1::SeekRequest const& request) = 0;
 
   virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) = 0;
 
   virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) = 0;
 
-  virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
-  TestIamPermissions(
-      grpc::ClientContext& context, Options const& options,
+  virtual StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) = 0;
 
-  virtual future<Status> AsyncModifyAckDeadline(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::pubsub::v1::ModifyAckDeadlineRequest const& request) = 0;
+  virtual future<Status>
+  AsyncModifyAckDeadline(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::pubsub::v1::ModifyAckDeadlineRequest const& request) = 0;
 
-  virtual future<Status> AsyncAcknowledge(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::pubsub::v1::AcknowledgeRequest const& request) = 0;
+  virtual future<Status>
+  AsyncAcknowledge(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::pubsub::v1::AcknowledgeRequest const& request) = 0;
 };
 
 class DefaultSubscriberStub : public SubscriberStub {
  public:
   explicit DefaultSubscriberStub(
       std::unique_ptr<google::pubsub::v1::Subscriber::StubInterface> grpc_stub,
-      std::unique_ptr<google::iam::v1::IAMPolicy::StubInterface> iampolicy_stub)
+      std::unique_ptr<google::iam::v1::IAMPolicy::StubInterface> iampolicy_stub
+)
       : grpc_stub_(std::move(grpc_stub)),
         iampolicy_stub_(std::move(iampolicy_stub)) {}
 
   StatusOr<google::pubsub::v1::Subscription> CreateSubscription(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::pubsub::v1::Subscription const& request) override;
 
   StatusOr<google::pubsub::v1::Subscription> GetSubscription(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::pubsub::v1::GetSubscriptionRequest const& request) override;
 
   StatusOr<google::pubsub::v1::Subscription> UpdateSubscription(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::pubsub::v1::UpdateSubscriptionRequest const& request) override;
 
   StatusOr<google::pubsub::v1::ListSubscriptionsResponse> ListSubscriptions(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::pubsub::v1::ListSubscriptionsRequest const& request) override;
 
   Status DeleteSubscription(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::pubsub::v1::DeleteSubscriptionRequest const& request) override;
 
   StatusOr<google::pubsub::v1::PullResponse> Pull(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::pubsub::v1::PullRequest const& request) override;
 
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
@@ -166,43 +190,53 @@ class DefaultSubscriberStub : public SubscriberStub {
       google::cloud::internal::ImmutableOptions options) override;
 
   Status ModifyPushConfig(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::pubsub::v1::ModifyPushConfigRequest const& request) override;
 
   StatusOr<google::pubsub::v1::Snapshot> GetSnapshot(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::pubsub::v1::GetSnapshotRequest const& request) override;
 
   StatusOr<google::pubsub::v1::ListSnapshotsResponse> ListSnapshots(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::pubsub::v1::ListSnapshotsRequest const& request) override;
 
   StatusOr<google::pubsub::v1::Snapshot> CreateSnapshot(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::pubsub::v1::CreateSnapshotRequest const& request) override;
 
   StatusOr<google::pubsub::v1::Snapshot> UpdateSnapshot(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::pubsub::v1::UpdateSnapshotRequest const& request) override;
 
   Status DeleteSnapshot(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::pubsub::v1::DeleteSnapshotRequest const& request) override;
 
   StatusOr<google::pubsub::v1::SeekResponse> Seek(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::pubsub::v1::SeekRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
   future<Status> AsyncModifyAckDeadline(

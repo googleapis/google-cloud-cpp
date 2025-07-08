@@ -36,24 +36,24 @@ class InstanceServiceTracingConnection
   ~InstanceServiceTracingConnection() override = default;
 
   explicit InstanceServiceTracingConnection(
-      std::shared_ptr<chronicle_v1::InstanceServiceConnection> child);
+    std::shared_ptr<chronicle_v1::InstanceServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::chronicle::v1::Instance> GetInstance(
-      google::cloud::chronicle::v1::GetInstanceRequest const& request) override;
+  StatusOr<google::cloud::chronicle::v1::Instance>
+  GetInstance(google::cloud::chronicle::v1::GetInstanceRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request) override;
 
-  Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request) override;
+  Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request) override;
 
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request) override;
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::shared_ptr<chronicle_v1::InstanceServiceConnection> child_;

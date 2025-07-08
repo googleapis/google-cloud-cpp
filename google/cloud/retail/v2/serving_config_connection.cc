@@ -17,17 +17,17 @@
 // source: google/cloud/retail/v2/serving_config_service.proto
 
 #include "google/cloud/retail/v2/serving_config_connection.h"
-#include "google/cloud/retail/v2/internal/serving_config_connection_impl.h"
-#include "google/cloud/retail/v2/internal/serving_config_option_defaults.h"
-#include "google/cloud/retail/v2/internal/serving_config_stub_factory.h"
-#include "google/cloud/retail/v2/internal/serving_config_tracing_connection.h"
-#include "google/cloud/retail/v2/serving_config_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/retail/v2/internal/serving_config_connection_impl.h"
+#include "google/cloud/retail/v2/internal/serving_config_option_defaults.h"
+#include "google/cloud/retail/v2/internal/serving_config_stub_factory.h"
+#include "google/cloud/retail/v2/internal/serving_config_tracing_connection.h"
+#include "google/cloud/retail/v2/serving_config_options.h"
 #include <memory>
 #include <utility>
 
@@ -44,7 +44,8 @@ ServingConfigServiceConnection::CreateServingConfig(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status ServingConfigServiceConnection::DeleteServingConfig(
+Status
+ServingConfigServiceConnection::DeleteServingConfig(
     google::cloud::retail::v2::DeleteServingConfigRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -61,10 +62,8 @@ ServingConfigServiceConnection::GetServingConfig(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::retail::v2::ServingConfig>
-ServingConfigServiceConnection::ListServingConfigs(
-    google::cloud::retail::v2::
-        ListServingConfigsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::retail::v2::ServingConfig> ServingConfigServiceConnection::ListServingConfigs(
+    google::cloud::retail::v2::ListServingConfigsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::retail::v2::ServingConfig>>();
 }
@@ -81,10 +80,8 @@ ServingConfigServiceConnection::RemoveControl(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::longrunning::Operation>
-ServingConfigServiceConnection::ListOperations(
-    google::longrunning::
-        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::longrunning::Operation> ServingConfigServiceConnection::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }
@@ -95,21 +92,20 @@ ServingConfigServiceConnection::GetOperation(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-std::shared_ptr<ServingConfigServiceConnection>
-MakeServingConfigServiceConnection(Options options) {
+std::shared_ptr<ServingConfigServiceConnection> MakeServingConfigServiceConnection(
+    Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 ServingConfigServicePolicyOptionList>(
-      options, __func__);
+      UnifiedCredentialsOptionList,
+      ServingConfigServicePolicyOptionList>(options, __func__);
   options = retail_v2_internal::ServingConfigServiceDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = retail_v2_internal::CreateDefaultServingConfigServiceStub(
-      std::move(auth), options);
+    std::move(auth), options);
   return retail_v2_internal::MakeServingConfigServiceTracingConnection(
       std::make_shared<retail_v2_internal::ServingConfigServiceConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options)));
+      std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_SNAPSHOT_SETTINGS_V1_INTERNAL_SNAPSHOT_SETTINGS_REST_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_SNAPSHOT_SETTINGS_V1_INTERNAL_SNAPSHOT_SETTINGS_REST_CONNECTION_IMPL_H
 
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/snapshot_settings/v1/internal/snapshot_settings_rest_stub.h"
 #include "google/cloud/compute/snapshot_settings/v1/internal/snapshot_settings_retry_traits.h"
 #include "google/cloud/compute/snapshot_settings/v1/snapshot_settings_connection.h"
 #include "google/cloud/compute/snapshot_settings/v1/snapshot_settings_connection_idempotency_policy.h"
 #include "google/cloud/compute/snapshot_settings/v1/snapshot_settings_options.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
@@ -43,67 +43,47 @@ class SnapshotSettingsRestConnectionImpl
   ~SnapshotSettingsRestConnectionImpl() override = default;
 
   SnapshotSettingsRestConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<
-          compute_snapshot_settings_v1_internal::SnapshotSettingsRestStub>
-          stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<compute_snapshot_settings_v1_internal::SnapshotSettingsRestStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
   StatusOr<google::cloud::cpp::compute::v1::SnapshotSettings>
-  GetSnapshotSettings(google::cloud::cpp::compute::snapshot_settings::v1::
-                          GetSnapshotSettingsRequest const& request) override;
+  GetSnapshotSettings(google::cloud::cpp::compute::snapshot_settings::v1::GetSnapshotSettingsRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchSnapshotSettings(
-      google::cloud::cpp::compute::snapshot_settings::v1::
-          PatchSnapshotSettingsRequest const& request) override;
+  PatchSnapshotSettings(google::cloud::cpp::compute::snapshot_settings::v1::PatchSnapshotSettingsRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchSnapshotSettings(
-      NoAwaitTag, google::cloud::cpp::compute::snapshot_settings::v1::
-                      PatchSnapshotSettingsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  PatchSnapshotSettings(NoAwaitTag,
+      google::cloud::cpp::compute::snapshot_settings::v1::PatchSnapshotSettingsRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   PatchSnapshotSettings(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
  private:
-  static std::unique_ptr<
-      compute_snapshot_settings_v1::SnapshotSettingsRetryPolicy>
+  static std::unique_ptr<compute_snapshot_settings_v1::SnapshotSettingsRetryPolicy>
   retry_policy(Options const& options) {
-    return options
-        .get<compute_snapshot_settings_v1::SnapshotSettingsRetryPolicyOption>()
-        ->clone();
+    return options.get<compute_snapshot_settings_v1::SnapshotSettingsRetryPolicyOption>()->clone();
   }
 
   static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options
-        .get<
-            compute_snapshot_settings_v1::SnapshotSettingsBackoffPolicyOption>()
-        ->clone();
+    return options.get<compute_snapshot_settings_v1::SnapshotSettingsBackoffPolicyOption>()->clone();
   }
 
-  static std::unique_ptr<
-      compute_snapshot_settings_v1::SnapshotSettingsConnectionIdempotencyPolicy>
+  static std::unique_ptr<compute_snapshot_settings_v1::SnapshotSettingsConnectionIdempotencyPolicy>
   idempotency_policy(Options const& options) {
-    return options
-        .get<compute_snapshot_settings_v1::
-                 SnapshotSettingsConnectionIdempotencyPolicyOption>()
-        ->clone();
+    return options.get<compute_snapshot_settings_v1::SnapshotSettingsConnectionIdempotencyPolicyOption>()->clone();
   }
 
   static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-    return options
-        .get<
-            compute_snapshot_settings_v1::SnapshotSettingsPollingPolicyOption>()
-        ->clone();
+    return options.get<compute_snapshot_settings_v1::SnapshotSettingsPollingPolicyOption>()->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<
-      compute_snapshot_settings_v1_internal::SnapshotSettingsRestStub>
-      stub_;
+  std::shared_ptr<compute_snapshot_settings_v1_internal::SnapshotSettingsRestStub> stub_;
   Options options_;
 };
 

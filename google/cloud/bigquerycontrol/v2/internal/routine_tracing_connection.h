@@ -36,29 +36,27 @@ class RoutineServiceTracingConnection
   ~RoutineServiceTracingConnection() override = default;
 
   explicit RoutineServiceTracingConnection(
-      std::shared_ptr<bigquerycontrol_v2::RoutineServiceConnection> child);
+    std::shared_ptr<bigquerycontrol_v2::RoutineServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::bigquery::v2::Routine> GetRoutine(
-      google::cloud::bigquery::v2::GetRoutineRequest const& request) override;
+  StatusOr<google::cloud::bigquery::v2::Routine>
+  GetRoutine(google::cloud::bigquery::v2::GetRoutineRequest const& request) override;
 
-  StatusOr<google::cloud::bigquery::v2::Routine> InsertRoutine(
-      google::cloud::bigquery::v2::InsertRoutineRequest const& request)
-      override;
+  StatusOr<google::cloud::bigquery::v2::Routine>
+  InsertRoutine(google::cloud::bigquery::v2::InsertRoutineRequest const& request) override;
 
-  StatusOr<google::cloud::bigquery::v2::Routine> UpdateRoutine(
-      google::cloud::bigquery::v2::UpdateRoutineRequest const& request)
-      override;
+  StatusOr<google::cloud::bigquery::v2::Routine>
+  UpdateRoutine(google::cloud::bigquery::v2::UpdateRoutineRequest const& request) override;
 
-  StatusOr<google::cloud::bigquery::v2::Routine> PatchRoutine(
-      google::cloud::bigquery::v2::PatchRoutineRequest const& request) override;
+  StatusOr<google::cloud::bigquery::v2::Routine>
+  PatchRoutine(google::cloud::bigquery::v2::PatchRoutineRequest const& request) override;
 
-  Status DeleteRoutine(google::cloud::bigquery::v2::DeleteRoutineRequest const&
-                           request) override;
+  Status
+  DeleteRoutine(google::cloud::bigquery::v2::DeleteRoutineRequest const& request) override;
 
-  StatusOr<google::cloud::bigquery::v2::ListRoutinesResponse> ListRoutines(
-      google::cloud::bigquery::v2::ListRoutinesRequest const& request) override;
+  StatusOr<google::cloud::bigquery::v2::ListRoutinesResponse>
+  ListRoutines(google::cloud::bigquery::v2::ListRoutinesRequest const& request) override;
 
  private:
   std::shared_ptr<bigquerycontrol_v2::RoutineServiceConnection> child_;

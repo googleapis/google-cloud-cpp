@@ -33,33 +33,36 @@ PoliciesStub::~PoliciesStub() = default;
 
 StatusOr<google::iam::v2::ListPoliciesResponse>
 DefaultPoliciesStub::ListPolicies(
-    grpc::ClientContext& context, Options const&,
-    google::iam::v2::ListPoliciesRequest const& request) {
-  google::iam::v2::ListPoliciesResponse response;
-  auto status = grpc_stub_->ListPolicies(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::iam::v2::ListPoliciesRequest const& request) {
+    google::iam::v2::ListPoliciesResponse response;
+    auto status =
+        grpc_stub_->ListPolicies(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-StatusOr<google::iam::v2::Policy> DefaultPoliciesStub::GetPolicy(
-    grpc::ClientContext& context, Options const&,
-    google::iam::v2::GetPolicyRequest const& request) {
-  google::iam::v2::Policy response;
-  auto status = grpc_stub_->GetPolicy(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::iam::v2::Policy>
+DefaultPoliciesStub::GetPolicy(
+  grpc::ClientContext& context, Options const&,
+  google::iam::v2::GetPolicyRequest const& request) {
+    google::iam::v2::Policy response;
+    auto status =
+        grpc_stub_->GetPolicy(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultPoliciesStub::AsyncCreatePolicy(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::iam::v2::CreatePolicyRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::iam::v2::CreatePolicyRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::iam::v2::CreatePolicyRequest,
                                     google::longrunning::Operation>(
       cq,
@@ -71,23 +74,26 @@ DefaultPoliciesStub::AsyncCreatePolicy(
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation> DefaultPoliciesStub::CreatePolicy(
-    grpc::ClientContext& context, Options,
-    google::iam::v2::CreatePolicyRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->CreatePolicy(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::longrunning::Operation>
+DefaultPoliciesStub::CreatePolicy(
+      grpc::ClientContext& context,
+      Options,
+      google::iam::v2::CreatePolicyRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->CreatePolicy(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultPoliciesStub::AsyncUpdatePolicy(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::iam::v2::UpdatePolicyRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::iam::v2::UpdatePolicyRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::iam::v2::UpdatePolicyRequest,
                                     google::longrunning::Operation>(
       cq,
@@ -99,23 +105,26 @@ DefaultPoliciesStub::AsyncUpdatePolicy(
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation> DefaultPoliciesStub::UpdatePolicy(
-    grpc::ClientContext& context, Options,
-    google::iam::v2::UpdatePolicyRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->UpdatePolicy(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::longrunning::Operation>
+DefaultPoliciesStub::UpdatePolicy(
+      grpc::ClientContext& context,
+      Options,
+      google::iam::v2::UpdatePolicyRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->UpdatePolicy(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultPoliciesStub::AsyncDeletePolicy(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::iam::v2::DeletePolicyRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::iam::v2::DeletePolicyRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::iam::v2::DeletePolicyRequest,
                                     google::longrunning::Operation>(
       cq,
@@ -127,26 +136,31 @@ DefaultPoliciesStub::AsyncDeletePolicy(
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation> DefaultPoliciesStub::DeletePolicy(
-    grpc::ClientContext& context, Options,
-    google::iam::v2::DeletePolicyRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->DeletePolicy(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::longrunning::Operation>
+DefaultPoliciesStub::DeletePolicy(
+      grpc::ClientContext& context,
+      Options,
+      google::iam::v2::DeletePolicyRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->DeletePolicy(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-StatusOr<google::longrunning::Operation> DefaultPoliciesStub::GetOperation(
-    grpc::ClientContext& context, Options const&,
-    google::longrunning::GetOperationRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = operations_stub_->GetOperation(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::longrunning::Operation>
+DefaultPoliciesStub::GetOperation(
+  grpc::ClientContext& context, Options const&,
+  google::longrunning::GetOperationRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        operations_stub_->GetOperation(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -175,14 +189,13 @@ future<Status> DefaultPoliciesStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(
-             cq,
-             [this](grpc::ClientContext* context,
-                    google::longrunning::CancelOperationRequest const& request,
-                    grpc::CompletionQueue* cq) {
-               return operations_stub_->AsyncCancelOperation(context, request,
-                                                             cq);
-             },
-             request, std::move(context))
+      cq,
+      [this](grpc::ClientContext* context,
+             google::longrunning::CancelOperationRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return operations_stub_->AsyncCancelOperation(context, request, cq);
+      },
+      request, std::move(context))
       .then([](future<StatusOr<google::protobuf::Empty>> f) {
         return f.get().status();
       });

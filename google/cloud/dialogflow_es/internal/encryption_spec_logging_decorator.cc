@@ -32,17 +32,20 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 EncryptionSpecServiceLogging::EncryptionSpecServiceLogging(
     std::shared_ptr<EncryptionSpecServiceStub> child,
-    TracingOptions tracing_options, std::set<std::string> const&)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
+    TracingOptions tracing_options,
+    std::set<std::string> const&)
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::cloud::dialogflow::v2::EncryptionSpec>
 EncryptionSpecServiceLogging::GetEncryptionSpec(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dialogflow::v2::GetEncryptionSpecRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dialogflow::v2::GetEncryptionSpecRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::dialogflow::v2::GetEncryptionSpecRequest const& request) {
         return child_->GetEncryptionSpec(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -50,18 +53,15 @@ EncryptionSpecServiceLogging::GetEncryptionSpec(
 
 future<StatusOr<google::longrunning::Operation>>
 EncryptionSpecServiceLogging::AsyncInitializeEncryptionSpec(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::dialogflow::v2::InitializeEncryptionSpecRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::dialogflow::v2::InitializeEncryptionSpecRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::dialogflow::v2::InitializeEncryptionSpecRequest const&
-              request) {
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::dialogflow::v2::InitializeEncryptionSpecRequest const& request) {
         return child_->AsyncInitializeEncryptionSpec(
             cq, std::move(context), std::move(options), request);
       },
@@ -71,14 +71,13 @@ EncryptionSpecServiceLogging::AsyncInitializeEncryptionSpec(
 
 StatusOr<google::longrunning::Operation>
 EncryptionSpecServiceLogging::InitializeEncryptionSpec(
-    grpc::ClientContext& context, Options options,
-    google::cloud::dialogflow::v2::InitializeEncryptionSpecRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::dialogflow::v2::InitializeEncryptionSpecRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::dialogflow::v2::InitializeEncryptionSpecRequest const&
-              request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::dialogflow::v2::InitializeEncryptionSpecRequest const& request) {
         return child_->InitializeEncryptionSpec(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -86,10 +85,12 @@ EncryptionSpecServiceLogging::InitializeEncryptionSpec(
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 EncryptionSpecServiceLogging::ListLocations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::location::ListLocationsRequest const& request) {
         return child_->ListLocations(context, options, request);
       },
@@ -98,10 +99,12 @@ EncryptionSpecServiceLogging::ListLocations(
 
 StatusOr<google::cloud::location::Location>
 EncryptionSpecServiceLogging::GetLocation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::location::GetLocationRequest const& request) {
         return child_->GetLocation(context, options, request);
       },
@@ -110,10 +113,12 @@ EncryptionSpecServiceLogging::GetLocation(
 
 StatusOr<google::longrunning::ListOperationsResponse>
 EncryptionSpecServiceLogging::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::ListOperationsRequest const& request) {
         return child_->ListOperations(context, options, request);
       },
@@ -122,21 +127,26 @@ EncryptionSpecServiceLogging::ListOperations(
 
 StatusOr<google::longrunning::Operation>
 EncryptionSpecServiceLogging::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::GetOperationRequest const& request) {
         return child_->GetOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status EncryptionSpecServiceLogging::CancelOperation(
-    grpc::ClientContext& context, Options const& options,
+Status
+EncryptionSpecServiceLogging::CancelOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::CancelOperationRequest const& request) {
         return child_->CancelOperation(context, options, request);
       },
@@ -154,8 +164,8 @@ EncryptionSpecServiceLogging::AsyncGetOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(cq, std::move(context),
-                                         std::move(options), request);
+        return child_->AsyncGetOperation(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -171,8 +181,8 @@ future<Status> EncryptionSpecServiceLogging::AsyncCancelOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::CancelOperationRequest const& request) {
-        return child_->AsyncCancelOperation(cq, std::move(context),
-                                            std::move(options), request);
+        return child_->AsyncCancelOperation(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);

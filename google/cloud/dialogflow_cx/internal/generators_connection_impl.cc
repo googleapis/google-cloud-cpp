@@ -17,9 +17,9 @@
 // source: google/cloud/dialogflow/cx/v3/generator.proto
 
 #include "google/cloud/dialogflow_cx/internal/generators_connection_impl.h"
-#include "google/cloud/dialogflow_cx/internal/generators_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/dialogflow_cx/internal/generators_option_defaults.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
@@ -32,62 +32,54 @@ namespace dialogflow_cx_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<dialogflow_cx::GeneratorsRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<dialogflow_cx::GeneratorsRetryPolicy>
+retry_policy(Options const& options) {
   return options.get<dialogflow_cx::GeneratorsRetryPolicyOption>()->clone();
 }
 
-std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+std::unique_ptr<BackoffPolicy>
+backoff_policy(Options const& options) {
   return options.get<dialogflow_cx::GeneratorsBackoffPolicyOption>()->clone();
 }
 
 std::unique_ptr<dialogflow_cx::GeneratorsConnectionIdempotencyPolicy>
 idempotency_policy(Options const& options) {
-  return options
-      .get<dialogflow_cx::GeneratorsConnectionIdempotencyPolicyOption>()
-      ->clone();
+  return options.get<dialogflow_cx::GeneratorsConnectionIdempotencyPolicyOption>()->clone();
 }
 
-}  // namespace
+} // namespace
 
 GeneratorsConnectionImpl::GeneratorsConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<dialogflow_cx_internal::GeneratorsStub> stub,
     Options options)
-    : background_(std::move(background)),
-      stub_(std::move(stub)),
-      options_(internal::MergeOptions(std::move(options),
-                                      GeneratorsConnection::options())) {}
+  : background_(std::move(background)), stub_(std::move(stub)),
+    options_(internal::MergeOptions(
+        std::move(options),
+        GeneratorsConnection::options())) {}
 
 StreamRange<google::cloud::dialogflow::cx::v3::Generator>
-GeneratorsConnectionImpl::ListGenerators(
-    google::cloud::dialogflow::cx::v3::ListGeneratorsRequest request) {
+GeneratorsConnectionImpl::ListGenerators(google::cloud::dialogflow::cx::v3::ListGeneratorsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListGenerators(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::dialogflow::cx::v3::Generator>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::dialogflow::cx::v3::Generator>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<dialogflow_cx::GeneratorsRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<dialogflow_cx::GeneratorsRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::dialogflow::cx::v3::ListGeneratorsRequest const& r) {
+          Options const& options, google::cloud::dialogflow::cx::v3::ListGeneratorsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](
-                grpc::ClientContext& context, Options const& options,
-                google::cloud::dialogflow::cx::v3::ListGeneratorsRequest const&
-                    request) {
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::cloud::dialogflow::cx::v3::ListGeneratorsRequest const& request) {
               return stub->ListGenerators(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::dialogflow::cx::v3::ListGeneratorsResponse r) {
-        std::vector<google::cloud::dialogflow::cx::v3::Generator> result(
-            r.generators().size());
+        std::vector<google::cloud::dialogflow::cx::v3::Generator> result(r.generators().size());
         auto& messages = *r.mutable_generators();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -95,92 +87,79 @@ GeneratorsConnectionImpl::ListGenerators(
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Generator>
-GeneratorsConnectionImpl::GetGenerator(
-    google::cloud::dialogflow::cx::v3::GetGeneratorRequest const& request) {
+GeneratorsConnectionImpl::GetGenerator(google::cloud::dialogflow::cx::v3::GetGeneratorRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetGenerator(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dialogflow::cx::v3::GetGeneratorRequest const&
-                 request) {
+             google::cloud::dialogflow::cx::v3::GetGeneratorRequest const& request) {
         return stub_->GetGenerator(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Generator>
-GeneratorsConnectionImpl::CreateGenerator(
-    google::cloud::dialogflow::cx::v3::CreateGeneratorRequest const& request) {
+GeneratorsConnectionImpl::CreateGenerator(google::cloud::dialogflow::cx::v3::CreateGeneratorRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateGenerator(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dialogflow::cx::v3::CreateGeneratorRequest const&
-                 request) {
+             google::cloud::dialogflow::cx::v3::CreateGeneratorRequest const& request) {
         return stub_->CreateGenerator(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Generator>
-GeneratorsConnectionImpl::UpdateGenerator(
-    google::cloud::dialogflow::cx::v3::UpdateGeneratorRequest const& request) {
+GeneratorsConnectionImpl::UpdateGenerator(google::cloud::dialogflow::cx::v3::UpdateGeneratorRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateGenerator(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dialogflow::cx::v3::UpdateGeneratorRequest const&
-                 request) {
+             google::cloud::dialogflow::cx::v3::UpdateGeneratorRequest const& request) {
         return stub_->UpdateGenerator(context, options, request);
       },
       *current, request, __func__);
 }
 
-Status GeneratorsConnectionImpl::DeleteGenerator(
-    google::cloud::dialogflow::cx::v3::DeleteGeneratorRequest const& request) {
+Status
+GeneratorsConnectionImpl::DeleteGenerator(google::cloud::dialogflow::cx::v3::DeleteGeneratorRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteGenerator(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dialogflow::cx::v3::DeleteGeneratorRequest const&
-                 request) {
+             google::cloud::dialogflow::cx::v3::DeleteGeneratorRequest const& request) {
         return stub_->DeleteGenerator(context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::cloud::location::Location>
-GeneratorsConnectionImpl::ListLocations(
-    google::cloud::location::ListLocationsRequest request) {
+GeneratorsConnectionImpl::ListLocations(google::cloud::location::ListLocationsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListLocations(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::location::Location>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::location::Location>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<dialogflow_cx::GeneratorsRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<dialogflow_cx::GeneratorsRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::location::ListLocationsRequest const& r) {
+          Options const& options, google::cloud::location::ListLocationsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](
-                grpc::ClientContext& context, Options const& options,
-                google::cloud::location::ListLocationsRequest const& request) {
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::cloud::location::ListLocationsRequest const& request) {
               return stub->ListLocations(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::location::ListLocationsResponse r) {
-        std::vector<google::cloud::location::Location> result(
-            r.locations().size());
+        std::vector<google::cloud::location::Location> result(r.locations().size());
         auto& messages = *r.mutable_locations();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -188,8 +167,7 @@ GeneratorsConnectionImpl::ListLocations(
 }
 
 StatusOr<google::cloud::location::Location>
-GeneratorsConnectionImpl::GetLocation(
-    google::cloud::location::GetLocationRequest const& request) {
+GeneratorsConnectionImpl::GetLocation(google::cloud::location::GetLocationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -202,21 +180,17 @@ GeneratorsConnectionImpl::GetLocation(
 }
 
 StreamRange<google::longrunning::Operation>
-GeneratorsConnectionImpl::ListOperations(
-    google::longrunning::ListOperationsRequest request) {
+GeneratorsConnectionImpl::ListOperations(google::longrunning::ListOperationsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListOperations(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::longrunning::Operation>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::longrunning::Operation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<dialogflow_cx::GeneratorsRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<dialogflow_cx::GeneratorsRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::longrunning::ListOperationsRequest const& r) {
+          Options const& options, google::longrunning::ListOperationsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
@@ -226,16 +200,15 @@ GeneratorsConnectionImpl::ListOperations(
             options, r, function_name);
       },
       [](google::longrunning::ListOperationsResponse r) {
-        std::vector<google::longrunning::Operation> result(
-            r.operations().size());
+        std::vector<google::longrunning::Operation> result(r.operations().size());
         auto& messages = *r.mutable_operations();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
       });
 }
 
-StatusOr<google::longrunning::Operation> GeneratorsConnectionImpl::GetOperation(
-    google::longrunning::GetOperationRequest const& request) {
+StatusOr<google::longrunning::Operation>
+GeneratorsConnectionImpl::GetOperation(google::longrunning::GetOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -247,8 +220,8 @@ StatusOr<google::longrunning::Operation> GeneratorsConnectionImpl::GetOperation(
       *current, request, __func__);
 }
 
-Status GeneratorsConnectionImpl::CancelOperation(
-    google::longrunning::CancelOperationRequest const& request) {
+Status
+GeneratorsConnectionImpl::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),

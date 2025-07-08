@@ -26,92 +26,74 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-RegistrationServiceConnectionIdempotencyPolicy::
-    ~RegistrationServiceConnectionIdempotencyPolicy() = default;
+RegistrationServiceConnectionIdempotencyPolicy::~RegistrationServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<RegistrationServiceConnectionIdempotencyPolicy>
 RegistrationServiceConnectionIdempotencyPolicy::clone() const {
-  return std::make_unique<RegistrationServiceConnectionIdempotencyPolicy>(
-      *this);
+  return std::make_unique<RegistrationServiceConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency RegistrationServiceConnectionIdempotencyPolicy::CreateNamespace(
-    google::cloud::servicedirectory::v1::CreateNamespaceRequest const&) {
+Idempotency RegistrationServiceConnectionIdempotencyPolicy::CreateNamespace(google::cloud::servicedirectory::v1::CreateNamespaceRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency RegistrationServiceConnectionIdempotencyPolicy::ListNamespaces(
-    google::cloud::servicedirectory::v1::ListNamespacesRequest) {  // NOLINT
+Idempotency RegistrationServiceConnectionIdempotencyPolicy::ListNamespaces(google::cloud::servicedirectory::v1::ListNamespacesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency RegistrationServiceConnectionIdempotencyPolicy::GetNamespace(
-    google::cloud::servicedirectory::v1::GetNamespaceRequest const&) {
+Idempotency RegistrationServiceConnectionIdempotencyPolicy::GetNamespace(google::cloud::servicedirectory::v1::GetNamespaceRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency RegistrationServiceConnectionIdempotencyPolicy::UpdateNamespace(
-    google::cloud::servicedirectory::v1::UpdateNamespaceRequest const&) {
+Idempotency RegistrationServiceConnectionIdempotencyPolicy::UpdateNamespace(google::cloud::servicedirectory::v1::UpdateNamespaceRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency RegistrationServiceConnectionIdempotencyPolicy::DeleteNamespace(
-    google::cloud::servicedirectory::v1::DeleteNamespaceRequest const&) {
+Idempotency RegistrationServiceConnectionIdempotencyPolicy::DeleteNamespace(google::cloud::servicedirectory::v1::DeleteNamespaceRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency RegistrationServiceConnectionIdempotencyPolicy::CreateService(
-    google::cloud::servicedirectory::v1::CreateServiceRequest const&) {
+Idempotency RegistrationServiceConnectionIdempotencyPolicy::CreateService(google::cloud::servicedirectory::v1::CreateServiceRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency RegistrationServiceConnectionIdempotencyPolicy::ListServices(
-    google::cloud::servicedirectory::v1::ListServicesRequest) {  // NOLINT
+Idempotency RegistrationServiceConnectionIdempotencyPolicy::ListServices(google::cloud::servicedirectory::v1::ListServicesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency RegistrationServiceConnectionIdempotencyPolicy::GetService(
-    google::cloud::servicedirectory::v1::GetServiceRequest const&) {
+Idempotency RegistrationServiceConnectionIdempotencyPolicy::GetService(google::cloud::servicedirectory::v1::GetServiceRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency RegistrationServiceConnectionIdempotencyPolicy::UpdateService(
-    google::cloud::servicedirectory::v1::UpdateServiceRequest const&) {
+Idempotency RegistrationServiceConnectionIdempotencyPolicy::UpdateService(google::cloud::servicedirectory::v1::UpdateServiceRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency RegistrationServiceConnectionIdempotencyPolicy::DeleteService(
-    google::cloud::servicedirectory::v1::DeleteServiceRequest const&) {
+Idempotency RegistrationServiceConnectionIdempotencyPolicy::DeleteService(google::cloud::servicedirectory::v1::DeleteServiceRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency RegistrationServiceConnectionIdempotencyPolicy::CreateEndpoint(
-    google::cloud::servicedirectory::v1::CreateEndpointRequest const&) {
+Idempotency RegistrationServiceConnectionIdempotencyPolicy::CreateEndpoint(google::cloud::servicedirectory::v1::CreateEndpointRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency RegistrationServiceConnectionIdempotencyPolicy::ListEndpoints(
-    google::cloud::servicedirectory::v1::ListEndpointsRequest) {  // NOLINT
+Idempotency RegistrationServiceConnectionIdempotencyPolicy::ListEndpoints(google::cloud::servicedirectory::v1::ListEndpointsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency RegistrationServiceConnectionIdempotencyPolicy::GetEndpoint(
-    google::cloud::servicedirectory::v1::GetEndpointRequest const&) {
+Idempotency RegistrationServiceConnectionIdempotencyPolicy::GetEndpoint(google::cloud::servicedirectory::v1::GetEndpointRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency RegistrationServiceConnectionIdempotencyPolicy::UpdateEndpoint(
-    google::cloud::servicedirectory::v1::UpdateEndpointRequest const&) {
+Idempotency RegistrationServiceConnectionIdempotencyPolicy::UpdateEndpoint(google::cloud::servicedirectory::v1::UpdateEndpointRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency RegistrationServiceConnectionIdempotencyPolicy::DeleteEndpoint(
-    google::cloud::servicedirectory::v1::DeleteEndpointRequest const&) {
+Idempotency RegistrationServiceConnectionIdempotencyPolicy::DeleteEndpoint(google::cloud::servicedirectory::v1::DeleteEndpointRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency RegistrationServiceConnectionIdempotencyPolicy::GetIamPolicy(
-    google::iam::v1::GetIamPolicyRequest const&) {
+Idempotency RegistrationServiceConnectionIdempotencyPolicy::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
@@ -121,23 +103,20 @@ Idempotency RegistrationServiceConnectionIdempotencyPolicy::SetIamPolicy(
                                          : Idempotency::kIdempotent;
 }
 
-Idempotency RegistrationServiceConnectionIdempotencyPolicy::TestIamPermissions(
-    google::iam::v1::TestIamPermissionsRequest const&) {
+Idempotency RegistrationServiceConnectionIdempotencyPolicy::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency RegistrationServiceConnectionIdempotencyPolicy::ListLocations(
-    google::cloud::location::ListLocationsRequest) {  // NOLINT
+Idempotency RegistrationServiceConnectionIdempotencyPolicy::ListLocations(google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency RegistrationServiceConnectionIdempotencyPolicy::GetLocation(
-    google::cloud::location::GetLocationRequest const&) {
+Idempotency RegistrationServiceConnectionIdempotencyPolicy::GetLocation(google::cloud::location::GetLocationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<RegistrationServiceConnectionIdempotencyPolicy>
-MakeDefaultRegistrationServiceConnectionIdempotencyPolicy() {
+    MakeDefaultRegistrationServiceConnectionIdempotencyPolicy() {
   return std::make_unique<RegistrationServiceConnectionIdempotencyPolicy>();
 }
 

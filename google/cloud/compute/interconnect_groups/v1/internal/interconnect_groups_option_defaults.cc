@@ -35,50 +35,32 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options InterconnectGroupsDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_INTERCONNECT_GROUPS_ENDPOINT", "",
-      "GOOGLE_CLOUD_CPP_INTERCONNECT_GROUPS_AUTHORITY",
+      std::move(options), "GOOGLE_CLOUD_CPP_INTERCONNECT_GROUPS_ENDPOINT",
+      "", "GOOGLE_CLOUD_CPP_INTERCONNECT_GROUPS_AUTHORITY",
       "compute.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
-  if (!options.has<compute_interconnect_groups_v1::
-                       InterconnectGroupsRetryPolicyOption>()) {
-    options.set<
-        compute_interconnect_groups_v1::InterconnectGroupsRetryPolicyOption>(
-        compute_interconnect_groups_v1::
-            InterconnectGroupsLimitedTimeRetryPolicy(std::chrono::minutes(30))
-                .clone());
+  if (!options.has<compute_interconnect_groups_v1::InterconnectGroupsRetryPolicyOption>()) {
+    options.set<compute_interconnect_groups_v1::InterconnectGroupsRetryPolicyOption>(
+        compute_interconnect_groups_v1::InterconnectGroupsLimitedTimeRetryPolicy(
+            std::chrono::minutes(30)).clone());
   }
-  if (!options.has<compute_interconnect_groups_v1::
-                       InterconnectGroupsBackoffPolicyOption>()) {
-    options.set<
-        compute_interconnect_groups_v1::InterconnectGroupsBackoffPolicyOption>(
-        ExponentialBackoffPolicy(
-            std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
-            .clone());
+  if (!options.has<compute_interconnect_groups_v1::InterconnectGroupsBackoffPolicyOption>()) {
+    options.set<compute_interconnect_groups_v1::InterconnectGroupsBackoffPolicyOption>(
+        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
   }
-  if (!options.has<compute_interconnect_groups_v1::
-                       InterconnectGroupsPollingPolicyOption>()) {
-    options.set<
-        compute_interconnect_groups_v1::InterconnectGroupsPollingPolicyOption>(
-        GenericPollingPolicy<compute_interconnect_groups_v1::
-                                 InterconnectGroupsRetryPolicyOption::Type,
-                             compute_interconnect_groups_v1::
-                                 InterconnectGroupsBackoffPolicyOption::Type>(
-            options
-                .get<compute_interconnect_groups_v1::
-                         InterconnectGroupsRetryPolicyOption>()
-                ->clone(),
+  if (!options.has<compute_interconnect_groups_v1::InterconnectGroupsPollingPolicyOption>()) {
+    options.set<compute_interconnect_groups_v1::InterconnectGroupsPollingPolicyOption>(
+        GenericPollingPolicy<
+            compute_interconnect_groups_v1::InterconnectGroupsRetryPolicyOption::Type,
+            compute_interconnect_groups_v1::InterconnectGroupsBackoffPolicyOption::Type>(
+            options.get<compute_interconnect_groups_v1::InterconnectGroupsRetryPolicyOption>()->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                     std::chrono::minutes(5), kBackoffScaling)
-                .clone())
-            .clone());
+            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
   }
-  if (!options.has<compute_interconnect_groups_v1::
-                       InterconnectGroupsConnectionIdempotencyPolicyOption>()) {
-    options.set<compute_interconnect_groups_v1::
-                    InterconnectGroupsConnectionIdempotencyPolicyOption>(
-        compute_interconnect_groups_v1::
-            MakeDefaultInterconnectGroupsConnectionIdempotencyPolicy());
+  if (!options.has<compute_interconnect_groups_v1::InterconnectGroupsConnectionIdempotencyPolicyOption>()) {
+    options.set<compute_interconnect_groups_v1::InterconnectGroupsConnectionIdempotencyPolicyOption>(
+        compute_interconnect_groups_v1::MakeDefaultInterconnectGroupsConnectionIdempotencyPolicy());
   }
 
   return options;

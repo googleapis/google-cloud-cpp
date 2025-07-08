@@ -61,29 +61,23 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class RowAccessPolicyServiceClient {
  public:
-  explicit RowAccessPolicyServiceClient(
-      std::shared_ptr<RowAccessPolicyServiceConnection> connection,
-      Options opts = {});
+  explicit RowAccessPolicyServiceClient(std::shared_ptr<RowAccessPolicyServiceConnection> connection, Options opts = {});
   ~RowAccessPolicyServiceClient();
 
   ///@{
   /// @name Copy and move support
   RowAccessPolicyServiceClient(RowAccessPolicyServiceClient const&) = default;
-  RowAccessPolicyServiceClient& operator=(RowAccessPolicyServiceClient const&) =
-      default;
+  RowAccessPolicyServiceClient& operator=(RowAccessPolicyServiceClient const&) = default;
   RowAccessPolicyServiceClient(RowAccessPolicyServiceClient&&) = default;
-  RowAccessPolicyServiceClient& operator=(RowAccessPolicyServiceClient&&) =
-      default;
+  RowAccessPolicyServiceClient& operator=(RowAccessPolicyServiceClient&&) = default;
   ///@}
 
   ///@{
   /// @name Equality
-  friend bool operator==(RowAccessPolicyServiceClient const& a,
-                         RowAccessPolicyServiceClient const& b) {
+  friend bool operator==(RowAccessPolicyServiceClient const& a, RowAccessPolicyServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(RowAccessPolicyServiceClient const& a,
-                         RowAccessPolicyServiceClient const& b) {
+  friend bool operator!=(RowAccessPolicyServiceClient const& a, RowAccessPolicyServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -125,9 +119,7 @@ class RowAccessPolicyServiceClient {
   ///
   // clang-format on
   StreamRange<google::cloud::bigquery::v2::RowAccessPolicy>
-  ListRowAccessPolicies(
-      google::cloud::bigquery::v2::ListRowAccessPoliciesRequest request,
-      Options opts = {});
+  ListRowAccessPolicies(google::cloud::bigquery::v2::ListRowAccessPoliciesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -156,9 +148,8 @@ class RowAccessPolicyServiceClient {
   /// [google.cloud.bigquery.v2.RowAccessPolicy]: @googleapis_reference_link{google/cloud/bigquery/v2/row_access_policy.proto#L212}
   ///
   // clang-format on
-  StatusOr<google::cloud::bigquery::v2::RowAccessPolicy> GetRowAccessPolicy(
-      google::cloud::bigquery::v2::GetRowAccessPolicyRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::bigquery::v2::RowAccessPolicy>
+  GetRowAccessPolicy(google::cloud::bigquery::v2::GetRowAccessPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -187,9 +178,8 @@ class RowAccessPolicyServiceClient {
   /// [google.cloud.bigquery.v2.RowAccessPolicy]: @googleapis_reference_link{google/cloud/bigquery/v2/row_access_policy.proto#L212}
   ///
   // clang-format on
-  StatusOr<google::cloud::bigquery::v2::RowAccessPolicy> CreateRowAccessPolicy(
-      google::cloud::bigquery::v2::CreateRowAccessPolicyRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::bigquery::v2::RowAccessPolicy>
+  CreateRowAccessPolicy(google::cloud::bigquery::v2::CreateRowAccessPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -218,9 +208,8 @@ class RowAccessPolicyServiceClient {
   /// [google.cloud.bigquery.v2.UpdateRowAccessPolicyRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/row_access_policy.proto#L151}
   ///
   // clang-format on
-  StatusOr<google::cloud::bigquery::v2::RowAccessPolicy> UpdateRowAccessPolicy(
-      google::cloud::bigquery::v2::UpdateRowAccessPolicyRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::bigquery::v2::RowAccessPolicy>
+  UpdateRowAccessPolicy(google::cloud::bigquery::v2::UpdateRowAccessPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -246,9 +235,8 @@ class RowAccessPolicyServiceClient {
   /// [google.cloud.bigquery.v2.DeleteRowAccessPolicyRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/row_access_policy.proto#L170}
   ///
   // clang-format on
-  Status DeleteRowAccessPolicy(
-      google::cloud::bigquery::v2::DeleteRowAccessPolicyRequest const& request,
-      Options opts = {});
+  Status
+  DeleteRowAccessPolicy(google::cloud::bigquery::v2::DeleteRowAccessPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -274,10 +262,8 @@ class RowAccessPolicyServiceClient {
   /// [google.cloud.bigquery.v2.BatchDeleteRowAccessPoliciesRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/row_access_policy.proto#L190}
   ///
   // clang-format on
-  Status BatchDeleteRowAccessPolicies(
-      google::cloud::bigquery::v2::BatchDeleteRowAccessPoliciesRequest const&
-          request,
-      Options opts = {});
+  Status
+  BatchDeleteRowAccessPolicies(google::cloud::bigquery::v2::BatchDeleteRowAccessPoliciesRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<RowAccessPolicyServiceConnection> connection_;

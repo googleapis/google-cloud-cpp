@@ -17,11 +17,11 @@
 // source: google/cloud/compute/target_http_proxies/v1/target_http_proxies.proto
 
 #include "google/cloud/compute/target_http_proxies/v1/target_http_proxies_connection.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/compute/target_http_proxies/v1/internal/target_http_proxies_option_defaults.h"
 #include "google/cloud/compute/target_http_proxies/v1/internal/target_http_proxies_tracing_connection.h"
 #include "google/cloud/compute/target_http_proxies/v1/target_http_proxies_options.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
@@ -36,129 +36,118 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 TargetHttpProxiesConnection::~TargetHttpProxiesConnection() = default;
 
-StreamRange<std::pair<
-    std::string, google::cloud::cpp::compute::v1::TargetHttpProxiesScopedList>>
-TargetHttpProxiesConnection::AggregatedListTargetHttpProxies(
-    google::cloud::cpp::compute::target_http_proxies::v1::
-        AggregatedListTargetHttpProxiesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::TargetHttpProxiesScopedList>> TargetHttpProxiesConnection::AggregatedListTargetHttpProxies(
+    google::cloud::cpp::compute::target_http_proxies::v1::AggregatedListTargetHttpProxiesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
-      StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::
-                                             TargetHttpProxiesScopedList>>>();
+      StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::TargetHttpProxiesScopedList>>>();
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetHttpProxiesConnection::DeleteTargetHttpProxy(
-    google::cloud::cpp::compute::target_http_proxies::v1::
-        DeleteTargetHttpProxyRequest const&) {
+    google::cloud::cpp::compute::target_http_proxies::v1::DeleteTargetHttpProxyRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetHttpProxiesConnection::DeleteTargetHttpProxy(
-    NoAwaitTag, google::cloud::cpp::compute::target_http_proxies::v1::
-                    DeleteTargetHttpProxyRequest const&) {
+    NoAwaitTag,
+    google::cloud::cpp::compute::target_http_proxies::v1::DeleteTargetHttpProxyRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetHttpProxiesConnection::DeleteTargetHttpProxy(
     google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TargetHttpProxy>
 TargetHttpProxiesConnection::GetTargetHttpProxy(
-    google::cloud::cpp::compute::target_http_proxies::v1::
-        GetTargetHttpProxyRequest const&) {
+    google::cloud::cpp::compute::target_http_proxies::v1::GetTargetHttpProxyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetHttpProxiesConnection::InsertTargetHttpProxy(
-    google::cloud::cpp::compute::target_http_proxies::v1::
-        InsertTargetHttpProxyRequest const&) {
+    google::cloud::cpp::compute::target_http_proxies::v1::InsertTargetHttpProxyRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetHttpProxiesConnection::InsertTargetHttpProxy(
-    NoAwaitTag, google::cloud::cpp::compute::target_http_proxies::v1::
-                    InsertTargetHttpProxyRequest const&) {
+    NoAwaitTag,
+    google::cloud::cpp::compute::target_http_proxies::v1::InsertTargetHttpProxyRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetHttpProxiesConnection::InsertTargetHttpProxy(
     google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StreamRange<google::cloud::cpp::compute::v1::TargetHttpProxy>
-TargetHttpProxiesConnection::ListTargetHttpProxies(
-    google::cloud::cpp::compute::target_http_proxies::v1::
-        ListTargetHttpProxiesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::cpp::compute::v1::TargetHttpProxy> TargetHttpProxiesConnection::ListTargetHttpProxies(
+    google::cloud::cpp::compute::target_http_proxies::v1::ListTargetHttpProxiesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::cpp::compute::v1::TargetHttpProxy>>();
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetHttpProxiesConnection::PatchTargetHttpProxy(
-    google::cloud::cpp::compute::target_http_proxies::v1::
-        PatchTargetHttpProxyRequest const&) {
+    google::cloud::cpp::compute::target_http_proxies::v1::PatchTargetHttpProxyRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetHttpProxiesConnection::PatchTargetHttpProxy(
-    NoAwaitTag, google::cloud::cpp::compute::target_http_proxies::v1::
-                    PatchTargetHttpProxyRequest const&) {
+    NoAwaitTag,
+    google::cloud::cpp::compute::target_http_proxies::v1::PatchTargetHttpProxyRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetHttpProxiesConnection::PatchTargetHttpProxy(
     google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetHttpProxiesConnection::SetUrlMap(
-    google::cloud::cpp::compute::target_http_proxies::v1::
-        SetUrlMapRequest const&) {
+    google::cloud::cpp::compute::target_http_proxies::v1::SetUrlMapRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetHttpProxiesConnection::SetUrlMap(
-    NoAwaitTag, google::cloud::cpp::compute::target_http_proxies::v1::
-                    SetUrlMapRequest const&) {
+    NoAwaitTag,
+    google::cloud::cpp::compute::target_http_proxies::v1::SetUrlMapRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetHttpProxiesConnection::SetUrlMap(
     google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

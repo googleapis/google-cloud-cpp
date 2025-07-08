@@ -30,44 +30,42 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-class AutokeyAdminTracingConnection : public kms_v1::AutokeyAdminConnection {
+class AutokeyAdminTracingConnection
+    : public kms_v1::AutokeyAdminConnection {
  public:
   ~AutokeyAdminTracingConnection() override = default;
 
   explicit AutokeyAdminTracingConnection(
-      std::shared_ptr<kms_v1::AutokeyAdminConnection> child);
+    std::shared_ptr<kms_v1::AutokeyAdminConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::kms::v1::AutokeyConfig> UpdateAutokeyConfig(
-      google::cloud::kms::v1::UpdateAutokeyConfigRequest const& request)
-      override;
+  StatusOr<google::cloud::kms::v1::AutokeyConfig>
+  UpdateAutokeyConfig(google::cloud::kms::v1::UpdateAutokeyConfigRequest const& request) override;
 
-  StatusOr<google::cloud::kms::v1::AutokeyConfig> GetAutokeyConfig(
-      google::cloud::kms::v1::GetAutokeyConfigRequest const& request) override;
+  StatusOr<google::cloud::kms::v1::AutokeyConfig>
+  GetAutokeyConfig(google::cloud::kms::v1::GetAutokeyConfigRequest const& request) override;
 
   StatusOr<google::cloud::kms::v1::ShowEffectiveAutokeyConfigResponse>
-  ShowEffectiveAutokeyConfig(
-      google::cloud::kms::v1::ShowEffectiveAutokeyConfigRequest const& request)
-      override;
+  ShowEffectiveAutokeyConfig(google::cloud::kms::v1::ShowEffectiveAutokeyConfigRequest const& request) override;
 
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request) override;
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request) override;
 
-  StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request) override;
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request) override;
+  StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request) override;
 
  private:
   std::shared_ptr<kms_v1::AutokeyAdminConnection> child_;

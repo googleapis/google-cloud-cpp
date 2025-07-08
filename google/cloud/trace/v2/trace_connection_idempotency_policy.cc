@@ -26,26 +26,23 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-TraceServiceConnectionIdempotencyPolicy::
-    ~TraceServiceConnectionIdempotencyPolicy() = default;
+TraceServiceConnectionIdempotencyPolicy::~TraceServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<TraceServiceConnectionIdempotencyPolicy>
 TraceServiceConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<TraceServiceConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency TraceServiceConnectionIdempotencyPolicy::BatchWriteSpans(
-    google::devtools::cloudtrace::v2::BatchWriteSpansRequest const&) {
+Idempotency TraceServiceConnectionIdempotencyPolicy::BatchWriteSpans(google::devtools::cloudtrace::v2::BatchWriteSpansRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TraceServiceConnectionIdempotencyPolicy::CreateSpan(
-    google::devtools::cloudtrace::v2::Span const&) {
+Idempotency TraceServiceConnectionIdempotencyPolicy::CreateSpan(google::devtools::cloudtrace::v2::Span const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<TraceServiceConnectionIdempotencyPolicy>
-MakeDefaultTraceServiceConnectionIdempotencyPolicy() {
+    MakeDefaultTraceServiceConnectionIdempotencyPolicy() {
   return std::make_unique<TraceServiceConnectionIdempotencyPolicy>();
 }
 

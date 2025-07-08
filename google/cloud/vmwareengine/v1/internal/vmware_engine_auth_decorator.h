@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VMWAREENGINE_V1_INTERNAL_VMWARE_ENGINE_AUTH_DECORATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VMWAREENGINE_V1_INTERNAL_VMWARE_ENGINE_AUTH_DECORATOR_H
 
-#include "google/cloud/vmwareengine/v1/internal/vmware_engine_stub.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/version.h"
+#include "google/cloud/vmwareengine/v1/internal/vmware_engine_stub.h"
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 #include <set>
@@ -39,710 +39,648 @@ class VmwareEngineAuth : public VmwareEngineStub {
       std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth,
       std::shared_ptr<VmwareEngineStub> child);
 
-  StatusOr<google::cloud::vmwareengine::v1::ListPrivateCloudsResponse>
-  ListPrivateClouds(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::vmwareengine::v1::ListPrivateCloudsRequest const& request)
-      override;
+  StatusOr<google::cloud::vmwareengine::v1::ListPrivateCloudsResponse> ListPrivateClouds(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::vmwareengine::v1::ListPrivateCloudsRequest const& request) override;
 
   StatusOr<google::cloud::vmwareengine::v1::PrivateCloud> GetPrivateCloud(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::vmwareengine::v1::GetPrivateCloudRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::vmwareengine::v1::GetPrivateCloudRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreatePrivateCloud(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::vmwareengine::v1::CreatePrivateCloudRequest const& request)
-      override;
+      google::cloud::vmwareengine::v1::CreatePrivateCloudRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreatePrivateCloud(
-      grpc::ClientContext& context, Options options,
-      google::cloud::vmwareengine::v1::CreatePrivateCloudRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::vmwareengine::v1::CreatePrivateCloudRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdatePrivateCloud(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::vmwareengine::v1::UpdatePrivateCloudRequest const& request)
-      override;
+      google::cloud::vmwareengine::v1::UpdatePrivateCloudRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdatePrivateCloud(
-      grpc::ClientContext& context, Options options,
-      google::cloud::vmwareengine::v1::UpdatePrivateCloudRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::vmwareengine::v1::UpdatePrivateCloudRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeletePrivateCloud(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::vmwareengine::v1::DeletePrivateCloudRequest const& request)
-      override;
+      google::cloud::vmwareengine::v1::DeletePrivateCloudRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeletePrivateCloud(
-      grpc::ClientContext& context, Options options,
-      google::cloud::vmwareengine::v1::DeletePrivateCloudRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::vmwareengine::v1::DeletePrivateCloudRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUndeletePrivateCloud(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::vmwareengine::v1::UndeletePrivateCloudRequest const&
-          request) override;
+      google::cloud::vmwareengine::v1::UndeletePrivateCloudRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UndeletePrivateCloud(
-      grpc::ClientContext& context, Options options,
-      google::cloud::vmwareengine::v1::UndeletePrivateCloudRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::vmwareengine::v1::UndeletePrivateCloudRequest const& request) override;
 
   StatusOr<google::cloud::vmwareengine::v1::ListClustersResponse> ListClusters(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::vmwareengine::v1::ListClustersRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::vmwareengine::v1::ListClustersRequest const& request) override;
 
   StatusOr<google::cloud::vmwareengine::v1::Cluster> GetCluster(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::vmwareengine::v1::GetClusterRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::vmwareengine::v1::GetClusterRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateCluster(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::vmwareengine::v1::CreateClusterRequest const& request)
-      override;
+      google::cloud::vmwareengine::v1::CreateClusterRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateCluster(
-      grpc::ClientContext& context, Options options,
-      google::cloud::vmwareengine::v1::CreateClusterRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::vmwareengine::v1::CreateClusterRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateCluster(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::vmwareengine::v1::UpdateClusterRequest const& request)
-      override;
+      google::cloud::vmwareengine::v1::UpdateClusterRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateCluster(
-      grpc::ClientContext& context, Options options,
-      google::cloud::vmwareengine::v1::UpdateClusterRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::vmwareengine::v1::UpdateClusterRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteCluster(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::vmwareengine::v1::DeleteClusterRequest const& request)
-      override;
+      google::cloud::vmwareengine::v1::DeleteClusterRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteCluster(
-      grpc::ClientContext& context, Options options,
-      google::cloud::vmwareengine::v1::DeleteClusterRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::vmwareengine::v1::DeleteClusterRequest const& request) override;
 
   StatusOr<google::cloud::vmwareengine::v1::ListNodesResponse> ListNodes(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::vmwareengine::v1::ListNodesRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::vmwareengine::v1::ListNodesRequest const& request) override;
 
   StatusOr<google::cloud::vmwareengine::v1::Node> GetNode(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::vmwareengine::v1::GetNodeRequest const& request) override;
 
-  StatusOr<google::cloud::vmwareengine::v1::ListExternalAddressesResponse>
-  ListExternalAddresses(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::vmwareengine::v1::ListExternalAddressesRequest const&
-          request) override;
+  StatusOr<google::cloud::vmwareengine::v1::ListExternalAddressesResponse> ListExternalAddresses(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::vmwareengine::v1::ListExternalAddressesRequest const& request) override;
 
-  StatusOr<google::cloud::vmwareengine::v1::
-               FetchNetworkPolicyExternalAddressesResponse>
-  FetchNetworkPolicyExternalAddresses(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::vmwareengine::v1::
-          FetchNetworkPolicyExternalAddressesRequest const& request) override;
+  StatusOr<google::cloud::vmwareengine::v1::FetchNetworkPolicyExternalAddressesResponse> FetchNetworkPolicyExternalAddresses(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::vmwareengine::v1::FetchNetworkPolicyExternalAddressesRequest const& request) override;
 
   StatusOr<google::cloud::vmwareengine::v1::ExternalAddress> GetExternalAddress(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::vmwareengine::v1::GetExternalAddressRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::vmwareengine::v1::GetExternalAddressRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateExternalAddress(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::vmwareengine::v1::CreateExternalAddressRequest const&
-          request) override;
+      google::cloud::vmwareengine::v1::CreateExternalAddressRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateExternalAddress(
-      grpc::ClientContext& context, Options options,
-      google::cloud::vmwareengine::v1::CreateExternalAddressRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::vmwareengine::v1::CreateExternalAddressRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateExternalAddress(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::vmwareengine::v1::UpdateExternalAddressRequest const&
-          request) override;
+      google::cloud::vmwareengine::v1::UpdateExternalAddressRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateExternalAddress(
-      grpc::ClientContext& context, Options options,
-      google::cloud::vmwareengine::v1::UpdateExternalAddressRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::vmwareengine::v1::UpdateExternalAddressRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteExternalAddress(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::vmwareengine::v1::DeleteExternalAddressRequest const&
-          request) override;
+      google::cloud::vmwareengine::v1::DeleteExternalAddressRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteExternalAddress(
-      grpc::ClientContext& context, Options options,
-      google::cloud::vmwareengine::v1::DeleteExternalAddressRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::vmwareengine::v1::DeleteExternalAddressRequest const& request) override;
 
   StatusOr<google::cloud::vmwareengine::v1::ListSubnetsResponse> ListSubnets(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::vmwareengine::v1::ListSubnetsRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::vmwareengine::v1::ListSubnetsRequest const& request) override;
 
   StatusOr<google::cloud::vmwareengine::v1::Subnet> GetSubnet(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::vmwareengine::v1::GetSubnetRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::vmwareengine::v1::GetSubnetRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateSubnet(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::vmwareengine::v1::UpdateSubnetRequest const& request)
-      override;
+      google::cloud::vmwareengine::v1::UpdateSubnetRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateSubnet(
-      grpc::ClientContext& context, Options options,
-      google::cloud::vmwareengine::v1::UpdateSubnetRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::vmwareengine::v1::UpdateSubnetRequest const& request) override;
 
-  StatusOr<google::cloud::vmwareengine::v1::ListExternalAccessRulesResponse>
-  ListExternalAccessRules(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::vmwareengine::v1::ListExternalAccessRulesRequest const&
-          request) override;
+  StatusOr<google::cloud::vmwareengine::v1::ListExternalAccessRulesResponse> ListExternalAccessRules(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::vmwareengine::v1::ListExternalAccessRulesRequest const& request) override;
 
-  StatusOr<google::cloud::vmwareengine::v1::ExternalAccessRule>
-  GetExternalAccessRule(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::vmwareengine::v1::GetExternalAccessRuleRequest const&
-          request) override;
+  StatusOr<google::cloud::vmwareengine::v1::ExternalAccessRule> GetExternalAccessRule(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::vmwareengine::v1::GetExternalAccessRuleRequest const& request) override;
 
-  future<StatusOr<google::longrunning::Operation>>
-  AsyncCreateExternalAccessRule(
+  future<StatusOr<google::longrunning::Operation>> AsyncCreateExternalAccessRule(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::vmwareengine::v1::CreateExternalAccessRuleRequest const&
-          request) override;
+      google::cloud::vmwareengine::v1::CreateExternalAccessRuleRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateExternalAccessRule(
-      grpc::ClientContext& context, Options options,
-      google::cloud::vmwareengine::v1::CreateExternalAccessRuleRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::vmwareengine::v1::CreateExternalAccessRuleRequest const& request) override;
 
-  future<StatusOr<google::longrunning::Operation>>
-  AsyncUpdateExternalAccessRule(
+  future<StatusOr<google::longrunning::Operation>> AsyncUpdateExternalAccessRule(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::vmwareengine::v1::UpdateExternalAccessRuleRequest const&
-          request) override;
+      google::cloud::vmwareengine::v1::UpdateExternalAccessRuleRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateExternalAccessRule(
-      grpc::ClientContext& context, Options options,
-      google::cloud::vmwareengine::v1::UpdateExternalAccessRuleRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::vmwareengine::v1::UpdateExternalAccessRuleRequest const& request) override;
 
-  future<StatusOr<google::longrunning::Operation>>
-  AsyncDeleteExternalAccessRule(
+  future<StatusOr<google::longrunning::Operation>> AsyncDeleteExternalAccessRule(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::vmwareengine::v1::DeleteExternalAccessRuleRequest const&
-          request) override;
+      google::cloud::vmwareengine::v1::DeleteExternalAccessRuleRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteExternalAccessRule(
-      grpc::ClientContext& context, Options options,
-      google::cloud::vmwareengine::v1::DeleteExternalAccessRuleRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::vmwareengine::v1::DeleteExternalAccessRuleRequest const& request) override;
 
-  StatusOr<google::cloud::vmwareengine::v1::ListLoggingServersResponse>
-  ListLoggingServers(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::vmwareengine::v1::ListLoggingServersRequest const& request)
-      override;
+  StatusOr<google::cloud::vmwareengine::v1::ListLoggingServersResponse> ListLoggingServers(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::vmwareengine::v1::ListLoggingServersRequest const& request) override;
 
   StatusOr<google::cloud::vmwareengine::v1::LoggingServer> GetLoggingServer(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::vmwareengine::v1::GetLoggingServerRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::vmwareengine::v1::GetLoggingServerRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateLoggingServer(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::vmwareengine::v1::CreateLoggingServerRequest const&
-          request) override;
+      google::cloud::vmwareengine::v1::CreateLoggingServerRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateLoggingServer(
-      grpc::ClientContext& context, Options options,
-      google::cloud::vmwareengine::v1::CreateLoggingServerRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::vmwareengine::v1::CreateLoggingServerRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateLoggingServer(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::vmwareengine::v1::UpdateLoggingServerRequest const&
-          request) override;
+      google::cloud::vmwareengine::v1::UpdateLoggingServerRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateLoggingServer(
-      grpc::ClientContext& context, Options options,
-      google::cloud::vmwareengine::v1::UpdateLoggingServerRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::vmwareengine::v1::UpdateLoggingServerRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteLoggingServer(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::vmwareengine::v1::DeleteLoggingServerRequest const&
-          request) override;
+      google::cloud::vmwareengine::v1::DeleteLoggingServerRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteLoggingServer(
-      grpc::ClientContext& context, Options options,
-      google::cloud::vmwareengine::v1::DeleteLoggingServerRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::vmwareengine::v1::DeleteLoggingServerRequest const& request) override;
 
-  StatusOr<google::cloud::vmwareengine::v1::ListNodeTypesResponse>
-  ListNodeTypes(grpc::ClientContext& context, Options const& options,
-                google::cloud::vmwareengine::v1::ListNodeTypesRequest const&
-                    request) override;
+  StatusOr<google::cloud::vmwareengine::v1::ListNodeTypesResponse> ListNodeTypes(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::vmwareengine::v1::ListNodeTypesRequest const& request) override;
 
   StatusOr<google::cloud::vmwareengine::v1::NodeType> GetNodeType(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::vmwareengine::v1::GetNodeTypeRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::vmwareengine::v1::GetNodeTypeRequest const& request) override;
 
   StatusOr<google::cloud::vmwareengine::v1::Credentials> ShowNsxCredentials(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::vmwareengine::v1::ShowNsxCredentialsRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::vmwareengine::v1::ShowNsxCredentialsRequest const& request) override;
 
   StatusOr<google::cloud::vmwareengine::v1::Credentials> ShowVcenterCredentials(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::vmwareengine::v1::ShowVcenterCredentialsRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::vmwareengine::v1::ShowVcenterCredentialsRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncResetNsxCredentials(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::vmwareengine::v1::ResetNsxCredentialsRequest const&
-          request) override;
+      google::cloud::vmwareengine::v1::ResetNsxCredentialsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> ResetNsxCredentials(
-      grpc::ClientContext& context, Options options,
-      google::cloud::vmwareengine::v1::ResetNsxCredentialsRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::vmwareengine::v1::ResetNsxCredentialsRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncResetVcenterCredentials(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::vmwareengine::v1::ResetVcenterCredentialsRequest const&
-          request) override;
+      google::cloud::vmwareengine::v1::ResetVcenterCredentialsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> ResetVcenterCredentials(
-      grpc::ClientContext& context, Options options,
-      google::cloud::vmwareengine::v1::ResetVcenterCredentialsRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::vmwareengine::v1::ResetVcenterCredentialsRequest const& request) override;
 
   StatusOr<google::cloud::vmwareengine::v1::DnsForwarding> GetDnsForwarding(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::vmwareengine::v1::GetDnsForwardingRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::vmwareengine::v1::GetDnsForwardingRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateDnsForwarding(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::vmwareengine::v1::UpdateDnsForwardingRequest const&
-          request) override;
+      google::cloud::vmwareengine::v1::UpdateDnsForwardingRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateDnsForwarding(
-      grpc::ClientContext& context, Options options,
-      google::cloud::vmwareengine::v1::UpdateDnsForwardingRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::vmwareengine::v1::UpdateDnsForwardingRequest const& request) override;
 
   StatusOr<google::cloud::vmwareengine::v1::NetworkPeering> GetNetworkPeering(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::vmwareengine::v1::GetNetworkPeeringRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::vmwareengine::v1::GetNetworkPeeringRequest const& request) override;
 
-  StatusOr<google::cloud::vmwareengine::v1::ListNetworkPeeringsResponse>
-  ListNetworkPeerings(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::vmwareengine::v1::ListNetworkPeeringsRequest const&
-          request) override;
+  StatusOr<google::cloud::vmwareengine::v1::ListNetworkPeeringsResponse> ListNetworkPeerings(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::vmwareengine::v1::ListNetworkPeeringsRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateNetworkPeering(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::vmwareengine::v1::CreateNetworkPeeringRequest const&
-          request) override;
+      google::cloud::vmwareengine::v1::CreateNetworkPeeringRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateNetworkPeering(
-      grpc::ClientContext& context, Options options,
-      google::cloud::vmwareengine::v1::CreateNetworkPeeringRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::vmwareengine::v1::CreateNetworkPeeringRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteNetworkPeering(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::vmwareengine::v1::DeleteNetworkPeeringRequest const&
-          request) override;
+      google::cloud::vmwareengine::v1::DeleteNetworkPeeringRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteNetworkPeering(
-      grpc::ClientContext& context, Options options,
-      google::cloud::vmwareengine::v1::DeleteNetworkPeeringRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::vmwareengine::v1::DeleteNetworkPeeringRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateNetworkPeering(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::vmwareengine::v1::UpdateNetworkPeeringRequest const&
-          request) override;
+      google::cloud::vmwareengine::v1::UpdateNetworkPeeringRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateNetworkPeering(
-      grpc::ClientContext& context, Options options,
-      google::cloud::vmwareengine::v1::UpdateNetworkPeeringRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::vmwareengine::v1::UpdateNetworkPeeringRequest const& request) override;
 
-  StatusOr<google::cloud::vmwareengine::v1::ListPeeringRoutesResponse>
-  ListPeeringRoutes(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::vmwareengine::v1::ListPeeringRoutesRequest const& request)
-      override;
+  StatusOr<google::cloud::vmwareengine::v1::ListPeeringRoutesResponse> ListPeeringRoutes(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::vmwareengine::v1::ListPeeringRoutesRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateHcxActivationKey(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::vmwareengine::v1::CreateHcxActivationKeyRequest const&
-          request) override;
+      google::cloud::vmwareengine::v1::CreateHcxActivationKeyRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateHcxActivationKey(
-      grpc::ClientContext& context, Options options,
-      google::cloud::vmwareengine::v1::CreateHcxActivationKeyRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::vmwareengine::v1::CreateHcxActivationKeyRequest const& request) override;
 
-  StatusOr<google::cloud::vmwareengine::v1::ListHcxActivationKeysResponse>
-  ListHcxActivationKeys(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::vmwareengine::v1::ListHcxActivationKeysRequest const&
-          request) override;
+  StatusOr<google::cloud::vmwareengine::v1::ListHcxActivationKeysResponse> ListHcxActivationKeys(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::vmwareengine::v1::ListHcxActivationKeysRequest const& request) override;
 
-  StatusOr<google::cloud::vmwareengine::v1::HcxActivationKey>
-  GetHcxActivationKey(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::vmwareengine::v1::GetHcxActivationKeyRequest const&
-          request) override;
+  StatusOr<google::cloud::vmwareengine::v1::HcxActivationKey> GetHcxActivationKey(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::vmwareengine::v1::GetHcxActivationKeyRequest const& request) override;
 
   StatusOr<google::cloud::vmwareengine::v1::NetworkPolicy> GetNetworkPolicy(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::vmwareengine::v1::GetNetworkPolicyRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::vmwareengine::v1::GetNetworkPolicyRequest const& request) override;
 
-  StatusOr<google::cloud::vmwareengine::v1::ListNetworkPoliciesResponse>
-  ListNetworkPolicies(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::vmwareengine::v1::ListNetworkPoliciesRequest const&
-          request) override;
+  StatusOr<google::cloud::vmwareengine::v1::ListNetworkPoliciesResponse> ListNetworkPolicies(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::vmwareengine::v1::ListNetworkPoliciesRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateNetworkPolicy(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::vmwareengine::v1::CreateNetworkPolicyRequest const&
-          request) override;
+      google::cloud::vmwareengine::v1::CreateNetworkPolicyRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateNetworkPolicy(
-      grpc::ClientContext& context, Options options,
-      google::cloud::vmwareengine::v1::CreateNetworkPolicyRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::vmwareengine::v1::CreateNetworkPolicyRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateNetworkPolicy(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::vmwareengine::v1::UpdateNetworkPolicyRequest const&
-          request) override;
+      google::cloud::vmwareengine::v1::UpdateNetworkPolicyRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateNetworkPolicy(
-      grpc::ClientContext& context, Options options,
-      google::cloud::vmwareengine::v1::UpdateNetworkPolicyRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::vmwareengine::v1::UpdateNetworkPolicyRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteNetworkPolicy(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::vmwareengine::v1::DeleteNetworkPolicyRequest const&
-          request) override;
+      google::cloud::vmwareengine::v1::DeleteNetworkPolicyRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteNetworkPolicy(
-      grpc::ClientContext& context, Options options,
-      google::cloud::vmwareengine::v1::DeleteNetworkPolicyRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::vmwareengine::v1::DeleteNetworkPolicyRequest const& request) override;
 
-  StatusOr<
-      google::cloud::vmwareengine::v1::ListManagementDnsZoneBindingsResponse>
-  ListManagementDnsZoneBindings(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::vmwareengine::v1::
-          ListManagementDnsZoneBindingsRequest const& request) override;
+  StatusOr<google::cloud::vmwareengine::v1::ListManagementDnsZoneBindingsResponse> ListManagementDnsZoneBindings(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::vmwareengine::v1::ListManagementDnsZoneBindingsRequest const& request) override;
 
-  StatusOr<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>
-  GetManagementDnsZoneBinding(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::vmwareengine::v1::GetManagementDnsZoneBindingRequest const&
-          request) override;
+  StatusOr<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding> GetManagementDnsZoneBinding(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::vmwareengine::v1::GetManagementDnsZoneBindingRequest const& request) override;
 
-  future<StatusOr<google::longrunning::Operation>>
-  AsyncCreateManagementDnsZoneBinding(
+  future<StatusOr<google::longrunning::Operation>> AsyncCreateManagementDnsZoneBinding(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::vmwareengine::v1::
-          CreateManagementDnsZoneBindingRequest const& request) override;
+      google::cloud::vmwareengine::v1::CreateManagementDnsZoneBindingRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateManagementDnsZoneBinding(
-      grpc::ClientContext& context, Options options,
-      google::cloud::vmwareengine::v1::
-          CreateManagementDnsZoneBindingRequest const& request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::vmwareengine::v1::CreateManagementDnsZoneBindingRequest const& request) override;
 
-  future<StatusOr<google::longrunning::Operation>>
-  AsyncUpdateManagementDnsZoneBinding(
+  future<StatusOr<google::longrunning::Operation>> AsyncUpdateManagementDnsZoneBinding(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::vmwareengine::v1::
-          UpdateManagementDnsZoneBindingRequest const& request) override;
+      google::cloud::vmwareengine::v1::UpdateManagementDnsZoneBindingRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateManagementDnsZoneBinding(
-      grpc::ClientContext& context, Options options,
-      google::cloud::vmwareengine::v1::
-          UpdateManagementDnsZoneBindingRequest const& request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::vmwareengine::v1::UpdateManagementDnsZoneBindingRequest const& request) override;
 
-  future<StatusOr<google::longrunning::Operation>>
-  AsyncDeleteManagementDnsZoneBinding(
+  future<StatusOr<google::longrunning::Operation>> AsyncDeleteManagementDnsZoneBinding(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::vmwareengine::v1::
-          DeleteManagementDnsZoneBindingRequest const& request) override;
+      google::cloud::vmwareengine::v1::DeleteManagementDnsZoneBindingRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteManagementDnsZoneBinding(
-      grpc::ClientContext& context, Options options,
-      google::cloud::vmwareengine::v1::
-          DeleteManagementDnsZoneBindingRequest const& request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::vmwareengine::v1::DeleteManagementDnsZoneBindingRequest const& request) override;
 
-  future<StatusOr<google::longrunning::Operation>>
-  AsyncRepairManagementDnsZoneBinding(
+  future<StatusOr<google::longrunning::Operation>> AsyncRepairManagementDnsZoneBinding(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::vmwareengine::v1::
-          RepairManagementDnsZoneBindingRequest const& request) override;
+      google::cloud::vmwareengine::v1::RepairManagementDnsZoneBindingRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> RepairManagementDnsZoneBinding(
-      grpc::ClientContext& context, Options options,
-      google::cloud::vmwareengine::v1::
-          RepairManagementDnsZoneBindingRequest const& request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::vmwareengine::v1::RepairManagementDnsZoneBindingRequest const& request) override;
 
-  future<StatusOr<google::longrunning::Operation>>
-  AsyncCreateVmwareEngineNetwork(
+  future<StatusOr<google::longrunning::Operation>> AsyncCreateVmwareEngineNetwork(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::vmwareengine::v1::CreateVmwareEngineNetworkRequest const&
-          request) override;
+      google::cloud::vmwareengine::v1::CreateVmwareEngineNetworkRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateVmwareEngineNetwork(
-      grpc::ClientContext& context, Options options,
-      google::cloud::vmwareengine::v1::CreateVmwareEngineNetworkRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::vmwareengine::v1::CreateVmwareEngineNetworkRequest const& request) override;
 
-  future<StatusOr<google::longrunning::Operation>>
-  AsyncUpdateVmwareEngineNetwork(
+  future<StatusOr<google::longrunning::Operation>> AsyncUpdateVmwareEngineNetwork(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::vmwareengine::v1::UpdateVmwareEngineNetworkRequest const&
-          request) override;
+      google::cloud::vmwareengine::v1::UpdateVmwareEngineNetworkRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateVmwareEngineNetwork(
-      grpc::ClientContext& context, Options options,
-      google::cloud::vmwareengine::v1::UpdateVmwareEngineNetworkRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::vmwareengine::v1::UpdateVmwareEngineNetworkRequest const& request) override;
 
-  future<StatusOr<google::longrunning::Operation>>
-  AsyncDeleteVmwareEngineNetwork(
+  future<StatusOr<google::longrunning::Operation>> AsyncDeleteVmwareEngineNetwork(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::vmwareengine::v1::DeleteVmwareEngineNetworkRequest const&
-          request) override;
+      google::cloud::vmwareengine::v1::DeleteVmwareEngineNetworkRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteVmwareEngineNetwork(
-      grpc::ClientContext& context, Options options,
-      google::cloud::vmwareengine::v1::DeleteVmwareEngineNetworkRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::vmwareengine::v1::DeleteVmwareEngineNetworkRequest const& request) override;
 
-  StatusOr<google::cloud::vmwareengine::v1::VmwareEngineNetwork>
-  GetVmwareEngineNetwork(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::vmwareengine::v1::GetVmwareEngineNetworkRequest const&
-          request) override;
+  StatusOr<google::cloud::vmwareengine::v1::VmwareEngineNetwork> GetVmwareEngineNetwork(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::vmwareengine::v1::GetVmwareEngineNetworkRequest const& request) override;
 
-  StatusOr<google::cloud::vmwareengine::v1::ListVmwareEngineNetworksResponse>
-  ListVmwareEngineNetworks(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::vmwareengine::v1::ListVmwareEngineNetworksRequest const&
-          request) override;
+  StatusOr<google::cloud::vmwareengine::v1::ListVmwareEngineNetworksResponse> ListVmwareEngineNetworks(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::vmwareengine::v1::ListVmwareEngineNetworksRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreatePrivateConnection(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::vmwareengine::v1::CreatePrivateConnectionRequest const&
-          request) override;
+      google::cloud::vmwareengine::v1::CreatePrivateConnectionRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreatePrivateConnection(
-      grpc::ClientContext& context, Options options,
-      google::cloud::vmwareengine::v1::CreatePrivateConnectionRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::vmwareengine::v1::CreatePrivateConnectionRequest const& request) override;
 
-  StatusOr<google::cloud::vmwareengine::v1::PrivateConnection>
-  GetPrivateConnection(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::vmwareengine::v1::GetPrivateConnectionRequest const&
-          request) override;
+  StatusOr<google::cloud::vmwareengine::v1::PrivateConnection> GetPrivateConnection(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::vmwareengine::v1::GetPrivateConnectionRequest const& request) override;
 
-  StatusOr<google::cloud::vmwareengine::v1::ListPrivateConnectionsResponse>
-  ListPrivateConnections(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::vmwareengine::v1::ListPrivateConnectionsRequest const&
-          request) override;
+  StatusOr<google::cloud::vmwareengine::v1::ListPrivateConnectionsResponse> ListPrivateConnections(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::vmwareengine::v1::ListPrivateConnectionsRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdatePrivateConnection(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::vmwareengine::v1::UpdatePrivateConnectionRequest const&
-          request) override;
+      google::cloud::vmwareengine::v1::UpdatePrivateConnectionRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdatePrivateConnection(
-      grpc::ClientContext& context, Options options,
-      google::cloud::vmwareengine::v1::UpdatePrivateConnectionRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::vmwareengine::v1::UpdatePrivateConnectionRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeletePrivateConnection(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::vmwareengine::v1::DeletePrivateConnectionRequest const&
-          request) override;
+      google::cloud::vmwareengine::v1::DeletePrivateConnectionRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeletePrivateConnection(
-      grpc::ClientContext& context, Options options,
-      google::cloud::vmwareengine::v1::DeletePrivateConnectionRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::vmwareengine::v1::DeletePrivateConnectionRequest const& request) override;
 
-  StatusOr<google::cloud::vmwareengine::v1::
-               ListPrivateConnectionPeeringRoutesResponse>
-  ListPrivateConnectionPeeringRoutes(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::vmwareengine::v1::
-          ListPrivateConnectionPeeringRoutesRequest const& request) override;
+  StatusOr<google::cloud::vmwareengine::v1::ListPrivateConnectionPeeringRoutesResponse> ListPrivateConnectionPeeringRoutes(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::vmwareengine::v1::ListPrivateConnectionPeeringRoutesRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGrantDnsBindPermission(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::vmwareengine::v1::GrantDnsBindPermissionRequest const&
-          request) override;
+      google::cloud::vmwareengine::v1::GrantDnsBindPermissionRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GrantDnsBindPermission(
-      grpc::ClientContext& context, Options options,
-      google::cloud::vmwareengine::v1::GrantDnsBindPermissionRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::vmwareengine::v1::GrantDnsBindPermissionRequest const& request) override;
 
-  StatusOr<google::cloud::vmwareengine::v1::DnsBindPermission>
-  GetDnsBindPermission(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::vmwareengine::v1::GetDnsBindPermissionRequest const&
-          request) override;
+  StatusOr<google::cloud::vmwareengine::v1::DnsBindPermission> GetDnsBindPermission(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::vmwareengine::v1::GetDnsBindPermissionRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncRevokeDnsBindPermission(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::vmwareengine::v1::RevokeDnsBindPermissionRequest const&
-          request) override;
+      google::cloud::vmwareengine::v1::RevokeDnsBindPermissionRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> RevokeDnsBindPermission(
-      grpc::ClientContext& context, Options options,
-      google::cloud::vmwareengine::v1::RevokeDnsBindPermissionRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::vmwareengine::v1::RevokeDnsBindPermissionRequest const& request) override;
 
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::location::ListLocationsRequest const& request) override;
 
   StatusOr<google::cloud::location::Location> GetLocation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::location::GetLocationRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status DeleteOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::DeleteOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(

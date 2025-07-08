@@ -31,18 +31,18 @@ BackupDRAuth::BackupDRAuth(
     std::shared_ptr<BackupDRStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::backupdr::v1::ListManagementServersResponse>
-BackupDRAuth::ListManagementServers(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::backupdr::v1::ListManagementServersResponse> BackupDRAuth::ListManagementServers(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::backupdr::v1::ListManagementServersRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListManagementServers(context, options, request);
 }
 
-StatusOr<google::cloud::backupdr::v1::ManagementServer>
-BackupDRAuth::GetManagementServer(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::backupdr::v1::ManagementServer> BackupDRAuth::GetManagementServer(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::backupdr::v1::GetManagementServerRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -51,27 +51,28 @@ BackupDRAuth::GetManagementServer(
 
 future<StatusOr<google::longrunning::Operation>>
 BackupDRAuth::AsyncCreateManagementServer(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::backupdr::v1::CreateManagementServerRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::backupdr::v1::CreateManagementServerRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreateManagementServer(cq, *std::move(context),
-                                                  std::move(options), request);
+        return child->AsyncCreateManagementServer(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation> BackupDRAuth::CreateManagementServer(
-    grpc::ClientContext& context, Options options,
-    google::cloud::backupdr::v1::CreateManagementServerRequest const& request) {
+StatusOr<google::longrunning::Operation>
+BackupDRAuth::CreateManagementServer(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::backupdr::v1::CreateManagementServerRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateManagementServer(context, options, request);
@@ -79,27 +80,28 @@ StatusOr<google::longrunning::Operation> BackupDRAuth::CreateManagementServer(
 
 future<StatusOr<google::longrunning::Operation>>
 BackupDRAuth::AsyncDeleteManagementServer(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::backupdr::v1::DeleteManagementServerRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::backupdr::v1::DeleteManagementServerRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDeleteManagementServer(cq, *std::move(context),
-                                                  std::move(options), request);
+        return child->AsyncDeleteManagementServer(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation> BackupDRAuth::DeleteManagementServer(
-    grpc::ClientContext& context, Options options,
-    google::cloud::backupdr::v1::DeleteManagementServerRequest const& request) {
+StatusOr<google::longrunning::Operation>
+BackupDRAuth::DeleteManagementServer(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::backupdr::v1::DeleteManagementServerRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteManagementServer(context, options, request);
@@ -107,53 +109,54 @@ StatusOr<google::longrunning::Operation> BackupDRAuth::DeleteManagementServer(
 
 future<StatusOr<google::longrunning::Operation>>
 BackupDRAuth::AsyncCreateBackupVault(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::backupdr::v1::CreateBackupVaultRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::backupdr::v1::CreateBackupVaultRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreateBackupVault(cq, *std::move(context),
-                                             std::move(options), request);
+        return child->AsyncCreateBackupVault(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation> BackupDRAuth::CreateBackupVault(
-    grpc::ClientContext& context, Options options,
-    google::cloud::backupdr::v1::CreateBackupVaultRequest const& request) {
+StatusOr<google::longrunning::Operation>
+BackupDRAuth::CreateBackupVault(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::backupdr::v1::CreateBackupVaultRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateBackupVault(context, options, request);
 }
 
-StatusOr<google::cloud::backupdr::v1::ListBackupVaultsResponse>
-BackupDRAuth::ListBackupVaults(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::backupdr::v1::ListBackupVaultsResponse> BackupDRAuth::ListBackupVaults(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::backupdr::v1::ListBackupVaultsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListBackupVaults(context, options, request);
 }
 
-StatusOr<google::cloud::backupdr::v1::FetchUsableBackupVaultsResponse>
-BackupDRAuth::FetchUsableBackupVaults(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::backupdr::v1::FetchUsableBackupVaultsRequest const&
-        request) {
+StatusOr<google::cloud::backupdr::v1::FetchUsableBackupVaultsResponse> BackupDRAuth::FetchUsableBackupVaults(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::backupdr::v1::FetchUsableBackupVaultsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->FetchUsableBackupVaults(context, options, request);
 }
 
 StatusOr<google::cloud::backupdr::v1::BackupVault> BackupDRAuth::GetBackupVault(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::backupdr::v1::GetBackupVaultRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -162,27 +165,28 @@ StatusOr<google::cloud::backupdr::v1::BackupVault> BackupDRAuth::GetBackupVault(
 
 future<StatusOr<google::longrunning::Operation>>
 BackupDRAuth::AsyncUpdateBackupVault(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::backupdr::v1::UpdateBackupVaultRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::backupdr::v1::UpdateBackupVaultRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncUpdateBackupVault(cq, *std::move(context),
-                                             std::move(options), request);
+        return child->AsyncUpdateBackupVault(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation> BackupDRAuth::UpdateBackupVault(
-    grpc::ClientContext& context, Options options,
-    google::cloud::backupdr::v1::UpdateBackupVaultRequest const& request) {
+StatusOr<google::longrunning::Operation>
+BackupDRAuth::UpdateBackupVault(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::backupdr::v1::UpdateBackupVaultRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateBackupVault(context, options, request);
@@ -190,35 +194,36 @@ StatusOr<google::longrunning::Operation> BackupDRAuth::UpdateBackupVault(
 
 future<StatusOr<google::longrunning::Operation>>
 BackupDRAuth::AsyncDeleteBackupVault(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::backupdr::v1::DeleteBackupVaultRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::backupdr::v1::DeleteBackupVaultRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDeleteBackupVault(cq, *std::move(context),
-                                             std::move(options), request);
+        return child->AsyncDeleteBackupVault(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation> BackupDRAuth::DeleteBackupVault(
-    grpc::ClientContext& context, Options options,
-    google::cloud::backupdr::v1::DeleteBackupVaultRequest const& request) {
+StatusOr<google::longrunning::Operation>
+BackupDRAuth::DeleteBackupVault(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::backupdr::v1::DeleteBackupVaultRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteBackupVault(context, options, request);
 }
 
-StatusOr<google::cloud::backupdr::v1::ListDataSourcesResponse>
-BackupDRAuth::ListDataSources(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::backupdr::v1::ListDataSourcesResponse> BackupDRAuth::ListDataSources(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::backupdr::v1::ListDataSourcesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -226,7 +231,8 @@ BackupDRAuth::ListDataSources(
 }
 
 StatusOr<google::cloud::backupdr::v1::DataSource> BackupDRAuth::GetDataSource(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::backupdr::v1::GetDataSourceRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -235,35 +241,36 @@ StatusOr<google::cloud::backupdr::v1::DataSource> BackupDRAuth::GetDataSource(
 
 future<StatusOr<google::longrunning::Operation>>
 BackupDRAuth::AsyncUpdateDataSource(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::backupdr::v1::UpdateDataSourceRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::backupdr::v1::UpdateDataSourceRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncUpdateDataSource(cq, *std::move(context),
-                                            std::move(options), request);
+        return child->AsyncUpdateDataSource(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation> BackupDRAuth::UpdateDataSource(
-    grpc::ClientContext& context, Options options,
-    google::cloud::backupdr::v1::UpdateDataSourceRequest const& request) {
+StatusOr<google::longrunning::Operation>
+BackupDRAuth::UpdateDataSource(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::backupdr::v1::UpdateDataSourceRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateDataSource(context, options, request);
 }
 
-StatusOr<google::cloud::backupdr::v1::ListBackupsResponse>
-BackupDRAuth::ListBackups(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::backupdr::v1::ListBackupsResponse> BackupDRAuth::ListBackups(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::backupdr::v1::ListBackupsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -271,7 +278,8 @@ BackupDRAuth::ListBackups(
 }
 
 StatusOr<google::cloud::backupdr::v1::Backup> BackupDRAuth::GetBackup(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::backupdr::v1::GetBackupRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -280,27 +288,28 @@ StatusOr<google::cloud::backupdr::v1::Backup> BackupDRAuth::GetBackup(
 
 future<StatusOr<google::longrunning::Operation>>
 BackupDRAuth::AsyncUpdateBackup(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::backupdr::v1::UpdateBackupRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::backupdr::v1::UpdateBackupRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncUpdateBackup(cq, *std::move(context),
-                                        std::move(options), request);
+        return child->AsyncUpdateBackup(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation> BackupDRAuth::UpdateBackup(
-    grpc::ClientContext& context, Options options,
-    google::cloud::backupdr::v1::UpdateBackupRequest const& request) {
+StatusOr<google::longrunning::Operation>
+BackupDRAuth::UpdateBackup(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::backupdr::v1::UpdateBackupRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateBackup(context, options, request);
@@ -308,27 +317,28 @@ StatusOr<google::longrunning::Operation> BackupDRAuth::UpdateBackup(
 
 future<StatusOr<google::longrunning::Operation>>
 BackupDRAuth::AsyncDeleteBackup(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::backupdr::v1::DeleteBackupRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::backupdr::v1::DeleteBackupRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDeleteBackup(cq, *std::move(context),
-                                        std::move(options), request);
+        return child->AsyncDeleteBackup(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation> BackupDRAuth::DeleteBackup(
-    grpc::ClientContext& context, Options options,
-    google::cloud::backupdr::v1::DeleteBackupRequest const& request) {
+StatusOr<google::longrunning::Operation>
+BackupDRAuth::DeleteBackup(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::backupdr::v1::DeleteBackupRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteBackup(context, options, request);
@@ -336,27 +346,28 @@ StatusOr<google::longrunning::Operation> BackupDRAuth::DeleteBackup(
 
 future<StatusOr<google::longrunning::Operation>>
 BackupDRAuth::AsyncRestoreBackup(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::backupdr::v1::RestoreBackupRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::backupdr::v1::RestoreBackupRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncRestoreBackup(cq, *std::move(context),
-                                         std::move(options), request);
+        return child->AsyncRestoreBackup(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation> BackupDRAuth::RestoreBackup(
-    grpc::ClientContext& context, Options options,
-    google::cloud::backupdr::v1::RestoreBackupRequest const& request) {
+StatusOr<google::longrunning::Operation>
+BackupDRAuth::RestoreBackup(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::backupdr::v1::RestoreBackupRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->RestoreBackup(context, options, request);
@@ -364,43 +375,45 @@ StatusOr<google::longrunning::Operation> BackupDRAuth::RestoreBackup(
 
 future<StatusOr<google::longrunning::Operation>>
 BackupDRAuth::AsyncCreateBackupPlan(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::backupdr::v1::CreateBackupPlanRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::backupdr::v1::CreateBackupPlanRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreateBackupPlan(cq, *std::move(context),
-                                            std::move(options), request);
+        return child->AsyncCreateBackupPlan(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation> BackupDRAuth::CreateBackupPlan(
-    grpc::ClientContext& context, Options options,
-    google::cloud::backupdr::v1::CreateBackupPlanRequest const& request) {
+StatusOr<google::longrunning::Operation>
+BackupDRAuth::CreateBackupPlan(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::backupdr::v1::CreateBackupPlanRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateBackupPlan(context, options, request);
 }
 
 StatusOr<google::cloud::backupdr::v1::BackupPlan> BackupDRAuth::GetBackupPlan(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::backupdr::v1::GetBackupPlanRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetBackupPlan(context, options, request);
 }
 
-StatusOr<google::cloud::backupdr::v1::ListBackupPlansResponse>
-BackupDRAuth::ListBackupPlans(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::backupdr::v1::ListBackupPlansResponse> BackupDRAuth::ListBackupPlans(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::backupdr::v1::ListBackupPlansRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -409,27 +422,28 @@ BackupDRAuth::ListBackupPlans(
 
 future<StatusOr<google::longrunning::Operation>>
 BackupDRAuth::AsyncDeleteBackupPlan(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::backupdr::v1::DeleteBackupPlanRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::backupdr::v1::DeleteBackupPlanRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDeleteBackupPlan(cq, *std::move(context),
-                                            std::move(options), request);
+        return child->AsyncDeleteBackupPlan(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation> BackupDRAuth::DeleteBackupPlan(
-    grpc::ClientContext& context, Options options,
-    google::cloud::backupdr::v1::DeleteBackupPlanRequest const& request) {
+StatusOr<google::longrunning::Operation>
+BackupDRAuth::DeleteBackupPlan(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::backupdr::v1::DeleteBackupPlanRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteBackupPlan(context, options, request);
@@ -437,16 +451,14 @@ StatusOr<google::longrunning::Operation> BackupDRAuth::DeleteBackupPlan(
 
 future<StatusOr<google::longrunning::Operation>>
 BackupDRAuth::AsyncCreateBackupPlanAssociation(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::backupdr::v1::CreateBackupPlanAssociationRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::backupdr::v1::CreateBackupPlanAssociationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
@@ -458,29 +470,27 @@ BackupDRAuth::AsyncCreateBackupPlanAssociation(
 
 StatusOr<google::longrunning::Operation>
 BackupDRAuth::CreateBackupPlanAssociation(
-    grpc::ClientContext& context, Options options,
-    google::cloud::backupdr::v1::CreateBackupPlanAssociationRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::backupdr::v1::CreateBackupPlanAssociationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateBackupPlanAssociation(context, options, request);
 }
 
-StatusOr<google::cloud::backupdr::v1::BackupPlanAssociation>
-BackupDRAuth::GetBackupPlanAssociation(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::backupdr::v1::GetBackupPlanAssociationRequest const&
-        request) {
+StatusOr<google::cloud::backupdr::v1::BackupPlanAssociation> BackupDRAuth::GetBackupPlanAssociation(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::backupdr::v1::GetBackupPlanAssociationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetBackupPlanAssociation(context, options, request);
 }
 
-StatusOr<google::cloud::backupdr::v1::ListBackupPlanAssociationsResponse>
-BackupDRAuth::ListBackupPlanAssociations(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::backupdr::v1::ListBackupPlanAssociationsRequest const&
-        request) {
+StatusOr<google::cloud::backupdr::v1::ListBackupPlanAssociationsResponse> BackupDRAuth::ListBackupPlanAssociations(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::backupdr::v1::ListBackupPlanAssociationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListBackupPlanAssociations(context, options, request);
@@ -488,16 +498,14 @@ BackupDRAuth::ListBackupPlanAssociations(
 
 future<StatusOr<google::longrunning::Operation>>
 BackupDRAuth::AsyncDeleteBackupPlanAssociation(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::backupdr::v1::DeleteBackupPlanAssociationRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::backupdr::v1::DeleteBackupPlanAssociationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
@@ -509,9 +517,9 @@ BackupDRAuth::AsyncDeleteBackupPlanAssociation(
 
 StatusOr<google::longrunning::Operation>
 BackupDRAuth::DeleteBackupPlanAssociation(
-    grpc::ClientContext& context, Options options,
-    google::cloud::backupdr::v1::DeleteBackupPlanAssociationRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::backupdr::v1::DeleteBackupPlanAssociationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteBackupPlanAssociation(context, options, request);
@@ -519,27 +527,28 @@ BackupDRAuth::DeleteBackupPlanAssociation(
 
 future<StatusOr<google::longrunning::Operation>>
 BackupDRAuth::AsyncTriggerBackup(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::backupdr::v1::TriggerBackupRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::backupdr::v1::TriggerBackupRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncTriggerBackup(cq, *std::move(context),
-                                         std::move(options), request);
+        return child->AsyncTriggerBackup(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation> BackupDRAuth::TriggerBackup(
-    grpc::ClientContext& context, Options options,
-    google::cloud::backupdr::v1::TriggerBackupRequest const& request) {
+StatusOr<google::longrunning::Operation>
+BackupDRAuth::TriggerBackup(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::backupdr::v1::TriggerBackupRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->TriggerBackup(context, options, request);
@@ -547,35 +556,36 @@ StatusOr<google::longrunning::Operation> BackupDRAuth::TriggerBackup(
 
 future<StatusOr<google::longrunning::Operation>>
 BackupDRAuth::AsyncInitializeService(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::backupdr::v1::InitializeServiceRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::backupdr::v1::InitializeServiceRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncInitializeService(cq, *std::move(context),
-                                             std::move(options), request);
+        return child->AsyncInitializeService(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation> BackupDRAuth::InitializeService(
-    grpc::ClientContext& context, Options options,
-    google::cloud::backupdr::v1::InitializeServiceRequest const& request) {
+StatusOr<google::longrunning::Operation>
+BackupDRAuth::InitializeService(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::backupdr::v1::InitializeServiceRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->InitializeService(context, options, request);
 }
 
-StatusOr<google::cloud::location::ListLocationsResponse>
-BackupDRAuth::ListLocations(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::location::ListLocationsResponse> BackupDRAuth::ListLocations(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -583,7 +593,8 @@ BackupDRAuth::ListLocations(
 }
 
 StatusOr<google::cloud::location::Location> BackupDRAuth::GetLocation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -591,7 +602,8 @@ StatusOr<google::cloud::location::Location> BackupDRAuth::GetLocation(
 }
 
 StatusOr<google::iam::v1::Policy> BackupDRAuth::SetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -599,25 +611,26 @@ StatusOr<google::iam::v1::Policy> BackupDRAuth::SetIamPolicy(
 }
 
 StatusOr<google::iam::v1::Policy> BackupDRAuth::GetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetIamPolicy(context, options, request);
 }
 
-StatusOr<google::iam::v1::TestIamPermissionsResponse>
-BackupDRAuth::TestIamPermissions(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::iam::v1::TestIamPermissionsResponse> BackupDRAuth::TestIamPermissions(
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->TestIamPermissions(context, options, request);
 }
 
-StatusOr<google::longrunning::ListOperationsResponse>
-BackupDRAuth::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse> BackupDRAuth::ListOperations(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -625,7 +638,8 @@ BackupDRAuth::ListOperations(
 }
 
 StatusOr<google::longrunning::Operation> BackupDRAuth::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -633,7 +647,8 @@ StatusOr<google::longrunning::Operation> BackupDRAuth::GetOperation(
 }
 
 Status BackupDRAuth::DeleteOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -641,7 +656,8 @@ Status BackupDRAuth::DeleteOperation(
 }
 
 Status BackupDRAuth::CancelOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -655,16 +671,15 @@ BackupDRAuth::AsyncGetOperation(
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncGetOperation(cq, *std::move(context),
-                                        std::move(options), request);
+        return child->AsyncGetOperation(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
@@ -673,14 +688,13 @@ future<Status> BackupDRAuth::AsyncCancelOperation(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) return make_ready_future(std::move(context).status());
-        return child->AsyncCancelOperation(cq, *std::move(context),
-                                           std::move(options), request);
+        return child->AsyncCancelOperation(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 

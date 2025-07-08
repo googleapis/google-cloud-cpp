@@ -33,125 +33,108 @@ GrafeasTracingConnection::GrafeasTracingConnection(
     std::shared_ptr<containeranalysis_v1::GrafeasConnection> child)
     : child_(std::move(child)) {}
 
-StatusOr<grafeas::v1::Occurrence> GrafeasTracingConnection::GetOccurrence(
-    grafeas::v1::GetOccurrenceRequest const& request) {
-  auto span = internal::MakeSpan(
-      "containeranalysis_v1::GrafeasConnection::GetOccurrence");
+StatusOr<grafeas::v1::Occurrence>
+GrafeasTracingConnection::GetOccurrence(grafeas::v1::GetOccurrenceRequest const& request) {
+  auto span = internal::MakeSpan("containeranalysis_v1::GrafeasConnection::GetOccurrence");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOccurrence(request));
 }
 
-StreamRange<grafeas::v1::Occurrence> GrafeasTracingConnection::ListOccurrences(
-    grafeas::v1::ListOccurrencesRequest request) {
-  auto span = internal::MakeSpan(
-      "containeranalysis_v1::GrafeasConnection::ListOccurrences");
+StreamRange<grafeas::v1::Occurrence>
+GrafeasTracingConnection::ListOccurrences(grafeas::v1::ListOccurrencesRequest request) {
+  auto span = internal::MakeSpan("containeranalysis_v1::GrafeasConnection::ListOccurrences");
   internal::OTelScope scope(span);
   auto sr = child_->ListOccurrences(std::move(request));
   return internal::MakeTracedStreamRange<grafeas::v1::Occurrence>(
-      std::move(span), std::move(sr));
+        std::move(span), std::move(sr));
 }
 
-Status GrafeasTracingConnection::DeleteOccurrence(
-    grafeas::v1::DeleteOccurrenceRequest const& request) {
-  auto span = internal::MakeSpan(
-      "containeranalysis_v1::GrafeasConnection::DeleteOccurrence");
+Status
+GrafeasTracingConnection::DeleteOccurrence(grafeas::v1::DeleteOccurrenceRequest const& request) {
+  auto span = internal::MakeSpan("containeranalysis_v1::GrafeasConnection::DeleteOccurrence");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteOccurrence(request));
 }
 
-StatusOr<grafeas::v1::Occurrence> GrafeasTracingConnection::CreateOccurrence(
-    grafeas::v1::CreateOccurrenceRequest const& request) {
-  auto span = internal::MakeSpan(
-      "containeranalysis_v1::GrafeasConnection::CreateOccurrence");
+StatusOr<grafeas::v1::Occurrence>
+GrafeasTracingConnection::CreateOccurrence(grafeas::v1::CreateOccurrenceRequest const& request) {
+  auto span = internal::MakeSpan("containeranalysis_v1::GrafeasConnection::CreateOccurrence");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateOccurrence(request));
 }
 
 StatusOr<grafeas::v1::BatchCreateOccurrencesResponse>
-GrafeasTracingConnection::BatchCreateOccurrences(
-    grafeas::v1::BatchCreateOccurrencesRequest const& request) {
-  auto span = internal::MakeSpan(
-      "containeranalysis_v1::GrafeasConnection::BatchCreateOccurrences");
+GrafeasTracingConnection::BatchCreateOccurrences(grafeas::v1::BatchCreateOccurrencesRequest const& request) {
+  auto span = internal::MakeSpan("containeranalysis_v1::GrafeasConnection::BatchCreateOccurrences");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->BatchCreateOccurrences(request));
 }
 
-StatusOr<grafeas::v1::Occurrence> GrafeasTracingConnection::UpdateOccurrence(
-    grafeas::v1::UpdateOccurrenceRequest const& request) {
-  auto span = internal::MakeSpan(
-      "containeranalysis_v1::GrafeasConnection::UpdateOccurrence");
+StatusOr<grafeas::v1::Occurrence>
+GrafeasTracingConnection::UpdateOccurrence(grafeas::v1::UpdateOccurrenceRequest const& request) {
+  auto span = internal::MakeSpan("containeranalysis_v1::GrafeasConnection::UpdateOccurrence");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateOccurrence(request));
 }
 
-StatusOr<grafeas::v1::Note> GrafeasTracingConnection::GetOccurrenceNote(
-    grafeas::v1::GetOccurrenceNoteRequest const& request) {
-  auto span = internal::MakeSpan(
-      "containeranalysis_v1::GrafeasConnection::GetOccurrenceNote");
+StatusOr<grafeas::v1::Note>
+GrafeasTracingConnection::GetOccurrenceNote(grafeas::v1::GetOccurrenceNoteRequest const& request) {
+  auto span = internal::MakeSpan("containeranalysis_v1::GrafeasConnection::GetOccurrenceNote");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOccurrenceNote(request));
 }
 
-StatusOr<grafeas::v1::Note> GrafeasTracingConnection::GetNote(
-    grafeas::v1::GetNoteRequest const& request) {
-  auto span =
-      internal::MakeSpan("containeranalysis_v1::GrafeasConnection::GetNote");
+StatusOr<grafeas::v1::Note>
+GrafeasTracingConnection::GetNote(grafeas::v1::GetNoteRequest const& request) {
+  auto span = internal::MakeSpan("containeranalysis_v1::GrafeasConnection::GetNote");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetNote(request));
 }
 
-StreamRange<grafeas::v1::Note> GrafeasTracingConnection::ListNotes(
-    grafeas::v1::ListNotesRequest request) {
-  auto span =
-      internal::MakeSpan("containeranalysis_v1::GrafeasConnection::ListNotes");
+StreamRange<grafeas::v1::Note>
+GrafeasTracingConnection::ListNotes(grafeas::v1::ListNotesRequest request) {
+  auto span = internal::MakeSpan("containeranalysis_v1::GrafeasConnection::ListNotes");
   internal::OTelScope scope(span);
   auto sr = child_->ListNotes(std::move(request));
-  return internal::MakeTracedStreamRange<grafeas::v1::Note>(std::move(span),
-                                                            std::move(sr));
+  return internal::MakeTracedStreamRange<grafeas::v1::Note>(
+        std::move(span), std::move(sr));
 }
 
-Status GrafeasTracingConnection::DeleteNote(
-    grafeas::v1::DeleteNoteRequest const& request) {
-  auto span =
-      internal::MakeSpan("containeranalysis_v1::GrafeasConnection::DeleteNote");
+Status
+GrafeasTracingConnection::DeleteNote(grafeas::v1::DeleteNoteRequest const& request) {
+  auto span = internal::MakeSpan("containeranalysis_v1::GrafeasConnection::DeleteNote");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteNote(request));
 }
 
-StatusOr<grafeas::v1::Note> GrafeasTracingConnection::CreateNote(
-    grafeas::v1::CreateNoteRequest const& request) {
-  auto span =
-      internal::MakeSpan("containeranalysis_v1::GrafeasConnection::CreateNote");
+StatusOr<grafeas::v1::Note>
+GrafeasTracingConnection::CreateNote(grafeas::v1::CreateNoteRequest const& request) {
+  auto span = internal::MakeSpan("containeranalysis_v1::GrafeasConnection::CreateNote");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateNote(request));
 }
 
 StatusOr<grafeas::v1::BatchCreateNotesResponse>
-GrafeasTracingConnection::BatchCreateNotes(
-    grafeas::v1::BatchCreateNotesRequest const& request) {
-  auto span = internal::MakeSpan(
-      "containeranalysis_v1::GrafeasConnection::BatchCreateNotes");
+GrafeasTracingConnection::BatchCreateNotes(grafeas::v1::BatchCreateNotesRequest const& request) {
+  auto span = internal::MakeSpan("containeranalysis_v1::GrafeasConnection::BatchCreateNotes");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->BatchCreateNotes(request));
 }
 
-StatusOr<grafeas::v1::Note> GrafeasTracingConnection::UpdateNote(
-    grafeas::v1::UpdateNoteRequest const& request) {
-  auto span =
-      internal::MakeSpan("containeranalysis_v1::GrafeasConnection::UpdateNote");
+StatusOr<grafeas::v1::Note>
+GrafeasTracingConnection::UpdateNote(grafeas::v1::UpdateNoteRequest const& request) {
+  auto span = internal::MakeSpan("containeranalysis_v1::GrafeasConnection::UpdateNote");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateNote(request));
 }
 
 StreamRange<grafeas::v1::Occurrence>
-GrafeasTracingConnection::ListNoteOccurrences(
-    grafeas::v1::ListNoteOccurrencesRequest request) {
-  auto span = internal::MakeSpan(
-      "containeranalysis_v1::GrafeasConnection::ListNoteOccurrences");
+GrafeasTracingConnection::ListNoteOccurrences(grafeas::v1::ListNoteOccurrencesRequest request) {
+  auto span = internal::MakeSpan("containeranalysis_v1::GrafeasConnection::ListNoteOccurrences");
   internal::OTelScope scope(span);
   auto sr = child_->ListNoteOccurrences(std::move(request));
   return internal::MakeTracedStreamRange<grafeas::v1::Occurrence>(
-      std::move(span), std::move(sr));
+        std::move(span), std::move(sr));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

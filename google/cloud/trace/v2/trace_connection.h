@@ -19,12 +19,12 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TRACE_V2_TRACE_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TRACE_V2_TRACE_CONNECTION_H
 
-#include "google/cloud/trace/v2/internal/trace_retry_traits.h"
-#include "google/cloud/trace/v2/trace_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
+#include "google/cloud/trace/v2/internal/trace_retry_traits.h"
+#include "google/cloud/trace/v2/trace_connection_idempotency_policy.h"
 #include "google/cloud/version.h"
 #include <google/devtools/cloudtrace/v2/tracing.pb.h>
 #include <memory>
@@ -51,8 +51,7 @@ class TraceServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class TraceServiceLimitedErrorCountRetryPolicy
-    : public TraceServiceRetryPolicy {
+class TraceServiceLimitedErrorCountRetryPolicy : public TraceServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -62,14 +61,14 @@ class TraceServiceLimitedErrorCountRetryPolicy
    *     @p maximum_failures == 0.
    */
   explicit TraceServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   TraceServiceLimitedErrorCountRetryPolicy(
       TraceServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : TraceServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : TraceServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   TraceServiceLimitedErrorCountRetryPolicy(
       TraceServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : TraceServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : TraceServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -89,9 +88,7 @@ class TraceServiceLimitedErrorCountRetryPolicy
   using BaseType = TraceServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      trace_v2_internal::TraceServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<trace_v2_internal::TraceServiceRetryTraits> impl_;
 };
 
 /**
@@ -129,14 +126,12 @@ class TraceServiceLimitedTimeRetryPolicy : public TraceServiceRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit TraceServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  TraceServiceLimitedTimeRetryPolicy(
-      TraceServiceLimitedTimeRetryPolicy&& rhs) noexcept
-      : TraceServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  TraceServiceLimitedTimeRetryPolicy(
-      TraceServiceLimitedTimeRetryPolicy const& rhs) noexcept
-      : TraceServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  TraceServiceLimitedTimeRetryPolicy(TraceServiceLimitedTimeRetryPolicy&& rhs) noexcept
+    : TraceServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  TraceServiceLimitedTimeRetryPolicy(TraceServiceLimitedTimeRetryPolicy const& rhs) noexcept
+    : TraceServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -158,9 +153,7 @@ class TraceServiceLimitedTimeRetryPolicy : public TraceServiceRetryPolicy {
   using BaseType = TraceServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      trace_v2_internal::TraceServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<trace_v2_internal::TraceServiceRetryTraits> impl_;
 };
 
 /**
@@ -181,11 +174,11 @@ class TraceServiceConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual Status BatchWriteSpans(
-      google::devtools::cloudtrace::v2::BatchWriteSpansRequest const& request);
+  virtual Status
+  BatchWriteSpans(google::devtools::cloudtrace::v2::BatchWriteSpansRequest const& request);
 
-  virtual StatusOr<google::devtools::cloudtrace::v2::Span> CreateSpan(
-      google::devtools::cloudtrace::v2::Span const& request);
+  virtual StatusOr<google::devtools::cloudtrace::v2::Span>
+  CreateSpan(google::devtools::cloudtrace::v2::Span const& request);
 };
 
 /**

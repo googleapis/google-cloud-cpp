@@ -31,27 +31,27 @@ FulfillmentsAuth::FulfillmentsAuth(
     std::shared_ptr<FulfillmentsStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::dialogflow::v2::Fulfillment>
-FulfillmentsAuth::GetFulfillment(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::dialogflow::v2::Fulfillment> FulfillmentsAuth::GetFulfillment(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dialogflow::v2::GetFulfillmentRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetFulfillment(context, options, request);
 }
 
-StatusOr<google::cloud::dialogflow::v2::Fulfillment>
-FulfillmentsAuth::UpdateFulfillment(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::dialogflow::v2::Fulfillment> FulfillmentsAuth::UpdateFulfillment(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dialogflow::v2::UpdateFulfillmentRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateFulfillment(context, options, request);
 }
 
-StatusOr<google::cloud::location::ListLocationsResponse>
-FulfillmentsAuth::ListLocations(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::location::ListLocationsResponse> FulfillmentsAuth::ListLocations(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -59,16 +59,17 @@ FulfillmentsAuth::ListLocations(
 }
 
 StatusOr<google::cloud::location::Location> FulfillmentsAuth::GetLocation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetLocation(context, options, request);
 }
 
-StatusOr<google::longrunning::ListOperationsResponse>
-FulfillmentsAuth::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse> FulfillmentsAuth::ListOperations(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -76,7 +77,8 @@ FulfillmentsAuth::ListOperations(
 }
 
 StatusOr<google::longrunning::Operation> FulfillmentsAuth::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -84,7 +86,8 @@ StatusOr<google::longrunning::Operation> FulfillmentsAuth::GetOperation(
 }
 
 Status FulfillmentsAuth::CancelOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;

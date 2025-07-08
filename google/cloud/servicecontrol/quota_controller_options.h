@@ -28,21 +28,16 @@ namespace cloud {
 namespace servicecontrol {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use servicecontrol_v1::QuotaControllerBackoffPolicyOption
-/// directly.
+/// @deprecated Use servicecontrol_v1::QuotaControllerBackoffPolicyOption directly.
 using ::google::cloud::servicecontrol_v1::QuotaControllerBackoffPolicyOption;
 
-/// @deprecated Use
-/// servicecontrol_v1::QuotaControllerConnectionIdempotencyPolicyOption
-/// directly.
-using ::google::cloud::servicecontrol_v1::
-    QuotaControllerConnectionIdempotencyPolicyOption;
+/// @deprecated Use servicecontrol_v1::QuotaControllerConnectionIdempotencyPolicyOption directly.
+using ::google::cloud::servicecontrol_v1::QuotaControllerConnectionIdempotencyPolicyOption;
 
 /// @deprecated Use servicecontrol_v1::QuotaControllerPolicyOptionList directly.
 using ::google::cloud::servicecontrol_v1::QuotaControllerPolicyOptionList;
 
-/// @deprecated Use servicecontrol_v1::QuotaControllerRetryPolicyOption
-/// directly.
+/// @deprecated Use servicecontrol_v1::QuotaControllerRetryPolicyOption directly.
 using ::google::cloud::servicecontrol_v1::QuotaControllerRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

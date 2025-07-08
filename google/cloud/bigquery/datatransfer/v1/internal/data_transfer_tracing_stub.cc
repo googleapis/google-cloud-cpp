@@ -32,142 +32,110 @@ DataTransferServiceTracingStub::DataTransferServiceTracingStub(
     std::shared_ptr<DataTransferServiceStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
-StatusOr<google::cloud::bigquery::datatransfer::v1::DataSource>
-DataTransferServiceTracingStub::GetDataSource(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::datatransfer::v1::GetDataSourceRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.bigquery.datatransfer.v1.DataTransferService",
-      "GetDataSource");
+StatusOr<google::cloud::bigquery::datatransfer::v1::DataSource> DataTransferServiceTracingStub::GetDataSource(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::datatransfer::v1::GetDataSourceRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.bigquery.datatransfer.v1.DataTransferService", "GetDataSource");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetDataSource(context, options, request));
 }
 
-StatusOr<google::cloud::bigquery::datatransfer::v1::ListDataSourcesResponse>
-DataTransferServiceTracingStub::ListDataSources(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::datatransfer::v1::ListDataSourcesRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.bigquery.datatransfer.v1.DataTransferService",
-      "ListDataSources");
+StatusOr<google::cloud::bigquery::datatransfer::v1::ListDataSourcesResponse> DataTransferServiceTracingStub::ListDataSources(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::datatransfer::v1::ListDataSourcesRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.bigquery.datatransfer.v1.DataTransferService", "ListDataSources");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListDataSources(context, options, request));
 }
 
-StatusOr<google::cloud::bigquery::datatransfer::v1::TransferConfig>
-DataTransferServiceTracingStub::CreateTransferConfig(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::datatransfer::v1::
-        CreateTransferConfigRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.bigquery.datatransfer.v1.DataTransferService",
-      "CreateTransferConfig");
+StatusOr<google::cloud::bigquery::datatransfer::v1::TransferConfig> DataTransferServiceTracingStub::CreateTransferConfig(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::datatransfer::v1::CreateTransferConfigRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.bigquery.datatransfer.v1.DataTransferService", "CreateTransferConfig");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->CreateTransferConfig(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->CreateTransferConfig(context, options, request));
 }
 
-StatusOr<google::cloud::bigquery::datatransfer::v1::TransferConfig>
-DataTransferServiceTracingStub::UpdateTransferConfig(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::datatransfer::v1::
-        UpdateTransferConfigRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.bigquery.datatransfer.v1.DataTransferService",
-      "UpdateTransferConfig");
+StatusOr<google::cloud::bigquery::datatransfer::v1::TransferConfig> DataTransferServiceTracingStub::UpdateTransferConfig(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::datatransfer::v1::UpdateTransferConfigRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.bigquery.datatransfer.v1.DataTransferService", "UpdateTransferConfig");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->UpdateTransferConfig(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->UpdateTransferConfig(context, options, request));
 }
 
 Status DataTransferServiceTracingStub::DeleteTransferConfig(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::datatransfer::v1::
-        DeleteTransferConfigRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.bigquery.datatransfer.v1.DataTransferService",
-      "DeleteTransferConfig");
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::datatransfer::v1::DeleteTransferConfigRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.bigquery.datatransfer.v1.DataTransferService", "DeleteTransferConfig");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->DeleteTransferConfig(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->DeleteTransferConfig(context, options, request));
 }
 
-StatusOr<google::cloud::bigquery::datatransfer::v1::TransferConfig>
-DataTransferServiceTracingStub::GetTransferConfig(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::datatransfer::v1::GetTransferConfigRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.bigquery.datatransfer.v1.DataTransferService",
-      "GetTransferConfig");
+StatusOr<google::cloud::bigquery::datatransfer::v1::TransferConfig> DataTransferServiceTracingStub::GetTransferConfig(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::datatransfer::v1::GetTransferConfigRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.bigquery.datatransfer.v1.DataTransferService", "GetTransferConfig");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->GetTransferConfig(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->GetTransferConfig(context, options, request));
 }
 
-StatusOr<google::cloud::bigquery::datatransfer::v1::ListTransferConfigsResponse>
-DataTransferServiceTracingStub::ListTransferConfigs(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::datatransfer::v1::ListTransferConfigsRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.bigquery.datatransfer.v1.DataTransferService",
-      "ListTransferConfigs");
+StatusOr<google::cloud::bigquery::datatransfer::v1::ListTransferConfigsResponse> DataTransferServiceTracingStub::ListTransferConfigs(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::datatransfer::v1::ListTransferConfigsRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.bigquery.datatransfer.v1.DataTransferService", "ListTransferConfigs");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->ListTransferConfigs(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->ListTransferConfigs(context, options, request));
 }
 
-StatusOr<
-    google::cloud::bigquery::datatransfer::v1::ScheduleTransferRunsResponse>
-DataTransferServiceTracingStub::ScheduleTransferRuns(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::datatransfer::v1::
-        ScheduleTransferRunsRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.bigquery.datatransfer.v1.DataTransferService",
-      "ScheduleTransferRuns");
+StatusOr<google::cloud::bigquery::datatransfer::v1::ScheduleTransferRunsResponse> DataTransferServiceTracingStub::ScheduleTransferRuns(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::datatransfer::v1::ScheduleTransferRunsRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.bigquery.datatransfer.v1.DataTransferService", "ScheduleTransferRuns");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->ScheduleTransferRuns(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->ScheduleTransferRuns(context, options, request));
 }
 
-StatusOr<
-    google::cloud::bigquery::datatransfer::v1::StartManualTransferRunsResponse>
-DataTransferServiceTracingStub::StartManualTransferRuns(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::datatransfer::v1::
-        StartManualTransferRunsRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.bigquery.datatransfer.v1.DataTransferService",
-      "StartManualTransferRuns");
+StatusOr<google::cloud::bigquery::datatransfer::v1::StartManualTransferRunsResponse> DataTransferServiceTracingStub::StartManualTransferRuns(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::datatransfer::v1::StartManualTransferRunsRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.bigquery.datatransfer.v1.DataTransferService", "StartManualTransferRuns");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span,
-      child_->StartManualTransferRuns(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->StartManualTransferRuns(context, options, request));
 }
 
-StatusOr<google::cloud::bigquery::datatransfer::v1::TransferRun>
-DataTransferServiceTracingStub::GetTransferRun(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::datatransfer::v1::GetTransferRunRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.bigquery.datatransfer.v1.DataTransferService",
-      "GetTransferRun");
+StatusOr<google::cloud::bigquery::datatransfer::v1::TransferRun> DataTransferServiceTracingStub::GetTransferRun(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::datatransfer::v1::GetTransferRunRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.bigquery.datatransfer.v1.DataTransferService", "GetTransferRun");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -175,54 +143,43 @@ DataTransferServiceTracingStub::GetTransferRun(
 }
 
 Status DataTransferServiceTracingStub::DeleteTransferRun(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::datatransfer::v1::DeleteTransferRunRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.bigquery.datatransfer.v1.DataTransferService",
-      "DeleteTransferRun");
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::datatransfer::v1::DeleteTransferRunRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.bigquery.datatransfer.v1.DataTransferService", "DeleteTransferRun");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->DeleteTransferRun(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->DeleteTransferRun(context, options, request));
 }
 
-StatusOr<google::cloud::bigquery::datatransfer::v1::ListTransferRunsResponse>
-DataTransferServiceTracingStub::ListTransferRuns(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::datatransfer::v1::ListTransferRunsRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.bigquery.datatransfer.v1.DataTransferService",
-      "ListTransferRuns");
+StatusOr<google::cloud::bigquery::datatransfer::v1::ListTransferRunsResponse> DataTransferServiceTracingStub::ListTransferRuns(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::datatransfer::v1::ListTransferRunsRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.bigquery.datatransfer.v1.DataTransferService", "ListTransferRuns");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListTransferRuns(context, options, request));
 }
 
-StatusOr<google::cloud::bigquery::datatransfer::v1::ListTransferLogsResponse>
-DataTransferServiceTracingStub::ListTransferLogs(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::datatransfer::v1::ListTransferLogsRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.bigquery.datatransfer.v1.DataTransferService",
-      "ListTransferLogs");
+StatusOr<google::cloud::bigquery::datatransfer::v1::ListTransferLogsResponse> DataTransferServiceTracingStub::ListTransferLogs(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::datatransfer::v1::ListTransferLogsRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.bigquery.datatransfer.v1.DataTransferService", "ListTransferLogs");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListTransferLogs(context, options, request));
 }
 
-StatusOr<google::cloud::bigquery::datatransfer::v1::CheckValidCredsResponse>
-DataTransferServiceTracingStub::CheckValidCreds(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::datatransfer::v1::CheckValidCredsRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.bigquery.datatransfer.v1.DataTransferService",
-      "CheckValidCreds");
+StatusOr<google::cloud::bigquery::datatransfer::v1::CheckValidCredsResponse> DataTransferServiceTracingStub::CheckValidCreds(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::datatransfer::v1::CheckValidCredsRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.bigquery.datatransfer.v1.DataTransferService", "CheckValidCreds");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -230,51 +187,43 @@ DataTransferServiceTracingStub::CheckValidCreds(
 }
 
 Status DataTransferServiceTracingStub::EnrollDataSources(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::datatransfer::v1::EnrollDataSourcesRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.bigquery.datatransfer.v1.DataTransferService",
-      "EnrollDataSources");
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::datatransfer::v1::EnrollDataSourcesRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.bigquery.datatransfer.v1.DataTransferService", "EnrollDataSources");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->EnrollDataSources(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->EnrollDataSources(context, options, request));
 }
 
 Status DataTransferServiceTracingStub::UnenrollDataSources(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::datatransfer::v1::UnenrollDataSourcesRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.bigquery.datatransfer.v1.DataTransferService",
-      "UnenrollDataSources");
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::datatransfer::v1::UnenrollDataSourcesRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.bigquery.datatransfer.v1.DataTransferService", "UnenrollDataSources");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->UnenrollDataSources(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->UnenrollDataSources(context, options, request));
 }
 
-StatusOr<google::cloud::location::ListLocationsResponse>
-DataTransferServiceTracingStub::ListLocations(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::location::ListLocationsResponse> DataTransferServiceTracingStub::ListLocations(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.bigquery.datatransfer.v1.DataTransferService",
-      "ListLocations");
+  auto span = internal::MakeSpanGrpc("google.cloud.bigquery.datatransfer.v1.DataTransferService", "ListLocations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListLocations(context, options, request));
 }
 
-StatusOr<google::cloud::location::Location>
-DataTransferServiceTracingStub::GetLocation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::location::Location> DataTransferServiceTracingStub::GetLocation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.bigquery.datatransfer.v1.DataTransferService",
-      "GetLocation");
+  auto span = internal::MakeSpanGrpc("google.cloud.bigquery.datatransfer.v1.DataTransferService", "GetLocation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,

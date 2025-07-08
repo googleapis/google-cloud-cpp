@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GKECONNECT_GATEWAY_V1_INTERNAL_GATEWAY_CONTROL_REST_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GKECONNECT_GATEWAY_V1_INTERNAL_GATEWAY_CONTROL_REST_CONNECTION_IMPL_H
 
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/gkeconnect/gateway/v1/gateway_control_connection.h"
 #include "google/cloud/gkeconnect/gateway/v1/gateway_control_connection_idempotency_policy.h"
 #include "google/cloud/gkeconnect/gateway/v1/gateway_control_options.h"
 #include "google/cloud/gkeconnect/gateway/v1/internal/gateway_control_rest_stub.h"
 #include "google/cloud/gkeconnect/gateway/v1/internal/gateway_control_retry_traits.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
@@ -42,39 +42,28 @@ class GatewayControlRestConnectionImpl
   ~GatewayControlRestConnectionImpl() override = default;
 
   GatewayControlRestConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<gkeconnect_gateway_v1_internal::GatewayControlRestStub>
-          stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<gkeconnect_gateway_v1_internal::GatewayControlRestStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
   StatusOr<google::cloud::gkeconnect::gateway::v1::GenerateCredentialsResponse>
-  GenerateCredentials(
-      google::cloud::gkeconnect::gateway::v1::GenerateCredentialsRequest const&
-          request) override;
+  GenerateCredentials(google::cloud::gkeconnect::gateway::v1::GenerateCredentialsRequest const& request) override;
 
  private:
   static std::unique_ptr<gkeconnect_gateway_v1::GatewayControlRetryPolicy>
   retry_policy(Options const& options) {
-    return options
-        .get<gkeconnect_gateway_v1::GatewayControlRetryPolicyOption>()
-        ->clone();
+    return options.get<gkeconnect_gateway_v1::GatewayControlRetryPolicyOption>()->clone();
   }
 
   static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options
-        .get<gkeconnect_gateway_v1::GatewayControlBackoffPolicyOption>()
-        ->clone();
+    return options.get<gkeconnect_gateway_v1::GatewayControlBackoffPolicyOption>()->clone();
   }
 
-  static std::unique_ptr<
-      gkeconnect_gateway_v1::GatewayControlConnectionIdempotencyPolicy>
+  static std::unique_ptr<gkeconnect_gateway_v1::GatewayControlConnectionIdempotencyPolicy>
   idempotency_policy(Options const& options) {
-    return options
-        .get<gkeconnect_gateway_v1::
-                 GatewayControlConnectionIdempotencyPolicyOption>()
-        ->clone();
+    return options.get<gkeconnect_gateway_v1::GatewayControlConnectionIdempotencyPolicyOption>()->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

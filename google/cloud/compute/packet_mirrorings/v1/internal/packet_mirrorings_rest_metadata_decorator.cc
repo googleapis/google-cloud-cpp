@@ -17,11 +17,11 @@
 // source: google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto
 
 #include "google/cloud/compute/packet_mirrorings/v1/internal/packet_mirrorings_rest_metadata_decorator.h"
+#include "absl/strings/str_format.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/internal/rest_set_metadata.h"
 #include "google/cloud/status_or.h"
-#include "absl/strings/str_format.h"
 #include <memory>
 #include <utility>
 
@@ -41,99 +41,89 @@ PacketMirroringsRestMetadata::PacketMirroringsRestMetadata(
 
 StatusOr<google::cloud::cpp::compute::v1::PacketMirroringAggregatedList>
 PacketMirroringsRestMetadata::AggregatedListPacketMirrorings(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::packet_mirrorings::v1::
-        AggregatedListPacketMirroringsRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::packet_mirrorings::v1::AggregatedListPacketMirroringsRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->AggregatedListPacketMirrorings(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 PacketMirroringsRestMetadata::AsyncDeletePacketMirroring(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::packet_mirrorings::v1::
-        DeletePacketMirroringRequest const& request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::packet_mirrorings::v1::DeletePacketMirroringRequest const& request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncDeletePacketMirroring(cq, std::move(rest_context),
-                                            std::move(options), request);
+  return child_->AsyncDeletePacketMirroring(
+      cq, std::move(rest_context), std::move(options), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 PacketMirroringsRestMetadata::DeletePacketMirroring(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::packet_mirrorings::v1::
-        DeletePacketMirroringRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::packet_mirrorings::v1::DeletePacketMirroringRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->DeletePacketMirroring(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::PacketMirroring>
 PacketMirroringsRestMetadata::GetPacketMirroring(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::packet_mirrorings::v1::
-        GetPacketMirroringRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::packet_mirrorings::v1::GetPacketMirroringRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->GetPacketMirroring(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 PacketMirroringsRestMetadata::AsyncInsertPacketMirroring(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::packet_mirrorings::v1::
-        InsertPacketMirroringRequest const& request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::packet_mirrorings::v1::InsertPacketMirroringRequest const& request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncInsertPacketMirroring(cq, std::move(rest_context),
-                                            std::move(options), request);
+  return child_->AsyncInsertPacketMirroring(
+      cq, std::move(rest_context), std::move(options), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 PacketMirroringsRestMetadata::InsertPacketMirroring(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::packet_mirrorings::v1::
-        InsertPacketMirroringRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::packet_mirrorings::v1::InsertPacketMirroringRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->InsertPacketMirroring(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::PacketMirroringList>
 PacketMirroringsRestMetadata::ListPacketMirrorings(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::packet_mirrorings::v1::
-        ListPacketMirroringsRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::packet_mirrorings::v1::ListPacketMirroringsRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->ListPacketMirrorings(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 PacketMirroringsRestMetadata::AsyncPatchPacketMirroring(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::packet_mirrorings::v1::
-        PatchPacketMirroringRequest const& request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::packet_mirrorings::v1::PatchPacketMirroringRequest const& request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncPatchPacketMirroring(cq, std::move(rest_context),
-                                           std::move(options), request);
+  return child_->AsyncPatchPacketMirroring(
+      cq, std::move(rest_context), std::move(options), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 PacketMirroringsRestMetadata::PatchPacketMirroring(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::packet_mirrorings::v1::
-        PatchPacketMirroringRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::packet_mirrorings::v1::PatchPacketMirroringRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->PatchPacketMirroring(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
 PacketMirroringsRestMetadata::TestIamPermissions(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::packet_mirrorings::v1::
-        TestIamPermissionsRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::packet_mirrorings::v1::TestIamPermissionsRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->TestIamPermissions(rest_context, options, request);
 }
@@ -143,29 +133,28 @@ PacketMirroringsRestMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::region_operations::v1::
-        GetOperationRequest const& request) {
+    google::cloud::cpp::compute::region_operations::v1::GetOperationRequest const& request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncGetOperation(cq, std::move(rest_context),
-                                   std::move(options), request);
+  return child_->AsyncGetOperation(
+      cq, std::move(rest_context), std::move(options), request);
 }
 
-future<Status> PacketMirroringsRestMetadata::AsyncCancelOperation(
+future<Status>
+PacketMirroringsRestMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::region_operations::v1::
-        DeleteOperationRequest const& request) {
+    google::cloud::cpp::compute::region_operations::v1::DeleteOperationRequest const& request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncCancelOperation(cq, std::move(rest_context),
-                                      std::move(options), request);
+  return child_->AsyncCancelOperation(
+      cq, std::move(rest_context), std::move(options), request);
 }
 
 void PacketMirroringsRestMetadata::SetMetadata(
-    rest_internal::RestContext& rest_context, Options const& options,
-    std::vector<std::string> const& params) {
-  google::cloud::rest_internal::SetMetadata(rest_context, options, params,
-                                            api_client_header_);
+      rest_internal::RestContext& rest_context,
+      Options const& options, std::vector<std::string> const& params) {
+  google::cloud::rest_internal::SetMetadata(
+      rest_context, options, params, api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

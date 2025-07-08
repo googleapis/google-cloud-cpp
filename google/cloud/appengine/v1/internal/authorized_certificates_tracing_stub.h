@@ -36,42 +36,36 @@ class AuthorizedCertificatesTracingStub : public AuthorizedCertificatesStub {
  public:
   ~AuthorizedCertificatesTracingStub() override = default;
 
-  explicit AuthorizedCertificatesTracingStub(
-      std::shared_ptr<AuthorizedCertificatesStub> child);
+  explicit AuthorizedCertificatesTracingStub(std::shared_ptr<AuthorizedCertificatesStub> child);
 
-  StatusOr<google::appengine::v1::ListAuthorizedCertificatesResponse>
-  ListAuthorizedCertificates(
-      grpc::ClientContext& context, Options const& options,
-      google::appengine::v1::ListAuthorizedCertificatesRequest const& request)
-      override;
+  StatusOr<google::appengine::v1::ListAuthorizedCertificatesResponse> ListAuthorizedCertificates(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::appengine::v1::ListAuthorizedCertificatesRequest const& request) override;
 
-  StatusOr<google::appengine::v1::AuthorizedCertificate>
-  GetAuthorizedCertificate(
-      grpc::ClientContext& context, Options const& options,
-      google::appengine::v1::GetAuthorizedCertificateRequest const& request)
-      override;
+  StatusOr<google::appengine::v1::AuthorizedCertificate> GetAuthorizedCertificate(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::appengine::v1::GetAuthorizedCertificateRequest const& request) override;
 
-  StatusOr<google::appengine::v1::AuthorizedCertificate>
-  CreateAuthorizedCertificate(
-      grpc::ClientContext& context, Options const& options,
-      google::appengine::v1::CreateAuthorizedCertificateRequest const& request)
-      override;
+  StatusOr<google::appengine::v1::AuthorizedCertificate> CreateAuthorizedCertificate(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::appengine::v1::CreateAuthorizedCertificateRequest const& request) override;
 
-  StatusOr<google::appengine::v1::AuthorizedCertificate>
-  UpdateAuthorizedCertificate(
-      grpc::ClientContext& context, Options const& options,
-      google::appengine::v1::UpdateAuthorizedCertificateRequest const& request)
-      override;
+  StatusOr<google::appengine::v1::AuthorizedCertificate> UpdateAuthorizedCertificate(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::appengine::v1::UpdateAuthorizedCertificateRequest const& request) override;
 
   Status DeleteAuthorizedCertificate(
-      grpc::ClientContext& context, Options const& options,
-      google::appengine::v1::DeleteAuthorizedCertificateRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::appengine::v1::DeleteAuthorizedCertificateRequest const& request) override;
 
  private:
   std::shared_ptr<AuthorizedCertificatesStub> child_;
-  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
-      propagator_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -82,8 +76,7 @@ class AuthorizedCertificatesTracingStub : public AuthorizedCertificatesStub {
  * The stub is only decorated if the library has been compiled with
  * OpenTelemetry.
  */
-std::shared_ptr<AuthorizedCertificatesStub>
-MakeAuthorizedCertificatesTracingStub(
+std::shared_ptr<AuthorizedCertificatesStub> MakeAuthorizedCertificatesTracingStub(
     std::shared_ptr<AuthorizedCertificatesStub> stub);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

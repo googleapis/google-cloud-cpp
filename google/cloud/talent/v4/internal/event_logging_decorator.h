@@ -35,16 +35,17 @@ class EventServiceLogging : public EventServiceStub {
  public:
   ~EventServiceLogging() override = default;
   EventServiceLogging(std::shared_ptr<EventServiceStub> child,
-                      TracingOptions tracing_options,
-                      std::set<std::string> const& components);
+                       TracingOptions tracing_options,
+                       std::set<std::string> const& components);
 
   StatusOr<google::cloud::talent::v4::ClientEvent> CreateClientEvent(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::talent::v4::CreateClientEventRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::talent::v4::CreateClientEventRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
  private:

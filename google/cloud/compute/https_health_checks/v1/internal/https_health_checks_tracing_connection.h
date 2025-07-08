@@ -36,75 +36,62 @@ class HttpsHealthChecksTracingConnection
   ~HttpsHealthChecksTracingConnection() override = default;
 
   explicit HttpsHealthChecksTracingConnection(
-      std::shared_ptr<
-          compute_https_health_checks_v1::HttpsHealthChecksConnection>
-          child);
+    std::shared_ptr<compute_https_health_checks_v1::HttpsHealthChecksConnection> child);
 
   Options options() override { return child_->options(); }
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteHttpsHealthCheck(
-      google::cloud::cpp::compute::https_health_checks::v1::
-          DeleteHttpsHealthCheckRequest const& request) override;
+  DeleteHttpsHealthCheck(google::cloud::cpp::compute::https_health_checks::v1::DeleteHttpsHealthCheckRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteHttpsHealthCheck(
-      NoAwaitTag, google::cloud::cpp::compute::https_health_checks::v1::
-                      DeleteHttpsHealthCheckRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeleteHttpsHealthCheck(NoAwaitTag,
+      google::cloud::cpp::compute::https_health_checks::v1::DeleteHttpsHealthCheckRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteHttpsHealthCheck(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StatusOr<google::cloud::cpp::compute::v1::HttpsHealthCheck>
-  GetHttpsHealthCheck(google::cloud::cpp::compute::https_health_checks::v1::
-                          GetHttpsHealthCheckRequest const& request) override;
+  GetHttpsHealthCheck(google::cloud::cpp::compute::https_health_checks::v1::GetHttpsHealthCheckRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertHttpsHealthCheck(
-      google::cloud::cpp::compute::https_health_checks::v1::
-          InsertHttpsHealthCheckRequest const& request) override;
+  InsertHttpsHealthCheck(google::cloud::cpp::compute::https_health_checks::v1::InsertHttpsHealthCheckRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertHttpsHealthCheck(
-      NoAwaitTag, google::cloud::cpp::compute::https_health_checks::v1::
-                      InsertHttpsHealthCheckRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  InsertHttpsHealthCheck(NoAwaitTag,
+      google::cloud::cpp::compute::https_health_checks::v1::InsertHttpsHealthCheckRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertHttpsHealthCheck(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StreamRange<google::cloud::cpp::compute::v1::HttpsHealthCheck>
-  ListHttpsHealthChecks(google::cloud::cpp::compute::https_health_checks::v1::
-                            ListHttpsHealthChecksRequest request) override;
+  ListHttpsHealthChecks(google::cloud::cpp::compute::https_health_checks::v1::ListHttpsHealthChecksRequest request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchHttpsHealthCheck(
-      google::cloud::cpp::compute::https_health_checks::v1::
-          PatchHttpsHealthCheckRequest const& request) override;
+  PatchHttpsHealthCheck(google::cloud::cpp::compute::https_health_checks::v1::PatchHttpsHealthCheckRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchHttpsHealthCheck(
-      NoAwaitTag, google::cloud::cpp::compute::https_health_checks::v1::
-                      PatchHttpsHealthCheckRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  PatchHttpsHealthCheck(NoAwaitTag,
+      google::cloud::cpp::compute::https_health_checks::v1::PatchHttpsHealthCheckRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   PatchHttpsHealthCheck(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateHttpsHealthCheck(
-      google::cloud::cpp::compute::https_health_checks::v1::
-          UpdateHttpsHealthCheckRequest const& request) override;
+  UpdateHttpsHealthCheck(google::cloud::cpp::compute::https_health_checks::v1::UpdateHttpsHealthCheckRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateHttpsHealthCheck(
-      NoAwaitTag, google::cloud::cpp::compute::https_health_checks::v1::
-                      UpdateHttpsHealthCheckRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  UpdateHttpsHealthCheck(NoAwaitTag,
+      google::cloud::cpp::compute::https_health_checks::v1::UpdateHttpsHealthCheckRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   UpdateHttpsHealthCheck(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
  private:
-  std::shared_ptr<compute_https_health_checks_v1::HttpsHealthChecksConnection>
-      child_;
+  std::shared_ptr<compute_https_health_checks_v1::HttpsHealthChecksConnection> child_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -117,8 +104,7 @@ class HttpsHealthChecksTracingConnection
  */
 std::shared_ptr<compute_https_health_checks_v1::HttpsHealthChecksConnection>
 MakeHttpsHealthChecksTracingConnection(
-    std::shared_ptr<compute_https_health_checks_v1::HttpsHealthChecksConnection>
-        conn);
+    std::shared_ptr<compute_https_health_checks_v1::HttpsHealthChecksConnection> conn);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_https_health_checks_v1_internal

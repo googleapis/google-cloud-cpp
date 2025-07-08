@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTACTCENTERINSIGHTS_V1_CONTACT_CENTER_INSIGHTS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTACTCENTERINSIGHTS_V1_CONTACT_CENTER_INSIGHTS_CONNECTION_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/contactcenterinsights/v1/contact_center_insights_connection_idempotency_policy.h"
 #include "google/cloud/contactcenterinsights/v1/internal/contact_center_insights_retry_traits.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -47,8 +47,7 @@ class ContactCenterInsightsRetryPolicy : public ::google::cloud::RetryPolicy {
 };
 
 /**
- * A retry policy for `ContactCenterInsightsConnection` based on counting
- * errors.
+ * A retry policy for `ContactCenterInsightsConnection` based on counting errors.
  *
  * This policy stops retrying if:
  * - An RPC returns a non-transient error.
@@ -57,8 +56,7 @@ class ContactCenterInsightsRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class ContactCenterInsightsLimitedErrorCountRetryPolicy
-    : public ContactCenterInsightsRetryPolicy {
+class ContactCenterInsightsLimitedErrorCountRetryPolicy : public ContactCenterInsightsRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -67,18 +65,15 @@ class ContactCenterInsightsLimitedErrorCountRetryPolicy
    * @note Disable the retry loop by providing an instance of this policy with
    *     @p maximum_failures == 0.
    */
-  explicit ContactCenterInsightsLimitedErrorCountRetryPolicy(
-      int maximum_failures)
-      : impl_(maximum_failures) {}
+  explicit ContactCenterInsightsLimitedErrorCountRetryPolicy(int maximum_failures)
+    : impl_(maximum_failures) {}
 
   ContactCenterInsightsLimitedErrorCountRetryPolicy(
       ContactCenterInsightsLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : ContactCenterInsightsLimitedErrorCountRetryPolicy(
-            rhs.maximum_failures()) {}
+    : ContactCenterInsightsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   ContactCenterInsightsLimitedErrorCountRetryPolicy(
       ContactCenterInsightsLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : ContactCenterInsightsLimitedErrorCountRetryPolicy(
-            rhs.maximum_failures()) {}
+    : ContactCenterInsightsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -98,9 +93,7 @@ class ContactCenterInsightsLimitedErrorCountRetryPolicy
   using BaseType = ContactCenterInsightsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      contactcenterinsights_v1_internal::ContactCenterInsightsRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<contactcenterinsights_v1_internal::ContactCenterInsightsRetryTraits> impl_;
 };
 
 /**
@@ -113,8 +106,7 @@ class ContactCenterInsightsLimitedErrorCountRetryPolicy
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class ContactCenterInsightsLimitedTimeRetryPolicy
-    : public ContactCenterInsightsRetryPolicy {
+class ContactCenterInsightsLimitedTimeRetryPolicy : public ContactCenterInsightsRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -139,14 +131,12 @@ class ContactCenterInsightsLimitedTimeRetryPolicy
   template <typename DurationRep, typename DurationPeriod>
   explicit ContactCenterInsightsLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  ContactCenterInsightsLimitedTimeRetryPolicy(
-      ContactCenterInsightsLimitedTimeRetryPolicy&& rhs) noexcept
-      : ContactCenterInsightsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  ContactCenterInsightsLimitedTimeRetryPolicy(
-      ContactCenterInsightsLimitedTimeRetryPolicy const& rhs) noexcept
-      : ContactCenterInsightsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  ContactCenterInsightsLimitedTimeRetryPolicy(ContactCenterInsightsLimitedTimeRetryPolicy&& rhs) noexcept
+    : ContactCenterInsightsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  ContactCenterInsightsLimitedTimeRetryPolicy(ContactCenterInsightsLimitedTimeRetryPolicy const& rhs) noexcept
+    : ContactCenterInsightsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -168,24 +158,20 @@ class ContactCenterInsightsLimitedTimeRetryPolicy
   using BaseType = ContactCenterInsightsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      contactcenterinsights_v1_internal::ContactCenterInsightsRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<contactcenterinsights_v1_internal::ContactCenterInsightsRetryTraits> impl_;
 };
 
 /**
- * The `ContactCenterInsightsConnection` object for
- * `ContactCenterInsightsClient`.
+ * The `ContactCenterInsightsConnection` object for `ContactCenterInsightsClient`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `ContactCenterInsightsClient`. This allows users to inject custom
- * behavior (e.g., with a Google Mock object) when writing tests that use
- * objects of type `ContactCenterInsightsClient`.
+ * sets in `ContactCenterInsightsClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `ContactCenterInsightsClient`.
  *
  * To create a concrete instance, see `MakeContactCenterInsightsConnection()`.
  *
- * For mocking, see
- * `contactcenterinsights_v1_mocks::MockContactCenterInsightsConnection`.
+ * For mocking, see `contactcenterinsights_v1_mocks::MockContactCenterInsightsConnection`.
  */
 class ContactCenterInsightsConnection {
  public:
@@ -194,544 +180,362 @@ class ContactCenterInsightsConnection {
   virtual Options options() { return Options{}; }
 
   virtual StatusOr<google::cloud::contactcenterinsights::v1::Conversation>
-  CreateConversation(
-      google::cloud::contactcenterinsights::v1::CreateConversationRequest const&
-          request);
+  CreateConversation(google::cloud::contactcenterinsights::v1::CreateConversationRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::contactcenterinsights::v1::Conversation>>
-  UploadConversation(
-      google::cloud::contactcenterinsights::v1::UploadConversationRequest const&
-          request);
+  virtual future<StatusOr<google::cloud::contactcenterinsights::v1::Conversation>>
+  UploadConversation(google::cloud::contactcenterinsights::v1::UploadConversationRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> UploadConversation(
-      NoAwaitTag,
-      google::cloud::contactcenterinsights::v1::UploadConversationRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  UploadConversation(NoAwaitTag, google::cloud::contactcenterinsights::v1::UploadConversationRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::contactcenterinsights::v1::Conversation>>
-  UploadConversation(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::contactcenterinsights::v1::Conversation>>
+  UploadConversation( google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::contactcenterinsights::v1::Conversation>
-  UpdateConversation(
-      google::cloud::contactcenterinsights::v1::UpdateConversationRequest const&
-          request);
+  UpdateConversation(google::cloud::contactcenterinsights::v1::UpdateConversationRequest const& request);
 
   virtual StatusOr<google::cloud::contactcenterinsights::v1::Conversation>
-  GetConversation(
-      google::cloud::contactcenterinsights::v1::GetConversationRequest const&
-          request);
+  GetConversation(google::cloud::contactcenterinsights::v1::GetConversationRequest const& request);
 
   virtual StreamRange<google::cloud::contactcenterinsights::v1::Conversation>
-  ListConversations(
-      google::cloud::contactcenterinsights::v1::ListConversationsRequest
-          request);
+  ListConversations(google::cloud::contactcenterinsights::v1::ListConversationsRequest request);
 
-  virtual Status DeleteConversation(
-      google::cloud::contactcenterinsights::v1::DeleteConversationRequest const&
-          request);
+  virtual Status
+  DeleteConversation(google::cloud::contactcenterinsights::v1::DeleteConversationRequest const& request);
 
   virtual future<StatusOr<google::cloud::contactcenterinsights::v1::Analysis>>
-  CreateAnalysis(
-      google::cloud::contactcenterinsights::v1::CreateAnalysisRequest const&
-          request);
+  CreateAnalysis(google::cloud::contactcenterinsights::v1::CreateAnalysisRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> CreateAnalysis(
-      NoAwaitTag,
-      google::cloud::contactcenterinsights::v1::CreateAnalysisRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  CreateAnalysis(NoAwaitTag, google::cloud::contactcenterinsights::v1::CreateAnalysisRequest const& request);
 
   virtual future<StatusOr<google::cloud::contactcenterinsights::v1::Analysis>>
-  CreateAnalysis(google::longrunning::Operation const& operation);
+  CreateAnalysis( google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::contactcenterinsights::v1::Analysis>
-  GetAnalysis(
-      google::cloud::contactcenterinsights::v1::GetAnalysisRequest const&
-          request);
+  GetAnalysis(google::cloud::contactcenterinsights::v1::GetAnalysisRequest const& request);
 
   virtual StreamRange<google::cloud::contactcenterinsights::v1::Analysis>
-  ListAnalyses(
-      google::cloud::contactcenterinsights::v1::ListAnalysesRequest request);
+  ListAnalyses(google::cloud::contactcenterinsights::v1::ListAnalysesRequest request);
 
-  virtual Status DeleteAnalysis(
-      google::cloud::contactcenterinsights::v1::DeleteAnalysisRequest const&
-          request);
+  virtual Status
+  DeleteAnalysis(google::cloud::contactcenterinsights::v1::DeleteAnalysisRequest const& request);
 
-  virtual future<StatusOr<google::cloud::contactcenterinsights::v1::
-                              BulkAnalyzeConversationsResponse>>
-  BulkAnalyzeConversations(google::cloud::contactcenterinsights::v1::
-                               BulkAnalyzeConversationsRequest const& request);
+  virtual future<StatusOr<google::cloud::contactcenterinsights::v1::BulkAnalyzeConversationsResponse>>
+  BulkAnalyzeConversations(google::cloud::contactcenterinsights::v1::BulkAnalyzeConversationsRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> BulkAnalyzeConversations(
-      NoAwaitTag, google::cloud::contactcenterinsights::v1::
-                      BulkAnalyzeConversationsRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  BulkAnalyzeConversations(NoAwaitTag, google::cloud::contactcenterinsights::v1::BulkAnalyzeConversationsRequest const& request);
 
-  virtual future<StatusOr<google::cloud::contactcenterinsights::v1::
-                              BulkAnalyzeConversationsResponse>>
-  BulkAnalyzeConversations(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::contactcenterinsights::v1::BulkAnalyzeConversationsResponse>>
+  BulkAnalyzeConversations( google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<google::cloud::contactcenterinsights::v1::
-                              BulkDeleteConversationsResponse>>
-  BulkDeleteConversations(google::cloud::contactcenterinsights::v1::
-                              BulkDeleteConversationsRequest const& request);
+  virtual future<StatusOr<google::cloud::contactcenterinsights::v1::BulkDeleteConversationsResponse>>
+  BulkDeleteConversations(google::cloud::contactcenterinsights::v1::BulkDeleteConversationsRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> BulkDeleteConversations(
-      NoAwaitTag, google::cloud::contactcenterinsights::v1::
-                      BulkDeleteConversationsRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  BulkDeleteConversations(NoAwaitTag, google::cloud::contactcenterinsights::v1::BulkDeleteConversationsRequest const& request);
 
-  virtual future<StatusOr<google::cloud::contactcenterinsights::v1::
-                              BulkDeleteConversationsResponse>>
-  BulkDeleteConversations(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::contactcenterinsights::v1::BulkDeleteConversationsResponse>>
+  BulkDeleteConversations( google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<
-      google::cloud::contactcenterinsights::v1::IngestConversationsResponse>>
-  IngestConversations(google::cloud::contactcenterinsights::v1::
-                          IngestConversationsRequest const& request);
+  virtual future<StatusOr<google::cloud::contactcenterinsights::v1::IngestConversationsResponse>>
+  IngestConversations(google::cloud::contactcenterinsights::v1::IngestConversationsRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> IngestConversations(
-      NoAwaitTag, google::cloud::contactcenterinsights::v1::
-                      IngestConversationsRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  IngestConversations(NoAwaitTag, google::cloud::contactcenterinsights::v1::IngestConversationsRequest const& request);
 
-  virtual future<StatusOr<
-      google::cloud::contactcenterinsights::v1::IngestConversationsResponse>>
-  IngestConversations(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::contactcenterinsights::v1::IngestConversationsResponse>>
+  IngestConversations( google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<
-      google::cloud::contactcenterinsights::v1::ExportInsightsDataResponse>>
-  ExportInsightsData(
-      google::cloud::contactcenterinsights::v1::ExportInsightsDataRequest const&
-          request);
+  virtual future<StatusOr<google::cloud::contactcenterinsights::v1::ExportInsightsDataResponse>>
+  ExportInsightsData(google::cloud::contactcenterinsights::v1::ExportInsightsDataRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> ExportInsightsData(
-      NoAwaitTag,
-      google::cloud::contactcenterinsights::v1::ExportInsightsDataRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  ExportInsightsData(NoAwaitTag, google::cloud::contactcenterinsights::v1::ExportInsightsDataRequest const& request);
 
-  virtual future<StatusOr<
-      google::cloud::contactcenterinsights::v1::ExportInsightsDataResponse>>
-  ExportInsightsData(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::contactcenterinsights::v1::ExportInsightsDataResponse>>
+  ExportInsightsData( google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::contactcenterinsights::v1::IssueModel>>
-  CreateIssueModel(
-      google::cloud::contactcenterinsights::v1::CreateIssueModelRequest const&
-          request);
+  CreateIssueModel(google::cloud::contactcenterinsights::v1::CreateIssueModelRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> CreateIssueModel(
-      NoAwaitTag,
-      google::cloud::contactcenterinsights::v1::CreateIssueModelRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  CreateIssueModel(NoAwaitTag, google::cloud::contactcenterinsights::v1::CreateIssueModelRequest const& request);
 
   virtual future<StatusOr<google::cloud::contactcenterinsights::v1::IssueModel>>
-  CreateIssueModel(google::longrunning::Operation const& operation);
+  CreateIssueModel( google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::contactcenterinsights::v1::IssueModel>
-  UpdateIssueModel(
-      google::cloud::contactcenterinsights::v1::UpdateIssueModelRequest const&
-          request);
+  UpdateIssueModel(google::cloud::contactcenterinsights::v1::UpdateIssueModelRequest const& request);
 
   virtual StatusOr<google::cloud::contactcenterinsights::v1::IssueModel>
-  GetIssueModel(
-      google::cloud::contactcenterinsights::v1::GetIssueModelRequest const&
-          request);
+  GetIssueModel(google::cloud::contactcenterinsights::v1::GetIssueModelRequest const& request);
 
-  virtual StatusOr<
-      google::cloud::contactcenterinsights::v1::ListIssueModelsResponse>
-  ListIssueModels(
-      google::cloud::contactcenterinsights::v1::ListIssueModelsRequest const&
-          request);
+  virtual StatusOr<google::cloud::contactcenterinsights::v1::ListIssueModelsResponse>
+  ListIssueModels(google::cloud::contactcenterinsights::v1::ListIssueModelsRequest const& request);
 
-  virtual future<StatusOr<
-      google::cloud::contactcenterinsights::v1::DeleteIssueModelMetadata>>
-  DeleteIssueModel(
-      google::cloud::contactcenterinsights::v1::DeleteIssueModelRequest const&
-          request);
+  virtual future<StatusOr<google::cloud::contactcenterinsights::v1::DeleteIssueModelMetadata>>
+  DeleteIssueModel(google::cloud::contactcenterinsights::v1::DeleteIssueModelRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> DeleteIssueModel(
-      NoAwaitTag,
-      google::cloud::contactcenterinsights::v1::DeleteIssueModelRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  DeleteIssueModel(NoAwaitTag, google::cloud::contactcenterinsights::v1::DeleteIssueModelRequest const& request);
 
-  virtual future<StatusOr<
-      google::cloud::contactcenterinsights::v1::DeleteIssueModelMetadata>>
-  DeleteIssueModel(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::contactcenterinsights::v1::DeleteIssueModelMetadata>>
+  DeleteIssueModel( google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<
-      google::cloud::contactcenterinsights::v1::DeployIssueModelResponse>>
-  DeployIssueModel(
-      google::cloud::contactcenterinsights::v1::DeployIssueModelRequest const&
-          request);
+  virtual future<StatusOr<google::cloud::contactcenterinsights::v1::DeployIssueModelResponse>>
+  DeployIssueModel(google::cloud::contactcenterinsights::v1::DeployIssueModelRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> DeployIssueModel(
-      NoAwaitTag,
-      google::cloud::contactcenterinsights::v1::DeployIssueModelRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  DeployIssueModel(NoAwaitTag, google::cloud::contactcenterinsights::v1::DeployIssueModelRequest const& request);
 
-  virtual future<StatusOr<
-      google::cloud::contactcenterinsights::v1::DeployIssueModelResponse>>
-  DeployIssueModel(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::contactcenterinsights::v1::DeployIssueModelResponse>>
+  DeployIssueModel( google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<
-      google::cloud::contactcenterinsights::v1::UndeployIssueModelResponse>>
-  UndeployIssueModel(
-      google::cloud::contactcenterinsights::v1::UndeployIssueModelRequest const&
-          request);
+  virtual future<StatusOr<google::cloud::contactcenterinsights::v1::UndeployIssueModelResponse>>
+  UndeployIssueModel(google::cloud::contactcenterinsights::v1::UndeployIssueModelRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> UndeployIssueModel(
-      NoAwaitTag,
-      google::cloud::contactcenterinsights::v1::UndeployIssueModelRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  UndeployIssueModel(NoAwaitTag, google::cloud::contactcenterinsights::v1::UndeployIssueModelRequest const& request);
 
-  virtual future<StatusOr<
-      google::cloud::contactcenterinsights::v1::UndeployIssueModelResponse>>
-  UndeployIssueModel(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::contactcenterinsights::v1::UndeployIssueModelResponse>>
+  UndeployIssueModel( google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<
-      google::cloud::contactcenterinsights::v1::ExportIssueModelResponse>>
-  ExportIssueModel(
-      google::cloud::contactcenterinsights::v1::ExportIssueModelRequest const&
-          request);
+  virtual future<StatusOr<google::cloud::contactcenterinsights::v1::ExportIssueModelResponse>>
+  ExportIssueModel(google::cloud::contactcenterinsights::v1::ExportIssueModelRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> ExportIssueModel(
-      NoAwaitTag,
-      google::cloud::contactcenterinsights::v1::ExportIssueModelRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  ExportIssueModel(NoAwaitTag, google::cloud::contactcenterinsights::v1::ExportIssueModelRequest const& request);
 
-  virtual future<StatusOr<
-      google::cloud::contactcenterinsights::v1::ExportIssueModelResponse>>
-  ExportIssueModel(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::contactcenterinsights::v1::ExportIssueModelResponse>>
+  ExportIssueModel( google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<
-      google::cloud::contactcenterinsights::v1::ImportIssueModelResponse>>
-  ImportIssueModel(
-      google::cloud::contactcenterinsights::v1::ImportIssueModelRequest const&
-          request);
+  virtual future<StatusOr<google::cloud::contactcenterinsights::v1::ImportIssueModelResponse>>
+  ImportIssueModel(google::cloud::contactcenterinsights::v1::ImportIssueModelRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> ImportIssueModel(
-      NoAwaitTag,
-      google::cloud::contactcenterinsights::v1::ImportIssueModelRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  ImportIssueModel(NoAwaitTag, google::cloud::contactcenterinsights::v1::ImportIssueModelRequest const& request);
 
-  virtual future<StatusOr<
-      google::cloud::contactcenterinsights::v1::ImportIssueModelResponse>>
-  ImportIssueModel(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::contactcenterinsights::v1::ImportIssueModelResponse>>
+  ImportIssueModel( google::longrunning::Operation const& operation);
 
-  virtual StatusOr<google::cloud::contactcenterinsights::v1::Issue> GetIssue(
-      google::cloud::contactcenterinsights::v1::GetIssueRequest const& request);
+  virtual StatusOr<google::cloud::contactcenterinsights::v1::Issue>
+  GetIssue(google::cloud::contactcenterinsights::v1::GetIssueRequest const& request);
 
   virtual StatusOr<google::cloud::contactcenterinsights::v1::ListIssuesResponse>
-  ListIssues(google::cloud::contactcenterinsights::v1::ListIssuesRequest const&
-                 request);
+  ListIssues(google::cloud::contactcenterinsights::v1::ListIssuesRequest const& request);
 
-  virtual StatusOr<google::cloud::contactcenterinsights::v1::Issue> UpdateIssue(
-      google::cloud::contactcenterinsights::v1::UpdateIssueRequest const&
-          request);
+  virtual StatusOr<google::cloud::contactcenterinsights::v1::Issue>
+  UpdateIssue(google::cloud::contactcenterinsights::v1::UpdateIssueRequest const& request);
 
-  virtual Status DeleteIssue(
-      google::cloud::contactcenterinsights::v1::DeleteIssueRequest const&
-          request);
+  virtual Status
+  DeleteIssue(google::cloud::contactcenterinsights::v1::DeleteIssueRequest const& request);
 
-  virtual StatusOr<google::cloud::contactcenterinsights::v1::
-                       CalculateIssueModelStatsResponse>
-  CalculateIssueModelStats(google::cloud::contactcenterinsights::v1::
-                               CalculateIssueModelStatsRequest const& request);
+  virtual StatusOr<google::cloud::contactcenterinsights::v1::CalculateIssueModelStatsResponse>
+  CalculateIssueModelStats(google::cloud::contactcenterinsights::v1::CalculateIssueModelStatsRequest const& request);
 
   virtual StatusOr<google::cloud::contactcenterinsights::v1::PhraseMatcher>
-  CreatePhraseMatcher(google::cloud::contactcenterinsights::v1::
-                          CreatePhraseMatcherRequest const& request);
+  CreatePhraseMatcher(google::cloud::contactcenterinsights::v1::CreatePhraseMatcherRequest const& request);
 
   virtual StatusOr<google::cloud::contactcenterinsights::v1::PhraseMatcher>
-  GetPhraseMatcher(
-      google::cloud::contactcenterinsights::v1::GetPhraseMatcherRequest const&
-          request);
+  GetPhraseMatcher(google::cloud::contactcenterinsights::v1::GetPhraseMatcherRequest const& request);
 
   virtual StreamRange<google::cloud::contactcenterinsights::v1::PhraseMatcher>
-  ListPhraseMatchers(
-      google::cloud::contactcenterinsights::v1::ListPhraseMatchersRequest
-          request);
+  ListPhraseMatchers(google::cloud::contactcenterinsights::v1::ListPhraseMatchersRequest request);
 
-  virtual Status DeletePhraseMatcher(
-      google::cloud::contactcenterinsights::v1::
-          DeletePhraseMatcherRequest const& request);
+  virtual Status
+  DeletePhraseMatcher(google::cloud::contactcenterinsights::v1::DeletePhraseMatcherRequest const& request);
 
   virtual StatusOr<google::cloud::contactcenterinsights::v1::PhraseMatcher>
-  UpdatePhraseMatcher(google::cloud::contactcenterinsights::v1::
-                          UpdatePhraseMatcherRequest const& request);
+  UpdatePhraseMatcher(google::cloud::contactcenterinsights::v1::UpdatePhraseMatcherRequest const& request);
 
-  virtual StatusOr<
-      google::cloud::contactcenterinsights::v1::CalculateStatsResponse>
-  CalculateStats(
-      google::cloud::contactcenterinsights::v1::CalculateStatsRequest const&
-          request);
+  virtual StatusOr<google::cloud::contactcenterinsights::v1::CalculateStatsResponse>
+  CalculateStats(google::cloud::contactcenterinsights::v1::CalculateStatsRequest const& request);
 
   virtual StatusOr<google::cloud::contactcenterinsights::v1::Settings>
-  GetSettings(
-      google::cloud::contactcenterinsights::v1::GetSettingsRequest const&
-          request);
+  GetSettings(google::cloud::contactcenterinsights::v1::GetSettingsRequest const& request);
 
   virtual StatusOr<google::cloud::contactcenterinsights::v1::Settings>
-  UpdateSettings(
-      google::cloud::contactcenterinsights::v1::UpdateSettingsRequest const&
-          request);
+  UpdateSettings(google::cloud::contactcenterinsights::v1::UpdateSettingsRequest const& request);
 
   virtual StatusOr<google::cloud::contactcenterinsights::v1::AnalysisRule>
-  CreateAnalysisRule(
-      google::cloud::contactcenterinsights::v1::CreateAnalysisRuleRequest const&
-          request);
+  CreateAnalysisRule(google::cloud::contactcenterinsights::v1::CreateAnalysisRuleRequest const& request);
 
   virtual StatusOr<google::cloud::contactcenterinsights::v1::AnalysisRule>
-  GetAnalysisRule(
-      google::cloud::contactcenterinsights::v1::GetAnalysisRuleRequest const&
-          request);
+  GetAnalysisRule(google::cloud::contactcenterinsights::v1::GetAnalysisRuleRequest const& request);
 
   virtual StreamRange<google::cloud::contactcenterinsights::v1::AnalysisRule>
-  ListAnalysisRules(
-      google::cloud::contactcenterinsights::v1::ListAnalysisRulesRequest
-          request);
+  ListAnalysisRules(google::cloud::contactcenterinsights::v1::ListAnalysisRulesRequest request);
 
   virtual StatusOr<google::cloud::contactcenterinsights::v1::AnalysisRule>
-  UpdateAnalysisRule(
-      google::cloud::contactcenterinsights::v1::UpdateAnalysisRuleRequest const&
-          request);
+  UpdateAnalysisRule(google::cloud::contactcenterinsights::v1::UpdateAnalysisRuleRequest const& request);
 
-  virtual Status DeleteAnalysisRule(
-      google::cloud::contactcenterinsights::v1::DeleteAnalysisRuleRequest const&
-          request);
+  virtual Status
+  DeleteAnalysisRule(google::cloud::contactcenterinsights::v1::DeleteAnalysisRuleRequest const& request);
 
   virtual StatusOr<google::cloud::contactcenterinsights::v1::EncryptionSpec>
-  GetEncryptionSpec(
-      google::cloud::contactcenterinsights::v1::GetEncryptionSpecRequest const&
-          request);
+  GetEncryptionSpec(google::cloud::contactcenterinsights::v1::GetEncryptionSpecRequest const& request);
 
-  virtual future<StatusOr<google::cloud::contactcenterinsights::v1::
-                              InitializeEncryptionSpecResponse>>
-  InitializeEncryptionSpec(google::cloud::contactcenterinsights::v1::
-                               InitializeEncryptionSpecRequest const& request);
+  virtual future<StatusOr<google::cloud::contactcenterinsights::v1::InitializeEncryptionSpecResponse>>
+  InitializeEncryptionSpec(google::cloud::contactcenterinsights::v1::InitializeEncryptionSpecRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> InitializeEncryptionSpec(
-      NoAwaitTag, google::cloud::contactcenterinsights::v1::
-                      InitializeEncryptionSpecRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  InitializeEncryptionSpec(NoAwaitTag, google::cloud::contactcenterinsights::v1::InitializeEncryptionSpecRequest const& request);
 
-  virtual future<StatusOr<google::cloud::contactcenterinsights::v1::
-                              InitializeEncryptionSpecResponse>>
-  InitializeEncryptionSpec(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::contactcenterinsights::v1::InitializeEncryptionSpecResponse>>
+  InitializeEncryptionSpec( google::longrunning::Operation const& operation);
 
-  virtual StatusOr<google::cloud::contactcenterinsights::v1::View> CreateView(
-      google::cloud::contactcenterinsights::v1::CreateViewRequest const&
-          request);
+  virtual StatusOr<google::cloud::contactcenterinsights::v1::View>
+  CreateView(google::cloud::contactcenterinsights::v1::CreateViewRequest const& request);
 
-  virtual StatusOr<google::cloud::contactcenterinsights::v1::View> GetView(
-      google::cloud::contactcenterinsights::v1::GetViewRequest const& request);
+  virtual StatusOr<google::cloud::contactcenterinsights::v1::View>
+  GetView(google::cloud::contactcenterinsights::v1::GetViewRequest const& request);
 
-  virtual StreamRange<google::cloud::contactcenterinsights::v1::View> ListViews(
-      google::cloud::contactcenterinsights::v1::ListViewsRequest request);
+  virtual StreamRange<google::cloud::contactcenterinsights::v1::View>
+  ListViews(google::cloud::contactcenterinsights::v1::ListViewsRequest request);
 
-  virtual StatusOr<google::cloud::contactcenterinsights::v1::View> UpdateView(
-      google::cloud::contactcenterinsights::v1::UpdateViewRequest const&
-          request);
+  virtual StatusOr<google::cloud::contactcenterinsights::v1::View>
+  UpdateView(google::cloud::contactcenterinsights::v1::UpdateViewRequest const& request);
 
-  virtual Status DeleteView(
-      google::cloud::contactcenterinsights::v1::DeleteViewRequest const&
-          request);
+  virtual Status
+  DeleteView(google::cloud::contactcenterinsights::v1::DeleteViewRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::contactcenterinsights::v1::QueryMetricsResponse>>
-  QueryMetrics(
-      google::cloud::contactcenterinsights::v1::QueryMetricsRequest const&
-          request);
+  virtual future<StatusOr<google::cloud::contactcenterinsights::v1::QueryMetricsResponse>>
+  QueryMetrics(google::cloud::contactcenterinsights::v1::QueryMetricsRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> QueryMetrics(
-      NoAwaitTag,
-      google::cloud::contactcenterinsights::v1::QueryMetricsRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  QueryMetrics(NoAwaitTag, google::cloud::contactcenterinsights::v1::QueryMetricsRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::contactcenterinsights::v1::QueryMetricsResponse>>
-  QueryMetrics(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::contactcenterinsights::v1::QueryMetricsResponse>>
+  QueryMetrics( google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::contactcenterinsights::v1::QaQuestion>
-  CreateQaQuestion(
-      google::cloud::contactcenterinsights::v1::CreateQaQuestionRequest const&
-          request);
+  CreateQaQuestion(google::cloud::contactcenterinsights::v1::CreateQaQuestionRequest const& request);
 
   virtual StatusOr<google::cloud::contactcenterinsights::v1::QaQuestion>
-  GetQaQuestion(
-      google::cloud::contactcenterinsights::v1::GetQaQuestionRequest const&
-          request);
+  GetQaQuestion(google::cloud::contactcenterinsights::v1::GetQaQuestionRequest const& request);
 
   virtual StatusOr<google::cloud::contactcenterinsights::v1::QaQuestion>
-  UpdateQaQuestion(
-      google::cloud::contactcenterinsights::v1::UpdateQaQuestionRequest const&
-          request);
+  UpdateQaQuestion(google::cloud::contactcenterinsights::v1::UpdateQaQuestionRequest const& request);
 
-  virtual Status DeleteQaQuestion(
-      google::cloud::contactcenterinsights::v1::DeleteQaQuestionRequest const&
-          request);
+  virtual Status
+  DeleteQaQuestion(google::cloud::contactcenterinsights::v1::DeleteQaQuestionRequest const& request);
 
   virtual StreamRange<google::cloud::contactcenterinsights::v1::QaQuestion>
-  ListQaQuestions(
-      google::cloud::contactcenterinsights::v1::ListQaQuestionsRequest request);
+  ListQaQuestions(google::cloud::contactcenterinsights::v1::ListQaQuestionsRequest request);
 
   virtual StatusOr<google::cloud::contactcenterinsights::v1::QaScorecard>
-  CreateQaScorecard(
-      google::cloud::contactcenterinsights::v1::CreateQaScorecardRequest const&
-          request);
+  CreateQaScorecard(google::cloud::contactcenterinsights::v1::CreateQaScorecardRequest const& request);
 
   virtual StatusOr<google::cloud::contactcenterinsights::v1::QaScorecard>
-  GetQaScorecard(
-      google::cloud::contactcenterinsights::v1::GetQaScorecardRequest const&
-          request);
+  GetQaScorecard(google::cloud::contactcenterinsights::v1::GetQaScorecardRequest const& request);
 
   virtual StatusOr<google::cloud::contactcenterinsights::v1::QaScorecard>
-  UpdateQaScorecard(
-      google::cloud::contactcenterinsights::v1::UpdateQaScorecardRequest const&
-          request);
+  UpdateQaScorecard(google::cloud::contactcenterinsights::v1::UpdateQaScorecardRequest const& request);
 
-  virtual Status DeleteQaScorecard(
-      google::cloud::contactcenterinsights::v1::DeleteQaScorecardRequest const&
-          request);
+  virtual Status
+  DeleteQaScorecard(google::cloud::contactcenterinsights::v1::DeleteQaScorecardRequest const& request);
 
   virtual StreamRange<google::cloud::contactcenterinsights::v1::QaScorecard>
-  ListQaScorecards(
-      google::cloud::contactcenterinsights::v1::ListQaScorecardsRequest
-          request);
+  ListQaScorecards(google::cloud::contactcenterinsights::v1::ListQaScorecardsRequest request);
 
-  virtual StatusOr<
-      google::cloud::contactcenterinsights::v1::QaScorecardRevision>
-  CreateQaScorecardRevision(
-      google::cloud::contactcenterinsights::v1::
-          CreateQaScorecardRevisionRequest const& request);
+  virtual StatusOr<google::cloud::contactcenterinsights::v1::QaScorecardRevision>
+  CreateQaScorecardRevision(google::cloud::contactcenterinsights::v1::CreateQaScorecardRevisionRequest const& request);
 
-  virtual StatusOr<
-      google::cloud::contactcenterinsights::v1::QaScorecardRevision>
-  GetQaScorecardRevision(google::cloud::contactcenterinsights::v1::
-                             GetQaScorecardRevisionRequest const& request);
+  virtual StatusOr<google::cloud::contactcenterinsights::v1::QaScorecardRevision>
+  GetQaScorecardRevision(google::cloud::contactcenterinsights::v1::GetQaScorecardRevisionRequest const& request);
 
-  virtual future<StatusOr<google::cloud::contactcenterinsights::v1::
-                              TuneQaScorecardRevisionResponse>>
-  TuneQaScorecardRevision(google::cloud::contactcenterinsights::v1::
-                              TuneQaScorecardRevisionRequest const& request);
+  virtual future<StatusOr<google::cloud::contactcenterinsights::v1::TuneQaScorecardRevisionResponse>>
+  TuneQaScorecardRevision(google::cloud::contactcenterinsights::v1::TuneQaScorecardRevisionRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> TuneQaScorecardRevision(
-      NoAwaitTag, google::cloud::contactcenterinsights::v1::
-                      TuneQaScorecardRevisionRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  TuneQaScorecardRevision(NoAwaitTag, google::cloud::contactcenterinsights::v1::TuneQaScorecardRevisionRequest const& request);
 
-  virtual future<StatusOr<google::cloud::contactcenterinsights::v1::
-                              TuneQaScorecardRevisionResponse>>
-  TuneQaScorecardRevision(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::contactcenterinsights::v1::TuneQaScorecardRevisionResponse>>
+  TuneQaScorecardRevision( google::longrunning::Operation const& operation);
 
-  virtual StatusOr<
-      google::cloud::contactcenterinsights::v1::QaScorecardRevision>
-  DeployQaScorecardRevision(
-      google::cloud::contactcenterinsights::v1::
-          DeployQaScorecardRevisionRequest const& request);
+  virtual StatusOr<google::cloud::contactcenterinsights::v1::QaScorecardRevision>
+  DeployQaScorecardRevision(google::cloud::contactcenterinsights::v1::DeployQaScorecardRevisionRequest const& request);
 
-  virtual StatusOr<
-      google::cloud::contactcenterinsights::v1::QaScorecardRevision>
-  UndeployQaScorecardRevision(
-      google::cloud::contactcenterinsights::v1::
-          UndeployQaScorecardRevisionRequest const& request);
+  virtual StatusOr<google::cloud::contactcenterinsights::v1::QaScorecardRevision>
+  UndeployQaScorecardRevision(google::cloud::contactcenterinsights::v1::UndeployQaScorecardRevisionRequest const& request);
 
-  virtual Status DeleteQaScorecardRevision(
-      google::cloud::contactcenterinsights::v1::
-          DeleteQaScorecardRevisionRequest const& request);
+  virtual Status
+  DeleteQaScorecardRevision(google::cloud::contactcenterinsights::v1::DeleteQaScorecardRevisionRequest const& request);
 
-  virtual StreamRange<
-      google::cloud::contactcenterinsights::v1::QaScorecardRevision>
-  ListQaScorecardRevisions(
-      google::cloud::contactcenterinsights::v1::ListQaScorecardRevisionsRequest
-          request);
+  virtual StreamRange<google::cloud::contactcenterinsights::v1::QaScorecardRevision>
+  ListQaScorecardRevisions(google::cloud::contactcenterinsights::v1::ListQaScorecardRevisionsRequest request);
 
   virtual StatusOr<google::cloud::contactcenterinsights::v1::FeedbackLabel>
-  CreateFeedbackLabel(google::cloud::contactcenterinsights::v1::
-                          CreateFeedbackLabelRequest const& request);
+  CreateFeedbackLabel(google::cloud::contactcenterinsights::v1::CreateFeedbackLabelRequest const& request);
 
   virtual StreamRange<google::cloud::contactcenterinsights::v1::FeedbackLabel>
-  ListFeedbackLabels(
-      google::cloud::contactcenterinsights::v1::ListFeedbackLabelsRequest
-          request);
+  ListFeedbackLabels(google::cloud::contactcenterinsights::v1::ListFeedbackLabelsRequest request);
 
   virtual StatusOr<google::cloud::contactcenterinsights::v1::FeedbackLabel>
-  GetFeedbackLabel(
-      google::cloud::contactcenterinsights::v1::GetFeedbackLabelRequest const&
-          request);
+  GetFeedbackLabel(google::cloud::contactcenterinsights::v1::GetFeedbackLabelRequest const& request);
 
   virtual StatusOr<google::cloud::contactcenterinsights::v1::FeedbackLabel>
-  UpdateFeedbackLabel(google::cloud::contactcenterinsights::v1::
-                          UpdateFeedbackLabelRequest const& request);
+  UpdateFeedbackLabel(google::cloud::contactcenterinsights::v1::UpdateFeedbackLabelRequest const& request);
 
-  virtual Status DeleteFeedbackLabel(
-      google::cloud::contactcenterinsights::v1::
-          DeleteFeedbackLabelRequest const& request);
+  virtual Status
+  DeleteFeedbackLabel(google::cloud::contactcenterinsights::v1::DeleteFeedbackLabelRequest const& request);
 
   virtual StreamRange<google::cloud::contactcenterinsights::v1::FeedbackLabel>
-  ListAllFeedbackLabels(
-      google::cloud::contactcenterinsights::v1::ListAllFeedbackLabelsRequest
-          request);
+  ListAllFeedbackLabels(google::cloud::contactcenterinsights::v1::ListAllFeedbackLabelsRequest request);
 
-  virtual future<StatusOr<google::cloud::contactcenterinsights::v1::
-                              BulkUploadFeedbackLabelsResponse>>
-  BulkUploadFeedbackLabels(google::cloud::contactcenterinsights::v1::
-                               BulkUploadFeedbackLabelsRequest const& request);
+  virtual future<StatusOr<google::cloud::contactcenterinsights::v1::BulkUploadFeedbackLabelsResponse>>
+  BulkUploadFeedbackLabels(google::cloud::contactcenterinsights::v1::BulkUploadFeedbackLabelsRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> BulkUploadFeedbackLabels(
-      NoAwaitTag, google::cloud::contactcenterinsights::v1::
-                      BulkUploadFeedbackLabelsRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  BulkUploadFeedbackLabels(NoAwaitTag, google::cloud::contactcenterinsights::v1::BulkUploadFeedbackLabelsRequest const& request);
 
-  virtual future<StatusOr<google::cloud::contactcenterinsights::v1::
-                              BulkUploadFeedbackLabelsResponse>>
-  BulkUploadFeedbackLabels(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::contactcenterinsights::v1::BulkUploadFeedbackLabelsResponse>>
+  BulkUploadFeedbackLabels( google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<google::cloud::contactcenterinsights::v1::
-                              BulkDownloadFeedbackLabelsResponse>>
-  BulkDownloadFeedbackLabels(
-      google::cloud::contactcenterinsights::v1::
-          BulkDownloadFeedbackLabelsRequest const& request);
+  virtual future<StatusOr<google::cloud::contactcenterinsights::v1::BulkDownloadFeedbackLabelsResponse>>
+  BulkDownloadFeedbackLabels(google::cloud::contactcenterinsights::v1::BulkDownloadFeedbackLabelsRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> BulkDownloadFeedbackLabels(
-      NoAwaitTag, google::cloud::contactcenterinsights::v1::
-                      BulkDownloadFeedbackLabelsRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  BulkDownloadFeedbackLabels(NoAwaitTag, google::cloud::contactcenterinsights::v1::BulkDownloadFeedbackLabelsRequest const& request);
 
-  virtual future<StatusOr<google::cloud::contactcenterinsights::v1::
-                              BulkDownloadFeedbackLabelsResponse>>
-  BulkDownloadFeedbackLabels(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::contactcenterinsights::v1::BulkDownloadFeedbackLabelsResponse>>
+  BulkDownloadFeedbackLabels( google::longrunning::Operation const& operation);
 
-  virtual StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 
-  virtual Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request);
+  virtual Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request);
 };
 
 /**
- * A factory function to construct an object of type
- * `ContactCenterInsightsConnection`.
+ * A factory function to construct an object of type `ContactCenterInsightsConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of
- * ContactCenterInsightsClient.
+ * should be passed as an argument to the constructor of ContactCenterInsightsClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `ContactCenterInsightsConnection`. Expected options are any of the
- * types in the following option lists:
+ * returned `ContactCenterInsightsConnection`. Expected options are any of the types in
+ * the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * -
- * `google::cloud::contactcenterinsights_v1::ContactCenterInsightsPolicyOptionList`
+ * - `google::cloud::contactcenterinsights_v1::ContactCenterInsightsPolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
- * @param options (optional) Configure the `ContactCenterInsightsConnection`
- * created by this function.
+ * @param options (optional) Configure the `ContactCenterInsightsConnection` created by
+ * this function.
  */
-std::shared_ptr<ContactCenterInsightsConnection>
-MakeContactCenterInsightsConnection(Options options = {});
+std::shared_ptr<ContactCenterInsightsConnection> MakeContactCenterInsightsConnection(
+    Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace contactcenterinsights_v1

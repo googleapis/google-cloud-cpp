@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_ES_INTERNAL_CONVERSATION_PROFILES_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_ES_INTERNAL_CONVERSATION_PROFILES_CONNECTION_IMPL_H
 
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/dialogflow_es/conversation_profiles_connection.h"
 #include "google/cloud/dialogflow_es/conversation_profiles_connection_idempotency_policy.h"
 #include "google/cloud/dialogflow_es/conversation_profiles_options.h"
 #include "google/cloud/dialogflow_es/internal/conversation_profiles_retry_traits.h"
 #include "google/cloud/dialogflow_es/internal/conversation_profiles_stub.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -46,78 +46,63 @@ class ConversationProfilesConnectionImpl
   ~ConversationProfilesConnectionImpl() override = default;
 
   ConversationProfilesConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<dialogflow_es_internal::ConversationProfilesStub> stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<dialogflow_es_internal::ConversationProfilesStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
   StreamRange<google::cloud::dialogflow::v2::ConversationProfile>
-  ListConversationProfiles(
-      google::cloud::dialogflow::v2::ListConversationProfilesRequest request)
-      override;
+  ListConversationProfiles(google::cloud::dialogflow::v2::ListConversationProfilesRequest request) override;
 
   StatusOr<google::cloud::dialogflow::v2::ConversationProfile>
-  GetConversationProfile(
-      google::cloud::dialogflow::v2::GetConversationProfileRequest const&
-          request) override;
+  GetConversationProfile(google::cloud::dialogflow::v2::GetConversationProfileRequest const& request) override;
 
   StatusOr<google::cloud::dialogflow::v2::ConversationProfile>
-  CreateConversationProfile(
-      google::cloud::dialogflow::v2::CreateConversationProfileRequest const&
-          request) override;
+  CreateConversationProfile(google::cloud::dialogflow::v2::CreateConversationProfileRequest const& request) override;
 
   StatusOr<google::cloud::dialogflow::v2::ConversationProfile>
-  UpdateConversationProfile(
-      google::cloud::dialogflow::v2::UpdateConversationProfileRequest const&
-          request) override;
+  UpdateConversationProfile(google::cloud::dialogflow::v2::UpdateConversationProfileRequest const& request) override;
 
-  Status DeleteConversationProfile(
-      google::cloud::dialogflow::v2::DeleteConversationProfileRequest const&
-          request) override;
+  Status
+  DeleteConversationProfile(google::cloud::dialogflow::v2::DeleteConversationProfileRequest const& request) override;
 
   future<StatusOr<google::cloud::dialogflow::v2::ConversationProfile>>
-  SetSuggestionFeatureConfig(
-      google::cloud::dialogflow::v2::SetSuggestionFeatureConfigRequest const&
-          request) override;
+  SetSuggestionFeatureConfig(google::cloud::dialogflow::v2::SetSuggestionFeatureConfigRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> SetSuggestionFeatureConfig(
-      NoAwaitTag,
-      google::cloud::dialogflow::v2::SetSuggestionFeatureConfigRequest const&
-          request) override;
+  StatusOr<google::longrunning::Operation>
+  SetSuggestionFeatureConfig(NoAwaitTag,
+      google::cloud::dialogflow::v2::SetSuggestionFeatureConfigRequest const& request) override;
 
   future<StatusOr<google::cloud::dialogflow::v2::ConversationProfile>>
   SetSuggestionFeatureConfig(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::dialogflow::v2::ConversationProfile>>
-  ClearSuggestionFeatureConfig(
-      google::cloud::dialogflow::v2::ClearSuggestionFeatureConfigRequest const&
-          request) override;
+  ClearSuggestionFeatureConfig(google::cloud::dialogflow::v2::ClearSuggestionFeatureConfigRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> ClearSuggestionFeatureConfig(
-      NoAwaitTag,
-      google::cloud::dialogflow::v2::ClearSuggestionFeatureConfigRequest const&
-          request) override;
+  StatusOr<google::longrunning::Operation>
+  ClearSuggestionFeatureConfig(NoAwaitTag,
+      google::cloud::dialogflow::v2::ClearSuggestionFeatureConfigRequest const& request) override;
 
   future<StatusOr<google::cloud::dialogflow::v2::ConversationProfile>>
   ClearSuggestionFeatureConfig(
       google::longrunning::Operation const& operation) override;
 
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request) override;
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request) override;
 
-  StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request) override;
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request) override;
 
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request) override;
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

@@ -17,16 +17,16 @@
 // source: google/monitoring/metricsscope/v1/metrics_scopes.proto
 
 #include "google/cloud/monitoring/metricsscope/v1/metrics_scopes_connection.h"
-#include "google/cloud/monitoring/metricsscope/v1/internal/metrics_scopes_connection_impl.h"
-#include "google/cloud/monitoring/metricsscope/v1/internal/metrics_scopes_option_defaults.h"
-#include "google/cloud/monitoring/metricsscope/v1/internal/metrics_scopes_stub_factory.h"
-#include "google/cloud/monitoring/metricsscope/v1/internal/metrics_scopes_tracing_connection.h"
-#include "google/cloud/monitoring/metricsscope/v1/metrics_scopes_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/monitoring/metricsscope/v1/internal/metrics_scopes_connection_impl.h"
+#include "google/cloud/monitoring/metricsscope/v1/internal/metrics_scopes_option_defaults.h"
+#include "google/cloud/monitoring/metricsscope/v1/internal/metrics_scopes_stub_factory.h"
+#include "google/cloud/monitoring/metricsscope/v1/internal/metrics_scopes_tracing_connection.h"
+#include "google/cloud/monitoring/metricsscope/v1/metrics_scopes_options.h"
 #include <memory>
 #include <utility>
 
@@ -43,82 +43,74 @@ MetricsScopesConnection::GetMetricsScope(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::monitoring::metricsscope::v1::
-             ListMetricsScopesByMonitoredProjectResponse>
+StatusOr<google::monitoring::metricsscope::v1::ListMetricsScopesByMonitoredProjectResponse>
 MetricsScopesConnection::ListMetricsScopesByMonitoredProject(
-    google::monitoring::metricsscope::v1::
-        ListMetricsScopesByMonitoredProjectRequest const&) {
+    google::monitoring::metricsscope::v1::ListMetricsScopesByMonitoredProjectRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 future<StatusOr<google::monitoring::metricsscope::v1::MonitoredProject>>
 MetricsScopesConnection::CreateMonitoredProject(
-    google::monitoring::metricsscope::v1::
-        CreateMonitoredProjectRequest const&) {
+    google::monitoring::metricsscope::v1::CreateMonitoredProjectRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::monitoring::metricsscope::v1::MonitoredProject>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::monitoring::metricsscope::v1::MonitoredProject>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 MetricsScopesConnection::CreateMonitoredProject(
-    NoAwaitTag, google::monitoring::metricsscope::v1::
-                    CreateMonitoredProjectRequest const&) {
+    NoAwaitTag,
+    google::monitoring::metricsscope::v1::CreateMonitoredProjectRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::monitoring::metricsscope::v1::MonitoredProject>>
 MetricsScopesConnection::CreateMonitoredProject(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::monitoring::metricsscope::v1::MonitoredProject>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::monitoring::metricsscope::v1::MonitoredProject>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::monitoring::metricsscope::v1::OperationMetadata>>
 MetricsScopesConnection::DeleteMonitoredProject(
-    google::monitoring::metricsscope::v1::
-        DeleteMonitoredProjectRequest const&) {
+    google::monitoring::metricsscope::v1::DeleteMonitoredProjectRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::monitoring::metricsscope::v1::OperationMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::monitoring::metricsscope::v1::OperationMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 MetricsScopesConnection::DeleteMonitoredProject(
-    NoAwaitTag, google::monitoring::metricsscope::v1::
-                    DeleteMonitoredProjectRequest const&) {
+    NoAwaitTag,
+    google::monitoring::metricsscope::v1::DeleteMonitoredProjectRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::monitoring::metricsscope::v1::OperationMetadata>>
 MetricsScopesConnection::DeleteMonitoredProject(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::monitoring::metricsscope::v1::OperationMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::monitoring::metricsscope::v1::OperationMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 std::shared_ptr<MetricsScopesConnection> MakeMetricsScopesConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 MetricsScopesPolicyOptionList>(options,
-                                                                __func__);
+      UnifiedCredentialsOptionList,
+      MetricsScopesPolicyOptionList>(options, __func__);
   options = monitoring_metricsscope_v1_internal::MetricsScopesDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
-  auto stub =
-      monitoring_metricsscope_v1_internal::CreateDefaultMetricsScopesStub(
-          std::move(auth), options);
-  return monitoring_metricsscope_v1_internal::
-      MakeMetricsScopesTracingConnection(
-          std::make_shared<
-              monitoring_metricsscope_v1_internal::MetricsScopesConnectionImpl>(
-              std::move(background), std::move(stub), std::move(options)));
+  auto stub = monitoring_metricsscope_v1_internal::CreateDefaultMetricsScopesStub(
+    std::move(auth), options);
+  return monitoring_metricsscope_v1_internal::MakeMetricsScopesTracingConnection(
+      std::make_shared<monitoring_metricsscope_v1_internal::MetricsScopesConnectionImpl>(
+      std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

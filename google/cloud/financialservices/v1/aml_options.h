@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_FINANCIALSERVICES_V1_AML_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_FINANCIALSERVICES_V1_AML_OPTIONS_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/financialservices/v1/aml_connection.h"
 #include "google/cloud/financialservices/v1/aml_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -74,8 +74,10 @@ struct AMLPollingPolicyOption {
  * @ingroup google-cloud-financialservices-options
  */
 using AMLPolicyOptionList =
-    OptionList<AMLRetryPolicyOption, AMLBackoffPolicyOption,
-               AMLPollingPolicyOption, AMLConnectionIdempotencyPolicyOption>;
+    OptionList<AMLRetryPolicyOption,
+               AMLBackoffPolicyOption,
+               AMLPollingPolicyOption,
+               AMLConnectionIdempotencyPolicyOption>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace financialservices_v1

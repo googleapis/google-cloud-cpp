@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SHELL_V1_INTERNAL_CLOUD_SHELL_STUB_FACTORY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SHELL_V1_INTERNAL_CLOUD_SHELL_STUB_FACTORY_H
 
-#include "google/cloud/shell/v1/internal/cloud_shell_stub.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/options.h"
+#include "google/cloud/shell/v1/internal/cloud_shell_stub.h"
 #include "google/cloud/version.h"
 #include <memory>
 

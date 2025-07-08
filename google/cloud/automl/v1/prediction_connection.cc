@@ -47,40 +47,40 @@ future<StatusOr<google::cloud::automl::v1::BatchPredictResult>>
 PredictionServiceConnection::BatchPredict(
     google::cloud::automl::v1::BatchPredictRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::automl::v1::BatchPredictResult>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::automl::v1::BatchPredictResult>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 PredictionServiceConnection::BatchPredict(
-    NoAwaitTag, google::cloud::automl::v1::BatchPredictRequest const&) {
+    NoAwaitTag,
+    google::cloud::automl::v1::BatchPredictRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::automl::v1::BatchPredictResult>>
 PredictionServiceConnection::BatchPredict(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::automl::v1::BatchPredictResult>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::automl::v1::BatchPredictResult>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 std::shared_ptr<PredictionServiceConnection> MakePredictionServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 PredictionServicePolicyOptionList>(options,
-                                                                    __func__);
-  options =
-      automl_v1_internal::PredictionServiceDefaultOptions(std::move(options));
+      UnifiedCredentialsOptionList,
+      PredictionServicePolicyOptionList>(options, __func__);
+  options = automl_v1_internal::PredictionServiceDefaultOptions(
+      std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = automl_v1_internal::CreateDefaultPredictionServiceStub(
-      std::move(auth), options);
+    std::move(auth), options);
   return automl_v1_internal::MakePredictionServiceTracingConnection(
       std::make_shared<automl_v1_internal::PredictionServiceConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options)));
+      std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

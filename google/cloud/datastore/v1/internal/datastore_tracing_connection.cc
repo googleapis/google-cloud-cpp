@@ -34,105 +34,87 @@ DatastoreTracingConnection::DatastoreTracingConnection(
     : child_(std::move(child)) {}
 
 StatusOr<google::datastore::v1::LookupResponse>
-DatastoreTracingConnection::Lookup(
-    google::datastore::v1::LookupRequest const& request) {
+DatastoreTracingConnection::Lookup(google::datastore::v1::LookupRequest const& request) {
   auto span = internal::MakeSpan("datastore_v1::DatastoreConnection::Lookup");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->Lookup(request));
 }
 
 StatusOr<google::datastore::v1::RunQueryResponse>
-DatastoreTracingConnection::RunQuery(
-    google::datastore::v1::RunQueryRequest const& request) {
+DatastoreTracingConnection::RunQuery(google::datastore::v1::RunQueryRequest const& request) {
   auto span = internal::MakeSpan("datastore_v1::DatastoreConnection::RunQuery");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->RunQuery(request));
 }
 
 StatusOr<google::datastore::v1::RunAggregationQueryResponse>
-DatastoreTracingConnection::RunAggregationQuery(
-    google::datastore::v1::RunAggregationQueryRequest const& request) {
-  auto span = internal::MakeSpan(
-      "datastore_v1::DatastoreConnection::RunAggregationQuery");
+DatastoreTracingConnection::RunAggregationQuery(google::datastore::v1::RunAggregationQueryRequest const& request) {
+  auto span = internal::MakeSpan("datastore_v1::DatastoreConnection::RunAggregationQuery");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->RunAggregationQuery(request));
 }
 
 StatusOr<google::datastore::v1::BeginTransactionResponse>
-DatastoreTracingConnection::BeginTransaction(
-    google::datastore::v1::BeginTransactionRequest const& request) {
-  auto span =
-      internal::MakeSpan("datastore_v1::DatastoreConnection::BeginTransaction");
+DatastoreTracingConnection::BeginTransaction(google::datastore::v1::BeginTransactionRequest const& request) {
+  auto span = internal::MakeSpan("datastore_v1::DatastoreConnection::BeginTransaction");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->BeginTransaction(request));
 }
 
 StatusOr<google::datastore::v1::CommitResponse>
-DatastoreTracingConnection::Commit(
-    google::datastore::v1::CommitRequest const& request) {
+DatastoreTracingConnection::Commit(google::datastore::v1::CommitRequest const& request) {
   auto span = internal::MakeSpan("datastore_v1::DatastoreConnection::Commit");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->Commit(request));
 }
 
 StatusOr<google::datastore::v1::RollbackResponse>
-DatastoreTracingConnection::Rollback(
-    google::datastore::v1::RollbackRequest const& request) {
+DatastoreTracingConnection::Rollback(google::datastore::v1::RollbackRequest const& request) {
   auto span = internal::MakeSpan("datastore_v1::DatastoreConnection::Rollback");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->Rollback(request));
 }
 
 StatusOr<google::datastore::v1::AllocateIdsResponse>
-DatastoreTracingConnection::AllocateIds(
-    google::datastore::v1::AllocateIdsRequest const& request) {
-  auto span =
-      internal::MakeSpan("datastore_v1::DatastoreConnection::AllocateIds");
+DatastoreTracingConnection::AllocateIds(google::datastore::v1::AllocateIdsRequest const& request) {
+  auto span = internal::MakeSpan("datastore_v1::DatastoreConnection::AllocateIds");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->AllocateIds(request));
 }
 
 StatusOr<google::datastore::v1::ReserveIdsResponse>
-DatastoreTracingConnection::ReserveIds(
-    google::datastore::v1::ReserveIdsRequest const& request) {
-  auto span =
-      internal::MakeSpan("datastore_v1::DatastoreConnection::ReserveIds");
+DatastoreTracingConnection::ReserveIds(google::datastore::v1::ReserveIdsRequest const& request) {
+  auto span = internal::MakeSpan("datastore_v1::DatastoreConnection::ReserveIds");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->ReserveIds(request));
 }
 
 StreamRange<google::longrunning::Operation>
-DatastoreTracingConnection::ListOperations(
-    google::longrunning::ListOperationsRequest request) {
-  auto span =
-      internal::MakeSpan("datastore_v1::DatastoreConnection::ListOperations");
+DatastoreTracingConnection::ListOperations(google::longrunning::ListOperationsRequest request) {
+  auto span = internal::MakeSpan("datastore_v1::DatastoreConnection::ListOperations");
   internal::OTelScope scope(span);
   auto sr = child_->ListOperations(std::move(request));
   return internal::MakeTracedStreamRange<google::longrunning::Operation>(
-      std::move(span), std::move(sr));
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::longrunning::Operation>
-DatastoreTracingConnection::GetOperation(
-    google::longrunning::GetOperationRequest const& request) {
-  auto span =
-      internal::MakeSpan("datastore_v1::DatastoreConnection::GetOperation");
+DatastoreTracingConnection::GetOperation(google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpan("datastore_v1::DatastoreConnection::GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOperation(request));
 }
 
-Status DatastoreTracingConnection::DeleteOperation(
-    google::longrunning::DeleteOperationRequest const& request) {
-  auto span =
-      internal::MakeSpan("datastore_v1::DatastoreConnection::DeleteOperation");
+Status
+DatastoreTracingConnection::DeleteOperation(google::longrunning::DeleteOperationRequest const& request) {
+  auto span = internal::MakeSpan("datastore_v1::DatastoreConnection::DeleteOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteOperation(request));
 }
 
-Status DatastoreTracingConnection::CancelOperation(
-    google::longrunning::CancelOperationRequest const& request) {
-  auto span =
-      internal::MakeSpan("datastore_v1::DatastoreConnection::CancelOperation");
+Status
+DatastoreTracingConnection::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
+  auto span = internal::MakeSpan("datastore_v1::DatastoreConnection::CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CancelOperation(request));
 }

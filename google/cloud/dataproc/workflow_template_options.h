@@ -28,26 +28,19 @@ namespace cloud {
 namespace dataproc {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use dataproc_v1::WorkflowTemplateServicePollingPolicyOption
-/// directly.
+/// @deprecated Use dataproc_v1::WorkflowTemplateServicePollingPolicyOption directly.
 using ::google::cloud::dataproc_v1::WorkflowTemplateServicePollingPolicyOption;
 
-/// @deprecated Use dataproc_v1::WorkflowTemplateServiceBackoffPolicyOption
-/// directly.
+/// @deprecated Use dataproc_v1::WorkflowTemplateServiceBackoffPolicyOption directly.
 using ::google::cloud::dataproc_v1::WorkflowTemplateServiceBackoffPolicyOption;
 
-/// @deprecated Use
-/// dataproc_v1::WorkflowTemplateServiceConnectionIdempotencyPolicyOption
-/// directly.
-using ::google::cloud::dataproc_v1::
-    WorkflowTemplateServiceConnectionIdempotencyPolicyOption;
+/// @deprecated Use dataproc_v1::WorkflowTemplateServiceConnectionIdempotencyPolicyOption directly.
+using ::google::cloud::dataproc_v1::WorkflowTemplateServiceConnectionIdempotencyPolicyOption;
 
-/// @deprecated Use dataproc_v1::WorkflowTemplateServicePolicyOptionList
-/// directly.
+/// @deprecated Use dataproc_v1::WorkflowTemplateServicePolicyOptionList directly.
 using ::google::cloud::dataproc_v1::WorkflowTemplateServicePolicyOptionList;
 
-/// @deprecated Use dataproc_v1::WorkflowTemplateServiceRetryPolicyOption
-/// directly.
+/// @deprecated Use dataproc_v1::WorkflowTemplateServiceRetryPolicyOption directly.
 using ::google::cloud::dataproc_v1::WorkflowTemplateServiceRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_NETWORKSECURITY_V1_NETWORK_SECURITY_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_NETWORKSECURITY_V1_NETWORK_SECURITY_CLIENT_H
 
-#include "google/cloud/networksecurity/v1/network_security_connection.h"
 #include "google/cloud/future.h"
+#include "google/cloud/networksecurity/v1/network_security_connection.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -66,8 +66,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class NetworkSecurityClient {
  public:
-  explicit NetworkSecurityClient(
-      std::shared_ptr<NetworkSecurityConnection> connection, Options opts = {});
+  explicit NetworkSecurityClient(std::shared_ptr<NetworkSecurityConnection> connection, Options opts = {});
   ~NetworkSecurityClient();
 
   ///@{
@@ -80,12 +79,10 @@ class NetworkSecurityClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(NetworkSecurityClient const& a,
-                         NetworkSecurityClient const& b) {
+  friend bool operator==(NetworkSecurityClient const& a, NetworkSecurityClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(NetworkSecurityClient const& a,
-                         NetworkSecurityClient const& b) {
+  friend bool operator!=(NetworkSecurityClient const& a, NetworkSecurityClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -163,10 +160,7 @@ class NetworkSecurityClient {
   ///
   // clang-format on
   StreamRange<google::cloud::networksecurity::v1::AuthorizationPolicy>
-  ListAuthorizationPolicies(
-      google::cloud::networksecurity::v1::ListAuthorizationPoliciesRequest
-          request,
-      Options opts = {});
+  ListAuthorizationPolicies(google::cloud::networksecurity::v1::ListAuthorizationPoliciesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -222,10 +216,7 @@ class NetworkSecurityClient {
   ///
   // clang-format on
   StatusOr<google::cloud::networksecurity::v1::AuthorizationPolicy>
-  GetAuthorizationPolicy(
-      google::cloud::networksecurity::v1::GetAuthorizationPolicyRequest const&
-          request,
-      Options opts = {});
+  GetAuthorizationPolicy(google::cloud::networksecurity::v1::GetAuthorizationPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -263,11 +254,7 @@ class NetworkSecurityClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networksecurity::v1::AuthorizationPolicy>>
-  CreateAuthorizationPolicy(
-      std::string const& parent,
-      google::cloud::networksecurity::v1::AuthorizationPolicy const&
-          authorization_policy,
-      std::string const& authorization_policy_id, Options opts = {});
+  CreateAuthorizationPolicy(std::string const& parent, google::cloud::networksecurity::v1::AuthorizationPolicy const& authorization_policy, std::string const& authorization_policy_id, Options opts = {});
 
   // clang-format off
   ///
@@ -280,11 +267,8 @@ class NetworkSecurityClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateAuthorizationPolicy(
-      NoAwaitTag, std::string const& parent,
-      google::cloud::networksecurity::v1::AuthorizationPolicy const&
-          authorization_policy,
-      std::string const& authorization_policy_id, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateAuthorizationPolicy(NoAwaitTag, std::string const& parent, google::cloud::networksecurity::v1::AuthorizationPolicy const& authorization_policy, std::string const& authorization_policy_id, Options opts = {});
 
   // clang-format off
   ///
@@ -321,9 +305,7 @@ class NetworkSecurityClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networksecurity::v1::AuthorizationPolicy>>
-  CreateAuthorizationPolicy(google::cloud::networksecurity::v1::
-                                CreateAuthorizationPolicyRequest const& request,
-                            Options opts = {});
+  CreateAuthorizationPolicy(google::cloud::networksecurity::v1::CreateAuthorizationPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -336,11 +318,8 @@ class NetworkSecurityClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateAuthorizationPolicy(
-      NoAwaitTag,
-      google::cloud::networksecurity::v1::
-          CreateAuthorizationPolicyRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateAuthorizationPolicy(NoAwaitTag, google::cloud::networksecurity::v1::CreateAuthorizationPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -352,8 +331,7 @@ class NetworkSecurityClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networksecurity::v1::AuthorizationPolicy>>
-  CreateAuthorizationPolicy(google::longrunning::Operation const& operation,
-                            Options opts = {});
+  CreateAuthorizationPolicy(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -390,10 +368,7 @@ class NetworkSecurityClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networksecurity::v1::AuthorizationPolicy>>
-  UpdateAuthorizationPolicy(
-      google::cloud::networksecurity::v1::AuthorizationPolicy const&
-          authorization_policy,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  UpdateAuthorizationPolicy(google::cloud::networksecurity::v1::AuthorizationPolicy const& authorization_policy, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -406,11 +381,8 @@ class NetworkSecurityClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateAuthorizationPolicy(
-      NoAwaitTag,
-      google::cloud::networksecurity::v1::AuthorizationPolicy const&
-          authorization_policy,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateAuthorizationPolicy(NoAwaitTag, google::cloud::networksecurity::v1::AuthorizationPolicy const& authorization_policy, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -447,9 +419,7 @@ class NetworkSecurityClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networksecurity::v1::AuthorizationPolicy>>
-  UpdateAuthorizationPolicy(google::cloud::networksecurity::v1::
-                                UpdateAuthorizationPolicyRequest const& request,
-                            Options opts = {});
+  UpdateAuthorizationPolicy(google::cloud::networksecurity::v1::UpdateAuthorizationPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -462,11 +432,8 @@ class NetworkSecurityClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateAuthorizationPolicy(
-      NoAwaitTag,
-      google::cloud::networksecurity::v1::
-          UpdateAuthorizationPolicyRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateAuthorizationPolicy(NoAwaitTag, google::cloud::networksecurity::v1::UpdateAuthorizationPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -478,8 +445,7 @@ class NetworkSecurityClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networksecurity::v1::AuthorizationPolicy>>
-  UpdateAuthorizationPolicy(google::longrunning::Operation const& operation,
-                            Options opts = {});
+  UpdateAuthorizationPolicy(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -525,8 +491,8 @@ class NetworkSecurityClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteAuthorizationPolicy(
-      NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteAuthorizationPolicy(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -563,9 +529,7 @@ class NetworkSecurityClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>
-  DeleteAuthorizationPolicy(google::cloud::networksecurity::v1::
-                                DeleteAuthorizationPolicyRequest const& request,
-                            Options opts = {});
+  DeleteAuthorizationPolicy(google::cloud::networksecurity::v1::DeleteAuthorizationPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -578,11 +542,8 @@ class NetworkSecurityClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteAuthorizationPolicy(
-      NoAwaitTag,
-      google::cloud::networksecurity::v1::
-          DeleteAuthorizationPolicyRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteAuthorizationPolicy(NoAwaitTag, google::cloud::networksecurity::v1::DeleteAuthorizationPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -594,8 +555,7 @@ class NetworkSecurityClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>
-  DeleteAuthorizationPolicy(google::longrunning::Operation const& operation,
-                            Options opts = {});
+  DeleteAuthorizationPolicy(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -669,9 +629,7 @@ class NetworkSecurityClient {
   ///
   // clang-format on
   StreamRange<google::cloud::networksecurity::v1::ServerTlsPolicy>
-  ListServerTlsPolicies(
-      google::cloud::networksecurity::v1::ListServerTlsPoliciesRequest request,
-      Options opts = {});
+  ListServerTlsPolicies(google::cloud::networksecurity::v1::ListServerTlsPoliciesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -727,10 +685,7 @@ class NetworkSecurityClient {
   ///
   // clang-format on
   StatusOr<google::cloud::networksecurity::v1::ServerTlsPolicy>
-  GetServerTlsPolicy(
-      google::cloud::networksecurity::v1::GetServerTlsPolicyRequest const&
-          request,
-      Options opts = {});
+  GetServerTlsPolicy(google::cloud::networksecurity::v1::GetServerTlsPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -767,11 +722,7 @@ class NetworkSecurityClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networksecurity::v1::ServerTlsPolicy>>
-  CreateServerTlsPolicy(
-      std::string const& parent,
-      google::cloud::networksecurity::v1::ServerTlsPolicy const&
-          server_tls_policy,
-      std::string const& server_tls_policy_id, Options opts = {});
+  CreateServerTlsPolicy(std::string const& parent, google::cloud::networksecurity::v1::ServerTlsPolicy const& server_tls_policy, std::string const& server_tls_policy_id, Options opts = {});
 
   // clang-format off
   ///
@@ -784,11 +735,8 @@ class NetworkSecurityClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateServerTlsPolicy(
-      NoAwaitTag, std::string const& parent,
-      google::cloud::networksecurity::v1::ServerTlsPolicy const&
-          server_tls_policy,
-      std::string const& server_tls_policy_id, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateServerTlsPolicy(NoAwaitTag, std::string const& parent, google::cloud::networksecurity::v1::ServerTlsPolicy const& server_tls_policy, std::string const& server_tls_policy_id, Options opts = {});
 
   // clang-format off
   ///
@@ -825,10 +773,7 @@ class NetworkSecurityClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networksecurity::v1::ServerTlsPolicy>>
-  CreateServerTlsPolicy(
-      google::cloud::networksecurity::v1::CreateServerTlsPolicyRequest const&
-          request,
-      Options opts = {});
+  CreateServerTlsPolicy(google::cloud::networksecurity::v1::CreateServerTlsPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -841,11 +786,8 @@ class NetworkSecurityClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateServerTlsPolicy(
-      NoAwaitTag,
-      google::cloud::networksecurity::v1::CreateServerTlsPolicyRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateServerTlsPolicy(NoAwaitTag, google::cloud::networksecurity::v1::CreateServerTlsPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -857,8 +799,7 @@ class NetworkSecurityClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networksecurity::v1::ServerTlsPolicy>>
-  CreateServerTlsPolicy(google::longrunning::Operation const& operation,
-                        Options opts = {});
+  CreateServerTlsPolicy(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -896,10 +837,7 @@ class NetworkSecurityClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networksecurity::v1::ServerTlsPolicy>>
-  UpdateServerTlsPolicy(
-      google::cloud::networksecurity::v1::ServerTlsPolicy const&
-          server_tls_policy,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  UpdateServerTlsPolicy(google::cloud::networksecurity::v1::ServerTlsPolicy const& server_tls_policy, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -912,11 +850,8 @@ class NetworkSecurityClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateServerTlsPolicy(
-      NoAwaitTag,
-      google::cloud::networksecurity::v1::ServerTlsPolicy const&
-          server_tls_policy,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateServerTlsPolicy(NoAwaitTag, google::cloud::networksecurity::v1::ServerTlsPolicy const& server_tls_policy, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -953,10 +888,7 @@ class NetworkSecurityClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networksecurity::v1::ServerTlsPolicy>>
-  UpdateServerTlsPolicy(
-      google::cloud::networksecurity::v1::UpdateServerTlsPolicyRequest const&
-          request,
-      Options opts = {});
+  UpdateServerTlsPolicy(google::cloud::networksecurity::v1::UpdateServerTlsPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -969,11 +901,8 @@ class NetworkSecurityClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateServerTlsPolicy(
-      NoAwaitTag,
-      google::cloud::networksecurity::v1::UpdateServerTlsPolicyRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateServerTlsPolicy(NoAwaitTag, google::cloud::networksecurity::v1::UpdateServerTlsPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -985,8 +914,7 @@ class NetworkSecurityClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networksecurity::v1::ServerTlsPolicy>>
-  UpdateServerTlsPolicy(google::longrunning::Operation const& operation,
-                        Options opts = {});
+  UpdateServerTlsPolicy(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1032,8 +960,8 @@ class NetworkSecurityClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteServerTlsPolicy(
-      NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteServerTlsPolicy(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1070,10 +998,7 @@ class NetworkSecurityClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>
-  DeleteServerTlsPolicy(
-      google::cloud::networksecurity::v1::DeleteServerTlsPolicyRequest const&
-          request,
-      Options opts = {});
+  DeleteServerTlsPolicy(google::cloud::networksecurity::v1::DeleteServerTlsPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1086,11 +1011,8 @@ class NetworkSecurityClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteServerTlsPolicy(
-      NoAwaitTag,
-      google::cloud::networksecurity::v1::DeleteServerTlsPolicyRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteServerTlsPolicy(NoAwaitTag, google::cloud::networksecurity::v1::DeleteServerTlsPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1102,8 +1024,7 @@ class NetworkSecurityClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>
-  DeleteServerTlsPolicy(google::longrunning::Operation const& operation,
-                        Options opts = {});
+  DeleteServerTlsPolicy(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1177,9 +1098,7 @@ class NetworkSecurityClient {
   ///
   // clang-format on
   StreamRange<google::cloud::networksecurity::v1::ClientTlsPolicy>
-  ListClientTlsPolicies(
-      google::cloud::networksecurity::v1::ListClientTlsPoliciesRequest request,
-      Options opts = {});
+  ListClientTlsPolicies(google::cloud::networksecurity::v1::ListClientTlsPoliciesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1235,10 +1154,7 @@ class NetworkSecurityClient {
   ///
   // clang-format on
   StatusOr<google::cloud::networksecurity::v1::ClientTlsPolicy>
-  GetClientTlsPolicy(
-      google::cloud::networksecurity::v1::GetClientTlsPolicyRequest const&
-          request,
-      Options opts = {});
+  GetClientTlsPolicy(google::cloud::networksecurity::v1::GetClientTlsPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1275,11 +1191,7 @@ class NetworkSecurityClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networksecurity::v1::ClientTlsPolicy>>
-  CreateClientTlsPolicy(
-      std::string const& parent,
-      google::cloud::networksecurity::v1::ClientTlsPolicy const&
-          client_tls_policy,
-      std::string const& client_tls_policy_id, Options opts = {});
+  CreateClientTlsPolicy(std::string const& parent, google::cloud::networksecurity::v1::ClientTlsPolicy const& client_tls_policy, std::string const& client_tls_policy_id, Options opts = {});
 
   // clang-format off
   ///
@@ -1292,11 +1204,8 @@ class NetworkSecurityClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateClientTlsPolicy(
-      NoAwaitTag, std::string const& parent,
-      google::cloud::networksecurity::v1::ClientTlsPolicy const&
-          client_tls_policy,
-      std::string const& client_tls_policy_id, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateClientTlsPolicy(NoAwaitTag, std::string const& parent, google::cloud::networksecurity::v1::ClientTlsPolicy const& client_tls_policy, std::string const& client_tls_policy_id, Options opts = {});
 
   // clang-format off
   ///
@@ -1333,10 +1242,7 @@ class NetworkSecurityClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networksecurity::v1::ClientTlsPolicy>>
-  CreateClientTlsPolicy(
-      google::cloud::networksecurity::v1::CreateClientTlsPolicyRequest const&
-          request,
-      Options opts = {});
+  CreateClientTlsPolicy(google::cloud::networksecurity::v1::CreateClientTlsPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1349,11 +1255,8 @@ class NetworkSecurityClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateClientTlsPolicy(
-      NoAwaitTag,
-      google::cloud::networksecurity::v1::CreateClientTlsPolicyRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateClientTlsPolicy(NoAwaitTag, google::cloud::networksecurity::v1::CreateClientTlsPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1365,8 +1268,7 @@ class NetworkSecurityClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networksecurity::v1::ClientTlsPolicy>>
-  CreateClientTlsPolicy(google::longrunning::Operation const& operation,
-                        Options opts = {});
+  CreateClientTlsPolicy(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1404,10 +1306,7 @@ class NetworkSecurityClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networksecurity::v1::ClientTlsPolicy>>
-  UpdateClientTlsPolicy(
-      google::cloud::networksecurity::v1::ClientTlsPolicy const&
-          client_tls_policy,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  UpdateClientTlsPolicy(google::cloud::networksecurity::v1::ClientTlsPolicy const& client_tls_policy, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -1420,11 +1319,8 @@ class NetworkSecurityClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateClientTlsPolicy(
-      NoAwaitTag,
-      google::cloud::networksecurity::v1::ClientTlsPolicy const&
-          client_tls_policy,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateClientTlsPolicy(NoAwaitTag, google::cloud::networksecurity::v1::ClientTlsPolicy const& client_tls_policy, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -1461,10 +1357,7 @@ class NetworkSecurityClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networksecurity::v1::ClientTlsPolicy>>
-  UpdateClientTlsPolicy(
-      google::cloud::networksecurity::v1::UpdateClientTlsPolicyRequest const&
-          request,
-      Options opts = {});
+  UpdateClientTlsPolicy(google::cloud::networksecurity::v1::UpdateClientTlsPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1477,11 +1370,8 @@ class NetworkSecurityClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateClientTlsPolicy(
-      NoAwaitTag,
-      google::cloud::networksecurity::v1::UpdateClientTlsPolicyRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateClientTlsPolicy(NoAwaitTag, google::cloud::networksecurity::v1::UpdateClientTlsPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1493,8 +1383,7 @@ class NetworkSecurityClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networksecurity::v1::ClientTlsPolicy>>
-  UpdateClientTlsPolicy(google::longrunning::Operation const& operation,
-                        Options opts = {});
+  UpdateClientTlsPolicy(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1540,8 +1429,8 @@ class NetworkSecurityClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteClientTlsPolicy(
-      NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteClientTlsPolicy(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1578,10 +1467,7 @@ class NetworkSecurityClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>
-  DeleteClientTlsPolicy(
-      google::cloud::networksecurity::v1::DeleteClientTlsPolicyRequest const&
-          request,
-      Options opts = {});
+  DeleteClientTlsPolicy(google::cloud::networksecurity::v1::DeleteClientTlsPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1594,11 +1480,8 @@ class NetworkSecurityClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteClientTlsPolicy(
-      NoAwaitTag,
-      google::cloud::networksecurity::v1::DeleteClientTlsPolicyRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteClientTlsPolicy(NoAwaitTag, google::cloud::networksecurity::v1::DeleteClientTlsPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1610,8 +1493,7 @@ class NetworkSecurityClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>
-  DeleteClientTlsPolicy(google::longrunning::Operation const& operation,
-                        Options opts = {});
+  DeleteClientTlsPolicy(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1649,8 +1531,8 @@ class NetworkSecurityClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request, Options opts = {});
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1679,9 +1561,8 @@ class NetworkSecurityClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1713,8 +1594,8 @@ class NetworkSecurityClient {
   /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L100}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1745,8 +1626,8 @@ class NetworkSecurityClient {
   /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1781,9 +1662,8 @@ class NetworkSecurityClient {
   /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L153}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request,
-      Options opts = {});
+  StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1818,8 +1698,8 @@ class NetworkSecurityClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -1858,8 +1738,8 @@ class NetworkSecurityClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1885,8 +1765,8 @@ class NetworkSecurityClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1917,9 +1797,8 @@ class NetworkSecurityClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1943,7 +1822,8 @@ class NetworkSecurityClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status DeleteOperation(std::string const& name, Options opts = {});
+  Status
+  DeleteOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1972,9 +1852,8 @@ class NetworkSecurityClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request,
-      Options opts = {});
+  Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2008,7 +1887,8 @@ class NetworkSecurityClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(std::string const& name, Options opts = {});
+  Status
+  CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2047,9 +1927,8 @@ class NetworkSecurityClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request,
-      Options opts = {});
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<NetworkSecurityConnection> connection_;

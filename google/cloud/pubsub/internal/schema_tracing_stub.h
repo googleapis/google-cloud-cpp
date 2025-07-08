@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_SCHEMA_TRACING_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_SCHEMA_TRACING_STUB_H
 
-#include "google/cloud/pubsub/internal/schema_stub.h"
 #include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/options.h"
+#include "google/cloud/pubsub/internal/schema_stub.h"
 #include "google/cloud/version.h"
 #include <memory>
 
@@ -39,61 +39,73 @@ class SchemaServiceTracingStub : public SchemaServiceStub {
   explicit SchemaServiceTracingStub(std::shared_ptr<SchemaServiceStub> child);
 
   StatusOr<google::pubsub::v1::Schema> CreateSchema(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::pubsub::v1::CreateSchemaRequest const& request) override;
 
   StatusOr<google::pubsub::v1::Schema> GetSchema(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::pubsub::v1::GetSchemaRequest const& request) override;
 
   StatusOr<google::pubsub::v1::ListSchemasResponse> ListSchemas(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::pubsub::v1::ListSchemasRequest const& request) override;
 
   StatusOr<google::pubsub::v1::ListSchemaRevisionsResponse> ListSchemaRevisions(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::pubsub::v1::ListSchemaRevisionsRequest const& request) override;
 
   StatusOr<google::pubsub::v1::Schema> CommitSchema(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::pubsub::v1::CommitSchemaRequest const& request) override;
 
   StatusOr<google::pubsub::v1::Schema> RollbackSchema(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::pubsub::v1::RollbackSchemaRequest const& request) override;
 
   StatusOr<google::pubsub::v1::Schema> DeleteSchemaRevision(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::pubsub::v1::DeleteSchemaRevisionRequest const& request) override;
 
   Status DeleteSchema(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::pubsub::v1::DeleteSchemaRequest const& request) override;
 
   StatusOr<google::pubsub::v1::ValidateSchemaResponse> ValidateSchema(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::pubsub::v1::ValidateSchemaRequest const& request) override;
 
   StatusOr<google::pubsub::v1::ValidateMessageResponse> ValidateMessage(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::pubsub::v1::ValidateMessageRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
  private:
   std::shared_ptr<SchemaServiceStub> child_;
-  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
-      propagator_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

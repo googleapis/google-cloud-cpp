@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IDS_V1_IDS_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IDS_V1_IDS_OPTIONS_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/ids/v1/ids_connection.h"
 #include "google/cloud/ids/v1/ids_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -74,8 +74,10 @@ struct IDSPollingPolicyOption {
  * @ingroup google-cloud-ids-options
  */
 using IDSPolicyOptionList =
-    OptionList<IDSRetryPolicyOption, IDSBackoffPolicyOption,
-               IDSPollingPolicyOption, IDSConnectionIdempotencyPolicyOption>;
+    OptionList<IDSRetryPolicyOption,
+               IDSBackoffPolicyOption,
+               IDSPollingPolicyOption,
+               IDSConnectionIdempotencyPolicyOption>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace ids_v1

@@ -31,13 +31,12 @@ namespace cloud {
 namespace pubsublite_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class PartitionAssignmentServiceLogging
-    : public PartitionAssignmentServiceStub {
+class PartitionAssignmentServiceLogging : public PartitionAssignmentServiceStub {
  public:
   ~PartitionAssignmentServiceLogging() override = default;
-  PartitionAssignmentServiceLogging(
-      std::shared_ptr<PartitionAssignmentServiceStub> child,
-      TracingOptions tracing_options, std::set<std::string> const& components);
+  PartitionAssignmentServiceLogging(std::shared_ptr<PartitionAssignmentServiceStub> child,
+                       TracingOptions tracing_options,
+                       std::set<std::string> const& components);
 
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::pubsublite::v1::PartitionAssignmentRequest,
@@ -48,19 +47,23 @@ class PartitionAssignmentServiceLogging
       google::cloud::internal::ImmutableOptions options) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status DeleteOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::DeleteOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:

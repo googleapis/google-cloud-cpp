@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ESSENTIALCONTACTS_V1_ESSENTIAL_CONTACTS_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ESSENTIALCONTACTS_V1_ESSENTIAL_CONTACTS_OPTIONS_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/essentialcontacts/v1/essential_contacts_connection.h"
 #include "google/cloud/essentialcontacts/v1/essential_contacts_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -55,8 +55,7 @@ struct EssentialContactsServiceBackoffPolicyOption {
  * @ingroup google-cloud-essentialcontacts-options
  */
 struct EssentialContactsServiceConnectionIdempotencyPolicyOption {
-  using Type =
-      std::shared_ptr<EssentialContactsServiceConnectionIdempotencyPolicy>;
+  using Type = std::shared_ptr<EssentialContactsServiceConnectionIdempotencyPolicy>;
 };
 
 /**

@@ -17,8 +17,8 @@
 // source: google/cloud/compute/regions/v1/regions.proto
 
 #include "google/cloud/compute/regions/v1/internal/regions_rest_connection_impl.h"
-#include "google/cloud/compute/regions/v1/internal/regions_rest_stub_factory.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/compute/regions/v1/internal/regions_rest_stub_factory.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/rest_retry_loop.h"
@@ -35,56 +35,47 @@ RegionsRestConnectionImpl::RegionsRestConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<compute_regions_v1_internal::RegionsRestStub> stub,
     Options options)
-    : background_(std::move(background)),
-      stub_(std::move(stub)),
-      options_(internal::MergeOptions(std::move(options),
-                                      RegionsConnection::options())) {}
+  : background_(std::move(background)), stub_(std::move(stub)),
+    options_(internal::MergeOptions(
+        std::move(options),
+        RegionsConnection::options())) {}
 
 StatusOr<google::cloud::cpp::compute::v1::Region>
-RegionsRestConnectionImpl::GetRegion(
-    google::cloud::cpp::compute::regions::v1::GetRegionRequest const& request) {
+RegionsRestConnectionImpl::GetRegion(google::cloud::cpp::compute::regions::v1::GetRegionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetRegion(request),
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::cloud::cpp::compute::regions::v1::GetRegionRequest const&
-                 request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options, google::cloud::cpp::compute::regions::v1::GetRegionRequest const& request) {
         return stub_->GetRegion(rest_context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::Region>
-RegionsRestConnectionImpl::ListRegions(
-    google::cloud::cpp::compute::regions::v1::ListRegionsRequest request) {
+RegionsRestConnectionImpl::ListRegions(google::cloud::cpp::compute::regions::v1::ListRegionsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListRegions(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::cpp::compute::v1::Region>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::cpp::compute::v1::Region>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<compute_regions_v1::RegionsRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<compute_regions_v1::RegionsRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::cpp::compute::regions::v1::ListRegionsRequest const&
-              r) {
+          Options const& options, google::cloud::cpp::compute::regions::v1::ListRegionsRequest const& r) {
         return google::cloud::rest_internal::RestRetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](rest_internal::RestContext& rest_context,
                    Options const& options,
-                   google::cloud::cpp::compute::regions::v1::
-                       ListRegionsRequest const& request) {
+                   google::cloud::cpp::compute::regions::v1::ListRegionsRequest const& request) {
               return stub->ListRegions(rest_context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::cpp::compute::v1::RegionList r) {
-        std::vector<google::cloud::cpp::compute::v1::Region> result(
-            r.items().size());
+        std::vector<google::cloud::cpp::compute::v1::Region> result(r.items().size());
         auto& messages = *r.mutable_items();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;

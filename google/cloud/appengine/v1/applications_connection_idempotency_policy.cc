@@ -26,36 +26,31 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-ApplicationsConnectionIdempotencyPolicy::
-    ~ApplicationsConnectionIdempotencyPolicy() = default;
+ApplicationsConnectionIdempotencyPolicy::~ApplicationsConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<ApplicationsConnectionIdempotencyPolicy>
 ApplicationsConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<ApplicationsConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency ApplicationsConnectionIdempotencyPolicy::GetApplication(
-    google::appengine::v1::GetApplicationRequest const&) {
+Idempotency ApplicationsConnectionIdempotencyPolicy::GetApplication(google::appengine::v1::GetApplicationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ApplicationsConnectionIdempotencyPolicy::CreateApplication(
-    google::appengine::v1::CreateApplicationRequest const&) {
+Idempotency ApplicationsConnectionIdempotencyPolicy::CreateApplication(google::appengine::v1::CreateApplicationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ApplicationsConnectionIdempotencyPolicy::UpdateApplication(
-    google::appengine::v1::UpdateApplicationRequest const&) {
+Idempotency ApplicationsConnectionIdempotencyPolicy::UpdateApplication(google::appengine::v1::UpdateApplicationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ApplicationsConnectionIdempotencyPolicy::RepairApplication(
-    google::appengine::v1::RepairApplicationRequest const&) {
+Idempotency ApplicationsConnectionIdempotencyPolicy::RepairApplication(google::appengine::v1::RepairApplicationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<ApplicationsConnectionIdempotencyPolicy>
-MakeDefaultApplicationsConnectionIdempotencyPolicy() {
+    MakeDefaultApplicationsConnectionIdempotencyPolicy() {
   return std::make_unique<ApplicationsConnectionIdempotencyPolicy>();
 }
 

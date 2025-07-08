@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGIONS_V1_REGIONS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGIONS_V1_REGIONS_CONNECTION_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/regions/v1/internal/regions_retry_traits.h"
 #include "google/cloud/compute/regions/v1/regions_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -62,14 +62,14 @@ class RegionsLimitedErrorCountRetryPolicy : public RegionsRetryPolicy {
    *     @p maximum_failures == 0.
    */
   explicit RegionsLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   RegionsLimitedErrorCountRetryPolicy(
       RegionsLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : RegionsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : RegionsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   RegionsLimitedErrorCountRetryPolicy(
       RegionsLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : RegionsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : RegionsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -89,9 +89,7 @@ class RegionsLimitedErrorCountRetryPolicy : public RegionsRetryPolicy {
   using BaseType = RegionsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      compute_regions_v1_internal::RegionsRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<compute_regions_v1_internal::RegionsRetryTraits> impl_;
 };
 
 /**
@@ -129,13 +127,12 @@ class RegionsLimitedTimeRetryPolicy : public RegionsRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit RegionsLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
   RegionsLimitedTimeRetryPolicy(RegionsLimitedTimeRetryPolicy&& rhs) noexcept
-      : RegionsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  RegionsLimitedTimeRetryPolicy(
-      RegionsLimitedTimeRetryPolicy const& rhs) noexcept
-      : RegionsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+    : RegionsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  RegionsLimitedTimeRetryPolicy(RegionsLimitedTimeRetryPolicy const& rhs) noexcept
+    : RegionsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -149,16 +146,15 @@ class RegionsLimitedTimeRetryPolicy : public RegionsRetryPolicy {
     return impl_.IsPermanentFailure(status);
   }
   std::unique_ptr<RegionsRetryPolicy> clone() const override {
-    return std::make_unique<RegionsLimitedTimeRetryPolicy>(maximum_duration());
+    return std::make_unique<RegionsLimitedTimeRetryPolicy>(
+        maximum_duration());
   }
 
   // This is provided only for backwards compatibility.
   using BaseType = RegionsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      compute_regions_v1_internal::RegionsRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<compute_regions_v1_internal::RegionsRetryTraits> impl_;
 };
 
 /**
@@ -179,12 +175,11 @@ class RegionsConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Region> GetRegion(
-      google::cloud::cpp::compute::regions::v1::GetRegionRequest const&
-          request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Region>
+  GetRegion(google::cloud::cpp::compute::regions::v1::GetRegionRequest const& request);
 
-  virtual StreamRange<google::cloud::cpp::compute::v1::Region> ListRegions(
-      google::cloud::cpp::compute::regions::v1::ListRegionsRequest request);
+  virtual StreamRange<google::cloud::cpp::compute::v1::Region>
+  ListRegions(google::cloud::cpp::compute::regions::v1::ListRegionsRequest request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

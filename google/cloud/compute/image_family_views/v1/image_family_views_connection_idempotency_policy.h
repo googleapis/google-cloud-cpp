@@ -34,16 +34,14 @@ class ImageFamilyViewsConnectionIdempotencyPolicy {
   virtual ~ImageFamilyViewsConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<ImageFamilyViewsConnectionIdempotencyPolicy> clone()
-      const;
+  virtual std::unique_ptr<ImageFamilyViewsConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency GetImageFamilyView(
-      google::cloud::cpp::compute::image_family_views::v1::
-          GetImageFamilyViewRequest const& request);
+  virtual google::cloud::Idempotency
+  GetImageFamilyView(google::cloud::cpp::compute::image_family_views::v1::GetImageFamilyViewRequest const& request);
 };
 
 std::unique_ptr<ImageFamilyViewsConnectionIdempotencyPolicy>
-MakeDefaultImageFamilyViewsConnectionIdempotencyPolicy();
+    MakeDefaultImageFamilyViewsConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_image_family_views_v1

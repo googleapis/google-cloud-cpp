@@ -36,40 +36,33 @@ class PolicyTagManagerSerializationTracingConnection
   ~PolicyTagManagerSerializationTracingConnection() override = default;
 
   explicit PolicyTagManagerSerializationTracingConnection(
-      std::shared_ptr<datacatalog_v1::PolicyTagManagerSerializationConnection>
-          child);
+    std::shared_ptr<datacatalog_v1::PolicyTagManagerSerializationConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::datacatalog::v1::Taxonomy> ReplaceTaxonomy(
-      google::cloud::datacatalog::v1::ReplaceTaxonomyRequest const& request)
-      override;
+  StatusOr<google::cloud::datacatalog::v1::Taxonomy>
+  ReplaceTaxonomy(google::cloud::datacatalog::v1::ReplaceTaxonomyRequest const& request) override;
 
   StatusOr<google::cloud::datacatalog::v1::ImportTaxonomiesResponse>
-  ImportTaxonomies(
-      google::cloud::datacatalog::v1::ImportTaxonomiesRequest const& request)
-      override;
+  ImportTaxonomies(google::cloud::datacatalog::v1::ImportTaxonomiesRequest const& request) override;
 
   StatusOr<google::cloud::datacatalog::v1::ExportTaxonomiesResponse>
-  ExportTaxonomies(
-      google::cloud::datacatalog::v1::ExportTaxonomiesRequest const& request)
-      override;
+  ExportTaxonomies(google::cloud::datacatalog::v1::ExportTaxonomiesRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request) override;
 
-  Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request) override;
+  Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request) override;
 
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request) override;
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  std::shared_ptr<datacatalog_v1::PolicyTagManagerSerializationConnection>
-      child_;
+  std::shared_ptr<datacatalog_v1::PolicyTagManagerSerializationConnection> child_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -82,8 +75,7 @@ class PolicyTagManagerSerializationTracingConnection
  */
 std::shared_ptr<datacatalog_v1::PolicyTagManagerSerializationConnection>
 MakePolicyTagManagerSerializationTracingConnection(
-    std::shared_ptr<datacatalog_v1::PolicyTagManagerSerializationConnection>
-        conn);
+    std::shared_ptr<datacatalog_v1::PolicyTagManagerSerializationConnection> conn);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace datacatalog_v1_internal

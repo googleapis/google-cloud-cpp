@@ -17,11 +17,11 @@
 // source: google/cloud/compute/license_codes/v1/license_codes.proto
 
 #include "google/cloud/compute/license_codes/v1/internal/license_codes_rest_metadata_decorator.h"
+#include "absl/strings/str_format.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/internal/rest_set_metadata.h"
 #include "google/cloud/status_or.h"
-#include "absl/strings/str_format.h"
 #include <memory>
 #include <utility>
 
@@ -31,7 +31,8 @@ namespace compute_license_codes_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 LicenseCodesRestMetadata::LicenseCodesRestMetadata(
-    std::shared_ptr<LicenseCodesRestStub> child, std::string api_client_header)
+    std::shared_ptr<LicenseCodesRestStub> child,
+    std::string api_client_header)
     : child_(std::move(child)),
       api_client_header_(
           api_client_header.empty()
@@ -40,27 +41,25 @@ LicenseCodesRestMetadata::LicenseCodesRestMetadata(
 
 StatusOr<google::cloud::cpp::compute::v1::LicenseCode>
 LicenseCodesRestMetadata::GetLicenseCode(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::license_codes::v1::GetLicenseCodeRequest const&
-        request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::license_codes::v1::GetLicenseCodeRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->GetLicenseCode(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
 LicenseCodesRestMetadata::TestIamPermissions(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::license_codes::v1::
-        TestIamPermissionsRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::license_codes::v1::TestIamPermissionsRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->TestIamPermissions(rest_context, options, request);
 }
 
 void LicenseCodesRestMetadata::SetMetadata(
-    rest_internal::RestContext& rest_context, Options const& options,
-    std::vector<std::string> const& params) {
-  google::cloud::rest_internal::SetMetadata(rest_context, options, params,
-                                            api_client_header_);
+      rest_internal::RestContext& rest_context,
+      Options const& options, std::vector<std::string> const& params) {
+  google::cloud::rest_internal::SetMetadata(
+      rest_context, options, params, api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

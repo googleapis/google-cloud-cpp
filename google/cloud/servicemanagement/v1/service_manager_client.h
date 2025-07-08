@@ -19,11 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SERVICEMANAGEMENT_V1_SERVICE_MANAGER_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SERVICEMANAGEMENT_V1_SERVICE_MANAGER_CLIENT_H
 
-#include "google/cloud/servicemanagement/v1/service_manager_connection.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
+#include "google/cloud/servicemanagement/v1/service_manager_connection.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
@@ -64,8 +64,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class ServiceManagerClient {
  public:
-  explicit ServiceManagerClient(
-      std::shared_ptr<ServiceManagerConnection> connection, Options opts = {});
+  explicit ServiceManagerClient(std::shared_ptr<ServiceManagerConnection> connection, Options opts = {});
   ~ServiceManagerClient();
 
   ///@{
@@ -78,12 +77,10 @@ class ServiceManagerClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(ServiceManagerClient const& a,
-                         ServiceManagerClient const& b) {
+  friend bool operator==(ServiceManagerClient const& a, ServiceManagerClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(ServiceManagerClient const& a,
-                         ServiceManagerClient const& b) {
+  friend bool operator!=(ServiceManagerClient const& a, ServiceManagerClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -128,9 +125,8 @@ class ServiceManagerClient {
   /// [google.api.servicemanagement.v1.ManagedService]: @googleapis_reference_link{google/api/servicemanagement/v1/resources.proto#L34}
   ///
   // clang-format on
-  StreamRange<google::api::servicemanagement::v1::ManagedService> ListServices(
-      google::api::servicemanagement::v1::ListServicesRequest request,
-      Options opts = {});
+  StreamRange<google::api::servicemanagement::v1::ManagedService>
+  ListServices(google::api::servicemanagement::v1::ListServicesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -156,8 +152,8 @@ class ServiceManagerClient {
   /// [google.api.servicemanagement.v1.ManagedService]: @googleapis_reference_link{google/api/servicemanagement/v1/resources.proto#L34}
   ///
   // clang-format on
-  StatusOr<google::api::servicemanagement::v1::ManagedService> GetService(
-      std::string const& service_name, Options opts = {});
+  StatusOr<google::api::servicemanagement::v1::ManagedService>
+  GetService(std::string const& service_name, Options opts = {});
 
   // clang-format off
   ///
@@ -187,9 +183,8 @@ class ServiceManagerClient {
   /// [google.api.servicemanagement.v1.ManagedService]: @googleapis_reference_link{google/api/servicemanagement/v1/resources.proto#L34}
   ///
   // clang-format on
-  StatusOr<google::api::servicemanagement::v1::ManagedService> GetService(
-      google::api::servicemanagement::v1::GetServiceRequest const& request,
-      Options opts = {});
+  StatusOr<google::api::servicemanagement::v1::ManagedService>
+  GetService(google::api::servicemanagement::v1::GetServiceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -231,9 +226,7 @@ class ServiceManagerClient {
   ///
   // clang-format on
   future<StatusOr<google::api::servicemanagement::v1::ManagedService>>
-  CreateService(
-      google::api::servicemanagement::v1::ManagedService const& service,
-      Options opts = {});
+  CreateService(google::api::servicemanagement::v1::ManagedService const& service, Options opts = {});
 
   // clang-format off
   ///
@@ -246,10 +239,8 @@ class ServiceManagerClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateService(
-      NoAwaitTag,
-      google::api::servicemanagement::v1::ManagedService const& service,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateService(NoAwaitTag, google::api::servicemanagement::v1::ManagedService const& service, Options opts = {});
 
   // clang-format off
   ///
@@ -296,9 +287,7 @@ class ServiceManagerClient {
   ///
   // clang-format on
   future<StatusOr<google::api::servicemanagement::v1::ManagedService>>
-  CreateService(
-      google::api::servicemanagement::v1::CreateServiceRequest const& request,
-      Options opts = {});
+  CreateService(google::api::servicemanagement::v1::CreateServiceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -311,10 +300,8 @@ class ServiceManagerClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateService(
-      NoAwaitTag,
-      google::api::servicemanagement::v1::CreateServiceRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateService(NoAwaitTag, google::api::servicemanagement::v1::CreateServiceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -326,8 +313,7 @@ class ServiceManagerClient {
   ///
   // clang-format on
   future<StatusOr<google::api::servicemanagement::v1::ManagedService>>
-  CreateService(google::longrunning::Operation const& operation,
-                Options opts = {});
+  CreateService(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -382,8 +368,8 @@ class ServiceManagerClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteService(
-      NoAwaitTag, std::string const& service_name, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteService(NoAwaitTag, std::string const& service_name, Options opts = {});
 
   // clang-format off
   ///
@@ -428,9 +414,7 @@ class ServiceManagerClient {
   ///
   // clang-format on
   future<StatusOr<google::api::servicemanagement::v1::OperationMetadata>>
-  DeleteService(
-      google::api::servicemanagement::v1::DeleteServiceRequest const& request,
-      Options opts = {});
+  DeleteService(google::api::servicemanagement::v1::DeleteServiceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -443,10 +427,8 @@ class ServiceManagerClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteService(
-      NoAwaitTag,
-      google::api::servicemanagement::v1::DeleteServiceRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteService(NoAwaitTag, google::api::servicemanagement::v1::DeleteServiceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -458,8 +440,7 @@ class ServiceManagerClient {
   ///
   // clang-format on
   future<StatusOr<google::api::servicemanagement::v1::OperationMetadata>>
-  DeleteService(google::longrunning::Operation const& operation,
-                Options opts = {});
+  DeleteService(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -511,8 +492,8 @@ class ServiceManagerClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UndeleteService(
-      NoAwaitTag, std::string const& service_name, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UndeleteService(NoAwaitTag, std::string const& service_name, Options opts = {});
 
   // clang-format off
   ///
@@ -554,9 +535,7 @@ class ServiceManagerClient {
   ///
   // clang-format on
   future<StatusOr<google::api::servicemanagement::v1::UndeleteServiceResponse>>
-  UndeleteService(
-      google::api::servicemanagement::v1::UndeleteServiceRequest const& request,
-      Options opts = {});
+  UndeleteService(google::api::servicemanagement::v1::UndeleteServiceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -569,10 +548,8 @@ class ServiceManagerClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UndeleteService(
-      NoAwaitTag,
-      google::api::servicemanagement::v1::UndeleteServiceRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UndeleteService(NoAwaitTag, google::api::servicemanagement::v1::UndeleteServiceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -584,8 +561,7 @@ class ServiceManagerClient {
   ///
   // clang-format on
   future<StatusOr<google::api::servicemanagement::v1::UndeleteServiceResponse>>
-  UndeleteService(google::longrunning::Operation const& operation,
-                  Options opts = {});
+  UndeleteService(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -621,8 +597,8 @@ class ServiceManagerClient {
   /// [google.api.servicemanagement.v1.ListServiceConfigsRequest]: @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L356}
   ///
   // clang-format on
-  StreamRange<google::api::Service> ListServiceConfigs(
-      std::string const& service_name, Options opts = {});
+  StreamRange<google::api::Service>
+  ListServiceConfigs(std::string const& service_name, Options opts = {});
 
   // clang-format off
   ///
@@ -661,9 +637,8 @@ class ServiceManagerClient {
   /// [google.api.servicemanagement.v1.ListServiceConfigsRequest]: @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L356}
   ///
   // clang-format on
-  StreamRange<google::api::Service> ListServiceConfigs(
-      google::api::servicemanagement::v1::ListServiceConfigsRequest request,
-      Options opts = {});
+  StreamRange<google::api::Service>
+  ListServiceConfigs(google::api::servicemanagement::v1::ListServiceConfigsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -695,11 +670,8 @@ class ServiceManagerClient {
   /// [google.api.servicemanagement.v1.GetServiceConfigRequest]: @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L327}
   ///
   // clang-format on
-  StatusOr<google::api::Service> GetServiceConfig(
-      std::string const& service_name, std::string const& config_id,
-      google::api::servicemanagement::v1::GetServiceConfigRequest::ConfigView
-          view,
-      Options opts = {});
+  StatusOr<google::api::Service>
+  GetServiceConfig(std::string const& service_name, std::string const& config_id, google::api::servicemanagement::v1::GetServiceConfigRequest::ConfigView view, Options opts = {});
 
   // clang-format off
   ///
@@ -728,10 +700,8 @@ class ServiceManagerClient {
   /// [google.api.servicemanagement.v1.GetServiceConfigRequest]: @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L327}
   ///
   // clang-format on
-  StatusOr<google::api::Service> GetServiceConfig(
-      google::api::servicemanagement::v1::GetServiceConfigRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::api::Service>
+  GetServiceConfig(google::api::servicemanagement::v1::GetServiceConfigRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -766,9 +736,8 @@ class ServiceManagerClient {
   /// [google.api.servicemanagement.v1.ServiceManager.CreateServiceRollout]: @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L227}
   ///
   // clang-format on
-  StatusOr<google::api::Service> CreateServiceConfig(
-      std::string const& service_name,
-      google::api::Service const& service_config, Options opts = {});
+  StatusOr<google::api::Service>
+  CreateServiceConfig(std::string const& service_name, google::api::Service const& service_config, Options opts = {});
 
   // clang-format off
   ///
@@ -805,10 +774,8 @@ class ServiceManagerClient {
   /// [google.api.servicemanagement.v1.ServiceManager.CreateServiceRollout]: @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L227}
   ///
   // clang-format on
-  StatusOr<google::api::Service> CreateServiceConfig(
-      google::api::servicemanagement::v1::CreateServiceConfigRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::api::Service>
+  CreateServiceConfig(google::api::servicemanagement::v1::CreateServiceConfigRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -859,12 +826,8 @@ class ServiceManagerClient {
   /// [google.api.servicemanagement.v1.SubmitConfigSourceResponse]: @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L408}
   ///
   // clang-format on
-  future<
-      StatusOr<google::api::servicemanagement::v1::SubmitConfigSourceResponse>>
-  SubmitConfigSource(
-      std::string const& service_name,
-      google::api::servicemanagement::v1::ConfigSource const& config_source,
-      bool validate_only, Options opts = {});
+  future<StatusOr<google::api::servicemanagement::v1::SubmitConfigSourceResponse>>
+  SubmitConfigSource(std::string const& service_name, google::api::servicemanagement::v1::ConfigSource const& config_source, bool validate_only, Options opts = {});
 
   // clang-format off
   ///
@@ -877,10 +840,8 @@ class ServiceManagerClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> SubmitConfigSource(
-      NoAwaitTag, std::string const& service_name,
-      google::api::servicemanagement::v1::ConfigSource const& config_source,
-      bool validate_only, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  SubmitConfigSource(NoAwaitTag, std::string const& service_name, google::api::servicemanagement::v1::ConfigSource const& config_source, bool validate_only, Options opts = {});
 
   // clang-format off
   ///
@@ -930,12 +891,8 @@ class ServiceManagerClient {
   /// [google.api.servicemanagement.v1.SubmitConfigSourceResponse]: @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L408}
   ///
   // clang-format on
-  future<
-      StatusOr<google::api::servicemanagement::v1::SubmitConfigSourceResponse>>
-  SubmitConfigSource(
-      google::api::servicemanagement::v1::SubmitConfigSourceRequest const&
-          request,
-      Options opts = {});
+  future<StatusOr<google::api::servicemanagement::v1::SubmitConfigSourceResponse>>
+  SubmitConfigSource(google::api::servicemanagement::v1::SubmitConfigSourceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -948,11 +905,8 @@ class ServiceManagerClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> SubmitConfigSource(
-      NoAwaitTag,
-      google::api::servicemanagement::v1::SubmitConfigSourceRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  SubmitConfigSource(NoAwaitTag, google::api::servicemanagement::v1::SubmitConfigSourceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -963,10 +917,8 @@ class ServiceManagerClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<
-      StatusOr<google::api::servicemanagement::v1::SubmitConfigSourceResponse>>
-  SubmitConfigSource(google::longrunning::Operation const& operation,
-                     Options opts = {});
+  future<StatusOr<google::api::servicemanagement::v1::SubmitConfigSourceResponse>>
+  SubmitConfigSource(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1012,9 +964,8 @@ class ServiceManagerClient {
   /// [google.api.servicemanagement.v1.Rollout]: @googleapis_reference_link{google/api/servicemanagement/v1/resources.proto#L190}
   ///
   // clang-format on
-  StreamRange<google::api::servicemanagement::v1::Rollout> ListServiceRollouts(
-      std::string const& service_name, std::string const& filter,
-      Options opts = {});
+  StreamRange<google::api::servicemanagement::v1::Rollout>
+  ListServiceRollouts(std::string const& service_name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -1053,9 +1004,8 @@ class ServiceManagerClient {
   /// [google.api.servicemanagement.v1.Rollout]: @googleapis_reference_link{google/api/servicemanagement/v1/resources.proto#L190}
   ///
   // clang-format on
-  StreamRange<google::api::servicemanagement::v1::Rollout> ListServiceRollouts(
-      google::api::servicemanagement::v1::ListServiceRolloutsRequest request,
-      Options opts = {});
+  StreamRange<google::api::servicemanagement::v1::Rollout>
+  ListServiceRollouts(google::api::servicemanagement::v1::ListServiceRolloutsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1083,9 +1033,8 @@ class ServiceManagerClient {
   /// [google.api.servicemanagement.v1.Rollout]: @googleapis_reference_link{google/api/servicemanagement/v1/resources.proto#L190}
   ///
   // clang-format on
-  StatusOr<google::api::servicemanagement::v1::Rollout> GetServiceRollout(
-      std::string const& service_name, std::string const& rollout_id,
-      Options opts = {});
+  StatusOr<google::api::servicemanagement::v1::Rollout>
+  GetServiceRollout(std::string const& service_name, std::string const& rollout_id, Options opts = {});
 
   // clang-format off
   ///
@@ -1115,10 +1064,8 @@ class ServiceManagerClient {
   /// [google.api.servicemanagement.v1.Rollout]: @googleapis_reference_link{google/api/servicemanagement/v1/resources.proto#L190}
   ///
   // clang-format on
-  StatusOr<google::api::servicemanagement::v1::Rollout> GetServiceRollout(
-      google::api::servicemanagement::v1::GetServiceRolloutRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::api::servicemanagement::v1::Rollout>
+  GetServiceRollout(google::api::servicemanagement::v1::GetServiceRolloutRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1166,10 +1113,7 @@ class ServiceManagerClient {
   ///
   // clang-format on
   future<StatusOr<google::api::servicemanagement::v1::Rollout>>
-  CreateServiceRollout(
-      std::string const& service_name,
-      google::api::servicemanagement::v1::Rollout const& rollout,
-      Options opts = {});
+  CreateServiceRollout(std::string const& service_name, google::api::servicemanagement::v1::Rollout const& rollout, Options opts = {});
 
   // clang-format off
   ///
@@ -1182,10 +1126,8 @@ class ServiceManagerClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateServiceRollout(
-      NoAwaitTag, std::string const& service_name,
-      google::api::servicemanagement::v1::Rollout const& rollout,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateServiceRollout(NoAwaitTag, std::string const& service_name, google::api::servicemanagement::v1::Rollout const& rollout, Options opts = {});
 
   // clang-format off
   ///
@@ -1235,10 +1177,7 @@ class ServiceManagerClient {
   ///
   // clang-format on
   future<StatusOr<google::api::servicemanagement::v1::Rollout>>
-  CreateServiceRollout(
-      google::api::servicemanagement::v1::CreateServiceRolloutRequest const&
-          request,
-      Options opts = {});
+  CreateServiceRollout(google::api::servicemanagement::v1::CreateServiceRolloutRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1251,11 +1190,8 @@ class ServiceManagerClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateServiceRollout(
-      NoAwaitTag,
-      google::api::servicemanagement::v1::CreateServiceRolloutRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateServiceRollout(NoAwaitTag, google::api::servicemanagement::v1::CreateServiceRolloutRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1267,8 +1203,7 @@ class ServiceManagerClient {
   ///
   // clang-format on
   future<StatusOr<google::api::servicemanagement::v1::Rollout>>
-  CreateServiceRollout(google::longrunning::Operation const& operation,
-                       Options opts = {});
+  CreateServiceRollout(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1315,9 +1250,7 @@ class ServiceManagerClient {
   ///
   // clang-format on
   StatusOr<google::api::servicemanagement::v1::GenerateConfigReportResponse>
-  GenerateConfigReport(google::protobuf::Any const& new_config,
-                       google::protobuf::Any const& old_config,
-                       Options opts = {});
+  GenerateConfigReport(google::protobuf::Any const& new_config, google::protobuf::Any const& old_config, Options opts = {});
 
   // clang-format off
   ///
@@ -1357,10 +1290,7 @@ class ServiceManagerClient {
   ///
   // clang-format on
   StatusOr<google::api::servicemanagement::v1::GenerateConfigReportResponse>
-  GenerateConfigReport(
-      google::api::servicemanagement::v1::GenerateConfigReportRequest const&
-          request,
-      Options opts = {});
+  GenerateConfigReport(google::api::servicemanagement::v1::GenerateConfigReportRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1392,8 +1322,8 @@ class ServiceManagerClient {
   /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L100}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1424,8 +1354,8 @@ class ServiceManagerClient {
   /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1460,9 +1390,8 @@ class ServiceManagerClient {
   /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L153}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request,
-      Options opts = {});
+  StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1497,8 +1426,8 @@ class ServiceManagerClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -1537,8 +1466,8 @@ class ServiceManagerClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
 
  private:
   std::shared_ptr<ServiceManagerConnection> connection_;

@@ -34,48 +34,38 @@ class NetworkAttachmentsConnectionIdempotencyPolicy {
   virtual ~NetworkAttachmentsConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<NetworkAttachmentsConnectionIdempotencyPolicy> clone()
-      const;
+  virtual std::unique_ptr<NetworkAttachmentsConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency AggregatedListNetworkAttachments(
-      google::cloud::cpp::compute::network_attachments::v1::
-          AggregatedListNetworkAttachmentsRequest request);
+  virtual google::cloud::Idempotency
+  AggregatedListNetworkAttachments(google::cloud::cpp::compute::network_attachments::v1::AggregatedListNetworkAttachmentsRequest request);
 
-  virtual google::cloud::Idempotency DeleteNetworkAttachment(
-      google::cloud::cpp::compute::network_attachments::v1::
-          DeleteNetworkAttachmentRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteNetworkAttachment(google::cloud::cpp::compute::network_attachments::v1::DeleteNetworkAttachmentRequest const& request);
 
-  virtual google::cloud::Idempotency GetNetworkAttachment(
-      google::cloud::cpp::compute::network_attachments::v1::
-          GetNetworkAttachmentRequest const& request);
+  virtual google::cloud::Idempotency
+  GetNetworkAttachment(google::cloud::cpp::compute::network_attachments::v1::GetNetworkAttachmentRequest const& request);
 
-  virtual google::cloud::Idempotency GetIamPolicy(
-      google::cloud::cpp::compute::network_attachments::v1::
-          GetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency
+  GetIamPolicy(google::cloud::cpp::compute::network_attachments::v1::GetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency InsertNetworkAttachment(
-      google::cloud::cpp::compute::network_attachments::v1::
-          InsertNetworkAttachmentRequest const& request);
+  virtual google::cloud::Idempotency
+  InsertNetworkAttachment(google::cloud::cpp::compute::network_attachments::v1::InsertNetworkAttachmentRequest const& request);
 
-  virtual google::cloud::Idempotency ListNetworkAttachments(
-      google::cloud::cpp::compute::network_attachments::v1::
-          ListNetworkAttachmentsRequest request);
+  virtual google::cloud::Idempotency
+  ListNetworkAttachments(google::cloud::cpp::compute::network_attachments::v1::ListNetworkAttachmentsRequest request);
 
-  virtual google::cloud::Idempotency PatchNetworkAttachment(
-      google::cloud::cpp::compute::network_attachments::v1::
-          PatchNetworkAttachmentRequest const& request);
+  virtual google::cloud::Idempotency
+  PatchNetworkAttachment(google::cloud::cpp::compute::network_attachments::v1::PatchNetworkAttachmentRequest const& request);
 
-  virtual google::cloud::Idempotency SetIamPolicy(
-      google::cloud::cpp::compute::network_attachments::v1::
-          SetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency
+  SetIamPolicy(google::cloud::cpp::compute::network_attachments::v1::SetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency TestIamPermissions(
-      google::cloud::cpp::compute::network_attachments::v1::
-          TestIamPermissionsRequest const& request);
+  virtual google::cloud::Idempotency
+  TestIamPermissions(google::cloud::cpp::compute::network_attachments::v1::TestIamPermissionsRequest const& request);
 };
 
 std::unique_ptr<NetworkAttachmentsConnectionIdempotencyPolicy>
-MakeDefaultNetworkAttachmentsConnectionIdempotencyPolicy();
+    MakeDefaultNetworkAttachmentsConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_network_attachments_v1

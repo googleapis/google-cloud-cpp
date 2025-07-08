@@ -26,46 +26,39 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-CloudQuotasConnectionIdempotencyPolicy::
-    ~CloudQuotasConnectionIdempotencyPolicy() = default;
+CloudQuotasConnectionIdempotencyPolicy::~CloudQuotasConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<CloudQuotasConnectionIdempotencyPolicy>
 CloudQuotasConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<CloudQuotasConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency CloudQuotasConnectionIdempotencyPolicy::ListQuotaInfos(
-    google::api::cloudquotas::v1::ListQuotaInfosRequest) {  // NOLINT
+Idempotency CloudQuotasConnectionIdempotencyPolicy::ListQuotaInfos(google::api::cloudquotas::v1::ListQuotaInfosRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency CloudQuotasConnectionIdempotencyPolicy::GetQuotaInfo(
-    google::api::cloudquotas::v1::GetQuotaInfoRequest const&) {
+Idempotency CloudQuotasConnectionIdempotencyPolicy::GetQuotaInfo(google::api::cloudquotas::v1::GetQuotaInfoRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency CloudQuotasConnectionIdempotencyPolicy::ListQuotaPreferences(
-    google::api::cloudquotas::v1::ListQuotaPreferencesRequest) {  // NOLINT
+Idempotency CloudQuotasConnectionIdempotencyPolicy::ListQuotaPreferences(google::api::cloudquotas::v1::ListQuotaPreferencesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency CloudQuotasConnectionIdempotencyPolicy::GetQuotaPreference(
-    google::api::cloudquotas::v1::GetQuotaPreferenceRequest const&) {
+Idempotency CloudQuotasConnectionIdempotencyPolicy::GetQuotaPreference(google::api::cloudquotas::v1::GetQuotaPreferenceRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency CloudQuotasConnectionIdempotencyPolicy::CreateQuotaPreference(
-    google::api::cloudquotas::v1::CreateQuotaPreferenceRequest const&) {
+Idempotency CloudQuotasConnectionIdempotencyPolicy::CreateQuotaPreference(google::api::cloudquotas::v1::CreateQuotaPreferenceRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CloudQuotasConnectionIdempotencyPolicy::UpdateQuotaPreference(
-    google::api::cloudquotas::v1::UpdateQuotaPreferenceRequest const&) {
+Idempotency CloudQuotasConnectionIdempotencyPolicy::UpdateQuotaPreference(google::api::cloudquotas::v1::UpdateQuotaPreferenceRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<CloudQuotasConnectionIdempotencyPolicy>
-MakeDefaultCloudQuotasConnectionIdempotencyPolicy() {
+    MakeDefaultCloudQuotasConnectionIdempotencyPolicy() {
   return std::make_unique<CloudQuotasConnectionIdempotencyPolicy>();
 }
 

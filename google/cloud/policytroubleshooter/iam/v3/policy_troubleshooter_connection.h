@@ -19,11 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_POLICYTROUBLESHOOTER_IAM_V3_POLICY_TROUBLESHOOTER_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_POLICYTROUBLESHOOTER_IAM_V3_POLICY_TROUBLESHOOTER_CONNECTION_H
 
-#include "google/cloud/policytroubleshooter/iam/v3/internal/policy_troubleshooter_retry_traits.h"
-#include "google/cloud/policytroubleshooter/iam/v3/policy_troubleshooter_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
+#include "google/cloud/policytroubleshooter/iam/v3/internal/policy_troubleshooter_retry_traits.h"
+#include "google/cloud/policytroubleshooter/iam/v3/policy_troubleshooter_connection_idempotency_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/policytroubleshooter/iam/v3/troubleshooter.pb.h>
@@ -51,8 +51,7 @@ class PolicyTroubleshooterRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class PolicyTroubleshooterLimitedErrorCountRetryPolicy
-    : public PolicyTroubleshooterRetryPolicy {
+class PolicyTroubleshooterLimitedErrorCountRetryPolicy : public PolicyTroubleshooterRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -61,18 +60,15 @@ class PolicyTroubleshooterLimitedErrorCountRetryPolicy
    * @note Disable the retry loop by providing an instance of this policy with
    *     @p maximum_failures == 0.
    */
-  explicit PolicyTroubleshooterLimitedErrorCountRetryPolicy(
-      int maximum_failures)
-      : impl_(maximum_failures) {}
+  explicit PolicyTroubleshooterLimitedErrorCountRetryPolicy(int maximum_failures)
+    : impl_(maximum_failures) {}
 
   PolicyTroubleshooterLimitedErrorCountRetryPolicy(
       PolicyTroubleshooterLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : PolicyTroubleshooterLimitedErrorCountRetryPolicy(
-            rhs.maximum_failures()) {}
+    : PolicyTroubleshooterLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   PolicyTroubleshooterLimitedErrorCountRetryPolicy(
       PolicyTroubleshooterLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : PolicyTroubleshooterLimitedErrorCountRetryPolicy(
-            rhs.maximum_failures()) {}
+    : PolicyTroubleshooterLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -92,9 +88,7 @@ class PolicyTroubleshooterLimitedErrorCountRetryPolicy
   using BaseType = PolicyTroubleshooterRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      policytroubleshooter_iam_v3_internal::PolicyTroubleshooterRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<policytroubleshooter_iam_v3_internal::PolicyTroubleshooterRetryTraits> impl_;
 };
 
 /**
@@ -107,8 +101,7 @@ class PolicyTroubleshooterLimitedErrorCountRetryPolicy
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class PolicyTroubleshooterLimitedTimeRetryPolicy
-    : public PolicyTroubleshooterRetryPolicy {
+class PolicyTroubleshooterLimitedTimeRetryPolicy : public PolicyTroubleshooterRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -133,14 +126,12 @@ class PolicyTroubleshooterLimitedTimeRetryPolicy
   template <typename DurationRep, typename DurationPeriod>
   explicit PolicyTroubleshooterLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  PolicyTroubleshooterLimitedTimeRetryPolicy(
-      PolicyTroubleshooterLimitedTimeRetryPolicy&& rhs) noexcept
-      : PolicyTroubleshooterLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  PolicyTroubleshooterLimitedTimeRetryPolicy(
-      PolicyTroubleshooterLimitedTimeRetryPolicy const& rhs) noexcept
-      : PolicyTroubleshooterLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  PolicyTroubleshooterLimitedTimeRetryPolicy(PolicyTroubleshooterLimitedTimeRetryPolicy&& rhs) noexcept
+    : PolicyTroubleshooterLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  PolicyTroubleshooterLimitedTimeRetryPolicy(PolicyTroubleshooterLimitedTimeRetryPolicy const& rhs) noexcept
+    : PolicyTroubleshooterLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -162,23 +153,20 @@ class PolicyTroubleshooterLimitedTimeRetryPolicy
   using BaseType = PolicyTroubleshooterRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      policytroubleshooter_iam_v3_internal::PolicyTroubleshooterRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<policytroubleshooter_iam_v3_internal::PolicyTroubleshooterRetryTraits> impl_;
 };
 
 /**
  * The `PolicyTroubleshooterConnection` object for `PolicyTroubleshooterClient`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `PolicyTroubleshooterClient`. This allows users to inject custom
- * behavior (e.g., with a Google Mock object) when writing tests that use
- * objects of type `PolicyTroubleshooterClient`.
+ * sets in `PolicyTroubleshooterClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `PolicyTroubleshooterClient`.
  *
  * To create a concrete instance, see `MakePolicyTroubleshooterConnection()`.
  *
- * For mocking, see
- * `policytroubleshooter_iam_v3_mocks::MockPolicyTroubleshooterConnection`.
+ * For mocking, see `policytroubleshooter_iam_v3_mocks::MockPolicyTroubleshooterConnection`.
  */
 class PolicyTroubleshooterConnection {
  public:
@@ -186,38 +174,33 @@ class PolicyTroubleshooterConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<google::cloud::policytroubleshooter::iam::v3::
-                       TroubleshootIamPolicyResponse>
-  TroubleshootIamPolicy(google::cloud::policytroubleshooter::iam::v3::
-                            TroubleshootIamPolicyRequest const& request);
+  virtual StatusOr<google::cloud::policytroubleshooter::iam::v3::TroubleshootIamPolicyResponse>
+  TroubleshootIamPolicy(google::cloud::policytroubleshooter::iam::v3::TroubleshootIamPolicyRequest const& request);
 };
 
 /**
- * A factory function to construct an object of type
- * `PolicyTroubleshooterConnection`.
+ * A factory function to construct an object of type `PolicyTroubleshooterConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of
- * PolicyTroubleshooterClient.
+ * should be passed as an argument to the constructor of PolicyTroubleshooterClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `PolicyTroubleshooterConnection`. Expected options are any of the
- * types in the following option lists:
+ * returned `PolicyTroubleshooterConnection`. Expected options are any of the types in
+ * the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * -
- * `google::cloud::policytroubleshooter_iam_v3::PolicyTroubleshooterPolicyOptionList`
+ * - `google::cloud::policytroubleshooter_iam_v3::PolicyTroubleshooterPolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
- * @param options (optional) Configure the `PolicyTroubleshooterConnection`
- * created by this function.
+ * @param options (optional) Configure the `PolicyTroubleshooterConnection` created by
+ * this function.
  */
-std::shared_ptr<PolicyTroubleshooterConnection>
-MakePolicyTroubleshooterConnection(Options options = {});
+std::shared_ptr<PolicyTroubleshooterConnection> MakePolicyTroubleshooterConnection(
+    Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace policytroubleshooter_iam_v3

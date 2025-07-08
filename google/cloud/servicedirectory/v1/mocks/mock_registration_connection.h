@@ -31,10 +31,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * A class to mock `RegistrationServiceConnection`.
  *
  * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `RegistrationServiceClient`. To do
- * so, construct an object of type `RegistrationServiceClient` with an instance
- * of this class. Then use the Google Test framework functions to program the
- * behavior of this mock.
+ * including errors, from an object of type `RegistrationServiceClient`. To do so,
+ * construct an object of type `RegistrationServiceClient` with an instance of this
+ * class. Then use the Google Test framework functions to program the behavior
+ * of this mock.
  *
  * @see [This example][bq-mock] for how to test your application with GoogleTest.
  * While the example showcases types from the BigQuery library, the underlying
@@ -42,115 +42,89 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockRegistrationServiceConnection
-    : public servicedirectory_v1::RegistrationServiceConnection {
+class MockRegistrationServiceConnection : public servicedirectory_v1::RegistrationServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::servicedirectory::v1::Namespace>, CreateNamespace,
-      (google::cloud::servicedirectory::v1::CreateNamespaceRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::servicedirectory::v1::Namespace>,
+  CreateNamespace,
+  (google::cloud::servicedirectory::v1::CreateNamespaceRequest const& request), (override));
 
-  MOCK_METHOD(
-      (StreamRange<google::cloud::servicedirectory::v1::Namespace>),
-      ListNamespaces,
-      (google::cloud::servicedirectory::v1::ListNamespacesRequest request),
-      (override));
+  MOCK_METHOD((StreamRange<google::cloud::servicedirectory::v1::Namespace>),
+  ListNamespaces,
+  (google::cloud::servicedirectory::v1::ListNamespacesRequest request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::servicedirectory::v1::Namespace>, GetNamespace,
-      (google::cloud::servicedirectory::v1::GetNamespaceRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::servicedirectory::v1::Namespace>,
+  GetNamespace,
+  (google::cloud::servicedirectory::v1::GetNamespaceRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::servicedirectory::v1::Namespace>, UpdateNamespace,
-      (google::cloud::servicedirectory::v1::UpdateNamespaceRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::servicedirectory::v1::Namespace>,
+  UpdateNamespace,
+  (google::cloud::servicedirectory::v1::UpdateNamespaceRequest const& request), (override));
 
-  MOCK_METHOD(
-      Status, DeleteNamespace,
-      (google::cloud::servicedirectory::v1::DeleteNamespaceRequest const&
-           request),
-      (override));
+  MOCK_METHOD(Status,
+  DeleteNamespace,
+  (google::cloud::servicedirectory::v1::DeleteNamespaceRequest const& request), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::servicedirectory::v1::Service>,
-              CreateService,
-              (google::cloud::servicedirectory::v1::CreateServiceRequest const&
-                   request),
-              (override));
+  CreateService,
+  (google::cloud::servicedirectory::v1::CreateServiceRequest const& request), (override));
 
-  MOCK_METHOD(
-      (StreamRange<google::cloud::servicedirectory::v1::Service>), ListServices,
-      (google::cloud::servicedirectory::v1::ListServicesRequest request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::servicedirectory::v1::Service>, GetService,
-      (google::cloud::servicedirectory::v1::GetServiceRequest const& request),
-      (override));
+  MOCK_METHOD((StreamRange<google::cloud::servicedirectory::v1::Service>),
+  ListServices,
+  (google::cloud::servicedirectory::v1::ListServicesRequest request), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::servicedirectory::v1::Service>,
-              UpdateService,
-              (google::cloud::servicedirectory::v1::UpdateServiceRequest const&
-                   request),
-              (override));
+  GetService,
+  (google::cloud::servicedirectory::v1::GetServiceRequest const& request), (override));
 
-  MOCK_METHOD(Status, DeleteService,
-              (google::cloud::servicedirectory::v1::DeleteServiceRequest const&
-                   request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::servicedirectory::v1::Service>,
+  UpdateService,
+  (google::cloud::servicedirectory::v1::UpdateServiceRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::servicedirectory::v1::Endpoint>,
-              CreateEndpoint,
-              (google::cloud::servicedirectory::v1::CreateEndpointRequest const&
-                   request),
-              (override));
-
-  MOCK_METHOD(
-      (StreamRange<google::cloud::servicedirectory::v1::Endpoint>),
-      ListEndpoints,
-      (google::cloud::servicedirectory::v1::ListEndpointsRequest request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::servicedirectory::v1::Endpoint>, GetEndpoint,
-      (google::cloud::servicedirectory::v1::GetEndpointRequest const& request),
-      (override));
+  MOCK_METHOD(Status,
+  DeleteService,
+  (google::cloud::servicedirectory::v1::DeleteServiceRequest const& request), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::servicedirectory::v1::Endpoint>,
-              UpdateEndpoint,
-              (google::cloud::servicedirectory::v1::UpdateEndpointRequest const&
-                   request),
-              (override));
+  CreateEndpoint,
+  (google::cloud::servicedirectory::v1::CreateEndpointRequest const& request), (override));
 
-  MOCK_METHOD(Status, DeleteEndpoint,
-              (google::cloud::servicedirectory::v1::DeleteEndpointRequest const&
-                   request),
-              (override));
+  MOCK_METHOD((StreamRange<google::cloud::servicedirectory::v1::Endpoint>),
+  ListEndpoints,
+  (google::cloud::servicedirectory::v1::ListEndpointsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, GetIamPolicy,
-              (google::iam::v1::GetIamPolicyRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::servicedirectory::v1::Endpoint>,
+  GetEndpoint,
+  (google::cloud::servicedirectory::v1::GetEndpointRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, SetIamPolicy,
-              (google::iam::v1::SetIamPolicyRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::servicedirectory::v1::Endpoint>,
+  UpdateEndpoint,
+  (google::cloud::servicedirectory::v1::UpdateEndpointRequest const& request), (override));
+
+  MOCK_METHOD(Status,
+  DeleteEndpoint,
+  (google::cloud::servicedirectory::v1::DeleteEndpointRequest const& request), (override));
+
+  MOCK_METHOD(StatusOr<google::iam::v1::Policy>,
+  GetIamPolicy,
+  (google::iam::v1::GetIamPolicyRequest const& request), (override));
+
+  MOCK_METHOD(StatusOr<google::iam::v1::Policy>,
+  SetIamPolicy,
+  (google::iam::v1::SetIamPolicyRequest const& request), (override));
 
   MOCK_METHOD(StatusOr<google::iam::v1::TestIamPermissionsResponse>,
-              TestIamPermissions,
-              (google::iam::v1::TestIamPermissionsRequest const& request),
-              (override));
+  TestIamPermissions,
+  (google::iam::v1::TestIamPermissionsRequest const& request), (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::location::Location>), ListLocations,
-              (google::cloud::location::ListLocationsRequest request),
-              (override));
+  MOCK_METHOD((StreamRange<google::cloud::location::Location>),
+  ListLocations,
+  (google::cloud::location::ListLocationsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::location::Location>, GetLocation,
-              (google::cloud::location::GetLocationRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::location::Location>,
+  GetLocation,
+  (google::cloud::location::GetLocationRequest const& request), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

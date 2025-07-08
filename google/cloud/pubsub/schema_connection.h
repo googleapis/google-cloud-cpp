@@ -19,11 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_SCHEMA_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_SCHEMA_CONNECTION_H
 
-#include "google/cloud/pubsub/internal/schema_retry_traits.h"
-#include "google/cloud/pubsub/schema_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
+#include "google/cloud/pubsub/internal/schema_retry_traits.h"
+#include "google/cloud/pubsub/schema_connection_idempotency_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
@@ -53,8 +53,7 @@ class SchemaServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class SchemaServiceLimitedErrorCountRetryPolicy
-    : public SchemaServiceRetryPolicy {
+class SchemaServiceLimitedErrorCountRetryPolicy : public SchemaServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -64,14 +63,14 @@ class SchemaServiceLimitedErrorCountRetryPolicy
    *     @p maximum_failures == 0.
    */
   explicit SchemaServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   SchemaServiceLimitedErrorCountRetryPolicy(
       SchemaServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : SchemaServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : SchemaServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   SchemaServiceLimitedErrorCountRetryPolicy(
       SchemaServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : SchemaServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : SchemaServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -91,9 +90,7 @@ class SchemaServiceLimitedErrorCountRetryPolicy
   using BaseType = SchemaServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      pubsub_internal::SchemaServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<pubsub_internal::SchemaServiceRetryTraits> impl_;
 };
 
 /**
@@ -131,14 +128,12 @@ class SchemaServiceLimitedTimeRetryPolicy : public SchemaServiceRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit SchemaServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  SchemaServiceLimitedTimeRetryPolicy(
-      SchemaServiceLimitedTimeRetryPolicy&& rhs) noexcept
-      : SchemaServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  SchemaServiceLimitedTimeRetryPolicy(
-      SchemaServiceLimitedTimeRetryPolicy const& rhs) noexcept
-      : SchemaServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  SchemaServiceLimitedTimeRetryPolicy(SchemaServiceLimitedTimeRetryPolicy&& rhs) noexcept
+    : SchemaServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  SchemaServiceLimitedTimeRetryPolicy(SchemaServiceLimitedTimeRetryPolicy const& rhs) noexcept
+    : SchemaServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -160,9 +155,7 @@ class SchemaServiceLimitedTimeRetryPolicy : public SchemaServiceRetryPolicy {
   using BaseType = SchemaServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      pubsub_internal::SchemaServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<pubsub_internal::SchemaServiceRetryTraits> impl_;
 };
 
 /**
@@ -183,41 +176,41 @@ class SchemaServiceConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<google::pubsub::v1::Schema> CreateSchema(
-      google::pubsub::v1::CreateSchemaRequest const& request);
+  virtual StatusOr<google::pubsub::v1::Schema>
+  CreateSchema(google::pubsub::v1::CreateSchemaRequest const& request);
 
-  virtual StatusOr<google::pubsub::v1::Schema> GetSchema(
-      google::pubsub::v1::GetSchemaRequest const& request);
+  virtual StatusOr<google::pubsub::v1::Schema>
+  GetSchema(google::pubsub::v1::GetSchemaRequest const& request);
 
-  virtual StreamRange<google::pubsub::v1::Schema> ListSchemas(
-      google::pubsub::v1::ListSchemasRequest request);
+  virtual StreamRange<google::pubsub::v1::Schema>
+  ListSchemas(google::pubsub::v1::ListSchemasRequest request);
 
-  virtual StreamRange<google::pubsub::v1::Schema> ListSchemaRevisions(
-      google::pubsub::v1::ListSchemaRevisionsRequest request);
+  virtual StreamRange<google::pubsub::v1::Schema>
+  ListSchemaRevisions(google::pubsub::v1::ListSchemaRevisionsRequest request);
 
-  virtual StatusOr<google::pubsub::v1::Schema> CommitSchema(
-      google::pubsub::v1::CommitSchemaRequest const& request);
+  virtual StatusOr<google::pubsub::v1::Schema>
+  CommitSchema(google::pubsub::v1::CommitSchemaRequest const& request);
 
-  virtual StatusOr<google::pubsub::v1::Schema> RollbackSchema(
-      google::pubsub::v1::RollbackSchemaRequest const& request);
+  virtual StatusOr<google::pubsub::v1::Schema>
+  RollbackSchema(google::pubsub::v1::RollbackSchemaRequest const& request);
 
-  virtual StatusOr<google::pubsub::v1::Schema> DeleteSchemaRevision(
-      google::pubsub::v1::DeleteSchemaRevisionRequest const& request);
+  virtual StatusOr<google::pubsub::v1::Schema>
+  DeleteSchemaRevision(google::pubsub::v1::DeleteSchemaRevisionRequest const& request);
 
-  virtual Status DeleteSchema(
-      google::pubsub::v1::DeleteSchemaRequest const& request);
+  virtual Status
+  DeleteSchema(google::pubsub::v1::DeleteSchemaRequest const& request);
 
-  virtual StatusOr<google::pubsub::v1::ValidateSchemaResponse> ValidateSchema(
-      google::pubsub::v1::ValidateSchemaRequest const& request);
+  virtual StatusOr<google::pubsub::v1::ValidateSchemaResponse>
+  ValidateSchema(google::pubsub::v1::ValidateSchemaRequest const& request);
 
-  virtual StatusOr<google::pubsub::v1::ValidateMessageResponse> ValidateMessage(
-      google::pubsub::v1::ValidateMessageRequest const& request);
+  virtual StatusOr<google::pubsub::v1::ValidateMessageResponse>
+  ValidateMessage(google::pubsub::v1::ValidateMessageRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
 
   virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
   TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);

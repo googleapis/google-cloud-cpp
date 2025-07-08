@@ -32,9 +32,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * Application developers may want to test their code with simulated responses,
  * including errors, from an object of type `CompletionServiceClient`. To do so,
- * construct an object of type `CompletionServiceClient` with an instance of
- * this class. Then use the Google Test framework functions to program the
- * behavior of this mock.
+ * construct an object of type `CompletionServiceClient` with an instance of this
+ * class. Then use the Google Test framework functions to program the behavior
+ * of this mock.
  *
  * @see [This example][bq-mock] for how to test your application with GoogleTest.
  * While the example showcases types from the BigQuery library, the underlying
@@ -42,30 +42,25 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockCompletionServiceConnection
-    : public retail_v2::CompletionServiceConnection {
+class MockCompletionServiceConnection : public retail_v2::CompletionServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::retail::v2::CompleteQueryResponse>,
-              CompleteQuery,
-              (google::cloud::retail::v2::CompleteQueryRequest const& request),
-              (override));
+  CompleteQuery,
+  (google::cloud::retail::v2::CompleteQueryRequest const& request), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// ImportCompletionData(Matcher<google::cloud::retail::v2::ImportCompletionDataRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, ImportCompletionData(Matcher<google::cloud::retail::v2::ImportCompletionDataRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::retail::v2::ImportCompletionDataResponse>>,
-      ImportCompletionData,
-      (google::cloud::retail::v2::ImportCompletionDataRequest const& request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::retail::v2::ImportCompletionDataResponse>>,
+  ImportCompletionData,
+  (google::cloud::retail::v2::ImportCompletionDataRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -73,31 +68,29 @@ class MockCompletionServiceConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, ImportCompletionData(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, ImportCompletionData,
-      (NoAwaitTag,
-       google::cloud::retail::v2::ImportCompletionDataRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  ImportCompletionData, (NoAwaitTag,
+    google::cloud::retail::v2::ImportCompletionDataRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// ImportCompletionData(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock, ImportCompletionData(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::retail::v2::ImportCompletionDataResponse>>,
-      ImportCompletionData, (google::longrunning::Operation const& operation),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::retail::v2::ImportCompletionDataResponse>>,
+  ImportCompletionData, (
+    google::longrunning::Operation const& operation), (override));
 
-  MOCK_METHOD((StreamRange<google::longrunning::Operation>), ListOperations,
-              (google::longrunning::ListOperationsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::longrunning::Operation>),
+  ListOperations,
+  (google::longrunning::ListOperationsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
-              (google::longrunning::GetOperationRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  GetOperation,
+  (google::longrunning::GetOperationRequest const& request), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

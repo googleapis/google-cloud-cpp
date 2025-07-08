@@ -46,167 +46,177 @@ CloudTasksMetadata::CloudTasksMetadata(
 
 StatusOr<google::cloud::tasks::v2::ListQueuesResponse>
 CloudTasksMetadata::ListQueues(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::tasks::v2::ListQueuesRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListQueues(context, options, request);
 }
 
-StatusOr<google::cloud::tasks::v2::Queue> CloudTasksMetadata::GetQueue(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::tasks::v2::Queue>
+CloudTasksMetadata::GetQueue(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::tasks::v2::GetQueueRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetQueue(context, options, request);
 }
 
-StatusOr<google::cloud::tasks::v2::Queue> CloudTasksMetadata::CreateQueue(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::tasks::v2::Queue>
+CloudTasksMetadata::CreateQueue(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::tasks::v2::CreateQueueRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateQueue(context, options, request);
 }
 
-StatusOr<google::cloud::tasks::v2::Queue> CloudTasksMetadata::UpdateQueue(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::tasks::v2::Queue>
+CloudTasksMetadata::UpdateQueue(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::tasks::v2::UpdateQueueRequest const& request) {
-  SetMetadata(
-      context, options,
-      absl::StrCat("queue.name=", internal::UrlEncode(request.queue().name())));
+  SetMetadata(context, options, absl::StrCat("queue.name=", internal::UrlEncode(request.queue().name())));
   return child_->UpdateQueue(context, options, request);
 }
 
-Status CloudTasksMetadata::DeleteQueue(
-    grpc::ClientContext& context, Options const& options,
+Status
+CloudTasksMetadata::DeleteQueue(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::tasks::v2::DeleteQueueRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteQueue(context, options, request);
 }
 
-StatusOr<google::cloud::tasks::v2::Queue> CloudTasksMetadata::PurgeQueue(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::tasks::v2::Queue>
+CloudTasksMetadata::PurgeQueue(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::tasks::v2::PurgeQueueRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->PurgeQueue(context, options, request);
 }
 
-StatusOr<google::cloud::tasks::v2::Queue> CloudTasksMetadata::PauseQueue(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::tasks::v2::Queue>
+CloudTasksMetadata::PauseQueue(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::tasks::v2::PauseQueueRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->PauseQueue(context, options, request);
 }
 
-StatusOr<google::cloud::tasks::v2::Queue> CloudTasksMetadata::ResumeQueue(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::tasks::v2::Queue>
+CloudTasksMetadata::ResumeQueue(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::tasks::v2::ResumeQueueRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ResumeQueue(context, options, request);
 }
 
-StatusOr<google::iam::v1::Policy> CloudTasksMetadata::GetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::iam::v1::Policy>
+CloudTasksMetadata::GetIamPolicy(
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
-  SetMetadata(
-      context, options,
-      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
+  SetMetadata(context, options, absl::StrCat("resource=", internal::UrlEncode(request.resource())));
   return child_->GetIamPolicy(context, options, request);
 }
 
-StatusOr<google::iam::v1::Policy> CloudTasksMetadata::SetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::iam::v1::Policy>
+CloudTasksMetadata::SetIamPolicy(
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
-  SetMetadata(
-      context, options,
-      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
+  SetMetadata(context, options, absl::StrCat("resource=", internal::UrlEncode(request.resource())));
   return child_->SetIamPolicy(context, options, request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 CloudTasksMetadata::TestIamPermissions(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  SetMetadata(
-      context, options,
-      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
+  SetMetadata(context, options, absl::StrCat("resource=", internal::UrlEncode(request.resource())));
   return child_->TestIamPermissions(context, options, request);
 }
 
 StatusOr<google::cloud::tasks::v2::ListTasksResponse>
 CloudTasksMetadata::ListTasks(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::tasks::v2::ListTasksRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListTasks(context, options, request);
 }
 
-StatusOr<google::cloud::tasks::v2::Task> CloudTasksMetadata::GetTask(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::tasks::v2::Task>
+CloudTasksMetadata::GetTask(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::tasks::v2::GetTaskRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetTask(context, options, request);
 }
 
-StatusOr<google::cloud::tasks::v2::Task> CloudTasksMetadata::CreateTask(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::tasks::v2::Task>
+CloudTasksMetadata::CreateTask(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::tasks::v2::CreateTaskRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateTask(context, options, request);
 }
 
-Status CloudTasksMetadata::DeleteTask(
-    grpc::ClientContext& context, Options const& options,
+Status
+CloudTasksMetadata::DeleteTask(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::tasks::v2::DeleteTaskRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteTask(context, options, request);
 }
 
-StatusOr<google::cloud::tasks::v2::Task> CloudTasksMetadata::RunTask(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::tasks::v2::Task>
+CloudTasksMetadata::RunTask(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::tasks::v2::RunTaskRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->RunTask(context, options, request);
 }
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 CloudTasksMetadata::ListLocations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ListLocations(context, options, request);
 }
 
-StatusOr<google::cloud::location::Location> CloudTasksMetadata::GetLocation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::location::Location>
+CloudTasksMetadata::GetLocation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetLocation(context, options, request);
 }
 
 void CloudTasksMetadata::SetMetadata(grpc::ClientContext& context,
-                                     Options const& options,
-                                     std::string const& request_params) {
+                                        Options const& options,
+                                        std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
 void CloudTasksMetadata::SetMetadata(grpc::ClientContext& context,
-                                     Options const& options) {
-  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
-                                       api_client_header_);
+                                        Options const& options) {
+  google::cloud::internal::SetMetadata(
+      context, options, fixed_metadata_, api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

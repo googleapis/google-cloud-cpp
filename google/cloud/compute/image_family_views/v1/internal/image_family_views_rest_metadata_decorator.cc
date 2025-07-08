@@ -17,11 +17,11 @@
 // source: google/cloud/compute/image_family_views/v1/image_family_views.proto
 
 #include "google/cloud/compute/image_family_views/v1/internal/image_family_views_rest_metadata_decorator.h"
+#include "absl/strings/str_format.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/internal/rest_set_metadata.h"
 #include "google/cloud/status_or.h"
-#include "absl/strings/str_format.h"
 #include <memory>
 #include <utility>
 
@@ -41,18 +41,17 @@ ImageFamilyViewsRestMetadata::ImageFamilyViewsRestMetadata(
 
 StatusOr<google::cloud::cpp::compute::v1::ImageFamilyView>
 ImageFamilyViewsRestMetadata::GetImageFamilyView(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::image_family_views::v1::
-        GetImageFamilyViewRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::image_family_views::v1::GetImageFamilyViewRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->GetImageFamilyView(rest_context, options, request);
 }
 
 void ImageFamilyViewsRestMetadata::SetMetadata(
-    rest_internal::RestContext& rest_context, Options const& options,
-    std::vector<std::string> const& params) {
-  google::cloud::rest_internal::SetMetadata(rest_context, options, params,
-                                            api_client_header_);
+      rest_internal::RestContext& rest_context,
+      Options const& options, std::vector<std::string> const& params) {
+  google::cloud::rest_internal::SetMetadata(
+      rest_context, options, params, api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

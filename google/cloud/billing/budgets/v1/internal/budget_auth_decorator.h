@@ -39,29 +39,29 @@ class BudgetServiceAuth : public BudgetServiceStub {
       std::shared_ptr<BudgetServiceStub> child);
 
   StatusOr<google::cloud::billing::budgets::v1::Budget> CreateBudget(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::billing::budgets::v1::CreateBudgetRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::billing::budgets::v1::CreateBudgetRequest const& request) override;
 
   StatusOr<google::cloud::billing::budgets::v1::Budget> UpdateBudget(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::billing::budgets::v1::UpdateBudgetRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::billing::budgets::v1::UpdateBudgetRequest const& request) override;
 
   StatusOr<google::cloud::billing::budgets::v1::Budget> GetBudget(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::billing::budgets::v1::GetBudgetRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::billing::budgets::v1::GetBudgetRequest const& request) override;
 
-  StatusOr<google::cloud::billing::budgets::v1::ListBudgetsResponse>
-  ListBudgets(grpc::ClientContext& context, Options const& options,
-              google::cloud::billing::budgets::v1::ListBudgetsRequest const&
-                  request) override;
+  StatusOr<google::cloud::billing::budgets::v1::ListBudgetsResponse> ListBudgets(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::billing::budgets::v1::ListBudgetsRequest const& request) override;
 
   Status DeleteBudget(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::billing::budgets::v1::DeleteBudgetRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::billing::budgets::v1::DeleteBudgetRequest const& request) override;
 
  private:
   std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth_;

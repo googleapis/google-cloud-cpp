@@ -28,22 +28,16 @@ namespace cloud {
 namespace appengine {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use appengine_v1::AuthorizedCertificatesBackoffPolicyOption
-/// directly.
+/// @deprecated Use appengine_v1::AuthorizedCertificatesBackoffPolicyOption directly.
 using ::google::cloud::appengine_v1::AuthorizedCertificatesBackoffPolicyOption;
 
-/// @deprecated Use
-/// appengine_v1::AuthorizedCertificatesConnectionIdempotencyPolicyOption
-/// directly.
-using ::google::cloud::appengine_v1::
-    AuthorizedCertificatesConnectionIdempotencyPolicyOption;
+/// @deprecated Use appengine_v1::AuthorizedCertificatesConnectionIdempotencyPolicyOption directly.
+using ::google::cloud::appengine_v1::AuthorizedCertificatesConnectionIdempotencyPolicyOption;
 
-/// @deprecated Use appengine_v1::AuthorizedCertificatesPolicyOptionList
-/// directly.
+/// @deprecated Use appengine_v1::AuthorizedCertificatesPolicyOptionList directly.
 using ::google::cloud::appengine_v1::AuthorizedCertificatesPolicyOptionList;
 
-/// @deprecated Use appengine_v1::AuthorizedCertificatesRetryPolicyOption
-/// directly.
+/// @deprecated Use appengine_v1::AuthorizedCertificatesRetryPolicyOption directly.
 using ::google::cloud::appengine_v1::AuthorizedCertificatesRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

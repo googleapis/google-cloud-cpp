@@ -37,27 +37,27 @@ class PoliciesConnectionIdempotencyPolicy {
   /// Create a new copy of this object.
   virtual std::unique_ptr<PoliciesConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency ListPolicies(
-      google::iam::v2::ListPoliciesRequest request);
+  virtual google::cloud::Idempotency
+  ListPolicies(google::iam::v2::ListPoliciesRequest request);
 
-  virtual google::cloud::Idempotency GetPolicy(
-      google::iam::v2::GetPolicyRequest const& request);
+  virtual google::cloud::Idempotency
+  GetPolicy(google::iam::v2::GetPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency CreatePolicy(
-      google::iam::v2::CreatePolicyRequest const& request);
+  virtual google::cloud::Idempotency
+  CreatePolicy(google::iam::v2::CreatePolicyRequest const& request);
 
-  virtual google::cloud::Idempotency UpdatePolicy(
-      google::iam::v2::UpdatePolicyRequest const& request);
+  virtual google::cloud::Idempotency
+  UpdatePolicy(google::iam::v2::UpdatePolicyRequest const& request);
 
-  virtual google::cloud::Idempotency DeletePolicy(
-      google::iam::v2::DeletePolicyRequest const& request);
+  virtual google::cloud::Idempotency
+  DeletePolicy(google::iam::v2::DeletePolicyRequest const& request);
 
-  virtual google::cloud::Idempotency GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 };
 
 std::unique_ptr<PoliciesConnectionIdempotencyPolicy>
-MakeDefaultPoliciesConnectionIdempotencyPolicy();
+    MakeDefaultPoliciesConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace iam_v2

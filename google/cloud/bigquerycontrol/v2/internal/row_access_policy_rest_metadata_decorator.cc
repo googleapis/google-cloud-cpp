@@ -17,11 +17,11 @@
 // source: google/cloud/bigquery/v2/row_access_policy.proto
 
 #include "google/cloud/bigquerycontrol/v2/internal/row_access_policy_rest_metadata_decorator.h"
+#include "absl/strings/str_format.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/internal/rest_set_metadata.h"
 #include "google/cloud/status_or.h"
-#include "absl/strings/str_format.h"
 #include <memory>
 #include <utility>
 
@@ -41,56 +41,57 @@ RowAccessPolicyServiceRestMetadata::RowAccessPolicyServiceRestMetadata(
 
 StatusOr<google::cloud::bigquery::v2::ListRowAccessPoliciesResponse>
 RowAccessPolicyServiceRestMetadata::ListRowAccessPolicies(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::bigquery::v2::ListRowAccessPoliciesRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::bigquery::v2::ListRowAccessPoliciesRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->ListRowAccessPolicies(rest_context, options, request);
 }
 
 StatusOr<google::cloud::bigquery::v2::RowAccessPolicy>
 RowAccessPolicyServiceRestMetadata::GetRowAccessPolicy(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::bigquery::v2::GetRowAccessPolicyRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::bigquery::v2::GetRowAccessPolicyRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->GetRowAccessPolicy(rest_context, options, request);
 }
 
 StatusOr<google::cloud::bigquery::v2::RowAccessPolicy>
 RowAccessPolicyServiceRestMetadata::CreateRowAccessPolicy(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::bigquery::v2::CreateRowAccessPolicyRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::bigquery::v2::CreateRowAccessPolicyRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->CreateRowAccessPolicy(rest_context, options, request);
 }
 
 StatusOr<google::cloud::bigquery::v2::RowAccessPolicy>
 RowAccessPolicyServiceRestMetadata::UpdateRowAccessPolicy(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::bigquery::v2::UpdateRowAccessPolicyRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::bigquery::v2::UpdateRowAccessPolicyRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->UpdateRowAccessPolicy(rest_context, options, request);
 }
 
-Status RowAccessPolicyServiceRestMetadata::DeleteRowAccessPolicy(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::bigquery::v2::DeleteRowAccessPolicyRequest const& request) {
+Status
+RowAccessPolicyServiceRestMetadata::DeleteRowAccessPolicy(
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::bigquery::v2::DeleteRowAccessPolicyRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->DeleteRowAccessPolicy(rest_context, options, request);
 }
 
-Status RowAccessPolicyServiceRestMetadata::BatchDeleteRowAccessPolicies(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::bigquery::v2::BatchDeleteRowAccessPoliciesRequest const&
-        request) {
+Status
+RowAccessPolicyServiceRestMetadata::BatchDeleteRowAccessPolicies(
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::bigquery::v2::BatchDeleteRowAccessPoliciesRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->BatchDeleteRowAccessPolicies(rest_context, options, request);
 }
 
 void RowAccessPolicyServiceRestMetadata::SetMetadata(
-    rest_internal::RestContext& rest_context, Options const& options,
-    std::vector<std::string> const& params) {
-  google::cloud::rest_internal::SetMetadata(rest_context, options, params,
-                                            api_client_header_);
+      rest_internal::RestContext& rest_context,
+      Options const& options, std::vector<std::string> const& params) {
+  google::cloud::rest_internal::SetMetadata(
+      rest_context, options, params, api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

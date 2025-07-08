@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_SQL_EVENTS_REST_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_SQL_EVENTS_REST_CONNECTION_H
 
-#include "google/cloud/sql/v1/sql_events_connection.h"
 #include "google/cloud/options.h"
+#include "google/cloud/sql/v1/sql_events_connection.h"
 #include "google/cloud/version.h"
 #include <memory>
 
@@ -30,17 +30,17 @@ namespace sql_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /**
- * A factory function to construct an object of type
- * `SqlEventsServiceConnection` that uses REST over HTTP as transport in lieu of
- * gRPC. REST transport should only be used for services that do not support
- * gRPC or if the existing network configuration precludes using gRPC.
+ * A factory function to construct an object of type `SqlEventsServiceConnection`
+ * that uses REST over HTTP as transport in lieu of gRPC. REST transport should
+ * only be used for services that do not support gRPC or if the existing network
+ * configuration precludes using gRPC.
  *
  * The returned connection object should not be used directly; instead it
  * should be passed as an argument to the constructor of SqlEventsServiceClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `SqlEventsServiceConnection`. Expected options are any of the types
- * in the following option lists:
+ * returned `SqlEventsServiceConnection`. Expected options are any of the types in
+ * the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::RestOptionList`
@@ -50,8 +50,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
- * @param options (optional) Configure the `SqlEventsServiceConnection` created
- * by this function.
+ * @param options (optional) Configure the `SqlEventsServiceConnection` created by
+ * this function.
  */
 std::shared_ptr<SqlEventsServiceConnection> MakeSqlEventsServiceConnectionRest(
     Options options = {});

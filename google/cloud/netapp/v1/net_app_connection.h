@@ -19,11 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_NETAPP_V1_NET_APP_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_NETAPP_V1_NET_APP_CONNECTION_H
 
-#include "google/cloud/netapp/v1/internal/net_app_retry_traits.h"
-#include "google/cloud/netapp/v1/net_app_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/netapp/v1/internal/net_app_retry_traits.h"
+#include "google/cloud/netapp/v1/net_app_connection_idempotency_policy.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -66,14 +66,14 @@ class NetAppLimitedErrorCountRetryPolicy : public NetAppRetryPolicy {
    *     @p maximum_failures == 0.
    */
   explicit NetAppLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   NetAppLimitedErrorCountRetryPolicy(
       NetAppLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : NetAppLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : NetAppLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   NetAppLimitedErrorCountRetryPolicy(
       NetAppLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : NetAppLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : NetAppLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -93,9 +93,7 @@ class NetAppLimitedErrorCountRetryPolicy : public NetAppRetryPolicy {
   using BaseType = NetAppRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      netapp_v1_internal::NetAppRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<netapp_v1_internal::NetAppRetryTraits> impl_;
 };
 
 /**
@@ -133,12 +131,12 @@ class NetAppLimitedTimeRetryPolicy : public NetAppRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit NetAppLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
   NetAppLimitedTimeRetryPolicy(NetAppLimitedTimeRetryPolicy&& rhs) noexcept
-      : NetAppLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+    : NetAppLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
   NetAppLimitedTimeRetryPolicy(NetAppLimitedTimeRetryPolicy const& rhs) noexcept
-      : NetAppLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+    : NetAppLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -152,16 +150,15 @@ class NetAppLimitedTimeRetryPolicy : public NetAppRetryPolicy {
     return impl_.IsPermanentFailure(status);
   }
   std::unique_ptr<NetAppRetryPolicy> clone() const override {
-    return std::make_unique<NetAppLimitedTimeRetryPolicy>(maximum_duration());
+    return std::make_unique<NetAppLimitedTimeRetryPolicy>(
+        maximum_duration());
   }
 
   // This is provided only for backwards compatibility.
   using BaseType = NetAppRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      netapp_v1_internal::NetAppRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<netapp_v1_internal::NetAppRetryTraits> impl_;
 };
 
 /**
@@ -182,513 +179,437 @@ class NetAppConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StreamRange<google::cloud::netapp::v1::StoragePool> ListStoragePools(
-      google::cloud::netapp::v1::ListStoragePoolsRequest request);
+  virtual StreamRange<google::cloud::netapp::v1::StoragePool>
+  ListStoragePools(google::cloud::netapp::v1::ListStoragePoolsRequest request);
 
   virtual future<StatusOr<google::cloud::netapp::v1::StoragePool>>
-  CreateStoragePool(
-      google::cloud::netapp::v1::CreateStoragePoolRequest const& request);
+  CreateStoragePool(google::cloud::netapp::v1::CreateStoragePoolRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> CreateStoragePool(
-      NoAwaitTag,
-      google::cloud::netapp::v1::CreateStoragePoolRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  CreateStoragePool(NoAwaitTag, google::cloud::netapp::v1::CreateStoragePoolRequest const& request);
 
   virtual future<StatusOr<google::cloud::netapp::v1::StoragePool>>
-  CreateStoragePool(google::longrunning::Operation const& operation);
+  CreateStoragePool( google::longrunning::Operation const& operation);
 
-  virtual StatusOr<google::cloud::netapp::v1::StoragePool> GetStoragePool(
-      google::cloud::netapp::v1::GetStoragePoolRequest const& request);
-
-  virtual future<StatusOr<google::cloud::netapp::v1::StoragePool>>
-  UpdateStoragePool(
-      google::cloud::netapp::v1::UpdateStoragePoolRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation> UpdateStoragePool(
-      NoAwaitTag,
-      google::cloud::netapp::v1::UpdateStoragePoolRequest const& request);
+  virtual StatusOr<google::cloud::netapp::v1::StoragePool>
+  GetStoragePool(google::cloud::netapp::v1::GetStoragePoolRequest const& request);
 
   virtual future<StatusOr<google::cloud::netapp::v1::StoragePool>>
-  UpdateStoragePool(google::longrunning::Operation const& operation);
+  UpdateStoragePool(google::cloud::netapp::v1::UpdateStoragePoolRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation>
+  UpdateStoragePool(NoAwaitTag, google::cloud::netapp::v1::UpdateStoragePoolRequest const& request);
+
+  virtual future<StatusOr<google::cloud::netapp::v1::StoragePool>>
+  UpdateStoragePool( google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
-  DeleteStoragePool(
-      google::cloud::netapp::v1::DeleteStoragePoolRequest const& request);
+  DeleteStoragePool(google::cloud::netapp::v1::DeleteStoragePoolRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> DeleteStoragePool(
-      NoAwaitTag,
-      google::cloud::netapp::v1::DeleteStoragePoolRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  DeleteStoragePool(NoAwaitTag, google::cloud::netapp::v1::DeleteStoragePoolRequest const& request);
 
   virtual future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
-  DeleteStoragePool(google::longrunning::Operation const& operation);
+  DeleteStoragePool( google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
-  ValidateDirectoryService(
-      google::cloud::netapp::v1::ValidateDirectoryServiceRequest const&
-          request);
+  ValidateDirectoryService(google::cloud::netapp::v1::ValidateDirectoryServiceRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> ValidateDirectoryService(
-      NoAwaitTag,
-      google::cloud::netapp::v1::ValidateDirectoryServiceRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  ValidateDirectoryService(NoAwaitTag, google::cloud::netapp::v1::ValidateDirectoryServiceRequest const& request);
 
   virtual future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
-  ValidateDirectoryService(google::longrunning::Operation const& operation);
+  ValidateDirectoryService( google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::netapp::v1::StoragePool>>
-  SwitchActiveReplicaZone(
-      google::cloud::netapp::v1::SwitchActiveReplicaZoneRequest const& request);
+  SwitchActiveReplicaZone(google::cloud::netapp::v1::SwitchActiveReplicaZoneRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> SwitchActiveReplicaZone(
-      NoAwaitTag,
-      google::cloud::netapp::v1::SwitchActiveReplicaZoneRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  SwitchActiveReplicaZone(NoAwaitTag, google::cloud::netapp::v1::SwitchActiveReplicaZoneRequest const& request);
 
   virtual future<StatusOr<google::cloud::netapp::v1::StoragePool>>
-  SwitchActiveReplicaZone(google::longrunning::Operation const& operation);
+  SwitchActiveReplicaZone( google::longrunning::Operation const& operation);
 
-  virtual StreamRange<google::cloud::netapp::v1::Volume> ListVolumes(
-      google::cloud::netapp::v1::ListVolumesRequest request);
+  virtual StreamRange<google::cloud::netapp::v1::Volume>
+  ListVolumes(google::cloud::netapp::v1::ListVolumesRequest request);
 
-  virtual StatusOr<google::cloud::netapp::v1::Volume> GetVolume(
-      google::cloud::netapp::v1::GetVolumeRequest const& request);
+  virtual StatusOr<google::cloud::netapp::v1::Volume>
+  GetVolume(google::cloud::netapp::v1::GetVolumeRequest const& request);
 
-  virtual future<StatusOr<google::cloud::netapp::v1::Volume>> CreateVolume(
-      google::cloud::netapp::v1::CreateVolumeRequest const& request);
+  virtual future<StatusOr<google::cloud::netapp::v1::Volume>>
+  CreateVolume(google::cloud::netapp::v1::CreateVolumeRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> CreateVolume(
-      NoAwaitTag,
-      google::cloud::netapp::v1::CreateVolumeRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  CreateVolume(NoAwaitTag, google::cloud::netapp::v1::CreateVolumeRequest const& request);
 
-  virtual future<StatusOr<google::cloud::netapp::v1::Volume>> CreateVolume(
-      google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::netapp::v1::Volume>>
+  CreateVolume( google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<google::cloud::netapp::v1::Volume>> UpdateVolume(
-      google::cloud::netapp::v1::UpdateVolumeRequest const& request);
+  virtual future<StatusOr<google::cloud::netapp::v1::Volume>>
+  UpdateVolume(google::cloud::netapp::v1::UpdateVolumeRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> UpdateVolume(
-      NoAwaitTag,
-      google::cloud::netapp::v1::UpdateVolumeRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  UpdateVolume(NoAwaitTag, google::cloud::netapp::v1::UpdateVolumeRequest const& request);
 
-  virtual future<StatusOr<google::cloud::netapp::v1::Volume>> UpdateVolume(
-      google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::netapp::v1::Volume>>
+  UpdateVolume( google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
   DeleteVolume(google::cloud::netapp::v1::DeleteVolumeRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> DeleteVolume(
-      NoAwaitTag,
-      google::cloud::netapp::v1::DeleteVolumeRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  DeleteVolume(NoAwaitTag, google::cloud::netapp::v1::DeleteVolumeRequest const& request);
 
   virtual future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
-  DeleteVolume(google::longrunning::Operation const& operation);
+  DeleteVolume( google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<google::cloud::netapp::v1::Volume>> RevertVolume(
-      google::cloud::netapp::v1::RevertVolumeRequest const& request);
+  virtual future<StatusOr<google::cloud::netapp::v1::Volume>>
+  RevertVolume(google::cloud::netapp::v1::RevertVolumeRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> RevertVolume(
-      NoAwaitTag,
-      google::cloud::netapp::v1::RevertVolumeRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  RevertVolume(NoAwaitTag, google::cloud::netapp::v1::RevertVolumeRequest const& request);
 
-  virtual future<StatusOr<google::cloud::netapp::v1::Volume>> RevertVolume(
-      google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::netapp::v1::Volume>>
+  RevertVolume( google::longrunning::Operation const& operation);
 
-  virtual StreamRange<google::cloud::netapp::v1::Snapshot> ListSnapshots(
-      google::cloud::netapp::v1::ListSnapshotsRequest request);
+  virtual StreamRange<google::cloud::netapp::v1::Snapshot>
+  ListSnapshots(google::cloud::netapp::v1::ListSnapshotsRequest request);
 
-  virtual StatusOr<google::cloud::netapp::v1::Snapshot> GetSnapshot(
-      google::cloud::netapp::v1::GetSnapshotRequest const& request);
+  virtual StatusOr<google::cloud::netapp::v1::Snapshot>
+  GetSnapshot(google::cloud::netapp::v1::GetSnapshotRequest const& request);
 
-  virtual future<StatusOr<google::cloud::netapp::v1::Snapshot>> CreateSnapshot(
-      google::cloud::netapp::v1::CreateSnapshotRequest const& request);
+  virtual future<StatusOr<google::cloud::netapp::v1::Snapshot>>
+  CreateSnapshot(google::cloud::netapp::v1::CreateSnapshotRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> CreateSnapshot(
-      NoAwaitTag,
-      google::cloud::netapp::v1::CreateSnapshotRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  CreateSnapshot(NoAwaitTag, google::cloud::netapp::v1::CreateSnapshotRequest const& request);
 
-  virtual future<StatusOr<google::cloud::netapp::v1::Snapshot>> CreateSnapshot(
-      google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::netapp::v1::Snapshot>>
+  CreateSnapshot( google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
-  DeleteSnapshot(
-      google::cloud::netapp::v1::DeleteSnapshotRequest const& request);
+  DeleteSnapshot(google::cloud::netapp::v1::DeleteSnapshotRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> DeleteSnapshot(
-      NoAwaitTag,
-      google::cloud::netapp::v1::DeleteSnapshotRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  DeleteSnapshot(NoAwaitTag, google::cloud::netapp::v1::DeleteSnapshotRequest const& request);
 
   virtual future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
-  DeleteSnapshot(google::longrunning::Operation const& operation);
+  DeleteSnapshot( google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<google::cloud::netapp::v1::Snapshot>> UpdateSnapshot(
-      google::cloud::netapp::v1::UpdateSnapshotRequest const& request);
+  virtual future<StatusOr<google::cloud::netapp::v1::Snapshot>>
+  UpdateSnapshot(google::cloud::netapp::v1::UpdateSnapshotRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> UpdateSnapshot(
-      NoAwaitTag,
-      google::cloud::netapp::v1::UpdateSnapshotRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  UpdateSnapshot(NoAwaitTag, google::cloud::netapp::v1::UpdateSnapshotRequest const& request);
 
-  virtual future<StatusOr<google::cloud::netapp::v1::Snapshot>> UpdateSnapshot(
-      google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::netapp::v1::Snapshot>>
+  UpdateSnapshot( google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::netapp::v1::ActiveDirectory>
-  ListActiveDirectories(
-      google::cloud::netapp::v1::ListActiveDirectoriesRequest request);
+  ListActiveDirectories(google::cloud::netapp::v1::ListActiveDirectoriesRequest request);
 
   virtual StatusOr<google::cloud::netapp::v1::ActiveDirectory>
-  GetActiveDirectory(
-      google::cloud::netapp::v1::GetActiveDirectoryRequest const& request);
+  GetActiveDirectory(google::cloud::netapp::v1::GetActiveDirectoryRequest const& request);
 
   virtual future<StatusOr<google::cloud::netapp::v1::ActiveDirectory>>
-  CreateActiveDirectory(
-      google::cloud::netapp::v1::CreateActiveDirectoryRequest const& request);
+  CreateActiveDirectory(google::cloud::netapp::v1::CreateActiveDirectoryRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> CreateActiveDirectory(
-      NoAwaitTag,
-      google::cloud::netapp::v1::CreateActiveDirectoryRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  CreateActiveDirectory(NoAwaitTag, google::cloud::netapp::v1::CreateActiveDirectoryRequest const& request);
 
   virtual future<StatusOr<google::cloud::netapp::v1::ActiveDirectory>>
-  CreateActiveDirectory(google::longrunning::Operation const& operation);
+  CreateActiveDirectory( google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::netapp::v1::ActiveDirectory>>
-  UpdateActiveDirectory(
-      google::cloud::netapp::v1::UpdateActiveDirectoryRequest const& request);
+  UpdateActiveDirectory(google::cloud::netapp::v1::UpdateActiveDirectoryRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> UpdateActiveDirectory(
-      NoAwaitTag,
-      google::cloud::netapp::v1::UpdateActiveDirectoryRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  UpdateActiveDirectory(NoAwaitTag, google::cloud::netapp::v1::UpdateActiveDirectoryRequest const& request);
 
   virtual future<StatusOr<google::cloud::netapp::v1::ActiveDirectory>>
-  UpdateActiveDirectory(google::longrunning::Operation const& operation);
+  UpdateActiveDirectory( google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
-  DeleteActiveDirectory(
-      google::cloud::netapp::v1::DeleteActiveDirectoryRequest const& request);
+  DeleteActiveDirectory(google::cloud::netapp::v1::DeleteActiveDirectoryRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> DeleteActiveDirectory(
-      NoAwaitTag,
-      google::cloud::netapp::v1::DeleteActiveDirectoryRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  DeleteActiveDirectory(NoAwaitTag, google::cloud::netapp::v1::DeleteActiveDirectoryRequest const& request);
 
   virtual future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
-  DeleteActiveDirectory(google::longrunning::Operation const& operation);
+  DeleteActiveDirectory( google::longrunning::Operation const& operation);
 
-  virtual StreamRange<google::cloud::netapp::v1::KmsConfig> ListKmsConfigs(
-      google::cloud::netapp::v1::ListKmsConfigsRequest request);
-
-  virtual future<StatusOr<google::cloud::netapp::v1::KmsConfig>>
-  CreateKmsConfig(
-      google::cloud::netapp::v1::CreateKmsConfigRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation> CreateKmsConfig(
-      NoAwaitTag,
-      google::cloud::netapp::v1::CreateKmsConfigRequest const& request);
+  virtual StreamRange<google::cloud::netapp::v1::KmsConfig>
+  ListKmsConfigs(google::cloud::netapp::v1::ListKmsConfigsRequest request);
 
   virtual future<StatusOr<google::cloud::netapp::v1::KmsConfig>>
-  CreateKmsConfig(google::longrunning::Operation const& operation);
+  CreateKmsConfig(google::cloud::netapp::v1::CreateKmsConfigRequest const& request);
 
-  virtual StatusOr<google::cloud::netapp::v1::KmsConfig> GetKmsConfig(
-      google::cloud::netapp::v1::GetKmsConfigRequest const& request);
-
-  virtual future<StatusOr<google::cloud::netapp::v1::KmsConfig>>
-  UpdateKmsConfig(
-      google::cloud::netapp::v1::UpdateKmsConfigRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation> UpdateKmsConfig(
-      NoAwaitTag,
-      google::cloud::netapp::v1::UpdateKmsConfigRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  CreateKmsConfig(NoAwaitTag, google::cloud::netapp::v1::CreateKmsConfigRequest const& request);
 
   virtual future<StatusOr<google::cloud::netapp::v1::KmsConfig>>
-  UpdateKmsConfig(google::longrunning::Operation const& operation);
+  CreateKmsConfig( google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<google::cloud::netapp::v1::KmsConfig>> EncryptVolumes(
-      google::cloud::netapp::v1::EncryptVolumesRequest const& request);
+  virtual StatusOr<google::cloud::netapp::v1::KmsConfig>
+  GetKmsConfig(google::cloud::netapp::v1::GetKmsConfigRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> EncryptVolumes(
-      NoAwaitTag,
-      google::cloud::netapp::v1::EncryptVolumesRequest const& request);
+  virtual future<StatusOr<google::cloud::netapp::v1::KmsConfig>>
+  UpdateKmsConfig(google::cloud::netapp::v1::UpdateKmsConfigRequest const& request);
 
-  virtual future<StatusOr<google::cloud::netapp::v1::KmsConfig>> EncryptVolumes(
-      google::longrunning::Operation const& operation);
+  virtual StatusOr<google::longrunning::Operation>
+  UpdateKmsConfig(NoAwaitTag, google::cloud::netapp::v1::UpdateKmsConfigRequest const& request);
+
+  virtual future<StatusOr<google::cloud::netapp::v1::KmsConfig>>
+  UpdateKmsConfig( google::longrunning::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::netapp::v1::KmsConfig>>
+  EncryptVolumes(google::cloud::netapp::v1::EncryptVolumesRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation>
+  EncryptVolumes(NoAwaitTag, google::cloud::netapp::v1::EncryptVolumesRequest const& request);
+
+  virtual future<StatusOr<google::cloud::netapp::v1::KmsConfig>>
+  EncryptVolumes( google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::netapp::v1::VerifyKmsConfigResponse>
-  VerifyKmsConfig(
-      google::cloud::netapp::v1::VerifyKmsConfigRequest const& request);
+  VerifyKmsConfig(google::cloud::netapp::v1::VerifyKmsConfigRequest const& request);
 
   virtual future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
-  DeleteKmsConfig(
-      google::cloud::netapp::v1::DeleteKmsConfigRequest const& request);
+  DeleteKmsConfig(google::cloud::netapp::v1::DeleteKmsConfigRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> DeleteKmsConfig(
-      NoAwaitTag,
-      google::cloud::netapp::v1::DeleteKmsConfigRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  DeleteKmsConfig(NoAwaitTag, google::cloud::netapp::v1::DeleteKmsConfigRequest const& request);
 
   virtual future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
-  DeleteKmsConfig(google::longrunning::Operation const& operation);
+  DeleteKmsConfig( google::longrunning::Operation const& operation);
 
-  virtual StreamRange<google::cloud::netapp::v1::Replication> ListReplications(
-      google::cloud::netapp::v1::ListReplicationsRequest request);
+  virtual StreamRange<google::cloud::netapp::v1::Replication>
+  ListReplications(google::cloud::netapp::v1::ListReplicationsRequest request);
 
-  virtual StatusOr<google::cloud::netapp::v1::Replication> GetReplication(
-      google::cloud::netapp::v1::GetReplicationRequest const& request);
-
-  virtual future<StatusOr<google::cloud::netapp::v1::Replication>>
-  CreateReplication(
-      google::cloud::netapp::v1::CreateReplicationRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation> CreateReplication(
-      NoAwaitTag,
-      google::cloud::netapp::v1::CreateReplicationRequest const& request);
+  virtual StatusOr<google::cloud::netapp::v1::Replication>
+  GetReplication(google::cloud::netapp::v1::GetReplicationRequest const& request);
 
   virtual future<StatusOr<google::cloud::netapp::v1::Replication>>
-  CreateReplication(google::longrunning::Operation const& operation);
+  CreateReplication(google::cloud::netapp::v1::CreateReplicationRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation>
+  CreateReplication(NoAwaitTag, google::cloud::netapp::v1::CreateReplicationRequest const& request);
+
+  virtual future<StatusOr<google::cloud::netapp::v1::Replication>>
+  CreateReplication( google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
-  DeleteReplication(
-      google::cloud::netapp::v1::DeleteReplicationRequest const& request);
+  DeleteReplication(google::cloud::netapp::v1::DeleteReplicationRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> DeleteReplication(
-      NoAwaitTag,
-      google::cloud::netapp::v1::DeleteReplicationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  DeleteReplication(NoAwaitTag, google::cloud::netapp::v1::DeleteReplicationRequest const& request);
 
   virtual future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
-  DeleteReplication(google::longrunning::Operation const& operation);
+  DeleteReplication( google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::netapp::v1::Replication>>
-  UpdateReplication(
-      google::cloud::netapp::v1::UpdateReplicationRequest const& request);
+  UpdateReplication(google::cloud::netapp::v1::UpdateReplicationRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> UpdateReplication(
-      NoAwaitTag,
-      google::cloud::netapp::v1::UpdateReplicationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  UpdateReplication(NoAwaitTag, google::cloud::netapp::v1::UpdateReplicationRequest const& request);
 
   virtual future<StatusOr<google::cloud::netapp::v1::Replication>>
-  UpdateReplication(google::longrunning::Operation const& operation);
+  UpdateReplication( google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::netapp::v1::Replication>>
-  StopReplication(
-      google::cloud::netapp::v1::StopReplicationRequest const& request);
+  StopReplication(google::cloud::netapp::v1::StopReplicationRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> StopReplication(
-      NoAwaitTag,
-      google::cloud::netapp::v1::StopReplicationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  StopReplication(NoAwaitTag, google::cloud::netapp::v1::StopReplicationRequest const& request);
 
   virtual future<StatusOr<google::cloud::netapp::v1::Replication>>
-  StopReplication(google::longrunning::Operation const& operation);
+  StopReplication( google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::netapp::v1::Replication>>
-  ResumeReplication(
-      google::cloud::netapp::v1::ResumeReplicationRequest const& request);
+  ResumeReplication(google::cloud::netapp::v1::ResumeReplicationRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> ResumeReplication(
-      NoAwaitTag,
-      google::cloud::netapp::v1::ResumeReplicationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  ResumeReplication(NoAwaitTag, google::cloud::netapp::v1::ResumeReplicationRequest const& request);
 
   virtual future<StatusOr<google::cloud::netapp::v1::Replication>>
-  ResumeReplication(google::longrunning::Operation const& operation);
+  ResumeReplication( google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::netapp::v1::Replication>>
-  ReverseReplicationDirection(
-      google::cloud::netapp::v1::ReverseReplicationDirectionRequest const&
-          request);
+  ReverseReplicationDirection(google::cloud::netapp::v1::ReverseReplicationDirectionRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> ReverseReplicationDirection(
-      NoAwaitTag,
-      google::cloud::netapp::v1::ReverseReplicationDirectionRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  ReverseReplicationDirection(NoAwaitTag, google::cloud::netapp::v1::ReverseReplicationDirectionRequest const& request);
 
   virtual future<StatusOr<google::cloud::netapp::v1::Replication>>
-  ReverseReplicationDirection(google::longrunning::Operation const& operation);
+  ReverseReplicationDirection( google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::netapp::v1::Replication>>
-  EstablishPeering(
-      google::cloud::netapp::v1::EstablishPeeringRequest const& request);
+  EstablishPeering(google::cloud::netapp::v1::EstablishPeeringRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> EstablishPeering(
-      NoAwaitTag,
-      google::cloud::netapp::v1::EstablishPeeringRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  EstablishPeering(NoAwaitTag, google::cloud::netapp::v1::EstablishPeeringRequest const& request);
 
   virtual future<StatusOr<google::cloud::netapp::v1::Replication>>
-  EstablishPeering(google::longrunning::Operation const& operation);
+  EstablishPeering( google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::netapp::v1::Replication>>
-  SyncReplication(
-      google::cloud::netapp::v1::SyncReplicationRequest const& request);
+  SyncReplication(google::cloud::netapp::v1::SyncReplicationRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> SyncReplication(
-      NoAwaitTag,
-      google::cloud::netapp::v1::SyncReplicationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  SyncReplication(NoAwaitTag, google::cloud::netapp::v1::SyncReplicationRequest const& request);
 
   virtual future<StatusOr<google::cloud::netapp::v1::Replication>>
-  SyncReplication(google::longrunning::Operation const& operation);
+  SyncReplication( google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::netapp::v1::BackupVault>>
-  CreateBackupVault(
-      google::cloud::netapp::v1::CreateBackupVaultRequest const& request);
+  CreateBackupVault(google::cloud::netapp::v1::CreateBackupVaultRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> CreateBackupVault(
-      NoAwaitTag,
-      google::cloud::netapp::v1::CreateBackupVaultRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  CreateBackupVault(NoAwaitTag, google::cloud::netapp::v1::CreateBackupVaultRequest const& request);
 
   virtual future<StatusOr<google::cloud::netapp::v1::BackupVault>>
-  CreateBackupVault(google::longrunning::Operation const& operation);
+  CreateBackupVault( google::longrunning::Operation const& operation);
 
-  virtual StatusOr<google::cloud::netapp::v1::BackupVault> GetBackupVault(
-      google::cloud::netapp::v1::GetBackupVaultRequest const& request);
+  virtual StatusOr<google::cloud::netapp::v1::BackupVault>
+  GetBackupVault(google::cloud::netapp::v1::GetBackupVaultRequest const& request);
 
-  virtual StreamRange<google::cloud::netapp::v1::BackupVault> ListBackupVaults(
-      google::cloud::netapp::v1::ListBackupVaultsRequest request);
-
-  virtual future<StatusOr<google::cloud::netapp::v1::BackupVault>>
-  UpdateBackupVault(
-      google::cloud::netapp::v1::UpdateBackupVaultRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation> UpdateBackupVault(
-      NoAwaitTag,
-      google::cloud::netapp::v1::UpdateBackupVaultRequest const& request);
+  virtual StreamRange<google::cloud::netapp::v1::BackupVault>
+  ListBackupVaults(google::cloud::netapp::v1::ListBackupVaultsRequest request);
 
   virtual future<StatusOr<google::cloud::netapp::v1::BackupVault>>
-  UpdateBackupVault(google::longrunning::Operation const& operation);
+  UpdateBackupVault(google::cloud::netapp::v1::UpdateBackupVaultRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation>
+  UpdateBackupVault(NoAwaitTag, google::cloud::netapp::v1::UpdateBackupVaultRequest const& request);
+
+  virtual future<StatusOr<google::cloud::netapp::v1::BackupVault>>
+  UpdateBackupVault( google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
-  DeleteBackupVault(
-      google::cloud::netapp::v1::DeleteBackupVaultRequest const& request);
+  DeleteBackupVault(google::cloud::netapp::v1::DeleteBackupVaultRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> DeleteBackupVault(
-      NoAwaitTag,
-      google::cloud::netapp::v1::DeleteBackupVaultRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  DeleteBackupVault(NoAwaitTag, google::cloud::netapp::v1::DeleteBackupVaultRequest const& request);
 
   virtual future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
-  DeleteBackupVault(google::longrunning::Operation const& operation);
+  DeleteBackupVault( google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<google::cloud::netapp::v1::Backup>> CreateBackup(
-      google::cloud::netapp::v1::CreateBackupRequest const& request);
+  virtual future<StatusOr<google::cloud::netapp::v1::Backup>>
+  CreateBackup(google::cloud::netapp::v1::CreateBackupRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> CreateBackup(
-      NoAwaitTag,
-      google::cloud::netapp::v1::CreateBackupRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  CreateBackup(NoAwaitTag, google::cloud::netapp::v1::CreateBackupRequest const& request);
 
-  virtual future<StatusOr<google::cloud::netapp::v1::Backup>> CreateBackup(
-      google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::netapp::v1::Backup>>
+  CreateBackup( google::longrunning::Operation const& operation);
 
-  virtual StatusOr<google::cloud::netapp::v1::Backup> GetBackup(
-      google::cloud::netapp::v1::GetBackupRequest const& request);
+  virtual StatusOr<google::cloud::netapp::v1::Backup>
+  GetBackup(google::cloud::netapp::v1::GetBackupRequest const& request);
 
-  virtual StreamRange<google::cloud::netapp::v1::Backup> ListBackups(
-      google::cloud::netapp::v1::ListBackupsRequest request);
+  virtual StreamRange<google::cloud::netapp::v1::Backup>
+  ListBackups(google::cloud::netapp::v1::ListBackupsRequest request);
 
   virtual future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
   DeleteBackup(google::cloud::netapp::v1::DeleteBackupRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> DeleteBackup(
-      NoAwaitTag,
-      google::cloud::netapp::v1::DeleteBackupRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  DeleteBackup(NoAwaitTag, google::cloud::netapp::v1::DeleteBackupRequest const& request);
 
   virtual future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
-  DeleteBackup(google::longrunning::Operation const& operation);
+  DeleteBackup( google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<google::cloud::netapp::v1::Backup>> UpdateBackup(
-      google::cloud::netapp::v1::UpdateBackupRequest const& request);
+  virtual future<StatusOr<google::cloud::netapp::v1::Backup>>
+  UpdateBackup(google::cloud::netapp::v1::UpdateBackupRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> UpdateBackup(
-      NoAwaitTag,
-      google::cloud::netapp::v1::UpdateBackupRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  UpdateBackup(NoAwaitTag, google::cloud::netapp::v1::UpdateBackupRequest const& request);
 
-  virtual future<StatusOr<google::cloud::netapp::v1::Backup>> UpdateBackup(
-      google::longrunning::Operation const& operation);
-
-  virtual future<StatusOr<google::cloud::netapp::v1::BackupPolicy>>
-  CreateBackupPolicy(
-      google::cloud::netapp::v1::CreateBackupPolicyRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation> CreateBackupPolicy(
-      NoAwaitTag,
-      google::cloud::netapp::v1::CreateBackupPolicyRequest const& request);
+  virtual future<StatusOr<google::cloud::netapp::v1::Backup>>
+  UpdateBackup( google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::netapp::v1::BackupPolicy>>
-  CreateBackupPolicy(google::longrunning::Operation const& operation);
+  CreateBackupPolicy(google::cloud::netapp::v1::CreateBackupPolicyRequest const& request);
 
-  virtual StatusOr<google::cloud::netapp::v1::BackupPolicy> GetBackupPolicy(
-      google::cloud::netapp::v1::GetBackupPolicyRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  CreateBackupPolicy(NoAwaitTag, google::cloud::netapp::v1::CreateBackupPolicyRequest const& request);
+
+  virtual future<StatusOr<google::cloud::netapp::v1::BackupPolicy>>
+  CreateBackupPolicy( google::longrunning::Operation const& operation);
+
+  virtual StatusOr<google::cloud::netapp::v1::BackupPolicy>
+  GetBackupPolicy(google::cloud::netapp::v1::GetBackupPolicyRequest const& request);
 
   virtual StreamRange<google::cloud::netapp::v1::BackupPolicy>
-  ListBackupPolicies(
-      google::cloud::netapp::v1::ListBackupPoliciesRequest request);
+  ListBackupPolicies(google::cloud::netapp::v1::ListBackupPoliciesRequest request);
 
   virtual future<StatusOr<google::cloud::netapp::v1::BackupPolicy>>
-  UpdateBackupPolicy(
-      google::cloud::netapp::v1::UpdateBackupPolicyRequest const& request);
+  UpdateBackupPolicy(google::cloud::netapp::v1::UpdateBackupPolicyRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> UpdateBackupPolicy(
-      NoAwaitTag,
-      google::cloud::netapp::v1::UpdateBackupPolicyRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  UpdateBackupPolicy(NoAwaitTag, google::cloud::netapp::v1::UpdateBackupPolicyRequest const& request);
 
   virtual future<StatusOr<google::cloud::netapp::v1::BackupPolicy>>
-  UpdateBackupPolicy(google::longrunning::Operation const& operation);
+  UpdateBackupPolicy( google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
-  DeleteBackupPolicy(
-      google::cloud::netapp::v1::DeleteBackupPolicyRequest const& request);
+  DeleteBackupPolicy(google::cloud::netapp::v1::DeleteBackupPolicyRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> DeleteBackupPolicy(
-      NoAwaitTag,
-      google::cloud::netapp::v1::DeleteBackupPolicyRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  DeleteBackupPolicy(NoAwaitTag, google::cloud::netapp::v1::DeleteBackupPolicyRequest const& request);
 
   virtual future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
-  DeleteBackupPolicy(google::longrunning::Operation const& operation);
+  DeleteBackupPolicy( google::longrunning::Operation const& operation);
 
-  virtual StreamRange<google::cloud::netapp::v1::QuotaRule> ListQuotaRules(
-      google::cloud::netapp::v1::ListQuotaRulesRequest request);
+  virtual StreamRange<google::cloud::netapp::v1::QuotaRule>
+  ListQuotaRules(google::cloud::netapp::v1::ListQuotaRulesRequest request);
 
-  virtual StatusOr<google::cloud::netapp::v1::QuotaRule> GetQuotaRule(
-      google::cloud::netapp::v1::GetQuotaRuleRequest const& request);
-
-  virtual future<StatusOr<google::cloud::netapp::v1::QuotaRule>>
-  CreateQuotaRule(
-      google::cloud::netapp::v1::CreateQuotaRuleRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation> CreateQuotaRule(
-      NoAwaitTag,
-      google::cloud::netapp::v1::CreateQuotaRuleRequest const& request);
+  virtual StatusOr<google::cloud::netapp::v1::QuotaRule>
+  GetQuotaRule(google::cloud::netapp::v1::GetQuotaRuleRequest const& request);
 
   virtual future<StatusOr<google::cloud::netapp::v1::QuotaRule>>
-  CreateQuotaRule(google::longrunning::Operation const& operation);
+  CreateQuotaRule(google::cloud::netapp::v1::CreateQuotaRuleRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation>
+  CreateQuotaRule(NoAwaitTag, google::cloud::netapp::v1::CreateQuotaRuleRequest const& request);
 
   virtual future<StatusOr<google::cloud::netapp::v1::QuotaRule>>
-  UpdateQuotaRule(
-      google::cloud::netapp::v1::UpdateQuotaRuleRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation> UpdateQuotaRule(
-      NoAwaitTag,
-      google::cloud::netapp::v1::UpdateQuotaRuleRequest const& request);
+  CreateQuotaRule( google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::netapp::v1::QuotaRule>>
-  UpdateQuotaRule(google::longrunning::Operation const& operation);
+  UpdateQuotaRule(google::cloud::netapp::v1::UpdateQuotaRuleRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation>
+  UpdateQuotaRule(NoAwaitTag, google::cloud::netapp::v1::UpdateQuotaRuleRequest const& request);
+
+  virtual future<StatusOr<google::cloud::netapp::v1::QuotaRule>>
+  UpdateQuotaRule( google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
-  DeleteQuotaRule(
-      google::cloud::netapp::v1::DeleteQuotaRuleRequest const& request);
+  DeleteQuotaRule(google::cloud::netapp::v1::DeleteQuotaRuleRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> DeleteQuotaRule(
-      NoAwaitTag,
-      google::cloud::netapp::v1::DeleteQuotaRuleRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  DeleteQuotaRule(NoAwaitTag, google::cloud::netapp::v1::DeleteQuotaRuleRequest const& request);
 
   virtual future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
-  DeleteQuotaRule(google::longrunning::Operation const& operation);
+  DeleteQuotaRule( google::longrunning::Operation const& operation);
 
-  virtual StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request);
+  virtual StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request);
 
-  virtual StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request);
+  virtual StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request);
 
-  virtual StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 
-  virtual Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request);
+  virtual Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
 
-  virtual Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request);
+  virtual Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request);
 };
 
 /**
@@ -712,7 +633,8 @@ class NetAppConnection {
  * @param options (optional) Configure the `NetAppConnection` created by
  * this function.
  */
-std::shared_ptr<NetAppConnection> MakeNetAppConnection(Options options = {});
+std::shared_ptr<NetAppConnection> MakeNetAppConnection(
+    Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace netapp_v1

@@ -17,12 +17,12 @@
 // source: google/cloud/compute/target_http_proxies/v1/target_http_proxies.proto
 
 #include "google/cloud/compute/target_http_proxies/v1/target_http_proxies_rest_connection.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/compute/target_http_proxies/v1/internal/target_http_proxies_option_defaults.h"
 #include "google/cloud/compute/target_http_proxies/v1/internal/target_http_proxies_rest_connection_impl.h"
 #include "google/cloud/compute/target_http_proxies/v1/internal/target_http_proxies_rest_stub_factory.h"
 #include "google/cloud/compute/target_http_proxies/v1/internal/target_http_proxies_tracing_connection.h"
 #include "google/cloud/compute/target_http_proxies/v1/target_http_proxies_options.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/rest_background_threads_impl.h"
 #include "google/cloud/internal/rest_options.h"
@@ -34,24 +34,21 @@ namespace cloud {
 namespace compute_target_http_proxies_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<TargetHttpProxiesConnection>
-MakeTargetHttpProxiesConnectionRest(Options options) {
-  internal::CheckExpectedOptions<
-      CommonOptionList, RestOptionList, UnifiedCredentialsOptionList,
-      rest_internal::TargetApiVersionOption, TargetHttpProxiesPolicyOptionList>(
-      options, __func__);
-  options =
-      compute_target_http_proxies_v1_internal::TargetHttpProxiesDefaultOptions(
-          std::move(options));
+std::shared_ptr<TargetHttpProxiesConnection> MakeTargetHttpProxiesConnectionRest(
+    Options options) {
+  internal::CheckExpectedOptions<CommonOptionList, RestOptionList,
+      UnifiedCredentialsOptionList, rest_internal::TargetApiVersionOption,
+      TargetHttpProxiesPolicyOptionList>(options, __func__);
+  options = compute_target_http_proxies_v1_internal::TargetHttpProxiesDefaultOptions(
+      std::move(options));
   auto background = std::make_unique<
       rest_internal::AutomaticallyCreatedRestBackgroundThreads>();
-  auto stub = compute_target_http_proxies_v1_internal::
-      CreateDefaultTargetHttpProxiesRestStub(options);
-  return compute_target_http_proxies_v1_internal::
-      MakeTargetHttpProxiesTracingConnection(
-          std::make_shared<compute_target_http_proxies_v1_internal::
-                               TargetHttpProxiesRestConnectionImpl>(
-              std::move(background), std::move(stub), std::move(options)));
+  auto stub = compute_target_http_proxies_v1_internal::CreateDefaultTargetHttpProxiesRestStub(
+      options);
+  return compute_target_http_proxies_v1_internal::MakeTargetHttpProxiesTracingConnection(
+      std::make_shared<
+          compute_target_http_proxies_v1_internal::TargetHttpProxiesRestConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

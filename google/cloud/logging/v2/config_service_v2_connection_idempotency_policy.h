@@ -35,117 +35,116 @@ class ConfigServiceV2ConnectionIdempotencyPolicy {
   virtual ~ConfigServiceV2ConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<ConfigServiceV2ConnectionIdempotencyPolicy> clone()
-      const;
+  virtual std::unique_ptr<ConfigServiceV2ConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency ListBuckets(
-      google::logging::v2::ListBucketsRequest request);
+  virtual google::cloud::Idempotency
+  ListBuckets(google::logging::v2::ListBucketsRequest request);
 
-  virtual google::cloud::Idempotency GetBucket(
-      google::logging::v2::GetBucketRequest const& request);
+  virtual google::cloud::Idempotency
+  GetBucket(google::logging::v2::GetBucketRequest const& request);
 
-  virtual google::cloud::Idempotency CreateBucketAsync(
-      google::logging::v2::CreateBucketRequest const& request);
+  virtual google::cloud::Idempotency
+  CreateBucketAsync(google::logging::v2::CreateBucketRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateBucketAsync(
-      google::logging::v2::UpdateBucketRequest const& request);
+  virtual google::cloud::Idempotency
+  UpdateBucketAsync(google::logging::v2::UpdateBucketRequest const& request);
 
-  virtual google::cloud::Idempotency CreateBucket(
-      google::logging::v2::CreateBucketRequest const& request);
+  virtual google::cloud::Idempotency
+  CreateBucket(google::logging::v2::CreateBucketRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateBucket(
-      google::logging::v2::UpdateBucketRequest const& request);
+  virtual google::cloud::Idempotency
+  UpdateBucket(google::logging::v2::UpdateBucketRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteBucket(
-      google::logging::v2::DeleteBucketRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteBucket(google::logging::v2::DeleteBucketRequest const& request);
 
-  virtual google::cloud::Idempotency UndeleteBucket(
-      google::logging::v2::UndeleteBucketRequest const& request);
+  virtual google::cloud::Idempotency
+  UndeleteBucket(google::logging::v2::UndeleteBucketRequest const& request);
 
-  virtual google::cloud::Idempotency ListViews(
-      google::logging::v2::ListViewsRequest request);
+  virtual google::cloud::Idempotency
+  ListViews(google::logging::v2::ListViewsRequest request);
 
-  virtual google::cloud::Idempotency GetView(
-      google::logging::v2::GetViewRequest const& request);
+  virtual google::cloud::Idempotency
+  GetView(google::logging::v2::GetViewRequest const& request);
 
-  virtual google::cloud::Idempotency CreateView(
-      google::logging::v2::CreateViewRequest const& request);
+  virtual google::cloud::Idempotency
+  CreateView(google::logging::v2::CreateViewRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateView(
-      google::logging::v2::UpdateViewRequest const& request);
+  virtual google::cloud::Idempotency
+  UpdateView(google::logging::v2::UpdateViewRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteView(
-      google::logging::v2::DeleteViewRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteView(google::logging::v2::DeleteViewRequest const& request);
 
-  virtual google::cloud::Idempotency ListSinks(
-      google::logging::v2::ListSinksRequest request);
+  virtual google::cloud::Idempotency
+  ListSinks(google::logging::v2::ListSinksRequest request);
 
-  virtual google::cloud::Idempotency GetSink(
-      google::logging::v2::GetSinkRequest const& request);
+  virtual google::cloud::Idempotency
+  GetSink(google::logging::v2::GetSinkRequest const& request);
 
-  virtual google::cloud::Idempotency CreateSink(
-      google::logging::v2::CreateSinkRequest const& request);
+  virtual google::cloud::Idempotency
+  CreateSink(google::logging::v2::CreateSinkRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateSink(
-      google::logging::v2::UpdateSinkRequest const& request);
+  virtual google::cloud::Idempotency
+  UpdateSink(google::logging::v2::UpdateSinkRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteSink(
-      google::logging::v2::DeleteSinkRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteSink(google::logging::v2::DeleteSinkRequest const& request);
 
-  virtual google::cloud::Idempotency CreateLink(
-      google::logging::v2::CreateLinkRequest const& request);
+  virtual google::cloud::Idempotency
+  CreateLink(google::logging::v2::CreateLinkRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteLink(
-      google::logging::v2::DeleteLinkRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteLink(google::logging::v2::DeleteLinkRequest const& request);
 
-  virtual google::cloud::Idempotency ListLinks(
-      google::logging::v2::ListLinksRequest request);
+  virtual google::cloud::Idempotency
+  ListLinks(google::logging::v2::ListLinksRequest request);
 
-  virtual google::cloud::Idempotency GetLink(
-      google::logging::v2::GetLinkRequest const& request);
+  virtual google::cloud::Idempotency
+  GetLink(google::logging::v2::GetLinkRequest const& request);
 
-  virtual google::cloud::Idempotency ListExclusions(
-      google::logging::v2::ListExclusionsRequest request);
+  virtual google::cloud::Idempotency
+  ListExclusions(google::logging::v2::ListExclusionsRequest request);
 
-  virtual google::cloud::Idempotency GetExclusion(
-      google::logging::v2::GetExclusionRequest const& request);
+  virtual google::cloud::Idempotency
+  GetExclusion(google::logging::v2::GetExclusionRequest const& request);
 
-  virtual google::cloud::Idempotency CreateExclusion(
-      google::logging::v2::CreateExclusionRequest const& request);
+  virtual google::cloud::Idempotency
+  CreateExclusion(google::logging::v2::CreateExclusionRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateExclusion(
-      google::logging::v2::UpdateExclusionRequest const& request);
+  virtual google::cloud::Idempotency
+  UpdateExclusion(google::logging::v2::UpdateExclusionRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteExclusion(
-      google::logging::v2::DeleteExclusionRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteExclusion(google::logging::v2::DeleteExclusionRequest const& request);
 
-  virtual google::cloud::Idempotency GetCmekSettings(
-      google::logging::v2::GetCmekSettingsRequest const& request);
+  virtual google::cloud::Idempotency
+  GetCmekSettings(google::logging::v2::GetCmekSettingsRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateCmekSettings(
-      google::logging::v2::UpdateCmekSettingsRequest const& request);
+  virtual google::cloud::Idempotency
+  UpdateCmekSettings(google::logging::v2::UpdateCmekSettingsRequest const& request);
 
-  virtual google::cloud::Idempotency GetSettings(
-      google::logging::v2::GetSettingsRequest const& request);
+  virtual google::cloud::Idempotency
+  GetSettings(google::logging::v2::GetSettingsRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateSettings(
-      google::logging::v2::UpdateSettingsRequest const& request);
+  virtual google::cloud::Idempotency
+  UpdateSettings(google::logging::v2::UpdateSettingsRequest const& request);
 
-  virtual google::cloud::Idempotency CopyLogEntries(
-      google::logging::v2::CopyLogEntriesRequest const& request);
+  virtual google::cloud::Idempotency
+  CopyLogEntries(google::logging::v2::CopyLogEntriesRequest const& request);
 
-  virtual google::cloud::Idempotency ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual google::cloud::Idempotency
+  ListOperations(google::longrunning::ListOperationsRequest request);
 
-  virtual google::cloud::Idempotency GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 
-  virtual google::cloud::Idempotency CancelOperation(
-      google::longrunning::CancelOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  CancelOperation(google::longrunning::CancelOperationRequest const& request);
 };
 
 std::unique_ptr<ConfigServiceV2ConnectionIdempotencyPolicy>
-MakeDefaultConfigServiceV2ConnectionIdempotencyPolicy();
+    MakeDefaultConfigServiceV2ConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace logging_v2

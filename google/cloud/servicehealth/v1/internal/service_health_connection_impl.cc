@@ -17,12 +17,12 @@
 // source: google/cloud/servicehealth/v1/event_service.proto
 
 #include "google/cloud/servicehealth/v1/internal/service_health_connection_impl.h"
-#include "google/cloud/servicehealth/v1/internal/service_health_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
+#include "google/cloud/servicehealth/v1/internal/service_health_option_defaults.h"
 #include <memory>
 #include <utility>
 
@@ -32,63 +32,54 @@ namespace servicehealth_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<servicehealth_v1::ServiceHealthRetryPolicy> retry_policy(
-    Options const& options) {
-  return options.get<servicehealth_v1::ServiceHealthRetryPolicyOption>()
-      ->clone();
+std::unique_ptr<servicehealth_v1::ServiceHealthRetryPolicy>
+retry_policy(Options const& options) {
+  return options.get<servicehealth_v1::ServiceHealthRetryPolicyOption>()->clone();
 }
 
-std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-  return options.get<servicehealth_v1::ServiceHealthBackoffPolicyOption>()
-      ->clone();
+std::unique_ptr<BackoffPolicy>
+backoff_policy(Options const& options) {
+  return options.get<servicehealth_v1::ServiceHealthBackoffPolicyOption>()->clone();
 }
 
 std::unique_ptr<servicehealth_v1::ServiceHealthConnectionIdempotencyPolicy>
 idempotency_policy(Options const& options) {
-  return options
-      .get<servicehealth_v1::ServiceHealthConnectionIdempotencyPolicyOption>()
-      ->clone();
+  return options.get<servicehealth_v1::ServiceHealthConnectionIdempotencyPolicyOption>()->clone();
 }
 
-}  // namespace
+} // namespace
 
 ServiceHealthConnectionImpl::ServiceHealthConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<servicehealth_v1_internal::ServiceHealthStub> stub,
     Options options)
-    : background_(std::move(background)),
-      stub_(std::move(stub)),
-      options_(internal::MergeOptions(std::move(options),
-                                      ServiceHealthConnection::options())) {}
+  : background_(std::move(background)), stub_(std::move(stub)),
+    options_(internal::MergeOptions(
+        std::move(options),
+        ServiceHealthConnection::options())) {}
 
 StreamRange<google::cloud::servicehealth::v1::Event>
-ServiceHealthConnectionImpl::ListEvents(
-    google::cloud::servicehealth::v1::ListEventsRequest request) {
+ServiceHealthConnectionImpl::ListEvents(google::cloud::servicehealth::v1::ListEventsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListEvents(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::servicehealth::v1::Event>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::servicehealth::v1::Event>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<servicehealth_v1::ServiceHealthRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<servicehealth_v1::ServiceHealthRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::servicehealth::v1::ListEventsRequest const& r) {
+          Options const& options, google::cloud::servicehealth::v1::ListEventsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::servicehealth::v1::ListEventsRequest const&
-                       request) {
+                   google::cloud::servicehealth::v1::ListEventsRequest const& request) {
               return stub->ListEvents(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::servicehealth::v1::ListEventsResponse r) {
-        std::vector<google::cloud::servicehealth::v1::Event> result(
-            r.events().size());
+        std::vector<google::cloud::servicehealth::v1::Event> result(r.events().size());
         auto& messages = *r.mutable_events();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -96,8 +87,7 @@ ServiceHealthConnectionImpl::ListEvents(
 }
 
 StatusOr<google::cloud::servicehealth::v1::Event>
-ServiceHealthConnectionImpl::GetEvent(
-    google::cloud::servicehealth::v1::GetEventRequest const& request) {
+ServiceHealthConnectionImpl::GetEvent(google::cloud::servicehealth::v1::GetEventRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -110,35 +100,27 @@ ServiceHealthConnectionImpl::GetEvent(
 }
 
 StreamRange<google::cloud::servicehealth::v1::OrganizationEvent>
-ServiceHealthConnectionImpl::ListOrganizationEvents(
-    google::cloud::servicehealth::v1::ListOrganizationEventsRequest request) {
+ServiceHealthConnectionImpl::ListOrganizationEvents(google::cloud::servicehealth::v1::ListOrganizationEventsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
-  auto idempotency =
-      idempotency_policy(*current)->ListOrganizationEvents(request);
+  auto idempotency = idempotency_policy(*current)->ListOrganizationEvents(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::servicehealth::v1::OrganizationEvent>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::servicehealth::v1::OrganizationEvent>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<servicehealth_v1::ServiceHealthRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<servicehealth_v1::ServiceHealthRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::servicehealth::v1::ListOrganizationEventsRequest const&
-              r) {
+          Options const& options, google::cloud::servicehealth::v1::ListOrganizationEventsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::servicehealth::v1::
-                       ListOrganizationEventsRequest const& request) {
+                   google::cloud::servicehealth::v1::ListOrganizationEventsRequest const& request) {
               return stub->ListOrganizationEvents(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::servicehealth::v1::ListOrganizationEventsResponse r) {
-        std::vector<google::cloud::servicehealth::v1::OrganizationEvent> result(
-            r.organization_events().size());
+        std::vector<google::cloud::servicehealth::v1::OrganizationEvent> result(r.organization_events().size());
         auto& messages = *r.mutable_organization_events();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -146,51 +128,40 @@ ServiceHealthConnectionImpl::ListOrganizationEvents(
 }
 
 StatusOr<google::cloud::servicehealth::v1::OrganizationEvent>
-ServiceHealthConnectionImpl::GetOrganizationEvent(
-    google::cloud::servicehealth::v1::GetOrganizationEventRequest const&
-        request) {
+ServiceHealthConnectionImpl::GetOrganizationEvent(google::cloud::servicehealth::v1::GetOrganizationEventRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetOrganizationEvent(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::servicehealth::v1::GetOrganizationEventRequest const&
-              request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::servicehealth::v1::GetOrganizationEventRequest const& request) {
         return stub_->GetOrganizationEvent(context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::cloud::servicehealth::v1::OrganizationImpact>
-ServiceHealthConnectionImpl::ListOrganizationImpacts(
-    google::cloud::servicehealth::v1::ListOrganizationImpactsRequest request) {
+ServiceHealthConnectionImpl::ListOrganizationImpacts(google::cloud::servicehealth::v1::ListOrganizationImpactsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
-  auto idempotency =
-      idempotency_policy(*current)->ListOrganizationImpacts(request);
+  auto idempotency = idempotency_policy(*current)->ListOrganizationImpacts(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::servicehealth::v1::OrganizationImpact>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::servicehealth::v1::OrganizationImpact>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<servicehealth_v1::ServiceHealthRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<servicehealth_v1::ServiceHealthRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::servicehealth::v1::
-                                      ListOrganizationImpactsRequest const& r) {
+          Options const& options, google::cloud::servicehealth::v1::ListOrganizationImpactsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::servicehealth::v1::
-                       ListOrganizationImpactsRequest const& request) {
+                   google::cloud::servicehealth::v1::ListOrganizationImpactsRequest const& request) {
               return stub->ListOrganizationImpacts(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::servicehealth::v1::ListOrganizationImpactsResponse r) {
-        std::vector<google::cloud::servicehealth::v1::OrganizationImpact>
-            result(r.organization_impacts().size());
+        std::vector<google::cloud::servicehealth::v1::OrganizationImpact> result(r.organization_impacts().size());
         auto& messages = *r.mutable_organization_impacts();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -198,50 +169,40 @@ ServiceHealthConnectionImpl::ListOrganizationImpacts(
 }
 
 StatusOr<google::cloud::servicehealth::v1::OrganizationImpact>
-ServiceHealthConnectionImpl::GetOrganizationImpact(
-    google::cloud::servicehealth::v1::GetOrganizationImpactRequest const&
-        request) {
+ServiceHealthConnectionImpl::GetOrganizationImpact(google::cloud::servicehealth::v1::GetOrganizationImpactRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetOrganizationImpact(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::servicehealth::v1::GetOrganizationImpactRequest const&
-              request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::servicehealth::v1::GetOrganizationImpactRequest const& request) {
         return stub_->GetOrganizationImpact(context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::cloud::location::Location>
-ServiceHealthConnectionImpl::ListLocations(
-    google::cloud::location::ListLocationsRequest request) {
+ServiceHealthConnectionImpl::ListLocations(google::cloud::location::ListLocationsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListLocations(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::location::Location>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::location::Location>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<servicehealth_v1::ServiceHealthRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<servicehealth_v1::ServiceHealthRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::location::ListLocationsRequest const& r) {
+          Options const& options, google::cloud::location::ListLocationsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](
-                grpc::ClientContext& context, Options const& options,
-                google::cloud::location::ListLocationsRequest const& request) {
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::cloud::location::ListLocationsRequest const& request) {
               return stub->ListLocations(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::location::ListLocationsResponse r) {
-        std::vector<google::cloud::location::Location> result(
-            r.locations().size());
+        std::vector<google::cloud::location::Location> result(r.locations().size());
         auto& messages = *r.mutable_locations();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -249,8 +210,7 @@ ServiceHealthConnectionImpl::ListLocations(
 }
 
 StatusOr<google::cloud::location::Location>
-ServiceHealthConnectionImpl::GetLocation(
-    google::cloud::location::GetLocationRequest const& request) {
+ServiceHealthConnectionImpl::GetLocation(google::cloud::location::GetLocationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),

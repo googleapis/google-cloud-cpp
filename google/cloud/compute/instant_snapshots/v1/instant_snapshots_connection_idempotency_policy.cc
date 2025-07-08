@@ -26,71 +26,51 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-InstantSnapshotsConnectionIdempotencyPolicy::
-    ~InstantSnapshotsConnectionIdempotencyPolicy() = default;
+InstantSnapshotsConnectionIdempotencyPolicy::~InstantSnapshotsConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<InstantSnapshotsConnectionIdempotencyPolicy>
 InstantSnapshotsConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<InstantSnapshotsConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency
-InstantSnapshotsConnectionIdempotencyPolicy::AggregatedListInstantSnapshots(
-    google::cloud::cpp::compute::instant_snapshots::v1::
-        AggregatedListInstantSnapshotsRequest) {  // NOLINT
+Idempotency InstantSnapshotsConnectionIdempotencyPolicy::AggregatedListInstantSnapshots(google::cloud::cpp::compute::instant_snapshots::v1::AggregatedListInstantSnapshotsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency InstantSnapshotsConnectionIdempotencyPolicy::DeleteInstantSnapshot(
-    google::cloud::cpp::compute::instant_snapshots::v1::
-        DeleteInstantSnapshotRequest const&) {
+Idempotency InstantSnapshotsConnectionIdempotencyPolicy::DeleteInstantSnapshot(google::cloud::cpp::compute::instant_snapshots::v1::DeleteInstantSnapshotRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency InstantSnapshotsConnectionIdempotencyPolicy::GetInstantSnapshot(
-    google::cloud::cpp::compute::instant_snapshots::v1::
-        GetInstantSnapshotRequest const&) {
+Idempotency InstantSnapshotsConnectionIdempotencyPolicy::GetInstantSnapshot(google::cloud::cpp::compute::instant_snapshots::v1::GetInstantSnapshotRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency InstantSnapshotsConnectionIdempotencyPolicy::GetIamPolicy(
-    google::cloud::cpp::compute::instant_snapshots::v1::
-        GetIamPolicyRequest const&) {
+Idempotency InstantSnapshotsConnectionIdempotencyPolicy::GetIamPolicy(google::cloud::cpp::compute::instant_snapshots::v1::GetIamPolicyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency InstantSnapshotsConnectionIdempotencyPolicy::InsertInstantSnapshot(
-    google::cloud::cpp::compute::instant_snapshots::v1::
-        InsertInstantSnapshotRequest const&) {
+Idempotency InstantSnapshotsConnectionIdempotencyPolicy::InsertInstantSnapshot(google::cloud::cpp::compute::instant_snapshots::v1::InsertInstantSnapshotRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency InstantSnapshotsConnectionIdempotencyPolicy::ListInstantSnapshots(
-    google::cloud::cpp::compute::instant_snapshots::v1::
-        ListInstantSnapshotsRequest) {  // NOLINT
+Idempotency InstantSnapshotsConnectionIdempotencyPolicy::ListInstantSnapshots(google::cloud::cpp::compute::instant_snapshots::v1::ListInstantSnapshotsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency InstantSnapshotsConnectionIdempotencyPolicy::SetIamPolicy(
-    google::cloud::cpp::compute::instant_snapshots::v1::
-        SetIamPolicyRequest const&) {
+Idempotency InstantSnapshotsConnectionIdempotencyPolicy::SetIamPolicy(google::cloud::cpp::compute::instant_snapshots::v1::SetIamPolicyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency InstantSnapshotsConnectionIdempotencyPolicy::SetLabels(
-    google::cloud::cpp::compute::instant_snapshots::v1::
-        SetLabelsRequest const&) {
+Idempotency InstantSnapshotsConnectionIdempotencyPolicy::SetLabels(google::cloud::cpp::compute::instant_snapshots::v1::SetLabelsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency InstantSnapshotsConnectionIdempotencyPolicy::TestIamPermissions(
-    google::cloud::cpp::compute::instant_snapshots::v1::
-        TestIamPermissionsRequest const&) {
+Idempotency InstantSnapshotsConnectionIdempotencyPolicy::TestIamPermissions(google::cloud::cpp::compute::instant_snapshots::v1::TestIamPermissionsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<InstantSnapshotsConnectionIdempotencyPolicy>
-MakeDefaultInstantSnapshotsConnectionIdempotencyPolicy() {
+    MakeDefaultInstantSnapshotsConnectionIdempotencyPolicy() {
   return std::make_unique<InstantSnapshotsConnectionIdempotencyPolicy>();
 }
 

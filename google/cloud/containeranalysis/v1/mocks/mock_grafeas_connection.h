@@ -46,54 +46,61 @@ class MockGrafeasConnection : public containeranalysis_v1::GrafeasConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<grafeas::v1::Occurrence>, GetOccurrence,
-              (grafeas::v1::GetOccurrenceRequest const& request), (override));
+  MOCK_METHOD(StatusOr<grafeas::v1::Occurrence>,
+  GetOccurrence,
+  (grafeas::v1::GetOccurrenceRequest const& request), (override));
 
-  MOCK_METHOD((StreamRange<grafeas::v1::Occurrence>), ListOccurrences,
-              (grafeas::v1::ListOccurrencesRequest request), (override));
+  MOCK_METHOD((StreamRange<grafeas::v1::Occurrence>),
+  ListOccurrences,
+  (grafeas::v1::ListOccurrencesRequest request), (override));
 
-  MOCK_METHOD(Status, DeleteOccurrence,
-              (grafeas::v1::DeleteOccurrenceRequest const& request),
-              (override));
+  MOCK_METHOD(Status,
+  DeleteOccurrence,
+  (grafeas::v1::DeleteOccurrenceRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<grafeas::v1::Occurrence>, CreateOccurrence,
-              (grafeas::v1::CreateOccurrenceRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<grafeas::v1::Occurrence>,
+  CreateOccurrence,
+  (grafeas::v1::CreateOccurrenceRequest const& request), (override));
 
   MOCK_METHOD(StatusOr<grafeas::v1::BatchCreateOccurrencesResponse>,
-              BatchCreateOccurrences,
-              (grafeas::v1::BatchCreateOccurrencesRequest const& request),
-              (override));
+  BatchCreateOccurrences,
+  (grafeas::v1::BatchCreateOccurrencesRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<grafeas::v1::Occurrence>, UpdateOccurrence,
-              (grafeas::v1::UpdateOccurrenceRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<grafeas::v1::Occurrence>,
+  UpdateOccurrence,
+  (grafeas::v1::UpdateOccurrenceRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<grafeas::v1::Note>, GetOccurrenceNote,
-              (grafeas::v1::GetOccurrenceNoteRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<grafeas::v1::Note>,
+  GetOccurrenceNote,
+  (grafeas::v1::GetOccurrenceNoteRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<grafeas::v1::Note>, GetNote,
-              (grafeas::v1::GetNoteRequest const& request), (override));
+  MOCK_METHOD(StatusOr<grafeas::v1::Note>,
+  GetNote,
+  (grafeas::v1::GetNoteRequest const& request), (override));
 
-  MOCK_METHOD((StreamRange<grafeas::v1::Note>), ListNotes,
-              (grafeas::v1::ListNotesRequest request), (override));
+  MOCK_METHOD((StreamRange<grafeas::v1::Note>),
+  ListNotes,
+  (grafeas::v1::ListNotesRequest request), (override));
 
-  MOCK_METHOD(Status, DeleteNote,
-              (grafeas::v1::DeleteNoteRequest const& request), (override));
+  MOCK_METHOD(Status,
+  DeleteNote,
+  (grafeas::v1::DeleteNoteRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<grafeas::v1::Note>, CreateNote,
-              (grafeas::v1::CreateNoteRequest const& request), (override));
+  MOCK_METHOD(StatusOr<grafeas::v1::Note>,
+  CreateNote,
+  (grafeas::v1::CreateNoteRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<grafeas::v1::BatchCreateNotesResponse>, BatchCreateNotes,
-              (grafeas::v1::BatchCreateNotesRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<grafeas::v1::BatchCreateNotesResponse>,
+  BatchCreateNotes,
+  (grafeas::v1::BatchCreateNotesRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<grafeas::v1::Note>, UpdateNote,
-              (grafeas::v1::UpdateNoteRequest const& request), (override));
+  MOCK_METHOD(StatusOr<grafeas::v1::Note>,
+  UpdateNote,
+  (grafeas::v1::UpdateNoteRequest const& request), (override));
 
-  MOCK_METHOD((StreamRange<grafeas::v1::Occurrence>), ListNoteOccurrences,
-              (grafeas::v1::ListNoteOccurrencesRequest request), (override));
+  MOCK_METHOD((StreamRange<grafeas::v1::Occurrence>),
+  ListNoteOccurrences,
+  (grafeas::v1::ListNoteOccurrencesRequest request), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

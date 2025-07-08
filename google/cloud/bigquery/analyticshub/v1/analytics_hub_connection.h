@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_ANALYTICSHUB_V1_ANALYTICS_HUB_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_ANALYTICSHUB_V1_ANALYTICS_HUB_CONNECTION_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/bigquery/analyticshub/v1/analytics_hub_connection_idempotency_policy.h"
 #include "google/cloud/bigquery/analyticshub/v1/internal/analytics_hub_retry_traits.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -56,8 +56,7 @@ class AnalyticsHubServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class AnalyticsHubServiceLimitedErrorCountRetryPolicy
-    : public AnalyticsHubServiceRetryPolicy {
+class AnalyticsHubServiceLimitedErrorCountRetryPolicy : public AnalyticsHubServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -67,16 +66,14 @@ class AnalyticsHubServiceLimitedErrorCountRetryPolicy
    *     @p maximum_failures == 0.
    */
   explicit AnalyticsHubServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   AnalyticsHubServiceLimitedErrorCountRetryPolicy(
       AnalyticsHubServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : AnalyticsHubServiceLimitedErrorCountRetryPolicy(
-            rhs.maximum_failures()) {}
+    : AnalyticsHubServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   AnalyticsHubServiceLimitedErrorCountRetryPolicy(
       AnalyticsHubServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : AnalyticsHubServiceLimitedErrorCountRetryPolicy(
-            rhs.maximum_failures()) {}
+    : AnalyticsHubServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -96,9 +93,7 @@ class AnalyticsHubServiceLimitedErrorCountRetryPolicy
   using BaseType = AnalyticsHubServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      bigquery_analyticshub_v1_internal::AnalyticsHubServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<bigquery_analyticshub_v1_internal::AnalyticsHubServiceRetryTraits> impl_;
 };
 
 /**
@@ -111,8 +106,7 @@ class AnalyticsHubServiceLimitedErrorCountRetryPolicy
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class AnalyticsHubServiceLimitedTimeRetryPolicy
-    : public AnalyticsHubServiceRetryPolicy {
+class AnalyticsHubServiceLimitedTimeRetryPolicy : public AnalyticsHubServiceRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -137,14 +131,12 @@ class AnalyticsHubServiceLimitedTimeRetryPolicy
   template <typename DurationRep, typename DurationPeriod>
   explicit AnalyticsHubServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  AnalyticsHubServiceLimitedTimeRetryPolicy(
-      AnalyticsHubServiceLimitedTimeRetryPolicy&& rhs) noexcept
-      : AnalyticsHubServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  AnalyticsHubServiceLimitedTimeRetryPolicy(
-      AnalyticsHubServiceLimitedTimeRetryPolicy const& rhs) noexcept
-      : AnalyticsHubServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  AnalyticsHubServiceLimitedTimeRetryPolicy(AnalyticsHubServiceLimitedTimeRetryPolicy&& rhs) noexcept
+    : AnalyticsHubServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  AnalyticsHubServiceLimitedTimeRetryPolicy(AnalyticsHubServiceLimitedTimeRetryPolicy const& rhs) noexcept
+    : AnalyticsHubServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -166,23 +158,20 @@ class AnalyticsHubServiceLimitedTimeRetryPolicy
   using BaseType = AnalyticsHubServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      bigquery_analyticshub_v1_internal::AnalyticsHubServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<bigquery_analyticshub_v1_internal::AnalyticsHubServiceRetryTraits> impl_;
 };
 
 /**
  * The `AnalyticsHubServiceConnection` object for `AnalyticsHubServiceClient`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `AnalyticsHubServiceClient`. This allows users to inject custom
- * behavior (e.g., with a Google Mock object) when writing tests that use
- * objects of type `AnalyticsHubServiceClient`.
+ * sets in `AnalyticsHubServiceClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `AnalyticsHubServiceClient`.
  *
  * To create a concrete instance, see `MakeAnalyticsHubServiceConnection()`.
  *
- * For mocking, see
- * `bigquery_analyticshub_v1_mocks::MockAnalyticsHubServiceConnection`.
+ * For mocking, see `bigquery_analyticshub_v1_mocks::MockAnalyticsHubServiceConnection`.
  */
 class AnalyticsHubServiceConnection {
  public:
@@ -191,155 +180,113 @@ class AnalyticsHubServiceConnection {
   virtual Options options() { return Options{}; }
 
   virtual StreamRange<google::cloud::bigquery::analyticshub::v1::DataExchange>
-  ListDataExchanges(
-      google::cloud::bigquery::analyticshub::v1::ListDataExchangesRequest
-          request);
+  ListDataExchanges(google::cloud::bigquery::analyticshub::v1::ListDataExchangesRequest request);
 
   virtual StreamRange<google::cloud::bigquery::analyticshub::v1::DataExchange>
-  ListOrgDataExchanges(
-      google::cloud::bigquery::analyticshub::v1::ListOrgDataExchangesRequest
-          request);
+  ListOrgDataExchanges(google::cloud::bigquery::analyticshub::v1::ListOrgDataExchangesRequest request);
 
   virtual StatusOr<google::cloud::bigquery::analyticshub::v1::DataExchange>
-  GetDataExchange(
-      google::cloud::bigquery::analyticshub::v1::GetDataExchangeRequest const&
-          request);
+  GetDataExchange(google::cloud::bigquery::analyticshub::v1::GetDataExchangeRequest const& request);
 
   virtual StatusOr<google::cloud::bigquery::analyticshub::v1::DataExchange>
-  CreateDataExchange(google::cloud::bigquery::analyticshub::v1::
-                         CreateDataExchangeRequest const& request);
+  CreateDataExchange(google::cloud::bigquery::analyticshub::v1::CreateDataExchangeRequest const& request);
 
   virtual StatusOr<google::cloud::bigquery::analyticshub::v1::DataExchange>
-  UpdateDataExchange(google::cloud::bigquery::analyticshub::v1::
-                         UpdateDataExchangeRequest const& request);
+  UpdateDataExchange(google::cloud::bigquery::analyticshub::v1::UpdateDataExchangeRequest const& request);
 
-  virtual Status DeleteDataExchange(
-      google::cloud::bigquery::analyticshub::v1::
-          DeleteDataExchangeRequest const& request);
+  virtual Status
+  DeleteDataExchange(google::cloud::bigquery::analyticshub::v1::DeleteDataExchangeRequest const& request);
 
   virtual StreamRange<google::cloud::bigquery::analyticshub::v1::Listing>
-  ListListings(
-      google::cloud::bigquery::analyticshub::v1::ListListingsRequest request);
+  ListListings(google::cloud::bigquery::analyticshub::v1::ListListingsRequest request);
 
   virtual StatusOr<google::cloud::bigquery::analyticshub::v1::Listing>
-  GetListing(google::cloud::bigquery::analyticshub::v1::GetListingRequest const&
-                 request);
+  GetListing(google::cloud::bigquery::analyticshub::v1::GetListingRequest const& request);
 
   virtual StatusOr<google::cloud::bigquery::analyticshub::v1::Listing>
-  CreateListing(
-      google::cloud::bigquery::analyticshub::v1::CreateListingRequest const&
-          request);
+  CreateListing(google::cloud::bigquery::analyticshub::v1::CreateListingRequest const& request);
 
   virtual StatusOr<google::cloud::bigquery::analyticshub::v1::Listing>
-  UpdateListing(
-      google::cloud::bigquery::analyticshub::v1::UpdateListingRequest const&
-          request);
+  UpdateListing(google::cloud::bigquery::analyticshub::v1::UpdateListingRequest const& request);
 
-  virtual Status DeleteListing(
-      google::cloud::bigquery::analyticshub::v1::DeleteListingRequest const&
-          request);
+  virtual Status
+  DeleteListing(google::cloud::bigquery::analyticshub::v1::DeleteListingRequest const& request);
 
-  virtual StatusOr<
-      google::cloud::bigquery::analyticshub::v1::SubscribeListingResponse>
-  SubscribeListing(
-      google::cloud::bigquery::analyticshub::v1::SubscribeListingRequest const&
-          request);
+  virtual StatusOr<google::cloud::bigquery::analyticshub::v1::SubscribeListingResponse>
+  SubscribeListing(google::cloud::bigquery::analyticshub::v1::SubscribeListingRequest const& request);
 
-  virtual future<StatusOr<
-      google::cloud::bigquery::analyticshub::v1::SubscribeDataExchangeResponse>>
-  SubscribeDataExchange(google::cloud::bigquery::analyticshub::v1::
-                            SubscribeDataExchangeRequest const& request);
+  virtual future<StatusOr<google::cloud::bigquery::analyticshub::v1::SubscribeDataExchangeResponse>>
+  SubscribeDataExchange(google::cloud::bigquery::analyticshub::v1::SubscribeDataExchangeRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> SubscribeDataExchange(
-      NoAwaitTag, google::cloud::bigquery::analyticshub::v1::
-                      SubscribeDataExchangeRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  SubscribeDataExchange(NoAwaitTag, google::cloud::bigquery::analyticshub::v1::SubscribeDataExchangeRequest const& request);
 
-  virtual future<StatusOr<
-      google::cloud::bigquery::analyticshub::v1::SubscribeDataExchangeResponse>>
-  SubscribeDataExchange(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::bigquery::analyticshub::v1::SubscribeDataExchangeResponse>>
+  SubscribeDataExchange( google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<
-      google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionResponse>>
-  RefreshSubscription(google::cloud::bigquery::analyticshub::v1::
-                          RefreshSubscriptionRequest const& request);
+  virtual future<StatusOr<google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionResponse>>
+  RefreshSubscription(google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> RefreshSubscription(
-      NoAwaitTag, google::cloud::bigquery::analyticshub::v1::
-                      RefreshSubscriptionRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  RefreshSubscription(NoAwaitTag, google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionRequest const& request);
 
-  virtual future<StatusOr<
-      google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionResponse>>
-  RefreshSubscription(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionResponse>>
+  RefreshSubscription( google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::bigquery::analyticshub::v1::Subscription>
-  GetSubscription(
-      google::cloud::bigquery::analyticshub::v1::GetSubscriptionRequest const&
-          request);
+  GetSubscription(google::cloud::bigquery::analyticshub::v1::GetSubscriptionRequest const& request);
 
   virtual StreamRange<google::cloud::bigquery::analyticshub::v1::Subscription>
-  ListSubscriptions(
-      google::cloud::bigquery::analyticshub::v1::ListSubscriptionsRequest
-          request);
+  ListSubscriptions(google::cloud::bigquery::analyticshub::v1::ListSubscriptionsRequest request);
 
   virtual StreamRange<google::cloud::bigquery::analyticshub::v1::Subscription>
-  ListSharedResourceSubscriptions(
-      google::cloud::bigquery::analyticshub::v1::
-          ListSharedResourceSubscriptionsRequest request);
+  ListSharedResourceSubscriptions(google::cloud::bigquery::analyticshub::v1::ListSharedResourceSubscriptionsRequest request);
 
-  virtual StatusOr<
-      google::cloud::bigquery::analyticshub::v1::RevokeSubscriptionResponse>
-  RevokeSubscription(google::cloud::bigquery::analyticshub::v1::
-                         RevokeSubscriptionRequest const& request);
+  virtual StatusOr<google::cloud::bigquery::analyticshub::v1::RevokeSubscriptionResponse>
+  RevokeSubscription(google::cloud::bigquery::analyticshub::v1::RevokeSubscriptionRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::bigquery::analyticshub::v1::OperationMetadata>>
-  DeleteSubscription(google::cloud::bigquery::analyticshub::v1::
-                         DeleteSubscriptionRequest const& request);
+  virtual future<StatusOr<google::cloud::bigquery::analyticshub::v1::OperationMetadata>>
+  DeleteSubscription(google::cloud::bigquery::analyticshub::v1::DeleteSubscriptionRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> DeleteSubscription(
-      NoAwaitTag, google::cloud::bigquery::analyticshub::v1::
-                      DeleteSubscriptionRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  DeleteSubscription(NoAwaitTag, google::cloud::bigquery::analyticshub::v1::DeleteSubscriptionRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::bigquery::analyticshub::v1::OperationMetadata>>
-  DeleteSubscription(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::bigquery::analyticshub::v1::OperationMetadata>>
+  DeleteSubscription( google::longrunning::Operation const& operation);
 
-  virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
 
   virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
   TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
 };
 
 /**
- * A factory function to construct an object of type
- * `AnalyticsHubServiceConnection`.
+ * A factory function to construct an object of type `AnalyticsHubServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of
- * AnalyticsHubServiceClient.
+ * should be passed as an argument to the constructor of AnalyticsHubServiceClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `AnalyticsHubServiceConnection`. Expected options are any of the
- * types in the following option lists:
+ * returned `AnalyticsHubServiceConnection`. Expected options are any of the types in
+ * the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * -
- * `google::cloud::bigquery_analyticshub_v1::AnalyticsHubServicePolicyOptionList`
+ * - `google::cloud::bigquery_analyticshub_v1::AnalyticsHubServicePolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
- * @param options (optional) Configure the `AnalyticsHubServiceConnection`
- * created by this function.
+ * @param options (optional) Configure the `AnalyticsHubServiceConnection` created by
+ * this function.
  */
-std::shared_ptr<AnalyticsHubServiceConnection>
-MakeAnalyticsHubServiceConnection(Options options = {});
+std::shared_ptr<AnalyticsHubServiceConnection> MakeAnalyticsHubServiceConnection(
+    Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_analyticshub_v1

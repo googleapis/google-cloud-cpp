@@ -26,64 +26,47 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-CompletionServiceConnectionIdempotencyPolicy::
-    ~CompletionServiceConnectionIdempotencyPolicy() = default;
+CompletionServiceConnectionIdempotencyPolicy::~CompletionServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<CompletionServiceConnectionIdempotencyPolicy>
 CompletionServiceConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<CompletionServiceConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency CompletionServiceConnectionIdempotencyPolicy::CompleteQuery(
-    google::cloud::discoveryengine::v1::CompleteQueryRequest const&) {
+Idempotency CompletionServiceConnectionIdempotencyPolicy::CompleteQuery(google::cloud::discoveryengine::v1::CompleteQueryRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency
-CompletionServiceConnectionIdempotencyPolicy::ImportSuggestionDenyListEntries(
-    google::cloud::discoveryengine::v1::
-        ImportSuggestionDenyListEntriesRequest const&) {
+Idempotency CompletionServiceConnectionIdempotencyPolicy::ImportSuggestionDenyListEntries(google::cloud::discoveryengine::v1::ImportSuggestionDenyListEntriesRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency
-CompletionServiceConnectionIdempotencyPolicy::PurgeSuggestionDenyListEntries(
-    google::cloud::discoveryengine::v1::
-        PurgeSuggestionDenyListEntriesRequest const&) {
+Idempotency CompletionServiceConnectionIdempotencyPolicy::PurgeSuggestionDenyListEntries(google::cloud::discoveryengine::v1::PurgeSuggestionDenyListEntriesRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency
-CompletionServiceConnectionIdempotencyPolicy::ImportCompletionSuggestions(
-    google::cloud::discoveryengine::v1::
-        ImportCompletionSuggestionsRequest const&) {
+Idempotency CompletionServiceConnectionIdempotencyPolicy::ImportCompletionSuggestions(google::cloud::discoveryengine::v1::ImportCompletionSuggestionsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency
-CompletionServiceConnectionIdempotencyPolicy::PurgeCompletionSuggestions(
-    google::cloud::discoveryengine::v1::
-        PurgeCompletionSuggestionsRequest const&) {
+Idempotency CompletionServiceConnectionIdempotencyPolicy::PurgeCompletionSuggestions(google::cloud::discoveryengine::v1::PurgeCompletionSuggestionsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CompletionServiceConnectionIdempotencyPolicy::ListOperations(
-    google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency CompletionServiceConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency CompletionServiceConnectionIdempotencyPolicy::GetOperation(
-    google::longrunning::GetOperationRequest const&) {
+Idempotency CompletionServiceConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency CompletionServiceConnectionIdempotencyPolicy::CancelOperation(
-    google::longrunning::CancelOperationRequest const&) {
+Idempotency CompletionServiceConnectionIdempotencyPolicy::CancelOperation(google::longrunning::CancelOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<CompletionServiceConnectionIdempotencyPolicy>
-MakeDefaultCompletionServiceConnectionIdempotencyPolicy() {
+    MakeDefaultCompletionServiceConnectionIdempotencyPolicy() {
   return std::make_unique<CompletionServiceConnectionIdempotencyPolicy>();
 }
 

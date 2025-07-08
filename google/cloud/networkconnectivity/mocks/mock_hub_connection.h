@@ -30,8 +30,7 @@ namespace cloud {
 namespace networkconnectivity_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use networkconnectivity_v1_mocks::MockHubServiceConnection
-/// directly.
+/// @deprecated Use networkconnectivity_v1_mocks::MockHubServiceConnection directly.
 using ::google::cloud::networkconnectivity_v1_mocks::MockHubServiceConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

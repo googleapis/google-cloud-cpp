@@ -26,17 +26,11 @@ namespace cloud {
 namespace servicedirectory {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use
-/// servicedirectory_v1::MakeDefaultRegistrationServiceConnectionIdempotencyPolicy
-/// directly.
-using ::google::cloud::servicedirectory_v1::
-    MakeDefaultRegistrationServiceConnectionIdempotencyPolicy;
+/// @deprecated Use servicedirectory_v1::MakeDefaultRegistrationServiceConnectionIdempotencyPolicy directly.
+using ::google::cloud::servicedirectory_v1::MakeDefaultRegistrationServiceConnectionIdempotencyPolicy;
 
-/// @deprecated Use
-/// servicedirectory_v1::RegistrationServiceConnectionIdempotencyPolicy
-/// directly.
-using ::google::cloud::servicedirectory_v1::
-    RegistrationServiceConnectionIdempotencyPolicy;
+/// @deprecated Use servicedirectory_v1::RegistrationServiceConnectionIdempotencyPolicy directly.
+using ::google::cloud::servicedirectory_v1::RegistrationServiceConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace servicedirectory

@@ -30,49 +30,53 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-class VersionsTracingConnection : public appengine_v1::VersionsConnection {
+class VersionsTracingConnection
+    : public appengine_v1::VersionsConnection {
  public:
   ~VersionsTracingConnection() override = default;
 
   explicit VersionsTracingConnection(
-      std::shared_ptr<appengine_v1::VersionsConnection> child);
+    std::shared_ptr<appengine_v1::VersionsConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StreamRange<google::appengine::v1::Version> ListVersions(
-      google::appengine::v1::ListVersionsRequest request) override;
+  StreamRange<google::appengine::v1::Version>
+  ListVersions(google::appengine::v1::ListVersionsRequest request) override;
 
-  StatusOr<google::appengine::v1::Version> GetVersion(
-      google::appengine::v1::GetVersionRequest const& request) override;
+  StatusOr<google::appengine::v1::Version>
+  GetVersion(google::appengine::v1::GetVersionRequest const& request) override;
 
-  future<StatusOr<google::appengine::v1::Version>> CreateVersion(
+  future<StatusOr<google::appengine::v1::Version>>
+  CreateVersion(google::appengine::v1::CreateVersionRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  CreateVersion(NoAwaitTag,
       google::appengine::v1::CreateVersionRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> CreateVersion(
-      NoAwaitTag,
-      google::appengine::v1::CreateVersionRequest const& request) override;
-
-  future<StatusOr<google::appengine::v1::Version>> CreateVersion(
+  future<StatusOr<google::appengine::v1::Version>>
+  CreateVersion(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::appengine::v1::Version>> UpdateVersion(
+  future<StatusOr<google::appengine::v1::Version>>
+  UpdateVersion(google::appengine::v1::UpdateVersionRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  UpdateVersion(NoAwaitTag,
       google::appengine::v1::UpdateVersionRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> UpdateVersion(
-      NoAwaitTag,
-      google::appengine::v1::UpdateVersionRequest const& request) override;
-
-  future<StatusOr<google::appengine::v1::Version>> UpdateVersion(
+  future<StatusOr<google::appengine::v1::Version>>
+  UpdateVersion(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::appengine::v1::OperationMetadataV1>> DeleteVersion(
+  future<StatusOr<google::appengine::v1::OperationMetadataV1>>
+  DeleteVersion(google::appengine::v1::DeleteVersionRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  DeleteVersion(NoAwaitTag,
       google::appengine::v1::DeleteVersionRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> DeleteVersion(
-      NoAwaitTag,
-      google::appengine::v1::DeleteVersionRequest const& request) override;
-
-  future<StatusOr<google::appengine::v1::OperationMetadataV1>> DeleteVersion(
+  future<StatusOr<google::appengine::v1::OperationMetadataV1>>
+  DeleteVersion(
       google::longrunning::Operation const& operation) override;
 
  private:
@@ -87,7 +91,8 @@ class VersionsTracingConnection : public appengine_v1::VersionsConnection {
  * The connection is only decorated if tracing is enabled (as determined by the
  * connection's options).
  */
-std::shared_ptr<appengine_v1::VersionsConnection> MakeVersionsTracingConnection(
+std::shared_ptr<appengine_v1::VersionsConnection>
+MakeVersionsTracingConnection(
     std::shared_ptr<appengine_v1::VersionsConnection> conn);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -17,12 +17,12 @@
 // source: google/cloud/kms/v1/ekm_service.proto
 
 #include "google/cloud/kms/v1/internal/ekm_connection_impl.h"
-#include "google/cloud/kms/v1/internal/ekm_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
+#include "google/cloud/kms/v1/internal/ekm_option_defaults.h"
 #include <memory>
 #include <utility>
 
@@ -32,59 +32,54 @@ namespace kms_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<kms_v1::EkmServiceRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<kms_v1::EkmServiceRetryPolicy>
+retry_policy(Options const& options) {
   return options.get<kms_v1::EkmServiceRetryPolicyOption>()->clone();
 }
 
-std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+std::unique_ptr<BackoffPolicy>
+backoff_policy(Options const& options) {
   return options.get<kms_v1::EkmServiceBackoffPolicyOption>()->clone();
 }
 
 std::unique_ptr<kms_v1::EkmServiceConnectionIdempotencyPolicy>
 idempotency_policy(Options const& options) {
-  return options.get<kms_v1::EkmServiceConnectionIdempotencyPolicyOption>()
-      ->clone();
+  return options.get<kms_v1::EkmServiceConnectionIdempotencyPolicyOption>()->clone();
 }
 
-}  // namespace
+} // namespace
 
 EkmServiceConnectionImpl::EkmServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<kms_v1_internal::EkmServiceStub> stub, Options options)
-    : background_(std::move(background)),
-      stub_(std::move(stub)),
-      options_(internal::MergeOptions(std::move(options),
-                                      EkmServiceConnection::options())) {}
+    std::shared_ptr<kms_v1_internal::EkmServiceStub> stub,
+    Options options)
+  : background_(std::move(background)), stub_(std::move(stub)),
+    options_(internal::MergeOptions(
+        std::move(options),
+        EkmServiceConnection::options())) {}
 
 StreamRange<google::cloud::kms::v1::EkmConnection>
-EkmServiceConnectionImpl::ListEkmConnections(
-    google::cloud::kms::v1::ListEkmConnectionsRequest request) {
+EkmServiceConnectionImpl::ListEkmConnections(google::cloud::kms::v1::ListEkmConnectionsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListEkmConnections(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::kms::v1::EkmConnection>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::kms::v1::EkmConnection>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<kms_v1::EkmServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<kms_v1::EkmServiceRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::kms::v1::ListEkmConnectionsRequest const& r) {
+          Options const& options, google::cloud::kms::v1::ListEkmConnectionsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::kms::v1::ListEkmConnectionsRequest const&
-                       request) {
+                   google::cloud::kms::v1::ListEkmConnectionsRequest const& request) {
               return stub->ListEkmConnections(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::kms::v1::ListEkmConnectionsResponse r) {
-        std::vector<google::cloud::kms::v1::EkmConnection> result(
-            r.ekm_connections().size());
+        std::vector<google::cloud::kms::v1::EkmConnection> result(r.ekm_connections().size());
         auto& messages = *r.mutable_ekm_connections();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -92,8 +87,7 @@ EkmServiceConnectionImpl::ListEkmConnections(
 }
 
 StatusOr<google::cloud::kms::v1::EkmConnection>
-EkmServiceConnectionImpl::GetEkmConnection(
-    google::cloud::kms::v1::GetEkmConnectionRequest const& request) {
+EkmServiceConnectionImpl::GetEkmConnection(google::cloud::kms::v1::GetEkmConnectionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -106,38 +100,33 @@ EkmServiceConnectionImpl::GetEkmConnection(
 }
 
 StatusOr<google::cloud::kms::v1::EkmConnection>
-EkmServiceConnectionImpl::CreateEkmConnection(
-    google::cloud::kms::v1::CreateEkmConnectionRequest const& request) {
+EkmServiceConnectionImpl::CreateEkmConnection(google::cloud::kms::v1::CreateEkmConnectionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateEkmConnection(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::kms::v1::CreateEkmConnectionRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::kms::v1::CreateEkmConnectionRequest const& request) {
         return stub_->CreateEkmConnection(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::kms::v1::EkmConnection>
-EkmServiceConnectionImpl::UpdateEkmConnection(
-    google::cloud::kms::v1::UpdateEkmConnectionRequest const& request) {
+EkmServiceConnectionImpl::UpdateEkmConnection(google::cloud::kms::v1::UpdateEkmConnectionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateEkmConnection(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::kms::v1::UpdateEkmConnectionRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::kms::v1::UpdateEkmConnectionRequest const& request) {
         return stub_->UpdateEkmConnection(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::kms::v1::EkmConfig>
-EkmServiceConnectionImpl::GetEkmConfig(
-    google::cloud::kms::v1::GetEkmConfigRequest const& request) {
+EkmServiceConnectionImpl::GetEkmConfig(google::cloud::kms::v1::GetEkmConfigRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -150,8 +139,7 @@ EkmServiceConnectionImpl::GetEkmConfig(
 }
 
 StatusOr<google::cloud::kms::v1::EkmConfig>
-EkmServiceConnectionImpl::UpdateEkmConfig(
-    google::cloud::kms::v1::UpdateEkmConfigRequest const& request) {
+EkmServiceConnectionImpl::UpdateEkmConfig(google::cloud::kms::v1::UpdateEkmConfigRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -164,8 +152,7 @@ EkmServiceConnectionImpl::UpdateEkmConfig(
 }
 
 StatusOr<google::cloud::kms::v1::VerifyConnectivityResponse>
-EkmServiceConnectionImpl::VerifyConnectivity(
-    google::cloud::kms::v1::VerifyConnectivityRequest const& request) {
+EkmServiceConnectionImpl::VerifyConnectivity(google::cloud::kms::v1::VerifyConnectivityRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -178,33 +165,27 @@ EkmServiceConnectionImpl::VerifyConnectivity(
 }
 
 StreamRange<google::cloud::location::Location>
-EkmServiceConnectionImpl::ListLocations(
-    google::cloud::location::ListLocationsRequest request) {
+EkmServiceConnectionImpl::ListLocations(google::cloud::location::ListLocationsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListLocations(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::location::Location>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::location::Location>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<kms_v1::EkmServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<kms_v1::EkmServiceRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::location::ListLocationsRequest const& r) {
+          Options const& options, google::cloud::location::ListLocationsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](
-                grpc::ClientContext& context, Options const& options,
-                google::cloud::location::ListLocationsRequest const& request) {
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::cloud::location::ListLocationsRequest const& request) {
               return stub->ListLocations(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::location::ListLocationsResponse r) {
-        std::vector<google::cloud::location::Location> result(
-            r.locations().size());
+        std::vector<google::cloud::location::Location> result(r.locations().size());
         auto& messages = *r.mutable_locations();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -212,8 +193,7 @@ EkmServiceConnectionImpl::ListLocations(
 }
 
 StatusOr<google::cloud::location::Location>
-EkmServiceConnectionImpl::GetLocation(
-    google::cloud::location::GetLocationRequest const& request) {
+EkmServiceConnectionImpl::GetLocation(google::cloud::location::GetLocationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -225,8 +205,8 @@ EkmServiceConnectionImpl::GetLocation(
       *current, request, __func__);
 }
 
-StatusOr<google::iam::v1::Policy> EkmServiceConnectionImpl::SetIamPolicy(
-    google::iam::v1::SetIamPolicyRequest const& request) {
+StatusOr<google::iam::v1::Policy>
+EkmServiceConnectionImpl::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -238,8 +218,8 @@ StatusOr<google::iam::v1::Policy> EkmServiceConnectionImpl::SetIamPolicy(
       *current, request, __func__);
 }
 
-StatusOr<google::iam::v1::Policy> EkmServiceConnectionImpl::GetIamPolicy(
-    google::iam::v1::GetIamPolicyRequest const& request) {
+StatusOr<google::iam::v1::Policy>
+EkmServiceConnectionImpl::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -252,8 +232,7 @@ StatusOr<google::iam::v1::Policy> EkmServiceConnectionImpl::GetIamPolicy(
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-EkmServiceConnectionImpl::TestIamPermissions(
-    google::iam::v1::TestIamPermissionsRequest const& request) {
+EkmServiceConnectionImpl::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -265,8 +244,8 @@ EkmServiceConnectionImpl::TestIamPermissions(
       *current, request, __func__);
 }
 
-StatusOr<google::longrunning::Operation> EkmServiceConnectionImpl::GetOperation(
-    google::longrunning::GetOperationRequest const& request) {
+StatusOr<google::longrunning::Operation>
+EkmServiceConnectionImpl::GetOperation(google::longrunning::GetOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),

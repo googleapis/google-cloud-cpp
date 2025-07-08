@@ -33,39 +33,35 @@ SqlUsersServiceTracingConnection::SqlUsersServiceTracingConnection(
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::sql::v1::Operation>
-SqlUsersServiceTracingConnection::Delete(
-    google::cloud::sql::v1::SqlUsersDeleteRequest const& request) {
+SqlUsersServiceTracingConnection::Delete(google::cloud::sql::v1::SqlUsersDeleteRequest const& request) {
   auto span = internal::MakeSpan("sql_v1::SqlUsersServiceConnection::Delete");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->Delete(request));
 }
 
-StatusOr<google::cloud::sql::v1::User> SqlUsersServiceTracingConnection::Get(
-    google::cloud::sql::v1::SqlUsersGetRequest const& request) {
+StatusOr<google::cloud::sql::v1::User>
+SqlUsersServiceTracingConnection::Get(google::cloud::sql::v1::SqlUsersGetRequest const& request) {
   auto span = internal::MakeSpan("sql_v1::SqlUsersServiceConnection::Get");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->Get(request));
 }
 
 StatusOr<google::cloud::sql::v1::Operation>
-SqlUsersServiceTracingConnection::Insert(
-    google::cloud::sql::v1::SqlUsersInsertRequest const& request) {
+SqlUsersServiceTracingConnection::Insert(google::cloud::sql::v1::SqlUsersInsertRequest const& request) {
   auto span = internal::MakeSpan("sql_v1::SqlUsersServiceConnection::Insert");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->Insert(request));
 }
 
 StatusOr<google::cloud::sql::v1::UsersListResponse>
-SqlUsersServiceTracingConnection::List(
-    google::cloud::sql::v1::SqlUsersListRequest const& request) {
+SqlUsersServiceTracingConnection::List(google::cloud::sql::v1::SqlUsersListRequest const& request) {
   auto span = internal::MakeSpan("sql_v1::SqlUsersServiceConnection::List");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->List(request));
 }
 
 StatusOr<google::cloud::sql::v1::Operation>
-SqlUsersServiceTracingConnection::Update(
-    google::cloud::sql::v1::SqlUsersUpdateRequest const& request) {
+SqlUsersServiceTracingConnection::Update(google::cloud::sql::v1::SqlUsersUpdateRequest const& request) {
   auto span = internal::MakeSpan("sql_v1::SqlUsersServiceConnection::Update");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->Update(request));

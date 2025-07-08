@@ -35,40 +35,32 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options AutoscalersDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_AUTOSCALERS_ENDPOINT", "",
-      "GOOGLE_CLOUD_CPP_AUTOSCALERS_AUTHORITY", "compute.googleapis.com");
+      std::move(options), "GOOGLE_CLOUD_CPP_AUTOSCALERS_ENDPOINT",
+      "", "GOOGLE_CLOUD_CPP_AUTOSCALERS_AUTHORITY",
+      "compute.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<compute_autoscalers_v1::AutoscalersRetryPolicyOption>()) {
     options.set<compute_autoscalers_v1::AutoscalersRetryPolicyOption>(
         compute_autoscalers_v1::AutoscalersLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
-            .clone());
+            std::chrono::minutes(30)).clone());
   }
   if (!options.has<compute_autoscalers_v1::AutoscalersBackoffPolicyOption>()) {
     options.set<compute_autoscalers_v1::AutoscalersBackoffPolicyOption>(
-        ExponentialBackoffPolicy(
-            std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
-            .clone());
+        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
   }
   if (!options.has<compute_autoscalers_v1::AutoscalersPollingPolicyOption>()) {
     options.set<compute_autoscalers_v1::AutoscalersPollingPolicyOption>(
         GenericPollingPolicy<
             compute_autoscalers_v1::AutoscalersRetryPolicyOption::Type,
             compute_autoscalers_v1::AutoscalersBackoffPolicyOption::Type>(
-            options.get<compute_autoscalers_v1::AutoscalersRetryPolicyOption>()
-                ->clone(),
+            options.get<compute_autoscalers_v1::AutoscalersRetryPolicyOption>()->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                     std::chrono::minutes(5), kBackoffScaling)
-                .clone())
-            .clone());
+            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
   }
-  if (!options.has<compute_autoscalers_v1::
-                       AutoscalersConnectionIdempotencyPolicyOption>()) {
-    options.set<
-        compute_autoscalers_v1::AutoscalersConnectionIdempotencyPolicyOption>(
-        compute_autoscalers_v1::
-            MakeDefaultAutoscalersConnectionIdempotencyPolicy());
+  if (!options.has<compute_autoscalers_v1::AutoscalersConnectionIdempotencyPolicyOption>()) {
+    options.set<compute_autoscalers_v1::AutoscalersConnectionIdempotencyPolicyOption>(
+        compute_autoscalers_v1::MakeDefaultAutoscalersConnectionIdempotencyPolicy());
   }
 
   return options;

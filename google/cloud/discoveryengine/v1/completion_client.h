@@ -63,9 +63,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class CompletionServiceClient {
  public:
-  explicit CompletionServiceClient(
-      std::shared_ptr<CompletionServiceConnection> connection,
-      Options opts = {});
+  explicit CompletionServiceClient(std::shared_ptr<CompletionServiceConnection> connection, Options opts = {});
   ~CompletionServiceClient();
 
   ///@{
@@ -78,12 +76,10 @@ class CompletionServiceClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(CompletionServiceClient const& a,
-                         CompletionServiceClient const& b) {
+  friend bool operator==(CompletionServiceClient const& a, CompletionServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(CompletionServiceClient const& a,
-                         CompletionServiceClient const& b) {
+  friend bool operator!=(CompletionServiceClient const& a, CompletionServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -116,9 +112,7 @@ class CompletionServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::discoveryengine::v1::CompleteQueryResponse>
-  CompleteQuery(
-      google::cloud::discoveryengine::v1::CompleteQueryRequest const& request,
-      Options opts = {});
+  CompleteQuery(google::cloud::discoveryengine::v1::CompleteQueryRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -157,12 +151,8 @@ class CompletionServiceClient {
   /// [google.cloud.discoveryengine.v1.SuggestionDenyListEntry]: @googleapis_reference_link{google/cloud/discoveryengine/v1/completion.proto#L32}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::discoveryengine::v1::
-                      ImportSuggestionDenyListEntriesResponse>>
-  ImportSuggestionDenyListEntries(
-      google::cloud::discoveryengine::v1::
-          ImportSuggestionDenyListEntriesRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::discoveryengine::v1::ImportSuggestionDenyListEntriesResponse>>
+  ImportSuggestionDenyListEntries(google::cloud::discoveryengine::v1::ImportSuggestionDenyListEntriesRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -175,11 +165,8 @@ class CompletionServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> ImportSuggestionDenyListEntries(
-      NoAwaitTag,
-      google::cloud::discoveryengine::v1::
-          ImportSuggestionDenyListEntriesRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  ImportSuggestionDenyListEntries(NoAwaitTag, google::cloud::discoveryengine::v1::ImportSuggestionDenyListEntriesRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -190,10 +177,8 @@ class CompletionServiceClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::discoveryengine::v1::
-                      ImportSuggestionDenyListEntriesResponse>>
-  ImportSuggestionDenyListEntries(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::discoveryengine::v1::ImportSuggestionDenyListEntriesResponse>>
+  ImportSuggestionDenyListEntries(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -232,12 +217,8 @@ class CompletionServiceClient {
   /// [google.cloud.discoveryengine.v1.SuggestionDenyListEntry]: @googleapis_reference_link{google/cloud/discoveryengine/v1/completion.proto#L32}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::discoveryengine::v1::
-                      PurgeSuggestionDenyListEntriesResponse>>
-  PurgeSuggestionDenyListEntries(
-      google::cloud::discoveryengine::v1::
-          PurgeSuggestionDenyListEntriesRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::discoveryengine::v1::PurgeSuggestionDenyListEntriesResponse>>
+  PurgeSuggestionDenyListEntries(google::cloud::discoveryengine::v1::PurgeSuggestionDenyListEntriesRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -250,11 +231,8 @@ class CompletionServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> PurgeSuggestionDenyListEntries(
-      NoAwaitTag,
-      google::cloud::discoveryengine::v1::
-          PurgeSuggestionDenyListEntriesRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  PurgeSuggestionDenyListEntries(NoAwaitTag, google::cloud::discoveryengine::v1::PurgeSuggestionDenyListEntriesRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -265,10 +243,8 @@ class CompletionServiceClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::discoveryengine::v1::
-                      PurgeSuggestionDenyListEntriesResponse>>
-  PurgeSuggestionDenyListEntries(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::discoveryengine::v1::PurgeSuggestionDenyListEntriesResponse>>
+  PurgeSuggestionDenyListEntries(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -307,12 +283,8 @@ class CompletionServiceClient {
   /// [google.cloud.discoveryengine.v1.ImportCompletionSuggestionsResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/import_config.proto#L769}
   ///
   // clang-format on
-  future<StatusOr<
-      google::cloud::discoveryengine::v1::ImportCompletionSuggestionsResponse>>
-  ImportCompletionSuggestions(
-      google::cloud::discoveryengine::v1::
-          ImportCompletionSuggestionsRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::discoveryengine::v1::ImportCompletionSuggestionsResponse>>
+  ImportCompletionSuggestions(google::cloud::discoveryengine::v1::ImportCompletionSuggestionsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -325,11 +297,8 @@ class CompletionServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> ImportCompletionSuggestions(
-      NoAwaitTag,
-      google::cloud::discoveryengine::v1::
-          ImportCompletionSuggestionsRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  ImportCompletionSuggestions(NoAwaitTag, google::cloud::discoveryengine::v1::ImportCompletionSuggestionsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -340,10 +309,8 @@ class CompletionServiceClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<
-      google::cloud::discoveryengine::v1::ImportCompletionSuggestionsResponse>>
-  ImportCompletionSuggestions(google::longrunning::Operation const& operation,
-                              Options opts = {});
+  future<StatusOr<google::cloud::discoveryengine::v1::ImportCompletionSuggestionsResponse>>
+  ImportCompletionSuggestions(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -382,12 +349,8 @@ class CompletionServiceClient {
   /// [google.cloud.discoveryengine.v1.PurgeCompletionSuggestionsResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/purge_config.proto#L268}
   ///
   // clang-format on
-  future<StatusOr<
-      google::cloud::discoveryengine::v1::PurgeCompletionSuggestionsResponse>>
-  PurgeCompletionSuggestions(
-      google::cloud::discoveryengine::v1::
-          PurgeCompletionSuggestionsRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::discoveryengine::v1::PurgeCompletionSuggestionsResponse>>
+  PurgeCompletionSuggestions(google::cloud::discoveryengine::v1::PurgeCompletionSuggestionsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -400,11 +363,8 @@ class CompletionServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> PurgeCompletionSuggestions(
-      NoAwaitTag,
-      google::cloud::discoveryengine::v1::
-          PurgeCompletionSuggestionsRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  PurgeCompletionSuggestions(NoAwaitTag, google::cloud::discoveryengine::v1::PurgeCompletionSuggestionsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -415,10 +375,8 @@ class CompletionServiceClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<
-      google::cloud::discoveryengine::v1::PurgeCompletionSuggestionsResponse>>
-  PurgeCompletionSuggestions(google::longrunning::Operation const& operation,
-                             Options opts = {});
+  future<StatusOr<google::cloud::discoveryengine::v1::PurgeCompletionSuggestionsResponse>>
+  PurgeCompletionSuggestions(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -453,8 +411,8 @@ class CompletionServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -493,8 +451,8 @@ class CompletionServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -520,8 +478,8 @@ class CompletionServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -552,9 +510,8 @@ class CompletionServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -588,7 +545,8 @@ class CompletionServiceClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(std::string const& name, Options opts = {});
+  Status
+  CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -627,9 +585,8 @@ class CompletionServiceClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request,
-      Options opts = {});
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<CompletionServiceConnection> connection_;

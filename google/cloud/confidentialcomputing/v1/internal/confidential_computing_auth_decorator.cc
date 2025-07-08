@@ -31,38 +31,36 @@ ConfidentialComputingAuth::ConfidentialComputingAuth(
     std::shared_ptr<ConfidentialComputingStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::confidentialcomputing::v1::Challenge>
-ConfidentialComputingAuth::CreateChallenge(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::confidentialcomputing::v1::CreateChallengeRequest const&
-        request) {
+StatusOr<google::cloud::confidentialcomputing::v1::Challenge> ConfidentialComputingAuth::CreateChallenge(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::confidentialcomputing::v1::CreateChallengeRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateChallenge(context, options, request);
 }
 
-StatusOr<google::cloud::confidentialcomputing::v1::VerifyAttestationResponse>
-ConfidentialComputingAuth::VerifyAttestation(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::confidentialcomputing::v1::VerifyAttestationRequest const&
-        request) {
+StatusOr<google::cloud::confidentialcomputing::v1::VerifyAttestationResponse> ConfidentialComputingAuth::VerifyAttestation(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::confidentialcomputing::v1::VerifyAttestationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->VerifyAttestation(context, options, request);
 }
 
-StatusOr<google::cloud::location::ListLocationsResponse>
-ConfidentialComputingAuth::ListLocations(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::location::ListLocationsResponse> ConfidentialComputingAuth::ListLocations(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListLocations(context, options, request);
 }
 
-StatusOr<google::cloud::location::Location>
-ConfidentialComputingAuth::GetLocation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::location::Location> ConfidentialComputingAuth::GetLocation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;

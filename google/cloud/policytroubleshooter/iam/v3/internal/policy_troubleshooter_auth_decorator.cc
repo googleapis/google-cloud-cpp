@@ -31,12 +31,10 @@ PolicyTroubleshooterAuth::PolicyTroubleshooterAuth(
     std::shared_ptr<PolicyTroubleshooterStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<
-    google::cloud::policytroubleshooter::iam::v3::TroubleshootIamPolicyResponse>
-PolicyTroubleshooterAuth::TroubleshootIamPolicy(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::policytroubleshooter::iam::v3::
-        TroubleshootIamPolicyRequest const& request) {
+StatusOr<google::cloud::policytroubleshooter::iam::v3::TroubleshootIamPolicyResponse> PolicyTroubleshooterAuth::TroubleshootIamPolicy(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::policytroubleshooter::iam::v3::TroubleshootIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->TroubleshootIamPolicy(context, options, request);

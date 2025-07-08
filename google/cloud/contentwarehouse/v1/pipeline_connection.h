@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTENTWAREHOUSE_V1_PIPELINE_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTENTWAREHOUSE_V1_PIPELINE_CONNECTION_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/contentwarehouse/v1/internal/pipeline_retry_traits.h"
 #include "google/cloud/contentwarehouse/v1/pipeline_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -55,8 +55,7 @@ class PipelineServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class PipelineServiceLimitedErrorCountRetryPolicy
-    : public PipelineServiceRetryPolicy {
+class PipelineServiceLimitedErrorCountRetryPolicy : public PipelineServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -66,14 +65,14 @@ class PipelineServiceLimitedErrorCountRetryPolicy
    *     @p maximum_failures == 0.
    */
   explicit PipelineServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   PipelineServiceLimitedErrorCountRetryPolicy(
       PipelineServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : PipelineServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : PipelineServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   PipelineServiceLimitedErrorCountRetryPolicy(
       PipelineServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : PipelineServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : PipelineServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -93,9 +92,7 @@ class PipelineServiceLimitedErrorCountRetryPolicy
   using BaseType = PipelineServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      contentwarehouse_v1_internal::PipelineServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<contentwarehouse_v1_internal::PipelineServiceRetryTraits> impl_;
 };
 
 /**
@@ -108,8 +105,7 @@ class PipelineServiceLimitedErrorCountRetryPolicy
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class PipelineServiceLimitedTimeRetryPolicy
-    : public PipelineServiceRetryPolicy {
+class PipelineServiceLimitedTimeRetryPolicy : public PipelineServiceRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -134,14 +130,12 @@ class PipelineServiceLimitedTimeRetryPolicy
   template <typename DurationRep, typename DurationPeriod>
   explicit PipelineServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  PipelineServiceLimitedTimeRetryPolicy(
-      PipelineServiceLimitedTimeRetryPolicy&& rhs) noexcept
-      : PipelineServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  PipelineServiceLimitedTimeRetryPolicy(
-      PipelineServiceLimitedTimeRetryPolicy const& rhs) noexcept
-      : PipelineServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  PipelineServiceLimitedTimeRetryPolicy(PipelineServiceLimitedTimeRetryPolicy&& rhs) noexcept
+    : PipelineServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  PipelineServiceLimitedTimeRetryPolicy(PipelineServiceLimitedTimeRetryPolicy const& rhs) noexcept
+    : PipelineServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -163,9 +157,7 @@ class PipelineServiceLimitedTimeRetryPolicy
   using BaseType = PipelineServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      contentwarehouse_v1_internal::PipelineServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<contentwarehouse_v1_internal::PipelineServiceRetryTraits> impl_;
 };
 
 /**
@@ -186,33 +178,28 @@ class PipelineServiceConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual future<
-      StatusOr<google::cloud::contentwarehouse::v1::RunPipelineResponse>>
-  RunPipeline(
-      google::cloud::contentwarehouse::v1::RunPipelineRequest const& request);
+  virtual future<StatusOr<google::cloud::contentwarehouse::v1::RunPipelineResponse>>
+  RunPipeline(google::cloud::contentwarehouse::v1::RunPipelineRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> RunPipeline(
-      NoAwaitTag,
-      google::cloud::contentwarehouse::v1::RunPipelineRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  RunPipeline(NoAwaitTag, google::cloud::contentwarehouse::v1::RunPipelineRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::contentwarehouse::v1::RunPipelineResponse>>
-  RunPipeline(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::contentwarehouse::v1::RunPipelineResponse>>
+  RunPipeline( google::longrunning::Operation const& operation);
 
-  virtual StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 };
 
 /**
- * A factory function to construct an object of type
- * `PipelineServiceConnection`.
+ * A factory function to construct an object of type `PipelineServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
  * should be passed as an argument to the constructor of PipelineServiceClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `PipelineServiceConnection`. Expected options are any of the types
- * in the following option lists:
+ * returned `PipelineServiceConnection`. Expected options are any of the types in
+ * the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
@@ -222,8 +209,8 @@ class PipelineServiceConnection {
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
- * @param options (optional) Configure the `PipelineServiceConnection` created
- * by this function.
+ * @param options (optional) Configure the `PipelineServiceConnection` created by
+ * this function.
  */
 std::shared_ptr<PipelineServiceConnection> MakePipelineServiceConnection(
     Options options = {});

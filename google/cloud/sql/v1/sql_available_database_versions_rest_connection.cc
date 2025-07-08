@@ -17,15 +17,15 @@
 // source: google/cloud/sql/v1/cloud_sql_available_database_versions.proto
 
 #include "google/cloud/sql/v1/sql_available_database_versions_rest_connection.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
+#include "google/cloud/internal/rest_background_threads_impl.h"
+#include "google/cloud/internal/rest_options.h"
 #include "google/cloud/sql/v1/internal/sql_available_database_versions_option_defaults.h"
 #include "google/cloud/sql/v1/internal/sql_available_database_versions_rest_connection_impl.h"
 #include "google/cloud/sql/v1/internal/sql_available_database_versions_rest_stub_factory.h"
 #include "google/cloud/sql/v1/internal/sql_available_database_versions_tracing_connection.h"
 #include "google/cloud/sql/v1/sql_available_database_versions_options.h"
-#include "google/cloud/common_options.h"
-#include "google/cloud/credentials.h"
-#include "google/cloud/internal/rest_background_threads_impl.h"
-#include "google/cloud/internal/rest_options.h"
 #include <memory>
 #include <utility>
 
@@ -34,25 +34,21 @@ namespace cloud {
 namespace sql_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<SqlAvailableDatabaseVersionsServiceConnection>
-MakeSqlAvailableDatabaseVersionsServiceConnectionRest(Options options) {
-  internal::CheckExpectedOptions<
-      CommonOptionList, RestOptionList, UnifiedCredentialsOptionList,
-      rest_internal::TargetApiVersionOption,
+std::shared_ptr<SqlAvailableDatabaseVersionsServiceConnection> MakeSqlAvailableDatabaseVersionsServiceConnectionRest(
+    Options options) {
+  internal::CheckExpectedOptions<CommonOptionList, RestOptionList,
+      UnifiedCredentialsOptionList, rest_internal::TargetApiVersionOption,
       SqlAvailableDatabaseVersionsServicePolicyOptionList>(options, __func__);
   options = sql_v1_internal::SqlAvailableDatabaseVersionsServiceDefaultOptions(
       std::move(options));
   auto background = std::make_unique<
       rest_internal::AutomaticallyCreatedRestBackgroundThreads>();
-  auto stub =
-      sql_v1_internal::CreateDefaultSqlAvailableDatabaseVersionsServiceRestStub(
-          options);
-  return sql_v1_internal::
-      MakeSqlAvailableDatabaseVersionsServiceTracingConnection(
-          std::make_shared<
-              sql_v1_internal::
-                  SqlAvailableDatabaseVersionsServiceRestConnectionImpl>(
-              std::move(background), std::move(stub), std::move(options)));
+  auto stub = sql_v1_internal::CreateDefaultSqlAvailableDatabaseVersionsServiceRestStub(
+      options);
+  return sql_v1_internal::MakeSqlAvailableDatabaseVersionsServiceTracingConnection(
+      std::make_shared<
+          sql_v1_internal::SqlAvailableDatabaseVersionsServiceRestConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

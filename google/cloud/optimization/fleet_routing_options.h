@@ -34,10 +34,8 @@ using ::google::cloud::optimization_v1::FleetRoutingPollingPolicyOption;
 /// @deprecated Use optimization_v1::FleetRoutingBackoffPolicyOption directly.
 using ::google::cloud::optimization_v1::FleetRoutingBackoffPolicyOption;
 
-/// @deprecated Use
-/// optimization_v1::FleetRoutingConnectionIdempotencyPolicyOption directly.
-using ::google::cloud::optimization_v1::
-    FleetRoutingConnectionIdempotencyPolicyOption;
+/// @deprecated Use optimization_v1::FleetRoutingConnectionIdempotencyPolicyOption directly.
+using ::google::cloud::optimization_v1::FleetRoutingConnectionIdempotencyPolicyOption;
 
 /// @deprecated Use optimization_v1::FleetRoutingPolicyOptionList directly.
 using ::google::cloud::optimization_v1::FleetRoutingPolicyOptionList;

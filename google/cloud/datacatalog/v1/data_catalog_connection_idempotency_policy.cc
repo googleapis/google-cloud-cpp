@@ -26,163 +26,130 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-DataCatalogConnectionIdempotencyPolicy::
-    ~DataCatalogConnectionIdempotencyPolicy() = default;
+DataCatalogConnectionIdempotencyPolicy::~DataCatalogConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<DataCatalogConnectionIdempotencyPolicy>
 DataCatalogConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<DataCatalogConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency DataCatalogConnectionIdempotencyPolicy::SearchCatalog(
-    google::cloud::datacatalog::v1::SearchCatalogRequest) {  // NOLINT
+Idempotency DataCatalogConnectionIdempotencyPolicy::SearchCatalog(google::cloud::datacatalog::v1::SearchCatalogRequest) {  // NOLINT
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DataCatalogConnectionIdempotencyPolicy::CreateEntryGroup(
-    google::cloud::datacatalog::v1::CreateEntryGroupRequest const&) {
+Idempotency DataCatalogConnectionIdempotencyPolicy::CreateEntryGroup(google::cloud::datacatalog::v1::CreateEntryGroupRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DataCatalogConnectionIdempotencyPolicy::GetEntryGroup(
-    google::cloud::datacatalog::v1::GetEntryGroupRequest const&) {
+Idempotency DataCatalogConnectionIdempotencyPolicy::GetEntryGroup(google::cloud::datacatalog::v1::GetEntryGroupRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DataCatalogConnectionIdempotencyPolicy::UpdateEntryGroup(
-    google::cloud::datacatalog::v1::UpdateEntryGroupRequest const&) {
+Idempotency DataCatalogConnectionIdempotencyPolicy::UpdateEntryGroup(google::cloud::datacatalog::v1::UpdateEntryGroupRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DataCatalogConnectionIdempotencyPolicy::DeleteEntryGroup(
-    google::cloud::datacatalog::v1::DeleteEntryGroupRequest const&) {
+Idempotency DataCatalogConnectionIdempotencyPolicy::DeleteEntryGroup(google::cloud::datacatalog::v1::DeleteEntryGroupRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DataCatalogConnectionIdempotencyPolicy::ListEntryGroups(
-    google::cloud::datacatalog::v1::ListEntryGroupsRequest) {  // NOLINT
+Idempotency DataCatalogConnectionIdempotencyPolicy::ListEntryGroups(google::cloud::datacatalog::v1::ListEntryGroupsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency DataCatalogConnectionIdempotencyPolicy::CreateEntry(
-    google::cloud::datacatalog::v1::CreateEntryRequest const&) {
+Idempotency DataCatalogConnectionIdempotencyPolicy::CreateEntry(google::cloud::datacatalog::v1::CreateEntryRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DataCatalogConnectionIdempotencyPolicy::UpdateEntry(
-    google::cloud::datacatalog::v1::UpdateEntryRequest const&) {
+Idempotency DataCatalogConnectionIdempotencyPolicy::UpdateEntry(google::cloud::datacatalog::v1::UpdateEntryRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DataCatalogConnectionIdempotencyPolicy::DeleteEntry(
-    google::cloud::datacatalog::v1::DeleteEntryRequest const&) {
+Idempotency DataCatalogConnectionIdempotencyPolicy::DeleteEntry(google::cloud::datacatalog::v1::DeleteEntryRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DataCatalogConnectionIdempotencyPolicy::GetEntry(
-    google::cloud::datacatalog::v1::GetEntryRequest const&) {
+Idempotency DataCatalogConnectionIdempotencyPolicy::GetEntry(google::cloud::datacatalog::v1::GetEntryRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DataCatalogConnectionIdempotencyPolicy::LookupEntry(
-    google::cloud::datacatalog::v1::LookupEntryRequest const&) {
+Idempotency DataCatalogConnectionIdempotencyPolicy::LookupEntry(google::cloud::datacatalog::v1::LookupEntryRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DataCatalogConnectionIdempotencyPolicy::ListEntries(
-    google::cloud::datacatalog::v1::ListEntriesRequest) {  // NOLINT
+Idempotency DataCatalogConnectionIdempotencyPolicy::ListEntries(google::cloud::datacatalog::v1::ListEntriesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency DataCatalogConnectionIdempotencyPolicy::ModifyEntryOverview(
-    google::cloud::datacatalog::v1::ModifyEntryOverviewRequest const&) {
+Idempotency DataCatalogConnectionIdempotencyPolicy::ModifyEntryOverview(google::cloud::datacatalog::v1::ModifyEntryOverviewRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DataCatalogConnectionIdempotencyPolicy::ModifyEntryContacts(
-    google::cloud::datacatalog::v1::ModifyEntryContactsRequest const&) {
+Idempotency DataCatalogConnectionIdempotencyPolicy::ModifyEntryContacts(google::cloud::datacatalog::v1::ModifyEntryContactsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DataCatalogConnectionIdempotencyPolicy::CreateTagTemplate(
-    google::cloud::datacatalog::v1::CreateTagTemplateRequest const&) {
+Idempotency DataCatalogConnectionIdempotencyPolicy::CreateTagTemplate(google::cloud::datacatalog::v1::CreateTagTemplateRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DataCatalogConnectionIdempotencyPolicy::GetTagTemplate(
-    google::cloud::datacatalog::v1::GetTagTemplateRequest const&) {
+Idempotency DataCatalogConnectionIdempotencyPolicy::GetTagTemplate(google::cloud::datacatalog::v1::GetTagTemplateRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DataCatalogConnectionIdempotencyPolicy::UpdateTagTemplate(
-    google::cloud::datacatalog::v1::UpdateTagTemplateRequest const&) {
+Idempotency DataCatalogConnectionIdempotencyPolicy::UpdateTagTemplate(google::cloud::datacatalog::v1::UpdateTagTemplateRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DataCatalogConnectionIdempotencyPolicy::DeleteTagTemplate(
-    google::cloud::datacatalog::v1::DeleteTagTemplateRequest const&) {
+Idempotency DataCatalogConnectionIdempotencyPolicy::DeleteTagTemplate(google::cloud::datacatalog::v1::DeleteTagTemplateRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DataCatalogConnectionIdempotencyPolicy::CreateTagTemplateField(
-    google::cloud::datacatalog::v1::CreateTagTemplateFieldRequest const&) {
+Idempotency DataCatalogConnectionIdempotencyPolicy::CreateTagTemplateField(google::cloud::datacatalog::v1::CreateTagTemplateFieldRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DataCatalogConnectionIdempotencyPolicy::UpdateTagTemplateField(
-    google::cloud::datacatalog::v1::UpdateTagTemplateFieldRequest const&) {
+Idempotency DataCatalogConnectionIdempotencyPolicy::UpdateTagTemplateField(google::cloud::datacatalog::v1::UpdateTagTemplateFieldRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DataCatalogConnectionIdempotencyPolicy::RenameTagTemplateField(
-    google::cloud::datacatalog::v1::RenameTagTemplateFieldRequest const&) {
+Idempotency DataCatalogConnectionIdempotencyPolicy::RenameTagTemplateField(google::cloud::datacatalog::v1::RenameTagTemplateFieldRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency
-DataCatalogConnectionIdempotencyPolicy::RenameTagTemplateFieldEnumValue(
-    google::cloud::datacatalog::v1::
-        RenameTagTemplateFieldEnumValueRequest const&) {
+Idempotency DataCatalogConnectionIdempotencyPolicy::RenameTagTemplateFieldEnumValue(google::cloud::datacatalog::v1::RenameTagTemplateFieldEnumValueRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DataCatalogConnectionIdempotencyPolicy::DeleteTagTemplateField(
-    google::cloud::datacatalog::v1::DeleteTagTemplateFieldRequest const&) {
+Idempotency DataCatalogConnectionIdempotencyPolicy::DeleteTagTemplateField(google::cloud::datacatalog::v1::DeleteTagTemplateFieldRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DataCatalogConnectionIdempotencyPolicy::CreateTag(
-    google::cloud::datacatalog::v1::CreateTagRequest const&) {
+Idempotency DataCatalogConnectionIdempotencyPolicy::CreateTag(google::cloud::datacatalog::v1::CreateTagRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DataCatalogConnectionIdempotencyPolicy::UpdateTag(
-    google::cloud::datacatalog::v1::UpdateTagRequest const&) {
+Idempotency DataCatalogConnectionIdempotencyPolicy::UpdateTag(google::cloud::datacatalog::v1::UpdateTagRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DataCatalogConnectionIdempotencyPolicy::DeleteTag(
-    google::cloud::datacatalog::v1::DeleteTagRequest const&) {
+Idempotency DataCatalogConnectionIdempotencyPolicy::DeleteTag(google::cloud::datacatalog::v1::DeleteTagRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DataCatalogConnectionIdempotencyPolicy::ListTags(
-    google::cloud::datacatalog::v1::ListTagsRequest) {  // NOLINT
+Idempotency DataCatalogConnectionIdempotencyPolicy::ListTags(google::cloud::datacatalog::v1::ListTagsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency DataCatalogConnectionIdempotencyPolicy::ReconcileTags(
-    google::cloud::datacatalog::v1::ReconcileTagsRequest const&) {
+Idempotency DataCatalogConnectionIdempotencyPolicy::ReconcileTags(google::cloud::datacatalog::v1::ReconcileTagsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DataCatalogConnectionIdempotencyPolicy::StarEntry(
-    google::cloud::datacatalog::v1::StarEntryRequest const&) {
+Idempotency DataCatalogConnectionIdempotencyPolicy::StarEntry(google::cloud::datacatalog::v1::StarEntryRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DataCatalogConnectionIdempotencyPolicy::UnstarEntry(
-    google::cloud::datacatalog::v1::UnstarEntryRequest const&) {
+Idempotency DataCatalogConnectionIdempotencyPolicy::UnstarEntry(google::cloud::datacatalog::v1::UnstarEntryRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
@@ -192,58 +159,48 @@ Idempotency DataCatalogConnectionIdempotencyPolicy::SetIamPolicy(
                                          : Idempotency::kIdempotent;
 }
 
-Idempotency DataCatalogConnectionIdempotencyPolicy::GetIamPolicy(
-    google::iam::v1::GetIamPolicyRequest const&) {
+Idempotency DataCatalogConnectionIdempotencyPolicy::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DataCatalogConnectionIdempotencyPolicy::TestIamPermissions(
-    google::iam::v1::TestIamPermissionsRequest const&) {
+Idempotency DataCatalogConnectionIdempotencyPolicy::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DataCatalogConnectionIdempotencyPolicy::ImportEntries(
-    google::cloud::datacatalog::v1::ImportEntriesRequest const&) {
+Idempotency DataCatalogConnectionIdempotencyPolicy::ImportEntries(google::cloud::datacatalog::v1::ImportEntriesRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DataCatalogConnectionIdempotencyPolicy::SetConfig(
-    google::cloud::datacatalog::v1::SetConfigRequest const&) {
+Idempotency DataCatalogConnectionIdempotencyPolicy::SetConfig(google::cloud::datacatalog::v1::SetConfigRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DataCatalogConnectionIdempotencyPolicy::RetrieveConfig(
-    google::cloud::datacatalog::v1::RetrieveConfigRequest const&) {
+Idempotency DataCatalogConnectionIdempotencyPolicy::RetrieveConfig(google::cloud::datacatalog::v1::RetrieveConfigRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DataCatalogConnectionIdempotencyPolicy::RetrieveEffectiveConfig(
-    google::cloud::datacatalog::v1::RetrieveEffectiveConfigRequest const&) {
+Idempotency DataCatalogConnectionIdempotencyPolicy::RetrieveEffectiveConfig(google::cloud::datacatalog::v1::RetrieveEffectiveConfigRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DataCatalogConnectionIdempotencyPolicy::ListOperations(
-    google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency DataCatalogConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency DataCatalogConnectionIdempotencyPolicy::GetOperation(
-    google::longrunning::GetOperationRequest const&) {
+Idempotency DataCatalogConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DataCatalogConnectionIdempotencyPolicy::DeleteOperation(
-    google::longrunning::DeleteOperationRequest const&) {
+Idempotency DataCatalogConnectionIdempotencyPolicy::DeleteOperation(google::longrunning::DeleteOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DataCatalogConnectionIdempotencyPolicy::CancelOperation(
-    google::longrunning::CancelOperationRequest const&) {
+Idempotency DataCatalogConnectionIdempotencyPolicy::CancelOperation(google::longrunning::CancelOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<DataCatalogConnectionIdempotencyPolicy>
-MakeDefaultDataCatalogConnectionIdempotencyPolicy() {
+    MakeDefaultDataCatalogConnectionIdempotencyPolicy() {
   return std::make_unique<DataCatalogConnectionIdempotencyPolicy>();
 }
 

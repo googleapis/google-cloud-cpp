@@ -30,19 +30,22 @@ namespace cloud {
 namespace dialogflow_cx_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-ExperimentsLogging::ExperimentsLogging(std::shared_ptr<ExperimentsStub> child,
-                                       TracingOptions tracing_options,
-                                       std::set<std::string> const&)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
+ExperimentsLogging::ExperimentsLogging(
+    std::shared_ptr<ExperimentsStub> child,
+    TracingOptions tracing_options,
+    std::set<std::string> const&)
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::cloud::dialogflow::cx::v3::ListExperimentsResponse>
 ExperimentsLogging::ListExperiments(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dialogflow::cx::v3::ListExperimentsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dialogflow::cx::v3::ListExperimentsRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::dialogflow::cx::v3::ListExperimentsRequest const& request) {
         return child_->ListExperiments(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -50,12 +53,13 @@ ExperimentsLogging::ListExperiments(
 
 StatusOr<google::cloud::dialogflow::cx::v3::Experiment>
 ExperimentsLogging::GetExperiment(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dialogflow::cx::v3::GetExperimentRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dialogflow::cx::v3::GetExperimentRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::dialogflow::cx::v3::GetExperimentRequest const& request) {
         return child_->GetExperiment(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -63,12 +67,13 @@ ExperimentsLogging::GetExperiment(
 
 StatusOr<google::cloud::dialogflow::cx::v3::Experiment>
 ExperimentsLogging::CreateExperiment(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dialogflow::cx::v3::CreateExperimentRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dialogflow::cx::v3::CreateExperimentRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::dialogflow::cx::v3::CreateExperimentRequest const& request) {
         return child_->CreateExperiment(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -76,24 +81,27 @@ ExperimentsLogging::CreateExperiment(
 
 StatusOr<google::cloud::dialogflow::cx::v3::Experiment>
 ExperimentsLogging::UpdateExperiment(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dialogflow::cx::v3::UpdateExperimentRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dialogflow::cx::v3::UpdateExperimentRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::dialogflow::cx::v3::UpdateExperimentRequest const& request) {
         return child_->UpdateExperiment(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status ExperimentsLogging::DeleteExperiment(
-    grpc::ClientContext& context, Options const& options,
+Status
+ExperimentsLogging::DeleteExperiment(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dialogflow::cx::v3::DeleteExperimentRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dialogflow::cx::v3::DeleteExperimentRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::dialogflow::cx::v3::DeleteExperimentRequest const& request) {
         return child_->DeleteExperiment(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -101,12 +109,13 @@ Status ExperimentsLogging::DeleteExperiment(
 
 StatusOr<google::cloud::dialogflow::cx::v3::Experiment>
 ExperimentsLogging::StartExperiment(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dialogflow::cx::v3::StartExperimentRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dialogflow::cx::v3::StartExperimentRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::dialogflow::cx::v3::StartExperimentRequest const& request) {
         return child_->StartExperiment(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -114,12 +123,13 @@ ExperimentsLogging::StartExperiment(
 
 StatusOr<google::cloud::dialogflow::cx::v3::Experiment>
 ExperimentsLogging::StopExperiment(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dialogflow::cx::v3::StopExperimentRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dialogflow::cx::v3::StopExperimentRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::dialogflow::cx::v3::StopExperimentRequest const& request) {
         return child_->StopExperiment(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -127,21 +137,26 @@ ExperimentsLogging::StopExperiment(
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 ExperimentsLogging::ListLocations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::location::ListLocationsRequest const& request) {
         return child_->ListLocations(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::cloud::location::Location> ExperimentsLogging::GetLocation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::location::Location>
+ExperimentsLogging::GetLocation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::location::GetLocationRequest const& request) {
         return child_->GetLocation(context, options, request);
       },
@@ -150,32 +165,40 @@ StatusOr<google::cloud::location::Location> ExperimentsLogging::GetLocation(
 
 StatusOr<google::longrunning::ListOperationsResponse>
 ExperimentsLogging::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::ListOperationsRequest const& request) {
         return child_->ListOperations(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> ExperimentsLogging::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::Operation>
+ExperimentsLogging::GetOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::GetOperationRequest const& request) {
         return child_->GetOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status ExperimentsLogging::CancelOperation(
-    grpc::ClientContext& context, Options const& options,
+Status
+ExperimentsLogging::CancelOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::CancelOperationRequest const& request) {
         return child_->CancelOperation(context, options, request);
       },

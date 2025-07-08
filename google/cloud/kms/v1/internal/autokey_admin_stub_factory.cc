@@ -17,15 +17,15 @@
 // source: google/cloud/kms/v1/autokey_admin.proto
 
 #include "google/cloud/kms/v1/internal/autokey_admin_stub_factory.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/grpc_options.h"
+#include "google/cloud/internal/algorithm.h"
+#include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/kms/v1/internal/autokey_admin_auth_decorator.h"
 #include "google/cloud/kms/v1/internal/autokey_admin_logging_decorator.h"
 #include "google/cloud/kms/v1/internal/autokey_admin_metadata_decorator.h"
 #include "google/cloud/kms/v1/internal/autokey_admin_stub.h"
 #include "google/cloud/kms/v1/internal/autokey_admin_tracing_stub.h"
-#include "google/cloud/common_options.h"
-#include "google/cloud/grpc_options.h"
-#include "google/cloud/internal/algorithm.h"
-#include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include <google/cloud/kms/v1/autokey_admin.grpc.pb.h>
@@ -40,32 +40,31 @@ namespace cloud {
 namespace kms_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<AutokeyAdminStub> CreateDefaultAutokeyAdminStub(
+std::shared_ptr<AutokeyAdminStub>
+CreateDefaultAutokeyAdminStub(
     std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
     Options const& options) {
-  auto channel = auth->CreateChannel(options.get<EndpointOption>(),
-                                     internal::MakeChannelArguments(options));
-  auto service_grpc_stub =
-      google::cloud::kms::v1::AutokeyAdmin::NewStub(channel);
-  auto service_operations_stub =
-      google::longrunning::Operations::NewStub(channel);
+  auto channel = auth->CreateChannel(
+    options.get<EndpointOption>(), internal::MakeChannelArguments(options));
+  auto service_grpc_stub = google::cloud::kms::v1::AutokeyAdmin::NewStub(channel);
+  auto service_operations_stub = google::longrunning::Operations::NewStub(channel);
   auto service_iampolicy_stub = google::iam::v1::IAMPolicy::NewStub(channel);
-  auto service_locations_stub =
-      google::cloud::location::Locations::NewStub(channel);
+  auto service_locations_stub = google::cloud::location::Locations::NewStub(channel);
   std::shared_ptr<AutokeyAdminStub> stub =
-      std::make_shared<DefaultAutokeyAdminStub>(
-          std::move(service_grpc_stub), std::move(service_operations_stub),
-          std::move(service_iampolicy_stub), std::move(service_locations_stub));
+    std::make_shared<DefaultAutokeyAdminStub>(std::move(service_grpc_stub), std::move(service_operations_stub), std::move(service_iampolicy_stub), std::move(service_locations_stub));
 
   if (auth->RequiresConfigureContext()) {
-    stub = std::make_shared<AutokeyAdminAuth>(std::move(auth), std::move(stub));
+    stub = std::make_shared<AutokeyAdminAuth>(
+        std::move(auth), std::move(stub));
   }
   stub = std::make_shared<AutokeyAdminMetadata>(
       std::move(stub), std::multimap<std::string, std::string>{});
-  if (internal::Contains(options.get<LoggingComponentsOption>(), "rpc")) {
+  if (internal::Contains(
+      options.get<LoggingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<AutokeyAdminLogging>(
-        std::move(stub), options.get<GrpcTracingOptionsOption>(),
+        std::move(stub),
+        options.get<GrpcTracingOptionsOption>(),
         options.get<LoggingComponentsOption>());
   }
   if (internal::TracingEnabled(options)) {

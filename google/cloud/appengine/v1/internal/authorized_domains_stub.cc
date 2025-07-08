@@ -32,14 +32,15 @@ AuthorizedDomainsStub::~AuthorizedDomainsStub() = default;
 
 StatusOr<google::appengine::v1::ListAuthorizedDomainsResponse>
 DefaultAuthorizedDomainsStub::ListAuthorizedDomains(
-    grpc::ClientContext& context, Options const&,
-    google::appengine::v1::ListAuthorizedDomainsRequest const& request) {
-  google::appengine::v1::ListAuthorizedDomainsResponse response;
-  auto status = grpc_stub_->ListAuthorizedDomains(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::appengine::v1::ListAuthorizedDomainsRequest const& request) {
+    google::appengine::v1::ListAuthorizedDomainsResponse response;
+    auto status =
+        grpc_stub_->ListAuthorizedDomains(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

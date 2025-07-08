@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_POLICYTROUBLESHOOTER_IAM_V3_POLICY_TROUBLESHOOTER_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_POLICYTROUBLESHOOTER_IAM_V3_POLICY_TROUBLESHOOTER_CLIENT_H
 
-#include "google/cloud/policytroubleshooter/iam/v3/policy_troubleshooter_connection.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
+#include "google/cloud/policytroubleshooter/iam/v3/policy_troubleshooter_connection.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
@@ -36,8 +36,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 /// IAM Policy Troubleshooter service.
 ///
-/// This service helps you troubleshoot access issues for Google Cloud
-/// resources.
+/// This service helps you troubleshoot access issues for Google Cloud resources.
 ///
 /// @par Equality
 ///
@@ -64,28 +63,23 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class PolicyTroubleshooterClient {
  public:
-  explicit PolicyTroubleshooterClient(
-      std::shared_ptr<PolicyTroubleshooterConnection> connection,
-      Options opts = {});
+  explicit PolicyTroubleshooterClient(std::shared_ptr<PolicyTroubleshooterConnection> connection, Options opts = {});
   ~PolicyTroubleshooterClient();
 
   ///@{
   /// @name Copy and move support
   PolicyTroubleshooterClient(PolicyTroubleshooterClient const&) = default;
-  PolicyTroubleshooterClient& operator=(PolicyTroubleshooterClient const&) =
-      default;
+  PolicyTroubleshooterClient& operator=(PolicyTroubleshooterClient const&) = default;
   PolicyTroubleshooterClient(PolicyTroubleshooterClient&&) = default;
   PolicyTroubleshooterClient& operator=(PolicyTroubleshooterClient&&) = default;
   ///@}
 
   ///@{
   /// @name Equality
-  friend bool operator==(PolicyTroubleshooterClient const& a,
-                         PolicyTroubleshooterClient const& b) {
+  friend bool operator==(PolicyTroubleshooterClient const& a, PolicyTroubleshooterClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(PolicyTroubleshooterClient const& a,
-                         PolicyTroubleshooterClient const& b) {
+  friend bool operator!=(PolicyTroubleshooterClient const& a, PolicyTroubleshooterClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -119,11 +113,8 @@ class PolicyTroubleshooterClient {
   /// [google.cloud.policytroubleshooter.iam.v3.TroubleshootIamPolicyResponse]: @googleapis_reference_link{google/cloud/policytroubleshooter/iam/v3/troubleshooter.proto#L181}
   ///
   // clang-format on
-  StatusOr<google::cloud::policytroubleshooter::iam::v3::
-               TroubleshootIamPolicyResponse>
-  TroubleshootIamPolicy(google::cloud::policytroubleshooter::iam::v3::
-                            TroubleshootIamPolicyRequest const& request,
-                        Options opts = {});
+  StatusOr<google::cloud::policytroubleshooter::iam::v3::TroubleshootIamPolicyResponse>
+  TroubleshootIamPolicy(google::cloud::policytroubleshooter::iam::v3::TroubleshootIamPolicyRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<PolicyTroubleshooterConnection> connection_;

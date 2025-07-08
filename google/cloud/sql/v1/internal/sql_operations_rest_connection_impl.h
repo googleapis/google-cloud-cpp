@@ -19,14 +19,14 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_INTERNAL_SQL_OPERATIONS_REST_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_INTERNAL_SQL_OPERATIONS_REST_CONNECTION_IMPL_H
 
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/options.h"
 #include "google/cloud/sql/v1/internal/sql_operations_rest_stub.h"
 #include "google/cloud/sql/v1/internal/sql_operations_retry_traits.h"
 #include "google/cloud/sql/v1/sql_operations_connection.h"
 #include "google/cloud/sql/v1/sql_operations_connection_idempotency_policy.h"
 #include "google/cloud/sql/v1/sql_operations_options.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
@@ -43,39 +43,34 @@ class SqlOperationsServiceRestConnectionImpl
   ~SqlOperationsServiceRestConnectionImpl() override = default;
 
   SqlOperationsServiceRestConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<sql_v1_internal::SqlOperationsServiceRestStub> stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<sql_v1_internal::SqlOperationsServiceRestStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
-  StatusOr<google::cloud::sql::v1::Operation> Get(
-      google::cloud::sql::v1::SqlOperationsGetRequest const& request) override;
+  StatusOr<google::cloud::sql::v1::Operation>
+  Get(google::cloud::sql::v1::SqlOperationsGetRequest const& request) override;
 
-  StreamRange<google::cloud::sql::v1::Operation> List(
-      google::cloud::sql::v1::SqlOperationsListRequest request) override;
+  StreamRange<google::cloud::sql::v1::Operation>
+  List(google::cloud::sql::v1::SqlOperationsListRequest request) override;
 
-  Status Cancel(google::cloud::sql::v1::SqlOperationsCancelRequest const&
-                    request) override;
+  Status
+  Cancel(google::cloud::sql::v1::SqlOperationsCancelRequest const& request) override;
 
  private:
-  static std::unique_ptr<sql_v1::SqlOperationsServiceRetryPolicy> retry_policy(
-      Options const& options) {
-    return options.get<sql_v1::SqlOperationsServiceRetryPolicyOption>()
-        ->clone();
+  static std::unique_ptr<sql_v1::SqlOperationsServiceRetryPolicy>
+  retry_policy(Options const& options) {
+    return options.get<sql_v1::SqlOperationsServiceRetryPolicyOption>()->clone();
   }
 
   static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<sql_v1::SqlOperationsServiceBackoffPolicyOption>()
-        ->clone();
+    return options.get<sql_v1::SqlOperationsServiceBackoffPolicyOption>()->clone();
   }
 
-  static std::unique_ptr<
-      sql_v1::SqlOperationsServiceConnectionIdempotencyPolicy>
+  static std::unique_ptr<sql_v1::SqlOperationsServiceConnectionIdempotencyPolicy>
   idempotency_policy(Options const& options) {
-    return options
-        .get<sql_v1::SqlOperationsServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
+    return options.get<sql_v1::SqlOperationsServiceConnectionIdempotencyPolicyOption>()->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

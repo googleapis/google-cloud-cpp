@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_NETWORK_ATTACHMENTS_V1_INTERNAL_NETWORK_ATTACHMENTS_REST_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_NETWORK_ATTACHMENTS_V1_INTERNAL_NETWORK_ATTACHMENTS_REST_CONNECTION_IMPL_H
 
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/network_attachments/v1/internal/network_attachments_rest_stub.h"
 #include "google/cloud/compute/network_attachments/v1/internal/network_attachments_retry_traits.h"
 #include "google/cloud/compute/network_attachments/v1/network_attachments_connection.h"
 #include "google/cloud/compute/network_attachments/v1/network_attachments_connection_idempotency_policy.h"
 #include "google/cloud/compute/network_attachments/v1/network_attachments_options.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -44,117 +44,84 @@ class NetworkAttachmentsRestConnectionImpl
   ~NetworkAttachmentsRestConnectionImpl() override = default;
 
   NetworkAttachmentsRestConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<
-          compute_network_attachments_v1_internal::NetworkAttachmentsRestStub>
-          stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<compute_network_attachments_v1_internal::NetworkAttachmentsRestStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
-  StreamRange<
-      std::pair<std::string,
-                google::cloud::cpp::compute::v1::NetworkAttachmentsScopedList>>
-  AggregatedListNetworkAttachments(
-      google::cloud::cpp::compute::network_attachments::v1::
-          AggregatedListNetworkAttachmentsRequest request) override;
+  StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::NetworkAttachmentsScopedList>>
+  AggregatedListNetworkAttachments(google::cloud::cpp::compute::network_attachments::v1::AggregatedListNetworkAttachmentsRequest request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteNetworkAttachment(
-      google::cloud::cpp::compute::network_attachments::v1::
-          DeleteNetworkAttachmentRequest const& request) override;
+  DeleteNetworkAttachment(google::cloud::cpp::compute::network_attachments::v1::DeleteNetworkAttachmentRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteNetworkAttachment(
-      NoAwaitTag, google::cloud::cpp::compute::network_attachments::v1::
-                      DeleteNetworkAttachmentRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeleteNetworkAttachment(NoAwaitTag,
+      google::cloud::cpp::compute::network_attachments::v1::DeleteNetworkAttachmentRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteNetworkAttachment(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StatusOr<google::cloud::cpp::compute::v1::NetworkAttachment>
-  GetNetworkAttachment(google::cloud::cpp::compute::network_attachments::v1::
-                           GetNetworkAttachmentRequest const& request) override;
+  GetNetworkAttachment(google::cloud::cpp::compute::network_attachments::v1::GetNetworkAttachmentRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
-      google::cloud::cpp::compute::network_attachments::v1::
-          GetIamPolicyRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Policy>
+  GetIamPolicy(google::cloud::cpp::compute::network_attachments::v1::GetIamPolicyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertNetworkAttachment(
-      google::cloud::cpp::compute::network_attachments::v1::
-          InsertNetworkAttachmentRequest const& request) override;
+  InsertNetworkAttachment(google::cloud::cpp::compute::network_attachments::v1::InsertNetworkAttachmentRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertNetworkAttachment(
-      NoAwaitTag, google::cloud::cpp::compute::network_attachments::v1::
-                      InsertNetworkAttachmentRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  InsertNetworkAttachment(NoAwaitTag,
+      google::cloud::cpp::compute::network_attachments::v1::InsertNetworkAttachmentRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertNetworkAttachment(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StreamRange<google::cloud::cpp::compute::v1::NetworkAttachment>
-  ListNetworkAttachments(google::cloud::cpp::compute::network_attachments::v1::
-                             ListNetworkAttachmentsRequest request) override;
+  ListNetworkAttachments(google::cloud::cpp::compute::network_attachments::v1::ListNetworkAttachmentsRequest request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchNetworkAttachment(
-      google::cloud::cpp::compute::network_attachments::v1::
-          PatchNetworkAttachmentRequest const& request) override;
+  PatchNetworkAttachment(google::cloud::cpp::compute::network_attachments::v1::PatchNetworkAttachmentRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchNetworkAttachment(
-      NoAwaitTag, google::cloud::cpp::compute::network_attachments::v1::
-                      PatchNetworkAttachmentRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  PatchNetworkAttachment(NoAwaitTag,
+      google::cloud::cpp::compute::network_attachments::v1::PatchNetworkAttachmentRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   PatchNetworkAttachment(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
-      google::cloud::cpp::compute::network_attachments::v1::
-          SetIamPolicyRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Policy>
+  SetIamPolicy(google::cloud::cpp::compute::network_attachments::v1::SetIamPolicyRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(google::cloud::cpp::compute::network_attachments::v1::
-                         TestIamPermissionsRequest const& request) override;
+  TestIamPermissions(google::cloud::cpp::compute::network_attachments::v1::TestIamPermissionsRequest const& request) override;
 
  private:
-  static std::unique_ptr<
-      compute_network_attachments_v1::NetworkAttachmentsRetryPolicy>
+  static std::unique_ptr<compute_network_attachments_v1::NetworkAttachmentsRetryPolicy>
   retry_policy(Options const& options) {
-    return options
-        .get<compute_network_attachments_v1::
-                 NetworkAttachmentsRetryPolicyOption>()
-        ->clone();
+    return options.get<compute_network_attachments_v1::NetworkAttachmentsRetryPolicyOption>()->clone();
   }
 
   static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options
-        .get<compute_network_attachments_v1::
-                 NetworkAttachmentsBackoffPolicyOption>()
-        ->clone();
+    return options.get<compute_network_attachments_v1::NetworkAttachmentsBackoffPolicyOption>()->clone();
   }
 
-  static std::unique_ptr<compute_network_attachments_v1::
-                             NetworkAttachmentsConnectionIdempotencyPolicy>
+  static std::unique_ptr<compute_network_attachments_v1::NetworkAttachmentsConnectionIdempotencyPolicy>
   idempotency_policy(Options const& options) {
-    return options
-        .get<compute_network_attachments_v1::
-                 NetworkAttachmentsConnectionIdempotencyPolicyOption>()
-        ->clone();
+    return options.get<compute_network_attachments_v1::NetworkAttachmentsConnectionIdempotencyPolicyOption>()->clone();
   }
 
   static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-    return options
-        .get<compute_network_attachments_v1::
-                 NetworkAttachmentsPollingPolicyOption>()
-        ->clone();
+    return options.get<compute_network_attachments_v1::NetworkAttachmentsPollingPolicyOption>()->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<
-      compute_network_attachments_v1_internal::NetworkAttachmentsRestStub>
-      stub_;
+  std::shared_ptr<compute_network_attachments_v1_internal::NetworkAttachmentsRestStub> stub_;
   Options options_;
 };
 

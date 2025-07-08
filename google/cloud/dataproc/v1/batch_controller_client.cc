@@ -28,14 +28,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 BatchControllerClient::BatchControllerClient(
     std::shared_ptr<BatchControllerConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 BatchControllerClient::~BatchControllerClient() = default;
 
 future<StatusOr<google::cloud::dataproc::v1::Batch>>
-BatchControllerClient::CreateBatch(
-    std::string const& parent, google::cloud::dataproc::v1::Batch const& batch,
-    std::string const& batch_id, Options opts) {
+BatchControllerClient::CreateBatch(std::string const& parent, google::cloud::dataproc::v1::Batch const& batch, std::string const& batch_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataproc::v1::CreateBatchRequest request;
   request.set_parent(parent);
@@ -44,10 +42,8 @@ BatchControllerClient::CreateBatch(
   return connection_->CreateBatch(request);
 }
 
-StatusOr<google::longrunning::Operation> BatchControllerClient::CreateBatch(
-    NoAwaitTag, std::string const& parent,
-    google::cloud::dataproc::v1::Batch const& batch,
-    std::string const& batch_id, Options opts) {
+StatusOr<google::longrunning::Operation>
+BatchControllerClient::CreateBatch(NoAwaitTag, std::string const& parent, google::cloud::dataproc::v1::Batch const& batch, std::string const& batch_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataproc::v1::CreateBatchRequest request;
   request.set_parent(parent);
@@ -57,37 +53,33 @@ StatusOr<google::longrunning::Operation> BatchControllerClient::CreateBatch(
 }
 
 future<StatusOr<google::cloud::dataproc::v1::Batch>>
-BatchControllerClient::CreateBatch(
-    google::cloud::dataproc::v1::CreateBatchRequest const& request,
-    Options opts) {
+BatchControllerClient::CreateBatch(google::cloud::dataproc::v1::CreateBatchRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateBatch(request);
 }
 
-StatusOr<google::longrunning::Operation> BatchControllerClient::CreateBatch(
-    NoAwaitTag, google::cloud::dataproc::v1::CreateBatchRequest const& request,
-    Options opts) {
+StatusOr<google::longrunning::Operation>
+BatchControllerClient::CreateBatch(NoAwaitTag, google::cloud::dataproc::v1::CreateBatchRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateBatch(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::dataproc::v1::Batch>>
-BatchControllerClient::CreateBatch(
-    google::longrunning::Operation const& operation, Options opts) {
+BatchControllerClient::CreateBatch(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateBatch(operation);
 }
 
-StatusOr<google::cloud::dataproc::v1::Batch> BatchControllerClient::GetBatch(
-    std::string const& name, Options opts) {
+StatusOr<google::cloud::dataproc::v1::Batch>
+BatchControllerClient::GetBatch(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataproc::v1::GetBatchRequest request;
   request.set_name(name);
   return connection_->GetBatch(request);
 }
 
-StatusOr<google::cloud::dataproc::v1::Batch> BatchControllerClient::GetBatch(
-    google::cloud::dataproc::v1::GetBatchRequest const& request, Options opts) {
+StatusOr<google::cloud::dataproc::v1::Batch>
+BatchControllerClient::GetBatch(google::cloud::dataproc::v1::GetBatchRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetBatch(request);
 }
@@ -101,49 +93,45 @@ BatchControllerClient::ListBatches(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::dataproc::v1::Batch>
-BatchControllerClient::ListBatches(
-    google::cloud::dataproc::v1::ListBatchesRequest request, Options opts) {
+BatchControllerClient::ListBatches(google::cloud::dataproc::v1::ListBatchesRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListBatches(std::move(request));
 }
 
-Status BatchControllerClient::DeleteBatch(std::string const& name,
-                                          Options opts) {
+Status
+BatchControllerClient::DeleteBatch(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataproc::v1::DeleteBatchRequest request;
   request.set_name(name);
   return connection_->DeleteBatch(request);
 }
 
-Status BatchControllerClient::DeleteBatch(
-    google::cloud::dataproc::v1::DeleteBatchRequest const& request,
-    Options opts) {
+Status
+BatchControllerClient::DeleteBatch(google::cloud::dataproc::v1::DeleteBatchRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteBatch(request);
 }
 
-StatusOr<google::iam::v1::Policy> BatchControllerClient::SetIamPolicy(
-    google::iam::v1::SetIamPolicyRequest const& request, Options opts) {
+StatusOr<google::iam::v1::Policy>
+BatchControllerClient::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetIamPolicy(request);
 }
 
-StatusOr<google::iam::v1::Policy> BatchControllerClient::GetIamPolicy(
-    google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
+StatusOr<google::iam::v1::Policy>
+BatchControllerClient::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetIamPolicy(request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-BatchControllerClient::TestIamPermissions(
-    google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
+BatchControllerClient::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->TestIamPermissions(request);
 }
 
 StreamRange<google::longrunning::Operation>
-BatchControllerClient::ListOperations(std::string const& name,
-                                      std::string const& filter, Options opts) {
+BatchControllerClient::ListOperations(std::string const& name, std::string const& filter, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::ListOperationsRequest request;
   request.set_name(name);
@@ -152,50 +140,49 @@ BatchControllerClient::ListOperations(std::string const& name,
 }
 
 StreamRange<google::longrunning::Operation>
-BatchControllerClient::ListOperations(
-    google::longrunning::ListOperationsRequest request, Options opts) {
+BatchControllerClient::ListOperations(google::longrunning::ListOperationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOperations(std::move(request));
 }
 
-StatusOr<google::longrunning::Operation> BatchControllerClient::GetOperation(
-    std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation>
+BatchControllerClient::GetOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
   return connection_->GetOperation(request);
 }
 
-StatusOr<google::longrunning::Operation> BatchControllerClient::GetOperation(
-    google::longrunning::GetOperationRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation>
+BatchControllerClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }
 
-Status BatchControllerClient::DeleteOperation(std::string const& name,
-                                              Options opts) {
+Status
+BatchControllerClient::DeleteOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::DeleteOperationRequest request;
   request.set_name(name);
   return connection_->DeleteOperation(request);
 }
 
-Status BatchControllerClient::DeleteOperation(
-    google::longrunning::DeleteOperationRequest const& request, Options opts) {
+Status
+BatchControllerClient::DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteOperation(request);
 }
 
-Status BatchControllerClient::CancelOperation(std::string const& name,
-                                              Options opts) {
+Status
+BatchControllerClient::CancelOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::CancelOperationRequest request;
   request.set_name(name);
   return connection_->CancelOperation(request);
 }
 
-Status BatchControllerClient::CancelOperation(
-    google::longrunning::CancelOperationRequest const& request, Options opts) {
+Status
+BatchControllerClient::CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelOperation(request);
 }

@@ -36,27 +36,27 @@ class TenantServiceTracingConnection
   ~TenantServiceTracingConnection() override = default;
 
   explicit TenantServiceTracingConnection(
-      std::shared_ptr<talent_v4::TenantServiceConnection> child);
+    std::shared_ptr<talent_v4::TenantServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::talent::v4::Tenant> CreateTenant(
-      google::cloud::talent::v4::CreateTenantRequest const& request) override;
+  StatusOr<google::cloud::talent::v4::Tenant>
+  CreateTenant(google::cloud::talent::v4::CreateTenantRequest const& request) override;
 
-  StatusOr<google::cloud::talent::v4::Tenant> GetTenant(
-      google::cloud::talent::v4::GetTenantRequest const& request) override;
+  StatusOr<google::cloud::talent::v4::Tenant>
+  GetTenant(google::cloud::talent::v4::GetTenantRequest const& request) override;
 
-  StatusOr<google::cloud::talent::v4::Tenant> UpdateTenant(
-      google::cloud::talent::v4::UpdateTenantRequest const& request) override;
+  StatusOr<google::cloud::talent::v4::Tenant>
+  UpdateTenant(google::cloud::talent::v4::UpdateTenantRequest const& request) override;
 
-  Status DeleteTenant(
-      google::cloud::talent::v4::DeleteTenantRequest const& request) override;
+  Status
+  DeleteTenant(google::cloud::talent::v4::DeleteTenantRequest const& request) override;
 
-  StreamRange<google::cloud::talent::v4::Tenant> ListTenants(
-      google::cloud::talent::v4::ListTenantsRequest request) override;
+  StreamRange<google::cloud::talent::v4::Tenant>
+  ListTenants(google::cloud::talent::v4::ListTenantsRequest request) override;
 
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request) override;
 
  private:
   std::shared_ptr<talent_v4::TenantServiceConnection> child_;

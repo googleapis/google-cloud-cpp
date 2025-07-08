@@ -44,29 +44,28 @@ std::shared_ptr<FeatureRegistryServiceStub>
 CreateDefaultFeatureRegistryServiceStub(
     std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
     Options const& options) {
-  auto channel = auth->CreateChannel(options.get<EndpointOption>(),
-                                     internal::MakeChannelArguments(options));
-  auto service_grpc_stub =
-      google::cloud::aiplatform::v1::FeatureRegistryService::NewStub(channel);
+  auto channel = auth->CreateChannel(
+    options.get<EndpointOption>(), internal::MakeChannelArguments(options));
+  auto service_grpc_stub = google::cloud::aiplatform::v1::FeatureRegistryService::NewStub(channel);
   auto service_iampolicy_stub = google::iam::v1::IAMPolicy::NewStub(channel);
-  auto service_locations_stub =
-      google::cloud::location::Locations::NewStub(channel);
+  auto service_locations_stub = google::cloud::location::Locations::NewStub(channel);
   std::shared_ptr<FeatureRegistryServiceStub> stub =
-      std::make_shared<DefaultFeatureRegistryServiceStub>(
-          std::move(service_grpc_stub), std::move(service_iampolicy_stub),
-          std::move(service_locations_stub),
-          google::longrunning::Operations::NewStub(channel));
+    std::make_shared<DefaultFeatureRegistryServiceStub>(
+      std::move(service_grpc_stub), std::move(service_iampolicy_stub), std::move(service_locations_stub),
+      google::longrunning::Operations::NewStub(channel));
 
   if (auth->RequiresConfigureContext()) {
-    stub = std::make_shared<FeatureRegistryServiceAuth>(std::move(auth),
-                                                        std::move(stub));
+    stub = std::make_shared<FeatureRegistryServiceAuth>(
+        std::move(auth), std::move(stub));
   }
   stub = std::make_shared<FeatureRegistryServiceMetadata>(
       std::move(stub), std::multimap<std::string, std::string>{});
-  if (internal::Contains(options.get<LoggingComponentsOption>(), "rpc")) {
+  if (internal::Contains(
+      options.get<LoggingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<FeatureRegistryServiceLogging>(
-        std::move(stub), options.get<GrpcTracingOptionsOption>(),
+        std::move(stub),
+        options.get<GrpcTracingOptionsOption>(),
         options.get<LoggingComponentsOption>());
   }
   if (internal::TracingEnabled(options)) {

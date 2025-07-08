@@ -32,183 +32,149 @@ PolicyBasedRoutingServiceTracingStub::PolicyBasedRoutingServiceTracingStub(
     std::shared_ptr<PolicyBasedRoutingServiceStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
-StatusOr<google::cloud::networkconnectivity::v1::ListPolicyBasedRoutesResponse>
-PolicyBasedRoutingServiceTracingStub::ListPolicyBasedRoutes(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::networkconnectivity::v1::ListPolicyBasedRoutesRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.networkconnectivity.v1.PolicyBasedRoutingService",
-      "ListPolicyBasedRoutes");
+StatusOr<google::cloud::networkconnectivity::v1::ListPolicyBasedRoutesResponse> PolicyBasedRoutingServiceTracingStub::ListPolicyBasedRoutes(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::networkconnectivity::v1::ListPolicyBasedRoutesRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.networkconnectivity.v1.PolicyBasedRoutingService", "ListPolicyBasedRoutes");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->ListPolicyBasedRoutes(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->ListPolicyBasedRoutes(context, options, request));
 }
 
-StatusOr<google::cloud::networkconnectivity::v1::PolicyBasedRoute>
-PolicyBasedRoutingServiceTracingStub::GetPolicyBasedRoute(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::networkconnectivity::v1::GetPolicyBasedRouteRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.networkconnectivity.v1.PolicyBasedRoutingService",
-      "GetPolicyBasedRoute");
+StatusOr<google::cloud::networkconnectivity::v1::PolicyBasedRoute> PolicyBasedRoutingServiceTracingStub::GetPolicyBasedRoute(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::networkconnectivity::v1::GetPolicyBasedRouteRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.networkconnectivity.v1.PolicyBasedRoutingService", "GetPolicyBasedRoute");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->GetPolicyBasedRoute(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->GetPolicyBasedRoute(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 PolicyBasedRoutingServiceTracingStub::AsyncCreatePolicyBasedRoute(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::networkconnectivity::v1::CreatePolicyBasedRouteRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.networkconnectivity.v1.PolicyBasedRoutingService",
-      "CreatePolicyBasedRoute");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::networkconnectivity::v1::CreatePolicyBasedRouteRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.networkconnectivity.v1.PolicyBasedRoutingService", "CreatePolicyBasedRoute");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCreatePolicyBasedRoute(cq, context, std::move(options),
-                                               request);
+  auto f = child_->AsyncCreatePolicyBasedRoute(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 PolicyBasedRoutingServiceTracingStub::CreatePolicyBasedRoute(
-    grpc::ClientContext& context, Options options,
-    google::cloud::networkconnectivity::v1::CreatePolicyBasedRouteRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.networkconnectivity.v1.PolicyBasedRoutingService",
-      "CreatePolicyBasedRoute");
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::networkconnectivity::v1::CreatePolicyBasedRouteRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.networkconnectivity.v1.PolicyBasedRoutingService", "CreatePolicyBasedRoute");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span,
-      child_->CreatePolicyBasedRoute(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->CreatePolicyBasedRoute(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 PolicyBasedRoutingServiceTracingStub::AsyncDeletePolicyBasedRoute(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::networkconnectivity::v1::DeletePolicyBasedRouteRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.networkconnectivity.v1.PolicyBasedRoutingService",
-      "DeletePolicyBasedRoute");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::networkconnectivity::v1::DeletePolicyBasedRouteRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.networkconnectivity.v1.PolicyBasedRoutingService", "DeletePolicyBasedRoute");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncDeletePolicyBasedRoute(cq, context, std::move(options),
-                                               request);
+  auto f = child_->AsyncDeletePolicyBasedRoute(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 PolicyBasedRoutingServiceTracingStub::DeletePolicyBasedRoute(
-    grpc::ClientContext& context, Options options,
-    google::cloud::networkconnectivity::v1::DeletePolicyBasedRouteRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.networkconnectivity.v1.PolicyBasedRoutingService",
-      "DeletePolicyBasedRoute");
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::networkconnectivity::v1::DeletePolicyBasedRouteRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.networkconnectivity.v1.PolicyBasedRoutingService", "DeletePolicyBasedRoute");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span,
-      child_->DeletePolicyBasedRoute(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->DeletePolicyBasedRoute(context, options, request));
 }
 
-StatusOr<google::cloud::location::ListLocationsResponse>
-PolicyBasedRoutingServiceTracingStub::ListLocations(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::location::ListLocationsResponse> PolicyBasedRoutingServiceTracingStub::ListLocations(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.networkconnectivity.v1.PolicyBasedRoutingService",
-      "ListLocations");
+  auto span = internal::MakeSpanGrpc("google.cloud.networkconnectivity.v1.PolicyBasedRoutingService", "ListLocations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListLocations(context, options, request));
 }
 
-StatusOr<google::cloud::location::Location>
-PolicyBasedRoutingServiceTracingStub::GetLocation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::location::Location> PolicyBasedRoutingServiceTracingStub::GetLocation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.networkconnectivity.v1.PolicyBasedRoutingService",
-      "GetLocation");
+  auto span = internal::MakeSpanGrpc("google.cloud.networkconnectivity.v1.PolicyBasedRoutingService", "GetLocation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetLocation(context, options, request));
 }
 
-StatusOr<google::iam::v1::Policy>
-PolicyBasedRoutingServiceTracingStub::SetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::iam::v1::Policy> PolicyBasedRoutingServiceTracingStub::SetIamPolicy(
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.networkconnectivity.v1.PolicyBasedRoutingService",
-      "SetIamPolicy");
+  auto span = internal::MakeSpanGrpc("google.cloud.networkconnectivity.v1.PolicyBasedRoutingService", "SetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->SetIamPolicy(context, options, request));
 }
 
-StatusOr<google::iam::v1::Policy>
-PolicyBasedRoutingServiceTracingStub::GetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::iam::v1::Policy> PolicyBasedRoutingServiceTracingStub::GetIamPolicy(
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.networkconnectivity.v1.PolicyBasedRoutingService",
-      "GetIamPolicy");
+  auto span = internal::MakeSpanGrpc("google.cloud.networkconnectivity.v1.PolicyBasedRoutingService", "GetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetIamPolicy(context, options, request));
 }
 
-StatusOr<google::iam::v1::TestIamPermissionsResponse>
-PolicyBasedRoutingServiceTracingStub::TestIamPermissions(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::iam::v1::TestIamPermissionsResponse> PolicyBasedRoutingServiceTracingStub::TestIamPermissions(
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.networkconnectivity.v1.PolicyBasedRoutingService",
-      "TestIamPermissions");
+  auto span = internal::MakeSpanGrpc("google.cloud.networkconnectivity.v1.PolicyBasedRoutingService", "TestIamPermissions");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->TestIamPermissions(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->TestIamPermissions(context, options, request));
 }
 
-StatusOr<google::longrunning::ListOperationsResponse>
-PolicyBasedRoutingServiceTracingStub::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse> PolicyBasedRoutingServiceTracingStub::ListOperations(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.networkconnectivity.v1.PolicyBasedRoutingService",
-      "ListOperations");
+  auto span = internal::MakeSpanGrpc("google.cloud.networkconnectivity.v1.PolicyBasedRoutingService", "ListOperations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListOperations(context, options, request));
 }
 
-StatusOr<google::longrunning::Operation>
-PolicyBasedRoutingServiceTracingStub::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::Operation> PolicyBasedRoutingServiceTracingStub::GetOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.networkconnectivity.v1.PolicyBasedRoutingService",
-      "GetOperation");
+  auto span = internal::MakeSpanGrpc("google.cloud.networkconnectivity.v1.PolicyBasedRoutingService", "GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -216,11 +182,10 @@ PolicyBasedRoutingServiceTracingStub::GetOperation(
 }
 
 Status PolicyBasedRoutingServiceTracingStub::DeleteOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.networkconnectivity.v1.PolicyBasedRoutingService",
-      "DeleteOperation");
+  auto span = internal::MakeSpanGrpc("google.cloud.networkconnectivity.v1.PolicyBasedRoutingService", "DeleteOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -228,11 +193,10 @@ Status PolicyBasedRoutingServiceTracingStub::DeleteOperation(
 }
 
 Status PolicyBasedRoutingServiceTracingStub::CancelOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.networkconnectivity.v1.PolicyBasedRoutingService",
-      "CancelOperation");
+  auto span = internal::MakeSpanGrpc("google.cloud.networkconnectivity.v1.PolicyBasedRoutingService", "CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -249,7 +213,8 @@ PolicyBasedRoutingServiceTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncGetOperation(cq, context, std::move(options), request);
+  auto f = child_->AsyncGetOperation(
+      cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -262,19 +227,17 @@ future<Status> PolicyBasedRoutingServiceTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f =
-      child_->AsyncCancelOperation(cq, context, std::move(options), request);
+  auto f = child_->AsyncCancelOperation(
+      cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-std::shared_ptr<PolicyBasedRoutingServiceStub>
-MakePolicyBasedRoutingServiceTracingStub(
+std::shared_ptr<PolicyBasedRoutingServiceStub> MakePolicyBasedRoutingServiceTracingStub(
     std::shared_ptr<PolicyBasedRoutingServiceStub> stub) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-  return std::make_shared<PolicyBasedRoutingServiceTracingStub>(
-      std::move(stub));
+  return std::make_shared<PolicyBasedRoutingServiceTracingStub>(std::move(stub));
 #else
   return stub;
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

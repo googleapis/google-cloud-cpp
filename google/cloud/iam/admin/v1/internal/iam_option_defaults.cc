@@ -35,20 +35,19 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options IAMDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_IAM_ENDPOINT", "",
-      "GOOGLE_CLOUD_CPP_IAM_AUTHORITY", "iam.googleapis.com");
+      std::move(options), "GOOGLE_CLOUD_CPP_IAM_ENDPOINT",
+      "", "GOOGLE_CLOUD_CPP_IAM_AUTHORITY",
+      "iam.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<iam_admin_v1::IAMRetryPolicyOption>()) {
     options.set<iam_admin_v1::IAMRetryPolicyOption>(
-        iam_admin_v1::IAMLimitedTimeRetryPolicy(std::chrono::minutes(30))
-            .clone());
+        iam_admin_v1::IAMLimitedTimeRetryPolicy(
+            std::chrono::minutes(30)).clone());
   }
   if (!options.has<iam_admin_v1::IAMBackoffPolicyOption>()) {
     options.set<iam_admin_v1::IAMBackoffPolicyOption>(
-        ExponentialBackoffPolicy(
-            std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
-            .clone());
+        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
   }
   if (!options.has<iam_admin_v1::IAMConnectionIdempotencyPolicyOption>()) {
     options.set<iam_admin_v1::IAMConnectionIdempotencyPolicyOption>(

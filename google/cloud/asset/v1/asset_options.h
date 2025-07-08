@@ -74,7 +74,8 @@ struct AssetServicePollingPolicyOption {
  * @ingroup google-cloud-asset-options
  */
 using AssetServicePolicyOptionList =
-    OptionList<AssetServiceRetryPolicyOption, AssetServiceBackoffPolicyOption,
+    OptionList<AssetServiceRetryPolicyOption,
+               AssetServiceBackoffPolicyOption,
                AssetServicePollingPolicyOption,
                AssetServiceConnectionIdempotencyPolicyOption>;
 

@@ -43,15 +43,14 @@ class ConnectionServiceConnectionImpl
   ~ConnectionServiceConnectionImpl() override = default;
 
   ConnectionServiceConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<apigeeconnect_v1_internal::ConnectionServiceStub> stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<apigeeconnect_v1_internal::ConnectionServiceStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
-  StreamRange<google::cloud::apigeeconnect::v1::Connection> ListConnections(
-      google::cloud::apigeeconnect::v1::ListConnectionsRequest request)
-      override;
+  StreamRange<google::cloud::apigeeconnect::v1::Connection>
+  ListConnections(google::cloud::apigeeconnect::v1::ListConnectionsRequest request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

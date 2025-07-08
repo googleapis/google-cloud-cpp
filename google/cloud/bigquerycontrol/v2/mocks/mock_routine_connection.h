@@ -42,38 +42,33 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockRoutineServiceConnection
-    : public bigquerycontrol_v2::RoutineServiceConnection {
+class MockRoutineServiceConnection : public bigquerycontrol_v2::RoutineServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::bigquery::v2::Routine>, GetRoutine,
-              (google::cloud::bigquery::v2::GetRoutineRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::bigquery::v2::Routine>,
+  GetRoutine,
+  (google::cloud::bigquery::v2::GetRoutineRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::bigquery::v2::Routine>, InsertRoutine,
-      (google::cloud::bigquery::v2::InsertRoutineRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::bigquery::v2::Routine>,
+  InsertRoutine,
+  (google::cloud::bigquery::v2::InsertRoutineRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::bigquery::v2::Routine>, UpdateRoutine,
-      (google::cloud::bigquery::v2::UpdateRoutineRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::bigquery::v2::Routine>,
+  UpdateRoutine,
+  (google::cloud::bigquery::v2::UpdateRoutineRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::bigquery::v2::Routine>, PatchRoutine,
-              (google::cloud::bigquery::v2::PatchRoutineRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::bigquery::v2::Routine>,
+  PatchRoutine,
+  (google::cloud::bigquery::v2::PatchRoutineRequest const& request), (override));
 
-  MOCK_METHOD(
-      Status, DeleteRoutine,
-      (google::cloud::bigquery::v2::DeleteRoutineRequest const& request),
-      (override));
+  MOCK_METHOD(Status,
+  DeleteRoutine,
+  (google::cloud::bigquery::v2::DeleteRoutineRequest const& request), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::bigquery::v2::ListRoutinesResponse>,
-              ListRoutines,
-              (google::cloud::bigquery::v2::ListRoutinesRequest const& request),
-              (override));
+  ListRoutines,
+  (google::cloud::bigquery::v2::ListRoutinesRequest const& request), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

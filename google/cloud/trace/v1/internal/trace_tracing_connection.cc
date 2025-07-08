@@ -34,28 +34,24 @@ TraceServiceTracingConnection::TraceServiceTracingConnection(
     : child_(std::move(child)) {}
 
 StreamRange<google::devtools::cloudtrace::v1::Trace>
-TraceServiceTracingConnection::ListTraces(
-    google::devtools::cloudtrace::v1::ListTracesRequest request) {
-  auto span =
-      internal::MakeSpan("trace_v1::TraceServiceConnection::ListTraces");
+TraceServiceTracingConnection::ListTraces(google::devtools::cloudtrace::v1::ListTracesRequest request) {
+  auto span = internal::MakeSpan("trace_v1::TraceServiceConnection::ListTraces");
   internal::OTelScope scope(span);
   auto sr = child_->ListTraces(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::devtools::cloudtrace::v1::Trace>(std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<google::devtools::cloudtrace::v1::Trace>(
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::devtools::cloudtrace::v1::Trace>
-TraceServiceTracingConnection::GetTrace(
-    google::devtools::cloudtrace::v1::GetTraceRequest const& request) {
+TraceServiceTracingConnection::GetTrace(google::devtools::cloudtrace::v1::GetTraceRequest const& request) {
   auto span = internal::MakeSpan("trace_v1::TraceServiceConnection::GetTrace");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetTrace(request));
 }
 
-Status TraceServiceTracingConnection::PatchTraces(
-    google::devtools::cloudtrace::v1::PatchTracesRequest const& request) {
-  auto span =
-      internal::MakeSpan("trace_v1::TraceServiceConnection::PatchTraces");
+Status
+TraceServiceTracingConnection::PatchTraces(google::devtools::cloudtrace::v1::PatchTracesRequest const& request) {
+  auto span = internal::MakeSpan("trace_v1::TraceServiceConnection::PatchTraces");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->PatchTraces(request));
 }

@@ -17,17 +17,17 @@
 // source: google/cloud/retail/v2/completion_service.proto
 
 #include "google/cloud/retail/v2/internal/completion_stub_factory.h"
-#include "google/cloud/retail/v2/internal/completion_auth_decorator.h"
-#include "google/cloud/retail/v2/internal/completion_logging_decorator.h"
-#include "google/cloud/retail/v2/internal/completion_metadata_decorator.h"
-#include "google/cloud/retail/v2/internal/completion_stub.h"
-#include "google/cloud/retail/v2/internal/completion_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
+#include "google/cloud/retail/v2/internal/completion_auth_decorator.h"
+#include "google/cloud/retail/v2/internal/completion_logging_decorator.h"
+#include "google/cloud/retail/v2/internal/completion_metadata_decorator.h"
+#include "google/cloud/retail/v2/internal/completion_stub.h"
+#include "google/cloud/retail/v2/internal/completion_tracing_stub.h"
 #include <google/cloud/retail/v2/completion_service.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
@@ -38,28 +38,30 @@ namespace cloud {
 namespace retail_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<CompletionServiceStub> CreateDefaultCompletionServiceStub(
+std::shared_ptr<CompletionServiceStub>
+CreateDefaultCompletionServiceStub(
     std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
     Options const& options) {
-  auto channel = auth->CreateChannel(options.get<EndpointOption>(),
-                                     internal::MakeChannelArguments(options));
-  auto service_grpc_stub =
-      google::cloud::retail::v2::CompletionService::NewStub(channel);
+  auto channel = auth->CreateChannel(
+    options.get<EndpointOption>(), internal::MakeChannelArguments(options));
+  auto service_grpc_stub = google::cloud::retail::v2::CompletionService::NewStub(channel);
   std::shared_ptr<CompletionServiceStub> stub =
-      std::make_shared<DefaultCompletionServiceStub>(
-          std::move(service_grpc_stub),
-          google::longrunning::Operations::NewStub(channel));
+    std::make_shared<DefaultCompletionServiceStub>(
+      std::move(service_grpc_stub),
+      google::longrunning::Operations::NewStub(channel));
 
   if (auth->RequiresConfigureContext()) {
-    stub = std::make_shared<CompletionServiceAuth>(std::move(auth),
-                                                   std::move(stub));
+    stub = std::make_shared<CompletionServiceAuth>(
+        std::move(auth), std::move(stub));
   }
   stub = std::make_shared<CompletionServiceMetadata>(
       std::move(stub), std::multimap<std::string, std::string>{});
-  if (internal::Contains(options.get<LoggingComponentsOption>(), "rpc")) {
+  if (internal::Contains(
+      options.get<LoggingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<CompletionServiceLogging>(
-        std::move(stub), options.get<GrpcTracingOptionsOption>(),
+        std::move(stub),
+        options.get<GrpcTracingOptionsOption>(),
         options.get<LoggingComponentsOption>());
   }
   if (internal::TracingEnabled(options)) {

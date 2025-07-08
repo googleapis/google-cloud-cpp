@@ -34,113 +34,95 @@ EkmServiceTracingConnection::EkmServiceTracingConnection(
     : child_(std::move(child)) {}
 
 StreamRange<google::cloud::kms::v1::EkmConnection>
-EkmServiceTracingConnection::ListEkmConnections(
-    google::cloud::kms::v1::ListEkmConnectionsRequest request) {
-  auto span =
-      internal::MakeSpan("kms_v1::EkmServiceConnection::ListEkmConnections");
+EkmServiceTracingConnection::ListEkmConnections(google::cloud::kms::v1::ListEkmConnectionsRequest request) {
+  auto span = internal::MakeSpan("kms_v1::EkmServiceConnection::ListEkmConnections");
   internal::OTelScope scope(span);
   auto sr = child_->ListEkmConnections(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::kms::v1::EkmConnection>(
-      std::move(span), std::move(sr));
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::kms::v1::EkmConnection>
-EkmServiceTracingConnection::GetEkmConnection(
-    google::cloud::kms::v1::GetEkmConnectionRequest const& request) {
-  auto span =
-      internal::MakeSpan("kms_v1::EkmServiceConnection::GetEkmConnection");
+EkmServiceTracingConnection::GetEkmConnection(google::cloud::kms::v1::GetEkmConnectionRequest const& request) {
+  auto span = internal::MakeSpan("kms_v1::EkmServiceConnection::GetEkmConnection");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetEkmConnection(request));
 }
 
 StatusOr<google::cloud::kms::v1::EkmConnection>
-EkmServiceTracingConnection::CreateEkmConnection(
-    google::cloud::kms::v1::CreateEkmConnectionRequest const& request) {
-  auto span =
-      internal::MakeSpan("kms_v1::EkmServiceConnection::CreateEkmConnection");
+EkmServiceTracingConnection::CreateEkmConnection(google::cloud::kms::v1::CreateEkmConnectionRequest const& request) {
+  auto span = internal::MakeSpan("kms_v1::EkmServiceConnection::CreateEkmConnection");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateEkmConnection(request));
 }
 
 StatusOr<google::cloud::kms::v1::EkmConnection>
-EkmServiceTracingConnection::UpdateEkmConnection(
-    google::cloud::kms::v1::UpdateEkmConnectionRequest const& request) {
-  auto span =
-      internal::MakeSpan("kms_v1::EkmServiceConnection::UpdateEkmConnection");
+EkmServiceTracingConnection::UpdateEkmConnection(google::cloud::kms::v1::UpdateEkmConnectionRequest const& request) {
+  auto span = internal::MakeSpan("kms_v1::EkmServiceConnection::UpdateEkmConnection");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateEkmConnection(request));
 }
 
 StatusOr<google::cloud::kms::v1::EkmConfig>
-EkmServiceTracingConnection::GetEkmConfig(
-    google::cloud::kms::v1::GetEkmConfigRequest const& request) {
+EkmServiceTracingConnection::GetEkmConfig(google::cloud::kms::v1::GetEkmConfigRequest const& request) {
   auto span = internal::MakeSpan("kms_v1::EkmServiceConnection::GetEkmConfig");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetEkmConfig(request));
 }
 
 StatusOr<google::cloud::kms::v1::EkmConfig>
-EkmServiceTracingConnection::UpdateEkmConfig(
-    google::cloud::kms::v1::UpdateEkmConfigRequest const& request) {
-  auto span =
-      internal::MakeSpan("kms_v1::EkmServiceConnection::UpdateEkmConfig");
+EkmServiceTracingConnection::UpdateEkmConfig(google::cloud::kms::v1::UpdateEkmConfigRequest const& request) {
+  auto span = internal::MakeSpan("kms_v1::EkmServiceConnection::UpdateEkmConfig");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateEkmConfig(request));
 }
 
 StatusOr<google::cloud::kms::v1::VerifyConnectivityResponse>
-EkmServiceTracingConnection::VerifyConnectivity(
-    google::cloud::kms::v1::VerifyConnectivityRequest const& request) {
-  auto span =
-      internal::MakeSpan("kms_v1::EkmServiceConnection::VerifyConnectivity");
+EkmServiceTracingConnection::VerifyConnectivity(google::cloud::kms::v1::VerifyConnectivityRequest const& request) {
+  auto span = internal::MakeSpan("kms_v1::EkmServiceConnection::VerifyConnectivity");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->VerifyConnectivity(request));
 }
 
 StreamRange<google::cloud::location::Location>
-EkmServiceTracingConnection::ListLocations(
-    google::cloud::location::ListLocationsRequest request) {
+EkmServiceTracingConnection::ListLocations(google::cloud::location::ListLocationsRequest request) {
   auto span = internal::MakeSpan("kms_v1::EkmServiceConnection::ListLocations");
   internal::OTelScope scope(span);
   auto sr = child_->ListLocations(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::location::Location>(
-      std::move(span), std::move(sr));
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::location::Location>
-EkmServiceTracingConnection::GetLocation(
-    google::cloud::location::GetLocationRequest const& request) {
+EkmServiceTracingConnection::GetLocation(google::cloud::location::GetLocationRequest const& request) {
   auto span = internal::MakeSpan("kms_v1::EkmServiceConnection::GetLocation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetLocation(request));
 }
 
-StatusOr<google::iam::v1::Policy> EkmServiceTracingConnection::SetIamPolicy(
-    google::iam::v1::SetIamPolicyRequest const& request) {
+StatusOr<google::iam::v1::Policy>
+EkmServiceTracingConnection::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) {
   auto span = internal::MakeSpan("kms_v1::EkmServiceConnection::SetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->SetIamPolicy(request));
 }
 
-StatusOr<google::iam::v1::Policy> EkmServiceTracingConnection::GetIamPolicy(
-    google::iam::v1::GetIamPolicyRequest const& request) {
+StatusOr<google::iam::v1::Policy>
+EkmServiceTracingConnection::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) {
   auto span = internal::MakeSpan("kms_v1::EkmServiceConnection::GetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetIamPolicy(request));
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-EkmServiceTracingConnection::TestIamPermissions(
-    google::iam::v1::TestIamPermissionsRequest const& request) {
-  auto span =
-      internal::MakeSpan("kms_v1::EkmServiceConnection::TestIamPermissions");
+EkmServiceTracingConnection::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) {
+  auto span = internal::MakeSpan("kms_v1::EkmServiceConnection::TestIamPermissions");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->TestIamPermissions(request));
 }
 
 StatusOr<google::longrunning::Operation>
-EkmServiceTracingConnection::GetOperation(
-    google::longrunning::GetOperationRequest const& request) {
+EkmServiceTracingConnection::GetOperation(google::longrunning::GetOperationRequest const& request) {
   auto span = internal::MakeSpan("kms_v1::EkmServiceConnection::GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOperation(request));
@@ -148,7 +130,8 @@ EkmServiceTracingConnection::GetOperation(
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-std::shared_ptr<kms_v1::EkmServiceConnection> MakeEkmServiceTracingConnection(
+std::shared_ptr<kms_v1::EkmServiceConnection>
+MakeEkmServiceTracingConnection(
     std::shared_ptr<kms_v1::EkmServiceConnection> conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {

@@ -33,13 +33,10 @@ using ::google::cloud::servicecontrol_v1::MakeQuotaControllerConnection;
 /// @deprecated Use servicecontrol_v1::QuotaControllerConnection directly.
 using ::google::cloud::servicecontrol_v1::QuotaControllerConnection;
 
-/// @deprecated Use
-/// servicecontrol_v1::QuotaControllerLimitedErrorCountRetryPolicy directly.
-using ::google::cloud::servicecontrol_v1::
-    QuotaControllerLimitedErrorCountRetryPolicy;
+/// @deprecated Use servicecontrol_v1::QuotaControllerLimitedErrorCountRetryPolicy directly.
+using ::google::cloud::servicecontrol_v1::QuotaControllerLimitedErrorCountRetryPolicy;
 
-/// @deprecated Use servicecontrol_v1::QuotaControllerLimitedTimeRetryPolicy
-/// directly.
+/// @deprecated Use servicecontrol_v1::QuotaControllerLimitedTimeRetryPolicy directly.
 using ::google::cloud::servicecontrol_v1::QuotaControllerLimitedTimeRetryPolicy;
 
 /// @deprecated Use servicecontrol_v1::QuotaControllerRetryPolicy directly.

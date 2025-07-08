@@ -35,24 +35,23 @@ class CompletionServiceConnectionIdempotencyPolicy {
   virtual ~CompletionServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<CompletionServiceConnectionIdempotencyPolicy> clone()
-      const;
+  virtual std::unique_ptr<CompletionServiceConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency CompleteQuery(
-      google::cloud::retail::v2::CompleteQueryRequest const& request);
+  virtual google::cloud::Idempotency
+  CompleteQuery(google::cloud::retail::v2::CompleteQueryRequest const& request);
 
-  virtual google::cloud::Idempotency ImportCompletionData(
-      google::cloud::retail::v2::ImportCompletionDataRequest const& request);
+  virtual google::cloud::Idempotency
+  ImportCompletionData(google::cloud::retail::v2::ImportCompletionDataRequest const& request);
 
-  virtual google::cloud::Idempotency ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual google::cloud::Idempotency
+  ListOperations(google::longrunning::ListOperationsRequest request);
 
-  virtual google::cloud::Idempotency GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 };
 
 std::unique_ptr<CompletionServiceConnectionIdempotencyPolicy>
-MakeDefaultCompletionServiceConnectionIdempotencyPolicy();
+    MakeDefaultCompletionServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace retail_v2

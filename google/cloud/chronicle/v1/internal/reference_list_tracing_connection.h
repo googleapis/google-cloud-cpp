@@ -36,36 +36,33 @@ class ReferenceListServiceTracingConnection
   ~ReferenceListServiceTracingConnection() override = default;
 
   explicit ReferenceListServiceTracingConnection(
-      std::shared_ptr<chronicle_v1::ReferenceListServiceConnection> child);
+    std::shared_ptr<chronicle_v1::ReferenceListServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::chronicle::v1::ReferenceList> GetReferenceList(
-      google::cloud::chronicle::v1::GetReferenceListRequest const& request)
-      override;
+  StatusOr<google::cloud::chronicle::v1::ReferenceList>
+  GetReferenceList(google::cloud::chronicle::v1::GetReferenceListRequest const& request) override;
 
-  StreamRange<google::cloud::chronicle::v1::ReferenceList> ListReferenceLists(
-      google::cloud::chronicle::v1::ListReferenceListsRequest request) override;
+  StreamRange<google::cloud::chronicle::v1::ReferenceList>
+  ListReferenceLists(google::cloud::chronicle::v1::ListReferenceListsRequest request) override;
 
-  StatusOr<google::cloud::chronicle::v1::ReferenceList> CreateReferenceList(
-      google::cloud::chronicle::v1::CreateReferenceListRequest const& request)
-      override;
+  StatusOr<google::cloud::chronicle::v1::ReferenceList>
+  CreateReferenceList(google::cloud::chronicle::v1::CreateReferenceListRequest const& request) override;
 
-  StatusOr<google::cloud::chronicle::v1::ReferenceList> UpdateReferenceList(
-      google::cloud::chronicle::v1::UpdateReferenceListRequest const& request)
-      override;
+  StatusOr<google::cloud::chronicle::v1::ReferenceList>
+  UpdateReferenceList(google::cloud::chronicle::v1::UpdateReferenceListRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request) override;
 
-  Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request) override;
+  Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request) override;
 
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request) override;
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::shared_ptr<chronicle_v1::ReferenceListServiceConnection> child_;

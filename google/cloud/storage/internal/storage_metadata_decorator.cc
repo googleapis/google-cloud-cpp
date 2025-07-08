@@ -46,15 +46,16 @@ StorageMetadata::StorageMetadata(
               ? google::cloud::internal::GeneratedLibClientHeader()
               : std::move(api_client_header)) {}
 
-Status StorageMetadata::DeleteBucket(
-    grpc::ClientContext& context, Options const& options,
+Status
+StorageMetadata::DeleteBucket(
+    grpc::ClientContext& context,
+    Options const& options,
     google::storage::v2::DeleteBucketRequest const& request) {
   std::vector<std::string> params;
   params.reserve(1);
 
   if (!request.name().empty()) {
-    params.push_back(
-        absl::StrCat("bucket=", internal::UrlEncode(request.name())));
+    params.push_back(absl::StrCat("bucket=", internal::UrlEncode(request.name())));
   }
 
   if (params.empty()) {
@@ -65,15 +66,16 @@ Status StorageMetadata::DeleteBucket(
   return child_->DeleteBucket(context, options, request);
 }
 
-StatusOr<google::storage::v2::Bucket> StorageMetadata::GetBucket(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::storage::v2::Bucket>
+StorageMetadata::GetBucket(
+    grpc::ClientContext& context,
+    Options const& options,
     google::storage::v2::GetBucketRequest const& request) {
   std::vector<std::string> params;
   params.reserve(1);
 
   if (!request.name().empty()) {
-    params.push_back(
-        absl::StrCat("bucket=", internal::UrlEncode(request.name())));
+    params.push_back(absl::StrCat("bucket=", internal::UrlEncode(request.name())));
   }
 
   if (params.empty()) {
@@ -84,18 +86,18 @@ StatusOr<google::storage::v2::Bucket> StorageMetadata::GetBucket(
   return child_->GetBucket(context, options, request);
 }
 
-StatusOr<google::storage::v2::Bucket> StorageMetadata::CreateBucket(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::storage::v2::Bucket>
+StorageMetadata::CreateBucket(
+    grpc::ClientContext& context,
+    Options const& options,
     google::storage::v2::CreateBucketRequest const& request) {
   std::vector<std::string> params;
   params.reserve(1);
 
   if (!request.bucket().project().empty()) {
-    params.push_back(absl::StrCat(
-        "project=", internal::UrlEncode(request.bucket().project())));
+    params.push_back(absl::StrCat("project=", internal::UrlEncode(request.bucket().project())));
   } else if (!request.parent().empty()) {
-    params.push_back(
-        absl::StrCat("project=", internal::UrlEncode(request.parent())));
+    params.push_back(absl::StrCat("project=", internal::UrlEncode(request.parent())));
   }
 
   if (params.empty()) {
@@ -106,15 +108,16 @@ StatusOr<google::storage::v2::Bucket> StorageMetadata::CreateBucket(
   return child_->CreateBucket(context, options, request);
 }
 
-StatusOr<google::storage::v2::ListBucketsResponse> StorageMetadata::ListBuckets(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::storage::v2::ListBucketsResponse>
+StorageMetadata::ListBuckets(
+    grpc::ClientContext& context,
+    Options const& options,
     google::storage::v2::ListBucketsRequest const& request) {
   std::vector<std::string> params;
   params.reserve(1);
 
   if (!request.parent().empty()) {
-    params.push_back(
-        absl::StrCat("project=", internal::UrlEncode(request.parent())));
+    params.push_back(absl::StrCat("project=", internal::UrlEncode(request.parent())));
   }
 
   if (params.empty()) {
@@ -127,14 +130,14 @@ StatusOr<google::storage::v2::ListBucketsResponse> StorageMetadata::ListBuckets(
 
 StatusOr<google::storage::v2::Bucket>
 StorageMetadata::LockBucketRetentionPolicy(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::storage::v2::LockBucketRetentionPolicyRequest const& request) {
   std::vector<std::string> params;
   params.reserve(1);
 
   if (!request.bucket().empty()) {
-    params.push_back(
-        absl::StrCat("bucket=", internal::UrlEncode(request.bucket())));
+    params.push_back(absl::StrCat("bucket=", internal::UrlEncode(request.bucket())));
   }
 
   if (params.empty()) {
@@ -145,25 +148,26 @@ StorageMetadata::LockBucketRetentionPolicy(
   return child_->LockBucketRetentionPolicy(context, options, request);
 }
 
-StatusOr<google::iam::v1::Policy> StorageMetadata::GetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::iam::v1::Policy>
+StorageMetadata::GetIamPolicy(
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   std::vector<std::string> params;
   params.reserve(1);
 
-  static auto* bucket_matcher = [] {
-    return new google::cloud::internal::RoutingMatcher<
-        google::iam::v1::GetIamPolicyRequest>{
-        "bucket=",
-        {
-            {[](google::iam::v1::GetIamPolicyRequest const& request)
-                 -> std::string const& { return request.resource(); },
-             std::regex{"(projects/[^/]+/buckets/[^/]+)/.*",
-                        std::regex::optimize}},
-            {[](google::iam::v1::GetIamPolicyRequest const& request)
-                 -> std::string const& { return request.resource(); },
-             absl::nullopt},
-        }};
+  static auto* bucket_matcher = []{
+    return new google::cloud::internal::RoutingMatcher<google::iam::v1::GetIamPolicyRequest>{
+      "bucket=", {
+      {[](google::iam::v1::GetIamPolicyRequest const& request) -> std::string const& {
+        return request.resource();
+      },
+      std::regex{"(projects/[^/]+/buckets/[^/]+)/.*", std::regex::optimize}},
+      {[](google::iam::v1::GetIamPolicyRequest const& request) -> std::string const& {
+        return request.resource();
+      },
+      absl::nullopt},
+      }};
   }();
   bucket_matcher->AppendParam(request, params);
 
@@ -175,25 +179,26 @@ StatusOr<google::iam::v1::Policy> StorageMetadata::GetIamPolicy(
   return child_->GetIamPolicy(context, options, request);
 }
 
-StatusOr<google::iam::v1::Policy> StorageMetadata::SetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::iam::v1::Policy>
+StorageMetadata::SetIamPolicy(
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   std::vector<std::string> params;
   params.reserve(1);
 
-  static auto* bucket_matcher = [] {
-    return new google::cloud::internal::RoutingMatcher<
-        google::iam::v1::SetIamPolicyRequest>{
-        "bucket=",
-        {
-            {[](google::iam::v1::SetIamPolicyRequest const& request)
-                 -> std::string const& { return request.resource(); },
-             std::regex{"(projects/[^/]+/buckets/[^/]+)/.*",
-                        std::regex::optimize}},
-            {[](google::iam::v1::SetIamPolicyRequest const& request)
-                 -> std::string const& { return request.resource(); },
-             absl::nullopt},
-        }};
+  static auto* bucket_matcher = []{
+    return new google::cloud::internal::RoutingMatcher<google::iam::v1::SetIamPolicyRequest>{
+      "bucket=", {
+      {[](google::iam::v1::SetIamPolicyRequest const& request) -> std::string const& {
+        return request.resource();
+      },
+      std::regex{"(projects/[^/]+/buckets/[^/]+)/.*", std::regex::optimize}},
+      {[](google::iam::v1::SetIamPolicyRequest const& request) -> std::string const& {
+        return request.resource();
+      },
+      absl::nullopt},
+      }};
   }();
   bucket_matcher->AppendParam(request, params);
 
@@ -207,28 +212,28 @@ StatusOr<google::iam::v1::Policy> StorageMetadata::SetIamPolicy(
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 StorageMetadata::TestIamPermissions(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   std::vector<std::string> params;
   params.reserve(1);
 
-  static auto* bucket_matcher = [] {
-    return new google::cloud::internal::RoutingMatcher<
-        google::iam::v1::TestIamPermissionsRequest>{
-        "bucket=",
-        {
-            {[](google::iam::v1::TestIamPermissionsRequest const& request)
-                 -> std::string const& { return request.resource(); },
-             std::regex{"(projects/[^/]+/buckets/[^/]+)/managedFolders/.*",
-                        std::regex::optimize}},
-            {[](google::iam::v1::TestIamPermissionsRequest const& request)
-                 -> std::string const& { return request.resource(); },
-             std::regex{"(projects/[^/]+/buckets/[^/]+)/objects/.*",
-                        std::regex::optimize}},
-            {[](google::iam::v1::TestIamPermissionsRequest const& request)
-                 -> std::string const& { return request.resource(); },
-             absl::nullopt},
-        }};
+  static auto* bucket_matcher = []{
+    return new google::cloud::internal::RoutingMatcher<google::iam::v1::TestIamPermissionsRequest>{
+      "bucket=", {
+      {[](google::iam::v1::TestIamPermissionsRequest const& request) -> std::string const& {
+        return request.resource();
+      },
+      std::regex{"(projects/[^/]+/buckets/[^/]+)/managedFolders/.*", std::regex::optimize}},
+      {[](google::iam::v1::TestIamPermissionsRequest const& request) -> std::string const& {
+        return request.resource();
+      },
+      std::regex{"(projects/[^/]+/buckets/[^/]+)/objects/.*", std::regex::optimize}},
+      {[](google::iam::v1::TestIamPermissionsRequest const& request) -> std::string const& {
+        return request.resource();
+      },
+      absl::nullopt},
+      }};
   }();
   bucket_matcher->AppendParam(request, params);
 
@@ -240,15 +245,16 @@ StorageMetadata::TestIamPermissions(
   return child_->TestIamPermissions(context, options, request);
 }
 
-StatusOr<google::storage::v2::Bucket> StorageMetadata::UpdateBucket(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::storage::v2::Bucket>
+StorageMetadata::UpdateBucket(
+    grpc::ClientContext& context,
+    Options const& options,
     google::storage::v2::UpdateBucketRequest const& request) {
   std::vector<std::string> params;
   params.reserve(1);
 
   if (!request.bucket().name().empty()) {
-    params.push_back(
-        absl::StrCat("bucket=", internal::UrlEncode(request.bucket().name())));
+    params.push_back(absl::StrCat("bucket=", internal::UrlEncode(request.bucket().name())));
   }
 
   if (params.empty()) {
@@ -259,15 +265,16 @@ StatusOr<google::storage::v2::Bucket> StorageMetadata::UpdateBucket(
   return child_->UpdateBucket(context, options, request);
 }
 
-StatusOr<google::storage::v2::Object> StorageMetadata::ComposeObject(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::storage::v2::Object>
+StorageMetadata::ComposeObject(
+    grpc::ClientContext& context,
+    Options const& options,
     google::storage::v2::ComposeObjectRequest const& request) {
   std::vector<std::string> params;
   params.reserve(1);
 
   if (!request.destination().bucket().empty()) {
-    params.push_back(absl::StrCat(
-        "bucket=", internal::UrlEncode(request.destination().bucket())));
+    params.push_back(absl::StrCat("bucket=", internal::UrlEncode(request.destination().bucket())));
   }
 
   if (params.empty()) {
@@ -278,15 +285,16 @@ StatusOr<google::storage::v2::Object> StorageMetadata::ComposeObject(
   return child_->ComposeObject(context, options, request);
 }
 
-Status StorageMetadata::DeleteObject(
-    grpc::ClientContext& context, Options const& options,
+Status
+StorageMetadata::DeleteObject(
+    grpc::ClientContext& context,
+    Options const& options,
     google::storage::v2::DeleteObjectRequest const& request) {
   std::vector<std::string> params;
   params.reserve(1);
 
   if (!request.bucket().empty()) {
-    params.push_back(
-        absl::StrCat("bucket=", internal::UrlEncode(request.bucket())));
+    params.push_back(absl::StrCat("bucket=", internal::UrlEncode(request.bucket())));
   }
 
   if (params.empty()) {
@@ -297,15 +305,16 @@ Status StorageMetadata::DeleteObject(
   return child_->DeleteObject(context, options, request);
 }
 
-StatusOr<google::storage::v2::Object> StorageMetadata::RestoreObject(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::storage::v2::Object>
+StorageMetadata::RestoreObject(
+    grpc::ClientContext& context,
+    Options const& options,
     google::storage::v2::RestoreObjectRequest const& request) {
   std::vector<std::string> params;
   params.reserve(1);
 
   if (!request.bucket().empty()) {
-    params.push_back(
-        absl::StrCat("bucket=", internal::UrlEncode(request.bucket())));
+    params.push_back(absl::StrCat("bucket=", internal::UrlEncode(request.bucket())));
   }
 
   if (params.empty()) {
@@ -318,21 +327,20 @@ StatusOr<google::storage::v2::Object> StorageMetadata::RestoreObject(
 
 StatusOr<google::storage::v2::CancelResumableWriteResponse>
 StorageMetadata::CancelResumableWrite(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::storage::v2::CancelResumableWriteRequest const& request) {
   std::vector<std::string> params;
   params.reserve(1);
 
-  static auto* bucket_matcher = [] {
-    return new google::cloud::internal::RoutingMatcher<
-        google::storage::v2::CancelResumableWriteRequest>{
-        "bucket=",
-        {
-            {[](google::storage::v2::CancelResumableWriteRequest const& request)
-                 -> std::string const& { return request.upload_id(); },
-             std::regex{"(projects/[^/]+/buckets/[^/]+)/.*",
-                        std::regex::optimize}},
-        }};
+  static auto* bucket_matcher = []{
+    return new google::cloud::internal::RoutingMatcher<google::storage::v2::CancelResumableWriteRequest>{
+      "bucket=", {
+      {[](google::storage::v2::CancelResumableWriteRequest const& request) -> std::string const& {
+        return request.upload_id();
+      },
+      std::regex{"(projects/[^/]+/buckets/[^/]+)/.*", std::regex::optimize}},
+      }};
   }();
   bucket_matcher->AppendParam(request, params);
 
@@ -344,15 +352,16 @@ StorageMetadata::CancelResumableWrite(
   return child_->CancelResumableWrite(context, options, request);
 }
 
-StatusOr<google::storage::v2::Object> StorageMetadata::GetObject(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::storage::v2::Object>
+StorageMetadata::GetObject(
+    grpc::ClientContext& context,
+    Options const& options,
     google::storage::v2::GetObjectRequest const& request) {
   std::vector<std::string> params;
   params.reserve(1);
 
   if (!request.bucket().empty()) {
-    params.push_back(
-        absl::StrCat("bucket=", internal::UrlEncode(request.bucket())));
+    params.push_back(absl::StrCat("bucket=", internal::UrlEncode(request.bucket())));
   }
 
   if (params.empty()) {
@@ -363,17 +372,16 @@ StatusOr<google::storage::v2::Object> StorageMetadata::GetObject(
   return child_->GetObject(context, options, request);
 }
 
-std::unique_ptr<google::cloud::internal::StreamingReadRpc<
-    google::storage::v2::ReadObjectResponse>>
+std::unique_ptr<google::cloud::internal::StreamingReadRpc<google::storage::v2::ReadObjectResponse>>
 StorageMetadata::ReadObject(
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    Options const& options,
     google::storage::v2::ReadObjectRequest const& request) {
   std::vector<std::string> params;
   params.reserve(1);
 
   if (!request.bucket().empty()) {
-    params.push_back(
-        absl::StrCat("bucket=", internal::UrlEncode(request.bucket())));
+    params.push_back(absl::StrCat("bucket=", internal::UrlEncode(request.bucket())));
   }
 
   if (params.empty()) {
@@ -385,26 +393,26 @@ StorageMetadata::ReadObject(
 }
 
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
-    google::storage::v2::BidiReadObjectRequest,
-    google::storage::v2::BidiReadObjectResponse>>
+      google::storage::v2::BidiReadObjectRequest,
+      google::storage::v2::BidiReadObjectResponse>>
 StorageMetadata::AsyncBidiReadObject(
     google::cloud::CompletionQueue const& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options) {
   SetMetadata(*context, *options);
-  return child_->AsyncBidiReadObject(cq, std::move(context),
-                                     std::move(options));
+  return child_->AsyncBidiReadObject(cq, std::move(context), std::move(options));
 }
 
-StatusOr<google::storage::v2::Object> StorageMetadata::UpdateObject(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::storage::v2::Object>
+StorageMetadata::UpdateObject(
+    grpc::ClientContext& context,
+    Options const& options,
     google::storage::v2::UpdateObjectRequest const& request) {
   std::vector<std::string> params;
   params.reserve(1);
 
   if (!request.object().bucket().empty()) {
-    params.push_back(absl::StrCat(
-        "bucket=", internal::UrlEncode(request.object().bucket())));
+    params.push_back(absl::StrCat("bucket=", internal::UrlEncode(request.object().bucket())));
   }
 
   if (params.empty()) {
@@ -418,33 +426,34 @@ StatusOr<google::storage::v2::Object> StorageMetadata::UpdateObject(
 std::unique_ptr<::google::cloud::internal::StreamingWriteRpc<
     google::storage::v2::WriteObjectRequest,
     google::storage::v2::WriteObjectResponse>>
-StorageMetadata::WriteObject(std::shared_ptr<grpc::ClientContext> context,
-                             Options const& options) {
+StorageMetadata::WriteObject(
+    std::shared_ptr<grpc::ClientContext> context,
+    Options const& options) {
   SetMetadata(*context, options);
   return child_->WriteObject(std::move(context), options);
 }
 
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
-    google::storage::v2::BidiWriteObjectRequest,
-    google::storage::v2::BidiWriteObjectResponse>>
+      google::storage::v2::BidiWriteObjectRequest,
+      google::storage::v2::BidiWriteObjectResponse>>
 StorageMetadata::AsyncBidiWriteObject(
     google::cloud::CompletionQueue const& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options) {
   SetMetadata(*context, *options);
-  return child_->AsyncBidiWriteObject(cq, std::move(context),
-                                      std::move(options));
+  return child_->AsyncBidiWriteObject(cq, std::move(context), std::move(options));
 }
 
-StatusOr<google::storage::v2::ListObjectsResponse> StorageMetadata::ListObjects(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::storage::v2::ListObjectsResponse>
+StorageMetadata::ListObjects(
+    grpc::ClientContext& context,
+    Options const& options,
     google::storage::v2::ListObjectsRequest const& request) {
   std::vector<std::string> params;
   params.reserve(1);
 
   if (!request.parent().empty()) {
-    params.push_back(
-        absl::StrCat("bucket=", internal::UrlEncode(request.parent())));
+    params.push_back(absl::StrCat("bucket=", internal::UrlEncode(request.parent())));
   }
 
   if (params.empty()) {
@@ -455,20 +464,20 @@ StatusOr<google::storage::v2::ListObjectsResponse> StorageMetadata::ListObjects(
   return child_->ListObjects(context, options, request);
 }
 
-StatusOr<google::storage::v2::RewriteResponse> StorageMetadata::RewriteObject(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::storage::v2::RewriteResponse>
+StorageMetadata::RewriteObject(
+    grpc::ClientContext& context,
+    Options const& options,
     google::storage::v2::RewriteObjectRequest const& request) {
   std::vector<std::string> params;
   params.reserve(2);
 
   if (!request.source_bucket().empty()) {
-    params.push_back(absl::StrCat(
-        "source_bucket=", internal::UrlEncode(request.source_bucket())));
+    params.push_back(absl::StrCat("source_bucket=", internal::UrlEncode(request.source_bucket())));
   }
 
   if (!request.destination_bucket().empty()) {
-    params.push_back(absl::StrCat(
-        "bucket=", internal::UrlEncode(request.destination_bucket())));
+    params.push_back(absl::StrCat("bucket=", internal::UrlEncode(request.destination_bucket())));
   }
 
   if (params.empty()) {
@@ -481,15 +490,14 @@ StatusOr<google::storage::v2::RewriteResponse> StorageMetadata::RewriteObject(
 
 StatusOr<google::storage::v2::StartResumableWriteResponse>
 StorageMetadata::StartResumableWrite(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::storage::v2::StartResumableWriteRequest const& request) {
   std::vector<std::string> params;
   params.reserve(1);
 
   if (!request.write_object_spec().resource().bucket().empty()) {
-    params.push_back(absl::StrCat(
-        "bucket=",
-        internal::UrlEncode(request.write_object_spec().resource().bucket())));
+    params.push_back(absl::StrCat("bucket=", internal::UrlEncode(request.write_object_spec().resource().bucket())));
   }
 
   if (params.empty()) {
@@ -502,21 +510,20 @@ StorageMetadata::StartResumableWrite(
 
 StatusOr<google::storage::v2::QueryWriteStatusResponse>
 StorageMetadata::QueryWriteStatus(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::storage::v2::QueryWriteStatusRequest const& request) {
   std::vector<std::string> params;
   params.reserve(1);
 
-  static auto* bucket_matcher = [] {
-    return new google::cloud::internal::RoutingMatcher<
-        google::storage::v2::QueryWriteStatusRequest>{
-        "bucket=",
-        {
-            {[](google::storage::v2::QueryWriteStatusRequest const& request)
-                 -> std::string const& { return request.upload_id(); },
-             std::regex{"(projects/[^/]+/buckets/[^/]+)/.*",
-                        std::regex::optimize}},
-        }};
+  static auto* bucket_matcher = []{
+    return new google::cloud::internal::RoutingMatcher<google::storage::v2::QueryWriteStatusRequest>{
+      "bucket=", {
+      {[](google::storage::v2::QueryWriteStatusRequest const& request) -> std::string const& {
+        return request.upload_id();
+      },
+      std::regex{"(projects/[^/]+/buckets/[^/]+)/.*", std::regex::optimize}},
+      }};
   }();
   bucket_matcher->AppendParam(request, params);
 
@@ -528,15 +535,16 @@ StorageMetadata::QueryWriteStatus(
   return child_->QueryWriteStatus(context, options, request);
 }
 
-StatusOr<google::storage::v2::Object> StorageMetadata::MoveObject(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::storage::v2::Object>
+StorageMetadata::MoveObject(
+    grpc::ClientContext& context,
+    Options const& options,
     google::storage::v2::MoveObjectRequest const& request) {
   std::vector<std::string> params;
   params.reserve(1);
 
   if (!request.bucket().empty()) {
-    params.push_back(
-        absl::StrCat("bucket=", internal::UrlEncode(request.bucket())));
+    params.push_back(absl::StrCat("bucket=", internal::UrlEncode(request.bucket())));
   }
 
   if (params.empty()) {
@@ -549,16 +557,15 @@ StatusOr<google::storage::v2::Object> StorageMetadata::MoveObject(
 
 future<StatusOr<google::storage::v2::Object>>
 StorageMetadata::AsyncComposeObject(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::storage::v2::ComposeObjectRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::storage::v2::ComposeObjectRequest const& request) {
   std::vector<std::string> params;
   params.reserve(1);
 
   if (!request.destination().bucket().empty()) {
-    params.push_back(absl::StrCat(
-        "bucket=", internal::UrlEncode(request.destination().bucket())));
+    params.push_back(absl::StrCat("bucket=", internal::UrlEncode(request.destination().bucket())));
   }
 
   if (params.empty()) {
@@ -566,21 +573,21 @@ StorageMetadata::AsyncComposeObject(
   } else {
     SetMetadata(*context, *options, absl::StrJoin(params, "&"));
   }
-  return child_->AsyncComposeObject(cq, std::move(context), std::move(options),
-                                    request);
+  return child_->AsyncComposeObject(
+      cq, std::move(context), std::move(options), request);
 }
 
-future<Status> StorageMetadata::AsyncDeleteObject(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::storage::v2::DeleteObjectRequest const& request) {
+future<Status>
+StorageMetadata::AsyncDeleteObject(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::storage::v2::DeleteObjectRequest const& request) {
   std::vector<std::string> params;
   params.reserve(1);
 
   if (!request.bucket().empty()) {
-    params.push_back(
-        absl::StrCat("bucket=", internal::UrlEncode(request.bucket())));
+    params.push_back(absl::StrCat("bucket=", internal::UrlEncode(request.bucket())));
   }
 
   if (params.empty()) {
@@ -588,12 +595,12 @@ future<Status> StorageMetadata::AsyncDeleteObject(
   } else {
     SetMetadata(*context, *options, absl::StrJoin(params, "&"));
   }
-  return child_->AsyncDeleteObject(cq, std::move(context), std::move(options),
-                                   request);
+  return child_->AsyncDeleteObject(
+      cq, std::move(context), std::move(options), request);
 }
 
 std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
-    google::storage::v2::ReadObjectResponse>>
+      google::storage::v2::ReadObjectResponse>>
 StorageMetadata::AsyncReadObject(
     google::cloud::CompletionQueue const& cq,
     std::shared_ptr<grpc::ClientContext> context,
@@ -603,8 +610,7 @@ StorageMetadata::AsyncReadObject(
   params.reserve(1);
 
   if (!request.bucket().empty()) {
-    params.push_back(
-        absl::StrCat("bucket=", internal::UrlEncode(request.bucket())));
+    params.push_back(absl::StrCat("bucket=", internal::UrlEncode(request.bucket())));
   }
 
   if (params.empty()) {
@@ -612,13 +618,12 @@ StorageMetadata::AsyncReadObject(
   } else {
     SetMetadata(*context, *options, absl::StrJoin(params, "&"));
   }
-  return child_->AsyncReadObject(cq, std::move(context), std::move(options),
-                                 request);
+  return child_->AsyncReadObject(
+      cq, std::move(context), std::move(options), request);
 }
 
 std::unique_ptr<::google::cloud::internal::AsyncStreamingWriteRpc<
-    google::storage::v2::WriteObjectRequest,
-    google::storage::v2::WriteObjectResponse>>
+    google::storage::v2::WriteObjectRequest, google::storage::v2::WriteObjectResponse>>
 StorageMetadata::AsyncWriteObject(
     google::cloud::CompletionQueue const& cq,
     std::shared_ptr<grpc::ClientContext> context,
@@ -629,21 +634,19 @@ StorageMetadata::AsyncWriteObject(
 
 future<StatusOr<google::storage::v2::RewriteResponse>>
 StorageMetadata::AsyncRewriteObject(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::storage::v2::RewriteObjectRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::storage::v2::RewriteObjectRequest const& request) {
   std::vector<std::string> params;
   params.reserve(2);
 
   if (!request.source_bucket().empty()) {
-    params.push_back(absl::StrCat(
-        "source_bucket=", internal::UrlEncode(request.source_bucket())));
+    params.push_back(absl::StrCat("source_bucket=", internal::UrlEncode(request.source_bucket())));
   }
 
   if (!request.destination_bucket().empty()) {
-    params.push_back(absl::StrCat(
-        "bucket=", internal::UrlEncode(request.destination_bucket())));
+    params.push_back(absl::StrCat("bucket=", internal::UrlEncode(request.destination_bucket())));
   }
 
   if (params.empty()) {
@@ -651,23 +654,21 @@ StorageMetadata::AsyncRewriteObject(
   } else {
     SetMetadata(*context, *options, absl::StrJoin(params, "&"));
   }
-  return child_->AsyncRewriteObject(cq, std::move(context), std::move(options),
-                                    request);
+  return child_->AsyncRewriteObject(
+      cq, std::move(context), std::move(options), request);
 }
 
 future<StatusOr<google::storage::v2::StartResumableWriteResponse>>
 StorageMetadata::AsyncStartResumableWrite(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::storage::v2::StartResumableWriteRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::storage::v2::StartResumableWriteRequest const& request) {
   std::vector<std::string> params;
   params.reserve(1);
 
   if (!request.write_object_spec().resource().bucket().empty()) {
-    params.push_back(absl::StrCat(
-        "bucket=",
-        internal::UrlEncode(request.write_object_spec().resource().bucket())));
+    params.push_back(absl::StrCat("bucket=", internal::UrlEncode(request.write_object_spec().resource().bucket())));
   }
 
   if (params.empty()) {
@@ -675,29 +676,27 @@ StorageMetadata::AsyncStartResumableWrite(
   } else {
     SetMetadata(*context, *options, absl::StrJoin(params, "&"));
   }
-  return child_->AsyncStartResumableWrite(cq, std::move(context),
-                                          std::move(options), request);
+  return child_->AsyncStartResumableWrite(
+      cq, std::move(context), std::move(options), request);
 }
 
 future<StatusOr<google::storage::v2::QueryWriteStatusResponse>>
 StorageMetadata::AsyncQueryWriteStatus(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::storage::v2::QueryWriteStatusRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::storage::v2::QueryWriteStatusRequest const& request) {
   std::vector<std::string> params;
   params.reserve(1);
 
-  static auto* bucket_matcher = [] {
-    return new google::cloud::internal::RoutingMatcher<
-        google::storage::v2::QueryWriteStatusRequest>{
-        "bucket=",
-        {
-            {[](google::storage::v2::QueryWriteStatusRequest const& request)
-                 -> std::string const& { return request.upload_id(); },
-             std::regex{"(projects/[^/]+/buckets/[^/]+)/.*",
-                        std::regex::optimize}},
-        }};
+  static auto* bucket_matcher = []{
+    return new google::cloud::internal::RoutingMatcher<google::storage::v2::QueryWriteStatusRequest>{
+      "bucket=", {
+      {[](google::storage::v2::QueryWriteStatusRequest const& request) -> std::string const& {
+        return request.upload_id();
+      },
+      std::regex{"(projects/[^/]+/buckets/[^/]+)/.*", std::regex::optimize}},
+      }};
   }();
   bucket_matcher->AppendParam(request, params);
 
@@ -706,21 +705,21 @@ StorageMetadata::AsyncQueryWriteStatus(
   } else {
     SetMetadata(*context, *options, absl::StrJoin(params, "&"));
   }
-  return child_->AsyncQueryWriteStatus(cq, std::move(context),
-                                       std::move(options), request);
+  return child_->AsyncQueryWriteStatus(
+      cq, std::move(context), std::move(options), request);
 }
 
 void StorageMetadata::SetMetadata(grpc::ClientContext& context,
-                                  Options const& options,
-                                  std::string const& request_params) {
+                                        Options const& options,
+                                        std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
 void StorageMetadata::SetMetadata(grpc::ClientContext& context,
-                                  Options const& options) {
-  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
-                                       api_client_header_);
+                                        Options const& options) {
+  google::cloud::internal::SetMetadata(
+      context, options, fixed_metadata_, api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

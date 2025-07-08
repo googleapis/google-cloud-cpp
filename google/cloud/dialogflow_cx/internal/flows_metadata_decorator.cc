@@ -44,163 +44,171 @@ FlowsMetadata::FlowsMetadata(
               ? google::cloud::internal::GeneratedLibClientHeader()
               : std::move(api_client_header)) {}
 
-StatusOr<google::cloud::dialogflow::cx::v3::Flow> FlowsMetadata::CreateFlow(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::dialogflow::cx::v3::Flow>
+FlowsMetadata::CreateFlow(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dialogflow::cx::v3::CreateFlowRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateFlow(context, options, request);
 }
 
-Status FlowsMetadata::DeleteFlow(
-    grpc::ClientContext& context, Options const& options,
+Status
+FlowsMetadata::DeleteFlow(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dialogflow::cx::v3::DeleteFlowRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteFlow(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::ListFlowsResponse>
 FlowsMetadata::ListFlows(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dialogflow::cx::v3::ListFlowsRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListFlows(context, options, request);
 }
 
-StatusOr<google::cloud::dialogflow::cx::v3::Flow> FlowsMetadata::GetFlow(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::dialogflow::cx::v3::Flow>
+FlowsMetadata::GetFlow(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dialogflow::cx::v3::GetFlowRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetFlow(context, options, request);
 }
 
-StatusOr<google::cloud::dialogflow::cx::v3::Flow> FlowsMetadata::UpdateFlow(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::dialogflow::cx::v3::Flow>
+FlowsMetadata::UpdateFlow(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dialogflow::cx::v3::UpdateFlowRequest const& request) {
-  SetMetadata(
-      context, options,
-      absl::StrCat("flow.name=", internal::UrlEncode(request.flow().name())));
+  SetMetadata(context, options, absl::StrCat("flow.name=", internal::UrlEncode(request.flow().name())));
   return child_->UpdateFlow(context, options, request);
 }
 
-future<StatusOr<google::longrunning::Operation>> FlowsMetadata::AsyncTrainFlow(
+future<StatusOr<google::longrunning::Operation>>
+FlowsMetadata::AsyncTrainFlow(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::dialogflow::cx::v3::TrainFlowRequest const& request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncTrainFlow(cq, std::move(context), std::move(options),
-                                request);
+  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncTrainFlow(
+      cq, std::move(context), std::move(options), request);
 }
 
-StatusOr<google::longrunning::Operation> FlowsMetadata::TrainFlow(
-    grpc::ClientContext& context, Options options,
+StatusOr<google::longrunning::Operation>
+FlowsMetadata::TrainFlow(
+    grpc::ClientContext& context,
+    Options options,
     google::cloud::dialogflow::cx::v3::TrainFlowRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->TrainFlow(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::FlowValidationResult>
 FlowsMetadata::ValidateFlow(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dialogflow::cx::v3::ValidateFlowRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ValidateFlow(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::FlowValidationResult>
 FlowsMetadata::GetFlowValidationResult(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::dialogflow::cx::v3::GetFlowValidationResultRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::dialogflow::cx::v3::GetFlowValidationResultRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetFlowValidationResult(context, options, request);
 }
 
-future<StatusOr<google::longrunning::Operation>> FlowsMetadata::AsyncImportFlow(
+future<StatusOr<google::longrunning::Operation>>
+FlowsMetadata::AsyncImportFlow(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::dialogflow::cx::v3::ImportFlowRequest const& request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncImportFlow(cq, std::move(context), std::move(options),
-                                 request);
+  SetMetadata(*context, *options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncImportFlow(
+      cq, std::move(context), std::move(options), request);
 }
 
-StatusOr<google::longrunning::Operation> FlowsMetadata::ImportFlow(
-    grpc::ClientContext& context, Options options,
+StatusOr<google::longrunning::Operation>
+FlowsMetadata::ImportFlow(
+    grpc::ClientContext& context,
+    Options options,
     google::cloud::dialogflow::cx::v3::ImportFlowRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ImportFlow(context, options, request);
 }
 
-future<StatusOr<google::longrunning::Operation>> FlowsMetadata::AsyncExportFlow(
+future<StatusOr<google::longrunning::Operation>>
+FlowsMetadata::AsyncExportFlow(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::dialogflow::cx::v3::ExportFlowRequest const& request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncExportFlow(cq, std::move(context), std::move(options),
-                                 request);
+  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncExportFlow(
+      cq, std::move(context), std::move(options), request);
 }
 
-StatusOr<google::longrunning::Operation> FlowsMetadata::ExportFlow(
-    grpc::ClientContext& context, Options options,
+StatusOr<google::longrunning::Operation>
+FlowsMetadata::ExportFlow(
+    grpc::ClientContext& context,
+    Options options,
     google::cloud::dialogflow::cx::v3::ExportFlowRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ExportFlow(context, options, request);
 }
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 FlowsMetadata::ListLocations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ListLocations(context, options, request);
 }
 
-StatusOr<google::cloud::location::Location> FlowsMetadata::GetLocation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::location::Location>
+FlowsMetadata::GetLocation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetLocation(context, options, request);
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
 FlowsMetadata::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ListOperations(context, options, request);
 }
 
-StatusOr<google::longrunning::Operation> FlowsMetadata::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::Operation>
+FlowsMetadata::GetOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetOperation(context, options, request);
 }
 
-Status FlowsMetadata::CancelOperation(
-    grpc::ClientContext& context, Options const& options,
+Status
+FlowsMetadata::CancelOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->CancelOperation(context, options, request);
 }
 
@@ -212,8 +220,8 @@ FlowsMetadata::AsyncGetOperation(
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(cq, std::move(context), std::move(options),
-                                   request);
+  return child_->AsyncGetOperation(
+      cq, std::move(context), std::move(options), request);
 }
 
 future<Status> FlowsMetadata::AsyncCancelOperation(
@@ -223,21 +231,21 @@ future<Status> FlowsMetadata::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(cq, std::move(context),
-                                      std::move(options), request);
+  return child_->AsyncCancelOperation(
+      cq, std::move(context), std::move(options), request);
 }
 
 void FlowsMetadata::SetMetadata(grpc::ClientContext& context,
-                                Options const& options,
-                                std::string const& request_params) {
+                                        Options const& options,
+                                        std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
 void FlowsMetadata::SetMetadata(grpc::ClientContext& context,
-                                Options const& options) {
-  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
-                                       api_client_header_);
+                                        Options const& options) {
+  google::cloud::internal::SetMetadata(
+      context, options, fixed_metadata_, api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

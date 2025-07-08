@@ -28,8 +28,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 CloudQuotasClient::CloudQuotasClient(
     std::shared_ptr<CloudQuotasConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 CloudQuotasClient::~CloudQuotasClient() = default;
 
 StreamRange<google::api::cloudquotas::v1::QuotaInfo>
@@ -41,8 +41,7 @@ CloudQuotasClient::ListQuotaInfos(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::api::cloudquotas::v1::QuotaInfo>
-CloudQuotasClient::ListQuotaInfos(
-    google::api::cloudquotas::v1::ListQuotaInfosRequest request, Options opts) {
+CloudQuotasClient::ListQuotaInfos(google::api::cloudquotas::v1::ListQuotaInfosRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListQuotaInfos(std::move(request));
 }
@@ -56,16 +55,13 @@ CloudQuotasClient::GetQuotaInfo(std::string const& name, Options opts) {
 }
 
 StatusOr<google::api::cloudquotas::v1::QuotaInfo>
-CloudQuotasClient::GetQuotaInfo(
-    google::api::cloudquotas::v1::GetQuotaInfoRequest const& request,
-    Options opts) {
+CloudQuotasClient::GetQuotaInfo(google::api::cloudquotas::v1::GetQuotaInfoRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetQuotaInfo(request);
 }
 
 StreamRange<google::api::cloudquotas::v1::QuotaPreference>
-CloudQuotasClient::ListQuotaPreferences(std::string const& parent,
-                                        Options opts) {
+CloudQuotasClient::ListQuotaPreferences(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::api::cloudquotas::v1::ListQuotaPreferencesRequest request;
   request.set_parent(parent);
@@ -73,9 +69,7 @@ CloudQuotasClient::ListQuotaPreferences(std::string const& parent,
 }
 
 StreamRange<google::api::cloudquotas::v1::QuotaPreference>
-CloudQuotasClient::ListQuotaPreferences(
-    google::api::cloudquotas::v1::ListQuotaPreferencesRequest request,
-    Options opts) {
+CloudQuotasClient::ListQuotaPreferences(google::api::cloudquotas::v1::ListQuotaPreferencesRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListQuotaPreferences(std::move(request));
 }
@@ -89,18 +83,13 @@ CloudQuotasClient::GetQuotaPreference(std::string const& name, Options opts) {
 }
 
 StatusOr<google::api::cloudquotas::v1::QuotaPreference>
-CloudQuotasClient::GetQuotaPreference(
-    google::api::cloudquotas::v1::GetQuotaPreferenceRequest const& request,
-    Options opts) {
+CloudQuotasClient::GetQuotaPreference(google::api::cloudquotas::v1::GetQuotaPreferenceRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetQuotaPreference(request);
 }
 
 StatusOr<google::api::cloudquotas::v1::QuotaPreference>
-CloudQuotasClient::CreateQuotaPreference(
-    std::string const& parent,
-    google::api::cloudquotas::v1::QuotaPreference const& quota_preference,
-    std::string const& quota_preference_id, Options opts) {
+CloudQuotasClient::CreateQuotaPreference(std::string const& parent, google::api::cloudquotas::v1::QuotaPreference const& quota_preference, std::string const& quota_preference_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::api::cloudquotas::v1::CreateQuotaPreferenceRequest request;
   request.set_parent(parent);
@@ -110,10 +99,7 @@ CloudQuotasClient::CreateQuotaPreference(
 }
 
 StatusOr<google::api::cloudquotas::v1::QuotaPreference>
-CloudQuotasClient::CreateQuotaPreference(
-    std::string const& parent,
-    google::api::cloudquotas::v1::QuotaPreference const& quota_preference,
-    Options opts) {
+CloudQuotasClient::CreateQuotaPreference(std::string const& parent, google::api::cloudquotas::v1::QuotaPreference const& quota_preference, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::api::cloudquotas::v1::CreateQuotaPreferenceRequest request;
   request.set_parent(parent);
@@ -122,17 +108,13 @@ CloudQuotasClient::CreateQuotaPreference(
 }
 
 StatusOr<google::api::cloudquotas::v1::QuotaPreference>
-CloudQuotasClient::CreateQuotaPreference(
-    google::api::cloudquotas::v1::CreateQuotaPreferenceRequest const& request,
-    Options opts) {
+CloudQuotasClient::CreateQuotaPreference(google::api::cloudquotas::v1::CreateQuotaPreferenceRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateQuotaPreference(request);
 }
 
 StatusOr<google::api::cloudquotas::v1::QuotaPreference>
-CloudQuotasClient::UpdateQuotaPreference(
-    google::api::cloudquotas::v1::QuotaPreference const& quota_preference,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+CloudQuotasClient::UpdateQuotaPreference(google::api::cloudquotas::v1::QuotaPreference const& quota_preference, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::api::cloudquotas::v1::UpdateQuotaPreferenceRequest request;
   *request.mutable_quota_preference() = quota_preference;
@@ -141,9 +123,7 @@ CloudQuotasClient::UpdateQuotaPreference(
 }
 
 StatusOr<google::api::cloudquotas::v1::QuotaPreference>
-CloudQuotasClient::UpdateQuotaPreference(
-    google::api::cloudquotas::v1::UpdateQuotaPreferenceRequest const& request,
-    Options opts) {
+CloudQuotasClient::UpdateQuotaPreference(google::api::cloudquotas::v1::UpdateQuotaPreferenceRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateQuotaPreference(request);
 }

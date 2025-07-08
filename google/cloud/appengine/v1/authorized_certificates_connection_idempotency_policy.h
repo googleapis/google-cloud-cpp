@@ -34,27 +34,26 @@ class AuthorizedCertificatesConnectionIdempotencyPolicy {
   virtual ~AuthorizedCertificatesConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<AuthorizedCertificatesConnectionIdempotencyPolicy>
-  clone() const;
+  virtual std::unique_ptr<AuthorizedCertificatesConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency ListAuthorizedCertificates(
-      google::appengine::v1::ListAuthorizedCertificatesRequest request);
+  virtual google::cloud::Idempotency
+  ListAuthorizedCertificates(google::appengine::v1::ListAuthorizedCertificatesRequest request);
 
-  virtual google::cloud::Idempotency GetAuthorizedCertificate(
-      google::appengine::v1::GetAuthorizedCertificateRequest const& request);
+  virtual google::cloud::Idempotency
+  GetAuthorizedCertificate(google::appengine::v1::GetAuthorizedCertificateRequest const& request);
 
-  virtual google::cloud::Idempotency CreateAuthorizedCertificate(
-      google::appengine::v1::CreateAuthorizedCertificateRequest const& request);
+  virtual google::cloud::Idempotency
+  CreateAuthorizedCertificate(google::appengine::v1::CreateAuthorizedCertificateRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateAuthorizedCertificate(
-      google::appengine::v1::UpdateAuthorizedCertificateRequest const& request);
+  virtual google::cloud::Idempotency
+  UpdateAuthorizedCertificate(google::appengine::v1::UpdateAuthorizedCertificateRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteAuthorizedCertificate(
-      google::appengine::v1::DeleteAuthorizedCertificateRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteAuthorizedCertificate(google::appengine::v1::DeleteAuthorizedCertificateRequest const& request);
 };
 
 std::unique_ptr<AuthorizedCertificatesConnectionIdempotencyPolicy>
-MakeDefaultAuthorizedCertificatesConnectionIdempotencyPolicy();
+    MakeDefaultAuthorizedCertificatesConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace appengine_v1

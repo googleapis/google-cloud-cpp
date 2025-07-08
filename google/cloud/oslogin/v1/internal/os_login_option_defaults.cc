@@ -17,10 +17,10 @@
 // source: google/cloud/oslogin/v1/oslogin.proto
 
 #include "google/cloud/oslogin/v1/internal/os_login_option_defaults.h"
-#include "google/cloud/oslogin/v1/os_login_connection.h"
-#include "google/cloud/oslogin/v1/os_login_options.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
+#include "google/cloud/oslogin/v1/os_login_connection.h"
+#include "google/cloud/oslogin/v1/os_login_options.h"
 #include <memory>
 #include <utility>
 
@@ -35,24 +35,21 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options OsLoginServiceDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_OS_LOGIN_SERVICE_ENDPOINT", "",
-      "GOOGLE_CLOUD_CPP_OS_LOGIN_SERVICE_AUTHORITY", "oslogin.googleapis.com");
+      std::move(options), "GOOGLE_CLOUD_CPP_OS_LOGIN_SERVICE_ENDPOINT",
+      "", "GOOGLE_CLOUD_CPP_OS_LOGIN_SERVICE_AUTHORITY",
+      "oslogin.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<oslogin_v1::OsLoginServiceRetryPolicyOption>()) {
     options.set<oslogin_v1::OsLoginServiceRetryPolicyOption>(
         oslogin_v1::OsLoginServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
-            .clone());
+            std::chrono::minutes(30)).clone());
   }
   if (!options.has<oslogin_v1::OsLoginServiceBackoffPolicyOption>()) {
     options.set<oslogin_v1::OsLoginServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(
-            std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
-            .clone());
+        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
   }
-  if (!options.has<
-          oslogin_v1::OsLoginServiceConnectionIdempotencyPolicyOption>()) {
+  if (!options.has<oslogin_v1::OsLoginServiceConnectionIdempotencyPolicyOption>()) {
     options.set<oslogin_v1::OsLoginServiceConnectionIdempotencyPolicyOption>(
         oslogin_v1::MakeDefaultOsLoginServiceConnectionIdempotencyPolicy());
   }

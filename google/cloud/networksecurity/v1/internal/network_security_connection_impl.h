@@ -19,14 +19,14 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_NETWORKSECURITY_V1_INTERNAL_NETWORK_SECURITY_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_NETWORKSECURITY_V1_INTERNAL_NETWORK_SECURITY_CONNECTION_IMPL_H
 
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/future.h"
 #include "google/cloud/networksecurity/v1/internal/network_security_retry_traits.h"
 #include "google/cloud/networksecurity/v1/internal/network_security_stub.h"
 #include "google/cloud/networksecurity/v1/network_security_connection.h"
 #include "google/cloud/networksecurity/v1/network_security_connection_idempotency_policy.h"
 #include "google/cloud/networksecurity/v1/network_security_options.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -46,191 +46,155 @@ class NetworkSecurityConnectionImpl
   ~NetworkSecurityConnectionImpl() override = default;
 
   NetworkSecurityConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<networksecurity_v1_internal::NetworkSecurityStub> stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<networksecurity_v1_internal::NetworkSecurityStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
   StreamRange<google::cloud::networksecurity::v1::AuthorizationPolicy>
-  ListAuthorizationPolicies(
-      google::cloud::networksecurity::v1::ListAuthorizationPoliciesRequest
-          request) override;
+  ListAuthorizationPolicies(google::cloud::networksecurity::v1::ListAuthorizationPoliciesRequest request) override;
 
   StatusOr<google::cloud::networksecurity::v1::AuthorizationPolicy>
-  GetAuthorizationPolicy(
-      google::cloud::networksecurity::v1::GetAuthorizationPolicyRequest const&
-          request) override;
+  GetAuthorizationPolicy(google::cloud::networksecurity::v1::GetAuthorizationPolicyRequest const& request) override;
 
   future<StatusOr<google::cloud::networksecurity::v1::AuthorizationPolicy>>
-  CreateAuthorizationPolicy(
-      google::cloud::networksecurity::v1::
-          CreateAuthorizationPolicyRequest const& request) override;
+  CreateAuthorizationPolicy(google::cloud::networksecurity::v1::CreateAuthorizationPolicyRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> CreateAuthorizationPolicy(
-      NoAwaitTag, google::cloud::networksecurity::v1::
-                      CreateAuthorizationPolicyRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  CreateAuthorizationPolicy(NoAwaitTag,
+      google::cloud::networksecurity::v1::CreateAuthorizationPolicyRequest const& request) override;
 
   future<StatusOr<google::cloud::networksecurity::v1::AuthorizationPolicy>>
   CreateAuthorizationPolicy(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::networksecurity::v1::AuthorizationPolicy>>
-  UpdateAuthorizationPolicy(
-      google::cloud::networksecurity::v1::
-          UpdateAuthorizationPolicyRequest const& request) override;
+  UpdateAuthorizationPolicy(google::cloud::networksecurity::v1::UpdateAuthorizationPolicyRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> UpdateAuthorizationPolicy(
-      NoAwaitTag, google::cloud::networksecurity::v1::
-                      UpdateAuthorizationPolicyRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  UpdateAuthorizationPolicy(NoAwaitTag,
+      google::cloud::networksecurity::v1::UpdateAuthorizationPolicyRequest const& request) override;
 
   future<StatusOr<google::cloud::networksecurity::v1::AuthorizationPolicy>>
   UpdateAuthorizationPolicy(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>
-  DeleteAuthorizationPolicy(
-      google::cloud::networksecurity::v1::
-          DeleteAuthorizationPolicyRequest const& request) override;
+  DeleteAuthorizationPolicy(google::cloud::networksecurity::v1::DeleteAuthorizationPolicyRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> DeleteAuthorizationPolicy(
-      NoAwaitTag, google::cloud::networksecurity::v1::
-                      DeleteAuthorizationPolicyRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  DeleteAuthorizationPolicy(NoAwaitTag,
+      google::cloud::networksecurity::v1::DeleteAuthorizationPolicyRequest const& request) override;
 
   future<StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>
   DeleteAuthorizationPolicy(
       google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::networksecurity::v1::ServerTlsPolicy>
-  ListServerTlsPolicies(
-      google::cloud::networksecurity::v1::ListServerTlsPoliciesRequest request)
-      override;
+  ListServerTlsPolicies(google::cloud::networksecurity::v1::ListServerTlsPoliciesRequest request) override;
 
   StatusOr<google::cloud::networksecurity::v1::ServerTlsPolicy>
-  GetServerTlsPolicy(
-      google::cloud::networksecurity::v1::GetServerTlsPolicyRequest const&
-          request) override;
+  GetServerTlsPolicy(google::cloud::networksecurity::v1::GetServerTlsPolicyRequest const& request) override;
 
   future<StatusOr<google::cloud::networksecurity::v1::ServerTlsPolicy>>
-  CreateServerTlsPolicy(
-      google::cloud::networksecurity::v1::CreateServerTlsPolicyRequest const&
-          request) override;
+  CreateServerTlsPolicy(google::cloud::networksecurity::v1::CreateServerTlsPolicyRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> CreateServerTlsPolicy(
-      NoAwaitTag,
-      google::cloud::networksecurity::v1::CreateServerTlsPolicyRequest const&
-          request) override;
+  StatusOr<google::longrunning::Operation>
+  CreateServerTlsPolicy(NoAwaitTag,
+      google::cloud::networksecurity::v1::CreateServerTlsPolicyRequest const& request) override;
 
   future<StatusOr<google::cloud::networksecurity::v1::ServerTlsPolicy>>
   CreateServerTlsPolicy(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::networksecurity::v1::ServerTlsPolicy>>
-  UpdateServerTlsPolicy(
-      google::cloud::networksecurity::v1::UpdateServerTlsPolicyRequest const&
-          request) override;
+  UpdateServerTlsPolicy(google::cloud::networksecurity::v1::UpdateServerTlsPolicyRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> UpdateServerTlsPolicy(
-      NoAwaitTag,
-      google::cloud::networksecurity::v1::UpdateServerTlsPolicyRequest const&
-          request) override;
+  StatusOr<google::longrunning::Operation>
+  UpdateServerTlsPolicy(NoAwaitTag,
+      google::cloud::networksecurity::v1::UpdateServerTlsPolicyRequest const& request) override;
 
   future<StatusOr<google::cloud::networksecurity::v1::ServerTlsPolicy>>
   UpdateServerTlsPolicy(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>
-  DeleteServerTlsPolicy(
-      google::cloud::networksecurity::v1::DeleteServerTlsPolicyRequest const&
-          request) override;
+  DeleteServerTlsPolicy(google::cloud::networksecurity::v1::DeleteServerTlsPolicyRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> DeleteServerTlsPolicy(
-      NoAwaitTag,
-      google::cloud::networksecurity::v1::DeleteServerTlsPolicyRequest const&
-          request) override;
+  StatusOr<google::longrunning::Operation>
+  DeleteServerTlsPolicy(NoAwaitTag,
+      google::cloud::networksecurity::v1::DeleteServerTlsPolicyRequest const& request) override;
 
   future<StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>
   DeleteServerTlsPolicy(
       google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::networksecurity::v1::ClientTlsPolicy>
-  ListClientTlsPolicies(
-      google::cloud::networksecurity::v1::ListClientTlsPoliciesRequest request)
-      override;
+  ListClientTlsPolicies(google::cloud::networksecurity::v1::ListClientTlsPoliciesRequest request) override;
 
   StatusOr<google::cloud::networksecurity::v1::ClientTlsPolicy>
-  GetClientTlsPolicy(
-      google::cloud::networksecurity::v1::GetClientTlsPolicyRequest const&
-          request) override;
+  GetClientTlsPolicy(google::cloud::networksecurity::v1::GetClientTlsPolicyRequest const& request) override;
 
   future<StatusOr<google::cloud::networksecurity::v1::ClientTlsPolicy>>
-  CreateClientTlsPolicy(
-      google::cloud::networksecurity::v1::CreateClientTlsPolicyRequest const&
-          request) override;
+  CreateClientTlsPolicy(google::cloud::networksecurity::v1::CreateClientTlsPolicyRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> CreateClientTlsPolicy(
-      NoAwaitTag,
-      google::cloud::networksecurity::v1::CreateClientTlsPolicyRequest const&
-          request) override;
+  StatusOr<google::longrunning::Operation>
+  CreateClientTlsPolicy(NoAwaitTag,
+      google::cloud::networksecurity::v1::CreateClientTlsPolicyRequest const& request) override;
 
   future<StatusOr<google::cloud::networksecurity::v1::ClientTlsPolicy>>
   CreateClientTlsPolicy(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::networksecurity::v1::ClientTlsPolicy>>
-  UpdateClientTlsPolicy(
-      google::cloud::networksecurity::v1::UpdateClientTlsPolicyRequest const&
-          request) override;
+  UpdateClientTlsPolicy(google::cloud::networksecurity::v1::UpdateClientTlsPolicyRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> UpdateClientTlsPolicy(
-      NoAwaitTag,
-      google::cloud::networksecurity::v1::UpdateClientTlsPolicyRequest const&
-          request) override;
+  StatusOr<google::longrunning::Operation>
+  UpdateClientTlsPolicy(NoAwaitTag,
+      google::cloud::networksecurity::v1::UpdateClientTlsPolicyRequest const& request) override;
 
   future<StatusOr<google::cloud::networksecurity::v1::ClientTlsPolicy>>
   UpdateClientTlsPolicy(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>
-  DeleteClientTlsPolicy(
-      google::cloud::networksecurity::v1::DeleteClientTlsPolicyRequest const&
-          request) override;
+  DeleteClientTlsPolicy(google::cloud::networksecurity::v1::DeleteClientTlsPolicyRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> DeleteClientTlsPolicy(
-      NoAwaitTag,
-      google::cloud::networksecurity::v1::DeleteClientTlsPolicyRequest const&
-          request) override;
+  StatusOr<google::longrunning::Operation>
+  DeleteClientTlsPolicy(NoAwaitTag,
+      google::cloud::networksecurity::v1::DeleteClientTlsPolicyRequest const& request) override;
 
   future<StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>
   DeleteClientTlsPolicy(
       google::longrunning::Operation const& operation) override;
 
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request) override;
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request) override;
 
-  StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request) override;
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request) override;
+  StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request) override;
 
-  Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request) override;
+  Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request) override;
 
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request) override;
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

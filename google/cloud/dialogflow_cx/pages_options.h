@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_PAGES_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_PAGES_OPTIONS_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/dialogflow_cx/pages_connection.h"
 #include "google/cloud/dialogflow_cx/pages_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -64,7 +64,8 @@ struct PagesConnectionIdempotencyPolicyOption {
  * @ingroup google-cloud-dialogflow_cx-options
  */
 using PagesPolicyOptionList =
-    OptionList<PagesRetryPolicyOption, PagesBackoffPolicyOption,
+    OptionList<PagesRetryPolicyOption,
+               PagesBackoffPolicyOption,
                PagesConnectionIdempotencyPolicyOption>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

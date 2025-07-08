@@ -35,20 +35,17 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class ZonesRestMetadata : public ZonesRestStub {
  public:
   ~ZonesRestMetadata() override = default;
-  explicit ZonesRestMetadata(std::shared_ptr<ZonesRestStub> child,
-                             std::string api_client_header = "");
+  explicit ZonesRestMetadata(
+      std::shared_ptr<ZonesRestStub> child,
+      std::string api_client_header = "");
 
   StatusOr<google::cloud::cpp::compute::v1::Zone> GetZone(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::zones::v1::GetZoneRequest const& request)
-      override;
+      Options const& options, google::cloud::cpp::compute::zones::v1::GetZoneRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::ZoneList> ListZones(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::zones::v1::ListZonesRequest const& request)
-      override;
+      Options const& options, google::cloud::cpp::compute::zones::v1::ListZonesRequest const& request) override;
 
  private:
   void SetMetadata(rest_internal::RestContext& rest_context,

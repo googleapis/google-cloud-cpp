@@ -24,8 +24,8 @@
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/cloud/datacatalog/lineage/v1/lineage.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
+#include <google/cloud/datacatalog/lineage/v1/lineage.grpc.pb.h>
 #include <memory>
 #include <utility>
 
@@ -38,137 +38,127 @@ class LineageStub {
  public:
   virtual ~LineageStub() = 0;
 
-  virtual StatusOr<google::cloud::datacatalog::lineage::v1::
-                       ProcessOpenLineageRunEventResponse>
-  ProcessOpenLineageRunEvent(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::datacatalog::lineage::v1::
-          ProcessOpenLineageRunEventRequest const& request) = 0;
+  virtual StatusOr<google::cloud::datacatalog::lineage::v1::ProcessOpenLineageRunEventResponse> ProcessOpenLineageRunEvent(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::datacatalog::lineage::v1::ProcessOpenLineageRunEventRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::datacatalog::lineage::v1::Process>
-  CreateProcess(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::datacatalog::lineage::v1::CreateProcessRequest const&
-          request) = 0;
+  virtual StatusOr<google::cloud::datacatalog::lineage::v1::Process> CreateProcess(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::datacatalog::lineage::v1::CreateProcessRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::datacatalog::lineage::v1::Process>
-  UpdateProcess(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::datacatalog::lineage::v1::UpdateProcessRequest const&
-          request) = 0;
+  virtual StatusOr<google::cloud::datacatalog::lineage::v1::Process> UpdateProcess(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::datacatalog::lineage::v1::UpdateProcessRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::datacatalog::lineage::v1::Process> GetProcess(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::datacatalog::lineage::v1::GetProcessRequest const&
-          request) = 0;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::datacatalog::lineage::v1::GetProcessRequest const& request) = 0;
 
-  virtual StatusOr<
-      google::cloud::datacatalog::lineage::v1::ListProcessesResponse>
-  ListProcesses(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::datacatalog::lineage::v1::ListProcessesRequest const&
-          request) = 0;
+  virtual StatusOr<google::cloud::datacatalog::lineage::v1::ListProcessesResponse> ListProcesses(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::datacatalog::lineage::v1::ListProcessesRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteProcess(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::datacatalog::lineage::v1::DeleteProcessRequest const&
-          request) = 0;
+      google::cloud::datacatalog::lineage::v1::DeleteProcessRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> DeleteProcess(
-      grpc::ClientContext& context, Options options,
-      google::cloud::datacatalog::lineage::v1::DeleteProcessRequest const&
-          request) = 0;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::datacatalog::lineage::v1::DeleteProcessRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::datacatalog::lineage::v1::Run> CreateRun(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::datacatalog::lineage::v1::CreateRunRequest const&
-          request) = 0;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::datacatalog::lineage::v1::CreateRunRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::datacatalog::lineage::v1::Run> UpdateRun(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::datacatalog::lineage::v1::UpdateRunRequest const&
-          request) = 0;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::datacatalog::lineage::v1::UpdateRunRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::datacatalog::lineage::v1::Run> GetRun(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::datacatalog::lineage::v1::GetRunRequest const&
-          request) = 0;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::datacatalog::lineage::v1::GetRunRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::datacatalog::lineage::v1::ListRunsResponse>
-  ListRuns(grpc::ClientContext& context, Options const& options,
-           google::cloud::datacatalog::lineage::v1::ListRunsRequest const&
-               request) = 0;
+  virtual StatusOr<google::cloud::datacatalog::lineage::v1::ListRunsResponse> ListRuns(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::datacatalog::lineage::v1::ListRunsRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteRun(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::datacatalog::lineage::v1::DeleteRunRequest const&
-          request) = 0;
+      google::cloud::datacatalog::lineage::v1::DeleteRunRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> DeleteRun(
-      grpc::ClientContext& context, Options options,
-      google::cloud::datacatalog::lineage::v1::DeleteRunRequest const&
-          request) = 0;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::datacatalog::lineage::v1::DeleteRunRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::datacatalog::lineage::v1::LineageEvent>
-  CreateLineageEvent(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::datacatalog::lineage::v1::CreateLineageEventRequest const&
-          request) = 0;
+  virtual StatusOr<google::cloud::datacatalog::lineage::v1::LineageEvent> CreateLineageEvent(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::datacatalog::lineage::v1::CreateLineageEventRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::datacatalog::lineage::v1::LineageEvent>
-  GetLineageEvent(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::datacatalog::lineage::v1::GetLineageEventRequest const&
-          request) = 0;
+  virtual StatusOr<google::cloud::datacatalog::lineage::v1::LineageEvent> GetLineageEvent(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::datacatalog::lineage::v1::GetLineageEventRequest const& request) = 0;
 
-  virtual StatusOr<
-      google::cloud::datacatalog::lineage::v1::ListLineageEventsResponse>
-  ListLineageEvents(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::datacatalog::lineage::v1::ListLineageEventsRequest const&
-          request) = 0;
+  virtual StatusOr<google::cloud::datacatalog::lineage::v1::ListLineageEventsResponse> ListLineageEvents(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::datacatalog::lineage::v1::ListLineageEventsRequest const& request) = 0;
 
   virtual Status DeleteLineageEvent(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::datacatalog::lineage::v1::DeleteLineageEventRequest const&
-          request) = 0;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::datacatalog::lineage::v1::DeleteLineageEventRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::datacatalog::lineage::v1::SearchLinksResponse>
-  SearchLinks(grpc::ClientContext& context, Options const& options,
-              google::cloud::datacatalog::lineage::v1::SearchLinksRequest const&
-                  request) = 0;
+  virtual StatusOr<google::cloud::datacatalog::lineage::v1::SearchLinksResponse> SearchLinks(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::datacatalog::lineage::v1::SearchLinksRequest const& request) = 0;
 
-  virtual StatusOr<
-      google::cloud::datacatalog::lineage::v1::BatchSearchLinkProcessesResponse>
-  BatchSearchLinkProcesses(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::datacatalog::lineage::v1::
-          BatchSearchLinkProcessesRequest const& request) = 0;
+  virtual StatusOr<google::cloud::datacatalog::lineage::v1::BatchSearchLinkProcessesResponse> BatchSearchLinkProcesses(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::datacatalog::lineage::v1::BatchSearchLinkProcessesRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::ListOperationsRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual Status DeleteOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::DeleteOperationRequest const& request) = 0;
 
   virtual Status CancelOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::CancelOperationRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
+    google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
@@ -181,135 +171,126 @@ class LineageStub {
 class DefaultLineageStub : public LineageStub {
  public:
   DefaultLineageStub(
-      std::unique_ptr<
-          google::cloud::datacatalog::lineage::v1::Lineage::StubInterface>
-          grpc_stub,
-      std::unique_ptr<google::longrunning::Operations::StubInterface>
-          operations_stub)
+      std::unique_ptr<google::cloud::datacatalog::lineage::v1::Lineage::StubInterface> grpc_stub,
+      std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub)
       : grpc_stub_(std::move(grpc_stub)),
         operations_stub_(std::move(operations_stub)) {}
 
-  StatusOr<google::cloud::datacatalog::lineage::v1::
-               ProcessOpenLineageRunEventResponse>
-  ProcessOpenLineageRunEvent(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::datacatalog::lineage::v1::
-          ProcessOpenLineageRunEventRequest const& request) override;
+  StatusOr<google::cloud::datacatalog::lineage::v1::ProcessOpenLineageRunEventResponse> ProcessOpenLineageRunEvent(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::datacatalog::lineage::v1::ProcessOpenLineageRunEventRequest const& request) override;
 
   StatusOr<google::cloud::datacatalog::lineage::v1::Process> CreateProcess(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::datacatalog::lineage::v1::CreateProcessRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::datacatalog::lineage::v1::CreateProcessRequest const& request) override;
 
   StatusOr<google::cloud::datacatalog::lineage::v1::Process> UpdateProcess(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::datacatalog::lineage::v1::UpdateProcessRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::datacatalog::lineage::v1::UpdateProcessRequest const& request) override;
 
   StatusOr<google::cloud::datacatalog::lineage::v1::Process> GetProcess(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::datacatalog::lineage::v1::GetProcessRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::datacatalog::lineage::v1::GetProcessRequest const& request) override;
 
-  StatusOr<google::cloud::datacatalog::lineage::v1::ListProcessesResponse>
-  ListProcesses(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::datacatalog::lineage::v1::ListProcessesRequest const&
-          request) override;
+  StatusOr<google::cloud::datacatalog::lineage::v1::ListProcessesResponse> ListProcesses(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::datacatalog::lineage::v1::ListProcessesRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteProcess(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::datacatalog::lineage::v1::DeleteProcessRequest const&
-          request) override;
+      google::cloud::datacatalog::lineage::v1::DeleteProcessRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteProcess(
-      grpc::ClientContext& context, Options options,
-      google::cloud::datacatalog::lineage::v1::DeleteProcessRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::datacatalog::lineage::v1::DeleteProcessRequest const& request) override;
 
   StatusOr<google::cloud::datacatalog::lineage::v1::Run> CreateRun(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::datacatalog::lineage::v1::CreateRunRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::datacatalog::lineage::v1::CreateRunRequest const& request) override;
 
   StatusOr<google::cloud::datacatalog::lineage::v1::Run> UpdateRun(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::datacatalog::lineage::v1::UpdateRunRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::datacatalog::lineage::v1::UpdateRunRequest const& request) override;
 
   StatusOr<google::cloud::datacatalog::lineage::v1::Run> GetRun(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::datacatalog::lineage::v1::GetRunRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::datacatalog::lineage::v1::GetRunRequest const& request) override;
 
   StatusOr<google::cloud::datacatalog::lineage::v1::ListRunsResponse> ListRuns(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::datacatalog::lineage::v1::ListRunsRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::datacatalog::lineage::v1::ListRunsRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteRun(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::datacatalog::lineage::v1::DeleteRunRequest const& request)
-      override;
+      google::cloud::datacatalog::lineage::v1::DeleteRunRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteRun(
-      grpc::ClientContext& context, Options options,
-      google::cloud::datacatalog::lineage::v1::DeleteRunRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::datacatalog::lineage::v1::DeleteRunRequest const& request) override;
 
-  StatusOr<google::cloud::datacatalog::lineage::v1::LineageEvent>
-  CreateLineageEvent(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::datacatalog::lineage::v1::CreateLineageEventRequest const&
-          request) override;
+  StatusOr<google::cloud::datacatalog::lineage::v1::LineageEvent> CreateLineageEvent(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::datacatalog::lineage::v1::CreateLineageEventRequest const& request) override;
 
-  StatusOr<google::cloud::datacatalog::lineage::v1::LineageEvent>
-  GetLineageEvent(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::datacatalog::lineage::v1::GetLineageEventRequest const&
-          request) override;
+  StatusOr<google::cloud::datacatalog::lineage::v1::LineageEvent> GetLineageEvent(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::datacatalog::lineage::v1::GetLineageEventRequest const& request) override;
 
-  StatusOr<google::cloud::datacatalog::lineage::v1::ListLineageEventsResponse>
-  ListLineageEvents(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::datacatalog::lineage::v1::ListLineageEventsRequest const&
-          request) override;
+  StatusOr<google::cloud::datacatalog::lineage::v1::ListLineageEventsResponse> ListLineageEvents(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::datacatalog::lineage::v1::ListLineageEventsRequest const& request) override;
 
   Status DeleteLineageEvent(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::datacatalog::lineage::v1::DeleteLineageEventRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::datacatalog::lineage::v1::DeleteLineageEventRequest const& request) override;
 
-  StatusOr<google::cloud::datacatalog::lineage::v1::SearchLinksResponse>
-  SearchLinks(grpc::ClientContext& context, Options const& options,
-              google::cloud::datacatalog::lineage::v1::SearchLinksRequest const&
-                  request) override;
+  StatusOr<google::cloud::datacatalog::lineage::v1::SearchLinksResponse> SearchLinks(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::datacatalog::lineage::v1::SearchLinksRequest const& request) override;
 
-  StatusOr<
-      google::cloud::datacatalog::lineage::v1::BatchSearchLinkProcessesResponse>
-  BatchSearchLinkProcesses(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::datacatalog::lineage::v1::
-          BatchSearchLinkProcessesRequest const& request) override;
+  StatusOr<google::cloud::datacatalog::lineage::v1::BatchSearchLinkProcessesResponse> BatchSearchLinkProcesses(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::datacatalog::lineage::v1::BatchSearchLinkProcessesRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status DeleteOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::DeleteOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -325,11 +306,8 @@ class DefaultLineageStub : public LineageStub {
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  std::unique_ptr<
-      google::cloud::datacatalog::lineage::v1::Lineage::StubInterface>
-      grpc_stub_;
-  std::unique_ptr<google::longrunning::Operations::StubInterface>
-      operations_stub_;
+  std::unique_ptr<google::cloud::datacatalog::lineage::v1::Lineage::StubInterface> grpc_stub_;
+  std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

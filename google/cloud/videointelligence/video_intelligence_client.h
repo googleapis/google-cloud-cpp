@@ -30,8 +30,7 @@ namespace cloud {
 namespace videointelligence {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use videointelligence_v1::VideoIntelligenceServiceClient
-/// directly.
+/// @deprecated Use videointelligence_v1::VideoIntelligenceServiceClient directly.
 using ::google::cloud::videointelligence_v1::VideoIntelligenceServiceClient;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

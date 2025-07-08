@@ -33,10 +33,8 @@ QuotaControllerTracingConnection::QuotaControllerTracingConnection(
     : child_(std::move(child)) {}
 
 StatusOr<google::api::servicecontrol::v1::AllocateQuotaResponse>
-QuotaControllerTracingConnection::AllocateQuota(
-    google::api::servicecontrol::v1::AllocateQuotaRequest const& request) {
-  auto span = internal::MakeSpan(
-      "servicecontrol_v1::QuotaControllerConnection::AllocateQuota");
+QuotaControllerTracingConnection::AllocateQuota(google::api::servicecontrol::v1::AllocateQuotaRequest const& request) {
+  auto span = internal::MakeSpan("servicecontrol_v1::QuotaControllerConnection::AllocateQuota");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->AllocateQuota(request));
 }

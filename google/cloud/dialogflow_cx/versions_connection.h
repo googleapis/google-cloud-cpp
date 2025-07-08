@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_VERSIONS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_VERSIONS_CONNECTION_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/dialogflow_cx/internal/versions_retry_traits.h"
 #include "google/cloud/dialogflow_cx/versions_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -30,9 +30,9 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
+#include <google/protobuf/struct.pb.h>
 #include <google/cloud/dialogflow/cx/v3/version.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
-#include <google/protobuf/struct.pb.h>
 #include <memory>
 #include <string>
 
@@ -68,14 +68,14 @@ class VersionsLimitedErrorCountRetryPolicy : public VersionsRetryPolicy {
    *     @p maximum_failures == 0.
    */
   explicit VersionsLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   VersionsLimitedErrorCountRetryPolicy(
       VersionsLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : VersionsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : VersionsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   VersionsLimitedErrorCountRetryPolicy(
       VersionsLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : VersionsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : VersionsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -95,9 +95,7 @@ class VersionsLimitedErrorCountRetryPolicy : public VersionsRetryPolicy {
   using BaseType = VersionsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      dialogflow_cx_internal::VersionsRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<dialogflow_cx_internal::VersionsRetryTraits> impl_;
 };
 
 /**
@@ -135,13 +133,12 @@ class VersionsLimitedTimeRetryPolicy : public VersionsRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit VersionsLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
   VersionsLimitedTimeRetryPolicy(VersionsLimitedTimeRetryPolicy&& rhs) noexcept
-      : VersionsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  VersionsLimitedTimeRetryPolicy(
-      VersionsLimitedTimeRetryPolicy const& rhs) noexcept
-      : VersionsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+    : VersionsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  VersionsLimitedTimeRetryPolicy(VersionsLimitedTimeRetryPolicy const& rhs) noexcept
+    : VersionsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -155,16 +152,15 @@ class VersionsLimitedTimeRetryPolicy : public VersionsRetryPolicy {
     return impl_.IsPermanentFailure(status);
   }
   std::unique_ptr<VersionsRetryPolicy> clone() const override {
-    return std::make_unique<VersionsLimitedTimeRetryPolicy>(maximum_duration());
+    return std::make_unique<VersionsLimitedTimeRetryPolicy>(
+        maximum_duration());
   }
 
   // This is provided only for backwards compatibility.
   using BaseType = VersionsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      dialogflow_cx_internal::VersionsRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<dialogflow_cx_internal::VersionsRetryTraits> impl_;
 };
 
 /**
@@ -185,57 +181,53 @@ class VersionsConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StreamRange<google::cloud::dialogflow::cx::v3::Version> ListVersions(
-      google::cloud::dialogflow::cx::v3::ListVersionsRequest request);
+  virtual StreamRange<google::cloud::dialogflow::cx::v3::Version>
+  ListVersions(google::cloud::dialogflow::cx::v3::ListVersionsRequest request);
 
-  virtual StatusOr<google::cloud::dialogflow::cx::v3::Version> GetVersion(
-      google::cloud::dialogflow::cx::v3::GetVersionRequest const& request);
-
-  virtual future<StatusOr<google::cloud::dialogflow::cx::v3::Version>>
-  CreateVersion(
-      google::cloud::dialogflow::cx::v3::CreateVersionRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation> CreateVersion(
-      NoAwaitTag,
-      google::cloud::dialogflow::cx::v3::CreateVersionRequest const& request);
+  virtual StatusOr<google::cloud::dialogflow::cx::v3::Version>
+  GetVersion(google::cloud::dialogflow::cx::v3::GetVersionRequest const& request);
 
   virtual future<StatusOr<google::cloud::dialogflow::cx::v3::Version>>
-  CreateVersion(google::longrunning::Operation const& operation);
+  CreateVersion(google::cloud::dialogflow::cx::v3::CreateVersionRequest const& request);
 
-  virtual StatusOr<google::cloud::dialogflow::cx::v3::Version> UpdateVersion(
-      google::cloud::dialogflow::cx::v3::UpdateVersionRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  CreateVersion(NoAwaitTag, google::cloud::dialogflow::cx::v3::CreateVersionRequest const& request);
 
-  virtual Status DeleteVersion(
-      google::cloud::dialogflow::cx::v3::DeleteVersionRequest const& request);
+  virtual future<StatusOr<google::cloud::dialogflow::cx::v3::Version>>
+  CreateVersion( google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<google::protobuf::Struct>> LoadVersion(
-      google::cloud::dialogflow::cx::v3::LoadVersionRequest const& request);
+  virtual StatusOr<google::cloud::dialogflow::cx::v3::Version>
+  UpdateVersion(google::cloud::dialogflow::cx::v3::UpdateVersionRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> LoadVersion(
-      NoAwaitTag,
-      google::cloud::dialogflow::cx::v3::LoadVersionRequest const& request);
+  virtual Status
+  DeleteVersion(google::cloud::dialogflow::cx::v3::DeleteVersionRequest const& request);
 
-  virtual future<StatusOr<google::protobuf::Struct>> LoadVersion(
-      google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::protobuf::Struct>>
+  LoadVersion(google::cloud::dialogflow::cx::v3::LoadVersionRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation>
+  LoadVersion(NoAwaitTag, google::cloud::dialogflow::cx::v3::LoadVersionRequest const& request);
+
+  virtual future<StatusOr<google::protobuf::Struct>>
+  LoadVersion( google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::dialogflow::cx::v3::CompareVersionsResponse>
-  CompareVersions(
-      google::cloud::dialogflow::cx::v3::CompareVersionsRequest const& request);
+  CompareVersions(google::cloud::dialogflow::cx::v3::CompareVersionsRequest const& request);
 
-  virtual StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request);
+  virtual StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request);
 
-  virtual StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request);
+  virtual StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request);
 
-  virtual StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 
-  virtual Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request);
+  virtual Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request);
 };
 
 /**

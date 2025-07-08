@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTAINERANALYSIS_V1_INTERNAL_GRAFEAS_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTAINERANALYSIS_V1_INTERNAL_GRAFEAS_CONNECTION_IMPL_H
 
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/containeranalysis/v1/grafeas_connection.h"
 #include "google/cloud/containeranalysis/v1/grafeas_connection_idempotency_policy.h"
 #include "google/cloud/containeranalysis/v1/grafeas_options.h"
 #include "google/cloud/containeranalysis/v1/internal/grafeas_retry_traits.h"
 #include "google/cloud/containeranalysis/v1/internal/grafeas_stub.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -37,57 +37,59 @@ namespace cloud {
 namespace containeranalysis_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class GrafeasConnectionImpl : public containeranalysis_v1::GrafeasConnection {
+class GrafeasConnectionImpl
+    : public containeranalysis_v1::GrafeasConnection {
  public:
   ~GrafeasConnectionImpl() override = default;
 
   GrafeasConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<containeranalysis_v1_internal::GrafeasStub> stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<containeranalysis_v1_internal::GrafeasStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
-  StatusOr<grafeas::v1::Occurrence> GetOccurrence(
-      grafeas::v1::GetOccurrenceRequest const& request) override;
+  StatusOr<grafeas::v1::Occurrence>
+  GetOccurrence(grafeas::v1::GetOccurrenceRequest const& request) override;
 
-  StreamRange<grafeas::v1::Occurrence> ListOccurrences(
-      grafeas::v1::ListOccurrencesRequest request) override;
+  StreamRange<grafeas::v1::Occurrence>
+  ListOccurrences(grafeas::v1::ListOccurrencesRequest request) override;
 
-  Status DeleteOccurrence(
-      grafeas::v1::DeleteOccurrenceRequest const& request) override;
+  Status
+  DeleteOccurrence(grafeas::v1::DeleteOccurrenceRequest const& request) override;
 
-  StatusOr<grafeas::v1::Occurrence> CreateOccurrence(
-      grafeas::v1::CreateOccurrenceRequest const& request) override;
+  StatusOr<grafeas::v1::Occurrence>
+  CreateOccurrence(grafeas::v1::CreateOccurrenceRequest const& request) override;
 
-  StatusOr<grafeas::v1::BatchCreateOccurrencesResponse> BatchCreateOccurrences(
-      grafeas::v1::BatchCreateOccurrencesRequest const& request) override;
+  StatusOr<grafeas::v1::BatchCreateOccurrencesResponse>
+  BatchCreateOccurrences(grafeas::v1::BatchCreateOccurrencesRequest const& request) override;
 
-  StatusOr<grafeas::v1::Occurrence> UpdateOccurrence(
-      grafeas::v1::UpdateOccurrenceRequest const& request) override;
+  StatusOr<grafeas::v1::Occurrence>
+  UpdateOccurrence(grafeas::v1::UpdateOccurrenceRequest const& request) override;
 
-  StatusOr<grafeas::v1::Note> GetOccurrenceNote(
-      grafeas::v1::GetOccurrenceNoteRequest const& request) override;
+  StatusOr<grafeas::v1::Note>
+  GetOccurrenceNote(grafeas::v1::GetOccurrenceNoteRequest const& request) override;
 
-  StatusOr<grafeas::v1::Note> GetNote(
-      grafeas::v1::GetNoteRequest const& request) override;
+  StatusOr<grafeas::v1::Note>
+  GetNote(grafeas::v1::GetNoteRequest const& request) override;
 
-  StreamRange<grafeas::v1::Note> ListNotes(
-      grafeas::v1::ListNotesRequest request) override;
+  StreamRange<grafeas::v1::Note>
+  ListNotes(grafeas::v1::ListNotesRequest request) override;
 
-  Status DeleteNote(grafeas::v1::DeleteNoteRequest const& request) override;
+  Status
+  DeleteNote(grafeas::v1::DeleteNoteRequest const& request) override;
 
-  StatusOr<grafeas::v1::Note> CreateNote(
-      grafeas::v1::CreateNoteRequest const& request) override;
+  StatusOr<grafeas::v1::Note>
+  CreateNote(grafeas::v1::CreateNoteRequest const& request) override;
 
-  StatusOr<grafeas::v1::BatchCreateNotesResponse> BatchCreateNotes(
-      grafeas::v1::BatchCreateNotesRequest const& request) override;
+  StatusOr<grafeas::v1::BatchCreateNotesResponse>
+  BatchCreateNotes(grafeas::v1::BatchCreateNotesRequest const& request) override;
 
-  StatusOr<grafeas::v1::Note> UpdateNote(
-      grafeas::v1::UpdateNoteRequest const& request) override;
+  StatusOr<grafeas::v1::Note>
+  UpdateNote(grafeas::v1::UpdateNoteRequest const& request) override;
 
-  StreamRange<grafeas::v1::Occurrence> ListNoteOccurrences(
-      grafeas::v1::ListNoteOccurrencesRequest request) override;
+  StreamRange<grafeas::v1::Occurrence>
+  ListNoteOccurrences(grafeas::v1::ListNoteOccurrencesRequest request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

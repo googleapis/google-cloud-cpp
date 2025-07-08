@@ -30,8 +30,8 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/appengine/v1/appengine.pb.h>
 #include <google/appengine/v1/operation.pb.h>
+#include <google/appengine/v1/appengine.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 
@@ -57,8 +57,7 @@ class DomainMappingsRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class DomainMappingsLimitedErrorCountRetryPolicy
-    : public DomainMappingsRetryPolicy {
+class DomainMappingsLimitedErrorCountRetryPolicy : public DomainMappingsRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -68,14 +67,14 @@ class DomainMappingsLimitedErrorCountRetryPolicy
    *     @p maximum_failures == 0.
    */
   explicit DomainMappingsLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   DomainMappingsLimitedErrorCountRetryPolicy(
       DomainMappingsLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : DomainMappingsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : DomainMappingsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   DomainMappingsLimitedErrorCountRetryPolicy(
       DomainMappingsLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : DomainMappingsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : DomainMappingsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -95,9 +94,7 @@ class DomainMappingsLimitedErrorCountRetryPolicy
   using BaseType = DomainMappingsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      appengine_v1_internal::DomainMappingsRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<appengine_v1_internal::DomainMappingsRetryTraits> impl_;
 };
 
 /**
@@ -135,14 +132,12 @@ class DomainMappingsLimitedTimeRetryPolicy : public DomainMappingsRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit DomainMappingsLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  DomainMappingsLimitedTimeRetryPolicy(
-      DomainMappingsLimitedTimeRetryPolicy&& rhs) noexcept
-      : DomainMappingsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  DomainMappingsLimitedTimeRetryPolicy(
-      DomainMappingsLimitedTimeRetryPolicy const& rhs) noexcept
-      : DomainMappingsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  DomainMappingsLimitedTimeRetryPolicy(DomainMappingsLimitedTimeRetryPolicy&& rhs) noexcept
+    : DomainMappingsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  DomainMappingsLimitedTimeRetryPolicy(DomainMappingsLimitedTimeRetryPolicy const& rhs) noexcept
+    : DomainMappingsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -164,9 +159,7 @@ class DomainMappingsLimitedTimeRetryPolicy : public DomainMappingsRetryPolicy {
   using BaseType = DomainMappingsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      appengine_v1_internal::DomainMappingsRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<appengine_v1_internal::DomainMappingsRetryTraits> impl_;
 };
 
 /**
@@ -187,44 +180,38 @@ class DomainMappingsConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StreamRange<google::appengine::v1::DomainMapping> ListDomainMappings(
-      google::appengine::v1::ListDomainMappingsRequest request);
+  virtual StreamRange<google::appengine::v1::DomainMapping>
+  ListDomainMappings(google::appengine::v1::ListDomainMappingsRequest request);
 
-  virtual StatusOr<google::appengine::v1::DomainMapping> GetDomainMapping(
-      google::appengine::v1::GetDomainMappingRequest const& request);
-
-  virtual future<StatusOr<google::appengine::v1::DomainMapping>>
-  CreateDomainMapping(
-      google::appengine::v1::CreateDomainMappingRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation> CreateDomainMapping(
-      NoAwaitTag,
-      google::appengine::v1::CreateDomainMappingRequest const& request);
+  virtual StatusOr<google::appengine::v1::DomainMapping>
+  GetDomainMapping(google::appengine::v1::GetDomainMappingRequest const& request);
 
   virtual future<StatusOr<google::appengine::v1::DomainMapping>>
-  CreateDomainMapping(google::longrunning::Operation const& operation);
+  CreateDomainMapping(google::appengine::v1::CreateDomainMappingRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation>
+  CreateDomainMapping(NoAwaitTag, google::appengine::v1::CreateDomainMappingRequest const& request);
 
   virtual future<StatusOr<google::appengine::v1::DomainMapping>>
-  UpdateDomainMapping(
-      google::appengine::v1::UpdateDomainMappingRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation> UpdateDomainMapping(
-      NoAwaitTag,
-      google::appengine::v1::UpdateDomainMappingRequest const& request);
+  CreateDomainMapping( google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::appengine::v1::DomainMapping>>
-  UpdateDomainMapping(google::longrunning::Operation const& operation);
+  UpdateDomainMapping(google::appengine::v1::UpdateDomainMappingRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation>
+  UpdateDomainMapping(NoAwaitTag, google::appengine::v1::UpdateDomainMappingRequest const& request);
+
+  virtual future<StatusOr<google::appengine::v1::DomainMapping>>
+  UpdateDomainMapping( google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::appengine::v1::OperationMetadataV1>>
-  DeleteDomainMapping(
-      google::appengine::v1::DeleteDomainMappingRequest const& request);
+  DeleteDomainMapping(google::appengine::v1::DeleteDomainMappingRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> DeleteDomainMapping(
-      NoAwaitTag,
-      google::appengine::v1::DeleteDomainMappingRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  DeleteDomainMapping(NoAwaitTag, google::appengine::v1::DeleteDomainMappingRequest const& request);
 
   virtual future<StatusOr<google::appengine::v1::OperationMetadataV1>>
-  DeleteDomainMapping(google::longrunning::Operation const& operation);
+  DeleteDomainMapping( google::longrunning::Operation const& operation);
 };
 
 /**

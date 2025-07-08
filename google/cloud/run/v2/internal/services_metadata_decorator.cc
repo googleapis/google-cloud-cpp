@@ -55,16 +55,14 @@ ServicesMetadata::AsyncCreateService(
   std::vector<std::string> params;
   params.reserve(1);
 
-  static auto* location_matcher = [] {
-    return new google::cloud::internal::RoutingMatcher<
-        google::cloud::run::v2::CreateServiceRequest>{
-        "location=",
-        {
-            {[](google::cloud::run::v2::CreateServiceRequest const& request)
-                 -> std::string const& { return request.parent(); },
-             std::regex{"projects/[^/]+/locations/([^/]+)",
-                        std::regex::optimize}},
-        }};
+  static auto* location_matcher = []{
+    return new google::cloud::internal::RoutingMatcher<google::cloud::run::v2::CreateServiceRequest>{
+      "location=", {
+      {[](google::cloud::run::v2::CreateServiceRequest const& request) -> std::string const& {
+        return request.parent();
+      },
+      std::regex{"projects/[^/]+/locations/([^/]+)", std::regex::optimize}},
+      }};
   }();
   location_matcher->AppendParam(request, params);
 
@@ -73,26 +71,26 @@ ServicesMetadata::AsyncCreateService(
   } else {
     SetMetadata(*context, *options, absl::StrJoin(params, "&"));
   }
-  return child_->AsyncCreateService(cq, std::move(context), std::move(options),
-                                    request);
+  return child_->AsyncCreateService(
+      cq, std::move(context), std::move(options), request);
 }
 
-StatusOr<google::longrunning::Operation> ServicesMetadata::CreateService(
-    grpc::ClientContext& context, Options options,
+StatusOr<google::longrunning::Operation>
+ServicesMetadata::CreateService(
+    grpc::ClientContext& context,
+    Options options,
     google::cloud::run::v2::CreateServiceRequest const& request) {
   std::vector<std::string> params;
   params.reserve(1);
 
-  static auto* location_matcher = [] {
-    return new google::cloud::internal::RoutingMatcher<
-        google::cloud::run::v2::CreateServiceRequest>{
-        "location=",
-        {
-            {[](google::cloud::run::v2::CreateServiceRequest const& request)
-                 -> std::string const& { return request.parent(); },
-             std::regex{"projects/[^/]+/locations/([^/]+)",
-                        std::regex::optimize}},
-        }};
+  static auto* location_matcher = []{
+    return new google::cloud::internal::RoutingMatcher<google::cloud::run::v2::CreateServiceRequest>{
+      "location=", {
+      {[](google::cloud::run::v2::CreateServiceRequest const& request) -> std::string const& {
+        return request.parent();
+      },
+      std::regex{"projects/[^/]+/locations/([^/]+)", std::regex::optimize}},
+      }};
   }();
   location_matcher->AppendParam(request, params);
 
@@ -104,22 +102,22 @@ StatusOr<google::longrunning::Operation> ServicesMetadata::CreateService(
   return child_->CreateService(context, options, request);
 }
 
-StatusOr<google::cloud::run::v2::Service> ServicesMetadata::GetService(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::run::v2::Service>
+ServicesMetadata::GetService(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::run::v2::GetServiceRequest const& request) {
   std::vector<std::string> params;
   params.reserve(1);
 
-  static auto* location_matcher = [] {
-    return new google::cloud::internal::RoutingMatcher<
-        google::cloud::run::v2::GetServiceRequest>{
-        "location=",
-        {
-            {[](google::cloud::run::v2::GetServiceRequest const& request)
-                 -> std::string const& { return request.name(); },
-             std::regex{"projects/[^/]+/locations/([^/]+)/.*",
-                        std::regex::optimize}},
-        }};
+  static auto* location_matcher = []{
+    return new google::cloud::internal::RoutingMatcher<google::cloud::run::v2::GetServiceRequest>{
+      "location=", {
+      {[](google::cloud::run::v2::GetServiceRequest const& request) -> std::string const& {
+        return request.name();
+      },
+      std::regex{"projects/[^/]+/locations/([^/]+)/.*", std::regex::optimize}},
+      }};
   }();
   location_matcher->AppendParam(request, params);
 
@@ -133,21 +131,20 @@ StatusOr<google::cloud::run::v2::Service> ServicesMetadata::GetService(
 
 StatusOr<google::cloud::run::v2::ListServicesResponse>
 ServicesMetadata::ListServices(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::run::v2::ListServicesRequest const& request) {
   std::vector<std::string> params;
   params.reserve(1);
 
-  static auto* location_matcher = [] {
-    return new google::cloud::internal::RoutingMatcher<
-        google::cloud::run::v2::ListServicesRequest>{
-        "location=",
-        {
-            {[](google::cloud::run::v2::ListServicesRequest const& request)
-                 -> std::string const& { return request.parent(); },
-             std::regex{"projects/[^/]+/locations/([^/]+)",
-                        std::regex::optimize}},
-        }};
+  static auto* location_matcher = []{
+    return new google::cloud::internal::RoutingMatcher<google::cloud::run::v2::ListServicesRequest>{
+      "location=", {
+      {[](google::cloud::run::v2::ListServicesRequest const& request) -> std::string const& {
+        return request.parent();
+      },
+      std::regex{"projects/[^/]+/locations/([^/]+)", std::regex::optimize}},
+      }};
   }();
   location_matcher->AppendParam(request, params);
 
@@ -168,16 +165,14 @@ ServicesMetadata::AsyncUpdateService(
   std::vector<std::string> params;
   params.reserve(1);
 
-  static auto* location_matcher = [] {
-    return new google::cloud::internal::RoutingMatcher<
-        google::cloud::run::v2::UpdateServiceRequest>{
-        "location=",
-        {
-            {[](google::cloud::run::v2::UpdateServiceRequest const& request)
-                 -> std::string const& { return request.service().name(); },
-             std::regex{"projects/[^/]+/locations/([^/]+)/.*",
-                        std::regex::optimize}},
-        }};
+  static auto* location_matcher = []{
+    return new google::cloud::internal::RoutingMatcher<google::cloud::run::v2::UpdateServiceRequest>{
+      "location=", {
+      {[](google::cloud::run::v2::UpdateServiceRequest const& request) -> std::string const& {
+        return request.service().name();
+      },
+      std::regex{"projects/[^/]+/locations/([^/]+)/.*", std::regex::optimize}},
+      }};
   }();
   location_matcher->AppendParam(request, params);
 
@@ -186,26 +181,26 @@ ServicesMetadata::AsyncUpdateService(
   } else {
     SetMetadata(*context, *options, absl::StrJoin(params, "&"));
   }
-  return child_->AsyncUpdateService(cq, std::move(context), std::move(options),
-                                    request);
+  return child_->AsyncUpdateService(
+      cq, std::move(context), std::move(options), request);
 }
 
-StatusOr<google::longrunning::Operation> ServicesMetadata::UpdateService(
-    grpc::ClientContext& context, Options options,
+StatusOr<google::longrunning::Operation>
+ServicesMetadata::UpdateService(
+    grpc::ClientContext& context,
+    Options options,
     google::cloud::run::v2::UpdateServiceRequest const& request) {
   std::vector<std::string> params;
   params.reserve(1);
 
-  static auto* location_matcher = [] {
-    return new google::cloud::internal::RoutingMatcher<
-        google::cloud::run::v2::UpdateServiceRequest>{
-        "location=",
-        {
-            {[](google::cloud::run::v2::UpdateServiceRequest const& request)
-                 -> std::string const& { return request.service().name(); },
-             std::regex{"projects/[^/]+/locations/([^/]+)/.*",
-                        std::regex::optimize}},
-        }};
+  static auto* location_matcher = []{
+    return new google::cloud::internal::RoutingMatcher<google::cloud::run::v2::UpdateServiceRequest>{
+      "location=", {
+      {[](google::cloud::run::v2::UpdateServiceRequest const& request) -> std::string const& {
+        return request.service().name();
+      },
+      std::regex{"projects/[^/]+/locations/([^/]+)/.*", std::regex::optimize}},
+      }};
   }();
   location_matcher->AppendParam(request, params);
 
@@ -226,16 +221,14 @@ ServicesMetadata::AsyncDeleteService(
   std::vector<std::string> params;
   params.reserve(1);
 
-  static auto* location_matcher = [] {
-    return new google::cloud::internal::RoutingMatcher<
-        google::cloud::run::v2::DeleteServiceRequest>{
-        "location=",
-        {
-            {[](google::cloud::run::v2::DeleteServiceRequest const& request)
-                 -> std::string const& { return request.name(); },
-             std::regex{"projects/[^/]+/locations/([^/]+)/.*",
-                        std::regex::optimize}},
-        }};
+  static auto* location_matcher = []{
+    return new google::cloud::internal::RoutingMatcher<google::cloud::run::v2::DeleteServiceRequest>{
+      "location=", {
+      {[](google::cloud::run::v2::DeleteServiceRequest const& request) -> std::string const& {
+        return request.name();
+      },
+      std::regex{"projects/[^/]+/locations/([^/]+)/.*", std::regex::optimize}},
+      }};
   }();
   location_matcher->AppendParam(request, params);
 
@@ -244,26 +237,26 @@ ServicesMetadata::AsyncDeleteService(
   } else {
     SetMetadata(*context, *options, absl::StrJoin(params, "&"));
   }
-  return child_->AsyncDeleteService(cq, std::move(context), std::move(options),
-                                    request);
+  return child_->AsyncDeleteService(
+      cq, std::move(context), std::move(options), request);
 }
 
-StatusOr<google::longrunning::Operation> ServicesMetadata::DeleteService(
-    grpc::ClientContext& context, Options options,
+StatusOr<google::longrunning::Operation>
+ServicesMetadata::DeleteService(
+    grpc::ClientContext& context,
+    Options options,
     google::cloud::run::v2::DeleteServiceRequest const& request) {
   std::vector<std::string> params;
   params.reserve(1);
 
-  static auto* location_matcher = [] {
-    return new google::cloud::internal::RoutingMatcher<
-        google::cloud::run::v2::DeleteServiceRequest>{
-        "location=",
-        {
-            {[](google::cloud::run::v2::DeleteServiceRequest const& request)
-                 -> std::string const& { return request.name(); },
-             std::regex{"projects/[^/]+/locations/([^/]+)/.*",
-                        std::regex::optimize}},
-        }};
+  static auto* location_matcher = []{
+    return new google::cloud::internal::RoutingMatcher<google::cloud::run::v2::DeleteServiceRequest>{
+      "location=", {
+      {[](google::cloud::run::v2::DeleteServiceRequest const& request) -> std::string const& {
+        return request.name();
+      },
+      std::regex{"projects/[^/]+/locations/([^/]+)/.*", std::regex::optimize}},
+      }};
   }();
   location_matcher->AppendParam(request, params);
 
@@ -275,61 +268,64 @@ StatusOr<google::longrunning::Operation> ServicesMetadata::DeleteService(
   return child_->DeleteService(context, options, request);
 }
 
-StatusOr<google::iam::v1::Policy> ServicesMetadata::GetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::iam::v1::Policy>
+ServicesMetadata::GetIamPolicy(
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
-  SetMetadata(
-      context, options,
-      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
+  SetMetadata(context, options, absl::StrCat("resource=", internal::UrlEncode(request.resource())));
   return child_->GetIamPolicy(context, options, request);
 }
 
-StatusOr<google::iam::v1::Policy> ServicesMetadata::SetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::iam::v1::Policy>
+ServicesMetadata::SetIamPolicy(
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
-  SetMetadata(
-      context, options,
-      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
+  SetMetadata(context, options, absl::StrCat("resource=", internal::UrlEncode(request.resource())));
   return child_->SetIamPolicy(context, options, request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 ServicesMetadata::TestIamPermissions(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  SetMetadata(
-      context, options,
-      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
+  SetMetadata(context, options, absl::StrCat("resource=", internal::UrlEncode(request.resource())));
   return child_->TestIamPermissions(context, options, request);
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
 ServicesMetadata::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ListOperations(context, options, request);
 }
 
-StatusOr<google::longrunning::Operation> ServicesMetadata::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::Operation>
+ServicesMetadata::GetOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetOperation(context, options, request);
 }
 
-Status ServicesMetadata::DeleteOperation(
-    grpc::ClientContext& context, Options const& options,
+Status
+ServicesMetadata::DeleteOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteOperation(context, options, request);
 }
 
-StatusOr<google::longrunning::Operation> ServicesMetadata::WaitOperation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::Operation>
+ServicesMetadata::WaitOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::WaitOperationRequest const& request) {
   SetMetadata(context, options);
   return child_->WaitOperation(context, options, request);
@@ -343,8 +339,8 @@ ServicesMetadata::AsyncGetOperation(
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(cq, std::move(context), std::move(options),
-                                   request);
+  return child_->AsyncGetOperation(
+      cq, std::move(context), std::move(options), request);
 }
 
 future<Status> ServicesMetadata::AsyncCancelOperation(
@@ -354,21 +350,21 @@ future<Status> ServicesMetadata::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(cq, std::move(context),
-                                      std::move(options), request);
+  return child_->AsyncCancelOperation(
+      cq, std::move(context), std::move(options), request);
 }
 
 void ServicesMetadata::SetMetadata(grpc::ClientContext& context,
-                                   Options const& options,
-                                   std::string const& request_params) {
+                                        Options const& options,
+                                        std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
 void ServicesMetadata::SetMetadata(grpc::ClientContext& context,
-                                   Options const& options) {
-  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
-                                       api_client_header_);
+                                        Options const& options) {
+  google::cloud::internal::SetMetadata(
+      context, options, fixed_metadata_, api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

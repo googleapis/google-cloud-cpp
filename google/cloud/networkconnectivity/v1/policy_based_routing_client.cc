@@ -26,16 +26,14 @@ namespace networkconnectivity_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 PolicyBasedRoutingServiceClient::PolicyBasedRoutingServiceClient(
-    std::shared_ptr<PolicyBasedRoutingServiceConnection> connection,
-    Options opts)
+    std::shared_ptr<PolicyBasedRoutingServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 PolicyBasedRoutingServiceClient::~PolicyBasedRoutingServiceClient() = default;
 
 StreamRange<google::cloud::networkconnectivity::v1::PolicyBasedRoute>
-PolicyBasedRoutingServiceClient::ListPolicyBasedRoutes(
-    std::string const& parent, Options opts) {
+PolicyBasedRoutingServiceClient::ListPolicyBasedRoutes(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::networkconnectivity::v1::ListPolicyBasedRoutesRequest request;
   request.set_parent(parent);
@@ -43,17 +41,13 @@ PolicyBasedRoutingServiceClient::ListPolicyBasedRoutes(
 }
 
 StreamRange<google::cloud::networkconnectivity::v1::PolicyBasedRoute>
-PolicyBasedRoutingServiceClient::ListPolicyBasedRoutes(
-    google::cloud::networkconnectivity::v1::ListPolicyBasedRoutesRequest
-        request,
-    Options opts) {
+PolicyBasedRoutingServiceClient::ListPolicyBasedRoutes(google::cloud::networkconnectivity::v1::ListPolicyBasedRoutesRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListPolicyBasedRoutes(std::move(request));
 }
 
 StatusOr<google::cloud::networkconnectivity::v1::PolicyBasedRoute>
-PolicyBasedRoutingServiceClient::GetPolicyBasedRoute(std::string const& name,
-                                                     Options opts) {
+PolicyBasedRoutingServiceClient::GetPolicyBasedRoute(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::networkconnectivity::v1::GetPolicyBasedRouteRequest request;
   request.set_name(name);
@@ -61,20 +55,13 @@ PolicyBasedRoutingServiceClient::GetPolicyBasedRoute(std::string const& name,
 }
 
 StatusOr<google::cloud::networkconnectivity::v1::PolicyBasedRoute>
-PolicyBasedRoutingServiceClient::GetPolicyBasedRoute(
-    google::cloud::networkconnectivity::v1::GetPolicyBasedRouteRequest const&
-        request,
-    Options opts) {
+PolicyBasedRoutingServiceClient::GetPolicyBasedRoute(google::cloud::networkconnectivity::v1::GetPolicyBasedRouteRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetPolicyBasedRoute(request);
 }
 
 future<StatusOr<google::cloud::networkconnectivity::v1::PolicyBasedRoute>>
-PolicyBasedRoutingServiceClient::CreatePolicyBasedRoute(
-    std::string const& parent,
-    google::cloud::networkconnectivity::v1::PolicyBasedRoute const&
-        policy_based_route,
-    std::string const& policy_based_route_id, Options opts) {
+PolicyBasedRoutingServiceClient::CreatePolicyBasedRoute(std::string const& parent, google::cloud::networkconnectivity::v1::PolicyBasedRoute const& policy_based_route, std::string const& policy_based_route_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::networkconnectivity::v1::CreatePolicyBasedRouteRequest request;
   request.set_parent(parent);
@@ -84,11 +71,7 @@ PolicyBasedRoutingServiceClient::CreatePolicyBasedRoute(
 }
 
 StatusOr<google::longrunning::Operation>
-PolicyBasedRoutingServiceClient::CreatePolicyBasedRoute(
-    NoAwaitTag, std::string const& parent,
-    google::cloud::networkconnectivity::v1::PolicyBasedRoute const&
-        policy_based_route,
-    std::string const& policy_based_route_id, Options opts) {
+PolicyBasedRoutingServiceClient::CreatePolicyBasedRoute(NoAwaitTag, std::string const& parent, google::cloud::networkconnectivity::v1::PolicyBasedRoute const& policy_based_route, std::string const& policy_based_route_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::networkconnectivity::v1::CreatePolicyBasedRouteRequest request;
   request.set_parent(parent);
@@ -98,34 +81,25 @@ PolicyBasedRoutingServiceClient::CreatePolicyBasedRoute(
 }
 
 future<StatusOr<google::cloud::networkconnectivity::v1::PolicyBasedRoute>>
-PolicyBasedRoutingServiceClient::CreatePolicyBasedRoute(
-    google::cloud::networkconnectivity::v1::CreatePolicyBasedRouteRequest const&
-        request,
-    Options opts) {
+PolicyBasedRoutingServiceClient::CreatePolicyBasedRoute(google::cloud::networkconnectivity::v1::CreatePolicyBasedRouteRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreatePolicyBasedRoute(request);
 }
 
 StatusOr<google::longrunning::Operation>
-PolicyBasedRoutingServiceClient::CreatePolicyBasedRoute(
-    NoAwaitTag,
-    google::cloud::networkconnectivity::v1::CreatePolicyBasedRouteRequest const&
-        request,
-    Options opts) {
+PolicyBasedRoutingServiceClient::CreatePolicyBasedRoute(NoAwaitTag, google::cloud::networkconnectivity::v1::CreatePolicyBasedRouteRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreatePolicyBasedRoute(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::networkconnectivity::v1::PolicyBasedRoute>>
-PolicyBasedRoutingServiceClient::CreatePolicyBasedRoute(
-    google::longrunning::Operation const& operation, Options opts) {
+PolicyBasedRoutingServiceClient::CreatePolicyBasedRoute(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreatePolicyBasedRoute(operation);
 }
 
 future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
-PolicyBasedRoutingServiceClient::DeletePolicyBasedRoute(std::string const& name,
-                                                        Options opts) {
+PolicyBasedRoutingServiceClient::DeletePolicyBasedRoute(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::networkconnectivity::v1::DeletePolicyBasedRouteRequest request;
   request.set_name(name);
@@ -133,9 +107,7 @@ PolicyBasedRoutingServiceClient::DeletePolicyBasedRoute(std::string const& name,
 }
 
 StatusOr<google::longrunning::Operation>
-PolicyBasedRoutingServiceClient::DeletePolicyBasedRoute(NoAwaitTag,
-                                                        std::string const& name,
-                                                        Options opts) {
+PolicyBasedRoutingServiceClient::DeletePolicyBasedRoute(NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::networkconnectivity::v1::DeletePolicyBasedRouteRequest request;
   request.set_name(name);
@@ -143,68 +115,55 @@ PolicyBasedRoutingServiceClient::DeletePolicyBasedRoute(NoAwaitTag,
 }
 
 future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
-PolicyBasedRoutingServiceClient::DeletePolicyBasedRoute(
-    google::cloud::networkconnectivity::v1::DeletePolicyBasedRouteRequest const&
-        request,
-    Options opts) {
+PolicyBasedRoutingServiceClient::DeletePolicyBasedRoute(google::cloud::networkconnectivity::v1::DeletePolicyBasedRouteRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeletePolicyBasedRoute(request);
 }
 
 StatusOr<google::longrunning::Operation>
-PolicyBasedRoutingServiceClient::DeletePolicyBasedRoute(
-    NoAwaitTag,
-    google::cloud::networkconnectivity::v1::DeletePolicyBasedRouteRequest const&
-        request,
-    Options opts) {
+PolicyBasedRoutingServiceClient::DeletePolicyBasedRoute(NoAwaitTag, google::cloud::networkconnectivity::v1::DeletePolicyBasedRouteRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeletePolicyBasedRoute(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
-PolicyBasedRoutingServiceClient::DeletePolicyBasedRoute(
-    google::longrunning::Operation const& operation, Options opts) {
+PolicyBasedRoutingServiceClient::DeletePolicyBasedRoute(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeletePolicyBasedRoute(operation);
 }
 
 StreamRange<google::cloud::location::Location>
-PolicyBasedRoutingServiceClient::ListLocations(
-    google::cloud::location::ListLocationsRequest request, Options opts) {
+PolicyBasedRoutingServiceClient::ListLocations(google::cloud::location::ListLocationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListLocations(std::move(request));
 }
 
 StatusOr<google::cloud::location::Location>
-PolicyBasedRoutingServiceClient::GetLocation(
-    google::cloud::location::GetLocationRequest const& request, Options opts) {
+PolicyBasedRoutingServiceClient::GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetLocation(request);
 }
 
-StatusOr<google::iam::v1::Policy> PolicyBasedRoutingServiceClient::SetIamPolicy(
-    google::iam::v1::SetIamPolicyRequest const& request, Options opts) {
+StatusOr<google::iam::v1::Policy>
+PolicyBasedRoutingServiceClient::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetIamPolicy(request);
 }
 
-StatusOr<google::iam::v1::Policy> PolicyBasedRoutingServiceClient::GetIamPolicy(
-    google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
+StatusOr<google::iam::v1::Policy>
+PolicyBasedRoutingServiceClient::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetIamPolicy(request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-PolicyBasedRoutingServiceClient::TestIamPermissions(
-    google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
+PolicyBasedRoutingServiceClient::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->TestIamPermissions(request);
 }
 
 StreamRange<google::longrunning::Operation>
-PolicyBasedRoutingServiceClient::ListOperations(std::string const& name,
-                                                std::string const& filter,
-                                                Options opts) {
+PolicyBasedRoutingServiceClient::ListOperations(std::string const& name, std::string const& filter, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::ListOperationsRequest request;
   request.set_name(name);
@@ -213,15 +172,13 @@ PolicyBasedRoutingServiceClient::ListOperations(std::string const& name,
 }
 
 StreamRange<google::longrunning::Operation>
-PolicyBasedRoutingServiceClient::ListOperations(
-    google::longrunning::ListOperationsRequest request, Options opts) {
+PolicyBasedRoutingServiceClient::ListOperations(google::longrunning::ListOperationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOperations(std::move(request));
 }
 
 StatusOr<google::longrunning::Operation>
-PolicyBasedRoutingServiceClient::GetOperation(std::string const& name,
-                                              Options opts) {
+PolicyBasedRoutingServiceClient::GetOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
@@ -229,36 +186,35 @@ PolicyBasedRoutingServiceClient::GetOperation(std::string const& name,
 }
 
 StatusOr<google::longrunning::Operation>
-PolicyBasedRoutingServiceClient::GetOperation(
-    google::longrunning::GetOperationRequest const& request, Options opts) {
+PolicyBasedRoutingServiceClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }
 
-Status PolicyBasedRoutingServiceClient::DeleteOperation(std::string const& name,
-                                                        Options opts) {
+Status
+PolicyBasedRoutingServiceClient::DeleteOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::DeleteOperationRequest request;
   request.set_name(name);
   return connection_->DeleteOperation(request);
 }
 
-Status PolicyBasedRoutingServiceClient::DeleteOperation(
-    google::longrunning::DeleteOperationRequest const& request, Options opts) {
+Status
+PolicyBasedRoutingServiceClient::DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteOperation(request);
 }
 
-Status PolicyBasedRoutingServiceClient::CancelOperation(std::string const& name,
-                                                        Options opts) {
+Status
+PolicyBasedRoutingServiceClient::CancelOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::CancelOperationRequest request;
   request.set_name(name);
   return connection_->CancelOperation(request);
 }
 
-Status PolicyBasedRoutingServiceClient::CancelOperation(
-    google::longrunning::CancelOperationRequest const& request, Options opts) {
+Status
+PolicyBasedRoutingServiceClient::CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelOperation(request);
 }

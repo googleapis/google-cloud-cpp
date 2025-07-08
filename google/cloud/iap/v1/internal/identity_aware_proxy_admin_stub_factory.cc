@@ -17,13 +17,13 @@
 // source: google/cloud/iap/v1/service.proto
 
 #include "google/cloud/iap/v1/internal/identity_aware_proxy_admin_stub_factory.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/grpc_options.h"
 #include "google/cloud/iap/v1/internal/identity_aware_proxy_admin_auth_decorator.h"
 #include "google/cloud/iap/v1/internal/identity_aware_proxy_admin_logging_decorator.h"
 #include "google/cloud/iap/v1/internal/identity_aware_proxy_admin_metadata_decorator.h"
 #include "google/cloud/iap/v1/internal/identity_aware_proxy_admin_stub.h"
 #include "google/cloud/iap/v1/internal/identity_aware_proxy_admin_tracing_stub.h"
-#include "google/cloud/common_options.h"
-#include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
@@ -41,13 +41,11 @@ std::shared_ptr<IdentityAwareProxyAdminServiceStub>
 CreateDefaultIdentityAwareProxyAdminServiceStub(
     std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
     Options const& options) {
-  auto channel = auth->CreateChannel(options.get<EndpointOption>(),
-                                     internal::MakeChannelArguments(options));
-  auto service_grpc_stub =
-      google::cloud::iap::v1::IdentityAwareProxyAdminService::NewStub(channel);
+  auto channel = auth->CreateChannel(
+    options.get<EndpointOption>(), internal::MakeChannelArguments(options));
+  auto service_grpc_stub = google::cloud::iap::v1::IdentityAwareProxyAdminService::NewStub(channel);
   std::shared_ptr<IdentityAwareProxyAdminServiceStub> stub =
-      std::make_shared<DefaultIdentityAwareProxyAdminServiceStub>(
-          std::move(service_grpc_stub));
+    std::make_shared<DefaultIdentityAwareProxyAdminServiceStub>(std::move(service_grpc_stub));
 
   if (auth->RequiresConfigureContext()) {
     stub = std::make_shared<IdentityAwareProxyAdminServiceAuth>(
@@ -55,10 +53,12 @@ CreateDefaultIdentityAwareProxyAdminServiceStub(
   }
   stub = std::make_shared<IdentityAwareProxyAdminServiceMetadata>(
       std::move(stub), std::multimap<std::string, std::string>{});
-  if (internal::Contains(options.get<LoggingComponentsOption>(), "rpc")) {
+  if (internal::Contains(
+      options.get<LoggingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<IdentityAwareProxyAdminServiceLogging>(
-        std::move(stub), options.get<GrpcTracingOptionsOption>(),
+        std::move(stub),
+        options.get<GrpcTracingOptionsOption>(),
         options.get<LoggingComponentsOption>());
   }
   if (internal::TracingEnabled(options)) {

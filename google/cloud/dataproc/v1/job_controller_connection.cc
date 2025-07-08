@@ -17,14 +17,14 @@
 // source: google/cloud/dataproc/v1/jobs.proto
 
 #include "google/cloud/dataproc/v1/job_controller_connection.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/dataproc/v1/internal/job_controller_connection_impl.h"
 #include "google/cloud/dataproc/v1/internal/job_controller_option_defaults.h"
 #include "google/cloud/dataproc/v1/internal/job_controller_stub_factory.h"
 #include "google/cloud/dataproc/v1/internal/job_controller_tracing_connection.h"
 #include "google/cloud/dataproc/v1/job_controller_options.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
-#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
@@ -38,7 +38,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 JobControllerConnection::~JobControllerConnection() = default;
 
-StatusOr<google::cloud::dataproc::v1::Job> JobControllerConnection::SubmitJob(
+StatusOr<google::cloud::dataproc::v1::Job>
+JobControllerConnection::SubmitJob(
     google::cloud::dataproc::v1::SubmitJobRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -47,58 +48,64 @@ future<StatusOr<google::cloud::dataproc::v1::Job>>
 JobControllerConnection::SubmitJobAsOperation(
     google::cloud::dataproc::v1::SubmitJobRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::dataproc::v1::Job>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::dataproc::v1::Job>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 JobControllerConnection::SubmitJobAsOperation(
-    NoAwaitTag, google::cloud::dataproc::v1::SubmitJobRequest const&) {
+    NoAwaitTag,
+    google::cloud::dataproc::v1::SubmitJobRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::dataproc::v1::Job>>
 JobControllerConnection::SubmitJobAsOperation(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::dataproc::v1::Job>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::dataproc::v1::Job>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::cloud::dataproc::v1::Job> JobControllerConnection::GetJob(
+StatusOr<google::cloud::dataproc::v1::Job>
+JobControllerConnection::GetJob(
     google::cloud::dataproc::v1::GetJobRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StreamRange<google::cloud::dataproc::v1::Job> JobControllerConnection::ListJobs(
-    google::cloud::dataproc::v1::
-        ListJobsRequest) {  // NOLINT(performance-unnecessary-value-param)
+    google::cloud::dataproc::v1::ListJobsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::dataproc::v1::Job>>();
 }
 
-StatusOr<google::cloud::dataproc::v1::Job> JobControllerConnection::UpdateJob(
+StatusOr<google::cloud::dataproc::v1::Job>
+JobControllerConnection::UpdateJob(
     google::cloud::dataproc::v1::UpdateJobRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::cloud::dataproc::v1::Job> JobControllerConnection::CancelJob(
+StatusOr<google::cloud::dataproc::v1::Job>
+JobControllerConnection::CancelJob(
     google::cloud::dataproc::v1::CancelJobRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status JobControllerConnection::DeleteJob(
+Status
+JobControllerConnection::DeleteJob(
     google::cloud::dataproc::v1::DeleteJobRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::iam::v1::Policy> JobControllerConnection::SetIamPolicy(
+StatusOr<google::iam::v1::Policy>
+JobControllerConnection::SetIamPolicy(
     google::iam::v1::SetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::iam::v1::Policy> JobControllerConnection::GetIamPolicy(
+StatusOr<google::iam::v1::Policy>
+JobControllerConnection::GetIamPolicy(
     google::iam::v1::GetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -109,25 +116,26 @@ JobControllerConnection::TestIamPermissions(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::longrunning::Operation>
-JobControllerConnection::ListOperations(
-    google::longrunning::
-        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::longrunning::Operation> JobControllerConnection::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }
 
-StatusOr<google::longrunning::Operation> JobControllerConnection::GetOperation(
+StatusOr<google::longrunning::Operation>
+JobControllerConnection::GetOperation(
     google::longrunning::GetOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status JobControllerConnection::DeleteOperation(
+Status
+JobControllerConnection::DeleteOperation(
     google::longrunning::DeleteOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status JobControllerConnection::CancelOperation(
+Status
+JobControllerConnection::CancelOperation(
     google::longrunning::CancelOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -135,18 +143,17 @@ Status JobControllerConnection::CancelOperation(
 std::shared_ptr<JobControllerConnection> MakeJobControllerConnection(
     std::string const& location, Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 JobControllerPolicyOptionList>(options,
-                                                                __func__);
+      UnifiedCredentialsOptionList,
+      JobControllerPolicyOptionList>(options, __func__);
   options = dataproc_v1_internal::JobControllerDefaultOptions(
       location, std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = dataproc_v1_internal::CreateDefaultJobControllerStub(
-      std::move(auth), options);
+    std::move(auth), options);
   return dataproc_v1_internal::MakeJobControllerTracingConnection(
       std::make_shared<dataproc_v1_internal::JobControllerConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options)));
+      std::move(background), std::move(stub), std::move(options)));
 }
 
 std::shared_ptr<JobControllerConnection> MakeJobControllerConnection(

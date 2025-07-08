@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_V3_SNOOZE_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_V3_SNOOZE_CONNECTION_H
 
-#include "google/cloud/monitoring/v3/internal/snooze_retry_traits.h"
-#include "google/cloud/monitoring/v3/snooze_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/monitoring/v3/internal/snooze_retry_traits.h"
+#include "google/cloud/monitoring/v3/snooze_connection_idempotency_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -52,8 +52,7 @@ class SnoozeServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class SnoozeServiceLimitedErrorCountRetryPolicy
-    : public SnoozeServiceRetryPolicy {
+class SnoozeServiceLimitedErrorCountRetryPolicy : public SnoozeServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -63,14 +62,14 @@ class SnoozeServiceLimitedErrorCountRetryPolicy
    *     @p maximum_failures == 0.
    */
   explicit SnoozeServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   SnoozeServiceLimitedErrorCountRetryPolicy(
       SnoozeServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : SnoozeServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : SnoozeServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   SnoozeServiceLimitedErrorCountRetryPolicy(
       SnoozeServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : SnoozeServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : SnoozeServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -90,9 +89,7 @@ class SnoozeServiceLimitedErrorCountRetryPolicy
   using BaseType = SnoozeServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      monitoring_v3_internal::SnoozeServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<monitoring_v3_internal::SnoozeServiceRetryTraits> impl_;
 };
 
 /**
@@ -130,14 +127,12 @@ class SnoozeServiceLimitedTimeRetryPolicy : public SnoozeServiceRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit SnoozeServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  SnoozeServiceLimitedTimeRetryPolicy(
-      SnoozeServiceLimitedTimeRetryPolicy&& rhs) noexcept
-      : SnoozeServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  SnoozeServiceLimitedTimeRetryPolicy(
-      SnoozeServiceLimitedTimeRetryPolicy const& rhs) noexcept
-      : SnoozeServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  SnoozeServiceLimitedTimeRetryPolicy(SnoozeServiceLimitedTimeRetryPolicy&& rhs) noexcept
+    : SnoozeServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  SnoozeServiceLimitedTimeRetryPolicy(SnoozeServiceLimitedTimeRetryPolicy const& rhs) noexcept
+    : SnoozeServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -159,9 +154,7 @@ class SnoozeServiceLimitedTimeRetryPolicy : public SnoozeServiceRetryPolicy {
   using BaseType = SnoozeServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      monitoring_v3_internal::SnoozeServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<monitoring_v3_internal::SnoozeServiceRetryTraits> impl_;
 };
 
 /**
@@ -182,17 +175,17 @@ class SnoozeServiceConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<google::monitoring::v3::Snooze> CreateSnooze(
-      google::monitoring::v3::CreateSnoozeRequest const& request);
+  virtual StatusOr<google::monitoring::v3::Snooze>
+  CreateSnooze(google::monitoring::v3::CreateSnoozeRequest const& request);
 
-  virtual StreamRange<google::monitoring::v3::Snooze> ListSnoozes(
-      google::monitoring::v3::ListSnoozesRequest request);
+  virtual StreamRange<google::monitoring::v3::Snooze>
+  ListSnoozes(google::monitoring::v3::ListSnoozesRequest request);
 
-  virtual StatusOr<google::monitoring::v3::Snooze> GetSnooze(
-      google::monitoring::v3::GetSnoozeRequest const& request);
+  virtual StatusOr<google::monitoring::v3::Snooze>
+  GetSnooze(google::monitoring::v3::GetSnoozeRequest const& request);
 
-  virtual StatusOr<google::monitoring::v3::Snooze> UpdateSnooze(
-      google::monitoring::v3::UpdateSnoozeRequest const& request);
+  virtual StatusOr<google::monitoring::v3::Snooze>
+  UpdateSnooze(google::monitoring::v3::UpdateSnoozeRequest const& request);
 };
 
 /**

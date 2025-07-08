@@ -33,49 +33,46 @@ ConversationModelsAuth::ConversationModelsAuth(
 
 future<StatusOr<google::longrunning::Operation>>
 ConversationModelsAuth::AsyncCreateConversationModel(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::dialogflow::v2::CreateConversationModelRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::dialogflow::v2::CreateConversationModelRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreateConversationModel(cq, *std::move(context),
-                                                   std::move(options), request);
+        return child->AsyncCreateConversationModel(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 ConversationModelsAuth::CreateConversationModel(
-    grpc::ClientContext& context, Options options,
-    google::cloud::dialogflow::v2::CreateConversationModelRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::dialogflow::v2::CreateConversationModelRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateConversationModel(context, options, request);
 }
 
-StatusOr<google::cloud::dialogflow::v2::ConversationModel>
-ConversationModelsAuth::GetConversationModel(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::dialogflow::v2::ConversationModel> ConversationModelsAuth::GetConversationModel(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dialogflow::v2::GetConversationModelRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetConversationModel(context, options, request);
 }
 
-StatusOr<google::cloud::dialogflow::v2::ListConversationModelsResponse>
-ConversationModelsAuth::ListConversationModels(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::dialogflow::v2::ListConversationModelsRequest const&
-        request) {
+StatusOr<google::cloud::dialogflow::v2::ListConversationModelsResponse> ConversationModelsAuth::ListConversationModels(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::dialogflow::v2::ListConversationModelsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListConversationModels(context, options, request);
@@ -83,30 +80,28 @@ ConversationModelsAuth::ListConversationModels(
 
 future<StatusOr<google::longrunning::Operation>>
 ConversationModelsAuth::AsyncDeleteConversationModel(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::dialogflow::v2::DeleteConversationModelRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::dialogflow::v2::DeleteConversationModelRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDeleteConversationModel(cq, *std::move(context),
-                                                   std::move(options), request);
+        return child->AsyncDeleteConversationModel(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 ConversationModelsAuth::DeleteConversationModel(
-    grpc::ClientContext& context, Options options,
-    google::cloud::dialogflow::v2::DeleteConversationModelRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::dialogflow::v2::DeleteConversationModelRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteConversationModel(context, options, request);
@@ -114,30 +109,28 @@ ConversationModelsAuth::DeleteConversationModel(
 
 future<StatusOr<google::longrunning::Operation>>
 ConversationModelsAuth::AsyncDeployConversationModel(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::dialogflow::v2::DeployConversationModelRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::dialogflow::v2::DeployConversationModelRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDeployConversationModel(cq, *std::move(context),
-                                                   std::move(options), request);
+        return child->AsyncDeployConversationModel(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 ConversationModelsAuth::DeployConversationModel(
-    grpc::ClientContext& context, Options options,
-    google::cloud::dialogflow::v2::DeployConversationModelRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::dialogflow::v2::DeployConversationModelRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeployConversationModel(context, options, request);
@@ -145,16 +138,14 @@ ConversationModelsAuth::DeployConversationModel(
 
 future<StatusOr<google::longrunning::Operation>>
 ConversationModelsAuth::AsyncUndeployConversationModel(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::dialogflow::v2::UndeployConversationModelRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::dialogflow::v2::UndeployConversationModelRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
@@ -166,30 +157,27 @@ ConversationModelsAuth::AsyncUndeployConversationModel(
 
 StatusOr<google::longrunning::Operation>
 ConversationModelsAuth::UndeployConversationModel(
-    grpc::ClientContext& context, Options options,
-    google::cloud::dialogflow::v2::UndeployConversationModelRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::dialogflow::v2::UndeployConversationModelRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UndeployConversationModel(context, options, request);
 }
 
-StatusOr<google::cloud::dialogflow::v2::ConversationModelEvaluation>
-ConversationModelsAuth::GetConversationModelEvaluation(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::dialogflow::v2::GetConversationModelEvaluationRequest const&
-        request) {
+StatusOr<google::cloud::dialogflow::v2::ConversationModelEvaluation> ConversationModelsAuth::GetConversationModelEvaluation(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::dialogflow::v2::GetConversationModelEvaluationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetConversationModelEvaluation(context, options, request);
 }
 
-StatusOr<
-    google::cloud::dialogflow::v2::ListConversationModelEvaluationsResponse>
-ConversationModelsAuth::ListConversationModelEvaluations(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::dialogflow::v2::
-        ListConversationModelEvaluationsRequest const& request) {
+StatusOr<google::cloud::dialogflow::v2::ListConversationModelEvaluationsResponse> ConversationModelsAuth::ListConversationModelEvaluations(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::dialogflow::v2::ListConversationModelEvaluationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListConversationModelEvaluations(context, options, request);
@@ -197,16 +185,14 @@ ConversationModelsAuth::ListConversationModelEvaluations(
 
 future<StatusOr<google::longrunning::Operation>>
 ConversationModelsAuth::AsyncCreateConversationModelEvaluation(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::dialogflow::v2::
-        CreateConversationModelEvaluationRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::dialogflow::v2::CreateConversationModelEvaluationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
@@ -218,17 +204,17 @@ ConversationModelsAuth::AsyncCreateConversationModelEvaluation(
 
 StatusOr<google::longrunning::Operation>
 ConversationModelsAuth::CreateConversationModelEvaluation(
-    grpc::ClientContext& context, Options options,
-    google::cloud::dialogflow::v2::
-        CreateConversationModelEvaluationRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::dialogflow::v2::CreateConversationModelEvaluationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateConversationModelEvaluation(context, options, request);
 }
 
-StatusOr<google::cloud::location::ListLocationsResponse>
-ConversationModelsAuth::ListLocations(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::location::ListLocationsResponse> ConversationModelsAuth::ListLocations(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -236,16 +222,17 @@ ConversationModelsAuth::ListLocations(
 }
 
 StatusOr<google::cloud::location::Location> ConversationModelsAuth::GetLocation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetLocation(context, options, request);
 }
 
-StatusOr<google::longrunning::ListOperationsResponse>
-ConversationModelsAuth::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse> ConversationModelsAuth::ListOperations(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -253,7 +240,8 @@ ConversationModelsAuth::ListOperations(
 }
 
 StatusOr<google::longrunning::Operation> ConversationModelsAuth::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -261,7 +249,8 @@ StatusOr<google::longrunning::Operation> ConversationModelsAuth::GetOperation(
 }
 
 Status ConversationModelsAuth::CancelOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -275,16 +264,15 @@ ConversationModelsAuth::AsyncGetOperation(
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncGetOperation(cq, *std::move(context),
-                                        std::move(options), request);
+        return child->AsyncGetOperation(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
@@ -293,14 +281,13 @@ future<Status> ConversationModelsAuth::AsyncCancelOperation(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) return make_ready_future(std::move(context).status());
-        return child->AsyncCancelOperation(cq, *std::move(context),
-                                           std::move(options), request);
+        return child->AsyncCancelOperation(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 

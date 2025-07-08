@@ -31,36 +31,36 @@ DataAccessControlServiceAuth::DataAccessControlServiceAuth(
     std::shared_ptr<DataAccessControlServiceStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::chronicle::v1::DataAccessLabel>
-DataAccessControlServiceAuth::CreateDataAccessLabel(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::chronicle::v1::DataAccessLabel> DataAccessControlServiceAuth::CreateDataAccessLabel(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::chronicle::v1::CreateDataAccessLabelRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateDataAccessLabel(context, options, request);
 }
 
-StatusOr<google::cloud::chronicle::v1::DataAccessLabel>
-DataAccessControlServiceAuth::GetDataAccessLabel(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::chronicle::v1::DataAccessLabel> DataAccessControlServiceAuth::GetDataAccessLabel(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::chronicle::v1::GetDataAccessLabelRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetDataAccessLabel(context, options, request);
 }
 
-StatusOr<google::cloud::chronicle::v1::ListDataAccessLabelsResponse>
-DataAccessControlServiceAuth::ListDataAccessLabels(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::chronicle::v1::ListDataAccessLabelsResponse> DataAccessControlServiceAuth::ListDataAccessLabels(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::chronicle::v1::ListDataAccessLabelsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListDataAccessLabels(context, options, request);
 }
 
-StatusOr<google::cloud::chronicle::v1::DataAccessLabel>
-DataAccessControlServiceAuth::UpdateDataAccessLabel(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::chronicle::v1::DataAccessLabel> DataAccessControlServiceAuth::UpdateDataAccessLabel(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::chronicle::v1::UpdateDataAccessLabelRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -68,43 +68,44 @@ DataAccessControlServiceAuth::UpdateDataAccessLabel(
 }
 
 Status DataAccessControlServiceAuth::DeleteDataAccessLabel(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::chronicle::v1::DeleteDataAccessLabelRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteDataAccessLabel(context, options, request);
 }
 
-StatusOr<google::cloud::chronicle::v1::DataAccessScope>
-DataAccessControlServiceAuth::CreateDataAccessScope(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::chronicle::v1::DataAccessScope> DataAccessControlServiceAuth::CreateDataAccessScope(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::chronicle::v1::CreateDataAccessScopeRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateDataAccessScope(context, options, request);
 }
 
-StatusOr<google::cloud::chronicle::v1::DataAccessScope>
-DataAccessControlServiceAuth::GetDataAccessScope(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::chronicle::v1::DataAccessScope> DataAccessControlServiceAuth::GetDataAccessScope(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::chronicle::v1::GetDataAccessScopeRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetDataAccessScope(context, options, request);
 }
 
-StatusOr<google::cloud::chronicle::v1::ListDataAccessScopesResponse>
-DataAccessControlServiceAuth::ListDataAccessScopes(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::chronicle::v1::ListDataAccessScopesResponse> DataAccessControlServiceAuth::ListDataAccessScopes(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::chronicle::v1::ListDataAccessScopesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListDataAccessScopes(context, options, request);
 }
 
-StatusOr<google::cloud::chronicle::v1::DataAccessScope>
-DataAccessControlServiceAuth::UpdateDataAccessScope(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::chronicle::v1::DataAccessScope> DataAccessControlServiceAuth::UpdateDataAccessScope(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::chronicle::v1::UpdateDataAccessScopeRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -112,25 +113,26 @@ DataAccessControlServiceAuth::UpdateDataAccessScope(
 }
 
 Status DataAccessControlServiceAuth::DeleteDataAccessScope(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::chronicle::v1::DeleteDataAccessScopeRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteDataAccessScope(context, options, request);
 }
 
-StatusOr<google::longrunning::ListOperationsResponse>
-DataAccessControlServiceAuth::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse> DataAccessControlServiceAuth::ListOperations(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListOperations(context, options, request);
 }
 
-StatusOr<google::longrunning::Operation>
-DataAccessControlServiceAuth::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::Operation> DataAccessControlServiceAuth::GetOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -138,7 +140,8 @@ DataAccessControlServiceAuth::GetOperation(
 }
 
 Status DataAccessControlServiceAuth::DeleteOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -146,7 +149,8 @@ Status DataAccessControlServiceAuth::DeleteOperation(
 }
 
 Status DataAccessControlServiceAuth::CancelOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;

@@ -19,11 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RETAIL_V2_ANALYTICS_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RETAIL_V2_ANALYTICS_CLIENT_H
 
-#include "google/cloud/retail/v2/analytics_connection.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
+#include "google/cloud/retail/v2/analytics_connection.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
@@ -64,9 +64,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class AnalyticsServiceClient {
  public:
-  explicit AnalyticsServiceClient(
-      std::shared_ptr<AnalyticsServiceConnection> connection,
-      Options opts = {});
+  explicit AnalyticsServiceClient(std::shared_ptr<AnalyticsServiceConnection> connection, Options opts = {});
   ~AnalyticsServiceClient();
 
   ///@{
@@ -79,12 +77,10 @@ class AnalyticsServiceClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(AnalyticsServiceClient const& a,
-                         AnalyticsServiceClient const& b) {
+  friend bool operator==(AnalyticsServiceClient const& a, AnalyticsServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(AnalyticsServiceClient const& a,
-                         AnalyticsServiceClient const& b) {
+  friend bool operator!=(AnalyticsServiceClient const& a, AnalyticsServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -127,9 +123,7 @@ class AnalyticsServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::retail::v2::ExportAnalyticsMetricsResponse>>
-  ExportAnalyticsMetrics(
-      google::cloud::retail::v2::ExportAnalyticsMetricsRequest const& request,
-      Options opts = {});
+  ExportAnalyticsMetrics(google::cloud::retail::v2::ExportAnalyticsMetricsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -142,10 +136,8 @@ class AnalyticsServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> ExportAnalyticsMetrics(
-      NoAwaitTag,
-      google::cloud::retail::v2::ExportAnalyticsMetricsRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  ExportAnalyticsMetrics(NoAwaitTag, google::cloud::retail::v2::ExportAnalyticsMetricsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -157,8 +149,7 @@ class AnalyticsServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::retail::v2::ExportAnalyticsMetricsResponse>>
-  ExportAnalyticsMetrics(google::longrunning::Operation const& operation,
-                         Options opts = {});
+  ExportAnalyticsMetrics(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -193,8 +184,8 @@ class AnalyticsServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -233,8 +224,8 @@ class AnalyticsServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -260,8 +251,8 @@ class AnalyticsServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -292,9 +283,8 @@ class AnalyticsServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<AnalyticsServiceConnection> connection_;

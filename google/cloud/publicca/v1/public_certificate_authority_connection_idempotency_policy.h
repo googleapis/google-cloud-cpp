@@ -34,17 +34,14 @@ class PublicCertificateAuthorityServiceConnectionIdempotencyPolicy {
   virtual ~PublicCertificateAuthorityServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<
-      PublicCertificateAuthorityServiceConnectionIdempotencyPolicy>
-  clone() const;
+  virtual std::unique_ptr<PublicCertificateAuthorityServiceConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency CreateExternalAccountKey(
-      google::cloud::security::publicca::v1::
-          CreateExternalAccountKeyRequest const& request);
+  virtual google::cloud::Idempotency
+  CreateExternalAccountKey(google::cloud::security::publicca::v1::CreateExternalAccountKeyRequest const& request);
 };
 
 std::unique_ptr<PublicCertificateAuthorityServiceConnectionIdempotencyPolicy>
-MakeDefaultPublicCertificateAuthorityServiceConnectionIdempotencyPolicy();
+    MakeDefaultPublicCertificateAuthorityServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace publicca_v1

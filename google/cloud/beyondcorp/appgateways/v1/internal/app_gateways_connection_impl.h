@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BEYONDCORP_APPGATEWAYS_V1_INTERNAL_APP_GATEWAYS_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BEYONDCORP_APPGATEWAYS_V1_INTERNAL_APP_GATEWAYS_CONNECTION_IMPL_H
 
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/beyondcorp/appgateways/v1/app_gateways_connection.h"
 #include "google/cloud/beyondcorp/appgateways/v1/app_gateways_connection_idempotency_policy.h"
 #include "google/cloud/beyondcorp/appgateways/v1/app_gateways_options.h"
 #include "google/cloud/beyondcorp/appgateways/v1/internal/app_gateways_retry_traits.h"
 #include "google/cloud/beyondcorp/appgateways/v1/internal/app_gateways_stub.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -46,83 +46,70 @@ class AppGatewaysServiceConnectionImpl
   ~AppGatewaysServiceConnectionImpl() override = default;
 
   AppGatewaysServiceConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<
-          beyondcorp_appgateways_v1_internal::AppGatewaysServiceStub>
-          stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<beyondcorp_appgateways_v1_internal::AppGatewaysServiceStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
   StreamRange<google::cloud::beyondcorp::appgateways::v1::AppGateway>
-  ListAppGateways(
-      google::cloud::beyondcorp::appgateways::v1::ListAppGatewaysRequest
-          request) override;
+  ListAppGateways(google::cloud::beyondcorp::appgateways::v1::ListAppGatewaysRequest request) override;
 
   StatusOr<google::cloud::beyondcorp::appgateways::v1::AppGateway>
-  GetAppGateway(
-      google::cloud::beyondcorp::appgateways::v1::GetAppGatewayRequest const&
-          request) override;
+  GetAppGateway(google::cloud::beyondcorp::appgateways::v1::GetAppGatewayRequest const& request) override;
+
+  future<StatusOr<google::cloud::beyondcorp::appgateways::v1::AppGateway>>
+  CreateAppGateway(google::cloud::beyondcorp::appgateways::v1::CreateAppGatewayRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  CreateAppGateway(NoAwaitTag,
+      google::cloud::beyondcorp::appgateways::v1::CreateAppGatewayRequest const& request) override;
 
   future<StatusOr<google::cloud::beyondcorp::appgateways::v1::AppGateway>>
   CreateAppGateway(
-      google::cloud::beyondcorp::appgateways::v1::CreateAppGatewayRequest const&
-          request) override;
+      google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::longrunning::Operation> CreateAppGateway(
-      NoAwaitTag,
-      google::cloud::beyondcorp::appgateways::v1::CreateAppGatewayRequest const&
-          request) override;
+  future<StatusOr<google::cloud::beyondcorp::appgateways::v1::AppGatewayOperationMetadata>>
+  DeleteAppGateway(google::cloud::beyondcorp::appgateways::v1::DeleteAppGatewayRequest const& request) override;
 
-  future<StatusOr<google::cloud::beyondcorp::appgateways::v1::AppGateway>>
-  CreateAppGateway(google::longrunning::Operation const& operation) override;
+  StatusOr<google::longrunning::Operation>
+  DeleteAppGateway(NoAwaitTag,
+      google::cloud::beyondcorp::appgateways::v1::DeleteAppGatewayRequest const& request) override;
 
-  future<StatusOr<
-      google::cloud::beyondcorp::appgateways::v1::AppGatewayOperationMetadata>>
+  future<StatusOr<google::cloud::beyondcorp::appgateways::v1::AppGatewayOperationMetadata>>
   DeleteAppGateway(
-      google::cloud::beyondcorp::appgateways::v1::DeleteAppGatewayRequest const&
-          request) override;
+      google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::longrunning::Operation> DeleteAppGateway(
-      NoAwaitTag,
-      google::cloud::beyondcorp::appgateways::v1::DeleteAppGatewayRequest const&
-          request) override;
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request) override;
 
-  future<StatusOr<
-      google::cloud::beyondcorp::appgateways::v1::AppGatewayOperationMetadata>>
-  DeleteAppGateway(google::longrunning::Operation const& operation) override;
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request) override;
 
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request) override;
+  StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) override;
 
-  StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request) override;
+  StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request) override;
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request) override;
+  Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request) override;
-
-  Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request) override;
-
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request) override;
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<beyondcorp_appgateways_v1_internal::AppGatewaysServiceStub>
-      stub_;
+  std::shared_ptr<beyondcorp_appgateways_v1_internal::AppGatewaysServiceStub> stub_;
   Options options_;
 };
 

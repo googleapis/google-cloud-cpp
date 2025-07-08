@@ -31,10 +31,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * A class to mock `VideoStitcherServiceConnection`.
  *
  * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `VideoStitcherServiceClient`. To do
- * so, construct an object of type `VideoStitcherServiceClient` with an instance
- * of this class. Then use the Google Test framework functions to program the
- * behavior of this mock.
+ * including errors, from an object of type `VideoStitcherServiceClient`. To do so,
+ * construct an object of type `VideoStitcherServiceClient` with an instance of this
+ * class. Then use the Google Test framework functions to program the behavior
+ * of this mock.
  *
  * @see [This example][bq-mock] for how to test your application with GoogleTest.
  * While the example showcases types from the BigQuery library, the underlying
@@ -42,8 +42,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockVideoStitcherServiceConnection
-    : public video_stitcher_v1::VideoStitcherServiceConnection {
+class MockVideoStitcherServiceConnection : public video_stitcher_v1::VideoStitcherServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
@@ -52,15 +51,12 @@ class MockVideoStitcherServiceConnection
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// CreateCdnKey(Matcher<google::cloud::video::stitcher::v1::CreateCdnKeyRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, CreateCdnKey(Matcher<google::cloud::video::stitcher::v1::CreateCdnKeyRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::video::stitcher::v1::CdnKey>>,
-      CreateCdnKey,
-      (google::cloud::video::stitcher::v1::CreateCdnKeyRequest const& request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::video::stitcher::v1::CdnKey>>,
+  CreateCdnKey,
+  (google::cloud::video::stitcher::v1::CreateCdnKeyRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -68,48 +64,41 @@ class MockVideoStitcherServiceConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, CreateCdnKey(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, CreateCdnKey,
-      (NoAwaitTag,
-       google::cloud::video::stitcher::v1::CreateCdnKeyRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  CreateCdnKey, (NoAwaitTag,
+    google::cloud::video::stitcher::v1::CreateCdnKeyRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateCdnKey(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, CreateCdnKey(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::video::stitcher::v1::CdnKey>>,
-              CreateCdnKey, (google::longrunning::Operation const& operation),
-              (override));
+  CreateCdnKey, (
+    google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD((StreamRange<google::cloud::video::stitcher::v1::CdnKey>),
-              ListCdnKeys,
-              (google::cloud::video::stitcher::v1::ListCdnKeysRequest request),
-              (override));
+  ListCdnKeys,
+  (google::cloud::video::stitcher::v1::ListCdnKeysRequest request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::video::stitcher::v1::CdnKey>, GetCdnKey,
-      (google::cloud::video::stitcher::v1::GetCdnKeyRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::video::stitcher::v1::CdnKey>,
+  GetCdnKey,
+  (google::cloud::video::stitcher::v1::GetCdnKeyRequest const& request), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteCdnKey(Matcher<google::cloud::video::stitcher::v1::DeleteCdnKeyRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteCdnKey(Matcher<google::cloud::video::stitcher::v1::DeleteCdnKeyRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>,
-      DeleteCdnKey,
-      (google::cloud::video::stitcher::v1::DeleteCdnKeyRequest const& request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>,
+  DeleteCdnKey,
+  (google::cloud::video::stitcher::v1::DeleteCdnKeyRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -117,39 +106,33 @@ class MockVideoStitcherServiceConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, DeleteCdnKey(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, DeleteCdnKey,
-      (NoAwaitTag,
-       google::cloud::video::stitcher::v1::DeleteCdnKeyRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  DeleteCdnKey, (NoAwaitTag,
+    google::cloud::video::stitcher::v1::DeleteCdnKeyRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteCdnKey(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteCdnKey(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>,
-      DeleteCdnKey, (google::longrunning::Operation const& operation),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>,
+  DeleteCdnKey, (
+    google::longrunning::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// UpdateCdnKey(Matcher<google::cloud::video::stitcher::v1::UpdateCdnKeyRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, UpdateCdnKey(Matcher<google::cloud::video::stitcher::v1::UpdateCdnKeyRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::video::stitcher::v1::CdnKey>>,
-      UpdateCdnKey,
-      (google::cloud::video::stitcher::v1::UpdateCdnKeyRequest const& request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::video::stitcher::v1::CdnKey>>,
+  UpdateCdnKey,
+  (google::cloud::video::stitcher::v1::UpdateCdnKeyRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -157,88 +140,65 @@ class MockVideoStitcherServiceConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, UpdateCdnKey(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, UpdateCdnKey,
-      (NoAwaitTag,
-       google::cloud::video::stitcher::v1::UpdateCdnKeyRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  UpdateCdnKey, (NoAwaitTag,
+    google::cloud::video::stitcher::v1::UpdateCdnKeyRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UpdateCdnKey(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, UpdateCdnKey(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::video::stitcher::v1::CdnKey>>,
-              UpdateCdnKey, (google::longrunning::Operation const& operation),
-              (override));
+  UpdateCdnKey, (
+    google::longrunning::Operation const& operation), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::video::stitcher::v1::VodSession>,
-      CreateVodSession,
-      (google::cloud::video::stitcher::v1::CreateVodSessionRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::video::stitcher::v1::VodSession>,
+  CreateVodSession,
+  (google::cloud::video::stitcher::v1::CreateVodSessionRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::video::stitcher::v1::VodSession>, GetVodSession,
-      (google::cloud::video::stitcher::v1::GetVodSessionRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::video::stitcher::v1::VodSession>,
+  GetVodSession,
+  (google::cloud::video::stitcher::v1::GetVodSessionRequest const& request), (override));
 
-  MOCK_METHOD(
-      (StreamRange<google::cloud::video::stitcher::v1::VodStitchDetail>),
-      ListVodStitchDetails,
-      (google::cloud::video::stitcher::v1::ListVodStitchDetailsRequest request),
-      (override));
+  MOCK_METHOD((StreamRange<google::cloud::video::stitcher::v1::VodStitchDetail>),
+  ListVodStitchDetails,
+  (google::cloud::video::stitcher::v1::ListVodStitchDetailsRequest request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::video::stitcher::v1::VodStitchDetail>,
-      GetVodStitchDetail,
-      (google::cloud::video::stitcher::v1::GetVodStitchDetailRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::video::stitcher::v1::VodStitchDetail>,
+  GetVodStitchDetail,
+  (google::cloud::video::stitcher::v1::GetVodStitchDetailRequest const& request), (override));
 
-  MOCK_METHOD(
-      (StreamRange<google::cloud::video::stitcher::v1::VodAdTagDetail>),
-      ListVodAdTagDetails,
-      (google::cloud::video::stitcher::v1::ListVodAdTagDetailsRequest request),
-      (override));
+  MOCK_METHOD((StreamRange<google::cloud::video::stitcher::v1::VodAdTagDetail>),
+  ListVodAdTagDetails,
+  (google::cloud::video::stitcher::v1::ListVodAdTagDetailsRequest request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::video::stitcher::v1::VodAdTagDetail>,
-      GetVodAdTagDetail,
-      (google::cloud::video::stitcher::v1::GetVodAdTagDetailRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::video::stitcher::v1::VodAdTagDetail>,
+  GetVodAdTagDetail,
+  (google::cloud::video::stitcher::v1::GetVodAdTagDetailRequest const& request), (override));
 
-  MOCK_METHOD(
-      (StreamRange<google::cloud::video::stitcher::v1::LiveAdTagDetail>),
-      ListLiveAdTagDetails,
-      (google::cloud::video::stitcher::v1::ListLiveAdTagDetailsRequest request),
-      (override));
+  MOCK_METHOD((StreamRange<google::cloud::video::stitcher::v1::LiveAdTagDetail>),
+  ListLiveAdTagDetails,
+  (google::cloud::video::stitcher::v1::ListLiveAdTagDetailsRequest request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::video::stitcher::v1::LiveAdTagDetail>,
-      GetLiveAdTagDetail,
-      (google::cloud::video::stitcher::v1::GetLiveAdTagDetailRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::video::stitcher::v1::LiveAdTagDetail>,
+  GetLiveAdTagDetail,
+  (google::cloud::video::stitcher::v1::GetLiveAdTagDetailRequest const& request), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// CreateSlate(Matcher<google::cloud::video::stitcher::v1::CreateSlateRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, CreateSlate(Matcher<google::cloud::video::stitcher::v1::CreateSlateRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::video::stitcher::v1::Slate>>, CreateSlate,
-      (google::cloud::video::stitcher::v1::CreateSlateRequest const& request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::video::stitcher::v1::Slate>>,
+  CreateSlate,
+  (google::cloud::video::stitcher::v1::CreateSlateRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -246,47 +206,41 @@ class MockVideoStitcherServiceConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, CreateSlate(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, CreateSlate,
-      (NoAwaitTag,
-       google::cloud::video::stitcher::v1::CreateSlateRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  CreateSlate, (NoAwaitTag,
+    google::cloud::video::stitcher::v1::CreateSlateRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateSlate(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, CreateSlate(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::video::stitcher::v1::Slate>>,
-              CreateSlate, (google::longrunning::Operation const& operation),
-              (override));
+  CreateSlate, (
+    google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD((StreamRange<google::cloud::video::stitcher::v1::Slate>),
-              ListSlates,
-              (google::cloud::video::stitcher::v1::ListSlatesRequest request),
-              (override));
+  ListSlates,
+  (google::cloud::video::stitcher::v1::ListSlatesRequest request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::video::stitcher::v1::Slate>, GetSlate,
-      (google::cloud::video::stitcher::v1::GetSlateRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::video::stitcher::v1::Slate>,
+  GetSlate,
+  (google::cloud::video::stitcher::v1::GetSlateRequest const& request), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// UpdateSlate(Matcher<google::cloud::video::stitcher::v1::UpdateSlateRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, UpdateSlate(Matcher<google::cloud::video::stitcher::v1::UpdateSlateRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::video::stitcher::v1::Slate>>, UpdateSlate,
-      (google::cloud::video::stitcher::v1::UpdateSlateRequest const& request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::video::stitcher::v1::Slate>>,
+  UpdateSlate,
+  (google::cloud::video::stitcher::v1::UpdateSlateRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -294,38 +248,33 @@ class MockVideoStitcherServiceConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, UpdateSlate(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, UpdateSlate,
-      (NoAwaitTag,
-       google::cloud::video::stitcher::v1::UpdateSlateRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  UpdateSlate, (NoAwaitTag,
+    google::cloud::video::stitcher::v1::UpdateSlateRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UpdateSlate(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, UpdateSlate(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::video::stitcher::v1::Slate>>,
-              UpdateSlate, (google::longrunning::Operation const& operation),
-              (override));
+  UpdateSlate, (
+    google::longrunning::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteSlate(Matcher<google::cloud::video::stitcher::v1::DeleteSlateRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteSlate(Matcher<google::cloud::video::stitcher::v1::DeleteSlateRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>,
-      DeleteSlate,
-      (google::cloud::video::stitcher::v1::DeleteSlateRequest const& request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>,
+  DeleteSlate,
+  (google::cloud::video::stitcher::v1::DeleteSlateRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -333,53 +282,41 @@ class MockVideoStitcherServiceConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, DeleteSlate(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, DeleteSlate,
-      (NoAwaitTag,
-       google::cloud::video::stitcher::v1::DeleteSlateRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  DeleteSlate, (NoAwaitTag,
+    google::cloud::video::stitcher::v1::DeleteSlateRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteSlate(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteSlate(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>,
-      DeleteSlate, (google::longrunning::Operation const& operation),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::video::stitcher::v1::LiveSession>,
-      CreateLiveSession,
-      (google::cloud::video::stitcher::v1::CreateLiveSessionRequest const&
-           request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>,
+  DeleteSlate, (
+    google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::video::stitcher::v1::LiveSession>,
-              GetLiveSession,
-              (google::cloud::video::stitcher::v1::GetLiveSessionRequest const&
-                   request),
-              (override));
+  CreateLiveSession,
+  (google::cloud::video::stitcher::v1::CreateLiveSessionRequest const& request), (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::video::stitcher::v1::LiveSession>,
+  GetLiveSession,
+  (google::cloud::video::stitcher::v1::GetLiveSessionRequest const& request), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// CreateLiveConfig(Matcher<google::cloud::video::stitcher::v1::CreateLiveConfigRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, CreateLiveConfig(Matcher<google::cloud::video::stitcher::v1::CreateLiveConfigRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::video::stitcher::v1::LiveConfig>>,
-      CreateLiveConfig,
-      (google::cloud::video::stitcher::v1::CreateLiveConfigRequest const&
-           request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::video::stitcher::v1::LiveConfig>>,
+  CreateLiveConfig,
+  (google::cloud::video::stitcher::v1::CreateLiveConfigRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -387,51 +324,41 @@ class MockVideoStitcherServiceConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, CreateLiveConfig(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, CreateLiveConfig,
-      (NoAwaitTag,
-       google::cloud::video::stitcher::v1::CreateLiveConfigRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  CreateLiveConfig, (NoAwaitTag,
+    google::cloud::video::stitcher::v1::CreateLiveConfigRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateLiveConfig(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, CreateLiveConfig(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::video::stitcher::v1::LiveConfig>>,
-              CreateLiveConfig,
-              (google::longrunning::Operation const& operation), (override));
+  CreateLiveConfig, (
+    google::longrunning::Operation const& operation), (override));
 
-  MOCK_METHOD(
-      (StreamRange<google::cloud::video::stitcher::v1::LiveConfig>),
-      ListLiveConfigs,
-      (google::cloud::video::stitcher::v1::ListLiveConfigsRequest request),
-      (override));
+  MOCK_METHOD((StreamRange<google::cloud::video::stitcher::v1::LiveConfig>),
+  ListLiveConfigs,
+  (google::cloud::video::stitcher::v1::ListLiveConfigsRequest request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::video::stitcher::v1::LiveConfig>, GetLiveConfig,
-      (google::cloud::video::stitcher::v1::GetLiveConfigRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::video::stitcher::v1::LiveConfig>,
+  GetLiveConfig,
+  (google::cloud::video::stitcher::v1::GetLiveConfigRequest const& request), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteLiveConfig(Matcher<google::cloud::video::stitcher::v1::DeleteLiveConfigRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteLiveConfig(Matcher<google::cloud::video::stitcher::v1::DeleteLiveConfigRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>,
-      DeleteLiveConfig,
-      (google::cloud::video::stitcher::v1::DeleteLiveConfigRequest const&
-           request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>,
+  DeleteLiveConfig,
+  (google::cloud::video::stitcher::v1::DeleteLiveConfigRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -439,41 +366,33 @@ class MockVideoStitcherServiceConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, DeleteLiveConfig(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, DeleteLiveConfig,
-      (NoAwaitTag,
-       google::cloud::video::stitcher::v1::DeleteLiveConfigRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  DeleteLiveConfig, (NoAwaitTag,
+    google::cloud::video::stitcher::v1::DeleteLiveConfigRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteLiveConfig(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteLiveConfig(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>,
-      DeleteLiveConfig, (google::longrunning::Operation const& operation),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>,
+  DeleteLiveConfig, (
+    google::longrunning::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// UpdateLiveConfig(Matcher<google::cloud::video::stitcher::v1::UpdateLiveConfigRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, UpdateLiveConfig(Matcher<google::cloud::video::stitcher::v1::UpdateLiveConfigRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::video::stitcher::v1::LiveConfig>>,
-      UpdateLiveConfig,
-      (google::cloud::video::stitcher::v1::UpdateLiveConfigRequest const&
-           request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::video::stitcher::v1::LiveConfig>>,
+  UpdateLiveConfig,
+  (google::cloud::video::stitcher::v1::UpdateLiveConfigRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -481,39 +400,33 @@ class MockVideoStitcherServiceConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, UpdateLiveConfig(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, UpdateLiveConfig,
-      (NoAwaitTag,
-       google::cloud::video::stitcher::v1::UpdateLiveConfigRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  UpdateLiveConfig, (NoAwaitTag,
+    google::cloud::video::stitcher::v1::UpdateLiveConfigRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UpdateLiveConfig(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, UpdateLiveConfig(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::video::stitcher::v1::LiveConfig>>,
-              UpdateLiveConfig,
-              (google::longrunning::Operation const& operation), (override));
+  UpdateLiveConfig, (
+    google::longrunning::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// CreateVodConfig(Matcher<google::cloud::video::stitcher::v1::CreateVodConfigRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, CreateVodConfig(Matcher<google::cloud::video::stitcher::v1::CreateVodConfigRequest const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::video::stitcher::v1::VodConfig>>,
-              CreateVodConfig,
-              (google::cloud::video::stitcher::v1::CreateVodConfigRequest const&
-                   request),
-              (override));
+  CreateVodConfig,
+  (google::cloud::video::stitcher::v1::CreateVodConfigRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -521,50 +434,41 @@ class MockVideoStitcherServiceConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, CreateVodConfig(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateVodConfig,
-              (NoAwaitTag,
-               google::cloud::video::stitcher::v1::CreateVodConfigRequest const&
-                   request),
-              (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  CreateVodConfig, (NoAwaitTag,
+    google::cloud::video::stitcher::v1::CreateVodConfigRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateVodConfig(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, CreateVodConfig(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::video::stitcher::v1::VodConfig>>,
-              CreateVodConfig,
-              (google::longrunning::Operation const& operation), (override));
+  CreateVodConfig, (
+    google::longrunning::Operation const& operation), (override));
 
-  MOCK_METHOD(
-      (StreamRange<google::cloud::video::stitcher::v1::VodConfig>),
-      ListVodConfigs,
-      (google::cloud::video::stitcher::v1::ListVodConfigsRequest request),
-      (override));
+  MOCK_METHOD((StreamRange<google::cloud::video::stitcher::v1::VodConfig>),
+  ListVodConfigs,
+  (google::cloud::video::stitcher::v1::ListVodConfigsRequest request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::video::stitcher::v1::VodConfig>, GetVodConfig,
-      (google::cloud::video::stitcher::v1::GetVodConfigRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::video::stitcher::v1::VodConfig>,
+  GetVodConfig,
+  (google::cloud::video::stitcher::v1::GetVodConfigRequest const& request), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteVodConfig(Matcher<google::cloud::video::stitcher::v1::DeleteVodConfigRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteVodConfig(Matcher<google::cloud::video::stitcher::v1::DeleteVodConfigRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>,
-      DeleteVodConfig,
-      (google::cloud::video::stitcher::v1::DeleteVodConfigRequest const&
-           request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>,
+  DeleteVodConfig,
+  (google::cloud::video::stitcher::v1::DeleteVodConfigRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -572,39 +476,33 @@ class MockVideoStitcherServiceConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, DeleteVodConfig(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteVodConfig,
-              (NoAwaitTag,
-               google::cloud::video::stitcher::v1::DeleteVodConfigRequest const&
-                   request),
-              (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  DeleteVodConfig, (NoAwaitTag,
+    google::cloud::video::stitcher::v1::DeleteVodConfigRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteVodConfig(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteVodConfig(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>,
-      DeleteVodConfig, (google::longrunning::Operation const& operation),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>,
+  DeleteVodConfig, (
+    google::longrunning::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// UpdateVodConfig(Matcher<google::cloud::video::stitcher::v1::UpdateVodConfigRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, UpdateVodConfig(Matcher<google::cloud::video::stitcher::v1::UpdateVodConfigRequest const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::video::stitcher::v1::VodConfig>>,
-              UpdateVodConfig,
-              (google::cloud::video::stitcher::v1::UpdateVodConfigRequest const&
-                   request),
-              (override));
+  UpdateVodConfig,
+  (google::cloud::video::stitcher::v1::UpdateVodConfigRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -612,38 +510,37 @@ class MockVideoStitcherServiceConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, UpdateVodConfig(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, UpdateVodConfig,
-              (NoAwaitTag,
-               google::cloud::video::stitcher::v1::UpdateVodConfigRequest const&
-                   request),
-              (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  UpdateVodConfig, (NoAwaitTag,
+    google::cloud::video::stitcher::v1::UpdateVodConfigRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UpdateVodConfig(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, UpdateVodConfig(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::video::stitcher::v1::VodConfig>>,
-              UpdateVodConfig,
-              (google::longrunning::Operation const& operation), (override));
+  UpdateVodConfig, (
+    google::longrunning::Operation const& operation), (override));
 
-  MOCK_METHOD((StreamRange<google::longrunning::Operation>), ListOperations,
-              (google::longrunning::ListOperationsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::longrunning::Operation>),
+  ListOperations,
+  (google::longrunning::ListOperationsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
-              (google::longrunning::GetOperationRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  GetOperation,
+  (google::longrunning::GetOperationRequest const& request), (override));
 
-  MOCK_METHOD(Status, DeleteOperation,
-              (google::longrunning::DeleteOperationRequest const& request),
-              (override));
+  MOCK_METHOD(Status,
+  DeleteOperation,
+  (google::longrunning::DeleteOperationRequest const& request), (override));
 
-  MOCK_METHOD(Status, CancelOperation,
-              (google::longrunning::CancelOperationRequest const& request),
-              (override));
+  MOCK_METHOD(Status,
+  CancelOperation,
+  (google::longrunning::CancelOperationRequest const& request), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

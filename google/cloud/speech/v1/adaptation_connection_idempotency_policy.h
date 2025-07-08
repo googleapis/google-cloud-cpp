@@ -37,45 +37,45 @@ class AdaptationConnectionIdempotencyPolicy {
   /// Create a new copy of this object.
   virtual std::unique_ptr<AdaptationConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency CreatePhraseSet(
-      google::cloud::speech::v1::CreatePhraseSetRequest const& request);
+  virtual google::cloud::Idempotency
+  CreatePhraseSet(google::cloud::speech::v1::CreatePhraseSetRequest const& request);
 
-  virtual google::cloud::Idempotency GetPhraseSet(
-      google::cloud::speech::v1::GetPhraseSetRequest const& request);
+  virtual google::cloud::Idempotency
+  GetPhraseSet(google::cloud::speech::v1::GetPhraseSetRequest const& request);
 
-  virtual google::cloud::Idempotency ListPhraseSet(
-      google::cloud::speech::v1::ListPhraseSetRequest request);
+  virtual google::cloud::Idempotency
+  ListPhraseSet(google::cloud::speech::v1::ListPhraseSetRequest request);
 
-  virtual google::cloud::Idempotency UpdatePhraseSet(
-      google::cloud::speech::v1::UpdatePhraseSetRequest const& request);
+  virtual google::cloud::Idempotency
+  UpdatePhraseSet(google::cloud::speech::v1::UpdatePhraseSetRequest const& request);
 
-  virtual google::cloud::Idempotency DeletePhraseSet(
-      google::cloud::speech::v1::DeletePhraseSetRequest const& request);
+  virtual google::cloud::Idempotency
+  DeletePhraseSet(google::cloud::speech::v1::DeletePhraseSetRequest const& request);
 
-  virtual google::cloud::Idempotency CreateCustomClass(
-      google::cloud::speech::v1::CreateCustomClassRequest const& request);
+  virtual google::cloud::Idempotency
+  CreateCustomClass(google::cloud::speech::v1::CreateCustomClassRequest const& request);
 
-  virtual google::cloud::Idempotency GetCustomClass(
-      google::cloud::speech::v1::GetCustomClassRequest const& request);
+  virtual google::cloud::Idempotency
+  GetCustomClass(google::cloud::speech::v1::GetCustomClassRequest const& request);
 
-  virtual google::cloud::Idempotency ListCustomClasses(
-      google::cloud::speech::v1::ListCustomClassesRequest request);
+  virtual google::cloud::Idempotency
+  ListCustomClasses(google::cloud::speech::v1::ListCustomClassesRequest request);
 
-  virtual google::cloud::Idempotency UpdateCustomClass(
-      google::cloud::speech::v1::UpdateCustomClassRequest const& request);
+  virtual google::cloud::Idempotency
+  UpdateCustomClass(google::cloud::speech::v1::UpdateCustomClassRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteCustomClass(
-      google::cloud::speech::v1::DeleteCustomClassRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteCustomClass(google::cloud::speech::v1::DeleteCustomClassRequest const& request);
 
-  virtual google::cloud::Idempotency ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual google::cloud::Idempotency
+  ListOperations(google::longrunning::ListOperationsRequest request);
 
-  virtual google::cloud::Idempotency GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 };
 
 std::unique_ptr<AdaptationConnectionIdempotencyPolicy>
-MakeDefaultAdaptationConnectionIdempotencyPolicy();
+    MakeDefaultAdaptationConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace speech_v1

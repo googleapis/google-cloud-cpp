@@ -19,14 +19,14 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_INTERNAL_SQL_USERS_REST_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_INTERNAL_SQL_USERS_REST_CONNECTION_IMPL_H
 
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/options.h"
 #include "google/cloud/sql/v1/internal/sql_users_rest_stub.h"
 #include "google/cloud/sql/v1/internal/sql_users_retry_traits.h"
 #include "google/cloud/sql/v1/sql_users_connection.h"
 #include "google/cloud/sql/v1/sql_users_connection_idempotency_policy.h"
 #include "google/cloud/sql/v1/sql_users_options.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -42,30 +42,30 @@ class SqlUsersServiceRestConnectionImpl
   ~SqlUsersServiceRestConnectionImpl() override = default;
 
   SqlUsersServiceRestConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<sql_v1_internal::SqlUsersServiceRestStub> stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<sql_v1_internal::SqlUsersServiceRestStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
-  StatusOr<google::cloud::sql::v1::Operation> Delete(
-      google::cloud::sql::v1::SqlUsersDeleteRequest const& request) override;
+  StatusOr<google::cloud::sql::v1::Operation>
+  Delete(google::cloud::sql::v1::SqlUsersDeleteRequest const& request) override;
 
-  StatusOr<google::cloud::sql::v1::User> Get(
-      google::cloud::sql::v1::SqlUsersGetRequest const& request) override;
+  StatusOr<google::cloud::sql::v1::User>
+  Get(google::cloud::sql::v1::SqlUsersGetRequest const& request) override;
 
-  StatusOr<google::cloud::sql::v1::Operation> Insert(
-      google::cloud::sql::v1::SqlUsersInsertRequest const& request) override;
+  StatusOr<google::cloud::sql::v1::Operation>
+  Insert(google::cloud::sql::v1::SqlUsersInsertRequest const& request) override;
 
-  StatusOr<google::cloud::sql::v1::UsersListResponse> List(
-      google::cloud::sql::v1::SqlUsersListRequest const& request) override;
+  StatusOr<google::cloud::sql::v1::UsersListResponse>
+  List(google::cloud::sql::v1::SqlUsersListRequest const& request) override;
 
-  StatusOr<google::cloud::sql::v1::Operation> Update(
-      google::cloud::sql::v1::SqlUsersUpdateRequest const& request) override;
+  StatusOr<google::cloud::sql::v1::Operation>
+  Update(google::cloud::sql::v1::SqlUsersUpdateRequest const& request) override;
 
  private:
-  static std::unique_ptr<sql_v1::SqlUsersServiceRetryPolicy> retry_policy(
-      Options const& options) {
+  static std::unique_ptr<sql_v1::SqlUsersServiceRetryPolicy>
+  retry_policy(Options const& options) {
     return options.get<sql_v1::SqlUsersServiceRetryPolicyOption>()->clone();
   }
 
@@ -75,9 +75,7 @@ class SqlUsersServiceRestConnectionImpl
 
   static std::unique_ptr<sql_v1::SqlUsersServiceConnectionIdempotencyPolicy>
   idempotency_policy(Options const& options) {
-    return options
-        .get<sql_v1::SqlUsersServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
+    return options.get<sql_v1::SqlUsersServiceConnectionIdempotencyPolicyOption>()->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

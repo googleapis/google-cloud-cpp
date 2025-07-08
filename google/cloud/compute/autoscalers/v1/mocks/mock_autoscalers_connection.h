@@ -42,34 +42,25 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockAutoscalersConnection
-    : public compute_autoscalers_v1::AutoscalersConnection {
+class MockAutoscalersConnection : public compute_autoscalers_v1::AutoscalersConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(
-      (StreamRange<
-          std::pair<std::string,
-                    google::cloud::cpp::compute::v1::AutoscalersScopedList>>),
-      AggregatedListAutoscalers,
-      (google::cloud::cpp::compute::autoscalers::v1::
-           AggregatedListAutoscalersRequest request),
-      (override));
+  MOCK_METHOD((StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::AutoscalersScopedList>>),
+  AggregatedListAutoscalers,
+  (google::cloud::cpp::compute::autoscalers::v1::AggregatedListAutoscalersRequest request), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteAutoscaler(Matcher<google::cloud::cpp::compute::autoscalers::v1::DeleteAutoscalerRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteAutoscaler(Matcher<google::cloud::cpp::compute::autoscalers::v1::DeleteAutoscalerRequest const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              DeleteAutoscaler,
-              (google::cloud::cpp::compute::autoscalers::v1::
-                   DeleteAutoscalerRequest const& request),
-              (override));
+  DeleteAutoscaler,
+  (google::cloud::cpp::compute::autoscalers::v1::DeleteAutoscalerRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -78,45 +69,36 @@ class MockAutoscalersConnection
   /// EXPECT_CALL(*mock, DeleteAutoscaler(_, _))
   /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-              DeleteAutoscaler,
-              (NoAwaitTag, google::cloud::cpp::compute::autoscalers::v1::
-                               DeleteAutoscalerRequest const& request),
-              (override));
+  DeleteAutoscaler, (NoAwaitTag,
+    google::cloud::cpp::compute::autoscalers::v1::DeleteAutoscalerRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteAutoscaler(Matcher<google::cloud::cpp::compute::v1::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteAutoscaler(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              DeleteAutoscaler,
-              (google::cloud::cpp::compute::v1::Operation const& operation),
-              (override));
+  DeleteAutoscaler, (
+    google::cloud::cpp::compute::v1::Operation const& operation), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::Autoscaler>, GetAutoscaler,
-      (google::cloud::cpp::compute::autoscalers::v1::GetAutoscalerRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Autoscaler>,
+  GetAutoscaler,
+  (google::cloud::cpp::compute::autoscalers::v1::GetAutoscalerRequest const& request), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// InsertAutoscaler(Matcher<google::cloud::cpp::compute::autoscalers::v1::InsertAutoscalerRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, InsertAutoscaler(Matcher<google::cloud::cpp::compute::autoscalers::v1::InsertAutoscalerRequest const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              InsertAutoscaler,
-              (google::cloud::cpp::compute::autoscalers::v1::
-                   InsertAutoscalerRequest const& request),
-              (override));
+  InsertAutoscaler,
+  (google::cloud::cpp::compute::autoscalers::v1::InsertAutoscalerRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -125,46 +107,36 @@ class MockAutoscalersConnection
   /// EXPECT_CALL(*mock, InsertAutoscaler(_, _))
   /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-              InsertAutoscaler,
-              (NoAwaitTag, google::cloud::cpp::compute::autoscalers::v1::
-                               InsertAutoscalerRequest const& request),
-              (override));
+  InsertAutoscaler, (NoAwaitTag,
+    google::cloud::cpp::compute::autoscalers::v1::InsertAutoscalerRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// InsertAutoscaler(Matcher<google::cloud::cpp::compute::v1::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, InsertAutoscaler(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              InsertAutoscaler,
-              (google::cloud::cpp::compute::v1::Operation const& operation),
-              (override));
+  InsertAutoscaler, (
+    google::cloud::cpp::compute::v1::Operation const& operation), (override));
 
-  MOCK_METHOD(
-      (StreamRange<google::cloud::cpp::compute::v1::Autoscaler>),
-      ListAutoscalers,
-      (google::cloud::cpp::compute::autoscalers::v1::ListAutoscalersRequest
-           request),
-      (override));
+  MOCK_METHOD((StreamRange<google::cloud::cpp::compute::v1::Autoscaler>),
+  ListAutoscalers,
+  (google::cloud::cpp::compute::autoscalers::v1::ListAutoscalersRequest request), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// PatchAutoscaler(Matcher<google::cloud::cpp::compute::autoscalers::v1::PatchAutoscalerRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, PatchAutoscaler(Matcher<google::cloud::cpp::compute::autoscalers::v1::PatchAutoscalerRequest const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              PatchAutoscaler,
-              (google::cloud::cpp::compute::autoscalers::v1::
-                   PatchAutoscalerRequest const& request),
-              (override));
+  PatchAutoscaler,
+  (google::cloud::cpp::compute::autoscalers::v1::PatchAutoscalerRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -173,39 +145,32 @@ class MockAutoscalersConnection
   /// EXPECT_CALL(*mock, PatchAutoscaler(_, _))
   /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-              PatchAutoscaler,
-              (NoAwaitTag, google::cloud::cpp::compute::autoscalers::v1::
-                               PatchAutoscalerRequest const& request),
-              (override));
+  PatchAutoscaler, (NoAwaitTag,
+    google::cloud::cpp::compute::autoscalers::v1::PatchAutoscalerRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// PatchAutoscaler(Matcher<google::cloud::cpp::compute::v1::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, PatchAutoscaler(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              PatchAutoscaler,
-              (google::cloud::cpp::compute::v1::Operation const& operation),
-              (override));
+  PatchAutoscaler, (
+    google::cloud::cpp::compute::v1::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// UpdateAutoscaler(Matcher<google::cloud::cpp::compute::autoscalers::v1::UpdateAutoscalerRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, UpdateAutoscaler(Matcher<google::cloud::cpp::compute::autoscalers::v1::UpdateAutoscalerRequest const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              UpdateAutoscaler,
-              (google::cloud::cpp::compute::autoscalers::v1::
-                   UpdateAutoscalerRequest const& request),
-              (override));
+  UpdateAutoscaler,
+  (google::cloud::cpp::compute::autoscalers::v1::UpdateAutoscalerRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -214,24 +179,20 @@ class MockAutoscalersConnection
   /// EXPECT_CALL(*mock, UpdateAutoscaler(_, _))
   /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-              UpdateAutoscaler,
-              (NoAwaitTag, google::cloud::cpp::compute::autoscalers::v1::
-                               UpdateAutoscalerRequest const& request),
-              (override));
+  UpdateAutoscaler, (NoAwaitTag,
+    google::cloud::cpp::compute::autoscalers::v1::UpdateAutoscalerRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// UpdateAutoscaler(Matcher<google::cloud::cpp::compute::v1::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, UpdateAutoscaler(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              UpdateAutoscaler,
-              (google::cloud::cpp::compute::v1::Operation const& operation),
-              (override));
+  UpdateAutoscaler, (
+    google::cloud::cpp::compute::v1::Operation const& operation), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

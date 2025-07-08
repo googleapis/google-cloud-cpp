@@ -26,61 +26,51 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-SessionsConnectionIdempotencyPolicy::~SessionsConnectionIdempotencyPolicy() =
-    default;
+SessionsConnectionIdempotencyPolicy::~SessionsConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<SessionsConnectionIdempotencyPolicy>
 SessionsConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<SessionsConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency SessionsConnectionIdempotencyPolicy::DetectIntent(
-    google::cloud::dialogflow::cx::v3::DetectIntentRequest const&) {
+Idempotency SessionsConnectionIdempotencyPolicy::DetectIntent(google::cloud::dialogflow::cx::v3::DetectIntentRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SessionsConnectionIdempotencyPolicy::MatchIntent(
-    google::cloud::dialogflow::cx::v3::MatchIntentRequest const&) {
+Idempotency SessionsConnectionIdempotencyPolicy::MatchIntent(google::cloud::dialogflow::cx::v3::MatchIntentRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SessionsConnectionIdempotencyPolicy::FulfillIntent(
-    google::cloud::dialogflow::cx::v3::FulfillIntentRequest const&) {
+Idempotency SessionsConnectionIdempotencyPolicy::FulfillIntent(google::cloud::dialogflow::cx::v3::FulfillIntentRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SessionsConnectionIdempotencyPolicy::SubmitAnswerFeedback(
-    google::cloud::dialogflow::cx::v3::SubmitAnswerFeedbackRequest const&) {
+Idempotency SessionsConnectionIdempotencyPolicy::SubmitAnswerFeedback(google::cloud::dialogflow::cx::v3::SubmitAnswerFeedbackRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SessionsConnectionIdempotencyPolicy::ListLocations(
-    google::cloud::location::ListLocationsRequest) {  // NOLINT
+Idempotency SessionsConnectionIdempotencyPolicy::ListLocations(google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency SessionsConnectionIdempotencyPolicy::GetLocation(
-    google::cloud::location::GetLocationRequest const&) {
+Idempotency SessionsConnectionIdempotencyPolicy::GetLocation(google::cloud::location::GetLocationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency SessionsConnectionIdempotencyPolicy::ListOperations(
-    google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency SessionsConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency SessionsConnectionIdempotencyPolicy::GetOperation(
-    google::longrunning::GetOperationRequest const&) {
+Idempotency SessionsConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency SessionsConnectionIdempotencyPolicy::CancelOperation(
-    google::longrunning::CancelOperationRequest const&) {
+Idempotency SessionsConnectionIdempotencyPolicy::CancelOperation(google::longrunning::CancelOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<SessionsConnectionIdempotencyPolicy>
-MakeDefaultSessionsConnectionIdempotencyPolicy() {
+    MakeDefaultSessionsConnectionIdempotencyPolicy() {
   return std::make_unique<SessionsConnectionIdempotencyPolicy>();
 }
 

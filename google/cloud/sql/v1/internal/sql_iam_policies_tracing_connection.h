@@ -36,7 +36,7 @@ class SqlIamPoliciesServiceTracingConnection
   ~SqlIamPoliciesServiceTracingConnection() override = default;
 
   explicit SqlIamPoliciesServiceTracingConnection(
-      std::shared_ptr<sql_v1::SqlIamPoliciesServiceConnection> child);
+    std::shared_ptr<sql_v1::SqlIamPoliciesServiceConnection> child);
 
   Options options() override { return child_->options(); }
 

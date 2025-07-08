@@ -30,27 +30,35 @@ namespace cloud {
 namespace iam_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-PoliciesLogging::PoliciesLogging(std::shared_ptr<PoliciesStub> child,
-                                 TracingOptions tracing_options,
-                                 std::set<std::string> const&)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
+PoliciesLogging::PoliciesLogging(
+    std::shared_ptr<PoliciesStub> child,
+    TracingOptions tracing_options,
+    std::set<std::string> const&)
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)) {}
 
-StatusOr<google::iam::v2::ListPoliciesResponse> PoliciesLogging::ListPolicies(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::iam::v2::ListPoliciesResponse>
+PoliciesLogging::ListPolicies(
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v2::ListPoliciesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::iam::v2::ListPoliciesRequest const& request) {
         return child_->ListPolicies(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::iam::v2::Policy> PoliciesLogging::GetPolicy(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::iam::v2::Policy>
+PoliciesLogging::GetPolicy(
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v2::GetPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::iam::v2::GetPolicyRequest const& request) {
         return child_->GetPolicy(context, options, request);
       },
@@ -59,27 +67,30 @@ StatusOr<google::iam::v2::Policy> PoliciesLogging::GetPolicy(
 
 future<StatusOr<google::longrunning::Operation>>
 PoliciesLogging::AsyncCreatePolicy(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::iam::v2::CreatePolicyRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::iam::v2::CreatePolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::iam::v2::CreatePolicyRequest const& request) {
-        return child_->AsyncCreatePolicy(cq, std::move(context),
-                                         std::move(options), request);
+        return child_->AsyncCreatePolicy(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> PoliciesLogging::CreatePolicy(
-    grpc::ClientContext& context, Options options,
-    google::iam::v2::CreatePolicyRequest const& request) {
+StatusOr<google::longrunning::Operation>
+PoliciesLogging::CreatePolicy(
+      grpc::ClientContext& context,
+      Options options,
+      google::iam::v2::CreatePolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::iam::v2::CreatePolicyRequest const& request) {
         return child_->CreatePolicy(context, options, request);
       },
@@ -88,27 +99,30 @@ StatusOr<google::longrunning::Operation> PoliciesLogging::CreatePolicy(
 
 future<StatusOr<google::longrunning::Operation>>
 PoliciesLogging::AsyncUpdatePolicy(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::iam::v2::UpdatePolicyRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::iam::v2::UpdatePolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::iam::v2::UpdatePolicyRequest const& request) {
-        return child_->AsyncUpdatePolicy(cq, std::move(context),
-                                         std::move(options), request);
+        return child_->AsyncUpdatePolicy(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> PoliciesLogging::UpdatePolicy(
-    grpc::ClientContext& context, Options options,
-    google::iam::v2::UpdatePolicyRequest const& request) {
+StatusOr<google::longrunning::Operation>
+PoliciesLogging::UpdatePolicy(
+      grpc::ClientContext& context,
+      Options options,
+      google::iam::v2::UpdatePolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::iam::v2::UpdatePolicyRequest const& request) {
         return child_->UpdatePolicy(context, options, request);
       },
@@ -117,38 +131,44 @@ StatusOr<google::longrunning::Operation> PoliciesLogging::UpdatePolicy(
 
 future<StatusOr<google::longrunning::Operation>>
 PoliciesLogging::AsyncDeletePolicy(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::iam::v2::DeletePolicyRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::iam::v2::DeletePolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::iam::v2::DeletePolicyRequest const& request) {
-        return child_->AsyncDeletePolicy(cq, std::move(context),
-                                         std::move(options), request);
+        return child_->AsyncDeletePolicy(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> PoliciesLogging::DeletePolicy(
-    grpc::ClientContext& context, Options options,
-    google::iam::v2::DeletePolicyRequest const& request) {
+StatusOr<google::longrunning::Operation>
+PoliciesLogging::DeletePolicy(
+      grpc::ClientContext& context,
+      Options options,
+      google::iam::v2::DeletePolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::iam::v2::DeletePolicyRequest const& request) {
         return child_->DeletePolicy(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> PoliciesLogging::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::Operation>
+PoliciesLogging::GetOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::GetOperationRequest const& request) {
         return child_->GetOperation(context, options, request);
       },
@@ -166,8 +186,8 @@ PoliciesLogging::AsyncGetOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(cq, std::move(context),
-                                         std::move(options), request);
+        return child_->AsyncGetOperation(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -183,8 +203,8 @@ future<Status> PoliciesLogging::AsyncCancelOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::CancelOperationRequest const& request) {
-        return child_->AsyncCancelOperation(cq, std::move(context),
-                                            std::move(options), request);
+        return child_->AsyncCancelOperation(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);

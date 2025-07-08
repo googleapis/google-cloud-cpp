@@ -28,28 +28,19 @@ namespace cloud {
 namespace datamigration {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use datamigration_v1::DataMigrationServicePollingPolicyOption
-/// directly.
-using ::google::cloud::datamigration_v1::
-    DataMigrationServicePollingPolicyOption;
+/// @deprecated Use datamigration_v1::DataMigrationServicePollingPolicyOption directly.
+using ::google::cloud::datamigration_v1::DataMigrationServicePollingPolicyOption;
 
-/// @deprecated Use datamigration_v1::DataMigrationServiceBackoffPolicyOption
-/// directly.
-using ::google::cloud::datamigration_v1::
-    DataMigrationServiceBackoffPolicyOption;
+/// @deprecated Use datamigration_v1::DataMigrationServiceBackoffPolicyOption directly.
+using ::google::cloud::datamigration_v1::DataMigrationServiceBackoffPolicyOption;
 
-/// @deprecated Use
-/// datamigration_v1::DataMigrationServiceConnectionIdempotencyPolicyOption
-/// directly.
-using ::google::cloud::datamigration_v1::
-    DataMigrationServiceConnectionIdempotencyPolicyOption;
+/// @deprecated Use datamigration_v1::DataMigrationServiceConnectionIdempotencyPolicyOption directly.
+using ::google::cloud::datamigration_v1::DataMigrationServiceConnectionIdempotencyPolicyOption;
 
-/// @deprecated Use datamigration_v1::DataMigrationServicePolicyOptionList
-/// directly.
+/// @deprecated Use datamigration_v1::DataMigrationServicePolicyOptionList directly.
 using ::google::cloud::datamigration_v1::DataMigrationServicePolicyOptionList;
 
-/// @deprecated Use datamigration_v1::DataMigrationServiceRetryPolicyOption
-/// directly.
+/// @deprecated Use datamigration_v1::DataMigrationServiceRetryPolicyOption directly.
 using ::google::cloud::datamigration_v1::DataMigrationServiceRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

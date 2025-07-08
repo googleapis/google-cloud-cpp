@@ -36,22 +36,18 @@ class BigQueryReadTracingConnection
   ~BigQueryReadTracingConnection() override = default;
 
   explicit BigQueryReadTracingConnection(
-      std::shared_ptr<bigquery_storage_v1::BigQueryReadConnection> child);
+    std::shared_ptr<bigquery_storage_v1::BigQueryReadConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::bigquery::storage::v1::ReadSession> CreateReadSession(
-      google::cloud::bigquery::storage::v1::CreateReadSessionRequest const&
-          request) override;
+  StatusOr<google::cloud::bigquery::storage::v1::ReadSession>
+  CreateReadSession(google::cloud::bigquery::storage::v1::CreateReadSessionRequest const& request) override;
 
-  StreamRange<google::cloud::bigquery::storage::v1::ReadRowsResponse> ReadRows(
-      google::cloud::bigquery::storage::v1::ReadRowsRequest const& request)
-      override;
+  StreamRange<google::cloud::bigquery::storage::v1::ReadRowsResponse>
+  ReadRows(google::cloud::bigquery::storage::v1::ReadRowsRequest const& request) override;
 
   StatusOr<google::cloud::bigquery::storage::v1::SplitReadStreamResponse>
-  SplitReadStream(
-      google::cloud::bigquery::storage::v1::SplitReadStreamRequest const&
-          request) override;
+  SplitReadStream(google::cloud::bigquery::storage::v1::SplitReadStreamRequest const& request) override;
 
  private:
   std::shared_ptr<bigquery_storage_v1::BigQueryReadConnection> child_;
@@ -70,7 +66,7 @@ MakeBigQueryReadTracingConnection(
     std::shared_ptr<bigquery_storage_v1::BigQueryReadConnection> conn);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS;  // NOLINT(misc-unused-alias-decls)
+namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS; // NOLINT(misc-unused-alias-decls)
 }  // namespace bigquery_storage_v1_internal
 }  // namespace cloud
 }  // namespace google

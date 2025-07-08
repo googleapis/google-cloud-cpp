@@ -40,27 +40,33 @@ class AlertPolicyServiceMetadata : public AlertPolicyServiceStub {
       std::string api_client_header = "");
 
   StatusOr<google::monitoring::v3::ListAlertPoliciesResponse> ListAlertPolicies(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::monitoring::v3::ListAlertPoliciesRequest const& request) override;
 
   StatusOr<google::monitoring::v3::AlertPolicy> GetAlertPolicy(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::monitoring::v3::GetAlertPolicyRequest const& request) override;
 
   StatusOr<google::monitoring::v3::AlertPolicy> CreateAlertPolicy(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::monitoring::v3::CreateAlertPolicyRequest const& request) override;
 
   Status DeleteAlertPolicy(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::monitoring::v3::DeleteAlertPolicyRequest const& request) override;
 
   StatusOr<google::monitoring::v3::AlertPolicy> UpdateAlertPolicy(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::monitoring::v3::UpdateAlertPolicyRequest const& request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context, Options const& options,
+  void SetMetadata(grpc::ClientContext& context,
+                   Options const& options,
                    std::string const& request_params);
   void SetMetadata(grpc::ClientContext& context, Options const& options);
 

@@ -28,8 +28,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ServiceHealthClient::ServiceHealthClient(
     std::shared_ptr<ServiceHealthConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 ServiceHealthClient::~ServiceHealthClient() = default;
 
 StreamRange<google::cloud::servicehealth::v1::Event>
@@ -41,30 +41,27 @@ ServiceHealthClient::ListEvents(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::servicehealth::v1::Event>
-ServiceHealthClient::ListEvents(
-    google::cloud::servicehealth::v1::ListEventsRequest request, Options opts) {
+ServiceHealthClient::ListEvents(google::cloud::servicehealth::v1::ListEventsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListEvents(std::move(request));
 }
 
-StatusOr<google::cloud::servicehealth::v1::Event> ServiceHealthClient::GetEvent(
-    std::string const& name, Options opts) {
+StatusOr<google::cloud::servicehealth::v1::Event>
+ServiceHealthClient::GetEvent(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::servicehealth::v1::GetEventRequest request;
   request.set_name(name);
   return connection_->GetEvent(request);
 }
 
-StatusOr<google::cloud::servicehealth::v1::Event> ServiceHealthClient::GetEvent(
-    google::cloud::servicehealth::v1::GetEventRequest const& request,
-    Options opts) {
+StatusOr<google::cloud::servicehealth::v1::Event>
+ServiceHealthClient::GetEvent(google::cloud::servicehealth::v1::GetEventRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetEvent(request);
 }
 
 StreamRange<google::cloud::servicehealth::v1::OrganizationEvent>
-ServiceHealthClient::ListOrganizationEvents(std::string const& parent,
-                                            Options opts) {
+ServiceHealthClient::ListOrganizationEvents(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::servicehealth::v1::ListOrganizationEventsRequest request;
   request.set_parent(parent);
@@ -72,16 +69,13 @@ ServiceHealthClient::ListOrganizationEvents(std::string const& parent,
 }
 
 StreamRange<google::cloud::servicehealth::v1::OrganizationEvent>
-ServiceHealthClient::ListOrganizationEvents(
-    google::cloud::servicehealth::v1::ListOrganizationEventsRequest request,
-    Options opts) {
+ServiceHealthClient::ListOrganizationEvents(google::cloud::servicehealth::v1::ListOrganizationEventsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOrganizationEvents(std::move(request));
 }
 
 StatusOr<google::cloud::servicehealth::v1::OrganizationEvent>
-ServiceHealthClient::GetOrganizationEvent(std::string const& name,
-                                          Options opts) {
+ServiceHealthClient::GetOrganizationEvent(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::servicehealth::v1::GetOrganizationEventRequest request;
   request.set_name(name);
@@ -89,17 +83,13 @@ ServiceHealthClient::GetOrganizationEvent(std::string const& name,
 }
 
 StatusOr<google::cloud::servicehealth::v1::OrganizationEvent>
-ServiceHealthClient::GetOrganizationEvent(
-    google::cloud::servicehealth::v1::GetOrganizationEventRequest const&
-        request,
-    Options opts) {
+ServiceHealthClient::GetOrganizationEvent(google::cloud::servicehealth::v1::GetOrganizationEventRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOrganizationEvent(request);
 }
 
 StreamRange<google::cloud::servicehealth::v1::OrganizationImpact>
-ServiceHealthClient::ListOrganizationImpacts(std::string const& parent,
-                                             Options opts) {
+ServiceHealthClient::ListOrganizationImpacts(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::servicehealth::v1::ListOrganizationImpactsRequest request;
   request.set_parent(parent);
@@ -107,16 +97,13 @@ ServiceHealthClient::ListOrganizationImpacts(std::string const& parent,
 }
 
 StreamRange<google::cloud::servicehealth::v1::OrganizationImpact>
-ServiceHealthClient::ListOrganizationImpacts(
-    google::cloud::servicehealth::v1::ListOrganizationImpactsRequest request,
-    Options opts) {
+ServiceHealthClient::ListOrganizationImpacts(google::cloud::servicehealth::v1::ListOrganizationImpactsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOrganizationImpacts(std::move(request));
 }
 
 StatusOr<google::cloud::servicehealth::v1::OrganizationImpact>
-ServiceHealthClient::GetOrganizationImpact(std::string const& name,
-                                           Options opts) {
+ServiceHealthClient::GetOrganizationImpact(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::servicehealth::v1::GetOrganizationImpactRequest request;
   request.set_name(name);
@@ -124,23 +111,19 @@ ServiceHealthClient::GetOrganizationImpact(std::string const& name,
 }
 
 StatusOr<google::cloud::servicehealth::v1::OrganizationImpact>
-ServiceHealthClient::GetOrganizationImpact(
-    google::cloud::servicehealth::v1::GetOrganizationImpactRequest const&
-        request,
-    Options opts) {
+ServiceHealthClient::GetOrganizationImpact(google::cloud::servicehealth::v1::GetOrganizationImpactRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOrganizationImpact(request);
 }
 
 StreamRange<google::cloud::location::Location>
-ServiceHealthClient::ListLocations(
-    google::cloud::location::ListLocationsRequest request, Options opts) {
+ServiceHealthClient::ListLocations(google::cloud::location::ListLocationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListLocations(std::move(request));
 }
 
-StatusOr<google::cloud::location::Location> ServiceHealthClient::GetLocation(
-    google::cloud::location::GetLocationRequest const& request, Options opts) {
+StatusOr<google::cloud::location::Location>
+ServiceHealthClient::GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetLocation(request);
 }

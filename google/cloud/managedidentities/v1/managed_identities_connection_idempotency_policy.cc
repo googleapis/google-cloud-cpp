@@ -26,73 +26,56 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-ManagedIdentitiesServiceConnectionIdempotencyPolicy::
-    ~ManagedIdentitiesServiceConnectionIdempotencyPolicy() = default;
+ManagedIdentitiesServiceConnectionIdempotencyPolicy::~ManagedIdentitiesServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<ManagedIdentitiesServiceConnectionIdempotencyPolicy>
 ManagedIdentitiesServiceConnectionIdempotencyPolicy::clone() const {
-  return std::make_unique<ManagedIdentitiesServiceConnectionIdempotencyPolicy>(
-      *this);
+  return std::make_unique<ManagedIdentitiesServiceConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency
-ManagedIdentitiesServiceConnectionIdempotencyPolicy::CreateMicrosoftAdDomain(
-    google::cloud::managedidentities::v1::
-        CreateMicrosoftAdDomainRequest const&) {
+Idempotency ManagedIdentitiesServiceConnectionIdempotencyPolicy::CreateMicrosoftAdDomain(google::cloud::managedidentities::v1::CreateMicrosoftAdDomainRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency
-ManagedIdentitiesServiceConnectionIdempotencyPolicy::ResetAdminPassword(
-    google::cloud::managedidentities::v1::ResetAdminPasswordRequest const&) {
+Idempotency ManagedIdentitiesServiceConnectionIdempotencyPolicy::ResetAdminPassword(google::cloud::managedidentities::v1::ResetAdminPasswordRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ManagedIdentitiesServiceConnectionIdempotencyPolicy::ListDomains(
-    google::cloud::managedidentities::v1::ListDomainsRequest) {  // NOLINT
+Idempotency ManagedIdentitiesServiceConnectionIdempotencyPolicy::ListDomains(google::cloud::managedidentities::v1::ListDomainsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency ManagedIdentitiesServiceConnectionIdempotencyPolicy::GetDomain(
-    google::cloud::managedidentities::v1::GetDomainRequest const&) {
+Idempotency ManagedIdentitiesServiceConnectionIdempotencyPolicy::GetDomain(google::cloud::managedidentities::v1::GetDomainRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ManagedIdentitiesServiceConnectionIdempotencyPolicy::UpdateDomain(
-    google::cloud::managedidentities::v1::UpdateDomainRequest const&) {
+Idempotency ManagedIdentitiesServiceConnectionIdempotencyPolicy::UpdateDomain(google::cloud::managedidentities::v1::UpdateDomainRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ManagedIdentitiesServiceConnectionIdempotencyPolicy::DeleteDomain(
-    google::cloud::managedidentities::v1::DeleteDomainRequest const&) {
+Idempotency ManagedIdentitiesServiceConnectionIdempotencyPolicy::DeleteDomain(google::cloud::managedidentities::v1::DeleteDomainRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ManagedIdentitiesServiceConnectionIdempotencyPolicy::AttachTrust(
-    google::cloud::managedidentities::v1::AttachTrustRequest const&) {
+Idempotency ManagedIdentitiesServiceConnectionIdempotencyPolicy::AttachTrust(google::cloud::managedidentities::v1::AttachTrustRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency
-ManagedIdentitiesServiceConnectionIdempotencyPolicy::ReconfigureTrust(
-    google::cloud::managedidentities::v1::ReconfigureTrustRequest const&) {
+Idempotency ManagedIdentitiesServiceConnectionIdempotencyPolicy::ReconfigureTrust(google::cloud::managedidentities::v1::ReconfigureTrustRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ManagedIdentitiesServiceConnectionIdempotencyPolicy::DetachTrust(
-    google::cloud::managedidentities::v1::DetachTrustRequest const&) {
+Idempotency ManagedIdentitiesServiceConnectionIdempotencyPolicy::DetachTrust(google::cloud::managedidentities::v1::DetachTrustRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ManagedIdentitiesServiceConnectionIdempotencyPolicy::ValidateTrust(
-    google::cloud::managedidentities::v1::ValidateTrustRequest const&) {
+Idempotency ManagedIdentitiesServiceConnectionIdempotencyPolicy::ValidateTrust(google::cloud::managedidentities::v1::ValidateTrustRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<ManagedIdentitiesServiceConnectionIdempotencyPolicy>
-MakeDefaultManagedIdentitiesServiceConnectionIdempotencyPolicy() {
-  return std::make_unique<
-      ManagedIdentitiesServiceConnectionIdempotencyPolicy>();
+    MakeDefaultManagedIdentitiesServiceConnectionIdempotencyPolicy() {
+  return std::make_unique<ManagedIdentitiesServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

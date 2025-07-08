@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_ES_KNOWLEDGE_BASES_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_ES_KNOWLEDGE_BASES_CONNECTION_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/dialogflow_es/internal/knowledge_bases_retry_traits.h"
 #include "google/cloud/dialogflow_es/knowledge_bases_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -53,8 +53,7 @@ class KnowledgeBasesRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class KnowledgeBasesLimitedErrorCountRetryPolicy
-    : public KnowledgeBasesRetryPolicy {
+class KnowledgeBasesLimitedErrorCountRetryPolicy : public KnowledgeBasesRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -64,14 +63,14 @@ class KnowledgeBasesLimitedErrorCountRetryPolicy
    *     @p maximum_failures == 0.
    */
   explicit KnowledgeBasesLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   KnowledgeBasesLimitedErrorCountRetryPolicy(
       KnowledgeBasesLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : KnowledgeBasesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : KnowledgeBasesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   KnowledgeBasesLimitedErrorCountRetryPolicy(
       KnowledgeBasesLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : KnowledgeBasesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : KnowledgeBasesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -91,9 +90,7 @@ class KnowledgeBasesLimitedErrorCountRetryPolicy
   using BaseType = KnowledgeBasesRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      dialogflow_es_internal::KnowledgeBasesRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<dialogflow_es_internal::KnowledgeBasesRetryTraits> impl_;
 };
 
 /**
@@ -131,14 +128,12 @@ class KnowledgeBasesLimitedTimeRetryPolicy : public KnowledgeBasesRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit KnowledgeBasesLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  KnowledgeBasesLimitedTimeRetryPolicy(
-      KnowledgeBasesLimitedTimeRetryPolicy&& rhs) noexcept
-      : KnowledgeBasesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  KnowledgeBasesLimitedTimeRetryPolicy(
-      KnowledgeBasesLimitedTimeRetryPolicy const& rhs) noexcept
-      : KnowledgeBasesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  KnowledgeBasesLimitedTimeRetryPolicy(KnowledgeBasesLimitedTimeRetryPolicy&& rhs) noexcept
+    : KnowledgeBasesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  KnowledgeBasesLimitedTimeRetryPolicy(KnowledgeBasesLimitedTimeRetryPolicy const& rhs) noexcept
+    : KnowledgeBasesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -160,9 +155,7 @@ class KnowledgeBasesLimitedTimeRetryPolicy : public KnowledgeBasesRetryPolicy {
   using BaseType = KnowledgeBasesRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      dialogflow_es_internal::KnowledgeBasesRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<dialogflow_es_internal::KnowledgeBasesRetryTraits> impl_;
 };
 
 /**
@@ -184,38 +177,34 @@ class KnowledgeBasesConnection {
   virtual Options options() { return Options{}; }
 
   virtual StreamRange<google::cloud::dialogflow::v2::KnowledgeBase>
-  ListKnowledgeBases(
-      google::cloud::dialogflow::v2::ListKnowledgeBasesRequest request);
+  ListKnowledgeBases(google::cloud::dialogflow::v2::ListKnowledgeBasesRequest request);
 
   virtual StatusOr<google::cloud::dialogflow::v2::KnowledgeBase>
-  GetKnowledgeBase(
-      google::cloud::dialogflow::v2::GetKnowledgeBaseRequest const& request);
+  GetKnowledgeBase(google::cloud::dialogflow::v2::GetKnowledgeBaseRequest const& request);
 
   virtual StatusOr<google::cloud::dialogflow::v2::KnowledgeBase>
-  CreateKnowledgeBase(
-      google::cloud::dialogflow::v2::CreateKnowledgeBaseRequest const& request);
+  CreateKnowledgeBase(google::cloud::dialogflow::v2::CreateKnowledgeBaseRequest const& request);
 
-  virtual Status DeleteKnowledgeBase(
-      google::cloud::dialogflow::v2::DeleteKnowledgeBaseRequest const& request);
+  virtual Status
+  DeleteKnowledgeBase(google::cloud::dialogflow::v2::DeleteKnowledgeBaseRequest const& request);
 
   virtual StatusOr<google::cloud::dialogflow::v2::KnowledgeBase>
-  UpdateKnowledgeBase(
-      google::cloud::dialogflow::v2::UpdateKnowledgeBaseRequest const& request);
+  UpdateKnowledgeBase(google::cloud::dialogflow::v2::UpdateKnowledgeBaseRequest const& request);
 
-  virtual StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request);
+  virtual StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request);
 
-  virtual StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request);
+  virtual StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request);
 
-  virtual StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 
-  virtual Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request);
+  virtual Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request);
 };
 
 /**

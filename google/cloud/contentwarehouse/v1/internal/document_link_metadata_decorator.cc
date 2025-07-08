@@ -46,63 +46,60 @@ DocumentLinkServiceMetadata::DocumentLinkServiceMetadata(
 
 StatusOr<google::cloud::contentwarehouse::v1::ListLinkedTargetsResponse>
 DocumentLinkServiceMetadata::ListLinkedTargets(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::contentwarehouse::v1::ListLinkedTargetsRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::contentwarehouse::v1::ListLinkedTargetsRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListLinkedTargets(context, options, request);
 }
 
 StatusOr<google::cloud::contentwarehouse::v1::ListLinkedSourcesResponse>
 DocumentLinkServiceMetadata::ListLinkedSources(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::contentwarehouse::v1::ListLinkedSourcesRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::contentwarehouse::v1::ListLinkedSourcesRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListLinkedSources(context, options, request);
 }
 
 StatusOr<google::cloud::contentwarehouse::v1::DocumentLink>
 DocumentLinkServiceMetadata::CreateDocumentLink(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::contentwarehouse::v1::CreateDocumentLinkRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::contentwarehouse::v1::CreateDocumentLinkRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateDocumentLink(context, options, request);
 }
 
-Status DocumentLinkServiceMetadata::DeleteDocumentLink(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::contentwarehouse::v1::DeleteDocumentLinkRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+Status
+DocumentLinkServiceMetadata::DeleteDocumentLink(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::contentwarehouse::v1::DeleteDocumentLinkRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteDocumentLink(context, options, request);
 }
 
 StatusOr<google::longrunning::Operation>
 DocumentLinkServiceMetadata::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetOperation(context, options, request);
 }
 
-void DocumentLinkServiceMetadata::SetMetadata(
-    grpc::ClientContext& context, Options const& options,
-    std::string const& request_params) {
+void DocumentLinkServiceMetadata::SetMetadata(grpc::ClientContext& context,
+                                        Options const& options,
+                                        std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
 void DocumentLinkServiceMetadata::SetMetadata(grpc::ClientContext& context,
-                                              Options const& options) {
-  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
-                                       api_client_header_);
+                                        Options const& options) {
+  google::cloud::internal::SetMetadata(
+      context, options, fixed_metadata_, api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

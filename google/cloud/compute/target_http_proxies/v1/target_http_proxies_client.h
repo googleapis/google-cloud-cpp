@@ -64,9 +64,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class TargetHttpProxiesClient {
  public:
-  explicit TargetHttpProxiesClient(
-      std::shared_ptr<TargetHttpProxiesConnection> connection,
-      Options opts = {});
+  explicit TargetHttpProxiesClient(std::shared_ptr<TargetHttpProxiesConnection> connection, Options opts = {});
   ~TargetHttpProxiesClient();
 
   ///@{
@@ -79,12 +77,10 @@ class TargetHttpProxiesClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(TargetHttpProxiesClient const& a,
-                         TargetHttpProxiesClient const& b) {
+  friend bool operator==(TargetHttpProxiesClient const& a, TargetHttpProxiesClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(TargetHttpProxiesClient const& a,
-                         TargetHttpProxiesClient const& b) {
+  friend bool operator!=(TargetHttpProxiesClient const& a, TargetHttpProxiesClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -123,11 +119,8 @@ class TargetHttpProxiesClient {
   /// [google.cloud.cpp.compute.v1.TargetHttpProxiesScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_134.proto#L26}
   ///
   // clang-format on
-  StreamRange<
-      std::pair<std::string,
-                google::cloud::cpp::compute::v1::TargetHttpProxiesScopedList>>
-  AggregatedListTargetHttpProxies(std::string const& project,
-                                  Options opts = {});
+  StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::TargetHttpProxiesScopedList>>
+  AggregatedListTargetHttpProxies(std::string const& project, Options opts = {});
 
   // clang-format off
   ///
@@ -168,13 +161,8 @@ class TargetHttpProxiesClient {
   /// [google.cloud.cpp.compute.v1.TargetHttpProxiesScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_134.proto#L26}
   ///
   // clang-format on
-  StreamRange<
-      std::pair<std::string,
-                google::cloud::cpp::compute::v1::TargetHttpProxiesScopedList>>
-  AggregatedListTargetHttpProxies(
-      google::cloud::cpp::compute::target_http_proxies::v1::
-          AggregatedListTargetHttpProxiesRequest request,
-      Options opts = {});
+  StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::TargetHttpProxiesScopedList>>
+  AggregatedListTargetHttpProxies(google::cloud::cpp::compute::target_http_proxies::v1::AggregatedListTargetHttpProxiesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -207,9 +195,7 @@ class TargetHttpProxiesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteTargetHttpProxy(std::string const& project,
-                        std::string const& target_http_proxy,
-                        Options opts = {});
+  DeleteTargetHttpProxy(std::string const& project, std::string const& target_http_proxy, Options opts = {});
 
   // clang-format off
   ///
@@ -222,9 +208,8 @@ class TargetHttpProxiesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteTargetHttpProxy(
-      NoAwaitTag, std::string const& project,
-      std::string const& target_http_proxy, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeleteTargetHttpProxy(NoAwaitTag, std::string const& project, std::string const& target_http_proxy, Options opts = {});
 
   // clang-format off
   ///
@@ -261,9 +246,7 @@ class TargetHttpProxiesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteTargetHttpProxy(google::cloud::cpp::compute::target_http_proxies::v1::
-                            DeleteTargetHttpProxyRequest const& request,
-                        Options opts = {});
+  DeleteTargetHttpProxy(google::cloud::cpp::compute::target_http_proxies::v1::DeleteTargetHttpProxyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -276,11 +259,8 @@ class TargetHttpProxiesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteTargetHttpProxy(
-      NoAwaitTag,
-      google::cloud::cpp::compute::target_http_proxies::v1::
-          DeleteTargetHttpProxyRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeleteTargetHttpProxy(NoAwaitTag, google::cloud::cpp::compute::target_http_proxies::v1::DeleteTargetHttpProxyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -292,9 +272,7 @@ class TargetHttpProxiesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteTargetHttpProxy(
-      google::cloud::cpp::compute::v1::Operation const& operation,
-      Options opts = {});
+  DeleteTargetHttpProxy(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -320,9 +298,8 @@ class TargetHttpProxiesClient {
   /// [google.cloud.cpp.compute.v1.TargetHttpProxy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_135.proto#L36}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::TargetHttpProxy> GetTargetHttpProxy(
-      std::string const& project, std::string const& target_http_proxy,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::TargetHttpProxy>
+  GetTargetHttpProxy(std::string const& project, std::string const& target_http_proxy, Options opts = {});
 
   // clang-format off
   ///
@@ -352,10 +329,8 @@ class TargetHttpProxiesClient {
   /// [google.cloud.cpp.compute.v1.TargetHttpProxy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_135.proto#L36}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::TargetHttpProxy> GetTargetHttpProxy(
-      google::cloud::cpp::compute::target_http_proxies::v1::
-          GetTargetHttpProxyRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::TargetHttpProxy>
+  GetTargetHttpProxy(google::cloud::cpp::compute::target_http_proxies::v1::GetTargetHttpProxyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -389,10 +364,7 @@ class TargetHttpProxiesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertTargetHttpProxy(std::string const& project,
-                        google::cloud::cpp::compute::v1::TargetHttpProxy const&
-                            target_http_proxy_resource,
-                        Options opts = {});
+  InsertTargetHttpProxy(std::string const& project, google::cloud::cpp::compute::v1::TargetHttpProxy const& target_http_proxy_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -405,11 +377,8 @@ class TargetHttpProxiesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertTargetHttpProxy(
-      NoAwaitTag, std::string const& project,
-      google::cloud::cpp::compute::v1::TargetHttpProxy const&
-          target_http_proxy_resource,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  InsertTargetHttpProxy(NoAwaitTag, std::string const& project, google::cloud::cpp::compute::v1::TargetHttpProxy const& target_http_proxy_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -447,9 +416,7 @@ class TargetHttpProxiesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertTargetHttpProxy(google::cloud::cpp::compute::target_http_proxies::v1::
-                            InsertTargetHttpProxyRequest const& request,
-                        Options opts = {});
+  InsertTargetHttpProxy(google::cloud::cpp::compute::target_http_proxies::v1::InsertTargetHttpProxyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -462,11 +429,8 @@ class TargetHttpProxiesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertTargetHttpProxy(
-      NoAwaitTag,
-      google::cloud::cpp::compute::target_http_proxies::v1::
-          InsertTargetHttpProxyRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  InsertTargetHttpProxy(NoAwaitTag, google::cloud::cpp::compute::target_http_proxies::v1::InsertTargetHttpProxyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -478,9 +442,7 @@ class TargetHttpProxiesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertTargetHttpProxy(
-      google::cloud::cpp::compute::v1::Operation const& operation,
-      Options opts = {});
+  InsertTargetHttpProxy(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -557,9 +519,7 @@ class TargetHttpProxiesClient {
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::TargetHttpProxy>
-  ListTargetHttpProxies(google::cloud::cpp::compute::target_http_proxies::v1::
-                            ListTargetHttpProxiesRequest request,
-                        Options opts = {});
+  ListTargetHttpProxies(google::cloud::cpp::compute::target_http_proxies::v1::ListTargetHttpProxiesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -595,11 +555,7 @@ class TargetHttpProxiesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchTargetHttpProxy(std::string const& project,
-                       std::string const& target_http_proxy,
-                       google::cloud::cpp::compute::v1::TargetHttpProxy const&
-                           target_http_proxy_resource,
-                       Options opts = {});
+  PatchTargetHttpProxy(std::string const& project, std::string const& target_http_proxy, google::cloud::cpp::compute::v1::TargetHttpProxy const& target_http_proxy_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -612,12 +568,8 @@ class TargetHttpProxiesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchTargetHttpProxy(
-      NoAwaitTag, std::string const& project,
-      std::string const& target_http_proxy,
-      google::cloud::cpp::compute::v1::TargetHttpProxy const&
-          target_http_proxy_resource,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  PatchTargetHttpProxy(NoAwaitTag, std::string const& project, std::string const& target_http_proxy, google::cloud::cpp::compute::v1::TargetHttpProxy const& target_http_proxy_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -656,9 +608,7 @@ class TargetHttpProxiesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchTargetHttpProxy(google::cloud::cpp::compute::target_http_proxies::v1::
-                           PatchTargetHttpProxyRequest const& request,
-                       Options opts = {});
+  PatchTargetHttpProxy(google::cloud::cpp::compute::target_http_proxies::v1::PatchTargetHttpProxyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -671,11 +621,8 @@ class TargetHttpProxiesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchTargetHttpProxy(
-      NoAwaitTag,
-      google::cloud::cpp::compute::target_http_proxies::v1::
-          PatchTargetHttpProxyRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  PatchTargetHttpProxy(NoAwaitTag, google::cloud::cpp::compute::target_http_proxies::v1::PatchTargetHttpProxyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -687,9 +634,7 @@ class TargetHttpProxiesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchTargetHttpProxy(
-      google::cloud::cpp::compute::v1::Operation const& operation,
-      Options opts = {});
+  PatchTargetHttpProxy(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -722,11 +667,8 @@ class TargetHttpProxiesClient {
   /// [google.cloud.cpp.compute.target_http_proxies.v1.SetUrlMapRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_http_proxies/v1/target_http_proxies.proto#L372}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetUrlMap(
-      std::string const& project, std::string const& target_http_proxy,
-      google::cloud::cpp::compute::v1::UrlMapReference const&
-          url_map_reference_resource,
-      Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  SetUrlMap(std::string const& project, std::string const& target_http_proxy, google::cloud::cpp::compute::v1::UrlMapReference const& url_map_reference_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -739,12 +681,8 @@ class TargetHttpProxiesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> SetUrlMap(
-      NoAwaitTag, std::string const& project,
-      std::string const& target_http_proxy,
-      google::cloud::cpp::compute::v1::UrlMapReference const&
-          url_map_reference_resource,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  SetUrlMap(NoAwaitTag, std::string const& project, std::string const& target_http_proxy, google::cloud::cpp::compute::v1::UrlMapReference const& url_map_reference_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -780,10 +718,8 @@ class TargetHttpProxiesClient {
   /// [google.cloud.cpp.compute.target_http_proxies.v1.SetUrlMapRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_http_proxies/v1/target_http_proxies.proto#L372}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetUrlMap(
-      google::cloud::cpp::compute::target_http_proxies::v1::
-          SetUrlMapRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  SetUrlMap(google::cloud::cpp::compute::target_http_proxies::v1::SetUrlMapRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -796,11 +732,8 @@ class TargetHttpProxiesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> SetUrlMap(
-      NoAwaitTag,
-      google::cloud::cpp::compute::target_http_proxies::v1::
-          SetUrlMapRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  SetUrlMap(NoAwaitTag, google::cloud::cpp::compute::target_http_proxies::v1::SetUrlMapRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -811,9 +744,8 @@ class TargetHttpProxiesClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetUrlMap(
-      google::cloud::cpp::compute::v1::Operation const& operation,
-      Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  SetUrlMap(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
 
  private:
   std::shared_ptr<TargetHttpProxiesConnection> connection_;

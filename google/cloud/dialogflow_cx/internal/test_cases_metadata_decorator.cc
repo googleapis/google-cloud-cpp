@@ -46,47 +46,46 @@ TestCasesMetadata::TestCasesMetadata(
 
 StatusOr<google::cloud::dialogflow::cx::v3::ListTestCasesResponse>
 TestCasesMetadata::ListTestCases(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dialogflow::cx::v3::ListTestCasesRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListTestCases(context, options, request);
 }
 
-Status TestCasesMetadata::BatchDeleteTestCases(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::dialogflow::cx::v3::BatchDeleteTestCasesRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+Status
+TestCasesMetadata::BatchDeleteTestCases(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::dialogflow::cx::v3::BatchDeleteTestCasesRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->BatchDeleteTestCases(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::TestCase>
 TestCasesMetadata::GetTestCase(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dialogflow::cx::v3::GetTestCaseRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetTestCase(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::TestCase>
 TestCasesMetadata::CreateTestCase(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dialogflow::cx::v3::CreateTestCaseRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateTestCase(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::TestCase>
 TestCasesMetadata::UpdateTestCase(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dialogflow::cx::v3::UpdateTestCaseRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("test_case.name=",
-                           internal::UrlEncode(request.test_case().name())));
+  SetMetadata(context, options, absl::StrCat("test_case.name=", internal::UrlEncode(request.test_case().name())));
   return child_->UpdateTestCase(context, options, request);
 }
 
@@ -96,17 +95,17 @@ TestCasesMetadata::AsyncRunTestCase(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::dialogflow::cx::v3::RunTestCaseRequest const& request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncRunTestCase(cq, std::move(context), std::move(options),
-                                  request);
+  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncRunTestCase(
+      cq, std::move(context), std::move(options), request);
 }
 
-StatusOr<google::longrunning::Operation> TestCasesMetadata::RunTestCase(
-    grpc::ClientContext& context, Options options,
+StatusOr<google::longrunning::Operation>
+TestCasesMetadata::RunTestCase(
+    grpc::ClientContext& context,
+    Options options,
     google::cloud::dialogflow::cx::v3::RunTestCaseRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->RunTestCase(context, options, request);
 }
 
@@ -115,30 +114,27 @@ TestCasesMetadata::AsyncBatchRunTestCases(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::dialogflow::cx::v3::BatchRunTestCasesRequest const&
-        request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncBatchRunTestCases(cq, std::move(context),
-                                        std::move(options), request);
+    google::cloud::dialogflow::cx::v3::BatchRunTestCasesRequest const& request) {
+  SetMetadata(*context, *options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncBatchRunTestCases(
+      cq, std::move(context), std::move(options), request);
 }
 
-StatusOr<google::longrunning::Operation> TestCasesMetadata::BatchRunTestCases(
-    grpc::ClientContext& context, Options options,
-    google::cloud::dialogflow::cx::v3::BatchRunTestCasesRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+StatusOr<google::longrunning::Operation>
+TestCasesMetadata::BatchRunTestCases(
+    grpc::ClientContext& context,
+    Options options,
+    google::cloud::dialogflow::cx::v3::BatchRunTestCasesRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->BatchRunTestCases(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::CalculateCoverageResponse>
 TestCasesMetadata::CalculateCoverage(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::dialogflow::cx::v3::CalculateCoverageRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("agent=", internal::UrlEncode(request.agent())));
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::dialogflow::cx::v3::CalculateCoverageRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("agent=", internal::UrlEncode(request.agent())));
   return child_->CalculateCoverage(context, options, request);
 }
 
@@ -148,17 +144,17 @@ TestCasesMetadata::AsyncImportTestCases(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::dialogflow::cx::v3::ImportTestCasesRequest const& request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncImportTestCases(cq, std::move(context),
-                                      std::move(options), request);
+  SetMetadata(*context, *options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncImportTestCases(
+      cq, std::move(context), std::move(options), request);
 }
 
-StatusOr<google::longrunning::Operation> TestCasesMetadata::ImportTestCases(
-    grpc::ClientContext& context, Options options,
+StatusOr<google::longrunning::Operation>
+TestCasesMetadata::ImportTestCases(
+    grpc::ClientContext& context,
+    Options options,
     google::cloud::dialogflow::cx::v3::ImportTestCasesRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ImportTestCases(context, options, request);
 }
 
@@ -168,79 +164,80 @@ TestCasesMetadata::AsyncExportTestCases(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::dialogflow::cx::v3::ExportTestCasesRequest const& request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncExportTestCases(cq, std::move(context),
-                                      std::move(options), request);
+  SetMetadata(*context, *options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncExportTestCases(
+      cq, std::move(context), std::move(options), request);
 }
 
-StatusOr<google::longrunning::Operation> TestCasesMetadata::ExportTestCases(
-    grpc::ClientContext& context, Options options,
+StatusOr<google::longrunning::Operation>
+TestCasesMetadata::ExportTestCases(
+    grpc::ClientContext& context,
+    Options options,
     google::cloud::dialogflow::cx::v3::ExportTestCasesRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ExportTestCases(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::ListTestCaseResultsResponse>
 TestCasesMetadata::ListTestCaseResults(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::dialogflow::cx::v3::ListTestCaseResultsRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::dialogflow::cx::v3::ListTestCaseResultsRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListTestCaseResults(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::TestCaseResult>
 TestCasesMetadata::GetTestCaseResult(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::dialogflow::cx::v3::GetTestCaseResultRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::dialogflow::cx::v3::GetTestCaseResultRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetTestCaseResult(context, options, request);
 }
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 TestCasesMetadata::ListLocations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ListLocations(context, options, request);
 }
 
-StatusOr<google::cloud::location::Location> TestCasesMetadata::GetLocation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::location::Location>
+TestCasesMetadata::GetLocation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetLocation(context, options, request);
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
 TestCasesMetadata::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ListOperations(context, options, request);
 }
 
-StatusOr<google::longrunning::Operation> TestCasesMetadata::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::Operation>
+TestCasesMetadata::GetOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetOperation(context, options, request);
 }
 
-Status TestCasesMetadata::CancelOperation(
-    grpc::ClientContext& context, Options const& options,
+Status
+TestCasesMetadata::CancelOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->CancelOperation(context, options, request);
 }
 
@@ -252,8 +249,8 @@ TestCasesMetadata::AsyncGetOperation(
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(cq, std::move(context), std::move(options),
-                                   request);
+  return child_->AsyncGetOperation(
+      cq, std::move(context), std::move(options), request);
 }
 
 future<Status> TestCasesMetadata::AsyncCancelOperation(
@@ -263,21 +260,21 @@ future<Status> TestCasesMetadata::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(cq, std::move(context),
-                                      std::move(options), request);
+  return child_->AsyncCancelOperation(
+      cq, std::move(context), std::move(options), request);
 }
 
 void TestCasesMetadata::SetMetadata(grpc::ClientContext& context,
-                                    Options const& options,
-                                    std::string const& request_params) {
+                                        Options const& options,
+                                        std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
 void TestCasesMetadata::SetMetadata(grpc::ClientContext& context,
-                                    Options const& options) {
-  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
-                                       api_client_header_);
+                                        Options const& options) {
+  google::cloud::internal::SetMetadata(
+      context, options, fixed_metadata_, api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

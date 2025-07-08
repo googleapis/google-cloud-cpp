@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DISCOVERYENGINE_V1_DATA_STORE_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DISCOVERYENGINE_V1_DATA_STORE_CONNECTION_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/discoveryengine/v1/data_store_connection_idempotency_policy.h"
 #include "google/cloud/discoveryengine/v1/internal/data_store_retry_traits.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -56,8 +56,7 @@ class DataStoreServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class DataStoreServiceLimitedErrorCountRetryPolicy
-    : public DataStoreServiceRetryPolicy {
+class DataStoreServiceLimitedErrorCountRetryPolicy : public DataStoreServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -67,14 +66,14 @@ class DataStoreServiceLimitedErrorCountRetryPolicy
    *     @p maximum_failures == 0.
    */
   explicit DataStoreServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   DataStoreServiceLimitedErrorCountRetryPolicy(
       DataStoreServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : DataStoreServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : DataStoreServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   DataStoreServiceLimitedErrorCountRetryPolicy(
       DataStoreServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : DataStoreServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : DataStoreServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -94,9 +93,7 @@ class DataStoreServiceLimitedErrorCountRetryPolicy
   using BaseType = DataStoreServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      discoveryengine_v1_internal::DataStoreServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<discoveryengine_v1_internal::DataStoreServiceRetryTraits> impl_;
 };
 
 /**
@@ -109,8 +106,7 @@ class DataStoreServiceLimitedErrorCountRetryPolicy
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class DataStoreServiceLimitedTimeRetryPolicy
-    : public DataStoreServiceRetryPolicy {
+class DataStoreServiceLimitedTimeRetryPolicy : public DataStoreServiceRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -135,14 +131,12 @@ class DataStoreServiceLimitedTimeRetryPolicy
   template <typename DurationRep, typename DurationPeriod>
   explicit DataStoreServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  DataStoreServiceLimitedTimeRetryPolicy(
-      DataStoreServiceLimitedTimeRetryPolicy&& rhs) noexcept
-      : DataStoreServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  DataStoreServiceLimitedTimeRetryPolicy(
-      DataStoreServiceLimitedTimeRetryPolicy const& rhs) noexcept
-      : DataStoreServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  DataStoreServiceLimitedTimeRetryPolicy(DataStoreServiceLimitedTimeRetryPolicy&& rhs) noexcept
+    : DataStoreServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  DataStoreServiceLimitedTimeRetryPolicy(DataStoreServiceLimitedTimeRetryPolicy const& rhs) noexcept
+    : DataStoreServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -164,9 +158,7 @@ class DataStoreServiceLimitedTimeRetryPolicy
   using BaseType = DataStoreServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      discoveryengine_v1_internal::DataStoreServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<discoveryengine_v1_internal::DataStoreServiceRetryTraits> impl_;
 };
 
 /**
@@ -188,65 +180,51 @@ class DataStoreServiceConnection {
   virtual Options options() { return Options{}; }
 
   virtual future<StatusOr<google::cloud::discoveryengine::v1::DataStore>>
-  CreateDataStore(
-      google::cloud::discoveryengine::v1::CreateDataStoreRequest const&
-          request);
+  CreateDataStore(google::cloud::discoveryengine::v1::CreateDataStoreRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> CreateDataStore(
-      NoAwaitTag,
-      google::cloud::discoveryengine::v1::CreateDataStoreRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  CreateDataStore(NoAwaitTag, google::cloud::discoveryengine::v1::CreateDataStoreRequest const& request);
 
   virtual future<StatusOr<google::cloud::discoveryengine::v1::DataStore>>
-  CreateDataStore(google::longrunning::Operation const& operation);
-
-  virtual StatusOr<google::cloud::discoveryengine::v1::DataStore> GetDataStore(
-      google::cloud::discoveryengine::v1::GetDataStoreRequest const& request);
-
-  virtual StreamRange<google::cloud::discoveryengine::v1::DataStore>
-  ListDataStores(
-      google::cloud::discoveryengine::v1::ListDataStoresRequest request);
-
-  virtual future<
-      StatusOr<google::cloud::discoveryengine::v1::DeleteDataStoreMetadata>>
-  DeleteDataStore(
-      google::cloud::discoveryengine::v1::DeleteDataStoreRequest const&
-          request);
-
-  virtual StatusOr<google::longrunning::Operation> DeleteDataStore(
-      NoAwaitTag,
-      google::cloud::discoveryengine::v1::DeleteDataStoreRequest const&
-          request);
-
-  virtual future<
-      StatusOr<google::cloud::discoveryengine::v1::DeleteDataStoreMetadata>>
-  DeleteDataStore(google::longrunning::Operation const& operation);
+  CreateDataStore( google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::discoveryengine::v1::DataStore>
-  UpdateDataStore(
-      google::cloud::discoveryengine::v1::UpdateDataStoreRequest const&
-          request);
+  GetDataStore(google::cloud::discoveryengine::v1::GetDataStoreRequest const& request);
 
-  virtual StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::cloud::discoveryengine::v1::DataStore>
+  ListDataStores(google::cloud::discoveryengine::v1::ListDataStoresRequest request);
 
-  virtual StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual future<StatusOr<google::cloud::discoveryengine::v1::DeleteDataStoreMetadata>>
+  DeleteDataStore(google::cloud::discoveryengine::v1::DeleteDataStoreRequest const& request);
 
-  virtual Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  DeleteDataStore(NoAwaitTag, google::cloud::discoveryengine::v1::DeleteDataStoreRequest const& request);
+
+  virtual future<StatusOr<google::cloud::discoveryengine::v1::DeleteDataStoreMetadata>>
+  DeleteDataStore( google::longrunning::Operation const& operation);
+
+  virtual StatusOr<google::cloud::discoveryengine::v1::DataStore>
+  UpdateDataStore(google::cloud::discoveryengine::v1::UpdateDataStoreRequest const& request);
+
+  virtual StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request);
+
+  virtual StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request);
+
+  virtual Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request);
 };
 
 /**
- * A factory function to construct an object of type
- * `DataStoreServiceConnection`.
+ * A factory function to construct an object of type `DataStoreServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
  * should be passed as an argument to the constructor of DataStoreServiceClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `DataStoreServiceConnection`. Expected options are any of the types
- * in the following option lists:
+ * returned `DataStoreServiceConnection`. Expected options are any of the types in
+ * the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
@@ -256,8 +234,8 @@ class DataStoreServiceConnection {
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
- * @param options (optional) Configure the `DataStoreServiceConnection` created
- * by this function.
+ * @param options (optional) Configure the `DataStoreServiceConnection` created by
+ * this function.
  */
 std::shared_ptr<DataStoreServiceConnection> MakeDataStoreServiceConnection(
     Options options = {});

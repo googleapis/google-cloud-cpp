@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RECAPTCHAENTERPRISE_V1_INTERNAL_RECAPTCHA_ENTERPRISE_STUB_FACTORY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RECAPTCHAENTERPRISE_V1_INTERNAL_RECAPTCHA_ENTERPRISE_STUB_FACTORY_H
 
-#include "google/cloud/recaptchaenterprise/v1/internal/recaptcha_enterprise_stub.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/options.h"
+#include "google/cloud/recaptchaenterprise/v1/internal/recaptcha_enterprise_stub.h"
 #include "google/cloud/version.h"
 #include <memory>
 
@@ -30,8 +30,7 @@ namespace cloud {
 namespace recaptchaenterprise_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<RecaptchaEnterpriseServiceStub>
-CreateDefaultRecaptchaEnterpriseServiceStub(
+std::shared_ptr<RecaptchaEnterpriseServiceStub> CreateDefaultRecaptchaEnterpriseServiceStub(
     std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
     Options const& options);
 

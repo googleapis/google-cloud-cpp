@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCEMANAGER_V3_ORGANIZATIONS_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCEMANAGER_V3_ORGANIZATIONS_OPTIONS_H
 
-#include "google/cloud/resourcemanager/v3/organizations_connection.h"
-#include "google/cloud/resourcemanager/v3/organizations_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
+#include "google/cloud/resourcemanager/v3/organizations_connection.h"
+#include "google/cloud/resourcemanager/v3/organizations_connection_idempotency_policy.h"
 #include "google/cloud/version.h"
 #include <memory>
 
@@ -64,7 +64,8 @@ struct OrganizationsConnectionIdempotencyPolicyOption {
  * @ingroup google-cloud-resourcemanager-options
  */
 using OrganizationsPolicyOptionList =
-    OptionList<OrganizationsRetryPolicyOption, OrganizationsBackoffPolicyOption,
+    OptionList<OrganizationsRetryPolicyOption,
+               OrganizationsBackoffPolicyOption,
                OrganizationsConnectionIdempotencyPolicyOption>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

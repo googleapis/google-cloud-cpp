@@ -33,13 +33,10 @@ using ::google::cloud::monitoring_v3::MakeAlertPolicyServiceConnection;
 /// @deprecated Use monitoring_v3::AlertPolicyServiceConnection directly.
 using ::google::cloud::monitoring_v3::AlertPolicyServiceConnection;
 
-/// @deprecated Use
-/// monitoring_v3::AlertPolicyServiceLimitedErrorCountRetryPolicy directly.
-using ::google::cloud::monitoring_v3::
-    AlertPolicyServiceLimitedErrorCountRetryPolicy;
+/// @deprecated Use monitoring_v3::AlertPolicyServiceLimitedErrorCountRetryPolicy directly.
+using ::google::cloud::monitoring_v3::AlertPolicyServiceLimitedErrorCountRetryPolicy;
 
-/// @deprecated Use monitoring_v3::AlertPolicyServiceLimitedTimeRetryPolicy
-/// directly.
+/// @deprecated Use monitoring_v3::AlertPolicyServiceLimitedTimeRetryPolicy directly.
 using ::google::cloud::monitoring_v3::AlertPolicyServiceLimitedTimeRetryPolicy;
 
 /// @deprecated Use monitoring_v3::AlertPolicyServiceRetryPolicy directly.

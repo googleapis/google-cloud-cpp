@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERYCONTROL_V2_ROW_ACCESS_POLICY_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERYCONTROL_V2_ROW_ACCESS_POLICY_CONNECTION_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/bigquerycontrol/v2/internal/row_access_policy_retry_traits.h"
 #include "google/cloud/bigquerycontrol/v2/row_access_policy_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -43,8 +43,7 @@ class RowAccessPolicyServiceRetryPolicy : public ::google::cloud::RetryPolicy {
 };
 
 /**
- * A retry policy for `RowAccessPolicyServiceConnection` based on counting
- * errors.
+ * A retry policy for `RowAccessPolicyServiceConnection` based on counting errors.
  *
  * This policy stops retrying if:
  * - An RPC returns a non-transient error.
@@ -53,8 +52,7 @@ class RowAccessPolicyServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class RowAccessPolicyServiceLimitedErrorCountRetryPolicy
-    : public RowAccessPolicyServiceRetryPolicy {
+class RowAccessPolicyServiceLimitedErrorCountRetryPolicy : public RowAccessPolicyServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -63,18 +61,15 @@ class RowAccessPolicyServiceLimitedErrorCountRetryPolicy
    * @note Disable the retry loop by providing an instance of this policy with
    *     @p maximum_failures == 0.
    */
-  explicit RowAccessPolicyServiceLimitedErrorCountRetryPolicy(
-      int maximum_failures)
-      : impl_(maximum_failures) {}
+  explicit RowAccessPolicyServiceLimitedErrorCountRetryPolicy(int maximum_failures)
+    : impl_(maximum_failures) {}
 
   RowAccessPolicyServiceLimitedErrorCountRetryPolicy(
       RowAccessPolicyServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : RowAccessPolicyServiceLimitedErrorCountRetryPolicy(
-            rhs.maximum_failures()) {}
+    : RowAccessPolicyServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   RowAccessPolicyServiceLimitedErrorCountRetryPolicy(
       RowAccessPolicyServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : RowAccessPolicyServiceLimitedErrorCountRetryPolicy(
-            rhs.maximum_failures()) {}
+    : RowAccessPolicyServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -94,9 +89,7 @@ class RowAccessPolicyServiceLimitedErrorCountRetryPolicy
   using BaseType = RowAccessPolicyServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      bigquerycontrol_v2_internal::RowAccessPolicyServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<bigquerycontrol_v2_internal::RowAccessPolicyServiceRetryTraits> impl_;
 };
 
 /**
@@ -109,8 +102,7 @@ class RowAccessPolicyServiceLimitedErrorCountRetryPolicy
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class RowAccessPolicyServiceLimitedTimeRetryPolicy
-    : public RowAccessPolicyServiceRetryPolicy {
+class RowAccessPolicyServiceLimitedTimeRetryPolicy : public RowAccessPolicyServiceRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -135,14 +127,12 @@ class RowAccessPolicyServiceLimitedTimeRetryPolicy
   template <typename DurationRep, typename DurationPeriod>
   explicit RowAccessPolicyServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  RowAccessPolicyServiceLimitedTimeRetryPolicy(
-      RowAccessPolicyServiceLimitedTimeRetryPolicy&& rhs) noexcept
-      : RowAccessPolicyServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  RowAccessPolicyServiceLimitedTimeRetryPolicy(
-      RowAccessPolicyServiceLimitedTimeRetryPolicy const& rhs) noexcept
-      : RowAccessPolicyServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  RowAccessPolicyServiceLimitedTimeRetryPolicy(RowAccessPolicyServiceLimitedTimeRetryPolicy&& rhs) noexcept
+    : RowAccessPolicyServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  RowAccessPolicyServiceLimitedTimeRetryPolicy(RowAccessPolicyServiceLimitedTimeRetryPolicy const& rhs) noexcept
+    : RowAccessPolicyServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -164,24 +154,20 @@ class RowAccessPolicyServiceLimitedTimeRetryPolicy
   using BaseType = RowAccessPolicyServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      bigquerycontrol_v2_internal::RowAccessPolicyServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<bigquerycontrol_v2_internal::RowAccessPolicyServiceRetryTraits> impl_;
 };
 
 /**
- * The `RowAccessPolicyServiceConnection` object for
- * `RowAccessPolicyServiceClient`.
+ * The `RowAccessPolicyServiceConnection` object for `RowAccessPolicyServiceClient`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `RowAccessPolicyServiceClient`. This allows users to inject custom
- * behavior (e.g., with a Google Mock object) when writing tests that use
- * objects of type `RowAccessPolicyServiceClient`.
+ * sets in `RowAccessPolicyServiceClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `RowAccessPolicyServiceClient`.
  *
  * To create a concrete instance, see `MakeRowAccessPolicyServiceConnection()`.
  *
- * For mocking, see
- * `bigquerycontrol_v2_mocks::MockRowAccessPolicyServiceConnection`.
+ * For mocking, see `bigquerycontrol_v2_mocks::MockRowAccessPolicyServiceConnection`.
  */
 class RowAccessPolicyServiceConnection {
  public:
@@ -190,27 +176,22 @@ class RowAccessPolicyServiceConnection {
   virtual Options options() { return Options{}; }
 
   virtual StreamRange<google::cloud::bigquery::v2::RowAccessPolicy>
-  ListRowAccessPolicies(
-      google::cloud::bigquery::v2::ListRowAccessPoliciesRequest request);
+  ListRowAccessPolicies(google::cloud::bigquery::v2::ListRowAccessPoliciesRequest request);
 
   virtual StatusOr<google::cloud::bigquery::v2::RowAccessPolicy>
-  GetRowAccessPolicy(
-      google::cloud::bigquery::v2::GetRowAccessPolicyRequest const& request);
+  GetRowAccessPolicy(google::cloud::bigquery::v2::GetRowAccessPolicyRequest const& request);
 
   virtual StatusOr<google::cloud::bigquery::v2::RowAccessPolicy>
-  CreateRowAccessPolicy(
-      google::cloud::bigquery::v2::CreateRowAccessPolicyRequest const& request);
+  CreateRowAccessPolicy(google::cloud::bigquery::v2::CreateRowAccessPolicyRequest const& request);
 
   virtual StatusOr<google::cloud::bigquery::v2::RowAccessPolicy>
-  UpdateRowAccessPolicy(
-      google::cloud::bigquery::v2::UpdateRowAccessPolicyRequest const& request);
+  UpdateRowAccessPolicy(google::cloud::bigquery::v2::UpdateRowAccessPolicyRequest const& request);
 
-  virtual Status DeleteRowAccessPolicy(
-      google::cloud::bigquery::v2::DeleteRowAccessPolicyRequest const& request);
+  virtual Status
+  DeleteRowAccessPolicy(google::cloud::bigquery::v2::DeleteRowAccessPolicyRequest const& request);
 
-  virtual Status BatchDeleteRowAccessPolicies(
-      google::cloud::bigquery::v2::BatchDeleteRowAccessPoliciesRequest const&
-          request);
+  virtual Status
+  BatchDeleteRowAccessPolicies(google::cloud::bigquery::v2::BatchDeleteRowAccessPoliciesRequest const& request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -28,13 +28,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 MetricServiceClient::MetricServiceClient(
     std::shared_ptr<MetricServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 MetricServiceClient::~MetricServiceClient() = default;
 
 StreamRange<google::api::MonitoredResourceDescriptor>
-MetricServiceClient::ListMonitoredResourceDescriptors(std::string const& name,
-                                                      Options opts) {
+MetricServiceClient::ListMonitoredResourceDescriptors(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::monitoring::v3::ListMonitoredResourceDescriptorsRequest request;
   request.set_name(name);
@@ -42,16 +41,13 @@ MetricServiceClient::ListMonitoredResourceDescriptors(std::string const& name,
 }
 
 StreamRange<google::api::MonitoredResourceDescriptor>
-MetricServiceClient::ListMonitoredResourceDescriptors(
-    google::monitoring::v3::ListMonitoredResourceDescriptorsRequest request,
-    Options opts) {
+MetricServiceClient::ListMonitoredResourceDescriptors(google::monitoring::v3::ListMonitoredResourceDescriptorsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListMonitoredResourceDescriptors(std::move(request));
 }
 
 StatusOr<google::api::MonitoredResourceDescriptor>
-MetricServiceClient::GetMonitoredResourceDescriptor(std::string const& name,
-                                                    Options opts) {
+MetricServiceClient::GetMonitoredResourceDescriptor(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::monitoring::v3::GetMonitoredResourceDescriptorRequest request;
   request.set_name(name);
@@ -59,17 +55,13 @@ MetricServiceClient::GetMonitoredResourceDescriptor(std::string const& name,
 }
 
 StatusOr<google::api::MonitoredResourceDescriptor>
-MetricServiceClient::GetMonitoredResourceDescriptor(
-    google::monitoring::v3::GetMonitoredResourceDescriptorRequest const&
-        request,
-    Options opts) {
+MetricServiceClient::GetMonitoredResourceDescriptor(google::monitoring::v3::GetMonitoredResourceDescriptorRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetMonitoredResourceDescriptor(request);
 }
 
 StreamRange<google::api::MetricDescriptor>
-MetricServiceClient::ListMetricDescriptors(std::string const& name,
-                                           Options opts) {
+MetricServiceClient::ListMetricDescriptors(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::monitoring::v3::ListMetricDescriptorsRequest request;
   request.set_name(name);
@@ -77,16 +69,13 @@ MetricServiceClient::ListMetricDescriptors(std::string const& name,
 }
 
 StreamRange<google::api::MetricDescriptor>
-MetricServiceClient::ListMetricDescriptors(
-    google::monitoring::v3::ListMetricDescriptorsRequest request,
-    Options opts) {
+MetricServiceClient::ListMetricDescriptors(google::monitoring::v3::ListMetricDescriptorsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListMetricDescriptors(std::move(request));
 }
 
 StatusOr<google::api::MetricDescriptor>
-MetricServiceClient::GetMetricDescriptor(std::string const& name,
-                                         Options opts) {
+MetricServiceClient::GetMetricDescriptor(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::monitoring::v3::GetMetricDescriptorRequest request;
   request.set_name(name);
@@ -94,17 +83,13 @@ MetricServiceClient::GetMetricDescriptor(std::string const& name,
 }
 
 StatusOr<google::api::MetricDescriptor>
-MetricServiceClient::GetMetricDescriptor(
-    google::monitoring::v3::GetMetricDescriptorRequest const& request,
-    Options opts) {
+MetricServiceClient::GetMetricDescriptor(google::monitoring::v3::GetMetricDescriptorRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetMetricDescriptor(request);
 }
 
 StatusOr<google::api::MetricDescriptor>
-MetricServiceClient::CreateMetricDescriptor(
-    std::string const& name,
-    google::api::MetricDescriptor const& metric_descriptor, Options opts) {
+MetricServiceClient::CreateMetricDescriptor(std::string const& name, google::api::MetricDescriptor const& metric_descriptor, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::monitoring::v3::CreateMetricDescriptorRequest request;
   request.set_name(name);
@@ -113,34 +98,27 @@ MetricServiceClient::CreateMetricDescriptor(
 }
 
 StatusOr<google::api::MetricDescriptor>
-MetricServiceClient::CreateMetricDescriptor(
-    google::monitoring::v3::CreateMetricDescriptorRequest const& request,
-    Options opts) {
+MetricServiceClient::CreateMetricDescriptor(google::monitoring::v3::CreateMetricDescriptorRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateMetricDescriptor(request);
 }
 
-Status MetricServiceClient::DeleteMetricDescriptor(std::string const& name,
-                                                   Options opts) {
+Status
+MetricServiceClient::DeleteMetricDescriptor(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::monitoring::v3::DeleteMetricDescriptorRequest request;
   request.set_name(name);
   return connection_->DeleteMetricDescriptor(request);
 }
 
-Status MetricServiceClient::DeleteMetricDescriptor(
-    google::monitoring::v3::DeleteMetricDescriptorRequest const& request,
-    Options opts) {
+Status
+MetricServiceClient::DeleteMetricDescriptor(google::monitoring::v3::DeleteMetricDescriptorRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteMetricDescriptor(request);
 }
 
 StreamRange<google::monitoring::v3::TimeSeries>
-MetricServiceClient::ListTimeSeries(
-    std::string const& name, std::string const& filter,
-    google::monitoring::v3::TimeInterval const& interval,
-    google::monitoring::v3::ListTimeSeriesRequest::TimeSeriesView view,
-    Options opts) {
+MetricServiceClient::ListTimeSeries(std::string const& name, std::string const& filter, google::monitoring::v3::TimeInterval const& interval, google::monitoring::v3::ListTimeSeriesRequest::TimeSeriesView view, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::monitoring::v3::ListTimeSeriesRequest request;
   request.set_name(name);
@@ -151,16 +129,13 @@ MetricServiceClient::ListTimeSeries(
 }
 
 StreamRange<google::monitoring::v3::TimeSeries>
-MetricServiceClient::ListTimeSeries(
-    google::monitoring::v3::ListTimeSeriesRequest request, Options opts) {
+MetricServiceClient::ListTimeSeries(google::monitoring::v3::ListTimeSeriesRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListTimeSeries(std::move(request));
 }
 
-Status MetricServiceClient::CreateTimeSeries(
-    std::string const& name,
-    std::vector<google::monitoring::v3::TimeSeries> const& time_series,
-    Options opts) {
+Status
+MetricServiceClient::CreateTimeSeries(std::string const& name, std::vector<google::monitoring::v3::TimeSeries> const& time_series, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::monitoring::v3::CreateTimeSeriesRequest request;
   request.set_name(name);
@@ -168,17 +143,14 @@ Status MetricServiceClient::CreateTimeSeries(
   return connection_->CreateTimeSeries(request);
 }
 
-Status MetricServiceClient::CreateTimeSeries(
-    google::monitoring::v3::CreateTimeSeriesRequest const& request,
-    Options opts) {
+Status
+MetricServiceClient::CreateTimeSeries(google::monitoring::v3::CreateTimeSeriesRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateTimeSeries(request);
 }
 
-Status MetricServiceClient::CreateServiceTimeSeries(
-    std::string const& name,
-    std::vector<google::monitoring::v3::TimeSeries> const& time_series,
-    Options opts) {
+Status
+MetricServiceClient::CreateServiceTimeSeries(std::string const& name, std::vector<google::monitoring::v3::TimeSeries> const& time_series, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::monitoring::v3::CreateTimeSeriesRequest request;
   request.set_name(name);
@@ -186,17 +158,14 @@ Status MetricServiceClient::CreateServiceTimeSeries(
   return connection_->CreateServiceTimeSeries(request);
 }
 
-Status MetricServiceClient::CreateServiceTimeSeries(
-    google::monitoring::v3::CreateTimeSeriesRequest const& request,
-    Options opts) {
+Status
+MetricServiceClient::CreateServiceTimeSeries(google::monitoring::v3::CreateTimeSeriesRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateServiceTimeSeries(request);
 }
 
-future<Status> MetricServiceClient::AsyncCreateTimeSeries(
-    std::string const& name,
-    std::vector<google::monitoring::v3::TimeSeries> const& time_series,
-    Options opts) {
+future<Status>
+MetricServiceClient::AsyncCreateTimeSeries(std::string const& name, std::vector<google::monitoring::v3::TimeSeries> const& time_series, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::monitoring::v3::CreateTimeSeriesRequest request;
   request.set_name(name);
@@ -204,9 +173,8 @@ future<Status> MetricServiceClient::AsyncCreateTimeSeries(
   return connection_->AsyncCreateTimeSeries(request);
 }
 
-future<Status> MetricServiceClient::AsyncCreateTimeSeries(
-    google::monitoring::v3::CreateTimeSeriesRequest const& request,
-    Options opts) {
+future<Status>
+MetricServiceClient::AsyncCreateTimeSeries(google::monitoring::v3::CreateTimeSeriesRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->AsyncCreateTimeSeries(request);
 }

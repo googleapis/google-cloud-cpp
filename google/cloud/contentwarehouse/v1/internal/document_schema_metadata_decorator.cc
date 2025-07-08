@@ -46,73 +46,69 @@ DocumentSchemaServiceMetadata::DocumentSchemaServiceMetadata(
 
 StatusOr<google::cloud::contentwarehouse::v1::DocumentSchema>
 DocumentSchemaServiceMetadata::CreateDocumentSchema(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::contentwarehouse::v1::CreateDocumentSchemaRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::contentwarehouse::v1::CreateDocumentSchemaRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateDocumentSchema(context, options, request);
 }
 
 StatusOr<google::cloud::contentwarehouse::v1::DocumentSchema>
 DocumentSchemaServiceMetadata::UpdateDocumentSchema(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::contentwarehouse::v1::UpdateDocumentSchemaRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::contentwarehouse::v1::UpdateDocumentSchemaRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->UpdateDocumentSchema(context, options, request);
 }
 
 StatusOr<google::cloud::contentwarehouse::v1::DocumentSchema>
 DocumentSchemaServiceMetadata::GetDocumentSchema(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::contentwarehouse::v1::GetDocumentSchemaRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::contentwarehouse::v1::GetDocumentSchemaRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetDocumentSchema(context, options, request);
 }
 
-Status DocumentSchemaServiceMetadata::DeleteDocumentSchema(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::contentwarehouse::v1::DeleteDocumentSchemaRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+Status
+DocumentSchemaServiceMetadata::DeleteDocumentSchema(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::contentwarehouse::v1::DeleteDocumentSchemaRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteDocumentSchema(context, options, request);
 }
 
 StatusOr<google::cloud::contentwarehouse::v1::ListDocumentSchemasResponse>
 DocumentSchemaServiceMetadata::ListDocumentSchemas(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::contentwarehouse::v1::ListDocumentSchemasRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::contentwarehouse::v1::ListDocumentSchemasRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListDocumentSchemas(context, options, request);
 }
 
 StatusOr<google::longrunning::Operation>
 DocumentSchemaServiceMetadata::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetOperation(context, options, request);
 }
 
-void DocumentSchemaServiceMetadata::SetMetadata(
-    grpc::ClientContext& context, Options const& options,
-    std::string const& request_params) {
+void DocumentSchemaServiceMetadata::SetMetadata(grpc::ClientContext& context,
+                                        Options const& options,
+                                        std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
 void DocumentSchemaServiceMetadata::SetMetadata(grpc::ClientContext& context,
-                                                Options const& options) {
-  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
-                                       api_client_header_);
+                                        Options const& options) {
+  google::cloud::internal::SetMetadata(
+      context, options, fixed_metadata_, api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

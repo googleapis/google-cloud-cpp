@@ -36,52 +36,42 @@ class NetworksConnectionIdempotencyPolicy {
   /// Create a new copy of this object.
   virtual std::unique_ptr<NetworksConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency AddPeering(
-      google::cloud::cpp::compute::networks::v1::AddPeeringRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  AddPeering(google::cloud::cpp::compute::networks::v1::AddPeeringRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteNetwork(
-      google::cloud::cpp::compute::networks::v1::DeleteNetworkRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  DeleteNetwork(google::cloud::cpp::compute::networks::v1::DeleteNetworkRequest const& request);
 
-  virtual google::cloud::Idempotency GetNetwork(
-      google::cloud::cpp::compute::networks::v1::GetNetworkRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  GetNetwork(google::cloud::cpp::compute::networks::v1::GetNetworkRequest const& request);
 
-  virtual google::cloud::Idempotency GetEffectiveFirewalls(
-      google::cloud::cpp::compute::networks::v1::
-          GetEffectiveFirewallsRequest const& request);
+  virtual google::cloud::Idempotency
+  GetEffectiveFirewalls(google::cloud::cpp::compute::networks::v1::GetEffectiveFirewallsRequest const& request);
 
-  virtual google::cloud::Idempotency InsertNetwork(
-      google::cloud::cpp::compute::networks::v1::InsertNetworkRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  InsertNetwork(google::cloud::cpp::compute::networks::v1::InsertNetworkRequest const& request);
 
-  virtual google::cloud::Idempotency ListNetworks(
-      google::cloud::cpp::compute::networks::v1::ListNetworksRequest request);
+  virtual google::cloud::Idempotency
+  ListNetworks(google::cloud::cpp::compute::networks::v1::ListNetworksRequest request);
 
-  virtual google::cloud::Idempotency ListPeeringRoutes(
-      google::cloud::cpp::compute::networks::v1::ListPeeringRoutesRequest
-          request);
+  virtual google::cloud::Idempotency
+  ListPeeringRoutes(google::cloud::cpp::compute::networks::v1::ListPeeringRoutesRequest request);
 
-  virtual google::cloud::Idempotency PatchNetwork(
-      google::cloud::cpp::compute::networks::v1::PatchNetworkRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  PatchNetwork(google::cloud::cpp::compute::networks::v1::PatchNetworkRequest const& request);
 
-  virtual google::cloud::Idempotency RemovePeering(
-      google::cloud::cpp::compute::networks::v1::RemovePeeringRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  RemovePeering(google::cloud::cpp::compute::networks::v1::RemovePeeringRequest const& request);
 
-  virtual google::cloud::Idempotency SwitchToCustomMode(
-      google::cloud::cpp::compute::networks::v1::
-          SwitchToCustomModeRequest const& request);
+  virtual google::cloud::Idempotency
+  SwitchToCustomMode(google::cloud::cpp::compute::networks::v1::SwitchToCustomModeRequest const& request);
 
-  virtual google::cloud::Idempotency UpdatePeering(
-      google::cloud::cpp::compute::networks::v1::UpdatePeeringRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  UpdatePeering(google::cloud::cpp::compute::networks::v1::UpdatePeeringRequest const& request);
 };
 
 std::unique_ptr<NetworksConnectionIdempotencyPolicy>
-MakeDefaultNetworksConnectionIdempotencyPolicy();
+    MakeDefaultNetworksConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_networks_v1

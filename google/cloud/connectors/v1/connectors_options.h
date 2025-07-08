@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONNECTORS_V1_CONNECTORS_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONNECTORS_V1_CONNECTORS_OPTIONS_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/connectors/v1/connectors_connection.h"
 #include "google/cloud/connectors/v1/connectors_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -74,7 +74,8 @@ struct ConnectorsPollingPolicyOption {
  * @ingroup google-cloud-connectors-options
  */
 using ConnectorsPolicyOptionList =
-    OptionList<ConnectorsRetryPolicyOption, ConnectorsBackoffPolicyOption,
+    OptionList<ConnectorsRetryPolicyOption,
+               ConnectorsBackoffPolicyOption,
                ConnectorsPollingPolicyOption,
                ConnectorsConnectionIdempotencyPolicyOption>;
 

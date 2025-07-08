@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_NETWORKMANAGEMENT_V1_INTERNAL_REACHABILITY_STUB_FACTORY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_NETWORKMANAGEMENT_V1_INTERNAL_REACHABILITY_STUB_FACTORY_H
 
-#include "google/cloud/networkmanagement/v1/internal/reachability_stub.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/networkmanagement/v1/internal/reachability_stub.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>

@@ -30,19 +30,22 @@ namespace cloud {
 namespace memorystore_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-MemorystoreLogging::MemorystoreLogging(std::shared_ptr<MemorystoreStub> child,
-                                       TracingOptions tracing_options,
-                                       std::set<std::string> const&)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
+MemorystoreLogging::MemorystoreLogging(
+    std::shared_ptr<MemorystoreStub> child,
+    TracingOptions tracing_options,
+    std::set<std::string> const&)
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::cloud::memorystore::v1::ListInstancesResponse>
 MemorystoreLogging::ListInstances(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::memorystore::v1::ListInstancesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::memorystore::v1::ListInstancesRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::memorystore::v1::ListInstancesRequest const& request) {
         return child_->ListInstances(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -50,12 +53,13 @@ MemorystoreLogging::ListInstances(
 
 StatusOr<google::cloud::memorystore::v1::Instance>
 MemorystoreLogging::GetInstance(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::memorystore::v1::GetInstanceRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::memorystore::v1::GetInstanceRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::memorystore::v1::GetInstanceRequest const& request) {
         return child_->GetInstance(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -63,30 +67,31 @@ MemorystoreLogging::GetInstance(
 
 future<StatusOr<google::longrunning::Operation>>
 MemorystoreLogging::AsyncCreateInstance(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::memorystore::v1::CreateInstanceRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::memorystore::v1::CreateInstanceRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::memorystore::v1::CreateInstanceRequest const&
-                 request) {
-        return child_->AsyncCreateInstance(cq, std::move(context),
-                                           std::move(options), request);
+             google::cloud::memorystore::v1::CreateInstanceRequest const& request) {
+        return child_->AsyncCreateInstance(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> MemorystoreLogging::CreateInstance(
-    grpc::ClientContext& context, Options options,
-    google::cloud::memorystore::v1::CreateInstanceRequest const& request) {
+StatusOr<google::longrunning::Operation>
+MemorystoreLogging::CreateInstance(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::memorystore::v1::CreateInstanceRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::memorystore::v1::CreateInstanceRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::memorystore::v1::CreateInstanceRequest const& request) {
         return child_->CreateInstance(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -94,30 +99,31 @@ StatusOr<google::longrunning::Operation> MemorystoreLogging::CreateInstance(
 
 future<StatusOr<google::longrunning::Operation>>
 MemorystoreLogging::AsyncUpdateInstance(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::memorystore::v1::UpdateInstanceRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::memorystore::v1::UpdateInstanceRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::memorystore::v1::UpdateInstanceRequest const&
-                 request) {
-        return child_->AsyncUpdateInstance(cq, std::move(context),
-                                           std::move(options), request);
+             google::cloud::memorystore::v1::UpdateInstanceRequest const& request) {
+        return child_->AsyncUpdateInstance(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> MemorystoreLogging::UpdateInstance(
-    grpc::ClientContext& context, Options options,
-    google::cloud::memorystore::v1::UpdateInstanceRequest const& request) {
+StatusOr<google::longrunning::Operation>
+MemorystoreLogging::UpdateInstance(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::memorystore::v1::UpdateInstanceRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::memorystore::v1::UpdateInstanceRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::memorystore::v1::UpdateInstanceRequest const& request) {
         return child_->UpdateInstance(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -125,30 +131,31 @@ StatusOr<google::longrunning::Operation> MemorystoreLogging::UpdateInstance(
 
 future<StatusOr<google::longrunning::Operation>>
 MemorystoreLogging::AsyncDeleteInstance(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::memorystore::v1::DeleteInstanceRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::memorystore::v1::DeleteInstanceRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::memorystore::v1::DeleteInstanceRequest const&
-                 request) {
-        return child_->AsyncDeleteInstance(cq, std::move(context),
-                                           std::move(options), request);
+             google::cloud::memorystore::v1::DeleteInstanceRequest const& request) {
+        return child_->AsyncDeleteInstance(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> MemorystoreLogging::DeleteInstance(
-    grpc::ClientContext& context, Options options,
-    google::cloud::memorystore::v1::DeleteInstanceRequest const& request) {
+StatusOr<google::longrunning::Operation>
+MemorystoreLogging::DeleteInstance(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::memorystore::v1::DeleteInstanceRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::memorystore::v1::DeleteInstanceRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::memorystore::v1::DeleteInstanceRequest const& request) {
         return child_->DeleteInstance(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -156,14 +163,13 @@ StatusOr<google::longrunning::Operation> MemorystoreLogging::DeleteInstance(
 
 StatusOr<google::cloud::memorystore::v1::CertificateAuthority>
 MemorystoreLogging::GetCertificateAuthority(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::memorystore::v1::GetCertificateAuthorityRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::memorystore::v1::GetCertificateAuthorityRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::memorystore::v1::GetCertificateAuthorityRequest const&
-              request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::memorystore::v1::GetCertificateAuthorityRequest const& request) {
         return child_->GetCertificateAuthority(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -171,19 +177,17 @@ MemorystoreLogging::GetCertificateAuthority(
 
 future<StatusOr<google::longrunning::Operation>>
 MemorystoreLogging::AsyncRescheduleMaintenance(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::memorystore::v1::RescheduleMaintenanceRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::memorystore::v1::RescheduleMaintenanceRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::memorystore::v1::RescheduleMaintenanceRequest const&
-                 request) {
-        return child_->AsyncRescheduleMaintenance(cq, std::move(context),
-                                                  std::move(options), request);
+             google::cloud::memorystore::v1::RescheduleMaintenanceRequest const& request) {
+        return child_->AsyncRescheduleMaintenance(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -191,13 +195,13 @@ MemorystoreLogging::AsyncRescheduleMaintenance(
 
 StatusOr<google::longrunning::Operation>
 MemorystoreLogging::RescheduleMaintenance(
-    grpc::ClientContext& context, Options options,
-    google::cloud::memorystore::v1::RescheduleMaintenanceRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::memorystore::v1::RescheduleMaintenanceRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::memorystore::v1::RescheduleMaintenanceRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::memorystore::v1::RescheduleMaintenanceRequest const& request) {
         return child_->RescheduleMaintenance(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -205,13 +209,13 @@ MemorystoreLogging::RescheduleMaintenance(
 
 StatusOr<google::cloud::memorystore::v1::ListBackupCollectionsResponse>
 MemorystoreLogging::ListBackupCollections(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::memorystore::v1::ListBackupCollectionsRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::memorystore::v1::ListBackupCollectionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::memorystore::v1::ListBackupCollectionsRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::memorystore::v1::ListBackupCollectionsRequest const& request) {
         return child_->ListBackupCollections(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -219,12 +223,13 @@ MemorystoreLogging::ListBackupCollections(
 
 StatusOr<google::cloud::memorystore::v1::BackupCollection>
 MemorystoreLogging::GetBackupCollection(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::memorystore::v1::GetBackupCollectionRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::memorystore::v1::GetBackupCollectionRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::memorystore::v1::GetBackupCollectionRequest const& request) {
         return child_->GetBackupCollection(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -232,22 +237,26 @@ MemorystoreLogging::GetBackupCollection(
 
 StatusOr<google::cloud::memorystore::v1::ListBackupsResponse>
 MemorystoreLogging::ListBackups(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::memorystore::v1::ListBackupsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::memorystore::v1::ListBackupsRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::memorystore::v1::ListBackupsRequest const& request) {
         return child_->ListBackups(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::cloud::memorystore::v1::Backup> MemorystoreLogging::GetBackup(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::memorystore::v1::Backup>
+MemorystoreLogging::GetBackup(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::memorystore::v1::GetBackupRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::memorystore::v1::GetBackupRequest const& request) {
         return child_->GetBackup(context, options, request);
       },
@@ -256,30 +265,31 @@ StatusOr<google::cloud::memorystore::v1::Backup> MemorystoreLogging::GetBackup(
 
 future<StatusOr<google::longrunning::Operation>>
 MemorystoreLogging::AsyncDeleteBackup(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::memorystore::v1::DeleteBackupRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::memorystore::v1::DeleteBackupRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::memorystore::v1::DeleteBackupRequest const& request) {
-        return child_->AsyncDeleteBackup(cq, std::move(context),
-                                         std::move(options), request);
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::memorystore::v1::DeleteBackupRequest const& request) {
+        return child_->AsyncDeleteBackup(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> MemorystoreLogging::DeleteBackup(
-    grpc::ClientContext& context, Options options,
-    google::cloud::memorystore::v1::DeleteBackupRequest const& request) {
+StatusOr<google::longrunning::Operation>
+MemorystoreLogging::DeleteBackup(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::memorystore::v1::DeleteBackupRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::memorystore::v1::DeleteBackupRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::memorystore::v1::DeleteBackupRequest const& request) {
         return child_->DeleteBackup(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -287,30 +297,31 @@ StatusOr<google::longrunning::Operation> MemorystoreLogging::DeleteBackup(
 
 future<StatusOr<google::longrunning::Operation>>
 MemorystoreLogging::AsyncExportBackup(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::memorystore::v1::ExportBackupRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::memorystore::v1::ExportBackupRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::memorystore::v1::ExportBackupRequest const& request) {
-        return child_->AsyncExportBackup(cq, std::move(context),
-                                         std::move(options), request);
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::memorystore::v1::ExportBackupRequest const& request) {
+        return child_->AsyncExportBackup(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> MemorystoreLogging::ExportBackup(
-    grpc::ClientContext& context, Options options,
-    google::cloud::memorystore::v1::ExportBackupRequest const& request) {
+StatusOr<google::longrunning::Operation>
+MemorystoreLogging::ExportBackup(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::memorystore::v1::ExportBackupRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::memorystore::v1::ExportBackupRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::memorystore::v1::ExportBackupRequest const& request) {
         return child_->ExportBackup(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -318,30 +329,31 @@ StatusOr<google::longrunning::Operation> MemorystoreLogging::ExportBackup(
 
 future<StatusOr<google::longrunning::Operation>>
 MemorystoreLogging::AsyncBackupInstance(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::memorystore::v1::BackupInstanceRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::memorystore::v1::BackupInstanceRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::memorystore::v1::BackupInstanceRequest const&
-                 request) {
-        return child_->AsyncBackupInstance(cq, std::move(context),
-                                           std::move(options), request);
+             google::cloud::memorystore::v1::BackupInstanceRequest const& request) {
+        return child_->AsyncBackupInstance(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> MemorystoreLogging::BackupInstance(
-    grpc::ClientContext& context, Options options,
-    google::cloud::memorystore::v1::BackupInstanceRequest const& request) {
+StatusOr<google::longrunning::Operation>
+MemorystoreLogging::BackupInstance(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::memorystore::v1::BackupInstanceRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::memorystore::v1::BackupInstanceRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::memorystore::v1::BackupInstanceRequest const& request) {
         return child_->BackupInstance(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -349,21 +361,26 @@ StatusOr<google::longrunning::Operation> MemorystoreLogging::BackupInstance(
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 MemorystoreLogging::ListLocations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::location::ListLocationsRequest const& request) {
         return child_->ListLocations(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::cloud::location::Location> MemorystoreLogging::GetLocation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::location::Location>
+MemorystoreLogging::GetLocation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::location::GetLocationRequest const& request) {
         return child_->GetLocation(context, options, request);
       },
@@ -372,43 +389,54 @@ StatusOr<google::cloud::location::Location> MemorystoreLogging::GetLocation(
 
 StatusOr<google::longrunning::ListOperationsResponse>
 MemorystoreLogging::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::ListOperationsRequest const& request) {
         return child_->ListOperations(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> MemorystoreLogging::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::Operation>
+MemorystoreLogging::GetOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::GetOperationRequest const& request) {
         return child_->GetOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status MemorystoreLogging::DeleteOperation(
-    grpc::ClientContext& context, Options const& options,
+Status
+MemorystoreLogging::DeleteOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::DeleteOperationRequest const& request) {
         return child_->DeleteOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status MemorystoreLogging::CancelOperation(
-    grpc::ClientContext& context, Options const& options,
+Status
+MemorystoreLogging::CancelOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::CancelOperationRequest const& request) {
         return child_->CancelOperation(context, options, request);
       },
@@ -426,8 +454,8 @@ MemorystoreLogging::AsyncGetOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(cq, std::move(context),
-                                         std::move(options), request);
+        return child_->AsyncGetOperation(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -443,8 +471,8 @@ future<Status> MemorystoreLogging::AsyncCancelOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::CancelOperationRequest const& request) {
-        return child_->AsyncCancelOperation(cq, std::move(context),
-                                            std::move(options), request);
+        return child_->AsyncCancelOperation(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);

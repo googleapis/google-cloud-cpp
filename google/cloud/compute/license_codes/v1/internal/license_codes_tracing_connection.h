@@ -36,17 +36,15 @@ class LicenseCodesTracingConnection
   ~LicenseCodesTracingConnection() override = default;
 
   explicit LicenseCodesTracingConnection(
-      std::shared_ptr<compute_license_codes_v1::LicenseCodesConnection> child);
+    std::shared_ptr<compute_license_codes_v1::LicenseCodesConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::cpp::compute::v1::LicenseCode> GetLicenseCode(
-      google::cloud::cpp::compute::license_codes::v1::
-          GetLicenseCodeRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::LicenseCode>
+  GetLicenseCode(google::cloud::cpp::compute::license_codes::v1::GetLicenseCodeRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(google::cloud::cpp::compute::license_codes::v1::
-                         TestIamPermissionsRequest const& request) override;
+  TestIamPermissions(google::cloud::cpp::compute::license_codes::v1::TestIamPermissionsRequest const& request) override;
 
  private:
   std::shared_ptr<compute_license_codes_v1::LicenseCodesConnection> child_;

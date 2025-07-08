@@ -30,8 +30,7 @@ namespace cloud {
 namespace filestore_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use filestore_v1_mocks::MockCloudFilestoreManagerConnection
-/// directly.
+/// @deprecated Use filestore_v1_mocks::MockCloudFilestoreManagerConnection directly.
 using ::google::cloud::filestore_v1_mocks::MockCloudFilestoreManagerConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

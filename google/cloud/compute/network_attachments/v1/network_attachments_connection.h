@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_NETWORK_ATTACHMENTS_V1_NETWORK_ATTACHMENTS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_NETWORK_ATTACHMENTS_V1_NETWORK_ATTACHMENTS_CONNECTION_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/network_attachments/v1/internal/network_attachments_retry_traits.h"
 #include "google/cloud/compute/network_attachments/v1/network_attachments_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -55,8 +55,7 @@ class NetworkAttachmentsRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class NetworkAttachmentsLimitedErrorCountRetryPolicy
-    : public NetworkAttachmentsRetryPolicy {
+class NetworkAttachmentsLimitedErrorCountRetryPolicy : public NetworkAttachmentsRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -66,16 +65,14 @@ class NetworkAttachmentsLimitedErrorCountRetryPolicy
    *     @p maximum_failures == 0.
    */
   explicit NetworkAttachmentsLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   NetworkAttachmentsLimitedErrorCountRetryPolicy(
       NetworkAttachmentsLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : NetworkAttachmentsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {
-  }
+    : NetworkAttachmentsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   NetworkAttachmentsLimitedErrorCountRetryPolicy(
       NetworkAttachmentsLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : NetworkAttachmentsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {
-  }
+    : NetworkAttachmentsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -95,9 +92,7 @@ class NetworkAttachmentsLimitedErrorCountRetryPolicy
   using BaseType = NetworkAttachmentsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      compute_network_attachments_v1_internal::NetworkAttachmentsRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<compute_network_attachments_v1_internal::NetworkAttachmentsRetryTraits> impl_;
 };
 
 /**
@@ -110,8 +105,7 @@ class NetworkAttachmentsLimitedErrorCountRetryPolicy
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class NetworkAttachmentsLimitedTimeRetryPolicy
-    : public NetworkAttachmentsRetryPolicy {
+class NetworkAttachmentsLimitedTimeRetryPolicy : public NetworkAttachmentsRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -136,14 +130,12 @@ class NetworkAttachmentsLimitedTimeRetryPolicy
   template <typename DurationRep, typename DurationPeriod>
   explicit NetworkAttachmentsLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  NetworkAttachmentsLimitedTimeRetryPolicy(
-      NetworkAttachmentsLimitedTimeRetryPolicy&& rhs) noexcept
-      : NetworkAttachmentsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  NetworkAttachmentsLimitedTimeRetryPolicy(
-      NetworkAttachmentsLimitedTimeRetryPolicy const& rhs) noexcept
-      : NetworkAttachmentsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  NetworkAttachmentsLimitedTimeRetryPolicy(NetworkAttachmentsLimitedTimeRetryPolicy&& rhs) noexcept
+    : NetworkAttachmentsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  NetworkAttachmentsLimitedTimeRetryPolicy(NetworkAttachmentsLimitedTimeRetryPolicy const& rhs) noexcept
+    : NetworkAttachmentsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -165,23 +157,20 @@ class NetworkAttachmentsLimitedTimeRetryPolicy
   using BaseType = NetworkAttachmentsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      compute_network_attachments_v1_internal::NetworkAttachmentsRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<compute_network_attachments_v1_internal::NetworkAttachmentsRetryTraits> impl_;
 };
 
 /**
  * The `NetworkAttachmentsConnection` object for `NetworkAttachmentsClient`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `NetworkAttachmentsClient`. This allows users to inject custom
- * behavior (e.g., with a Google Mock object) when writing tests that use
- * objects of type `NetworkAttachmentsClient`.
+ * sets in `NetworkAttachmentsClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `NetworkAttachmentsClient`.
  *
  * To create a concrete instance, see `MakeNetworkAttachmentsConnection()`.
  *
- * For mocking, see
- * `compute_network_attachments_v1_mocks::MockNetworkAttachmentsConnection`.
+ * For mocking, see `compute_network_attachments_v1_mocks::MockNetworkAttachmentsConnection`.
  */
 class NetworkAttachmentsConnection {
  public:
@@ -189,71 +178,50 @@ class NetworkAttachmentsConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StreamRange<
-      std::pair<std::string,
-                google::cloud::cpp::compute::v1::NetworkAttachmentsScopedList>>
-  AggregatedListNetworkAttachments(
-      google::cloud::cpp::compute::network_attachments::v1::
-          AggregatedListNetworkAttachmentsRequest request);
+  virtual StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::NetworkAttachmentsScopedList>>
+  AggregatedListNetworkAttachments(google::cloud::cpp::compute::network_attachments::v1::AggregatedListNetworkAttachmentsRequest request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteNetworkAttachment(google::cloud::cpp::compute::network_attachments::v1::
-                              DeleteNetworkAttachmentRequest const& request);
+  DeleteNetworkAttachment(google::cloud::cpp::compute::network_attachments::v1::DeleteNetworkAttachmentRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteNetworkAttachment(NoAwaitTag,
-                          google::cloud::cpp::compute::network_attachments::v1::
-                              DeleteNetworkAttachmentRequest const& request);
+  DeleteNetworkAttachment(NoAwaitTag, google::cloud::cpp::compute::network_attachments::v1::DeleteNetworkAttachmentRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteNetworkAttachment(
-      google::cloud::cpp::compute::v1::Operation const& operation);
+  DeleteNetworkAttachment( google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::NetworkAttachment>
-  GetNetworkAttachment(google::cloud::cpp::compute::network_attachments::v1::
-                           GetNetworkAttachmentRequest const& request);
+  GetNetworkAttachment(google::cloud::cpp::compute::network_attachments::v1::GetNetworkAttachmentRequest const& request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
-      google::cloud::cpp::compute::network_attachments::v1::
-          GetIamPolicyRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Policy>
+  GetIamPolicy(google::cloud::cpp::compute::network_attachments::v1::GetIamPolicyRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertNetworkAttachment(google::cloud::cpp::compute::network_attachments::v1::
-                              InsertNetworkAttachmentRequest const& request);
+  InsertNetworkAttachment(google::cloud::cpp::compute::network_attachments::v1::InsertNetworkAttachmentRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertNetworkAttachment(NoAwaitTag,
-                          google::cloud::cpp::compute::network_attachments::v1::
-                              InsertNetworkAttachmentRequest const& request);
+  InsertNetworkAttachment(NoAwaitTag, google::cloud::cpp::compute::network_attachments::v1::InsertNetworkAttachmentRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertNetworkAttachment(
-      google::cloud::cpp::compute::v1::Operation const& operation);
+  InsertNetworkAttachment( google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::NetworkAttachment>
-  ListNetworkAttachments(google::cloud::cpp::compute::network_attachments::v1::
-                             ListNetworkAttachmentsRequest request);
+  ListNetworkAttachments(google::cloud::cpp::compute::network_attachments::v1::ListNetworkAttachmentsRequest request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchNetworkAttachment(google::cloud::cpp::compute::network_attachments::v1::
-                             PatchNetworkAttachmentRequest const& request);
+  PatchNetworkAttachment(google::cloud::cpp::compute::network_attachments::v1::PatchNetworkAttachmentRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  PatchNetworkAttachment(NoAwaitTag,
-                         google::cloud::cpp::compute::network_attachments::v1::
-                             PatchNetworkAttachmentRequest const& request);
+  PatchNetworkAttachment(NoAwaitTag, google::cloud::cpp::compute::network_attachments::v1::PatchNetworkAttachmentRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchNetworkAttachment(
-      google::cloud::cpp::compute::v1::Operation const& operation);
+  PatchNetworkAttachment( google::cloud::cpp::compute::v1::Operation const& operation);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
-      google::cloud::cpp::compute::network_attachments::v1::
-          SetIamPolicyRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Policy>
+  SetIamPolicy(google::cloud::cpp::compute::network_attachments::v1::SetIamPolicyRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(google::cloud::cpp::compute::network_attachments::v1::
-                         TestIamPermissionsRequest const& request);
+  TestIamPermissions(google::cloud::cpp::compute::network_attachments::v1::TestIamPermissionsRequest const& request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

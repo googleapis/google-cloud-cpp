@@ -31,10 +31,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// @deprecated Use oslogin_v1::OsLoginServiceBackoffPolicyOption directly.
 using ::google::cloud::oslogin_v1::OsLoginServiceBackoffPolicyOption;
 
-/// @deprecated Use oslogin_v1::OsLoginServiceConnectionIdempotencyPolicyOption
-/// directly.
-using ::google::cloud::oslogin_v1::
-    OsLoginServiceConnectionIdempotencyPolicyOption;
+/// @deprecated Use oslogin_v1::OsLoginServiceConnectionIdempotencyPolicyOption directly.
+using ::google::cloud::oslogin_v1::OsLoginServiceConnectionIdempotencyPolicyOption;
 
 /// @deprecated Use oslogin_v1::OsLoginServicePolicyOptionList directly.
 using ::google::cloud::oslogin_v1::OsLoginServicePolicyOptionList;

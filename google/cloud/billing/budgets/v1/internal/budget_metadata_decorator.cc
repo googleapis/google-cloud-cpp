@@ -46,46 +46,46 @@ BudgetServiceMetadata::BudgetServiceMetadata(
 
 StatusOr<google::cloud::billing::budgets::v1::Budget>
 BudgetServiceMetadata::CreateBudget(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::billing::budgets::v1::CreateBudgetRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateBudget(context, options, request);
 }
 
 StatusOr<google::cloud::billing::budgets::v1::Budget>
 BudgetServiceMetadata::UpdateBudget(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::billing::budgets::v1::UpdateBudgetRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("budget.name=",
-                           internal::UrlEncode(request.budget().name())));
+  SetMetadata(context, options, absl::StrCat("budget.name=", internal::UrlEncode(request.budget().name())));
   return child_->UpdateBudget(context, options, request);
 }
 
 StatusOr<google::cloud::billing::budgets::v1::Budget>
 BudgetServiceMetadata::GetBudget(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::billing::budgets::v1::GetBudgetRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetBudget(context, options, request);
 }
 
 StatusOr<google::cloud::billing::budgets::v1::ListBudgetsResponse>
 BudgetServiceMetadata::ListBudgets(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::billing::budgets::v1::ListBudgetsRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListBudgets(context, options, request);
 }
 
-Status BudgetServiceMetadata::DeleteBudget(
-    grpc::ClientContext& context, Options const& options,
+Status
+BudgetServiceMetadata::DeleteBudget(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::billing::budgets::v1::DeleteBudgetRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteBudget(context, options, request);
 }
 
@@ -98,8 +98,8 @@ void BudgetServiceMetadata::SetMetadata(grpc::ClientContext& context,
 
 void BudgetServiceMetadata::SetMetadata(grpc::ClientContext& context,
                                         Options const& options) {
-  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
-                                       api_client_header_);
+  google::cloud::internal::SetMetadata(
+      context, options, fixed_metadata_, api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

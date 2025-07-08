@@ -36,8 +36,7 @@ class SqlAvailableDatabaseVersionsServiceTracingConnection
   ~SqlAvailableDatabaseVersionsServiceTracingConnection() override = default;
 
   explicit SqlAvailableDatabaseVersionsServiceTracingConnection(
-      std::shared_ptr<sql_v1::SqlAvailableDatabaseVersionsServiceConnection>
-          child);
+    std::shared_ptr<sql_v1::SqlAvailableDatabaseVersionsServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
@@ -55,8 +54,7 @@ class SqlAvailableDatabaseVersionsServiceTracingConnection
  */
 std::shared_ptr<sql_v1::SqlAvailableDatabaseVersionsServiceConnection>
 MakeSqlAvailableDatabaseVersionsServiceTracingConnection(
-    std::shared_ptr<sql_v1::SqlAvailableDatabaseVersionsServiceConnection>
-        conn);
+    std::shared_ptr<sql_v1::SqlAvailableDatabaseVersionsServiceConnection> conn);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace sql_v1_internal

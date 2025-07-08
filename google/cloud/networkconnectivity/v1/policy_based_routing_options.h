@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_NETWORKCONNECTIVITY_V1_POLICY_BASED_ROUTING_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_NETWORKCONNECTIVITY_V1_POLICY_BASED_ROUTING_OPTIONS_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/networkconnectivity/v1/policy_based_routing_connection.h"
 #include "google/cloud/networkconnectivity/v1/policy_based_routing_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -55,8 +55,7 @@ struct PolicyBasedRoutingServiceBackoffPolicyOption {
  * @ingroup google-cloud-networkconnectivity-options
  */
 struct PolicyBasedRoutingServiceConnectionIdempotencyPolicyOption {
-  using Type =
-      std::shared_ptr<PolicyBasedRoutingServiceConnectionIdempotencyPolicy>;
+  using Type = std::shared_ptr<PolicyBasedRoutingServiceConnectionIdempotencyPolicy>;
 };
 
 /**

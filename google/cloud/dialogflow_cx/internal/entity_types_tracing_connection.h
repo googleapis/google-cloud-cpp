@@ -36,70 +36,61 @@ class EntityTypesTracingConnection
   ~EntityTypesTracingConnection() override = default;
 
   explicit EntityTypesTracingConnection(
-      std::shared_ptr<dialogflow_cx::EntityTypesConnection> child);
+    std::shared_ptr<dialogflow_cx::EntityTypesConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::dialogflow::cx::v3::EntityType> GetEntityType(
-      google::cloud::dialogflow::cx::v3::GetEntityTypeRequest const& request)
-      override;
+  StatusOr<google::cloud::dialogflow::cx::v3::EntityType>
+  GetEntityType(google::cloud::dialogflow::cx::v3::GetEntityTypeRequest const& request) override;
 
-  StatusOr<google::cloud::dialogflow::cx::v3::EntityType> CreateEntityType(
-      google::cloud::dialogflow::cx::v3::CreateEntityTypeRequest const& request)
-      override;
+  StatusOr<google::cloud::dialogflow::cx::v3::EntityType>
+  CreateEntityType(google::cloud::dialogflow::cx::v3::CreateEntityTypeRequest const& request) override;
 
-  StatusOr<google::cloud::dialogflow::cx::v3::EntityType> UpdateEntityType(
-      google::cloud::dialogflow::cx::v3::UpdateEntityTypeRequest const& request)
-      override;
+  StatusOr<google::cloud::dialogflow::cx::v3::EntityType>
+  UpdateEntityType(google::cloud::dialogflow::cx::v3::UpdateEntityTypeRequest const& request) override;
 
-  Status DeleteEntityType(
-      google::cloud::dialogflow::cx::v3::DeleteEntityTypeRequest const& request)
-      override;
+  Status
+  DeleteEntityType(google::cloud::dialogflow::cx::v3::DeleteEntityTypeRequest const& request) override;
 
-  StreamRange<google::cloud::dialogflow::cx::v3::EntityType> ListEntityTypes(
-      google::cloud::dialogflow::cx::v3::ListEntityTypesRequest request)
-      override;
+  StreamRange<google::cloud::dialogflow::cx::v3::EntityType>
+  ListEntityTypes(google::cloud::dialogflow::cx::v3::ListEntityTypesRequest request) override;
+
+  future<StatusOr<google::cloud::dialogflow::cx::v3::ExportEntityTypesResponse>>
+  ExportEntityTypes(google::cloud::dialogflow::cx::v3::ExportEntityTypesRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  ExportEntityTypes(NoAwaitTag,
+      google::cloud::dialogflow::cx::v3::ExportEntityTypesRequest const& request) override;
 
   future<StatusOr<google::cloud::dialogflow::cx::v3::ExportEntityTypesResponse>>
   ExportEntityTypes(
-      google::cloud::dialogflow::cx::v3::ExportEntityTypesRequest const&
-          request) override;
+      google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::longrunning::Operation> ExportEntityTypes(
-      NoAwaitTag,
-      google::cloud::dialogflow::cx::v3::ExportEntityTypesRequest const&
-          request) override;
+  future<StatusOr<google::cloud::dialogflow::cx::v3::ImportEntityTypesResponse>>
+  ImportEntityTypes(google::cloud::dialogflow::cx::v3::ImportEntityTypesRequest const& request) override;
 
-  future<StatusOr<google::cloud::dialogflow::cx::v3::ExportEntityTypesResponse>>
-  ExportEntityTypes(google::longrunning::Operation const& operation) override;
+  StatusOr<google::longrunning::Operation>
+  ImportEntityTypes(NoAwaitTag,
+      google::cloud::dialogflow::cx::v3::ImportEntityTypesRequest const& request) override;
 
   future<StatusOr<google::cloud::dialogflow::cx::v3::ImportEntityTypesResponse>>
   ImportEntityTypes(
-      google::cloud::dialogflow::cx::v3::ImportEntityTypesRequest const&
-          request) override;
+      google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::longrunning::Operation> ImportEntityTypes(
-      NoAwaitTag,
-      google::cloud::dialogflow::cx::v3::ImportEntityTypesRequest const&
-          request) override;
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request) override;
 
-  future<StatusOr<google::cloud::dialogflow::cx::v3::ImportEntityTypesResponse>>
-  ImportEntityTypes(google::longrunning::Operation const& operation) override;
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request) override;
 
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request) override;
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request) override;
-
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request) override;
-
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request) override;
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::shared_ptr<dialogflow_cx::EntityTypesConnection> child_;

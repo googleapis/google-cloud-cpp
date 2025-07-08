@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_TARGET_VPN_GATEWAYS_V1_INTERNAL_TARGET_VPN_GATEWAYS_REST_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_TARGET_VPN_GATEWAYS_V1_INTERNAL_TARGET_VPN_GATEWAYS_REST_CONNECTION_IMPL_H
 
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/target_vpn_gateways/v1/internal/target_vpn_gateways_rest_stub.h"
 #include "google/cloud/compute/target_vpn_gateways/v1/internal/target_vpn_gateways_retry_traits.h"
 #include "google/cloud/compute/target_vpn_gateways/v1/target_vpn_gateways_connection.h"
 #include "google/cloud/compute/target_vpn_gateways/v1/target_vpn_gateways_connection_idempotency_policy.h"
 #include "google/cloud/compute/target_vpn_gateways/v1/target_vpn_gateways_options.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -44,103 +44,75 @@ class TargetVpnGatewaysRestConnectionImpl
   ~TargetVpnGatewaysRestConnectionImpl() override = default;
 
   TargetVpnGatewaysRestConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<
-          compute_target_vpn_gateways_v1_internal::TargetVpnGatewaysRestStub>
-          stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<compute_target_vpn_gateways_v1_internal::TargetVpnGatewaysRestStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
-  StreamRange<
-      std::pair<std::string,
-                google::cloud::cpp::compute::v1::TargetVpnGatewaysScopedList>>
-  AggregatedListTargetVpnGateways(
-      google::cloud::cpp::compute::target_vpn_gateways::v1::
-          AggregatedListTargetVpnGatewaysRequest request) override;
+  StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::TargetVpnGatewaysScopedList>>
+  AggregatedListTargetVpnGateways(google::cloud::cpp::compute::target_vpn_gateways::v1::AggregatedListTargetVpnGatewaysRequest request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteTargetVpnGateway(
-      google::cloud::cpp::compute::target_vpn_gateways::v1::
-          DeleteTargetVpnGatewayRequest const& request) override;
+  DeleteTargetVpnGateway(google::cloud::cpp::compute::target_vpn_gateways::v1::DeleteTargetVpnGatewayRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteTargetVpnGateway(
-      NoAwaitTag, google::cloud::cpp::compute::target_vpn_gateways::v1::
-                      DeleteTargetVpnGatewayRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeleteTargetVpnGateway(NoAwaitTag,
+      google::cloud::cpp::compute::target_vpn_gateways::v1::DeleteTargetVpnGatewayRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteTargetVpnGateway(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StatusOr<google::cloud::cpp::compute::v1::TargetVpnGateway>
-  GetTargetVpnGateway(google::cloud::cpp::compute::target_vpn_gateways::v1::
-                          GetTargetVpnGatewayRequest const& request) override;
+  GetTargetVpnGateway(google::cloud::cpp::compute::target_vpn_gateways::v1::GetTargetVpnGatewayRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertTargetVpnGateway(
-      google::cloud::cpp::compute::target_vpn_gateways::v1::
-          InsertTargetVpnGatewayRequest const& request) override;
+  InsertTargetVpnGateway(google::cloud::cpp::compute::target_vpn_gateways::v1::InsertTargetVpnGatewayRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertTargetVpnGateway(
-      NoAwaitTag, google::cloud::cpp::compute::target_vpn_gateways::v1::
-                      InsertTargetVpnGatewayRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  InsertTargetVpnGateway(NoAwaitTag,
+      google::cloud::cpp::compute::target_vpn_gateways::v1::InsertTargetVpnGatewayRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertTargetVpnGateway(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StreamRange<google::cloud::cpp::compute::v1::TargetVpnGateway>
-  ListTargetVpnGateways(google::cloud::cpp::compute::target_vpn_gateways::v1::
-                            ListTargetVpnGatewaysRequest request) override;
+  ListTargetVpnGateways(google::cloud::cpp::compute::target_vpn_gateways::v1::ListTargetVpnGatewaysRequest request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
-      google::cloud::cpp::compute::target_vpn_gateways::v1::
-          SetLabelsRequest const& request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  SetLabels(google::cloud::cpp::compute::target_vpn_gateways::v1::SetLabelsRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
-      NoAwaitTag, google::cloud::cpp::compute::target_vpn_gateways::v1::
-                      SetLabelsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  SetLabels(NoAwaitTag,
+      google::cloud::cpp::compute::target_vpn_gateways::v1::SetLabelsRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  SetLabels(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
  private:
-  static std::unique_ptr<
-      compute_target_vpn_gateways_v1::TargetVpnGatewaysRetryPolicy>
+  static std::unique_ptr<compute_target_vpn_gateways_v1::TargetVpnGatewaysRetryPolicy>
   retry_policy(Options const& options) {
-    return options
-        .get<compute_target_vpn_gateways_v1::
-                 TargetVpnGatewaysRetryPolicyOption>()
-        ->clone();
+    return options.get<compute_target_vpn_gateways_v1::TargetVpnGatewaysRetryPolicyOption>()->clone();
   }
 
   static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options
-        .get<compute_target_vpn_gateways_v1::
-                 TargetVpnGatewaysBackoffPolicyOption>()
-        ->clone();
+    return options.get<compute_target_vpn_gateways_v1::TargetVpnGatewaysBackoffPolicyOption>()->clone();
   }
 
-  static std::unique_ptr<compute_target_vpn_gateways_v1::
-                             TargetVpnGatewaysConnectionIdempotencyPolicy>
+  static std::unique_ptr<compute_target_vpn_gateways_v1::TargetVpnGatewaysConnectionIdempotencyPolicy>
   idempotency_policy(Options const& options) {
-    return options
-        .get<compute_target_vpn_gateways_v1::
-                 TargetVpnGatewaysConnectionIdempotencyPolicyOption>()
-        ->clone();
+    return options.get<compute_target_vpn_gateways_v1::TargetVpnGatewaysConnectionIdempotencyPolicyOption>()->clone();
   }
 
   static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-    return options
-        .get<compute_target_vpn_gateways_v1::
-                 TargetVpnGatewaysPollingPolicyOption>()
-        ->clone();
+    return options.get<compute_target_vpn_gateways_v1::TargetVpnGatewaysPollingPolicyOption>()->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<
-      compute_target_vpn_gateways_v1_internal::TargetVpnGatewaysRestStub>
-      stub_;
+  std::shared_ptr<compute_target_vpn_gateways_v1_internal::TargetVpnGatewaysRestStub> stub_;
   Options options_;
 };
 

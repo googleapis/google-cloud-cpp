@@ -36,24 +36,24 @@ class SqlUsersServiceTracingConnection
   ~SqlUsersServiceTracingConnection() override = default;
 
   explicit SqlUsersServiceTracingConnection(
-      std::shared_ptr<sql_v1::SqlUsersServiceConnection> child);
+    std::shared_ptr<sql_v1::SqlUsersServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::sql::v1::Operation> Delete(
-      google::cloud::sql::v1::SqlUsersDeleteRequest const& request) override;
+  StatusOr<google::cloud::sql::v1::Operation>
+  Delete(google::cloud::sql::v1::SqlUsersDeleteRequest const& request) override;
 
-  StatusOr<google::cloud::sql::v1::User> Get(
-      google::cloud::sql::v1::SqlUsersGetRequest const& request) override;
+  StatusOr<google::cloud::sql::v1::User>
+  Get(google::cloud::sql::v1::SqlUsersGetRequest const& request) override;
 
-  StatusOr<google::cloud::sql::v1::Operation> Insert(
-      google::cloud::sql::v1::SqlUsersInsertRequest const& request) override;
+  StatusOr<google::cloud::sql::v1::Operation>
+  Insert(google::cloud::sql::v1::SqlUsersInsertRequest const& request) override;
 
-  StatusOr<google::cloud::sql::v1::UsersListResponse> List(
-      google::cloud::sql::v1::SqlUsersListRequest const& request) override;
+  StatusOr<google::cloud::sql::v1::UsersListResponse>
+  List(google::cloud::sql::v1::SqlUsersListRequest const& request) override;
 
-  StatusOr<google::cloud::sql::v1::Operation> Update(
-      google::cloud::sql::v1::SqlUsersUpdateRequest const& request) override;
+  StatusOr<google::cloud::sql::v1::Operation>
+  Update(google::cloud::sql::v1::SqlUsersUpdateRequest const& request) override;
 
  private:
   std::shared_ptr<sql_v1::SqlUsersServiceConnection> child_;

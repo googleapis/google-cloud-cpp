@@ -46,103 +46,96 @@ DataPolicyServiceMetadata::DataPolicyServiceMetadata(
 
 StatusOr<google::cloud::bigquery::datapolicies::v1::DataPolicy>
 DataPolicyServiceMetadata::CreateDataPolicy(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::datapolicies::v1::CreateDataPolicyRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::datapolicies::v1::CreateDataPolicyRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateDataPolicy(context, options, request);
 }
 
 StatusOr<google::cloud::bigquery::datapolicies::v1::DataPolicy>
 DataPolicyServiceMetadata::UpdateDataPolicy(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::datapolicies::v1::UpdateDataPolicyRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("data_policy.name=",
-                           internal::UrlEncode(request.data_policy().name())));
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::datapolicies::v1::UpdateDataPolicyRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("data_policy.name=", internal::UrlEncode(request.data_policy().name())));
   return child_->UpdateDataPolicy(context, options, request);
 }
 
 StatusOr<google::cloud::bigquery::datapolicies::v1::DataPolicy>
 DataPolicyServiceMetadata::RenameDataPolicy(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::datapolicies::v1::RenameDataPolicyRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::datapolicies::v1::RenameDataPolicyRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->RenameDataPolicy(context, options, request);
 }
 
-Status DataPolicyServiceMetadata::DeleteDataPolicy(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::datapolicies::v1::DeleteDataPolicyRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+Status
+DataPolicyServiceMetadata::DeleteDataPolicy(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::datapolicies::v1::DeleteDataPolicyRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteDataPolicy(context, options, request);
 }
 
 StatusOr<google::cloud::bigquery::datapolicies::v1::DataPolicy>
 DataPolicyServiceMetadata::GetDataPolicy(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::datapolicies::v1::GetDataPolicyRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::datapolicies::v1::GetDataPolicyRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetDataPolicy(context, options, request);
 }
 
 StatusOr<google::cloud::bigquery::datapolicies::v1::ListDataPoliciesResponse>
 DataPolicyServiceMetadata::ListDataPolicies(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::datapolicies::v1::ListDataPoliciesRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::datapolicies::v1::ListDataPoliciesRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListDataPolicies(context, options, request);
 }
 
-StatusOr<google::iam::v1::Policy> DataPolicyServiceMetadata::GetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::iam::v1::Policy>
+DataPolicyServiceMetadata::GetIamPolicy(
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
-  SetMetadata(
-      context, options,
-      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
+  SetMetadata(context, options, absl::StrCat("resource=", internal::UrlEncode(request.resource())));
   return child_->GetIamPolicy(context, options, request);
 }
 
-StatusOr<google::iam::v1::Policy> DataPolicyServiceMetadata::SetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::iam::v1::Policy>
+DataPolicyServiceMetadata::SetIamPolicy(
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
-  SetMetadata(
-      context, options,
-      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
+  SetMetadata(context, options, absl::StrCat("resource=", internal::UrlEncode(request.resource())));
   return child_->SetIamPolicy(context, options, request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 DataPolicyServiceMetadata::TestIamPermissions(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  SetMetadata(
-      context, options,
-      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
+  SetMetadata(context, options, absl::StrCat("resource=", internal::UrlEncode(request.resource())));
   return child_->TestIamPermissions(context, options, request);
 }
 
 void DataPolicyServiceMetadata::SetMetadata(grpc::ClientContext& context,
-                                            Options const& options,
-                                            std::string const& request_params) {
+                                        Options const& options,
+                                        std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
 void DataPolicyServiceMetadata::SetMetadata(grpc::ClientContext& context,
-                                            Options const& options) {
-  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
-                                       api_client_header_);
+                                        Options const& options) {
+  google::cloud::internal::SetMetadata(
+      context, options, fixed_metadata_, api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

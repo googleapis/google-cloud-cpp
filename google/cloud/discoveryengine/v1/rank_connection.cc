@@ -17,14 +17,14 @@
 // source: google/cloud/discoveryengine/v1/rank_service.proto
 
 #include "google/cloud/discoveryengine/v1/rank_connection.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/discoveryengine/v1/internal/rank_connection_impl.h"
 #include "google/cloud/discoveryengine/v1/internal/rank_option_defaults.h"
 #include "google/cloud/discoveryengine/v1/internal/rank_stub_factory.h"
 #include "google/cloud/discoveryengine/v1/internal/rank_tracing_connection.h"
 #include "google/cloud/discoveryengine/v1/rank_options.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
-#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
@@ -44,20 +44,20 @@ RankServiceConnection::Rank(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::longrunning::Operation>
-RankServiceConnection::ListOperations(
-    google::longrunning::
-        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::longrunning::Operation> RankServiceConnection::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }
 
-StatusOr<google::longrunning::Operation> RankServiceConnection::GetOperation(
+StatusOr<google::longrunning::Operation>
+RankServiceConnection::GetOperation(
     google::longrunning::GetOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status RankServiceConnection::CancelOperation(
+Status
+RankServiceConnection::CancelOperation(
     google::longrunning::CancelOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -65,18 +65,17 @@ Status RankServiceConnection::CancelOperation(
 std::shared_ptr<RankServiceConnection> MakeRankServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 RankServicePolicyOptionList>(options,
-                                                              __func__);
+      UnifiedCredentialsOptionList,
+      RankServicePolicyOptionList>(options, __func__);
   options = discoveryengine_v1_internal::RankServiceDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = discoveryengine_v1_internal::CreateDefaultRankServiceStub(
-      std::move(auth), options);
+    std::move(auth), options);
   return discoveryengine_v1_internal::MakeRankServiceTracingConnection(
       std::make_shared<discoveryengine_v1_internal::RankServiceConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options)));
+      std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

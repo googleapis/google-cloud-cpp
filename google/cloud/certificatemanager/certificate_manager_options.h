@@ -28,31 +28,20 @@ namespace cloud {
 namespace certificatemanager {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use certificatemanager_v1::CertificateManagerPollingPolicyOption
-/// directly.
-using ::google::cloud::certificatemanager_v1::
-    CertificateManagerPollingPolicyOption;
+/// @deprecated Use certificatemanager_v1::CertificateManagerPollingPolicyOption directly.
+using ::google::cloud::certificatemanager_v1::CertificateManagerPollingPolicyOption;
 
-/// @deprecated Use certificatemanager_v1::CertificateManagerBackoffPolicyOption
-/// directly.
-using ::google::cloud::certificatemanager_v1::
-    CertificateManagerBackoffPolicyOption;
+/// @deprecated Use certificatemanager_v1::CertificateManagerBackoffPolicyOption directly.
+using ::google::cloud::certificatemanager_v1::CertificateManagerBackoffPolicyOption;
 
-/// @deprecated Use
-/// certificatemanager_v1::CertificateManagerConnectionIdempotencyPolicyOption
-/// directly.
-using ::google::cloud::certificatemanager_v1::
-    CertificateManagerConnectionIdempotencyPolicyOption;
+/// @deprecated Use certificatemanager_v1::CertificateManagerConnectionIdempotencyPolicyOption directly.
+using ::google::cloud::certificatemanager_v1::CertificateManagerConnectionIdempotencyPolicyOption;
 
-/// @deprecated Use certificatemanager_v1::CertificateManagerPolicyOptionList
-/// directly.
-using ::google::cloud::certificatemanager_v1::
-    CertificateManagerPolicyOptionList;
+/// @deprecated Use certificatemanager_v1::CertificateManagerPolicyOptionList directly.
+using ::google::cloud::certificatemanager_v1::CertificateManagerPolicyOptionList;
 
-/// @deprecated Use certificatemanager_v1::CertificateManagerRetryPolicyOption
-/// directly.
-using ::google::cloud::certificatemanager_v1::
-    CertificateManagerRetryPolicyOption;
+/// @deprecated Use certificatemanager_v1::CertificateManagerRetryPolicyOption directly.
+using ::google::cloud::certificatemanager_v1::CertificateManagerRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace certificatemanager

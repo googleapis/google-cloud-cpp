@@ -35,36 +35,30 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options EdgeNetworkDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_EDGE_NETWORK_ENDPOINT", "",
-      "GOOGLE_CLOUD_CPP_EDGE_NETWORK_AUTHORITY", "edgenetwork.googleapis.com");
+      std::move(options), "GOOGLE_CLOUD_CPP_EDGE_NETWORK_ENDPOINT",
+      "", "GOOGLE_CLOUD_CPP_EDGE_NETWORK_AUTHORITY",
+      "edgenetwork.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<edgenetwork_v1::EdgeNetworkRetryPolicyOption>()) {
     options.set<edgenetwork_v1::EdgeNetworkRetryPolicyOption>(
         edgenetwork_v1::EdgeNetworkLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
-            .clone());
+            std::chrono::minutes(30)).clone());
   }
   if (!options.has<edgenetwork_v1::EdgeNetworkBackoffPolicyOption>()) {
     options.set<edgenetwork_v1::EdgeNetworkBackoffPolicyOption>(
-        ExponentialBackoffPolicy(
-            std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
-            .clone());
+        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
   }
   if (!options.has<edgenetwork_v1::EdgeNetworkPollingPolicyOption>()) {
     options.set<edgenetwork_v1::EdgeNetworkPollingPolicyOption>(
         GenericPollingPolicy<
             edgenetwork_v1::EdgeNetworkRetryPolicyOption::Type,
             edgenetwork_v1::EdgeNetworkBackoffPolicyOption::Type>(
-            options.get<edgenetwork_v1::EdgeNetworkRetryPolicyOption>()
-                ->clone(),
+            options.get<edgenetwork_v1::EdgeNetworkRetryPolicyOption>()->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                     std::chrono::minutes(5), kBackoffScaling)
-                .clone())
-            .clone());
+            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
   }
-  if (!options.has<
-          edgenetwork_v1::EdgeNetworkConnectionIdempotencyPolicyOption>()) {
+  if (!options.has<edgenetwork_v1::EdgeNetworkConnectionIdempotencyPolicyOption>()) {
     options.set<edgenetwork_v1::EdgeNetworkConnectionIdempotencyPolicyOption>(
         edgenetwork_v1::MakeDefaultEdgeNetworkConnectionIdempotencyPolicy());
   }

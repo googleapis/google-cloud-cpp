@@ -17,16 +17,16 @@
 // source: google/cloud/compute/firewall_policies/v1/firewall_policies.proto
 
 #include "google/cloud/compute/firewall_policies/v1/internal/firewall_policies_rest_stub_factory.h"
+#include "absl/strings/match.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/compute/firewall_policies/v1/internal/firewall_policies_rest_logging_decorator.h"
 #include "google/cloud/compute/firewall_policies/v1/internal/firewall_policies_rest_metadata_decorator.h"
 #include "google/cloud/compute/firewall_policies/v1/internal/firewall_policies_rest_stub.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/populate_rest_options.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include "google/cloud/rest_options.h"
-#include "absl/strings/match.h"
 #include <memory>
 #include <utility>
 
@@ -35,16 +35,18 @@ namespace cloud {
 namespace compute_firewall_policies_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<FirewallPoliciesRestStub> CreateDefaultFirewallPoliciesRestStub(
-    Options const& options) {
+std::shared_ptr<FirewallPoliciesRestStub>
+CreateDefaultFirewallPoliciesRestStub(Options const& options) {
   auto opts = internal::PopulateRestOptions(options);
   std::shared_ptr<FirewallPoliciesRestStub> stub =
       std::make_shared<DefaultFirewallPoliciesRestStub>(std::move(opts));
   stub = std::make_shared<FirewallPoliciesRestMetadata>(std::move(stub));
-  if (internal::Contains(options.get<LoggingComponentsOption>(), "rpc")) {
+  if (internal::Contains(
+      options.get<LoggingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for REST rpc calls";
     stub = std::make_shared<FirewallPoliciesRestLogging>(
-        std::move(stub), options.get<RestTracingOptionsOption>(),
+        std::move(stub),
+        options.get<RestTracingOptionsOption>(),
         options.get<LoggingComponentsOption>());
   }
   return stub;

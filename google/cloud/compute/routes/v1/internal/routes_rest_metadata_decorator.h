@@ -36,63 +36,49 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class RoutesRestMetadata : public RoutesRestStub {
  public:
   ~RoutesRestMetadata() override = default;
-  explicit RoutesRestMetadata(std::shared_ptr<RoutesRestStub> child,
-                              std::string api_client_header = "");
+  explicit RoutesRestMetadata(
+      std::shared_ptr<RoutesRestStub> child,
+      std::string api_client_header = "");
 
-  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncDeleteRoute(
+  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncDeleteRoute(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::routes::v1::DeleteRouteRequest const&
-          request) override;
+      google::cloud::cpp::compute::routes::v1::DeleteRouteRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteRoute(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::routes::v1::DeleteRouteRequest const&
-          request) override;
+      Options const& options, google::cloud::cpp::compute::routes::v1::DeleteRouteRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Route> GetRoute(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::routes::v1::GetRouteRequest const& request)
-      override;
+      Options const& options, google::cloud::cpp::compute::routes::v1::GetRouteRequest const& request) override;
 
-  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncInsertRoute(
+  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncInsertRoute(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::routes::v1::InsertRouteRequest const&
-          request) override;
+      google::cloud::cpp::compute::routes::v1::InsertRouteRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertRoute(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::routes::v1::InsertRouteRequest const&
-          request) override;
+      Options const& options, google::cloud::cpp::compute::routes::v1::InsertRouteRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::RouteList> ListRoutes(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::routes::v1::ListRoutesRequest const& request)
-      override;
+      Options const& options, google::cloud::cpp::compute::routes::v1::ListRoutesRequest const& request) override;
 
-  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncGetOperation(
+  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::global_operations::v1::
-          GetOperationRequest const& request) override;
+      google::cloud::cpp::compute::global_operations::v1::GetOperationRequest const& request) override;
 
   google::cloud::future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::global_operations::v1::
-          DeleteOperationRequest const& request) override;
+      google::cloud::cpp::compute::global_operations::v1::DeleteOperationRequest const& request) override;
 
  private:
   void SetMetadata(rest_internal::RestContext& rest_context,

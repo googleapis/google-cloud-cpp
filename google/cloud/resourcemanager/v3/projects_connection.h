@@ -19,14 +19,14 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCEMANAGER_V3_PROJECTS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCEMANAGER_V3_PROJECTS_CONNECTION_H
 
-#include "google/cloud/resourcemanager/v3/internal/projects_retry_traits.h"
-#include "google/cloud/resourcemanager/v3/projects_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
+#include "google/cloud/resourcemanager/v3/internal/projects_retry_traits.h"
+#include "google/cloud/resourcemanager/v3/projects_connection_idempotency_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
@@ -67,14 +67,14 @@ class ProjectsLimitedErrorCountRetryPolicy : public ProjectsRetryPolicy {
    *     @p maximum_failures == 0.
    */
   explicit ProjectsLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   ProjectsLimitedErrorCountRetryPolicy(
       ProjectsLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : ProjectsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : ProjectsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   ProjectsLimitedErrorCountRetryPolicy(
       ProjectsLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : ProjectsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : ProjectsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -94,9 +94,7 @@ class ProjectsLimitedErrorCountRetryPolicy : public ProjectsRetryPolicy {
   using BaseType = ProjectsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      resourcemanager_v3_internal::ProjectsRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<resourcemanager_v3_internal::ProjectsRetryTraits> impl_;
 };
 
 /**
@@ -134,13 +132,12 @@ class ProjectsLimitedTimeRetryPolicy : public ProjectsRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit ProjectsLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
   ProjectsLimitedTimeRetryPolicy(ProjectsLimitedTimeRetryPolicy&& rhs) noexcept
-      : ProjectsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  ProjectsLimitedTimeRetryPolicy(
-      ProjectsLimitedTimeRetryPolicy const& rhs) noexcept
-      : ProjectsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+    : ProjectsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  ProjectsLimitedTimeRetryPolicy(ProjectsLimitedTimeRetryPolicy const& rhs) noexcept
+    : ProjectsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -154,16 +151,15 @@ class ProjectsLimitedTimeRetryPolicy : public ProjectsRetryPolicy {
     return impl_.IsPermanentFailure(status);
   }
   std::unique_ptr<ProjectsRetryPolicy> clone() const override {
-    return std::make_unique<ProjectsLimitedTimeRetryPolicy>(maximum_duration());
+    return std::make_unique<ProjectsLimitedTimeRetryPolicy>(
+        maximum_duration());
   }
 
   // This is provided only for backwards compatibility.
   using BaseType = ProjectsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      resourcemanager_v3_internal::ProjectsRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<resourcemanager_v3_internal::ProjectsRetryTraits> impl_;
 };
 
 /**
@@ -184,84 +180,71 @@ class ProjectsConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<google::cloud::resourcemanager::v3::Project> GetProject(
-      google::cloud::resourcemanager::v3::GetProjectRequest const& request);
-
-  virtual StreamRange<google::cloud::resourcemanager::v3::Project> ListProjects(
-      google::cloud::resourcemanager::v3::ListProjectsRequest request);
+  virtual StatusOr<google::cloud::resourcemanager::v3::Project>
+  GetProject(google::cloud::resourcemanager::v3::GetProjectRequest const& request);
 
   virtual StreamRange<google::cloud::resourcemanager::v3::Project>
-  SearchProjects(
-      google::cloud::resourcemanager::v3::SearchProjectsRequest request);
+  ListProjects(google::cloud::resourcemanager::v3::ListProjectsRequest request);
+
+  virtual StreamRange<google::cloud::resourcemanager::v3::Project>
+  SearchProjects(google::cloud::resourcemanager::v3::SearchProjectsRequest request);
 
   virtual future<StatusOr<google::cloud::resourcemanager::v3::Project>>
-  CreateProject(
-      google::cloud::resourcemanager::v3::CreateProjectRequest const& request);
+  CreateProject(google::cloud::resourcemanager::v3::CreateProjectRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> CreateProject(
-      NoAwaitTag,
-      google::cloud::resourcemanager::v3::CreateProjectRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  CreateProject(NoAwaitTag, google::cloud::resourcemanager::v3::CreateProjectRequest const& request);
 
   virtual future<StatusOr<google::cloud::resourcemanager::v3::Project>>
-  CreateProject(google::longrunning::Operation const& operation);
+  CreateProject( google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::resourcemanager::v3::Project>>
-  UpdateProject(
-      google::cloud::resourcemanager::v3::UpdateProjectRequest const& request);
+  UpdateProject(google::cloud::resourcemanager::v3::UpdateProjectRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> UpdateProject(
-      NoAwaitTag,
-      google::cloud::resourcemanager::v3::UpdateProjectRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  UpdateProject(NoAwaitTag, google::cloud::resourcemanager::v3::UpdateProjectRequest const& request);
 
   virtual future<StatusOr<google::cloud::resourcemanager::v3::Project>>
-  UpdateProject(google::longrunning::Operation const& operation);
+  UpdateProject( google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::resourcemanager::v3::Project>>
-  MoveProject(
-      google::cloud::resourcemanager::v3::MoveProjectRequest const& request);
+  MoveProject(google::cloud::resourcemanager::v3::MoveProjectRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> MoveProject(
-      NoAwaitTag,
-      google::cloud::resourcemanager::v3::MoveProjectRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  MoveProject(NoAwaitTag, google::cloud::resourcemanager::v3::MoveProjectRequest const& request);
 
   virtual future<StatusOr<google::cloud::resourcemanager::v3::Project>>
-  MoveProject(google::longrunning::Operation const& operation);
+  MoveProject( google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::resourcemanager::v3::Project>>
-  DeleteProject(
-      google::cloud::resourcemanager::v3::DeleteProjectRequest const& request);
+  DeleteProject(google::cloud::resourcemanager::v3::DeleteProjectRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> DeleteProject(
-      NoAwaitTag,
-      google::cloud::resourcemanager::v3::DeleteProjectRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  DeleteProject(NoAwaitTag, google::cloud::resourcemanager::v3::DeleteProjectRequest const& request);
 
   virtual future<StatusOr<google::cloud::resourcemanager::v3::Project>>
-  DeleteProject(google::longrunning::Operation const& operation);
+  DeleteProject( google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::resourcemanager::v3::Project>>
-  UndeleteProject(
-      google::cloud::resourcemanager::v3::UndeleteProjectRequest const&
-          request);
+  UndeleteProject(google::cloud::resourcemanager::v3::UndeleteProjectRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> UndeleteProject(
-      NoAwaitTag,
-      google::cloud::resourcemanager::v3::UndeleteProjectRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  UndeleteProject(NoAwaitTag, google::cloud::resourcemanager::v3::UndeleteProjectRequest const& request);
 
   virtual future<StatusOr<google::cloud::resourcemanager::v3::Project>>
-  UndeleteProject(google::longrunning::Operation const& operation);
+  UndeleteProject( google::longrunning::Operation const& operation);
 
-  virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
 
   virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
   TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 };
 
 /**

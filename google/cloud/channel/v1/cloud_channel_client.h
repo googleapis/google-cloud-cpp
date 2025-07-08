@@ -50,8 +50,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// enterprise-managed by a reseller or distributor.
 ///
 /// - [Entitlement][google.cloud.channel.v1.Entitlement]s: An entity that
-/// provides a customer with the means to use a service. Entitlements are
-/// created or updated as a result of a successful fulfillment.
+/// provides a customer with the means to use a service. Entitlements are created
+/// or updated as a result of a successful fulfillment.
 ///
 /// - [ChannelPartnerLink][google.cloud.channel.v1.ChannelPartnerLink]s: An
 /// entity that identifies links between distributors and their indirect
@@ -80,37 +80,29 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// and move-construction is a relatively efficient operation, consider using
 /// such a copy when using this class from multiple threads.
 ///
-/// [google.cloud.channel.v1.ChannelPartnerLink]:
-/// @googleapis_reference_link{google/cloud/channel/v1/channel_partner_links.proto#L66}
-/// [google.cloud.channel.v1.Customer]:
-/// @googleapis_reference_link{google/cloud/channel/v1/customers.proto#L31}
-/// [google.cloud.channel.v1.Entitlement]:
-/// @googleapis_reference_link{google/cloud/channel/v1/entitlements.proto#L32}
+/// [google.cloud.channel.v1.ChannelPartnerLink]: @googleapis_reference_link{google/cloud/channel/v1/channel_partner_links.proto#L66}
+/// [google.cloud.channel.v1.Customer]: @googleapis_reference_link{google/cloud/channel/v1/customers.proto#L31}
+/// [google.cloud.channel.v1.Entitlement]: @googleapis_reference_link{google/cloud/channel/v1/entitlements.proto#L32}
 ///
 class CloudChannelServiceClient {
  public:
-  explicit CloudChannelServiceClient(
-      std::shared_ptr<CloudChannelServiceConnection> connection,
-      Options opts = {});
+  explicit CloudChannelServiceClient(std::shared_ptr<CloudChannelServiceConnection> connection, Options opts = {});
   ~CloudChannelServiceClient();
 
   ///@{
   /// @name Copy and move support
   CloudChannelServiceClient(CloudChannelServiceClient const&) = default;
-  CloudChannelServiceClient& operator=(CloudChannelServiceClient const&) =
-      default;
+  CloudChannelServiceClient& operator=(CloudChannelServiceClient const&) = default;
   CloudChannelServiceClient(CloudChannelServiceClient&&) = default;
   CloudChannelServiceClient& operator=(CloudChannelServiceClient&&) = default;
   ///@}
 
   ///@{
   /// @name Equality
-  friend bool operator==(CloudChannelServiceClient const& a,
-                         CloudChannelServiceClient const& b) {
+  friend bool operator==(CloudChannelServiceClient const& a, CloudChannelServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(CloudChannelServiceClient const& a,
-                         CloudChannelServiceClient const& b) {
+  friend bool operator!=(CloudChannelServiceClient const& a, CloudChannelServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -161,9 +153,8 @@ class CloudChannelServiceClient {
   /// [google.cloud.channel.v1.ListCustomersRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L1521}
   ///
   // clang-format on
-  StreamRange<google::cloud::channel::v1::Customer> ListCustomers(
-      google::cloud::channel::v1::ListCustomersRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::channel::v1::Customer>
+  ListCustomers(google::cloud::channel::v1::ListCustomersRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -200,8 +191,8 @@ class CloudChannelServiceClient {
   /// [google.cloud.channel.v1.GetCustomerRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L1561}
   ///
   // clang-format on
-  StatusOr<google::cloud::channel::v1::Customer> GetCustomer(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::channel::v1::Customer>
+  GetCustomer(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -242,9 +233,8 @@ class CloudChannelServiceClient {
   /// [google.cloud.channel.v1.GetCustomerRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L1561}
   ///
   // clang-format on
-  StatusOr<google::cloud::channel::v1::Customer> GetCustomer(
-      google::cloud::channel::v1::GetCustomerRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::channel::v1::Customer>
+  GetCustomer(google::cloud::channel::v1::GetCustomerRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -293,10 +283,7 @@ class CloudChannelServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::channel::v1::CheckCloudIdentityAccountsExistResponse>
-  CheckCloudIdentityAccountsExist(
-      google::cloud::channel::v1::CheckCloudIdentityAccountsExistRequest const&
-          request,
-      Options opts = {});
+  CheckCloudIdentityAccountsExist(google::cloud::channel::v1::CheckCloudIdentityAccountsExistRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -340,9 +327,8 @@ class CloudChannelServiceClient {
   /// [google.cloud.channel.v1.Customer]: @googleapis_reference_link{google/cloud/channel/v1/customers.proto#L31}
   ///
   // clang-format on
-  StatusOr<google::cloud::channel::v1::Customer> CreateCustomer(
-      google::cloud::channel::v1::CreateCustomerRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::channel::v1::Customer>
+  CreateCustomer(google::cloud::channel::v1::CreateCustomerRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -383,9 +369,8 @@ class CloudChannelServiceClient {
   /// [google.cloud.channel.v1.UpdateCustomerRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L1585}
   ///
   // clang-format on
-  StatusOr<google::cloud::channel::v1::Customer> UpdateCustomer(
-      google::cloud::channel::v1::UpdateCustomerRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::channel::v1::Customer>
+  UpdateCustomer(google::cloud::channel::v1::UpdateCustomerRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -416,7 +401,8 @@ class CloudChannelServiceClient {
   /// [google.cloud.channel.v1.DeleteCustomerRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L1596}
   ///
   // clang-format on
-  Status DeleteCustomer(std::string const& name, Options opts = {});
+  Status
+  DeleteCustomer(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -452,9 +438,8 @@ class CloudChannelServiceClient {
   /// [google.cloud.channel.v1.DeleteCustomerRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L1596}
   ///
   // clang-format on
-  Status DeleteCustomer(
-      google::cloud::channel::v1::DeleteCustomerRequest const& request,
-      Options opts = {});
+  Status
+  DeleteCustomer(google::cloud::channel::v1::DeleteCustomerRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -502,9 +487,8 @@ class CloudChannelServiceClient {
   /// [google.cloud.channel.v1.ImportCustomerRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L1608}
   ///
   // clang-format on
-  StatusOr<google::cloud::channel::v1::Customer> ImportCustomer(
-      google::cloud::channel::v1::ImportCustomerRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::channel::v1::Customer>
+  ImportCustomer(google::cloud::channel::v1::ImportCustomerRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -564,9 +548,8 @@ class CloudChannelServiceClient {
   /// [google.cloud.channel.v1.ProvisionCloudIdentityRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L1659}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::channel::v1::Customer>> ProvisionCloudIdentity(
-      google::cloud::channel::v1::ProvisionCloudIdentityRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::channel::v1::Customer>>
+  ProvisionCloudIdentity(google::cloud::channel::v1::ProvisionCloudIdentityRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -579,10 +562,8 @@ class CloudChannelServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> ProvisionCloudIdentity(
-      NoAwaitTag,
-      google::cloud::channel::v1::ProvisionCloudIdentityRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  ProvisionCloudIdentity(NoAwaitTag, google::cloud::channel::v1::ProvisionCloudIdentityRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -593,8 +574,8 @@ class CloudChannelServiceClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::channel::v1::Customer>> ProvisionCloudIdentity(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::channel::v1::Customer>>
+  ProvisionCloudIdentity(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -642,9 +623,8 @@ class CloudChannelServiceClient {
   /// [google.cloud.channel.v1.ListEntitlementsRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L1681}
   ///
   // clang-format on
-  StreamRange<google::cloud::channel::v1::Entitlement> ListEntitlements(
-      google::cloud::channel::v1::ListEntitlementsRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::channel::v1::Entitlement>
+  ListEntitlements(google::cloud::channel::v1::ListEntitlementsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -700,9 +680,8 @@ class CloudChannelServiceClient {
   /// [google.cloud.channel.v1.TransferableSku]: @googleapis_reference_link{google/cloud/channel/v1/entitlements.proto#L238}
   ///
   // clang-format on
-  StreamRange<google::cloud::channel::v1::TransferableSku> ListTransferableSkus(
-      google::cloud::channel::v1::ListTransferableSkusRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::channel::v1::TransferableSku>
+  ListTransferableSkus(google::cloud::channel::v1::ListTransferableSkusRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -762,9 +741,7 @@ class CloudChannelServiceClient {
   ///
   // clang-format on
   StreamRange<google::cloud::channel::v1::TransferableOffer>
-  ListTransferableOffers(
-      google::cloud::channel::v1::ListTransferableOffersRequest request,
-      Options opts = {});
+  ListTransferableOffers(google::cloud::channel::v1::ListTransferableOffersRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -803,9 +780,8 @@ class CloudChannelServiceClient {
   /// [google.cloud.channel.v1.GetEntitlementRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L1850}
   ///
   // clang-format on
-  StatusOr<google::cloud::channel::v1::Entitlement> GetEntitlement(
-      google::cloud::channel::v1::GetEntitlementRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::channel::v1::Entitlement>
+  GetEntitlement(google::cloud::channel::v1::GetEntitlementRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -880,9 +856,8 @@ class CloudChannelServiceClient {
   /// [google.cloud.channel.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/channel/v1/operations.proto#L26}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::channel::v1::Entitlement>> CreateEntitlement(
-      google::cloud::channel::v1::CreateEntitlementRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::channel::v1::Entitlement>>
+  CreateEntitlement(google::cloud::channel::v1::CreateEntitlementRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -895,10 +870,8 @@ class CloudChannelServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateEntitlement(
-      NoAwaitTag,
-      google::cloud::channel::v1::CreateEntitlementRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateEntitlement(NoAwaitTag, google::cloud::channel::v1::CreateEntitlementRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -909,8 +882,8 @@ class CloudChannelServiceClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::channel::v1::Entitlement>> CreateEntitlement(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::channel::v1::Entitlement>>
+  CreateEntitlement(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -969,9 +942,8 @@ class CloudChannelServiceClient {
   /// [google.cloud.channel.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/channel/v1/operations.proto#L26}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::channel::v1::Entitlement>> ChangeParameters(
-      google::cloud::channel::v1::ChangeParametersRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::channel::v1::Entitlement>>
+  ChangeParameters(google::cloud::channel::v1::ChangeParametersRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -984,10 +956,8 @@ class CloudChannelServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> ChangeParameters(
-      NoAwaitTag,
-      google::cloud::channel::v1::ChangeParametersRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  ChangeParameters(NoAwaitTag, google::cloud::channel::v1::ChangeParametersRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -998,8 +968,8 @@ class CloudChannelServiceClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::channel::v1::Entitlement>> ChangeParameters(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::channel::v1::Entitlement>>
+  ChangeParameters(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1059,9 +1029,7 @@ class CloudChannelServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::channel::v1::Entitlement>>
-  ChangeRenewalSettings(
-      google::cloud::channel::v1::ChangeRenewalSettingsRequest const& request,
-      Options opts = {});
+  ChangeRenewalSettings(google::cloud::channel::v1::ChangeRenewalSettingsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1074,10 +1042,8 @@ class CloudChannelServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> ChangeRenewalSettings(
-      NoAwaitTag,
-      google::cloud::channel::v1::ChangeRenewalSettingsRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  ChangeRenewalSettings(NoAwaitTag, google::cloud::channel::v1::ChangeRenewalSettingsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1089,8 +1055,7 @@ class CloudChannelServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::channel::v1::Entitlement>>
-  ChangeRenewalSettings(google::longrunning::Operation const& operation,
-                        Options opts = {});
+  ChangeRenewalSettings(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1147,9 +1112,8 @@ class CloudChannelServiceClient {
   /// [google.cloud.channel.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/channel/v1/operations.proto#L26}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::channel::v1::Entitlement>> ChangeOffer(
-      google::cloud::channel::v1::ChangeOfferRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::channel::v1::Entitlement>>
+  ChangeOffer(google::cloud::channel::v1::ChangeOfferRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1162,9 +1126,8 @@ class CloudChannelServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> ChangeOffer(
-      NoAwaitTag, google::cloud::channel::v1::ChangeOfferRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  ChangeOffer(NoAwaitTag, google::cloud::channel::v1::ChangeOfferRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1175,8 +1138,8 @@ class CloudChannelServiceClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::channel::v1::Entitlement>> ChangeOffer(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::channel::v1::Entitlement>>
+  ChangeOffer(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1236,9 +1199,8 @@ class CloudChannelServiceClient {
   /// [google.cloud.channel.v1.StartPaidServiceRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2468}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::channel::v1::Entitlement>> StartPaidService(
-      google::cloud::channel::v1::StartPaidServiceRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::channel::v1::Entitlement>>
+  StartPaidService(google::cloud::channel::v1::StartPaidServiceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1251,10 +1213,8 @@ class CloudChannelServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> StartPaidService(
-      NoAwaitTag,
-      google::cloud::channel::v1::StartPaidServiceRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  StartPaidService(NoAwaitTag, google::cloud::channel::v1::StartPaidServiceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1265,8 +1225,8 @@ class CloudChannelServiceClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::channel::v1::Entitlement>> StartPaidService(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::channel::v1::Entitlement>>
+  StartPaidService(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1323,9 +1283,8 @@ class CloudChannelServiceClient {
   /// [google.cloud.channel.v1.SuspendEntitlementRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2514}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::channel::v1::Entitlement>> SuspendEntitlement(
-      google::cloud::channel::v1::SuspendEntitlementRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::channel::v1::Entitlement>>
+  SuspendEntitlement(google::cloud::channel::v1::SuspendEntitlementRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1338,10 +1297,8 @@ class CloudChannelServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> SuspendEntitlement(
-      NoAwaitTag,
-      google::cloud::channel::v1::SuspendEntitlementRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  SuspendEntitlement(NoAwaitTag, google::cloud::channel::v1::SuspendEntitlementRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1352,8 +1309,8 @@ class CloudChannelServiceClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::channel::v1::Entitlement>> SuspendEntitlement(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::channel::v1::Entitlement>>
+  SuspendEntitlement(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1415,9 +1372,7 @@ class CloudChannelServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::channel::v1::OperationMetadata>>
-  CancelEntitlement(
-      google::cloud::channel::v1::CancelEntitlementRequest const& request,
-      Options opts = {});
+  CancelEntitlement(google::cloud::channel::v1::CancelEntitlementRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1430,10 +1385,8 @@ class CloudChannelServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CancelEntitlement(
-      NoAwaitTag,
-      google::cloud::channel::v1::CancelEntitlementRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CancelEntitlement(NoAwaitTag, google::cloud::channel::v1::CancelEntitlementRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1445,8 +1398,7 @@ class CloudChannelServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::channel::v1::OperationMetadata>>
-  CancelEntitlement(google::longrunning::Operation const& operation,
-                    Options opts = {});
+  CancelEntitlement(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1509,9 +1461,8 @@ class CloudChannelServiceClient {
   /// [google.cloud.channel.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/channel/v1/operations.proto#L26}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::channel::v1::Entitlement>> ActivateEntitlement(
-      google::cloud::channel::v1::ActivateEntitlementRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::channel::v1::Entitlement>>
+  ActivateEntitlement(google::cloud::channel::v1::ActivateEntitlementRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1524,10 +1475,8 @@ class CloudChannelServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> ActivateEntitlement(
-      NoAwaitTag,
-      google::cloud::channel::v1::ActivateEntitlementRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  ActivateEntitlement(NoAwaitTag, google::cloud::channel::v1::ActivateEntitlementRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1538,8 +1487,8 @@ class CloudChannelServiceClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::channel::v1::Entitlement>> ActivateEntitlement(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::channel::v1::Entitlement>>
+  ActivateEntitlement(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1608,9 +1557,7 @@ class CloudChannelServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::channel::v1::TransferEntitlementsResponse>>
-  TransferEntitlements(
-      google::cloud::channel::v1::TransferEntitlementsRequest const& request,
-      Options opts = {});
+  TransferEntitlements(google::cloud::channel::v1::TransferEntitlementsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1623,10 +1570,8 @@ class CloudChannelServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> TransferEntitlements(
-      NoAwaitTag,
-      google::cloud::channel::v1::TransferEntitlementsRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  TransferEntitlements(NoAwaitTag, google::cloud::channel::v1::TransferEntitlementsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1638,8 +1583,7 @@ class CloudChannelServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::channel::v1::TransferEntitlementsResponse>>
-  TransferEntitlements(google::longrunning::Operation const& operation,
-                       Options opts = {});
+  TransferEntitlements(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1704,10 +1648,7 @@ class CloudChannelServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::channel::v1::OperationMetadata>>
-  TransferEntitlementsToGoogle(
-      google::cloud::channel::v1::TransferEntitlementsToGoogleRequest const&
-          request,
-      Options opts = {});
+  TransferEntitlementsToGoogle(google::cloud::channel::v1::TransferEntitlementsToGoogleRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1720,11 +1661,8 @@ class CloudChannelServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> TransferEntitlementsToGoogle(
-      NoAwaitTag,
-      google::cloud::channel::v1::TransferEntitlementsToGoogleRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  TransferEntitlementsToGoogle(NoAwaitTag, google::cloud::channel::v1::TransferEntitlementsToGoogleRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1736,8 +1674,7 @@ class CloudChannelServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::channel::v1::OperationMetadata>>
-  TransferEntitlementsToGoogle(google::longrunning::Operation const& operation,
-                               Options opts = {});
+  TransferEntitlementsToGoogle(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1787,9 +1724,7 @@ class CloudChannelServiceClient {
   ///
   // clang-format on
   StreamRange<google::cloud::channel::v1::ChannelPartnerLink>
-  ListChannelPartnerLinks(
-      google::cloud::channel::v1::ListChannelPartnerLinksRequest request,
-      Options opts = {});
+  ListChannelPartnerLinks(google::cloud::channel::v1::ListChannelPartnerLinksRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1833,9 +1768,7 @@ class CloudChannelServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::channel::v1::ChannelPartnerLink>
-  GetChannelPartnerLink(
-      google::cloud::channel::v1::GetChannelPartnerLinkRequest const& request,
-      Options opts = {});
+  GetChannelPartnerLink(google::cloud::channel::v1::GetChannelPartnerLinkRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1887,10 +1820,7 @@ class CloudChannelServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::channel::v1::ChannelPartnerLink>
-  CreateChannelPartnerLink(
-      google::cloud::channel::v1::CreateChannelPartnerLinkRequest const&
-          request,
-      Options opts = {});
+  CreateChannelPartnerLink(google::cloud::channel::v1::CreateChannelPartnerLinkRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1941,10 +1871,7 @@ class CloudChannelServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::channel::v1::ChannelPartnerLink>
-  UpdateChannelPartnerLink(
-      google::cloud::channel::v1::UpdateChannelPartnerLinkRequest const&
-          request,
-      Options opts = {});
+  UpdateChannelPartnerLink(google::cloud::channel::v1::UpdateChannelPartnerLinkRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2033,10 +1960,7 @@ class CloudChannelServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::channel::v1::CustomerRepricingConfig>
-  GetCustomerRepricingConfig(
-      google::cloud::channel::v1::GetCustomerRepricingConfigRequest const&
-          request,
-      Options opts = {});
+  GetCustomerRepricingConfig(google::cloud::channel::v1::GetCustomerRepricingConfigRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2166,9 +2090,7 @@ class CloudChannelServiceClient {
   ///
   // clang-format on
   StreamRange<google::cloud::channel::v1::CustomerRepricingConfig>
-  ListCustomerRepricingConfigs(
-      google::cloud::channel::v1::ListCustomerRepricingConfigsRequest request,
-      Options opts = {});
+  ListCustomerRepricingConfigs(google::cloud::channel::v1::ListCustomerRepricingConfigsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -2240,11 +2162,7 @@ class CloudChannelServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::channel::v1::CustomerRepricingConfig>
-  CreateCustomerRepricingConfig(
-      std::string const& parent,
-      google::cloud::channel::v1::CustomerRepricingConfig const&
-          customer_repricing_config,
-      Options opts = {});
+  CreateCustomerRepricingConfig(std::string const& parent, google::cloud::channel::v1::CustomerRepricingConfig const& customer_repricing_config, Options opts = {});
 
   // clang-format off
   ///
@@ -2318,10 +2236,7 @@ class CloudChannelServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::channel::v1::CustomerRepricingConfig>
-  CreateCustomerRepricingConfig(
-      google::cloud::channel::v1::CreateCustomerRepricingConfigRequest const&
-          request,
-      Options opts = {});
+  CreateCustomerRepricingConfig(google::cloud::channel::v1::CreateCustomerRepricingConfigRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2379,10 +2294,7 @@ class CloudChannelServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::channel::v1::CustomerRepricingConfig>
-  UpdateCustomerRepricingConfig(
-      google::cloud::channel::v1::CustomerRepricingConfig const&
-          customer_repricing_config,
-      Options opts = {});
+  UpdateCustomerRepricingConfig(google::cloud::channel::v1::CustomerRepricingConfig const& customer_repricing_config, Options opts = {});
 
   // clang-format off
   ///
@@ -2445,10 +2357,7 @@ class CloudChannelServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::channel::v1::CustomerRepricingConfig>
-  UpdateCustomerRepricingConfig(
-      google::cloud::channel::v1::UpdateCustomerRepricingConfigRequest const&
-          request,
-      Options opts = {});
+  UpdateCustomerRepricingConfig(google::cloud::channel::v1::UpdateCustomerRepricingConfigRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2489,8 +2398,8 @@ class CloudChannelServiceClient {
   /// [google.cloud.channel.v1.RepricingConfig.effective_invoice_month]: @googleapis_reference_link{google/cloud/channel/v1/repricing.proto#L146}
   ///
   // clang-format on
-  Status DeleteCustomerRepricingConfig(std::string const& name,
-                                       Options opts = {});
+  Status
+  DeleteCustomerRepricingConfig(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2534,10 +2443,8 @@ class CloudChannelServiceClient {
   /// [google.cloud.channel.v1.RepricingConfig.effective_invoice_month]: @googleapis_reference_link{google/cloud/channel/v1/repricing.proto#L146}
   ///
   // clang-format on
-  Status DeleteCustomerRepricingConfig(
-      google::cloud::channel::v1::DeleteCustomerRepricingConfigRequest const&
-          request,
-      Options opts = {});
+  Status
+  DeleteCustomerRepricingConfig(google::cloud::channel::v1::DeleteCustomerRepricingConfigRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2626,10 +2533,7 @@ class CloudChannelServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::channel::v1::ChannelPartnerRepricingConfig>
-  GetChannelPartnerRepricingConfig(
-      google::cloud::channel::v1::GetChannelPartnerRepricingConfigRequest const&
-          request,
-      Options opts = {});
+  GetChannelPartnerRepricingConfig(google::cloud::channel::v1::GetChannelPartnerRepricingConfigRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2694,8 +2598,7 @@ class CloudChannelServiceClient {
   ///
   // clang-format on
   StreamRange<google::cloud::channel::v1::ChannelPartnerRepricingConfig>
-  ListChannelPartnerRepricingConfigs(std::string const& parent,
-                                     Options opts = {});
+  ListChannelPartnerRepricingConfigs(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -2759,10 +2662,7 @@ class CloudChannelServiceClient {
   ///
   // clang-format on
   StreamRange<google::cloud::channel::v1::ChannelPartnerRepricingConfig>
-  ListChannelPartnerRepricingConfigs(
-      google::cloud::channel::v1::ListChannelPartnerRepricingConfigsRequest
-          request,
-      Options opts = {});
+  ListChannelPartnerRepricingConfigs(google::cloud::channel::v1::ListChannelPartnerRepricingConfigsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -2835,11 +2735,7 @@ class CloudChannelServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::channel::v1::ChannelPartnerRepricingConfig>
-  CreateChannelPartnerRepricingConfig(
-      std::string const& parent,
-      google::cloud::channel::v1::ChannelPartnerRepricingConfig const&
-          channel_partner_repricing_config,
-      Options opts = {});
+  CreateChannelPartnerRepricingConfig(std::string const& parent, google::cloud::channel::v1::ChannelPartnerRepricingConfig const& channel_partner_repricing_config, Options opts = {});
 
   // clang-format off
   ///
@@ -2914,10 +2810,7 @@ class CloudChannelServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::channel::v1::ChannelPartnerRepricingConfig>
-  CreateChannelPartnerRepricingConfig(
-      google::cloud::channel::v1::
-          CreateChannelPartnerRepricingConfigRequest const& request,
-      Options opts = {});
+  CreateChannelPartnerRepricingConfig(google::cloud::channel::v1::CreateChannelPartnerRepricingConfigRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2975,10 +2868,7 @@ class CloudChannelServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::channel::v1::ChannelPartnerRepricingConfig>
-  UpdateChannelPartnerRepricingConfig(
-      google::cloud::channel::v1::ChannelPartnerRepricingConfig const&
-          channel_partner_repricing_config,
-      Options opts = {});
+  UpdateChannelPartnerRepricingConfig(google::cloud::channel::v1::ChannelPartnerRepricingConfig const& channel_partner_repricing_config, Options opts = {});
 
   // clang-format off
   ///
@@ -3041,10 +2931,7 @@ class CloudChannelServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::channel::v1::ChannelPartnerRepricingConfig>
-  UpdateChannelPartnerRepricingConfig(
-      google::cloud::channel::v1::
-          UpdateChannelPartnerRepricingConfigRequest const& request,
-      Options opts = {});
+  UpdateChannelPartnerRepricingConfig(google::cloud::channel::v1::UpdateChannelPartnerRepricingConfigRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -3084,8 +2971,8 @@ class CloudChannelServiceClient {
   /// [google.cloud.channel.v1.RepricingConfig.effective_invoice_month]: @googleapis_reference_link{google/cloud/channel/v1/repricing.proto#L146}
   ///
   // clang-format on
-  Status DeleteChannelPartnerRepricingConfig(std::string const& name,
-                                             Options opts = {});
+  Status
+  DeleteChannelPartnerRepricingConfig(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -3129,10 +3016,8 @@ class CloudChannelServiceClient {
   /// [google.cloud.channel.v1.RepricingConfig.effective_invoice_month]: @googleapis_reference_link{google/cloud/channel/v1/repricing.proto#L146}
   ///
   // clang-format on
-  Status DeleteChannelPartnerRepricingConfig(
-      google::cloud::channel::v1::
-          DeleteChannelPartnerRepricingConfigRequest const& request,
-      Options opts = {});
+  Status
+  DeleteChannelPartnerRepricingConfig(google::cloud::channel::v1::DeleteChannelPartnerRepricingConfigRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -3185,8 +3070,8 @@ class CloudChannelServiceClient {
   /// [google.cloud.channel.v1.SkuGroup.display_name]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2236}
   ///
   // clang-format on
-  StreamRange<google::cloud::channel::v1::SkuGroup> ListSkuGroups(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::channel::v1::SkuGroup>
+  ListSkuGroups(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -3243,9 +3128,8 @@ class CloudChannelServiceClient {
   /// [google.cloud.channel.v1.SkuGroup.display_name]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2236}
   ///
   // clang-format on
-  StreamRange<google::cloud::channel::v1::SkuGroup> ListSkuGroups(
-      google::cloud::channel::v1::ListSkuGroupsRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::channel::v1::SkuGroup>
+  ListSkuGroups(google::cloud::channel::v1::ListSkuGroupsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -3299,8 +3183,8 @@ class CloudChannelServiceClient {
   /// [google.cloud.channel.v1.ListSkuGroupBillableSkusRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2177}
   ///
   // clang-format on
-  StreamRange<google::cloud::channel::v1::BillableSku> ListSkuGroupBillableSkus(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::channel::v1::BillableSku>
+  ListSkuGroupBillableSkus(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -3358,9 +3242,8 @@ class CloudChannelServiceClient {
   /// [google.cloud.channel.v1.ListSkuGroupBillableSkusRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2177}
   ///
   // clang-format on
-  StreamRange<google::cloud::channel::v1::BillableSku> ListSkuGroupBillableSkus(
-      google::cloud::channel::v1::ListSkuGroupBillableSkusRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::channel::v1::BillableSku>
+  ListSkuGroupBillableSkus(google::cloud::channel::v1::ListSkuGroupBillableSkusRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -3398,9 +3281,8 @@ class CloudChannelServiceClient {
   /// [google.cloud.channel.v1.Offer]: @googleapis_reference_link{google/cloud/channel/v1/offers.proto#L129}
   ///
   // clang-format on
-  StatusOr<google::cloud::channel::v1::Offer> LookupOffer(
-      google::cloud::channel::v1::LookupOfferRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::channel::v1::Offer>
+  LookupOffer(google::cloud::channel::v1::LookupOfferRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -3442,9 +3324,8 @@ class CloudChannelServiceClient {
   /// [google.cloud.channel.v1.Product]: @googleapis_reference_link{google/cloud/channel/v1/products.proto#L37}
   ///
   // clang-format on
-  StreamRange<google::cloud::channel::v1::Product> ListProducts(
-      google::cloud::channel::v1::ListProductsRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::channel::v1::Product>
+  ListProducts(google::cloud::channel::v1::ListProductsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -3486,8 +3367,8 @@ class CloudChannelServiceClient {
   /// [google.cloud.channel.v1.Sku]: @googleapis_reference_link{google/cloud/channel/v1/products.proto#L55}
   ///
   // clang-format on
-  StreamRange<google::cloud::channel::v1::Sku> ListSkus(
-      google::cloud::channel::v1::ListSkusRequest request, Options opts = {});
+  StreamRange<google::cloud::channel::v1::Sku>
+  ListSkus(google::cloud::channel::v1::ListSkusRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -3529,8 +3410,8 @@ class CloudChannelServiceClient {
   /// [google.cloud.channel.v1.Offer]: @googleapis_reference_link{google/cloud/channel/v1/offers.proto#L129}
   ///
   // clang-format on
-  StreamRange<google::cloud::channel::v1::Offer> ListOffers(
-      google::cloud::channel::v1::ListOffersRequest request, Options opts = {});
+  StreamRange<google::cloud::channel::v1::Offer>
+  ListOffers(google::cloud::channel::v1::ListOffersRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -3576,9 +3457,8 @@ class CloudChannelServiceClient {
   /// [google.cloud.channel.v1.PurchasableSku]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2761}
   ///
   // clang-format on
-  StreamRange<google::cloud::channel::v1::PurchasableSku> ListPurchasableSkus(
-      google::cloud::channel::v1::ListPurchasableSkusRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::channel::v1::PurchasableSku>
+  ListPurchasableSkus(google::cloud::channel::v1::ListPurchasableSkusRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -3628,9 +3508,7 @@ class CloudChannelServiceClient {
   ///
   // clang-format on
   StreamRange<google::cloud::channel::v1::PurchasableOffer>
-  ListPurchasableOffers(
-      google::cloud::channel::v1::ListPurchasableOffersRequest request,
-      Options opts = {});
+  ListPurchasableOffers(google::cloud::channel::v1::ListPurchasableOffersRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -3671,10 +3549,7 @@ class CloudChannelServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::channel::v1::QueryEligibleBillingAccountsResponse>
-  QueryEligibleBillingAccounts(
-      google::cloud::channel::v1::QueryEligibleBillingAccountsRequest const&
-          request,
-      Options opts = {});
+  QueryEligibleBillingAccounts(google::cloud::channel::v1::QueryEligibleBillingAccountsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -3721,9 +3596,7 @@ class CloudChannelServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::channel::v1::RegisterSubscriberResponse>
-  RegisterSubscriber(
-      google::cloud::channel::v1::RegisterSubscriberRequest const& request,
-      Options opts = {});
+  RegisterSubscriber(google::cloud::channel::v1::RegisterSubscriberRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -3773,9 +3646,7 @@ class CloudChannelServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::channel::v1::UnregisterSubscriberResponse>
-  UnregisterSubscriber(
-      google::cloud::channel::v1::UnregisterSubscriberRequest const& request,
-      Options opts = {});
+  UnregisterSubscriber(google::cloud::channel::v1::UnregisterSubscriberRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -3826,9 +3697,8 @@ class CloudChannelServiceClient {
   /// [google.cloud.channel.v1.ListSubscribersRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2923}
   ///
   // clang-format on
-  StreamRange<std::string> ListSubscribers(
-      google::cloud::channel::v1::ListSubscribersRequest request,
-      Options opts = {});
+  StreamRange<std::string>
+  ListSubscribers(google::cloud::channel::v1::ListSubscribersRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -3936,9 +3806,7 @@ class CloudChannelServiceClient {
   ///
   // clang-format on
   StreamRange<google::cloud::channel::v1::EntitlementChange>
-  ListEntitlementChanges(
-      google::cloud::channel::v1::ListEntitlementChangesRequest request,
-      Options opts = {});
+  ListEntitlementChanges(google::cloud::channel::v1::ListEntitlementChangesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -3973,8 +3841,8 @@ class CloudChannelServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -4013,8 +3881,8 @@ class CloudChannelServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -4040,8 +3908,8 @@ class CloudChannelServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -4072,9 +3940,8 @@ class CloudChannelServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -4098,7 +3965,8 @@ class CloudChannelServiceClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status DeleteOperation(std::string const& name, Options opts = {});
+  Status
+  DeleteOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -4127,9 +3995,8 @@ class CloudChannelServiceClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request,
-      Options opts = {});
+  Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -4163,7 +4030,8 @@ class CloudChannelServiceClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(std::string const& name, Options opts = {});
+  Status
+  CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -4202,9 +4070,8 @@ class CloudChannelServiceClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request,
-      Options opts = {});
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<CloudChannelServiceConnection> connection_;

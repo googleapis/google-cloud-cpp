@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPOSER_V1_IMAGE_VERSIONS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPOSER_V1_IMAGE_VERSIONS_CONNECTION_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/composer/v1/image_versions_connection_idempotency_policy.h"
 #include "google/cloud/composer/v1/internal/image_versions_retry_traits.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -52,8 +52,7 @@ class ImageVersionsRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class ImageVersionsLimitedErrorCountRetryPolicy
-    : public ImageVersionsRetryPolicy {
+class ImageVersionsLimitedErrorCountRetryPolicy : public ImageVersionsRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -63,14 +62,14 @@ class ImageVersionsLimitedErrorCountRetryPolicy
    *     @p maximum_failures == 0.
    */
   explicit ImageVersionsLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   ImageVersionsLimitedErrorCountRetryPolicy(
       ImageVersionsLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : ImageVersionsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : ImageVersionsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   ImageVersionsLimitedErrorCountRetryPolicy(
       ImageVersionsLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : ImageVersionsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : ImageVersionsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -90,9 +89,7 @@ class ImageVersionsLimitedErrorCountRetryPolicy
   using BaseType = ImageVersionsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      composer_v1_internal::ImageVersionsRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<composer_v1_internal::ImageVersionsRetryTraits> impl_;
 };
 
 /**
@@ -130,14 +127,12 @@ class ImageVersionsLimitedTimeRetryPolicy : public ImageVersionsRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit ImageVersionsLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  ImageVersionsLimitedTimeRetryPolicy(
-      ImageVersionsLimitedTimeRetryPolicy&& rhs) noexcept
-      : ImageVersionsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  ImageVersionsLimitedTimeRetryPolicy(
-      ImageVersionsLimitedTimeRetryPolicy const& rhs) noexcept
-      : ImageVersionsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  ImageVersionsLimitedTimeRetryPolicy(ImageVersionsLimitedTimeRetryPolicy&& rhs) noexcept
+    : ImageVersionsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  ImageVersionsLimitedTimeRetryPolicy(ImageVersionsLimitedTimeRetryPolicy const& rhs) noexcept
+    : ImageVersionsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -159,9 +154,7 @@ class ImageVersionsLimitedTimeRetryPolicy : public ImageVersionsRetryPolicy {
   using BaseType = ImageVersionsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      composer_v1_internal::ImageVersionsRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<composer_v1_internal::ImageVersionsRetryTraits> impl_;
 };
 
 /**
@@ -182,19 +175,17 @@ class ImageVersionsConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StreamRange<
-      google::cloud::orchestration::airflow::service::v1::ImageVersion>
-  ListImageVersions(google::cloud::orchestration::airflow::service::v1::
-                        ListImageVersionsRequest request);
+  virtual StreamRange<google::cloud::orchestration::airflow::service::v1::ImageVersion>
+  ListImageVersions(google::cloud::orchestration::airflow::service::v1::ListImageVersionsRequest request);
 
-  virtual StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 
-  virtual Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request);
+  virtual Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
 };
 
 /**

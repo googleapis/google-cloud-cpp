@@ -51,14 +51,12 @@ class MockAssetServiceConnection : public asset_v1::AssetServiceConnection {
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// ExportAssets(Matcher<google::cloud::asset::v1::ExportAssetsRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, ExportAssets(Matcher<google::cloud::asset::v1::ExportAssetsRequest const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::asset::v1::ExportAssetsResponse>>,
-              ExportAssets,
-              (google::cloud::asset::v1::ExportAssetsRequest const& request),
-              (override));
+  ExportAssets,
+  (google::cloud::asset::v1::ExportAssetsRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -66,85 +64,73 @@ class MockAssetServiceConnection : public asset_v1::AssetServiceConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, ExportAssets(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, ExportAssets,
-              (NoAwaitTag,
-               google::cloud::asset::v1::ExportAssetsRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  ExportAssets, (NoAwaitTag,
+    google::cloud::asset::v1::ExportAssetsRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, ExportAssets(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, ExportAssets(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::asset::v1::ExportAssetsResponse>>,
-              ExportAssets, (google::longrunning::Operation const& operation),
-              (override));
+  ExportAssets, (
+    google::longrunning::Operation const& operation), (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::asset::v1::Asset>), ListAssets,
-              (google::cloud::asset::v1::ListAssetsRequest request),
-              (override));
+  MOCK_METHOD((StreamRange<google::cloud::asset::v1::Asset>),
+  ListAssets,
+  (google::cloud::asset::v1::ListAssetsRequest request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::asset::v1::BatchGetAssetsHistoryResponse>,
-      BatchGetAssetsHistory,
-      (google::cloud::asset::v1::BatchGetAssetsHistoryRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::asset::v1::BatchGetAssetsHistoryResponse>,
+  BatchGetAssetsHistory,
+  (google::cloud::asset::v1::BatchGetAssetsHistoryRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::asset::v1::Feed>, CreateFeed,
-              (google::cloud::asset::v1::CreateFeedRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::asset::v1::Feed>,
+  CreateFeed,
+  (google::cloud::asset::v1::CreateFeedRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::asset::v1::Feed>, GetFeed,
-              (google::cloud::asset::v1::GetFeedRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::asset::v1::Feed>,
+  GetFeed,
+  (google::cloud::asset::v1::GetFeedRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::asset::v1::ListFeedsResponse>, ListFeeds,
-              (google::cloud::asset::v1::ListFeedsRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::asset::v1::ListFeedsResponse>,
+  ListFeeds,
+  (google::cloud::asset::v1::ListFeedsRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::asset::v1::Feed>, UpdateFeed,
-              (google::cloud::asset::v1::UpdateFeedRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::asset::v1::Feed>,
+  UpdateFeed,
+  (google::cloud::asset::v1::UpdateFeedRequest const& request), (override));
 
-  MOCK_METHOD(Status, DeleteFeed,
-              (google::cloud::asset::v1::DeleteFeedRequest const& request),
-              (override));
+  MOCK_METHOD(Status,
+  DeleteFeed,
+  (google::cloud::asset::v1::DeleteFeedRequest const& request), (override));
 
   MOCK_METHOD((StreamRange<google::cloud::asset::v1::ResourceSearchResult>),
-              SearchAllResources,
-              (google::cloud::asset::v1::SearchAllResourcesRequest request),
-              (override));
+  SearchAllResources,
+  (google::cloud::asset::v1::SearchAllResourcesRequest request), (override));
 
   MOCK_METHOD((StreamRange<google::cloud::asset::v1::IamPolicySearchResult>),
-              SearchAllIamPolicies,
-              (google::cloud::asset::v1::SearchAllIamPoliciesRequest request),
-              (override));
+  SearchAllIamPolicies,
+  (google::cloud::asset::v1::SearchAllIamPoliciesRequest request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::asset::v1::AnalyzeIamPolicyResponse>,
-      AnalyzeIamPolicy,
-      (google::cloud::asset::v1::AnalyzeIamPolicyRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::asset::v1::AnalyzeIamPolicyResponse>,
+  AnalyzeIamPolicy,
+  (google::cloud::asset::v1::AnalyzeIamPolicyRequest const& request), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// AnalyzeIamPolicyLongrunning(Matcher<google::cloud::asset::v1::AnalyzeIamPolicyLongrunningRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, AnalyzeIamPolicyLongrunning(Matcher<google::cloud::asset::v1::AnalyzeIamPolicyLongrunningRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<
-          google::cloud::asset::v1::AnalyzeIamPolicyLongrunningResponse>>,
-      AnalyzeIamPolicyLongrunning,
-      (google::cloud::asset::v1::AnalyzeIamPolicyLongrunningRequest const&
-           request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::asset::v1::AnalyzeIamPolicyLongrunningResponse>>,
+  AnalyzeIamPolicyLongrunning,
+  (google::cloud::asset::v1::AnalyzeIamPolicyLongrunningRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -152,94 +138,69 @@ class MockAssetServiceConnection : public asset_v1::AssetServiceConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, AnalyzeIamPolicyLongrunning(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, AnalyzeIamPolicyLongrunning,
-      (NoAwaitTag,
-       google::cloud::asset::v1::AnalyzeIamPolicyLongrunningRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  AnalyzeIamPolicyLongrunning, (NoAwaitTag,
+    google::cloud::asset::v1::AnalyzeIamPolicyLongrunningRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// AnalyzeIamPolicyLongrunning(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, AnalyzeIamPolicyLongrunning(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<
-          google::cloud::asset::v1::AnalyzeIamPolicyLongrunningResponse>>,
-      AnalyzeIamPolicyLongrunning,
-      (google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::asset::v1::AnalyzeIamPolicyLongrunningResponse>>,
+  AnalyzeIamPolicyLongrunning, (
+    google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::asset::v1::AnalyzeMoveResponse>,
-              AnalyzeMove,
-              (google::cloud::asset::v1::AnalyzeMoveRequest const& request),
-              (override));
+  AnalyzeMove,
+  (google::cloud::asset::v1::AnalyzeMoveRequest const& request), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::asset::v1::QueryAssetsResponse>,
-              QueryAssets,
-              (google::cloud::asset::v1::QueryAssetsRequest const& request),
-              (override));
+  QueryAssets,
+  (google::cloud::asset::v1::QueryAssetsRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::asset::v1::SavedQuery>, CreateSavedQuery,
-      (google::cloud::asset::v1::CreateSavedQueryRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::asset::v1::SavedQuery>,
+  CreateSavedQuery,
+  (google::cloud::asset::v1::CreateSavedQueryRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::asset::v1::SavedQuery>, GetSavedQuery,
-              (google::cloud::asset::v1::GetSavedQueryRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::asset::v1::SavedQuery>,
+  GetSavedQuery,
+  (google::cloud::asset::v1::GetSavedQueryRequest const& request), (override));
 
   MOCK_METHOD((StreamRange<google::cloud::asset::v1::SavedQuery>),
-              ListSavedQueries,
-              (google::cloud::asset::v1::ListSavedQueriesRequest request),
-              (override));
+  ListSavedQueries,
+  (google::cloud::asset::v1::ListSavedQueriesRequest request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::asset::v1::SavedQuery>, UpdateSavedQuery,
-      (google::cloud::asset::v1::UpdateSavedQueryRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::asset::v1::SavedQuery>,
+  UpdateSavedQuery,
+  (google::cloud::asset::v1::UpdateSavedQueryRequest const& request), (override));
 
-  MOCK_METHOD(
-      Status, DeleteSavedQuery,
-      (google::cloud::asset::v1::DeleteSavedQueryRequest const& request),
-      (override));
+  MOCK_METHOD(Status,
+  DeleteSavedQuery,
+  (google::cloud::asset::v1::DeleteSavedQueryRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::asset::v1::BatchGetEffectiveIamPoliciesResponse>,
-      BatchGetEffectiveIamPolicies,
-      (google::cloud::asset::v1::BatchGetEffectiveIamPoliciesRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::asset::v1::BatchGetEffectiveIamPoliciesResponse>,
+  BatchGetEffectiveIamPolicies,
+  (google::cloud::asset::v1::BatchGetEffectiveIamPoliciesRequest const& request), (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::asset::v1::
-                               AnalyzeOrgPoliciesResponse::OrgPolicyResult>),
-              AnalyzeOrgPolicies,
-              (google::cloud::asset::v1::AnalyzeOrgPoliciesRequest request),
-              (override));
+  MOCK_METHOD((StreamRange<google::cloud::asset::v1::AnalyzeOrgPoliciesResponse::OrgPolicyResult>),
+  AnalyzeOrgPolicies,
+  (google::cloud::asset::v1::AnalyzeOrgPoliciesRequest request), (override));
 
-  MOCK_METHOD(
-      (StreamRange<
-          google::cloud::asset::v1::AnalyzeOrgPolicyGovernedContainersResponse::
-              GovernedContainer>),
-      AnalyzeOrgPolicyGovernedContainers,
-      (google::cloud::asset::v1::AnalyzeOrgPolicyGovernedContainersRequest
-           request),
-      (override));
+  MOCK_METHOD((StreamRange<google::cloud::asset::v1::AnalyzeOrgPolicyGovernedContainersResponse::GovernedContainer>),
+  AnalyzeOrgPolicyGovernedContainers,
+  (google::cloud::asset::v1::AnalyzeOrgPolicyGovernedContainersRequest request), (override));
 
-  MOCK_METHOD(
-      (StreamRange<google::cloud::asset::v1::
-                       AnalyzeOrgPolicyGovernedAssetsResponse::GovernedAsset>),
-      AnalyzeOrgPolicyGovernedAssets,
-      (google::cloud::asset::v1::AnalyzeOrgPolicyGovernedAssetsRequest request),
-      (override));
+  MOCK_METHOD((StreamRange<google::cloud::asset::v1::AnalyzeOrgPolicyGovernedAssetsResponse::GovernedAsset>),
+  AnalyzeOrgPolicyGovernedAssets,
+  (google::cloud::asset::v1::AnalyzeOrgPolicyGovernedAssetsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
-              (google::longrunning::GetOperationRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  GetOperation,
+  (google::longrunning::GetOperationRequest const& request), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

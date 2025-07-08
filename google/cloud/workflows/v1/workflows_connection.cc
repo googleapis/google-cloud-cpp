@@ -17,17 +17,17 @@
 // source: google/cloud/workflows/v1/workflows.proto
 
 #include "google/cloud/workflows/v1/workflows_connection.h"
-#include "google/cloud/workflows/v1/internal/workflows_connection_impl.h"
-#include "google/cloud/workflows/v1/internal/workflows_option_defaults.h"
-#include "google/cloud/workflows/v1/internal/workflows_stub_factory.h"
-#include "google/cloud/workflows/v1/internal/workflows_tracing_connection.h"
-#include "google/cloud/workflows/v1/workflows_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/workflows/v1/internal/workflows_connection_impl.h"
+#include "google/cloud/workflows/v1/internal/workflows_option_defaults.h"
+#include "google/cloud/workflows/v1/internal/workflows_stub_factory.h"
+#include "google/cloud/workflows/v1/internal/workflows_tracing_connection.h"
+#include "google/cloud/workflows/v1/workflows_options.h"
 #include <memory>
 #include <utility>
 
@@ -38,10 +38,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 WorkflowsConnection::~WorkflowsConnection() = default;
 
-StreamRange<google::cloud::workflows::v1::Workflow>
-WorkflowsConnection::ListWorkflows(
-    google::cloud::workflows::v1::
-        ListWorkflowsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::workflows::v1::Workflow> WorkflowsConnection::ListWorkflows(
+    google::cloud::workflows::v1::ListWorkflowsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::workflows::v1::Workflow>>();
 }
@@ -56,115 +54,124 @@ future<StatusOr<google::cloud::workflows::v1::Workflow>>
 WorkflowsConnection::CreateWorkflow(
     google::cloud::workflows::v1::CreateWorkflowRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::workflows::v1::Workflow>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::workflows::v1::Workflow>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation> WorkflowsConnection::CreateWorkflow(
-    NoAwaitTag, google::cloud::workflows::v1::CreateWorkflowRequest const&) {
+StatusOr<google::longrunning::Operation>
+WorkflowsConnection::CreateWorkflow(
+    NoAwaitTag,
+    google::cloud::workflows::v1::CreateWorkflowRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::workflows::v1::Workflow>>
-WorkflowsConnection::CreateWorkflow(google::longrunning::Operation const&) {
+WorkflowsConnection::CreateWorkflow(
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::workflows::v1::Workflow>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::workflows::v1::Workflow>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::workflows::v1::OperationMetadata>>
 WorkflowsConnection::DeleteWorkflow(
     google::cloud::workflows::v1::DeleteWorkflowRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::workflows::v1::OperationMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::workflows::v1::OperationMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation> WorkflowsConnection::DeleteWorkflow(
-    NoAwaitTag, google::cloud::workflows::v1::DeleteWorkflowRequest const&) {
+StatusOr<google::longrunning::Operation>
+WorkflowsConnection::DeleteWorkflow(
+    NoAwaitTag,
+    google::cloud::workflows::v1::DeleteWorkflowRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::workflows::v1::OperationMetadata>>
-WorkflowsConnection::DeleteWorkflow(google::longrunning::Operation const&) {
+WorkflowsConnection::DeleteWorkflow(
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::workflows::v1::OperationMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::workflows::v1::OperationMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::workflows::v1::Workflow>>
 WorkflowsConnection::UpdateWorkflow(
     google::cloud::workflows::v1::UpdateWorkflowRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::workflows::v1::Workflow>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::workflows::v1::Workflow>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation> WorkflowsConnection::UpdateWorkflow(
-    NoAwaitTag, google::cloud::workflows::v1::UpdateWorkflowRequest const&) {
+StatusOr<google::longrunning::Operation>
+WorkflowsConnection::UpdateWorkflow(
+    NoAwaitTag,
+    google::cloud::workflows::v1::UpdateWorkflowRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::workflows::v1::Workflow>>
-WorkflowsConnection::UpdateWorkflow(google::longrunning::Operation const&) {
+WorkflowsConnection::UpdateWorkflow(
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::workflows::v1::Workflow>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::workflows::v1::Workflow>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StreamRange<google::cloud::workflows::v1::Workflow>
-WorkflowsConnection::ListWorkflowRevisions(
-    google::cloud::workflows::v1::
-        ListWorkflowRevisionsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::workflows::v1::Workflow> WorkflowsConnection::ListWorkflowRevisions(
+    google::cloud::workflows::v1::ListWorkflowRevisionsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::workflows::v1::Workflow>>();
 }
 
-StreamRange<google::cloud::location::Location>
-WorkflowsConnection::ListLocations(
-    google::cloud::location::
-        ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::location::Location> WorkflowsConnection::ListLocations(
+    google::cloud::location::ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::location::Location>>();
 }
 
-StatusOr<google::cloud::location::Location> WorkflowsConnection::GetLocation(
+StatusOr<google::cloud::location::Location>
+WorkflowsConnection::GetLocation(
     google::cloud::location::GetLocationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StreamRange<google::longrunning::Operation> WorkflowsConnection::ListOperations(
-    google::longrunning::
-        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+    google::longrunning::ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }
 
-StatusOr<google::longrunning::Operation> WorkflowsConnection::GetOperation(
+StatusOr<google::longrunning::Operation>
+WorkflowsConnection::GetOperation(
     google::longrunning::GetOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status WorkflowsConnection::DeleteOperation(
+Status
+WorkflowsConnection::DeleteOperation(
     google::longrunning::DeleteOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-std::shared_ptr<WorkflowsConnection> MakeWorkflowsConnection(Options options) {
+std::shared_ptr<WorkflowsConnection> MakeWorkflowsConnection(
+    Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 WorkflowsPolicyOptionList>(options, __func__);
-  options = workflows_v1_internal::WorkflowsDefaultOptions(std::move(options));
+      UnifiedCredentialsOptionList,
+      WorkflowsPolicyOptionList>(options, __func__);
+  options = workflows_v1_internal::WorkflowsDefaultOptions(
+      std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
-  auto stub = workflows_v1_internal::CreateDefaultWorkflowsStub(std::move(auth),
-                                                                options);
+  auto stub = workflows_v1_internal::CreateDefaultWorkflowsStub(
+    std::move(auth), options);
   return workflows_v1_internal::MakeWorkflowsTracingConnection(
       std::make_shared<workflows_v1_internal::WorkflowsConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options)));
+      std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

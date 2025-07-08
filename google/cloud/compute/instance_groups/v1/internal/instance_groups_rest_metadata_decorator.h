@@ -40,115 +40,83 @@ class InstanceGroupsRestMetadata : public InstanceGroupsRestStub {
       std::shared_ptr<InstanceGroupsRestStub> child,
       std::string api_client_header = "");
 
-  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncAddInstances(
+  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncAddInstances(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::instance_groups::v1::
-          AddInstancesRequest const& request) override;
+      google::cloud::cpp::compute::instance_groups::v1::AddInstancesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> AddInstances(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::instance_groups::v1::
-          AddInstancesRequest const& request) override;
+      Options const& options, google::cloud::cpp::compute::instance_groups::v1::AddInstancesRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::InstanceGroupAggregatedList>
-  AggregatedListInstanceGroups(
+  StatusOr<google::cloud::cpp::compute::v1::InstanceGroupAggregatedList> AggregatedListInstanceGroups(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::instance_groups::v1::
-          AggregatedListInstanceGroupsRequest const& request) override;
+      Options const& options, google::cloud::cpp::compute::instance_groups::v1::AggregatedListInstanceGroupsRequest const& request) override;
 
-  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncDeleteInstanceGroup(
+  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncDeleteInstanceGroup(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::instance_groups::v1::
-          DeleteInstanceGroupRequest const& request) override;
+      google::cloud::cpp::compute::instance_groups::v1::DeleteInstanceGroupRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteInstanceGroup(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::instance_groups::v1::
-          DeleteInstanceGroupRequest const& request) override;
+      Options const& options, google::cloud::cpp::compute::instance_groups::v1::DeleteInstanceGroupRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::InstanceGroup> GetInstanceGroup(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::instance_groups::v1::
-          GetInstanceGroupRequest const& request) override;
+      Options const& options, google::cloud::cpp::compute::instance_groups::v1::GetInstanceGroupRequest const& request) override;
 
-  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncInsertInstanceGroup(
+  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncInsertInstanceGroup(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::instance_groups::v1::
-          InsertInstanceGroupRequest const& request) override;
+      google::cloud::cpp::compute::instance_groups::v1::InsertInstanceGroupRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertInstanceGroup(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::instance_groups::v1::
-          InsertInstanceGroupRequest const& request) override;
+      Options const& options, google::cloud::cpp::compute::instance_groups::v1::InsertInstanceGroupRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::InstanceGroupList>
-  ListInstanceGroups(google::cloud::rest_internal::RestContext& rest_context,
-                     Options const& options,
-                     google::cloud::cpp::compute::instance_groups::v1::
-                         ListInstanceGroupsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::InstanceGroupList> ListInstanceGroups(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options, google::cloud::cpp::compute::instance_groups::v1::ListInstanceGroupsRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::InstanceGroupsListInstances>
-  ListInstances(google::cloud::rest_internal::RestContext& rest_context,
-                Options const& options,
-                google::cloud::cpp::compute::instance_groups::v1::
-                    ListInstancesRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::InstanceGroupsListInstances> ListInstances(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options, google::cloud::cpp::compute::instance_groups::v1::ListInstancesRequest const& request) override;
 
-  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncRemoveInstances(
+  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncRemoveInstances(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::instance_groups::v1::
-          RemoveInstancesRequest const& request) override;
+      google::cloud::cpp::compute::instance_groups::v1::RemoveInstancesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> RemoveInstances(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::instance_groups::v1::
-          RemoveInstancesRequest const& request) override;
+      Options const& options, google::cloud::cpp::compute::instance_groups::v1::RemoveInstancesRequest const& request) override;
 
-  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncSetNamedPorts(
+  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncSetNamedPorts(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::instance_groups::v1::
-          SetNamedPortsRequest const& request) override;
+      google::cloud::cpp::compute::instance_groups::v1::SetNamedPortsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetNamedPorts(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::instance_groups::v1::
-          SetNamedPortsRequest const& request) override;
+      Options const& options, google::cloud::cpp::compute::instance_groups::v1::SetNamedPortsRequest const& request) override;
 
-  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncGetOperation(
+  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::zone_operations::v1::
-          GetOperationRequest const& request) override;
+      google::cloud::cpp::compute::zone_operations::v1::GetOperationRequest const& request) override;
 
   google::cloud::future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::zone_operations::v1::
-          DeleteOperationRequest const& request) override;
+      google::cloud::cpp::compute::zone_operations::v1::DeleteOperationRequest const& request) override;
 
  private:
   void SetMetadata(rest_internal::RestContext& rest_context,

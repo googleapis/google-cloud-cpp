@@ -17,17 +17,17 @@
 // source: google/cloud/networkmanagement/v1/reachability.proto
 
 #include "google/cloud/networkmanagement/v1/reachability_connection.h"
-#include "google/cloud/networkmanagement/v1/internal/reachability_connection_impl.h"
-#include "google/cloud/networkmanagement/v1/internal/reachability_option_defaults.h"
-#include "google/cloud/networkmanagement/v1/internal/reachability_stub_factory.h"
-#include "google/cloud/networkmanagement/v1/internal/reachability_tracing_connection.h"
-#include "google/cloud/networkmanagement/v1/reachability_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/networkmanagement/v1/internal/reachability_connection_impl.h"
+#include "google/cloud/networkmanagement/v1/internal/reachability_option_defaults.h"
+#include "google/cloud/networkmanagement/v1/internal/reachability_stub_factory.h"
+#include "google/cloud/networkmanagement/v1/internal/reachability_tracing_connection.h"
+#include "google/cloud/networkmanagement/v1/reachability_options.h"
 #include <memory>
 #include <utility>
 
@@ -38,10 +38,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ReachabilityServiceConnection::~ReachabilityServiceConnection() = default;
 
-StreamRange<google::cloud::networkmanagement::v1::ConnectivityTest>
-ReachabilityServiceConnection::ListConnectivityTests(
-    google::cloud::networkmanagement::v1::
-        ListConnectivityTestsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::networkmanagement::v1::ConnectivityTest> ReachabilityServiceConnection::ListConnectivityTests(
+    google::cloud::networkmanagement::v1::ListConnectivityTestsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::networkmanagement::v1::ConnectivityTest>>();
 }
@@ -54,60 +52,58 @@ ReachabilityServiceConnection::GetConnectivityTest(
 
 future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>
 ReachabilityServiceConnection::CreateConnectivityTest(
-    google::cloud::networkmanagement::v1::
-        CreateConnectivityTestRequest const&) {
+    google::cloud::networkmanagement::v1::CreateConnectivityTestRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 ReachabilityServiceConnection::CreateConnectivityTest(
-    NoAwaitTag, google::cloud::networkmanagement::v1::
-                    CreateConnectivityTestRequest const&) {
+    NoAwaitTag,
+    google::cloud::networkmanagement::v1::CreateConnectivityTestRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>
 ReachabilityServiceConnection::CreateConnectivityTest(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>
 ReachabilityServiceConnection::UpdateConnectivityTest(
-    google::cloud::networkmanagement::v1::
-        UpdateConnectivityTestRequest const&) {
+    google::cloud::networkmanagement::v1::UpdateConnectivityTestRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 ReachabilityServiceConnection::UpdateConnectivityTest(
-    NoAwaitTag, google::cloud::networkmanagement::v1::
-                    UpdateConnectivityTestRequest const&) {
+    NoAwaitTag,
+    google::cloud::networkmanagement::v1::UpdateConnectivityTestRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>
 ReachabilityServiceConnection::UpdateConnectivityTest(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>
 ReachabilityServiceConnection::RerunConnectivityTest(
     google::cloud::networkmanagement::v1::RerunConnectivityTestRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -115,46 +111,43 @@ ReachabilityServiceConnection::RerunConnectivityTest(
     NoAwaitTag,
     google::cloud::networkmanagement::v1::RerunConnectivityTestRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>
 ReachabilityServiceConnection::RerunConnectivityTest(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::networkmanagement::v1::OperationMetadata>>
 ReachabilityServiceConnection::DeleteConnectivityTest(
-    google::cloud::networkmanagement::v1::
-        DeleteConnectivityTestRequest const&) {
+    google::cloud::networkmanagement::v1::DeleteConnectivityTestRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::networkmanagement::v1::OperationMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::networkmanagement::v1::OperationMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 ReachabilityServiceConnection::DeleteConnectivityTest(
-    NoAwaitTag, google::cloud::networkmanagement::v1::
-                    DeleteConnectivityTestRequest const&) {
+    NoAwaitTag,
+    google::cloud::networkmanagement::v1::DeleteConnectivityTestRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::networkmanagement::v1::OperationMetadata>>
 ReachabilityServiceConnection::DeleteConnectivityTest(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::networkmanagement::v1::OperationMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::networkmanagement::v1::OperationMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StreamRange<google::cloud::location::Location>
-ReachabilityServiceConnection::ListLocations(
-    google::cloud::location::
-        ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::location::Location> ReachabilityServiceConnection::ListLocations(
+    google::cloud::location::ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::location::Location>>();
 }
@@ -165,12 +158,14 @@ ReachabilityServiceConnection::GetLocation(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::iam::v1::Policy> ReachabilityServiceConnection::SetIamPolicy(
+StatusOr<google::iam::v1::Policy>
+ReachabilityServiceConnection::SetIamPolicy(
     google::iam::v1::SetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::iam::v1::Policy> ReachabilityServiceConnection::GetIamPolicy(
+StatusOr<google::iam::v1::Policy>
+ReachabilityServiceConnection::GetIamPolicy(
     google::iam::v1::GetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -181,10 +176,8 @@ ReachabilityServiceConnection::TestIamPermissions(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::longrunning::Operation>
-ReachabilityServiceConnection::ListOperations(
-    google::longrunning::
-        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::longrunning::Operation> ReachabilityServiceConnection::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }
@@ -195,34 +188,32 @@ ReachabilityServiceConnection::GetOperation(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status ReachabilityServiceConnection::DeleteOperation(
+Status
+ReachabilityServiceConnection::DeleteOperation(
     google::longrunning::DeleteOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status ReachabilityServiceConnection::CancelOperation(
+Status
+ReachabilityServiceConnection::CancelOperation(
     google::longrunning::CancelOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-std::shared_ptr<ReachabilityServiceConnection>
-MakeReachabilityServiceConnection(Options options) {
+std::shared_ptr<ReachabilityServiceConnection> MakeReachabilityServiceConnection(
+    Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 ReachabilityServicePolicyOptionList>(options,
-                                                                      __func__);
+      UnifiedCredentialsOptionList,
+      ReachabilityServicePolicyOptionList>(options, __func__);
   options = networkmanagement_v1_internal::ReachabilityServiceDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
-  auto stub =
-      networkmanagement_v1_internal::CreateDefaultReachabilityServiceStub(
-          std::move(auth), options);
-  return networkmanagement_v1_internal::
-      MakeReachabilityServiceTracingConnection(
-          std::make_shared<
-              networkmanagement_v1_internal::ReachabilityServiceConnectionImpl>(
-              std::move(background), std::move(stub), std::move(options)));
+  auto stub = networkmanagement_v1_internal::CreateDefaultReachabilityServiceStub(
+    std::move(auth), options);
+  return networkmanagement_v1_internal::MakeReachabilityServiceTracingConnection(
+      std::make_shared<networkmanagement_v1_internal::ReachabilityServiceConnectionImpl>(
+      std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

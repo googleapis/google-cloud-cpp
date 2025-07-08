@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_INTERNAL_SQL_REGIONS_REST_LOGGING_DECORATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_INTERNAL_SQL_REGIONS_REST_LOGGING_DECORATOR_H
 
-#include "google/cloud/sql/v1/internal/sql_regions_rest_stub.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/rest_context.h"
+#include "google/cloud/sql/v1/internal/sql_regions_rest_stub.h"
 #include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
 #include <google/cloud/sql/v1/cloud_sql_regions.pb.h>
@@ -38,8 +38,8 @@ class SqlRegionsServiceRestLogging : public SqlRegionsServiceRestStub {
  public:
   ~SqlRegionsServiceRestLogging() override = default;
   SqlRegionsServiceRestLogging(std::shared_ptr<SqlRegionsServiceRestStub> child,
-                               TracingOptions tracing_options,
-                               std::set<std::string> components);
+                       TracingOptions tracing_options,
+                       std::set<std::string> components);
 
  private:
   std::shared_ptr<SqlRegionsServiceRestStub> child_;

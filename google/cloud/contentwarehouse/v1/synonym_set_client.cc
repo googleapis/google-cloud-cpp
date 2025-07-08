@@ -28,15 +28,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 SynonymSetServiceClient::SynonymSetServiceClient(
     std::shared_ptr<SynonymSetServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 SynonymSetServiceClient::~SynonymSetServiceClient() = default;
 
 StatusOr<google::cloud::contentwarehouse::v1::SynonymSet>
-SynonymSetServiceClient::CreateSynonymSet(
-    std::string const& parent,
-    google::cloud::contentwarehouse::v1::SynonymSet const& synonym_set,
-    Options opts) {
+SynonymSetServiceClient::CreateSynonymSet(std::string const& parent, google::cloud::contentwarehouse::v1::SynonymSet const& synonym_set, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::contentwarehouse::v1::CreateSynonymSetRequest request;
   request.set_parent(parent);
@@ -45,9 +42,7 @@ SynonymSetServiceClient::CreateSynonymSet(
 }
 
 StatusOr<google::cloud::contentwarehouse::v1::SynonymSet>
-SynonymSetServiceClient::CreateSynonymSet(
-    google::cloud::contentwarehouse::v1::CreateSynonymSetRequest const& request,
-    Options opts) {
+SynonymSetServiceClient::CreateSynonymSet(google::cloud::contentwarehouse::v1::CreateSynonymSetRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateSynonymSet(request);
 }
@@ -61,18 +56,13 @@ SynonymSetServiceClient::GetSynonymSet(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::contentwarehouse::v1::SynonymSet>
-SynonymSetServiceClient::GetSynonymSet(
-    google::cloud::contentwarehouse::v1::GetSynonymSetRequest const& request,
-    Options opts) {
+SynonymSetServiceClient::GetSynonymSet(google::cloud::contentwarehouse::v1::GetSynonymSetRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetSynonymSet(request);
 }
 
 StatusOr<google::cloud::contentwarehouse::v1::SynonymSet>
-SynonymSetServiceClient::UpdateSynonymSet(
-    std::string const& name,
-    google::cloud::contentwarehouse::v1::SynonymSet const& synonym_set,
-    Options opts) {
+SynonymSetServiceClient::UpdateSynonymSet(std::string const& name, google::cloud::contentwarehouse::v1::SynonymSet const& synonym_set, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::contentwarehouse::v1::UpdateSynonymSetRequest request;
   request.set_name(name);
@@ -81,31 +71,27 @@ SynonymSetServiceClient::UpdateSynonymSet(
 }
 
 StatusOr<google::cloud::contentwarehouse::v1::SynonymSet>
-SynonymSetServiceClient::UpdateSynonymSet(
-    google::cloud::contentwarehouse::v1::UpdateSynonymSetRequest const& request,
-    Options opts) {
+SynonymSetServiceClient::UpdateSynonymSet(google::cloud::contentwarehouse::v1::UpdateSynonymSetRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateSynonymSet(request);
 }
 
-Status SynonymSetServiceClient::DeleteSynonymSet(std::string const& name,
-                                                 Options opts) {
+Status
+SynonymSetServiceClient::DeleteSynonymSet(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::contentwarehouse::v1::DeleteSynonymSetRequest request;
   request.set_name(name);
   return connection_->DeleteSynonymSet(request);
 }
 
-Status SynonymSetServiceClient::DeleteSynonymSet(
-    google::cloud::contentwarehouse::v1::DeleteSynonymSetRequest const& request,
-    Options opts) {
+Status
+SynonymSetServiceClient::DeleteSynonymSet(google::cloud::contentwarehouse::v1::DeleteSynonymSetRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteSynonymSet(request);
 }
 
 StreamRange<google::cloud::contentwarehouse::v1::SynonymSet>
-SynonymSetServiceClient::ListSynonymSets(std::string const& parent,
-                                         Options opts) {
+SynonymSetServiceClient::ListSynonymSets(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::contentwarehouse::v1::ListSynonymSetsRequest request;
   request.set_parent(parent);
@@ -113,23 +99,21 @@ SynonymSetServiceClient::ListSynonymSets(std::string const& parent,
 }
 
 StreamRange<google::cloud::contentwarehouse::v1::SynonymSet>
-SynonymSetServiceClient::ListSynonymSets(
-    google::cloud::contentwarehouse::v1::ListSynonymSetsRequest request,
-    Options opts) {
+SynonymSetServiceClient::ListSynonymSets(google::cloud::contentwarehouse::v1::ListSynonymSetsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListSynonymSets(std::move(request));
 }
 
-StatusOr<google::longrunning::Operation> SynonymSetServiceClient::GetOperation(
-    std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation>
+SynonymSetServiceClient::GetOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
   return connection_->GetOperation(request);
 }
 
-StatusOr<google::longrunning::Operation> SynonymSetServiceClient::GetOperation(
-    google::longrunning::GetOperationRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation>
+SynonymSetServiceClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }

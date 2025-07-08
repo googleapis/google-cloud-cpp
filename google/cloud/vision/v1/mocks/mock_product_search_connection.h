@@ -46,101 +46,85 @@ class MockProductSearchConnection : public vision_v1::ProductSearchConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::vision::v1::ProductSet>, CreateProductSet,
-      (google::cloud::vision::v1::CreateProductSetRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::vision::v1::ProductSet>,
+  CreateProductSet,
+  (google::cloud::vision::v1::CreateProductSetRequest const& request), (override));
 
   MOCK_METHOD((StreamRange<google::cloud::vision::v1::ProductSet>),
-              ListProductSets,
-              (google::cloud::vision::v1::ListProductSetsRequest request),
-              (override));
+  ListProductSets,
+  (google::cloud::vision::v1::ListProductSetsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::vision::v1::ProductSet>, GetProductSet,
-              (google::cloud::vision::v1::GetProductSetRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::vision::v1::ProductSet>,
+  GetProductSet,
+  (google::cloud::vision::v1::GetProductSetRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::vision::v1::ProductSet>, UpdateProductSet,
-      (google::cloud::vision::v1::UpdateProductSetRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::vision::v1::ProductSet>,
+  UpdateProductSet,
+  (google::cloud::vision::v1::UpdateProductSetRequest const& request), (override));
 
-  MOCK_METHOD(
-      Status, DeleteProductSet,
-      (google::cloud::vision::v1::DeleteProductSetRequest const& request),
-      (override));
+  MOCK_METHOD(Status,
+  DeleteProductSet,
+  (google::cloud::vision::v1::DeleteProductSetRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::vision::v1::Product>, CreateProduct,
-              (google::cloud::vision::v1::CreateProductRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::vision::v1::Product>,
+  CreateProduct,
+  (google::cloud::vision::v1::CreateProductRequest const& request), (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::vision::v1::Product>), ListProducts,
-              (google::cloud::vision::v1::ListProductsRequest request),
-              (override));
+  MOCK_METHOD((StreamRange<google::cloud::vision::v1::Product>),
+  ListProducts,
+  (google::cloud::vision::v1::ListProductsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::vision::v1::Product>, GetProduct,
-              (google::cloud::vision::v1::GetProductRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::vision::v1::Product>,
+  GetProduct,
+  (google::cloud::vision::v1::GetProductRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::vision::v1::Product>, UpdateProduct,
-              (google::cloud::vision::v1::UpdateProductRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::vision::v1::Product>,
+  UpdateProduct,
+  (google::cloud::vision::v1::UpdateProductRequest const& request), (override));
 
-  MOCK_METHOD(Status, DeleteProduct,
-              (google::cloud::vision::v1::DeleteProductRequest const& request),
-              (override));
+  MOCK_METHOD(Status,
+  DeleteProduct,
+  (google::cloud::vision::v1::DeleteProductRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::vision::v1::ReferenceImage>, CreateReferenceImage,
-      (google::cloud::vision::v1::CreateReferenceImageRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::vision::v1::ReferenceImage>,
+  CreateReferenceImage,
+  (google::cloud::vision::v1::CreateReferenceImageRequest const& request), (override));
 
-  MOCK_METHOD(
-      Status, DeleteReferenceImage,
-      (google::cloud::vision::v1::DeleteReferenceImageRequest const& request),
-      (override));
+  MOCK_METHOD(Status,
+  DeleteReferenceImage,
+  (google::cloud::vision::v1::DeleteReferenceImageRequest const& request), (override));
 
   MOCK_METHOD((StreamRange<google::cloud::vision::v1::ReferenceImage>),
-              ListReferenceImages,
-              (google::cloud::vision::v1::ListReferenceImagesRequest request),
-              (override));
+  ListReferenceImages,
+  (google::cloud::vision::v1::ListReferenceImagesRequest request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::vision::v1::ReferenceImage>, GetReferenceImage,
-      (google::cloud::vision::v1::GetReferenceImageRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::vision::v1::ReferenceImage>,
+  GetReferenceImage,
+  (google::cloud::vision::v1::GetReferenceImageRequest const& request), (override));
 
-  MOCK_METHOD(
-      Status, AddProductToProductSet,
-      (google::cloud::vision::v1::AddProductToProductSetRequest const& request),
-      (override));
+  MOCK_METHOD(Status,
+  AddProductToProductSet,
+  (google::cloud::vision::v1::AddProductToProductSetRequest const& request), (override));
 
-  MOCK_METHOD(
-      Status, RemoveProductFromProductSet,
-      (google::cloud::vision::v1::RemoveProductFromProductSetRequest const&
-           request),
-      (override));
+  MOCK_METHOD(Status,
+  RemoveProductFromProductSet,
+  (google::cloud::vision::v1::RemoveProductFromProductSetRequest const& request), (override));
 
-  MOCK_METHOD(
-      (StreamRange<google::cloud::vision::v1::Product>),
-      ListProductsInProductSet,
-      (google::cloud::vision::v1::ListProductsInProductSetRequest request),
-      (override));
+  MOCK_METHOD((StreamRange<google::cloud::vision::v1::Product>),
+  ListProductsInProductSet,
+  (google::cloud::vision::v1::ListProductsInProductSetRequest request), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// ImportProductSets(Matcher<google::cloud::vision::v1::ImportProductSetsRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, ImportProductSets(Matcher<google::cloud::vision::v1::ImportProductSetsRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::vision::v1::ImportProductSetsResponse>>,
-      ImportProductSets,
-      (google::cloud::vision::v1::ImportProductSetsRequest const& request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::vision::v1::ImportProductSetsResponse>>,
+  ImportProductSets,
+  (google::cloud::vision::v1::ImportProductSetsRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -148,39 +132,33 @@ class MockProductSearchConnection : public vision_v1::ProductSearchConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, ImportProductSets(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, ImportProductSets,
-      (NoAwaitTag,
-       google::cloud::vision::v1::ImportProductSetsRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  ImportProductSets, (NoAwaitTag,
+    google::cloud::vision::v1::ImportProductSetsRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// ImportProductSets(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock, ImportProductSets(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::vision::v1::ImportProductSetsResponse>>,
-      ImportProductSets, (google::longrunning::Operation const& operation),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::vision::v1::ImportProductSetsResponse>>,
+  ImportProductSets, (
+    google::longrunning::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// PurgeProducts(Matcher<google::cloud::vision::v1::PurgeProductsRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, PurgeProducts(Matcher<google::cloud::vision::v1::PurgeProductsRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::vision::v1::BatchOperationMetadata>>,
-      PurgeProducts,
-      (google::cloud::vision::v1::PurgeProductsRequest const& request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::vision::v1::BatchOperationMetadata>>,
+  PurgeProducts,
+  (google::cloud::vision::v1::PurgeProductsRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -188,27 +166,25 @@ class MockProductSearchConnection : public vision_v1::ProductSearchConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, PurgeProducts(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, PurgeProducts,
-              (NoAwaitTag,
-               google::cloud::vision::v1::PurgeProductsRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  PurgeProducts, (NoAwaitTag,
+    google::cloud::vision::v1::PurgeProductsRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, PurgeProducts(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, PurgeProducts(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::vision::v1::BatchOperationMetadata>>,
-      PurgeProducts, (google::longrunning::Operation const& operation),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::vision::v1::BatchOperationMetadata>>,
+  PurgeProducts, (
+    google::longrunning::Operation const& operation), (override));
 
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
-              (google::longrunning::GetOperationRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  GetOperation,
+  (google::longrunning::GetOperationRequest const& request), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

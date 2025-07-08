@@ -17,16 +17,16 @@
 // source: google/cloud/videointelligence/v1/video_intelligence.proto
 
 #include "google/cloud/videointelligence/v1/video_intelligence_connection.h"
-#include "google/cloud/videointelligence/v1/internal/video_intelligence_connection_impl.h"
-#include "google/cloud/videointelligence/v1/internal/video_intelligence_option_defaults.h"
-#include "google/cloud/videointelligence/v1/internal/video_intelligence_stub_factory.h"
-#include "google/cloud/videointelligence/v1/internal/video_intelligence_tracing_connection.h"
-#include "google/cloud/videointelligence/v1/video_intelligence_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/videointelligence/v1/internal/video_intelligence_connection_impl.h"
+#include "google/cloud/videointelligence/v1/internal/video_intelligence_option_defaults.h"
+#include "google/cloud/videointelligence/v1/internal/video_intelligence_stub_factory.h"
+#include "google/cloud/videointelligence/v1/internal/video_intelligence_tracing_connection.h"
+#include "google/cloud/videointelligence/v1/video_intelligence_options.h"
 #include <memory>
 #include <utility>
 
@@ -35,15 +35,14 @@ namespace cloud {
 namespace videointelligence_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-VideoIntelligenceServiceConnection::~VideoIntelligenceServiceConnection() =
-    default;
+VideoIntelligenceServiceConnection::~VideoIntelligenceServiceConnection() = default;
 
 future<StatusOr<google::cloud::videointelligence::v1::AnnotateVideoResponse>>
 VideoIntelligenceServiceConnection::AnnotateVideo(
     google::cloud::videointelligence::v1::AnnotateVideoRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::videointelligence::v1::AnnotateVideoResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::videointelligence::v1::AnnotateVideoResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -51,36 +50,31 @@ VideoIntelligenceServiceConnection::AnnotateVideo(
     NoAwaitTag,
     google::cloud::videointelligence::v1::AnnotateVideoRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::videointelligence::v1::AnnotateVideoResponse>>
 VideoIntelligenceServiceConnection::AnnotateVideo(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::videointelligence::v1::AnnotateVideoResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::videointelligence::v1::AnnotateVideoResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-std::shared_ptr<VideoIntelligenceServiceConnection>
-MakeVideoIntelligenceServiceConnection(Options options) {
+std::shared_ptr<VideoIntelligenceServiceConnection> MakeVideoIntelligenceServiceConnection(
+    Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 VideoIntelligenceServicePolicyOptionList>(
-      options, __func__);
-  options =
-      videointelligence_v1_internal::VideoIntelligenceServiceDefaultOptions(
-          std::move(options));
+      UnifiedCredentialsOptionList,
+      VideoIntelligenceServicePolicyOptionList>(options, __func__);
+  options = videointelligence_v1_internal::VideoIntelligenceServiceDefaultOptions(
+      std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
-  auto stub =
-      videointelligence_v1_internal::CreateDefaultVideoIntelligenceServiceStub(
-          std::move(auth), options);
-  return videointelligence_v1_internal::
-      MakeVideoIntelligenceServiceTracingConnection(
-          std::make_shared<videointelligence_v1_internal::
-                               VideoIntelligenceServiceConnectionImpl>(
-              std::move(background), std::move(stub), std::move(options)));
+  auto stub = videointelligence_v1_internal::CreateDefaultVideoIntelligenceServiceStub(
+    std::move(auth), options);
+  return videointelligence_v1_internal::MakeVideoIntelligenceServiceTracingConnection(
+      std::make_shared<videointelligence_v1_internal::VideoIntelligenceServiceConnectionImpl>(
+      std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

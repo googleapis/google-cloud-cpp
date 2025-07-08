@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RUN_V2_INTERNAL_REVISIONS_METADATA_DECORATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RUN_V2_INTERNAL_REVISIONS_METADATA_DECORATOR_H
 
-#include "google/cloud/run/v2/internal/revisions_stub.h"
 #include "google/cloud/options.h"
+#include "google/cloud/run/v2/internal/revisions_stub.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
 #include <map>
@@ -35,16 +35,19 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class RevisionsMetadata : public RevisionsStub {
  public:
   ~RevisionsMetadata() override = default;
-  RevisionsMetadata(std::shared_ptr<RevisionsStub> child,
-                    std::multimap<std::string, std::string> fixed_metadata,
-                    std::string api_client_header = "");
+  RevisionsMetadata(
+      std::shared_ptr<RevisionsStub> child,
+      std::multimap<std::string, std::string> fixed_metadata,
+      std::string api_client_header = "");
 
   StatusOr<google::cloud::run::v2::Revision> GetRevision(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::run::v2::GetRevisionRequest const& request) override;
 
   StatusOr<google::cloud::run::v2::ListRevisionsResponse> ListRevisions(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::run::v2::ListRevisionsRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteRevision(
@@ -54,23 +57,28 @@ class RevisionsMetadata : public RevisionsStub {
       google::cloud::run::v2::DeleteRevisionRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteRevision(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::cloud::run::v2::DeleteRevisionRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status DeleteOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::DeleteOperationRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> WaitOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::WaitOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -86,7 +94,8 @@ class RevisionsMetadata : public RevisionsStub {
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context, Options const& options,
+  void SetMetadata(grpc::ClientContext& context,
+                   Options const& options,
                    std::string const& request_params);
   void SetMetadata(grpc::ClientContext& context, Options const& options);
 

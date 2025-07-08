@@ -34,57 +34,64 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class GeneratorsMetadata : public GeneratorsStub {
  public:
   ~GeneratorsMetadata() override = default;
-  GeneratorsMetadata(std::shared_ptr<GeneratorsStub> child,
-                     std::multimap<std::string, std::string> fixed_metadata,
-                     std::string api_client_header = "");
+  GeneratorsMetadata(
+      std::shared_ptr<GeneratorsStub> child,
+      std::multimap<std::string, std::string> fixed_metadata,
+      std::string api_client_header = "");
 
   StatusOr<google::cloud::dialogflow::v2::Generator> CreateGenerator(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::dialogflow::v2::CreateGeneratorRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::dialogflow::v2::CreateGeneratorRequest const& request) override;
 
   StatusOr<google::cloud::dialogflow::v2::Generator> GetGenerator(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::dialogflow::v2::GetGeneratorRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::dialogflow::v2::GetGeneratorRequest const& request) override;
 
-  StatusOr<google::cloud::dialogflow::v2::ListGeneratorsResponse>
-  ListGenerators(grpc::ClientContext& context, Options const& options,
-                 google::cloud::dialogflow::v2::ListGeneratorsRequest const&
-                     request) override;
+  StatusOr<google::cloud::dialogflow::v2::ListGeneratorsResponse> ListGenerators(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::dialogflow::v2::ListGeneratorsRequest const& request) override;
 
   Status DeleteGenerator(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::dialogflow::v2::DeleteGeneratorRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::dialogflow::v2::DeleteGeneratorRequest const& request) override;
 
   StatusOr<google::cloud::dialogflow::v2::Generator> UpdateGenerator(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::dialogflow::v2::UpdateGeneratorRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::dialogflow::v2::UpdateGeneratorRequest const& request) override;
 
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::location::ListLocationsRequest const& request) override;
 
   StatusOr<google::cloud::location::Location> GetLocation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::location::GetLocationRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context, Options const& options,
+  void SetMetadata(grpc::ClientContext& context,
+                   Options const& options,
                    std::string const& request_params);
   void SetMetadata(grpc::ClientContext& context, Options const& options);
 

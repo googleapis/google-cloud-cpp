@@ -26,89 +26,70 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-ManagedNotebookServiceConnectionIdempotencyPolicy::
-    ~ManagedNotebookServiceConnectionIdempotencyPolicy() = default;
+ManagedNotebookServiceConnectionIdempotencyPolicy::~ManagedNotebookServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<ManagedNotebookServiceConnectionIdempotencyPolicy>
 ManagedNotebookServiceConnectionIdempotencyPolicy::clone() const {
-  return std::make_unique<ManagedNotebookServiceConnectionIdempotencyPolicy>(
-      *this);
+  return std::make_unique<ManagedNotebookServiceConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency ManagedNotebookServiceConnectionIdempotencyPolicy::ListRuntimes(
-    google::cloud::notebooks::v1::ListRuntimesRequest) {  // NOLINT
+Idempotency ManagedNotebookServiceConnectionIdempotencyPolicy::ListRuntimes(google::cloud::notebooks::v1::ListRuntimesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency ManagedNotebookServiceConnectionIdempotencyPolicy::GetRuntime(
-    google::cloud::notebooks::v1::GetRuntimeRequest const&) {
+Idempotency ManagedNotebookServiceConnectionIdempotencyPolicy::GetRuntime(google::cloud::notebooks::v1::GetRuntimeRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ManagedNotebookServiceConnectionIdempotencyPolicy::CreateRuntime(
-    google::cloud::notebooks::v1::CreateRuntimeRequest const&) {
+Idempotency ManagedNotebookServiceConnectionIdempotencyPolicy::CreateRuntime(google::cloud::notebooks::v1::CreateRuntimeRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ManagedNotebookServiceConnectionIdempotencyPolicy::UpdateRuntime(
-    google::cloud::notebooks::v1::UpdateRuntimeRequest const&) {
+Idempotency ManagedNotebookServiceConnectionIdempotencyPolicy::UpdateRuntime(google::cloud::notebooks::v1::UpdateRuntimeRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ManagedNotebookServiceConnectionIdempotencyPolicy::DeleteRuntime(
-    google::cloud::notebooks::v1::DeleteRuntimeRequest const&) {
+Idempotency ManagedNotebookServiceConnectionIdempotencyPolicy::DeleteRuntime(google::cloud::notebooks::v1::DeleteRuntimeRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ManagedNotebookServiceConnectionIdempotencyPolicy::StartRuntime(
-    google::cloud::notebooks::v1::StartRuntimeRequest const&) {
+Idempotency ManagedNotebookServiceConnectionIdempotencyPolicy::StartRuntime(google::cloud::notebooks::v1::StartRuntimeRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ManagedNotebookServiceConnectionIdempotencyPolicy::StopRuntime(
-    google::cloud::notebooks::v1::StopRuntimeRequest const&) {
+Idempotency ManagedNotebookServiceConnectionIdempotencyPolicy::StopRuntime(google::cloud::notebooks::v1::StopRuntimeRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ManagedNotebookServiceConnectionIdempotencyPolicy::SwitchRuntime(
-    google::cloud::notebooks::v1::SwitchRuntimeRequest const&) {
+Idempotency ManagedNotebookServiceConnectionIdempotencyPolicy::SwitchRuntime(google::cloud::notebooks::v1::SwitchRuntimeRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ManagedNotebookServiceConnectionIdempotencyPolicy::ResetRuntime(
-    google::cloud::notebooks::v1::ResetRuntimeRequest const&) {
+Idempotency ManagedNotebookServiceConnectionIdempotencyPolicy::ResetRuntime(google::cloud::notebooks::v1::ResetRuntimeRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ManagedNotebookServiceConnectionIdempotencyPolicy::UpgradeRuntime(
-    google::cloud::notebooks::v1::UpgradeRuntimeRequest const&) {
+Idempotency ManagedNotebookServiceConnectionIdempotencyPolicy::UpgradeRuntime(google::cloud::notebooks::v1::UpgradeRuntimeRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency
-ManagedNotebookServiceConnectionIdempotencyPolicy::ReportRuntimeEvent(
-    google::cloud::notebooks::v1::ReportRuntimeEventRequest const&) {
+Idempotency ManagedNotebookServiceConnectionIdempotencyPolicy::ReportRuntimeEvent(google::cloud::notebooks::v1::ReportRuntimeEventRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency
-ManagedNotebookServiceConnectionIdempotencyPolicy::RefreshRuntimeTokenInternal(
-    google::cloud::notebooks::v1::RefreshRuntimeTokenInternalRequest const&) {
+Idempotency ManagedNotebookServiceConnectionIdempotencyPolicy::RefreshRuntimeTokenInternal(google::cloud::notebooks::v1::RefreshRuntimeTokenInternalRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ManagedNotebookServiceConnectionIdempotencyPolicy::DiagnoseRuntime(
-    google::cloud::notebooks::v1::DiagnoseRuntimeRequest const&) {
+Idempotency ManagedNotebookServiceConnectionIdempotencyPolicy::DiagnoseRuntime(google::cloud::notebooks::v1::DiagnoseRuntimeRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ManagedNotebookServiceConnectionIdempotencyPolicy::ListLocations(
-    google::cloud::location::ListLocationsRequest) {  // NOLINT
+Idempotency ManagedNotebookServiceConnectionIdempotencyPolicy::ListLocations(google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency ManagedNotebookServiceConnectionIdempotencyPolicy::GetLocation(
-    google::cloud::location::GetLocationRequest const&) {
+Idempotency ManagedNotebookServiceConnectionIdempotencyPolicy::GetLocation(google::cloud::location::GetLocationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
@@ -118,39 +99,32 @@ Idempotency ManagedNotebookServiceConnectionIdempotencyPolicy::SetIamPolicy(
                                          : Idempotency::kIdempotent;
 }
 
-Idempotency ManagedNotebookServiceConnectionIdempotencyPolicy::GetIamPolicy(
-    google::iam::v1::GetIamPolicyRequest const&) {
+Idempotency ManagedNotebookServiceConnectionIdempotencyPolicy::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency
-ManagedNotebookServiceConnectionIdempotencyPolicy::TestIamPermissions(
-    google::iam::v1::TestIamPermissionsRequest const&) {
+Idempotency ManagedNotebookServiceConnectionIdempotencyPolicy::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ManagedNotebookServiceConnectionIdempotencyPolicy::ListOperations(
-    google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency ManagedNotebookServiceConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency ManagedNotebookServiceConnectionIdempotencyPolicy::GetOperation(
-    google::longrunning::GetOperationRequest const&) {
+Idempotency ManagedNotebookServiceConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ManagedNotebookServiceConnectionIdempotencyPolicy::DeleteOperation(
-    google::longrunning::DeleteOperationRequest const&) {
+Idempotency ManagedNotebookServiceConnectionIdempotencyPolicy::DeleteOperation(google::longrunning::DeleteOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ManagedNotebookServiceConnectionIdempotencyPolicy::CancelOperation(
-    google::longrunning::CancelOperationRequest const&) {
+Idempotency ManagedNotebookServiceConnectionIdempotencyPolicy::CancelOperation(google::longrunning::CancelOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<ManagedNotebookServiceConnectionIdempotencyPolicy>
-MakeDefaultManagedNotebookServiceConnectionIdempotencyPolicy() {
+    MakeDefaultManagedNotebookServiceConnectionIdempotencyPolicy() {
   return std::make_unique<ManagedNotebookServiceConnectionIdempotencyPolicy>();
 }
 

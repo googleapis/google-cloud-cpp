@@ -32,125 +32,132 @@ ServiceMonitoringServiceStub::~ServiceMonitoringServiceStub() = default;
 
 StatusOr<google::monitoring::v3::Service>
 DefaultServiceMonitoringServiceStub::CreateService(
-    grpc::ClientContext& context, Options const&,
-    google::monitoring::v3::CreateServiceRequest const& request) {
-  google::monitoring::v3::Service response;
-  auto status = grpc_stub_->CreateService(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::monitoring::v3::CreateServiceRequest const& request) {
+    google::monitoring::v3::Service response;
+    auto status =
+        grpc_stub_->CreateService(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::monitoring::v3::Service>
 DefaultServiceMonitoringServiceStub::GetService(
-    grpc::ClientContext& context, Options const&,
-    google::monitoring::v3::GetServiceRequest const& request) {
-  google::monitoring::v3::Service response;
-  auto status = grpc_stub_->GetService(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::monitoring::v3::GetServiceRequest const& request) {
+    google::monitoring::v3::Service response;
+    auto status =
+        grpc_stub_->GetService(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::monitoring::v3::ListServicesResponse>
 DefaultServiceMonitoringServiceStub::ListServices(
-    grpc::ClientContext& context, Options const&,
-    google::monitoring::v3::ListServicesRequest const& request) {
-  google::monitoring::v3::ListServicesResponse response;
-  auto status = grpc_stub_->ListServices(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::monitoring::v3::ListServicesRequest const& request) {
+    google::monitoring::v3::ListServicesResponse response;
+    auto status =
+        grpc_stub_->ListServices(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::monitoring::v3::Service>
 DefaultServiceMonitoringServiceStub::UpdateService(
-    grpc::ClientContext& context, Options const&,
-    google::monitoring::v3::UpdateServiceRequest const& request) {
-  google::monitoring::v3::Service response;
-  auto status = grpc_stub_->UpdateService(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::monitoring::v3::UpdateServiceRequest const& request) {
+    google::monitoring::v3::Service response;
+    auto status =
+        grpc_stub_->UpdateService(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-Status DefaultServiceMonitoringServiceStub::DeleteService(
-    grpc::ClientContext& context, Options const&,
-    google::monitoring::v3::DeleteServiceRequest const& request) {
-  google::protobuf::Empty response;
-  auto status = grpc_stub_->DeleteService(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return google::cloud::Status();
+Status
+DefaultServiceMonitoringServiceStub::DeleteService(
+  grpc::ClientContext& context, Options const&,
+  google::monitoring::v3::DeleteServiceRequest const& request) {
+    google::protobuf::Empty response;
+    auto status =
+        grpc_stub_->DeleteService(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return google::cloud::Status();
 }
 
 StatusOr<google::monitoring::v3::ServiceLevelObjective>
 DefaultServiceMonitoringServiceStub::CreateServiceLevelObjective(
-    grpc::ClientContext& context, Options const&,
-    google::monitoring::v3::CreateServiceLevelObjectiveRequest const& request) {
-  google::monitoring::v3::ServiceLevelObjective response;
-  auto status =
-      grpc_stub_->CreateServiceLevelObjective(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::monitoring::v3::CreateServiceLevelObjectiveRequest const& request) {
+    google::monitoring::v3::ServiceLevelObjective response;
+    auto status =
+        grpc_stub_->CreateServiceLevelObjective(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::monitoring::v3::ServiceLevelObjective>
 DefaultServiceMonitoringServiceStub::GetServiceLevelObjective(
-    grpc::ClientContext& context, Options const&,
-    google::monitoring::v3::GetServiceLevelObjectiveRequest const& request) {
-  google::monitoring::v3::ServiceLevelObjective response;
-  auto status =
-      grpc_stub_->GetServiceLevelObjective(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::monitoring::v3::GetServiceLevelObjectiveRequest const& request) {
+    google::monitoring::v3::ServiceLevelObjective response;
+    auto status =
+        grpc_stub_->GetServiceLevelObjective(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::monitoring::v3::ListServiceLevelObjectivesResponse>
 DefaultServiceMonitoringServiceStub::ListServiceLevelObjectives(
-    grpc::ClientContext& context, Options const&,
-    google::monitoring::v3::ListServiceLevelObjectivesRequest const& request) {
-  google::monitoring::v3::ListServiceLevelObjectivesResponse response;
-  auto status =
-      grpc_stub_->ListServiceLevelObjectives(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::monitoring::v3::ListServiceLevelObjectivesRequest const& request) {
+    google::monitoring::v3::ListServiceLevelObjectivesResponse response;
+    auto status =
+        grpc_stub_->ListServiceLevelObjectives(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::monitoring::v3::ServiceLevelObjective>
 DefaultServiceMonitoringServiceStub::UpdateServiceLevelObjective(
-    grpc::ClientContext& context, Options const&,
-    google::monitoring::v3::UpdateServiceLevelObjectiveRequest const& request) {
-  google::monitoring::v3::ServiceLevelObjective response;
-  auto status =
-      grpc_stub_->UpdateServiceLevelObjective(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::monitoring::v3::UpdateServiceLevelObjectiveRequest const& request) {
+    google::monitoring::v3::ServiceLevelObjective response;
+    auto status =
+        grpc_stub_->UpdateServiceLevelObjective(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-Status DefaultServiceMonitoringServiceStub::DeleteServiceLevelObjective(
-    grpc::ClientContext& context, Options const&,
-    google::monitoring::v3::DeleteServiceLevelObjectiveRequest const& request) {
-  google::protobuf::Empty response;
-  auto status =
-      grpc_stub_->DeleteServiceLevelObjective(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return google::cloud::Status();
+Status
+DefaultServiceMonitoringServiceStub::DeleteServiceLevelObjective(
+  grpc::ClientContext& context, Options const&,
+  google::monitoring::v3::DeleteServiceLevelObjectiveRequest const& request) {
+    google::protobuf::Empty response;
+    auto status =
+        grpc_stub_->DeleteServiceLevelObjective(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return google::cloud::Status();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

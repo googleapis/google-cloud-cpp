@@ -28,22 +28,16 @@ namespace cloud {
 namespace dataproc {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use dataproc_v1::AutoscalingPolicyServiceBackoffPolicyOption
-/// directly.
+/// @deprecated Use dataproc_v1::AutoscalingPolicyServiceBackoffPolicyOption directly.
 using ::google::cloud::dataproc_v1::AutoscalingPolicyServiceBackoffPolicyOption;
 
-/// @deprecated Use
-/// dataproc_v1::AutoscalingPolicyServiceConnectionIdempotencyPolicyOption
-/// directly.
-using ::google::cloud::dataproc_v1::
-    AutoscalingPolicyServiceConnectionIdempotencyPolicyOption;
+/// @deprecated Use dataproc_v1::AutoscalingPolicyServiceConnectionIdempotencyPolicyOption directly.
+using ::google::cloud::dataproc_v1::AutoscalingPolicyServiceConnectionIdempotencyPolicyOption;
 
-/// @deprecated Use dataproc_v1::AutoscalingPolicyServicePolicyOptionList
-/// directly.
+/// @deprecated Use dataproc_v1::AutoscalingPolicyServicePolicyOptionList directly.
 using ::google::cloud::dataproc_v1::AutoscalingPolicyServicePolicyOptionList;
 
-/// @deprecated Use dataproc_v1::AutoscalingPolicyServiceRetryPolicyOption
-/// directly.
+/// @deprecated Use dataproc_v1::AutoscalingPolicyServiceRetryPolicyOption directly.
 using ::google::cloud::dataproc_v1::AutoscalingPolicyServiceRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

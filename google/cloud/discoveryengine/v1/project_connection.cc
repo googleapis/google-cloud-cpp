@@ -17,14 +17,14 @@
 // source: google/cloud/discoveryengine/v1/project_service.proto
 
 #include "google/cloud/discoveryengine/v1/project_connection.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/discoveryengine/v1/internal/project_connection_impl.h"
 #include "google/cloud/discoveryengine/v1/internal/project_option_defaults.h"
 #include "google/cloud/discoveryengine/v1/internal/project_stub_factory.h"
 #include "google/cloud/discoveryengine/v1/internal/project_tracing_connection.h"
 #include "google/cloud/discoveryengine/v1/project_options.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
-#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
@@ -42,8 +42,8 @@ future<StatusOr<google::cloud::discoveryengine::v1::Project>>
 ProjectServiceConnection::ProvisionProject(
     google::cloud::discoveryengine::v1::ProvisionProjectRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::discoveryengine::v1::Project>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::discoveryengine::v1::Project>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -51,31 +51,31 @@ ProjectServiceConnection::ProvisionProject(
     NoAwaitTag,
     google::cloud::discoveryengine::v1::ProvisionProjectRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::discoveryengine::v1::Project>>
 ProjectServiceConnection::ProvisionProject(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::discoveryengine::v1::Project>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::discoveryengine::v1::Project>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StreamRange<google::longrunning::Operation>
-ProjectServiceConnection::ListOperations(
-    google::longrunning::
-        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::longrunning::Operation> ProjectServiceConnection::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }
 
-StatusOr<google::longrunning::Operation> ProjectServiceConnection::GetOperation(
+StatusOr<google::longrunning::Operation>
+ProjectServiceConnection::GetOperation(
     google::longrunning::GetOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status ProjectServiceConnection::CancelOperation(
+Status
+ProjectServiceConnection::CancelOperation(
     google::longrunning::CancelOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -83,19 +83,17 @@ Status ProjectServiceConnection::CancelOperation(
 std::shared_ptr<ProjectServiceConnection> MakeProjectServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 ProjectServicePolicyOptionList>(options,
-                                                                 __func__);
+      UnifiedCredentialsOptionList,
+      ProjectServicePolicyOptionList>(options, __func__);
   options = discoveryengine_v1_internal::ProjectServiceDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = discoveryengine_v1_internal::CreateDefaultProjectServiceStub(
-      std::move(auth), options);
+    std::move(auth), options);
   return discoveryengine_v1_internal::MakeProjectServiceTracingConnection(
-      std::make_shared<
-          discoveryengine_v1_internal::ProjectServiceConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options)));
+      std::make_shared<discoveryengine_v1_internal::ProjectServiceConnectionImpl>(
+      std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

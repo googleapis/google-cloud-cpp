@@ -33,13 +33,12 @@ AssetServiceStub::~AssetServiceStub() = default;
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultAssetServiceStub::AsyncExportAssets(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::asset::v1::ExportAssetsRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::asset::v1::ExportAssetsRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::asset::v1::ExportAssetsRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::asset::v1::ExportAssetsRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
              google::cloud::asset::v1::ExportAssetsRequest const& request,
@@ -49,314 +48,335 @@ DefaultAssetServiceStub::AsyncExportAssets(
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation> DefaultAssetServiceStub::ExportAssets(
-    grpc::ClientContext& context, Options,
-    google::cloud::asset::v1::ExportAssetsRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->ExportAssets(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::longrunning::Operation>
+DefaultAssetServiceStub::ExportAssets(
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::asset::v1::ExportAssetsRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->ExportAssets(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::asset::v1::ListAssetsResponse>
 DefaultAssetServiceStub::ListAssets(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::asset::v1::ListAssetsRequest const& request) {
-  google::cloud::asset::v1::ListAssetsResponse response;
-  auto status = grpc_stub_->ListAssets(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::asset::v1::ListAssetsRequest const& request) {
+    google::cloud::asset::v1::ListAssetsResponse response;
+    auto status =
+        grpc_stub_->ListAssets(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::asset::v1::BatchGetAssetsHistoryResponse>
 DefaultAssetServiceStub::BatchGetAssetsHistory(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::asset::v1::BatchGetAssetsHistoryRequest const& request) {
-  google::cloud::asset::v1::BatchGetAssetsHistoryResponse response;
-  auto status = grpc_stub_->BatchGetAssetsHistory(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::asset::v1::BatchGetAssetsHistoryRequest const& request) {
+    google::cloud::asset::v1::BatchGetAssetsHistoryResponse response;
+    auto status =
+        grpc_stub_->BatchGetAssetsHistory(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-StatusOr<google::cloud::asset::v1::Feed> DefaultAssetServiceStub::CreateFeed(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::asset::v1::CreateFeedRequest const& request) {
-  google::cloud::asset::v1::Feed response;
-  auto status = grpc_stub_->CreateFeed(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::cloud::asset::v1::Feed>
+DefaultAssetServiceStub::CreateFeed(
+  grpc::ClientContext& context, Options const&,
+  google::cloud::asset::v1::CreateFeedRequest const& request) {
+    google::cloud::asset::v1::Feed response;
+    auto status =
+        grpc_stub_->CreateFeed(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-StatusOr<google::cloud::asset::v1::Feed> DefaultAssetServiceStub::GetFeed(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::asset::v1::GetFeedRequest const& request) {
-  google::cloud::asset::v1::Feed response;
-  auto status = grpc_stub_->GetFeed(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::cloud::asset::v1::Feed>
+DefaultAssetServiceStub::GetFeed(
+  grpc::ClientContext& context, Options const&,
+  google::cloud::asset::v1::GetFeedRequest const& request) {
+    google::cloud::asset::v1::Feed response;
+    auto status =
+        grpc_stub_->GetFeed(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::asset::v1::ListFeedsResponse>
 DefaultAssetServiceStub::ListFeeds(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::asset::v1::ListFeedsRequest const& request) {
-  google::cloud::asset::v1::ListFeedsResponse response;
-  auto status = grpc_stub_->ListFeeds(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::asset::v1::ListFeedsRequest const& request) {
+    google::cloud::asset::v1::ListFeedsResponse response;
+    auto status =
+        grpc_stub_->ListFeeds(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-StatusOr<google::cloud::asset::v1::Feed> DefaultAssetServiceStub::UpdateFeed(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::asset::v1::UpdateFeedRequest const& request) {
-  google::cloud::asset::v1::Feed response;
-  auto status = grpc_stub_->UpdateFeed(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::cloud::asset::v1::Feed>
+DefaultAssetServiceStub::UpdateFeed(
+  grpc::ClientContext& context, Options const&,
+  google::cloud::asset::v1::UpdateFeedRequest const& request) {
+    google::cloud::asset::v1::Feed response;
+    auto status =
+        grpc_stub_->UpdateFeed(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-Status DefaultAssetServiceStub::DeleteFeed(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::asset::v1::DeleteFeedRequest const& request) {
-  google::protobuf::Empty response;
-  auto status = grpc_stub_->DeleteFeed(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return google::cloud::Status();
+Status
+DefaultAssetServiceStub::DeleteFeed(
+  grpc::ClientContext& context, Options const&,
+  google::cloud::asset::v1::DeleteFeedRequest const& request) {
+    google::protobuf::Empty response;
+    auto status =
+        grpc_stub_->DeleteFeed(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return google::cloud::Status();
 }
 
 StatusOr<google::cloud::asset::v1::SearchAllResourcesResponse>
 DefaultAssetServiceStub::SearchAllResources(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::asset::v1::SearchAllResourcesRequest const& request) {
-  google::cloud::asset::v1::SearchAllResourcesResponse response;
-  auto status = grpc_stub_->SearchAllResources(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::asset::v1::SearchAllResourcesRequest const& request) {
+    google::cloud::asset::v1::SearchAllResourcesResponse response;
+    auto status =
+        grpc_stub_->SearchAllResources(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::asset::v1::SearchAllIamPoliciesResponse>
 DefaultAssetServiceStub::SearchAllIamPolicies(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::asset::v1::SearchAllIamPoliciesRequest const& request) {
-  google::cloud::asset::v1::SearchAllIamPoliciesResponse response;
-  auto status = grpc_stub_->SearchAllIamPolicies(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::asset::v1::SearchAllIamPoliciesRequest const& request) {
+    google::cloud::asset::v1::SearchAllIamPoliciesResponse response;
+    auto status =
+        grpc_stub_->SearchAllIamPolicies(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::asset::v1::AnalyzeIamPolicyResponse>
 DefaultAssetServiceStub::AnalyzeIamPolicy(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::asset::v1::AnalyzeIamPolicyRequest const& request) {
-  google::cloud::asset::v1::AnalyzeIamPolicyResponse response;
-  auto status = grpc_stub_->AnalyzeIamPolicy(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::asset::v1::AnalyzeIamPolicyRequest const& request) {
+    google::cloud::asset::v1::AnalyzeIamPolicyResponse response;
+    auto status =
+        grpc_stub_->AnalyzeIamPolicy(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultAssetServiceStub::AsyncAnalyzeIamPolicyLongrunning(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::asset::v1::AnalyzeIamPolicyLongrunningRequest const&
-        request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::asset::v1::AnalyzeIamPolicyLongrunningRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::asset::v1::AnalyzeIamPolicyLongrunningRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::asset::v1::AnalyzeIamPolicyLongrunningRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::asset::v1::AnalyzeIamPolicyLongrunningRequest const&
-                 request,
+             google::cloud::asset::v1::AnalyzeIamPolicyLongrunningRequest const& request,
              grpc::CompletionQueue* cq) {
-        return grpc_stub_->AsyncAnalyzeIamPolicyLongrunning(context, request,
-                                                            cq);
+        return grpc_stub_->AsyncAnalyzeIamPolicyLongrunning(context, request, cq);
       },
       request, std::move(context));
 }
 
 StatusOr<google::longrunning::Operation>
 DefaultAssetServiceStub::AnalyzeIamPolicyLongrunning(
-    grpc::ClientContext& context, Options,
-    google::cloud::asset::v1::AnalyzeIamPolicyLongrunningRequest const&
-        request) {
-  google::longrunning::Operation response;
-  auto status =
-      grpc_stub_->AnalyzeIamPolicyLongrunning(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::asset::v1::AnalyzeIamPolicyLongrunningRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->AnalyzeIamPolicyLongrunning(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::asset::v1::AnalyzeMoveResponse>
 DefaultAssetServiceStub::AnalyzeMove(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::asset::v1::AnalyzeMoveRequest const& request) {
-  google::cloud::asset::v1::AnalyzeMoveResponse response;
-  auto status = grpc_stub_->AnalyzeMove(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::asset::v1::AnalyzeMoveRequest const& request) {
+    google::cloud::asset::v1::AnalyzeMoveResponse response;
+    auto status =
+        grpc_stub_->AnalyzeMove(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::asset::v1::QueryAssetsResponse>
 DefaultAssetServiceStub::QueryAssets(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::asset::v1::QueryAssetsRequest const& request) {
-  google::cloud::asset::v1::QueryAssetsResponse response;
-  auto status = grpc_stub_->QueryAssets(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::asset::v1::QueryAssetsRequest const& request) {
+    google::cloud::asset::v1::QueryAssetsResponse response;
+    auto status =
+        grpc_stub_->QueryAssets(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::asset::v1::SavedQuery>
 DefaultAssetServiceStub::CreateSavedQuery(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::asset::v1::CreateSavedQueryRequest const& request) {
-  google::cloud::asset::v1::SavedQuery response;
-  auto status = grpc_stub_->CreateSavedQuery(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::asset::v1::CreateSavedQueryRequest const& request) {
+    google::cloud::asset::v1::SavedQuery response;
+    auto status =
+        grpc_stub_->CreateSavedQuery(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::asset::v1::SavedQuery>
 DefaultAssetServiceStub::GetSavedQuery(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::asset::v1::GetSavedQueryRequest const& request) {
-  google::cloud::asset::v1::SavedQuery response;
-  auto status = grpc_stub_->GetSavedQuery(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::asset::v1::GetSavedQueryRequest const& request) {
+    google::cloud::asset::v1::SavedQuery response;
+    auto status =
+        grpc_stub_->GetSavedQuery(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::asset::v1::ListSavedQueriesResponse>
 DefaultAssetServiceStub::ListSavedQueries(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::asset::v1::ListSavedQueriesRequest const& request) {
-  google::cloud::asset::v1::ListSavedQueriesResponse response;
-  auto status = grpc_stub_->ListSavedQueries(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::asset::v1::ListSavedQueriesRequest const& request) {
+    google::cloud::asset::v1::ListSavedQueriesResponse response;
+    auto status =
+        grpc_stub_->ListSavedQueries(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::asset::v1::SavedQuery>
 DefaultAssetServiceStub::UpdateSavedQuery(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::asset::v1::UpdateSavedQueryRequest const& request) {
-  google::cloud::asset::v1::SavedQuery response;
-  auto status = grpc_stub_->UpdateSavedQuery(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::asset::v1::UpdateSavedQueryRequest const& request) {
+    google::cloud::asset::v1::SavedQuery response;
+    auto status =
+        grpc_stub_->UpdateSavedQuery(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-Status DefaultAssetServiceStub::DeleteSavedQuery(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::asset::v1::DeleteSavedQueryRequest const& request) {
-  google::protobuf::Empty response;
-  auto status = grpc_stub_->DeleteSavedQuery(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return google::cloud::Status();
+Status
+DefaultAssetServiceStub::DeleteSavedQuery(
+  grpc::ClientContext& context, Options const&,
+  google::cloud::asset::v1::DeleteSavedQueryRequest const& request) {
+    google::protobuf::Empty response;
+    auto status =
+        grpc_stub_->DeleteSavedQuery(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return google::cloud::Status();
 }
 
 StatusOr<google::cloud::asset::v1::BatchGetEffectiveIamPoliciesResponse>
 DefaultAssetServiceStub::BatchGetEffectiveIamPolicies(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::asset::v1::BatchGetEffectiveIamPoliciesRequest const&
-        request) {
-  google::cloud::asset::v1::BatchGetEffectiveIamPoliciesResponse response;
-  auto status =
-      grpc_stub_->BatchGetEffectiveIamPolicies(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::asset::v1::BatchGetEffectiveIamPoliciesRequest const& request) {
+    google::cloud::asset::v1::BatchGetEffectiveIamPoliciesResponse response;
+    auto status =
+        grpc_stub_->BatchGetEffectiveIamPolicies(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::asset::v1::AnalyzeOrgPoliciesResponse>
 DefaultAssetServiceStub::AnalyzeOrgPolicies(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::asset::v1::AnalyzeOrgPoliciesRequest const& request) {
-  google::cloud::asset::v1::AnalyzeOrgPoliciesResponse response;
-  auto status = grpc_stub_->AnalyzeOrgPolicies(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::asset::v1::AnalyzeOrgPoliciesRequest const& request) {
+    google::cloud::asset::v1::AnalyzeOrgPoliciesResponse response;
+    auto status =
+        grpc_stub_->AnalyzeOrgPolicies(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::asset::v1::AnalyzeOrgPolicyGovernedContainersResponse>
 DefaultAssetServiceStub::AnalyzeOrgPolicyGovernedContainers(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::asset::v1::AnalyzeOrgPolicyGovernedContainersRequest const&
-        request) {
-  google::cloud::asset::v1::AnalyzeOrgPolicyGovernedContainersResponse response;
-  auto status = grpc_stub_->AnalyzeOrgPolicyGovernedContainers(
-      &context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::asset::v1::AnalyzeOrgPolicyGovernedContainersRequest const& request) {
+    google::cloud::asset::v1::AnalyzeOrgPolicyGovernedContainersResponse response;
+    auto status =
+        grpc_stub_->AnalyzeOrgPolicyGovernedContainers(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::asset::v1::AnalyzeOrgPolicyGovernedAssetsResponse>
 DefaultAssetServiceStub::AnalyzeOrgPolicyGovernedAssets(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::asset::v1::AnalyzeOrgPolicyGovernedAssetsRequest const&
-        request) {
-  google::cloud::asset::v1::AnalyzeOrgPolicyGovernedAssetsResponse response;
-  auto status =
-      grpc_stub_->AnalyzeOrgPolicyGovernedAssets(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::asset::v1::AnalyzeOrgPolicyGovernedAssetsRequest const& request) {
+    google::cloud::asset::v1::AnalyzeOrgPolicyGovernedAssetsResponse response;
+    auto status =
+        grpc_stub_->AnalyzeOrgPolicyGovernedAssets(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-StatusOr<google::longrunning::Operation> DefaultAssetServiceStub::GetOperation(
-    grpc::ClientContext& context, Options const&,
-    google::longrunning::GetOperationRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = operations_stub_->GetOperation(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::longrunning::Operation>
+DefaultAssetServiceStub::GetOperation(
+  grpc::ClientContext& context, Options const&,
+  google::longrunning::GetOperationRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        operations_stub_->GetOperation(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -385,14 +405,13 @@ future<Status> DefaultAssetServiceStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(
-             cq,
-             [this](grpc::ClientContext* context,
-                    google::longrunning::CancelOperationRequest const& request,
-                    grpc::CompletionQueue* cq) {
-               return operations_stub_->AsyncCancelOperation(context, request,
-                                                             cq);
-             },
-             request, std::move(context))
+      cq,
+      [this](grpc::ClientContext* context,
+             google::longrunning::CancelOperationRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return operations_stub_->AsyncCancelOperation(context, request, cq);
+      },
+      request, std::move(context))
       .then([](future<StatusOr<google::protobuf::Empty>> f) {
         return f.get().status();
       });

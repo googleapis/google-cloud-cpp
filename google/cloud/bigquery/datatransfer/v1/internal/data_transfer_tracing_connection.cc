@@ -30,210 +30,141 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 DataTransferServiceTracingConnection::DataTransferServiceTracingConnection(
-    std::shared_ptr<bigquery_datatransfer_v1::DataTransferServiceConnection>
-        child)
+    std::shared_ptr<bigquery_datatransfer_v1::DataTransferServiceConnection> child)
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::bigquery::datatransfer::v1::DataSource>
-DataTransferServiceTracingConnection::GetDataSource(
-    google::cloud::bigquery::datatransfer::v1::GetDataSourceRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "bigquery_datatransfer_v1::DataTransferServiceConnection::GetDataSource");
+DataTransferServiceTracingConnection::GetDataSource(google::cloud::bigquery::datatransfer::v1::GetDataSourceRequest const& request) {
+  auto span = internal::MakeSpan("bigquery_datatransfer_v1::DataTransferServiceConnection::GetDataSource");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetDataSource(request));
 }
 
 StreamRange<google::cloud::bigquery::datatransfer::v1::DataSource>
-DataTransferServiceTracingConnection::ListDataSources(
-    google::cloud::bigquery::datatransfer::v1::ListDataSourcesRequest request) {
-  auto span = internal::MakeSpan(
-      "bigquery_datatransfer_v1::DataTransferServiceConnection::"
-      "ListDataSources");
+DataTransferServiceTracingConnection::ListDataSources(google::cloud::bigquery::datatransfer::v1::ListDataSourcesRequest request) {
+  auto span = internal::MakeSpan("bigquery_datatransfer_v1::DataTransferServiceConnection::ListDataSources");
   internal::OTelScope scope(span);
   auto sr = child_->ListDataSources(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::bigquery::datatransfer::v1::DataSource>(std::move(span),
-                                                             std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::bigquery::datatransfer::v1::DataSource>(
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::bigquery::datatransfer::v1::TransferConfig>
-DataTransferServiceTracingConnection::CreateTransferConfig(
-    google::cloud::bigquery::datatransfer::v1::
-        CreateTransferConfigRequest const& request) {
-  auto span = internal::MakeSpan(
-      "bigquery_datatransfer_v1::DataTransferServiceConnection::"
-      "CreateTransferConfig");
+DataTransferServiceTracingConnection::CreateTransferConfig(google::cloud::bigquery::datatransfer::v1::CreateTransferConfigRequest const& request) {
+  auto span = internal::MakeSpan("bigquery_datatransfer_v1::DataTransferServiceConnection::CreateTransferConfig");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateTransferConfig(request));
 }
 
 StatusOr<google::cloud::bigquery::datatransfer::v1::TransferConfig>
-DataTransferServiceTracingConnection::UpdateTransferConfig(
-    google::cloud::bigquery::datatransfer::v1::
-        UpdateTransferConfigRequest const& request) {
-  auto span = internal::MakeSpan(
-      "bigquery_datatransfer_v1::DataTransferServiceConnection::"
-      "UpdateTransferConfig");
+DataTransferServiceTracingConnection::UpdateTransferConfig(google::cloud::bigquery::datatransfer::v1::UpdateTransferConfigRequest const& request) {
+  auto span = internal::MakeSpan("bigquery_datatransfer_v1::DataTransferServiceConnection::UpdateTransferConfig");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateTransferConfig(request));
 }
 
-Status DataTransferServiceTracingConnection::DeleteTransferConfig(
-    google::cloud::bigquery::datatransfer::v1::
-        DeleteTransferConfigRequest const& request) {
-  auto span = internal::MakeSpan(
-      "bigquery_datatransfer_v1::DataTransferServiceConnection::"
-      "DeleteTransferConfig");
+Status
+DataTransferServiceTracingConnection::DeleteTransferConfig(google::cloud::bigquery::datatransfer::v1::DeleteTransferConfigRequest const& request) {
+  auto span = internal::MakeSpan("bigquery_datatransfer_v1::DataTransferServiceConnection::DeleteTransferConfig");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteTransferConfig(request));
 }
 
 StatusOr<google::cloud::bigquery::datatransfer::v1::TransferConfig>
-DataTransferServiceTracingConnection::GetTransferConfig(
-    google::cloud::bigquery::datatransfer::v1::GetTransferConfigRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "bigquery_datatransfer_v1::DataTransferServiceConnection::"
-      "GetTransferConfig");
+DataTransferServiceTracingConnection::GetTransferConfig(google::cloud::bigquery::datatransfer::v1::GetTransferConfigRequest const& request) {
+  auto span = internal::MakeSpan("bigquery_datatransfer_v1::DataTransferServiceConnection::GetTransferConfig");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetTransferConfig(request));
 }
 
 StreamRange<google::cloud::bigquery::datatransfer::v1::TransferConfig>
-DataTransferServiceTracingConnection::ListTransferConfigs(
-    google::cloud::bigquery::datatransfer::v1::ListTransferConfigsRequest
-        request) {
-  auto span = internal::MakeSpan(
-      "bigquery_datatransfer_v1::DataTransferServiceConnection::"
-      "ListTransferConfigs");
+DataTransferServiceTracingConnection::ListTransferConfigs(google::cloud::bigquery::datatransfer::v1::ListTransferConfigsRequest request) {
+  auto span = internal::MakeSpan("bigquery_datatransfer_v1::DataTransferServiceConnection::ListTransferConfigs");
   internal::OTelScope scope(span);
   auto sr = child_->ListTransferConfigs(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::bigquery::datatransfer::v1::TransferConfig>(
-      std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::bigquery::datatransfer::v1::TransferConfig>(
+        std::move(span), std::move(sr));
 }
 
-StatusOr<
-    google::cloud::bigquery::datatransfer::v1::ScheduleTransferRunsResponse>
-DataTransferServiceTracingConnection::ScheduleTransferRuns(
-    google::cloud::bigquery::datatransfer::v1::
-        ScheduleTransferRunsRequest const& request) {
-  auto span = internal::MakeSpan(
-      "bigquery_datatransfer_v1::DataTransferServiceConnection::"
-      "ScheduleTransferRuns");
+StatusOr<google::cloud::bigquery::datatransfer::v1::ScheduleTransferRunsResponse>
+DataTransferServiceTracingConnection::ScheduleTransferRuns(google::cloud::bigquery::datatransfer::v1::ScheduleTransferRunsRequest const& request) {
+  auto span = internal::MakeSpan("bigquery_datatransfer_v1::DataTransferServiceConnection::ScheduleTransferRuns");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->ScheduleTransferRuns(request));
 }
 
-StatusOr<
-    google::cloud::bigquery::datatransfer::v1::StartManualTransferRunsResponse>
-DataTransferServiceTracingConnection::StartManualTransferRuns(
-    google::cloud::bigquery::datatransfer::v1::
-        StartManualTransferRunsRequest const& request) {
-  auto span = internal::MakeSpan(
-      "bigquery_datatransfer_v1::DataTransferServiceConnection::"
-      "StartManualTransferRuns");
+StatusOr<google::cloud::bigquery::datatransfer::v1::StartManualTransferRunsResponse>
+DataTransferServiceTracingConnection::StartManualTransferRuns(google::cloud::bigquery::datatransfer::v1::StartManualTransferRunsRequest const& request) {
+  auto span = internal::MakeSpan("bigquery_datatransfer_v1::DataTransferServiceConnection::StartManualTransferRuns");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->StartManualTransferRuns(request));
 }
 
 StatusOr<google::cloud::bigquery::datatransfer::v1::TransferRun>
-DataTransferServiceTracingConnection::GetTransferRun(
-    google::cloud::bigquery::datatransfer::v1::GetTransferRunRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "bigquery_datatransfer_v1::DataTransferServiceConnection::"
-      "GetTransferRun");
+DataTransferServiceTracingConnection::GetTransferRun(google::cloud::bigquery::datatransfer::v1::GetTransferRunRequest const& request) {
+  auto span = internal::MakeSpan("bigquery_datatransfer_v1::DataTransferServiceConnection::GetTransferRun");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetTransferRun(request));
 }
 
-Status DataTransferServiceTracingConnection::DeleteTransferRun(
-    google::cloud::bigquery::datatransfer::v1::DeleteTransferRunRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "bigquery_datatransfer_v1::DataTransferServiceConnection::"
-      "DeleteTransferRun");
+Status
+DataTransferServiceTracingConnection::DeleteTransferRun(google::cloud::bigquery::datatransfer::v1::DeleteTransferRunRequest const& request) {
+  auto span = internal::MakeSpan("bigquery_datatransfer_v1::DataTransferServiceConnection::DeleteTransferRun");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteTransferRun(request));
 }
 
 StreamRange<google::cloud::bigquery::datatransfer::v1::TransferRun>
-DataTransferServiceTracingConnection::ListTransferRuns(
-    google::cloud::bigquery::datatransfer::v1::ListTransferRunsRequest
-        request) {
-  auto span = internal::MakeSpan(
-      "bigquery_datatransfer_v1::DataTransferServiceConnection::"
-      "ListTransferRuns");
+DataTransferServiceTracingConnection::ListTransferRuns(google::cloud::bigquery::datatransfer::v1::ListTransferRunsRequest request) {
+  auto span = internal::MakeSpan("bigquery_datatransfer_v1::DataTransferServiceConnection::ListTransferRuns");
   internal::OTelScope scope(span);
   auto sr = child_->ListTransferRuns(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::bigquery::datatransfer::v1::TransferRun>(std::move(span),
-                                                              std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::bigquery::datatransfer::v1::TransferRun>(
+        std::move(span), std::move(sr));
 }
 
 StreamRange<google::cloud::bigquery::datatransfer::v1::TransferMessage>
-DataTransferServiceTracingConnection::ListTransferLogs(
-    google::cloud::bigquery::datatransfer::v1::ListTransferLogsRequest
-        request) {
-  auto span = internal::MakeSpan(
-      "bigquery_datatransfer_v1::DataTransferServiceConnection::"
-      "ListTransferLogs");
+DataTransferServiceTracingConnection::ListTransferLogs(google::cloud::bigquery::datatransfer::v1::ListTransferLogsRequest request) {
+  auto span = internal::MakeSpan("bigquery_datatransfer_v1::DataTransferServiceConnection::ListTransferLogs");
   internal::OTelScope scope(span);
   auto sr = child_->ListTransferLogs(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::bigquery::datatransfer::v1::TransferMessage>(
-      std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::bigquery::datatransfer::v1::TransferMessage>(
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::bigquery::datatransfer::v1::CheckValidCredsResponse>
-DataTransferServiceTracingConnection::CheckValidCreds(
-    google::cloud::bigquery::datatransfer::v1::CheckValidCredsRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "bigquery_datatransfer_v1::DataTransferServiceConnection::"
-      "CheckValidCreds");
+DataTransferServiceTracingConnection::CheckValidCreds(google::cloud::bigquery::datatransfer::v1::CheckValidCredsRequest const& request) {
+  auto span = internal::MakeSpan("bigquery_datatransfer_v1::DataTransferServiceConnection::CheckValidCreds");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CheckValidCreds(request));
 }
 
-Status DataTransferServiceTracingConnection::EnrollDataSources(
-    google::cloud::bigquery::datatransfer::v1::EnrollDataSourcesRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "bigquery_datatransfer_v1::DataTransferServiceConnection::"
-      "EnrollDataSources");
+Status
+DataTransferServiceTracingConnection::EnrollDataSources(google::cloud::bigquery::datatransfer::v1::EnrollDataSourcesRequest const& request) {
+  auto span = internal::MakeSpan("bigquery_datatransfer_v1::DataTransferServiceConnection::EnrollDataSources");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->EnrollDataSources(request));
 }
 
-Status DataTransferServiceTracingConnection::UnenrollDataSources(
-    google::cloud::bigquery::datatransfer::v1::UnenrollDataSourcesRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "bigquery_datatransfer_v1::DataTransferServiceConnection::"
-      "UnenrollDataSources");
+Status
+DataTransferServiceTracingConnection::UnenrollDataSources(google::cloud::bigquery::datatransfer::v1::UnenrollDataSourcesRequest const& request) {
+  auto span = internal::MakeSpan("bigquery_datatransfer_v1::DataTransferServiceConnection::UnenrollDataSources");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UnenrollDataSources(request));
 }
 
 StreamRange<google::cloud::location::Location>
-DataTransferServiceTracingConnection::ListLocations(
-    google::cloud::location::ListLocationsRequest request) {
-  auto span = internal::MakeSpan(
-      "bigquery_datatransfer_v1::DataTransferServiceConnection::ListLocations");
+DataTransferServiceTracingConnection::ListLocations(google::cloud::location::ListLocationsRequest request) {
+  auto span = internal::MakeSpan("bigquery_datatransfer_v1::DataTransferServiceConnection::ListLocations");
   internal::OTelScope scope(span);
   auto sr = child_->ListLocations(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::location::Location>(
-      std::move(span), std::move(sr));
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::location::Location>
-DataTransferServiceTracingConnection::GetLocation(
-    google::cloud::location::GetLocationRequest const& request) {
-  auto span = internal::MakeSpan(
-      "bigquery_datatransfer_v1::DataTransferServiceConnection::GetLocation");
+DataTransferServiceTracingConnection::GetLocation(google::cloud::location::GetLocationRequest const& request) {
+  auto span = internal::MakeSpan("bigquery_datatransfer_v1::DataTransferServiceConnection::GetLocation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetLocation(request));
 }
@@ -242,12 +173,10 @@ DataTransferServiceTracingConnection::GetLocation(
 
 std::shared_ptr<bigquery_datatransfer_v1::DataTransferServiceConnection>
 MakeDataTransferServiceTracingConnection(
-    std::shared_ptr<bigquery_datatransfer_v1::DataTransferServiceConnection>
-        conn) {
+    std::shared_ptr<bigquery_datatransfer_v1::DataTransferServiceConnection> conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
-    conn =
-        std::make_shared<DataTransferServiceTracingConnection>(std::move(conn));
+    conn = std::make_shared<DataTransferServiceTracingConnection>(std::move(conn));
   }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;

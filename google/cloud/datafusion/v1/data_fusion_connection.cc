@@ -17,14 +17,14 @@
 // source: google/cloud/datafusion/v1/datafusion.proto
 
 #include "google/cloud/datafusion/v1/data_fusion_connection.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/datafusion/v1/data_fusion_options.h"
 #include "google/cloud/datafusion/v1/internal/data_fusion_connection_impl.h"
 #include "google/cloud/datafusion/v1/internal/data_fusion_option_defaults.h"
 #include "google/cloud/datafusion/v1/internal/data_fusion_stub_factory.h"
 #include "google/cloud/datafusion/v1/internal/data_fusion_tracing_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
-#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
@@ -38,18 +38,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 DataFusionConnection::~DataFusionConnection() = default;
 
-StreamRange<google::cloud::datafusion::v1::Version>
-DataFusionConnection::ListAvailableVersions(
-    google::cloud::datafusion::v1::
-        ListAvailableVersionsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::datafusion::v1::Version> DataFusionConnection::ListAvailableVersions(
+    google::cloud::datafusion::v1::ListAvailableVersionsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::datafusion::v1::Version>>();
 }
 
-StreamRange<google::cloud::datafusion::v1::Instance>
-DataFusionConnection::ListInstances(
-    google::cloud::datafusion::v1::
-        ListInstancesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::datafusion::v1::Instance> DataFusionConnection::ListInstances(
+    google::cloud::datafusion::v1::ListInstancesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::datafusion::v1::Instance>>();
 }
@@ -64,100 +60,112 @@ future<StatusOr<google::cloud::datafusion::v1::Instance>>
 DataFusionConnection::CreateInstance(
     google::cloud::datafusion::v1::CreateInstanceRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::datafusion::v1::Instance>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::datafusion::v1::Instance>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation> DataFusionConnection::CreateInstance(
-    NoAwaitTag, google::cloud::datafusion::v1::CreateInstanceRequest const&) {
+StatusOr<google::longrunning::Operation>
+DataFusionConnection::CreateInstance(
+    NoAwaitTag,
+    google::cloud::datafusion::v1::CreateInstanceRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::datafusion::v1::Instance>>
-DataFusionConnection::CreateInstance(google::longrunning::Operation const&) {
+DataFusionConnection::CreateInstance(
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::datafusion::v1::Instance>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::datafusion::v1::Instance>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::datafusion::v1::OperationMetadata>>
 DataFusionConnection::DeleteInstance(
     google::cloud::datafusion::v1::DeleteInstanceRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::datafusion::v1::OperationMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::datafusion::v1::OperationMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation> DataFusionConnection::DeleteInstance(
-    NoAwaitTag, google::cloud::datafusion::v1::DeleteInstanceRequest const&) {
+StatusOr<google::longrunning::Operation>
+DataFusionConnection::DeleteInstance(
+    NoAwaitTag,
+    google::cloud::datafusion::v1::DeleteInstanceRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::datafusion::v1::OperationMetadata>>
-DataFusionConnection::DeleteInstance(google::longrunning::Operation const&) {
+DataFusionConnection::DeleteInstance(
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::datafusion::v1::OperationMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::datafusion::v1::OperationMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::datafusion::v1::Instance>>
 DataFusionConnection::UpdateInstance(
     google::cloud::datafusion::v1::UpdateInstanceRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::datafusion::v1::Instance>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::datafusion::v1::Instance>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation> DataFusionConnection::UpdateInstance(
-    NoAwaitTag, google::cloud::datafusion::v1::UpdateInstanceRequest const&) {
+StatusOr<google::longrunning::Operation>
+DataFusionConnection::UpdateInstance(
+    NoAwaitTag,
+    google::cloud::datafusion::v1::UpdateInstanceRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::datafusion::v1::Instance>>
-DataFusionConnection::UpdateInstance(google::longrunning::Operation const&) {
+DataFusionConnection::UpdateInstance(
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::datafusion::v1::Instance>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::datafusion::v1::Instance>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::datafusion::v1::Instance>>
 DataFusionConnection::RestartInstance(
     google::cloud::datafusion::v1::RestartInstanceRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::datafusion::v1::Instance>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::datafusion::v1::Instance>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation> DataFusionConnection::RestartInstance(
-    NoAwaitTag, google::cloud::datafusion::v1::RestartInstanceRequest const&) {
+StatusOr<google::longrunning::Operation>
+DataFusionConnection::RestartInstance(
+    NoAwaitTag,
+    google::cloud::datafusion::v1::RestartInstanceRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::datafusion::v1::Instance>>
-DataFusionConnection::RestartInstance(google::longrunning::Operation const&) {
+DataFusionConnection::RestartInstance(
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::datafusion::v1::Instance>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::datafusion::v1::Instance>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 std::shared_ptr<DataFusionConnection> MakeDataFusionConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 DataFusionPolicyOptionList>(options, __func__);
-  options =
-      datafusion_v1_internal::DataFusionDefaultOptions(std::move(options));
+      UnifiedCredentialsOptionList,
+      DataFusionPolicyOptionList>(options, __func__);
+  options = datafusion_v1_internal::DataFusionDefaultOptions(
+      std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = datafusion_v1_internal::CreateDefaultDataFusionStub(
-      std::move(auth), options);
+    std::move(auth), options);
   return datafusion_v1_internal::MakeDataFusionTracingConnection(
       std::make_shared<datafusion_v1_internal::DataFusionConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options)));
+      std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

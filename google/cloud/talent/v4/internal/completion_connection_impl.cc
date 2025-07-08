@@ -17,11 +17,11 @@
 // source: google/cloud/talent/v4/completion_service.proto
 
 #include "google/cloud/talent/v4/internal/completion_connection_impl.h"
-#include "google/cloud/talent/v4/internal/completion_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/retry_loop.h"
+#include "google/cloud/talent/v4/internal/completion_option_defaults.h"
 #include <memory>
 #include <utility>
 
@@ -31,34 +31,34 @@ namespace talent_v4_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<talent_v4::CompletionRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<talent_v4::CompletionRetryPolicy>
+retry_policy(Options const& options) {
   return options.get<talent_v4::CompletionRetryPolicyOption>()->clone();
 }
 
-std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+std::unique_ptr<BackoffPolicy>
+backoff_policy(Options const& options) {
   return options.get<talent_v4::CompletionBackoffPolicyOption>()->clone();
 }
 
 std::unique_ptr<talent_v4::CompletionConnectionIdempotencyPolicy>
 idempotency_policy(Options const& options) {
-  return options.get<talent_v4::CompletionConnectionIdempotencyPolicyOption>()
-      ->clone();
+  return options.get<talent_v4::CompletionConnectionIdempotencyPolicyOption>()->clone();
 }
 
-}  // namespace
+} // namespace
 
 CompletionConnectionImpl::CompletionConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<talent_v4_internal::CompletionStub> stub, Options options)
-    : background_(std::move(background)),
-      stub_(std::move(stub)),
-      options_(internal::MergeOptions(std::move(options),
-                                      CompletionConnection::options())) {}
+    std::shared_ptr<talent_v4_internal::CompletionStub> stub,
+    Options options)
+  : background_(std::move(background)), stub_(std::move(stub)),
+    options_(internal::MergeOptions(
+        std::move(options),
+        CompletionConnection::options())) {}
 
 StatusOr<google::cloud::talent::v4::CompleteQueryResponse>
-CompletionConnectionImpl::CompleteQuery(
-    google::cloud::talent::v4::CompleteQueryRequest const& request) {
+CompletionConnectionImpl::CompleteQuery(google::cloud::talent::v4::CompleteQueryRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -70,8 +70,8 @@ CompletionConnectionImpl::CompleteQuery(
       *current, request, __func__);
 }
 
-StatusOr<google::longrunning::Operation> CompletionConnectionImpl::GetOperation(
-    google::longrunning::GetOperationRequest const& request) {
+StatusOr<google::longrunning::Operation>
+CompletionConnectionImpl::GetOperation(google::longrunning::GetOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),

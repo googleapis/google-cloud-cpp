@@ -32,7 +32,8 @@ StorageControlAuth::StorageControlAuth(
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
 StatusOr<google::storage::control::v2::Folder> StorageControlAuth::CreateFolder(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::storage::control::v2::CreateFolderRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -40,7 +41,8 @@ StatusOr<google::storage::control::v2::Folder> StorageControlAuth::CreateFolder(
 }
 
 Status StorageControlAuth::DeleteFolder(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::storage::control::v2::DeleteFolderRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -48,16 +50,17 @@ Status StorageControlAuth::DeleteFolder(
 }
 
 StatusOr<google::storage::control::v2::Folder> StorageControlAuth::GetFolder(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::storage::control::v2::GetFolderRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetFolder(context, options, request);
 }
 
-StatusOr<google::storage::control::v2::ListFoldersResponse>
-StorageControlAuth::ListFolders(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::storage::control::v2::ListFoldersResponse> StorageControlAuth::ListFolders(
+    grpc::ClientContext& context,
+    Options const& options,
     google::storage::control::v2::ListFoldersRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -66,44 +69,45 @@ StorageControlAuth::ListFolders(
 
 future<StatusOr<google::longrunning::Operation>>
 StorageControlAuth::AsyncRenameFolder(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::storage::control::v2::RenameFolderRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::storage::control::v2::RenameFolderRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncRenameFolder(cq, *std::move(context),
-                                        std::move(options), request);
+        return child->AsyncRenameFolder(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation> StorageControlAuth::RenameFolder(
-    grpc::ClientContext& context, Options options,
-    google::storage::control::v2::RenameFolderRequest const& request) {
+StatusOr<google::longrunning::Operation>
+StorageControlAuth::RenameFolder(
+      grpc::ClientContext& context,
+      Options options,
+      google::storage::control::v2::RenameFolderRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->RenameFolder(context, options, request);
 }
 
-StatusOr<google::storage::control::v2::StorageLayout>
-StorageControlAuth::GetStorageLayout(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::storage::control::v2::StorageLayout> StorageControlAuth::GetStorageLayout(
+    grpc::ClientContext& context,
+    Options const& options,
     google::storage::control::v2::GetStorageLayoutRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetStorageLayout(context, options, request);
 }
 
-StatusOr<google::storage::control::v2::ManagedFolder>
-StorageControlAuth::CreateManagedFolder(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::storage::control::v2::ManagedFolder> StorageControlAuth::CreateManagedFolder(
+    grpc::ClientContext& context,
+    Options const& options,
     google::storage::control::v2::CreateManagedFolderRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -111,25 +115,26 @@ StorageControlAuth::CreateManagedFolder(
 }
 
 Status StorageControlAuth::DeleteManagedFolder(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::storage::control::v2::DeleteManagedFolderRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteManagedFolder(context, options, request);
 }
 
-StatusOr<google::storage::control::v2::ManagedFolder>
-StorageControlAuth::GetManagedFolder(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::storage::control::v2::ManagedFolder> StorageControlAuth::GetManagedFolder(
+    grpc::ClientContext& context,
+    Options const& options,
     google::storage::control::v2::GetManagedFolderRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetManagedFolder(context, options, request);
 }
 
-StatusOr<google::storage::control::v2::ListManagedFoldersResponse>
-StorageControlAuth::ListManagedFolders(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::storage::control::v2::ListManagedFoldersResponse> StorageControlAuth::ListManagedFolders(
+    grpc::ClientContext& context,
+    Options const& options,
     google::storage::control::v2::ListManagedFoldersRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -138,28 +143,28 @@ StorageControlAuth::ListManagedFolders(
 
 future<StatusOr<google::longrunning::Operation>>
 StorageControlAuth::AsyncCreateAnywhereCache(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::storage::control::v2::CreateAnywhereCacheRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::storage::control::v2::CreateAnywhereCacheRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreateAnywhereCache(cq, *std::move(context),
-                                               std::move(options), request);
+        return child->AsyncCreateAnywhereCache(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 StorageControlAuth::CreateAnywhereCache(
-    grpc::ClientContext& context, Options options,
-    google::storage::control::v2::CreateAnywhereCacheRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::storage::control::v2::CreateAnywhereCacheRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateAnywhereCache(context, options, request);
@@ -167,137 +172,130 @@ StorageControlAuth::CreateAnywhereCache(
 
 future<StatusOr<google::longrunning::Operation>>
 StorageControlAuth::AsyncUpdateAnywhereCache(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::storage::control::v2::UpdateAnywhereCacheRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::storage::control::v2::UpdateAnywhereCacheRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncUpdateAnywhereCache(cq, *std::move(context),
-                                               std::move(options), request);
+        return child->AsyncUpdateAnywhereCache(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 StorageControlAuth::UpdateAnywhereCache(
-    grpc::ClientContext& context, Options options,
-    google::storage::control::v2::UpdateAnywhereCacheRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::storage::control::v2::UpdateAnywhereCacheRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateAnywhereCache(context, options, request);
 }
 
-StatusOr<google::storage::control::v2::AnywhereCache>
-StorageControlAuth::DisableAnywhereCache(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::storage::control::v2::AnywhereCache> StorageControlAuth::DisableAnywhereCache(
+    grpc::ClientContext& context,
+    Options const& options,
     google::storage::control::v2::DisableAnywhereCacheRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DisableAnywhereCache(context, options, request);
 }
 
-StatusOr<google::storage::control::v2::AnywhereCache>
-StorageControlAuth::PauseAnywhereCache(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::storage::control::v2::AnywhereCache> StorageControlAuth::PauseAnywhereCache(
+    grpc::ClientContext& context,
+    Options const& options,
     google::storage::control::v2::PauseAnywhereCacheRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->PauseAnywhereCache(context, options, request);
 }
 
-StatusOr<google::storage::control::v2::AnywhereCache>
-StorageControlAuth::ResumeAnywhereCache(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::storage::control::v2::AnywhereCache> StorageControlAuth::ResumeAnywhereCache(
+    grpc::ClientContext& context,
+    Options const& options,
     google::storage::control::v2::ResumeAnywhereCacheRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ResumeAnywhereCache(context, options, request);
 }
 
-StatusOr<google::storage::control::v2::AnywhereCache>
-StorageControlAuth::GetAnywhereCache(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::storage::control::v2::AnywhereCache> StorageControlAuth::GetAnywhereCache(
+    grpc::ClientContext& context,
+    Options const& options,
     google::storage::control::v2::GetAnywhereCacheRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetAnywhereCache(context, options, request);
 }
 
-StatusOr<google::storage::control::v2::ListAnywhereCachesResponse>
-StorageControlAuth::ListAnywhereCaches(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::storage::control::v2::ListAnywhereCachesResponse> StorageControlAuth::ListAnywhereCaches(
+    grpc::ClientContext& context,
+    Options const& options,
     google::storage::control::v2::ListAnywhereCachesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListAnywhereCaches(context, options, request);
 }
 
-StatusOr<google::storage::control::v2::IntelligenceConfig>
-StorageControlAuth::GetProjectIntelligenceConfig(
-    grpc::ClientContext& context, Options const& options,
-    google::storage::control::v2::GetProjectIntelligenceConfigRequest const&
-        request) {
+StatusOr<google::storage::control::v2::IntelligenceConfig> StorageControlAuth::GetProjectIntelligenceConfig(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::storage::control::v2::GetProjectIntelligenceConfigRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetProjectIntelligenceConfig(context, options, request);
 }
 
-StatusOr<google::storage::control::v2::IntelligenceConfig>
-StorageControlAuth::UpdateProjectIntelligenceConfig(
-    grpc::ClientContext& context, Options const& options,
-    google::storage::control::v2::UpdateProjectIntelligenceConfigRequest const&
-        request) {
+StatusOr<google::storage::control::v2::IntelligenceConfig> StorageControlAuth::UpdateProjectIntelligenceConfig(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::storage::control::v2::UpdateProjectIntelligenceConfigRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateProjectIntelligenceConfig(context, options, request);
 }
 
-StatusOr<google::storage::control::v2::IntelligenceConfig>
-StorageControlAuth::GetFolderIntelligenceConfig(
-    grpc::ClientContext& context, Options const& options,
-    google::storage::control::v2::GetFolderIntelligenceConfigRequest const&
-        request) {
+StatusOr<google::storage::control::v2::IntelligenceConfig> StorageControlAuth::GetFolderIntelligenceConfig(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::storage::control::v2::GetFolderIntelligenceConfigRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetFolderIntelligenceConfig(context, options, request);
 }
 
-StatusOr<google::storage::control::v2::IntelligenceConfig>
-StorageControlAuth::UpdateFolderIntelligenceConfig(
-    grpc::ClientContext& context, Options const& options,
-    google::storage::control::v2::UpdateFolderIntelligenceConfigRequest const&
-        request) {
+StatusOr<google::storage::control::v2::IntelligenceConfig> StorageControlAuth::UpdateFolderIntelligenceConfig(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::storage::control::v2::UpdateFolderIntelligenceConfigRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateFolderIntelligenceConfig(context, options, request);
 }
 
-StatusOr<google::storage::control::v2::IntelligenceConfig>
-StorageControlAuth::GetOrganizationIntelligenceConfig(
-    grpc::ClientContext& context, Options const& options,
-    google::storage::control::v2::
-        GetOrganizationIntelligenceConfigRequest const& request) {
+StatusOr<google::storage::control::v2::IntelligenceConfig> StorageControlAuth::GetOrganizationIntelligenceConfig(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::storage::control::v2::GetOrganizationIntelligenceConfigRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetOrganizationIntelligenceConfig(context, options, request);
 }
 
-StatusOr<google::storage::control::v2::IntelligenceConfig>
-StorageControlAuth::UpdateOrganizationIntelligenceConfig(
-    grpc::ClientContext& context, Options const& options,
-    google::storage::control::v2::
-        UpdateOrganizationIntelligenceConfigRequest const& request) {
+StatusOr<google::storage::control::v2::IntelligenceConfig> StorageControlAuth::UpdateOrganizationIntelligenceConfig(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::storage::control::v2::UpdateOrganizationIntelligenceConfigRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateOrganizationIntelligenceConfig(context, options,
-                                                      request);
+  return child_->UpdateOrganizationIntelligenceConfig(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -307,16 +305,15 @@ StorageControlAuth::AsyncGetOperation(
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncGetOperation(cq, *std::move(context),
-                                        std::move(options), request);
+        return child->AsyncGetOperation(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
@@ -325,14 +322,13 @@ future<Status> StorageControlAuth::AsyncCancelOperation(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) return make_ready_future(std::move(context).status());
-        return child->AsyncCancelOperation(cq, *std::move(context),
-                                           std::move(options), request);
+        return child->AsyncCancelOperation(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 

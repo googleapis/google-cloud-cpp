@@ -35,43 +35,32 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options StoragePoolsDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_STORAGE_POOLS_ENDPOINT", "",
-      "GOOGLE_CLOUD_CPP_STORAGE_POOLS_AUTHORITY", "compute.googleapis.com");
+      std::move(options), "GOOGLE_CLOUD_CPP_STORAGE_POOLS_ENDPOINT",
+      "", "GOOGLE_CLOUD_CPP_STORAGE_POOLS_AUTHORITY",
+      "compute.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<compute_storage_pools_v1::StoragePoolsRetryPolicyOption>()) {
     options.set<compute_storage_pools_v1::StoragePoolsRetryPolicyOption>(
         compute_storage_pools_v1::StoragePoolsLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
-            .clone());
+            std::chrono::minutes(30)).clone());
   }
-  if (!options
-           .has<compute_storage_pools_v1::StoragePoolsBackoffPolicyOption>()) {
+  if (!options.has<compute_storage_pools_v1::StoragePoolsBackoffPolicyOption>()) {
     options.set<compute_storage_pools_v1::StoragePoolsBackoffPolicyOption>(
-        ExponentialBackoffPolicy(
-            std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
-            .clone());
+        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
   }
-  if (!options
-           .has<compute_storage_pools_v1::StoragePoolsPollingPolicyOption>()) {
+  if (!options.has<compute_storage_pools_v1::StoragePoolsPollingPolicyOption>()) {
     options.set<compute_storage_pools_v1::StoragePoolsPollingPolicyOption>(
         GenericPollingPolicy<
             compute_storage_pools_v1::StoragePoolsRetryPolicyOption::Type,
             compute_storage_pools_v1::StoragePoolsBackoffPolicyOption::Type>(
-            options
-                .get<compute_storage_pools_v1::StoragePoolsRetryPolicyOption>()
-                ->clone(),
+            options.get<compute_storage_pools_v1::StoragePoolsRetryPolicyOption>()->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                     std::chrono::minutes(5), kBackoffScaling)
-                .clone())
-            .clone());
+            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
   }
-  if (!options.has<compute_storage_pools_v1::
-                       StoragePoolsConnectionIdempotencyPolicyOption>()) {
-    options.set<compute_storage_pools_v1::
-                    StoragePoolsConnectionIdempotencyPolicyOption>(
-        compute_storage_pools_v1::
-            MakeDefaultStoragePoolsConnectionIdempotencyPolicy());
+  if (!options.has<compute_storage_pools_v1::StoragePoolsConnectionIdempotencyPolicyOption>()) {
+    options.set<compute_storage_pools_v1::StoragePoolsConnectionIdempotencyPolicyOption>(
+        compute_storage_pools_v1::MakeDefaultStoragePoolsConnectionIdempotencyPolicy());
   }
 
   return options;

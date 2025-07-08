@@ -28,28 +28,26 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 CompletionClient::CompletionClient(
     std::shared_ptr<CompletionConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 CompletionClient::~CompletionClient() = default;
 
 StatusOr<google::cloud::talent::v4::CompleteQueryResponse>
-CompletionClient::CompleteQuery(
-    google::cloud::talent::v4::CompleteQueryRequest const& request,
-    Options opts) {
+CompletionClient::CompleteQuery(google::cloud::talent::v4::CompleteQueryRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CompleteQuery(request);
 }
 
-StatusOr<google::longrunning::Operation> CompletionClient::GetOperation(
-    std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation>
+CompletionClient::GetOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
   return connection_->GetOperation(request);
 }
 
-StatusOr<google::longrunning::Operation> CompletionClient::GetOperation(
-    google::longrunning::GetOperationRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation>
+CompletionClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }

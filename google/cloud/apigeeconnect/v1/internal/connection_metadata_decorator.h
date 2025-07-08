@@ -39,14 +39,14 @@ class ConnectionServiceMetadata : public ConnectionServiceStub {
       std::multimap<std::string, std::string> fixed_metadata,
       std::string api_client_header = "");
 
-  StatusOr<google::cloud::apigeeconnect::v1::ListConnectionsResponse>
-  ListConnections(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::apigeeconnect::v1::ListConnectionsRequest const& request)
-      override;
+  StatusOr<google::cloud::apigeeconnect::v1::ListConnectionsResponse> ListConnections(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::apigeeconnect::v1::ListConnectionsRequest const& request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context, Options const& options,
+  void SetMetadata(grpc::ClientContext& context,
+                   Options const& options,
                    std::string const& request_params);
   void SetMetadata(grpc::ClientContext& context, Options const& options);
 

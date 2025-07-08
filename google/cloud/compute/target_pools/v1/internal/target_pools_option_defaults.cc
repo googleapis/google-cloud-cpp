@@ -35,41 +35,32 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options TargetPoolsDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_TARGET_POOLS_ENDPOINT", "",
-      "GOOGLE_CLOUD_CPP_TARGET_POOLS_AUTHORITY", "compute.googleapis.com");
+      std::move(options), "GOOGLE_CLOUD_CPP_TARGET_POOLS_ENDPOINT",
+      "", "GOOGLE_CLOUD_CPP_TARGET_POOLS_AUTHORITY",
+      "compute.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<compute_target_pools_v1::TargetPoolsRetryPolicyOption>()) {
     options.set<compute_target_pools_v1::TargetPoolsRetryPolicyOption>(
         compute_target_pools_v1::TargetPoolsLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
-            .clone());
+            std::chrono::minutes(30)).clone());
   }
   if (!options.has<compute_target_pools_v1::TargetPoolsBackoffPolicyOption>()) {
     options.set<compute_target_pools_v1::TargetPoolsBackoffPolicyOption>(
-        ExponentialBackoffPolicy(
-            std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
-            .clone());
+        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
   }
   if (!options.has<compute_target_pools_v1::TargetPoolsPollingPolicyOption>()) {
     options.set<compute_target_pools_v1::TargetPoolsPollingPolicyOption>(
         GenericPollingPolicy<
             compute_target_pools_v1::TargetPoolsRetryPolicyOption::Type,
             compute_target_pools_v1::TargetPoolsBackoffPolicyOption::Type>(
-            options
-                .get<compute_target_pools_v1::TargetPoolsRetryPolicyOption>()
-                ->clone(),
+            options.get<compute_target_pools_v1::TargetPoolsRetryPolicyOption>()->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                     std::chrono::minutes(5), kBackoffScaling)
-                .clone())
-            .clone());
+            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
   }
-  if (!options.has<compute_target_pools_v1::
-                       TargetPoolsConnectionIdempotencyPolicyOption>()) {
-    options.set<
-        compute_target_pools_v1::TargetPoolsConnectionIdempotencyPolicyOption>(
-        compute_target_pools_v1::
-            MakeDefaultTargetPoolsConnectionIdempotencyPolicy());
+  if (!options.has<compute_target_pools_v1::TargetPoolsConnectionIdempotencyPolicyOption>()) {
+    options.set<compute_target_pools_v1::TargetPoolsConnectionIdempotencyPolicyOption>(
+        compute_target_pools_v1::MakeDefaultTargetPoolsConnectionIdempotencyPolicy());
   }
 
   return options;

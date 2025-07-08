@@ -34,18 +34,17 @@ class CommentServiceConnectionIdempotencyPolicy {
   virtual ~CommentServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<CommentServiceConnectionIdempotencyPolicy> clone()
-      const;
+  virtual std::unique_ptr<CommentServiceConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency ListComments(
-      google::cloud::support::v2::ListCommentsRequest request);
+  virtual google::cloud::Idempotency
+  ListComments(google::cloud::support::v2::ListCommentsRequest request);
 
-  virtual google::cloud::Idempotency CreateComment(
-      google::cloud::support::v2::CreateCommentRequest const& request);
+  virtual google::cloud::Idempotency
+  CreateComment(google::cloud::support::v2::CreateCommentRequest const& request);
 };
 
 std::unique_ptr<CommentServiceConnectionIdempotencyPolicy>
-MakeDefaultCommentServiceConnectionIdempotencyPolicy();
+    MakeDefaultCommentServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace support_v2

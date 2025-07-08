@@ -17,17 +17,17 @@
 // source: google/cloud/metastore/v1/metastore_federation.proto
 
 #include "google/cloud/metastore/v1/dataproc_metastore_federation_connection.h"
-#include "google/cloud/metastore/v1/dataproc_metastore_federation_options.h"
-#include "google/cloud/metastore/v1/internal/dataproc_metastore_federation_connection_impl.h"
-#include "google/cloud/metastore/v1/internal/dataproc_metastore_federation_option_defaults.h"
-#include "google/cloud/metastore/v1/internal/dataproc_metastore_federation_stub_factory.h"
-#include "google/cloud/metastore/v1/internal/dataproc_metastore_federation_tracing_connection.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/metastore/v1/dataproc_metastore_federation_options.h"
+#include "google/cloud/metastore/v1/internal/dataproc_metastore_federation_connection_impl.h"
+#include "google/cloud/metastore/v1/internal/dataproc_metastore_federation_option_defaults.h"
+#include "google/cloud/metastore/v1/internal/dataproc_metastore_federation_stub_factory.h"
+#include "google/cloud/metastore/v1/internal/dataproc_metastore_federation_tracing_connection.h"
 #include <memory>
 #include <utility>
 
@@ -36,13 +36,10 @@ namespace cloud {
 namespace metastore_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-DataprocMetastoreFederationConnection::
-    ~DataprocMetastoreFederationConnection() = default;
+DataprocMetastoreFederationConnection::~DataprocMetastoreFederationConnection() = default;
 
-StreamRange<google::cloud::metastore::v1::Federation>
-DataprocMetastoreFederationConnection::ListFederations(
-    google::cloud::metastore::v1::
-        ListFederationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::metastore::v1::Federation> DataprocMetastoreFederationConnection::ListFederations(
+    google::cloud::metastore::v1::ListFederationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::metastore::v1::Federation>>();
 }
@@ -57,75 +54,76 @@ future<StatusOr<google::cloud::metastore::v1::Federation>>
 DataprocMetastoreFederationConnection::CreateFederation(
     google::cloud::metastore::v1::CreateFederationRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::metastore::v1::Federation>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::metastore::v1::Federation>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 DataprocMetastoreFederationConnection::CreateFederation(
-    NoAwaitTag, google::cloud::metastore::v1::CreateFederationRequest const&) {
+    NoAwaitTag,
+    google::cloud::metastore::v1::CreateFederationRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::metastore::v1::Federation>>
 DataprocMetastoreFederationConnection::CreateFederation(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::metastore::v1::Federation>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::metastore::v1::Federation>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::metastore::v1::Federation>>
 DataprocMetastoreFederationConnection::UpdateFederation(
     google::cloud::metastore::v1::UpdateFederationRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::metastore::v1::Federation>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::metastore::v1::Federation>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 DataprocMetastoreFederationConnection::UpdateFederation(
-    NoAwaitTag, google::cloud::metastore::v1::UpdateFederationRequest const&) {
+    NoAwaitTag,
+    google::cloud::metastore::v1::UpdateFederationRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::metastore::v1::Federation>>
 DataprocMetastoreFederationConnection::UpdateFederation(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::metastore::v1::Federation>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::metastore::v1::Federation>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::metastore::v1::OperationMetadata>>
 DataprocMetastoreFederationConnection::DeleteFederation(
     google::cloud::metastore::v1::DeleteFederationRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::metastore::v1::OperationMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::metastore::v1::OperationMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 DataprocMetastoreFederationConnection::DeleteFederation(
-    NoAwaitTag, google::cloud::metastore::v1::DeleteFederationRequest const&) {
+    NoAwaitTag,
+    google::cloud::metastore::v1::DeleteFederationRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::metastore::v1::OperationMetadata>>
 DataprocMetastoreFederationConnection::DeleteFederation(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::metastore::v1::OperationMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::metastore::v1::OperationMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StreamRange<google::cloud::location::Location>
-DataprocMetastoreFederationConnection::ListLocations(
-    google::cloud::location::
-        ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::location::Location> DataprocMetastoreFederationConnection::ListLocations(
+    google::cloud::location::ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::location::Location>>();
 }
@@ -154,10 +152,8 @@ DataprocMetastoreFederationConnection::TestIamPermissions(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::longrunning::Operation>
-DataprocMetastoreFederationConnection::ListOperations(
-    google::longrunning::
-        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::longrunning::Operation> DataprocMetastoreFederationConnection::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }
@@ -168,34 +164,32 @@ DataprocMetastoreFederationConnection::GetOperation(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status DataprocMetastoreFederationConnection::DeleteOperation(
+Status
+DataprocMetastoreFederationConnection::DeleteOperation(
     google::longrunning::DeleteOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status DataprocMetastoreFederationConnection::CancelOperation(
+Status
+DataprocMetastoreFederationConnection::CancelOperation(
     google::longrunning::CancelOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-std::shared_ptr<DataprocMetastoreFederationConnection>
-MakeDataprocMetastoreFederationConnection(Options options) {
+std::shared_ptr<DataprocMetastoreFederationConnection> MakeDataprocMetastoreFederationConnection(
+    Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 DataprocMetastoreFederationPolicyOptionList>(
-      options, __func__);
+      UnifiedCredentialsOptionList,
+      DataprocMetastoreFederationPolicyOptionList>(options, __func__);
   options = metastore_v1_internal::DataprocMetastoreFederationDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
-  auto stub =
-      metastore_v1_internal::CreateDefaultDataprocMetastoreFederationStub(
-          std::move(auth), options);
-  return metastore_v1_internal::
-      MakeDataprocMetastoreFederationTracingConnection(
-          std::make_shared<
-              metastore_v1_internal::DataprocMetastoreFederationConnectionImpl>(
-              std::move(background), std::move(stub), std::move(options)));
+  auto stub = metastore_v1_internal::CreateDefaultDataprocMetastoreFederationStub(
+    std::move(auth), options);
+  return metastore_v1_internal::MakeDataprocMetastoreFederationTracingConnection(
+      std::make_shared<metastore_v1_internal::DataprocMetastoreFederationConnectionImpl>(
+      std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

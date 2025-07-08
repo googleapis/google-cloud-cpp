@@ -17,12 +17,12 @@
 // source: google/cloud/support/v2/case_service.proto
 
 #include "google/cloud/support/v2/internal/case_connection_impl.h"
-#include "google/cloud/support/v2/internal/case_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
+#include "google/cloud/support/v2/internal/case_option_defaults.h"
 #include <memory>
 #include <utility>
 
@@ -32,34 +32,34 @@ namespace support_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<support_v2::CaseServiceRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<support_v2::CaseServiceRetryPolicy>
+retry_policy(Options const& options) {
   return options.get<support_v2::CaseServiceRetryPolicyOption>()->clone();
 }
 
-std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+std::unique_ptr<BackoffPolicy>
+backoff_policy(Options const& options) {
   return options.get<support_v2::CaseServiceBackoffPolicyOption>()->clone();
 }
 
 std::unique_ptr<support_v2::CaseServiceConnectionIdempotencyPolicy>
 idempotency_policy(Options const& options) {
-  return options
-      .get<support_v2::CaseServiceConnectionIdempotencyPolicyOption>()
-      ->clone();
+  return options.get<support_v2::CaseServiceConnectionIdempotencyPolicyOption>()->clone();
 }
 
-}  // namespace
+} // namespace
 
 CaseServiceConnectionImpl::CaseServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<support_v2_internal::CaseServiceStub> stub, Options options)
-    : background_(std::move(background)),
-      stub_(std::move(stub)),
-      options_(internal::MergeOptions(std::move(options),
-                                      CaseServiceConnection::options())) {}
+    std::shared_ptr<support_v2_internal::CaseServiceStub> stub,
+    Options options)
+  : background_(std::move(background)), stub_(std::move(stub)),
+    options_(internal::MergeOptions(
+        std::move(options),
+        CaseServiceConnection::options())) {}
 
-StatusOr<google::cloud::support::v2::Case> CaseServiceConnectionImpl::GetCase(
-    google::cloud::support::v2::GetCaseRequest const& request) {
+StatusOr<google::cloud::support::v2::Case>
+CaseServiceConnectionImpl::GetCase(google::cloud::support::v2::GetCaseRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -72,26 +72,21 @@ StatusOr<google::cloud::support::v2::Case> CaseServiceConnectionImpl::GetCase(
 }
 
 StreamRange<google::cloud::support::v2::Case>
-CaseServiceConnectionImpl::ListCases(
-    google::cloud::support::v2::ListCasesRequest request) {
+CaseServiceConnectionImpl::ListCases(google::cloud::support::v2::ListCasesRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListCases(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::support::v2::Case>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::support::v2::Case>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<support_v2::CaseServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<support_v2::CaseServiceRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::support::v2::ListCasesRequest const& r) {
+          Options const& options, google::cloud::support::v2::ListCasesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](
-                grpc::ClientContext& context, Options const& options,
-                google::cloud::support::v2::ListCasesRequest const& request) {
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::cloud::support::v2::ListCasesRequest const& request) {
               return stub->ListCases(context, options, request);
             },
             options, r, function_name);
@@ -105,26 +100,21 @@ CaseServiceConnectionImpl::ListCases(
 }
 
 StreamRange<google::cloud::support::v2::Case>
-CaseServiceConnectionImpl::SearchCases(
-    google::cloud::support::v2::SearchCasesRequest request) {
+CaseServiceConnectionImpl::SearchCases(google::cloud::support::v2::SearchCasesRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->SearchCases(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::support::v2::Case>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::support::v2::Case>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<support_v2::CaseServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<support_v2::CaseServiceRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::support::v2::SearchCasesRequest const& r) {
+          Options const& options, google::cloud::support::v2::SearchCasesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](
-                grpc::ClientContext& context, Options const& options,
-                google::cloud::support::v2::SearchCasesRequest const& request) {
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::cloud::support::v2::SearchCasesRequest const& request) {
               return stub->SearchCases(context, options, request);
             },
             options, r, function_name);
@@ -138,8 +128,7 @@ CaseServiceConnectionImpl::SearchCases(
 }
 
 StatusOr<google::cloud::support::v2::Case>
-CaseServiceConnectionImpl::CreateCase(
-    google::cloud::support::v2::CreateCaseRequest const& request) {
+CaseServiceConnectionImpl::CreateCase(google::cloud::support::v2::CreateCaseRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -152,8 +141,7 @@ CaseServiceConnectionImpl::CreateCase(
 }
 
 StatusOr<google::cloud::support::v2::Case>
-CaseServiceConnectionImpl::UpdateCase(
-    google::cloud::support::v2::UpdateCaseRequest const& request) {
+CaseServiceConnectionImpl::UpdateCase(google::cloud::support::v2::UpdateCaseRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -166,8 +154,7 @@ CaseServiceConnectionImpl::UpdateCase(
 }
 
 StatusOr<google::cloud::support::v2::Case>
-CaseServiceConnectionImpl::EscalateCase(
-    google::cloud::support::v2::EscalateCaseRequest const& request) {
+CaseServiceConnectionImpl::EscalateCase(google::cloud::support::v2::EscalateCaseRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -179,8 +166,8 @@ CaseServiceConnectionImpl::EscalateCase(
       *current, request, __func__);
 }
 
-StatusOr<google::cloud::support::v2::Case> CaseServiceConnectionImpl::CloseCase(
-    google::cloud::support::v2::CloseCaseRequest const& request) {
+StatusOr<google::cloud::support::v2::Case>
+CaseServiceConnectionImpl::CloseCase(google::cloud::support::v2::CloseCaseRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -193,35 +180,27 @@ StatusOr<google::cloud::support::v2::Case> CaseServiceConnectionImpl::CloseCase(
 }
 
 StreamRange<google::cloud::support::v2::CaseClassification>
-CaseServiceConnectionImpl::SearchCaseClassifications(
-    google::cloud::support::v2::SearchCaseClassificationsRequest request) {
+CaseServiceConnectionImpl::SearchCaseClassifications(google::cloud::support::v2::SearchCaseClassificationsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
-  auto idempotency =
-      idempotency_policy(*current)->SearchCaseClassifications(request);
+  auto idempotency = idempotency_policy(*current)->SearchCaseClassifications(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::support::v2::CaseClassification>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::support::v2::CaseClassification>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<support_v2::CaseServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<support_v2::CaseServiceRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::support::v2::SearchCaseClassificationsRequest const&
-              r) {
+          Options const& options, google::cloud::support::v2::SearchCaseClassificationsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::support::v2::
-                       SearchCaseClassificationsRequest const& request) {
+                   google::cloud::support::v2::SearchCaseClassificationsRequest const& request) {
               return stub->SearchCaseClassifications(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::support::v2::SearchCaseClassificationsResponse r) {
-        std::vector<google::cloud::support::v2::CaseClassification> result(
-            r.case_classifications().size());
+        std::vector<google::cloud::support::v2::CaseClassification> result(r.case_classifications().size());
         auto& messages = *r.mutable_case_classifications();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;

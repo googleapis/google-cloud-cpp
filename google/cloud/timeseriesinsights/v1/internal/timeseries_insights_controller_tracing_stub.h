@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TIMESERIESINSIGHTS_V1_INTERNAL_TIMESERIES_INSIGHTS_CONTROLLER_TRACING_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TIMESERIESINSIGHTS_V1_INTERNAL_TIMESERIES_INSIGHTS_CONTROLLER_TRACING_STUB_H
 
-#include "google/cloud/timeseriesinsights/v1/internal/timeseries_insights_controller_stub.h"
 #include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/options.h"
+#include "google/cloud/timeseriesinsights/v1/internal/timeseries_insights_controller_stub.h"
 #include "google/cloud/version.h"
 #include <memory>
 
@@ -32,54 +32,50 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-class TimeseriesInsightsControllerTracingStub
-    : public TimeseriesInsightsControllerStub {
+class TimeseriesInsightsControllerTracingStub : public TimeseriesInsightsControllerStub {
  public:
   ~TimeseriesInsightsControllerTracingStub() override = default;
 
-  explicit TimeseriesInsightsControllerTracingStub(
-      std::shared_ptr<TimeseriesInsightsControllerStub> child);
+  explicit TimeseriesInsightsControllerTracingStub(std::shared_ptr<TimeseriesInsightsControllerStub> child);
 
-  StatusOr<google::cloud::timeseriesinsights::v1::ListDataSetsResponse>
-  ListDataSets(grpc::ClientContext& context, Options const& options,
-               google::cloud::timeseriesinsights::v1::ListDataSetsRequest const&
-                   request) override;
+  StatusOr<google::cloud::timeseriesinsights::v1::ListDataSetsResponse> ListDataSets(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::timeseriesinsights::v1::ListDataSetsRequest const& request) override;
 
   StatusOr<google::cloud::timeseriesinsights::v1::DataSet> CreateDataSet(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::timeseriesinsights::v1::CreateDataSetRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::timeseriesinsights::v1::CreateDataSetRequest const& request) override;
 
   Status DeleteDataSet(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::timeseriesinsights::v1::DeleteDataSetRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::timeseriesinsights::v1::DeleteDataSetRequest const& request) override;
 
-  StatusOr<google::cloud::timeseriesinsights::v1::AppendEventsResponse>
-  AppendEvents(grpc::ClientContext& context, Options const& options,
-               google::cloud::timeseriesinsights::v1::AppendEventsRequest const&
-                   request) override;
+  StatusOr<google::cloud::timeseriesinsights::v1::AppendEventsResponse> AppendEvents(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::timeseriesinsights::v1::AppendEventsRequest const& request) override;
 
-  StatusOr<google::cloud::timeseriesinsights::v1::QueryDataSetResponse>
-  QueryDataSet(grpc::ClientContext& context, Options const& options,
-               google::cloud::timeseriesinsights::v1::QueryDataSetRequest const&
-                   request) override;
+  StatusOr<google::cloud::timeseriesinsights::v1::QueryDataSetResponse> QueryDataSet(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::timeseriesinsights::v1::QueryDataSetRequest const& request) override;
 
   StatusOr<google::cloud::timeseriesinsights::v1::EvaluatedSlice> EvaluateSlice(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::timeseriesinsights::v1::EvaluateSliceRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::timeseriesinsights::v1::EvaluateSliceRequest const& request) override;
 
-  StatusOr<google::cloud::timeseriesinsights::v1::EvaluatedSlice>
-  EvaluateTimeseries(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::timeseriesinsights::v1::EvaluateTimeseriesRequest const&
-          request) override;
+  StatusOr<google::cloud::timeseriesinsights::v1::EvaluatedSlice> EvaluateTimeseries(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::timeseriesinsights::v1::EvaluateTimeseriesRequest const& request) override;
 
  private:
   std::shared_ptr<TimeseriesInsightsControllerStub> child_;
-  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
-      propagator_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -90,8 +86,7 @@ class TimeseriesInsightsControllerTracingStub
  * The stub is only decorated if the library has been compiled with
  * OpenTelemetry.
  */
-std::shared_ptr<TimeseriesInsightsControllerStub>
-MakeTimeseriesInsightsControllerTracingStub(
+std::shared_ptr<TimeseriesInsightsControllerStub> MakeTimeseriesInsightsControllerTracingStub(
     std::shared_ptr<TimeseriesInsightsControllerStub> stub);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

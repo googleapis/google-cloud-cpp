@@ -36,34 +36,30 @@ class DatasetServiceTracingConnection
   ~DatasetServiceTracingConnection() override = default;
 
   explicit DatasetServiceTracingConnection(
-      std::shared_ptr<bigquerycontrol_v2::DatasetServiceConnection> child);
+    std::shared_ptr<bigquerycontrol_v2::DatasetServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::bigquery::v2::Dataset> GetDataset(
-      google::cloud::bigquery::v2::GetDatasetRequest const& request) override;
+  StatusOr<google::cloud::bigquery::v2::Dataset>
+  GetDataset(google::cloud::bigquery::v2::GetDatasetRequest const& request) override;
 
-  StatusOr<google::cloud::bigquery::v2::Dataset> InsertDataset(
-      google::cloud::bigquery::v2::InsertDatasetRequest const& request)
-      override;
+  StatusOr<google::cloud::bigquery::v2::Dataset>
+  InsertDataset(google::cloud::bigquery::v2::InsertDatasetRequest const& request) override;
 
-  StatusOr<google::cloud::bigquery::v2::Dataset> PatchDataset(
-      google::cloud::bigquery::v2::UpdateOrPatchDatasetRequest const& request)
-      override;
+  StatusOr<google::cloud::bigquery::v2::Dataset>
+  PatchDataset(google::cloud::bigquery::v2::UpdateOrPatchDatasetRequest const& request) override;
 
-  StatusOr<google::cloud::bigquery::v2::Dataset> UpdateDataset(
-      google::cloud::bigquery::v2::UpdateOrPatchDatasetRequest const& request)
-      override;
+  StatusOr<google::cloud::bigquery::v2::Dataset>
+  UpdateDataset(google::cloud::bigquery::v2::UpdateOrPatchDatasetRequest const& request) override;
 
-  Status DeleteDataset(google::cloud::bigquery::v2::DeleteDatasetRequest const&
-                           request) override;
+  Status
+  DeleteDataset(google::cloud::bigquery::v2::DeleteDatasetRequest const& request) override;
 
-  StreamRange<google::cloud::bigquery::v2::ListFormatDataset> ListDatasets(
-      google::cloud::bigquery::v2::ListDatasetsRequest request) override;
+  StreamRange<google::cloud::bigquery::v2::ListFormatDataset>
+  ListDatasets(google::cloud::bigquery::v2::ListDatasetsRequest request) override;
 
-  StatusOr<google::cloud::bigquery::v2::Dataset> UndeleteDataset(
-      google::cloud::bigquery::v2::UndeleteDatasetRequest const& request)
-      override;
+  StatusOr<google::cloud::bigquery::v2::Dataset>
+  UndeleteDataset(google::cloud::bigquery::v2::UndeleteDatasetRequest const& request) override;
 
  private:
   std::shared_ptr<bigquerycontrol_v2::DatasetServiceConnection> child_;

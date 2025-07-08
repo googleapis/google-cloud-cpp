@@ -32,62 +32,67 @@ LanguageServiceStub::~LanguageServiceStub() = default;
 
 StatusOr<google::cloud::language::v2::AnalyzeSentimentResponse>
 DefaultLanguageServiceStub::AnalyzeSentiment(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::language::v2::AnalyzeSentimentRequest const& request) {
-  google::cloud::language::v2::AnalyzeSentimentResponse response;
-  auto status = grpc_stub_->AnalyzeSentiment(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::language::v2::AnalyzeSentimentRequest const& request) {
+    google::cloud::language::v2::AnalyzeSentimentResponse response;
+    auto status =
+        grpc_stub_->AnalyzeSentiment(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::language::v2::AnalyzeEntitiesResponse>
 DefaultLanguageServiceStub::AnalyzeEntities(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::language::v2::AnalyzeEntitiesRequest const& request) {
-  google::cloud::language::v2::AnalyzeEntitiesResponse response;
-  auto status = grpc_stub_->AnalyzeEntities(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::language::v2::AnalyzeEntitiesRequest const& request) {
+    google::cloud::language::v2::AnalyzeEntitiesResponse response;
+    auto status =
+        grpc_stub_->AnalyzeEntities(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::language::v2::ClassifyTextResponse>
 DefaultLanguageServiceStub::ClassifyText(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::language::v2::ClassifyTextRequest const& request) {
-  google::cloud::language::v2::ClassifyTextResponse response;
-  auto status = grpc_stub_->ClassifyText(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::language::v2::ClassifyTextRequest const& request) {
+    google::cloud::language::v2::ClassifyTextResponse response;
+    auto status =
+        grpc_stub_->ClassifyText(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::language::v2::ModerateTextResponse>
 DefaultLanguageServiceStub::ModerateText(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::language::v2::ModerateTextRequest const& request) {
-  google::cloud::language::v2::ModerateTextResponse response;
-  auto status = grpc_stub_->ModerateText(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::language::v2::ModerateTextRequest const& request) {
+    google::cloud::language::v2::ModerateTextResponse response;
+    auto status =
+        grpc_stub_->ModerateText(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::language::v2::AnnotateTextResponse>
 DefaultLanguageServiceStub::AnnotateText(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::language::v2::AnnotateTextRequest const& request) {
-  google::cloud::language::v2::AnnotateTextResponse response;
-  auto status = grpc_stub_->AnnotateText(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::language::v2::AnnotateTextRequest const& request) {
+    google::cloud::language::v2::AnnotateTextResponse response;
+    auto status =
+        grpc_stub_->AnnotateText(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

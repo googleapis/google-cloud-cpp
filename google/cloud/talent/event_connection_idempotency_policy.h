@@ -26,10 +26,8 @@ namespace cloud {
 namespace talent {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use
-/// talent_v4::MakeDefaultEventServiceConnectionIdempotencyPolicy directly.
-using ::google::cloud::talent_v4::
-    MakeDefaultEventServiceConnectionIdempotencyPolicy;
+/// @deprecated Use talent_v4::MakeDefaultEventServiceConnectionIdempotencyPolicy directly.
+using ::google::cloud::talent_v4::MakeDefaultEventServiceConnectionIdempotencyPolicy;
 
 /// @deprecated Use talent_v4::EventServiceConnectionIdempotencyPolicy directly.
 using ::google::cloud::talent_v4::EventServiceConnectionIdempotencyPolicy;

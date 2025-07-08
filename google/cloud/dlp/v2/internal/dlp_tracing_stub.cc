@@ -32,243 +32,220 @@ DlpServiceTracingStub::DlpServiceTracingStub(
     std::shared_ptr<DlpServiceStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
-StatusOr<google::privacy::dlp::v2::InspectContentResponse>
-DlpServiceTracingStub::InspectContent(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::privacy::dlp::v2::InspectContentResponse> DlpServiceTracingStub::InspectContent(
+    grpc::ClientContext& context,
+    Options const& options,
     google::privacy::dlp::v2::InspectContentRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService",
-                                     "InspectContent");
+  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService", "InspectContent");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->InspectContent(context, options, request));
 }
 
-StatusOr<google::privacy::dlp::v2::RedactImageResponse>
-DlpServiceTracingStub::RedactImage(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::privacy::dlp::v2::RedactImageResponse> DlpServiceTracingStub::RedactImage(
+    grpc::ClientContext& context,
+    Options const& options,
     google::privacy::dlp::v2::RedactImageRequest const& request) {
-  auto span =
-      internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService", "RedactImage");
+  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService", "RedactImage");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->RedactImage(context, options, request));
 }
 
-StatusOr<google::privacy::dlp::v2::DeidentifyContentResponse>
-DlpServiceTracingStub::DeidentifyContent(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::privacy::dlp::v2::DeidentifyContentResponse> DlpServiceTracingStub::DeidentifyContent(
+    grpc::ClientContext& context,
+    Options const& options,
     google::privacy::dlp::v2::DeidentifyContentRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService",
-                                     "DeidentifyContent");
+  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService", "DeidentifyContent");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->DeidentifyContent(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->DeidentifyContent(context, options, request));
 }
 
-StatusOr<google::privacy::dlp::v2::ReidentifyContentResponse>
-DlpServiceTracingStub::ReidentifyContent(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::privacy::dlp::v2::ReidentifyContentResponse> DlpServiceTracingStub::ReidentifyContent(
+    grpc::ClientContext& context,
+    Options const& options,
     google::privacy::dlp::v2::ReidentifyContentRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService",
-                                     "ReidentifyContent");
+  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService", "ReidentifyContent");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->ReidentifyContent(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->ReidentifyContent(context, options, request));
 }
 
-StatusOr<google::privacy::dlp::v2::ListInfoTypesResponse>
-DlpServiceTracingStub::ListInfoTypes(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::privacy::dlp::v2::ListInfoTypesResponse> DlpServiceTracingStub::ListInfoTypes(
+    grpc::ClientContext& context,
+    Options const& options,
     google::privacy::dlp::v2::ListInfoTypesRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService",
-                                     "ListInfoTypes");
+  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService", "ListInfoTypes");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListInfoTypes(context, options, request));
 }
 
-StatusOr<google::privacy::dlp::v2::InspectTemplate>
-DlpServiceTracingStub::CreateInspectTemplate(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::privacy::dlp::v2::InspectTemplate> DlpServiceTracingStub::CreateInspectTemplate(
+    grpc::ClientContext& context,
+    Options const& options,
     google::privacy::dlp::v2::CreateInspectTemplateRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService",
-                                     "CreateInspectTemplate");
+  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService", "CreateInspectTemplate");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->CreateInspectTemplate(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->CreateInspectTemplate(context, options, request));
 }
 
-StatusOr<google::privacy::dlp::v2::InspectTemplate>
-DlpServiceTracingStub::UpdateInspectTemplate(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::privacy::dlp::v2::InspectTemplate> DlpServiceTracingStub::UpdateInspectTemplate(
+    grpc::ClientContext& context,
+    Options const& options,
     google::privacy::dlp::v2::UpdateInspectTemplateRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService",
-                                     "UpdateInspectTemplate");
+  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService", "UpdateInspectTemplate");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->UpdateInspectTemplate(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->UpdateInspectTemplate(context, options, request));
 }
 
-StatusOr<google::privacy::dlp::v2::InspectTemplate>
-DlpServiceTracingStub::GetInspectTemplate(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::privacy::dlp::v2::InspectTemplate> DlpServiceTracingStub::GetInspectTemplate(
+    grpc::ClientContext& context,
+    Options const& options,
     google::privacy::dlp::v2::GetInspectTemplateRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService",
-                                     "GetInspectTemplate");
+  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService", "GetInspectTemplate");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->GetInspectTemplate(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->GetInspectTemplate(context, options, request));
 }
 
-StatusOr<google::privacy::dlp::v2::ListInspectTemplatesResponse>
-DlpServiceTracingStub::ListInspectTemplates(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::privacy::dlp::v2::ListInspectTemplatesResponse> DlpServiceTracingStub::ListInspectTemplates(
+    grpc::ClientContext& context,
+    Options const& options,
     google::privacy::dlp::v2::ListInspectTemplatesRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService",
-                                     "ListInspectTemplates");
+  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService", "ListInspectTemplates");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->ListInspectTemplates(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->ListInspectTemplates(context, options, request));
 }
 
 Status DlpServiceTracingStub::DeleteInspectTemplate(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::privacy::dlp::v2::DeleteInspectTemplateRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService",
-                                     "DeleteInspectTemplate");
+  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService", "DeleteInspectTemplate");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->DeleteInspectTemplate(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->DeleteInspectTemplate(context, options, request));
 }
 
-StatusOr<google::privacy::dlp::v2::DeidentifyTemplate>
-DlpServiceTracingStub::CreateDeidentifyTemplate(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::privacy::dlp::v2::DeidentifyTemplate> DlpServiceTracingStub::CreateDeidentifyTemplate(
+    grpc::ClientContext& context,
+    Options const& options,
     google::privacy::dlp::v2::CreateDeidentifyTemplateRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService",
-                                     "CreateDeidentifyTemplate");
+  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService", "CreateDeidentifyTemplate");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span,
-      child_->CreateDeidentifyTemplate(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->CreateDeidentifyTemplate(context, options, request));
 }
 
-StatusOr<google::privacy::dlp::v2::DeidentifyTemplate>
-DlpServiceTracingStub::UpdateDeidentifyTemplate(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::privacy::dlp::v2::DeidentifyTemplate> DlpServiceTracingStub::UpdateDeidentifyTemplate(
+    grpc::ClientContext& context,
+    Options const& options,
     google::privacy::dlp::v2::UpdateDeidentifyTemplateRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService",
-                                     "UpdateDeidentifyTemplate");
+  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService", "UpdateDeidentifyTemplate");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span,
-      child_->UpdateDeidentifyTemplate(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->UpdateDeidentifyTemplate(context, options, request));
 }
 
-StatusOr<google::privacy::dlp::v2::DeidentifyTemplate>
-DlpServiceTracingStub::GetDeidentifyTemplate(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::privacy::dlp::v2::DeidentifyTemplate> DlpServiceTracingStub::GetDeidentifyTemplate(
+    grpc::ClientContext& context,
+    Options const& options,
     google::privacy::dlp::v2::GetDeidentifyTemplateRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService",
-                                     "GetDeidentifyTemplate");
+  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService", "GetDeidentifyTemplate");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->GetDeidentifyTemplate(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->GetDeidentifyTemplate(context, options, request));
 }
 
-StatusOr<google::privacy::dlp::v2::ListDeidentifyTemplatesResponse>
-DlpServiceTracingStub::ListDeidentifyTemplates(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::privacy::dlp::v2::ListDeidentifyTemplatesResponse> DlpServiceTracingStub::ListDeidentifyTemplates(
+    grpc::ClientContext& context,
+    Options const& options,
     google::privacy::dlp::v2::ListDeidentifyTemplatesRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService",
-                                     "ListDeidentifyTemplates");
+  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService", "ListDeidentifyTemplates");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span,
-      child_->ListDeidentifyTemplates(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->ListDeidentifyTemplates(context, options, request));
 }
 
 Status DlpServiceTracingStub::DeleteDeidentifyTemplate(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::privacy::dlp::v2::DeleteDeidentifyTemplateRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService",
-                                     "DeleteDeidentifyTemplate");
+  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService", "DeleteDeidentifyTemplate");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span,
-      child_->DeleteDeidentifyTemplate(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->DeleteDeidentifyTemplate(context, options, request));
 }
 
-StatusOr<google::privacy::dlp::v2::JobTrigger>
-DlpServiceTracingStub::CreateJobTrigger(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::privacy::dlp::v2::JobTrigger> DlpServiceTracingStub::CreateJobTrigger(
+    grpc::ClientContext& context,
+    Options const& options,
     google::privacy::dlp::v2::CreateJobTriggerRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService",
-                                     "CreateJobTrigger");
+  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService", "CreateJobTrigger");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateJobTrigger(context, options, request));
 }
 
-StatusOr<google::privacy::dlp::v2::JobTrigger>
-DlpServiceTracingStub::UpdateJobTrigger(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::privacy::dlp::v2::JobTrigger> DlpServiceTracingStub::UpdateJobTrigger(
+    grpc::ClientContext& context,
+    Options const& options,
     google::privacy::dlp::v2::UpdateJobTriggerRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService",
-                                     "UpdateJobTrigger");
+  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService", "UpdateJobTrigger");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->UpdateJobTrigger(context, options, request));
 }
 
-StatusOr<google::privacy::dlp::v2::HybridInspectResponse>
-DlpServiceTracingStub::HybridInspectJobTrigger(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::privacy::dlp::v2::HybridInspectResponse> DlpServiceTracingStub::HybridInspectJobTrigger(
+    grpc::ClientContext& context,
+    Options const& options,
     google::privacy::dlp::v2::HybridInspectJobTriggerRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService",
-                                     "HybridInspectJobTrigger");
+  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService", "HybridInspectJobTrigger");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span,
-      child_->HybridInspectJobTrigger(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->HybridInspectJobTrigger(context, options, request));
 }
 
-StatusOr<google::privacy::dlp::v2::JobTrigger>
-DlpServiceTracingStub::GetJobTrigger(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::privacy::dlp::v2::JobTrigger> DlpServiceTracingStub::GetJobTrigger(
+    grpc::ClientContext& context,
+    Options const& options,
     google::privacy::dlp::v2::GetJobTriggerRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService",
-                                     "GetJobTrigger");
+  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService", "GetJobTrigger");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetJobTrigger(context, options, request));
 }
 
-StatusOr<google::privacy::dlp::v2::ListJobTriggersResponse>
-DlpServiceTracingStub::ListJobTriggers(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::privacy::dlp::v2::ListJobTriggersResponse> DlpServiceTracingStub::ListJobTriggers(
+    grpc::ClientContext& context,
+    Options const& options,
     google::privacy::dlp::v2::ListJobTriggersRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService",
-                                     "ListJobTriggers");
+  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService", "ListJobTriggers");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -276,104 +253,98 @@ DlpServiceTracingStub::ListJobTriggers(
 }
 
 Status DlpServiceTracingStub::DeleteJobTrigger(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::privacy::dlp::v2::DeleteJobTriggerRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService",
-                                     "DeleteJobTrigger");
+  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService", "DeleteJobTrigger");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeleteJobTrigger(context, options, request));
 }
 
-StatusOr<google::privacy::dlp::v2::DlpJob>
-DlpServiceTracingStub::ActivateJobTrigger(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::privacy::dlp::v2::DlpJob> DlpServiceTracingStub::ActivateJobTrigger(
+    grpc::ClientContext& context,
+    Options const& options,
     google::privacy::dlp::v2::ActivateJobTriggerRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService",
-                                     "ActivateJobTrigger");
+  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService", "ActivateJobTrigger");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->ActivateJobTrigger(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->ActivateJobTrigger(context, options, request));
 }
 
-StatusOr<google::privacy::dlp::v2::DiscoveryConfig>
-DlpServiceTracingStub::CreateDiscoveryConfig(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::privacy::dlp::v2::DiscoveryConfig> DlpServiceTracingStub::CreateDiscoveryConfig(
+    grpc::ClientContext& context,
+    Options const& options,
     google::privacy::dlp::v2::CreateDiscoveryConfigRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService",
-                                     "CreateDiscoveryConfig");
+  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService", "CreateDiscoveryConfig");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->CreateDiscoveryConfig(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->CreateDiscoveryConfig(context, options, request));
 }
 
-StatusOr<google::privacy::dlp::v2::DiscoveryConfig>
-DlpServiceTracingStub::UpdateDiscoveryConfig(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::privacy::dlp::v2::DiscoveryConfig> DlpServiceTracingStub::UpdateDiscoveryConfig(
+    grpc::ClientContext& context,
+    Options const& options,
     google::privacy::dlp::v2::UpdateDiscoveryConfigRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService",
-                                     "UpdateDiscoveryConfig");
+  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService", "UpdateDiscoveryConfig");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->UpdateDiscoveryConfig(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->UpdateDiscoveryConfig(context, options, request));
 }
 
-StatusOr<google::privacy::dlp::v2::DiscoveryConfig>
-DlpServiceTracingStub::GetDiscoveryConfig(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::privacy::dlp::v2::DiscoveryConfig> DlpServiceTracingStub::GetDiscoveryConfig(
+    grpc::ClientContext& context,
+    Options const& options,
     google::privacy::dlp::v2::GetDiscoveryConfigRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService",
-                                     "GetDiscoveryConfig");
+  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService", "GetDiscoveryConfig");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->GetDiscoveryConfig(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->GetDiscoveryConfig(context, options, request));
 }
 
-StatusOr<google::privacy::dlp::v2::ListDiscoveryConfigsResponse>
-DlpServiceTracingStub::ListDiscoveryConfigs(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::privacy::dlp::v2::ListDiscoveryConfigsResponse> DlpServiceTracingStub::ListDiscoveryConfigs(
+    grpc::ClientContext& context,
+    Options const& options,
     google::privacy::dlp::v2::ListDiscoveryConfigsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService",
-                                     "ListDiscoveryConfigs");
+  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService", "ListDiscoveryConfigs");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->ListDiscoveryConfigs(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->ListDiscoveryConfigs(context, options, request));
 }
 
 Status DlpServiceTracingStub::DeleteDiscoveryConfig(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::privacy::dlp::v2::DeleteDiscoveryConfigRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService",
-                                     "DeleteDiscoveryConfig");
+  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService", "DeleteDiscoveryConfig");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->DeleteDiscoveryConfig(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->DeleteDiscoveryConfig(context, options, request));
 }
 
 StatusOr<google::privacy::dlp::v2::DlpJob> DlpServiceTracingStub::CreateDlpJob(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::privacy::dlp::v2::CreateDlpJobRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService",
-                                     "CreateDlpJob");
+  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService", "CreateDlpJob");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateDlpJob(context, options, request));
 }
 
-StatusOr<google::privacy::dlp::v2::ListDlpJobsResponse>
-DlpServiceTracingStub::ListDlpJobs(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::privacy::dlp::v2::ListDlpJobsResponse> DlpServiceTracingStub::ListDlpJobs(
+    grpc::ClientContext& context,
+    Options const& options,
     google::privacy::dlp::v2::ListDlpJobsRequest const& request) {
-  auto span =
-      internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService", "ListDlpJobs");
+  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService", "ListDlpJobs");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -381,10 +352,10 @@ DlpServiceTracingStub::ListDlpJobs(
 }
 
 StatusOr<google::privacy::dlp::v2::DlpJob> DlpServiceTracingStub::GetDlpJob(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::privacy::dlp::v2::GetDlpJobRequest const& request) {
-  auto span =
-      internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService", "GetDlpJob");
+  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService", "GetDlpJob");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -392,10 +363,10 @@ StatusOr<google::privacy::dlp::v2::DlpJob> DlpServiceTracingStub::GetDlpJob(
 }
 
 Status DlpServiceTracingStub::DeleteDlpJob(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::privacy::dlp::v2::DeleteDlpJobRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService",
-                                     "DeleteDlpJob");
+  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService", "DeleteDlpJob");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -403,288 +374,263 @@ Status DlpServiceTracingStub::DeleteDlpJob(
 }
 
 Status DlpServiceTracingStub::CancelDlpJob(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::privacy::dlp::v2::CancelDlpJobRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService",
-                                     "CancelDlpJob");
+  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService", "CancelDlpJob");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CancelDlpJob(context, options, request));
 }
 
-StatusOr<google::privacy::dlp::v2::StoredInfoType>
-DlpServiceTracingStub::CreateStoredInfoType(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::privacy::dlp::v2::StoredInfoType> DlpServiceTracingStub::CreateStoredInfoType(
+    grpc::ClientContext& context,
+    Options const& options,
     google::privacy::dlp::v2::CreateStoredInfoTypeRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService",
-                                     "CreateStoredInfoType");
+  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService", "CreateStoredInfoType");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->CreateStoredInfoType(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->CreateStoredInfoType(context, options, request));
 }
 
-StatusOr<google::privacy::dlp::v2::StoredInfoType>
-DlpServiceTracingStub::UpdateStoredInfoType(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::privacy::dlp::v2::StoredInfoType> DlpServiceTracingStub::UpdateStoredInfoType(
+    grpc::ClientContext& context,
+    Options const& options,
     google::privacy::dlp::v2::UpdateStoredInfoTypeRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService",
-                                     "UpdateStoredInfoType");
+  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService", "UpdateStoredInfoType");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->UpdateStoredInfoType(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->UpdateStoredInfoType(context, options, request));
 }
 
-StatusOr<google::privacy::dlp::v2::StoredInfoType>
-DlpServiceTracingStub::GetStoredInfoType(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::privacy::dlp::v2::StoredInfoType> DlpServiceTracingStub::GetStoredInfoType(
+    grpc::ClientContext& context,
+    Options const& options,
     google::privacy::dlp::v2::GetStoredInfoTypeRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService",
-                                     "GetStoredInfoType");
+  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService", "GetStoredInfoType");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->GetStoredInfoType(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->GetStoredInfoType(context, options, request));
 }
 
-StatusOr<google::privacy::dlp::v2::ListStoredInfoTypesResponse>
-DlpServiceTracingStub::ListStoredInfoTypes(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::privacy::dlp::v2::ListStoredInfoTypesResponse> DlpServiceTracingStub::ListStoredInfoTypes(
+    grpc::ClientContext& context,
+    Options const& options,
     google::privacy::dlp::v2::ListStoredInfoTypesRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService",
-                                     "ListStoredInfoTypes");
+  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService", "ListStoredInfoTypes");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->ListStoredInfoTypes(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->ListStoredInfoTypes(context, options, request));
 }
 
 Status DlpServiceTracingStub::DeleteStoredInfoType(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::privacy::dlp::v2::DeleteStoredInfoTypeRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService",
-                                     "DeleteStoredInfoType");
+  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService", "DeleteStoredInfoType");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->DeleteStoredInfoType(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->DeleteStoredInfoType(context, options, request));
 }
 
-StatusOr<google::privacy::dlp::v2::ListProjectDataProfilesResponse>
-DlpServiceTracingStub::ListProjectDataProfiles(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::privacy::dlp::v2::ListProjectDataProfilesResponse> DlpServiceTracingStub::ListProjectDataProfiles(
+    grpc::ClientContext& context,
+    Options const& options,
     google::privacy::dlp::v2::ListProjectDataProfilesRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService",
-                                     "ListProjectDataProfiles");
+  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService", "ListProjectDataProfiles");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span,
-      child_->ListProjectDataProfiles(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->ListProjectDataProfiles(context, options, request));
 }
 
-StatusOr<google::privacy::dlp::v2::ListTableDataProfilesResponse>
-DlpServiceTracingStub::ListTableDataProfiles(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::privacy::dlp::v2::ListTableDataProfilesResponse> DlpServiceTracingStub::ListTableDataProfiles(
+    grpc::ClientContext& context,
+    Options const& options,
     google::privacy::dlp::v2::ListTableDataProfilesRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService",
-                                     "ListTableDataProfiles");
+  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService", "ListTableDataProfiles");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->ListTableDataProfiles(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->ListTableDataProfiles(context, options, request));
 }
 
-StatusOr<google::privacy::dlp::v2::ListColumnDataProfilesResponse>
-DlpServiceTracingStub::ListColumnDataProfiles(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::privacy::dlp::v2::ListColumnDataProfilesResponse> DlpServiceTracingStub::ListColumnDataProfiles(
+    grpc::ClientContext& context,
+    Options const& options,
     google::privacy::dlp::v2::ListColumnDataProfilesRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService",
-                                     "ListColumnDataProfiles");
+  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService", "ListColumnDataProfiles");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span,
-      child_->ListColumnDataProfiles(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->ListColumnDataProfiles(context, options, request));
 }
 
-StatusOr<google::privacy::dlp::v2::ProjectDataProfile>
-DlpServiceTracingStub::GetProjectDataProfile(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::privacy::dlp::v2::ProjectDataProfile> DlpServiceTracingStub::GetProjectDataProfile(
+    grpc::ClientContext& context,
+    Options const& options,
     google::privacy::dlp::v2::GetProjectDataProfileRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService",
-                                     "GetProjectDataProfile");
+  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService", "GetProjectDataProfile");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->GetProjectDataProfile(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->GetProjectDataProfile(context, options, request));
 }
 
-StatusOr<google::privacy::dlp::v2::ListFileStoreDataProfilesResponse>
-DlpServiceTracingStub::ListFileStoreDataProfiles(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::privacy::dlp::v2::ListFileStoreDataProfilesResponse> DlpServiceTracingStub::ListFileStoreDataProfiles(
+    grpc::ClientContext& context,
+    Options const& options,
     google::privacy::dlp::v2::ListFileStoreDataProfilesRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService",
-                                     "ListFileStoreDataProfiles");
+  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService", "ListFileStoreDataProfiles");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span,
-      child_->ListFileStoreDataProfiles(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->ListFileStoreDataProfiles(context, options, request));
 }
 
-StatusOr<google::privacy::dlp::v2::FileStoreDataProfile>
-DlpServiceTracingStub::GetFileStoreDataProfile(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::privacy::dlp::v2::FileStoreDataProfile> DlpServiceTracingStub::GetFileStoreDataProfile(
+    grpc::ClientContext& context,
+    Options const& options,
     google::privacy::dlp::v2::GetFileStoreDataProfileRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService",
-                                     "GetFileStoreDataProfile");
+  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService", "GetFileStoreDataProfile");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span,
-      child_->GetFileStoreDataProfile(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->GetFileStoreDataProfile(context, options, request));
 }
 
 Status DlpServiceTracingStub::DeleteFileStoreDataProfile(
-    grpc::ClientContext& context, Options const& options,
-    google::privacy::dlp::v2::DeleteFileStoreDataProfileRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService",
-                                     "DeleteFileStoreDataProfile");
+    grpc::ClientContext& context,
+    Options const& options,
+    google::privacy::dlp::v2::DeleteFileStoreDataProfileRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService", "DeleteFileStoreDataProfile");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span,
-      child_->DeleteFileStoreDataProfile(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->DeleteFileStoreDataProfile(context, options, request));
 }
 
-StatusOr<google::privacy::dlp::v2::TableDataProfile>
-DlpServiceTracingStub::GetTableDataProfile(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::privacy::dlp::v2::TableDataProfile> DlpServiceTracingStub::GetTableDataProfile(
+    grpc::ClientContext& context,
+    Options const& options,
     google::privacy::dlp::v2::GetTableDataProfileRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService",
-                                     "GetTableDataProfile");
+  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService", "GetTableDataProfile");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->GetTableDataProfile(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->GetTableDataProfile(context, options, request));
 }
 
-StatusOr<google::privacy::dlp::v2::ColumnDataProfile>
-DlpServiceTracingStub::GetColumnDataProfile(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::privacy::dlp::v2::ColumnDataProfile> DlpServiceTracingStub::GetColumnDataProfile(
+    grpc::ClientContext& context,
+    Options const& options,
     google::privacy::dlp::v2::GetColumnDataProfileRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService",
-                                     "GetColumnDataProfile");
+  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService", "GetColumnDataProfile");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->GetColumnDataProfile(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->GetColumnDataProfile(context, options, request));
 }
 
 Status DlpServiceTracingStub::DeleteTableDataProfile(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::privacy::dlp::v2::DeleteTableDataProfileRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService",
-                                     "DeleteTableDataProfile");
+  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService", "DeleteTableDataProfile");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span,
-      child_->DeleteTableDataProfile(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->DeleteTableDataProfile(context, options, request));
 }
 
-StatusOr<google::privacy::dlp::v2::HybridInspectResponse>
-DlpServiceTracingStub::HybridInspectDlpJob(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::privacy::dlp::v2::HybridInspectResponse> DlpServiceTracingStub::HybridInspectDlpJob(
+    grpc::ClientContext& context,
+    Options const& options,
     google::privacy::dlp::v2::HybridInspectDlpJobRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService",
-                                     "HybridInspectDlpJob");
+  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService", "HybridInspectDlpJob");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->HybridInspectDlpJob(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->HybridInspectDlpJob(context, options, request));
 }
 
 Status DlpServiceTracingStub::FinishDlpJob(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::privacy::dlp::v2::FinishDlpJobRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService",
-                                     "FinishDlpJob");
+  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService", "FinishDlpJob");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->FinishDlpJob(context, options, request));
 }
 
-StatusOr<google::privacy::dlp::v2::Connection>
-DlpServiceTracingStub::CreateConnection(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::privacy::dlp::v2::Connection> DlpServiceTracingStub::CreateConnection(
+    grpc::ClientContext& context,
+    Options const& options,
     google::privacy::dlp::v2::CreateConnectionRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService",
-                                     "CreateConnection");
+  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService", "CreateConnection");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateConnection(context, options, request));
 }
 
-StatusOr<google::privacy::dlp::v2::Connection>
-DlpServiceTracingStub::GetConnection(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::privacy::dlp::v2::Connection> DlpServiceTracingStub::GetConnection(
+    grpc::ClientContext& context,
+    Options const& options,
     google::privacy::dlp::v2::GetConnectionRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService",
-                                     "GetConnection");
+  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService", "GetConnection");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetConnection(context, options, request));
 }
 
-StatusOr<google::privacy::dlp::v2::ListConnectionsResponse>
-DlpServiceTracingStub::ListConnections(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::privacy::dlp::v2::ListConnectionsResponse> DlpServiceTracingStub::ListConnections(
+    grpc::ClientContext& context,
+    Options const& options,
     google::privacy::dlp::v2::ListConnectionsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService",
-                                     "ListConnections");
+  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService", "ListConnections");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListConnections(context, options, request));
 }
 
-StatusOr<google::privacy::dlp::v2::SearchConnectionsResponse>
-DlpServiceTracingStub::SearchConnections(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::privacy::dlp::v2::SearchConnectionsResponse> DlpServiceTracingStub::SearchConnections(
+    grpc::ClientContext& context,
+    Options const& options,
     google::privacy::dlp::v2::SearchConnectionsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService",
-                                     "SearchConnections");
+  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService", "SearchConnections");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->SearchConnections(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->SearchConnections(context, options, request));
 }
 
 Status DlpServiceTracingStub::DeleteConnection(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::privacy::dlp::v2::DeleteConnectionRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService",
-                                     "DeleteConnection");
+  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService", "DeleteConnection");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeleteConnection(context, options, request));
 }
 
-StatusOr<google::privacy::dlp::v2::Connection>
-DlpServiceTracingStub::UpdateConnection(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::privacy::dlp::v2::Connection> DlpServiceTracingStub::UpdateConnection(
+    grpc::ClientContext& context,
+    Options const& options,
     google::privacy::dlp::v2::UpdateConnectionRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService",
-                                     "UpdateConnection");
+  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService", "UpdateConnection");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,

@@ -34,30 +34,29 @@ class RoutineServiceConnectionIdempotencyPolicy {
   virtual ~RoutineServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<RoutineServiceConnectionIdempotencyPolicy> clone()
-      const;
+  virtual std::unique_ptr<RoutineServiceConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency GetRoutine(
-      google::cloud::bigquery::v2::GetRoutineRequest const& request);
+  virtual google::cloud::Idempotency
+  GetRoutine(google::cloud::bigquery::v2::GetRoutineRequest const& request);
 
-  virtual google::cloud::Idempotency InsertRoutine(
-      google::cloud::bigquery::v2::InsertRoutineRequest const& request);
+  virtual google::cloud::Idempotency
+  InsertRoutine(google::cloud::bigquery::v2::InsertRoutineRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateRoutine(
-      google::cloud::bigquery::v2::UpdateRoutineRequest const& request);
+  virtual google::cloud::Idempotency
+  UpdateRoutine(google::cloud::bigquery::v2::UpdateRoutineRequest const& request);
 
-  virtual google::cloud::Idempotency PatchRoutine(
-      google::cloud::bigquery::v2::PatchRoutineRequest const& request);
+  virtual google::cloud::Idempotency
+  PatchRoutine(google::cloud::bigquery::v2::PatchRoutineRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteRoutine(
-      google::cloud::bigquery::v2::DeleteRoutineRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteRoutine(google::cloud::bigquery::v2::DeleteRoutineRequest const& request);
 
-  virtual google::cloud::Idempotency ListRoutines(
-      google::cloud::bigquery::v2::ListRoutinesRequest const& request);
+  virtual google::cloud::Idempotency
+  ListRoutines(google::cloud::bigquery::v2::ListRoutinesRequest const& request);
 };
 
 std::unique_ptr<RoutineServiceConnectionIdempotencyPolicy>
-MakeDefaultRoutineServiceConnectionIdempotencyPolicy();
+    MakeDefaultRoutineServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquerycontrol_v2

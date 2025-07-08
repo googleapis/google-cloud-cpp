@@ -26,35 +26,27 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-ReservationBlocksConnectionIdempotencyPolicy::
-    ~ReservationBlocksConnectionIdempotencyPolicy() = default;
+ReservationBlocksConnectionIdempotencyPolicy::~ReservationBlocksConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<ReservationBlocksConnectionIdempotencyPolicy>
 ReservationBlocksConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<ReservationBlocksConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency
-ReservationBlocksConnectionIdempotencyPolicy::GetReservationBlocksGetResponse(
-    google::cloud::cpp::compute::reservation_blocks::v1::
-        GetReservationBlocksGetResponseRequest const&) {
+Idempotency ReservationBlocksConnectionIdempotencyPolicy::GetReservationBlocksGetResponse(google::cloud::cpp::compute::reservation_blocks::v1::GetReservationBlocksGetResponseRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ReservationBlocksConnectionIdempotencyPolicy::ListReservationBlocks(
-    google::cloud::cpp::compute::reservation_blocks::v1::
-        ListReservationBlocksRequest) {  // NOLINT
+Idempotency ReservationBlocksConnectionIdempotencyPolicy::ListReservationBlocks(google::cloud::cpp::compute::reservation_blocks::v1::ListReservationBlocksRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency ReservationBlocksConnectionIdempotencyPolicy::PerformMaintenance(
-    google::cloud::cpp::compute::reservation_blocks::v1::
-        PerformMaintenanceRequest const&) {
+Idempotency ReservationBlocksConnectionIdempotencyPolicy::PerformMaintenance(google::cloud::cpp::compute::reservation_blocks::v1::PerformMaintenanceRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<ReservationBlocksConnectionIdempotencyPolicy>
-MakeDefaultReservationBlocksConnectionIdempotencyPolicy() {
+    MakeDefaultReservationBlocksConnectionIdempotencyPolicy() {
   return std::make_unique<ReservationBlocksConnectionIdempotencyPolicy>();
 }
 

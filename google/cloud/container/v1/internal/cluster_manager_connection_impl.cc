@@ -17,9 +17,9 @@
 // source: google/container/v1/cluster_service.proto
 
 #include "google/cloud/container/v1/internal/cluster_manager_connection_impl.h"
-#include "google/cloud/container/v1/internal/cluster_manager_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/container/v1/internal/cluster_manager_option_defaults.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
@@ -32,37 +32,34 @@ namespace container_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<container_v1::ClusterManagerRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<container_v1::ClusterManagerRetryPolicy>
+retry_policy(Options const& options) {
   return options.get<container_v1::ClusterManagerRetryPolicyOption>()->clone();
 }
 
-std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-  return options.get<container_v1::ClusterManagerBackoffPolicyOption>()
-      ->clone();
+std::unique_ptr<BackoffPolicy>
+backoff_policy(Options const& options) {
+  return options.get<container_v1::ClusterManagerBackoffPolicyOption>()->clone();
 }
 
 std::unique_ptr<container_v1::ClusterManagerConnectionIdempotencyPolicy>
 idempotency_policy(Options const& options) {
-  return options
-      .get<container_v1::ClusterManagerConnectionIdempotencyPolicyOption>()
-      ->clone();
+  return options.get<container_v1::ClusterManagerConnectionIdempotencyPolicyOption>()->clone();
 }
 
-}  // namespace
+} // namespace
 
 ClusterManagerConnectionImpl::ClusterManagerConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<container_v1_internal::ClusterManagerStub> stub,
     Options options)
-    : background_(std::move(background)),
-      stub_(std::move(stub)),
-      options_(internal::MergeOptions(std::move(options),
-                                      ClusterManagerConnection::options())) {}
+  : background_(std::move(background)), stub_(std::move(stub)),
+    options_(internal::MergeOptions(
+        std::move(options),
+        ClusterManagerConnection::options())) {}
 
 StatusOr<google::container::v1::ListClustersResponse>
-ClusterManagerConnectionImpl::ListClusters(
-    google::container::v1::ListClustersRequest const& request) {
+ClusterManagerConnectionImpl::ListClusters(google::container::v1::ListClustersRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -75,8 +72,7 @@ ClusterManagerConnectionImpl::ListClusters(
 }
 
 StatusOr<google::container::v1::Cluster>
-ClusterManagerConnectionImpl::GetCluster(
-    google::container::v1::GetClusterRequest const& request) {
+ClusterManagerConnectionImpl::GetCluster(google::container::v1::GetClusterRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -89,8 +85,7 @@ ClusterManagerConnectionImpl::GetCluster(
 }
 
 StatusOr<google::container::v1::Operation>
-ClusterManagerConnectionImpl::CreateCluster(
-    google::container::v1::CreateClusterRequest const& request) {
+ClusterManagerConnectionImpl::CreateCluster(google::container::v1::CreateClusterRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -103,8 +98,7 @@ ClusterManagerConnectionImpl::CreateCluster(
 }
 
 StatusOr<google::container::v1::Operation>
-ClusterManagerConnectionImpl::UpdateCluster(
-    google::container::v1::UpdateClusterRequest const& request) {
+ClusterManagerConnectionImpl::UpdateCluster(google::container::v1::UpdateClusterRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -117,8 +111,7 @@ ClusterManagerConnectionImpl::UpdateCluster(
 }
 
 StatusOr<google::container::v1::Operation>
-ClusterManagerConnectionImpl::UpdateNodePool(
-    google::container::v1::UpdateNodePoolRequest const& request) {
+ClusterManagerConnectionImpl::UpdateNodePool(google::container::v1::UpdateNodePoolRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -131,23 +124,20 @@ ClusterManagerConnectionImpl::UpdateNodePool(
 }
 
 StatusOr<google::container::v1::Operation>
-ClusterManagerConnectionImpl::SetNodePoolAutoscaling(
-    google::container::v1::SetNodePoolAutoscalingRequest const& request) {
+ClusterManagerConnectionImpl::SetNodePoolAutoscaling(google::container::v1::SetNodePoolAutoscalingRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->SetNodePoolAutoscaling(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::container::v1::SetNodePoolAutoscalingRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::container::v1::SetNodePoolAutoscalingRequest const& request) {
         return stub_->SetNodePoolAutoscaling(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::container::v1::Operation>
-ClusterManagerConnectionImpl::SetLoggingService(
-    google::container::v1::SetLoggingServiceRequest const& request) {
+ClusterManagerConnectionImpl::SetLoggingService(google::container::v1::SetLoggingServiceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -160,23 +150,20 @@ ClusterManagerConnectionImpl::SetLoggingService(
 }
 
 StatusOr<google::container::v1::Operation>
-ClusterManagerConnectionImpl::SetMonitoringService(
-    google::container::v1::SetMonitoringServiceRequest const& request) {
+ClusterManagerConnectionImpl::SetMonitoringService(google::container::v1::SetMonitoringServiceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->SetMonitoringService(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::container::v1::SetMonitoringServiceRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::container::v1::SetMonitoringServiceRequest const& request) {
         return stub_->SetMonitoringService(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::container::v1::Operation>
-ClusterManagerConnectionImpl::SetAddonsConfig(
-    google::container::v1::SetAddonsConfigRequest const& request) {
+ClusterManagerConnectionImpl::SetAddonsConfig(google::container::v1::SetAddonsConfigRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -189,8 +176,7 @@ ClusterManagerConnectionImpl::SetAddonsConfig(
 }
 
 StatusOr<google::container::v1::Operation>
-ClusterManagerConnectionImpl::SetLocations(
-    google::container::v1::SetLocationsRequest const& request) {
+ClusterManagerConnectionImpl::SetLocations(google::container::v1::SetLocationsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -203,8 +189,7 @@ ClusterManagerConnectionImpl::SetLocations(
 }
 
 StatusOr<google::container::v1::Operation>
-ClusterManagerConnectionImpl::UpdateMaster(
-    google::container::v1::UpdateMasterRequest const& request) {
+ClusterManagerConnectionImpl::UpdateMaster(google::container::v1::UpdateMasterRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -217,8 +202,7 @@ ClusterManagerConnectionImpl::UpdateMaster(
 }
 
 StatusOr<google::container::v1::Operation>
-ClusterManagerConnectionImpl::SetMasterAuth(
-    google::container::v1::SetMasterAuthRequest const& request) {
+ClusterManagerConnectionImpl::SetMasterAuth(google::container::v1::SetMasterAuthRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -231,8 +215,7 @@ ClusterManagerConnectionImpl::SetMasterAuth(
 }
 
 StatusOr<google::container::v1::Operation>
-ClusterManagerConnectionImpl::DeleteCluster(
-    google::container::v1::DeleteClusterRequest const& request) {
+ClusterManagerConnectionImpl::DeleteCluster(google::container::v1::DeleteClusterRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -245,8 +228,7 @@ ClusterManagerConnectionImpl::DeleteCluster(
 }
 
 StatusOr<google::container::v1::ListOperationsResponse>
-ClusterManagerConnectionImpl::ListOperations(
-    google::container::v1::ListOperationsRequest const& request) {
+ClusterManagerConnectionImpl::ListOperations(google::container::v1::ListOperationsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -259,8 +241,7 @@ ClusterManagerConnectionImpl::ListOperations(
 }
 
 StatusOr<google::container::v1::Operation>
-ClusterManagerConnectionImpl::GetOperation(
-    google::container::v1::GetOperationRequest const& request) {
+ClusterManagerConnectionImpl::GetOperation(google::container::v1::GetOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -272,8 +253,8 @@ ClusterManagerConnectionImpl::GetOperation(
       *current, request, __func__);
 }
 
-Status ClusterManagerConnectionImpl::CancelOperation(
-    google::container::v1::CancelOperationRequest const& request) {
+Status
+ClusterManagerConnectionImpl::CancelOperation(google::container::v1::CancelOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -286,8 +267,7 @@ Status ClusterManagerConnectionImpl::CancelOperation(
 }
 
 StatusOr<google::container::v1::ServerConfig>
-ClusterManagerConnectionImpl::GetServerConfig(
-    google::container::v1::GetServerConfigRequest const& request) {
+ClusterManagerConnectionImpl::GetServerConfig(google::container::v1::GetServerConfigRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -300,8 +280,7 @@ ClusterManagerConnectionImpl::GetServerConfig(
 }
 
 StatusOr<google::container::v1::GetJSONWebKeysResponse>
-ClusterManagerConnectionImpl::GetJSONWebKeys(
-    google::container::v1::GetJSONWebKeysRequest const& request) {
+ClusterManagerConnectionImpl::GetJSONWebKeys(google::container::v1::GetJSONWebKeysRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -314,8 +293,7 @@ ClusterManagerConnectionImpl::GetJSONWebKeys(
 }
 
 StatusOr<google::container::v1::ListNodePoolsResponse>
-ClusterManagerConnectionImpl::ListNodePools(
-    google::container::v1::ListNodePoolsRequest const& request) {
+ClusterManagerConnectionImpl::ListNodePools(google::container::v1::ListNodePoolsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -328,8 +306,7 @@ ClusterManagerConnectionImpl::ListNodePools(
 }
 
 StatusOr<google::container::v1::NodePool>
-ClusterManagerConnectionImpl::GetNodePool(
-    google::container::v1::GetNodePoolRequest const& request) {
+ClusterManagerConnectionImpl::GetNodePool(google::container::v1::GetNodePoolRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -342,8 +319,7 @@ ClusterManagerConnectionImpl::GetNodePool(
 }
 
 StatusOr<google::container::v1::Operation>
-ClusterManagerConnectionImpl::CreateNodePool(
-    google::container::v1::CreateNodePoolRequest const& request) {
+ClusterManagerConnectionImpl::CreateNodePool(google::container::v1::CreateNodePoolRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -356,8 +332,7 @@ ClusterManagerConnectionImpl::CreateNodePool(
 }
 
 StatusOr<google::container::v1::Operation>
-ClusterManagerConnectionImpl::DeleteNodePool(
-    google::container::v1::DeleteNodePoolRequest const& request) {
+ClusterManagerConnectionImpl::DeleteNodePool(google::container::v1::DeleteNodePoolRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -369,53 +344,47 @@ ClusterManagerConnectionImpl::DeleteNodePool(
       *current, request, __func__);
 }
 
-Status ClusterManagerConnectionImpl::CompleteNodePoolUpgrade(
-    google::container::v1::CompleteNodePoolUpgradeRequest const& request) {
+Status
+ClusterManagerConnectionImpl::CompleteNodePoolUpgrade(google::container::v1::CompleteNodePoolUpgradeRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CompleteNodePoolUpgrade(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::container::v1::CompleteNodePoolUpgradeRequest const&
-                 request) {
+             google::container::v1::CompleteNodePoolUpgradeRequest const& request) {
         return stub_->CompleteNodePoolUpgrade(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::container::v1::Operation>
-ClusterManagerConnectionImpl::RollbackNodePoolUpgrade(
-    google::container::v1::RollbackNodePoolUpgradeRequest const& request) {
+ClusterManagerConnectionImpl::RollbackNodePoolUpgrade(google::container::v1::RollbackNodePoolUpgradeRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->RollbackNodePoolUpgrade(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::container::v1::RollbackNodePoolUpgradeRequest const&
-                 request) {
+             google::container::v1::RollbackNodePoolUpgradeRequest const& request) {
         return stub_->RollbackNodePoolUpgrade(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::container::v1::Operation>
-ClusterManagerConnectionImpl::SetNodePoolManagement(
-    google::container::v1::SetNodePoolManagementRequest const& request) {
+ClusterManagerConnectionImpl::SetNodePoolManagement(google::container::v1::SetNodePoolManagementRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->SetNodePoolManagement(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::container::v1::SetNodePoolManagementRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::container::v1::SetNodePoolManagementRequest const& request) {
         return stub_->SetNodePoolManagement(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::container::v1::Operation>
-ClusterManagerConnectionImpl::SetLabels(
-    google::container::v1::SetLabelsRequest const& request) {
+ClusterManagerConnectionImpl::SetLabels(google::container::v1::SetLabelsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -428,8 +397,7 @@ ClusterManagerConnectionImpl::SetLabels(
 }
 
 StatusOr<google::container::v1::Operation>
-ClusterManagerConnectionImpl::SetLegacyAbac(
-    google::container::v1::SetLegacyAbacRequest const& request) {
+ClusterManagerConnectionImpl::SetLegacyAbac(google::container::v1::SetLegacyAbacRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -442,8 +410,7 @@ ClusterManagerConnectionImpl::SetLegacyAbac(
 }
 
 StatusOr<google::container::v1::Operation>
-ClusterManagerConnectionImpl::StartIPRotation(
-    google::container::v1::StartIPRotationRequest const& request) {
+ClusterManagerConnectionImpl::StartIPRotation(google::container::v1::StartIPRotationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -456,8 +423,7 @@ ClusterManagerConnectionImpl::StartIPRotation(
 }
 
 StatusOr<google::container::v1::Operation>
-ClusterManagerConnectionImpl::CompleteIPRotation(
-    google::container::v1::CompleteIPRotationRequest const& request) {
+ClusterManagerConnectionImpl::CompleteIPRotation(google::container::v1::CompleteIPRotationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -470,8 +436,7 @@ ClusterManagerConnectionImpl::CompleteIPRotation(
 }
 
 StatusOr<google::container::v1::Operation>
-ClusterManagerConnectionImpl::SetNodePoolSize(
-    google::container::v1::SetNodePoolSizeRequest const& request) {
+ClusterManagerConnectionImpl::SetNodePoolSize(google::container::v1::SetNodePoolSizeRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -484,8 +449,7 @@ ClusterManagerConnectionImpl::SetNodePoolSize(
 }
 
 StatusOr<google::container::v1::Operation>
-ClusterManagerConnectionImpl::SetNetworkPolicy(
-    google::container::v1::SetNetworkPolicyRequest const& request) {
+ClusterManagerConnectionImpl::SetNetworkPolicy(google::container::v1::SetNetworkPolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -498,49 +462,40 @@ ClusterManagerConnectionImpl::SetNetworkPolicy(
 }
 
 StatusOr<google::container::v1::Operation>
-ClusterManagerConnectionImpl::SetMaintenancePolicy(
-    google::container::v1::SetMaintenancePolicyRequest const& request) {
+ClusterManagerConnectionImpl::SetMaintenancePolicy(google::container::v1::SetMaintenancePolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->SetMaintenancePolicy(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::container::v1::SetMaintenancePolicyRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::container::v1::SetMaintenancePolicyRequest const& request) {
         return stub_->SetMaintenancePolicy(context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::container::v1::UsableSubnetwork>
-ClusterManagerConnectionImpl::ListUsableSubnetworks(
-    google::container::v1::ListUsableSubnetworksRequest request) {
+ClusterManagerConnectionImpl::ListUsableSubnetworks(google::container::v1::ListUsableSubnetworksRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
-  auto idempotency =
-      idempotency_policy(*current)->ListUsableSubnetworks(request);
+  auto idempotency = idempotency_policy(*current)->ListUsableSubnetworks(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::container::v1::UsableSubnetwork>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::container::v1::UsableSubnetwork>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<container_v1::ClusterManagerRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<container_v1::ClusterManagerRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::container::v1::ListUsableSubnetworksRequest const& r) {
+          Options const& options, google::container::v1::ListUsableSubnetworksRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::container::v1::ListUsableSubnetworksRequest const&
-                       request) {
+                   google::container::v1::ListUsableSubnetworksRequest const& request) {
               return stub->ListUsableSubnetworks(context, options, request);
             },
             options, r, function_name);
       },
       [](google::container::v1::ListUsableSubnetworksResponse r) {
-        std::vector<google::container::v1::UsableSubnetwork> result(
-            r.subnetworks().size());
+        std::vector<google::container::v1::UsableSubnetwork> result(r.subnetworks().size());
         auto& messages = *r.mutable_subnetworks();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -548,45 +503,39 @@ ClusterManagerConnectionImpl::ListUsableSubnetworks(
 }
 
 StatusOr<google::container::v1::CheckAutopilotCompatibilityResponse>
-ClusterManagerConnectionImpl::CheckAutopilotCompatibility(
-    google::container::v1::CheckAutopilotCompatibilityRequest const& request) {
+ClusterManagerConnectionImpl::CheckAutopilotCompatibility(google::container::v1::CheckAutopilotCompatibilityRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CheckAutopilotCompatibility(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::container::v1::CheckAutopilotCompatibilityRequest const&
-                 request) {
+             google::container::v1::CheckAutopilotCompatibilityRequest const& request) {
         return stub_->CheckAutopilotCompatibility(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::container::v1::ClusterUpgradeInfo>
-ClusterManagerConnectionImpl::FetchClusterUpgradeInfo(
-    google::container::v1::FetchClusterUpgradeInfoRequest const& request) {
+ClusterManagerConnectionImpl::FetchClusterUpgradeInfo(google::container::v1::FetchClusterUpgradeInfoRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->FetchClusterUpgradeInfo(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::container::v1::FetchClusterUpgradeInfoRequest const&
-                 request) {
+             google::container::v1::FetchClusterUpgradeInfoRequest const& request) {
         return stub_->FetchClusterUpgradeInfo(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::container::v1::NodePoolUpgradeInfo>
-ClusterManagerConnectionImpl::FetchNodePoolUpgradeInfo(
-    google::container::v1::FetchNodePoolUpgradeInfoRequest const& request) {
+ClusterManagerConnectionImpl::FetchNodePoolUpgradeInfo(google::container::v1::FetchNodePoolUpgradeInfoRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->FetchNodePoolUpgradeInfo(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::container::v1::FetchNodePoolUpgradeInfoRequest const&
-                 request) {
+             google::container::v1::FetchNodePoolUpgradeInfoRequest const& request) {
         return stub_->FetchNodePoolUpgradeInfo(context, options, request);
       },
       *current, request, __func__);

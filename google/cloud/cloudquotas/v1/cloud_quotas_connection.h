@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CLOUDQUOTAS_V1_CLOUD_QUOTAS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CLOUDQUOTAS_V1_CLOUD_QUOTAS_CONNECTION_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/cloudquotas/v1/cloud_quotas_connection_idempotency_policy.h"
 #include "google/cloud/cloudquotas/v1/internal/cloud_quotas_retry_traits.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -62,14 +62,14 @@ class CloudQuotasLimitedErrorCountRetryPolicy : public CloudQuotasRetryPolicy {
    *     @p maximum_failures == 0.
    */
   explicit CloudQuotasLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   CloudQuotasLimitedErrorCountRetryPolicy(
       CloudQuotasLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : CloudQuotasLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : CloudQuotasLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   CloudQuotasLimitedErrorCountRetryPolicy(
       CloudQuotasLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : CloudQuotasLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : CloudQuotasLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -89,9 +89,7 @@ class CloudQuotasLimitedErrorCountRetryPolicy : public CloudQuotasRetryPolicy {
   using BaseType = CloudQuotasRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      cloudquotas_v1_internal::CloudQuotasRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<cloudquotas_v1_internal::CloudQuotasRetryTraits> impl_;
 };
 
 /**
@@ -129,14 +127,12 @@ class CloudQuotasLimitedTimeRetryPolicy : public CloudQuotasRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit CloudQuotasLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  CloudQuotasLimitedTimeRetryPolicy(
-      CloudQuotasLimitedTimeRetryPolicy&& rhs) noexcept
-      : CloudQuotasLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  CloudQuotasLimitedTimeRetryPolicy(
-      CloudQuotasLimitedTimeRetryPolicy const& rhs) noexcept
-      : CloudQuotasLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  CloudQuotasLimitedTimeRetryPolicy(CloudQuotasLimitedTimeRetryPolicy&& rhs) noexcept
+    : CloudQuotasLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  CloudQuotasLimitedTimeRetryPolicy(CloudQuotasLimitedTimeRetryPolicy const& rhs) noexcept
+    : CloudQuotasLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -158,9 +154,7 @@ class CloudQuotasLimitedTimeRetryPolicy : public CloudQuotasRetryPolicy {
   using BaseType = CloudQuotasRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      cloudquotas_v1_internal::CloudQuotasRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<cloudquotas_v1_internal::CloudQuotasRetryTraits> impl_;
 };
 
 /**
@@ -181,29 +175,23 @@ class CloudQuotasConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StreamRange<google::api::cloudquotas::v1::QuotaInfo> ListQuotaInfos(
-      google::api::cloudquotas::v1::ListQuotaInfosRequest request);
+  virtual StreamRange<google::api::cloudquotas::v1::QuotaInfo>
+  ListQuotaInfos(google::api::cloudquotas::v1::ListQuotaInfosRequest request);
 
-  virtual StatusOr<google::api::cloudquotas::v1::QuotaInfo> GetQuotaInfo(
-      google::api::cloudquotas::v1::GetQuotaInfoRequest const& request);
+  virtual StatusOr<google::api::cloudquotas::v1::QuotaInfo>
+  GetQuotaInfo(google::api::cloudquotas::v1::GetQuotaInfoRequest const& request);
 
   virtual StreamRange<google::api::cloudquotas::v1::QuotaPreference>
-  ListQuotaPreferences(
-      google::api::cloudquotas::v1::ListQuotaPreferencesRequest request);
+  ListQuotaPreferences(google::api::cloudquotas::v1::ListQuotaPreferencesRequest request);
 
   virtual StatusOr<google::api::cloudquotas::v1::QuotaPreference>
-  GetQuotaPreference(
-      google::api::cloudquotas::v1::GetQuotaPreferenceRequest const& request);
+  GetQuotaPreference(google::api::cloudquotas::v1::GetQuotaPreferenceRequest const& request);
 
   virtual StatusOr<google::api::cloudquotas::v1::QuotaPreference>
-  CreateQuotaPreference(
-      google::api::cloudquotas::v1::CreateQuotaPreferenceRequest const&
-          request);
+  CreateQuotaPreference(google::api::cloudquotas::v1::CreateQuotaPreferenceRequest const& request);
 
   virtual StatusOr<google::api::cloudquotas::v1::QuotaPreference>
-  UpdateQuotaPreference(
-      google::api::cloudquotas::v1::UpdateQuotaPreferenceRequest const&
-          request);
+  UpdateQuotaPreference(google::api::cloudquotas::v1::UpdateQuotaPreferenceRequest const& request);
 };
 
 /**

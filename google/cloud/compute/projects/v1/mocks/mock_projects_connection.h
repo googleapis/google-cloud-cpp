@@ -51,16 +51,12 @@ class MockProjectsConnection : public compute_projects_v1::ProjectsConnection {
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DisableXpnHost(Matcher<google::cloud::cpp::compute::projects::v1::DisableXpnHostRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, DisableXpnHost(Matcher<google::cloud::cpp::compute::projects::v1::DisableXpnHostRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-      DisableXpnHost,
-      (google::cloud::cpp::compute::projects::v1::DisableXpnHostRequest const&
-           request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  DisableXpnHost,
+  (google::cloud::cpp::compute::projects::v1::DisableXpnHostRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -68,41 +64,33 @@ class MockProjectsConnection : public compute_projects_v1::ProjectsConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, DisableXpnHost(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::Operation>, DisableXpnHost,
-      (NoAwaitTag,
-       google::cloud::cpp::compute::projects::v1::DisableXpnHostRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+  DisableXpnHost, (NoAwaitTag,
+    google::cloud::cpp::compute::projects::v1::DisableXpnHostRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DisableXpnHost(Matcher<google::cloud::cpp::compute::v1::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, DisableXpnHost(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              DisableXpnHost,
-              (google::cloud::cpp::compute::v1::Operation const& operation),
-              (override));
+  DisableXpnHost, (
+    google::cloud::cpp::compute::v1::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DisableXpnResource(Matcher<google::cloud::cpp::compute::projects::v1::DisableXpnResourceRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, DisableXpnResource(Matcher<google::cloud::cpp::compute::projects::v1::DisableXpnResourceRequest const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              DisableXpnResource,
-              (google::cloud::cpp::compute::projects::v1::
-                   DisableXpnResourceRequest const& request),
-              (override));
+  DisableXpnResource,
+  (google::cloud::cpp::compute::projects::v1::DisableXpnResourceRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -111,40 +99,32 @@ class MockProjectsConnection : public compute_projects_v1::ProjectsConnection {
   /// EXPECT_CALL(*mock, DisableXpnResource(_, _))
   /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-              DisableXpnResource,
-              (NoAwaitTag, google::cloud::cpp::compute::projects::v1::
-                               DisableXpnResourceRequest const& request),
-              (override));
+  DisableXpnResource, (NoAwaitTag,
+    google::cloud::cpp::compute::projects::v1::DisableXpnResourceRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DisableXpnResource(Matcher<google::cloud::cpp::compute::v1::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, DisableXpnResource(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              DisableXpnResource,
-              (google::cloud::cpp::compute::v1::Operation const& operation),
-              (override));
+  DisableXpnResource, (
+    google::cloud::cpp::compute::v1::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// EnableXpnHost(Matcher<google::cloud::cpp::compute::projects::v1::EnableXpnHostRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, EnableXpnHost(Matcher<google::cloud::cpp::compute::projects::v1::EnableXpnHostRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-      EnableXpnHost,
-      (google::cloud::cpp::compute::projects::v1::EnableXpnHostRequest const&
-           request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  EnableXpnHost,
+  (google::cloud::cpp::compute::projects::v1::EnableXpnHostRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -152,41 +132,33 @@ class MockProjectsConnection : public compute_projects_v1::ProjectsConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, EnableXpnHost(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::Operation>, EnableXpnHost,
-      (NoAwaitTag,
-       google::cloud::cpp::compute::projects::v1::EnableXpnHostRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+  EnableXpnHost, (NoAwaitTag,
+    google::cloud::cpp::compute::projects::v1::EnableXpnHostRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// EnableXpnHost(Matcher<google::cloud::cpp::compute::v1::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, EnableXpnHost(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              EnableXpnHost,
-              (google::cloud::cpp::compute::v1::Operation const& operation),
-              (override));
+  EnableXpnHost, (
+    google::cloud::cpp::compute::v1::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// EnableXpnResource(Matcher<google::cloud::cpp::compute::projects::v1::EnableXpnResourceRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, EnableXpnResource(Matcher<google::cloud::cpp::compute::projects::v1::EnableXpnResourceRequest const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              EnableXpnResource,
-              (google::cloud::cpp::compute::projects::v1::
-                   EnableXpnResourceRequest const& request),
-              (override));
+  EnableXpnResource,
+  (google::cloud::cpp::compute::projects::v1::EnableXpnResourceRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -195,63 +167,48 @@ class MockProjectsConnection : public compute_projects_v1::ProjectsConnection {
   /// EXPECT_CALL(*mock, EnableXpnResource(_, _))
   /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-              EnableXpnResource,
-              (NoAwaitTag, google::cloud::cpp::compute::projects::v1::
-                               EnableXpnResourceRequest const& request),
-              (override));
+  EnableXpnResource, (NoAwaitTag,
+    google::cloud::cpp::compute::projects::v1::EnableXpnResourceRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// EnableXpnResource(Matcher<google::cloud::cpp::compute::v1::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, EnableXpnResource(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              EnableXpnResource,
-              (google::cloud::cpp::compute::v1::Operation const& operation),
-              (override));
+  EnableXpnResource, (
+    google::cloud::cpp::compute::v1::Operation const& operation), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::Project>, GetProject,
-      (google::cloud::cpp::compute::projects::v1::GetProjectRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Project>,
+  GetProject,
+  (google::cloud::cpp::compute::projects::v1::GetProjectRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::Project>, GetXpnHost,
-      (google::cloud::cpp::compute::projects::v1::GetXpnHostRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Project>,
+  GetXpnHost,
+  (google::cloud::cpp::compute::projects::v1::GetXpnHostRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::ProjectsGetXpnResources>,
-      GetXpnResources,
-      (google::cloud::cpp::compute::projects::v1::GetXpnResourcesRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::ProjectsGetXpnResources>,
+  GetXpnResources,
+  (google::cloud::cpp::compute::projects::v1::GetXpnResourcesRequest const& request), (override));
 
-  MOCK_METHOD(
-      (StreamRange<google::cloud::cpp::compute::v1::Project>), ListXpnHosts,
-      (google::cloud::cpp::compute::projects::v1::ListXpnHostsRequest request),
-      (override));
+  MOCK_METHOD((StreamRange<google::cloud::cpp::compute::v1::Project>),
+  ListXpnHosts,
+  (google::cloud::cpp::compute::projects::v1::ListXpnHostsRequest request), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// MoveDisk(Matcher<google::cloud::cpp::compute::projects::v1::MoveDiskRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, MoveDisk(Matcher<google::cloud::cpp::compute::projects::v1::MoveDiskRequest const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              MoveDisk,
-              (google::cloud::cpp::compute::projects::v1::MoveDiskRequest const&
-                   request),
-              (override));
+  MoveDisk,
+  (google::cloud::cpp::compute::projects::v1::MoveDiskRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -259,40 +216,33 @@ class MockProjectsConnection : public compute_projects_v1::ProjectsConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, MoveDisk(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>, MoveDisk,
-              (NoAwaitTag,
-               google::cloud::cpp::compute::projects::v1::MoveDiskRequest const&
-                   request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+  MoveDisk, (NoAwaitTag,
+    google::cloud::cpp::compute::projects::v1::MoveDiskRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// MoveDisk(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
+  /// EXPECT_CALL(*mock, MoveDisk(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              MoveDisk,
-              (google::cloud::cpp::compute::v1::Operation const& operation),
-              (override));
+  MoveDisk, (
+    google::cloud::cpp::compute::v1::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// MoveInstance(Matcher<google::cloud::cpp::compute::projects::v1::MoveInstanceRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, MoveInstance(Matcher<google::cloud::cpp::compute::projects::v1::MoveInstanceRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-      MoveInstance,
-      (google::cloud::cpp::compute::projects::v1::MoveInstanceRequest const&
-           request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  MoveInstance,
+  (google::cloud::cpp::compute::projects::v1::MoveInstanceRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -300,41 +250,33 @@ class MockProjectsConnection : public compute_projects_v1::ProjectsConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, MoveInstance(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::Operation>, MoveInstance,
-      (NoAwaitTag,
-       google::cloud::cpp::compute::projects::v1::MoveInstanceRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+  MoveInstance, (NoAwaitTag,
+    google::cloud::cpp::compute::projects::v1::MoveInstanceRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// MoveInstance(Matcher<google::cloud::cpp::compute::v1::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, MoveInstance(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              MoveInstance,
-              (google::cloud::cpp::compute::v1::Operation const& operation),
-              (override));
+  MoveInstance, (
+    google::cloud::cpp::compute::v1::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// SetCloudArmorTier(Matcher<google::cloud::cpp::compute::projects::v1::SetCloudArmorTierRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, SetCloudArmorTier(Matcher<google::cloud::cpp::compute::projects::v1::SetCloudArmorTierRequest const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              SetCloudArmorTier,
-              (google::cloud::cpp::compute::projects::v1::
-                   SetCloudArmorTierRequest const& request),
-              (override));
+  SetCloudArmorTier,
+  (google::cloud::cpp::compute::projects::v1::SetCloudArmorTierRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -343,39 +285,32 @@ class MockProjectsConnection : public compute_projects_v1::ProjectsConnection {
   /// EXPECT_CALL(*mock, SetCloudArmorTier(_, _))
   /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-              SetCloudArmorTier,
-              (NoAwaitTag, google::cloud::cpp::compute::projects::v1::
-                               SetCloudArmorTierRequest const& request),
-              (override));
+  SetCloudArmorTier, (NoAwaitTag,
+    google::cloud::cpp::compute::projects::v1::SetCloudArmorTierRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// SetCloudArmorTier(Matcher<google::cloud::cpp::compute::v1::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, SetCloudArmorTier(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              SetCloudArmorTier,
-              (google::cloud::cpp::compute::v1::Operation const& operation),
-              (override));
+  SetCloudArmorTier, (
+    google::cloud::cpp::compute::v1::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// SetCommonInstanceMetadata(Matcher<google::cloud::cpp::compute::projects::v1::SetCommonInstanceMetadataRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, SetCommonInstanceMetadata(Matcher<google::cloud::cpp::compute::projects::v1::SetCommonInstanceMetadataRequest const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              SetCommonInstanceMetadata,
-              (google::cloud::cpp::compute::projects::v1::
-                   SetCommonInstanceMetadataRequest const& request),
-              (override));
+  SetCommonInstanceMetadata,
+  (google::cloud::cpp::compute::projects::v1::SetCommonInstanceMetadataRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -384,39 +319,32 @@ class MockProjectsConnection : public compute_projects_v1::ProjectsConnection {
   /// EXPECT_CALL(*mock, SetCommonInstanceMetadata(_, _))
   /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-              SetCommonInstanceMetadata,
-              (NoAwaitTag, google::cloud::cpp::compute::projects::v1::
-                               SetCommonInstanceMetadataRequest const& request),
-              (override));
+  SetCommonInstanceMetadata, (NoAwaitTag,
+    google::cloud::cpp::compute::projects::v1::SetCommonInstanceMetadataRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// SetCommonInstanceMetadata(Matcher<google::cloud::cpp::compute::v1::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, SetCommonInstanceMetadata(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              SetCommonInstanceMetadata,
-              (google::cloud::cpp::compute::v1::Operation const& operation),
-              (override));
+  SetCommonInstanceMetadata, (
+    google::cloud::cpp::compute::v1::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// SetDefaultNetworkTier(Matcher<google::cloud::cpp::compute::projects::v1::SetDefaultNetworkTierRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, SetDefaultNetworkTier(Matcher<google::cloud::cpp::compute::projects::v1::SetDefaultNetworkTierRequest const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              SetDefaultNetworkTier,
-              (google::cloud::cpp::compute::projects::v1::
-                   SetDefaultNetworkTierRequest const& request),
-              (override));
+  SetDefaultNetworkTier,
+  (google::cloud::cpp::compute::projects::v1::SetDefaultNetworkTierRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -425,39 +353,32 @@ class MockProjectsConnection : public compute_projects_v1::ProjectsConnection {
   /// EXPECT_CALL(*mock, SetDefaultNetworkTier(_, _))
   /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-              SetDefaultNetworkTier,
-              (NoAwaitTag, google::cloud::cpp::compute::projects::v1::
-                               SetDefaultNetworkTierRequest const& request),
-              (override));
+  SetDefaultNetworkTier, (NoAwaitTag,
+    google::cloud::cpp::compute::projects::v1::SetDefaultNetworkTierRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// SetDefaultNetworkTier(Matcher<google::cloud::cpp::compute::v1::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, SetDefaultNetworkTier(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              SetDefaultNetworkTier,
-              (google::cloud::cpp::compute::v1::Operation const& operation),
-              (override));
+  SetDefaultNetworkTier, (
+    google::cloud::cpp::compute::v1::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// SetUsageExportBucket(Matcher<google::cloud::cpp::compute::projects::v1::SetUsageExportBucketRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, SetUsageExportBucket(Matcher<google::cloud::cpp::compute::projects::v1::SetUsageExportBucketRequest const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              SetUsageExportBucket,
-              (google::cloud::cpp::compute::projects::v1::
-                   SetUsageExportBucketRequest const& request),
-              (override));
+  SetUsageExportBucket,
+  (google::cloud::cpp::compute::projects::v1::SetUsageExportBucketRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -466,24 +387,20 @@ class MockProjectsConnection : public compute_projects_v1::ProjectsConnection {
   /// EXPECT_CALL(*mock, SetUsageExportBucket(_, _))
   /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-              SetUsageExportBucket,
-              (NoAwaitTag, google::cloud::cpp::compute::projects::v1::
-                               SetUsageExportBucketRequest const& request),
-              (override));
+  SetUsageExportBucket, (NoAwaitTag,
+    google::cloud::cpp::compute::projects::v1::SetUsageExportBucketRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// SetUsageExportBucket(Matcher<google::cloud::cpp::compute::v1::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, SetUsageExportBucket(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              SetUsageExportBucket,
-              (google::cloud::cpp::compute::v1::Operation const& operation),
-              (override));
+  SetUsageExportBucket, (
+    google::cloud::cpp::compute::v1::Operation const& operation), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

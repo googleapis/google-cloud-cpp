@@ -26,41 +26,35 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-AlertPolicyServiceConnectionIdempotencyPolicy::
-    ~AlertPolicyServiceConnectionIdempotencyPolicy() = default;
+AlertPolicyServiceConnectionIdempotencyPolicy::~AlertPolicyServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<AlertPolicyServiceConnectionIdempotencyPolicy>
 AlertPolicyServiceConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<AlertPolicyServiceConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency AlertPolicyServiceConnectionIdempotencyPolicy::ListAlertPolicies(
-    google::monitoring::v3::ListAlertPoliciesRequest) {  // NOLINT
+Idempotency AlertPolicyServiceConnectionIdempotencyPolicy::ListAlertPolicies(google::monitoring::v3::ListAlertPoliciesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency AlertPolicyServiceConnectionIdempotencyPolicy::GetAlertPolicy(
-    google::monitoring::v3::GetAlertPolicyRequest const&) {
+Idempotency AlertPolicyServiceConnectionIdempotencyPolicy::GetAlertPolicy(google::monitoring::v3::GetAlertPolicyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency AlertPolicyServiceConnectionIdempotencyPolicy::CreateAlertPolicy(
-    google::monitoring::v3::CreateAlertPolicyRequest const&) {
+Idempotency AlertPolicyServiceConnectionIdempotencyPolicy::CreateAlertPolicy(google::monitoring::v3::CreateAlertPolicyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency AlertPolicyServiceConnectionIdempotencyPolicy::DeleteAlertPolicy(
-    google::monitoring::v3::DeleteAlertPolicyRequest const&) {
+Idempotency AlertPolicyServiceConnectionIdempotencyPolicy::DeleteAlertPolicy(google::monitoring::v3::DeleteAlertPolicyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency AlertPolicyServiceConnectionIdempotencyPolicy::UpdateAlertPolicy(
-    google::monitoring::v3::UpdateAlertPolicyRequest const&) {
+Idempotency AlertPolicyServiceConnectionIdempotencyPolicy::UpdateAlertPolicy(google::monitoring::v3::UpdateAlertPolicyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<AlertPolicyServiceConnectionIdempotencyPolicy>
-MakeDefaultAlertPolicyServiceConnectionIdempotencyPolicy() {
+    MakeDefaultAlertPolicyServiceConnectionIdempotencyPolicy() {
   return std::make_unique<AlertPolicyServiceConnectionIdempotencyPolicy>();
 }
 

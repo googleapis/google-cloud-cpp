@@ -36,29 +36,27 @@ class TableServiceTracingConnection
   ~TableServiceTracingConnection() override = default;
 
   explicit TableServiceTracingConnection(
-      std::shared_ptr<bigquerycontrol_v2::TableServiceConnection> child);
+    std::shared_ptr<bigquerycontrol_v2::TableServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::bigquery::v2::Table> GetTable(
-      google::cloud::bigquery::v2::GetTableRequest const& request) override;
+  StatusOr<google::cloud::bigquery::v2::Table>
+  GetTable(google::cloud::bigquery::v2::GetTableRequest const& request) override;
 
-  StatusOr<google::cloud::bigquery::v2::Table> InsertTable(
-      google::cloud::bigquery::v2::InsertTableRequest const& request) override;
+  StatusOr<google::cloud::bigquery::v2::Table>
+  InsertTable(google::cloud::bigquery::v2::InsertTableRequest const& request) override;
 
-  StatusOr<google::cloud::bigquery::v2::Table> PatchTable(
-      google::cloud::bigquery::v2::UpdateOrPatchTableRequest const& request)
-      override;
+  StatusOr<google::cloud::bigquery::v2::Table>
+  PatchTable(google::cloud::bigquery::v2::UpdateOrPatchTableRequest const& request) override;
 
-  StatusOr<google::cloud::bigquery::v2::Table> UpdateTable(
-      google::cloud::bigquery::v2::UpdateOrPatchTableRequest const& request)
-      override;
+  StatusOr<google::cloud::bigquery::v2::Table>
+  UpdateTable(google::cloud::bigquery::v2::UpdateOrPatchTableRequest const& request) override;
 
-  Status DeleteTable(
-      google::cloud::bigquery::v2::DeleteTableRequest const& request) override;
+  Status
+  DeleteTable(google::cloud::bigquery::v2::DeleteTableRequest const& request) override;
 
-  StreamRange<google::cloud::bigquery::v2::ListFormatTable> ListTables(
-      google::cloud::bigquery::v2::ListTablesRequest request) override;
+  StreamRange<google::cloud::bigquery::v2::ListFormatTable>
+  ListTables(google::cloud::bigquery::v2::ListTablesRequest request) override;
 
  private:
   std::shared_ptr<bigquerycontrol_v2::TableServiceConnection> child_;

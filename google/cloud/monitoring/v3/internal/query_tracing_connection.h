@@ -36,12 +36,12 @@ class QueryServiceTracingConnection
   ~QueryServiceTracingConnection() override = default;
 
   explicit QueryServiceTracingConnection(
-      std::shared_ptr<monitoring_v3::QueryServiceConnection> child);
+    std::shared_ptr<monitoring_v3::QueryServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StreamRange<google::monitoring::v3::TimeSeriesData> QueryTimeSeries(
-      google::monitoring::v3::QueryTimeSeriesRequest request) override;
+  StreamRange<google::monitoring::v3::TimeSeriesData>
+  QueryTimeSeries(google::monitoring::v3::QueryTimeSeriesRequest request) override;
 
  private:
   std::shared_ptr<monitoring_v3::QueryServiceConnection> child_;

@@ -29,8 +29,8 @@ namespace cloud {
 namespace compute_target_vpn_gateways_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<TargetVpnGatewaysRestStub>
-CreateDefaultTargetVpnGatewaysRestStub(Options const& options);
+std::shared_ptr<TargetVpnGatewaysRestStub> CreateDefaultTargetVpnGatewaysRestStub(
+    Options const& options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_target_vpn_gateways_v1_internal

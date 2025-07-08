@@ -33,239 +33,184 @@ AMLConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<AMLConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency AMLConnectionIdempotencyPolicy::ListInstances(
-    google::cloud::financialservices::v1::ListInstancesRequest) {  // NOLINT
+Idempotency AMLConnectionIdempotencyPolicy::ListInstances(google::cloud::financialservices::v1::ListInstancesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency AMLConnectionIdempotencyPolicy::GetInstance(
-    google::cloud::financialservices::v1::GetInstanceRequest const&) {
+Idempotency AMLConnectionIdempotencyPolicy::GetInstance(google::cloud::financialservices::v1::GetInstanceRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency AMLConnectionIdempotencyPolicy::CreateInstance(
-    google::cloud::financialservices::v1::CreateInstanceRequest const&) {
+Idempotency AMLConnectionIdempotencyPolicy::CreateInstance(google::cloud::financialservices::v1::CreateInstanceRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency AMLConnectionIdempotencyPolicy::UpdateInstance(
-    google::cloud::financialservices::v1::UpdateInstanceRequest const&) {
+Idempotency AMLConnectionIdempotencyPolicy::UpdateInstance(google::cloud::financialservices::v1::UpdateInstanceRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency AMLConnectionIdempotencyPolicy::DeleteInstance(
-    google::cloud::financialservices::v1::DeleteInstanceRequest const&) {
+Idempotency AMLConnectionIdempotencyPolicy::DeleteInstance(google::cloud::financialservices::v1::DeleteInstanceRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency AMLConnectionIdempotencyPolicy::ImportRegisteredParties(
-    google::cloud::financialservices::v1::
-        ImportRegisteredPartiesRequest const&) {
+Idempotency AMLConnectionIdempotencyPolicy::ImportRegisteredParties(google::cloud::financialservices::v1::ImportRegisteredPartiesRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency AMLConnectionIdempotencyPolicy::ExportRegisteredParties(
-    google::cloud::financialservices::v1::
-        ExportRegisteredPartiesRequest const&) {
+Idempotency AMLConnectionIdempotencyPolicy::ExportRegisteredParties(google::cloud::financialservices::v1::ExportRegisteredPartiesRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency AMLConnectionIdempotencyPolicy::ListDatasets(
-    google::cloud::financialservices::v1::ListDatasetsRequest) {  // NOLINT
+Idempotency AMLConnectionIdempotencyPolicy::ListDatasets(google::cloud::financialservices::v1::ListDatasetsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency AMLConnectionIdempotencyPolicy::GetDataset(
-    google::cloud::financialservices::v1::GetDatasetRequest const&) {
+Idempotency AMLConnectionIdempotencyPolicy::GetDataset(google::cloud::financialservices::v1::GetDatasetRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency AMLConnectionIdempotencyPolicy::CreateDataset(
-    google::cloud::financialservices::v1::CreateDatasetRequest const&) {
+Idempotency AMLConnectionIdempotencyPolicy::CreateDataset(google::cloud::financialservices::v1::CreateDatasetRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency AMLConnectionIdempotencyPolicy::UpdateDataset(
-    google::cloud::financialservices::v1::UpdateDatasetRequest const&) {
+Idempotency AMLConnectionIdempotencyPolicy::UpdateDataset(google::cloud::financialservices::v1::UpdateDatasetRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency AMLConnectionIdempotencyPolicy::DeleteDataset(
-    google::cloud::financialservices::v1::DeleteDatasetRequest const&) {
+Idempotency AMLConnectionIdempotencyPolicy::DeleteDataset(google::cloud::financialservices::v1::DeleteDatasetRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency AMLConnectionIdempotencyPolicy::ListModels(
-    google::cloud::financialservices::v1::ListModelsRequest) {  // NOLINT
+Idempotency AMLConnectionIdempotencyPolicy::ListModels(google::cloud::financialservices::v1::ListModelsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency AMLConnectionIdempotencyPolicy::GetModel(
-    google::cloud::financialservices::v1::GetModelRequest const&) {
+Idempotency AMLConnectionIdempotencyPolicy::GetModel(google::cloud::financialservices::v1::GetModelRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency AMLConnectionIdempotencyPolicy::CreateModel(
-    google::cloud::financialservices::v1::CreateModelRequest const&) {
+Idempotency AMLConnectionIdempotencyPolicy::CreateModel(google::cloud::financialservices::v1::CreateModelRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency AMLConnectionIdempotencyPolicy::UpdateModel(
-    google::cloud::financialservices::v1::UpdateModelRequest const&) {
+Idempotency AMLConnectionIdempotencyPolicy::UpdateModel(google::cloud::financialservices::v1::UpdateModelRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency AMLConnectionIdempotencyPolicy::ExportModelMetadata(
-    google::cloud::financialservices::v1::ExportModelMetadataRequest const&) {
+Idempotency AMLConnectionIdempotencyPolicy::ExportModelMetadata(google::cloud::financialservices::v1::ExportModelMetadataRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency AMLConnectionIdempotencyPolicy::DeleteModel(
-    google::cloud::financialservices::v1::DeleteModelRequest const&) {
+Idempotency AMLConnectionIdempotencyPolicy::DeleteModel(google::cloud::financialservices::v1::DeleteModelRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency AMLConnectionIdempotencyPolicy::ListEngineConfigs(
-    google::cloud::financialservices::v1::ListEngineConfigsRequest) {  // NOLINT
+Idempotency AMLConnectionIdempotencyPolicy::ListEngineConfigs(google::cloud::financialservices::v1::ListEngineConfigsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency AMLConnectionIdempotencyPolicy::GetEngineConfig(
-    google::cloud::financialservices::v1::GetEngineConfigRequest const&) {
+Idempotency AMLConnectionIdempotencyPolicy::GetEngineConfig(google::cloud::financialservices::v1::GetEngineConfigRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency AMLConnectionIdempotencyPolicy::CreateEngineConfig(
-    google::cloud::financialservices::v1::CreateEngineConfigRequest const&) {
+Idempotency AMLConnectionIdempotencyPolicy::CreateEngineConfig(google::cloud::financialservices::v1::CreateEngineConfigRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency AMLConnectionIdempotencyPolicy::UpdateEngineConfig(
-    google::cloud::financialservices::v1::UpdateEngineConfigRequest const&) {
+Idempotency AMLConnectionIdempotencyPolicy::UpdateEngineConfig(google::cloud::financialservices::v1::UpdateEngineConfigRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency AMLConnectionIdempotencyPolicy::ExportEngineConfigMetadata(
-    google::cloud::financialservices::v1::
-        ExportEngineConfigMetadataRequest const&) {
+Idempotency AMLConnectionIdempotencyPolicy::ExportEngineConfigMetadata(google::cloud::financialservices::v1::ExportEngineConfigMetadataRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency AMLConnectionIdempotencyPolicy::DeleteEngineConfig(
-    google::cloud::financialservices::v1::DeleteEngineConfigRequest const&) {
+Idempotency AMLConnectionIdempotencyPolicy::DeleteEngineConfig(google::cloud::financialservices::v1::DeleteEngineConfigRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency AMLConnectionIdempotencyPolicy::GetEngineVersion(
-    google::cloud::financialservices::v1::GetEngineVersionRequest const&) {
+Idempotency AMLConnectionIdempotencyPolicy::GetEngineVersion(google::cloud::financialservices::v1::GetEngineVersionRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency AMLConnectionIdempotencyPolicy::ListEngineVersions(
-    google::cloud::financialservices::v1::
-        ListEngineVersionsRequest) {  // NOLINT
+Idempotency AMLConnectionIdempotencyPolicy::ListEngineVersions(google::cloud::financialservices::v1::ListEngineVersionsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency AMLConnectionIdempotencyPolicy::ListPredictionResults(
-    google::cloud::financialservices::v1::
-        ListPredictionResultsRequest) {  // NOLINT
+Idempotency AMLConnectionIdempotencyPolicy::ListPredictionResults(google::cloud::financialservices::v1::ListPredictionResultsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency AMLConnectionIdempotencyPolicy::GetPredictionResult(
-    google::cloud::financialservices::v1::GetPredictionResultRequest const&) {
+Idempotency AMLConnectionIdempotencyPolicy::GetPredictionResult(google::cloud::financialservices::v1::GetPredictionResultRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency AMLConnectionIdempotencyPolicy::CreatePredictionResult(
-    google::cloud::financialservices::v1::
-        CreatePredictionResultRequest const&) {
+Idempotency AMLConnectionIdempotencyPolicy::CreatePredictionResult(google::cloud::financialservices::v1::CreatePredictionResultRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency AMLConnectionIdempotencyPolicy::UpdatePredictionResult(
-    google::cloud::financialservices::v1::
-        UpdatePredictionResultRequest const&) {
+Idempotency AMLConnectionIdempotencyPolicy::UpdatePredictionResult(google::cloud::financialservices::v1::UpdatePredictionResultRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency AMLConnectionIdempotencyPolicy::ExportPredictionResultMetadata(
-    google::cloud::financialservices::v1::
-        ExportPredictionResultMetadataRequest const&) {
+Idempotency AMLConnectionIdempotencyPolicy::ExportPredictionResultMetadata(google::cloud::financialservices::v1::ExportPredictionResultMetadataRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency AMLConnectionIdempotencyPolicy::DeletePredictionResult(
-    google::cloud::financialservices::v1::
-        DeletePredictionResultRequest const&) {
+Idempotency AMLConnectionIdempotencyPolicy::DeletePredictionResult(google::cloud::financialservices::v1::DeletePredictionResultRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency AMLConnectionIdempotencyPolicy::ListBacktestResults(
-    google::cloud::financialservices::v1::
-        ListBacktestResultsRequest) {  // NOLINT
+Idempotency AMLConnectionIdempotencyPolicy::ListBacktestResults(google::cloud::financialservices::v1::ListBacktestResultsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency AMLConnectionIdempotencyPolicy::GetBacktestResult(
-    google::cloud::financialservices::v1::GetBacktestResultRequest const&) {
+Idempotency AMLConnectionIdempotencyPolicy::GetBacktestResult(google::cloud::financialservices::v1::GetBacktestResultRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency AMLConnectionIdempotencyPolicy::CreateBacktestResult(
-    google::cloud::financialservices::v1::CreateBacktestResultRequest const&) {
+Idempotency AMLConnectionIdempotencyPolicy::CreateBacktestResult(google::cloud::financialservices::v1::CreateBacktestResultRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency AMLConnectionIdempotencyPolicy::UpdateBacktestResult(
-    google::cloud::financialservices::v1::UpdateBacktestResultRequest const&) {
+Idempotency AMLConnectionIdempotencyPolicy::UpdateBacktestResult(google::cloud::financialservices::v1::UpdateBacktestResultRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency AMLConnectionIdempotencyPolicy::ExportBacktestResultMetadata(
-    google::cloud::financialservices::v1::
-        ExportBacktestResultMetadataRequest const&) {
+Idempotency AMLConnectionIdempotencyPolicy::ExportBacktestResultMetadata(google::cloud::financialservices::v1::ExportBacktestResultMetadataRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency AMLConnectionIdempotencyPolicy::DeleteBacktestResult(
-    google::cloud::financialservices::v1::DeleteBacktestResultRequest const&) {
+Idempotency AMLConnectionIdempotencyPolicy::DeleteBacktestResult(google::cloud::financialservices::v1::DeleteBacktestResultRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency AMLConnectionIdempotencyPolicy::ListLocations(
-    google::cloud::location::ListLocationsRequest) {  // NOLINT
+Idempotency AMLConnectionIdempotencyPolicy::ListLocations(google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency AMLConnectionIdempotencyPolicy::GetLocation(
-    google::cloud::location::GetLocationRequest const&) {
+Idempotency AMLConnectionIdempotencyPolicy::GetLocation(google::cloud::location::GetLocationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency AMLConnectionIdempotencyPolicy::ListOperations(
-    google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency AMLConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency AMLConnectionIdempotencyPolicy::GetOperation(
-    google::longrunning::GetOperationRequest const&) {
+Idempotency AMLConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency AMLConnectionIdempotencyPolicy::DeleteOperation(
-    google::longrunning::DeleteOperationRequest const&) {
+Idempotency AMLConnectionIdempotencyPolicy::DeleteOperation(google::longrunning::DeleteOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency AMLConnectionIdempotencyPolicy::CancelOperation(
-    google::longrunning::CancelOperationRequest const&) {
+Idempotency AMLConnectionIdempotencyPolicy::CancelOperation(google::longrunning::CancelOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<AMLConnectionIdempotencyPolicy>
-MakeDefaultAMLConnectionIdempotencyPolicy() {
+    MakeDefaultAMLConnectionIdempotencyPolicy() {
   return std::make_unique<AMLConnectionIdempotencyPolicy>();
 }
 

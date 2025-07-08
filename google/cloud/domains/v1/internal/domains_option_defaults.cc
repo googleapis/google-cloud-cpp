@@ -35,30 +35,28 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options DomainsDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_DOMAINS_ENDPOINT", "",
-      "GOOGLE_CLOUD_CPP_DOMAINS_AUTHORITY", "domains.googleapis.com");
+      std::move(options), "GOOGLE_CLOUD_CPP_DOMAINS_ENDPOINT",
+      "", "GOOGLE_CLOUD_CPP_DOMAINS_AUTHORITY",
+      "domains.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<domains_v1::DomainsRetryPolicyOption>()) {
     options.set<domains_v1::DomainsRetryPolicyOption>(
-        domains_v1::DomainsLimitedTimeRetryPolicy(std::chrono::minutes(30))
-            .clone());
+        domains_v1::DomainsLimitedTimeRetryPolicy(
+            std::chrono::minutes(30)).clone());
   }
   if (!options.has<domains_v1::DomainsBackoffPolicyOption>()) {
     options.set<domains_v1::DomainsBackoffPolicyOption>(
-        ExponentialBackoffPolicy(
-            std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
-            .clone());
+        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
   }
   if (!options.has<domains_v1::DomainsPollingPolicyOption>()) {
     options.set<domains_v1::DomainsPollingPolicyOption>(
-        GenericPollingPolicy<domains_v1::DomainsRetryPolicyOption::Type,
-                             domains_v1::DomainsBackoffPolicyOption::Type>(
+        GenericPollingPolicy<
+            domains_v1::DomainsRetryPolicyOption::Type,
+            domains_v1::DomainsBackoffPolicyOption::Type>(
             options.get<domains_v1::DomainsRetryPolicyOption>()->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                     std::chrono::minutes(5), kBackoffScaling)
-                .clone())
-            .clone());
+            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
   }
   if (!options.has<domains_v1::DomainsConnectionIdempotencyPolicyOption>()) {
     options.set<domains_v1::DomainsConnectionIdempotencyPolicyOption>(

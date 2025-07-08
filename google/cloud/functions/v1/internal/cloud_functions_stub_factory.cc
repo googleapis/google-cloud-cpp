@@ -17,12 +17,12 @@
 // source: google/cloud/functions/v1/functions.proto
 
 #include "google/cloud/functions/v1/internal/cloud_functions_stub_factory.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/functions/v1/internal/cloud_functions_auth_decorator.h"
 #include "google/cloud/functions/v1/internal/cloud_functions_logging_decorator.h"
 #include "google/cloud/functions/v1/internal/cloud_functions_metadata_decorator.h"
 #include "google/cloud/functions/v1/internal/cloud_functions_stub.h"
 #include "google/cloud/functions/v1/internal/cloud_functions_tracing_stub.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/opentelemetry.h"
@@ -43,27 +43,27 @@ std::shared_ptr<CloudFunctionsServiceStub>
 CreateDefaultCloudFunctionsServiceStub(
     std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
     Options const& options) {
-  auto channel = auth->CreateChannel(options.get<EndpointOption>(),
-                                     internal::MakeChannelArguments(options));
-  auto service_grpc_stub =
-      google::cloud::functions::v1::CloudFunctionsService::NewStub(channel);
-  auto service_locations_stub =
-      google::cloud::location::Locations::NewStub(channel);
+  auto channel = auth->CreateChannel(
+    options.get<EndpointOption>(), internal::MakeChannelArguments(options));
+  auto service_grpc_stub = google::cloud::functions::v1::CloudFunctionsService::NewStub(channel);
+  auto service_locations_stub = google::cloud::location::Locations::NewStub(channel);
   std::shared_ptr<CloudFunctionsServiceStub> stub =
-      std::make_shared<DefaultCloudFunctionsServiceStub>(
-          std::move(service_grpc_stub), std::move(service_locations_stub),
-          google::longrunning::Operations::NewStub(channel));
+    std::make_shared<DefaultCloudFunctionsServiceStub>(
+      std::move(service_grpc_stub), std::move(service_locations_stub),
+      google::longrunning::Operations::NewStub(channel));
 
   if (auth->RequiresConfigureContext()) {
-    stub = std::make_shared<CloudFunctionsServiceAuth>(std::move(auth),
-                                                       std::move(stub));
+    stub = std::make_shared<CloudFunctionsServiceAuth>(
+        std::move(auth), std::move(stub));
   }
   stub = std::make_shared<CloudFunctionsServiceMetadata>(
       std::move(stub), std::multimap<std::string, std::string>{});
-  if (internal::Contains(options.get<LoggingComponentsOption>(), "rpc")) {
+  if (internal::Contains(
+      options.get<LoggingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<CloudFunctionsServiceLogging>(
-        std::move(stub), options.get<GrpcTracingOptionsOption>(),
+        std::move(stub),
+        options.get<GrpcTracingOptionsOption>(),
         options.get<LoggingComponentsOption>());
   }
   if (internal::TracingEnabled(options)) {

@@ -46,72 +46,69 @@ SynonymSetServiceMetadata::SynonymSetServiceMetadata(
 
 StatusOr<google::cloud::contentwarehouse::v1::SynonymSet>
 SynonymSetServiceMetadata::CreateSynonymSet(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::contentwarehouse::v1::CreateSynonymSetRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::contentwarehouse::v1::CreateSynonymSetRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateSynonymSet(context, options, request);
 }
 
 StatusOr<google::cloud::contentwarehouse::v1::SynonymSet>
 SynonymSetServiceMetadata::GetSynonymSet(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::contentwarehouse::v1::GetSynonymSetRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetSynonymSet(context, options, request);
 }
 
 StatusOr<google::cloud::contentwarehouse::v1::SynonymSet>
 SynonymSetServiceMetadata::UpdateSynonymSet(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::contentwarehouse::v1::UpdateSynonymSetRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::contentwarehouse::v1::UpdateSynonymSetRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->UpdateSynonymSet(context, options, request);
 }
 
-Status SynonymSetServiceMetadata::DeleteSynonymSet(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::contentwarehouse::v1::DeleteSynonymSetRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+Status
+SynonymSetServiceMetadata::DeleteSynonymSet(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::contentwarehouse::v1::DeleteSynonymSetRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteSynonymSet(context, options, request);
 }
 
 StatusOr<google::cloud::contentwarehouse::v1::ListSynonymSetsResponse>
 SynonymSetServiceMetadata::ListSynonymSets(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::contentwarehouse::v1::ListSynonymSetsRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::contentwarehouse::v1::ListSynonymSetsRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListSynonymSets(context, options, request);
 }
 
 StatusOr<google::longrunning::Operation>
 SynonymSetServiceMetadata::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetOperation(context, options, request);
 }
 
 void SynonymSetServiceMetadata::SetMetadata(grpc::ClientContext& context,
-                                            Options const& options,
-                                            std::string const& request_params) {
+                                        Options const& options,
+                                        std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
 void SynonymSetServiceMetadata::SetMetadata(grpc::ClientContext& context,
-                                            Options const& options) {
-  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
-                                       api_client_header_);
+                                        Options const& options) {
+  google::cloud::internal::SetMetadata(
+      context, options, fixed_metadata_, api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

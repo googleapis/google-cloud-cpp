@@ -16,14 +16,14 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/videointelligence/v1/video_intelligence.proto
 
-#include "google/cloud/videointelligence/v1/video_intelligence_client.h"
-#include "google/cloud/videointelligence/v1/video_intelligence_connection_idempotency_policy.h"
-#include "google/cloud/videointelligence/v1/video_intelligence_options.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/testing_util/example_driver.h"
+#include "google/cloud/videointelligence/v1/video_intelligence_client.h"
+#include "google/cloud/videointelligence/v1/video_intelligence_connection_idempotency_policy.h"
+#include "google/cloud/videointelligence/v1/video_intelligence_options.h"
 #include <fstream>
 #include <iostream>
 #include <string>
@@ -44,22 +44,17 @@ void SetClientEndpoint(std::vector<std::string> const& argv) {
   //     https://cloud.google.com/vpc/docs/private-google-access
   auto options = google::cloud::Options{}.set<google::cloud::EndpointOption>(
       "private.googleapis.com");
-  auto vpc_client =
-      google::cloud::videointelligence_v1::VideoIntelligenceServiceClient(
-          google::cloud::videointelligence_v1::
-              MakeVideoIntelligenceServiceConnection(options));
+  auto vpc_client = google::cloud::videointelligence_v1::VideoIntelligenceServiceClient(
+      google::cloud::videointelligence_v1::MakeVideoIntelligenceServiceConnection(options));
   //! [set-client-endpoint]
 }
 
 //! [custom-idempotency-policy]
 class CustomIdempotencyPolicy
-    : public google::cloud::videointelligence_v1::
-          VideoIntelligenceServiceConnectionIdempotencyPolicy {
+   : public google::cloud::videointelligence_v1::VideoIntelligenceServiceConnectionIdempotencyPolicy {
  public:
   ~CustomIdempotencyPolicy() override = default;
-  std::unique_ptr<google::cloud::videointelligence_v1::
-                      VideoIntelligenceServiceConnectionIdempotencyPolicy>
-  clone() const override {
+  std::unique_ptr<google::cloud::videointelligence_v1::VideoIntelligenceServiceConnectionIdempotencyPolicy> clone() const override {
     return std::make_unique<CustomIdempotencyPolicy>(*this);
   }
   // Override inherited functions to define as needed.
@@ -71,42 +66,27 @@ void SetRetryPolicy(std::vector<std::string> const& argv) {
     throw google::cloud::testing_util::Usage{"set-client-retry-policy"};
   }
   //! [set-retry-policy]
-  auto options =
-      google::cloud::Options{}
-          .set<google::cloud::videointelligence_v1::
-                   VideoIntelligenceServiceConnectionIdempotencyPolicyOption>(
-              CustomIdempotencyPolicy().clone())
-          .set<google::cloud::videointelligence_v1::
-                   VideoIntelligenceServiceRetryPolicyOption>(
-              google::cloud::videointelligence_v1::
-                  VideoIntelligenceServiceLimitedErrorCountRetryPolicy(3)
-                      .clone())
-          .set<google::cloud::videointelligence_v1::
-                   VideoIntelligenceServiceBackoffPolicyOption>(
-              google::cloud::ExponentialBackoffPolicy(
-                  /*initial_delay=*/std::chrono::milliseconds(200),
-                  /*maximum_delay=*/std::chrono::seconds(45),
-                  /*scaling=*/2.0)
-                  .clone());
-  auto connection = google::cloud::videointelligence_v1::
-      MakeVideoIntelligenceServiceConnection(options);
+  auto options = google::cloud::Options{}
+    .set<google::cloud::videointelligence_v1::VideoIntelligenceServiceConnectionIdempotencyPolicyOption>(
+      CustomIdempotencyPolicy().clone())
+    .set<google::cloud::videointelligence_v1::VideoIntelligenceServiceRetryPolicyOption>(
+      google::cloud::videointelligence_v1::VideoIntelligenceServiceLimitedErrorCountRetryPolicy(3).clone())
+    .set<google::cloud::videointelligence_v1::VideoIntelligenceServiceBackoffPolicyOption>(
+      google::cloud::ExponentialBackoffPolicy(
+          /*initial_delay=*/std::chrono::milliseconds(200),
+          /*maximum_delay=*/std::chrono::seconds(45),
+          /*scaling=*/2.0).clone());
+  auto connection = google::cloud::videointelligence_v1::MakeVideoIntelligenceServiceConnection(options);
 
   // c1 and c2 share the same retry policies
-  auto c1 = google::cloud::videointelligence_v1::VideoIntelligenceServiceClient(
-      connection);
-  auto c2 = google::cloud::videointelligence_v1::VideoIntelligenceServiceClient(
-      connection);
+  auto c1 = google::cloud::videointelligence_v1::VideoIntelligenceServiceClient(connection);
+  auto c2 = google::cloud::videointelligence_v1::VideoIntelligenceServiceClient(connection);
 
   // You can override any of the policies in a new client. This new client
   // will share the policies from c1 (or c2) *except* for the retry policy.
   auto c3 = google::cloud::videointelligence_v1::VideoIntelligenceServiceClient(
-      connection, google::cloud::Options{}
-                      .set<google::cloud::videointelligence_v1::
-                               VideoIntelligenceServiceRetryPolicyOption>(
-                          google::cloud::videointelligence_v1::
-                              VideoIntelligenceServiceLimitedTimeRetryPolicy(
-                                  std::chrono::minutes(5))
-                                  .clone()));
+    connection, google::cloud::Options{}.set<google::cloud::videointelligence_v1::VideoIntelligenceServiceRetryPolicyOption>(
+      google::cloud::videointelligence_v1::VideoIntelligenceServiceLimitedTimeRetryPolicy(std::chrono::minutes(5)).clone()));
 
   // You can also override the policies in a single call:
   // c3.SomeRpc(..., google::cloud::Options{}
@@ -127,34 +107,25 @@ void SetPollingPolicy(std::vector<std::string> const& argv) {
   // or error) or 45 minutes, whichever happens first. Initially pause for
   // 10 seconds between polling requests, increasing the pause by a factor
   // of 4 until it becomes 2 minutes.
-  auto options =
-      google::cloud::Options{}
-          .set<google::cloud::videointelligence_v1::
-                   VideoIntelligenceServicePollingPolicyOption>(
-              google::cloud::GenericPollingPolicy<
-                  google::cloud::videointelligence_v1::
-                      VideoIntelligenceServiceRetryPolicyOption::Type,
-                  google::cloud::videointelligence_v1::
-                      VideoIntelligenceServiceBackoffPolicyOption::Type>(
-                  google::cloud::videointelligence_v1::
-                      VideoIntelligenceServiceLimitedTimeRetryPolicy(
-                          /*maximum_duration=*/std::chrono::minutes(45))
-                          .clone(),
-                  google::cloud::ExponentialBackoffPolicy(
-                      /*initial_delay=*/std::chrono::seconds(10),
-                      /*maximum_delay=*/std::chrono::minutes(2),
-                      /*scaling=*/4.0)
-                      .clone())
-                  .clone());
+  auto options = google::cloud::Options{}
+    .set<google::cloud::videointelligence_v1::VideoIntelligenceServicePollingPolicyOption>(
+        google::cloud::GenericPollingPolicy<
+            google::cloud::videointelligence_v1::VideoIntelligenceServiceRetryPolicyOption::Type,
+            google::cloud::videointelligence_v1::VideoIntelligenceServiceBackoffPolicyOption::Type>(
+            google::cloud::videointelligence_v1::VideoIntelligenceServiceLimitedTimeRetryPolicy(
+                /*maximum_duration=*/std::chrono::minutes(45))
+                .clone(),
+            google::cloud::ExponentialBackoffPolicy(
+                /*initial_delay=*/std::chrono::seconds(10),
+                /*maximum_delay=*/std::chrono::minutes(2),
+                /*scaling=*/4.0).clone())
+            .clone());
 
-  auto connection = google::cloud::videointelligence_v1::
-      MakeVideoIntelligenceServiceConnection(options);
+  auto connection = google::cloud::videointelligence_v1::MakeVideoIntelligenceServiceConnection(options);
 
   // c1 and c2 share the same polling policies.
-  auto c1 = google::cloud::videointelligence_v1::VideoIntelligenceServiceClient(
-      connection);
-  auto c2 = google::cloud::videointelligence_v1::VideoIntelligenceServiceClient(
-      connection);
+  auto c1 = google::cloud::videointelligence_v1::VideoIntelligenceServiceClient(connection);
+  auto c2 = google::cloud::videointelligence_v1::VideoIntelligenceServiceClient(connection);
   //! [set-polling-policy]
 }
 
@@ -171,8 +142,7 @@ void WithServiceAccount(std::vector<std::string> const& argv) {
         google::cloud::Options{}.set<google::cloud::UnifiedCredentialsOption>(
             google::cloud::MakeServiceAccountCredentials(contents));
     return google::cloud::videointelligence_v1::VideoIntelligenceServiceClient(
-        google::cloud::videointelligence_v1::
-            MakeVideoIntelligenceServiceConnection(options));
+      google::cloud::videointelligence_v1::MakeVideoIntelligenceServiceConnection(options));
   }
   //! [with-service-account]
   (argv.at(0));
@@ -182,8 +152,9 @@ void AutoRun(std::vector<std::string> const& argv) {
   namespace examples = ::google::cloud::testing_util;
   using ::google::cloud::internal::GetEnv;
   if (!argv.empty()) throw examples::Usage{"auto"};
-  examples::CheckEnvironmentVariablesAreSet(
-      {"GOOGLE_CLOUD_CPP_TEST_SERVICE_ACCOUNT_KEYFILE"});
+  examples::CheckEnvironmentVariablesAreSet({
+    "GOOGLE_CLOUD_CPP_TEST_SERVICE_ACCOUNT_KEYFILE"
+  });
   auto const keyfile =
       GetEnv("GOOGLE_CLOUD_CPP_TEST_SERVICE_ACCOUNT_KEYFILE").value();
 

@@ -42,16 +42,13 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockProjectServiceConnection
-    : public bigquerycontrol_v2::ProjectServiceConnection {
+class MockProjectServiceConnection : public bigquerycontrol_v2::ProjectServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::bigquery::v2::GetServiceAccountResponse>,
-      GetServiceAccount,
-      (google::cloud::bigquery::v2::GetServiceAccountRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::bigquery::v2::GetServiceAccountResponse>,
+  GetServiceAccount,
+  (google::cloud::bigquery::v2::GetServiceAccountRequest const& request), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

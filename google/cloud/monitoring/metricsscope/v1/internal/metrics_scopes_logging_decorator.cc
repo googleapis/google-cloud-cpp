@@ -31,55 +31,53 @@ namespace monitoring_metricsscope_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 MetricsScopesLogging::MetricsScopesLogging(
-    std::shared_ptr<MetricsScopesStub> child, TracingOptions tracing_options,
+    std::shared_ptr<MetricsScopesStub> child,
+    TracingOptions tracing_options,
     std::set<std::string> const&)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::monitoring::metricsscope::v1::MetricsScope>
 MetricsScopesLogging::GetMetricsScope(
-    grpc::ClientContext& context, Options const& options,
-    google::monitoring::metricsscope::v1::GetMetricsScopeRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::monitoring::metricsscope::v1::GetMetricsScopeRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::monitoring::metricsscope::v1::GetMetricsScopeRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::monitoring::metricsscope::v1::GetMetricsScopeRequest const& request) {
         return child_->GetMetricsScope(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::monitoring::metricsscope::v1::
-             ListMetricsScopesByMonitoredProjectResponse>
+StatusOr<google::monitoring::metricsscope::v1::ListMetricsScopesByMonitoredProjectResponse>
 MetricsScopesLogging::ListMetricsScopesByMonitoredProject(
-    grpc::ClientContext& context, Options const& options,
-    google::monitoring::metricsscope::v1::
-        ListMetricsScopesByMonitoredProjectRequest const& request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::monitoring::metricsscope::v1::ListMetricsScopesByMonitoredProjectRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::monitoring::metricsscope::v1::
-                 ListMetricsScopesByMonitoredProjectRequest const& request) {
-        return child_->ListMetricsScopesByMonitoredProject(context, options,
-                                                           request);
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::monitoring::metricsscope::v1::ListMetricsScopesByMonitoredProjectRequest const& request) {
+        return child_->ListMetricsScopesByMonitoredProject(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 MetricsScopesLogging::AsyncCreateMonitoredProject(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::monitoring::metricsscope::v1::CreateMonitoredProjectRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::monitoring::metricsscope::v1::CreateMonitoredProjectRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::monitoring::metricsscope::v1::
-                 CreateMonitoredProjectRequest const& request) {
-        return child_->AsyncCreateMonitoredProject(cq, std::move(context),
-                                                   std::move(options), request);
+             google::monitoring::metricsscope::v1::CreateMonitoredProjectRequest const& request) {
+        return child_->AsyncCreateMonitoredProject(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -87,13 +85,13 @@ MetricsScopesLogging::AsyncCreateMonitoredProject(
 
 StatusOr<google::longrunning::Operation>
 MetricsScopesLogging::CreateMonitoredProject(
-    grpc::ClientContext& context, Options options,
-    google::monitoring::metricsscope::v1::CreateMonitoredProjectRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::monitoring::metricsscope::v1::CreateMonitoredProjectRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::monitoring::metricsscope::v1::
-                 CreateMonitoredProjectRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::monitoring::metricsscope::v1::CreateMonitoredProjectRequest const& request) {
         return child_->CreateMonitoredProject(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -101,19 +99,17 @@ MetricsScopesLogging::CreateMonitoredProject(
 
 future<StatusOr<google::longrunning::Operation>>
 MetricsScopesLogging::AsyncDeleteMonitoredProject(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::monitoring::metricsscope::v1::DeleteMonitoredProjectRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::monitoring::metricsscope::v1::DeleteMonitoredProjectRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::monitoring::metricsscope::v1::
-                 DeleteMonitoredProjectRequest const& request) {
-        return child_->AsyncDeleteMonitoredProject(cq, std::move(context),
-                                                   std::move(options), request);
+             google::monitoring::metricsscope::v1::DeleteMonitoredProjectRequest const& request) {
+        return child_->AsyncDeleteMonitoredProject(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -121,13 +117,13 @@ MetricsScopesLogging::AsyncDeleteMonitoredProject(
 
 StatusOr<google::longrunning::Operation>
 MetricsScopesLogging::DeleteMonitoredProject(
-    grpc::ClientContext& context, Options options,
-    google::monitoring::metricsscope::v1::DeleteMonitoredProjectRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::monitoring::metricsscope::v1::DeleteMonitoredProjectRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::monitoring::metricsscope::v1::
-                 DeleteMonitoredProjectRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::monitoring::metricsscope::v1::DeleteMonitoredProjectRequest const& request) {
         return child_->DeleteMonitoredProject(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -144,8 +140,8 @@ MetricsScopesLogging::AsyncGetOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(cq, std::move(context),
-                                         std::move(options), request);
+        return child_->AsyncGetOperation(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -161,8 +157,8 @@ future<Status> MetricsScopesLogging::AsyncCancelOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::CancelOperationRequest const& request) {
-        return child_->AsyncCancelOperation(cq, std::move(context),
-                                            std::move(options), request);
+        return child_->AsyncCancelOperation(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);

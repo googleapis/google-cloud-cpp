@@ -34,32 +34,26 @@ SearchServiceTracingConnection::SearchServiceTracingConnection(
     : child_(std::move(child)) {}
 
 StreamRange<google::cloud::retail::v2::SearchResponse::SearchResult>
-SearchServiceTracingConnection::Search(
-    google::cloud::retail::v2::SearchRequest request) {
+SearchServiceTracingConnection::Search(google::cloud::retail::v2::SearchRequest request) {
   auto span = internal::MakeSpan("retail_v2::SearchServiceConnection::Search");
   internal::OTelScope scope(span);
   auto sr = child_->Search(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::retail::v2::SearchResponse::SearchResult>(std::move(span),
-                                                               std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::retail::v2::SearchResponse::SearchResult>(
+        std::move(span), std::move(sr));
 }
 
 StreamRange<google::longrunning::Operation>
-SearchServiceTracingConnection::ListOperations(
-    google::longrunning::ListOperationsRequest request) {
-  auto span =
-      internal::MakeSpan("retail_v2::SearchServiceConnection::ListOperations");
+SearchServiceTracingConnection::ListOperations(google::longrunning::ListOperationsRequest request) {
+  auto span = internal::MakeSpan("retail_v2::SearchServiceConnection::ListOperations");
   internal::OTelScope scope(span);
   auto sr = child_->ListOperations(std::move(request));
   return internal::MakeTracedStreamRange<google::longrunning::Operation>(
-      std::move(span), std::move(sr));
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::longrunning::Operation>
-SearchServiceTracingConnection::GetOperation(
-    google::longrunning::GetOperationRequest const& request) {
-  auto span =
-      internal::MakeSpan("retail_v2::SearchServiceConnection::GetOperation");
+SearchServiceTracingConnection::GetOperation(google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpan("retail_v2::SearchServiceConnection::GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOperation(request));
 }

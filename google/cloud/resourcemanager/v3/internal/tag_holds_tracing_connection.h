@@ -36,39 +36,37 @@ class TagHoldsTracingConnection
   ~TagHoldsTracingConnection() override = default;
 
   explicit TagHoldsTracingConnection(
-      std::shared_ptr<resourcemanager_v3::TagHoldsConnection> child);
+    std::shared_ptr<resourcemanager_v3::TagHoldsConnection> child);
 
   Options options() override { return child_->options(); }
 
-  future<StatusOr<google::cloud::resourcemanager::v3::TagHold>> CreateTagHold(
-      google::cloud::resourcemanager::v3::CreateTagHoldRequest const& request)
-      override;
+  future<StatusOr<google::cloud::resourcemanager::v3::TagHold>>
+  CreateTagHold(google::cloud::resourcemanager::v3::CreateTagHoldRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> CreateTagHold(
-      NoAwaitTag,
-      google::cloud::resourcemanager::v3::CreateTagHoldRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  CreateTagHold(NoAwaitTag,
+      google::cloud::resourcemanager::v3::CreateTagHoldRequest const& request) override;
 
-  future<StatusOr<google::cloud::resourcemanager::v3::TagHold>> CreateTagHold(
+  future<StatusOr<google::cloud::resourcemanager::v3::TagHold>>
+  CreateTagHold(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::resourcemanager::v3::DeleteTagHoldMetadata>>
-  DeleteTagHold(google::cloud::resourcemanager::v3::DeleteTagHoldRequest const&
-                    request) override;
+  DeleteTagHold(google::cloud::resourcemanager::v3::DeleteTagHoldRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> DeleteTagHold(
-      NoAwaitTag,
-      google::cloud::resourcemanager::v3::DeleteTagHoldRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  DeleteTagHold(NoAwaitTag,
+      google::cloud::resourcemanager::v3::DeleteTagHoldRequest const& request) override;
 
   future<StatusOr<google::cloud::resourcemanager::v3::DeleteTagHoldMetadata>>
-  DeleteTagHold(google::longrunning::Operation const& operation) override;
+  DeleteTagHold(
+      google::longrunning::Operation const& operation) override;
 
-  StreamRange<google::cloud::resourcemanager::v3::TagHold> ListTagHolds(
-      google::cloud::resourcemanager::v3::ListTagHoldsRequest request) override;
+  StreamRange<google::cloud::resourcemanager::v3::TagHold>
+  ListTagHolds(google::cloud::resourcemanager::v3::ListTagHoldsRequest request) override;
 
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request) override;
 
  private:
   std::shared_ptr<resourcemanager_v3::TagHoldsConnection> child_;

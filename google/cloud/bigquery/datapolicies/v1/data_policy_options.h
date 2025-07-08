@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_DATAPOLICIES_V1_DATA_POLICY_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_DATAPOLICIES_V1_DATA_POLICY_OPTIONS_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/bigquery/datapolicies/v1/data_policy_connection.h"
 #include "google/cloud/bigquery/datapolicies/v1/data_policy_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>

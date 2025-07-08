@@ -26,81 +26,67 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-WebSecurityScannerConnectionIdempotencyPolicy::
-    ~WebSecurityScannerConnectionIdempotencyPolicy() = default;
+WebSecurityScannerConnectionIdempotencyPolicy::~WebSecurityScannerConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<WebSecurityScannerConnectionIdempotencyPolicy>
 WebSecurityScannerConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<WebSecurityScannerConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency WebSecurityScannerConnectionIdempotencyPolicy::CreateScanConfig(
-    google::cloud::websecurityscanner::v1::CreateScanConfigRequest const&) {
+Idempotency WebSecurityScannerConnectionIdempotencyPolicy::CreateScanConfig(google::cloud::websecurityscanner::v1::CreateScanConfigRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency WebSecurityScannerConnectionIdempotencyPolicy::DeleteScanConfig(
-    google::cloud::websecurityscanner::v1::DeleteScanConfigRequest const&) {
+Idempotency WebSecurityScannerConnectionIdempotencyPolicy::DeleteScanConfig(google::cloud::websecurityscanner::v1::DeleteScanConfigRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency WebSecurityScannerConnectionIdempotencyPolicy::GetScanConfig(
-    google::cloud::websecurityscanner::v1::GetScanConfigRequest const&) {
+Idempotency WebSecurityScannerConnectionIdempotencyPolicy::GetScanConfig(google::cloud::websecurityscanner::v1::GetScanConfigRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency WebSecurityScannerConnectionIdempotencyPolicy::ListScanConfigs(
-    google::cloud::websecurityscanner::v1::ListScanConfigsRequest) {  // NOLINT
+Idempotency WebSecurityScannerConnectionIdempotencyPolicy::ListScanConfigs(google::cloud::websecurityscanner::v1::ListScanConfigsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency WebSecurityScannerConnectionIdempotencyPolicy::UpdateScanConfig(
-    google::cloud::websecurityscanner::v1::UpdateScanConfigRequest const&) {
+Idempotency WebSecurityScannerConnectionIdempotencyPolicy::UpdateScanConfig(google::cloud::websecurityscanner::v1::UpdateScanConfigRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency WebSecurityScannerConnectionIdempotencyPolicy::StartScanRun(
-    google::cloud::websecurityscanner::v1::StartScanRunRequest const&) {
+Idempotency WebSecurityScannerConnectionIdempotencyPolicy::StartScanRun(google::cloud::websecurityscanner::v1::StartScanRunRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency WebSecurityScannerConnectionIdempotencyPolicy::GetScanRun(
-    google::cloud::websecurityscanner::v1::GetScanRunRequest const&) {
+Idempotency WebSecurityScannerConnectionIdempotencyPolicy::GetScanRun(google::cloud::websecurityscanner::v1::GetScanRunRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency WebSecurityScannerConnectionIdempotencyPolicy::ListScanRuns(
-    google::cloud::websecurityscanner::v1::ListScanRunsRequest) {  // NOLINT
+Idempotency WebSecurityScannerConnectionIdempotencyPolicy::ListScanRuns(google::cloud::websecurityscanner::v1::ListScanRunsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency WebSecurityScannerConnectionIdempotencyPolicy::StopScanRun(
-    google::cloud::websecurityscanner::v1::StopScanRunRequest const&) {
+Idempotency WebSecurityScannerConnectionIdempotencyPolicy::StopScanRun(google::cloud::websecurityscanner::v1::StopScanRunRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency WebSecurityScannerConnectionIdempotencyPolicy::ListCrawledUrls(
-    google::cloud::websecurityscanner::v1::ListCrawledUrlsRequest) {  // NOLINT
+Idempotency WebSecurityScannerConnectionIdempotencyPolicy::ListCrawledUrls(google::cloud::websecurityscanner::v1::ListCrawledUrlsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency WebSecurityScannerConnectionIdempotencyPolicy::GetFinding(
-    google::cloud::websecurityscanner::v1::GetFindingRequest const&) {
+Idempotency WebSecurityScannerConnectionIdempotencyPolicy::GetFinding(google::cloud::websecurityscanner::v1::GetFindingRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency WebSecurityScannerConnectionIdempotencyPolicy::ListFindings(
-    google::cloud::websecurityscanner::v1::ListFindingsRequest) {  // NOLINT
+Idempotency WebSecurityScannerConnectionIdempotencyPolicy::ListFindings(google::cloud::websecurityscanner::v1::ListFindingsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency WebSecurityScannerConnectionIdempotencyPolicy::ListFindingTypeStats(
-    google::cloud::websecurityscanner::v1::ListFindingTypeStatsRequest const&) {
+Idempotency WebSecurityScannerConnectionIdempotencyPolicy::ListFindingTypeStats(google::cloud::websecurityscanner::v1::ListFindingTypeStatsRequest const&) {
   return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<WebSecurityScannerConnectionIdempotencyPolicy>
-MakeDefaultWebSecurityScannerConnectionIdempotencyPolicy() {
+    MakeDefaultWebSecurityScannerConnectionIdempotencyPolicy() {
   return std::make_unique<WebSecurityScannerConnectionIdempotencyPolicy>();
 }
 

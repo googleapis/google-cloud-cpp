@@ -42,31 +42,25 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockInstanceSettingsConnection
-    : public compute_instance_settings_v1::InstanceSettingsConnection {
+class MockInstanceSettingsConnection : public compute_instance_settings_v1::InstanceSettingsConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::InstanceSettings>,
-              GetInstanceSettings,
-              (google::cloud::cpp::compute::instance_settings::v1::
-                   GetInstanceSettingsRequest const& request),
-              (override));
+  GetInstanceSettings,
+  (google::cloud::cpp::compute::instance_settings::v1::GetInstanceSettingsRequest const& request), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// PatchInstanceSettings(Matcher<google::cloud::cpp::compute::instance_settings::v1::PatchInstanceSettingsRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, PatchInstanceSettings(Matcher<google::cloud::cpp::compute::instance_settings::v1::PatchInstanceSettingsRequest const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              PatchInstanceSettings,
-              (google::cloud::cpp::compute::instance_settings::v1::
-                   PatchInstanceSettingsRequest const& request),
-              (override));
+  PatchInstanceSettings,
+  (google::cloud::cpp::compute::instance_settings::v1::PatchInstanceSettingsRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -75,24 +69,20 @@ class MockInstanceSettingsConnection
   /// EXPECT_CALL(*mock, PatchInstanceSettings(_, _))
   /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-              PatchInstanceSettings,
-              (NoAwaitTag, google::cloud::cpp::compute::instance_settings::v1::
-                               PatchInstanceSettingsRequest const& request),
-              (override));
+  PatchInstanceSettings, (NoAwaitTag,
+    google::cloud::cpp::compute::instance_settings::v1::PatchInstanceSettingsRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// PatchInstanceSettings(Matcher<google::cloud::cpp::compute::v1::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, PatchInstanceSettings(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              PatchInstanceSettings,
-              (google::cloud::cpp::compute::v1::Operation const& operation),
-              (override));
+  PatchInstanceSettings, (
+    google::cloud::cpp::compute::v1::Operation const& operation), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

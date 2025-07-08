@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SERVICECONTROL_V2_SERVICE_CONTROLLER_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SERVICECONTROL_V2_SERVICE_CONTROLLER_OPTIONS_H
 
-#include "google/cloud/servicecontrol/v2/service_controller_connection.h"
-#include "google/cloud/servicecontrol/v2/service_controller_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
+#include "google/cloud/servicecontrol/v2/service_controller_connection.h"
+#include "google/cloud/servicecontrol/v2/service_controller_connection_idempotency_policy.h"
 #include "google/cloud/version.h"
 #include <memory>
 

@@ -17,10 +17,10 @@
 // source: google/cloud/support/v2/case_service.proto
 
 #include "google/cloud/support/v2/internal/case_option_defaults.h"
-#include "google/cloud/support/v2/case_connection.h"
-#include "google/cloud/support/v2/case_options.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
+#include "google/cloud/support/v2/case_connection.h"
+#include "google/cloud/support/v2/case_options.h"
 #include <memory>
 #include <utility>
 
@@ -35,23 +35,21 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options CaseServiceDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_CASE_SERVICE_ENDPOINT", "",
-      "GOOGLE_CLOUD_CPP_CASE_SERVICE_AUTHORITY", "cloudsupport.googleapis.com");
+      std::move(options), "GOOGLE_CLOUD_CPP_CASE_SERVICE_ENDPOINT",
+      "", "GOOGLE_CLOUD_CPP_CASE_SERVICE_AUTHORITY",
+      "cloudsupport.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<support_v2::CaseServiceRetryPolicyOption>()) {
     options.set<support_v2::CaseServiceRetryPolicyOption>(
-        support_v2::CaseServiceLimitedTimeRetryPolicy(std::chrono::minutes(30))
-            .clone());
+        support_v2::CaseServiceLimitedTimeRetryPolicy(
+            std::chrono::minutes(30)).clone());
   }
   if (!options.has<support_v2::CaseServiceBackoffPolicyOption>()) {
     options.set<support_v2::CaseServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(
-            std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
-            .clone());
+        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
   }
-  if (!options
-           .has<support_v2::CaseServiceConnectionIdempotencyPolicyOption>()) {
+  if (!options.has<support_v2::CaseServiceConnectionIdempotencyPolicyOption>()) {
     options.set<support_v2::CaseServiceConnectionIdempotencyPolicyOption>(
         support_v2::MakeDefaultCaseServiceConnectionIdempotencyPolicy());
   }

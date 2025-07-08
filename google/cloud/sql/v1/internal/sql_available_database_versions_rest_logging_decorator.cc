@@ -27,12 +27,11 @@ namespace cloud {
 namespace sql_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-SqlAvailableDatabaseVersionsServiceRestLogging::
-    SqlAvailableDatabaseVersionsServiceRestLogging(
-        std::shared_ptr<SqlAvailableDatabaseVersionsServiceRestStub> child,
-        TracingOptions tracing_options, std::set<std::string> components)
-    : child_(std::move(child)),
-      tracing_options_(std::move(tracing_options)),
+SqlAvailableDatabaseVersionsServiceRestLogging::SqlAvailableDatabaseVersionsServiceRestLogging(
+    std::shared_ptr<SqlAvailableDatabaseVersionsServiceRestStub> child,
+    TracingOptions tracing_options,
+    std::set<std::string> components)
+    : child_(std::move(child)), tracing_options_(std::move(tracing_options)),
       components_(std::move(components)) {}
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

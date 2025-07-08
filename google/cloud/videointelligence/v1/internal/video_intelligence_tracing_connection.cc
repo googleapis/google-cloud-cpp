@@ -28,54 +28,46 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-VideoIntelligenceServiceTracingConnection::
-    VideoIntelligenceServiceTracingConnection(
-        std::shared_ptr<
-            videointelligence_v1::VideoIntelligenceServiceConnection>
-            child)
+VideoIntelligenceServiceTracingConnection::VideoIntelligenceServiceTracingConnection(
+    std::shared_ptr<videointelligence_v1::VideoIntelligenceServiceConnection> child)
     : child_(std::move(child)) {}
 
 future<StatusOr<google::cloud::videointelligence::v1::AnnotateVideoResponse>>
-VideoIntelligenceServiceTracingConnection::AnnotateVideo(
-    google::cloud::videointelligence::v1::AnnotateVideoRequest const& request) {
+VideoIntelligenceServiceTracingConnection::AnnotateVideo(google::cloud::videointelligence::v1::AnnotateVideoRequest const& request) {
   auto span = internal::MakeSpan(
-      "videointelligence_v1::VideoIntelligenceServiceConnection::"
-      "AnnotateVideo");
+      "videointelligence_v1::VideoIntelligenceServiceConnection::AnnotateVideo");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->AnnotateVideo(request));
 }
 
 StatusOr<google::longrunning::Operation>
 VideoIntelligenceServiceTracingConnection::AnnotateVideo(
-    NoAwaitTag,
-    google::cloud::videointelligence::v1::AnnotateVideoRequest const& request) {
+    NoAwaitTag, google::cloud::videointelligence::v1::AnnotateVideoRequest const& request) {
   auto span = internal::MakeSpan(
-      "videointelligence_v1::VideoIntelligenceServiceConnection::"
-      "AnnotateVideo");
+      "videointelligence_v1::VideoIntelligenceServiceConnection::AnnotateVideo");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->AnnotateVideo(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->AnnotateVideo(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::videointelligence::v1::AnnotateVideoResponse>>
 VideoIntelligenceServiceTracingConnection::AnnotateVideo(
     google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
-      "videointelligence_v1::VideoIntelligenceServiceConnection::"
-      "AnnotateVideo");
+      "videointelligence_v1::VideoIntelligenceServiceConnection::AnnotateVideo");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->AnnotateVideo(operation));
+  return internal::EndSpan(std::move(span),
+      child_->AnnotateVideo(operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<videointelligence_v1::VideoIntelligenceServiceConnection>
 MakeVideoIntelligenceServiceTracingConnection(
-    std::shared_ptr<videointelligence_v1::VideoIntelligenceServiceConnection>
-        conn) {
+    std::shared_ptr<videointelligence_v1::VideoIntelligenceServiceConnection> conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
-    conn = std::make_shared<VideoIntelligenceServiceTracingConnection>(
-        std::move(conn));
+    conn = std::make_shared<VideoIntelligenceServiceTracingConnection>(std::move(conn));
   }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;

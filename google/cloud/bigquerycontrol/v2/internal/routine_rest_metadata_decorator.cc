@@ -17,11 +17,11 @@
 // source: google/cloud/bigquery/v2/routine.proto
 
 #include "google/cloud/bigquerycontrol/v2/internal/routine_rest_metadata_decorator.h"
+#include "absl/strings/str_format.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/internal/rest_set_metadata.h"
 #include "google/cloud/status_or.h"
-#include "absl/strings/str_format.h"
 #include <memory>
 #include <utility>
 
@@ -41,48 +41,49 @@ RoutineServiceRestMetadata::RoutineServiceRestMetadata(
 
 StatusOr<google::cloud::bigquery::v2::Routine>
 RoutineServiceRestMetadata::GetRoutine(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::bigquery::v2::GetRoutineRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::bigquery::v2::GetRoutineRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->GetRoutine(rest_context, options, request);
 }
 
 StatusOr<google::cloud::bigquery::v2::Routine>
 RoutineServiceRestMetadata::InsertRoutine(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::bigquery::v2::InsertRoutineRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::bigquery::v2::InsertRoutineRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->InsertRoutine(rest_context, options, request);
 }
 
 StatusOr<google::cloud::bigquery::v2::Routine>
 RoutineServiceRestMetadata::UpdateRoutine(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::bigquery::v2::UpdateRoutineRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::bigquery::v2::UpdateRoutineRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->UpdateRoutine(rest_context, options, request);
 }
 
-Status RoutineServiceRestMetadata::DeleteRoutine(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::bigquery::v2::DeleteRoutineRequest const& request) {
+Status
+RoutineServiceRestMetadata::DeleteRoutine(
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::bigquery::v2::DeleteRoutineRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->DeleteRoutine(rest_context, options, request);
 }
 
 StatusOr<google::cloud::bigquery::v2::ListRoutinesResponse>
 RoutineServiceRestMetadata::ListRoutines(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::bigquery::v2::ListRoutinesRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::bigquery::v2::ListRoutinesRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->ListRoutines(rest_context, options, request);
 }
 
 void RoutineServiceRestMetadata::SetMetadata(
-    rest_internal::RestContext& rest_context, Options const& options,
-    std::vector<std::string> const& params) {
-  google::cloud::rest_internal::SetMetadata(rest_context, options, params,
-                                            api_client_header_);
+      rest_internal::RestContext& rest_context,
+      Options const& options, std::vector<std::string> const& params) {
+  google::cloud::rest_internal::SetMetadata(
+      rest_context, options, params, api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

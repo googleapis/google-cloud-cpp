@@ -28,17 +28,20 @@ namespace bigquerycontrol_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ModelServiceRestLogging::ModelServiceRestLogging(
-    std::shared_ptr<ModelServiceRestStub> child, TracingOptions tracing_options,
+    std::shared_ptr<ModelServiceRestStub> child,
+    TracingOptions tracing_options,
     std::set<std::string> components)
-    : child_(std::move(child)),
-      tracing_options_(std::move(tracing_options)),
+    : child_(std::move(child)), tracing_options_(std::move(tracing_options)),
       components_(std::move(components)) {}
 
-StatusOr<google::cloud::bigquery::v2::Model> ModelServiceRestLogging::GetModel(
-    rest_internal::RestContext& rest_context, Options const& options,
+StatusOr<google::cloud::bigquery::v2::Model>
+ModelServiceRestLogging::GetModel(
+    rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::bigquery::v2::GetModelRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context, Options const& options,
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
              google::cloud::bigquery::v2::GetModelRequest const& request) {
         return child_->GetModel(rest_context, options, request);
       },
@@ -47,10 +50,12 @@ StatusOr<google::cloud::bigquery::v2::Model> ModelServiceRestLogging::GetModel(
 
 StatusOr<google::cloud::bigquery::v2::ListModelsResponse>
 ModelServiceRestLogging::ListModels(
-    rest_internal::RestContext& rest_context, Options const& options,
+    rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::bigquery::v2::ListModelsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context, Options const& options,
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
              google::cloud::bigquery::v2::ListModelsRequest const& request) {
         return child_->ListModels(rest_context, options, request);
       },
@@ -59,21 +64,26 @@ ModelServiceRestLogging::ListModels(
 
 StatusOr<google::cloud::bigquery::v2::Model>
 ModelServiceRestLogging::PatchModel(
-    rest_internal::RestContext& rest_context, Options const& options,
+    rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::bigquery::v2::PatchModelRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context, Options const& options,
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
              google::cloud::bigquery::v2::PatchModelRequest const& request) {
         return child_->PatchModel(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
 }
 
-Status ModelServiceRestLogging::DeleteModel(
-    rest_internal::RestContext& rest_context, Options const& options,
+Status
+ModelServiceRestLogging::DeleteModel(
+    rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::bigquery::v2::DeleteModelRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context, Options const& options,
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
              google::cloud::bigquery::v2::DeleteModelRequest const& request) {
         return child_->DeleteModel(rest_context, options, request);
       },

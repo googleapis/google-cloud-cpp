@@ -34,124 +34,113 @@ class SqlInstancesServiceConnectionIdempotencyPolicy {
   virtual ~SqlInstancesServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<SqlInstancesServiceConnectionIdempotencyPolicy>
-  clone() const;
+  virtual std::unique_ptr<SqlInstancesServiceConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency AddServerCa(
-      google::cloud::sql::v1::SqlInstancesAddServerCaRequest const& request);
+  virtual google::cloud::Idempotency
+  AddServerCa(google::cloud::sql::v1::SqlInstancesAddServerCaRequest const& request);
 
-  virtual google::cloud::Idempotency Clone(
-      google::cloud::sql::v1::SqlInstancesCloneRequest const& request);
+  virtual google::cloud::Idempotency
+  Clone(google::cloud::sql::v1::SqlInstancesCloneRequest const& request);
 
-  virtual google::cloud::Idempotency Delete(
-      google::cloud::sql::v1::SqlInstancesDeleteRequest const& request);
+  virtual google::cloud::Idempotency
+  Delete(google::cloud::sql::v1::SqlInstancesDeleteRequest const& request);
 
-  virtual google::cloud::Idempotency DemoteMaster(
-      google::cloud::sql::v1::SqlInstancesDemoteMasterRequest const& request);
+  virtual google::cloud::Idempotency
+  DemoteMaster(google::cloud::sql::v1::SqlInstancesDemoteMasterRequest const& request);
 
-  virtual google::cloud::Idempotency Demote(
-      google::cloud::sql::v1::SqlInstancesDemoteRequest const& request);
+  virtual google::cloud::Idempotency
+  Demote(google::cloud::sql::v1::SqlInstancesDemoteRequest const& request);
 
-  virtual google::cloud::Idempotency Export(
-      google::cloud::sql::v1::SqlInstancesExportRequest const& request);
+  virtual google::cloud::Idempotency
+  Export(google::cloud::sql::v1::SqlInstancesExportRequest const& request);
 
-  virtual google::cloud::Idempotency Failover(
-      google::cloud::sql::v1::SqlInstancesFailoverRequest const& request);
+  virtual google::cloud::Idempotency
+  Failover(google::cloud::sql::v1::SqlInstancesFailoverRequest const& request);
 
-  virtual google::cloud::Idempotency Reencrypt(
-      google::cloud::sql::v1::SqlInstancesReencryptRequest const& request);
+  virtual google::cloud::Idempotency
+  Reencrypt(google::cloud::sql::v1::SqlInstancesReencryptRequest const& request);
 
-  virtual google::cloud::Idempotency Get(
-      google::cloud::sql::v1::SqlInstancesGetRequest const& request);
+  virtual google::cloud::Idempotency
+  Get(google::cloud::sql::v1::SqlInstancesGetRequest const& request);
 
-  virtual google::cloud::Idempotency Import(
-      google::cloud::sql::v1::SqlInstancesImportRequest const& request);
+  virtual google::cloud::Idempotency
+  Import(google::cloud::sql::v1::SqlInstancesImportRequest const& request);
 
-  virtual google::cloud::Idempotency Insert(
-      google::cloud::sql::v1::SqlInstancesInsertRequest const& request);
+  virtual google::cloud::Idempotency
+  Insert(google::cloud::sql::v1::SqlInstancesInsertRequest const& request);
 
-  virtual google::cloud::Idempotency List(
-      google::cloud::sql::v1::SqlInstancesListRequest request);
+  virtual google::cloud::Idempotency
+  List(google::cloud::sql::v1::SqlInstancesListRequest request);
 
-  virtual google::cloud::Idempotency ListServerCas(
-      google::cloud::sql::v1::SqlInstancesListServerCasRequest const& request);
+  virtual google::cloud::Idempotency
+  ListServerCas(google::cloud::sql::v1::SqlInstancesListServerCasRequest const& request);
 
-  virtual google::cloud::Idempotency Patch(
-      google::cloud::sql::v1::SqlInstancesPatchRequest const& request);
+  virtual google::cloud::Idempotency
+  Patch(google::cloud::sql::v1::SqlInstancesPatchRequest const& request);
 
-  virtual google::cloud::Idempotency PromoteReplica(
-      google::cloud::sql::v1::SqlInstancesPromoteReplicaRequest const& request);
+  virtual google::cloud::Idempotency
+  PromoteReplica(google::cloud::sql::v1::SqlInstancesPromoteReplicaRequest const& request);
 
-  virtual google::cloud::Idempotency Switchover(
-      google::cloud::sql::v1::SqlInstancesSwitchoverRequest const& request);
+  virtual google::cloud::Idempotency
+  Switchover(google::cloud::sql::v1::SqlInstancesSwitchoverRequest const& request);
 
-  virtual google::cloud::Idempotency ResetSslConfig(
-      google::cloud::sql::v1::SqlInstancesResetSslConfigRequest const& request);
+  virtual google::cloud::Idempotency
+  ResetSslConfig(google::cloud::sql::v1::SqlInstancesResetSslConfigRequest const& request);
 
-  virtual google::cloud::Idempotency Restart(
-      google::cloud::sql::v1::SqlInstancesRestartRequest const& request);
+  virtual google::cloud::Idempotency
+  Restart(google::cloud::sql::v1::SqlInstancesRestartRequest const& request);
 
-  virtual google::cloud::Idempotency RestoreBackup(
-      google::cloud::sql::v1::SqlInstancesRestoreBackupRequest const& request);
+  virtual google::cloud::Idempotency
+  RestoreBackup(google::cloud::sql::v1::SqlInstancesRestoreBackupRequest const& request);
 
-  virtual google::cloud::Idempotency RotateServerCa(
-      google::cloud::sql::v1::SqlInstancesRotateServerCaRequest const& request);
+  virtual google::cloud::Idempotency
+  RotateServerCa(google::cloud::sql::v1::SqlInstancesRotateServerCaRequest const& request);
 
-  virtual google::cloud::Idempotency StartReplica(
-      google::cloud::sql::v1::SqlInstancesStartReplicaRequest const& request);
+  virtual google::cloud::Idempotency
+  StartReplica(google::cloud::sql::v1::SqlInstancesStartReplicaRequest const& request);
 
-  virtual google::cloud::Idempotency StopReplica(
-      google::cloud::sql::v1::SqlInstancesStopReplicaRequest const& request);
+  virtual google::cloud::Idempotency
+  StopReplica(google::cloud::sql::v1::SqlInstancesStopReplicaRequest const& request);
 
-  virtual google::cloud::Idempotency TruncateLog(
-      google::cloud::sql::v1::SqlInstancesTruncateLogRequest const& request);
+  virtual google::cloud::Idempotency
+  TruncateLog(google::cloud::sql::v1::SqlInstancesTruncateLogRequest const& request);
 
-  virtual google::cloud::Idempotency Update(
-      google::cloud::sql::v1::SqlInstancesUpdateRequest const& request);
+  virtual google::cloud::Idempotency
+  Update(google::cloud::sql::v1::SqlInstancesUpdateRequest const& request);
 
-  virtual google::cloud::Idempotency CreateEphemeral(
-      google::cloud::sql::v1::SqlInstancesCreateEphemeralCertRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  CreateEphemeral(google::cloud::sql::v1::SqlInstancesCreateEphemeralCertRequest const& request);
 
-  virtual google::cloud::Idempotency RescheduleMaintenance(
-      google::cloud::sql::v1::SqlInstancesRescheduleMaintenanceRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  RescheduleMaintenance(google::cloud::sql::v1::SqlInstancesRescheduleMaintenanceRequest const& request);
 
-  virtual google::cloud::Idempotency VerifyExternalSyncSettings(
-      google::cloud::sql::v1::
-          SqlInstancesVerifyExternalSyncSettingsRequest const& request);
+  virtual google::cloud::Idempotency
+  VerifyExternalSyncSettings(google::cloud::sql::v1::SqlInstancesVerifyExternalSyncSettingsRequest const& request);
 
-  virtual google::cloud::Idempotency StartExternalSync(
-      google::cloud::sql::v1::SqlInstancesStartExternalSyncRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  StartExternalSync(google::cloud::sql::v1::SqlInstancesStartExternalSyncRequest const& request);
 
-  virtual google::cloud::Idempotency PerformDiskShrink(
-      google::cloud::sql::v1::SqlInstancesPerformDiskShrinkRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  PerformDiskShrink(google::cloud::sql::v1::SqlInstancesPerformDiskShrinkRequest const& request);
 
-  virtual google::cloud::Idempotency GetDiskShrinkConfig(
-      google::cloud::sql::v1::SqlInstancesGetDiskShrinkConfigRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  GetDiskShrinkConfig(google::cloud::sql::v1::SqlInstancesGetDiskShrinkConfigRequest const& request);
 
-  virtual google::cloud::Idempotency ResetReplicaSize(
-      google::cloud::sql::v1::SqlInstancesResetReplicaSizeRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  ResetReplicaSize(google::cloud::sql::v1::SqlInstancesResetReplicaSizeRequest const& request);
 
-  virtual google::cloud::Idempotency GetLatestRecoveryTime(
-      google::cloud::sql::v1::SqlInstancesGetLatestRecoveryTimeRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  GetLatestRecoveryTime(google::cloud::sql::v1::SqlInstancesGetLatestRecoveryTimeRequest const& request);
 
-  virtual google::cloud::Idempotency AcquireSsrsLease(
-      google::cloud::sql::v1::SqlInstancesAcquireSsrsLeaseRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  AcquireSsrsLease(google::cloud::sql::v1::SqlInstancesAcquireSsrsLeaseRequest const& request);
 
-  virtual google::cloud::Idempotency ReleaseSsrsLease(
-      google::cloud::sql::v1::SqlInstancesReleaseSsrsLeaseRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  ReleaseSsrsLease(google::cloud::sql::v1::SqlInstancesReleaseSsrsLeaseRequest const& request);
 };
 
 std::unique_ptr<SqlInstancesServiceConnectionIdempotencyPolicy>
-MakeDefaultSqlInstancesServiceConnectionIdempotencyPolicy();
+    MakeDefaultSqlInstancesServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace sql_v1

@@ -29,26 +29,24 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 TargetSslProxiesRestLogging::TargetSslProxiesRestLogging(
     std::shared_ptr<TargetSslProxiesRestStub> child,
-    TracingOptions tracing_options, std::set<std::string> components)
-    : child_(std::move(child)),
-      tracing_options_(std::move(tracing_options)),
+    TracingOptions tracing_options,
+    std::set<std::string> components)
+    : child_(std::move(child)), tracing_options_(std::move(tracing_options)),
       components_(std::move(components)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetSslProxiesRestLogging::AsyncDeleteTargetSslProxy(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::target_ssl_proxies::v1::
-        DeleteTargetSslProxyRequest const& request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::target_ssl_proxies::v1::DeleteTargetSslProxyRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::cpp::compute::target_ssl_proxies::v1::
-                 DeleteTargetSslProxyRequest const& request) {
-        return child_->AsyncDeleteTargetSslProxy(cq, std::move(rest_context),
-                                                 std::move(options), request);
+             google::cloud::cpp::compute::target_ssl_proxies::v1::DeleteTargetSslProxyRequest const& request) {
+        return child_->AsyncDeleteTargetSslProxy(
+            cq, std::move(rest_context), std::move(options), request);
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
@@ -56,13 +54,13 @@ TargetSslProxiesRestLogging::AsyncDeleteTargetSslProxy(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetSslProxiesRestLogging::DeleteTargetSslProxy(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::target_ssl_proxies::v1::
-        DeleteTargetSslProxyRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::target_ssl_proxies::v1::DeleteTargetSslProxyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::cloud::cpp::compute::target_ssl_proxies::v1::
-                 DeleteTargetSslProxyRequest const& request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
+             google::cloud::cpp::compute::target_ssl_proxies::v1::DeleteTargetSslProxyRequest const& request) {
         return child_->DeleteTargetSslProxy(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -70,13 +68,13 @@ TargetSslProxiesRestLogging::DeleteTargetSslProxy(
 
 StatusOr<google::cloud::cpp::compute::v1::TargetSslProxy>
 TargetSslProxiesRestLogging::GetTargetSslProxy(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::target_ssl_proxies::v1::
-        GetTargetSslProxyRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::target_ssl_proxies::v1::GetTargetSslProxyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::cloud::cpp::compute::target_ssl_proxies::v1::
-                 GetTargetSslProxyRequest const& request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
+             google::cloud::cpp::compute::target_ssl_proxies::v1::GetTargetSslProxyRequest const& request) {
         return child_->GetTargetSslProxy(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -84,19 +82,17 @@ TargetSslProxiesRestLogging::GetTargetSslProxy(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetSslProxiesRestLogging::AsyncInsertTargetSslProxy(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::target_ssl_proxies::v1::
-        InsertTargetSslProxyRequest const& request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::target_ssl_proxies::v1::InsertTargetSslProxyRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::cpp::compute::target_ssl_proxies::v1::
-                 InsertTargetSslProxyRequest const& request) {
-        return child_->AsyncInsertTargetSslProxy(cq, std::move(rest_context),
-                                                 std::move(options), request);
+             google::cloud::cpp::compute::target_ssl_proxies::v1::InsertTargetSslProxyRequest const& request) {
+        return child_->AsyncInsertTargetSslProxy(
+            cq, std::move(rest_context), std::move(options), request);
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
@@ -104,13 +100,13 @@ TargetSslProxiesRestLogging::AsyncInsertTargetSslProxy(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetSslProxiesRestLogging::InsertTargetSslProxy(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::target_ssl_proxies::v1::
-        InsertTargetSslProxyRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::target_ssl_proxies::v1::InsertTargetSslProxyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::cloud::cpp::compute::target_ssl_proxies::v1::
-                 InsertTargetSslProxyRequest const& request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
+             google::cloud::cpp::compute::target_ssl_proxies::v1::InsertTargetSslProxyRequest const& request) {
         return child_->InsertTargetSslProxy(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -118,13 +114,13 @@ TargetSslProxiesRestLogging::InsertTargetSslProxy(
 
 StatusOr<google::cloud::cpp::compute::v1::TargetSslProxyList>
 TargetSslProxiesRestLogging::ListTargetSslProxies(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::target_ssl_proxies::v1::
-        ListTargetSslProxiesRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::target_ssl_proxies::v1::ListTargetSslProxiesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::cloud::cpp::compute::target_ssl_proxies::v1::
-                 ListTargetSslProxiesRequest const& request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
+             google::cloud::cpp::compute::target_ssl_proxies::v1::ListTargetSslProxiesRequest const& request) {
         return child_->ListTargetSslProxies(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -132,19 +128,17 @@ TargetSslProxiesRestLogging::ListTargetSslProxies(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetSslProxiesRestLogging::AsyncSetBackendService(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::target_ssl_proxies::v1::
-        SetBackendServiceRequest const& request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::target_ssl_proxies::v1::SetBackendServiceRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::cpp::compute::target_ssl_proxies::v1::
-                 SetBackendServiceRequest const& request) {
-        return child_->AsyncSetBackendService(cq, std::move(rest_context),
-                                              std::move(options), request);
+             google::cloud::cpp::compute::target_ssl_proxies::v1::SetBackendServiceRequest const& request) {
+        return child_->AsyncSetBackendService(
+            cq, std::move(rest_context), std::move(options), request);
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
@@ -152,13 +146,13 @@ TargetSslProxiesRestLogging::AsyncSetBackendService(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetSslProxiesRestLogging::SetBackendService(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::target_ssl_proxies::v1::
-        SetBackendServiceRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::target_ssl_proxies::v1::SetBackendServiceRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::cloud::cpp::compute::target_ssl_proxies::v1::
-                 SetBackendServiceRequest const& request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
+             google::cloud::cpp::compute::target_ssl_proxies::v1::SetBackendServiceRequest const& request) {
         return child_->SetBackendService(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -166,19 +160,17 @@ TargetSslProxiesRestLogging::SetBackendService(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetSslProxiesRestLogging::AsyncSetCertificateMap(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::target_ssl_proxies::v1::
-        SetCertificateMapRequest const& request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::target_ssl_proxies::v1::SetCertificateMapRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::cpp::compute::target_ssl_proxies::v1::
-                 SetCertificateMapRequest const& request) {
-        return child_->AsyncSetCertificateMap(cq, std::move(rest_context),
-                                              std::move(options), request);
+             google::cloud::cpp::compute::target_ssl_proxies::v1::SetCertificateMapRequest const& request) {
+        return child_->AsyncSetCertificateMap(
+            cq, std::move(rest_context), std::move(options), request);
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
@@ -186,13 +178,13 @@ TargetSslProxiesRestLogging::AsyncSetCertificateMap(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetSslProxiesRestLogging::SetCertificateMap(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::target_ssl_proxies::v1::
-        SetCertificateMapRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::target_ssl_proxies::v1::SetCertificateMapRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::cloud::cpp::compute::target_ssl_proxies::v1::
-                 SetCertificateMapRequest const& request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
+             google::cloud::cpp::compute::target_ssl_proxies::v1::SetCertificateMapRequest const& request) {
         return child_->SetCertificateMap(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -200,19 +192,17 @@ TargetSslProxiesRestLogging::SetCertificateMap(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetSslProxiesRestLogging::AsyncSetProxyHeader(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::target_ssl_proxies::v1::
-        SetProxyHeaderRequest const& request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::target_ssl_proxies::v1::SetProxyHeaderRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::cpp::compute::target_ssl_proxies::v1::
-                 SetProxyHeaderRequest const& request) {
-        return child_->AsyncSetProxyHeader(cq, std::move(rest_context),
-                                           std::move(options), request);
+             google::cloud::cpp::compute::target_ssl_proxies::v1::SetProxyHeaderRequest const& request) {
+        return child_->AsyncSetProxyHeader(
+            cq, std::move(rest_context), std::move(options), request);
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
@@ -220,13 +210,13 @@ TargetSslProxiesRestLogging::AsyncSetProxyHeader(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetSslProxiesRestLogging::SetProxyHeader(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::target_ssl_proxies::v1::
-        SetProxyHeaderRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::target_ssl_proxies::v1::SetProxyHeaderRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::cloud::cpp::compute::target_ssl_proxies::v1::
-                 SetProxyHeaderRequest const& request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
+             google::cloud::cpp::compute::target_ssl_proxies::v1::SetProxyHeaderRequest const& request) {
         return child_->SetProxyHeader(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -234,19 +224,17 @@ TargetSslProxiesRestLogging::SetProxyHeader(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetSslProxiesRestLogging::AsyncSetSslCertificates(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::target_ssl_proxies::v1::
-        SetSslCertificatesRequest const& request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::target_ssl_proxies::v1::SetSslCertificatesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::cpp::compute::target_ssl_proxies::v1::
-                 SetSslCertificatesRequest const& request) {
-        return child_->AsyncSetSslCertificates(cq, std::move(rest_context),
-                                               std::move(options), request);
+             google::cloud::cpp::compute::target_ssl_proxies::v1::SetSslCertificatesRequest const& request) {
+        return child_->AsyncSetSslCertificates(
+            cq, std::move(rest_context), std::move(options), request);
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
@@ -254,13 +242,13 @@ TargetSslProxiesRestLogging::AsyncSetSslCertificates(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetSslProxiesRestLogging::SetSslCertificates(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::target_ssl_proxies::v1::
-        SetSslCertificatesRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::target_ssl_proxies::v1::SetSslCertificatesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::cloud::cpp::compute::target_ssl_proxies::v1::
-                 SetSslCertificatesRequest const& request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
+             google::cloud::cpp::compute::target_ssl_proxies::v1::SetSslCertificatesRequest const& request) {
         return child_->SetSslCertificates(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -268,19 +256,17 @@ TargetSslProxiesRestLogging::SetSslCertificates(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetSslProxiesRestLogging::AsyncSetSslPolicy(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::target_ssl_proxies::v1::
-        SetSslPolicyRequest const& request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::target_ssl_proxies::v1::SetSslPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::cpp::compute::target_ssl_proxies::v1::
-                 SetSslPolicyRequest const& request) {
-        return child_->AsyncSetSslPolicy(cq, std::move(rest_context),
-                                         std::move(options), request);
+             google::cloud::cpp::compute::target_ssl_proxies::v1::SetSslPolicyRequest const& request) {
+        return child_->AsyncSetSslPolicy(
+            cq, std::move(rest_context), std::move(options), request);
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
@@ -288,13 +274,13 @@ TargetSslProxiesRestLogging::AsyncSetSslPolicy(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetSslProxiesRestLogging::SetSslPolicy(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::target_ssl_proxies::v1::
-        SetSslPolicyRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::target_ssl_proxies::v1::SetSslPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::cloud::cpp::compute::target_ssl_proxies::v1::
-                 SetSslPolicyRequest const& request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
+             google::cloud::cpp::compute::target_ssl_proxies::v1::SetSslPolicyRequest const& request) {
         return child_->SetSslPolicy(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -305,35 +291,32 @@ TargetSslProxiesRestLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::global_operations::v1::
-        GetOperationRequest const& request) {
+    google::cloud::cpp::compute::global_operations::v1::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::cpp::compute::global_operations::v1::
-                 GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(cq, std::move(rest_context),
-                                         std::move(options), request);
+             google::cloud::cpp::compute::global_operations::v1::GetOperationRequest const& request) {
+        return child_->AsyncGetOperation(
+            cq, std::move(rest_context), std::move(options), request);
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-future<Status> TargetSslProxiesRestLogging::AsyncCancelOperation(
+future<Status>
+TargetSslProxiesRestLogging::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::global_operations::v1::
-        DeleteOperationRequest const& request) {
+    google::cloud::cpp::compute::global_operations::v1::DeleteOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::cpp::compute::global_operations::v1::
-                 DeleteOperationRequest const& request) {
-        return child_->AsyncCancelOperation(cq, std::move(rest_context),
-                                            std::move(options), request);
+             google::cloud::cpp::compute::global_operations::v1::DeleteOperationRequest const& request) {
+        return child_->AsyncCancelOperation(
+            cq, std::move(rest_context), std::move(options), request);
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);

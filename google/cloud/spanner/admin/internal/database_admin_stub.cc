@@ -33,30 +33,28 @@ DatabaseAdminStub::~DatabaseAdminStub() = default;
 
 StatusOr<google::spanner::admin::database::v1::ListDatabasesResponse>
 DefaultDatabaseAdminStub::ListDatabases(
-    grpc::ClientContext& context, Options const&,
-    google::spanner::admin::database::v1::ListDatabasesRequest const& request) {
-  google::spanner::admin::database::v1::ListDatabasesResponse response;
-  auto status = grpc_stub_->ListDatabases(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::spanner::admin::database::v1::ListDatabasesRequest const& request) {
+    google::spanner::admin::database::v1::ListDatabasesResponse response;
+    auto status =
+        grpc_stub_->ListDatabases(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultDatabaseAdminStub::AsyncCreateDatabase(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::spanner::admin::database::v1::CreateDatabaseRequest const&
-        request) {
-  return internal::MakeUnaryRpcImpl<
-      google::spanner::admin::database::v1::CreateDatabaseRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::spanner::admin::database::v1::CreateDatabaseRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::spanner::admin::database::v1::CreateDatabaseRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::spanner::admin::database::v1::CreateDatabaseRequest const&
-                 request,
+             google::spanner::admin::database::v1::CreateDatabaseRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncCreateDatabase(context, request, cq);
       },
@@ -65,43 +63,42 @@ DefaultDatabaseAdminStub::AsyncCreateDatabase(
 
 StatusOr<google::longrunning::Operation>
 DefaultDatabaseAdminStub::CreateDatabase(
-    grpc::ClientContext& context, Options,
-    google::spanner::admin::database::v1::CreateDatabaseRequest const&
-        request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->CreateDatabase(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::spanner::admin::database::v1::CreateDatabaseRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->CreateDatabase(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::spanner::admin::database::v1::Database>
 DefaultDatabaseAdminStub::GetDatabase(
-    grpc::ClientContext& context, Options const&,
-    google::spanner::admin::database::v1::GetDatabaseRequest const& request) {
-  google::spanner::admin::database::v1::Database response;
-  auto status = grpc_stub_->GetDatabase(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::spanner::admin::database::v1::GetDatabaseRequest const& request) {
+    google::spanner::admin::database::v1::Database response;
+    auto status =
+        grpc_stub_->GetDatabase(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultDatabaseAdminStub::AsyncUpdateDatabase(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::spanner::admin::database::v1::UpdateDatabaseRequest const&
-        request) {
-  return internal::MakeUnaryRpcImpl<
-      google::spanner::admin::database::v1::UpdateDatabaseRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::spanner::admin::database::v1::UpdateDatabaseRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::spanner::admin::database::v1::UpdateDatabaseRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::spanner::admin::database::v1::UpdateDatabaseRequest const&
-                 request,
+             google::spanner::admin::database::v1::UpdateDatabaseRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncUpdateDatabase(context, request, cq);
       },
@@ -110,33 +107,30 @@ DefaultDatabaseAdminStub::AsyncUpdateDatabase(
 
 StatusOr<google::longrunning::Operation>
 DefaultDatabaseAdminStub::UpdateDatabase(
-    grpc::ClientContext& context, Options,
-    google::spanner::admin::database::v1::UpdateDatabaseRequest const&
-        request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->UpdateDatabase(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::spanner::admin::database::v1::UpdateDatabaseRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->UpdateDatabase(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultDatabaseAdminStub::AsyncUpdateDatabaseDdl(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::spanner::admin::database::v1::UpdateDatabaseDdlRequest const&
-        request) {
-  return internal::MakeUnaryRpcImpl<
-      google::spanner::admin::database::v1::UpdateDatabaseDdlRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::spanner::admin::database::v1::UpdateDatabaseDdlRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::spanner::admin::database::v1::UpdateDatabaseDdlRequest,
+                                    google::longrunning::Operation>(
       cq,
-      [this](
-          grpc::ClientContext* context,
-          google::spanner::admin::database::v1::UpdateDatabaseDdlRequest const&
-              request,
-          grpc::CompletionQueue* cq) {
+      [this](grpc::ClientContext* context,
+             google::spanner::admin::database::v1::UpdateDatabaseDdlRequest const& request,
+             grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncUpdateDatabaseDdl(context, request, cq);
       },
       request, std::move(context));
@@ -144,196 +138,208 @@ DefaultDatabaseAdminStub::AsyncUpdateDatabaseDdl(
 
 StatusOr<google::longrunning::Operation>
 DefaultDatabaseAdminStub::UpdateDatabaseDdl(
-    grpc::ClientContext& context, Options,
-    google::spanner::admin::database::v1::UpdateDatabaseDdlRequest const&
-        request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->UpdateDatabaseDdl(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::spanner::admin::database::v1::UpdateDatabaseDdlRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->UpdateDatabaseDdl(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-Status DefaultDatabaseAdminStub::DropDatabase(
-    grpc::ClientContext& context, Options const&,
-    google::spanner::admin::database::v1::DropDatabaseRequest const& request) {
-  google::protobuf::Empty response;
-  auto status = grpc_stub_->DropDatabase(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return google::cloud::Status();
+Status
+DefaultDatabaseAdminStub::DropDatabase(
+  grpc::ClientContext& context, Options const&,
+  google::spanner::admin::database::v1::DropDatabaseRequest const& request) {
+    google::protobuf::Empty response;
+    auto status =
+        grpc_stub_->DropDatabase(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return google::cloud::Status();
 }
 
 StatusOr<google::spanner::admin::database::v1::GetDatabaseDdlResponse>
 DefaultDatabaseAdminStub::GetDatabaseDdl(
-    grpc::ClientContext& context, Options const&,
-    google::spanner::admin::database::v1::GetDatabaseDdlRequest const&
-        request) {
-  google::spanner::admin::database::v1::GetDatabaseDdlResponse response;
-  auto status = grpc_stub_->GetDatabaseDdl(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::spanner::admin::database::v1::GetDatabaseDdlRequest const& request) {
+    google::spanner::admin::database::v1::GetDatabaseDdlResponse response;
+    auto status =
+        grpc_stub_->GetDatabaseDdl(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-StatusOr<google::iam::v1::Policy> DefaultDatabaseAdminStub::SetIamPolicy(
-    grpc::ClientContext& context, Options const&,
-    google::iam::v1::SetIamPolicyRequest const& request) {
-  google::iam::v1::Policy response;
-  auto status = grpc_stub_->SetIamPolicy(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::iam::v1::Policy>
+DefaultDatabaseAdminStub::SetIamPolicy(
+  grpc::ClientContext& context, Options const&,
+  google::iam::v1::SetIamPolicyRequest const& request) {
+    google::iam::v1::Policy response;
+    auto status =
+        grpc_stub_->SetIamPolicy(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-StatusOr<google::iam::v1::Policy> DefaultDatabaseAdminStub::GetIamPolicy(
-    grpc::ClientContext& context, Options const&,
-    google::iam::v1::GetIamPolicyRequest const& request) {
-  google::iam::v1::Policy response;
-  auto status = grpc_stub_->GetIamPolicy(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::iam::v1::Policy>
+DefaultDatabaseAdminStub::GetIamPolicy(
+  grpc::ClientContext& context, Options const&,
+  google::iam::v1::GetIamPolicyRequest const& request) {
+    google::iam::v1::Policy response;
+    auto status =
+        grpc_stub_->GetIamPolicy(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 DefaultDatabaseAdminStub::TestIamPermissions(
-    grpc::ClientContext& context, Options const&,
-    google::iam::v1::TestIamPermissionsRequest const& request) {
-  google::iam::v1::TestIamPermissionsResponse response;
-  auto status = grpc_stub_->TestIamPermissions(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::iam::v1::TestIamPermissionsRequest const& request) {
+    google::iam::v1::TestIamPermissionsResponse response;
+    auto status =
+        grpc_stub_->TestIamPermissions(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultDatabaseAdminStub::AsyncCreateBackup(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::spanner::admin::database::v1::CreateBackupRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::spanner::admin::database::v1::CreateBackupRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::spanner::admin::database::v1::CreateBackupRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::spanner::admin::database::v1::CreateBackupRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::spanner::admin::database::v1::CreateBackupRequest const&
-                 request,
+             google::spanner::admin::database::v1::CreateBackupRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncCreateBackup(context, request, cq);
       },
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation> DefaultDatabaseAdminStub::CreateBackup(
-    grpc::ClientContext& context, Options,
-    google::spanner::admin::database::v1::CreateBackupRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->CreateBackup(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::longrunning::Operation>
+DefaultDatabaseAdminStub::CreateBackup(
+      grpc::ClientContext& context,
+      Options,
+      google::spanner::admin::database::v1::CreateBackupRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->CreateBackup(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultDatabaseAdminStub::AsyncCopyBackup(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::spanner::admin::database::v1::CopyBackupRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::spanner::admin::database::v1::CopyBackupRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::spanner::admin::database::v1::CopyBackupRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::spanner::admin::database::v1::CopyBackupRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::spanner::admin::database::v1::CopyBackupRequest const&
-                 request,
+             google::spanner::admin::database::v1::CopyBackupRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncCopyBackup(context, request, cq);
       },
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation> DefaultDatabaseAdminStub::CopyBackup(
-    grpc::ClientContext& context, Options,
-    google::spanner::admin::database::v1::CopyBackupRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->CopyBackup(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::longrunning::Operation>
+DefaultDatabaseAdminStub::CopyBackup(
+      grpc::ClientContext& context,
+      Options,
+      google::spanner::admin::database::v1::CopyBackupRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->CopyBackup(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::spanner::admin::database::v1::Backup>
 DefaultDatabaseAdminStub::GetBackup(
-    grpc::ClientContext& context, Options const&,
-    google::spanner::admin::database::v1::GetBackupRequest const& request) {
-  google::spanner::admin::database::v1::Backup response;
-  auto status = grpc_stub_->GetBackup(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::spanner::admin::database::v1::GetBackupRequest const& request) {
+    google::spanner::admin::database::v1::Backup response;
+    auto status =
+        grpc_stub_->GetBackup(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::spanner::admin::database::v1::Backup>
 DefaultDatabaseAdminStub::UpdateBackup(
-    grpc::ClientContext& context, Options const&,
-    google::spanner::admin::database::v1::UpdateBackupRequest const& request) {
-  google::spanner::admin::database::v1::Backup response;
-  auto status = grpc_stub_->UpdateBackup(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::spanner::admin::database::v1::UpdateBackupRequest const& request) {
+    google::spanner::admin::database::v1::Backup response;
+    auto status =
+        grpc_stub_->UpdateBackup(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-Status DefaultDatabaseAdminStub::DeleteBackup(
-    grpc::ClientContext& context, Options const&,
-    google::spanner::admin::database::v1::DeleteBackupRequest const& request) {
-  google::protobuf::Empty response;
-  auto status = grpc_stub_->DeleteBackup(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return google::cloud::Status();
+Status
+DefaultDatabaseAdminStub::DeleteBackup(
+  grpc::ClientContext& context, Options const&,
+  google::spanner::admin::database::v1::DeleteBackupRequest const& request) {
+    google::protobuf::Empty response;
+    auto status =
+        grpc_stub_->DeleteBackup(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return google::cloud::Status();
 }
 
 StatusOr<google::spanner::admin::database::v1::ListBackupsResponse>
 DefaultDatabaseAdminStub::ListBackups(
-    grpc::ClientContext& context, Options const&,
-    google::spanner::admin::database::v1::ListBackupsRequest const& request) {
-  google::spanner::admin::database::v1::ListBackupsResponse response;
-  auto status = grpc_stub_->ListBackups(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::spanner::admin::database::v1::ListBackupsRequest const& request) {
+    google::spanner::admin::database::v1::ListBackupsResponse response;
+    auto status =
+        grpc_stub_->ListBackups(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultDatabaseAdminStub::AsyncRestoreDatabase(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::spanner::admin::database::v1::RestoreDatabaseRequest const&
-        request) {
-  return internal::MakeUnaryRpcImpl<
-      google::spanner::admin::database::v1::RestoreDatabaseRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::spanner::admin::database::v1::RestoreDatabaseRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::spanner::admin::database::v1::RestoreDatabaseRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::spanner::admin::database::v1::RestoreDatabaseRequest const&
-                 request,
+             google::spanner::admin::database::v1::RestoreDatabaseRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncRestoreDatabase(context, request, cq);
       },
@@ -342,177 +348,185 @@ DefaultDatabaseAdminStub::AsyncRestoreDatabase(
 
 StatusOr<google::longrunning::Operation>
 DefaultDatabaseAdminStub::RestoreDatabase(
-    grpc::ClientContext& context, Options,
-    google::spanner::admin::database::v1::RestoreDatabaseRequest const&
-        request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->RestoreDatabase(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::spanner::admin::database::v1::RestoreDatabaseRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->RestoreDatabase(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::spanner::admin::database::v1::ListDatabaseOperationsResponse>
 DefaultDatabaseAdminStub::ListDatabaseOperations(
-    grpc::ClientContext& context, Options const&,
-    google::spanner::admin::database::v1::ListDatabaseOperationsRequest const&
-        request) {
-  google::spanner::admin::database::v1::ListDatabaseOperationsResponse response;
-  auto status =
-      grpc_stub_->ListDatabaseOperations(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::spanner::admin::database::v1::ListDatabaseOperationsRequest const& request) {
+    google::spanner::admin::database::v1::ListDatabaseOperationsResponse response;
+    auto status =
+        grpc_stub_->ListDatabaseOperations(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::spanner::admin::database::v1::ListBackupOperationsResponse>
 DefaultDatabaseAdminStub::ListBackupOperations(
-    grpc::ClientContext& context, Options const&,
-    google::spanner::admin::database::v1::ListBackupOperationsRequest const&
-        request) {
-  google::spanner::admin::database::v1::ListBackupOperationsResponse response;
-  auto status = grpc_stub_->ListBackupOperations(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::spanner::admin::database::v1::ListBackupOperationsRequest const& request) {
+    google::spanner::admin::database::v1::ListBackupOperationsResponse response;
+    auto status =
+        grpc_stub_->ListBackupOperations(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::spanner::admin::database::v1::ListDatabaseRolesResponse>
 DefaultDatabaseAdminStub::ListDatabaseRoles(
-    grpc::ClientContext& context, Options const&,
-    google::spanner::admin::database::v1::ListDatabaseRolesRequest const&
-        request) {
-  google::spanner::admin::database::v1::ListDatabaseRolesResponse response;
-  auto status = grpc_stub_->ListDatabaseRoles(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::spanner::admin::database::v1::ListDatabaseRolesRequest const& request) {
+    google::spanner::admin::database::v1::ListDatabaseRolesResponse response;
+    auto status =
+        grpc_stub_->ListDatabaseRoles(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::spanner::admin::database::v1::AddSplitPointsResponse>
 DefaultDatabaseAdminStub::AddSplitPoints(
-    grpc::ClientContext& context, Options const&,
-    google::spanner::admin::database::v1::AddSplitPointsRequest const&
-        request) {
-  google::spanner::admin::database::v1::AddSplitPointsResponse response;
-  auto status = grpc_stub_->AddSplitPoints(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::spanner::admin::database::v1::AddSplitPointsRequest const& request) {
+    google::spanner::admin::database::v1::AddSplitPointsResponse response;
+    auto status =
+        grpc_stub_->AddSplitPoints(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::spanner::admin::database::v1::BackupSchedule>
 DefaultDatabaseAdminStub::CreateBackupSchedule(
-    grpc::ClientContext& context, Options const&,
-    google::spanner::admin::database::v1::CreateBackupScheduleRequest const&
-        request) {
-  google::spanner::admin::database::v1::BackupSchedule response;
-  auto status = grpc_stub_->CreateBackupSchedule(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::spanner::admin::database::v1::CreateBackupScheduleRequest const& request) {
+    google::spanner::admin::database::v1::BackupSchedule response;
+    auto status =
+        grpc_stub_->CreateBackupSchedule(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::spanner::admin::database::v1::BackupSchedule>
 DefaultDatabaseAdminStub::GetBackupSchedule(
-    grpc::ClientContext& context, Options const&,
-    google::spanner::admin::database::v1::GetBackupScheduleRequest const&
-        request) {
-  google::spanner::admin::database::v1::BackupSchedule response;
-  auto status = grpc_stub_->GetBackupSchedule(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::spanner::admin::database::v1::GetBackupScheduleRequest const& request) {
+    google::spanner::admin::database::v1::BackupSchedule response;
+    auto status =
+        grpc_stub_->GetBackupSchedule(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::spanner::admin::database::v1::BackupSchedule>
 DefaultDatabaseAdminStub::UpdateBackupSchedule(
-    grpc::ClientContext& context, Options const&,
-    google::spanner::admin::database::v1::UpdateBackupScheduleRequest const&
-        request) {
-  google::spanner::admin::database::v1::BackupSchedule response;
-  auto status = grpc_stub_->UpdateBackupSchedule(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::spanner::admin::database::v1::UpdateBackupScheduleRequest const& request) {
+    google::spanner::admin::database::v1::BackupSchedule response;
+    auto status =
+        grpc_stub_->UpdateBackupSchedule(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-Status DefaultDatabaseAdminStub::DeleteBackupSchedule(
-    grpc::ClientContext& context, Options const&,
-    google::spanner::admin::database::v1::DeleteBackupScheduleRequest const&
-        request) {
-  google::protobuf::Empty response;
-  auto status = grpc_stub_->DeleteBackupSchedule(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return google::cloud::Status();
+Status
+DefaultDatabaseAdminStub::DeleteBackupSchedule(
+  grpc::ClientContext& context, Options const&,
+  google::spanner::admin::database::v1::DeleteBackupScheduleRequest const& request) {
+    google::protobuf::Empty response;
+    auto status =
+        grpc_stub_->DeleteBackupSchedule(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return google::cloud::Status();
 }
 
 StatusOr<google::spanner::admin::database::v1::ListBackupSchedulesResponse>
 DefaultDatabaseAdminStub::ListBackupSchedules(
-    grpc::ClientContext& context, Options const&,
-    google::spanner::admin::database::v1::ListBackupSchedulesRequest const&
-        request) {
-  google::spanner::admin::database::v1::ListBackupSchedulesResponse response;
-  auto status = grpc_stub_->ListBackupSchedules(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::spanner::admin::database::v1::ListBackupSchedulesRequest const& request) {
+    google::spanner::admin::database::v1::ListBackupSchedulesResponse response;
+    auto status =
+        grpc_stub_->ListBackupSchedules(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
 DefaultDatabaseAdminStub::ListOperations(
-    grpc::ClientContext& context, Options const&,
-    google::longrunning::ListOperationsRequest const& request) {
-  google::longrunning::ListOperationsResponse response;
-  auto status = operations_stub_->ListOperations(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::longrunning::ListOperationsRequest const& request) {
+    google::longrunning::ListOperationsResponse response;
+    auto status =
+        operations_stub_->ListOperations(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-StatusOr<google::longrunning::Operation> DefaultDatabaseAdminStub::GetOperation(
-    grpc::ClientContext& context, Options const&,
-    google::longrunning::GetOperationRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = operations_stub_->GetOperation(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::longrunning::Operation>
+DefaultDatabaseAdminStub::GetOperation(
+  grpc::ClientContext& context, Options const&,
+  google::longrunning::GetOperationRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        operations_stub_->GetOperation(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-Status DefaultDatabaseAdminStub::DeleteOperation(
-    grpc::ClientContext& context, Options const&,
-    google::longrunning::DeleteOperationRequest const& request) {
-  google::protobuf::Empty response;
-  auto status = operations_stub_->DeleteOperation(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return google::cloud::Status();
+Status
+DefaultDatabaseAdminStub::DeleteOperation(
+  grpc::ClientContext& context, Options const&,
+  google::longrunning::DeleteOperationRequest const& request) {
+    google::protobuf::Empty response;
+    auto status =
+        operations_stub_->DeleteOperation(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return google::cloud::Status();
 }
 
-Status DefaultDatabaseAdminStub::CancelOperation(
-    grpc::ClientContext& context, Options const&,
-    google::longrunning::CancelOperationRequest const& request) {
-  google::protobuf::Empty response;
-  auto status = operations_stub_->CancelOperation(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return google::cloud::Status();
+Status
+DefaultDatabaseAdminStub::CancelOperation(
+  grpc::ClientContext& context, Options const&,
+  google::longrunning::CancelOperationRequest const& request) {
+    google::protobuf::Empty response;
+    auto status =
+        operations_stub_->CancelOperation(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return google::cloud::Status();
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -541,14 +555,13 @@ future<Status> DefaultDatabaseAdminStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(
-             cq,
-             [this](grpc::ClientContext* context,
-                    google::longrunning::CancelOperationRequest const& request,
-                    grpc::CompletionQueue* cq) {
-               return operations_stub_->AsyncCancelOperation(context, request,
-                                                             cq);
-             },
-             request, std::move(context))
+      cq,
+      [this](grpc::ClientContext* context,
+             google::longrunning::CancelOperationRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return operations_stub_->AsyncCancelOperation(context, request, cq);
+      },
+      request, std::move(context))
       .then([](future<StatusOr<google::protobuf::Empty>> f) {
         return f.get().status();
       });

@@ -36,103 +36,92 @@ class WorkstationsConnectionIdempotencyPolicy {
   virtual ~WorkstationsConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<WorkstationsConnectionIdempotencyPolicy> clone()
-      const;
+  virtual std::unique_ptr<WorkstationsConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency GetWorkstationCluster(
-      google::cloud::workstations::v1::GetWorkstationClusterRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  GetWorkstationCluster(google::cloud::workstations::v1::GetWorkstationClusterRequest const& request);
 
-  virtual google::cloud::Idempotency ListWorkstationClusters(
-      google::cloud::workstations::v1::ListWorkstationClustersRequest request);
+  virtual google::cloud::Idempotency
+  ListWorkstationClusters(google::cloud::workstations::v1::ListWorkstationClustersRequest request);
 
-  virtual google::cloud::Idempotency CreateWorkstationCluster(
-      google::cloud::workstations::v1::CreateWorkstationClusterRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  CreateWorkstationCluster(google::cloud::workstations::v1::CreateWorkstationClusterRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateWorkstationCluster(
-      google::cloud::workstations::v1::UpdateWorkstationClusterRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  UpdateWorkstationCluster(google::cloud::workstations::v1::UpdateWorkstationClusterRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteWorkstationCluster(
-      google::cloud::workstations::v1::DeleteWorkstationClusterRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  DeleteWorkstationCluster(google::cloud::workstations::v1::DeleteWorkstationClusterRequest const& request);
 
-  virtual google::cloud::Idempotency GetWorkstationConfig(
-      google::cloud::workstations::v1::GetWorkstationConfigRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  GetWorkstationConfig(google::cloud::workstations::v1::GetWorkstationConfigRequest const& request);
 
-  virtual google::cloud::Idempotency ListWorkstationConfigs(
-      google::cloud::workstations::v1::ListWorkstationConfigsRequest request);
+  virtual google::cloud::Idempotency
+  ListWorkstationConfigs(google::cloud::workstations::v1::ListWorkstationConfigsRequest request);
 
-  virtual google::cloud::Idempotency ListUsableWorkstationConfigs(
-      google::cloud::workstations::v1::ListUsableWorkstationConfigsRequest
-          request);
+  virtual google::cloud::Idempotency
+  ListUsableWorkstationConfigs(google::cloud::workstations::v1::ListUsableWorkstationConfigsRequest request);
 
-  virtual google::cloud::Idempotency CreateWorkstationConfig(
-      google::cloud::workstations::v1::CreateWorkstationConfigRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  CreateWorkstationConfig(google::cloud::workstations::v1::CreateWorkstationConfigRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateWorkstationConfig(
-      google::cloud::workstations::v1::UpdateWorkstationConfigRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  UpdateWorkstationConfig(google::cloud::workstations::v1::UpdateWorkstationConfigRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteWorkstationConfig(
-      google::cloud::workstations::v1::DeleteWorkstationConfigRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  DeleteWorkstationConfig(google::cloud::workstations::v1::DeleteWorkstationConfigRequest const& request);
 
-  virtual google::cloud::Idempotency GetWorkstation(
-      google::cloud::workstations::v1::GetWorkstationRequest const& request);
+  virtual google::cloud::Idempotency
+  GetWorkstation(google::cloud::workstations::v1::GetWorkstationRequest const& request);
 
-  virtual google::cloud::Idempotency ListWorkstations(
-      google::cloud::workstations::v1::ListWorkstationsRequest request);
+  virtual google::cloud::Idempotency
+  ListWorkstations(google::cloud::workstations::v1::ListWorkstationsRequest request);
 
-  virtual google::cloud::Idempotency ListUsableWorkstations(
-      google::cloud::workstations::v1::ListUsableWorkstationsRequest request);
+  virtual google::cloud::Idempotency
+  ListUsableWorkstations(google::cloud::workstations::v1::ListUsableWorkstationsRequest request);
 
-  virtual google::cloud::Idempotency CreateWorkstation(
-      google::cloud::workstations::v1::CreateWorkstationRequest const& request);
+  virtual google::cloud::Idempotency
+  CreateWorkstation(google::cloud::workstations::v1::CreateWorkstationRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateWorkstation(
-      google::cloud::workstations::v1::UpdateWorkstationRequest const& request);
+  virtual google::cloud::Idempotency
+  UpdateWorkstation(google::cloud::workstations::v1::UpdateWorkstationRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteWorkstation(
-      google::cloud::workstations::v1::DeleteWorkstationRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteWorkstation(google::cloud::workstations::v1::DeleteWorkstationRequest const& request);
 
-  virtual google::cloud::Idempotency StartWorkstation(
-      google::cloud::workstations::v1::StartWorkstationRequest const& request);
+  virtual google::cloud::Idempotency
+  StartWorkstation(google::cloud::workstations::v1::StartWorkstationRequest const& request);
 
-  virtual google::cloud::Idempotency StopWorkstation(
-      google::cloud::workstations::v1::StopWorkstationRequest const& request);
+  virtual google::cloud::Idempotency
+  StopWorkstation(google::cloud::workstations::v1::StopWorkstationRequest const& request);
 
-  virtual google::cloud::Idempotency GenerateAccessToken(
-      google::cloud::workstations::v1::GenerateAccessTokenRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  GenerateAccessToken(google::cloud::workstations::v1::GenerateAccessTokenRequest const& request);
 
-  virtual google::cloud::Idempotency SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request);
+  virtual google::cloud::Idempotency
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
 
-  virtual google::cloud::Idempotency ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual google::cloud::Idempotency
+  ListOperations(google::longrunning::ListOperationsRequest request);
 
-  virtual google::cloud::Idempotency GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
 
-  virtual google::cloud::Idempotency CancelOperation(
-      google::longrunning::CancelOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  CancelOperation(google::longrunning::CancelOperationRequest const& request);
 };
 
 std::unique_ptr<WorkstationsConnectionIdempotencyPolicy>
-MakeDefaultWorkstationsConnectionIdempotencyPolicy();
+    MakeDefaultWorkstationsConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace workstations_v1

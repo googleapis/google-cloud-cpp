@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_DATATRANSFER_V1_DATA_TRANSFER_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_DATATRANSFER_V1_DATA_TRANSFER_CONNECTION_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/bigquery/datatransfer/v1/data_transfer_connection_idempotency_policy.h"
 #include "google/cloud/bigquery/datatransfer/v1/internal/data_transfer_retry_traits.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -52,8 +52,7 @@ class DataTransferServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class DataTransferServiceLimitedErrorCountRetryPolicy
-    : public DataTransferServiceRetryPolicy {
+class DataTransferServiceLimitedErrorCountRetryPolicy : public DataTransferServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -63,16 +62,14 @@ class DataTransferServiceLimitedErrorCountRetryPolicy
    *     @p maximum_failures == 0.
    */
   explicit DataTransferServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   DataTransferServiceLimitedErrorCountRetryPolicy(
       DataTransferServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : DataTransferServiceLimitedErrorCountRetryPolicy(
-            rhs.maximum_failures()) {}
+    : DataTransferServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   DataTransferServiceLimitedErrorCountRetryPolicy(
       DataTransferServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : DataTransferServiceLimitedErrorCountRetryPolicy(
-            rhs.maximum_failures()) {}
+    : DataTransferServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -92,9 +89,7 @@ class DataTransferServiceLimitedErrorCountRetryPolicy
   using BaseType = DataTransferServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      bigquery_datatransfer_v1_internal::DataTransferServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<bigquery_datatransfer_v1_internal::DataTransferServiceRetryTraits> impl_;
 };
 
 /**
@@ -107,8 +102,7 @@ class DataTransferServiceLimitedErrorCountRetryPolicy
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class DataTransferServiceLimitedTimeRetryPolicy
-    : public DataTransferServiceRetryPolicy {
+class DataTransferServiceLimitedTimeRetryPolicy : public DataTransferServiceRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -133,14 +127,12 @@ class DataTransferServiceLimitedTimeRetryPolicy
   template <typename DurationRep, typename DurationPeriod>
   explicit DataTransferServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  DataTransferServiceLimitedTimeRetryPolicy(
-      DataTransferServiceLimitedTimeRetryPolicy&& rhs) noexcept
-      : DataTransferServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  DataTransferServiceLimitedTimeRetryPolicy(
-      DataTransferServiceLimitedTimeRetryPolicy const& rhs) noexcept
-      : DataTransferServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  DataTransferServiceLimitedTimeRetryPolicy(DataTransferServiceLimitedTimeRetryPolicy&& rhs) noexcept
+    : DataTransferServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  DataTransferServiceLimitedTimeRetryPolicy(DataTransferServiceLimitedTimeRetryPolicy const& rhs) noexcept
+    : DataTransferServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -162,23 +154,20 @@ class DataTransferServiceLimitedTimeRetryPolicy
   using BaseType = DataTransferServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      bigquery_datatransfer_v1_internal::DataTransferServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<bigquery_datatransfer_v1_internal::DataTransferServiceRetryTraits> impl_;
 };
 
 /**
  * The `DataTransferServiceConnection` object for `DataTransferServiceClient`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `DataTransferServiceClient`. This allows users to inject custom
- * behavior (e.g., with a Google Mock object) when writing tests that use
- * objects of type `DataTransferServiceClient`.
+ * sets in `DataTransferServiceClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `DataTransferServiceClient`.
  *
  * To create a concrete instance, see `MakeDataTransferServiceConnection()`.
  *
- * For mocking, see
- * `bigquery_datatransfer_v1_mocks::MockDataTransferServiceConnection`.
+ * For mocking, see `bigquery_datatransfer_v1_mocks::MockDataTransferServiceConnection`.
  */
 class DataTransferServiceConnection {
  public:
@@ -187,114 +176,83 @@ class DataTransferServiceConnection {
   virtual Options options() { return Options{}; }
 
   virtual StatusOr<google::cloud::bigquery::datatransfer::v1::DataSource>
-  GetDataSource(
-      google::cloud::bigquery::datatransfer::v1::GetDataSourceRequest const&
-          request);
+  GetDataSource(google::cloud::bigquery::datatransfer::v1::GetDataSourceRequest const& request);
 
   virtual StreamRange<google::cloud::bigquery::datatransfer::v1::DataSource>
-  ListDataSources(
-      google::cloud::bigquery::datatransfer::v1::ListDataSourcesRequest
-          request);
+  ListDataSources(google::cloud::bigquery::datatransfer::v1::ListDataSourcesRequest request);
 
   virtual StatusOr<google::cloud::bigquery::datatransfer::v1::TransferConfig>
-  CreateTransferConfig(google::cloud::bigquery::datatransfer::v1::
-                           CreateTransferConfigRequest const& request);
+  CreateTransferConfig(google::cloud::bigquery::datatransfer::v1::CreateTransferConfigRequest const& request);
 
   virtual StatusOr<google::cloud::bigquery::datatransfer::v1::TransferConfig>
-  UpdateTransferConfig(google::cloud::bigquery::datatransfer::v1::
-                           UpdateTransferConfigRequest const& request);
+  UpdateTransferConfig(google::cloud::bigquery::datatransfer::v1::UpdateTransferConfigRequest const& request);
 
-  virtual Status DeleteTransferConfig(
-      google::cloud::bigquery::datatransfer::v1::
-          DeleteTransferConfigRequest const& request);
+  virtual Status
+  DeleteTransferConfig(google::cloud::bigquery::datatransfer::v1::DeleteTransferConfigRequest const& request);
 
   virtual StatusOr<google::cloud::bigquery::datatransfer::v1::TransferConfig>
-  GetTransferConfig(
-      google::cloud::bigquery::datatransfer::v1::GetTransferConfigRequest const&
-          request);
+  GetTransferConfig(google::cloud::bigquery::datatransfer::v1::GetTransferConfigRequest const& request);
 
   virtual StreamRange<google::cloud::bigquery::datatransfer::v1::TransferConfig>
-  ListTransferConfigs(
-      google::cloud::bigquery::datatransfer::v1::ListTransferConfigsRequest
-          request);
+  ListTransferConfigs(google::cloud::bigquery::datatransfer::v1::ListTransferConfigsRequest request);
 
-  virtual StatusOr<
-      google::cloud::bigquery::datatransfer::v1::ScheduleTransferRunsResponse>
-  ScheduleTransferRuns(google::cloud::bigquery::datatransfer::v1::
-                           ScheduleTransferRunsRequest const& request);
+  virtual StatusOr<google::cloud::bigquery::datatransfer::v1::ScheduleTransferRunsResponse>
+  ScheduleTransferRuns(google::cloud::bigquery::datatransfer::v1::ScheduleTransferRunsRequest const& request);
 
-  virtual StatusOr<google::cloud::bigquery::datatransfer::v1::
-                       StartManualTransferRunsResponse>
-  StartManualTransferRuns(google::cloud::bigquery::datatransfer::v1::
-                              StartManualTransferRunsRequest const& request);
+  virtual StatusOr<google::cloud::bigquery::datatransfer::v1::StartManualTransferRunsResponse>
+  StartManualTransferRuns(google::cloud::bigquery::datatransfer::v1::StartManualTransferRunsRequest const& request);
 
   virtual StatusOr<google::cloud::bigquery::datatransfer::v1::TransferRun>
-  GetTransferRun(
-      google::cloud::bigquery::datatransfer::v1::GetTransferRunRequest const&
-          request);
+  GetTransferRun(google::cloud::bigquery::datatransfer::v1::GetTransferRunRequest const& request);
 
-  virtual Status DeleteTransferRun(
-      google::cloud::bigquery::datatransfer::v1::DeleteTransferRunRequest const&
-          request);
+  virtual Status
+  DeleteTransferRun(google::cloud::bigquery::datatransfer::v1::DeleteTransferRunRequest const& request);
 
   virtual StreamRange<google::cloud::bigquery::datatransfer::v1::TransferRun>
-  ListTransferRuns(
-      google::cloud::bigquery::datatransfer::v1::ListTransferRunsRequest
-          request);
+  ListTransferRuns(google::cloud::bigquery::datatransfer::v1::ListTransferRunsRequest request);
 
-  virtual StreamRange<
-      google::cloud::bigquery::datatransfer::v1::TransferMessage>
-  ListTransferLogs(
-      google::cloud::bigquery::datatransfer::v1::ListTransferLogsRequest
-          request);
+  virtual StreamRange<google::cloud::bigquery::datatransfer::v1::TransferMessage>
+  ListTransferLogs(google::cloud::bigquery::datatransfer::v1::ListTransferLogsRequest request);
 
-  virtual StatusOr<
-      google::cloud::bigquery::datatransfer::v1::CheckValidCredsResponse>
-  CheckValidCreds(
-      google::cloud::bigquery::datatransfer::v1::CheckValidCredsRequest const&
-          request);
+  virtual StatusOr<google::cloud::bigquery::datatransfer::v1::CheckValidCredsResponse>
+  CheckValidCreds(google::cloud::bigquery::datatransfer::v1::CheckValidCredsRequest const& request);
 
-  virtual Status EnrollDataSources(
-      google::cloud::bigquery::datatransfer::v1::EnrollDataSourcesRequest const&
-          request);
+  virtual Status
+  EnrollDataSources(google::cloud::bigquery::datatransfer::v1::EnrollDataSourcesRequest const& request);
 
-  virtual Status UnenrollDataSources(
-      google::cloud::bigquery::datatransfer::v1::
-          UnenrollDataSourcesRequest const& request);
+  virtual Status
+  UnenrollDataSources(google::cloud::bigquery::datatransfer::v1::UnenrollDataSourcesRequest const& request);
 
-  virtual StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request);
+  virtual StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request);
 
-  virtual StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request);
+  virtual StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request);
 };
 
 /**
- * A factory function to construct an object of type
- * `DataTransferServiceConnection`.
+ * A factory function to construct an object of type `DataTransferServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of
- * DataTransferServiceClient.
+ * should be passed as an argument to the constructor of DataTransferServiceClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `DataTransferServiceConnection`. Expected options are any of the
- * types in the following option lists:
+ * returned `DataTransferServiceConnection`. Expected options are any of the types in
+ * the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * -
- * `google::cloud::bigquery_datatransfer_v1::DataTransferServicePolicyOptionList`
+ * - `google::cloud::bigquery_datatransfer_v1::DataTransferServicePolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
- * @param options (optional) Configure the `DataTransferServiceConnection`
- * created by this function.
+ * @param options (optional) Configure the `DataTransferServiceConnection` created by
+ * this function.
  */
-std::shared_ptr<DataTransferServiceConnection>
-MakeDataTransferServiceConnection(Options options = {});
+std::shared_ptr<DataTransferServiceConnection> MakeDataTransferServiceConnection(
+    Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_datatransfer_v1

@@ -34,70 +34,56 @@ DeploymentsTracingConnection::DeploymentsTracingConnection(
     : child_(std::move(child)) {}
 
 StreamRange<google::cloud::dialogflow::cx::v3::Deployment>
-DeploymentsTracingConnection::ListDeployments(
-    google::cloud::dialogflow::cx::v3::ListDeploymentsRequest request) {
-  auto span = internal::MakeSpan(
-      "dialogflow_cx::DeploymentsConnection::ListDeployments");
+DeploymentsTracingConnection::ListDeployments(google::cloud::dialogflow::cx::v3::ListDeploymentsRequest request) {
+  auto span = internal::MakeSpan("dialogflow_cx::DeploymentsConnection::ListDeployments");
   internal::OTelScope scope(span);
   auto sr = child_->ListDeployments(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::dialogflow::cx::v3::Deployment>(std::move(span),
-                                                     std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::dialogflow::cx::v3::Deployment>(
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Deployment>
-DeploymentsTracingConnection::GetDeployment(
-    google::cloud::dialogflow::cx::v3::GetDeploymentRequest const& request) {
-  auto span =
-      internal::MakeSpan("dialogflow_cx::DeploymentsConnection::GetDeployment");
+DeploymentsTracingConnection::GetDeployment(google::cloud::dialogflow::cx::v3::GetDeploymentRequest const& request) {
+  auto span = internal::MakeSpan("dialogflow_cx::DeploymentsConnection::GetDeployment");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetDeployment(request));
 }
 
 StreamRange<google::cloud::location::Location>
-DeploymentsTracingConnection::ListLocations(
-    google::cloud::location::ListLocationsRequest request) {
-  auto span =
-      internal::MakeSpan("dialogflow_cx::DeploymentsConnection::ListLocations");
+DeploymentsTracingConnection::ListLocations(google::cloud::location::ListLocationsRequest request) {
+  auto span = internal::MakeSpan("dialogflow_cx::DeploymentsConnection::ListLocations");
   internal::OTelScope scope(span);
   auto sr = child_->ListLocations(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::location::Location>(
-      std::move(span), std::move(sr));
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::location::Location>
-DeploymentsTracingConnection::GetLocation(
-    google::cloud::location::GetLocationRequest const& request) {
-  auto span =
-      internal::MakeSpan("dialogflow_cx::DeploymentsConnection::GetLocation");
+DeploymentsTracingConnection::GetLocation(google::cloud::location::GetLocationRequest const& request) {
+  auto span = internal::MakeSpan("dialogflow_cx::DeploymentsConnection::GetLocation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetLocation(request));
 }
 
 StreamRange<google::longrunning::Operation>
-DeploymentsTracingConnection::ListOperations(
-    google::longrunning::ListOperationsRequest request) {
-  auto span = internal::MakeSpan(
-      "dialogflow_cx::DeploymentsConnection::ListOperations");
+DeploymentsTracingConnection::ListOperations(google::longrunning::ListOperationsRequest request) {
+  auto span = internal::MakeSpan("dialogflow_cx::DeploymentsConnection::ListOperations");
   internal::OTelScope scope(span);
   auto sr = child_->ListOperations(std::move(request));
   return internal::MakeTracedStreamRange<google::longrunning::Operation>(
-      std::move(span), std::move(sr));
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::longrunning::Operation>
-DeploymentsTracingConnection::GetOperation(
-    google::longrunning::GetOperationRequest const& request) {
-  auto span =
-      internal::MakeSpan("dialogflow_cx::DeploymentsConnection::GetOperation");
+DeploymentsTracingConnection::GetOperation(google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpan("dialogflow_cx::DeploymentsConnection::GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOperation(request));
 }
 
-Status DeploymentsTracingConnection::CancelOperation(
-    google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpan(
-      "dialogflow_cx::DeploymentsConnection::CancelOperation");
+Status
+DeploymentsTracingConnection::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
+  auto span = internal::MakeSpan("dialogflow_cx::DeploymentsConnection::CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CancelOperation(request));
 }

@@ -17,17 +17,17 @@
 // source: google/cloud/redis/v1/cloud_redis.proto
 
 #include "google/cloud/redis/v1/cloud_redis_connection.h"
-#include "google/cloud/redis/v1/cloud_redis_options.h"
-#include "google/cloud/redis/v1/internal/cloud_redis_connection_impl.h"
-#include "google/cloud/redis/v1/internal/cloud_redis_option_defaults.h"
-#include "google/cloud/redis/v1/internal/cloud_redis_stub_factory.h"
-#include "google/cloud/redis/v1/internal/cloud_redis_tracing_connection.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/redis/v1/cloud_redis_options.h"
+#include "google/cloud/redis/v1/internal/cloud_redis_connection_impl.h"
+#include "google/cloud/redis/v1/internal/cloud_redis_option_defaults.h"
+#include "google/cloud/redis/v1/internal/cloud_redis_stub_factory.h"
+#include "google/cloud/redis/v1/internal/cloud_redis_tracing_connection.h"
 #include <memory>
 #include <utility>
 
@@ -38,15 +38,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 CloudRedisConnection::~CloudRedisConnection() = default;
 
-StreamRange<google::cloud::redis::v1::Instance>
-CloudRedisConnection::ListInstances(
-    google::cloud::redis::v1::
-        ListInstancesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::redis::v1::Instance> CloudRedisConnection::ListInstances(
+    google::cloud::redis::v1::ListInstancesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::redis::v1::Instance>>();
 }
 
-StatusOr<google::cloud::redis::v1::Instance> CloudRedisConnection::GetInstance(
+StatusOr<google::cloud::redis::v1::Instance>
+CloudRedisConnection::GetInstance(
     google::cloud::redis::v1::GetInstanceRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -61,204 +60,226 @@ future<StatusOr<google::cloud::redis::v1::Instance>>
 CloudRedisConnection::CreateInstance(
     google::cloud::redis::v1::CreateInstanceRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::redis::v1::Instance>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::redis::v1::Instance>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation> CloudRedisConnection::CreateInstance(
-    NoAwaitTag, google::cloud::redis::v1::CreateInstanceRequest const&) {
+StatusOr<google::longrunning::Operation>
+CloudRedisConnection::CreateInstance(
+    NoAwaitTag,
+    google::cloud::redis::v1::CreateInstanceRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::redis::v1::Instance>>
-CloudRedisConnection::CreateInstance(google::longrunning::Operation const&) {
+CloudRedisConnection::CreateInstance(
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::redis::v1::Instance>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::redis::v1::Instance>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::redis::v1::Instance>>
 CloudRedisConnection::UpdateInstance(
     google::cloud::redis::v1::UpdateInstanceRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::redis::v1::Instance>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::redis::v1::Instance>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation> CloudRedisConnection::UpdateInstance(
-    NoAwaitTag, google::cloud::redis::v1::UpdateInstanceRequest const&) {
+StatusOr<google::longrunning::Operation>
+CloudRedisConnection::UpdateInstance(
+    NoAwaitTag,
+    google::cloud::redis::v1::UpdateInstanceRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::redis::v1::Instance>>
-CloudRedisConnection::UpdateInstance(google::longrunning::Operation const&) {
+CloudRedisConnection::UpdateInstance(
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::redis::v1::Instance>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::redis::v1::Instance>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::redis::v1::Instance>>
 CloudRedisConnection::UpgradeInstance(
     google::cloud::redis::v1::UpgradeInstanceRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::redis::v1::Instance>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::redis::v1::Instance>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation> CloudRedisConnection::UpgradeInstance(
-    NoAwaitTag, google::cloud::redis::v1::UpgradeInstanceRequest const&) {
+StatusOr<google::longrunning::Operation>
+CloudRedisConnection::UpgradeInstance(
+    NoAwaitTag,
+    google::cloud::redis::v1::UpgradeInstanceRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::redis::v1::Instance>>
-CloudRedisConnection::UpgradeInstance(google::longrunning::Operation const&) {
+CloudRedisConnection::UpgradeInstance(
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::redis::v1::Instance>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::redis::v1::Instance>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::redis::v1::Instance>>
 CloudRedisConnection::ImportInstance(
     google::cloud::redis::v1::ImportInstanceRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::redis::v1::Instance>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::redis::v1::Instance>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation> CloudRedisConnection::ImportInstance(
-    NoAwaitTag, google::cloud::redis::v1::ImportInstanceRequest const&) {
+StatusOr<google::longrunning::Operation>
+CloudRedisConnection::ImportInstance(
+    NoAwaitTag,
+    google::cloud::redis::v1::ImportInstanceRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::redis::v1::Instance>>
-CloudRedisConnection::ImportInstance(google::longrunning::Operation const&) {
+CloudRedisConnection::ImportInstance(
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::redis::v1::Instance>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::redis::v1::Instance>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::redis::v1::Instance>>
 CloudRedisConnection::ExportInstance(
     google::cloud::redis::v1::ExportInstanceRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::redis::v1::Instance>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::redis::v1::Instance>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation> CloudRedisConnection::ExportInstance(
-    NoAwaitTag, google::cloud::redis::v1::ExportInstanceRequest const&) {
+StatusOr<google::longrunning::Operation>
+CloudRedisConnection::ExportInstance(
+    NoAwaitTag,
+    google::cloud::redis::v1::ExportInstanceRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::redis::v1::Instance>>
-CloudRedisConnection::ExportInstance(google::longrunning::Operation const&) {
+CloudRedisConnection::ExportInstance(
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::redis::v1::Instance>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::redis::v1::Instance>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::redis::v1::Instance>>
 CloudRedisConnection::FailoverInstance(
     google::cloud::redis::v1::FailoverInstanceRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::redis::v1::Instance>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::redis::v1::Instance>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation> CloudRedisConnection::FailoverInstance(
-    NoAwaitTag, google::cloud::redis::v1::FailoverInstanceRequest const&) {
+StatusOr<google::longrunning::Operation>
+CloudRedisConnection::FailoverInstance(
+    NoAwaitTag,
+    google::cloud::redis::v1::FailoverInstanceRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::redis::v1::Instance>>
-CloudRedisConnection::FailoverInstance(google::longrunning::Operation const&) {
+CloudRedisConnection::FailoverInstance(
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::redis::v1::Instance>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::redis::v1::Instance>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::redis::v1::OperationMetadata>>
 CloudRedisConnection::DeleteInstance(
     google::cloud::redis::v1::DeleteInstanceRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::redis::v1::OperationMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::redis::v1::OperationMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation> CloudRedisConnection::DeleteInstance(
-    NoAwaitTag, google::cloud::redis::v1::DeleteInstanceRequest const&) {
+StatusOr<google::longrunning::Operation>
+CloudRedisConnection::DeleteInstance(
+    NoAwaitTag,
+    google::cloud::redis::v1::DeleteInstanceRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::redis::v1::OperationMetadata>>
-CloudRedisConnection::DeleteInstance(google::longrunning::Operation const&) {
+CloudRedisConnection::DeleteInstance(
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::redis::v1::OperationMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::redis::v1::OperationMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::redis::v1::Instance>>
 CloudRedisConnection::RescheduleMaintenance(
     google::cloud::redis::v1::RescheduleMaintenanceRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::redis::v1::Instance>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::redis::v1::Instance>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 CloudRedisConnection::RescheduleMaintenance(
-    NoAwaitTag, google::cloud::redis::v1::RescheduleMaintenanceRequest const&) {
+    NoAwaitTag,
+    google::cloud::redis::v1::RescheduleMaintenanceRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::redis::v1::Instance>>
 CloudRedisConnection::RescheduleMaintenance(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::redis::v1::Instance>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::redis::v1::Instance>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StreamRange<google::cloud::location::Location>
-CloudRedisConnection::ListLocations(
-    google::cloud::location::
-        ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::location::Location> CloudRedisConnection::ListLocations(
+    google::cloud::location::ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::location::Location>>();
 }
 
-StatusOr<google::cloud::location::Location> CloudRedisConnection::GetLocation(
+StatusOr<google::cloud::location::Location>
+CloudRedisConnection::GetLocation(
     google::cloud::location::GetLocationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::longrunning::Operation>
-CloudRedisConnection::ListOperations(
-    google::longrunning::
-        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::longrunning::Operation> CloudRedisConnection::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }
 
-StatusOr<google::longrunning::Operation> CloudRedisConnection::GetOperation(
+StatusOr<google::longrunning::Operation>
+CloudRedisConnection::GetOperation(
     google::longrunning::GetOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status CloudRedisConnection::DeleteOperation(
+Status
+CloudRedisConnection::DeleteOperation(
     google::longrunning::DeleteOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status CloudRedisConnection::CancelOperation(
+Status
+CloudRedisConnection::CancelOperation(
     google::longrunning::CancelOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -266,16 +287,17 @@ Status CloudRedisConnection::CancelOperation(
 std::shared_ptr<CloudRedisConnection> MakeCloudRedisConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 CloudRedisPolicyOptionList>(options, __func__);
-  options = redis_v1_internal::CloudRedisDefaultOptions(std::move(options));
+      UnifiedCredentialsOptionList,
+      CloudRedisPolicyOptionList>(options, __func__);
+  options = redis_v1_internal::CloudRedisDefaultOptions(
+      std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
-  auto stub =
-      redis_v1_internal::CreateDefaultCloudRedisStub(std::move(auth), options);
+  auto stub = redis_v1_internal::CreateDefaultCloudRedisStub(
+    std::move(auth), options);
   return redis_v1_internal::MakeCloudRedisTracingConnection(
       std::make_shared<redis_v1_internal::CloudRedisConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options)));
+      std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

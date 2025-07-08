@@ -36,23 +36,22 @@ DefaultSqlFlagsServiceRestStub::DefaultSqlFlagsServiceRestStub(Options options)
       options_(std::move(options)) {}
 
 DefaultSqlFlagsServiceRestStub::DefaultSqlFlagsServiceRestStub(
-    std::shared_ptr<rest_internal::RestClient> service, Options options)
-    : service_(std::move(service)), options_(std::move(options)) {}
+    std::shared_ptr<rest_internal::RestClient> service,
+    Options options)
+    : service_(std::move(service)),
+      options_(std::move(options)) {}
 
 StatusOr<google::cloud::sql::v1::FlagsListResponse>
 DefaultSqlFlagsServiceRestStub::List(
-    google::cloud::rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::sql::v1::SqlFlagsListRequest const& request) {
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::sql::v1::SqlFlagsListRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"database_version", request.database_version()});
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
+  query_params = rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<google::cloud::sql::v1::FlagsListResponse>(
       *service_, rest_context, request, true,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   "flags"),
-      std::move(query_params));
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/", "flags"), std::move(query_params));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -34,8 +34,7 @@ SessionControllerTracingConnection::SessionControllerTracingConnection(
     : child_(std::move(child)) {}
 
 future<StatusOr<google::cloud::dataproc::v1::Session>>
-SessionControllerTracingConnection::CreateSession(
-    google::cloud::dataproc::v1::CreateSessionRequest const& request) {
+SessionControllerTracingConnection::CreateSession(google::cloud::dataproc::v1::CreateSessionRequest const& request) {
   auto span = internal::MakeSpan(
       "dataproc_v1::SessionControllerConnection::CreateSession");
   internal::OTelScope scope(span);
@@ -44,12 +43,12 @@ SessionControllerTracingConnection::CreateSession(
 
 StatusOr<google::longrunning::Operation>
 SessionControllerTracingConnection::CreateSession(
-    NoAwaitTag,
-    google::cloud::dataproc::v1::CreateSessionRequest const& request) {
+    NoAwaitTag, google::cloud::dataproc::v1::CreateSessionRequest const& request) {
   auto span = internal::MakeSpan(
       "dataproc_v1::SessionControllerConnection::CreateSession");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->CreateSession(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->CreateSession(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::dataproc::v1::Session>>
@@ -58,32 +57,28 @@ SessionControllerTracingConnection::CreateSession(
   auto span = internal::MakeSpan(
       "dataproc_v1::SessionControllerConnection::CreateSession");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->CreateSession(operation));
+  return internal::EndSpan(std::move(span),
+      child_->CreateSession(operation));
 }
 
 StatusOr<google::cloud::dataproc::v1::Session>
-SessionControllerTracingConnection::GetSession(
-    google::cloud::dataproc::v1::GetSessionRequest const& request) {
-  auto span = internal::MakeSpan(
-      "dataproc_v1::SessionControllerConnection::GetSession");
+SessionControllerTracingConnection::GetSession(google::cloud::dataproc::v1::GetSessionRequest const& request) {
+  auto span = internal::MakeSpan("dataproc_v1::SessionControllerConnection::GetSession");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetSession(request));
 }
 
 StreamRange<google::cloud::dataproc::v1::Session>
-SessionControllerTracingConnection::ListSessions(
-    google::cloud::dataproc::v1::ListSessionsRequest request) {
-  auto span = internal::MakeSpan(
-      "dataproc_v1::SessionControllerConnection::ListSessions");
+SessionControllerTracingConnection::ListSessions(google::cloud::dataproc::v1::ListSessionsRequest request) {
+  auto span = internal::MakeSpan("dataproc_v1::SessionControllerConnection::ListSessions");
   internal::OTelScope scope(span);
   auto sr = child_->ListSessions(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::dataproc::v1::Session>(
-      std::move(span), std::move(sr));
+        std::move(span), std::move(sr));
 }
 
 future<StatusOr<google::cloud::dataproc::v1::Session>>
-SessionControllerTracingConnection::TerminateSession(
-    google::cloud::dataproc::v1::TerminateSessionRequest const& request) {
+SessionControllerTracingConnection::TerminateSession(google::cloud::dataproc::v1::TerminateSessionRequest const& request) {
   auto span = internal::MakeSpan(
       "dataproc_v1::SessionControllerConnection::TerminateSession");
   internal::OTelScope scope(span);
@@ -92,13 +87,12 @@ SessionControllerTracingConnection::TerminateSession(
 
 StatusOr<google::longrunning::Operation>
 SessionControllerTracingConnection::TerminateSession(
-    NoAwaitTag,
-    google::cloud::dataproc::v1::TerminateSessionRequest const& request) {
+    NoAwaitTag, google::cloud::dataproc::v1::TerminateSessionRequest const& request) {
   auto span = internal::MakeSpan(
       "dataproc_v1::SessionControllerConnection::TerminateSession");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span,
-                           child_->TerminateSession(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->TerminateSession(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::dataproc::v1::Session>>
@@ -108,12 +102,11 @@ SessionControllerTracingConnection::TerminateSession(
       "dataproc_v1::SessionControllerConnection::TerminateSession");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->TerminateSession(operation));
+      child_->TerminateSession(operation));
 }
 
 future<StatusOr<google::cloud::dataproc::v1::Session>>
-SessionControllerTracingConnection::DeleteSession(
-    google::cloud::dataproc::v1::DeleteSessionRequest const& request) {
+SessionControllerTracingConnection::DeleteSession(google::cloud::dataproc::v1::DeleteSessionRequest const& request) {
   auto span = internal::MakeSpan(
       "dataproc_v1::SessionControllerConnection::DeleteSession");
   internal::OTelScope scope(span);
@@ -122,12 +115,12 @@ SessionControllerTracingConnection::DeleteSession(
 
 StatusOr<google::longrunning::Operation>
 SessionControllerTracingConnection::DeleteSession(
-    NoAwaitTag,
-    google::cloud::dataproc::v1::DeleteSessionRequest const& request) {
+    NoAwaitTag, google::cloud::dataproc::v1::DeleteSessionRequest const& request) {
   auto span = internal::MakeSpan(
       "dataproc_v1::SessionControllerConnection::DeleteSession");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->DeleteSession(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->DeleteSession(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::dataproc::v1::Session>>
@@ -136,68 +129,57 @@ SessionControllerTracingConnection::DeleteSession(
   auto span = internal::MakeSpan(
       "dataproc_v1::SessionControllerConnection::DeleteSession");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->DeleteSession(operation));
+  return internal::EndSpan(std::move(span),
+      child_->DeleteSession(operation));
 }
 
 StatusOr<google::iam::v1::Policy>
-SessionControllerTracingConnection::SetIamPolicy(
-    google::iam::v1::SetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpan(
-      "dataproc_v1::SessionControllerConnection::SetIamPolicy");
+SessionControllerTracingConnection::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) {
+  auto span = internal::MakeSpan("dataproc_v1::SessionControllerConnection::SetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->SetIamPolicy(request));
 }
 
 StatusOr<google::iam::v1::Policy>
-SessionControllerTracingConnection::GetIamPolicy(
-    google::iam::v1::GetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpan(
-      "dataproc_v1::SessionControllerConnection::GetIamPolicy");
+SessionControllerTracingConnection::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) {
+  auto span = internal::MakeSpan("dataproc_v1::SessionControllerConnection::GetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetIamPolicy(request));
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-SessionControllerTracingConnection::TestIamPermissions(
-    google::iam::v1::TestIamPermissionsRequest const& request) {
-  auto span = internal::MakeSpan(
-      "dataproc_v1::SessionControllerConnection::TestIamPermissions");
+SessionControllerTracingConnection::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) {
+  auto span = internal::MakeSpan("dataproc_v1::SessionControllerConnection::TestIamPermissions");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->TestIamPermissions(request));
 }
 
 StreamRange<google::longrunning::Operation>
-SessionControllerTracingConnection::ListOperations(
-    google::longrunning::ListOperationsRequest request) {
-  auto span = internal::MakeSpan(
-      "dataproc_v1::SessionControllerConnection::ListOperations");
+SessionControllerTracingConnection::ListOperations(google::longrunning::ListOperationsRequest request) {
+  auto span = internal::MakeSpan("dataproc_v1::SessionControllerConnection::ListOperations");
   internal::OTelScope scope(span);
   auto sr = child_->ListOperations(std::move(request));
   return internal::MakeTracedStreamRange<google::longrunning::Operation>(
-      std::move(span), std::move(sr));
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::longrunning::Operation>
-SessionControllerTracingConnection::GetOperation(
-    google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpan(
-      "dataproc_v1::SessionControllerConnection::GetOperation");
+SessionControllerTracingConnection::GetOperation(google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpan("dataproc_v1::SessionControllerConnection::GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOperation(request));
 }
 
-Status SessionControllerTracingConnection::DeleteOperation(
-    google::longrunning::DeleteOperationRequest const& request) {
-  auto span = internal::MakeSpan(
-      "dataproc_v1::SessionControllerConnection::DeleteOperation");
+Status
+SessionControllerTracingConnection::DeleteOperation(google::longrunning::DeleteOperationRequest const& request) {
+  auto span = internal::MakeSpan("dataproc_v1::SessionControllerConnection::DeleteOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteOperation(request));
 }
 
-Status SessionControllerTracingConnection::CancelOperation(
-    google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpan(
-      "dataproc_v1::SessionControllerConnection::CancelOperation");
+Status
+SessionControllerTracingConnection::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
+  auto span = internal::MakeSpan("dataproc_v1::SessionControllerConnection::CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CancelOperation(request));
 }
@@ -209,8 +191,7 @@ MakeSessionControllerTracingConnection(
     std::shared_ptr<dataproc_v1::SessionControllerConnection> conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
-    conn =
-        std::make_shared<SessionControllerTracingConnection>(std::move(conn));
+    conn = std::make_shared<SessionControllerTracingConnection>(std::move(conn));
   }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;

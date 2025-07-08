@@ -17,15 +17,15 @@
 // source: google/iam/credentials/v1/iamcredentials.proto
 
 #include "google/cloud/iam/credentials/v1/iam_credentials_connection.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
+#include "google/cloud/grpc_options.h"
 #include "google/cloud/iam/credentials/v1/iam_credentials_options.h"
 #include "google/cloud/iam/credentials/v1/internal/iam_credentials_connection_impl.h"
 #include "google/cloud/iam/credentials/v1/internal/iam_credentials_option_defaults.h"
 #include "google/cloud/iam/credentials/v1/internal/iam_credentials_stub_factory.h"
 #include "google/cloud/iam/credentials/v1/internal/iam_credentials_tracing_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
-#include "google/cloud/credentials.h"
-#include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
 #include <utility>
@@ -64,19 +64,17 @@ IAMCredentialsConnection::SignJwt(
 std::shared_ptr<IAMCredentialsConnection> MakeIAMCredentialsConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 IAMCredentialsPolicyOptionList>(options,
-                                                                 __func__);
+      UnifiedCredentialsOptionList,
+      IAMCredentialsPolicyOptionList>(options, __func__);
   options = iam_credentials_v1_internal::IAMCredentialsDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = iam_credentials_v1_internal::CreateDefaultIAMCredentialsStub(
-      std::move(auth), options);
+    std::move(auth), options);
   return iam_credentials_v1_internal::MakeIAMCredentialsTracingConnection(
-      std::make_shared<
-          iam_credentials_v1_internal::IAMCredentialsConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options)));
+      std::make_shared<iam_credentials_v1_internal::IAMCredentialsConnectionImpl>(
+      std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

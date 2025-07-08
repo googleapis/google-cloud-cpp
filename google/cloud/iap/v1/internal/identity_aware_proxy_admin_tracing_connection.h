@@ -36,48 +36,42 @@ class IdentityAwareProxyAdminServiceTracingConnection
   ~IdentityAwareProxyAdminServiceTracingConnection() override = default;
 
   explicit IdentityAwareProxyAdminServiceTracingConnection(
-      std::shared_ptr<iap_v1::IdentityAwareProxyAdminServiceConnection> child);
+    std::shared_ptr<iap_v1::IdentityAwareProxyAdminServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request) override;
+  StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) override;
 
-  StatusOr<google::cloud::iap::v1::IapSettings> GetIapSettings(
-      google::cloud::iap::v1::GetIapSettingsRequest const& request) override;
+  StatusOr<google::cloud::iap::v1::IapSettings>
+  GetIapSettings(google::cloud::iap::v1::GetIapSettingsRequest const& request) override;
 
-  StatusOr<google::cloud::iap::v1::IapSettings> UpdateIapSettings(
-      google::cloud::iap::v1::UpdateIapSettingsRequest const& request) override;
+  StatusOr<google::cloud::iap::v1::IapSettings>
+  UpdateIapSettings(google::cloud::iap::v1::UpdateIapSettingsRequest const& request) override;
 
   StatusOr<google::cloud::iap::v1::ValidateIapAttributeExpressionResponse>
-  ValidateIapAttributeExpression(
-      google::cloud::iap::v1::ValidateIapAttributeExpressionRequest const&
-          request) override;
+  ValidateIapAttributeExpression(google::cloud::iap::v1::ValidateIapAttributeExpressionRequest const& request) override;
 
-  StreamRange<google::cloud::iap::v1::TunnelDestGroup> ListTunnelDestGroups(
-      google::cloud::iap::v1::ListTunnelDestGroupsRequest request) override;
+  StreamRange<google::cloud::iap::v1::TunnelDestGroup>
+  ListTunnelDestGroups(google::cloud::iap::v1::ListTunnelDestGroupsRequest request) override;
 
-  StatusOr<google::cloud::iap::v1::TunnelDestGroup> CreateTunnelDestGroup(
-      google::cloud::iap::v1::CreateTunnelDestGroupRequest const& request)
-      override;
+  StatusOr<google::cloud::iap::v1::TunnelDestGroup>
+  CreateTunnelDestGroup(google::cloud::iap::v1::CreateTunnelDestGroupRequest const& request) override;
 
-  StatusOr<google::cloud::iap::v1::TunnelDestGroup> GetTunnelDestGroup(
-      google::cloud::iap::v1::GetTunnelDestGroupRequest const& request)
-      override;
+  StatusOr<google::cloud::iap::v1::TunnelDestGroup>
+  GetTunnelDestGroup(google::cloud::iap::v1::GetTunnelDestGroupRequest const& request) override;
 
-  Status DeleteTunnelDestGroup(
-      google::cloud::iap::v1::DeleteTunnelDestGroupRequest const& request)
-      override;
+  Status
+  DeleteTunnelDestGroup(google::cloud::iap::v1::DeleteTunnelDestGroupRequest const& request) override;
 
-  StatusOr<google::cloud::iap::v1::TunnelDestGroup> UpdateTunnelDestGroup(
-      google::cloud::iap::v1::UpdateTunnelDestGroupRequest const& request)
-      override;
+  StatusOr<google::cloud::iap::v1::TunnelDestGroup>
+  UpdateTunnelDestGroup(google::cloud::iap::v1::UpdateTunnelDestGroupRequest const& request) override;
 
  private:
   std::shared_ptr<iap_v1::IdentityAwareProxyAdminServiceConnection> child_;

@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DLP_V2_DLP_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DLP_V2_DLP_OPTIONS_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/dlp/v2/dlp_connection.h"
 #include "google/cloud/dlp/v2/dlp_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -64,7 +64,8 @@ struct DlpServiceConnectionIdempotencyPolicyOption {
  * @ingroup google-cloud-dlp-options
  */
 using DlpServicePolicyOptionList =
-    OptionList<DlpServiceRetryPolicyOption, DlpServiceBackoffPolicyOption,
+    OptionList<DlpServiceRetryPolicyOption,
+               DlpServiceBackoffPolicyOption,
                DlpServiceConnectionIdempotencyPolicyOption>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

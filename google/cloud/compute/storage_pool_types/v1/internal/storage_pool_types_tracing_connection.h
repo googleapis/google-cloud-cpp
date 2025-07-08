@@ -36,28 +36,21 @@ class StoragePoolTypesTracingConnection
   ~StoragePoolTypesTracingConnection() override = default;
 
   explicit StoragePoolTypesTracingConnection(
-      std::shared_ptr<compute_storage_pool_types_v1::StoragePoolTypesConnection>
-          child);
+    std::shared_ptr<compute_storage_pool_types_v1::StoragePoolTypesConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StreamRange<std::pair<
-      std::string, google::cloud::cpp::compute::v1::StoragePoolTypesScopedList>>
-  AggregatedListStoragePoolTypes(
-      google::cloud::cpp::compute::storage_pool_types::v1::
-          AggregatedListStoragePoolTypesRequest request) override;
+  StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::StoragePoolTypesScopedList>>
+  AggregatedListStoragePoolTypes(google::cloud::cpp::compute::storage_pool_types::v1::AggregatedListStoragePoolTypesRequest request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::StoragePoolType> GetStoragePoolType(
-      google::cloud::cpp::compute::storage_pool_types::v1::
-          GetStoragePoolTypeRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::StoragePoolType>
+  GetStoragePoolType(google::cloud::cpp::compute::storage_pool_types::v1::GetStoragePoolTypeRequest const& request) override;
 
   StreamRange<google::cloud::cpp::compute::v1::StoragePoolType>
-  ListStoragePoolTypes(google::cloud::cpp::compute::storage_pool_types::v1::
-                           ListStoragePoolTypesRequest request) override;
+  ListStoragePoolTypes(google::cloud::cpp::compute::storage_pool_types::v1::ListStoragePoolTypesRequest request) override;
 
  private:
-  std::shared_ptr<compute_storage_pool_types_v1::StoragePoolTypesConnection>
-      child_;
+  std::shared_ptr<compute_storage_pool_types_v1::StoragePoolTypesConnection> child_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -70,8 +63,7 @@ class StoragePoolTypesTracingConnection
  */
 std::shared_ptr<compute_storage_pool_types_v1::StoragePoolTypesConnection>
 MakeStoragePoolTypesTracingConnection(
-    std::shared_ptr<compute_storage_pool_types_v1::StoragePoolTypesConnection>
-        conn);
+    std::shared_ptr<compute_storage_pool_types_v1::StoragePoolTypesConnection> conn);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_storage_pool_types_v1_internal

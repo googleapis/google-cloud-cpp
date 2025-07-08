@@ -34,113 +34,91 @@ AdaptationTracingConnection::AdaptationTracingConnection(
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::speech::v1::PhraseSet>
-AdaptationTracingConnection::CreatePhraseSet(
-    google::cloud::speech::v1::CreatePhraseSetRequest const& request) {
-  auto span =
-      internal::MakeSpan("speech_v1::AdaptationConnection::CreatePhraseSet");
+AdaptationTracingConnection::CreatePhraseSet(google::cloud::speech::v1::CreatePhraseSetRequest const& request) {
+  auto span = internal::MakeSpan("speech_v1::AdaptationConnection::CreatePhraseSet");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreatePhraseSet(request));
 }
 
 StatusOr<google::cloud::speech::v1::PhraseSet>
-AdaptationTracingConnection::GetPhraseSet(
-    google::cloud::speech::v1::GetPhraseSetRequest const& request) {
-  auto span =
-      internal::MakeSpan("speech_v1::AdaptationConnection::GetPhraseSet");
+AdaptationTracingConnection::GetPhraseSet(google::cloud::speech::v1::GetPhraseSetRequest const& request) {
+  auto span = internal::MakeSpan("speech_v1::AdaptationConnection::GetPhraseSet");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetPhraseSet(request));
 }
 
 StreamRange<google::cloud::speech::v1::PhraseSet>
-AdaptationTracingConnection::ListPhraseSet(
-    google::cloud::speech::v1::ListPhraseSetRequest request) {
-  auto span =
-      internal::MakeSpan("speech_v1::AdaptationConnection::ListPhraseSet");
+AdaptationTracingConnection::ListPhraseSet(google::cloud::speech::v1::ListPhraseSetRequest request) {
+  auto span = internal::MakeSpan("speech_v1::AdaptationConnection::ListPhraseSet");
   internal::OTelScope scope(span);
   auto sr = child_->ListPhraseSet(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::speech::v1::PhraseSet>(
-      std::move(span), std::move(sr));
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::speech::v1::PhraseSet>
-AdaptationTracingConnection::UpdatePhraseSet(
-    google::cloud::speech::v1::UpdatePhraseSetRequest const& request) {
-  auto span =
-      internal::MakeSpan("speech_v1::AdaptationConnection::UpdatePhraseSet");
+AdaptationTracingConnection::UpdatePhraseSet(google::cloud::speech::v1::UpdatePhraseSetRequest const& request) {
+  auto span = internal::MakeSpan("speech_v1::AdaptationConnection::UpdatePhraseSet");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdatePhraseSet(request));
 }
 
-Status AdaptationTracingConnection::DeletePhraseSet(
-    google::cloud::speech::v1::DeletePhraseSetRequest const& request) {
-  auto span =
-      internal::MakeSpan("speech_v1::AdaptationConnection::DeletePhraseSet");
+Status
+AdaptationTracingConnection::DeletePhraseSet(google::cloud::speech::v1::DeletePhraseSetRequest const& request) {
+  auto span = internal::MakeSpan("speech_v1::AdaptationConnection::DeletePhraseSet");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeletePhraseSet(request));
 }
 
 StatusOr<google::cloud::speech::v1::CustomClass>
-AdaptationTracingConnection::CreateCustomClass(
-    google::cloud::speech::v1::CreateCustomClassRequest const& request) {
-  auto span =
-      internal::MakeSpan("speech_v1::AdaptationConnection::CreateCustomClass");
+AdaptationTracingConnection::CreateCustomClass(google::cloud::speech::v1::CreateCustomClassRequest const& request) {
+  auto span = internal::MakeSpan("speech_v1::AdaptationConnection::CreateCustomClass");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateCustomClass(request));
 }
 
 StatusOr<google::cloud::speech::v1::CustomClass>
-AdaptationTracingConnection::GetCustomClass(
-    google::cloud::speech::v1::GetCustomClassRequest const& request) {
-  auto span =
-      internal::MakeSpan("speech_v1::AdaptationConnection::GetCustomClass");
+AdaptationTracingConnection::GetCustomClass(google::cloud::speech::v1::GetCustomClassRequest const& request) {
+  auto span = internal::MakeSpan("speech_v1::AdaptationConnection::GetCustomClass");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetCustomClass(request));
 }
 
 StreamRange<google::cloud::speech::v1::CustomClass>
-AdaptationTracingConnection::ListCustomClasses(
-    google::cloud::speech::v1::ListCustomClassesRequest request) {
-  auto span =
-      internal::MakeSpan("speech_v1::AdaptationConnection::ListCustomClasses");
+AdaptationTracingConnection::ListCustomClasses(google::cloud::speech::v1::ListCustomClassesRequest request) {
+  auto span = internal::MakeSpan("speech_v1::AdaptationConnection::ListCustomClasses");
   internal::OTelScope scope(span);
   auto sr = child_->ListCustomClasses(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::speech::v1::CustomClass>(std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::speech::v1::CustomClass>(
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::speech::v1::CustomClass>
-AdaptationTracingConnection::UpdateCustomClass(
-    google::cloud::speech::v1::UpdateCustomClassRequest const& request) {
-  auto span =
-      internal::MakeSpan("speech_v1::AdaptationConnection::UpdateCustomClass");
+AdaptationTracingConnection::UpdateCustomClass(google::cloud::speech::v1::UpdateCustomClassRequest const& request) {
+  auto span = internal::MakeSpan("speech_v1::AdaptationConnection::UpdateCustomClass");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateCustomClass(request));
 }
 
-Status AdaptationTracingConnection::DeleteCustomClass(
-    google::cloud::speech::v1::DeleteCustomClassRequest const& request) {
-  auto span =
-      internal::MakeSpan("speech_v1::AdaptationConnection::DeleteCustomClass");
+Status
+AdaptationTracingConnection::DeleteCustomClass(google::cloud::speech::v1::DeleteCustomClassRequest const& request) {
+  auto span = internal::MakeSpan("speech_v1::AdaptationConnection::DeleteCustomClass");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteCustomClass(request));
 }
 
 StreamRange<google::longrunning::Operation>
-AdaptationTracingConnection::ListOperations(
-    google::longrunning::ListOperationsRequest request) {
-  auto span =
-      internal::MakeSpan("speech_v1::AdaptationConnection::ListOperations");
+AdaptationTracingConnection::ListOperations(google::longrunning::ListOperationsRequest request) {
+  auto span = internal::MakeSpan("speech_v1::AdaptationConnection::ListOperations");
   internal::OTelScope scope(span);
   auto sr = child_->ListOperations(std::move(request));
   return internal::MakeTracedStreamRange<google::longrunning::Operation>(
-      std::move(span), std::move(sr));
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::longrunning::Operation>
-AdaptationTracingConnection::GetOperation(
-    google::longrunning::GetOperationRequest const& request) {
-  auto span =
-      internal::MakeSpan("speech_v1::AdaptationConnection::GetOperation");
+AdaptationTracingConnection::GetOperation(google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpan("speech_v1::AdaptationConnection::GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOperation(request));
 }

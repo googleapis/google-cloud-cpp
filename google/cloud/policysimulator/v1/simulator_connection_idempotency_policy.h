@@ -37,24 +37,24 @@ class SimulatorConnectionIdempotencyPolicy {
   /// Create a new copy of this object.
   virtual std::unique_ptr<SimulatorConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency GetReplay(
-      google::cloud::policysimulator::v1::GetReplayRequest const& request);
+  virtual google::cloud::Idempotency
+  GetReplay(google::cloud::policysimulator::v1::GetReplayRequest const& request);
 
-  virtual google::cloud::Idempotency CreateReplay(
-      google::cloud::policysimulator::v1::CreateReplayRequest const& request);
+  virtual google::cloud::Idempotency
+  CreateReplay(google::cloud::policysimulator::v1::CreateReplayRequest const& request);
 
-  virtual google::cloud::Idempotency ListReplayResults(
-      google::cloud::policysimulator::v1::ListReplayResultsRequest request);
+  virtual google::cloud::Idempotency
+  ListReplayResults(google::cloud::policysimulator::v1::ListReplayResultsRequest request);
 
-  virtual google::cloud::Idempotency ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual google::cloud::Idempotency
+  ListOperations(google::longrunning::ListOperationsRequest request);
 
-  virtual google::cloud::Idempotency GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 };
 
 std::unique_ptr<SimulatorConnectionIdempotencyPolicy>
-MakeDefaultSimulatorConnectionIdempotencyPolicy();
+    MakeDefaultSimulatorConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace policysimulator_v1

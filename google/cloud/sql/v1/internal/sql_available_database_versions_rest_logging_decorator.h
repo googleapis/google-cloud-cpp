@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_INTERNAL_SQL_AVAILABLE_DATABASE_VERSIONS_REST_LOGGING_DECORATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_INTERNAL_SQL_AVAILABLE_DATABASE_VERSIONS_REST_LOGGING_DECORATOR_H
 
-#include "google/cloud/sql/v1/internal/sql_available_database_versions_rest_stub.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/rest_context.h"
+#include "google/cloud/sql/v1/internal/sql_available_database_versions_rest_stub.h"
 #include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
 #include <google/cloud/sql/v1/cloud_sql_available_database_versions.pb.h>
@@ -34,13 +34,12 @@ namespace cloud {
 namespace sql_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class SqlAvailableDatabaseVersionsServiceRestLogging
-    : public SqlAvailableDatabaseVersionsServiceRestStub {
+class SqlAvailableDatabaseVersionsServiceRestLogging : public SqlAvailableDatabaseVersionsServiceRestStub {
  public:
   ~SqlAvailableDatabaseVersionsServiceRestLogging() override = default;
-  SqlAvailableDatabaseVersionsServiceRestLogging(
-      std::shared_ptr<SqlAvailableDatabaseVersionsServiceRestStub> child,
-      TracingOptions tracing_options, std::set<std::string> components);
+  SqlAvailableDatabaseVersionsServiceRestLogging(std::shared_ptr<SqlAvailableDatabaseVersionsServiceRestStub> child,
+                       TracingOptions tracing_options,
+                       std::set<std::string> components);
 
  private:
   std::shared_ptr<SqlAvailableDatabaseVersionsServiceRestStub> child_;

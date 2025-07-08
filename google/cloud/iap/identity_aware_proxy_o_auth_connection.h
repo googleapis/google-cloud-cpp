@@ -27,22 +27,17 @@ namespace cloud {
 namespace iap {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use iap_v1::MakeIdentityAwareProxyOAuthServiceConnection
-/// directly.
+/// @deprecated Use iap_v1::MakeIdentityAwareProxyOAuthServiceConnection directly.
 using ::google::cloud::iap_v1::MakeIdentityAwareProxyOAuthServiceConnection;
 
 /// @deprecated Use iap_v1::IdentityAwareProxyOAuthServiceConnection directly.
 using ::google::cloud::iap_v1::IdentityAwareProxyOAuthServiceConnection;
 
-/// @deprecated Use
-/// iap_v1::IdentityAwareProxyOAuthServiceLimitedErrorCountRetryPolicy directly.
-using ::google::cloud::iap_v1::
-    IdentityAwareProxyOAuthServiceLimitedErrorCountRetryPolicy;
+/// @deprecated Use iap_v1::IdentityAwareProxyOAuthServiceLimitedErrorCountRetryPolicy directly.
+using ::google::cloud::iap_v1::IdentityAwareProxyOAuthServiceLimitedErrorCountRetryPolicy;
 
-/// @deprecated Use iap_v1::IdentityAwareProxyOAuthServiceLimitedTimeRetryPolicy
-/// directly.
-using ::google::cloud::iap_v1::
-    IdentityAwareProxyOAuthServiceLimitedTimeRetryPolicy;
+/// @deprecated Use iap_v1::IdentityAwareProxyOAuthServiceLimitedTimeRetryPolicy directly.
+using ::google::cloud::iap_v1::IdentityAwareProxyOAuthServiceLimitedTimeRetryPolicy;
 
 /// @deprecated Use iap_v1::IdentityAwareProxyOAuthServiceRetryPolicy directly.
 using ::google::cloud::iap_v1::IdentityAwareProxyOAuthServiceRetryPolicy;

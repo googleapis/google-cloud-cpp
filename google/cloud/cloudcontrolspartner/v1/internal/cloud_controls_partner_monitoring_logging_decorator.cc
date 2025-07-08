@@ -32,19 +32,20 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 CloudControlsPartnerMonitoringLogging::CloudControlsPartnerMonitoringLogging(
     std::shared_ptr<CloudControlsPartnerMonitoringStub> child,
-    TracingOptions tracing_options, std::set<std::string> const&)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
+    TracingOptions tracing_options,
+    std::set<std::string> const&)
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::cloud::cloudcontrolspartner::v1::ListViolationsResponse>
 CloudControlsPartnerMonitoringLogging::ListViolations(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::cloudcontrolspartner::v1::ListViolationsRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::cloudcontrolspartner::v1::ListViolationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::cloudcontrolspartner::v1::ListViolationsRequest const&
-              request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::cloudcontrolspartner::v1::ListViolationsRequest const& request) {
         return child_->ListViolations(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -52,13 +53,13 @@ CloudControlsPartnerMonitoringLogging::ListViolations(
 
 StatusOr<google::cloud::cloudcontrolspartner::v1::Violation>
 CloudControlsPartnerMonitoringLogging::GetViolation(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::cloudcontrolspartner::v1::GetViolationRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::cloudcontrolspartner::v1::GetViolationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::cloudcontrolspartner::v1::GetViolationRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::cloudcontrolspartner::v1::GetViolationRequest const& request) {
         return child_->GetViolation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);

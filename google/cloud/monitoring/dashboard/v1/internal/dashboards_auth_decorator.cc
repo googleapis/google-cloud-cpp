@@ -31,27 +31,27 @@ DashboardsServiceAuth::DashboardsServiceAuth(
     std::shared_ptr<DashboardsServiceStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::monitoring::dashboard::v1::Dashboard>
-DashboardsServiceAuth::CreateDashboard(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::monitoring::dashboard::v1::Dashboard> DashboardsServiceAuth::CreateDashboard(
+    grpc::ClientContext& context,
+    Options const& options,
     google::monitoring::dashboard::v1::CreateDashboardRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateDashboard(context, options, request);
 }
 
-StatusOr<google::monitoring::dashboard::v1::ListDashboardsResponse>
-DashboardsServiceAuth::ListDashboards(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::monitoring::dashboard::v1::ListDashboardsResponse> DashboardsServiceAuth::ListDashboards(
+    grpc::ClientContext& context,
+    Options const& options,
     google::monitoring::dashboard::v1::ListDashboardsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListDashboards(context, options, request);
 }
 
-StatusOr<google::monitoring::dashboard::v1::Dashboard>
-DashboardsServiceAuth::GetDashboard(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::monitoring::dashboard::v1::Dashboard> DashboardsServiceAuth::GetDashboard(
+    grpc::ClientContext& context,
+    Options const& options,
     google::monitoring::dashboard::v1::GetDashboardRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -59,16 +59,17 @@ DashboardsServiceAuth::GetDashboard(
 }
 
 Status DashboardsServiceAuth::DeleteDashboard(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::monitoring::dashboard::v1::DeleteDashboardRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteDashboard(context, options, request);
 }
 
-StatusOr<google::monitoring::dashboard::v1::Dashboard>
-DashboardsServiceAuth::UpdateDashboard(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::monitoring::dashboard::v1::Dashboard> DashboardsServiceAuth::UpdateDashboard(
+    grpc::ClientContext& context,
+    Options const& options,
     google::monitoring::dashboard::v1::UpdateDashboardRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;

@@ -33,17 +33,15 @@ TensorboardServiceStub::~TensorboardServiceStub() = default;
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultTensorboardServiceStub::AsyncCreateTensorboard(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::aiplatform::v1::CreateTensorboardRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::aiplatform::v1::CreateTensorboardRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::aiplatform::v1::CreateTensorboardRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::aiplatform::v1::CreateTensorboardRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::aiplatform::v1::CreateTensorboardRequest const&
-                 request,
+             google::cloud::aiplatform::v1::CreateTensorboardRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncCreateTensorboard(context, request, cq);
       },
@@ -52,41 +50,42 @@ DefaultTensorboardServiceStub::AsyncCreateTensorboard(
 
 StatusOr<google::longrunning::Operation>
 DefaultTensorboardServiceStub::CreateTensorboard(
-    grpc::ClientContext& context, Options,
-    google::cloud::aiplatform::v1::CreateTensorboardRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->CreateTensorboard(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::aiplatform::v1::CreateTensorboardRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->CreateTensorboard(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::aiplatform::v1::Tensorboard>
 DefaultTensorboardServiceStub::GetTensorboard(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::aiplatform::v1::GetTensorboardRequest const& request) {
-  google::cloud::aiplatform::v1::Tensorboard response;
-  auto status = grpc_stub_->GetTensorboard(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::aiplatform::v1::GetTensorboardRequest const& request) {
+    google::cloud::aiplatform::v1::Tensorboard response;
+    auto status =
+        grpc_stub_->GetTensorboard(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultTensorboardServiceStub::AsyncUpdateTensorboard(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::aiplatform::v1::UpdateTensorboardRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::aiplatform::v1::UpdateTensorboardRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::aiplatform::v1::UpdateTensorboardRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::aiplatform::v1::UpdateTensorboardRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::aiplatform::v1::UpdateTensorboardRequest const&
-                 request,
+             google::cloud::aiplatform::v1::UpdateTensorboardRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncUpdateTensorboard(context, request, cq);
       },
@@ -95,41 +94,42 @@ DefaultTensorboardServiceStub::AsyncUpdateTensorboard(
 
 StatusOr<google::longrunning::Operation>
 DefaultTensorboardServiceStub::UpdateTensorboard(
-    grpc::ClientContext& context, Options,
-    google::cloud::aiplatform::v1::UpdateTensorboardRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->UpdateTensorboard(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::aiplatform::v1::UpdateTensorboardRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->UpdateTensorboard(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::aiplatform::v1::ListTensorboardsResponse>
 DefaultTensorboardServiceStub::ListTensorboards(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::aiplatform::v1::ListTensorboardsRequest const& request) {
-  google::cloud::aiplatform::v1::ListTensorboardsResponse response;
-  auto status = grpc_stub_->ListTensorboards(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::aiplatform::v1::ListTensorboardsRequest const& request) {
+    google::cloud::aiplatform::v1::ListTensorboardsResponse response;
+    auto status =
+        grpc_stub_->ListTensorboards(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultTensorboardServiceStub::AsyncDeleteTensorboard(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::aiplatform::v1::DeleteTensorboardRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::aiplatform::v1::DeleteTensorboardRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::aiplatform::v1::DeleteTensorboardRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::aiplatform::v1::DeleteTensorboardRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::aiplatform::v1::DeleteTensorboardRequest const&
-                 request,
+             google::cloud::aiplatform::v1::DeleteTensorboardRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncDeleteTensorboard(context, request, cq);
       },
@@ -138,206 +138,203 @@ DefaultTensorboardServiceStub::AsyncDeleteTensorboard(
 
 StatusOr<google::longrunning::Operation>
 DefaultTensorboardServiceStub::DeleteTensorboard(
-    grpc::ClientContext& context, Options,
-    google::cloud::aiplatform::v1::DeleteTensorboardRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->DeleteTensorboard(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::aiplatform::v1::DeleteTensorboardRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->DeleteTensorboard(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::aiplatform::v1::ReadTensorboardUsageResponse>
 DefaultTensorboardServiceStub::ReadTensorboardUsage(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::aiplatform::v1::ReadTensorboardUsageRequest const& request) {
-  google::cloud::aiplatform::v1::ReadTensorboardUsageResponse response;
-  auto status = grpc_stub_->ReadTensorboardUsage(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::aiplatform::v1::ReadTensorboardUsageRequest const& request) {
+    google::cloud::aiplatform::v1::ReadTensorboardUsageResponse response;
+    auto status =
+        grpc_stub_->ReadTensorboardUsage(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::aiplatform::v1::ReadTensorboardSizeResponse>
 DefaultTensorboardServiceStub::ReadTensorboardSize(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::aiplatform::v1::ReadTensorboardSizeRequest const& request) {
-  google::cloud::aiplatform::v1::ReadTensorboardSizeResponse response;
-  auto status = grpc_stub_->ReadTensorboardSize(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::aiplatform::v1::ReadTensorboardSizeRequest const& request) {
+    google::cloud::aiplatform::v1::ReadTensorboardSizeResponse response;
+    auto status =
+        grpc_stub_->ReadTensorboardSize(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::aiplatform::v1::TensorboardExperiment>
 DefaultTensorboardServiceStub::CreateTensorboardExperiment(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::aiplatform::v1::CreateTensorboardExperimentRequest const&
-        request) {
-  google::cloud::aiplatform::v1::TensorboardExperiment response;
-  auto status =
-      grpc_stub_->CreateTensorboardExperiment(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::aiplatform::v1::CreateTensorboardExperimentRequest const& request) {
+    google::cloud::aiplatform::v1::TensorboardExperiment response;
+    auto status =
+        grpc_stub_->CreateTensorboardExperiment(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::aiplatform::v1::TensorboardExperiment>
 DefaultTensorboardServiceStub::GetTensorboardExperiment(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::aiplatform::v1::GetTensorboardExperimentRequest const&
-        request) {
-  google::cloud::aiplatform::v1::TensorboardExperiment response;
-  auto status =
-      grpc_stub_->GetTensorboardExperiment(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::aiplatform::v1::GetTensorboardExperimentRequest const& request) {
+    google::cloud::aiplatform::v1::TensorboardExperiment response;
+    auto status =
+        grpc_stub_->GetTensorboardExperiment(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::aiplatform::v1::TensorboardExperiment>
 DefaultTensorboardServiceStub::UpdateTensorboardExperiment(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::aiplatform::v1::UpdateTensorboardExperimentRequest const&
-        request) {
-  google::cloud::aiplatform::v1::TensorboardExperiment response;
-  auto status =
-      grpc_stub_->UpdateTensorboardExperiment(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::aiplatform::v1::UpdateTensorboardExperimentRequest const& request) {
+    google::cloud::aiplatform::v1::TensorboardExperiment response;
+    auto status =
+        grpc_stub_->UpdateTensorboardExperiment(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::aiplatform::v1::ListTensorboardExperimentsResponse>
 DefaultTensorboardServiceStub::ListTensorboardExperiments(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::aiplatform::v1::ListTensorboardExperimentsRequest const&
-        request) {
-  google::cloud::aiplatform::v1::ListTensorboardExperimentsResponse response;
-  auto status =
-      grpc_stub_->ListTensorboardExperiments(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::aiplatform::v1::ListTensorboardExperimentsRequest const& request) {
+    google::cloud::aiplatform::v1::ListTensorboardExperimentsResponse response;
+    auto status =
+        grpc_stub_->ListTensorboardExperiments(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultTensorboardServiceStub::AsyncDeleteTensorboardExperiment(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::aiplatform::v1::DeleteTensorboardExperimentRequest const&
-        request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::aiplatform::v1::DeleteTensorboardExperimentRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::aiplatform::v1::DeleteTensorboardExperimentRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::aiplatform::v1::DeleteTensorboardExperimentRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::aiplatform::v1::
-                 DeleteTensorboardExperimentRequest const& request,
+             google::cloud::aiplatform::v1::DeleteTensorboardExperimentRequest const& request,
              grpc::CompletionQueue* cq) {
-        return grpc_stub_->AsyncDeleteTensorboardExperiment(context, request,
-                                                            cq);
+        return grpc_stub_->AsyncDeleteTensorboardExperiment(context, request, cq);
       },
       request, std::move(context));
 }
 
 StatusOr<google::longrunning::Operation>
 DefaultTensorboardServiceStub::DeleteTensorboardExperiment(
-    grpc::ClientContext& context, Options,
-    google::cloud::aiplatform::v1::DeleteTensorboardExperimentRequest const&
-        request) {
-  google::longrunning::Operation response;
-  auto status =
-      grpc_stub_->DeleteTensorboardExperiment(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::aiplatform::v1::DeleteTensorboardExperimentRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->DeleteTensorboardExperiment(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::aiplatform::v1::TensorboardRun>
 DefaultTensorboardServiceStub::CreateTensorboardRun(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::aiplatform::v1::CreateTensorboardRunRequest const& request) {
-  google::cloud::aiplatform::v1::TensorboardRun response;
-  auto status = grpc_stub_->CreateTensorboardRun(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::aiplatform::v1::CreateTensorboardRunRequest const& request) {
+    google::cloud::aiplatform::v1::TensorboardRun response;
+    auto status =
+        grpc_stub_->CreateTensorboardRun(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::aiplatform::v1::BatchCreateTensorboardRunsResponse>
 DefaultTensorboardServiceStub::BatchCreateTensorboardRuns(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::aiplatform::v1::BatchCreateTensorboardRunsRequest const&
-        request) {
-  google::cloud::aiplatform::v1::BatchCreateTensorboardRunsResponse response;
-  auto status =
-      grpc_stub_->BatchCreateTensorboardRuns(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::aiplatform::v1::BatchCreateTensorboardRunsRequest const& request) {
+    google::cloud::aiplatform::v1::BatchCreateTensorboardRunsResponse response;
+    auto status =
+        grpc_stub_->BatchCreateTensorboardRuns(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::aiplatform::v1::TensorboardRun>
 DefaultTensorboardServiceStub::GetTensorboardRun(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::aiplatform::v1::GetTensorboardRunRequest const& request) {
-  google::cloud::aiplatform::v1::TensorboardRun response;
-  auto status = grpc_stub_->GetTensorboardRun(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::aiplatform::v1::GetTensorboardRunRequest const& request) {
+    google::cloud::aiplatform::v1::TensorboardRun response;
+    auto status =
+        grpc_stub_->GetTensorboardRun(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::aiplatform::v1::TensorboardRun>
 DefaultTensorboardServiceStub::UpdateTensorboardRun(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::aiplatform::v1::UpdateTensorboardRunRequest const& request) {
-  google::cloud::aiplatform::v1::TensorboardRun response;
-  auto status = grpc_stub_->UpdateTensorboardRun(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::aiplatform::v1::UpdateTensorboardRunRequest const& request) {
+    google::cloud::aiplatform::v1::TensorboardRun response;
+    auto status =
+        grpc_stub_->UpdateTensorboardRun(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::aiplatform::v1::ListTensorboardRunsResponse>
 DefaultTensorboardServiceStub::ListTensorboardRuns(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::aiplatform::v1::ListTensorboardRunsRequest const& request) {
-  google::cloud::aiplatform::v1::ListTensorboardRunsResponse response;
-  auto status = grpc_stub_->ListTensorboardRuns(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::aiplatform::v1::ListTensorboardRunsRequest const& request) {
+    google::cloud::aiplatform::v1::ListTensorboardRunsResponse response;
+    auto status =
+        grpc_stub_->ListTensorboardRuns(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultTensorboardServiceStub::AsyncDeleteTensorboardRun(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::aiplatform::v1::DeleteTensorboardRunRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::aiplatform::v1::DeleteTensorboardRunRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::aiplatform::v1::DeleteTensorboardRunRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::aiplatform::v1::DeleteTensorboardRunRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::aiplatform::v1::DeleteTensorboardRunRequest const&
-                 request,
+             google::cloud::aiplatform::v1::DeleteTensorboardRunRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncDeleteTensorboardRun(context, request, cq);
       },
@@ -346,159 +343,145 @@ DefaultTensorboardServiceStub::AsyncDeleteTensorboardRun(
 
 StatusOr<google::longrunning::Operation>
 DefaultTensorboardServiceStub::DeleteTensorboardRun(
-    grpc::ClientContext& context, Options,
-    google::cloud::aiplatform::v1::DeleteTensorboardRunRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->DeleteTensorboardRun(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::aiplatform::v1::DeleteTensorboardRunRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->DeleteTensorboardRun(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-StatusOr<
-    google::cloud::aiplatform::v1::BatchCreateTensorboardTimeSeriesResponse>
+StatusOr<google::cloud::aiplatform::v1::BatchCreateTensorboardTimeSeriesResponse>
 DefaultTensorboardServiceStub::BatchCreateTensorboardTimeSeries(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::aiplatform::v1::
-        BatchCreateTensorboardTimeSeriesRequest const& request) {
-  google::cloud::aiplatform::v1::BatchCreateTensorboardTimeSeriesResponse
-      response;
-  auto status = grpc_stub_->BatchCreateTensorboardTimeSeries(&context, request,
-                                                             &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::aiplatform::v1::BatchCreateTensorboardTimeSeriesRequest const& request) {
+    google::cloud::aiplatform::v1::BatchCreateTensorboardTimeSeriesResponse response;
+    auto status =
+        grpc_stub_->BatchCreateTensorboardTimeSeries(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::aiplatform::v1::TensorboardTimeSeries>
 DefaultTensorboardServiceStub::CreateTensorboardTimeSeries(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::aiplatform::v1::CreateTensorboardTimeSeriesRequest const&
-        request) {
-  google::cloud::aiplatform::v1::TensorboardTimeSeries response;
-  auto status =
-      grpc_stub_->CreateTensorboardTimeSeries(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::aiplatform::v1::CreateTensorboardTimeSeriesRequest const& request) {
+    google::cloud::aiplatform::v1::TensorboardTimeSeries response;
+    auto status =
+        grpc_stub_->CreateTensorboardTimeSeries(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::aiplatform::v1::TensorboardTimeSeries>
 DefaultTensorboardServiceStub::GetTensorboardTimeSeries(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::aiplatform::v1::GetTensorboardTimeSeriesRequest const&
-        request) {
-  google::cloud::aiplatform::v1::TensorboardTimeSeries response;
-  auto status =
-      grpc_stub_->GetTensorboardTimeSeries(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::aiplatform::v1::GetTensorboardTimeSeriesRequest const& request) {
+    google::cloud::aiplatform::v1::TensorboardTimeSeries response;
+    auto status =
+        grpc_stub_->GetTensorboardTimeSeries(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::aiplatform::v1::TensorboardTimeSeries>
 DefaultTensorboardServiceStub::UpdateTensorboardTimeSeries(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::aiplatform::v1::UpdateTensorboardTimeSeriesRequest const&
-        request) {
-  google::cloud::aiplatform::v1::TensorboardTimeSeries response;
-  auto status =
-      grpc_stub_->UpdateTensorboardTimeSeries(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::aiplatform::v1::UpdateTensorboardTimeSeriesRequest const& request) {
+    google::cloud::aiplatform::v1::TensorboardTimeSeries response;
+    auto status =
+        grpc_stub_->UpdateTensorboardTimeSeries(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::aiplatform::v1::ListTensorboardTimeSeriesResponse>
 DefaultTensorboardServiceStub::ListTensorboardTimeSeries(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::aiplatform::v1::ListTensorboardTimeSeriesRequest const&
-        request) {
-  google::cloud::aiplatform::v1::ListTensorboardTimeSeriesResponse response;
-  auto status =
-      grpc_stub_->ListTensorboardTimeSeries(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::aiplatform::v1::ListTensorboardTimeSeriesRequest const& request) {
+    google::cloud::aiplatform::v1::ListTensorboardTimeSeriesResponse response;
+    auto status =
+        grpc_stub_->ListTensorboardTimeSeries(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultTensorboardServiceStub::AsyncDeleteTensorboardTimeSeries(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::aiplatform::v1::DeleteTensorboardTimeSeriesRequest const&
-        request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::aiplatform::v1::DeleteTensorboardTimeSeriesRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::aiplatform::v1::DeleteTensorboardTimeSeriesRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::aiplatform::v1::DeleteTensorboardTimeSeriesRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::aiplatform::v1::
-                 DeleteTensorboardTimeSeriesRequest const& request,
+             google::cloud::aiplatform::v1::DeleteTensorboardTimeSeriesRequest const& request,
              grpc::CompletionQueue* cq) {
-        return grpc_stub_->AsyncDeleteTensorboardTimeSeries(context, request,
-                                                            cq);
+        return grpc_stub_->AsyncDeleteTensorboardTimeSeries(context, request, cq);
       },
       request, std::move(context));
 }
 
 StatusOr<google::longrunning::Operation>
 DefaultTensorboardServiceStub::DeleteTensorboardTimeSeries(
-    grpc::ClientContext& context, Options,
-    google::cloud::aiplatform::v1::DeleteTensorboardTimeSeriesRequest const&
-        request) {
-  google::longrunning::Operation response;
-  auto status =
-      grpc_stub_->DeleteTensorboardTimeSeries(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::aiplatform::v1::DeleteTensorboardTimeSeriesRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->DeleteTensorboardTimeSeries(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-StatusOr<
-    google::cloud::aiplatform::v1::BatchReadTensorboardTimeSeriesDataResponse>
+StatusOr<google::cloud::aiplatform::v1::BatchReadTensorboardTimeSeriesDataResponse>
 DefaultTensorboardServiceStub::BatchReadTensorboardTimeSeriesData(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::aiplatform::v1::
-        BatchReadTensorboardTimeSeriesDataRequest const& request) {
-  google::cloud::aiplatform::v1::BatchReadTensorboardTimeSeriesDataResponse
-      response;
-  auto status = grpc_stub_->BatchReadTensorboardTimeSeriesData(
-      &context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::aiplatform::v1::BatchReadTensorboardTimeSeriesDataRequest const& request) {
+    google::cloud::aiplatform::v1::BatchReadTensorboardTimeSeriesDataResponse response;
+    auto status =
+        grpc_stub_->BatchReadTensorboardTimeSeriesData(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::aiplatform::v1::ReadTensorboardTimeSeriesDataResponse>
 DefaultTensorboardServiceStub::ReadTensorboardTimeSeriesData(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::aiplatform::v1::ReadTensorboardTimeSeriesDataRequest const&
-        request) {
-  google::cloud::aiplatform::v1::ReadTensorboardTimeSeriesDataResponse response;
-  auto status =
-      grpc_stub_->ReadTensorboardTimeSeriesData(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::aiplatform::v1::ReadTensorboardTimeSeriesDataRequest const& request) {
+    google::cloud::aiplatform::v1::ReadTensorboardTimeSeriesDataResponse response;
+    auto status =
+        grpc_stub_->ReadTensorboardTimeSeriesData(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-std::unique_ptr<google::cloud::internal::StreamingReadRpc<
-    google::cloud::aiplatform::v1::ReadTensorboardBlobDataResponse>>
+std::unique_ptr<google::cloud::internal::StreamingReadRpc<google::cloud::aiplatform::v1::ReadTensorboardBlobDataResponse>>
 DefaultTensorboardServiceStub::ReadTensorboardBlobData(
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
-    google::cloud::aiplatform::v1::ReadTensorboardBlobDataRequest const&
-        request) {
+    std::shared_ptr<grpc::ClientContext> context,
+    Options const&,
+    google::cloud::aiplatform::v1::ReadTensorboardBlobDataRequest const& request) {
   auto stream = grpc_stub_->ReadTensorboardBlobData(context.get(), request);
   return std::make_unique<google::cloud::internal::StreamingReadRpcImpl<
       google::cloud::aiplatform::v1::ReadTensorboardBlobDataResponse>>(
@@ -507,163 +490,171 @@ DefaultTensorboardServiceStub::ReadTensorboardBlobData(
 
 StatusOr<google::cloud::aiplatform::v1::WriteTensorboardExperimentDataResponse>
 DefaultTensorboardServiceStub::WriteTensorboardExperimentData(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::aiplatform::v1::WriteTensorboardExperimentDataRequest const&
-        request) {
-  google::cloud::aiplatform::v1::WriteTensorboardExperimentDataResponse
-      response;
-  auto status =
-      grpc_stub_->WriteTensorboardExperimentData(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::aiplatform::v1::WriteTensorboardExperimentDataRequest const& request) {
+    google::cloud::aiplatform::v1::WriteTensorboardExperimentDataResponse response;
+    auto status =
+        grpc_stub_->WriteTensorboardExperimentData(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::aiplatform::v1::WriteTensorboardRunDataResponse>
 DefaultTensorboardServiceStub::WriteTensorboardRunData(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::aiplatform::v1::WriteTensorboardRunDataRequest const&
-        request) {
-  google::cloud::aiplatform::v1::WriteTensorboardRunDataResponse response;
-  auto status =
-      grpc_stub_->WriteTensorboardRunData(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::aiplatform::v1::WriteTensorboardRunDataRequest const& request) {
+    google::cloud::aiplatform::v1::WriteTensorboardRunDataResponse response;
+    auto status =
+        grpc_stub_->WriteTensorboardRunData(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::aiplatform::v1::ExportTensorboardTimeSeriesDataResponse>
 DefaultTensorboardServiceStub::ExportTensorboardTimeSeriesData(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::aiplatform::v1::ExportTensorboardTimeSeriesDataRequest const&
-        request) {
-  google::cloud::aiplatform::v1::ExportTensorboardTimeSeriesDataResponse
-      response;
-  auto status =
-      grpc_stub_->ExportTensorboardTimeSeriesData(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::aiplatform::v1::ExportTensorboardTimeSeriesDataRequest const& request) {
+    google::cloud::aiplatform::v1::ExportTensorboardTimeSeriesDataResponse response;
+    auto status =
+        grpc_stub_->ExportTensorboardTimeSeriesData(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 DefaultTensorboardServiceStub::ListLocations(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::location::ListLocationsRequest const& request) {
-  google::cloud::location::ListLocationsResponse response;
-  auto status = locations_stub_->ListLocations(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::location::ListLocationsRequest const& request) {
+    google::cloud::location::ListLocationsResponse response;
+    auto status =
+        locations_stub_->ListLocations(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::location::Location>
 DefaultTensorboardServiceStub::GetLocation(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::location::GetLocationRequest const& request) {
-  google::cloud::location::Location response;
-  auto status = locations_stub_->GetLocation(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::location::GetLocationRequest const& request) {
+    google::cloud::location::Location response;
+    auto status =
+        locations_stub_->GetLocation(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-StatusOr<google::iam::v1::Policy> DefaultTensorboardServiceStub::SetIamPolicy(
-    grpc::ClientContext& context, Options const&,
-    google::iam::v1::SetIamPolicyRequest const& request) {
-  google::iam::v1::Policy response;
-  auto status = iampolicy_stub_->SetIamPolicy(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::iam::v1::Policy>
+DefaultTensorboardServiceStub::SetIamPolicy(
+  grpc::ClientContext& context, Options const&,
+  google::iam::v1::SetIamPolicyRequest const& request) {
+    google::iam::v1::Policy response;
+    auto status =
+        iampolicy_stub_->SetIamPolicy(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-StatusOr<google::iam::v1::Policy> DefaultTensorboardServiceStub::GetIamPolicy(
-    grpc::ClientContext& context, Options const&,
-    google::iam::v1::GetIamPolicyRequest const& request) {
-  google::iam::v1::Policy response;
-  auto status = iampolicy_stub_->GetIamPolicy(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::iam::v1::Policy>
+DefaultTensorboardServiceStub::GetIamPolicy(
+  grpc::ClientContext& context, Options const&,
+  google::iam::v1::GetIamPolicyRequest const& request) {
+    google::iam::v1::Policy response;
+    auto status =
+        iampolicy_stub_->GetIamPolicy(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 DefaultTensorboardServiceStub::TestIamPermissions(
-    grpc::ClientContext& context, Options const&,
-    google::iam::v1::TestIamPermissionsRequest const& request) {
-  google::iam::v1::TestIamPermissionsResponse response;
-  auto status =
-      iampolicy_stub_->TestIamPermissions(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::iam::v1::TestIamPermissionsRequest const& request) {
+    google::iam::v1::TestIamPermissionsResponse response;
+    auto status =
+        iampolicy_stub_->TestIamPermissions(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
 DefaultTensorboardServiceStub::ListOperations(
-    grpc::ClientContext& context, Options const&,
-    google::longrunning::ListOperationsRequest const& request) {
-  google::longrunning::ListOperationsResponse response;
-  auto status = operations_stub_->ListOperations(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::longrunning::ListOperationsRequest const& request) {
+    google::longrunning::ListOperationsResponse response;
+    auto status =
+        operations_stub_->ListOperations(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::longrunning::Operation>
 DefaultTensorboardServiceStub::GetOperation(
-    grpc::ClientContext& context, Options const&,
-    google::longrunning::GetOperationRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = operations_stub_->GetOperation(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::longrunning::GetOperationRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        operations_stub_->GetOperation(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-Status DefaultTensorboardServiceStub::DeleteOperation(
-    grpc::ClientContext& context, Options const&,
-    google::longrunning::DeleteOperationRequest const& request) {
-  google::protobuf::Empty response;
-  auto status = operations_stub_->DeleteOperation(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return google::cloud::Status();
+Status
+DefaultTensorboardServiceStub::DeleteOperation(
+  grpc::ClientContext& context, Options const&,
+  google::longrunning::DeleteOperationRequest const& request) {
+    google::protobuf::Empty response;
+    auto status =
+        operations_stub_->DeleteOperation(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return google::cloud::Status();
 }
 
-Status DefaultTensorboardServiceStub::CancelOperation(
-    grpc::ClientContext& context, Options const&,
-    google::longrunning::CancelOperationRequest const& request) {
-  google::protobuf::Empty response;
-  auto status = operations_stub_->CancelOperation(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return google::cloud::Status();
+Status
+DefaultTensorboardServiceStub::CancelOperation(
+  grpc::ClientContext& context, Options const&,
+  google::longrunning::CancelOperationRequest const& request) {
+    google::protobuf::Empty response;
+    auto status =
+        operations_stub_->CancelOperation(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return google::cloud::Status();
 }
 
 StatusOr<google::longrunning::Operation>
 DefaultTensorboardServiceStub::WaitOperation(
-    grpc::ClientContext& context, Options const&,
-    google::longrunning::WaitOperationRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = operations_stub_->WaitOperation(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::longrunning::WaitOperationRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        operations_stub_->WaitOperation(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -692,14 +683,13 @@ future<Status> DefaultTensorboardServiceStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(
-             cq,
-             [this](grpc::ClientContext* context,
-                    google::longrunning::CancelOperationRequest const& request,
-                    grpc::CompletionQueue* cq) {
-               return operations_stub_->AsyncCancelOperation(context, request,
-                                                             cq);
-             },
-             request, std::move(context))
+      cq,
+      [this](grpc::ClientContext* context,
+             google::longrunning::CancelOperationRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return operations_stub_->AsyncCancelOperation(context, request, cq);
+      },
+      request, std::move(context))
       .then([](future<StatusOr<google::protobuf::Empty>> f) {
         return f.get().status();
       });

@@ -36,81 +36,63 @@ class ServiceAttachmentsTracingConnection
   ~ServiceAttachmentsTracingConnection() override = default;
 
   explicit ServiceAttachmentsTracingConnection(
-      std::shared_ptr<
-          compute_service_attachments_v1::ServiceAttachmentsConnection>
-          child);
+    std::shared_ptr<compute_service_attachments_v1::ServiceAttachmentsConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StreamRange<
-      std::pair<std::string,
-                google::cloud::cpp::compute::v1::ServiceAttachmentsScopedList>>
-  AggregatedListServiceAttachments(
-      google::cloud::cpp::compute::service_attachments::v1::
-          AggregatedListServiceAttachmentsRequest request) override;
+  StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::ServiceAttachmentsScopedList>>
+  AggregatedListServiceAttachments(google::cloud::cpp::compute::service_attachments::v1::AggregatedListServiceAttachmentsRequest request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteServiceAttachment(
-      google::cloud::cpp::compute::service_attachments::v1::
-          DeleteServiceAttachmentRequest const& request) override;
+  DeleteServiceAttachment(google::cloud::cpp::compute::service_attachments::v1::DeleteServiceAttachmentRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteServiceAttachment(
-      NoAwaitTag, google::cloud::cpp::compute::service_attachments::v1::
-                      DeleteServiceAttachmentRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeleteServiceAttachment(NoAwaitTag,
+      google::cloud::cpp::compute::service_attachments::v1::DeleteServiceAttachmentRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteServiceAttachment(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StatusOr<google::cloud::cpp::compute::v1::ServiceAttachment>
-  GetServiceAttachment(google::cloud::cpp::compute::service_attachments::v1::
-                           GetServiceAttachmentRequest const& request) override;
+  GetServiceAttachment(google::cloud::cpp::compute::service_attachments::v1::GetServiceAttachmentRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
-      google::cloud::cpp::compute::service_attachments::v1::
-          GetIamPolicyRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Policy>
+  GetIamPolicy(google::cloud::cpp::compute::service_attachments::v1::GetIamPolicyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertServiceAttachment(
-      google::cloud::cpp::compute::service_attachments::v1::
-          InsertServiceAttachmentRequest const& request) override;
+  InsertServiceAttachment(google::cloud::cpp::compute::service_attachments::v1::InsertServiceAttachmentRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertServiceAttachment(
-      NoAwaitTag, google::cloud::cpp::compute::service_attachments::v1::
-                      InsertServiceAttachmentRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  InsertServiceAttachment(NoAwaitTag,
+      google::cloud::cpp::compute::service_attachments::v1::InsertServiceAttachmentRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertServiceAttachment(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StreamRange<google::cloud::cpp::compute::v1::ServiceAttachment>
-  ListServiceAttachments(google::cloud::cpp::compute::service_attachments::v1::
-                             ListServiceAttachmentsRequest request) override;
+  ListServiceAttachments(google::cloud::cpp::compute::service_attachments::v1::ListServiceAttachmentsRequest request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchServiceAttachment(
-      google::cloud::cpp::compute::service_attachments::v1::
-          PatchServiceAttachmentRequest const& request) override;
+  PatchServiceAttachment(google::cloud::cpp::compute::service_attachments::v1::PatchServiceAttachmentRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchServiceAttachment(
-      NoAwaitTag, google::cloud::cpp::compute::service_attachments::v1::
-                      PatchServiceAttachmentRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  PatchServiceAttachment(NoAwaitTag,
+      google::cloud::cpp::compute::service_attachments::v1::PatchServiceAttachmentRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   PatchServiceAttachment(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
-      google::cloud::cpp::compute::service_attachments::v1::
-          SetIamPolicyRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Policy>
+  SetIamPolicy(google::cloud::cpp::compute::service_attachments::v1::SetIamPolicyRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(google::cloud::cpp::compute::service_attachments::v1::
-                         TestIamPermissionsRequest const& request) override;
+  TestIamPermissions(google::cloud::cpp::compute::service_attachments::v1::TestIamPermissionsRequest const& request) override;
 
  private:
-  std::shared_ptr<compute_service_attachments_v1::ServiceAttachmentsConnection>
-      child_;
+  std::shared_ptr<compute_service_attachments_v1::ServiceAttachmentsConnection> child_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -123,9 +105,7 @@ class ServiceAttachmentsTracingConnection
  */
 std::shared_ptr<compute_service_attachments_v1::ServiceAttachmentsConnection>
 MakeServiceAttachmentsTracingConnection(
-    std::shared_ptr<
-        compute_service_attachments_v1::ServiceAttachmentsConnection>
-        conn);
+    std::shared_ptr<compute_service_attachments_v1::ServiceAttachmentsConnection> conn);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_service_attachments_v1_internal

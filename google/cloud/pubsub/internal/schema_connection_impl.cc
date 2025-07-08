@@ -17,12 +17,12 @@
 // source: google/pubsub/v1/schema.proto
 
 #include "google/cloud/pubsub/internal/schema_connection_impl.h"
-#include "google/cloud/pubsub/internal/schema_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
+#include "google/cloud/pubsub/internal/schema_option_defaults.h"
 #include <memory>
 #include <utility>
 
@@ -32,33 +32,34 @@ namespace pubsub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<pubsub::SchemaServiceRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<pubsub::SchemaServiceRetryPolicy>
+retry_policy(Options const& options) {
   return options.get<pubsub::SchemaServiceRetryPolicyOption>()->clone();
 }
 
-std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+std::unique_ptr<BackoffPolicy>
+backoff_policy(Options const& options) {
   return options.get<pubsub::SchemaServiceBackoffPolicyOption>()->clone();
 }
 
 std::unique_ptr<pubsub::SchemaServiceConnectionIdempotencyPolicy>
 idempotency_policy(Options const& options) {
-  return options.get<pubsub::SchemaServiceConnectionIdempotencyPolicyOption>()
-      ->clone();
+  return options.get<pubsub::SchemaServiceConnectionIdempotencyPolicyOption>()->clone();
 }
 
-}  // namespace
+} // namespace
 
 SchemaServiceConnectionImpl::SchemaServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<pubsub_internal::SchemaServiceStub> stub, Options options)
-    : background_(std::move(background)),
-      stub_(std::move(stub)),
-      options_(internal::MergeOptions(std::move(options),
-                                      SchemaServiceConnection::options())) {}
+    std::shared_ptr<pubsub_internal::SchemaServiceStub> stub,
+    Options options)
+  : background_(std::move(background)), stub_(std::move(stub)),
+    options_(internal::MergeOptions(
+        std::move(options),
+        SchemaServiceConnection::options())) {}
 
-StatusOr<google::pubsub::v1::Schema> SchemaServiceConnectionImpl::CreateSchema(
-    google::pubsub::v1::CreateSchemaRequest const& request) {
+StatusOr<google::pubsub::v1::Schema>
+SchemaServiceConnectionImpl::CreateSchema(google::pubsub::v1::CreateSchemaRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -70,8 +71,8 @@ StatusOr<google::pubsub::v1::Schema> SchemaServiceConnectionImpl::CreateSchema(
       *current, request, __func__);
 }
 
-StatusOr<google::pubsub::v1::Schema> SchemaServiceConnectionImpl::GetSchema(
-    google::pubsub::v1::GetSchemaRequest const& request) {
+StatusOr<google::pubsub::v1::Schema>
+SchemaServiceConnectionImpl::GetSchema(google::pubsub::v1::GetSchemaRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -84,21 +85,17 @@ StatusOr<google::pubsub::v1::Schema> SchemaServiceConnectionImpl::GetSchema(
 }
 
 StreamRange<google::pubsub::v1::Schema>
-SchemaServiceConnectionImpl::ListSchemas(
-    google::pubsub::v1::ListSchemasRequest request) {
+SchemaServiceConnectionImpl::ListSchemas(google::pubsub::v1::ListSchemasRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListSchemas(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::pubsub::v1::Schema>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::pubsub::v1::Schema>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<pubsub::SchemaServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<pubsub::SchemaServiceRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::pubsub::v1::ListSchemasRequest const& r) {
+          Options const& options, google::pubsub::v1::ListSchemasRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
@@ -116,26 +113,21 @@ SchemaServiceConnectionImpl::ListSchemas(
 }
 
 StreamRange<google::pubsub::v1::Schema>
-SchemaServiceConnectionImpl::ListSchemaRevisions(
-    google::pubsub::v1::ListSchemaRevisionsRequest request) {
+SchemaServiceConnectionImpl::ListSchemaRevisions(google::pubsub::v1::ListSchemaRevisionsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListSchemaRevisions(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::pubsub::v1::Schema>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::pubsub::v1::Schema>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<pubsub::SchemaServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<pubsub::SchemaServiceRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::pubsub::v1::ListSchemaRevisionsRequest const& r) {
+          Options const& options, google::pubsub::v1::ListSchemaRevisionsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](
-                grpc::ClientContext& context, Options const& options,
-                google::pubsub::v1::ListSchemaRevisionsRequest const& request) {
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::pubsub::v1::ListSchemaRevisionsRequest const& request) {
               return stub->ListSchemaRevisions(context, options, request);
             },
             options, r, function_name);
@@ -148,8 +140,8 @@ SchemaServiceConnectionImpl::ListSchemaRevisions(
       });
 }
 
-StatusOr<google::pubsub::v1::Schema> SchemaServiceConnectionImpl::CommitSchema(
-    google::pubsub::v1::CommitSchemaRequest const& request) {
+StatusOr<google::pubsub::v1::Schema>
+SchemaServiceConnectionImpl::CommitSchema(google::pubsub::v1::CommitSchemaRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -162,8 +154,7 @@ StatusOr<google::pubsub::v1::Schema> SchemaServiceConnectionImpl::CommitSchema(
 }
 
 StatusOr<google::pubsub::v1::Schema>
-SchemaServiceConnectionImpl::RollbackSchema(
-    google::pubsub::v1::RollbackSchemaRequest const& request) {
+SchemaServiceConnectionImpl::RollbackSchema(google::pubsub::v1::RollbackSchemaRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -176,8 +167,7 @@ SchemaServiceConnectionImpl::RollbackSchema(
 }
 
 StatusOr<google::pubsub::v1::Schema>
-SchemaServiceConnectionImpl::DeleteSchemaRevision(
-    google::pubsub::v1::DeleteSchemaRevisionRequest const& request) {
+SchemaServiceConnectionImpl::DeleteSchemaRevision(google::pubsub::v1::DeleteSchemaRevisionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -189,8 +179,8 @@ SchemaServiceConnectionImpl::DeleteSchemaRevision(
       *current, request, __func__);
 }
 
-Status SchemaServiceConnectionImpl::DeleteSchema(
-    google::pubsub::v1::DeleteSchemaRequest const& request) {
+Status
+SchemaServiceConnectionImpl::DeleteSchema(google::pubsub::v1::DeleteSchemaRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -203,8 +193,7 @@ Status SchemaServiceConnectionImpl::DeleteSchema(
 }
 
 StatusOr<google::pubsub::v1::ValidateSchemaResponse>
-SchemaServiceConnectionImpl::ValidateSchema(
-    google::pubsub::v1::ValidateSchemaRequest const& request) {
+SchemaServiceConnectionImpl::ValidateSchema(google::pubsub::v1::ValidateSchemaRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -217,8 +206,7 @@ SchemaServiceConnectionImpl::ValidateSchema(
 }
 
 StatusOr<google::pubsub::v1::ValidateMessageResponse>
-SchemaServiceConnectionImpl::ValidateMessage(
-    google::pubsub::v1::ValidateMessageRequest const& request) {
+SchemaServiceConnectionImpl::ValidateMessage(google::pubsub::v1::ValidateMessageRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -230,8 +218,8 @@ SchemaServiceConnectionImpl::ValidateMessage(
       *current, request, __func__);
 }
 
-StatusOr<google::iam::v1::Policy> SchemaServiceConnectionImpl::SetIamPolicy(
-    google::iam::v1::SetIamPolicyRequest const& request) {
+StatusOr<google::iam::v1::Policy>
+SchemaServiceConnectionImpl::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -243,8 +231,8 @@ StatusOr<google::iam::v1::Policy> SchemaServiceConnectionImpl::SetIamPolicy(
       *current, request, __func__);
 }
 
-StatusOr<google::iam::v1::Policy> SchemaServiceConnectionImpl::GetIamPolicy(
-    google::iam::v1::GetIamPolicyRequest const& request) {
+StatusOr<google::iam::v1::Policy>
+SchemaServiceConnectionImpl::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -257,8 +245,7 @@ StatusOr<google::iam::v1::Policy> SchemaServiceConnectionImpl::GetIamPolicy(
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-SchemaServiceConnectionImpl::TestIamPermissions(
-    google::iam::v1::TestIamPermissionsRequest const& request) {
+SchemaServiceConnectionImpl::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),

@@ -26,17 +26,11 @@ namespace cloud {
 namespace beyondcorp {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use
-/// beyondcorp_appconnectors_v1::MakeDefaultAppConnectorsServiceConnectionIdempotencyPolicy
-/// directly.
-using ::google::cloud::beyondcorp_appconnectors_v1::
-    MakeDefaultAppConnectorsServiceConnectionIdempotencyPolicy;
+/// @deprecated Use beyondcorp_appconnectors_v1::MakeDefaultAppConnectorsServiceConnectionIdempotencyPolicy directly.
+using ::google::cloud::beyondcorp_appconnectors_v1::MakeDefaultAppConnectorsServiceConnectionIdempotencyPolicy;
 
-/// @deprecated Use
-/// beyondcorp_appconnectors_v1::AppConnectorsServiceConnectionIdempotencyPolicy
-/// directly.
-using ::google::cloud::beyondcorp_appconnectors_v1::
-    AppConnectorsServiceConnectionIdempotencyPolicy;
+/// @deprecated Use beyondcorp_appconnectors_v1::AppConnectorsServiceConnectionIdempotencyPolicy directly.
+using ::google::cloud::beyondcorp_appconnectors_v1::AppConnectorsServiceConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace beyondcorp

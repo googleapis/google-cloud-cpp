@@ -27,28 +27,19 @@ namespace cloud {
 namespace assuredworkloads {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use assuredworkloads_v1::MakeAssuredWorkloadsServiceConnection
-/// directly.
-using ::google::cloud::assuredworkloads_v1::
-    MakeAssuredWorkloadsServiceConnection;
+/// @deprecated Use assuredworkloads_v1::MakeAssuredWorkloadsServiceConnection directly.
+using ::google::cloud::assuredworkloads_v1::MakeAssuredWorkloadsServiceConnection;
 
-/// @deprecated Use assuredworkloads_v1::AssuredWorkloadsServiceConnection
-/// directly.
+/// @deprecated Use assuredworkloads_v1::AssuredWorkloadsServiceConnection directly.
 using ::google::cloud::assuredworkloads_v1::AssuredWorkloadsServiceConnection;
 
-/// @deprecated Use
-/// assuredworkloads_v1::AssuredWorkloadsServiceLimitedErrorCountRetryPolicy
-/// directly.
-using ::google::cloud::assuredworkloads_v1::
-    AssuredWorkloadsServiceLimitedErrorCountRetryPolicy;
+/// @deprecated Use assuredworkloads_v1::AssuredWorkloadsServiceLimitedErrorCountRetryPolicy directly.
+using ::google::cloud::assuredworkloads_v1::AssuredWorkloadsServiceLimitedErrorCountRetryPolicy;
 
-/// @deprecated Use
-/// assuredworkloads_v1::AssuredWorkloadsServiceLimitedTimeRetryPolicy directly.
-using ::google::cloud::assuredworkloads_v1::
-    AssuredWorkloadsServiceLimitedTimeRetryPolicy;
+/// @deprecated Use assuredworkloads_v1::AssuredWorkloadsServiceLimitedTimeRetryPolicy directly.
+using ::google::cloud::assuredworkloads_v1::AssuredWorkloadsServiceLimitedTimeRetryPolicy;
 
-/// @deprecated Use assuredworkloads_v1::AssuredWorkloadsServiceRetryPolicy
-/// directly.
+/// @deprecated Use assuredworkloads_v1::AssuredWorkloadsServiceRetryPolicy directly.
 using ::google::cloud::assuredworkloads_v1::AssuredWorkloadsServiceRetryPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

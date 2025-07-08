@@ -64,9 +64,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class InstantSnapshotsClient {
  public:
-  explicit InstantSnapshotsClient(
-      std::shared_ptr<InstantSnapshotsConnection> connection,
-      Options opts = {});
+  explicit InstantSnapshotsClient(std::shared_ptr<InstantSnapshotsConnection> connection, Options opts = {});
   ~InstantSnapshotsClient();
 
   ///@{
@@ -79,12 +77,10 @@ class InstantSnapshotsClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(InstantSnapshotsClient const& a,
-                         InstantSnapshotsClient const& b) {
+  friend bool operator==(InstantSnapshotsClient const& a, InstantSnapshotsClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(InstantSnapshotsClient const& a,
-                         InstantSnapshotsClient const& b) {
+  friend bool operator!=(InstantSnapshotsClient const& a, InstantSnapshotsClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -123,8 +119,7 @@ class InstantSnapshotsClient {
   /// [google.cloud.cpp.compute.v1.InstantSnapshotsScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_067.proto#L138}
   ///
   // clang-format on
-  StreamRange<std::pair<
-      std::string, google::cloud::cpp::compute::v1::InstantSnapshotsScopedList>>
+  StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::InstantSnapshotsScopedList>>
   AggregatedListInstantSnapshots(std::string const& project, Options opts = {});
 
   // clang-format off
@@ -166,12 +161,8 @@ class InstantSnapshotsClient {
   /// [google.cloud.cpp.compute.v1.InstantSnapshotsScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_067.proto#L138}
   ///
   // clang-format on
-  StreamRange<std::pair<
-      std::string, google::cloud::cpp::compute::v1::InstantSnapshotsScopedList>>
-  AggregatedListInstantSnapshots(
-      google::cloud::cpp::compute::instant_snapshots::v1::
-          AggregatedListInstantSnapshotsRequest request,
-      Options opts = {});
+  StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::InstantSnapshotsScopedList>>
+  AggregatedListInstantSnapshots(google::cloud::cpp::compute::instant_snapshots::v1::AggregatedListInstantSnapshotsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -210,8 +201,7 @@ class InstantSnapshotsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteInstantSnapshot(std::string const& project, std::string const& zone,
-                        std::string const& instant_snapshot, Options opts = {});
+  DeleteInstantSnapshot(std::string const& project, std::string const& zone, std::string const& instant_snapshot, Options opts = {});
 
   // clang-format off
   ///
@@ -224,9 +214,8 @@ class InstantSnapshotsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteInstantSnapshot(
-      NoAwaitTag, std::string const& project, std::string const& zone,
-      std::string const& instant_snapshot, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeleteInstantSnapshot(NoAwaitTag, std::string const& project, std::string const& zone, std::string const& instant_snapshot, Options opts = {});
 
   // clang-format off
   ///
@@ -268,9 +257,7 @@ class InstantSnapshotsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteInstantSnapshot(google::cloud::cpp::compute::instant_snapshots::v1::
-                            DeleteInstantSnapshotRequest const& request,
-                        Options opts = {});
+  DeleteInstantSnapshot(google::cloud::cpp::compute::instant_snapshots::v1::DeleteInstantSnapshotRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -283,11 +270,8 @@ class InstantSnapshotsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteInstantSnapshot(
-      NoAwaitTag,
-      google::cloud::cpp::compute::instant_snapshots::v1::
-          DeleteInstantSnapshotRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeleteInstantSnapshot(NoAwaitTag, google::cloud::cpp::compute::instant_snapshots::v1::DeleteInstantSnapshotRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -299,9 +283,7 @@ class InstantSnapshotsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteInstantSnapshot(
-      google::cloud::cpp::compute::v1::Operation const& operation,
-      Options opts = {});
+  DeleteInstantSnapshot(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -328,9 +310,8 @@ class InstantSnapshotsClient {
   /// [google.cloud.cpp.compute.v1.InstantSnapshot]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_066.proto#L26}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::InstantSnapshot> GetInstantSnapshot(
-      std::string const& project, std::string const& zone,
-      std::string const& instant_snapshot, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::InstantSnapshot>
+  GetInstantSnapshot(std::string const& project, std::string const& zone, std::string const& instant_snapshot, Options opts = {});
 
   // clang-format off
   ///
@@ -360,10 +341,8 @@ class InstantSnapshotsClient {
   /// [google.cloud.cpp.compute.v1.InstantSnapshot]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_066.proto#L26}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::InstantSnapshot> GetInstantSnapshot(
-      google::cloud::cpp::compute::instant_snapshots::v1::
-          GetInstantSnapshotRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::InstantSnapshot>
+  GetInstantSnapshot(google::cloud::cpp::compute::instant_snapshots::v1::GetInstantSnapshotRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -391,9 +370,8 @@ class InstantSnapshotsClient {
   /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_007.proto#L178}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
-      std::string const& project, std::string const& zone,
-      std::string const& resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Policy>
+  GetIamPolicy(std::string const& project, std::string const& zone, std::string const& resource, Options opts = {});
 
   // clang-format off
   ///
@@ -424,10 +402,8 @@ class InstantSnapshotsClient {
   /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_007.proto#L178}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
-      google::cloud::cpp::compute::instant_snapshots::v1::
-          GetIamPolicyRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Policy>
+  GetIamPolicy(google::cloud::cpp::compute::instant_snapshots::v1::GetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -461,10 +437,7 @@ class InstantSnapshotsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertInstantSnapshot(std::string const& project, std::string const& zone,
-                        google::cloud::cpp::compute::v1::InstantSnapshot const&
-                            instant_snapshot_resource,
-                        Options opts = {});
+  InsertInstantSnapshot(std::string const& project, std::string const& zone, google::cloud::cpp::compute::v1::InstantSnapshot const& instant_snapshot_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -477,11 +450,8 @@ class InstantSnapshotsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertInstantSnapshot(
-      NoAwaitTag, std::string const& project, std::string const& zone,
-      google::cloud::cpp::compute::v1::InstantSnapshot const&
-          instant_snapshot_resource,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  InsertInstantSnapshot(NoAwaitTag, std::string const& project, std::string const& zone, google::cloud::cpp::compute::v1::InstantSnapshot const& instant_snapshot_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -518,9 +488,7 @@ class InstantSnapshotsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertInstantSnapshot(google::cloud::cpp::compute::instant_snapshots::v1::
-                            InsertInstantSnapshotRequest const& request,
-                        Options opts = {});
+  InsertInstantSnapshot(google::cloud::cpp::compute::instant_snapshots::v1::InsertInstantSnapshotRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -533,11 +501,8 @@ class InstantSnapshotsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertInstantSnapshot(
-      NoAwaitTag,
-      google::cloud::cpp::compute::instant_snapshots::v1::
-          InsertInstantSnapshotRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  InsertInstantSnapshot(NoAwaitTag, google::cloud::cpp::compute::instant_snapshots::v1::InsertInstantSnapshotRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -549,9 +514,7 @@ class InstantSnapshotsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertInstantSnapshot(
-      google::cloud::cpp::compute::v1::Operation const& operation,
-      Options opts = {});
+  InsertInstantSnapshot(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -588,8 +551,7 @@ class InstantSnapshotsClient {
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::InstantSnapshot>
-  ListInstantSnapshots(std::string const& project, std::string const& zone,
-                       Options opts = {});
+  ListInstantSnapshots(std::string const& project, std::string const& zone, Options opts = {});
 
   // clang-format off
   ///
@@ -630,9 +592,7 @@ class InstantSnapshotsClient {
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::InstantSnapshot>
-  ListInstantSnapshots(google::cloud::cpp::compute::instant_snapshots::v1::
-                           ListInstantSnapshotsRequest request,
-                       Options opts = {});
+  ListInstantSnapshots(google::cloud::cpp::compute::instant_snapshots::v1::ListInstantSnapshotsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -661,12 +621,8 @@ class InstantSnapshotsClient {
   /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_007.proto#L178}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
-      std::string const& project, std::string const& zone,
-      std::string const& resource,
-      google::cloud::cpp::compute::v1::ZoneSetPolicyRequest const&
-          zone_set_policy_request_resource,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Policy>
+  SetIamPolicy(std::string const& project, std::string const& zone, std::string const& resource, google::cloud::cpp::compute::v1::ZoneSetPolicyRequest const& zone_set_policy_request_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -697,10 +653,8 @@ class InstantSnapshotsClient {
   /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_007.proto#L178}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
-      google::cloud::cpp::compute::instant_snapshots::v1::
-          SetIamPolicyRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Policy>
+  SetIamPolicy(google::cloud::cpp::compute::instant_snapshots::v1::SetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -735,12 +689,8 @@ class InstantSnapshotsClient {
   /// [google.cloud.cpp.compute.instant_snapshots.v1.SetLabelsRequest]: @cloud_cpp_reference_link{google/cloud/compute/instant_snapshots/v1/instant_snapshots.proto#L428}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
-      std::string const& project, std::string const& zone,
-      std::string const& resource,
-      google::cloud::cpp::compute::v1::ZoneSetLabelsRequest const&
-          zone_set_labels_request_resource,
-      Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  SetLabels(std::string const& project, std::string const& zone, std::string const& resource, google::cloud::cpp::compute::v1::ZoneSetLabelsRequest const& zone_set_labels_request_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -753,12 +703,8 @@ class InstantSnapshotsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
-      NoAwaitTag, std::string const& project, std::string const& zone,
-      std::string const& resource,
-      google::cloud::cpp::compute::v1::ZoneSetLabelsRequest const&
-          zone_set_labels_request_resource,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  SetLabels(NoAwaitTag, std::string const& project, std::string const& zone, std::string const& resource, google::cloud::cpp::compute::v1::ZoneSetLabelsRequest const& zone_set_labels_request_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -795,10 +741,8 @@ class InstantSnapshotsClient {
   /// [google.cloud.cpp.compute.instant_snapshots.v1.SetLabelsRequest]: @cloud_cpp_reference_link{google/cloud/compute/instant_snapshots/v1/instant_snapshots.proto#L428}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
-      google::cloud::cpp::compute::instant_snapshots::v1::
-          SetLabelsRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  SetLabels(google::cloud::cpp::compute::instant_snapshots::v1::SetLabelsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -811,11 +755,8 @@ class InstantSnapshotsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
-      NoAwaitTag,
-      google::cloud::cpp::compute::instant_snapshots::v1::
-          SetLabelsRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  SetLabels(NoAwaitTag, google::cloud::cpp::compute::instant_snapshots::v1::SetLabelsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -826,9 +767,8 @@ class InstantSnapshotsClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
-      google::cloud::cpp::compute::v1::Operation const& operation,
-      Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  SetLabels(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -857,12 +797,7 @@ class InstantSnapshotsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(
-      std::string const& project, std::string const& zone,
-      std::string const& resource,
-      google::cloud::cpp::compute::v1::TestPermissionsRequest const&
-          test_permissions_request_resource,
-      Options opts = {});
+  TestIamPermissions(std::string const& project, std::string const& zone, std::string const& resource, google::cloud::cpp::compute::v1::TestPermissionsRequest const& test_permissions_request_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -893,9 +828,7 @@ class InstantSnapshotsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(google::cloud::cpp::compute::instant_snapshots::v1::
-                         TestIamPermissionsRequest const& request,
-                     Options opts = {});
+  TestIamPermissions(google::cloud::cpp::compute::instant_snapshots::v1::TestIamPermissionsRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<InstantSnapshotsConnection> connection_;

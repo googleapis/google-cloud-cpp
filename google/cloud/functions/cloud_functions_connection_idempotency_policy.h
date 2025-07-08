@@ -26,16 +26,11 @@ namespace cloud {
 namespace functions {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use
-/// functions_v1::MakeDefaultCloudFunctionsServiceConnectionIdempotencyPolicy
-/// directly.
-using ::google::cloud::functions_v1::
-    MakeDefaultCloudFunctionsServiceConnectionIdempotencyPolicy;
+/// @deprecated Use functions_v1::MakeDefaultCloudFunctionsServiceConnectionIdempotencyPolicy directly.
+using ::google::cloud::functions_v1::MakeDefaultCloudFunctionsServiceConnectionIdempotencyPolicy;
 
-/// @deprecated Use
-/// functions_v1::CloudFunctionsServiceConnectionIdempotencyPolicy directly.
-using ::google::cloud::functions_v1::
-    CloudFunctionsServiceConnectionIdempotencyPolicy;
+/// @deprecated Use functions_v1::CloudFunctionsServiceConnectionIdempotencyPolicy directly.
+using ::google::cloud::functions_v1::CloudFunctionsServiceConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace functions

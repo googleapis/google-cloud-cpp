@@ -39,43 +39,34 @@ class InstanceSettingsRestLogging : public InstanceSettingsRestStub {
  public:
   ~InstanceSettingsRestLogging() override = default;
   InstanceSettingsRestLogging(std::shared_ptr<InstanceSettingsRestStub> child,
-                              TracingOptions tracing_options,
-                              std::set<std::string> components);
+                       TracingOptions tracing_options,
+                       std::set<std::string> components);
 
-  StatusOr<google::cloud::cpp::compute::v1::InstanceSettings>
-  GetInstanceSettings(google::cloud::rest_internal::RestContext& rest_context,
-                      Options const& options,
-                      google::cloud::cpp::compute::instance_settings::v1::
-                          GetInstanceSettingsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::InstanceSettings> GetInstanceSettings(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options, google::cloud::cpp::compute::instance_settings::v1::GetInstanceSettingsRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncPatchInstanceSettings(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncPatchInstanceSettings(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::instance_settings::v1::
-          PatchInstanceSettingsRequest const& request) override;
+      google::cloud::cpp::compute::instance_settings::v1::PatchInstanceSettingsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchInstanceSettings(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::instance_settings::v1::
-          PatchInstanceSettingsRequest const& request) override;
+      Options const& options, google::cloud::cpp::compute::instance_settings::v1::PatchInstanceSettingsRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncGetOperation(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::zone_operations::v1::
-          GetOperationRequest const& request) override;
+      google::cloud::cpp::compute::zone_operations::v1::GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::zone_operations::v1::
-          DeleteOperationRequest const& request) override;
+      google::cloud::cpp::compute::zone_operations::v1::DeleteOperationRequest const& request) override;
 
  private:
   std::shared_ptr<InstanceSettingsRestStub> child_;

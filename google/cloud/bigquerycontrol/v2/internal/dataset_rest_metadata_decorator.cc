@@ -17,11 +17,11 @@
 // source: google/cloud/bigquery/v2/dataset.proto
 
 #include "google/cloud/bigquerycontrol/v2/internal/dataset_rest_metadata_decorator.h"
+#include "absl/strings/str_format.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/internal/rest_set_metadata.h"
 #include "google/cloud/status_or.h"
-#include "absl/strings/str_format.h"
 #include <memory>
 #include <utility>
 
@@ -41,64 +41,65 @@ DatasetServiceRestMetadata::DatasetServiceRestMetadata(
 
 StatusOr<google::cloud::bigquery::v2::Dataset>
 DatasetServiceRestMetadata::GetDataset(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::bigquery::v2::GetDatasetRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::bigquery::v2::GetDatasetRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->GetDataset(rest_context, options, request);
 }
 
 StatusOr<google::cloud::bigquery::v2::Dataset>
 DatasetServiceRestMetadata::InsertDataset(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::bigquery::v2::InsertDatasetRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::bigquery::v2::InsertDatasetRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->InsertDataset(rest_context, options, request);
 }
 
 StatusOr<google::cloud::bigquery::v2::Dataset>
 DatasetServiceRestMetadata::PatchDataset(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::bigquery::v2::UpdateOrPatchDatasetRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::bigquery::v2::UpdateOrPatchDatasetRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->PatchDataset(rest_context, options, request);
 }
 
 StatusOr<google::cloud::bigquery::v2::Dataset>
 DatasetServiceRestMetadata::UpdateDataset(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::bigquery::v2::UpdateOrPatchDatasetRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::bigquery::v2::UpdateOrPatchDatasetRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->UpdateDataset(rest_context, options, request);
 }
 
-Status DatasetServiceRestMetadata::DeleteDataset(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::bigquery::v2::DeleteDatasetRequest const& request) {
+Status
+DatasetServiceRestMetadata::DeleteDataset(
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::bigquery::v2::DeleteDatasetRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->DeleteDataset(rest_context, options, request);
 }
 
 StatusOr<google::cloud::bigquery::v2::DatasetList>
 DatasetServiceRestMetadata::ListDatasets(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::bigquery::v2::ListDatasetsRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::bigquery::v2::ListDatasetsRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->ListDatasets(rest_context, options, request);
 }
 
 StatusOr<google::cloud::bigquery::v2::Dataset>
 DatasetServiceRestMetadata::UndeleteDataset(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::bigquery::v2::UndeleteDatasetRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::bigquery::v2::UndeleteDatasetRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->UndeleteDataset(rest_context, options, request);
 }
 
 void DatasetServiceRestMetadata::SetMetadata(
-    rest_internal::RestContext& rest_context, Options const& options,
-    std::vector<std::string> const& params) {
-  google::cloud::rest_internal::SetMetadata(rest_context, options, params,
-                                            api_client_header_);
+      rest_internal::RestContext& rest_context,
+      Options const& options, std::vector<std::string> const& params) {
+  google::cloud::rest_internal::SetMetadata(
+      rest_context, options, params, api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

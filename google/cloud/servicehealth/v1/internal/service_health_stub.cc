@@ -32,104 +32,106 @@ ServiceHealthStub::~ServiceHealthStub() = default;
 
 StatusOr<google::cloud::servicehealth::v1::ListEventsResponse>
 DefaultServiceHealthStub::ListEvents(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::servicehealth::v1::ListEventsRequest const& request) {
-  google::cloud::servicehealth::v1::ListEventsResponse response;
-  auto status = grpc_stub_->ListEvents(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::servicehealth::v1::ListEventsRequest const& request) {
+    google::cloud::servicehealth::v1::ListEventsResponse response;
+    auto status =
+        grpc_stub_->ListEvents(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::servicehealth::v1::Event>
 DefaultServiceHealthStub::GetEvent(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::servicehealth::v1::GetEventRequest const& request) {
-  google::cloud::servicehealth::v1::Event response;
-  auto status = grpc_stub_->GetEvent(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::servicehealth::v1::GetEventRequest const& request) {
+    google::cloud::servicehealth::v1::Event response;
+    auto status =
+        grpc_stub_->GetEvent(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::servicehealth::v1::ListOrganizationEventsResponse>
 DefaultServiceHealthStub::ListOrganizationEvents(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::servicehealth::v1::ListOrganizationEventsRequest const&
-        request) {
-  google::cloud::servicehealth::v1::ListOrganizationEventsResponse response;
-  auto status =
-      grpc_stub_->ListOrganizationEvents(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::servicehealth::v1::ListOrganizationEventsRequest const& request) {
+    google::cloud::servicehealth::v1::ListOrganizationEventsResponse response;
+    auto status =
+        grpc_stub_->ListOrganizationEvents(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::servicehealth::v1::OrganizationEvent>
 DefaultServiceHealthStub::GetOrganizationEvent(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::servicehealth::v1::GetOrganizationEventRequest const&
-        request) {
-  google::cloud::servicehealth::v1::OrganizationEvent response;
-  auto status = grpc_stub_->GetOrganizationEvent(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::servicehealth::v1::GetOrganizationEventRequest const& request) {
+    google::cloud::servicehealth::v1::OrganizationEvent response;
+    auto status =
+        grpc_stub_->GetOrganizationEvent(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::servicehealth::v1::ListOrganizationImpactsResponse>
 DefaultServiceHealthStub::ListOrganizationImpacts(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::servicehealth::v1::ListOrganizationImpactsRequest const&
-        request) {
-  google::cloud::servicehealth::v1::ListOrganizationImpactsResponse response;
-  auto status =
-      grpc_stub_->ListOrganizationImpacts(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::servicehealth::v1::ListOrganizationImpactsRequest const& request) {
+    google::cloud::servicehealth::v1::ListOrganizationImpactsResponse response;
+    auto status =
+        grpc_stub_->ListOrganizationImpacts(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::servicehealth::v1::OrganizationImpact>
 DefaultServiceHealthStub::GetOrganizationImpact(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::servicehealth::v1::GetOrganizationImpactRequest const&
-        request) {
-  google::cloud::servicehealth::v1::OrganizationImpact response;
-  auto status = grpc_stub_->GetOrganizationImpact(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::servicehealth::v1::GetOrganizationImpactRequest const& request) {
+    google::cloud::servicehealth::v1::OrganizationImpact response;
+    auto status =
+        grpc_stub_->GetOrganizationImpact(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 DefaultServiceHealthStub::ListLocations(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::location::ListLocationsRequest const& request) {
-  google::cloud::location::ListLocationsResponse response;
-  auto status = locations_stub_->ListLocations(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::location::ListLocationsRequest const& request) {
+    google::cloud::location::ListLocationsResponse response;
+    auto status =
+        locations_stub_->ListLocations(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::location::Location>
 DefaultServiceHealthStub::GetLocation(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::location::GetLocationRequest const& request) {
-  google::cloud::location::Location response;
-  auto status = locations_stub_->GetLocation(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::location::GetLocationRequest const& request) {
+    google::cloud::location::Location response;
+    auto status =
+        locations_stub_->GetLocation(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

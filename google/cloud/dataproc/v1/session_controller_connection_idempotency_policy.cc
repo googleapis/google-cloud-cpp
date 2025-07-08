@@ -26,36 +26,30 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-SessionControllerConnectionIdempotencyPolicy::
-    ~SessionControllerConnectionIdempotencyPolicy() = default;
+SessionControllerConnectionIdempotencyPolicy::~SessionControllerConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<SessionControllerConnectionIdempotencyPolicy>
 SessionControllerConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<SessionControllerConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency SessionControllerConnectionIdempotencyPolicy::CreateSession(
-    google::cloud::dataproc::v1::CreateSessionRequest const&) {
+Idempotency SessionControllerConnectionIdempotencyPolicy::CreateSession(google::cloud::dataproc::v1::CreateSessionRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SessionControllerConnectionIdempotencyPolicy::GetSession(
-    google::cloud::dataproc::v1::GetSessionRequest const&) {
+Idempotency SessionControllerConnectionIdempotencyPolicy::GetSession(google::cloud::dataproc::v1::GetSessionRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency SessionControllerConnectionIdempotencyPolicy::ListSessions(
-    google::cloud::dataproc::v1::ListSessionsRequest) {  // NOLINT
+Idempotency SessionControllerConnectionIdempotencyPolicy::ListSessions(google::cloud::dataproc::v1::ListSessionsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency SessionControllerConnectionIdempotencyPolicy::TerminateSession(
-    google::cloud::dataproc::v1::TerminateSessionRequest const&) {
+Idempotency SessionControllerConnectionIdempotencyPolicy::TerminateSession(google::cloud::dataproc::v1::TerminateSessionRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SessionControllerConnectionIdempotencyPolicy::DeleteSession(
-    google::cloud::dataproc::v1::DeleteSessionRequest const&) {
+Idempotency SessionControllerConnectionIdempotencyPolicy::DeleteSession(google::cloud::dataproc::v1::DeleteSessionRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
@@ -65,38 +59,32 @@ Idempotency SessionControllerConnectionIdempotencyPolicy::SetIamPolicy(
                                          : Idempotency::kIdempotent;
 }
 
-Idempotency SessionControllerConnectionIdempotencyPolicy::GetIamPolicy(
-    google::iam::v1::GetIamPolicyRequest const&) {
+Idempotency SessionControllerConnectionIdempotencyPolicy::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency SessionControllerConnectionIdempotencyPolicy::TestIamPermissions(
-    google::iam::v1::TestIamPermissionsRequest const&) {
+Idempotency SessionControllerConnectionIdempotencyPolicy::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency SessionControllerConnectionIdempotencyPolicy::ListOperations(
-    google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency SessionControllerConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency SessionControllerConnectionIdempotencyPolicy::GetOperation(
-    google::longrunning::GetOperationRequest const&) {
+Idempotency SessionControllerConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency SessionControllerConnectionIdempotencyPolicy::DeleteOperation(
-    google::longrunning::DeleteOperationRequest const&) {
+Idempotency SessionControllerConnectionIdempotencyPolicy::DeleteOperation(google::longrunning::DeleteOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SessionControllerConnectionIdempotencyPolicy::CancelOperation(
-    google::longrunning::CancelOperationRequest const&) {
+Idempotency SessionControllerConnectionIdempotencyPolicy::CancelOperation(google::longrunning::CancelOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<SessionControllerConnectionIdempotencyPolicy>
-MakeDefaultSessionControllerConnectionIdempotencyPolicy() {
+    MakeDefaultSessionControllerConnectionIdempotencyPolicy() {
   return std::make_unique<SessionControllerConnectionIdempotencyPolicy>();
 }
 

@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DISCOVERYENGINE_V1_SITE_SEARCH_ENGINE_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DISCOVERYENGINE_V1_SITE_SEARCH_ENGINE_CONNECTION_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/discoveryengine/v1/internal/site_search_engine_retry_traits.h"
 #include "google/cloud/discoveryengine/v1/site_search_engine_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -47,8 +47,7 @@ class SiteSearchEngineServiceRetryPolicy : public ::google::cloud::RetryPolicy {
 };
 
 /**
- * A retry policy for `SiteSearchEngineServiceConnection` based on counting
- * errors.
+ * A retry policy for `SiteSearchEngineServiceConnection` based on counting errors.
  *
  * This policy stops retrying if:
  * - An RPC returns a non-transient error.
@@ -57,8 +56,7 @@ class SiteSearchEngineServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class SiteSearchEngineServiceLimitedErrorCountRetryPolicy
-    : public SiteSearchEngineServiceRetryPolicy {
+class SiteSearchEngineServiceLimitedErrorCountRetryPolicy : public SiteSearchEngineServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -67,18 +65,15 @@ class SiteSearchEngineServiceLimitedErrorCountRetryPolicy
    * @note Disable the retry loop by providing an instance of this policy with
    *     @p maximum_failures == 0.
    */
-  explicit SiteSearchEngineServiceLimitedErrorCountRetryPolicy(
-      int maximum_failures)
-      : impl_(maximum_failures) {}
+  explicit SiteSearchEngineServiceLimitedErrorCountRetryPolicy(int maximum_failures)
+    : impl_(maximum_failures) {}
 
   SiteSearchEngineServiceLimitedErrorCountRetryPolicy(
       SiteSearchEngineServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : SiteSearchEngineServiceLimitedErrorCountRetryPolicy(
-            rhs.maximum_failures()) {}
+    : SiteSearchEngineServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   SiteSearchEngineServiceLimitedErrorCountRetryPolicy(
       SiteSearchEngineServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : SiteSearchEngineServiceLimitedErrorCountRetryPolicy(
-            rhs.maximum_failures()) {}
+    : SiteSearchEngineServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -90,8 +85,7 @@ class SiteSearchEngineServiceLimitedErrorCountRetryPolicy
     return impl_.IsPermanentFailure(status);
   }
   std::unique_ptr<SiteSearchEngineServiceRetryPolicy> clone() const override {
-    return std::make_unique<
-        SiteSearchEngineServiceLimitedErrorCountRetryPolicy>(
+    return std::make_unique<SiteSearchEngineServiceLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
 
@@ -99,9 +93,7 @@ class SiteSearchEngineServiceLimitedErrorCountRetryPolicy
   using BaseType = SiteSearchEngineServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      discoveryengine_v1_internal::SiteSearchEngineServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<discoveryengine_v1_internal::SiteSearchEngineServiceRetryTraits> impl_;
 };
 
 /**
@@ -114,8 +106,7 @@ class SiteSearchEngineServiceLimitedErrorCountRetryPolicy
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class SiteSearchEngineServiceLimitedTimeRetryPolicy
-    : public SiteSearchEngineServiceRetryPolicy {
+class SiteSearchEngineServiceLimitedTimeRetryPolicy : public SiteSearchEngineServiceRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -140,14 +131,12 @@ class SiteSearchEngineServiceLimitedTimeRetryPolicy
   template <typename DurationRep, typename DurationPeriod>
   explicit SiteSearchEngineServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  SiteSearchEngineServiceLimitedTimeRetryPolicy(
-      SiteSearchEngineServiceLimitedTimeRetryPolicy&& rhs) noexcept
-      : SiteSearchEngineServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  SiteSearchEngineServiceLimitedTimeRetryPolicy(
-      SiteSearchEngineServiceLimitedTimeRetryPolicy const& rhs) noexcept
-      : SiteSearchEngineServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  SiteSearchEngineServiceLimitedTimeRetryPolicy(SiteSearchEngineServiceLimitedTimeRetryPolicy&& rhs) noexcept
+    : SiteSearchEngineServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  SiteSearchEngineServiceLimitedTimeRetryPolicy(SiteSearchEngineServiceLimitedTimeRetryPolicy const& rhs) noexcept
+    : SiteSearchEngineServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -169,24 +158,20 @@ class SiteSearchEngineServiceLimitedTimeRetryPolicy
   using BaseType = SiteSearchEngineServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      discoveryengine_v1_internal::SiteSearchEngineServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<discoveryengine_v1_internal::SiteSearchEngineServiceRetryTraits> impl_;
 };
 
 /**
- * The `SiteSearchEngineServiceConnection` object for
- * `SiteSearchEngineServiceClient`.
+ * The `SiteSearchEngineServiceConnection` object for `SiteSearchEngineServiceClient`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `SiteSearchEngineServiceClient`. This allows users to inject custom
- * behavior (e.g., with a Google Mock object) when writing tests that use
- * objects of type `SiteSearchEngineServiceClient`.
+ * sets in `SiteSearchEngineServiceClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `SiteSearchEngineServiceClient`.
  *
  * To create a concrete instance, see `MakeSiteSearchEngineServiceConnection()`.
  *
- * For mocking, see
- * `discoveryengine_v1_mocks::MockSiteSearchEngineServiceConnection`.
+ * For mocking, see `discoveryengine_v1_mocks::MockSiteSearchEngineServiceConnection`.
  */
 class SiteSearchEngineServiceConnection {
  public:
@@ -195,200 +180,143 @@ class SiteSearchEngineServiceConnection {
   virtual Options options() { return Options{}; }
 
   virtual StatusOr<google::cloud::discoveryengine::v1::SiteSearchEngine>
-  GetSiteSearchEngine(
-      google::cloud::discoveryengine::v1::GetSiteSearchEngineRequest const&
-          request);
+  GetSiteSearchEngine(google::cloud::discoveryengine::v1::GetSiteSearchEngineRequest const& request);
 
   virtual future<StatusOr<google::cloud::discoveryengine::v1::TargetSite>>
-  CreateTargetSite(
-      google::cloud::discoveryengine::v1::CreateTargetSiteRequest const&
-          request);
+  CreateTargetSite(google::cloud::discoveryengine::v1::CreateTargetSiteRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> CreateTargetSite(
-      NoAwaitTag,
-      google::cloud::discoveryengine::v1::CreateTargetSiteRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  CreateTargetSite(NoAwaitTag, google::cloud::discoveryengine::v1::CreateTargetSiteRequest const& request);
 
   virtual future<StatusOr<google::cloud::discoveryengine::v1::TargetSite>>
-  CreateTargetSite(google::longrunning::Operation const& operation);
+  CreateTargetSite( google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<
-      google::cloud::discoveryengine::v1::BatchCreateTargetSitesResponse>>
-  BatchCreateTargetSites(
-      google::cloud::discoveryengine::v1::BatchCreateTargetSitesRequest const&
-          request);
+  virtual future<StatusOr<google::cloud::discoveryengine::v1::BatchCreateTargetSitesResponse>>
+  BatchCreateTargetSites(google::cloud::discoveryengine::v1::BatchCreateTargetSitesRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> BatchCreateTargetSites(
-      NoAwaitTag,
-      google::cloud::discoveryengine::v1::BatchCreateTargetSitesRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  BatchCreateTargetSites(NoAwaitTag, google::cloud::discoveryengine::v1::BatchCreateTargetSitesRequest const& request);
 
-  virtual future<StatusOr<
-      google::cloud::discoveryengine::v1::BatchCreateTargetSitesResponse>>
-  BatchCreateTargetSites(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::discoveryengine::v1::BatchCreateTargetSitesResponse>>
+  BatchCreateTargetSites( google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::discoveryengine::v1::TargetSite>
-  GetTargetSite(
-      google::cloud::discoveryengine::v1::GetTargetSiteRequest const& request);
+  GetTargetSite(google::cloud::discoveryengine::v1::GetTargetSiteRequest const& request);
 
   virtual future<StatusOr<google::cloud::discoveryengine::v1::TargetSite>>
-  UpdateTargetSite(
-      google::cloud::discoveryengine::v1::UpdateTargetSiteRequest const&
-          request);
+  UpdateTargetSite(google::cloud::discoveryengine::v1::UpdateTargetSiteRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> UpdateTargetSite(
-      NoAwaitTag,
-      google::cloud::discoveryengine::v1::UpdateTargetSiteRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  UpdateTargetSite(NoAwaitTag, google::cloud::discoveryengine::v1::UpdateTargetSiteRequest const& request);
 
   virtual future<StatusOr<google::cloud::discoveryengine::v1::TargetSite>>
-  UpdateTargetSite(google::longrunning::Operation const& operation);
+  UpdateTargetSite( google::longrunning::Operation const& operation);
 
-  virtual future<
-      StatusOr<google::cloud::discoveryengine::v1::DeleteTargetSiteMetadata>>
-  DeleteTargetSite(
-      google::cloud::discoveryengine::v1::DeleteTargetSiteRequest const&
-          request);
+  virtual future<StatusOr<google::cloud::discoveryengine::v1::DeleteTargetSiteMetadata>>
+  DeleteTargetSite(google::cloud::discoveryengine::v1::DeleteTargetSiteRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> DeleteTargetSite(
-      NoAwaitTag,
-      google::cloud::discoveryengine::v1::DeleteTargetSiteRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  DeleteTargetSite(NoAwaitTag, google::cloud::discoveryengine::v1::DeleteTargetSiteRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::discoveryengine::v1::DeleteTargetSiteMetadata>>
-  DeleteTargetSite(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::discoveryengine::v1::DeleteTargetSiteMetadata>>
+  DeleteTargetSite( google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::discoveryengine::v1::TargetSite>
-  ListTargetSites(
-      google::cloud::discoveryengine::v1::ListTargetSitesRequest request);
+  ListTargetSites(google::cloud::discoveryengine::v1::ListTargetSitesRequest request);
 
   virtual future<StatusOr<google::cloud::discoveryengine::v1::Sitemap>>
-  CreateSitemap(
-      google::cloud::discoveryengine::v1::CreateSitemapRequest const& request);
+  CreateSitemap(google::cloud::discoveryengine::v1::CreateSitemapRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> CreateSitemap(
-      NoAwaitTag,
-      google::cloud::discoveryengine::v1::CreateSitemapRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  CreateSitemap(NoAwaitTag, google::cloud::discoveryengine::v1::CreateSitemapRequest const& request);
 
   virtual future<StatusOr<google::cloud::discoveryengine::v1::Sitemap>>
-  CreateSitemap(google::longrunning::Operation const& operation);
+  CreateSitemap( google::longrunning::Operation const& operation);
 
-  virtual future<
-      StatusOr<google::cloud::discoveryengine::v1::DeleteSitemapMetadata>>
-  DeleteSitemap(
-      google::cloud::discoveryengine::v1::DeleteSitemapRequest const& request);
+  virtual future<StatusOr<google::cloud::discoveryengine::v1::DeleteSitemapMetadata>>
+  DeleteSitemap(google::cloud::discoveryengine::v1::DeleteSitemapRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> DeleteSitemap(
-      NoAwaitTag,
-      google::cloud::discoveryengine::v1::DeleteSitemapRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  DeleteSitemap(NoAwaitTag, google::cloud::discoveryengine::v1::DeleteSitemapRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::discoveryengine::v1::DeleteSitemapMetadata>>
-  DeleteSitemap(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::discoveryengine::v1::DeleteSitemapMetadata>>
+  DeleteSitemap( google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::discoveryengine::v1::FetchSitemapsResponse>
-  FetchSitemaps(
-      google::cloud::discoveryengine::v1::FetchSitemapsRequest const& request);
+  FetchSitemaps(google::cloud::discoveryengine::v1::FetchSitemapsRequest const& request);
 
-  virtual future<StatusOr<
-      google::cloud::discoveryengine::v1::EnableAdvancedSiteSearchResponse>>
-  EnableAdvancedSiteSearch(
-      google::cloud::discoveryengine::v1::EnableAdvancedSiteSearchRequest const&
-          request);
+  virtual future<StatusOr<google::cloud::discoveryengine::v1::EnableAdvancedSiteSearchResponse>>
+  EnableAdvancedSiteSearch(google::cloud::discoveryengine::v1::EnableAdvancedSiteSearchRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> EnableAdvancedSiteSearch(
-      NoAwaitTag,
-      google::cloud::discoveryengine::v1::EnableAdvancedSiteSearchRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  EnableAdvancedSiteSearch(NoAwaitTag, google::cloud::discoveryengine::v1::EnableAdvancedSiteSearchRequest const& request);
 
-  virtual future<StatusOr<
-      google::cloud::discoveryengine::v1::EnableAdvancedSiteSearchResponse>>
-  EnableAdvancedSiteSearch(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::discoveryengine::v1::EnableAdvancedSiteSearchResponse>>
+  EnableAdvancedSiteSearch( google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<
-      google::cloud::discoveryengine::v1::DisableAdvancedSiteSearchResponse>>
-  DisableAdvancedSiteSearch(
-      google::cloud::discoveryengine::v1::
-          DisableAdvancedSiteSearchRequest const& request);
+  virtual future<StatusOr<google::cloud::discoveryengine::v1::DisableAdvancedSiteSearchResponse>>
+  DisableAdvancedSiteSearch(google::cloud::discoveryengine::v1::DisableAdvancedSiteSearchRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> DisableAdvancedSiteSearch(
-      NoAwaitTag, google::cloud::discoveryengine::v1::
-                      DisableAdvancedSiteSearchRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  DisableAdvancedSiteSearch(NoAwaitTag, google::cloud::discoveryengine::v1::DisableAdvancedSiteSearchRequest const& request);
 
-  virtual future<StatusOr<
-      google::cloud::discoveryengine::v1::DisableAdvancedSiteSearchResponse>>
-  DisableAdvancedSiteSearch(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::discoveryengine::v1::DisableAdvancedSiteSearchResponse>>
+  DisableAdvancedSiteSearch( google::longrunning::Operation const& operation);
 
-  virtual future<
-      StatusOr<google::cloud::discoveryengine::v1::RecrawlUrisResponse>>
-  RecrawlUris(
-      google::cloud::discoveryengine::v1::RecrawlUrisRequest const& request);
+  virtual future<StatusOr<google::cloud::discoveryengine::v1::RecrawlUrisResponse>>
+  RecrawlUris(google::cloud::discoveryengine::v1::RecrawlUrisRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> RecrawlUris(
-      NoAwaitTag,
-      google::cloud::discoveryengine::v1::RecrawlUrisRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  RecrawlUris(NoAwaitTag, google::cloud::discoveryengine::v1::RecrawlUrisRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::discoveryengine::v1::RecrawlUrisResponse>>
-  RecrawlUris(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::discoveryengine::v1::RecrawlUrisResponse>>
+  RecrawlUris( google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<
-      google::cloud::discoveryengine::v1::BatchVerifyTargetSitesResponse>>
-  BatchVerifyTargetSites(
-      google::cloud::discoveryengine::v1::BatchVerifyTargetSitesRequest const&
-          request);
+  virtual future<StatusOr<google::cloud::discoveryengine::v1::BatchVerifyTargetSitesResponse>>
+  BatchVerifyTargetSites(google::cloud::discoveryengine::v1::BatchVerifyTargetSitesRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> BatchVerifyTargetSites(
-      NoAwaitTag,
-      google::cloud::discoveryengine::v1::BatchVerifyTargetSitesRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  BatchVerifyTargetSites(NoAwaitTag, google::cloud::discoveryengine::v1::BatchVerifyTargetSitesRequest const& request);
 
-  virtual future<StatusOr<
-      google::cloud::discoveryengine::v1::BatchVerifyTargetSitesResponse>>
-  BatchVerifyTargetSites(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::discoveryengine::v1::BatchVerifyTargetSitesResponse>>
+  BatchVerifyTargetSites( google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::discoveryengine::v1::TargetSite>
-  FetchDomainVerificationStatus(
-      google::cloud::discoveryengine::v1::FetchDomainVerificationStatusRequest
-          request);
+  FetchDomainVerificationStatus(google::cloud::discoveryengine::v1::FetchDomainVerificationStatusRequest request);
 
-  virtual StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 
-  virtual Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request);
+  virtual Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request);
 };
 
 /**
- * A factory function to construct an object of type
- * `SiteSearchEngineServiceConnection`.
+ * A factory function to construct an object of type `SiteSearchEngineServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of
- * SiteSearchEngineServiceClient.
+ * should be passed as an argument to the constructor of SiteSearchEngineServiceClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `SiteSearchEngineServiceConnection`. Expected options are any of the
- * types in the following option lists:
+ * returned `SiteSearchEngineServiceConnection`. Expected options are any of the types in
+ * the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * -
- * `google::cloud::discoveryengine_v1::SiteSearchEngineServicePolicyOptionList`
+ * - `google::cloud::discoveryengine_v1::SiteSearchEngineServicePolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
- * @param options (optional) Configure the `SiteSearchEngineServiceConnection`
- * created by this function.
+ * @param options (optional) Configure the `SiteSearchEngineServiceConnection` created by
+ * this function.
  */
-std::shared_ptr<SiteSearchEngineServiceConnection>
-MakeSiteSearchEngineServiceConnection(Options options = {});
+std::shared_ptr<SiteSearchEngineServiceConnection> MakeSiteSearchEngineServiceConnection(
+    Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace discoveryengine_v1

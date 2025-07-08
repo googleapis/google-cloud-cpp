@@ -17,17 +17,17 @@
 // source: google/cloud/support/v2/comment_service.proto
 
 #include "google/cloud/support/v2/comment_connection.h"
-#include "google/cloud/support/v2/comment_options.h"
-#include "google/cloud/support/v2/internal/comment_connection_impl.h"
-#include "google/cloud/support/v2/internal/comment_option_defaults.h"
-#include "google/cloud/support/v2/internal/comment_stub_factory.h"
-#include "google/cloud/support/v2/internal/comment_tracing_connection.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/support/v2/comment_options.h"
+#include "google/cloud/support/v2/internal/comment_connection_impl.h"
+#include "google/cloud/support/v2/internal/comment_option_defaults.h"
+#include "google/cloud/support/v2/internal/comment_stub_factory.h"
+#include "google/cloud/support/v2/internal/comment_tracing_connection.h"
 #include <memory>
 #include <utility>
 
@@ -38,10 +38,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 CommentServiceConnection::~CommentServiceConnection() = default;
 
-StreamRange<google::cloud::support::v2::Comment>
-CommentServiceConnection::ListComments(
-    google::cloud::support::v2::
-        ListCommentsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::support::v2::Comment> CommentServiceConnection::ListComments(
+    google::cloud::support::v2::ListCommentsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::support::v2::Comment>>();
 }
@@ -55,18 +53,17 @@ CommentServiceConnection::CreateComment(
 std::shared_ptr<CommentServiceConnection> MakeCommentServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 CommentServicePolicyOptionList>(options,
-                                                                 __func__);
-  options =
-      support_v2_internal::CommentServiceDefaultOptions(std::move(options));
+      UnifiedCredentialsOptionList,
+      CommentServicePolicyOptionList>(options, __func__);
+  options = support_v2_internal::CommentServiceDefaultOptions(
+      std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = support_v2_internal::CreateDefaultCommentServiceStub(
-      std::move(auth), options);
+    std::move(auth), options);
   return support_v2_internal::MakeCommentServiceTracingConnection(
       std::make_shared<support_v2_internal::CommentServiceConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options)));
+      std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

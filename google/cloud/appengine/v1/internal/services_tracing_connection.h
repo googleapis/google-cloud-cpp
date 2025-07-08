@@ -30,39 +30,42 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-class ServicesTracingConnection : public appengine_v1::ServicesConnection {
+class ServicesTracingConnection
+    : public appengine_v1::ServicesConnection {
  public:
   ~ServicesTracingConnection() override = default;
 
   explicit ServicesTracingConnection(
-      std::shared_ptr<appengine_v1::ServicesConnection> child);
+    std::shared_ptr<appengine_v1::ServicesConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StreamRange<google::appengine::v1::Service> ListServices(
-      google::appengine::v1::ListServicesRequest request) override;
+  StreamRange<google::appengine::v1::Service>
+  ListServices(google::appengine::v1::ListServicesRequest request) override;
 
-  StatusOr<google::appengine::v1::Service> GetService(
-      google::appengine::v1::GetServiceRequest const& request) override;
+  StatusOr<google::appengine::v1::Service>
+  GetService(google::appengine::v1::GetServiceRequest const& request) override;
 
-  future<StatusOr<google::appengine::v1::Service>> UpdateService(
+  future<StatusOr<google::appengine::v1::Service>>
+  UpdateService(google::appengine::v1::UpdateServiceRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  UpdateService(NoAwaitTag,
       google::appengine::v1::UpdateServiceRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> UpdateService(
-      NoAwaitTag,
-      google::appengine::v1::UpdateServiceRequest const& request) override;
-
-  future<StatusOr<google::appengine::v1::Service>> UpdateService(
+  future<StatusOr<google::appengine::v1::Service>>
+  UpdateService(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::appengine::v1::OperationMetadataV1>> DeleteService(
+  future<StatusOr<google::appengine::v1::OperationMetadataV1>>
+  DeleteService(google::appengine::v1::DeleteServiceRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  DeleteService(NoAwaitTag,
       google::appengine::v1::DeleteServiceRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> DeleteService(
-      NoAwaitTag,
-      google::appengine::v1::DeleteServiceRequest const& request) override;
-
-  future<StatusOr<google::appengine::v1::OperationMetadataV1>> DeleteService(
+  future<StatusOr<google::appengine::v1::OperationMetadataV1>>
+  DeleteService(
       google::longrunning::Operation const& operation) override;
 
  private:
@@ -77,7 +80,8 @@ class ServicesTracingConnection : public appengine_v1::ServicesConnection {
  * The connection is only decorated if tracing is enabled (as determined by the
  * connection's options).
  */
-std::shared_ptr<appengine_v1::ServicesConnection> MakeServicesTracingConnection(
+std::shared_ptr<appengine_v1::ServicesConnection>
+MakeServicesTracingConnection(
     std::shared_ptr<appengine_v1::ServicesConnection> conn);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

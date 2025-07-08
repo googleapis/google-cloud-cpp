@@ -17,14 +17,14 @@
 // source: google/cloud/dataproc/v1/session_templates.proto
 
 #include "google/cloud/dataproc/v1/session_template_controller_connection.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/dataproc/v1/internal/session_template_controller_connection_impl.h"
 #include "google/cloud/dataproc/v1/internal/session_template_controller_option_defaults.h"
 #include "google/cloud/dataproc/v1/internal/session_template_controller_stub_factory.h"
 #include "google/cloud/dataproc/v1/internal/session_template_controller_tracing_connection.h"
 #include "google/cloud/dataproc/v1/session_template_controller_options.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
-#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
@@ -36,8 +36,7 @@ namespace cloud {
 namespace dataproc_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-SessionTemplateControllerConnection::~SessionTemplateControllerConnection() =
-    default;
+SessionTemplateControllerConnection::~SessionTemplateControllerConnection() = default;
 
 StatusOr<google::cloud::dataproc::v1::SessionTemplate>
 SessionTemplateControllerConnection::CreateSessionTemplate(
@@ -57,15 +56,14 @@ SessionTemplateControllerConnection::GetSessionTemplate(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::dataproc::v1::SessionTemplate>
-SessionTemplateControllerConnection::ListSessionTemplates(
-    google::cloud::dataproc::v1::
-        ListSessionTemplatesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::dataproc::v1::SessionTemplate> SessionTemplateControllerConnection::ListSessionTemplates(
+    google::cloud::dataproc::v1::ListSessionTemplatesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::dataproc::v1::SessionTemplate>>();
 }
 
-Status SessionTemplateControllerConnection::DeleteSessionTemplate(
+Status
+SessionTemplateControllerConnection::DeleteSessionTemplate(
     google::cloud::dataproc::v1::DeleteSessionTemplateRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -88,10 +86,8 @@ SessionTemplateControllerConnection::TestIamPermissions(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::longrunning::Operation>
-SessionTemplateControllerConnection::ListOperations(
-    google::longrunning::
-        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::longrunning::Operation> SessionTemplateControllerConnection::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }
@@ -102,33 +98,32 @@ SessionTemplateControllerConnection::GetOperation(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status SessionTemplateControllerConnection::DeleteOperation(
+Status
+SessionTemplateControllerConnection::DeleteOperation(
     google::longrunning::DeleteOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status SessionTemplateControllerConnection::CancelOperation(
+Status
+SessionTemplateControllerConnection::CancelOperation(
     google::longrunning::CancelOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-std::shared_ptr<SessionTemplateControllerConnection>
-MakeSessionTemplateControllerConnection(std::string const& location,
-                                        Options options) {
+std::shared_ptr<SessionTemplateControllerConnection> MakeSessionTemplateControllerConnection(
+    std::string const& location, Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 SessionTemplateControllerPolicyOptionList>(
-      options, __func__);
+      UnifiedCredentialsOptionList,
+      SessionTemplateControllerPolicyOptionList>(options, __func__);
   options = dataproc_v1_internal::SessionTemplateControllerDefaultOptions(
       location, std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = dataproc_v1_internal::CreateDefaultSessionTemplateControllerStub(
-      std::move(auth), options);
+    std::move(auth), options);
   return dataproc_v1_internal::MakeSessionTemplateControllerTracingConnection(
-      std::make_shared<
-          dataproc_v1_internal::SessionTemplateControllerConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options)));
+      std::make_shared<dataproc_v1_internal::SessionTemplateControllerConnectionImpl>(
+      std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

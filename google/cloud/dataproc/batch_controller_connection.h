@@ -33,8 +33,7 @@ using ::google::cloud::dataproc_v1::MakeBatchControllerConnection;
 /// @deprecated Use dataproc_v1::BatchControllerConnection directly.
 using ::google::cloud::dataproc_v1::BatchControllerConnection;
 
-/// @deprecated Use dataproc_v1::BatchControllerLimitedErrorCountRetryPolicy
-/// directly.
+/// @deprecated Use dataproc_v1::BatchControllerLimitedErrorCountRetryPolicy directly.
 using ::google::cloud::dataproc_v1::BatchControllerLimitedErrorCountRetryPolicy;
 
 /// @deprecated Use dataproc_v1::BatchControllerLimitedTimeRetryPolicy directly.

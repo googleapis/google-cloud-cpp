@@ -19,14 +19,14 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBLICCA_V1_INTERNAL_PUBLIC_CERTIFICATE_AUTHORITY_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBLICCA_V1_INTERNAL_PUBLIC_CERTIFICATE_AUTHORITY_CONNECTION_IMPL_H
 
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/options.h"
 #include "google/cloud/publicca/v1/internal/public_certificate_authority_retry_traits.h"
 #include "google/cloud/publicca/v1/internal/public_certificate_authority_stub.h"
 #include "google/cloud/publicca/v1/public_certificate_authority_connection.h"
 #include "google/cloud/publicca/v1/public_certificate_authority_connection_idempotency_policy.h"
 #include "google/cloud/publicca/v1/public_certificate_authority_options.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -42,23 +42,18 @@ class PublicCertificateAuthorityServiceConnectionImpl
   ~PublicCertificateAuthorityServiceConnectionImpl() override = default;
 
   PublicCertificateAuthorityServiceConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<
-          publicca_v1_internal::PublicCertificateAuthorityServiceStub>
-          stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<publicca_v1_internal::PublicCertificateAuthorityServiceStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
   StatusOr<google::cloud::security::publicca::v1::ExternalAccountKey>
-  CreateExternalAccountKey(
-      google::cloud::security::publicca::v1::
-          CreateExternalAccountKeyRequest const& request) override;
+  CreateExternalAccountKey(google::cloud::security::publicca::v1::CreateExternalAccountKeyRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<publicca_v1_internal::PublicCertificateAuthorityServiceStub>
-      stub_;
+  std::shared_ptr<publicca_v1_internal::PublicCertificateAuthorityServiceStub> stub_;
   Options options_;
 };
 

@@ -17,11 +17,11 @@
 // source: google/cloud/compute/instant_snapshots/v1/instant_snapshots.proto
 
 #include "google/cloud/compute/instant_snapshots/v1/internal/instant_snapshots_rest_metadata_decorator.h"
+#include "absl/strings/str_format.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/internal/rest_set_metadata.h"
 #include "google/cloud/status_or.h"
-#include "absl/strings/str_format.h"
 #include <memory>
 #include <utility>
 
@@ -41,117 +41,105 @@ InstantSnapshotsRestMetadata::InstantSnapshotsRestMetadata(
 
 StatusOr<google::cloud::cpp::compute::v1::InstantSnapshotAggregatedList>
 InstantSnapshotsRestMetadata::AggregatedListInstantSnapshots(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::instant_snapshots::v1::
-        AggregatedListInstantSnapshotsRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::instant_snapshots::v1::AggregatedListInstantSnapshotsRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->AggregatedListInstantSnapshots(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstantSnapshotsRestMetadata::AsyncDeleteInstantSnapshot(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::instant_snapshots::v1::
-        DeleteInstantSnapshotRequest const& request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::instant_snapshots::v1::DeleteInstantSnapshotRequest const& request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncDeleteInstantSnapshot(cq, std::move(rest_context),
-                                            std::move(options), request);
+  return child_->AsyncDeleteInstantSnapshot(
+      cq, std::move(rest_context), std::move(options), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstantSnapshotsRestMetadata::DeleteInstantSnapshot(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::instant_snapshots::v1::
-        DeleteInstantSnapshotRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::instant_snapshots::v1::DeleteInstantSnapshotRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->DeleteInstantSnapshot(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InstantSnapshot>
 InstantSnapshotsRestMetadata::GetInstantSnapshot(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::instant_snapshots::v1::
-        GetInstantSnapshotRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::instant_snapshots::v1::GetInstantSnapshotRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->GetInstantSnapshot(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 InstantSnapshotsRestMetadata::GetIamPolicy(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::instant_snapshots::v1::
-        GetIamPolicyRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::instant_snapshots::v1::GetIamPolicyRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->GetIamPolicy(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstantSnapshotsRestMetadata::AsyncInsertInstantSnapshot(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::instant_snapshots::v1::
-        InsertInstantSnapshotRequest const& request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::instant_snapshots::v1::InsertInstantSnapshotRequest const& request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncInsertInstantSnapshot(cq, std::move(rest_context),
-                                            std::move(options), request);
+  return child_->AsyncInsertInstantSnapshot(
+      cq, std::move(rest_context), std::move(options), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstantSnapshotsRestMetadata::InsertInstantSnapshot(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::instant_snapshots::v1::
-        InsertInstantSnapshotRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::instant_snapshots::v1::InsertInstantSnapshotRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->InsertInstantSnapshot(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InstantSnapshotList>
 InstantSnapshotsRestMetadata::ListInstantSnapshots(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::instant_snapshots::v1::
-        ListInstantSnapshotsRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::instant_snapshots::v1::ListInstantSnapshotsRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->ListInstantSnapshots(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 InstantSnapshotsRestMetadata::SetIamPolicy(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::instant_snapshots::v1::
-        SetIamPolicyRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::instant_snapshots::v1::SetIamPolicyRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->SetIamPolicy(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstantSnapshotsRestMetadata::AsyncSetLabels(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::instant_snapshots::v1::SetLabelsRequest const&
-        request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::instant_snapshots::v1::SetLabelsRequest const& request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncSetLabels(cq, std::move(rest_context), std::move(options),
-                                request);
+  return child_->AsyncSetLabels(
+      cq, std::move(rest_context), std::move(options), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstantSnapshotsRestMetadata::SetLabels(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::instant_snapshots::v1::SetLabelsRequest const&
-        request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::instant_snapshots::v1::SetLabelsRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->SetLabels(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
 InstantSnapshotsRestMetadata::TestIamPermissions(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::instant_snapshots::v1::
-        TestIamPermissionsRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::instant_snapshots::v1::TestIamPermissionsRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->TestIamPermissions(rest_context, options, request);
 }
@@ -161,29 +149,28 @@ InstantSnapshotsRestMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::zone_operations::v1::GetOperationRequest const&
-        request) {
+    google::cloud::cpp::compute::zone_operations::v1::GetOperationRequest const& request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncGetOperation(cq, std::move(rest_context),
-                                   std::move(options), request);
+  return child_->AsyncGetOperation(
+      cq, std::move(rest_context), std::move(options), request);
 }
 
-future<Status> InstantSnapshotsRestMetadata::AsyncCancelOperation(
+future<Status>
+InstantSnapshotsRestMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::zone_operations::v1::
-        DeleteOperationRequest const& request) {
+    google::cloud::cpp::compute::zone_operations::v1::DeleteOperationRequest const& request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncCancelOperation(cq, std::move(rest_context),
-                                      std::move(options), request);
+  return child_->AsyncCancelOperation(
+      cq, std::move(rest_context), std::move(options), request);
 }
 
 void InstantSnapshotsRestMetadata::SetMetadata(
-    rest_internal::RestContext& rest_context, Options const& options,
-    std::vector<std::string> const& params) {
-  google::cloud::rest_internal::SetMetadata(rest_context, options, params,
-                                            api_client_header_);
+      rest_internal::RestContext& rest_context,
+      Options const& options, std::vector<std::string> const& params) {
+  google::cloud::rest_internal::SetMetadata(
+      rest_context, options, params, api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

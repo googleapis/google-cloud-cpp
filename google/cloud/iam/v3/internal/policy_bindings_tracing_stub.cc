@@ -34,37 +34,34 @@ PolicyBindingsTracingStub::PolicyBindingsTracingStub(
 
 future<StatusOr<google::longrunning::Operation>>
 PolicyBindingsTracingStub::AsyncCreatePolicyBinding(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::iam::v3::CreatePolicyBindingRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.iam.v3.PolicyBindings",
-                                     "CreatePolicyBinding");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::iam::v3::CreatePolicyBindingRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.iam.v3.PolicyBindings", "CreatePolicyBinding");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCreatePolicyBinding(cq, context, std::move(options),
-                                            request);
+  auto f = child_->AsyncCreatePolicyBinding(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 PolicyBindingsTracingStub::CreatePolicyBinding(
-    grpc::ClientContext& context, Options options,
-    google::iam::v3::CreatePolicyBindingRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.iam.v3.PolicyBindings",
-                                     "CreatePolicyBinding");
+      grpc::ClientContext& context,
+      Options options,
+      google::iam::v3::CreatePolicyBindingRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.iam.v3.PolicyBindings", "CreatePolicyBinding");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->CreatePolicyBinding(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->CreatePolicyBinding(context, options, request));
 }
 
-StatusOr<google::iam::v3::PolicyBinding>
-PolicyBindingsTracingStub::GetPolicyBinding(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::iam::v3::PolicyBinding> PolicyBindingsTracingStub::GetPolicyBinding(
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v3::GetPolicyBindingRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.iam.v3.PolicyBindings",
-                                     "GetPolicyBinding");
+  auto span = internal::MakeSpanGrpc("google.iam.v3.PolicyBindings", "GetPolicyBinding");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -73,89 +70,81 @@ PolicyBindingsTracingStub::GetPolicyBinding(
 
 future<StatusOr<google::longrunning::Operation>>
 PolicyBindingsTracingStub::AsyncUpdatePolicyBinding(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::iam::v3::UpdatePolicyBindingRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.iam.v3.PolicyBindings",
-                                     "UpdatePolicyBinding");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::iam::v3::UpdatePolicyBindingRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.iam.v3.PolicyBindings", "UpdatePolicyBinding");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncUpdatePolicyBinding(cq, context, std::move(options),
-                                            request);
+  auto f = child_->AsyncUpdatePolicyBinding(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 PolicyBindingsTracingStub::UpdatePolicyBinding(
-    grpc::ClientContext& context, Options options,
-    google::iam::v3::UpdatePolicyBindingRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.iam.v3.PolicyBindings",
-                                     "UpdatePolicyBinding");
+      grpc::ClientContext& context,
+      Options options,
+      google::iam::v3::UpdatePolicyBindingRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.iam.v3.PolicyBindings", "UpdatePolicyBinding");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->UpdatePolicyBinding(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->UpdatePolicyBinding(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 PolicyBindingsTracingStub::AsyncDeletePolicyBinding(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::iam::v3::DeletePolicyBindingRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.iam.v3.PolicyBindings",
-                                     "DeletePolicyBinding");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::iam::v3::DeletePolicyBindingRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.iam.v3.PolicyBindings", "DeletePolicyBinding");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncDeletePolicyBinding(cq, context, std::move(options),
-                                            request);
+  auto f = child_->AsyncDeletePolicyBinding(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 PolicyBindingsTracingStub::DeletePolicyBinding(
-    grpc::ClientContext& context, Options options,
-    google::iam::v3::DeletePolicyBindingRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.iam.v3.PolicyBindings",
-                                     "DeletePolicyBinding");
+      grpc::ClientContext& context,
+      Options options,
+      google::iam::v3::DeletePolicyBindingRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.iam.v3.PolicyBindings", "DeletePolicyBinding");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->DeletePolicyBinding(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->DeletePolicyBinding(context, options, request));
 }
 
-StatusOr<google::iam::v3::ListPolicyBindingsResponse>
-PolicyBindingsTracingStub::ListPolicyBindings(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::iam::v3::ListPolicyBindingsResponse> PolicyBindingsTracingStub::ListPolicyBindings(
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v3::ListPolicyBindingsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.iam.v3.PolicyBindings",
-                                     "ListPolicyBindings");
+  auto span = internal::MakeSpanGrpc("google.iam.v3.PolicyBindings", "ListPolicyBindings");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->ListPolicyBindings(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->ListPolicyBindings(context, options, request));
 }
 
-StatusOr<google::iam::v3::SearchTargetPolicyBindingsResponse>
-PolicyBindingsTracingStub::SearchTargetPolicyBindings(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::iam::v3::SearchTargetPolicyBindingsResponse> PolicyBindingsTracingStub::SearchTargetPolicyBindings(
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v3::SearchTargetPolicyBindingsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.iam.v3.PolicyBindings",
-                                     "SearchTargetPolicyBindings");
+  auto span = internal::MakeSpanGrpc("google.iam.v3.PolicyBindings", "SearchTargetPolicyBindings");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span,
-      child_->SearchTargetPolicyBindings(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->SearchTargetPolicyBindings(context, options, request));
 }
 
-StatusOr<google::longrunning::Operation>
-PolicyBindingsTracingStub::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::Operation> PolicyBindingsTracingStub::GetOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  auto span =
-      internal::MakeSpanGrpc("google.iam.v3.PolicyBindings", "GetOperation");
+  auto span = internal::MakeSpanGrpc("google.iam.v3.PolicyBindings", "GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -172,7 +161,8 @@ PolicyBindingsTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncGetOperation(cq, context, std::move(options), request);
+  auto f = child_->AsyncGetOperation(
+      cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -185,8 +175,8 @@ future<Status> PolicyBindingsTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f =
-      child_->AsyncCancelOperation(cq, context, std::move(options), request);
+  auto f = child_->AsyncCancelOperation(
+      cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 

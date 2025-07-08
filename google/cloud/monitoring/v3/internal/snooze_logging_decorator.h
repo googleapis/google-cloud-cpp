@@ -39,19 +39,23 @@ class SnoozeServiceLogging : public SnoozeServiceStub {
                        std::set<std::string> const& components);
 
   StatusOr<google::monitoring::v3::Snooze> CreateSnooze(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::monitoring::v3::CreateSnoozeRequest const& request) override;
 
   StatusOr<google::monitoring::v3::ListSnoozesResponse> ListSnoozes(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::monitoring::v3::ListSnoozesRequest const& request) override;
 
   StatusOr<google::monitoring::v3::Snooze> GetSnooze(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::monitoring::v3::GetSnoozeRequest const& request) override;
 
   StatusOr<google::monitoring::v3::Snooze> UpdateSnooze(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::monitoring::v3::UpdateSnoozeRequest const& request) override;
 
  private:

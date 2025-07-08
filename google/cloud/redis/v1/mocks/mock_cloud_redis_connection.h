@@ -46,33 +46,29 @@ class MockCloudRedisConnection : public redis_v1::CloudRedisConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::redis::v1::Instance>), ListInstances,
-              (google::cloud::redis::v1::ListInstancesRequest request),
-              (override));
+  MOCK_METHOD((StreamRange<google::cloud::redis::v1::Instance>),
+  ListInstances,
+  (google::cloud::redis::v1::ListInstancesRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::redis::v1::Instance>, GetInstance,
-              (google::cloud::redis::v1::GetInstanceRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::redis::v1::Instance>,
+  GetInstance,
+  (google::cloud::redis::v1::GetInstanceRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::redis::v1::InstanceAuthString>,
-      GetInstanceAuthString,
-      (google::cloud::redis::v1::GetInstanceAuthStringRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::redis::v1::InstanceAuthString>,
+  GetInstanceAuthString,
+  (google::cloud::redis::v1::GetInstanceAuthStringRequest const& request), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// CreateInstance(Matcher<google::cloud::redis::v1::CreateInstanceRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, CreateInstance(Matcher<google::cloud::redis::v1::CreateInstanceRequest const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::redis::v1::Instance>>,
-              CreateInstance,
-              (google::cloud::redis::v1::CreateInstanceRequest const& request),
-              (override));
+  CreateInstance,
+  (google::cloud::redis::v1::CreateInstanceRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -80,36 +76,33 @@ class MockCloudRedisConnection : public redis_v1::CloudRedisConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, CreateInstance(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateInstance,
-              (NoAwaitTag,
-               google::cloud::redis::v1::CreateInstanceRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  CreateInstance, (NoAwaitTag,
+    google::cloud::redis::v1::CreateInstanceRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateInstance(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, CreateInstance(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::redis::v1::Instance>>,
-              CreateInstance, (google::longrunning::Operation const& operation),
-              (override));
+  CreateInstance, (
+    google::longrunning::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// UpdateInstance(Matcher<google::cloud::redis::v1::UpdateInstanceRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, UpdateInstance(Matcher<google::cloud::redis::v1::UpdateInstanceRequest const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::redis::v1::Instance>>,
-              UpdateInstance,
-              (google::cloud::redis::v1::UpdateInstanceRequest const& request),
-              (override));
+  UpdateInstance,
+  (google::cloud::redis::v1::UpdateInstanceRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -117,36 +110,33 @@ class MockCloudRedisConnection : public redis_v1::CloudRedisConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, UpdateInstance(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, UpdateInstance,
-              (NoAwaitTag,
-               google::cloud::redis::v1::UpdateInstanceRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  UpdateInstance, (NoAwaitTag,
+    google::cloud::redis::v1::UpdateInstanceRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UpdateInstance(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, UpdateInstance(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::redis::v1::Instance>>,
-              UpdateInstance, (google::longrunning::Operation const& operation),
-              (override));
+  UpdateInstance, (
+    google::longrunning::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// UpgradeInstance(Matcher<google::cloud::redis::v1::UpgradeInstanceRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, UpgradeInstance(Matcher<google::cloud::redis::v1::UpgradeInstanceRequest const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::redis::v1::Instance>>,
-              UpgradeInstance,
-              (google::cloud::redis::v1::UpgradeInstanceRequest const& request),
-              (override));
+  UpgradeInstance,
+  (google::cloud::redis::v1::UpgradeInstanceRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -154,36 +144,33 @@ class MockCloudRedisConnection : public redis_v1::CloudRedisConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, UpgradeInstance(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, UpgradeInstance,
-              (NoAwaitTag,
-               google::cloud::redis::v1::UpgradeInstanceRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  UpgradeInstance, (NoAwaitTag,
+    google::cloud::redis::v1::UpgradeInstanceRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UpgradeInstance(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, UpgradeInstance(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::redis::v1::Instance>>,
-              UpgradeInstance,
-              (google::longrunning::Operation const& operation), (override));
+  UpgradeInstance, (
+    google::longrunning::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// ImportInstance(Matcher<google::cloud::redis::v1::ImportInstanceRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, ImportInstance(Matcher<google::cloud::redis::v1::ImportInstanceRequest const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::redis::v1::Instance>>,
-              ImportInstance,
-              (google::cloud::redis::v1::ImportInstanceRequest const& request),
-              (override));
+  ImportInstance,
+  (google::cloud::redis::v1::ImportInstanceRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -191,36 +178,33 @@ class MockCloudRedisConnection : public redis_v1::CloudRedisConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, ImportInstance(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, ImportInstance,
-              (NoAwaitTag,
-               google::cloud::redis::v1::ImportInstanceRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  ImportInstance, (NoAwaitTag,
+    google::cloud::redis::v1::ImportInstanceRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, ImportInstance(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, ImportInstance(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::redis::v1::Instance>>,
-              ImportInstance, (google::longrunning::Operation const& operation),
-              (override));
+  ImportInstance, (
+    google::longrunning::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// ExportInstance(Matcher<google::cloud::redis::v1::ExportInstanceRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, ExportInstance(Matcher<google::cloud::redis::v1::ExportInstanceRequest const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::redis::v1::Instance>>,
-              ExportInstance,
-              (google::cloud::redis::v1::ExportInstanceRequest const& request),
-              (override));
+  ExportInstance,
+  (google::cloud::redis::v1::ExportInstanceRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -228,36 +212,33 @@ class MockCloudRedisConnection : public redis_v1::CloudRedisConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, ExportInstance(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, ExportInstance,
-              (NoAwaitTag,
-               google::cloud::redis::v1::ExportInstanceRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  ExportInstance, (NoAwaitTag,
+    google::cloud::redis::v1::ExportInstanceRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, ExportInstance(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, ExportInstance(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::redis::v1::Instance>>,
-              ExportInstance, (google::longrunning::Operation const& operation),
-              (override));
+  ExportInstance, (
+    google::longrunning::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// FailoverInstance(Matcher<google::cloud::redis::v1::FailoverInstanceRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, FailoverInstance(Matcher<google::cloud::redis::v1::FailoverInstanceRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::redis::v1::Instance>>, FailoverInstance,
-      (google::cloud::redis::v1::FailoverInstanceRequest const& request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::redis::v1::Instance>>,
+  FailoverInstance,
+  (google::cloud::redis::v1::FailoverInstanceRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -265,37 +246,33 @@ class MockCloudRedisConnection : public redis_v1::CloudRedisConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, FailoverInstance(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, FailoverInstance,
-      (NoAwaitTag,
-       google::cloud::redis::v1::FailoverInstanceRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  FailoverInstance, (NoAwaitTag,
+    google::cloud::redis::v1::FailoverInstanceRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, FailoverInstance(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, FailoverInstance(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::redis::v1::Instance>>,
-              FailoverInstance,
-              (google::longrunning::Operation const& operation), (override));
+  FailoverInstance, (
+    google::longrunning::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteInstance(Matcher<google::cloud::redis::v1::DeleteInstanceRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteInstance(Matcher<google::cloud::redis::v1::DeleteInstanceRequest const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::redis::v1::OperationMetadata>>,
-              DeleteInstance,
-              (google::cloud::redis::v1::DeleteInstanceRequest const& request),
-              (override));
+  DeleteInstance,
+  (google::cloud::redis::v1::DeleteInstanceRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -303,37 +280,33 @@ class MockCloudRedisConnection : public redis_v1::CloudRedisConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, DeleteInstance(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteInstance,
-              (NoAwaitTag,
-               google::cloud::redis::v1::DeleteInstanceRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  DeleteInstance, (NoAwaitTag,
+    google::cloud::redis::v1::DeleteInstanceRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteInstance(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteInstance(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::redis::v1::OperationMetadata>>,
-              DeleteInstance, (google::longrunning::Operation const& operation),
-              (override));
+  DeleteInstance, (
+    google::longrunning::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// RescheduleMaintenance(Matcher<google::cloud::redis::v1::RescheduleMaintenanceRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, RescheduleMaintenance(Matcher<google::cloud::redis::v1::RescheduleMaintenanceRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::redis::v1::Instance>>,
-      RescheduleMaintenance,
-      (google::cloud::redis::v1::RescheduleMaintenanceRequest const& request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::redis::v1::Instance>>,
+  RescheduleMaintenance,
+  (google::cloud::redis::v1::RescheduleMaintenanceRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -341,46 +314,45 @@ class MockCloudRedisConnection : public redis_v1::CloudRedisConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, RescheduleMaintenance(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, RescheduleMaintenance,
-      (NoAwaitTag,
-       google::cloud::redis::v1::RescheduleMaintenanceRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  RescheduleMaintenance, (NoAwaitTag,
+    google::cloud::redis::v1::RescheduleMaintenanceRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// RescheduleMaintenance(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock, RescheduleMaintenance(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::redis::v1::Instance>>,
-              RescheduleMaintenance,
-              (google::longrunning::Operation const& operation), (override));
+  RescheduleMaintenance, (
+    google::longrunning::Operation const& operation), (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::location::Location>), ListLocations,
-              (google::cloud::location::ListLocationsRequest request),
-              (override));
+  MOCK_METHOD((StreamRange<google::cloud::location::Location>),
+  ListLocations,
+  (google::cloud::location::ListLocationsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::location::Location>, GetLocation,
-              (google::cloud::location::GetLocationRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::location::Location>,
+  GetLocation,
+  (google::cloud::location::GetLocationRequest const& request), (override));
 
-  MOCK_METHOD((StreamRange<google::longrunning::Operation>), ListOperations,
-              (google::longrunning::ListOperationsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::longrunning::Operation>),
+  ListOperations,
+  (google::longrunning::ListOperationsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
-              (google::longrunning::GetOperationRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  GetOperation,
+  (google::longrunning::GetOperationRequest const& request), (override));
 
-  MOCK_METHOD(Status, DeleteOperation,
-              (google::longrunning::DeleteOperationRequest const& request),
-              (override));
+  MOCK_METHOD(Status,
+  DeleteOperation,
+  (google::longrunning::DeleteOperationRequest const& request), (override));
 
-  MOCK_METHOD(Status, CancelOperation,
-              (google::longrunning::CancelOperationRequest const& request),
-              (override));
+  MOCK_METHOD(Status,
+  CancelOperation,
+  (google::longrunning::CancelOperationRequest const& request), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

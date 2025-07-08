@@ -19,11 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_OSCONFIG_V1_OS_CONFIG_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_OSCONFIG_V1_OS_CONFIG_CONNECTION_H
 
-#include "google/cloud/osconfig/v1/internal/os_config_retry_traits.h"
-#include "google/cloud/osconfig/v1/os_config_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
+#include "google/cloud/osconfig/v1/internal/os_config_retry_traits.h"
+#include "google/cloud/osconfig/v1/os_config_connection_idempotency_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
@@ -52,8 +52,7 @@ class OsConfigServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class OsConfigServiceLimitedErrorCountRetryPolicy
-    : public OsConfigServiceRetryPolicy {
+class OsConfigServiceLimitedErrorCountRetryPolicy : public OsConfigServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -63,14 +62,14 @@ class OsConfigServiceLimitedErrorCountRetryPolicy
    *     @p maximum_failures == 0.
    */
   explicit OsConfigServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   OsConfigServiceLimitedErrorCountRetryPolicy(
       OsConfigServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : OsConfigServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : OsConfigServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   OsConfigServiceLimitedErrorCountRetryPolicy(
       OsConfigServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : OsConfigServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : OsConfigServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -90,9 +89,7 @@ class OsConfigServiceLimitedErrorCountRetryPolicy
   using BaseType = OsConfigServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      osconfig_v1_internal::OsConfigServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<osconfig_v1_internal::OsConfigServiceRetryTraits> impl_;
 };
 
 /**
@@ -105,8 +102,7 @@ class OsConfigServiceLimitedErrorCountRetryPolicy
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class OsConfigServiceLimitedTimeRetryPolicy
-    : public OsConfigServiceRetryPolicy {
+class OsConfigServiceLimitedTimeRetryPolicy : public OsConfigServiceRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -131,14 +127,12 @@ class OsConfigServiceLimitedTimeRetryPolicy
   template <typename DurationRep, typename DurationPeriod>
   explicit OsConfigServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  OsConfigServiceLimitedTimeRetryPolicy(
-      OsConfigServiceLimitedTimeRetryPolicy&& rhs) noexcept
-      : OsConfigServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  OsConfigServiceLimitedTimeRetryPolicy(
-      OsConfigServiceLimitedTimeRetryPolicy const& rhs) noexcept
-      : OsConfigServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  OsConfigServiceLimitedTimeRetryPolicy(OsConfigServiceLimitedTimeRetryPolicy&& rhs) noexcept
+    : OsConfigServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  OsConfigServiceLimitedTimeRetryPolicy(OsConfigServiceLimitedTimeRetryPolicy const& rhs) noexcept
+    : OsConfigServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -160,9 +154,7 @@ class OsConfigServiceLimitedTimeRetryPolicy
   using BaseType = OsConfigServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      osconfig_v1_internal::OsConfigServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<osconfig_v1_internal::OsConfigServiceRetryTraits> impl_;
 };
 
 /**
@@ -183,60 +175,52 @@ class OsConfigServiceConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<google::cloud::osconfig::v1::PatchJob> ExecutePatchJob(
-      google::cloud::osconfig::v1::ExecutePatchJobRequest const& request);
+  virtual StatusOr<google::cloud::osconfig::v1::PatchJob>
+  ExecutePatchJob(google::cloud::osconfig::v1::ExecutePatchJobRequest const& request);
 
-  virtual StatusOr<google::cloud::osconfig::v1::PatchJob> GetPatchJob(
-      google::cloud::osconfig::v1::GetPatchJobRequest const& request);
+  virtual StatusOr<google::cloud::osconfig::v1::PatchJob>
+  GetPatchJob(google::cloud::osconfig::v1::GetPatchJobRequest const& request);
 
-  virtual StatusOr<google::cloud::osconfig::v1::PatchJob> CancelPatchJob(
-      google::cloud::osconfig::v1::CancelPatchJobRequest const& request);
+  virtual StatusOr<google::cloud::osconfig::v1::PatchJob>
+  CancelPatchJob(google::cloud::osconfig::v1::CancelPatchJobRequest const& request);
 
-  virtual StreamRange<google::cloud::osconfig::v1::PatchJob> ListPatchJobs(
-      google::cloud::osconfig::v1::ListPatchJobsRequest request);
+  virtual StreamRange<google::cloud::osconfig::v1::PatchJob>
+  ListPatchJobs(google::cloud::osconfig::v1::ListPatchJobsRequest request);
 
   virtual StreamRange<google::cloud::osconfig::v1::PatchJobInstanceDetails>
-  ListPatchJobInstanceDetails(
-      google::cloud::osconfig::v1::ListPatchJobInstanceDetailsRequest request);
+  ListPatchJobInstanceDetails(google::cloud::osconfig::v1::ListPatchJobInstanceDetailsRequest request);
 
   virtual StatusOr<google::cloud::osconfig::v1::PatchDeployment>
-  CreatePatchDeployment(
-      google::cloud::osconfig::v1::CreatePatchDeploymentRequest const& request);
+  CreatePatchDeployment(google::cloud::osconfig::v1::CreatePatchDeploymentRequest const& request);
 
   virtual StatusOr<google::cloud::osconfig::v1::PatchDeployment>
-  GetPatchDeployment(
-      google::cloud::osconfig::v1::GetPatchDeploymentRequest const& request);
+  GetPatchDeployment(google::cloud::osconfig::v1::GetPatchDeploymentRequest const& request);
 
   virtual StreamRange<google::cloud::osconfig::v1::PatchDeployment>
-  ListPatchDeployments(
-      google::cloud::osconfig::v1::ListPatchDeploymentsRequest request);
+  ListPatchDeployments(google::cloud::osconfig::v1::ListPatchDeploymentsRequest request);
 
-  virtual Status DeletePatchDeployment(
-      google::cloud::osconfig::v1::DeletePatchDeploymentRequest const& request);
-
-  virtual StatusOr<google::cloud::osconfig::v1::PatchDeployment>
-  UpdatePatchDeployment(
-      google::cloud::osconfig::v1::UpdatePatchDeploymentRequest const& request);
+  virtual Status
+  DeletePatchDeployment(google::cloud::osconfig::v1::DeletePatchDeploymentRequest const& request);
 
   virtual StatusOr<google::cloud::osconfig::v1::PatchDeployment>
-  PausePatchDeployment(
-      google::cloud::osconfig::v1::PausePatchDeploymentRequest const& request);
+  UpdatePatchDeployment(google::cloud::osconfig::v1::UpdatePatchDeploymentRequest const& request);
 
   virtual StatusOr<google::cloud::osconfig::v1::PatchDeployment>
-  ResumePatchDeployment(
-      google::cloud::osconfig::v1::ResumePatchDeploymentRequest const& request);
+  PausePatchDeployment(google::cloud::osconfig::v1::PausePatchDeploymentRequest const& request);
+
+  virtual StatusOr<google::cloud::osconfig::v1::PatchDeployment>
+  ResumePatchDeployment(google::cloud::osconfig::v1::ResumePatchDeploymentRequest const& request);
 };
 
 /**
- * A factory function to construct an object of type
- * `OsConfigServiceConnection`.
+ * A factory function to construct an object of type `OsConfigServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
  * should be passed as an argument to the constructor of OsConfigServiceClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `OsConfigServiceConnection`. Expected options are any of the types
- * in the following option lists:
+ * returned `OsConfigServiceConnection`. Expected options are any of the types in
+ * the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
@@ -246,8 +230,8 @@ class OsConfigServiceConnection {
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
- * @param options (optional) Configure the `OsConfigServiceConnection` created
- * by this function.
+ * @param options (optional) Configure the `OsConfigServiceConnection` created by
+ * this function.
  */
 std::shared_ptr<OsConfigServiceConnection> MakeOsConfigServiceConnection(
     Options options = {});

@@ -62,30 +62,23 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class DataAccessControlServiceClient {
  public:
-  explicit DataAccessControlServiceClient(
-      std::shared_ptr<DataAccessControlServiceConnection> connection,
-      Options opts = {});
+  explicit DataAccessControlServiceClient(std::shared_ptr<DataAccessControlServiceConnection> connection, Options opts = {});
   ~DataAccessControlServiceClient();
 
   ///@{
   /// @name Copy and move support
-  DataAccessControlServiceClient(DataAccessControlServiceClient const&) =
-      default;
-  DataAccessControlServiceClient& operator=(
-      DataAccessControlServiceClient const&) = default;
+  DataAccessControlServiceClient(DataAccessControlServiceClient const&) = default;
+  DataAccessControlServiceClient& operator=(DataAccessControlServiceClient const&) = default;
   DataAccessControlServiceClient(DataAccessControlServiceClient&&) = default;
-  DataAccessControlServiceClient& operator=(DataAccessControlServiceClient&&) =
-      default;
+  DataAccessControlServiceClient& operator=(DataAccessControlServiceClient&&) = default;
   ///@}
 
   ///@{
   /// @name Equality
-  friend bool operator==(DataAccessControlServiceClient const& a,
-                         DataAccessControlServiceClient const& b) {
+  friend bool operator==(DataAccessControlServiceClient const& a, DataAccessControlServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(DataAccessControlServiceClient const& a,
-                         DataAccessControlServiceClient const& b) {
+  friend bool operator!=(DataAccessControlServiceClient const& a, DataAccessControlServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -123,10 +116,8 @@ class DataAccessControlServiceClient {
   /// [google.cloud.chronicle.v1.DataAccessLabel]: @googleapis_reference_link{google/cloud/chronicle/v1/data_access_control.proto#L361}
   ///
   // clang-format on
-  StatusOr<google::cloud::chronicle::v1::DataAccessLabel> CreateDataAccessLabel(
-      std::string const& parent,
-      google::cloud::chronicle::v1::DataAccessLabel const& data_access_label,
-      std::string const& data_access_label_id, Options opts = {});
+  StatusOr<google::cloud::chronicle::v1::DataAccessLabel>
+  CreateDataAccessLabel(std::string const& parent, google::cloud::chronicle::v1::DataAccessLabel const& data_access_label, std::string const& data_access_label_id, Options opts = {});
 
   // clang-format off
   ///
@@ -160,9 +151,8 @@ class DataAccessControlServiceClient {
   /// [google.cloud.chronicle.v1.DataAccessLabel]: @googleapis_reference_link{google/cloud/chronicle/v1/data_access_control.proto#L361}
   ///
   // clang-format on
-  StatusOr<google::cloud::chronicle::v1::DataAccessLabel> CreateDataAccessLabel(
-      google::cloud::chronicle::v1::CreateDataAccessLabelRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::chronicle::v1::DataAccessLabel>
+  CreateDataAccessLabel(google::cloud::chronicle::v1::CreateDataAccessLabelRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -188,8 +178,8 @@ class DataAccessControlServiceClient {
   /// [google.cloud.chronicle.v1.GetDataAccessLabelRequest]: @googleapis_reference_link{google/cloud/chronicle/v1/data_access_control.proto#L172}
   ///
   // clang-format on
-  StatusOr<google::cloud::chronicle::v1::DataAccessLabel> GetDataAccessLabel(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::chronicle::v1::DataAccessLabel>
+  GetDataAccessLabel(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -218,9 +208,8 @@ class DataAccessControlServiceClient {
   /// [google.cloud.chronicle.v1.GetDataAccessLabelRequest]: @googleapis_reference_link{google/cloud/chronicle/v1/data_access_control.proto#L172}
   ///
   // clang-format on
-  StatusOr<google::cloud::chronicle::v1::DataAccessLabel> GetDataAccessLabel(
-      google::cloud::chronicle::v1::GetDataAccessLabelRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::chronicle::v1::DataAccessLabel>
+  GetDataAccessLabel(google::cloud::chronicle::v1::GetDataAccessLabelRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -294,9 +283,7 @@ class DataAccessControlServiceClient {
   ///
   // clang-format on
   StreamRange<google::cloud::chronicle::v1::DataAccessLabel>
-  ListDataAccessLabels(
-      google::cloud::chronicle::v1::ListDataAccessLabelsRequest request,
-      Options opts = {});
+  ListDataAccessLabels(google::cloud::chronicle::v1::ListDataAccessLabelsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -328,9 +315,8 @@ class DataAccessControlServiceClient {
   /// [google.cloud.chronicle.v1.UpdateDataAccessLabelRequest]: @googleapis_reference_link{google/cloud/chronicle/v1/data_access_control.proto#L224}
   ///
   // clang-format on
-  StatusOr<google::cloud::chronicle::v1::DataAccessLabel> UpdateDataAccessLabel(
-      google::cloud::chronicle::v1::DataAccessLabel const& data_access_label,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::cloud::chronicle::v1::DataAccessLabel>
+  UpdateDataAccessLabel(google::cloud::chronicle::v1::DataAccessLabel const& data_access_label, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -359,9 +345,8 @@ class DataAccessControlServiceClient {
   /// [google.cloud.chronicle.v1.UpdateDataAccessLabelRequest]: @googleapis_reference_link{google/cloud/chronicle/v1/data_access_control.proto#L224}
   ///
   // clang-format on
-  StatusOr<google::cloud::chronicle::v1::DataAccessLabel> UpdateDataAccessLabel(
-      google::cloud::chronicle::v1::UpdateDataAccessLabelRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::chronicle::v1::DataAccessLabel>
+  UpdateDataAccessLabel(google::cloud::chronicle::v1::UpdateDataAccessLabelRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -386,7 +371,8 @@ class DataAccessControlServiceClient {
   /// [google.cloud.chronicle.v1.DeleteDataAccessLabelRequest]: @googleapis_reference_link{google/cloud/chronicle/v1/data_access_control.proto#L241}
   ///
   // clang-format on
-  Status DeleteDataAccessLabel(std::string const& name, Options opts = {});
+  Status
+  DeleteDataAccessLabel(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -414,9 +400,8 @@ class DataAccessControlServiceClient {
   /// [google.cloud.chronicle.v1.DeleteDataAccessLabelRequest]: @googleapis_reference_link{google/cloud/chronicle/v1/data_access_control.proto#L241}
   ///
   // clang-format on
-  Status DeleteDataAccessLabel(
-      google::cloud::chronicle::v1::DeleteDataAccessLabelRequest const& request,
-      Options opts = {});
+  Status
+  DeleteDataAccessLabel(google::cloud::chronicle::v1::DeleteDataAccessLabelRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -450,10 +435,8 @@ class DataAccessControlServiceClient {
   /// [google.cloud.chronicle.v1.DataAccessScope]: @googleapis_reference_link{google/cloud/chronicle/v1/data_access_control.proto#L404}
   ///
   // clang-format on
-  StatusOr<google::cloud::chronicle::v1::DataAccessScope> CreateDataAccessScope(
-      std::string const& parent,
-      google::cloud::chronicle::v1::DataAccessScope const& data_access_scope,
-      std::string const& data_access_scope_id, Options opts = {});
+  StatusOr<google::cloud::chronicle::v1::DataAccessScope>
+  CreateDataAccessScope(std::string const& parent, google::cloud::chronicle::v1::DataAccessScope const& data_access_scope, std::string const& data_access_scope_id, Options opts = {});
 
   // clang-format off
   ///
@@ -487,9 +470,8 @@ class DataAccessControlServiceClient {
   /// [google.cloud.chronicle.v1.DataAccessScope]: @googleapis_reference_link{google/cloud/chronicle/v1/data_access_control.proto#L404}
   ///
   // clang-format on
-  StatusOr<google::cloud::chronicle::v1::DataAccessScope> CreateDataAccessScope(
-      google::cloud::chronicle::v1::CreateDataAccessScopeRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::chronicle::v1::DataAccessScope>
+  CreateDataAccessScope(google::cloud::chronicle::v1::CreateDataAccessScopeRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -515,8 +497,8 @@ class DataAccessControlServiceClient {
   /// [google.cloud.chronicle.v1.GetDataAccessScopeRequest]: @googleapis_reference_link{google/cloud/chronicle/v1/data_access_control.proto#L275}
   ///
   // clang-format on
-  StatusOr<google::cloud::chronicle::v1::DataAccessScope> GetDataAccessScope(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::chronicle::v1::DataAccessScope>
+  GetDataAccessScope(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -545,9 +527,8 @@ class DataAccessControlServiceClient {
   /// [google.cloud.chronicle.v1.GetDataAccessScopeRequest]: @googleapis_reference_link{google/cloud/chronicle/v1/data_access_control.proto#L275}
   ///
   // clang-format on
-  StatusOr<google::cloud::chronicle::v1::DataAccessScope> GetDataAccessScope(
-      google::cloud::chronicle::v1::GetDataAccessScopeRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::chronicle::v1::DataAccessScope>
+  GetDataAccessScope(google::cloud::chronicle::v1::GetDataAccessScopeRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -621,9 +602,7 @@ class DataAccessControlServiceClient {
   ///
   // clang-format on
   StreamRange<google::cloud::chronicle::v1::DataAccessScope>
-  ListDataAccessScopes(
-      google::cloud::chronicle::v1::ListDataAccessScopesRequest request,
-      Options opts = {});
+  ListDataAccessScopes(google::cloud::chronicle::v1::ListDataAccessScopesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -656,9 +635,8 @@ class DataAccessControlServiceClient {
   /// [google.cloud.chronicle.v1.UpdateDataAccessScopeRequest]: @googleapis_reference_link{google/cloud/chronicle/v1/data_access_control.proto#L330}
   ///
   // clang-format on
-  StatusOr<google::cloud::chronicle::v1::DataAccessScope> UpdateDataAccessScope(
-      google::cloud::chronicle::v1::DataAccessScope const& data_access_scope,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::cloud::chronicle::v1::DataAccessScope>
+  UpdateDataAccessScope(google::cloud::chronicle::v1::DataAccessScope const& data_access_scope, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -687,9 +665,8 @@ class DataAccessControlServiceClient {
   /// [google.cloud.chronicle.v1.UpdateDataAccessScopeRequest]: @googleapis_reference_link{google/cloud/chronicle/v1/data_access_control.proto#L330}
   ///
   // clang-format on
-  StatusOr<google::cloud::chronicle::v1::DataAccessScope> UpdateDataAccessScope(
-      google::cloud::chronicle::v1::UpdateDataAccessScopeRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::chronicle::v1::DataAccessScope>
+  UpdateDataAccessScope(google::cloud::chronicle::v1::UpdateDataAccessScopeRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -712,7 +689,8 @@ class DataAccessControlServiceClient {
   /// [google.cloud.chronicle.v1.DeleteDataAccessScopeRequest]: @googleapis_reference_link{google/cloud/chronicle/v1/data_access_control.proto#L348}
   ///
   // clang-format on
-  Status DeleteDataAccessScope(std::string const& name, Options opts = {});
+  Status
+  DeleteDataAccessScope(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -738,9 +716,8 @@ class DataAccessControlServiceClient {
   /// [google.cloud.chronicle.v1.DeleteDataAccessScopeRequest]: @googleapis_reference_link{google/cloud/chronicle/v1/data_access_control.proto#L348}
   ///
   // clang-format on
-  Status DeleteDataAccessScope(
-      google::cloud::chronicle::v1::DeleteDataAccessScopeRequest const& request,
-      Options opts = {});
+  Status
+  DeleteDataAccessScope(google::cloud::chronicle::v1::DeleteDataAccessScopeRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -775,8 +752,8 @@ class DataAccessControlServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -815,8 +792,8 @@ class DataAccessControlServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -842,8 +819,8 @@ class DataAccessControlServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -874,9 +851,8 @@ class DataAccessControlServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -900,7 +876,8 @@ class DataAccessControlServiceClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status DeleteOperation(std::string const& name, Options opts = {});
+  Status
+  DeleteOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -929,9 +906,8 @@ class DataAccessControlServiceClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request,
-      Options opts = {});
+  Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -965,7 +941,8 @@ class DataAccessControlServiceClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(std::string const& name, Options opts = {});
+  Status
+  CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1004,9 +981,8 @@ class DataAccessControlServiceClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request,
-      Options opts = {});
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<DataAccessControlServiceConnection> connection_;

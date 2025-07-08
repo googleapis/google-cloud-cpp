@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BINARYAUTHORIZATION_V1_BINAUTHZ_MANAGEMENT_SERVICE_V1_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BINARYAUTHORIZATION_V1_BINAUTHZ_MANAGEMENT_SERVICE_V1_CONNECTION_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/binaryauthorization/v1/binauthz_management_service_v1_connection_idempotency_policy.h"
 #include "google/cloud/binaryauthorization/v1/internal/binauthz_management_service_v1_retry_traits.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -36,17 +36,14 @@ namespace binaryauthorization_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `BinauthzManagementServiceV1Connection`.
-class BinauthzManagementServiceV1RetryPolicy
-    : public ::google::cloud::RetryPolicy {
+class BinauthzManagementServiceV1RetryPolicy : public ::google::cloud::RetryPolicy {
  public:
   /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<BinauthzManagementServiceV1RetryPolicy> clone()
-      const = 0;
+  virtual std::unique_ptr<BinauthzManagementServiceV1RetryPolicy> clone() const = 0;
 };
 
 /**
- * A retry policy for `BinauthzManagementServiceV1Connection` based on counting
- * errors.
+ * A retry policy for `BinauthzManagementServiceV1Connection` based on counting errors.
  *
  * This policy stops retrying if:
  * - An RPC returns a non-transient error.
@@ -55,8 +52,7 @@ class BinauthzManagementServiceV1RetryPolicy
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class BinauthzManagementServiceV1LimitedErrorCountRetryPolicy
-    : public BinauthzManagementServiceV1RetryPolicy {
+class BinauthzManagementServiceV1LimitedErrorCountRetryPolicy : public BinauthzManagementServiceV1RetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -65,19 +61,15 @@ class BinauthzManagementServiceV1LimitedErrorCountRetryPolicy
    * @note Disable the retry loop by providing an instance of this policy with
    *     @p maximum_failures == 0.
    */
-  explicit BinauthzManagementServiceV1LimitedErrorCountRetryPolicy(
-      int maximum_failures)
-      : impl_(maximum_failures) {}
+  explicit BinauthzManagementServiceV1LimitedErrorCountRetryPolicy(int maximum_failures)
+    : impl_(maximum_failures) {}
 
   BinauthzManagementServiceV1LimitedErrorCountRetryPolicy(
       BinauthzManagementServiceV1LimitedErrorCountRetryPolicy&& rhs) noexcept
-      : BinauthzManagementServiceV1LimitedErrorCountRetryPolicy(
-            rhs.maximum_failures()) {}
+    : BinauthzManagementServiceV1LimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   BinauthzManagementServiceV1LimitedErrorCountRetryPolicy(
-      BinauthzManagementServiceV1LimitedErrorCountRetryPolicy const&
-          rhs) noexcept
-      : BinauthzManagementServiceV1LimitedErrorCountRetryPolicy(
-            rhs.maximum_failures()) {}
+      BinauthzManagementServiceV1LimitedErrorCountRetryPolicy const& rhs) noexcept
+    : BinauthzManagementServiceV1LimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -88,10 +80,8 @@ class BinauthzManagementServiceV1LimitedErrorCountRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<BinauthzManagementServiceV1RetryPolicy> clone()
-      const override {
-    return std::make_unique<
-        BinauthzManagementServiceV1LimitedErrorCountRetryPolicy>(
+  std::unique_ptr<BinauthzManagementServiceV1RetryPolicy> clone() const override {
+    return std::make_unique<BinauthzManagementServiceV1LimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
 
@@ -99,14 +89,11 @@ class BinauthzManagementServiceV1LimitedErrorCountRetryPolicy
   using BaseType = BinauthzManagementServiceV1RetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      binaryauthorization_v1_internal::BinauthzManagementServiceV1RetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<binaryauthorization_v1_internal::BinauthzManagementServiceV1RetryTraits> impl_;
 };
 
 /**
- * A retry policy for `BinauthzManagementServiceV1Connection` based on elapsed
- * time.
+ * A retry policy for `BinauthzManagementServiceV1Connection` based on elapsed time.
  *
  * This policy stops retrying if:
  * - An RPC returns a non-transient error.
@@ -115,8 +102,7 @@ class BinauthzManagementServiceV1LimitedErrorCountRetryPolicy
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class BinauthzManagementServiceV1LimitedTimeRetryPolicy
-    : public BinauthzManagementServiceV1RetryPolicy {
+class BinauthzManagementServiceV1LimitedTimeRetryPolicy : public BinauthzManagementServiceV1RetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -141,16 +127,12 @@ class BinauthzManagementServiceV1LimitedTimeRetryPolicy
   template <typename DurationRep, typename DurationPeriod>
   explicit BinauthzManagementServiceV1LimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  BinauthzManagementServiceV1LimitedTimeRetryPolicy(
-      BinauthzManagementServiceV1LimitedTimeRetryPolicy&& rhs) noexcept
-      : BinauthzManagementServiceV1LimitedTimeRetryPolicy(
-            rhs.maximum_duration()) {}
-  BinauthzManagementServiceV1LimitedTimeRetryPolicy(
-      BinauthzManagementServiceV1LimitedTimeRetryPolicy const& rhs) noexcept
-      : BinauthzManagementServiceV1LimitedTimeRetryPolicy(
-            rhs.maximum_duration()) {}
+  BinauthzManagementServiceV1LimitedTimeRetryPolicy(BinauthzManagementServiceV1LimitedTimeRetryPolicy&& rhs) noexcept
+    : BinauthzManagementServiceV1LimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  BinauthzManagementServiceV1LimitedTimeRetryPolicy(BinauthzManagementServiceV1LimitedTimeRetryPolicy const& rhs) noexcept
+    : BinauthzManagementServiceV1LimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -163,8 +145,7 @@ class BinauthzManagementServiceV1LimitedTimeRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<BinauthzManagementServiceV1RetryPolicy> clone()
-      const override {
+  std::unique_ptr<BinauthzManagementServiceV1RetryPolicy> clone() const override {
     return std::make_unique<BinauthzManagementServiceV1LimitedTimeRetryPolicy>(
         maximum_duration());
   }
@@ -173,25 +154,20 @@ class BinauthzManagementServiceV1LimitedTimeRetryPolicy
   using BaseType = BinauthzManagementServiceV1RetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      binaryauthorization_v1_internal::BinauthzManagementServiceV1RetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<binaryauthorization_v1_internal::BinauthzManagementServiceV1RetryTraits> impl_;
 };
 
 /**
- * The `BinauthzManagementServiceV1Connection` object for
- * `BinauthzManagementServiceV1Client`.
+ * The `BinauthzManagementServiceV1Connection` object for `BinauthzManagementServiceV1Client`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `BinauthzManagementServiceV1Client`. This allows users to inject
- * custom behavior (e.g., with a Google Mock object) when writing tests that use
- * objects of type `BinauthzManagementServiceV1Client`.
+ * sets in `BinauthzManagementServiceV1Client`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `BinauthzManagementServiceV1Client`.
  *
- * To create a concrete instance, see
- * `MakeBinauthzManagementServiceV1Connection()`.
+ * To create a concrete instance, see `MakeBinauthzManagementServiceV1Connection()`.
  *
- * For mocking, see
- * `binaryauthorization_v1_mocks::MockBinauthzManagementServiceV1Connection`.
+ * For mocking, see `binaryauthorization_v1_mocks::MockBinauthzManagementServiceV1Connection`.
  */
 class BinauthzManagementServiceV1Connection {
  public:
@@ -199,62 +175,51 @@ class BinauthzManagementServiceV1Connection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<google::cloud::binaryauthorization::v1::Policy> GetPolicy(
-      google::cloud::binaryauthorization::v1::GetPolicyRequest const& request);
+  virtual StatusOr<google::cloud::binaryauthorization::v1::Policy>
+  GetPolicy(google::cloud::binaryauthorization::v1::GetPolicyRequest const& request);
 
-  virtual StatusOr<google::cloud::binaryauthorization::v1::Policy> UpdatePolicy(
-      google::cloud::binaryauthorization::v1::UpdatePolicyRequest const&
-          request);
-
-  virtual StatusOr<google::cloud::binaryauthorization::v1::Attestor>
-  CreateAttestor(
-      google::cloud::binaryauthorization::v1::CreateAttestorRequest const&
-          request);
+  virtual StatusOr<google::cloud::binaryauthorization::v1::Policy>
+  UpdatePolicy(google::cloud::binaryauthorization::v1::UpdatePolicyRequest const& request);
 
   virtual StatusOr<google::cloud::binaryauthorization::v1::Attestor>
-  GetAttestor(google::cloud::binaryauthorization::v1::GetAttestorRequest const&
-                  request);
+  CreateAttestor(google::cloud::binaryauthorization::v1::CreateAttestorRequest const& request);
 
   virtual StatusOr<google::cloud::binaryauthorization::v1::Attestor>
-  UpdateAttestor(
-      google::cloud::binaryauthorization::v1::UpdateAttestorRequest const&
-          request);
+  GetAttestor(google::cloud::binaryauthorization::v1::GetAttestorRequest const& request);
+
+  virtual StatusOr<google::cloud::binaryauthorization::v1::Attestor>
+  UpdateAttestor(google::cloud::binaryauthorization::v1::UpdateAttestorRequest const& request);
 
   virtual StreamRange<google::cloud::binaryauthorization::v1::Attestor>
-  ListAttestors(
-      google::cloud::binaryauthorization::v1::ListAttestorsRequest request);
+  ListAttestors(google::cloud::binaryauthorization::v1::ListAttestorsRequest request);
 
-  virtual Status DeleteAttestor(
-      google::cloud::binaryauthorization::v1::DeleteAttestorRequest const&
-          request);
+  virtual Status
+  DeleteAttestor(google::cloud::binaryauthorization::v1::DeleteAttestorRequest const& request);
 };
 
 /**
- * A factory function to construct an object of type
- * `BinauthzManagementServiceV1Connection`.
+ * A factory function to construct an object of type `BinauthzManagementServiceV1Connection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of
- * BinauthzManagementServiceV1Client.
+ * should be passed as an argument to the constructor of BinauthzManagementServiceV1Client.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `BinauthzManagementServiceV1Connection`. Expected options are any of
- * the types in the following option lists:
+ * returned `BinauthzManagementServiceV1Connection`. Expected options are any of the types in
+ * the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * -
- * `google::cloud::binaryauthorization_v1::BinauthzManagementServiceV1PolicyOptionList`
+ * - `google::cloud::binaryauthorization_v1::BinauthzManagementServiceV1PolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
- * @param options (optional) Configure the
- * `BinauthzManagementServiceV1Connection` created by this function.
+ * @param options (optional) Configure the `BinauthzManagementServiceV1Connection` created by
+ * this function.
  */
-std::shared_ptr<BinauthzManagementServiceV1Connection>
-MakeBinauthzManagementServiceV1Connection(Options options = {});
+std::shared_ptr<BinauthzManagementServiceV1Connection> MakeBinauthzManagementServiceV1Connection(
+    Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace binaryauthorization_v1

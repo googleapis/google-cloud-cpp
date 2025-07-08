@@ -32,18 +32,20 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ConfidentialComputingLogging::ConfidentialComputingLogging(
     std::shared_ptr<ConfidentialComputingStub> child,
-    TracingOptions tracing_options, std::set<std::string> const&)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
+    TracingOptions tracing_options,
+    std::set<std::string> const&)
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::cloud::confidentialcomputing::v1::Challenge>
 ConfidentialComputingLogging::CreateChallenge(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::confidentialcomputing::v1::CreateChallengeRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::confidentialcomputing::v1::CreateChallengeRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::confidentialcomputing::v1::
-                 CreateChallengeRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::confidentialcomputing::v1::CreateChallengeRequest const& request) {
         return child_->CreateChallenge(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -51,13 +53,13 @@ ConfidentialComputingLogging::CreateChallenge(
 
 StatusOr<google::cloud::confidentialcomputing::v1::VerifyAttestationResponse>
 ConfidentialComputingLogging::VerifyAttestation(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::confidentialcomputing::v1::VerifyAttestationRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::confidentialcomputing::v1::VerifyAttestationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::confidentialcomputing::v1::
-                 VerifyAttestationRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::confidentialcomputing::v1::VerifyAttestationRequest const& request) {
         return child_->VerifyAttestation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -65,10 +67,12 @@ ConfidentialComputingLogging::VerifyAttestation(
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 ConfidentialComputingLogging::ListLocations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::location::ListLocationsRequest const& request) {
         return child_->ListLocations(context, options, request);
       },
@@ -77,10 +81,12 @@ ConfidentialComputingLogging::ListLocations(
 
 StatusOr<google::cloud::location::Location>
 ConfidentialComputingLogging::GetLocation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::location::GetLocationRequest const& request) {
         return child_->GetLocation(context, options, request);
       },

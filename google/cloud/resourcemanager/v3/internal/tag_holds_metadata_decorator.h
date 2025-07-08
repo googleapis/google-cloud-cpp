@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCEMANAGER_V3_INTERNAL_TAG_HOLDS_METADATA_DECORATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCEMANAGER_V3_INTERNAL_TAG_HOLDS_METADATA_DECORATOR_H
 
-#include "google/cloud/resourcemanager/v3/internal/tag_holds_stub.h"
 #include "google/cloud/options.h"
+#include "google/cloud/resourcemanager/v3/internal/tag_holds_stub.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
 #include <map>
@@ -35,41 +35,41 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class TagHoldsMetadata : public TagHoldsStub {
  public:
   ~TagHoldsMetadata() override = default;
-  TagHoldsMetadata(std::shared_ptr<TagHoldsStub> child,
-                   std::multimap<std::string, std::string> fixed_metadata,
-                   std::string api_client_header = "");
+  TagHoldsMetadata(
+      std::shared_ptr<TagHoldsStub> child,
+      std::multimap<std::string, std::string> fixed_metadata,
+      std::string api_client_header = "");
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateTagHold(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::resourcemanager::v3::CreateTagHoldRequest const& request)
-      override;
+      google::cloud::resourcemanager::v3::CreateTagHoldRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateTagHold(
-      grpc::ClientContext& context, Options options,
-      google::cloud::resourcemanager::v3::CreateTagHoldRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::resourcemanager::v3::CreateTagHoldRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteTagHold(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::resourcemanager::v3::DeleteTagHoldRequest const& request)
-      override;
+      google::cloud::resourcemanager::v3::DeleteTagHoldRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteTagHold(
-      grpc::ClientContext& context, Options options,
-      google::cloud::resourcemanager::v3::DeleteTagHoldRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::resourcemanager::v3::DeleteTagHoldRequest const& request) override;
 
-  StatusOr<google::cloud::resourcemanager::v3::ListTagHoldsResponse>
-  ListTagHolds(grpc::ClientContext& context, Options const& options,
-               google::cloud::resourcemanager::v3::ListTagHoldsRequest const&
-                   request) override;
+  StatusOr<google::cloud::resourcemanager::v3::ListTagHoldsResponse> ListTagHolds(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::resourcemanager::v3::ListTagHoldsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -85,7 +85,8 @@ class TagHoldsMetadata : public TagHoldsStub {
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context, Options const& options,
+  void SetMetadata(grpc::ClientContext& context,
+                   Options const& options,
                    std::string const& request_params);
   void SetMetadata(grpc::ClientContext& context, Options const& options);
 

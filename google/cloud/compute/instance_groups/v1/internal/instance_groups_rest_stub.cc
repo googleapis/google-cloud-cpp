@@ -40,405 +40,279 @@ DefaultInstanceGroupsRestStub::DefaultInstanceGroupsRestStub(Options options)
 
 DefaultInstanceGroupsRestStub::DefaultInstanceGroupsRestStub(
     std::shared_ptr<rest_internal::RestClient> service,
-    std::shared_ptr<rest_internal::RestClient> operations, Options options)
+    std::shared_ptr<rest_internal::RestClient> operations,
+    Options options)
     : service_(std::move(service)),
       operations_(std::move(operations)),
       options_(std::move(options)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultInstanceGroupsRestStub::AsyncAddInstances(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::instance_groups::v1::AddInstancesRequest const&
-        request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::instance_groups::v1::AddInstancesRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
-      p.get_future();
-  std::thread t{
-      [](auto p, auto service, auto request, auto rest_context, auto options) {
-        std::vector<std::pair<std::string, std::string>> query_params;
-        query_params.push_back({"request_id", request.request_id()});
-        query_params =
-            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
-        p.set_value(
-            rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context,
-                request.instance_groups_add_instances_request_resource(), false,
-                absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", *options),
-                             "/", "projects", "/", request.project(), "/",
-                             "zones", "/", request.zone(), "/",
-                             "instanceGroups", "/", request.instance_group(),
-                             "/", "addInstances"),
-                std::move(query_params)));
-      },
-      std::move(p),
-      service_,
-      request,
-      std::move(rest_context),
-      std::move(options)};
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f = p.get_future();
+  std::thread t{[](
+          auto p, auto service, auto request, auto rest_context, auto options) {
+      std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"request_id", request.request_id()});
+  query_params = rest_internal::TrimEmptyQueryParameters(std::move(query_params));
+      p.set_value(rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+          *service, *rest_context, request.instance_groups_add_instances_request_resource(),
+          false,
+          absl::StrCat("/", "compute", "/", rest_internal::DetermineApiVersion("v1", *options), "/", "projects", "/", request.project(), "/", "zones", "/", request.zone(), "/", "instanceGroups", "/", request.instance_group(), "/", "addInstances"), std::move(query_params)));
+    },
+    std::move(p), service_, request, std::move(rest_context),
+    std::move(options)};
   return f.then([t = std::move(t), cq](auto f) mutable {
-    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
+    cq.RunAsync([t = std::move(t)]() mutable {
+      t.join();
+    });
     return f.get();
   });
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultInstanceGroupsRestStub::AddInstances(
-    google::cloud::rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::compute::instance_groups::v1::AddInstancesRequest const&
-        request) {
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::instance_groups::v1::AddInstancesRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"request_id", request.request_id()});
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
+  query_params = rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
-      *service_, rest_context,
-      request.instance_groups_add_instances_request_resource(), false,
-      absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "zones", "/",
-                   request.zone(), "/", "instanceGroups", "/",
-                   request.instance_group(), "/", "addInstances"),
-      std::move(query_params));
+      *service_, rest_context, request.instance_groups_add_instances_request_resource(), false,
+      absl::StrCat("/", "compute", "/", rest_internal::DetermineApiVersion("v1", options), "/", "projects", "/", request.project(), "/", "zones", "/", request.zone(), "/", "instanceGroups", "/", request.instance_group(), "/", "addInstances"), std::move(query_params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InstanceGroupAggregatedList>
 DefaultInstanceGroupsRestStub::AggregatedListInstanceGroups(
-    google::cloud::rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::compute::instance_groups::v1::
-        AggregatedListInstanceGroupsRequest const& request) {
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::instance_groups::v1::AggregatedListInstanceGroupsRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"filter", request.filter()});
-  query_params.push_back(
-      {"include_all_scopes", (request.include_all_scopes() ? "1" : "0")});
-  query_params.push_back(
-      {"max_results", std::to_string(request.max_results())});
+  query_params.push_back({"include_all_scopes", (request.include_all_scopes() ? "1" : "0")});
+  query_params.push_back({"max_results", std::to_string(request.max_results())});
   query_params.push_back({"order_by", request.order_by()});
   query_params.push_back({"page_token", request.page_token()});
-  query_params.push_back({"return_partial_success",
-                          (request.return_partial_success() ? "1" : "0")});
-  query_params.push_back(
-      {"service_project_number", request.service_project_number()});
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
-  return rest_internal::Get<
-      google::cloud::cpp::compute::v1::InstanceGroupAggregatedList>(
+  query_params.push_back({"return_partial_success", (request.return_partial_success() ? "1" : "0")});
+  query_params.push_back({"service_project_number", request.service_project_number()});
+  query_params = rest_internal::TrimEmptyQueryParameters(std::move(query_params));
+  return rest_internal::Get<google::cloud::cpp::compute::v1::InstanceGroupAggregatedList>(
       *service_, rest_context, request, false,
-      absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "aggregated", "/",
-                   "instanceGroups"),
-      std::move(query_params));
+      absl::StrCat("/", "compute", "/", rest_internal::DetermineApiVersion("v1", options), "/", "projects", "/", request.project(), "/", "aggregated", "/", "instanceGroups"), std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultInstanceGroupsRestStub::AsyncDeleteInstanceGroup(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::instance_groups::v1::
-        DeleteInstanceGroupRequest const& request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::instance_groups::v1::DeleteInstanceGroupRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
-      p.get_future();
-  std::thread t{
-      [](auto p, auto service, auto request, auto rest_context, auto options) {
-        std::vector<std::pair<std::string, std::string>> query_params;
-        query_params.push_back({"request_id", request.request_id()});
-        query_params =
-            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
-        p.set_value(
-            rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request, false,
-                absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", *options),
-                             "/", "projects", "/", request.project(), "/",
-                             "zones", "/", request.zone(), "/",
-                             "instanceGroups", "/", request.instance_group()),
-                std::move(query_params)));
-      },
-      std::move(p),
-      service_,
-      request,
-      std::move(rest_context),
-      std::move(options)};
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f = p.get_future();
+  std::thread t{[](
+          auto p, auto service, auto request, auto rest_context, auto options) {
+      std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"request_id", request.request_id()});
+  query_params = rest_internal::TrimEmptyQueryParameters(std::move(query_params));
+      p.set_value(rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
+          *service, *rest_context, request,
+          false,
+          absl::StrCat("/", "compute", "/", rest_internal::DetermineApiVersion("v1", *options), "/", "projects", "/", request.project(), "/", "zones", "/", request.zone(), "/", "instanceGroups", "/", request.instance_group()), std::move(query_params)));
+    },
+    std::move(p), service_, request, std::move(rest_context),
+    std::move(options)};
   return f.then([t = std::move(t), cq](auto f) mutable {
-    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
+    cq.RunAsync([t = std::move(t)]() mutable {
+      t.join();
+    });
     return f.get();
   });
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultInstanceGroupsRestStub::DeleteInstanceGroup(
-    google::cloud::rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::compute::instance_groups::v1::
-        DeleteInstanceGroupRequest const& request) {
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::instance_groups::v1::DeleteInstanceGroupRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"request_id", request.request_id()});
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
+  query_params = rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request, false,
-      absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "zones", "/",
-                   request.zone(), "/", "instanceGroups", "/",
-                   request.instance_group()),
-      std::move(query_params));
+      absl::StrCat("/", "compute", "/", rest_internal::DetermineApiVersion("v1", options), "/", "projects", "/", request.project(), "/", "zones", "/", request.zone(), "/", "instanceGroups", "/", request.instance_group()), std::move(query_params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InstanceGroup>
 DefaultInstanceGroupsRestStub::GetInstanceGroup(
-    google::cloud::rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::compute::instance_groups::v1::
-        GetInstanceGroupRequest const& request) {
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::instance_groups::v1::GetInstanceGroupRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Get<google::cloud::cpp::compute::v1::InstanceGroup>(
       *service_, rest_context, request, false,
-      absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "zones", "/",
-                   request.zone(), "/", "instanceGroups", "/",
-                   request.instance_group()),
-      std::move(query_params));
+      absl::StrCat("/", "compute", "/", rest_internal::DetermineApiVersion("v1", options), "/", "projects", "/", request.project(), "/", "zones", "/", request.zone(), "/", "instanceGroups", "/", request.instance_group()), std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultInstanceGroupsRestStub::AsyncInsertInstanceGroup(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::instance_groups::v1::
-        InsertInstanceGroupRequest const& request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::instance_groups::v1::InsertInstanceGroupRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
-      p.get_future();
-  std::thread t{
-      [](auto p, auto service, auto request, auto rest_context, auto options) {
-        std::vector<std::pair<std::string, std::string>> query_params;
-        query_params.push_back({"request_id", request.request_id()});
-        query_params =
-            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
-        p.set_value(
-            rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request.instance_group_resource(),
-                false,
-                absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", *options),
-                             "/", "projects", "/", request.project(), "/",
-                             "zones", "/", request.zone(), "/",
-                             "instanceGroups"),
-                std::move(query_params)));
-      },
-      std::move(p),
-      service_,
-      request,
-      std::move(rest_context),
-      std::move(options)};
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f = p.get_future();
+  std::thread t{[](
+          auto p, auto service, auto request, auto rest_context, auto options) {
+      std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"request_id", request.request_id()});
+  query_params = rest_internal::TrimEmptyQueryParameters(std::move(query_params));
+      p.set_value(rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+          *service, *rest_context, request.instance_group_resource(),
+          false,
+          absl::StrCat("/", "compute", "/", rest_internal::DetermineApiVersion("v1", *options), "/", "projects", "/", request.project(), "/", "zones", "/", request.zone(), "/", "instanceGroups"), std::move(query_params)));
+    },
+    std::move(p), service_, request, std::move(rest_context),
+    std::move(options)};
   return f.then([t = std::move(t), cq](auto f) mutable {
-    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
+    cq.RunAsync([t = std::move(t)]() mutable {
+      t.join();
+    });
     return f.get();
   });
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultInstanceGroupsRestStub::InsertInstanceGroup(
-    google::cloud::rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::compute::instance_groups::v1::
-        InsertInstanceGroupRequest const& request) {
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::instance_groups::v1::InsertInstanceGroupRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"request_id", request.request_id()});
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
+  query_params = rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request.instance_group_resource(), false,
-      absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "zones", "/",
-                   request.zone(), "/", "instanceGroups"),
-      std::move(query_params));
+      absl::StrCat("/", "compute", "/", rest_internal::DetermineApiVersion("v1", options), "/", "projects", "/", request.project(), "/", "zones", "/", request.zone(), "/", "instanceGroups"), std::move(query_params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InstanceGroupList>
 DefaultInstanceGroupsRestStub::ListInstanceGroups(
-    google::cloud::rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::compute::instance_groups::v1::
-        ListInstanceGroupsRequest const& request) {
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::instance_groups::v1::ListInstanceGroupsRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"filter", request.filter()});
-  query_params.push_back(
-      {"max_results", std::to_string(request.max_results())});
+  query_params.push_back({"max_results", std::to_string(request.max_results())});
   query_params.push_back({"order_by", request.order_by()});
   query_params.push_back({"page_token", request.page_token()});
-  query_params.push_back({"return_partial_success",
-                          (request.return_partial_success() ? "1" : "0")});
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
+  query_params.push_back({"return_partial_success", (request.return_partial_success() ? "1" : "0")});
+  query_params = rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<google::cloud::cpp::compute::v1::InstanceGroupList>(
       *service_, rest_context, request, false,
-      absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "zones", "/",
-                   request.zone(), "/", "instanceGroups"),
-      std::move(query_params));
+      absl::StrCat("/", "compute", "/", rest_internal::DetermineApiVersion("v1", options), "/", "projects", "/", request.project(), "/", "zones", "/", request.zone(), "/", "instanceGroups"), std::move(query_params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InstanceGroupsListInstances>
 DefaultInstanceGroupsRestStub::ListInstances(
-    google::cloud::rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::compute::instance_groups::v1::
-        ListInstancesRequest const& request) {
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::instance_groups::v1::ListInstancesRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"filter", request.filter()});
-  query_params.push_back(
-      {"max_results", std::to_string(request.max_results())});
+  query_params.push_back({"max_results", std::to_string(request.max_results())});
   query_params.push_back({"order_by", request.order_by()});
   query_params.push_back({"page_token", request.page_token()});
-  query_params.push_back({"return_partial_success",
-                          (request.return_partial_success() ? "1" : "0")});
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
-  return rest_internal::Post<
-      google::cloud::cpp::compute::v1::InstanceGroupsListInstances>(
-      *service_, rest_context,
-      request.instance_groups_list_instances_request_resource(), false,
-      absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "zones", "/",
-                   request.zone(), "/", "instanceGroups", "/",
-                   request.instance_group(), "/", "listInstances"),
-      std::move(query_params));
+  query_params.push_back({"return_partial_success", (request.return_partial_success() ? "1" : "0")});
+  query_params = rest_internal::TrimEmptyQueryParameters(std::move(query_params));
+  return rest_internal::Post<google::cloud::cpp::compute::v1::InstanceGroupsListInstances>(
+      *service_, rest_context, request.instance_groups_list_instances_request_resource(), false,
+      absl::StrCat("/", "compute", "/", rest_internal::DetermineApiVersion("v1", options), "/", "projects", "/", request.project(), "/", "zones", "/", request.zone(), "/", "instanceGroups", "/", request.instance_group(), "/", "listInstances"), std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultInstanceGroupsRestStub::AsyncRemoveInstances(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::instance_groups::v1::
-        RemoveInstancesRequest const& request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::instance_groups::v1::RemoveInstancesRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
-      p.get_future();
-  std::thread t{
-      [](auto p, auto service, auto request, auto rest_context, auto options) {
-        std::vector<std::pair<std::string, std::string>> query_params;
-        query_params.push_back({"request_id", request.request_id()});
-        query_params =
-            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
-        p.set_value(
-            rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context,
-                request.instance_groups_remove_instances_request_resource(),
-                false,
-                absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", *options),
-                             "/", "projects", "/", request.project(), "/",
-                             "zones", "/", request.zone(), "/",
-                             "instanceGroups", "/", request.instance_group(),
-                             "/", "removeInstances"),
-                std::move(query_params)));
-      },
-      std::move(p),
-      service_,
-      request,
-      std::move(rest_context),
-      std::move(options)};
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f = p.get_future();
+  std::thread t{[](
+          auto p, auto service, auto request, auto rest_context, auto options) {
+      std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"request_id", request.request_id()});
+  query_params = rest_internal::TrimEmptyQueryParameters(std::move(query_params));
+      p.set_value(rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+          *service, *rest_context, request.instance_groups_remove_instances_request_resource(),
+          false,
+          absl::StrCat("/", "compute", "/", rest_internal::DetermineApiVersion("v1", *options), "/", "projects", "/", request.project(), "/", "zones", "/", request.zone(), "/", "instanceGroups", "/", request.instance_group(), "/", "removeInstances"), std::move(query_params)));
+    },
+    std::move(p), service_, request, std::move(rest_context),
+    std::move(options)};
   return f.then([t = std::move(t), cq](auto f) mutable {
-    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
+    cq.RunAsync([t = std::move(t)]() mutable {
+      t.join();
+    });
     return f.get();
   });
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultInstanceGroupsRestStub::RemoveInstances(
-    google::cloud::rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::compute::instance_groups::v1::
-        RemoveInstancesRequest const& request) {
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::instance_groups::v1::RemoveInstancesRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"request_id", request.request_id()});
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
+  query_params = rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
-      *service_, rest_context,
-      request.instance_groups_remove_instances_request_resource(), false,
-      absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "zones", "/",
-                   request.zone(), "/", "instanceGroups", "/",
-                   request.instance_group(), "/", "removeInstances"),
-      std::move(query_params));
+      *service_, rest_context, request.instance_groups_remove_instances_request_resource(), false,
+      absl::StrCat("/", "compute", "/", rest_internal::DetermineApiVersion("v1", options), "/", "projects", "/", request.project(), "/", "zones", "/", request.zone(), "/", "instanceGroups", "/", request.instance_group(), "/", "removeInstances"), std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultInstanceGroupsRestStub::AsyncSetNamedPorts(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::instance_groups::v1::
-        SetNamedPortsRequest const& request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::instance_groups::v1::SetNamedPortsRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
-      p.get_future();
-  std::thread t{
-      [](auto p, auto service, auto request, auto rest_context, auto options) {
-        std::vector<std::pair<std::string, std::string>> query_params;
-        query_params.push_back({"request_id", request.request_id()});
-        query_params =
-            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
-        p.set_value(
-            rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context,
-                request.instance_groups_set_named_ports_request_resource(),
-                false,
-                absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", *options),
-                             "/", "projects", "/", request.project(), "/",
-                             "zones", "/", request.zone(), "/",
-                             "instanceGroups", "/", request.instance_group(),
-                             "/", "setNamedPorts"),
-                std::move(query_params)));
-      },
-      std::move(p),
-      service_,
-      request,
-      std::move(rest_context),
-      std::move(options)};
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f = p.get_future();
+  std::thread t{[](
+          auto p, auto service, auto request, auto rest_context, auto options) {
+      std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"request_id", request.request_id()});
+  query_params = rest_internal::TrimEmptyQueryParameters(std::move(query_params));
+      p.set_value(rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+          *service, *rest_context, request.instance_groups_set_named_ports_request_resource(),
+          false,
+          absl::StrCat("/", "compute", "/", rest_internal::DetermineApiVersion("v1", *options), "/", "projects", "/", request.project(), "/", "zones", "/", request.zone(), "/", "instanceGroups", "/", request.instance_group(), "/", "setNamedPorts"), std::move(query_params)));
+    },
+    std::move(p), service_, request, std::move(rest_context),
+    std::move(options)};
   return f.then([t = std::move(t), cq](auto f) mutable {
-    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
+    cq.RunAsync([t = std::move(t)]() mutable {
+      t.join();
+    });
     return f.get();
   });
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultInstanceGroupsRestStub::SetNamedPorts(
-    google::cloud::rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::compute::instance_groups::v1::
-        SetNamedPortsRequest const& request) {
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::instance_groups::v1::SetNamedPortsRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"request_id", request.request_id()});
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
+  query_params = rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
-      *service_, rest_context,
-      request.instance_groups_set_named_ports_request_resource(), false,
-      absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "zones", "/",
-                   request.zone(), "/", "instanceGroups", "/",
-                   request.instance_group(), "/", "setNamedPorts"),
-      std::move(query_params));
+      *service_, rest_context, request.instance_groups_set_named_ports_request_resource(), false,
+      absl::StrCat("/", "compute", "/", rest_internal::DetermineApiVersion("v1", options), "/", "projects", "/", request.project(), "/", "zones", "/", request.zone(), "/", "instanceGroups", "/", request.instance_group(), "/", "setNamedPorts"), std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -446,59 +320,51 @@ DefaultInstanceGroupsRestStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::zone_operations::v1::GetOperationRequest const&
-        request) {
+    google::cloud::cpp::compute::zone_operations::v1::GetOperationRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
-      p.get_future();
-  std::thread t{
-      [](auto p, auto operations, auto request, auto rest_context,
-         auto options) {
-        p.set_value(
-            rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
-                *operations, *rest_context, request, false,
-                absl::StrCat("/compute/",
-                             rest_internal::DetermineApiVersion("v1", *options),
-                             "/projects/", request.project(), "/zones/",
-                             request.zone(), "/operations/",
-                             request.operation())));
-      },
-      std::move(p),
-      operations_,
-      request,
-      std::move(rest_context),
-      std::move(options)};
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f = p.get_future();
+  std::thread t{[](auto p, auto operations, auto request, auto rest_context, auto options) {
+      p.set_value(rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
+          *operations, *rest_context, request, false,
+          absl::StrCat("/compute/",
+                              rest_internal::DetermineApiVersion("v1", *options),
+                              "/projects/", request.project(),
+                              "/zones/", request.zone(),
+                              "/operations/", request.operation())));
+    },
+    std::move(p), operations_, request, std::move(rest_context),
+    std::move(options)};
   return f.then([t = std::move(t), cq](auto f) mutable {
-    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
+    cq.RunAsync([t = std::move(t)]() mutable {
+      t.join();
+    });
     return f.get();
   });
 }
 
-future<Status> DefaultInstanceGroupsRestStub::AsyncCancelOperation(
+future<Status>
+DefaultInstanceGroupsRestStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::zone_operations::v1::
-        DeleteOperationRequest const& request) {
+    google::cloud::cpp::compute::zone_operations::v1::DeleteOperationRequest const& request) {
   promise<StatusOr<google::protobuf::Empty>> p;
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
-  std::thread t{
-      [](auto p, auto operations, auto request, auto rest_context,
-         auto options) {
-        p.set_value(rest_internal::Post<google::protobuf::Empty>(
-            *operations, *rest_context, request, false,
-            absl::StrCat("/compute/",
-                         rest_internal::DetermineApiVersion("v1", *options),
-                         "/projects/", request.project(), "/zones/",
-                         request.zone(), "/operations/", request.operation())));
-      },
-      std::move(p),
-      operations_,
-      request,
-      std::move(rest_context),
-      std::move(options)};
+  std::thread t{[](auto p, auto operations, auto request, auto rest_context, auto options) {
+      p.set_value(rest_internal::Post<google::protobuf::Empty>(
+          *operations, *rest_context, request, false,
+          absl::StrCat("/compute/",
+                              rest_internal::DetermineApiVersion("v1", *options),
+                              "/projects/", request.project(),
+                              "/zones/", request.zone(),
+                              "/operations/", request.operation())));
+    },
+    std::move(p), operations_, request, std::move(rest_context),
+    std::move(options)};
   return f.then([t = std::move(t), cq](auto f) mutable {
-    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
+    cq.RunAsync([t = std::move(t)]() mutable {
+      t.join();
+    });
     return f.get().status();
   });
 }

@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DEPLOY_V1_CLOUD_DEPLOY_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DEPLOY_V1_CLOUD_DEPLOY_OPTIONS_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/deploy/v1/cloud_deploy_connection.h"
 #include "google/cloud/deploy/v1/cloud_deploy_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -74,7 +74,8 @@ struct CloudDeployPollingPolicyOption {
  * @ingroup google-cloud-deploy-options
  */
 using CloudDeployPolicyOptionList =
-    OptionList<CloudDeployRetryPolicyOption, CloudDeployBackoffPolicyOption,
+    OptionList<CloudDeployRetryPolicyOption,
+               CloudDeployBackoffPolicyOption,
                CloudDeployPollingPolicyOption,
                CloudDeployConnectionIdempotencyPolicyOption>;
 

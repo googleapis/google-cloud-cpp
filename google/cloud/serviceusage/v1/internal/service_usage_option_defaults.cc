@@ -17,10 +17,10 @@
 // source: google/api/serviceusage/v1/serviceusage.proto
 
 #include "google/cloud/serviceusage/v1/internal/service_usage_option_defaults.h"
-#include "google/cloud/serviceusage/v1/service_usage_connection.h"
-#include "google/cloud/serviceusage/v1/service_usage_options.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
+#include "google/cloud/serviceusage/v1/service_usage_connection.h"
+#include "google/cloud/serviceusage/v1/service_usage_options.h"
 #include <memory>
 #include <utility>
 
@@ -35,37 +35,30 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options ServiceUsageDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_SERVICE_USAGE_ENDPOINT", "",
-      "GOOGLE_CLOUD_CPP_SERVICE_USAGE_AUTHORITY",
+      std::move(options), "GOOGLE_CLOUD_CPP_SERVICE_USAGE_ENDPOINT",
+      "", "GOOGLE_CLOUD_CPP_SERVICE_USAGE_AUTHORITY",
       "serviceusage.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<serviceusage_v1::ServiceUsageRetryPolicyOption>()) {
     options.set<serviceusage_v1::ServiceUsageRetryPolicyOption>(
         serviceusage_v1::ServiceUsageLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
-            .clone());
+            std::chrono::minutes(30)).clone());
   }
   if (!options.has<serviceusage_v1::ServiceUsageBackoffPolicyOption>()) {
     options.set<serviceusage_v1::ServiceUsageBackoffPolicyOption>(
-        ExponentialBackoffPolicy(
-            std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
-            .clone());
+        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
   }
   if (!options.has<serviceusage_v1::ServiceUsagePollingPolicyOption>()) {
     options.set<serviceusage_v1::ServiceUsagePollingPolicyOption>(
         GenericPollingPolicy<
             serviceusage_v1::ServiceUsageRetryPolicyOption::Type,
             serviceusage_v1::ServiceUsageBackoffPolicyOption::Type>(
-            options.get<serviceusage_v1::ServiceUsageRetryPolicyOption>()
-                ->clone(),
+            options.get<serviceusage_v1::ServiceUsageRetryPolicyOption>()->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                     std::chrono::minutes(5), kBackoffScaling)
-                .clone())
-            .clone());
+            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
   }
-  if (!options.has<
-          serviceusage_v1::ServiceUsageConnectionIdempotencyPolicyOption>()) {
+  if (!options.has<serviceusage_v1::ServiceUsageConnectionIdempotencyPolicyOption>()) {
     options.set<serviceusage_v1::ServiceUsageConnectionIdempotencyPolicyOption>(
         serviceusage_v1::MakeDefaultServiceUsageConnectionIdempotencyPolicy());
   }

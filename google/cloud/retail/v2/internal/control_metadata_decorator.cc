@@ -46,76 +46,78 @@ ControlServiceMetadata::ControlServiceMetadata(
 
 StatusOr<google::cloud::retail::v2::Control>
 ControlServiceMetadata::CreateControl(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::retail::v2::CreateControlRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateControl(context, options, request);
 }
 
-Status ControlServiceMetadata::DeleteControl(
-    grpc::ClientContext& context, Options const& options,
+Status
+ControlServiceMetadata::DeleteControl(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::retail::v2::DeleteControlRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteControl(context, options, request);
 }
 
 StatusOr<google::cloud::retail::v2::Control>
 ControlServiceMetadata::UpdateControl(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::retail::v2::UpdateControlRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("control.name=",
-                           internal::UrlEncode(request.control().name())));
+  SetMetadata(context, options, absl::StrCat("control.name=", internal::UrlEncode(request.control().name())));
   return child_->UpdateControl(context, options, request);
 }
 
-StatusOr<google::cloud::retail::v2::Control> ControlServiceMetadata::GetControl(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::retail::v2::Control>
+ControlServiceMetadata::GetControl(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::retail::v2::GetControlRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetControl(context, options, request);
 }
 
 StatusOr<google::cloud::retail::v2::ListControlsResponse>
 ControlServiceMetadata::ListControls(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::retail::v2::ListControlsRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListControls(context, options, request);
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
 ControlServiceMetadata::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ListOperations(context, options, request);
 }
 
-StatusOr<google::longrunning::Operation> ControlServiceMetadata::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::Operation>
+ControlServiceMetadata::GetOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetOperation(context, options, request);
 }
 
 void ControlServiceMetadata::SetMetadata(grpc::ClientContext& context,
-                                         Options const& options,
-                                         std::string const& request_params) {
+                                        Options const& options,
+                                        std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
 void ControlServiceMetadata::SetMetadata(grpc::ClientContext& context,
-                                         Options const& options) {
-  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
-                                       api_client_header_);
+                                        Options const& options) {
+  google::cloud::internal::SetMetadata(
+      context, options, fixed_metadata_, api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

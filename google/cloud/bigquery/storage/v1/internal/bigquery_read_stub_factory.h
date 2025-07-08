@@ -35,7 +35,7 @@ std::shared_ptr<BigQueryReadStub> CreateDefaultBigQueryReadStub(
     Options const& options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS;  // NOLINT(misc-unused-alias-decls)
+namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS; // NOLINT(misc-unused-alias-decls)
 }  // namespace bigquery_storage_v1_internal
 }  // namespace cloud
 }  // namespace google

@@ -28,15 +28,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 StorageControlClient::StorageControlClient(
     std::shared_ptr<StorageControlConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 StorageControlClient::~StorageControlClient() = default;
 
 StatusOr<google::storage::control::v2::Folder>
-StorageControlClient::CreateFolder(
-    std::string const& parent,
-    google::storage::control::v2::Folder const& folder,
-    std::string const& folder_id, Options opts) {
+StorageControlClient::CreateFolder(std::string const& parent, google::storage::control::v2::Folder const& folder, std::string const& folder_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::storage::control::v2::CreateFolderRequest request;
   request.set_parent(parent);
@@ -46,39 +43,35 @@ StorageControlClient::CreateFolder(
 }
 
 StatusOr<google::storage::control::v2::Folder>
-StorageControlClient::CreateFolder(
-    google::storage::control::v2::CreateFolderRequest const& request,
-    Options opts) {
+StorageControlClient::CreateFolder(google::storage::control::v2::CreateFolderRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateFolder(request);
 }
 
-Status StorageControlClient::DeleteFolder(std::string const& name,
-                                          Options opts) {
+Status
+StorageControlClient::DeleteFolder(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::storage::control::v2::DeleteFolderRequest request;
   request.set_name(name);
   return connection_->DeleteFolder(request);
 }
 
-Status StorageControlClient::DeleteFolder(
-    google::storage::control::v2::DeleteFolderRequest const& request,
-    Options opts) {
+Status
+StorageControlClient::DeleteFolder(google::storage::control::v2::DeleteFolderRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteFolder(request);
 }
 
-StatusOr<google::storage::control::v2::Folder> StorageControlClient::GetFolder(
-    std::string const& name, Options opts) {
+StatusOr<google::storage::control::v2::Folder>
+StorageControlClient::GetFolder(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::storage::control::v2::GetFolderRequest request;
   request.set_name(name);
   return connection_->GetFolder(request);
 }
 
-StatusOr<google::storage::control::v2::Folder> StorageControlClient::GetFolder(
-    google::storage::control::v2::GetFolderRequest const& request,
-    Options opts) {
+StatusOr<google::storage::control::v2::Folder>
+StorageControlClient::GetFolder(google::storage::control::v2::GetFolderRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetFolder(request);
 }
@@ -92,16 +85,13 @@ StorageControlClient::ListFolders(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::storage::control::v2::Folder>
-StorageControlClient::ListFolders(
-    google::storage::control::v2::ListFoldersRequest request, Options opts) {
+StorageControlClient::ListFolders(google::storage::control::v2::ListFoldersRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListFolders(std::move(request));
 }
 
 future<StatusOr<google::storage::control::v2::Folder>>
-StorageControlClient::RenameFolder(std::string const& name,
-                                   std::string const& destination_folder_id,
-                                   Options opts) {
+StorageControlClient::RenameFolder(std::string const& name, std::string const& destination_folder_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::storage::control::v2::RenameFolderRequest request;
   request.set_name(name);
@@ -109,9 +99,8 @@ StorageControlClient::RenameFolder(std::string const& name,
   return connection_->RenameFolder(request);
 }
 
-StatusOr<google::longrunning::Operation> StorageControlClient::RenameFolder(
-    NoAwaitTag, std::string const& name,
-    std::string const& destination_folder_id, Options opts) {
+StatusOr<google::longrunning::Operation>
+StorageControlClient::RenameFolder(NoAwaitTag, std::string const& name, std::string const& destination_folder_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::storage::control::v2::RenameFolderRequest request;
   request.set_name(name);
@@ -120,24 +109,19 @@ StatusOr<google::longrunning::Operation> StorageControlClient::RenameFolder(
 }
 
 future<StatusOr<google::storage::control::v2::Folder>>
-StorageControlClient::RenameFolder(
-    google::storage::control::v2::RenameFolderRequest const& request,
-    Options opts) {
+StorageControlClient::RenameFolder(google::storage::control::v2::RenameFolderRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RenameFolder(request);
 }
 
-StatusOr<google::longrunning::Operation> StorageControlClient::RenameFolder(
-    NoAwaitTag,
-    google::storage::control::v2::RenameFolderRequest const& request,
-    Options opts) {
+StatusOr<google::longrunning::Operation>
+StorageControlClient::RenameFolder(NoAwaitTag, google::storage::control::v2::RenameFolderRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RenameFolder(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::storage::control::v2::Folder>>
-StorageControlClient::RenameFolder(
-    google::longrunning::Operation const& operation, Options opts) {
+StorageControlClient::RenameFolder(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RenameFolder(operation);
 }
@@ -151,18 +135,13 @@ StorageControlClient::GetStorageLayout(std::string const& name, Options opts) {
 }
 
 StatusOr<google::storage::control::v2::StorageLayout>
-StorageControlClient::GetStorageLayout(
-    google::storage::control::v2::GetStorageLayoutRequest const& request,
-    Options opts) {
+StorageControlClient::GetStorageLayout(google::storage::control::v2::GetStorageLayoutRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetStorageLayout(request);
 }
 
 StatusOr<google::storage::control::v2::ManagedFolder>
-StorageControlClient::CreateManagedFolder(
-    std::string const& parent,
-    google::storage::control::v2::ManagedFolder const& managed_folder,
-    std::string const& managed_folder_id, Options opts) {
+StorageControlClient::CreateManagedFolder(std::string const& parent, google::storage::control::v2::ManagedFolder const& managed_folder, std::string const& managed_folder_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::storage::control::v2::CreateManagedFolderRequest request;
   request.set_parent(parent);
@@ -172,24 +151,21 @@ StorageControlClient::CreateManagedFolder(
 }
 
 StatusOr<google::storage::control::v2::ManagedFolder>
-StorageControlClient::CreateManagedFolder(
-    google::storage::control::v2::CreateManagedFolderRequest const& request,
-    Options opts) {
+StorageControlClient::CreateManagedFolder(google::storage::control::v2::CreateManagedFolderRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateManagedFolder(request);
 }
 
-Status StorageControlClient::DeleteManagedFolder(std::string const& name,
-                                                 Options opts) {
+Status
+StorageControlClient::DeleteManagedFolder(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::storage::control::v2::DeleteManagedFolderRequest request;
   request.set_name(name);
   return connection_->DeleteManagedFolder(request);
 }
 
-Status StorageControlClient::DeleteManagedFolder(
-    google::storage::control::v2::DeleteManagedFolderRequest const& request,
-    Options opts) {
+Status
+StorageControlClient::DeleteManagedFolder(google::storage::control::v2::DeleteManagedFolderRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteManagedFolder(request);
 }
@@ -203,16 +179,13 @@ StorageControlClient::GetManagedFolder(std::string const& name, Options opts) {
 }
 
 StatusOr<google::storage::control::v2::ManagedFolder>
-StorageControlClient::GetManagedFolder(
-    google::storage::control::v2::GetManagedFolderRequest const& request,
-    Options opts) {
+StorageControlClient::GetManagedFolder(google::storage::control::v2::GetManagedFolderRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetManagedFolder(request);
 }
 
 StreamRange<google::storage::control::v2::ManagedFolder>
-StorageControlClient::ListManagedFolders(std::string const& parent,
-                                         Options opts) {
+StorageControlClient::ListManagedFolders(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::storage::control::v2::ListManagedFoldersRequest request;
   request.set_parent(parent);
@@ -220,18 +193,13 @@ StorageControlClient::ListManagedFolders(std::string const& parent,
 }
 
 StreamRange<google::storage::control::v2::ManagedFolder>
-StorageControlClient::ListManagedFolders(
-    google::storage::control::v2::ListManagedFoldersRequest request,
-    Options opts) {
+StorageControlClient::ListManagedFolders(google::storage::control::v2::ListManagedFoldersRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListManagedFolders(std::move(request));
 }
 
 future<StatusOr<google::storage::control::v2::AnywhereCache>>
-StorageControlClient::CreateAnywhereCache(
-    std::string const& parent,
-    google::storage::control::v2::AnywhereCache const& anywhere_cache,
-    Options opts) {
+StorageControlClient::CreateAnywhereCache(std::string const& parent, google::storage::control::v2::AnywhereCache const& anywhere_cache, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::storage::control::v2::CreateAnywhereCacheRequest request;
   request.set_parent(parent);
@@ -240,10 +208,7 @@ StorageControlClient::CreateAnywhereCache(
 }
 
 StatusOr<google::longrunning::Operation>
-StorageControlClient::CreateAnywhereCache(
-    NoAwaitTag, std::string const& parent,
-    google::storage::control::v2::AnywhereCache const& anywhere_cache,
-    Options opts) {
+StorageControlClient::CreateAnywhereCache(NoAwaitTag, std::string const& parent, google::storage::control::v2::AnywhereCache const& anywhere_cache, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::storage::control::v2::CreateAnywhereCacheRequest request;
   request.set_parent(parent);
@@ -252,33 +217,25 @@ StorageControlClient::CreateAnywhereCache(
 }
 
 future<StatusOr<google::storage::control::v2::AnywhereCache>>
-StorageControlClient::CreateAnywhereCache(
-    google::storage::control::v2::CreateAnywhereCacheRequest const& request,
-    Options opts) {
+StorageControlClient::CreateAnywhereCache(google::storage::control::v2::CreateAnywhereCacheRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateAnywhereCache(request);
 }
 
 StatusOr<google::longrunning::Operation>
-StorageControlClient::CreateAnywhereCache(
-    NoAwaitTag,
-    google::storage::control::v2::CreateAnywhereCacheRequest const& request,
-    Options opts) {
+StorageControlClient::CreateAnywhereCache(NoAwaitTag, google::storage::control::v2::CreateAnywhereCacheRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateAnywhereCache(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::storage::control::v2::AnywhereCache>>
-StorageControlClient::CreateAnywhereCache(
-    google::longrunning::Operation const& operation, Options opts) {
+StorageControlClient::CreateAnywhereCache(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateAnywhereCache(operation);
 }
 
 future<StatusOr<google::storage::control::v2::AnywhereCache>>
-StorageControlClient::UpdateAnywhereCache(
-    google::storage::control::v2::AnywhereCache const& anywhere_cache,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+StorageControlClient::UpdateAnywhereCache(google::storage::control::v2::AnywhereCache const& anywhere_cache, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::storage::control::v2::UpdateAnywhereCacheRequest request;
   *request.mutable_anywhere_cache() = anywhere_cache;
@@ -287,10 +244,7 @@ StorageControlClient::UpdateAnywhereCache(
 }
 
 StatusOr<google::longrunning::Operation>
-StorageControlClient::UpdateAnywhereCache(
-    NoAwaitTag,
-    google::storage::control::v2::AnywhereCache const& anywhere_cache,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+StorageControlClient::UpdateAnywhereCache(NoAwaitTag, google::storage::control::v2::AnywhereCache const& anywhere_cache, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::storage::control::v2::UpdateAnywhereCacheRequest request;
   *request.mutable_anywhere_cache() = anywhere_cache;
@@ -299,32 +253,25 @@ StorageControlClient::UpdateAnywhereCache(
 }
 
 future<StatusOr<google::storage::control::v2::AnywhereCache>>
-StorageControlClient::UpdateAnywhereCache(
-    google::storage::control::v2::UpdateAnywhereCacheRequest const& request,
-    Options opts) {
+StorageControlClient::UpdateAnywhereCache(google::storage::control::v2::UpdateAnywhereCacheRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateAnywhereCache(request);
 }
 
 StatusOr<google::longrunning::Operation>
-StorageControlClient::UpdateAnywhereCache(
-    NoAwaitTag,
-    google::storage::control::v2::UpdateAnywhereCacheRequest const& request,
-    Options opts) {
+StorageControlClient::UpdateAnywhereCache(NoAwaitTag, google::storage::control::v2::UpdateAnywhereCacheRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateAnywhereCache(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::storage::control::v2::AnywhereCache>>
-StorageControlClient::UpdateAnywhereCache(
-    google::longrunning::Operation const& operation, Options opts) {
+StorageControlClient::UpdateAnywhereCache(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateAnywhereCache(operation);
 }
 
 StatusOr<google::storage::control::v2::AnywhereCache>
-StorageControlClient::DisableAnywhereCache(std::string const& name,
-                                           Options opts) {
+StorageControlClient::DisableAnywhereCache(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::storage::control::v2::DisableAnywhereCacheRequest request;
   request.set_name(name);
@@ -332,16 +279,13 @@ StorageControlClient::DisableAnywhereCache(std::string const& name,
 }
 
 StatusOr<google::storage::control::v2::AnywhereCache>
-StorageControlClient::DisableAnywhereCache(
-    google::storage::control::v2::DisableAnywhereCacheRequest const& request,
-    Options opts) {
+StorageControlClient::DisableAnywhereCache(google::storage::control::v2::DisableAnywhereCacheRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DisableAnywhereCache(request);
 }
 
 StatusOr<google::storage::control::v2::AnywhereCache>
-StorageControlClient::PauseAnywhereCache(std::string const& name,
-                                         Options opts) {
+StorageControlClient::PauseAnywhereCache(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::storage::control::v2::PauseAnywhereCacheRequest request;
   request.set_name(name);
@@ -349,16 +293,13 @@ StorageControlClient::PauseAnywhereCache(std::string const& name,
 }
 
 StatusOr<google::storage::control::v2::AnywhereCache>
-StorageControlClient::PauseAnywhereCache(
-    google::storage::control::v2::PauseAnywhereCacheRequest const& request,
-    Options opts) {
+StorageControlClient::PauseAnywhereCache(google::storage::control::v2::PauseAnywhereCacheRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PauseAnywhereCache(request);
 }
 
 StatusOr<google::storage::control::v2::AnywhereCache>
-StorageControlClient::ResumeAnywhereCache(std::string const& name,
-                                          Options opts) {
+StorageControlClient::ResumeAnywhereCache(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::storage::control::v2::ResumeAnywhereCacheRequest request;
   request.set_name(name);
@@ -366,9 +307,7 @@ StorageControlClient::ResumeAnywhereCache(std::string const& name,
 }
 
 StatusOr<google::storage::control::v2::AnywhereCache>
-StorageControlClient::ResumeAnywhereCache(
-    google::storage::control::v2::ResumeAnywhereCacheRequest const& request,
-    Options opts) {
+StorageControlClient::ResumeAnywhereCache(google::storage::control::v2::ResumeAnywhereCacheRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ResumeAnywhereCache(request);
 }
@@ -382,16 +321,13 @@ StorageControlClient::GetAnywhereCache(std::string const& name, Options opts) {
 }
 
 StatusOr<google::storage::control::v2::AnywhereCache>
-StorageControlClient::GetAnywhereCache(
-    google::storage::control::v2::GetAnywhereCacheRequest const& request,
-    Options opts) {
+StorageControlClient::GetAnywhereCache(google::storage::control::v2::GetAnywhereCacheRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetAnywhereCache(request);
 }
 
 StreamRange<google::storage::control::v2::AnywhereCache>
-StorageControlClient::ListAnywhereCaches(std::string const& parent,
-                                         Options opts) {
+StorageControlClient::ListAnywhereCaches(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::storage::control::v2::ListAnywhereCachesRequest request;
   request.set_parent(parent);
@@ -399,16 +335,13 @@ StorageControlClient::ListAnywhereCaches(std::string const& parent,
 }
 
 StreamRange<google::storage::control::v2::AnywhereCache>
-StorageControlClient::ListAnywhereCaches(
-    google::storage::control::v2::ListAnywhereCachesRequest request,
-    Options opts) {
+StorageControlClient::ListAnywhereCaches(google::storage::control::v2::ListAnywhereCachesRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListAnywhereCaches(std::move(request));
 }
 
 StatusOr<google::storage::control::v2::IntelligenceConfig>
-StorageControlClient::GetProjectIntelligenceConfig(std::string const& name,
-                                                   Options opts) {
+StorageControlClient::GetProjectIntelligenceConfig(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::storage::control::v2::GetProjectIntelligenceConfigRequest request;
   request.set_name(name);
@@ -416,18 +349,13 @@ StorageControlClient::GetProjectIntelligenceConfig(std::string const& name,
 }
 
 StatusOr<google::storage::control::v2::IntelligenceConfig>
-StorageControlClient::GetProjectIntelligenceConfig(
-    google::storage::control::v2::GetProjectIntelligenceConfigRequest const&
-        request,
-    Options opts) {
+StorageControlClient::GetProjectIntelligenceConfig(google::storage::control::v2::GetProjectIntelligenceConfigRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetProjectIntelligenceConfig(request);
 }
 
 StatusOr<google::storage::control::v2::IntelligenceConfig>
-StorageControlClient::UpdateProjectIntelligenceConfig(
-    google::storage::control::v2::IntelligenceConfig const& intelligence_config,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+StorageControlClient::UpdateProjectIntelligenceConfig(google::storage::control::v2::IntelligenceConfig const& intelligence_config, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::storage::control::v2::UpdateProjectIntelligenceConfigRequest request;
   *request.mutable_intelligence_config() = intelligence_config;
@@ -436,17 +364,13 @@ StorageControlClient::UpdateProjectIntelligenceConfig(
 }
 
 StatusOr<google::storage::control::v2::IntelligenceConfig>
-StorageControlClient::UpdateProjectIntelligenceConfig(
-    google::storage::control::v2::UpdateProjectIntelligenceConfigRequest const&
-        request,
-    Options opts) {
+StorageControlClient::UpdateProjectIntelligenceConfig(google::storage::control::v2::UpdateProjectIntelligenceConfigRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateProjectIntelligenceConfig(request);
 }
 
 StatusOr<google::storage::control::v2::IntelligenceConfig>
-StorageControlClient::GetFolderIntelligenceConfig(std::string const& name,
-                                                  Options opts) {
+StorageControlClient::GetFolderIntelligenceConfig(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::storage::control::v2::GetFolderIntelligenceConfigRequest request;
   request.set_name(name);
@@ -454,18 +378,13 @@ StorageControlClient::GetFolderIntelligenceConfig(std::string const& name,
 }
 
 StatusOr<google::storage::control::v2::IntelligenceConfig>
-StorageControlClient::GetFolderIntelligenceConfig(
-    google::storage::control::v2::GetFolderIntelligenceConfigRequest const&
-        request,
-    Options opts) {
+StorageControlClient::GetFolderIntelligenceConfig(google::storage::control::v2::GetFolderIntelligenceConfigRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetFolderIntelligenceConfig(request);
 }
 
 StatusOr<google::storage::control::v2::IntelligenceConfig>
-StorageControlClient::UpdateFolderIntelligenceConfig(
-    google::storage::control::v2::IntelligenceConfig const& intelligence_config,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+StorageControlClient::UpdateFolderIntelligenceConfig(google::storage::control::v2::IntelligenceConfig const& intelligence_config, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::storage::control::v2::UpdateFolderIntelligenceConfigRequest request;
   *request.mutable_intelligence_config() = intelligence_config;
@@ -474,50 +393,36 @@ StorageControlClient::UpdateFolderIntelligenceConfig(
 }
 
 StatusOr<google::storage::control::v2::IntelligenceConfig>
-StorageControlClient::UpdateFolderIntelligenceConfig(
-    google::storage::control::v2::UpdateFolderIntelligenceConfigRequest const&
-        request,
-    Options opts) {
+StorageControlClient::UpdateFolderIntelligenceConfig(google::storage::control::v2::UpdateFolderIntelligenceConfigRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateFolderIntelligenceConfig(request);
 }
 
 StatusOr<google::storage::control::v2::IntelligenceConfig>
-StorageControlClient::GetOrganizationIntelligenceConfig(std::string const& name,
-                                                        Options opts) {
+StorageControlClient::GetOrganizationIntelligenceConfig(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::storage::control::v2::GetOrganizationIntelligenceConfigRequest
-      request;
+  google::storage::control::v2::GetOrganizationIntelligenceConfigRequest request;
   request.set_name(name);
   return connection_->GetOrganizationIntelligenceConfig(request);
 }
 
 StatusOr<google::storage::control::v2::IntelligenceConfig>
-StorageControlClient::GetOrganizationIntelligenceConfig(
-    google::storage::control::v2::
-        GetOrganizationIntelligenceConfigRequest const& request,
-    Options opts) {
+StorageControlClient::GetOrganizationIntelligenceConfig(google::storage::control::v2::GetOrganizationIntelligenceConfigRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOrganizationIntelligenceConfig(request);
 }
 
 StatusOr<google::storage::control::v2::IntelligenceConfig>
-StorageControlClient::UpdateOrganizationIntelligenceConfig(
-    google::storage::control::v2::IntelligenceConfig const& intelligence_config,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+StorageControlClient::UpdateOrganizationIntelligenceConfig(google::storage::control::v2::IntelligenceConfig const& intelligence_config, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::storage::control::v2::UpdateOrganizationIntelligenceConfigRequest
-      request;
+  google::storage::control::v2::UpdateOrganizationIntelligenceConfigRequest request;
   *request.mutable_intelligence_config() = intelligence_config;
   *request.mutable_update_mask() = update_mask;
   return connection_->UpdateOrganizationIntelligenceConfig(request);
 }
 
 StatusOr<google::storage::control::v2::IntelligenceConfig>
-StorageControlClient::UpdateOrganizationIntelligenceConfig(
-    google::storage::control::v2::
-        UpdateOrganizationIntelligenceConfigRequest const& request,
-    Options opts) {
+StorageControlClient::UpdateOrganizationIntelligenceConfig(google::storage::control::v2::UpdateOrganizationIntelligenceConfigRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateOrganizationIntelligenceConfig(request);
 }

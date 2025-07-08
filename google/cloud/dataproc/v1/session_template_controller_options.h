@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAPROC_V1_SESSION_TEMPLATE_CONTROLLER_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAPROC_V1_SESSION_TEMPLATE_CONTROLLER_OPTIONS_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/dataproc/v1/session_template_controller_connection.h"
 #include "google/cloud/dataproc/v1/session_template_controller_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -55,8 +55,7 @@ struct SessionTemplateControllerBackoffPolicyOption {
  * @ingroup google-cloud-dataproc-options
  */
 struct SessionTemplateControllerConnectionIdempotencyPolicyOption {
-  using Type =
-      std::shared_ptr<SessionTemplateControllerConnectionIdempotencyPolicy>;
+  using Type = std::shared_ptr<SessionTemplateControllerConnectionIdempotencyPolicy>;
 };
 
 /**

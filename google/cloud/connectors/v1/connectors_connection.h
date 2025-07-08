@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONNECTORS_V1_CONNECTORS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONNECTORS_V1_CONNECTORS_CONNECTION_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/connectors/v1/connectors_connection_idempotency_policy.h"
 #include "google/cloud/connectors/v1/internal/connectors_retry_traits.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -66,14 +66,14 @@ class ConnectorsLimitedErrorCountRetryPolicy : public ConnectorsRetryPolicy {
    *     @p maximum_failures == 0.
    */
   explicit ConnectorsLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   ConnectorsLimitedErrorCountRetryPolicy(
       ConnectorsLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : ConnectorsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : ConnectorsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   ConnectorsLimitedErrorCountRetryPolicy(
       ConnectorsLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : ConnectorsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : ConnectorsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -93,9 +93,7 @@ class ConnectorsLimitedErrorCountRetryPolicy : public ConnectorsRetryPolicy {
   using BaseType = ConnectorsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      connectors_v1_internal::ConnectorsRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<connectors_v1_internal::ConnectorsRetryTraits> impl_;
 };
 
 /**
@@ -133,14 +131,12 @@ class ConnectorsLimitedTimeRetryPolicy : public ConnectorsRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit ConnectorsLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  ConnectorsLimitedTimeRetryPolicy(
-      ConnectorsLimitedTimeRetryPolicy&& rhs) noexcept
-      : ConnectorsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  ConnectorsLimitedTimeRetryPolicy(
-      ConnectorsLimitedTimeRetryPolicy const& rhs) noexcept
-      : ConnectorsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  ConnectorsLimitedTimeRetryPolicy(ConnectorsLimitedTimeRetryPolicy&& rhs) noexcept
+    : ConnectorsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  ConnectorsLimitedTimeRetryPolicy(ConnectorsLimitedTimeRetryPolicy const& rhs) noexcept
+    : ConnectorsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -162,9 +158,7 @@ class ConnectorsLimitedTimeRetryPolicy : public ConnectorsRetryPolicy {
   using BaseType = ConnectorsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      connectors_v1_internal::ConnectorsRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<connectors_v1_internal::ConnectorsRetryTraits> impl_;
 };
 
 /**
@@ -186,127 +180,106 @@ class ConnectorsConnection {
   virtual Options options() { return Options{}; }
 
   virtual StreamRange<google::cloud::connectors::v1::Connection>
-  ListConnections(
-      google::cloud::connectors::v1::ListConnectionsRequest request);
+  ListConnections(google::cloud::connectors::v1::ListConnectionsRequest request);
 
-  virtual StatusOr<google::cloud::connectors::v1::Connection> GetConnection(
-      google::cloud::connectors::v1::GetConnectionRequest const& request);
-
-  virtual future<StatusOr<google::cloud::connectors::v1::Connection>>
-  CreateConnection(
-      google::cloud::connectors::v1::CreateConnectionRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation> CreateConnection(
-      NoAwaitTag,
-      google::cloud::connectors::v1::CreateConnectionRequest const& request);
+  virtual StatusOr<google::cloud::connectors::v1::Connection>
+  GetConnection(google::cloud::connectors::v1::GetConnectionRequest const& request);
 
   virtual future<StatusOr<google::cloud::connectors::v1::Connection>>
-  CreateConnection(google::longrunning::Operation const& operation);
-
-  virtual future<StatusOr<google::cloud::connectors::v1::Connection>>
-  UpdateConnection(
-      google::cloud::connectors::v1::UpdateConnectionRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation> UpdateConnection(
-      NoAwaitTag,
-      google::cloud::connectors::v1::UpdateConnectionRequest const& request);
-
-  virtual future<StatusOr<google::cloud::connectors::v1::Connection>>
-  UpdateConnection(google::longrunning::Operation const& operation);
-
-  virtual future<StatusOr<google::cloud::connectors::v1::OperationMetadata>>
-  DeleteConnection(
-      google::cloud::connectors::v1::DeleteConnectionRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation> DeleteConnection(
-      NoAwaitTag,
-      google::cloud::connectors::v1::DeleteConnectionRequest const& request);
-
-  virtual future<StatusOr<google::cloud::connectors::v1::OperationMetadata>>
-  DeleteConnection(google::longrunning::Operation const& operation);
-
-  virtual StreamRange<google::cloud::connectors::v1::Provider> ListProviders(
-      google::cloud::connectors::v1::ListProvidersRequest request);
-
-  virtual StatusOr<google::cloud::connectors::v1::Provider> GetProvider(
-      google::cloud::connectors::v1::GetProviderRequest const& request);
-
-  virtual StreamRange<google::cloud::connectors::v1::Connector> ListConnectors(
-      google::cloud::connectors::v1::ListConnectorsRequest request);
-
-  virtual StatusOr<google::cloud::connectors::v1::Connector> GetConnector(
-      google::cloud::connectors::v1::GetConnectorRequest const& request);
-
-  virtual StreamRange<google::cloud::connectors::v1::ConnectorVersion>
-  ListConnectorVersions(
-      google::cloud::connectors::v1::ListConnectorVersionsRequest request);
-
-  virtual StatusOr<google::cloud::connectors::v1::ConnectorVersion>
-  GetConnectorVersion(
-      google::cloud::connectors::v1::GetConnectorVersionRequest const& request);
-
-  virtual StatusOr<google::cloud::connectors::v1::ConnectionSchemaMetadata>
-  GetConnectionSchemaMetadata(
-      google::cloud::connectors::v1::GetConnectionSchemaMetadataRequest const&
-          request);
-
-  virtual future<
-      StatusOr<google::cloud::connectors::v1::ConnectionSchemaMetadata>>
-  RefreshConnectionSchemaMetadata(
-      google::cloud::connectors::v1::
-          RefreshConnectionSchemaMetadataRequest const& request);
+  CreateConnection(google::cloud::connectors::v1::CreateConnectionRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation>
-  RefreshConnectionSchemaMetadata(
-      NoAwaitTag, google::cloud::connectors::v1::
-                      RefreshConnectionSchemaMetadataRequest const& request);
+  CreateConnection(NoAwaitTag, google::cloud::connectors::v1::CreateConnectionRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::connectors::v1::ConnectionSchemaMetadata>>
-  RefreshConnectionSchemaMetadata(
-      google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::connectors::v1::Connection>>
+  CreateConnection( google::longrunning::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::connectors::v1::Connection>>
+  UpdateConnection(google::cloud::connectors::v1::UpdateConnectionRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation>
+  UpdateConnection(NoAwaitTag, google::cloud::connectors::v1::UpdateConnectionRequest const& request);
+
+  virtual future<StatusOr<google::cloud::connectors::v1::Connection>>
+  UpdateConnection( google::longrunning::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::connectors::v1::OperationMetadata>>
+  DeleteConnection(google::cloud::connectors::v1::DeleteConnectionRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation>
+  DeleteConnection(NoAwaitTag, google::cloud::connectors::v1::DeleteConnectionRequest const& request);
+
+  virtual future<StatusOr<google::cloud::connectors::v1::OperationMetadata>>
+  DeleteConnection( google::longrunning::Operation const& operation);
+
+  virtual StreamRange<google::cloud::connectors::v1::Provider>
+  ListProviders(google::cloud::connectors::v1::ListProvidersRequest request);
+
+  virtual StatusOr<google::cloud::connectors::v1::Provider>
+  GetProvider(google::cloud::connectors::v1::GetProviderRequest const& request);
+
+  virtual StreamRange<google::cloud::connectors::v1::Connector>
+  ListConnectors(google::cloud::connectors::v1::ListConnectorsRequest request);
+
+  virtual StatusOr<google::cloud::connectors::v1::Connector>
+  GetConnector(google::cloud::connectors::v1::GetConnectorRequest const& request);
+
+  virtual StreamRange<google::cloud::connectors::v1::ConnectorVersion>
+  ListConnectorVersions(google::cloud::connectors::v1::ListConnectorVersionsRequest request);
+
+  virtual StatusOr<google::cloud::connectors::v1::ConnectorVersion>
+  GetConnectorVersion(google::cloud::connectors::v1::GetConnectorVersionRequest const& request);
+
+  virtual StatusOr<google::cloud::connectors::v1::ConnectionSchemaMetadata>
+  GetConnectionSchemaMetadata(google::cloud::connectors::v1::GetConnectionSchemaMetadataRequest const& request);
+
+  virtual future<StatusOr<google::cloud::connectors::v1::ConnectionSchemaMetadata>>
+  RefreshConnectionSchemaMetadata(google::cloud::connectors::v1::RefreshConnectionSchemaMetadataRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation>
+  RefreshConnectionSchemaMetadata(NoAwaitTag, google::cloud::connectors::v1::RefreshConnectionSchemaMetadataRequest const& request);
+
+  virtual future<StatusOr<google::cloud::connectors::v1::ConnectionSchemaMetadata>>
+  RefreshConnectionSchemaMetadata( google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::connectors::v1::RuntimeEntitySchema>
-  ListRuntimeEntitySchemas(
-      google::cloud::connectors::v1::ListRuntimeEntitySchemasRequest request);
+  ListRuntimeEntitySchemas(google::cloud::connectors::v1::ListRuntimeEntitySchemasRequest request);
 
   virtual StreamRange<google::cloud::connectors::v1::RuntimeActionSchema>
-  ListRuntimeActionSchemas(
-      google::cloud::connectors::v1::ListRuntimeActionSchemasRequest request);
+  ListRuntimeActionSchemas(google::cloud::connectors::v1::ListRuntimeActionSchemasRequest request);
 
   virtual StatusOr<google::cloud::connectors::v1::RuntimeConfig>
-  GetRuntimeConfig(
-      google::cloud::connectors::v1::GetRuntimeConfigRequest const& request);
+  GetRuntimeConfig(google::cloud::connectors::v1::GetRuntimeConfigRequest const& request);
 
-  virtual StatusOr<google::cloud::connectors::v1::Settings> GetGlobalSettings(
-      google::cloud::connectors::v1::GetGlobalSettingsRequest const& request);
+  virtual StatusOr<google::cloud::connectors::v1::Settings>
+  GetGlobalSettings(google::cloud::connectors::v1::GetGlobalSettingsRequest const& request);
 
-  virtual StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request);
+  virtual StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request);
 
-  virtual StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request);
+  virtual StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
 
   virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
   TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
 
-  virtual StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 
-  virtual Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request);
+  virtual Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
 
-  virtual Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request);
+  virtual Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request);
 };
 
 /**

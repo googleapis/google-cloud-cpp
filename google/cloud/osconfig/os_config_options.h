@@ -31,10 +31,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// @deprecated Use osconfig_v1::OsConfigServiceBackoffPolicyOption directly.
 using ::google::cloud::osconfig_v1::OsConfigServiceBackoffPolicyOption;
 
-/// @deprecated Use
-/// osconfig_v1::OsConfigServiceConnectionIdempotencyPolicyOption directly.
-using ::google::cloud::osconfig_v1::
-    OsConfigServiceConnectionIdempotencyPolicyOption;
+/// @deprecated Use osconfig_v1::OsConfigServiceConnectionIdempotencyPolicyOption directly.
+using ::google::cloud::osconfig_v1::OsConfigServiceConnectionIdempotencyPolicyOption;
 
 /// @deprecated Use osconfig_v1::OsConfigServicePolicyOptionList directly.
 using ::google::cloud::osconfig_v1::OsConfigServicePolicyOptionList;

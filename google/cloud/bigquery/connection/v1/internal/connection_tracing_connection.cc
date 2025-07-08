@@ -34,80 +34,59 @@ ConnectionServiceTracingConnection::ConnectionServiceTracingConnection(
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::bigquery::connection::v1::Connection>
-ConnectionServiceTracingConnection::CreateConnection(
-    google::cloud::bigquery::connection::v1::CreateConnectionRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "bigquery_connection_v1::ConnectionServiceConnection::CreateConnection");
+ConnectionServiceTracingConnection::CreateConnection(google::cloud::bigquery::connection::v1::CreateConnectionRequest const& request) {
+  auto span = internal::MakeSpan("bigquery_connection_v1::ConnectionServiceConnection::CreateConnection");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateConnection(request));
 }
 
 StatusOr<google::cloud::bigquery::connection::v1::Connection>
-ConnectionServiceTracingConnection::GetConnection(
-    google::cloud::bigquery::connection::v1::GetConnectionRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "bigquery_connection_v1::ConnectionServiceConnection::GetConnection");
+ConnectionServiceTracingConnection::GetConnection(google::cloud::bigquery::connection::v1::GetConnectionRequest const& request) {
+  auto span = internal::MakeSpan("bigquery_connection_v1::ConnectionServiceConnection::GetConnection");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetConnection(request));
 }
 
 StreamRange<google::cloud::bigquery::connection::v1::Connection>
-ConnectionServiceTracingConnection::ListConnections(
-    google::cloud::bigquery::connection::v1::ListConnectionsRequest request) {
-  auto span = internal::MakeSpan(
-      "bigquery_connection_v1::ConnectionServiceConnection::ListConnections");
+ConnectionServiceTracingConnection::ListConnections(google::cloud::bigquery::connection::v1::ListConnectionsRequest request) {
+  auto span = internal::MakeSpan("bigquery_connection_v1::ConnectionServiceConnection::ListConnections");
   internal::OTelScope scope(span);
   auto sr = child_->ListConnections(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::bigquery::connection::v1::Connection>(std::move(span),
-                                                           std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::bigquery::connection::v1::Connection>(
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::bigquery::connection::v1::Connection>
-ConnectionServiceTracingConnection::UpdateConnection(
-    google::cloud::bigquery::connection::v1::UpdateConnectionRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "bigquery_connection_v1::ConnectionServiceConnection::UpdateConnection");
+ConnectionServiceTracingConnection::UpdateConnection(google::cloud::bigquery::connection::v1::UpdateConnectionRequest const& request) {
+  auto span = internal::MakeSpan("bigquery_connection_v1::ConnectionServiceConnection::UpdateConnection");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateConnection(request));
 }
 
-Status ConnectionServiceTracingConnection::DeleteConnection(
-    google::cloud::bigquery::connection::v1::DeleteConnectionRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "bigquery_connection_v1::ConnectionServiceConnection::DeleteConnection");
+Status
+ConnectionServiceTracingConnection::DeleteConnection(google::cloud::bigquery::connection::v1::DeleteConnectionRequest const& request) {
+  auto span = internal::MakeSpan("bigquery_connection_v1::ConnectionServiceConnection::DeleteConnection");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteConnection(request));
 }
 
 StatusOr<google::iam::v1::Policy>
-ConnectionServiceTracingConnection::GetIamPolicy(
-    google::iam::v1::GetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpan(
-      "bigquery_connection_v1::ConnectionServiceConnection::GetIamPolicy");
+ConnectionServiceTracingConnection::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) {
+  auto span = internal::MakeSpan("bigquery_connection_v1::ConnectionServiceConnection::GetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetIamPolicy(request));
 }
 
 StatusOr<google::iam::v1::Policy>
-ConnectionServiceTracingConnection::SetIamPolicy(
-    google::iam::v1::SetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpan(
-      "bigquery_connection_v1::ConnectionServiceConnection::SetIamPolicy");
+ConnectionServiceTracingConnection::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) {
+  auto span = internal::MakeSpan("bigquery_connection_v1::ConnectionServiceConnection::SetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->SetIamPolicy(request));
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-ConnectionServiceTracingConnection::TestIamPermissions(
-    google::iam::v1::TestIamPermissionsRequest const& request) {
-  auto span = internal::MakeSpan(
-      "bigquery_connection_v1::ConnectionServiceConnection::"
-      "TestIamPermissions");
+ConnectionServiceTracingConnection::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) {
+  auto span = internal::MakeSpan("bigquery_connection_v1::ConnectionServiceConnection::TestIamPermissions");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->TestIamPermissions(request));
 }
@@ -119,8 +98,7 @@ MakeConnectionServiceTracingConnection(
     std::shared_ptr<bigquery_connection_v1::ConnectionServiceConnection> conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
-    conn =
-        std::make_shared<ConnectionServiceTracingConnection>(std::move(conn));
+    conn = std::make_shared<ConnectionServiceTracingConnection>(std::move(conn));
   }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;

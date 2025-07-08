@@ -30,189 +30,144 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 AppGatewaysServiceTracingConnection::AppGatewaysServiceTracingConnection(
-    std::shared_ptr<beyondcorp_appgateways_v1::AppGatewaysServiceConnection>
-        child)
+    std::shared_ptr<beyondcorp_appgateways_v1::AppGatewaysServiceConnection> child)
     : child_(std::move(child)) {}
 
 StreamRange<google::cloud::beyondcorp::appgateways::v1::AppGateway>
-AppGatewaysServiceTracingConnection::ListAppGateways(
-    google::cloud::beyondcorp::appgateways::v1::ListAppGatewaysRequest
-        request) {
-  auto span = internal::MakeSpan(
-      "beyondcorp_appgateways_v1::AppGatewaysServiceConnection::"
-      "ListAppGateways");
+AppGatewaysServiceTracingConnection::ListAppGateways(google::cloud::beyondcorp::appgateways::v1::ListAppGatewaysRequest request) {
+  auto span = internal::MakeSpan("beyondcorp_appgateways_v1::AppGatewaysServiceConnection::ListAppGateways");
   internal::OTelScope scope(span);
   auto sr = child_->ListAppGateways(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::beyondcorp::appgateways::v1::AppGateway>(std::move(span),
-                                                              std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::beyondcorp::appgateways::v1::AppGateway>(
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::beyondcorp::appgateways::v1::AppGateway>
-AppGatewaysServiceTracingConnection::GetAppGateway(
-    google::cloud::beyondcorp::appgateways::v1::GetAppGatewayRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "beyondcorp_appgateways_v1::AppGatewaysServiceConnection::GetAppGateway");
+AppGatewaysServiceTracingConnection::GetAppGateway(google::cloud::beyondcorp::appgateways::v1::GetAppGatewayRequest const& request) {
+  auto span = internal::MakeSpan("beyondcorp_appgateways_v1::AppGatewaysServiceConnection::GetAppGateway");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetAppGateway(request));
 }
 
 future<StatusOr<google::cloud::beyondcorp::appgateways::v1::AppGateway>>
-AppGatewaysServiceTracingConnection::CreateAppGateway(
-    google::cloud::beyondcorp::appgateways::v1::CreateAppGatewayRequest const&
-        request) {
+AppGatewaysServiceTracingConnection::CreateAppGateway(google::cloud::beyondcorp::appgateways::v1::CreateAppGatewayRequest const& request) {
   auto span = internal::MakeSpan(
-      "beyondcorp_appgateways_v1::AppGatewaysServiceConnection::"
-      "CreateAppGateway");
+      "beyondcorp_appgateways_v1::AppGatewaysServiceConnection::CreateAppGateway");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateAppGateway(request));
 }
 
 StatusOr<google::longrunning::Operation>
 AppGatewaysServiceTracingConnection::CreateAppGateway(
-    NoAwaitTag,
-    google::cloud::beyondcorp::appgateways::v1::CreateAppGatewayRequest const&
-        request) {
+    NoAwaitTag, google::cloud::beyondcorp::appgateways::v1::CreateAppGatewayRequest const& request) {
   auto span = internal::MakeSpan(
-      "beyondcorp_appgateways_v1::AppGatewaysServiceConnection::"
-      "CreateAppGateway");
+      "beyondcorp_appgateways_v1::AppGatewaysServiceConnection::CreateAppGateway");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span,
-                           child_->CreateAppGateway(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->CreateAppGateway(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::beyondcorp::appgateways::v1::AppGateway>>
 AppGatewaysServiceTracingConnection::CreateAppGateway(
     google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
-      "beyondcorp_appgateways_v1::AppGatewaysServiceConnection::"
-      "CreateAppGateway");
+      "beyondcorp_appgateways_v1::AppGatewaysServiceConnection::CreateAppGateway");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->CreateAppGateway(operation));
+      child_->CreateAppGateway(operation));
 }
 
-future<StatusOr<
-    google::cloud::beyondcorp::appgateways::v1::AppGatewayOperationMetadata>>
-AppGatewaysServiceTracingConnection::DeleteAppGateway(
-    google::cloud::beyondcorp::appgateways::v1::DeleteAppGatewayRequest const&
-        request) {
+future<StatusOr<google::cloud::beyondcorp::appgateways::v1::AppGatewayOperationMetadata>>
+AppGatewaysServiceTracingConnection::DeleteAppGateway(google::cloud::beyondcorp::appgateways::v1::DeleteAppGatewayRequest const& request) {
   auto span = internal::MakeSpan(
-      "beyondcorp_appgateways_v1::AppGatewaysServiceConnection::"
-      "DeleteAppGateway");
+      "beyondcorp_appgateways_v1::AppGatewaysServiceConnection::DeleteAppGateway");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteAppGateway(request));
 }
 
 StatusOr<google::longrunning::Operation>
 AppGatewaysServiceTracingConnection::DeleteAppGateway(
-    NoAwaitTag,
-    google::cloud::beyondcorp::appgateways::v1::DeleteAppGatewayRequest const&
-        request) {
+    NoAwaitTag, google::cloud::beyondcorp::appgateways::v1::DeleteAppGatewayRequest const& request) {
   auto span = internal::MakeSpan(
-      "beyondcorp_appgateways_v1::AppGatewaysServiceConnection::"
-      "DeleteAppGateway");
+      "beyondcorp_appgateways_v1::AppGatewaysServiceConnection::DeleteAppGateway");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span,
-                           child_->DeleteAppGateway(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->DeleteAppGateway(
+      NoAwaitTag{}, request));
 }
 
-future<StatusOr<
-    google::cloud::beyondcorp::appgateways::v1::AppGatewayOperationMetadata>>
+future<StatusOr<google::cloud::beyondcorp::appgateways::v1::AppGatewayOperationMetadata>>
 AppGatewaysServiceTracingConnection::DeleteAppGateway(
     google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
-      "beyondcorp_appgateways_v1::AppGatewaysServiceConnection::"
-      "DeleteAppGateway");
+      "beyondcorp_appgateways_v1::AppGatewaysServiceConnection::DeleteAppGateway");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->DeleteAppGateway(operation));
+      child_->DeleteAppGateway(operation));
 }
 
 StreamRange<google::cloud::location::Location>
-AppGatewaysServiceTracingConnection::ListLocations(
-    google::cloud::location::ListLocationsRequest request) {
-  auto span = internal::MakeSpan(
-      "beyondcorp_appgateways_v1::AppGatewaysServiceConnection::ListLocations");
+AppGatewaysServiceTracingConnection::ListLocations(google::cloud::location::ListLocationsRequest request) {
+  auto span = internal::MakeSpan("beyondcorp_appgateways_v1::AppGatewaysServiceConnection::ListLocations");
   internal::OTelScope scope(span);
   auto sr = child_->ListLocations(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::location::Location>(
-      std::move(span), std::move(sr));
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::location::Location>
-AppGatewaysServiceTracingConnection::GetLocation(
-    google::cloud::location::GetLocationRequest const& request) {
-  auto span = internal::MakeSpan(
-      "beyondcorp_appgateways_v1::AppGatewaysServiceConnection::GetLocation");
+AppGatewaysServiceTracingConnection::GetLocation(google::cloud::location::GetLocationRequest const& request) {
+  auto span = internal::MakeSpan("beyondcorp_appgateways_v1::AppGatewaysServiceConnection::GetLocation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetLocation(request));
 }
 
 StatusOr<google::iam::v1::Policy>
-AppGatewaysServiceTracingConnection::SetIamPolicy(
-    google::iam::v1::SetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpan(
-      "beyondcorp_appgateways_v1::AppGatewaysServiceConnection::SetIamPolicy");
+AppGatewaysServiceTracingConnection::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) {
+  auto span = internal::MakeSpan("beyondcorp_appgateways_v1::AppGatewaysServiceConnection::SetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->SetIamPolicy(request));
 }
 
 StatusOr<google::iam::v1::Policy>
-AppGatewaysServiceTracingConnection::GetIamPolicy(
-    google::iam::v1::GetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpan(
-      "beyondcorp_appgateways_v1::AppGatewaysServiceConnection::GetIamPolicy");
+AppGatewaysServiceTracingConnection::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) {
+  auto span = internal::MakeSpan("beyondcorp_appgateways_v1::AppGatewaysServiceConnection::GetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetIamPolicy(request));
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-AppGatewaysServiceTracingConnection::TestIamPermissions(
-    google::iam::v1::TestIamPermissionsRequest const& request) {
-  auto span = internal::MakeSpan(
-      "beyondcorp_appgateways_v1::AppGatewaysServiceConnection::"
-      "TestIamPermissions");
+AppGatewaysServiceTracingConnection::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) {
+  auto span = internal::MakeSpan("beyondcorp_appgateways_v1::AppGatewaysServiceConnection::TestIamPermissions");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->TestIamPermissions(request));
 }
 
 StreamRange<google::longrunning::Operation>
-AppGatewaysServiceTracingConnection::ListOperations(
-    google::longrunning::ListOperationsRequest request) {
-  auto span = internal::MakeSpan(
-      "beyondcorp_appgateways_v1::AppGatewaysServiceConnection::"
-      "ListOperations");
+AppGatewaysServiceTracingConnection::ListOperations(google::longrunning::ListOperationsRequest request) {
+  auto span = internal::MakeSpan("beyondcorp_appgateways_v1::AppGatewaysServiceConnection::ListOperations");
   internal::OTelScope scope(span);
   auto sr = child_->ListOperations(std::move(request));
   return internal::MakeTracedStreamRange<google::longrunning::Operation>(
-      std::move(span), std::move(sr));
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::longrunning::Operation>
-AppGatewaysServiceTracingConnection::GetOperation(
-    google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpan(
-      "beyondcorp_appgateways_v1::AppGatewaysServiceConnection::GetOperation");
+AppGatewaysServiceTracingConnection::GetOperation(google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpan("beyondcorp_appgateways_v1::AppGatewaysServiceConnection::GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOperation(request));
 }
 
-Status AppGatewaysServiceTracingConnection::DeleteOperation(
-    google::longrunning::DeleteOperationRequest const& request) {
-  auto span = internal::MakeSpan(
-      "beyondcorp_appgateways_v1::AppGatewaysServiceConnection::"
-      "DeleteOperation");
+Status
+AppGatewaysServiceTracingConnection::DeleteOperation(google::longrunning::DeleteOperationRequest const& request) {
+  auto span = internal::MakeSpan("beyondcorp_appgateways_v1::AppGatewaysServiceConnection::DeleteOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteOperation(request));
 }
 
-Status AppGatewaysServiceTracingConnection::CancelOperation(
-    google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpan(
-      "beyondcorp_appgateways_v1::AppGatewaysServiceConnection::"
-      "CancelOperation");
+Status
+AppGatewaysServiceTracingConnection::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
+  auto span = internal::MakeSpan("beyondcorp_appgateways_v1::AppGatewaysServiceConnection::CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CancelOperation(request));
 }
@@ -221,12 +176,10 @@ Status AppGatewaysServiceTracingConnection::CancelOperation(
 
 std::shared_ptr<beyondcorp_appgateways_v1::AppGatewaysServiceConnection>
 MakeAppGatewaysServiceTracingConnection(
-    std::shared_ptr<beyondcorp_appgateways_v1::AppGatewaysServiceConnection>
-        conn) {
+    std::shared_ptr<beyondcorp_appgateways_v1::AppGatewaysServiceConnection> conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
-    conn =
-        std::make_shared<AppGatewaysServiceTracingConnection>(std::move(conn));
+    conn = std::make_shared<AppGatewaysServiceTracingConnection>(std::move(conn));
   }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;

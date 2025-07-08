@@ -36,80 +36,63 @@ class ConversationalSearchServiceTracingConnection
   ~ConversationalSearchServiceTracingConnection() override = default;
 
   explicit ConversationalSearchServiceTracingConnection(
-      std::shared_ptr<discoveryengine_v1::ConversationalSearchServiceConnection>
-          child);
+    std::shared_ptr<discoveryengine_v1::ConversationalSearchServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
   StatusOr<google::cloud::discoveryengine::v1::ConverseConversationResponse>
-  ConverseConversation(
-      google::cloud::discoveryengine::v1::ConverseConversationRequest const&
-          request) override;
+  ConverseConversation(google::cloud::discoveryengine::v1::ConverseConversationRequest const& request) override;
 
-  StatusOr<google::cloud::discoveryengine::v1::Conversation> CreateConversation(
-      google::cloud::discoveryengine::v1::CreateConversationRequest const&
-          request) override;
+  StatusOr<google::cloud::discoveryengine::v1::Conversation>
+  CreateConversation(google::cloud::discoveryengine::v1::CreateConversationRequest const& request) override;
 
-  Status DeleteConversation(
-      google::cloud::discoveryengine::v1::DeleteConversationRequest const&
-          request) override;
+  Status
+  DeleteConversation(google::cloud::discoveryengine::v1::DeleteConversationRequest const& request) override;
 
-  StatusOr<google::cloud::discoveryengine::v1::Conversation> UpdateConversation(
-      google::cloud::discoveryengine::v1::UpdateConversationRequest const&
-          request) override;
+  StatusOr<google::cloud::discoveryengine::v1::Conversation>
+  UpdateConversation(google::cloud::discoveryengine::v1::UpdateConversationRequest const& request) override;
 
-  StatusOr<google::cloud::discoveryengine::v1::Conversation> GetConversation(
-      google::cloud::discoveryengine::v1::GetConversationRequest const& request)
-      override;
+  StatusOr<google::cloud::discoveryengine::v1::Conversation>
+  GetConversation(google::cloud::discoveryengine::v1::GetConversationRequest const& request) override;
 
   StreamRange<google::cloud::discoveryengine::v1::Conversation>
-  ListConversations(google::cloud::discoveryengine::v1::ListConversationsRequest
-                        request) override;
+  ListConversations(google::cloud::discoveryengine::v1::ListConversationsRequest request) override;
 
-  StatusOr<google::cloud::discoveryengine::v1::AnswerQueryResponse> AnswerQuery(
-      google::cloud::discoveryengine::v1::AnswerQueryRequest const& request)
-      override;
+  StatusOr<google::cloud::discoveryengine::v1::AnswerQueryResponse>
+  AnswerQuery(google::cloud::discoveryengine::v1::AnswerQueryRequest const& request) override;
 
   StreamRange<google::cloud::discoveryengine::v1::AnswerQueryResponse>
-  StreamAnswerQuery(
-      google::cloud::discoveryengine::v1::AnswerQueryRequest const& request)
-      override;
+  StreamAnswerQuery(google::cloud::discoveryengine::v1::AnswerQueryRequest const& request) override;
 
-  StatusOr<google::cloud::discoveryengine::v1::Answer> GetAnswer(
-      google::cloud::discoveryengine::v1::GetAnswerRequest const& request)
-      override;
+  StatusOr<google::cloud::discoveryengine::v1::Answer>
+  GetAnswer(google::cloud::discoveryengine::v1::GetAnswerRequest const& request) override;
 
-  StatusOr<google::cloud::discoveryengine::v1::Session> CreateSession(
-      google::cloud::discoveryengine::v1::CreateSessionRequest const& request)
-      override;
+  StatusOr<google::cloud::discoveryengine::v1::Session>
+  CreateSession(google::cloud::discoveryengine::v1::CreateSessionRequest const& request) override;
 
-  Status DeleteSession(
-      google::cloud::discoveryengine::v1::DeleteSessionRequest const& request)
-      override;
+  Status
+  DeleteSession(google::cloud::discoveryengine::v1::DeleteSessionRequest const& request) override;
 
-  StatusOr<google::cloud::discoveryengine::v1::Session> UpdateSession(
-      google::cloud::discoveryengine::v1::UpdateSessionRequest const& request)
-      override;
+  StatusOr<google::cloud::discoveryengine::v1::Session>
+  UpdateSession(google::cloud::discoveryengine::v1::UpdateSessionRequest const& request) override;
 
-  StatusOr<google::cloud::discoveryengine::v1::Session> GetSession(
-      google::cloud::discoveryengine::v1::GetSessionRequest const& request)
-      override;
+  StatusOr<google::cloud::discoveryengine::v1::Session>
+  GetSession(google::cloud::discoveryengine::v1::GetSessionRequest const& request) override;
 
-  StreamRange<google::cloud::discoveryengine::v1::Session> ListSessions(
-      google::cloud::discoveryengine::v1::ListSessionsRequest request) override;
+  StreamRange<google::cloud::discoveryengine::v1::Session>
+  ListSessions(google::cloud::discoveryengine::v1::ListSessionsRequest request) override;
 
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request) override;
 
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request) override;
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  std::shared_ptr<discoveryengine_v1::ConversationalSearchServiceConnection>
-      child_;
+  std::shared_ptr<discoveryengine_v1::ConversationalSearchServiceConnection> child_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -122,8 +105,7 @@ class ConversationalSearchServiceTracingConnection
  */
 std::shared_ptr<discoveryengine_v1::ConversationalSearchServiceConnection>
 MakeConversationalSearchServiceTracingConnection(
-    std::shared_ptr<discoveryengine_v1::ConversationalSearchServiceConnection>
-        conn);
+    std::shared_ptr<discoveryengine_v1::ConversationalSearchServiceConnection> conn);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace discoveryengine_v1_internal

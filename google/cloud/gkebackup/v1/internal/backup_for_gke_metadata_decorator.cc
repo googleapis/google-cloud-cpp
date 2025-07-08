@@ -50,35 +50,35 @@ BackupForGKEMetadata::AsyncCreateBackupPlan(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::gkebackup::v1::CreateBackupPlanRequest const& request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateBackupPlan(cq, std::move(context),
-                                       std::move(options), request);
+  SetMetadata(*context, *options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateBackupPlan(
+      cq, std::move(context), std::move(options), request);
 }
 
-StatusOr<google::longrunning::Operation> BackupForGKEMetadata::CreateBackupPlan(
-    grpc::ClientContext& context, Options options,
+StatusOr<google::longrunning::Operation>
+BackupForGKEMetadata::CreateBackupPlan(
+    grpc::ClientContext& context,
+    Options options,
     google::cloud::gkebackup::v1::CreateBackupPlanRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateBackupPlan(context, options, request);
 }
 
 StatusOr<google::cloud::gkebackup::v1::ListBackupPlansResponse>
 BackupForGKEMetadata::ListBackupPlans(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::gkebackup::v1::ListBackupPlansRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListBackupPlans(context, options, request);
 }
 
 StatusOr<google::cloud::gkebackup::v1::BackupPlan>
 BackupForGKEMetadata::GetBackupPlan(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::gkebackup::v1::GetBackupPlanRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetBackupPlan(context, options, request);
 }
 
@@ -88,19 +88,17 @@ BackupForGKEMetadata::AsyncUpdateBackupPlan(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::gkebackup::v1::UpdateBackupPlanRequest const& request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("backup_plan.name=",
-                           internal::UrlEncode(request.backup_plan().name())));
-  return child_->AsyncUpdateBackupPlan(cq, std::move(context),
-                                       std::move(options), request);
+  SetMetadata(*context, *options, absl::StrCat("backup_plan.name=", internal::UrlEncode(request.backup_plan().name())));
+  return child_->AsyncUpdateBackupPlan(
+      cq, std::move(context), std::move(options), request);
 }
 
-StatusOr<google::longrunning::Operation> BackupForGKEMetadata::UpdateBackupPlan(
-    grpc::ClientContext& context, Options options,
+StatusOr<google::longrunning::Operation>
+BackupForGKEMetadata::UpdateBackupPlan(
+    grpc::ClientContext& context,
+    Options options,
     google::cloud::gkebackup::v1::UpdateBackupPlanRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("backup_plan.name=",
-                           internal::UrlEncode(request.backup_plan().name())));
+  SetMetadata(context, options, absl::StrCat("backup_plan.name=", internal::UrlEncode(request.backup_plan().name())));
   return child_->UpdateBackupPlan(context, options, request);
 }
 
@@ -110,17 +108,17 @@ BackupForGKEMetadata::AsyncDeleteBackupPlan(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::gkebackup::v1::DeleteBackupPlanRequest const& request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteBackupPlan(cq, std::move(context),
-                                       std::move(options), request);
+  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteBackupPlan(
+      cq, std::move(context), std::move(options), request);
 }
 
-StatusOr<google::longrunning::Operation> BackupForGKEMetadata::DeleteBackupPlan(
-    grpc::ClientContext& context, Options options,
+StatusOr<google::longrunning::Operation>
+BackupForGKEMetadata::DeleteBackupPlan(
+    grpc::ClientContext& context,
+    Options options,
     google::cloud::gkebackup::v1::DeleteBackupPlanRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteBackupPlan(context, options, request);
 }
 
@@ -130,36 +128,35 @@ BackupForGKEMetadata::AsyncCreateBackupChannel(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::gkebackup::v1::CreateBackupChannelRequest const& request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateBackupChannel(cq, std::move(context),
-                                          std::move(options), request);
+  SetMetadata(*context, *options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateBackupChannel(
+      cq, std::move(context), std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 BackupForGKEMetadata::CreateBackupChannel(
-    grpc::ClientContext& context, Options options,
+    grpc::ClientContext& context,
+    Options options,
     google::cloud::gkebackup::v1::CreateBackupChannelRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateBackupChannel(context, options, request);
 }
 
 StatusOr<google::cloud::gkebackup::v1::ListBackupChannelsResponse>
 BackupForGKEMetadata::ListBackupChannels(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::gkebackup::v1::ListBackupChannelsRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListBackupChannels(context, options, request);
 }
 
 StatusOr<google::cloud::gkebackup::v1::BackupChannel>
 BackupForGKEMetadata::GetBackupChannel(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::gkebackup::v1::GetBackupChannelRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetBackupChannel(context, options, request);
 }
 
@@ -169,22 +166,17 @@ BackupForGKEMetadata::AsyncUpdateBackupChannel(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::gkebackup::v1::UpdateBackupChannelRequest const& request) {
-  SetMetadata(
-      *context, *options,
-      absl::StrCat("backup_channel.name=",
-                   internal::UrlEncode(request.backup_channel().name())));
-  return child_->AsyncUpdateBackupChannel(cq, std::move(context),
-                                          std::move(options), request);
+  SetMetadata(*context, *options, absl::StrCat("backup_channel.name=", internal::UrlEncode(request.backup_channel().name())));
+  return child_->AsyncUpdateBackupChannel(
+      cq, std::move(context), std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 BackupForGKEMetadata::UpdateBackupChannel(
-    grpc::ClientContext& context, Options options,
+    grpc::ClientContext& context,
+    Options options,
     google::cloud::gkebackup::v1::UpdateBackupChannelRequest const& request) {
-  SetMetadata(
-      context, options,
-      absl::StrCat("backup_channel.name=",
-                   internal::UrlEncode(request.backup_channel().name())));
+  SetMetadata(context, options, absl::StrCat("backup_channel.name=", internal::UrlEncode(request.backup_channel().name())));
   return child_->UpdateBackupChannel(context, options, request);
 }
 
@@ -194,37 +186,35 @@ BackupForGKEMetadata::AsyncDeleteBackupChannel(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::gkebackup::v1::DeleteBackupChannelRequest const& request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteBackupChannel(cq, std::move(context),
-                                          std::move(options), request);
+  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteBackupChannel(
+      cq, std::move(context), std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 BackupForGKEMetadata::DeleteBackupChannel(
-    grpc::ClientContext& context, Options options,
+    grpc::ClientContext& context,
+    Options options,
     google::cloud::gkebackup::v1::DeleteBackupChannelRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteBackupChannel(context, options, request);
 }
 
 StatusOr<google::cloud::gkebackup::v1::ListBackupPlanBindingsResponse>
 BackupForGKEMetadata::ListBackupPlanBindings(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::gkebackup::v1::ListBackupPlanBindingsRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::gkebackup::v1::ListBackupPlanBindingsRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListBackupPlanBindings(context, options, request);
 }
 
 StatusOr<google::cloud::gkebackup::v1::BackupPlanBinding>
 BackupForGKEMetadata::GetBackupPlanBinding(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::gkebackup::v1::GetBackupPlanBindingRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetBackupPlanBinding(context, options, request);
 }
 
@@ -234,34 +224,35 @@ BackupForGKEMetadata::AsyncCreateBackup(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::gkebackup::v1::CreateBackupRequest const& request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateBackup(cq, std::move(context), std::move(options),
-                                   request);
+  SetMetadata(*context, *options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateBackup(
+      cq, std::move(context), std::move(options), request);
 }
 
-StatusOr<google::longrunning::Operation> BackupForGKEMetadata::CreateBackup(
-    grpc::ClientContext& context, Options options,
+StatusOr<google::longrunning::Operation>
+BackupForGKEMetadata::CreateBackup(
+    grpc::ClientContext& context,
+    Options options,
     google::cloud::gkebackup::v1::CreateBackupRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateBackup(context, options, request);
 }
 
 StatusOr<google::cloud::gkebackup::v1::ListBackupsResponse>
 BackupForGKEMetadata::ListBackups(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::gkebackup::v1::ListBackupsRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListBackups(context, options, request);
 }
 
-StatusOr<google::cloud::gkebackup::v1::Backup> BackupForGKEMetadata::GetBackup(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::gkebackup::v1::Backup>
+BackupForGKEMetadata::GetBackup(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::gkebackup::v1::GetBackupRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetBackup(context, options, request);
 }
 
@@ -271,19 +262,17 @@ BackupForGKEMetadata::AsyncUpdateBackup(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::gkebackup::v1::UpdateBackupRequest const& request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("backup.name=",
-                           internal::UrlEncode(request.backup().name())));
-  return child_->AsyncUpdateBackup(cq, std::move(context), std::move(options),
-                                   request);
+  SetMetadata(*context, *options, absl::StrCat("backup.name=", internal::UrlEncode(request.backup().name())));
+  return child_->AsyncUpdateBackup(
+      cq, std::move(context), std::move(options), request);
 }
 
-StatusOr<google::longrunning::Operation> BackupForGKEMetadata::UpdateBackup(
-    grpc::ClientContext& context, Options options,
+StatusOr<google::longrunning::Operation>
+BackupForGKEMetadata::UpdateBackup(
+    grpc::ClientContext& context,
+    Options options,
     google::cloud::gkebackup::v1::UpdateBackupRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("backup.name=",
-                           internal::UrlEncode(request.backup().name())));
+  SetMetadata(context, options, absl::StrCat("backup.name=", internal::UrlEncode(request.backup().name())));
   return child_->UpdateBackup(context, options, request);
 }
 
@@ -293,35 +282,35 @@ BackupForGKEMetadata::AsyncDeleteBackup(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::gkebackup::v1::DeleteBackupRequest const& request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteBackup(cq, std::move(context), std::move(options),
-                                   request);
+  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteBackup(
+      cq, std::move(context), std::move(options), request);
 }
 
-StatusOr<google::longrunning::Operation> BackupForGKEMetadata::DeleteBackup(
-    grpc::ClientContext& context, Options options,
+StatusOr<google::longrunning::Operation>
+BackupForGKEMetadata::DeleteBackup(
+    grpc::ClientContext& context,
+    Options options,
     google::cloud::gkebackup::v1::DeleteBackupRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteBackup(context, options, request);
 }
 
 StatusOr<google::cloud::gkebackup::v1::ListVolumeBackupsResponse>
 BackupForGKEMetadata::ListVolumeBackups(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::gkebackup::v1::ListVolumeBackupsRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListVolumeBackups(context, options, request);
 }
 
 StatusOr<google::cloud::gkebackup::v1::VolumeBackup>
 BackupForGKEMetadata::GetVolumeBackup(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::gkebackup::v1::GetVolumeBackupRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetVolumeBackup(context, options, request);
 }
 
@@ -331,36 +320,35 @@ BackupForGKEMetadata::AsyncCreateRestorePlan(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::gkebackup::v1::CreateRestorePlanRequest const& request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateRestorePlan(cq, std::move(context),
-                                        std::move(options), request);
+  SetMetadata(*context, *options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateRestorePlan(
+      cq, std::move(context), std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 BackupForGKEMetadata::CreateRestorePlan(
-    grpc::ClientContext& context, Options options,
+    grpc::ClientContext& context,
+    Options options,
     google::cloud::gkebackup::v1::CreateRestorePlanRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateRestorePlan(context, options, request);
 }
 
 StatusOr<google::cloud::gkebackup::v1::ListRestorePlansResponse>
 BackupForGKEMetadata::ListRestorePlans(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::gkebackup::v1::ListRestorePlansRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListRestorePlans(context, options, request);
 }
 
 StatusOr<google::cloud::gkebackup::v1::RestorePlan>
 BackupForGKEMetadata::GetRestorePlan(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::gkebackup::v1::GetRestorePlanRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetRestorePlan(context, options, request);
 }
 
@@ -370,20 +358,17 @@ BackupForGKEMetadata::AsyncUpdateRestorePlan(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::gkebackup::v1::UpdateRestorePlanRequest const& request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("restore_plan.name=",
-                           internal::UrlEncode(request.restore_plan().name())));
-  return child_->AsyncUpdateRestorePlan(cq, std::move(context),
-                                        std::move(options), request);
+  SetMetadata(*context, *options, absl::StrCat("restore_plan.name=", internal::UrlEncode(request.restore_plan().name())));
+  return child_->AsyncUpdateRestorePlan(
+      cq, std::move(context), std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 BackupForGKEMetadata::UpdateRestorePlan(
-    grpc::ClientContext& context, Options options,
+    grpc::ClientContext& context,
+    Options options,
     google::cloud::gkebackup::v1::UpdateRestorePlanRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("restore_plan.name=",
-                           internal::UrlEncode(request.restore_plan().name())));
+  SetMetadata(context, options, absl::StrCat("restore_plan.name=", internal::UrlEncode(request.restore_plan().name())));
   return child_->UpdateRestorePlan(context, options, request);
 }
 
@@ -393,18 +378,17 @@ BackupForGKEMetadata::AsyncDeleteRestorePlan(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::gkebackup::v1::DeleteRestorePlanRequest const& request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteRestorePlan(cq, std::move(context),
-                                        std::move(options), request);
+  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteRestorePlan(
+      cq, std::move(context), std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 BackupForGKEMetadata::DeleteRestorePlan(
-    grpc::ClientContext& context, Options options,
+    grpc::ClientContext& context,
+    Options options,
     google::cloud::gkebackup::v1::DeleteRestorePlanRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteRestorePlan(context, options, request);
 }
 
@@ -414,36 +398,35 @@ BackupForGKEMetadata::AsyncCreateRestoreChannel(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::gkebackup::v1::CreateRestoreChannelRequest const& request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateRestoreChannel(cq, std::move(context),
-                                           std::move(options), request);
+  SetMetadata(*context, *options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateRestoreChannel(
+      cq, std::move(context), std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 BackupForGKEMetadata::CreateRestoreChannel(
-    grpc::ClientContext& context, Options options,
+    grpc::ClientContext& context,
+    Options options,
     google::cloud::gkebackup::v1::CreateRestoreChannelRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateRestoreChannel(context, options, request);
 }
 
 StatusOr<google::cloud::gkebackup::v1::ListRestoreChannelsResponse>
 BackupForGKEMetadata::ListRestoreChannels(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::gkebackup::v1::ListRestoreChannelsRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListRestoreChannels(context, options, request);
 }
 
 StatusOr<google::cloud::gkebackup::v1::RestoreChannel>
 BackupForGKEMetadata::GetRestoreChannel(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::gkebackup::v1::GetRestoreChannelRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetRestoreChannel(context, options, request);
 }
 
@@ -453,22 +436,17 @@ BackupForGKEMetadata::AsyncUpdateRestoreChannel(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::gkebackup::v1::UpdateRestoreChannelRequest const& request) {
-  SetMetadata(
-      *context, *options,
-      absl::StrCat("restore_channel.name=",
-                   internal::UrlEncode(request.restore_channel().name())));
-  return child_->AsyncUpdateRestoreChannel(cq, std::move(context),
-                                           std::move(options), request);
+  SetMetadata(*context, *options, absl::StrCat("restore_channel.name=", internal::UrlEncode(request.restore_channel().name())));
+  return child_->AsyncUpdateRestoreChannel(
+      cq, std::move(context), std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 BackupForGKEMetadata::UpdateRestoreChannel(
-    grpc::ClientContext& context, Options options,
+    grpc::ClientContext& context,
+    Options options,
     google::cloud::gkebackup::v1::UpdateRestoreChannelRequest const& request) {
-  SetMetadata(
-      context, options,
-      absl::StrCat("restore_channel.name=",
-                   internal::UrlEncode(request.restore_channel().name())));
+  SetMetadata(context, options, absl::StrCat("restore_channel.name=", internal::UrlEncode(request.restore_channel().name())));
   return child_->UpdateRestoreChannel(context, options, request);
 }
 
@@ -478,37 +456,35 @@ BackupForGKEMetadata::AsyncDeleteRestoreChannel(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::gkebackup::v1::DeleteRestoreChannelRequest const& request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteRestoreChannel(cq, std::move(context),
-                                           std::move(options), request);
+  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteRestoreChannel(
+      cq, std::move(context), std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 BackupForGKEMetadata::DeleteRestoreChannel(
-    grpc::ClientContext& context, Options options,
+    grpc::ClientContext& context,
+    Options options,
     google::cloud::gkebackup::v1::DeleteRestoreChannelRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteRestoreChannel(context, options, request);
 }
 
 StatusOr<google::cloud::gkebackup::v1::ListRestorePlanBindingsResponse>
 BackupForGKEMetadata::ListRestorePlanBindings(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::gkebackup::v1::ListRestorePlanBindingsRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::gkebackup::v1::ListRestorePlanBindingsRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListRestorePlanBindings(context, options, request);
 }
 
 StatusOr<google::cloud::gkebackup::v1::RestorePlanBinding>
 BackupForGKEMetadata::GetRestorePlanBinding(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::gkebackup::v1::GetRestorePlanBindingRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetRestorePlanBinding(context, options, request);
 }
 
@@ -518,35 +494,35 @@ BackupForGKEMetadata::AsyncCreateRestore(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::gkebackup::v1::CreateRestoreRequest const& request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateRestore(cq, std::move(context), std::move(options),
-                                    request);
+  SetMetadata(*context, *options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateRestore(
+      cq, std::move(context), std::move(options), request);
 }
 
-StatusOr<google::longrunning::Operation> BackupForGKEMetadata::CreateRestore(
-    grpc::ClientContext& context, Options options,
+StatusOr<google::longrunning::Operation>
+BackupForGKEMetadata::CreateRestore(
+    grpc::ClientContext& context,
+    Options options,
     google::cloud::gkebackup::v1::CreateRestoreRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateRestore(context, options, request);
 }
 
 StatusOr<google::cloud::gkebackup::v1::ListRestoresResponse>
 BackupForGKEMetadata::ListRestores(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::gkebackup::v1::ListRestoresRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListRestores(context, options, request);
 }
 
 StatusOr<google::cloud::gkebackup::v1::Restore>
 BackupForGKEMetadata::GetRestore(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::gkebackup::v1::GetRestoreRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetRestore(context, options, request);
 }
 
@@ -556,19 +532,17 @@ BackupForGKEMetadata::AsyncUpdateRestore(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::gkebackup::v1::UpdateRestoreRequest const& request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("restore.name=",
-                           internal::UrlEncode(request.restore().name())));
-  return child_->AsyncUpdateRestore(cq, std::move(context), std::move(options),
-                                    request);
+  SetMetadata(*context, *options, absl::StrCat("restore.name=", internal::UrlEncode(request.restore().name())));
+  return child_->AsyncUpdateRestore(
+      cq, std::move(context), std::move(options), request);
 }
 
-StatusOr<google::longrunning::Operation> BackupForGKEMetadata::UpdateRestore(
-    grpc::ClientContext& context, Options options,
+StatusOr<google::longrunning::Operation>
+BackupForGKEMetadata::UpdateRestore(
+    grpc::ClientContext& context,
+    Options options,
     google::cloud::gkebackup::v1::UpdateRestoreRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("restore.name=",
-                           internal::UrlEncode(request.restore().name())));
+  SetMetadata(context, options, absl::StrCat("restore.name=", internal::UrlEncode(request.restore().name())));
   return child_->UpdateRestore(context, options, request);
 }
 
@@ -578,123 +552,125 @@ BackupForGKEMetadata::AsyncDeleteRestore(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::gkebackup::v1::DeleteRestoreRequest const& request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteRestore(cq, std::move(context), std::move(options),
-                                    request);
+  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteRestore(
+      cq, std::move(context), std::move(options), request);
 }
 
-StatusOr<google::longrunning::Operation> BackupForGKEMetadata::DeleteRestore(
-    grpc::ClientContext& context, Options options,
+StatusOr<google::longrunning::Operation>
+BackupForGKEMetadata::DeleteRestore(
+    grpc::ClientContext& context,
+    Options options,
     google::cloud::gkebackup::v1::DeleteRestoreRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteRestore(context, options, request);
 }
 
 StatusOr<google::cloud::gkebackup::v1::ListVolumeRestoresResponse>
 BackupForGKEMetadata::ListVolumeRestores(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::gkebackup::v1::ListVolumeRestoresRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListVolumeRestores(context, options, request);
 }
 
 StatusOr<google::cloud::gkebackup::v1::VolumeRestore>
 BackupForGKEMetadata::GetVolumeRestore(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::gkebackup::v1::GetVolumeRestoreRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetVolumeRestore(context, options, request);
 }
 
 StatusOr<google::cloud::gkebackup::v1::GetBackupIndexDownloadUrlResponse>
 BackupForGKEMetadata::GetBackupIndexDownloadUrl(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::gkebackup::v1::GetBackupIndexDownloadUrlRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("backup=", internal::UrlEncode(request.backup())));
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::gkebackup::v1::GetBackupIndexDownloadUrlRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("backup=", internal::UrlEncode(request.backup())));
   return child_->GetBackupIndexDownloadUrl(context, options, request);
 }
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 BackupForGKEMetadata::ListLocations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ListLocations(context, options, request);
 }
 
-StatusOr<google::cloud::location::Location> BackupForGKEMetadata::GetLocation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::location::Location>
+BackupForGKEMetadata::GetLocation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetLocation(context, options, request);
 }
 
-StatusOr<google::iam::v1::Policy> BackupForGKEMetadata::SetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::iam::v1::Policy>
+BackupForGKEMetadata::SetIamPolicy(
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
-  SetMetadata(
-      context, options,
-      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
+  SetMetadata(context, options, absl::StrCat("resource=", internal::UrlEncode(request.resource())));
   return child_->SetIamPolicy(context, options, request);
 }
 
-StatusOr<google::iam::v1::Policy> BackupForGKEMetadata::GetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::iam::v1::Policy>
+BackupForGKEMetadata::GetIamPolicy(
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
-  SetMetadata(
-      context, options,
-      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
+  SetMetadata(context, options, absl::StrCat("resource=", internal::UrlEncode(request.resource())));
   return child_->GetIamPolicy(context, options, request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 BackupForGKEMetadata::TestIamPermissions(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  SetMetadata(
-      context, options,
-      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
+  SetMetadata(context, options, absl::StrCat("resource=", internal::UrlEncode(request.resource())));
   return child_->TestIamPermissions(context, options, request);
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
 BackupForGKEMetadata::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ListOperations(context, options, request);
 }
 
-StatusOr<google::longrunning::Operation> BackupForGKEMetadata::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::Operation>
+BackupForGKEMetadata::GetOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetOperation(context, options, request);
 }
 
-Status BackupForGKEMetadata::DeleteOperation(
-    grpc::ClientContext& context, Options const& options,
+Status
+BackupForGKEMetadata::DeleteOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteOperation(context, options, request);
 }
 
-Status BackupForGKEMetadata::CancelOperation(
-    grpc::ClientContext& context, Options const& options,
+Status
+BackupForGKEMetadata::CancelOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->CancelOperation(context, options, request);
 }
 
@@ -706,8 +682,8 @@ BackupForGKEMetadata::AsyncGetOperation(
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(cq, std::move(context), std::move(options),
-                                   request);
+  return child_->AsyncGetOperation(
+      cq, std::move(context), std::move(options), request);
 }
 
 future<Status> BackupForGKEMetadata::AsyncCancelOperation(
@@ -717,21 +693,21 @@ future<Status> BackupForGKEMetadata::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(cq, std::move(context),
-                                      std::move(options), request);
+  return child_->AsyncCancelOperation(
+      cq, std::move(context), std::move(options), request);
 }
 
 void BackupForGKEMetadata::SetMetadata(grpc::ClientContext& context,
-                                       Options const& options,
-                                       std::string const& request_params) {
+                                        Options const& options,
+                                        std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
 void BackupForGKEMetadata::SetMetadata(grpc::ClientContext& context,
-                                       Options const& options) {
-  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
-                                       api_client_header_);
+                                        Options const& options) {
+  google::cloud::internal::SetMetadata(
+      context, options, fixed_metadata_, api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

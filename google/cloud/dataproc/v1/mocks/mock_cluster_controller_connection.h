@@ -32,9 +32,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * Application developers may want to test their code with simulated responses,
  * including errors, from an object of type `ClusterControllerClient`. To do so,
- * construct an object of type `ClusterControllerClient` with an instance of
- * this class. Then use the Google Test framework functions to program the
- * behavior of this mock.
+ * construct an object of type `ClusterControllerClient` with an instance of this
+ * class. Then use the Google Test framework functions to program the behavior
+ * of this mock.
  *
  * @see [This example][bq-mock] for how to test your application with GoogleTest.
  * While the example showcases types from the BigQuery library, the underlying
@@ -42,8 +42,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockClusterControllerConnection
-    : public dataproc_v1::ClusterControllerConnection {
+class MockClusterControllerConnection : public dataproc_v1::ClusterControllerConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
@@ -52,14 +51,12 @@ class MockClusterControllerConnection
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// CreateCluster(Matcher<google::cloud::dataproc::v1::CreateClusterRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, CreateCluster(Matcher<google::cloud::dataproc::v1::CreateClusterRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::dataproc::v1::Cluster>>, CreateCluster,
-      (google::cloud::dataproc::v1::CreateClusterRequest const& request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::dataproc::v1::Cluster>>,
+  CreateCluster,
+  (google::cloud::dataproc::v1::CreateClusterRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -67,37 +64,33 @@ class MockClusterControllerConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, CreateCluster(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, CreateCluster,
-      (NoAwaitTag,
-       google::cloud::dataproc::v1::CreateClusterRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  CreateCluster, (NoAwaitTag,
+    google::cloud::dataproc::v1::CreateClusterRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateCluster(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, CreateCluster(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::dataproc::v1::Cluster>>,
-              CreateCluster, (google::longrunning::Operation const& operation),
-              (override));
+  CreateCluster, (
+    google::longrunning::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// UpdateCluster(Matcher<google::cloud::dataproc::v1::UpdateClusterRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, UpdateCluster(Matcher<google::cloud::dataproc::v1::UpdateClusterRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::dataproc::v1::Cluster>>, UpdateCluster,
-      (google::cloud::dataproc::v1::UpdateClusterRequest const& request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::dataproc::v1::Cluster>>,
+  UpdateCluster,
+  (google::cloud::dataproc::v1::UpdateClusterRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -105,37 +98,33 @@ class MockClusterControllerConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, UpdateCluster(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, UpdateCluster,
-      (NoAwaitTag,
-       google::cloud::dataproc::v1::UpdateClusterRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  UpdateCluster, (NoAwaitTag,
+    google::cloud::dataproc::v1::UpdateClusterRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UpdateCluster(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, UpdateCluster(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::dataproc::v1::Cluster>>,
-              UpdateCluster, (google::longrunning::Operation const& operation),
-              (override));
+  UpdateCluster, (
+    google::longrunning::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// StopCluster(Matcher<google::cloud::dataproc::v1::StopClusterRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, StopCluster(Matcher<google::cloud::dataproc::v1::StopClusterRequest const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::dataproc::v1::Cluster>>,
-              StopCluster,
-              (google::cloud::dataproc::v1::StopClusterRequest const& request),
-              (override));
+  StopCluster,
+  (google::cloud::dataproc::v1::StopClusterRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -143,36 +132,33 @@ class MockClusterControllerConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, StopCluster(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StopCluster,
-              (NoAwaitTag,
-               google::cloud::dataproc::v1::StopClusterRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  StopCluster, (NoAwaitTag,
+    google::cloud::dataproc::v1::StopClusterRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, StopCluster(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, StopCluster(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::dataproc::v1::Cluster>>,
-              StopCluster, (google::longrunning::Operation const& operation),
-              (override));
+  StopCluster, (
+    google::longrunning::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// StartCluster(Matcher<google::cloud::dataproc::v1::StartClusterRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, StartCluster(Matcher<google::cloud::dataproc::v1::StartClusterRequest const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::dataproc::v1::Cluster>>,
-              StartCluster,
-              (google::cloud::dataproc::v1::StartClusterRequest const& request),
-              (override));
+  StartCluster,
+  (google::cloud::dataproc::v1::StartClusterRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -180,37 +166,33 @@ class MockClusterControllerConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, StartCluster(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartCluster,
-              (NoAwaitTag,
-               google::cloud::dataproc::v1::StartClusterRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  StartCluster, (NoAwaitTag,
+    google::cloud::dataproc::v1::StartClusterRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, StartCluster(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, StartCluster(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::dataproc::v1::Cluster>>,
-              StartCluster, (google::longrunning::Operation const& operation),
-              (override));
+  StartCluster, (
+    google::longrunning::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteCluster(Matcher<google::cloud::dataproc::v1::DeleteClusterRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteCluster(Matcher<google::cloud::dataproc::v1::DeleteClusterRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::dataproc::v1::ClusterOperationMetadata>>,
-      DeleteCluster,
-      (google::cloud::dataproc::v1::DeleteClusterRequest const& request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::dataproc::v1::ClusterOperationMetadata>>,
+  DeleteCluster,
+  (google::cloud::dataproc::v1::DeleteClusterRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -218,47 +200,41 @@ class MockClusterControllerConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, DeleteCluster(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, DeleteCluster,
-      (NoAwaitTag,
-       google::cloud::dataproc::v1::DeleteClusterRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  DeleteCluster, (NoAwaitTag,
+    google::cloud::dataproc::v1::DeleteClusterRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteCluster(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteCluster(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::dataproc::v1::ClusterOperationMetadata>>,
-      DeleteCluster, (google::longrunning::Operation const& operation),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::dataproc::v1::ClusterOperationMetadata>>,
+  DeleteCluster, (
+    google::longrunning::Operation const& operation), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::dataproc::v1::Cluster>, GetCluster,
-              (google::cloud::dataproc::v1::GetClusterRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::dataproc::v1::Cluster>,
+  GetCluster,
+  (google::cloud::dataproc::v1::GetClusterRequest const& request), (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::dataproc::v1::Cluster>), ListClusters,
-              (google::cloud::dataproc::v1::ListClustersRequest request),
-              (override));
+  MOCK_METHOD((StreamRange<google::cloud::dataproc::v1::Cluster>),
+  ListClusters,
+  (google::cloud::dataproc::v1::ListClustersRequest request), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DiagnoseCluster(Matcher<google::cloud::dataproc::v1::DiagnoseClusterRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, DiagnoseCluster(Matcher<google::cloud::dataproc::v1::DiagnoseClusterRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::dataproc::v1::DiagnoseClusterResults>>,
-      DiagnoseCluster,
-      (google::cloud::dataproc::v1::DiagnoseClusterRequest const& request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::dataproc::v1::DiagnoseClusterResults>>,
+  DiagnoseCluster,
+  (google::cloud::dataproc::v1::DiagnoseClusterRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -266,52 +242,49 @@ class MockClusterControllerConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, DiagnoseCluster(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, DiagnoseCluster,
-      (NoAwaitTag,
-       google::cloud::dataproc::v1::DiagnoseClusterRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  DiagnoseCluster, (NoAwaitTag,
+    google::cloud::dataproc::v1::DiagnoseClusterRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DiagnoseCluster(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, DiagnoseCluster(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::dataproc::v1::DiagnoseClusterResults>>,
-      DiagnoseCluster, (google::longrunning::Operation const& operation),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::dataproc::v1::DiagnoseClusterResults>>,
+  DiagnoseCluster, (
+    google::longrunning::Operation const& operation), (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, SetIamPolicy,
-              (google::iam::v1::SetIamPolicyRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::iam::v1::Policy>,
+  SetIamPolicy,
+  (google::iam::v1::SetIamPolicyRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, GetIamPolicy,
-              (google::iam::v1::GetIamPolicyRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::iam::v1::Policy>,
+  GetIamPolicy,
+  (google::iam::v1::GetIamPolicyRequest const& request), (override));
 
   MOCK_METHOD(StatusOr<google::iam::v1::TestIamPermissionsResponse>,
-              TestIamPermissions,
-              (google::iam::v1::TestIamPermissionsRequest const& request),
-              (override));
+  TestIamPermissions,
+  (google::iam::v1::TestIamPermissionsRequest const& request), (override));
 
-  MOCK_METHOD((StreamRange<google::longrunning::Operation>), ListOperations,
-              (google::longrunning::ListOperationsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::longrunning::Operation>),
+  ListOperations,
+  (google::longrunning::ListOperationsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
-              (google::longrunning::GetOperationRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  GetOperation,
+  (google::longrunning::GetOperationRequest const& request), (override));
 
-  MOCK_METHOD(Status, DeleteOperation,
-              (google::longrunning::DeleteOperationRequest const& request),
-              (override));
+  MOCK_METHOD(Status,
+  DeleteOperation,
+  (google::longrunning::DeleteOperationRequest const& request), (override));
 
-  MOCK_METHOD(Status, CancelOperation,
-              (google::longrunning::CancelOperationRequest const& request),
-              (override));
+  MOCK_METHOD(Status,
+  CancelOperation,
+  (google::longrunning::CancelOperationRequest const& request), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

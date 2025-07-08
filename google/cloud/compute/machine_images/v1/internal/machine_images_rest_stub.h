@@ -37,92 +37,67 @@ class MachineImagesRestStub {
  public:
   virtual ~MachineImagesRestStub() = default;
 
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncDeleteMachineImage(
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncDeleteMachineImage(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::machine_images::v1::
-          DeleteMachineImageRequest const& request) = 0;
+      google::cloud::cpp::compute::machine_images::v1::DeleteMachineImageRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteMachineImage(google::cloud::rest_internal::RestContext& rest_context,
-                     Options const& options,
-                     google::cloud::cpp::compute::machine_images::v1::
-                         DeleteMachineImageRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteMachineImage(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options, google::cloud::cpp::compute::machine_images::v1::DeleteMachineImageRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::MachineImage>
-  GetMachineImage(google::cloud::rest_internal::RestContext& rest_context,
-                  Options const& options,
-                  google::cloud::cpp::compute::machine_images::v1::
-                      GetMachineImageRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::MachineImage> GetMachineImage(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options, google::cloud::cpp::compute::machine_images::v1::GetMachineImageRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::machine_images::v1::
-          GetIamPolicyRequest const& request) = 0;
+      Options const& options, google::cloud::cpp::compute::machine_images::v1::GetIamPolicyRequest const& request) = 0;
 
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncInsertMachineImage(
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncInsertMachineImage(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::machine_images::v1::
-          InsertMachineImageRequest const& request) = 0;
+      google::cloud::cpp::compute::machine_images::v1::InsertMachineImageRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertMachineImage(google::cloud::rest_internal::RestContext& rest_context,
-                     Options const& options,
-                     google::cloud::cpp::compute::machine_images::v1::
-                         InsertMachineImageRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> InsertMachineImage(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options, google::cloud::cpp::compute::machine_images::v1::InsertMachineImageRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::MachineImageList>
-  ListMachineImages(google::cloud::rest_internal::RestContext& rest_context,
-                    Options const& options,
-                    google::cloud::cpp::compute::machine_images::v1::
-                        ListMachineImagesRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::MachineImageList> ListMachineImages(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options, google::cloud::cpp::compute::machine_images::v1::ListMachineImagesRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::machine_images::v1::
-          SetIamPolicyRequest const& request) = 0;
+      Options const& options, google::cloud::cpp::compute::machine_images::v1::SetIamPolicyRequest const& request) = 0;
 
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncSetLabels(
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncSetLabels(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::machine_images::v1::SetLabelsRequest const&
-          request) = 0;
+      google::cloud::cpp::compute::machine_images::v1::SetLabelsRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::machine_images::v1::SetLabelsRequest const&
-          request) = 0;
+      Options const& options, google::cloud::cpp::compute::machine_images::v1::SetLabelsRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(google::cloud::rest_internal::RestContext& rest_context,
-                     Options const& options,
-                     google::cloud::cpp::compute::machine_images::v1::
-                         TestIamPermissionsRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse> TestIamPermissions(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options, google::cloud::cpp::compute::machine_images::v1::TestIamPermissionsRequest const& request) = 0;
 
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncGetOperation(
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::global_operations::v1::
-          GetOperationRequest const& request) = 0;
+      google::cloud::cpp::compute::global_operations::v1::GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::global_operations::v1::
-          DeleteOperationRequest const& request) = 0;
+      google::cloud::cpp::compute::global_operations::v1::DeleteOperationRequest const& request) = 0;
 };
 
 class DefaultMachineImagesRestStub : public MachineImagesRestStub {
@@ -132,93 +107,70 @@ class DefaultMachineImagesRestStub : public MachineImagesRestStub {
   explicit DefaultMachineImagesRestStub(Options options);
   DefaultMachineImagesRestStub(
       std::shared_ptr<rest_internal::RestClient> service,
-      std::shared_ptr<rest_internal::RestClient> operations, Options options);
+      std::shared_ptr<rest_internal::RestClient> operations,
+      Options options);
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncDeleteMachineImage(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncDeleteMachineImage(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::machine_images::v1::
-          DeleteMachineImageRequest const& request) override;
+      google::cloud::cpp::compute::machine_images::v1::DeleteMachineImageRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteMachineImage(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::machine_images::v1::
-          DeleteMachineImageRequest const& request) override;
+      Options const& options, google::cloud::cpp::compute::machine_images::v1::DeleteMachineImageRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::MachineImage> GetMachineImage(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::machine_images::v1::
-          GetMachineImageRequest const& request) override;
+      Options const& options, google::cloud::cpp::compute::machine_images::v1::GetMachineImageRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::machine_images::v1::
-          GetIamPolicyRequest const& request) override;
+      Options const& options, google::cloud::cpp::compute::machine_images::v1::GetIamPolicyRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncInsertMachineImage(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncInsertMachineImage(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::machine_images::v1::
-          InsertMachineImageRequest const& request) override;
+      google::cloud::cpp::compute::machine_images::v1::InsertMachineImageRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertMachineImage(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::machine_images::v1::
-          InsertMachineImageRequest const& request) override;
+      Options const& options, google::cloud::cpp::compute::machine_images::v1::InsertMachineImageRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::MachineImageList> ListMachineImages(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::machine_images::v1::
-          ListMachineImagesRequest const& request) override;
+      Options const& options, google::cloud::cpp::compute::machine_images::v1::ListMachineImagesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::machine_images::v1::
-          SetIamPolicyRequest const& request) override;
+      Options const& options, google::cloud::cpp::compute::machine_images::v1::SetIamPolicyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncSetLabels(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::machine_images::v1::SetLabelsRequest const&
-          request) override;
+      google::cloud::cpp::compute::machine_images::v1::SetLabelsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::machine_images::v1::SetLabelsRequest const&
-          request) override;
+      Options const& options, google::cloud::cpp::compute::machine_images::v1::SetLabelsRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(google::cloud::rest_internal::RestContext& rest_context,
-                     Options const& options,
-                     google::cloud::cpp::compute::machine_images::v1::
-                         TestIamPermissionsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse> TestIamPermissions(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options, google::cloud::cpp::compute::machine_images::v1::TestIamPermissionsRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncGetOperation(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::global_operations::v1::
-          GetOperationRequest const& request) override;
+      google::cloud::cpp::compute::global_operations::v1::GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::global_operations::v1::
-          DeleteOperationRequest const& request) override;
+      google::cloud::cpp::compute::global_operations::v1::DeleteOperationRequest const& request) override;
 
  private:
   std::shared_ptr<rest_internal::RestClient> service_;

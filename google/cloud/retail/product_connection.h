@@ -33,8 +33,7 @@ using ::google::cloud::retail_v2::MakeProductServiceConnection;
 /// @deprecated Use retail_v2::ProductServiceConnection directly.
 using ::google::cloud::retail_v2::ProductServiceConnection;
 
-/// @deprecated Use retail_v2::ProductServiceLimitedErrorCountRetryPolicy
-/// directly.
+/// @deprecated Use retail_v2::ProductServiceLimitedErrorCountRetryPolicy directly.
 using ::google::cloud::retail_v2::ProductServiceLimitedErrorCountRetryPolicy;
 
 /// @deprecated Use retail_v2::ProductServiceLimitedTimeRetryPolicy directly.

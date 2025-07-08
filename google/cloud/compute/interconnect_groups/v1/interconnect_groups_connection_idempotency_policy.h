@@ -34,52 +34,41 @@ class InterconnectGroupsConnectionIdempotencyPolicy {
   virtual ~InterconnectGroupsConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<InterconnectGroupsConnectionIdempotencyPolicy> clone()
-      const;
+  virtual std::unique_ptr<InterconnectGroupsConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency CreateMembers(
-      google::cloud::cpp::compute::interconnect_groups::v1::
-          CreateMembersRequest const& request);
+  virtual google::cloud::Idempotency
+  CreateMembers(google::cloud::cpp::compute::interconnect_groups::v1::CreateMembersRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteInterconnectGroup(
-      google::cloud::cpp::compute::interconnect_groups::v1::
-          DeleteInterconnectGroupRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteInterconnectGroup(google::cloud::cpp::compute::interconnect_groups::v1::DeleteInterconnectGroupRequest const& request);
 
-  virtual google::cloud::Idempotency GetInterconnectGroup(
-      google::cloud::cpp::compute::interconnect_groups::v1::
-          GetInterconnectGroupRequest const& request);
+  virtual google::cloud::Idempotency
+  GetInterconnectGroup(google::cloud::cpp::compute::interconnect_groups::v1::GetInterconnectGroupRequest const& request);
 
-  virtual google::cloud::Idempotency GetIamPolicy(
-      google::cloud::cpp::compute::interconnect_groups::v1::
-          GetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency
+  GetIamPolicy(google::cloud::cpp::compute::interconnect_groups::v1::GetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency GetOperationalStatus(
-      google::cloud::cpp::compute::interconnect_groups::v1::
-          GetOperationalStatusRequest const& request);
+  virtual google::cloud::Idempotency
+  GetOperationalStatus(google::cloud::cpp::compute::interconnect_groups::v1::GetOperationalStatusRequest const& request);
 
-  virtual google::cloud::Idempotency InsertInterconnectGroup(
-      google::cloud::cpp::compute::interconnect_groups::v1::
-          InsertInterconnectGroupRequest const& request);
+  virtual google::cloud::Idempotency
+  InsertInterconnectGroup(google::cloud::cpp::compute::interconnect_groups::v1::InsertInterconnectGroupRequest const& request);
 
-  virtual google::cloud::Idempotency ListInterconnectGroups(
-      google::cloud::cpp::compute::interconnect_groups::v1::
-          ListInterconnectGroupsRequest request);
+  virtual google::cloud::Idempotency
+  ListInterconnectGroups(google::cloud::cpp::compute::interconnect_groups::v1::ListInterconnectGroupsRequest request);
 
-  virtual google::cloud::Idempotency PatchInterconnectGroup(
-      google::cloud::cpp::compute::interconnect_groups::v1::
-          PatchInterconnectGroupRequest const& request);
+  virtual google::cloud::Idempotency
+  PatchInterconnectGroup(google::cloud::cpp::compute::interconnect_groups::v1::PatchInterconnectGroupRequest const& request);
 
-  virtual google::cloud::Idempotency SetIamPolicy(
-      google::cloud::cpp::compute::interconnect_groups::v1::
-          SetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency
+  SetIamPolicy(google::cloud::cpp::compute::interconnect_groups::v1::SetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency TestIamPermissions(
-      google::cloud::cpp::compute::interconnect_groups::v1::
-          TestIamPermissionsRequest const& request);
+  virtual google::cloud::Idempotency
+  TestIamPermissions(google::cloud::cpp::compute::interconnect_groups::v1::TestIamPermissionsRequest const& request);
 };
 
 std::unique_ptr<InterconnectGroupsConnectionIdempotencyPolicy>
-MakeDefaultInterconnectGroupsConnectionIdempotencyPolicy();
+    MakeDefaultInterconnectGroupsConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_interconnect_groups_v1

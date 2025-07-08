@@ -19,14 +19,14 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PROFILER_V2_INTERNAL_EXPORT_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PROFILER_V2_INTERNAL_EXPORT_CONNECTION_IMPL_H
 
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/options.h"
 #include "google/cloud/profiler/v2/export_connection.h"
 #include "google/cloud/profiler/v2/export_connection_idempotency_policy.h"
 #include "google/cloud/profiler/v2/export_options.h"
 #include "google/cloud/profiler/v2/internal/export_retry_traits.h"
 #include "google/cloud/profiler/v2/internal/export_stub.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
@@ -43,15 +43,14 @@ class ExportServiceConnectionImpl
   ~ExportServiceConnectionImpl() override = default;
 
   ExportServiceConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<profiler_v2_internal::ExportServiceStub> stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<profiler_v2_internal::ExportServiceStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
-  StreamRange<google::devtools::cloudprofiler::v2::Profile> ListProfiles(
-      google::devtools::cloudprofiler::v2::ListProfilesRequest request)
-      override;
+  StreamRange<google::devtools::cloudprofiler::v2::Profile>
+  ListProfiles(google::devtools::cloudprofiler::v2::ListProfilesRequest request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

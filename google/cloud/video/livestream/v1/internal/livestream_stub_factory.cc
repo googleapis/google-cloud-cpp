@@ -17,17 +17,17 @@
 // source: google/cloud/video/livestream/v1/service.proto
 
 #include "google/cloud/video/livestream/v1/internal/livestream_stub_factory.h"
-#include "google/cloud/video/livestream/v1/internal/livestream_auth_decorator.h"
-#include "google/cloud/video/livestream/v1/internal/livestream_logging_decorator.h"
-#include "google/cloud/video/livestream/v1/internal/livestream_metadata_decorator.h"
-#include "google/cloud/video/livestream/v1/internal/livestream_stub.h"
-#include "google/cloud/video/livestream/v1/internal/livestream_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
+#include "google/cloud/video/livestream/v1/internal/livestream_auth_decorator.h"
+#include "google/cloud/video/livestream/v1/internal/livestream_logging_decorator.h"
+#include "google/cloud/video/livestream/v1/internal/livestream_metadata_decorator.h"
+#include "google/cloud/video/livestream/v1/internal/livestream_stub.h"
+#include "google/cloud/video/livestream/v1/internal/livestream_tracing_stub.h"
 #include <google/cloud/location/locations.grpc.pb.h>
 #include <google/cloud/video/livestream/v1/service.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
@@ -39,30 +39,31 @@ namespace cloud {
 namespace video_livestream_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<LivestreamServiceStub> CreateDefaultLivestreamServiceStub(
+std::shared_ptr<LivestreamServiceStub>
+CreateDefaultLivestreamServiceStub(
     std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
     Options const& options) {
-  auto channel = auth->CreateChannel(options.get<EndpointOption>(),
-                                     internal::MakeChannelArguments(options));
-  auto service_grpc_stub =
-      google::cloud::video::livestream::v1::LivestreamService::NewStub(channel);
-  auto service_locations_stub =
-      google::cloud::location::Locations::NewStub(channel);
+  auto channel = auth->CreateChannel(
+    options.get<EndpointOption>(), internal::MakeChannelArguments(options));
+  auto service_grpc_stub = google::cloud::video::livestream::v1::LivestreamService::NewStub(channel);
+  auto service_locations_stub = google::cloud::location::Locations::NewStub(channel);
   std::shared_ptr<LivestreamServiceStub> stub =
-      std::make_shared<DefaultLivestreamServiceStub>(
-          std::move(service_grpc_stub), std::move(service_locations_stub),
-          google::longrunning::Operations::NewStub(channel));
+    std::make_shared<DefaultLivestreamServiceStub>(
+      std::move(service_grpc_stub), std::move(service_locations_stub),
+      google::longrunning::Operations::NewStub(channel));
 
   if (auth->RequiresConfigureContext()) {
-    stub = std::make_shared<LivestreamServiceAuth>(std::move(auth),
-                                                   std::move(stub));
+    stub = std::make_shared<LivestreamServiceAuth>(
+        std::move(auth), std::move(stub));
   }
   stub = std::make_shared<LivestreamServiceMetadata>(
       std::move(stub), std::multimap<std::string, std::string>{});
-  if (internal::Contains(options.get<LoggingComponentsOption>(), "rpc")) {
+  if (internal::Contains(
+      options.get<LoggingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<LivestreamServiceLogging>(
-        std::move(stub), options.get<GrpcTracingOptionsOption>(),
+        std::move(stub),
+        options.get<GrpcTracingOptionsOption>(),
         options.get<LoggingComponentsOption>());
   }
   if (internal::TracingEnabled(options)) {

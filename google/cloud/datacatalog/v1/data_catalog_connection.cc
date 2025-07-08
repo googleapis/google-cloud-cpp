@@ -17,14 +17,14 @@
 // source: google/cloud/datacatalog/v1/datacatalog.proto
 
 #include "google/cloud/datacatalog/v1/data_catalog_connection.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/datacatalog/v1/data_catalog_options.h"
 #include "google/cloud/datacatalog/v1/internal/data_catalog_connection_impl.h"
 #include "google/cloud/datacatalog/v1/internal/data_catalog_option_defaults.h"
 #include "google/cloud/datacatalog/v1/internal/data_catalog_stub_factory.h"
 #include "google/cloud/datacatalog/v1/internal/data_catalog_tracing_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
-#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
@@ -38,10 +38,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 DataCatalogConnection::~DataCatalogConnection() = default;
 
-StreamRange<google::cloud::datacatalog::v1::SearchCatalogResult>
-DataCatalogConnection::SearchCatalog(
-    google::cloud::datacatalog::v1::
-        SearchCatalogRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::datacatalog::v1::SearchCatalogResult> DataCatalogConnection::SearchCatalog(
+    google::cloud::datacatalog::v1::SearchCatalogRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::datacatalog::v1::SearchCatalogResult>>();
 }
@@ -64,15 +62,14 @@ DataCatalogConnection::UpdateEntryGroup(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status DataCatalogConnection::DeleteEntryGroup(
+Status
+DataCatalogConnection::DeleteEntryGroup(
     google::cloud::datacatalog::v1::DeleteEntryGroupRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::datacatalog::v1::EntryGroup>
-DataCatalogConnection::ListEntryGroups(
-    google::cloud::datacatalog::v1::
-        ListEntryGroupsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::datacatalog::v1::EntryGroup> DataCatalogConnection::ListEntryGroups(
+    google::cloud::datacatalog::v1::ListEntryGroupsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::datacatalog::v1::EntryGroup>>();
 }
@@ -89,12 +86,14 @@ DataCatalogConnection::UpdateEntry(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status DataCatalogConnection::DeleteEntry(
+Status
+DataCatalogConnection::DeleteEntry(
     google::cloud::datacatalog::v1::DeleteEntryRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::cloud::datacatalog::v1::Entry> DataCatalogConnection::GetEntry(
+StatusOr<google::cloud::datacatalog::v1::Entry>
+DataCatalogConnection::GetEntry(
     google::cloud::datacatalog::v1::GetEntryRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -105,10 +104,8 @@ DataCatalogConnection::LookupEntry(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::datacatalog::v1::Entry>
-DataCatalogConnection::ListEntries(
-    google::cloud::datacatalog::v1::
-        ListEntriesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::datacatalog::v1::Entry> DataCatalogConnection::ListEntries(
+    google::cloud::datacatalog::v1::ListEntriesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::datacatalog::v1::Entry>>();
 }
@@ -143,7 +140,8 @@ DataCatalogConnection::UpdateTagTemplate(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status DataCatalogConnection::DeleteTagTemplate(
+Status
+DataCatalogConnection::DeleteTagTemplate(
     google::cloud::datacatalog::v1::DeleteTagTemplateRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -168,35 +166,36 @@ DataCatalogConnection::RenameTagTemplateField(
 
 StatusOr<google::cloud::datacatalog::v1::TagTemplateField>
 DataCatalogConnection::RenameTagTemplateFieldEnumValue(
-    google::cloud::datacatalog::v1::
-        RenameTagTemplateFieldEnumValueRequest const&) {
+    google::cloud::datacatalog::v1::RenameTagTemplateFieldEnumValueRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status DataCatalogConnection::DeleteTagTemplateField(
+Status
+DataCatalogConnection::DeleteTagTemplateField(
     google::cloud::datacatalog::v1::DeleteTagTemplateFieldRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::cloud::datacatalog::v1::Tag> DataCatalogConnection::CreateTag(
+StatusOr<google::cloud::datacatalog::v1::Tag>
+DataCatalogConnection::CreateTag(
     google::cloud::datacatalog::v1::CreateTagRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::cloud::datacatalog::v1::Tag> DataCatalogConnection::UpdateTag(
+StatusOr<google::cloud::datacatalog::v1::Tag>
+DataCatalogConnection::UpdateTag(
     google::cloud::datacatalog::v1::UpdateTagRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status DataCatalogConnection::DeleteTag(
+Status
+DataCatalogConnection::DeleteTag(
     google::cloud::datacatalog::v1::DeleteTagRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::datacatalog::v1::Tag>
-DataCatalogConnection::ListTags(
-    google::cloud::datacatalog::v1::
-        ListTagsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::datacatalog::v1::Tag> DataCatalogConnection::ListTags(
+    google::cloud::datacatalog::v1::ListTagsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::datacatalog::v1::Tag>>();
 }
@@ -205,21 +204,24 @@ future<StatusOr<google::cloud::datacatalog::v1::ReconcileTagsResponse>>
 DataCatalogConnection::ReconcileTags(
     google::cloud::datacatalog::v1::ReconcileTagsRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::datacatalog::v1::ReconcileTagsResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::datacatalog::v1::ReconcileTagsResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation> DataCatalogConnection::ReconcileTags(
-    NoAwaitTag, google::cloud::datacatalog::v1::ReconcileTagsRequest const&) {
+StatusOr<google::longrunning::Operation>
+DataCatalogConnection::ReconcileTags(
+    NoAwaitTag,
+    google::cloud::datacatalog::v1::ReconcileTagsRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::datacatalog::v1::ReconcileTagsResponse>>
-DataCatalogConnection::ReconcileTags(google::longrunning::Operation const&) {
+DataCatalogConnection::ReconcileTags(
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::datacatalog::v1::ReconcileTagsResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::datacatalog::v1::ReconcileTagsResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::datacatalog::v1::StarEntryResponse>
@@ -234,12 +236,14 @@ DataCatalogConnection::UnstarEntry(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::iam::v1::Policy> DataCatalogConnection::SetIamPolicy(
+StatusOr<google::iam::v1::Policy>
+DataCatalogConnection::SetIamPolicy(
     google::iam::v1::SetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::iam::v1::Policy> DataCatalogConnection::GetIamPolicy(
+StatusOr<google::iam::v1::Policy>
+DataCatalogConnection::GetIamPolicy(
     google::iam::v1::GetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -254,21 +258,24 @@ future<StatusOr<google::cloud::datacatalog::v1::ImportEntriesResponse>>
 DataCatalogConnection::ImportEntries(
     google::cloud::datacatalog::v1::ImportEntriesRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::datacatalog::v1::ImportEntriesResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::datacatalog::v1::ImportEntriesResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation> DataCatalogConnection::ImportEntries(
-    NoAwaitTag, google::cloud::datacatalog::v1::ImportEntriesRequest const&) {
+StatusOr<google::longrunning::Operation>
+DataCatalogConnection::ImportEntries(
+    NoAwaitTag,
+    google::cloud::datacatalog::v1::ImportEntriesRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::datacatalog::v1::ImportEntriesResponse>>
-DataCatalogConnection::ImportEntries(google::longrunning::Operation const&) {
+DataCatalogConnection::ImportEntries(
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::datacatalog::v1::ImportEntriesResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::datacatalog::v1::ImportEntriesResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::datacatalog::v1::MigrationConfig>
@@ -289,25 +296,26 @@ DataCatalogConnection::RetrieveEffectiveConfig(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::longrunning::Operation>
-DataCatalogConnection::ListOperations(
-    google::longrunning::
-        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::longrunning::Operation> DataCatalogConnection::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }
 
-StatusOr<google::longrunning::Operation> DataCatalogConnection::GetOperation(
+StatusOr<google::longrunning::Operation>
+DataCatalogConnection::GetOperation(
     google::longrunning::GetOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status DataCatalogConnection::DeleteOperation(
+Status
+DataCatalogConnection::DeleteOperation(
     google::longrunning::DeleteOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status DataCatalogConnection::CancelOperation(
+Status
+DataCatalogConnection::CancelOperation(
     google::longrunning::CancelOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -315,18 +323,17 @@ Status DataCatalogConnection::CancelOperation(
 std::shared_ptr<DataCatalogConnection> MakeDataCatalogConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 DataCatalogPolicyOptionList>(options,
-                                                              __func__);
-  options =
-      datacatalog_v1_internal::DataCatalogDefaultOptions(std::move(options));
+      UnifiedCredentialsOptionList,
+      DataCatalogPolicyOptionList>(options, __func__);
+  options = datacatalog_v1_internal::DataCatalogDefaultOptions(
+      std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = datacatalog_v1_internal::CreateDefaultDataCatalogStub(
-      std::move(auth), options);
+    std::move(auth), options);
   return datacatalog_v1_internal::MakeDataCatalogTracingConnection(
       std::make_shared<datacatalog_v1_internal::DataCatalogConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options)));
+      std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

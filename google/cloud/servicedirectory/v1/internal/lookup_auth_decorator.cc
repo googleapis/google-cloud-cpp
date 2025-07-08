@@ -31,18 +31,18 @@ LookupServiceAuth::LookupServiceAuth(
     std::shared_ptr<LookupServiceStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::servicedirectory::v1::ResolveServiceResponse>
-LookupServiceAuth::ResolveService(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::servicedirectory::v1::ResolveServiceResponse> LookupServiceAuth::ResolveService(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::servicedirectory::v1::ResolveServiceRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ResolveService(context, options, request);
 }
 
-StatusOr<google::cloud::location::ListLocationsResponse>
-LookupServiceAuth::ListLocations(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::location::ListLocationsResponse> LookupServiceAuth::ListLocations(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -50,7 +50,8 @@ LookupServiceAuth::ListLocations(
 }
 
 StatusOr<google::cloud::location::Location> LookupServiceAuth::GetLocation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;

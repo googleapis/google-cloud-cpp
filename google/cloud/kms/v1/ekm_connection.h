@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_KMS_V1_EKM_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_KMS_V1_EKM_CONNECTION_H
 
-#include "google/cloud/kms/v1/ekm_connection_idempotency_policy.h"
-#include "google/cloud/kms/v1/internal/ekm_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/kms/v1/ekm_connection_idempotency_policy.h"
+#include "google/cloud/kms/v1/internal/ekm_retry_traits.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -62,14 +62,14 @@ class EkmServiceLimitedErrorCountRetryPolicy : public EkmServiceRetryPolicy {
    *     @p maximum_failures == 0.
    */
   explicit EkmServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   EkmServiceLimitedErrorCountRetryPolicy(
       EkmServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : EkmServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : EkmServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   EkmServiceLimitedErrorCountRetryPolicy(
       EkmServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : EkmServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : EkmServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -89,9 +89,7 @@ class EkmServiceLimitedErrorCountRetryPolicy : public EkmServiceRetryPolicy {
   using BaseType = EkmServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      kms_v1_internal::EkmServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<kms_v1_internal::EkmServiceRetryTraits> impl_;
 };
 
 /**
@@ -129,14 +127,12 @@ class EkmServiceLimitedTimeRetryPolicy : public EkmServiceRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit EkmServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  EkmServiceLimitedTimeRetryPolicy(
-      EkmServiceLimitedTimeRetryPolicy&& rhs) noexcept
-      : EkmServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  EkmServiceLimitedTimeRetryPolicy(
-      EkmServiceLimitedTimeRetryPolicy const& rhs) noexcept
-      : EkmServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  EkmServiceLimitedTimeRetryPolicy(EkmServiceLimitedTimeRetryPolicy&& rhs) noexcept
+    : EkmServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  EkmServiceLimitedTimeRetryPolicy(EkmServiceLimitedTimeRetryPolicy const& rhs) noexcept
+    : EkmServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -158,9 +154,7 @@ class EkmServiceLimitedTimeRetryPolicy : public EkmServiceRetryPolicy {
   using BaseType = EkmServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      kms_v1_internal::EkmServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<kms_v1_internal::EkmServiceRetryTraits> impl_;
 };
 
 /**
@@ -181,45 +175,44 @@ class EkmServiceConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StreamRange<google::cloud::kms::v1::EkmConnection> ListEkmConnections(
-      google::cloud::kms::v1::ListEkmConnectionsRequest request);
+  virtual StreamRange<google::cloud::kms::v1::EkmConnection>
+  ListEkmConnections(google::cloud::kms::v1::ListEkmConnectionsRequest request);
 
-  virtual StatusOr<google::cloud::kms::v1::EkmConnection> GetEkmConnection(
-      google::cloud::kms::v1::GetEkmConnectionRequest const& request);
+  virtual StatusOr<google::cloud::kms::v1::EkmConnection>
+  GetEkmConnection(google::cloud::kms::v1::GetEkmConnectionRequest const& request);
 
-  virtual StatusOr<google::cloud::kms::v1::EkmConnection> CreateEkmConnection(
-      google::cloud::kms::v1::CreateEkmConnectionRequest const& request);
+  virtual StatusOr<google::cloud::kms::v1::EkmConnection>
+  CreateEkmConnection(google::cloud::kms::v1::CreateEkmConnectionRequest const& request);
 
-  virtual StatusOr<google::cloud::kms::v1::EkmConnection> UpdateEkmConnection(
-      google::cloud::kms::v1::UpdateEkmConnectionRequest const& request);
+  virtual StatusOr<google::cloud::kms::v1::EkmConnection>
+  UpdateEkmConnection(google::cloud::kms::v1::UpdateEkmConnectionRequest const& request);
 
-  virtual StatusOr<google::cloud::kms::v1::EkmConfig> GetEkmConfig(
-      google::cloud::kms::v1::GetEkmConfigRequest const& request);
+  virtual StatusOr<google::cloud::kms::v1::EkmConfig>
+  GetEkmConfig(google::cloud::kms::v1::GetEkmConfigRequest const& request);
 
-  virtual StatusOr<google::cloud::kms::v1::EkmConfig> UpdateEkmConfig(
-      google::cloud::kms::v1::UpdateEkmConfigRequest const& request);
+  virtual StatusOr<google::cloud::kms::v1::EkmConfig>
+  UpdateEkmConfig(google::cloud::kms::v1::UpdateEkmConfigRequest const& request);
 
   virtual StatusOr<google::cloud::kms::v1::VerifyConnectivityResponse>
-  VerifyConnectivity(
-      google::cloud::kms::v1::VerifyConnectivityRequest const& request);
+  VerifyConnectivity(google::cloud::kms::v1::VerifyConnectivityRequest const& request);
 
-  virtual StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request);
+  virtual StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request);
 
-  virtual StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request);
+  virtual StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
 
   virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
   TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 };
 
 /**

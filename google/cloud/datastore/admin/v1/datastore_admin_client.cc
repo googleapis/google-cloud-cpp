@@ -28,16 +28,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 DatastoreAdminClient::DatastoreAdminClient(
     std::shared_ptr<DatastoreAdminConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 DatastoreAdminClient::~DatastoreAdminClient() = default;
 
 future<StatusOr<google::datastore::admin::v1::ExportEntitiesResponse>>
-DatastoreAdminClient::ExportEntities(
-    std::string const& project_id,
-    std::map<std::string, std::string> const& labels,
-    google::datastore::admin::v1::EntityFilter const& entity_filter,
-    std::string const& output_url_prefix, Options opts) {
+DatastoreAdminClient::ExportEntities(std::string const& project_id, std::map<std::string, std::string> const& labels, google::datastore::admin::v1::EntityFilter const& entity_filter, std::string const& output_url_prefix, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::datastore::admin::v1::ExportEntitiesRequest request;
   request.set_project_id(project_id);
@@ -47,11 +43,8 @@ DatastoreAdminClient::ExportEntities(
   return connection_->ExportEntities(request);
 }
 
-StatusOr<google::longrunning::Operation> DatastoreAdminClient::ExportEntities(
-    NoAwaitTag, std::string const& project_id,
-    std::map<std::string, std::string> const& labels,
-    google::datastore::admin::v1::EntityFilter const& entity_filter,
-    std::string const& output_url_prefix, Options opts) {
+StatusOr<google::longrunning::Operation>
+DatastoreAdminClient::ExportEntities(NoAwaitTag, std::string const& project_id, std::map<std::string, std::string> const& labels, google::datastore::admin::v1::EntityFilter const& entity_filter, std::string const& output_url_prefix, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::datastore::admin::v1::ExportEntitiesRequest request;
   request.set_project_id(project_id);
@@ -62,35 +55,25 @@ StatusOr<google::longrunning::Operation> DatastoreAdminClient::ExportEntities(
 }
 
 future<StatusOr<google::datastore::admin::v1::ExportEntitiesResponse>>
-DatastoreAdminClient::ExportEntities(
-    google::datastore::admin::v1::ExportEntitiesRequest const& request,
-    Options opts) {
+DatastoreAdminClient::ExportEntities(google::datastore::admin::v1::ExportEntitiesRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ExportEntities(request);
 }
 
-StatusOr<google::longrunning::Operation> DatastoreAdminClient::ExportEntities(
-    NoAwaitTag,
-    google::datastore::admin::v1::ExportEntitiesRequest const& request,
-    Options opts) {
+StatusOr<google::longrunning::Operation>
+DatastoreAdminClient::ExportEntities(NoAwaitTag, google::datastore::admin::v1::ExportEntitiesRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ExportEntities(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::datastore::admin::v1::ExportEntitiesResponse>>
-DatastoreAdminClient::ExportEntities(
-    google::longrunning::Operation const& operation, Options opts) {
+DatastoreAdminClient::ExportEntities(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ExportEntities(operation);
 }
 
 future<StatusOr<google::datastore::admin::v1::ImportEntitiesMetadata>>
-DatastoreAdminClient::ImportEntities(
-    std::string const& project_id,
-    std::map<std::string, std::string> const& labels,
-    std::string const& input_url,
-    google::datastore::admin::v1::EntityFilter const& entity_filter,
-    Options opts) {
+DatastoreAdminClient::ImportEntities(std::string const& project_id, std::map<std::string, std::string> const& labels, std::string const& input_url, google::datastore::admin::v1::EntityFilter const& entity_filter, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::datastore::admin::v1::ImportEntitiesRequest request;
   request.set_project_id(project_id);
@@ -100,12 +83,8 @@ DatastoreAdminClient::ImportEntities(
   return connection_->ImportEntities(request);
 }
 
-StatusOr<google::longrunning::Operation> DatastoreAdminClient::ImportEntities(
-    NoAwaitTag, std::string const& project_id,
-    std::map<std::string, std::string> const& labels,
-    std::string const& input_url,
-    google::datastore::admin::v1::EntityFilter const& entity_filter,
-    Options opts) {
+StatusOr<google::longrunning::Operation>
+DatastoreAdminClient::ImportEntities(NoAwaitTag, std::string const& project_id, std::map<std::string, std::string> const& labels, std::string const& input_url, google::datastore::admin::v1::EntityFilter const& entity_filter, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::datastore::admin::v1::ImportEntitiesRequest request;
   request.set_project_id(project_id);
@@ -116,89 +95,73 @@ StatusOr<google::longrunning::Operation> DatastoreAdminClient::ImportEntities(
 }
 
 future<StatusOr<google::datastore::admin::v1::ImportEntitiesMetadata>>
-DatastoreAdminClient::ImportEntities(
-    google::datastore::admin::v1::ImportEntitiesRequest const& request,
-    Options opts) {
+DatastoreAdminClient::ImportEntities(google::datastore::admin::v1::ImportEntitiesRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ImportEntities(request);
 }
 
-StatusOr<google::longrunning::Operation> DatastoreAdminClient::ImportEntities(
-    NoAwaitTag,
-    google::datastore::admin::v1::ImportEntitiesRequest const& request,
-    Options opts) {
+StatusOr<google::longrunning::Operation>
+DatastoreAdminClient::ImportEntities(NoAwaitTag, google::datastore::admin::v1::ImportEntitiesRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ImportEntities(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::datastore::admin::v1::ImportEntitiesMetadata>>
-DatastoreAdminClient::ImportEntities(
-    google::longrunning::Operation const& operation, Options opts) {
+DatastoreAdminClient::ImportEntities(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ImportEntities(operation);
 }
 
 future<StatusOr<google::datastore::admin::v1::Index>>
-DatastoreAdminClient::CreateIndex(
-    google::datastore::admin::v1::CreateIndexRequest const& request,
-    Options opts) {
+DatastoreAdminClient::CreateIndex(google::datastore::admin::v1::CreateIndexRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateIndex(request);
 }
 
-StatusOr<google::longrunning::Operation> DatastoreAdminClient::CreateIndex(
-    NoAwaitTag, google::datastore::admin::v1::CreateIndexRequest const& request,
-    Options opts) {
+StatusOr<google::longrunning::Operation>
+DatastoreAdminClient::CreateIndex(NoAwaitTag, google::datastore::admin::v1::CreateIndexRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateIndex(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::datastore::admin::v1::Index>>
-DatastoreAdminClient::CreateIndex(
-    google::longrunning::Operation const& operation, Options opts) {
+DatastoreAdminClient::CreateIndex(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateIndex(operation);
 }
 
 future<StatusOr<google::datastore::admin::v1::Index>>
-DatastoreAdminClient::DeleteIndex(
-    google::datastore::admin::v1::DeleteIndexRequest const& request,
-    Options opts) {
+DatastoreAdminClient::DeleteIndex(google::datastore::admin::v1::DeleteIndexRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteIndex(request);
 }
 
-StatusOr<google::longrunning::Operation> DatastoreAdminClient::DeleteIndex(
-    NoAwaitTag, google::datastore::admin::v1::DeleteIndexRequest const& request,
-    Options opts) {
+StatusOr<google::longrunning::Operation>
+DatastoreAdminClient::DeleteIndex(NoAwaitTag, google::datastore::admin::v1::DeleteIndexRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteIndex(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::datastore::admin::v1::Index>>
-DatastoreAdminClient::DeleteIndex(
-    google::longrunning::Operation const& operation, Options opts) {
+DatastoreAdminClient::DeleteIndex(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteIndex(operation);
 }
 
-StatusOr<google::datastore::admin::v1::Index> DatastoreAdminClient::GetIndex(
-    google::datastore::admin::v1::GetIndexRequest const& request,
-    Options opts) {
+StatusOr<google::datastore::admin::v1::Index>
+DatastoreAdminClient::GetIndex(google::datastore::admin::v1::GetIndexRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetIndex(request);
 }
 
 StreamRange<google::datastore::admin::v1::Index>
-DatastoreAdminClient::ListIndexes(
-    google::datastore::admin::v1::ListIndexesRequest request, Options opts) {
+DatastoreAdminClient::ListIndexes(google::datastore::admin::v1::ListIndexesRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListIndexes(std::move(request));
 }
 
 StreamRange<google::longrunning::Operation>
-DatastoreAdminClient::ListOperations(std::string const& name,
-                                     std::string const& filter, Options opts) {
+DatastoreAdminClient::ListOperations(std::string const& name, std::string const& filter, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::ListOperationsRequest request;
   request.set_name(name);
@@ -207,50 +170,49 @@ DatastoreAdminClient::ListOperations(std::string const& name,
 }
 
 StreamRange<google::longrunning::Operation>
-DatastoreAdminClient::ListOperations(
-    google::longrunning::ListOperationsRequest request, Options opts) {
+DatastoreAdminClient::ListOperations(google::longrunning::ListOperationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOperations(std::move(request));
 }
 
-StatusOr<google::longrunning::Operation> DatastoreAdminClient::GetOperation(
-    std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation>
+DatastoreAdminClient::GetOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
   return connection_->GetOperation(request);
 }
 
-StatusOr<google::longrunning::Operation> DatastoreAdminClient::GetOperation(
-    google::longrunning::GetOperationRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation>
+DatastoreAdminClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }
 
-Status DatastoreAdminClient::DeleteOperation(std::string const& name,
-                                             Options opts) {
+Status
+DatastoreAdminClient::DeleteOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::DeleteOperationRequest request;
   request.set_name(name);
   return connection_->DeleteOperation(request);
 }
 
-Status DatastoreAdminClient::DeleteOperation(
-    google::longrunning::DeleteOperationRequest const& request, Options opts) {
+Status
+DatastoreAdminClient::DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteOperation(request);
 }
 
-Status DatastoreAdminClient::CancelOperation(std::string const& name,
-                                             Options opts) {
+Status
+DatastoreAdminClient::CancelOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::CancelOperationRequest request;
   request.set_name(name);
   return connection_->CancelOperation(request);
 }
 
-Status DatastoreAdminClient::CancelOperation(
-    google::longrunning::CancelOperationRequest const& request, Options opts) {
+Status
+DatastoreAdminClient::CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelOperation(request);
 }

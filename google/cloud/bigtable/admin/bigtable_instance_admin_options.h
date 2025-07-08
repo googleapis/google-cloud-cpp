@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_ADMIN_BIGTABLE_INSTANCE_ADMIN_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_ADMIN_BIGTABLE_INSTANCE_ADMIN_OPTIONS_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/bigtable/admin/bigtable_instance_admin_connection.h"
 #include "google/cloud/bigtable/admin/bigtable_instance_admin_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -55,8 +55,7 @@ struct BigtableInstanceAdminBackoffPolicyOption {
  * @ingroup google-cloud-bigtable-options
  */
 struct BigtableInstanceAdminConnectionIdempotencyPolicyOption {
-  using Type =
-      std::shared_ptr<BigtableInstanceAdminConnectionIdempotencyPolicy>;
+  using Type = std::shared_ptr<BigtableInstanceAdminConnectionIdempotencyPolicy>;
 };
 
 /**

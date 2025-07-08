@@ -17,17 +17,17 @@
 // source: google/cloud/telcoautomation/v1/telcoautomation.proto
 
 #include "google/cloud/telcoautomation/v1/telco_automation_connection.h"
-#include "google/cloud/telcoautomation/v1/internal/telco_automation_connection_impl.h"
-#include "google/cloud/telcoautomation/v1/internal/telco_automation_option_defaults.h"
-#include "google/cloud/telcoautomation/v1/internal/telco_automation_stub_factory.h"
-#include "google/cloud/telcoautomation/v1/internal/telco_automation_tracing_connection.h"
-#include "google/cloud/telcoautomation/v1/telco_automation_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/telcoautomation/v1/internal/telco_automation_connection_impl.h"
+#include "google/cloud/telcoautomation/v1/internal/telco_automation_option_defaults.h"
+#include "google/cloud/telcoautomation/v1/internal/telco_automation_stub_factory.h"
+#include "google/cloud/telcoautomation/v1/internal/telco_automation_tracing_connection.h"
+#include "google/cloud/telcoautomation/v1/telco_automation_options.h"
 #include <memory>
 #include <utility>
 
@@ -38,10 +38,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 TelcoAutomationConnection::~TelcoAutomationConnection() = default;
 
-StreamRange<google::cloud::telcoautomation::v1::OrchestrationCluster>
-TelcoAutomationConnection::ListOrchestrationClusters(
-    google::cloud::telcoautomation::v1::
-        ListOrchestrationClustersRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::telcoautomation::v1::OrchestrationCluster> TelcoAutomationConnection::ListOrchestrationClusters(
+    google::cloud::telcoautomation::v1::ListOrchestrationClustersRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::telcoautomation::v1::OrchestrationCluster>>();
 }
@@ -54,58 +52,54 @@ TelcoAutomationConnection::GetOrchestrationCluster(
 
 future<StatusOr<google::cloud::telcoautomation::v1::OrchestrationCluster>>
 TelcoAutomationConnection::CreateOrchestrationCluster(
-    google::cloud::telcoautomation::v1::
-        CreateOrchestrationClusterRequest const&) {
+    google::cloud::telcoautomation::v1::CreateOrchestrationClusterRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::telcoautomation::v1::OrchestrationCluster>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::telcoautomation::v1::OrchestrationCluster>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 TelcoAutomationConnection::CreateOrchestrationCluster(
-    NoAwaitTag, google::cloud::telcoautomation::v1::
-                    CreateOrchestrationClusterRequest const&) {
+    NoAwaitTag,
+    google::cloud::telcoautomation::v1::CreateOrchestrationClusterRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::telcoautomation::v1::OrchestrationCluster>>
 TelcoAutomationConnection::CreateOrchestrationCluster(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::telcoautomation::v1::OrchestrationCluster>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::telcoautomation::v1::OrchestrationCluster>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::telcoautomation::v1::OperationMetadata>>
 TelcoAutomationConnection::DeleteOrchestrationCluster(
-    google::cloud::telcoautomation::v1::
-        DeleteOrchestrationClusterRequest const&) {
+    google::cloud::telcoautomation::v1::DeleteOrchestrationClusterRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::telcoautomation::v1::OperationMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::telcoautomation::v1::OperationMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 TelcoAutomationConnection::DeleteOrchestrationCluster(
-    NoAwaitTag, google::cloud::telcoautomation::v1::
-                    DeleteOrchestrationClusterRequest const&) {
+    NoAwaitTag,
+    google::cloud::telcoautomation::v1::DeleteOrchestrationClusterRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::telcoautomation::v1::OperationMetadata>>
 TelcoAutomationConnection::DeleteOrchestrationCluster(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::telcoautomation::v1::OperationMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::telcoautomation::v1::OperationMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StreamRange<google::cloud::telcoautomation::v1::EdgeSlm>
-TelcoAutomationConnection::ListEdgeSlms(
-    google::cloud::telcoautomation::v1::
-        ListEdgeSlmsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::telcoautomation::v1::EdgeSlm> TelcoAutomationConnection::ListEdgeSlms(
+    google::cloud::telcoautomation::v1::ListEdgeSlmsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::telcoautomation::v1::EdgeSlm>>();
 }
@@ -120,8 +114,8 @@ future<StatusOr<google::cloud::telcoautomation::v1::EdgeSlm>>
 TelcoAutomationConnection::CreateEdgeSlm(
     google::cloud::telcoautomation::v1::CreateEdgeSlmRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::telcoautomation::v1::EdgeSlm>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::telcoautomation::v1::EdgeSlm>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -129,23 +123,23 @@ TelcoAutomationConnection::CreateEdgeSlm(
     NoAwaitTag,
     google::cloud::telcoautomation::v1::CreateEdgeSlmRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::telcoautomation::v1::EdgeSlm>>
 TelcoAutomationConnection::CreateEdgeSlm(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::telcoautomation::v1::EdgeSlm>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::telcoautomation::v1::EdgeSlm>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::telcoautomation::v1::OperationMetadata>>
 TelcoAutomationConnection::DeleteEdgeSlm(
     google::cloud::telcoautomation::v1::DeleteEdgeSlmRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::telcoautomation::v1::OperationMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::telcoautomation::v1::OperationMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -153,15 +147,15 @@ TelcoAutomationConnection::DeleteEdgeSlm(
     NoAwaitTag,
     google::cloud::telcoautomation::v1::DeleteEdgeSlmRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::telcoautomation::v1::OperationMetadata>>
 TelcoAutomationConnection::DeleteEdgeSlm(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::telcoautomation::v1::OperationMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::telcoautomation::v1::OperationMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::telcoautomation::v1::Blueprint>
@@ -182,15 +176,14 @@ TelcoAutomationConnection::GetBlueprint(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status TelcoAutomationConnection::DeleteBlueprint(
+Status
+TelcoAutomationConnection::DeleteBlueprint(
     google::cloud::telcoautomation::v1::DeleteBlueprintRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::telcoautomation::v1::Blueprint>
-TelcoAutomationConnection::ListBlueprints(
-    google::cloud::telcoautomation::v1::
-        ListBlueprintsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::telcoautomation::v1::Blueprint> TelcoAutomationConnection::ListBlueprints(
+    google::cloud::telcoautomation::v1::ListBlueprintsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::telcoautomation::v1::Blueprint>>();
 }
@@ -213,26 +206,20 @@ TelcoAutomationConnection::RejectBlueprint(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::telcoautomation::v1::Blueprint>
-TelcoAutomationConnection::ListBlueprintRevisions(
-    google::cloud::telcoautomation::v1::
-        ListBlueprintRevisionsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::telcoautomation::v1::Blueprint> TelcoAutomationConnection::ListBlueprintRevisions(
+    google::cloud::telcoautomation::v1::ListBlueprintRevisionsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::telcoautomation::v1::Blueprint>>();
 }
 
-StreamRange<google::cloud::telcoautomation::v1::Blueprint>
-TelcoAutomationConnection::SearchBlueprintRevisions(
-    google::cloud::telcoautomation::v1::
-        SearchBlueprintRevisionsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::telcoautomation::v1::Blueprint> TelcoAutomationConnection::SearchBlueprintRevisions(
+    google::cloud::telcoautomation::v1::SearchBlueprintRevisionsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::telcoautomation::v1::Blueprint>>();
 }
 
-StreamRange<google::cloud::telcoautomation::v1::Deployment>
-TelcoAutomationConnection::SearchDeploymentRevisions(
-    google::cloud::telcoautomation::v1::
-        SearchDeploymentRevisionsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::telcoautomation::v1::Deployment> TelcoAutomationConnection::SearchDeploymentRevisions(
+    google::cloud::telcoautomation::v1::SearchDeploymentRevisionsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::telcoautomation::v1::Deployment>>();
 }
@@ -243,10 +230,8 @@ TelcoAutomationConnection::DiscardBlueprintChanges(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::telcoautomation::v1::PublicBlueprint>
-TelcoAutomationConnection::ListPublicBlueprints(
-    google::cloud::telcoautomation::v1::
-        ListPublicBlueprintsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::telcoautomation::v1::PublicBlueprint> TelcoAutomationConnection::ListPublicBlueprints(
+    google::cloud::telcoautomation::v1::ListPublicBlueprintsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::telcoautomation::v1::PublicBlueprint>>();
 }
@@ -275,31 +260,27 @@ TelcoAutomationConnection::GetDeployment(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status TelcoAutomationConnection::RemoveDeployment(
+Status
+TelcoAutomationConnection::RemoveDeployment(
     google::cloud::telcoautomation::v1::RemoveDeploymentRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::telcoautomation::v1::Deployment>
-TelcoAutomationConnection::ListDeployments(
-    google::cloud::telcoautomation::v1::
-        ListDeploymentsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::telcoautomation::v1::Deployment> TelcoAutomationConnection::ListDeployments(
+    google::cloud::telcoautomation::v1::ListDeploymentsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::telcoautomation::v1::Deployment>>();
 }
 
-StreamRange<google::cloud::telcoautomation::v1::Deployment>
-TelcoAutomationConnection::ListDeploymentRevisions(
-    google::cloud::telcoautomation::v1::
-        ListDeploymentRevisionsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::telcoautomation::v1::Deployment> TelcoAutomationConnection::ListDeploymentRevisions(
+    google::cloud::telcoautomation::v1::ListDeploymentRevisionsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::telcoautomation::v1::Deployment>>();
 }
 
 StatusOr<google::cloud::telcoautomation::v1::DiscardDeploymentChangesResponse>
 TelcoAutomationConnection::DiscardDeploymentChanges(
-    google::cloud::telcoautomation::v1::
-        DiscardDeploymentChangesRequest const&) {
+    google::cloud::telcoautomation::v1::DiscardDeploymentChangesRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
@@ -327,18 +308,15 @@ TelcoAutomationConnection::GetHydratedDeployment(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::telcoautomation::v1::HydratedDeployment>
-TelcoAutomationConnection::ListHydratedDeployments(
-    google::cloud::telcoautomation::v1::
-        ListHydratedDeploymentsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::telcoautomation::v1::HydratedDeployment> TelcoAutomationConnection::ListHydratedDeployments(
+    google::cloud::telcoautomation::v1::ListHydratedDeploymentsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::telcoautomation::v1::HydratedDeployment>>();
 }
 
 StatusOr<google::cloud::telcoautomation::v1::HydratedDeployment>
 TelcoAutomationConnection::UpdateHydratedDeployment(
-    google::cloud::telcoautomation::v1::
-        UpdateHydratedDeploymentRequest const&) {
+    google::cloud::telcoautomation::v1::UpdateHydratedDeploymentRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
@@ -348,10 +326,8 @@ TelcoAutomationConnection::ApplyHydratedDeployment(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::location::Location>
-TelcoAutomationConnection::ListLocations(
-    google::cloud::location::
-        ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::location::Location> TelcoAutomationConnection::ListLocations(
+    google::cloud::location::ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::location::Location>>();
 }
@@ -362,10 +338,8 @@ TelcoAutomationConnection::GetLocation(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::longrunning::Operation>
-TelcoAutomationConnection::ListOperations(
-    google::longrunning::
-        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::longrunning::Operation> TelcoAutomationConnection::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }
@@ -376,12 +350,14 @@ TelcoAutomationConnection::GetOperation(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status TelcoAutomationConnection::DeleteOperation(
+Status
+TelcoAutomationConnection::DeleteOperation(
     google::longrunning::DeleteOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status TelcoAutomationConnection::CancelOperation(
+Status
+TelcoAutomationConnection::CancelOperation(
     google::longrunning::CancelOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -389,19 +365,17 @@ Status TelcoAutomationConnection::CancelOperation(
 std::shared_ptr<TelcoAutomationConnection> MakeTelcoAutomationConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 TelcoAutomationPolicyOptionList>(options,
-                                                                  __func__);
+      UnifiedCredentialsOptionList,
+      TelcoAutomationPolicyOptionList>(options, __func__);
   options = telcoautomation_v1_internal::TelcoAutomationDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = telcoautomation_v1_internal::CreateDefaultTelcoAutomationStub(
-      std::move(auth), options);
+    std::move(auth), options);
   return telcoautomation_v1_internal::MakeTelcoAutomationTracingConnection(
-      std::make_shared<
-          telcoautomation_v1_internal::TelcoAutomationConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options)));
+      std::make_shared<telcoautomation_v1_internal::TelcoAutomationConnectionImpl>(
+      std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

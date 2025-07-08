@@ -17,13 +17,13 @@
 // source: google/iam/v3/principal_access_boundary_policies_service.proto
 
 #include "google/cloud/iam/v3/internal/principal_access_boundary_policies_stub_factory.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/grpc_options.h"
 #include "google/cloud/iam/v3/internal/principal_access_boundary_policies_auth_decorator.h"
 #include "google/cloud/iam/v3/internal/principal_access_boundary_policies_logging_decorator.h"
 #include "google/cloud/iam/v3/internal/principal_access_boundary_policies_metadata_decorator.h"
 #include "google/cloud/iam/v3/internal/principal_access_boundary_policies_stub.h"
 #include "google/cloud/iam/v3/internal/principal_access_boundary_policies_tracing_stub.h"
-#include "google/cloud/common_options.h"
-#include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
@@ -42,14 +42,13 @@ std::shared_ptr<PrincipalAccessBoundaryPoliciesStub>
 CreateDefaultPrincipalAccessBoundaryPoliciesStub(
     std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
     Options const& options) {
-  auto channel = auth->CreateChannel(options.get<EndpointOption>(),
-                                     internal::MakeChannelArguments(options));
-  auto service_grpc_stub =
-      google::iam::v3::PrincipalAccessBoundaryPolicies::NewStub(channel);
+  auto channel = auth->CreateChannel(
+    options.get<EndpointOption>(), internal::MakeChannelArguments(options));
+  auto service_grpc_stub = google::iam::v3::PrincipalAccessBoundaryPolicies::NewStub(channel);
   std::shared_ptr<PrincipalAccessBoundaryPoliciesStub> stub =
-      std::make_shared<DefaultPrincipalAccessBoundaryPoliciesStub>(
-          std::move(service_grpc_stub),
-          google::longrunning::Operations::NewStub(channel));
+    std::make_shared<DefaultPrincipalAccessBoundaryPoliciesStub>(
+      std::move(service_grpc_stub),
+      google::longrunning::Operations::NewStub(channel));
 
   if (auth->RequiresConfigureContext()) {
     stub = std::make_shared<PrincipalAccessBoundaryPoliciesAuth>(
@@ -57,10 +56,12 @@ CreateDefaultPrincipalAccessBoundaryPoliciesStub(
   }
   stub = std::make_shared<PrincipalAccessBoundaryPoliciesMetadata>(
       std::move(stub), std::multimap<std::string, std::string>{});
-  if (internal::Contains(options.get<LoggingComponentsOption>(), "rpc")) {
+  if (internal::Contains(
+      options.get<LoggingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<PrincipalAccessBoundaryPoliciesLogging>(
-        std::move(stub), options.get<GrpcTracingOptionsOption>(),
+        std::move(stub),
+        options.get<GrpcTracingOptionsOption>(),
         options.get<LoggingComponentsOption>());
   }
   if (internal::TracingEnabled(options)) {

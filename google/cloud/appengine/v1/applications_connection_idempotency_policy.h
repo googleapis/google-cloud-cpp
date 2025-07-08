@@ -34,24 +34,23 @@ class ApplicationsConnectionIdempotencyPolicy {
   virtual ~ApplicationsConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<ApplicationsConnectionIdempotencyPolicy> clone()
-      const;
+  virtual std::unique_ptr<ApplicationsConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency GetApplication(
-      google::appengine::v1::GetApplicationRequest const& request);
+  virtual google::cloud::Idempotency
+  GetApplication(google::appengine::v1::GetApplicationRequest const& request);
 
-  virtual google::cloud::Idempotency CreateApplication(
-      google::appengine::v1::CreateApplicationRequest const& request);
+  virtual google::cloud::Idempotency
+  CreateApplication(google::appengine::v1::CreateApplicationRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateApplication(
-      google::appengine::v1::UpdateApplicationRequest const& request);
+  virtual google::cloud::Idempotency
+  UpdateApplication(google::appengine::v1::UpdateApplicationRequest const& request);
 
-  virtual google::cloud::Idempotency RepairApplication(
-      google::appengine::v1::RepairApplicationRequest const& request);
+  virtual google::cloud::Idempotency
+  RepairApplication(google::appengine::v1::RepairApplicationRequest const& request);
 };
 
 std::unique_ptr<ApplicationsConnectionIdempotencyPolicy>
-MakeDefaultApplicationsConnectionIdempotencyPolicy();
+    MakeDefaultApplicationsConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace appengine_v1

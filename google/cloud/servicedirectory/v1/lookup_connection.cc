@@ -17,17 +17,17 @@
 // source: google/cloud/servicedirectory/v1/lookup_service.proto
 
 #include "google/cloud/servicedirectory/v1/lookup_connection.h"
-#include "google/cloud/servicedirectory/v1/internal/lookup_connection_impl.h"
-#include "google/cloud/servicedirectory/v1/internal/lookup_option_defaults.h"
-#include "google/cloud/servicedirectory/v1/internal/lookup_stub_factory.h"
-#include "google/cloud/servicedirectory/v1/internal/lookup_tracing_connection.h"
-#include "google/cloud/servicedirectory/v1/lookup_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/servicedirectory/v1/internal/lookup_connection_impl.h"
+#include "google/cloud/servicedirectory/v1/internal/lookup_option_defaults.h"
+#include "google/cloud/servicedirectory/v1/internal/lookup_stub_factory.h"
+#include "google/cloud/servicedirectory/v1/internal/lookup_tracing_connection.h"
+#include "google/cloud/servicedirectory/v1/lookup_options.h"
 #include <memory>
 #include <utility>
 
@@ -44,10 +44,8 @@ LookupServiceConnection::ResolveService(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::location::Location>
-LookupServiceConnection::ListLocations(
-    google::cloud::location::
-        ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::location::Location> LookupServiceConnection::ListLocations(
+    google::cloud::location::ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::location::Location>>();
 }
@@ -61,19 +59,17 @@ LookupServiceConnection::GetLocation(
 std::shared_ptr<LookupServiceConnection> MakeLookupServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 LookupServicePolicyOptionList>(options,
-                                                                __func__);
+      UnifiedCredentialsOptionList,
+      LookupServicePolicyOptionList>(options, __func__);
   options = servicedirectory_v1_internal::LookupServiceDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = servicedirectory_v1_internal::CreateDefaultLookupServiceStub(
-      std::move(auth), options);
+    std::move(auth), options);
   return servicedirectory_v1_internal::MakeLookupServiceTracingConnection(
-      std::make_shared<
-          servicedirectory_v1_internal::LookupServiceConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options)));
+      std::make_shared<servicedirectory_v1_internal::LookupServiceConnectionImpl>(
+      std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

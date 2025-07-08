@@ -27,18 +27,14 @@ namespace recaptchaenterprise_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 RecaptchaEnterpriseServiceClient::RecaptchaEnterpriseServiceClient(
-    std::shared_ptr<RecaptchaEnterpriseServiceConnection> connection,
-    Options opts)
+    std::shared_ptr<RecaptchaEnterpriseServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 RecaptchaEnterpriseServiceClient::~RecaptchaEnterpriseServiceClient() = default;
 
 StatusOr<google::cloud::recaptchaenterprise::v1::Assessment>
-RecaptchaEnterpriseServiceClient::CreateAssessment(
-    std::string const& parent,
-    google::cloud::recaptchaenterprise::v1::Assessment const& assessment,
-    Options opts) {
+RecaptchaEnterpriseServiceClient::CreateAssessment(std::string const& parent, google::cloud::recaptchaenterprise::v1::Assessment const& assessment, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::recaptchaenterprise::v1::CreateAssessmentRequest request;
   request.set_parent(parent);
@@ -47,20 +43,13 @@ RecaptchaEnterpriseServiceClient::CreateAssessment(
 }
 
 StatusOr<google::cloud::recaptchaenterprise::v1::Assessment>
-RecaptchaEnterpriseServiceClient::CreateAssessment(
-    google::cloud::recaptchaenterprise::v1::CreateAssessmentRequest const&
-        request,
-    Options opts) {
+RecaptchaEnterpriseServiceClient::CreateAssessment(google::cloud::recaptchaenterprise::v1::CreateAssessmentRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateAssessment(request);
 }
 
 StatusOr<google::cloud::recaptchaenterprise::v1::AnnotateAssessmentResponse>
-RecaptchaEnterpriseServiceClient::AnnotateAssessment(
-    std::string const& name,
-    google::cloud::recaptchaenterprise::v1::AnnotateAssessmentRequest::
-        Annotation annotation,
-    Options opts) {
+RecaptchaEnterpriseServiceClient::AnnotateAssessment(std::string const& name, google::cloud::recaptchaenterprise::v1::AnnotateAssessmentRequest::Annotation annotation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::recaptchaenterprise::v1::AnnotateAssessmentRequest request;
   request.set_name(name);
@@ -69,18 +58,13 @@ RecaptchaEnterpriseServiceClient::AnnotateAssessment(
 }
 
 StatusOr<google::cloud::recaptchaenterprise::v1::AnnotateAssessmentResponse>
-RecaptchaEnterpriseServiceClient::AnnotateAssessment(
-    google::cloud::recaptchaenterprise::v1::AnnotateAssessmentRequest const&
-        request,
-    Options opts) {
+RecaptchaEnterpriseServiceClient::AnnotateAssessment(google::cloud::recaptchaenterprise::v1::AnnotateAssessmentRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->AnnotateAssessment(request);
 }
 
 StatusOr<google::cloud::recaptchaenterprise::v1::Key>
-RecaptchaEnterpriseServiceClient::CreateKey(
-    std::string const& parent,
-    google::cloud::recaptchaenterprise::v1::Key const& key, Options opts) {
+RecaptchaEnterpriseServiceClient::CreateKey(std::string const& parent, google::cloud::recaptchaenterprise::v1::Key const& key, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::recaptchaenterprise::v1::CreateKeyRequest request;
   request.set_parent(parent);
@@ -89,16 +73,13 @@ RecaptchaEnterpriseServiceClient::CreateKey(
 }
 
 StatusOr<google::cloud::recaptchaenterprise::v1::Key>
-RecaptchaEnterpriseServiceClient::CreateKey(
-    google::cloud::recaptchaenterprise::v1::CreateKeyRequest const& request,
-    Options opts) {
+RecaptchaEnterpriseServiceClient::CreateKey(google::cloud::recaptchaenterprise::v1::CreateKeyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateKey(request);
 }
 
 StreamRange<google::cloud::recaptchaenterprise::v1::Key>
-RecaptchaEnterpriseServiceClient::ListKeys(std::string const& parent,
-                                           Options opts) {
+RecaptchaEnterpriseServiceClient::ListKeys(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::recaptchaenterprise::v1::ListKeysRequest request;
   request.set_parent(parent);
@@ -106,37 +87,27 @@ RecaptchaEnterpriseServiceClient::ListKeys(std::string const& parent,
 }
 
 StreamRange<google::cloud::recaptchaenterprise::v1::Key>
-RecaptchaEnterpriseServiceClient::ListKeys(
-    google::cloud::recaptchaenterprise::v1::ListKeysRequest request,
-    Options opts) {
+RecaptchaEnterpriseServiceClient::ListKeys(google::cloud::recaptchaenterprise::v1::ListKeysRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListKeys(std::move(request));
 }
 
-StatusOr<
-    google::cloud::recaptchaenterprise::v1::RetrieveLegacySecretKeyResponse>
-RecaptchaEnterpriseServiceClient::RetrieveLegacySecretKey(
-    std::string const& key, Options opts) {
+StatusOr<google::cloud::recaptchaenterprise::v1::RetrieveLegacySecretKeyResponse>
+RecaptchaEnterpriseServiceClient::RetrieveLegacySecretKey(std::string const& key, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::recaptchaenterprise::v1::RetrieveLegacySecretKeyRequest
-      request;
+  google::cloud::recaptchaenterprise::v1::RetrieveLegacySecretKeyRequest request;
   request.set_key(key);
   return connection_->RetrieveLegacySecretKey(request);
 }
 
-StatusOr<
-    google::cloud::recaptchaenterprise::v1::RetrieveLegacySecretKeyResponse>
-RecaptchaEnterpriseServiceClient::RetrieveLegacySecretKey(
-    google::cloud::recaptchaenterprise::v1::
-        RetrieveLegacySecretKeyRequest const& request,
-    Options opts) {
+StatusOr<google::cloud::recaptchaenterprise::v1::RetrieveLegacySecretKeyResponse>
+RecaptchaEnterpriseServiceClient::RetrieveLegacySecretKey(google::cloud::recaptchaenterprise::v1::RetrieveLegacySecretKeyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RetrieveLegacySecretKey(request);
 }
 
 StatusOr<google::cloud::recaptchaenterprise::v1::Key>
-RecaptchaEnterpriseServiceClient::GetKey(std::string const& name,
-                                         Options opts) {
+RecaptchaEnterpriseServiceClient::GetKey(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::recaptchaenterprise::v1::GetKeyRequest request;
   request.set_name(name);
@@ -144,17 +115,13 @@ RecaptchaEnterpriseServiceClient::GetKey(std::string const& name,
 }
 
 StatusOr<google::cloud::recaptchaenterprise::v1::Key>
-RecaptchaEnterpriseServiceClient::GetKey(
-    google::cloud::recaptchaenterprise::v1::GetKeyRequest const& request,
-    Options opts) {
+RecaptchaEnterpriseServiceClient::GetKey(google::cloud::recaptchaenterprise::v1::GetKeyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetKey(request);
 }
 
 StatusOr<google::cloud::recaptchaenterprise::v1::Key>
-RecaptchaEnterpriseServiceClient::UpdateKey(
-    google::cloud::recaptchaenterprise::v1::Key const& key,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+RecaptchaEnterpriseServiceClient::UpdateKey(google::cloud::recaptchaenterprise::v1::Key const& key, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::recaptchaenterprise::v1::UpdateKeyRequest request;
   *request.mutable_key() = key;
@@ -163,42 +130,33 @@ RecaptchaEnterpriseServiceClient::UpdateKey(
 }
 
 StatusOr<google::cloud::recaptchaenterprise::v1::Key>
-RecaptchaEnterpriseServiceClient::UpdateKey(
-    google::cloud::recaptchaenterprise::v1::UpdateKeyRequest const& request,
-    Options opts) {
+RecaptchaEnterpriseServiceClient::UpdateKey(google::cloud::recaptchaenterprise::v1::UpdateKeyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateKey(request);
 }
 
-Status RecaptchaEnterpriseServiceClient::DeleteKey(std::string const& name,
-                                                   Options opts) {
+Status
+RecaptchaEnterpriseServiceClient::DeleteKey(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::recaptchaenterprise::v1::DeleteKeyRequest request;
   request.set_name(name);
   return connection_->DeleteKey(request);
 }
 
-Status RecaptchaEnterpriseServiceClient::DeleteKey(
-    google::cloud::recaptchaenterprise::v1::DeleteKeyRequest const& request,
-    Options opts) {
+Status
+RecaptchaEnterpriseServiceClient::DeleteKey(google::cloud::recaptchaenterprise::v1::DeleteKeyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteKey(request);
 }
 
 StatusOr<google::cloud::recaptchaenterprise::v1::Key>
-RecaptchaEnterpriseServiceClient::MigrateKey(
-    google::cloud::recaptchaenterprise::v1::MigrateKeyRequest const& request,
-    Options opts) {
+RecaptchaEnterpriseServiceClient::MigrateKey(google::cloud::recaptchaenterprise::v1::MigrateKeyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->MigrateKey(request);
 }
 
 StatusOr<google::cloud::recaptchaenterprise::v1::AddIpOverrideResponse>
-RecaptchaEnterpriseServiceClient::AddIpOverride(
-    std::string const& name,
-    google::cloud::recaptchaenterprise::v1::IpOverrideData const&
-        ip_override_data,
-    Options opts) {
+RecaptchaEnterpriseServiceClient::AddIpOverride(std::string const& name, google::cloud::recaptchaenterprise::v1::IpOverrideData const& ip_override_data, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::recaptchaenterprise::v1::AddIpOverrideRequest request;
   request.set_name(name);
@@ -207,19 +165,13 @@ RecaptchaEnterpriseServiceClient::AddIpOverride(
 }
 
 StatusOr<google::cloud::recaptchaenterprise::v1::AddIpOverrideResponse>
-RecaptchaEnterpriseServiceClient::AddIpOverride(
-    google::cloud::recaptchaenterprise::v1::AddIpOverrideRequest const& request,
-    Options opts) {
+RecaptchaEnterpriseServiceClient::AddIpOverride(google::cloud::recaptchaenterprise::v1::AddIpOverrideRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->AddIpOverride(request);
 }
 
 StatusOr<google::cloud::recaptchaenterprise::v1::RemoveIpOverrideResponse>
-RecaptchaEnterpriseServiceClient::RemoveIpOverride(
-    std::string const& name,
-    google::cloud::recaptchaenterprise::v1::IpOverrideData const&
-        ip_override_data,
-    Options opts) {
+RecaptchaEnterpriseServiceClient::RemoveIpOverride(std::string const& name, google::cloud::recaptchaenterprise::v1::IpOverrideData const& ip_override_data, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::recaptchaenterprise::v1::RemoveIpOverrideRequest request;
   request.set_name(name);
@@ -228,17 +180,13 @@ RecaptchaEnterpriseServiceClient::RemoveIpOverride(
 }
 
 StatusOr<google::cloud::recaptchaenterprise::v1::RemoveIpOverrideResponse>
-RecaptchaEnterpriseServiceClient::RemoveIpOverride(
-    google::cloud::recaptchaenterprise::v1::RemoveIpOverrideRequest const&
-        request,
-    Options opts) {
+RecaptchaEnterpriseServiceClient::RemoveIpOverride(google::cloud::recaptchaenterprise::v1::RemoveIpOverrideRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RemoveIpOverride(request);
 }
 
 StreamRange<google::cloud::recaptchaenterprise::v1::IpOverrideData>
-RecaptchaEnterpriseServiceClient::ListIpOverrides(std::string const& parent,
-                                                  Options opts) {
+RecaptchaEnterpriseServiceClient::ListIpOverrides(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::recaptchaenterprise::v1::ListIpOverridesRequest request;
   request.set_parent(parent);
@@ -246,16 +194,13 @@ RecaptchaEnterpriseServiceClient::ListIpOverrides(std::string const& parent,
 }
 
 StreamRange<google::cloud::recaptchaenterprise::v1::IpOverrideData>
-RecaptchaEnterpriseServiceClient::ListIpOverrides(
-    google::cloud::recaptchaenterprise::v1::ListIpOverridesRequest request,
-    Options opts) {
+RecaptchaEnterpriseServiceClient::ListIpOverrides(google::cloud::recaptchaenterprise::v1::ListIpOverridesRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListIpOverrides(std::move(request));
 }
 
 StatusOr<google::cloud::recaptchaenterprise::v1::Metrics>
-RecaptchaEnterpriseServiceClient::GetMetrics(std::string const& name,
-                                             Options opts) {
+RecaptchaEnterpriseServiceClient::GetMetrics(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::recaptchaenterprise::v1::GetMetricsRequest request;
   request.set_name(name);
@@ -263,19 +208,13 @@ RecaptchaEnterpriseServiceClient::GetMetrics(std::string const& name,
 }
 
 StatusOr<google::cloud::recaptchaenterprise::v1::Metrics>
-RecaptchaEnterpriseServiceClient::GetMetrics(
-    google::cloud::recaptchaenterprise::v1::GetMetricsRequest const& request,
-    Options opts) {
+RecaptchaEnterpriseServiceClient::GetMetrics(google::cloud::recaptchaenterprise::v1::GetMetricsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetMetrics(request);
 }
 
 StatusOr<google::cloud::recaptchaenterprise::v1::FirewallPolicy>
-RecaptchaEnterpriseServiceClient::CreateFirewallPolicy(
-    std::string const& parent,
-    google::cloud::recaptchaenterprise::v1::FirewallPolicy const&
-        firewall_policy,
-    Options opts) {
+RecaptchaEnterpriseServiceClient::CreateFirewallPolicy(std::string const& parent, google::cloud::recaptchaenterprise::v1::FirewallPolicy const& firewall_policy, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::recaptchaenterprise::v1::CreateFirewallPolicyRequest request;
   request.set_parent(parent);
@@ -284,17 +223,13 @@ RecaptchaEnterpriseServiceClient::CreateFirewallPolicy(
 }
 
 StatusOr<google::cloud::recaptchaenterprise::v1::FirewallPolicy>
-RecaptchaEnterpriseServiceClient::CreateFirewallPolicy(
-    google::cloud::recaptchaenterprise::v1::CreateFirewallPolicyRequest const&
-        request,
-    Options opts) {
+RecaptchaEnterpriseServiceClient::CreateFirewallPolicy(google::cloud::recaptchaenterprise::v1::CreateFirewallPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateFirewallPolicy(request);
 }
 
 StreamRange<google::cloud::recaptchaenterprise::v1::FirewallPolicy>
-RecaptchaEnterpriseServiceClient::ListFirewallPolicies(
-    std::string const& parent, Options opts) {
+RecaptchaEnterpriseServiceClient::ListFirewallPolicies(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::recaptchaenterprise::v1::ListFirewallPoliciesRequest request;
   request.set_parent(parent);
@@ -302,16 +237,13 @@ RecaptchaEnterpriseServiceClient::ListFirewallPolicies(
 }
 
 StreamRange<google::cloud::recaptchaenterprise::v1::FirewallPolicy>
-RecaptchaEnterpriseServiceClient::ListFirewallPolicies(
-    google::cloud::recaptchaenterprise::v1::ListFirewallPoliciesRequest request,
-    Options opts) {
+RecaptchaEnterpriseServiceClient::ListFirewallPolicies(google::cloud::recaptchaenterprise::v1::ListFirewallPoliciesRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListFirewallPolicies(std::move(request));
 }
 
 StatusOr<google::cloud::recaptchaenterprise::v1::FirewallPolicy>
-RecaptchaEnterpriseServiceClient::GetFirewallPolicy(std::string const& name,
-                                                    Options opts) {
+RecaptchaEnterpriseServiceClient::GetFirewallPolicy(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::recaptchaenterprise::v1::GetFirewallPolicyRequest request;
   request.set_name(name);
@@ -319,19 +251,13 @@ RecaptchaEnterpriseServiceClient::GetFirewallPolicy(std::string const& name,
 }
 
 StatusOr<google::cloud::recaptchaenterprise::v1::FirewallPolicy>
-RecaptchaEnterpriseServiceClient::GetFirewallPolicy(
-    google::cloud::recaptchaenterprise::v1::GetFirewallPolicyRequest const&
-        request,
-    Options opts) {
+RecaptchaEnterpriseServiceClient::GetFirewallPolicy(google::cloud::recaptchaenterprise::v1::GetFirewallPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetFirewallPolicy(request);
 }
 
 StatusOr<google::cloud::recaptchaenterprise::v1::FirewallPolicy>
-RecaptchaEnterpriseServiceClient::UpdateFirewallPolicy(
-    google::cloud::recaptchaenterprise::v1::FirewallPolicy const&
-        firewall_policy,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+RecaptchaEnterpriseServiceClient::UpdateFirewallPolicy(google::cloud::recaptchaenterprise::v1::FirewallPolicy const& firewall_policy, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::recaptchaenterprise::v1::UpdateFirewallPolicyRequest request;
   *request.mutable_firewall_policy() = firewall_policy;
@@ -340,112 +266,79 @@ RecaptchaEnterpriseServiceClient::UpdateFirewallPolicy(
 }
 
 StatusOr<google::cloud::recaptchaenterprise::v1::FirewallPolicy>
-RecaptchaEnterpriseServiceClient::UpdateFirewallPolicy(
-    google::cloud::recaptchaenterprise::v1::UpdateFirewallPolicyRequest const&
-        request,
-    Options opts) {
+RecaptchaEnterpriseServiceClient::UpdateFirewallPolicy(google::cloud::recaptchaenterprise::v1::UpdateFirewallPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateFirewallPolicy(request);
 }
 
-Status RecaptchaEnterpriseServiceClient::DeleteFirewallPolicy(
-    std::string const& name, Options opts) {
+Status
+RecaptchaEnterpriseServiceClient::DeleteFirewallPolicy(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::recaptchaenterprise::v1::DeleteFirewallPolicyRequest request;
   request.set_name(name);
   return connection_->DeleteFirewallPolicy(request);
 }
 
-Status RecaptchaEnterpriseServiceClient::DeleteFirewallPolicy(
-    google::cloud::recaptchaenterprise::v1::DeleteFirewallPolicyRequest const&
-        request,
-    Options opts) {
+Status
+RecaptchaEnterpriseServiceClient::DeleteFirewallPolicy(google::cloud::recaptchaenterprise::v1::DeleteFirewallPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteFirewallPolicy(request);
 }
 
-StatusOr<
-    google::cloud::recaptchaenterprise::v1::ReorderFirewallPoliciesResponse>
-RecaptchaEnterpriseServiceClient::ReorderFirewallPolicies(
-    std::string const& parent, std::vector<std::string> const& names,
-    Options opts) {
+StatusOr<google::cloud::recaptchaenterprise::v1::ReorderFirewallPoliciesResponse>
+RecaptchaEnterpriseServiceClient::ReorderFirewallPolicies(std::string const& parent, std::vector<std::string> const& names, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::recaptchaenterprise::v1::ReorderFirewallPoliciesRequest
-      request;
+  google::cloud::recaptchaenterprise::v1::ReorderFirewallPoliciesRequest request;
   request.set_parent(parent);
   *request.mutable_names() = {names.begin(), names.end()};
   return connection_->ReorderFirewallPolicies(request);
 }
 
-StatusOr<
-    google::cloud::recaptchaenterprise::v1::ReorderFirewallPoliciesResponse>
-RecaptchaEnterpriseServiceClient::ReorderFirewallPolicies(
-    google::cloud::recaptchaenterprise::v1::
-        ReorderFirewallPoliciesRequest const& request,
-    Options opts) {
+StatusOr<google::cloud::recaptchaenterprise::v1::ReorderFirewallPoliciesResponse>
+RecaptchaEnterpriseServiceClient::ReorderFirewallPolicies(google::cloud::recaptchaenterprise::v1::ReorderFirewallPoliciesRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ReorderFirewallPolicies(request);
 }
 
 StreamRange<google::cloud::recaptchaenterprise::v1::RelatedAccountGroup>
-RecaptchaEnterpriseServiceClient::ListRelatedAccountGroups(
-    std::string const& parent, Options opts) {
+RecaptchaEnterpriseServiceClient::ListRelatedAccountGroups(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::recaptchaenterprise::v1::ListRelatedAccountGroupsRequest
-      request;
+  google::cloud::recaptchaenterprise::v1::ListRelatedAccountGroupsRequest request;
   request.set_parent(parent);
   return connection_->ListRelatedAccountGroups(request);
 }
 
 StreamRange<google::cloud::recaptchaenterprise::v1::RelatedAccountGroup>
-RecaptchaEnterpriseServiceClient::ListRelatedAccountGroups(
-    google::cloud::recaptchaenterprise::v1::ListRelatedAccountGroupsRequest
-        request,
-    Options opts) {
+RecaptchaEnterpriseServiceClient::ListRelatedAccountGroups(google::cloud::recaptchaenterprise::v1::ListRelatedAccountGroupsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListRelatedAccountGroups(std::move(request));
 }
 
-StreamRange<
-    google::cloud::recaptchaenterprise::v1::RelatedAccountGroupMembership>
-RecaptchaEnterpriseServiceClient::ListRelatedAccountGroupMemberships(
-    std::string const& parent, Options opts) {
+StreamRange<google::cloud::recaptchaenterprise::v1::RelatedAccountGroupMembership>
+RecaptchaEnterpriseServiceClient::ListRelatedAccountGroupMemberships(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::recaptchaenterprise::v1::
-      ListRelatedAccountGroupMembershipsRequest request;
+  google::cloud::recaptchaenterprise::v1::ListRelatedAccountGroupMembershipsRequest request;
   request.set_parent(parent);
   return connection_->ListRelatedAccountGroupMemberships(request);
 }
 
-StreamRange<
-    google::cloud::recaptchaenterprise::v1::RelatedAccountGroupMembership>
-RecaptchaEnterpriseServiceClient::ListRelatedAccountGroupMemberships(
-    google::cloud::recaptchaenterprise::v1::
-        ListRelatedAccountGroupMembershipsRequest request,
-    Options opts) {
+StreamRange<google::cloud::recaptchaenterprise::v1::RelatedAccountGroupMembership>
+RecaptchaEnterpriseServiceClient::ListRelatedAccountGroupMemberships(google::cloud::recaptchaenterprise::v1::ListRelatedAccountGroupMembershipsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListRelatedAccountGroupMemberships(std::move(request));
 }
 
-StreamRange<
-    google::cloud::recaptchaenterprise::v1::RelatedAccountGroupMembership>
-RecaptchaEnterpriseServiceClient::SearchRelatedAccountGroupMemberships(
-    std::string const& project, std::string const& hashed_account_id,
-    Options opts) {
+StreamRange<google::cloud::recaptchaenterprise::v1::RelatedAccountGroupMembership>
+RecaptchaEnterpriseServiceClient::SearchRelatedAccountGroupMemberships(std::string const& project, std::string const& hashed_account_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::recaptchaenterprise::v1::
-      SearchRelatedAccountGroupMembershipsRequest request;
+  google::cloud::recaptchaenterprise::v1::SearchRelatedAccountGroupMembershipsRequest request;
   request.set_project(project);
   request.set_hashed_account_id(hashed_account_id);
   return connection_->SearchRelatedAccountGroupMemberships(request);
 }
 
-StreamRange<
-    google::cloud::recaptchaenterprise::v1::RelatedAccountGroupMembership>
-RecaptchaEnterpriseServiceClient::SearchRelatedAccountGroupMemberships(
-    google::cloud::recaptchaenterprise::v1::
-        SearchRelatedAccountGroupMembershipsRequest request,
-    Options opts) {
+StreamRange<google::cloud::recaptchaenterprise::v1::RelatedAccountGroupMembership>
+RecaptchaEnterpriseServiceClient::SearchRelatedAccountGroupMemberships(google::cloud::recaptchaenterprise::v1::SearchRelatedAccountGroupMembershipsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SearchRelatedAccountGroupMemberships(std::move(request));
 }

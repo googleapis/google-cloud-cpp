@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_ES_CONVERSATION_PROFILES_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_ES_CONVERSATION_PROFILES_CONNECTION_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/dialogflow_es/conversation_profiles_connection_idempotency_policy.h"
 #include "google/cloud/dialogflow_es/internal/conversation_profiles_retry_traits.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -57,8 +57,7 @@ class ConversationProfilesRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class ConversationProfilesLimitedErrorCountRetryPolicy
-    : public ConversationProfilesRetryPolicy {
+class ConversationProfilesLimitedErrorCountRetryPolicy : public ConversationProfilesRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -67,18 +66,15 @@ class ConversationProfilesLimitedErrorCountRetryPolicy
    * @note Disable the retry loop by providing an instance of this policy with
    *     @p maximum_failures == 0.
    */
-  explicit ConversationProfilesLimitedErrorCountRetryPolicy(
-      int maximum_failures)
-      : impl_(maximum_failures) {}
+  explicit ConversationProfilesLimitedErrorCountRetryPolicy(int maximum_failures)
+    : impl_(maximum_failures) {}
 
   ConversationProfilesLimitedErrorCountRetryPolicy(
       ConversationProfilesLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : ConversationProfilesLimitedErrorCountRetryPolicy(
-            rhs.maximum_failures()) {}
+    : ConversationProfilesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   ConversationProfilesLimitedErrorCountRetryPolicy(
       ConversationProfilesLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : ConversationProfilesLimitedErrorCountRetryPolicy(
-            rhs.maximum_failures()) {}
+    : ConversationProfilesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -98,9 +94,7 @@ class ConversationProfilesLimitedErrorCountRetryPolicy
   using BaseType = ConversationProfilesRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      dialogflow_es_internal::ConversationProfilesRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<dialogflow_es_internal::ConversationProfilesRetryTraits> impl_;
 };
 
 /**
@@ -113,8 +107,7 @@ class ConversationProfilesLimitedErrorCountRetryPolicy
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class ConversationProfilesLimitedTimeRetryPolicy
-    : public ConversationProfilesRetryPolicy {
+class ConversationProfilesLimitedTimeRetryPolicy : public ConversationProfilesRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -139,14 +132,12 @@ class ConversationProfilesLimitedTimeRetryPolicy
   template <typename DurationRep, typename DurationPeriod>
   explicit ConversationProfilesLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  ConversationProfilesLimitedTimeRetryPolicy(
-      ConversationProfilesLimitedTimeRetryPolicy&& rhs) noexcept
-      : ConversationProfilesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  ConversationProfilesLimitedTimeRetryPolicy(
-      ConversationProfilesLimitedTimeRetryPolicy const& rhs) noexcept
-      : ConversationProfilesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  ConversationProfilesLimitedTimeRetryPolicy(ConversationProfilesLimitedTimeRetryPolicy&& rhs) noexcept
+    : ConversationProfilesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  ConversationProfilesLimitedTimeRetryPolicy(ConversationProfilesLimitedTimeRetryPolicy const& rhs) noexcept
+    : ConversationProfilesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -168,18 +159,16 @@ class ConversationProfilesLimitedTimeRetryPolicy
   using BaseType = ConversationProfilesRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      dialogflow_es_internal::ConversationProfilesRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<dialogflow_es_internal::ConversationProfilesRetryTraits> impl_;
 };
 
 /**
  * The `ConversationProfilesConnection` object for `ConversationProfilesClient`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `ConversationProfilesClient`. This allows users to inject custom
- * behavior (e.g., with a Google Mock object) when writing tests that use
- * objects of type `ConversationProfilesClient`.
+ * sets in `ConversationProfilesClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `ConversationProfilesClient`.
  *
  * To create a concrete instance, see `MakeConversationProfilesConnection()`.
  *
@@ -192,81 +181,63 @@ class ConversationProfilesConnection {
   virtual Options options() { return Options{}; }
 
   virtual StreamRange<google::cloud::dialogflow::v2::ConversationProfile>
-  ListConversationProfiles(
-      google::cloud::dialogflow::v2::ListConversationProfilesRequest request);
+  ListConversationProfiles(google::cloud::dialogflow::v2::ListConversationProfilesRequest request);
 
   virtual StatusOr<google::cloud::dialogflow::v2::ConversationProfile>
-  GetConversationProfile(
-      google::cloud::dialogflow::v2::GetConversationProfileRequest const&
-          request);
+  GetConversationProfile(google::cloud::dialogflow::v2::GetConversationProfileRequest const& request);
 
   virtual StatusOr<google::cloud::dialogflow::v2::ConversationProfile>
-  CreateConversationProfile(
-      google::cloud::dialogflow::v2::CreateConversationProfileRequest const&
-          request);
+  CreateConversationProfile(google::cloud::dialogflow::v2::CreateConversationProfileRequest const& request);
 
   virtual StatusOr<google::cloud::dialogflow::v2::ConversationProfile>
-  UpdateConversationProfile(
-      google::cloud::dialogflow::v2::UpdateConversationProfileRequest const&
-          request);
+  UpdateConversationProfile(google::cloud::dialogflow::v2::UpdateConversationProfileRequest const& request);
 
-  virtual Status DeleteConversationProfile(
-      google::cloud::dialogflow::v2::DeleteConversationProfileRequest const&
-          request);
+  virtual Status
+  DeleteConversationProfile(google::cloud::dialogflow::v2::DeleteConversationProfileRequest const& request);
 
   virtual future<StatusOr<google::cloud::dialogflow::v2::ConversationProfile>>
-  SetSuggestionFeatureConfig(
-      google::cloud::dialogflow::v2::SetSuggestionFeatureConfigRequest const&
-          request);
+  SetSuggestionFeatureConfig(google::cloud::dialogflow::v2::SetSuggestionFeatureConfigRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> SetSuggestionFeatureConfig(
-      NoAwaitTag,
-      google::cloud::dialogflow::v2::SetSuggestionFeatureConfigRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  SetSuggestionFeatureConfig(NoAwaitTag, google::cloud::dialogflow::v2::SetSuggestionFeatureConfigRequest const& request);
 
   virtual future<StatusOr<google::cloud::dialogflow::v2::ConversationProfile>>
-  SetSuggestionFeatureConfig(google::longrunning::Operation const& operation);
+  SetSuggestionFeatureConfig( google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::dialogflow::v2::ConversationProfile>>
-  ClearSuggestionFeatureConfig(
-      google::cloud::dialogflow::v2::ClearSuggestionFeatureConfigRequest const&
-          request);
+  ClearSuggestionFeatureConfig(google::cloud::dialogflow::v2::ClearSuggestionFeatureConfigRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> ClearSuggestionFeatureConfig(
-      NoAwaitTag,
-      google::cloud::dialogflow::v2::ClearSuggestionFeatureConfigRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  ClearSuggestionFeatureConfig(NoAwaitTag, google::cloud::dialogflow::v2::ClearSuggestionFeatureConfigRequest const& request);
 
   virtual future<StatusOr<google::cloud::dialogflow::v2::ConversationProfile>>
-  ClearSuggestionFeatureConfig(google::longrunning::Operation const& operation);
+  ClearSuggestionFeatureConfig( google::longrunning::Operation const& operation);
 
-  virtual StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request);
+  virtual StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request);
 
-  virtual StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request);
+  virtual StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request);
 
-  virtual StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 
-  virtual Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request);
+  virtual Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request);
 };
 
 /**
- * A factory function to construct an object of type
- * `ConversationProfilesConnection`.
+ * A factory function to construct an object of type `ConversationProfilesConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of
- * ConversationProfilesClient.
+ * should be passed as an argument to the constructor of ConversationProfilesClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `ConversationProfilesConnection`. Expected options are any of the
- * types in the following option lists:
+ * returned `ConversationProfilesConnection`. Expected options are any of the types in
+ * the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
@@ -277,12 +248,11 @@ class ConversationProfilesConnection {
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
  * @param location Sets the prefix for the default `EndpointOption` value.
- * @param options (optional) Configure the `ConversationProfilesConnection`
- * created by this function.
+ * @param options (optional) Configure the `ConversationProfilesConnection` created by
+ * this function.
  */
-std::shared_ptr<ConversationProfilesConnection>
-MakeConversationProfilesConnection(std::string const& location,
-                                   Options options = {});
+std::shared_ptr<ConversationProfilesConnection> MakeConversationProfilesConnection(
+    std::string const& location, Options options = {});
 
 /**
  * A backwards-compatible version of the previous factory function.  Unless
@@ -291,8 +261,8 @@ MakeConversationProfilesConnection(std::string const& location,
  *
  * @deprecated Please use the `location` overload instead.
  */
-std::shared_ptr<ConversationProfilesConnection>
-MakeConversationProfilesConnection(Options options = {});
+std::shared_ptr<ConversationProfilesConnection> MakeConversationProfilesConnection(
+    Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_es

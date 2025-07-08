@@ -42,34 +42,25 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockHealthChecksConnection
-    : public compute_health_checks_v1::HealthChecksConnection {
+class MockHealthChecksConnection : public compute_health_checks_v1::HealthChecksConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(
-      (StreamRange<
-          std::pair<std::string,
-                    google::cloud::cpp::compute::v1::HealthChecksScopedList>>),
-      AggregatedListHealthChecks,
-      (google::cloud::cpp::compute::health_checks::v1::
-           AggregatedListHealthChecksRequest request),
-      (override));
+  MOCK_METHOD((StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::HealthChecksScopedList>>),
+  AggregatedListHealthChecks,
+  (google::cloud::cpp::compute::health_checks::v1::AggregatedListHealthChecksRequest request), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteHealthCheck(Matcher<google::cloud::cpp::compute::health_checks::v1::DeleteHealthCheckRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteHealthCheck(Matcher<google::cloud::cpp::compute::health_checks::v1::DeleteHealthCheckRequest const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              DeleteHealthCheck,
-              (google::cloud::cpp::compute::health_checks::v1::
-                   DeleteHealthCheckRequest const& request),
-              (override));
+  DeleteHealthCheck,
+  (google::cloud::cpp::compute::health_checks::v1::DeleteHealthCheckRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -78,45 +69,36 @@ class MockHealthChecksConnection
   /// EXPECT_CALL(*mock, DeleteHealthCheck(_, _))
   /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-              DeleteHealthCheck,
-              (NoAwaitTag, google::cloud::cpp::compute::health_checks::v1::
-                               DeleteHealthCheckRequest const& request),
-              (override));
+  DeleteHealthCheck, (NoAwaitTag,
+    google::cloud::cpp::compute::health_checks::v1::DeleteHealthCheckRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteHealthCheck(Matcher<google::cloud::cpp::compute::v1::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteHealthCheck(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              DeleteHealthCheck,
-              (google::cloud::cpp::compute::v1::Operation const& operation),
-              (override));
+  DeleteHealthCheck, (
+    google::cloud::cpp::compute::v1::Operation const& operation), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::HealthCheck>,
-              GetHealthCheck,
-              (google::cloud::cpp::compute::health_checks::v1::
-                   GetHealthCheckRequest const& request),
-              (override));
+  GetHealthCheck,
+  (google::cloud::cpp::compute::health_checks::v1::GetHealthCheckRequest const& request), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// InsertHealthCheck(Matcher<google::cloud::cpp::compute::health_checks::v1::InsertHealthCheckRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, InsertHealthCheck(Matcher<google::cloud::cpp::compute::health_checks::v1::InsertHealthCheckRequest const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              InsertHealthCheck,
-              (google::cloud::cpp::compute::health_checks::v1::
-                   InsertHealthCheckRequest const& request),
-              (override));
+  InsertHealthCheck,
+  (google::cloud::cpp::compute::health_checks::v1::InsertHealthCheckRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -125,46 +107,36 @@ class MockHealthChecksConnection
   /// EXPECT_CALL(*mock, InsertHealthCheck(_, _))
   /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-              InsertHealthCheck,
-              (NoAwaitTag, google::cloud::cpp::compute::health_checks::v1::
-                               InsertHealthCheckRequest const& request),
-              (override));
+  InsertHealthCheck, (NoAwaitTag,
+    google::cloud::cpp::compute::health_checks::v1::InsertHealthCheckRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// InsertHealthCheck(Matcher<google::cloud::cpp::compute::v1::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, InsertHealthCheck(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              InsertHealthCheck,
-              (google::cloud::cpp::compute::v1::Operation const& operation),
-              (override));
+  InsertHealthCheck, (
+    google::cloud::cpp::compute::v1::Operation const& operation), (override));
 
-  MOCK_METHOD(
-      (StreamRange<google::cloud::cpp::compute::v1::HealthCheck>),
-      ListHealthChecks,
-      (google::cloud::cpp::compute::health_checks::v1::ListHealthChecksRequest
-           request),
-      (override));
+  MOCK_METHOD((StreamRange<google::cloud::cpp::compute::v1::HealthCheck>),
+  ListHealthChecks,
+  (google::cloud::cpp::compute::health_checks::v1::ListHealthChecksRequest request), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// PatchHealthCheck(Matcher<google::cloud::cpp::compute::health_checks::v1::PatchHealthCheckRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, PatchHealthCheck(Matcher<google::cloud::cpp::compute::health_checks::v1::PatchHealthCheckRequest const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              PatchHealthCheck,
-              (google::cloud::cpp::compute::health_checks::v1::
-                   PatchHealthCheckRequest const& request),
-              (override));
+  PatchHealthCheck,
+  (google::cloud::cpp::compute::health_checks::v1::PatchHealthCheckRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -173,39 +145,32 @@ class MockHealthChecksConnection
   /// EXPECT_CALL(*mock, PatchHealthCheck(_, _))
   /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-              PatchHealthCheck,
-              (NoAwaitTag, google::cloud::cpp::compute::health_checks::v1::
-                               PatchHealthCheckRequest const& request),
-              (override));
+  PatchHealthCheck, (NoAwaitTag,
+    google::cloud::cpp::compute::health_checks::v1::PatchHealthCheckRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// PatchHealthCheck(Matcher<google::cloud::cpp::compute::v1::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, PatchHealthCheck(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              PatchHealthCheck,
-              (google::cloud::cpp::compute::v1::Operation const& operation),
-              (override));
+  PatchHealthCheck, (
+    google::cloud::cpp::compute::v1::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// UpdateHealthCheck(Matcher<google::cloud::cpp::compute::health_checks::v1::UpdateHealthCheckRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, UpdateHealthCheck(Matcher<google::cloud::cpp::compute::health_checks::v1::UpdateHealthCheckRequest const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              UpdateHealthCheck,
-              (google::cloud::cpp::compute::health_checks::v1::
-                   UpdateHealthCheckRequest const& request),
-              (override));
+  UpdateHealthCheck,
+  (google::cloud::cpp::compute::health_checks::v1::UpdateHealthCheckRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -214,24 +179,20 @@ class MockHealthChecksConnection
   /// EXPECT_CALL(*mock, UpdateHealthCheck(_, _))
   /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-              UpdateHealthCheck,
-              (NoAwaitTag, google::cloud::cpp::compute::health_checks::v1::
-                               UpdateHealthCheckRequest const& request),
-              (override));
+  UpdateHealthCheck, (NoAwaitTag,
+    google::cloud::cpp::compute::health_checks::v1::UpdateHealthCheckRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// UpdateHealthCheck(Matcher<google::cloud::cpp::compute::v1::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, UpdateHealthCheck(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              UpdateHealthCheck,
-              (google::cloud::cpp::compute::v1::Operation const& operation),
-              (override));
+  UpdateHealthCheck, (
+    google::cloud::cpp::compute::v1::Operation const& operation), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

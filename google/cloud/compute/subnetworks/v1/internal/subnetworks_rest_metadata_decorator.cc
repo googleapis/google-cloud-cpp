@@ -17,11 +17,11 @@
 // source: google/cloud/compute/subnetworks/v1/subnetworks.proto
 
 #include "google/cloud/compute/subnetworks/v1/internal/subnetworks_rest_metadata_decorator.h"
+#include "absl/strings/str_format.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/internal/rest_set_metadata.h"
 #include "google/cloud/status_or.h"
-#include "absl/strings/str_format.h"
 #include <memory>
 #include <utility>
 
@@ -31,7 +31,8 @@ namespace compute_subnetworks_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 SubnetworksRestMetadata::SubnetworksRestMetadata(
-    std::shared_ptr<SubnetworksRestStub> child, std::string api_client_header)
+    std::shared_ptr<SubnetworksRestStub> child,
+    std::string api_client_header)
     : child_(std::move(child)),
       api_client_header_(
           api_client_header.empty()
@@ -40,168 +41,151 @@ SubnetworksRestMetadata::SubnetworksRestMetadata(
 
 StatusOr<google::cloud::cpp::compute::v1::SubnetworkAggregatedList>
 SubnetworksRestMetadata::AggregatedListSubnetworks(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::subnetworks::v1::
-        AggregatedListSubnetworksRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::subnetworks::v1::AggregatedListSubnetworksRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->AggregatedListSubnetworks(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 SubnetworksRestMetadata::AsyncDeleteSubnetwork(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::subnetworks::v1::DeleteSubnetworkRequest const&
-        request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::subnetworks::v1::DeleteSubnetworkRequest const& request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncDeleteSubnetwork(cq, std::move(rest_context),
-                                       std::move(options), request);
+  return child_->AsyncDeleteSubnetwork(
+      cq, std::move(rest_context), std::move(options), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 SubnetworksRestMetadata::DeleteSubnetwork(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::subnetworks::v1::DeleteSubnetworkRequest const&
-        request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::subnetworks::v1::DeleteSubnetworkRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->DeleteSubnetwork(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 SubnetworksRestMetadata::AsyncExpandIpCidrRange(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::subnetworks::v1::
-        ExpandIpCidrRangeRequest const& request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::subnetworks::v1::ExpandIpCidrRangeRequest const& request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncExpandIpCidrRange(cq, std::move(rest_context),
-                                        std::move(options), request);
+  return child_->AsyncExpandIpCidrRange(
+      cq, std::move(rest_context), std::move(options), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 SubnetworksRestMetadata::ExpandIpCidrRange(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::subnetworks::v1::
-        ExpandIpCidrRangeRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::subnetworks::v1::ExpandIpCidrRangeRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->ExpandIpCidrRange(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Subnetwork>
 SubnetworksRestMetadata::GetSubnetwork(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::subnetworks::v1::GetSubnetworkRequest const&
-        request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::subnetworks::v1::GetSubnetworkRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->GetSubnetwork(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 SubnetworksRestMetadata::GetIamPolicy(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::subnetworks::v1::GetIamPolicyRequest const&
-        request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::subnetworks::v1::GetIamPolicyRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->GetIamPolicy(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 SubnetworksRestMetadata::AsyncInsertSubnetwork(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::subnetworks::v1::InsertSubnetworkRequest const&
-        request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::subnetworks::v1::InsertSubnetworkRequest const& request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncInsertSubnetwork(cq, std::move(rest_context),
-                                       std::move(options), request);
+  return child_->AsyncInsertSubnetwork(
+      cq, std::move(rest_context), std::move(options), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 SubnetworksRestMetadata::InsertSubnetwork(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::subnetworks::v1::InsertSubnetworkRequest const&
-        request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::subnetworks::v1::InsertSubnetworkRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->InsertSubnetwork(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::SubnetworkList>
 SubnetworksRestMetadata::ListSubnetworks(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::subnetworks::v1::ListSubnetworksRequest const&
-        request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::subnetworks::v1::ListSubnetworksRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->ListSubnetworks(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::UsableSubnetworksAggregatedList>
 SubnetworksRestMetadata::ListUsable(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::subnetworks::v1::ListUsableRequest const&
-        request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::subnetworks::v1::ListUsableRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->ListUsable(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 SubnetworksRestMetadata::AsyncPatchSubnetwork(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::subnetworks::v1::PatchSubnetworkRequest const&
-        request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::subnetworks::v1::PatchSubnetworkRequest const& request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncPatchSubnetwork(cq, std::move(rest_context),
-                                      std::move(options), request);
+  return child_->AsyncPatchSubnetwork(
+      cq, std::move(rest_context), std::move(options), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 SubnetworksRestMetadata::PatchSubnetwork(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::subnetworks::v1::PatchSubnetworkRequest const&
-        request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::subnetworks::v1::PatchSubnetworkRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->PatchSubnetwork(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 SubnetworksRestMetadata::SetIamPolicy(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::subnetworks::v1::SetIamPolicyRequest const&
-        request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::subnetworks::v1::SetIamPolicyRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->SetIamPolicy(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 SubnetworksRestMetadata::AsyncSetPrivateIpGoogleAccess(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::subnetworks::v1::
-        SetPrivateIpGoogleAccessRequest const& request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::subnetworks::v1::SetPrivateIpGoogleAccessRequest const& request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncSetPrivateIpGoogleAccess(cq, std::move(rest_context),
-                                               std::move(options), request);
+  return child_->AsyncSetPrivateIpGoogleAccess(
+      cq, std::move(rest_context), std::move(options), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 SubnetworksRestMetadata::SetPrivateIpGoogleAccess(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::subnetworks::v1::
-        SetPrivateIpGoogleAccessRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::subnetworks::v1::SetPrivateIpGoogleAccessRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->SetPrivateIpGoogleAccess(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
 SubnetworksRestMetadata::TestIamPermissions(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::subnetworks::v1::
-        TestIamPermissionsRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::subnetworks::v1::TestIamPermissionsRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->TestIamPermissions(rest_context, options, request);
 }
@@ -211,29 +195,28 @@ SubnetworksRestMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::region_operations::v1::
-        GetOperationRequest const& request) {
+    google::cloud::cpp::compute::region_operations::v1::GetOperationRequest const& request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncGetOperation(cq, std::move(rest_context),
-                                   std::move(options), request);
+  return child_->AsyncGetOperation(
+      cq, std::move(rest_context), std::move(options), request);
 }
 
-future<Status> SubnetworksRestMetadata::AsyncCancelOperation(
+future<Status>
+SubnetworksRestMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::region_operations::v1::
-        DeleteOperationRequest const& request) {
+    google::cloud::cpp::compute::region_operations::v1::DeleteOperationRequest const& request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncCancelOperation(cq, std::move(rest_context),
-                                      std::move(options), request);
+  return child_->AsyncCancelOperation(
+      cq, std::move(rest_context), std::move(options), request);
 }
 
 void SubnetworksRestMetadata::SetMetadata(
-    rest_internal::RestContext& rest_context, Options const& options,
-    std::vector<std::string> const& params) {
-  google::cloud::rest_internal::SetMetadata(rest_context, options, params,
-                                            api_client_header_);
+      rest_internal::RestContext& rest_context,
+      Options const& options, std::vector<std::string> const& params) {
+  google::cloud::rest_internal::SetMetadata(
+      rest_context, options, params, api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

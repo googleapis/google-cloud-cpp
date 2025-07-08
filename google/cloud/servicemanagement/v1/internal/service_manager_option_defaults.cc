@@ -17,10 +17,10 @@
 // source: google/api/servicemanagement/v1/servicemanager.proto
 
 #include "google/cloud/servicemanagement/v1/internal/service_manager_option_defaults.h"
-#include "google/cloud/servicemanagement/v1/service_manager_connection.h"
-#include "google/cloud/servicemanagement/v1/service_manager_options.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
+#include "google/cloud/servicemanagement/v1/service_manager_connection.h"
+#include "google/cloud/servicemanagement/v1/service_manager_options.h"
 #include <memory>
 #include <utility>
 
@@ -35,42 +35,32 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options ServiceManagerDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_SERVICE_MANAGER_ENDPOINT", "",
-      "GOOGLE_CLOUD_CPP_SERVICE_MANAGER_AUTHORITY",
+      std::move(options), "GOOGLE_CLOUD_CPP_SERVICE_MANAGER_ENDPOINT",
+      "", "GOOGLE_CLOUD_CPP_SERVICE_MANAGER_AUTHORITY",
       "servicemanagement.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<servicemanagement_v1::ServiceManagerRetryPolicyOption>()) {
     options.set<servicemanagement_v1::ServiceManagerRetryPolicyOption>(
         servicemanagement_v1::ServiceManagerLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
-            .clone());
+            std::chrono::minutes(30)).clone());
   }
   if (!options.has<servicemanagement_v1::ServiceManagerBackoffPolicyOption>()) {
     options.set<servicemanagement_v1::ServiceManagerBackoffPolicyOption>(
-        ExponentialBackoffPolicy(
-            std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
-            .clone());
+        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
   }
   if (!options.has<servicemanagement_v1::ServiceManagerPollingPolicyOption>()) {
     options.set<servicemanagement_v1::ServiceManagerPollingPolicyOption>(
         GenericPollingPolicy<
             servicemanagement_v1::ServiceManagerRetryPolicyOption::Type,
             servicemanagement_v1::ServiceManagerBackoffPolicyOption::Type>(
-            options
-                .get<servicemanagement_v1::ServiceManagerRetryPolicyOption>()
-                ->clone(),
+            options.get<servicemanagement_v1::ServiceManagerRetryPolicyOption>()->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                     std::chrono::minutes(5), kBackoffScaling)
-                .clone())
-            .clone());
+            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
   }
-  if (!options.has<servicemanagement_v1::
-                       ServiceManagerConnectionIdempotencyPolicyOption>()) {
-    options.set<
-        servicemanagement_v1::ServiceManagerConnectionIdempotencyPolicyOption>(
-        servicemanagement_v1::
-            MakeDefaultServiceManagerConnectionIdempotencyPolicy());
+  if (!options.has<servicemanagement_v1::ServiceManagerConnectionIdempotencyPolicyOption>()) {
+    options.set<servicemanagement_v1::ServiceManagerConnectionIdempotencyPolicyOption>(
+        servicemanagement_v1::MakeDefaultServiceManagerConnectionIdempotencyPolicy());
   }
 
   return options;

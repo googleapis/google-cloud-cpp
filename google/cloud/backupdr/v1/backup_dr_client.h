@@ -64,8 +64,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class BackupDRClient {
  public:
-  explicit BackupDRClient(std::shared_ptr<BackupDRConnection> connection,
-                          Options opts = {});
+  explicit BackupDRClient(std::shared_ptr<BackupDRConnection> connection, Options opts = {});
   ~BackupDRClient();
 
   ///@{
@@ -162,9 +161,7 @@ class BackupDRClient {
   ///
   // clang-format on
   StreamRange<google::cloud::backupdr::v1::ManagementServer>
-  ListManagementServers(
-      google::cloud::backupdr::v1::ListManagementServersRequest request,
-      Options opts = {});
+  ListManagementServers(google::cloud::backupdr::v1::ListManagementServersRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -189,8 +186,8 @@ class BackupDRClient {
   /// [google.cloud.backupdr.v1.ManagementServer]: @googleapis_reference_link{google/cloud/backupdr/v1/backupdr.proto#L420}
   ///
   // clang-format on
-  StatusOr<google::cloud::backupdr::v1::ManagementServer> GetManagementServer(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::backupdr::v1::ManagementServer>
+  GetManagementServer(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -219,9 +216,8 @@ class BackupDRClient {
   /// [google.cloud.backupdr.v1.ManagementServer]: @googleapis_reference_link{google/cloud/backupdr/v1/backupdr.proto#L420}
   ///
   // clang-format on
-  StatusOr<google::cloud::backupdr::v1::ManagementServer> GetManagementServer(
-      google::cloud::backupdr::v1::GetManagementServerRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::backupdr::v1::ManagementServer>
+  GetManagementServer(google::cloud::backupdr::v1::GetManagementServerRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -259,10 +255,7 @@ class BackupDRClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::backupdr::v1::ManagementServer>>
-  CreateManagementServer(
-      std::string const& parent,
-      google::cloud::backupdr::v1::ManagementServer const& management_server,
-      std::string const& management_server_id, Options opts = {});
+  CreateManagementServer(std::string const& parent, google::cloud::backupdr::v1::ManagementServer const& management_server, std::string const& management_server_id, Options opts = {});
 
   // clang-format off
   ///
@@ -275,10 +268,8 @@ class BackupDRClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateManagementServer(
-      NoAwaitTag, std::string const& parent,
-      google::cloud::backupdr::v1::ManagementServer const& management_server,
-      std::string const& management_server_id, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateManagementServer(NoAwaitTag, std::string const& parent, google::cloud::backupdr::v1::ManagementServer const& management_server, std::string const& management_server_id, Options opts = {});
 
   // clang-format off
   ///
@@ -315,9 +306,7 @@ class BackupDRClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::backupdr::v1::ManagementServer>>
-  CreateManagementServer(
-      google::cloud::backupdr::v1::CreateManagementServerRequest const& request,
-      Options opts = {});
+  CreateManagementServer(google::cloud::backupdr::v1::CreateManagementServerRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -330,10 +319,8 @@ class BackupDRClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateManagementServer(
-      NoAwaitTag,
-      google::cloud::backupdr::v1::CreateManagementServerRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateManagementServer(NoAwaitTag, google::cloud::backupdr::v1::CreateManagementServerRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -345,8 +332,7 @@ class BackupDRClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::backupdr::v1::ManagementServer>>
-  CreateManagementServer(google::longrunning::Operation const& operation,
-                         Options opts = {});
+  CreateManagementServer(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -391,8 +377,8 @@ class BackupDRClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteManagementServer(
-      NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteManagementServer(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -429,9 +415,7 @@ class BackupDRClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::backupdr::v1::OperationMetadata>>
-  DeleteManagementServer(
-      google::cloud::backupdr::v1::DeleteManagementServerRequest const& request,
-      Options opts = {});
+  DeleteManagementServer(google::cloud::backupdr::v1::DeleteManagementServerRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -444,10 +428,8 @@ class BackupDRClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteManagementServer(
-      NoAwaitTag,
-      google::cloud::backupdr::v1::DeleteManagementServerRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteManagementServer(NoAwaitTag, google::cloud::backupdr::v1::DeleteManagementServerRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -459,8 +441,7 @@ class BackupDRClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::backupdr::v1::OperationMetadata>>
-  DeleteManagementServer(google::longrunning::Operation const& operation,
-                         Options opts = {});
+  DeleteManagementServer(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -495,10 +476,8 @@ class BackupDRClient {
   /// [google.cloud.backupdr.v1.CreateBackupVaultRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L580}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::backupdr::v1::BackupVault>> CreateBackupVault(
-      std::string const& parent,
-      google::cloud::backupdr::v1::BackupVault const& backup_vault,
-      std::string const& backup_vault_id, Options opts = {});
+  future<StatusOr<google::cloud::backupdr::v1::BackupVault>>
+  CreateBackupVault(std::string const& parent, google::cloud::backupdr::v1::BackupVault const& backup_vault, std::string const& backup_vault_id, Options opts = {});
 
   // clang-format off
   ///
@@ -511,10 +490,8 @@ class BackupDRClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateBackupVault(
-      NoAwaitTag, std::string const& parent,
-      google::cloud::backupdr::v1::BackupVault const& backup_vault,
-      std::string const& backup_vault_id, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateBackupVault(NoAwaitTag, std::string const& parent, google::cloud::backupdr::v1::BackupVault const& backup_vault, std::string const& backup_vault_id, Options opts = {});
 
   // clang-format off
   ///
@@ -550,9 +527,8 @@ class BackupDRClient {
   /// [google.cloud.backupdr.v1.CreateBackupVaultRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L580}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::backupdr::v1::BackupVault>> CreateBackupVault(
-      google::cloud::backupdr::v1::CreateBackupVaultRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::backupdr::v1::BackupVault>>
+  CreateBackupVault(google::cloud::backupdr::v1::CreateBackupVaultRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -565,10 +541,8 @@ class BackupDRClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateBackupVault(
-      NoAwaitTag,
-      google::cloud::backupdr::v1::CreateBackupVaultRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateBackupVault(NoAwaitTag, google::cloud::backupdr::v1::CreateBackupVaultRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -579,8 +553,8 @@ class BackupDRClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::backupdr::v1::BackupVault>> CreateBackupVault(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::backupdr::v1::BackupVault>>
+  CreateBackupVault(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -618,8 +592,8 @@ class BackupDRClient {
   /// [google.cloud.backupdr.v1.ListBackupVaultsRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L621}
   ///
   // clang-format on
-  StreamRange<google::cloud::backupdr::v1::BackupVault> ListBackupVaults(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::backupdr::v1::BackupVault>
+  ListBackupVaults(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -657,9 +631,8 @@ class BackupDRClient {
   /// [google.cloud.backupdr.v1.ListBackupVaultsRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L621}
   ///
   // clang-format on
-  StreamRange<google::cloud::backupdr::v1::BackupVault> ListBackupVaults(
-      google::cloud::backupdr::v1::ListBackupVaultsRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::backupdr::v1::BackupVault>
+  ListBackupVaults(google::cloud::backupdr::v1::ListBackupVaultsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -699,8 +672,8 @@ class BackupDRClient {
   /// [google.cloud.backupdr.v1.FetchUsableBackupVaultsRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L673}
   ///
   // clang-format on
-  StreamRange<google::cloud::backupdr::v1::BackupVault> FetchUsableBackupVaults(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::backupdr::v1::BackupVault>
+  FetchUsableBackupVaults(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -740,9 +713,8 @@ class BackupDRClient {
   /// [google.cloud.backupdr.v1.FetchUsableBackupVaultsRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L673}
   ///
   // clang-format on
-  StreamRange<google::cloud::backupdr::v1::BackupVault> FetchUsableBackupVaults(
-      google::cloud::backupdr::v1::FetchUsableBackupVaultsRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::backupdr::v1::BackupVault>
+  FetchUsableBackupVaults(google::cloud::backupdr::v1::FetchUsableBackupVaultsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -767,8 +739,8 @@ class BackupDRClient {
   /// [google.cloud.backupdr.v1.GetBackupVaultRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L721}
   ///
   // clang-format on
-  StatusOr<google::cloud::backupdr::v1::BackupVault> GetBackupVault(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::backupdr::v1::BackupVault>
+  GetBackupVault(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -797,9 +769,8 @@ class BackupDRClient {
   /// [google.cloud.backupdr.v1.GetBackupVaultRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L721}
   ///
   // clang-format on
-  StatusOr<google::cloud::backupdr::v1::BackupVault> GetBackupVault(
-      google::cloud::backupdr::v1::GetBackupVaultRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::backupdr::v1::BackupVault>
+  GetBackupVault(google::cloud::backupdr::v1::GetBackupVaultRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -835,9 +806,8 @@ class BackupDRClient {
   /// [google.cloud.backupdr.v1.UpdateBackupVaultRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L737}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::backupdr::v1::BackupVault>> UpdateBackupVault(
-      google::cloud::backupdr::v1::BackupVault const& backup_vault,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  future<StatusOr<google::cloud::backupdr::v1::BackupVault>>
+  UpdateBackupVault(google::cloud::backupdr::v1::BackupVault const& backup_vault, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -850,9 +820,8 @@ class BackupDRClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateBackupVault(
-      NoAwaitTag, google::cloud::backupdr::v1::BackupVault const& backup_vault,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateBackupVault(NoAwaitTag, google::cloud::backupdr::v1::BackupVault const& backup_vault, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -888,9 +857,8 @@ class BackupDRClient {
   /// [google.cloud.backupdr.v1.UpdateBackupVaultRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L737}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::backupdr::v1::BackupVault>> UpdateBackupVault(
-      google::cloud::backupdr::v1::UpdateBackupVaultRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::backupdr::v1::BackupVault>>
+  UpdateBackupVault(google::cloud::backupdr::v1::UpdateBackupVaultRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -903,10 +871,8 @@ class BackupDRClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateBackupVault(
-      NoAwaitTag,
-      google::cloud::backupdr::v1::UpdateBackupVaultRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateBackupVault(NoAwaitTag, google::cloud::backupdr::v1::UpdateBackupVaultRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -917,8 +883,8 @@ class BackupDRClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::backupdr::v1::BackupVault>> UpdateBackupVault(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::backupdr::v1::BackupVault>>
+  UpdateBackupVault(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -963,8 +929,8 @@ class BackupDRClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteBackupVault(
-      NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteBackupVault(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1001,9 +967,7 @@ class BackupDRClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::backupdr::v1::OperationMetadata>>
-  DeleteBackupVault(
-      google::cloud::backupdr::v1::DeleteBackupVaultRequest const& request,
-      Options opts = {});
+  DeleteBackupVault(google::cloud::backupdr::v1::DeleteBackupVaultRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1016,10 +980,8 @@ class BackupDRClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteBackupVault(
-      NoAwaitTag,
-      google::cloud::backupdr::v1::DeleteBackupVaultRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteBackupVault(NoAwaitTag, google::cloud::backupdr::v1::DeleteBackupVaultRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1031,8 +993,7 @@ class BackupDRClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::backupdr::v1::OperationMetadata>>
-  DeleteBackupVault(google::longrunning::Operation const& operation,
-                    Options opts = {});
+  DeleteBackupVault(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1070,8 +1031,8 @@ class BackupDRClient {
   /// [google.cloud.backupdr.v1.ListDataSourcesRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L828}
   ///
   // clang-format on
-  StreamRange<google::cloud::backupdr::v1::DataSource> ListDataSources(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::backupdr::v1::DataSource>
+  ListDataSources(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -1109,9 +1070,8 @@ class BackupDRClient {
   /// [google.cloud.backupdr.v1.ListDataSourcesRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L828}
   ///
   // clang-format on
-  StreamRange<google::cloud::backupdr::v1::DataSource> ListDataSources(
-      google::cloud::backupdr::v1::ListDataSourcesRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::backupdr::v1::DataSource>
+  ListDataSources(google::cloud::backupdr::v1::ListDataSourcesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1136,8 +1096,8 @@ class BackupDRClient {
   /// [google.cloud.backupdr.v1.GetDataSourceRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L876}
   ///
   // clang-format on
-  StatusOr<google::cloud::backupdr::v1::DataSource> GetDataSource(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::backupdr::v1::DataSource>
+  GetDataSource(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1166,9 +1126,8 @@ class BackupDRClient {
   /// [google.cloud.backupdr.v1.GetDataSourceRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L876}
   ///
   // clang-format on
-  StatusOr<google::cloud::backupdr::v1::DataSource> GetDataSource(
-      google::cloud::backupdr::v1::GetDataSourceRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::backupdr::v1::DataSource>
+  GetDataSource(google::cloud::backupdr::v1::GetDataSourceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1204,9 +1163,8 @@ class BackupDRClient {
   /// [google.cloud.backupdr.v1.UpdateDataSourceRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L888}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::backupdr::v1::DataSource>> UpdateDataSource(
-      google::cloud::backupdr::v1::DataSource const& data_source,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  future<StatusOr<google::cloud::backupdr::v1::DataSource>>
+  UpdateDataSource(google::cloud::backupdr::v1::DataSource const& data_source, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -1219,9 +1177,8 @@ class BackupDRClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateDataSource(
-      NoAwaitTag, google::cloud::backupdr::v1::DataSource const& data_source,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateDataSource(NoAwaitTag, google::cloud::backupdr::v1::DataSource const& data_source, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -1257,9 +1214,8 @@ class BackupDRClient {
   /// [google.cloud.backupdr.v1.UpdateDataSourceRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L888}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::backupdr::v1::DataSource>> UpdateDataSource(
-      google::cloud::backupdr::v1::UpdateDataSourceRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::backupdr::v1::DataSource>>
+  UpdateDataSource(google::cloud::backupdr::v1::UpdateDataSourceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1272,10 +1228,8 @@ class BackupDRClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateDataSource(
-      NoAwaitTag,
-      google::cloud::backupdr::v1::UpdateDataSourceRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateDataSource(NoAwaitTag, google::cloud::backupdr::v1::UpdateDataSourceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1286,8 +1240,8 @@ class BackupDRClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::backupdr::v1::DataSource>> UpdateDataSource(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::backupdr::v1::DataSource>>
+  UpdateDataSource(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1325,8 +1279,8 @@ class BackupDRClient {
   /// [google.cloud.backupdr.v1.ListBackupsRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L923}
   ///
   // clang-format on
-  StreamRange<google::cloud::backupdr::v1::Backup> ListBackups(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::backupdr::v1::Backup>
+  ListBackups(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -1364,9 +1318,8 @@ class BackupDRClient {
   /// [google.cloud.backupdr.v1.ListBackupsRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L923}
   ///
   // clang-format on
-  StreamRange<google::cloud::backupdr::v1::Backup> ListBackups(
-      google::cloud::backupdr::v1::ListBackupsRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::backupdr::v1::Backup>
+  ListBackups(google::cloud::backupdr::v1::ListBackupsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1391,8 +1344,8 @@ class BackupDRClient {
   /// [google.cloud.backupdr.v1.GetBackupRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L975}
   ///
   // clang-format on
-  StatusOr<google::cloud::backupdr::v1::Backup> GetBackup(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::backupdr::v1::Backup>
+  GetBackup(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1421,9 +1374,8 @@ class BackupDRClient {
   /// [google.cloud.backupdr.v1.GetBackupRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L975}
   ///
   // clang-format on
-  StatusOr<google::cloud::backupdr::v1::Backup> GetBackup(
-      google::cloud::backupdr::v1::GetBackupRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::backupdr::v1::Backup>
+  GetBackup(google::cloud::backupdr::v1::GetBackupRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1459,9 +1411,8 @@ class BackupDRClient {
   /// [google.cloud.backupdr.v1.UpdateBackupRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L989}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::backupdr::v1::Backup>> UpdateBackup(
-      google::cloud::backupdr::v1::Backup const& backup,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  future<StatusOr<google::cloud::backupdr::v1::Backup>>
+  UpdateBackup(google::cloud::backupdr::v1::Backup const& backup, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -1474,9 +1425,8 @@ class BackupDRClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateBackup(
-      NoAwaitTag, google::cloud::backupdr::v1::Backup const& backup,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateBackup(NoAwaitTag, google::cloud::backupdr::v1::Backup const& backup, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -1512,9 +1462,8 @@ class BackupDRClient {
   /// [google.cloud.backupdr.v1.UpdateBackupRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L989}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::backupdr::v1::Backup>> UpdateBackup(
-      google::cloud::backupdr::v1::UpdateBackupRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::backupdr::v1::Backup>>
+  UpdateBackup(google::cloud::backupdr::v1::UpdateBackupRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1527,10 +1476,8 @@ class BackupDRClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateBackup(
-      NoAwaitTag,
-      google::cloud::backupdr::v1::UpdateBackupRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateBackup(NoAwaitTag, google::cloud::backupdr::v1::UpdateBackupRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1541,8 +1488,8 @@ class BackupDRClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::backupdr::v1::Backup>> UpdateBackup(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::backupdr::v1::Backup>>
+  UpdateBackup(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1573,8 +1520,8 @@ class BackupDRClient {
   /// [google.cloud.backupdr.v1.DeleteBackupRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L1021}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::backupdr::v1::Backup>> DeleteBackup(
-      std::string const& name, Options opts = {});
+  future<StatusOr<google::cloud::backupdr::v1::Backup>>
+  DeleteBackup(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1587,9 +1534,8 @@ class BackupDRClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteBackup(NoAwaitTag,
-                                                        std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteBackup(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1625,9 +1571,8 @@ class BackupDRClient {
   /// [google.cloud.backupdr.v1.DeleteBackupRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L1021}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::backupdr::v1::Backup>> DeleteBackup(
-      google::cloud::backupdr::v1::DeleteBackupRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::backupdr::v1::Backup>>
+  DeleteBackup(google::cloud::backupdr::v1::DeleteBackupRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1640,10 +1585,8 @@ class BackupDRClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteBackup(
-      NoAwaitTag,
-      google::cloud::backupdr::v1::DeleteBackupRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteBackup(NoAwaitTag, google::cloud::backupdr::v1::DeleteBackupRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1654,8 +1597,8 @@ class BackupDRClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::backupdr::v1::Backup>> DeleteBackup(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::backupdr::v1::Backup>>
+  DeleteBackup(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1701,8 +1644,8 @@ class BackupDRClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> RestoreBackup(
-      NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  RestoreBackup(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1739,9 +1682,7 @@ class BackupDRClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::backupdr::v1::RestoreBackupResponse>>
-  RestoreBackup(
-      google::cloud::backupdr::v1::RestoreBackupRequest const& request,
-      Options opts = {});
+  RestoreBackup(google::cloud::backupdr::v1::RestoreBackupRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1754,10 +1695,8 @@ class BackupDRClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> RestoreBackup(
-      NoAwaitTag,
-      google::cloud::backupdr::v1::RestoreBackupRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  RestoreBackup(NoAwaitTag, google::cloud::backupdr::v1::RestoreBackupRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1769,8 +1708,7 @@ class BackupDRClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::backupdr::v1::RestoreBackupResponse>>
-  RestoreBackup(google::longrunning::Operation const& operation,
-                Options opts = {});
+  RestoreBackup(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1808,10 +1746,8 @@ class BackupDRClient {
   /// [google.cloud.backupdr.v1.CreateBackupPlanRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplan.proto#L300}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::backupdr::v1::BackupPlan>> CreateBackupPlan(
-      std::string const& parent,
-      google::cloud::backupdr::v1::BackupPlan const& backup_plan,
-      std::string const& backup_plan_id, Options opts = {});
+  future<StatusOr<google::cloud::backupdr::v1::BackupPlan>>
+  CreateBackupPlan(std::string const& parent, google::cloud::backupdr::v1::BackupPlan const& backup_plan, std::string const& backup_plan_id, Options opts = {});
 
   // clang-format off
   ///
@@ -1824,10 +1760,8 @@ class BackupDRClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateBackupPlan(
-      NoAwaitTag, std::string const& parent,
-      google::cloud::backupdr::v1::BackupPlan const& backup_plan,
-      std::string const& backup_plan_id, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateBackupPlan(NoAwaitTag, std::string const& parent, google::cloud::backupdr::v1::BackupPlan const& backup_plan, std::string const& backup_plan_id, Options opts = {});
 
   // clang-format off
   ///
@@ -1863,9 +1797,8 @@ class BackupDRClient {
   /// [google.cloud.backupdr.v1.CreateBackupPlanRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplan.proto#L300}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::backupdr::v1::BackupPlan>> CreateBackupPlan(
-      google::cloud::backupdr::v1::CreateBackupPlanRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::backupdr::v1::BackupPlan>>
+  CreateBackupPlan(google::cloud::backupdr::v1::CreateBackupPlanRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1878,10 +1811,8 @@ class BackupDRClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateBackupPlan(
-      NoAwaitTag,
-      google::cloud::backupdr::v1::CreateBackupPlanRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateBackupPlan(NoAwaitTag, google::cloud::backupdr::v1::CreateBackupPlanRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1892,8 +1823,8 @@ class BackupDRClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::backupdr::v1::BackupPlan>> CreateBackupPlan(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::backupdr::v1::BackupPlan>>
+  CreateBackupPlan(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1919,8 +1850,8 @@ class BackupDRClient {
   /// [google.cloud.backupdr.v1.GetBackupPlanRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplan.proto#L401}
   ///
   // clang-format on
-  StatusOr<google::cloud::backupdr::v1::BackupPlan> GetBackupPlan(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::backupdr::v1::BackupPlan>
+  GetBackupPlan(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1949,9 +1880,8 @@ class BackupDRClient {
   /// [google.cloud.backupdr.v1.GetBackupPlanRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplan.proto#L401}
   ///
   // clang-format on
-  StatusOr<google::cloud::backupdr::v1::BackupPlan> GetBackupPlan(
-      google::cloud::backupdr::v1::GetBackupPlanRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::backupdr::v1::BackupPlan>
+  GetBackupPlan(google::cloud::backupdr::v1::GetBackupPlanRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1988,8 +1918,8 @@ class BackupDRClient {
   /// [google.cloud.backupdr.v1.ListBackupPlansRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplan.proto#L340}
   ///
   // clang-format on
-  StreamRange<google::cloud::backupdr::v1::BackupPlan> ListBackupPlans(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::backupdr::v1::BackupPlan>
+  ListBackupPlans(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -2027,9 +1957,8 @@ class BackupDRClient {
   /// [google.cloud.backupdr.v1.ListBackupPlansRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupplan.proto#L340}
   ///
   // clang-format on
-  StreamRange<google::cloud::backupdr::v1::BackupPlan> ListBackupPlans(
-      google::cloud::backupdr::v1::ListBackupPlansRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::backupdr::v1::BackupPlan>
+  ListBackupPlans(google::cloud::backupdr::v1::ListBackupPlansRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -2076,8 +2005,8 @@ class BackupDRClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteBackupPlan(
-      NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteBackupPlan(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2114,9 +2043,7 @@ class BackupDRClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::backupdr::v1::OperationMetadata>>
-  DeleteBackupPlan(
-      google::cloud::backupdr::v1::DeleteBackupPlanRequest const& request,
-      Options opts = {});
+  DeleteBackupPlan(google::cloud::backupdr::v1::DeleteBackupPlanRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2129,10 +2056,8 @@ class BackupDRClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteBackupPlan(
-      NoAwaitTag,
-      google::cloud::backupdr::v1::DeleteBackupPlanRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteBackupPlan(NoAwaitTag, google::cloud::backupdr::v1::DeleteBackupPlanRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2144,8 +2069,7 @@ class BackupDRClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::backupdr::v1::OperationMetadata>>
-  DeleteBackupPlan(google::longrunning::Operation const& operation,
-                   Options opts = {});
+  DeleteBackupPlan(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -2182,11 +2106,7 @@ class BackupDRClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::backupdr::v1::BackupPlanAssociation>>
-  CreateBackupPlanAssociation(
-      std::string const& parent,
-      google::cloud::backupdr::v1::BackupPlanAssociation const&
-          backup_plan_association,
-      std::string const& backup_plan_association_id, Options opts = {});
+  CreateBackupPlanAssociation(std::string const& parent, google::cloud::backupdr::v1::BackupPlanAssociation const& backup_plan_association, std::string const& backup_plan_association_id, Options opts = {});
 
   // clang-format off
   ///
@@ -2199,11 +2119,8 @@ class BackupDRClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateBackupPlanAssociation(
-      NoAwaitTag, std::string const& parent,
-      google::cloud::backupdr::v1::BackupPlanAssociation const&
-          backup_plan_association,
-      std::string const& backup_plan_association_id, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateBackupPlanAssociation(NoAwaitTag, std::string const& parent, google::cloud::backupdr::v1::BackupPlanAssociation const& backup_plan_association, std::string const& backup_plan_association_id, Options opts = {});
 
   // clang-format off
   ///
@@ -2240,10 +2157,7 @@ class BackupDRClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::backupdr::v1::BackupPlanAssociation>>
-  CreateBackupPlanAssociation(
-      google::cloud::backupdr::v1::CreateBackupPlanAssociationRequest const&
-          request,
-      Options opts = {});
+  CreateBackupPlanAssociation(google::cloud::backupdr::v1::CreateBackupPlanAssociationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2256,11 +2170,8 @@ class BackupDRClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateBackupPlanAssociation(
-      NoAwaitTag,
-      google::cloud::backupdr::v1::CreateBackupPlanAssociationRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateBackupPlanAssociation(NoAwaitTag, google::cloud::backupdr::v1::CreateBackupPlanAssociationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2272,8 +2183,7 @@ class BackupDRClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::backupdr::v1::BackupPlanAssociation>>
-  CreateBackupPlanAssociation(google::longrunning::Operation const& operation,
-                              Options opts = {});
+  CreateBackupPlanAssociation(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -2329,10 +2239,7 @@ class BackupDRClient {
   ///
   // clang-format on
   StatusOr<google::cloud::backupdr::v1::BackupPlanAssociation>
-  GetBackupPlanAssociation(
-      google::cloud::backupdr::v1::GetBackupPlanAssociationRequest const&
-          request,
-      Options opts = {});
+  GetBackupPlanAssociation(google::cloud::backupdr::v1::GetBackupPlanAssociationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2410,9 +2317,7 @@ class BackupDRClient {
   ///
   // clang-format on
   StreamRange<google::cloud::backupdr::v1::BackupPlanAssociation>
-  ListBackupPlanAssociations(
-      google::cloud::backupdr::v1::ListBackupPlanAssociationsRequest request,
-      Options opts = {});
+  ListBackupPlanAssociations(google::cloud::backupdr::v1::ListBackupPlanAssociationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -2458,8 +2363,8 @@ class BackupDRClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteBackupPlanAssociation(
-      NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteBackupPlanAssociation(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2496,10 +2401,7 @@ class BackupDRClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::backupdr::v1::OperationMetadata>>
-  DeleteBackupPlanAssociation(
-      google::cloud::backupdr::v1::DeleteBackupPlanAssociationRequest const&
-          request,
-      Options opts = {});
+  DeleteBackupPlanAssociation(google::cloud::backupdr::v1::DeleteBackupPlanAssociationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2512,11 +2414,8 @@ class BackupDRClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteBackupPlanAssociation(
-      NoAwaitTag,
-      google::cloud::backupdr::v1::DeleteBackupPlanAssociationRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteBackupPlanAssociation(NoAwaitTag, google::cloud::backupdr::v1::DeleteBackupPlanAssociationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2528,8 +2427,7 @@ class BackupDRClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::backupdr::v1::OperationMetadata>>
-  DeleteBackupPlanAssociation(google::longrunning::Operation const& operation,
-                              Options opts = {});
+  DeleteBackupPlanAssociation(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -2563,8 +2461,7 @@ class BackupDRClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::backupdr::v1::BackupPlanAssociation>>
-  TriggerBackup(std::string const& name, std::string const& rule_id,
-                Options opts = {});
+  TriggerBackup(std::string const& name, std::string const& rule_id, Options opts = {});
 
   // clang-format off
   ///
@@ -2577,9 +2474,8 @@ class BackupDRClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> TriggerBackup(
-      NoAwaitTag, std::string const& name, std::string const& rule_id,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  TriggerBackup(NoAwaitTag, std::string const& name, std::string const& rule_id, Options opts = {});
 
   // clang-format off
   ///
@@ -2616,9 +2512,7 @@ class BackupDRClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::backupdr::v1::BackupPlanAssociation>>
-  TriggerBackup(
-      google::cloud::backupdr::v1::TriggerBackupRequest const& request,
-      Options opts = {});
+  TriggerBackup(google::cloud::backupdr::v1::TriggerBackupRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2631,10 +2525,8 @@ class BackupDRClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> TriggerBackup(
-      NoAwaitTag,
-      google::cloud::backupdr::v1::TriggerBackupRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  TriggerBackup(NoAwaitTag, google::cloud::backupdr::v1::TriggerBackupRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2646,8 +2538,7 @@ class BackupDRClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::backupdr::v1::BackupPlanAssociation>>
-  TriggerBackup(google::longrunning::Operation const& operation,
-                Options opts = {});
+  TriggerBackup(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -2684,9 +2575,7 @@ class BackupDRClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::backupdr::v1::InitializeServiceResponse>>
-  InitializeService(
-      google::cloud::backupdr::v1::InitializeServiceRequest const& request,
-      Options opts = {});
+  InitializeService(google::cloud::backupdr::v1::InitializeServiceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2699,10 +2588,8 @@ class BackupDRClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> InitializeService(
-      NoAwaitTag,
-      google::cloud::backupdr::v1::InitializeServiceRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  InitializeService(NoAwaitTag, google::cloud::backupdr::v1::InitializeServiceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2714,8 +2601,7 @@ class BackupDRClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::backupdr::v1::InitializeServiceResponse>>
-  InitializeService(google::longrunning::Operation const& operation,
-                    Options opts = {});
+  InitializeService(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -2753,8 +2639,8 @@ class BackupDRClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request, Options opts = {});
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -2783,9 +2669,8 @@ class BackupDRClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2817,8 +2702,8 @@ class BackupDRClient {
   /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L100}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2849,8 +2734,8 @@ class BackupDRClient {
   /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2885,9 +2770,8 @@ class BackupDRClient {
   /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L153}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request,
-      Options opts = {});
+  StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2922,8 +2806,8 @@ class BackupDRClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -2962,8 +2846,8 @@ class BackupDRClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -2989,8 +2873,8 @@ class BackupDRClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -3021,9 +2905,8 @@ class BackupDRClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -3047,7 +2930,8 @@ class BackupDRClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status DeleteOperation(std::string const& name, Options opts = {});
+  Status
+  DeleteOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -3076,9 +2960,8 @@ class BackupDRClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request,
-      Options opts = {});
+  Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -3112,7 +2995,8 @@ class BackupDRClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(std::string const& name, Options opts = {});
+  Status
+  CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -3151,9 +3035,8 @@ class BackupDRClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request,
-      Options opts = {});
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<BackupDRConnection> connection_;

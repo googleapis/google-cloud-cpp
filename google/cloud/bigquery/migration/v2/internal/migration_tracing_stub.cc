@@ -32,104 +32,81 @@ MigrationServiceTracingStub::MigrationServiceTracingStub(
     std::shared_ptr<MigrationServiceStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
-StatusOr<google::cloud::bigquery::migration::v2::MigrationWorkflow>
-MigrationServiceTracingStub::CreateMigrationWorkflow(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::migration::v2::
-        CreateMigrationWorkflowRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.bigquery.migration.v2.MigrationService",
-      "CreateMigrationWorkflow");
+StatusOr<google::cloud::bigquery::migration::v2::MigrationWorkflow> MigrationServiceTracingStub::CreateMigrationWorkflow(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::migration::v2::CreateMigrationWorkflowRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.bigquery.migration.v2.MigrationService", "CreateMigrationWorkflow");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span,
-      child_->CreateMigrationWorkflow(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->CreateMigrationWorkflow(context, options, request));
 }
 
-StatusOr<google::cloud::bigquery::migration::v2::MigrationWorkflow>
-MigrationServiceTracingStub::GetMigrationWorkflow(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::migration::v2::GetMigrationWorkflowRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.bigquery.migration.v2.MigrationService",
-      "GetMigrationWorkflow");
+StatusOr<google::cloud::bigquery::migration::v2::MigrationWorkflow> MigrationServiceTracingStub::GetMigrationWorkflow(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::migration::v2::GetMigrationWorkflowRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.bigquery.migration.v2.MigrationService", "GetMigrationWorkflow");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->GetMigrationWorkflow(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->GetMigrationWorkflow(context, options, request));
 }
 
-StatusOr<google::cloud::bigquery::migration::v2::ListMigrationWorkflowsResponse>
-MigrationServiceTracingStub::ListMigrationWorkflows(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::migration::v2::ListMigrationWorkflowsRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.bigquery.migration.v2.MigrationService",
-      "ListMigrationWorkflows");
+StatusOr<google::cloud::bigquery::migration::v2::ListMigrationWorkflowsResponse> MigrationServiceTracingStub::ListMigrationWorkflows(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::migration::v2::ListMigrationWorkflowsRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.bigquery.migration.v2.MigrationService", "ListMigrationWorkflows");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span,
-      child_->ListMigrationWorkflows(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->ListMigrationWorkflows(context, options, request));
 }
 
 Status MigrationServiceTracingStub::DeleteMigrationWorkflow(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::migration::v2::
-        DeleteMigrationWorkflowRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.bigquery.migration.v2.MigrationService",
-      "DeleteMigrationWorkflow");
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::migration::v2::DeleteMigrationWorkflowRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.bigquery.migration.v2.MigrationService", "DeleteMigrationWorkflow");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span,
-      child_->DeleteMigrationWorkflow(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->DeleteMigrationWorkflow(context, options, request));
 }
 
 Status MigrationServiceTracingStub::StartMigrationWorkflow(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::migration::v2::StartMigrationWorkflowRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.bigquery.migration.v2.MigrationService",
-      "StartMigrationWorkflow");
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::migration::v2::StartMigrationWorkflowRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.bigquery.migration.v2.MigrationService", "StartMigrationWorkflow");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span,
-      child_->StartMigrationWorkflow(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->StartMigrationWorkflow(context, options, request));
 }
 
-StatusOr<google::cloud::bigquery::migration::v2::MigrationSubtask>
-MigrationServiceTracingStub::GetMigrationSubtask(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::migration::v2::GetMigrationSubtaskRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.bigquery.migration.v2.MigrationService",
-      "GetMigrationSubtask");
+StatusOr<google::cloud::bigquery::migration::v2::MigrationSubtask> MigrationServiceTracingStub::GetMigrationSubtask(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::migration::v2::GetMigrationSubtaskRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.bigquery.migration.v2.MigrationService", "GetMigrationSubtask");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->GetMigrationSubtask(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->GetMigrationSubtask(context, options, request));
 }
 
-StatusOr<google::cloud::bigquery::migration::v2::ListMigrationSubtasksResponse>
-MigrationServiceTracingStub::ListMigrationSubtasks(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::migration::v2::ListMigrationSubtasksRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.bigquery.migration.v2.MigrationService",
-      "ListMigrationSubtasks");
+StatusOr<google::cloud::bigquery::migration::v2::ListMigrationSubtasksResponse> MigrationServiceTracingStub::ListMigrationSubtasks(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::migration::v2::ListMigrationSubtasksRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.bigquery.migration.v2.MigrationService", "ListMigrationSubtasks");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->ListMigrationSubtasks(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->ListMigrationSubtasks(context, options, request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

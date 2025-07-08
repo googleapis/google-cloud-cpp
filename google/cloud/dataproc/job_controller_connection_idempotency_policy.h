@@ -26,13 +26,10 @@ namespace cloud {
 namespace dataproc {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use
-/// dataproc_v1::MakeDefaultJobControllerConnectionIdempotencyPolicy directly.
-using ::google::cloud::dataproc_v1::
-    MakeDefaultJobControllerConnectionIdempotencyPolicy;
+/// @deprecated Use dataproc_v1::MakeDefaultJobControllerConnectionIdempotencyPolicy directly.
+using ::google::cloud::dataproc_v1::MakeDefaultJobControllerConnectionIdempotencyPolicy;
 
-/// @deprecated Use dataproc_v1::JobControllerConnectionIdempotencyPolicy
-/// directly.
+/// @deprecated Use dataproc_v1::JobControllerConnectionIdempotencyPolicy directly.
 using ::google::cloud::dataproc_v1::JobControllerConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

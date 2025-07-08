@@ -77,28 +77,23 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class AppGatewaysServiceClient {
  public:
-  explicit AppGatewaysServiceClient(
-      std::shared_ptr<AppGatewaysServiceConnection> connection,
-      Options opts = {});
+  explicit AppGatewaysServiceClient(std::shared_ptr<AppGatewaysServiceConnection> connection, Options opts = {});
   ~AppGatewaysServiceClient();
 
   ///@{
   /// @name Copy and move support
   AppGatewaysServiceClient(AppGatewaysServiceClient const&) = default;
-  AppGatewaysServiceClient& operator=(AppGatewaysServiceClient const&) =
-      default;
+  AppGatewaysServiceClient& operator=(AppGatewaysServiceClient const&) = default;
   AppGatewaysServiceClient(AppGatewaysServiceClient&&) = default;
   AppGatewaysServiceClient& operator=(AppGatewaysServiceClient&&) = default;
   ///@}
 
   ///@{
   /// @name Equality
-  friend bool operator==(AppGatewaysServiceClient const& a,
-                         AppGatewaysServiceClient const& b) {
+  friend bool operator==(AppGatewaysServiceClient const& a, AppGatewaysServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(AppGatewaysServiceClient const& a,
-                         AppGatewaysServiceClient const& b) {
+  friend bool operator!=(AppGatewaysServiceClient const& a, AppGatewaysServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -175,10 +170,7 @@ class AppGatewaysServiceClient {
   ///
   // clang-format on
   StreamRange<google::cloud::beyondcorp::appgateways::v1::AppGateway>
-  ListAppGateways(
-      google::cloud::beyondcorp::appgateways::v1::ListAppGatewaysRequest
-          request,
-      Options opts = {});
+  ListAppGateways(google::cloud::beyondcorp::appgateways::v1::ListAppGatewaysRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -234,10 +226,7 @@ class AppGatewaysServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::beyondcorp::appgateways::v1::AppGateway>
-  GetAppGateway(
-      google::cloud::beyondcorp::appgateways::v1::GetAppGatewayRequest const&
-          request,
-      Options opts = {});
+  GetAppGateway(google::cloud::beyondcorp::appgateways::v1::GetAppGatewayRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -275,10 +264,7 @@ class AppGatewaysServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::beyondcorp::appgateways::v1::AppGateway>>
-  CreateAppGateway(
-      std::string const& parent,
-      google::cloud::beyondcorp::appgateways::v1::AppGateway const& app_gateway,
-      std::string const& app_gateway_id, Options opts = {});
+  CreateAppGateway(std::string const& parent, google::cloud::beyondcorp::appgateways::v1::AppGateway const& app_gateway, std::string const& app_gateway_id, Options opts = {});
 
   // clang-format off
   ///
@@ -291,10 +277,8 @@ class AppGatewaysServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateAppGateway(
-      NoAwaitTag, std::string const& parent,
-      google::cloud::beyondcorp::appgateways::v1::AppGateway const& app_gateway,
-      std::string const& app_gateway_id, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateAppGateway(NoAwaitTag, std::string const& parent, google::cloud::beyondcorp::appgateways::v1::AppGateway const& app_gateway, std::string const& app_gateway_id, Options opts = {});
 
   // clang-format off
   ///
@@ -331,10 +315,7 @@ class AppGatewaysServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::beyondcorp::appgateways::v1::AppGateway>>
-  CreateAppGateway(
-      google::cloud::beyondcorp::appgateways::v1::CreateAppGatewayRequest const&
-          request,
-      Options opts = {});
+  CreateAppGateway(google::cloud::beyondcorp::appgateways::v1::CreateAppGatewayRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -347,11 +328,8 @@ class AppGatewaysServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateAppGateway(
-      NoAwaitTag,
-      google::cloud::beyondcorp::appgateways::v1::CreateAppGatewayRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateAppGateway(NoAwaitTag, google::cloud::beyondcorp::appgateways::v1::CreateAppGatewayRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -363,8 +341,7 @@ class AppGatewaysServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::beyondcorp::appgateways::v1::AppGateway>>
-  CreateAppGateway(google::longrunning::Operation const& operation,
-                   Options opts = {});
+  CreateAppGateway(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -396,8 +373,7 @@ class AppGatewaysServiceClient {
   /// [google.cloud.beyondcorp.appgateways.v1.DeleteAppGatewayRequest]: @googleapis_reference_link{google/cloud/beyondcorp/appgateways/v1/app_gateways_service.proto#L197}
   ///
   // clang-format on
-  future<StatusOr<
-      google::cloud::beyondcorp::appgateways::v1::AppGatewayOperationMetadata>>
+  future<StatusOr<google::cloud::beyondcorp::appgateways::v1::AppGatewayOperationMetadata>>
   DeleteAppGateway(std::string const& name, Options opts = {});
 
   // clang-format off
@@ -411,8 +387,8 @@ class AppGatewaysServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteAppGateway(
-      NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteAppGateway(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -448,12 +424,8 @@ class AppGatewaysServiceClient {
   /// [google.cloud.beyondcorp.appgateways.v1.DeleteAppGatewayRequest]: @googleapis_reference_link{google/cloud/beyondcorp/appgateways/v1/app_gateways_service.proto#L197}
   ///
   // clang-format on
-  future<StatusOr<
-      google::cloud::beyondcorp::appgateways::v1::AppGatewayOperationMetadata>>
-  DeleteAppGateway(
-      google::cloud::beyondcorp::appgateways::v1::DeleteAppGatewayRequest const&
-          request,
-      Options opts = {});
+  future<StatusOr<google::cloud::beyondcorp::appgateways::v1::AppGatewayOperationMetadata>>
+  DeleteAppGateway(google::cloud::beyondcorp::appgateways::v1::DeleteAppGatewayRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -466,11 +438,8 @@ class AppGatewaysServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteAppGateway(
-      NoAwaitTag,
-      google::cloud::beyondcorp::appgateways::v1::DeleteAppGatewayRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteAppGateway(NoAwaitTag, google::cloud::beyondcorp::appgateways::v1::DeleteAppGatewayRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -481,10 +450,8 @@ class AppGatewaysServiceClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<
-      google::cloud::beyondcorp::appgateways::v1::AppGatewayOperationMetadata>>
-  DeleteAppGateway(google::longrunning::Operation const& operation,
-                   Options opts = {});
+  future<StatusOr<google::cloud::beyondcorp::appgateways::v1::AppGatewayOperationMetadata>>
+  DeleteAppGateway(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -522,8 +489,8 @@ class AppGatewaysServiceClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request, Options opts = {});
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -552,9 +519,8 @@ class AppGatewaysServiceClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -586,8 +552,8 @@ class AppGatewaysServiceClient {
   /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L100}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -618,8 +584,8 @@ class AppGatewaysServiceClient {
   /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -654,9 +620,8 @@ class AppGatewaysServiceClient {
   /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L153}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request,
-      Options opts = {});
+  StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -691,8 +656,8 @@ class AppGatewaysServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -731,8 +696,8 @@ class AppGatewaysServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -758,8 +723,8 @@ class AppGatewaysServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -790,9 +755,8 @@ class AppGatewaysServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -816,7 +780,8 @@ class AppGatewaysServiceClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status DeleteOperation(std::string const& name, Options opts = {});
+  Status
+  DeleteOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -845,9 +810,8 @@ class AppGatewaysServiceClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request,
-      Options opts = {});
+  Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -881,7 +845,8 @@ class AppGatewaysServiceClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(std::string const& name, Options opts = {});
+  Status
+  CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -920,9 +885,8 @@ class AppGatewaysServiceClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request,
-      Options opts = {});
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<AppGatewaysServiceConnection> connection_;

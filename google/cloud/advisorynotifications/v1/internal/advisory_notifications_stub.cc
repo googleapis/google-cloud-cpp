@@ -32,54 +32,54 @@ AdvisoryNotificationsServiceStub::~AdvisoryNotificationsServiceStub() = default;
 
 StatusOr<google::cloud::advisorynotifications::v1::ListNotificationsResponse>
 DefaultAdvisoryNotificationsServiceStub::ListNotifications(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::advisorynotifications::v1::ListNotificationsRequest const&
-        request) {
-  google::cloud::advisorynotifications::v1::ListNotificationsResponse response;
-  auto status = grpc_stub_->ListNotifications(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::advisorynotifications::v1::ListNotificationsRequest const& request) {
+    google::cloud::advisorynotifications::v1::ListNotificationsResponse response;
+    auto status =
+        grpc_stub_->ListNotifications(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::advisorynotifications::v1::Notification>
 DefaultAdvisoryNotificationsServiceStub::GetNotification(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::advisorynotifications::v1::GetNotificationRequest const&
-        request) {
-  google::cloud::advisorynotifications::v1::Notification response;
-  auto status = grpc_stub_->GetNotification(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::advisorynotifications::v1::GetNotificationRequest const& request) {
+    google::cloud::advisorynotifications::v1::Notification response;
+    auto status =
+        grpc_stub_->GetNotification(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::advisorynotifications::v1::Settings>
 DefaultAdvisoryNotificationsServiceStub::GetSettings(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::advisorynotifications::v1::GetSettingsRequest const&
-        request) {
-  google::cloud::advisorynotifications::v1::Settings response;
-  auto status = grpc_stub_->GetSettings(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::advisorynotifications::v1::GetSettingsRequest const& request) {
+    google::cloud::advisorynotifications::v1::Settings response;
+    auto status =
+        grpc_stub_->GetSettings(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::advisorynotifications::v1::Settings>
 DefaultAdvisoryNotificationsServiceStub::UpdateSettings(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::advisorynotifications::v1::UpdateSettingsRequest const&
-        request) {
-  google::cloud::advisorynotifications::v1::Settings response;
-  auto status = grpc_stub_->UpdateSettings(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::advisorynotifications::v1::UpdateSettingsRequest const& request) {
+    google::cloud::advisorynotifications::v1::Settings response;
+    auto status =
+        grpc_stub_->UpdateSettings(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

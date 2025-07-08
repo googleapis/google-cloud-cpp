@@ -17,17 +17,17 @@
 // source: google/storagetransfer/v1/transfer.proto
 
 #include "google/cloud/storagetransfer/v1/internal/storage_transfer_stub_factory.h"
-#include "google/cloud/storagetransfer/v1/internal/storage_transfer_auth_decorator.h"
-#include "google/cloud/storagetransfer/v1/internal/storage_transfer_logging_decorator.h"
-#include "google/cloud/storagetransfer/v1/internal/storage_transfer_metadata_decorator.h"
-#include "google/cloud/storagetransfer/v1/internal/storage_transfer_stub.h"
-#include "google/cloud/storagetransfer/v1/internal/storage_transfer_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
+#include "google/cloud/storagetransfer/v1/internal/storage_transfer_auth_decorator.h"
+#include "google/cloud/storagetransfer/v1/internal/storage_transfer_logging_decorator.h"
+#include "google/cloud/storagetransfer/v1/internal/storage_transfer_metadata_decorator.h"
+#include "google/cloud/storagetransfer/v1/internal/storage_transfer_stub.h"
+#include "google/cloud/storagetransfer/v1/internal/storage_transfer_tracing_stub.h"
 #include <google/longrunning/operations.grpc.pb.h>
 #include <google/storagetransfer/v1/transfer.grpc.pb.h>
 #include <memory>
@@ -42,25 +42,26 @@ std::shared_ptr<StorageTransferServiceStub>
 CreateDefaultStorageTransferServiceStub(
     std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
     Options const& options) {
-  auto channel = auth->CreateChannel(options.get<EndpointOption>(),
-                                     internal::MakeChannelArguments(options));
-  auto service_grpc_stub =
-      google::storagetransfer::v1::StorageTransferService::NewStub(channel);
+  auto channel = auth->CreateChannel(
+    options.get<EndpointOption>(), internal::MakeChannelArguments(options));
+  auto service_grpc_stub = google::storagetransfer::v1::StorageTransferService::NewStub(channel);
   std::shared_ptr<StorageTransferServiceStub> stub =
-      std::make_shared<DefaultStorageTransferServiceStub>(
-          std::move(service_grpc_stub),
-          google::longrunning::Operations::NewStub(channel));
+    std::make_shared<DefaultStorageTransferServiceStub>(
+      std::move(service_grpc_stub),
+      google::longrunning::Operations::NewStub(channel));
 
   if (auth->RequiresConfigureContext()) {
-    stub = std::make_shared<StorageTransferServiceAuth>(std::move(auth),
-                                                        std::move(stub));
+    stub = std::make_shared<StorageTransferServiceAuth>(
+        std::move(auth), std::move(stub));
   }
   stub = std::make_shared<StorageTransferServiceMetadata>(
       std::move(stub), std::multimap<std::string, std::string>{});
-  if (internal::Contains(options.get<LoggingComponentsOption>(), "rpc")) {
+  if (internal::Contains(
+      options.get<LoggingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<StorageTransferServiceLogging>(
-        std::move(stub), options.get<GrpcTracingOptionsOption>(),
+        std::move(stub),
+        options.get<GrpcTracingOptionsOption>(),
         options.get<LoggingComponentsOption>());
   }
   if (internal::TracingEnabled(options)) {

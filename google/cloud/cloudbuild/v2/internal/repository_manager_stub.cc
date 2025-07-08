@@ -33,17 +33,15 @@ RepositoryManagerStub::~RepositoryManagerStub() = default;
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultRepositoryManagerStub::AsyncCreateConnection(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::devtools::cloudbuild::v2::CreateConnectionRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::devtools::cloudbuild::v2::CreateConnectionRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::devtools::cloudbuild::v2::CreateConnectionRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::devtools::cloudbuild::v2::CreateConnectionRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::devtools::cloudbuild::v2::CreateConnectionRequest const&
-                 request,
+             google::devtools::cloudbuild::v2::CreateConnectionRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncCreateConnection(context, request, cq);
       },
@@ -52,53 +50,55 @@ DefaultRepositoryManagerStub::AsyncCreateConnection(
 
 StatusOr<google::longrunning::Operation>
 DefaultRepositoryManagerStub::CreateConnection(
-    grpc::ClientContext& context, Options,
-    google::devtools::cloudbuild::v2::CreateConnectionRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->CreateConnection(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::devtools::cloudbuild::v2::CreateConnectionRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->CreateConnection(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::devtools::cloudbuild::v2::Connection>
 DefaultRepositoryManagerStub::GetConnection(
-    grpc::ClientContext& context, Options const&,
-    google::devtools::cloudbuild::v2::GetConnectionRequest const& request) {
-  google::devtools::cloudbuild::v2::Connection response;
-  auto status = grpc_stub_->GetConnection(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::devtools::cloudbuild::v2::GetConnectionRequest const& request) {
+    google::devtools::cloudbuild::v2::Connection response;
+    auto status =
+        grpc_stub_->GetConnection(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::devtools::cloudbuild::v2::ListConnectionsResponse>
 DefaultRepositoryManagerStub::ListConnections(
-    grpc::ClientContext& context, Options const&,
-    google::devtools::cloudbuild::v2::ListConnectionsRequest const& request) {
-  google::devtools::cloudbuild::v2::ListConnectionsResponse response;
-  auto status = grpc_stub_->ListConnections(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::devtools::cloudbuild::v2::ListConnectionsRequest const& request) {
+    google::devtools::cloudbuild::v2::ListConnectionsResponse response;
+    auto status =
+        grpc_stub_->ListConnections(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultRepositoryManagerStub::AsyncUpdateConnection(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::devtools::cloudbuild::v2::UpdateConnectionRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::devtools::cloudbuild::v2::UpdateConnectionRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::devtools::cloudbuild::v2::UpdateConnectionRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::devtools::cloudbuild::v2::UpdateConnectionRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::devtools::cloudbuild::v2::UpdateConnectionRequest const&
-                 request,
+             google::devtools::cloudbuild::v2::UpdateConnectionRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncUpdateConnection(context, request, cq);
       },
@@ -107,29 +107,29 @@ DefaultRepositoryManagerStub::AsyncUpdateConnection(
 
 StatusOr<google::longrunning::Operation>
 DefaultRepositoryManagerStub::UpdateConnection(
-    grpc::ClientContext& context, Options,
-    google::devtools::cloudbuild::v2::UpdateConnectionRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->UpdateConnection(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::devtools::cloudbuild::v2::UpdateConnectionRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->UpdateConnection(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultRepositoryManagerStub::AsyncDeleteConnection(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::devtools::cloudbuild::v2::DeleteConnectionRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::devtools::cloudbuild::v2::DeleteConnectionRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::devtools::cloudbuild::v2::DeleteConnectionRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::devtools::cloudbuild::v2::DeleteConnectionRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::devtools::cloudbuild::v2::DeleteConnectionRequest const&
-                 request,
+             google::devtools::cloudbuild::v2::DeleteConnectionRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncDeleteConnection(context, request, cq);
       },
@@ -138,29 +138,29 @@ DefaultRepositoryManagerStub::AsyncDeleteConnection(
 
 StatusOr<google::longrunning::Operation>
 DefaultRepositoryManagerStub::DeleteConnection(
-    grpc::ClientContext& context, Options,
-    google::devtools::cloudbuild::v2::DeleteConnectionRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->DeleteConnection(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::devtools::cloudbuild::v2::DeleteConnectionRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->DeleteConnection(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultRepositoryManagerStub::AsyncCreateRepository(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::devtools::cloudbuild::v2::CreateRepositoryRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::devtools::cloudbuild::v2::CreateRepositoryRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::devtools::cloudbuild::v2::CreateRepositoryRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::devtools::cloudbuild::v2::CreateRepositoryRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::devtools::cloudbuild::v2::CreateRepositoryRequest const&
-                 request,
+             google::devtools::cloudbuild::v2::CreateRepositoryRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncCreateRepository(context, request, cq);
       },
@@ -169,30 +169,29 @@ DefaultRepositoryManagerStub::AsyncCreateRepository(
 
 StatusOr<google::longrunning::Operation>
 DefaultRepositoryManagerStub::CreateRepository(
-    grpc::ClientContext& context, Options,
-    google::devtools::cloudbuild::v2::CreateRepositoryRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->CreateRepository(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::devtools::cloudbuild::v2::CreateRepositoryRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->CreateRepository(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultRepositoryManagerStub::AsyncBatchCreateRepositories(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::devtools::cloudbuild::v2::BatchCreateRepositoriesRequest const&
-        request) {
-  return internal::MakeUnaryRpcImpl<
-      google::devtools::cloudbuild::v2::BatchCreateRepositoriesRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::devtools::cloudbuild::v2::BatchCreateRepositoriesRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::devtools::cloudbuild::v2::BatchCreateRepositoriesRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::devtools::cloudbuild::v2::
-                 BatchCreateRepositoriesRequest const& request,
+             google::devtools::cloudbuild::v2::BatchCreateRepositoriesRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncBatchCreateRepositories(context, request, cq);
       },
@@ -201,55 +200,55 @@ DefaultRepositoryManagerStub::AsyncBatchCreateRepositories(
 
 StatusOr<google::longrunning::Operation>
 DefaultRepositoryManagerStub::BatchCreateRepositories(
-    grpc::ClientContext& context, Options,
-    google::devtools::cloudbuild::v2::BatchCreateRepositoriesRequest const&
-        request) {
-  google::longrunning::Operation response;
-  auto status =
-      grpc_stub_->BatchCreateRepositories(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::devtools::cloudbuild::v2::BatchCreateRepositoriesRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->BatchCreateRepositories(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::devtools::cloudbuild::v2::Repository>
 DefaultRepositoryManagerStub::GetRepository(
-    grpc::ClientContext& context, Options const&,
-    google::devtools::cloudbuild::v2::GetRepositoryRequest const& request) {
-  google::devtools::cloudbuild::v2::Repository response;
-  auto status = grpc_stub_->GetRepository(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::devtools::cloudbuild::v2::GetRepositoryRequest const& request) {
+    google::devtools::cloudbuild::v2::Repository response;
+    auto status =
+        grpc_stub_->GetRepository(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::devtools::cloudbuild::v2::ListRepositoriesResponse>
 DefaultRepositoryManagerStub::ListRepositories(
-    grpc::ClientContext& context, Options const&,
-    google::devtools::cloudbuild::v2::ListRepositoriesRequest const& request) {
-  google::devtools::cloudbuild::v2::ListRepositoriesResponse response;
-  auto status = grpc_stub_->ListRepositories(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::devtools::cloudbuild::v2::ListRepositoriesRequest const& request) {
+    google::devtools::cloudbuild::v2::ListRepositoriesResponse response;
+    auto status =
+        grpc_stub_->ListRepositories(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultRepositoryManagerStub::AsyncDeleteRepository(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::devtools::cloudbuild::v2::DeleteRepositoryRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::devtools::cloudbuild::v2::DeleteRepositoryRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::devtools::cloudbuild::v2::DeleteRepositoryRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::devtools::cloudbuild::v2::DeleteRepositoryRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::devtools::cloudbuild::v2::DeleteRepositoryRequest const&
-                 request,
+             google::devtools::cloudbuild::v2::DeleteRepositoryRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncDeleteRepository(context, request, cq);
       },
@@ -258,123 +257,133 @@ DefaultRepositoryManagerStub::AsyncDeleteRepository(
 
 StatusOr<google::longrunning::Operation>
 DefaultRepositoryManagerStub::DeleteRepository(
-    grpc::ClientContext& context, Options,
-    google::devtools::cloudbuild::v2::DeleteRepositoryRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->DeleteRepository(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::devtools::cloudbuild::v2::DeleteRepositoryRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->DeleteRepository(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::devtools::cloudbuild::v2::FetchReadWriteTokenResponse>
 DefaultRepositoryManagerStub::FetchReadWriteToken(
-    grpc::ClientContext& context, Options const&,
-    google::devtools::cloudbuild::v2::FetchReadWriteTokenRequest const&
-        request) {
-  google::devtools::cloudbuild::v2::FetchReadWriteTokenResponse response;
-  auto status = grpc_stub_->FetchReadWriteToken(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::devtools::cloudbuild::v2::FetchReadWriteTokenRequest const& request) {
+    google::devtools::cloudbuild::v2::FetchReadWriteTokenResponse response;
+    auto status =
+        grpc_stub_->FetchReadWriteToken(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::devtools::cloudbuild::v2::FetchReadTokenResponse>
 DefaultRepositoryManagerStub::FetchReadToken(
-    grpc::ClientContext& context, Options const&,
-    google::devtools::cloudbuild::v2::FetchReadTokenRequest const& request) {
-  google::devtools::cloudbuild::v2::FetchReadTokenResponse response;
-  auto status = grpc_stub_->FetchReadToken(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::devtools::cloudbuild::v2::FetchReadTokenRequest const& request) {
+    google::devtools::cloudbuild::v2::FetchReadTokenResponse response;
+    auto status =
+        grpc_stub_->FetchReadToken(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::devtools::cloudbuild::v2::FetchLinkableRepositoriesResponse>
 DefaultRepositoryManagerStub::FetchLinkableRepositories(
-    grpc::ClientContext& context, Options const&,
-    google::devtools::cloudbuild::v2::FetchLinkableRepositoriesRequest const&
-        request) {
-  google::devtools::cloudbuild::v2::FetchLinkableRepositoriesResponse response;
-  auto status =
-      grpc_stub_->FetchLinkableRepositories(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::devtools::cloudbuild::v2::FetchLinkableRepositoriesRequest const& request) {
+    google::devtools::cloudbuild::v2::FetchLinkableRepositoriesResponse response;
+    auto status =
+        grpc_stub_->FetchLinkableRepositories(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::devtools::cloudbuild::v2::FetchGitRefsResponse>
 DefaultRepositoryManagerStub::FetchGitRefs(
-    grpc::ClientContext& context, Options const&,
-    google::devtools::cloudbuild::v2::FetchGitRefsRequest const& request) {
-  google::devtools::cloudbuild::v2::FetchGitRefsResponse response;
-  auto status = grpc_stub_->FetchGitRefs(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::devtools::cloudbuild::v2::FetchGitRefsRequest const& request) {
+    google::devtools::cloudbuild::v2::FetchGitRefsResponse response;
+    auto status =
+        grpc_stub_->FetchGitRefs(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-StatusOr<google::iam::v1::Policy> DefaultRepositoryManagerStub::SetIamPolicy(
-    grpc::ClientContext& context, Options const&,
-    google::iam::v1::SetIamPolicyRequest const& request) {
-  google::iam::v1::Policy response;
-  auto status = iampolicy_stub_->SetIamPolicy(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::iam::v1::Policy>
+DefaultRepositoryManagerStub::SetIamPolicy(
+  grpc::ClientContext& context, Options const&,
+  google::iam::v1::SetIamPolicyRequest const& request) {
+    google::iam::v1::Policy response;
+    auto status =
+        iampolicy_stub_->SetIamPolicy(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-StatusOr<google::iam::v1::Policy> DefaultRepositoryManagerStub::GetIamPolicy(
-    grpc::ClientContext& context, Options const&,
-    google::iam::v1::GetIamPolicyRequest const& request) {
-  google::iam::v1::Policy response;
-  auto status = iampolicy_stub_->GetIamPolicy(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::iam::v1::Policy>
+DefaultRepositoryManagerStub::GetIamPolicy(
+  grpc::ClientContext& context, Options const&,
+  google::iam::v1::GetIamPolicyRequest const& request) {
+    google::iam::v1::Policy response;
+    auto status =
+        iampolicy_stub_->GetIamPolicy(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 DefaultRepositoryManagerStub::TestIamPermissions(
-    grpc::ClientContext& context, Options const&,
-    google::iam::v1::TestIamPermissionsRequest const& request) {
-  google::iam::v1::TestIamPermissionsResponse response;
-  auto status =
-      iampolicy_stub_->TestIamPermissions(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::iam::v1::TestIamPermissionsRequest const& request) {
+    google::iam::v1::TestIamPermissionsResponse response;
+    auto status =
+        iampolicy_stub_->TestIamPermissions(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::longrunning::Operation>
 DefaultRepositoryManagerStub::GetOperation(
-    grpc::ClientContext& context, Options const&,
-    google::longrunning::GetOperationRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = operations_stub_->GetOperation(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::longrunning::GetOperationRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        operations_stub_->GetOperation(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-Status DefaultRepositoryManagerStub::CancelOperation(
-    grpc::ClientContext& context, Options const&,
-    google::longrunning::CancelOperationRequest const& request) {
-  google::protobuf::Empty response;
-  auto status = operations_stub_->CancelOperation(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return google::cloud::Status();
+Status
+DefaultRepositoryManagerStub::CancelOperation(
+  grpc::ClientContext& context, Options const&,
+  google::longrunning::CancelOperationRequest const& request) {
+    google::protobuf::Empty response;
+    auto status =
+        operations_stub_->CancelOperation(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return google::cloud::Status();
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -403,14 +412,13 @@ future<Status> DefaultRepositoryManagerStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(
-             cq,
-             [this](grpc::ClientContext* context,
-                    google::longrunning::CancelOperationRequest const& request,
-                    grpc::CompletionQueue* cq) {
-               return operations_stub_->AsyncCancelOperation(context, request,
-                                                             cq);
-             },
-             request, std::move(context))
+      cq,
+      [this](grpc::ClientContext* context,
+             google::longrunning::CancelOperationRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return operations_stub_->AsyncCancelOperation(context, request, cq);
+      },
+      request, std::move(context))
       .then([](future<StatusOr<google::protobuf::Empty>> f) {
         return f.get().status();
       });

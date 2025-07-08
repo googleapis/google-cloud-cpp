@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGION_AUTOSCALERS_V1_REGION_AUTOSCALERS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGION_AUTOSCALERS_V1_REGION_AUTOSCALERS_CONNECTION_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/region_autoscalers/v1/internal/region_autoscalers_retry_traits.h"
 #include "google/cloud/compute/region_autoscalers/v1/region_autoscalers_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -55,8 +55,7 @@ class RegionAutoscalersRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class RegionAutoscalersLimitedErrorCountRetryPolicy
-    : public RegionAutoscalersRetryPolicy {
+class RegionAutoscalersLimitedErrorCountRetryPolicy : public RegionAutoscalersRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -66,14 +65,14 @@ class RegionAutoscalersLimitedErrorCountRetryPolicy
    *     @p maximum_failures == 0.
    */
   explicit RegionAutoscalersLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   RegionAutoscalersLimitedErrorCountRetryPolicy(
       RegionAutoscalersLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : RegionAutoscalersLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : RegionAutoscalersLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   RegionAutoscalersLimitedErrorCountRetryPolicy(
       RegionAutoscalersLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : RegionAutoscalersLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : RegionAutoscalersLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -93,9 +92,7 @@ class RegionAutoscalersLimitedErrorCountRetryPolicy
   using BaseType = RegionAutoscalersRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      compute_region_autoscalers_v1_internal::RegionAutoscalersRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<compute_region_autoscalers_v1_internal::RegionAutoscalersRetryTraits> impl_;
 };
 
 /**
@@ -108,8 +105,7 @@ class RegionAutoscalersLimitedErrorCountRetryPolicy
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class RegionAutoscalersLimitedTimeRetryPolicy
-    : public RegionAutoscalersRetryPolicy {
+class RegionAutoscalersLimitedTimeRetryPolicy : public RegionAutoscalersRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -134,14 +130,12 @@ class RegionAutoscalersLimitedTimeRetryPolicy
   template <typename DurationRep, typename DurationPeriod>
   explicit RegionAutoscalersLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  RegionAutoscalersLimitedTimeRetryPolicy(
-      RegionAutoscalersLimitedTimeRetryPolicy&& rhs) noexcept
-      : RegionAutoscalersLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  RegionAutoscalersLimitedTimeRetryPolicy(
-      RegionAutoscalersLimitedTimeRetryPolicy const& rhs) noexcept
-      : RegionAutoscalersLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  RegionAutoscalersLimitedTimeRetryPolicy(RegionAutoscalersLimitedTimeRetryPolicy&& rhs) noexcept
+    : RegionAutoscalersLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  RegionAutoscalersLimitedTimeRetryPolicy(RegionAutoscalersLimitedTimeRetryPolicy const& rhs) noexcept
+    : RegionAutoscalersLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -163,23 +157,20 @@ class RegionAutoscalersLimitedTimeRetryPolicy
   using BaseType = RegionAutoscalersRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      compute_region_autoscalers_v1_internal::RegionAutoscalersRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<compute_region_autoscalers_v1_internal::RegionAutoscalersRetryTraits> impl_;
 };
 
 /**
  * The `RegionAutoscalersConnection` object for `RegionAutoscalersClient`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `RegionAutoscalersClient`. This allows users to inject custom
- * behavior (e.g., with a Google Mock object) when writing tests that use
- * objects of type `RegionAutoscalersClient`.
+ * sets in `RegionAutoscalersClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `RegionAutoscalersClient`.
  *
  * To create a concrete instance, see `MakeRegionAutoscalersConnection()`.
  *
- * For mocking, see
- * `compute_region_autoscalers_v1_mocks::MockRegionAutoscalersConnection`.
+ * For mocking, see `compute_region_autoscalers_v1_mocks::MockRegionAutoscalersConnection`.
  */
 class RegionAutoscalersConnection {
  public:
@@ -188,56 +179,46 @@ class RegionAutoscalersConnection {
   virtual Options options() { return Options{}; }
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteAutoscaler(google::cloud::cpp::compute::region_autoscalers::v1::
-                       DeleteAutoscalerRequest const& request);
+  DeleteAutoscaler(google::cloud::cpp::compute::region_autoscalers::v1::DeleteAutoscalerRequest const& request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteAutoscaler(
-      NoAwaitTag, google::cloud::cpp::compute::region_autoscalers::v1::
-                      DeleteAutoscalerRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeleteAutoscaler(NoAwaitTag, google::cloud::cpp::compute::region_autoscalers::v1::DeleteAutoscalerRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteAutoscaler(google::cloud::cpp::compute::v1::Operation const& operation);
+  DeleteAutoscaler( google::cloud::cpp::compute::v1::Operation const& operation);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Autoscaler> GetAutoscaler(
-      google::cloud::cpp::compute::region_autoscalers::v1::
-          GetAutoscalerRequest const& request);
-
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertAutoscaler(google::cloud::cpp::compute::region_autoscalers::v1::
-                       InsertAutoscalerRequest const& request);
-
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> InsertAutoscaler(
-      NoAwaitTag, google::cloud::cpp::compute::region_autoscalers::v1::
-                      InsertAutoscalerRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Autoscaler>
+  GetAutoscaler(google::cloud::cpp::compute::region_autoscalers::v1::GetAutoscalerRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertAutoscaler(google::cloud::cpp::compute::v1::Operation const& operation);
+  InsertAutoscaler(google::cloud::cpp::compute::region_autoscalers::v1::InsertAutoscalerRequest const& request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  InsertAutoscaler(NoAwaitTag, google::cloud::cpp::compute::region_autoscalers::v1::InsertAutoscalerRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  InsertAutoscaler( google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::Autoscaler>
-  ListRegionAutoscalers(google::cloud::cpp::compute::region_autoscalers::v1::
-                            ListRegionAutoscalersRequest request);
+  ListRegionAutoscalers(google::cloud::cpp::compute::region_autoscalers::v1::ListRegionAutoscalersRequest request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchAutoscaler(google::cloud::cpp::compute::region_autoscalers::v1::
-                      PatchAutoscalerRequest const& request);
+  PatchAutoscaler(google::cloud::cpp::compute::region_autoscalers::v1::PatchAutoscalerRequest const& request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> PatchAutoscaler(
-      NoAwaitTag, google::cloud::cpp::compute::region_autoscalers::v1::
-                      PatchAutoscalerRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  PatchAutoscaler(NoAwaitTag, google::cloud::cpp::compute::region_autoscalers::v1::PatchAutoscalerRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchAutoscaler(google::cloud::cpp::compute::v1::Operation const& operation);
+  PatchAutoscaler( google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateAutoscaler(google::cloud::cpp::compute::region_autoscalers::v1::
-                       UpdateAutoscalerRequest const& request);
+  UpdateAutoscaler(google::cloud::cpp::compute::region_autoscalers::v1::UpdateAutoscalerRequest const& request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateAutoscaler(
-      NoAwaitTag, google::cloud::cpp::compute::region_autoscalers::v1::
-                      UpdateAutoscalerRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  UpdateAutoscaler(NoAwaitTag, google::cloud::cpp::compute::region_autoscalers::v1::UpdateAutoscalerRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateAutoscaler(google::cloud::cpp::compute::v1::Operation const& operation);
+  UpdateAutoscaler( google::cloud::cpp::compute::v1::Operation const& operation);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

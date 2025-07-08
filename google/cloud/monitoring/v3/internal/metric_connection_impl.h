@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_V3_INTERNAL_METRIC_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_V3_INTERNAL_METRIC_CONNECTION_IMPL_H
 
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/monitoring/v3/internal/metric_retry_traits.h"
 #include "google/cloud/monitoring/v3/internal/metric_stub.h"
 #include "google/cloud/monitoring/v3/metric_connection.h"
 #include "google/cloud/monitoring/v3/metric_connection_idempotency_policy.h"
 #include "google/cloud/monitoring/v3/metric_options.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -43,48 +43,41 @@ class MetricServiceConnectionImpl
   ~MetricServiceConnectionImpl() override = default;
 
   MetricServiceConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<monitoring_v3_internal::MetricServiceStub> stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<monitoring_v3_internal::MetricServiceStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
   StreamRange<google::api::MonitoredResourceDescriptor>
-  ListMonitoredResourceDescriptors(
-      google::monitoring::v3::ListMonitoredResourceDescriptorsRequest request)
-      override;
+  ListMonitoredResourceDescriptors(google::monitoring::v3::ListMonitoredResourceDescriptorsRequest request) override;
 
   StatusOr<google::api::MonitoredResourceDescriptor>
-  GetMonitoredResourceDescriptor(
-      google::monitoring::v3::GetMonitoredResourceDescriptorRequest const&
-          request) override;
+  GetMonitoredResourceDescriptor(google::monitoring::v3::GetMonitoredResourceDescriptorRequest const& request) override;
 
-  StreamRange<google::api::MetricDescriptor> ListMetricDescriptors(
-      google::monitoring::v3::ListMetricDescriptorsRequest request) override;
+  StreamRange<google::api::MetricDescriptor>
+  ListMetricDescriptors(google::monitoring::v3::ListMetricDescriptorsRequest request) override;
 
-  StatusOr<google::api::MetricDescriptor> GetMetricDescriptor(
-      google::monitoring::v3::GetMetricDescriptorRequest const& request)
-      override;
+  StatusOr<google::api::MetricDescriptor>
+  GetMetricDescriptor(google::monitoring::v3::GetMetricDescriptorRequest const& request) override;
 
-  StatusOr<google::api::MetricDescriptor> CreateMetricDescriptor(
-      google::monitoring::v3::CreateMetricDescriptorRequest const& request)
-      override;
+  StatusOr<google::api::MetricDescriptor>
+  CreateMetricDescriptor(google::monitoring::v3::CreateMetricDescriptorRequest const& request) override;
 
-  Status DeleteMetricDescriptor(
-      google::monitoring::v3::DeleteMetricDescriptorRequest const& request)
-      override;
+  Status
+  DeleteMetricDescriptor(google::monitoring::v3::DeleteMetricDescriptorRequest const& request) override;
 
-  StreamRange<google::monitoring::v3::TimeSeries> ListTimeSeries(
-      google::monitoring::v3::ListTimeSeriesRequest request) override;
+  StreamRange<google::monitoring::v3::TimeSeries>
+  ListTimeSeries(google::monitoring::v3::ListTimeSeriesRequest request) override;
 
-  Status CreateTimeSeries(
-      google::monitoring::v3::CreateTimeSeriesRequest const& request) override;
+  Status
+  CreateTimeSeries(google::monitoring::v3::CreateTimeSeriesRequest const& request) override;
 
-  Status CreateServiceTimeSeries(
-      google::monitoring::v3::CreateTimeSeriesRequest const& request) override;
+  Status
+  CreateServiceTimeSeries(google::monitoring::v3::CreateTimeSeriesRequest const& request) override;
 
-  future<Status> AsyncCreateTimeSeries(
-      google::monitoring::v3::CreateTimeSeriesRequest const& request) override;
+  future<Status>
+  AsyncCreateTimeSeries(google::monitoring::v3::CreateTimeSeriesRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

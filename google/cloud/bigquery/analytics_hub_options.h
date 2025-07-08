@@ -28,31 +28,20 @@ namespace cloud {
 namespace bigquery {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use
-/// bigquery_analyticshub_v1::AnalyticsHubServicePollingPolicyOption directly.
-using ::google::cloud::bigquery_analyticshub_v1::
-    AnalyticsHubServicePollingPolicyOption;
+/// @deprecated Use bigquery_analyticshub_v1::AnalyticsHubServicePollingPolicyOption directly.
+using ::google::cloud::bigquery_analyticshub_v1::AnalyticsHubServicePollingPolicyOption;
 
-/// @deprecated Use
-/// bigquery_analyticshub_v1::AnalyticsHubServiceBackoffPolicyOption directly.
-using ::google::cloud::bigquery_analyticshub_v1::
-    AnalyticsHubServiceBackoffPolicyOption;
+/// @deprecated Use bigquery_analyticshub_v1::AnalyticsHubServiceBackoffPolicyOption directly.
+using ::google::cloud::bigquery_analyticshub_v1::AnalyticsHubServiceBackoffPolicyOption;
 
-/// @deprecated Use
-/// bigquery_analyticshub_v1::AnalyticsHubServiceConnectionIdempotencyPolicyOption
-/// directly.
-using ::google::cloud::bigquery_analyticshub_v1::
-    AnalyticsHubServiceConnectionIdempotencyPolicyOption;
+/// @deprecated Use bigquery_analyticshub_v1::AnalyticsHubServiceConnectionIdempotencyPolicyOption directly.
+using ::google::cloud::bigquery_analyticshub_v1::AnalyticsHubServiceConnectionIdempotencyPolicyOption;
 
-/// @deprecated Use
-/// bigquery_analyticshub_v1::AnalyticsHubServicePolicyOptionList directly.
-using ::google::cloud::bigquery_analyticshub_v1::
-    AnalyticsHubServicePolicyOptionList;
+/// @deprecated Use bigquery_analyticshub_v1::AnalyticsHubServicePolicyOptionList directly.
+using ::google::cloud::bigquery_analyticshub_v1::AnalyticsHubServicePolicyOptionList;
 
-/// @deprecated Use
-/// bigquery_analyticshub_v1::AnalyticsHubServiceRetryPolicyOption directly.
-using ::google::cloud::bigquery_analyticshub_v1::
-    AnalyticsHubServiceRetryPolicyOption;
+/// @deprecated Use bigquery_analyticshub_v1::AnalyticsHubServiceRetryPolicyOption directly.
+using ::google::cloud::bigquery_analyticshub_v1::AnalyticsHubServiceRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery

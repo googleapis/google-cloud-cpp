@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_STORAGE_V1_BIGQUERY_WRITE_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_STORAGE_V1_BIGQUERY_WRITE_CONNECTION_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/bigquery/storage/v1/bigquery_write_connection_idempotency_policy.h"
 #include "google/cloud/bigquery/storage/v1/internal/bigquery_write_retry_traits.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/async_read_write_stream_impl.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
@@ -52,8 +52,7 @@ class BigQueryWriteRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class BigQueryWriteLimitedErrorCountRetryPolicy
-    : public BigQueryWriteRetryPolicy {
+class BigQueryWriteLimitedErrorCountRetryPolicy : public BigQueryWriteRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -63,14 +62,14 @@ class BigQueryWriteLimitedErrorCountRetryPolicy
    *     @p maximum_failures == 0.
    */
   explicit BigQueryWriteLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   BigQueryWriteLimitedErrorCountRetryPolicy(
       BigQueryWriteLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : BigQueryWriteLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : BigQueryWriteLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   BigQueryWriteLimitedErrorCountRetryPolicy(
       BigQueryWriteLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : BigQueryWriteLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : BigQueryWriteLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -90,9 +89,7 @@ class BigQueryWriteLimitedErrorCountRetryPolicy
   using BaseType = BigQueryWriteRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      bigquery_storage_v1_internal::BigQueryWriteRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<bigquery_storage_v1_internal::BigQueryWriteRetryTraits> impl_;
 };
 
 /**
@@ -130,14 +127,12 @@ class BigQueryWriteLimitedTimeRetryPolicy : public BigQueryWriteRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit BigQueryWriteLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  BigQueryWriteLimitedTimeRetryPolicy(
-      BigQueryWriteLimitedTimeRetryPolicy&& rhs) noexcept
-      : BigQueryWriteLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  BigQueryWriteLimitedTimeRetryPolicy(
-      BigQueryWriteLimitedTimeRetryPolicy const& rhs) noexcept
-      : BigQueryWriteLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  BigQueryWriteLimitedTimeRetryPolicy(BigQueryWriteLimitedTimeRetryPolicy&& rhs) noexcept
+    : BigQueryWriteLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  BigQueryWriteLimitedTimeRetryPolicy(BigQueryWriteLimitedTimeRetryPolicy const& rhs) noexcept
+    : BigQueryWriteLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -159,9 +154,7 @@ class BigQueryWriteLimitedTimeRetryPolicy : public BigQueryWriteRetryPolicy {
   using BaseType = BigQueryWriteRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      bigquery_storage_v1_internal::BigQueryWriteRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<bigquery_storage_v1_internal::BigQueryWriteRetryTraits> impl_;
 };
 
 /**
@@ -183,9 +176,7 @@ class BigQueryWriteConnection {
   virtual Options options() { return Options{}; }
 
   virtual StatusOr<google::cloud::bigquery::storage::v1::WriteStream>
-  CreateWriteStream(
-      google::cloud::bigquery::storage::v1::CreateWriteStreamRequest const&
-          request);
+  CreateWriteStream(google::cloud::bigquery::storage::v1::CreateWriteStreamRequest const& request);
 
   virtual std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::bigquery::storage::v1::AppendRowsRequest,
@@ -193,24 +184,16 @@ class BigQueryWriteConnection {
   AsyncAppendRows();
 
   virtual StatusOr<google::cloud::bigquery::storage::v1::WriteStream>
-  GetWriteStream(
-      google::cloud::bigquery::storage::v1::GetWriteStreamRequest const&
-          request);
+  GetWriteStream(google::cloud::bigquery::storage::v1::GetWriteStreamRequest const& request);
 
-  virtual StatusOr<
-      google::cloud::bigquery::storage::v1::FinalizeWriteStreamResponse>
-  FinalizeWriteStream(
-      google::cloud::bigquery::storage::v1::FinalizeWriteStreamRequest const&
-          request);
+  virtual StatusOr<google::cloud::bigquery::storage::v1::FinalizeWriteStreamResponse>
+  FinalizeWriteStream(google::cloud::bigquery::storage::v1::FinalizeWriteStreamRequest const& request);
 
-  virtual StatusOr<
-      google::cloud::bigquery::storage::v1::BatchCommitWriteStreamsResponse>
-  BatchCommitWriteStreams(google::cloud::bigquery::storage::v1::
-                              BatchCommitWriteStreamsRequest const& request);
+  virtual StatusOr<google::cloud::bigquery::storage::v1::BatchCommitWriteStreamsResponse>
+  BatchCommitWriteStreams(google::cloud::bigquery::storage::v1::BatchCommitWriteStreamsRequest const& request);
 
   virtual StatusOr<google::cloud::bigquery::storage::v1::FlushRowsResponse>
-  FlushRows(
-      google::cloud::bigquery::storage::v1::FlushRowsRequest const& request);
+  FlushRows(google::cloud::bigquery::storage::v1::FlushRowsRequest const& request);
 };
 
 /**

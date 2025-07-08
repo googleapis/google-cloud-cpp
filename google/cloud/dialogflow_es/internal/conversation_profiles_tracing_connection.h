@@ -36,76 +36,61 @@ class ConversationProfilesTracingConnection
   ~ConversationProfilesTracingConnection() override = default;
 
   explicit ConversationProfilesTracingConnection(
-      std::shared_ptr<dialogflow_es::ConversationProfilesConnection> child);
+    std::shared_ptr<dialogflow_es::ConversationProfilesConnection> child);
 
   Options options() override { return child_->options(); }
 
   StreamRange<google::cloud::dialogflow::v2::ConversationProfile>
-  ListConversationProfiles(
-      google::cloud::dialogflow::v2::ListConversationProfilesRequest request)
-      override;
+  ListConversationProfiles(google::cloud::dialogflow::v2::ListConversationProfilesRequest request) override;
 
   StatusOr<google::cloud::dialogflow::v2::ConversationProfile>
-  GetConversationProfile(
-      google::cloud::dialogflow::v2::GetConversationProfileRequest const&
-          request) override;
+  GetConversationProfile(google::cloud::dialogflow::v2::GetConversationProfileRequest const& request) override;
 
   StatusOr<google::cloud::dialogflow::v2::ConversationProfile>
-  CreateConversationProfile(
-      google::cloud::dialogflow::v2::CreateConversationProfileRequest const&
-          request) override;
+  CreateConversationProfile(google::cloud::dialogflow::v2::CreateConversationProfileRequest const& request) override;
 
   StatusOr<google::cloud::dialogflow::v2::ConversationProfile>
-  UpdateConversationProfile(
-      google::cloud::dialogflow::v2::UpdateConversationProfileRequest const&
-          request) override;
+  UpdateConversationProfile(google::cloud::dialogflow::v2::UpdateConversationProfileRequest const& request) override;
 
-  Status DeleteConversationProfile(
-      google::cloud::dialogflow::v2::DeleteConversationProfileRequest const&
-          request) override;
+  Status
+  DeleteConversationProfile(google::cloud::dialogflow::v2::DeleteConversationProfileRequest const& request) override;
 
   future<StatusOr<google::cloud::dialogflow::v2::ConversationProfile>>
-  SetSuggestionFeatureConfig(
-      google::cloud::dialogflow::v2::SetSuggestionFeatureConfigRequest const&
-          request) override;
+  SetSuggestionFeatureConfig(google::cloud::dialogflow::v2::SetSuggestionFeatureConfigRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> SetSuggestionFeatureConfig(
-      NoAwaitTag,
-      google::cloud::dialogflow::v2::SetSuggestionFeatureConfigRequest const&
-          request) override;
+  StatusOr<google::longrunning::Operation>
+  SetSuggestionFeatureConfig(NoAwaitTag,
+      google::cloud::dialogflow::v2::SetSuggestionFeatureConfigRequest const& request) override;
 
   future<StatusOr<google::cloud::dialogflow::v2::ConversationProfile>>
   SetSuggestionFeatureConfig(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::dialogflow::v2::ConversationProfile>>
-  ClearSuggestionFeatureConfig(
-      google::cloud::dialogflow::v2::ClearSuggestionFeatureConfigRequest const&
-          request) override;
+  ClearSuggestionFeatureConfig(google::cloud::dialogflow::v2::ClearSuggestionFeatureConfigRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> ClearSuggestionFeatureConfig(
-      NoAwaitTag,
-      google::cloud::dialogflow::v2::ClearSuggestionFeatureConfigRequest const&
-          request) override;
+  StatusOr<google::longrunning::Operation>
+  ClearSuggestionFeatureConfig(NoAwaitTag,
+      google::cloud::dialogflow::v2::ClearSuggestionFeatureConfigRequest const& request) override;
 
   future<StatusOr<google::cloud::dialogflow::v2::ConversationProfile>>
   ClearSuggestionFeatureConfig(
       google::longrunning::Operation const& operation) override;
 
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request) override;
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request) override;
 
-  StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request) override;
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request) override;
 
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request) override;
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::shared_ptr<dialogflow_es::ConversationProfilesConnection> child_;

@@ -19,11 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MANAGEDKAFKA_V1_MANAGED_KAFKA_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MANAGEDKAFKA_V1_MANAGED_KAFKA_CONNECTION_H
 
-#include "google/cloud/managedkafka/v1/internal/managed_kafka_retry_traits.h"
-#include "google/cloud/managedkafka/v1/managed_kafka_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/managedkafka/v1/internal/managed_kafka_retry_traits.h"
+#include "google/cloud/managedkafka/v1/managed_kafka_connection_idempotency_policy.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -56,8 +56,7 @@ class ManagedKafkaRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class ManagedKafkaLimitedErrorCountRetryPolicy
-    : public ManagedKafkaRetryPolicy {
+class ManagedKafkaLimitedErrorCountRetryPolicy : public ManagedKafkaRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -67,14 +66,14 @@ class ManagedKafkaLimitedErrorCountRetryPolicy
    *     @p maximum_failures == 0.
    */
   explicit ManagedKafkaLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   ManagedKafkaLimitedErrorCountRetryPolicy(
       ManagedKafkaLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : ManagedKafkaLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : ManagedKafkaLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   ManagedKafkaLimitedErrorCountRetryPolicy(
       ManagedKafkaLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : ManagedKafkaLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : ManagedKafkaLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -94,9 +93,7 @@ class ManagedKafkaLimitedErrorCountRetryPolicy
   using BaseType = ManagedKafkaRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      managedkafka_v1_internal::ManagedKafkaRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<managedkafka_v1_internal::ManagedKafkaRetryTraits> impl_;
 };
 
 /**
@@ -134,14 +131,12 @@ class ManagedKafkaLimitedTimeRetryPolicy : public ManagedKafkaRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit ManagedKafkaLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  ManagedKafkaLimitedTimeRetryPolicy(
-      ManagedKafkaLimitedTimeRetryPolicy&& rhs) noexcept
-      : ManagedKafkaLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  ManagedKafkaLimitedTimeRetryPolicy(
-      ManagedKafkaLimitedTimeRetryPolicy const& rhs) noexcept
-      : ManagedKafkaLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  ManagedKafkaLimitedTimeRetryPolicy(ManagedKafkaLimitedTimeRetryPolicy&& rhs) noexcept
+    : ManagedKafkaLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  ManagedKafkaLimitedTimeRetryPolicy(ManagedKafkaLimitedTimeRetryPolicy const& rhs) noexcept
+    : ManagedKafkaLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -163,9 +158,7 @@ class ManagedKafkaLimitedTimeRetryPolicy : public ManagedKafkaRetryPolicy {
   using BaseType = ManagedKafkaRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      managedkafka_v1_internal::ManagedKafkaRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<managedkafka_v1_internal::ManagedKafkaRetryTraits> impl_;
 };
 
 /**
@@ -186,117 +179,104 @@ class ManagedKafkaConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StreamRange<google::cloud::managedkafka::v1::Cluster> ListClusters(
-      google::cloud::managedkafka::v1::ListClustersRequest request);
+  virtual StreamRange<google::cloud::managedkafka::v1::Cluster>
+  ListClusters(google::cloud::managedkafka::v1::ListClustersRequest request);
 
-  virtual StatusOr<google::cloud::managedkafka::v1::Cluster> GetCluster(
-      google::cloud::managedkafka::v1::GetClusterRequest const& request);
-
-  virtual future<StatusOr<google::cloud::managedkafka::v1::Cluster>>
-  CreateCluster(
-      google::cloud::managedkafka::v1::CreateClusterRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation> CreateCluster(
-      NoAwaitTag,
-      google::cloud::managedkafka::v1::CreateClusterRequest const& request);
+  virtual StatusOr<google::cloud::managedkafka::v1::Cluster>
+  GetCluster(google::cloud::managedkafka::v1::GetClusterRequest const& request);
 
   virtual future<StatusOr<google::cloud::managedkafka::v1::Cluster>>
-  CreateCluster(google::longrunning::Operation const& operation);
+  CreateCluster(google::cloud::managedkafka::v1::CreateClusterRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation>
+  CreateCluster(NoAwaitTag, google::cloud::managedkafka::v1::CreateClusterRequest const& request);
 
   virtual future<StatusOr<google::cloud::managedkafka::v1::Cluster>>
-  UpdateCluster(
-      google::cloud::managedkafka::v1::UpdateClusterRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation> UpdateCluster(
-      NoAwaitTag,
-      google::cloud::managedkafka::v1::UpdateClusterRequest const& request);
+  CreateCluster( google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::managedkafka::v1::Cluster>>
-  UpdateCluster(google::longrunning::Operation const& operation);
+  UpdateCluster(google::cloud::managedkafka::v1::UpdateClusterRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation>
+  UpdateCluster(NoAwaitTag, google::cloud::managedkafka::v1::UpdateClusterRequest const& request);
+
+  virtual future<StatusOr<google::cloud::managedkafka::v1::Cluster>>
+  UpdateCluster( google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::managedkafka::v1::OperationMetadata>>
-  DeleteCluster(
-      google::cloud::managedkafka::v1::DeleteClusterRequest const& request);
+  DeleteCluster(google::cloud::managedkafka::v1::DeleteClusterRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> DeleteCluster(
-      NoAwaitTag,
-      google::cloud::managedkafka::v1::DeleteClusterRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  DeleteCluster(NoAwaitTag, google::cloud::managedkafka::v1::DeleteClusterRequest const& request);
 
   virtual future<StatusOr<google::cloud::managedkafka::v1::OperationMetadata>>
-  DeleteCluster(google::longrunning::Operation const& operation);
+  DeleteCluster( google::longrunning::Operation const& operation);
 
-  virtual StreamRange<google::cloud::managedkafka::v1::Topic> ListTopics(
-      google::cloud::managedkafka::v1::ListTopicsRequest request);
+  virtual StreamRange<google::cloud::managedkafka::v1::Topic>
+  ListTopics(google::cloud::managedkafka::v1::ListTopicsRequest request);
 
-  virtual StatusOr<google::cloud::managedkafka::v1::Topic> GetTopic(
-      google::cloud::managedkafka::v1::GetTopicRequest const& request);
+  virtual StatusOr<google::cloud::managedkafka::v1::Topic>
+  GetTopic(google::cloud::managedkafka::v1::GetTopicRequest const& request);
 
-  virtual StatusOr<google::cloud::managedkafka::v1::Topic> CreateTopic(
-      google::cloud::managedkafka::v1::CreateTopicRequest const& request);
+  virtual StatusOr<google::cloud::managedkafka::v1::Topic>
+  CreateTopic(google::cloud::managedkafka::v1::CreateTopicRequest const& request);
 
-  virtual StatusOr<google::cloud::managedkafka::v1::Topic> UpdateTopic(
-      google::cloud::managedkafka::v1::UpdateTopicRequest const& request);
+  virtual StatusOr<google::cloud::managedkafka::v1::Topic>
+  UpdateTopic(google::cloud::managedkafka::v1::UpdateTopicRequest const& request);
 
-  virtual Status DeleteTopic(
-      google::cloud::managedkafka::v1::DeleteTopicRequest const& request);
+  virtual Status
+  DeleteTopic(google::cloud::managedkafka::v1::DeleteTopicRequest const& request);
 
   virtual StreamRange<google::cloud::managedkafka::v1::ConsumerGroup>
-  ListConsumerGroups(
-      google::cloud::managedkafka::v1::ListConsumerGroupsRequest request);
+  ListConsumerGroups(google::cloud::managedkafka::v1::ListConsumerGroupsRequest request);
 
   virtual StatusOr<google::cloud::managedkafka::v1::ConsumerGroup>
-  GetConsumerGroup(
-      google::cloud::managedkafka::v1::GetConsumerGroupRequest const& request);
+  GetConsumerGroup(google::cloud::managedkafka::v1::GetConsumerGroupRequest const& request);
 
   virtual StatusOr<google::cloud::managedkafka::v1::ConsumerGroup>
-  UpdateConsumerGroup(
-      google::cloud::managedkafka::v1::UpdateConsumerGroupRequest const&
-          request);
+  UpdateConsumerGroup(google::cloud::managedkafka::v1::UpdateConsumerGroupRequest const& request);
 
-  virtual Status DeleteConsumerGroup(
-      google::cloud::managedkafka::v1::DeleteConsumerGroupRequest const&
-          request);
+  virtual Status
+  DeleteConsumerGroup(google::cloud::managedkafka::v1::DeleteConsumerGroupRequest const& request);
 
-  virtual StreamRange<google::cloud::managedkafka::v1::Acl> ListAcls(
-      google::cloud::managedkafka::v1::ListAclsRequest request);
+  virtual StreamRange<google::cloud::managedkafka::v1::Acl>
+  ListAcls(google::cloud::managedkafka::v1::ListAclsRequest request);
 
-  virtual StatusOr<google::cloud::managedkafka::v1::Acl> GetAcl(
-      google::cloud::managedkafka::v1::GetAclRequest const& request);
+  virtual StatusOr<google::cloud::managedkafka::v1::Acl>
+  GetAcl(google::cloud::managedkafka::v1::GetAclRequest const& request);
 
-  virtual StatusOr<google::cloud::managedkafka::v1::Acl> CreateAcl(
-      google::cloud::managedkafka::v1::CreateAclRequest const& request);
+  virtual StatusOr<google::cloud::managedkafka::v1::Acl>
+  CreateAcl(google::cloud::managedkafka::v1::CreateAclRequest const& request);
 
-  virtual StatusOr<google::cloud::managedkafka::v1::Acl> UpdateAcl(
-      google::cloud::managedkafka::v1::UpdateAclRequest const& request);
+  virtual StatusOr<google::cloud::managedkafka::v1::Acl>
+  UpdateAcl(google::cloud::managedkafka::v1::UpdateAclRequest const& request);
 
-  virtual Status DeleteAcl(
-      google::cloud::managedkafka::v1::DeleteAclRequest const& request);
+  virtual Status
+  DeleteAcl(google::cloud::managedkafka::v1::DeleteAclRequest const& request);
 
   virtual StatusOr<google::cloud::managedkafka::v1::AddAclEntryResponse>
-  AddAclEntry(
-      google::cloud::managedkafka::v1::AddAclEntryRequest const& request);
+  AddAclEntry(google::cloud::managedkafka::v1::AddAclEntryRequest const& request);
 
   virtual StatusOr<google::cloud::managedkafka::v1::RemoveAclEntryResponse>
-  RemoveAclEntry(
-      google::cloud::managedkafka::v1::RemoveAclEntryRequest const& request);
+  RemoveAclEntry(google::cloud::managedkafka::v1::RemoveAclEntryRequest const& request);
 
-  virtual StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request);
+  virtual StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request);
 
-  virtual StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request);
+  virtual StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request);
 
-  virtual StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 
-  virtual Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request);
+  virtual Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
 
-  virtual Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request);
+  virtual Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request);
 };
 
 /**

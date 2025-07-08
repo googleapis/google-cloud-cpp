@@ -17,10 +17,10 @@
 // source: google/monitoring/dashboard/v1/dashboards_service.proto
 
 #include "google/cloud/monitoring/dashboard/v1/internal/dashboards_option_defaults.h"
-#include "google/cloud/monitoring/dashboard/v1/dashboards_connection.h"
-#include "google/cloud/monitoring/dashboard/v1/dashboards_options.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
+#include "google/cloud/monitoring/dashboard/v1/dashboards_connection.h"
+#include "google/cloud/monitoring/dashboard/v1/dashboards_options.h"
 #include <memory>
 #include <utility>
 
@@ -35,31 +35,23 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options DashboardsServiceDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_DASHBOARDS_SERVICE_ENDPOINT", "",
-      "GOOGLE_CLOUD_CPP_DASHBOARDS_SERVICE_AUTHORITY",
+      std::move(options), "GOOGLE_CLOUD_CPP_DASHBOARDS_SERVICE_ENDPOINT",
+      "", "GOOGLE_CLOUD_CPP_DASHBOARDS_SERVICE_AUTHORITY",
       "monitoring.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
-  if (!options.has<
-          monitoring_dashboard_v1::DashboardsServiceRetryPolicyOption>()) {
+  if (!options.has<monitoring_dashboard_v1::DashboardsServiceRetryPolicyOption>()) {
     options.set<monitoring_dashboard_v1::DashboardsServiceRetryPolicyOption>(
         monitoring_dashboard_v1::DashboardsServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
-            .clone());
+            std::chrono::minutes(30)).clone());
   }
-  if (!options.has<
-          monitoring_dashboard_v1::DashboardsServiceBackoffPolicyOption>()) {
+  if (!options.has<monitoring_dashboard_v1::DashboardsServiceBackoffPolicyOption>()) {
     options.set<monitoring_dashboard_v1::DashboardsServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(
-            std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
-            .clone());
+        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
   }
-  if (!options.has<monitoring_dashboard_v1::
-                       DashboardsServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<monitoring_dashboard_v1::
-                    DashboardsServiceConnectionIdempotencyPolicyOption>(
-        monitoring_dashboard_v1::
-            MakeDefaultDashboardsServiceConnectionIdempotencyPolicy());
+  if (!options.has<monitoring_dashboard_v1::DashboardsServiceConnectionIdempotencyPolicyOption>()) {
+    options.set<monitoring_dashboard_v1::DashboardsServiceConnectionIdempotencyPolicyOption>(
+        monitoring_dashboard_v1::MakeDefaultDashboardsServiceConnectionIdempotencyPolicy());
   }
 
   return options;

@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_V3_INTERNAL_QUERY_AUTH_DECORATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_V3_INTERNAL_QUERY_AUTH_DECORATOR_H
 
-#include "google/cloud/monitoring/v3/internal/query_stub.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/monitoring/v3/internal/query_stub.h"
 #include "google/cloud/version.h"
 #include <memory>
 #include <set>
@@ -39,7 +39,8 @@ class QueryServiceAuth : public QueryServiceStub {
       std::shared_ptr<QueryServiceStub> child);
 
   StatusOr<google::monitoring::v3::QueryTimeSeriesResponse> QueryTimeSeries(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::monitoring::v3::QueryTimeSeriesRequest const& request) override;
 
  private:

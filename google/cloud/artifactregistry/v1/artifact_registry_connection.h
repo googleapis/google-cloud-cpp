@@ -56,8 +56,7 @@ class ArtifactRegistryRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class ArtifactRegistryLimitedErrorCountRetryPolicy
-    : public ArtifactRegistryRetryPolicy {
+class ArtifactRegistryLimitedErrorCountRetryPolicy : public ArtifactRegistryRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -67,14 +66,14 @@ class ArtifactRegistryLimitedErrorCountRetryPolicy
    *     @p maximum_failures == 0.
    */
   explicit ArtifactRegistryLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   ArtifactRegistryLimitedErrorCountRetryPolicy(
       ArtifactRegistryLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : ArtifactRegistryLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : ArtifactRegistryLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   ArtifactRegistryLimitedErrorCountRetryPolicy(
       ArtifactRegistryLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : ArtifactRegistryLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : ArtifactRegistryLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -94,9 +93,7 @@ class ArtifactRegistryLimitedErrorCountRetryPolicy
   using BaseType = ArtifactRegistryRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      artifactregistry_v1_internal::ArtifactRegistryRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<artifactregistry_v1_internal::ArtifactRegistryRetryTraits> impl_;
 };
 
 /**
@@ -109,8 +106,7 @@ class ArtifactRegistryLimitedErrorCountRetryPolicy
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class ArtifactRegistryLimitedTimeRetryPolicy
-    : public ArtifactRegistryRetryPolicy {
+class ArtifactRegistryLimitedTimeRetryPolicy : public ArtifactRegistryRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -135,14 +131,12 @@ class ArtifactRegistryLimitedTimeRetryPolicy
   template <typename DurationRep, typename DurationPeriod>
   explicit ArtifactRegistryLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  ArtifactRegistryLimitedTimeRetryPolicy(
-      ArtifactRegistryLimitedTimeRetryPolicy&& rhs) noexcept
-      : ArtifactRegistryLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  ArtifactRegistryLimitedTimeRetryPolicy(
-      ArtifactRegistryLimitedTimeRetryPolicy const& rhs) noexcept
-      : ArtifactRegistryLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  ArtifactRegistryLimitedTimeRetryPolicy(ArtifactRegistryLimitedTimeRetryPolicy&& rhs) noexcept
+    : ArtifactRegistryLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  ArtifactRegistryLimitedTimeRetryPolicy(ArtifactRegistryLimitedTimeRetryPolicy const& rhs) noexcept
+    : ArtifactRegistryLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -164,9 +158,7 @@ class ArtifactRegistryLimitedTimeRetryPolicy
   using BaseType = ArtifactRegistryRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      artifactregistry_v1_internal::ArtifactRegistryRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<artifactregistry_v1_internal::ArtifactRegistryRetryTraits> impl_;
 };
 
 /**
@@ -188,321 +180,231 @@ class ArtifactRegistryConnection {
   virtual Options options() { return Options{}; }
 
   virtual StreamRange<google::devtools::artifactregistry::v1::DockerImage>
-  ListDockerImages(
-      google::devtools::artifactregistry::v1::ListDockerImagesRequest request);
+  ListDockerImages(google::devtools::artifactregistry::v1::ListDockerImagesRequest request);
 
   virtual StatusOr<google::devtools::artifactregistry::v1::DockerImage>
-  GetDockerImage(
-      google::devtools::artifactregistry::v1::GetDockerImageRequest const&
-          request);
+  GetDockerImage(google::devtools::artifactregistry::v1::GetDockerImageRequest const& request);
 
   virtual StreamRange<google::devtools::artifactregistry::v1::MavenArtifact>
-  ListMavenArtifacts(
-      google::devtools::artifactregistry::v1::ListMavenArtifactsRequest
-          request);
+  ListMavenArtifacts(google::devtools::artifactregistry::v1::ListMavenArtifactsRequest request);
 
   virtual StatusOr<google::devtools::artifactregistry::v1::MavenArtifact>
-  GetMavenArtifact(
-      google::devtools::artifactregistry::v1::GetMavenArtifactRequest const&
-          request);
+  GetMavenArtifact(google::devtools::artifactregistry::v1::GetMavenArtifactRequest const& request);
 
   virtual StreamRange<google::devtools::artifactregistry::v1::NpmPackage>
-  ListNpmPackages(
-      google::devtools::artifactregistry::v1::ListNpmPackagesRequest request);
+  ListNpmPackages(google::devtools::artifactregistry::v1::ListNpmPackagesRequest request);
 
   virtual StatusOr<google::devtools::artifactregistry::v1::NpmPackage>
-  GetNpmPackage(
-      google::devtools::artifactregistry::v1::GetNpmPackageRequest const&
-          request);
+  GetNpmPackage(google::devtools::artifactregistry::v1::GetNpmPackageRequest const& request);
 
   virtual StreamRange<google::devtools::artifactregistry::v1::PythonPackage>
-  ListPythonPackages(
-      google::devtools::artifactregistry::v1::ListPythonPackagesRequest
-          request);
+  ListPythonPackages(google::devtools::artifactregistry::v1::ListPythonPackagesRequest request);
 
   virtual StatusOr<google::devtools::artifactregistry::v1::PythonPackage>
-  GetPythonPackage(
-      google::devtools::artifactregistry::v1::GetPythonPackageRequest const&
-          request);
+  GetPythonPackage(google::devtools::artifactregistry::v1::GetPythonPackageRequest const& request);
 
-  virtual future<StatusOr<
-      google::devtools::artifactregistry::v1::ImportAptArtifactsResponse>>
-  ImportAptArtifacts(
-      google::devtools::artifactregistry::v1::ImportAptArtifactsRequest const&
-          request);
+  virtual future<StatusOr<google::devtools::artifactregistry::v1::ImportAptArtifactsResponse>>
+  ImportAptArtifacts(google::devtools::artifactregistry::v1::ImportAptArtifactsRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> ImportAptArtifacts(
-      NoAwaitTag,
-      google::devtools::artifactregistry::v1::ImportAptArtifactsRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  ImportAptArtifacts(NoAwaitTag, google::devtools::artifactregistry::v1::ImportAptArtifactsRequest const& request);
 
-  virtual future<StatusOr<
-      google::devtools::artifactregistry::v1::ImportAptArtifactsResponse>>
-  ImportAptArtifacts(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::devtools::artifactregistry::v1::ImportAptArtifactsResponse>>
+  ImportAptArtifacts( google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<
-      google::devtools::artifactregistry::v1::ImportYumArtifactsResponse>>
-  ImportYumArtifacts(
-      google::devtools::artifactregistry::v1::ImportYumArtifactsRequest const&
-          request);
+  virtual future<StatusOr<google::devtools::artifactregistry::v1::ImportYumArtifactsResponse>>
+  ImportYumArtifacts(google::devtools::artifactregistry::v1::ImportYumArtifactsRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> ImportYumArtifacts(
-      NoAwaitTag,
-      google::devtools::artifactregistry::v1::ImportYumArtifactsRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  ImportYumArtifacts(NoAwaitTag, google::devtools::artifactregistry::v1::ImportYumArtifactsRequest const& request);
 
-  virtual future<StatusOr<
-      google::devtools::artifactregistry::v1::ImportYumArtifactsResponse>>
-  ImportYumArtifacts(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::devtools::artifactregistry::v1::ImportYumArtifactsResponse>>
+  ImportYumArtifacts( google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::devtools::artifactregistry::v1::Repository>
-  ListRepositories(
-      google::devtools::artifactregistry::v1::ListRepositoriesRequest request);
+  ListRepositories(google::devtools::artifactregistry::v1::ListRepositoriesRequest request);
 
   virtual StatusOr<google::devtools::artifactregistry::v1::Repository>
-  GetRepository(
-      google::devtools::artifactregistry::v1::GetRepositoryRequest const&
-          request);
+  GetRepository(google::devtools::artifactregistry::v1::GetRepositoryRequest const& request);
 
   virtual future<StatusOr<google::devtools::artifactregistry::v1::Repository>>
-  CreateRepository(
-      google::devtools::artifactregistry::v1::CreateRepositoryRequest const&
-          request);
+  CreateRepository(google::devtools::artifactregistry::v1::CreateRepositoryRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> CreateRepository(
-      NoAwaitTag,
-      google::devtools::artifactregistry::v1::CreateRepositoryRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  CreateRepository(NoAwaitTag, google::devtools::artifactregistry::v1::CreateRepositoryRequest const& request);
 
   virtual future<StatusOr<google::devtools::artifactregistry::v1::Repository>>
-  CreateRepository(google::longrunning::Operation const& operation);
+  CreateRepository( google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::devtools::artifactregistry::v1::Repository>
-  UpdateRepository(
-      google::devtools::artifactregistry::v1::UpdateRepositoryRequest const&
-          request);
+  UpdateRepository(google::devtools::artifactregistry::v1::UpdateRepositoryRequest const& request);
 
-  virtual future<
-      StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
-  DeleteRepository(
-      google::devtools::artifactregistry::v1::DeleteRepositoryRequest const&
-          request);
+  virtual future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
+  DeleteRepository(google::devtools::artifactregistry::v1::DeleteRepositoryRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> DeleteRepository(
-      NoAwaitTag,
-      google::devtools::artifactregistry::v1::DeleteRepositoryRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  DeleteRepository(NoAwaitTag, google::devtools::artifactregistry::v1::DeleteRepositoryRequest const& request);
 
-  virtual future<
-      StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
-  DeleteRepository(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
+  DeleteRepository( google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::devtools::artifactregistry::v1::Package>
-  ListPackages(
-      google::devtools::artifactregistry::v1::ListPackagesRequest request);
+  ListPackages(google::devtools::artifactregistry::v1::ListPackagesRequest request);
 
-  virtual StatusOr<google::devtools::artifactregistry::v1::Package> GetPackage(
-      google::devtools::artifactregistry::v1::GetPackageRequest const& request);
+  virtual StatusOr<google::devtools::artifactregistry::v1::Package>
+  GetPackage(google::devtools::artifactregistry::v1::GetPackageRequest const& request);
 
-  virtual future<
-      StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
-  DeletePackage(
-      google::devtools::artifactregistry::v1::DeletePackageRequest const&
-          request);
+  virtual future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
+  DeletePackage(google::devtools::artifactregistry::v1::DeletePackageRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> DeletePackage(
-      NoAwaitTag,
-      google::devtools::artifactregistry::v1::DeletePackageRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  DeletePackage(NoAwaitTag, google::devtools::artifactregistry::v1::DeletePackageRequest const& request);
 
-  virtual future<
-      StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
-  DeletePackage(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
+  DeletePackage( google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::devtools::artifactregistry::v1::Version>
-  ListVersions(
-      google::devtools::artifactregistry::v1::ListVersionsRequest request);
-
-  virtual StatusOr<google::devtools::artifactregistry::v1::Version> GetVersion(
-      google::devtools::artifactregistry::v1::GetVersionRequest const& request);
-
-  virtual future<
-      StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
-  DeleteVersion(
-      google::devtools::artifactregistry::v1::DeleteVersionRequest const&
-          request);
-
-  virtual StatusOr<google::longrunning::Operation> DeleteVersion(
-      NoAwaitTag,
-      google::devtools::artifactregistry::v1::DeleteVersionRequest const&
-          request);
-
-  virtual future<
-      StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
-  DeleteVersion(google::longrunning::Operation const& operation);
-
-  virtual future<StatusOr<
-      google::devtools::artifactregistry::v1::BatchDeleteVersionsMetadata>>
-  BatchDeleteVersions(
-      google::devtools::artifactregistry::v1::BatchDeleteVersionsRequest const&
-          request);
-
-  virtual StatusOr<google::longrunning::Operation> BatchDeleteVersions(
-      NoAwaitTag,
-      google::devtools::artifactregistry::v1::BatchDeleteVersionsRequest const&
-          request);
-
-  virtual future<StatusOr<
-      google::devtools::artifactregistry::v1::BatchDeleteVersionsMetadata>>
-  BatchDeleteVersions(google::longrunning::Operation const& operation);
+  ListVersions(google::devtools::artifactregistry::v1::ListVersionsRequest request);
 
   virtual StatusOr<google::devtools::artifactregistry::v1::Version>
-  UpdateVersion(
-      google::devtools::artifactregistry::v1::UpdateVersionRequest const&
-          request);
+  GetVersion(google::devtools::artifactregistry::v1::GetVersionRequest const& request);
 
-  virtual StreamRange<google::devtools::artifactregistry::v1::File> ListFiles(
-      google::devtools::artifactregistry::v1::ListFilesRequest request);
+  virtual future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
+  DeleteVersion(google::devtools::artifactregistry::v1::DeleteVersionRequest const& request);
 
-  virtual StatusOr<google::devtools::artifactregistry::v1::File> GetFile(
-      google::devtools::artifactregistry::v1::GetFileRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  DeleteVersion(NoAwaitTag, google::devtools::artifactregistry::v1::DeleteVersionRequest const& request);
 
-  virtual future<
-      StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
-  DeleteFile(
-      google::devtools::artifactregistry::v1::DeleteFileRequest const& request);
+  virtual future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
+  DeleteVersion( google::longrunning::Operation const& operation);
 
-  virtual StatusOr<google::longrunning::Operation> DeleteFile(
-      NoAwaitTag,
-      google::devtools::artifactregistry::v1::DeleteFileRequest const& request);
+  virtual future<StatusOr<google::devtools::artifactregistry::v1::BatchDeleteVersionsMetadata>>
+  BatchDeleteVersions(google::devtools::artifactregistry::v1::BatchDeleteVersionsRequest const& request);
 
-  virtual future<
-      StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
-  DeleteFile(google::longrunning::Operation const& operation);
+  virtual StatusOr<google::longrunning::Operation>
+  BatchDeleteVersions(NoAwaitTag, google::devtools::artifactregistry::v1::BatchDeleteVersionsRequest const& request);
 
-  virtual StatusOr<google::devtools::artifactregistry::v1::File> UpdateFile(
-      google::devtools::artifactregistry::v1::UpdateFileRequest const& request);
+  virtual future<StatusOr<google::devtools::artifactregistry::v1::BatchDeleteVersionsMetadata>>
+  BatchDeleteVersions( google::longrunning::Operation const& operation);
 
-  virtual StreamRange<google::devtools::artifactregistry::v1::Tag> ListTags(
-      google::devtools::artifactregistry::v1::ListTagsRequest request);
+  virtual StatusOr<google::devtools::artifactregistry::v1::Version>
+  UpdateVersion(google::devtools::artifactregistry::v1::UpdateVersionRequest const& request);
 
-  virtual StatusOr<google::devtools::artifactregistry::v1::Tag> GetTag(
-      google::devtools::artifactregistry::v1::GetTagRequest const& request);
+  virtual StreamRange<google::devtools::artifactregistry::v1::File>
+  ListFiles(google::devtools::artifactregistry::v1::ListFilesRequest request);
 
-  virtual StatusOr<google::devtools::artifactregistry::v1::Tag> CreateTag(
-      google::devtools::artifactregistry::v1::CreateTagRequest const& request);
+  virtual StatusOr<google::devtools::artifactregistry::v1::File>
+  GetFile(google::devtools::artifactregistry::v1::GetFileRequest const& request);
 
-  virtual StatusOr<google::devtools::artifactregistry::v1::Tag> UpdateTag(
-      google::devtools::artifactregistry::v1::UpdateTagRequest const& request);
+  virtual future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
+  DeleteFile(google::devtools::artifactregistry::v1::DeleteFileRequest const& request);
 
-  virtual Status DeleteTag(
-      google::devtools::artifactregistry::v1::DeleteTagRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  DeleteFile(NoAwaitTag, google::devtools::artifactregistry::v1::DeleteFileRequest const& request);
 
-  virtual StatusOr<google::devtools::artifactregistry::v1::Rule> CreateRule(
-      google::devtools::artifactregistry::v1::CreateRuleRequest const& request);
+  virtual future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
+  DeleteFile( google::longrunning::Operation const& operation);
 
-  virtual StreamRange<google::devtools::artifactregistry::v1::Rule> ListRules(
-      google::devtools::artifactregistry::v1::ListRulesRequest request);
+  virtual StatusOr<google::devtools::artifactregistry::v1::File>
+  UpdateFile(google::devtools::artifactregistry::v1::UpdateFileRequest const& request);
 
-  virtual StatusOr<google::devtools::artifactregistry::v1::Rule> GetRule(
-      google::devtools::artifactregistry::v1::GetRuleRequest const& request);
+  virtual StreamRange<google::devtools::artifactregistry::v1::Tag>
+  ListTags(google::devtools::artifactregistry::v1::ListTagsRequest request);
 
-  virtual StatusOr<google::devtools::artifactregistry::v1::Rule> UpdateRule(
-      google::devtools::artifactregistry::v1::UpdateRuleRequest const& request);
+  virtual StatusOr<google::devtools::artifactregistry::v1::Tag>
+  GetTag(google::devtools::artifactregistry::v1::GetTagRequest const& request);
 
-  virtual Status DeleteRule(
-      google::devtools::artifactregistry::v1::DeleteRuleRequest const& request);
+  virtual StatusOr<google::devtools::artifactregistry::v1::Tag>
+  CreateTag(google::devtools::artifactregistry::v1::CreateTagRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request);
+  virtual StatusOr<google::devtools::artifactregistry::v1::Tag>
+  UpdateTag(google::devtools::artifactregistry::v1::UpdateTagRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request);
+  virtual Status
+  DeleteTag(google::devtools::artifactregistry::v1::DeleteTagRequest const& request);
+
+  virtual StatusOr<google::devtools::artifactregistry::v1::Rule>
+  CreateRule(google::devtools::artifactregistry::v1::CreateRuleRequest const& request);
+
+  virtual StreamRange<google::devtools::artifactregistry::v1::Rule>
+  ListRules(google::devtools::artifactregistry::v1::ListRulesRequest request);
+
+  virtual StatusOr<google::devtools::artifactregistry::v1::Rule>
+  GetRule(google::devtools::artifactregistry::v1::GetRuleRequest const& request);
+
+  virtual StatusOr<google::devtools::artifactregistry::v1::Rule>
+  UpdateRule(google::devtools::artifactregistry::v1::UpdateRuleRequest const& request);
+
+  virtual Status
+  DeleteRule(google::devtools::artifactregistry::v1::DeleteRuleRequest const& request);
+
+  virtual StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
+
+  virtual StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
 
   virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
   TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
 
   virtual StatusOr<google::devtools::artifactregistry::v1::ProjectSettings>
-  GetProjectSettings(
-      google::devtools::artifactregistry::v1::GetProjectSettingsRequest const&
-          request);
+  GetProjectSettings(google::devtools::artifactregistry::v1::GetProjectSettingsRequest const& request);
 
   virtual StatusOr<google::devtools::artifactregistry::v1::ProjectSettings>
-  UpdateProjectSettings(google::devtools::artifactregistry::v1::
-                            UpdateProjectSettingsRequest const& request);
+  UpdateProjectSettings(google::devtools::artifactregistry::v1::UpdateProjectSettingsRequest const& request);
 
   virtual StatusOr<google::devtools::artifactregistry::v1::VPCSCConfig>
-  GetVPCSCConfig(
-      google::devtools::artifactregistry::v1::GetVPCSCConfigRequest const&
-          request);
+  GetVPCSCConfig(google::devtools::artifactregistry::v1::GetVPCSCConfigRequest const& request);
 
   virtual StatusOr<google::devtools::artifactregistry::v1::VPCSCConfig>
-  UpdateVPCSCConfig(
-      google::devtools::artifactregistry::v1::UpdateVPCSCConfigRequest const&
-          request);
+  UpdateVPCSCConfig(google::devtools::artifactregistry::v1::UpdateVPCSCConfigRequest const& request);
 
   virtual StatusOr<google::devtools::artifactregistry::v1::Package>
-  UpdatePackage(
-      google::devtools::artifactregistry::v1::UpdatePackageRequest const&
-          request);
+  UpdatePackage(google::devtools::artifactregistry::v1::UpdatePackageRequest const& request);
 
   virtual StreamRange<google::devtools::artifactregistry::v1::Attachment>
-  ListAttachments(
-      google::devtools::artifactregistry::v1::ListAttachmentsRequest request);
+  ListAttachments(google::devtools::artifactregistry::v1::ListAttachmentsRequest request);
 
   virtual StatusOr<google::devtools::artifactregistry::v1::Attachment>
-  GetAttachment(
-      google::devtools::artifactregistry::v1::GetAttachmentRequest const&
-          request);
+  GetAttachment(google::devtools::artifactregistry::v1::GetAttachmentRequest const& request);
 
   virtual future<StatusOr<google::devtools::artifactregistry::v1::Attachment>>
-  CreateAttachment(
-      google::devtools::artifactregistry::v1::CreateAttachmentRequest const&
-          request);
+  CreateAttachment(google::devtools::artifactregistry::v1::CreateAttachmentRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> CreateAttachment(
-      NoAwaitTag,
-      google::devtools::artifactregistry::v1::CreateAttachmentRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  CreateAttachment(NoAwaitTag, google::devtools::artifactregistry::v1::CreateAttachmentRequest const& request);
 
   virtual future<StatusOr<google::devtools::artifactregistry::v1::Attachment>>
-  CreateAttachment(google::longrunning::Operation const& operation);
+  CreateAttachment( google::longrunning::Operation const& operation);
 
-  virtual future<
-      StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
-  DeleteAttachment(
-      google::devtools::artifactregistry::v1::DeleteAttachmentRequest const&
-          request);
+  virtual future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
+  DeleteAttachment(google::devtools::artifactregistry::v1::DeleteAttachmentRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> DeleteAttachment(
-      NoAwaitTag,
-      google::devtools::artifactregistry::v1::DeleteAttachmentRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  DeleteAttachment(NoAwaitTag, google::devtools::artifactregistry::v1::DeleteAttachmentRequest const& request);
 
-  virtual future<
-      StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
-  DeleteAttachment(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
+  DeleteAttachment( google::longrunning::Operation const& operation);
 
-  virtual StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request);
+  virtual StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request);
 
-  virtual StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request);
+  virtual StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 };
 
 /**
- * A factory function to construct an object of type
- * `ArtifactRegistryConnection`.
+ * A factory function to construct an object of type `ArtifactRegistryConnection`.
  *
  * The returned connection object should not be used directly; instead it
  * should be passed as an argument to the constructor of ArtifactRegistryClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `ArtifactRegistryConnection`. Expected options are any of the types
- * in the following option lists:
+ * returned `ArtifactRegistryConnection`. Expected options are any of the types in
+ * the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
@@ -512,8 +414,8 @@ class ArtifactRegistryConnection {
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
- * @param options (optional) Configure the `ArtifactRegistryConnection` created
- * by this function.
+ * @param options (optional) Configure the `ArtifactRegistryConnection` created by
+ * this function.
  */
 std::shared_ptr<ArtifactRegistryConnection> MakeArtifactRegistryConnection(
     Options options = {});

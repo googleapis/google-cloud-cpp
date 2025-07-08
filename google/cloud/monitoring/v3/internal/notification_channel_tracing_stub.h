@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_V3_INTERNAL_NOTIFICATION_CHANNEL_TRACING_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_V3_INTERNAL_NOTIFICATION_CHANNEL_TRACING_STUB_H
 
-#include "google/cloud/monitoring/v3/internal/notification_channel_stub.h"
 #include "google/cloud/internal/trace_propagator.h"
+#include "google/cloud/monitoring/v3/internal/notification_channel_stub.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -32,78 +32,65 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-class NotificationChannelServiceTracingStub
-    : public NotificationChannelServiceStub {
+class NotificationChannelServiceTracingStub : public NotificationChannelServiceStub {
  public:
   ~NotificationChannelServiceTracingStub() override = default;
 
-  explicit NotificationChannelServiceTracingStub(
-      std::shared_ptr<NotificationChannelServiceStub> child);
+  explicit NotificationChannelServiceTracingStub(std::shared_ptr<NotificationChannelServiceStub> child);
 
-  StatusOr<google::monitoring::v3::ListNotificationChannelDescriptorsResponse>
-  ListNotificationChannelDescriptors(
-      grpc::ClientContext& context, Options const& options,
-      google::monitoring::v3::ListNotificationChannelDescriptorsRequest const&
-          request) override;
+  StatusOr<google::monitoring::v3::ListNotificationChannelDescriptorsResponse> ListNotificationChannelDescriptors(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::monitoring::v3::ListNotificationChannelDescriptorsRequest const& request) override;
 
-  StatusOr<google::monitoring::v3::NotificationChannelDescriptor>
-  GetNotificationChannelDescriptor(
-      grpc::ClientContext& context, Options const& options,
-      google::monitoring::v3::GetNotificationChannelDescriptorRequest const&
-          request) override;
+  StatusOr<google::monitoring::v3::NotificationChannelDescriptor> GetNotificationChannelDescriptor(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::monitoring::v3::GetNotificationChannelDescriptorRequest const& request) override;
 
-  StatusOr<google::monitoring::v3::ListNotificationChannelsResponse>
-  ListNotificationChannels(
-      grpc::ClientContext& context, Options const& options,
-      google::monitoring::v3::ListNotificationChannelsRequest const& request)
-      override;
+  StatusOr<google::monitoring::v3::ListNotificationChannelsResponse> ListNotificationChannels(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::monitoring::v3::ListNotificationChannelsRequest const& request) override;
 
   StatusOr<google::monitoring::v3::NotificationChannel> GetNotificationChannel(
-      grpc::ClientContext& context, Options const& options,
-      google::monitoring::v3::GetNotificationChannelRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::monitoring::v3::GetNotificationChannelRequest const& request) override;
 
-  StatusOr<google::monitoring::v3::NotificationChannel>
-  CreateNotificationChannel(
-      grpc::ClientContext& context, Options const& options,
-      google::monitoring::v3::CreateNotificationChannelRequest const& request)
-      override;
+  StatusOr<google::monitoring::v3::NotificationChannel> CreateNotificationChannel(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::monitoring::v3::CreateNotificationChannelRequest const& request) override;
 
-  StatusOr<google::monitoring::v3::NotificationChannel>
-  UpdateNotificationChannel(
-      grpc::ClientContext& context, Options const& options,
-      google::monitoring::v3::UpdateNotificationChannelRequest const& request)
-      override;
+  StatusOr<google::monitoring::v3::NotificationChannel> UpdateNotificationChannel(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::monitoring::v3::UpdateNotificationChannelRequest const& request) override;
 
   Status DeleteNotificationChannel(
-      grpc::ClientContext& context, Options const& options,
-      google::monitoring::v3::DeleteNotificationChannelRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::monitoring::v3::DeleteNotificationChannelRequest const& request) override;
 
   Status SendNotificationChannelVerificationCode(
-      grpc::ClientContext& context, Options const& options,
-      google::monitoring::v3::
-          SendNotificationChannelVerificationCodeRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::monitoring::v3::SendNotificationChannelVerificationCodeRequest const& request) override;
 
-  StatusOr<
-      google::monitoring::v3::GetNotificationChannelVerificationCodeResponse>
-  GetNotificationChannelVerificationCode(
-      grpc::ClientContext& context, Options const& options,
-      google::monitoring::v3::
-          GetNotificationChannelVerificationCodeRequest const& request)
-      override;
+  StatusOr<google::monitoring::v3::GetNotificationChannelVerificationCodeResponse> GetNotificationChannelVerificationCode(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::monitoring::v3::GetNotificationChannelVerificationCodeRequest const& request) override;
 
-  StatusOr<google::monitoring::v3::NotificationChannel>
-  VerifyNotificationChannel(
-      grpc::ClientContext& context, Options const& options,
-      google::monitoring::v3::VerifyNotificationChannelRequest const& request)
-      override;
+  StatusOr<google::monitoring::v3::NotificationChannel> VerifyNotificationChannel(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::monitoring::v3::VerifyNotificationChannelRequest const& request) override;
 
  private:
   std::shared_ptr<NotificationChannelServiceStub> child_;
-  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
-      propagator_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -114,8 +101,7 @@ class NotificationChannelServiceTracingStub
  * The stub is only decorated if the library has been compiled with
  * OpenTelemetry.
  */
-std::shared_ptr<NotificationChannelServiceStub>
-MakeNotificationChannelServiceTracingStub(
+std::shared_ptr<NotificationChannelServiceStub> MakeNotificationChannelServiceTracingStub(
     std::shared_ptr<NotificationChannelServiceStub> stub);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

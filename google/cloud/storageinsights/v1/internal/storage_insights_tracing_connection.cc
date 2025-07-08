@@ -34,119 +34,90 @@ StorageInsightsTracingConnection::StorageInsightsTracingConnection(
     : child_(std::move(child)) {}
 
 StreamRange<google::cloud::storageinsights::v1::ReportConfig>
-StorageInsightsTracingConnection::ListReportConfigs(
-    google::cloud::storageinsights::v1::ListReportConfigsRequest request) {
-  auto span = internal::MakeSpan(
-      "storageinsights_v1::StorageInsightsConnection::ListReportConfigs");
+StorageInsightsTracingConnection::ListReportConfigs(google::cloud::storageinsights::v1::ListReportConfigsRequest request) {
+  auto span = internal::MakeSpan("storageinsights_v1::StorageInsightsConnection::ListReportConfigs");
   internal::OTelScope scope(span);
   auto sr = child_->ListReportConfigs(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::storageinsights::v1::ReportConfig>(std::move(span),
-                                                        std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::storageinsights::v1::ReportConfig>(
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::storageinsights::v1::ReportConfig>
-StorageInsightsTracingConnection::GetReportConfig(
-    google::cloud::storageinsights::v1::GetReportConfigRequest const& request) {
-  auto span = internal::MakeSpan(
-      "storageinsights_v1::StorageInsightsConnection::GetReportConfig");
+StorageInsightsTracingConnection::GetReportConfig(google::cloud::storageinsights::v1::GetReportConfigRequest const& request) {
+  auto span = internal::MakeSpan("storageinsights_v1::StorageInsightsConnection::GetReportConfig");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetReportConfig(request));
 }
 
 StatusOr<google::cloud::storageinsights::v1::ReportConfig>
-StorageInsightsTracingConnection::CreateReportConfig(
-    google::cloud::storageinsights::v1::CreateReportConfigRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "storageinsights_v1::StorageInsightsConnection::CreateReportConfig");
+StorageInsightsTracingConnection::CreateReportConfig(google::cloud::storageinsights::v1::CreateReportConfigRequest const& request) {
+  auto span = internal::MakeSpan("storageinsights_v1::StorageInsightsConnection::CreateReportConfig");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateReportConfig(request));
 }
 
 StatusOr<google::cloud::storageinsights::v1::ReportConfig>
-StorageInsightsTracingConnection::UpdateReportConfig(
-    google::cloud::storageinsights::v1::UpdateReportConfigRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "storageinsights_v1::StorageInsightsConnection::UpdateReportConfig");
+StorageInsightsTracingConnection::UpdateReportConfig(google::cloud::storageinsights::v1::UpdateReportConfigRequest const& request) {
+  auto span = internal::MakeSpan("storageinsights_v1::StorageInsightsConnection::UpdateReportConfig");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateReportConfig(request));
 }
 
-Status StorageInsightsTracingConnection::DeleteReportConfig(
-    google::cloud::storageinsights::v1::DeleteReportConfigRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "storageinsights_v1::StorageInsightsConnection::DeleteReportConfig");
+Status
+StorageInsightsTracingConnection::DeleteReportConfig(google::cloud::storageinsights::v1::DeleteReportConfigRequest const& request) {
+  auto span = internal::MakeSpan("storageinsights_v1::StorageInsightsConnection::DeleteReportConfig");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteReportConfig(request));
 }
 
 StreamRange<google::cloud::storageinsights::v1::ReportDetail>
-StorageInsightsTracingConnection::ListReportDetails(
-    google::cloud::storageinsights::v1::ListReportDetailsRequest request) {
-  auto span = internal::MakeSpan(
-      "storageinsights_v1::StorageInsightsConnection::ListReportDetails");
+StorageInsightsTracingConnection::ListReportDetails(google::cloud::storageinsights::v1::ListReportDetailsRequest request) {
+  auto span = internal::MakeSpan("storageinsights_v1::StorageInsightsConnection::ListReportDetails");
   internal::OTelScope scope(span);
   auto sr = child_->ListReportDetails(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::storageinsights::v1::ReportDetail>(std::move(span),
-                                                        std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::storageinsights::v1::ReportDetail>(
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::storageinsights::v1::ReportDetail>
-StorageInsightsTracingConnection::GetReportDetail(
-    google::cloud::storageinsights::v1::GetReportDetailRequest const& request) {
-  auto span = internal::MakeSpan(
-      "storageinsights_v1::StorageInsightsConnection::GetReportDetail");
+StorageInsightsTracingConnection::GetReportDetail(google::cloud::storageinsights::v1::GetReportDetailRequest const& request) {
+  auto span = internal::MakeSpan("storageinsights_v1::StorageInsightsConnection::GetReportDetail");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetReportDetail(request));
 }
 
 StreamRange<google::cloud::storageinsights::v1::DatasetConfig>
-StorageInsightsTracingConnection::ListDatasetConfigs(
-    google::cloud::storageinsights::v1::ListDatasetConfigsRequest request) {
-  auto span = internal::MakeSpan(
-      "storageinsights_v1::StorageInsightsConnection::ListDatasetConfigs");
+StorageInsightsTracingConnection::ListDatasetConfigs(google::cloud::storageinsights::v1::ListDatasetConfigsRequest request) {
+  auto span = internal::MakeSpan("storageinsights_v1::StorageInsightsConnection::ListDatasetConfigs");
   internal::OTelScope scope(span);
   auto sr = child_->ListDatasetConfigs(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::storageinsights::v1::DatasetConfig>(std::move(span),
-                                                         std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::storageinsights::v1::DatasetConfig>(
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::storageinsights::v1::DatasetConfig>
-StorageInsightsTracingConnection::GetDatasetConfig(
-    google::cloud::storageinsights::v1::GetDatasetConfigRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "storageinsights_v1::StorageInsightsConnection::GetDatasetConfig");
+StorageInsightsTracingConnection::GetDatasetConfig(google::cloud::storageinsights::v1::GetDatasetConfigRequest const& request) {
+  auto span = internal::MakeSpan("storageinsights_v1::StorageInsightsConnection::GetDatasetConfig");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetDatasetConfig(request));
 }
 
 future<StatusOr<google::cloud::storageinsights::v1::DatasetConfig>>
-StorageInsightsTracingConnection::CreateDatasetConfig(
-    google::cloud::storageinsights::v1::CreateDatasetConfigRequest const&
-        request) {
+StorageInsightsTracingConnection::CreateDatasetConfig(google::cloud::storageinsights::v1::CreateDatasetConfigRequest const& request) {
   auto span = internal::MakeSpan(
       "storageinsights_v1::StorageInsightsConnection::CreateDatasetConfig");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->CreateDatasetConfig(request));
+  return internal::EndSpan(std::move(span), child_->CreateDatasetConfig(request));
 }
 
 StatusOr<google::longrunning::Operation>
 StorageInsightsTracingConnection::CreateDatasetConfig(
-    NoAwaitTag,
-    google::cloud::storageinsights::v1::CreateDatasetConfigRequest const&
-        request) {
+    NoAwaitTag, google::cloud::storageinsights::v1::CreateDatasetConfigRequest const& request) {
   auto span = internal::MakeSpan(
       "storageinsights_v1::StorageInsightsConnection::CreateDatasetConfig");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span,
-                           child_->CreateDatasetConfig(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->CreateDatasetConfig(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::storageinsights::v1::DatasetConfig>>
@@ -156,30 +127,25 @@ StorageInsightsTracingConnection::CreateDatasetConfig(
       "storageinsights_v1::StorageInsightsConnection::CreateDatasetConfig");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->CreateDatasetConfig(operation));
+      child_->CreateDatasetConfig(operation));
 }
 
 future<StatusOr<google::cloud::storageinsights::v1::DatasetConfig>>
-StorageInsightsTracingConnection::UpdateDatasetConfig(
-    google::cloud::storageinsights::v1::UpdateDatasetConfigRequest const&
-        request) {
+StorageInsightsTracingConnection::UpdateDatasetConfig(google::cloud::storageinsights::v1::UpdateDatasetConfigRequest const& request) {
   auto span = internal::MakeSpan(
       "storageinsights_v1::StorageInsightsConnection::UpdateDatasetConfig");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->UpdateDatasetConfig(request));
+  return internal::EndSpan(std::move(span), child_->UpdateDatasetConfig(request));
 }
 
 StatusOr<google::longrunning::Operation>
 StorageInsightsTracingConnection::UpdateDatasetConfig(
-    NoAwaitTag,
-    google::cloud::storageinsights::v1::UpdateDatasetConfigRequest const&
-        request) {
+    NoAwaitTag, google::cloud::storageinsights::v1::UpdateDatasetConfigRequest const& request) {
   auto span = internal::MakeSpan(
       "storageinsights_v1::StorageInsightsConnection::UpdateDatasetConfig");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span,
-                           child_->UpdateDatasetConfig(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->UpdateDatasetConfig(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::storageinsights::v1::DatasetConfig>>
@@ -189,30 +155,25 @@ StorageInsightsTracingConnection::UpdateDatasetConfig(
       "storageinsights_v1::StorageInsightsConnection::UpdateDatasetConfig");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->UpdateDatasetConfig(operation));
+      child_->UpdateDatasetConfig(operation));
 }
 
 future<StatusOr<google::cloud::storageinsights::v1::OperationMetadata>>
-StorageInsightsTracingConnection::DeleteDatasetConfig(
-    google::cloud::storageinsights::v1::DeleteDatasetConfigRequest const&
-        request) {
+StorageInsightsTracingConnection::DeleteDatasetConfig(google::cloud::storageinsights::v1::DeleteDatasetConfigRequest const& request) {
   auto span = internal::MakeSpan(
       "storageinsights_v1::StorageInsightsConnection::DeleteDatasetConfig");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->DeleteDatasetConfig(request));
+  return internal::EndSpan(std::move(span), child_->DeleteDatasetConfig(request));
 }
 
 StatusOr<google::longrunning::Operation>
 StorageInsightsTracingConnection::DeleteDatasetConfig(
-    NoAwaitTag,
-    google::cloud::storageinsights::v1::DeleteDatasetConfigRequest const&
-        request) {
+    NoAwaitTag, google::cloud::storageinsights::v1::DeleteDatasetConfigRequest const& request) {
   auto span = internal::MakeSpan(
       "storageinsights_v1::StorageInsightsConnection::DeleteDatasetConfig");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span,
-                           child_->DeleteDatasetConfig(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->DeleteDatasetConfig(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::storageinsights::v1::OperationMetadata>>
@@ -222,12 +183,11 @@ StorageInsightsTracingConnection::DeleteDatasetConfig(
       "storageinsights_v1::StorageInsightsConnection::DeleteDatasetConfig");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->DeleteDatasetConfig(operation));
+      child_->DeleteDatasetConfig(operation));
 }
 
 future<StatusOr<google::cloud::storageinsights::v1::LinkDatasetResponse>>
-StorageInsightsTracingConnection::LinkDataset(
-    google::cloud::storageinsights::v1::LinkDatasetRequest const& request) {
+StorageInsightsTracingConnection::LinkDataset(google::cloud::storageinsights::v1::LinkDatasetRequest const& request) {
   auto span = internal::MakeSpan(
       "storageinsights_v1::StorageInsightsConnection::LinkDataset");
   internal::OTelScope scope(span);
@@ -236,12 +196,12 @@ StorageInsightsTracingConnection::LinkDataset(
 
 StatusOr<google::longrunning::Operation>
 StorageInsightsTracingConnection::LinkDataset(
-    NoAwaitTag,
-    google::cloud::storageinsights::v1::LinkDatasetRequest const& request) {
+    NoAwaitTag, google::cloud::storageinsights::v1::LinkDatasetRequest const& request) {
   auto span = internal::MakeSpan(
       "storageinsights_v1::StorageInsightsConnection::LinkDataset");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->LinkDataset(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->LinkDataset(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::storageinsights::v1::LinkDatasetResponse>>
@@ -250,12 +210,12 @@ StorageInsightsTracingConnection::LinkDataset(
   auto span = internal::MakeSpan(
       "storageinsights_v1::StorageInsightsConnection::LinkDataset");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->LinkDataset(operation));
+  return internal::EndSpan(std::move(span),
+      child_->LinkDataset(operation));
 }
 
 future<StatusOr<google::cloud::storageinsights::v1::OperationMetadata>>
-StorageInsightsTracingConnection::UnlinkDataset(
-    google::cloud::storageinsights::v1::UnlinkDatasetRequest const& request) {
+StorageInsightsTracingConnection::UnlinkDataset(google::cloud::storageinsights::v1::UnlinkDatasetRequest const& request) {
   auto span = internal::MakeSpan(
       "storageinsights_v1::StorageInsightsConnection::UnlinkDataset");
   internal::OTelScope scope(span);
@@ -264,12 +224,12 @@ StorageInsightsTracingConnection::UnlinkDataset(
 
 StatusOr<google::longrunning::Operation>
 StorageInsightsTracingConnection::UnlinkDataset(
-    NoAwaitTag,
-    google::cloud::storageinsights::v1::UnlinkDatasetRequest const& request) {
+    NoAwaitTag, google::cloud::storageinsights::v1::UnlinkDatasetRequest const& request) {
   auto span = internal::MakeSpan(
       "storageinsights_v1::StorageInsightsConnection::UnlinkDataset");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->UnlinkDataset(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->UnlinkDataset(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::storageinsights::v1::OperationMetadata>>
@@ -278,61 +238,52 @@ StorageInsightsTracingConnection::UnlinkDataset(
   auto span = internal::MakeSpan(
       "storageinsights_v1::StorageInsightsConnection::UnlinkDataset");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->UnlinkDataset(operation));
+  return internal::EndSpan(std::move(span),
+      child_->UnlinkDataset(operation));
 }
 
 StreamRange<google::cloud::location::Location>
-StorageInsightsTracingConnection::ListLocations(
-    google::cloud::location::ListLocationsRequest request) {
-  auto span = internal::MakeSpan(
-      "storageinsights_v1::StorageInsightsConnection::ListLocations");
+StorageInsightsTracingConnection::ListLocations(google::cloud::location::ListLocationsRequest request) {
+  auto span = internal::MakeSpan("storageinsights_v1::StorageInsightsConnection::ListLocations");
   internal::OTelScope scope(span);
   auto sr = child_->ListLocations(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::location::Location>(
-      std::move(span), std::move(sr));
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::location::Location>
-StorageInsightsTracingConnection::GetLocation(
-    google::cloud::location::GetLocationRequest const& request) {
-  auto span = internal::MakeSpan(
-      "storageinsights_v1::StorageInsightsConnection::GetLocation");
+StorageInsightsTracingConnection::GetLocation(google::cloud::location::GetLocationRequest const& request) {
+  auto span = internal::MakeSpan("storageinsights_v1::StorageInsightsConnection::GetLocation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetLocation(request));
 }
 
 StreamRange<google::longrunning::Operation>
-StorageInsightsTracingConnection::ListOperations(
-    google::longrunning::ListOperationsRequest request) {
-  auto span = internal::MakeSpan(
-      "storageinsights_v1::StorageInsightsConnection::ListOperations");
+StorageInsightsTracingConnection::ListOperations(google::longrunning::ListOperationsRequest request) {
+  auto span = internal::MakeSpan("storageinsights_v1::StorageInsightsConnection::ListOperations");
   internal::OTelScope scope(span);
   auto sr = child_->ListOperations(std::move(request));
   return internal::MakeTracedStreamRange<google::longrunning::Operation>(
-      std::move(span), std::move(sr));
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::longrunning::Operation>
-StorageInsightsTracingConnection::GetOperation(
-    google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpan(
-      "storageinsights_v1::StorageInsightsConnection::GetOperation");
+StorageInsightsTracingConnection::GetOperation(google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpan("storageinsights_v1::StorageInsightsConnection::GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOperation(request));
 }
 
-Status StorageInsightsTracingConnection::DeleteOperation(
-    google::longrunning::DeleteOperationRequest const& request) {
-  auto span = internal::MakeSpan(
-      "storageinsights_v1::StorageInsightsConnection::DeleteOperation");
+Status
+StorageInsightsTracingConnection::DeleteOperation(google::longrunning::DeleteOperationRequest const& request) {
+  auto span = internal::MakeSpan("storageinsights_v1::StorageInsightsConnection::DeleteOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteOperation(request));
 }
 
-Status StorageInsightsTracingConnection::CancelOperation(
-    google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpan(
-      "storageinsights_v1::StorageInsightsConnection::CancelOperation");
+Status
+StorageInsightsTracingConnection::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
+  auto span = internal::MakeSpan("storageinsights_v1::StorageInsightsConnection::CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CancelOperation(request));
 }

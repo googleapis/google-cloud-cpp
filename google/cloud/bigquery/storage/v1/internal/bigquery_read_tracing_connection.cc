@@ -34,32 +34,23 @@ BigQueryReadTracingConnection::BigQueryReadTracingConnection(
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::bigquery::storage::v1::ReadSession>
-BigQueryReadTracingConnection::CreateReadSession(
-    google::cloud::bigquery::storage::v1::CreateReadSessionRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "bigquery_storage_v1::BigQueryReadConnection::CreateReadSession");
+BigQueryReadTracingConnection::CreateReadSession(google::cloud::bigquery::storage::v1::CreateReadSessionRequest const& request) {
+  auto span = internal::MakeSpan("bigquery_storage_v1::BigQueryReadConnection::CreateReadSession");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateReadSession(request));
 }
 
 StreamRange<google::cloud::bigquery::storage::v1::ReadRowsResponse>
-BigQueryReadTracingConnection::ReadRows(
-    google::cloud::bigquery::storage::v1::ReadRowsRequest const& request) {
-  auto span = internal::MakeSpan(
-      "bigquery_storage_v1::BigQueryReadConnection::ReadRows");
+BigQueryReadTracingConnection::ReadRows(google::cloud::bigquery::storage::v1::ReadRowsRequest const& request) {
+  auto span = internal::MakeSpan("bigquery_storage_v1::BigQueryReadConnection::ReadRows");
   internal::OTelScope scope(span);
   auto sr = child_->ReadRows(request);
-  return internal::MakeTracedStreamRange<
-      google::cloud::bigquery::storage::v1::ReadRowsResponse>(std::move(span),
-                                                              std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::bigquery::storage::v1::ReadRowsResponse>(
+        std::move(span), std::move(sr));
 }
 StatusOr<google::cloud::bigquery::storage::v1::SplitReadStreamResponse>
-BigQueryReadTracingConnection::SplitReadStream(
-    google::cloud::bigquery::storage::v1::SplitReadStreamRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "bigquery_storage_v1::BigQueryReadConnection::SplitReadStream");
+BigQueryReadTracingConnection::SplitReadStream(google::cloud::bigquery::storage::v1::SplitReadStreamRequest const& request) {
+  auto span = internal::MakeSpan("bigquery_storage_v1::BigQueryReadConnection::SplitReadStream");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->SplitReadStream(request));
 }

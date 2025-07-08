@@ -34,10 +34,9 @@ ModelServiceTracingConnection::ModelServiceTracingConnection(
     : child_(std::move(child)) {}
 
 future<StatusOr<google::cloud::retail::v2::Model>>
-ModelServiceTracingConnection::CreateModel(
-    google::cloud::retail::v2::CreateModelRequest const& request) {
-  auto span =
-      internal::MakeSpan("retail_v2::ModelServiceConnection::CreateModel");
+ModelServiceTracingConnection::CreateModel(google::cloud::retail::v2::CreateModelRequest const& request) {
+  auto span = internal::MakeSpan(
+      "retail_v2::ModelServiceConnection::CreateModel");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateModel(request));
 }
@@ -45,80 +44,71 @@ ModelServiceTracingConnection::CreateModel(
 StatusOr<google::longrunning::Operation>
 ModelServiceTracingConnection::CreateModel(
     NoAwaitTag, google::cloud::retail::v2::CreateModelRequest const& request) {
-  auto span =
-      internal::MakeSpan("retail_v2::ModelServiceConnection::CreateModel");
+  auto span = internal::MakeSpan(
+      "retail_v2::ModelServiceConnection::CreateModel");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->CreateModel(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->CreateModel(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::retail::v2::Model>>
 ModelServiceTracingConnection::CreateModel(
     google::longrunning::Operation const& operation) {
-  auto span =
-      internal::MakeSpan("retail_v2::ModelServiceConnection::CreateModel");
+  auto span = internal::MakeSpan(
+      "retail_v2::ModelServiceConnection::CreateModel");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->CreateModel(operation));
+  return internal::EndSpan(std::move(span),
+      child_->CreateModel(operation));
 }
 
 StatusOr<google::cloud::retail::v2::Model>
-ModelServiceTracingConnection::GetModel(
-    google::cloud::retail::v2::GetModelRequest const& request) {
+ModelServiceTracingConnection::GetModel(google::cloud::retail::v2::GetModelRequest const& request) {
   auto span = internal::MakeSpan("retail_v2::ModelServiceConnection::GetModel");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetModel(request));
 }
 
 StatusOr<google::cloud::retail::v2::Model>
-ModelServiceTracingConnection::PauseModel(
-    google::cloud::retail::v2::PauseModelRequest const& request) {
-  auto span =
-      internal::MakeSpan("retail_v2::ModelServiceConnection::PauseModel");
+ModelServiceTracingConnection::PauseModel(google::cloud::retail::v2::PauseModelRequest const& request) {
+  auto span = internal::MakeSpan("retail_v2::ModelServiceConnection::PauseModel");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->PauseModel(request));
 }
 
 StatusOr<google::cloud::retail::v2::Model>
-ModelServiceTracingConnection::ResumeModel(
-    google::cloud::retail::v2::ResumeModelRequest const& request) {
-  auto span =
-      internal::MakeSpan("retail_v2::ModelServiceConnection::ResumeModel");
+ModelServiceTracingConnection::ResumeModel(google::cloud::retail::v2::ResumeModelRequest const& request) {
+  auto span = internal::MakeSpan("retail_v2::ModelServiceConnection::ResumeModel");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->ResumeModel(request));
 }
 
-Status ModelServiceTracingConnection::DeleteModel(
-    google::cloud::retail::v2::DeleteModelRequest const& request) {
-  auto span =
-      internal::MakeSpan("retail_v2::ModelServiceConnection::DeleteModel");
+Status
+ModelServiceTracingConnection::DeleteModel(google::cloud::retail::v2::DeleteModelRequest const& request) {
+  auto span = internal::MakeSpan("retail_v2::ModelServiceConnection::DeleteModel");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteModel(request));
 }
 
 StreamRange<google::cloud::retail::v2::Model>
-ModelServiceTracingConnection::ListModels(
-    google::cloud::retail::v2::ListModelsRequest request) {
-  auto span =
-      internal::MakeSpan("retail_v2::ModelServiceConnection::ListModels");
+ModelServiceTracingConnection::ListModels(google::cloud::retail::v2::ListModelsRequest request) {
+  auto span = internal::MakeSpan("retail_v2::ModelServiceConnection::ListModels");
   internal::OTelScope scope(span);
   auto sr = child_->ListModels(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::retail::v2::Model>(
-      std::move(span), std::move(sr));
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::retail::v2::Model>
-ModelServiceTracingConnection::UpdateModel(
-    google::cloud::retail::v2::UpdateModelRequest const& request) {
-  auto span =
-      internal::MakeSpan("retail_v2::ModelServiceConnection::UpdateModel");
+ModelServiceTracingConnection::UpdateModel(google::cloud::retail::v2::UpdateModelRequest const& request) {
+  auto span = internal::MakeSpan("retail_v2::ModelServiceConnection::UpdateModel");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateModel(request));
 }
 
 future<StatusOr<google::cloud::retail::v2::TuneModelResponse>>
-ModelServiceTracingConnection::TuneModel(
-    google::cloud::retail::v2::TuneModelRequest const& request) {
-  auto span =
-      internal::MakeSpan("retail_v2::ModelServiceConnection::TuneModel");
+ModelServiceTracingConnection::TuneModel(google::cloud::retail::v2::TuneModelRequest const& request) {
+  auto span = internal::MakeSpan(
+      "retail_v2::ModelServiceConnection::TuneModel");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->TuneModel(request));
 }
@@ -126,37 +116,35 @@ ModelServiceTracingConnection::TuneModel(
 StatusOr<google::longrunning::Operation>
 ModelServiceTracingConnection::TuneModel(
     NoAwaitTag, google::cloud::retail::v2::TuneModelRequest const& request) {
-  auto span =
-      internal::MakeSpan("retail_v2::ModelServiceConnection::TuneModel");
+  auto span = internal::MakeSpan(
+      "retail_v2::ModelServiceConnection::TuneModel");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->TuneModel(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->TuneModel(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::retail::v2::TuneModelResponse>>
 ModelServiceTracingConnection::TuneModel(
     google::longrunning::Operation const& operation) {
-  auto span =
-      internal::MakeSpan("retail_v2::ModelServiceConnection::TuneModel");
+  auto span = internal::MakeSpan(
+      "retail_v2::ModelServiceConnection::TuneModel");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->TuneModel(operation));
+  return internal::EndSpan(std::move(span),
+      child_->TuneModel(operation));
 }
 
 StreamRange<google::longrunning::Operation>
-ModelServiceTracingConnection::ListOperations(
-    google::longrunning::ListOperationsRequest request) {
-  auto span =
-      internal::MakeSpan("retail_v2::ModelServiceConnection::ListOperations");
+ModelServiceTracingConnection::ListOperations(google::longrunning::ListOperationsRequest request) {
+  auto span = internal::MakeSpan("retail_v2::ModelServiceConnection::ListOperations");
   internal::OTelScope scope(span);
   auto sr = child_->ListOperations(std::move(request));
   return internal::MakeTracedStreamRange<google::longrunning::Operation>(
-      std::move(span), std::move(sr));
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::longrunning::Operation>
-ModelServiceTracingConnection::GetOperation(
-    google::longrunning::GetOperationRequest const& request) {
-  auto span =
-      internal::MakeSpan("retail_v2::ModelServiceConnection::GetOperation");
+ModelServiceTracingConnection::GetOperation(google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpan("retail_v2::ModelServiceConnection::GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOperation(request));
 }

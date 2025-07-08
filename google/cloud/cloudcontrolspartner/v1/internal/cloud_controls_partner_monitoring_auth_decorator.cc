@@ -31,21 +31,19 @@ CloudControlsPartnerMonitoringAuth::CloudControlsPartnerMonitoringAuth(
     std::shared_ptr<CloudControlsPartnerMonitoringStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::cloudcontrolspartner::v1::ListViolationsResponse>
-CloudControlsPartnerMonitoringAuth::ListViolations(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::cloudcontrolspartner::v1::ListViolationsRequest const&
-        request) {
+StatusOr<google::cloud::cloudcontrolspartner::v1::ListViolationsResponse> CloudControlsPartnerMonitoringAuth::ListViolations(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::cloudcontrolspartner::v1::ListViolationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListViolations(context, options, request);
 }
 
-StatusOr<google::cloud::cloudcontrolspartner::v1::Violation>
-CloudControlsPartnerMonitoringAuth::GetViolation(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::cloudcontrolspartner::v1::GetViolationRequest const&
-        request) {
+StatusOr<google::cloud::cloudcontrolspartner::v1::Violation> CloudControlsPartnerMonitoringAuth::GetViolation(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::cloudcontrolspartner::v1::GetViolationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetViolation(context, options, request);

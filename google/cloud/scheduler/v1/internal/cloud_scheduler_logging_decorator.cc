@@ -31,93 +31,118 @@ namespace scheduler_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 CloudSchedulerLogging::CloudSchedulerLogging(
-    std::shared_ptr<CloudSchedulerStub> child, TracingOptions tracing_options,
+    std::shared_ptr<CloudSchedulerStub> child,
+    TracingOptions tracing_options,
     std::set<std::string> const&)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::cloud::scheduler::v1::ListJobsResponse>
 CloudSchedulerLogging::ListJobs(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::scheduler::v1::ListJobsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::scheduler::v1::ListJobsRequest const& request) {
         return child_->ListJobs(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::cloud::scheduler::v1::Job> CloudSchedulerLogging::GetJob(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::scheduler::v1::Job>
+CloudSchedulerLogging::GetJob(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::scheduler::v1::GetJobRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::scheduler::v1::GetJobRequest const& request) {
         return child_->GetJob(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::cloud::scheduler::v1::Job> CloudSchedulerLogging::CreateJob(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::scheduler::v1::Job>
+CloudSchedulerLogging::CreateJob(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::scheduler::v1::CreateJobRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::scheduler::v1::CreateJobRequest const& request) {
         return child_->CreateJob(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::cloud::scheduler::v1::Job> CloudSchedulerLogging::UpdateJob(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::scheduler::v1::Job>
+CloudSchedulerLogging::UpdateJob(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::scheduler::v1::UpdateJobRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::scheduler::v1::UpdateJobRequest const& request) {
         return child_->UpdateJob(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status CloudSchedulerLogging::DeleteJob(
-    grpc::ClientContext& context, Options const& options,
+Status
+CloudSchedulerLogging::DeleteJob(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::scheduler::v1::DeleteJobRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::scheduler::v1::DeleteJobRequest const& request) {
         return child_->DeleteJob(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::cloud::scheduler::v1::Job> CloudSchedulerLogging::PauseJob(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::scheduler::v1::Job>
+CloudSchedulerLogging::PauseJob(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::scheduler::v1::PauseJobRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::scheduler::v1::PauseJobRequest const& request) {
         return child_->PauseJob(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::cloud::scheduler::v1::Job> CloudSchedulerLogging::ResumeJob(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::scheduler::v1::Job>
+CloudSchedulerLogging::ResumeJob(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::scheduler::v1::ResumeJobRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::scheduler::v1::ResumeJobRequest const& request) {
         return child_->ResumeJob(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::cloud::scheduler::v1::Job> CloudSchedulerLogging::RunJob(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::scheduler::v1::Job>
+CloudSchedulerLogging::RunJob(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::scheduler::v1::RunJobRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::scheduler::v1::RunJobRequest const& request) {
         return child_->RunJob(context, options, request);
       },
@@ -126,21 +151,26 @@ StatusOr<google::cloud::scheduler::v1::Job> CloudSchedulerLogging::RunJob(
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 CloudSchedulerLogging::ListLocations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::location::ListLocationsRequest const& request) {
         return child_->ListLocations(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::cloud::location::Location> CloudSchedulerLogging::GetLocation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::location::Location>
+CloudSchedulerLogging::GetLocation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::location::GetLocationRequest const& request) {
         return child_->GetLocation(context, options, request);
       },

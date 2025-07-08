@@ -26,291 +26,235 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-DlpServiceConnectionIdempotencyPolicy::
-    ~DlpServiceConnectionIdempotencyPolicy() = default;
+DlpServiceConnectionIdempotencyPolicy::~DlpServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<DlpServiceConnectionIdempotencyPolicy>
 DlpServiceConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<DlpServiceConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency DlpServiceConnectionIdempotencyPolicy::InspectContent(
-    google::privacy::dlp::v2::InspectContentRequest const&) {
+Idempotency DlpServiceConnectionIdempotencyPolicy::InspectContent(google::privacy::dlp::v2::InspectContentRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DlpServiceConnectionIdempotencyPolicy::RedactImage(
-    google::privacy::dlp::v2::RedactImageRequest const&) {
+Idempotency DlpServiceConnectionIdempotencyPolicy::RedactImage(google::privacy::dlp::v2::RedactImageRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DlpServiceConnectionIdempotencyPolicy::DeidentifyContent(
-    google::privacy::dlp::v2::DeidentifyContentRequest const&) {
+Idempotency DlpServiceConnectionIdempotencyPolicy::DeidentifyContent(google::privacy::dlp::v2::DeidentifyContentRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DlpServiceConnectionIdempotencyPolicy::ReidentifyContent(
-    google::privacy::dlp::v2::ReidentifyContentRequest const&) {
+Idempotency DlpServiceConnectionIdempotencyPolicy::ReidentifyContent(google::privacy::dlp::v2::ReidentifyContentRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DlpServiceConnectionIdempotencyPolicy::ListInfoTypes(
-    google::privacy::dlp::v2::ListInfoTypesRequest const&) {
+Idempotency DlpServiceConnectionIdempotencyPolicy::ListInfoTypes(google::privacy::dlp::v2::ListInfoTypesRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DlpServiceConnectionIdempotencyPolicy::CreateInspectTemplate(
-    google::privacy::dlp::v2::CreateInspectTemplateRequest const&) {
+Idempotency DlpServiceConnectionIdempotencyPolicy::CreateInspectTemplate(google::privacy::dlp::v2::CreateInspectTemplateRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DlpServiceConnectionIdempotencyPolicy::UpdateInspectTemplate(
-    google::privacy::dlp::v2::UpdateInspectTemplateRequest const&) {
+Idempotency DlpServiceConnectionIdempotencyPolicy::UpdateInspectTemplate(google::privacy::dlp::v2::UpdateInspectTemplateRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DlpServiceConnectionIdempotencyPolicy::GetInspectTemplate(
-    google::privacy::dlp::v2::GetInspectTemplateRequest const&) {
+Idempotency DlpServiceConnectionIdempotencyPolicy::GetInspectTemplate(google::privacy::dlp::v2::GetInspectTemplateRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DlpServiceConnectionIdempotencyPolicy::ListInspectTemplates(
-    google::privacy::dlp::v2::ListInspectTemplatesRequest) {  // NOLINT
+Idempotency DlpServiceConnectionIdempotencyPolicy::ListInspectTemplates(google::privacy::dlp::v2::ListInspectTemplatesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency DlpServiceConnectionIdempotencyPolicy::DeleteInspectTemplate(
-    google::privacy::dlp::v2::DeleteInspectTemplateRequest const&) {
+Idempotency DlpServiceConnectionIdempotencyPolicy::DeleteInspectTemplate(google::privacy::dlp::v2::DeleteInspectTemplateRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DlpServiceConnectionIdempotencyPolicy::CreateDeidentifyTemplate(
-    google::privacy::dlp::v2::CreateDeidentifyTemplateRequest const&) {
+Idempotency DlpServiceConnectionIdempotencyPolicy::CreateDeidentifyTemplate(google::privacy::dlp::v2::CreateDeidentifyTemplateRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DlpServiceConnectionIdempotencyPolicy::UpdateDeidentifyTemplate(
-    google::privacy::dlp::v2::UpdateDeidentifyTemplateRequest const&) {
+Idempotency DlpServiceConnectionIdempotencyPolicy::UpdateDeidentifyTemplate(google::privacy::dlp::v2::UpdateDeidentifyTemplateRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DlpServiceConnectionIdempotencyPolicy::GetDeidentifyTemplate(
-    google::privacy::dlp::v2::GetDeidentifyTemplateRequest const&) {
+Idempotency DlpServiceConnectionIdempotencyPolicy::GetDeidentifyTemplate(google::privacy::dlp::v2::GetDeidentifyTemplateRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DlpServiceConnectionIdempotencyPolicy::ListDeidentifyTemplates(
-    google::privacy::dlp::v2::ListDeidentifyTemplatesRequest) {  // NOLINT
+Idempotency DlpServiceConnectionIdempotencyPolicy::ListDeidentifyTemplates(google::privacy::dlp::v2::ListDeidentifyTemplatesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency DlpServiceConnectionIdempotencyPolicy::DeleteDeidentifyTemplate(
-    google::privacy::dlp::v2::DeleteDeidentifyTemplateRequest const&) {
+Idempotency DlpServiceConnectionIdempotencyPolicy::DeleteDeidentifyTemplate(google::privacy::dlp::v2::DeleteDeidentifyTemplateRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DlpServiceConnectionIdempotencyPolicy::CreateJobTrigger(
-    google::privacy::dlp::v2::CreateJobTriggerRequest const&) {
+Idempotency DlpServiceConnectionIdempotencyPolicy::CreateJobTrigger(google::privacy::dlp::v2::CreateJobTriggerRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DlpServiceConnectionIdempotencyPolicy::UpdateJobTrigger(
-    google::privacy::dlp::v2::UpdateJobTriggerRequest const&) {
+Idempotency DlpServiceConnectionIdempotencyPolicy::UpdateJobTrigger(google::privacy::dlp::v2::UpdateJobTriggerRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DlpServiceConnectionIdempotencyPolicy::HybridInspectJobTrigger(
-    google::privacy::dlp::v2::HybridInspectJobTriggerRequest const&) {
+Idempotency DlpServiceConnectionIdempotencyPolicy::HybridInspectJobTrigger(google::privacy::dlp::v2::HybridInspectJobTriggerRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DlpServiceConnectionIdempotencyPolicy::GetJobTrigger(
-    google::privacy::dlp::v2::GetJobTriggerRequest const&) {
+Idempotency DlpServiceConnectionIdempotencyPolicy::GetJobTrigger(google::privacy::dlp::v2::GetJobTriggerRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DlpServiceConnectionIdempotencyPolicy::ListJobTriggers(
-    google::privacy::dlp::v2::ListJobTriggersRequest) {  // NOLINT
+Idempotency DlpServiceConnectionIdempotencyPolicy::ListJobTriggers(google::privacy::dlp::v2::ListJobTriggersRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency DlpServiceConnectionIdempotencyPolicy::DeleteJobTrigger(
-    google::privacy::dlp::v2::DeleteJobTriggerRequest const&) {
+Idempotency DlpServiceConnectionIdempotencyPolicy::DeleteJobTrigger(google::privacy::dlp::v2::DeleteJobTriggerRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DlpServiceConnectionIdempotencyPolicy::ActivateJobTrigger(
-    google::privacy::dlp::v2::ActivateJobTriggerRequest const&) {
+Idempotency DlpServiceConnectionIdempotencyPolicy::ActivateJobTrigger(google::privacy::dlp::v2::ActivateJobTriggerRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DlpServiceConnectionIdempotencyPolicy::CreateDiscoveryConfig(
-    google::privacy::dlp::v2::CreateDiscoveryConfigRequest const&) {
+Idempotency DlpServiceConnectionIdempotencyPolicy::CreateDiscoveryConfig(google::privacy::dlp::v2::CreateDiscoveryConfigRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DlpServiceConnectionIdempotencyPolicy::UpdateDiscoveryConfig(
-    google::privacy::dlp::v2::UpdateDiscoveryConfigRequest const&) {
+Idempotency DlpServiceConnectionIdempotencyPolicy::UpdateDiscoveryConfig(google::privacy::dlp::v2::UpdateDiscoveryConfigRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DlpServiceConnectionIdempotencyPolicy::GetDiscoveryConfig(
-    google::privacy::dlp::v2::GetDiscoveryConfigRequest const&) {
+Idempotency DlpServiceConnectionIdempotencyPolicy::GetDiscoveryConfig(google::privacy::dlp::v2::GetDiscoveryConfigRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DlpServiceConnectionIdempotencyPolicy::ListDiscoveryConfigs(
-    google::privacy::dlp::v2::ListDiscoveryConfigsRequest) {  // NOLINT
+Idempotency DlpServiceConnectionIdempotencyPolicy::ListDiscoveryConfigs(google::privacy::dlp::v2::ListDiscoveryConfigsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency DlpServiceConnectionIdempotencyPolicy::DeleteDiscoveryConfig(
-    google::privacy::dlp::v2::DeleteDiscoveryConfigRequest const&) {
+Idempotency DlpServiceConnectionIdempotencyPolicy::DeleteDiscoveryConfig(google::privacy::dlp::v2::DeleteDiscoveryConfigRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DlpServiceConnectionIdempotencyPolicy::CreateDlpJob(
-    google::privacy::dlp::v2::CreateDlpJobRequest const&) {
+Idempotency DlpServiceConnectionIdempotencyPolicy::CreateDlpJob(google::privacy::dlp::v2::CreateDlpJobRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DlpServiceConnectionIdempotencyPolicy::ListDlpJobs(
-    google::privacy::dlp::v2::ListDlpJobsRequest) {  // NOLINT
+Idempotency DlpServiceConnectionIdempotencyPolicy::ListDlpJobs(google::privacy::dlp::v2::ListDlpJobsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency DlpServiceConnectionIdempotencyPolicy::GetDlpJob(
-    google::privacy::dlp::v2::GetDlpJobRequest const&) {
+Idempotency DlpServiceConnectionIdempotencyPolicy::GetDlpJob(google::privacy::dlp::v2::GetDlpJobRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DlpServiceConnectionIdempotencyPolicy::DeleteDlpJob(
-    google::privacy::dlp::v2::DeleteDlpJobRequest const&) {
+Idempotency DlpServiceConnectionIdempotencyPolicy::DeleteDlpJob(google::privacy::dlp::v2::DeleteDlpJobRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DlpServiceConnectionIdempotencyPolicy::CancelDlpJob(
-    google::privacy::dlp::v2::CancelDlpJobRequest const&) {
+Idempotency DlpServiceConnectionIdempotencyPolicy::CancelDlpJob(google::privacy::dlp::v2::CancelDlpJobRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DlpServiceConnectionIdempotencyPolicy::CreateStoredInfoType(
-    google::privacy::dlp::v2::CreateStoredInfoTypeRequest const&) {
+Idempotency DlpServiceConnectionIdempotencyPolicy::CreateStoredInfoType(google::privacy::dlp::v2::CreateStoredInfoTypeRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DlpServiceConnectionIdempotencyPolicy::UpdateStoredInfoType(
-    google::privacy::dlp::v2::UpdateStoredInfoTypeRequest const&) {
+Idempotency DlpServiceConnectionIdempotencyPolicy::UpdateStoredInfoType(google::privacy::dlp::v2::UpdateStoredInfoTypeRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DlpServiceConnectionIdempotencyPolicy::GetStoredInfoType(
-    google::privacy::dlp::v2::GetStoredInfoTypeRequest const&) {
+Idempotency DlpServiceConnectionIdempotencyPolicy::GetStoredInfoType(google::privacy::dlp::v2::GetStoredInfoTypeRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DlpServiceConnectionIdempotencyPolicy::ListStoredInfoTypes(
-    google::privacy::dlp::v2::ListStoredInfoTypesRequest) {  // NOLINT
+Idempotency DlpServiceConnectionIdempotencyPolicy::ListStoredInfoTypes(google::privacy::dlp::v2::ListStoredInfoTypesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency DlpServiceConnectionIdempotencyPolicy::DeleteStoredInfoType(
-    google::privacy::dlp::v2::DeleteStoredInfoTypeRequest const&) {
+Idempotency DlpServiceConnectionIdempotencyPolicy::DeleteStoredInfoType(google::privacy::dlp::v2::DeleteStoredInfoTypeRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DlpServiceConnectionIdempotencyPolicy::ListProjectDataProfiles(
-    google::privacy::dlp::v2::ListProjectDataProfilesRequest) {  // NOLINT
+Idempotency DlpServiceConnectionIdempotencyPolicy::ListProjectDataProfiles(google::privacy::dlp::v2::ListProjectDataProfilesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency DlpServiceConnectionIdempotencyPolicy::ListTableDataProfiles(
-    google::privacy::dlp::v2::ListTableDataProfilesRequest) {  // NOLINT
+Idempotency DlpServiceConnectionIdempotencyPolicy::ListTableDataProfiles(google::privacy::dlp::v2::ListTableDataProfilesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency DlpServiceConnectionIdempotencyPolicy::ListColumnDataProfiles(
-    google::privacy::dlp::v2::ListColumnDataProfilesRequest) {  // NOLINT
+Idempotency DlpServiceConnectionIdempotencyPolicy::ListColumnDataProfiles(google::privacy::dlp::v2::ListColumnDataProfilesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency DlpServiceConnectionIdempotencyPolicy::GetProjectDataProfile(
-    google::privacy::dlp::v2::GetProjectDataProfileRequest const&) {
+Idempotency DlpServiceConnectionIdempotencyPolicy::GetProjectDataProfile(google::privacy::dlp::v2::GetProjectDataProfileRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DlpServiceConnectionIdempotencyPolicy::ListFileStoreDataProfiles(
-    google::privacy::dlp::v2::ListFileStoreDataProfilesRequest) {  // NOLINT
+Idempotency DlpServiceConnectionIdempotencyPolicy::ListFileStoreDataProfiles(google::privacy::dlp::v2::ListFileStoreDataProfilesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency DlpServiceConnectionIdempotencyPolicy::GetFileStoreDataProfile(
-    google::privacy::dlp::v2::GetFileStoreDataProfileRequest const&) {
+Idempotency DlpServiceConnectionIdempotencyPolicy::GetFileStoreDataProfile(google::privacy::dlp::v2::GetFileStoreDataProfileRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DlpServiceConnectionIdempotencyPolicy::DeleteFileStoreDataProfile(
-    google::privacy::dlp::v2::DeleteFileStoreDataProfileRequest const&) {
+Idempotency DlpServiceConnectionIdempotencyPolicy::DeleteFileStoreDataProfile(google::privacy::dlp::v2::DeleteFileStoreDataProfileRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DlpServiceConnectionIdempotencyPolicy::GetTableDataProfile(
-    google::privacy::dlp::v2::GetTableDataProfileRequest const&) {
+Idempotency DlpServiceConnectionIdempotencyPolicy::GetTableDataProfile(google::privacy::dlp::v2::GetTableDataProfileRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DlpServiceConnectionIdempotencyPolicy::GetColumnDataProfile(
-    google::privacy::dlp::v2::GetColumnDataProfileRequest const&) {
+Idempotency DlpServiceConnectionIdempotencyPolicy::GetColumnDataProfile(google::privacy::dlp::v2::GetColumnDataProfileRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DlpServiceConnectionIdempotencyPolicy::DeleteTableDataProfile(
-    google::privacy::dlp::v2::DeleteTableDataProfileRequest const&) {
+Idempotency DlpServiceConnectionIdempotencyPolicy::DeleteTableDataProfile(google::privacy::dlp::v2::DeleteTableDataProfileRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DlpServiceConnectionIdempotencyPolicy::HybridInspectDlpJob(
-    google::privacy::dlp::v2::HybridInspectDlpJobRequest const&) {
+Idempotency DlpServiceConnectionIdempotencyPolicy::HybridInspectDlpJob(google::privacy::dlp::v2::HybridInspectDlpJobRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DlpServiceConnectionIdempotencyPolicy::FinishDlpJob(
-    google::privacy::dlp::v2::FinishDlpJobRequest const&) {
+Idempotency DlpServiceConnectionIdempotencyPolicy::FinishDlpJob(google::privacy::dlp::v2::FinishDlpJobRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DlpServiceConnectionIdempotencyPolicy::CreateConnection(
-    google::privacy::dlp::v2::CreateConnectionRequest const&) {
+Idempotency DlpServiceConnectionIdempotencyPolicy::CreateConnection(google::privacy::dlp::v2::CreateConnectionRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DlpServiceConnectionIdempotencyPolicy::GetConnection(
-    google::privacy::dlp::v2::GetConnectionRequest const&) {
+Idempotency DlpServiceConnectionIdempotencyPolicy::GetConnection(google::privacy::dlp::v2::GetConnectionRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DlpServiceConnectionIdempotencyPolicy::ListConnections(
-    google::privacy::dlp::v2::ListConnectionsRequest) {  // NOLINT
+Idempotency DlpServiceConnectionIdempotencyPolicy::ListConnections(google::privacy::dlp::v2::ListConnectionsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency DlpServiceConnectionIdempotencyPolicy::SearchConnections(
-    google::privacy::dlp::v2::SearchConnectionsRequest) {  // NOLINT
+Idempotency DlpServiceConnectionIdempotencyPolicy::SearchConnections(google::privacy::dlp::v2::SearchConnectionsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency DlpServiceConnectionIdempotencyPolicy::DeleteConnection(
-    google::privacy::dlp::v2::DeleteConnectionRequest const&) {
+Idempotency DlpServiceConnectionIdempotencyPolicy::DeleteConnection(google::privacy::dlp::v2::DeleteConnectionRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DlpServiceConnectionIdempotencyPolicy::UpdateConnection(
-    google::privacy::dlp::v2::UpdateConnectionRequest const&) {
+Idempotency DlpServiceConnectionIdempotencyPolicy::UpdateConnection(google::privacy::dlp::v2::UpdateConnectionRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<DlpServiceConnectionIdempotencyPolicy>
-MakeDefaultDlpServiceConnectionIdempotencyPolicy() {
+    MakeDefaultDlpServiceConnectionIdempotencyPolicy() {
   return std::make_unique<DlpServiceConnectionIdempotencyPolicy>();
 }
 

@@ -27,23 +27,17 @@ namespace cloud {
 namespace video {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use video_stitcher_v1::MakeVideoStitcherServiceConnection
-/// directly.
+/// @deprecated Use video_stitcher_v1::MakeVideoStitcherServiceConnection directly.
 using ::google::cloud::video_stitcher_v1::MakeVideoStitcherServiceConnection;
 
 /// @deprecated Use video_stitcher_v1::VideoStitcherServiceConnection directly.
 using ::google::cloud::video_stitcher_v1::VideoStitcherServiceConnection;
 
-/// @deprecated Use
-/// video_stitcher_v1::VideoStitcherServiceLimitedErrorCountRetryPolicy
-/// directly.
-using ::google::cloud::video_stitcher_v1::
-    VideoStitcherServiceLimitedErrorCountRetryPolicy;
+/// @deprecated Use video_stitcher_v1::VideoStitcherServiceLimitedErrorCountRetryPolicy directly.
+using ::google::cloud::video_stitcher_v1::VideoStitcherServiceLimitedErrorCountRetryPolicy;
 
-/// @deprecated Use
-/// video_stitcher_v1::VideoStitcherServiceLimitedTimeRetryPolicy directly.
-using ::google::cloud::video_stitcher_v1::
-    VideoStitcherServiceLimitedTimeRetryPolicy;
+/// @deprecated Use video_stitcher_v1::VideoStitcherServiceLimitedTimeRetryPolicy directly.
+using ::google::cloud::video_stitcher_v1::VideoStitcherServiceLimitedTimeRetryPolicy;
 
 /// @deprecated Use video_stitcher_v1::VideoStitcherServiceRetryPolicy directly.
 using ::google::cloud::video_stitcher_v1::VideoStitcherServiceRetryPolicy;

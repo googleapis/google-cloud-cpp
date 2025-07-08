@@ -36,44 +36,33 @@ class MetricsScopesTracingConnection
   ~MetricsScopesTracingConnection() override = default;
 
   explicit MetricsScopesTracingConnection(
-      std::shared_ptr<monitoring_metricsscope_v1::MetricsScopesConnection>
-          child);
+    std::shared_ptr<monitoring_metricsscope_v1::MetricsScopesConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::monitoring::metricsscope::v1::MetricsScope> GetMetricsScope(
-      google::monitoring::metricsscope::v1::GetMetricsScopeRequest const&
-          request) override;
+  StatusOr<google::monitoring::metricsscope::v1::MetricsScope>
+  GetMetricsScope(google::monitoring::metricsscope::v1::GetMetricsScopeRequest const& request) override;
 
-  StatusOr<google::monitoring::metricsscope::v1::
-               ListMetricsScopesByMonitoredProjectResponse>
-  ListMetricsScopesByMonitoredProject(
-      google::monitoring::metricsscope::v1::
-          ListMetricsScopesByMonitoredProjectRequest const& request) override;
+  StatusOr<google::monitoring::metricsscope::v1::ListMetricsScopesByMonitoredProjectResponse>
+  ListMetricsScopesByMonitoredProject(google::monitoring::metricsscope::v1::ListMetricsScopesByMonitoredProjectRequest const& request) override;
 
   future<StatusOr<google::monitoring::metricsscope::v1::MonitoredProject>>
-  CreateMonitoredProject(
-      google::monitoring::metricsscope::v1::CreateMonitoredProjectRequest const&
-          request) override;
+  CreateMonitoredProject(google::monitoring::metricsscope::v1::CreateMonitoredProjectRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> CreateMonitoredProject(
-      NoAwaitTag,
-      google::monitoring::metricsscope::v1::CreateMonitoredProjectRequest const&
-          request) override;
+  StatusOr<google::longrunning::Operation>
+  CreateMonitoredProject(NoAwaitTag,
+      google::monitoring::metricsscope::v1::CreateMonitoredProjectRequest const& request) override;
 
   future<StatusOr<google::monitoring::metricsscope::v1::MonitoredProject>>
   CreateMonitoredProject(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::monitoring::metricsscope::v1::OperationMetadata>>
-  DeleteMonitoredProject(
-      google::monitoring::metricsscope::v1::DeleteMonitoredProjectRequest const&
-          request) override;
+  DeleteMonitoredProject(google::monitoring::metricsscope::v1::DeleteMonitoredProjectRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> DeleteMonitoredProject(
-      NoAwaitTag,
-      google::monitoring::metricsscope::v1::DeleteMonitoredProjectRequest const&
-          request) override;
+  StatusOr<google::longrunning::Operation>
+  DeleteMonitoredProject(NoAwaitTag,
+      google::monitoring::metricsscope::v1::DeleteMonitoredProjectRequest const& request) override;
 
   future<StatusOr<google::monitoring::metricsscope::v1::OperationMetadata>>
   DeleteMonitoredProject(

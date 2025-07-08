@@ -26,76 +26,63 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-DatastoreConnectionIdempotencyPolicy::~DatastoreConnectionIdempotencyPolicy() =
-    default;
+DatastoreConnectionIdempotencyPolicy::~DatastoreConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<DatastoreConnectionIdempotencyPolicy>
 DatastoreConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<DatastoreConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency DatastoreConnectionIdempotencyPolicy::Lookup(
-    google::datastore::v1::LookupRequest const&) {
+Idempotency DatastoreConnectionIdempotencyPolicy::Lookup(google::datastore::v1::LookupRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DatastoreConnectionIdempotencyPolicy::RunQuery(
-    google::datastore::v1::RunQueryRequest const&) {
+Idempotency DatastoreConnectionIdempotencyPolicy::RunQuery(google::datastore::v1::RunQueryRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DatastoreConnectionIdempotencyPolicy::RunAggregationQuery(
-    google::datastore::v1::RunAggregationQueryRequest const&) {
+Idempotency DatastoreConnectionIdempotencyPolicy::RunAggregationQuery(google::datastore::v1::RunAggregationQueryRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DatastoreConnectionIdempotencyPolicy::BeginTransaction(
-    google::datastore::v1::BeginTransactionRequest const&) {
+Idempotency DatastoreConnectionIdempotencyPolicy::BeginTransaction(google::datastore::v1::BeginTransactionRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DatastoreConnectionIdempotencyPolicy::Commit(
-    google::datastore::v1::CommitRequest const&) {
+Idempotency DatastoreConnectionIdempotencyPolicy::Commit(google::datastore::v1::CommitRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DatastoreConnectionIdempotencyPolicy::Rollback(
-    google::datastore::v1::RollbackRequest const&) {
+Idempotency DatastoreConnectionIdempotencyPolicy::Rollback(google::datastore::v1::RollbackRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DatastoreConnectionIdempotencyPolicy::AllocateIds(
-    google::datastore::v1::AllocateIdsRequest const&) {
+Idempotency DatastoreConnectionIdempotencyPolicy::AllocateIds(google::datastore::v1::AllocateIdsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DatastoreConnectionIdempotencyPolicy::ReserveIds(
-    google::datastore::v1::ReserveIdsRequest const&) {
+Idempotency DatastoreConnectionIdempotencyPolicy::ReserveIds(google::datastore::v1::ReserveIdsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DatastoreConnectionIdempotencyPolicy::ListOperations(
-    google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency DatastoreConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency DatastoreConnectionIdempotencyPolicy::GetOperation(
-    google::longrunning::GetOperationRequest const&) {
+Idempotency DatastoreConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DatastoreConnectionIdempotencyPolicy::DeleteOperation(
-    google::longrunning::DeleteOperationRequest const&) {
+Idempotency DatastoreConnectionIdempotencyPolicy::DeleteOperation(google::longrunning::DeleteOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DatastoreConnectionIdempotencyPolicy::CancelOperation(
-    google::longrunning::CancelOperationRequest const&) {
+Idempotency DatastoreConnectionIdempotencyPolicy::CancelOperation(google::longrunning::CancelOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<DatastoreConnectionIdempotencyPolicy>
-MakeDefaultDatastoreConnectionIdempotencyPolicy() {
+    MakeDefaultDatastoreConnectionIdempotencyPolicy() {
   return std::make_unique<DatastoreConnectionIdempotencyPolicy>();
 }
 

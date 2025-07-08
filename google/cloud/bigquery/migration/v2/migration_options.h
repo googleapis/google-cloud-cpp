@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_MIGRATION_V2_MIGRATION_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_MIGRATION_V2_MIGRATION_OPTIONS_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/bigquery/migration/v2/migration_connection.h"
 #include "google/cloud/bigquery/migration/v2/migration_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>

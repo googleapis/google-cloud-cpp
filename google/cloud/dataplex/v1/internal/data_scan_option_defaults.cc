@@ -35,37 +35,30 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options DataScanServiceDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_DATA_SCAN_SERVICE_ENDPOINT", "",
-      "GOOGLE_CLOUD_CPP_DATA_SCAN_SERVICE_AUTHORITY",
+      std::move(options), "GOOGLE_CLOUD_CPP_DATA_SCAN_SERVICE_ENDPOINT",
+      "", "GOOGLE_CLOUD_CPP_DATA_SCAN_SERVICE_AUTHORITY",
       "dataplex.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<dataplex_v1::DataScanServiceRetryPolicyOption>()) {
     options.set<dataplex_v1::DataScanServiceRetryPolicyOption>(
         dataplex_v1::DataScanServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
-            .clone());
+            std::chrono::minutes(30)).clone());
   }
   if (!options.has<dataplex_v1::DataScanServiceBackoffPolicyOption>()) {
     options.set<dataplex_v1::DataScanServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(
-            std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
-            .clone());
+        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
   }
   if (!options.has<dataplex_v1::DataScanServicePollingPolicyOption>()) {
     options.set<dataplex_v1::DataScanServicePollingPolicyOption>(
         GenericPollingPolicy<
             dataplex_v1::DataScanServiceRetryPolicyOption::Type,
             dataplex_v1::DataScanServiceBackoffPolicyOption::Type>(
-            options.get<dataplex_v1::DataScanServiceRetryPolicyOption>()
-                ->clone(),
+            options.get<dataplex_v1::DataScanServiceRetryPolicyOption>()->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                     std::chrono::minutes(5), kBackoffScaling)
-                .clone())
-            .clone());
+            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
   }
-  if (!options.has<
-          dataplex_v1::DataScanServiceConnectionIdempotencyPolicyOption>()) {
+  if (!options.has<dataplex_v1::DataScanServiceConnectionIdempotencyPolicyOption>()) {
     options.set<dataplex_v1::DataScanServiceConnectionIdempotencyPolicyOption>(
         dataplex_v1::MakeDefaultDataScanServiceConnectionIdempotencyPolicy());
   }

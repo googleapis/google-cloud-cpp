@@ -17,14 +17,14 @@
 // source: google/cloud/sql/v1/cloud_sql_instance_names.proto
 
 #include "google/cloud/sql/v1/sql_instance_names_connection.h"
-#include "google/cloud/sql/v1/internal/sql_instance_names_option_defaults.h"
-#include "google/cloud/sql/v1/internal/sql_instance_names_tracing_connection.h"
-#include "google/cloud/sql/v1/sql_instance_names_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/sql/v1/internal/sql_instance_names_option_defaults.h"
+#include "google/cloud/sql/v1/internal/sql_instance_names_tracing_connection.h"
+#include "google/cloud/sql/v1/sql_instance_names_options.h"
 #include <memory>
 #include <utility>
 
@@ -33,8 +33,7 @@ namespace cloud {
 namespace sql_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-SqlInstanceNamesServiceConnection::~SqlInstanceNamesServiceConnection() =
-    default;
+SqlInstanceNamesServiceConnection::~SqlInstanceNamesServiceConnection() = default;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace sql_v1

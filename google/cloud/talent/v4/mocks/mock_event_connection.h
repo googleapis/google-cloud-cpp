@@ -46,14 +46,13 @@ class MockEventServiceConnection : public talent_v4::EventServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::talent::v4::ClientEvent>, CreateClientEvent,
-      (google::cloud::talent::v4::CreateClientEventRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::talent::v4::ClientEvent>,
+  CreateClientEvent,
+  (google::cloud::talent::v4::CreateClientEventRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
-              (google::longrunning::GetOperationRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  GetOperation,
+  (google::longrunning::GetOperationRequest const& request), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

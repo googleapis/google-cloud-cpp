@@ -26,71 +26,59 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-EnvironmentsConnectionIdempotencyPolicy::
-    ~EnvironmentsConnectionIdempotencyPolicy() = default;
+EnvironmentsConnectionIdempotencyPolicy::~EnvironmentsConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<EnvironmentsConnectionIdempotencyPolicy>
 EnvironmentsConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<EnvironmentsConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency EnvironmentsConnectionIdempotencyPolicy::ListEnvironments(
-    google::cloud::dialogflow::v2::ListEnvironmentsRequest) {  // NOLINT
+Idempotency EnvironmentsConnectionIdempotencyPolicy::ListEnvironments(google::cloud::dialogflow::v2::ListEnvironmentsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency EnvironmentsConnectionIdempotencyPolicy::GetEnvironment(
-    google::cloud::dialogflow::v2::GetEnvironmentRequest const&) {
+Idempotency EnvironmentsConnectionIdempotencyPolicy::GetEnvironment(google::cloud::dialogflow::v2::GetEnvironmentRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency EnvironmentsConnectionIdempotencyPolicy::CreateEnvironment(
-    google::cloud::dialogflow::v2::CreateEnvironmentRequest const&) {
+Idempotency EnvironmentsConnectionIdempotencyPolicy::CreateEnvironment(google::cloud::dialogflow::v2::CreateEnvironmentRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency EnvironmentsConnectionIdempotencyPolicy::UpdateEnvironment(
-    google::cloud::dialogflow::v2::UpdateEnvironmentRequest const&) {
+Idempotency EnvironmentsConnectionIdempotencyPolicy::UpdateEnvironment(google::cloud::dialogflow::v2::UpdateEnvironmentRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency EnvironmentsConnectionIdempotencyPolicy::DeleteEnvironment(
-    google::cloud::dialogflow::v2::DeleteEnvironmentRequest const&) {
+Idempotency EnvironmentsConnectionIdempotencyPolicy::DeleteEnvironment(google::cloud::dialogflow::v2::DeleteEnvironmentRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency EnvironmentsConnectionIdempotencyPolicy::GetEnvironmentHistory(
-    google::cloud::dialogflow::v2::GetEnvironmentHistoryRequest) {  // NOLINT
+Idempotency EnvironmentsConnectionIdempotencyPolicy::GetEnvironmentHistory(google::cloud::dialogflow::v2::GetEnvironmentHistoryRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency EnvironmentsConnectionIdempotencyPolicy::ListLocations(
-    google::cloud::location::ListLocationsRequest) {  // NOLINT
+Idempotency EnvironmentsConnectionIdempotencyPolicy::ListLocations(google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency EnvironmentsConnectionIdempotencyPolicy::GetLocation(
-    google::cloud::location::GetLocationRequest const&) {
+Idempotency EnvironmentsConnectionIdempotencyPolicy::GetLocation(google::cloud::location::GetLocationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency EnvironmentsConnectionIdempotencyPolicy::ListOperations(
-    google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency EnvironmentsConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency EnvironmentsConnectionIdempotencyPolicy::GetOperation(
-    google::longrunning::GetOperationRequest const&) {
+Idempotency EnvironmentsConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency EnvironmentsConnectionIdempotencyPolicy::CancelOperation(
-    google::longrunning::CancelOperationRequest const&) {
+Idempotency EnvironmentsConnectionIdempotencyPolicy::CancelOperation(google::longrunning::CancelOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<EnvironmentsConnectionIdempotencyPolicy>
-MakeDefaultEnvironmentsConnectionIdempotencyPolicy() {
+    MakeDefaultEnvironmentsConnectionIdempotencyPolicy() {
   return std::make_unique<EnvironmentsConnectionIdempotencyPolicy>();
 }
 

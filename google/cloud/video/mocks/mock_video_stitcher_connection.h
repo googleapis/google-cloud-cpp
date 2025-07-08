@@ -30,10 +30,8 @@ namespace cloud {
 namespace video_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use video_stitcher_v1_mocks::MockVideoStitcherServiceConnection
-/// directly.
-using ::google::cloud::video_stitcher_v1_mocks::
-    MockVideoStitcherServiceConnection;
+/// @deprecated Use video_stitcher_v1_mocks::MockVideoStitcherServiceConnection directly.
+using ::google::cloud::video_stitcher_v1_mocks::MockVideoStitcherServiceConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace video_mocks

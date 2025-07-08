@@ -32,7 +32,8 @@ ProductServiceAuth::ProductServiceAuth(
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
 StatusOr<google::cloud::retail::v2::Product> ProductServiceAuth::CreateProduct(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::retail::v2::CreateProductRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -40,16 +41,17 @@ StatusOr<google::cloud::retail::v2::Product> ProductServiceAuth::CreateProduct(
 }
 
 StatusOr<google::cloud::retail::v2::Product> ProductServiceAuth::GetProduct(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::retail::v2::GetProductRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetProduct(context, options, request);
 }
 
-StatusOr<google::cloud::retail::v2::ListProductsResponse>
-ProductServiceAuth::ListProducts(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::retail::v2::ListProductsResponse> ProductServiceAuth::ListProducts(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::retail::v2::ListProductsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -57,7 +59,8 @@ ProductServiceAuth::ListProducts(
 }
 
 StatusOr<google::cloud::retail::v2::Product> ProductServiceAuth::UpdateProduct(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::retail::v2::UpdateProductRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -65,7 +68,8 @@ StatusOr<google::cloud::retail::v2::Product> ProductServiceAuth::UpdateProduct(
 }
 
 Status ProductServiceAuth::DeleteProduct(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::retail::v2::DeleteProductRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -74,27 +78,28 @@ Status ProductServiceAuth::DeleteProduct(
 
 future<StatusOr<google::longrunning::Operation>>
 ProductServiceAuth::AsyncPurgeProducts(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::retail::v2::PurgeProductsRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::retail::v2::PurgeProductsRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncPurgeProducts(cq, *std::move(context),
-                                         std::move(options), request);
+        return child->AsyncPurgeProducts(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation> ProductServiceAuth::PurgeProducts(
-    grpc::ClientContext& context, Options options,
-    google::cloud::retail::v2::PurgeProductsRequest const& request) {
+StatusOr<google::longrunning::Operation>
+ProductServiceAuth::PurgeProducts(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::retail::v2::PurgeProductsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->PurgeProducts(context, options, request);
@@ -102,27 +107,28 @@ StatusOr<google::longrunning::Operation> ProductServiceAuth::PurgeProducts(
 
 future<StatusOr<google::longrunning::Operation>>
 ProductServiceAuth::AsyncImportProducts(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::retail::v2::ImportProductsRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::retail::v2::ImportProductsRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncImportProducts(cq, *std::move(context),
-                                          std::move(options), request);
+        return child->AsyncImportProducts(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation> ProductServiceAuth::ImportProducts(
-    grpc::ClientContext& context, Options options,
-    google::cloud::retail::v2::ImportProductsRequest const& request) {
+StatusOr<google::longrunning::Operation>
+ProductServiceAuth::ImportProducts(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::retail::v2::ImportProductsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ImportProducts(context, options, request);
@@ -130,27 +136,28 @@ StatusOr<google::longrunning::Operation> ProductServiceAuth::ImportProducts(
 
 future<StatusOr<google::longrunning::Operation>>
 ProductServiceAuth::AsyncSetInventory(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::retail::v2::SetInventoryRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::retail::v2::SetInventoryRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncSetInventory(cq, *std::move(context),
-                                        std::move(options), request);
+        return child->AsyncSetInventory(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation> ProductServiceAuth::SetInventory(
-    grpc::ClientContext& context, Options options,
-    google::cloud::retail::v2::SetInventoryRequest const& request) {
+StatusOr<google::longrunning::Operation>
+ProductServiceAuth::SetInventory(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::retail::v2::SetInventoryRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->SetInventory(context, options, request);
@@ -158,28 +165,28 @@ StatusOr<google::longrunning::Operation> ProductServiceAuth::SetInventory(
 
 future<StatusOr<google::longrunning::Operation>>
 ProductServiceAuth::AsyncAddFulfillmentPlaces(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::retail::v2::AddFulfillmentPlacesRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::retail::v2::AddFulfillmentPlacesRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncAddFulfillmentPlaces(cq, *std::move(context),
-                                                std::move(options), request);
+        return child->AsyncAddFulfillmentPlaces(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 ProductServiceAuth::AddFulfillmentPlaces(
-    grpc::ClientContext& context, Options options,
-    google::cloud::retail::v2::AddFulfillmentPlacesRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::retail::v2::AddFulfillmentPlacesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->AddFulfillmentPlaces(context, options, request);
@@ -187,28 +194,28 @@ ProductServiceAuth::AddFulfillmentPlaces(
 
 future<StatusOr<google::longrunning::Operation>>
 ProductServiceAuth::AsyncRemoveFulfillmentPlaces(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::retail::v2::RemoveFulfillmentPlacesRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::retail::v2::RemoveFulfillmentPlacesRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncRemoveFulfillmentPlaces(cq, *std::move(context),
-                                                   std::move(options), request);
+        return child->AsyncRemoveFulfillmentPlaces(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 ProductServiceAuth::RemoveFulfillmentPlaces(
-    grpc::ClientContext& context, Options options,
-    google::cloud::retail::v2::RemoveFulfillmentPlacesRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::retail::v2::RemoveFulfillmentPlacesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->RemoveFulfillmentPlaces(context, options, request);
@@ -216,28 +223,28 @@ ProductServiceAuth::RemoveFulfillmentPlaces(
 
 future<StatusOr<google::longrunning::Operation>>
 ProductServiceAuth::AsyncAddLocalInventories(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::retail::v2::AddLocalInventoriesRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::retail::v2::AddLocalInventoriesRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncAddLocalInventories(cq, *std::move(context),
-                                               std::move(options), request);
+        return child->AsyncAddLocalInventories(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 ProductServiceAuth::AddLocalInventories(
-    grpc::ClientContext& context, Options options,
-    google::cloud::retail::v2::AddLocalInventoriesRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::retail::v2::AddLocalInventoriesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->AddLocalInventories(context, options, request);
@@ -245,36 +252,36 @@ ProductServiceAuth::AddLocalInventories(
 
 future<StatusOr<google::longrunning::Operation>>
 ProductServiceAuth::AsyncRemoveLocalInventories(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::retail::v2::RemoveLocalInventoriesRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::retail::v2::RemoveLocalInventoriesRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncRemoveLocalInventories(cq, *std::move(context),
-                                                  std::move(options), request);
+        return child->AsyncRemoveLocalInventories(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 ProductServiceAuth::RemoveLocalInventories(
-    grpc::ClientContext& context, Options options,
-    google::cloud::retail::v2::RemoveLocalInventoriesRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::retail::v2::RemoveLocalInventoriesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->RemoveLocalInventories(context, options, request);
 }
 
-StatusOr<google::longrunning::ListOperationsResponse>
-ProductServiceAuth::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse> ProductServiceAuth::ListOperations(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -282,7 +289,8 @@ ProductServiceAuth::ListOperations(
 }
 
 StatusOr<google::longrunning::Operation> ProductServiceAuth::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -296,16 +304,15 @@ ProductServiceAuth::AsyncGetOperation(
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncGetOperation(cq, *std::move(context),
-                                        std::move(options), request);
+        return child->AsyncGetOperation(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
@@ -314,14 +321,13 @@ future<Status> ProductServiceAuth::AsyncCancelOperation(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) return make_ready_future(std::move(context).status());
-        return child->AsyncCancelOperation(cq, *std::move(context),
-                                           std::move(options), request);
+        return child->AsyncCancelOperation(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 

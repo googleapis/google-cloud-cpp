@@ -74,7 +74,8 @@ struct AppHubPollingPolicyOption {
  * @ingroup google-cloud-apphub-options
  */
 using AppHubPolicyOptionList =
-    OptionList<AppHubRetryPolicyOption, AppHubBackoffPolicyOption,
+    OptionList<AppHubRetryPolicyOption,
+               AppHubBackoffPolicyOption,
                AppHubPollingPolicyOption,
                AppHubConnectionIdempotencyPolicyOption>;
 

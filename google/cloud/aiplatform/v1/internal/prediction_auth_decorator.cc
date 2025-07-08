@@ -32,9 +32,9 @@ PredictionServiceAuth::PredictionServiceAuth(
     std::shared_ptr<PredictionServiceStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::aiplatform::v1::PredictResponse>
-PredictionServiceAuth::Predict(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::aiplatform::v1::PredictResponse> PredictionServiceAuth::Predict(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::PredictRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -42,37 +42,38 @@ PredictionServiceAuth::Predict(
 }
 
 StatusOr<google::api::HttpBody> PredictionServiceAuth::RawPredict(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::RawPredictRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->RawPredict(context, options, request);
 }
 
-std::unique_ptr<
-    google::cloud::internal::StreamingReadRpc<google::api::HttpBody>>
+std::unique_ptr<google::cloud::internal::StreamingReadRpc<google::api::HttpBody>>
 PredictionServiceAuth::StreamRawPredict(
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
-    google::cloud::aiplatform::v1::StreamRawPredictRequest const& request) {
-  using ErrorStream =
-      ::google::cloud::internal::StreamingReadRpcError<google::api::HttpBody>;
+   std::shared_ptr<grpc::ClientContext> context,
+   Options const& options,
+   google::cloud::aiplatform::v1::StreamRawPredictRequest const& request) {
+  using ErrorStream = ::google::cloud::internal::StreamingReadRpcError<
+      google::api::HttpBody>;
   auto status = auth_->ConfigureContext(*context);
   if (!status.ok()) return std::make_unique<ErrorStream>(std::move(status));
   return child_->StreamRawPredict(std::move(context), options, request);
 }
 
-StatusOr<google::cloud::aiplatform::v1::DirectPredictResponse>
-PredictionServiceAuth::DirectPredict(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::aiplatform::v1::DirectPredictResponse> PredictionServiceAuth::DirectPredict(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::DirectPredictRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DirectPredict(context, options, request);
 }
 
-StatusOr<google::cloud::aiplatform::v1::DirectRawPredictResponse>
-PredictionServiceAuth::DirectRawPredict(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::aiplatform::v1::DirectRawPredictResponse> PredictionServiceAuth::DirectRawPredict(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::DirectRawPredictRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -87,15 +88,14 @@ PredictionServiceAuth::AsyncStreamDirectPredict(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options) {
   using StreamAuth = google::cloud::internal::AsyncStreamingReadWriteRpcAuth<
-      google::cloud::aiplatform::v1::StreamDirectPredictRequest,
-      google::cloud::aiplatform::v1::StreamDirectPredictResponse>;
+    google::cloud::aiplatform::v1::StreamDirectPredictRequest, google::cloud::aiplatform::v1::StreamDirectPredictResponse>;
 
   auto call = [child = child_, cq, options = std::move(options)](
                   std::shared_ptr<grpc::ClientContext> ctx) {
     return child->AsyncStreamDirectPredict(cq, std::move(ctx), options);
   };
   return std::make_unique<StreamAuth>(
-      std::move(context), auth_, StreamAuth::StreamFactory(std::move(call)));
+    std::move(context), auth_, StreamAuth::StreamFactory(std::move(call)));
 }
 
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
@@ -106,15 +106,14 @@ PredictionServiceAuth::AsyncStreamDirectRawPredict(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options) {
   using StreamAuth = google::cloud::internal::AsyncStreamingReadWriteRpcAuth<
-      google::cloud::aiplatform::v1::StreamDirectRawPredictRequest,
-      google::cloud::aiplatform::v1::StreamDirectRawPredictResponse>;
+    google::cloud::aiplatform::v1::StreamDirectRawPredictRequest, google::cloud::aiplatform::v1::StreamDirectRawPredictResponse>;
 
   auto call = [child = child_, cq, options = std::move(options)](
                   std::shared_ptr<grpc::ClientContext> ctx) {
     return child->AsyncStreamDirectRawPredict(cq, std::move(ctx), options);
   };
   return std::make_unique<StreamAuth>(
-      std::move(context), auth_, StreamAuth::StreamFactory(std::move(call)));
+    std::move(context), auth_, StreamAuth::StreamFactory(std::move(call)));
 }
 
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
@@ -125,22 +124,21 @@ PredictionServiceAuth::AsyncStreamingPredict(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options) {
   using StreamAuth = google::cloud::internal::AsyncStreamingReadWriteRpcAuth<
-      google::cloud::aiplatform::v1::StreamingPredictRequest,
-      google::cloud::aiplatform::v1::StreamingPredictResponse>;
+    google::cloud::aiplatform::v1::StreamingPredictRequest, google::cloud::aiplatform::v1::StreamingPredictResponse>;
 
   auto call = [child = child_, cq, options = std::move(options)](
                   std::shared_ptr<grpc::ClientContext> ctx) {
     return child->AsyncStreamingPredict(cq, std::move(ctx), options);
   };
   return std::make_unique<StreamAuth>(
-      std::move(context), auth_, StreamAuth::StreamFactory(std::move(call)));
+    std::move(context), auth_, StreamAuth::StreamFactory(std::move(call)));
 }
 
-std::unique_ptr<google::cloud::internal::StreamingReadRpc<
-    google::cloud::aiplatform::v1::StreamingPredictResponse>>
+std::unique_ptr<google::cloud::internal::StreamingReadRpc<google::cloud::aiplatform::v1::StreamingPredictResponse>>
 PredictionServiceAuth::ServerStreamingPredict(
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
-    google::cloud::aiplatform::v1::StreamingPredictRequest const& request) {
+   std::shared_ptr<grpc::ClientContext> context,
+   Options const& options,
+   google::cloud::aiplatform::v1::StreamingPredictRequest const& request) {
   using ErrorStream = ::google::cloud::internal::StreamingReadRpcError<
       google::cloud::aiplatform::v1::StreamingPredictResponse>;
   auto status = auth_->ConfigureContext(*context);
@@ -156,40 +154,39 @@ PredictionServiceAuth::AsyncStreamingRawPredict(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options) {
   using StreamAuth = google::cloud::internal::AsyncStreamingReadWriteRpcAuth<
-      google::cloud::aiplatform::v1::StreamingRawPredictRequest,
-      google::cloud::aiplatform::v1::StreamingRawPredictResponse>;
+    google::cloud::aiplatform::v1::StreamingRawPredictRequest, google::cloud::aiplatform::v1::StreamingRawPredictResponse>;
 
   auto call = [child = child_, cq, options = std::move(options)](
                   std::shared_ptr<grpc::ClientContext> ctx) {
     return child->AsyncStreamingRawPredict(cq, std::move(ctx), options);
   };
   return std::make_unique<StreamAuth>(
-      std::move(context), auth_, StreamAuth::StreamFactory(std::move(call)));
+    std::move(context), auth_, StreamAuth::StreamFactory(std::move(call)));
 }
 
-StatusOr<google::cloud::aiplatform::v1::ExplainResponse>
-PredictionServiceAuth::Explain(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::aiplatform::v1::ExplainResponse> PredictionServiceAuth::Explain(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::ExplainRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->Explain(context, options, request);
 }
 
-StatusOr<google::cloud::aiplatform::v1::GenerateContentResponse>
-PredictionServiceAuth::GenerateContent(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::aiplatform::v1::GenerateContentResponse> PredictionServiceAuth::GenerateContent(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::GenerateContentRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GenerateContent(context, options, request);
 }
 
-std::unique_ptr<google::cloud::internal::StreamingReadRpc<
-    google::cloud::aiplatform::v1::GenerateContentResponse>>
+std::unique_ptr<google::cloud::internal::StreamingReadRpc<google::cloud::aiplatform::v1::GenerateContentResponse>>
 PredictionServiceAuth::StreamGenerateContent(
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
-    google::cloud::aiplatform::v1::GenerateContentRequest const& request) {
+   std::shared_ptr<grpc::ClientContext> context,
+   Options const& options,
+   google::cloud::aiplatform::v1::GenerateContentRequest const& request) {
   using ErrorStream = ::google::cloud::internal::StreamingReadRpcError<
       google::cloud::aiplatform::v1::GenerateContentResponse>;
   auto status = auth_->ConfigureContext(*context);
@@ -197,9 +194,9 @@ PredictionServiceAuth::StreamGenerateContent(
   return child_->StreamGenerateContent(std::move(context), options, request);
 }
 
-StatusOr<google::cloud::location::ListLocationsResponse>
-PredictionServiceAuth::ListLocations(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::location::ListLocationsResponse> PredictionServiceAuth::ListLocations(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -207,7 +204,8 @@ PredictionServiceAuth::ListLocations(
 }
 
 StatusOr<google::cloud::location::Location> PredictionServiceAuth::GetLocation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -215,7 +213,8 @@ StatusOr<google::cloud::location::Location> PredictionServiceAuth::GetLocation(
 }
 
 StatusOr<google::iam::v1::Policy> PredictionServiceAuth::SetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -223,25 +222,26 @@ StatusOr<google::iam::v1::Policy> PredictionServiceAuth::SetIamPolicy(
 }
 
 StatusOr<google::iam::v1::Policy> PredictionServiceAuth::GetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetIamPolicy(context, options, request);
 }
 
-StatusOr<google::iam::v1::TestIamPermissionsResponse>
-PredictionServiceAuth::TestIamPermissions(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::iam::v1::TestIamPermissionsResponse> PredictionServiceAuth::TestIamPermissions(
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->TestIamPermissions(context, options, request);
 }
 
-StatusOr<google::longrunning::ListOperationsResponse>
-PredictionServiceAuth::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse> PredictionServiceAuth::ListOperations(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -249,7 +249,8 @@ PredictionServiceAuth::ListOperations(
 }
 
 StatusOr<google::longrunning::Operation> PredictionServiceAuth::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -257,7 +258,8 @@ StatusOr<google::longrunning::Operation> PredictionServiceAuth::GetOperation(
 }
 
 Status PredictionServiceAuth::DeleteOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -265,7 +267,8 @@ Status PredictionServiceAuth::DeleteOperation(
 }
 
 Status PredictionServiceAuth::CancelOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -273,7 +276,8 @@ Status PredictionServiceAuth::CancelOperation(
 }
 
 StatusOr<google::longrunning::Operation> PredictionServiceAuth::WaitOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::WaitOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;

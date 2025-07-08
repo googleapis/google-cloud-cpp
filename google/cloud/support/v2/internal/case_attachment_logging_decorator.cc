@@ -32,17 +32,20 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 CaseAttachmentServiceLogging::CaseAttachmentServiceLogging(
     std::shared_ptr<CaseAttachmentServiceStub> child,
-    TracingOptions tracing_options, std::set<std::string> const&)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
+    TracingOptions tracing_options,
+    std::set<std::string> const&)
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::cloud::support::v2::ListAttachmentsResponse>
 CaseAttachmentServiceLogging::ListAttachments(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::support::v2::ListAttachmentsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::support::v2::ListAttachmentsRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::support::v2::ListAttachmentsRequest const& request) {
         return child_->ListAttachments(context, options, request);
       },
       context, options, request, __func__, tracing_options_);

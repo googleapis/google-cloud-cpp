@@ -36,75 +36,71 @@ class CloudRedisClusterConnectionIdempotencyPolicy {
   virtual ~CloudRedisClusterConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<CloudRedisClusterConnectionIdempotencyPolicy> clone()
-      const;
+  virtual std::unique_ptr<CloudRedisClusterConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency ListClusters(
-      google::cloud::redis::cluster::v1::ListClustersRequest request);
+  virtual google::cloud::Idempotency
+  ListClusters(google::cloud::redis::cluster::v1::ListClustersRequest request);
 
-  virtual google::cloud::Idempotency GetCluster(
-      google::cloud::redis::cluster::v1::GetClusterRequest const& request);
+  virtual google::cloud::Idempotency
+  GetCluster(google::cloud::redis::cluster::v1::GetClusterRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateCluster(
-      google::cloud::redis::cluster::v1::UpdateClusterRequest const& request);
+  virtual google::cloud::Idempotency
+  UpdateCluster(google::cloud::redis::cluster::v1::UpdateClusterRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteCluster(
-      google::cloud::redis::cluster::v1::DeleteClusterRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteCluster(google::cloud::redis::cluster::v1::DeleteClusterRequest const& request);
 
-  virtual google::cloud::Idempotency CreateCluster(
-      google::cloud::redis::cluster::v1::CreateClusterRequest const& request);
+  virtual google::cloud::Idempotency
+  CreateCluster(google::cloud::redis::cluster::v1::CreateClusterRequest const& request);
 
-  virtual google::cloud::Idempotency GetClusterCertificateAuthority(
-      google::cloud::redis::cluster::v1::
-          GetClusterCertificateAuthorityRequest const& request);
+  virtual google::cloud::Idempotency
+  GetClusterCertificateAuthority(google::cloud::redis::cluster::v1::GetClusterCertificateAuthorityRequest const& request);
 
-  virtual google::cloud::Idempotency RescheduleClusterMaintenance(
-      google::cloud::redis::cluster::v1::
-          RescheduleClusterMaintenanceRequest const& request);
+  virtual google::cloud::Idempotency
+  RescheduleClusterMaintenance(google::cloud::redis::cluster::v1::RescheduleClusterMaintenanceRequest const& request);
 
-  virtual google::cloud::Idempotency ListBackupCollections(
-      google::cloud::redis::cluster::v1::ListBackupCollectionsRequest request);
+  virtual google::cloud::Idempotency
+  ListBackupCollections(google::cloud::redis::cluster::v1::ListBackupCollectionsRequest request);
 
-  virtual google::cloud::Idempotency GetBackupCollection(
-      google::cloud::redis::cluster::v1::GetBackupCollectionRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  GetBackupCollection(google::cloud::redis::cluster::v1::GetBackupCollectionRequest const& request);
 
-  virtual google::cloud::Idempotency ListBackups(
-      google::cloud::redis::cluster::v1::ListBackupsRequest request);
+  virtual google::cloud::Idempotency
+  ListBackups(google::cloud::redis::cluster::v1::ListBackupsRequest request);
 
-  virtual google::cloud::Idempotency GetBackup(
-      google::cloud::redis::cluster::v1::GetBackupRequest const& request);
+  virtual google::cloud::Idempotency
+  GetBackup(google::cloud::redis::cluster::v1::GetBackupRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteBackup(
-      google::cloud::redis::cluster::v1::DeleteBackupRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteBackup(google::cloud::redis::cluster::v1::DeleteBackupRequest const& request);
 
-  virtual google::cloud::Idempotency ExportBackup(
-      google::cloud::redis::cluster::v1::ExportBackupRequest const& request);
+  virtual google::cloud::Idempotency
+  ExportBackup(google::cloud::redis::cluster::v1::ExportBackupRequest const& request);
 
-  virtual google::cloud::Idempotency BackupCluster(
-      google::cloud::redis::cluster::v1::BackupClusterRequest const& request);
+  virtual google::cloud::Idempotency
+  BackupCluster(google::cloud::redis::cluster::v1::BackupClusterRequest const& request);
 
-  virtual google::cloud::Idempotency ListLocations(
-      google::cloud::location::ListLocationsRequest request);
+  virtual google::cloud::Idempotency
+  ListLocations(google::cloud::location::ListLocationsRequest request);
 
-  virtual google::cloud::Idempotency GetLocation(
-      google::cloud::location::GetLocationRequest const& request);
+  virtual google::cloud::Idempotency
+  GetLocation(google::cloud::location::GetLocationRequest const& request);
 
-  virtual google::cloud::Idempotency ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual google::cloud::Idempotency
+  ListOperations(google::longrunning::ListOperationsRequest request);
 
-  virtual google::cloud::Idempotency GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
 
-  virtual google::cloud::Idempotency CancelOperation(
-      google::longrunning::CancelOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  CancelOperation(google::longrunning::CancelOperationRequest const& request);
 };
 
 std::unique_ptr<CloudRedisClusterConnectionIdempotencyPolicy>
-MakeDefaultCloudRedisClusterConnectionIdempotencyPolicy();
+    MakeDefaultCloudRedisClusterConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace redis_cluster_v1

@@ -46,18 +46,17 @@ StorageTransferServiceMetadata::StorageTransferServiceMetadata(
 
 StatusOr<google::storagetransfer::v1::GoogleServiceAccount>
 StorageTransferServiceMetadata::GetGoogleServiceAccount(
-    grpc::ClientContext& context, Options const& options,
-    google::storagetransfer::v1::GetGoogleServiceAccountRequest const&
-        request) {
-  SetMetadata(
-      context, options,
-      absl::StrCat("project_id=", internal::UrlEncode(request.project_id())));
+    grpc::ClientContext& context,
+    Options const& options,
+    google::storagetransfer::v1::GetGoogleServiceAccountRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("project_id=", internal::UrlEncode(request.project_id())));
   return child_->GetGoogleServiceAccount(context, options, request);
 }
 
 StatusOr<google::storagetransfer::v1::TransferJob>
 StorageTransferServiceMetadata::CreateTransferJob(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::storagetransfer::v1::CreateTransferJobRequest const& request) {
   SetMetadata(context, options);
   return child_->CreateTransferJob(context, options, request);
@@ -65,46 +64,46 @@ StorageTransferServiceMetadata::CreateTransferJob(
 
 StatusOr<google::storagetransfer::v1::TransferJob>
 StorageTransferServiceMetadata::UpdateTransferJob(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::storagetransfer::v1::UpdateTransferJobRequest const& request) {
-  SetMetadata(
-      context, options,
-      absl::StrCat("job_name=", internal::UrlEncode(request.job_name())));
+  SetMetadata(context, options, absl::StrCat("job_name=", internal::UrlEncode(request.job_name())));
   return child_->UpdateTransferJob(context, options, request);
 }
 
 StatusOr<google::storagetransfer::v1::TransferJob>
 StorageTransferServiceMetadata::GetTransferJob(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::storagetransfer::v1::GetTransferJobRequest const& request) {
-  SetMetadata(
-      context, options,
-      absl::StrCat("job_name=", internal::UrlEncode(request.job_name())));
+  SetMetadata(context, options, absl::StrCat("job_name=", internal::UrlEncode(request.job_name())));
   return child_->GetTransferJob(context, options, request);
 }
 
 StatusOr<google::storagetransfer::v1::ListTransferJobsResponse>
 StorageTransferServiceMetadata::ListTransferJobs(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::storagetransfer::v1::ListTransferJobsRequest const& request) {
   SetMetadata(context, options);
   return child_->ListTransferJobs(context, options, request);
 }
 
-Status StorageTransferServiceMetadata::PauseTransferOperation(
-    grpc::ClientContext& context, Options const& options,
+Status
+StorageTransferServiceMetadata::PauseTransferOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::storagetransfer::v1::PauseTransferOperationRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->PauseTransferOperation(context, options, request);
 }
 
-Status StorageTransferServiceMetadata::ResumeTransferOperation(
-    grpc::ClientContext& context, Options const& options,
-    google::storagetransfer::v1::ResumeTransferOperationRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+Status
+StorageTransferServiceMetadata::ResumeTransferOperation(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::storagetransfer::v1::ResumeTransferOperationRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ResumeTransferOperation(context, options, request);
 }
 
@@ -114,102 +113,98 @@ StorageTransferServiceMetadata::AsyncRunTransferJob(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::storagetransfer::v1::RunTransferJobRequest const& request) {
-  SetMetadata(
-      *context, *options,
-      absl::StrCat("job_name=", internal::UrlEncode(request.job_name())));
-  return child_->AsyncRunTransferJob(cq, std::move(context), std::move(options),
-                                     request);
+  SetMetadata(*context, *options, absl::StrCat("job_name=", internal::UrlEncode(request.job_name())));
+  return child_->AsyncRunTransferJob(
+      cq, std::move(context), std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 StorageTransferServiceMetadata::RunTransferJob(
-    grpc::ClientContext& context, Options options,
+    grpc::ClientContext& context,
+    Options options,
     google::storagetransfer::v1::RunTransferJobRequest const& request) {
-  SetMetadata(
-      context, options,
-      absl::StrCat("job_name=", internal::UrlEncode(request.job_name())));
+  SetMetadata(context, options, absl::StrCat("job_name=", internal::UrlEncode(request.job_name())));
   return child_->RunTransferJob(context, options, request);
 }
 
-Status StorageTransferServiceMetadata::DeleteTransferJob(
-    grpc::ClientContext& context, Options const& options,
+Status
+StorageTransferServiceMetadata::DeleteTransferJob(
+    grpc::ClientContext& context,
+    Options const& options,
     google::storagetransfer::v1::DeleteTransferJobRequest const& request) {
-  SetMetadata(
-      context, options,
-      absl::StrCat("job_name=", internal::UrlEncode(request.job_name())));
+  SetMetadata(context, options, absl::StrCat("job_name=", internal::UrlEncode(request.job_name())));
   return child_->DeleteTransferJob(context, options, request);
 }
 
 StatusOr<google::storagetransfer::v1::AgentPool>
 StorageTransferServiceMetadata::CreateAgentPool(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::storagetransfer::v1::CreateAgentPoolRequest const& request) {
-  SetMetadata(
-      context, options,
-      absl::StrCat("project_id=", internal::UrlEncode(request.project_id())));
+  SetMetadata(context, options, absl::StrCat("project_id=", internal::UrlEncode(request.project_id())));
   return child_->CreateAgentPool(context, options, request);
 }
 
 StatusOr<google::storagetransfer::v1::AgentPool>
 StorageTransferServiceMetadata::UpdateAgentPool(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::storagetransfer::v1::UpdateAgentPoolRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("agent_pool.name=",
-                           internal::UrlEncode(request.agent_pool().name())));
+  SetMetadata(context, options, absl::StrCat("agent_pool.name=", internal::UrlEncode(request.agent_pool().name())));
   return child_->UpdateAgentPool(context, options, request);
 }
 
 StatusOr<google::storagetransfer::v1::AgentPool>
 StorageTransferServiceMetadata::GetAgentPool(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::storagetransfer::v1::GetAgentPoolRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetAgentPool(context, options, request);
 }
 
 StatusOr<google::storagetransfer::v1::ListAgentPoolsResponse>
 StorageTransferServiceMetadata::ListAgentPools(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::storagetransfer::v1::ListAgentPoolsRequest const& request) {
-  SetMetadata(
-      context, options,
-      absl::StrCat("project_id=", internal::UrlEncode(request.project_id())));
+  SetMetadata(context, options, absl::StrCat("project_id=", internal::UrlEncode(request.project_id())));
   return child_->ListAgentPools(context, options, request);
 }
 
-Status StorageTransferServiceMetadata::DeleteAgentPool(
-    grpc::ClientContext& context, Options const& options,
+Status
+StorageTransferServiceMetadata::DeleteAgentPool(
+    grpc::ClientContext& context,
+    Options const& options,
     google::storagetransfer::v1::DeleteAgentPoolRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteAgentPool(context, options, request);
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
 StorageTransferServiceMetadata::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ListOperations(context, options, request);
 }
 
 StatusOr<google::longrunning::Operation>
 StorageTransferServiceMetadata::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetOperation(context, options, request);
 }
 
-Status StorageTransferServiceMetadata::CancelOperation(
-    grpc::ClientContext& context, Options const& options,
+Status
+StorageTransferServiceMetadata::CancelOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->CancelOperation(context, options, request);
 }
 
@@ -221,8 +216,8 @@ StorageTransferServiceMetadata::AsyncGetOperation(
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(cq, std::move(context), std::move(options),
-                                   request);
+  return child_->AsyncGetOperation(
+      cq, std::move(context), std::move(options), request);
 }
 
 future<Status> StorageTransferServiceMetadata::AsyncCancelOperation(
@@ -232,21 +227,21 @@ future<Status> StorageTransferServiceMetadata::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(cq, std::move(context),
-                                      std::move(options), request);
+  return child_->AsyncCancelOperation(
+      cq, std::move(context), std::move(options), request);
 }
 
-void StorageTransferServiceMetadata::SetMetadata(
-    grpc::ClientContext& context, Options const& options,
-    std::string const& request_params) {
+void StorageTransferServiceMetadata::SetMetadata(grpc::ClientContext& context,
+                                        Options const& options,
+                                        std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
 void StorageTransferServiceMetadata::SetMetadata(grpc::ClientContext& context,
-                                                 Options const& options) {
-  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
-                                       api_client_header_);
+                                        Options const& options) {
+  google::cloud::internal::SetMetadata(
+      context, options, fixed_metadata_, api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

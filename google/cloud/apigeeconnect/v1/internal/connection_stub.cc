@@ -32,14 +32,15 @@ ConnectionServiceStub::~ConnectionServiceStub() = default;
 
 StatusOr<google::cloud::apigeeconnect::v1::ListConnectionsResponse>
 DefaultConnectionServiceStub::ListConnections(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::apigeeconnect::v1::ListConnectionsRequest const& request) {
-  google::cloud::apigeeconnect::v1::ListConnectionsResponse response;
-  auto status = grpc_stub_->ListConnections(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::apigeeconnect::v1::ListConnectionsRequest const& request) {
+    google::cloud::apigeeconnect::v1::ListConnectionsResponse response;
+    auto status =
+        grpc_stub_->ListConnections(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

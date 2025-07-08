@@ -35,32 +35,25 @@ class PublicCertificateAuthorityServiceStub {
  public:
   virtual ~PublicCertificateAuthorityServiceStub() = 0;
 
-  virtual StatusOr<google::cloud::security::publicca::v1::ExternalAccountKey>
-  CreateExternalAccountKey(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::security::publicca::v1::
-          CreateExternalAccountKeyRequest const& request) = 0;
+  virtual StatusOr<google::cloud::security::publicca::v1::ExternalAccountKey> CreateExternalAccountKey(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::security::publicca::v1::CreateExternalAccountKeyRequest const& request) = 0;
 };
 
-class DefaultPublicCertificateAuthorityServiceStub
-    : public PublicCertificateAuthorityServiceStub {
+class DefaultPublicCertificateAuthorityServiceStub : public PublicCertificateAuthorityServiceStub {
  public:
   explicit DefaultPublicCertificateAuthorityServiceStub(
-      std::unique_ptr<google::cloud::security::publicca::v1::
-                          PublicCertificateAuthorityService::StubInterface>
-          grpc_stub)
+      std::unique_ptr<google::cloud::security::publicca::v1::PublicCertificateAuthorityService::StubInterface> grpc_stub)
       : grpc_stub_(std::move(grpc_stub)) {}
 
-  StatusOr<google::cloud::security::publicca::v1::ExternalAccountKey>
-  CreateExternalAccountKey(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::security::publicca::v1::
-          CreateExternalAccountKeyRequest const& request) override;
+  StatusOr<google::cloud::security::publicca::v1::ExternalAccountKey> CreateExternalAccountKey(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::security::publicca::v1::CreateExternalAccountKeyRequest const& request) override;
 
  private:
-  std::unique_ptr<google::cloud::security::publicca::v1::
-                      PublicCertificateAuthorityService::StubInterface>
-      grpc_stub_;
+  std::unique_ptr<google::cloud::security::publicca::v1::PublicCertificateAuthorityService::StubInterface> grpc_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

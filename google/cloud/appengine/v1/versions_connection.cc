@@ -39,13 +39,13 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 VersionsConnection::~VersionsConnection() = default;
 
 StreamRange<google::appengine::v1::Version> VersionsConnection::ListVersions(
-    google::appengine::v1::
-        ListVersionsRequest) {  // NOLINT(performance-unnecessary-value-param)
+    google::appengine::v1::ListVersionsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::appengine::v1::Version>>();
 }
 
-StatusOr<google::appengine::v1::Version> VersionsConnection::GetVersion(
+StatusOr<google::appengine::v1::Version>
+VersionsConnection::GetVersion(
     google::appengine::v1::GetVersionRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -54,77 +54,88 @@ future<StatusOr<google::appengine::v1::Version>>
 VersionsConnection::CreateVersion(
     google::appengine::v1::CreateVersionRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::appengine::v1::Version>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::appengine::v1::Version>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation> VersionsConnection::CreateVersion(
-    NoAwaitTag, google::appengine::v1::CreateVersionRequest const&) {
+StatusOr<google::longrunning::Operation>
+VersionsConnection::CreateVersion(
+    NoAwaitTag,
+    google::appengine::v1::CreateVersionRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::appengine::v1::Version>>
-VersionsConnection::CreateVersion(google::longrunning::Operation const&) {
+VersionsConnection::CreateVersion(
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::appengine::v1::Version>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::appengine::v1::Version>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::appengine::v1::Version>>
 VersionsConnection::UpdateVersion(
     google::appengine::v1::UpdateVersionRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::appengine::v1::Version>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::appengine::v1::Version>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation> VersionsConnection::UpdateVersion(
-    NoAwaitTag, google::appengine::v1::UpdateVersionRequest const&) {
+StatusOr<google::longrunning::Operation>
+VersionsConnection::UpdateVersion(
+    NoAwaitTag,
+    google::appengine::v1::UpdateVersionRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::appengine::v1::Version>>
-VersionsConnection::UpdateVersion(google::longrunning::Operation const&) {
+VersionsConnection::UpdateVersion(
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::appengine::v1::Version>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::appengine::v1::Version>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::appengine::v1::OperationMetadataV1>>
 VersionsConnection::DeleteVersion(
     google::appengine::v1::DeleteVersionRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::appengine::v1::OperationMetadataV1>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::appengine::v1::OperationMetadataV1>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation> VersionsConnection::DeleteVersion(
-    NoAwaitTag, google::appengine::v1::DeleteVersionRequest const&) {
+StatusOr<google::longrunning::Operation>
+VersionsConnection::DeleteVersion(
+    NoAwaitTag,
+    google::appengine::v1::DeleteVersionRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::appengine::v1::OperationMetadataV1>>
-VersionsConnection::DeleteVersion(google::longrunning::Operation const&) {
+VersionsConnection::DeleteVersion(
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::appengine::v1::OperationMetadataV1>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::appengine::v1::OperationMetadataV1>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-std::shared_ptr<VersionsConnection> MakeVersionsConnection(Options options) {
+std::shared_ptr<VersionsConnection> MakeVersionsConnection(
+    Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 VersionsPolicyOptionList>(options, __func__);
-  options = appengine_v1_internal::VersionsDefaultOptions(std::move(options));
+      UnifiedCredentialsOptionList,
+      VersionsPolicyOptionList>(options, __func__);
+  options = appengine_v1_internal::VersionsDefaultOptions(
+      std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
-  auto stub = appengine_v1_internal::CreateDefaultVersionsStub(std::move(auth),
-                                                               options);
+  auto stub = appengine_v1_internal::CreateDefaultVersionsStub(
+    std::move(auth), options);
   return appengine_v1_internal::MakeVersionsTracingConnection(
       std::make_shared<appengine_v1_internal::VersionsConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options)));
+      std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

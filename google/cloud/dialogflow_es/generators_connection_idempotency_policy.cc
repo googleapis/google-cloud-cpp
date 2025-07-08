@@ -26,66 +26,55 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-GeneratorsConnectionIdempotencyPolicy::
-    ~GeneratorsConnectionIdempotencyPolicy() = default;
+GeneratorsConnectionIdempotencyPolicy::~GeneratorsConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<GeneratorsConnectionIdempotencyPolicy>
 GeneratorsConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<GeneratorsConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency GeneratorsConnectionIdempotencyPolicy::CreateGenerator(
-    google::cloud::dialogflow::v2::CreateGeneratorRequest const&) {
+Idempotency GeneratorsConnectionIdempotencyPolicy::CreateGenerator(google::cloud::dialogflow::v2::CreateGeneratorRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency GeneratorsConnectionIdempotencyPolicy::GetGenerator(
-    google::cloud::dialogflow::v2::GetGeneratorRequest const&) {
+Idempotency GeneratorsConnectionIdempotencyPolicy::GetGenerator(google::cloud::dialogflow::v2::GetGeneratorRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency GeneratorsConnectionIdempotencyPolicy::ListGenerators(
-    google::cloud::dialogflow::v2::ListGeneratorsRequest) {  // NOLINT
+Idempotency GeneratorsConnectionIdempotencyPolicy::ListGenerators(google::cloud::dialogflow::v2::ListGeneratorsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency GeneratorsConnectionIdempotencyPolicy::DeleteGenerator(
-    google::cloud::dialogflow::v2::DeleteGeneratorRequest const&) {
+Idempotency GeneratorsConnectionIdempotencyPolicy::DeleteGenerator(google::cloud::dialogflow::v2::DeleteGeneratorRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency GeneratorsConnectionIdempotencyPolicy::UpdateGenerator(
-    google::cloud::dialogflow::v2::UpdateGeneratorRequest const&) {
+Idempotency GeneratorsConnectionIdempotencyPolicy::UpdateGenerator(google::cloud::dialogflow::v2::UpdateGeneratorRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency GeneratorsConnectionIdempotencyPolicy::ListLocations(
-    google::cloud::location::ListLocationsRequest) {  // NOLINT
+Idempotency GeneratorsConnectionIdempotencyPolicy::ListLocations(google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency GeneratorsConnectionIdempotencyPolicy::GetLocation(
-    google::cloud::location::GetLocationRequest const&) {
+Idempotency GeneratorsConnectionIdempotencyPolicy::GetLocation(google::cloud::location::GetLocationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency GeneratorsConnectionIdempotencyPolicy::ListOperations(
-    google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency GeneratorsConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency GeneratorsConnectionIdempotencyPolicy::GetOperation(
-    google::longrunning::GetOperationRequest const&) {
+Idempotency GeneratorsConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency GeneratorsConnectionIdempotencyPolicy::CancelOperation(
-    google::longrunning::CancelOperationRequest const&) {
+Idempotency GeneratorsConnectionIdempotencyPolicy::CancelOperation(google::longrunning::CancelOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<GeneratorsConnectionIdempotencyPolicy>
-MakeDefaultGeneratorsConnectionIdempotencyPolicy() {
+    MakeDefaultGeneratorsConnectionIdempotencyPolicy() {
   return std::make_unique<GeneratorsConnectionIdempotencyPolicy>();
 }
 

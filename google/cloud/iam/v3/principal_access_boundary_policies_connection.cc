@@ -17,15 +17,15 @@
 // source: google/iam/v3/principal_access_boundary_policies_service.proto
 
 #include "google/cloud/iam/v3/principal_access_boundary_policies_connection.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
+#include "google/cloud/grpc_options.h"
 #include "google/cloud/iam/v3/internal/principal_access_boundary_policies_connection_impl.h"
 #include "google/cloud/iam/v3/internal/principal_access_boundary_policies_option_defaults.h"
 #include "google/cloud/iam/v3/internal/principal_access_boundary_policies_stub_factory.h"
 #include "google/cloud/iam/v3/internal/principal_access_boundary_policies_tracing_connection.h"
 #include "google/cloud/iam/v3/principal_access_boundary_policies_options.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
-#include "google/cloud/credentials.h"
-#include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
@@ -36,15 +36,14 @@ namespace cloud {
 namespace iam_v3 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-PrincipalAccessBoundaryPoliciesConnection::
-    ~PrincipalAccessBoundaryPoliciesConnection() = default;
+PrincipalAccessBoundaryPoliciesConnection::~PrincipalAccessBoundaryPoliciesConnection() = default;
 
 future<StatusOr<google::iam::v3::PrincipalAccessBoundaryPolicy>>
 PrincipalAccessBoundaryPoliciesConnection::CreatePrincipalAccessBoundaryPolicy(
     google::iam::v3::CreatePrincipalAccessBoundaryPolicyRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::iam::v3::PrincipalAccessBoundaryPolicy>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::iam::v3::PrincipalAccessBoundaryPolicy>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -52,15 +51,15 @@ PrincipalAccessBoundaryPoliciesConnection::CreatePrincipalAccessBoundaryPolicy(
     NoAwaitTag,
     google::iam::v3::CreatePrincipalAccessBoundaryPolicyRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::iam::v3::PrincipalAccessBoundaryPolicy>>
 PrincipalAccessBoundaryPoliciesConnection::CreatePrincipalAccessBoundaryPolicy(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::iam::v3::PrincipalAccessBoundaryPolicy>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::iam::v3::PrincipalAccessBoundaryPolicy>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::iam::v3::PrincipalAccessBoundaryPolicy>
@@ -73,8 +72,8 @@ future<StatusOr<google::iam::v3::PrincipalAccessBoundaryPolicy>>
 PrincipalAccessBoundaryPoliciesConnection::UpdatePrincipalAccessBoundaryPolicy(
     google::iam::v3::UpdatePrincipalAccessBoundaryPolicyRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::iam::v3::PrincipalAccessBoundaryPolicy>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::iam::v3::PrincipalAccessBoundaryPolicy>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -82,23 +81,23 @@ PrincipalAccessBoundaryPoliciesConnection::UpdatePrincipalAccessBoundaryPolicy(
     NoAwaitTag,
     google::iam::v3::UpdatePrincipalAccessBoundaryPolicyRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::iam::v3::PrincipalAccessBoundaryPolicy>>
 PrincipalAccessBoundaryPoliciesConnection::UpdatePrincipalAccessBoundaryPolicy(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::iam::v3::PrincipalAccessBoundaryPolicy>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::iam::v3::PrincipalAccessBoundaryPolicy>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::iam::v3::OperationMetadata>>
 PrincipalAccessBoundaryPoliciesConnection::DeletePrincipalAccessBoundaryPolicy(
     google::iam::v3::DeletePrincipalAccessBoundaryPolicyRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::iam::v3::OperationMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::iam::v3::OperationMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -106,30 +105,25 @@ PrincipalAccessBoundaryPoliciesConnection::DeletePrincipalAccessBoundaryPolicy(
     NoAwaitTag,
     google::iam::v3::DeletePrincipalAccessBoundaryPolicyRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::iam::v3::OperationMetadata>>
 PrincipalAccessBoundaryPoliciesConnection::DeletePrincipalAccessBoundaryPolicy(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::iam::v3::OperationMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::iam::v3::OperationMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StreamRange<google::iam::v3::PrincipalAccessBoundaryPolicy>
-PrincipalAccessBoundaryPoliciesConnection::ListPrincipalAccessBoundaryPolicies(
-    google::iam::v3::
-        ListPrincipalAccessBoundaryPoliciesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::iam::v3::PrincipalAccessBoundaryPolicy> PrincipalAccessBoundaryPoliciesConnection::ListPrincipalAccessBoundaryPolicies(
+    google::iam::v3::ListPrincipalAccessBoundaryPoliciesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::iam::v3::PrincipalAccessBoundaryPolicy>>();
 }
 
-StreamRange<google::iam::v3::PolicyBinding>
-PrincipalAccessBoundaryPoliciesConnection::
-    SearchPrincipalAccessBoundaryPolicyBindings(
-        google::iam::v3::
-            SearchPrincipalAccessBoundaryPolicyBindingsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::iam::v3::PolicyBinding> PrincipalAccessBoundaryPoliciesConnection::SearchPrincipalAccessBoundaryPolicyBindings(
+    google::iam::v3::SearchPrincipalAccessBoundaryPolicyBindingsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::iam::v3::PolicyBinding>>();
 }
@@ -140,21 +134,20 @@ PrincipalAccessBoundaryPoliciesConnection::GetOperation(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-std::shared_ptr<PrincipalAccessBoundaryPoliciesConnection>
-MakePrincipalAccessBoundaryPoliciesConnection(Options options) {
-  internal::CheckExpectedOptions<
-      CommonOptionList, GrpcOptionList, UnifiedCredentialsOptionList,
+std::shared_ptr<PrincipalAccessBoundaryPoliciesConnection> MakePrincipalAccessBoundaryPoliciesConnection(
+    Options options) {
+  internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+      UnifiedCredentialsOptionList,
       PrincipalAccessBoundaryPoliciesPolicyOptionList>(options, __func__);
   options = iam_v3_internal::PrincipalAccessBoundaryPoliciesDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = iam_v3_internal::CreateDefaultPrincipalAccessBoundaryPoliciesStub(
-      std::move(auth), options);
+    std::move(auth), options);
   return iam_v3_internal::MakePrincipalAccessBoundaryPoliciesTracingConnection(
-      std::make_shared<
-          iam_v3_internal::PrincipalAccessBoundaryPoliciesConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options)));
+      std::make_shared<iam_v3_internal::PrincipalAccessBoundaryPoliciesConnectionImpl>(
+      std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -46,48 +46,49 @@ class MockTopicAdminConnection : public pubsub_admin::TopicAdminConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::pubsub::v1::Topic>, CreateTopic,
-              (google::pubsub::v1::Topic const& request), (override));
+  MOCK_METHOD(StatusOr<google::pubsub::v1::Topic>,
+  CreateTopic,
+  (google::pubsub::v1::Topic const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::pubsub::v1::Topic>, UpdateTopic,
-              (google::pubsub::v1::UpdateTopicRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::pubsub::v1::Topic>,
+  UpdateTopic,
+  (google::pubsub::v1::UpdateTopicRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::pubsub::v1::Topic>, GetTopic,
-              (google::pubsub::v1::GetTopicRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::pubsub::v1::Topic>,
+  GetTopic,
+  (google::pubsub::v1::GetTopicRequest const& request), (override));
 
-  MOCK_METHOD((StreamRange<google::pubsub::v1::Topic>), ListTopics,
-              (google::pubsub::v1::ListTopicsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::pubsub::v1::Topic>),
+  ListTopics,
+  (google::pubsub::v1::ListTopicsRequest request), (override));
 
-  MOCK_METHOD((StreamRange<std::string>), ListTopicSubscriptions,
-              (google::pubsub::v1::ListTopicSubscriptionsRequest request),
-              (override));
+  MOCK_METHOD((StreamRange<std::string>),
+  ListTopicSubscriptions,
+  (google::pubsub::v1::ListTopicSubscriptionsRequest request), (override));
 
-  MOCK_METHOD((StreamRange<std::string>), ListTopicSnapshots,
-              (google::pubsub::v1::ListTopicSnapshotsRequest request),
-              (override));
+  MOCK_METHOD((StreamRange<std::string>),
+  ListTopicSnapshots,
+  (google::pubsub::v1::ListTopicSnapshotsRequest request), (override));
 
-  MOCK_METHOD(Status, DeleteTopic,
-              (google::pubsub::v1::DeleteTopicRequest const& request),
-              (override));
+  MOCK_METHOD(Status,
+  DeleteTopic,
+  (google::pubsub::v1::DeleteTopicRequest const& request), (override));
 
   MOCK_METHOD(StatusOr<google::pubsub::v1::DetachSubscriptionResponse>,
-              DetachSubscription,
-              (google::pubsub::v1::DetachSubscriptionRequest const& request),
-              (override));
+  DetachSubscription,
+  (google::pubsub::v1::DetachSubscriptionRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, SetIamPolicy,
-              (google::iam::v1::SetIamPolicyRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::iam::v1::Policy>,
+  SetIamPolicy,
+  (google::iam::v1::SetIamPolicyRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, GetIamPolicy,
-              (google::iam::v1::GetIamPolicyRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::iam::v1::Policy>,
+  GetIamPolicy,
+  (google::iam::v1::GetIamPolicyRequest const& request), (override));
 
   MOCK_METHOD(StatusOr<google::iam::v1::TestIamPermissionsResponse>,
-              TestIamPermissions,
-              (google::iam::v1::TestIamPermissionsRequest const& request),
-              (override));
+  TestIamPermissions,
+  (google::iam::v1::TestIamPermissionsRequest const& request), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

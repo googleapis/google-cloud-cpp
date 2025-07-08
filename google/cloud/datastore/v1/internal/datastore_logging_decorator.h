@@ -35,56 +35,67 @@ class DatastoreLogging : public DatastoreStub {
  public:
   ~DatastoreLogging() override = default;
   DatastoreLogging(std::shared_ptr<DatastoreStub> child,
-                   TracingOptions tracing_options,
-                   std::set<std::string> const& components);
+                       TracingOptions tracing_options,
+                       std::set<std::string> const& components);
 
   StatusOr<google::datastore::v1::LookupResponse> Lookup(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::datastore::v1::LookupRequest const& request) override;
 
   StatusOr<google::datastore::v1::RunQueryResponse> RunQuery(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::datastore::v1::RunQueryRequest const& request) override;
 
-  StatusOr<google::datastore::v1::RunAggregationQueryResponse>
-  RunAggregationQuery(grpc::ClientContext& context, Options const& options,
-                      google::datastore::v1::RunAggregationQueryRequest const&
-                          request) override;
+  StatusOr<google::datastore::v1::RunAggregationQueryResponse> RunAggregationQuery(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::datastore::v1::RunAggregationQueryRequest const& request) override;
 
   StatusOr<google::datastore::v1::BeginTransactionResponse> BeginTransaction(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::datastore::v1::BeginTransactionRequest const& request) override;
 
   StatusOr<google::datastore::v1::CommitResponse> Commit(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::datastore::v1::CommitRequest const& request) override;
 
   StatusOr<google::datastore::v1::RollbackResponse> Rollback(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::datastore::v1::RollbackRequest const& request) override;
 
   StatusOr<google::datastore::v1::AllocateIdsResponse> AllocateIds(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::datastore::v1::AllocateIdsRequest const& request) override;
 
   StatusOr<google::datastore::v1::ReserveIdsResponse> ReserveIds(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::datastore::v1::ReserveIdsRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status DeleteOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::DeleteOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:

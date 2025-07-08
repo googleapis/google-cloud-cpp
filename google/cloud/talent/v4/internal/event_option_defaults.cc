@@ -17,10 +17,10 @@
 // source: google/cloud/talent/v4/event_service.proto
 
 #include "google/cloud/talent/v4/internal/event_option_defaults.h"
-#include "google/cloud/talent/v4/event_connection.h"
-#include "google/cloud/talent/v4/event_options.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
+#include "google/cloud/talent/v4/event_connection.h"
+#include "google/cloud/talent/v4/event_options.h"
 #include <memory>
 #include <utility>
 
@@ -35,23 +35,21 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options EventServiceDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_EVENT_SERVICE_ENDPOINT", "",
-      "GOOGLE_CLOUD_CPP_EVENT_SERVICE_AUTHORITY", "jobs.googleapis.com");
+      std::move(options), "GOOGLE_CLOUD_CPP_EVENT_SERVICE_ENDPOINT",
+      "", "GOOGLE_CLOUD_CPP_EVENT_SERVICE_AUTHORITY",
+      "jobs.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<talent_v4::EventServiceRetryPolicyOption>()) {
     options.set<talent_v4::EventServiceRetryPolicyOption>(
-        talent_v4::EventServiceLimitedTimeRetryPolicy(std::chrono::minutes(30))
-            .clone());
+        talent_v4::EventServiceLimitedTimeRetryPolicy(
+            std::chrono::minutes(30)).clone());
   }
   if (!options.has<talent_v4::EventServiceBackoffPolicyOption>()) {
     options.set<talent_v4::EventServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(
-            std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
-            .clone());
+        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
   }
-  if (!options
-           .has<talent_v4::EventServiceConnectionIdempotencyPolicyOption>()) {
+  if (!options.has<talent_v4::EventServiceConnectionIdempotencyPolicyOption>()) {
     options.set<talent_v4::EventServiceConnectionIdempotencyPolicyOption>(
         talent_v4::MakeDefaultEventServiceConnectionIdempotencyPolicy());
   }

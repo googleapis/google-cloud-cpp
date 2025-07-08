@@ -34,58 +34,59 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class ServiceMonitoringServiceLogging : public ServiceMonitoringServiceStub {
  public:
   ~ServiceMonitoringServiceLogging() override = default;
-  ServiceMonitoringServiceLogging(
-      std::shared_ptr<ServiceMonitoringServiceStub> child,
-      TracingOptions tracing_options, std::set<std::string> const& components);
+  ServiceMonitoringServiceLogging(std::shared_ptr<ServiceMonitoringServiceStub> child,
+                       TracingOptions tracing_options,
+                       std::set<std::string> const& components);
 
   StatusOr<google::monitoring::v3::Service> CreateService(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::monitoring::v3::CreateServiceRequest const& request) override;
 
   StatusOr<google::monitoring::v3::Service> GetService(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::monitoring::v3::GetServiceRequest const& request) override;
 
   StatusOr<google::monitoring::v3::ListServicesResponse> ListServices(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::monitoring::v3::ListServicesRequest const& request) override;
 
   StatusOr<google::monitoring::v3::Service> UpdateService(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::monitoring::v3::UpdateServiceRequest const& request) override;
 
   Status DeleteService(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::monitoring::v3::DeleteServiceRequest const& request) override;
 
-  StatusOr<google::monitoring::v3::ServiceLevelObjective>
-  CreateServiceLevelObjective(
-      grpc::ClientContext& context, Options const& options,
-      google::monitoring::v3::CreateServiceLevelObjectiveRequest const& request)
-      override;
+  StatusOr<google::monitoring::v3::ServiceLevelObjective> CreateServiceLevelObjective(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::monitoring::v3::CreateServiceLevelObjectiveRequest const& request) override;
 
-  StatusOr<google::monitoring::v3::ServiceLevelObjective>
-  GetServiceLevelObjective(
-      grpc::ClientContext& context, Options const& options,
-      google::monitoring::v3::GetServiceLevelObjectiveRequest const& request)
-      override;
+  StatusOr<google::monitoring::v3::ServiceLevelObjective> GetServiceLevelObjective(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::monitoring::v3::GetServiceLevelObjectiveRequest const& request) override;
 
-  StatusOr<google::monitoring::v3::ListServiceLevelObjectivesResponse>
-  ListServiceLevelObjectives(
-      grpc::ClientContext& context, Options const& options,
-      google::monitoring::v3::ListServiceLevelObjectivesRequest const& request)
-      override;
+  StatusOr<google::monitoring::v3::ListServiceLevelObjectivesResponse> ListServiceLevelObjectives(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::monitoring::v3::ListServiceLevelObjectivesRequest const& request) override;
 
-  StatusOr<google::monitoring::v3::ServiceLevelObjective>
-  UpdateServiceLevelObjective(
-      grpc::ClientContext& context, Options const& options,
-      google::monitoring::v3::UpdateServiceLevelObjectiveRequest const& request)
-      override;
+  StatusOr<google::monitoring::v3::ServiceLevelObjective> UpdateServiceLevelObjective(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::monitoring::v3::UpdateServiceLevelObjectiveRequest const& request) override;
 
   Status DeleteServiceLevelObjective(
-      grpc::ClientContext& context, Options const& options,
-      google::monitoring::v3::DeleteServiceLevelObjectiveRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::monitoring::v3::DeleteServiceLevelObjectiveRequest const& request) override;
 
  private:
   std::shared_ptr<ServiceMonitoringServiceStub> child_;

@@ -55,8 +55,7 @@ struct AssuredWorkloadsServiceBackoffPolicyOption {
  * @ingroup google-cloud-assuredworkloads-options
  */
 struct AssuredWorkloadsServiceConnectionIdempotencyPolicyOption {
-  using Type =
-      std::shared_ptr<AssuredWorkloadsServiceConnectionIdempotencyPolicy>;
+  using Type = std::shared_ptr<AssuredWorkloadsServiceConnectionIdempotencyPolicy>;
 };
 
 /**

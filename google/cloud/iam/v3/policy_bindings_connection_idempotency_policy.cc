@@ -26,52 +26,43 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-PolicyBindingsConnectionIdempotencyPolicy::
-    ~PolicyBindingsConnectionIdempotencyPolicy() = default;
+PolicyBindingsConnectionIdempotencyPolicy::~PolicyBindingsConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<PolicyBindingsConnectionIdempotencyPolicy>
 PolicyBindingsConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<PolicyBindingsConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency PolicyBindingsConnectionIdempotencyPolicy::CreatePolicyBinding(
-    google::iam::v3::CreatePolicyBindingRequest const&) {
+Idempotency PolicyBindingsConnectionIdempotencyPolicy::CreatePolicyBinding(google::iam::v3::CreatePolicyBindingRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency PolicyBindingsConnectionIdempotencyPolicy::GetPolicyBinding(
-    google::iam::v3::GetPolicyBindingRequest const&) {
+Idempotency PolicyBindingsConnectionIdempotencyPolicy::GetPolicyBinding(google::iam::v3::GetPolicyBindingRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency PolicyBindingsConnectionIdempotencyPolicy::UpdatePolicyBinding(
-    google::iam::v3::UpdatePolicyBindingRequest const&) {
+Idempotency PolicyBindingsConnectionIdempotencyPolicy::UpdatePolicyBinding(google::iam::v3::UpdatePolicyBindingRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency PolicyBindingsConnectionIdempotencyPolicy::DeletePolicyBinding(
-    google::iam::v3::DeletePolicyBindingRequest const&) {
+Idempotency PolicyBindingsConnectionIdempotencyPolicy::DeletePolicyBinding(google::iam::v3::DeletePolicyBindingRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency PolicyBindingsConnectionIdempotencyPolicy::ListPolicyBindings(
-    google::iam::v3::ListPolicyBindingsRequest) {  // NOLINT
+Idempotency PolicyBindingsConnectionIdempotencyPolicy::ListPolicyBindings(google::iam::v3::ListPolicyBindingsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency
-PolicyBindingsConnectionIdempotencyPolicy::SearchTargetPolicyBindings(
-    google::iam::v3::SearchTargetPolicyBindingsRequest) {  // NOLINT
+Idempotency PolicyBindingsConnectionIdempotencyPolicy::SearchTargetPolicyBindings(google::iam::v3::SearchTargetPolicyBindingsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency PolicyBindingsConnectionIdempotencyPolicy::GetOperation(
-    google::longrunning::GetOperationRequest const&) {
+Idempotency PolicyBindingsConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<PolicyBindingsConnectionIdempotencyPolicy>
-MakeDefaultPolicyBindingsConnectionIdempotencyPolicy() {
+    MakeDefaultPolicyBindingsConnectionIdempotencyPolicy() {
   return std::make_unique<PolicyBindingsConnectionIdempotencyPolicy>();
 }
 

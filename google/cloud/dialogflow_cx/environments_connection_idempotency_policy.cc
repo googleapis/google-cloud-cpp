@@ -26,88 +26,71 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-EnvironmentsConnectionIdempotencyPolicy::
-    ~EnvironmentsConnectionIdempotencyPolicy() = default;
+EnvironmentsConnectionIdempotencyPolicy::~EnvironmentsConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<EnvironmentsConnectionIdempotencyPolicy>
 EnvironmentsConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<EnvironmentsConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency EnvironmentsConnectionIdempotencyPolicy::ListEnvironments(
-    google::cloud::dialogflow::cx::v3::ListEnvironmentsRequest) {  // NOLINT
+Idempotency EnvironmentsConnectionIdempotencyPolicy::ListEnvironments(google::cloud::dialogflow::cx::v3::ListEnvironmentsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency EnvironmentsConnectionIdempotencyPolicy::GetEnvironment(
-    google::cloud::dialogflow::cx::v3::GetEnvironmentRequest const&) {
+Idempotency EnvironmentsConnectionIdempotencyPolicy::GetEnvironment(google::cloud::dialogflow::cx::v3::GetEnvironmentRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency EnvironmentsConnectionIdempotencyPolicy::CreateEnvironment(
-    google::cloud::dialogflow::cx::v3::CreateEnvironmentRequest const&) {
+Idempotency EnvironmentsConnectionIdempotencyPolicy::CreateEnvironment(google::cloud::dialogflow::cx::v3::CreateEnvironmentRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency EnvironmentsConnectionIdempotencyPolicy::UpdateEnvironment(
-    google::cloud::dialogflow::cx::v3::UpdateEnvironmentRequest const&) {
+Idempotency EnvironmentsConnectionIdempotencyPolicy::UpdateEnvironment(google::cloud::dialogflow::cx::v3::UpdateEnvironmentRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency EnvironmentsConnectionIdempotencyPolicy::DeleteEnvironment(
-    google::cloud::dialogflow::cx::v3::DeleteEnvironmentRequest const&) {
+Idempotency EnvironmentsConnectionIdempotencyPolicy::DeleteEnvironment(google::cloud::dialogflow::cx::v3::DeleteEnvironmentRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency EnvironmentsConnectionIdempotencyPolicy::LookupEnvironmentHistory(
-    google::cloud::dialogflow::cx::v3::
-        LookupEnvironmentHistoryRequest) {  // NOLINT
+Idempotency EnvironmentsConnectionIdempotencyPolicy::LookupEnvironmentHistory(google::cloud::dialogflow::cx::v3::LookupEnvironmentHistoryRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency EnvironmentsConnectionIdempotencyPolicy::RunContinuousTest(
-    google::cloud::dialogflow::cx::v3::RunContinuousTestRequest const&) {
+Idempotency EnvironmentsConnectionIdempotencyPolicy::RunContinuousTest(google::cloud::dialogflow::cx::v3::RunContinuousTestRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency EnvironmentsConnectionIdempotencyPolicy::ListContinuousTestResults(
-    google::cloud::dialogflow::cx::v3::
-        ListContinuousTestResultsRequest) {  // NOLINT
+Idempotency EnvironmentsConnectionIdempotencyPolicy::ListContinuousTestResults(google::cloud::dialogflow::cx::v3::ListContinuousTestResultsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency EnvironmentsConnectionIdempotencyPolicy::DeployFlow(
-    google::cloud::dialogflow::cx::v3::DeployFlowRequest const&) {
+Idempotency EnvironmentsConnectionIdempotencyPolicy::DeployFlow(google::cloud::dialogflow::cx::v3::DeployFlowRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency EnvironmentsConnectionIdempotencyPolicy::ListLocations(
-    google::cloud::location::ListLocationsRequest) {  // NOLINT
+Idempotency EnvironmentsConnectionIdempotencyPolicy::ListLocations(google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency EnvironmentsConnectionIdempotencyPolicy::GetLocation(
-    google::cloud::location::GetLocationRequest const&) {
+Idempotency EnvironmentsConnectionIdempotencyPolicy::GetLocation(google::cloud::location::GetLocationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency EnvironmentsConnectionIdempotencyPolicy::ListOperations(
-    google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency EnvironmentsConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency EnvironmentsConnectionIdempotencyPolicy::GetOperation(
-    google::longrunning::GetOperationRequest const&) {
+Idempotency EnvironmentsConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency EnvironmentsConnectionIdempotencyPolicy::CancelOperation(
-    google::longrunning::CancelOperationRequest const&) {
+Idempotency EnvironmentsConnectionIdempotencyPolicy::CancelOperation(google::longrunning::CancelOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<EnvironmentsConnectionIdempotencyPolicy>
-MakeDefaultEnvironmentsConnectionIdempotencyPolicy() {
+    MakeDefaultEnvironmentsConnectionIdempotencyPolicy() {
   return std::make_unique<EnvironmentsConnectionIdempotencyPolicy>();
 }
 

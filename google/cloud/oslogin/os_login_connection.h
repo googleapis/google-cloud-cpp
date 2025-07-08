@@ -33,8 +33,7 @@ using ::google::cloud::oslogin_v1::MakeOsLoginServiceConnection;
 /// @deprecated Use oslogin_v1::OsLoginServiceConnection directly.
 using ::google::cloud::oslogin_v1::OsLoginServiceConnection;
 
-/// @deprecated Use oslogin_v1::OsLoginServiceLimitedErrorCountRetryPolicy
-/// directly.
+/// @deprecated Use oslogin_v1::OsLoginServiceLimitedErrorCountRetryPolicy directly.
 using ::google::cloud::oslogin_v1::OsLoginServiceLimitedErrorCountRetryPolicy;
 
 /// @deprecated Use oslogin_v1::OsLoginServiceLimitedTimeRetryPolicy directly.

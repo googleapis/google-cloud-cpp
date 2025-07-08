@@ -35,44 +35,32 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options DeveloperConnectDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_DEVELOPER_CONNECT_ENDPOINT", "",
-      "GOOGLE_CLOUD_CPP_DEVELOPER_CONNECT_AUTHORITY",
+      std::move(options), "GOOGLE_CLOUD_CPP_DEVELOPER_CONNECT_ENDPOINT",
+      "", "GOOGLE_CLOUD_CPP_DEVELOPER_CONNECT_AUTHORITY",
       "developerconnect.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<developerconnect_v1::DeveloperConnectRetryPolicyOption>()) {
     options.set<developerconnect_v1::DeveloperConnectRetryPolicyOption>(
         developerconnect_v1::DeveloperConnectLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
-            .clone());
+            std::chrono::minutes(30)).clone());
   }
-  if (!options
-           .has<developerconnect_v1::DeveloperConnectBackoffPolicyOption>()) {
+  if (!options.has<developerconnect_v1::DeveloperConnectBackoffPolicyOption>()) {
     options.set<developerconnect_v1::DeveloperConnectBackoffPolicyOption>(
-        ExponentialBackoffPolicy(
-            std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
-            .clone());
+        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
   }
-  if (!options
-           .has<developerconnect_v1::DeveloperConnectPollingPolicyOption>()) {
+  if (!options.has<developerconnect_v1::DeveloperConnectPollingPolicyOption>()) {
     options.set<developerconnect_v1::DeveloperConnectPollingPolicyOption>(
         GenericPollingPolicy<
             developerconnect_v1::DeveloperConnectRetryPolicyOption::Type,
             developerconnect_v1::DeveloperConnectBackoffPolicyOption::Type>(
-            options
-                .get<developerconnect_v1::DeveloperConnectRetryPolicyOption>()
-                ->clone(),
+            options.get<developerconnect_v1::DeveloperConnectRetryPolicyOption>()->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                     std::chrono::minutes(5), kBackoffScaling)
-                .clone())
-            .clone());
+            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
   }
-  if (!options.has<developerconnect_v1::
-                       DeveloperConnectConnectionIdempotencyPolicyOption>()) {
-    options.set<
-        developerconnect_v1::DeveloperConnectConnectionIdempotencyPolicyOption>(
-        developerconnect_v1::
-            MakeDefaultDeveloperConnectConnectionIdempotencyPolicy());
+  if (!options.has<developerconnect_v1::DeveloperConnectConnectionIdempotencyPolicyOption>()) {
+    options.set<developerconnect_v1::DeveloperConnectConnectionIdempotencyPolicyOption>(
+        developerconnect_v1::MakeDefaultDeveloperConnectConnectionIdempotencyPolicy());
   }
 
   return options;

@@ -33,13 +33,10 @@ using ::google::cloud::bigquery_storage_v1::MakeBigQueryWriteConnection;
 /// @deprecated Use bigquery_storage_v1::BigQueryWriteConnection directly.
 using ::google::cloud::bigquery_storage_v1::BigQueryWriteConnection;
 
-/// @deprecated Use
-/// bigquery_storage_v1::BigQueryWriteLimitedErrorCountRetryPolicy directly.
-using ::google::cloud::bigquery_storage_v1::
-    BigQueryWriteLimitedErrorCountRetryPolicy;
+/// @deprecated Use bigquery_storage_v1::BigQueryWriteLimitedErrorCountRetryPolicy directly.
+using ::google::cloud::bigquery_storage_v1::BigQueryWriteLimitedErrorCountRetryPolicy;
 
-/// @deprecated Use bigquery_storage_v1::BigQueryWriteLimitedTimeRetryPolicy
-/// directly.
+/// @deprecated Use bigquery_storage_v1::BigQueryWriteLimitedTimeRetryPolicy directly.
 using ::google::cloud::bigquery_storage_v1::BigQueryWriteLimitedTimeRetryPolicy;
 
 /// @deprecated Use bigquery_storage_v1::BigQueryWriteRetryPolicy directly.

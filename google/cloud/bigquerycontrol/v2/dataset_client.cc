@@ -28,59 +28,48 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 DatasetServiceClient::DatasetServiceClient(
     std::shared_ptr<DatasetServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 DatasetServiceClient::~DatasetServiceClient() = default;
 
-StatusOr<google::cloud::bigquery::v2::Dataset> DatasetServiceClient::GetDataset(
-    google::cloud::bigquery::v2::GetDatasetRequest const& request,
-    Options opts) {
+StatusOr<google::cloud::bigquery::v2::Dataset>
+DatasetServiceClient::GetDataset(google::cloud::bigquery::v2::GetDatasetRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetDataset(request);
 }
 
 StatusOr<google::cloud::bigquery::v2::Dataset>
-DatasetServiceClient::InsertDataset(
-    google::cloud::bigquery::v2::InsertDatasetRequest const& request,
-    Options opts) {
+DatasetServiceClient::InsertDataset(google::cloud::bigquery::v2::InsertDatasetRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->InsertDataset(request);
 }
 
 StatusOr<google::cloud::bigquery::v2::Dataset>
-DatasetServiceClient::PatchDataset(
-    google::cloud::bigquery::v2::UpdateOrPatchDatasetRequest const& request,
-    Options opts) {
+DatasetServiceClient::PatchDataset(google::cloud::bigquery::v2::UpdateOrPatchDatasetRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PatchDataset(request);
 }
 
 StatusOr<google::cloud::bigquery::v2::Dataset>
-DatasetServiceClient::UpdateDataset(
-    google::cloud::bigquery::v2::UpdateOrPatchDatasetRequest const& request,
-    Options opts) {
+DatasetServiceClient::UpdateDataset(google::cloud::bigquery::v2::UpdateOrPatchDatasetRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateDataset(request);
 }
 
-Status DatasetServiceClient::DeleteDataset(
-    google::cloud::bigquery::v2::DeleteDatasetRequest const& request,
-    Options opts) {
+Status
+DatasetServiceClient::DeleteDataset(google::cloud::bigquery::v2::DeleteDatasetRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteDataset(request);
 }
 
 StreamRange<google::cloud::bigquery::v2::ListFormatDataset>
-DatasetServiceClient::ListDatasets(
-    google::cloud::bigquery::v2::ListDatasetsRequest request, Options opts) {
+DatasetServiceClient::ListDatasets(google::cloud::bigquery::v2::ListDatasetsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListDatasets(std::move(request));
 }
 
 StatusOr<google::cloud::bigquery::v2::Dataset>
-DatasetServiceClient::UndeleteDataset(
-    google::cloud::bigquery::v2::UndeleteDatasetRequest const& request,
-    Options opts) {
+DatasetServiceClient::UndeleteDataset(google::cloud::bigquery::v2::UndeleteDatasetRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UndeleteDataset(request);
 }

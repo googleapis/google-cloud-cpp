@@ -31,26 +31,34 @@ namespace pubsublite_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 AdminServiceLogging::AdminServiceLogging(
-    std::shared_ptr<AdminServiceStub> child, TracingOptions tracing_options,
+    std::shared_ptr<AdminServiceStub> child,
+    TracingOptions tracing_options,
     std::set<std::string> const&)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)) {}
 
-StatusOr<google::cloud::pubsublite::v1::Topic> AdminServiceLogging::CreateTopic(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::pubsublite::v1::Topic>
+AdminServiceLogging::CreateTopic(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::pubsublite::v1::CreateTopicRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::pubsublite::v1::CreateTopicRequest const& request) {
         return child_->CreateTopic(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::cloud::pubsublite::v1::Topic> AdminServiceLogging::GetTopic(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::pubsublite::v1::Topic>
+AdminServiceLogging::GetTopic(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::pubsublite::v1::GetTopicRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::pubsublite::v1::GetTopicRequest const& request) {
         return child_->GetTopic(context, options, request);
       },
@@ -59,12 +67,13 @@ StatusOr<google::cloud::pubsublite::v1::Topic> AdminServiceLogging::GetTopic(
 
 StatusOr<google::cloud::pubsublite::v1::TopicPartitions>
 AdminServiceLogging::GetTopicPartitions(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::pubsublite::v1::GetTopicPartitionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::pubsublite::v1::GetTopicPartitionsRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::pubsublite::v1::GetTopicPartitionsRequest const& request) {
         return child_->GetTopicPartitions(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -72,32 +81,40 @@ AdminServiceLogging::GetTopicPartitions(
 
 StatusOr<google::cloud::pubsublite::v1::ListTopicsResponse>
 AdminServiceLogging::ListTopics(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::pubsublite::v1::ListTopicsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::pubsublite::v1::ListTopicsRequest const& request) {
         return child_->ListTopics(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::cloud::pubsublite::v1::Topic> AdminServiceLogging::UpdateTopic(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::pubsublite::v1::Topic>
+AdminServiceLogging::UpdateTopic(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::pubsublite::v1::UpdateTopicRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::pubsublite::v1::UpdateTopicRequest const& request) {
         return child_->UpdateTopic(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status AdminServiceLogging::DeleteTopic(
-    grpc::ClientContext& context, Options const& options,
+Status
+AdminServiceLogging::DeleteTopic(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::pubsublite::v1::DeleteTopicRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::pubsublite::v1::DeleteTopicRequest const& request) {
         return child_->DeleteTopic(context, options, request);
       },
@@ -106,13 +123,13 @@ Status AdminServiceLogging::DeleteTopic(
 
 StatusOr<google::cloud::pubsublite::v1::ListTopicSubscriptionsResponse>
 AdminServiceLogging::ListTopicSubscriptions(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::pubsublite::v1::ListTopicSubscriptionsRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::pubsublite::v1::ListTopicSubscriptionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::pubsublite::v1::ListTopicSubscriptionsRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::pubsublite::v1::ListTopicSubscriptionsRequest const& request) {
         return child_->ListTopicSubscriptions(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -120,12 +137,13 @@ AdminServiceLogging::ListTopicSubscriptions(
 
 StatusOr<google::cloud::pubsublite::v1::Subscription>
 AdminServiceLogging::CreateSubscription(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::pubsublite::v1::CreateSubscriptionRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::pubsublite::v1::CreateSubscriptionRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::pubsublite::v1::CreateSubscriptionRequest const& request) {
         return child_->CreateSubscription(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -133,12 +151,13 @@ AdminServiceLogging::CreateSubscription(
 
 StatusOr<google::cloud::pubsublite::v1::Subscription>
 AdminServiceLogging::GetSubscription(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::pubsublite::v1::GetSubscriptionRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::pubsublite::v1::GetSubscriptionRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::pubsublite::v1::GetSubscriptionRequest const& request) {
         return child_->GetSubscription(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -146,12 +165,13 @@ AdminServiceLogging::GetSubscription(
 
 StatusOr<google::cloud::pubsublite::v1::ListSubscriptionsResponse>
 AdminServiceLogging::ListSubscriptions(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::pubsublite::v1::ListSubscriptionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::pubsublite::v1::ListSubscriptionsRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::pubsublite::v1::ListSubscriptionsRequest const& request) {
         return child_->ListSubscriptions(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -159,24 +179,27 @@ AdminServiceLogging::ListSubscriptions(
 
 StatusOr<google::cloud::pubsublite::v1::Subscription>
 AdminServiceLogging::UpdateSubscription(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::pubsublite::v1::UpdateSubscriptionRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::pubsublite::v1::UpdateSubscriptionRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::pubsublite::v1::UpdateSubscriptionRequest const& request) {
         return child_->UpdateSubscription(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status AdminServiceLogging::DeleteSubscription(
-    grpc::ClientContext& context, Options const& options,
+Status
+AdminServiceLogging::DeleteSubscription(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::pubsublite::v1::DeleteSubscriptionRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::pubsublite::v1::DeleteSubscriptionRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::pubsublite::v1::DeleteSubscriptionRequest const& request) {
         return child_->DeleteSubscription(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -184,30 +207,31 @@ Status AdminServiceLogging::DeleteSubscription(
 
 future<StatusOr<google::longrunning::Operation>>
 AdminServiceLogging::AsyncSeekSubscription(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::pubsublite::v1::SeekSubscriptionRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::pubsublite::v1::SeekSubscriptionRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::pubsublite::v1::SeekSubscriptionRequest const&
-                 request) {
-        return child_->AsyncSeekSubscription(cq, std::move(context),
-                                             std::move(options), request);
+             google::cloud::pubsublite::v1::SeekSubscriptionRequest const& request) {
+        return child_->AsyncSeekSubscription(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> AdminServiceLogging::SeekSubscription(
-    grpc::ClientContext& context, Options options,
-    google::cloud::pubsublite::v1::SeekSubscriptionRequest const& request) {
+StatusOr<google::longrunning::Operation>
+AdminServiceLogging::SeekSubscription(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::pubsublite::v1::SeekSubscriptionRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::pubsublite::v1::SeekSubscriptionRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::pubsublite::v1::SeekSubscriptionRequest const& request) {
         return child_->SeekSubscription(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -215,12 +239,13 @@ StatusOr<google::longrunning::Operation> AdminServiceLogging::SeekSubscription(
 
 StatusOr<google::cloud::pubsublite::v1::Reservation>
 AdminServiceLogging::CreateReservation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::pubsublite::v1::CreateReservationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::pubsublite::v1::CreateReservationRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::pubsublite::v1::CreateReservationRequest const& request) {
         return child_->CreateReservation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -228,12 +253,13 @@ AdminServiceLogging::CreateReservation(
 
 StatusOr<google::cloud::pubsublite::v1::Reservation>
 AdminServiceLogging::GetReservation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::pubsublite::v1::GetReservationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::pubsublite::v1::GetReservationRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::pubsublite::v1::GetReservationRequest const& request) {
         return child_->GetReservation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -241,12 +267,13 @@ AdminServiceLogging::GetReservation(
 
 StatusOr<google::cloud::pubsublite::v1::ListReservationsResponse>
 AdminServiceLogging::ListReservations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::pubsublite::v1::ListReservationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::pubsublite::v1::ListReservationsRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::pubsublite::v1::ListReservationsRequest const& request) {
         return child_->ListReservations(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -254,24 +281,27 @@ AdminServiceLogging::ListReservations(
 
 StatusOr<google::cloud::pubsublite::v1::Reservation>
 AdminServiceLogging::UpdateReservation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::pubsublite::v1::UpdateReservationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::pubsublite::v1::UpdateReservationRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::pubsublite::v1::UpdateReservationRequest const& request) {
         return child_->UpdateReservation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status AdminServiceLogging::DeleteReservation(
-    grpc::ClientContext& context, Options const& options,
+Status
+AdminServiceLogging::DeleteReservation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::pubsublite::v1::DeleteReservationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::pubsublite::v1::DeleteReservationRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::pubsublite::v1::DeleteReservationRequest const& request) {
         return child_->DeleteReservation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -279,13 +309,13 @@ Status AdminServiceLogging::DeleteReservation(
 
 StatusOr<google::cloud::pubsublite::v1::ListReservationTopicsResponse>
 AdminServiceLogging::ListReservationTopics(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::pubsublite::v1::ListReservationTopicsRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::pubsublite::v1::ListReservationTopicsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::pubsublite::v1::ListReservationTopicsRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::pubsublite::v1::ListReservationTopicsRequest const& request) {
         return child_->ListReservationTopics(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -293,43 +323,54 @@ AdminServiceLogging::ListReservationTopics(
 
 StatusOr<google::longrunning::ListOperationsResponse>
 AdminServiceLogging::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::ListOperationsRequest const& request) {
         return child_->ListOperations(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> AdminServiceLogging::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::Operation>
+AdminServiceLogging::GetOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::GetOperationRequest const& request) {
         return child_->GetOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status AdminServiceLogging::DeleteOperation(
-    grpc::ClientContext& context, Options const& options,
+Status
+AdminServiceLogging::DeleteOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::DeleteOperationRequest const& request) {
         return child_->DeleteOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status AdminServiceLogging::CancelOperation(
-    grpc::ClientContext& context, Options const& options,
+Status
+AdminServiceLogging::CancelOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::CancelOperationRequest const& request) {
         return child_->CancelOperation(context, options, request);
       },
@@ -338,21 +379,19 @@ Status AdminServiceLogging::CancelOperation(
 
 future<StatusOr<google::cloud::pubsublite::v1::TopicPartitions>>
 AdminServiceLogging::AsyncGetTopicPartitions(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::pubsublite::v1::GetTopicPartitionsRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::pubsublite::v1::GetTopicPartitionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::pubsublite::v1::GetTopicPartitionsRequest const&
-                 request) {
-        return child_->AsyncGetTopicPartitions(cq, std::move(context),
-                                               std::move(options), request);
+             google::cloud::pubsublite::v1::GetTopicPartitionsRequest const& request) {
+        return child_->AsyncGetTopicPartitions(
+            cq, std::move(context), std::move(options), request);
       },
-      cq, std::move(context), std::move(options), request, __func__,
-      tracing_options_);
+      cq, std::move(context), std::move(options), request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -366,8 +405,8 @@ AdminServiceLogging::AsyncGetOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(cq, std::move(context),
-                                         std::move(options), request);
+        return child_->AsyncGetOperation(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -383,8 +422,8 @@ future<Status> AdminServiceLogging::AsyncCancelOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::CancelOperationRequest const& request) {
-        return child_->AsyncCancelOperation(cq, std::move(context),
-                                            std::move(options), request);
+        return child_->AsyncCancelOperation(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);

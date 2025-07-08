@@ -17,11 +17,11 @@
 // source: google/cloud/compute/reservations/v1/reservations.proto
 
 #include "google/cloud/compute/reservations/v1/reservations_connection.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/compute/reservations/v1/internal/reservations_option_defaults.h"
 #include "google/cloud/compute/reservations/v1/internal/reservations_tracing_connection.h"
 #include "google/cloud/compute/reservations/v1/reservations_options.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
@@ -36,45 +36,39 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ReservationsConnection::~ReservationsConnection() = default;
 
-StreamRange<std::pair<std::string,
-                      google::cloud::cpp::compute::v1::ReservationsScopedList>>
-ReservationsConnection::AggregatedListReservations(
-    google::cloud::cpp::compute::reservations::v1::
-        AggregatedListReservationsRequest) {  // NOLINT(performance-unnecessary-value-param)
-  return google::cloud::internal::MakeUnimplementedPaginationRange<StreamRange<
-      std::pair<std::string,
-                google::cloud::cpp::compute::v1::ReservationsScopedList>>>();
+StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::ReservationsScopedList>> ReservationsConnection::AggregatedListReservations(
+    google::cloud::cpp::compute::reservations::v1::AggregatedListReservationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::ReservationsScopedList>>>();
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ReservationsConnection::DeleteReservation(
-    google::cloud::cpp::compute::reservations::v1::
-        DeleteReservationRequest const&) {
+    google::cloud::cpp::compute::reservations::v1::DeleteReservationRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ReservationsConnection::DeleteReservation(
-    NoAwaitTag, google::cloud::cpp::compute::reservations::v1::
-                    DeleteReservationRequest const&) {
+    NoAwaitTag,
+    google::cloud::cpp::compute::reservations::v1::DeleteReservationRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ReservationsConnection::DeleteReservation(
     google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Reservation>
 ReservationsConnection::GetReservation(
-    google::cloud::cpp::compute::reservations::v1::
-        GetReservationRequest const&) {
+    google::cloud::cpp::compute::reservations::v1::GetReservationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
@@ -86,68 +80,64 @@ ReservationsConnection::GetIamPolicy(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ReservationsConnection::InsertReservation(
-    google::cloud::cpp::compute::reservations::v1::
-        InsertReservationRequest const&) {
+    google::cloud::cpp::compute::reservations::v1::InsertReservationRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ReservationsConnection::InsertReservation(
-    NoAwaitTag, google::cloud::cpp::compute::reservations::v1::
-                    InsertReservationRequest const&) {
+    NoAwaitTag,
+    google::cloud::cpp::compute::reservations::v1::InsertReservationRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ReservationsConnection::InsertReservation(
     google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StreamRange<google::cloud::cpp::compute::v1::Reservation>
-ReservationsConnection::ListReservations(
-    google::cloud::cpp::compute::reservations::v1::
-        ListReservationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::cpp::compute::v1::Reservation> ReservationsConnection::ListReservations(
+    google::cloud::cpp::compute::reservations::v1::ListReservationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::cpp::compute::v1::Reservation>>();
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ReservationsConnection::PerformMaintenance(
-    google::cloud::cpp::compute::reservations::v1::
-        PerformMaintenanceRequest const&) {
+    google::cloud::cpp::compute::reservations::v1::PerformMaintenanceRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ReservationsConnection::PerformMaintenance(
-    NoAwaitTag, google::cloud::cpp::compute::reservations::v1::
-                    PerformMaintenanceRequest const&) {
+    NoAwaitTag,
+    google::cloud::cpp::compute::reservations::v1::PerformMaintenanceRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ReservationsConnection::PerformMaintenance(
     google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ReservationsConnection::Resize(
     google::cloud::cpp::compute::reservations::v1::ResizeRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
@@ -155,15 +145,15 @@ ReservationsConnection::Resize(
     NoAwaitTag,
     google::cloud::cpp::compute::reservations::v1::ResizeRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ReservationsConnection::Resize(
     google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
@@ -174,34 +164,32 @@ ReservationsConnection::SetIamPolicy(
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
 ReservationsConnection::TestIamPermissions(
-    google::cloud::cpp::compute::reservations::v1::
-        TestIamPermissionsRequest const&) {
+    google::cloud::cpp::compute::reservations::v1::TestIamPermissionsRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ReservationsConnection::UpdateReservation(
-    google::cloud::cpp::compute::reservations::v1::
-        UpdateReservationRequest const&) {
+    google::cloud::cpp::compute::reservations::v1::UpdateReservationRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ReservationsConnection::UpdateReservation(
-    NoAwaitTag, google::cloud::cpp::compute::reservations::v1::
-                    UpdateReservationRequest const&) {
+    NoAwaitTag,
+    google::cloud::cpp::compute::reservations::v1::UpdateReservationRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ReservationsConnection::UpdateReservation(
     google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

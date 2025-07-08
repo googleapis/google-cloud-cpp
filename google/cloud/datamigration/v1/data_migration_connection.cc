@@ -17,14 +17,14 @@
 // source: google/cloud/clouddms/v1/clouddms.proto
 
 #include "google/cloud/datamigration/v1/data_migration_connection.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/datamigration/v1/data_migration_options.h"
 #include "google/cloud/datamigration/v1/internal/data_migration_connection_impl.h"
 #include "google/cloud/datamigration/v1/internal/data_migration_option_defaults.h"
 #include "google/cloud/datamigration/v1/internal/data_migration_stub_factory.h"
 #include "google/cloud/datamigration/v1/internal/data_migration_tracing_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
-#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
@@ -38,10 +38,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 DataMigrationServiceConnection::~DataMigrationServiceConnection() = default;
 
-StreamRange<google::cloud::clouddms::v1::MigrationJob>
-DataMigrationServiceConnection::ListMigrationJobs(
-    google::cloud::clouddms::v1::
-        ListMigrationJobsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::clouddms::v1::MigrationJob> DataMigrationServiceConnection::ListMigrationJobs(
+    google::cloud::clouddms::v1::ListMigrationJobsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::clouddms::v1::MigrationJob>>();
 }
@@ -56,146 +54,152 @@ future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
 DataMigrationServiceConnection::CreateMigrationJob(
     google::cloud::clouddms::v1::CreateMigrationJobRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::clouddms::v1::MigrationJob>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::clouddms::v1::MigrationJob>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 DataMigrationServiceConnection::CreateMigrationJob(
-    NoAwaitTag, google::cloud::clouddms::v1::CreateMigrationJobRequest const&) {
+    NoAwaitTag,
+    google::cloud::clouddms::v1::CreateMigrationJobRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
 DataMigrationServiceConnection::CreateMigrationJob(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::clouddms::v1::MigrationJob>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::clouddms::v1::MigrationJob>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
 DataMigrationServiceConnection::UpdateMigrationJob(
     google::cloud::clouddms::v1::UpdateMigrationJobRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::clouddms::v1::MigrationJob>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::clouddms::v1::MigrationJob>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 DataMigrationServiceConnection::UpdateMigrationJob(
-    NoAwaitTag, google::cloud::clouddms::v1::UpdateMigrationJobRequest const&) {
+    NoAwaitTag,
+    google::cloud::clouddms::v1::UpdateMigrationJobRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
 DataMigrationServiceConnection::UpdateMigrationJob(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::clouddms::v1::MigrationJob>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::clouddms::v1::MigrationJob>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>
 DataMigrationServiceConnection::DeleteMigrationJob(
     google::cloud::clouddms::v1::DeleteMigrationJobRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::clouddms::v1::OperationMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::clouddms::v1::OperationMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 DataMigrationServiceConnection::DeleteMigrationJob(
-    NoAwaitTag, google::cloud::clouddms::v1::DeleteMigrationJobRequest const&) {
+    NoAwaitTag,
+    google::cloud::clouddms::v1::DeleteMigrationJobRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>
 DataMigrationServiceConnection::DeleteMigrationJob(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::clouddms::v1::OperationMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::clouddms::v1::OperationMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
 DataMigrationServiceConnection::StartMigrationJob(
     google::cloud::clouddms::v1::StartMigrationJobRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::clouddms::v1::MigrationJob>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::clouddms::v1::MigrationJob>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 DataMigrationServiceConnection::StartMigrationJob(
-    NoAwaitTag, google::cloud::clouddms::v1::StartMigrationJobRequest const&) {
+    NoAwaitTag,
+    google::cloud::clouddms::v1::StartMigrationJobRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
 DataMigrationServiceConnection::StartMigrationJob(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::clouddms::v1::MigrationJob>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::clouddms::v1::MigrationJob>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
 DataMigrationServiceConnection::StopMigrationJob(
     google::cloud::clouddms::v1::StopMigrationJobRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::clouddms::v1::MigrationJob>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::clouddms::v1::MigrationJob>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 DataMigrationServiceConnection::StopMigrationJob(
-    NoAwaitTag, google::cloud::clouddms::v1::StopMigrationJobRequest const&) {
+    NoAwaitTag,
+    google::cloud::clouddms::v1::StopMigrationJobRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
 DataMigrationServiceConnection::StopMigrationJob(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::clouddms::v1::MigrationJob>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::clouddms::v1::MigrationJob>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
 DataMigrationServiceConnection::ResumeMigrationJob(
     google::cloud::clouddms::v1::ResumeMigrationJobRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::clouddms::v1::MigrationJob>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::clouddms::v1::MigrationJob>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 DataMigrationServiceConnection::ResumeMigrationJob(
-    NoAwaitTag, google::cloud::clouddms::v1::ResumeMigrationJobRequest const&) {
+    NoAwaitTag,
+    google::cloud::clouddms::v1::ResumeMigrationJobRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
 DataMigrationServiceConnection::ResumeMigrationJob(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::clouddms::v1::MigrationJob>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::clouddms::v1::MigrationJob>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
 DataMigrationServiceConnection::PromoteMigrationJob(
     google::cloud::clouddms::v1::PromoteMigrationJobRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::clouddms::v1::MigrationJob>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::clouddms::v1::MigrationJob>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -203,46 +207,47 @@ DataMigrationServiceConnection::PromoteMigrationJob(
     NoAwaitTag,
     google::cloud::clouddms::v1::PromoteMigrationJobRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
 DataMigrationServiceConnection::PromoteMigrationJob(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::clouddms::v1::MigrationJob>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::clouddms::v1::MigrationJob>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
 DataMigrationServiceConnection::VerifyMigrationJob(
     google::cloud::clouddms::v1::VerifyMigrationJobRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::clouddms::v1::MigrationJob>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::clouddms::v1::MigrationJob>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 DataMigrationServiceConnection::VerifyMigrationJob(
-    NoAwaitTag, google::cloud::clouddms::v1::VerifyMigrationJobRequest const&) {
+    NoAwaitTag,
+    google::cloud::clouddms::v1::VerifyMigrationJobRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
 DataMigrationServiceConnection::VerifyMigrationJob(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::clouddms::v1::MigrationJob>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::clouddms::v1::MigrationJob>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
 DataMigrationServiceConnection::RestartMigrationJob(
     google::cloud::clouddms::v1::RestartMigrationJobRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::clouddms::v1::MigrationJob>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::clouddms::v1::MigrationJob>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -250,15 +255,15 @@ DataMigrationServiceConnection::RestartMigrationJob(
     NoAwaitTag,
     google::cloud::clouddms::v1::RestartMigrationJobRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
 DataMigrationServiceConnection::RestartMigrationJob(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::clouddms::v1::MigrationJob>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::clouddms::v1::MigrationJob>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::clouddms::v1::SshScript>
@@ -273,10 +278,8 @@ DataMigrationServiceConnection::GenerateTcpProxyScript(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::clouddms::v1::ConnectionProfile>
-DataMigrationServiceConnection::ListConnectionProfiles(
-    google::cloud::clouddms::v1::
-        ListConnectionProfilesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::clouddms::v1::ConnectionProfile> DataMigrationServiceConnection::ListConnectionProfiles(
+    google::cloud::clouddms::v1::ListConnectionProfilesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::clouddms::v1::ConnectionProfile>>();
 }
@@ -291,8 +294,8 @@ future<StatusOr<google::cloud::clouddms::v1::ConnectionProfile>>
 DataMigrationServiceConnection::CreateConnectionProfile(
     google::cloud::clouddms::v1::CreateConnectionProfileRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::clouddms::v1::ConnectionProfile>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::clouddms::v1::ConnectionProfile>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -300,23 +303,23 @@ DataMigrationServiceConnection::CreateConnectionProfile(
     NoAwaitTag,
     google::cloud::clouddms::v1::CreateConnectionProfileRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::clouddms::v1::ConnectionProfile>>
 DataMigrationServiceConnection::CreateConnectionProfile(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::clouddms::v1::ConnectionProfile>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::clouddms::v1::ConnectionProfile>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::clouddms::v1::ConnectionProfile>>
 DataMigrationServiceConnection::UpdateConnectionProfile(
     google::cloud::clouddms::v1::UpdateConnectionProfileRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::clouddms::v1::ConnectionProfile>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::clouddms::v1::ConnectionProfile>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -324,23 +327,23 @@ DataMigrationServiceConnection::UpdateConnectionProfile(
     NoAwaitTag,
     google::cloud::clouddms::v1::UpdateConnectionProfileRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::clouddms::v1::ConnectionProfile>>
 DataMigrationServiceConnection::UpdateConnectionProfile(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::clouddms::v1::ConnectionProfile>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::clouddms::v1::ConnectionProfile>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>
 DataMigrationServiceConnection::DeleteConnectionProfile(
     google::cloud::clouddms::v1::DeleteConnectionProfileRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::clouddms::v1::OperationMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::clouddms::v1::OperationMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -348,23 +351,23 @@ DataMigrationServiceConnection::DeleteConnectionProfile(
     NoAwaitTag,
     google::cloud::clouddms::v1::DeleteConnectionProfileRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>
 DataMigrationServiceConnection::DeleteConnectionProfile(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::clouddms::v1::OperationMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::clouddms::v1::OperationMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::clouddms::v1::PrivateConnection>>
 DataMigrationServiceConnection::CreatePrivateConnection(
     google::cloud::clouddms::v1::CreatePrivateConnectionRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::clouddms::v1::PrivateConnection>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::clouddms::v1::PrivateConnection>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -372,15 +375,15 @@ DataMigrationServiceConnection::CreatePrivateConnection(
     NoAwaitTag,
     google::cloud::clouddms::v1::CreatePrivateConnectionRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::clouddms::v1::PrivateConnection>>
 DataMigrationServiceConnection::CreatePrivateConnection(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::clouddms::v1::PrivateConnection>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::clouddms::v1::PrivateConnection>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::clouddms::v1::PrivateConnection>
@@ -389,10 +392,8 @@ DataMigrationServiceConnection::GetPrivateConnection(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::clouddms::v1::PrivateConnection>
-DataMigrationServiceConnection::ListPrivateConnections(
-    google::cloud::clouddms::v1::
-        ListPrivateConnectionsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::clouddms::v1::PrivateConnection> DataMigrationServiceConnection::ListPrivateConnections(
+    google::cloud::clouddms::v1::ListPrivateConnectionsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::clouddms::v1::PrivateConnection>>();
 }
@@ -401,8 +402,8 @@ future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>
 DataMigrationServiceConnection::DeletePrivateConnection(
     google::cloud::clouddms::v1::DeletePrivateConnectionRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::clouddms::v1::OperationMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::clouddms::v1::OperationMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -410,15 +411,15 @@ DataMigrationServiceConnection::DeletePrivateConnection(
     NoAwaitTag,
     google::cloud::clouddms::v1::DeletePrivateConnectionRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>
 DataMigrationServiceConnection::DeletePrivateConnection(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::clouddms::v1::OperationMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::clouddms::v1::OperationMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>
@@ -427,10 +428,8 @@ DataMigrationServiceConnection::GetConversionWorkspace(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::clouddms::v1::ConversionWorkspace>
-DataMigrationServiceConnection::ListConversionWorkspaces(
-    google::cloud::clouddms::v1::
-        ListConversionWorkspacesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::clouddms::v1::ConversionWorkspace> DataMigrationServiceConnection::ListConversionWorkspaces(
+    google::cloud::clouddms::v1::ListConversionWorkspacesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::clouddms::v1::ConversionWorkspace>>();
 }
@@ -439,8 +438,8 @@ future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
 DataMigrationServiceConnection::CreateConversionWorkspace(
     google::cloud::clouddms::v1::CreateConversionWorkspaceRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -448,23 +447,23 @@ DataMigrationServiceConnection::CreateConversionWorkspace(
     NoAwaitTag,
     google::cloud::clouddms::v1::CreateConversionWorkspaceRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
 DataMigrationServiceConnection::CreateConversionWorkspace(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
 DataMigrationServiceConnection::UpdateConversionWorkspace(
     google::cloud::clouddms::v1::UpdateConversionWorkspaceRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -472,23 +471,23 @@ DataMigrationServiceConnection::UpdateConversionWorkspace(
     NoAwaitTag,
     google::cloud::clouddms::v1::UpdateConversionWorkspaceRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
 DataMigrationServiceConnection::UpdateConversionWorkspace(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>
 DataMigrationServiceConnection::DeleteConversionWorkspace(
     google::cloud::clouddms::v1::DeleteConversionWorkspaceRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::clouddms::v1::OperationMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::clouddms::v1::OperationMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -496,15 +495,15 @@ DataMigrationServiceConnection::DeleteConversionWorkspace(
     NoAwaitTag,
     google::cloud::clouddms::v1::DeleteConversionWorkspaceRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>
 DataMigrationServiceConnection::DeleteConversionWorkspace(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::clouddms::v1::OperationMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::clouddms::v1::OperationMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::clouddms::v1::MappingRule>
@@ -513,15 +512,14 @@ DataMigrationServiceConnection::CreateMappingRule(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status DataMigrationServiceConnection::DeleteMappingRule(
+Status
+DataMigrationServiceConnection::DeleteMappingRule(
     google::cloud::clouddms::v1::DeleteMappingRuleRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::clouddms::v1::MappingRule>
-DataMigrationServiceConnection::ListMappingRules(
-    google::cloud::clouddms::v1::
-        ListMappingRulesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::clouddms::v1::MappingRule> DataMigrationServiceConnection::ListMappingRules(
+    google::cloud::clouddms::v1::ListMappingRulesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::clouddms::v1::MappingRule>>();
 }
@@ -536,8 +534,8 @@ future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
 DataMigrationServiceConnection::SeedConversionWorkspace(
     google::cloud::clouddms::v1::SeedConversionWorkspaceRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -545,46 +543,47 @@ DataMigrationServiceConnection::SeedConversionWorkspace(
     NoAwaitTag,
     google::cloud::clouddms::v1::SeedConversionWorkspaceRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
 DataMigrationServiceConnection::SeedConversionWorkspace(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
 DataMigrationServiceConnection::ImportMappingRules(
     google::cloud::clouddms::v1::ImportMappingRulesRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 DataMigrationServiceConnection::ImportMappingRules(
-    NoAwaitTag, google::cloud::clouddms::v1::ImportMappingRulesRequest const&) {
+    NoAwaitTag,
+    google::cloud::clouddms::v1::ImportMappingRulesRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
 DataMigrationServiceConnection::ImportMappingRules(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
 DataMigrationServiceConnection::ConvertConversionWorkspace(
     google::cloud::clouddms::v1::ConvertConversionWorkspaceRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -592,23 +591,23 @@ DataMigrationServiceConnection::ConvertConversionWorkspace(
     NoAwaitTag,
     google::cloud::clouddms::v1::ConvertConversionWorkspaceRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
 DataMigrationServiceConnection::ConvertConversionWorkspace(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
 DataMigrationServiceConnection::CommitConversionWorkspace(
     google::cloud::clouddms::v1::CommitConversionWorkspaceRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -616,23 +615,23 @@ DataMigrationServiceConnection::CommitConversionWorkspace(
     NoAwaitTag,
     google::cloud::clouddms::v1::CommitConversionWorkspaceRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
 DataMigrationServiceConnection::CommitConversionWorkspace(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
 DataMigrationServiceConnection::RollbackConversionWorkspace(
     google::cloud::clouddms::v1::RollbackConversionWorkspaceRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -640,23 +639,23 @@ DataMigrationServiceConnection::RollbackConversionWorkspace(
     NoAwaitTag,
     google::cloud::clouddms::v1::RollbackConversionWorkspaceRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
 DataMigrationServiceConnection::RollbackConversionWorkspace(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
 DataMigrationServiceConnection::ApplyConversionWorkspace(
     google::cloud::clouddms::v1::ApplyConversionWorkspaceRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -664,21 +663,19 @@ DataMigrationServiceConnection::ApplyConversionWorkspace(
     NoAwaitTag,
     google::cloud::clouddms::v1::ApplyConversionWorkspaceRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
 DataMigrationServiceConnection::ApplyConversionWorkspace(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StreamRange<google::cloud::clouddms::v1::DatabaseEntity>
-DataMigrationServiceConnection::DescribeDatabaseEntities(
-    google::cloud::clouddms::v1::
-        DescribeDatabaseEntitiesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::clouddms::v1::DatabaseEntity> DataMigrationServiceConnection::DescribeDatabaseEntities(
+    google::cloud::clouddms::v1::DescribeDatabaseEntitiesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::clouddms::v1::DatabaseEntity>>();
 }
@@ -689,25 +686,20 @@ DataMigrationServiceConnection::SearchBackgroundJobs(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<
-    google::cloud::clouddms::v1::DescribeConversionWorkspaceRevisionsResponse>
+StatusOr<google::cloud::clouddms::v1::DescribeConversionWorkspaceRevisionsResponse>
 DataMigrationServiceConnection::DescribeConversionWorkspaceRevisions(
-    google::cloud::clouddms::v1::
-        DescribeConversionWorkspaceRevisionsRequest const&) {
+    google::cloud::clouddms::v1::DescribeConversionWorkspaceRevisionsRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StreamRange<std::string> DataMigrationServiceConnection::FetchStaticIps(
-    google::cloud::clouddms::v1::
-        FetchStaticIpsRequest) {  // NOLINT(performance-unnecessary-value-param)
+    google::cloud::clouddms::v1::FetchStaticIpsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<std::string>>();
 }
 
-StreamRange<google::cloud::location::Location>
-DataMigrationServiceConnection::ListLocations(
-    google::cloud::location::
-        ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::location::Location> DataMigrationServiceConnection::ListLocations(
+    google::cloud::location::ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::location::Location>>();
 }
@@ -718,12 +710,14 @@ DataMigrationServiceConnection::GetLocation(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::iam::v1::Policy> DataMigrationServiceConnection::SetIamPolicy(
+StatusOr<google::iam::v1::Policy>
+DataMigrationServiceConnection::SetIamPolicy(
     google::iam::v1::SetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::iam::v1::Policy> DataMigrationServiceConnection::GetIamPolicy(
+StatusOr<google::iam::v1::Policy>
+DataMigrationServiceConnection::GetIamPolicy(
     google::iam::v1::GetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -734,10 +728,8 @@ DataMigrationServiceConnection::TestIamPermissions(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::longrunning::Operation>
-DataMigrationServiceConnection::ListOperations(
-    google::longrunning::
-        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::longrunning::Operation> DataMigrationServiceConnection::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }
@@ -748,32 +740,32 @@ DataMigrationServiceConnection::GetOperation(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status DataMigrationServiceConnection::DeleteOperation(
+Status
+DataMigrationServiceConnection::DeleteOperation(
     google::longrunning::DeleteOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status DataMigrationServiceConnection::CancelOperation(
+Status
+DataMigrationServiceConnection::CancelOperation(
     google::longrunning::CancelOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-std::shared_ptr<DataMigrationServiceConnection>
-MakeDataMigrationServiceConnection(Options options) {
+std::shared_ptr<DataMigrationServiceConnection> MakeDataMigrationServiceConnection(
+    Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 DataMigrationServicePolicyOptionList>(
-      options, __func__);
+      UnifiedCredentialsOptionList,
+      DataMigrationServicePolicyOptionList>(options, __func__);
   options = datamigration_v1_internal::DataMigrationServiceDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = datamigration_v1_internal::CreateDefaultDataMigrationServiceStub(
-      std::move(auth), options);
+    std::move(auth), options);
   return datamigration_v1_internal::MakeDataMigrationServiceTracingConnection(
-      std::make_shared<
-          datamigration_v1_internal::DataMigrationServiceConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options)));
+      std::make_shared<datamigration_v1_internal::DataMigrationServiceConnectionImpl>(
+      std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -17,14 +17,14 @@
 // source: google/cloud/dialogflow/v2/participant.proto
 
 #include "google/cloud/dialogflow_es/participants_connection.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/dialogflow_es/internal/participants_connection_impl.h"
 #include "google/cloud/dialogflow_es/internal/participants_option_defaults.h"
 #include "google/cloud/dialogflow_es/internal/participants_stub_factory.h"
 #include "google/cloud/dialogflow_es/internal/participants_tracing_connection.h"
 #include "google/cloud/dialogflow_es/participants_options.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
-#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
@@ -50,10 +50,8 @@ ParticipantsConnection::GetParticipant(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::dialogflow::v2::Participant>
-ParticipantsConnection::ListParticipants(
-    google::cloud::dialogflow::v2::
-        ListParticipantsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::dialogflow::v2::Participant> ParticipantsConnection::ListParticipants(
+    google::cloud::dialogflow::v2::ListParticipantsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::dialogflow::v2::Participant>>();
 }
@@ -105,33 +103,32 @@ ParticipantsConnection::SuggestKnowledgeAssist(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::location::Location>
-ParticipantsConnection::ListLocations(
-    google::cloud::location::
-        ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::location::Location> ParticipantsConnection::ListLocations(
+    google::cloud::location::ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::location::Location>>();
 }
 
-StatusOr<google::cloud::location::Location> ParticipantsConnection::GetLocation(
+StatusOr<google::cloud::location::Location>
+ParticipantsConnection::GetLocation(
     google::cloud::location::GetLocationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::longrunning::Operation>
-ParticipantsConnection::ListOperations(
-    google::longrunning::
-        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::longrunning::Operation> ParticipantsConnection::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }
 
-StatusOr<google::longrunning::Operation> ParticipantsConnection::GetOperation(
+StatusOr<google::longrunning::Operation>
+ParticipantsConnection::GetOperation(
     google::longrunning::GetOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status ParticipantsConnection::CancelOperation(
+Status
+ParticipantsConnection::CancelOperation(
     google::longrunning::CancelOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -139,18 +136,17 @@ Status ParticipantsConnection::CancelOperation(
 std::shared_ptr<ParticipantsConnection> MakeParticipantsConnection(
     std::string const& location, Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 ParticipantsPolicyOptionList>(options,
-                                                               __func__);
+      UnifiedCredentialsOptionList,
+      ParticipantsPolicyOptionList>(options, __func__);
   options = dialogflow_es_internal::ParticipantsDefaultOptions(
       location, std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = dialogflow_es_internal::CreateDefaultParticipantsStub(
-      std::move(auth), options);
+    std::move(auth), options);
   return dialogflow_es_internal::MakeParticipantsTracingConnection(
       std::make_shared<dialogflow_es_internal::ParticipantsConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options)));
+      std::move(background), std::move(stub), std::move(options)));
 }
 
 std::shared_ptr<ParticipantsConnection> MakeParticipantsConnection(

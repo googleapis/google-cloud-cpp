@@ -25,8 +25,8 @@
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/cloud/speech/v1/cloud_speech.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
+#include <google/cloud/speech/v1/cloud_speech.grpc.pb.h>
 #include <memory>
 #include <utility>
 
@@ -40,21 +40,20 @@ class SpeechStub {
   virtual ~SpeechStub() = 0;
 
   virtual StatusOr<google::cloud::speech::v1::RecognizeResponse> Recognize(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::speech::v1::RecognizeRequest const& request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>>
-  AsyncLongRunningRecognize(
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncLongRunningRecognize(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::speech::v1::LongRunningRecognizeRequest const&
-          request) = 0;
+      google::cloud::speech::v1::LongRunningRecognizeRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> LongRunningRecognize(
-      grpc::ClientContext& context, Options options,
-      google::cloud::speech::v1::LongRunningRecognizeRequest const&
-          request) = 0;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::speech::v1::LongRunningRecognizeRequest const& request) = 0;
 
   virtual std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::speech::v1::StreamingRecognizeRequest,
@@ -65,17 +64,19 @@ class SpeechStub {
       google::cloud::internal::ImmutableOptions options) = 0;
 
   virtual StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::ListOperationsRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
+    google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
@@ -88,28 +89,26 @@ class SpeechStub {
 class DefaultSpeechStub : public SpeechStub {
  public:
   DefaultSpeechStub(
-      std::unique_ptr<google::cloud::speech::v1::Speech::StubInterface>
-          grpc_stub,
-      std::unique_ptr<google::longrunning::Operations::StubInterface>
-          operations_stub)
+      std::unique_ptr<google::cloud::speech::v1::Speech::StubInterface> grpc_stub,
+      std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub)
       : grpc_stub_(std::move(grpc_stub)),
         operations_stub_(std::move(operations_stub)) {}
 
   StatusOr<google::cloud::speech::v1::RecognizeResponse> Recognize(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::speech::v1::RecognizeRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncLongRunningRecognize(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::speech::v1::LongRunningRecognizeRequest const& request)
-      override;
+      google::cloud::speech::v1::LongRunningRecognizeRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> LongRunningRecognize(
-      grpc::ClientContext& context, Options options,
-      google::cloud::speech::v1::LongRunningRecognizeRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::speech::v1::LongRunningRecognizeRequest const& request) override;
 
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::speech::v1::StreamingRecognizeRequest,
@@ -120,11 +119,13 @@ class DefaultSpeechStub : public SpeechStub {
       google::cloud::internal::ImmutableOptions options) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -141,8 +142,7 @@ class DefaultSpeechStub : public SpeechStub {
 
  private:
   std::unique_ptr<google::cloud::speech::v1::Speech::StubInterface> grpc_stub_;
-  std::unique_ptr<google::longrunning::Operations::StubInterface>
-      operations_stub_;
+  std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

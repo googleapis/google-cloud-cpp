@@ -33,13 +33,10 @@ using ::google::cloud::iam_credentials_v1::MakeIAMCredentialsConnection;
 /// @deprecated Use iam_credentials_v1::IAMCredentialsConnection directly.
 using ::google::cloud::iam_credentials_v1::IAMCredentialsConnection;
 
-/// @deprecated Use
-/// iam_credentials_v1::IAMCredentialsLimitedErrorCountRetryPolicy directly.
-using ::google::cloud::iam_credentials_v1::
-    IAMCredentialsLimitedErrorCountRetryPolicy;
+/// @deprecated Use iam_credentials_v1::IAMCredentialsLimitedErrorCountRetryPolicy directly.
+using ::google::cloud::iam_credentials_v1::IAMCredentialsLimitedErrorCountRetryPolicy;
 
-/// @deprecated Use iam_credentials_v1::IAMCredentialsLimitedTimeRetryPolicy
-/// directly.
+/// @deprecated Use iam_credentials_v1::IAMCredentialsLimitedTimeRetryPolicy directly.
 using ::google::cloud::iam_credentials_v1::IAMCredentialsLimitedTimeRetryPolicy;
 
 /// @deprecated Use iam_credentials_v1::IAMCredentialsRetryPolicy directly.

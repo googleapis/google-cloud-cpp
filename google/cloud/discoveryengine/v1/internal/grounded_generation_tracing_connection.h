@@ -36,8 +36,7 @@ class GroundedGenerationServiceTracingConnection
   ~GroundedGenerationServiceTracingConnection() override = default;
 
   explicit GroundedGenerationServiceTracingConnection(
-      std::shared_ptr<discoveryengine_v1::GroundedGenerationServiceConnection>
-          child);
+    std::shared_ptr<discoveryengine_v1::GroundedGenerationServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
@@ -47,27 +46,22 @@ class GroundedGenerationServiceTracingConnection
   AsyncStreamGenerateGroundedContent() override;
 
   StatusOr<google::cloud::discoveryengine::v1::GenerateGroundedContentResponse>
-  GenerateGroundedContent(
-      google::cloud::discoveryengine::v1::GenerateGroundedContentRequest const&
-          request) override;
+  GenerateGroundedContent(google::cloud::discoveryengine::v1::GenerateGroundedContentRequest const& request) override;
 
   StatusOr<google::cloud::discoveryengine::v1::CheckGroundingResponse>
-  CheckGrounding(
-      google::cloud::discoveryengine::v1::CheckGroundingRequest const& request)
-      override;
+  CheckGrounding(google::cloud::discoveryengine::v1::CheckGroundingRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request) override;
 
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request) override;
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  std::shared_ptr<discoveryengine_v1::GroundedGenerationServiceConnection>
-      child_;
+  std::shared_ptr<discoveryengine_v1::GroundedGenerationServiceConnection> child_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -80,8 +74,7 @@ class GroundedGenerationServiceTracingConnection
  */
 std::shared_ptr<discoveryengine_v1::GroundedGenerationServiceConnection>
 MakeGroundedGenerationServiceTracingConnection(
-    std::shared_ptr<discoveryengine_v1::GroundedGenerationServiceConnection>
-        conn);
+    std::shared_ptr<discoveryengine_v1::GroundedGenerationServiceConnection> conn);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace discoveryengine_v1_internal

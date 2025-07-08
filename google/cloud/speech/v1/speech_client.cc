@@ -25,16 +25,15 @@ namespace cloud {
 namespace speech_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-SpeechClient::SpeechClient(std::shared_ptr<SpeechConnection> connection,
-                           Options opts)
+SpeechClient::SpeechClient(
+    std::shared_ptr<SpeechConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 SpeechClient::~SpeechClient() = default;
 
-StatusOr<google::cloud::speech::v1::RecognizeResponse> SpeechClient::Recognize(
-    google::cloud::speech::v1::RecognitionConfig const& config,
-    google::cloud::speech::v1::RecognitionAudio const& audio, Options opts) {
+StatusOr<google::cloud::speech::v1::RecognizeResponse>
+SpeechClient::Recognize(google::cloud::speech::v1::RecognitionConfig const& config, google::cloud::speech::v1::RecognitionAudio const& audio, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::speech::v1::RecognizeRequest request;
   *request.mutable_config() = config;
@@ -42,16 +41,14 @@ StatusOr<google::cloud::speech::v1::RecognizeResponse> SpeechClient::Recognize(
   return connection_->Recognize(request);
 }
 
-StatusOr<google::cloud::speech::v1::RecognizeResponse> SpeechClient::Recognize(
-    google::cloud::speech::v1::RecognizeRequest const& request, Options opts) {
+StatusOr<google::cloud::speech::v1::RecognizeResponse>
+SpeechClient::Recognize(google::cloud::speech::v1::RecognizeRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->Recognize(request);
 }
 
 future<StatusOr<google::cloud::speech::v1::LongRunningRecognizeResponse>>
-SpeechClient::LongRunningRecognize(
-    google::cloud::speech::v1::RecognitionConfig const& config,
-    google::cloud::speech::v1::RecognitionAudio const& audio, Options opts) {
+SpeechClient::LongRunningRecognize(google::cloud::speech::v1::RecognitionConfig const& config, google::cloud::speech::v1::RecognitionAudio const& audio, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::speech::v1::LongRunningRecognizeRequest request;
   *request.mutable_config() = config;
@@ -59,9 +56,8 @@ SpeechClient::LongRunningRecognize(
   return connection_->LongRunningRecognize(request);
 }
 
-StatusOr<google::longrunning::Operation> SpeechClient::LongRunningRecognize(
-    NoAwaitTag, google::cloud::speech::v1::RecognitionConfig const& config,
-    google::cloud::speech::v1::RecognitionAudio const& audio, Options opts) {
+StatusOr<google::longrunning::Operation>
+SpeechClient::LongRunningRecognize(NoAwaitTag, google::cloud::speech::v1::RecognitionConfig const& config, google::cloud::speech::v1::RecognitionAudio const& audio, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::speech::v1::LongRunningRecognizeRequest request;
   *request.mutable_config() = config;
@@ -70,24 +66,19 @@ StatusOr<google::longrunning::Operation> SpeechClient::LongRunningRecognize(
 }
 
 future<StatusOr<google::cloud::speech::v1::LongRunningRecognizeResponse>>
-SpeechClient::LongRunningRecognize(
-    google::cloud::speech::v1::LongRunningRecognizeRequest const& request,
-    Options opts) {
+SpeechClient::LongRunningRecognize(google::cloud::speech::v1::LongRunningRecognizeRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->LongRunningRecognize(request);
 }
 
-StatusOr<google::longrunning::Operation> SpeechClient::LongRunningRecognize(
-    NoAwaitTag,
-    google::cloud::speech::v1::LongRunningRecognizeRequest const& request,
-    Options opts) {
+StatusOr<google::longrunning::Operation>
+SpeechClient::LongRunningRecognize(NoAwaitTag, google::cloud::speech::v1::LongRunningRecognizeRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->LongRunningRecognize(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::speech::v1::LongRunningRecognizeResponse>>
-SpeechClient::LongRunningRecognize(
-    google::longrunning::Operation const& operation, Options opts) {
+SpeechClient::LongRunningRecognize(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->LongRunningRecognize(operation);
 }
@@ -96,12 +87,13 @@ std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::cloud::speech::v1::StreamingRecognizeRequest,
     google::cloud::speech::v1::StreamingRecognizeResponse>>
 SpeechClient::AsyncStreamingRecognize(Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(opts), options_));
   return connection_->AsyncStreamingRecognize();
 }
 
-StreamRange<google::longrunning::Operation> SpeechClient::ListOperations(
-    std::string const& name, std::string const& filter, Options opts) {
+StreamRange<google::longrunning::Operation>
+SpeechClient::ListOperations(std::string const& name, std::string const& filter, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::ListOperationsRequest request;
   request.set_name(name);
@@ -109,22 +101,22 @@ StreamRange<google::longrunning::Operation> SpeechClient::ListOperations(
   return connection_->ListOperations(request);
 }
 
-StreamRange<google::longrunning::Operation> SpeechClient::ListOperations(
-    google::longrunning::ListOperationsRequest request, Options opts) {
+StreamRange<google::longrunning::Operation>
+SpeechClient::ListOperations(google::longrunning::ListOperationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOperations(std::move(request));
 }
 
-StatusOr<google::longrunning::Operation> SpeechClient::GetOperation(
-    std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation>
+SpeechClient::GetOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
   return connection_->GetOperation(request);
 }
 
-StatusOr<google::longrunning::Operation> SpeechClient::GetOperation(
-    google::longrunning::GetOperationRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation>
+SpeechClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }

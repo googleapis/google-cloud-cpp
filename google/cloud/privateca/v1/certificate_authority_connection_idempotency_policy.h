@@ -37,153 +37,125 @@ class CertificateAuthorityServiceConnectionIdempotencyPolicy {
   virtual ~CertificateAuthorityServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<
-      CertificateAuthorityServiceConnectionIdempotencyPolicy>
-  clone() const;
+  virtual std::unique_ptr<CertificateAuthorityServiceConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency CreateCertificate(
-      google::cloud::security::privateca::v1::CreateCertificateRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  CreateCertificate(google::cloud::security::privateca::v1::CreateCertificateRequest const& request);
 
-  virtual google::cloud::Idempotency GetCertificate(
-      google::cloud::security::privateca::v1::GetCertificateRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  GetCertificate(google::cloud::security::privateca::v1::GetCertificateRequest const& request);
 
-  virtual google::cloud::Idempotency ListCertificates(
-      google::cloud::security::privateca::v1::ListCertificatesRequest request);
+  virtual google::cloud::Idempotency
+  ListCertificates(google::cloud::security::privateca::v1::ListCertificatesRequest request);
 
-  virtual google::cloud::Idempotency RevokeCertificate(
-      google::cloud::security::privateca::v1::RevokeCertificateRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  RevokeCertificate(google::cloud::security::privateca::v1::RevokeCertificateRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateCertificate(
-      google::cloud::security::privateca::v1::UpdateCertificateRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  UpdateCertificate(google::cloud::security::privateca::v1::UpdateCertificateRequest const& request);
 
-  virtual google::cloud::Idempotency ActivateCertificateAuthority(
-      google::cloud::security::privateca::v1::
-          ActivateCertificateAuthorityRequest const& request);
+  virtual google::cloud::Idempotency
+  ActivateCertificateAuthority(google::cloud::security::privateca::v1::ActivateCertificateAuthorityRequest const& request);
 
-  virtual google::cloud::Idempotency CreateCertificateAuthority(
-      google::cloud::security::privateca::v1::
-          CreateCertificateAuthorityRequest const& request);
+  virtual google::cloud::Idempotency
+  CreateCertificateAuthority(google::cloud::security::privateca::v1::CreateCertificateAuthorityRequest const& request);
 
-  virtual google::cloud::Idempotency DisableCertificateAuthority(
-      google::cloud::security::privateca::v1::
-          DisableCertificateAuthorityRequest const& request);
+  virtual google::cloud::Idempotency
+  DisableCertificateAuthority(google::cloud::security::privateca::v1::DisableCertificateAuthorityRequest const& request);
 
-  virtual google::cloud::Idempotency EnableCertificateAuthority(
-      google::cloud::security::privateca::v1::
-          EnableCertificateAuthorityRequest const& request);
+  virtual google::cloud::Idempotency
+  EnableCertificateAuthority(google::cloud::security::privateca::v1::EnableCertificateAuthorityRequest const& request);
 
-  virtual google::cloud::Idempotency FetchCertificateAuthorityCsr(
-      google::cloud::security::privateca::v1::
-          FetchCertificateAuthorityCsrRequest const& request);
+  virtual google::cloud::Idempotency
+  FetchCertificateAuthorityCsr(google::cloud::security::privateca::v1::FetchCertificateAuthorityCsrRequest const& request);
 
-  virtual google::cloud::Idempotency GetCertificateAuthority(
-      google::cloud::security::privateca::v1::
-          GetCertificateAuthorityRequest const& request);
+  virtual google::cloud::Idempotency
+  GetCertificateAuthority(google::cloud::security::privateca::v1::GetCertificateAuthorityRequest const& request);
 
-  virtual google::cloud::Idempotency ListCertificateAuthorities(
-      google::cloud::security::privateca::v1::ListCertificateAuthoritiesRequest
-          request);
+  virtual google::cloud::Idempotency
+  ListCertificateAuthorities(google::cloud::security::privateca::v1::ListCertificateAuthoritiesRequest request);
 
-  virtual google::cloud::Idempotency UndeleteCertificateAuthority(
-      google::cloud::security::privateca::v1::
-          UndeleteCertificateAuthorityRequest const& request);
+  virtual google::cloud::Idempotency
+  UndeleteCertificateAuthority(google::cloud::security::privateca::v1::UndeleteCertificateAuthorityRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteCertificateAuthority(
-      google::cloud::security::privateca::v1::
-          DeleteCertificateAuthorityRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteCertificateAuthority(google::cloud::security::privateca::v1::DeleteCertificateAuthorityRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateCertificateAuthority(
-      google::cloud::security::privateca::v1::
-          UpdateCertificateAuthorityRequest const& request);
+  virtual google::cloud::Idempotency
+  UpdateCertificateAuthority(google::cloud::security::privateca::v1::UpdateCertificateAuthorityRequest const& request);
 
-  virtual google::cloud::Idempotency CreateCaPool(
-      google::cloud::security::privateca::v1::CreateCaPoolRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  CreateCaPool(google::cloud::security::privateca::v1::CreateCaPoolRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateCaPool(
-      google::cloud::security::privateca::v1::UpdateCaPoolRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  UpdateCaPool(google::cloud::security::privateca::v1::UpdateCaPoolRequest const& request);
 
-  virtual google::cloud::Idempotency GetCaPool(
-      google::cloud::security::privateca::v1::GetCaPoolRequest const& request);
+  virtual google::cloud::Idempotency
+  GetCaPool(google::cloud::security::privateca::v1::GetCaPoolRequest const& request);
 
-  virtual google::cloud::Idempotency ListCaPools(
-      google::cloud::security::privateca::v1::ListCaPoolsRequest request);
+  virtual google::cloud::Idempotency
+  ListCaPools(google::cloud::security::privateca::v1::ListCaPoolsRequest request);
 
-  virtual google::cloud::Idempotency DeleteCaPool(
-      google::cloud::security::privateca::v1::DeleteCaPoolRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  DeleteCaPool(google::cloud::security::privateca::v1::DeleteCaPoolRequest const& request);
 
-  virtual google::cloud::Idempotency FetchCaCerts(
-      google::cloud::security::privateca::v1::FetchCaCertsRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  FetchCaCerts(google::cloud::security::privateca::v1::FetchCaCertsRequest const& request);
 
-  virtual google::cloud::Idempotency GetCertificateRevocationList(
-      google::cloud::security::privateca::v1::
-          GetCertificateRevocationListRequest const& request);
+  virtual google::cloud::Idempotency
+  GetCertificateRevocationList(google::cloud::security::privateca::v1::GetCertificateRevocationListRequest const& request);
 
-  virtual google::cloud::Idempotency ListCertificateRevocationLists(
-      google::cloud::security::privateca::v1::
-          ListCertificateRevocationListsRequest request);
+  virtual google::cloud::Idempotency
+  ListCertificateRevocationLists(google::cloud::security::privateca::v1::ListCertificateRevocationListsRequest request);
 
-  virtual google::cloud::Idempotency UpdateCertificateRevocationList(
-      google::cloud::security::privateca::v1::
-          UpdateCertificateRevocationListRequest const& request);
+  virtual google::cloud::Idempotency
+  UpdateCertificateRevocationList(google::cloud::security::privateca::v1::UpdateCertificateRevocationListRequest const& request);
 
-  virtual google::cloud::Idempotency CreateCertificateTemplate(
-      google::cloud::security::privateca::v1::
-          CreateCertificateTemplateRequest const& request);
+  virtual google::cloud::Idempotency
+  CreateCertificateTemplate(google::cloud::security::privateca::v1::CreateCertificateTemplateRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteCertificateTemplate(
-      google::cloud::security::privateca::v1::
-          DeleteCertificateTemplateRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteCertificateTemplate(google::cloud::security::privateca::v1::DeleteCertificateTemplateRequest const& request);
 
-  virtual google::cloud::Idempotency GetCertificateTemplate(
-      google::cloud::security::privateca::v1::
-          GetCertificateTemplateRequest const& request);
+  virtual google::cloud::Idempotency
+  GetCertificateTemplate(google::cloud::security::privateca::v1::GetCertificateTemplateRequest const& request);
 
-  virtual google::cloud::Idempotency ListCertificateTemplates(
-      google::cloud::security::privateca::v1::ListCertificateTemplatesRequest
-          request);
+  virtual google::cloud::Idempotency
+  ListCertificateTemplates(google::cloud::security::privateca::v1::ListCertificateTemplatesRequest request);
 
-  virtual google::cloud::Idempotency UpdateCertificateTemplate(
-      google::cloud::security::privateca::v1::
-          UpdateCertificateTemplateRequest const& request);
+  virtual google::cloud::Idempotency
+  UpdateCertificateTemplate(google::cloud::security::privateca::v1::UpdateCertificateTemplateRequest const& request);
 
-  virtual google::cloud::Idempotency ListLocations(
-      google::cloud::location::ListLocationsRequest request);
+  virtual google::cloud::Idempotency
+  ListLocations(google::cloud::location::ListLocationsRequest request);
 
-  virtual google::cloud::Idempotency GetLocation(
-      google::cloud::location::GetLocationRequest const& request);
+  virtual google::cloud::Idempotency
+  GetLocation(google::cloud::location::GetLocationRequest const& request);
 
-  virtual google::cloud::Idempotency SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request);
+  virtual google::cloud::Idempotency
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
 
-  virtual google::cloud::Idempotency ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual google::cloud::Idempotency
+  ListOperations(google::longrunning::ListOperationsRequest request);
 
-  virtual google::cloud::Idempotency GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
 
-  virtual google::cloud::Idempotency CancelOperation(
-      google::longrunning::CancelOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  CancelOperation(google::longrunning::CancelOperationRequest const& request);
 };
 
 std::unique_ptr<CertificateAuthorityServiceConnectionIdempotencyPolicy>
-MakeDefaultCertificateAuthorityServiceConnectionIdempotencyPolicy();
+    MakeDefaultCertificateAuthorityServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace privateca_v1

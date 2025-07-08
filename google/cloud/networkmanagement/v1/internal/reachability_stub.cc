@@ -33,44 +33,41 @@ ReachabilityServiceStub::~ReachabilityServiceStub() = default;
 
 StatusOr<google::cloud::networkmanagement::v1::ListConnectivityTestsResponse>
 DefaultReachabilityServiceStub::ListConnectivityTests(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::networkmanagement::v1::ListConnectivityTestsRequest const&
-        request) {
-  google::cloud::networkmanagement::v1::ListConnectivityTestsResponse response;
-  auto status = grpc_stub_->ListConnectivityTests(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::networkmanagement::v1::ListConnectivityTestsRequest const& request) {
+    google::cloud::networkmanagement::v1::ListConnectivityTestsResponse response;
+    auto status =
+        grpc_stub_->ListConnectivityTests(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>
 DefaultReachabilityServiceStub::GetConnectivityTest(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::networkmanagement::v1::GetConnectivityTestRequest const&
-        request) {
-  google::cloud::networkmanagement::v1::ConnectivityTest response;
-  auto status = grpc_stub_->GetConnectivityTest(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::networkmanagement::v1::GetConnectivityTestRequest const& request) {
+    google::cloud::networkmanagement::v1::ConnectivityTest response;
+    auto status =
+        grpc_stub_->GetConnectivityTest(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultReachabilityServiceStub::AsyncCreateConnectivityTest(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::networkmanagement::v1::CreateConnectivityTestRequest const&
-        request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::networkmanagement::v1::CreateConnectivityTestRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::networkmanagement::v1::CreateConnectivityTestRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::networkmanagement::v1::CreateConnectivityTestRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::networkmanagement::v1::
-                 CreateConnectivityTestRequest const& request,
+             google::cloud::networkmanagement::v1::CreateConnectivityTestRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncCreateConnectivityTest(context, request, cq);
       },
@@ -79,32 +76,29 @@ DefaultReachabilityServiceStub::AsyncCreateConnectivityTest(
 
 StatusOr<google::longrunning::Operation>
 DefaultReachabilityServiceStub::CreateConnectivityTest(
-    grpc::ClientContext& context, Options,
-    google::cloud::networkmanagement::v1::CreateConnectivityTestRequest const&
-        request) {
-  google::longrunning::Operation response;
-  auto status =
-      grpc_stub_->CreateConnectivityTest(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::networkmanagement::v1::CreateConnectivityTestRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->CreateConnectivityTest(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultReachabilityServiceStub::AsyncUpdateConnectivityTest(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::networkmanagement::v1::UpdateConnectivityTestRequest const&
-        request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::networkmanagement::v1::UpdateConnectivityTestRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::networkmanagement::v1::UpdateConnectivityTestRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::networkmanagement::v1::UpdateConnectivityTestRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::networkmanagement::v1::
-                 UpdateConnectivityTestRequest const& request,
+             google::cloud::networkmanagement::v1::UpdateConnectivityTestRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncUpdateConnectivityTest(context, request, cq);
       },
@@ -113,32 +107,29 @@ DefaultReachabilityServiceStub::AsyncUpdateConnectivityTest(
 
 StatusOr<google::longrunning::Operation>
 DefaultReachabilityServiceStub::UpdateConnectivityTest(
-    grpc::ClientContext& context, Options,
-    google::cloud::networkmanagement::v1::UpdateConnectivityTestRequest const&
-        request) {
-  google::longrunning::Operation response;
-  auto status =
-      grpc_stub_->UpdateConnectivityTest(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::networkmanagement::v1::UpdateConnectivityTestRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->UpdateConnectivityTest(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultReachabilityServiceStub::AsyncRerunConnectivityTest(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::networkmanagement::v1::RerunConnectivityTestRequest const&
-        request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::networkmanagement::v1::RerunConnectivityTestRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::networkmanagement::v1::RerunConnectivityTestRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::networkmanagement::v1::RerunConnectivityTestRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::networkmanagement::v1::
-                 RerunConnectivityTestRequest const& request,
+             google::cloud::networkmanagement::v1::RerunConnectivityTestRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncRerunConnectivityTest(context, request, cq);
       },
@@ -147,31 +138,29 @@ DefaultReachabilityServiceStub::AsyncRerunConnectivityTest(
 
 StatusOr<google::longrunning::Operation>
 DefaultReachabilityServiceStub::RerunConnectivityTest(
-    grpc::ClientContext& context, Options,
-    google::cloud::networkmanagement::v1::RerunConnectivityTestRequest const&
-        request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->RerunConnectivityTest(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::networkmanagement::v1::RerunConnectivityTestRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->RerunConnectivityTest(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultReachabilityServiceStub::AsyncDeleteConnectivityTest(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::networkmanagement::v1::DeleteConnectivityTestRequest const&
-        request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::networkmanagement::v1::DeleteConnectivityTestRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::networkmanagement::v1::DeleteConnectivityTestRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::networkmanagement::v1::DeleteConnectivityTestRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::networkmanagement::v1::
-                 DeleteConnectivityTestRequest const& request,
+             google::cloud::networkmanagement::v1::DeleteConnectivityTestRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncDeleteConnectivityTest(context, request, cq);
       },
@@ -180,121 +169,133 @@ DefaultReachabilityServiceStub::AsyncDeleteConnectivityTest(
 
 StatusOr<google::longrunning::Operation>
 DefaultReachabilityServiceStub::DeleteConnectivityTest(
-    grpc::ClientContext& context, Options,
-    google::cloud::networkmanagement::v1::DeleteConnectivityTestRequest const&
-        request) {
-  google::longrunning::Operation response;
-  auto status =
-      grpc_stub_->DeleteConnectivityTest(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::networkmanagement::v1::DeleteConnectivityTestRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->DeleteConnectivityTest(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 DefaultReachabilityServiceStub::ListLocations(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::location::ListLocationsRequest const& request) {
-  google::cloud::location::ListLocationsResponse response;
-  auto status = locations_stub_->ListLocations(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::location::ListLocationsRequest const& request) {
+    google::cloud::location::ListLocationsResponse response;
+    auto status =
+        locations_stub_->ListLocations(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::location::Location>
 DefaultReachabilityServiceStub::GetLocation(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::location::GetLocationRequest const& request) {
-  google::cloud::location::Location response;
-  auto status = locations_stub_->GetLocation(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::location::GetLocationRequest const& request) {
+    google::cloud::location::Location response;
+    auto status =
+        locations_stub_->GetLocation(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-StatusOr<google::iam::v1::Policy> DefaultReachabilityServiceStub::SetIamPolicy(
-    grpc::ClientContext& context, Options const&,
-    google::iam::v1::SetIamPolicyRequest const& request) {
-  google::iam::v1::Policy response;
-  auto status = iampolicy_stub_->SetIamPolicy(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::iam::v1::Policy>
+DefaultReachabilityServiceStub::SetIamPolicy(
+  grpc::ClientContext& context, Options const&,
+  google::iam::v1::SetIamPolicyRequest const& request) {
+    google::iam::v1::Policy response;
+    auto status =
+        iampolicy_stub_->SetIamPolicy(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-StatusOr<google::iam::v1::Policy> DefaultReachabilityServiceStub::GetIamPolicy(
-    grpc::ClientContext& context, Options const&,
-    google::iam::v1::GetIamPolicyRequest const& request) {
-  google::iam::v1::Policy response;
-  auto status = iampolicy_stub_->GetIamPolicy(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::iam::v1::Policy>
+DefaultReachabilityServiceStub::GetIamPolicy(
+  grpc::ClientContext& context, Options const&,
+  google::iam::v1::GetIamPolicyRequest const& request) {
+    google::iam::v1::Policy response;
+    auto status =
+        iampolicy_stub_->GetIamPolicy(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 DefaultReachabilityServiceStub::TestIamPermissions(
-    grpc::ClientContext& context, Options const&,
-    google::iam::v1::TestIamPermissionsRequest const& request) {
-  google::iam::v1::TestIamPermissionsResponse response;
-  auto status =
-      iampolicy_stub_->TestIamPermissions(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::iam::v1::TestIamPermissionsRequest const& request) {
+    google::iam::v1::TestIamPermissionsResponse response;
+    auto status =
+        iampolicy_stub_->TestIamPermissions(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
 DefaultReachabilityServiceStub::ListOperations(
-    grpc::ClientContext& context, Options const&,
-    google::longrunning::ListOperationsRequest const& request) {
-  google::longrunning::ListOperationsResponse response;
-  auto status = operations_stub_->ListOperations(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::longrunning::ListOperationsRequest const& request) {
+    google::longrunning::ListOperationsResponse response;
+    auto status =
+        operations_stub_->ListOperations(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::longrunning::Operation>
 DefaultReachabilityServiceStub::GetOperation(
-    grpc::ClientContext& context, Options const&,
-    google::longrunning::GetOperationRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = operations_stub_->GetOperation(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::longrunning::GetOperationRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        operations_stub_->GetOperation(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-Status DefaultReachabilityServiceStub::DeleteOperation(
-    grpc::ClientContext& context, Options const&,
-    google::longrunning::DeleteOperationRequest const& request) {
-  google::protobuf::Empty response;
-  auto status = operations_stub_->DeleteOperation(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return google::cloud::Status();
+Status
+DefaultReachabilityServiceStub::DeleteOperation(
+  grpc::ClientContext& context, Options const&,
+  google::longrunning::DeleteOperationRequest const& request) {
+    google::protobuf::Empty response;
+    auto status =
+        operations_stub_->DeleteOperation(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return google::cloud::Status();
 }
 
-Status DefaultReachabilityServiceStub::CancelOperation(
-    grpc::ClientContext& context, Options const&,
-    google::longrunning::CancelOperationRequest const& request) {
-  google::protobuf::Empty response;
-  auto status = operations_stub_->CancelOperation(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return google::cloud::Status();
+Status
+DefaultReachabilityServiceStub::CancelOperation(
+  grpc::ClientContext& context, Options const&,
+  google::longrunning::CancelOperationRequest const& request) {
+    google::protobuf::Empty response;
+    auto status =
+        operations_stub_->CancelOperation(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return google::cloud::Status();
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -323,14 +324,13 @@ future<Status> DefaultReachabilityServiceStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(
-             cq,
-             [this](grpc::ClientContext* context,
-                    google::longrunning::CancelOperationRequest const& request,
-                    grpc::CompletionQueue* cq) {
-               return operations_stub_->AsyncCancelOperation(context, request,
-                                                             cq);
-             },
-             request, std::move(context))
+      cq,
+      [this](grpc::ClientContext* context,
+             google::longrunning::CancelOperationRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return operations_stub_->AsyncCancelOperation(context, request, cq);
+      },
+      request, std::move(context))
       .then([](future<StatusOr<google::protobuf::Empty>> f) {
         return f.get().status();
       });

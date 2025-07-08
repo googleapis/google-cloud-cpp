@@ -17,17 +17,17 @@
 // source: google/cloud/osconfig/v1/osconfig_zonal_service.proto
 
 #include "google/cloud/osconfig/v1/os_config_zonal_connection.h"
-#include "google/cloud/osconfig/v1/internal/os_config_zonal_connection_impl.h"
-#include "google/cloud/osconfig/v1/internal/os_config_zonal_option_defaults.h"
-#include "google/cloud/osconfig/v1/internal/os_config_zonal_stub_factory.h"
-#include "google/cloud/osconfig/v1/internal/os_config_zonal_tracing_connection.h"
-#include "google/cloud/osconfig/v1/os_config_zonal_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/osconfig/v1/internal/os_config_zonal_connection_impl.h"
+#include "google/cloud/osconfig/v1/internal/os_config_zonal_option_defaults.h"
+#include "google/cloud/osconfig/v1/internal/os_config_zonal_stub_factory.h"
+#include "google/cloud/osconfig/v1/internal/os_config_zonal_tracing_connection.h"
+#include "google/cloud/osconfig/v1/os_config_zonal_options.h"
 #include <memory>
 #include <utility>
 
@@ -42,8 +42,8 @@ future<StatusOr<google::cloud::osconfig::v1::OSPolicyAssignment>>
 OsConfigZonalServiceConnection::CreateOSPolicyAssignment(
     google::cloud::osconfig::v1::CreateOSPolicyAssignmentRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::osconfig::v1::OSPolicyAssignment>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::osconfig::v1::OSPolicyAssignment>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -51,23 +51,23 @@ OsConfigZonalServiceConnection::CreateOSPolicyAssignment(
     NoAwaitTag,
     google::cloud::osconfig::v1::CreateOSPolicyAssignmentRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::osconfig::v1::OSPolicyAssignment>>
 OsConfigZonalServiceConnection::CreateOSPolicyAssignment(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::osconfig::v1::OSPolicyAssignment>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::osconfig::v1::OSPolicyAssignment>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::osconfig::v1::OSPolicyAssignment>>
 OsConfigZonalServiceConnection::UpdateOSPolicyAssignment(
     google::cloud::osconfig::v1::UpdateOSPolicyAssignmentRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::osconfig::v1::OSPolicyAssignment>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::osconfig::v1::OSPolicyAssignment>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -75,15 +75,15 @@ OsConfigZonalServiceConnection::UpdateOSPolicyAssignment(
     NoAwaitTag,
     google::cloud::osconfig::v1::UpdateOSPolicyAssignmentRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::osconfig::v1::OSPolicyAssignment>>
 OsConfigZonalServiceConnection::UpdateOSPolicyAssignment(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::osconfig::v1::OSPolicyAssignment>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::osconfig::v1::OSPolicyAssignment>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::osconfig::v1::OSPolicyAssignment>
@@ -92,29 +92,24 @@ OsConfigZonalServiceConnection::GetOSPolicyAssignment(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::osconfig::v1::OSPolicyAssignment>
-OsConfigZonalServiceConnection::ListOSPolicyAssignments(
-    google::cloud::osconfig::v1::
-        ListOSPolicyAssignmentsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::osconfig::v1::OSPolicyAssignment> OsConfigZonalServiceConnection::ListOSPolicyAssignments(
+    google::cloud::osconfig::v1::ListOSPolicyAssignmentsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::osconfig::v1::OSPolicyAssignment>>();
 }
 
-StreamRange<google::cloud::osconfig::v1::OSPolicyAssignment>
-OsConfigZonalServiceConnection::ListOSPolicyAssignmentRevisions(
-    google::cloud::osconfig::v1::
-        ListOSPolicyAssignmentRevisionsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::osconfig::v1::OSPolicyAssignment> OsConfigZonalServiceConnection::ListOSPolicyAssignmentRevisions(
+    google::cloud::osconfig::v1::ListOSPolicyAssignmentRevisionsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::osconfig::v1::OSPolicyAssignment>>();
 }
 
-future<
-    StatusOr<google::cloud::osconfig::v1::OSPolicyAssignmentOperationMetadata>>
+future<StatusOr<google::cloud::osconfig::v1::OSPolicyAssignmentOperationMetadata>>
 OsConfigZonalServiceConnection::DeleteOSPolicyAssignment(
     google::cloud::osconfig::v1::DeleteOSPolicyAssignmentRequest const&) {
-  return google::cloud::make_ready_future<StatusOr<
-      google::cloud::osconfig::v1::OSPolicyAssignmentOperationMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+  return google::cloud::make_ready_future<
+    StatusOr<google::cloud::osconfig::v1::OSPolicyAssignmentOperationMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -122,16 +117,15 @@ OsConfigZonalServiceConnection::DeleteOSPolicyAssignment(
     NoAwaitTag,
     google::cloud::osconfig::v1::DeleteOSPolicyAssignmentRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<
-    StatusOr<google::cloud::osconfig::v1::OSPolicyAssignmentOperationMetadata>>
+future<StatusOr<google::cloud::osconfig::v1::OSPolicyAssignmentOperationMetadata>>
 OsConfigZonalServiceConnection::DeleteOSPolicyAssignment(
     google::longrunning::Operation const&) {
-  return google::cloud::make_ready_future<StatusOr<
-      google::cloud::osconfig::v1::OSPolicyAssignmentOperationMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+  return google::cloud::make_ready_future<
+    StatusOr<google::cloud::osconfig::v1::OSPolicyAssignmentOperationMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::osconfig::v1::OSPolicyAssignmentReport>
@@ -140,10 +134,8 @@ OsConfigZonalServiceConnection::GetOSPolicyAssignmentReport(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::osconfig::v1::OSPolicyAssignmentReport>
-OsConfigZonalServiceConnection::ListOSPolicyAssignmentReports(
-    google::cloud::osconfig::v1::
-        ListOSPolicyAssignmentReportsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::osconfig::v1::OSPolicyAssignmentReport> OsConfigZonalServiceConnection::ListOSPolicyAssignmentReports(
+    google::cloud::osconfig::v1::ListOSPolicyAssignmentReportsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::osconfig::v1::OSPolicyAssignmentReport>>();
 }
@@ -154,10 +146,8 @@ OsConfigZonalServiceConnection::GetInventory(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::osconfig::v1::Inventory>
-OsConfigZonalServiceConnection::ListInventories(
-    google::cloud::osconfig::v1::
-        ListInventoriesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::osconfig::v1::Inventory> OsConfigZonalServiceConnection::ListInventories(
+    google::cloud::osconfig::v1::ListInventoriesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::osconfig::v1::Inventory>>();
 }
@@ -168,30 +158,26 @@ OsConfigZonalServiceConnection::GetVulnerabilityReport(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::osconfig::v1::VulnerabilityReport>
-OsConfigZonalServiceConnection::ListVulnerabilityReports(
-    google::cloud::osconfig::v1::
-        ListVulnerabilityReportsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::osconfig::v1::VulnerabilityReport> OsConfigZonalServiceConnection::ListVulnerabilityReports(
+    google::cloud::osconfig::v1::ListVulnerabilityReportsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::osconfig::v1::VulnerabilityReport>>();
 }
 
-std::shared_ptr<OsConfigZonalServiceConnection>
-MakeOsConfigZonalServiceConnection(Options options) {
+std::shared_ptr<OsConfigZonalServiceConnection> MakeOsConfigZonalServiceConnection(
+    Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 OsConfigZonalServicePolicyOptionList>(
-      options, __func__);
+      UnifiedCredentialsOptionList,
+      OsConfigZonalServicePolicyOptionList>(options, __func__);
   options = osconfig_v1_internal::OsConfigZonalServiceDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = osconfig_v1_internal::CreateDefaultOsConfigZonalServiceStub(
-      std::move(auth), options);
+    std::move(auth), options);
   return osconfig_v1_internal::MakeOsConfigZonalServiceTracingConnection(
-      std::make_shared<
-          osconfig_v1_internal::OsConfigZonalServiceConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options)));
+      std::make_shared<osconfig_v1_internal::OsConfigZonalServiceConnectionImpl>(
+      std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

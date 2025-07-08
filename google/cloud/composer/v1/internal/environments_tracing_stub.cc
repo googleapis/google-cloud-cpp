@@ -34,58 +34,45 @@ EnvironmentsTracingStub::EnvironmentsTracingStub(
 
 future<StatusOr<google::longrunning::Operation>>
 EnvironmentsTracingStub::AsyncCreateEnvironment(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::orchestration::airflow::service::v1::
-        CreateEnvironmentRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.orchestration.airflow.service.v1.Environments",
-      "CreateEnvironment");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::orchestration::airflow::service::v1::CreateEnvironmentRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.orchestration.airflow.service.v1.Environments", "CreateEnvironment");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f =
-      child_->AsyncCreateEnvironment(cq, context, std::move(options), request);
+  auto f = child_->AsyncCreateEnvironment(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 EnvironmentsTracingStub::CreateEnvironment(
-    grpc::ClientContext& context, Options options,
-    google::cloud::orchestration::airflow::service::v1::
-        CreateEnvironmentRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.orchestration.airflow.service.v1.Environments",
-      "CreateEnvironment");
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::orchestration::airflow::service::v1::CreateEnvironmentRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.orchestration.airflow.service.v1.Environments", "CreateEnvironment");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->CreateEnvironment(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->CreateEnvironment(context, options, request));
 }
 
-StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>
-EnvironmentsTracingStub::GetEnvironment(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::orchestration::airflow::service::v1::
-        GetEnvironmentRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.orchestration.airflow.service.v1.Environments",
-      "GetEnvironment");
+StatusOr<google::cloud::orchestration::airflow::service::v1::Environment> EnvironmentsTracingStub::GetEnvironment(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::orchestration::airflow::service::v1::GetEnvironmentRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.orchestration.airflow.service.v1.Environments", "GetEnvironment");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetEnvironment(context, options, request));
 }
 
-StatusOr<google::cloud::orchestration::airflow::service::v1::
-             ListEnvironmentsResponse>
-EnvironmentsTracingStub::ListEnvironments(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::orchestration::airflow::service::v1::
-        ListEnvironmentsRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.orchestration.airflow.service.v1.Environments",
-      "ListEnvironments");
+StatusOr<google::cloud::orchestration::airflow::service::v1::ListEnvironmentsResponse> EnvironmentsTracingStub::ListEnvironments(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::orchestration::airflow::service::v1::ListEnvironmentsRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.orchestration.airflow.service.v1.Environments", "ListEnvironments");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -94,120 +81,92 @@ EnvironmentsTracingStub::ListEnvironments(
 
 future<StatusOr<google::longrunning::Operation>>
 EnvironmentsTracingStub::AsyncUpdateEnvironment(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::orchestration::airflow::service::v1::
-        UpdateEnvironmentRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.orchestration.airflow.service.v1.Environments",
-      "UpdateEnvironment");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::orchestration::airflow::service::v1::UpdateEnvironmentRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.orchestration.airflow.service.v1.Environments", "UpdateEnvironment");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f =
-      child_->AsyncUpdateEnvironment(cq, context, std::move(options), request);
+  auto f = child_->AsyncUpdateEnvironment(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 EnvironmentsTracingStub::UpdateEnvironment(
-    grpc::ClientContext& context, Options options,
-    google::cloud::orchestration::airflow::service::v1::
-        UpdateEnvironmentRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.orchestration.airflow.service.v1.Environments",
-      "UpdateEnvironment");
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::orchestration::airflow::service::v1::UpdateEnvironmentRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.orchestration.airflow.service.v1.Environments", "UpdateEnvironment");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->UpdateEnvironment(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->UpdateEnvironment(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 EnvironmentsTracingStub::AsyncDeleteEnvironment(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::orchestration::airflow::service::v1::
-        DeleteEnvironmentRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.orchestration.airflow.service.v1.Environments",
-      "DeleteEnvironment");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::orchestration::airflow::service::v1::DeleteEnvironmentRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.orchestration.airflow.service.v1.Environments", "DeleteEnvironment");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f =
-      child_->AsyncDeleteEnvironment(cq, context, std::move(options), request);
+  auto f = child_->AsyncDeleteEnvironment(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 EnvironmentsTracingStub::DeleteEnvironment(
-    grpc::ClientContext& context, Options options,
-    google::cloud::orchestration::airflow::service::v1::
-        DeleteEnvironmentRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.orchestration.airflow.service.v1.Environments",
-      "DeleteEnvironment");
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::orchestration::airflow::service::v1::DeleteEnvironmentRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.orchestration.airflow.service.v1.Environments", "DeleteEnvironment");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->DeleteEnvironment(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->DeleteEnvironment(context, options, request));
 }
 
-StatusOr<google::cloud::orchestration::airflow::service::v1::
-             ExecuteAirflowCommandResponse>
-EnvironmentsTracingStub::ExecuteAirflowCommand(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::orchestration::airflow::service::v1::
-        ExecuteAirflowCommandRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.orchestration.airflow.service.v1.Environments",
-      "ExecuteAirflowCommand");
+StatusOr<google::cloud::orchestration::airflow::service::v1::ExecuteAirflowCommandResponse> EnvironmentsTracingStub::ExecuteAirflowCommand(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::orchestration::airflow::service::v1::ExecuteAirflowCommandRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.orchestration.airflow.service.v1.Environments", "ExecuteAirflowCommand");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->ExecuteAirflowCommand(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->ExecuteAirflowCommand(context, options, request));
 }
 
-StatusOr<google::cloud::orchestration::airflow::service::v1::
-             StopAirflowCommandResponse>
-EnvironmentsTracingStub::StopAirflowCommand(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::orchestration::airflow::service::v1::
-        StopAirflowCommandRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.orchestration.airflow.service.v1.Environments",
-      "StopAirflowCommand");
+StatusOr<google::cloud::orchestration::airflow::service::v1::StopAirflowCommandResponse> EnvironmentsTracingStub::StopAirflowCommand(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::orchestration::airflow::service::v1::StopAirflowCommandRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.orchestration.airflow.service.v1.Environments", "StopAirflowCommand");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->StopAirflowCommand(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->StopAirflowCommand(context, options, request));
 }
 
-StatusOr<google::cloud::orchestration::airflow::service::v1::
-             PollAirflowCommandResponse>
-EnvironmentsTracingStub::PollAirflowCommand(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::orchestration::airflow::service::v1::
-        PollAirflowCommandRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.orchestration.airflow.service.v1.Environments",
-      "PollAirflowCommand");
+StatusOr<google::cloud::orchestration::airflow::service::v1::PollAirflowCommandResponse> EnvironmentsTracingStub::PollAirflowCommand(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::orchestration::airflow::service::v1::PollAirflowCommandRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.orchestration.airflow.service.v1.Environments", "PollAirflowCommand");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->PollAirflowCommand(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->PollAirflowCommand(context, options, request));
 }
 
-StatusOr<
-    google::cloud::orchestration::airflow::service::v1::ListWorkloadsResponse>
-EnvironmentsTracingStub::ListWorkloads(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::orchestration::airflow::service::v1::
-        ListWorkloadsRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.orchestration.airflow.service.v1.Environments",
-      "ListWorkloads");
+StatusOr<google::cloud::orchestration::airflow::service::v1::ListWorkloadsResponse> EnvironmentsTracingStub::ListWorkloads(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::orchestration::airflow::service::v1::ListWorkloadsRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.orchestration.airflow.service.v1.Environments", "ListWorkloads");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -216,212 +175,158 @@ EnvironmentsTracingStub::ListWorkloads(
 
 future<StatusOr<google::longrunning::Operation>>
 EnvironmentsTracingStub::AsyncCheckUpgrade(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::orchestration::airflow::service::v1::
-        CheckUpgradeRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.orchestration.airflow.service.v1.Environments",
-      "CheckUpgrade");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::orchestration::airflow::service::v1::CheckUpgradeRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.orchestration.airflow.service.v1.Environments", "CheckUpgrade");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCheckUpgrade(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
-StatusOr<google::longrunning::Operation> EnvironmentsTracingStub::CheckUpgrade(
-    grpc::ClientContext& context, Options options,
-    google::cloud::orchestration::airflow::service::v1::
-        CheckUpgradeRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.orchestration.airflow.service.v1.Environments",
-      "CheckUpgrade");
+StatusOr<google::longrunning::Operation>
+EnvironmentsTracingStub::CheckUpgrade(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::orchestration::airflow::service::v1::CheckUpgradeRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.orchestration.airflow.service.v1.Environments", "CheckUpgrade");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CheckUpgrade(context, options, request));
 }
 
-StatusOr<
-    google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
-EnvironmentsTracingStub::CreateUserWorkloadsSecret(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::orchestration::airflow::service::v1::
-        CreateUserWorkloadsSecretRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.orchestration.airflow.service.v1.Environments",
-      "CreateUserWorkloadsSecret");
+StatusOr<google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret> EnvironmentsTracingStub::CreateUserWorkloadsSecret(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::orchestration::airflow::service::v1::CreateUserWorkloadsSecretRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.orchestration.airflow.service.v1.Environments", "CreateUserWorkloadsSecret");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span,
-      child_->CreateUserWorkloadsSecret(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->CreateUserWorkloadsSecret(context, options, request));
 }
 
-StatusOr<
-    google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
-EnvironmentsTracingStub::GetUserWorkloadsSecret(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::orchestration::airflow::service::v1::
-        GetUserWorkloadsSecretRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.orchestration.airflow.service.v1.Environments",
-      "GetUserWorkloadsSecret");
+StatusOr<google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret> EnvironmentsTracingStub::GetUserWorkloadsSecret(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::orchestration::airflow::service::v1::GetUserWorkloadsSecretRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.orchestration.airflow.service.v1.Environments", "GetUserWorkloadsSecret");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span,
-      child_->GetUserWorkloadsSecret(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->GetUserWorkloadsSecret(context, options, request));
 }
 
-StatusOr<google::cloud::orchestration::airflow::service::v1::
-             ListUserWorkloadsSecretsResponse>
-EnvironmentsTracingStub::ListUserWorkloadsSecrets(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::orchestration::airflow::service::v1::
-        ListUserWorkloadsSecretsRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.orchestration.airflow.service.v1.Environments",
-      "ListUserWorkloadsSecrets");
+StatusOr<google::cloud::orchestration::airflow::service::v1::ListUserWorkloadsSecretsResponse> EnvironmentsTracingStub::ListUserWorkloadsSecrets(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::orchestration::airflow::service::v1::ListUserWorkloadsSecretsRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.orchestration.airflow.service.v1.Environments", "ListUserWorkloadsSecrets");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span,
-      child_->ListUserWorkloadsSecrets(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->ListUserWorkloadsSecrets(context, options, request));
 }
 
-StatusOr<
-    google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
-EnvironmentsTracingStub::UpdateUserWorkloadsSecret(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::orchestration::airflow::service::v1::
-        UpdateUserWorkloadsSecretRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.orchestration.airflow.service.v1.Environments",
-      "UpdateUserWorkloadsSecret");
+StatusOr<google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret> EnvironmentsTracingStub::UpdateUserWorkloadsSecret(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::orchestration::airflow::service::v1::UpdateUserWorkloadsSecretRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.orchestration.airflow.service.v1.Environments", "UpdateUserWorkloadsSecret");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span,
-      child_->UpdateUserWorkloadsSecret(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->UpdateUserWorkloadsSecret(context, options, request));
 }
 
 Status EnvironmentsTracingStub::DeleteUserWorkloadsSecret(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::orchestration::airflow::service::v1::
-        DeleteUserWorkloadsSecretRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.orchestration.airflow.service.v1.Environments",
-      "DeleteUserWorkloadsSecret");
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::orchestration::airflow::service::v1::DeleteUserWorkloadsSecretRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.orchestration.airflow.service.v1.Environments", "DeleteUserWorkloadsSecret");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span,
-      child_->DeleteUserWorkloadsSecret(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->DeleteUserWorkloadsSecret(context, options, request));
 }
 
-StatusOr<
-    google::cloud::orchestration::airflow::service::v1::UserWorkloadsConfigMap>
-EnvironmentsTracingStub::CreateUserWorkloadsConfigMap(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::orchestration::airflow::service::v1::
-        CreateUserWorkloadsConfigMapRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.orchestration.airflow.service.v1.Environments",
-      "CreateUserWorkloadsConfigMap");
+StatusOr<google::cloud::orchestration::airflow::service::v1::UserWorkloadsConfigMap> EnvironmentsTracingStub::CreateUserWorkloadsConfigMap(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::orchestration::airflow::service::v1::CreateUserWorkloadsConfigMapRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.orchestration.airflow.service.v1.Environments", "CreateUserWorkloadsConfigMap");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span,
-      child_->CreateUserWorkloadsConfigMap(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->CreateUserWorkloadsConfigMap(context, options, request));
 }
 
-StatusOr<
-    google::cloud::orchestration::airflow::service::v1::UserWorkloadsConfigMap>
-EnvironmentsTracingStub::GetUserWorkloadsConfigMap(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::orchestration::airflow::service::v1::
-        GetUserWorkloadsConfigMapRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.orchestration.airflow.service.v1.Environments",
-      "GetUserWorkloadsConfigMap");
+StatusOr<google::cloud::orchestration::airflow::service::v1::UserWorkloadsConfigMap> EnvironmentsTracingStub::GetUserWorkloadsConfigMap(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::orchestration::airflow::service::v1::GetUserWorkloadsConfigMapRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.orchestration.airflow.service.v1.Environments", "GetUserWorkloadsConfigMap");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span,
-      child_->GetUserWorkloadsConfigMap(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->GetUserWorkloadsConfigMap(context, options, request));
 }
 
-StatusOr<google::cloud::orchestration::airflow::service::v1::
-             ListUserWorkloadsConfigMapsResponse>
-EnvironmentsTracingStub::ListUserWorkloadsConfigMaps(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::orchestration::airflow::service::v1::
-        ListUserWorkloadsConfigMapsRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.orchestration.airflow.service.v1.Environments",
-      "ListUserWorkloadsConfigMaps");
+StatusOr<google::cloud::orchestration::airflow::service::v1::ListUserWorkloadsConfigMapsResponse> EnvironmentsTracingStub::ListUserWorkloadsConfigMaps(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::orchestration::airflow::service::v1::ListUserWorkloadsConfigMapsRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.orchestration.airflow.service.v1.Environments", "ListUserWorkloadsConfigMaps");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span,
-      child_->ListUserWorkloadsConfigMaps(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->ListUserWorkloadsConfigMaps(context, options, request));
 }
 
-StatusOr<
-    google::cloud::orchestration::airflow::service::v1::UserWorkloadsConfigMap>
-EnvironmentsTracingStub::UpdateUserWorkloadsConfigMap(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::orchestration::airflow::service::v1::
-        UpdateUserWorkloadsConfigMapRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.orchestration.airflow.service.v1.Environments",
-      "UpdateUserWorkloadsConfigMap");
+StatusOr<google::cloud::orchestration::airflow::service::v1::UserWorkloadsConfigMap> EnvironmentsTracingStub::UpdateUserWorkloadsConfigMap(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::orchestration::airflow::service::v1::UpdateUserWorkloadsConfigMapRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.orchestration.airflow.service.v1.Environments", "UpdateUserWorkloadsConfigMap");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span,
-      child_->UpdateUserWorkloadsConfigMap(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->UpdateUserWorkloadsConfigMap(context, options, request));
 }
 
 Status EnvironmentsTracingStub::DeleteUserWorkloadsConfigMap(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::orchestration::airflow::service::v1::
-        DeleteUserWorkloadsConfigMapRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.orchestration.airflow.service.v1.Environments",
-      "DeleteUserWorkloadsConfigMap");
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::orchestration::airflow::service::v1::DeleteUserWorkloadsConfigMapRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.orchestration.airflow.service.v1.Environments", "DeleteUserWorkloadsConfigMap");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span,
-      child_->DeleteUserWorkloadsConfigMap(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->DeleteUserWorkloadsConfigMap(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 EnvironmentsTracingStub::AsyncSaveSnapshot(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::orchestration::airflow::service::v1::
-        SaveSnapshotRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.orchestration.airflow.service.v1.Environments",
-      "SaveSnapshot");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::orchestration::airflow::service::v1::SaveSnapshotRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.orchestration.airflow.service.v1.Environments", "SaveSnapshot");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncSaveSnapshot(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
-StatusOr<google::longrunning::Operation> EnvironmentsTracingStub::SaveSnapshot(
-    grpc::ClientContext& context, Options options,
-    google::cloud::orchestration::airflow::service::v1::
-        SaveSnapshotRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.orchestration.airflow.service.v1.Environments",
-      "SaveSnapshot");
+StatusOr<google::longrunning::Operation>
+EnvironmentsTracingStub::SaveSnapshot(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::orchestration::airflow::service::v1::SaveSnapshotRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.orchestration.airflow.service.v1.Environments", "SaveSnapshot");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -430,27 +335,23 @@ StatusOr<google::longrunning::Operation> EnvironmentsTracingStub::SaveSnapshot(
 
 future<StatusOr<google::longrunning::Operation>>
 EnvironmentsTracingStub::AsyncLoadSnapshot(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::orchestration::airflow::service::v1::
-        LoadSnapshotRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.orchestration.airflow.service.v1.Environments",
-      "LoadSnapshot");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::orchestration::airflow::service::v1::LoadSnapshotRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.orchestration.airflow.service.v1.Environments", "LoadSnapshot");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncLoadSnapshot(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
-StatusOr<google::longrunning::Operation> EnvironmentsTracingStub::LoadSnapshot(
-    grpc::ClientContext& context, Options options,
-    google::cloud::orchestration::airflow::service::v1::
-        LoadSnapshotRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.orchestration.airflow.service.v1.Environments",
-      "LoadSnapshot");
+StatusOr<google::longrunning::Operation>
+EnvironmentsTracingStub::LoadSnapshot(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::orchestration::airflow::service::v1::LoadSnapshotRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.orchestration.airflow.service.v1.Environments", "LoadSnapshot");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -459,58 +360,45 @@ StatusOr<google::longrunning::Operation> EnvironmentsTracingStub::LoadSnapshot(
 
 future<StatusOr<google::longrunning::Operation>>
 EnvironmentsTracingStub::AsyncDatabaseFailover(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::orchestration::airflow::service::v1::
-        DatabaseFailoverRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.orchestration.airflow.service.v1.Environments",
-      "DatabaseFailover");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::orchestration::airflow::service::v1::DatabaseFailoverRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.orchestration.airflow.service.v1.Environments", "DatabaseFailover");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f =
-      child_->AsyncDatabaseFailover(cq, context, std::move(options), request);
+  auto f = child_->AsyncDatabaseFailover(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 EnvironmentsTracingStub::DatabaseFailover(
-    grpc::ClientContext& context, Options options,
-    google::cloud::orchestration::airflow::service::v1::
-        DatabaseFailoverRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.orchestration.airflow.service.v1.Environments",
-      "DatabaseFailover");
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::orchestration::airflow::service::v1::DatabaseFailoverRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.orchestration.airflow.service.v1.Environments", "DatabaseFailover");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DatabaseFailover(context, options, request));
 }
 
-StatusOr<google::cloud::orchestration::airflow::service::v1::
-             FetchDatabasePropertiesResponse>
-EnvironmentsTracingStub::FetchDatabaseProperties(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::orchestration::airflow::service::v1::
-        FetchDatabasePropertiesRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.orchestration.airflow.service.v1.Environments",
-      "FetchDatabaseProperties");
+StatusOr<google::cloud::orchestration::airflow::service::v1::FetchDatabasePropertiesResponse> EnvironmentsTracingStub::FetchDatabaseProperties(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::orchestration::airflow::service::v1::FetchDatabasePropertiesRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.orchestration.airflow.service.v1.Environments", "FetchDatabaseProperties");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span,
-      child_->FetchDatabaseProperties(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->FetchDatabaseProperties(context, options, request));
 }
 
-StatusOr<google::longrunning::ListOperationsResponse>
-EnvironmentsTracingStub::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse> EnvironmentsTracingStub::ListOperations(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.orchestration.airflow.service.v1.Environments",
-      "ListOperations");
+  auto span = internal::MakeSpanGrpc("google.cloud.orchestration.airflow.service.v1.Environments", "ListOperations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -518,11 +406,10 @@ EnvironmentsTracingStub::ListOperations(
 }
 
 StatusOr<google::longrunning::Operation> EnvironmentsTracingStub::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.orchestration.airflow.service.v1.Environments",
-      "GetOperation");
+  auto span = internal::MakeSpanGrpc("google.cloud.orchestration.airflow.service.v1.Environments", "GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -530,11 +417,10 @@ StatusOr<google::longrunning::Operation> EnvironmentsTracingStub::GetOperation(
 }
 
 Status EnvironmentsTracingStub::DeleteOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.orchestration.airflow.service.v1.Environments",
-      "DeleteOperation");
+  auto span = internal::MakeSpanGrpc("google.cloud.orchestration.airflow.service.v1.Environments", "DeleteOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -551,7 +437,8 @@ EnvironmentsTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncGetOperation(cq, context, std::move(options), request);
+  auto f = child_->AsyncGetOperation(
+      cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -564,8 +451,8 @@ future<Status> EnvironmentsTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f =
-      child_->AsyncCancelOperation(cq, context, std::move(options), request);
+  auto f = child_->AsyncCancelOperation(
+      cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 

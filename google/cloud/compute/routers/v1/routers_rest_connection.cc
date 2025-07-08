@@ -17,12 +17,12 @@
 // source: google/cloud/compute/routers/v1/routers.proto
 
 #include "google/cloud/compute/routers/v1/routers_rest_connection.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/compute/routers/v1/internal/routers_option_defaults.h"
 #include "google/cloud/compute/routers/v1/internal/routers_rest_connection_impl.h"
 #include "google/cloud/compute/routers/v1/internal/routers_rest_stub_factory.h"
 #include "google/cloud/compute/routers/v1/internal/routers_tracing_connection.h"
 #include "google/cloud/compute/routers/v1/routers_options.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/rest_background_threads_impl.h"
 #include "google/cloud/internal/rest_options.h"
@@ -34,19 +34,20 @@ namespace cloud {
 namespace compute_routers_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<RoutersConnection> MakeRoutersConnectionRest(Options options) {
-  internal::CheckExpectedOptions<
-      CommonOptionList, RestOptionList, UnifiedCredentialsOptionList,
-      rest_internal::TargetApiVersionOption, RoutersPolicyOptionList>(options,
-                                                                      __func__);
-  options =
-      compute_routers_v1_internal::RoutersDefaultOptions(std::move(options));
+std::shared_ptr<RoutersConnection> MakeRoutersConnectionRest(
+    Options options) {
+  internal::CheckExpectedOptions<CommonOptionList, RestOptionList,
+      UnifiedCredentialsOptionList, rest_internal::TargetApiVersionOption,
+      RoutersPolicyOptionList>(options, __func__);
+  options = compute_routers_v1_internal::RoutersDefaultOptions(
+      std::move(options));
   auto background = std::make_unique<
       rest_internal::AutomaticallyCreatedRestBackgroundThreads>();
-  auto stub =
-      compute_routers_v1_internal::CreateDefaultRoutersRestStub(options);
+  auto stub = compute_routers_v1_internal::CreateDefaultRoutersRestStub(
+      options);
   return compute_routers_v1_internal::MakeRoutersTracingConnection(
-      std::make_shared<compute_routers_v1_internal::RoutersRestConnectionImpl>(
+      std::make_shared<
+          compute_routers_v1_internal::RoutersRestConnectionImpl>(
           std::move(background), std::move(stub), std::move(options)));
 }
 

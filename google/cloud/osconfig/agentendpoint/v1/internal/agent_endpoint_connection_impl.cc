@@ -17,13 +17,13 @@
 // source: google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto
 
 #include "google/cloud/osconfig/agentendpoint/v1/internal/agent_endpoint_connection_impl.h"
-#include "google/cloud/osconfig/agentendpoint/v1/internal/agent_endpoint_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/resumable_streaming_read_rpc.h"
 #include "google/cloud/internal/retry_loop.h"
 #include "google/cloud/internal/streaming_read_rpc_logging.h"
+#include "google/cloud/osconfig/agentendpoint/v1/internal/agent_endpoint_option_defaults.h"
 #include <memory>
 #include <utility>
 
@@ -35,145 +35,109 @@ namespace {
 
 std::unique_ptr<osconfig_agentendpoint_v1::AgentEndpointServiceRetryPolicy>
 retry_policy(Options const& options) {
-  return options
-      .get<osconfig_agentendpoint_v1::AgentEndpointServiceRetryPolicyOption>()
-      ->clone();
+  return options.get<osconfig_agentendpoint_v1::AgentEndpointServiceRetryPolicyOption>()->clone();
 }
 
-std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-  return options
-      .get<osconfig_agentendpoint_v1::AgentEndpointServiceBackoffPolicyOption>()
-      ->clone();
+std::unique_ptr<BackoffPolicy>
+backoff_policy(Options const& options) {
+  return options.get<osconfig_agentendpoint_v1::AgentEndpointServiceBackoffPolicyOption>()->clone();
 }
 
-std::unique_ptr<
-    osconfig_agentendpoint_v1::AgentEndpointServiceConnectionIdempotencyPolicy>
+std::unique_ptr<osconfig_agentendpoint_v1::AgentEndpointServiceConnectionIdempotencyPolicy>
 idempotency_policy(Options const& options) {
-  return options
-      .get<osconfig_agentendpoint_v1::
-               AgentEndpointServiceConnectionIdempotencyPolicyOption>()
-      ->clone();
+  return options.get<osconfig_agentendpoint_v1::AgentEndpointServiceConnectionIdempotencyPolicyOption>()->clone();
 }
 
-}  // namespace
+} // namespace
 
 void AgentEndpointServiceReceiveTaskNotificationStreamingUpdater(
-    google::cloud::osconfig::agentendpoint::v1::
-        ReceiveTaskNotificationResponse const&,
-    google::cloud::osconfig::agentendpoint::v1::
-        ReceiveTaskNotificationRequest&) {}
+    google::cloud::osconfig::agentendpoint::v1::ReceiveTaskNotificationResponse const&,
+    google::cloud::osconfig::agentendpoint::v1::ReceiveTaskNotificationRequest&) {}
 
 AgentEndpointServiceConnectionImpl::AgentEndpointServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<
-        osconfig_agentendpoint_v1_internal::AgentEndpointServiceStub>
-        stub,
+    std::shared_ptr<osconfig_agentendpoint_v1_internal::AgentEndpointServiceStub> stub,
     Options options)
-    : background_(std::move(background)),
-      stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options), AgentEndpointServiceConnection::options())) {}
+  : background_(std::move(background)), stub_(std::move(stub)),
+    options_(internal::MergeOptions(
+        std::move(options),
+        AgentEndpointServiceConnection::options())) {}
 
-StreamRange<
-    google::cloud::osconfig::agentendpoint::v1::ReceiveTaskNotificationResponse>
-AgentEndpointServiceConnectionImpl::ReceiveTaskNotification(
-    google::cloud::osconfig::agentendpoint::v1::
-        ReceiveTaskNotificationRequest const& request) {
+StreamRange<google::cloud::osconfig::agentendpoint::v1::ReceiveTaskNotificationResponse>
+AgentEndpointServiceConnectionImpl::ReceiveTaskNotification(google::cloud::osconfig::agentendpoint::v1::ReceiveTaskNotificationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  auto factory = [stub = stub_,
-                  current](google::cloud::osconfig::agentendpoint::v1::
-                               ReceiveTaskNotificationRequest const& request) {
+  auto factory = [stub = stub_, current](google::cloud::osconfig::agentendpoint::v1::ReceiveTaskNotificationRequest const& request) {
     return stub->ReceiveTaskNotification(
         std::make_shared<grpc::ClientContext>(), *current, request);
   };
-  auto resumable = internal::MakeResumableStreamingReadRpc<
-      google::cloud::osconfig::agentendpoint::v1::
-          ReceiveTaskNotificationResponse,
-      google::cloud::osconfig::agentendpoint::v1::
-          ReceiveTaskNotificationRequest>(
-      retry_policy(*current), backoff_policy(*current), factory,
-      AgentEndpointServiceReceiveTaskNotificationStreamingUpdater, request);
-  return internal::MakeStreamRange(
-      internal::StreamReader<google::cloud::osconfig::agentendpoint::v1::
-                                 ReceiveTaskNotificationResponse>(
-          [resumable] { return resumable->Read(); }));
+  auto resumable =
+      internal::MakeResumableStreamingReadRpc<google::cloud::osconfig::agentendpoint::v1::ReceiveTaskNotificationResponse, google::cloud::osconfig::agentendpoint::v1::ReceiveTaskNotificationRequest>(
+          retry_policy(*current), backoff_policy(*current), factory,
+          AgentEndpointServiceReceiveTaskNotificationStreamingUpdater, request);
+  return internal::MakeStreamRange(internal::StreamReader<google::cloud::osconfig::agentendpoint::v1::ReceiveTaskNotificationResponse>(
+      [resumable] { return resumable->Read(); }));
 }
 
 StatusOr<google::cloud::osconfig::agentendpoint::v1::StartNextTaskResponse>
-AgentEndpointServiceConnectionImpl::StartNextTask(
-    google::cloud::osconfig::agentendpoint::v1::StartNextTaskRequest const&
-        request) {
+AgentEndpointServiceConnectionImpl::StartNextTask(google::cloud::osconfig::agentendpoint::v1::StartNextTaskRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->StartNextTask(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::osconfig::agentendpoint::v1::
-                 StartNextTaskRequest const& request) {
+             google::cloud::osconfig::agentendpoint::v1::StartNextTaskRequest const& request) {
         return stub_->StartNextTask(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::osconfig::agentendpoint::v1::ReportTaskProgressResponse>
-AgentEndpointServiceConnectionImpl::ReportTaskProgress(
-    google::cloud::osconfig::agentendpoint::v1::ReportTaskProgressRequest const&
-        request) {
+AgentEndpointServiceConnectionImpl::ReportTaskProgress(google::cloud::osconfig::agentendpoint::v1::ReportTaskProgressRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->ReportTaskProgress(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::osconfig::agentendpoint::v1::
-                 ReportTaskProgressRequest const& request) {
+             google::cloud::osconfig::agentendpoint::v1::ReportTaskProgressRequest const& request) {
         return stub_->ReportTaskProgress(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::osconfig::agentendpoint::v1::ReportTaskCompleteResponse>
-AgentEndpointServiceConnectionImpl::ReportTaskComplete(
-    google::cloud::osconfig::agentendpoint::v1::ReportTaskCompleteRequest const&
-        request) {
+AgentEndpointServiceConnectionImpl::ReportTaskComplete(google::cloud::osconfig::agentendpoint::v1::ReportTaskCompleteRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->ReportTaskComplete(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::osconfig::agentendpoint::v1::
-                 ReportTaskCompleteRequest const& request) {
+             google::cloud::osconfig::agentendpoint::v1::ReportTaskCompleteRequest const& request) {
         return stub_->ReportTaskComplete(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::osconfig::agentendpoint::v1::RegisterAgentResponse>
-AgentEndpointServiceConnectionImpl::RegisterAgent(
-    google::cloud::osconfig::agentendpoint::v1::RegisterAgentRequest const&
-        request) {
+AgentEndpointServiceConnectionImpl::RegisterAgent(google::cloud::osconfig::agentendpoint::v1::RegisterAgentRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->RegisterAgent(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::osconfig::agentendpoint::v1::
-                 RegisterAgentRequest const& request) {
+             google::cloud::osconfig::agentendpoint::v1::RegisterAgentRequest const& request) {
         return stub_->RegisterAgent(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::osconfig::agentendpoint::v1::ReportInventoryResponse>
-AgentEndpointServiceConnectionImpl::ReportInventory(
-    google::cloud::osconfig::agentendpoint::v1::ReportInventoryRequest const&
-        request) {
+AgentEndpointServiceConnectionImpl::ReportInventory(google::cloud::osconfig::agentendpoint::v1::ReportInventoryRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->ReportInventory(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::osconfig::agentendpoint::v1::
-                 ReportInventoryRequest const& request) {
+             google::cloud::osconfig::agentendpoint::v1::ReportInventoryRequest const& request) {
         return stub_->ReportInventory(context, options, request);
       },
       *current, request, __func__);

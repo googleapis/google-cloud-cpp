@@ -31,68 +31,64 @@ BinauthzManagementServiceV1Auth::BinauthzManagementServiceV1Auth(
     std::shared_ptr<BinauthzManagementServiceV1Stub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::binaryauthorization::v1::Policy>
-BinauthzManagementServiceV1Auth::GetPolicy(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::binaryauthorization::v1::Policy> BinauthzManagementServiceV1Auth::GetPolicy(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::binaryauthorization::v1::GetPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetPolicy(context, options, request);
 }
 
-StatusOr<google::cloud::binaryauthorization::v1::Policy>
-BinauthzManagementServiceV1Auth::UpdatePolicy(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::binaryauthorization::v1::UpdatePolicyRequest const&
-        request) {
+StatusOr<google::cloud::binaryauthorization::v1::Policy> BinauthzManagementServiceV1Auth::UpdatePolicy(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::binaryauthorization::v1::UpdatePolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdatePolicy(context, options, request);
 }
 
-StatusOr<google::cloud::binaryauthorization::v1::Attestor>
-BinauthzManagementServiceV1Auth::CreateAttestor(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::binaryauthorization::v1::CreateAttestorRequest const&
-        request) {
+StatusOr<google::cloud::binaryauthorization::v1::Attestor> BinauthzManagementServiceV1Auth::CreateAttestor(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::binaryauthorization::v1::CreateAttestorRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateAttestor(context, options, request);
 }
 
-StatusOr<google::cloud::binaryauthorization::v1::Attestor>
-BinauthzManagementServiceV1Auth::GetAttestor(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::binaryauthorization::v1::Attestor> BinauthzManagementServiceV1Auth::GetAttestor(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::binaryauthorization::v1::GetAttestorRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetAttestor(context, options, request);
 }
 
-StatusOr<google::cloud::binaryauthorization::v1::Attestor>
-BinauthzManagementServiceV1Auth::UpdateAttestor(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::binaryauthorization::v1::UpdateAttestorRequest const&
-        request) {
+StatusOr<google::cloud::binaryauthorization::v1::Attestor> BinauthzManagementServiceV1Auth::UpdateAttestor(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::binaryauthorization::v1::UpdateAttestorRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateAttestor(context, options, request);
 }
 
-StatusOr<google::cloud::binaryauthorization::v1::ListAttestorsResponse>
-BinauthzManagementServiceV1Auth::ListAttestors(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::binaryauthorization::v1::ListAttestorsRequest const&
-        request) {
+StatusOr<google::cloud::binaryauthorization::v1::ListAttestorsResponse> BinauthzManagementServiceV1Auth::ListAttestors(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::binaryauthorization::v1::ListAttestorsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListAttestors(context, options, request);
 }
 
 Status BinauthzManagementServiceV1Auth::DeleteAttestor(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::binaryauthorization::v1::DeleteAttestorRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::binaryauthorization::v1::DeleteAttestorRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteAttestor(context, options, request);

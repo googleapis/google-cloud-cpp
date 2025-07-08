@@ -19,9 +19,9 @@
 #include "google/cloud/dialogflow_es/internal/contexts_option_defaults.h"
 #include "google/cloud/dialogflow_es/contexts_connection.h"
 #include "google/cloud/dialogflow_es/contexts_options.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include <memory>
 #include <utility>
 
@@ -36,25 +36,21 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options ContextsDefaultOptions(std::string const& location, Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_CONTEXTS_ENDPOINT", "",
-      "GOOGLE_CLOUD_CPP_CONTEXTS_AUTHORITY",
-      absl::StrCat(location, location.empty() ? "" : "-",
-                   "dialogflow.googleapis.com"));
+      std::move(options), "GOOGLE_CLOUD_CPP_CONTEXTS_ENDPOINT",
+      "", "GOOGLE_CLOUD_CPP_CONTEXTS_AUTHORITY",
+      absl::StrCat(location, location.empty() ? "" : "-", "dialogflow.googleapis.com"));
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<dialogflow_es::ContextsRetryPolicyOption>()) {
     options.set<dialogflow_es::ContextsRetryPolicyOption>(
-        dialogflow_es::ContextsLimitedTimeRetryPolicy(std::chrono::minutes(30))
-            .clone());
+        dialogflow_es::ContextsLimitedTimeRetryPolicy(
+            std::chrono::minutes(30)).clone());
   }
   if (!options.has<dialogflow_es::ContextsBackoffPolicyOption>()) {
     options.set<dialogflow_es::ContextsBackoffPolicyOption>(
-        ExponentialBackoffPolicy(
-            std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
-            .clone());
+        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
   }
-  if (!options
-           .has<dialogflow_es::ContextsConnectionIdempotencyPolicyOption>()) {
+  if (!options.has<dialogflow_es::ContextsConnectionIdempotencyPolicyOption>()) {
     options.set<dialogflow_es::ContextsConnectionIdempotencyPolicyOption>(
         dialogflow_es::MakeDefaultContextsConnectionIdempotencyPolicy());
   }

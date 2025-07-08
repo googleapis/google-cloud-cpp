@@ -34,20 +34,17 @@ class SnapshotSettingsConnectionIdempotencyPolicy {
   virtual ~SnapshotSettingsConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<SnapshotSettingsConnectionIdempotencyPolicy> clone()
-      const;
+  virtual std::unique_ptr<SnapshotSettingsConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency GetSnapshotSettings(
-      google::cloud::cpp::compute::snapshot_settings::v1::
-          GetSnapshotSettingsRequest const& request);
+  virtual google::cloud::Idempotency
+  GetSnapshotSettings(google::cloud::cpp::compute::snapshot_settings::v1::GetSnapshotSettingsRequest const& request);
 
-  virtual google::cloud::Idempotency PatchSnapshotSettings(
-      google::cloud::cpp::compute::snapshot_settings::v1::
-          PatchSnapshotSettingsRequest const& request);
+  virtual google::cloud::Idempotency
+  PatchSnapshotSettings(google::cloud::cpp::compute::snapshot_settings::v1::PatchSnapshotSettingsRequest const& request);
 };
 
 std::unique_ptr<SnapshotSettingsConnectionIdempotencyPolicy>
-MakeDefaultSnapshotSettingsConnectionIdempotencyPolicy();
+    MakeDefaultSnapshotSettingsConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_snapshot_settings_v1

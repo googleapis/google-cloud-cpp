@@ -33,40 +33,29 @@ DiskTypesTracingConnection::DiskTypesTracingConnection(
     std::shared_ptr<compute_disk_types_v1::DiskTypesConnection> child)
     : child_(std::move(child)) {}
 
-StreamRange<std::pair<std::string,
-                      google::cloud::cpp::compute::v1::DiskTypesScopedList>>
-DiskTypesTracingConnection::AggregatedListDiskTypes(
-    google::cloud::cpp::compute::disk_types::v1::AggregatedListDiskTypesRequest
-        request) {
-  auto span = internal::MakeSpan(
-      "compute_disk_types_v1::DiskTypesConnection::AggregatedListDiskTypes");
+StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::DiskTypesScopedList>>
+DiskTypesTracingConnection::AggregatedListDiskTypes(google::cloud::cpp::compute::disk_types::v1::AggregatedListDiskTypesRequest request) {
+  auto span = internal::MakeSpan("compute_disk_types_v1::DiskTypesConnection::AggregatedListDiskTypes");
   internal::OTelScope scope(span);
   auto sr = child_->AggregatedListDiskTypes(std::move(request));
-  return internal::MakeTracedStreamRange<std::pair<
-      std::string, google::cloud::cpp::compute::v1::DiskTypesScopedList>>(
-      std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::DiskTypesScopedList>>(
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::DiskType>
-DiskTypesTracingConnection::GetDiskType(
-    google::cloud::cpp::compute::disk_types::v1::GetDiskTypeRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "compute_disk_types_v1::DiskTypesConnection::GetDiskType");
+DiskTypesTracingConnection::GetDiskType(google::cloud::cpp::compute::disk_types::v1::GetDiskTypeRequest const& request) {
+  auto span = internal::MakeSpan("compute_disk_types_v1::DiskTypesConnection::GetDiskType");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetDiskType(request));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::DiskType>
-DiskTypesTracingConnection::ListDiskTypes(
-    google::cloud::cpp::compute::disk_types::v1::ListDiskTypesRequest request) {
-  auto span = internal::MakeSpan(
-      "compute_disk_types_v1::DiskTypesConnection::ListDiskTypes");
+DiskTypesTracingConnection::ListDiskTypes(google::cloud::cpp::compute::disk_types::v1::ListDiskTypesRequest request) {
+  auto span = internal::MakeSpan("compute_disk_types_v1::DiskTypesConnection::ListDiskTypes");
   internal::OTelScope scope(span);
   auto sr = child_->ListDiskTypes(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::cpp::compute::v1::DiskType>(std::move(span),
-                                                 std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::cpp::compute::v1::DiskType>(
+        std::move(span), std::move(sr));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

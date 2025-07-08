@@ -33,13 +33,12 @@ ServiceUsageStub::~ServiceUsageStub() = default;
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultServiceUsageStub::AsyncEnableService(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::api::serviceusage::v1::EnableServiceRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::api::serviceusage::v1::EnableServiceRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::api::serviceusage::v1::EnableServiceRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::api::serviceusage::v1::EnableServiceRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
              google::api::serviceusage::v1::EnableServiceRequest const& request,
@@ -49,31 +48,32 @@ DefaultServiceUsageStub::AsyncEnableService(
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation> DefaultServiceUsageStub::EnableService(
-    grpc::ClientContext& context, Options,
-    google::api::serviceusage::v1::EnableServiceRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->EnableService(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::longrunning::Operation>
+DefaultServiceUsageStub::EnableService(
+      grpc::ClientContext& context,
+      Options,
+      google::api::serviceusage::v1::EnableServiceRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->EnableService(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultServiceUsageStub::AsyncDisableService(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::api::serviceusage::v1::DisableServiceRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::api::serviceusage::v1::DisableServiceRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::api::serviceusage::v1::DisableServiceRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::api::serviceusage::v1::DisableServiceRequest,
+                                    google::longrunning::Operation>(
       cq,
-      [this](
-          grpc::ClientContext* context,
-          google::api::serviceusage::v1::DisableServiceRequest const& request,
-          grpc::CompletionQueue* cq) {
+      [this](grpc::ClientContext* context,
+             google::api::serviceusage::v1::DisableServiceRequest const& request,
+             grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncDisableService(context, request, cq);
       },
       request, std::move(context));
@@ -81,53 +81,55 @@ DefaultServiceUsageStub::AsyncDisableService(
 
 StatusOr<google::longrunning::Operation>
 DefaultServiceUsageStub::DisableService(
-    grpc::ClientContext& context, Options,
-    google::api::serviceusage::v1::DisableServiceRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->DisableService(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::api::serviceusage::v1::DisableServiceRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->DisableService(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::api::serviceusage::v1::Service>
 DefaultServiceUsageStub::GetService(
-    grpc::ClientContext& context, Options const&,
-    google::api::serviceusage::v1::GetServiceRequest const& request) {
-  google::api::serviceusage::v1::Service response;
-  auto status = grpc_stub_->GetService(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::api::serviceusage::v1::GetServiceRequest const& request) {
+    google::api::serviceusage::v1::Service response;
+    auto status =
+        grpc_stub_->GetService(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::api::serviceusage::v1::ListServicesResponse>
 DefaultServiceUsageStub::ListServices(
-    grpc::ClientContext& context, Options const&,
-    google::api::serviceusage::v1::ListServicesRequest const& request) {
-  google::api::serviceusage::v1::ListServicesResponse response;
-  auto status = grpc_stub_->ListServices(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::api::serviceusage::v1::ListServicesRequest const& request) {
+    google::api::serviceusage::v1::ListServicesResponse response;
+    auto status =
+        grpc_stub_->ListServices(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultServiceUsageStub::AsyncBatchEnableServices(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::api::serviceusage::v1::BatchEnableServicesRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::api::serviceusage::v1::BatchEnableServicesRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::api::serviceusage::v1::BatchEnableServicesRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::api::serviceusage::v1::BatchEnableServicesRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::api::serviceusage::v1::BatchEnableServicesRequest const&
-                 request,
+             google::api::serviceusage::v1::BatchEnableServicesRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncBatchEnableServices(context, request, cq);
       },
@@ -136,49 +138,55 @@ DefaultServiceUsageStub::AsyncBatchEnableServices(
 
 StatusOr<google::longrunning::Operation>
 DefaultServiceUsageStub::BatchEnableServices(
-    grpc::ClientContext& context, Options,
-    google::api::serviceusage::v1::BatchEnableServicesRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->BatchEnableServices(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::api::serviceusage::v1::BatchEnableServicesRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->BatchEnableServices(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::api::serviceusage::v1::BatchGetServicesResponse>
 DefaultServiceUsageStub::BatchGetServices(
-    grpc::ClientContext& context, Options const&,
-    google::api::serviceusage::v1::BatchGetServicesRequest const& request) {
-  google::api::serviceusage::v1::BatchGetServicesResponse response;
-  auto status = grpc_stub_->BatchGetServices(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::api::serviceusage::v1::BatchGetServicesRequest const& request) {
+    google::api::serviceusage::v1::BatchGetServicesResponse response;
+    auto status =
+        grpc_stub_->BatchGetServices(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
 DefaultServiceUsageStub::ListOperations(
-    grpc::ClientContext& context, Options const&,
-    google::longrunning::ListOperationsRequest const& request) {
-  google::longrunning::ListOperationsResponse response;
-  auto status = operations_stub_->ListOperations(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::longrunning::ListOperationsRequest const& request) {
+    google::longrunning::ListOperationsResponse response;
+    auto status =
+        operations_stub_->ListOperations(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-StatusOr<google::longrunning::Operation> DefaultServiceUsageStub::GetOperation(
-    grpc::ClientContext& context, Options const&,
-    google::longrunning::GetOperationRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = operations_stub_->GetOperation(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::longrunning::Operation>
+DefaultServiceUsageStub::GetOperation(
+  grpc::ClientContext& context, Options const&,
+  google::longrunning::GetOperationRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        operations_stub_->GetOperation(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -207,14 +215,13 @@ future<Status> DefaultServiceUsageStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(
-             cq,
-             [this](grpc::ClientContext* context,
-                    google::longrunning::CancelOperationRequest const& request,
-                    grpc::CompletionQueue* cq) {
-               return operations_stub_->AsyncCancelOperation(context, request,
-                                                             cq);
-             },
-             request, std::move(context))
+      cq,
+      [this](grpc::ClientContext* context,
+             google::longrunning::CancelOperationRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return operations_stub_->AsyncCancelOperation(context, request, cq);
+      },
+      request, std::move(context))
       .then([](future<StatusOr<google::protobuf::Empty>> f) {
         return f.get().status();
       });

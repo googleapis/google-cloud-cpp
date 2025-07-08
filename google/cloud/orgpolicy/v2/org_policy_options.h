@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ORGPOLICY_V2_ORG_POLICY_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ORGPOLICY_V2_ORG_POLICY_OPTIONS_H
 
-#include "google/cloud/orgpolicy/v2/org_policy_connection.h"
-#include "google/cloud/orgpolicy/v2/org_policy_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
+#include "google/cloud/orgpolicy/v2/org_policy_connection.h"
+#include "google/cloud/orgpolicy/v2/org_policy_connection_idempotency_policy.h"
 #include "google/cloud/version.h"
 #include <memory>
 
@@ -64,7 +64,8 @@ struct OrgPolicyConnectionIdempotencyPolicyOption {
  * @ingroup google-cloud-orgpolicy-options
  */
 using OrgPolicyPolicyOptionList =
-    OptionList<OrgPolicyRetryPolicyOption, OrgPolicyBackoffPolicyOption,
+    OptionList<OrgPolicyRetryPolicyOption,
+               OrgPolicyBackoffPolicyOption,
                OrgPolicyConnectionIdempotencyPolicyOption>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

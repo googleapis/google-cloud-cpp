@@ -39,48 +39,49 @@ class ConnectionServiceMetadata : public ConnectionServiceStub {
       std::multimap<std::string, std::string> fixed_metadata,
       std::string api_client_header = "");
 
-  StatusOr<google::cloud::bigquery::connection::v1::Connection>
-  CreateConnection(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::bigquery::connection::v1::CreateConnectionRequest const&
-          request) override;
+  StatusOr<google::cloud::bigquery::connection::v1::Connection> CreateConnection(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::bigquery::connection::v1::CreateConnectionRequest const& request) override;
 
   StatusOr<google::cloud::bigquery::connection::v1::Connection> GetConnection(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::bigquery::connection::v1::GetConnectionRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::bigquery::connection::v1::GetConnectionRequest const& request) override;
 
-  StatusOr<google::cloud::bigquery::connection::v1::ListConnectionsResponse>
-  ListConnections(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::bigquery::connection::v1::ListConnectionsRequest const&
-          request) override;
+  StatusOr<google::cloud::bigquery::connection::v1::ListConnectionsResponse> ListConnections(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::bigquery::connection::v1::ListConnectionsRequest const& request) override;
 
-  StatusOr<google::cloud::bigquery::connection::v1::Connection>
-  UpdateConnection(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::bigquery::connection::v1::UpdateConnectionRequest const&
-          request) override;
+  StatusOr<google::cloud::bigquery::connection::v1::Connection> UpdateConnection(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::bigquery::connection::v1::UpdateConnectionRequest const& request) override;
 
   Status DeleteConnection(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::bigquery::connection::v1::DeleteConnectionRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::bigquery::connection::v1::DeleteConnectionRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context, Options const& options,
+  void SetMetadata(grpc::ClientContext& context,
+                   Options const& options,
                    std::string const& request_params);
   void SetMetadata(grpc::ClientContext& context, Options const& options);
 

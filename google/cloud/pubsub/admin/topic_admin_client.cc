@@ -28,27 +28,26 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 TopicAdminClient::TopicAdminClient(
     std::shared_ptr<TopicAdminConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 TopicAdminClient::~TopicAdminClient() = default;
 
-StatusOr<google::pubsub::v1::Topic> TopicAdminClient::CreateTopic(
-    std::string const& name, Options opts) {
+StatusOr<google::pubsub::v1::Topic>
+TopicAdminClient::CreateTopic(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::pubsub::v1::Topic request;
   request.set_name(name);
   return connection_->CreateTopic(request);
 }
 
-StatusOr<google::pubsub::v1::Topic> TopicAdminClient::CreateTopic(
-    google::pubsub::v1::Topic const& request, Options opts) {
+StatusOr<google::pubsub::v1::Topic>
+TopicAdminClient::CreateTopic(google::pubsub::v1::Topic const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateTopic(request);
 }
 
-StatusOr<google::pubsub::v1::Topic> TopicAdminClient::UpdateTopic(
-    google::pubsub::v1::Topic const& topic,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+StatusOr<google::pubsub::v1::Topic>
+TopicAdminClient::UpdateTopic(google::pubsub::v1::Topic const& topic, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::pubsub::v1::UpdateTopicRequest request;
   *request.mutable_topic() = topic;
@@ -56,104 +55,102 @@ StatusOr<google::pubsub::v1::Topic> TopicAdminClient::UpdateTopic(
   return connection_->UpdateTopic(request);
 }
 
-StatusOr<google::pubsub::v1::Topic> TopicAdminClient::UpdateTopic(
-    google::pubsub::v1::UpdateTopicRequest const& request, Options opts) {
+StatusOr<google::pubsub::v1::Topic>
+TopicAdminClient::UpdateTopic(google::pubsub::v1::UpdateTopicRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateTopic(request);
 }
 
-StatusOr<google::pubsub::v1::Topic> TopicAdminClient::GetTopic(
-    std::string const& topic, Options opts) {
+StatusOr<google::pubsub::v1::Topic>
+TopicAdminClient::GetTopic(std::string const& topic, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::pubsub::v1::GetTopicRequest request;
   request.set_topic(topic);
   return connection_->GetTopic(request);
 }
 
-StatusOr<google::pubsub::v1::Topic> TopicAdminClient::GetTopic(
-    google::pubsub::v1::GetTopicRequest const& request, Options opts) {
+StatusOr<google::pubsub::v1::Topic>
+TopicAdminClient::GetTopic(google::pubsub::v1::GetTopicRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetTopic(request);
 }
 
-StreamRange<google::pubsub::v1::Topic> TopicAdminClient::ListTopics(
-    std::string const& project, Options opts) {
+StreamRange<google::pubsub::v1::Topic>
+TopicAdminClient::ListTopics(std::string const& project, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::pubsub::v1::ListTopicsRequest request;
   request.set_project(project);
   return connection_->ListTopics(request);
 }
 
-StreamRange<google::pubsub::v1::Topic> TopicAdminClient::ListTopics(
-    google::pubsub::v1::ListTopicsRequest request, Options opts) {
+StreamRange<google::pubsub::v1::Topic>
+TopicAdminClient::ListTopics(google::pubsub::v1::ListTopicsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListTopics(std::move(request));
 }
 
-StreamRange<std::string> TopicAdminClient::ListTopicSubscriptions(
-    std::string const& topic, Options opts) {
+StreamRange<std::string>
+TopicAdminClient::ListTopicSubscriptions(std::string const& topic, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::pubsub::v1::ListTopicSubscriptionsRequest request;
   request.set_topic(topic);
   return connection_->ListTopicSubscriptions(request);
 }
 
-StreamRange<std::string> TopicAdminClient::ListTopicSubscriptions(
-    google::pubsub::v1::ListTopicSubscriptionsRequest request, Options opts) {
+StreamRange<std::string>
+TopicAdminClient::ListTopicSubscriptions(google::pubsub::v1::ListTopicSubscriptionsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListTopicSubscriptions(std::move(request));
 }
 
-StreamRange<std::string> TopicAdminClient::ListTopicSnapshots(
-    std::string const& topic, Options opts) {
+StreamRange<std::string>
+TopicAdminClient::ListTopicSnapshots(std::string const& topic, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::pubsub::v1::ListTopicSnapshotsRequest request;
   request.set_topic(topic);
   return connection_->ListTopicSnapshots(request);
 }
 
-StreamRange<std::string> TopicAdminClient::ListTopicSnapshots(
-    google::pubsub::v1::ListTopicSnapshotsRequest request, Options opts) {
+StreamRange<std::string>
+TopicAdminClient::ListTopicSnapshots(google::pubsub::v1::ListTopicSnapshotsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListTopicSnapshots(std::move(request));
 }
 
-Status TopicAdminClient::DeleteTopic(std::string const& topic, Options opts) {
+Status
+TopicAdminClient::DeleteTopic(std::string const& topic, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::pubsub::v1::DeleteTopicRequest request;
   request.set_topic(topic);
   return connection_->DeleteTopic(request);
 }
 
-Status TopicAdminClient::DeleteTopic(
-    google::pubsub::v1::DeleteTopicRequest const& request, Options opts) {
+Status
+TopicAdminClient::DeleteTopic(google::pubsub::v1::DeleteTopicRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteTopic(request);
 }
 
 StatusOr<google::pubsub::v1::DetachSubscriptionResponse>
-TopicAdminClient::DetachSubscription(
-    google::pubsub::v1::DetachSubscriptionRequest const& request,
-    Options opts) {
+TopicAdminClient::DetachSubscription(google::pubsub::v1::DetachSubscriptionRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DetachSubscription(request);
 }
 
-StatusOr<google::iam::v1::Policy> TopicAdminClient::SetIamPolicy(
-    google::iam::v1::SetIamPolicyRequest const& request, Options opts) {
+StatusOr<google::iam::v1::Policy>
+TopicAdminClient::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetIamPolicy(request);
 }
 
-StatusOr<google::iam::v1::Policy> TopicAdminClient::GetIamPolicy(
-    google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
+StatusOr<google::iam::v1::Policy>
+TopicAdminClient::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetIamPolicy(request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-TopicAdminClient::TestIamPermissions(
-    google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
+TopicAdminClient::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->TestIamPermissions(request);
 }

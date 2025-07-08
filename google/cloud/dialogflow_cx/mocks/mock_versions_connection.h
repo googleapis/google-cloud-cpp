@@ -47,29 +47,24 @@ class MockVersionsConnection : public dialogflow_cx::VersionsConnection {
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD((StreamRange<google::cloud::dialogflow::cx::v3::Version>),
-              ListVersions,
-              (google::cloud::dialogflow::cx::v3::ListVersionsRequest request),
-              (override));
+  ListVersions,
+  (google::cloud::dialogflow::cx::v3::ListVersionsRequest request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::cx::v3::Version>, GetVersion,
-      (google::cloud::dialogflow::cx::v3::GetVersionRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::dialogflow::cx::v3::Version>,
+  GetVersion,
+  (google::cloud::dialogflow::cx::v3::GetVersionRequest const& request), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// CreateVersion(Matcher<google::cloud::dialogflow::cx::v3::CreateVersionRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, CreateVersion(Matcher<google::cloud::dialogflow::cx::v3::CreateVersionRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::dialogflow::cx::v3::Version>>,
-      CreateVersion,
-      (google::cloud::dialogflow::cx::v3::CreateVersionRequest const& request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::dialogflow::cx::v3::Version>>,
+  CreateVersion,
+  (google::cloud::dialogflow::cx::v3::CreateVersionRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -77,47 +72,41 @@ class MockVersionsConnection : public dialogflow_cx::VersionsConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, CreateVersion(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, CreateVersion,
-      (NoAwaitTag,
-       google::cloud::dialogflow::cx::v3::CreateVersionRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  CreateVersion, (NoAwaitTag,
+    google::cloud::dialogflow::cx::v3::CreateVersionRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateVersion(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, CreateVersion(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::dialogflow::cx::v3::Version>>,
-              CreateVersion, (google::longrunning::Operation const& operation),
-              (override));
+  CreateVersion, (
+    google::longrunning::Operation const& operation), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::cx::v3::Version>, UpdateVersion,
-      (google::cloud::dialogflow::cx::v3::UpdateVersionRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::dialogflow::cx::v3::Version>,
+  UpdateVersion,
+  (google::cloud::dialogflow::cx::v3::UpdateVersionRequest const& request), (override));
 
-  MOCK_METHOD(
-      Status, DeleteVersion,
-      (google::cloud::dialogflow::cx::v3::DeleteVersionRequest const& request),
-      (override));
+  MOCK_METHOD(Status,
+  DeleteVersion,
+  (google::cloud::dialogflow::cx::v3::DeleteVersionRequest const& request), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// LoadVersion(Matcher<google::cloud::dialogflow::cx::v3::LoadVersionRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, LoadVersion(Matcher<google::cloud::dialogflow::cx::v3::LoadVersionRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::protobuf::Struct>>, LoadVersion,
-      (google::cloud::dialogflow::cx::v3::LoadVersionRequest const& request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::protobuf::Struct>>,
+  LoadVersion,
+  (google::cloud::dialogflow::cx::v3::LoadVersionRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -125,48 +114,45 @@ class MockVersionsConnection : public dialogflow_cx::VersionsConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, LoadVersion(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, LoadVersion,
-      (NoAwaitTag,
-       google::cloud::dialogflow::cx::v3::LoadVersionRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  LoadVersion, (NoAwaitTag,
+    google::cloud::dialogflow::cx::v3::LoadVersionRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, LoadVersion(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, LoadVersion(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::protobuf::Struct>>, LoadVersion,
-              (google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(future<StatusOr<google::protobuf::Struct>>,
+  LoadVersion, (
+    google::longrunning::Operation const& operation), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::cx::v3::CompareVersionsResponse>,
-      CompareVersions,
-      (google::cloud::dialogflow::cx::v3::CompareVersionsRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::dialogflow::cx::v3::CompareVersionsResponse>,
+  CompareVersions,
+  (google::cloud::dialogflow::cx::v3::CompareVersionsRequest const& request), (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::location::Location>), ListLocations,
-              (google::cloud::location::ListLocationsRequest request),
-              (override));
+  MOCK_METHOD((StreamRange<google::cloud::location::Location>),
+  ListLocations,
+  (google::cloud::location::ListLocationsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::location::Location>, GetLocation,
-              (google::cloud::location::GetLocationRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::location::Location>,
+  GetLocation,
+  (google::cloud::location::GetLocationRequest const& request), (override));
 
-  MOCK_METHOD((StreamRange<google::longrunning::Operation>), ListOperations,
-              (google::longrunning::ListOperationsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::longrunning::Operation>),
+  ListOperations,
+  (google::longrunning::ListOperationsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
-              (google::longrunning::GetOperationRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  GetOperation,
+  (google::longrunning::GetOperationRequest const& request), (override));
 
-  MOCK_METHOD(Status, CancelOperation,
-              (google::longrunning::CancelOperationRequest const& request),
-              (override));
+  MOCK_METHOD(Status,
+  CancelOperation,
+  (google::longrunning::CancelOperationRequest const& request), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

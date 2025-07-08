@@ -36,21 +36,21 @@ class SnoozeServiceTracingConnection
   ~SnoozeServiceTracingConnection() override = default;
 
   explicit SnoozeServiceTracingConnection(
-      std::shared_ptr<monitoring_v3::SnoozeServiceConnection> child);
+    std::shared_ptr<monitoring_v3::SnoozeServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::monitoring::v3::Snooze> CreateSnooze(
-      google::monitoring::v3::CreateSnoozeRequest const& request) override;
+  StatusOr<google::monitoring::v3::Snooze>
+  CreateSnooze(google::monitoring::v3::CreateSnoozeRequest const& request) override;
 
-  StreamRange<google::monitoring::v3::Snooze> ListSnoozes(
-      google::monitoring::v3::ListSnoozesRequest request) override;
+  StreamRange<google::monitoring::v3::Snooze>
+  ListSnoozes(google::monitoring::v3::ListSnoozesRequest request) override;
 
-  StatusOr<google::monitoring::v3::Snooze> GetSnooze(
-      google::monitoring::v3::GetSnoozeRequest const& request) override;
+  StatusOr<google::monitoring::v3::Snooze>
+  GetSnooze(google::monitoring::v3::GetSnoozeRequest const& request) override;
 
-  StatusOr<google::monitoring::v3::Snooze> UpdateSnooze(
-      google::monitoring::v3::UpdateSnoozeRequest const& request) override;
+  StatusOr<google::monitoring::v3::Snooze>
+  UpdateSnooze(google::monitoring::v3::UpdateSnoozeRequest const& request) override;
 
  private:
   std::shared_ptr<monitoring_v3::SnoozeServiceConnection> child_;

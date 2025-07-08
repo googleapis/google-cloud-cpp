@@ -26,25 +26,20 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-PublicCertificateAuthorityServiceConnectionIdempotencyPolicy::
-    ~PublicCertificateAuthorityServiceConnectionIdempotencyPolicy() = default;
+PublicCertificateAuthorityServiceConnectionIdempotencyPolicy::~PublicCertificateAuthorityServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<PublicCertificateAuthorityServiceConnectionIdempotencyPolicy>
 PublicCertificateAuthorityServiceConnectionIdempotencyPolicy::clone() const {
-  return std::make_unique<
-      PublicCertificateAuthorityServiceConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<PublicCertificateAuthorityServiceConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency PublicCertificateAuthorityServiceConnectionIdempotencyPolicy::
-    CreateExternalAccountKey(google::cloud::security::publicca::v1::
-                                 CreateExternalAccountKeyRequest const&) {
+Idempotency PublicCertificateAuthorityServiceConnectionIdempotencyPolicy::CreateExternalAccountKey(google::cloud::security::publicca::v1::CreateExternalAccountKeyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<PublicCertificateAuthorityServiceConnectionIdempotencyPolicy>
-MakeDefaultPublicCertificateAuthorityServiceConnectionIdempotencyPolicy() {
-  return std::make_unique<
-      PublicCertificateAuthorityServiceConnectionIdempotencyPolicy>();
+    MakeDefaultPublicCertificateAuthorityServiceConnectionIdempotencyPolicy() {
+  return std::make_unique<PublicCertificateAuthorityServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

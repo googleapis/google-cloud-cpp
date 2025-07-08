@@ -25,16 +25,12 @@ namespace cloud {
 namespace sql_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-SqlAvailableDatabaseVersionsServiceClient::
-    SqlAvailableDatabaseVersionsServiceClient(
-        std::shared_ptr<SqlAvailableDatabaseVersionsServiceConnection>
-            connection,
-        Options opts)
+SqlAvailableDatabaseVersionsServiceClient::SqlAvailableDatabaseVersionsServiceClient(
+    std::shared_ptr<SqlAvailableDatabaseVersionsServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
-SqlAvailableDatabaseVersionsServiceClient::
-    ~SqlAvailableDatabaseVersionsServiceClient() = default;
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
+SqlAvailableDatabaseVersionsServiceClient::~SqlAvailableDatabaseVersionsServiceClient() = default;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace sql_v1

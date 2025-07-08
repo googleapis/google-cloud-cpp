@@ -35,36 +35,35 @@ class LoggingServiceV2ConnectionIdempotencyPolicy {
   virtual ~LoggingServiceV2ConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<LoggingServiceV2ConnectionIdempotencyPolicy> clone()
-      const;
+  virtual std::unique_ptr<LoggingServiceV2ConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency DeleteLog(
-      google::logging::v2::DeleteLogRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteLog(google::logging::v2::DeleteLogRequest const& request);
 
-  virtual google::cloud::Idempotency WriteLogEntries(
-      google::logging::v2::WriteLogEntriesRequest const& request);
+  virtual google::cloud::Idempotency
+  WriteLogEntries(google::logging::v2::WriteLogEntriesRequest const& request);
 
-  virtual google::cloud::Idempotency ListLogEntries(
-      google::logging::v2::ListLogEntriesRequest request);
+  virtual google::cloud::Idempotency
+  ListLogEntries(google::logging::v2::ListLogEntriesRequest request);
 
-  virtual google::cloud::Idempotency ListMonitoredResourceDescriptors(
-      google::logging::v2::ListMonitoredResourceDescriptorsRequest request);
+  virtual google::cloud::Idempotency
+  ListMonitoredResourceDescriptors(google::logging::v2::ListMonitoredResourceDescriptorsRequest request);
 
-  virtual google::cloud::Idempotency ListLogs(
-      google::logging::v2::ListLogsRequest request);
+  virtual google::cloud::Idempotency
+  ListLogs(google::logging::v2::ListLogsRequest request);
 
-  virtual google::cloud::Idempotency ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual google::cloud::Idempotency
+  ListOperations(google::longrunning::ListOperationsRequest request);
 
-  virtual google::cloud::Idempotency GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 
-  virtual google::cloud::Idempotency CancelOperation(
-      google::longrunning::CancelOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  CancelOperation(google::longrunning::CancelOperationRequest const& request);
 };
 
 std::unique_ptr<LoggingServiceV2ConnectionIdempotencyPolicy>
-MakeDefaultLoggingServiceV2ConnectionIdempotencyPolicy();
+    MakeDefaultLoggingServiceV2ConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace logging_v2

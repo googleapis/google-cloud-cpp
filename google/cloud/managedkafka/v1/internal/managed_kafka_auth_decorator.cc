@@ -31,9 +31,9 @@ ManagedKafkaAuth::ManagedKafkaAuth(
     std::shared_ptr<ManagedKafkaStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::managedkafka::v1::ListClustersResponse>
-ManagedKafkaAuth::ListClusters(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::managedkafka::v1::ListClustersResponse> ManagedKafkaAuth::ListClusters(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::managedkafka::v1::ListClustersRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -41,7 +41,8 @@ ManagedKafkaAuth::ListClusters(
 }
 
 StatusOr<google::cloud::managedkafka::v1::Cluster> ManagedKafkaAuth::GetCluster(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::managedkafka::v1::GetClusterRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -50,27 +51,28 @@ StatusOr<google::cloud::managedkafka::v1::Cluster> ManagedKafkaAuth::GetCluster(
 
 future<StatusOr<google::longrunning::Operation>>
 ManagedKafkaAuth::AsyncCreateCluster(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::managedkafka::v1::CreateClusterRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::managedkafka::v1::CreateClusterRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreateCluster(cq, *std::move(context),
-                                         std::move(options), request);
+        return child->AsyncCreateCluster(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation> ManagedKafkaAuth::CreateCluster(
-    grpc::ClientContext& context, Options options,
-    google::cloud::managedkafka::v1::CreateClusterRequest const& request) {
+StatusOr<google::longrunning::Operation>
+ManagedKafkaAuth::CreateCluster(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::managedkafka::v1::CreateClusterRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateCluster(context, options, request);
@@ -78,27 +80,28 @@ StatusOr<google::longrunning::Operation> ManagedKafkaAuth::CreateCluster(
 
 future<StatusOr<google::longrunning::Operation>>
 ManagedKafkaAuth::AsyncUpdateCluster(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::managedkafka::v1::UpdateClusterRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::managedkafka::v1::UpdateClusterRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncUpdateCluster(cq, *std::move(context),
-                                         std::move(options), request);
+        return child->AsyncUpdateCluster(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation> ManagedKafkaAuth::UpdateCluster(
-    grpc::ClientContext& context, Options options,
-    google::cloud::managedkafka::v1::UpdateClusterRequest const& request) {
+StatusOr<google::longrunning::Operation>
+ManagedKafkaAuth::UpdateCluster(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::managedkafka::v1::UpdateClusterRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateCluster(context, options, request);
@@ -106,35 +109,36 @@ StatusOr<google::longrunning::Operation> ManagedKafkaAuth::UpdateCluster(
 
 future<StatusOr<google::longrunning::Operation>>
 ManagedKafkaAuth::AsyncDeleteCluster(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::managedkafka::v1::DeleteClusterRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::managedkafka::v1::DeleteClusterRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDeleteCluster(cq, *std::move(context),
-                                         std::move(options), request);
+        return child->AsyncDeleteCluster(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation> ManagedKafkaAuth::DeleteCluster(
-    grpc::ClientContext& context, Options options,
-    google::cloud::managedkafka::v1::DeleteClusterRequest const& request) {
+StatusOr<google::longrunning::Operation>
+ManagedKafkaAuth::DeleteCluster(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::managedkafka::v1::DeleteClusterRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteCluster(context, options, request);
 }
 
-StatusOr<google::cloud::managedkafka::v1::ListTopicsResponse>
-ManagedKafkaAuth::ListTopics(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::managedkafka::v1::ListTopicsResponse> ManagedKafkaAuth::ListTopics(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::managedkafka::v1::ListTopicsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -142,7 +146,8 @@ ManagedKafkaAuth::ListTopics(
 }
 
 StatusOr<google::cloud::managedkafka::v1::Topic> ManagedKafkaAuth::GetTopic(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::managedkafka::v1::GetTopicRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -150,7 +155,8 @@ StatusOr<google::cloud::managedkafka::v1::Topic> ManagedKafkaAuth::GetTopic(
 }
 
 StatusOr<google::cloud::managedkafka::v1::Topic> ManagedKafkaAuth::CreateTopic(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::managedkafka::v1::CreateTopicRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -158,7 +164,8 @@ StatusOr<google::cloud::managedkafka::v1::Topic> ManagedKafkaAuth::CreateTopic(
 }
 
 StatusOr<google::cloud::managedkafka::v1::Topic> ManagedKafkaAuth::UpdateTopic(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::managedkafka::v1::UpdateTopicRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -166,53 +173,53 @@ StatusOr<google::cloud::managedkafka::v1::Topic> ManagedKafkaAuth::UpdateTopic(
 }
 
 Status ManagedKafkaAuth::DeleteTopic(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::managedkafka::v1::DeleteTopicRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteTopic(context, options, request);
 }
 
-StatusOr<google::cloud::managedkafka::v1::ListConsumerGroupsResponse>
-ManagedKafkaAuth::ListConsumerGroups(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::managedkafka::v1::ListConsumerGroupsResponse> ManagedKafkaAuth::ListConsumerGroups(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::managedkafka::v1::ListConsumerGroupsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListConsumerGroups(context, options, request);
 }
 
-StatusOr<google::cloud::managedkafka::v1::ConsumerGroup>
-ManagedKafkaAuth::GetConsumerGroup(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::managedkafka::v1::ConsumerGroup> ManagedKafkaAuth::GetConsumerGroup(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::managedkafka::v1::GetConsumerGroupRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetConsumerGroup(context, options, request);
 }
 
-StatusOr<google::cloud::managedkafka::v1::ConsumerGroup>
-ManagedKafkaAuth::UpdateConsumerGroup(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::managedkafka::v1::UpdateConsumerGroupRequest const&
-        request) {
+StatusOr<google::cloud::managedkafka::v1::ConsumerGroup> ManagedKafkaAuth::UpdateConsumerGroup(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::managedkafka::v1::UpdateConsumerGroupRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateConsumerGroup(context, options, request);
 }
 
 Status ManagedKafkaAuth::DeleteConsumerGroup(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::managedkafka::v1::DeleteConsumerGroupRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::managedkafka::v1::DeleteConsumerGroupRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteConsumerGroup(context, options, request);
 }
 
-StatusOr<google::cloud::managedkafka::v1::ListAclsResponse>
-ManagedKafkaAuth::ListAcls(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::managedkafka::v1::ListAclsResponse> ManagedKafkaAuth::ListAcls(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::managedkafka::v1::ListAclsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -220,7 +227,8 @@ ManagedKafkaAuth::ListAcls(
 }
 
 StatusOr<google::cloud::managedkafka::v1::Acl> ManagedKafkaAuth::GetAcl(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::managedkafka::v1::GetAclRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -228,7 +236,8 @@ StatusOr<google::cloud::managedkafka::v1::Acl> ManagedKafkaAuth::GetAcl(
 }
 
 StatusOr<google::cloud::managedkafka::v1::Acl> ManagedKafkaAuth::CreateAcl(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::managedkafka::v1::CreateAclRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -236,7 +245,8 @@ StatusOr<google::cloud::managedkafka::v1::Acl> ManagedKafkaAuth::CreateAcl(
 }
 
 StatusOr<google::cloud::managedkafka::v1::Acl> ManagedKafkaAuth::UpdateAcl(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::managedkafka::v1::UpdateAclRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -244,34 +254,35 @@ StatusOr<google::cloud::managedkafka::v1::Acl> ManagedKafkaAuth::UpdateAcl(
 }
 
 Status ManagedKafkaAuth::DeleteAcl(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::managedkafka::v1::DeleteAclRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteAcl(context, options, request);
 }
 
-StatusOr<google::cloud::managedkafka::v1::AddAclEntryResponse>
-ManagedKafkaAuth::AddAclEntry(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::managedkafka::v1::AddAclEntryResponse> ManagedKafkaAuth::AddAclEntry(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::managedkafka::v1::AddAclEntryRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->AddAclEntry(context, options, request);
 }
 
-StatusOr<google::cloud::managedkafka::v1::RemoveAclEntryResponse>
-ManagedKafkaAuth::RemoveAclEntry(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::managedkafka::v1::RemoveAclEntryResponse> ManagedKafkaAuth::RemoveAclEntry(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::managedkafka::v1::RemoveAclEntryRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->RemoveAclEntry(context, options, request);
 }
 
-StatusOr<google::cloud::location::ListLocationsResponse>
-ManagedKafkaAuth::ListLocations(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::location::ListLocationsResponse> ManagedKafkaAuth::ListLocations(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -279,16 +290,17 @@ ManagedKafkaAuth::ListLocations(
 }
 
 StatusOr<google::cloud::location::Location> ManagedKafkaAuth::GetLocation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetLocation(context, options, request);
 }
 
-StatusOr<google::longrunning::ListOperationsResponse>
-ManagedKafkaAuth::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse> ManagedKafkaAuth::ListOperations(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -296,7 +308,8 @@ ManagedKafkaAuth::ListOperations(
 }
 
 StatusOr<google::longrunning::Operation> ManagedKafkaAuth::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -304,7 +317,8 @@ StatusOr<google::longrunning::Operation> ManagedKafkaAuth::GetOperation(
 }
 
 Status ManagedKafkaAuth::DeleteOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -312,7 +326,8 @@ Status ManagedKafkaAuth::DeleteOperation(
 }
 
 Status ManagedKafkaAuth::CancelOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -326,16 +341,15 @@ ManagedKafkaAuth::AsyncGetOperation(
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncGetOperation(cq, *std::move(context),
-                                        std::move(options), request);
+        return child->AsyncGetOperation(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
@@ -344,14 +358,13 @@ future<Status> ManagedKafkaAuth::AsyncCancelOperation(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) return make_ready_future(std::move(context).status());
-        return child->AsyncCancelOperation(cq, *std::move(context),
-                                           std::move(options), request);
+        return child->AsyncCancelOperation(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 

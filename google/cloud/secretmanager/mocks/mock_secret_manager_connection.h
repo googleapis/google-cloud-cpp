@@ -30,10 +30,8 @@ namespace cloud {
 namespace secretmanager_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use secretmanager_v1_mocks::MockSecretManagerServiceConnection
-/// directly.
-using ::google::cloud::secretmanager_v1_mocks::
-    MockSecretManagerServiceConnection;
+/// @deprecated Use secretmanager_v1_mocks::MockSecretManagerServiceConnection directly.
+using ::google::cloud::secretmanager_v1_mocks::MockSecretManagerServiceConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace secretmanager_mocks

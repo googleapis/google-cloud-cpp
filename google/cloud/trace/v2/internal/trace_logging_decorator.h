@@ -35,16 +35,17 @@ class TraceServiceLogging : public TraceServiceStub {
  public:
   ~TraceServiceLogging() override = default;
   TraceServiceLogging(std::shared_ptr<TraceServiceStub> child,
-                      TracingOptions tracing_options,
-                      std::set<std::string> const& components);
+                       TracingOptions tracing_options,
+                       std::set<std::string> const& components);
 
   Status BatchWriteSpans(
-      grpc::ClientContext& context, Options const& options,
-      google::devtools::cloudtrace::v2::BatchWriteSpansRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::devtools::cloudtrace::v2::BatchWriteSpansRequest const& request) override;
 
   StatusOr<google::devtools::cloudtrace::v2::Span> CreateSpan(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::devtools::cloudtrace::v2::Span const& request) override;
 
  private:

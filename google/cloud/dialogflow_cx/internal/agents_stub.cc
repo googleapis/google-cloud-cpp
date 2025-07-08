@@ -33,230 +33,246 @@ AgentsStub::~AgentsStub() = default;
 
 StatusOr<google::cloud::dialogflow::cx::v3::ListAgentsResponse>
 DefaultAgentsStub::ListAgents(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::dialogflow::cx::v3::ListAgentsRequest const& request) {
-  google::cloud::dialogflow::cx::v3::ListAgentsResponse response;
-  auto status = grpc_stub_->ListAgents(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::dialogflow::cx::v3::ListAgentsRequest const& request) {
+    google::cloud::dialogflow::cx::v3::ListAgentsResponse response;
+    auto status =
+        grpc_stub_->ListAgents(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-StatusOr<google::cloud::dialogflow::cx::v3::Agent> DefaultAgentsStub::GetAgent(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::dialogflow::cx::v3::GetAgentRequest const& request) {
-  google::cloud::dialogflow::cx::v3::Agent response;
-  auto status = grpc_stub_->GetAgent(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::cloud::dialogflow::cx::v3::Agent>
+DefaultAgentsStub::GetAgent(
+  grpc::ClientContext& context, Options const&,
+  google::cloud::dialogflow::cx::v3::GetAgentRequest const& request) {
+    google::cloud::dialogflow::cx::v3::Agent response;
+    auto status =
+        grpc_stub_->GetAgent(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Agent>
 DefaultAgentsStub::CreateAgent(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::dialogflow::cx::v3::CreateAgentRequest const& request) {
-  google::cloud::dialogflow::cx::v3::Agent response;
-  auto status = grpc_stub_->CreateAgent(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::dialogflow::cx::v3::CreateAgentRequest const& request) {
+    google::cloud::dialogflow::cx::v3::Agent response;
+    auto status =
+        grpc_stub_->CreateAgent(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Agent>
 DefaultAgentsStub::UpdateAgent(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::dialogflow::cx::v3::UpdateAgentRequest const& request) {
-  google::cloud::dialogflow::cx::v3::Agent response;
-  auto status = grpc_stub_->UpdateAgent(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::dialogflow::cx::v3::UpdateAgentRequest const& request) {
+    google::cloud::dialogflow::cx::v3::Agent response;
+    auto status =
+        grpc_stub_->UpdateAgent(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-Status DefaultAgentsStub::DeleteAgent(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::dialogflow::cx::v3::DeleteAgentRequest const& request) {
-  google::protobuf::Empty response;
-  auto status = grpc_stub_->DeleteAgent(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return google::cloud::Status();
+Status
+DefaultAgentsStub::DeleteAgent(
+  grpc::ClientContext& context, Options const&,
+  google::cloud::dialogflow::cx::v3::DeleteAgentRequest const& request) {
+    google::protobuf::Empty response;
+    auto status =
+        grpc_stub_->DeleteAgent(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return google::cloud::Status();
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultAgentsStub::AsyncExportAgent(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::dialogflow::cx::v3::ExportAgentRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::dialogflow::cx::v3::ExportAgentRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::dialogflow::cx::v3::ExportAgentRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::dialogflow::cx::v3::ExportAgentRequest,
+                                    google::longrunning::Operation>(
       cq,
-      [this](
-          grpc::ClientContext* context,
-          google::cloud::dialogflow::cx::v3::ExportAgentRequest const& request,
-          grpc::CompletionQueue* cq) {
+      [this](grpc::ClientContext* context,
+             google::cloud::dialogflow::cx::v3::ExportAgentRequest const& request,
+             grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncExportAgent(context, request, cq);
       },
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation> DefaultAgentsStub::ExportAgent(
-    grpc::ClientContext& context, Options,
-    google::cloud::dialogflow::cx::v3::ExportAgentRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->ExportAgent(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::longrunning::Operation>
+DefaultAgentsStub::ExportAgent(
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::dialogflow::cx::v3::ExportAgentRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->ExportAgent(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultAgentsStub::AsyncRestoreAgent(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::dialogflow::cx::v3::RestoreAgentRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::dialogflow::cx::v3::RestoreAgentRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::dialogflow::cx::v3::RestoreAgentRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::dialogflow::cx::v3::RestoreAgentRequest,
+                                    google::longrunning::Operation>(
       cq,
-      [this](
-          grpc::ClientContext* context,
-          google::cloud::dialogflow::cx::v3::RestoreAgentRequest const& request,
-          grpc::CompletionQueue* cq) {
+      [this](grpc::ClientContext* context,
+             google::cloud::dialogflow::cx::v3::RestoreAgentRequest const& request,
+             grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncRestoreAgent(context, request, cq);
       },
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation> DefaultAgentsStub::RestoreAgent(
-    grpc::ClientContext& context, Options,
-    google::cloud::dialogflow::cx::v3::RestoreAgentRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->RestoreAgent(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::longrunning::Operation>
+DefaultAgentsStub::RestoreAgent(
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::dialogflow::cx::v3::RestoreAgentRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->RestoreAgent(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::AgentValidationResult>
 DefaultAgentsStub::ValidateAgent(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::dialogflow::cx::v3::ValidateAgentRequest const& request) {
-  google::cloud::dialogflow::cx::v3::AgentValidationResult response;
-  auto status = grpc_stub_->ValidateAgent(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::dialogflow::cx::v3::ValidateAgentRequest const& request) {
+    google::cloud::dialogflow::cx::v3::AgentValidationResult response;
+    auto status =
+        grpc_stub_->ValidateAgent(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::AgentValidationResult>
 DefaultAgentsStub::GetAgentValidationResult(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::dialogflow::cx::v3::GetAgentValidationResultRequest const&
-        request) {
-  google::cloud::dialogflow::cx::v3::AgentValidationResult response;
-  auto status =
-      grpc_stub_->GetAgentValidationResult(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::dialogflow::cx::v3::GetAgentValidationResultRequest const& request) {
+    google::cloud::dialogflow::cx::v3::AgentValidationResult response;
+    auto status =
+        grpc_stub_->GetAgentValidationResult(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::GenerativeSettings>
 DefaultAgentsStub::GetGenerativeSettings(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::dialogflow::cx::v3::GetGenerativeSettingsRequest const&
-        request) {
-  google::cloud::dialogflow::cx::v3::GenerativeSettings response;
-  auto status = grpc_stub_->GetGenerativeSettings(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::dialogflow::cx::v3::GetGenerativeSettingsRequest const& request) {
+    google::cloud::dialogflow::cx::v3::GenerativeSettings response;
+    auto status =
+        grpc_stub_->GetGenerativeSettings(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::GenerativeSettings>
 DefaultAgentsStub::UpdateGenerativeSettings(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::dialogflow::cx::v3::UpdateGenerativeSettingsRequest const&
-        request) {
-  google::cloud::dialogflow::cx::v3::GenerativeSettings response;
-  auto status =
-      grpc_stub_->UpdateGenerativeSettings(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::dialogflow::cx::v3::UpdateGenerativeSettingsRequest const& request) {
+    google::cloud::dialogflow::cx::v3::GenerativeSettings response;
+    auto status =
+        grpc_stub_->UpdateGenerativeSettings(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 DefaultAgentsStub::ListLocations(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::location::ListLocationsRequest const& request) {
-  google::cloud::location::ListLocationsResponse response;
-  auto status = locations_stub_->ListLocations(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::location::ListLocationsRequest const& request) {
+    google::cloud::location::ListLocationsResponse response;
+    auto status =
+        locations_stub_->ListLocations(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-StatusOr<google::cloud::location::Location> DefaultAgentsStub::GetLocation(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::location::GetLocationRequest const& request) {
-  google::cloud::location::Location response;
-  auto status = locations_stub_->GetLocation(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::cloud::location::Location>
+DefaultAgentsStub::GetLocation(
+  grpc::ClientContext& context, Options const&,
+  google::cloud::location::GetLocationRequest const& request) {
+    google::cloud::location::Location response;
+    auto status =
+        locations_stub_->GetLocation(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
 DefaultAgentsStub::ListOperations(
-    grpc::ClientContext& context, Options const&,
-    google::longrunning::ListOperationsRequest const& request) {
-  google::longrunning::ListOperationsResponse response;
-  auto status = operations_stub_->ListOperations(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::longrunning::ListOperationsRequest const& request) {
+    google::longrunning::ListOperationsResponse response;
+    auto status =
+        operations_stub_->ListOperations(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-StatusOr<google::longrunning::Operation> DefaultAgentsStub::GetOperation(
-    grpc::ClientContext& context, Options const&,
-    google::longrunning::GetOperationRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = operations_stub_->GetOperation(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::longrunning::Operation>
+DefaultAgentsStub::GetOperation(
+  grpc::ClientContext& context, Options const&,
+  google::longrunning::GetOperationRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        operations_stub_->GetOperation(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-Status DefaultAgentsStub::CancelOperation(
-    grpc::ClientContext& context, Options const&,
-    google::longrunning::CancelOperationRequest const& request) {
-  google::protobuf::Empty response;
-  auto status = operations_stub_->CancelOperation(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return google::cloud::Status();
+Status
+DefaultAgentsStub::CancelOperation(
+  grpc::ClientContext& context, Options const&,
+  google::longrunning::CancelOperationRequest const& request) {
+    google::protobuf::Empty response;
+    auto status =
+        operations_stub_->CancelOperation(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return google::cloud::Status();
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -285,14 +301,13 @@ future<Status> DefaultAgentsStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(
-             cq,
-             [this](grpc::ClientContext* context,
-                    google::longrunning::CancelOperationRequest const& request,
-                    grpc::CompletionQueue* cq) {
-               return operations_stub_->AsyncCancelOperation(context, request,
-                                                             cq);
-             },
-             request, std::move(context))
+      cq,
+      [this](grpc::ClientContext* context,
+             google::longrunning::CancelOperationRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return operations_stub_->AsyncCancelOperation(context, request, cq);
+      },
+      request, std::move(context))
       .then([](future<StatusOr<google::protobuf::Empty>> f) {
         return f.get().status();
       });

@@ -35,33 +35,30 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options AlloyDBAdminDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_ALLOY_DB_ADMIN_ENDPOINT", "",
-      "GOOGLE_CLOUD_CPP_ALLOY_DB_ADMIN_AUTHORITY", "alloydb.googleapis.com");
+      std::move(options), "GOOGLE_CLOUD_CPP_ALLOY_DB_ADMIN_ENDPOINT",
+      "", "GOOGLE_CLOUD_CPP_ALLOY_DB_ADMIN_AUTHORITY",
+      "alloydb.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<alloydb_v1::AlloyDBAdminRetryPolicyOption>()) {
     options.set<alloydb_v1::AlloyDBAdminRetryPolicyOption>(
-        alloydb_v1::AlloyDBAdminLimitedTimeRetryPolicy(std::chrono::minutes(30))
-            .clone());
+        alloydb_v1::AlloyDBAdminLimitedTimeRetryPolicy(
+            std::chrono::minutes(30)).clone());
   }
   if (!options.has<alloydb_v1::AlloyDBAdminBackoffPolicyOption>()) {
     options.set<alloydb_v1::AlloyDBAdminBackoffPolicyOption>(
-        ExponentialBackoffPolicy(
-            std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
-            .clone());
+        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
   }
   if (!options.has<alloydb_v1::AlloyDBAdminPollingPolicyOption>()) {
     options.set<alloydb_v1::AlloyDBAdminPollingPolicyOption>(
-        GenericPollingPolicy<alloydb_v1::AlloyDBAdminRetryPolicyOption::Type,
-                             alloydb_v1::AlloyDBAdminBackoffPolicyOption::Type>(
+        GenericPollingPolicy<
+            alloydb_v1::AlloyDBAdminRetryPolicyOption::Type,
+            alloydb_v1::AlloyDBAdminBackoffPolicyOption::Type>(
             options.get<alloydb_v1::AlloyDBAdminRetryPolicyOption>()->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                     std::chrono::minutes(5), kBackoffScaling)
-                .clone())
-            .clone());
+            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
   }
-  if (!options
-           .has<alloydb_v1::AlloyDBAdminConnectionIdempotencyPolicyOption>()) {
+  if (!options.has<alloydb_v1::AlloyDBAdminConnectionIdempotencyPolicyOption>()) {
     options.set<alloydb_v1::AlloyDBAdminConnectionIdempotencyPolicyOption>(
         alloydb_v1::MakeDefaultAlloyDBAdminConnectionIdempotencyPolicy());
   }

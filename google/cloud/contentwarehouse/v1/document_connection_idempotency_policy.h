@@ -35,42 +35,38 @@ class DocumentServiceConnectionIdempotencyPolicy {
   virtual ~DocumentServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<DocumentServiceConnectionIdempotencyPolicy> clone()
-      const;
+  virtual std::unique_ptr<DocumentServiceConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency CreateDocument(
-      google::cloud::contentwarehouse::v1::CreateDocumentRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  CreateDocument(google::cloud::contentwarehouse::v1::CreateDocumentRequest const& request);
 
-  virtual google::cloud::Idempotency GetDocument(
-      google::cloud::contentwarehouse::v1::GetDocumentRequest const& request);
+  virtual google::cloud::Idempotency
+  GetDocument(google::cloud::contentwarehouse::v1::GetDocumentRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateDocument(
-      google::cloud::contentwarehouse::v1::UpdateDocumentRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  UpdateDocument(google::cloud::contentwarehouse::v1::UpdateDocumentRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteDocument(
-      google::cloud::contentwarehouse::v1::DeleteDocumentRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  DeleteDocument(google::cloud::contentwarehouse::v1::DeleteDocumentRequest const& request);
 
-  virtual google::cloud::Idempotency SearchDocuments(
-      google::cloud::contentwarehouse::v1::SearchDocumentsRequest request);
+  virtual google::cloud::Idempotency
+  SearchDocuments(google::cloud::contentwarehouse::v1::SearchDocumentsRequest request);
 
-  virtual google::cloud::Idempotency LockDocument(
-      google::cloud::contentwarehouse::v1::LockDocumentRequest const& request);
+  virtual google::cloud::Idempotency
+  LockDocument(google::cloud::contentwarehouse::v1::LockDocumentRequest const& request);
 
-  virtual google::cloud::Idempotency FetchAcl(
-      google::cloud::contentwarehouse::v1::FetchAclRequest const& request);
+  virtual google::cloud::Idempotency
+  FetchAcl(google::cloud::contentwarehouse::v1::FetchAclRequest const& request);
 
-  virtual google::cloud::Idempotency SetAcl(
-      google::cloud::contentwarehouse::v1::SetAclRequest const& request);
+  virtual google::cloud::Idempotency
+  SetAcl(google::cloud::contentwarehouse::v1::SetAclRequest const& request);
 
-  virtual google::cloud::Idempotency GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 };
 
 std::unique_ptr<DocumentServiceConnectionIdempotencyPolicy>
-MakeDefaultDocumentServiceConnectionIdempotencyPolicy();
+    MakeDefaultDocumentServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace contentwarehouse_v1

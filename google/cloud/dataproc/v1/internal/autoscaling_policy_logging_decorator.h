@@ -34,64 +34,68 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class AutoscalingPolicyServiceLogging : public AutoscalingPolicyServiceStub {
  public:
   ~AutoscalingPolicyServiceLogging() override = default;
-  AutoscalingPolicyServiceLogging(
-      std::shared_ptr<AutoscalingPolicyServiceStub> child,
-      TracingOptions tracing_options, std::set<std::string> const& components);
+  AutoscalingPolicyServiceLogging(std::shared_ptr<AutoscalingPolicyServiceStub> child,
+                       TracingOptions tracing_options,
+                       std::set<std::string> const& components);
 
-  StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy>
-  CreateAutoscalingPolicy(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::dataproc::v1::CreateAutoscalingPolicyRequest const&
-          request) override;
+  StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy> CreateAutoscalingPolicy(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::dataproc::v1::CreateAutoscalingPolicyRequest const& request) override;
 
-  StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy>
-  UpdateAutoscalingPolicy(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::dataproc::v1::UpdateAutoscalingPolicyRequest const&
-          request) override;
+  StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy> UpdateAutoscalingPolicy(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::dataproc::v1::UpdateAutoscalingPolicyRequest const& request) override;
 
   StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy> GetAutoscalingPolicy(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::dataproc::v1::GetAutoscalingPolicyRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::dataproc::v1::GetAutoscalingPolicyRequest const& request) override;
 
-  StatusOr<google::cloud::dataproc::v1::ListAutoscalingPoliciesResponse>
-  ListAutoscalingPolicies(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::dataproc::v1::ListAutoscalingPoliciesRequest const&
-          request) override;
+  StatusOr<google::cloud::dataproc::v1::ListAutoscalingPoliciesResponse> ListAutoscalingPolicies(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::dataproc::v1::ListAutoscalingPoliciesRequest const& request) override;
 
   Status DeleteAutoscalingPolicy(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::dataproc::v1::DeleteAutoscalingPolicyRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::dataproc::v1::DeleteAutoscalingPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status DeleteOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::DeleteOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:

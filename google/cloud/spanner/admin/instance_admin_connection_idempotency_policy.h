@@ -35,104 +35,89 @@ class InstanceAdminConnectionIdempotencyPolicy {
   virtual ~InstanceAdminConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<InstanceAdminConnectionIdempotencyPolicy> clone()
-      const;
+  virtual std::unique_ptr<InstanceAdminConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency ListInstanceConfigs(
-      google::spanner::admin::instance::v1::ListInstanceConfigsRequest request);
+  virtual google::cloud::Idempotency
+  ListInstanceConfigs(google::spanner::admin::instance::v1::ListInstanceConfigsRequest request);
 
-  virtual google::cloud::Idempotency GetInstanceConfig(
-      google::spanner::admin::instance::v1::GetInstanceConfigRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  GetInstanceConfig(google::spanner::admin::instance::v1::GetInstanceConfigRequest const& request);
 
-  virtual google::cloud::Idempotency CreateInstanceConfig(
-      google::spanner::admin::instance::v1::CreateInstanceConfigRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  CreateInstanceConfig(google::spanner::admin::instance::v1::CreateInstanceConfigRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateInstanceConfig(
-      google::spanner::admin::instance::v1::UpdateInstanceConfigRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  UpdateInstanceConfig(google::spanner::admin::instance::v1::UpdateInstanceConfigRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteInstanceConfig(
-      google::spanner::admin::instance::v1::DeleteInstanceConfigRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  DeleteInstanceConfig(google::spanner::admin::instance::v1::DeleteInstanceConfigRequest const& request);
 
-  virtual google::cloud::Idempotency ListInstanceConfigOperations(
-      google::spanner::admin::instance::v1::ListInstanceConfigOperationsRequest
-          request);
+  virtual google::cloud::Idempotency
+  ListInstanceConfigOperations(google::spanner::admin::instance::v1::ListInstanceConfigOperationsRequest request);
 
-  virtual google::cloud::Idempotency ListInstances(
-      google::spanner::admin::instance::v1::ListInstancesRequest request);
+  virtual google::cloud::Idempotency
+  ListInstances(google::spanner::admin::instance::v1::ListInstancesRequest request);
 
-  virtual google::cloud::Idempotency ListInstancePartitions(
-      google::spanner::admin::instance::v1::ListInstancePartitionsRequest
-          request);
+  virtual google::cloud::Idempotency
+  ListInstancePartitions(google::spanner::admin::instance::v1::ListInstancePartitionsRequest request);
 
-  virtual google::cloud::Idempotency GetInstance(
-      google::spanner::admin::instance::v1::GetInstanceRequest const& request);
+  virtual google::cloud::Idempotency
+  GetInstance(google::spanner::admin::instance::v1::GetInstanceRequest const& request);
 
-  virtual google::cloud::Idempotency CreateInstance(
-      google::spanner::admin::instance::v1::CreateInstanceRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  CreateInstance(google::spanner::admin::instance::v1::CreateInstanceRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateInstance(
-      google::spanner::admin::instance::v1::UpdateInstanceRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  UpdateInstance(google::spanner::admin::instance::v1::UpdateInstanceRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteInstance(
-      google::spanner::admin::instance::v1::DeleteInstanceRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  DeleteInstance(google::spanner::admin::instance::v1::DeleteInstanceRequest const& request);
 
-  virtual google::cloud::Idempotency SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request);
+  virtual google::cloud::Idempotency
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
 
-  virtual google::cloud::Idempotency GetInstancePartition(
-      google::spanner::admin::instance::v1::GetInstancePartitionRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  GetInstancePartition(google::spanner::admin::instance::v1::GetInstancePartitionRequest const& request);
 
-  virtual google::cloud::Idempotency CreateInstancePartition(
-      google::spanner::admin::instance::v1::
-          CreateInstancePartitionRequest const& request);
+  virtual google::cloud::Idempotency
+  CreateInstancePartition(google::spanner::admin::instance::v1::CreateInstancePartitionRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteInstancePartition(
-      google::spanner::admin::instance::v1::
-          DeleteInstancePartitionRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteInstancePartition(google::spanner::admin::instance::v1::DeleteInstancePartitionRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateInstancePartition(
-      google::spanner::admin::instance::v1::
-          UpdateInstancePartitionRequest const& request);
+  virtual google::cloud::Idempotency
+  UpdateInstancePartition(google::spanner::admin::instance::v1::UpdateInstancePartitionRequest const& request);
 
-  virtual google::cloud::Idempotency ListInstancePartitionOperations(
-      google::spanner::admin::instance::v1::
-          ListInstancePartitionOperationsRequest request);
+  virtual google::cloud::Idempotency
+  ListInstancePartitionOperations(google::spanner::admin::instance::v1::ListInstancePartitionOperationsRequest request);
 
-  virtual google::cloud::Idempotency MoveInstance(
-      google::spanner::admin::instance::v1::MoveInstanceRequest const& request);
+  virtual google::cloud::Idempotency
+  MoveInstance(google::spanner::admin::instance::v1::MoveInstanceRequest const& request);
 
-  virtual google::cloud::Idempotency ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual google::cloud::Idempotency
+  ListOperations(google::longrunning::ListOperationsRequest request);
 
-  virtual google::cloud::Idempotency GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
 
-  virtual google::cloud::Idempotency CancelOperation(
-      google::longrunning::CancelOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  CancelOperation(google::longrunning::CancelOperationRequest const& request);
 };
 
 std::unique_ptr<InstanceAdminConnectionIdempotencyPolicy>
-MakeDefaultInstanceAdminConnectionIdempotencyPolicy();
+    MakeDefaultInstanceAdminConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS;  // NOLINT(misc-unused-alias-decls)
+namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS; // NOLINT(misc-unused-alias-decls)
 }  // namespace spanner_admin
 }  // namespace cloud
 }  // namespace google

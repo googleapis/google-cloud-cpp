@@ -34,8 +34,7 @@ DatasetServiceTracingConnection::DatasetServiceTracingConnection(
     : child_(std::move(child)) {}
 
 future<StatusOr<google::cloud::aiplatform::v1::Dataset>>
-DatasetServiceTracingConnection::CreateDataset(
-    google::cloud::aiplatform::v1::CreateDatasetRequest const& request) {
+DatasetServiceTracingConnection::CreateDataset(google::cloud::aiplatform::v1::CreateDatasetRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::DatasetServiceConnection::CreateDataset");
   internal::OTelScope scope(span);
@@ -44,12 +43,12 @@ DatasetServiceTracingConnection::CreateDataset(
 
 StatusOr<google::longrunning::Operation>
 DatasetServiceTracingConnection::CreateDataset(
-    NoAwaitTag,
-    google::cloud::aiplatform::v1::CreateDatasetRequest const& request) {
+    NoAwaitTag, google::cloud::aiplatform::v1::CreateDatasetRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::DatasetServiceConnection::CreateDataset");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->CreateDataset(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->CreateDataset(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::Dataset>>
@@ -58,41 +57,35 @@ DatasetServiceTracingConnection::CreateDataset(
   auto span = internal::MakeSpan(
       "aiplatform_v1::DatasetServiceConnection::CreateDataset");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->CreateDataset(operation));
+  return internal::EndSpan(std::move(span),
+      child_->CreateDataset(operation));
 }
 
 StatusOr<google::cloud::aiplatform::v1::Dataset>
-DatasetServiceTracingConnection::GetDataset(
-    google::cloud::aiplatform::v1::GetDatasetRequest const& request) {
-  auto span =
-      internal::MakeSpan("aiplatform_v1::DatasetServiceConnection::GetDataset");
+DatasetServiceTracingConnection::GetDataset(google::cloud::aiplatform::v1::GetDatasetRequest const& request) {
+  auto span = internal::MakeSpan("aiplatform_v1::DatasetServiceConnection::GetDataset");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetDataset(request));
 }
 
 StatusOr<google::cloud::aiplatform::v1::Dataset>
-DatasetServiceTracingConnection::UpdateDataset(
-    google::cloud::aiplatform::v1::UpdateDatasetRequest const& request) {
-  auto span = internal::MakeSpan(
-      "aiplatform_v1::DatasetServiceConnection::UpdateDataset");
+DatasetServiceTracingConnection::UpdateDataset(google::cloud::aiplatform::v1::UpdateDatasetRequest const& request) {
+  auto span = internal::MakeSpan("aiplatform_v1::DatasetServiceConnection::UpdateDataset");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateDataset(request));
 }
 
 StreamRange<google::cloud::aiplatform::v1::Dataset>
-DatasetServiceTracingConnection::ListDatasets(
-    google::cloud::aiplatform::v1::ListDatasetsRequest request) {
-  auto span = internal::MakeSpan(
-      "aiplatform_v1::DatasetServiceConnection::ListDatasets");
+DatasetServiceTracingConnection::ListDatasets(google::cloud::aiplatform::v1::ListDatasetsRequest request) {
+  auto span = internal::MakeSpan("aiplatform_v1::DatasetServiceConnection::ListDatasets");
   internal::OTelScope scope(span);
   auto sr = child_->ListDatasets(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::aiplatform::v1::Dataset>(std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::aiplatform::v1::Dataset>(
+        std::move(span), std::move(sr));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-DatasetServiceTracingConnection::DeleteDataset(
-    google::cloud::aiplatform::v1::DeleteDatasetRequest const& request) {
+DatasetServiceTracingConnection::DeleteDataset(google::cloud::aiplatform::v1::DeleteDatasetRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::DatasetServiceConnection::DeleteDataset");
   internal::OTelScope scope(span);
@@ -101,12 +94,12 @@ DatasetServiceTracingConnection::DeleteDataset(
 
 StatusOr<google::longrunning::Operation>
 DatasetServiceTracingConnection::DeleteDataset(
-    NoAwaitTag,
-    google::cloud::aiplatform::v1::DeleteDatasetRequest const& request) {
+    NoAwaitTag, google::cloud::aiplatform::v1::DeleteDatasetRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::DatasetServiceConnection::DeleteDataset");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->DeleteDataset(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->DeleteDataset(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
@@ -115,84 +108,82 @@ DatasetServiceTracingConnection::DeleteDataset(
   auto span = internal::MakeSpan(
       "aiplatform_v1::DatasetServiceConnection::DeleteDataset");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->DeleteDataset(operation));
+  return internal::EndSpan(std::move(span),
+      child_->DeleteDataset(operation));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::ImportDataResponse>>
-DatasetServiceTracingConnection::ImportData(
-    google::cloud::aiplatform::v1::ImportDataRequest const& request) {
-  auto span =
-      internal::MakeSpan("aiplatform_v1::DatasetServiceConnection::ImportData");
+DatasetServiceTracingConnection::ImportData(google::cloud::aiplatform::v1::ImportDataRequest const& request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::DatasetServiceConnection::ImportData");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->ImportData(request));
 }
 
 StatusOr<google::longrunning::Operation>
 DatasetServiceTracingConnection::ImportData(
-    NoAwaitTag,
-    google::cloud::aiplatform::v1::ImportDataRequest const& request) {
-  auto span =
-      internal::MakeSpan("aiplatform_v1::DatasetServiceConnection::ImportData");
+    NoAwaitTag, google::cloud::aiplatform::v1::ImportDataRequest const& request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::DatasetServiceConnection::ImportData");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->ImportData(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->ImportData(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::ImportDataResponse>>
 DatasetServiceTracingConnection::ImportData(
     google::longrunning::Operation const& operation) {
-  auto span =
-      internal::MakeSpan("aiplatform_v1::DatasetServiceConnection::ImportData");
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::DatasetServiceConnection::ImportData");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->ImportData(operation));
+  return internal::EndSpan(std::move(span),
+      child_->ImportData(operation));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::ExportDataResponse>>
-DatasetServiceTracingConnection::ExportData(
-    google::cloud::aiplatform::v1::ExportDataRequest const& request) {
-  auto span =
-      internal::MakeSpan("aiplatform_v1::DatasetServiceConnection::ExportData");
+DatasetServiceTracingConnection::ExportData(google::cloud::aiplatform::v1::ExportDataRequest const& request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::DatasetServiceConnection::ExportData");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->ExportData(request));
 }
 
 StatusOr<google::longrunning::Operation>
 DatasetServiceTracingConnection::ExportData(
-    NoAwaitTag,
-    google::cloud::aiplatform::v1::ExportDataRequest const& request) {
-  auto span =
-      internal::MakeSpan("aiplatform_v1::DatasetServiceConnection::ExportData");
+    NoAwaitTag, google::cloud::aiplatform::v1::ExportDataRequest const& request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::DatasetServiceConnection::ExportData");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->ExportData(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->ExportData(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::ExportDataResponse>>
 DatasetServiceTracingConnection::ExportData(
     google::longrunning::Operation const& operation) {
-  auto span =
-      internal::MakeSpan("aiplatform_v1::DatasetServiceConnection::ExportData");
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::DatasetServiceConnection::ExportData");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->ExportData(operation));
+  return internal::EndSpan(std::move(span),
+      child_->ExportData(operation));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DatasetVersion>>
-DatasetServiceTracingConnection::CreateDatasetVersion(
-    google::cloud::aiplatform::v1::CreateDatasetVersionRequest const& request) {
+DatasetServiceTracingConnection::CreateDatasetVersion(google::cloud::aiplatform::v1::CreateDatasetVersionRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::DatasetServiceConnection::CreateDatasetVersion");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->CreateDatasetVersion(request));
+  return internal::EndSpan(std::move(span), child_->CreateDatasetVersion(request));
 }
 
 StatusOr<google::longrunning::Operation>
 DatasetServiceTracingConnection::CreateDatasetVersion(
-    NoAwaitTag,
-    google::cloud::aiplatform::v1::CreateDatasetVersionRequest const& request) {
+    NoAwaitTag, google::cloud::aiplatform::v1::CreateDatasetVersionRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::DatasetServiceConnection::CreateDatasetVersion");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span,
-                           child_->CreateDatasetVersion(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->CreateDatasetVersion(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DatasetVersion>>
@@ -202,37 +193,32 @@ DatasetServiceTracingConnection::CreateDatasetVersion(
       "aiplatform_v1::DatasetServiceConnection::CreateDatasetVersion");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->CreateDatasetVersion(operation));
+      child_->CreateDatasetVersion(operation));
 }
 
 StatusOr<google::cloud::aiplatform::v1::DatasetVersion>
-DatasetServiceTracingConnection::UpdateDatasetVersion(
-    google::cloud::aiplatform::v1::UpdateDatasetVersionRequest const& request) {
-  auto span = internal::MakeSpan(
-      "aiplatform_v1::DatasetServiceConnection::UpdateDatasetVersion");
+DatasetServiceTracingConnection::UpdateDatasetVersion(google::cloud::aiplatform::v1::UpdateDatasetVersionRequest const& request) {
+  auto span = internal::MakeSpan("aiplatform_v1::DatasetServiceConnection::UpdateDatasetVersion");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateDatasetVersion(request));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-DatasetServiceTracingConnection::DeleteDatasetVersion(
-    google::cloud::aiplatform::v1::DeleteDatasetVersionRequest const& request) {
+DatasetServiceTracingConnection::DeleteDatasetVersion(google::cloud::aiplatform::v1::DeleteDatasetVersionRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::DatasetServiceConnection::DeleteDatasetVersion");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->DeleteDatasetVersion(request));
+  return internal::EndSpan(std::move(span), child_->DeleteDatasetVersion(request));
 }
 
 StatusOr<google::longrunning::Operation>
 DatasetServiceTracingConnection::DeleteDatasetVersion(
-    NoAwaitTag,
-    google::cloud::aiplatform::v1::DeleteDatasetVersionRequest const& request) {
+    NoAwaitTag, google::cloud::aiplatform::v1::DeleteDatasetVersionRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::DatasetServiceConnection::DeleteDatasetVersion");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span,
-                           child_->DeleteDatasetVersion(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->DeleteDatasetVersion(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
@@ -242,51 +228,41 @@ DatasetServiceTracingConnection::DeleteDatasetVersion(
       "aiplatform_v1::DatasetServiceConnection::DeleteDatasetVersion");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->DeleteDatasetVersion(operation));
+      child_->DeleteDatasetVersion(operation));
 }
 
 StatusOr<google::cloud::aiplatform::v1::DatasetVersion>
-DatasetServiceTracingConnection::GetDatasetVersion(
-    google::cloud::aiplatform::v1::GetDatasetVersionRequest const& request) {
-  auto span = internal::MakeSpan(
-      "aiplatform_v1::DatasetServiceConnection::GetDatasetVersion");
+DatasetServiceTracingConnection::GetDatasetVersion(google::cloud::aiplatform::v1::GetDatasetVersionRequest const& request) {
+  auto span = internal::MakeSpan("aiplatform_v1::DatasetServiceConnection::GetDatasetVersion");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetDatasetVersion(request));
 }
 
 StreamRange<google::cloud::aiplatform::v1::DatasetVersion>
-DatasetServiceTracingConnection::ListDatasetVersions(
-    google::cloud::aiplatform::v1::ListDatasetVersionsRequest request) {
-  auto span = internal::MakeSpan(
-      "aiplatform_v1::DatasetServiceConnection::ListDatasetVersions");
+DatasetServiceTracingConnection::ListDatasetVersions(google::cloud::aiplatform::v1::ListDatasetVersionsRequest request) {
+  auto span = internal::MakeSpan("aiplatform_v1::DatasetServiceConnection::ListDatasetVersions");
   internal::OTelScope scope(span);
   auto sr = child_->ListDatasetVersions(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::aiplatform::v1::DatasetVersion>(std::move(span),
-                                                     std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::aiplatform::v1::DatasetVersion>(
+        std::move(span), std::move(sr));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DatasetVersion>>
-DatasetServiceTracingConnection::RestoreDatasetVersion(
-    google::cloud::aiplatform::v1::RestoreDatasetVersionRequest const&
-        request) {
+DatasetServiceTracingConnection::RestoreDatasetVersion(google::cloud::aiplatform::v1::RestoreDatasetVersionRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::DatasetServiceConnection::RestoreDatasetVersion");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->RestoreDatasetVersion(request));
+  return internal::EndSpan(std::move(span), child_->RestoreDatasetVersion(request));
 }
 
 StatusOr<google::longrunning::Operation>
 DatasetServiceTracingConnection::RestoreDatasetVersion(
-    NoAwaitTag,
-    google::cloud::aiplatform::v1::RestoreDatasetVersionRequest const&
-        request) {
+    NoAwaitTag, google::cloud::aiplatform::v1::RestoreDatasetVersionRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::DatasetServiceConnection::RestoreDatasetVersion");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->RestoreDatasetVersion(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->RestoreDatasetVersion(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DatasetVersion>>
@@ -296,47 +272,38 @@ DatasetServiceTracingConnection::RestoreDatasetVersion(
       "aiplatform_v1::DatasetServiceConnection::RestoreDatasetVersion");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->RestoreDatasetVersion(operation));
+      child_->RestoreDatasetVersion(operation));
 }
 
 StreamRange<google::cloud::aiplatform::v1::DataItem>
-DatasetServiceTracingConnection::ListDataItems(
-    google::cloud::aiplatform::v1::ListDataItemsRequest request) {
-  auto span = internal::MakeSpan(
-      "aiplatform_v1::DatasetServiceConnection::ListDataItems");
+DatasetServiceTracingConnection::ListDataItems(google::cloud::aiplatform::v1::ListDataItemsRequest request) {
+  auto span = internal::MakeSpan("aiplatform_v1::DatasetServiceConnection::ListDataItems");
   internal::OTelScope scope(span);
   auto sr = child_->ListDataItems(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::aiplatform::v1::DataItem>(std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::aiplatform::v1::DataItem>(
+        std::move(span), std::move(sr));
 }
 
 StreamRange<google::cloud::aiplatform::v1::DataItemView>
-DatasetServiceTracingConnection::SearchDataItems(
-    google::cloud::aiplatform::v1::SearchDataItemsRequest request) {
-  auto span = internal::MakeSpan(
-      "aiplatform_v1::DatasetServiceConnection::SearchDataItems");
+DatasetServiceTracingConnection::SearchDataItems(google::cloud::aiplatform::v1::SearchDataItemsRequest request) {
+  auto span = internal::MakeSpan("aiplatform_v1::DatasetServiceConnection::SearchDataItems");
   internal::OTelScope scope(span);
   auto sr = child_->SearchDataItems(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::aiplatform::v1::DataItemView>(std::move(span),
-                                                   std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::aiplatform::v1::DataItemView>(
+        std::move(span), std::move(sr));
 }
 
 StreamRange<google::cloud::aiplatform::v1::SavedQuery>
-DatasetServiceTracingConnection::ListSavedQueries(
-    google::cloud::aiplatform::v1::ListSavedQueriesRequest request) {
-  auto span = internal::MakeSpan(
-      "aiplatform_v1::DatasetServiceConnection::ListSavedQueries");
+DatasetServiceTracingConnection::ListSavedQueries(google::cloud::aiplatform::v1::ListSavedQueriesRequest request) {
+  auto span = internal::MakeSpan("aiplatform_v1::DatasetServiceConnection::ListSavedQueries");
   internal::OTelScope scope(span);
   auto sr = child_->ListSavedQueries(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::aiplatform::v1::SavedQuery>(std::move(span),
-                                                 std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::aiplatform::v1::SavedQuery>(
+        std::move(span), std::move(sr));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-DatasetServiceTracingConnection::DeleteSavedQuery(
-    google::cloud::aiplatform::v1::DeleteSavedQueryRequest const& request) {
+DatasetServiceTracingConnection::DeleteSavedQuery(google::cloud::aiplatform::v1::DeleteSavedQueryRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::DatasetServiceConnection::DeleteSavedQuery");
   internal::OTelScope scope(span);
@@ -345,13 +312,12 @@ DatasetServiceTracingConnection::DeleteSavedQuery(
 
 StatusOr<google::longrunning::Operation>
 DatasetServiceTracingConnection::DeleteSavedQuery(
-    NoAwaitTag,
-    google::cloud::aiplatform::v1::DeleteSavedQueryRequest const& request) {
+    NoAwaitTag, google::cloud::aiplatform::v1::DeleteSavedQueryRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::DatasetServiceConnection::DeleteSavedQuery");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span,
-                           child_->DeleteSavedQuery(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->DeleteSavedQuery(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
@@ -361,116 +327,95 @@ DatasetServiceTracingConnection::DeleteSavedQuery(
       "aiplatform_v1::DatasetServiceConnection::DeleteSavedQuery");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->DeleteSavedQuery(operation));
+      child_->DeleteSavedQuery(operation));
 }
 
 StatusOr<google::cloud::aiplatform::v1::AnnotationSpec>
-DatasetServiceTracingConnection::GetAnnotationSpec(
-    google::cloud::aiplatform::v1::GetAnnotationSpecRequest const& request) {
-  auto span = internal::MakeSpan(
-      "aiplatform_v1::DatasetServiceConnection::GetAnnotationSpec");
+DatasetServiceTracingConnection::GetAnnotationSpec(google::cloud::aiplatform::v1::GetAnnotationSpecRequest const& request) {
+  auto span = internal::MakeSpan("aiplatform_v1::DatasetServiceConnection::GetAnnotationSpec");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetAnnotationSpec(request));
 }
 
 StreamRange<google::cloud::aiplatform::v1::Annotation>
-DatasetServiceTracingConnection::ListAnnotations(
-    google::cloud::aiplatform::v1::ListAnnotationsRequest request) {
-  auto span = internal::MakeSpan(
-      "aiplatform_v1::DatasetServiceConnection::ListAnnotations");
+DatasetServiceTracingConnection::ListAnnotations(google::cloud::aiplatform::v1::ListAnnotationsRequest request) {
+  auto span = internal::MakeSpan("aiplatform_v1::DatasetServiceConnection::ListAnnotations");
   internal::OTelScope scope(span);
   auto sr = child_->ListAnnotations(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::aiplatform::v1::Annotation>(std::move(span),
-                                                 std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::aiplatform::v1::Annotation>(
+        std::move(span), std::move(sr));
 }
 
 StreamRange<google::cloud::location::Location>
-DatasetServiceTracingConnection::ListLocations(
-    google::cloud::location::ListLocationsRequest request) {
-  auto span = internal::MakeSpan(
-      "aiplatform_v1::DatasetServiceConnection::ListLocations");
+DatasetServiceTracingConnection::ListLocations(google::cloud::location::ListLocationsRequest request) {
+  auto span = internal::MakeSpan("aiplatform_v1::DatasetServiceConnection::ListLocations");
   internal::OTelScope scope(span);
   auto sr = child_->ListLocations(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::location::Location>(
-      std::move(span), std::move(sr));
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::location::Location>
-DatasetServiceTracingConnection::GetLocation(
-    google::cloud::location::GetLocationRequest const& request) {
-  auto span = internal::MakeSpan(
-      "aiplatform_v1::DatasetServiceConnection::GetLocation");
+DatasetServiceTracingConnection::GetLocation(google::cloud::location::GetLocationRequest const& request) {
+  auto span = internal::MakeSpan("aiplatform_v1::DatasetServiceConnection::GetLocation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetLocation(request));
 }
 
-StatusOr<google::iam::v1::Policy> DatasetServiceTracingConnection::SetIamPolicy(
-    google::iam::v1::SetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpan(
-      "aiplatform_v1::DatasetServiceConnection::SetIamPolicy");
+StatusOr<google::iam::v1::Policy>
+DatasetServiceTracingConnection::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) {
+  auto span = internal::MakeSpan("aiplatform_v1::DatasetServiceConnection::SetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->SetIamPolicy(request));
 }
 
-StatusOr<google::iam::v1::Policy> DatasetServiceTracingConnection::GetIamPolicy(
-    google::iam::v1::GetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpan(
-      "aiplatform_v1::DatasetServiceConnection::GetIamPolicy");
+StatusOr<google::iam::v1::Policy>
+DatasetServiceTracingConnection::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) {
+  auto span = internal::MakeSpan("aiplatform_v1::DatasetServiceConnection::GetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetIamPolicy(request));
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-DatasetServiceTracingConnection::TestIamPermissions(
-    google::iam::v1::TestIamPermissionsRequest const& request) {
-  auto span = internal::MakeSpan(
-      "aiplatform_v1::DatasetServiceConnection::TestIamPermissions");
+DatasetServiceTracingConnection::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) {
+  auto span = internal::MakeSpan("aiplatform_v1::DatasetServiceConnection::TestIamPermissions");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->TestIamPermissions(request));
 }
 
 StreamRange<google::longrunning::Operation>
-DatasetServiceTracingConnection::ListOperations(
-    google::longrunning::ListOperationsRequest request) {
-  auto span = internal::MakeSpan(
-      "aiplatform_v1::DatasetServiceConnection::ListOperations");
+DatasetServiceTracingConnection::ListOperations(google::longrunning::ListOperationsRequest request) {
+  auto span = internal::MakeSpan("aiplatform_v1::DatasetServiceConnection::ListOperations");
   internal::OTelScope scope(span);
   auto sr = child_->ListOperations(std::move(request));
   return internal::MakeTracedStreamRange<google::longrunning::Operation>(
-      std::move(span), std::move(sr));
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::longrunning::Operation>
-DatasetServiceTracingConnection::GetOperation(
-    google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpan(
-      "aiplatform_v1::DatasetServiceConnection::GetOperation");
+DatasetServiceTracingConnection::GetOperation(google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpan("aiplatform_v1::DatasetServiceConnection::GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOperation(request));
 }
 
-Status DatasetServiceTracingConnection::DeleteOperation(
-    google::longrunning::DeleteOperationRequest const& request) {
-  auto span = internal::MakeSpan(
-      "aiplatform_v1::DatasetServiceConnection::DeleteOperation");
+Status
+DatasetServiceTracingConnection::DeleteOperation(google::longrunning::DeleteOperationRequest const& request) {
+  auto span = internal::MakeSpan("aiplatform_v1::DatasetServiceConnection::DeleteOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteOperation(request));
 }
 
-Status DatasetServiceTracingConnection::CancelOperation(
-    google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpan(
-      "aiplatform_v1::DatasetServiceConnection::CancelOperation");
+Status
+DatasetServiceTracingConnection::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
+  auto span = internal::MakeSpan("aiplatform_v1::DatasetServiceConnection::CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CancelOperation(request));
 }
 
 StatusOr<google::longrunning::Operation>
-DatasetServiceTracingConnection::WaitOperation(
-    google::longrunning::WaitOperationRequest const& request) {
-  auto span = internal::MakeSpan(
-      "aiplatform_v1::DatasetServiceConnection::WaitOperation");
+DatasetServiceTracingConnection::WaitOperation(google::longrunning::WaitOperationRequest const& request) {
+  auto span = internal::MakeSpan("aiplatform_v1::DatasetServiceConnection::WaitOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->WaitOperation(request));
 }

@@ -26,71 +26,59 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-JobServiceConnectionIdempotencyPolicy::
-    ~JobServiceConnectionIdempotencyPolicy() = default;
+JobServiceConnectionIdempotencyPolicy::~JobServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<JobServiceConnectionIdempotencyPolicy>
 JobServiceConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<JobServiceConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency JobServiceConnectionIdempotencyPolicy::CreateJob(
-    google::cloud::talent::v4::CreateJobRequest const&) {
+Idempotency JobServiceConnectionIdempotencyPolicy::CreateJob(google::cloud::talent::v4::CreateJobRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency JobServiceConnectionIdempotencyPolicy::BatchCreateJobs(
-    google::cloud::talent::v4::BatchCreateJobsRequest const&) {
+Idempotency JobServiceConnectionIdempotencyPolicy::BatchCreateJobs(google::cloud::talent::v4::BatchCreateJobsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency JobServiceConnectionIdempotencyPolicy::GetJob(
-    google::cloud::talent::v4::GetJobRequest const&) {
+Idempotency JobServiceConnectionIdempotencyPolicy::GetJob(google::cloud::talent::v4::GetJobRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency JobServiceConnectionIdempotencyPolicy::UpdateJob(
-    google::cloud::talent::v4::UpdateJobRequest const&) {
+Idempotency JobServiceConnectionIdempotencyPolicy::UpdateJob(google::cloud::talent::v4::UpdateJobRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency JobServiceConnectionIdempotencyPolicy::BatchUpdateJobs(
-    google::cloud::talent::v4::BatchUpdateJobsRequest const&) {
+Idempotency JobServiceConnectionIdempotencyPolicy::BatchUpdateJobs(google::cloud::talent::v4::BatchUpdateJobsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency JobServiceConnectionIdempotencyPolicy::DeleteJob(
-    google::cloud::talent::v4::DeleteJobRequest const&) {
+Idempotency JobServiceConnectionIdempotencyPolicy::DeleteJob(google::cloud::talent::v4::DeleteJobRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency JobServiceConnectionIdempotencyPolicy::BatchDeleteJobs(
-    google::cloud::talent::v4::BatchDeleteJobsRequest const&) {
+Idempotency JobServiceConnectionIdempotencyPolicy::BatchDeleteJobs(google::cloud::talent::v4::BatchDeleteJobsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency JobServiceConnectionIdempotencyPolicy::ListJobs(
-    google::cloud::talent::v4::ListJobsRequest) {  // NOLINT
+Idempotency JobServiceConnectionIdempotencyPolicy::ListJobs(google::cloud::talent::v4::ListJobsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency JobServiceConnectionIdempotencyPolicy::SearchJobs(
-    google::cloud::talent::v4::SearchJobsRequest const&) {
+Idempotency JobServiceConnectionIdempotencyPolicy::SearchJobs(google::cloud::talent::v4::SearchJobsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency JobServiceConnectionIdempotencyPolicy::SearchJobsForAlert(
-    google::cloud::talent::v4::SearchJobsRequest const&) {
+Idempotency JobServiceConnectionIdempotencyPolicy::SearchJobsForAlert(google::cloud::talent::v4::SearchJobsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency JobServiceConnectionIdempotencyPolicy::GetOperation(
-    google::longrunning::GetOperationRequest const&) {
+Idempotency JobServiceConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<JobServiceConnectionIdempotencyPolicy>
-MakeDefaultJobServiceConnectionIdempotencyPolicy() {
+    MakeDefaultJobServiceConnectionIdempotencyPolicy() {
   return std::make_unique<JobServiceConnectionIdempotencyPolicy>();
 }
 

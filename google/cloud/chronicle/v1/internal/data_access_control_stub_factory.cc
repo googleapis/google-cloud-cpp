@@ -42,26 +42,25 @@ std::shared_ptr<DataAccessControlServiceStub>
 CreateDefaultDataAccessControlServiceStub(
     std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
     Options const& options) {
-  auto channel = auth->CreateChannel(options.get<EndpointOption>(),
-                                     internal::MakeChannelArguments(options));
-  auto service_grpc_stub =
-      google::cloud::chronicle::v1::DataAccessControlService::NewStub(channel);
-  auto service_operations_stub =
-      google::longrunning::Operations::NewStub(channel);
+  auto channel = auth->CreateChannel(
+    options.get<EndpointOption>(), internal::MakeChannelArguments(options));
+  auto service_grpc_stub = google::cloud::chronicle::v1::DataAccessControlService::NewStub(channel);
+  auto service_operations_stub = google::longrunning::Operations::NewStub(channel);
   std::shared_ptr<DataAccessControlServiceStub> stub =
-      std::make_shared<DefaultDataAccessControlServiceStub>(
-          std::move(service_grpc_stub), std::move(service_operations_stub));
+    std::make_shared<DefaultDataAccessControlServiceStub>(std::move(service_grpc_stub), std::move(service_operations_stub));
 
   if (auth->RequiresConfigureContext()) {
-    stub = std::make_shared<DataAccessControlServiceAuth>(std::move(auth),
-                                                          std::move(stub));
+    stub = std::make_shared<DataAccessControlServiceAuth>(
+        std::move(auth), std::move(stub));
   }
   stub = std::make_shared<DataAccessControlServiceMetadata>(
       std::move(stub), std::multimap<std::string, std::string>{});
-  if (internal::Contains(options.get<LoggingComponentsOption>(), "rpc")) {
+  if (internal::Contains(
+      options.get<LoggingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<DataAccessControlServiceLogging>(
-        std::move(stub), options.get<GrpcTracingOptionsOption>(),
+        std::move(stub),
+        options.get<GrpcTracingOptionsOption>(),
         options.get<LoggingComponentsOption>());
   }
   if (internal::TracingEnabled(options)) {

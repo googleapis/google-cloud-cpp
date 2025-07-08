@@ -26,42 +26,35 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-DocumentLinkServiceConnectionIdempotencyPolicy::
-    ~DocumentLinkServiceConnectionIdempotencyPolicy() = default;
+DocumentLinkServiceConnectionIdempotencyPolicy::~DocumentLinkServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<DocumentLinkServiceConnectionIdempotencyPolicy>
 DocumentLinkServiceConnectionIdempotencyPolicy::clone() const {
-  return std::make_unique<DocumentLinkServiceConnectionIdempotencyPolicy>(
-      *this);
+  return std::make_unique<DocumentLinkServiceConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency DocumentLinkServiceConnectionIdempotencyPolicy::ListLinkedTargets(
-    google::cloud::contentwarehouse::v1::ListLinkedTargetsRequest const&) {
+Idempotency DocumentLinkServiceConnectionIdempotencyPolicy::ListLinkedTargets(google::cloud::contentwarehouse::v1::ListLinkedTargetsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DocumentLinkServiceConnectionIdempotencyPolicy::ListLinkedSources(
-    google::cloud::contentwarehouse::v1::ListLinkedSourcesRequest) {  // NOLINT
+Idempotency DocumentLinkServiceConnectionIdempotencyPolicy::ListLinkedSources(google::cloud::contentwarehouse::v1::ListLinkedSourcesRequest) {  // NOLINT
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DocumentLinkServiceConnectionIdempotencyPolicy::CreateDocumentLink(
-    google::cloud::contentwarehouse::v1::CreateDocumentLinkRequest const&) {
+Idempotency DocumentLinkServiceConnectionIdempotencyPolicy::CreateDocumentLink(google::cloud::contentwarehouse::v1::CreateDocumentLinkRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DocumentLinkServiceConnectionIdempotencyPolicy::DeleteDocumentLink(
-    google::cloud::contentwarehouse::v1::DeleteDocumentLinkRequest const&) {
+Idempotency DocumentLinkServiceConnectionIdempotencyPolicy::DeleteDocumentLink(google::cloud::contentwarehouse::v1::DeleteDocumentLinkRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DocumentLinkServiceConnectionIdempotencyPolicy::GetOperation(
-    google::longrunning::GetOperationRequest const&) {
+Idempotency DocumentLinkServiceConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<DocumentLinkServiceConnectionIdempotencyPolicy>
-MakeDefaultDocumentLinkServiceConnectionIdempotencyPolicy() {
+    MakeDefaultDocumentLinkServiceConnectionIdempotencyPolicy() {
   return std::make_unique<DocumentLinkServiceConnectionIdempotencyPolicy>();
 }
 

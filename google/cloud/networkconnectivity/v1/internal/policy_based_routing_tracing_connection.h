@@ -36,78 +36,67 @@ class PolicyBasedRoutingServiceTracingConnection
   ~PolicyBasedRoutingServiceTracingConnection() override = default;
 
   explicit PolicyBasedRoutingServiceTracingConnection(
-      std::shared_ptr<
-          networkconnectivity_v1::PolicyBasedRoutingServiceConnection>
-          child);
+    std::shared_ptr<networkconnectivity_v1::PolicyBasedRoutingServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
   StreamRange<google::cloud::networkconnectivity::v1::PolicyBasedRoute>
-  ListPolicyBasedRoutes(
-      google::cloud::networkconnectivity::v1::ListPolicyBasedRoutesRequest
-          request) override;
+  ListPolicyBasedRoutes(google::cloud::networkconnectivity::v1::ListPolicyBasedRoutesRequest request) override;
 
   StatusOr<google::cloud::networkconnectivity::v1::PolicyBasedRoute>
-  GetPolicyBasedRoute(
-      google::cloud::networkconnectivity::v1::GetPolicyBasedRouteRequest const&
-          request) override;
+  GetPolicyBasedRoute(google::cloud::networkconnectivity::v1::GetPolicyBasedRouteRequest const& request) override;
 
   future<StatusOr<google::cloud::networkconnectivity::v1::PolicyBasedRoute>>
-  CreatePolicyBasedRoute(
-      google::cloud::networkconnectivity::v1::
-          CreatePolicyBasedRouteRequest const& request) override;
+  CreatePolicyBasedRoute(google::cloud::networkconnectivity::v1::CreatePolicyBasedRouteRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> CreatePolicyBasedRoute(
-      NoAwaitTag, google::cloud::networkconnectivity::v1::
-                      CreatePolicyBasedRouteRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  CreatePolicyBasedRoute(NoAwaitTag,
+      google::cloud::networkconnectivity::v1::CreatePolicyBasedRouteRequest const& request) override;
 
   future<StatusOr<google::cloud::networkconnectivity::v1::PolicyBasedRoute>>
   CreatePolicyBasedRoute(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
-  DeletePolicyBasedRoute(
-      google::cloud::networkconnectivity::v1::
-          DeletePolicyBasedRouteRequest const& request) override;
+  DeletePolicyBasedRoute(google::cloud::networkconnectivity::v1::DeletePolicyBasedRouteRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> DeletePolicyBasedRoute(
-      NoAwaitTag, google::cloud::networkconnectivity::v1::
-                      DeletePolicyBasedRouteRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  DeletePolicyBasedRoute(NoAwaitTag,
+      google::cloud::networkconnectivity::v1::DeletePolicyBasedRouteRequest const& request) override;
 
   future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
   DeletePolicyBasedRoute(
       google::longrunning::Operation const& operation) override;
 
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request) override;
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request) override;
 
-  StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request) override;
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request) override;
+  StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request) override;
 
-  Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request) override;
+  Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request) override;
 
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request) override;
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  std::shared_ptr<networkconnectivity_v1::PolicyBasedRoutingServiceConnection>
-      child_;
+  std::shared_ptr<networkconnectivity_v1::PolicyBasedRoutingServiceConnection> child_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -120,8 +109,7 @@ class PolicyBasedRoutingServiceTracingConnection
  */
 std::shared_ptr<networkconnectivity_v1::PolicyBasedRoutingServiceConnection>
 MakePolicyBasedRoutingServiceTracingConnection(
-    std::shared_ptr<networkconnectivity_v1::PolicyBasedRoutingServiceConnection>
-        conn);
+    std::shared_ptr<networkconnectivity_v1::PolicyBasedRoutingServiceConnection> conn);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace networkconnectivity_v1_internal

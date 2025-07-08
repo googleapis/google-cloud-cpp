@@ -17,10 +17,10 @@
 // source: google/cloud/vision/v1/product_search_service.proto
 
 #include "google/cloud/vision/v1/internal/product_search_option_defaults.h"
-#include "google/cloud/vision/v1/product_search_connection.h"
-#include "google/cloud/vision/v1/product_search_options.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
+#include "google/cloud/vision/v1/product_search_connection.h"
+#include "google/cloud/vision/v1/product_search_options.h"
 #include <memory>
 #include <utility>
 
@@ -35,33 +35,30 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options ProductSearchDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_PRODUCT_SEARCH_ENDPOINT", "",
-      "GOOGLE_CLOUD_CPP_PRODUCT_SEARCH_AUTHORITY", "vision.googleapis.com");
+      std::move(options), "GOOGLE_CLOUD_CPP_PRODUCT_SEARCH_ENDPOINT",
+      "", "GOOGLE_CLOUD_CPP_PRODUCT_SEARCH_AUTHORITY",
+      "vision.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<vision_v1::ProductSearchRetryPolicyOption>()) {
     options.set<vision_v1::ProductSearchRetryPolicyOption>(
-        vision_v1::ProductSearchLimitedTimeRetryPolicy(std::chrono::minutes(30))
-            .clone());
+        vision_v1::ProductSearchLimitedTimeRetryPolicy(
+            std::chrono::minutes(30)).clone());
   }
   if (!options.has<vision_v1::ProductSearchBackoffPolicyOption>()) {
     options.set<vision_v1::ProductSearchBackoffPolicyOption>(
-        ExponentialBackoffPolicy(
-            std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
-            .clone());
+        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
   }
   if (!options.has<vision_v1::ProductSearchPollingPolicyOption>()) {
     options.set<vision_v1::ProductSearchPollingPolicyOption>(
-        GenericPollingPolicy<vision_v1::ProductSearchRetryPolicyOption::Type,
-                             vision_v1::ProductSearchBackoffPolicyOption::Type>(
+        GenericPollingPolicy<
+            vision_v1::ProductSearchRetryPolicyOption::Type,
+            vision_v1::ProductSearchBackoffPolicyOption::Type>(
             options.get<vision_v1::ProductSearchRetryPolicyOption>()->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                     std::chrono::minutes(5), kBackoffScaling)
-                .clone())
-            .clone());
+            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
   }
-  if (!options
-           .has<vision_v1::ProductSearchConnectionIdempotencyPolicyOption>()) {
+  if (!options.has<vision_v1::ProductSearchConnectionIdempotencyPolicyOption>()) {
     options.set<vision_v1::ProductSearchConnectionIdempotencyPolicyOption>(
         vision_v1::MakeDefaultProductSearchConnectionIdempotencyPolicy());
   }

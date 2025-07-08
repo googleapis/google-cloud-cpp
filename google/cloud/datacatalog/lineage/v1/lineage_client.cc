@@ -25,41 +25,30 @@ namespace cloud {
 namespace datacatalog_lineage_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-LineageClient::LineageClient(std::shared_ptr<LineageConnection> connection,
-                             Options opts)
+LineageClient::LineageClient(
+    std::shared_ptr<LineageConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 LineageClient::~LineageClient() = default;
 
-StatusOr<
-    google::cloud::datacatalog::lineage::v1::ProcessOpenLineageRunEventResponse>
-LineageClient::ProcessOpenLineageRunEvent(
-    std::string const& parent, google::protobuf::Struct const& open_lineage,
-    Options opts) {
+StatusOr<google::cloud::datacatalog::lineage::v1::ProcessOpenLineageRunEventResponse>
+LineageClient::ProcessOpenLineageRunEvent(std::string const& parent, google::protobuf::Struct const& open_lineage, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::datacatalog::lineage::v1::ProcessOpenLineageRunEventRequest
-      request;
+  google::cloud::datacatalog::lineage::v1::ProcessOpenLineageRunEventRequest request;
   request.set_parent(parent);
   *request.mutable_open_lineage() = open_lineage;
   return connection_->ProcessOpenLineageRunEvent(request);
 }
 
-StatusOr<
-    google::cloud::datacatalog::lineage::v1::ProcessOpenLineageRunEventResponse>
-LineageClient::ProcessOpenLineageRunEvent(
-    google::cloud::datacatalog::lineage::v1::
-        ProcessOpenLineageRunEventRequest const& request,
-    Options opts) {
+StatusOr<google::cloud::datacatalog::lineage::v1::ProcessOpenLineageRunEventResponse>
+LineageClient::ProcessOpenLineageRunEvent(google::cloud::datacatalog::lineage::v1::ProcessOpenLineageRunEventRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ProcessOpenLineageRunEvent(request);
 }
 
 StatusOr<google::cloud::datacatalog::lineage::v1::Process>
-LineageClient::CreateProcess(
-    std::string const& parent,
-    google::cloud::datacatalog::lineage::v1::Process const& process,
-    Options opts) {
+LineageClient::CreateProcess(std::string const& parent, google::cloud::datacatalog::lineage::v1::Process const& process, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::datacatalog::lineage::v1::CreateProcessRequest request;
   request.set_parent(parent);
@@ -68,18 +57,13 @@ LineageClient::CreateProcess(
 }
 
 StatusOr<google::cloud::datacatalog::lineage::v1::Process>
-LineageClient::CreateProcess(
-    google::cloud::datacatalog::lineage::v1::CreateProcessRequest const&
-        request,
-    Options opts) {
+LineageClient::CreateProcess(google::cloud::datacatalog::lineage::v1::CreateProcessRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateProcess(request);
 }
 
 StatusOr<google::cloud::datacatalog::lineage::v1::Process>
-LineageClient::UpdateProcess(
-    google::cloud::datacatalog::lineage::v1::Process const& process,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+LineageClient::UpdateProcess(google::cloud::datacatalog::lineage::v1::Process const& process, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::datacatalog::lineage::v1::UpdateProcessRequest request;
   *request.mutable_process() = process;
@@ -88,10 +72,7 @@ LineageClient::UpdateProcess(
 }
 
 StatusOr<google::cloud::datacatalog::lineage::v1::Process>
-LineageClient::UpdateProcess(
-    google::cloud::datacatalog::lineage::v1::UpdateProcessRequest const&
-        request,
-    Options opts) {
+LineageClient::UpdateProcess(google::cloud::datacatalog::lineage::v1::UpdateProcessRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateProcess(request);
 }
@@ -105,9 +86,7 @@ LineageClient::GetProcess(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::datacatalog::lineage::v1::Process>
-LineageClient::GetProcess(
-    google::cloud::datacatalog::lineage::v1::GetProcessRequest const& request,
-    Options opts) {
+LineageClient::GetProcess(google::cloud::datacatalog::lineage::v1::GetProcessRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetProcess(request);
 }
@@ -121,9 +100,7 @@ LineageClient::ListProcesses(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::datacatalog::lineage::v1::Process>
-LineageClient::ListProcesses(
-    google::cloud::datacatalog::lineage::v1::ListProcessesRequest request,
-    Options opts) {
+LineageClient::ListProcesses(google::cloud::datacatalog::lineage::v1::ListProcessesRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListProcesses(std::move(request));
 }
@@ -136,8 +113,8 @@ LineageClient::DeleteProcess(std::string const& name, Options opts) {
   return connection_->DeleteProcess(request);
 }
 
-StatusOr<google::longrunning::Operation> LineageClient::DeleteProcess(
-    NoAwaitTag, std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation>
+LineageClient::DeleteProcess(NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::datacatalog::lineage::v1::DeleteProcessRequest request;
   request.set_name(name);
@@ -145,33 +122,25 @@ StatusOr<google::longrunning::Operation> LineageClient::DeleteProcess(
 }
 
 future<StatusOr<google::cloud::datacatalog::lineage::v1::OperationMetadata>>
-LineageClient::DeleteProcess(
-    google::cloud::datacatalog::lineage::v1::DeleteProcessRequest const&
-        request,
-    Options opts) {
+LineageClient::DeleteProcess(google::cloud::datacatalog::lineage::v1::DeleteProcessRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteProcess(request);
 }
 
-StatusOr<google::longrunning::Operation> LineageClient::DeleteProcess(
-    NoAwaitTag,
-    google::cloud::datacatalog::lineage::v1::DeleteProcessRequest const&
-        request,
-    Options opts) {
+StatusOr<google::longrunning::Operation>
+LineageClient::DeleteProcess(NoAwaitTag, google::cloud::datacatalog::lineage::v1::DeleteProcessRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteProcess(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::datacatalog::lineage::v1::OperationMetadata>>
-LineageClient::DeleteProcess(google::longrunning::Operation const& operation,
-                             Options opts) {
+LineageClient::DeleteProcess(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteProcess(operation);
 }
 
-StatusOr<google::cloud::datacatalog::lineage::v1::Run> LineageClient::CreateRun(
-    std::string const& parent,
-    google::cloud::datacatalog::lineage::v1::Run const& run, Options opts) {
+StatusOr<google::cloud::datacatalog::lineage::v1::Run>
+LineageClient::CreateRun(std::string const& parent, google::cloud::datacatalog::lineage::v1::Run const& run, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::datacatalog::lineage::v1::CreateRunRequest request;
   request.set_parent(parent);
@@ -179,16 +148,14 @@ StatusOr<google::cloud::datacatalog::lineage::v1::Run> LineageClient::CreateRun(
   return connection_->CreateRun(request);
 }
 
-StatusOr<google::cloud::datacatalog::lineage::v1::Run> LineageClient::CreateRun(
-    google::cloud::datacatalog::lineage::v1::CreateRunRequest const& request,
-    Options opts) {
+StatusOr<google::cloud::datacatalog::lineage::v1::Run>
+LineageClient::CreateRun(google::cloud::datacatalog::lineage::v1::CreateRunRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateRun(request);
 }
 
-StatusOr<google::cloud::datacatalog::lineage::v1::Run> LineageClient::UpdateRun(
-    google::cloud::datacatalog::lineage::v1::Run const& run,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+StatusOr<google::cloud::datacatalog::lineage::v1::Run>
+LineageClient::UpdateRun(google::cloud::datacatalog::lineage::v1::Run const& run, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::datacatalog::lineage::v1::UpdateRunRequest request;
   *request.mutable_run() = run;
@@ -196,24 +163,22 @@ StatusOr<google::cloud::datacatalog::lineage::v1::Run> LineageClient::UpdateRun(
   return connection_->UpdateRun(request);
 }
 
-StatusOr<google::cloud::datacatalog::lineage::v1::Run> LineageClient::UpdateRun(
-    google::cloud::datacatalog::lineage::v1::UpdateRunRequest const& request,
-    Options opts) {
+StatusOr<google::cloud::datacatalog::lineage::v1::Run>
+LineageClient::UpdateRun(google::cloud::datacatalog::lineage::v1::UpdateRunRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateRun(request);
 }
 
-StatusOr<google::cloud::datacatalog::lineage::v1::Run> LineageClient::GetRun(
-    std::string const& name, Options opts) {
+StatusOr<google::cloud::datacatalog::lineage::v1::Run>
+LineageClient::GetRun(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::datacatalog::lineage::v1::GetRunRequest request;
   request.set_name(name);
   return connection_->GetRun(request);
 }
 
-StatusOr<google::cloud::datacatalog::lineage::v1::Run> LineageClient::GetRun(
-    google::cloud::datacatalog::lineage::v1::GetRunRequest const& request,
-    Options opts) {
+StatusOr<google::cloud::datacatalog::lineage::v1::Run>
+LineageClient::GetRun(google::cloud::datacatalog::lineage::v1::GetRunRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetRun(request);
 }
@@ -227,9 +192,7 @@ LineageClient::ListRuns(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::datacatalog::lineage::v1::Run>
-LineageClient::ListRuns(
-    google::cloud::datacatalog::lineage::v1::ListRunsRequest request,
-    Options opts) {
+LineageClient::ListRuns(google::cloud::datacatalog::lineage::v1::ListRunsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListRuns(std::move(request));
 }
@@ -242,8 +205,8 @@ LineageClient::DeleteRun(std::string const& name, Options opts) {
   return connection_->DeleteRun(request);
 }
 
-StatusOr<google::longrunning::Operation> LineageClient::DeleteRun(
-    NoAwaitTag, std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation>
+LineageClient::DeleteRun(NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::datacatalog::lineage::v1::DeleteRunRequest request;
   request.set_name(name);
@@ -251,33 +214,25 @@ StatusOr<google::longrunning::Operation> LineageClient::DeleteRun(
 }
 
 future<StatusOr<google::cloud::datacatalog::lineage::v1::OperationMetadata>>
-LineageClient::DeleteRun(
-    google::cloud::datacatalog::lineage::v1::DeleteRunRequest const& request,
-    Options opts) {
+LineageClient::DeleteRun(google::cloud::datacatalog::lineage::v1::DeleteRunRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteRun(request);
 }
 
-StatusOr<google::longrunning::Operation> LineageClient::DeleteRun(
-    NoAwaitTag,
-    google::cloud::datacatalog::lineage::v1::DeleteRunRequest const& request,
-    Options opts) {
+StatusOr<google::longrunning::Operation>
+LineageClient::DeleteRun(NoAwaitTag, google::cloud::datacatalog::lineage::v1::DeleteRunRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteRun(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::datacatalog::lineage::v1::OperationMetadata>>
-LineageClient::DeleteRun(google::longrunning::Operation const& operation,
-                         Options opts) {
+LineageClient::DeleteRun(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteRun(operation);
 }
 
 StatusOr<google::cloud::datacatalog::lineage::v1::LineageEvent>
-LineageClient::CreateLineageEvent(
-    std::string const& parent,
-    google::cloud::datacatalog::lineage::v1::LineageEvent const& lineage_event,
-    Options opts) {
+LineageClient::CreateLineageEvent(std::string const& parent, google::cloud::datacatalog::lineage::v1::LineageEvent const& lineage_event, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::datacatalog::lineage::v1::CreateLineageEventRequest request;
   request.set_parent(parent);
@@ -286,10 +241,7 @@ LineageClient::CreateLineageEvent(
 }
 
 StatusOr<google::cloud::datacatalog::lineage::v1::LineageEvent>
-LineageClient::CreateLineageEvent(
-    google::cloud::datacatalog::lineage::v1::CreateLineageEventRequest const&
-        request,
-    Options opts) {
+LineageClient::CreateLineageEvent(google::cloud::datacatalog::lineage::v1::CreateLineageEventRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateLineageEvent(request);
 }
@@ -303,10 +255,7 @@ LineageClient::GetLineageEvent(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::datacatalog::lineage::v1::LineageEvent>
-LineageClient::GetLineageEvent(
-    google::cloud::datacatalog::lineage::v1::GetLineageEventRequest const&
-        request,
-    Options opts) {
+LineageClient::GetLineageEvent(google::cloud::datacatalog::lineage::v1::GetLineageEventRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetLineageEvent(request);
 }
@@ -320,48 +269,39 @@ LineageClient::ListLineageEvents(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::datacatalog::lineage::v1::LineageEvent>
-LineageClient::ListLineageEvents(
-    google::cloud::datacatalog::lineage::v1::ListLineageEventsRequest request,
-    Options opts) {
+LineageClient::ListLineageEvents(google::cloud::datacatalog::lineage::v1::ListLineageEventsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListLineageEvents(std::move(request));
 }
 
-Status LineageClient::DeleteLineageEvent(std::string const& name,
-                                         Options opts) {
+Status
+LineageClient::DeleteLineageEvent(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::datacatalog::lineage::v1::DeleteLineageEventRequest request;
   request.set_name(name);
   return connection_->DeleteLineageEvent(request);
 }
 
-Status LineageClient::DeleteLineageEvent(
-    google::cloud::datacatalog::lineage::v1::DeleteLineageEventRequest const&
-        request,
-    Options opts) {
+Status
+LineageClient::DeleteLineageEvent(google::cloud::datacatalog::lineage::v1::DeleteLineageEventRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteLineageEvent(request);
 }
 
 StreamRange<google::cloud::datacatalog::lineage::v1::Link>
-LineageClient::SearchLinks(
-    google::cloud::datacatalog::lineage::v1::SearchLinksRequest request,
-    Options opts) {
+LineageClient::SearchLinks(google::cloud::datacatalog::lineage::v1::SearchLinksRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SearchLinks(std::move(request));
 }
 
 StreamRange<google::cloud::datacatalog::lineage::v1::ProcessLinks>
-LineageClient::BatchSearchLinkProcesses(
-    google::cloud::datacatalog::lineage::v1::BatchSearchLinkProcessesRequest
-        request,
-    Options opts) {
+LineageClient::BatchSearchLinkProcesses(google::cloud::datacatalog::lineage::v1::BatchSearchLinkProcessesRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->BatchSearchLinkProcesses(std::move(request));
 }
 
-StreamRange<google::longrunning::Operation> LineageClient::ListOperations(
-    std::string const& name, std::string const& filter, Options opts) {
+StreamRange<google::longrunning::Operation>
+LineageClient::ListOperations(std::string const& name, std::string const& filter, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::ListOperationsRequest request;
   request.set_name(name);
@@ -369,48 +309,50 @@ StreamRange<google::longrunning::Operation> LineageClient::ListOperations(
   return connection_->ListOperations(request);
 }
 
-StreamRange<google::longrunning::Operation> LineageClient::ListOperations(
-    google::longrunning::ListOperationsRequest request, Options opts) {
+StreamRange<google::longrunning::Operation>
+LineageClient::ListOperations(google::longrunning::ListOperationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOperations(std::move(request));
 }
 
-StatusOr<google::longrunning::Operation> LineageClient::GetOperation(
-    std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation>
+LineageClient::GetOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
   return connection_->GetOperation(request);
 }
 
-StatusOr<google::longrunning::Operation> LineageClient::GetOperation(
-    google::longrunning::GetOperationRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation>
+LineageClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }
 
-Status LineageClient::DeleteOperation(std::string const& name, Options opts) {
+Status
+LineageClient::DeleteOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::DeleteOperationRequest request;
   request.set_name(name);
   return connection_->DeleteOperation(request);
 }
 
-Status LineageClient::DeleteOperation(
-    google::longrunning::DeleteOperationRequest const& request, Options opts) {
+Status
+LineageClient::DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteOperation(request);
 }
 
-Status LineageClient::CancelOperation(std::string const& name, Options opts) {
+Status
+LineageClient::CancelOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::CancelOperationRequest request;
   request.set_name(name);
   return connection_->CancelOperation(request);
 }
 
-Status LineageClient::CancelOperation(
-    google::longrunning::CancelOperationRequest const& request, Options opts) {
+Status
+LineageClient::CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelOperation(request);
 }

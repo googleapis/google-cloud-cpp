@@ -35,16 +35,19 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class ServicesMetadata : public ServicesStub {
  public:
   ~ServicesMetadata() override = default;
-  ServicesMetadata(std::shared_ptr<ServicesStub> child,
-                   std::multimap<std::string, std::string> fixed_metadata,
-                   std::string api_client_header = "");
+  ServicesMetadata(
+      std::shared_ptr<ServicesStub> child,
+      std::multimap<std::string, std::string> fixed_metadata,
+      std::string api_client_header = "");
 
   StatusOr<google::appengine::v1::ListServicesResponse> ListServices(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::appengine::v1::ListServicesRequest const& request) override;
 
   StatusOr<google::appengine::v1::Service> GetService(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::appengine::v1::GetServiceRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateService(
@@ -54,7 +57,8 @@ class ServicesMetadata : public ServicesStub {
       google::appengine::v1::UpdateServiceRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateService(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::appengine::v1::UpdateServiceRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteService(
@@ -64,7 +68,8 @@ class ServicesMetadata : public ServicesStub {
       google::appengine::v1::DeleteServiceRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteService(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::appengine::v1::DeleteServiceRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -80,7 +85,8 @@ class ServicesMetadata : public ServicesStub {
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context, Options const& options,
+  void SetMetadata(grpc::ClientContext& context,
+                   Options const& options,
                    std::string const& request_params);
   void SetMetadata(grpc::ClientContext& context, Options const& options);
 

@@ -31,10 +31,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * A class to mock `GenAiTuningServiceConnection`.
  *
  * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `GenAiTuningServiceClient`. To do
- * so, construct an object of type `GenAiTuningServiceClient` with an instance
- * of this class. Then use the Google Test framework functions to program the
- * behavior of this mock.
+ * including errors, from an object of type `GenAiTuningServiceClient`. To do so,
+ * construct an object of type `GenAiTuningServiceClient` with an instance of this
+ * class. Then use the Google Test framework functions to program the behavior
+ * of this mock.
  *
  * @see [This example][bq-mock] for how to test your application with GoogleTest.
  * While the example showcases types from the BigQuery library, the underlying
@@ -42,45 +42,37 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockGenAiTuningServiceConnection
-    : public aiplatform_v1::GenAiTuningServiceConnection {
+class MockGenAiTuningServiceConnection : public aiplatform_v1::GenAiTuningServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::aiplatform::v1::TuningJob>, CreateTuningJob,
-      (google::cloud::aiplatform::v1::CreateTuningJobRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::aiplatform::v1::TuningJob>,
+  CreateTuningJob,
+  (google::cloud::aiplatform::v1::CreateTuningJobRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::aiplatform::v1::TuningJob>, GetTuningJob,
-      (google::cloud::aiplatform::v1::GetTuningJobRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::aiplatform::v1::TuningJob>,
+  GetTuningJob,
+  (google::cloud::aiplatform::v1::GetTuningJobRequest const& request), (override));
 
   MOCK_METHOD((StreamRange<google::cloud::aiplatform::v1::TuningJob>),
-              ListTuningJobs,
-              (google::cloud::aiplatform::v1::ListTuningJobsRequest request),
-              (override));
+  ListTuningJobs,
+  (google::cloud::aiplatform::v1::ListTuningJobsRequest request), (override));
 
-  MOCK_METHOD(
-      Status, CancelTuningJob,
-      (google::cloud::aiplatform::v1::CancelTuningJobRequest const& request),
-      (override));
+  MOCK_METHOD(Status,
+  CancelTuningJob,
+  (google::cloud::aiplatform::v1::CancelTuningJobRequest const& request), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// RebaseTunedModel(Matcher<google::cloud::aiplatform::v1::RebaseTunedModelRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, RebaseTunedModel(Matcher<google::cloud::aiplatform::v1::RebaseTunedModelRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::aiplatform::v1::TuningJob>>,
-      RebaseTunedModel,
-      (google::cloud::aiplatform::v1::RebaseTunedModelRequest const& request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::TuningJob>>,
+  RebaseTunedModel,
+  (google::cloud::aiplatform::v1::RebaseTunedModelRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -88,63 +80,61 @@ class MockGenAiTuningServiceConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, RebaseTunedModel(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, RebaseTunedModel,
-      (NoAwaitTag,
-       google::cloud::aiplatform::v1::RebaseTunedModelRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  RebaseTunedModel, (NoAwaitTag,
+    google::cloud::aiplatform::v1::RebaseTunedModelRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, RebaseTunedModel(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, RebaseTunedModel(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::TuningJob>>,
-              RebaseTunedModel,
-              (google::longrunning::Operation const& operation), (override));
+  RebaseTunedModel, (
+    google::longrunning::Operation const& operation), (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::location::Location>), ListLocations,
-              (google::cloud::location::ListLocationsRequest request),
-              (override));
+  MOCK_METHOD((StreamRange<google::cloud::location::Location>),
+  ListLocations,
+  (google::cloud::location::ListLocationsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::location::Location>, GetLocation,
-              (google::cloud::location::GetLocationRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::location::Location>,
+  GetLocation,
+  (google::cloud::location::GetLocationRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, SetIamPolicy,
-              (google::iam::v1::SetIamPolicyRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::iam::v1::Policy>,
+  SetIamPolicy,
+  (google::iam::v1::SetIamPolicyRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, GetIamPolicy,
-              (google::iam::v1::GetIamPolicyRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::iam::v1::Policy>,
+  GetIamPolicy,
+  (google::iam::v1::GetIamPolicyRequest const& request), (override));
 
   MOCK_METHOD(StatusOr<google::iam::v1::TestIamPermissionsResponse>,
-              TestIamPermissions,
-              (google::iam::v1::TestIamPermissionsRequest const& request),
-              (override));
+  TestIamPermissions,
+  (google::iam::v1::TestIamPermissionsRequest const& request), (override));
 
-  MOCK_METHOD((StreamRange<google::longrunning::Operation>), ListOperations,
-              (google::longrunning::ListOperationsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::longrunning::Operation>),
+  ListOperations,
+  (google::longrunning::ListOperationsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
-              (google::longrunning::GetOperationRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  GetOperation,
+  (google::longrunning::GetOperationRequest const& request), (override));
 
-  MOCK_METHOD(Status, DeleteOperation,
-              (google::longrunning::DeleteOperationRequest const& request),
-              (override));
+  MOCK_METHOD(Status,
+  DeleteOperation,
+  (google::longrunning::DeleteOperationRequest const& request), (override));
 
-  MOCK_METHOD(Status, CancelOperation,
-              (google::longrunning::CancelOperationRequest const& request),
-              (override));
+  MOCK_METHOD(Status,
+  CancelOperation,
+  (google::longrunning::CancelOperationRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, WaitOperation,
-              (google::longrunning::WaitOperationRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  WaitOperation,
+  (google::longrunning::WaitOperationRequest const& request), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -36,28 +36,21 @@ class AcceleratorTypesTracingConnection
   ~AcceleratorTypesTracingConnection() override = default;
 
   explicit AcceleratorTypesTracingConnection(
-      std::shared_ptr<compute_accelerator_types_v1::AcceleratorTypesConnection>
-          child);
+    std::shared_ptr<compute_accelerator_types_v1::AcceleratorTypesConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StreamRange<std::pair<
-      std::string, google::cloud::cpp::compute::v1::AcceleratorTypesScopedList>>
-  AggregatedListAcceleratorTypes(
-      google::cloud::cpp::compute::accelerator_types::v1::
-          AggregatedListAcceleratorTypesRequest request) override;
+  StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::AcceleratorTypesScopedList>>
+  AggregatedListAcceleratorTypes(google::cloud::cpp::compute::accelerator_types::v1::AggregatedListAcceleratorTypesRequest request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::AcceleratorType> GetAcceleratorType(
-      google::cloud::cpp::compute::accelerator_types::v1::
-          GetAcceleratorTypeRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::AcceleratorType>
+  GetAcceleratorType(google::cloud::cpp::compute::accelerator_types::v1::GetAcceleratorTypeRequest const& request) override;
 
   StreamRange<google::cloud::cpp::compute::v1::AcceleratorType>
-  ListAcceleratorTypes(google::cloud::cpp::compute::accelerator_types::v1::
-                           ListAcceleratorTypesRequest request) override;
+  ListAcceleratorTypes(google::cloud::cpp::compute::accelerator_types::v1::ListAcceleratorTypesRequest request) override;
 
  private:
-  std::shared_ptr<compute_accelerator_types_v1::AcceleratorTypesConnection>
-      child_;
+  std::shared_ptr<compute_accelerator_types_v1::AcceleratorTypesConnection> child_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -70,8 +63,7 @@ class AcceleratorTypesTracingConnection
  */
 std::shared_ptr<compute_accelerator_types_v1::AcceleratorTypesConnection>
 MakeAcceleratorTypesTracingConnection(
-    std::shared_ptr<compute_accelerator_types_v1::AcceleratorTypesConnection>
-        conn);
+    std::shared_ptr<compute_accelerator_types_v1::AcceleratorTypesConnection> conn);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_accelerator_types_v1_internal

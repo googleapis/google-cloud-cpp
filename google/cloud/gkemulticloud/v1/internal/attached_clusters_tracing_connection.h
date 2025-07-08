@@ -36,105 +36,80 @@ class AttachedClustersTracingConnection
   ~AttachedClustersTracingConnection() override = default;
 
   explicit AttachedClustersTracingConnection(
-      std::shared_ptr<gkemulticloud_v1::AttachedClustersConnection> child);
+    std::shared_ptr<gkemulticloud_v1::AttachedClustersConnection> child);
 
   Options options() override { return child_->options(); }
 
   future<StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>
-  CreateAttachedCluster(
-      google::cloud::gkemulticloud::v1::CreateAttachedClusterRequest const&
-          request) override;
+  CreateAttachedCluster(google::cloud::gkemulticloud::v1::CreateAttachedClusterRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> CreateAttachedCluster(
-      NoAwaitTag,
-      google::cloud::gkemulticloud::v1::CreateAttachedClusterRequest const&
-          request) override;
+  StatusOr<google::longrunning::Operation>
+  CreateAttachedCluster(NoAwaitTag,
+      google::cloud::gkemulticloud::v1::CreateAttachedClusterRequest const& request) override;
 
   future<StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>
   CreateAttachedCluster(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>
-  UpdateAttachedCluster(
-      google::cloud::gkemulticloud::v1::UpdateAttachedClusterRequest const&
-          request) override;
+  UpdateAttachedCluster(google::cloud::gkemulticloud::v1::UpdateAttachedClusterRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> UpdateAttachedCluster(
-      NoAwaitTag,
-      google::cloud::gkemulticloud::v1::UpdateAttachedClusterRequest const&
-          request) override;
+  StatusOr<google::longrunning::Operation>
+  UpdateAttachedCluster(NoAwaitTag,
+      google::cloud::gkemulticloud::v1::UpdateAttachedClusterRequest const& request) override;
 
   future<StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>
   UpdateAttachedCluster(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>
-  ImportAttachedCluster(
-      google::cloud::gkemulticloud::v1::ImportAttachedClusterRequest const&
-          request) override;
+  ImportAttachedCluster(google::cloud::gkemulticloud::v1::ImportAttachedClusterRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> ImportAttachedCluster(
-      NoAwaitTag,
-      google::cloud::gkemulticloud::v1::ImportAttachedClusterRequest const&
-          request) override;
+  StatusOr<google::longrunning::Operation>
+  ImportAttachedCluster(NoAwaitTag,
+      google::cloud::gkemulticloud::v1::ImportAttachedClusterRequest const& request) override;
 
   future<StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>
   ImportAttachedCluster(
       google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>
-  GetAttachedCluster(
-      google::cloud::gkemulticloud::v1::GetAttachedClusterRequest const&
-          request) override;
+  GetAttachedCluster(google::cloud::gkemulticloud::v1::GetAttachedClusterRequest const& request) override;
 
   StreamRange<google::cloud::gkemulticloud::v1::AttachedCluster>
-  ListAttachedClusters(
-      google::cloud::gkemulticloud::v1::ListAttachedClustersRequest request)
-      override;
+  ListAttachedClusters(google::cloud::gkemulticloud::v1::ListAttachedClustersRequest request) override;
 
   future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
-  DeleteAttachedCluster(
-      google::cloud::gkemulticloud::v1::DeleteAttachedClusterRequest const&
-          request) override;
+  DeleteAttachedCluster(google::cloud::gkemulticloud::v1::DeleteAttachedClusterRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> DeleteAttachedCluster(
-      NoAwaitTag,
-      google::cloud::gkemulticloud::v1::DeleteAttachedClusterRequest const&
-          request) override;
+  StatusOr<google::longrunning::Operation>
+  DeleteAttachedCluster(NoAwaitTag,
+      google::cloud::gkemulticloud::v1::DeleteAttachedClusterRequest const& request) override;
 
   future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
   DeleteAttachedCluster(
       google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::gkemulticloud::v1::AttachedServerConfig>
-  GetAttachedServerConfig(
-      google::cloud::gkemulticloud::v1::GetAttachedServerConfigRequest const&
-          request) override;
+  GetAttachedServerConfig(google::cloud::gkemulticloud::v1::GetAttachedServerConfigRequest const& request) override;
 
-  StatusOr<google::cloud::gkemulticloud::v1::
-               GenerateAttachedClusterInstallManifestResponse>
-  GenerateAttachedClusterInstallManifest(
-      google::cloud::gkemulticloud::v1::
-          GenerateAttachedClusterInstallManifestRequest const& request)
-      override;
+  StatusOr<google::cloud::gkemulticloud::v1::GenerateAttachedClusterInstallManifestResponse>
+  GenerateAttachedClusterInstallManifest(google::cloud::gkemulticloud::v1::GenerateAttachedClusterInstallManifestRequest const& request) override;
 
-  StatusOr<google::cloud::gkemulticloud::v1::
-               GenerateAttachedClusterAgentTokenResponse>
-  GenerateAttachedClusterAgentToken(
-      google::cloud::gkemulticloud::v1::
-          GenerateAttachedClusterAgentTokenRequest const& request) override;
+  StatusOr<google::cloud::gkemulticloud::v1::GenerateAttachedClusterAgentTokenResponse>
+  GenerateAttachedClusterAgentToken(google::cloud::gkemulticloud::v1::GenerateAttachedClusterAgentTokenRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request) override;
 
-  Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request) override;
+  Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request) override;
 
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request) override;
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::shared_ptr<gkemulticloud_v1::AttachedClustersConnection> child_;

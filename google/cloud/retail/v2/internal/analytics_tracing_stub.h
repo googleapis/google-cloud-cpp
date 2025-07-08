@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RETAIL_V2_INTERNAL_ANALYTICS_TRACING_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RETAIL_V2_INTERNAL_ANALYTICS_TRACING_STUB_H
 
-#include "google/cloud/retail/v2/internal/analytics_stub.h"
 #include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/options.h"
+#include "google/cloud/retail/v2/internal/analytics_stub.h"
 #include "google/cloud/version.h"
 #include <memory>
 
@@ -36,27 +36,27 @@ class AnalyticsServiceTracingStub : public AnalyticsServiceStub {
  public:
   ~AnalyticsServiceTracingStub() override = default;
 
-  explicit AnalyticsServiceTracingStub(
-      std::shared_ptr<AnalyticsServiceStub> child);
+  explicit AnalyticsServiceTracingStub(std::shared_ptr<AnalyticsServiceStub> child);
 
   future<StatusOr<google::longrunning::Operation>> AsyncExportAnalyticsMetrics(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::retail::v2::ExportAnalyticsMetricsRequest const& request)
-      override;
+      google::cloud::retail::v2::ExportAnalyticsMetricsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> ExportAnalyticsMetrics(
-      grpc::ClientContext& context, Options options,
-      google::cloud::retail::v2::ExportAnalyticsMetricsRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::retail::v2::ExportAnalyticsMetricsRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -73,8 +73,7 @@ class AnalyticsServiceTracingStub : public AnalyticsServiceStub {
 
  private:
   std::shared_ptr<AnalyticsServiceStub> child_;
-  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
-      propagator_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

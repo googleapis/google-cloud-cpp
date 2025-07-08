@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCEMANAGER_V3_INTERNAL_ORGANIZATIONS_METADATA_DECORATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCEMANAGER_V3_INTERNAL_ORGANIZATIONS_METADATA_DECORATOR_H
 
-#include "google/cloud/resourcemanager/v3/internal/organizations_stub.h"
 #include "google/cloud/options.h"
+#include "google/cloud/resourcemanager/v3/internal/organizations_stub.h"
 #include "google/cloud/version.h"
 #include <map>
 #include <memory>
@@ -34,39 +34,44 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class OrganizationsMetadata : public OrganizationsStub {
  public:
   ~OrganizationsMetadata() override = default;
-  OrganizationsMetadata(std::shared_ptr<OrganizationsStub> child,
-                        std::multimap<std::string, std::string> fixed_metadata,
-                        std::string api_client_header = "");
+  OrganizationsMetadata(
+      std::shared_ptr<OrganizationsStub> child,
+      std::multimap<std::string, std::string> fixed_metadata,
+      std::string api_client_header = "");
 
   StatusOr<google::cloud::resourcemanager::v3::Organization> GetOrganization(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::resourcemanager::v3::GetOrganizationRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::resourcemanager::v3::GetOrganizationRequest const& request) override;
 
-  StatusOr<google::cloud::resourcemanager::v3::SearchOrganizationsResponse>
-  SearchOrganizations(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::resourcemanager::v3::SearchOrganizationsRequest const&
-          request) override;
+  StatusOr<google::cloud::resourcemanager::v3::SearchOrganizationsResponse> SearchOrganizations(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::resourcemanager::v3::SearchOrganizationsRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context, Options const& options,
+  void SetMetadata(grpc::ClientContext& context,
+                   Options const& options,
                    std::string const& request_params);
   void SetMetadata(grpc::ClientContext& context, Options const& options);
 

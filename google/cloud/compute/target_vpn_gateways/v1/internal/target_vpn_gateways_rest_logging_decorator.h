@@ -39,84 +39,62 @@ class TargetVpnGatewaysRestLogging : public TargetVpnGatewaysRestStub {
  public:
   ~TargetVpnGatewaysRestLogging() override = default;
   TargetVpnGatewaysRestLogging(std::shared_ptr<TargetVpnGatewaysRestStub> child,
-                               TracingOptions tracing_options,
-                               std::set<std::string> components);
+                       TracingOptions tracing_options,
+                       std::set<std::string> components);
 
-  StatusOr<google::cloud::cpp::compute::v1::TargetVpnGatewayAggregatedList>
-  AggregatedListTargetVpnGateways(
+  StatusOr<google::cloud::cpp::compute::v1::TargetVpnGatewayAggregatedList> AggregatedListTargetVpnGateways(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::target_vpn_gateways::v1::
-          AggregatedListTargetVpnGatewaysRequest const& request) override;
+      Options const& options, google::cloud::cpp::compute::target_vpn_gateways::v1::AggregatedListTargetVpnGatewaysRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncDeleteTargetVpnGateway(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncDeleteTargetVpnGateway(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::target_vpn_gateways::v1::
-          DeleteTargetVpnGatewayRequest const& request) override;
+      google::cloud::cpp::compute::target_vpn_gateways::v1::DeleteTargetVpnGatewayRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteTargetVpnGateway(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::target_vpn_gateways::v1::
-          DeleteTargetVpnGatewayRequest const& request) override;
+      Options const& options, google::cloud::cpp::compute::target_vpn_gateways::v1::DeleteTargetVpnGatewayRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::TargetVpnGateway>
-  GetTargetVpnGateway(google::cloud::rest_internal::RestContext& rest_context,
-                      Options const& options,
-                      google::cloud::cpp::compute::target_vpn_gateways::v1::
-                          GetTargetVpnGatewayRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::TargetVpnGateway> GetTargetVpnGateway(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options, google::cloud::cpp::compute::target_vpn_gateways::v1::GetTargetVpnGatewayRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncInsertTargetVpnGateway(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncInsertTargetVpnGateway(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::target_vpn_gateways::v1::
-          InsertTargetVpnGatewayRequest const& request) override;
+      google::cloud::cpp::compute::target_vpn_gateways::v1::InsertTargetVpnGatewayRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertTargetVpnGateway(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::target_vpn_gateways::v1::
-          InsertTargetVpnGatewayRequest const& request) override;
+      Options const& options, google::cloud::cpp::compute::target_vpn_gateways::v1::InsertTargetVpnGatewayRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::TargetVpnGatewayList>
-  ListTargetVpnGateways(
+  StatusOr<google::cloud::cpp::compute::v1::TargetVpnGatewayList> ListTargetVpnGateways(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::target_vpn_gateways::v1::
-          ListTargetVpnGatewaysRequest const& request) override;
+      Options const& options, google::cloud::cpp::compute::target_vpn_gateways::v1::ListTargetVpnGatewaysRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncSetLabels(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::target_vpn_gateways::v1::
-          SetLabelsRequest const& request) override;
+      google::cloud::cpp::compute::target_vpn_gateways::v1::SetLabelsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::target_vpn_gateways::v1::
-          SetLabelsRequest const& request) override;
+      Options const& options, google::cloud::cpp::compute::target_vpn_gateways::v1::SetLabelsRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncGetOperation(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::region_operations::v1::
-          GetOperationRequest const& request) override;
+      google::cloud::cpp::compute::region_operations::v1::GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::region_operations::v1::
-          DeleteOperationRequest const& request) override;
+      google::cloud::cpp::compute::region_operations::v1::DeleteOperationRequest const& request) override;
 
  private:
   std::shared_ptr<TargetVpnGatewaysRestStub> child_;

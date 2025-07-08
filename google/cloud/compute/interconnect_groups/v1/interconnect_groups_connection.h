@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_INTERCONNECT_GROUPS_V1_INTERCONNECT_GROUPS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_INTERCONNECT_GROUPS_V1_INTERCONNECT_GROUPS_CONNECTION_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/interconnect_groups/v1/interconnect_groups_connection_idempotency_policy.h"
 #include "google/cloud/compute/interconnect_groups/v1/internal/interconnect_groups_retry_traits.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -55,8 +55,7 @@ class InterconnectGroupsRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class InterconnectGroupsLimitedErrorCountRetryPolicy
-    : public InterconnectGroupsRetryPolicy {
+class InterconnectGroupsLimitedErrorCountRetryPolicy : public InterconnectGroupsRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -66,16 +65,14 @@ class InterconnectGroupsLimitedErrorCountRetryPolicy
    *     @p maximum_failures == 0.
    */
   explicit InterconnectGroupsLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   InterconnectGroupsLimitedErrorCountRetryPolicy(
       InterconnectGroupsLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : InterconnectGroupsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {
-  }
+    : InterconnectGroupsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   InterconnectGroupsLimitedErrorCountRetryPolicy(
       InterconnectGroupsLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : InterconnectGroupsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {
-  }
+    : InterconnectGroupsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -95,9 +92,7 @@ class InterconnectGroupsLimitedErrorCountRetryPolicy
   using BaseType = InterconnectGroupsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      compute_interconnect_groups_v1_internal::InterconnectGroupsRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<compute_interconnect_groups_v1_internal::InterconnectGroupsRetryTraits> impl_;
 };
 
 /**
@@ -110,8 +105,7 @@ class InterconnectGroupsLimitedErrorCountRetryPolicy
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class InterconnectGroupsLimitedTimeRetryPolicy
-    : public InterconnectGroupsRetryPolicy {
+class InterconnectGroupsLimitedTimeRetryPolicy : public InterconnectGroupsRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -136,14 +130,12 @@ class InterconnectGroupsLimitedTimeRetryPolicy
   template <typename DurationRep, typename DurationPeriod>
   explicit InterconnectGroupsLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  InterconnectGroupsLimitedTimeRetryPolicy(
-      InterconnectGroupsLimitedTimeRetryPolicy&& rhs) noexcept
-      : InterconnectGroupsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  InterconnectGroupsLimitedTimeRetryPolicy(
-      InterconnectGroupsLimitedTimeRetryPolicy const& rhs) noexcept
-      : InterconnectGroupsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  InterconnectGroupsLimitedTimeRetryPolicy(InterconnectGroupsLimitedTimeRetryPolicy&& rhs) noexcept
+    : InterconnectGroupsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  InterconnectGroupsLimitedTimeRetryPolicy(InterconnectGroupsLimitedTimeRetryPolicy const& rhs) noexcept
+    : InterconnectGroupsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -165,23 +157,20 @@ class InterconnectGroupsLimitedTimeRetryPolicy
   using BaseType = InterconnectGroupsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      compute_interconnect_groups_v1_internal::InterconnectGroupsRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<compute_interconnect_groups_v1_internal::InterconnectGroupsRetryTraits> impl_;
 };
 
 /**
  * The `InterconnectGroupsConnection` object for `InterconnectGroupsClient`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `InterconnectGroupsClient`. This allows users to inject custom
- * behavior (e.g., with a Google Mock object) when writing tests that use
- * objects of type `InterconnectGroupsClient`.
+ * sets in `InterconnectGroupsClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `InterconnectGroupsClient`.
  *
  * To create a concrete instance, see `MakeInterconnectGroupsConnection()`.
  *
- * For mocking, see
- * `compute_interconnect_groups_v1_mocks::MockInterconnectGroupsConnection`.
+ * For mocking, see `compute_interconnect_groups_v1_mocks::MockInterconnectGroupsConnection`.
  */
 class InterconnectGroupsConnection {
  public:
@@ -190,79 +179,58 @@ class InterconnectGroupsConnection {
   virtual Options options() { return Options{}; }
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  CreateMembers(google::cloud::cpp::compute::interconnect_groups::v1::
-                    CreateMembersRequest const& request);
-
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> CreateMembers(
-      NoAwaitTag, google::cloud::cpp::compute::interconnect_groups::v1::
-                      CreateMembersRequest const& request);
-
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  CreateMembers(google::cloud::cpp::compute::v1::Operation const& operation);
-
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteInterconnectGroup(google::cloud::cpp::compute::interconnect_groups::v1::
-                              DeleteInterconnectGroupRequest const& request);
+  CreateMembers(google::cloud::cpp::compute::interconnect_groups::v1::CreateMembersRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteInterconnectGroup(NoAwaitTag,
-                          google::cloud::cpp::compute::interconnect_groups::v1::
-                              DeleteInterconnectGroupRequest const& request);
+  CreateMembers(NoAwaitTag, google::cloud::cpp::compute::interconnect_groups::v1::CreateMembersRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteInterconnectGroup(
-      google::cloud::cpp::compute::v1::Operation const& operation);
+  CreateMembers( google::cloud::cpp::compute::v1::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteInterconnectGroup(google::cloud::cpp::compute::interconnect_groups::v1::DeleteInterconnectGroupRequest const& request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeleteInterconnectGroup(NoAwaitTag, google::cloud::cpp::compute::interconnect_groups::v1::DeleteInterconnectGroupRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteInterconnectGroup( google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::InterconnectGroup>
-  GetInterconnectGroup(google::cloud::cpp::compute::interconnect_groups::v1::
-                           GetInterconnectGroupRequest const& request);
+  GetInterconnectGroup(google::cloud::cpp::compute::interconnect_groups::v1::GetInterconnectGroupRequest const& request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
-      google::cloud::cpp::compute::interconnect_groups::v1::
-          GetIamPolicyRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Policy>
+  GetIamPolicy(google::cloud::cpp::compute::interconnect_groups::v1::GetIamPolicyRequest const& request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::
-                       InterconnectGroupsGetOperationalStatusResponse>
-  GetOperationalStatus(google::cloud::cpp::compute::interconnect_groups::v1::
-                           GetOperationalStatusRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::InterconnectGroupsGetOperationalStatusResponse>
+  GetOperationalStatus(google::cloud::cpp::compute::interconnect_groups::v1::GetOperationalStatusRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertInterconnectGroup(google::cloud::cpp::compute::interconnect_groups::v1::
-                              InsertInterconnectGroupRequest const& request);
+  InsertInterconnectGroup(google::cloud::cpp::compute::interconnect_groups::v1::InsertInterconnectGroupRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertInterconnectGroup(NoAwaitTag,
-                          google::cloud::cpp::compute::interconnect_groups::v1::
-                              InsertInterconnectGroupRequest const& request);
+  InsertInterconnectGroup(NoAwaitTag, google::cloud::cpp::compute::interconnect_groups::v1::InsertInterconnectGroupRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertInterconnectGroup(
-      google::cloud::cpp::compute::v1::Operation const& operation);
+  InsertInterconnectGroup( google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::InterconnectGroup>
-  ListInterconnectGroups(google::cloud::cpp::compute::interconnect_groups::v1::
-                             ListInterconnectGroupsRequest request);
+  ListInterconnectGroups(google::cloud::cpp::compute::interconnect_groups::v1::ListInterconnectGroupsRequest request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchInterconnectGroup(google::cloud::cpp::compute::interconnect_groups::v1::
-                             PatchInterconnectGroupRequest const& request);
+  PatchInterconnectGroup(google::cloud::cpp::compute::interconnect_groups::v1::PatchInterconnectGroupRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  PatchInterconnectGroup(NoAwaitTag,
-                         google::cloud::cpp::compute::interconnect_groups::v1::
-                             PatchInterconnectGroupRequest const& request);
+  PatchInterconnectGroup(NoAwaitTag, google::cloud::cpp::compute::interconnect_groups::v1::PatchInterconnectGroupRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchInterconnectGroup(
-      google::cloud::cpp::compute::v1::Operation const& operation);
+  PatchInterconnectGroup( google::cloud::cpp::compute::v1::Operation const& operation);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
-      google::cloud::cpp::compute::interconnect_groups::v1::
-          SetIamPolicyRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Policy>
+  SetIamPolicy(google::cloud::cpp::compute::interconnect_groups::v1::SetIamPolicyRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(google::cloud::cpp::compute::interconnect_groups::v1::
-                         TestIamPermissionsRequest const& request);
+  TestIamPermissions(google::cloud::cpp::compute::interconnect_groups::v1::TestIamPermissionsRequest const& request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

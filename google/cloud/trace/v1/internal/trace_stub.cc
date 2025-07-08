@@ -32,37 +32,41 @@ TraceServiceStub::~TraceServiceStub() = default;
 
 StatusOr<google::devtools::cloudtrace::v1::ListTracesResponse>
 DefaultTraceServiceStub::ListTraces(
-    grpc::ClientContext& context, Options const&,
-    google::devtools::cloudtrace::v1::ListTracesRequest const& request) {
-  google::devtools::cloudtrace::v1::ListTracesResponse response;
-  auto status = grpc_stub_->ListTraces(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::devtools::cloudtrace::v1::ListTracesRequest const& request) {
+    google::devtools::cloudtrace::v1::ListTracesResponse response;
+    auto status =
+        grpc_stub_->ListTraces(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::devtools::cloudtrace::v1::Trace>
 DefaultTraceServiceStub::GetTrace(
-    grpc::ClientContext& context, Options const&,
-    google::devtools::cloudtrace::v1::GetTraceRequest const& request) {
-  google::devtools::cloudtrace::v1::Trace response;
-  auto status = grpc_stub_->GetTrace(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::devtools::cloudtrace::v1::GetTraceRequest const& request) {
+    google::devtools::cloudtrace::v1::Trace response;
+    auto status =
+        grpc_stub_->GetTrace(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-Status DefaultTraceServiceStub::PatchTraces(
-    grpc::ClientContext& context, Options const&,
-    google::devtools::cloudtrace::v1::PatchTracesRequest const& request) {
-  google::protobuf::Empty response;
-  auto status = grpc_stub_->PatchTraces(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return google::cloud::Status();
+Status
+DefaultTraceServiceStub::PatchTraces(
+  grpc::ClientContext& context, Options const&,
+  google::devtools::cloudtrace::v1::PatchTracesRequest const& request) {
+    google::protobuf::Empty response;
+    auto status =
+        grpc_stub_->PatchTraces(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return google::cloud::Status();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -33,8 +33,7 @@ using ::google::cloud::automl_v1::MakePredictionServiceConnection;
 /// @deprecated Use automl_v1::PredictionServiceConnection directly.
 using ::google::cloud::automl_v1::PredictionServiceConnection;
 
-/// @deprecated Use automl_v1::PredictionServiceLimitedErrorCountRetryPolicy
-/// directly.
+/// @deprecated Use automl_v1::PredictionServiceLimitedErrorCountRetryPolicy directly.
 using ::google::cloud::automl_v1::PredictionServiceLimitedErrorCountRetryPolicy;
 
 /// @deprecated Use automl_v1::PredictionServiceLimitedTimeRetryPolicy directly.

@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_ADMIN_INTERNAL_INSTANCE_ADMIN_REST_STUB_FACTORY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_ADMIN_INTERNAL_INSTANCE_ADMIN_REST_STUB_FACTORY_H
 
-#include "google/cloud/spanner/admin/internal/instance_admin_rest_stub.h"
 #include "google/cloud/options.h"
+#include "google/cloud/spanner/admin/internal/instance_admin_rest_stub.h"
 #include "google/cloud/version.h"
 #include <memory>
 

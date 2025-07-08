@@ -32,24 +32,22 @@ ServiceControllerTracingStub::ServiceControllerTracingStub(
     std::shared_ptr<ServiceControllerStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
-StatusOr<google::api::servicecontrol::v2::CheckResponse>
-ServiceControllerTracingStub::Check(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::api::servicecontrol::v2::CheckResponse> ServiceControllerTracingStub::Check(
+    grpc::ClientContext& context,
+    Options const& options,
     google::api::servicecontrol::v2::CheckRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.api.servicecontrol.v2.ServiceController", "Check");
+  auto span = internal::MakeSpanGrpc("google.api.servicecontrol.v2.ServiceController", "Check");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->Check(context, options, request));
 }
 
-StatusOr<google::api::servicecontrol::v2::ReportResponse>
-ServiceControllerTracingStub::Report(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::api::servicecontrol::v2::ReportResponse> ServiceControllerTracingStub::Report(
+    grpc::ClientContext& context,
+    Options const& options,
     google::api::servicecontrol::v2::ReportRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.api.servicecontrol.v2.ServiceController", "Report");
+  auto span = internal::MakeSpanGrpc("google.api.servicecontrol.v2.ServiceController", "Report");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,

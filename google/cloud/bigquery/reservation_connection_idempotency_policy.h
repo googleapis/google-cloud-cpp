@@ -26,17 +26,11 @@ namespace cloud {
 namespace bigquery {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use
-/// bigquery_reservation_v1::MakeDefaultReservationServiceConnectionIdempotencyPolicy
-/// directly.
-using ::google::cloud::bigquery_reservation_v1::
-    MakeDefaultReservationServiceConnectionIdempotencyPolicy;
+/// @deprecated Use bigquery_reservation_v1::MakeDefaultReservationServiceConnectionIdempotencyPolicy directly.
+using ::google::cloud::bigquery_reservation_v1::MakeDefaultReservationServiceConnectionIdempotencyPolicy;
 
-/// @deprecated Use
-/// bigquery_reservation_v1::ReservationServiceConnectionIdempotencyPolicy
-/// directly.
-using ::google::cloud::bigquery_reservation_v1::
-    ReservationServiceConnectionIdempotencyPolicy;
+/// @deprecated Use bigquery_reservation_v1::ReservationServiceConnectionIdempotencyPolicy directly.
+using ::google::cloud::bigquery_reservation_v1::ReservationServiceConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery

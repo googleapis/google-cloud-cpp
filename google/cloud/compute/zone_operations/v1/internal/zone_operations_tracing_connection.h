@@ -36,25 +36,21 @@ class ZoneOperationsTracingConnection
   ~ZoneOperationsTracingConnection() override = default;
 
   explicit ZoneOperationsTracingConnection(
-      std::shared_ptr<compute_zone_operations_v1::ZoneOperationsConnection>
-          child);
+    std::shared_ptr<compute_zone_operations_v1::ZoneOperationsConnection> child);
 
   Options options() override { return child_->options(); }
 
-  Status DeleteOperation(google::cloud::cpp::compute::zone_operations::v1::
-                             DeleteOperationRequest const& request) override;
+  Status
+  DeleteOperation(google::cloud::cpp::compute::zone_operations::v1::DeleteOperationRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation> GetOperation(
-      google::cloud::cpp::compute::zone_operations::v1::
-          GetOperationRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  GetOperation(google::cloud::cpp::compute::zone_operations::v1::GetOperationRequest const& request) override;
 
-  StreamRange<google::cloud::cpp::compute::v1::Operation> ListZoneOperations(
-      google::cloud::cpp::compute::zone_operations::v1::
-          ListZoneOperationsRequest request) override;
+  StreamRange<google::cloud::cpp::compute::v1::Operation>
+  ListZoneOperations(google::cloud::cpp::compute::zone_operations::v1::ListZoneOperationsRequest request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation> Wait(
-      google::cloud::cpp::compute::zone_operations::v1::WaitRequest const&
-          request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  Wait(google::cloud::cpp::compute::zone_operations::v1::WaitRequest const& request) override;
 
  private:
   std::shared_ptr<compute_zone_operations_v1::ZoneOperationsConnection> child_;

@@ -19,9 +19,9 @@
 #include "google/cloud/dataproc/v1/internal/session_template_controller_option_defaults.h"
 #include "google/cloud/dataproc/v1/session_template_controller_connection.h"
 #include "google/cloud/dataproc/v1/session_template_controller_options.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include <memory>
 #include <utility>
 
@@ -34,35 +34,25 @@ namespace {
 auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
-Options SessionTemplateControllerDefaultOptions(std::string const& location,
-                                                Options options) {
+Options SessionTemplateControllerDefaultOptions(std::string const& location, Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options),
-      "GOOGLE_CLOUD_CPP_SESSION_TEMPLATE_CONTROLLER_ENDPOINT", "",
-      "GOOGLE_CLOUD_CPP_SESSION_TEMPLATE_CONTROLLER_AUTHORITY",
+      std::move(options), "GOOGLE_CLOUD_CPP_SESSION_TEMPLATE_CONTROLLER_ENDPOINT",
+      "", "GOOGLE_CLOUD_CPP_SESSION_TEMPLATE_CONTROLLER_AUTHORITY",
       absl::StrCat(location, "-", "dataproc.googleapis.com"));
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<dataproc_v1::SessionTemplateControllerRetryPolicyOption>()) {
     options.set<dataproc_v1::SessionTemplateControllerRetryPolicyOption>(
         dataproc_v1::SessionTemplateControllerLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
-            .clone());
+            std::chrono::minutes(30)).clone());
   }
-  if (!options
-           .has<dataproc_v1::SessionTemplateControllerBackoffPolicyOption>()) {
+  if (!options.has<dataproc_v1::SessionTemplateControllerBackoffPolicyOption>()) {
     options.set<dataproc_v1::SessionTemplateControllerBackoffPolicyOption>(
-        ExponentialBackoffPolicy(
-            std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
-            .clone());
+        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
   }
-  if (!options.has<
-          dataproc_v1::
-              SessionTemplateControllerConnectionIdempotencyPolicyOption>()) {
-    options.set<dataproc_v1::
-                    SessionTemplateControllerConnectionIdempotencyPolicyOption>(
-        dataproc_v1::
-            MakeDefaultSessionTemplateControllerConnectionIdempotencyPolicy());
+  if (!options.has<dataproc_v1::SessionTemplateControllerConnectionIdempotencyPolicyOption>()) {
+    options.set<dataproc_v1::SessionTemplateControllerConnectionIdempotencyPolicyOption>(
+        dataproc_v1::MakeDefaultSessionTemplateControllerConnectionIdempotencyPolicy());
   }
 
   return options;

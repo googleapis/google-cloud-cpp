@@ -30,8 +30,7 @@ namespace cloud {
 namespace confidentialcomputing_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<ConfidentialComputingStub>
-CreateDefaultConfidentialComputingStub(
+std::shared_ptr<ConfidentialComputingStub> CreateDefaultConfidentialComputingStub(
     std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
     Options const& options);
 

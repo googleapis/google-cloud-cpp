@@ -30,81 +30,61 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 ReservationBlocksTracingConnection::ReservationBlocksTracingConnection(
-    std::shared_ptr<compute_reservation_blocks_v1::ReservationBlocksConnection>
-        child)
+    std::shared_ptr<compute_reservation_blocks_v1::ReservationBlocksConnection> child)
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::ReservationBlocksGetResponse>
-ReservationBlocksTracingConnection::GetReservationBlocksGetResponse(
-    google::cloud::cpp::compute::reservation_blocks::v1::
-        GetReservationBlocksGetResponseRequest const& request) {
-  auto span = internal::MakeSpan(
-      "compute_reservation_blocks_v1::ReservationBlocksConnection::"
-      "GetReservationBlocksGetResponse");
+ReservationBlocksTracingConnection::GetReservationBlocksGetResponse(google::cloud::cpp::compute::reservation_blocks::v1::GetReservationBlocksGetResponseRequest const& request) {
+  auto span = internal::MakeSpan("compute_reservation_blocks_v1::ReservationBlocksConnection::GetReservationBlocksGetResponse");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span,
-                           child_->GetReservationBlocksGetResponse(request));
+  return internal::EndSpan(*span, child_->GetReservationBlocksGetResponse(request));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::ReservationBlock>
-ReservationBlocksTracingConnection::ListReservationBlocks(
-    google::cloud::cpp::compute::reservation_blocks::v1::
-        ListReservationBlocksRequest request) {
-  auto span = internal::MakeSpan(
-      "compute_reservation_blocks_v1::ReservationBlocksConnection::"
-      "ListReservationBlocks");
+ReservationBlocksTracingConnection::ListReservationBlocks(google::cloud::cpp::compute::reservation_blocks::v1::ListReservationBlocksRequest request) {
+  auto span = internal::MakeSpan("compute_reservation_blocks_v1::ReservationBlocksConnection::ListReservationBlocks");
   internal::OTelScope scope(span);
   auto sr = child_->ListReservationBlocks(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::cpp::compute::v1::ReservationBlock>(std::move(span),
-                                                         std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::cpp::compute::v1::ReservationBlock>(
+        std::move(span), std::move(sr));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-ReservationBlocksTracingConnection::PerformMaintenance(
-    google::cloud::cpp::compute::reservation_blocks::v1::
-        PerformMaintenanceRequest const& request) {
+ReservationBlocksTracingConnection::PerformMaintenance(google::cloud::cpp::compute::reservation_blocks::v1::PerformMaintenanceRequest const& request) {
   auto span = internal::MakeSpan(
-      "compute_reservation_blocks_v1::ReservationBlocksConnection::"
-      "PerformMaintenance");
+      "compute_reservation_blocks_v1::ReservationBlocksConnection::PerformMaintenance");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->PerformMaintenance(request));
+  return internal::EndSpan(std::move(span), child_->PerformMaintenance(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ReservationBlocksTracingConnection::PerformMaintenance(
-    NoAwaitTag, google::cloud::cpp::compute::reservation_blocks::v1::
-                    PerformMaintenanceRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::reservation_blocks::v1::PerformMaintenanceRequest const& request) {
   auto span = internal::MakeSpan(
-      "compute_reservation_blocks_v1::ReservationBlocksConnection::"
-      "PerformMaintenance");
+      "compute_reservation_blocks_v1::ReservationBlocksConnection::PerformMaintenance");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span,
-                           child_->PerformMaintenance(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->PerformMaintenance(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ReservationBlocksTracingConnection::PerformMaintenance(
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
-      "compute_reservation_blocks_v1::ReservationBlocksConnection::"
-      "PerformMaintenance");
+      "compute_reservation_blocks_v1::ReservationBlocksConnection::PerformMaintenance");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->PerformMaintenance(operation));
+      child_->PerformMaintenance(operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<compute_reservation_blocks_v1::ReservationBlocksConnection>
 MakeReservationBlocksTracingConnection(
-    std::shared_ptr<compute_reservation_blocks_v1::ReservationBlocksConnection>
-        conn) {
+    std::shared_ptr<compute_reservation_blocks_v1::ReservationBlocksConnection> conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
-    conn =
-        std::make_shared<ReservationBlocksTracingConnection>(std::move(conn));
+    conn = std::make_shared<ReservationBlocksTracingConnection>(std::move(conn));
   }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;

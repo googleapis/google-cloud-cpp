@@ -31,9 +31,9 @@ ServingConfigServiceAuth::ServingConfigServiceAuth(
     std::shared_ptr<ServingConfigServiceStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::retail::v2::ServingConfig>
-ServingConfigServiceAuth::CreateServingConfig(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::retail::v2::ServingConfig> ServingConfigServiceAuth::CreateServingConfig(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::retail::v2::CreateServingConfigRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -41,61 +41,62 @@ ServingConfigServiceAuth::CreateServingConfig(
 }
 
 Status ServingConfigServiceAuth::DeleteServingConfig(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::retail::v2::DeleteServingConfigRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteServingConfig(context, options, request);
 }
 
-StatusOr<google::cloud::retail::v2::ServingConfig>
-ServingConfigServiceAuth::UpdateServingConfig(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::retail::v2::ServingConfig> ServingConfigServiceAuth::UpdateServingConfig(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::retail::v2::UpdateServingConfigRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateServingConfig(context, options, request);
 }
 
-StatusOr<google::cloud::retail::v2::ServingConfig>
-ServingConfigServiceAuth::GetServingConfig(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::retail::v2::ServingConfig> ServingConfigServiceAuth::GetServingConfig(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::retail::v2::GetServingConfigRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetServingConfig(context, options, request);
 }
 
-StatusOr<google::cloud::retail::v2::ListServingConfigsResponse>
-ServingConfigServiceAuth::ListServingConfigs(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::retail::v2::ListServingConfigsResponse> ServingConfigServiceAuth::ListServingConfigs(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::retail::v2::ListServingConfigsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListServingConfigs(context, options, request);
 }
 
-StatusOr<google::cloud::retail::v2::ServingConfig>
-ServingConfigServiceAuth::AddControl(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::retail::v2::ServingConfig> ServingConfigServiceAuth::AddControl(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::retail::v2::AddControlRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->AddControl(context, options, request);
 }
 
-StatusOr<google::cloud::retail::v2::ServingConfig>
-ServingConfigServiceAuth::RemoveControl(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::retail::v2::ServingConfig> ServingConfigServiceAuth::RemoveControl(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::retail::v2::RemoveControlRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->RemoveControl(context, options, request);
 }
 
-StatusOr<google::longrunning::ListOperationsResponse>
-ServingConfigServiceAuth::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse> ServingConfigServiceAuth::ListOperations(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -103,7 +104,8 @@ ServingConfigServiceAuth::ListOperations(
 }
 
 StatusOr<google::longrunning::Operation> ServingConfigServiceAuth::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;

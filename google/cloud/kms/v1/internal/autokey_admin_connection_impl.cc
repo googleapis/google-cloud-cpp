@@ -17,12 +17,12 @@
 // source: google/cloud/kms/v1/autokey_admin.proto
 
 #include "google/cloud/kms/v1/internal/autokey_admin_connection_impl.h"
-#include "google/cloud/kms/v1/internal/autokey_admin_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
+#include "google/cloud/kms/v1/internal/autokey_admin_option_defaults.h"
 #include <memory>
 #include <utility>
 
@@ -32,49 +32,47 @@ namespace kms_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<kms_v1::AutokeyAdminRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<kms_v1::AutokeyAdminRetryPolicy>
+retry_policy(Options const& options) {
   return options.get<kms_v1::AutokeyAdminRetryPolicyOption>()->clone();
 }
 
-std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+std::unique_ptr<BackoffPolicy>
+backoff_policy(Options const& options) {
   return options.get<kms_v1::AutokeyAdminBackoffPolicyOption>()->clone();
 }
 
 std::unique_ptr<kms_v1::AutokeyAdminConnectionIdempotencyPolicy>
 idempotency_policy(Options const& options) {
-  return options.get<kms_v1::AutokeyAdminConnectionIdempotencyPolicyOption>()
-      ->clone();
+  return options.get<kms_v1::AutokeyAdminConnectionIdempotencyPolicyOption>()->clone();
 }
 
-}  // namespace
+} // namespace
 
 AutokeyAdminConnectionImpl::AutokeyAdminConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<kms_v1_internal::AutokeyAdminStub> stub, Options options)
-    : background_(std::move(background)),
-      stub_(std::move(stub)),
-      options_(internal::MergeOptions(std::move(options),
-                                      AutokeyAdminConnection::options())) {}
+    std::shared_ptr<kms_v1_internal::AutokeyAdminStub> stub,
+    Options options)
+  : background_(std::move(background)), stub_(std::move(stub)),
+    options_(internal::MergeOptions(
+        std::move(options),
+        AutokeyAdminConnection::options())) {}
 
 StatusOr<google::cloud::kms::v1::AutokeyConfig>
-AutokeyAdminConnectionImpl::UpdateAutokeyConfig(
-    google::cloud::kms::v1::UpdateAutokeyConfigRequest const& request) {
+AutokeyAdminConnectionImpl::UpdateAutokeyConfig(google::cloud::kms::v1::UpdateAutokeyConfigRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateAutokeyConfig(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::kms::v1::UpdateAutokeyConfigRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::kms::v1::UpdateAutokeyConfigRequest const& request) {
         return stub_->UpdateAutokeyConfig(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::kms::v1::AutokeyConfig>
-AutokeyAdminConnectionImpl::GetAutokeyConfig(
-    google::cloud::kms::v1::GetAutokeyConfigRequest const& request) {
+AutokeyAdminConnectionImpl::GetAutokeyConfig(google::cloud::kms::v1::GetAutokeyConfigRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -87,48 +85,40 @@ AutokeyAdminConnectionImpl::GetAutokeyConfig(
 }
 
 StatusOr<google::cloud::kms::v1::ShowEffectiveAutokeyConfigResponse>
-AutokeyAdminConnectionImpl::ShowEffectiveAutokeyConfig(
-    google::cloud::kms::v1::ShowEffectiveAutokeyConfigRequest const& request) {
+AutokeyAdminConnectionImpl::ShowEffectiveAutokeyConfig(google::cloud::kms::v1::ShowEffectiveAutokeyConfigRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->ShowEffectiveAutokeyConfig(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::kms::v1::ShowEffectiveAutokeyConfigRequest const&
-                 request) {
+             google::cloud::kms::v1::ShowEffectiveAutokeyConfigRequest const& request) {
         return stub_->ShowEffectiveAutokeyConfig(context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::cloud::location::Location>
-AutokeyAdminConnectionImpl::ListLocations(
-    google::cloud::location::ListLocationsRequest request) {
+AutokeyAdminConnectionImpl::ListLocations(google::cloud::location::ListLocationsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListLocations(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::location::Location>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::location::Location>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<kms_v1::AutokeyAdminRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<kms_v1::AutokeyAdminRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::location::ListLocationsRequest const& r) {
+          Options const& options, google::cloud::location::ListLocationsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](
-                grpc::ClientContext& context, Options const& options,
-                google::cloud::location::ListLocationsRequest const& request) {
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::cloud::location::ListLocationsRequest const& request) {
               return stub->ListLocations(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::location::ListLocationsResponse r) {
-        std::vector<google::cloud::location::Location> result(
-            r.locations().size());
+        std::vector<google::cloud::location::Location> result(r.locations().size());
         auto& messages = *r.mutable_locations();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -136,8 +126,7 @@ AutokeyAdminConnectionImpl::ListLocations(
 }
 
 StatusOr<google::cloud::location::Location>
-AutokeyAdminConnectionImpl::GetLocation(
-    google::cloud::location::GetLocationRequest const& request) {
+AutokeyAdminConnectionImpl::GetLocation(google::cloud::location::GetLocationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -149,8 +138,8 @@ AutokeyAdminConnectionImpl::GetLocation(
       *current, request, __func__);
 }
 
-StatusOr<google::iam::v1::Policy> AutokeyAdminConnectionImpl::SetIamPolicy(
-    google::iam::v1::SetIamPolicyRequest const& request) {
+StatusOr<google::iam::v1::Policy>
+AutokeyAdminConnectionImpl::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -162,8 +151,8 @@ StatusOr<google::iam::v1::Policy> AutokeyAdminConnectionImpl::SetIamPolicy(
       *current, request, __func__);
 }
 
-StatusOr<google::iam::v1::Policy> AutokeyAdminConnectionImpl::GetIamPolicy(
-    google::iam::v1::GetIamPolicyRequest const& request) {
+StatusOr<google::iam::v1::Policy>
+AutokeyAdminConnectionImpl::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -176,8 +165,7 @@ StatusOr<google::iam::v1::Policy> AutokeyAdminConnectionImpl::GetIamPolicy(
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-AutokeyAdminConnectionImpl::TestIamPermissions(
-    google::iam::v1::TestIamPermissionsRequest const& request) {
+AutokeyAdminConnectionImpl::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -190,8 +178,7 @@ AutokeyAdminConnectionImpl::TestIamPermissions(
 }
 
 StatusOr<google::longrunning::Operation>
-AutokeyAdminConnectionImpl::GetOperation(
-    google::longrunning::GetOperationRequest const& request) {
+AutokeyAdminConnectionImpl::GetOperation(google::longrunning::GetOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),

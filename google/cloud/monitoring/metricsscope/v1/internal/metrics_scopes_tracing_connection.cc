@@ -33,98 +33,73 @@ MetricsScopesTracingConnection::MetricsScopesTracingConnection(
     : child_(std::move(child)) {}
 
 StatusOr<google::monitoring::metricsscope::v1::MetricsScope>
-MetricsScopesTracingConnection::GetMetricsScope(
-    google::monitoring::metricsscope::v1::GetMetricsScopeRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "monitoring_metricsscope_v1::MetricsScopesConnection::GetMetricsScope");
+MetricsScopesTracingConnection::GetMetricsScope(google::monitoring::metricsscope::v1::GetMetricsScopeRequest const& request) {
+  auto span = internal::MakeSpan("monitoring_metricsscope_v1::MetricsScopesConnection::GetMetricsScope");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetMetricsScope(request));
 }
 
-StatusOr<google::monitoring::metricsscope::v1::
-             ListMetricsScopesByMonitoredProjectResponse>
-MetricsScopesTracingConnection::ListMetricsScopesByMonitoredProject(
-    google::monitoring::metricsscope::v1::
-        ListMetricsScopesByMonitoredProjectRequest const& request) {
-  auto span = internal::MakeSpan(
-      "monitoring_metricsscope_v1::MetricsScopesConnection::"
-      "ListMetricsScopesByMonitoredProject");
+StatusOr<google::monitoring::metricsscope::v1::ListMetricsScopesByMonitoredProjectResponse>
+MetricsScopesTracingConnection::ListMetricsScopesByMonitoredProject(google::monitoring::metricsscope::v1::ListMetricsScopesByMonitoredProjectRequest const& request) {
+  auto span = internal::MakeSpan("monitoring_metricsscope_v1::MetricsScopesConnection::ListMetricsScopesByMonitoredProject");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(
-      *span, child_->ListMetricsScopesByMonitoredProject(request));
+  return internal::EndSpan(*span, child_->ListMetricsScopesByMonitoredProject(request));
 }
 
 future<StatusOr<google::monitoring::metricsscope::v1::MonitoredProject>>
-MetricsScopesTracingConnection::CreateMonitoredProject(
-    google::monitoring::metricsscope::v1::CreateMonitoredProjectRequest const&
-        request) {
+MetricsScopesTracingConnection::CreateMonitoredProject(google::monitoring::metricsscope::v1::CreateMonitoredProjectRequest const& request) {
   auto span = internal::MakeSpan(
-      "monitoring_metricsscope_v1::MetricsScopesConnection::"
-      "CreateMonitoredProject");
+      "monitoring_metricsscope_v1::MetricsScopesConnection::CreateMonitoredProject");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->CreateMonitoredProject(request));
+  return internal::EndSpan(std::move(span), child_->CreateMonitoredProject(request));
 }
 
 StatusOr<google::longrunning::Operation>
 MetricsScopesTracingConnection::CreateMonitoredProject(
-    NoAwaitTag,
-    google::monitoring::metricsscope::v1::CreateMonitoredProjectRequest const&
-        request) {
+    NoAwaitTag, google::monitoring::metricsscope::v1::CreateMonitoredProjectRequest const& request) {
   auto span = internal::MakeSpan(
-      "monitoring_metricsscope_v1::MetricsScopesConnection::"
-      "CreateMonitoredProject");
+      "monitoring_metricsscope_v1::MetricsScopesConnection::CreateMonitoredProject");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->CreateMonitoredProject(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->CreateMonitoredProject(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::monitoring::metricsscope::v1::MonitoredProject>>
 MetricsScopesTracingConnection::CreateMonitoredProject(
     google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
-      "monitoring_metricsscope_v1::MetricsScopesConnection::"
-      "CreateMonitoredProject");
+      "monitoring_metricsscope_v1::MetricsScopesConnection::CreateMonitoredProject");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->CreateMonitoredProject(operation));
+      child_->CreateMonitoredProject(operation));
 }
 
 future<StatusOr<google::monitoring::metricsscope::v1::OperationMetadata>>
-MetricsScopesTracingConnection::DeleteMonitoredProject(
-    google::monitoring::metricsscope::v1::DeleteMonitoredProjectRequest const&
-        request) {
+MetricsScopesTracingConnection::DeleteMonitoredProject(google::monitoring::metricsscope::v1::DeleteMonitoredProjectRequest const& request) {
   auto span = internal::MakeSpan(
-      "monitoring_metricsscope_v1::MetricsScopesConnection::"
-      "DeleteMonitoredProject");
+      "monitoring_metricsscope_v1::MetricsScopesConnection::DeleteMonitoredProject");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->DeleteMonitoredProject(request));
+  return internal::EndSpan(std::move(span), child_->DeleteMonitoredProject(request));
 }
 
 StatusOr<google::longrunning::Operation>
 MetricsScopesTracingConnection::DeleteMonitoredProject(
-    NoAwaitTag,
-    google::monitoring::metricsscope::v1::DeleteMonitoredProjectRequest const&
-        request) {
+    NoAwaitTag, google::monitoring::metricsscope::v1::DeleteMonitoredProjectRequest const& request) {
   auto span = internal::MakeSpan(
-      "monitoring_metricsscope_v1::MetricsScopesConnection::"
-      "DeleteMonitoredProject");
+      "monitoring_metricsscope_v1::MetricsScopesConnection::DeleteMonitoredProject");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->DeleteMonitoredProject(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->DeleteMonitoredProject(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::monitoring::metricsscope::v1::OperationMetadata>>
 MetricsScopesTracingConnection::DeleteMonitoredProject(
     google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
-      "monitoring_metricsscope_v1::MetricsScopesConnection::"
-      "DeleteMonitoredProject");
+      "monitoring_metricsscope_v1::MetricsScopesConnection::DeleteMonitoredProject");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->DeleteMonitoredProject(operation));
+      child_->DeleteMonitoredProject(operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

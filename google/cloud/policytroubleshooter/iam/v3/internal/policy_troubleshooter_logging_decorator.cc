@@ -32,19 +32,20 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 PolicyTroubleshooterLogging::PolicyTroubleshooterLogging(
     std::shared_ptr<PolicyTroubleshooterStub> child,
-    TracingOptions tracing_options, std::set<std::string> const&)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
+    TracingOptions tracing_options,
+    std::set<std::string> const&)
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)) {}
 
-StatusOr<
-    google::cloud::policytroubleshooter::iam::v3::TroubleshootIamPolicyResponse>
+StatusOr<google::cloud::policytroubleshooter::iam::v3::TroubleshootIamPolicyResponse>
 PolicyTroubleshooterLogging::TroubleshootIamPolicy(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::policytroubleshooter::iam::v3::
-        TroubleshootIamPolicyRequest const& request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::policytroubleshooter::iam::v3::TroubleshootIamPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::policytroubleshooter::iam::v3::
-                 TroubleshootIamPolicyRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::policytroubleshooter::iam::v3::TroubleshootIamPolicyRequest const& request) {
         return child_->TroubleshootIamPolicy(context, options, request);
       },
       context, options, request, __func__, tracing_options_);

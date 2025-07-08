@@ -27,23 +27,17 @@ namespace cloud {
 namespace documentai {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use documentai_v1::MakeDocumentProcessorServiceConnection
-/// directly.
+/// @deprecated Use documentai_v1::MakeDocumentProcessorServiceConnection directly.
 using ::google::cloud::documentai_v1::MakeDocumentProcessorServiceConnection;
 
 /// @deprecated Use documentai_v1::DocumentProcessorServiceConnection directly.
 using ::google::cloud::documentai_v1::DocumentProcessorServiceConnection;
 
-/// @deprecated Use
-/// documentai_v1::DocumentProcessorServiceLimitedErrorCountRetryPolicy
-/// directly.
-using ::google::cloud::documentai_v1::
-    DocumentProcessorServiceLimitedErrorCountRetryPolicy;
+/// @deprecated Use documentai_v1::DocumentProcessorServiceLimitedErrorCountRetryPolicy directly.
+using ::google::cloud::documentai_v1::DocumentProcessorServiceLimitedErrorCountRetryPolicy;
 
-/// @deprecated Use
-/// documentai_v1::DocumentProcessorServiceLimitedTimeRetryPolicy directly.
-using ::google::cloud::documentai_v1::
-    DocumentProcessorServiceLimitedTimeRetryPolicy;
+/// @deprecated Use documentai_v1::DocumentProcessorServiceLimitedTimeRetryPolicy directly.
+using ::google::cloud::documentai_v1::DocumentProcessorServiceLimitedTimeRetryPolicy;
 
 /// @deprecated Use documentai_v1::DocumentProcessorServiceRetryPolicy directly.
 using ::google::cloud::documentai_v1::DocumentProcessorServiceRetryPolicy;

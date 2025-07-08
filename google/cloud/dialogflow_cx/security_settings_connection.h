@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_SECURITY_SETTINGS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_SECURITY_SETTINGS_CONNECTION_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/dialogflow_cx/internal/security_settings_retry_traits.h"
 #include "google/cloud/dialogflow_cx/security_settings_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -44,8 +44,7 @@ class SecuritySettingsServiceRetryPolicy : public ::google::cloud::RetryPolicy {
 };
 
 /**
- * A retry policy for `SecuritySettingsServiceConnection` based on counting
- * errors.
+ * A retry policy for `SecuritySettingsServiceConnection` based on counting errors.
  *
  * This policy stops retrying if:
  * - An RPC returns a non-transient error.
@@ -54,8 +53,7 @@ class SecuritySettingsServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class SecuritySettingsServiceLimitedErrorCountRetryPolicy
-    : public SecuritySettingsServiceRetryPolicy {
+class SecuritySettingsServiceLimitedErrorCountRetryPolicy : public SecuritySettingsServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -64,18 +62,15 @@ class SecuritySettingsServiceLimitedErrorCountRetryPolicy
    * @note Disable the retry loop by providing an instance of this policy with
    *     @p maximum_failures == 0.
    */
-  explicit SecuritySettingsServiceLimitedErrorCountRetryPolicy(
-      int maximum_failures)
-      : impl_(maximum_failures) {}
+  explicit SecuritySettingsServiceLimitedErrorCountRetryPolicy(int maximum_failures)
+    : impl_(maximum_failures) {}
 
   SecuritySettingsServiceLimitedErrorCountRetryPolicy(
       SecuritySettingsServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : SecuritySettingsServiceLimitedErrorCountRetryPolicy(
-            rhs.maximum_failures()) {}
+    : SecuritySettingsServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   SecuritySettingsServiceLimitedErrorCountRetryPolicy(
       SecuritySettingsServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : SecuritySettingsServiceLimitedErrorCountRetryPolicy(
-            rhs.maximum_failures()) {}
+    : SecuritySettingsServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -87,8 +82,7 @@ class SecuritySettingsServiceLimitedErrorCountRetryPolicy
     return impl_.IsPermanentFailure(status);
   }
   std::unique_ptr<SecuritySettingsServiceRetryPolicy> clone() const override {
-    return std::make_unique<
-        SecuritySettingsServiceLimitedErrorCountRetryPolicy>(
+    return std::make_unique<SecuritySettingsServiceLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
 
@@ -96,9 +90,7 @@ class SecuritySettingsServiceLimitedErrorCountRetryPolicy
   using BaseType = SecuritySettingsServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      dialogflow_cx_internal::SecuritySettingsServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<dialogflow_cx_internal::SecuritySettingsServiceRetryTraits> impl_;
 };
 
 /**
@@ -111,8 +103,7 @@ class SecuritySettingsServiceLimitedErrorCountRetryPolicy
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class SecuritySettingsServiceLimitedTimeRetryPolicy
-    : public SecuritySettingsServiceRetryPolicy {
+class SecuritySettingsServiceLimitedTimeRetryPolicy : public SecuritySettingsServiceRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -137,14 +128,12 @@ class SecuritySettingsServiceLimitedTimeRetryPolicy
   template <typename DurationRep, typename DurationPeriod>
   explicit SecuritySettingsServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  SecuritySettingsServiceLimitedTimeRetryPolicy(
-      SecuritySettingsServiceLimitedTimeRetryPolicy&& rhs) noexcept
-      : SecuritySettingsServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  SecuritySettingsServiceLimitedTimeRetryPolicy(
-      SecuritySettingsServiceLimitedTimeRetryPolicy const& rhs) noexcept
-      : SecuritySettingsServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  SecuritySettingsServiceLimitedTimeRetryPolicy(SecuritySettingsServiceLimitedTimeRetryPolicy&& rhs) noexcept
+    : SecuritySettingsServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  SecuritySettingsServiceLimitedTimeRetryPolicy(SecuritySettingsServiceLimitedTimeRetryPolicy const& rhs) noexcept
+    : SecuritySettingsServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -166,24 +155,20 @@ class SecuritySettingsServiceLimitedTimeRetryPolicy
   using BaseType = SecuritySettingsServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      dialogflow_cx_internal::SecuritySettingsServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<dialogflow_cx_internal::SecuritySettingsServiceRetryTraits> impl_;
 };
 
 /**
- * The `SecuritySettingsServiceConnection` object for
- * `SecuritySettingsServiceClient`.
+ * The `SecuritySettingsServiceConnection` object for `SecuritySettingsServiceClient`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `SecuritySettingsServiceClient`. This allows users to inject custom
- * behavior (e.g., with a Google Mock object) when writing tests that use
- * objects of type `SecuritySettingsServiceClient`.
+ * sets in `SecuritySettingsServiceClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `SecuritySettingsServiceClient`.
  *
  * To create a concrete instance, see `MakeSecuritySettingsServiceConnection()`.
  *
- * For mocking, see
- * `dialogflow_cx_mocks::MockSecuritySettingsServiceConnection`.
+ * For mocking, see `dialogflow_cx_mocks::MockSecuritySettingsServiceConnection`.
  */
 class SecuritySettingsServiceConnection {
  public:
@@ -192,55 +177,45 @@ class SecuritySettingsServiceConnection {
   virtual Options options() { return Options{}; }
 
   virtual StatusOr<google::cloud::dialogflow::cx::v3::SecuritySettings>
-  CreateSecuritySettings(
-      google::cloud::dialogflow::cx::v3::CreateSecuritySettingsRequest const&
-          request);
+  CreateSecuritySettings(google::cloud::dialogflow::cx::v3::CreateSecuritySettingsRequest const& request);
 
   virtual StatusOr<google::cloud::dialogflow::cx::v3::SecuritySettings>
-  GetSecuritySettings(
-      google::cloud::dialogflow::cx::v3::GetSecuritySettingsRequest const&
-          request);
+  GetSecuritySettings(google::cloud::dialogflow::cx::v3::GetSecuritySettingsRequest const& request);
 
   virtual StatusOr<google::cloud::dialogflow::cx::v3::SecuritySettings>
-  UpdateSecuritySettings(
-      google::cloud::dialogflow::cx::v3::UpdateSecuritySettingsRequest const&
-          request);
+  UpdateSecuritySettings(google::cloud::dialogflow::cx::v3::UpdateSecuritySettingsRequest const& request);
 
   virtual StreamRange<google::cloud::dialogflow::cx::v3::SecuritySettings>
-  ListSecuritySettings(
-      google::cloud::dialogflow::cx::v3::ListSecuritySettingsRequest request);
+  ListSecuritySettings(google::cloud::dialogflow::cx::v3::ListSecuritySettingsRequest request);
 
-  virtual Status DeleteSecuritySettings(
-      google::cloud::dialogflow::cx::v3::DeleteSecuritySettingsRequest const&
-          request);
+  virtual Status
+  DeleteSecuritySettings(google::cloud::dialogflow::cx::v3::DeleteSecuritySettingsRequest const& request);
 
-  virtual StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request);
+  virtual StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request);
 
-  virtual StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request);
+  virtual StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request);
 
-  virtual StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 
-  virtual Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request);
+  virtual Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request);
 };
 
 /**
- * A factory function to construct an object of type
- * `SecuritySettingsServiceConnection`.
+ * A factory function to construct an object of type `SecuritySettingsServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of
- * SecuritySettingsServiceClient.
+ * should be passed as an argument to the constructor of SecuritySettingsServiceClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `SecuritySettingsServiceConnection`. Expected options are any of the
- * types in the following option lists:
+ * returned `SecuritySettingsServiceConnection`. Expected options are any of the types in
+ * the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
@@ -251,12 +226,11 @@ class SecuritySettingsServiceConnection {
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
  * @param location Sets the prefix for the default `EndpointOption` value.
- * @param options (optional) Configure the `SecuritySettingsServiceConnection`
- * created by this function.
+ * @param options (optional) Configure the `SecuritySettingsServiceConnection` created by
+ * this function.
  */
-std::shared_ptr<SecuritySettingsServiceConnection>
-MakeSecuritySettingsServiceConnection(std::string const& location,
-                                      Options options = {});
+std::shared_ptr<SecuritySettingsServiceConnection> MakeSecuritySettingsServiceConnection(
+    std::string const& location, Options options = {});
 
 /**
  * A backwards-compatible version of the previous factory function.  Unless
@@ -265,8 +239,8 @@ MakeSecuritySettingsServiceConnection(std::string const& location,
  *
  * @deprecated Please use the `location` overload instead.
  */
-std::shared_ptr<SecuritySettingsServiceConnection>
-MakeSecuritySettingsServiceConnection(Options options = {});
+std::shared_ptr<SecuritySettingsServiceConnection> MakeSecuritySettingsServiceConnection(
+    Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_cx

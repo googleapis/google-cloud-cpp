@@ -38,27 +38,20 @@ class AcceleratorTypesRestLogging : public AcceleratorTypesRestStub {
  public:
   ~AcceleratorTypesRestLogging() override = default;
   AcceleratorTypesRestLogging(std::shared_ptr<AcceleratorTypesRestStub> child,
-                              TracingOptions tracing_options,
-                              std::set<std::string> components);
+                       TracingOptions tracing_options,
+                       std::set<std::string> components);
 
-  StatusOr<google::cloud::cpp::compute::v1::AcceleratorTypeAggregatedList>
-  AggregatedListAcceleratorTypes(
+  StatusOr<google::cloud::cpp::compute::v1::AcceleratorTypeAggregatedList> AggregatedListAcceleratorTypes(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::accelerator_types::v1::
-          AggregatedListAcceleratorTypesRequest const& request) override;
+      Options const& options, google::cloud::cpp::compute::accelerator_types::v1::AggregatedListAcceleratorTypesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::AcceleratorType> GetAcceleratorType(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::accelerator_types::v1::
-          GetAcceleratorTypeRequest const& request) override;
+      Options const& options, google::cloud::cpp::compute::accelerator_types::v1::GetAcceleratorTypeRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::AcceleratorTypeList>
-  ListAcceleratorTypes(google::cloud::rest_internal::RestContext& rest_context,
-                       Options const& options,
-                       google::cloud::cpp::compute::accelerator_types::v1::
-                           ListAcceleratorTypesRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::AcceleratorTypeList> ListAcceleratorTypes(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options, google::cloud::cpp::compute::accelerator_types::v1::ListAcceleratorTypesRequest const& request) override;
 
  private:
   std::shared_ptr<AcceleratorTypesRestStub> child_;

@@ -57,8 +57,7 @@ class ApiGatewayServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  * - [`kUnknown`](@ref google::cloud::StatusCode)
  */
-class ApiGatewayServiceLimitedErrorCountRetryPolicy
-    : public ApiGatewayServiceRetryPolicy {
+class ApiGatewayServiceLimitedErrorCountRetryPolicy : public ApiGatewayServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -68,14 +67,14 @@ class ApiGatewayServiceLimitedErrorCountRetryPolicy
    *     @p maximum_failures == 0.
    */
   explicit ApiGatewayServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   ApiGatewayServiceLimitedErrorCountRetryPolicy(
       ApiGatewayServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : ApiGatewayServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : ApiGatewayServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   ApiGatewayServiceLimitedErrorCountRetryPolicy(
       ApiGatewayServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : ApiGatewayServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : ApiGatewayServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -95,9 +94,7 @@ class ApiGatewayServiceLimitedErrorCountRetryPolicy
   using BaseType = ApiGatewayServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      apigateway_v1_internal::ApiGatewayServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<apigateway_v1_internal::ApiGatewayServiceRetryTraits> impl_;
 };
 
 /**
@@ -111,8 +108,7 @@ class ApiGatewayServiceLimitedErrorCountRetryPolicy
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  * - [`kUnknown`](@ref google::cloud::StatusCode)
  */
-class ApiGatewayServiceLimitedTimeRetryPolicy
-    : public ApiGatewayServiceRetryPolicy {
+class ApiGatewayServiceLimitedTimeRetryPolicy : public ApiGatewayServiceRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -137,14 +133,12 @@ class ApiGatewayServiceLimitedTimeRetryPolicy
   template <typename DurationRep, typename DurationPeriod>
   explicit ApiGatewayServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  ApiGatewayServiceLimitedTimeRetryPolicy(
-      ApiGatewayServiceLimitedTimeRetryPolicy&& rhs) noexcept
-      : ApiGatewayServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  ApiGatewayServiceLimitedTimeRetryPolicy(
-      ApiGatewayServiceLimitedTimeRetryPolicy const& rhs) noexcept
-      : ApiGatewayServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  ApiGatewayServiceLimitedTimeRetryPolicy(ApiGatewayServiceLimitedTimeRetryPolicy&& rhs) noexcept
+    : ApiGatewayServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  ApiGatewayServiceLimitedTimeRetryPolicy(ApiGatewayServiceLimitedTimeRetryPolicy const& rhs) noexcept
+    : ApiGatewayServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -166,18 +160,16 @@ class ApiGatewayServiceLimitedTimeRetryPolicy
   using BaseType = ApiGatewayServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      apigateway_v1_internal::ApiGatewayServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<apigateway_v1_internal::ApiGatewayServiceRetryTraits> impl_;
 };
 
 /**
  * The `ApiGatewayServiceConnection` object for `ApiGatewayServiceClient`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `ApiGatewayServiceClient`. This allows users to inject custom
- * behavior (e.g., with a Google Mock object) when writing tests that use
- * objects of type `ApiGatewayServiceClient`.
+ * sets in `ApiGatewayServiceClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `ApiGatewayServiceClient`.
  *
  * To create a concrete instance, see `MakeApiGatewayServiceConnection()`.
  *
@@ -189,132 +181,115 @@ class ApiGatewayServiceConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StreamRange<google::cloud::apigateway::v1::Gateway> ListGateways(
-      google::cloud::apigateway::v1::ListGatewaysRequest request);
+  virtual StreamRange<google::cloud::apigateway::v1::Gateway>
+  ListGateways(google::cloud::apigateway::v1::ListGatewaysRequest request);
 
-  virtual StatusOr<google::cloud::apigateway::v1::Gateway> GetGateway(
-      google::cloud::apigateway::v1::GetGatewayRequest const& request);
-
-  virtual future<StatusOr<google::cloud::apigateway::v1::Gateway>>
-  CreateGateway(
-      google::cloud::apigateway::v1::CreateGatewayRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation> CreateGateway(
-      NoAwaitTag,
-      google::cloud::apigateway::v1::CreateGatewayRequest const& request);
+  virtual StatusOr<google::cloud::apigateway::v1::Gateway>
+  GetGateway(google::cloud::apigateway::v1::GetGatewayRequest const& request);
 
   virtual future<StatusOr<google::cloud::apigateway::v1::Gateway>>
-  CreateGateway(google::longrunning::Operation const& operation);
+  CreateGateway(google::cloud::apigateway::v1::CreateGatewayRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation>
+  CreateGateway(NoAwaitTag, google::cloud::apigateway::v1::CreateGatewayRequest const& request);
 
   virtual future<StatusOr<google::cloud::apigateway::v1::Gateway>>
-  UpdateGateway(
-      google::cloud::apigateway::v1::UpdateGatewayRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation> UpdateGateway(
-      NoAwaitTag,
-      google::cloud::apigateway::v1::UpdateGatewayRequest const& request);
+  CreateGateway( google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::apigateway::v1::Gateway>>
-  UpdateGateway(google::longrunning::Operation const& operation);
+  UpdateGateway(google::cloud::apigateway::v1::UpdateGatewayRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation>
+  UpdateGateway(NoAwaitTag, google::cloud::apigateway::v1::UpdateGatewayRequest const& request);
+
+  virtual future<StatusOr<google::cloud::apigateway::v1::Gateway>>
+  UpdateGateway( google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>>
-  DeleteGateway(
-      google::cloud::apigateway::v1::DeleteGatewayRequest const& request);
+  DeleteGateway(google::cloud::apigateway::v1::DeleteGatewayRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> DeleteGateway(
-      NoAwaitTag,
-      google::cloud::apigateway::v1::DeleteGatewayRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  DeleteGateway(NoAwaitTag, google::cloud::apigateway::v1::DeleteGatewayRequest const& request);
 
   virtual future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>>
-  DeleteGateway(google::longrunning::Operation const& operation);
+  DeleteGateway( google::longrunning::Operation const& operation);
 
-  virtual StreamRange<google::cloud::apigateway::v1::Api> ListApis(
-      google::cloud::apigateway::v1::ListApisRequest request);
+  virtual StreamRange<google::cloud::apigateway::v1::Api>
+  ListApis(google::cloud::apigateway::v1::ListApisRequest request);
 
-  virtual StatusOr<google::cloud::apigateway::v1::Api> GetApi(
-      google::cloud::apigateway::v1::GetApiRequest const& request);
+  virtual StatusOr<google::cloud::apigateway::v1::Api>
+  GetApi(google::cloud::apigateway::v1::GetApiRequest const& request);
 
-  virtual future<StatusOr<google::cloud::apigateway::v1::Api>> CreateApi(
-      google::cloud::apigateway::v1::CreateApiRequest const& request);
+  virtual future<StatusOr<google::cloud::apigateway::v1::Api>>
+  CreateApi(google::cloud::apigateway::v1::CreateApiRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> CreateApi(
-      NoAwaitTag,
-      google::cloud::apigateway::v1::CreateApiRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  CreateApi(NoAwaitTag, google::cloud::apigateway::v1::CreateApiRequest const& request);
 
-  virtual future<StatusOr<google::cloud::apigateway::v1::Api>> CreateApi(
-      google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::apigateway::v1::Api>>
+  CreateApi( google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<google::cloud::apigateway::v1::Api>> UpdateApi(
-      google::cloud::apigateway::v1::UpdateApiRequest const& request);
+  virtual future<StatusOr<google::cloud::apigateway::v1::Api>>
+  UpdateApi(google::cloud::apigateway::v1::UpdateApiRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> UpdateApi(
-      NoAwaitTag,
-      google::cloud::apigateway::v1::UpdateApiRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  UpdateApi(NoAwaitTag, google::cloud::apigateway::v1::UpdateApiRequest const& request);
 
-  virtual future<StatusOr<google::cloud::apigateway::v1::Api>> UpdateApi(
-      google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::apigateway::v1::Api>>
+  UpdateApi( google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>>
   DeleteApi(google::cloud::apigateway::v1::DeleteApiRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> DeleteApi(
-      NoAwaitTag,
-      google::cloud::apigateway::v1::DeleteApiRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  DeleteApi(NoAwaitTag, google::cloud::apigateway::v1::DeleteApiRequest const& request);
 
   virtual future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>>
-  DeleteApi(google::longrunning::Operation const& operation);
+  DeleteApi( google::longrunning::Operation const& operation);
 
-  virtual StreamRange<google::cloud::apigateway::v1::ApiConfig> ListApiConfigs(
-      google::cloud::apigateway::v1::ListApiConfigsRequest request);
+  virtual StreamRange<google::cloud::apigateway::v1::ApiConfig>
+  ListApiConfigs(google::cloud::apigateway::v1::ListApiConfigsRequest request);
 
-  virtual StatusOr<google::cloud::apigateway::v1::ApiConfig> GetApiConfig(
-      google::cloud::apigateway::v1::GetApiConfigRequest const& request);
-
-  virtual future<StatusOr<google::cloud::apigateway::v1::ApiConfig>>
-  CreateApiConfig(
-      google::cloud::apigateway::v1::CreateApiConfigRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation> CreateApiConfig(
-      NoAwaitTag,
-      google::cloud::apigateway::v1::CreateApiConfigRequest const& request);
+  virtual StatusOr<google::cloud::apigateway::v1::ApiConfig>
+  GetApiConfig(google::cloud::apigateway::v1::GetApiConfigRequest const& request);
 
   virtual future<StatusOr<google::cloud::apigateway::v1::ApiConfig>>
-  CreateApiConfig(google::longrunning::Operation const& operation);
+  CreateApiConfig(google::cloud::apigateway::v1::CreateApiConfigRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation>
+  CreateApiConfig(NoAwaitTag, google::cloud::apigateway::v1::CreateApiConfigRequest const& request);
 
   virtual future<StatusOr<google::cloud::apigateway::v1::ApiConfig>>
-  UpdateApiConfig(
-      google::cloud::apigateway::v1::UpdateApiConfigRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation> UpdateApiConfig(
-      NoAwaitTag,
-      google::cloud::apigateway::v1::UpdateApiConfigRequest const& request);
+  CreateApiConfig( google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::apigateway::v1::ApiConfig>>
-  UpdateApiConfig(google::longrunning::Operation const& operation);
+  UpdateApiConfig(google::cloud::apigateway::v1::UpdateApiConfigRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation>
+  UpdateApiConfig(NoAwaitTag, google::cloud::apigateway::v1::UpdateApiConfigRequest const& request);
+
+  virtual future<StatusOr<google::cloud::apigateway::v1::ApiConfig>>
+  UpdateApiConfig( google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>>
-  DeleteApiConfig(
-      google::cloud::apigateway::v1::DeleteApiConfigRequest const& request);
+  DeleteApiConfig(google::cloud::apigateway::v1::DeleteApiConfigRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> DeleteApiConfig(
-      NoAwaitTag,
-      google::cloud::apigateway::v1::DeleteApiConfigRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  DeleteApiConfig(NoAwaitTag, google::cloud::apigateway::v1::DeleteApiConfigRequest const& request);
 
   virtual future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>>
-  DeleteApiConfig(google::longrunning::Operation const& operation);
+  DeleteApiConfig( google::longrunning::Operation const& operation);
 };
 
 /**
- * A factory function to construct an object of type
- * `ApiGatewayServiceConnection`.
+ * A factory function to construct an object of type `ApiGatewayServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of
- * ApiGatewayServiceClient.
+ * should be passed as an argument to the constructor of ApiGatewayServiceClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `ApiGatewayServiceConnection`. Expected options are any of the types
- * in the following option lists:
+ * returned `ApiGatewayServiceConnection`. Expected options are any of the types in
+ * the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
@@ -324,8 +299,8 @@ class ApiGatewayServiceConnection {
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
- * @param options (optional) Configure the `ApiGatewayServiceConnection` created
- * by this function.
+ * @param options (optional) Configure the `ApiGatewayServiceConnection` created by
+ * this function.
  */
 std::shared_ptr<ApiGatewayServiceConnection> MakeApiGatewayServiceConnection(
     Options options = {});

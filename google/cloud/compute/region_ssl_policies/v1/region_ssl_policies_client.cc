@@ -28,18 +28,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 RegionSslPoliciesClient::RegionSslPoliciesClient(
     std::shared_ptr<RegionSslPoliciesConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 RegionSslPoliciesClient::~RegionSslPoliciesClient() = default;
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionSslPoliciesClient::DeleteSslPolicy(std::string const& project,
-                                         std::string const& region,
-                                         std::string const& ssl_policy,
-                                         Options opts) {
+RegionSslPoliciesClient::DeleteSslPolicy(std::string const& project, std::string const& region, std::string const& ssl_policy, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::region_ssl_policies::v1::DeleteSslPolicyRequest
-      request;
+  google::cloud::cpp::compute::region_ssl_policies::v1::DeleteSslPolicyRequest request;
   request.set_project(project);
   request.set_region(region);
   request.set_ssl_policy(ssl_policy);
@@ -47,13 +43,9 @@ RegionSslPoliciesClient::DeleteSslPolicy(std::string const& project,
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-RegionSslPoliciesClient::DeleteSslPolicy(NoAwaitTag, std::string const& project,
-                                         std::string const& region,
-                                         std::string const& ssl_policy,
-                                         Options opts) {
+RegionSslPoliciesClient::DeleteSslPolicy(NoAwaitTag, std::string const& project, std::string const& region, std::string const& ssl_policy, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::region_ssl_policies::v1::DeleteSslPolicyRequest
-      request;
+  google::cloud::cpp::compute::region_ssl_policies::v1::DeleteSslPolicyRequest request;
   request.set_project(project);
   request.set_region(region);
   request.set_ssl_policy(ssl_policy);
@@ -61,39 +53,27 @@ RegionSslPoliciesClient::DeleteSslPolicy(NoAwaitTag, std::string const& project,
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionSslPoliciesClient::DeleteSslPolicy(
-    google::cloud::cpp::compute::region_ssl_policies::v1::
-        DeleteSslPolicyRequest const& request,
-    Options opts) {
+RegionSslPoliciesClient::DeleteSslPolicy(google::cloud::cpp::compute::region_ssl_policies::v1::DeleteSslPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteSslPolicy(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-RegionSslPoliciesClient::DeleteSslPolicy(
-    NoAwaitTag,
-    google::cloud::cpp::compute::region_ssl_policies::v1::
-        DeleteSslPolicyRequest const& request,
-    Options opts) {
+RegionSslPoliciesClient::DeleteSslPolicy(NoAwaitTag, google::cloud::cpp::compute::region_ssl_policies::v1::DeleteSslPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteSslPolicy(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionSslPoliciesClient::DeleteSslPolicy(
-    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+RegionSslPoliciesClient::DeleteSslPolicy(google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteSslPolicy(operation);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::SslPolicy>
-RegionSslPoliciesClient::GetSslPolicy(std::string const& project,
-                                      std::string const& region,
-                                      std::string const& ssl_policy,
-                                      Options opts) {
+RegionSslPoliciesClient::GetSslPolicy(std::string const& project, std::string const& region, std::string const& ssl_policy, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::region_ssl_policies::v1::GetSslPolicyRequest
-      request;
+  google::cloud::cpp::compute::region_ssl_policies::v1::GetSslPolicyRequest request;
   request.set_project(project);
   request.set_region(region);
   request.set_ssl_policy(ssl_policy);
@@ -101,22 +81,15 @@ RegionSslPoliciesClient::GetSslPolicy(std::string const& project,
 }
 
 StatusOr<google::cloud::cpp::compute::v1::SslPolicy>
-RegionSslPoliciesClient::GetSslPolicy(
-    google::cloud::cpp::compute::region_ssl_policies::v1::
-        GetSslPolicyRequest const& request,
-    Options opts) {
+RegionSslPoliciesClient::GetSslPolicy(google::cloud::cpp::compute::region_ssl_policies::v1::GetSslPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetSslPolicy(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionSslPoliciesClient::InsertSslPolicy(
-    std::string const& project, std::string const& region,
-    google::cloud::cpp::compute::v1::SslPolicy const& ssl_policy_resource,
-    Options opts) {
+RegionSslPoliciesClient::InsertSslPolicy(std::string const& project, std::string const& region, google::cloud::cpp::compute::v1::SslPolicy const& ssl_policy_resource, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::region_ssl_policies::v1::InsertSslPolicyRequest
-      request;
+  google::cloud::cpp::compute::region_ssl_policies::v1::InsertSslPolicyRequest request;
   request.set_project(project);
   request.set_region(region);
   *request.mutable_ssl_policy_resource() = ssl_policy_resource;
@@ -124,13 +97,9 @@ RegionSslPoliciesClient::InsertSslPolicy(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-RegionSslPoliciesClient::InsertSslPolicy(
-    NoAwaitTag, std::string const& project, std::string const& region,
-    google::cloud::cpp::compute::v1::SslPolicy const& ssl_policy_resource,
-    Options opts) {
+RegionSslPoliciesClient::InsertSslPolicy(NoAwaitTag, std::string const& project, std::string const& region, google::cloud::cpp::compute::v1::SslPolicy const& ssl_policy_resource, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::region_ssl_policies::v1::InsertSslPolicyRequest
-      request;
+  google::cloud::cpp::compute::region_ssl_policies::v1::InsertSslPolicyRequest request;
   request.set_project(project);
   request.set_region(region);
   *request.mutable_ssl_policy_resource() = ssl_policy_resource;
@@ -138,84 +107,57 @@ RegionSslPoliciesClient::InsertSslPolicy(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionSslPoliciesClient::InsertSslPolicy(
-    google::cloud::cpp::compute::region_ssl_policies::v1::
-        InsertSslPolicyRequest const& request,
-    Options opts) {
+RegionSslPoliciesClient::InsertSslPolicy(google::cloud::cpp::compute::region_ssl_policies::v1::InsertSslPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->InsertSslPolicy(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-RegionSslPoliciesClient::InsertSslPolicy(
-    NoAwaitTag,
-    google::cloud::cpp::compute::region_ssl_policies::v1::
-        InsertSslPolicyRequest const& request,
-    Options opts) {
+RegionSslPoliciesClient::InsertSslPolicy(NoAwaitTag, google::cloud::cpp::compute::region_ssl_policies::v1::InsertSslPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->InsertSslPolicy(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionSslPoliciesClient::InsertSslPolicy(
-    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+RegionSslPoliciesClient::InsertSslPolicy(google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->InsertSslPolicy(operation);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::SslPolicy>
-RegionSslPoliciesClient::ListRegionSslPolicies(std::string const& project,
-                                               std::string const& region,
-                                               Options opts) {
+RegionSslPoliciesClient::ListRegionSslPolicies(std::string const& project, std::string const& region, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::region_ssl_policies::v1::
-      ListRegionSslPoliciesRequest request;
+  google::cloud::cpp::compute::region_ssl_policies::v1::ListRegionSslPoliciesRequest request;
   request.set_project(project);
   request.set_region(region);
   return connection_->ListRegionSslPolicies(request);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::SslPolicy>
-RegionSslPoliciesClient::ListRegionSslPolicies(
-    google::cloud::cpp::compute::region_ssl_policies::v1::
-        ListRegionSslPoliciesRequest request,
-    Options opts) {
+RegionSslPoliciesClient::ListRegionSslPolicies(google::cloud::cpp::compute::region_ssl_policies::v1::ListRegionSslPoliciesRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListRegionSslPolicies(std::move(request));
 }
 
-StatusOr<
-    google::cloud::cpp::compute::v1::SslPoliciesListAvailableFeaturesResponse>
-RegionSslPoliciesClient::ListAvailableFeatures(std::string const& project,
-                                               std::string const& region,
-                                               Options opts) {
+StatusOr<google::cloud::cpp::compute::v1::SslPoliciesListAvailableFeaturesResponse>
+RegionSslPoliciesClient::ListAvailableFeatures(std::string const& project, std::string const& region, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::region_ssl_policies::v1::
-      ListAvailableFeaturesRequest request;
+  google::cloud::cpp::compute::region_ssl_policies::v1::ListAvailableFeaturesRequest request;
   request.set_project(project);
   request.set_region(region);
   return connection_->ListAvailableFeatures(request);
 }
 
-StatusOr<
-    google::cloud::cpp::compute::v1::SslPoliciesListAvailableFeaturesResponse>
-RegionSslPoliciesClient::ListAvailableFeatures(
-    google::cloud::cpp::compute::region_ssl_policies::v1::
-        ListAvailableFeaturesRequest const& request,
-    Options opts) {
+StatusOr<google::cloud::cpp::compute::v1::SslPoliciesListAvailableFeaturesResponse>
+RegionSslPoliciesClient::ListAvailableFeatures(google::cloud::cpp::compute::region_ssl_policies::v1::ListAvailableFeaturesRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListAvailableFeatures(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionSslPoliciesClient::PatchSslPolicy(
-    std::string const& project, std::string const& region,
-    std::string const& ssl_policy,
-    google::cloud::cpp::compute::v1::SslPolicy const& ssl_policy_resource,
-    Options opts) {
+RegionSslPoliciesClient::PatchSslPolicy(std::string const& project, std::string const& region, std::string const& ssl_policy, google::cloud::cpp::compute::v1::SslPolicy const& ssl_policy_resource, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::region_ssl_policies::v1::PatchSslPolicyRequest
-      request;
+  google::cloud::cpp::compute::region_ssl_policies::v1::PatchSslPolicyRequest request;
   request.set_project(project);
   request.set_region(region);
   request.set_ssl_policy(ssl_policy);
@@ -224,14 +166,9 @@ RegionSslPoliciesClient::PatchSslPolicy(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-RegionSslPoliciesClient::PatchSslPolicy(
-    NoAwaitTag, std::string const& project, std::string const& region,
-    std::string const& ssl_policy,
-    google::cloud::cpp::compute::v1::SslPolicy const& ssl_policy_resource,
-    Options opts) {
+RegionSslPoliciesClient::PatchSslPolicy(NoAwaitTag, std::string const& project, std::string const& region, std::string const& ssl_policy, google::cloud::cpp::compute::v1::SslPolicy const& ssl_policy_resource, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::region_ssl_policies::v1::PatchSslPolicyRequest
-      request;
+  google::cloud::cpp::compute::region_ssl_policies::v1::PatchSslPolicyRequest request;
   request.set_project(project);
   request.set_region(region);
   request.set_ssl_policy(ssl_policy);
@@ -240,27 +177,19 @@ RegionSslPoliciesClient::PatchSslPolicy(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionSslPoliciesClient::PatchSslPolicy(
-    google::cloud::cpp::compute::region_ssl_policies::v1::
-        PatchSslPolicyRequest const& request,
-    Options opts) {
+RegionSslPoliciesClient::PatchSslPolicy(google::cloud::cpp::compute::region_ssl_policies::v1::PatchSslPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PatchSslPolicy(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-RegionSslPoliciesClient::PatchSslPolicy(
-    NoAwaitTag,
-    google::cloud::cpp::compute::region_ssl_policies::v1::
-        PatchSslPolicyRequest const& request,
-    Options opts) {
+RegionSslPoliciesClient::PatchSslPolicy(NoAwaitTag, google::cloud::cpp::compute::region_ssl_policies::v1::PatchSslPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PatchSslPolicy(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionSslPoliciesClient::PatchSslPolicy(
-    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+RegionSslPoliciesClient::PatchSslPolicy(google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PatchSslPolicy(operation);
 }

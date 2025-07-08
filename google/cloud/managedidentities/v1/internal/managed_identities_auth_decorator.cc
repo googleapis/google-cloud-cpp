@@ -33,57 +33,54 @@ ManagedIdentitiesServiceAuth::ManagedIdentitiesServiceAuth(
 
 future<StatusOr<google::longrunning::Operation>>
 ManagedIdentitiesServiceAuth::AsyncCreateMicrosoftAdDomain(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::managedidentities::v1::CreateMicrosoftAdDomainRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::managedidentities::v1::CreateMicrosoftAdDomainRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreateMicrosoftAdDomain(cq, *std::move(context),
-                                                   std::move(options), request);
+        return child->AsyncCreateMicrosoftAdDomain(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 ManagedIdentitiesServiceAuth::CreateMicrosoftAdDomain(
-    grpc::ClientContext& context, Options options,
-    google::cloud::managedidentities::v1::CreateMicrosoftAdDomainRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::managedidentities::v1::CreateMicrosoftAdDomainRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateMicrosoftAdDomain(context, options, request);
 }
 
-StatusOr<google::cloud::managedidentities::v1::ResetAdminPasswordResponse>
-ManagedIdentitiesServiceAuth::ResetAdminPassword(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::managedidentities::v1::ResetAdminPasswordRequest const&
-        request) {
+StatusOr<google::cloud::managedidentities::v1::ResetAdminPasswordResponse> ManagedIdentitiesServiceAuth::ResetAdminPassword(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::managedidentities::v1::ResetAdminPasswordRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ResetAdminPassword(context, options, request);
 }
 
-StatusOr<google::cloud::managedidentities::v1::ListDomainsResponse>
-ManagedIdentitiesServiceAuth::ListDomains(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::managedidentities::v1::ListDomainsResponse> ManagedIdentitiesServiceAuth::ListDomains(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::managedidentities::v1::ListDomainsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListDomains(context, options, request);
 }
 
-StatusOr<google::cloud::managedidentities::v1::Domain>
-ManagedIdentitiesServiceAuth::GetDomain(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::managedidentities::v1::Domain> ManagedIdentitiesServiceAuth::GetDomain(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::managedidentities::v1::GetDomainRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -92,28 +89,28 @@ ManagedIdentitiesServiceAuth::GetDomain(
 
 future<StatusOr<google::longrunning::Operation>>
 ManagedIdentitiesServiceAuth::AsyncUpdateDomain(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::managedidentities::v1::UpdateDomainRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::managedidentities::v1::UpdateDomainRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncUpdateDomain(cq, *std::move(context),
-                                        std::move(options), request);
+        return child->AsyncUpdateDomain(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 ManagedIdentitiesServiceAuth::UpdateDomain(
-    grpc::ClientContext& context, Options options,
-    google::cloud::managedidentities::v1::UpdateDomainRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::managedidentities::v1::UpdateDomainRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateDomain(context, options, request);
@@ -121,28 +118,28 @@ ManagedIdentitiesServiceAuth::UpdateDomain(
 
 future<StatusOr<google::longrunning::Operation>>
 ManagedIdentitiesServiceAuth::AsyncDeleteDomain(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::managedidentities::v1::DeleteDomainRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::managedidentities::v1::DeleteDomainRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDeleteDomain(cq, *std::move(context),
-                                        std::move(options), request);
+        return child->AsyncDeleteDomain(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 ManagedIdentitiesServiceAuth::DeleteDomain(
-    grpc::ClientContext& context, Options options,
-    google::cloud::managedidentities::v1::DeleteDomainRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::managedidentities::v1::DeleteDomainRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteDomain(context, options, request);
@@ -150,28 +147,28 @@ ManagedIdentitiesServiceAuth::DeleteDomain(
 
 future<StatusOr<google::longrunning::Operation>>
 ManagedIdentitiesServiceAuth::AsyncAttachTrust(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::managedidentities::v1::AttachTrustRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::managedidentities::v1::AttachTrustRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncAttachTrust(cq, *std::move(context),
-                                       std::move(options), request);
+        return child->AsyncAttachTrust(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 ManagedIdentitiesServiceAuth::AttachTrust(
-    grpc::ClientContext& context, Options options,
-    google::cloud::managedidentities::v1::AttachTrustRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::managedidentities::v1::AttachTrustRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->AttachTrust(context, options, request);
@@ -179,30 +176,28 @@ ManagedIdentitiesServiceAuth::AttachTrust(
 
 future<StatusOr<google::longrunning::Operation>>
 ManagedIdentitiesServiceAuth::AsyncReconfigureTrust(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::managedidentities::v1::ReconfigureTrustRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::managedidentities::v1::ReconfigureTrustRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncReconfigureTrust(cq, *std::move(context),
-                                            std::move(options), request);
+        return child->AsyncReconfigureTrust(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 ManagedIdentitiesServiceAuth::ReconfigureTrust(
-    grpc::ClientContext& context, Options options,
-    google::cloud::managedidentities::v1::ReconfigureTrustRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::managedidentities::v1::ReconfigureTrustRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ReconfigureTrust(context, options, request);
@@ -210,28 +205,28 @@ ManagedIdentitiesServiceAuth::ReconfigureTrust(
 
 future<StatusOr<google::longrunning::Operation>>
 ManagedIdentitiesServiceAuth::AsyncDetachTrust(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::managedidentities::v1::DetachTrustRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::managedidentities::v1::DetachTrustRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDetachTrust(cq, *std::move(context),
-                                       std::move(options), request);
+        return child->AsyncDetachTrust(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 ManagedIdentitiesServiceAuth::DetachTrust(
-    grpc::ClientContext& context, Options options,
-    google::cloud::managedidentities::v1::DetachTrustRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::managedidentities::v1::DetachTrustRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DetachTrust(context, options, request);
@@ -239,28 +234,28 @@ ManagedIdentitiesServiceAuth::DetachTrust(
 
 future<StatusOr<google::longrunning::Operation>>
 ManagedIdentitiesServiceAuth::AsyncValidateTrust(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::managedidentities::v1::ValidateTrustRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::managedidentities::v1::ValidateTrustRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncValidateTrust(cq, *std::move(context),
-                                         std::move(options), request);
+        return child->AsyncValidateTrust(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 ManagedIdentitiesServiceAuth::ValidateTrust(
-    grpc::ClientContext& context, Options options,
-    google::cloud::managedidentities::v1::ValidateTrustRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::managedidentities::v1::ValidateTrustRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ValidateTrust(context, options, request);
@@ -273,16 +268,15 @@ ManagedIdentitiesServiceAuth::AsyncGetOperation(
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncGetOperation(cq, *std::move(context),
-                                        std::move(options), request);
+        return child->AsyncGetOperation(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
@@ -291,14 +285,13 @@ future<Status> ManagedIdentitiesServiceAuth::AsyncCancelOperation(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) return make_ready_future(std::move(context).status());
-        return child->AsyncCancelOperation(cq, *std::move(context),
-                                           std::move(options), request);
+        return child->AsyncCancelOperation(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 

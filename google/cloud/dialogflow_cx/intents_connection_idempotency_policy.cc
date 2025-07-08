@@ -26,76 +26,63 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-IntentsConnectionIdempotencyPolicy::~IntentsConnectionIdempotencyPolicy() =
-    default;
+IntentsConnectionIdempotencyPolicy::~IntentsConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<IntentsConnectionIdempotencyPolicy>
 IntentsConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<IntentsConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency IntentsConnectionIdempotencyPolicy::ListIntents(
-    google::cloud::dialogflow::cx::v3::ListIntentsRequest) {  // NOLINT
+Idempotency IntentsConnectionIdempotencyPolicy::ListIntents(google::cloud::dialogflow::cx::v3::ListIntentsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency IntentsConnectionIdempotencyPolicy::GetIntent(
-    google::cloud::dialogflow::cx::v3::GetIntentRequest const&) {
+Idempotency IntentsConnectionIdempotencyPolicy::GetIntent(google::cloud::dialogflow::cx::v3::GetIntentRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency IntentsConnectionIdempotencyPolicy::CreateIntent(
-    google::cloud::dialogflow::cx::v3::CreateIntentRequest const&) {
+Idempotency IntentsConnectionIdempotencyPolicy::CreateIntent(google::cloud::dialogflow::cx::v3::CreateIntentRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency IntentsConnectionIdempotencyPolicy::UpdateIntent(
-    google::cloud::dialogflow::cx::v3::UpdateIntentRequest const&) {
+Idempotency IntentsConnectionIdempotencyPolicy::UpdateIntent(google::cloud::dialogflow::cx::v3::UpdateIntentRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency IntentsConnectionIdempotencyPolicy::DeleteIntent(
-    google::cloud::dialogflow::cx::v3::DeleteIntentRequest const&) {
+Idempotency IntentsConnectionIdempotencyPolicy::DeleteIntent(google::cloud::dialogflow::cx::v3::DeleteIntentRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency IntentsConnectionIdempotencyPolicy::ImportIntents(
-    google::cloud::dialogflow::cx::v3::ImportIntentsRequest const&) {
+Idempotency IntentsConnectionIdempotencyPolicy::ImportIntents(google::cloud::dialogflow::cx::v3::ImportIntentsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency IntentsConnectionIdempotencyPolicy::ExportIntents(
-    google::cloud::dialogflow::cx::v3::ExportIntentsRequest const&) {
+Idempotency IntentsConnectionIdempotencyPolicy::ExportIntents(google::cloud::dialogflow::cx::v3::ExportIntentsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency IntentsConnectionIdempotencyPolicy::ListLocations(
-    google::cloud::location::ListLocationsRequest) {  // NOLINT
+Idempotency IntentsConnectionIdempotencyPolicy::ListLocations(google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency IntentsConnectionIdempotencyPolicy::GetLocation(
-    google::cloud::location::GetLocationRequest const&) {
+Idempotency IntentsConnectionIdempotencyPolicy::GetLocation(google::cloud::location::GetLocationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency IntentsConnectionIdempotencyPolicy::ListOperations(
-    google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency IntentsConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency IntentsConnectionIdempotencyPolicy::GetOperation(
-    google::longrunning::GetOperationRequest const&) {
+Idempotency IntentsConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency IntentsConnectionIdempotencyPolicy::CancelOperation(
-    google::longrunning::CancelOperationRequest const&) {
+Idempotency IntentsConnectionIdempotencyPolicy::CancelOperation(google::longrunning::CancelOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<IntentsConnectionIdempotencyPolicy>
-MakeDefaultIntentsConnectionIdempotencyPolicy() {
+    MakeDefaultIntentsConnectionIdempotencyPolicy() {
   return std::make_unique<IntentsConnectionIdempotencyPolicy>();
 }
 

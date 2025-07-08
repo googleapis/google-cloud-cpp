@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SUPPORT_V2_CASE_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SUPPORT_V2_CASE_OPTIONS_H
 
-#include "google/cloud/support/v2/case_connection.h"
-#include "google/cloud/support/v2/case_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
+#include "google/cloud/support/v2/case_connection.h"
+#include "google/cloud/support/v2/case_connection_idempotency_policy.h"
 #include "google/cloud/version.h"
 #include <memory>
 
@@ -64,7 +64,8 @@ struct CaseServiceConnectionIdempotencyPolicyOption {
  * @ingroup google-cloud-support-options
  */
 using CaseServicePolicyOptionList =
-    OptionList<CaseServiceRetryPolicyOption, CaseServiceBackoffPolicyOption,
+    OptionList<CaseServiceRetryPolicyOption,
+               CaseServiceBackoffPolicyOption,
                CaseServiceConnectionIdempotencyPolicyOption>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

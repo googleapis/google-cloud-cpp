@@ -63,8 +63,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class CloudCatalogClient {
  public:
-  explicit CloudCatalogClient(
-      std::shared_ptr<CloudCatalogConnection> connection, Options opts = {});
+  explicit CloudCatalogClient(std::shared_ptr<CloudCatalogConnection> connection, Options opts = {});
   ~CloudCatalogClient();
 
   ///@{
@@ -77,12 +76,10 @@ class CloudCatalogClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(CloudCatalogClient const& a,
-                         CloudCatalogClient const& b) {
+  friend bool operator==(CloudCatalogClient const& a, CloudCatalogClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(CloudCatalogClient const& a,
-                         CloudCatalogClient const& b) {
+  friend bool operator!=(CloudCatalogClient const& a, CloudCatalogClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -117,8 +114,8 @@ class CloudCatalogClient {
   /// [google.cloud.billing.v1.Service]: @googleapis_reference_link{google/cloud/billing/v1/cloud_catalog.proto#L61}
   ///
   // clang-format on
-  StreamRange<google::cloud::billing::v1::Service> ListServices(
-      Options opts = {});
+  StreamRange<google::cloud::billing::v1::Service>
+  ListServices(Options opts = {});
 
   // clang-format off
   ///
@@ -156,9 +153,8 @@ class CloudCatalogClient {
   /// [google.cloud.billing.v1.Service]: @googleapis_reference_link{google/cloud/billing/v1/cloud_catalog.proto#L61}
   ///
   // clang-format on
-  StreamRange<google::cloud::billing::v1::Service> ListServices(
-      google::cloud::billing::v1::ListServicesRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::billing::v1::Service>
+  ListServices(google::cloud::billing::v1::ListServicesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -192,8 +188,8 @@ class CloudCatalogClient {
   /// [google.cloud.billing.v1.Sku]: @googleapis_reference_link{google/cloud/billing/v1/cloud_catalog.proto#L84}
   ///
   // clang-format on
-  StreamRange<google::cloud::billing::v1::Sku> ListSkus(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::billing::v1::Sku>
+  ListSkus(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -231,8 +227,8 @@ class CloudCatalogClient {
   /// [google.cloud.billing.v1.Sku]: @googleapis_reference_link{google/cloud/billing/v1/cloud_catalog.proto#L84}
   ///
   // clang-format on
-  StreamRange<google::cloud::billing::v1::Sku> ListSkus(
-      google::cloud::billing::v1::ListSkusRequest request, Options opts = {});
+  StreamRange<google::cloud::billing::v1::Sku>
+  ListSkus(google::cloud::billing::v1::ListSkusRequest request, Options opts = {});
 
  private:
   std::shared_ptr<CloudCatalogConnection> connection_;

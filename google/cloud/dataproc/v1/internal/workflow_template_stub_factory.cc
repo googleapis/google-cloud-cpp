@@ -17,12 +17,12 @@
 // source: google/cloud/dataproc/v1/workflow_templates.proto
 
 #include "google/cloud/dataproc/v1/internal/workflow_template_stub_factory.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/dataproc/v1/internal/workflow_template_auth_decorator.h"
 #include "google/cloud/dataproc/v1/internal/workflow_template_logging_decorator.h"
 #include "google/cloud/dataproc/v1/internal/workflow_template_metadata_decorator.h"
 #include "google/cloud/dataproc/v1/internal/workflow_template_stub.h"
 #include "google/cloud/dataproc/v1/internal/workflow_template_tracing_stub.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/opentelemetry.h"
@@ -43,26 +43,27 @@ std::shared_ptr<WorkflowTemplateServiceStub>
 CreateDefaultWorkflowTemplateServiceStub(
     std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
     Options const& options) {
-  auto channel = auth->CreateChannel(options.get<EndpointOption>(),
-                                     internal::MakeChannelArguments(options));
-  auto service_grpc_stub =
-      google::cloud::dataproc::v1::WorkflowTemplateService::NewStub(channel);
+  auto channel = auth->CreateChannel(
+    options.get<EndpointOption>(), internal::MakeChannelArguments(options));
+  auto service_grpc_stub = google::cloud::dataproc::v1::WorkflowTemplateService::NewStub(channel);
   auto service_iampolicy_stub = google::iam::v1::IAMPolicy::NewStub(channel);
   std::shared_ptr<WorkflowTemplateServiceStub> stub =
-      std::make_shared<DefaultWorkflowTemplateServiceStub>(
-          std::move(service_grpc_stub), std::move(service_iampolicy_stub),
-          google::longrunning::Operations::NewStub(channel));
+    std::make_shared<DefaultWorkflowTemplateServiceStub>(
+      std::move(service_grpc_stub), std::move(service_iampolicy_stub),
+      google::longrunning::Operations::NewStub(channel));
 
   if (auth->RequiresConfigureContext()) {
-    stub = std::make_shared<WorkflowTemplateServiceAuth>(std::move(auth),
-                                                         std::move(stub));
+    stub = std::make_shared<WorkflowTemplateServiceAuth>(
+        std::move(auth), std::move(stub));
   }
   stub = std::make_shared<WorkflowTemplateServiceMetadata>(
       std::move(stub), std::multimap<std::string, std::string>{});
-  if (internal::Contains(options.get<LoggingComponentsOption>(), "rpc")) {
+  if (internal::Contains(
+      options.get<LoggingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<WorkflowTemplateServiceLogging>(
-        std::move(stub), options.get<GrpcTracingOptionsOption>(),
+        std::move(stub),
+        options.get<GrpcTracingOptionsOption>(),
         options.get<LoggingComponentsOption>());
   }
   if (internal::TracingEnabled(options)) {

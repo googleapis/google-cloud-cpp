@@ -19,11 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_SQL_REGIONS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_SQL_REGIONS_CONNECTION_H
 
-#include "google/cloud/sql/v1/internal/sql_regions_retry_traits.h"
-#include "google/cloud/sql/v1/sql_regions_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
+#include "google/cloud/sql/v1/internal/sql_regions_retry_traits.h"
+#include "google/cloud/sql/v1/sql_regions_connection_idempotency_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/sql/v1/cloud_sql_regions.pb.h>
@@ -51,8 +51,7 @@ class SqlRegionsServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class SqlRegionsServiceLimitedErrorCountRetryPolicy
-    : public SqlRegionsServiceRetryPolicy {
+class SqlRegionsServiceLimitedErrorCountRetryPolicy : public SqlRegionsServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -62,14 +61,14 @@ class SqlRegionsServiceLimitedErrorCountRetryPolicy
    *     @p maximum_failures == 0.
    */
   explicit SqlRegionsServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   SqlRegionsServiceLimitedErrorCountRetryPolicy(
       SqlRegionsServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : SqlRegionsServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : SqlRegionsServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   SqlRegionsServiceLimitedErrorCountRetryPolicy(
       SqlRegionsServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : SqlRegionsServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : SqlRegionsServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -89,9 +88,7 @@ class SqlRegionsServiceLimitedErrorCountRetryPolicy
   using BaseType = SqlRegionsServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      sql_v1_internal::SqlRegionsServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<sql_v1_internal::SqlRegionsServiceRetryTraits> impl_;
 };
 
 /**
@@ -104,8 +101,7 @@ class SqlRegionsServiceLimitedErrorCountRetryPolicy
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class SqlRegionsServiceLimitedTimeRetryPolicy
-    : public SqlRegionsServiceRetryPolicy {
+class SqlRegionsServiceLimitedTimeRetryPolicy : public SqlRegionsServiceRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -130,14 +126,12 @@ class SqlRegionsServiceLimitedTimeRetryPolicy
   template <typename DurationRep, typename DurationPeriod>
   explicit SqlRegionsServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  SqlRegionsServiceLimitedTimeRetryPolicy(
-      SqlRegionsServiceLimitedTimeRetryPolicy&& rhs) noexcept
-      : SqlRegionsServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  SqlRegionsServiceLimitedTimeRetryPolicy(
-      SqlRegionsServiceLimitedTimeRetryPolicy const& rhs) noexcept
-      : SqlRegionsServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  SqlRegionsServiceLimitedTimeRetryPolicy(SqlRegionsServiceLimitedTimeRetryPolicy&& rhs) noexcept
+    : SqlRegionsServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  SqlRegionsServiceLimitedTimeRetryPolicy(SqlRegionsServiceLimitedTimeRetryPolicy const& rhs) noexcept
+    : SqlRegionsServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -159,18 +153,16 @@ class SqlRegionsServiceLimitedTimeRetryPolicy
   using BaseType = SqlRegionsServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      sql_v1_internal::SqlRegionsServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<sql_v1_internal::SqlRegionsServiceRetryTraits> impl_;
 };
 
 /**
  * The `SqlRegionsServiceConnection` object for `SqlRegionsServiceClient`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `SqlRegionsServiceClient`. This allows users to inject custom
- * behavior (e.g., with a Google Mock object) when writing tests that use
- * objects of type `SqlRegionsServiceClient`.
+ * sets in `SqlRegionsServiceClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `SqlRegionsServiceClient`.
  *
  * To create a concrete instance, see `MakeSqlRegionsServiceConnection()`.
  *

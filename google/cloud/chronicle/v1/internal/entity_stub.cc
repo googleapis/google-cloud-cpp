@@ -32,106 +32,119 @@ EntityServiceStub::~EntityServiceStub() = default;
 
 StatusOr<google::cloud::chronicle::v1::Watchlist>
 DefaultEntityServiceStub::GetWatchlist(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::chronicle::v1::GetWatchlistRequest const& request) {
-  google::cloud::chronicle::v1::Watchlist response;
-  auto status = grpc_stub_->GetWatchlist(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::chronicle::v1::GetWatchlistRequest const& request) {
+    google::cloud::chronicle::v1::Watchlist response;
+    auto status =
+        grpc_stub_->GetWatchlist(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::chronicle::v1::ListWatchlistsResponse>
 DefaultEntityServiceStub::ListWatchlists(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::chronicle::v1::ListWatchlistsRequest const& request) {
-  google::cloud::chronicle::v1::ListWatchlistsResponse response;
-  auto status = grpc_stub_->ListWatchlists(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::chronicle::v1::ListWatchlistsRequest const& request) {
+    google::cloud::chronicle::v1::ListWatchlistsResponse response;
+    auto status =
+        grpc_stub_->ListWatchlists(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::chronicle::v1::Watchlist>
 DefaultEntityServiceStub::CreateWatchlist(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::chronicle::v1::CreateWatchlistRequest const& request) {
-  google::cloud::chronicle::v1::Watchlist response;
-  auto status = grpc_stub_->CreateWatchlist(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::chronicle::v1::CreateWatchlistRequest const& request) {
+    google::cloud::chronicle::v1::Watchlist response;
+    auto status =
+        grpc_stub_->CreateWatchlist(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::chronicle::v1::Watchlist>
 DefaultEntityServiceStub::UpdateWatchlist(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::chronicle::v1::UpdateWatchlistRequest const& request) {
-  google::cloud::chronicle::v1::Watchlist response;
-  auto status = grpc_stub_->UpdateWatchlist(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::chronicle::v1::UpdateWatchlistRequest const& request) {
+    google::cloud::chronicle::v1::Watchlist response;
+    auto status =
+        grpc_stub_->UpdateWatchlist(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-Status DefaultEntityServiceStub::DeleteWatchlist(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::chronicle::v1::DeleteWatchlistRequest const& request) {
-  google::protobuf::Empty response;
-  auto status = grpc_stub_->DeleteWatchlist(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return google::cloud::Status();
+Status
+DefaultEntityServiceStub::DeleteWatchlist(
+  grpc::ClientContext& context, Options const&,
+  google::cloud::chronicle::v1::DeleteWatchlistRequest const& request) {
+    google::protobuf::Empty response;
+    auto status =
+        grpc_stub_->DeleteWatchlist(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return google::cloud::Status();
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
 DefaultEntityServiceStub::ListOperations(
-    grpc::ClientContext& context, Options const&,
-    google::longrunning::ListOperationsRequest const& request) {
-  google::longrunning::ListOperationsResponse response;
-  auto status = operations_stub_->ListOperations(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::longrunning::ListOperationsRequest const& request) {
+    google::longrunning::ListOperationsResponse response;
+    auto status =
+        operations_stub_->ListOperations(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-StatusOr<google::longrunning::Operation> DefaultEntityServiceStub::GetOperation(
-    grpc::ClientContext& context, Options const&,
-    google::longrunning::GetOperationRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = operations_stub_->GetOperation(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::longrunning::Operation>
+DefaultEntityServiceStub::GetOperation(
+  grpc::ClientContext& context, Options const&,
+  google::longrunning::GetOperationRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        operations_stub_->GetOperation(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-Status DefaultEntityServiceStub::DeleteOperation(
-    grpc::ClientContext& context, Options const&,
-    google::longrunning::DeleteOperationRequest const& request) {
-  google::protobuf::Empty response;
-  auto status = operations_stub_->DeleteOperation(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return google::cloud::Status();
+Status
+DefaultEntityServiceStub::DeleteOperation(
+  grpc::ClientContext& context, Options const&,
+  google::longrunning::DeleteOperationRequest const& request) {
+    google::protobuf::Empty response;
+    auto status =
+        operations_stub_->DeleteOperation(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return google::cloud::Status();
 }
 
-Status DefaultEntityServiceStub::CancelOperation(
-    grpc::ClientContext& context, Options const&,
-    google::longrunning::CancelOperationRequest const& request) {
-  google::protobuf::Empty response;
-  auto status = operations_stub_->CancelOperation(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return google::cloud::Status();
+Status
+DefaultEntityServiceStub::CancelOperation(
+  grpc::ClientContext& context, Options const&,
+  google::longrunning::CancelOperationRequest const& request) {
+    google::protobuf::Empty response;
+    auto status =
+        operations_stub_->CancelOperation(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return google::cloud::Status();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

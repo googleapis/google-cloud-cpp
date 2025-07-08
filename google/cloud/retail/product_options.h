@@ -34,10 +34,8 @@ using ::google::cloud::retail_v2::ProductServicePollingPolicyOption;
 /// @deprecated Use retail_v2::ProductServiceBackoffPolicyOption directly.
 using ::google::cloud::retail_v2::ProductServiceBackoffPolicyOption;
 
-/// @deprecated Use retail_v2::ProductServiceConnectionIdempotencyPolicyOption
-/// directly.
-using ::google::cloud::retail_v2::
-    ProductServiceConnectionIdempotencyPolicyOption;
+/// @deprecated Use retail_v2::ProductServiceConnectionIdempotencyPolicyOption directly.
+using ::google::cloud::retail_v2::ProductServiceConnectionIdempotencyPolicyOption;
 
 /// @deprecated Use retail_v2::ProductServicePolicyOptionList directly.
 using ::google::cloud::retail_v2::ProductServicePolicyOptionList;

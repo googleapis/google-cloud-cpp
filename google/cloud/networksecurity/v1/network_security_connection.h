@@ -19,11 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_NETWORKSECURITY_V1_NETWORK_SECURITY_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_NETWORKSECURITY_V1_NETWORK_SECURITY_CONNECTION_H
 
-#include "google/cloud/networksecurity/v1/internal/network_security_retry_traits.h"
-#include "google/cloud/networksecurity/v1/network_security_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/networksecurity/v1/internal/network_security_retry_traits.h"
+#include "google/cloud/networksecurity/v1/network_security_connection_idempotency_policy.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -57,8 +57,7 @@ class NetworkSecurityRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class NetworkSecurityLimitedErrorCountRetryPolicy
-    : public NetworkSecurityRetryPolicy {
+class NetworkSecurityLimitedErrorCountRetryPolicy : public NetworkSecurityRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -68,14 +67,14 @@ class NetworkSecurityLimitedErrorCountRetryPolicy
    *     @p maximum_failures == 0.
    */
   explicit NetworkSecurityLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   NetworkSecurityLimitedErrorCountRetryPolicy(
       NetworkSecurityLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : NetworkSecurityLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : NetworkSecurityLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   NetworkSecurityLimitedErrorCountRetryPolicy(
       NetworkSecurityLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : NetworkSecurityLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : NetworkSecurityLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -95,9 +94,7 @@ class NetworkSecurityLimitedErrorCountRetryPolicy
   using BaseType = NetworkSecurityRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      networksecurity_v1_internal::NetworkSecurityRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<networksecurity_v1_internal::NetworkSecurityRetryTraits> impl_;
 };
 
 /**
@@ -110,8 +107,7 @@ class NetworkSecurityLimitedErrorCountRetryPolicy
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class NetworkSecurityLimitedTimeRetryPolicy
-    : public NetworkSecurityRetryPolicy {
+class NetworkSecurityLimitedTimeRetryPolicy : public NetworkSecurityRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -136,14 +132,12 @@ class NetworkSecurityLimitedTimeRetryPolicy
   template <typename DurationRep, typename DurationPeriod>
   explicit NetworkSecurityLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  NetworkSecurityLimitedTimeRetryPolicy(
-      NetworkSecurityLimitedTimeRetryPolicy&& rhs) noexcept
-      : NetworkSecurityLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  NetworkSecurityLimitedTimeRetryPolicy(
-      NetworkSecurityLimitedTimeRetryPolicy const& rhs) noexcept
-      : NetworkSecurityLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  NetworkSecurityLimitedTimeRetryPolicy(NetworkSecurityLimitedTimeRetryPolicy&& rhs) noexcept
+    : NetworkSecurityLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  NetworkSecurityLimitedTimeRetryPolicy(NetworkSecurityLimitedTimeRetryPolicy const& rhs) noexcept
+    : NetworkSecurityLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -165,9 +159,7 @@ class NetworkSecurityLimitedTimeRetryPolicy
   using BaseType = NetworkSecurityRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      networksecurity_v1_internal::NetworkSecurityRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<networksecurity_v1_internal::NetworkSecurityRetryTraits> impl_;
 };
 
 /**
@@ -189,195 +181,141 @@ class NetworkSecurityConnection {
   virtual Options options() { return Options{}; }
 
   virtual StreamRange<google::cloud::networksecurity::v1::AuthorizationPolicy>
-  ListAuthorizationPolicies(
-      google::cloud::networksecurity::v1::ListAuthorizationPoliciesRequest
-          request);
+  ListAuthorizationPolicies(google::cloud::networksecurity::v1::ListAuthorizationPoliciesRequest request);
 
   virtual StatusOr<google::cloud::networksecurity::v1::AuthorizationPolicy>
-  GetAuthorizationPolicy(
-      google::cloud::networksecurity::v1::GetAuthorizationPolicyRequest const&
-          request);
+  GetAuthorizationPolicy(google::cloud::networksecurity::v1::GetAuthorizationPolicyRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::networksecurity::v1::AuthorizationPolicy>>
-  CreateAuthorizationPolicy(
-      google::cloud::networksecurity::v1::
-          CreateAuthorizationPolicyRequest const& request);
+  virtual future<StatusOr<google::cloud::networksecurity::v1::AuthorizationPolicy>>
+  CreateAuthorizationPolicy(google::cloud::networksecurity::v1::CreateAuthorizationPolicyRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> CreateAuthorizationPolicy(
-      NoAwaitTag, google::cloud::networksecurity::v1::
-                      CreateAuthorizationPolicyRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  CreateAuthorizationPolicy(NoAwaitTag, google::cloud::networksecurity::v1::CreateAuthorizationPolicyRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::networksecurity::v1::AuthorizationPolicy>>
-  CreateAuthorizationPolicy(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::networksecurity::v1::AuthorizationPolicy>>
+  CreateAuthorizationPolicy( google::longrunning::Operation const& operation);
 
-  virtual future<
-      StatusOr<google::cloud::networksecurity::v1::AuthorizationPolicy>>
-  UpdateAuthorizationPolicy(
-      google::cloud::networksecurity::v1::
-          UpdateAuthorizationPolicyRequest const& request);
+  virtual future<StatusOr<google::cloud::networksecurity::v1::AuthorizationPolicy>>
+  UpdateAuthorizationPolicy(google::cloud::networksecurity::v1::UpdateAuthorizationPolicyRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> UpdateAuthorizationPolicy(
-      NoAwaitTag, google::cloud::networksecurity::v1::
-                      UpdateAuthorizationPolicyRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  UpdateAuthorizationPolicy(NoAwaitTag, google::cloud::networksecurity::v1::UpdateAuthorizationPolicyRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::networksecurity::v1::AuthorizationPolicy>>
-  UpdateAuthorizationPolicy(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::networksecurity::v1::AuthorizationPolicy>>
+  UpdateAuthorizationPolicy( google::longrunning::Operation const& operation);
 
-  virtual future<
-      StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>
-  DeleteAuthorizationPolicy(
-      google::cloud::networksecurity::v1::
-          DeleteAuthorizationPolicyRequest const& request);
+  virtual future<StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>
+  DeleteAuthorizationPolicy(google::cloud::networksecurity::v1::DeleteAuthorizationPolicyRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> DeleteAuthorizationPolicy(
-      NoAwaitTag, google::cloud::networksecurity::v1::
-                      DeleteAuthorizationPolicyRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  DeleteAuthorizationPolicy(NoAwaitTag, google::cloud::networksecurity::v1::DeleteAuthorizationPolicyRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>
-  DeleteAuthorizationPolicy(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>
+  DeleteAuthorizationPolicy( google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::networksecurity::v1::ServerTlsPolicy>
-  ListServerTlsPolicies(
-      google::cloud::networksecurity::v1::ListServerTlsPoliciesRequest request);
+  ListServerTlsPolicies(google::cloud::networksecurity::v1::ListServerTlsPoliciesRequest request);
 
   virtual StatusOr<google::cloud::networksecurity::v1::ServerTlsPolicy>
-  GetServerTlsPolicy(
-      google::cloud::networksecurity::v1::GetServerTlsPolicyRequest const&
-          request);
+  GetServerTlsPolicy(google::cloud::networksecurity::v1::GetServerTlsPolicyRequest const& request);
 
   virtual future<StatusOr<google::cloud::networksecurity::v1::ServerTlsPolicy>>
-  CreateServerTlsPolicy(
-      google::cloud::networksecurity::v1::CreateServerTlsPolicyRequest const&
-          request);
+  CreateServerTlsPolicy(google::cloud::networksecurity::v1::CreateServerTlsPolicyRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> CreateServerTlsPolicy(
-      NoAwaitTag,
-      google::cloud::networksecurity::v1::CreateServerTlsPolicyRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  CreateServerTlsPolicy(NoAwaitTag, google::cloud::networksecurity::v1::CreateServerTlsPolicyRequest const& request);
 
   virtual future<StatusOr<google::cloud::networksecurity::v1::ServerTlsPolicy>>
-  CreateServerTlsPolicy(google::longrunning::Operation const& operation);
+  CreateServerTlsPolicy( google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::networksecurity::v1::ServerTlsPolicy>>
-  UpdateServerTlsPolicy(
-      google::cloud::networksecurity::v1::UpdateServerTlsPolicyRequest const&
-          request);
+  UpdateServerTlsPolicy(google::cloud::networksecurity::v1::UpdateServerTlsPolicyRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> UpdateServerTlsPolicy(
-      NoAwaitTag,
-      google::cloud::networksecurity::v1::UpdateServerTlsPolicyRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  UpdateServerTlsPolicy(NoAwaitTag, google::cloud::networksecurity::v1::UpdateServerTlsPolicyRequest const& request);
 
   virtual future<StatusOr<google::cloud::networksecurity::v1::ServerTlsPolicy>>
-  UpdateServerTlsPolicy(google::longrunning::Operation const& operation);
+  UpdateServerTlsPolicy( google::longrunning::Operation const& operation);
 
-  virtual future<
-      StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>
-  DeleteServerTlsPolicy(
-      google::cloud::networksecurity::v1::DeleteServerTlsPolicyRequest const&
-          request);
+  virtual future<StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>
+  DeleteServerTlsPolicy(google::cloud::networksecurity::v1::DeleteServerTlsPolicyRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> DeleteServerTlsPolicy(
-      NoAwaitTag,
-      google::cloud::networksecurity::v1::DeleteServerTlsPolicyRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  DeleteServerTlsPolicy(NoAwaitTag, google::cloud::networksecurity::v1::DeleteServerTlsPolicyRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>
-  DeleteServerTlsPolicy(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>
+  DeleteServerTlsPolicy( google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::networksecurity::v1::ClientTlsPolicy>
-  ListClientTlsPolicies(
-      google::cloud::networksecurity::v1::ListClientTlsPoliciesRequest request);
+  ListClientTlsPolicies(google::cloud::networksecurity::v1::ListClientTlsPoliciesRequest request);
 
   virtual StatusOr<google::cloud::networksecurity::v1::ClientTlsPolicy>
-  GetClientTlsPolicy(
-      google::cloud::networksecurity::v1::GetClientTlsPolicyRequest const&
-          request);
+  GetClientTlsPolicy(google::cloud::networksecurity::v1::GetClientTlsPolicyRequest const& request);
 
   virtual future<StatusOr<google::cloud::networksecurity::v1::ClientTlsPolicy>>
-  CreateClientTlsPolicy(
-      google::cloud::networksecurity::v1::CreateClientTlsPolicyRequest const&
-          request);
+  CreateClientTlsPolicy(google::cloud::networksecurity::v1::CreateClientTlsPolicyRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> CreateClientTlsPolicy(
-      NoAwaitTag,
-      google::cloud::networksecurity::v1::CreateClientTlsPolicyRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  CreateClientTlsPolicy(NoAwaitTag, google::cloud::networksecurity::v1::CreateClientTlsPolicyRequest const& request);
 
   virtual future<StatusOr<google::cloud::networksecurity::v1::ClientTlsPolicy>>
-  CreateClientTlsPolicy(google::longrunning::Operation const& operation);
+  CreateClientTlsPolicy( google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::networksecurity::v1::ClientTlsPolicy>>
-  UpdateClientTlsPolicy(
-      google::cloud::networksecurity::v1::UpdateClientTlsPolicyRequest const&
-          request);
+  UpdateClientTlsPolicy(google::cloud::networksecurity::v1::UpdateClientTlsPolicyRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> UpdateClientTlsPolicy(
-      NoAwaitTag,
-      google::cloud::networksecurity::v1::UpdateClientTlsPolicyRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  UpdateClientTlsPolicy(NoAwaitTag, google::cloud::networksecurity::v1::UpdateClientTlsPolicyRequest const& request);
 
   virtual future<StatusOr<google::cloud::networksecurity::v1::ClientTlsPolicy>>
-  UpdateClientTlsPolicy(google::longrunning::Operation const& operation);
+  UpdateClientTlsPolicy( google::longrunning::Operation const& operation);
 
-  virtual future<
-      StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>
-  DeleteClientTlsPolicy(
-      google::cloud::networksecurity::v1::DeleteClientTlsPolicyRequest const&
-          request);
+  virtual future<StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>
+  DeleteClientTlsPolicy(google::cloud::networksecurity::v1::DeleteClientTlsPolicyRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> DeleteClientTlsPolicy(
-      NoAwaitTag,
-      google::cloud::networksecurity::v1::DeleteClientTlsPolicyRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  DeleteClientTlsPolicy(NoAwaitTag, google::cloud::networksecurity::v1::DeleteClientTlsPolicyRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>
-  DeleteClientTlsPolicy(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>
+  DeleteClientTlsPolicy( google::longrunning::Operation const& operation);
 
-  virtual StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request);
+  virtual StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request);
 
-  virtual StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request);
+  virtual StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
 
   virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
   TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
 
-  virtual StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 
-  virtual Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request);
+  virtual Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
 
-  virtual Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request);
+  virtual Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request);
 };
 
 /**
- * A factory function to construct an object of type
- * `NetworkSecurityConnection`.
+ * A factory function to construct an object of type `NetworkSecurityConnection`.
  *
  * The returned connection object should not be used directly; instead it
  * should be passed as an argument to the constructor of NetworkSecurityClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `NetworkSecurityConnection`. Expected options are any of the types
- * in the following option lists:
+ * returned `NetworkSecurityConnection`. Expected options are any of the types in
+ * the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
@@ -387,8 +325,8 @@ class NetworkSecurityConnection {
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
- * @param options (optional) Configure the `NetworkSecurityConnection` created
- * by this function.
+ * @param options (optional) Configure the `NetworkSecurityConnection` created by
+ * this function.
  */
 std::shared_ptr<NetworkSecurityConnection> MakeNetworkSecurityConnection(
     Options options = {});

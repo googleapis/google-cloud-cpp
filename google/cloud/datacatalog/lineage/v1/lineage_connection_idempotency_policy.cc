@@ -26,124 +26,99 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-LineageConnectionIdempotencyPolicy::~LineageConnectionIdempotencyPolicy() =
-    default;
+LineageConnectionIdempotencyPolicy::~LineageConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<LineageConnectionIdempotencyPolicy>
 LineageConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<LineageConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency LineageConnectionIdempotencyPolicy::ProcessOpenLineageRunEvent(
-    google::cloud::datacatalog::lineage::v1::
-        ProcessOpenLineageRunEventRequest const&) {
+Idempotency LineageConnectionIdempotencyPolicy::ProcessOpenLineageRunEvent(google::cloud::datacatalog::lineage::v1::ProcessOpenLineageRunEventRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency LineageConnectionIdempotencyPolicy::CreateProcess(
-    google::cloud::datacatalog::lineage::v1::CreateProcessRequest const&) {
+Idempotency LineageConnectionIdempotencyPolicy::CreateProcess(google::cloud::datacatalog::lineage::v1::CreateProcessRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency LineageConnectionIdempotencyPolicy::UpdateProcess(
-    google::cloud::datacatalog::lineage::v1::UpdateProcessRequest const&) {
+Idempotency LineageConnectionIdempotencyPolicy::UpdateProcess(google::cloud::datacatalog::lineage::v1::UpdateProcessRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency LineageConnectionIdempotencyPolicy::GetProcess(
-    google::cloud::datacatalog::lineage::v1::GetProcessRequest const&) {
+Idempotency LineageConnectionIdempotencyPolicy::GetProcess(google::cloud::datacatalog::lineage::v1::GetProcessRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency LineageConnectionIdempotencyPolicy::ListProcesses(
-    google::cloud::datacatalog::lineage::v1::ListProcessesRequest) {  // NOLINT
+Idempotency LineageConnectionIdempotencyPolicy::ListProcesses(google::cloud::datacatalog::lineage::v1::ListProcessesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency LineageConnectionIdempotencyPolicy::DeleteProcess(
-    google::cloud::datacatalog::lineage::v1::DeleteProcessRequest const&) {
+Idempotency LineageConnectionIdempotencyPolicy::DeleteProcess(google::cloud::datacatalog::lineage::v1::DeleteProcessRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency LineageConnectionIdempotencyPolicy::CreateRun(
-    google::cloud::datacatalog::lineage::v1::CreateRunRequest const&) {
+Idempotency LineageConnectionIdempotencyPolicy::CreateRun(google::cloud::datacatalog::lineage::v1::CreateRunRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency LineageConnectionIdempotencyPolicy::UpdateRun(
-    google::cloud::datacatalog::lineage::v1::UpdateRunRequest const&) {
+Idempotency LineageConnectionIdempotencyPolicy::UpdateRun(google::cloud::datacatalog::lineage::v1::UpdateRunRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency LineageConnectionIdempotencyPolicy::GetRun(
-    google::cloud::datacatalog::lineage::v1::GetRunRequest const&) {
+Idempotency LineageConnectionIdempotencyPolicy::GetRun(google::cloud::datacatalog::lineage::v1::GetRunRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency LineageConnectionIdempotencyPolicy::ListRuns(
-    google::cloud::datacatalog::lineage::v1::ListRunsRequest) {  // NOLINT
+Idempotency LineageConnectionIdempotencyPolicy::ListRuns(google::cloud::datacatalog::lineage::v1::ListRunsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency LineageConnectionIdempotencyPolicy::DeleteRun(
-    google::cloud::datacatalog::lineage::v1::DeleteRunRequest const&) {
+Idempotency LineageConnectionIdempotencyPolicy::DeleteRun(google::cloud::datacatalog::lineage::v1::DeleteRunRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency LineageConnectionIdempotencyPolicy::CreateLineageEvent(
-    google::cloud::datacatalog::lineage::v1::CreateLineageEventRequest const&) {
+Idempotency LineageConnectionIdempotencyPolicy::CreateLineageEvent(google::cloud::datacatalog::lineage::v1::CreateLineageEventRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency LineageConnectionIdempotencyPolicy::GetLineageEvent(
-    google::cloud::datacatalog::lineage::v1::GetLineageEventRequest const&) {
+Idempotency LineageConnectionIdempotencyPolicy::GetLineageEvent(google::cloud::datacatalog::lineage::v1::GetLineageEventRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency LineageConnectionIdempotencyPolicy::ListLineageEvents(
-    google::cloud::datacatalog::lineage::v1::
-        ListLineageEventsRequest) {  // NOLINT
+Idempotency LineageConnectionIdempotencyPolicy::ListLineageEvents(google::cloud::datacatalog::lineage::v1::ListLineageEventsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency LineageConnectionIdempotencyPolicy::DeleteLineageEvent(
-    google::cloud::datacatalog::lineage::v1::DeleteLineageEventRequest const&) {
+Idempotency LineageConnectionIdempotencyPolicy::DeleteLineageEvent(google::cloud::datacatalog::lineage::v1::DeleteLineageEventRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency LineageConnectionIdempotencyPolicy::SearchLinks(
-    google::cloud::datacatalog::lineage::v1::SearchLinksRequest) {  // NOLINT
+Idempotency LineageConnectionIdempotencyPolicy::SearchLinks(google::cloud::datacatalog::lineage::v1::SearchLinksRequest) {  // NOLINT
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency LineageConnectionIdempotencyPolicy::BatchSearchLinkProcesses(
-    google::cloud::datacatalog::lineage::v1::
-        BatchSearchLinkProcessesRequest) {  // NOLINT
+Idempotency LineageConnectionIdempotencyPolicy::BatchSearchLinkProcesses(google::cloud::datacatalog::lineage::v1::BatchSearchLinkProcessesRequest) {  // NOLINT
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency LineageConnectionIdempotencyPolicy::ListOperations(
-    google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency LineageConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency LineageConnectionIdempotencyPolicy::GetOperation(
-    google::longrunning::GetOperationRequest const&) {
+Idempotency LineageConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency LineageConnectionIdempotencyPolicy::DeleteOperation(
-    google::longrunning::DeleteOperationRequest const&) {
+Idempotency LineageConnectionIdempotencyPolicy::DeleteOperation(google::longrunning::DeleteOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency LineageConnectionIdempotencyPolicy::CancelOperation(
-    google::longrunning::CancelOperationRequest const&) {
+Idempotency LineageConnectionIdempotencyPolicy::CancelOperation(google::longrunning::CancelOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<LineageConnectionIdempotencyPolicy>
-MakeDefaultLineageConnectionIdempotencyPolicy() {
+    MakeDefaultLineageConnectionIdempotencyPolicy() {
   return std::make_unique<LineageConnectionIdempotencyPolicy>();
 }
 

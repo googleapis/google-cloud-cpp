@@ -26,8 +26,7 @@ namespace cloud {
 namespace kms {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use kms_v1::MakeDefaultEkmServiceConnectionIdempotencyPolicy
-/// directly.
+/// @deprecated Use kms_v1::MakeDefaultEkmServiceConnectionIdempotencyPolicy directly.
 using ::google::cloud::kms_v1::MakeDefaultEkmServiceConnectionIdempotencyPolicy;
 
 /// @deprecated Use kms_v1::EkmServiceConnectionIdempotencyPolicy directly.

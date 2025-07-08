@@ -19,16 +19,16 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SECURESOURCEMANAGER_V1_INTERNAL_SECURE_SOURCE_MANAGER_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SECURESOURCEMANAGER_V1_INTERNAL_SECURE_SOURCE_MANAGER_CONNECTION_IMPL_H
 
-#include "google/cloud/securesourcemanager/v1/internal/secure_source_manager_retry_traits.h"
-#include "google/cloud/securesourcemanager/v1/internal/secure_source_manager_stub.h"
-#include "google/cloud/securesourcemanager/v1/secure_source_manager_connection.h"
-#include "google/cloud/securesourcemanager/v1/secure_source_manager_connection_idempotency_policy.h"
-#include "google/cloud/securesourcemanager/v1/secure_source_manager_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
+#include "google/cloud/securesourcemanager/v1/internal/secure_source_manager_retry_traits.h"
+#include "google/cloud/securesourcemanager/v1/internal/secure_source_manager_stub.h"
+#include "google/cloud/securesourcemanager/v1/secure_source_manager_connection.h"
+#include "google/cloud/securesourcemanager/v1/secure_source_manager_connection_idempotency_policy.h"
+#include "google/cloud/securesourcemanager/v1/secure_source_manager_options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
@@ -46,169 +46,146 @@ class SecureSourceManagerConnectionImpl
   ~SecureSourceManagerConnectionImpl() override = default;
 
   SecureSourceManagerConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<securesourcemanager_v1_internal::SecureSourceManagerStub>
-          stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<securesourcemanager_v1_internal::SecureSourceManagerStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
-  StreamRange<google::cloud::securesourcemanager::v1::Instance> ListInstances(
-      google::cloud::securesourcemanager::v1::ListInstancesRequest request)
-      override;
+  StreamRange<google::cloud::securesourcemanager::v1::Instance>
+  ListInstances(google::cloud::securesourcemanager::v1::ListInstancesRequest request) override;
 
-  StatusOr<google::cloud::securesourcemanager::v1::Instance> GetInstance(
-      google::cloud::securesourcemanager::v1::GetInstanceRequest const& request)
-      override;
+  StatusOr<google::cloud::securesourcemanager::v1::Instance>
+  GetInstance(google::cloud::securesourcemanager::v1::GetInstanceRequest const& request) override;
+
+  future<StatusOr<google::cloud::securesourcemanager::v1::Instance>>
+  CreateInstance(google::cloud::securesourcemanager::v1::CreateInstanceRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  CreateInstance(NoAwaitTag,
+      google::cloud::securesourcemanager::v1::CreateInstanceRequest const& request) override;
 
   future<StatusOr<google::cloud::securesourcemanager::v1::Instance>>
   CreateInstance(
-      google::cloud::securesourcemanager::v1::CreateInstanceRequest const&
-          request) override;
+      google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::longrunning::Operation> CreateInstance(
-      NoAwaitTag,
-      google::cloud::securesourcemanager::v1::CreateInstanceRequest const&
-          request) override;
+  future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
+  DeleteInstance(google::cloud::securesourcemanager::v1::DeleteInstanceRequest const& request) override;
 
-  future<StatusOr<google::cloud::securesourcemanager::v1::Instance>>
-  CreateInstance(google::longrunning::Operation const& operation) override;
+  StatusOr<google::longrunning::Operation>
+  DeleteInstance(NoAwaitTag,
+      google::cloud::securesourcemanager::v1::DeleteInstanceRequest const& request) override;
 
   future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
   DeleteInstance(
-      google::cloud::securesourcemanager::v1::DeleteInstanceRequest const&
-          request) override;
-
-  StatusOr<google::longrunning::Operation> DeleteInstance(
-      NoAwaitTag,
-      google::cloud::securesourcemanager::v1::DeleteInstanceRequest const&
-          request) override;
-
-  future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
-  DeleteInstance(google::longrunning::Operation const& operation) override;
+      google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::securesourcemanager::v1::Repository>
-  ListRepositories(
-      google::cloud::securesourcemanager::v1::ListRepositoriesRequest request)
-      override;
+  ListRepositories(google::cloud::securesourcemanager::v1::ListRepositoriesRequest request) override;
 
-  StatusOr<google::cloud::securesourcemanager::v1::Repository> GetRepository(
-      google::cloud::securesourcemanager::v1::GetRepositoryRequest const&
-          request) override;
+  StatusOr<google::cloud::securesourcemanager::v1::Repository>
+  GetRepository(google::cloud::securesourcemanager::v1::GetRepositoryRequest const& request) override;
+
+  future<StatusOr<google::cloud::securesourcemanager::v1::Repository>>
+  CreateRepository(google::cloud::securesourcemanager::v1::CreateRepositoryRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  CreateRepository(NoAwaitTag,
+      google::cloud::securesourcemanager::v1::CreateRepositoryRequest const& request) override;
 
   future<StatusOr<google::cloud::securesourcemanager::v1::Repository>>
   CreateRepository(
-      google::cloud::securesourcemanager::v1::CreateRepositoryRequest const&
-          request) override;
+      google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::longrunning::Operation> CreateRepository(
-      NoAwaitTag,
-      google::cloud::securesourcemanager::v1::CreateRepositoryRequest const&
-          request) override;
+  future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
+  DeleteRepository(google::cloud::securesourcemanager::v1::DeleteRepositoryRequest const& request) override;
 
-  future<StatusOr<google::cloud::securesourcemanager::v1::Repository>>
-  CreateRepository(google::longrunning::Operation const& operation) override;
+  StatusOr<google::longrunning::Operation>
+  DeleteRepository(NoAwaitTag,
+      google::cloud::securesourcemanager::v1::DeleteRepositoryRequest const& request) override;
 
   future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
   DeleteRepository(
-      google::cloud::securesourcemanager::v1::DeleteRepositoryRequest const&
-          request) override;
+      google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::longrunning::Operation> DeleteRepository(
-      NoAwaitTag,
-      google::cloud::securesourcemanager::v1::DeleteRepositoryRequest const&
-          request) override;
+  StatusOr<google::iam::v1::Policy>
+  GetIamPolicyRepo(google::iam::v1::GetIamPolicyRequest const& request) override;
 
-  future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
-  DeleteRepository(google::longrunning::Operation const& operation) override;
+  StatusOr<google::iam::v1::Policy>
+  SetIamPolicyRepo(google::iam::v1::SetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy> GetIamPolicyRepo(
-      google::iam::v1::GetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissionsRepo(google::iam::v1::TestIamPermissionsRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy> SetIamPolicyRepo(
-      google::iam::v1::SetIamPolicyRequest const& request) override;
+  future<StatusOr<google::cloud::securesourcemanager::v1::BranchRule>>
+  CreateBranchRule(google::cloud::securesourcemanager::v1::CreateBranchRuleRequest const& request) override;
 
-  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissionsRepo(
-      google::iam::v1::TestIamPermissionsRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  CreateBranchRule(NoAwaitTag,
+      google::cloud::securesourcemanager::v1::CreateBranchRuleRequest const& request) override;
 
   future<StatusOr<google::cloud::securesourcemanager::v1::BranchRule>>
   CreateBranchRule(
-      google::cloud::securesourcemanager::v1::CreateBranchRuleRequest const&
-          request) override;
-
-  StatusOr<google::longrunning::Operation> CreateBranchRule(
-      NoAwaitTag,
-      google::cloud::securesourcemanager::v1::CreateBranchRuleRequest const&
-          request) override;
-
-  future<StatusOr<google::cloud::securesourcemanager::v1::BranchRule>>
-  CreateBranchRule(google::longrunning::Operation const& operation) override;
+      google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::securesourcemanager::v1::BranchRule>
-  ListBranchRules(google::cloud::securesourcemanager::v1::ListBranchRulesRequest
-                      request) override;
+  ListBranchRules(google::cloud::securesourcemanager::v1::ListBranchRulesRequest request) override;
 
-  StatusOr<google::cloud::securesourcemanager::v1::BranchRule> GetBranchRule(
-      google::cloud::securesourcemanager::v1::GetBranchRuleRequest const&
-          request) override;
+  StatusOr<google::cloud::securesourcemanager::v1::BranchRule>
+  GetBranchRule(google::cloud::securesourcemanager::v1::GetBranchRuleRequest const& request) override;
+
+  future<StatusOr<google::cloud::securesourcemanager::v1::BranchRule>>
+  UpdateBranchRule(google::cloud::securesourcemanager::v1::UpdateBranchRuleRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  UpdateBranchRule(NoAwaitTag,
+      google::cloud::securesourcemanager::v1::UpdateBranchRuleRequest const& request) override;
 
   future<StatusOr<google::cloud::securesourcemanager::v1::BranchRule>>
   UpdateBranchRule(
-      google::cloud::securesourcemanager::v1::UpdateBranchRuleRequest const&
-          request) override;
+      google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::longrunning::Operation> UpdateBranchRule(
-      NoAwaitTag,
-      google::cloud::securesourcemanager::v1::UpdateBranchRuleRequest const&
-          request) override;
+  future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
+  DeleteBranchRule(google::cloud::securesourcemanager::v1::DeleteBranchRuleRequest const& request) override;
 
-  future<StatusOr<google::cloud::securesourcemanager::v1::BranchRule>>
-  UpdateBranchRule(google::longrunning::Operation const& operation) override;
+  StatusOr<google::longrunning::Operation>
+  DeleteBranchRule(NoAwaitTag,
+      google::cloud::securesourcemanager::v1::DeleteBranchRuleRequest const& request) override;
 
   future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
   DeleteBranchRule(
-      google::cloud::securesourcemanager::v1::DeleteBranchRuleRequest const&
-          request) override;
+      google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::longrunning::Operation> DeleteBranchRule(
-      NoAwaitTag,
-      google::cloud::securesourcemanager::v1::DeleteBranchRuleRequest const&
-          request) override;
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request) override;
 
-  future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
-  DeleteBranchRule(google::longrunning::Operation const& operation) override;
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request) override;
 
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request) override;
+  StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) override;
 
-  StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request) override;
+  StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request) override;
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request) override;
+  Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request) override;
-
-  Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request) override;
-
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request) override;
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<securesourcemanager_v1_internal::SecureSourceManagerStub>
-      stub_;
+  std::shared_ptr<securesourcemanager_v1_internal::SecureSourceManagerStub> stub_;
   Options options_;
 };
 

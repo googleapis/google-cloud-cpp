@@ -17,10 +17,10 @@
 // source: google/cloud/kms/v1/service.proto
 
 #include "google/cloud/kms/v1/internal/key_management_option_defaults.h"
-#include "google/cloud/kms/v1/key_management_connection.h"
-#include "google/cloud/kms/v1/key_management_options.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
+#include "google/cloud/kms/v1/key_management_connection.h"
+#include "google/cloud/kms/v1/key_management_options.h"
 #include <memory>
 #include <utility>
 
@@ -42,18 +42,14 @@ Options KeyManagementServiceDefaultOptions(Options options) {
   if (!options.has<kms_v1::KeyManagementServiceRetryPolicyOption>()) {
     options.set<kms_v1::KeyManagementServiceRetryPolicyOption>(
         kms_v1::KeyManagementServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
-            .clone());
+            std::chrono::minutes(30)).clone());
   }
   if (!options.has<kms_v1::KeyManagementServiceBackoffPolicyOption>()) {
     options.set<kms_v1::KeyManagementServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(
-            std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
-            .clone());
+        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
   }
-  if (!options.has<
-          kms_v1::KeyManagementServiceConnectionIdempotencyPolicyOption>()) {
+  if (!options.has<kms_v1::KeyManagementServiceConnectionIdempotencyPolicyOption>()) {
     options.set<kms_v1::KeyManagementServiceConnectionIdempotencyPolicyOption>(
         kms_v1::MakeDefaultKeyManagementServiceConnectionIdempotencyPolicy());
   }

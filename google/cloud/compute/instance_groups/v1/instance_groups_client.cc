@@ -28,99 +28,68 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 InstanceGroupsClient::InstanceGroupsClient(
     std::shared_ptr<InstanceGroupsConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 InstanceGroupsClient::~InstanceGroupsClient() = default;
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InstanceGroupsClient::AddInstances(
-    std::string const& project, std::string const& zone,
-    std::string const& instance_group,
-    google::cloud::cpp::compute::v1::InstanceGroupsAddInstancesRequest const&
-        instance_groups_add_instances_request_resource,
-    Options opts) {
+InstanceGroupsClient::AddInstances(std::string const& project, std::string const& zone, std::string const& instance_group, google::cloud::cpp::compute::v1::InstanceGroupsAddInstancesRequest const& instance_groups_add_instances_request_resource, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::instance_groups::v1::AddInstancesRequest request;
   request.set_project(project);
   request.set_zone(zone);
   request.set_instance_group(instance_group);
-  *request.mutable_instance_groups_add_instances_request_resource() =
-      instance_groups_add_instances_request_resource;
+  *request.mutable_instance_groups_add_instances_request_resource() = instance_groups_add_instances_request_resource;
   return connection_->AddInstances(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-InstanceGroupsClient::AddInstances(
-    NoAwaitTag, std::string const& project, std::string const& zone,
-    std::string const& instance_group,
-    google::cloud::cpp::compute::v1::InstanceGroupsAddInstancesRequest const&
-        instance_groups_add_instances_request_resource,
-    Options opts) {
+InstanceGroupsClient::AddInstances(NoAwaitTag, std::string const& project, std::string const& zone, std::string const& instance_group, google::cloud::cpp::compute::v1::InstanceGroupsAddInstancesRequest const& instance_groups_add_instances_request_resource, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::instance_groups::v1::AddInstancesRequest request;
   request.set_project(project);
   request.set_zone(zone);
   request.set_instance_group(instance_group);
-  *request.mutable_instance_groups_add_instances_request_resource() =
-      instance_groups_add_instances_request_resource;
+  *request.mutable_instance_groups_add_instances_request_resource() = instance_groups_add_instances_request_resource;
   return connection_->AddInstances(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InstanceGroupsClient::AddInstances(
-    google::cloud::cpp::compute::instance_groups::v1::AddInstancesRequest const&
-        request,
-    Options opts) {
+InstanceGroupsClient::AddInstances(google::cloud::cpp::compute::instance_groups::v1::AddInstancesRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->AddInstances(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-InstanceGroupsClient::AddInstances(
-    NoAwaitTag,
-    google::cloud::cpp::compute::instance_groups::v1::AddInstancesRequest const&
-        request,
-    Options opts) {
+InstanceGroupsClient::AddInstances(NoAwaitTag, google::cloud::cpp::compute::instance_groups::v1::AddInstancesRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->AddInstances(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InstanceGroupsClient::AddInstances(
-    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+InstanceGroupsClient::AddInstances(google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->AddInstances(operation);
 }
 
-StreamRange<std::pair<
-    std::string, google::cloud::cpp::compute::v1::InstanceGroupsScopedList>>
-InstanceGroupsClient::AggregatedListInstanceGroups(std::string const& project,
-                                                   Options opts) {
+StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::InstanceGroupsScopedList>>
+InstanceGroupsClient::AggregatedListInstanceGroups(std::string const& project, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::instance_groups::v1::
-      AggregatedListInstanceGroupsRequest request;
+  google::cloud::cpp::compute::instance_groups::v1::AggregatedListInstanceGroupsRequest request;
   request.set_project(project);
   return connection_->AggregatedListInstanceGroups(request);
 }
 
-StreamRange<std::pair<
-    std::string, google::cloud::cpp::compute::v1::InstanceGroupsScopedList>>
-InstanceGroupsClient::AggregatedListInstanceGroups(
-    google::cloud::cpp::compute::instance_groups::v1::
-        AggregatedListInstanceGroupsRequest request,
-    Options opts) {
+StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::InstanceGroupsScopedList>>
+InstanceGroupsClient::AggregatedListInstanceGroups(google::cloud::cpp::compute::instance_groups::v1::AggregatedListInstanceGroupsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->AggregatedListInstanceGroups(std::move(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InstanceGroupsClient::DeleteInstanceGroup(std::string const& project,
-                                          std::string const& zone,
-                                          std::string const& instance_group,
-                                          Options opts) {
+InstanceGroupsClient::DeleteInstanceGroup(std::string const& project, std::string const& zone, std::string const& instance_group, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::instance_groups::v1::DeleteInstanceGroupRequest
-      request;
+  google::cloud::cpp::compute::instance_groups::v1::DeleteInstanceGroupRequest request;
   request.set_project(project);
   request.set_zone(zone);
   request.set_instance_group(instance_group);
@@ -128,14 +97,9 @@ InstanceGroupsClient::DeleteInstanceGroup(std::string const& project,
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-InstanceGroupsClient::DeleteInstanceGroup(NoAwaitTag,
-                                          std::string const& project,
-                                          std::string const& zone,
-                                          std::string const& instance_group,
-                                          Options opts) {
+InstanceGroupsClient::DeleteInstanceGroup(NoAwaitTag, std::string const& project, std::string const& zone, std::string const& instance_group, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::instance_groups::v1::DeleteInstanceGroupRequest
-      request;
+  google::cloud::cpp::compute::instance_groups::v1::DeleteInstanceGroupRequest request;
   request.set_project(project);
   request.set_zone(zone);
   request.set_instance_group(instance_group);
@@ -143,39 +107,27 @@ InstanceGroupsClient::DeleteInstanceGroup(NoAwaitTag,
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InstanceGroupsClient::DeleteInstanceGroup(
-    google::cloud::cpp::compute::instance_groups::v1::
-        DeleteInstanceGroupRequest const& request,
-    Options opts) {
+InstanceGroupsClient::DeleteInstanceGroup(google::cloud::cpp::compute::instance_groups::v1::DeleteInstanceGroupRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteInstanceGroup(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-InstanceGroupsClient::DeleteInstanceGroup(
-    NoAwaitTag,
-    google::cloud::cpp::compute::instance_groups::v1::
-        DeleteInstanceGroupRequest const& request,
-    Options opts) {
+InstanceGroupsClient::DeleteInstanceGroup(NoAwaitTag, google::cloud::cpp::compute::instance_groups::v1::DeleteInstanceGroupRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteInstanceGroup(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InstanceGroupsClient::DeleteInstanceGroup(
-    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+InstanceGroupsClient::DeleteInstanceGroup(google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteInstanceGroup(operation);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InstanceGroup>
-InstanceGroupsClient::GetInstanceGroup(std::string const& project,
-                                       std::string const& zone,
-                                       std::string const& instance_group,
-                                       Options opts) {
+InstanceGroupsClient::GetInstanceGroup(std::string const& project, std::string const& zone, std::string const& instance_group, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::instance_groups::v1::GetInstanceGroupRequest
-      request;
+  google::cloud::cpp::compute::instance_groups::v1::GetInstanceGroupRequest request;
   request.set_project(project);
   request.set_zone(zone);
   request.set_instance_group(instance_group);
@@ -183,23 +135,15 @@ InstanceGroupsClient::GetInstanceGroup(std::string const& project,
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InstanceGroup>
-InstanceGroupsClient::GetInstanceGroup(
-    google::cloud::cpp::compute::instance_groups::v1::
-        GetInstanceGroupRequest const& request,
-    Options opts) {
+InstanceGroupsClient::GetInstanceGroup(google::cloud::cpp::compute::instance_groups::v1::GetInstanceGroupRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetInstanceGroup(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InstanceGroupsClient::InsertInstanceGroup(
-    std::string const& project, std::string const& zone,
-    google::cloud::cpp::compute::v1::InstanceGroup const&
-        instance_group_resource,
-    Options opts) {
+InstanceGroupsClient::InsertInstanceGroup(std::string const& project, std::string const& zone, google::cloud::cpp::compute::v1::InstanceGroup const& instance_group_resource, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::instance_groups::v1::InsertInstanceGroupRequest
-      request;
+  google::cloud::cpp::compute::instance_groups::v1::InsertInstanceGroupRequest request;
   request.set_project(project);
   request.set_zone(zone);
   *request.mutable_instance_group_resource() = instance_group_resource;
@@ -207,14 +151,9 @@ InstanceGroupsClient::InsertInstanceGroup(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-InstanceGroupsClient::InsertInstanceGroup(
-    NoAwaitTag, std::string const& project, std::string const& zone,
-    google::cloud::cpp::compute::v1::InstanceGroup const&
-        instance_group_resource,
-    Options opts) {
+InstanceGroupsClient::InsertInstanceGroup(NoAwaitTag, std::string const& project, std::string const& zone, google::cloud::cpp::compute::v1::InstanceGroup const& instance_group_resource, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::instance_groups::v1::InsertInstanceGroupRequest
-      request;
+  google::cloud::cpp::compute::instance_groups::v1::InsertInstanceGroupRequest request;
   request.set_project(project);
   request.set_zone(zone);
   *request.mutable_instance_group_resource() = instance_group_resource;
@@ -222,199 +161,131 @@ InstanceGroupsClient::InsertInstanceGroup(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InstanceGroupsClient::InsertInstanceGroup(
-    google::cloud::cpp::compute::instance_groups::v1::
-        InsertInstanceGroupRequest const& request,
-    Options opts) {
+InstanceGroupsClient::InsertInstanceGroup(google::cloud::cpp::compute::instance_groups::v1::InsertInstanceGroupRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->InsertInstanceGroup(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-InstanceGroupsClient::InsertInstanceGroup(
-    NoAwaitTag,
-    google::cloud::cpp::compute::instance_groups::v1::
-        InsertInstanceGroupRequest const& request,
-    Options opts) {
+InstanceGroupsClient::InsertInstanceGroup(NoAwaitTag, google::cloud::cpp::compute::instance_groups::v1::InsertInstanceGroupRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->InsertInstanceGroup(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InstanceGroupsClient::InsertInstanceGroup(
-    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+InstanceGroupsClient::InsertInstanceGroup(google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->InsertInstanceGroup(operation);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::InstanceGroup>
-InstanceGroupsClient::ListInstanceGroups(std::string const& project,
-                                         std::string const& zone,
-                                         Options opts) {
+InstanceGroupsClient::ListInstanceGroups(std::string const& project, std::string const& zone, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::instance_groups::v1::ListInstanceGroupsRequest
-      request;
+  google::cloud::cpp::compute::instance_groups::v1::ListInstanceGroupsRequest request;
   request.set_project(project);
   request.set_zone(zone);
   return connection_->ListInstanceGroups(request);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::InstanceGroup>
-InstanceGroupsClient::ListInstanceGroups(
-    google::cloud::cpp::compute::instance_groups::v1::ListInstanceGroupsRequest
-        request,
-    Options opts) {
+InstanceGroupsClient::ListInstanceGroups(google::cloud::cpp::compute::instance_groups::v1::ListInstanceGroupsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListInstanceGroups(std::move(request));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::InstanceWithNamedPorts>
-InstanceGroupsClient::ListInstances(
-    std::string const& project, std::string const& zone,
-    std::string const& instance_group,
-    google::cloud::cpp::compute::v1::InstanceGroupsListInstancesRequest const&
-        instance_groups_list_instances_request_resource,
-    Options opts) {
+InstanceGroupsClient::ListInstances(std::string const& project, std::string const& zone, std::string const& instance_group, google::cloud::cpp::compute::v1::InstanceGroupsListInstancesRequest const& instance_groups_list_instances_request_resource, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::instance_groups::v1::ListInstancesRequest
-      request;
+  google::cloud::cpp::compute::instance_groups::v1::ListInstancesRequest request;
   request.set_project(project);
   request.set_zone(zone);
   request.set_instance_group(instance_group);
-  *request.mutable_instance_groups_list_instances_request_resource() =
-      instance_groups_list_instances_request_resource;
+  *request.mutable_instance_groups_list_instances_request_resource() = instance_groups_list_instances_request_resource;
   return connection_->ListInstances(request);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::InstanceWithNamedPorts>
-InstanceGroupsClient::ListInstances(
-    google::cloud::cpp::compute::instance_groups::v1::ListInstancesRequest
-        request,
-    Options opts) {
+InstanceGroupsClient::ListInstances(google::cloud::cpp::compute::instance_groups::v1::ListInstancesRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListInstances(std::move(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InstanceGroupsClient::RemoveInstances(
-    std::string const& project, std::string const& zone,
-    std::string const& instance_group,
-    google::cloud::cpp::compute::v1::InstanceGroupsRemoveInstancesRequest const&
-        instance_groups_remove_instances_request_resource,
-    Options opts) {
+InstanceGroupsClient::RemoveInstances(std::string const& project, std::string const& zone, std::string const& instance_group, google::cloud::cpp::compute::v1::InstanceGroupsRemoveInstancesRequest const& instance_groups_remove_instances_request_resource, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::instance_groups::v1::RemoveInstancesRequest
-      request;
+  google::cloud::cpp::compute::instance_groups::v1::RemoveInstancesRequest request;
   request.set_project(project);
   request.set_zone(zone);
   request.set_instance_group(instance_group);
-  *request.mutable_instance_groups_remove_instances_request_resource() =
-      instance_groups_remove_instances_request_resource;
+  *request.mutable_instance_groups_remove_instances_request_resource() = instance_groups_remove_instances_request_resource;
   return connection_->RemoveInstances(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-InstanceGroupsClient::RemoveInstances(
-    NoAwaitTag, std::string const& project, std::string const& zone,
-    std::string const& instance_group,
-    google::cloud::cpp::compute::v1::InstanceGroupsRemoveInstancesRequest const&
-        instance_groups_remove_instances_request_resource,
-    Options opts) {
+InstanceGroupsClient::RemoveInstances(NoAwaitTag, std::string const& project, std::string const& zone, std::string const& instance_group, google::cloud::cpp::compute::v1::InstanceGroupsRemoveInstancesRequest const& instance_groups_remove_instances_request_resource, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::instance_groups::v1::RemoveInstancesRequest
-      request;
+  google::cloud::cpp::compute::instance_groups::v1::RemoveInstancesRequest request;
   request.set_project(project);
   request.set_zone(zone);
   request.set_instance_group(instance_group);
-  *request.mutable_instance_groups_remove_instances_request_resource() =
-      instance_groups_remove_instances_request_resource;
+  *request.mutable_instance_groups_remove_instances_request_resource() = instance_groups_remove_instances_request_resource;
   return connection_->RemoveInstances(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InstanceGroupsClient::RemoveInstances(
-    google::cloud::cpp::compute::instance_groups::v1::
-        RemoveInstancesRequest const& request,
-    Options opts) {
+InstanceGroupsClient::RemoveInstances(google::cloud::cpp::compute::instance_groups::v1::RemoveInstancesRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RemoveInstances(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-InstanceGroupsClient::RemoveInstances(
-    NoAwaitTag,
-    google::cloud::cpp::compute::instance_groups::v1::
-        RemoveInstancesRequest const& request,
-    Options opts) {
+InstanceGroupsClient::RemoveInstances(NoAwaitTag, google::cloud::cpp::compute::instance_groups::v1::RemoveInstancesRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RemoveInstances(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InstanceGroupsClient::RemoveInstances(
-    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+InstanceGroupsClient::RemoveInstances(google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RemoveInstances(operation);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InstanceGroupsClient::SetNamedPorts(
-    std::string const& project, std::string const& zone,
-    std::string const& instance_group,
-    google::cloud::cpp::compute::v1::InstanceGroupsSetNamedPortsRequest const&
-        instance_groups_set_named_ports_request_resource,
-    Options opts) {
+InstanceGroupsClient::SetNamedPorts(std::string const& project, std::string const& zone, std::string const& instance_group, google::cloud::cpp::compute::v1::InstanceGroupsSetNamedPortsRequest const& instance_groups_set_named_ports_request_resource, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::instance_groups::v1::SetNamedPortsRequest
-      request;
+  google::cloud::cpp::compute::instance_groups::v1::SetNamedPortsRequest request;
   request.set_project(project);
   request.set_zone(zone);
   request.set_instance_group(instance_group);
-  *request.mutable_instance_groups_set_named_ports_request_resource() =
-      instance_groups_set_named_ports_request_resource;
+  *request.mutable_instance_groups_set_named_ports_request_resource() = instance_groups_set_named_ports_request_resource;
   return connection_->SetNamedPorts(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-InstanceGroupsClient::SetNamedPorts(
-    NoAwaitTag, std::string const& project, std::string const& zone,
-    std::string const& instance_group,
-    google::cloud::cpp::compute::v1::InstanceGroupsSetNamedPortsRequest const&
-        instance_groups_set_named_ports_request_resource,
-    Options opts) {
+InstanceGroupsClient::SetNamedPorts(NoAwaitTag, std::string const& project, std::string const& zone, std::string const& instance_group, google::cloud::cpp::compute::v1::InstanceGroupsSetNamedPortsRequest const& instance_groups_set_named_ports_request_resource, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::instance_groups::v1::SetNamedPortsRequest
-      request;
+  google::cloud::cpp::compute::instance_groups::v1::SetNamedPortsRequest request;
   request.set_project(project);
   request.set_zone(zone);
   request.set_instance_group(instance_group);
-  *request.mutable_instance_groups_set_named_ports_request_resource() =
-      instance_groups_set_named_ports_request_resource;
+  *request.mutable_instance_groups_set_named_ports_request_resource() = instance_groups_set_named_ports_request_resource;
   return connection_->SetNamedPorts(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InstanceGroupsClient::SetNamedPorts(
-    google::cloud::cpp::compute::instance_groups::v1::
-        SetNamedPortsRequest const& request,
-    Options opts) {
+InstanceGroupsClient::SetNamedPorts(google::cloud::cpp::compute::instance_groups::v1::SetNamedPortsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetNamedPorts(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-InstanceGroupsClient::SetNamedPorts(
-    NoAwaitTag,
-    google::cloud::cpp::compute::instance_groups::v1::
-        SetNamedPortsRequest const& request,
-    Options opts) {
+InstanceGroupsClient::SetNamedPorts(NoAwaitTag, google::cloud::cpp::compute::instance_groups::v1::SetNamedPortsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetNamedPorts(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InstanceGroupsClient::SetNamedPorts(
-    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+InstanceGroupsClient::SetNamedPorts(google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetNamedPorts(operation);
 }

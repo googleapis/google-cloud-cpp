@@ -30,8 +30,7 @@ namespace cloud {
 namespace datacatalog {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use datacatalog_v1::PolicyTagManagerSerializationClient
-/// directly.
+/// @deprecated Use datacatalog_v1::PolicyTagManagerSerializationClient directly.
 using ::google::cloud::datacatalog_v1::PolicyTagManagerSerializationClient;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

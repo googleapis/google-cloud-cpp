@@ -32,18 +32,20 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ReservationServiceLogging::ReservationServiceLogging(
     std::shared_ptr<ReservationServiceStub> child,
-    TracingOptions tracing_options, std::set<std::string> const&)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
+    TracingOptions tracing_options,
+    std::set<std::string> const&)
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::cloud::bigquery::reservation::v1::Reservation>
 ReservationServiceLogging::CreateReservation(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::reservation::v1::CreateReservationRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::reservation::v1::CreateReservationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::bigquery::reservation::v1::
-                 CreateReservationRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::bigquery::reservation::v1::CreateReservationRequest const& request) {
         return child_->CreateReservation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -51,13 +53,13 @@ ReservationServiceLogging::CreateReservation(
 
 StatusOr<google::cloud::bigquery::reservation::v1::ListReservationsResponse>
 ReservationServiceLogging::ListReservations(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::reservation::v1::ListReservationsRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::reservation::v1::ListReservationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::bigquery::reservation::v1::
-                 ListReservationsRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::bigquery::reservation::v1::ListReservationsRequest const& request) {
         return child_->ListReservations(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -65,27 +67,27 @@ ReservationServiceLogging::ListReservations(
 
 StatusOr<google::cloud::bigquery::reservation::v1::Reservation>
 ReservationServiceLogging::GetReservation(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::reservation::v1::GetReservationRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::reservation::v1::GetReservationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::bigquery::reservation::v1::GetReservationRequest const&
-              request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::bigquery::reservation::v1::GetReservationRequest const& request) {
         return child_->GetReservation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status ReservationServiceLogging::DeleteReservation(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::reservation::v1::DeleteReservationRequest const&
-        request) {
+Status
+ReservationServiceLogging::DeleteReservation(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::reservation::v1::DeleteReservationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::bigquery::reservation::v1::
-                 DeleteReservationRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::bigquery::reservation::v1::DeleteReservationRequest const& request) {
         return child_->DeleteReservation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -93,13 +95,13 @@ Status ReservationServiceLogging::DeleteReservation(
 
 StatusOr<google::cloud::bigquery::reservation::v1::Reservation>
 ReservationServiceLogging::UpdateReservation(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::reservation::v1::UpdateReservationRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::reservation::v1::UpdateReservationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::bigquery::reservation::v1::
-                 UpdateReservationRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::bigquery::reservation::v1::UpdateReservationRequest const& request) {
         return child_->UpdateReservation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -107,13 +109,13 @@ ReservationServiceLogging::UpdateReservation(
 
 StatusOr<google::cloud::bigquery::reservation::v1::Reservation>
 ReservationServiceLogging::FailoverReservation(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::reservation::v1::FailoverReservationRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::reservation::v1::FailoverReservationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::bigquery::reservation::v1::
-                 FailoverReservationRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::bigquery::reservation::v1::FailoverReservationRequest const& request) {
         return child_->FailoverReservation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -121,28 +123,27 @@ ReservationServiceLogging::FailoverReservation(
 
 StatusOr<google::cloud::bigquery::reservation::v1::CapacityCommitment>
 ReservationServiceLogging::CreateCapacityCommitment(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::reservation::v1::
-        CreateCapacityCommitmentRequest const& request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::reservation::v1::CreateCapacityCommitmentRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::bigquery::reservation::v1::
-                 CreateCapacityCommitmentRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::bigquery::reservation::v1::CreateCapacityCommitmentRequest const& request) {
         return child_->CreateCapacityCommitment(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<
-    google::cloud::bigquery::reservation::v1::ListCapacityCommitmentsResponse>
+StatusOr<google::cloud::bigquery::reservation::v1::ListCapacityCommitmentsResponse>
 ReservationServiceLogging::ListCapacityCommitments(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::reservation::v1::
-        ListCapacityCommitmentsRequest const& request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::reservation::v1::ListCapacityCommitmentsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::bigquery::reservation::v1::
-                 ListCapacityCommitmentsRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::bigquery::reservation::v1::ListCapacityCommitmentsRequest const& request) {
         return child_->ListCapacityCommitments(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -150,26 +151,27 @@ ReservationServiceLogging::ListCapacityCommitments(
 
 StatusOr<google::cloud::bigquery::reservation::v1::CapacityCommitment>
 ReservationServiceLogging::GetCapacityCommitment(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::reservation::v1::
-        GetCapacityCommitmentRequest const& request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::reservation::v1::GetCapacityCommitmentRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::bigquery::reservation::v1::
-                 GetCapacityCommitmentRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::bigquery::reservation::v1::GetCapacityCommitmentRequest const& request) {
         return child_->GetCapacityCommitment(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status ReservationServiceLogging::DeleteCapacityCommitment(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::reservation::v1::
-        DeleteCapacityCommitmentRequest const& request) {
+Status
+ReservationServiceLogging::DeleteCapacityCommitment(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::reservation::v1::DeleteCapacityCommitmentRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::bigquery::reservation::v1::
-                 DeleteCapacityCommitmentRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::bigquery::reservation::v1::DeleteCapacityCommitmentRequest const& request) {
         return child_->DeleteCapacityCommitment(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -177,28 +179,27 @@ Status ReservationServiceLogging::DeleteCapacityCommitment(
 
 StatusOr<google::cloud::bigquery::reservation::v1::CapacityCommitment>
 ReservationServiceLogging::UpdateCapacityCommitment(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::reservation::v1::
-        UpdateCapacityCommitmentRequest const& request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::reservation::v1::UpdateCapacityCommitmentRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::bigquery::reservation::v1::
-                 UpdateCapacityCommitmentRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::bigquery::reservation::v1::UpdateCapacityCommitmentRequest const& request) {
         return child_->UpdateCapacityCommitment(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<
-    google::cloud::bigquery::reservation::v1::SplitCapacityCommitmentResponse>
+StatusOr<google::cloud::bigquery::reservation::v1::SplitCapacityCommitmentResponse>
 ReservationServiceLogging::SplitCapacityCommitment(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::reservation::v1::
-        SplitCapacityCommitmentRequest const& request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::reservation::v1::SplitCapacityCommitmentRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::bigquery::reservation::v1::
-                 SplitCapacityCommitmentRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::bigquery::reservation::v1::SplitCapacityCommitmentRequest const& request) {
         return child_->SplitCapacityCommitment(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -206,13 +207,13 @@ ReservationServiceLogging::SplitCapacityCommitment(
 
 StatusOr<google::cloud::bigquery::reservation::v1::CapacityCommitment>
 ReservationServiceLogging::MergeCapacityCommitments(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::reservation::v1::
-        MergeCapacityCommitmentsRequest const& request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::reservation::v1::MergeCapacityCommitmentsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::bigquery::reservation::v1::
-                 MergeCapacityCommitmentsRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::bigquery::reservation::v1::MergeCapacityCommitmentsRequest const& request) {
         return child_->MergeCapacityCommitments(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -220,13 +221,13 @@ ReservationServiceLogging::MergeCapacityCommitments(
 
 StatusOr<google::cloud::bigquery::reservation::v1::Assignment>
 ReservationServiceLogging::CreateAssignment(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::reservation::v1::CreateAssignmentRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::reservation::v1::CreateAssignmentRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::bigquery::reservation::v1::
-                 CreateAssignmentRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::bigquery::reservation::v1::CreateAssignmentRequest const& request) {
         return child_->CreateAssignment(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -234,26 +235,27 @@ ReservationServiceLogging::CreateAssignment(
 
 StatusOr<google::cloud::bigquery::reservation::v1::ListAssignmentsResponse>
 ReservationServiceLogging::ListAssignments(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::reservation::v1::ListAssignmentsRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::reservation::v1::ListAssignmentsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::bigquery::reservation::v1::
-                 ListAssignmentsRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::bigquery::reservation::v1::ListAssignmentsRequest const& request) {
         return child_->ListAssignments(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status ReservationServiceLogging::DeleteAssignment(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::reservation::v1::DeleteAssignmentRequest const&
-        request) {
+Status
+ReservationServiceLogging::DeleteAssignment(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::reservation::v1::DeleteAssignmentRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::bigquery::reservation::v1::
-                 DeleteAssignmentRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::bigquery::reservation::v1::DeleteAssignmentRequest const& request) {
         return child_->DeleteAssignment(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -261,13 +263,13 @@ Status ReservationServiceLogging::DeleteAssignment(
 
 StatusOr<google::cloud::bigquery::reservation::v1::SearchAssignmentsResponse>
 ReservationServiceLogging::SearchAssignments(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::reservation::v1::SearchAssignmentsRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::reservation::v1::SearchAssignmentsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::bigquery::reservation::v1::
-                 SearchAssignmentsRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::bigquery::reservation::v1::SearchAssignmentsRequest const& request) {
         return child_->SearchAssignments(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -275,13 +277,13 @@ ReservationServiceLogging::SearchAssignments(
 
 StatusOr<google::cloud::bigquery::reservation::v1::SearchAllAssignmentsResponse>
 ReservationServiceLogging::SearchAllAssignments(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::reservation::v1::SearchAllAssignmentsRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::reservation::v1::SearchAllAssignmentsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::bigquery::reservation::v1::
-                 SearchAllAssignmentsRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::bigquery::reservation::v1::SearchAllAssignmentsRequest const& request) {
         return child_->SearchAllAssignments(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -289,14 +291,13 @@ ReservationServiceLogging::SearchAllAssignments(
 
 StatusOr<google::cloud::bigquery::reservation::v1::Assignment>
 ReservationServiceLogging::MoveAssignment(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::reservation::v1::MoveAssignmentRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::reservation::v1::MoveAssignmentRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::bigquery::reservation::v1::MoveAssignmentRequest const&
-              request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::bigquery::reservation::v1::MoveAssignmentRequest const& request) {
         return child_->MoveAssignment(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -304,13 +305,13 @@ ReservationServiceLogging::MoveAssignment(
 
 StatusOr<google::cloud::bigquery::reservation::v1::Assignment>
 ReservationServiceLogging::UpdateAssignment(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::reservation::v1::UpdateAssignmentRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::reservation::v1::UpdateAssignmentRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::bigquery::reservation::v1::
-                 UpdateAssignmentRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::bigquery::reservation::v1::UpdateAssignmentRequest const& request) {
         return child_->UpdateAssignment(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -318,13 +319,13 @@ ReservationServiceLogging::UpdateAssignment(
 
 StatusOr<google::cloud::bigquery::reservation::v1::BiReservation>
 ReservationServiceLogging::GetBiReservation(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::reservation::v1::GetBiReservationRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::reservation::v1::GetBiReservationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::bigquery::reservation::v1::
-                 GetBiReservationRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::bigquery::reservation::v1::GetBiReservationRequest const& request) {
         return child_->GetBiReservation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -332,13 +333,13 @@ ReservationServiceLogging::GetBiReservation(
 
 StatusOr<google::cloud::bigquery::reservation::v1::BiReservation>
 ReservationServiceLogging::UpdateBiReservation(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::reservation::v1::UpdateBiReservationRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::reservation::v1::UpdateBiReservationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::bigquery::reservation::v1::
-                 UpdateBiReservationRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::bigquery::reservation::v1::UpdateBiReservationRequest const& request) {
         return child_->UpdateBiReservation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);

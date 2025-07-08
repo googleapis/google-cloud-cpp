@@ -24,10 +24,10 @@
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/cloud/dataplex/v1/catalog.grpc.pb.h>
 #include <google/cloud/location/locations.grpc.pb.h>
 #include <google/iam/v1/iam_policy.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
+#include <google/cloud/dataplex/v1/catalog.grpc.pb.h>
 #include <memory>
 #include <utility>
 
@@ -47,7 +47,8 @@ class CatalogServiceStub {
       google::cloud::dataplex::v1::CreateEntryTypeRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> CreateEntryType(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::cloud::dataplex::v1::CreateEntryTypeRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncUpdateEntryType(
@@ -57,7 +58,8 @@ class CatalogServiceStub {
       google::cloud::dataplex::v1::UpdateEntryTypeRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> UpdateEntryType(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::cloud::dataplex::v1::UpdateEntryTypeRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteEntryType(
@@ -67,198 +69,216 @@ class CatalogServiceStub {
       google::cloud::dataplex::v1::DeleteEntryTypeRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> DeleteEntryType(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::cloud::dataplex::v1::DeleteEntryTypeRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::dataplex::v1::ListEntryTypesResponse>
-  ListEntryTypes(
-      grpc::ClientContext& context, Options const& options,
+  virtual StatusOr<google::cloud::dataplex::v1::ListEntryTypesResponse> ListEntryTypes(
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::dataplex::v1::ListEntryTypesRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::dataplex::v1::EntryType> GetEntryType(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::dataplex::v1::GetEntryTypeRequest const& request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>>
-  AsyncCreateAspectType(
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateAspectType(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
       google::cloud::dataplex::v1::CreateAspectTypeRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> CreateAspectType(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::cloud::dataplex::v1::CreateAspectTypeRequest const& request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>>
-  AsyncUpdateAspectType(
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncUpdateAspectType(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
       google::cloud::dataplex::v1::UpdateAspectTypeRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> UpdateAspectType(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::cloud::dataplex::v1::UpdateAspectTypeRequest const& request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>>
-  AsyncDeleteAspectType(
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteAspectType(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
       google::cloud::dataplex::v1::DeleteAspectTypeRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> DeleteAspectType(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::cloud::dataplex::v1::DeleteAspectTypeRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::dataplex::v1::ListAspectTypesResponse>
-  ListAspectTypes(
-      grpc::ClientContext& context, Options const& options,
+  virtual StatusOr<google::cloud::dataplex::v1::ListAspectTypesResponse> ListAspectTypes(
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::dataplex::v1::ListAspectTypesRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::dataplex::v1::AspectType> GetAspectType(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::dataplex::v1::GetAspectTypeRequest const& request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>>
-  AsyncCreateEntryGroup(
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateEntryGroup(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
       google::cloud::dataplex::v1::CreateEntryGroupRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> CreateEntryGroup(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::cloud::dataplex::v1::CreateEntryGroupRequest const& request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>>
-  AsyncUpdateEntryGroup(
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncUpdateEntryGroup(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
       google::cloud::dataplex::v1::UpdateEntryGroupRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> UpdateEntryGroup(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::cloud::dataplex::v1::UpdateEntryGroupRequest const& request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>>
-  AsyncDeleteEntryGroup(
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteEntryGroup(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
       google::cloud::dataplex::v1::DeleteEntryGroupRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> DeleteEntryGroup(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::cloud::dataplex::v1::DeleteEntryGroupRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::dataplex::v1::ListEntryGroupsResponse>
-  ListEntryGroups(
-      grpc::ClientContext& context, Options const& options,
+  virtual StatusOr<google::cloud::dataplex::v1::ListEntryGroupsResponse> ListEntryGroups(
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::dataplex::v1::ListEntryGroupsRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::dataplex::v1::EntryGroup> GetEntryGroup(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::dataplex::v1::GetEntryGroupRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::dataplex::v1::Entry> CreateEntry(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::dataplex::v1::CreateEntryRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::dataplex::v1::Entry> UpdateEntry(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::dataplex::v1::UpdateEntryRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::dataplex::v1::Entry> DeleteEntry(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::dataplex::v1::DeleteEntryRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::dataplex::v1::ListEntriesResponse>
-  ListEntries(
-      grpc::ClientContext& context, Options const& options,
+  virtual StatusOr<google::cloud::dataplex::v1::ListEntriesResponse> ListEntries(
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::dataplex::v1::ListEntriesRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::dataplex::v1::Entry> GetEntry(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::dataplex::v1::GetEntryRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::dataplex::v1::Entry> LookupEntry(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::dataplex::v1::LookupEntryRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::dataplex::v1::SearchEntriesResponse>
-  SearchEntries(
-      grpc::ClientContext& context, Options const& options,
+  virtual StatusOr<google::cloud::dataplex::v1::SearchEntriesResponse> SearchEntries(
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::dataplex::v1::SearchEntriesRequest const& request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>>
-  AsyncCreateMetadataJob(
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateMetadataJob(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
       google::cloud::dataplex::v1::CreateMetadataJobRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> CreateMetadataJob(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::cloud::dataplex::v1::CreateMetadataJobRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::dataplex::v1::MetadataJob> GetMetadataJob(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::dataplex::v1::GetMetadataJobRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::dataplex::v1::ListMetadataJobsResponse>
-  ListMetadataJobs(
-      grpc::ClientContext& context, Options const& options,
+  virtual StatusOr<google::cloud::dataplex::v1::ListMetadataJobsResponse> ListMetadataJobs(
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::dataplex::v1::ListMetadataJobsRequest const& request) = 0;
 
   virtual Status CancelMetadataJob(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::dataplex::v1::CancelMetadataJobRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::location::ListLocationsResponse>
-  ListLocations(
-      grpc::ClientContext& context, Options const& options,
+  virtual StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::location::ListLocationsRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::location::Location> GetLocation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::location::GetLocationRequest const& request) = 0;
 
   virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) = 0;
 
   virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) = 0;
 
-  virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
-  TestIamPermissions(
-      grpc::ClientContext& context, Options const& options,
+  virtual StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::ListOperationsRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual Status DeleteOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::DeleteOperationRequest const& request) = 0;
 
   virtual Status CancelOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::CancelOperationRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
+    google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
@@ -271,14 +291,10 @@ class CatalogServiceStub {
 class DefaultCatalogServiceStub : public CatalogServiceStub {
  public:
   DefaultCatalogServiceStub(
-      std::unique_ptr<
-          google::cloud::dataplex::v1::CatalogService::StubInterface>
-          grpc_stub,
+      std::unique_ptr<google::cloud::dataplex::v1::CatalogService::StubInterface> grpc_stub,
       std::unique_ptr<google::iam::v1::IAMPolicy::StubInterface> iampolicy_stub,
-      std::unique_ptr<google::cloud::location::Locations::StubInterface>
-          locations_stub,
-      std::unique_ptr<google::longrunning::Operations::StubInterface>
-          operations_stub)
+      std::unique_ptr<google::cloud::location::Locations::StubInterface> locations_stub,
+      std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub)
       : grpc_stub_(std::move(grpc_stub)),
         iampolicy_stub_(std::move(iampolicy_stub)),
         locations_stub_(std::move(locations_stub)),
@@ -288,229 +304,235 @@ class DefaultCatalogServiceStub : public CatalogServiceStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::dataplex::v1::CreateEntryTypeRequest const& request)
-      override;
+      google::cloud::dataplex::v1::CreateEntryTypeRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateEntryType(
-      grpc::ClientContext& context, Options options,
-      google::cloud::dataplex::v1::CreateEntryTypeRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::dataplex::v1::CreateEntryTypeRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateEntryType(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::dataplex::v1::UpdateEntryTypeRequest const& request)
-      override;
+      google::cloud::dataplex::v1::UpdateEntryTypeRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateEntryType(
-      grpc::ClientContext& context, Options options,
-      google::cloud::dataplex::v1::UpdateEntryTypeRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::dataplex::v1::UpdateEntryTypeRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteEntryType(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::dataplex::v1::DeleteEntryTypeRequest const& request)
-      override;
+      google::cloud::dataplex::v1::DeleteEntryTypeRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteEntryType(
-      grpc::ClientContext& context, Options options,
-      google::cloud::dataplex::v1::DeleteEntryTypeRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::dataplex::v1::DeleteEntryTypeRequest const& request) override;
 
   StatusOr<google::cloud::dataplex::v1::ListEntryTypesResponse> ListEntryTypes(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::dataplex::v1::ListEntryTypesRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::dataplex::v1::ListEntryTypesRequest const& request) override;
 
   StatusOr<google::cloud::dataplex::v1::EntryType> GetEntryType(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::dataplex::v1::GetEntryTypeRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateAspectType(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::dataplex::v1::CreateAspectTypeRequest const& request)
-      override;
+      google::cloud::dataplex::v1::CreateAspectTypeRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateAspectType(
-      grpc::ClientContext& context, Options options,
-      google::cloud::dataplex::v1::CreateAspectTypeRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::dataplex::v1::CreateAspectTypeRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateAspectType(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::dataplex::v1::UpdateAspectTypeRequest const& request)
-      override;
+      google::cloud::dataplex::v1::UpdateAspectTypeRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateAspectType(
-      grpc::ClientContext& context, Options options,
-      google::cloud::dataplex::v1::UpdateAspectTypeRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::dataplex::v1::UpdateAspectTypeRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteAspectType(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::dataplex::v1::DeleteAspectTypeRequest const& request)
-      override;
+      google::cloud::dataplex::v1::DeleteAspectTypeRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteAspectType(
-      grpc::ClientContext& context, Options options,
-      google::cloud::dataplex::v1::DeleteAspectTypeRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::dataplex::v1::DeleteAspectTypeRequest const& request) override;
 
-  StatusOr<google::cloud::dataplex::v1::ListAspectTypesResponse>
-  ListAspectTypes(grpc::ClientContext& context, Options const& options,
-                  google::cloud::dataplex::v1::ListAspectTypesRequest const&
-                      request) override;
+  StatusOr<google::cloud::dataplex::v1::ListAspectTypesResponse> ListAspectTypes(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::dataplex::v1::ListAspectTypesRequest const& request) override;
 
   StatusOr<google::cloud::dataplex::v1::AspectType> GetAspectType(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::dataplex::v1::GetAspectTypeRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::dataplex::v1::GetAspectTypeRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateEntryGroup(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::dataplex::v1::CreateEntryGroupRequest const& request)
-      override;
+      google::cloud::dataplex::v1::CreateEntryGroupRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateEntryGroup(
-      grpc::ClientContext& context, Options options,
-      google::cloud::dataplex::v1::CreateEntryGroupRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::dataplex::v1::CreateEntryGroupRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateEntryGroup(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::dataplex::v1::UpdateEntryGroupRequest const& request)
-      override;
+      google::cloud::dataplex::v1::UpdateEntryGroupRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateEntryGroup(
-      grpc::ClientContext& context, Options options,
-      google::cloud::dataplex::v1::UpdateEntryGroupRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::dataplex::v1::UpdateEntryGroupRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteEntryGroup(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::dataplex::v1::DeleteEntryGroupRequest const& request)
-      override;
+      google::cloud::dataplex::v1::DeleteEntryGroupRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteEntryGroup(
-      grpc::ClientContext& context, Options options,
-      google::cloud::dataplex::v1::DeleteEntryGroupRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::dataplex::v1::DeleteEntryGroupRequest const& request) override;
 
-  StatusOr<google::cloud::dataplex::v1::ListEntryGroupsResponse>
-  ListEntryGroups(grpc::ClientContext& context, Options const& options,
-                  google::cloud::dataplex::v1::ListEntryGroupsRequest const&
-                      request) override;
+  StatusOr<google::cloud::dataplex::v1::ListEntryGroupsResponse> ListEntryGroups(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::dataplex::v1::ListEntryGroupsRequest const& request) override;
 
   StatusOr<google::cloud::dataplex::v1::EntryGroup> GetEntryGroup(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::dataplex::v1::GetEntryGroupRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::dataplex::v1::GetEntryGroupRequest const& request) override;
 
   StatusOr<google::cloud::dataplex::v1::Entry> CreateEntry(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::dataplex::v1::CreateEntryRequest const& request) override;
 
   StatusOr<google::cloud::dataplex::v1::Entry> UpdateEntry(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::dataplex::v1::UpdateEntryRequest const& request) override;
 
   StatusOr<google::cloud::dataplex::v1::Entry> DeleteEntry(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::dataplex::v1::DeleteEntryRequest const& request) override;
 
   StatusOr<google::cloud::dataplex::v1::ListEntriesResponse> ListEntries(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::dataplex::v1::ListEntriesRequest const& request) override;
 
   StatusOr<google::cloud::dataplex::v1::Entry> GetEntry(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::dataplex::v1::GetEntryRequest const& request) override;
 
   StatusOr<google::cloud::dataplex::v1::Entry> LookupEntry(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::dataplex::v1::LookupEntryRequest const& request) override;
 
   StatusOr<google::cloud::dataplex::v1::SearchEntriesResponse> SearchEntries(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::dataplex::v1::SearchEntriesRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::dataplex::v1::SearchEntriesRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateMetadataJob(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::dataplex::v1::CreateMetadataJobRequest const& request)
-      override;
+      google::cloud::dataplex::v1::CreateMetadataJobRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateMetadataJob(
-      grpc::ClientContext& context, Options options,
-      google::cloud::dataplex::v1::CreateMetadataJobRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::dataplex::v1::CreateMetadataJobRequest const& request) override;
 
   StatusOr<google::cloud::dataplex::v1::MetadataJob> GetMetadataJob(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::dataplex::v1::GetMetadataJobRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::dataplex::v1::GetMetadataJobRequest const& request) override;
 
-  StatusOr<google::cloud::dataplex::v1::ListMetadataJobsResponse>
-  ListMetadataJobs(grpc::ClientContext& context, Options const& options,
-                   google::cloud::dataplex::v1::ListMetadataJobsRequest const&
-                       request) override;
+  StatusOr<google::cloud::dataplex::v1::ListMetadataJobsResponse> ListMetadataJobs(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::dataplex::v1::ListMetadataJobsRequest const& request) override;
 
   Status CancelMetadataJob(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::dataplex::v1::CancelMetadataJobRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::dataplex::v1::CancelMetadataJobRequest const& request) override;
 
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::location::ListLocationsRequest const& request) override;
 
   StatusOr<google::cloud::location::Location> GetLocation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::location::GetLocationRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status DeleteOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::DeleteOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -526,13 +548,10 @@ class DefaultCatalogServiceStub : public CatalogServiceStub {
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  std::unique_ptr<google::cloud::dataplex::v1::CatalogService::StubInterface>
-      grpc_stub_;
+  std::unique_ptr<google::cloud::dataplex::v1::CatalogService::StubInterface> grpc_stub_;
   std::unique_ptr<google::iam::v1::IAMPolicy::StubInterface> iampolicy_stub_;
-  std::unique_ptr<google::cloud::location::Locations::StubInterface>
-      locations_stub_;
-  std::unique_ptr<google::longrunning::Operations::StubInterface>
-      operations_stub_;
+  std::unique_ptr<google::cloud::location::Locations::StubInterface> locations_stub_;
+  std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -28,31 +28,20 @@ namespace cloud {
 namespace storagetransfer {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use
-/// storagetransfer_v1::StorageTransferServicePollingPolicyOption directly.
-using ::google::cloud::storagetransfer_v1::
-    StorageTransferServicePollingPolicyOption;
+/// @deprecated Use storagetransfer_v1::StorageTransferServicePollingPolicyOption directly.
+using ::google::cloud::storagetransfer_v1::StorageTransferServicePollingPolicyOption;
 
-/// @deprecated Use
-/// storagetransfer_v1::StorageTransferServiceBackoffPolicyOption directly.
-using ::google::cloud::storagetransfer_v1::
-    StorageTransferServiceBackoffPolicyOption;
+/// @deprecated Use storagetransfer_v1::StorageTransferServiceBackoffPolicyOption directly.
+using ::google::cloud::storagetransfer_v1::StorageTransferServiceBackoffPolicyOption;
 
-/// @deprecated Use
-/// storagetransfer_v1::StorageTransferServiceConnectionIdempotencyPolicyOption
-/// directly.
-using ::google::cloud::storagetransfer_v1::
-    StorageTransferServiceConnectionIdempotencyPolicyOption;
+/// @deprecated Use storagetransfer_v1::StorageTransferServiceConnectionIdempotencyPolicyOption directly.
+using ::google::cloud::storagetransfer_v1::StorageTransferServiceConnectionIdempotencyPolicyOption;
 
-/// @deprecated Use storagetransfer_v1::StorageTransferServicePolicyOptionList
-/// directly.
-using ::google::cloud::storagetransfer_v1::
-    StorageTransferServicePolicyOptionList;
+/// @deprecated Use storagetransfer_v1::StorageTransferServicePolicyOptionList directly.
+using ::google::cloud::storagetransfer_v1::StorageTransferServicePolicyOptionList;
 
-/// @deprecated Use storagetransfer_v1::StorageTransferServiceRetryPolicyOption
-/// directly.
-using ::google::cloud::storagetransfer_v1::
-    StorageTransferServiceRetryPolicyOption;
+/// @deprecated Use storagetransfer_v1::StorageTransferServiceRetryPolicyOption directly.
+using ::google::cloud::storagetransfer_v1::StorageTransferServiceRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storagetransfer

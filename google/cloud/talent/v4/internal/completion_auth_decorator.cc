@@ -31,9 +31,9 @@ CompletionAuth::CompletionAuth(
     std::shared_ptr<CompletionStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::talent::v4::CompleteQueryResponse>
-CompletionAuth::CompleteQuery(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::talent::v4::CompleteQueryResponse> CompletionAuth::CompleteQuery(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::talent::v4::CompleteQueryRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -41,7 +41,8 @@ CompletionAuth::CompleteQuery(
 }
 
 StatusOr<google::longrunning::Operation> CompletionAuth::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;

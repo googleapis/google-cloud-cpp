@@ -28,28 +28,19 @@ namespace cloud {
 namespace baremetalsolution {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use baremetalsolution_v2::BareMetalSolutionPollingPolicyOption
-/// directly.
-using ::google::cloud::baremetalsolution_v2::
-    BareMetalSolutionPollingPolicyOption;
+/// @deprecated Use baremetalsolution_v2::BareMetalSolutionPollingPolicyOption directly.
+using ::google::cloud::baremetalsolution_v2::BareMetalSolutionPollingPolicyOption;
 
-/// @deprecated Use baremetalsolution_v2::BareMetalSolutionBackoffPolicyOption
-/// directly.
-using ::google::cloud::baremetalsolution_v2::
-    BareMetalSolutionBackoffPolicyOption;
+/// @deprecated Use baremetalsolution_v2::BareMetalSolutionBackoffPolicyOption directly.
+using ::google::cloud::baremetalsolution_v2::BareMetalSolutionBackoffPolicyOption;
 
-/// @deprecated Use
-/// baremetalsolution_v2::BareMetalSolutionConnectionIdempotencyPolicyOption
-/// directly.
-using ::google::cloud::baremetalsolution_v2::
-    BareMetalSolutionConnectionIdempotencyPolicyOption;
+/// @deprecated Use baremetalsolution_v2::BareMetalSolutionConnectionIdempotencyPolicyOption directly.
+using ::google::cloud::baremetalsolution_v2::BareMetalSolutionConnectionIdempotencyPolicyOption;
 
-/// @deprecated Use baremetalsolution_v2::BareMetalSolutionPolicyOptionList
-/// directly.
+/// @deprecated Use baremetalsolution_v2::BareMetalSolutionPolicyOptionList directly.
 using ::google::cloud::baremetalsolution_v2::BareMetalSolutionPolicyOptionList;
 
-/// @deprecated Use baremetalsolution_v2::BareMetalSolutionRetryPolicyOption
-/// directly.
+/// @deprecated Use baremetalsolution_v2::BareMetalSolutionRetryPolicyOption directly.
 using ::google::cloud::baremetalsolution_v2::BareMetalSolutionRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

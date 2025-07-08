@@ -19,11 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_METASTORE_V1_DATAPROC_METASTORE_FEDERATION_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_METASTORE_V1_DATAPROC_METASTORE_FEDERATION_CONNECTION_H
 
-#include "google/cloud/metastore/v1/dataproc_metastore_federation_connection_idempotency_policy.h"
-#include "google/cloud/metastore/v1/internal/dataproc_metastore_federation_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/metastore/v1/dataproc_metastore_federation_connection_idempotency_policy.h"
+#include "google/cloud/metastore/v1/internal/dataproc_metastore_federation_retry_traits.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -40,17 +40,14 @@ namespace metastore_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `DataprocMetastoreFederationConnection`.
-class DataprocMetastoreFederationRetryPolicy
-    : public ::google::cloud::RetryPolicy {
+class DataprocMetastoreFederationRetryPolicy : public ::google::cloud::RetryPolicy {
  public:
   /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<DataprocMetastoreFederationRetryPolicy> clone()
-      const = 0;
+  virtual std::unique_ptr<DataprocMetastoreFederationRetryPolicy> clone() const = 0;
 };
 
 /**
- * A retry policy for `DataprocMetastoreFederationConnection` based on counting
- * errors.
+ * A retry policy for `DataprocMetastoreFederationConnection` based on counting errors.
  *
  * This policy stops retrying if:
  * - An RPC returns a non-transient error.
@@ -59,8 +56,7 @@ class DataprocMetastoreFederationRetryPolicy
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class DataprocMetastoreFederationLimitedErrorCountRetryPolicy
-    : public DataprocMetastoreFederationRetryPolicy {
+class DataprocMetastoreFederationLimitedErrorCountRetryPolicy : public DataprocMetastoreFederationRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -69,19 +65,15 @@ class DataprocMetastoreFederationLimitedErrorCountRetryPolicy
    * @note Disable the retry loop by providing an instance of this policy with
    *     @p maximum_failures == 0.
    */
-  explicit DataprocMetastoreFederationLimitedErrorCountRetryPolicy(
-      int maximum_failures)
-      : impl_(maximum_failures) {}
+  explicit DataprocMetastoreFederationLimitedErrorCountRetryPolicy(int maximum_failures)
+    : impl_(maximum_failures) {}
 
   DataprocMetastoreFederationLimitedErrorCountRetryPolicy(
       DataprocMetastoreFederationLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : DataprocMetastoreFederationLimitedErrorCountRetryPolicy(
-            rhs.maximum_failures()) {}
+    : DataprocMetastoreFederationLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   DataprocMetastoreFederationLimitedErrorCountRetryPolicy(
-      DataprocMetastoreFederationLimitedErrorCountRetryPolicy const&
-          rhs) noexcept
-      : DataprocMetastoreFederationLimitedErrorCountRetryPolicy(
-            rhs.maximum_failures()) {}
+      DataprocMetastoreFederationLimitedErrorCountRetryPolicy const& rhs) noexcept
+    : DataprocMetastoreFederationLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -92,10 +84,8 @@ class DataprocMetastoreFederationLimitedErrorCountRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<DataprocMetastoreFederationRetryPolicy> clone()
-      const override {
-    return std::make_unique<
-        DataprocMetastoreFederationLimitedErrorCountRetryPolicy>(
+  std::unique_ptr<DataprocMetastoreFederationRetryPolicy> clone() const override {
+    return std::make_unique<DataprocMetastoreFederationLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
 
@@ -103,14 +93,11 @@ class DataprocMetastoreFederationLimitedErrorCountRetryPolicy
   using BaseType = DataprocMetastoreFederationRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      metastore_v1_internal::DataprocMetastoreFederationRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<metastore_v1_internal::DataprocMetastoreFederationRetryTraits> impl_;
 };
 
 /**
- * A retry policy for `DataprocMetastoreFederationConnection` based on elapsed
- * time.
+ * A retry policy for `DataprocMetastoreFederationConnection` based on elapsed time.
  *
  * This policy stops retrying if:
  * - An RPC returns a non-transient error.
@@ -119,8 +106,7 @@ class DataprocMetastoreFederationLimitedErrorCountRetryPolicy
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class DataprocMetastoreFederationLimitedTimeRetryPolicy
-    : public DataprocMetastoreFederationRetryPolicy {
+class DataprocMetastoreFederationLimitedTimeRetryPolicy : public DataprocMetastoreFederationRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -145,16 +131,12 @@ class DataprocMetastoreFederationLimitedTimeRetryPolicy
   template <typename DurationRep, typename DurationPeriod>
   explicit DataprocMetastoreFederationLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  DataprocMetastoreFederationLimitedTimeRetryPolicy(
-      DataprocMetastoreFederationLimitedTimeRetryPolicy&& rhs) noexcept
-      : DataprocMetastoreFederationLimitedTimeRetryPolicy(
-            rhs.maximum_duration()) {}
-  DataprocMetastoreFederationLimitedTimeRetryPolicy(
-      DataprocMetastoreFederationLimitedTimeRetryPolicy const& rhs) noexcept
-      : DataprocMetastoreFederationLimitedTimeRetryPolicy(
-            rhs.maximum_duration()) {}
+  DataprocMetastoreFederationLimitedTimeRetryPolicy(DataprocMetastoreFederationLimitedTimeRetryPolicy&& rhs) noexcept
+    : DataprocMetastoreFederationLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  DataprocMetastoreFederationLimitedTimeRetryPolicy(DataprocMetastoreFederationLimitedTimeRetryPolicy const& rhs) noexcept
+    : DataprocMetastoreFederationLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -167,8 +149,7 @@ class DataprocMetastoreFederationLimitedTimeRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<DataprocMetastoreFederationRetryPolicy> clone()
-      const override {
+  std::unique_ptr<DataprocMetastoreFederationRetryPolicy> clone() const override {
     return std::make_unique<DataprocMetastoreFederationLimitedTimeRetryPolicy>(
         maximum_duration());
   }
@@ -177,25 +158,20 @@ class DataprocMetastoreFederationLimitedTimeRetryPolicy
   using BaseType = DataprocMetastoreFederationRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      metastore_v1_internal::DataprocMetastoreFederationRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<metastore_v1_internal::DataprocMetastoreFederationRetryTraits> impl_;
 };
 
 /**
- * The `DataprocMetastoreFederationConnection` object for
- * `DataprocMetastoreFederationClient`.
+ * The `DataprocMetastoreFederationConnection` object for `DataprocMetastoreFederationClient`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `DataprocMetastoreFederationClient`. This allows users to inject
- * custom behavior (e.g., with a Google Mock object) when writing tests that use
- * objects of type `DataprocMetastoreFederationClient`.
+ * sets in `DataprocMetastoreFederationClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `DataprocMetastoreFederationClient`.
  *
- * To create a concrete instance, see
- * `MakeDataprocMetastoreFederationConnection()`.
+ * To create a concrete instance, see `MakeDataprocMetastoreFederationConnection()`.
  *
- * For mocking, see
- * `metastore_v1_mocks::MockDataprocMetastoreFederationConnection`.
+ * For mocking, see `metastore_v1_mocks::MockDataprocMetastoreFederationConnection`.
  */
 class DataprocMetastoreFederationConnection {
  public:
@@ -203,84 +179,76 @@ class DataprocMetastoreFederationConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StreamRange<google::cloud::metastore::v1::Federation> ListFederations(
-      google::cloud::metastore::v1::ListFederationsRequest request);
+  virtual StreamRange<google::cloud::metastore::v1::Federation>
+  ListFederations(google::cloud::metastore::v1::ListFederationsRequest request);
 
-  virtual StatusOr<google::cloud::metastore::v1::Federation> GetFederation(
-      google::cloud::metastore::v1::GetFederationRequest const& request);
-
-  virtual future<StatusOr<google::cloud::metastore::v1::Federation>>
-  CreateFederation(
-      google::cloud::metastore::v1::CreateFederationRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation> CreateFederation(
-      NoAwaitTag,
-      google::cloud::metastore::v1::CreateFederationRequest const& request);
+  virtual StatusOr<google::cloud::metastore::v1::Federation>
+  GetFederation(google::cloud::metastore::v1::GetFederationRequest const& request);
 
   virtual future<StatusOr<google::cloud::metastore::v1::Federation>>
-  CreateFederation(google::longrunning::Operation const& operation);
+  CreateFederation(google::cloud::metastore::v1::CreateFederationRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation>
+  CreateFederation(NoAwaitTag, google::cloud::metastore::v1::CreateFederationRequest const& request);
 
   virtual future<StatusOr<google::cloud::metastore::v1::Federation>>
-  UpdateFederation(
-      google::cloud::metastore::v1::UpdateFederationRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation> UpdateFederation(
-      NoAwaitTag,
-      google::cloud::metastore::v1::UpdateFederationRequest const& request);
+  CreateFederation( google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::metastore::v1::Federation>>
-  UpdateFederation(google::longrunning::Operation const& operation);
+  UpdateFederation(google::cloud::metastore::v1::UpdateFederationRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation>
+  UpdateFederation(NoAwaitTag, google::cloud::metastore::v1::UpdateFederationRequest const& request);
+
+  virtual future<StatusOr<google::cloud::metastore::v1::Federation>>
+  UpdateFederation( google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::metastore::v1::OperationMetadata>>
-  DeleteFederation(
-      google::cloud::metastore::v1::DeleteFederationRequest const& request);
+  DeleteFederation(google::cloud::metastore::v1::DeleteFederationRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> DeleteFederation(
-      NoAwaitTag,
-      google::cloud::metastore::v1::DeleteFederationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  DeleteFederation(NoAwaitTag, google::cloud::metastore::v1::DeleteFederationRequest const& request);
 
   virtual future<StatusOr<google::cloud::metastore::v1::OperationMetadata>>
-  DeleteFederation(google::longrunning::Operation const& operation);
+  DeleteFederation( google::longrunning::Operation const& operation);
 
-  virtual StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request);
+  virtual StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request);
 
-  virtual StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request);
+  virtual StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
 
   virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
   TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
 
-  virtual StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 
-  virtual Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request);
+  virtual Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
 
-  virtual Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request);
+  virtual Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request);
 };
 
 /**
- * A factory function to construct an object of type
- * `DataprocMetastoreFederationConnection`.
+ * A factory function to construct an object of type `DataprocMetastoreFederationConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of
- * DataprocMetastoreFederationClient.
+ * should be passed as an argument to the constructor of DataprocMetastoreFederationClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `DataprocMetastoreFederationConnection`. Expected options are any of
- * the types in the following option lists:
+ * returned `DataprocMetastoreFederationConnection`. Expected options are any of the types in
+ * the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
@@ -290,11 +258,11 @@ class DataprocMetastoreFederationConnection {
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
- * @param options (optional) Configure the
- * `DataprocMetastoreFederationConnection` created by this function.
+ * @param options (optional) Configure the `DataprocMetastoreFederationConnection` created by
+ * this function.
  */
-std::shared_ptr<DataprocMetastoreFederationConnection>
-MakeDataprocMetastoreFederationConnection(Options options = {});
+std::shared_ptr<DataprocMetastoreFederationConnection> MakeDataprocMetastoreFederationConnection(
+    Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace metastore_v1

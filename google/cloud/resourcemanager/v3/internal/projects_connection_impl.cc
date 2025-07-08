@@ -17,13 +17,13 @@
 // source: google/cloud/resourcemanager/v3/projects.proto
 
 #include "google/cloud/resourcemanager/v3/internal/projects_connection_impl.h"
-#include "google/cloud/resourcemanager/v3/internal/projects_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/async_long_running_operation.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
+#include "google/cloud/resourcemanager/v3/internal/projects_option_defaults.h"
 #include <memory>
 #include <utility>
 
@@ -33,83 +33,71 @@ namespace resourcemanager_v3_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<resourcemanager_v3::ProjectsRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<resourcemanager_v3::ProjectsRetryPolicy>
+retry_policy(Options const& options) {
   return options.get<resourcemanager_v3::ProjectsRetryPolicyOption>()->clone();
 }
 
-std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-  return options.get<resourcemanager_v3::ProjectsBackoffPolicyOption>()
-      ->clone();
+std::unique_ptr<BackoffPolicy>
+backoff_policy(Options const& options) {
+  return options.get<resourcemanager_v3::ProjectsBackoffPolicyOption>()->clone();
 }
 
 std::unique_ptr<resourcemanager_v3::ProjectsConnectionIdempotencyPolicy>
 idempotency_policy(Options const& options) {
-  return options
-      .get<resourcemanager_v3::ProjectsConnectionIdempotencyPolicyOption>()
-      ->clone();
+  return options.get<resourcemanager_v3::ProjectsConnectionIdempotencyPolicyOption>()->clone();
 }
 
 std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-  return options.get<resourcemanager_v3::ProjectsPollingPolicyOption>()
-      ->clone();
+  return options.get<resourcemanager_v3::ProjectsPollingPolicyOption>()->clone();
 }
 
-}  // namespace
+} // namespace
 
 ProjectsConnectionImpl::ProjectsConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<resourcemanager_v3_internal::ProjectsStub> stub,
     Options options)
-    : background_(std::move(background)),
-      stub_(std::move(stub)),
-      options_(internal::MergeOptions(std::move(options),
-                                      ProjectsConnection::options())) {}
+  : background_(std::move(background)), stub_(std::move(stub)),
+    options_(internal::MergeOptions(
+        std::move(options),
+        ProjectsConnection::options())) {}
 
 StatusOr<google::cloud::resourcemanager::v3::Project>
-ProjectsConnectionImpl::GetProject(
-    google::cloud::resourcemanager::v3::GetProjectRequest const& request) {
+ProjectsConnectionImpl::GetProject(google::cloud::resourcemanager::v3::GetProjectRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetProject(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::resourcemanager::v3::GetProjectRequest const&
-                 request) {
+             google::cloud::resourcemanager::v3::GetProjectRequest const& request) {
         return stub_->GetProject(context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::cloud::resourcemanager::v3::Project>
-ProjectsConnectionImpl::ListProjects(
-    google::cloud::resourcemanager::v3::ListProjectsRequest request) {
+ProjectsConnectionImpl::ListProjects(google::cloud::resourcemanager::v3::ListProjectsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListProjects(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::resourcemanager::v3::Project>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::resourcemanager::v3::Project>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<resourcemanager_v3::ProjectsRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<resourcemanager_v3::ProjectsRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::resourcemanager::v3::ListProjectsRequest const& r) {
+          Options const& options, google::cloud::resourcemanager::v3::ListProjectsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](
-                grpc::ClientContext& context, Options const& options,
-                google::cloud::resourcemanager::v3::ListProjectsRequest const&
-                    request) {
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::cloud::resourcemanager::v3::ListProjectsRequest const& request) {
               return stub->ListProjects(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::resourcemanager::v3::ListProjectsResponse r) {
-        std::vector<google::cloud::resourcemanager::v3::Project> result(
-            r.projects().size());
+        std::vector<google::cloud::resourcemanager::v3::Project> result(r.projects().size());
         auto& messages = *r.mutable_projects();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -117,34 +105,27 @@ ProjectsConnectionImpl::ListProjects(
 }
 
 StreamRange<google::cloud::resourcemanager::v3::Project>
-ProjectsConnectionImpl::SearchProjects(
-    google::cloud::resourcemanager::v3::SearchProjectsRequest request) {
+ProjectsConnectionImpl::SearchProjects(google::cloud::resourcemanager::v3::SearchProjectsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->SearchProjects(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::resourcemanager::v3::Project>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::resourcemanager::v3::Project>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<resourcemanager_v3::ProjectsRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<resourcemanager_v3::ProjectsRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::resourcemanager::v3::SearchProjectsRequest const& r) {
+          Options const& options, google::cloud::resourcemanager::v3::SearchProjectsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](
-                grpc::ClientContext& context, Options const& options,
-                google::cloud::resourcemanager::v3::SearchProjectsRequest const&
-                    request) {
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::cloud::resourcemanager::v3::SearchProjectsRequest const& request) {
               return stub->SearchProjects(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::resourcemanager::v3::SearchProjectsResponse r) {
-        std::vector<google::cloud::resourcemanager::v3::Project> result(
-            r.projects().size());
+        std::vector<google::cloud::resourcemanager::v3::Project> result(r.projects().size());
         auto& messages = *r.mutable_projects();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -152,55 +133,49 @@ ProjectsConnectionImpl::SearchProjects(
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::Project>>
-ProjectsConnectionImpl::CreateProject(
-    google::cloud::resourcemanager::v3::CreateProjectRequest const& request) {
+ProjectsConnectionImpl::CreateProject(google::cloud::resourcemanager::v3::CreateProjectRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->CreateProject(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<
-      google::cloud::resourcemanager::v3::Project>(
-      background_->cq(), current, std::move(request_copy),
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::resourcemanager::v3::CreateProjectRequest const&
-              request) {
-        return stub->AsyncCreateProject(cq, std::move(context),
-                                        std::move(options), request);
-      },
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::resourcemanager::v3::Project>,
-      retry_policy(*current), backoff_policy(*current), idempotent,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::resourcemanager::v3::Project>(
+    background_->cq(), current, std::move(request_copy),
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::cloud::resourcemanager::v3::CreateProjectRequest const& request) {
+     return stub->AsyncCreateProject(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::resourcemanager::v3::Project>,
+    retry_policy(*current), backoff_policy(*current), idempotent,
+    polling_policy(*current), __func__);
 }
 
-StatusOr<google::longrunning::Operation> ProjectsConnectionImpl::CreateProject(
-    NoAwaitTag,
-    google::cloud::resourcemanager::v3::CreateProjectRequest const& request) {
+StatusOr<google::longrunning::Operation>
+ProjectsConnectionImpl::CreateProject(
+      NoAwaitTag, google::cloud::resourcemanager::v3::CreateProjectRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateProject(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::resourcemanager::v3::CreateProjectRequest const&
-                 request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::resourcemanager::v3::CreateProjectRequest const& request) {
         return stub_->CreateProject(context, options, request);
       },
       *current, request, __func__);
@@ -208,92 +183,78 @@ StatusOr<google::longrunning::Operation> ProjectsConnectionImpl::CreateProject(
 
 future<StatusOr<google::cloud::resourcemanager::v3::Project>>
 ProjectsConnectionImpl::CreateProject(
-    google::longrunning::Operation const& operation) {
+      google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata()
-           .Is<typename google::cloud::resourcemanager::v3::
-                   CreateProjectMetadata>()) {
-    return make_ready_future<
-        StatusOr<google::cloud::resourcemanager::v3::Project>>(
-        internal::InvalidArgumentError(
-            "operation does not correspond to CreateProject",
-            GCP_ERROR_INFO().WithMetadata("operation",
-                                          operation.metadata().DebugString())));
+  if (!operation.metadata().Is<typename google::cloud::resourcemanager::v3::CreateProjectMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::resourcemanager::v3::Project>>(
+        internal::InvalidArgumentError("operation does not correspond to CreateProject",
+                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<
-      google::cloud::resourcemanager::v3::Project>(
-      background_->cq(), current, operation,
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::resourcemanager::v3::Project>,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::resourcemanager::v3::Project>(
+    background_->cq(), current, operation,
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::resourcemanager::v3::Project>,
+    polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::Project>>
-ProjectsConnectionImpl::UpdateProject(
-    google::cloud::resourcemanager::v3::UpdateProjectRequest const& request) {
+ProjectsConnectionImpl::UpdateProject(google::cloud::resourcemanager::v3::UpdateProjectRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->UpdateProject(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<
-      google::cloud::resourcemanager::v3::Project>(
-      background_->cq(), current, std::move(request_copy),
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::resourcemanager::v3::UpdateProjectRequest const&
-              request) {
-        return stub->AsyncUpdateProject(cq, std::move(context),
-                                        std::move(options), request);
-      },
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::resourcemanager::v3::Project>,
-      retry_policy(*current), backoff_policy(*current), idempotent,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::resourcemanager::v3::Project>(
+    background_->cq(), current, std::move(request_copy),
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::cloud::resourcemanager::v3::UpdateProjectRequest const& request) {
+     return stub->AsyncUpdateProject(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::resourcemanager::v3::Project>,
+    retry_policy(*current), backoff_policy(*current), idempotent,
+    polling_policy(*current), __func__);
 }
 
-StatusOr<google::longrunning::Operation> ProjectsConnectionImpl::UpdateProject(
-    NoAwaitTag,
-    google::cloud::resourcemanager::v3::UpdateProjectRequest const& request) {
+StatusOr<google::longrunning::Operation>
+ProjectsConnectionImpl::UpdateProject(
+      NoAwaitTag, google::cloud::resourcemanager::v3::UpdateProjectRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateProject(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::resourcemanager::v3::UpdateProjectRequest const&
-                 request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::resourcemanager::v3::UpdateProjectRequest const& request) {
         return stub_->UpdateProject(context, options, request);
       },
       *current, request, __func__);
@@ -301,92 +262,78 @@ StatusOr<google::longrunning::Operation> ProjectsConnectionImpl::UpdateProject(
 
 future<StatusOr<google::cloud::resourcemanager::v3::Project>>
 ProjectsConnectionImpl::UpdateProject(
-    google::longrunning::Operation const& operation) {
+      google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata()
-           .Is<typename google::cloud::resourcemanager::v3::
-                   UpdateProjectMetadata>()) {
-    return make_ready_future<
-        StatusOr<google::cloud::resourcemanager::v3::Project>>(
-        internal::InvalidArgumentError(
-            "operation does not correspond to UpdateProject",
-            GCP_ERROR_INFO().WithMetadata("operation",
-                                          operation.metadata().DebugString())));
+  if (!operation.metadata().Is<typename google::cloud::resourcemanager::v3::UpdateProjectMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::resourcemanager::v3::Project>>(
+        internal::InvalidArgumentError("operation does not correspond to UpdateProject",
+                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<
-      google::cloud::resourcemanager::v3::Project>(
-      background_->cq(), current, operation,
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::resourcemanager::v3::Project>,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::resourcemanager::v3::Project>(
+    background_->cq(), current, operation,
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::resourcemanager::v3::Project>,
+    polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::Project>>
-ProjectsConnectionImpl::MoveProject(
-    google::cloud::resourcemanager::v3::MoveProjectRequest const& request) {
+ProjectsConnectionImpl::MoveProject(google::cloud::resourcemanager::v3::MoveProjectRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->MoveProject(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<
-      google::cloud::resourcemanager::v3::Project>(
-      background_->cq(), current, std::move(request_copy),
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::resourcemanager::v3::MoveProjectRequest const&
-              request) {
-        return stub->AsyncMoveProject(cq, std::move(context),
-                                      std::move(options), request);
-      },
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::resourcemanager::v3::Project>,
-      retry_policy(*current), backoff_policy(*current), idempotent,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::resourcemanager::v3::Project>(
+    background_->cq(), current, std::move(request_copy),
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::cloud::resourcemanager::v3::MoveProjectRequest const& request) {
+     return stub->AsyncMoveProject(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::resourcemanager::v3::Project>,
+    retry_policy(*current), backoff_policy(*current), idempotent,
+    polling_policy(*current), __func__);
 }
 
-StatusOr<google::longrunning::Operation> ProjectsConnectionImpl::MoveProject(
-    NoAwaitTag,
-    google::cloud::resourcemanager::v3::MoveProjectRequest const& request) {
+StatusOr<google::longrunning::Operation>
+ProjectsConnectionImpl::MoveProject(
+      NoAwaitTag, google::cloud::resourcemanager::v3::MoveProjectRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->MoveProject(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::resourcemanager::v3::MoveProjectRequest const&
-                 request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::resourcemanager::v3::MoveProjectRequest const& request) {
         return stub_->MoveProject(context, options, request);
       },
       *current, request, __func__);
@@ -394,92 +341,78 @@ StatusOr<google::longrunning::Operation> ProjectsConnectionImpl::MoveProject(
 
 future<StatusOr<google::cloud::resourcemanager::v3::Project>>
 ProjectsConnectionImpl::MoveProject(
-    google::longrunning::Operation const& operation) {
+      google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata()
-           .Is<typename google::cloud::resourcemanager::v3::
-                   MoveProjectMetadata>()) {
-    return make_ready_future<
-        StatusOr<google::cloud::resourcemanager::v3::Project>>(
-        internal::InvalidArgumentError(
-            "operation does not correspond to MoveProject",
-            GCP_ERROR_INFO().WithMetadata("operation",
-                                          operation.metadata().DebugString())));
+  if (!operation.metadata().Is<typename google::cloud::resourcemanager::v3::MoveProjectMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::resourcemanager::v3::Project>>(
+        internal::InvalidArgumentError("operation does not correspond to MoveProject",
+                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<
-      google::cloud::resourcemanager::v3::Project>(
-      background_->cq(), current, operation,
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::resourcemanager::v3::Project>,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::resourcemanager::v3::Project>(
+    background_->cq(), current, operation,
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::resourcemanager::v3::Project>,
+    polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::Project>>
-ProjectsConnectionImpl::DeleteProject(
-    google::cloud::resourcemanager::v3::DeleteProjectRequest const& request) {
+ProjectsConnectionImpl::DeleteProject(google::cloud::resourcemanager::v3::DeleteProjectRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->DeleteProject(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<
-      google::cloud::resourcemanager::v3::Project>(
-      background_->cq(), current, std::move(request_copy),
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::resourcemanager::v3::DeleteProjectRequest const&
-              request) {
-        return stub->AsyncDeleteProject(cq, std::move(context),
-                                        std::move(options), request);
-      },
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::resourcemanager::v3::Project>,
-      retry_policy(*current), backoff_policy(*current), idempotent,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::resourcemanager::v3::Project>(
+    background_->cq(), current, std::move(request_copy),
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::cloud::resourcemanager::v3::DeleteProjectRequest const& request) {
+     return stub->AsyncDeleteProject(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::resourcemanager::v3::Project>,
+    retry_policy(*current), backoff_policy(*current), idempotent,
+    polling_policy(*current), __func__);
 }
 
-StatusOr<google::longrunning::Operation> ProjectsConnectionImpl::DeleteProject(
-    NoAwaitTag,
-    google::cloud::resourcemanager::v3::DeleteProjectRequest const& request) {
+StatusOr<google::longrunning::Operation>
+ProjectsConnectionImpl::DeleteProject(
+      NoAwaitTag, google::cloud::resourcemanager::v3::DeleteProjectRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteProject(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::resourcemanager::v3::DeleteProjectRequest const&
-                 request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::resourcemanager::v3::DeleteProjectRequest const& request) {
         return stub_->DeleteProject(context, options, request);
       },
       *current, request, __func__);
@@ -487,93 +420,78 @@ StatusOr<google::longrunning::Operation> ProjectsConnectionImpl::DeleteProject(
 
 future<StatusOr<google::cloud::resourcemanager::v3::Project>>
 ProjectsConnectionImpl::DeleteProject(
-    google::longrunning::Operation const& operation) {
+      google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata()
-           .Is<typename google::cloud::resourcemanager::v3::
-                   DeleteProjectMetadata>()) {
-    return make_ready_future<
-        StatusOr<google::cloud::resourcemanager::v3::Project>>(
-        internal::InvalidArgumentError(
-            "operation does not correspond to DeleteProject",
-            GCP_ERROR_INFO().WithMetadata("operation",
-                                          operation.metadata().DebugString())));
+  if (!operation.metadata().Is<typename google::cloud::resourcemanager::v3::DeleteProjectMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::resourcemanager::v3::Project>>(
+        internal::InvalidArgumentError("operation does not correspond to DeleteProject",
+                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<
-      google::cloud::resourcemanager::v3::Project>(
-      background_->cq(), current, operation,
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::resourcemanager::v3::Project>,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::resourcemanager::v3::Project>(
+    background_->cq(), current, operation,
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::resourcemanager::v3::Project>,
+    polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::Project>>
-ProjectsConnectionImpl::UndeleteProject(
-    google::cloud::resourcemanager::v3::UndeleteProjectRequest const& request) {
+ProjectsConnectionImpl::UndeleteProject(google::cloud::resourcemanager::v3::UndeleteProjectRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->UndeleteProject(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<
-      google::cloud::resourcemanager::v3::Project>(
-      background_->cq(), current, std::move(request_copy),
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::resourcemanager::v3::UndeleteProjectRequest const&
-              request) {
-        return stub->AsyncUndeleteProject(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::resourcemanager::v3::Project>,
-      retry_policy(*current), backoff_policy(*current), idempotent,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::resourcemanager::v3::Project>(
+    background_->cq(), current, std::move(request_copy),
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::cloud::resourcemanager::v3::UndeleteProjectRequest const& request) {
+     return stub->AsyncUndeleteProject(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::resourcemanager::v3::Project>,
+    retry_policy(*current), backoff_policy(*current), idempotent,
+    polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 ProjectsConnectionImpl::UndeleteProject(
-    NoAwaitTag,
-    google::cloud::resourcemanager::v3::UndeleteProjectRequest const& request) {
+      NoAwaitTag, google::cloud::resourcemanager::v3::UndeleteProjectRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UndeleteProject(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::resourcemanager::v3::UndeleteProjectRequest const&
-                 request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::resourcemanager::v3::UndeleteProjectRequest const& request) {
         return stub_->UndeleteProject(context, options, request);
       },
       *current, request, __func__);
@@ -581,44 +499,36 @@ ProjectsConnectionImpl::UndeleteProject(
 
 future<StatusOr<google::cloud::resourcemanager::v3::Project>>
 ProjectsConnectionImpl::UndeleteProject(
-    google::longrunning::Operation const& operation) {
+      google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata()
-           .Is<typename google::cloud::resourcemanager::v3::
-                   UndeleteProjectMetadata>()) {
-    return make_ready_future<
-        StatusOr<google::cloud::resourcemanager::v3::Project>>(
-        internal::InvalidArgumentError(
-            "operation does not correspond to UndeleteProject",
-            GCP_ERROR_INFO().WithMetadata("operation",
-                                          operation.metadata().DebugString())));
+  if (!operation.metadata().Is<typename google::cloud::resourcemanager::v3::UndeleteProjectMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::resourcemanager::v3::Project>>(
+        internal::InvalidArgumentError("operation does not correspond to UndeleteProject",
+                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<
-      google::cloud::resourcemanager::v3::Project>(
-      background_->cq(), current, operation,
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::resourcemanager::v3::Project>,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::resourcemanager::v3::Project>(
+    background_->cq(), current, operation,
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::resourcemanager::v3::Project>,
+    polling_policy(*current), __func__);
 }
 
-StatusOr<google::iam::v1::Policy> ProjectsConnectionImpl::GetIamPolicy(
-    google::iam::v1::GetIamPolicyRequest const& request) {
+StatusOr<google::iam::v1::Policy>
+ProjectsConnectionImpl::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -630,8 +540,8 @@ StatusOr<google::iam::v1::Policy> ProjectsConnectionImpl::GetIamPolicy(
       *current, request, __func__);
 }
 
-StatusOr<google::iam::v1::Policy> ProjectsConnectionImpl::SetIamPolicy(
-    google::iam::v1::SetIamPolicyRequest const& request) {
+StatusOr<google::iam::v1::Policy>
+ProjectsConnectionImpl::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -644,8 +554,7 @@ StatusOr<google::iam::v1::Policy> ProjectsConnectionImpl::SetIamPolicy(
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-ProjectsConnectionImpl::TestIamPermissions(
-    google::iam::v1::TestIamPermissionsRequest const& request) {
+ProjectsConnectionImpl::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -657,8 +566,8 @@ ProjectsConnectionImpl::TestIamPermissions(
       *current, request, __func__);
 }
 
-StatusOr<google::longrunning::Operation> ProjectsConnectionImpl::GetOperation(
-    google::longrunning::GetOperationRequest const& request) {
+StatusOr<google::longrunning::Operation>
+ProjectsConnectionImpl::GetOperation(google::longrunning::GetOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),

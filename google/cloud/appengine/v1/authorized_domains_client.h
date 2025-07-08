@@ -63,9 +63,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class AuthorizedDomainsClient {
  public:
-  explicit AuthorizedDomainsClient(
-      std::shared_ptr<AuthorizedDomainsConnection> connection,
-      Options opts = {});
+  explicit AuthorizedDomainsClient(std::shared_ptr<AuthorizedDomainsConnection> connection, Options opts = {});
   ~AuthorizedDomainsClient();
 
   ///@{
@@ -78,12 +76,10 @@ class AuthorizedDomainsClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(AuthorizedDomainsClient const& a,
-                         AuthorizedDomainsClient const& b) {
+  friend bool operator==(AuthorizedDomainsClient const& a, AuthorizedDomainsClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(AuthorizedDomainsClient const& a,
-                         AuthorizedDomainsClient const& b) {
+  friend bool operator!=(AuthorizedDomainsClient const& a, AuthorizedDomainsClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -124,9 +120,8 @@ class AuthorizedDomainsClient {
   /// [google.appengine.v1.ListAuthorizedDomainsRequest]: @googleapis_reference_link{google/appengine/v1/appengine.proto#L718}
   ///
   // clang-format on
-  StreamRange<google::appengine::v1::AuthorizedDomain> ListAuthorizedDomains(
-      google::appengine::v1::ListAuthorizedDomainsRequest request,
-      Options opts = {});
+  StreamRange<google::appengine::v1::AuthorizedDomain>
+  ListAuthorizedDomains(google::appengine::v1::ListAuthorizedDomainsRequest request, Options opts = {});
 
  private:
   std::shared_ptr<AuthorizedDomainsConnection> connection_;

@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_PUBLISHER_TRACING_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_PUBLISHER_TRACING_STUB_H
 
-#include "google/cloud/pubsub/internal/publisher_stub.h"
 #include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/options.h"
+#include "google/cloud/pubsub/internal/publisher_stub.h"
 #include "google/cloud/version.h"
 #include <memory>
 
@@ -39,53 +39,63 @@ class PublisherTracingStub : public PublisherStub {
   explicit PublisherTracingStub(std::shared_ptr<PublisherStub> child);
 
   StatusOr<google::pubsub::v1::Topic> CreateTopic(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::pubsub::v1::Topic const& request) override;
 
   StatusOr<google::pubsub::v1::Topic> UpdateTopic(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::pubsub::v1::UpdateTopicRequest const& request) override;
 
   StatusOr<google::pubsub::v1::PublishResponse> Publish(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::pubsub::v1::PublishRequest const& request) override;
 
   StatusOr<google::pubsub::v1::Topic> GetTopic(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::pubsub::v1::GetTopicRequest const& request) override;
 
   StatusOr<google::pubsub::v1::ListTopicsResponse> ListTopics(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::pubsub::v1::ListTopicsRequest const& request) override;
 
-  StatusOr<google::pubsub::v1::ListTopicSubscriptionsResponse>
-  ListTopicSubscriptions(
-      grpc::ClientContext& context, Options const& options,
-      google::pubsub::v1::ListTopicSubscriptionsRequest const& request)
-      override;
+  StatusOr<google::pubsub::v1::ListTopicSubscriptionsResponse> ListTopicSubscriptions(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::pubsub::v1::ListTopicSubscriptionsRequest const& request) override;
 
   StatusOr<google::pubsub::v1::ListTopicSnapshotsResponse> ListTopicSnapshots(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::pubsub::v1::ListTopicSnapshotsRequest const& request) override;
 
   Status DeleteTopic(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::pubsub::v1::DeleteTopicRequest const& request) override;
 
   StatusOr<google::pubsub::v1::DetachSubscriptionResponse> DetachSubscription(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::pubsub::v1::DetachSubscriptionRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
   future<StatusOr<google::pubsub::v1::PublishResponse>> AsyncPublish(
@@ -96,8 +106,7 @@ class PublisherTracingStub : public PublisherStub {
 
  private:
   std::shared_ptr<PublisherStub> child_;
-  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
-      propagator_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

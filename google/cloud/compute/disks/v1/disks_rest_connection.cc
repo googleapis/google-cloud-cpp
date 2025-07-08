@@ -17,12 +17,12 @@
 // source: google/cloud/compute/disks/v1/disks.proto
 
 #include "google/cloud/compute/disks/v1/disks_rest_connection.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/compute/disks/v1/disks_options.h"
 #include "google/cloud/compute/disks/v1/internal/disks_option_defaults.h"
 #include "google/cloud/compute/disks/v1/internal/disks_rest_connection_impl.h"
 #include "google/cloud/compute/disks/v1/internal/disks_rest_stub_factory.h"
 #include "google/cloud/compute/disks/v1/internal/disks_tracing_connection.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/rest_background_threads_impl.h"
 #include "google/cloud/internal/rest_options.h"
@@ -34,17 +34,20 @@ namespace cloud {
 namespace compute_disks_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<DisksConnection> MakeDisksConnectionRest(Options options) {
-  internal::CheckExpectedOptions<
-      CommonOptionList, RestOptionList, UnifiedCredentialsOptionList,
-      rest_internal::TargetApiVersionOption, DisksPolicyOptionList>(options,
-                                                                    __func__);
-  options = compute_disks_v1_internal::DisksDefaultOptions(std::move(options));
+std::shared_ptr<DisksConnection> MakeDisksConnectionRest(
+    Options options) {
+  internal::CheckExpectedOptions<CommonOptionList, RestOptionList,
+      UnifiedCredentialsOptionList, rest_internal::TargetApiVersionOption,
+      DisksPolicyOptionList>(options, __func__);
+  options = compute_disks_v1_internal::DisksDefaultOptions(
+      std::move(options));
   auto background = std::make_unique<
       rest_internal::AutomaticallyCreatedRestBackgroundThreads>();
-  auto stub = compute_disks_v1_internal::CreateDefaultDisksRestStub(options);
+  auto stub = compute_disks_v1_internal::CreateDefaultDisksRestStub(
+      options);
   return compute_disks_v1_internal::MakeDisksTracingConnection(
-      std::make_shared<compute_disks_v1_internal::DisksRestConnectionImpl>(
+      std::make_shared<
+          compute_disks_v1_internal::DisksRestConnectionImpl>(
           std::move(background), std::move(stub), std::move(options)));
 }
 

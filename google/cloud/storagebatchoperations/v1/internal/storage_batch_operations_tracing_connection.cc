@@ -29,38 +29,28 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-StorageBatchOperationsTracingConnection::
-    StorageBatchOperationsTracingConnection(
-        std::shared_ptr<
-            storagebatchoperations_v1::StorageBatchOperationsConnection>
-            child)
+StorageBatchOperationsTracingConnection::StorageBatchOperationsTracingConnection(
+    std::shared_ptr<storagebatchoperations_v1::StorageBatchOperationsConnection> child)
     : child_(std::move(child)) {}
 
 StreamRange<google::cloud::storagebatchoperations::v1::Job>
-StorageBatchOperationsTracingConnection::ListJobs(
-    google::cloud::storagebatchoperations::v1::ListJobsRequest request) {
-  auto span = internal::MakeSpan(
-      "storagebatchoperations_v1::StorageBatchOperationsConnection::ListJobs");
+StorageBatchOperationsTracingConnection::ListJobs(google::cloud::storagebatchoperations::v1::ListJobsRequest request) {
+  auto span = internal::MakeSpan("storagebatchoperations_v1::StorageBatchOperationsConnection::ListJobs");
   internal::OTelScope scope(span);
   auto sr = child_->ListJobs(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::storagebatchoperations::v1::Job>(std::move(span),
-                                                      std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::storagebatchoperations::v1::Job>(
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::storagebatchoperations::v1::Job>
-StorageBatchOperationsTracingConnection::GetJob(
-    google::cloud::storagebatchoperations::v1::GetJobRequest const& request) {
-  auto span = internal::MakeSpan(
-      "storagebatchoperations_v1::StorageBatchOperationsConnection::GetJob");
+StorageBatchOperationsTracingConnection::GetJob(google::cloud::storagebatchoperations::v1::GetJobRequest const& request) {
+  auto span = internal::MakeSpan("storagebatchoperations_v1::StorageBatchOperationsConnection::GetJob");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetJob(request));
 }
 
 future<StatusOr<google::cloud::storagebatchoperations::v1::Job>>
-StorageBatchOperationsTracingConnection::CreateJob(
-    google::cloud::storagebatchoperations::v1::CreateJobRequest const&
-        request) {
+StorageBatchOperationsTracingConnection::CreateJob(google::cloud::storagebatchoperations::v1::CreateJobRequest const& request) {
   auto span = internal::MakeSpan(
       "storagebatchoperations_v1::StorageBatchOperationsConnection::CreateJob");
   internal::OTelScope scope(span);
@@ -69,13 +59,12 @@ StorageBatchOperationsTracingConnection::CreateJob(
 
 StatusOr<google::longrunning::Operation>
 StorageBatchOperationsTracingConnection::CreateJob(
-    NoAwaitTag,
-    google::cloud::storagebatchoperations::v1::CreateJobRequest const&
-        request) {
+    NoAwaitTag, google::cloud::storagebatchoperations::v1::CreateJobRequest const& request) {
   auto span = internal::MakeSpan(
       "storagebatchoperations_v1::StorageBatchOperationsConnection::CreateJob");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->CreateJob(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->CreateJob(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::storagebatchoperations::v1::Job>>
@@ -84,86 +73,66 @@ StorageBatchOperationsTracingConnection::CreateJob(
   auto span = internal::MakeSpan(
       "storagebatchoperations_v1::StorageBatchOperationsConnection::CreateJob");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->CreateJob(operation));
+  return internal::EndSpan(std::move(span),
+      child_->CreateJob(operation));
 }
 
-Status StorageBatchOperationsTracingConnection::DeleteJob(
-    google::cloud::storagebatchoperations::v1::DeleteJobRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "storagebatchoperations_v1::StorageBatchOperationsConnection::DeleteJob");
+Status
+StorageBatchOperationsTracingConnection::DeleteJob(google::cloud::storagebatchoperations::v1::DeleteJobRequest const& request) {
+  auto span = internal::MakeSpan("storagebatchoperations_v1::StorageBatchOperationsConnection::DeleteJob");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteJob(request));
 }
 
 StatusOr<google::cloud::storagebatchoperations::v1::CancelJobResponse>
-StorageBatchOperationsTracingConnection::CancelJob(
-    google::cloud::storagebatchoperations::v1::CancelJobRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "storagebatchoperations_v1::StorageBatchOperationsConnection::CancelJob");
+StorageBatchOperationsTracingConnection::CancelJob(google::cloud::storagebatchoperations::v1::CancelJobRequest const& request) {
+  auto span = internal::MakeSpan("storagebatchoperations_v1::StorageBatchOperationsConnection::CancelJob");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CancelJob(request));
 }
 
 StreamRange<google::cloud::location::Location>
-StorageBatchOperationsTracingConnection::ListLocations(
-    google::cloud::location::ListLocationsRequest request) {
-  auto span = internal::MakeSpan(
-      "storagebatchoperations_v1::StorageBatchOperationsConnection::"
-      "ListLocations");
+StorageBatchOperationsTracingConnection::ListLocations(google::cloud::location::ListLocationsRequest request) {
+  auto span = internal::MakeSpan("storagebatchoperations_v1::StorageBatchOperationsConnection::ListLocations");
   internal::OTelScope scope(span);
   auto sr = child_->ListLocations(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::location::Location>(
-      std::move(span), std::move(sr));
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::location::Location>
-StorageBatchOperationsTracingConnection::GetLocation(
-    google::cloud::location::GetLocationRequest const& request) {
-  auto span = internal::MakeSpan(
-      "storagebatchoperations_v1::StorageBatchOperationsConnection::"
-      "GetLocation");
+StorageBatchOperationsTracingConnection::GetLocation(google::cloud::location::GetLocationRequest const& request) {
+  auto span = internal::MakeSpan("storagebatchoperations_v1::StorageBatchOperationsConnection::GetLocation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetLocation(request));
 }
 
 StreamRange<google::longrunning::Operation>
-StorageBatchOperationsTracingConnection::ListOperations(
-    google::longrunning::ListOperationsRequest request) {
-  auto span = internal::MakeSpan(
-      "storagebatchoperations_v1::StorageBatchOperationsConnection::"
-      "ListOperations");
+StorageBatchOperationsTracingConnection::ListOperations(google::longrunning::ListOperationsRequest request) {
+  auto span = internal::MakeSpan("storagebatchoperations_v1::StorageBatchOperationsConnection::ListOperations");
   internal::OTelScope scope(span);
   auto sr = child_->ListOperations(std::move(request));
   return internal::MakeTracedStreamRange<google::longrunning::Operation>(
-      std::move(span), std::move(sr));
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::longrunning::Operation>
-StorageBatchOperationsTracingConnection::GetOperation(
-    google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpan(
-      "storagebatchoperations_v1::StorageBatchOperationsConnection::"
-      "GetOperation");
+StorageBatchOperationsTracingConnection::GetOperation(google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpan("storagebatchoperations_v1::StorageBatchOperationsConnection::GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOperation(request));
 }
 
-Status StorageBatchOperationsTracingConnection::DeleteOperation(
-    google::longrunning::DeleteOperationRequest const& request) {
-  auto span = internal::MakeSpan(
-      "storagebatchoperations_v1::StorageBatchOperationsConnection::"
-      "DeleteOperation");
+Status
+StorageBatchOperationsTracingConnection::DeleteOperation(google::longrunning::DeleteOperationRequest const& request) {
+  auto span = internal::MakeSpan("storagebatchoperations_v1::StorageBatchOperationsConnection::DeleteOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteOperation(request));
 }
 
-Status StorageBatchOperationsTracingConnection::CancelOperation(
-    google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpan(
-      "storagebatchoperations_v1::StorageBatchOperationsConnection::"
-      "CancelOperation");
+Status
+StorageBatchOperationsTracingConnection::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
+  auto span = internal::MakeSpan("storagebatchoperations_v1::StorageBatchOperationsConnection::CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CancelOperation(request));
 }
@@ -172,12 +141,10 @@ Status StorageBatchOperationsTracingConnection::CancelOperation(
 
 std::shared_ptr<storagebatchoperations_v1::StorageBatchOperationsConnection>
 MakeStorageBatchOperationsTracingConnection(
-    std::shared_ptr<storagebatchoperations_v1::StorageBatchOperationsConnection>
-        conn) {
+    std::shared_ptr<storagebatchoperations_v1::StorageBatchOperationsConnection> conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
-    conn = std::make_shared<StorageBatchOperationsTracingConnection>(
-        std::move(conn));
+    conn = std::make_shared<StorageBatchOperationsTracingConnection>(std::move(conn));
   }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;

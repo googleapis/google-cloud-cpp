@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RECOMMENDER_V1_RECOMMENDER_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RECOMMENDER_V1_RECOMMENDER_OPTIONS_H
 
-#include "google/cloud/recommender/v1/recommender_connection.h"
-#include "google/cloud/recommender/v1/recommender_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
+#include "google/cloud/recommender/v1/recommender_connection.h"
+#include "google/cloud/recommender/v1/recommender_connection_idempotency_policy.h"
 #include "google/cloud/version.h"
 #include <memory>
 
@@ -64,7 +64,8 @@ struct RecommenderConnectionIdempotencyPolicyOption {
  * @ingroup google-cloud-recommender-options
  */
 using RecommenderPolicyOptionList =
-    OptionList<RecommenderRetryPolicyOption, RecommenderBackoffPolicyOption,
+    OptionList<RecommenderRetryPolicyOption,
+               RecommenderBackoffPolicyOption,
                RecommenderConnectionIdempotencyPolicyOption>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

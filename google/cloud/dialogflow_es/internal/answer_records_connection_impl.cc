@@ -17,9 +17,9 @@
 // source: google/cloud/dialogflow/v2/answer_record.proto
 
 #include "google/cloud/dialogflow_es/internal/answer_records_connection_impl.h"
-#include "google/cloud/dialogflow_es/internal/answer_records_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/dialogflow_es/internal/answer_records_option_defaults.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
@@ -32,63 +32,54 @@ namespace dialogflow_es_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<dialogflow_es::AnswerRecordsRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<dialogflow_es::AnswerRecordsRetryPolicy>
+retry_policy(Options const& options) {
   return options.get<dialogflow_es::AnswerRecordsRetryPolicyOption>()->clone();
 }
 
-std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-  return options.get<dialogflow_es::AnswerRecordsBackoffPolicyOption>()
-      ->clone();
+std::unique_ptr<BackoffPolicy>
+backoff_policy(Options const& options) {
+  return options.get<dialogflow_es::AnswerRecordsBackoffPolicyOption>()->clone();
 }
 
 std::unique_ptr<dialogflow_es::AnswerRecordsConnectionIdempotencyPolicy>
 idempotency_policy(Options const& options) {
-  return options
-      .get<dialogflow_es::AnswerRecordsConnectionIdempotencyPolicyOption>()
-      ->clone();
+  return options.get<dialogflow_es::AnswerRecordsConnectionIdempotencyPolicyOption>()->clone();
 }
 
-}  // namespace
+} // namespace
 
 AnswerRecordsConnectionImpl::AnswerRecordsConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<dialogflow_es_internal::AnswerRecordsStub> stub,
     Options options)
-    : background_(std::move(background)),
-      stub_(std::move(stub)),
-      options_(internal::MergeOptions(std::move(options),
-                                      AnswerRecordsConnection::options())) {}
+  : background_(std::move(background)), stub_(std::move(stub)),
+    options_(internal::MergeOptions(
+        std::move(options),
+        AnswerRecordsConnection::options())) {}
 
 StreamRange<google::cloud::dialogflow::v2::AnswerRecord>
-AnswerRecordsConnectionImpl::ListAnswerRecords(
-    google::cloud::dialogflow::v2::ListAnswerRecordsRequest request) {
+AnswerRecordsConnectionImpl::ListAnswerRecords(google::cloud::dialogflow::v2::ListAnswerRecordsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListAnswerRecords(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::dialogflow::v2::AnswerRecord>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::dialogflow::v2::AnswerRecord>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<dialogflow_es::AnswerRecordsRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<dialogflow_es::AnswerRecordsRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::dialogflow::v2::ListAnswerRecordsRequest const& r) {
+          Options const& options, google::cloud::dialogflow::v2::ListAnswerRecordsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](
-                grpc::ClientContext& context, Options const& options,
-                google::cloud::dialogflow::v2::ListAnswerRecordsRequest const&
-                    request) {
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::cloud::dialogflow::v2::ListAnswerRecordsRequest const& request) {
               return stub->ListAnswerRecords(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::dialogflow::v2::ListAnswerRecordsResponse r) {
-        std::vector<google::cloud::dialogflow::v2::AnswerRecord> result(
-            r.answer_records().size());
+        std::vector<google::cloud::dialogflow::v2::AnswerRecord> result(r.answer_records().size());
         auto& messages = *r.mutable_answer_records();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -96,48 +87,40 @@ AnswerRecordsConnectionImpl::ListAnswerRecords(
 }
 
 StatusOr<google::cloud::dialogflow::v2::AnswerRecord>
-AnswerRecordsConnectionImpl::UpdateAnswerRecord(
-    google::cloud::dialogflow::v2::UpdateAnswerRecordRequest const& request) {
+AnswerRecordsConnectionImpl::UpdateAnswerRecord(google::cloud::dialogflow::v2::UpdateAnswerRecordRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateAnswerRecord(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dialogflow::v2::UpdateAnswerRecordRequest const&
-                 request) {
+             google::cloud::dialogflow::v2::UpdateAnswerRecordRequest const& request) {
         return stub_->UpdateAnswerRecord(context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::cloud::location::Location>
-AnswerRecordsConnectionImpl::ListLocations(
-    google::cloud::location::ListLocationsRequest request) {
+AnswerRecordsConnectionImpl::ListLocations(google::cloud::location::ListLocationsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListLocations(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::location::Location>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::location::Location>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<dialogflow_es::AnswerRecordsRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<dialogflow_es::AnswerRecordsRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::location::ListLocationsRequest const& r) {
+          Options const& options, google::cloud::location::ListLocationsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](
-                grpc::ClientContext& context, Options const& options,
-                google::cloud::location::ListLocationsRequest const& request) {
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::cloud::location::ListLocationsRequest const& request) {
               return stub->ListLocations(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::location::ListLocationsResponse r) {
-        std::vector<google::cloud::location::Location> result(
-            r.locations().size());
+        std::vector<google::cloud::location::Location> result(r.locations().size());
         auto& messages = *r.mutable_locations();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -145,8 +128,7 @@ AnswerRecordsConnectionImpl::ListLocations(
 }
 
 StatusOr<google::cloud::location::Location>
-AnswerRecordsConnectionImpl::GetLocation(
-    google::cloud::location::GetLocationRequest const& request) {
+AnswerRecordsConnectionImpl::GetLocation(google::cloud::location::GetLocationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -159,21 +141,17 @@ AnswerRecordsConnectionImpl::GetLocation(
 }
 
 StreamRange<google::longrunning::Operation>
-AnswerRecordsConnectionImpl::ListOperations(
-    google::longrunning::ListOperationsRequest request) {
+AnswerRecordsConnectionImpl::ListOperations(google::longrunning::ListOperationsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListOperations(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::longrunning::Operation>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::longrunning::Operation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<dialogflow_es::AnswerRecordsRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<dialogflow_es::AnswerRecordsRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::longrunning::ListOperationsRequest const& r) {
+          Options const& options, google::longrunning::ListOperationsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
@@ -183,8 +161,7 @@ AnswerRecordsConnectionImpl::ListOperations(
             options, r, function_name);
       },
       [](google::longrunning::ListOperationsResponse r) {
-        std::vector<google::longrunning::Operation> result(
-            r.operations().size());
+        std::vector<google::longrunning::Operation> result(r.operations().size());
         auto& messages = *r.mutable_operations();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -192,8 +169,7 @@ AnswerRecordsConnectionImpl::ListOperations(
 }
 
 StatusOr<google::longrunning::Operation>
-AnswerRecordsConnectionImpl::GetOperation(
-    google::longrunning::GetOperationRequest const& request) {
+AnswerRecordsConnectionImpl::GetOperation(google::longrunning::GetOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -205,8 +181,8 @@ AnswerRecordsConnectionImpl::GetOperation(
       *current, request, __func__);
 }
 
-Status AnswerRecordsConnectionImpl::CancelOperation(
-    google::longrunning::CancelOperationRequest const& request) {
+Status
+AnswerRecordsConnectionImpl::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),

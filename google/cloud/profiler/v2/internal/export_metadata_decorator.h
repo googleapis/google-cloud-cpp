@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PROFILER_V2_INTERNAL_EXPORT_METADATA_DECORATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PROFILER_V2_INTERNAL_EXPORT_METADATA_DECORATOR_H
 
-#include "google/cloud/profiler/v2/internal/export_stub.h"
 #include "google/cloud/options.h"
+#include "google/cloud/profiler/v2/internal/export_stub.h"
 #include "google/cloud/version.h"
 #include <map>
 #include <memory>
@@ -34,17 +34,19 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class ExportServiceMetadata : public ExportServiceStub {
  public:
   ~ExportServiceMetadata() override = default;
-  ExportServiceMetadata(std::shared_ptr<ExportServiceStub> child,
-                        std::multimap<std::string, std::string> fixed_metadata,
-                        std::string api_client_header = "");
+  ExportServiceMetadata(
+      std::shared_ptr<ExportServiceStub> child,
+      std::multimap<std::string, std::string> fixed_metadata,
+      std::string api_client_header = "");
 
-  StatusOr<google::devtools::cloudprofiler::v2::ListProfilesResponse>
-  ListProfiles(grpc::ClientContext& context, Options const& options,
-               google::devtools::cloudprofiler::v2::ListProfilesRequest const&
-                   request) override;
+  StatusOr<google::devtools::cloudprofiler::v2::ListProfilesResponse> ListProfiles(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::devtools::cloudprofiler::v2::ListProfilesRequest const& request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context, Options const& options,
+  void SetMetadata(grpc::ClientContext& context,
+                   Options const& options,
                    std::string const& request_params);
   void SetMetadata(grpc::ClientContext& context, Options const& options);
 

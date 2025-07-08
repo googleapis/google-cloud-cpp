@@ -31,11 +31,10 @@ IamCheckerAuth::IamCheckerAuth(
     std::shared_ptr<IamCheckerStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::policytroubleshooter::v1::TroubleshootIamPolicyResponse>
-IamCheckerAuth::TroubleshootIamPolicy(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::policytroubleshooter::v1::TroubleshootIamPolicyRequest const&
-        request) {
+StatusOr<google::cloud::policytroubleshooter::v1::TroubleshootIamPolicyResponse> IamCheckerAuth::TroubleshootIamPolicy(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::policytroubleshooter::v1::TroubleshootIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->TroubleshootIamPolicy(context, options, request);

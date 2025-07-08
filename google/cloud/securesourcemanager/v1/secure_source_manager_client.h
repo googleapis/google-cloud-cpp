@@ -19,11 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SECURESOURCEMANAGER_V1_SECURE_SOURCE_MANAGER_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SECURESOURCEMANAGER_V1_SECURE_SOURCE_MANAGER_CLIENT_H
 
-#include "google/cloud/securesourcemanager/v1/secure_source_manager_connection.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
+#include "google/cloud/securesourcemanager/v1/secure_source_manager_connection.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
@@ -83,28 +83,23 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class SecureSourceManagerClient {
  public:
-  explicit SecureSourceManagerClient(
-      std::shared_ptr<SecureSourceManagerConnection> connection,
-      Options opts = {});
+  explicit SecureSourceManagerClient(std::shared_ptr<SecureSourceManagerConnection> connection, Options opts = {});
   ~SecureSourceManagerClient();
 
   ///@{
   /// @name Copy and move support
   SecureSourceManagerClient(SecureSourceManagerClient const&) = default;
-  SecureSourceManagerClient& operator=(SecureSourceManagerClient const&) =
-      default;
+  SecureSourceManagerClient& operator=(SecureSourceManagerClient const&) = default;
   SecureSourceManagerClient(SecureSourceManagerClient&&) = default;
   SecureSourceManagerClient& operator=(SecureSourceManagerClient&&) = default;
   ///@}
 
   ///@{
   /// @name Equality
-  friend bool operator==(SecureSourceManagerClient const& a,
-                         SecureSourceManagerClient const& b) {
+  friend bool operator==(SecureSourceManagerClient const& a, SecureSourceManagerClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(SecureSourceManagerClient const& a,
-                         SecureSourceManagerClient const& b) {
+  friend bool operator!=(SecureSourceManagerClient const& a, SecureSourceManagerClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -140,8 +135,8 @@ class SecureSourceManagerClient {
   /// [google.cloud.securesourcemanager.v1.ListInstancesRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L691}
   ///
   // clang-format on
-  StreamRange<google::cloud::securesourcemanager::v1::Instance> ListInstances(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::securesourcemanager::v1::Instance>
+  ListInstances(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -179,9 +174,8 @@ class SecureSourceManagerClient {
   /// [google.cloud.securesourcemanager.v1.ListInstancesRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L691}
   ///
   // clang-format on
-  StreamRange<google::cloud::securesourcemanager::v1::Instance> ListInstances(
-      google::cloud::securesourcemanager::v1::ListInstancesRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::securesourcemanager::v1::Instance>
+  ListInstances(google::cloud::securesourcemanager::v1::ListInstancesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -205,8 +199,8 @@ class SecureSourceManagerClient {
   /// [google.cloud.securesourcemanager.v1.Instance]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L260}
   ///
   // clang-format on
-  StatusOr<google::cloud::securesourcemanager::v1::Instance> GetInstance(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::securesourcemanager::v1::Instance>
+  GetInstance(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -235,9 +229,8 @@ class SecureSourceManagerClient {
   /// [google.cloud.securesourcemanager.v1.Instance]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L260}
   ///
   // clang-format on
-  StatusOr<google::cloud::securesourcemanager::v1::Instance> GetInstance(
-      google::cloud::securesourcemanager::v1::GetInstanceRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::securesourcemanager::v1::Instance>
+  GetInstance(google::cloud::securesourcemanager::v1::GetInstanceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -271,10 +264,7 @@ class SecureSourceManagerClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::securesourcemanager::v1::Instance>>
-  CreateInstance(
-      std::string const& parent,
-      google::cloud::securesourcemanager::v1::Instance const& instance,
-      std::string const& instance_id, Options opts = {});
+  CreateInstance(std::string const& parent, google::cloud::securesourcemanager::v1::Instance const& instance, std::string const& instance_id, Options opts = {});
 
   // clang-format off
   ///
@@ -287,10 +277,8 @@ class SecureSourceManagerClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateInstance(
-      NoAwaitTag, std::string const& parent,
-      google::cloud::securesourcemanager::v1::Instance const& instance,
-      std::string const& instance_id, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateInstance(NoAwaitTag, std::string const& parent, google::cloud::securesourcemanager::v1::Instance const& instance, std::string const& instance_id, Options opts = {});
 
   // clang-format off
   ///
@@ -327,10 +315,7 @@ class SecureSourceManagerClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::securesourcemanager::v1::Instance>>
-  CreateInstance(
-      google::cloud::securesourcemanager::v1::CreateInstanceRequest const&
-          request,
-      Options opts = {});
+  CreateInstance(google::cloud::securesourcemanager::v1::CreateInstanceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -343,11 +328,8 @@ class SecureSourceManagerClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateInstance(
-      NoAwaitTag,
-      google::cloud::securesourcemanager::v1::CreateInstanceRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateInstance(NoAwaitTag, google::cloud::securesourcemanager::v1::CreateInstanceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -359,8 +341,7 @@ class SecureSourceManagerClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::securesourcemanager::v1::Instance>>
-  CreateInstance(google::longrunning::Operation const& operation,
-                 Options opts = {});
+  CreateInstance(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -405,8 +386,8 @@ class SecureSourceManagerClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteInstance(
-      NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteInstance(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -443,10 +424,7 @@ class SecureSourceManagerClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
-  DeleteInstance(
-      google::cloud::securesourcemanager::v1::DeleteInstanceRequest const&
-          request,
-      Options opts = {});
+  DeleteInstance(google::cloud::securesourcemanager::v1::DeleteInstanceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -459,11 +437,8 @@ class SecureSourceManagerClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteInstance(
-      NoAwaitTag,
-      google::cloud::securesourcemanager::v1::DeleteInstanceRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteInstance(NoAwaitTag, google::cloud::securesourcemanager::v1::DeleteInstanceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -475,8 +450,7 @@ class SecureSourceManagerClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
-  DeleteInstance(google::longrunning::Operation const& operation,
-                 Options opts = {});
+  DeleteInstance(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -553,9 +527,7 @@ class SecureSourceManagerClient {
   ///
   // clang-format on
   StreamRange<google::cloud::securesourcemanager::v1::Repository>
-  ListRepositories(
-      google::cloud::securesourcemanager::v1::ListRepositoriesRequest request,
-      Options opts = {});
+  ListRepositories(google::cloud::securesourcemanager::v1::ListRepositoriesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -583,8 +555,8 @@ class SecureSourceManagerClient {
   /// [google.cloud.securesourcemanager.v1.Repository]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L409}
   ///
   // clang-format on
-  StatusOr<google::cloud::securesourcemanager::v1::Repository> GetRepository(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::securesourcemanager::v1::Repository>
+  GetRepository(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -615,10 +587,8 @@ class SecureSourceManagerClient {
   /// [google.cloud.securesourcemanager.v1.Repository]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L409}
   ///
   // clang-format on
-  StatusOr<google::cloud::securesourcemanager::v1::Repository> GetRepository(
-      google::cloud::securesourcemanager::v1::GetRepositoryRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::cloud::securesourcemanager::v1::Repository>
+  GetRepository(google::cloud::securesourcemanager::v1::GetRepositoryRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -657,10 +627,7 @@ class SecureSourceManagerClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::securesourcemanager::v1::Repository>>
-  CreateRepository(
-      std::string const& parent,
-      google::cloud::securesourcemanager::v1::Repository const& repository,
-      std::string const& repository_id, Options opts = {});
+  CreateRepository(std::string const& parent, google::cloud::securesourcemanager::v1::Repository const& repository, std::string const& repository_id, Options opts = {});
 
   // clang-format off
   ///
@@ -673,10 +640,8 @@ class SecureSourceManagerClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateRepository(
-      NoAwaitTag, std::string const& parent,
-      google::cloud::securesourcemanager::v1::Repository const& repository,
-      std::string const& repository_id, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateRepository(NoAwaitTag, std::string const& parent, google::cloud::securesourcemanager::v1::Repository const& repository, std::string const& repository_id, Options opts = {});
 
   // clang-format off
   ///
@@ -715,10 +680,7 @@ class SecureSourceManagerClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::securesourcemanager::v1::Repository>>
-  CreateRepository(
-      google::cloud::securesourcemanager::v1::CreateRepositoryRequest const&
-          request,
-      Options opts = {});
+  CreateRepository(google::cloud::securesourcemanager::v1::CreateRepositoryRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -731,11 +693,8 @@ class SecureSourceManagerClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateRepository(
-      NoAwaitTag,
-      google::cloud::securesourcemanager::v1::CreateRepositoryRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateRepository(NoAwaitTag, google::cloud::securesourcemanager::v1::CreateRepositoryRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -747,8 +706,7 @@ class SecureSourceManagerClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::securesourcemanager::v1::Repository>>
-  CreateRepository(google::longrunning::Operation const& operation,
-                   Options opts = {});
+  CreateRepository(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -797,8 +755,8 @@ class SecureSourceManagerClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteRepository(
-      NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteRepository(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -837,10 +795,7 @@ class SecureSourceManagerClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
-  DeleteRepository(
-      google::cloud::securesourcemanager::v1::DeleteRepositoryRequest const&
-          request,
-      Options opts = {});
+  DeleteRepository(google::cloud::securesourcemanager::v1::DeleteRepositoryRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -853,11 +808,8 @@ class SecureSourceManagerClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteRepository(
-      NoAwaitTag,
-      google::cloud::securesourcemanager::v1::DeleteRepositoryRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteRepository(NoAwaitTag, google::cloud::securesourcemanager::v1::DeleteRepositoryRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -869,8 +821,7 @@ class SecureSourceManagerClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
-  DeleteRepository(google::longrunning::Operation const& operation,
-                   Options opts = {});
+  DeleteRepository(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -895,8 +846,8 @@ class SecureSourceManagerClient {
   /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy> GetIamPolicyRepo(
-      std::string const& resource, Options opts = {});
+  StatusOr<google::iam::v1::Policy>
+  GetIamPolicyRepo(std::string const& resource, Options opts = {});
 
   // clang-format off
   ///
@@ -925,8 +876,8 @@ class SecureSourceManagerClient {
   /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy> GetIamPolicyRepo(
-      google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy>
+  GetIamPolicyRepo(google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -951,8 +902,8 @@ class SecureSourceManagerClient {
   /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L100}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy> SetIamPolicyRepo(
-      std::string const& resource, Options opts = {});
+  StatusOr<google::iam::v1::Policy>
+  SetIamPolicyRepo(std::string const& resource, Options opts = {});
 
   // clang-format off
   ///
@@ -981,8 +932,8 @@ class SecureSourceManagerClient {
   /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L100}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy> SetIamPolicyRepo(
-      google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy>
+  SetIamPolicyRepo(google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1008,8 +959,8 @@ class SecureSourceManagerClient {
   /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L153}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissionsRepo(
-      std::string const& resource, Options opts = {});
+  StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissionsRepo(std::string const& resource, Options opts = {});
 
   // clang-format off
   ///
@@ -1039,17 +990,16 @@ class SecureSourceManagerClient {
   /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L153}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissionsRepo(
-      google::iam::v1::TestIamPermissionsRequest const& request,
-      Options opts = {});
+  StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissionsRepo(google::iam::v1::TestIamPermissionsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
   /// CreateBranchRule creates a branch rule in a given repository.
   ///
-  /// @param parent
-  /// @param branch_rule
-  /// @param branch_rule_id
+  /// @param parent 
+  /// @param branch_rule 
+  /// @param branch_rule_id 
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return A [`future`] that becomes satisfied when the LRO
@@ -1075,10 +1025,7 @@ class SecureSourceManagerClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::securesourcemanager::v1::BranchRule>>
-  CreateBranchRule(
-      std::string const& parent,
-      google::cloud::securesourcemanager::v1::BranchRule const& branch_rule,
-      std::string const& branch_rule_id, Options opts = {});
+  CreateBranchRule(std::string const& parent, google::cloud::securesourcemanager::v1::BranchRule const& branch_rule, std::string const& branch_rule_id, Options opts = {});
 
   // clang-format off
   ///
@@ -1091,10 +1038,8 @@ class SecureSourceManagerClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateBranchRule(
-      NoAwaitTag, std::string const& parent,
-      google::cloud::securesourcemanager::v1::BranchRule const& branch_rule,
-      std::string const& branch_rule_id, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateBranchRule(NoAwaitTag, std::string const& parent, google::cloud::securesourcemanager::v1::BranchRule const& branch_rule, std::string const& branch_rule_id, Options opts = {});
 
   // clang-format off
   ///
@@ -1131,10 +1076,7 @@ class SecureSourceManagerClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::securesourcemanager::v1::BranchRule>>
-  CreateBranchRule(
-      google::cloud::securesourcemanager::v1::CreateBranchRuleRequest const&
-          request,
-      Options opts = {});
+  CreateBranchRule(google::cloud::securesourcemanager::v1::CreateBranchRuleRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1147,11 +1089,8 @@ class SecureSourceManagerClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateBranchRule(
-      NoAwaitTag,
-      google::cloud::securesourcemanager::v1::CreateBranchRuleRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateBranchRule(NoAwaitTag, google::cloud::securesourcemanager::v1::CreateBranchRuleRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1163,14 +1102,13 @@ class SecureSourceManagerClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::securesourcemanager::v1::BranchRule>>
-  CreateBranchRule(google::longrunning::Operation const& operation,
-                   Options opts = {});
+  CreateBranchRule(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
   /// ListBranchRules lists branch rules in a given repository.
   ///
-  /// @param parent
+  /// @param parent 
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [StreamRange](@ref google::cloud::StreamRange)
@@ -1237,9 +1175,7 @@ class SecureSourceManagerClient {
   ///
   // clang-format on
   StreamRange<google::cloud::securesourcemanager::v1::BranchRule>
-  ListBranchRules(
-      google::cloud::securesourcemanager::v1::ListBranchRulesRequest request,
-      Options opts = {});
+  ListBranchRules(google::cloud::securesourcemanager::v1::ListBranchRulesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1265,8 +1201,8 @@ class SecureSourceManagerClient {
   /// [google.cloud.securesourcemanager.v1.GetBranchRuleRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L918}
   ///
   // clang-format on
-  StatusOr<google::cloud::securesourcemanager::v1::BranchRule> GetBranchRule(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::securesourcemanager::v1::BranchRule>
+  GetBranchRule(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1295,16 +1231,14 @@ class SecureSourceManagerClient {
   /// [google.cloud.securesourcemanager.v1.GetBranchRuleRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L918}
   ///
   // clang-format on
-  StatusOr<google::cloud::securesourcemanager::v1::BranchRule> GetBranchRule(
-      google::cloud::securesourcemanager::v1::GetBranchRuleRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::cloud::securesourcemanager::v1::BranchRule>
+  GetBranchRule(google::cloud::securesourcemanager::v1::GetBranchRuleRequest const& request, Options opts = {});
 
   // clang-format off
   ///
   /// UpdateBranchRule updates a branch rule.
   ///
-  /// @param branch_rule
+  /// @param branch_rule 
   /// @param update_mask  Required. Field mask is used to specify the fields to be overwritten in the
   ///  branchRule resource by the update.
   ///  The fields specified in the update_mask are relative to the resource, not
@@ -1335,9 +1269,7 @@ class SecureSourceManagerClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::securesourcemanager::v1::BranchRule>>
-  UpdateBranchRule(
-      google::cloud::securesourcemanager::v1::BranchRule const& branch_rule,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  UpdateBranchRule(google::cloud::securesourcemanager::v1::BranchRule const& branch_rule, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -1350,10 +1282,8 @@ class SecureSourceManagerClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateBranchRule(
-      NoAwaitTag,
-      google::cloud::securesourcemanager::v1::BranchRule const& branch_rule,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateBranchRule(NoAwaitTag, google::cloud::securesourcemanager::v1::BranchRule const& branch_rule, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -1390,10 +1320,7 @@ class SecureSourceManagerClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::securesourcemanager::v1::BranchRule>>
-  UpdateBranchRule(
-      google::cloud::securesourcemanager::v1::UpdateBranchRuleRequest const&
-          request,
-      Options opts = {});
+  UpdateBranchRule(google::cloud::securesourcemanager::v1::UpdateBranchRuleRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1406,11 +1333,8 @@ class SecureSourceManagerClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateBranchRule(
-      NoAwaitTag,
-      google::cloud::securesourcemanager::v1::UpdateBranchRuleRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateBranchRule(NoAwaitTag, google::cloud::securesourcemanager::v1::UpdateBranchRuleRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1422,14 +1346,13 @@ class SecureSourceManagerClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::securesourcemanager::v1::BranchRule>>
-  UpdateBranchRule(google::longrunning::Operation const& operation,
-                   Options opts = {});
+  UpdateBranchRule(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
   /// DeleteBranchRule deletes a branch rule.
   ///
-  /// @param name
+  /// @param name 
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return A [`future`] that becomes satisfied when the LRO
@@ -1468,8 +1391,8 @@ class SecureSourceManagerClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteBranchRule(
-      NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteBranchRule(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1506,10 +1429,7 @@ class SecureSourceManagerClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
-  DeleteBranchRule(
-      google::cloud::securesourcemanager::v1::DeleteBranchRuleRequest const&
-          request,
-      Options opts = {});
+  DeleteBranchRule(google::cloud::securesourcemanager::v1::DeleteBranchRuleRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1522,11 +1442,8 @@ class SecureSourceManagerClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteBranchRule(
-      NoAwaitTag,
-      google::cloud::securesourcemanager::v1::DeleteBranchRuleRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteBranchRule(NoAwaitTag, google::cloud::securesourcemanager::v1::DeleteBranchRuleRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1538,8 +1455,7 @@ class SecureSourceManagerClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
-  DeleteBranchRule(google::longrunning::Operation const& operation,
-                   Options opts = {});
+  DeleteBranchRule(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1577,8 +1493,8 @@ class SecureSourceManagerClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request, Options opts = {});
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1607,9 +1523,8 @@ class SecureSourceManagerClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1641,8 +1556,8 @@ class SecureSourceManagerClient {
   /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L100}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1673,8 +1588,8 @@ class SecureSourceManagerClient {
   /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1709,9 +1624,8 @@ class SecureSourceManagerClient {
   /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L153}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request,
-      Options opts = {});
+  StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1746,8 +1660,8 @@ class SecureSourceManagerClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -1786,8 +1700,8 @@ class SecureSourceManagerClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1813,8 +1727,8 @@ class SecureSourceManagerClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1845,9 +1759,8 @@ class SecureSourceManagerClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1871,7 +1784,8 @@ class SecureSourceManagerClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status DeleteOperation(std::string const& name, Options opts = {});
+  Status
+  DeleteOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1900,9 +1814,8 @@ class SecureSourceManagerClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request,
-      Options opts = {});
+  Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1936,7 +1849,8 @@ class SecureSourceManagerClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(std::string const& name, Options opts = {});
+  Status
+  CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1975,9 +1889,8 @@ class SecureSourceManagerClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request,
-      Options opts = {});
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<SecureSourceManagerConnection> connection_;

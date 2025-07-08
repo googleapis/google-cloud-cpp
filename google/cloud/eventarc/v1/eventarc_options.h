@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_EVENTARC_V1_EVENTARC_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_EVENTARC_V1_EVENTARC_OPTIONS_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/eventarc/v1/eventarc_connection.h"
 #include "google/cloud/eventarc/v1/eventarc_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -74,7 +74,8 @@ struct EventarcPollingPolicyOption {
  * @ingroup google-cloud-eventarc-options
  */
 using EventarcPolicyOptionList =
-    OptionList<EventarcRetryPolicyOption, EventarcBackoffPolicyOption,
+    OptionList<EventarcRetryPolicyOption,
+               EventarcBackoffPolicyOption,
                EventarcPollingPolicyOption,
                EventarcConnectionIdempotencyPolicyOption>;
 

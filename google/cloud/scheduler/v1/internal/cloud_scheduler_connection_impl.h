@@ -19,14 +19,14 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SCHEDULER_V1_INTERNAL_CLOUD_SCHEDULER_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SCHEDULER_V1_INTERNAL_CLOUD_SCHEDULER_CONNECTION_IMPL_H
 
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/options.h"
 #include "google/cloud/scheduler/v1/cloud_scheduler_connection.h"
 #include "google/cloud/scheduler/v1/cloud_scheduler_connection_idempotency_policy.h"
 #include "google/cloud/scheduler/v1/cloud_scheduler_options.h"
 #include "google/cloud/scheduler/v1/internal/cloud_scheduler_retry_traits.h"
 #include "google/cloud/scheduler/v1/internal/cloud_scheduler_stub.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
@@ -43,41 +43,41 @@ class CloudSchedulerConnectionImpl
   ~CloudSchedulerConnectionImpl() override = default;
 
   CloudSchedulerConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<scheduler_v1_internal::CloudSchedulerStub> stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<scheduler_v1_internal::CloudSchedulerStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
-  StreamRange<google::cloud::scheduler::v1::Job> ListJobs(
-      google::cloud::scheduler::v1::ListJobsRequest request) override;
+  StreamRange<google::cloud::scheduler::v1::Job>
+  ListJobs(google::cloud::scheduler::v1::ListJobsRequest request) override;
 
-  StatusOr<google::cloud::scheduler::v1::Job> GetJob(
-      google::cloud::scheduler::v1::GetJobRequest const& request) override;
+  StatusOr<google::cloud::scheduler::v1::Job>
+  GetJob(google::cloud::scheduler::v1::GetJobRequest const& request) override;
 
-  StatusOr<google::cloud::scheduler::v1::Job> CreateJob(
-      google::cloud::scheduler::v1::CreateJobRequest const& request) override;
+  StatusOr<google::cloud::scheduler::v1::Job>
+  CreateJob(google::cloud::scheduler::v1::CreateJobRequest const& request) override;
 
-  StatusOr<google::cloud::scheduler::v1::Job> UpdateJob(
-      google::cloud::scheduler::v1::UpdateJobRequest const& request) override;
+  StatusOr<google::cloud::scheduler::v1::Job>
+  UpdateJob(google::cloud::scheduler::v1::UpdateJobRequest const& request) override;
 
-  Status DeleteJob(
-      google::cloud::scheduler::v1::DeleteJobRequest const& request) override;
+  Status
+  DeleteJob(google::cloud::scheduler::v1::DeleteJobRequest const& request) override;
 
-  StatusOr<google::cloud::scheduler::v1::Job> PauseJob(
-      google::cloud::scheduler::v1::PauseJobRequest const& request) override;
+  StatusOr<google::cloud::scheduler::v1::Job>
+  PauseJob(google::cloud::scheduler::v1::PauseJobRequest const& request) override;
 
-  StatusOr<google::cloud::scheduler::v1::Job> ResumeJob(
-      google::cloud::scheduler::v1::ResumeJobRequest const& request) override;
+  StatusOr<google::cloud::scheduler::v1::Job>
+  ResumeJob(google::cloud::scheduler::v1::ResumeJobRequest const& request) override;
 
-  StatusOr<google::cloud::scheduler::v1::Job> RunJob(
-      google::cloud::scheduler::v1::RunJobRequest const& request) override;
+  StatusOr<google::cloud::scheduler::v1::Job>
+  RunJob(google::cloud::scheduler::v1::RunJobRequest const& request) override;
 
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request) override;
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request) override;
 
-  StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request) override;
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

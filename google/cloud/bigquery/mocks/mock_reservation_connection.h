@@ -30,10 +30,8 @@ namespace cloud {
 namespace bigquery_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use
-/// bigquery_reservation_v1_mocks::MockReservationServiceConnection directly.
-using ::google::cloud::bigquery_reservation_v1_mocks::
-    MockReservationServiceConnection;
+/// @deprecated Use bigquery_reservation_v1_mocks::MockReservationServiceConnection directly.
+using ::google::cloud::bigquery_reservation_v1_mocks::MockReservationServiceConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_mocks

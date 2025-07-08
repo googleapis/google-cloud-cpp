@@ -17,17 +17,17 @@
 // source: google/cloud/retail/v2/catalog_service.proto
 
 #include "google/cloud/retail/v2/catalog_connection.h"
-#include "google/cloud/retail/v2/catalog_options.h"
-#include "google/cloud/retail/v2/internal/catalog_connection_impl.h"
-#include "google/cloud/retail/v2/internal/catalog_option_defaults.h"
-#include "google/cloud/retail/v2/internal/catalog_stub_factory.h"
-#include "google/cloud/retail/v2/internal/catalog_tracing_connection.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/retail/v2/catalog_options.h"
+#include "google/cloud/retail/v2/internal/catalog_connection_impl.h"
+#include "google/cloud/retail/v2/internal/catalog_option_defaults.h"
+#include "google/cloud/retail/v2/internal/catalog_stub_factory.h"
+#include "google/cloud/retail/v2/internal/catalog_tracing_connection.h"
 #include <memory>
 #include <utility>
 
@@ -38,10 +38,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 CatalogServiceConnection::~CatalogServiceConnection() = default;
 
-StreamRange<google::cloud::retail::v2::Catalog>
-CatalogServiceConnection::ListCatalogs(
-    google::cloud::retail::v2::
-        ListCatalogsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::retail::v2::Catalog> CatalogServiceConnection::ListCatalogs(
+    google::cloud::retail::v2::ListCatalogsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::retail::v2::Catalog>>();
 }
@@ -52,7 +50,8 @@ CatalogServiceConnection::UpdateCatalog(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status CatalogServiceConnection::SetDefaultBranch(
+Status
+CatalogServiceConnection::SetDefaultBranch(
     google::cloud::retail::v2::SetDefaultBranchRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -105,15 +104,14 @@ CatalogServiceConnection::ReplaceCatalogAttribute(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::longrunning::Operation>
-CatalogServiceConnection::ListOperations(
-    google::longrunning::
-        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::longrunning::Operation> CatalogServiceConnection::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }
 
-StatusOr<google::longrunning::Operation> CatalogServiceConnection::GetOperation(
+StatusOr<google::longrunning::Operation>
+CatalogServiceConnection::GetOperation(
     google::longrunning::GetOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -121,18 +119,17 @@ StatusOr<google::longrunning::Operation> CatalogServiceConnection::GetOperation(
 std::shared_ptr<CatalogServiceConnection> MakeCatalogServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 CatalogServicePolicyOptionList>(options,
-                                                                 __func__);
-  options =
-      retail_v2_internal::CatalogServiceDefaultOptions(std::move(options));
+      UnifiedCredentialsOptionList,
+      CatalogServicePolicyOptionList>(options, __func__);
+  options = retail_v2_internal::CatalogServiceDefaultOptions(
+      std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = retail_v2_internal::CreateDefaultCatalogServiceStub(
-      std::move(auth), options);
+    std::move(auth), options);
   return retail_v2_internal::MakeCatalogServiceTracingConnection(
       std::make_shared<retail_v2_internal::CatalogServiceConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options)));
+      std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -34,60 +34,45 @@ SynonymSetServiceTracingConnection::SynonymSetServiceTracingConnection(
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::contentwarehouse::v1::SynonymSet>
-SynonymSetServiceTracingConnection::CreateSynonymSet(
-    google::cloud::contentwarehouse::v1::CreateSynonymSetRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "contentwarehouse_v1::SynonymSetServiceConnection::CreateSynonymSet");
+SynonymSetServiceTracingConnection::CreateSynonymSet(google::cloud::contentwarehouse::v1::CreateSynonymSetRequest const& request) {
+  auto span = internal::MakeSpan("contentwarehouse_v1::SynonymSetServiceConnection::CreateSynonymSet");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateSynonymSet(request));
 }
 
 StatusOr<google::cloud::contentwarehouse::v1::SynonymSet>
-SynonymSetServiceTracingConnection::GetSynonymSet(
-    google::cloud::contentwarehouse::v1::GetSynonymSetRequest const& request) {
-  auto span = internal::MakeSpan(
-      "contentwarehouse_v1::SynonymSetServiceConnection::GetSynonymSet");
+SynonymSetServiceTracingConnection::GetSynonymSet(google::cloud::contentwarehouse::v1::GetSynonymSetRequest const& request) {
+  auto span = internal::MakeSpan("contentwarehouse_v1::SynonymSetServiceConnection::GetSynonymSet");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetSynonymSet(request));
 }
 
 StatusOr<google::cloud::contentwarehouse::v1::SynonymSet>
-SynonymSetServiceTracingConnection::UpdateSynonymSet(
-    google::cloud::contentwarehouse::v1::UpdateSynonymSetRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "contentwarehouse_v1::SynonymSetServiceConnection::UpdateSynonymSet");
+SynonymSetServiceTracingConnection::UpdateSynonymSet(google::cloud::contentwarehouse::v1::UpdateSynonymSetRequest const& request) {
+  auto span = internal::MakeSpan("contentwarehouse_v1::SynonymSetServiceConnection::UpdateSynonymSet");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateSynonymSet(request));
 }
 
-Status SynonymSetServiceTracingConnection::DeleteSynonymSet(
-    google::cloud::contentwarehouse::v1::DeleteSynonymSetRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "contentwarehouse_v1::SynonymSetServiceConnection::DeleteSynonymSet");
+Status
+SynonymSetServiceTracingConnection::DeleteSynonymSet(google::cloud::contentwarehouse::v1::DeleteSynonymSetRequest const& request) {
+  auto span = internal::MakeSpan("contentwarehouse_v1::SynonymSetServiceConnection::DeleteSynonymSet");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteSynonymSet(request));
 }
 
 StreamRange<google::cloud::contentwarehouse::v1::SynonymSet>
-SynonymSetServiceTracingConnection::ListSynonymSets(
-    google::cloud::contentwarehouse::v1::ListSynonymSetsRequest request) {
-  auto span = internal::MakeSpan(
-      "contentwarehouse_v1::SynonymSetServiceConnection::ListSynonymSets");
+SynonymSetServiceTracingConnection::ListSynonymSets(google::cloud::contentwarehouse::v1::ListSynonymSetsRequest request) {
+  auto span = internal::MakeSpan("contentwarehouse_v1::SynonymSetServiceConnection::ListSynonymSets");
   internal::OTelScope scope(span);
   auto sr = child_->ListSynonymSets(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::contentwarehouse::v1::SynonymSet>(std::move(span),
-                                                       std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::contentwarehouse::v1::SynonymSet>(
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::longrunning::Operation>
-SynonymSetServiceTracingConnection::GetOperation(
-    google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpan(
-      "contentwarehouse_v1::SynonymSetServiceConnection::GetOperation");
+SynonymSetServiceTracingConnection::GetOperation(google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpan("contentwarehouse_v1::SynonymSetServiceConnection::GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOperation(request));
 }
@@ -99,8 +84,7 @@ MakeSynonymSetServiceTracingConnection(
     std::shared_ptr<contentwarehouse_v1::SynonymSetServiceConnection> conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
-    conn =
-        std::make_shared<SynonymSetServiceTracingConnection>(std::move(conn));
+    conn = std::make_shared<SynonymSetServiceTracingConnection>(std::move(conn));
   }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;

@@ -32,48 +32,44 @@ AdaptationTracingStub::AdaptationTracingStub(
     std::shared_ptr<AdaptationStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
-StatusOr<google::cloud::speech::v1::PhraseSet>
-AdaptationTracingStub::CreatePhraseSet(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::speech::v1::PhraseSet> AdaptationTracingStub::CreatePhraseSet(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::speech::v1::CreatePhraseSetRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.speech.v1.Adaptation",
-                                     "CreatePhraseSet");
+  auto span = internal::MakeSpanGrpc("google.cloud.speech.v1.Adaptation", "CreatePhraseSet");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreatePhraseSet(context, options, request));
 }
 
-StatusOr<google::cloud::speech::v1::PhraseSet>
-AdaptationTracingStub::GetPhraseSet(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::speech::v1::PhraseSet> AdaptationTracingStub::GetPhraseSet(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::speech::v1::GetPhraseSetRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.speech.v1.Adaptation",
-                                     "GetPhraseSet");
+  auto span = internal::MakeSpanGrpc("google.cloud.speech.v1.Adaptation", "GetPhraseSet");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetPhraseSet(context, options, request));
 }
 
-StatusOr<google::cloud::speech::v1::ListPhraseSetResponse>
-AdaptationTracingStub::ListPhraseSet(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::speech::v1::ListPhraseSetResponse> AdaptationTracingStub::ListPhraseSet(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::speech::v1::ListPhraseSetRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.speech.v1.Adaptation",
-                                     "ListPhraseSet");
+  auto span = internal::MakeSpanGrpc("google.cloud.speech.v1.Adaptation", "ListPhraseSet");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListPhraseSet(context, options, request));
 }
 
-StatusOr<google::cloud::speech::v1::PhraseSet>
-AdaptationTracingStub::UpdatePhraseSet(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::speech::v1::PhraseSet> AdaptationTracingStub::UpdatePhraseSet(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::speech::v1::UpdatePhraseSetRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.speech.v1.Adaptation",
-                                     "UpdatePhraseSet");
+  auto span = internal::MakeSpanGrpc("google.cloud.speech.v1.Adaptation", "UpdatePhraseSet");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -81,81 +77,76 @@ AdaptationTracingStub::UpdatePhraseSet(
 }
 
 Status AdaptationTracingStub::DeletePhraseSet(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::speech::v1::DeletePhraseSetRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.speech.v1.Adaptation",
-                                     "DeletePhraseSet");
+  auto span = internal::MakeSpanGrpc("google.cloud.speech.v1.Adaptation", "DeletePhraseSet");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeletePhraseSet(context, options, request));
 }
 
-StatusOr<google::cloud::speech::v1::CustomClass>
-AdaptationTracingStub::CreateCustomClass(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::speech::v1::CustomClass> AdaptationTracingStub::CreateCustomClass(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::speech::v1::CreateCustomClassRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.speech.v1.Adaptation",
-                                     "CreateCustomClass");
+  auto span = internal::MakeSpanGrpc("google.cloud.speech.v1.Adaptation", "CreateCustomClass");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->CreateCustomClass(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->CreateCustomClass(context, options, request));
 }
 
-StatusOr<google::cloud::speech::v1::CustomClass>
-AdaptationTracingStub::GetCustomClass(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::speech::v1::CustomClass> AdaptationTracingStub::GetCustomClass(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::speech::v1::GetCustomClassRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.speech.v1.Adaptation",
-                                     "GetCustomClass");
+  auto span = internal::MakeSpanGrpc("google.cloud.speech.v1.Adaptation", "GetCustomClass");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetCustomClass(context, options, request));
 }
 
-StatusOr<google::cloud::speech::v1::ListCustomClassesResponse>
-AdaptationTracingStub::ListCustomClasses(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::speech::v1::ListCustomClassesResponse> AdaptationTracingStub::ListCustomClasses(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::speech::v1::ListCustomClassesRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.speech.v1.Adaptation",
-                                     "ListCustomClasses");
+  auto span = internal::MakeSpanGrpc("google.cloud.speech.v1.Adaptation", "ListCustomClasses");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->ListCustomClasses(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->ListCustomClasses(context, options, request));
 }
 
-StatusOr<google::cloud::speech::v1::CustomClass>
-AdaptationTracingStub::UpdateCustomClass(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::speech::v1::CustomClass> AdaptationTracingStub::UpdateCustomClass(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::speech::v1::UpdateCustomClassRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.speech.v1.Adaptation",
-                                     "UpdateCustomClass");
+  auto span = internal::MakeSpanGrpc("google.cloud.speech.v1.Adaptation", "UpdateCustomClass");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->UpdateCustomClass(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->UpdateCustomClass(context, options, request));
 }
 
 Status AdaptationTracingStub::DeleteCustomClass(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::speech::v1::DeleteCustomClassRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.speech.v1.Adaptation",
-                                     "DeleteCustomClass");
+  auto span = internal::MakeSpanGrpc("google.cloud.speech.v1.Adaptation", "DeleteCustomClass");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->DeleteCustomClass(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->DeleteCustomClass(context, options, request));
 }
 
-StatusOr<google::longrunning::ListOperationsResponse>
-AdaptationTracingStub::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse> AdaptationTracingStub::ListOperations(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.speech.v1.Adaptation",
-                                     "ListOperations");
+  auto span = internal::MakeSpanGrpc("google.cloud.speech.v1.Adaptation", "ListOperations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -163,10 +154,10 @@ AdaptationTracingStub::ListOperations(
 }
 
 StatusOr<google::longrunning::Operation> AdaptationTracingStub::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.speech.v1.Adaptation",
-                                     "GetOperation");
+  auto span = internal::MakeSpanGrpc("google.cloud.speech.v1.Adaptation", "GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,

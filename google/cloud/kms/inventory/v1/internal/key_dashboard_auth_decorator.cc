@@ -31,9 +31,9 @@ KeyDashboardServiceAuth::KeyDashboardServiceAuth(
     std::shared_ptr<KeyDashboardServiceStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::kms::inventory::v1::ListCryptoKeysResponse>
-KeyDashboardServiceAuth::ListCryptoKeys(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::kms::inventory::v1::ListCryptoKeysResponse> KeyDashboardServiceAuth::ListCryptoKeys(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::kms::inventory::v1::ListCryptoKeysRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;

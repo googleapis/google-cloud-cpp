@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_V3_INTERNAL_SNOOZE_TRACING_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_V3_INTERNAL_SNOOZE_TRACING_STUB_H
 
-#include "google/cloud/monitoring/v3/internal/snooze_stub.h"
 #include "google/cloud/internal/trace_propagator.h"
+#include "google/cloud/monitoring/v3/internal/snooze_stub.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -39,25 +39,28 @@ class SnoozeServiceTracingStub : public SnoozeServiceStub {
   explicit SnoozeServiceTracingStub(std::shared_ptr<SnoozeServiceStub> child);
 
   StatusOr<google::monitoring::v3::Snooze> CreateSnooze(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::monitoring::v3::CreateSnoozeRequest const& request) override;
 
   StatusOr<google::monitoring::v3::ListSnoozesResponse> ListSnoozes(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::monitoring::v3::ListSnoozesRequest const& request) override;
 
   StatusOr<google::monitoring::v3::Snooze> GetSnooze(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::monitoring::v3::GetSnoozeRequest const& request) override;
 
   StatusOr<google::monitoring::v3::Snooze> UpdateSnooze(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::monitoring::v3::UpdateSnoozeRequest const& request) override;
 
  private:
   std::shared_ptr<SnoozeServiceStub> child_;
-  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
-      propagator_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

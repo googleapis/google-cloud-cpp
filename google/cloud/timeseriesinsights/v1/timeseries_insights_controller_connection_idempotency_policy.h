@@ -34,40 +34,32 @@ class TimeseriesInsightsControllerConnectionIdempotencyPolicy {
   virtual ~TimeseriesInsightsControllerConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<
-      TimeseriesInsightsControllerConnectionIdempotencyPolicy>
-  clone() const;
+  virtual std::unique_ptr<TimeseriesInsightsControllerConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency ListDataSets(
-      google::cloud::timeseriesinsights::v1::ListDataSetsRequest request);
+  virtual google::cloud::Idempotency
+  ListDataSets(google::cloud::timeseriesinsights::v1::ListDataSetsRequest request);
 
-  virtual google::cloud::Idempotency CreateDataSet(
-      google::cloud::timeseriesinsights::v1::CreateDataSetRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  CreateDataSet(google::cloud::timeseriesinsights::v1::CreateDataSetRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteDataSet(
-      google::cloud::timeseriesinsights::v1::DeleteDataSetRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  DeleteDataSet(google::cloud::timeseriesinsights::v1::DeleteDataSetRequest const& request);
 
-  virtual google::cloud::Idempotency AppendEvents(
-      google::cloud::timeseriesinsights::v1::AppendEventsRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  AppendEvents(google::cloud::timeseriesinsights::v1::AppendEventsRequest const& request);
 
-  virtual google::cloud::Idempotency QueryDataSet(
-      google::cloud::timeseriesinsights::v1::QueryDataSetRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  QueryDataSet(google::cloud::timeseriesinsights::v1::QueryDataSetRequest const& request);
 
-  virtual google::cloud::Idempotency EvaluateSlice(
-      google::cloud::timeseriesinsights::v1::EvaluateSliceRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  EvaluateSlice(google::cloud::timeseriesinsights::v1::EvaluateSliceRequest const& request);
 
-  virtual google::cloud::Idempotency EvaluateTimeseries(
-      google::cloud::timeseriesinsights::v1::EvaluateTimeseriesRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  EvaluateTimeseries(google::cloud::timeseriesinsights::v1::EvaluateTimeseriesRequest const& request);
 };
 
 std::unique_ptr<TimeseriesInsightsControllerConnectionIdempotencyPolicy>
-MakeDefaultTimeseriesInsightsControllerConnectionIdempotencyPolicy();
+    MakeDefaultTimeseriesInsightsControllerConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace timeseriesinsights_v1

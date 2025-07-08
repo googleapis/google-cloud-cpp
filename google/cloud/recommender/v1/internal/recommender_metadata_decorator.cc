@@ -46,144 +46,132 @@ RecommenderMetadata::RecommenderMetadata(
 
 StatusOr<google::cloud::recommender::v1::ListInsightsResponse>
 RecommenderMetadata::ListInsights(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::recommender::v1::ListInsightsRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListInsights(context, options, request);
 }
 
 StatusOr<google::cloud::recommender::v1::Insight>
 RecommenderMetadata::GetInsight(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::recommender::v1::GetInsightRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetInsight(context, options, request);
 }
 
 StatusOr<google::cloud::recommender::v1::Insight>
 RecommenderMetadata::MarkInsightAccepted(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::recommender::v1::MarkInsightAcceptedRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->MarkInsightAccepted(context, options, request);
 }
 
 StatusOr<google::cloud::recommender::v1::ListRecommendationsResponse>
 RecommenderMetadata::ListRecommendations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::recommender::v1::ListRecommendationsRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListRecommendations(context, options, request);
 }
 
 StatusOr<google::cloud::recommender::v1::Recommendation>
 RecommenderMetadata::GetRecommendation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::recommender::v1::GetRecommendationRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetRecommendation(context, options, request);
 }
 
 StatusOr<google::cloud::recommender::v1::Recommendation>
 RecommenderMetadata::MarkRecommendationDismissed(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::recommender::v1::MarkRecommendationDismissedRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::recommender::v1::MarkRecommendationDismissedRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->MarkRecommendationDismissed(context, options, request);
 }
 
 StatusOr<google::cloud::recommender::v1::Recommendation>
 RecommenderMetadata::MarkRecommendationClaimed(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::recommender::v1::MarkRecommendationClaimedRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::recommender::v1::MarkRecommendationClaimedRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->MarkRecommendationClaimed(context, options, request);
 }
 
 StatusOr<google::cloud::recommender::v1::Recommendation>
 RecommenderMetadata::MarkRecommendationSucceeded(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::recommender::v1::MarkRecommendationSucceededRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::recommender::v1::MarkRecommendationSucceededRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->MarkRecommendationSucceeded(context, options, request);
 }
 
 StatusOr<google::cloud::recommender::v1::Recommendation>
 RecommenderMetadata::MarkRecommendationFailed(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::recommender::v1::MarkRecommendationFailedRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::recommender::v1::MarkRecommendationFailedRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->MarkRecommendationFailed(context, options, request);
 }
 
 StatusOr<google::cloud::recommender::v1::RecommenderConfig>
 RecommenderMetadata::GetRecommenderConfig(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::recommender::v1::GetRecommenderConfigRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::recommender::v1::GetRecommenderConfigRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetRecommenderConfig(context, options, request);
 }
 
 StatusOr<google::cloud::recommender::v1::RecommenderConfig>
 RecommenderMetadata::UpdateRecommenderConfig(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::recommender::v1::UpdateRecommenderConfigRequest const&
-        request) {
-  SetMetadata(
-      context, options,
-      absl::StrCat("recommender_config.name=",
-                   internal::UrlEncode(request.recommender_config().name())));
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::recommender::v1::UpdateRecommenderConfigRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("recommender_config.name=", internal::UrlEncode(request.recommender_config().name())));
   return child_->UpdateRecommenderConfig(context, options, request);
 }
 
 StatusOr<google::cloud::recommender::v1::InsightTypeConfig>
 RecommenderMetadata::GetInsightTypeConfig(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::recommender::v1::GetInsightTypeConfigRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::recommender::v1::GetInsightTypeConfigRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetInsightTypeConfig(context, options, request);
 }
 
 StatusOr<google::cloud::recommender::v1::InsightTypeConfig>
 RecommenderMetadata::UpdateInsightTypeConfig(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::recommender::v1::UpdateInsightTypeConfigRequest const&
-        request) {
-  SetMetadata(
-      context, options,
-      absl::StrCat("insight_type_config.name=",
-                   internal::UrlEncode(request.insight_type_config().name())));
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::recommender::v1::UpdateInsightTypeConfigRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("insight_type_config.name=", internal::UrlEncode(request.insight_type_config().name())));
   return child_->UpdateInsightTypeConfig(context, options, request);
 }
 
 void RecommenderMetadata::SetMetadata(grpc::ClientContext& context,
-                                      Options const& options,
-                                      std::string const& request_params) {
+                                        Options const& options,
+                                        std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
 void RecommenderMetadata::SetMetadata(grpc::ClientContext& context,
-                                      Options const& options) {
-  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
-                                       api_client_header_);
+                                        Options const& options) {
+  google::cloud::internal::SetMetadata(
+      context, options, fixed_metadata_, api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

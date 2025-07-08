@@ -31,36 +31,36 @@ EkmServiceAuth::EkmServiceAuth(
     std::shared_ptr<EkmServiceStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::kms::v1::ListEkmConnectionsResponse>
-EkmServiceAuth::ListEkmConnections(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::kms::v1::ListEkmConnectionsResponse> EkmServiceAuth::ListEkmConnections(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::kms::v1::ListEkmConnectionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListEkmConnections(context, options, request);
 }
 
-StatusOr<google::cloud::kms::v1::EkmConnection>
-EkmServiceAuth::GetEkmConnection(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::kms::v1::EkmConnection> EkmServiceAuth::GetEkmConnection(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::kms::v1::GetEkmConnectionRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetEkmConnection(context, options, request);
 }
 
-StatusOr<google::cloud::kms::v1::EkmConnection>
-EkmServiceAuth::CreateEkmConnection(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::kms::v1::EkmConnection> EkmServiceAuth::CreateEkmConnection(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::kms::v1::CreateEkmConnectionRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateEkmConnection(context, options, request);
 }
 
-StatusOr<google::cloud::kms::v1::EkmConnection>
-EkmServiceAuth::UpdateEkmConnection(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::kms::v1::EkmConnection> EkmServiceAuth::UpdateEkmConnection(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::kms::v1::UpdateEkmConnectionRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -68,7 +68,8 @@ EkmServiceAuth::UpdateEkmConnection(
 }
 
 StatusOr<google::cloud::kms::v1::EkmConfig> EkmServiceAuth::GetEkmConfig(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::kms::v1::GetEkmConfigRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -76,25 +77,26 @@ StatusOr<google::cloud::kms::v1::EkmConfig> EkmServiceAuth::GetEkmConfig(
 }
 
 StatusOr<google::cloud::kms::v1::EkmConfig> EkmServiceAuth::UpdateEkmConfig(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::kms::v1::UpdateEkmConfigRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateEkmConfig(context, options, request);
 }
 
-StatusOr<google::cloud::kms::v1::VerifyConnectivityResponse>
-EkmServiceAuth::VerifyConnectivity(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::kms::v1::VerifyConnectivityResponse> EkmServiceAuth::VerifyConnectivity(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::kms::v1::VerifyConnectivityRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->VerifyConnectivity(context, options, request);
 }
 
-StatusOr<google::cloud::location::ListLocationsResponse>
-EkmServiceAuth::ListLocations(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::location::ListLocationsResponse> EkmServiceAuth::ListLocations(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -102,7 +104,8 @@ EkmServiceAuth::ListLocations(
 }
 
 StatusOr<google::cloud::location::Location> EkmServiceAuth::GetLocation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -110,7 +113,8 @@ StatusOr<google::cloud::location::Location> EkmServiceAuth::GetLocation(
 }
 
 StatusOr<google::iam::v1::Policy> EkmServiceAuth::SetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -118,16 +122,17 @@ StatusOr<google::iam::v1::Policy> EkmServiceAuth::SetIamPolicy(
 }
 
 StatusOr<google::iam::v1::Policy> EkmServiceAuth::GetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetIamPolicy(context, options, request);
 }
 
-StatusOr<google::iam::v1::TestIamPermissionsResponse>
-EkmServiceAuth::TestIamPermissions(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::iam::v1::TestIamPermissionsResponse> EkmServiceAuth::TestIamPermissions(
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -135,7 +140,8 @@ EkmServiceAuth::TestIamPermissions(
 }
 
 StatusOr<google::longrunning::Operation> EkmServiceAuth::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;

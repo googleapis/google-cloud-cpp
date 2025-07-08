@@ -31,10 +31,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// @deprecated Use appengine_v1::AuthorizedDomainsBackoffPolicyOption directly.
 using ::google::cloud::appengine_v1::AuthorizedDomainsBackoffPolicyOption;
 
-/// @deprecated Use
-/// appengine_v1::AuthorizedDomainsConnectionIdempotencyPolicyOption directly.
-using ::google::cloud::appengine_v1::
-    AuthorizedDomainsConnectionIdempotencyPolicyOption;
+/// @deprecated Use appengine_v1::AuthorizedDomainsConnectionIdempotencyPolicyOption directly.
+using ::google::cloud::appengine_v1::AuthorizedDomainsConnectionIdempotencyPolicyOption;
 
 /// @deprecated Use appengine_v1::AuthorizedDomainsPolicyOptionList directly.
 using ::google::cloud::appengine_v1::AuthorizedDomainsPolicyOptionList;

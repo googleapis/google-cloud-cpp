@@ -19,11 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPEECH_V2_SPEECH_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPEECH_V2_SPEECH_CLIENT_H
 
-#include "google/cloud/speech/v2/speech_connection.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
+#include "google/cloud/speech/v2/speech_connection.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
@@ -64,8 +64,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class SpeechClient {
  public:
-  explicit SpeechClient(std::shared_ptr<SpeechConnection> connection,
-                        Options opts = {});
+  explicit SpeechClient(std::shared_ptr<SpeechConnection> connection, Options opts = {});
   ~SpeechClient();
 
   ///@{
@@ -122,10 +121,8 @@ class SpeechClient {
   /// [google.cloud.speech.v2.Recognizer]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L559}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::speech::v2::Recognizer>> CreateRecognizer(
-      std::string const& parent,
-      google::cloud::speech::v2::Recognizer const& recognizer,
-      std::string const& recognizer_id, Options opts = {});
+  future<StatusOr<google::cloud::speech::v2::Recognizer>>
+  CreateRecognizer(std::string const& parent, google::cloud::speech::v2::Recognizer const& recognizer, std::string const& recognizer_id, Options opts = {});
 
   // clang-format off
   ///
@@ -138,10 +135,8 @@ class SpeechClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateRecognizer(
-      NoAwaitTag, std::string const& parent,
-      google::cloud::speech::v2::Recognizer const& recognizer,
-      std::string const& recognizer_id, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateRecognizer(NoAwaitTag, std::string const& parent, google::cloud::speech::v2::Recognizer const& recognizer, std::string const& recognizer_id, Options opts = {});
 
   // clang-format off
   ///
@@ -177,9 +172,8 @@ class SpeechClient {
   /// [google.cloud.speech.v2.Recognizer]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L559}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::speech::v2::Recognizer>> CreateRecognizer(
-      google::cloud::speech::v2::CreateRecognizerRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::speech::v2::Recognizer>>
+  CreateRecognizer(google::cloud::speech::v2::CreateRecognizerRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -192,10 +186,8 @@ class SpeechClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateRecognizer(
-      NoAwaitTag,
-      google::cloud::speech::v2::CreateRecognizerRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateRecognizer(NoAwaitTag, google::cloud::speech::v2::CreateRecognizerRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -206,8 +198,8 @@ class SpeechClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::speech::v2::Recognizer>> CreateRecognizer(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::speech::v2::Recognizer>>
+  CreateRecognizer(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -241,8 +233,8 @@ class SpeechClient {
   /// [google.cloud.speech.v2.Recognizer]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L559}
   ///
   // clang-format on
-  StreamRange<google::cloud::speech::v2::Recognizer> ListRecognizers(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::speech::v2::Recognizer>
+  ListRecognizers(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -280,9 +272,8 @@ class SpeechClient {
   /// [google.cloud.speech.v2.Recognizer]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L559}
   ///
   // clang-format on
-  StreamRange<google::cloud::speech::v2::Recognizer> ListRecognizers(
-      google::cloud::speech::v2::ListRecognizersRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::speech::v2::Recognizer>
+  ListRecognizers(google::cloud::speech::v2::ListRecognizersRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -310,8 +301,8 @@ class SpeechClient {
   /// [google.cloud.speech.v2.Recognizer]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L559}
   ///
   // clang-format on
-  StatusOr<google::cloud::speech::v2::Recognizer> GetRecognizer(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::speech::v2::Recognizer>
+  GetRecognizer(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -343,9 +334,8 @@ class SpeechClient {
   /// [google.cloud.speech.v2.Recognizer]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L559}
   ///
   // clang-format on
-  StatusOr<google::cloud::speech::v2::Recognizer> GetRecognizer(
-      google::cloud::speech::v2::GetRecognizerRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::speech::v2::Recognizer>
+  GetRecognizer(google::cloud::speech::v2::GetRecognizerRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -381,9 +371,8 @@ class SpeechClient {
   /// [google.cloud.speech.v2.UpdateRecognizerRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L493}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::speech::v2::Recognizer>> UpdateRecognizer(
-      google::cloud::speech::v2::Recognizer const& recognizer,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  future<StatusOr<google::cloud::speech::v2::Recognizer>>
+  UpdateRecognizer(google::cloud::speech::v2::Recognizer const& recognizer, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -396,9 +385,8 @@ class SpeechClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateRecognizer(
-      NoAwaitTag, google::cloud::speech::v2::Recognizer const& recognizer,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateRecognizer(NoAwaitTag, google::cloud::speech::v2::Recognizer const& recognizer, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -434,9 +422,8 @@ class SpeechClient {
   /// [google.cloud.speech.v2.UpdateRecognizerRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L493}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::speech::v2::Recognizer>> UpdateRecognizer(
-      google::cloud::speech::v2::UpdateRecognizerRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::speech::v2::Recognizer>>
+  UpdateRecognizer(google::cloud::speech::v2::UpdateRecognizerRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -449,10 +436,8 @@ class SpeechClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateRecognizer(
-      NoAwaitTag,
-      google::cloud::speech::v2::UpdateRecognizerRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateRecognizer(NoAwaitTag, google::cloud::speech::v2::UpdateRecognizerRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -463,8 +448,8 @@ class SpeechClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::speech::v2::Recognizer>> UpdateRecognizer(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::speech::v2::Recognizer>>
+  UpdateRecognizer(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -496,8 +481,8 @@ class SpeechClient {
   /// [google.cloud.speech.v2.Recognizer]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L559}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::speech::v2::Recognizer>> DeleteRecognizer(
-      std::string const& name, Options opts = {});
+  future<StatusOr<google::cloud::speech::v2::Recognizer>>
+  DeleteRecognizer(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -510,8 +495,8 @@ class SpeechClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteRecognizer(
-      NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteRecognizer(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -547,9 +532,8 @@ class SpeechClient {
   /// [google.cloud.speech.v2.Recognizer]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L559}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::speech::v2::Recognizer>> DeleteRecognizer(
-      google::cloud::speech::v2::DeleteRecognizerRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::speech::v2::Recognizer>>
+  DeleteRecognizer(google::cloud::speech::v2::DeleteRecognizerRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -562,10 +546,8 @@ class SpeechClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteRecognizer(
-      NoAwaitTag,
-      google::cloud::speech::v2::DeleteRecognizerRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteRecognizer(NoAwaitTag, google::cloud::speech::v2::DeleteRecognizerRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -576,8 +558,8 @@ class SpeechClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::speech::v2::Recognizer>> DeleteRecognizer(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::speech::v2::Recognizer>>
+  DeleteRecognizer(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -609,8 +591,8 @@ class SpeechClient {
   /// [google.cloud.speech.v2.UndeleteRecognizerRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L538}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::speech::v2::Recognizer>> UndeleteRecognizer(
-      std::string const& name, Options opts = {});
+  future<StatusOr<google::cloud::speech::v2::Recognizer>>
+  UndeleteRecognizer(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -623,8 +605,8 @@ class SpeechClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UndeleteRecognizer(
-      NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UndeleteRecognizer(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -660,9 +642,8 @@ class SpeechClient {
   /// [google.cloud.speech.v2.UndeleteRecognizerRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L538}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::speech::v2::Recognizer>> UndeleteRecognizer(
-      google::cloud::speech::v2::UndeleteRecognizerRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::speech::v2::Recognizer>>
+  UndeleteRecognizer(google::cloud::speech::v2::UndeleteRecognizerRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -675,10 +656,8 @@ class SpeechClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UndeleteRecognizer(
-      NoAwaitTag,
-      google::cloud::speech::v2::UndeleteRecognizerRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UndeleteRecognizer(NoAwaitTag, google::cloud::speech::v2::UndeleteRecognizerRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -689,8 +668,8 @@ class SpeechClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::speech::v2::Recognizer>> UndeleteRecognizer(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::speech::v2::Recognizer>>
+  UndeleteRecognizer(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -745,11 +724,8 @@ class SpeechClient {
   /// [google.cloud.speech.v2.Recognizer.default_recognition_config]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L631}
   ///
   // clang-format on
-  StatusOr<google::cloud::speech::v2::RecognizeResponse> Recognize(
-      std::string const& recognizer,
-      google::cloud::speech::v2::RecognitionConfig const& config,
-      google::protobuf::FieldMask const& config_mask,
-      std::string const& content, Options opts = {});
+  StatusOr<google::cloud::speech::v2::RecognizeResponse>
+  Recognize(std::string const& recognizer, google::cloud::speech::v2::RecognitionConfig const& config, google::protobuf::FieldMask const& config_mask, std::string const& content, Options opts = {});
 
   // clang-format off
   ///
@@ -779,9 +755,8 @@ class SpeechClient {
   /// [google.cloud.speech.v2.RecognizeResponse]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1157}
   ///
   // clang-format on
-  StatusOr<google::cloud::speech::v2::RecognizeResponse> Recognize(
-      google::cloud::speech::v2::RecognizeRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::speech::v2::RecognizeResponse>
+  Recognize(google::cloud::speech::v2::RecognizeRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -873,13 +848,7 @@ class SpeechClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::speech::v2::BatchRecognizeResponse>>
-  BatchRecognize(
-      std::string const& recognizer,
-      google::cloud::speech::v2::RecognitionConfig const& config,
-      google::protobuf::FieldMask const& config_mask,
-      std::vector<google::cloud::speech::v2::BatchRecognizeFileMetadata> const&
-          files,
-      Options opts = {});
+  BatchRecognize(std::string const& recognizer, google::cloud::speech::v2::RecognitionConfig const& config, google::protobuf::FieldMask const& config_mask, std::vector<google::cloud::speech::v2::BatchRecognizeFileMetadata> const& files, Options opts = {});
 
   // clang-format off
   ///
@@ -892,13 +861,8 @@ class SpeechClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> BatchRecognize(
-      NoAwaitTag, std::string const& recognizer,
-      google::cloud::speech::v2::RecognitionConfig const& config,
-      google::protobuf::FieldMask const& config_mask,
-      std::vector<google::cloud::speech::v2::BatchRecognizeFileMetadata> const&
-          files,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  BatchRecognize(NoAwaitTag, std::string const& recognizer, google::cloud::speech::v2::RecognitionConfig const& config, google::protobuf::FieldMask const& config_mask, std::vector<google::cloud::speech::v2::BatchRecognizeFileMetadata> const& files, Options opts = {});
 
   // clang-format off
   ///
@@ -937,9 +901,7 @@ class SpeechClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::speech::v2::BatchRecognizeResponse>>
-  BatchRecognize(
-      google::cloud::speech::v2::BatchRecognizeRequest const& request,
-      Options opts = {});
+  BatchRecognize(google::cloud::speech::v2::BatchRecognizeRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -952,10 +914,8 @@ class SpeechClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> BatchRecognize(
-      NoAwaitTag,
-      google::cloud::speech::v2::BatchRecognizeRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  BatchRecognize(NoAwaitTag, google::cloud::speech::v2::BatchRecognizeRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -967,8 +927,7 @@ class SpeechClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::speech::v2::BatchRecognizeResponse>>
-  BatchRecognize(google::longrunning::Operation const& operation,
-                 Options opts = {});
+  BatchRecognize(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -994,8 +953,8 @@ class SpeechClient {
   /// [google.cloud.speech.v2.GetConfigRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1694}
   ///
   // clang-format on
-  StatusOr<google::cloud::speech::v2::Config> GetConfig(std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::cloud::speech::v2::Config>
+  GetConfig(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1024,9 +983,8 @@ class SpeechClient {
   /// [google.cloud.speech.v2.GetConfigRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1694}
   ///
   // clang-format on
-  StatusOr<google::cloud::speech::v2::Config> GetConfig(
-      google::cloud::speech::v2::GetConfigRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::speech::v2::Config>
+  GetConfig(google::cloud::speech::v2::GetConfigRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1054,9 +1012,8 @@ class SpeechClient {
   /// [google.cloud.speech.v2.UpdateConfigRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1706}
   ///
   // clang-format on
-  StatusOr<google::cloud::speech::v2::Config> UpdateConfig(
-      google::cloud::speech::v2::Config const& config,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::cloud::speech::v2::Config>
+  UpdateConfig(google::cloud::speech::v2::Config const& config, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -1085,9 +1042,8 @@ class SpeechClient {
   /// [google.cloud.speech.v2.UpdateConfigRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1706}
   ///
   // clang-format on
-  StatusOr<google::cloud::speech::v2::Config> UpdateConfig(
-      google::cloud::speech::v2::UpdateConfigRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::speech::v2::Config>
+  UpdateConfig(google::cloud::speech::v2::UpdateConfigRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1125,10 +1081,8 @@ class SpeechClient {
   /// [google.cloud.speech.v2.CustomClass]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1720}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::speech::v2::CustomClass>> CreateCustomClass(
-      std::string const& parent,
-      google::cloud::speech::v2::CustomClass const& custom_class,
-      std::string const& custom_class_id, Options opts = {});
+  future<StatusOr<google::cloud::speech::v2::CustomClass>>
+  CreateCustomClass(std::string const& parent, google::cloud::speech::v2::CustomClass const& custom_class, std::string const& custom_class_id, Options opts = {});
 
   // clang-format off
   ///
@@ -1141,10 +1095,8 @@ class SpeechClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateCustomClass(
-      NoAwaitTag, std::string const& parent,
-      google::cloud::speech::v2::CustomClass const& custom_class,
-      std::string const& custom_class_id, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateCustomClass(NoAwaitTag, std::string const& parent, google::cloud::speech::v2::CustomClass const& custom_class, std::string const& custom_class_id, Options opts = {});
 
   // clang-format off
   ///
@@ -1180,9 +1132,8 @@ class SpeechClient {
   /// [google.cloud.speech.v2.CustomClass]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1720}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::speech::v2::CustomClass>> CreateCustomClass(
-      google::cloud::speech::v2::CreateCustomClassRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::speech::v2::CustomClass>>
+  CreateCustomClass(google::cloud::speech::v2::CreateCustomClassRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1195,10 +1146,8 @@ class SpeechClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateCustomClass(
-      NoAwaitTag,
-      google::cloud::speech::v2::CreateCustomClassRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateCustomClass(NoAwaitTag, google::cloud::speech::v2::CreateCustomClassRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1209,8 +1158,8 @@ class SpeechClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::speech::v2::CustomClass>> CreateCustomClass(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::speech::v2::CustomClass>>
+  CreateCustomClass(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1244,8 +1193,8 @@ class SpeechClient {
   /// [google.cloud.speech.v2.ListCustomClassesRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1978}
   ///
   // clang-format on
-  StreamRange<google::cloud::speech::v2::CustomClass> ListCustomClasses(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::speech::v2::CustomClass>
+  ListCustomClasses(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -1283,9 +1232,8 @@ class SpeechClient {
   /// [google.cloud.speech.v2.ListCustomClassesRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1978}
   ///
   // clang-format on
-  StreamRange<google::cloud::speech::v2::CustomClass> ListCustomClasses(
-      google::cloud::speech::v2::ListCustomClassesRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::speech::v2::CustomClass>
+  ListCustomClasses(google::cloud::speech::v2::ListCustomClassesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1311,8 +1259,8 @@ class SpeechClient {
   /// [google.cloud.speech.v2.GetCustomClassRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L2022}
   ///
   // clang-format on
-  StatusOr<google::cloud::speech::v2::CustomClass> GetCustomClass(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::speech::v2::CustomClass>
+  GetCustomClass(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1342,9 +1290,8 @@ class SpeechClient {
   /// [google.cloud.speech.v2.GetCustomClassRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L2022}
   ///
   // clang-format on
-  StatusOr<google::cloud::speech::v2::CustomClass> GetCustomClass(
-      google::cloud::speech::v2::GetCustomClassRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::speech::v2::CustomClass>
+  GetCustomClass(google::cloud::speech::v2::GetCustomClassRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1381,9 +1328,8 @@ class SpeechClient {
   /// [google.cloud.speech.v2.UpdateCustomClassRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L2035}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::speech::v2::CustomClass>> UpdateCustomClass(
-      google::cloud::speech::v2::CustomClass const& custom_class,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  future<StatusOr<google::cloud::speech::v2::CustomClass>>
+  UpdateCustomClass(google::cloud::speech::v2::CustomClass const& custom_class, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -1396,9 +1342,8 @@ class SpeechClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateCustomClass(
-      NoAwaitTag, google::cloud::speech::v2::CustomClass const& custom_class,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateCustomClass(NoAwaitTag, google::cloud::speech::v2::CustomClass const& custom_class, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -1434,9 +1379,8 @@ class SpeechClient {
   /// [google.cloud.speech.v2.UpdateCustomClassRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L2035}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::speech::v2::CustomClass>> UpdateCustomClass(
-      google::cloud::speech::v2::UpdateCustomClassRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::speech::v2::CustomClass>>
+  UpdateCustomClass(google::cloud::speech::v2::UpdateCustomClassRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1449,10 +1393,8 @@ class SpeechClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateCustomClass(
-      NoAwaitTag,
-      google::cloud::speech::v2::UpdateCustomClassRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateCustomClass(NoAwaitTag, google::cloud::speech::v2::UpdateCustomClassRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1463,8 +1405,8 @@ class SpeechClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::speech::v2::CustomClass>> UpdateCustomClass(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::speech::v2::CustomClass>>
+  UpdateCustomClass(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1497,8 +1439,8 @@ class SpeechClient {
   /// [google.cloud.speech.v2.DeleteCustomClassRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L2054}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::speech::v2::CustomClass>> DeleteCustomClass(
-      std::string const& name, Options opts = {});
+  future<StatusOr<google::cloud::speech::v2::CustomClass>>
+  DeleteCustomClass(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1511,8 +1453,8 @@ class SpeechClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteCustomClass(
-      NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteCustomClass(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1548,9 +1490,8 @@ class SpeechClient {
   /// [google.cloud.speech.v2.DeleteCustomClassRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L2054}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::speech::v2::CustomClass>> DeleteCustomClass(
-      google::cloud::speech::v2::DeleteCustomClassRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::speech::v2::CustomClass>>
+  DeleteCustomClass(google::cloud::speech::v2::DeleteCustomClassRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1563,10 +1504,8 @@ class SpeechClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteCustomClass(
-      NoAwaitTag,
-      google::cloud::speech::v2::DeleteCustomClassRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteCustomClass(NoAwaitTag, google::cloud::speech::v2::DeleteCustomClassRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1577,8 +1516,8 @@ class SpeechClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::speech::v2::CustomClass>> DeleteCustomClass(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::speech::v2::CustomClass>>
+  DeleteCustomClass(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1611,8 +1550,8 @@ class SpeechClient {
   /// [google.cloud.speech.v2.UndeleteCustomClassRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L2082}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::speech::v2::CustomClass>> UndeleteCustomClass(
-      std::string const& name, Options opts = {});
+  future<StatusOr<google::cloud::speech::v2::CustomClass>>
+  UndeleteCustomClass(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1625,8 +1564,8 @@ class SpeechClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UndeleteCustomClass(
-      NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UndeleteCustomClass(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1662,9 +1601,8 @@ class SpeechClient {
   /// [google.cloud.speech.v2.UndeleteCustomClassRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L2082}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::speech::v2::CustomClass>> UndeleteCustomClass(
-      google::cloud::speech::v2::UndeleteCustomClassRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::speech::v2::CustomClass>>
+  UndeleteCustomClass(google::cloud::speech::v2::UndeleteCustomClassRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1677,10 +1615,8 @@ class SpeechClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UndeleteCustomClass(
-      NoAwaitTag,
-      google::cloud::speech::v2::UndeleteCustomClassRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UndeleteCustomClass(NoAwaitTag, google::cloud::speech::v2::UndeleteCustomClassRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1691,8 +1627,8 @@ class SpeechClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::speech::v2::CustomClass>> UndeleteCustomClass(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::speech::v2::CustomClass>>
+  UndeleteCustomClass(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1730,10 +1666,8 @@ class SpeechClient {
   /// [google.cloud.speech.v2.PhraseSet]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1823}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::speech::v2::PhraseSet>> CreatePhraseSet(
-      std::string const& parent,
-      google::cloud::speech::v2::PhraseSet const& phrase_set,
-      std::string const& phrase_set_id, Options opts = {});
+  future<StatusOr<google::cloud::speech::v2::PhraseSet>>
+  CreatePhraseSet(std::string const& parent, google::cloud::speech::v2::PhraseSet const& phrase_set, std::string const& phrase_set_id, Options opts = {});
 
   // clang-format off
   ///
@@ -1746,10 +1680,8 @@ class SpeechClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreatePhraseSet(
-      NoAwaitTag, std::string const& parent,
-      google::cloud::speech::v2::PhraseSet const& phrase_set,
-      std::string const& phrase_set_id, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreatePhraseSet(NoAwaitTag, std::string const& parent, google::cloud::speech::v2::PhraseSet const& phrase_set, std::string const& phrase_set_id, Options opts = {});
 
   // clang-format off
   ///
@@ -1785,9 +1717,8 @@ class SpeechClient {
   /// [google.cloud.speech.v2.PhraseSet]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1823}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::speech::v2::PhraseSet>> CreatePhraseSet(
-      google::cloud::speech::v2::CreatePhraseSetRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::speech::v2::PhraseSet>>
+  CreatePhraseSet(google::cloud::speech::v2::CreatePhraseSetRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1800,10 +1731,8 @@ class SpeechClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreatePhraseSet(
-      NoAwaitTag,
-      google::cloud::speech::v2::CreatePhraseSetRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreatePhraseSet(NoAwaitTag, google::cloud::speech::v2::CreatePhraseSetRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1814,8 +1743,8 @@ class SpeechClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::speech::v2::PhraseSet>> CreatePhraseSet(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::speech::v2::PhraseSet>>
+  CreatePhraseSet(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1849,8 +1778,8 @@ class SpeechClient {
   /// [google.cloud.speech.v2.PhraseSet]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1823}
   ///
   // clang-format on
-  StreamRange<google::cloud::speech::v2::PhraseSet> ListPhraseSets(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::speech::v2::PhraseSet>
+  ListPhraseSets(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -1888,9 +1817,8 @@ class SpeechClient {
   /// [google.cloud.speech.v2.PhraseSet]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1823}
   ///
   // clang-format on
-  StreamRange<google::cloud::speech::v2::PhraseSet> ListPhraseSets(
-      google::cloud::speech::v2::ListPhraseSetsRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::speech::v2::PhraseSet>
+  ListPhraseSets(google::cloud::speech::v2::ListPhraseSetsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1916,8 +1844,8 @@ class SpeechClient {
   /// [google.cloud.speech.v2.PhraseSet]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1823}
   ///
   // clang-format on
-  StatusOr<google::cloud::speech::v2::PhraseSet> GetPhraseSet(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::speech::v2::PhraseSet>
+  GetPhraseSet(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1947,9 +1875,8 @@ class SpeechClient {
   /// [google.cloud.speech.v2.PhraseSet]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1823}
   ///
   // clang-format on
-  StatusOr<google::cloud::speech::v2::PhraseSet> GetPhraseSet(
-      google::cloud::speech::v2::GetPhraseSetRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::speech::v2::PhraseSet>
+  GetPhraseSet(google::cloud::speech::v2::GetPhraseSetRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1985,9 +1912,8 @@ class SpeechClient {
   /// [google.cloud.speech.v2.UpdatePhraseSetRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L2188}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::speech::v2::PhraseSet>> UpdatePhraseSet(
-      google::cloud::speech::v2::PhraseSet const& phrase_set,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  future<StatusOr<google::cloud::speech::v2::PhraseSet>>
+  UpdatePhraseSet(google::cloud::speech::v2::PhraseSet const& phrase_set, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -2000,9 +1926,8 @@ class SpeechClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdatePhraseSet(
-      NoAwaitTag, google::cloud::speech::v2::PhraseSet const& phrase_set,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdatePhraseSet(NoAwaitTag, google::cloud::speech::v2::PhraseSet const& phrase_set, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -2038,9 +1963,8 @@ class SpeechClient {
   /// [google.cloud.speech.v2.UpdatePhraseSetRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L2188}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::speech::v2::PhraseSet>> UpdatePhraseSet(
-      google::cloud::speech::v2::UpdatePhraseSetRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::speech::v2::PhraseSet>>
+  UpdatePhraseSet(google::cloud::speech::v2::UpdatePhraseSetRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2053,10 +1977,8 @@ class SpeechClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdatePhraseSet(
-      NoAwaitTag,
-      google::cloud::speech::v2::UpdatePhraseSetRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdatePhraseSet(NoAwaitTag, google::cloud::speech::v2::UpdatePhraseSetRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2067,8 +1989,8 @@ class SpeechClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::speech::v2::PhraseSet>> UpdatePhraseSet(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::speech::v2::PhraseSet>>
+  UpdatePhraseSet(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -2100,8 +2022,8 @@ class SpeechClient {
   /// [google.cloud.speech.v2.PhraseSet]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1823}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::speech::v2::PhraseSet>> DeletePhraseSet(
-      std::string const& name, Options opts = {});
+  future<StatusOr<google::cloud::speech::v2::PhraseSet>>
+  DeletePhraseSet(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2114,8 +2036,8 @@ class SpeechClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeletePhraseSet(
-      NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeletePhraseSet(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2151,9 +2073,8 @@ class SpeechClient {
   /// [google.cloud.speech.v2.PhraseSet]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1823}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::speech::v2::PhraseSet>> DeletePhraseSet(
-      google::cloud::speech::v2::DeletePhraseSetRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::speech::v2::PhraseSet>>
+  DeletePhraseSet(google::cloud::speech::v2::DeletePhraseSetRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2166,10 +2087,8 @@ class SpeechClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeletePhraseSet(
-      NoAwaitTag,
-      google::cloud::speech::v2::DeletePhraseSetRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeletePhraseSet(NoAwaitTag, google::cloud::speech::v2::DeletePhraseSetRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2180,8 +2099,8 @@ class SpeechClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::speech::v2::PhraseSet>> DeletePhraseSet(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::speech::v2::PhraseSet>>
+  DeletePhraseSet(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -2213,8 +2132,8 @@ class SpeechClient {
   /// [google.cloud.speech.v2.UndeletePhraseSetRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L2233}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::speech::v2::PhraseSet>> UndeletePhraseSet(
-      std::string const& name, Options opts = {});
+  future<StatusOr<google::cloud::speech::v2::PhraseSet>>
+  UndeletePhraseSet(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2227,8 +2146,8 @@ class SpeechClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UndeletePhraseSet(
-      NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UndeletePhraseSet(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2264,9 +2183,8 @@ class SpeechClient {
   /// [google.cloud.speech.v2.UndeletePhraseSetRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L2233}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::speech::v2::PhraseSet>> UndeletePhraseSet(
-      google::cloud::speech::v2::UndeletePhraseSetRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::speech::v2::PhraseSet>>
+  UndeletePhraseSet(google::cloud::speech::v2::UndeletePhraseSetRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2279,10 +2197,8 @@ class SpeechClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UndeletePhraseSet(
-      NoAwaitTag,
-      google::cloud::speech::v2::UndeletePhraseSetRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UndeletePhraseSet(NoAwaitTag, google::cloud::speech::v2::UndeletePhraseSetRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2293,8 +2209,8 @@ class SpeechClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::speech::v2::PhraseSet>> UndeletePhraseSet(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::speech::v2::PhraseSet>>
+  UndeletePhraseSet(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -2332,8 +2248,8 @@ class SpeechClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request, Options opts = {});
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -2362,9 +2278,8 @@ class SpeechClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2399,8 +2314,8 @@ class SpeechClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -2439,8 +2354,8 @@ class SpeechClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -2466,8 +2381,8 @@ class SpeechClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2498,9 +2413,8 @@ class SpeechClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2524,7 +2438,8 @@ class SpeechClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status DeleteOperation(std::string const& name, Options opts = {});
+  Status
+  DeleteOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2553,9 +2468,8 @@ class SpeechClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request,
-      Options opts = {});
+  Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2589,7 +2503,8 @@ class SpeechClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(std::string const& name, Options opts = {});
+  Status
+  CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2628,9 +2543,8 @@ class SpeechClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request,
-      Options opts = {});
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<SpeechConnection> connection_;

@@ -26,125 +26,135 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-DeveloperConnectConnectionIdempotencyPolicy::
-    ~DeveloperConnectConnectionIdempotencyPolicy() = default;
+DeveloperConnectConnectionIdempotencyPolicy::~DeveloperConnectConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<DeveloperConnectConnectionIdempotencyPolicy>
 DeveloperConnectConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<DeveloperConnectConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency DeveloperConnectConnectionIdempotencyPolicy::ListConnections(
-    google::cloud::developerconnect::v1::ListConnectionsRequest) {  // NOLINT
+Idempotency DeveloperConnectConnectionIdempotencyPolicy::ListConnections(google::cloud::developerconnect::v1::ListConnectionsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency DeveloperConnectConnectionIdempotencyPolicy::GetConnection(
-    google::cloud::developerconnect::v1::GetConnectionRequest const&) {
+Idempotency DeveloperConnectConnectionIdempotencyPolicy::GetConnection(google::cloud::developerconnect::v1::GetConnectionRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DeveloperConnectConnectionIdempotencyPolicy::CreateConnection(
-    google::cloud::developerconnect::v1::CreateConnectionRequest const&) {
+Idempotency DeveloperConnectConnectionIdempotencyPolicy::CreateConnection(google::cloud::developerconnect::v1::CreateConnectionRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DeveloperConnectConnectionIdempotencyPolicy::UpdateConnection(
-    google::cloud::developerconnect::v1::UpdateConnectionRequest const&) {
+Idempotency DeveloperConnectConnectionIdempotencyPolicy::UpdateConnection(google::cloud::developerconnect::v1::UpdateConnectionRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DeveloperConnectConnectionIdempotencyPolicy::DeleteConnection(
-    google::cloud::developerconnect::v1::DeleteConnectionRequest const&) {
+Idempotency DeveloperConnectConnectionIdempotencyPolicy::DeleteConnection(google::cloud::developerconnect::v1::DeleteConnectionRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency
-DeveloperConnectConnectionIdempotencyPolicy::CreateGitRepositoryLink(
-    google::cloud::developerconnect::v1::
-        CreateGitRepositoryLinkRequest const&) {
+Idempotency DeveloperConnectConnectionIdempotencyPolicy::CreateGitRepositoryLink(google::cloud::developerconnect::v1::CreateGitRepositoryLinkRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency
-DeveloperConnectConnectionIdempotencyPolicy::DeleteGitRepositoryLink(
-    google::cloud::developerconnect::v1::
-        DeleteGitRepositoryLinkRequest const&) {
+Idempotency DeveloperConnectConnectionIdempotencyPolicy::DeleteGitRepositoryLink(google::cloud::developerconnect::v1::DeleteGitRepositoryLinkRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DeveloperConnectConnectionIdempotencyPolicy::ListGitRepositoryLinks(
-    google::cloud::developerconnect::v1::
-        ListGitRepositoryLinksRequest) {  // NOLINT
+Idempotency DeveloperConnectConnectionIdempotencyPolicy::ListGitRepositoryLinks(google::cloud::developerconnect::v1::ListGitRepositoryLinksRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency DeveloperConnectConnectionIdempotencyPolicy::GetGitRepositoryLink(
-    google::cloud::developerconnect::v1::GetGitRepositoryLinkRequest const&) {
+Idempotency DeveloperConnectConnectionIdempotencyPolicy::GetGitRepositoryLink(google::cloud::developerconnect::v1::GetGitRepositoryLinkRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DeveloperConnectConnectionIdempotencyPolicy::FetchReadWriteToken(
-    google::cloud::developerconnect::v1::FetchReadWriteTokenRequest const&) {
+Idempotency DeveloperConnectConnectionIdempotencyPolicy::FetchReadWriteToken(google::cloud::developerconnect::v1::FetchReadWriteTokenRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DeveloperConnectConnectionIdempotencyPolicy::FetchReadToken(
-    google::cloud::developerconnect::v1::FetchReadTokenRequest const&) {
+Idempotency DeveloperConnectConnectionIdempotencyPolicy::FetchReadToken(google::cloud::developerconnect::v1::FetchReadTokenRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency
-DeveloperConnectConnectionIdempotencyPolicy::FetchLinkableGitRepositories(
-    google::cloud::developerconnect::v1::
-        FetchLinkableGitRepositoriesRequest) {  // NOLINT
+Idempotency DeveloperConnectConnectionIdempotencyPolicy::FetchLinkableGitRepositories(google::cloud::developerconnect::v1::FetchLinkableGitRepositoriesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency
-DeveloperConnectConnectionIdempotencyPolicy::FetchGitHubInstallations(
-    google::cloud::developerconnect::v1::
-        FetchGitHubInstallationsRequest const&) {
+Idempotency DeveloperConnectConnectionIdempotencyPolicy::FetchGitHubInstallations(google::cloud::developerconnect::v1::FetchGitHubInstallationsRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DeveloperConnectConnectionIdempotencyPolicy::FetchGitRefs(
-    google::cloud::developerconnect::v1::FetchGitRefsRequest) {  // NOLINT
+Idempotency DeveloperConnectConnectionIdempotencyPolicy::FetchGitRefs(google::cloud::developerconnect::v1::FetchGitRefsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency DeveloperConnectConnectionIdempotencyPolicy::ListLocations(
-    google::cloud::location::ListLocationsRequest) {  // NOLINT
+Idempotency DeveloperConnectConnectionIdempotencyPolicy::ListAccountConnectors(google::cloud::developerconnect::v1::ListAccountConnectorsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency DeveloperConnectConnectionIdempotencyPolicy::GetLocation(
-    google::cloud::location::GetLocationRequest const&) {
+Idempotency DeveloperConnectConnectionIdempotencyPolicy::GetAccountConnector(google::cloud::developerconnect::v1::GetAccountConnectorRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DeveloperConnectConnectionIdempotencyPolicy::ListOperations(
-    google::longrunning::ListOperationsRequest) {  // NOLINT
-  return Idempotency::kIdempotent;
-}
-
-Idempotency DeveloperConnectConnectionIdempotencyPolicy::GetOperation(
-    google::longrunning::GetOperationRequest const&) {
-  return Idempotency::kIdempotent;
-}
-
-Idempotency DeveloperConnectConnectionIdempotencyPolicy::DeleteOperation(
-    google::longrunning::DeleteOperationRequest const&) {
+Idempotency DeveloperConnectConnectionIdempotencyPolicy::CreateAccountConnector(google::cloud::developerconnect::v1::CreateAccountConnectorRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DeveloperConnectConnectionIdempotencyPolicy::CancelOperation(
-    google::longrunning::CancelOperationRequest const&) {
+Idempotency DeveloperConnectConnectionIdempotencyPolicy::UpdateAccountConnector(google::cloud::developerconnect::v1::UpdateAccountConnectorRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency DeveloperConnectConnectionIdempotencyPolicy::DeleteAccountConnector(google::cloud::developerconnect::v1::DeleteAccountConnectorRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency DeveloperConnectConnectionIdempotencyPolicy::FetchAccessToken(google::cloud::developerconnect::v1::FetchAccessTokenRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency DeveloperConnectConnectionIdempotencyPolicy::ListUsers(google::cloud::developerconnect::v1::ListUsersRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency DeveloperConnectConnectionIdempotencyPolicy::DeleteUser(google::cloud::developerconnect::v1::DeleteUserRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency DeveloperConnectConnectionIdempotencyPolicy::FetchSelf(google::cloud::developerconnect::v1::FetchSelfRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency DeveloperConnectConnectionIdempotencyPolicy::DeleteSelf(google::cloud::developerconnect::v1::DeleteSelfRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency DeveloperConnectConnectionIdempotencyPolicy::ListLocations(google::cloud::location::ListLocationsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency DeveloperConnectConnectionIdempotencyPolicy::GetLocation(google::cloud::location::GetLocationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency DeveloperConnectConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency DeveloperConnectConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency DeveloperConnectConnectionIdempotencyPolicy::DeleteOperation(google::longrunning::DeleteOperationRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency DeveloperConnectConnectionIdempotencyPolicy::CancelOperation(google::longrunning::CancelOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<DeveloperConnectConnectionIdempotencyPolicy>
-MakeDefaultDeveloperConnectConnectionIdempotencyPolicy() {
+    MakeDefaultDeveloperConnectConnectionIdempotencyPolicy() {
   return std::make_unique<DeveloperConnectConnectionIdempotencyPolicy>();
 }
 

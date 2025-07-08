@@ -32,12 +32,11 @@ KeyDashboardServiceTracingStub::KeyDashboardServiceTracingStub(
     std::shared_ptr<KeyDashboardServiceStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
-StatusOr<google::cloud::kms::inventory::v1::ListCryptoKeysResponse>
-KeyDashboardServiceTracingStub::ListCryptoKeys(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::kms::inventory::v1::ListCryptoKeysResponse> KeyDashboardServiceTracingStub::ListCryptoKeys(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::kms::inventory::v1::ListCryptoKeysRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.kms.inventory.v1.KeyDashboardService", "ListCryptoKeys");
+  auto span = internal::MakeSpanGrpc("google.cloud.kms.inventory.v1.KeyDashboardService", "ListCryptoKeys");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,

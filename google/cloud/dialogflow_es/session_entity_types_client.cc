@@ -28,13 +28,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 SessionEntityTypesClient::SessionEntityTypesClient(
     std::shared_ptr<SessionEntityTypesConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 SessionEntityTypesClient::~SessionEntityTypesClient() = default;
 
 StreamRange<google::cloud::dialogflow::v2::SessionEntityType>
-SessionEntityTypesClient::ListSessionEntityTypes(std::string const& parent,
-                                                 Options opts) {
+SessionEntityTypesClient::ListSessionEntityTypes(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dialogflow::v2::ListSessionEntityTypesRequest request;
   request.set_parent(parent);
@@ -42,16 +41,13 @@ SessionEntityTypesClient::ListSessionEntityTypes(std::string const& parent,
 }
 
 StreamRange<google::cloud::dialogflow::v2::SessionEntityType>
-SessionEntityTypesClient::ListSessionEntityTypes(
-    google::cloud::dialogflow::v2::ListSessionEntityTypesRequest request,
-    Options opts) {
+SessionEntityTypesClient::ListSessionEntityTypes(google::cloud::dialogflow::v2::ListSessionEntityTypesRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListSessionEntityTypes(std::move(request));
 }
 
 StatusOr<google::cloud::dialogflow::v2::SessionEntityType>
-SessionEntityTypesClient::GetSessionEntityType(std::string const& name,
-                                               Options opts) {
+SessionEntityTypesClient::GetSessionEntityType(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dialogflow::v2::GetSessionEntityTypeRequest request;
   request.set_name(name);
@@ -59,18 +55,13 @@ SessionEntityTypesClient::GetSessionEntityType(std::string const& name,
 }
 
 StatusOr<google::cloud::dialogflow::v2::SessionEntityType>
-SessionEntityTypesClient::GetSessionEntityType(
-    google::cloud::dialogflow::v2::GetSessionEntityTypeRequest const& request,
-    Options opts) {
+SessionEntityTypesClient::GetSessionEntityType(google::cloud::dialogflow::v2::GetSessionEntityTypeRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetSessionEntityType(request);
 }
 
 StatusOr<google::cloud::dialogflow::v2::SessionEntityType>
-SessionEntityTypesClient::CreateSessionEntityType(
-    std::string const& parent,
-    google::cloud::dialogflow::v2::SessionEntityType const& session_entity_type,
-    Options opts) {
+SessionEntityTypesClient::CreateSessionEntityType(std::string const& parent, google::cloud::dialogflow::v2::SessionEntityType const& session_entity_type, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dialogflow::v2::CreateSessionEntityTypeRequest request;
   request.set_parent(parent);
@@ -79,18 +70,13 @@ SessionEntityTypesClient::CreateSessionEntityType(
 }
 
 StatusOr<google::cloud::dialogflow::v2::SessionEntityType>
-SessionEntityTypesClient::CreateSessionEntityType(
-    google::cloud::dialogflow::v2::CreateSessionEntityTypeRequest const&
-        request,
-    Options opts) {
+SessionEntityTypesClient::CreateSessionEntityType(google::cloud::dialogflow::v2::CreateSessionEntityTypeRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateSessionEntityType(request);
 }
 
 StatusOr<google::cloud::dialogflow::v2::SessionEntityType>
-SessionEntityTypesClient::UpdateSessionEntityType(
-    google::cloud::dialogflow::v2::SessionEntityType const& session_entity_type,
-    Options opts) {
+SessionEntityTypesClient::UpdateSessionEntityType(google::cloud::dialogflow::v2::SessionEntityType const& session_entity_type, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dialogflow::v2::UpdateSessionEntityTypeRequest request;
   *request.mutable_session_entity_type() = session_entity_type;
@@ -98,9 +84,7 @@ SessionEntityTypesClient::UpdateSessionEntityType(
 }
 
 StatusOr<google::cloud::dialogflow::v2::SessionEntityType>
-SessionEntityTypesClient::UpdateSessionEntityType(
-    google::cloud::dialogflow::v2::SessionEntityType const& session_entity_type,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+SessionEntityTypesClient::UpdateSessionEntityType(google::cloud::dialogflow::v2::SessionEntityType const& session_entity_type, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dialogflow::v2::UpdateSessionEntityTypeRequest request;
   *request.mutable_session_entity_type() = session_entity_type;
@@ -109,48 +93,39 @@ SessionEntityTypesClient::UpdateSessionEntityType(
 }
 
 StatusOr<google::cloud::dialogflow::v2::SessionEntityType>
-SessionEntityTypesClient::UpdateSessionEntityType(
-    google::cloud::dialogflow::v2::UpdateSessionEntityTypeRequest const&
-        request,
-    Options opts) {
+SessionEntityTypesClient::UpdateSessionEntityType(google::cloud::dialogflow::v2::UpdateSessionEntityTypeRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateSessionEntityType(request);
 }
 
-Status SessionEntityTypesClient::DeleteSessionEntityType(
-    std::string const& name, Options opts) {
+Status
+SessionEntityTypesClient::DeleteSessionEntityType(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dialogflow::v2::DeleteSessionEntityTypeRequest request;
   request.set_name(name);
   return connection_->DeleteSessionEntityType(request);
 }
 
-Status SessionEntityTypesClient::DeleteSessionEntityType(
-    google::cloud::dialogflow::v2::DeleteSessionEntityTypeRequest const&
-        request,
-    Options opts) {
+Status
+SessionEntityTypesClient::DeleteSessionEntityType(google::cloud::dialogflow::v2::DeleteSessionEntityTypeRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteSessionEntityType(request);
 }
 
 StreamRange<google::cloud::location::Location>
-SessionEntityTypesClient::ListLocations(
-    google::cloud::location::ListLocationsRequest request, Options opts) {
+SessionEntityTypesClient::ListLocations(google::cloud::location::ListLocationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListLocations(std::move(request));
 }
 
 StatusOr<google::cloud::location::Location>
-SessionEntityTypesClient::GetLocation(
-    google::cloud::location::GetLocationRequest const& request, Options opts) {
+SessionEntityTypesClient::GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetLocation(request);
 }
 
 StreamRange<google::longrunning::Operation>
-SessionEntityTypesClient::ListOperations(std::string const& name,
-                                         std::string const& filter,
-                                         Options opts) {
+SessionEntityTypesClient::ListOperations(std::string const& name, std::string const& filter, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::ListOperationsRequest request;
   request.set_name(name);
@@ -159,36 +134,35 @@ SessionEntityTypesClient::ListOperations(std::string const& name,
 }
 
 StreamRange<google::longrunning::Operation>
-SessionEntityTypesClient::ListOperations(
-    google::longrunning::ListOperationsRequest request, Options opts) {
+SessionEntityTypesClient::ListOperations(google::longrunning::ListOperationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOperations(std::move(request));
 }
 
-StatusOr<google::longrunning::Operation> SessionEntityTypesClient::GetOperation(
-    std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation>
+SessionEntityTypesClient::GetOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
   return connection_->GetOperation(request);
 }
 
-StatusOr<google::longrunning::Operation> SessionEntityTypesClient::GetOperation(
-    google::longrunning::GetOperationRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation>
+SessionEntityTypesClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }
 
-Status SessionEntityTypesClient::CancelOperation(std::string const& name,
-                                                 Options opts) {
+Status
+SessionEntityTypesClient::CancelOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::CancelOperationRequest request;
   request.set_name(name);
   return connection_->CancelOperation(request);
 }
 
-Status SessionEntityTypesClient::CancelOperation(
-    google::longrunning::CancelOperationRequest const& request, Options opts) {
+Status
+SessionEntityTypesClient::CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelOperation(request);
 }

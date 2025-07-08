@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CHRONICLE_V1_REFERENCE_LIST_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CHRONICLE_V1_REFERENCE_LIST_CONNECTION_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/chronicle/v1/internal/reference_list_retry_traits.h"
 #include "google/cloud/chronicle/v1/reference_list_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -52,8 +52,7 @@ class ReferenceListServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class ReferenceListServiceLimitedErrorCountRetryPolicy
-    : public ReferenceListServiceRetryPolicy {
+class ReferenceListServiceLimitedErrorCountRetryPolicy : public ReferenceListServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -62,18 +61,15 @@ class ReferenceListServiceLimitedErrorCountRetryPolicy
    * @note Disable the retry loop by providing an instance of this policy with
    *     @p maximum_failures == 0.
    */
-  explicit ReferenceListServiceLimitedErrorCountRetryPolicy(
-      int maximum_failures)
-      : impl_(maximum_failures) {}
+  explicit ReferenceListServiceLimitedErrorCountRetryPolicy(int maximum_failures)
+    : impl_(maximum_failures) {}
 
   ReferenceListServiceLimitedErrorCountRetryPolicy(
       ReferenceListServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : ReferenceListServiceLimitedErrorCountRetryPolicy(
-            rhs.maximum_failures()) {}
+    : ReferenceListServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   ReferenceListServiceLimitedErrorCountRetryPolicy(
       ReferenceListServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : ReferenceListServiceLimitedErrorCountRetryPolicy(
-            rhs.maximum_failures()) {}
+    : ReferenceListServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -93,9 +89,7 @@ class ReferenceListServiceLimitedErrorCountRetryPolicy
   using BaseType = ReferenceListServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      chronicle_v1_internal::ReferenceListServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<chronicle_v1_internal::ReferenceListServiceRetryTraits> impl_;
 };
 
 /**
@@ -108,8 +102,7 @@ class ReferenceListServiceLimitedErrorCountRetryPolicy
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class ReferenceListServiceLimitedTimeRetryPolicy
-    : public ReferenceListServiceRetryPolicy {
+class ReferenceListServiceLimitedTimeRetryPolicy : public ReferenceListServiceRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -134,14 +127,12 @@ class ReferenceListServiceLimitedTimeRetryPolicy
   template <typename DurationRep, typename DurationPeriod>
   explicit ReferenceListServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  ReferenceListServiceLimitedTimeRetryPolicy(
-      ReferenceListServiceLimitedTimeRetryPolicy&& rhs) noexcept
-      : ReferenceListServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  ReferenceListServiceLimitedTimeRetryPolicy(
-      ReferenceListServiceLimitedTimeRetryPolicy const& rhs) noexcept
-      : ReferenceListServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  ReferenceListServiceLimitedTimeRetryPolicy(ReferenceListServiceLimitedTimeRetryPolicy&& rhs) noexcept
+    : ReferenceListServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  ReferenceListServiceLimitedTimeRetryPolicy(ReferenceListServiceLimitedTimeRetryPolicy const& rhs) noexcept
+    : ReferenceListServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -163,18 +154,16 @@ class ReferenceListServiceLimitedTimeRetryPolicy
   using BaseType = ReferenceListServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      chronicle_v1_internal::ReferenceListServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<chronicle_v1_internal::ReferenceListServiceRetryTraits> impl_;
 };
 
 /**
  * The `ReferenceListServiceConnection` object for `ReferenceListServiceClient`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `ReferenceListServiceClient`. This allows users to inject custom
- * behavior (e.g., with a Google Mock object) when writing tests that use
- * objects of type `ReferenceListServiceClient`.
+ * sets in `ReferenceListServiceClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `ReferenceListServiceClient`.
  *
  * To create a concrete instance, see `MakeReferenceListServiceConnection()`.
  *
@@ -187,45 +176,39 @@ class ReferenceListServiceConnection {
   virtual Options options() { return Options{}; }
 
   virtual StatusOr<google::cloud::chronicle::v1::ReferenceList>
-  GetReferenceList(
-      google::cloud::chronicle::v1::GetReferenceListRequest const& request);
+  GetReferenceList(google::cloud::chronicle::v1::GetReferenceListRequest const& request);
 
   virtual StreamRange<google::cloud::chronicle::v1::ReferenceList>
-  ListReferenceLists(
-      google::cloud::chronicle::v1::ListReferenceListsRequest request);
+  ListReferenceLists(google::cloud::chronicle::v1::ListReferenceListsRequest request);
 
   virtual StatusOr<google::cloud::chronicle::v1::ReferenceList>
-  CreateReferenceList(
-      google::cloud::chronicle::v1::CreateReferenceListRequest const& request);
+  CreateReferenceList(google::cloud::chronicle::v1::CreateReferenceListRequest const& request);
 
   virtual StatusOr<google::cloud::chronicle::v1::ReferenceList>
-  UpdateReferenceList(
-      google::cloud::chronicle::v1::UpdateReferenceListRequest const& request);
+  UpdateReferenceList(google::cloud::chronicle::v1::UpdateReferenceListRequest const& request);
 
-  virtual StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 
-  virtual Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request);
+  virtual Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
 
-  virtual Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request);
+  virtual Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request);
 };
 
 /**
- * A factory function to construct an object of type
- * `ReferenceListServiceConnection`.
+ * A factory function to construct an object of type `ReferenceListServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of
- * ReferenceListServiceClient.
+ * should be passed as an argument to the constructor of ReferenceListServiceClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `ReferenceListServiceConnection`. Expected options are any of the
- * types in the following option lists:
+ * returned `ReferenceListServiceConnection`. Expected options are any of the types in
+ * the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
@@ -235,11 +218,11 @@ class ReferenceListServiceConnection {
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
- * @param options (optional) Configure the `ReferenceListServiceConnection`
- * created by this function.
+ * @param options (optional) Configure the `ReferenceListServiceConnection` created by
+ * this function.
  */
-std::shared_ptr<ReferenceListServiceConnection>
-MakeReferenceListServiceConnection(Options options = {});
+std::shared_ptr<ReferenceListServiceConnection> MakeReferenceListServiceConnection(
+    Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace chronicle_v1

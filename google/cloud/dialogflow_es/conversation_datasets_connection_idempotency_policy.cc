@@ -26,72 +26,55 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-ConversationDatasetsConnectionIdempotencyPolicy::
-    ~ConversationDatasetsConnectionIdempotencyPolicy() = default;
+ConversationDatasetsConnectionIdempotencyPolicy::~ConversationDatasetsConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<ConversationDatasetsConnectionIdempotencyPolicy>
 ConversationDatasetsConnectionIdempotencyPolicy::clone() const {
-  return std::make_unique<ConversationDatasetsConnectionIdempotencyPolicy>(
-      *this);
+  return std::make_unique<ConversationDatasetsConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency
-ConversationDatasetsConnectionIdempotencyPolicy::CreateConversationDataset(
-    google::cloud::dialogflow::v2::CreateConversationDatasetRequest const&) {
+Idempotency ConversationDatasetsConnectionIdempotencyPolicy::CreateConversationDataset(google::cloud::dialogflow::v2::CreateConversationDatasetRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency
-ConversationDatasetsConnectionIdempotencyPolicy::GetConversationDataset(
-    google::cloud::dialogflow::v2::GetConversationDatasetRequest const&) {
+Idempotency ConversationDatasetsConnectionIdempotencyPolicy::GetConversationDataset(google::cloud::dialogflow::v2::GetConversationDatasetRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency
-ConversationDatasetsConnectionIdempotencyPolicy::ListConversationDatasets(
-    google::cloud::dialogflow::v2::ListConversationDatasetsRequest) {  // NOLINT
+Idempotency ConversationDatasetsConnectionIdempotencyPolicy::ListConversationDatasets(google::cloud::dialogflow::v2::ListConversationDatasetsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency
-ConversationDatasetsConnectionIdempotencyPolicy::DeleteConversationDataset(
-    google::cloud::dialogflow::v2::DeleteConversationDatasetRequest const&) {
+Idempotency ConversationDatasetsConnectionIdempotencyPolicy::DeleteConversationDataset(google::cloud::dialogflow::v2::DeleteConversationDatasetRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency
-ConversationDatasetsConnectionIdempotencyPolicy::ImportConversationData(
-    google::cloud::dialogflow::v2::ImportConversationDataRequest const&) {
+Idempotency ConversationDatasetsConnectionIdempotencyPolicy::ImportConversationData(google::cloud::dialogflow::v2::ImportConversationDataRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ConversationDatasetsConnectionIdempotencyPolicy::ListLocations(
-    google::cloud::location::ListLocationsRequest) {  // NOLINT
+Idempotency ConversationDatasetsConnectionIdempotencyPolicy::ListLocations(google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency ConversationDatasetsConnectionIdempotencyPolicy::GetLocation(
-    google::cloud::location::GetLocationRequest const&) {
+Idempotency ConversationDatasetsConnectionIdempotencyPolicy::GetLocation(google::cloud::location::GetLocationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ConversationDatasetsConnectionIdempotencyPolicy::ListOperations(
-    google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency ConversationDatasetsConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency ConversationDatasetsConnectionIdempotencyPolicy::GetOperation(
-    google::longrunning::GetOperationRequest const&) {
+Idempotency ConversationDatasetsConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ConversationDatasetsConnectionIdempotencyPolicy::CancelOperation(
-    google::longrunning::CancelOperationRequest const&) {
+Idempotency ConversationDatasetsConnectionIdempotencyPolicy::CancelOperation(google::longrunning::CancelOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<ConversationDatasetsConnectionIdempotencyPolicy>
-MakeDefaultConversationDatasetsConnectionIdempotencyPolicy() {
+    MakeDefaultConversationDatasetsConnectionIdempotencyPolicy() {
   return std::make_unique<ConversationDatasetsConnectionIdempotencyPolicy>();
 }
 

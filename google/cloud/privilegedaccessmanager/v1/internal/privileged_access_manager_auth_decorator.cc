@@ -31,42 +31,37 @@ PrivilegedAccessManagerAuth::PrivilegedAccessManagerAuth(
     std::shared_ptr<PrivilegedAccessManagerStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<
-    google::cloud::privilegedaccessmanager::v1::CheckOnboardingStatusResponse>
-PrivilegedAccessManagerAuth::CheckOnboardingStatus(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::privilegedaccessmanager::v1::
-        CheckOnboardingStatusRequest const& request) {
+StatusOr<google::cloud::privilegedaccessmanager::v1::CheckOnboardingStatusResponse> PrivilegedAccessManagerAuth::CheckOnboardingStatus(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::privilegedaccessmanager::v1::CheckOnboardingStatusRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CheckOnboardingStatus(context, options, request);
 }
 
-StatusOr<google::cloud::privilegedaccessmanager::v1::ListEntitlementsResponse>
-PrivilegedAccessManagerAuth::ListEntitlements(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::privilegedaccessmanager::v1::ListEntitlementsRequest const&
-        request) {
+StatusOr<google::cloud::privilegedaccessmanager::v1::ListEntitlementsResponse> PrivilegedAccessManagerAuth::ListEntitlements(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::privilegedaccessmanager::v1::ListEntitlementsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListEntitlements(context, options, request);
 }
 
-StatusOr<google::cloud::privilegedaccessmanager::v1::SearchEntitlementsResponse>
-PrivilegedAccessManagerAuth::SearchEntitlements(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::privilegedaccessmanager::v1::SearchEntitlementsRequest const&
-        request) {
+StatusOr<google::cloud::privilegedaccessmanager::v1::SearchEntitlementsResponse> PrivilegedAccessManagerAuth::SearchEntitlements(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::privilegedaccessmanager::v1::SearchEntitlementsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->SearchEntitlements(context, options, request);
 }
 
-StatusOr<google::cloud::privilegedaccessmanager::v1::Entitlement>
-PrivilegedAccessManagerAuth::GetEntitlement(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::privilegedaccessmanager::v1::GetEntitlementRequest const&
-        request) {
+StatusOr<google::cloud::privilegedaccessmanager::v1::Entitlement> PrivilegedAccessManagerAuth::GetEntitlement(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::privilegedaccessmanager::v1::GetEntitlementRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetEntitlement(context, options, request);
@@ -74,30 +69,28 @@ PrivilegedAccessManagerAuth::GetEntitlement(
 
 future<StatusOr<google::longrunning::Operation>>
 PrivilegedAccessManagerAuth::AsyncCreateEntitlement(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::privilegedaccessmanager::v1::CreateEntitlementRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::privilegedaccessmanager::v1::CreateEntitlementRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreateEntitlement(cq, *std::move(context),
-                                             std::move(options), request);
+        return child->AsyncCreateEntitlement(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 PrivilegedAccessManagerAuth::CreateEntitlement(
-    grpc::ClientContext& context, Options options,
-    google::cloud::privilegedaccessmanager::v1::CreateEntitlementRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::privilegedaccessmanager::v1::CreateEntitlementRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateEntitlement(context, options, request);
@@ -105,30 +98,28 @@ PrivilegedAccessManagerAuth::CreateEntitlement(
 
 future<StatusOr<google::longrunning::Operation>>
 PrivilegedAccessManagerAuth::AsyncDeleteEntitlement(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::privilegedaccessmanager::v1::DeleteEntitlementRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::privilegedaccessmanager::v1::DeleteEntitlementRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDeleteEntitlement(cq, *std::move(context),
-                                             std::move(options), request);
+        return child->AsyncDeleteEntitlement(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 PrivilegedAccessManagerAuth::DeleteEntitlement(
-    grpc::ClientContext& context, Options options,
-    google::cloud::privilegedaccessmanager::v1::DeleteEntitlementRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::privilegedaccessmanager::v1::DeleteEntitlementRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteEntitlement(context, options, request);
@@ -136,90 +127,82 @@ PrivilegedAccessManagerAuth::DeleteEntitlement(
 
 future<StatusOr<google::longrunning::Operation>>
 PrivilegedAccessManagerAuth::AsyncUpdateEntitlement(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::privilegedaccessmanager::v1::UpdateEntitlementRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::privilegedaccessmanager::v1::UpdateEntitlementRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncUpdateEntitlement(cq, *std::move(context),
-                                             std::move(options), request);
+        return child->AsyncUpdateEntitlement(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 PrivilegedAccessManagerAuth::UpdateEntitlement(
-    grpc::ClientContext& context, Options options,
-    google::cloud::privilegedaccessmanager::v1::UpdateEntitlementRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::privilegedaccessmanager::v1::UpdateEntitlementRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateEntitlement(context, options, request);
 }
 
-StatusOr<google::cloud::privilegedaccessmanager::v1::ListGrantsResponse>
-PrivilegedAccessManagerAuth::ListGrants(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::privilegedaccessmanager::v1::ListGrantsRequest const&
-        request) {
+StatusOr<google::cloud::privilegedaccessmanager::v1::ListGrantsResponse> PrivilegedAccessManagerAuth::ListGrants(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::privilegedaccessmanager::v1::ListGrantsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListGrants(context, options, request);
 }
 
-StatusOr<google::cloud::privilegedaccessmanager::v1::SearchGrantsResponse>
-PrivilegedAccessManagerAuth::SearchGrants(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::privilegedaccessmanager::v1::SearchGrantsRequest const&
-        request) {
+StatusOr<google::cloud::privilegedaccessmanager::v1::SearchGrantsResponse> PrivilegedAccessManagerAuth::SearchGrants(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::privilegedaccessmanager::v1::SearchGrantsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->SearchGrants(context, options, request);
 }
 
-StatusOr<google::cloud::privilegedaccessmanager::v1::Grant>
-PrivilegedAccessManagerAuth::GetGrant(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::privilegedaccessmanager::v1::GetGrantRequest const&
-        request) {
+StatusOr<google::cloud::privilegedaccessmanager::v1::Grant> PrivilegedAccessManagerAuth::GetGrant(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::privilegedaccessmanager::v1::GetGrantRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetGrant(context, options, request);
 }
 
-StatusOr<google::cloud::privilegedaccessmanager::v1::Grant>
-PrivilegedAccessManagerAuth::CreateGrant(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::privilegedaccessmanager::v1::CreateGrantRequest const&
-        request) {
+StatusOr<google::cloud::privilegedaccessmanager::v1::Grant> PrivilegedAccessManagerAuth::CreateGrant(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::privilegedaccessmanager::v1::CreateGrantRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateGrant(context, options, request);
 }
 
-StatusOr<google::cloud::privilegedaccessmanager::v1::Grant>
-PrivilegedAccessManagerAuth::ApproveGrant(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::privilegedaccessmanager::v1::ApproveGrantRequest const&
-        request) {
+StatusOr<google::cloud::privilegedaccessmanager::v1::Grant> PrivilegedAccessManagerAuth::ApproveGrant(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::privilegedaccessmanager::v1::ApproveGrantRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ApproveGrant(context, options, request);
 }
 
-StatusOr<google::cloud::privilegedaccessmanager::v1::Grant>
-PrivilegedAccessManagerAuth::DenyGrant(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::privilegedaccessmanager::v1::DenyGrantRequest const&
-        request) {
+StatusOr<google::cloud::privilegedaccessmanager::v1::Grant> PrivilegedAccessManagerAuth::DenyGrant(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::privilegedaccessmanager::v1::DenyGrantRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DenyGrant(context, options, request);
@@ -227,65 +210,63 @@ PrivilegedAccessManagerAuth::DenyGrant(
 
 future<StatusOr<google::longrunning::Operation>>
 PrivilegedAccessManagerAuth::AsyncRevokeGrant(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::privilegedaccessmanager::v1::RevokeGrantRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::privilegedaccessmanager::v1::RevokeGrantRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncRevokeGrant(cq, *std::move(context),
-                                       std::move(options), request);
+        return child->AsyncRevokeGrant(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 PrivilegedAccessManagerAuth::RevokeGrant(
-    grpc::ClientContext& context, Options options,
-    google::cloud::privilegedaccessmanager::v1::RevokeGrantRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::privilegedaccessmanager::v1::RevokeGrantRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->RevokeGrant(context, options, request);
 }
 
-StatusOr<google::cloud::location::ListLocationsResponse>
-PrivilegedAccessManagerAuth::ListLocations(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::location::ListLocationsResponse> PrivilegedAccessManagerAuth::ListLocations(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListLocations(context, options, request);
 }
 
-StatusOr<google::cloud::location::Location>
-PrivilegedAccessManagerAuth::GetLocation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::location::Location> PrivilegedAccessManagerAuth::GetLocation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetLocation(context, options, request);
 }
 
-StatusOr<google::longrunning::ListOperationsResponse>
-PrivilegedAccessManagerAuth::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse> PrivilegedAccessManagerAuth::ListOperations(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListOperations(context, options, request);
 }
 
-StatusOr<google::longrunning::Operation>
-PrivilegedAccessManagerAuth::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::Operation> PrivilegedAccessManagerAuth::GetOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -293,7 +274,8 @@ PrivilegedAccessManagerAuth::GetOperation(
 }
 
 Status PrivilegedAccessManagerAuth::DeleteOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -307,16 +289,15 @@ PrivilegedAccessManagerAuth::AsyncGetOperation(
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncGetOperation(cq, *std::move(context),
-                                        std::move(options), request);
+        return child->AsyncGetOperation(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
@@ -325,14 +306,13 @@ future<Status> PrivilegedAccessManagerAuth::AsyncCancelOperation(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) return make_ready_future(std::move(context).status());
-        return child->AsyncCancelOperation(cq, *std::move(context),
-                                           std::move(options), request);
+        return child->AsyncCancelOperation(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 

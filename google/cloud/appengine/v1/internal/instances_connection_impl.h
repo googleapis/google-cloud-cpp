@@ -40,41 +40,44 @@ namespace cloud {
 namespace appengine_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class InstancesConnectionImpl : public appengine_v1::InstancesConnection {
+class InstancesConnectionImpl
+    : public appengine_v1::InstancesConnection {
  public:
   ~InstancesConnectionImpl() override = default;
 
   InstancesConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<appengine_v1_internal::InstancesStub> stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<appengine_v1_internal::InstancesStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
-  StreamRange<google::appengine::v1::Instance> ListInstances(
-      google::appengine::v1::ListInstancesRequest request) override;
+  StreamRange<google::appengine::v1::Instance>
+  ListInstances(google::appengine::v1::ListInstancesRequest request) override;
 
-  StatusOr<google::appengine::v1::Instance> GetInstance(
-      google::appengine::v1::GetInstanceRequest const& request) override;
+  StatusOr<google::appengine::v1::Instance>
+  GetInstance(google::appengine::v1::GetInstanceRequest const& request) override;
 
-  future<StatusOr<google::appengine::v1::OperationMetadataV1>> DeleteInstance(
+  future<StatusOr<google::appengine::v1::OperationMetadataV1>>
+  DeleteInstance(google::appengine::v1::DeleteInstanceRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  DeleteInstance(NoAwaitTag,
       google::appengine::v1::DeleteInstanceRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> DeleteInstance(
-      NoAwaitTag,
-      google::appengine::v1::DeleteInstanceRequest const& request) override;
-
-  future<StatusOr<google::appengine::v1::OperationMetadataV1>> DeleteInstance(
+  future<StatusOr<google::appengine::v1::OperationMetadataV1>>
+  DeleteInstance(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::appengine::v1::Instance>> DebugInstance(
+  future<StatusOr<google::appengine::v1::Instance>>
+  DebugInstance(google::appengine::v1::DebugInstanceRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  DebugInstance(NoAwaitTag,
       google::appengine::v1::DebugInstanceRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> DebugInstance(
-      NoAwaitTag,
-      google::appengine::v1::DebugInstanceRequest const& request) override;
-
-  future<StatusOr<google::appengine::v1::Instance>> DebugInstance(
+  future<StatusOr<google::appengine::v1::Instance>>
+  DebugInstance(
       google::longrunning::Operation const& operation) override;
 
  private:

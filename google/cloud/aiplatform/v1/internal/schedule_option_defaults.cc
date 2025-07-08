@@ -19,9 +19,9 @@
 #include "google/cloud/aiplatform/v1/internal/schedule_option_defaults.h"
 #include "google/cloud/aiplatform/v1/schedule_connection.h"
 #include "google/cloud/aiplatform/v1/schedule_options.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include <memory>
 #include <utility>
 
@@ -34,42 +34,33 @@ namespace {
 auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
-Options ScheduleServiceDefaultOptions(std::string const& location,
-                                      Options options) {
+Options ScheduleServiceDefaultOptions(std::string const& location, Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_SCHEDULE_SERVICE_ENDPOINT", "",
-      "GOOGLE_CLOUD_CPP_SCHEDULE_SERVICE_AUTHORITY",
+      std::move(options), "GOOGLE_CLOUD_CPP_SCHEDULE_SERVICE_ENDPOINT",
+      "", "GOOGLE_CLOUD_CPP_SCHEDULE_SERVICE_AUTHORITY",
       absl::StrCat(location, "-", "aiplatform.googleapis.com"));
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<aiplatform_v1::ScheduleServiceRetryPolicyOption>()) {
     options.set<aiplatform_v1::ScheduleServiceRetryPolicyOption>(
         aiplatform_v1::ScheduleServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
-            .clone());
+            std::chrono::minutes(30)).clone());
   }
   if (!options.has<aiplatform_v1::ScheduleServiceBackoffPolicyOption>()) {
     options.set<aiplatform_v1::ScheduleServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(
-            std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
-            .clone());
+        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
   }
   if (!options.has<aiplatform_v1::ScheduleServicePollingPolicyOption>()) {
     options.set<aiplatform_v1::ScheduleServicePollingPolicyOption>(
         GenericPollingPolicy<
             aiplatform_v1::ScheduleServiceRetryPolicyOption::Type,
             aiplatform_v1::ScheduleServiceBackoffPolicyOption::Type>(
-            options.get<aiplatform_v1::ScheduleServiceRetryPolicyOption>()
-                ->clone(),
+            options.get<aiplatform_v1::ScheduleServiceRetryPolicyOption>()->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                     std::chrono::minutes(5), kBackoffScaling)
-                .clone())
-            .clone());
+            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
   }
-  if (!options.has<
-          aiplatform_v1::ScheduleServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<
-        aiplatform_v1::ScheduleServiceConnectionIdempotencyPolicyOption>(
+  if (!options.has<aiplatform_v1::ScheduleServiceConnectionIdempotencyPolicyOption>()) {
+    options.set<aiplatform_v1::ScheduleServiceConnectionIdempotencyPolicyOption>(
         aiplatform_v1::MakeDefaultScheduleServiceConnectionIdempotencyPolicy());
   }
 

@@ -26,247 +26,195 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-TranslationServiceConnectionIdempotencyPolicy::
-    ~TranslationServiceConnectionIdempotencyPolicy() = default;
+TranslationServiceConnectionIdempotencyPolicy::~TranslationServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<TranslationServiceConnectionIdempotencyPolicy>
 TranslationServiceConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<TranslationServiceConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency TranslationServiceConnectionIdempotencyPolicy::TranslateText(
-    google::cloud::translation::v3::TranslateTextRequest const&) {
+Idempotency TranslationServiceConnectionIdempotencyPolicy::TranslateText(google::cloud::translation::v3::TranslateTextRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TranslationServiceConnectionIdempotencyPolicy::RomanizeText(
-    google::cloud::translation::v3::RomanizeTextRequest const&) {
+Idempotency TranslationServiceConnectionIdempotencyPolicy::RomanizeText(google::cloud::translation::v3::RomanizeTextRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TranslationServiceConnectionIdempotencyPolicy::DetectLanguage(
-    google::cloud::translation::v3::DetectLanguageRequest const&) {
+Idempotency TranslationServiceConnectionIdempotencyPolicy::DetectLanguage(google::cloud::translation::v3::DetectLanguageRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency
-TranslationServiceConnectionIdempotencyPolicy::GetSupportedLanguages(
-    google::cloud::translation::v3::GetSupportedLanguagesRequest const&) {
+Idempotency TranslationServiceConnectionIdempotencyPolicy::GetSupportedLanguages(google::cloud::translation::v3::GetSupportedLanguagesRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency TranslationServiceConnectionIdempotencyPolicy::TranslateDocument(
-    google::cloud::translation::v3::TranslateDocumentRequest const&) {
+Idempotency TranslationServiceConnectionIdempotencyPolicy::TranslateDocument(google::cloud::translation::v3::TranslateDocumentRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TranslationServiceConnectionIdempotencyPolicy::BatchTranslateText(
-    google::cloud::translation::v3::BatchTranslateTextRequest const&) {
+Idempotency TranslationServiceConnectionIdempotencyPolicy::BatchTranslateText(google::cloud::translation::v3::BatchTranslateTextRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency
-TranslationServiceConnectionIdempotencyPolicy::BatchTranslateDocument(
-    google::cloud::translation::v3::BatchTranslateDocumentRequest const&) {
+Idempotency TranslationServiceConnectionIdempotencyPolicy::BatchTranslateDocument(google::cloud::translation::v3::BatchTranslateDocumentRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TranslationServiceConnectionIdempotencyPolicy::CreateGlossary(
-    google::cloud::translation::v3::CreateGlossaryRequest const&) {
+Idempotency TranslationServiceConnectionIdempotencyPolicy::CreateGlossary(google::cloud::translation::v3::CreateGlossaryRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TranslationServiceConnectionIdempotencyPolicy::UpdateGlossary(
-    google::cloud::translation::v3::UpdateGlossaryRequest const&) {
+Idempotency TranslationServiceConnectionIdempotencyPolicy::UpdateGlossary(google::cloud::translation::v3::UpdateGlossaryRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TranslationServiceConnectionIdempotencyPolicy::ListGlossaries(
-    google::cloud::translation::v3::ListGlossariesRequest) {  // NOLINT
+Idempotency TranslationServiceConnectionIdempotencyPolicy::ListGlossaries(google::cloud::translation::v3::ListGlossariesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency TranslationServiceConnectionIdempotencyPolicy::GetGlossary(
-    google::cloud::translation::v3::GetGlossaryRequest const&) {
+Idempotency TranslationServiceConnectionIdempotencyPolicy::GetGlossary(google::cloud::translation::v3::GetGlossaryRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency TranslationServiceConnectionIdempotencyPolicy::DeleteGlossary(
-    google::cloud::translation::v3::DeleteGlossaryRequest const&) {
+Idempotency TranslationServiceConnectionIdempotencyPolicy::DeleteGlossary(google::cloud::translation::v3::DeleteGlossaryRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TranslationServiceConnectionIdempotencyPolicy::GetGlossaryEntry(
-    google::cloud::translation::v3::GetGlossaryEntryRequest const&) {
+Idempotency TranslationServiceConnectionIdempotencyPolicy::GetGlossaryEntry(google::cloud::translation::v3::GetGlossaryEntryRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency TranslationServiceConnectionIdempotencyPolicy::ListGlossaryEntries(
-    google::cloud::translation::v3::ListGlossaryEntriesRequest) {  // NOLINT
+Idempotency TranslationServiceConnectionIdempotencyPolicy::ListGlossaryEntries(google::cloud::translation::v3::ListGlossaryEntriesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency TranslationServiceConnectionIdempotencyPolicy::CreateGlossaryEntry(
-    google::cloud::translation::v3::CreateGlossaryEntryRequest const&) {
+Idempotency TranslationServiceConnectionIdempotencyPolicy::CreateGlossaryEntry(google::cloud::translation::v3::CreateGlossaryEntryRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TranslationServiceConnectionIdempotencyPolicy::UpdateGlossaryEntry(
-    google::cloud::translation::v3::UpdateGlossaryEntryRequest const&) {
+Idempotency TranslationServiceConnectionIdempotencyPolicy::UpdateGlossaryEntry(google::cloud::translation::v3::UpdateGlossaryEntryRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TranslationServiceConnectionIdempotencyPolicy::DeleteGlossaryEntry(
-    google::cloud::translation::v3::DeleteGlossaryEntryRequest const&) {
+Idempotency TranslationServiceConnectionIdempotencyPolicy::DeleteGlossaryEntry(google::cloud::translation::v3::DeleteGlossaryEntryRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TranslationServiceConnectionIdempotencyPolicy::CreateDataset(
-    google::cloud::translation::v3::CreateDatasetRequest const&) {
+Idempotency TranslationServiceConnectionIdempotencyPolicy::CreateDataset(google::cloud::translation::v3::CreateDatasetRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TranslationServiceConnectionIdempotencyPolicy::GetDataset(
-    google::cloud::translation::v3::GetDatasetRequest const&) {
+Idempotency TranslationServiceConnectionIdempotencyPolicy::GetDataset(google::cloud::translation::v3::GetDatasetRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency TranslationServiceConnectionIdempotencyPolicy::ListDatasets(
-    google::cloud::translation::v3::ListDatasetsRequest) {  // NOLINT
+Idempotency TranslationServiceConnectionIdempotencyPolicy::ListDatasets(google::cloud::translation::v3::ListDatasetsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency TranslationServiceConnectionIdempotencyPolicy::DeleteDataset(
-    google::cloud::translation::v3::DeleteDatasetRequest const&) {
+Idempotency TranslationServiceConnectionIdempotencyPolicy::DeleteDataset(google::cloud::translation::v3::DeleteDatasetRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency
-TranslationServiceConnectionIdempotencyPolicy::CreateAdaptiveMtDataset(
-    google::cloud::translation::v3::CreateAdaptiveMtDatasetRequest const&) {
+Idempotency TranslationServiceConnectionIdempotencyPolicy::CreateAdaptiveMtDataset(google::cloud::translation::v3::CreateAdaptiveMtDatasetRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency
-TranslationServiceConnectionIdempotencyPolicy::DeleteAdaptiveMtDataset(
-    google::cloud::translation::v3::DeleteAdaptiveMtDatasetRequest const&) {
+Idempotency TranslationServiceConnectionIdempotencyPolicy::DeleteAdaptiveMtDataset(google::cloud::translation::v3::DeleteAdaptiveMtDatasetRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TranslationServiceConnectionIdempotencyPolicy::GetAdaptiveMtDataset(
-    google::cloud::translation::v3::GetAdaptiveMtDatasetRequest const&) {
+Idempotency TranslationServiceConnectionIdempotencyPolicy::GetAdaptiveMtDataset(google::cloud::translation::v3::GetAdaptiveMtDatasetRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency
-TranslationServiceConnectionIdempotencyPolicy::ListAdaptiveMtDatasets(
-    google::cloud::translation::v3::ListAdaptiveMtDatasetsRequest) {  // NOLINT
+Idempotency TranslationServiceConnectionIdempotencyPolicy::ListAdaptiveMtDatasets(google::cloud::translation::v3::ListAdaptiveMtDatasetsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency TranslationServiceConnectionIdempotencyPolicy::AdaptiveMtTranslate(
-    google::cloud::translation::v3::AdaptiveMtTranslateRequest const&) {
+Idempotency TranslationServiceConnectionIdempotencyPolicy::AdaptiveMtTranslate(google::cloud::translation::v3::AdaptiveMtTranslateRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TranslationServiceConnectionIdempotencyPolicy::GetAdaptiveMtFile(
-    google::cloud::translation::v3::GetAdaptiveMtFileRequest const&) {
+Idempotency TranslationServiceConnectionIdempotencyPolicy::GetAdaptiveMtFile(google::cloud::translation::v3::GetAdaptiveMtFileRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency TranslationServiceConnectionIdempotencyPolicy::DeleteAdaptiveMtFile(
-    google::cloud::translation::v3::DeleteAdaptiveMtFileRequest const&) {
+Idempotency TranslationServiceConnectionIdempotencyPolicy::DeleteAdaptiveMtFile(google::cloud::translation::v3::DeleteAdaptiveMtFileRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TranslationServiceConnectionIdempotencyPolicy::ImportAdaptiveMtFile(
-    google::cloud::translation::v3::ImportAdaptiveMtFileRequest const&) {
+Idempotency TranslationServiceConnectionIdempotencyPolicy::ImportAdaptiveMtFile(google::cloud::translation::v3::ImportAdaptiveMtFileRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TranslationServiceConnectionIdempotencyPolicy::ListAdaptiveMtFiles(
-    google::cloud::translation::v3::ListAdaptiveMtFilesRequest) {  // NOLINT
+Idempotency TranslationServiceConnectionIdempotencyPolicy::ListAdaptiveMtFiles(google::cloud::translation::v3::ListAdaptiveMtFilesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency
-TranslationServiceConnectionIdempotencyPolicy::ListAdaptiveMtSentences(
-    google::cloud::translation::v3::ListAdaptiveMtSentencesRequest) {  // NOLINT
+Idempotency TranslationServiceConnectionIdempotencyPolicy::ListAdaptiveMtSentences(google::cloud::translation::v3::ListAdaptiveMtSentencesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency TranslationServiceConnectionIdempotencyPolicy::ImportData(
-    google::cloud::translation::v3::ImportDataRequest const&) {
+Idempotency TranslationServiceConnectionIdempotencyPolicy::ImportData(google::cloud::translation::v3::ImportDataRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TranslationServiceConnectionIdempotencyPolicy::ExportData(
-    google::cloud::translation::v3::ExportDataRequest const&) {
+Idempotency TranslationServiceConnectionIdempotencyPolicy::ExportData(google::cloud::translation::v3::ExportDataRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TranslationServiceConnectionIdempotencyPolicy::ListExamples(
-    google::cloud::translation::v3::ListExamplesRequest) {  // NOLINT
+Idempotency TranslationServiceConnectionIdempotencyPolicy::ListExamples(google::cloud::translation::v3::ListExamplesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency TranslationServiceConnectionIdempotencyPolicy::CreateModel(
-    google::cloud::translation::v3::CreateModelRequest const&) {
+Idempotency TranslationServiceConnectionIdempotencyPolicy::CreateModel(google::cloud::translation::v3::CreateModelRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TranslationServiceConnectionIdempotencyPolicy::ListModels(
-    google::cloud::translation::v3::ListModelsRequest) {  // NOLINT
+Idempotency TranslationServiceConnectionIdempotencyPolicy::ListModels(google::cloud::translation::v3::ListModelsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency TranslationServiceConnectionIdempotencyPolicy::GetModel(
-    google::cloud::translation::v3::GetModelRequest const&) {
+Idempotency TranslationServiceConnectionIdempotencyPolicy::GetModel(google::cloud::translation::v3::GetModelRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency TranslationServiceConnectionIdempotencyPolicy::DeleteModel(
-    google::cloud::translation::v3::DeleteModelRequest const&) {
+Idempotency TranslationServiceConnectionIdempotencyPolicy::DeleteModel(google::cloud::translation::v3::DeleteModelRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TranslationServiceConnectionIdempotencyPolicy::ListLocations(
-    google::cloud::location::ListLocationsRequest) {  // NOLINT
+Idempotency TranslationServiceConnectionIdempotencyPolicy::ListLocations(google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency TranslationServiceConnectionIdempotencyPolicy::GetLocation(
-    google::cloud::location::GetLocationRequest const&) {
+Idempotency TranslationServiceConnectionIdempotencyPolicy::GetLocation(google::cloud::location::GetLocationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency TranslationServiceConnectionIdempotencyPolicy::ListOperations(
-    google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency TranslationServiceConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency TranslationServiceConnectionIdempotencyPolicy::GetOperation(
-    google::longrunning::GetOperationRequest const&) {
+Idempotency TranslationServiceConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency TranslationServiceConnectionIdempotencyPolicy::DeleteOperation(
-    google::longrunning::DeleteOperationRequest const&) {
+Idempotency TranslationServiceConnectionIdempotencyPolicy::DeleteOperation(google::longrunning::DeleteOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TranslationServiceConnectionIdempotencyPolicy::CancelOperation(
-    google::longrunning::CancelOperationRequest const&) {
+Idempotency TranslationServiceConnectionIdempotencyPolicy::CancelOperation(google::longrunning::CancelOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TranslationServiceConnectionIdempotencyPolicy::WaitOperation(
-    google::longrunning::WaitOperationRequest const&) {
+Idempotency TranslationServiceConnectionIdempotencyPolicy::WaitOperation(google::longrunning::WaitOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<TranslationServiceConnectionIdempotencyPolicy>
-MakeDefaultTranslationServiceConnectionIdempotencyPolicy() {
+    MakeDefaultTranslationServiceConnectionIdempotencyPolicy() {
   return std::make_unique<TranslationServiceConnectionIdempotencyPolicy>();
 }
 

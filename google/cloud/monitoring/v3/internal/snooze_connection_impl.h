@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_V3_INTERNAL_SNOOZE_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_V3_INTERNAL_SNOOZE_CONNECTION_IMPL_H
 
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/monitoring/v3/internal/snooze_retry_traits.h"
 #include "google/cloud/monitoring/v3/internal/snooze_stub.h"
 #include "google/cloud/monitoring/v3/snooze_connection.h"
 #include "google/cloud/monitoring/v3/snooze_connection_idempotency_policy.h"
 #include "google/cloud/monitoring/v3/snooze_options.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -43,23 +43,23 @@ class SnoozeServiceConnectionImpl
   ~SnoozeServiceConnectionImpl() override = default;
 
   SnoozeServiceConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<monitoring_v3_internal::SnoozeServiceStub> stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<monitoring_v3_internal::SnoozeServiceStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
-  StatusOr<google::monitoring::v3::Snooze> CreateSnooze(
-      google::monitoring::v3::CreateSnoozeRequest const& request) override;
+  StatusOr<google::monitoring::v3::Snooze>
+  CreateSnooze(google::monitoring::v3::CreateSnoozeRequest const& request) override;
 
-  StreamRange<google::monitoring::v3::Snooze> ListSnoozes(
-      google::monitoring::v3::ListSnoozesRequest request) override;
+  StreamRange<google::monitoring::v3::Snooze>
+  ListSnoozes(google::monitoring::v3::ListSnoozesRequest request) override;
 
-  StatusOr<google::monitoring::v3::Snooze> GetSnooze(
-      google::monitoring::v3::GetSnoozeRequest const& request) override;
+  StatusOr<google::monitoring::v3::Snooze>
+  GetSnooze(google::monitoring::v3::GetSnoozeRequest const& request) override;
 
-  StatusOr<google::monitoring::v3::Snooze> UpdateSnooze(
-      google::monitoring::v3::UpdateSnoozeRequest const& request) override;
+  StatusOr<google::monitoring::v3::Snooze>
+  UpdateSnooze(google::monitoring::v3::UpdateSnoozeRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

@@ -35,29 +35,23 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options RuleSetServiceDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_RULE_SET_SERVICE_ENDPOINT", "",
-      "GOOGLE_CLOUD_CPP_RULE_SET_SERVICE_AUTHORITY",
+      std::move(options), "GOOGLE_CLOUD_CPP_RULE_SET_SERVICE_ENDPOINT",
+      "", "GOOGLE_CLOUD_CPP_RULE_SET_SERVICE_AUTHORITY",
       "contentwarehouse.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<contentwarehouse_v1::RuleSetServiceRetryPolicyOption>()) {
     options.set<contentwarehouse_v1::RuleSetServiceRetryPolicyOption>(
         contentwarehouse_v1::RuleSetServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
-            .clone());
+            std::chrono::minutes(30)).clone());
   }
   if (!options.has<contentwarehouse_v1::RuleSetServiceBackoffPolicyOption>()) {
     options.set<contentwarehouse_v1::RuleSetServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(
-            std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
-            .clone());
+        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
   }
-  if (!options.has<contentwarehouse_v1::
-                       RuleSetServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<
-        contentwarehouse_v1::RuleSetServiceConnectionIdempotencyPolicyOption>(
-        contentwarehouse_v1::
-            MakeDefaultRuleSetServiceConnectionIdempotencyPolicy());
+  if (!options.has<contentwarehouse_v1::RuleSetServiceConnectionIdempotencyPolicyOption>()) {
+    options.set<contentwarehouse_v1::RuleSetServiceConnectionIdempotencyPolicyOption>(
+        contentwarehouse_v1::MakeDefaultRuleSetServiceConnectionIdempotencyPolicy());
   }
 
   return options;

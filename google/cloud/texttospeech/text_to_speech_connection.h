@@ -33,13 +33,10 @@ using ::google::cloud::texttospeech_v1::MakeTextToSpeechConnection;
 /// @deprecated Use texttospeech_v1::TextToSpeechConnection directly.
 using ::google::cloud::texttospeech_v1::TextToSpeechConnection;
 
-/// @deprecated Use texttospeech_v1::TextToSpeechLimitedErrorCountRetryPolicy
-/// directly.
-using ::google::cloud::texttospeech_v1::
-    TextToSpeechLimitedErrorCountRetryPolicy;
+/// @deprecated Use texttospeech_v1::TextToSpeechLimitedErrorCountRetryPolicy directly.
+using ::google::cloud::texttospeech_v1::TextToSpeechLimitedErrorCountRetryPolicy;
 
-/// @deprecated Use texttospeech_v1::TextToSpeechLimitedTimeRetryPolicy
-/// directly.
+/// @deprecated Use texttospeech_v1::TextToSpeechLimitedTimeRetryPolicy directly.
 using ::google::cloud::texttospeech_v1::TextToSpeechLimitedTimeRetryPolicy;
 
 /// @deprecated Use texttospeech_v1::TextToSpeechRetryPolicy directly.

@@ -62,8 +62,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class LicenseCodesClient {
  public:
-  explicit LicenseCodesClient(
-      std::shared_ptr<LicenseCodesConnection> connection, Options opts = {});
+  explicit LicenseCodesClient(std::shared_ptr<LicenseCodesConnection> connection, Options opts = {});
   ~LicenseCodesClient();
 
   ///@{
@@ -76,12 +75,10 @@ class LicenseCodesClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(LicenseCodesClient const& a,
-                         LicenseCodesClient const& b) {
+  friend bool operator==(LicenseCodesClient const& a, LicenseCodesClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(LicenseCodesClient const& a,
-                         LicenseCodesClient const& b) {
+  friend bool operator!=(LicenseCodesClient const& a, LicenseCodesClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -113,9 +110,8 @@ class LicenseCodesClient {
   /// [google.cloud.cpp.compute.v1.LicenseCode]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_077.proto#L27}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::LicenseCode> GetLicenseCode(
-      std::string const& project, std::string const& license_code,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::LicenseCode>
+  GetLicenseCode(std::string const& project, std::string const& license_code, Options opts = {});
 
   // clang-format off
   ///
@@ -148,10 +144,8 @@ class LicenseCodesClient {
   /// [google.cloud.cpp.compute.v1.LicenseCode]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_077.proto#L27}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::LicenseCode> GetLicenseCode(
-      google::cloud::cpp::compute::license_codes::v1::
-          GetLicenseCodeRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::LicenseCode>
+  GetLicenseCode(google::cloud::cpp::compute::license_codes::v1::GetLicenseCodeRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -181,11 +175,7 @@ class LicenseCodesClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(
-      std::string const& project, std::string const& resource,
-      google::cloud::cpp::compute::v1::TestPermissionsRequest const&
-          test_permissions_request_resource,
-      Options opts = {});
+  TestIamPermissions(std::string const& project, std::string const& resource, google::cloud::cpp::compute::v1::TestPermissionsRequest const& test_permissions_request_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -218,9 +208,7 @@ class LicenseCodesClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(google::cloud::cpp::compute::license_codes::v1::
-                         TestIamPermissionsRequest const& request,
-                     Options opts = {});
+  TestIamPermissions(google::cloud::cpp::compute::license_codes::v1::TestIamPermissionsRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<LicenseCodesConnection> connection_;

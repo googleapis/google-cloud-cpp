@@ -31,18 +31,21 @@ namespace language_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 LanguageServiceLogging::LanguageServiceLogging(
-    std::shared_ptr<LanguageServiceStub> child, TracingOptions tracing_options,
+    std::shared_ptr<LanguageServiceStub> child,
+    TracingOptions tracing_options,
     std::set<std::string> const&)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::cloud::language::v2::AnalyzeSentimentResponse>
 LanguageServiceLogging::AnalyzeSentiment(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::language::v2::AnalyzeSentimentRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::language::v2::AnalyzeSentimentRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::language::v2::AnalyzeSentimentRequest const& request) {
         return child_->AnalyzeSentiment(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -50,12 +53,13 @@ LanguageServiceLogging::AnalyzeSentiment(
 
 StatusOr<google::cloud::language::v2::AnalyzeEntitiesResponse>
 LanguageServiceLogging::AnalyzeEntities(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::language::v2::AnalyzeEntitiesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::language::v2::AnalyzeEntitiesRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::language::v2::AnalyzeEntitiesRequest const& request) {
         return child_->AnalyzeEntities(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -63,10 +67,12 @@ LanguageServiceLogging::AnalyzeEntities(
 
 StatusOr<google::cloud::language::v2::ClassifyTextResponse>
 LanguageServiceLogging::ClassifyText(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::language::v2::ClassifyTextRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::language::v2::ClassifyTextRequest const& request) {
         return child_->ClassifyText(context, options, request);
       },
@@ -75,10 +81,12 @@ LanguageServiceLogging::ClassifyText(
 
 StatusOr<google::cloud::language::v2::ModerateTextResponse>
 LanguageServiceLogging::ModerateText(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::language::v2::ModerateTextRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::language::v2::ModerateTextRequest const& request) {
         return child_->ModerateText(context, options, request);
       },
@@ -87,10 +95,12 @@ LanguageServiceLogging::ModerateText(
 
 StatusOr<google::cloud::language::v2::AnnotateTextResponse>
 LanguageServiceLogging::AnnotateText(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::language::v2::AnnotateTextRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::language::v2::AnnotateTextRequest const& request) {
         return child_->AnnotateText(context, options, request);
       },

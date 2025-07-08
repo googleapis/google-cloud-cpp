@@ -32,236 +32,236 @@ DataTransferServiceStub::~DataTransferServiceStub() = default;
 
 StatusOr<google::cloud::bigquery::datatransfer::v1::DataSource>
 DefaultDataTransferServiceStub::GetDataSource(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::bigquery::datatransfer::v1::GetDataSourceRequest const&
-        request) {
-  google::cloud::bigquery::datatransfer::v1::DataSource response;
-  auto status = grpc_stub_->GetDataSource(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::bigquery::datatransfer::v1::GetDataSourceRequest const& request) {
+    google::cloud::bigquery::datatransfer::v1::DataSource response;
+    auto status =
+        grpc_stub_->GetDataSource(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::bigquery::datatransfer::v1::ListDataSourcesResponse>
 DefaultDataTransferServiceStub::ListDataSources(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::bigquery::datatransfer::v1::ListDataSourcesRequest const&
-        request) {
-  google::cloud::bigquery::datatransfer::v1::ListDataSourcesResponse response;
-  auto status = grpc_stub_->ListDataSources(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::bigquery::datatransfer::v1::ListDataSourcesRequest const& request) {
+    google::cloud::bigquery::datatransfer::v1::ListDataSourcesResponse response;
+    auto status =
+        grpc_stub_->ListDataSources(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::bigquery::datatransfer::v1::TransferConfig>
 DefaultDataTransferServiceStub::CreateTransferConfig(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::bigquery::datatransfer::v1::
-        CreateTransferConfigRequest const& request) {
-  google::cloud::bigquery::datatransfer::v1::TransferConfig response;
-  auto status = grpc_stub_->CreateTransferConfig(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::bigquery::datatransfer::v1::CreateTransferConfigRequest const& request) {
+    google::cloud::bigquery::datatransfer::v1::TransferConfig response;
+    auto status =
+        grpc_stub_->CreateTransferConfig(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::bigquery::datatransfer::v1::TransferConfig>
 DefaultDataTransferServiceStub::UpdateTransferConfig(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::bigquery::datatransfer::v1::
-        UpdateTransferConfigRequest const& request) {
-  google::cloud::bigquery::datatransfer::v1::TransferConfig response;
-  auto status = grpc_stub_->UpdateTransferConfig(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::bigquery::datatransfer::v1::UpdateTransferConfigRequest const& request) {
+    google::cloud::bigquery::datatransfer::v1::TransferConfig response;
+    auto status =
+        grpc_stub_->UpdateTransferConfig(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-Status DefaultDataTransferServiceStub::DeleteTransferConfig(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::bigquery::datatransfer::v1::
-        DeleteTransferConfigRequest const& request) {
-  google::protobuf::Empty response;
-  auto status = grpc_stub_->DeleteTransferConfig(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return google::cloud::Status();
+Status
+DefaultDataTransferServiceStub::DeleteTransferConfig(
+  grpc::ClientContext& context, Options const&,
+  google::cloud::bigquery::datatransfer::v1::DeleteTransferConfigRequest const& request) {
+    google::protobuf::Empty response;
+    auto status =
+        grpc_stub_->DeleteTransferConfig(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return google::cloud::Status();
 }
 
 StatusOr<google::cloud::bigquery::datatransfer::v1::TransferConfig>
 DefaultDataTransferServiceStub::GetTransferConfig(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::bigquery::datatransfer::v1::GetTransferConfigRequest const&
-        request) {
-  google::cloud::bigquery::datatransfer::v1::TransferConfig response;
-  auto status = grpc_stub_->GetTransferConfig(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::bigquery::datatransfer::v1::GetTransferConfigRequest const& request) {
+    google::cloud::bigquery::datatransfer::v1::TransferConfig response;
+    auto status =
+        grpc_stub_->GetTransferConfig(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::bigquery::datatransfer::v1::ListTransferConfigsResponse>
 DefaultDataTransferServiceStub::ListTransferConfigs(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::bigquery::datatransfer::v1::ListTransferConfigsRequest const&
-        request) {
-  google::cloud::bigquery::datatransfer::v1::ListTransferConfigsResponse
-      response;
-  auto status = grpc_stub_->ListTransferConfigs(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::bigquery::datatransfer::v1::ListTransferConfigsRequest const& request) {
+    google::cloud::bigquery::datatransfer::v1::ListTransferConfigsResponse response;
+    auto status =
+        grpc_stub_->ListTransferConfigs(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-StatusOr<
-    google::cloud::bigquery::datatransfer::v1::ScheduleTransferRunsResponse>
+StatusOr<google::cloud::bigquery::datatransfer::v1::ScheduleTransferRunsResponse>
 DefaultDataTransferServiceStub::ScheduleTransferRuns(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::bigquery::datatransfer::v1::
-        ScheduleTransferRunsRequest const& request) {
-  google::cloud::bigquery::datatransfer::v1::ScheduleTransferRunsResponse
-      response;
-  auto status = grpc_stub_->ScheduleTransferRuns(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::bigquery::datatransfer::v1::ScheduleTransferRunsRequest const& request) {
+    google::cloud::bigquery::datatransfer::v1::ScheduleTransferRunsResponse response;
+    auto status =
+        grpc_stub_->ScheduleTransferRuns(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-StatusOr<
-    google::cloud::bigquery::datatransfer::v1::StartManualTransferRunsResponse>
+StatusOr<google::cloud::bigquery::datatransfer::v1::StartManualTransferRunsResponse>
 DefaultDataTransferServiceStub::StartManualTransferRuns(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::bigquery::datatransfer::v1::
-        StartManualTransferRunsRequest const& request) {
-  google::cloud::bigquery::datatransfer::v1::StartManualTransferRunsResponse
-      response;
-  auto status =
-      grpc_stub_->StartManualTransferRuns(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::bigquery::datatransfer::v1::StartManualTransferRunsRequest const& request) {
+    google::cloud::bigquery::datatransfer::v1::StartManualTransferRunsResponse response;
+    auto status =
+        grpc_stub_->StartManualTransferRuns(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::bigquery::datatransfer::v1::TransferRun>
 DefaultDataTransferServiceStub::GetTransferRun(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::bigquery::datatransfer::v1::GetTransferRunRequest const&
-        request) {
-  google::cloud::bigquery::datatransfer::v1::TransferRun response;
-  auto status = grpc_stub_->GetTransferRun(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::bigquery::datatransfer::v1::GetTransferRunRequest const& request) {
+    google::cloud::bigquery::datatransfer::v1::TransferRun response;
+    auto status =
+        grpc_stub_->GetTransferRun(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-Status DefaultDataTransferServiceStub::DeleteTransferRun(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::bigquery::datatransfer::v1::DeleteTransferRunRequest const&
-        request) {
-  google::protobuf::Empty response;
-  auto status = grpc_stub_->DeleteTransferRun(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return google::cloud::Status();
+Status
+DefaultDataTransferServiceStub::DeleteTransferRun(
+  grpc::ClientContext& context, Options const&,
+  google::cloud::bigquery::datatransfer::v1::DeleteTransferRunRequest const& request) {
+    google::protobuf::Empty response;
+    auto status =
+        grpc_stub_->DeleteTransferRun(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return google::cloud::Status();
 }
 
 StatusOr<google::cloud::bigquery::datatransfer::v1::ListTransferRunsResponse>
 DefaultDataTransferServiceStub::ListTransferRuns(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::bigquery::datatransfer::v1::ListTransferRunsRequest const&
-        request) {
-  google::cloud::bigquery::datatransfer::v1::ListTransferRunsResponse response;
-  auto status = grpc_stub_->ListTransferRuns(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::bigquery::datatransfer::v1::ListTransferRunsRequest const& request) {
+    google::cloud::bigquery::datatransfer::v1::ListTransferRunsResponse response;
+    auto status =
+        grpc_stub_->ListTransferRuns(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::bigquery::datatransfer::v1::ListTransferLogsResponse>
 DefaultDataTransferServiceStub::ListTransferLogs(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::bigquery::datatransfer::v1::ListTransferLogsRequest const&
-        request) {
-  google::cloud::bigquery::datatransfer::v1::ListTransferLogsResponse response;
-  auto status = grpc_stub_->ListTransferLogs(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::bigquery::datatransfer::v1::ListTransferLogsRequest const& request) {
+    google::cloud::bigquery::datatransfer::v1::ListTransferLogsResponse response;
+    auto status =
+        grpc_stub_->ListTransferLogs(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::bigquery::datatransfer::v1::CheckValidCredsResponse>
 DefaultDataTransferServiceStub::CheckValidCreds(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::bigquery::datatransfer::v1::CheckValidCredsRequest const&
-        request) {
-  google::cloud::bigquery::datatransfer::v1::CheckValidCredsResponse response;
-  auto status = grpc_stub_->CheckValidCreds(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::bigquery::datatransfer::v1::CheckValidCredsRequest const& request) {
+    google::cloud::bigquery::datatransfer::v1::CheckValidCredsResponse response;
+    auto status =
+        grpc_stub_->CheckValidCreds(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-Status DefaultDataTransferServiceStub::EnrollDataSources(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::bigquery::datatransfer::v1::EnrollDataSourcesRequest const&
-        request) {
-  google::protobuf::Empty response;
-  auto status = grpc_stub_->EnrollDataSources(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return google::cloud::Status();
+Status
+DefaultDataTransferServiceStub::EnrollDataSources(
+  grpc::ClientContext& context, Options const&,
+  google::cloud::bigquery::datatransfer::v1::EnrollDataSourcesRequest const& request) {
+    google::protobuf::Empty response;
+    auto status =
+        grpc_stub_->EnrollDataSources(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return google::cloud::Status();
 }
 
-Status DefaultDataTransferServiceStub::UnenrollDataSources(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::bigquery::datatransfer::v1::UnenrollDataSourcesRequest const&
-        request) {
-  google::protobuf::Empty response;
-  auto status = grpc_stub_->UnenrollDataSources(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return google::cloud::Status();
+Status
+DefaultDataTransferServiceStub::UnenrollDataSources(
+  grpc::ClientContext& context, Options const&,
+  google::cloud::bigquery::datatransfer::v1::UnenrollDataSourcesRequest const& request) {
+    google::protobuf::Empty response;
+    auto status =
+        grpc_stub_->UnenrollDataSources(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return google::cloud::Status();
 }
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 DefaultDataTransferServiceStub::ListLocations(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::location::ListLocationsRequest const& request) {
-  google::cloud::location::ListLocationsResponse response;
-  auto status = locations_stub_->ListLocations(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::location::ListLocationsRequest const& request) {
+    google::cloud::location::ListLocationsResponse response;
+    auto status =
+        locations_stub_->ListLocations(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::location::Location>
 DefaultDataTransferServiceStub::GetLocation(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::location::GetLocationRequest const& request) {
-  google::cloud::location::Location response;
-  auto status = locations_stub_->GetLocation(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::location::GetLocationRequest const& request) {
+    google::cloud::location::Location response;
+    auto status =
+        locations_stub_->GetLocation(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

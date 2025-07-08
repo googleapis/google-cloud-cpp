@@ -40,270 +40,192 @@ DefaultSnapshotsRestStub::DefaultSnapshotsRestStub(Options options)
 
 DefaultSnapshotsRestStub::DefaultSnapshotsRestStub(
     std::shared_ptr<rest_internal::RestClient> service,
-    std::shared_ptr<rest_internal::RestClient> operations, Options options)
+    std::shared_ptr<rest_internal::RestClient> operations,
+    Options options)
     : service_(std::move(service)),
       operations_(std::move(operations)),
       options_(std::move(options)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultSnapshotsRestStub::AsyncDeleteSnapshot(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::snapshots::v1::DeleteSnapshotRequest const&
-        request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::snapshots::v1::DeleteSnapshotRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
-      p.get_future();
-  std::thread t{
-      [](auto p, auto service, auto request, auto rest_context, auto options) {
-        std::vector<std::pair<std::string, std::string>> query_params;
-        query_params.push_back({"request_id", request.request_id()});
-        query_params =
-            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
-        p.set_value(
-            rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request, false,
-                absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", *options),
-                             "/", "projects", "/", request.project(), "/",
-                             "global", "/", "snapshots", "/",
-                             request.snapshot()),
-                std::move(query_params)));
-      },
-      std::move(p),
-      service_,
-      request,
-      std::move(rest_context),
-      std::move(options)};
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f = p.get_future();
+  std::thread t{[](
+          auto p, auto service, auto request, auto rest_context, auto options) {
+      std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"request_id", request.request_id()});
+  query_params = rest_internal::TrimEmptyQueryParameters(std::move(query_params));
+      p.set_value(rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
+          *service, *rest_context, request,
+          false,
+          absl::StrCat("/", "compute", "/", rest_internal::DetermineApiVersion("v1", *options), "/", "projects", "/", request.project(), "/", "global", "/", "snapshots", "/", request.snapshot()), std::move(query_params)));
+    },
+    std::move(p), service_, request, std::move(rest_context),
+    std::move(options)};
   return f.then([t = std::move(t), cq](auto f) mutable {
-    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
+    cq.RunAsync([t = std::move(t)]() mutable {
+      t.join();
+    });
     return f.get();
   });
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultSnapshotsRestStub::DeleteSnapshot(
-    google::cloud::rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::compute::snapshots::v1::DeleteSnapshotRequest const&
-        request) {
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::snapshots::v1::DeleteSnapshotRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"request_id", request.request_id()});
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
+  query_params = rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request, false,
-      absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "global", "/",
-                   "snapshots", "/", request.snapshot()),
-      std::move(query_params));
+      absl::StrCat("/", "compute", "/", rest_internal::DetermineApiVersion("v1", options), "/", "projects", "/", request.project(), "/", "global", "/", "snapshots", "/", request.snapshot()), std::move(query_params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Snapshot>
 DefaultSnapshotsRestStub::GetSnapshot(
-    google::cloud::rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::compute::snapshots::v1::GetSnapshotRequest const&
-        request) {
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::snapshots::v1::GetSnapshotRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Get<google::cloud::cpp::compute::v1::Snapshot>(
       *service_, rest_context, request, false,
-      absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "global", "/",
-                   "snapshots", "/", request.snapshot()),
-      std::move(query_params));
+      absl::StrCat("/", "compute", "/", rest_internal::DetermineApiVersion("v1", options), "/", "projects", "/", request.project(), "/", "global", "/", "snapshots", "/", request.snapshot()), std::move(query_params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 DefaultSnapshotsRestStub::GetIamPolicy(
-    google::cloud::rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::compute::snapshots::v1::GetIamPolicyRequest const&
-        request) {
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::snapshots::v1::GetIamPolicyRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params.push_back(
-      {"options_requested_policy_version",
-       std::to_string(request.options_requested_policy_version())});
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
+  query_params.push_back({"options_requested_policy_version", std::to_string(request.options_requested_policy_version())});
+  query_params = rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request, false,
-      absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "global", "/",
-                   "snapshots", "/", request.resource(), "/", "getIamPolicy"),
-      std::move(query_params));
+      absl::StrCat("/", "compute", "/", rest_internal::DetermineApiVersion("v1", options), "/", "projects", "/", request.project(), "/", "global", "/", "snapshots", "/", request.resource(), "/", "getIamPolicy"), std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultSnapshotsRestStub::AsyncInsertSnapshot(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::snapshots::v1::InsertSnapshotRequest const&
-        request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::snapshots::v1::InsertSnapshotRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
-      p.get_future();
-  std::thread t{
-      [](auto p, auto service, auto request, auto rest_context, auto options) {
-        std::vector<std::pair<std::string, std::string>> query_params;
-        query_params.push_back({"request_id", request.request_id()});
-        query_params =
-            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
-        p.set_value(
-            rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request.snapshot_resource(), false,
-                absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", *options),
-                             "/", "projects", "/", request.project(), "/",
-                             "global", "/", "snapshots"),
-                std::move(query_params)));
-      },
-      std::move(p),
-      service_,
-      request,
-      std::move(rest_context),
-      std::move(options)};
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f = p.get_future();
+  std::thread t{[](
+          auto p, auto service, auto request, auto rest_context, auto options) {
+      std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"request_id", request.request_id()});
+  query_params = rest_internal::TrimEmptyQueryParameters(std::move(query_params));
+      p.set_value(rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+          *service, *rest_context, request.snapshot_resource(),
+          false,
+          absl::StrCat("/", "compute", "/", rest_internal::DetermineApiVersion("v1", *options), "/", "projects", "/", request.project(), "/", "global", "/", "snapshots"), std::move(query_params)));
+    },
+    std::move(p), service_, request, std::move(rest_context),
+    std::move(options)};
   return f.then([t = std::move(t), cq](auto f) mutable {
-    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
+    cq.RunAsync([t = std::move(t)]() mutable {
+      t.join();
+    });
     return f.get();
   });
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultSnapshotsRestStub::InsertSnapshot(
-    google::cloud::rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::compute::snapshots::v1::InsertSnapshotRequest const&
-        request) {
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::snapshots::v1::InsertSnapshotRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"request_id", request.request_id()});
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
+  query_params = rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request.snapshot_resource(), false,
-      absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "global", "/",
-                   "snapshots"),
-      std::move(query_params));
+      absl::StrCat("/", "compute", "/", rest_internal::DetermineApiVersion("v1", options), "/", "projects", "/", request.project(), "/", "global", "/", "snapshots"), std::move(query_params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::SnapshotList>
 DefaultSnapshotsRestStub::ListSnapshots(
-    google::cloud::rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::compute::snapshots::v1::ListSnapshotsRequest const&
-        request) {
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::snapshots::v1::ListSnapshotsRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"filter", request.filter()});
-  query_params.push_back(
-      {"max_results", std::to_string(request.max_results())});
+  query_params.push_back({"max_results", std::to_string(request.max_results())});
   query_params.push_back({"order_by", request.order_by()});
   query_params.push_back({"page_token", request.page_token()});
-  query_params.push_back({"return_partial_success",
-                          (request.return_partial_success() ? "1" : "0")});
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
+  query_params.push_back({"return_partial_success", (request.return_partial_success() ? "1" : "0")});
+  query_params = rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<google::cloud::cpp::compute::v1::SnapshotList>(
       *service_, rest_context, request, false,
-      absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "global", "/",
-                   "snapshots"),
-      std::move(query_params));
+      absl::StrCat("/", "compute", "/", rest_internal::DetermineApiVersion("v1", options), "/", "projects", "/", request.project(), "/", "global", "/", "snapshots"), std::move(query_params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 DefaultSnapshotsRestStub::SetIamPolicy(
-    google::cloud::rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::compute::snapshots::v1::SetIamPolicyRequest const&
-        request) {
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::snapshots::v1::SetIamPolicyRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Post<google::cloud::cpp::compute::v1::Policy>(
-      *service_, rest_context, request.global_set_policy_request_resource(),
-      false,
-      absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "global", "/",
-                   "snapshots", "/", request.resource(), "/", "setIamPolicy"),
-      std::move(query_params));
+      *service_, rest_context, request.global_set_policy_request_resource(), false,
+      absl::StrCat("/", "compute", "/", rest_internal::DetermineApiVersion("v1", options), "/", "projects", "/", request.project(), "/", "global", "/", "snapshots", "/", request.resource(), "/", "setIamPolicy"), std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultSnapshotsRestStub::AsyncSetLabels(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::snapshots::v1::SetLabelsRequest const&
-        request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::snapshots::v1::SetLabelsRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
-      p.get_future();
-  std::thread t{
-      [](auto p, auto service, auto request, auto rest_context, auto options) {
-        std::vector<std::pair<std::string, std::string>> query_params;
-        p.set_value(
-            rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context,
-                request.global_set_labels_request_resource(), false,
-                absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", *options),
-                             "/", "projects", "/", request.project(), "/",
-                             "global", "/", "snapshots", "/",
-                             request.resource(), "/", "setLabels"),
-                std::move(query_params)));
-      },
-      std::move(p),
-      service_,
-      request,
-      std::move(rest_context),
-      std::move(options)};
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f = p.get_future();
+  std::thread t{[](
+          auto p, auto service, auto request, auto rest_context, auto options) {
+      std::vector<std::pair<std::string, std::string>> query_params;
+      p.set_value(rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+          *service, *rest_context, request.global_set_labels_request_resource(),
+          false,
+          absl::StrCat("/", "compute", "/", rest_internal::DetermineApiVersion("v1", *options), "/", "projects", "/", request.project(), "/", "global", "/", "snapshots", "/", request.resource(), "/", "setLabels"), std::move(query_params)));
+    },
+    std::move(p), service_, request, std::move(rest_context),
+    std::move(options)};
   return f.then([t = std::move(t), cq](auto f) mutable {
-    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
+    cq.RunAsync([t = std::move(t)]() mutable {
+      t.join();
+    });
     return f.get();
   });
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultSnapshotsRestStub::SetLabels(
-    google::cloud::rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::compute::snapshots::v1::SetLabelsRequest const&
-        request) {
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::snapshots::v1::SetLabelsRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
-      *service_, rest_context, request.global_set_labels_request_resource(),
-      false,
-      absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "global", "/",
-                   "snapshots", "/", request.resource(), "/", "setLabels"),
-      std::move(query_params));
+      *service_, rest_context, request.global_set_labels_request_resource(), false,
+      absl::StrCat("/", "compute", "/", rest_internal::DetermineApiVersion("v1", options), "/", "projects", "/", request.project(), "/", "global", "/", "snapshots", "/", request.resource(), "/", "setLabels"), std::move(query_params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
 DefaultSnapshotsRestStub::TestIamPermissions(
-    google::cloud::rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::compute::snapshots::v1::TestIamPermissionsRequest const&
-        request) {
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::snapshots::v1::TestIamPermissionsRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  return rest_internal::Post<
-      google::cloud::cpp::compute::v1::TestPermissionsResponse>(
-      *service_, rest_context, request.test_permissions_request_resource(),
-      false,
-      absl::StrCat("/", "compute", "/",
-                   rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "global", "/",
-                   "snapshots", "/", request.resource(), "/",
-                   "testIamPermissions"),
-      std::move(query_params));
+  return rest_internal::Post<google::cloud::cpp::compute::v1::TestPermissionsResponse>(
+      *service_, rest_context, request.test_permissions_request_resource(), false,
+      absl::StrCat("/", "compute", "/", rest_internal::DetermineApiVersion("v1", options), "/", "projects", "/", request.project(), "/", "global", "/", "snapshots", "/", request.resource(), "/", "testIamPermissions"), std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -311,58 +233,49 @@ DefaultSnapshotsRestStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::global_operations::v1::
-        GetOperationRequest const& request) {
+    google::cloud::cpp::compute::global_operations::v1::GetOperationRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
-      p.get_future();
-  std::thread t{
-      [](auto p, auto operations, auto request, auto rest_context,
-         auto options) {
-        p.set_value(
-            rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
-                *operations, *rest_context, request, false,
-                absl::StrCat("/compute/",
-                             rest_internal::DetermineApiVersion("v1", *options),
-                             "/projects/", request.project(),
-                             "/global/operations/", request.operation())));
-      },
-      std::move(p),
-      operations_,
-      request,
-      std::move(rest_context),
-      std::move(options)};
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f = p.get_future();
+  std::thread t{[](auto p, auto operations, auto request, auto rest_context, auto options) {
+      p.set_value(rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
+          *operations, *rest_context, request, false,
+          absl::StrCat("/compute/",
+                              rest_internal::DetermineApiVersion("v1", *options),
+                              "/projects/", request.project(),
+                              "/global/operations/", request.operation())));
+    },
+    std::move(p), operations_, request, std::move(rest_context),
+    std::move(options)};
   return f.then([t = std::move(t), cq](auto f) mutable {
-    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
+    cq.RunAsync([t = std::move(t)]() mutable {
+      t.join();
+    });
     return f.get();
   });
 }
 
-future<Status> DefaultSnapshotsRestStub::AsyncCancelOperation(
+future<Status>
+DefaultSnapshotsRestStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::global_operations::v1::
-        DeleteOperationRequest const& request) {
+    google::cloud::cpp::compute::global_operations::v1::DeleteOperationRequest const& request) {
   promise<StatusOr<google::protobuf::Empty>> p;
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
-  std::thread t{
-      [](auto p, auto operations, auto request, auto rest_context,
-         auto options) {
-        p.set_value(rest_internal::Post<google::protobuf::Empty>(
-            *operations, *rest_context, request, false,
-            absl::StrCat("/compute/",
-                         rest_internal::DetermineApiVersion("v1", *options),
-                         "/projects/", request.project(), "/global/operations/",
-                         request.operation())));
-      },
-      std::move(p),
-      operations_,
-      request,
-      std::move(rest_context),
-      std::move(options)};
+  std::thread t{[](auto p, auto operations, auto request, auto rest_context, auto options) {
+      p.set_value(rest_internal::Post<google::protobuf::Empty>(
+          *operations, *rest_context, request, false,
+          absl::StrCat("/compute/",
+                              rest_internal::DetermineApiVersion("v1", *options),
+                              "/projects/", request.project(),
+                              "/global/operations/", request.operation())));
+    },
+    std::move(p), operations_, request, std::move(rest_context),
+    std::move(options)};
   return f.then([t = std::move(t), cq](auto f) mutable {
-    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
+    cq.RunAsync([t = std::move(t)]() mutable {
+      t.join();
+    });
     return f.get().status();
   });
 }

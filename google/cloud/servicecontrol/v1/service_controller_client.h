@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SERVICECONTROL_V1_SERVICE_CONTROLLER_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SERVICECONTROL_V1_SERVICE_CONTROLLER_CLIENT_H
 
-#include "google/cloud/servicecontrol/v1/service_controller_connection.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
+#include "google/cloud/servicecontrol/v1/service_controller_connection.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -64,9 +64,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class ServiceControllerClient {
  public:
-  explicit ServiceControllerClient(
-      std::shared_ptr<ServiceControllerConnection> connection,
-      Options opts = {});
+  explicit ServiceControllerClient(std::shared_ptr<ServiceControllerConnection> connection, Options opts = {});
   ~ServiceControllerClient();
 
   ///@{
@@ -79,12 +77,10 @@ class ServiceControllerClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(ServiceControllerClient const& a,
-                         ServiceControllerClient const& b) {
+  friend bool operator==(ServiceControllerClient const& a, ServiceControllerClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(ServiceControllerClient const& a,
-                         ServiceControllerClient const& b) {
+  friend bool operator!=(ServiceControllerClient const& a, ServiceControllerClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -132,9 +128,8 @@ class ServiceControllerClient {
   /// [google.api.servicecontrol.v1.CheckResponse]: @googleapis_reference_link{google/api/servicecontrol/v1/service_controller.proto#L114}
   ///
   // clang-format on
-  StatusOr<google::api::servicecontrol::v1::CheckResponse> Check(
-      google::api::servicecontrol::v1::CheckRequest const& request,
-      Options opts = {});
+  StatusOr<google::api::servicecontrol::v1::CheckResponse>
+  Check(google::api::servicecontrol::v1::CheckRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -177,9 +172,8 @@ class ServiceControllerClient {
   /// [google.api.servicecontrol.v1.ReportResponse]: @googleapis_reference_link{google/api/servicecontrol/v1/service_controller.proto#L225}
   ///
   // clang-format on
-  StatusOr<google::api::servicecontrol::v1::ReportResponse> Report(
-      google::api::servicecontrol::v1::ReportRequest const& request,
-      Options opts = {});
+  StatusOr<google::api::servicecontrol::v1::ReportResponse>
+  Report(google::api::servicecontrol::v1::ReportRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<ServiceControllerConnection> connection_;

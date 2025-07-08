@@ -32,40 +32,35 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-class AdvisoryNotificationsServiceTracingStub
-    : public AdvisoryNotificationsServiceStub {
+class AdvisoryNotificationsServiceTracingStub : public AdvisoryNotificationsServiceStub {
  public:
   ~AdvisoryNotificationsServiceTracingStub() override = default;
 
-  explicit AdvisoryNotificationsServiceTracingStub(
-      std::shared_ptr<AdvisoryNotificationsServiceStub> child);
+  explicit AdvisoryNotificationsServiceTracingStub(std::shared_ptr<AdvisoryNotificationsServiceStub> child);
 
-  StatusOr<google::cloud::advisorynotifications::v1::ListNotificationsResponse>
-  ListNotifications(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::advisorynotifications::v1::ListNotificationsRequest const&
-          request) override;
+  StatusOr<google::cloud::advisorynotifications::v1::ListNotificationsResponse> ListNotifications(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::advisorynotifications::v1::ListNotificationsRequest const& request) override;
 
-  StatusOr<google::cloud::advisorynotifications::v1::Notification>
-  GetNotification(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::advisorynotifications::v1::GetNotificationRequest const&
-          request) override;
+  StatusOr<google::cloud::advisorynotifications::v1::Notification> GetNotification(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::advisorynotifications::v1::GetNotificationRequest const& request) override;
 
   StatusOr<google::cloud::advisorynotifications::v1::Settings> GetSettings(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::advisorynotifications::v1::GetSettingsRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::advisorynotifications::v1::GetSettingsRequest const& request) override;
 
   StatusOr<google::cloud::advisorynotifications::v1::Settings> UpdateSettings(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::advisorynotifications::v1::UpdateSettingsRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::advisorynotifications::v1::UpdateSettingsRequest const& request) override;
 
  private:
   std::shared_ptr<AdvisoryNotificationsServiceStub> child_;
-  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
-      propagator_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -76,8 +71,7 @@ class AdvisoryNotificationsServiceTracingStub
  * The stub is only decorated if the library has been compiled with
  * OpenTelemetry.
  */
-std::shared_ptr<AdvisoryNotificationsServiceStub>
-MakeAdvisoryNotificationsServiceTracingStub(
+std::shared_ptr<AdvisoryNotificationsServiceStub> MakeAdvisoryNotificationsServiceTracingStub(
     std::shared_ptr<AdvisoryNotificationsServiceStub> stub);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

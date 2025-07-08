@@ -37,74 +37,55 @@ class TargetGrpcProxiesRestStub {
  public:
   virtual ~TargetGrpcProxiesRestStub() = default;
 
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncDeleteTargetGrpcProxy(
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncDeleteTargetGrpcProxy(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::target_grpc_proxies::v1::
-          DeleteTargetGrpcProxyRequest const& request) = 0;
+      google::cloud::cpp::compute::target_grpc_proxies::v1::DeleteTargetGrpcProxyRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteTargetGrpcProxy(google::cloud::rest_internal::RestContext& rest_context,
-                        Options const& options,
-                        google::cloud::cpp::compute::target_grpc_proxies::v1::
-                            DeleteTargetGrpcProxyRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteTargetGrpcProxy(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options, google::cloud::cpp::compute::target_grpc_proxies::v1::DeleteTargetGrpcProxyRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::TargetGrpcProxy>
-  GetTargetGrpcProxy(google::cloud::rest_internal::RestContext& rest_context,
-                     Options const& options,
-                     google::cloud::cpp::compute::target_grpc_proxies::v1::
-                         GetTargetGrpcProxyRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::TargetGrpcProxy> GetTargetGrpcProxy(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options, google::cloud::cpp::compute::target_grpc_proxies::v1::GetTargetGrpcProxyRequest const& request) = 0;
 
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncInsertTargetGrpcProxy(
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncInsertTargetGrpcProxy(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::target_grpc_proxies::v1::
-          InsertTargetGrpcProxyRequest const& request) = 0;
+      google::cloud::cpp::compute::target_grpc_proxies::v1::InsertTargetGrpcProxyRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertTargetGrpcProxy(google::cloud::rest_internal::RestContext& rest_context,
-                        Options const& options,
-                        google::cloud::cpp::compute::target_grpc_proxies::v1::
-                            InsertTargetGrpcProxyRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> InsertTargetGrpcProxy(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options, google::cloud::cpp::compute::target_grpc_proxies::v1::InsertTargetGrpcProxyRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::TargetGrpcProxyList>
-  ListTargetGrpcProxies(google::cloud::rest_internal::RestContext& rest_context,
-                        Options const& options,
-                        google::cloud::cpp::compute::target_grpc_proxies::v1::
-                            ListTargetGrpcProxiesRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::TargetGrpcProxyList> ListTargetGrpcProxies(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options, google::cloud::cpp::compute::target_grpc_proxies::v1::ListTargetGrpcProxiesRequest const& request) = 0;
 
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncPatchTargetGrpcProxy(
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncPatchTargetGrpcProxy(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::target_grpc_proxies::v1::
-          PatchTargetGrpcProxyRequest const& request) = 0;
+      google::cloud::cpp::compute::target_grpc_proxies::v1::PatchTargetGrpcProxyRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  PatchTargetGrpcProxy(google::cloud::rest_internal::RestContext& rest_context,
-                       Options const& options,
-                       google::cloud::cpp::compute::target_grpc_proxies::v1::
-                           PatchTargetGrpcProxyRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> PatchTargetGrpcProxy(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options, google::cloud::cpp::compute::target_grpc_proxies::v1::PatchTargetGrpcProxyRequest const& request) = 0;
 
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncGetOperation(
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::global_operations::v1::
-          GetOperationRequest const& request) = 0;
+      google::cloud::cpp::compute::global_operations::v1::GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::global_operations::v1::
-          DeleteOperationRequest const& request) = 0;
+      google::cloud::cpp::compute::global_operations::v1::DeleteOperationRequest const& request) = 0;
 };
 
 class DefaultTargetGrpcProxiesRestStub : public TargetGrpcProxiesRestStub {
@@ -114,77 +95,58 @@ class DefaultTargetGrpcProxiesRestStub : public TargetGrpcProxiesRestStub {
   explicit DefaultTargetGrpcProxiesRestStub(Options options);
   DefaultTargetGrpcProxiesRestStub(
       std::shared_ptr<rest_internal::RestClient> service,
-      std::shared_ptr<rest_internal::RestClient> operations, Options options);
+      std::shared_ptr<rest_internal::RestClient> operations,
+      Options options);
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncDeleteTargetGrpcProxy(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncDeleteTargetGrpcProxy(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::target_grpc_proxies::v1::
-          DeleteTargetGrpcProxyRequest const& request) override;
+      google::cloud::cpp::compute::target_grpc_proxies::v1::DeleteTargetGrpcProxyRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteTargetGrpcProxy(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::target_grpc_proxies::v1::
-          DeleteTargetGrpcProxyRequest const& request) override;
+      Options const& options, google::cloud::cpp::compute::target_grpc_proxies::v1::DeleteTargetGrpcProxyRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::TargetGrpcProxy> GetTargetGrpcProxy(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::target_grpc_proxies::v1::
-          GetTargetGrpcProxyRequest const& request) override;
+      Options const& options, google::cloud::cpp::compute::target_grpc_proxies::v1::GetTargetGrpcProxyRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncInsertTargetGrpcProxy(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncInsertTargetGrpcProxy(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::target_grpc_proxies::v1::
-          InsertTargetGrpcProxyRequest const& request) override;
+      google::cloud::cpp::compute::target_grpc_proxies::v1::InsertTargetGrpcProxyRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertTargetGrpcProxy(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::target_grpc_proxies::v1::
-          InsertTargetGrpcProxyRequest const& request) override;
+      Options const& options, google::cloud::cpp::compute::target_grpc_proxies::v1::InsertTargetGrpcProxyRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::TargetGrpcProxyList>
-  ListTargetGrpcProxies(
+  StatusOr<google::cloud::cpp::compute::v1::TargetGrpcProxyList> ListTargetGrpcProxies(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::target_grpc_proxies::v1::
-          ListTargetGrpcProxiesRequest const& request) override;
+      Options const& options, google::cloud::cpp::compute::target_grpc_proxies::v1::ListTargetGrpcProxiesRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncPatchTargetGrpcProxy(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncPatchTargetGrpcProxy(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::target_grpc_proxies::v1::
-          PatchTargetGrpcProxyRequest const& request) override;
+      google::cloud::cpp::compute::target_grpc_proxies::v1::PatchTargetGrpcProxyRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchTargetGrpcProxy(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::target_grpc_proxies::v1::
-          PatchTargetGrpcProxyRequest const& request) override;
+      Options const& options, google::cloud::cpp::compute::target_grpc_proxies::v1::PatchTargetGrpcProxyRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncGetOperation(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::global_operations::v1::
-          GetOperationRequest const& request) override;
+      google::cloud::cpp::compute::global_operations::v1::GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::global_operations::v1::
-          DeleteOperationRequest const& request) override;
+      google::cloud::cpp::compute::global_operations::v1::DeleteOperationRequest const& request) override;
 
  private:
   std::shared_ptr<rest_internal::RestClient> service_;

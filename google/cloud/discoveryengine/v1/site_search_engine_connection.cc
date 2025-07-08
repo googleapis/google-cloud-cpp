@@ -17,14 +17,14 @@
 // source: google/cloud/discoveryengine/v1/site_search_engine_service.proto
 
 #include "google/cloud/discoveryengine/v1/site_search_engine_connection.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/discoveryengine/v1/internal/site_search_engine_connection_impl.h"
 #include "google/cloud/discoveryengine/v1/internal/site_search_engine_option_defaults.h"
 #include "google/cloud/discoveryengine/v1/internal/site_search_engine_stub_factory.h"
 #include "google/cloud/discoveryengine/v1/internal/site_search_engine_tracing_connection.h"
 #include "google/cloud/discoveryengine/v1/site_search_engine_options.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
-#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
@@ -36,8 +36,7 @@ namespace cloud {
 namespace discoveryengine_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-SiteSearchEngineServiceConnection::~SiteSearchEngineServiceConnection() =
-    default;
+SiteSearchEngineServiceConnection::~SiteSearchEngineServiceConnection() = default;
 
 StatusOr<google::cloud::discoveryengine::v1::SiteSearchEngine>
 SiteSearchEngineServiceConnection::GetSiteSearchEngine(
@@ -49,8 +48,8 @@ future<StatusOr<google::cloud::discoveryengine::v1::TargetSite>>
 SiteSearchEngineServiceConnection::CreateTargetSite(
     google::cloud::discoveryengine::v1::CreateTargetSiteRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::discoveryengine::v1::TargetSite>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::discoveryengine::v1::TargetSite>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -58,24 +57,23 @@ SiteSearchEngineServiceConnection::CreateTargetSite(
     NoAwaitTag,
     google::cloud::discoveryengine::v1::CreateTargetSiteRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::discoveryengine::v1::TargetSite>>
 SiteSearchEngineServiceConnection::CreateTargetSite(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::discoveryengine::v1::TargetSite>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::discoveryengine::v1::TargetSite>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<StatusOr<
-    google::cloud::discoveryengine::v1::BatchCreateTargetSitesResponse>>
+future<StatusOr<google::cloud::discoveryengine::v1::BatchCreateTargetSitesResponse>>
 SiteSearchEngineServiceConnection::BatchCreateTargetSites(
     google::cloud::discoveryengine::v1::BatchCreateTargetSitesRequest const&) {
-  return google::cloud::make_ready_future<StatusOr<
-      google::cloud::discoveryengine::v1::BatchCreateTargetSitesResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+  return google::cloud::make_ready_future<
+    StatusOr<google::cloud::discoveryengine::v1::BatchCreateTargetSitesResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -83,16 +81,15 @@ SiteSearchEngineServiceConnection::BatchCreateTargetSites(
     NoAwaitTag,
     google::cloud::discoveryengine::v1::BatchCreateTargetSitesRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<StatusOr<
-    google::cloud::discoveryengine::v1::BatchCreateTargetSitesResponse>>
+future<StatusOr<google::cloud::discoveryengine::v1::BatchCreateTargetSitesResponse>>
 SiteSearchEngineServiceConnection::BatchCreateTargetSites(
     google::longrunning::Operation const&) {
-  return google::cloud::make_ready_future<StatusOr<
-      google::cloud::discoveryengine::v1::BatchCreateTargetSitesResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+  return google::cloud::make_ready_future<
+    StatusOr<google::cloud::discoveryengine::v1::BatchCreateTargetSitesResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::discoveryengine::v1::TargetSite>
@@ -105,8 +102,8 @@ future<StatusOr<google::cloud::discoveryengine::v1::TargetSite>>
 SiteSearchEngineServiceConnection::UpdateTargetSite(
     google::cloud::discoveryengine::v1::UpdateTargetSiteRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::discoveryengine::v1::TargetSite>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::discoveryengine::v1::TargetSite>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -114,23 +111,23 @@ SiteSearchEngineServiceConnection::UpdateTargetSite(
     NoAwaitTag,
     google::cloud::discoveryengine::v1::UpdateTargetSiteRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::discoveryengine::v1::TargetSite>>
 SiteSearchEngineServiceConnection::UpdateTargetSite(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::discoveryengine::v1::TargetSite>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::discoveryengine::v1::TargetSite>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::discoveryengine::v1::DeleteTargetSiteMetadata>>
 SiteSearchEngineServiceConnection::DeleteTargetSite(
     google::cloud::discoveryengine::v1::DeleteTargetSiteRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::discoveryengine::v1::DeleteTargetSiteMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::discoveryengine::v1::DeleteTargetSiteMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -138,21 +135,19 @@ SiteSearchEngineServiceConnection::DeleteTargetSite(
     NoAwaitTag,
     google::cloud::discoveryengine::v1::DeleteTargetSiteRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::discoveryengine::v1::DeleteTargetSiteMetadata>>
 SiteSearchEngineServiceConnection::DeleteTargetSite(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::discoveryengine::v1::DeleteTargetSiteMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::discoveryengine::v1::DeleteTargetSiteMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StreamRange<google::cloud::discoveryengine::v1::TargetSite>
-SiteSearchEngineServiceConnection::ListTargetSites(
-    google::cloud::discoveryengine::v1::
-        ListTargetSitesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::discoveryengine::v1::TargetSite> SiteSearchEngineServiceConnection::ListTargetSites(
+    google::cloud::discoveryengine::v1::ListTargetSitesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::discoveryengine::v1::TargetSite>>();
 }
@@ -161,8 +156,8 @@ future<StatusOr<google::cloud::discoveryengine::v1::Sitemap>>
 SiteSearchEngineServiceConnection::CreateSitemap(
     google::cloud::discoveryengine::v1::CreateSitemapRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::discoveryengine::v1::Sitemap>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::discoveryengine::v1::Sitemap>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -170,23 +165,23 @@ SiteSearchEngineServiceConnection::CreateSitemap(
     NoAwaitTag,
     google::cloud::discoveryengine::v1::CreateSitemapRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::discoveryengine::v1::Sitemap>>
 SiteSearchEngineServiceConnection::CreateSitemap(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::discoveryengine::v1::Sitemap>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::discoveryengine::v1::Sitemap>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::discoveryengine::v1::DeleteSitemapMetadata>>
 SiteSearchEngineServiceConnection::DeleteSitemap(
     google::cloud::discoveryengine::v1::DeleteSitemapRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::discoveryengine::v1::DeleteSitemapMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::discoveryengine::v1::DeleteSitemapMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -194,15 +189,15 @@ SiteSearchEngineServiceConnection::DeleteSitemap(
     NoAwaitTag,
     google::cloud::discoveryengine::v1::DeleteSitemapRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::discoveryengine::v1::DeleteSitemapMetadata>>
 SiteSearchEngineServiceConnection::DeleteSitemap(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::discoveryengine::v1::DeleteSitemapMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::discoveryengine::v1::DeleteSitemapMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::discoveryengine::v1::FetchSitemapsResponse>
@@ -211,90 +206,84 @@ SiteSearchEngineServiceConnection::FetchSitemaps(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-future<StatusOr<
-    google::cloud::discoveryengine::v1::EnableAdvancedSiteSearchResponse>>
+future<StatusOr<google::cloud::discoveryengine::v1::EnableAdvancedSiteSearchResponse>>
 SiteSearchEngineServiceConnection::EnableAdvancedSiteSearch(
-    google::cloud::discoveryengine::v1::
-        EnableAdvancedSiteSearchRequest const&) {
-  return google::cloud::make_ready_future<StatusOr<
-      google::cloud::discoveryengine::v1::EnableAdvancedSiteSearchResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    google::cloud::discoveryengine::v1::EnableAdvancedSiteSearchRequest const&) {
+  return google::cloud::make_ready_future<
+    StatusOr<google::cloud::discoveryengine::v1::EnableAdvancedSiteSearchResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 SiteSearchEngineServiceConnection::EnableAdvancedSiteSearch(
-    NoAwaitTag, google::cloud::discoveryengine::v1::
-                    EnableAdvancedSiteSearchRequest const&) {
+    NoAwaitTag,
+    google::cloud::discoveryengine::v1::EnableAdvancedSiteSearchRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<StatusOr<
-    google::cloud::discoveryengine::v1::EnableAdvancedSiteSearchResponse>>
+future<StatusOr<google::cloud::discoveryengine::v1::EnableAdvancedSiteSearchResponse>>
 SiteSearchEngineServiceConnection::EnableAdvancedSiteSearch(
     google::longrunning::Operation const&) {
-  return google::cloud::make_ready_future<StatusOr<
-      google::cloud::discoveryengine::v1::EnableAdvancedSiteSearchResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+  return google::cloud::make_ready_future<
+    StatusOr<google::cloud::discoveryengine::v1::EnableAdvancedSiteSearchResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<StatusOr<
-    google::cloud::discoveryengine::v1::DisableAdvancedSiteSearchResponse>>
+future<StatusOr<google::cloud::discoveryengine::v1::DisableAdvancedSiteSearchResponse>>
 SiteSearchEngineServiceConnection::DisableAdvancedSiteSearch(
-    google::cloud::discoveryengine::v1::
-        DisableAdvancedSiteSearchRequest const&) {
-  return google::cloud::make_ready_future<StatusOr<
-      google::cloud::discoveryengine::v1::DisableAdvancedSiteSearchResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    google::cloud::discoveryengine::v1::DisableAdvancedSiteSearchRequest const&) {
+  return google::cloud::make_ready_future<
+    StatusOr<google::cloud::discoveryengine::v1::DisableAdvancedSiteSearchResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 SiteSearchEngineServiceConnection::DisableAdvancedSiteSearch(
-    NoAwaitTag, google::cloud::discoveryengine::v1::
-                    DisableAdvancedSiteSearchRequest const&) {
+    NoAwaitTag,
+    google::cloud::discoveryengine::v1::DisableAdvancedSiteSearchRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<StatusOr<
-    google::cloud::discoveryengine::v1::DisableAdvancedSiteSearchResponse>>
+future<StatusOr<google::cloud::discoveryengine::v1::DisableAdvancedSiteSearchResponse>>
 SiteSearchEngineServiceConnection::DisableAdvancedSiteSearch(
     google::longrunning::Operation const&) {
-  return google::cloud::make_ready_future<StatusOr<
-      google::cloud::discoveryengine::v1::DisableAdvancedSiteSearchResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+  return google::cloud::make_ready_future<
+    StatusOr<google::cloud::discoveryengine::v1::DisableAdvancedSiteSearchResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::discoveryengine::v1::RecrawlUrisResponse>>
 SiteSearchEngineServiceConnection::RecrawlUris(
     google::cloud::discoveryengine::v1::RecrawlUrisRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::discoveryengine::v1::RecrawlUrisResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::discoveryengine::v1::RecrawlUrisResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 SiteSearchEngineServiceConnection::RecrawlUris(
-    NoAwaitTag, google::cloud::discoveryengine::v1::RecrawlUrisRequest const&) {
+    NoAwaitTag,
+    google::cloud::discoveryengine::v1::RecrawlUrisRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::discoveryengine::v1::RecrawlUrisResponse>>
 SiteSearchEngineServiceConnection::RecrawlUris(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::discoveryengine::v1::RecrawlUrisResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::discoveryengine::v1::RecrawlUrisResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<StatusOr<
-    google::cloud::discoveryengine::v1::BatchVerifyTargetSitesResponse>>
+future<StatusOr<google::cloud::discoveryengine::v1::BatchVerifyTargetSitesResponse>>
 SiteSearchEngineServiceConnection::BatchVerifyTargetSites(
     google::cloud::discoveryengine::v1::BatchVerifyTargetSitesRequest const&) {
-  return google::cloud::make_ready_future<StatusOr<
-      google::cloud::discoveryengine::v1::BatchVerifyTargetSitesResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+  return google::cloud::make_ready_future<
+    StatusOr<google::cloud::discoveryengine::v1::BatchVerifyTargetSitesResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -302,30 +291,25 @@ SiteSearchEngineServiceConnection::BatchVerifyTargetSites(
     NoAwaitTag,
     google::cloud::discoveryengine::v1::BatchVerifyTargetSitesRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<StatusOr<
-    google::cloud::discoveryengine::v1::BatchVerifyTargetSitesResponse>>
+future<StatusOr<google::cloud::discoveryengine::v1::BatchVerifyTargetSitesResponse>>
 SiteSearchEngineServiceConnection::BatchVerifyTargetSites(
     google::longrunning::Operation const&) {
-  return google::cloud::make_ready_future<StatusOr<
-      google::cloud::discoveryengine::v1::BatchVerifyTargetSitesResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+  return google::cloud::make_ready_future<
+    StatusOr<google::cloud::discoveryengine::v1::BatchVerifyTargetSitesResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StreamRange<google::cloud::discoveryengine::v1::TargetSite>
-SiteSearchEngineServiceConnection::FetchDomainVerificationStatus(
-    google::cloud::discoveryengine::v1::
-        FetchDomainVerificationStatusRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::discoveryengine::v1::TargetSite> SiteSearchEngineServiceConnection::FetchDomainVerificationStatus(
+    google::cloud::discoveryengine::v1::FetchDomainVerificationStatusRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::discoveryengine::v1::TargetSite>>();
 }
 
-StreamRange<google::longrunning::Operation>
-SiteSearchEngineServiceConnection::ListOperations(
-    google::longrunning::
-        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::longrunning::Operation> SiteSearchEngineServiceConnection::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }
@@ -336,29 +320,26 @@ SiteSearchEngineServiceConnection::GetOperation(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status SiteSearchEngineServiceConnection::CancelOperation(
+Status
+SiteSearchEngineServiceConnection::CancelOperation(
     google::longrunning::CancelOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-std::shared_ptr<SiteSearchEngineServiceConnection>
-MakeSiteSearchEngineServiceConnection(Options options) {
+std::shared_ptr<SiteSearchEngineServiceConnection> MakeSiteSearchEngineServiceConnection(
+    Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 SiteSearchEngineServicePolicyOptionList>(
-      options, __func__);
+      UnifiedCredentialsOptionList,
+      SiteSearchEngineServicePolicyOptionList>(options, __func__);
   options = discoveryengine_v1_internal::SiteSearchEngineServiceDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
-  auto stub =
-      discoveryengine_v1_internal::CreateDefaultSiteSearchEngineServiceStub(
-          std::move(auth), options);
-  return discoveryengine_v1_internal::
-      MakeSiteSearchEngineServiceTracingConnection(
-          std::make_shared<discoveryengine_v1_internal::
-                               SiteSearchEngineServiceConnectionImpl>(
-              std::move(background), std::move(stub), std::move(options)));
+  auto stub = discoveryengine_v1_internal::CreateDefaultSiteSearchEngineServiceStub(
+    std::move(auth), options);
+  return discoveryengine_v1_internal::MakeSiteSearchEngineServiceTracingConnection(
+      std::make_shared<discoveryengine_v1_internal::SiteSearchEngineServiceConnectionImpl>(
+      std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -37,106 +37,108 @@ class MetricServiceStub {
  public:
   virtual ~MetricServiceStub() = 0;
 
-  virtual StatusOr<
-      google::monitoring::v3::ListMonitoredResourceDescriptorsResponse>
-  ListMonitoredResourceDescriptors(
-      grpc::ClientContext& context, Options const& options,
-      google::monitoring::v3::ListMonitoredResourceDescriptorsRequest const&
-          request) = 0;
+  virtual StatusOr<google::monitoring::v3::ListMonitoredResourceDescriptorsResponse> ListMonitoredResourceDescriptors(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::monitoring::v3::ListMonitoredResourceDescriptorsRequest const& request) = 0;
 
-  virtual StatusOr<google::api::MonitoredResourceDescriptor>
-  GetMonitoredResourceDescriptor(
-      grpc::ClientContext& context, Options const& options,
-      google::monitoring::v3::GetMonitoredResourceDescriptorRequest const&
-          request) = 0;
+  virtual StatusOr<google::api::MonitoredResourceDescriptor> GetMonitoredResourceDescriptor(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::monitoring::v3::GetMonitoredResourceDescriptorRequest const& request) = 0;
 
-  virtual StatusOr<google::monitoring::v3::ListMetricDescriptorsResponse>
-  ListMetricDescriptors(
-      grpc::ClientContext& context, Options const& options,
+  virtual StatusOr<google::monitoring::v3::ListMetricDescriptorsResponse> ListMetricDescriptors(
+      grpc::ClientContext& context,
+      Options const& options,
       google::monitoring::v3::ListMetricDescriptorsRequest const& request) = 0;
 
   virtual StatusOr<google::api::MetricDescriptor> GetMetricDescriptor(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::monitoring::v3::GetMetricDescriptorRequest const& request) = 0;
 
   virtual StatusOr<google::api::MetricDescriptor> CreateMetricDescriptor(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::monitoring::v3::CreateMetricDescriptorRequest const& request) = 0;
 
   virtual Status DeleteMetricDescriptor(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::monitoring::v3::DeleteMetricDescriptorRequest const& request) = 0;
 
-  virtual StatusOr<google::monitoring::v3::ListTimeSeriesResponse>
-  ListTimeSeries(
-      grpc::ClientContext& context, Options const& options,
+  virtual StatusOr<google::monitoring::v3::ListTimeSeriesResponse> ListTimeSeries(
+      grpc::ClientContext& context,
+      Options const& options,
       google::monitoring::v3::ListTimeSeriesRequest const& request) = 0;
 
   virtual Status CreateTimeSeries(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::monitoring::v3::CreateTimeSeriesRequest const& request) = 0;
 
   virtual Status CreateServiceTimeSeries(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::monitoring::v3::CreateTimeSeriesRequest const& request) = 0;
 
-  virtual future<Status> AsyncCreateTimeSeries(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::monitoring::v3::CreateTimeSeriesRequest const& request) = 0;
+  virtual future<Status>
+  AsyncCreateTimeSeries(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::monitoring::v3::CreateTimeSeriesRequest const& request) = 0;
 };
 
 class DefaultMetricServiceStub : public MetricServiceStub {
  public:
   explicit DefaultMetricServiceStub(
-      std::unique_ptr<google::monitoring::v3::MetricService::StubInterface>
-          grpc_stub)
+      std::unique_ptr<google::monitoring::v3::MetricService::StubInterface> grpc_stub)
       : grpc_stub_(std::move(grpc_stub)) {}
 
-  StatusOr<google::monitoring::v3::ListMonitoredResourceDescriptorsResponse>
-  ListMonitoredResourceDescriptors(
-      grpc::ClientContext& context, Options const& options,
-      google::monitoring::v3::ListMonitoredResourceDescriptorsRequest const&
-          request) override;
+  StatusOr<google::monitoring::v3::ListMonitoredResourceDescriptorsResponse> ListMonitoredResourceDescriptors(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::monitoring::v3::ListMonitoredResourceDescriptorsRequest const& request) override;
 
-  StatusOr<google::api::MonitoredResourceDescriptor>
-  GetMonitoredResourceDescriptor(
-      grpc::ClientContext& context, Options const& options,
-      google::monitoring::v3::GetMonitoredResourceDescriptorRequest const&
-          request) override;
+  StatusOr<google::api::MonitoredResourceDescriptor> GetMonitoredResourceDescriptor(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::monitoring::v3::GetMonitoredResourceDescriptorRequest const& request) override;
 
-  StatusOr<google::monitoring::v3::ListMetricDescriptorsResponse>
-  ListMetricDescriptors(
-      grpc::ClientContext& context, Options const& options,
-      google::monitoring::v3::ListMetricDescriptorsRequest const& request)
-      override;
+  StatusOr<google::monitoring::v3::ListMetricDescriptorsResponse> ListMetricDescriptors(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::monitoring::v3::ListMetricDescriptorsRequest const& request) override;
 
   StatusOr<google::api::MetricDescriptor> GetMetricDescriptor(
-      grpc::ClientContext& context, Options const& options,
-      google::monitoring::v3::GetMetricDescriptorRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::monitoring::v3::GetMetricDescriptorRequest const& request) override;
 
   StatusOr<google::api::MetricDescriptor> CreateMetricDescriptor(
-      grpc::ClientContext& context, Options const& options,
-      google::monitoring::v3::CreateMetricDescriptorRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::monitoring::v3::CreateMetricDescriptorRequest const& request) override;
 
   Status DeleteMetricDescriptor(
-      grpc::ClientContext& context, Options const& options,
-      google::monitoring::v3::DeleteMetricDescriptorRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::monitoring::v3::DeleteMetricDescriptorRequest const& request) override;
 
   StatusOr<google::monitoring::v3::ListTimeSeriesResponse> ListTimeSeries(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::monitoring::v3::ListTimeSeriesRequest const& request) override;
 
   Status CreateTimeSeries(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::monitoring::v3::CreateTimeSeriesRequest const& request) override;
 
   Status CreateServiceTimeSeries(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::monitoring::v3::CreateTimeSeriesRequest const& request) override;
 
   future<Status> AsyncCreateTimeSeries(
@@ -146,8 +148,7 @@ class DefaultMetricServiceStub : public MetricServiceStub {
       google::monitoring::v3::CreateTimeSeriesRequest const& request) override;
 
  private:
-  std::unique_ptr<google::monitoring::v3::MetricService::StubInterface>
-      grpc_stub_;
+  std::unique_ptr<google::monitoring::v3::MetricService::StubInterface> grpc_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

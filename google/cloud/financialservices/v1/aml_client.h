@@ -65,8 +65,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class AMLClient {
  public:
-  explicit AMLClient(std::shared_ptr<AMLConnection> connection,
-                     Options opts = {});
+  explicit AMLClient(std::shared_ptr<AMLConnection> connection, Options opts = {});
   ~AMLClient();
 
   ///@{
@@ -119,8 +118,8 @@ class AMLClient {
   /// [google.cloud.financialservices.v1.ListInstancesRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/instance.proto#L93}
   ///
   // clang-format on
-  StreamRange<google::cloud::financialservices::v1::Instance> ListInstances(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::financialservices::v1::Instance>
+  ListInstances(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -158,9 +157,8 @@ class AMLClient {
   /// [google.cloud.financialservices.v1.ListInstancesRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/instance.proto#L93}
   ///
   // clang-format on
-  StreamRange<google::cloud::financialservices::v1::Instance> ListInstances(
-      google::cloud::financialservices::v1::ListInstancesRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::financialservices::v1::Instance>
+  ListInstances(google::cloud::financialservices::v1::ListInstancesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -184,8 +182,8 @@ class AMLClient {
   /// [google.cloud.financialservices.v1.Instance]: @googleapis_reference_link{google/cloud/financialservices/v1/instance.proto#L39}
   ///
   // clang-format on
-  StatusOr<google::cloud::financialservices::v1::Instance> GetInstance(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::financialservices::v1::Instance>
+  GetInstance(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -214,9 +212,8 @@ class AMLClient {
   /// [google.cloud.financialservices.v1.Instance]: @googleapis_reference_link{google/cloud/financialservices/v1/instance.proto#L39}
   ///
   // clang-format on
-  StatusOr<google::cloud::financialservices::v1::Instance> GetInstance(
-      google::cloud::financialservices::v1::GetInstanceRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::financialservices::v1::Instance>
+  GetInstance(google::cloud::financialservices::v1::GetInstanceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -251,9 +248,7 @@ class AMLClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::financialservices::v1::Instance>>
-  CreateInstance(std::string const& parent,
-                 google::cloud::financialservices::v1::Instance const& instance,
-                 std::string const& instance_id, Options opts = {});
+  CreateInstance(std::string const& parent, google::cloud::financialservices::v1::Instance const& instance, std::string const& instance_id, Options opts = {});
 
   // clang-format off
   ///
@@ -266,10 +261,8 @@ class AMLClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateInstance(
-      NoAwaitTag, std::string const& parent,
-      google::cloud::financialservices::v1::Instance const& instance,
-      std::string const& instance_id, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateInstance(NoAwaitTag, std::string const& parent, google::cloud::financialservices::v1::Instance const& instance, std::string const& instance_id, Options opts = {});
 
   // clang-format off
   ///
@@ -306,10 +299,7 @@ class AMLClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::financialservices::v1::Instance>>
-  CreateInstance(
-      google::cloud::financialservices::v1::CreateInstanceRequest const&
-          request,
-      Options opts = {});
+  CreateInstance(google::cloud::financialservices::v1::CreateInstanceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -322,11 +312,8 @@ class AMLClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateInstance(
-      NoAwaitTag,
-      google::cloud::financialservices::v1::CreateInstanceRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateInstance(NoAwaitTag, google::cloud::financialservices::v1::CreateInstanceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -338,8 +325,7 @@ class AMLClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::financialservices::v1::Instance>>
-  CreateInstance(google::longrunning::Operation const& operation,
-                 Options opts = {});
+  CreateInstance(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -377,9 +363,7 @@ class AMLClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::financialservices::v1::Instance>>
-  UpdateInstance(google::cloud::financialservices::v1::Instance const& instance,
-                 google::protobuf::FieldMask const& update_mask,
-                 Options opts = {});
+  UpdateInstance(google::cloud::financialservices::v1::Instance const& instance, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -392,10 +376,8 @@ class AMLClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateInstance(
-      NoAwaitTag,
-      google::cloud::financialservices::v1::Instance const& instance,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateInstance(NoAwaitTag, google::cloud::financialservices::v1::Instance const& instance, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -432,10 +414,7 @@ class AMLClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::financialservices::v1::Instance>>
-  UpdateInstance(
-      google::cloud::financialservices::v1::UpdateInstanceRequest const&
-          request,
-      Options opts = {});
+  UpdateInstance(google::cloud::financialservices::v1::UpdateInstanceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -448,11 +427,8 @@ class AMLClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateInstance(
-      NoAwaitTag,
-      google::cloud::financialservices::v1::UpdateInstanceRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateInstance(NoAwaitTag, google::cloud::financialservices::v1::UpdateInstanceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -464,8 +440,7 @@ class AMLClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::financialservices::v1::Instance>>
-  UpdateInstance(google::longrunning::Operation const& operation,
-                 Options opts = {});
+  UpdateInstance(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -510,8 +485,8 @@ class AMLClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteInstance(
-      NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteInstance(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -548,10 +523,7 @@ class AMLClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::financialservices::v1::OperationMetadata>>
-  DeleteInstance(
-      google::cloud::financialservices::v1::DeleteInstanceRequest const&
-          request,
-      Options opts = {});
+  DeleteInstance(google::cloud::financialservices::v1::DeleteInstanceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -564,11 +536,8 @@ class AMLClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteInstance(
-      NoAwaitTag,
-      google::cloud::financialservices::v1::DeleteInstanceRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteInstance(NoAwaitTag, google::cloud::financialservices::v1::DeleteInstanceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -580,8 +549,7 @@ class AMLClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::financialservices::v1::OperationMetadata>>
-  DeleteInstance(google::longrunning::Operation const& operation,
-                 Options opts = {});
+  DeleteInstance(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -624,14 +592,8 @@ class AMLClient {
   /// [google.cloud.financialservices.v1.ImportRegisteredPartiesResponse]: @googleapis_reference_link{google/cloud/financialservices/v1/instance.proto#L278}
   ///
   // clang-format on
-  future<StatusOr<
-      google::cloud::financialservices::v1::ImportRegisteredPartiesResponse>>
-  ImportRegisteredParties(
-      std::string const& name,
-      google::cloud::financialservices::v1::ImportRegisteredPartiesRequest::
-          UpdateMode mode,
-      google::cloud::financialservices::v1::LineOfBusiness line_of_business,
-      std::vector<std::string> const& party_tables, Options opts = {});
+  future<StatusOr<google::cloud::financialservices::v1::ImportRegisteredPartiesResponse>>
+  ImportRegisteredParties(std::string const& name, google::cloud::financialservices::v1::ImportRegisteredPartiesRequest::UpdateMode mode, google::cloud::financialservices::v1::LineOfBusiness line_of_business, std::vector<std::string> const& party_tables, Options opts = {});
 
   // clang-format off
   ///
@@ -644,12 +606,8 @@ class AMLClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> ImportRegisteredParties(
-      NoAwaitTag, std::string const& name,
-      google::cloud::financialservices::v1::ImportRegisteredPartiesRequest::
-          UpdateMode mode,
-      google::cloud::financialservices::v1::LineOfBusiness line_of_business,
-      std::vector<std::string> const& party_tables, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  ImportRegisteredParties(NoAwaitTag, std::string const& name, google::cloud::financialservices::v1::ImportRegisteredPartiesRequest::UpdateMode mode, google::cloud::financialservices::v1::LineOfBusiness line_of_business, std::vector<std::string> const& party_tables, Options opts = {});
 
   // clang-format off
   ///
@@ -688,11 +646,8 @@ class AMLClient {
   /// [google.cloud.financialservices.v1.ImportRegisteredPartiesResponse]: @googleapis_reference_link{google/cloud/financialservices/v1/instance.proto#L278}
   ///
   // clang-format on
-  future<StatusOr<
-      google::cloud::financialservices::v1::ImportRegisteredPartiesResponse>>
-  ImportRegisteredParties(google::cloud::financialservices::v1::
-                              ImportRegisteredPartiesRequest const& request,
-                          Options opts = {});
+  future<StatusOr<google::cloud::financialservices::v1::ImportRegisteredPartiesResponse>>
+  ImportRegisteredParties(google::cloud::financialservices::v1::ImportRegisteredPartiesRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -705,11 +660,8 @@ class AMLClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> ImportRegisteredParties(
-      NoAwaitTag,
-      google::cloud::financialservices::v1::
-          ImportRegisteredPartiesRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  ImportRegisteredParties(NoAwaitTag, google::cloud::financialservices::v1::ImportRegisteredPartiesRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -720,10 +672,8 @@ class AMLClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<
-      google::cloud::financialservices::v1::ImportRegisteredPartiesResponse>>
-  ImportRegisteredParties(google::longrunning::Operation const& operation,
-                          Options opts = {});
+  future<StatusOr<google::cloud::financialservices::v1::ImportRegisteredPartiesResponse>>
+  ImportRegisteredParties(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -760,13 +710,8 @@ class AMLClient {
   /// [google.cloud.financialservices.v1.ExportRegisteredPartiesResponse]: @googleapis_reference_link{google/cloud/financialservices/v1/instance.proto#L320}
   ///
   // clang-format on
-  future<StatusOr<
-      google::cloud::financialservices::v1::ExportRegisteredPartiesResponse>>
-  ExportRegisteredParties(
-      std::string const& name,
-      google::cloud::financialservices::v1::BigQueryDestination const& dataset,
-      google::cloud::financialservices::v1::LineOfBusiness line_of_business,
-      Options opts = {});
+  future<StatusOr<google::cloud::financialservices::v1::ExportRegisteredPartiesResponse>>
+  ExportRegisteredParties(std::string const& name, google::cloud::financialservices::v1::BigQueryDestination const& dataset, google::cloud::financialservices::v1::LineOfBusiness line_of_business, Options opts = {});
 
   // clang-format off
   ///
@@ -779,11 +724,8 @@ class AMLClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> ExportRegisteredParties(
-      NoAwaitTag, std::string const& name,
-      google::cloud::financialservices::v1::BigQueryDestination const& dataset,
-      google::cloud::financialservices::v1::LineOfBusiness line_of_business,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  ExportRegisteredParties(NoAwaitTag, std::string const& name, google::cloud::financialservices::v1::BigQueryDestination const& dataset, google::cloud::financialservices::v1::LineOfBusiness line_of_business, Options opts = {});
 
   // clang-format off
   ///
@@ -822,11 +764,8 @@ class AMLClient {
   /// [google.cloud.financialservices.v1.ExportRegisteredPartiesResponse]: @googleapis_reference_link{google/cloud/financialservices/v1/instance.proto#L320}
   ///
   // clang-format on
-  future<StatusOr<
-      google::cloud::financialservices::v1::ExportRegisteredPartiesResponse>>
-  ExportRegisteredParties(google::cloud::financialservices::v1::
-                              ExportRegisteredPartiesRequest const& request,
-                          Options opts = {});
+  future<StatusOr<google::cloud::financialservices::v1::ExportRegisteredPartiesResponse>>
+  ExportRegisteredParties(google::cloud::financialservices::v1::ExportRegisteredPartiesRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -839,11 +778,8 @@ class AMLClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> ExportRegisteredParties(
-      NoAwaitTag,
-      google::cloud::financialservices::v1::
-          ExportRegisteredPartiesRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  ExportRegisteredParties(NoAwaitTag, google::cloud::financialservices::v1::ExportRegisteredPartiesRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -854,10 +790,8 @@ class AMLClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<
-      google::cloud::financialservices::v1::ExportRegisteredPartiesResponse>>
-  ExportRegisteredParties(google::longrunning::Operation const& operation,
-                          Options opts = {});
+  future<StatusOr<google::cloud::financialservices::v1::ExportRegisteredPartiesResponse>>
+  ExportRegisteredParties(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -890,8 +824,8 @@ class AMLClient {
   /// [google.cloud.financialservices.v1.ListDatasetsRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/dataset.proto#L100}
   ///
   // clang-format on
-  StreamRange<google::cloud::financialservices::v1::Dataset> ListDatasets(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::financialservices::v1::Dataset>
+  ListDatasets(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -929,9 +863,8 @@ class AMLClient {
   /// [google.cloud.financialservices.v1.ListDatasetsRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/dataset.proto#L100}
   ///
   // clang-format on
-  StreamRange<google::cloud::financialservices::v1::Dataset> ListDatasets(
-      google::cloud::financialservices::v1::ListDatasetsRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::financialservices::v1::Dataset>
+  ListDatasets(google::cloud::financialservices::v1::ListDatasetsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -955,8 +888,8 @@ class AMLClient {
   /// [google.cloud.financialservices.v1.GetDatasetRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/dataset.proto#L141}
   ///
   // clang-format on
-  StatusOr<google::cloud::financialservices::v1::Dataset> GetDataset(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::financialservices::v1::Dataset>
+  GetDataset(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -985,9 +918,8 @@ class AMLClient {
   /// [google.cloud.financialservices.v1.GetDatasetRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/dataset.proto#L141}
   ///
   // clang-format on
-  StatusOr<google::cloud::financialservices::v1::Dataset> GetDataset(
-      google::cloud::financialservices::v1::GetDatasetRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::financialservices::v1::Dataset>
+  GetDataset(google::cloud::financialservices::v1::GetDatasetRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1020,10 +952,8 @@ class AMLClient {
   /// [google.cloud.financialservices.v1.Dataset]: @googleapis_reference_link{google/cloud/financialservices/v1/dataset.proto#L35}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::financialservices::v1::Dataset>> CreateDataset(
-      std::string const& parent,
-      google::cloud::financialservices::v1::Dataset const& dataset,
-      std::string const& dataset_id, Options opts = {});
+  future<StatusOr<google::cloud::financialservices::v1::Dataset>>
+  CreateDataset(std::string const& parent, google::cloud::financialservices::v1::Dataset const& dataset, std::string const& dataset_id, Options opts = {});
 
   // clang-format off
   ///
@@ -1036,10 +966,8 @@ class AMLClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateDataset(
-      NoAwaitTag, std::string const& parent,
-      google::cloud::financialservices::v1::Dataset const& dataset,
-      std::string const& dataset_id, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateDataset(NoAwaitTag, std::string const& parent, google::cloud::financialservices::v1::Dataset const& dataset, std::string const& dataset_id, Options opts = {});
 
   // clang-format off
   ///
@@ -1075,9 +1003,8 @@ class AMLClient {
   /// [google.cloud.financialservices.v1.Dataset]: @googleapis_reference_link{google/cloud/financialservices/v1/dataset.proto#L35}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::financialservices::v1::Dataset>> CreateDataset(
-      google::cloud::financialservices::v1::CreateDatasetRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::financialservices::v1::Dataset>>
+  CreateDataset(google::cloud::financialservices::v1::CreateDatasetRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1090,10 +1017,8 @@ class AMLClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateDataset(
-      NoAwaitTag,
-      google::cloud::financialservices::v1::CreateDatasetRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateDataset(NoAwaitTag, google::cloud::financialservices::v1::CreateDatasetRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1104,8 +1029,8 @@ class AMLClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::financialservices::v1::Dataset>> CreateDataset(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::financialservices::v1::Dataset>>
+  CreateDataset(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1142,9 +1067,8 @@ class AMLClient {
   /// [google.cloud.financialservices.v1.UpdateDatasetRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/dataset.proto#L184}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::financialservices::v1::Dataset>> UpdateDataset(
-      google::cloud::financialservices::v1::Dataset const& dataset,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  future<StatusOr<google::cloud::financialservices::v1::Dataset>>
+  UpdateDataset(google::cloud::financialservices::v1::Dataset const& dataset, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -1157,9 +1081,8 @@ class AMLClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateDataset(
-      NoAwaitTag, google::cloud::financialservices::v1::Dataset const& dataset,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateDataset(NoAwaitTag, google::cloud::financialservices::v1::Dataset const& dataset, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -1195,9 +1118,8 @@ class AMLClient {
   /// [google.cloud.financialservices.v1.UpdateDatasetRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/dataset.proto#L184}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::financialservices::v1::Dataset>> UpdateDataset(
-      google::cloud::financialservices::v1::UpdateDatasetRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::financialservices::v1::Dataset>>
+  UpdateDataset(google::cloud::financialservices::v1::UpdateDatasetRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1210,10 +1132,8 @@ class AMLClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateDataset(
-      NoAwaitTag,
-      google::cloud::financialservices::v1::UpdateDatasetRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateDataset(NoAwaitTag, google::cloud::financialservices::v1::UpdateDatasetRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1224,8 +1144,8 @@ class AMLClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::financialservices::v1::Dataset>> UpdateDataset(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::financialservices::v1::Dataset>>
+  UpdateDataset(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1270,8 +1190,8 @@ class AMLClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteDataset(
-      NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteDataset(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1308,9 +1228,7 @@ class AMLClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::financialservices::v1::OperationMetadata>>
-  DeleteDataset(
-      google::cloud::financialservices::v1::DeleteDatasetRequest const& request,
-      Options opts = {});
+  DeleteDataset(google::cloud::financialservices::v1::DeleteDatasetRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1323,10 +1241,8 @@ class AMLClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteDataset(
-      NoAwaitTag,
-      google::cloud::financialservices::v1::DeleteDatasetRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteDataset(NoAwaitTag, google::cloud::financialservices::v1::DeleteDatasetRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1338,8 +1254,7 @@ class AMLClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::financialservices::v1::OperationMetadata>>
-  DeleteDataset(google::longrunning::Operation const& operation,
-                Options opts = {});
+  DeleteDataset(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1372,8 +1287,8 @@ class AMLClient {
   /// [google.cloud.financialservices.v1.Model]: @googleapis_reference_link{google/cloud/financialservices/v1/model.proto#L35}
   ///
   // clang-format on
-  StreamRange<google::cloud::financialservices::v1::Model> ListModels(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::financialservices::v1::Model>
+  ListModels(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -1411,9 +1326,8 @@ class AMLClient {
   /// [google.cloud.financialservices.v1.Model]: @googleapis_reference_link{google/cloud/financialservices/v1/model.proto#L35}
   ///
   // clang-format on
-  StreamRange<google::cloud::financialservices::v1::Model> ListModels(
-      google::cloud::financialservices::v1::ListModelsRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::financialservices::v1::Model>
+  ListModels(google::cloud::financialservices::v1::ListModelsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1437,8 +1351,8 @@ class AMLClient {
   /// [google.cloud.financialservices.v1.Model]: @googleapis_reference_link{google/cloud/financialservices/v1/model.proto#L35}
   ///
   // clang-format on
-  StatusOr<google::cloud::financialservices::v1::Model> GetModel(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::financialservices::v1::Model>
+  GetModel(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1467,9 +1381,8 @@ class AMLClient {
   /// [google.cloud.financialservices.v1.Model]: @googleapis_reference_link{google/cloud/financialservices/v1/model.proto#L35}
   ///
   // clang-format on
-  StatusOr<google::cloud::financialservices::v1::Model> GetModel(
-      google::cloud::financialservices::v1::GetModelRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::financialservices::v1::Model>
+  GetModel(google::cloud::financialservices::v1::GetModelRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1502,10 +1415,8 @@ class AMLClient {
   /// [google.cloud.financialservices.v1.Model]: @googleapis_reference_link{google/cloud/financialservices/v1/model.proto#L35}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::financialservices::v1::Model>> CreateModel(
-      std::string const& parent,
-      google::cloud::financialservices::v1::Model const& model,
-      std::string const& model_id, Options opts = {});
+  future<StatusOr<google::cloud::financialservices::v1::Model>>
+  CreateModel(std::string const& parent, google::cloud::financialservices::v1::Model const& model, std::string const& model_id, Options opts = {});
 
   // clang-format off
   ///
@@ -1518,10 +1429,8 @@ class AMLClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateModel(
-      NoAwaitTag, std::string const& parent,
-      google::cloud::financialservices::v1::Model const& model,
-      std::string const& model_id, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateModel(NoAwaitTag, std::string const& parent, google::cloud::financialservices::v1::Model const& model, std::string const& model_id, Options opts = {});
 
   // clang-format off
   ///
@@ -1557,9 +1466,8 @@ class AMLClient {
   /// [google.cloud.financialservices.v1.Model]: @googleapis_reference_link{google/cloud/financialservices/v1/model.proto#L35}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::financialservices::v1::Model>> CreateModel(
-      google::cloud::financialservices::v1::CreateModelRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::financialservices::v1::Model>>
+  CreateModel(google::cloud::financialservices::v1::CreateModelRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1572,10 +1480,8 @@ class AMLClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateModel(
-      NoAwaitTag,
-      google::cloud::financialservices::v1::CreateModelRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateModel(NoAwaitTag, google::cloud::financialservices::v1::CreateModelRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1586,8 +1492,8 @@ class AMLClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::financialservices::v1::Model>> CreateModel(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::financialservices::v1::Model>>
+  CreateModel(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1624,9 +1530,8 @@ class AMLClient {
   /// [google.cloud.financialservices.v1.UpdateModelRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/model.proto#L206}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::financialservices::v1::Model>> UpdateModel(
-      google::cloud::financialservices::v1::Model const& model,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  future<StatusOr<google::cloud::financialservices::v1::Model>>
+  UpdateModel(google::cloud::financialservices::v1::Model const& model, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -1639,9 +1544,8 @@ class AMLClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateModel(
-      NoAwaitTag, google::cloud::financialservices::v1::Model const& model,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateModel(NoAwaitTag, google::cloud::financialservices::v1::Model const& model, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -1677,9 +1581,8 @@ class AMLClient {
   /// [google.cloud.financialservices.v1.UpdateModelRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/model.proto#L206}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::financialservices::v1::Model>> UpdateModel(
-      google::cloud::financialservices::v1::UpdateModelRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::financialservices::v1::Model>>
+  UpdateModel(google::cloud::financialservices::v1::UpdateModelRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1692,10 +1595,8 @@ class AMLClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateModel(
-      NoAwaitTag,
-      google::cloud::financialservices::v1::UpdateModelRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateModel(NoAwaitTag, google::cloud::financialservices::v1::UpdateModelRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1706,8 +1607,8 @@ class AMLClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::financialservices::v1::Model>> UpdateModel(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::financialservices::v1::Model>>
+  UpdateModel(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1742,13 +1643,8 @@ class AMLClient {
   /// [google.cloud.financialservices.v1.ExportModelMetadataResponse]: @googleapis_reference_link{google/cloud/financialservices/v1/model.proto#L277}
   ///
   // clang-format on
-  future<StatusOr<
-      google::cloud::financialservices::v1::ExportModelMetadataResponse>>
-  ExportModelMetadata(
-      std::string const& model,
-      google::cloud::financialservices::v1::BigQueryDestination const&
-          structured_metadata_destination,
-      Options opts = {});
+  future<StatusOr<google::cloud::financialservices::v1::ExportModelMetadataResponse>>
+  ExportModelMetadata(std::string const& model, google::cloud::financialservices::v1::BigQueryDestination const& structured_metadata_destination, Options opts = {});
 
   // clang-format off
   ///
@@ -1761,11 +1657,8 @@ class AMLClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> ExportModelMetadata(
-      NoAwaitTag, std::string const& model,
-      google::cloud::financialservices::v1::BigQueryDestination const&
-          structured_metadata_destination,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  ExportModelMetadata(NoAwaitTag, std::string const& model, google::cloud::financialservices::v1::BigQueryDestination const& structured_metadata_destination, Options opts = {});
 
   // clang-format off
   ///
@@ -1804,12 +1697,8 @@ class AMLClient {
   /// [google.cloud.financialservices.v1.ExportModelMetadataResponse]: @googleapis_reference_link{google/cloud/financialservices/v1/model.proto#L277}
   ///
   // clang-format on
-  future<StatusOr<
-      google::cloud::financialservices::v1::ExportModelMetadataResponse>>
-  ExportModelMetadata(
-      google::cloud::financialservices::v1::ExportModelMetadataRequest const&
-          request,
-      Options opts = {});
+  future<StatusOr<google::cloud::financialservices::v1::ExportModelMetadataResponse>>
+  ExportModelMetadata(google::cloud::financialservices::v1::ExportModelMetadataRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1822,11 +1711,8 @@ class AMLClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> ExportModelMetadata(
-      NoAwaitTag,
-      google::cloud::financialservices::v1::ExportModelMetadataRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  ExportModelMetadata(NoAwaitTag, google::cloud::financialservices::v1::ExportModelMetadataRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1837,10 +1723,8 @@ class AMLClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<
-      google::cloud::financialservices::v1::ExportModelMetadataResponse>>
-  ExportModelMetadata(google::longrunning::Operation const& operation,
-                      Options opts = {});
+  future<StatusOr<google::cloud::financialservices::v1::ExportModelMetadataResponse>>
+  ExportModelMetadata(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1885,9 +1769,8 @@ class AMLClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteModel(NoAwaitTag,
-                                                       std::string const& name,
-                                                       Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteModel(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1924,9 +1807,7 @@ class AMLClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::financialservices::v1::OperationMetadata>>
-  DeleteModel(
-      google::cloud::financialservices::v1::DeleteModelRequest const& request,
-      Options opts = {});
+  DeleteModel(google::cloud::financialservices::v1::DeleteModelRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1939,10 +1820,8 @@ class AMLClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteModel(
-      NoAwaitTag,
-      google::cloud::financialservices::v1::DeleteModelRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteModel(NoAwaitTag, google::cloud::financialservices::v1::DeleteModelRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1954,8 +1833,7 @@ class AMLClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::financialservices::v1::OperationMetadata>>
-  DeleteModel(google::longrunning::Operation const& operation,
-              Options opts = {});
+  DeleteModel(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -2028,9 +1906,7 @@ class AMLClient {
   ///
   // clang-format on
   StreamRange<google::cloud::financialservices::v1::EngineConfig>
-  ListEngineConfigs(
-      google::cloud::financialservices::v1::ListEngineConfigsRequest request,
-      Options opts = {});
+  ListEngineConfigs(google::cloud::financialservices::v1::ListEngineConfigsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -2054,8 +1930,8 @@ class AMLClient {
   /// [google.cloud.financialservices.v1.GetEngineConfigRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/engine_config.proto#L222}
   ///
   // clang-format on
-  StatusOr<google::cloud::financialservices::v1::EngineConfig> GetEngineConfig(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::financialservices::v1::EngineConfig>
+  GetEngineConfig(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2084,10 +1960,8 @@ class AMLClient {
   /// [google.cloud.financialservices.v1.GetEngineConfigRequest]: @googleapis_reference_link{google/cloud/financialservices/v1/engine_config.proto#L222}
   ///
   // clang-format on
-  StatusOr<google::cloud::financialservices::v1::EngineConfig> GetEngineConfig(
-      google::cloud::financialservices::v1::GetEngineConfigRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::cloud::financialservices::v1::EngineConfig>
+  GetEngineConfig(google::cloud::financialservices::v1::GetEngineConfigRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2121,10 +1995,7 @@ class AMLClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::financialservices::v1::EngineConfig>>
-  CreateEngineConfig(
-      std::string const& parent,
-      google::cloud::financialservices::v1::EngineConfig const& engine_config,
-      std::string const& engine_config_id, Options opts = {});
+  CreateEngineConfig(std::string const& parent, google::cloud::financialservices::v1::EngineConfig const& engine_config, std::string const& engine_config_id, Options opts = {});
 
   // clang-format off
   ///
@@ -2137,10 +2008,8 @@ class AMLClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateEngineConfig(
-      NoAwaitTag, std::string const& parent,
-      google::cloud::financialservices::v1::EngineConfig const& engine_config,
-      std::string const& engine_config_id, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateEngineConfig(NoAwaitTag, std::string const& parent, google::cloud::financialservices::v1::EngineConfig const& engine_config, std::string const& engine_config_id, Options opts = {});
 
   // clang-format off
   ///
@@ -2177,10 +2046,7 @@ class AMLClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::financialservices::v1::EngineConfig>>
-  CreateEngineConfig(
-      google::cloud::financialservices::v1::CreateEngineConfigRequest const&
-          request,
-      Options opts = {});
+  CreateEngineConfig(google::cloud::financialservices::v1::CreateEngineConfigRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2193,11 +2059,8 @@ class AMLClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateEngineConfig(
-      NoAwaitTag,
-      google::cloud::financialservices::v1::CreateEngineConfigRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateEngineConfig(NoAwaitTag, google::cloud::financialservices::v1::CreateEngineConfigRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2209,8 +2072,7 @@ class AMLClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::financialservices::v1::EngineConfig>>
-  CreateEngineConfig(google::longrunning::Operation const& operation,
-                     Options opts = {});
+  CreateEngineConfig(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -2248,9 +2110,7 @@ class AMLClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::financialservices::v1::EngineConfig>>
-  UpdateEngineConfig(
-      google::cloud::financialservices::v1::EngineConfig const& engine_config,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  UpdateEngineConfig(google::cloud::financialservices::v1::EngineConfig const& engine_config, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -2263,10 +2123,8 @@ class AMLClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateEngineConfig(
-      NoAwaitTag,
-      google::cloud::financialservices::v1::EngineConfig const& engine_config,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateEngineConfig(NoAwaitTag, google::cloud::financialservices::v1::EngineConfig const& engine_config, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -2303,10 +2161,7 @@ class AMLClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::financialservices::v1::EngineConfig>>
-  UpdateEngineConfig(
-      google::cloud::financialservices::v1::UpdateEngineConfigRequest const&
-          request,
-      Options opts = {});
+  UpdateEngineConfig(google::cloud::financialservices::v1::UpdateEngineConfigRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2319,11 +2174,8 @@ class AMLClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateEngineConfig(
-      NoAwaitTag,
-      google::cloud::financialservices::v1::UpdateEngineConfigRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateEngineConfig(NoAwaitTag, google::cloud::financialservices::v1::UpdateEngineConfigRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2335,8 +2187,7 @@ class AMLClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::financialservices::v1::EngineConfig>>
-  UpdateEngineConfig(google::longrunning::Operation const& operation,
-                     Options opts = {});
+  UpdateEngineConfig(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -2371,13 +2222,8 @@ class AMLClient {
   /// [google.cloud.financialservices.v1.ExportEngineConfigMetadataResponse]: @googleapis_reference_link{google/cloud/financialservices/v1/engine_config.proto#L336}
   ///
   // clang-format on
-  future<StatusOr<
-      google::cloud::financialservices::v1::ExportEngineConfigMetadataResponse>>
-  ExportEngineConfigMetadata(
-      std::string const& engine_config,
-      google::cloud::financialservices::v1::BigQueryDestination const&
-          structured_metadata_destination,
-      Options opts = {});
+  future<StatusOr<google::cloud::financialservices::v1::ExportEngineConfigMetadataResponse>>
+  ExportEngineConfigMetadata(std::string const& engine_config, google::cloud::financialservices::v1::BigQueryDestination const& structured_metadata_destination, Options opts = {});
 
   // clang-format off
   ///
@@ -2390,11 +2236,8 @@ class AMLClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> ExportEngineConfigMetadata(
-      NoAwaitTag, std::string const& engine_config,
-      google::cloud::financialservices::v1::BigQueryDestination const&
-          structured_metadata_destination,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  ExportEngineConfigMetadata(NoAwaitTag, std::string const& engine_config, google::cloud::financialservices::v1::BigQueryDestination const& structured_metadata_destination, Options opts = {});
 
   // clang-format off
   ///
@@ -2433,12 +2276,8 @@ class AMLClient {
   /// [google.cloud.financialservices.v1.ExportEngineConfigMetadataResponse]: @googleapis_reference_link{google/cloud/financialservices/v1/engine_config.proto#L336}
   ///
   // clang-format on
-  future<StatusOr<
-      google::cloud::financialservices::v1::ExportEngineConfigMetadataResponse>>
-  ExportEngineConfigMetadata(
-      google::cloud::financialservices::v1::
-          ExportEngineConfigMetadataRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::financialservices::v1::ExportEngineConfigMetadataResponse>>
+  ExportEngineConfigMetadata(google::cloud::financialservices::v1::ExportEngineConfigMetadataRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2451,11 +2290,8 @@ class AMLClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> ExportEngineConfigMetadata(
-      NoAwaitTag,
-      google::cloud::financialservices::v1::
-          ExportEngineConfigMetadataRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  ExportEngineConfigMetadata(NoAwaitTag, google::cloud::financialservices::v1::ExportEngineConfigMetadataRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2466,10 +2302,8 @@ class AMLClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<
-      google::cloud::financialservices::v1::ExportEngineConfigMetadataResponse>>
-  ExportEngineConfigMetadata(google::longrunning::Operation const& operation,
-                             Options opts = {});
+  future<StatusOr<google::cloud::financialservices::v1::ExportEngineConfigMetadataResponse>>
+  ExportEngineConfigMetadata(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -2514,8 +2348,8 @@ class AMLClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteEngineConfig(
-      NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteEngineConfig(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2552,10 +2386,7 @@ class AMLClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::financialservices::v1::OperationMetadata>>
-  DeleteEngineConfig(
-      google::cloud::financialservices::v1::DeleteEngineConfigRequest const&
-          request,
-      Options opts = {});
+  DeleteEngineConfig(google::cloud::financialservices::v1::DeleteEngineConfigRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2568,11 +2399,8 @@ class AMLClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteEngineConfig(
-      NoAwaitTag,
-      google::cloud::financialservices::v1::DeleteEngineConfigRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteEngineConfig(NoAwaitTag, google::cloud::financialservices::v1::DeleteEngineConfigRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2584,8 +2412,7 @@ class AMLClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::financialservices::v1::OperationMetadata>>
-  DeleteEngineConfig(google::longrunning::Operation const& operation,
-                     Options opts = {});
+  DeleteEngineConfig(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -2640,10 +2467,7 @@ class AMLClient {
   ///
   // clang-format on
   StatusOr<google::cloud::financialservices::v1::EngineVersion>
-  GetEngineVersion(
-      google::cloud::financialservices::v1::GetEngineVersionRequest const&
-          request,
-      Options opts = {});
+  GetEngineVersion(google::cloud::financialservices::v1::GetEngineVersionRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2716,9 +2540,7 @@ class AMLClient {
   ///
   // clang-format on
   StreamRange<google::cloud::financialservices::v1::EngineVersion>
-  ListEngineVersions(
-      google::cloud::financialservices::v1::ListEngineVersionsRequest request,
-      Options opts = {});
+  ListEngineVersions(google::cloud::financialservices::v1::ListEngineVersionsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -2791,10 +2613,7 @@ class AMLClient {
   ///
   // clang-format on
   StreamRange<google::cloud::financialservices::v1::PredictionResult>
-  ListPredictionResults(
-      google::cloud::financialservices::v1::ListPredictionResultsRequest
-          request,
-      Options opts = {});
+  ListPredictionResults(google::cloud::financialservices::v1::ListPredictionResultsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -2849,10 +2668,7 @@ class AMLClient {
   ///
   // clang-format on
   StatusOr<google::cloud::financialservices::v1::PredictionResult>
-  GetPredictionResult(
-      google::cloud::financialservices::v1::GetPredictionResultRequest const&
-          request,
-      Options opts = {});
+  GetPredictionResult(google::cloud::financialservices::v1::GetPredictionResultRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2886,11 +2702,7 @@ class AMLClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::financialservices::v1::PredictionResult>>
-  CreatePredictionResult(
-      std::string const& parent,
-      google::cloud::financialservices::v1::PredictionResult const&
-          prediction_result,
-      std::string const& prediction_result_id, Options opts = {});
+  CreatePredictionResult(std::string const& parent, google::cloud::financialservices::v1::PredictionResult const& prediction_result, std::string const& prediction_result_id, Options opts = {});
 
   // clang-format off
   ///
@@ -2903,11 +2715,8 @@ class AMLClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreatePredictionResult(
-      NoAwaitTag, std::string const& parent,
-      google::cloud::financialservices::v1::PredictionResult const&
-          prediction_result,
-      std::string const& prediction_result_id, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreatePredictionResult(NoAwaitTag, std::string const& parent, google::cloud::financialservices::v1::PredictionResult const& prediction_result, std::string const& prediction_result_id, Options opts = {});
 
   // clang-format off
   ///
@@ -2944,10 +2753,7 @@ class AMLClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::financialservices::v1::PredictionResult>>
-  CreatePredictionResult(
-      google::cloud::financialservices::v1::CreatePredictionResultRequest const&
-          request,
-      Options opts = {});
+  CreatePredictionResult(google::cloud::financialservices::v1::CreatePredictionResultRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2960,11 +2766,8 @@ class AMLClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreatePredictionResult(
-      NoAwaitTag,
-      google::cloud::financialservices::v1::CreatePredictionResultRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreatePredictionResult(NoAwaitTag, google::cloud::financialservices::v1::CreatePredictionResultRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2976,8 +2779,7 @@ class AMLClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::financialservices::v1::PredictionResult>>
-  CreatePredictionResult(google::longrunning::Operation const& operation,
-                         Options opts = {});
+  CreatePredictionResult(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -3015,10 +2817,7 @@ class AMLClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::financialservices::v1::PredictionResult>>
-  UpdatePredictionResult(
-      google::cloud::financialservices::v1::PredictionResult const&
-          prediction_result,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  UpdatePredictionResult(google::cloud::financialservices::v1::PredictionResult const& prediction_result, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -3031,11 +2830,8 @@ class AMLClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdatePredictionResult(
-      NoAwaitTag,
-      google::cloud::financialservices::v1::PredictionResult const&
-          prediction_result,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdatePredictionResult(NoAwaitTag, google::cloud::financialservices::v1::PredictionResult const& prediction_result, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -3072,10 +2868,7 @@ class AMLClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::financialservices::v1::PredictionResult>>
-  UpdatePredictionResult(
-      google::cloud::financialservices::v1::UpdatePredictionResultRequest const&
-          request,
-      Options opts = {});
+  UpdatePredictionResult(google::cloud::financialservices::v1::UpdatePredictionResultRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -3088,11 +2881,8 @@ class AMLClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdatePredictionResult(
-      NoAwaitTag,
-      google::cloud::financialservices::v1::UpdatePredictionResultRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdatePredictionResult(NoAwaitTag, google::cloud::financialservices::v1::UpdatePredictionResultRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -3104,8 +2894,7 @@ class AMLClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::financialservices::v1::PredictionResult>>
-  UpdatePredictionResult(google::longrunning::Operation const& operation,
-                         Options opts = {});
+  UpdatePredictionResult(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -3140,13 +2929,8 @@ class AMLClient {
   /// [google.cloud.financialservices.v1.ExportPredictionResultMetadataResponse]: @googleapis_reference_link{google/cloud/financialservices/v1/prediction_result.proto#L293}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::financialservices::v1::
-                      ExportPredictionResultMetadataResponse>>
-  ExportPredictionResultMetadata(
-      std::string const& prediction_result,
-      google::cloud::financialservices::v1::BigQueryDestination const&
-          structured_metadata_destination,
-      Options opts = {});
+  future<StatusOr<google::cloud::financialservices::v1::ExportPredictionResultMetadataResponse>>
+  ExportPredictionResultMetadata(std::string const& prediction_result, google::cloud::financialservices::v1::BigQueryDestination const& structured_metadata_destination, Options opts = {});
 
   // clang-format off
   ///
@@ -3159,11 +2943,8 @@ class AMLClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> ExportPredictionResultMetadata(
-      NoAwaitTag, std::string const& prediction_result,
-      google::cloud::financialservices::v1::BigQueryDestination const&
-          structured_metadata_destination,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  ExportPredictionResultMetadata(NoAwaitTag, std::string const& prediction_result, google::cloud::financialservices::v1::BigQueryDestination const& structured_metadata_destination, Options opts = {});
 
   // clang-format off
   ///
@@ -3202,12 +2983,8 @@ class AMLClient {
   /// [google.cloud.financialservices.v1.ExportPredictionResultMetadataResponse]: @googleapis_reference_link{google/cloud/financialservices/v1/prediction_result.proto#L293}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::financialservices::v1::
-                      ExportPredictionResultMetadataResponse>>
-  ExportPredictionResultMetadata(
-      google::cloud::financialservices::v1::
-          ExportPredictionResultMetadataRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::financialservices::v1::ExportPredictionResultMetadataResponse>>
+  ExportPredictionResultMetadata(google::cloud::financialservices::v1::ExportPredictionResultMetadataRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -3220,11 +2997,8 @@ class AMLClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> ExportPredictionResultMetadata(
-      NoAwaitTag,
-      google::cloud::financialservices::v1::
-          ExportPredictionResultMetadataRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  ExportPredictionResultMetadata(NoAwaitTag, google::cloud::financialservices::v1::ExportPredictionResultMetadataRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -3235,10 +3009,8 @@ class AMLClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::financialservices::v1::
-                      ExportPredictionResultMetadataResponse>>
-  ExportPredictionResultMetadata(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::financialservices::v1::ExportPredictionResultMetadataResponse>>
+  ExportPredictionResultMetadata(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -3283,8 +3055,8 @@ class AMLClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeletePredictionResult(
-      NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeletePredictionResult(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -3321,10 +3093,7 @@ class AMLClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::financialservices::v1::OperationMetadata>>
-  DeletePredictionResult(
-      google::cloud::financialservices::v1::DeletePredictionResultRequest const&
-          request,
-      Options opts = {});
+  DeletePredictionResult(google::cloud::financialservices::v1::DeletePredictionResultRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -3337,11 +3106,8 @@ class AMLClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeletePredictionResult(
-      NoAwaitTag,
-      google::cloud::financialservices::v1::DeletePredictionResultRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeletePredictionResult(NoAwaitTag, google::cloud::financialservices::v1::DeletePredictionResultRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -3353,8 +3119,7 @@ class AMLClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::financialservices::v1::OperationMetadata>>
-  DeletePredictionResult(google::longrunning::Operation const& operation,
-                         Options opts = {});
+  DeletePredictionResult(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -3427,9 +3192,7 @@ class AMLClient {
   ///
   // clang-format on
   StreamRange<google::cloud::financialservices::v1::BacktestResult>
-  ListBacktestResults(
-      google::cloud::financialservices::v1::ListBacktestResultsRequest request,
-      Options opts = {});
+  ListBacktestResults(google::cloud::financialservices::v1::ListBacktestResultsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -3484,10 +3247,7 @@ class AMLClient {
   ///
   // clang-format on
   StatusOr<google::cloud::financialservices::v1::BacktestResult>
-  GetBacktestResult(
-      google::cloud::financialservices::v1::GetBacktestResultRequest const&
-          request,
-      Options opts = {});
+  GetBacktestResult(google::cloud::financialservices::v1::GetBacktestResultRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -3521,11 +3281,7 @@ class AMLClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::financialservices::v1::BacktestResult>>
-  CreateBacktestResult(
-      std::string const& parent,
-      google::cloud::financialservices::v1::BacktestResult const&
-          backtest_result,
-      std::string const& backtest_result_id, Options opts = {});
+  CreateBacktestResult(std::string const& parent, google::cloud::financialservices::v1::BacktestResult const& backtest_result, std::string const& backtest_result_id, Options opts = {});
 
   // clang-format off
   ///
@@ -3538,11 +3294,8 @@ class AMLClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateBacktestResult(
-      NoAwaitTag, std::string const& parent,
-      google::cloud::financialservices::v1::BacktestResult const&
-          backtest_result,
-      std::string const& backtest_result_id, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateBacktestResult(NoAwaitTag, std::string const& parent, google::cloud::financialservices::v1::BacktestResult const& backtest_result, std::string const& backtest_result_id, Options opts = {});
 
   // clang-format off
   ///
@@ -3579,10 +3332,7 @@ class AMLClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::financialservices::v1::BacktestResult>>
-  CreateBacktestResult(
-      google::cloud::financialservices::v1::CreateBacktestResultRequest const&
-          request,
-      Options opts = {});
+  CreateBacktestResult(google::cloud::financialservices::v1::CreateBacktestResultRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -3595,11 +3345,8 @@ class AMLClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateBacktestResult(
-      NoAwaitTag,
-      google::cloud::financialservices::v1::CreateBacktestResultRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateBacktestResult(NoAwaitTag, google::cloud::financialservices::v1::CreateBacktestResultRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -3611,8 +3358,7 @@ class AMLClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::financialservices::v1::BacktestResult>>
-  CreateBacktestResult(google::longrunning::Operation const& operation,
-                       Options opts = {});
+  CreateBacktestResult(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -3650,10 +3396,7 @@ class AMLClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::financialservices::v1::BacktestResult>>
-  UpdateBacktestResult(
-      google::cloud::financialservices::v1::BacktestResult const&
-          backtest_result,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  UpdateBacktestResult(google::cloud::financialservices::v1::BacktestResult const& backtest_result, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -3666,11 +3409,8 @@ class AMLClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateBacktestResult(
-      NoAwaitTag,
-      google::cloud::financialservices::v1::BacktestResult const&
-          backtest_result,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateBacktestResult(NoAwaitTag, google::cloud::financialservices::v1::BacktestResult const& backtest_result, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -3707,10 +3447,7 @@ class AMLClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::financialservices::v1::BacktestResult>>
-  UpdateBacktestResult(
-      google::cloud::financialservices::v1::UpdateBacktestResultRequest const&
-          request,
-      Options opts = {});
+  UpdateBacktestResult(google::cloud::financialservices::v1::UpdateBacktestResultRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -3723,11 +3460,8 @@ class AMLClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateBacktestResult(
-      NoAwaitTag,
-      google::cloud::financialservices::v1::UpdateBacktestResultRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateBacktestResult(NoAwaitTag, google::cloud::financialservices::v1::UpdateBacktestResultRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -3739,8 +3473,7 @@ class AMLClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::financialservices::v1::BacktestResult>>
-  UpdateBacktestResult(google::longrunning::Operation const& operation,
-                       Options opts = {});
+  UpdateBacktestResult(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -3775,13 +3508,8 @@ class AMLClient {
   /// [google.cloud.financialservices.v1.ExportBacktestResultMetadataResponse]: @googleapis_reference_link{google/cloud/financialservices/v1/backtest_result.proto#L292}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::financialservices::v1::
-                      ExportBacktestResultMetadataResponse>>
-  ExportBacktestResultMetadata(
-      std::string const& backtest_result,
-      google::cloud::financialservices::v1::BigQueryDestination const&
-          structured_metadata_destination,
-      Options opts = {});
+  future<StatusOr<google::cloud::financialservices::v1::ExportBacktestResultMetadataResponse>>
+  ExportBacktestResultMetadata(std::string const& backtest_result, google::cloud::financialservices::v1::BigQueryDestination const& structured_metadata_destination, Options opts = {});
 
   // clang-format off
   ///
@@ -3794,11 +3522,8 @@ class AMLClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> ExportBacktestResultMetadata(
-      NoAwaitTag, std::string const& backtest_result,
-      google::cloud::financialservices::v1::BigQueryDestination const&
-          structured_metadata_destination,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  ExportBacktestResultMetadata(NoAwaitTag, std::string const& backtest_result, google::cloud::financialservices::v1::BigQueryDestination const& structured_metadata_destination, Options opts = {});
 
   // clang-format off
   ///
@@ -3837,12 +3562,8 @@ class AMLClient {
   /// [google.cloud.financialservices.v1.ExportBacktestResultMetadataResponse]: @googleapis_reference_link{google/cloud/financialservices/v1/backtest_result.proto#L292}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::financialservices::v1::
-                      ExportBacktestResultMetadataResponse>>
-  ExportBacktestResultMetadata(
-      google::cloud::financialservices::v1::
-          ExportBacktestResultMetadataRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::financialservices::v1::ExportBacktestResultMetadataResponse>>
+  ExportBacktestResultMetadata(google::cloud::financialservices::v1::ExportBacktestResultMetadataRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -3855,11 +3576,8 @@ class AMLClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> ExportBacktestResultMetadata(
-      NoAwaitTag,
-      google::cloud::financialservices::v1::
-          ExportBacktestResultMetadataRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  ExportBacktestResultMetadata(NoAwaitTag, google::cloud::financialservices::v1::ExportBacktestResultMetadataRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -3870,10 +3588,8 @@ class AMLClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::financialservices::v1::
-                      ExportBacktestResultMetadataResponse>>
-  ExportBacktestResultMetadata(google::longrunning::Operation const& operation,
-                               Options opts = {});
+  future<StatusOr<google::cloud::financialservices::v1::ExportBacktestResultMetadataResponse>>
+  ExportBacktestResultMetadata(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -3918,8 +3634,8 @@ class AMLClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteBacktestResult(
-      NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteBacktestResult(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -3956,10 +3672,7 @@ class AMLClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::financialservices::v1::OperationMetadata>>
-  DeleteBacktestResult(
-      google::cloud::financialservices::v1::DeleteBacktestResultRequest const&
-          request,
-      Options opts = {});
+  DeleteBacktestResult(google::cloud::financialservices::v1::DeleteBacktestResultRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -3972,11 +3685,8 @@ class AMLClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteBacktestResult(
-      NoAwaitTag,
-      google::cloud::financialservices::v1::DeleteBacktestResultRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteBacktestResult(NoAwaitTag, google::cloud::financialservices::v1::DeleteBacktestResultRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -3988,8 +3698,7 @@ class AMLClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::financialservices::v1::OperationMetadata>>
-  DeleteBacktestResult(google::longrunning::Operation const& operation,
-                       Options opts = {});
+  DeleteBacktestResult(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -4027,8 +3736,8 @@ class AMLClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request, Options opts = {});
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -4057,9 +3766,8 @@ class AMLClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -4094,8 +3802,8 @@ class AMLClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -4134,8 +3842,8 @@ class AMLClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -4161,8 +3869,8 @@ class AMLClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -4193,9 +3901,8 @@ class AMLClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -4219,7 +3926,8 @@ class AMLClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status DeleteOperation(std::string const& name, Options opts = {});
+  Status
+  DeleteOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -4248,9 +3956,8 @@ class AMLClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request,
-      Options opts = {});
+  Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -4284,7 +3991,8 @@ class AMLClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(std::string const& name, Options opts = {});
+  Status
+  CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -4323,9 +4031,8 @@ class AMLClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request,
-      Options opts = {});
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<AMLConnection> connection_;

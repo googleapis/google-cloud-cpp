@@ -35,29 +35,25 @@ class KeyDashboardServiceStub {
  public:
   virtual ~KeyDashboardServiceStub() = 0;
 
-  virtual StatusOr<google::cloud::kms::inventory::v1::ListCryptoKeysResponse>
-  ListCryptoKeys(grpc::ClientContext& context, Options const& options,
-                 google::cloud::kms::inventory::v1::ListCryptoKeysRequest const&
-                     request) = 0;
+  virtual StatusOr<google::cloud::kms::inventory::v1::ListCryptoKeysResponse> ListCryptoKeys(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::kms::inventory::v1::ListCryptoKeysRequest const& request) = 0;
 };
 
 class DefaultKeyDashboardServiceStub : public KeyDashboardServiceStub {
  public:
   explicit DefaultKeyDashboardServiceStub(
-      std::unique_ptr<
-          google::cloud::kms::inventory::v1::KeyDashboardService::StubInterface>
-          grpc_stub)
+      std::unique_ptr<google::cloud::kms::inventory::v1::KeyDashboardService::StubInterface> grpc_stub)
       : grpc_stub_(std::move(grpc_stub)) {}
 
-  StatusOr<google::cloud::kms::inventory::v1::ListCryptoKeysResponse>
-  ListCryptoKeys(grpc::ClientContext& context, Options const& options,
-                 google::cloud::kms::inventory::v1::ListCryptoKeysRequest const&
-                     request) override;
+  StatusOr<google::cloud::kms::inventory::v1::ListCryptoKeysResponse> ListCryptoKeys(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::kms::inventory::v1::ListCryptoKeysRequest const& request) override;
 
  private:
-  std::unique_ptr<
-      google::cloud::kms::inventory::v1::KeyDashboardService::StubInterface>
-      grpc_stub_;
+  std::unique_ptr<google::cloud::kms::inventory::v1::KeyDashboardService::StubInterface> grpc_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

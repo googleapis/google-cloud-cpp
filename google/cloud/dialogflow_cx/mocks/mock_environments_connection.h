@@ -42,37 +42,29 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockEnvironmentsConnection
-    : public dialogflow_cx::EnvironmentsConnection {
+class MockEnvironmentsConnection : public dialogflow_cx::EnvironmentsConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(
-      (StreamRange<google::cloud::dialogflow::cx::v3::Environment>),
-      ListEnvironments,
-      (google::cloud::dialogflow::cx::v3::ListEnvironmentsRequest request),
-      (override));
+  MOCK_METHOD((StreamRange<google::cloud::dialogflow::cx::v3::Environment>),
+  ListEnvironments,
+  (google::cloud::dialogflow::cx::v3::ListEnvironmentsRequest request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::cx::v3::Environment>, GetEnvironment,
-      (google::cloud::dialogflow::cx::v3::GetEnvironmentRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::dialogflow::cx::v3::Environment>,
+  GetEnvironment,
+  (google::cloud::dialogflow::cx::v3::GetEnvironmentRequest const& request), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// CreateEnvironment(Matcher<google::cloud::dialogflow::cx::v3::CreateEnvironmentRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, CreateEnvironment(Matcher<google::cloud::dialogflow::cx::v3::CreateEnvironmentRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::dialogflow::cx::v3::Environment>>,
-      CreateEnvironment,
-      (google::cloud::dialogflow::cx::v3::CreateEnvironmentRequest const&
-           request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::dialogflow::cx::v3::Environment>>,
+  CreateEnvironment,
+  (google::cloud::dialogflow::cx::v3::CreateEnvironmentRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -80,40 +72,33 @@ class MockEnvironmentsConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, CreateEnvironment(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, CreateEnvironment,
-      (NoAwaitTag,
-       google::cloud::dialogflow::cx::v3::CreateEnvironmentRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  CreateEnvironment, (NoAwaitTag,
+    google::cloud::dialogflow::cx::v3::CreateEnvironmentRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// CreateEnvironment(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock, CreateEnvironment(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::dialogflow::cx::v3::Environment>>,
-              CreateEnvironment,
-              (google::longrunning::Operation const& operation), (override));
+  CreateEnvironment, (
+    google::longrunning::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// UpdateEnvironment(Matcher<google::cloud::dialogflow::cx::v3::UpdateEnvironmentRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, UpdateEnvironment(Matcher<google::cloud::dialogflow::cx::v3::UpdateEnvironmentRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::dialogflow::cx::v3::Environment>>,
-      UpdateEnvironment,
-      (google::cloud::dialogflow::cx::v3::UpdateEnvironmentRequest const&
-           request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::dialogflow::cx::v3::Environment>>,
+  UpdateEnvironment,
+  (google::cloud::dialogflow::cx::v3::UpdateEnvironmentRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -121,54 +106,41 @@ class MockEnvironmentsConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, UpdateEnvironment(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, UpdateEnvironment,
-      (NoAwaitTag,
-       google::cloud::dialogflow::cx::v3::UpdateEnvironmentRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  UpdateEnvironment, (NoAwaitTag,
+    google::cloud::dialogflow::cx::v3::UpdateEnvironmentRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// UpdateEnvironment(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock, UpdateEnvironment(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::dialogflow::cx::v3::Environment>>,
-              UpdateEnvironment,
-              (google::longrunning::Operation const& operation), (override));
+  UpdateEnvironment, (
+    google::longrunning::Operation const& operation), (override));
 
-  MOCK_METHOD(
-      Status, DeleteEnvironment,
-      (google::cloud::dialogflow::cx::v3::DeleteEnvironmentRequest const&
-           request),
-      (override));
+  MOCK_METHOD(Status,
+  DeleteEnvironment,
+  (google::cloud::dialogflow::cx::v3::DeleteEnvironmentRequest const& request), (override));
 
-  MOCK_METHOD(
-      (StreamRange<google::cloud::dialogflow::cx::v3::Environment>),
-      LookupEnvironmentHistory,
-      (google::cloud::dialogflow::cx::v3::LookupEnvironmentHistoryRequest
-           request),
-      (override));
+  MOCK_METHOD((StreamRange<google::cloud::dialogflow::cx::v3::Environment>),
+  LookupEnvironmentHistory,
+  (google::cloud::dialogflow::cx::v3::LookupEnvironmentHistoryRequest request), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// RunContinuousTest(Matcher<google::cloud::dialogflow::cx::v3::RunContinuousTestRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, RunContinuousTest(Matcher<google::cloud::dialogflow::cx::v3::RunContinuousTestRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<
-          google::cloud::dialogflow::cx::v3::RunContinuousTestResponse>>,
-      RunContinuousTest,
-      (google::cloud::dialogflow::cx::v3::RunContinuousTestRequest const&
-           request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::dialogflow::cx::v3::RunContinuousTestResponse>>,
+  RunContinuousTest,
+  (google::cloud::dialogflow::cx::v3::RunContinuousTestRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -176,48 +148,37 @@ class MockEnvironmentsConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, RunContinuousTest(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, RunContinuousTest,
-      (NoAwaitTag,
-       google::cloud::dialogflow::cx::v3::RunContinuousTestRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  RunContinuousTest, (NoAwaitTag,
+    google::cloud::dialogflow::cx::v3::RunContinuousTestRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// RunContinuousTest(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock, RunContinuousTest(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<
-          google::cloud::dialogflow::cx::v3::RunContinuousTestResponse>>,
-      RunContinuousTest, (google::longrunning::Operation const& operation),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::dialogflow::cx::v3::RunContinuousTestResponse>>,
+  RunContinuousTest, (
+    google::longrunning::Operation const& operation), (override));
 
-  MOCK_METHOD(
-      (StreamRange<google::cloud::dialogflow::cx::v3::ContinuousTestResult>),
-      ListContinuousTestResults,
-      (google::cloud::dialogflow::cx::v3::ListContinuousTestResultsRequest
-           request),
-      (override));
+  MOCK_METHOD((StreamRange<google::cloud::dialogflow::cx::v3::ContinuousTestResult>),
+  ListContinuousTestResults,
+  (google::cloud::dialogflow::cx::v3::ListContinuousTestResultsRequest request), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeployFlow(Matcher<google::cloud::dialogflow::cx::v3::DeployFlowRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, DeployFlow(Matcher<google::cloud::dialogflow::cx::v3::DeployFlowRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::dialogflow::cx::v3::DeployFlowResponse>>,
-      DeployFlow,
-      (google::cloud::dialogflow::cx::v3::DeployFlowRequest const& request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::dialogflow::cx::v3::DeployFlowResponse>>,
+  DeployFlow,
+  (google::cloud::dialogflow::cx::v3::DeployFlowRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -225,43 +186,41 @@ class MockEnvironmentsConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, DeployFlow(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, DeployFlow,
-      (NoAwaitTag,
-       google::cloud::dialogflow::cx::v3::DeployFlowRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  DeployFlow, (NoAwaitTag,
+    google::cloud::dialogflow::cx::v3::DeployFlowRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeployFlow(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, DeployFlow(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::dialogflow::cx::v3::DeployFlowResponse>>,
-      DeployFlow, (google::longrunning::Operation const& operation),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::dialogflow::cx::v3::DeployFlowResponse>>,
+  DeployFlow, (
+    google::longrunning::Operation const& operation), (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::location::Location>), ListLocations,
-              (google::cloud::location::ListLocationsRequest request),
-              (override));
+  MOCK_METHOD((StreamRange<google::cloud::location::Location>),
+  ListLocations,
+  (google::cloud::location::ListLocationsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::location::Location>, GetLocation,
-              (google::cloud::location::GetLocationRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::location::Location>,
+  GetLocation,
+  (google::cloud::location::GetLocationRequest const& request), (override));
 
-  MOCK_METHOD((StreamRange<google::longrunning::Operation>), ListOperations,
-              (google::longrunning::ListOperationsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::longrunning::Operation>),
+  ListOperations,
+  (google::longrunning::ListOperationsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
-              (google::longrunning::GetOperationRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  GetOperation,
+  (google::longrunning::GetOperationRequest const& request), (override));
 
-  MOCK_METHOD(Status, CancelOperation,
-              (google::longrunning::CancelOperationRequest const& request),
-              (override));
+  MOCK_METHOD(Status,
+  CancelOperation,
+  (google::longrunning::CancelOperationRequest const& request), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -35,25 +35,21 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options InstanceServiceDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_INSTANCE_SERVICE_ENDPOINT", "",
-      "GOOGLE_CLOUD_CPP_INSTANCE_SERVICE_AUTHORITY",
+      std::move(options), "GOOGLE_CLOUD_CPP_INSTANCE_SERVICE_ENDPOINT",
+      "", "GOOGLE_CLOUD_CPP_INSTANCE_SERVICE_AUTHORITY",
       "chronicle.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<chronicle_v1::InstanceServiceRetryPolicyOption>()) {
     options.set<chronicle_v1::InstanceServiceRetryPolicyOption>(
         chronicle_v1::InstanceServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
-            .clone());
+            std::chrono::minutes(30)).clone());
   }
   if (!options.has<chronicle_v1::InstanceServiceBackoffPolicyOption>()) {
     options.set<chronicle_v1::InstanceServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(
-            std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
-            .clone());
+        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
   }
-  if (!options.has<
-          chronicle_v1::InstanceServiceConnectionIdempotencyPolicyOption>()) {
+  if (!options.has<chronicle_v1::InstanceServiceConnectionIdempotencyPolicyOption>()) {
     options.set<chronicle_v1::InstanceServiceConnectionIdempotencyPolicyOption>(
         chronicle_v1::MakeDefaultInstanceServiceConnectionIdempotencyPolicy());
   }

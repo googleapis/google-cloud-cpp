@@ -34,20 +34,17 @@ class CloudControlsPartnerMonitoringConnectionIdempotencyPolicy {
   virtual ~CloudControlsPartnerMonitoringConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<
-      CloudControlsPartnerMonitoringConnectionIdempotencyPolicy>
-  clone() const;
+  virtual std::unique_ptr<CloudControlsPartnerMonitoringConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency ListViolations(
-      google::cloud::cloudcontrolspartner::v1::ListViolationsRequest request);
+  virtual google::cloud::Idempotency
+  ListViolations(google::cloud::cloudcontrolspartner::v1::ListViolationsRequest request);
 
-  virtual google::cloud::Idempotency GetViolation(
-      google::cloud::cloudcontrolspartner::v1::GetViolationRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  GetViolation(google::cloud::cloudcontrolspartner::v1::GetViolationRequest const& request);
 };
 
 std::unique_ptr<CloudControlsPartnerMonitoringConnectionIdempotencyPolicy>
-MakeDefaultCloudControlsPartnerMonitoringConnectionIdempotencyPolicy();
+    MakeDefaultCloudControlsPartnerMonitoringConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloudcontrolspartner_v1

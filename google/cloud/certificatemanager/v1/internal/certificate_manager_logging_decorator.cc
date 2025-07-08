@@ -32,19 +32,20 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 CertificateManagerLogging::CertificateManagerLogging(
     std::shared_ptr<CertificateManagerStub> child,
-    TracingOptions tracing_options, std::set<std::string> const&)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
+    TracingOptions tracing_options,
+    std::set<std::string> const&)
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::cloud::certificatemanager::v1::ListCertificatesResponse>
 CertificateManagerLogging::ListCertificates(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::certificatemanager::v1::ListCertificatesRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::certificatemanager::v1::ListCertificatesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::certificatemanager::v1::ListCertificatesRequest const&
-              request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::certificatemanager::v1::ListCertificatesRequest const& request) {
         return child_->ListCertificates(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -52,13 +53,13 @@ CertificateManagerLogging::ListCertificates(
 
 StatusOr<google::cloud::certificatemanager::v1::Certificate>
 CertificateManagerLogging::GetCertificate(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::certificatemanager::v1::GetCertificateRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::certificatemanager::v1::GetCertificateRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::certificatemanager::v1::GetCertificateRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::certificatemanager::v1::GetCertificateRequest const& request) {
         return child_->GetCertificate(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -66,20 +67,17 @@ CertificateManagerLogging::GetCertificate(
 
 future<StatusOr<google::longrunning::Operation>>
 CertificateManagerLogging::AsyncCreateCertificate(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::certificatemanager::v1::CreateCertificateRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::certificatemanager::v1::CreateCertificateRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::certificatemanager::v1::CreateCertificateRequest const&
-              request) {
-        return child_->AsyncCreateCertificate(cq, std::move(context),
-                                              std::move(options), request);
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::certificatemanager::v1::CreateCertificateRequest const& request) {
+        return child_->AsyncCreateCertificate(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -87,14 +85,13 @@ CertificateManagerLogging::AsyncCreateCertificate(
 
 StatusOr<google::longrunning::Operation>
 CertificateManagerLogging::CreateCertificate(
-    grpc::ClientContext& context, Options options,
-    google::cloud::certificatemanager::v1::CreateCertificateRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::certificatemanager::v1::CreateCertificateRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::certificatemanager::v1::CreateCertificateRequest const&
-              request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::certificatemanager::v1::CreateCertificateRequest const& request) {
         return child_->CreateCertificate(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -102,20 +99,17 @@ CertificateManagerLogging::CreateCertificate(
 
 future<StatusOr<google::longrunning::Operation>>
 CertificateManagerLogging::AsyncUpdateCertificate(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::certificatemanager::v1::UpdateCertificateRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::certificatemanager::v1::UpdateCertificateRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::certificatemanager::v1::UpdateCertificateRequest const&
-              request) {
-        return child_->AsyncUpdateCertificate(cq, std::move(context),
-                                              std::move(options), request);
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::certificatemanager::v1::UpdateCertificateRequest const& request) {
+        return child_->AsyncUpdateCertificate(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -123,14 +117,13 @@ CertificateManagerLogging::AsyncUpdateCertificate(
 
 StatusOr<google::longrunning::Operation>
 CertificateManagerLogging::UpdateCertificate(
-    grpc::ClientContext& context, Options options,
-    google::cloud::certificatemanager::v1::UpdateCertificateRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::certificatemanager::v1::UpdateCertificateRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::certificatemanager::v1::UpdateCertificateRequest const&
-              request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::certificatemanager::v1::UpdateCertificateRequest const& request) {
         return child_->UpdateCertificate(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -138,20 +131,17 @@ CertificateManagerLogging::UpdateCertificate(
 
 future<StatusOr<google::longrunning::Operation>>
 CertificateManagerLogging::AsyncDeleteCertificate(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::certificatemanager::v1::DeleteCertificateRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::certificatemanager::v1::DeleteCertificateRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::certificatemanager::v1::DeleteCertificateRequest const&
-              request) {
-        return child_->AsyncDeleteCertificate(cq, std::move(context),
-                                              std::move(options), request);
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::certificatemanager::v1::DeleteCertificateRequest const& request) {
+        return child_->AsyncDeleteCertificate(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -159,14 +149,13 @@ CertificateManagerLogging::AsyncDeleteCertificate(
 
 StatusOr<google::longrunning::Operation>
 CertificateManagerLogging::DeleteCertificate(
-    grpc::ClientContext& context, Options options,
-    google::cloud::certificatemanager::v1::DeleteCertificateRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::certificatemanager::v1::DeleteCertificateRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::certificatemanager::v1::DeleteCertificateRequest const&
-              request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::certificatemanager::v1::DeleteCertificateRequest const& request) {
         return child_->DeleteCertificate(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -174,13 +163,13 @@ CertificateManagerLogging::DeleteCertificate(
 
 StatusOr<google::cloud::certificatemanager::v1::ListCertificateMapsResponse>
 CertificateManagerLogging::ListCertificateMaps(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::certificatemanager::v1::ListCertificateMapsRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::certificatemanager::v1::ListCertificateMapsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::certificatemanager::v1::
-                 ListCertificateMapsRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::certificatemanager::v1::ListCertificateMapsRequest const& request) {
         return child_->ListCertificateMaps(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -188,14 +177,13 @@ CertificateManagerLogging::ListCertificateMaps(
 
 StatusOr<google::cloud::certificatemanager::v1::CertificateMap>
 CertificateManagerLogging::GetCertificateMap(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::certificatemanager::v1::GetCertificateMapRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::certificatemanager::v1::GetCertificateMapRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::certificatemanager::v1::GetCertificateMapRequest const&
-              request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::certificatemanager::v1::GetCertificateMapRequest const& request) {
         return child_->GetCertificateMap(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -203,19 +191,17 @@ CertificateManagerLogging::GetCertificateMap(
 
 future<StatusOr<google::longrunning::Operation>>
 CertificateManagerLogging::AsyncCreateCertificateMap(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::certificatemanager::v1::CreateCertificateMapRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::certificatemanager::v1::CreateCertificateMapRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::certificatemanager::v1::
-                 CreateCertificateMapRequest const& request) {
-        return child_->AsyncCreateCertificateMap(cq, std::move(context),
-                                                 std::move(options), request);
+             google::cloud::certificatemanager::v1::CreateCertificateMapRequest const& request) {
+        return child_->AsyncCreateCertificateMap(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -223,13 +209,13 @@ CertificateManagerLogging::AsyncCreateCertificateMap(
 
 StatusOr<google::longrunning::Operation>
 CertificateManagerLogging::CreateCertificateMap(
-    grpc::ClientContext& context, Options options,
-    google::cloud::certificatemanager::v1::CreateCertificateMapRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::certificatemanager::v1::CreateCertificateMapRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::certificatemanager::v1::
-                 CreateCertificateMapRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::certificatemanager::v1::CreateCertificateMapRequest const& request) {
         return child_->CreateCertificateMap(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -237,19 +223,17 @@ CertificateManagerLogging::CreateCertificateMap(
 
 future<StatusOr<google::longrunning::Operation>>
 CertificateManagerLogging::AsyncUpdateCertificateMap(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::certificatemanager::v1::UpdateCertificateMapRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::certificatemanager::v1::UpdateCertificateMapRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::certificatemanager::v1::
-                 UpdateCertificateMapRequest const& request) {
-        return child_->AsyncUpdateCertificateMap(cq, std::move(context),
-                                                 std::move(options), request);
+             google::cloud::certificatemanager::v1::UpdateCertificateMapRequest const& request) {
+        return child_->AsyncUpdateCertificateMap(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -257,13 +241,13 @@ CertificateManagerLogging::AsyncUpdateCertificateMap(
 
 StatusOr<google::longrunning::Operation>
 CertificateManagerLogging::UpdateCertificateMap(
-    grpc::ClientContext& context, Options options,
-    google::cloud::certificatemanager::v1::UpdateCertificateMapRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::certificatemanager::v1::UpdateCertificateMapRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::certificatemanager::v1::
-                 UpdateCertificateMapRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::certificatemanager::v1::UpdateCertificateMapRequest const& request) {
         return child_->UpdateCertificateMap(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -271,19 +255,17 @@ CertificateManagerLogging::UpdateCertificateMap(
 
 future<StatusOr<google::longrunning::Operation>>
 CertificateManagerLogging::AsyncDeleteCertificateMap(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::certificatemanager::v1::DeleteCertificateMapRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::certificatemanager::v1::DeleteCertificateMapRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::certificatemanager::v1::
-                 DeleteCertificateMapRequest const& request) {
-        return child_->AsyncDeleteCertificateMap(cq, std::move(context),
-                                                 std::move(options), request);
+             google::cloud::certificatemanager::v1::DeleteCertificateMapRequest const& request) {
+        return child_->AsyncDeleteCertificateMap(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -291,28 +273,27 @@ CertificateManagerLogging::AsyncDeleteCertificateMap(
 
 StatusOr<google::longrunning::Operation>
 CertificateManagerLogging::DeleteCertificateMap(
-    grpc::ClientContext& context, Options options,
-    google::cloud::certificatemanager::v1::DeleteCertificateMapRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::certificatemanager::v1::DeleteCertificateMapRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::certificatemanager::v1::
-                 DeleteCertificateMapRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::certificatemanager::v1::DeleteCertificateMapRequest const& request) {
         return child_->DeleteCertificateMap(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<
-    google::cloud::certificatemanager::v1::ListCertificateMapEntriesResponse>
+StatusOr<google::cloud::certificatemanager::v1::ListCertificateMapEntriesResponse>
 CertificateManagerLogging::ListCertificateMapEntries(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::certificatemanager::v1::
-        ListCertificateMapEntriesRequest const& request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::certificatemanager::v1::ListCertificateMapEntriesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::certificatemanager::v1::
-                 ListCertificateMapEntriesRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::certificatemanager::v1::ListCertificateMapEntriesRequest const& request) {
         return child_->ListCertificateMapEntries(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -320,13 +301,13 @@ CertificateManagerLogging::ListCertificateMapEntries(
 
 StatusOr<google::cloud::certificatemanager::v1::CertificateMapEntry>
 CertificateManagerLogging::GetCertificateMapEntry(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::certificatemanager::v1::GetCertificateMapEntryRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::certificatemanager::v1::GetCertificateMapEntryRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::certificatemanager::v1::
-                 GetCertificateMapEntryRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::certificatemanager::v1::GetCertificateMapEntryRequest const& request) {
         return child_->GetCertificateMapEntry(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -334,17 +315,15 @@ CertificateManagerLogging::GetCertificateMapEntry(
 
 future<StatusOr<google::longrunning::Operation>>
 CertificateManagerLogging::AsyncCreateCertificateMapEntry(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::certificatemanager::v1::
-        CreateCertificateMapEntryRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::certificatemanager::v1::CreateCertificateMapEntryRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::certificatemanager::v1::
-                 CreateCertificateMapEntryRequest const& request) {
+             google::cloud::certificatemanager::v1::CreateCertificateMapEntryRequest const& request) {
         return child_->AsyncCreateCertificateMapEntry(
             cq, std::move(context), std::move(options), request);
       },
@@ -354,13 +333,13 @@ CertificateManagerLogging::AsyncCreateCertificateMapEntry(
 
 StatusOr<google::longrunning::Operation>
 CertificateManagerLogging::CreateCertificateMapEntry(
-    grpc::ClientContext& context, Options options,
-    google::cloud::certificatemanager::v1::
-        CreateCertificateMapEntryRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::certificatemanager::v1::CreateCertificateMapEntryRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::certificatemanager::v1::
-                 CreateCertificateMapEntryRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::certificatemanager::v1::CreateCertificateMapEntryRequest const& request) {
         return child_->CreateCertificateMapEntry(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -368,17 +347,15 @@ CertificateManagerLogging::CreateCertificateMapEntry(
 
 future<StatusOr<google::longrunning::Operation>>
 CertificateManagerLogging::AsyncUpdateCertificateMapEntry(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::certificatemanager::v1::
-        UpdateCertificateMapEntryRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::certificatemanager::v1::UpdateCertificateMapEntryRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::certificatemanager::v1::
-                 UpdateCertificateMapEntryRequest const& request) {
+             google::cloud::certificatemanager::v1::UpdateCertificateMapEntryRequest const& request) {
         return child_->AsyncUpdateCertificateMapEntry(
             cq, std::move(context), std::move(options), request);
       },
@@ -388,13 +365,13 @@ CertificateManagerLogging::AsyncUpdateCertificateMapEntry(
 
 StatusOr<google::longrunning::Operation>
 CertificateManagerLogging::UpdateCertificateMapEntry(
-    grpc::ClientContext& context, Options options,
-    google::cloud::certificatemanager::v1::
-        UpdateCertificateMapEntryRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::certificatemanager::v1::UpdateCertificateMapEntryRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::certificatemanager::v1::
-                 UpdateCertificateMapEntryRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::certificatemanager::v1::UpdateCertificateMapEntryRequest const& request) {
         return child_->UpdateCertificateMapEntry(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -402,17 +379,15 @@ CertificateManagerLogging::UpdateCertificateMapEntry(
 
 future<StatusOr<google::longrunning::Operation>>
 CertificateManagerLogging::AsyncDeleteCertificateMapEntry(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::certificatemanager::v1::
-        DeleteCertificateMapEntryRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::certificatemanager::v1::DeleteCertificateMapEntryRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::certificatemanager::v1::
-                 DeleteCertificateMapEntryRequest const& request) {
+             google::cloud::certificatemanager::v1::DeleteCertificateMapEntryRequest const& request) {
         return child_->AsyncDeleteCertificateMapEntry(
             cq, std::move(context), std::move(options), request);
       },
@@ -422,13 +397,13 @@ CertificateManagerLogging::AsyncDeleteCertificateMapEntry(
 
 StatusOr<google::longrunning::Operation>
 CertificateManagerLogging::DeleteCertificateMapEntry(
-    grpc::ClientContext& context, Options options,
-    google::cloud::certificatemanager::v1::
-        DeleteCertificateMapEntryRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::certificatemanager::v1::DeleteCertificateMapEntryRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::certificatemanager::v1::
-                 DeleteCertificateMapEntryRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::certificatemanager::v1::DeleteCertificateMapEntryRequest const& request) {
         return child_->DeleteCertificateMapEntry(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -436,13 +411,13 @@ CertificateManagerLogging::DeleteCertificateMapEntry(
 
 StatusOr<google::cloud::certificatemanager::v1::ListDnsAuthorizationsResponse>
 CertificateManagerLogging::ListDnsAuthorizations(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::certificatemanager::v1::ListDnsAuthorizationsRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::certificatemanager::v1::ListDnsAuthorizationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::certificatemanager::v1::
-                 ListDnsAuthorizationsRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::certificatemanager::v1::ListDnsAuthorizationsRequest const& request) {
         return child_->ListDnsAuthorizations(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -450,13 +425,13 @@ CertificateManagerLogging::ListDnsAuthorizations(
 
 StatusOr<google::cloud::certificatemanager::v1::DnsAuthorization>
 CertificateManagerLogging::GetDnsAuthorization(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::certificatemanager::v1::GetDnsAuthorizationRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::certificatemanager::v1::GetDnsAuthorizationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::certificatemanager::v1::
-                 GetDnsAuthorizationRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::certificatemanager::v1::GetDnsAuthorizationRequest const& request) {
         return child_->GetDnsAuthorization(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -464,19 +439,17 @@ CertificateManagerLogging::GetDnsAuthorization(
 
 future<StatusOr<google::longrunning::Operation>>
 CertificateManagerLogging::AsyncCreateDnsAuthorization(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::certificatemanager::v1::CreateDnsAuthorizationRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::certificatemanager::v1::CreateDnsAuthorizationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::certificatemanager::v1::
-                 CreateDnsAuthorizationRequest const& request) {
-        return child_->AsyncCreateDnsAuthorization(cq, std::move(context),
-                                                   std::move(options), request);
+             google::cloud::certificatemanager::v1::CreateDnsAuthorizationRequest const& request) {
+        return child_->AsyncCreateDnsAuthorization(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -484,13 +457,13 @@ CertificateManagerLogging::AsyncCreateDnsAuthorization(
 
 StatusOr<google::longrunning::Operation>
 CertificateManagerLogging::CreateDnsAuthorization(
-    grpc::ClientContext& context, Options options,
-    google::cloud::certificatemanager::v1::CreateDnsAuthorizationRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::certificatemanager::v1::CreateDnsAuthorizationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::certificatemanager::v1::
-                 CreateDnsAuthorizationRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::certificatemanager::v1::CreateDnsAuthorizationRequest const& request) {
         return child_->CreateDnsAuthorization(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -498,19 +471,17 @@ CertificateManagerLogging::CreateDnsAuthorization(
 
 future<StatusOr<google::longrunning::Operation>>
 CertificateManagerLogging::AsyncUpdateDnsAuthorization(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::certificatemanager::v1::UpdateDnsAuthorizationRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::certificatemanager::v1::UpdateDnsAuthorizationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::certificatemanager::v1::
-                 UpdateDnsAuthorizationRequest const& request) {
-        return child_->AsyncUpdateDnsAuthorization(cq, std::move(context),
-                                                   std::move(options), request);
+             google::cloud::certificatemanager::v1::UpdateDnsAuthorizationRequest const& request) {
+        return child_->AsyncUpdateDnsAuthorization(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -518,13 +489,13 @@ CertificateManagerLogging::AsyncUpdateDnsAuthorization(
 
 StatusOr<google::longrunning::Operation>
 CertificateManagerLogging::UpdateDnsAuthorization(
-    grpc::ClientContext& context, Options options,
-    google::cloud::certificatemanager::v1::UpdateDnsAuthorizationRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::certificatemanager::v1::UpdateDnsAuthorizationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::certificatemanager::v1::
-                 UpdateDnsAuthorizationRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::certificatemanager::v1::UpdateDnsAuthorizationRequest const& request) {
         return child_->UpdateDnsAuthorization(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -532,19 +503,17 @@ CertificateManagerLogging::UpdateDnsAuthorization(
 
 future<StatusOr<google::longrunning::Operation>>
 CertificateManagerLogging::AsyncDeleteDnsAuthorization(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::certificatemanager::v1::DeleteDnsAuthorizationRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::certificatemanager::v1::DeleteDnsAuthorizationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::certificatemanager::v1::
-                 DeleteDnsAuthorizationRequest const& request) {
-        return child_->AsyncDeleteDnsAuthorization(cq, std::move(context),
-                                                   std::move(options), request);
+             google::cloud::certificatemanager::v1::DeleteDnsAuthorizationRequest const& request) {
+        return child_->AsyncDeleteDnsAuthorization(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -552,43 +521,41 @@ CertificateManagerLogging::AsyncDeleteDnsAuthorization(
 
 StatusOr<google::longrunning::Operation>
 CertificateManagerLogging::DeleteDnsAuthorization(
-    grpc::ClientContext& context, Options options,
-    google::cloud::certificatemanager::v1::DeleteDnsAuthorizationRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::certificatemanager::v1::DeleteDnsAuthorizationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::certificatemanager::v1::
-                 DeleteDnsAuthorizationRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::certificatemanager::v1::DeleteDnsAuthorizationRequest const& request) {
         return child_->DeleteDnsAuthorization(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::cloud::certificatemanager::v1::
-             ListCertificateIssuanceConfigsResponse>
+StatusOr<google::cloud::certificatemanager::v1::ListCertificateIssuanceConfigsResponse>
 CertificateManagerLogging::ListCertificateIssuanceConfigs(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::certificatemanager::v1::
-        ListCertificateIssuanceConfigsRequest const& request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::certificatemanager::v1::ListCertificateIssuanceConfigsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::certificatemanager::v1::
-                 ListCertificateIssuanceConfigsRequest const& request) {
-        return child_->ListCertificateIssuanceConfigs(context, options,
-                                                      request);
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::certificatemanager::v1::ListCertificateIssuanceConfigsRequest const& request) {
+        return child_->ListCertificateIssuanceConfigs(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::certificatemanager::v1::CertificateIssuanceConfig>
 CertificateManagerLogging::GetCertificateIssuanceConfig(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::certificatemanager::v1::
-        GetCertificateIssuanceConfigRequest const& request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::certificatemanager::v1::GetCertificateIssuanceConfigRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::certificatemanager::v1::
-                 GetCertificateIssuanceConfigRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::certificatemanager::v1::GetCertificateIssuanceConfigRequest const& request) {
         return child_->GetCertificateIssuanceConfig(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -596,17 +563,15 @@ CertificateManagerLogging::GetCertificateIssuanceConfig(
 
 future<StatusOr<google::longrunning::Operation>>
 CertificateManagerLogging::AsyncCreateCertificateIssuanceConfig(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::certificatemanager::v1::
-        CreateCertificateIssuanceConfigRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::certificatemanager::v1::CreateCertificateIssuanceConfigRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::certificatemanager::v1::
-                 CreateCertificateIssuanceConfigRequest const& request) {
+             google::cloud::certificatemanager::v1::CreateCertificateIssuanceConfigRequest const& request) {
         return child_->AsyncCreateCertificateIssuanceConfig(
             cq, std::move(context), std::move(options), request);
       },
@@ -616,32 +581,29 @@ CertificateManagerLogging::AsyncCreateCertificateIssuanceConfig(
 
 StatusOr<google::longrunning::Operation>
 CertificateManagerLogging::CreateCertificateIssuanceConfig(
-    grpc::ClientContext& context, Options options,
-    google::cloud::certificatemanager::v1::
-        CreateCertificateIssuanceConfigRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::certificatemanager::v1::CreateCertificateIssuanceConfigRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::certificatemanager::v1::
-                 CreateCertificateIssuanceConfigRequest const& request) {
-        return child_->CreateCertificateIssuanceConfig(context, options,
-                                                       request);
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::certificatemanager::v1::CreateCertificateIssuanceConfigRequest const& request) {
+        return child_->CreateCertificateIssuanceConfig(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 CertificateManagerLogging::AsyncDeleteCertificateIssuanceConfig(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::certificatemanager::v1::
-        DeleteCertificateIssuanceConfigRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::certificatemanager::v1::DeleteCertificateIssuanceConfigRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::certificatemanager::v1::
-                 DeleteCertificateIssuanceConfigRequest const& request) {
+             google::cloud::certificatemanager::v1::DeleteCertificateIssuanceConfigRequest const& request) {
         return child_->AsyncDeleteCertificateIssuanceConfig(
             cq, std::move(context), std::move(options), request);
       },
@@ -651,29 +613,27 @@ CertificateManagerLogging::AsyncDeleteCertificateIssuanceConfig(
 
 StatusOr<google::longrunning::Operation>
 CertificateManagerLogging::DeleteCertificateIssuanceConfig(
-    grpc::ClientContext& context, Options options,
-    google::cloud::certificatemanager::v1::
-        DeleteCertificateIssuanceConfigRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::certificatemanager::v1::DeleteCertificateIssuanceConfigRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::certificatemanager::v1::
-                 DeleteCertificateIssuanceConfigRequest const& request) {
-        return child_->DeleteCertificateIssuanceConfig(context, options,
-                                                       request);
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::certificatemanager::v1::DeleteCertificateIssuanceConfigRequest const& request) {
+        return child_->DeleteCertificateIssuanceConfig(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::certificatemanager::v1::ListTrustConfigsResponse>
 CertificateManagerLogging::ListTrustConfigs(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::certificatemanager::v1::ListTrustConfigsRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::certificatemanager::v1::ListTrustConfigsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::certificatemanager::v1::ListTrustConfigsRequest const&
-              request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::certificatemanager::v1::ListTrustConfigsRequest const& request) {
         return child_->ListTrustConfigs(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -681,13 +641,13 @@ CertificateManagerLogging::ListTrustConfigs(
 
 StatusOr<google::cloud::certificatemanager::v1::TrustConfig>
 CertificateManagerLogging::GetTrustConfig(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::certificatemanager::v1::GetTrustConfigRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::certificatemanager::v1::GetTrustConfigRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::certificatemanager::v1::GetTrustConfigRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::certificatemanager::v1::GetTrustConfigRequest const& request) {
         return child_->GetTrustConfig(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -695,20 +655,17 @@ CertificateManagerLogging::GetTrustConfig(
 
 future<StatusOr<google::longrunning::Operation>>
 CertificateManagerLogging::AsyncCreateTrustConfig(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::certificatemanager::v1::CreateTrustConfigRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::certificatemanager::v1::CreateTrustConfigRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::certificatemanager::v1::CreateTrustConfigRequest const&
-              request) {
-        return child_->AsyncCreateTrustConfig(cq, std::move(context),
-                                              std::move(options), request);
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::certificatemanager::v1::CreateTrustConfigRequest const& request) {
+        return child_->AsyncCreateTrustConfig(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -716,14 +673,13 @@ CertificateManagerLogging::AsyncCreateTrustConfig(
 
 StatusOr<google::longrunning::Operation>
 CertificateManagerLogging::CreateTrustConfig(
-    grpc::ClientContext& context, Options options,
-    google::cloud::certificatemanager::v1::CreateTrustConfigRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::certificatemanager::v1::CreateTrustConfigRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::certificatemanager::v1::CreateTrustConfigRequest const&
-              request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::certificatemanager::v1::CreateTrustConfigRequest const& request) {
         return child_->CreateTrustConfig(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -731,20 +687,17 @@ CertificateManagerLogging::CreateTrustConfig(
 
 future<StatusOr<google::longrunning::Operation>>
 CertificateManagerLogging::AsyncUpdateTrustConfig(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::certificatemanager::v1::UpdateTrustConfigRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::certificatemanager::v1::UpdateTrustConfigRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::certificatemanager::v1::UpdateTrustConfigRequest const&
-              request) {
-        return child_->AsyncUpdateTrustConfig(cq, std::move(context),
-                                              std::move(options), request);
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::certificatemanager::v1::UpdateTrustConfigRequest const& request) {
+        return child_->AsyncUpdateTrustConfig(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -752,14 +705,13 @@ CertificateManagerLogging::AsyncUpdateTrustConfig(
 
 StatusOr<google::longrunning::Operation>
 CertificateManagerLogging::UpdateTrustConfig(
-    grpc::ClientContext& context, Options options,
-    google::cloud::certificatemanager::v1::UpdateTrustConfigRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::certificatemanager::v1::UpdateTrustConfigRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::certificatemanager::v1::UpdateTrustConfigRequest const&
-              request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::certificatemanager::v1::UpdateTrustConfigRequest const& request) {
         return child_->UpdateTrustConfig(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -767,20 +719,17 @@ CertificateManagerLogging::UpdateTrustConfig(
 
 future<StatusOr<google::longrunning::Operation>>
 CertificateManagerLogging::AsyncDeleteTrustConfig(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::certificatemanager::v1::DeleteTrustConfigRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::certificatemanager::v1::DeleteTrustConfigRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::certificatemanager::v1::DeleteTrustConfigRequest const&
-              request) {
-        return child_->AsyncDeleteTrustConfig(cq, std::move(context),
-                                              std::move(options), request);
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::certificatemanager::v1::DeleteTrustConfigRequest const& request) {
+        return child_->AsyncDeleteTrustConfig(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -788,14 +737,13 @@ CertificateManagerLogging::AsyncDeleteTrustConfig(
 
 StatusOr<google::longrunning::Operation>
 CertificateManagerLogging::DeleteTrustConfig(
-    grpc::ClientContext& context, Options options,
-    google::cloud::certificatemanager::v1::DeleteTrustConfigRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::certificatemanager::v1::DeleteTrustConfigRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::certificatemanager::v1::DeleteTrustConfigRequest const&
-              request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::certificatemanager::v1::DeleteTrustConfigRequest const& request) {
         return child_->DeleteTrustConfig(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -803,10 +751,12 @@ CertificateManagerLogging::DeleteTrustConfig(
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 CertificateManagerLogging::ListLocations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::location::ListLocationsRequest const& request) {
         return child_->ListLocations(context, options, request);
       },
@@ -815,10 +765,12 @@ CertificateManagerLogging::ListLocations(
 
 StatusOr<google::cloud::location::Location>
 CertificateManagerLogging::GetLocation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::location::GetLocationRequest const& request) {
         return child_->GetLocation(context, options, request);
       },
@@ -827,10 +779,12 @@ CertificateManagerLogging::GetLocation(
 
 StatusOr<google::longrunning::ListOperationsResponse>
 CertificateManagerLogging::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::ListOperationsRequest const& request) {
         return child_->ListOperations(context, options, request);
       },
@@ -839,32 +793,40 @@ CertificateManagerLogging::ListOperations(
 
 StatusOr<google::longrunning::Operation>
 CertificateManagerLogging::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::GetOperationRequest const& request) {
         return child_->GetOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status CertificateManagerLogging::DeleteOperation(
-    grpc::ClientContext& context, Options const& options,
+Status
+CertificateManagerLogging::DeleteOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::DeleteOperationRequest const& request) {
         return child_->DeleteOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status CertificateManagerLogging::CancelOperation(
-    grpc::ClientContext& context, Options const& options,
+Status
+CertificateManagerLogging::CancelOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::CancelOperationRequest const& request) {
         return child_->CancelOperation(context, options, request);
       },
@@ -882,8 +844,8 @@ CertificateManagerLogging::AsyncGetOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(cq, std::move(context),
-                                         std::move(options), request);
+        return child_->AsyncGetOperation(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -899,8 +861,8 @@ future<Status> CertificateManagerLogging::AsyncCancelOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::CancelOperationRequest const& request) {
-        return child_->AsyncCancelOperation(cq, std::move(context),
-                                            std::move(options), request);
+        return child_->AsyncCancelOperation(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);

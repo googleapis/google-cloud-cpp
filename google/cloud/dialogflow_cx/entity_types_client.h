@@ -37,8 +37,7 @@ namespace dialogflow_cx {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ///
-/// Service for managing
-/// [EntityTypes][google.cloud.dialogflow.cx.v3.EntityType].
+/// Service for managing [EntityTypes][google.cloud.dialogflow.cx.v3.EntityType].
 ///
 /// @par Equality
 ///
@@ -63,13 +62,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// and move-construction is a relatively efficient operation, consider using
 /// such a copy when using this class from multiple threads.
 ///
-/// [google.cloud.dialogflow.cx.v3.EntityType]:
-/// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L155}
+/// [google.cloud.dialogflow.cx.v3.EntityType]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L155}
 ///
 class EntityTypesClient {
  public:
-  explicit EntityTypesClient(std::shared_ptr<EntityTypesConnection> connection,
-                             Options opts = {});
+  explicit EntityTypesClient(std::shared_ptr<EntityTypesConnection> connection, Options opts = {});
   ~EntityTypesClient();
 
   ///@{
@@ -82,12 +79,10 @@ class EntityTypesClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(EntityTypesClient const& a,
-                         EntityTypesClient const& b) {
+  friend bool operator==(EntityTypesClient const& a, EntityTypesClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(EntityTypesClient const& a,
-                         EntityTypesClient const& b) {
+  friend bool operator!=(EntityTypesClient const& a, EntityTypesClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -116,8 +111,8 @@ class EntityTypesClient {
   /// [google.cloud.dialogflow.cx.v3.GetEntityTypeRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L503}
   ///
   // clang-format on
-  StatusOr<google::cloud::dialogflow::cx::v3::EntityType> GetEntityType(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::dialogflow::cx::v3::EntityType>
+  GetEntityType(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -146,9 +141,8 @@ class EntityTypesClient {
   /// [google.cloud.dialogflow.cx.v3.GetEntityTypeRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L503}
   ///
   // clang-format on
-  StatusOr<google::cloud::dialogflow::cx::v3::EntityType> GetEntityType(
-      google::cloud::dialogflow::cx::v3::GetEntityTypeRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::dialogflow::cx::v3::EntityType>
+  GetEntityType(google::cloud::dialogflow::cx::v3::GetEntityTypeRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -178,10 +172,8 @@ class EntityTypesClient {
   /// [google.cloud.dialogflow.cx.v3.EntityType]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L155}
   ///
   // clang-format on
-  StatusOr<google::cloud::dialogflow::cx::v3::EntityType> CreateEntityType(
-      std::string const& parent,
-      google::cloud::dialogflow::cx::v3::EntityType const& entity_type,
-      Options opts = {});
+  StatusOr<google::cloud::dialogflow::cx::v3::EntityType>
+  CreateEntityType(std::string const& parent, google::cloud::dialogflow::cx::v3::EntityType const& entity_type, Options opts = {});
 
   // clang-format off
   ///
@@ -214,9 +206,8 @@ class EntityTypesClient {
   /// [google.cloud.dialogflow.cx.v3.EntityType]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L155}
   ///
   // clang-format on
-  StatusOr<google::cloud::dialogflow::cx::v3::EntityType> CreateEntityType(
-      google::cloud::dialogflow::cx::v3::CreateEntityTypeRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::dialogflow::cx::v3::EntityType>
+  CreateEntityType(google::cloud::dialogflow::cx::v3::CreateEntityTypeRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -245,9 +236,8 @@ class EntityTypesClient {
   /// [google.cloud.dialogflow.cx.v3.UpdateEntityTypeRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L560}
   ///
   // clang-format on
-  StatusOr<google::cloud::dialogflow::cx::v3::EntityType> UpdateEntityType(
-      google::cloud::dialogflow::cx::v3::EntityType const& entity_type,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::cloud::dialogflow::cx::v3::EntityType>
+  UpdateEntityType(google::cloud::dialogflow::cx::v3::EntityType const& entity_type, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -280,9 +270,8 @@ class EntityTypesClient {
   /// [google.cloud.dialogflow.cx.v3.UpdateEntityTypeRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L560}
   ///
   // clang-format on
-  StatusOr<google::cloud::dialogflow::cx::v3::EntityType> UpdateEntityType(
-      google::cloud::dialogflow::cx::v3::UpdateEntityTypeRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::dialogflow::cx::v3::EntityType>
+  UpdateEntityType(google::cloud::dialogflow::cx::v3::UpdateEntityTypeRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -309,7 +298,8 @@ class EntityTypesClient {
   /// [google.cloud.dialogflow.cx.v3.DeleteEntityTypeRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L583}
   ///
   // clang-format on
-  Status DeleteEntityType(std::string const& name, Options opts = {});
+  Status
+  DeleteEntityType(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -339,9 +329,8 @@ class EntityTypesClient {
   /// [google.cloud.dialogflow.cx.v3.DeleteEntityTypeRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L583}
   ///
   // clang-format on
-  Status DeleteEntityType(
-      google::cloud::dialogflow::cx::v3::DeleteEntityTypeRequest const& request,
-      Options opts = {});
+  Status
+  DeleteEntityType(google::cloud::dialogflow::cx::v3::DeleteEntityTypeRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -375,8 +364,8 @@ class EntityTypesClient {
   /// [google.cloud.dialogflow.cx.v3.ListEntityTypesRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L457}
   ///
   // clang-format on
-  StreamRange<google::cloud::dialogflow::cx::v3::EntityType> ListEntityTypes(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::dialogflow::cx::v3::EntityType>
+  ListEntityTypes(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -414,9 +403,8 @@ class EntityTypesClient {
   /// [google.cloud.dialogflow.cx.v3.ListEntityTypesRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L457}
   ///
   // clang-format on
-  StreamRange<google::cloud::dialogflow::cx::v3::EntityType> ListEntityTypes(
-      google::cloud::dialogflow::cx::v3::ListEntityTypesRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::dialogflow::cx::v3::EntityType>
+  ListEntityTypes(google::cloud::dialogflow::cx::v3::ListEntityTypesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -453,10 +441,7 @@ class EntityTypesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dialogflow::cx::v3::ExportEntityTypesResponse>>
-  ExportEntityTypes(
-      google::cloud::dialogflow::cx::v3::ExportEntityTypesRequest const&
-          request,
-      Options opts = {});
+  ExportEntityTypes(google::cloud::dialogflow::cx::v3::ExportEntityTypesRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -469,11 +454,8 @@ class EntityTypesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> ExportEntityTypes(
-      NoAwaitTag,
-      google::cloud::dialogflow::cx::v3::ExportEntityTypesRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  ExportEntityTypes(NoAwaitTag, google::cloud::dialogflow::cx::v3::ExportEntityTypesRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -485,8 +467,7 @@ class EntityTypesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dialogflow::cx::v3::ExportEntityTypesResponse>>
-  ExportEntityTypes(google::longrunning::Operation const& operation,
-                    Options opts = {});
+  ExportEntityTypes(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -523,10 +504,7 @@ class EntityTypesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dialogflow::cx::v3::ImportEntityTypesResponse>>
-  ImportEntityTypes(
-      google::cloud::dialogflow::cx::v3::ImportEntityTypesRequest const&
-          request,
-      Options opts = {});
+  ImportEntityTypes(google::cloud::dialogflow::cx::v3::ImportEntityTypesRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -539,11 +517,8 @@ class EntityTypesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> ImportEntityTypes(
-      NoAwaitTag,
-      google::cloud::dialogflow::cx::v3::ImportEntityTypesRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  ImportEntityTypes(NoAwaitTag, google::cloud::dialogflow::cx::v3::ImportEntityTypesRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -555,8 +530,7 @@ class EntityTypesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dialogflow::cx::v3::ImportEntityTypesResponse>>
-  ImportEntityTypes(google::longrunning::Operation const& operation,
-                    Options opts = {});
+  ImportEntityTypes(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -594,8 +568,8 @@ class EntityTypesClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request, Options opts = {});
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -624,9 +598,8 @@ class EntityTypesClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -661,8 +634,8 @@ class EntityTypesClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -701,8 +674,8 @@ class EntityTypesClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -728,8 +701,8 @@ class EntityTypesClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -760,9 +733,8 @@ class EntityTypesClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -796,7 +768,8 @@ class EntityTypesClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(std::string const& name, Options opts = {});
+  Status
+  CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -835,9 +808,8 @@ class EntityTypesClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request,
-      Options opts = {});
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<EntityTypesConnection> connection_;

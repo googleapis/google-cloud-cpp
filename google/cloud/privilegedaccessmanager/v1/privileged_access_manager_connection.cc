@@ -17,17 +17,17 @@
 // source: google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto
 
 #include "google/cloud/privilegedaccessmanager/v1/privileged_access_manager_connection.h"
-#include "google/cloud/privilegedaccessmanager/v1/internal/privileged_access_manager_connection_impl.h"
-#include "google/cloud/privilegedaccessmanager/v1/internal/privileged_access_manager_option_defaults.h"
-#include "google/cloud/privilegedaccessmanager/v1/internal/privileged_access_manager_stub_factory.h"
-#include "google/cloud/privilegedaccessmanager/v1/internal/privileged_access_manager_tracing_connection.h"
-#include "google/cloud/privilegedaccessmanager/v1/privileged_access_manager_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/privilegedaccessmanager/v1/internal/privileged_access_manager_connection_impl.h"
+#include "google/cloud/privilegedaccessmanager/v1/internal/privileged_access_manager_option_defaults.h"
+#include "google/cloud/privilegedaccessmanager/v1/internal/privileged_access_manager_stub_factory.h"
+#include "google/cloud/privilegedaccessmanager/v1/internal/privileged_access_manager_tracing_connection.h"
+#include "google/cloud/privilegedaccessmanager/v1/privileged_access_manager_options.h"
 #include <memory>
 #include <utility>
 
@@ -36,29 +36,22 @@ namespace cloud {
 namespace privilegedaccessmanager_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-PrivilegedAccessManagerConnection::~PrivilegedAccessManagerConnection() =
-    default;
+PrivilegedAccessManagerConnection::~PrivilegedAccessManagerConnection() = default;
 
-StatusOr<
-    google::cloud::privilegedaccessmanager::v1::CheckOnboardingStatusResponse>
+StatusOr<google::cloud::privilegedaccessmanager::v1::CheckOnboardingStatusResponse>
 PrivilegedAccessManagerConnection::CheckOnboardingStatus(
-    google::cloud::privilegedaccessmanager::v1::
-        CheckOnboardingStatusRequest const&) {
+    google::cloud::privilegedaccessmanager::v1::CheckOnboardingStatusRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::privilegedaccessmanager::v1::Entitlement>
-PrivilegedAccessManagerConnection::ListEntitlements(
-    google::cloud::privilegedaccessmanager::v1::
-        ListEntitlementsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::privilegedaccessmanager::v1::Entitlement> PrivilegedAccessManagerConnection::ListEntitlements(
+    google::cloud::privilegedaccessmanager::v1::ListEntitlementsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::privilegedaccessmanager::v1::Entitlement>>();
 }
 
-StreamRange<google::cloud::privilegedaccessmanager::v1::Entitlement>
-PrivilegedAccessManagerConnection::SearchEntitlements(
-    google::cloud::privilegedaccessmanager::v1::
-        SearchEntitlementsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::privilegedaccessmanager::v1::Entitlement> PrivilegedAccessManagerConnection::SearchEntitlements(
+    google::cloud::privilegedaccessmanager::v1::SearchEntitlementsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::privilegedaccessmanager::v1::Entitlement>>();
 }
@@ -71,91 +64,84 @@ PrivilegedAccessManagerConnection::GetEntitlement(
 
 future<StatusOr<google::cloud::privilegedaccessmanager::v1::Entitlement>>
 PrivilegedAccessManagerConnection::CreateEntitlement(
-    google::cloud::privilegedaccessmanager::v1::
-        CreateEntitlementRequest const&) {
+    google::cloud::privilegedaccessmanager::v1::CreateEntitlementRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::privilegedaccessmanager::v1::Entitlement>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::privilegedaccessmanager::v1::Entitlement>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 PrivilegedAccessManagerConnection::CreateEntitlement(
-    NoAwaitTag, google::cloud::privilegedaccessmanager::v1::
-                    CreateEntitlementRequest const&) {
+    NoAwaitTag,
+    google::cloud::privilegedaccessmanager::v1::CreateEntitlementRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::privilegedaccessmanager::v1::Entitlement>>
 PrivilegedAccessManagerConnection::CreateEntitlement(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::privilegedaccessmanager::v1::Entitlement>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::privilegedaccessmanager::v1::Entitlement>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::privilegedaccessmanager::v1::Entitlement>>
 PrivilegedAccessManagerConnection::DeleteEntitlement(
-    google::cloud::privilegedaccessmanager::v1::
-        DeleteEntitlementRequest const&) {
+    google::cloud::privilegedaccessmanager::v1::DeleteEntitlementRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::privilegedaccessmanager::v1::Entitlement>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::privilegedaccessmanager::v1::Entitlement>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 PrivilegedAccessManagerConnection::DeleteEntitlement(
-    NoAwaitTag, google::cloud::privilegedaccessmanager::v1::
-                    DeleteEntitlementRequest const&) {
+    NoAwaitTag,
+    google::cloud::privilegedaccessmanager::v1::DeleteEntitlementRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::privilegedaccessmanager::v1::Entitlement>>
 PrivilegedAccessManagerConnection::DeleteEntitlement(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::privilegedaccessmanager::v1::Entitlement>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::privilegedaccessmanager::v1::Entitlement>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::privilegedaccessmanager::v1::Entitlement>>
 PrivilegedAccessManagerConnection::UpdateEntitlement(
-    google::cloud::privilegedaccessmanager::v1::
-        UpdateEntitlementRequest const&) {
+    google::cloud::privilegedaccessmanager::v1::UpdateEntitlementRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::privilegedaccessmanager::v1::Entitlement>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::privilegedaccessmanager::v1::Entitlement>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 PrivilegedAccessManagerConnection::UpdateEntitlement(
-    NoAwaitTag, google::cloud::privilegedaccessmanager::v1::
-                    UpdateEntitlementRequest const&) {
+    NoAwaitTag,
+    google::cloud::privilegedaccessmanager::v1::UpdateEntitlementRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::privilegedaccessmanager::v1::Entitlement>>
 PrivilegedAccessManagerConnection::UpdateEntitlement(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::privilegedaccessmanager::v1::Entitlement>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::privilegedaccessmanager::v1::Entitlement>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StreamRange<google::cloud::privilegedaccessmanager::v1::Grant>
-PrivilegedAccessManagerConnection::ListGrants(
-    google::cloud::privilegedaccessmanager::v1::
-        ListGrantsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::privilegedaccessmanager::v1::Grant> PrivilegedAccessManagerConnection::ListGrants(
+    google::cloud::privilegedaccessmanager::v1::ListGrantsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::privilegedaccessmanager::v1::Grant>>();
 }
 
-StreamRange<google::cloud::privilegedaccessmanager::v1::Grant>
-PrivilegedAccessManagerConnection::SearchGrants(
-    google::cloud::privilegedaccessmanager::v1::
-        SearchGrantsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::privilegedaccessmanager::v1::Grant> PrivilegedAccessManagerConnection::SearchGrants(
+    google::cloud::privilegedaccessmanager::v1::SearchGrantsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::privilegedaccessmanager::v1::Grant>>();
 }
@@ -188,8 +174,8 @@ future<StatusOr<google::cloud::privilegedaccessmanager::v1::Grant>>
 PrivilegedAccessManagerConnection::RevokeGrant(
     google::cloud::privilegedaccessmanager::v1::RevokeGrantRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::privilegedaccessmanager::v1::Grant>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::privilegedaccessmanager::v1::Grant>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -197,21 +183,19 @@ PrivilegedAccessManagerConnection::RevokeGrant(
     NoAwaitTag,
     google::cloud::privilegedaccessmanager::v1::RevokeGrantRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::privilegedaccessmanager::v1::Grant>>
 PrivilegedAccessManagerConnection::RevokeGrant(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::privilegedaccessmanager::v1::Grant>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::privilegedaccessmanager::v1::Grant>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StreamRange<google::cloud::location::Location>
-PrivilegedAccessManagerConnection::ListLocations(
-    google::cloud::location::
-        ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::location::Location> PrivilegedAccessManagerConnection::ListLocations(
+    google::cloud::location::ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::location::Location>>();
 }
@@ -222,10 +206,8 @@ PrivilegedAccessManagerConnection::GetLocation(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::longrunning::Operation>
-PrivilegedAccessManagerConnection::ListOperations(
-    google::longrunning::
-        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::longrunning::Operation> PrivilegedAccessManagerConnection::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }
@@ -236,28 +218,26 @@ PrivilegedAccessManagerConnection::GetOperation(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status PrivilegedAccessManagerConnection::DeleteOperation(
+Status
+PrivilegedAccessManagerConnection::DeleteOperation(
     google::longrunning::DeleteOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-std::shared_ptr<PrivilegedAccessManagerConnection>
-MakePrivilegedAccessManagerConnection(Options options) {
+std::shared_ptr<PrivilegedAccessManagerConnection> MakePrivilegedAccessManagerConnection(
+    Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 PrivilegedAccessManagerPolicyOptionList>(
-      options, __func__);
-  options = privilegedaccessmanager_v1_internal::
-      PrivilegedAccessManagerDefaultOptions(std::move(options));
+      UnifiedCredentialsOptionList,
+      PrivilegedAccessManagerPolicyOptionList>(options, __func__);
+  options = privilegedaccessmanager_v1_internal::PrivilegedAccessManagerDefaultOptions(
+      std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
-  auto stub = privilegedaccessmanager_v1_internal::
-      CreateDefaultPrivilegedAccessManagerStub(std::move(auth), options);
-  return privilegedaccessmanager_v1_internal::
-      MakePrivilegedAccessManagerTracingConnection(
-          std::make_shared<privilegedaccessmanager_v1_internal::
-                               PrivilegedAccessManagerConnectionImpl>(
-              std::move(background), std::move(stub), std::move(options)));
+  auto stub = privilegedaccessmanager_v1_internal::CreateDefaultPrivilegedAccessManagerStub(
+    std::move(auth), options);
+  return privilegedaccessmanager_v1_internal::MakePrivilegedAccessManagerTracingConnection(
+      std::make_shared<privilegedaccessmanager_v1_internal::PrivilegedAccessManagerConnectionImpl>(
+      std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

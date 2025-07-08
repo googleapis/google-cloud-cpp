@@ -17,12 +17,12 @@
 // source: google/cloud/dataform/v1/dataform.proto
 
 #include "google/cloud/dataform/v1/internal/dataform_stub_factory.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/dataform/v1/internal/dataform_auth_decorator.h"
 #include "google/cloud/dataform/v1/internal/dataform_logging_decorator.h"
 #include "google/cloud/dataform/v1/internal/dataform_metadata_decorator.h"
 #include "google/cloud/dataform/v1/internal/dataform_stub.h"
 #include "google/cloud/dataform/v1/internal/dataform_tracing_stub.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/opentelemetry.h"
@@ -39,29 +39,30 @@ namespace cloud {
 namespace dataform_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<DataformStub> CreateDefaultDataformStub(
+std::shared_ptr<DataformStub>
+CreateDefaultDataformStub(
     std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
     Options const& options) {
-  auto channel = auth->CreateChannel(options.get<EndpointOption>(),
-                                     internal::MakeChannelArguments(options));
-  auto service_grpc_stub =
-      google::cloud::dataform::v1::Dataform::NewStub(channel);
+  auto channel = auth->CreateChannel(
+    options.get<EndpointOption>(), internal::MakeChannelArguments(options));
+  auto service_grpc_stub = google::cloud::dataform::v1::Dataform::NewStub(channel);
   auto service_iampolicy_stub = google::iam::v1::IAMPolicy::NewStub(channel);
-  auto service_locations_stub =
-      google::cloud::location::Locations::NewStub(channel);
-  std::shared_ptr<DataformStub> stub = std::make_shared<DefaultDataformStub>(
-      std::move(service_grpc_stub), std::move(service_iampolicy_stub),
-      std::move(service_locations_stub));
+  auto service_locations_stub = google::cloud::location::Locations::NewStub(channel);
+  std::shared_ptr<DataformStub> stub =
+    std::make_shared<DefaultDataformStub>(std::move(service_grpc_stub), std::move(service_iampolicy_stub), std::move(service_locations_stub));
 
   if (auth->RequiresConfigureContext()) {
-    stub = std::make_shared<DataformAuth>(std::move(auth), std::move(stub));
+    stub = std::make_shared<DataformAuth>(
+        std::move(auth), std::move(stub));
   }
   stub = std::make_shared<DataformMetadata>(
       std::move(stub), std::multimap<std::string, std::string>{});
-  if (internal::Contains(options.get<LoggingComponentsOption>(), "rpc")) {
+  if (internal::Contains(
+      options.get<LoggingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<DataformLogging>(
-        std::move(stub), options.get<GrpcTracingOptionsOption>(),
+        std::move(stub),
+        options.get<GrpcTracingOptionsOption>(),
         options.get<LoggingComponentsOption>());
   }
   if (internal::TracingEnabled(options)) {

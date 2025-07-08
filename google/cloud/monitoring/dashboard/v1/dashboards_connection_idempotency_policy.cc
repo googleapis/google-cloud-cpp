@@ -26,41 +26,35 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-DashboardsServiceConnectionIdempotencyPolicy::
-    ~DashboardsServiceConnectionIdempotencyPolicy() = default;
+DashboardsServiceConnectionIdempotencyPolicy::~DashboardsServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<DashboardsServiceConnectionIdempotencyPolicy>
 DashboardsServiceConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<DashboardsServiceConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency DashboardsServiceConnectionIdempotencyPolicy::CreateDashboard(
-    google::monitoring::dashboard::v1::CreateDashboardRequest const&) {
+Idempotency DashboardsServiceConnectionIdempotencyPolicy::CreateDashboard(google::monitoring::dashboard::v1::CreateDashboardRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DashboardsServiceConnectionIdempotencyPolicy::ListDashboards(
-    google::monitoring::dashboard::v1::ListDashboardsRequest) {  // NOLINT
+Idempotency DashboardsServiceConnectionIdempotencyPolicy::ListDashboards(google::monitoring::dashboard::v1::ListDashboardsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency DashboardsServiceConnectionIdempotencyPolicy::GetDashboard(
-    google::monitoring::dashboard::v1::GetDashboardRequest const&) {
+Idempotency DashboardsServiceConnectionIdempotencyPolicy::GetDashboard(google::monitoring::dashboard::v1::GetDashboardRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DashboardsServiceConnectionIdempotencyPolicy::DeleteDashboard(
-    google::monitoring::dashboard::v1::DeleteDashboardRequest const&) {
+Idempotency DashboardsServiceConnectionIdempotencyPolicy::DeleteDashboard(google::monitoring::dashboard::v1::DeleteDashboardRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DashboardsServiceConnectionIdempotencyPolicy::UpdateDashboard(
-    google::monitoring::dashboard::v1::UpdateDashboardRequest const&) {
+Idempotency DashboardsServiceConnectionIdempotencyPolicy::UpdateDashboard(google::monitoring::dashboard::v1::UpdateDashboardRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<DashboardsServiceConnectionIdempotencyPolicy>
-MakeDefaultDashboardsServiceConnectionIdempotencyPolicy() {
+    MakeDefaultDashboardsServiceConnectionIdempotencyPolicy() {
   return std::make_unique<DashboardsServiceConnectionIdempotencyPolicy>();
 }
 

@@ -27,23 +27,17 @@ namespace cloud {
 namespace monitoring {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use monitoring_v3::MakeServiceMonitoringServiceConnection
-/// directly.
+/// @deprecated Use monitoring_v3::MakeServiceMonitoringServiceConnection directly.
 using ::google::cloud::monitoring_v3::MakeServiceMonitoringServiceConnection;
 
 /// @deprecated Use monitoring_v3::ServiceMonitoringServiceConnection directly.
 using ::google::cloud::monitoring_v3::ServiceMonitoringServiceConnection;
 
-/// @deprecated Use
-/// monitoring_v3::ServiceMonitoringServiceLimitedErrorCountRetryPolicy
-/// directly.
-using ::google::cloud::monitoring_v3::
-    ServiceMonitoringServiceLimitedErrorCountRetryPolicy;
+/// @deprecated Use monitoring_v3::ServiceMonitoringServiceLimitedErrorCountRetryPolicy directly.
+using ::google::cloud::monitoring_v3::ServiceMonitoringServiceLimitedErrorCountRetryPolicy;
 
-/// @deprecated Use
-/// monitoring_v3::ServiceMonitoringServiceLimitedTimeRetryPolicy directly.
-using ::google::cloud::monitoring_v3::
-    ServiceMonitoringServiceLimitedTimeRetryPolicy;
+/// @deprecated Use monitoring_v3::ServiceMonitoringServiceLimitedTimeRetryPolicy directly.
+using ::google::cloud::monitoring_v3::ServiceMonitoringServiceLimitedTimeRetryPolicy;
 
 /// @deprecated Use monitoring_v3::ServiceMonitoringServiceRetryPolicy directly.
 using ::google::cloud::monitoring_v3::ServiceMonitoringServiceRetryPolicy;

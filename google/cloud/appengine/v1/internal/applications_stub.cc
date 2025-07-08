@@ -33,25 +33,25 @@ ApplicationsStub::~ApplicationsStub() = default;
 
 StatusOr<google::appengine::v1::Application>
 DefaultApplicationsStub::GetApplication(
-    grpc::ClientContext& context, Options const&,
-    google::appengine::v1::GetApplicationRequest const& request) {
-  google::appengine::v1::Application response;
-  auto status = grpc_stub_->GetApplication(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::appengine::v1::GetApplicationRequest const& request) {
+    google::appengine::v1::Application response;
+    auto status =
+        grpc_stub_->GetApplication(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultApplicationsStub::AsyncCreateApplication(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::appengine::v1::CreateApplicationRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::appengine::v1::CreateApplicationRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::appengine::v1::CreateApplicationRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::appengine::v1::CreateApplicationRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
              google::appengine::v1::CreateApplicationRequest const& request,
@@ -63,25 +63,26 @@ DefaultApplicationsStub::AsyncCreateApplication(
 
 StatusOr<google::longrunning::Operation>
 DefaultApplicationsStub::CreateApplication(
-    grpc::ClientContext& context, Options,
-    google::appengine::v1::CreateApplicationRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->CreateApplication(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::appengine::v1::CreateApplicationRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->CreateApplication(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultApplicationsStub::AsyncUpdateApplication(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::appengine::v1::UpdateApplicationRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::appengine::v1::UpdateApplicationRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::appengine::v1::UpdateApplicationRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::appengine::v1::UpdateApplicationRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
              google::appengine::v1::UpdateApplicationRequest const& request,
@@ -93,25 +94,26 @@ DefaultApplicationsStub::AsyncUpdateApplication(
 
 StatusOr<google::longrunning::Operation>
 DefaultApplicationsStub::UpdateApplication(
-    grpc::ClientContext& context, Options,
-    google::appengine::v1::UpdateApplicationRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->UpdateApplication(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::appengine::v1::UpdateApplicationRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->UpdateApplication(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultApplicationsStub::AsyncRepairApplication(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::appengine::v1::RepairApplicationRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::appengine::v1::RepairApplicationRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::appengine::v1::RepairApplicationRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::appengine::v1::RepairApplicationRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
              google::appengine::v1::RepairApplicationRequest const& request,
@@ -123,14 +125,16 @@ DefaultApplicationsStub::AsyncRepairApplication(
 
 StatusOr<google::longrunning::Operation>
 DefaultApplicationsStub::RepairApplication(
-    grpc::ClientContext& context, Options,
-    google::appengine::v1::RepairApplicationRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->RepairApplication(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::appengine::v1::RepairApplicationRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->RepairApplication(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -159,14 +163,13 @@ future<Status> DefaultApplicationsStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(
-             cq,
-             [this](grpc::ClientContext* context,
-                    google::longrunning::CancelOperationRequest const& request,
-                    grpc::CompletionQueue* cq) {
-               return operations_stub_->AsyncCancelOperation(context, request,
-                                                             cq);
-             },
-             request, std::move(context))
+      cq,
+      [this](grpc::ClientContext* context,
+             google::longrunning::CancelOperationRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return operations_stub_->AsyncCancelOperation(context, request, cq);
+      },
+      request, std::move(context))
       .then([](future<StatusOr<google::protobuf::Empty>> f) {
         return f.get().status();
       });

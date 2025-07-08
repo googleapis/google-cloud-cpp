@@ -17,11 +17,11 @@
 // source: google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto
 
 #include "google/cloud/compute/forwarding_rules/v1/internal/forwarding_rules_rest_metadata_decorator.h"
+#include "absl/strings/str_format.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/internal/rest_set_metadata.h"
 #include "google/cloud/status_or.h"
-#include "absl/strings/str_format.h"
 #include <memory>
 #include <utility>
 
@@ -41,132 +41,119 @@ ForwardingRulesRestMetadata::ForwardingRulesRestMetadata(
 
 StatusOr<google::cloud::cpp::compute::v1::ForwardingRuleAggregatedList>
 ForwardingRulesRestMetadata::AggregatedListForwardingRules(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::forwarding_rules::v1::
-        AggregatedListForwardingRulesRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::forwarding_rules::v1::AggregatedListForwardingRulesRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->AggregatedListForwardingRules(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ForwardingRulesRestMetadata::AsyncDeleteForwardingRule(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::forwarding_rules::v1::
-        DeleteForwardingRuleRequest const& request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::forwarding_rules::v1::DeleteForwardingRuleRequest const& request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncDeleteForwardingRule(cq, std::move(rest_context),
-                                           std::move(options), request);
+  return child_->AsyncDeleteForwardingRule(
+      cq, std::move(rest_context), std::move(options), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ForwardingRulesRestMetadata::DeleteForwardingRule(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::forwarding_rules::v1::
-        DeleteForwardingRuleRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::forwarding_rules::v1::DeleteForwardingRuleRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->DeleteForwardingRule(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::ForwardingRule>
 ForwardingRulesRestMetadata::GetForwardingRule(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::forwarding_rules::v1::
-        GetForwardingRuleRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::forwarding_rules::v1::GetForwardingRuleRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->GetForwardingRule(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ForwardingRulesRestMetadata::AsyncInsertForwardingRule(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::forwarding_rules::v1::
-        InsertForwardingRuleRequest const& request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::forwarding_rules::v1::InsertForwardingRuleRequest const& request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncInsertForwardingRule(cq, std::move(rest_context),
-                                           std::move(options), request);
+  return child_->AsyncInsertForwardingRule(
+      cq, std::move(rest_context), std::move(options), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ForwardingRulesRestMetadata::InsertForwardingRule(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::forwarding_rules::v1::
-        InsertForwardingRuleRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::forwarding_rules::v1::InsertForwardingRuleRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->InsertForwardingRule(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::ForwardingRuleList>
 ForwardingRulesRestMetadata::ListForwardingRules(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::forwarding_rules::v1::
-        ListForwardingRulesRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::forwarding_rules::v1::ListForwardingRulesRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->ListForwardingRules(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ForwardingRulesRestMetadata::AsyncPatchForwardingRule(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::forwarding_rules::v1::
-        PatchForwardingRuleRequest const& request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::forwarding_rules::v1::PatchForwardingRuleRequest const& request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncPatchForwardingRule(cq, std::move(rest_context),
-                                          std::move(options), request);
+  return child_->AsyncPatchForwardingRule(
+      cq, std::move(rest_context), std::move(options), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ForwardingRulesRestMetadata::PatchForwardingRule(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::forwarding_rules::v1::
-        PatchForwardingRuleRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::forwarding_rules::v1::PatchForwardingRuleRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->PatchForwardingRule(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ForwardingRulesRestMetadata::AsyncSetLabels(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::forwarding_rules::v1::SetLabelsRequest const&
-        request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::forwarding_rules::v1::SetLabelsRequest const& request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncSetLabels(cq, std::move(rest_context), std::move(options),
-                                request);
+  return child_->AsyncSetLabels(
+      cq, std::move(rest_context), std::move(options), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ForwardingRulesRestMetadata::SetLabels(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::forwarding_rules::v1::SetLabelsRequest const&
-        request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::forwarding_rules::v1::SetLabelsRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->SetLabels(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ForwardingRulesRestMetadata::AsyncSetTarget(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::forwarding_rules::v1::SetTargetRequest const&
-        request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::forwarding_rules::v1::SetTargetRequest const& request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncSetTarget(cq, std::move(rest_context), std::move(options),
-                                request);
+  return child_->AsyncSetTarget(
+      cq, std::move(rest_context), std::move(options), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ForwardingRulesRestMetadata::SetTarget(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::forwarding_rules::v1::SetTargetRequest const&
-        request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::forwarding_rules::v1::SetTargetRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->SetTarget(rest_context, options, request);
 }
@@ -176,29 +163,28 @@ ForwardingRulesRestMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::region_operations::v1::
-        GetOperationRequest const& request) {
+    google::cloud::cpp::compute::region_operations::v1::GetOperationRequest const& request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncGetOperation(cq, std::move(rest_context),
-                                   std::move(options), request);
+  return child_->AsyncGetOperation(
+      cq, std::move(rest_context), std::move(options), request);
 }
 
-future<Status> ForwardingRulesRestMetadata::AsyncCancelOperation(
+future<Status>
+ForwardingRulesRestMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::region_operations::v1::
-        DeleteOperationRequest const& request) {
+    google::cloud::cpp::compute::region_operations::v1::DeleteOperationRequest const& request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncCancelOperation(cq, std::move(rest_context),
-                                      std::move(options), request);
+  return child_->AsyncCancelOperation(
+      cq, std::move(rest_context), std::move(options), request);
 }
 
 void ForwardingRulesRestMetadata::SetMetadata(
-    rest_internal::RestContext& rest_context, Options const& options,
-    std::vector<std::string> const& params) {
-  google::cloud::rest_internal::SetMetadata(rest_context, options, params,
-                                            api_client_header_);
+      rest_internal::RestContext& rest_context,
+      Options const& options, std::vector<std::string> const& params) {
+  google::cloud::rest_internal::SetMetadata(
+      rest_context, options, params, api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

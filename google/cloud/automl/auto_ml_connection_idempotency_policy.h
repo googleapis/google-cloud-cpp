@@ -26,8 +26,7 @@ namespace cloud {
 namespace automl {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use automl_v1::MakeDefaultAutoMlConnectionIdempotencyPolicy
-/// directly.
+/// @deprecated Use automl_v1::MakeDefaultAutoMlConnectionIdempotencyPolicy directly.
 using ::google::cloud::automl_v1::MakeDefaultAutoMlConnectionIdempotencyPolicy;
 
 /// @deprecated Use automl_v1::AutoMlConnectionIdempotencyPolicy directly.

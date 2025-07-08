@@ -33,17 +33,15 @@ LivestreamServiceStub::~LivestreamServiceStub() = default;
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultLivestreamServiceStub::AsyncCreateChannel(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::video::livestream::v1::CreateChannelRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::video::livestream::v1::CreateChannelRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::video::livestream::v1::CreateChannelRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::video::livestream::v1::CreateChannelRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::video::livestream::v1::CreateChannelRequest const&
-                 request,
+             google::cloud::video::livestream::v1::CreateChannelRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncCreateChannel(context, request, cq);
       },
@@ -52,53 +50,55 @@ DefaultLivestreamServiceStub::AsyncCreateChannel(
 
 StatusOr<google::longrunning::Operation>
 DefaultLivestreamServiceStub::CreateChannel(
-    grpc::ClientContext& context, Options,
-    google::cloud::video::livestream::v1::CreateChannelRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->CreateChannel(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::video::livestream::v1::CreateChannelRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->CreateChannel(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::video::livestream::v1::ListChannelsResponse>
 DefaultLivestreamServiceStub::ListChannels(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::video::livestream::v1::ListChannelsRequest const& request) {
-  google::cloud::video::livestream::v1::ListChannelsResponse response;
-  auto status = grpc_stub_->ListChannels(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::video::livestream::v1::ListChannelsRequest const& request) {
+    google::cloud::video::livestream::v1::ListChannelsResponse response;
+    auto status =
+        grpc_stub_->ListChannels(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::video::livestream::v1::Channel>
 DefaultLivestreamServiceStub::GetChannel(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::video::livestream::v1::GetChannelRequest const& request) {
-  google::cloud::video::livestream::v1::Channel response;
-  auto status = grpc_stub_->GetChannel(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::video::livestream::v1::GetChannelRequest const& request) {
+    google::cloud::video::livestream::v1::Channel response;
+    auto status =
+        grpc_stub_->GetChannel(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultLivestreamServiceStub::AsyncDeleteChannel(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::video::livestream::v1::DeleteChannelRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::video::livestream::v1::DeleteChannelRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::video::livestream::v1::DeleteChannelRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::video::livestream::v1::DeleteChannelRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::video::livestream::v1::DeleteChannelRequest const&
-                 request,
+             google::cloud::video::livestream::v1::DeleteChannelRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncDeleteChannel(context, request, cq);
       },
@@ -107,29 +107,29 @@ DefaultLivestreamServiceStub::AsyncDeleteChannel(
 
 StatusOr<google::longrunning::Operation>
 DefaultLivestreamServiceStub::DeleteChannel(
-    grpc::ClientContext& context, Options,
-    google::cloud::video::livestream::v1::DeleteChannelRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->DeleteChannel(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::video::livestream::v1::DeleteChannelRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->DeleteChannel(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultLivestreamServiceStub::AsyncUpdateChannel(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::video::livestream::v1::UpdateChannelRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::video::livestream::v1::UpdateChannelRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::video::livestream::v1::UpdateChannelRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::video::livestream::v1::UpdateChannelRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::video::livestream::v1::UpdateChannelRequest const&
-                 request,
+             google::cloud::video::livestream::v1::UpdateChannelRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncUpdateChannel(context, request, cq);
       },
@@ -138,29 +138,29 @@ DefaultLivestreamServiceStub::AsyncUpdateChannel(
 
 StatusOr<google::longrunning::Operation>
 DefaultLivestreamServiceStub::UpdateChannel(
-    grpc::ClientContext& context, Options,
-    google::cloud::video::livestream::v1::UpdateChannelRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->UpdateChannel(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::video::livestream::v1::UpdateChannelRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->UpdateChannel(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultLivestreamServiceStub::AsyncStartChannel(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::video::livestream::v1::StartChannelRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::video::livestream::v1::StartChannelRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::video::livestream::v1::StartChannelRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::video::livestream::v1::StartChannelRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::video::livestream::v1::StartChannelRequest const&
-                 request,
+             google::cloud::video::livestream::v1::StartChannelRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncStartChannel(context, request, cq);
       },
@@ -169,29 +169,29 @@ DefaultLivestreamServiceStub::AsyncStartChannel(
 
 StatusOr<google::longrunning::Operation>
 DefaultLivestreamServiceStub::StartChannel(
-    grpc::ClientContext& context, Options,
-    google::cloud::video::livestream::v1::StartChannelRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->StartChannel(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::video::livestream::v1::StartChannelRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->StartChannel(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultLivestreamServiceStub::AsyncStopChannel(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::video::livestream::v1::StopChannelRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::video::livestream::v1::StopChannelRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::video::livestream::v1::StopChannelRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::video::livestream::v1::StopChannelRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::video::livestream::v1::StopChannelRequest const&
-                 request,
+             google::cloud::video::livestream::v1::StopChannelRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncStopChannel(context, request, cq);
       },
@@ -200,29 +200,29 @@ DefaultLivestreamServiceStub::AsyncStopChannel(
 
 StatusOr<google::longrunning::Operation>
 DefaultLivestreamServiceStub::StopChannel(
-    grpc::ClientContext& context, Options,
-    google::cloud::video::livestream::v1::StopChannelRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->StopChannel(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::video::livestream::v1::StopChannelRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->StopChannel(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultLivestreamServiceStub::AsyncCreateInput(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::video::livestream::v1::CreateInputRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::video::livestream::v1::CreateInputRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::video::livestream::v1::CreateInputRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::video::livestream::v1::CreateInputRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::video::livestream::v1::CreateInputRequest const&
-                 request,
+             google::cloud::video::livestream::v1::CreateInputRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncCreateInput(context, request, cq);
       },
@@ -231,53 +231,55 @@ DefaultLivestreamServiceStub::AsyncCreateInput(
 
 StatusOr<google::longrunning::Operation>
 DefaultLivestreamServiceStub::CreateInput(
-    grpc::ClientContext& context, Options,
-    google::cloud::video::livestream::v1::CreateInputRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->CreateInput(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::video::livestream::v1::CreateInputRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->CreateInput(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::video::livestream::v1::ListInputsResponse>
 DefaultLivestreamServiceStub::ListInputs(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::video::livestream::v1::ListInputsRequest const& request) {
-  google::cloud::video::livestream::v1::ListInputsResponse response;
-  auto status = grpc_stub_->ListInputs(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::video::livestream::v1::ListInputsRequest const& request) {
+    google::cloud::video::livestream::v1::ListInputsResponse response;
+    auto status =
+        grpc_stub_->ListInputs(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::video::livestream::v1::Input>
 DefaultLivestreamServiceStub::GetInput(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::video::livestream::v1::GetInputRequest const& request) {
-  google::cloud::video::livestream::v1::Input response;
-  auto status = grpc_stub_->GetInput(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::video::livestream::v1::GetInputRequest const& request) {
+    google::cloud::video::livestream::v1::Input response;
+    auto status =
+        grpc_stub_->GetInput(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultLivestreamServiceStub::AsyncDeleteInput(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::video::livestream::v1::DeleteInputRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::video::livestream::v1::DeleteInputRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::video::livestream::v1::DeleteInputRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::video::livestream::v1::DeleteInputRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::video::livestream::v1::DeleteInputRequest const&
-                 request,
+             google::cloud::video::livestream::v1::DeleteInputRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncDeleteInput(context, request, cq);
       },
@@ -286,29 +288,29 @@ DefaultLivestreamServiceStub::AsyncDeleteInput(
 
 StatusOr<google::longrunning::Operation>
 DefaultLivestreamServiceStub::DeleteInput(
-    grpc::ClientContext& context, Options,
-    google::cloud::video::livestream::v1::DeleteInputRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->DeleteInput(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::video::livestream::v1::DeleteInputRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->DeleteInput(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultLivestreamServiceStub::AsyncUpdateInput(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::video::livestream::v1::UpdateInputRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::video::livestream::v1::UpdateInputRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::video::livestream::v1::UpdateInputRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::video::livestream::v1::UpdateInputRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::video::livestream::v1::UpdateInputRequest const&
-                 request,
+             google::cloud::video::livestream::v1::UpdateInputRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncUpdateInput(context, request, cq);
       },
@@ -317,100 +319,107 @@ DefaultLivestreamServiceStub::AsyncUpdateInput(
 
 StatusOr<google::longrunning::Operation>
 DefaultLivestreamServiceStub::UpdateInput(
-    grpc::ClientContext& context, Options,
-    google::cloud::video::livestream::v1::UpdateInputRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->UpdateInput(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::video::livestream::v1::UpdateInputRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->UpdateInput(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::video::livestream::v1::Event>
 DefaultLivestreamServiceStub::CreateEvent(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::video::livestream::v1::CreateEventRequest const& request) {
-  google::cloud::video::livestream::v1::Event response;
-  auto status = grpc_stub_->CreateEvent(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::video::livestream::v1::CreateEventRequest const& request) {
+    google::cloud::video::livestream::v1::Event response;
+    auto status =
+        grpc_stub_->CreateEvent(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::video::livestream::v1::ListEventsResponse>
 DefaultLivestreamServiceStub::ListEvents(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::video::livestream::v1::ListEventsRequest const& request) {
-  google::cloud::video::livestream::v1::ListEventsResponse response;
-  auto status = grpc_stub_->ListEvents(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::video::livestream::v1::ListEventsRequest const& request) {
+    google::cloud::video::livestream::v1::ListEventsResponse response;
+    auto status =
+        grpc_stub_->ListEvents(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::video::livestream::v1::Event>
 DefaultLivestreamServiceStub::GetEvent(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::video::livestream::v1::GetEventRequest const& request) {
-  google::cloud::video::livestream::v1::Event response;
-  auto status = grpc_stub_->GetEvent(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::video::livestream::v1::GetEventRequest const& request) {
+    google::cloud::video::livestream::v1::Event response;
+    auto status =
+        grpc_stub_->GetEvent(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-Status DefaultLivestreamServiceStub::DeleteEvent(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::video::livestream::v1::DeleteEventRequest const& request) {
-  google::protobuf::Empty response;
-  auto status = grpc_stub_->DeleteEvent(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return google::cloud::Status();
+Status
+DefaultLivestreamServiceStub::DeleteEvent(
+  grpc::ClientContext& context, Options const&,
+  google::cloud::video::livestream::v1::DeleteEventRequest const& request) {
+    google::protobuf::Empty response;
+    auto status =
+        grpc_stub_->DeleteEvent(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return google::cloud::Status();
 }
 
 StatusOr<google::cloud::video::livestream::v1::ListClipsResponse>
 DefaultLivestreamServiceStub::ListClips(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::video::livestream::v1::ListClipsRequest const& request) {
-  google::cloud::video::livestream::v1::ListClipsResponse response;
-  auto status = grpc_stub_->ListClips(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::video::livestream::v1::ListClipsRequest const& request) {
+    google::cloud::video::livestream::v1::ListClipsResponse response;
+    auto status =
+        grpc_stub_->ListClips(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::video::livestream::v1::Clip>
 DefaultLivestreamServiceStub::GetClip(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::video::livestream::v1::GetClipRequest const& request) {
-  google::cloud::video::livestream::v1::Clip response;
-  auto status = grpc_stub_->GetClip(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::video::livestream::v1::GetClipRequest const& request) {
+    google::cloud::video::livestream::v1::Clip response;
+    auto status =
+        grpc_stub_->GetClip(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultLivestreamServiceStub::AsyncCreateClip(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::video::livestream::v1::CreateClipRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::video::livestream::v1::CreateClipRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::video::livestream::v1::CreateClipRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::video::livestream::v1::CreateClipRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::video::livestream::v1::CreateClipRequest const&
-                 request,
+             google::cloud::video::livestream::v1::CreateClipRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncCreateClip(context, request, cq);
       },
@@ -419,29 +428,29 @@ DefaultLivestreamServiceStub::AsyncCreateClip(
 
 StatusOr<google::longrunning::Operation>
 DefaultLivestreamServiceStub::CreateClip(
-    grpc::ClientContext& context, Options,
-    google::cloud::video::livestream::v1::CreateClipRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->CreateClip(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::video::livestream::v1::CreateClipRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->CreateClip(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultLivestreamServiceStub::AsyncDeleteClip(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::video::livestream::v1::DeleteClipRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::video::livestream::v1::DeleteClipRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::video::livestream::v1::DeleteClipRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::video::livestream::v1::DeleteClipRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::video::livestream::v1::DeleteClipRequest const&
-                 request,
+             google::cloud::video::livestream::v1::DeleteClipRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncDeleteClip(context, request, cq);
       },
@@ -450,32 +459,30 @@ DefaultLivestreamServiceStub::AsyncDeleteClip(
 
 StatusOr<google::longrunning::Operation>
 DefaultLivestreamServiceStub::DeleteClip(
-    grpc::ClientContext& context, Options,
-    google::cloud::video::livestream::v1::DeleteClipRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->DeleteClip(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::video::livestream::v1::DeleteClipRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->DeleteClip(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultLivestreamServiceStub::AsyncCreateDvrSession(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::video::livestream::v1::CreateDvrSessionRequest const&
-        request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::video::livestream::v1::CreateDvrSessionRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::video::livestream::v1::CreateDvrSessionRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::video::livestream::v1::CreateDvrSessionRequest,
+                                    google::longrunning::Operation>(
       cq,
-      [this](
-          grpc::ClientContext* context,
-          google::cloud::video::livestream::v1::CreateDvrSessionRequest const&
-              request,
-          grpc::CompletionQueue* cq) {
+      [this](grpc::ClientContext* context,
+             google::cloud::video::livestream::v1::CreateDvrSessionRequest const& request,
+             grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncCreateDvrSession(context, request, cq);
       },
       request, std::move(context));
@@ -483,58 +490,56 @@ DefaultLivestreamServiceStub::AsyncCreateDvrSession(
 
 StatusOr<google::longrunning::Operation>
 DefaultLivestreamServiceStub::CreateDvrSession(
-    grpc::ClientContext& context, Options,
-    google::cloud::video::livestream::v1::CreateDvrSessionRequest const&
-        request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->CreateDvrSession(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::video::livestream::v1::CreateDvrSessionRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->CreateDvrSession(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::video::livestream::v1::ListDvrSessionsResponse>
 DefaultLivestreamServiceStub::ListDvrSessions(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::video::livestream::v1::ListDvrSessionsRequest const&
-        request) {
-  google::cloud::video::livestream::v1::ListDvrSessionsResponse response;
-  auto status = grpc_stub_->ListDvrSessions(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::video::livestream::v1::ListDvrSessionsRequest const& request) {
+    google::cloud::video::livestream::v1::ListDvrSessionsResponse response;
+    auto status =
+        grpc_stub_->ListDvrSessions(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::video::livestream::v1::DvrSession>
 DefaultLivestreamServiceStub::GetDvrSession(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::video::livestream::v1::GetDvrSessionRequest const& request) {
-  google::cloud::video::livestream::v1::DvrSession response;
-  auto status = grpc_stub_->GetDvrSession(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::video::livestream::v1::GetDvrSessionRequest const& request) {
+    google::cloud::video::livestream::v1::DvrSession response;
+    auto status =
+        grpc_stub_->GetDvrSession(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultLivestreamServiceStub::AsyncDeleteDvrSession(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::video::livestream::v1::DeleteDvrSessionRequest const&
-        request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::video::livestream::v1::DeleteDvrSessionRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::video::livestream::v1::DeleteDvrSessionRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::video::livestream::v1::DeleteDvrSessionRequest,
+                                    google::longrunning::Operation>(
       cq,
-      [this](
-          grpc::ClientContext* context,
-          google::cloud::video::livestream::v1::DeleteDvrSessionRequest const&
-              request,
-          grpc::CompletionQueue* cq) {
+      [this](grpc::ClientContext* context,
+             google::cloud::video::livestream::v1::DeleteDvrSessionRequest const& request,
+             grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncDeleteDvrSession(context, request, cq);
       },
       request, std::move(context));
@@ -542,33 +547,30 @@ DefaultLivestreamServiceStub::AsyncDeleteDvrSession(
 
 StatusOr<google::longrunning::Operation>
 DefaultLivestreamServiceStub::DeleteDvrSession(
-    grpc::ClientContext& context, Options,
-    google::cloud::video::livestream::v1::DeleteDvrSessionRequest const&
-        request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->DeleteDvrSession(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::video::livestream::v1::DeleteDvrSessionRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->DeleteDvrSession(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultLivestreamServiceStub::AsyncUpdateDvrSession(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::video::livestream::v1::UpdateDvrSessionRequest const&
-        request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::video::livestream::v1::UpdateDvrSessionRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::video::livestream::v1::UpdateDvrSessionRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::video::livestream::v1::UpdateDvrSessionRequest,
+                                    google::longrunning::Operation>(
       cq,
-      [this](
-          grpc::ClientContext* context,
-          google::cloud::video::livestream::v1::UpdateDvrSessionRequest const&
-              request,
-          grpc::CompletionQueue* cq) {
+      [this](grpc::ClientContext* context,
+             google::cloud::video::livestream::v1::UpdateDvrSessionRequest const& request,
+             grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncUpdateDvrSession(context, request, cq);
       },
       request, std::move(context));
@@ -576,30 +578,29 @@ DefaultLivestreamServiceStub::AsyncUpdateDvrSession(
 
 StatusOr<google::longrunning::Operation>
 DefaultLivestreamServiceStub::UpdateDvrSession(
-    grpc::ClientContext& context, Options,
-    google::cloud::video::livestream::v1::UpdateDvrSessionRequest const&
-        request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->UpdateDvrSession(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::video::livestream::v1::UpdateDvrSessionRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->UpdateDvrSession(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultLivestreamServiceStub::AsyncCreateAsset(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::video::livestream::v1::CreateAssetRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::video::livestream::v1::CreateAssetRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::video::livestream::v1::CreateAssetRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::video::livestream::v1::CreateAssetRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::video::livestream::v1::CreateAssetRequest const&
-                 request,
+             google::cloud::video::livestream::v1::CreateAssetRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncCreateAsset(context, request, cq);
       },
@@ -608,29 +609,29 @@ DefaultLivestreamServiceStub::AsyncCreateAsset(
 
 StatusOr<google::longrunning::Operation>
 DefaultLivestreamServiceStub::CreateAsset(
-    grpc::ClientContext& context, Options,
-    google::cloud::video::livestream::v1::CreateAssetRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->CreateAsset(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::video::livestream::v1::CreateAssetRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->CreateAsset(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultLivestreamServiceStub::AsyncDeleteAsset(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::video::livestream::v1::DeleteAssetRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::video::livestream::v1::DeleteAssetRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::video::livestream::v1::DeleteAssetRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::video::livestream::v1::DeleteAssetRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::video::livestream::v1::DeleteAssetRequest const&
-                 request,
+             google::cloud::video::livestream::v1::DeleteAssetRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncDeleteAsset(context, request, cq);
       },
@@ -639,65 +640,68 @@ DefaultLivestreamServiceStub::AsyncDeleteAsset(
 
 StatusOr<google::longrunning::Operation>
 DefaultLivestreamServiceStub::DeleteAsset(
-    grpc::ClientContext& context, Options,
-    google::cloud::video::livestream::v1::DeleteAssetRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->DeleteAsset(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::video::livestream::v1::DeleteAssetRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->DeleteAsset(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::video::livestream::v1::Asset>
 DefaultLivestreamServiceStub::GetAsset(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::video::livestream::v1::GetAssetRequest const& request) {
-  google::cloud::video::livestream::v1::Asset response;
-  auto status = grpc_stub_->GetAsset(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::video::livestream::v1::GetAssetRequest const& request) {
+    google::cloud::video::livestream::v1::Asset response;
+    auto status =
+        grpc_stub_->GetAsset(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::video::livestream::v1::ListAssetsResponse>
 DefaultLivestreamServiceStub::ListAssets(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::video::livestream::v1::ListAssetsRequest const& request) {
-  google::cloud::video::livestream::v1::ListAssetsResponse response;
-  auto status = grpc_stub_->ListAssets(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::video::livestream::v1::ListAssetsRequest const& request) {
+    google::cloud::video::livestream::v1::ListAssetsResponse response;
+    auto status =
+        grpc_stub_->ListAssets(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::video::livestream::v1::Pool>
 DefaultLivestreamServiceStub::GetPool(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::video::livestream::v1::GetPoolRequest const& request) {
-  google::cloud::video::livestream::v1::Pool response;
-  auto status = grpc_stub_->GetPool(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::video::livestream::v1::GetPoolRequest const& request) {
+    google::cloud::video::livestream::v1::Pool response;
+    auto status =
+        grpc_stub_->GetPool(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultLivestreamServiceStub::AsyncUpdatePool(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::video::livestream::v1::UpdatePoolRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::video::livestream::v1::UpdatePoolRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::video::livestream::v1::UpdatePoolRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::video::livestream::v1::UpdatePoolRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::video::livestream::v1::UpdatePoolRequest const&
-                 request,
+             google::cloud::video::livestream::v1::UpdatePoolRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncUpdatePool(context, request, cq);
       },
@@ -706,84 +710,94 @@ DefaultLivestreamServiceStub::AsyncUpdatePool(
 
 StatusOr<google::longrunning::Operation>
 DefaultLivestreamServiceStub::UpdatePool(
-    grpc::ClientContext& context, Options,
-    google::cloud::video::livestream::v1::UpdatePoolRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->UpdatePool(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::video::livestream::v1::UpdatePoolRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->UpdatePool(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 DefaultLivestreamServiceStub::ListLocations(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::location::ListLocationsRequest const& request) {
-  google::cloud::location::ListLocationsResponse response;
-  auto status = locations_stub_->ListLocations(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::location::ListLocationsRequest const& request) {
+    google::cloud::location::ListLocationsResponse response;
+    auto status =
+        locations_stub_->ListLocations(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::location::Location>
 DefaultLivestreamServiceStub::GetLocation(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::location::GetLocationRequest const& request) {
-  google::cloud::location::Location response;
-  auto status = locations_stub_->GetLocation(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::location::GetLocationRequest const& request) {
+    google::cloud::location::Location response;
+    auto status =
+        locations_stub_->GetLocation(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
 DefaultLivestreamServiceStub::ListOperations(
-    grpc::ClientContext& context, Options const&,
-    google::longrunning::ListOperationsRequest const& request) {
-  google::longrunning::ListOperationsResponse response;
-  auto status = operations_stub_->ListOperations(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::longrunning::ListOperationsRequest const& request) {
+    google::longrunning::ListOperationsResponse response;
+    auto status =
+        operations_stub_->ListOperations(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::longrunning::Operation>
 DefaultLivestreamServiceStub::GetOperation(
-    grpc::ClientContext& context, Options const&,
-    google::longrunning::GetOperationRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = operations_stub_->GetOperation(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::longrunning::GetOperationRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        operations_stub_->GetOperation(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-Status DefaultLivestreamServiceStub::DeleteOperation(
-    grpc::ClientContext& context, Options const&,
-    google::longrunning::DeleteOperationRequest const& request) {
-  google::protobuf::Empty response;
-  auto status = operations_stub_->DeleteOperation(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return google::cloud::Status();
+Status
+DefaultLivestreamServiceStub::DeleteOperation(
+  grpc::ClientContext& context, Options const&,
+  google::longrunning::DeleteOperationRequest const& request) {
+    google::protobuf::Empty response;
+    auto status =
+        operations_stub_->DeleteOperation(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return google::cloud::Status();
 }
 
-Status DefaultLivestreamServiceStub::CancelOperation(
-    grpc::ClientContext& context, Options const&,
-    google::longrunning::CancelOperationRequest const& request) {
-  google::protobuf::Empty response;
-  auto status = operations_stub_->CancelOperation(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return google::cloud::Status();
+Status
+DefaultLivestreamServiceStub::CancelOperation(
+  grpc::ClientContext& context, Options const&,
+  google::longrunning::CancelOperationRequest const& request) {
+    google::protobuf::Empty response;
+    auto status =
+        operations_stub_->CancelOperation(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return google::cloud::Status();
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -812,14 +826,13 @@ future<Status> DefaultLivestreamServiceStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(
-             cq,
-             [this](grpc::ClientContext* context,
-                    google::longrunning::CancelOperationRequest const& request,
-                    grpc::CompletionQueue* cq) {
-               return operations_stub_->AsyncCancelOperation(context, request,
-                                                             cq);
-             },
-             request, std::move(context))
+      cq,
+      [this](grpc::ClientContext* context,
+             google::longrunning::CancelOperationRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return operations_stub_->AsyncCancelOperation(context, request, cq);
+      },
+      request, std::move(context))
       .then([](future<StatusOr<google::protobuf::Empty>> f) {
         return f.get().status();
       });

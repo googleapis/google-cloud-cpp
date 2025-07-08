@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_ENTITY_TYPES_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_ENTITY_TYPES_CONNECTION_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/dialogflow_cx/entity_types_connection_idempotency_policy.h"
 #include "google/cloud/dialogflow_cx/internal/entity_types_retry_traits.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -67,14 +67,14 @@ class EntityTypesLimitedErrorCountRetryPolicy : public EntityTypesRetryPolicy {
    *     @p maximum_failures == 0.
    */
   explicit EntityTypesLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   EntityTypesLimitedErrorCountRetryPolicy(
       EntityTypesLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : EntityTypesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : EntityTypesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   EntityTypesLimitedErrorCountRetryPolicy(
       EntityTypesLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : EntityTypesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : EntityTypesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -94,9 +94,7 @@ class EntityTypesLimitedErrorCountRetryPolicy : public EntityTypesRetryPolicy {
   using BaseType = EntityTypesRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      dialogflow_cx_internal::EntityTypesRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<dialogflow_cx_internal::EntityTypesRetryTraits> impl_;
 };
 
 /**
@@ -134,14 +132,12 @@ class EntityTypesLimitedTimeRetryPolicy : public EntityTypesRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit EntityTypesLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  EntityTypesLimitedTimeRetryPolicy(
-      EntityTypesLimitedTimeRetryPolicy&& rhs) noexcept
-      : EntityTypesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  EntityTypesLimitedTimeRetryPolicy(
-      EntityTypesLimitedTimeRetryPolicy const& rhs) noexcept
-      : EntityTypesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  EntityTypesLimitedTimeRetryPolicy(EntityTypesLimitedTimeRetryPolicy&& rhs) noexcept
+    : EntityTypesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  EntityTypesLimitedTimeRetryPolicy(EntityTypesLimitedTimeRetryPolicy const& rhs) noexcept
+    : EntityTypesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -163,9 +159,7 @@ class EntityTypesLimitedTimeRetryPolicy : public EntityTypesRetryPolicy {
   using BaseType = EntityTypesRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      dialogflow_cx_internal::EntityTypesRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<dialogflow_cx_internal::EntityTypesRetryTraits> impl_;
 };
 
 /**
@@ -186,71 +180,53 @@ class EntityTypesConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<google::cloud::dialogflow::cx::v3::EntityType> GetEntityType(
-      google::cloud::dialogflow::cx::v3::GetEntityTypeRequest const& request);
+  virtual StatusOr<google::cloud::dialogflow::cx::v3::EntityType>
+  GetEntityType(google::cloud::dialogflow::cx::v3::GetEntityTypeRequest const& request);
 
   virtual StatusOr<google::cloud::dialogflow::cx::v3::EntityType>
-  CreateEntityType(
-      google::cloud::dialogflow::cx::v3::CreateEntityTypeRequest const&
-          request);
+  CreateEntityType(google::cloud::dialogflow::cx::v3::CreateEntityTypeRequest const& request);
 
   virtual StatusOr<google::cloud::dialogflow::cx::v3::EntityType>
-  UpdateEntityType(
-      google::cloud::dialogflow::cx::v3::UpdateEntityTypeRequest const&
-          request);
+  UpdateEntityType(google::cloud::dialogflow::cx::v3::UpdateEntityTypeRequest const& request);
 
-  virtual Status DeleteEntityType(
-      google::cloud::dialogflow::cx::v3::DeleteEntityTypeRequest const&
-          request);
+  virtual Status
+  DeleteEntityType(google::cloud::dialogflow::cx::v3::DeleteEntityTypeRequest const& request);
 
   virtual StreamRange<google::cloud::dialogflow::cx::v3::EntityType>
-  ListEntityTypes(
-      google::cloud::dialogflow::cx::v3::ListEntityTypesRequest request);
+  ListEntityTypes(google::cloud::dialogflow::cx::v3::ListEntityTypesRequest request);
 
-  virtual future<
-      StatusOr<google::cloud::dialogflow::cx::v3::ExportEntityTypesResponse>>
-  ExportEntityTypes(
-      google::cloud::dialogflow::cx::v3::ExportEntityTypesRequest const&
-          request);
+  virtual future<StatusOr<google::cloud::dialogflow::cx::v3::ExportEntityTypesResponse>>
+  ExportEntityTypes(google::cloud::dialogflow::cx::v3::ExportEntityTypesRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> ExportEntityTypes(
-      NoAwaitTag,
-      google::cloud::dialogflow::cx::v3::ExportEntityTypesRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  ExportEntityTypes(NoAwaitTag, google::cloud::dialogflow::cx::v3::ExportEntityTypesRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::dialogflow::cx::v3::ExportEntityTypesResponse>>
-  ExportEntityTypes(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::dialogflow::cx::v3::ExportEntityTypesResponse>>
+  ExportEntityTypes( google::longrunning::Operation const& operation);
 
-  virtual future<
-      StatusOr<google::cloud::dialogflow::cx::v3::ImportEntityTypesResponse>>
-  ImportEntityTypes(
-      google::cloud::dialogflow::cx::v3::ImportEntityTypesRequest const&
-          request);
+  virtual future<StatusOr<google::cloud::dialogflow::cx::v3::ImportEntityTypesResponse>>
+  ImportEntityTypes(google::cloud::dialogflow::cx::v3::ImportEntityTypesRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> ImportEntityTypes(
-      NoAwaitTag,
-      google::cloud::dialogflow::cx::v3::ImportEntityTypesRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  ImportEntityTypes(NoAwaitTag, google::cloud::dialogflow::cx::v3::ImportEntityTypesRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::dialogflow::cx::v3::ImportEntityTypesResponse>>
-  ImportEntityTypes(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::dialogflow::cx::v3::ImportEntityTypesResponse>>
+  ImportEntityTypes( google::longrunning::Operation const& operation);
 
-  virtual StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request);
+  virtual StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request);
 
-  virtual StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request);
+  virtual StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request);
 
-  virtual StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 
-  virtual Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request);
+  virtual Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request);
 };
 
 /**

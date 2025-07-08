@@ -46,19 +46,19 @@ DocumentsMetadata::DocumentsMetadata(
 
 StatusOr<google::cloud::dialogflow::v2::ListDocumentsResponse>
 DocumentsMetadata::ListDocuments(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dialogflow::v2::ListDocumentsRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListDocuments(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::v2::Document>
 DocumentsMetadata::GetDocument(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dialogflow::v2::GetDocumentRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetDocument(context, options, request);
 }
 
@@ -68,17 +68,17 @@ DocumentsMetadata::AsyncCreateDocument(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::dialogflow::v2::CreateDocumentRequest const& request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateDocument(cq, std::move(context), std::move(options),
-                                     request);
+  SetMetadata(*context, *options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateDocument(
+      cq, std::move(context), std::move(options), request);
 }
 
-StatusOr<google::longrunning::Operation> DocumentsMetadata::CreateDocument(
-    grpc::ClientContext& context, Options options,
+StatusOr<google::longrunning::Operation>
+DocumentsMetadata::CreateDocument(
+    grpc::ClientContext& context,
+    Options options,
     google::cloud::dialogflow::v2::CreateDocumentRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateDocument(context, options, request);
 }
 
@@ -88,17 +88,17 @@ DocumentsMetadata::AsyncImportDocuments(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::dialogflow::v2::ImportDocumentsRequest const& request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncImportDocuments(cq, std::move(context),
-                                      std::move(options), request);
+  SetMetadata(*context, *options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncImportDocuments(
+      cq, std::move(context), std::move(options), request);
 }
 
-StatusOr<google::longrunning::Operation> DocumentsMetadata::ImportDocuments(
-    grpc::ClientContext& context, Options options,
+StatusOr<google::longrunning::Operation>
+DocumentsMetadata::ImportDocuments(
+    grpc::ClientContext& context,
+    Options options,
     google::cloud::dialogflow::v2::ImportDocumentsRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ImportDocuments(context, options, request);
 }
 
@@ -108,17 +108,17 @@ DocumentsMetadata::AsyncDeleteDocument(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::dialogflow::v2::DeleteDocumentRequest const& request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteDocument(cq, std::move(context), std::move(options),
-                                     request);
+  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteDocument(
+      cq, std::move(context), std::move(options), request);
 }
 
-StatusOr<google::longrunning::Operation> DocumentsMetadata::DeleteDocument(
-    grpc::ClientContext& context, Options options,
+StatusOr<google::longrunning::Operation>
+DocumentsMetadata::DeleteDocument(
+    grpc::ClientContext& context,
+    Options options,
     google::cloud::dialogflow::v2::DeleteDocumentRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteDocument(context, options, request);
 }
 
@@ -128,19 +128,17 @@ DocumentsMetadata::AsyncUpdateDocument(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::dialogflow::v2::UpdateDocumentRequest const& request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("document.name=",
-                           internal::UrlEncode(request.document().name())));
-  return child_->AsyncUpdateDocument(cq, std::move(context), std::move(options),
-                                     request);
+  SetMetadata(*context, *options, absl::StrCat("document.name=", internal::UrlEncode(request.document().name())));
+  return child_->AsyncUpdateDocument(
+      cq, std::move(context), std::move(options), request);
 }
 
-StatusOr<google::longrunning::Operation> DocumentsMetadata::UpdateDocument(
-    grpc::ClientContext& context, Options options,
+StatusOr<google::longrunning::Operation>
+DocumentsMetadata::UpdateDocument(
+    grpc::ClientContext& context,
+    Options options,
     google::cloud::dialogflow::v2::UpdateDocumentRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("document.name=",
-                           internal::UrlEncode(request.document().name())));
+  SetMetadata(context, options, absl::StrCat("document.name=", internal::UrlEncode(request.document().name())));
   return child_->UpdateDocument(context, options, request);
 }
 
@@ -150,17 +148,17 @@ DocumentsMetadata::AsyncReloadDocument(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::dialogflow::v2::ReloadDocumentRequest const& request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncReloadDocument(cq, std::move(context), std::move(options),
-                                     request);
+  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncReloadDocument(
+      cq, std::move(context), std::move(options), request);
 }
 
-StatusOr<google::longrunning::Operation> DocumentsMetadata::ReloadDocument(
-    grpc::ClientContext& context, Options options,
+StatusOr<google::longrunning::Operation>
+DocumentsMetadata::ReloadDocument(
+    grpc::ClientContext& context,
+    Options options,
     google::cloud::dialogflow::v2::ReloadDocumentRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ReloadDocument(context, options, request);
 }
 
@@ -170,59 +168,62 @@ DocumentsMetadata::AsyncExportDocument(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::dialogflow::v2::ExportDocumentRequest const& request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncExportDocument(cq, std::move(context), std::move(options),
-                                     request);
+  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncExportDocument(
+      cq, std::move(context), std::move(options), request);
 }
 
-StatusOr<google::longrunning::Operation> DocumentsMetadata::ExportDocument(
-    grpc::ClientContext& context, Options options,
+StatusOr<google::longrunning::Operation>
+DocumentsMetadata::ExportDocument(
+    grpc::ClientContext& context,
+    Options options,
     google::cloud::dialogflow::v2::ExportDocumentRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ExportDocument(context, options, request);
 }
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 DocumentsMetadata::ListLocations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ListLocations(context, options, request);
 }
 
-StatusOr<google::cloud::location::Location> DocumentsMetadata::GetLocation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::location::Location>
+DocumentsMetadata::GetLocation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetLocation(context, options, request);
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
 DocumentsMetadata::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ListOperations(context, options, request);
 }
 
-StatusOr<google::longrunning::Operation> DocumentsMetadata::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::Operation>
+DocumentsMetadata::GetOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetOperation(context, options, request);
 }
 
-Status DocumentsMetadata::CancelOperation(
-    grpc::ClientContext& context, Options const& options,
+Status
+DocumentsMetadata::CancelOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->CancelOperation(context, options, request);
 }
 
@@ -234,8 +235,8 @@ DocumentsMetadata::AsyncGetOperation(
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(cq, std::move(context), std::move(options),
-                                   request);
+  return child_->AsyncGetOperation(
+      cq, std::move(context), std::move(options), request);
 }
 
 future<Status> DocumentsMetadata::AsyncCancelOperation(
@@ -245,21 +246,21 @@ future<Status> DocumentsMetadata::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(cq, std::move(context),
-                                      std::move(options), request);
+  return child_->AsyncCancelOperation(
+      cq, std::move(context), std::move(options), request);
 }
 
 void DocumentsMetadata::SetMetadata(grpc::ClientContext& context,
-                                    Options const& options,
-                                    std::string const& request_params) {
+                                        Options const& options,
+                                        std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
 void DocumentsMetadata::SetMetadata(grpc::ClientContext& context,
-                                    Options const& options) {
-  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
-                                       api_client_header_);
+                                        Options const& options) {
+  google::cloud::internal::SetMetadata(
+      context, options, fixed_metadata_, api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

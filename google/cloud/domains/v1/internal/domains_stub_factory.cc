@@ -17,12 +17,12 @@
 // source: google/cloud/domains/v1/domains.proto
 
 #include "google/cloud/domains/v1/internal/domains_stub_factory.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/domains/v1/internal/domains_auth_decorator.h"
 #include "google/cloud/domains/v1/internal/domains_logging_decorator.h"
 #include "google/cloud/domains/v1/internal/domains_metadata_decorator.h"
 #include "google/cloud/domains/v1/internal/domains_stub.h"
 #include "google/cloud/domains/v1/internal/domains_tracing_stub.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/opentelemetry.h"
@@ -37,26 +37,30 @@ namespace cloud {
 namespace domains_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<DomainsStub> CreateDefaultDomainsStub(
+std::shared_ptr<DomainsStub>
+CreateDefaultDomainsStub(
     std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
     Options const& options) {
-  auto channel = auth->CreateChannel(options.get<EndpointOption>(),
-                                     internal::MakeChannelArguments(options));
-  auto service_grpc_stub =
-      google::cloud::domains::v1::Domains::NewStub(channel);
-  std::shared_ptr<DomainsStub> stub = std::make_shared<DefaultDomainsStub>(
+  auto channel = auth->CreateChannel(
+    options.get<EndpointOption>(), internal::MakeChannelArguments(options));
+  auto service_grpc_stub = google::cloud::domains::v1::Domains::NewStub(channel);
+  std::shared_ptr<DomainsStub> stub =
+    std::make_shared<DefaultDomainsStub>(
       std::move(service_grpc_stub),
       google::longrunning::Operations::NewStub(channel));
 
   if (auth->RequiresConfigureContext()) {
-    stub = std::make_shared<DomainsAuth>(std::move(auth), std::move(stub));
+    stub = std::make_shared<DomainsAuth>(
+        std::move(auth), std::move(stub));
   }
   stub = std::make_shared<DomainsMetadata>(
       std::move(stub), std::multimap<std::string, std::string>{});
-  if (internal::Contains(options.get<LoggingComponentsOption>(), "rpc")) {
+  if (internal::Contains(
+      options.get<LoggingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<DomainsLogging>(
-        std::move(stub), options.get<GrpcTracingOptionsOption>(),
+        std::move(stub),
+        options.get<GrpcTracingOptionsOption>(),
         options.get<LoggingComponentsOption>());
   }
   if (internal::TracingEnabled(options)) {

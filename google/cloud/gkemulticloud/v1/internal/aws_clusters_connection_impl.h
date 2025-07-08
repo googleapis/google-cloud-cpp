@@ -19,14 +19,14 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GKEMULTICLOUD_V1_INTERNAL_AWS_CLUSTERS_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GKEMULTICLOUD_V1_INTERNAL_AWS_CLUSTERS_CONNECTION_IMPL_H
 
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/future.h"
 #include "google/cloud/gkemulticloud/v1/aws_clusters_connection.h"
 #include "google/cloud/gkemulticloud/v1/aws_clusters_connection_idempotency_policy.h"
 #include "google/cloud/gkemulticloud/v1/aws_clusters_options.h"
 #include "google/cloud/gkemulticloud/v1/internal/aws_clusters_retry_traits.h"
 #include "google/cloud/gkemulticloud/v1/internal/aws_clusters_stub.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -46,156 +46,127 @@ class AwsClustersConnectionImpl
   ~AwsClustersConnectionImpl() override = default;
 
   AwsClustersConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<gkemulticloud_v1_internal::AwsClustersStub> stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<gkemulticloud_v1_internal::AwsClustersStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
   future<StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>>
-  CreateAwsCluster(
-      google::cloud::gkemulticloud::v1::CreateAwsClusterRequest const& request)
-      override;
+  CreateAwsCluster(google::cloud::gkemulticloud::v1::CreateAwsClusterRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> CreateAwsCluster(
-      NoAwaitTag,
-      google::cloud::gkemulticloud::v1::CreateAwsClusterRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  CreateAwsCluster(NoAwaitTag,
+      google::cloud::gkemulticloud::v1::CreateAwsClusterRequest const& request) override;
 
   future<StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>>
-  CreateAwsCluster(google::longrunning::Operation const& operation) override;
+  CreateAwsCluster(
+      google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>>
+  UpdateAwsCluster(google::cloud::gkemulticloud::v1::UpdateAwsClusterRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  UpdateAwsCluster(NoAwaitTag,
+      google::cloud::gkemulticloud::v1::UpdateAwsClusterRequest const& request) override;
 
   future<StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>>
   UpdateAwsCluster(
-      google::cloud::gkemulticloud::v1::UpdateAwsClusterRequest const& request)
-      override;
+      google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::longrunning::Operation> UpdateAwsCluster(
-      NoAwaitTag,
-      google::cloud::gkemulticloud::v1::UpdateAwsClusterRequest const& request)
-      override;
+  StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>
+  GetAwsCluster(google::cloud::gkemulticloud::v1::GetAwsClusterRequest const& request) override;
 
-  future<StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>>
-  UpdateAwsCluster(google::longrunning::Operation const& operation) override;
+  StreamRange<google::cloud::gkemulticloud::v1::AwsCluster>
+  ListAwsClusters(google::cloud::gkemulticloud::v1::ListAwsClustersRequest request) override;
 
-  StatusOr<google::cloud::gkemulticloud::v1::AwsCluster> GetAwsCluster(
-      google::cloud::gkemulticloud::v1::GetAwsClusterRequest const& request)
-      override;
+  future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
+  DeleteAwsCluster(google::cloud::gkemulticloud::v1::DeleteAwsClusterRequest const& request) override;
 
-  StreamRange<google::cloud::gkemulticloud::v1::AwsCluster> ListAwsClusters(
-      google::cloud::gkemulticloud::v1::ListAwsClustersRequest request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  DeleteAwsCluster(NoAwaitTag,
+      google::cloud::gkemulticloud::v1::DeleteAwsClusterRequest const& request) override;
 
   future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
   DeleteAwsCluster(
-      google::cloud::gkemulticloud::v1::DeleteAwsClusterRequest const& request)
-      override;
+      google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::longrunning::Operation> DeleteAwsCluster(
-      NoAwaitTag,
-      google::cloud::gkemulticloud::v1::DeleteAwsClusterRequest const& request)
-      override;
-
-  future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
-  DeleteAwsCluster(google::longrunning::Operation const& operation) override;
-
-  StatusOr<
-      google::cloud::gkemulticloud::v1::GenerateAwsClusterAgentTokenResponse>
-  GenerateAwsClusterAgentToken(
-      google::cloud::gkemulticloud::v1::
-          GenerateAwsClusterAgentTokenRequest const& request) override;
+  StatusOr<google::cloud::gkemulticloud::v1::GenerateAwsClusterAgentTokenResponse>
+  GenerateAwsClusterAgentToken(google::cloud::gkemulticloud::v1::GenerateAwsClusterAgentTokenRequest const& request) override;
 
   StatusOr<google::cloud::gkemulticloud::v1::GenerateAwsAccessTokenResponse>
-  GenerateAwsAccessToken(
-      google::cloud::gkemulticloud::v1::GenerateAwsAccessTokenRequest const&
-          request) override;
+  GenerateAwsAccessToken(google::cloud::gkemulticloud::v1::GenerateAwsAccessTokenRequest const& request) override;
+
+  future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
+  CreateAwsNodePool(google::cloud::gkemulticloud::v1::CreateAwsNodePoolRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  CreateAwsNodePool(NoAwaitTag,
+      google::cloud::gkemulticloud::v1::CreateAwsNodePoolRequest const& request) override;
 
   future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
   CreateAwsNodePool(
-      google::cloud::gkemulticloud::v1::CreateAwsNodePoolRequest const& request)
-      override;
-
-  StatusOr<google::longrunning::Operation> CreateAwsNodePool(
-      NoAwaitTag,
-      google::cloud::gkemulticloud::v1::CreateAwsNodePoolRequest const& request)
-      override;
+      google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
-  CreateAwsNodePool(google::longrunning::Operation const& operation) override;
+  UpdateAwsNodePool(google::cloud::gkemulticloud::v1::UpdateAwsNodePoolRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  UpdateAwsNodePool(NoAwaitTag,
+      google::cloud::gkemulticloud::v1::UpdateAwsNodePoolRequest const& request) override;
 
   future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
   UpdateAwsNodePool(
-      google::cloud::gkemulticloud::v1::UpdateAwsNodePoolRequest const& request)
-      override;
-
-  StatusOr<google::longrunning::Operation> UpdateAwsNodePool(
-      NoAwaitTag,
-      google::cloud::gkemulticloud::v1::UpdateAwsNodePoolRequest const& request)
-      override;
+      google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
-  UpdateAwsNodePool(google::longrunning::Operation const& operation) override;
+  RollbackAwsNodePoolUpdate(google::cloud::gkemulticloud::v1::RollbackAwsNodePoolUpdateRequest const& request) override;
 
-  future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
-  RollbackAwsNodePoolUpdate(
-      google::cloud::gkemulticloud::v1::RollbackAwsNodePoolUpdateRequest const&
-          request) override;
-
-  StatusOr<google::longrunning::Operation> RollbackAwsNodePoolUpdate(
-      NoAwaitTag,
-      google::cloud::gkemulticloud::v1::RollbackAwsNodePoolUpdateRequest const&
-          request) override;
+  StatusOr<google::longrunning::Operation>
+  RollbackAwsNodePoolUpdate(NoAwaitTag,
+      google::cloud::gkemulticloud::v1::RollbackAwsNodePoolUpdateRequest const& request) override;
 
   future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
   RollbackAwsNodePoolUpdate(
       google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool> GetAwsNodePool(
-      google::cloud::gkemulticloud::v1::GetAwsNodePoolRequest const& request)
-      override;
+  StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>
+  GetAwsNodePool(google::cloud::gkemulticloud::v1::GetAwsNodePoolRequest const& request) override;
 
-  StreamRange<google::cloud::gkemulticloud::v1::AwsNodePool> ListAwsNodePools(
-      google::cloud::gkemulticloud::v1::ListAwsNodePoolsRequest request)
-      override;
+  StreamRange<google::cloud::gkemulticloud::v1::AwsNodePool>
+  ListAwsNodePools(google::cloud::gkemulticloud::v1::ListAwsNodePoolsRequest request) override;
+
+  future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
+  DeleteAwsNodePool(google::cloud::gkemulticloud::v1::DeleteAwsNodePoolRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  DeleteAwsNodePool(NoAwaitTag,
+      google::cloud::gkemulticloud::v1::DeleteAwsNodePoolRequest const& request) override;
 
   future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
   DeleteAwsNodePool(
-      google::cloud::gkemulticloud::v1::DeleteAwsNodePoolRequest const& request)
-      override;
-
-  StatusOr<google::longrunning::Operation> DeleteAwsNodePool(
-      NoAwaitTag,
-      google::cloud::gkemulticloud::v1::DeleteAwsNodePoolRequest const& request)
-      override;
-
-  future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
-  DeleteAwsNodePool(google::longrunning::Operation const& operation) override;
+      google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::gkemulticloud::v1::AwsOpenIdConfig>
-  GetAwsOpenIdConfig(
-      google::cloud::gkemulticloud::v1::GetAwsOpenIdConfigRequest const&
-          request) override;
+  GetAwsOpenIdConfig(google::cloud::gkemulticloud::v1::GetAwsOpenIdConfigRequest const& request) override;
 
-  StatusOr<google::cloud::gkemulticloud::v1::AwsJsonWebKeys> GetAwsJsonWebKeys(
-      google::cloud::gkemulticloud::v1::GetAwsJsonWebKeysRequest const& request)
-      override;
+  StatusOr<google::cloud::gkemulticloud::v1::AwsJsonWebKeys>
+  GetAwsJsonWebKeys(google::cloud::gkemulticloud::v1::GetAwsJsonWebKeysRequest const& request) override;
 
   StatusOr<google::cloud::gkemulticloud::v1::AwsServerConfig>
-  GetAwsServerConfig(
-      google::cloud::gkemulticloud::v1::GetAwsServerConfigRequest const&
-          request) override;
+  GetAwsServerConfig(google::cloud::gkemulticloud::v1::GetAwsServerConfigRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request) override;
 
-  Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request) override;
+  Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request) override;
 
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request) override;
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

@@ -38,45 +38,45 @@ class IntentsConnectionIdempotencyPolicy {
   /// Create a new copy of this object.
   virtual std::unique_ptr<IntentsConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency ListIntents(
-      google::cloud::dialogflow::cx::v3::ListIntentsRequest request);
+  virtual google::cloud::Idempotency
+  ListIntents(google::cloud::dialogflow::cx::v3::ListIntentsRequest request);
 
-  virtual google::cloud::Idempotency GetIntent(
-      google::cloud::dialogflow::cx::v3::GetIntentRequest const& request);
+  virtual google::cloud::Idempotency
+  GetIntent(google::cloud::dialogflow::cx::v3::GetIntentRequest const& request);
 
-  virtual google::cloud::Idempotency CreateIntent(
-      google::cloud::dialogflow::cx::v3::CreateIntentRequest const& request);
+  virtual google::cloud::Idempotency
+  CreateIntent(google::cloud::dialogflow::cx::v3::CreateIntentRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateIntent(
-      google::cloud::dialogflow::cx::v3::UpdateIntentRequest const& request);
+  virtual google::cloud::Idempotency
+  UpdateIntent(google::cloud::dialogflow::cx::v3::UpdateIntentRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteIntent(
-      google::cloud::dialogflow::cx::v3::DeleteIntentRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteIntent(google::cloud::dialogflow::cx::v3::DeleteIntentRequest const& request);
 
-  virtual google::cloud::Idempotency ImportIntents(
-      google::cloud::dialogflow::cx::v3::ImportIntentsRequest const& request);
+  virtual google::cloud::Idempotency
+  ImportIntents(google::cloud::dialogflow::cx::v3::ImportIntentsRequest const& request);
 
-  virtual google::cloud::Idempotency ExportIntents(
-      google::cloud::dialogflow::cx::v3::ExportIntentsRequest const& request);
+  virtual google::cloud::Idempotency
+  ExportIntents(google::cloud::dialogflow::cx::v3::ExportIntentsRequest const& request);
 
-  virtual google::cloud::Idempotency ListLocations(
-      google::cloud::location::ListLocationsRequest request);
+  virtual google::cloud::Idempotency
+  ListLocations(google::cloud::location::ListLocationsRequest request);
 
-  virtual google::cloud::Idempotency GetLocation(
-      google::cloud::location::GetLocationRequest const& request);
+  virtual google::cloud::Idempotency
+  GetLocation(google::cloud::location::GetLocationRequest const& request);
 
-  virtual google::cloud::Idempotency ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual google::cloud::Idempotency
+  ListOperations(google::longrunning::ListOperationsRequest request);
 
-  virtual google::cloud::Idempotency GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 
-  virtual google::cloud::Idempotency CancelOperation(
-      google::longrunning::CancelOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  CancelOperation(google::longrunning::CancelOperationRequest const& request);
 };
 
 std::unique_ptr<IntentsConnectionIdempotencyPolicy>
-MakeDefaultIntentsConnectionIdempotencyPolicy();
+    MakeDefaultIntentsConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_cx

@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TELCOAUTOMATION_V1_TELCO_AUTOMATION_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TELCOAUTOMATION_V1_TELCO_AUTOMATION_OPTIONS_H
 
-#include "google/cloud/telcoautomation/v1/telco_automation_connection.h"
-#include "google/cloud/telcoautomation/v1/telco_automation_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
+#include "google/cloud/telcoautomation/v1/telco_automation_connection.h"
+#include "google/cloud/telcoautomation/v1/telco_automation_connection_idempotency_policy.h"
 #include "google/cloud/version.h"
 #include <memory>
 

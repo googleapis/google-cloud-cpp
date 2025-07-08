@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_BACKEND_SERVICES_V1_INTERNAL_BACKEND_SERVICES_REST_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_BACKEND_SERVICES_V1_INTERNAL_BACKEND_SERVICES_REST_CONNECTION_IMPL_H
 
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/backend_services/v1/backend_services_connection.h"
 #include "google/cloud/compute/backend_services/v1/backend_services_connection_idempotency_policy.h"
 #include "google/cloud/compute/backend_services/v1/backend_services_options.h"
 #include "google/cloud/compute/backend_services/v1/internal/backend_services_rest_stub.h"
 #include "google/cloud/compute/backend_services/v1/internal/backend_services_retry_traits.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -44,178 +44,145 @@ class BackendServicesRestConnectionImpl
   ~BackendServicesRestConnectionImpl() override = default;
 
   BackendServicesRestConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<
-          compute_backend_services_v1_internal::BackendServicesRestStub>
-          stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<compute_backend_services_v1_internal::BackendServicesRestStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddSignedUrlKey(
-      google::cloud::cpp::compute::backend_services::v1::
-          AddSignedUrlKeyRequest const& request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AddSignedUrlKey(google::cloud::cpp::compute::backend_services::v1::AddSignedUrlKeyRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation> AddSignedUrlKey(
-      NoAwaitTag, google::cloud::cpp::compute::backend_services::v1::
-                      AddSignedUrlKeyRequest const& request) override;
-
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddSignedUrlKey(
-      google::cloud::cpp::compute::v1::Operation const& operation) override;
-
-  StreamRange<std::pair<
-      std::string, google::cloud::cpp::compute::v1::BackendServicesScopedList>>
-  AggregatedListBackendServices(
-      google::cloud::cpp::compute::backend_services::v1::
-          AggregatedListBackendServicesRequest request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  AddSignedUrlKey(NoAwaitTag,
+      google::cloud::cpp::compute::backend_services::v1::AddSignedUrlKeyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteBackendService(google::cloud::cpp::compute::backend_services::v1::
-                           DeleteBackendServiceRequest const& request) override;
+  AddSignedUrlKey(
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteBackendService(
-      NoAwaitTag, google::cloud::cpp::compute::backend_services::v1::
-                      DeleteBackendServiceRequest const& request) override;
+  StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::BackendServicesScopedList>>
+  AggregatedListBackendServices(google::cloud::cpp::compute::backend_services::v1::AggregatedListBackendServicesRequest request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteBackendService(google::cloud::cpp::compute::backend_services::v1::DeleteBackendServiceRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeleteBackendService(NoAwaitTag,
+      google::cloud::cpp::compute::backend_services::v1::DeleteBackendServiceRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteBackendService(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteSignedUrlKey(google::cloud::cpp::compute::backend_services::v1::
-                         DeleteSignedUrlKeyRequest const& request) override;
+  DeleteSignedUrlKey(google::cloud::cpp::compute::backend_services::v1::DeleteSignedUrlKeyRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteSignedUrlKey(
-      NoAwaitTag, google::cloud::cpp::compute::backend_services::v1::
-                      DeleteSignedUrlKeyRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeleteSignedUrlKey(NoAwaitTag,
+      google::cloud::cpp::compute::backend_services::v1::DeleteSignedUrlKeyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteSignedUrlKey(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::BackendService> GetBackendService(
-      google::cloud::cpp::compute::backend_services::v1::
-          GetBackendServiceRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::BackendService>
+  GetBackendService(google::cloud::cpp::compute::backend_services::v1::GetBackendServiceRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::BackendServiceGroupHealth>
-  GetHealth(
-      google::cloud::cpp::compute::backend_services::v1::GetHealthRequest const&
-          request) override;
+  GetHealth(google::cloud::cpp::compute::backend_services::v1::GetHealthRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
-      google::cloud::cpp::compute::backend_services::v1::
-          GetIamPolicyRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Policy>
+  GetIamPolicy(google::cloud::cpp::compute::backend_services::v1::GetIamPolicyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertBackendService(google::cloud::cpp::compute::backend_services::v1::
-                           InsertBackendServiceRequest const& request) override;
+  InsertBackendService(google::cloud::cpp::compute::backend_services::v1::InsertBackendServiceRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertBackendService(
-      NoAwaitTag, google::cloud::cpp::compute::backend_services::v1::
-                      InsertBackendServiceRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  InsertBackendService(NoAwaitTag,
+      google::cloud::cpp::compute::backend_services::v1::InsertBackendServiceRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertBackendService(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StreamRange<google::cloud::cpp::compute::v1::BackendService>
-  ListBackendServices(google::cloud::cpp::compute::backend_services::v1::
-                          ListBackendServicesRequest request) override;
+  ListBackendServices(google::cloud::cpp::compute::backend_services::v1::ListBackendServicesRequest request) override;
 
-  StreamRange<google::cloud::cpp::compute::v1::BackendService> ListUsable(
-      google::cloud::cpp::compute::backend_services::v1::ListUsableRequest
-          request) override;
+  StreamRange<google::cloud::cpp::compute::v1::BackendService>
+  ListUsable(google::cloud::cpp::compute::backend_services::v1::ListUsableRequest request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchBackendService(google::cloud::cpp::compute::backend_services::v1::
-                          PatchBackendServiceRequest const& request) override;
+  PatchBackendService(google::cloud::cpp::compute::backend_services::v1::PatchBackendServiceRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchBackendService(
-      NoAwaitTag, google::cloud::cpp::compute::backend_services::v1::
-                      PatchBackendServiceRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  PatchBackendService(NoAwaitTag,
+      google::cloud::cpp::compute::backend_services::v1::PatchBackendServiceRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   PatchBackendService(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetEdgeSecurityPolicy(
-      google::cloud::cpp::compute::backend_services::v1::
-          SetEdgeSecurityPolicyRequest const& request) override;
+  SetEdgeSecurityPolicy(google::cloud::cpp::compute::backend_services::v1::SetEdgeSecurityPolicyRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation> SetEdgeSecurityPolicy(
-      NoAwaitTag, google::cloud::cpp::compute::backend_services::v1::
-                      SetEdgeSecurityPolicyRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  SetEdgeSecurityPolicy(NoAwaitTag,
+      google::cloud::cpp::compute::backend_services::v1::SetEdgeSecurityPolicyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SetEdgeSecurityPolicy(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
-      google::cloud::cpp::compute::backend_services::v1::
-          SetIamPolicyRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Policy>
+  SetIamPolicy(google::cloud::cpp::compute::backend_services::v1::SetIamPolicyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetSecurityPolicy(google::cloud::cpp::compute::backend_services::v1::
-                        SetSecurityPolicyRequest const& request) override;
+  SetSecurityPolicy(google::cloud::cpp::compute::backend_services::v1::SetSecurityPolicyRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation> SetSecurityPolicy(
-      NoAwaitTag, google::cloud::cpp::compute::backend_services::v1::
-                      SetSecurityPolicyRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  SetSecurityPolicy(NoAwaitTag,
+      google::cloud::cpp::compute::backend_services::v1::SetSecurityPolicyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SetSecurityPolicy(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(google::cloud::cpp::compute::backend_services::v1::
-                         TestIamPermissionsRequest const& request) override;
+  TestIamPermissions(google::cloud::cpp::compute::backend_services::v1::TestIamPermissionsRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateBackendService(google::cloud::cpp::compute::backend_services::v1::
-                           UpdateBackendServiceRequest const& request) override;
+  UpdateBackendService(google::cloud::cpp::compute::backend_services::v1::UpdateBackendServiceRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateBackendService(
-      NoAwaitTag, google::cloud::cpp::compute::backend_services::v1::
-                      UpdateBackendServiceRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  UpdateBackendService(NoAwaitTag,
+      google::cloud::cpp::compute::backend_services::v1::UpdateBackendServiceRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   UpdateBackendService(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
  private:
-  static std::unique_ptr<
-      compute_backend_services_v1::BackendServicesRetryPolicy>
+  static std::unique_ptr<compute_backend_services_v1::BackendServicesRetryPolicy>
   retry_policy(Options const& options) {
-    return options
-        .get<compute_backend_services_v1::BackendServicesRetryPolicyOption>()
-        ->clone();
+    return options.get<compute_backend_services_v1::BackendServicesRetryPolicyOption>()->clone();
   }
 
   static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options
-        .get<compute_backend_services_v1::BackendServicesBackoffPolicyOption>()
-        ->clone();
+    return options.get<compute_backend_services_v1::BackendServicesBackoffPolicyOption>()->clone();
   }
 
-  static std::unique_ptr<
-      compute_backend_services_v1::BackendServicesConnectionIdempotencyPolicy>
+  static std::unique_ptr<compute_backend_services_v1::BackendServicesConnectionIdempotencyPolicy>
   idempotency_policy(Options const& options) {
-    return options
-        .get<compute_backend_services_v1::
-                 BackendServicesConnectionIdempotencyPolicyOption>()
-        ->clone();
+    return options.get<compute_backend_services_v1::BackendServicesConnectionIdempotencyPolicyOption>()->clone();
   }
 
   static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-    return options
-        .get<compute_backend_services_v1::BackendServicesPollingPolicyOption>()
-        ->clone();
+    return options.get<compute_backend_services_v1::BackendServicesPollingPolicyOption>()->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<compute_backend_services_v1_internal::BackendServicesRestStub>
-      stub_;
+  std::shared_ptr<compute_backend_services_v1_internal::BackendServicesRestStub> stub_;
   Options options_;
 };
 

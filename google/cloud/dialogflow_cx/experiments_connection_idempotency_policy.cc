@@ -26,76 +26,63 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-ExperimentsConnectionIdempotencyPolicy::
-    ~ExperimentsConnectionIdempotencyPolicy() = default;
+ExperimentsConnectionIdempotencyPolicy::~ExperimentsConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<ExperimentsConnectionIdempotencyPolicy>
 ExperimentsConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<ExperimentsConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency ExperimentsConnectionIdempotencyPolicy::ListExperiments(
-    google::cloud::dialogflow::cx::v3::ListExperimentsRequest) {  // NOLINT
+Idempotency ExperimentsConnectionIdempotencyPolicy::ListExperiments(google::cloud::dialogflow::cx::v3::ListExperimentsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency ExperimentsConnectionIdempotencyPolicy::GetExperiment(
-    google::cloud::dialogflow::cx::v3::GetExperimentRequest const&) {
+Idempotency ExperimentsConnectionIdempotencyPolicy::GetExperiment(google::cloud::dialogflow::cx::v3::GetExperimentRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ExperimentsConnectionIdempotencyPolicy::CreateExperiment(
-    google::cloud::dialogflow::cx::v3::CreateExperimentRequest const&) {
+Idempotency ExperimentsConnectionIdempotencyPolicy::CreateExperiment(google::cloud::dialogflow::cx::v3::CreateExperimentRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ExperimentsConnectionIdempotencyPolicy::UpdateExperiment(
-    google::cloud::dialogflow::cx::v3::UpdateExperimentRequest const&) {
+Idempotency ExperimentsConnectionIdempotencyPolicy::UpdateExperiment(google::cloud::dialogflow::cx::v3::UpdateExperimentRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ExperimentsConnectionIdempotencyPolicy::DeleteExperiment(
-    google::cloud::dialogflow::cx::v3::DeleteExperimentRequest const&) {
+Idempotency ExperimentsConnectionIdempotencyPolicy::DeleteExperiment(google::cloud::dialogflow::cx::v3::DeleteExperimentRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ExperimentsConnectionIdempotencyPolicy::StartExperiment(
-    google::cloud::dialogflow::cx::v3::StartExperimentRequest const&) {
+Idempotency ExperimentsConnectionIdempotencyPolicy::StartExperiment(google::cloud::dialogflow::cx::v3::StartExperimentRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ExperimentsConnectionIdempotencyPolicy::StopExperiment(
-    google::cloud::dialogflow::cx::v3::StopExperimentRequest const&) {
+Idempotency ExperimentsConnectionIdempotencyPolicy::StopExperiment(google::cloud::dialogflow::cx::v3::StopExperimentRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ExperimentsConnectionIdempotencyPolicy::ListLocations(
-    google::cloud::location::ListLocationsRequest) {  // NOLINT
+Idempotency ExperimentsConnectionIdempotencyPolicy::ListLocations(google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency ExperimentsConnectionIdempotencyPolicy::GetLocation(
-    google::cloud::location::GetLocationRequest const&) {
+Idempotency ExperimentsConnectionIdempotencyPolicy::GetLocation(google::cloud::location::GetLocationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ExperimentsConnectionIdempotencyPolicy::ListOperations(
-    google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency ExperimentsConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency ExperimentsConnectionIdempotencyPolicy::GetOperation(
-    google::longrunning::GetOperationRequest const&) {
+Idempotency ExperimentsConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ExperimentsConnectionIdempotencyPolicy::CancelOperation(
-    google::longrunning::CancelOperationRequest const&) {
+Idempotency ExperimentsConnectionIdempotencyPolicy::CancelOperation(google::longrunning::CancelOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<ExperimentsConnectionIdempotencyPolicy>
-MakeDefaultExperimentsConnectionIdempotencyPolicy() {
+    MakeDefaultExperimentsConnectionIdempotencyPolicy() {
   return std::make_unique<ExperimentsConnectionIdempotencyPolicy>();
 }
 

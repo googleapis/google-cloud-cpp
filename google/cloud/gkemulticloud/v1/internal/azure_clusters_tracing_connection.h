@@ -36,175 +36,142 @@ class AzureClustersTracingConnection
   ~AzureClustersTracingConnection() override = default;
 
   explicit AzureClustersTracingConnection(
-      std::shared_ptr<gkemulticloud_v1::AzureClustersConnection> child);
+    std::shared_ptr<gkemulticloud_v1::AzureClustersConnection> child);
 
   Options options() override { return child_->options(); }
 
   future<StatusOr<google::cloud::gkemulticloud::v1::AzureClient>>
-  CreateAzureClient(
-      google::cloud::gkemulticloud::v1::CreateAzureClientRequest const& request)
-      override;
+  CreateAzureClient(google::cloud::gkemulticloud::v1::CreateAzureClientRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> CreateAzureClient(
-      NoAwaitTag,
-      google::cloud::gkemulticloud::v1::CreateAzureClientRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  CreateAzureClient(NoAwaitTag,
+      google::cloud::gkemulticloud::v1::CreateAzureClientRequest const& request) override;
 
   future<StatusOr<google::cloud::gkemulticloud::v1::AzureClient>>
-  CreateAzureClient(google::longrunning::Operation const& operation) override;
+  CreateAzureClient(
+      google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::cloud::gkemulticloud::v1::AzureClient> GetAzureClient(
-      google::cloud::gkemulticloud::v1::GetAzureClientRequest const& request)
-      override;
+  StatusOr<google::cloud::gkemulticloud::v1::AzureClient>
+  GetAzureClient(google::cloud::gkemulticloud::v1::GetAzureClientRequest const& request) override;
 
-  StreamRange<google::cloud::gkemulticloud::v1::AzureClient> ListAzureClients(
-      google::cloud::gkemulticloud::v1::ListAzureClientsRequest request)
-      override;
+  StreamRange<google::cloud::gkemulticloud::v1::AzureClient>
+  ListAzureClients(google::cloud::gkemulticloud::v1::ListAzureClientsRequest request) override;
+
+  future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
+  DeleteAzureClient(google::cloud::gkemulticloud::v1::DeleteAzureClientRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  DeleteAzureClient(NoAwaitTag,
+      google::cloud::gkemulticloud::v1::DeleteAzureClientRequest const& request) override;
 
   future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
   DeleteAzureClient(
-      google::cloud::gkemulticloud::v1::DeleteAzureClientRequest const& request)
-      override;
+      google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::longrunning::Operation> DeleteAzureClient(
-      NoAwaitTag,
-      google::cloud::gkemulticloud::v1::DeleteAzureClientRequest const& request)
-      override;
+  future<StatusOr<google::cloud::gkemulticloud::v1::AzureCluster>>
+  CreateAzureCluster(google::cloud::gkemulticloud::v1::CreateAzureClusterRequest const& request) override;
 
-  future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
-  DeleteAzureClient(google::longrunning::Operation const& operation) override;
+  StatusOr<google::longrunning::Operation>
+  CreateAzureCluster(NoAwaitTag,
+      google::cloud::gkemulticloud::v1::CreateAzureClusterRequest const& request) override;
 
   future<StatusOr<google::cloud::gkemulticloud::v1::AzureCluster>>
   CreateAzureCluster(
-      google::cloud::gkemulticloud::v1::CreateAzureClusterRequest const&
-          request) override;
-
-  StatusOr<google::longrunning::Operation> CreateAzureCluster(
-      NoAwaitTag,
-      google::cloud::gkemulticloud::v1::CreateAzureClusterRequest const&
-          request) override;
+      google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::gkemulticloud::v1::AzureCluster>>
-  CreateAzureCluster(google::longrunning::Operation const& operation) override;
+  UpdateAzureCluster(google::cloud::gkemulticloud::v1::UpdateAzureClusterRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  UpdateAzureCluster(NoAwaitTag,
+      google::cloud::gkemulticloud::v1::UpdateAzureClusterRequest const& request) override;
 
   future<StatusOr<google::cloud::gkemulticloud::v1::AzureCluster>>
   UpdateAzureCluster(
-      google::cloud::gkemulticloud::v1::UpdateAzureClusterRequest const&
-          request) override;
+      google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::longrunning::Operation> UpdateAzureCluster(
-      NoAwaitTag,
-      google::cloud::gkemulticloud::v1::UpdateAzureClusterRequest const&
-          request) override;
+  StatusOr<google::cloud::gkemulticloud::v1::AzureCluster>
+  GetAzureCluster(google::cloud::gkemulticloud::v1::GetAzureClusterRequest const& request) override;
 
-  future<StatusOr<google::cloud::gkemulticloud::v1::AzureCluster>>
-  UpdateAzureCluster(google::longrunning::Operation const& operation) override;
+  StreamRange<google::cloud::gkemulticloud::v1::AzureCluster>
+  ListAzureClusters(google::cloud::gkemulticloud::v1::ListAzureClustersRequest request) override;
 
-  StatusOr<google::cloud::gkemulticloud::v1::AzureCluster> GetAzureCluster(
-      google::cloud::gkemulticloud::v1::GetAzureClusterRequest const& request)
-      override;
+  future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
+  DeleteAzureCluster(google::cloud::gkemulticloud::v1::DeleteAzureClusterRequest const& request) override;
 
-  StreamRange<google::cloud::gkemulticloud::v1::AzureCluster> ListAzureClusters(
-      google::cloud::gkemulticloud::v1::ListAzureClustersRequest request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  DeleteAzureCluster(NoAwaitTag,
+      google::cloud::gkemulticloud::v1::DeleteAzureClusterRequest const& request) override;
 
   future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
   DeleteAzureCluster(
-      google::cloud::gkemulticloud::v1::DeleteAzureClusterRequest const&
-          request) override;
+      google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::longrunning::Operation> DeleteAzureCluster(
-      NoAwaitTag,
-      google::cloud::gkemulticloud::v1::DeleteAzureClusterRequest const&
-          request) override;
-
-  future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
-  DeleteAzureCluster(google::longrunning::Operation const& operation) override;
-
-  StatusOr<
-      google::cloud::gkemulticloud::v1::GenerateAzureClusterAgentTokenResponse>
-  GenerateAzureClusterAgentToken(
-      google::cloud::gkemulticloud::v1::
-          GenerateAzureClusterAgentTokenRequest const& request) override;
+  StatusOr<google::cloud::gkemulticloud::v1::GenerateAzureClusterAgentTokenResponse>
+  GenerateAzureClusterAgentToken(google::cloud::gkemulticloud::v1::GenerateAzureClusterAgentTokenRequest const& request) override;
 
   StatusOr<google::cloud::gkemulticloud::v1::GenerateAzureAccessTokenResponse>
-  GenerateAzureAccessToken(
-      google::cloud::gkemulticloud::v1::GenerateAzureAccessTokenRequest const&
-          request) override;
+  GenerateAzureAccessToken(google::cloud::gkemulticloud::v1::GenerateAzureAccessTokenRequest const& request) override;
+
+  future<StatusOr<google::cloud::gkemulticloud::v1::AzureNodePool>>
+  CreateAzureNodePool(google::cloud::gkemulticloud::v1::CreateAzureNodePoolRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  CreateAzureNodePool(NoAwaitTag,
+      google::cloud::gkemulticloud::v1::CreateAzureNodePoolRequest const& request) override;
 
   future<StatusOr<google::cloud::gkemulticloud::v1::AzureNodePool>>
   CreateAzureNodePool(
-      google::cloud::gkemulticloud::v1::CreateAzureNodePoolRequest const&
-          request) override;
-
-  StatusOr<google::longrunning::Operation> CreateAzureNodePool(
-      NoAwaitTag,
-      google::cloud::gkemulticloud::v1::CreateAzureNodePoolRequest const&
-          request) override;
+      google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::gkemulticloud::v1::AzureNodePool>>
-  CreateAzureNodePool(google::longrunning::Operation const& operation) override;
+  UpdateAzureNodePool(google::cloud::gkemulticloud::v1::UpdateAzureNodePoolRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  UpdateAzureNodePool(NoAwaitTag,
+      google::cloud::gkemulticloud::v1::UpdateAzureNodePoolRequest const& request) override;
 
   future<StatusOr<google::cloud::gkemulticloud::v1::AzureNodePool>>
   UpdateAzureNodePool(
-      google::cloud::gkemulticloud::v1::UpdateAzureNodePoolRequest const&
-          request) override;
+      google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::longrunning::Operation> UpdateAzureNodePool(
-      NoAwaitTag,
-      google::cloud::gkemulticloud::v1::UpdateAzureNodePoolRequest const&
-          request) override;
-
-  future<StatusOr<google::cloud::gkemulticloud::v1::AzureNodePool>>
-  UpdateAzureNodePool(google::longrunning::Operation const& operation) override;
-
-  StatusOr<google::cloud::gkemulticloud::v1::AzureNodePool> GetAzureNodePool(
-      google::cloud::gkemulticloud::v1::GetAzureNodePoolRequest const& request)
-      override;
+  StatusOr<google::cloud::gkemulticloud::v1::AzureNodePool>
+  GetAzureNodePool(google::cloud::gkemulticloud::v1::GetAzureNodePoolRequest const& request) override;
 
   StreamRange<google::cloud::gkemulticloud::v1::AzureNodePool>
-  ListAzureNodePools(google::cloud::gkemulticloud::v1::ListAzureNodePoolsRequest
-                         request) override;
+  ListAzureNodePools(google::cloud::gkemulticloud::v1::ListAzureNodePoolsRequest request) override;
+
+  future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
+  DeleteAzureNodePool(google::cloud::gkemulticloud::v1::DeleteAzureNodePoolRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  DeleteAzureNodePool(NoAwaitTag,
+      google::cloud::gkemulticloud::v1::DeleteAzureNodePoolRequest const& request) override;
 
   future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
   DeleteAzureNodePool(
-      google::cloud::gkemulticloud::v1::DeleteAzureNodePoolRequest const&
-          request) override;
-
-  StatusOr<google::longrunning::Operation> DeleteAzureNodePool(
-      NoAwaitTag,
-      google::cloud::gkemulticloud::v1::DeleteAzureNodePoolRequest const&
-          request) override;
-
-  future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
-  DeleteAzureNodePool(google::longrunning::Operation const& operation) override;
+      google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::gkemulticloud::v1::AzureOpenIdConfig>
-  GetAzureOpenIdConfig(
-      google::cloud::gkemulticloud::v1::GetAzureOpenIdConfigRequest const&
-          request) override;
+  GetAzureOpenIdConfig(google::cloud::gkemulticloud::v1::GetAzureOpenIdConfigRequest const& request) override;
 
   StatusOr<google::cloud::gkemulticloud::v1::AzureJsonWebKeys>
-  GetAzureJsonWebKeys(
-      google::cloud::gkemulticloud::v1::GetAzureJsonWebKeysRequest const&
-          request) override;
+  GetAzureJsonWebKeys(google::cloud::gkemulticloud::v1::GetAzureJsonWebKeysRequest const& request) override;
 
   StatusOr<google::cloud::gkemulticloud::v1::AzureServerConfig>
-  GetAzureServerConfig(
-      google::cloud::gkemulticloud::v1::GetAzureServerConfigRequest const&
-          request) override;
+  GetAzureServerConfig(google::cloud::gkemulticloud::v1::GetAzureServerConfigRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request) override;
 
-  Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request) override;
+  Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request) override;
 
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request) override;
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::shared_ptr<gkemulticloud_v1::AzureClustersConnection> child_;

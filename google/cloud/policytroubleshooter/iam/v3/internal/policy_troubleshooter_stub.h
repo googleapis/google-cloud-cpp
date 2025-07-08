@@ -35,32 +35,25 @@ class PolicyTroubleshooterStub {
  public:
   virtual ~PolicyTroubleshooterStub() = 0;
 
-  virtual StatusOr<google::cloud::policytroubleshooter::iam::v3::
-                       TroubleshootIamPolicyResponse>
-  TroubleshootIamPolicy(grpc::ClientContext& context, Options const& options,
-                        google::cloud::policytroubleshooter::iam::v3::
-                            TroubleshootIamPolicyRequest const& request) = 0;
+  virtual StatusOr<google::cloud::policytroubleshooter::iam::v3::TroubleshootIamPolicyResponse> TroubleshootIamPolicy(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::policytroubleshooter::iam::v3::TroubleshootIamPolicyRequest const& request) = 0;
 };
 
 class DefaultPolicyTroubleshooterStub : public PolicyTroubleshooterStub {
  public:
   explicit DefaultPolicyTroubleshooterStub(
-      std::unique_ptr<google::cloud::policytroubleshooter::iam::v3::
-                          PolicyTroubleshooter::StubInterface>
-          grpc_stub)
+      std::unique_ptr<google::cloud::policytroubleshooter::iam::v3::PolicyTroubleshooter::StubInterface> grpc_stub)
       : grpc_stub_(std::move(grpc_stub)) {}
 
-  StatusOr<google::cloud::policytroubleshooter::iam::v3::
-               TroubleshootIamPolicyResponse>
-  TroubleshootIamPolicy(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::policytroubleshooter::iam::v3::
-          TroubleshootIamPolicyRequest const& request) override;
+  StatusOr<google::cloud::policytroubleshooter::iam::v3::TroubleshootIamPolicyResponse> TroubleshootIamPolicy(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::policytroubleshooter::iam::v3::TroubleshootIamPolicyRequest const& request) override;
 
  private:
-  std::unique_ptr<google::cloud::policytroubleshooter::iam::v3::
-                      PolicyTroubleshooter::StubInterface>
-      grpc_stub_;
+  std::unique_ptr<google::cloud::policytroubleshooter::iam::v3::PolicyTroubleshooter::StubInterface> grpc_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

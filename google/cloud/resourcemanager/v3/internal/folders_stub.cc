@@ -33,233 +33,248 @@ FoldersStub::~FoldersStub() = default;
 
 StatusOr<google::cloud::resourcemanager::v3::Folder>
 DefaultFoldersStub::GetFolder(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::resourcemanager::v3::GetFolderRequest const& request) {
-  google::cloud::resourcemanager::v3::Folder response;
-  auto status = grpc_stub_->GetFolder(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::resourcemanager::v3::GetFolderRequest const& request) {
+    google::cloud::resourcemanager::v3::Folder response;
+    auto status =
+        grpc_stub_->GetFolder(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::resourcemanager::v3::ListFoldersResponse>
 DefaultFoldersStub::ListFolders(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::resourcemanager::v3::ListFoldersRequest const& request) {
-  google::cloud::resourcemanager::v3::ListFoldersResponse response;
-  auto status = grpc_stub_->ListFolders(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::resourcemanager::v3::ListFoldersRequest const& request) {
+    google::cloud::resourcemanager::v3::ListFoldersResponse response;
+    auto status =
+        grpc_stub_->ListFolders(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::resourcemanager::v3::SearchFoldersResponse>
 DefaultFoldersStub::SearchFolders(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::resourcemanager::v3::SearchFoldersRequest const& request) {
-  google::cloud::resourcemanager::v3::SearchFoldersResponse response;
-  auto status = grpc_stub_->SearchFolders(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::resourcemanager::v3::SearchFoldersRequest const& request) {
+    google::cloud::resourcemanager::v3::SearchFoldersResponse response;
+    auto status =
+        grpc_stub_->SearchFolders(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultFoldersStub::AsyncCreateFolder(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::resourcemanager::v3::CreateFolderRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::resourcemanager::v3::CreateFolderRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::resourcemanager::v3::CreateFolderRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::resourcemanager::v3::CreateFolderRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::resourcemanager::v3::CreateFolderRequest const&
-                 request,
+             google::cloud::resourcemanager::v3::CreateFolderRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncCreateFolder(context, request, cq);
       },
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation> DefaultFoldersStub::CreateFolder(
-    grpc::ClientContext& context, Options,
-    google::cloud::resourcemanager::v3::CreateFolderRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->CreateFolder(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::longrunning::Operation>
+DefaultFoldersStub::CreateFolder(
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::resourcemanager::v3::CreateFolderRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->CreateFolder(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultFoldersStub::AsyncUpdateFolder(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::resourcemanager::v3::UpdateFolderRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::resourcemanager::v3::UpdateFolderRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::resourcemanager::v3::UpdateFolderRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::resourcemanager::v3::UpdateFolderRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::resourcemanager::v3::UpdateFolderRequest const&
-                 request,
+             google::cloud::resourcemanager::v3::UpdateFolderRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncUpdateFolder(context, request, cq);
       },
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation> DefaultFoldersStub::UpdateFolder(
-    grpc::ClientContext& context, Options,
-    google::cloud::resourcemanager::v3::UpdateFolderRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->UpdateFolder(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::longrunning::Operation>
+DefaultFoldersStub::UpdateFolder(
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::resourcemanager::v3::UpdateFolderRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->UpdateFolder(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultFoldersStub::AsyncMoveFolder(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::resourcemanager::v3::MoveFolderRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::resourcemanager::v3::MoveFolderRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::resourcemanager::v3::MoveFolderRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::resourcemanager::v3::MoveFolderRequest,
+                                    google::longrunning::Operation>(
       cq,
-      [this](
-          grpc::ClientContext* context,
-          google::cloud::resourcemanager::v3::MoveFolderRequest const& request,
-          grpc::CompletionQueue* cq) {
+      [this](grpc::ClientContext* context,
+             google::cloud::resourcemanager::v3::MoveFolderRequest const& request,
+             grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncMoveFolder(context, request, cq);
       },
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation> DefaultFoldersStub::MoveFolder(
-    grpc::ClientContext& context, Options,
-    google::cloud::resourcemanager::v3::MoveFolderRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->MoveFolder(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::longrunning::Operation>
+DefaultFoldersStub::MoveFolder(
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::resourcemanager::v3::MoveFolderRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->MoveFolder(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultFoldersStub::AsyncDeleteFolder(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::resourcemanager::v3::DeleteFolderRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::resourcemanager::v3::DeleteFolderRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::resourcemanager::v3::DeleteFolderRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::resourcemanager::v3::DeleteFolderRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::resourcemanager::v3::DeleteFolderRequest const&
-                 request,
+             google::cloud::resourcemanager::v3::DeleteFolderRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncDeleteFolder(context, request, cq);
       },
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation> DefaultFoldersStub::DeleteFolder(
-    grpc::ClientContext& context, Options,
-    google::cloud::resourcemanager::v3::DeleteFolderRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->DeleteFolder(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::longrunning::Operation>
+DefaultFoldersStub::DeleteFolder(
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::resourcemanager::v3::DeleteFolderRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->DeleteFolder(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultFoldersStub::AsyncUndeleteFolder(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::resourcemanager::v3::UndeleteFolderRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::resourcemanager::v3::UndeleteFolderRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::resourcemanager::v3::UndeleteFolderRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::resourcemanager::v3::UndeleteFolderRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::resourcemanager::v3::UndeleteFolderRequest const&
-                 request,
+             google::cloud::resourcemanager::v3::UndeleteFolderRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncUndeleteFolder(context, request, cq);
       },
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation> DefaultFoldersStub::UndeleteFolder(
-    grpc::ClientContext& context, Options,
-    google::cloud::resourcemanager::v3::UndeleteFolderRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->UndeleteFolder(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::longrunning::Operation>
+DefaultFoldersStub::UndeleteFolder(
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::resourcemanager::v3::UndeleteFolderRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->UndeleteFolder(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-StatusOr<google::iam::v1::Policy> DefaultFoldersStub::GetIamPolicy(
-    grpc::ClientContext& context, Options const&,
-    google::iam::v1::GetIamPolicyRequest const& request) {
-  google::iam::v1::Policy response;
-  auto status = grpc_stub_->GetIamPolicy(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::iam::v1::Policy>
+DefaultFoldersStub::GetIamPolicy(
+  grpc::ClientContext& context, Options const&,
+  google::iam::v1::GetIamPolicyRequest const& request) {
+    google::iam::v1::Policy response;
+    auto status =
+        grpc_stub_->GetIamPolicy(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-StatusOr<google::iam::v1::Policy> DefaultFoldersStub::SetIamPolicy(
-    grpc::ClientContext& context, Options const&,
-    google::iam::v1::SetIamPolicyRequest const& request) {
-  google::iam::v1::Policy response;
-  auto status = grpc_stub_->SetIamPolicy(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::iam::v1::Policy>
+DefaultFoldersStub::SetIamPolicy(
+  grpc::ClientContext& context, Options const&,
+  google::iam::v1::SetIamPolicyRequest const& request) {
+    google::iam::v1::Policy response;
+    auto status =
+        grpc_stub_->SetIamPolicy(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 DefaultFoldersStub::TestIamPermissions(
-    grpc::ClientContext& context, Options const&,
-    google::iam::v1::TestIamPermissionsRequest const& request) {
-  google::iam::v1::TestIamPermissionsResponse response;
-  auto status = grpc_stub_->TestIamPermissions(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::iam::v1::TestIamPermissionsRequest const& request) {
+    google::iam::v1::TestIamPermissionsResponse response;
+    auto status =
+        grpc_stub_->TestIamPermissions(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-StatusOr<google::longrunning::Operation> DefaultFoldersStub::GetOperation(
-    grpc::ClientContext& context, Options const&,
-    google::longrunning::GetOperationRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = operations_stub_->GetOperation(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::longrunning::Operation>
+DefaultFoldersStub::GetOperation(
+  grpc::ClientContext& context, Options const&,
+  google::longrunning::GetOperationRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        operations_stub_->GetOperation(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -288,14 +303,13 @@ future<Status> DefaultFoldersStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(
-             cq,
-             [this](grpc::ClientContext* context,
-                    google::longrunning::CancelOperationRequest const& request,
-                    grpc::CompletionQueue* cq) {
-               return operations_stub_->AsyncCancelOperation(context, request,
-                                                             cq);
-             },
-             request, std::move(context))
+      cq,
+      [this](grpc::ClientContext* context,
+             google::longrunning::CancelOperationRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return operations_stub_->AsyncCancelOperation(context, request, cq);
+      },
+      request, std::move(context))
       .then([](future<StatusOr<google::protobuf::Empty>> f) {
         return f.get().status();
       });

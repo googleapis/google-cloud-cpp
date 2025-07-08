@@ -17,9 +17,9 @@
 // source: google/cloud/confidentialcomputing/v1/service.proto
 
 #include "google/cloud/confidentialcomputing/v1/internal/confidential_computing_connection_impl.h"
-#include "google/cloud/confidentialcomputing/v1/internal/confidential_computing_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/confidentialcomputing/v1/internal/confidential_computing_option_defaults.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
@@ -34,100 +34,78 @@ namespace {
 
 std::unique_ptr<confidentialcomputing_v1::ConfidentialComputingRetryPolicy>
 retry_policy(Options const& options) {
-  return options
-      .get<confidentialcomputing_v1::ConfidentialComputingRetryPolicyOption>()
-      ->clone();
+  return options.get<confidentialcomputing_v1::ConfidentialComputingRetryPolicyOption>()->clone();
 }
 
-std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-  return options
-      .get<confidentialcomputing_v1::ConfidentialComputingBackoffPolicyOption>()
-      ->clone();
+std::unique_ptr<BackoffPolicy>
+backoff_policy(Options const& options) {
+  return options.get<confidentialcomputing_v1::ConfidentialComputingBackoffPolicyOption>()->clone();
 }
 
-std::unique_ptr<
-    confidentialcomputing_v1::ConfidentialComputingConnectionIdempotencyPolicy>
+std::unique_ptr<confidentialcomputing_v1::ConfidentialComputingConnectionIdempotencyPolicy>
 idempotency_policy(Options const& options) {
-  return options
-      .get<confidentialcomputing_v1::
-               ConfidentialComputingConnectionIdempotencyPolicyOption>()
-      ->clone();
+  return options.get<confidentialcomputing_v1::ConfidentialComputingConnectionIdempotencyPolicyOption>()->clone();
 }
 
-}  // namespace
+} // namespace
 
 ConfidentialComputingConnectionImpl::ConfidentialComputingConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<
-        confidentialcomputing_v1_internal::ConfidentialComputingStub>
-        stub,
+    std::shared_ptr<confidentialcomputing_v1_internal::ConfidentialComputingStub> stub,
     Options options)
-    : background_(std::move(background)),
-      stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options), ConfidentialComputingConnection::options())) {}
+  : background_(std::move(background)), stub_(std::move(stub)),
+    options_(internal::MergeOptions(
+        std::move(options),
+        ConfidentialComputingConnection::options())) {}
 
 StatusOr<google::cloud::confidentialcomputing::v1::Challenge>
-ConfidentialComputingConnectionImpl::CreateChallenge(
-    google::cloud::confidentialcomputing::v1::CreateChallengeRequest const&
-        request) {
+ConfidentialComputingConnectionImpl::CreateChallenge(google::cloud::confidentialcomputing::v1::CreateChallengeRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateChallenge(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::confidentialcomputing::v1::
-                 CreateChallengeRequest const& request) {
+             google::cloud::confidentialcomputing::v1::CreateChallengeRequest const& request) {
         return stub_->CreateChallenge(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::confidentialcomputing::v1::VerifyAttestationResponse>
-ConfidentialComputingConnectionImpl::VerifyAttestation(
-    google::cloud::confidentialcomputing::v1::VerifyAttestationRequest const&
-        request) {
+ConfidentialComputingConnectionImpl::VerifyAttestation(google::cloud::confidentialcomputing::v1::VerifyAttestationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->VerifyAttestation(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::confidentialcomputing::v1::
-                 VerifyAttestationRequest const& request) {
+             google::cloud::confidentialcomputing::v1::VerifyAttestationRequest const& request) {
         return stub_->VerifyAttestation(context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::cloud::location::Location>
-ConfidentialComputingConnectionImpl::ListLocations(
-    google::cloud::location::ListLocationsRequest request) {
+ConfidentialComputingConnectionImpl::ListLocations(google::cloud::location::ListLocationsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListLocations(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::location::Location>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::location::Location>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<
-           confidentialcomputing_v1::ConfidentialComputingRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<confidentialcomputing_v1::ConfidentialComputingRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::location::ListLocationsRequest const& r) {
+          Options const& options, google::cloud::location::ListLocationsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](
-                grpc::ClientContext& context, Options const& options,
-                google::cloud::location::ListLocationsRequest const& request) {
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::cloud::location::ListLocationsRequest const& request) {
               return stub->ListLocations(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::location::ListLocationsResponse r) {
-        std::vector<google::cloud::location::Location> result(
-            r.locations().size());
+        std::vector<google::cloud::location::Location> result(r.locations().size());
         auto& messages = *r.mutable_locations();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -135,8 +113,7 @@ ConfidentialComputingConnectionImpl::ListLocations(
 }
 
 StatusOr<google::cloud::location::Location>
-ConfidentialComputingConnectionImpl::GetLocation(
-    google::cloud::location::GetLocationRequest const& request) {
+ConfidentialComputingConnectionImpl::GetLocation(google::cloud::location::GetLocationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),

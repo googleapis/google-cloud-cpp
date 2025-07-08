@@ -31,85 +31,81 @@ SecuritySettingsServiceAuth::SecuritySettingsServiceAuth(
     std::shared_ptr<SecuritySettingsServiceStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::dialogflow::cx::v3::SecuritySettings>
-SecuritySettingsServiceAuth::CreateSecuritySettings(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::dialogflow::cx::v3::CreateSecuritySettingsRequest const&
-        request) {
+StatusOr<google::cloud::dialogflow::cx::v3::SecuritySettings> SecuritySettingsServiceAuth::CreateSecuritySettings(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::dialogflow::cx::v3::CreateSecuritySettingsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateSecuritySettings(context, options, request);
 }
 
-StatusOr<google::cloud::dialogflow::cx::v3::SecuritySettings>
-SecuritySettingsServiceAuth::GetSecuritySettings(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::dialogflow::cx::v3::GetSecuritySettingsRequest const&
-        request) {
+StatusOr<google::cloud::dialogflow::cx::v3::SecuritySettings> SecuritySettingsServiceAuth::GetSecuritySettings(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::dialogflow::cx::v3::GetSecuritySettingsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetSecuritySettings(context, options, request);
 }
 
-StatusOr<google::cloud::dialogflow::cx::v3::SecuritySettings>
-SecuritySettingsServiceAuth::UpdateSecuritySettings(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::dialogflow::cx::v3::UpdateSecuritySettingsRequest const&
-        request) {
+StatusOr<google::cloud::dialogflow::cx::v3::SecuritySettings> SecuritySettingsServiceAuth::UpdateSecuritySettings(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::dialogflow::cx::v3::UpdateSecuritySettingsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateSecuritySettings(context, options, request);
 }
 
-StatusOr<google::cloud::dialogflow::cx::v3::ListSecuritySettingsResponse>
-SecuritySettingsServiceAuth::ListSecuritySettings(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::dialogflow::cx::v3::ListSecuritySettingsRequest const&
-        request) {
+StatusOr<google::cloud::dialogflow::cx::v3::ListSecuritySettingsResponse> SecuritySettingsServiceAuth::ListSecuritySettings(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::dialogflow::cx::v3::ListSecuritySettingsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListSecuritySettings(context, options, request);
 }
 
 Status SecuritySettingsServiceAuth::DeleteSecuritySettings(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::dialogflow::cx::v3::DeleteSecuritySettingsRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::dialogflow::cx::v3::DeleteSecuritySettingsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteSecuritySettings(context, options, request);
 }
 
-StatusOr<google::cloud::location::ListLocationsResponse>
-SecuritySettingsServiceAuth::ListLocations(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::location::ListLocationsResponse> SecuritySettingsServiceAuth::ListLocations(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListLocations(context, options, request);
 }
 
-StatusOr<google::cloud::location::Location>
-SecuritySettingsServiceAuth::GetLocation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::location::Location> SecuritySettingsServiceAuth::GetLocation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetLocation(context, options, request);
 }
 
-StatusOr<google::longrunning::ListOperationsResponse>
-SecuritySettingsServiceAuth::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse> SecuritySettingsServiceAuth::ListOperations(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListOperations(context, options, request);
 }
 
-StatusOr<google::longrunning::Operation>
-SecuritySettingsServiceAuth::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::Operation> SecuritySettingsServiceAuth::GetOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -117,7 +113,8 @@ SecuritySettingsServiceAuth::GetOperation(
 }
 
 Status SecuritySettingsServiceAuth::CancelOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;

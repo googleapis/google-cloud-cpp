@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_EVENTARC_PUBLISHING_V1_INTERNAL_PUBLISHER_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_EVENTARC_PUBLISHING_V1_INTERNAL_PUBLISHER_CONNECTION_IMPL_H
 
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/eventarc/publishing/v1/internal/publisher_retry_traits.h"
 #include "google/cloud/eventarc/publishing/v1/internal/publisher_stub.h"
 #include "google/cloud/eventarc/publishing/v1/publisher_connection.h"
 #include "google/cloud/eventarc/publishing/v1/publisher_connection_idempotency_policy.h"
 #include "google/cloud/eventarc/publishing/v1/publisher_options.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
@@ -42,26 +42,20 @@ class PublisherConnectionImpl
   ~PublisherConnectionImpl() override = default;
 
   PublisherConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<eventarc_publishing_v1_internal::PublisherStub> stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<eventarc_publishing_v1_internal::PublisherStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
-  StatusOr<google::cloud::eventarc::publishing::v1::
-               PublishChannelConnectionEventsResponse>
-  PublishChannelConnectionEvents(
-      google::cloud::eventarc::publishing::v1::
-          PublishChannelConnectionEventsRequest const& request) override;
+  StatusOr<google::cloud::eventarc::publishing::v1::PublishChannelConnectionEventsResponse>
+  PublishChannelConnectionEvents(google::cloud::eventarc::publishing::v1::PublishChannelConnectionEventsRequest const& request) override;
 
   StatusOr<google::cloud::eventarc::publishing::v1::PublishEventsResponse>
-  PublishEvents(
-      google::cloud::eventarc::publishing::v1::PublishEventsRequest const&
-          request) override;
+  PublishEvents(google::cloud::eventarc::publishing::v1::PublishEventsRequest const& request) override;
 
-  StatusOr<google::cloud::eventarc::publishing::v1::PublishResponse> Publish(
-      google::cloud::eventarc::publishing::v1::PublishRequest const& request)
-      override;
+  StatusOr<google::cloud::eventarc::publishing::v1::PublishResponse>
+  Publish(google::cloud::eventarc::publishing::v1::PublishRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

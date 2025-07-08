@@ -36,52 +36,42 @@ class CloudBillingTracingConnection
   ~CloudBillingTracingConnection() override = default;
 
   explicit CloudBillingTracingConnection(
-      std::shared_ptr<billing_v1::CloudBillingConnection> child);
+    std::shared_ptr<billing_v1::CloudBillingConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::billing::v1::BillingAccount> GetBillingAccount(
-      google::cloud::billing::v1::GetBillingAccountRequest const& request)
-      override;
+  StatusOr<google::cloud::billing::v1::BillingAccount>
+  GetBillingAccount(google::cloud::billing::v1::GetBillingAccountRequest const& request) override;
 
-  StreamRange<google::cloud::billing::v1::BillingAccount> ListBillingAccounts(
-      google::cloud::billing::v1::ListBillingAccountsRequest request) override;
+  StreamRange<google::cloud::billing::v1::BillingAccount>
+  ListBillingAccounts(google::cloud::billing::v1::ListBillingAccountsRequest request) override;
 
-  StatusOr<google::cloud::billing::v1::BillingAccount> UpdateBillingAccount(
-      google::cloud::billing::v1::UpdateBillingAccountRequest const& request)
-      override;
+  StatusOr<google::cloud::billing::v1::BillingAccount>
+  UpdateBillingAccount(google::cloud::billing::v1::UpdateBillingAccountRequest const& request) override;
 
-  StatusOr<google::cloud::billing::v1::BillingAccount> CreateBillingAccount(
-      google::cloud::billing::v1::CreateBillingAccountRequest const& request)
-      override;
+  StatusOr<google::cloud::billing::v1::BillingAccount>
+  CreateBillingAccount(google::cloud::billing::v1::CreateBillingAccountRequest const& request) override;
 
   StreamRange<google::cloud::billing::v1::ProjectBillingInfo>
-  ListProjectBillingInfo(
-      google::cloud::billing::v1::ListProjectBillingInfoRequest request)
-      override;
+  ListProjectBillingInfo(google::cloud::billing::v1::ListProjectBillingInfoRequest request) override;
 
   StatusOr<google::cloud::billing::v1::ProjectBillingInfo>
-  GetProjectBillingInfo(
-      google::cloud::billing::v1::GetProjectBillingInfoRequest const& request)
-      override;
+  GetProjectBillingInfo(google::cloud::billing::v1::GetProjectBillingInfoRequest const& request) override;
 
   StatusOr<google::cloud::billing::v1::ProjectBillingInfo>
-  UpdateProjectBillingInfo(
-      google::cloud::billing::v1::UpdateProjectBillingInfoRequest const&
-          request) override;
+  UpdateProjectBillingInfo(google::cloud::billing::v1::UpdateProjectBillingInfoRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request) override;
+  StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) override;
 
-  StatusOr<google::cloud::billing::v1::BillingAccount> MoveBillingAccount(
-      google::cloud::billing::v1::MoveBillingAccountRequest const& request)
-      override;
+  StatusOr<google::cloud::billing::v1::BillingAccount>
+  MoveBillingAccount(google::cloud::billing::v1::MoveBillingAccountRequest const& request) override;
 
  private:
   std::shared_ptr<billing_v1::CloudBillingConnection> child_;

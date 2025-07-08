@@ -35,33 +35,32 @@ class PolicyBindingsConnectionIdempotencyPolicy {
   virtual ~PolicyBindingsConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<PolicyBindingsConnectionIdempotencyPolicy> clone()
-      const;
+  virtual std::unique_ptr<PolicyBindingsConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency CreatePolicyBinding(
-      google::iam::v3::CreatePolicyBindingRequest const& request);
+  virtual google::cloud::Idempotency
+  CreatePolicyBinding(google::iam::v3::CreatePolicyBindingRequest const& request);
 
-  virtual google::cloud::Idempotency GetPolicyBinding(
-      google::iam::v3::GetPolicyBindingRequest const& request);
+  virtual google::cloud::Idempotency
+  GetPolicyBinding(google::iam::v3::GetPolicyBindingRequest const& request);
 
-  virtual google::cloud::Idempotency UpdatePolicyBinding(
-      google::iam::v3::UpdatePolicyBindingRequest const& request);
+  virtual google::cloud::Idempotency
+  UpdatePolicyBinding(google::iam::v3::UpdatePolicyBindingRequest const& request);
 
-  virtual google::cloud::Idempotency DeletePolicyBinding(
-      google::iam::v3::DeletePolicyBindingRequest const& request);
+  virtual google::cloud::Idempotency
+  DeletePolicyBinding(google::iam::v3::DeletePolicyBindingRequest const& request);
 
-  virtual google::cloud::Idempotency ListPolicyBindings(
-      google::iam::v3::ListPolicyBindingsRequest request);
+  virtual google::cloud::Idempotency
+  ListPolicyBindings(google::iam::v3::ListPolicyBindingsRequest request);
 
-  virtual google::cloud::Idempotency SearchTargetPolicyBindings(
-      google::iam::v3::SearchTargetPolicyBindingsRequest request);
+  virtual google::cloud::Idempotency
+  SearchTargetPolicyBindings(google::iam::v3::SearchTargetPolicyBindingsRequest request);
 
-  virtual google::cloud::Idempotency GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 };
 
 std::unique_ptr<PolicyBindingsConnectionIdempotencyPolicy>
-MakeDefaultPolicyBindingsConnectionIdempotencyPolicy();
+    MakeDefaultPolicyBindingsConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace iam_v3

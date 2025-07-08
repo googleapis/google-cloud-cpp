@@ -35,50 +35,32 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options ReservationBlocksDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_RESERVATION_BLOCKS_ENDPOINT", "",
-      "GOOGLE_CLOUD_CPP_RESERVATION_BLOCKS_AUTHORITY",
+      std::move(options), "GOOGLE_CLOUD_CPP_RESERVATION_BLOCKS_ENDPOINT",
+      "", "GOOGLE_CLOUD_CPP_RESERVATION_BLOCKS_AUTHORITY",
       "compute.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
-  if (!options.has<compute_reservation_blocks_v1::
-                       ReservationBlocksRetryPolicyOption>()) {
-    options.set<
-        compute_reservation_blocks_v1::ReservationBlocksRetryPolicyOption>(
+  if (!options.has<compute_reservation_blocks_v1::ReservationBlocksRetryPolicyOption>()) {
+    options.set<compute_reservation_blocks_v1::ReservationBlocksRetryPolicyOption>(
         compute_reservation_blocks_v1::ReservationBlocksLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
-            .clone());
+            std::chrono::minutes(30)).clone());
   }
-  if (!options.has<compute_reservation_blocks_v1::
-                       ReservationBlocksBackoffPolicyOption>()) {
-    options.set<
-        compute_reservation_blocks_v1::ReservationBlocksBackoffPolicyOption>(
-        ExponentialBackoffPolicy(
-            std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
-            .clone());
+  if (!options.has<compute_reservation_blocks_v1::ReservationBlocksBackoffPolicyOption>()) {
+    options.set<compute_reservation_blocks_v1::ReservationBlocksBackoffPolicyOption>(
+        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
   }
-  if (!options.has<compute_reservation_blocks_v1::
-                       ReservationBlocksPollingPolicyOption>()) {
-    options.set<
-        compute_reservation_blocks_v1::ReservationBlocksPollingPolicyOption>(
-        GenericPollingPolicy<compute_reservation_blocks_v1::
-                                 ReservationBlocksRetryPolicyOption::Type,
-                             compute_reservation_blocks_v1::
-                                 ReservationBlocksBackoffPolicyOption::Type>(
-            options
-                .get<compute_reservation_blocks_v1::
-                         ReservationBlocksRetryPolicyOption>()
-                ->clone(),
+  if (!options.has<compute_reservation_blocks_v1::ReservationBlocksPollingPolicyOption>()) {
+    options.set<compute_reservation_blocks_v1::ReservationBlocksPollingPolicyOption>(
+        GenericPollingPolicy<
+            compute_reservation_blocks_v1::ReservationBlocksRetryPolicyOption::Type,
+            compute_reservation_blocks_v1::ReservationBlocksBackoffPolicyOption::Type>(
+            options.get<compute_reservation_blocks_v1::ReservationBlocksRetryPolicyOption>()->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                     std::chrono::minutes(5), kBackoffScaling)
-                .clone())
-            .clone());
+            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
   }
-  if (!options.has<compute_reservation_blocks_v1::
-                       ReservationBlocksConnectionIdempotencyPolicyOption>()) {
-    options.set<compute_reservation_blocks_v1::
-                    ReservationBlocksConnectionIdempotencyPolicyOption>(
-        compute_reservation_blocks_v1::
-            MakeDefaultReservationBlocksConnectionIdempotencyPolicy());
+  if (!options.has<compute_reservation_blocks_v1::ReservationBlocksConnectionIdempotencyPolicyOption>()) {
+    options.set<compute_reservation_blocks_v1::ReservationBlocksConnectionIdempotencyPolicyOption>(
+        compute_reservation_blocks_v1::MakeDefaultReservationBlocksConnectionIdempotencyPolicy());
   }
 
   return options;

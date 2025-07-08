@@ -37,63 +37,56 @@ class ReachabilityServiceConnectionIdempotencyPolicy {
   virtual ~ReachabilityServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<ReachabilityServiceConnectionIdempotencyPolicy>
-  clone() const;
+  virtual std::unique_ptr<ReachabilityServiceConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency ListConnectivityTests(
-      google::cloud::networkmanagement::v1::ListConnectivityTestsRequest
-          request);
+  virtual google::cloud::Idempotency
+  ListConnectivityTests(google::cloud::networkmanagement::v1::ListConnectivityTestsRequest request);
 
-  virtual google::cloud::Idempotency GetConnectivityTest(
-      google::cloud::networkmanagement::v1::GetConnectivityTestRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  GetConnectivityTest(google::cloud::networkmanagement::v1::GetConnectivityTestRequest const& request);
 
-  virtual google::cloud::Idempotency CreateConnectivityTest(
-      google::cloud::networkmanagement::v1::CreateConnectivityTestRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  CreateConnectivityTest(google::cloud::networkmanagement::v1::CreateConnectivityTestRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateConnectivityTest(
-      google::cloud::networkmanagement::v1::UpdateConnectivityTestRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  UpdateConnectivityTest(google::cloud::networkmanagement::v1::UpdateConnectivityTestRequest const& request);
 
-  virtual google::cloud::Idempotency RerunConnectivityTest(
-      google::cloud::networkmanagement::v1::RerunConnectivityTestRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  RerunConnectivityTest(google::cloud::networkmanagement::v1::RerunConnectivityTestRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteConnectivityTest(
-      google::cloud::networkmanagement::v1::DeleteConnectivityTestRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  DeleteConnectivityTest(google::cloud::networkmanagement::v1::DeleteConnectivityTestRequest const& request);
 
-  virtual google::cloud::Idempotency ListLocations(
-      google::cloud::location::ListLocationsRequest request);
+  virtual google::cloud::Idempotency
+  ListLocations(google::cloud::location::ListLocationsRequest request);
 
-  virtual google::cloud::Idempotency GetLocation(
-      google::cloud::location::GetLocationRequest const& request);
+  virtual google::cloud::Idempotency
+  GetLocation(google::cloud::location::GetLocationRequest const& request);
 
-  virtual google::cloud::Idempotency SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request);
+  virtual google::cloud::Idempotency
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
 
-  virtual google::cloud::Idempotency ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual google::cloud::Idempotency
+  ListOperations(google::longrunning::ListOperationsRequest request);
 
-  virtual google::cloud::Idempotency GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
 
-  virtual google::cloud::Idempotency CancelOperation(
-      google::longrunning::CancelOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  CancelOperation(google::longrunning::CancelOperationRequest const& request);
 };
 
 std::unique_ptr<ReachabilityServiceConnectionIdempotencyPolicy>
-MakeDefaultReachabilityServiceConnectionIdempotencyPolicy();
+    MakeDefaultReachabilityServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace networkmanagement_v1

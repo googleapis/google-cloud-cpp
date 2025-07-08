@@ -54,8 +54,7 @@ class PredictionServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class PredictionServiceLimitedErrorCountRetryPolicy
-    : public PredictionServiceRetryPolicy {
+class PredictionServiceLimitedErrorCountRetryPolicy : public PredictionServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -65,14 +64,14 @@ class PredictionServiceLimitedErrorCountRetryPolicy
    *     @p maximum_failures == 0.
    */
   explicit PredictionServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   PredictionServiceLimitedErrorCountRetryPolicy(
       PredictionServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : PredictionServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : PredictionServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   PredictionServiceLimitedErrorCountRetryPolicy(
       PredictionServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : PredictionServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : PredictionServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -92,9 +91,7 @@ class PredictionServiceLimitedErrorCountRetryPolicy
   using BaseType = PredictionServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      aiplatform_v1_internal::PredictionServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<aiplatform_v1_internal::PredictionServiceRetryTraits> impl_;
 };
 
 /**
@@ -107,8 +104,7 @@ class PredictionServiceLimitedErrorCountRetryPolicy
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class PredictionServiceLimitedTimeRetryPolicy
-    : public PredictionServiceRetryPolicy {
+class PredictionServiceLimitedTimeRetryPolicy : public PredictionServiceRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -133,14 +129,12 @@ class PredictionServiceLimitedTimeRetryPolicy
   template <typename DurationRep, typename DurationPeriod>
   explicit PredictionServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  PredictionServiceLimitedTimeRetryPolicy(
-      PredictionServiceLimitedTimeRetryPolicy&& rhs) noexcept
-      : PredictionServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  PredictionServiceLimitedTimeRetryPolicy(
-      PredictionServiceLimitedTimeRetryPolicy const& rhs) noexcept
-      : PredictionServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  PredictionServiceLimitedTimeRetryPolicy(PredictionServiceLimitedTimeRetryPolicy&& rhs) noexcept
+    : PredictionServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  PredictionServiceLimitedTimeRetryPolicy(PredictionServiceLimitedTimeRetryPolicy const& rhs) noexcept
+    : PredictionServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -162,18 +156,16 @@ class PredictionServiceLimitedTimeRetryPolicy
   using BaseType = PredictionServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      aiplatform_v1_internal::PredictionServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<aiplatform_v1_internal::PredictionServiceRetryTraits> impl_;
 };
 
 /**
  * The `PredictionServiceConnection` object for `PredictionServiceClient`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `PredictionServiceClient`. This allows users to inject custom
- * behavior (e.g., with a Google Mock object) when writing tests that use
- * objects of type `PredictionServiceClient`.
+ * sets in `PredictionServiceClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `PredictionServiceClient`.
  *
  * To create a concrete instance, see `MakePredictionServiceConnection()`.
  *
@@ -185,22 +177,20 @@ class PredictionServiceConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<google::cloud::aiplatform::v1::PredictResponse> Predict(
-      google::cloud::aiplatform::v1::PredictRequest const& request);
+  virtual StatusOr<google::cloud::aiplatform::v1::PredictResponse>
+  Predict(google::cloud::aiplatform::v1::PredictRequest const& request);
 
-  virtual StatusOr<google::api::HttpBody> RawPredict(
-      google::cloud::aiplatform::v1::RawPredictRequest const& request);
+  virtual StatusOr<google::api::HttpBody>
+  RawPredict(google::cloud::aiplatform::v1::RawPredictRequest const& request);
 
-  virtual StreamRange<google::api::HttpBody> StreamRawPredict(
-      google::cloud::aiplatform::v1::StreamRawPredictRequest const& request);
+  virtual StreamRange<google::api::HttpBody>
+  StreamRawPredict(google::cloud::aiplatform::v1::StreamRawPredictRequest const& request);
 
   virtual StatusOr<google::cloud::aiplatform::v1::DirectPredictResponse>
-  DirectPredict(
-      google::cloud::aiplatform::v1::DirectPredictRequest const& request);
+  DirectPredict(google::cloud::aiplatform::v1::DirectPredictRequest const& request);
 
   virtual StatusOr<google::cloud::aiplatform::v1::DirectRawPredictResponse>
-  DirectRawPredict(
-      google::cloud::aiplatform::v1::DirectRawPredictRequest const& request);
+  DirectRawPredict(google::cloud::aiplatform::v1::DirectRawPredictRequest const& request);
 
   virtual std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::aiplatform::v1::StreamDirectPredictRequest,
@@ -218,67 +208,62 @@ class PredictionServiceConnection {
   AsyncStreamingPredict();
 
   virtual StreamRange<google::cloud::aiplatform::v1::StreamingPredictResponse>
-  ServerStreamingPredict(
-      google::cloud::aiplatform::v1::StreamingPredictRequest const& request);
+  ServerStreamingPredict(google::cloud::aiplatform::v1::StreamingPredictRequest const& request);
 
   virtual std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::aiplatform::v1::StreamingRawPredictRequest,
       google::cloud::aiplatform::v1::StreamingRawPredictResponse>>
   AsyncStreamingRawPredict();
 
-  virtual StatusOr<google::cloud::aiplatform::v1::ExplainResponse> Explain(
-      google::cloud::aiplatform::v1::ExplainRequest const& request);
+  virtual StatusOr<google::cloud::aiplatform::v1::ExplainResponse>
+  Explain(google::cloud::aiplatform::v1::ExplainRequest const& request);
 
   virtual StatusOr<google::cloud::aiplatform::v1::GenerateContentResponse>
-  GenerateContent(
-      google::cloud::aiplatform::v1::GenerateContentRequest const& request);
+  GenerateContent(google::cloud::aiplatform::v1::GenerateContentRequest const& request);
 
   virtual StreamRange<google::cloud::aiplatform::v1::GenerateContentResponse>
-  StreamGenerateContent(
-      google::cloud::aiplatform::v1::GenerateContentRequest const& request);
+  StreamGenerateContent(google::cloud::aiplatform::v1::GenerateContentRequest const& request);
 
-  virtual StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request);
+  virtual StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request);
 
-  virtual StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request);
+  virtual StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
 
   virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
   TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
 
-  virtual StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 
-  virtual Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request);
+  virtual Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
 
-  virtual Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request);
+  virtual Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> WaitOperation(
-      google::longrunning::WaitOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  WaitOperation(google::longrunning::WaitOperationRequest const& request);
 };
 
 /**
- * A factory function to construct an object of type
- * `PredictionServiceConnection`.
+ * A factory function to construct an object of type `PredictionServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of
- * PredictionServiceClient.
+ * should be passed as an argument to the constructor of PredictionServiceClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `PredictionServiceConnection`. Expected options are any of the types
- * in the following option lists:
+ * returned `PredictionServiceConnection`. Expected options are any of the types in
+ * the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
@@ -289,8 +274,8 @@ class PredictionServiceConnection {
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
  * @param location Sets the prefix for the default `EndpointOption` value.
- * @param options (optional) Configure the `PredictionServiceConnection` created
- * by this function.
+ * @param options (optional) Configure the `PredictionServiceConnection` created by
+ * this function.
  */
 std::shared_ptr<PredictionServiceConnection> MakePredictionServiceConnection(
     std::string const& location, Options options = {});

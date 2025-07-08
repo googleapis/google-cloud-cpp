@@ -26,36 +26,31 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-RoutesConnectionIdempotencyPolicy::~RoutesConnectionIdempotencyPolicy() =
-    default;
+RoutesConnectionIdempotencyPolicy::~RoutesConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<RoutesConnectionIdempotencyPolicy>
 RoutesConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<RoutesConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency RoutesConnectionIdempotencyPolicy::DeleteRoute(
-    google::cloud::cpp::compute::routes::v1::DeleteRouteRequest const&) {
+Idempotency RoutesConnectionIdempotencyPolicy::DeleteRoute(google::cloud::cpp::compute::routes::v1::DeleteRouteRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency RoutesConnectionIdempotencyPolicy::GetRoute(
-    google::cloud::cpp::compute::routes::v1::GetRouteRequest const&) {
+Idempotency RoutesConnectionIdempotencyPolicy::GetRoute(google::cloud::cpp::compute::routes::v1::GetRouteRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency RoutesConnectionIdempotencyPolicy::InsertRoute(
-    google::cloud::cpp::compute::routes::v1::InsertRouteRequest const&) {
+Idempotency RoutesConnectionIdempotencyPolicy::InsertRoute(google::cloud::cpp::compute::routes::v1::InsertRouteRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency RoutesConnectionIdempotencyPolicy::ListRoutes(
-    google::cloud::cpp::compute::routes::v1::ListRoutesRequest) {  // NOLINT
+Idempotency RoutesConnectionIdempotencyPolicy::ListRoutes(google::cloud::cpp::compute::routes::v1::ListRoutesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<RoutesConnectionIdempotencyPolicy>
-MakeDefaultRoutesConnectionIdempotencyPolicy() {
+    MakeDefaultRoutesConnectionIdempotencyPolicy() {
   return std::make_unique<RoutesConnectionIdempotencyPolicy>();
 }
 

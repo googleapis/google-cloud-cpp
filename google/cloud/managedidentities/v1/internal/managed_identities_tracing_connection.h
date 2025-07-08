@@ -36,113 +36,98 @@ class ManagedIdentitiesServiceTracingConnection
   ~ManagedIdentitiesServiceTracingConnection() override = default;
 
   explicit ManagedIdentitiesServiceTracingConnection(
-      std::shared_ptr<managedidentities_v1::ManagedIdentitiesServiceConnection>
-          child);
+    std::shared_ptr<managedidentities_v1::ManagedIdentitiesServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
   future<StatusOr<google::cloud::managedidentities::v1::Domain>>
-  CreateMicrosoftAdDomain(
-      google::cloud::managedidentities::v1::
-          CreateMicrosoftAdDomainRequest const& request) override;
+  CreateMicrosoftAdDomain(google::cloud::managedidentities::v1::CreateMicrosoftAdDomainRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> CreateMicrosoftAdDomain(
-      NoAwaitTag, google::cloud::managedidentities::v1::
-                      CreateMicrosoftAdDomainRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  CreateMicrosoftAdDomain(NoAwaitTag,
+      google::cloud::managedidentities::v1::CreateMicrosoftAdDomainRequest const& request) override;
 
   future<StatusOr<google::cloud::managedidentities::v1::Domain>>
   CreateMicrosoftAdDomain(
       google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::managedidentities::v1::ResetAdminPasswordResponse>
-  ResetAdminPassword(
-      google::cloud::managedidentities::v1::ResetAdminPasswordRequest const&
-          request) override;
+  ResetAdminPassword(google::cloud::managedidentities::v1::ResetAdminPasswordRequest const& request) override;
 
-  StreamRange<google::cloud::managedidentities::v1::Domain> ListDomains(
-      google::cloud::managedidentities::v1::ListDomainsRequest request)
-      override;
+  StreamRange<google::cloud::managedidentities::v1::Domain>
+  ListDomains(google::cloud::managedidentities::v1::ListDomainsRequest request) override;
 
-  StatusOr<google::cloud::managedidentities::v1::Domain> GetDomain(
-      google::cloud::managedidentities::v1::GetDomainRequest const& request)
-      override;
+  StatusOr<google::cloud::managedidentities::v1::Domain>
+  GetDomain(google::cloud::managedidentities::v1::GetDomainRequest const& request) override;
 
-  future<StatusOr<google::cloud::managedidentities::v1::Domain>> UpdateDomain(
-      google::cloud::managedidentities::v1::UpdateDomainRequest const& request)
-      override;
+  future<StatusOr<google::cloud::managedidentities::v1::Domain>>
+  UpdateDomain(google::cloud::managedidentities::v1::UpdateDomainRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> UpdateDomain(
-      NoAwaitTag,
-      google::cloud::managedidentities::v1::UpdateDomainRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  UpdateDomain(NoAwaitTag,
+      google::cloud::managedidentities::v1::UpdateDomainRequest const& request) override;
 
-  future<StatusOr<google::cloud::managedidentities::v1::Domain>> UpdateDomain(
+  future<StatusOr<google::cloud::managedidentities::v1::Domain>>
+  UpdateDomain(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::managedidentities::v1::OpMetadata>>
-  DeleteDomain(google::cloud::managedidentities::v1::DeleteDomainRequest const&
-                   request) override;
+  DeleteDomain(google::cloud::managedidentities::v1::DeleteDomainRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> DeleteDomain(
-      NoAwaitTag,
-      google::cloud::managedidentities::v1::DeleteDomainRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  DeleteDomain(NoAwaitTag,
+      google::cloud::managedidentities::v1::DeleteDomainRequest const& request) override;
 
   future<StatusOr<google::cloud::managedidentities::v1::OpMetadata>>
-  DeleteDomain(google::longrunning::Operation const& operation) override;
-
-  future<StatusOr<google::cloud::managedidentities::v1::Domain>> AttachTrust(
-      google::cloud::managedidentities::v1::AttachTrustRequest const& request)
-      override;
-
-  StatusOr<google::longrunning::Operation> AttachTrust(
-      NoAwaitTag,
-      google::cloud::managedidentities::v1::AttachTrustRequest const& request)
-      override;
-
-  future<StatusOr<google::cloud::managedidentities::v1::Domain>> AttachTrust(
+  DeleteDomain(
       google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::managedidentities::v1::Domain>>
+  AttachTrust(google::cloud::managedidentities::v1::AttachTrustRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  AttachTrust(NoAwaitTag,
+      google::cloud::managedidentities::v1::AttachTrustRequest const& request) override;
+
+  future<StatusOr<google::cloud::managedidentities::v1::Domain>>
+  AttachTrust(
+      google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::managedidentities::v1::Domain>>
+  ReconfigureTrust(google::cloud::managedidentities::v1::ReconfigureTrustRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  ReconfigureTrust(NoAwaitTag,
+      google::cloud::managedidentities::v1::ReconfigureTrustRequest const& request) override;
 
   future<StatusOr<google::cloud::managedidentities::v1::Domain>>
   ReconfigureTrust(
-      google::cloud::managedidentities::v1::ReconfigureTrustRequest const&
-          request) override;
-
-  StatusOr<google::longrunning::Operation> ReconfigureTrust(
-      NoAwaitTag,
-      google::cloud::managedidentities::v1::ReconfigureTrustRequest const&
-          request) override;
-
-  future<StatusOr<google::cloud::managedidentities::v1::Domain>>
-  ReconfigureTrust(google::longrunning::Operation const& operation) override;
-
-  future<StatusOr<google::cloud::managedidentities::v1::Domain>> DetachTrust(
-      google::cloud::managedidentities::v1::DetachTrustRequest const& request)
-      override;
-
-  StatusOr<google::longrunning::Operation> DetachTrust(
-      NoAwaitTag,
-      google::cloud::managedidentities::v1::DetachTrustRequest const& request)
-      override;
-
-  future<StatusOr<google::cloud::managedidentities::v1::Domain>> DetachTrust(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::managedidentities::v1::Domain>> ValidateTrust(
-      google::cloud::managedidentities::v1::ValidateTrustRequest const& request)
-      override;
+  future<StatusOr<google::cloud::managedidentities::v1::Domain>>
+  DetachTrust(google::cloud::managedidentities::v1::DetachTrustRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> ValidateTrust(
-      NoAwaitTag,
-      google::cloud::managedidentities::v1::ValidateTrustRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  DetachTrust(NoAwaitTag,
+      google::cloud::managedidentities::v1::DetachTrustRequest const& request) override;
 
-  future<StatusOr<google::cloud::managedidentities::v1::Domain>> ValidateTrust(
+  future<StatusOr<google::cloud::managedidentities::v1::Domain>>
+  DetachTrust(
+      google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::managedidentities::v1::Domain>>
+  ValidateTrust(google::cloud::managedidentities::v1::ValidateTrustRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  ValidateTrust(NoAwaitTag,
+      google::cloud::managedidentities::v1::ValidateTrustRequest const& request) override;
+
+  future<StatusOr<google::cloud::managedidentities::v1::Domain>>
+  ValidateTrust(
       google::longrunning::Operation const& operation) override;
 
  private:
-  std::shared_ptr<managedidentities_v1::ManagedIdentitiesServiceConnection>
-      child_;
+  std::shared_ptr<managedidentities_v1::ManagedIdentitiesServiceConnection> child_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -155,8 +140,7 @@ class ManagedIdentitiesServiceTracingConnection
  */
 std::shared_ptr<managedidentities_v1::ManagedIdentitiesServiceConnection>
 MakeManagedIdentitiesServiceTracingConnection(
-    std::shared_ptr<managedidentities_v1::ManagedIdentitiesServiceConnection>
-        conn);
+    std::shared_ptr<managedidentities_v1::ManagedIdentitiesServiceConnection> conn);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace managedidentities_v1_internal

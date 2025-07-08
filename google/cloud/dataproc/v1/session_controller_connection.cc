@@ -17,14 +17,14 @@
 // source: google/cloud/dataproc/v1/sessions.proto
 
 #include "google/cloud/dataproc/v1/session_controller_connection.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/dataproc/v1/internal/session_controller_connection_impl.h"
 #include "google/cloud/dataproc/v1/internal/session_controller_option_defaults.h"
 #include "google/cloud/dataproc/v1/internal/session_controller_stub_factory.h"
 #include "google/cloud/dataproc/v1/internal/session_controller_tracing_connection.h"
 #include "google/cloud/dataproc/v1/session_controller_options.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
-#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
@@ -42,23 +42,24 @@ future<StatusOr<google::cloud::dataproc::v1::Session>>
 SessionControllerConnection::CreateSession(
     google::cloud::dataproc::v1::CreateSessionRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::dataproc::v1::Session>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::dataproc::v1::Session>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 SessionControllerConnection::CreateSession(
-    NoAwaitTag, google::cloud::dataproc::v1::CreateSessionRequest const&) {
+    NoAwaitTag,
+    google::cloud::dataproc::v1::CreateSessionRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::dataproc::v1::Session>>
 SessionControllerConnection::CreateSession(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::dataproc::v1::Session>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::dataproc::v1::Session>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::dataproc::v1::Session>
@@ -67,10 +68,8 @@ SessionControllerConnection::GetSession(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::dataproc::v1::Session>
-SessionControllerConnection::ListSessions(
-    google::cloud::dataproc::v1::
-        ListSessionsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::dataproc::v1::Session> SessionControllerConnection::ListSessions(
+    google::cloud::dataproc::v1::ListSessionsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::dataproc::v1::Session>>();
 }
@@ -79,54 +78,58 @@ future<StatusOr<google::cloud::dataproc::v1::Session>>
 SessionControllerConnection::TerminateSession(
     google::cloud::dataproc::v1::TerminateSessionRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::dataproc::v1::Session>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::dataproc::v1::Session>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 SessionControllerConnection::TerminateSession(
-    NoAwaitTag, google::cloud::dataproc::v1::TerminateSessionRequest const&) {
+    NoAwaitTag,
+    google::cloud::dataproc::v1::TerminateSessionRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::dataproc::v1::Session>>
 SessionControllerConnection::TerminateSession(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::dataproc::v1::Session>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::dataproc::v1::Session>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::dataproc::v1::Session>>
 SessionControllerConnection::DeleteSession(
     google::cloud::dataproc::v1::DeleteSessionRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::dataproc::v1::Session>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::dataproc::v1::Session>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 SessionControllerConnection::DeleteSession(
-    NoAwaitTag, google::cloud::dataproc::v1::DeleteSessionRequest const&) {
+    NoAwaitTag,
+    google::cloud::dataproc::v1::DeleteSessionRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::dataproc::v1::Session>>
 SessionControllerConnection::DeleteSession(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::dataproc::v1::Session>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::dataproc::v1::Session>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::iam::v1::Policy> SessionControllerConnection::SetIamPolicy(
+StatusOr<google::iam::v1::Policy>
+SessionControllerConnection::SetIamPolicy(
     google::iam::v1::SetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::iam::v1::Policy> SessionControllerConnection::GetIamPolicy(
+StatusOr<google::iam::v1::Policy>
+SessionControllerConnection::GetIamPolicy(
     google::iam::v1::GetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -137,10 +140,8 @@ SessionControllerConnection::TestIamPermissions(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::longrunning::Operation>
-SessionControllerConnection::ListOperations(
-    google::longrunning::
-        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::longrunning::Operation> SessionControllerConnection::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }
@@ -151,12 +152,14 @@ SessionControllerConnection::GetOperation(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status SessionControllerConnection::DeleteOperation(
+Status
+SessionControllerConnection::DeleteOperation(
     google::longrunning::DeleteOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status SessionControllerConnection::CancelOperation(
+Status
+SessionControllerConnection::CancelOperation(
     google::longrunning::CancelOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -164,18 +167,17 @@ Status SessionControllerConnection::CancelOperation(
 std::shared_ptr<SessionControllerConnection> MakeSessionControllerConnection(
     std::string const& location, Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 SessionControllerPolicyOptionList>(options,
-                                                                    __func__);
+      UnifiedCredentialsOptionList,
+      SessionControllerPolicyOptionList>(options, __func__);
   options = dataproc_v1_internal::SessionControllerDefaultOptions(
       location, std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = dataproc_v1_internal::CreateDefaultSessionControllerStub(
-      std::move(auth), options);
+    std::move(auth), options);
   return dataproc_v1_internal::MakeSessionControllerTracingConnection(
       std::make_shared<dataproc_v1_internal::SessionControllerConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options)));
+      std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

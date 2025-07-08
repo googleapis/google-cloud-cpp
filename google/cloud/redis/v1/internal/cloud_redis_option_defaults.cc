@@ -17,10 +17,10 @@
 // source: google/cloud/redis/v1/cloud_redis.proto
 
 #include "google/cloud/redis/v1/internal/cloud_redis_option_defaults.h"
-#include "google/cloud/redis/v1/cloud_redis_connection.h"
-#include "google/cloud/redis/v1/cloud_redis_options.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
+#include "google/cloud/redis/v1/cloud_redis_connection.h"
+#include "google/cloud/redis/v1/cloud_redis_options.h"
 #include <memory>
 #include <utility>
 
@@ -35,30 +35,28 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options CloudRedisDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_CLOUD_REDIS_ENDPOINT", "",
-      "GOOGLE_CLOUD_CPP_CLOUD_REDIS_AUTHORITY", "redis.googleapis.com");
+      std::move(options), "GOOGLE_CLOUD_CPP_CLOUD_REDIS_ENDPOINT",
+      "", "GOOGLE_CLOUD_CPP_CLOUD_REDIS_AUTHORITY",
+      "redis.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<redis_v1::CloudRedisRetryPolicyOption>()) {
     options.set<redis_v1::CloudRedisRetryPolicyOption>(
-        redis_v1::CloudRedisLimitedTimeRetryPolicy(std::chrono::minutes(30))
-            .clone());
+        redis_v1::CloudRedisLimitedTimeRetryPolicy(
+            std::chrono::minutes(30)).clone());
   }
   if (!options.has<redis_v1::CloudRedisBackoffPolicyOption>()) {
     options.set<redis_v1::CloudRedisBackoffPolicyOption>(
-        ExponentialBackoffPolicy(
-            std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
-            .clone());
+        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
   }
   if (!options.has<redis_v1::CloudRedisPollingPolicyOption>()) {
     options.set<redis_v1::CloudRedisPollingPolicyOption>(
-        GenericPollingPolicy<redis_v1::CloudRedisRetryPolicyOption::Type,
-                             redis_v1::CloudRedisBackoffPolicyOption::Type>(
+        GenericPollingPolicy<
+            redis_v1::CloudRedisRetryPolicyOption::Type,
+            redis_v1::CloudRedisBackoffPolicyOption::Type>(
             options.get<redis_v1::CloudRedisRetryPolicyOption>()->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                     std::chrono::minutes(5), kBackoffScaling)
-                .clone())
-            .clone());
+            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
   }
   if (!options.has<redis_v1::CloudRedisConnectionIdempotencyPolicyOption>()) {
     options.set<redis_v1::CloudRedisConnectionIdempotencyPolicyOption>(

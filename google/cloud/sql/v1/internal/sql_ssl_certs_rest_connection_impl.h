@@ -19,14 +19,14 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_INTERNAL_SQL_SSL_CERTS_REST_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_INTERNAL_SQL_SSL_CERTS_REST_CONNECTION_IMPL_H
 
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/options.h"
 #include "google/cloud/sql/v1/internal/sql_ssl_certs_rest_stub.h"
 #include "google/cloud/sql/v1/internal/sql_ssl_certs_retry_traits.h"
 #include "google/cloud/sql/v1/sql_ssl_certs_connection.h"
 #include "google/cloud/sql/v1/sql_ssl_certs_connection_idempotency_policy.h"
 #include "google/cloud/sql/v1/sql_ssl_certs_options.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -42,40 +42,37 @@ class SqlSslCertsServiceRestConnectionImpl
   ~SqlSslCertsServiceRestConnectionImpl() override = default;
 
   SqlSslCertsServiceRestConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<sql_v1_internal::SqlSslCertsServiceRestStub> stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<sql_v1_internal::SqlSslCertsServiceRestStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
-  StatusOr<google::cloud::sql::v1::Operation> Delete(
-      google::cloud::sql::v1::SqlSslCertsDeleteRequest const& request) override;
+  StatusOr<google::cloud::sql::v1::Operation>
+  Delete(google::cloud::sql::v1::SqlSslCertsDeleteRequest const& request) override;
 
-  StatusOr<google::cloud::sql::v1::SslCert> Get(
-      google::cloud::sql::v1::SqlSslCertsGetRequest const& request) override;
+  StatusOr<google::cloud::sql::v1::SslCert>
+  Get(google::cloud::sql::v1::SqlSslCertsGetRequest const& request) override;
 
-  StatusOr<google::cloud::sql::v1::SslCertsInsertResponse> Insert(
-      google::cloud::sql::v1::SqlSslCertsInsertRequest const& request) override;
+  StatusOr<google::cloud::sql::v1::SslCertsInsertResponse>
+  Insert(google::cloud::sql::v1::SqlSslCertsInsertRequest const& request) override;
 
-  StatusOr<google::cloud::sql::v1::SslCertsListResponse> List(
-      google::cloud::sql::v1::SqlSslCertsListRequest const& request) override;
+  StatusOr<google::cloud::sql::v1::SslCertsListResponse>
+  List(google::cloud::sql::v1::SqlSslCertsListRequest const& request) override;
 
  private:
-  static std::unique_ptr<sql_v1::SqlSslCertsServiceRetryPolicy> retry_policy(
-      Options const& options) {
+  static std::unique_ptr<sql_v1::SqlSslCertsServiceRetryPolicy>
+  retry_policy(Options const& options) {
     return options.get<sql_v1::SqlSslCertsServiceRetryPolicyOption>()->clone();
   }
 
   static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<sql_v1::SqlSslCertsServiceBackoffPolicyOption>()
-        ->clone();
+    return options.get<sql_v1::SqlSslCertsServiceBackoffPolicyOption>()->clone();
   }
 
   static std::unique_ptr<sql_v1::SqlSslCertsServiceConnectionIdempotencyPolicy>
   idempotency_policy(Options const& options) {
-    return options
-        .get<sql_v1::SqlSslCertsServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
+    return options.get<sql_v1::SqlSslCertsServiceConnectionIdempotencyPolicyOption>()->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

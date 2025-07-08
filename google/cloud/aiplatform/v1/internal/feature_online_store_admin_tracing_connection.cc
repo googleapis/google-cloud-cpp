@@ -29,391 +29,303 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-FeatureOnlineStoreAdminServiceTracingConnection::
-    FeatureOnlineStoreAdminServiceTracingConnection(
-        std::shared_ptr<aiplatform_v1::FeatureOnlineStoreAdminServiceConnection>
-            child)
+FeatureOnlineStoreAdminServiceTracingConnection::FeatureOnlineStoreAdminServiceTracingConnection(
+    std::shared_ptr<aiplatform_v1::FeatureOnlineStoreAdminServiceConnection> child)
     : child_(std::move(child)) {}
 
 future<StatusOr<google::cloud::aiplatform::v1::FeatureOnlineStore>>
-FeatureOnlineStoreAdminServiceTracingConnection::CreateFeatureOnlineStore(
-    google::cloud::aiplatform::v1::CreateFeatureOnlineStoreRequest const&
-        request) {
+FeatureOnlineStoreAdminServiceTracingConnection::CreateFeatureOnlineStore(google::cloud::aiplatform::v1::CreateFeatureOnlineStoreRequest const& request) {
   auto span = internal::MakeSpan(
-      "aiplatform_v1::FeatureOnlineStoreAdminServiceConnection::"
-      "CreateFeatureOnlineStore");
+      "aiplatform_v1::FeatureOnlineStoreAdminServiceConnection::CreateFeatureOnlineStore");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->CreateFeatureOnlineStore(request));
+  return internal::EndSpan(std::move(span), child_->CreateFeatureOnlineStore(request));
 }
 
 StatusOr<google::longrunning::Operation>
 FeatureOnlineStoreAdminServiceTracingConnection::CreateFeatureOnlineStore(
-    NoAwaitTag,
-    google::cloud::aiplatform::v1::CreateFeatureOnlineStoreRequest const&
-        request) {
+    NoAwaitTag, google::cloud::aiplatform::v1::CreateFeatureOnlineStoreRequest const& request) {
   auto span = internal::MakeSpan(
-      "aiplatform_v1::FeatureOnlineStoreAdminServiceConnection::"
-      "CreateFeatureOnlineStore");
+      "aiplatform_v1::FeatureOnlineStoreAdminServiceConnection::CreateFeatureOnlineStore");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->CreateFeatureOnlineStore(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->CreateFeatureOnlineStore(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::FeatureOnlineStore>>
 FeatureOnlineStoreAdminServiceTracingConnection::CreateFeatureOnlineStore(
     google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
-      "aiplatform_v1::FeatureOnlineStoreAdminServiceConnection::"
-      "CreateFeatureOnlineStore");
+      "aiplatform_v1::FeatureOnlineStoreAdminServiceConnection::CreateFeatureOnlineStore");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->CreateFeatureOnlineStore(operation));
+      child_->CreateFeatureOnlineStore(operation));
 }
 
 StatusOr<google::cloud::aiplatform::v1::FeatureOnlineStore>
-FeatureOnlineStoreAdminServiceTracingConnection::GetFeatureOnlineStore(
-    google::cloud::aiplatform::v1::GetFeatureOnlineStoreRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "aiplatform_v1::FeatureOnlineStoreAdminServiceConnection::"
-      "GetFeatureOnlineStore");
+FeatureOnlineStoreAdminServiceTracingConnection::GetFeatureOnlineStore(google::cloud::aiplatform::v1::GetFeatureOnlineStoreRequest const& request) {
+  auto span = internal::MakeSpan("aiplatform_v1::FeatureOnlineStoreAdminServiceConnection::GetFeatureOnlineStore");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetFeatureOnlineStore(request));
 }
 
 StreamRange<google::cloud::aiplatform::v1::FeatureOnlineStore>
-FeatureOnlineStoreAdminServiceTracingConnection::ListFeatureOnlineStores(
-    google::cloud::aiplatform::v1::ListFeatureOnlineStoresRequest request) {
-  auto span = internal::MakeSpan(
-      "aiplatform_v1::FeatureOnlineStoreAdminServiceConnection::"
-      "ListFeatureOnlineStores");
+FeatureOnlineStoreAdminServiceTracingConnection::ListFeatureOnlineStores(google::cloud::aiplatform::v1::ListFeatureOnlineStoresRequest request) {
+  auto span = internal::MakeSpan("aiplatform_v1::FeatureOnlineStoreAdminServiceConnection::ListFeatureOnlineStores");
   internal::OTelScope scope(span);
   auto sr = child_->ListFeatureOnlineStores(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::aiplatform::v1::FeatureOnlineStore>(std::move(span),
-                                                         std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::aiplatform::v1::FeatureOnlineStore>(
+        std::move(span), std::move(sr));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::FeatureOnlineStore>>
-FeatureOnlineStoreAdminServiceTracingConnection::UpdateFeatureOnlineStore(
-    google::cloud::aiplatform::v1::UpdateFeatureOnlineStoreRequest const&
-        request) {
+FeatureOnlineStoreAdminServiceTracingConnection::UpdateFeatureOnlineStore(google::cloud::aiplatform::v1::UpdateFeatureOnlineStoreRequest const& request) {
   auto span = internal::MakeSpan(
-      "aiplatform_v1::FeatureOnlineStoreAdminServiceConnection::"
-      "UpdateFeatureOnlineStore");
+      "aiplatform_v1::FeatureOnlineStoreAdminServiceConnection::UpdateFeatureOnlineStore");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->UpdateFeatureOnlineStore(request));
+  return internal::EndSpan(std::move(span), child_->UpdateFeatureOnlineStore(request));
 }
 
 StatusOr<google::longrunning::Operation>
 FeatureOnlineStoreAdminServiceTracingConnection::UpdateFeatureOnlineStore(
-    NoAwaitTag,
-    google::cloud::aiplatform::v1::UpdateFeatureOnlineStoreRequest const&
-        request) {
+    NoAwaitTag, google::cloud::aiplatform::v1::UpdateFeatureOnlineStoreRequest const& request) {
   auto span = internal::MakeSpan(
-      "aiplatform_v1::FeatureOnlineStoreAdminServiceConnection::"
-      "UpdateFeatureOnlineStore");
+      "aiplatform_v1::FeatureOnlineStoreAdminServiceConnection::UpdateFeatureOnlineStore");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->UpdateFeatureOnlineStore(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->UpdateFeatureOnlineStore(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::FeatureOnlineStore>>
 FeatureOnlineStoreAdminServiceTracingConnection::UpdateFeatureOnlineStore(
     google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
-      "aiplatform_v1::FeatureOnlineStoreAdminServiceConnection::"
-      "UpdateFeatureOnlineStore");
+      "aiplatform_v1::FeatureOnlineStoreAdminServiceConnection::UpdateFeatureOnlineStore");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->UpdateFeatureOnlineStore(operation));
+      child_->UpdateFeatureOnlineStore(operation));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-FeatureOnlineStoreAdminServiceTracingConnection::DeleteFeatureOnlineStore(
-    google::cloud::aiplatform::v1::DeleteFeatureOnlineStoreRequest const&
-        request) {
+FeatureOnlineStoreAdminServiceTracingConnection::DeleteFeatureOnlineStore(google::cloud::aiplatform::v1::DeleteFeatureOnlineStoreRequest const& request) {
   auto span = internal::MakeSpan(
-      "aiplatform_v1::FeatureOnlineStoreAdminServiceConnection::"
-      "DeleteFeatureOnlineStore");
+      "aiplatform_v1::FeatureOnlineStoreAdminServiceConnection::DeleteFeatureOnlineStore");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->DeleteFeatureOnlineStore(request));
+  return internal::EndSpan(std::move(span), child_->DeleteFeatureOnlineStore(request));
 }
 
 StatusOr<google::longrunning::Operation>
 FeatureOnlineStoreAdminServiceTracingConnection::DeleteFeatureOnlineStore(
-    NoAwaitTag,
-    google::cloud::aiplatform::v1::DeleteFeatureOnlineStoreRequest const&
-        request) {
+    NoAwaitTag, google::cloud::aiplatform::v1::DeleteFeatureOnlineStoreRequest const& request) {
   auto span = internal::MakeSpan(
-      "aiplatform_v1::FeatureOnlineStoreAdminServiceConnection::"
-      "DeleteFeatureOnlineStore");
+      "aiplatform_v1::FeatureOnlineStoreAdminServiceConnection::DeleteFeatureOnlineStore");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->DeleteFeatureOnlineStore(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->DeleteFeatureOnlineStore(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 FeatureOnlineStoreAdminServiceTracingConnection::DeleteFeatureOnlineStore(
     google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
-      "aiplatform_v1::FeatureOnlineStoreAdminServiceConnection::"
-      "DeleteFeatureOnlineStore");
+      "aiplatform_v1::FeatureOnlineStoreAdminServiceConnection::DeleteFeatureOnlineStore");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->DeleteFeatureOnlineStore(operation));
+      child_->DeleteFeatureOnlineStore(operation));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::FeatureView>>
-FeatureOnlineStoreAdminServiceTracingConnection::CreateFeatureView(
-    google::cloud::aiplatform::v1::CreateFeatureViewRequest const& request) {
+FeatureOnlineStoreAdminServiceTracingConnection::CreateFeatureView(google::cloud::aiplatform::v1::CreateFeatureViewRequest const& request) {
   auto span = internal::MakeSpan(
-      "aiplatform_v1::FeatureOnlineStoreAdminServiceConnection::"
-      "CreateFeatureView");
+      "aiplatform_v1::FeatureOnlineStoreAdminServiceConnection::CreateFeatureView");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateFeatureView(request));
 }
 
 StatusOr<google::longrunning::Operation>
 FeatureOnlineStoreAdminServiceTracingConnection::CreateFeatureView(
-    NoAwaitTag,
-    google::cloud::aiplatform::v1::CreateFeatureViewRequest const& request) {
+    NoAwaitTag, google::cloud::aiplatform::v1::CreateFeatureViewRequest const& request) {
   auto span = internal::MakeSpan(
-      "aiplatform_v1::FeatureOnlineStoreAdminServiceConnection::"
-      "CreateFeatureView");
+      "aiplatform_v1::FeatureOnlineStoreAdminServiceConnection::CreateFeatureView");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span,
-                           child_->CreateFeatureView(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->CreateFeatureView(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::FeatureView>>
 FeatureOnlineStoreAdminServiceTracingConnection::CreateFeatureView(
     google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
-      "aiplatform_v1::FeatureOnlineStoreAdminServiceConnection::"
-      "CreateFeatureView");
+      "aiplatform_v1::FeatureOnlineStoreAdminServiceConnection::CreateFeatureView");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->CreateFeatureView(operation));
+      child_->CreateFeatureView(operation));
 }
 
 StatusOr<google::cloud::aiplatform::v1::FeatureView>
-FeatureOnlineStoreAdminServiceTracingConnection::GetFeatureView(
-    google::cloud::aiplatform::v1::GetFeatureViewRequest const& request) {
-  auto span = internal::MakeSpan(
-      "aiplatform_v1::FeatureOnlineStoreAdminServiceConnection::"
-      "GetFeatureView");
+FeatureOnlineStoreAdminServiceTracingConnection::GetFeatureView(google::cloud::aiplatform::v1::GetFeatureViewRequest const& request) {
+  auto span = internal::MakeSpan("aiplatform_v1::FeatureOnlineStoreAdminServiceConnection::GetFeatureView");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetFeatureView(request));
 }
 
 StreamRange<google::cloud::aiplatform::v1::FeatureView>
-FeatureOnlineStoreAdminServiceTracingConnection::ListFeatureViews(
-    google::cloud::aiplatform::v1::ListFeatureViewsRequest request) {
-  auto span = internal::MakeSpan(
-      "aiplatform_v1::FeatureOnlineStoreAdminServiceConnection::"
-      "ListFeatureViews");
+FeatureOnlineStoreAdminServiceTracingConnection::ListFeatureViews(google::cloud::aiplatform::v1::ListFeatureViewsRequest request) {
+  auto span = internal::MakeSpan("aiplatform_v1::FeatureOnlineStoreAdminServiceConnection::ListFeatureViews");
   internal::OTelScope scope(span);
   auto sr = child_->ListFeatureViews(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::aiplatform::v1::FeatureView>(std::move(span),
-                                                  std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::aiplatform::v1::FeatureView>(
+        std::move(span), std::move(sr));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::FeatureView>>
-FeatureOnlineStoreAdminServiceTracingConnection::UpdateFeatureView(
-    google::cloud::aiplatform::v1::UpdateFeatureViewRequest const& request) {
+FeatureOnlineStoreAdminServiceTracingConnection::UpdateFeatureView(google::cloud::aiplatform::v1::UpdateFeatureViewRequest const& request) {
   auto span = internal::MakeSpan(
-      "aiplatform_v1::FeatureOnlineStoreAdminServiceConnection::"
-      "UpdateFeatureView");
+      "aiplatform_v1::FeatureOnlineStoreAdminServiceConnection::UpdateFeatureView");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateFeatureView(request));
 }
 
 StatusOr<google::longrunning::Operation>
 FeatureOnlineStoreAdminServiceTracingConnection::UpdateFeatureView(
-    NoAwaitTag,
-    google::cloud::aiplatform::v1::UpdateFeatureViewRequest const& request) {
+    NoAwaitTag, google::cloud::aiplatform::v1::UpdateFeatureViewRequest const& request) {
   auto span = internal::MakeSpan(
-      "aiplatform_v1::FeatureOnlineStoreAdminServiceConnection::"
-      "UpdateFeatureView");
+      "aiplatform_v1::FeatureOnlineStoreAdminServiceConnection::UpdateFeatureView");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span,
-                           child_->UpdateFeatureView(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->UpdateFeatureView(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::FeatureView>>
 FeatureOnlineStoreAdminServiceTracingConnection::UpdateFeatureView(
     google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
-      "aiplatform_v1::FeatureOnlineStoreAdminServiceConnection::"
-      "UpdateFeatureView");
+      "aiplatform_v1::FeatureOnlineStoreAdminServiceConnection::UpdateFeatureView");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->UpdateFeatureView(operation));
+      child_->UpdateFeatureView(operation));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-FeatureOnlineStoreAdminServiceTracingConnection::DeleteFeatureView(
-    google::cloud::aiplatform::v1::DeleteFeatureViewRequest const& request) {
+FeatureOnlineStoreAdminServiceTracingConnection::DeleteFeatureView(google::cloud::aiplatform::v1::DeleteFeatureViewRequest const& request) {
   auto span = internal::MakeSpan(
-      "aiplatform_v1::FeatureOnlineStoreAdminServiceConnection::"
-      "DeleteFeatureView");
+      "aiplatform_v1::FeatureOnlineStoreAdminServiceConnection::DeleteFeatureView");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteFeatureView(request));
 }
 
 StatusOr<google::longrunning::Operation>
 FeatureOnlineStoreAdminServiceTracingConnection::DeleteFeatureView(
-    NoAwaitTag,
-    google::cloud::aiplatform::v1::DeleteFeatureViewRequest const& request) {
+    NoAwaitTag, google::cloud::aiplatform::v1::DeleteFeatureViewRequest const& request) {
   auto span = internal::MakeSpan(
-      "aiplatform_v1::FeatureOnlineStoreAdminServiceConnection::"
-      "DeleteFeatureView");
+      "aiplatform_v1::FeatureOnlineStoreAdminServiceConnection::DeleteFeatureView");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span,
-                           child_->DeleteFeatureView(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->DeleteFeatureView(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 FeatureOnlineStoreAdminServiceTracingConnection::DeleteFeatureView(
     google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
-      "aiplatform_v1::FeatureOnlineStoreAdminServiceConnection::"
-      "DeleteFeatureView");
+      "aiplatform_v1::FeatureOnlineStoreAdminServiceConnection::DeleteFeatureView");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->DeleteFeatureView(operation));
+      child_->DeleteFeatureView(operation));
 }
 
 StatusOr<google::cloud::aiplatform::v1::SyncFeatureViewResponse>
-FeatureOnlineStoreAdminServiceTracingConnection::SyncFeatureView(
-    google::cloud::aiplatform::v1::SyncFeatureViewRequest const& request) {
-  auto span = internal::MakeSpan(
-      "aiplatform_v1::FeatureOnlineStoreAdminServiceConnection::"
-      "SyncFeatureView");
+FeatureOnlineStoreAdminServiceTracingConnection::SyncFeatureView(google::cloud::aiplatform::v1::SyncFeatureViewRequest const& request) {
+  auto span = internal::MakeSpan("aiplatform_v1::FeatureOnlineStoreAdminServiceConnection::SyncFeatureView");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->SyncFeatureView(request));
 }
 
 StatusOr<google::cloud::aiplatform::v1::FeatureViewSync>
-FeatureOnlineStoreAdminServiceTracingConnection::GetFeatureViewSync(
-    google::cloud::aiplatform::v1::GetFeatureViewSyncRequest const& request) {
-  auto span = internal::MakeSpan(
-      "aiplatform_v1::FeatureOnlineStoreAdminServiceConnection::"
-      "GetFeatureViewSync");
+FeatureOnlineStoreAdminServiceTracingConnection::GetFeatureViewSync(google::cloud::aiplatform::v1::GetFeatureViewSyncRequest const& request) {
+  auto span = internal::MakeSpan("aiplatform_v1::FeatureOnlineStoreAdminServiceConnection::GetFeatureViewSync");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetFeatureViewSync(request));
 }
 
 StreamRange<google::cloud::aiplatform::v1::FeatureViewSync>
-FeatureOnlineStoreAdminServiceTracingConnection::ListFeatureViewSyncs(
-    google::cloud::aiplatform::v1::ListFeatureViewSyncsRequest request) {
-  auto span = internal::MakeSpan(
-      "aiplatform_v1::FeatureOnlineStoreAdminServiceConnection::"
-      "ListFeatureViewSyncs");
+FeatureOnlineStoreAdminServiceTracingConnection::ListFeatureViewSyncs(google::cloud::aiplatform::v1::ListFeatureViewSyncsRequest request) {
+  auto span = internal::MakeSpan("aiplatform_v1::FeatureOnlineStoreAdminServiceConnection::ListFeatureViewSyncs");
   internal::OTelScope scope(span);
   auto sr = child_->ListFeatureViewSyncs(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::aiplatform::v1::FeatureViewSync>(std::move(span),
-                                                      std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::aiplatform::v1::FeatureViewSync>(
+        std::move(span), std::move(sr));
 }
 
 StreamRange<google::cloud::location::Location>
-FeatureOnlineStoreAdminServiceTracingConnection::ListLocations(
-    google::cloud::location::ListLocationsRequest request) {
-  auto span = internal::MakeSpan(
-      "aiplatform_v1::FeatureOnlineStoreAdminServiceConnection::ListLocations");
+FeatureOnlineStoreAdminServiceTracingConnection::ListLocations(google::cloud::location::ListLocationsRequest request) {
+  auto span = internal::MakeSpan("aiplatform_v1::FeatureOnlineStoreAdminServiceConnection::ListLocations");
   internal::OTelScope scope(span);
   auto sr = child_->ListLocations(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::location::Location>(
-      std::move(span), std::move(sr));
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::location::Location>
-FeatureOnlineStoreAdminServiceTracingConnection::GetLocation(
-    google::cloud::location::GetLocationRequest const& request) {
-  auto span = internal::MakeSpan(
-      "aiplatform_v1::FeatureOnlineStoreAdminServiceConnection::GetLocation");
+FeatureOnlineStoreAdminServiceTracingConnection::GetLocation(google::cloud::location::GetLocationRequest const& request) {
+  auto span = internal::MakeSpan("aiplatform_v1::FeatureOnlineStoreAdminServiceConnection::GetLocation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetLocation(request));
 }
 
 StatusOr<google::iam::v1::Policy>
-FeatureOnlineStoreAdminServiceTracingConnection::SetIamPolicy(
-    google::iam::v1::SetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpan(
-      "aiplatform_v1::FeatureOnlineStoreAdminServiceConnection::SetIamPolicy");
+FeatureOnlineStoreAdminServiceTracingConnection::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) {
+  auto span = internal::MakeSpan("aiplatform_v1::FeatureOnlineStoreAdminServiceConnection::SetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->SetIamPolicy(request));
 }
 
 StatusOr<google::iam::v1::Policy>
-FeatureOnlineStoreAdminServiceTracingConnection::GetIamPolicy(
-    google::iam::v1::GetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpan(
-      "aiplatform_v1::FeatureOnlineStoreAdminServiceConnection::GetIamPolicy");
+FeatureOnlineStoreAdminServiceTracingConnection::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) {
+  auto span = internal::MakeSpan("aiplatform_v1::FeatureOnlineStoreAdminServiceConnection::GetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetIamPolicy(request));
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-FeatureOnlineStoreAdminServiceTracingConnection::TestIamPermissions(
-    google::iam::v1::TestIamPermissionsRequest const& request) {
-  auto span = internal::MakeSpan(
-      "aiplatform_v1::FeatureOnlineStoreAdminServiceConnection::"
-      "TestIamPermissions");
+FeatureOnlineStoreAdminServiceTracingConnection::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) {
+  auto span = internal::MakeSpan("aiplatform_v1::FeatureOnlineStoreAdminServiceConnection::TestIamPermissions");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->TestIamPermissions(request));
 }
 
 StreamRange<google::longrunning::Operation>
-FeatureOnlineStoreAdminServiceTracingConnection::ListOperations(
-    google::longrunning::ListOperationsRequest request) {
-  auto span = internal::MakeSpan(
-      "aiplatform_v1::FeatureOnlineStoreAdminServiceConnection::"
-      "ListOperations");
+FeatureOnlineStoreAdminServiceTracingConnection::ListOperations(google::longrunning::ListOperationsRequest request) {
+  auto span = internal::MakeSpan("aiplatform_v1::FeatureOnlineStoreAdminServiceConnection::ListOperations");
   internal::OTelScope scope(span);
   auto sr = child_->ListOperations(std::move(request));
   return internal::MakeTracedStreamRange<google::longrunning::Operation>(
-      std::move(span), std::move(sr));
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::longrunning::Operation>
-FeatureOnlineStoreAdminServiceTracingConnection::GetOperation(
-    google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpan(
-      "aiplatform_v1::FeatureOnlineStoreAdminServiceConnection::GetOperation");
+FeatureOnlineStoreAdminServiceTracingConnection::GetOperation(google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpan("aiplatform_v1::FeatureOnlineStoreAdminServiceConnection::GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOperation(request));
 }
 
-Status FeatureOnlineStoreAdminServiceTracingConnection::DeleteOperation(
-    google::longrunning::DeleteOperationRequest const& request) {
-  auto span = internal::MakeSpan(
-      "aiplatform_v1::FeatureOnlineStoreAdminServiceConnection::"
-      "DeleteOperation");
+Status
+FeatureOnlineStoreAdminServiceTracingConnection::DeleteOperation(google::longrunning::DeleteOperationRequest const& request) {
+  auto span = internal::MakeSpan("aiplatform_v1::FeatureOnlineStoreAdminServiceConnection::DeleteOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteOperation(request));
 }
 
-Status FeatureOnlineStoreAdminServiceTracingConnection::CancelOperation(
-    google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpan(
-      "aiplatform_v1::FeatureOnlineStoreAdminServiceConnection::"
-      "CancelOperation");
+Status
+FeatureOnlineStoreAdminServiceTracingConnection::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
+  auto span = internal::MakeSpan("aiplatform_v1::FeatureOnlineStoreAdminServiceConnection::CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CancelOperation(request));
 }
 
 StatusOr<google::longrunning::Operation>
-FeatureOnlineStoreAdminServiceTracingConnection::WaitOperation(
-    google::longrunning::WaitOperationRequest const& request) {
-  auto span = internal::MakeSpan(
-      "aiplatform_v1::FeatureOnlineStoreAdminServiceConnection::WaitOperation");
+FeatureOnlineStoreAdminServiceTracingConnection::WaitOperation(google::longrunning::WaitOperationRequest const& request) {
+  auto span = internal::MakeSpan("aiplatform_v1::FeatureOnlineStoreAdminServiceConnection::WaitOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->WaitOperation(request));
 }
@@ -422,12 +334,10 @@ FeatureOnlineStoreAdminServiceTracingConnection::WaitOperation(
 
 std::shared_ptr<aiplatform_v1::FeatureOnlineStoreAdminServiceConnection>
 MakeFeatureOnlineStoreAdminServiceTracingConnection(
-    std::shared_ptr<aiplatform_v1::FeatureOnlineStoreAdminServiceConnection>
-        conn) {
+    std::shared_ptr<aiplatform_v1::FeatureOnlineStoreAdminServiceConnection> conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
-    conn = std::make_shared<FeatureOnlineStoreAdminServiceTracingConnection>(
-        std::move(conn));
+    conn = std::make_shared<FeatureOnlineStoreAdminServiceTracingConnection>(std::move(conn));
   }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;

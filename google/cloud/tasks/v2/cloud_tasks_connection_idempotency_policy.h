@@ -37,63 +37,63 @@ class CloudTasksConnectionIdempotencyPolicy {
   /// Create a new copy of this object.
   virtual std::unique_ptr<CloudTasksConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency ListQueues(
-      google::cloud::tasks::v2::ListQueuesRequest request);
+  virtual google::cloud::Idempotency
+  ListQueues(google::cloud::tasks::v2::ListQueuesRequest request);
 
-  virtual google::cloud::Idempotency GetQueue(
-      google::cloud::tasks::v2::GetQueueRequest const& request);
+  virtual google::cloud::Idempotency
+  GetQueue(google::cloud::tasks::v2::GetQueueRequest const& request);
 
-  virtual google::cloud::Idempotency CreateQueue(
-      google::cloud::tasks::v2::CreateQueueRequest const& request);
+  virtual google::cloud::Idempotency
+  CreateQueue(google::cloud::tasks::v2::CreateQueueRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateQueue(
-      google::cloud::tasks::v2::UpdateQueueRequest const& request);
+  virtual google::cloud::Idempotency
+  UpdateQueue(google::cloud::tasks::v2::UpdateQueueRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteQueue(
-      google::cloud::tasks::v2::DeleteQueueRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteQueue(google::cloud::tasks::v2::DeleteQueueRequest const& request);
 
-  virtual google::cloud::Idempotency PurgeQueue(
-      google::cloud::tasks::v2::PurgeQueueRequest const& request);
+  virtual google::cloud::Idempotency
+  PurgeQueue(google::cloud::tasks::v2::PurgeQueueRequest const& request);
 
-  virtual google::cloud::Idempotency PauseQueue(
-      google::cloud::tasks::v2::PauseQueueRequest const& request);
+  virtual google::cloud::Idempotency
+  PauseQueue(google::cloud::tasks::v2::PauseQueueRequest const& request);
 
-  virtual google::cloud::Idempotency ResumeQueue(
-      google::cloud::tasks::v2::ResumeQueueRequest const& request);
+  virtual google::cloud::Idempotency
+  ResumeQueue(google::cloud::tasks::v2::ResumeQueueRequest const& request);
 
-  virtual google::cloud::Idempotency GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request);
+  virtual google::cloud::Idempotency
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
 
-  virtual google::cloud::Idempotency ListTasks(
-      google::cloud::tasks::v2::ListTasksRequest request);
+  virtual google::cloud::Idempotency
+  ListTasks(google::cloud::tasks::v2::ListTasksRequest request);
 
-  virtual google::cloud::Idempotency GetTask(
-      google::cloud::tasks::v2::GetTaskRequest const& request);
+  virtual google::cloud::Idempotency
+  GetTask(google::cloud::tasks::v2::GetTaskRequest const& request);
 
-  virtual google::cloud::Idempotency CreateTask(
-      google::cloud::tasks::v2::CreateTaskRequest const& request);
+  virtual google::cloud::Idempotency
+  CreateTask(google::cloud::tasks::v2::CreateTaskRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteTask(
-      google::cloud::tasks::v2::DeleteTaskRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteTask(google::cloud::tasks::v2::DeleteTaskRequest const& request);
 
-  virtual google::cloud::Idempotency RunTask(
-      google::cloud::tasks::v2::RunTaskRequest const& request);
+  virtual google::cloud::Idempotency
+  RunTask(google::cloud::tasks::v2::RunTaskRequest const& request);
 
-  virtual google::cloud::Idempotency ListLocations(
-      google::cloud::location::ListLocationsRequest request);
+  virtual google::cloud::Idempotency
+  ListLocations(google::cloud::location::ListLocationsRequest request);
 
-  virtual google::cloud::Idempotency GetLocation(
-      google::cloud::location::GetLocationRequest const& request);
+  virtual google::cloud::Idempotency
+  GetLocation(google::cloud::location::GetLocationRequest const& request);
 };
 
 std::unique_ptr<CloudTasksConnectionIdempotencyPolicy>
-MakeDefaultCloudTasksConnectionIdempotencyPolicy();
+    MakeDefaultCloudTasksConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace tasks_v2

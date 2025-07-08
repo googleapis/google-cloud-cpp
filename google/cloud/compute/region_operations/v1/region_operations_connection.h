@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGION_OPERATIONS_V1_REGION_OPERATIONS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGION_OPERATIONS_V1_REGION_OPERATIONS_CONNECTION_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/region_operations/v1/internal/region_operations_retry_traits.h"
 #include "google/cloud/compute/region_operations/v1/region_operations_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -52,8 +52,7 @@ class RegionOperationsRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class RegionOperationsLimitedErrorCountRetryPolicy
-    : public RegionOperationsRetryPolicy {
+class RegionOperationsLimitedErrorCountRetryPolicy : public RegionOperationsRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -63,14 +62,14 @@ class RegionOperationsLimitedErrorCountRetryPolicy
    *     @p maximum_failures == 0.
    */
   explicit RegionOperationsLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   RegionOperationsLimitedErrorCountRetryPolicy(
       RegionOperationsLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : RegionOperationsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : RegionOperationsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   RegionOperationsLimitedErrorCountRetryPolicy(
       RegionOperationsLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : RegionOperationsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : RegionOperationsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -90,9 +89,7 @@ class RegionOperationsLimitedErrorCountRetryPolicy
   using BaseType = RegionOperationsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      compute_region_operations_v1_internal::RegionOperationsRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<compute_region_operations_v1_internal::RegionOperationsRetryTraits> impl_;
 };
 
 /**
@@ -105,8 +102,7 @@ class RegionOperationsLimitedErrorCountRetryPolicy
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class RegionOperationsLimitedTimeRetryPolicy
-    : public RegionOperationsRetryPolicy {
+class RegionOperationsLimitedTimeRetryPolicy : public RegionOperationsRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -131,14 +127,12 @@ class RegionOperationsLimitedTimeRetryPolicy
   template <typename DurationRep, typename DurationPeriod>
   explicit RegionOperationsLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  RegionOperationsLimitedTimeRetryPolicy(
-      RegionOperationsLimitedTimeRetryPolicy&& rhs) noexcept
-      : RegionOperationsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  RegionOperationsLimitedTimeRetryPolicy(
-      RegionOperationsLimitedTimeRetryPolicy const& rhs) noexcept
-      : RegionOperationsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  RegionOperationsLimitedTimeRetryPolicy(RegionOperationsLimitedTimeRetryPolicy&& rhs) noexcept
+    : RegionOperationsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  RegionOperationsLimitedTimeRetryPolicy(RegionOperationsLimitedTimeRetryPolicy const& rhs) noexcept
+    : RegionOperationsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -160,9 +154,7 @@ class RegionOperationsLimitedTimeRetryPolicy
   using BaseType = RegionOperationsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      compute_region_operations_v1_internal::RegionOperationsRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<compute_region_operations_v1_internal::RegionOperationsRetryTraits> impl_;
 };
 
 /**
@@ -175,8 +167,7 @@ class RegionOperationsLimitedTimeRetryPolicy
  *
  * To create a concrete instance, see `MakeRegionOperationsConnection()`.
  *
- * For mocking, see
- * `compute_region_operations_v1_mocks::MockRegionOperationsConnection`.
+ * For mocking, see `compute_region_operations_v1_mocks::MockRegionOperationsConnection`.
  */
 class RegionOperationsConnection {
  public:
@@ -184,21 +175,17 @@ class RegionOperationsConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual Status DeleteOperation(
-      google::cloud::cpp::compute::region_operations::v1::
-          DeleteOperationRequest const& request);
+  virtual Status
+  DeleteOperation(google::cloud::cpp::compute::region_operations::v1::DeleteOperationRequest const& request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> GetOperation(
-      google::cloud::cpp::compute::region_operations::v1::
-          GetOperationRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  GetOperation(google::cloud::cpp::compute::region_operations::v1::GetOperationRequest const& request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::Operation>
-  ListRegionOperations(google::cloud::cpp::compute::region_operations::v1::
-                           ListRegionOperationsRequest request);
+  ListRegionOperations(google::cloud::cpp::compute::region_operations::v1::ListRegionOperationsRequest request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> Wait(
-      google::cloud::cpp::compute::region_operations::v1::WaitRequest const&
-          request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  Wait(google::cloud::cpp::compute::region_operations::v1::WaitRequest const& request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

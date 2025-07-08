@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SUPPORT_V2_COMMENT_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SUPPORT_V2_COMMENT_OPTIONS_H
 
-#include "google/cloud/support/v2/comment_connection.h"
-#include "google/cloud/support/v2/comment_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
+#include "google/cloud/support/v2/comment_connection.h"
+#include "google/cloud/support/v2/comment_connection_idempotency_policy.h"
 #include "google/cloud/version.h"
 #include <memory>
 

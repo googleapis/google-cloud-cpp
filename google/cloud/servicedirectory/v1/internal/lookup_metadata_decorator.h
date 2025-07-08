@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SERVICEDIRECTORY_V1_INTERNAL_LOOKUP_METADATA_DECORATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SERVICEDIRECTORY_V1_INTERNAL_LOOKUP_METADATA_DECORATOR_H
 
-#include "google/cloud/servicedirectory/v1/internal/lookup_stub.h"
 #include "google/cloud/options.h"
+#include "google/cloud/servicedirectory/v1/internal/lookup_stub.h"
 #include "google/cloud/version.h"
 #include <map>
 #include <memory>
@@ -34,26 +34,29 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class LookupServiceMetadata : public LookupServiceStub {
  public:
   ~LookupServiceMetadata() override = default;
-  LookupServiceMetadata(std::shared_ptr<LookupServiceStub> child,
-                        std::multimap<std::string, std::string> fixed_metadata,
-                        std::string api_client_header = "");
+  LookupServiceMetadata(
+      std::shared_ptr<LookupServiceStub> child,
+      std::multimap<std::string, std::string> fixed_metadata,
+      std::string api_client_header = "");
 
-  StatusOr<google::cloud::servicedirectory::v1::ResolveServiceResponse>
-  ResolveService(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::servicedirectory::v1::ResolveServiceRequest const& request)
-      override;
+  StatusOr<google::cloud::servicedirectory::v1::ResolveServiceResponse> ResolveService(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::servicedirectory::v1::ResolveServiceRequest const& request) override;
 
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::location::ListLocationsRequest const& request) override;
 
   StatusOr<google::cloud::location::Location> GetLocation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::location::GetLocationRequest const& request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context, Options const& options,
+  void SetMetadata(grpc::ClientContext& context,
+                   Options const& options,
                    std::string const& request_params);
   void SetMetadata(grpc::ClientContext& context, Options const& options);
 

@@ -25,8 +25,8 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/location/locations.grpc.pb.h>
-#include <google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
+#include <google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.grpc.pb.h>
 #include <memory>
 #include <utility>
 
@@ -39,140 +39,129 @@ class PrivilegedAccessManagerStub {
  public:
   virtual ~PrivilegedAccessManagerStub() = 0;
 
-  virtual StatusOr<
-      google::cloud::privilegedaccessmanager::v1::CheckOnboardingStatusResponse>
-  CheckOnboardingStatus(grpc::ClientContext& context, Options const& options,
-                        google::cloud::privilegedaccessmanager::v1::
-                            CheckOnboardingStatusRequest const& request) = 0;
+  virtual StatusOr<google::cloud::privilegedaccessmanager::v1::CheckOnboardingStatusResponse> CheckOnboardingStatus(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::privilegedaccessmanager::v1::CheckOnboardingStatusRequest const& request) = 0;
 
-  virtual StatusOr<
-      google::cloud::privilegedaccessmanager::v1::ListEntitlementsResponse>
-  ListEntitlements(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::privilegedaccessmanager::v1::ListEntitlementsRequest const&
-          request) = 0;
+  virtual StatusOr<google::cloud::privilegedaccessmanager::v1::ListEntitlementsResponse> ListEntitlements(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::privilegedaccessmanager::v1::ListEntitlementsRequest const& request) = 0;
 
-  virtual StatusOr<
-      google::cloud::privilegedaccessmanager::v1::SearchEntitlementsResponse>
-  SearchEntitlements(grpc::ClientContext& context, Options const& options,
-                     google::cloud::privilegedaccessmanager::v1::
-                         SearchEntitlementsRequest const& request) = 0;
+  virtual StatusOr<google::cloud::privilegedaccessmanager::v1::SearchEntitlementsResponse> SearchEntitlements(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::privilegedaccessmanager::v1::SearchEntitlementsRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::privilegedaccessmanager::v1::Entitlement>
-  GetEntitlement(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::privilegedaccessmanager::v1::GetEntitlementRequest const&
-          request) = 0;
+  virtual StatusOr<google::cloud::privilegedaccessmanager::v1::Entitlement> GetEntitlement(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::privilegedaccessmanager::v1::GetEntitlementRequest const& request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>>
-  AsyncCreateEntitlement(google::cloud::CompletionQueue& cq,
-                         std::shared_ptr<grpc::ClientContext> context,
-                         google::cloud::internal::ImmutableOptions options,
-                         google::cloud::privilegedaccessmanager::v1::
-                             CreateEntitlementRequest const& request) = 0;
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateEntitlement(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::privilegedaccessmanager::v1::CreateEntitlementRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> CreateEntitlement(
-      grpc::ClientContext& context, Options options,
-      google::cloud::privilegedaccessmanager::v1::
-          CreateEntitlementRequest const& request) = 0;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::privilegedaccessmanager::v1::CreateEntitlementRequest const& request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>>
-  AsyncDeleteEntitlement(google::cloud::CompletionQueue& cq,
-                         std::shared_ptr<grpc::ClientContext> context,
-                         google::cloud::internal::ImmutableOptions options,
-                         google::cloud::privilegedaccessmanager::v1::
-                             DeleteEntitlementRequest const& request) = 0;
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteEntitlement(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::privilegedaccessmanager::v1::DeleteEntitlementRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> DeleteEntitlement(
-      grpc::ClientContext& context, Options options,
-      google::cloud::privilegedaccessmanager::v1::
-          DeleteEntitlementRequest const& request) = 0;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::privilegedaccessmanager::v1::DeleteEntitlementRequest const& request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>>
-  AsyncUpdateEntitlement(google::cloud::CompletionQueue& cq,
-                         std::shared_ptr<grpc::ClientContext> context,
-                         google::cloud::internal::ImmutableOptions options,
-                         google::cloud::privilegedaccessmanager::v1::
-                             UpdateEntitlementRequest const& request) = 0;
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncUpdateEntitlement(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::privilegedaccessmanager::v1::UpdateEntitlementRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> UpdateEntitlement(
-      grpc::ClientContext& context, Options options,
-      google::cloud::privilegedaccessmanager::v1::
-          UpdateEntitlementRequest const& request) = 0;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::privilegedaccessmanager::v1::UpdateEntitlementRequest const& request) = 0;
 
-  virtual StatusOr<
-      google::cloud::privilegedaccessmanager::v1::ListGrantsResponse>
-  ListGrants(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::privilegedaccessmanager::v1::ListGrantsRequest const&
-          request) = 0;
+  virtual StatusOr<google::cloud::privilegedaccessmanager::v1::ListGrantsResponse> ListGrants(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::privilegedaccessmanager::v1::ListGrantsRequest const& request) = 0;
 
-  virtual StatusOr<
-      google::cloud::privilegedaccessmanager::v1::SearchGrantsResponse>
-  SearchGrants(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::privilegedaccessmanager::v1::SearchGrantsRequest const&
-          request) = 0;
+  virtual StatusOr<google::cloud::privilegedaccessmanager::v1::SearchGrantsResponse> SearchGrants(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::privilegedaccessmanager::v1::SearchGrantsRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::privilegedaccessmanager::v1::Grant> GetGrant(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::privilegedaccessmanager::v1::GetGrantRequest const&
-          request) = 0;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::privilegedaccessmanager::v1::GetGrantRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::privilegedaccessmanager::v1::Grant>
-  CreateGrant(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::privilegedaccessmanager::v1::CreateGrantRequest const&
-          request) = 0;
+  virtual StatusOr<google::cloud::privilegedaccessmanager::v1::Grant> CreateGrant(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::privilegedaccessmanager::v1::CreateGrantRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::privilegedaccessmanager::v1::Grant>
-  ApproveGrant(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::privilegedaccessmanager::v1::ApproveGrantRequest const&
-          request) = 0;
+  virtual StatusOr<google::cloud::privilegedaccessmanager::v1::Grant> ApproveGrant(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::privilegedaccessmanager::v1::ApproveGrantRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::privilegedaccessmanager::v1::Grant> DenyGrant(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::privilegedaccessmanager::v1::DenyGrantRequest const&
-          request) = 0;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::privilegedaccessmanager::v1::DenyGrantRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncRevokeGrant(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::privilegedaccessmanager::v1::RevokeGrantRequest const&
-          request) = 0;
+      google::cloud::privilegedaccessmanager::v1::RevokeGrantRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> RevokeGrant(
-      grpc::ClientContext& context, Options options,
-      google::cloud::privilegedaccessmanager::v1::RevokeGrantRequest const&
-          request) = 0;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::privilegedaccessmanager::v1::RevokeGrantRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::location::ListLocationsResponse>
-  ListLocations(
-      grpc::ClientContext& context, Options const& options,
+  virtual StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::location::ListLocationsRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::location::Location> GetLocation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::location::GetLocationRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::ListOperationsRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual Status DeleteOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::DeleteOperationRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
+    google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
@@ -185,140 +174,130 @@ class PrivilegedAccessManagerStub {
 class DefaultPrivilegedAccessManagerStub : public PrivilegedAccessManagerStub {
  public:
   DefaultPrivilegedAccessManagerStub(
-      std::unique_ptr<google::cloud::privilegedaccessmanager::v1::
-                          PrivilegedAccessManager::StubInterface>
-          grpc_stub,
-      std::unique_ptr<google::cloud::location::Locations::StubInterface>
-          locations_stub,
-      std::unique_ptr<google::longrunning::Operations::StubInterface>
-          operations_stub)
+      std::unique_ptr<google::cloud::privilegedaccessmanager::v1::PrivilegedAccessManager::StubInterface> grpc_stub,
+      std::unique_ptr<google::cloud::location::Locations::StubInterface> locations_stub,
+      std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub)
       : grpc_stub_(std::move(grpc_stub)),
         locations_stub_(std::move(locations_stub)),
         operations_stub_(std::move(operations_stub)) {}
 
-  StatusOr<
-      google::cloud::privilegedaccessmanager::v1::CheckOnboardingStatusResponse>
-  CheckOnboardingStatus(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::privilegedaccessmanager::v1::
-          CheckOnboardingStatusRequest const& request) override;
+  StatusOr<google::cloud::privilegedaccessmanager::v1::CheckOnboardingStatusResponse> CheckOnboardingStatus(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::privilegedaccessmanager::v1::CheckOnboardingStatusRequest const& request) override;
 
-  StatusOr<google::cloud::privilegedaccessmanager::v1::ListEntitlementsResponse>
-  ListEntitlements(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::privilegedaccessmanager::v1::ListEntitlementsRequest const&
-          request) override;
+  StatusOr<google::cloud::privilegedaccessmanager::v1::ListEntitlementsResponse> ListEntitlements(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::privilegedaccessmanager::v1::ListEntitlementsRequest const& request) override;
 
-  StatusOr<
-      google::cloud::privilegedaccessmanager::v1::SearchEntitlementsResponse>
-  SearchEntitlements(grpc::ClientContext& context, Options const& options,
-                     google::cloud::privilegedaccessmanager::v1::
-                         SearchEntitlementsRequest const& request) override;
+  StatusOr<google::cloud::privilegedaccessmanager::v1::SearchEntitlementsResponse> SearchEntitlements(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::privilegedaccessmanager::v1::SearchEntitlementsRequest const& request) override;
 
-  StatusOr<google::cloud::privilegedaccessmanager::v1::Entitlement>
-  GetEntitlement(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::privilegedaccessmanager::v1::GetEntitlementRequest const&
-          request) override;
+  StatusOr<google::cloud::privilegedaccessmanager::v1::Entitlement> GetEntitlement(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::privilegedaccessmanager::v1::GetEntitlementRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateEntitlement(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::privilegedaccessmanager::v1::
-          CreateEntitlementRequest const& request) override;
+      google::cloud::privilegedaccessmanager::v1::CreateEntitlementRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateEntitlement(
-      grpc::ClientContext& context, Options options,
-      google::cloud::privilegedaccessmanager::v1::
-          CreateEntitlementRequest const& request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::privilegedaccessmanager::v1::CreateEntitlementRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteEntitlement(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::privilegedaccessmanager::v1::
-          DeleteEntitlementRequest const& request) override;
+      google::cloud::privilegedaccessmanager::v1::DeleteEntitlementRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteEntitlement(
-      grpc::ClientContext& context, Options options,
-      google::cloud::privilegedaccessmanager::v1::
-          DeleteEntitlementRequest const& request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::privilegedaccessmanager::v1::DeleteEntitlementRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateEntitlement(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::privilegedaccessmanager::v1::
-          UpdateEntitlementRequest const& request) override;
+      google::cloud::privilegedaccessmanager::v1::UpdateEntitlementRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateEntitlement(
-      grpc::ClientContext& context, Options options,
-      google::cloud::privilegedaccessmanager::v1::
-          UpdateEntitlementRequest const& request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::privilegedaccessmanager::v1::UpdateEntitlementRequest const& request) override;
 
-  StatusOr<google::cloud::privilegedaccessmanager::v1::ListGrantsResponse>
-  ListGrants(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::privilegedaccessmanager::v1::ListGrantsRequest const&
-          request) override;
+  StatusOr<google::cloud::privilegedaccessmanager::v1::ListGrantsResponse> ListGrants(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::privilegedaccessmanager::v1::ListGrantsRequest const& request) override;
 
-  StatusOr<google::cloud::privilegedaccessmanager::v1::SearchGrantsResponse>
-  SearchGrants(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::privilegedaccessmanager::v1::SearchGrantsRequest const&
-          request) override;
+  StatusOr<google::cloud::privilegedaccessmanager::v1::SearchGrantsResponse> SearchGrants(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::privilegedaccessmanager::v1::SearchGrantsRequest const& request) override;
 
   StatusOr<google::cloud::privilegedaccessmanager::v1::Grant> GetGrant(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::privilegedaccessmanager::v1::GetGrantRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::privilegedaccessmanager::v1::GetGrantRequest const& request) override;
 
   StatusOr<google::cloud::privilegedaccessmanager::v1::Grant> CreateGrant(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::privilegedaccessmanager::v1::CreateGrantRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::privilegedaccessmanager::v1::CreateGrantRequest const& request) override;
 
   StatusOr<google::cloud::privilegedaccessmanager::v1::Grant> ApproveGrant(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::privilegedaccessmanager::v1::ApproveGrantRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::privilegedaccessmanager::v1::ApproveGrantRequest const& request) override;
 
   StatusOr<google::cloud::privilegedaccessmanager::v1::Grant> DenyGrant(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::privilegedaccessmanager::v1::DenyGrantRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::privilegedaccessmanager::v1::DenyGrantRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncRevokeGrant(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::privilegedaccessmanager::v1::RevokeGrantRequest const&
-          request) override;
+      google::cloud::privilegedaccessmanager::v1::RevokeGrantRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> RevokeGrant(
-      grpc::ClientContext& context, Options options,
-      google::cloud::privilegedaccessmanager::v1::RevokeGrantRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::privilegedaccessmanager::v1::RevokeGrantRequest const& request) override;
 
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::location::ListLocationsRequest const& request) override;
 
   StatusOr<google::cloud::location::Location> GetLocation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::location::GetLocationRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status DeleteOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::DeleteOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -334,13 +313,9 @@ class DefaultPrivilegedAccessManagerStub : public PrivilegedAccessManagerStub {
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  std::unique_ptr<google::cloud::privilegedaccessmanager::v1::
-                      PrivilegedAccessManager::StubInterface>
-      grpc_stub_;
-  std::unique_ptr<google::cloud::location::Locations::StubInterface>
-      locations_stub_;
-  std::unique_ptr<google::longrunning::Operations::StubInterface>
-      operations_stub_;
+  std::unique_ptr<google::cloud::privilegedaccessmanager::v1::PrivilegedAccessManager::StubInterface> grpc_stub_;
+  std::unique_ptr<google::cloud::location::Locations::StubInterface> locations_stub_;
+  std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -38,10 +38,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 AuthorizedCertificatesConnection::~AuthorizedCertificatesConnection() = default;
 
-StreamRange<google::appengine::v1::AuthorizedCertificate>
-AuthorizedCertificatesConnection::ListAuthorizedCertificates(
-    google::appengine::v1::
-        ListAuthorizedCertificatesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::appengine::v1::AuthorizedCertificate> AuthorizedCertificatesConnection::ListAuthorizedCertificates(
+    google::appengine::v1::ListAuthorizedCertificatesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::appengine::v1::AuthorizedCertificate>>();
 }
@@ -64,27 +62,26 @@ AuthorizedCertificatesConnection::UpdateAuthorizedCertificate(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status AuthorizedCertificatesConnection::DeleteAuthorizedCertificate(
+Status
+AuthorizedCertificatesConnection::DeleteAuthorizedCertificate(
     google::appengine::v1::DeleteAuthorizedCertificateRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-std::shared_ptr<AuthorizedCertificatesConnection>
-MakeAuthorizedCertificatesConnection(Options options) {
+std::shared_ptr<AuthorizedCertificatesConnection> MakeAuthorizedCertificatesConnection(
+    Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 AuthorizedCertificatesPolicyOptionList>(
-      options, __func__);
+      UnifiedCredentialsOptionList,
+      AuthorizedCertificatesPolicyOptionList>(options, __func__);
   options = appengine_v1_internal::AuthorizedCertificatesDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = appengine_v1_internal::CreateDefaultAuthorizedCertificatesStub(
-      std::move(auth), options);
+    std::move(auth), options);
   return appengine_v1_internal::MakeAuthorizedCertificatesTracingConnection(
-      std::make_shared<
-          appengine_v1_internal::AuthorizedCertificatesConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options)));
+      std::make_shared<appengine_v1_internal::AuthorizedCertificatesConnectionImpl>(
+      std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

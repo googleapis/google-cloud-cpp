@@ -38,27 +38,19 @@ class ZoneOperationsRestStub {
 
   virtual Status DeleteOperation(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::zone_operations::v1::
-          DeleteOperationRequest const& request) = 0;
+      Options const& options, google::cloud::cpp::compute::zone_operations::v1::DeleteOperationRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> GetOperation(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::zone_operations::v1::
-          GetOperationRequest const& request) = 0;
+      Options const& options, google::cloud::cpp::compute::zone_operations::v1::GetOperationRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::OperationList>
-  ListZoneOperations(google::cloud::rest_internal::RestContext& rest_context,
-                     Options const& options,
-                     google::cloud::cpp::compute::zone_operations::v1::
-                         ListZoneOperationsRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::OperationList> ListZoneOperations(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options, google::cloud::cpp::compute::zone_operations::v1::ListZoneOperationsRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> Wait(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::zone_operations::v1::WaitRequest const&
-          request) = 0;
+      Options const& options, google::cloud::cpp::compute::zone_operations::v1::WaitRequest const& request) = 0;
 };
 
 class DefaultZoneOperationsRestStub : public ZoneOperationsRestStub {
@@ -67,31 +59,24 @@ class DefaultZoneOperationsRestStub : public ZoneOperationsRestStub {
 
   explicit DefaultZoneOperationsRestStub(Options options);
   DefaultZoneOperationsRestStub(
-      std::shared_ptr<rest_internal::RestClient> service, Options options);
+      std::shared_ptr<rest_internal::RestClient> service,
+      Options options);
 
   Status DeleteOperation(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::zone_operations::v1::
-          DeleteOperationRequest const& request) override;
+      Options const& options, google::cloud::cpp::compute::zone_operations::v1::DeleteOperationRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> GetOperation(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::zone_operations::v1::
-          GetOperationRequest const& request) override;
+      Options const& options, google::cloud::cpp::compute::zone_operations::v1::GetOperationRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::OperationList> ListZoneOperations(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::zone_operations::v1::
-          ListZoneOperationsRequest const& request) override;
+      Options const& options, google::cloud::cpp::compute::zone_operations::v1::ListZoneOperationsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> Wait(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::zone_operations::v1::WaitRequest const&
-          request) override;
+      Options const& options, google::cloud::cpp::compute::zone_operations::v1::WaitRequest const& request) override;
 
  private:
   std::shared_ptr<rest_internal::RestClient> service_;

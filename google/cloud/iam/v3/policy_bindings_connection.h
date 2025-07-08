@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAM_V3_POLICY_BINDINGS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAM_V3_POLICY_BINDINGS_CONNECTION_H
 
-#include "google/cloud/iam/v3/internal/policy_bindings_retry_traits.h"
-#include "google/cloud/iam/v3/policy_bindings_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
+#include "google/cloud/iam/v3/internal/policy_bindings_retry_traits.h"
+#include "google/cloud/iam/v3/policy_bindings_connection_idempotency_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -56,8 +56,7 @@ class PolicyBindingsRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class PolicyBindingsLimitedErrorCountRetryPolicy
-    : public PolicyBindingsRetryPolicy {
+class PolicyBindingsLimitedErrorCountRetryPolicy : public PolicyBindingsRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -67,14 +66,14 @@ class PolicyBindingsLimitedErrorCountRetryPolicy
    *     @p maximum_failures == 0.
    */
   explicit PolicyBindingsLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   PolicyBindingsLimitedErrorCountRetryPolicy(
       PolicyBindingsLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : PolicyBindingsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : PolicyBindingsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   PolicyBindingsLimitedErrorCountRetryPolicy(
       PolicyBindingsLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : PolicyBindingsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : PolicyBindingsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -94,9 +93,7 @@ class PolicyBindingsLimitedErrorCountRetryPolicy
   using BaseType = PolicyBindingsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      iam_v3_internal::PolicyBindingsRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<iam_v3_internal::PolicyBindingsRetryTraits> impl_;
 };
 
 /**
@@ -134,14 +131,12 @@ class PolicyBindingsLimitedTimeRetryPolicy : public PolicyBindingsRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit PolicyBindingsLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  PolicyBindingsLimitedTimeRetryPolicy(
-      PolicyBindingsLimitedTimeRetryPolicy&& rhs) noexcept
-      : PolicyBindingsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  PolicyBindingsLimitedTimeRetryPolicy(
-      PolicyBindingsLimitedTimeRetryPolicy const& rhs) noexcept
-      : PolicyBindingsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  PolicyBindingsLimitedTimeRetryPolicy(PolicyBindingsLimitedTimeRetryPolicy&& rhs) noexcept
+    : PolicyBindingsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  PolicyBindingsLimitedTimeRetryPolicy(PolicyBindingsLimitedTimeRetryPolicy const& rhs) noexcept
+    : PolicyBindingsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -163,9 +158,7 @@ class PolicyBindingsLimitedTimeRetryPolicy : public PolicyBindingsRetryPolicy {
   using BaseType = PolicyBindingsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      iam_v3_internal::PolicyBindingsRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<iam_v3_internal::PolicyBindingsRetryTraits> impl_;
 };
 
 /**
@@ -186,46 +179,44 @@ class PolicyBindingsConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual future<StatusOr<google::iam::v3::PolicyBinding>> CreatePolicyBinding(
-      google::iam::v3::CreatePolicyBindingRequest const& request);
+  virtual future<StatusOr<google::iam::v3::PolicyBinding>>
+  CreatePolicyBinding(google::iam::v3::CreatePolicyBindingRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> CreatePolicyBinding(
-      NoAwaitTag, google::iam::v3::CreatePolicyBindingRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  CreatePolicyBinding(NoAwaitTag, google::iam::v3::CreatePolicyBindingRequest const& request);
 
-  virtual future<StatusOr<google::iam::v3::PolicyBinding>> CreatePolicyBinding(
-      google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::iam::v3::PolicyBinding>>
+  CreatePolicyBinding( google::longrunning::Operation const& operation);
 
-  virtual StatusOr<google::iam::v3::PolicyBinding> GetPolicyBinding(
-      google::iam::v3::GetPolicyBindingRequest const& request);
+  virtual StatusOr<google::iam::v3::PolicyBinding>
+  GetPolicyBinding(google::iam::v3::GetPolicyBindingRequest const& request);
 
-  virtual future<StatusOr<google::iam::v3::PolicyBinding>> UpdatePolicyBinding(
-      google::iam::v3::UpdatePolicyBindingRequest const& request);
+  virtual future<StatusOr<google::iam::v3::PolicyBinding>>
+  UpdatePolicyBinding(google::iam::v3::UpdatePolicyBindingRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> UpdatePolicyBinding(
-      NoAwaitTag, google::iam::v3::UpdatePolicyBindingRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  UpdatePolicyBinding(NoAwaitTag, google::iam::v3::UpdatePolicyBindingRequest const& request);
 
-  virtual future<StatusOr<google::iam::v3::PolicyBinding>> UpdatePolicyBinding(
-      google::longrunning::Operation const& operation);
-
-  virtual future<StatusOr<google::iam::v3::OperationMetadata>>
-  DeletePolicyBinding(
-      google::iam::v3::DeletePolicyBindingRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation> DeletePolicyBinding(
-      NoAwaitTag, google::iam::v3::DeletePolicyBindingRequest const& request);
+  virtual future<StatusOr<google::iam::v3::PolicyBinding>>
+  UpdatePolicyBinding( google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::iam::v3::OperationMetadata>>
-  DeletePolicyBinding(google::longrunning::Operation const& operation);
+  DeletePolicyBinding(google::iam::v3::DeletePolicyBindingRequest const& request);
 
-  virtual StreamRange<google::iam::v3::PolicyBinding> ListPolicyBindings(
-      google::iam::v3::ListPolicyBindingsRequest request);
+  virtual StatusOr<google::longrunning::Operation>
+  DeletePolicyBinding(NoAwaitTag, google::iam::v3::DeletePolicyBindingRequest const& request);
+
+  virtual future<StatusOr<google::iam::v3::OperationMetadata>>
+  DeletePolicyBinding( google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::iam::v3::PolicyBinding>
-  SearchTargetPolicyBindings(
-      google::iam::v3::SearchTargetPolicyBindingsRequest request);
+  ListPolicyBindings(google::iam::v3::ListPolicyBindingsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual StreamRange<google::iam::v3::PolicyBinding>
+  SearchTargetPolicyBindings(google::iam::v3::SearchTargetPolicyBindingsRequest request);
+
+  virtual StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 };
 
 /**

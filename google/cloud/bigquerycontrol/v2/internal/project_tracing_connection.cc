@@ -33,10 +33,8 @@ ProjectServiceTracingConnection::ProjectServiceTracingConnection(
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::bigquery::v2::GetServiceAccountResponse>
-ProjectServiceTracingConnection::GetServiceAccount(
-    google::cloud::bigquery::v2::GetServiceAccountRequest const& request) {
-  auto span = internal::MakeSpan(
-      "bigquerycontrol_v2::ProjectServiceConnection::GetServiceAccount");
+ProjectServiceTracingConnection::GetServiceAccount(google::cloud::bigquery::v2::GetServiceAccountRequest const& request) {
+  auto span = internal::MakeSpan("bigquerycontrol_v2::ProjectServiceConnection::GetServiceAccount");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetServiceAccount(request));
 }

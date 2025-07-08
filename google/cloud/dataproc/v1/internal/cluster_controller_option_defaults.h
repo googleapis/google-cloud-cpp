@@ -28,8 +28,7 @@ namespace cloud {
 namespace dataproc_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-Options ClusterControllerDefaultOptions(std::string const& location,
-                                        Options options);
+Options ClusterControllerDefaultOptions(std::string const& location, Options options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataproc_v1_internal

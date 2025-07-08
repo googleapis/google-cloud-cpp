@@ -28,15 +28,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 DirectAccessServiceClient::DirectAccessServiceClient(
     std::shared_ptr<DirectAccessServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 DirectAccessServiceClient::~DirectAccessServiceClient() = default;
 
 StatusOr<google::cloud::devicestreaming::v1::DeviceSession>
-DirectAccessServiceClient::CreateDeviceSession(
-    std::string const& parent,
-    google::cloud::devicestreaming::v1::DeviceSession const& device_session,
-    std::string const& device_session_id, Options opts) {
+DirectAccessServiceClient::CreateDeviceSession(std::string const& parent, google::cloud::devicestreaming::v1::DeviceSession const& device_session, std::string const& device_session_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::devicestreaming::v1::CreateDeviceSessionRequest request;
   request.set_parent(parent);
@@ -46,17 +43,13 @@ DirectAccessServiceClient::CreateDeviceSession(
 }
 
 StatusOr<google::cloud::devicestreaming::v1::DeviceSession>
-DirectAccessServiceClient::CreateDeviceSession(
-    google::cloud::devicestreaming::v1::CreateDeviceSessionRequest const&
-        request,
-    Options opts) {
+DirectAccessServiceClient::CreateDeviceSession(google::cloud::devicestreaming::v1::CreateDeviceSessionRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateDeviceSession(request);
 }
 
 StreamRange<google::cloud::devicestreaming::v1::DeviceSession>
-DirectAccessServiceClient::ListDeviceSessions(std::string const& parent,
-                                              Options opts) {
+DirectAccessServiceClient::ListDeviceSessions(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::devicestreaming::v1::ListDeviceSessionsRequest request;
   request.set_parent(parent);
@@ -64,16 +57,13 @@ DirectAccessServiceClient::ListDeviceSessions(std::string const& parent,
 }
 
 StreamRange<google::cloud::devicestreaming::v1::DeviceSession>
-DirectAccessServiceClient::ListDeviceSessions(
-    google::cloud::devicestreaming::v1::ListDeviceSessionsRequest request,
-    Options opts) {
+DirectAccessServiceClient::ListDeviceSessions(google::cloud::devicestreaming::v1::ListDeviceSessionsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListDeviceSessions(std::move(request));
 }
 
 StatusOr<google::cloud::devicestreaming::v1::DeviceSession>
-DirectAccessServiceClient::GetDeviceSession(std::string const& name,
-                                            Options opts) {
+DirectAccessServiceClient::GetDeviceSession(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::devicestreaming::v1::GetDeviceSessionRequest request;
   request.set_name(name);
@@ -81,25 +71,19 @@ DirectAccessServiceClient::GetDeviceSession(std::string const& name,
 }
 
 StatusOr<google::cloud::devicestreaming::v1::DeviceSession>
-DirectAccessServiceClient::GetDeviceSession(
-    google::cloud::devicestreaming::v1::GetDeviceSessionRequest const& request,
-    Options opts) {
+DirectAccessServiceClient::GetDeviceSession(google::cloud::devicestreaming::v1::GetDeviceSessionRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetDeviceSession(request);
 }
 
-Status DirectAccessServiceClient::CancelDeviceSession(
-    google::cloud::devicestreaming::v1::CancelDeviceSessionRequest const&
-        request,
-    Options opts) {
+Status
+DirectAccessServiceClient::CancelDeviceSession(google::cloud::devicestreaming::v1::CancelDeviceSessionRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelDeviceSession(request);
 }
 
 StatusOr<google::cloud::devicestreaming::v1::DeviceSession>
-DirectAccessServiceClient::UpdateDeviceSession(
-    google::cloud::devicestreaming::v1::DeviceSession const& device_session,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+DirectAccessServiceClient::UpdateDeviceSession(google::cloud::devicestreaming::v1::DeviceSession const& device_session, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::devicestreaming::v1::UpdateDeviceSessionRequest request;
   *request.mutable_device_session() = device_session;
@@ -108,10 +92,7 @@ DirectAccessServiceClient::UpdateDeviceSession(
 }
 
 StatusOr<google::cloud::devicestreaming::v1::DeviceSession>
-DirectAccessServiceClient::UpdateDeviceSession(
-    google::cloud::devicestreaming::v1::UpdateDeviceSessionRequest const&
-        request,
-    Options opts) {
+DirectAccessServiceClient::UpdateDeviceSession(google::cloud::devicestreaming::v1::UpdateDeviceSessionRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateDeviceSession(request);
 }
@@ -120,7 +101,8 @@ std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::cloud::devicestreaming::v1::AdbMessage,
     google::cloud::devicestreaming::v1::DeviceMessage>>
 DirectAccessServiceClient::AsyncAdbConnect(Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(opts), options_));
   return connection_->AsyncAdbConnect();
 }
 

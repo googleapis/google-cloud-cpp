@@ -28,38 +28,30 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 AnalyticsServiceClient::AnalyticsServiceClient(
     std::shared_ptr<AnalyticsServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 AnalyticsServiceClient::~AnalyticsServiceClient() = default;
 
 future<StatusOr<google::cloud::retail::v2::ExportAnalyticsMetricsResponse>>
-AnalyticsServiceClient::ExportAnalyticsMetrics(
-    google::cloud::retail::v2::ExportAnalyticsMetricsRequest const& request,
-    Options opts) {
+AnalyticsServiceClient::ExportAnalyticsMetrics(google::cloud::retail::v2::ExportAnalyticsMetricsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ExportAnalyticsMetrics(request);
 }
 
 StatusOr<google::longrunning::Operation>
-AnalyticsServiceClient::ExportAnalyticsMetrics(
-    NoAwaitTag,
-    google::cloud::retail::v2::ExportAnalyticsMetricsRequest const& request,
-    Options opts) {
+AnalyticsServiceClient::ExportAnalyticsMetrics(NoAwaitTag, google::cloud::retail::v2::ExportAnalyticsMetricsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ExportAnalyticsMetrics(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::retail::v2::ExportAnalyticsMetricsResponse>>
-AnalyticsServiceClient::ExportAnalyticsMetrics(
-    google::longrunning::Operation const& operation, Options opts) {
+AnalyticsServiceClient::ExportAnalyticsMetrics(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ExportAnalyticsMetrics(operation);
 }
 
 StreamRange<google::longrunning::Operation>
-AnalyticsServiceClient::ListOperations(std::string const& name,
-                                       std::string const& filter,
-                                       Options opts) {
+AnalyticsServiceClient::ListOperations(std::string const& name, std::string const& filter, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::ListOperationsRequest request;
   request.set_name(name);
@@ -68,22 +60,21 @@ AnalyticsServiceClient::ListOperations(std::string const& name,
 }
 
 StreamRange<google::longrunning::Operation>
-AnalyticsServiceClient::ListOperations(
-    google::longrunning::ListOperationsRequest request, Options opts) {
+AnalyticsServiceClient::ListOperations(google::longrunning::ListOperationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOperations(std::move(request));
 }
 
-StatusOr<google::longrunning::Operation> AnalyticsServiceClient::GetOperation(
-    std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation>
+AnalyticsServiceClient::GetOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
   return connection_->GetOperation(request);
 }
 
-StatusOr<google::longrunning::Operation> AnalyticsServiceClient::GetOperation(
-    google::longrunning::GetOperationRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation>
+AnalyticsServiceClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }

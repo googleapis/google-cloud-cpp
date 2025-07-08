@@ -28,70 +28,59 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-PolicyTagManagerSerializationTracingStub::
-    PolicyTagManagerSerializationTracingStub(
-        std::shared_ptr<PolicyTagManagerSerializationStub> child)
+PolicyTagManagerSerializationTracingStub::PolicyTagManagerSerializationTracingStub(
+    std::shared_ptr<PolicyTagManagerSerializationStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
-StatusOr<google::cloud::datacatalog::v1::Taxonomy>
-PolicyTagManagerSerializationTracingStub::ReplaceTaxonomy(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::datacatalog::v1::Taxonomy> PolicyTagManagerSerializationTracingStub::ReplaceTaxonomy(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::datacatalog::v1::ReplaceTaxonomyRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.datacatalog.v1.PolicyTagManagerSerialization",
-      "ReplaceTaxonomy");
+  auto span = internal::MakeSpanGrpc("google.cloud.datacatalog.v1.PolicyTagManagerSerialization", "ReplaceTaxonomy");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ReplaceTaxonomy(context, options, request));
 }
 
-StatusOr<google::cloud::datacatalog::v1::ImportTaxonomiesResponse>
-PolicyTagManagerSerializationTracingStub::ImportTaxonomies(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::datacatalog::v1::ImportTaxonomiesResponse> PolicyTagManagerSerializationTracingStub::ImportTaxonomies(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::datacatalog::v1::ImportTaxonomiesRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.datacatalog.v1.PolicyTagManagerSerialization",
-      "ImportTaxonomies");
+  auto span = internal::MakeSpanGrpc("google.cloud.datacatalog.v1.PolicyTagManagerSerialization", "ImportTaxonomies");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ImportTaxonomies(context, options, request));
 }
 
-StatusOr<google::cloud::datacatalog::v1::ExportTaxonomiesResponse>
-PolicyTagManagerSerializationTracingStub::ExportTaxonomies(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::datacatalog::v1::ExportTaxonomiesResponse> PolicyTagManagerSerializationTracingStub::ExportTaxonomies(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::datacatalog::v1::ExportTaxonomiesRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.datacatalog.v1.PolicyTagManagerSerialization",
-      "ExportTaxonomies");
+  auto span = internal::MakeSpanGrpc("google.cloud.datacatalog.v1.PolicyTagManagerSerialization", "ExportTaxonomies");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ExportTaxonomies(context, options, request));
 }
 
-StatusOr<google::longrunning::ListOperationsResponse>
-PolicyTagManagerSerializationTracingStub::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse> PolicyTagManagerSerializationTracingStub::ListOperations(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.datacatalog.v1.PolicyTagManagerSerialization",
-      "ListOperations");
+  auto span = internal::MakeSpanGrpc("google.cloud.datacatalog.v1.PolicyTagManagerSerialization", "ListOperations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListOperations(context, options, request));
 }
 
-StatusOr<google::longrunning::Operation>
-PolicyTagManagerSerializationTracingStub::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::Operation> PolicyTagManagerSerializationTracingStub::GetOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.datacatalog.v1.PolicyTagManagerSerialization",
-      "GetOperation");
+  auto span = internal::MakeSpanGrpc("google.cloud.datacatalog.v1.PolicyTagManagerSerialization", "GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -99,11 +88,10 @@ PolicyTagManagerSerializationTracingStub::GetOperation(
 }
 
 Status PolicyTagManagerSerializationTracingStub::DeleteOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.datacatalog.v1.PolicyTagManagerSerialization",
-      "DeleteOperation");
+  auto span = internal::MakeSpanGrpc("google.cloud.datacatalog.v1.PolicyTagManagerSerialization", "DeleteOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -111,11 +99,10 @@ Status PolicyTagManagerSerializationTracingStub::DeleteOperation(
 }
 
 Status PolicyTagManagerSerializationTracingStub::CancelOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.datacatalog.v1.PolicyTagManagerSerialization",
-      "CancelOperation");
+  auto span = internal::MakeSpanGrpc("google.cloud.datacatalog.v1.PolicyTagManagerSerialization", "CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -124,12 +111,10 @@ Status PolicyTagManagerSerializationTracingStub::CancelOperation(
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-std::shared_ptr<PolicyTagManagerSerializationStub>
-MakePolicyTagManagerSerializationTracingStub(
+std::shared_ptr<PolicyTagManagerSerializationStub> MakePolicyTagManagerSerializationTracingStub(
     std::shared_ptr<PolicyTagManagerSerializationStub> stub) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-  return std::make_shared<PolicyTagManagerSerializationTracingStub>(
-      std::move(stub));
+  return std::make_shared<PolicyTagManagerSerializationTracingStub>(std::move(stub));
 #else
   return stub;
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

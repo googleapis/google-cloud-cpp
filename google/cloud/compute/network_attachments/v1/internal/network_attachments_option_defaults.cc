@@ -35,50 +35,32 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options NetworkAttachmentsDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_NETWORK_ATTACHMENTS_ENDPOINT", "",
-      "GOOGLE_CLOUD_CPP_NETWORK_ATTACHMENTS_AUTHORITY",
+      std::move(options), "GOOGLE_CLOUD_CPP_NETWORK_ATTACHMENTS_ENDPOINT",
+      "", "GOOGLE_CLOUD_CPP_NETWORK_ATTACHMENTS_AUTHORITY",
       "compute.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
-  if (!options.has<compute_network_attachments_v1::
-                       NetworkAttachmentsRetryPolicyOption>()) {
-    options.set<
-        compute_network_attachments_v1::NetworkAttachmentsRetryPolicyOption>(
-        compute_network_attachments_v1::
-            NetworkAttachmentsLimitedTimeRetryPolicy(std::chrono::minutes(30))
-                .clone());
+  if (!options.has<compute_network_attachments_v1::NetworkAttachmentsRetryPolicyOption>()) {
+    options.set<compute_network_attachments_v1::NetworkAttachmentsRetryPolicyOption>(
+        compute_network_attachments_v1::NetworkAttachmentsLimitedTimeRetryPolicy(
+            std::chrono::minutes(30)).clone());
   }
-  if (!options.has<compute_network_attachments_v1::
-                       NetworkAttachmentsBackoffPolicyOption>()) {
-    options.set<
-        compute_network_attachments_v1::NetworkAttachmentsBackoffPolicyOption>(
-        ExponentialBackoffPolicy(
-            std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
-            .clone());
+  if (!options.has<compute_network_attachments_v1::NetworkAttachmentsBackoffPolicyOption>()) {
+    options.set<compute_network_attachments_v1::NetworkAttachmentsBackoffPolicyOption>(
+        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
   }
-  if (!options.has<compute_network_attachments_v1::
-                       NetworkAttachmentsPollingPolicyOption>()) {
-    options.set<
-        compute_network_attachments_v1::NetworkAttachmentsPollingPolicyOption>(
-        GenericPollingPolicy<compute_network_attachments_v1::
-                                 NetworkAttachmentsRetryPolicyOption::Type,
-                             compute_network_attachments_v1::
-                                 NetworkAttachmentsBackoffPolicyOption::Type>(
-            options
-                .get<compute_network_attachments_v1::
-                         NetworkAttachmentsRetryPolicyOption>()
-                ->clone(),
+  if (!options.has<compute_network_attachments_v1::NetworkAttachmentsPollingPolicyOption>()) {
+    options.set<compute_network_attachments_v1::NetworkAttachmentsPollingPolicyOption>(
+        GenericPollingPolicy<
+            compute_network_attachments_v1::NetworkAttachmentsRetryPolicyOption::Type,
+            compute_network_attachments_v1::NetworkAttachmentsBackoffPolicyOption::Type>(
+            options.get<compute_network_attachments_v1::NetworkAttachmentsRetryPolicyOption>()->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                     std::chrono::minutes(5), kBackoffScaling)
-                .clone())
-            .clone());
+            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
   }
-  if (!options.has<compute_network_attachments_v1::
-                       NetworkAttachmentsConnectionIdempotencyPolicyOption>()) {
-    options.set<compute_network_attachments_v1::
-                    NetworkAttachmentsConnectionIdempotencyPolicyOption>(
-        compute_network_attachments_v1::
-            MakeDefaultNetworkAttachmentsConnectionIdempotencyPolicy());
+  if (!options.has<compute_network_attachments_v1::NetworkAttachmentsConnectionIdempotencyPolicyOption>()) {
+    options.set<compute_network_attachments_v1::NetworkAttachmentsConnectionIdempotencyPolicyOption>(
+        compute_network_attachments_v1::MakeDefaultNetworkAttachmentsConnectionIdempotencyPolicy());
   }
 
   return options;

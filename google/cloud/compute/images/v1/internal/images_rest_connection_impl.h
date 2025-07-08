@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_IMAGES_V1_INTERNAL_IMAGES_REST_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_IMAGES_V1_INTERNAL_IMAGES_REST_CONNECTION_IMPL_H
 
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/images/v1/images_connection.h"
 #include "google/cloud/compute/images/v1/images_connection_idempotency_policy.h"
 #include "google/cloud/compute/images/v1/images_options.h"
 #include "google/cloud/compute/images/v1/internal/images_rest_stub.h"
 #include "google/cloud/compute/images/v1/internal/images_retry_traits.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -38,105 +38,94 @@ namespace cloud {
 namespace compute_images_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class ImagesRestConnectionImpl : public compute_images_v1::ImagesConnection {
+class ImagesRestConnectionImpl
+    : public compute_images_v1::ImagesConnection {
  public:
   ~ImagesRestConnectionImpl() override = default;
 
   ImagesRestConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<compute_images_v1_internal::ImagesRestStub> stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<compute_images_v1_internal::ImagesRestStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteImage(
-      google::cloud::cpp::compute::images::v1::DeleteImageRequest const&
-          request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteImage(google::cloud::cpp::compute::images::v1::DeleteImageRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteImage(
-      NoAwaitTag,
-      google::cloud::cpp::compute::images::v1::DeleteImageRequest const&
-          request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeleteImage(NoAwaitTag,
+      google::cloud::cpp::compute::images::v1::DeleteImageRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteImage(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteImage(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Deprecate(
-      google::cloud::cpp::compute::images::v1::DeprecateRequest const& request)
-      override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  Deprecate(google::cloud::cpp::compute::images::v1::DeprecateRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation> Deprecate(
-      NoAwaitTag,
-      google::cloud::cpp::compute::images::v1::DeprecateRequest const& request)
-      override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  Deprecate(NoAwaitTag,
+      google::cloud::cpp::compute::images::v1::DeprecateRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Deprecate(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  Deprecate(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Image> GetImage(
-      google::cloud::cpp::compute::images::v1::GetImageRequest const& request)
-      override;
+  StatusOr<google::cloud::cpp::compute::v1::Image>
+  GetImage(google::cloud::cpp::compute::images::v1::GetImageRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Image> GetFromFamily(
-      google::cloud::cpp::compute::images::v1::GetFromFamilyRequest const&
-          request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Image>
+  GetFromFamily(google::cloud::cpp::compute::images::v1::GetFromFamilyRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
-      google::cloud::cpp::compute::images::v1::GetIamPolicyRequest const&
-          request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Policy>
+  GetIamPolicy(google::cloud::cpp::compute::images::v1::GetIamPolicyRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertImage(
-      google::cloud::cpp::compute::images::v1::InsertImageRequest const&
-          request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  InsertImage(google::cloud::cpp::compute::images::v1::InsertImageRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertImage(
-      NoAwaitTag,
-      google::cloud::cpp::compute::images::v1::InsertImageRequest const&
-          request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  InsertImage(NoAwaitTag,
+      google::cloud::cpp::compute::images::v1::InsertImageRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertImage(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  InsertImage(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
-  StreamRange<google::cloud::cpp::compute::v1::Image> ListImages(
-      google::cloud::cpp::compute::images::v1::ListImagesRequest request)
-      override;
+  StreamRange<google::cloud::cpp::compute::v1::Image>
+  ListImages(google::cloud::cpp::compute::images::v1::ListImagesRequest request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchImage(
-      google::cloud::cpp::compute::images::v1::PatchImageRequest const& request)
-      override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  PatchImage(google::cloud::cpp::compute::images::v1::PatchImageRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchImage(
-      NoAwaitTag,
-      google::cloud::cpp::compute::images::v1::PatchImageRequest const& request)
-      override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  PatchImage(NoAwaitTag,
+      google::cloud::cpp::compute::images::v1::PatchImageRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchImage(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  PatchImage(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
-      google::cloud::cpp::compute::images::v1::SetIamPolicyRequest const&
-          request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Policy>
+  SetIamPolicy(google::cloud::cpp::compute::images::v1::SetIamPolicyRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
-      google::cloud::cpp::compute::images::v1::SetLabelsRequest const& request)
-      override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  SetLabels(google::cloud::cpp::compute::images::v1::SetLabelsRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
-      NoAwaitTag,
-      google::cloud::cpp::compute::images::v1::SetLabelsRequest const& request)
-      override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  SetLabels(NoAwaitTag,
+      google::cloud::cpp::compute::images::v1::SetLabelsRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  SetLabels(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(
-      google::cloud::cpp::compute::images::v1::TestIamPermissionsRequest const&
-          request) override;
+  TestIamPermissions(google::cloud::cpp::compute::images::v1::TestIamPermissionsRequest const& request) override;
 
  private:
-  static std::unique_ptr<compute_images_v1::ImagesRetryPolicy> retry_policy(
-      Options const& options) {
+  static std::unique_ptr<compute_images_v1::ImagesRetryPolicy>
+  retry_policy(Options const& options) {
     return options.get<compute_images_v1::ImagesRetryPolicyOption>()->clone();
   }
 
@@ -146,9 +135,7 @@ class ImagesRestConnectionImpl : public compute_images_v1::ImagesConnection {
 
   static std::unique_ptr<compute_images_v1::ImagesConnectionIdempotencyPolicy>
   idempotency_policy(Options const& options) {
-    return options
-        .get<compute_images_v1::ImagesConnectionIdempotencyPolicyOption>()
-        ->clone();
+    return options.get<compute_images_v1::ImagesConnectionIdempotencyPolicyOption>()->clone();
   }
 
   static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {

@@ -36,56 +36,50 @@ class VpnTunnelsTracingConnection
   ~VpnTunnelsTracingConnection() override = default;
 
   explicit VpnTunnelsTracingConnection(
-      std::shared_ptr<compute_vpn_tunnels_v1::VpnTunnelsConnection> child);
+    std::shared_ptr<compute_vpn_tunnels_v1::VpnTunnelsConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StreamRange<std::pair<std::string,
-                        google::cloud::cpp::compute::v1::VpnTunnelsScopedList>>
-  AggregatedListVpnTunnels(
-      google::cloud::cpp::compute::vpn_tunnels::v1::
-          AggregatedListVpnTunnelsRequest request) override;
+  StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::VpnTunnelsScopedList>>
+  AggregatedListVpnTunnels(google::cloud::cpp::compute::vpn_tunnels::v1::AggregatedListVpnTunnelsRequest request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteVpnTunnel(
-      google::cloud::cpp::compute::vpn_tunnels::v1::
-          DeleteVpnTunnelRequest const& request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteVpnTunnel(google::cloud::cpp::compute::vpn_tunnels::v1::DeleteVpnTunnelRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteVpnTunnel(
-      NoAwaitTag, google::cloud::cpp::compute::vpn_tunnels::v1::
-                      DeleteVpnTunnelRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeleteVpnTunnel(NoAwaitTag,
+      google::cloud::cpp::compute::vpn_tunnels::v1::DeleteVpnTunnelRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteVpnTunnel(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteVpnTunnel(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::VpnTunnel> GetVpnTunnel(
-      google::cloud::cpp::compute::vpn_tunnels::v1::GetVpnTunnelRequest const&
-          request) override;
+  StatusOr<google::cloud::cpp::compute::v1::VpnTunnel>
+  GetVpnTunnel(google::cloud::cpp::compute::vpn_tunnels::v1::GetVpnTunnelRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertVpnTunnel(
-      google::cloud::cpp::compute::vpn_tunnels::v1::
-          InsertVpnTunnelRequest const& request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  InsertVpnTunnel(google::cloud::cpp::compute::vpn_tunnels::v1::InsertVpnTunnelRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertVpnTunnel(
-      NoAwaitTag, google::cloud::cpp::compute::vpn_tunnels::v1::
-                      InsertVpnTunnelRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  InsertVpnTunnel(NoAwaitTag,
+      google::cloud::cpp::compute::vpn_tunnels::v1::InsertVpnTunnelRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertVpnTunnel(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  InsertVpnTunnel(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
-  StreamRange<google::cloud::cpp::compute::v1::VpnTunnel> ListVpnTunnels(
-      google::cloud::cpp::compute::vpn_tunnels::v1::ListVpnTunnelsRequest
-          request) override;
+  StreamRange<google::cloud::cpp::compute::v1::VpnTunnel>
+  ListVpnTunnels(google::cloud::cpp::compute::vpn_tunnels::v1::ListVpnTunnelsRequest request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
-      google::cloud::cpp::compute::vpn_tunnels::v1::SetLabelsRequest const&
-          request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  SetLabels(google::cloud::cpp::compute::vpn_tunnels::v1::SetLabelsRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
-      NoAwaitTag,
-      google::cloud::cpp::compute::vpn_tunnels::v1::SetLabelsRequest const&
-          request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  SetLabels(NoAwaitTag,
+      google::cloud::cpp::compute::vpn_tunnels::v1::SetLabelsRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  SetLabels(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
  private:

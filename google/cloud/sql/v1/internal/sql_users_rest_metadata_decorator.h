@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_INTERNAL_SQL_USERS_REST_METADATA_DECORATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_INTERNAL_SQL_USERS_REST_METADATA_DECORATOR_H
 
-#include "google/cloud/sql/v1/internal/sql_users_rest_stub.h"
 #include "google/cloud/future.h"
 #include "google/cloud/rest_options.h"
+#include "google/cloud/sql/v1/internal/sql_users_rest_stub.h"
 #include "google/cloud/version.h"
 #include <google/cloud/sql/v1/cloud_sql_users.pb.h>
 #include <memory>
@@ -41,28 +41,23 @@ class SqlUsersServiceRestMetadata : public SqlUsersServiceRestStub {
 
   StatusOr<google::cloud::sql::v1::Operation> Delete(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::sql::v1::SqlUsersDeleteRequest const& request) override;
+      Options const& options, google::cloud::sql::v1::SqlUsersDeleteRequest const& request) override;
 
   StatusOr<google::cloud::sql::v1::User> Get(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::sql::v1::SqlUsersGetRequest const& request) override;
+      Options const& options, google::cloud::sql::v1::SqlUsersGetRequest const& request) override;
 
   StatusOr<google::cloud::sql::v1::Operation> Insert(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::sql::v1::SqlUsersInsertRequest const& request) override;
+      Options const& options, google::cloud::sql::v1::SqlUsersInsertRequest const& request) override;
 
   StatusOr<google::cloud::sql::v1::UsersListResponse> List(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::sql::v1::SqlUsersListRequest const& request) override;
+      Options const& options, google::cloud::sql::v1::SqlUsersListRequest const& request) override;
 
   StatusOr<google::cloud::sql::v1::Operation> Update(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::sql::v1::SqlUsersUpdateRequest const& request) override;
+      Options const& options, google::cloud::sql::v1::SqlUsersUpdateRequest const& request) override;
 
  private:
   void SetMetadata(rest_internal::RestContext& rest_context,

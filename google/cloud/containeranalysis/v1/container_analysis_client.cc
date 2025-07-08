@@ -17,8 +17,8 @@
 // source: google/devtools/containeranalysis/v1/containeranalysis.proto
 
 #include "google/cloud/containeranalysis/v1/container_analysis_client.h"
-#include "google/cloud/containeranalysis/v1/container_analysis_options.h"
 #include <memory>
+#include "google/cloud/containeranalysis/v1/container_analysis_options.h"
 #include <thread>
 #include <utility>
 
@@ -30,13 +30,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ContainerAnalysisClient::ContainerAnalysisClient(
     std::shared_ptr<ContainerAnalysisConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 ContainerAnalysisClient::~ContainerAnalysisClient() = default;
 
-StatusOr<google::iam::v1::Policy> ContainerAnalysisClient::SetIamPolicy(
-    std::string const& resource, google::iam::v1::Policy const& policy,
-    Options opts) {
+StatusOr<google::iam::v1::Policy>
+ContainerAnalysisClient::SetIamPolicy(std::string const& resource, google::iam::v1::Policy const& policy, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::iam::v1::SetIamPolicyRequest request;
   request.set_resource(resource);
@@ -44,17 +43,15 @@ StatusOr<google::iam::v1::Policy> ContainerAnalysisClient::SetIamPolicy(
   return connection_->SetIamPolicy(request);
 }
 
-StatusOr<google::iam::v1::Policy> ContainerAnalysisClient::SetIamPolicy(
-    std::string const& resource, IamUpdater const& updater, Options opts) {
-  internal::CheckExpectedOptions<ContainerAnalysisBackoffPolicyOption>(
-      opts, __func__);
+StatusOr<google::iam::v1::Policy>
+ContainerAnalysisClient::SetIamPolicy(std::string const& resource, IamUpdater const& updater, Options opts) {
+  internal::CheckExpectedOptions<ContainerAnalysisBackoffPolicyOption>(opts, __func__);
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::iam::v1::GetIamPolicyRequest get_request;
   get_request.set_resource(resource);
   google::iam::v1::SetIamPolicyRequest set_request;
   set_request.set_resource(resource);
-  auto backoff_policy =
-      internal::CurrentOptions().get<ContainerAnalysisBackoffPolicyOption>();
+  auto backoff_policy = internal::CurrentOptions().get<ContainerAnalysisBackoffPolicyOption>();
   if (backoff_policy != nullptr) {
     backoff_policy = backoff_policy->clone();
   }
@@ -71,7 +68,8 @@ StatusOr<google::iam::v1::Policy> ContainerAnalysisClient::SetIamPolicy(
     }
     *set_request.mutable_policy() = *std::move(policy);
     auto result = connection_->SetIamPolicy(set_request);
-    if (result || result.status().code() != StatusCode::kAborted ||
+    if (result ||
+        result.status().code() != StatusCode::kAborted ||
         backoff_policy == nullptr) {
       return result;
     }
@@ -79,30 +77,28 @@ StatusOr<google::iam::v1::Policy> ContainerAnalysisClient::SetIamPolicy(
   }
 }
 
-StatusOr<google::iam::v1::Policy> ContainerAnalysisClient::SetIamPolicy(
-    google::iam::v1::SetIamPolicyRequest const& request, Options opts) {
+StatusOr<google::iam::v1::Policy>
+ContainerAnalysisClient::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetIamPolicy(request);
 }
 
-StatusOr<google::iam::v1::Policy> ContainerAnalysisClient::GetIamPolicy(
-    std::string const& resource, Options opts) {
+StatusOr<google::iam::v1::Policy>
+ContainerAnalysisClient::GetIamPolicy(std::string const& resource, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::iam::v1::GetIamPolicyRequest request;
   request.set_resource(resource);
   return connection_->GetIamPolicy(request);
 }
 
-StatusOr<google::iam::v1::Policy> ContainerAnalysisClient::GetIamPolicy(
-    google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
+StatusOr<google::iam::v1::Policy>
+ContainerAnalysisClient::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetIamPolicy(request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-ContainerAnalysisClient::TestIamPermissions(
-    std::string const& resource, std::vector<std::string> const& permissions,
-    Options opts) {
+ContainerAnalysisClient::TestIamPermissions(std::string const& resource, std::vector<std::string> const& permissions, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::iam::v1::TestIamPermissionsRequest request;
   request.set_resource(resource);
@@ -111,38 +107,28 @@ ContainerAnalysisClient::TestIamPermissions(
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-ContainerAnalysisClient::TestIamPermissions(
-    google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
+ContainerAnalysisClient::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->TestIamPermissions(request);
 }
 
-StatusOr<
-    google::devtools::containeranalysis::v1::VulnerabilityOccurrencesSummary>
-ContainerAnalysisClient::GetVulnerabilityOccurrencesSummary(
-    std::string const& parent, std::string const& filter, Options opts) {
+StatusOr<google::devtools::containeranalysis::v1::VulnerabilityOccurrencesSummary>
+ContainerAnalysisClient::GetVulnerabilityOccurrencesSummary(std::string const& parent, std::string const& filter, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::devtools::containeranalysis::v1::
-      GetVulnerabilityOccurrencesSummaryRequest request;
+  google::devtools::containeranalysis::v1::GetVulnerabilityOccurrencesSummaryRequest request;
   request.set_parent(parent);
   request.set_filter(filter);
   return connection_->GetVulnerabilityOccurrencesSummary(request);
 }
 
-StatusOr<
-    google::devtools::containeranalysis::v1::VulnerabilityOccurrencesSummary>
-ContainerAnalysisClient::GetVulnerabilityOccurrencesSummary(
-    google::devtools::containeranalysis::v1::
-        GetVulnerabilityOccurrencesSummaryRequest const& request,
-    Options opts) {
+StatusOr<google::devtools::containeranalysis::v1::VulnerabilityOccurrencesSummary>
+ContainerAnalysisClient::GetVulnerabilityOccurrencesSummary(google::devtools::containeranalysis::v1::GetVulnerabilityOccurrencesSummaryRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetVulnerabilityOccurrencesSummary(request);
 }
 
 StatusOr<google::devtools::containeranalysis::v1::ExportSBOMResponse>
-ContainerAnalysisClient::ExportSBOM(
-    google::devtools::containeranalysis::v1::ExportSBOMRequest const& request,
-    Options opts) {
+ContainerAnalysisClient::ExportSBOM(google::devtools::containeranalysis::v1::ExportSBOMRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ExportSBOM(request);
 }

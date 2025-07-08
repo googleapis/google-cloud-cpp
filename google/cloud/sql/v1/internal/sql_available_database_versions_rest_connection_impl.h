@@ -19,14 +19,14 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_INTERNAL_SQL_AVAILABLE_DATABASE_VERSIONS_REST_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_INTERNAL_SQL_AVAILABLE_DATABASE_VERSIONS_REST_CONNECTION_IMPL_H
 
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/options.h"
 #include "google/cloud/sql/v1/internal/sql_available_database_versions_rest_stub.h"
 #include "google/cloud/sql/v1/internal/sql_available_database_versions_retry_traits.h"
 #include "google/cloud/sql/v1/sql_available_database_versions_connection.h"
 #include "google/cloud/sql/v1/sql_available_database_versions_connection_idempotency_policy.h"
 #include "google/cloud/sql/v1/sql_available_database_versions_options.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -42,41 +42,29 @@ class SqlAvailableDatabaseVersionsServiceRestConnectionImpl
   ~SqlAvailableDatabaseVersionsServiceRestConnectionImpl() override = default;
 
   SqlAvailableDatabaseVersionsServiceRestConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<
-          sql_v1_internal::SqlAvailableDatabaseVersionsServiceRestStub>
-          stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<sql_v1_internal::SqlAvailableDatabaseVersionsServiceRestStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
  private:
   static std::unique_ptr<sql_v1::SqlAvailableDatabaseVersionsServiceRetryPolicy>
   retry_policy(Options const& options) {
-    return options
-        .get<sql_v1::SqlAvailableDatabaseVersionsServiceRetryPolicyOption>()
-        ->clone();
+    return options.get<sql_v1::SqlAvailableDatabaseVersionsServiceRetryPolicyOption>()->clone();
   }
 
   static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options
-        .get<sql_v1::SqlAvailableDatabaseVersionsServiceBackoffPolicyOption>()
-        ->clone();
+    return options.get<sql_v1::SqlAvailableDatabaseVersionsServiceBackoffPolicyOption>()->clone();
   }
 
-  static std::unique_ptr<
-      sql_v1::SqlAvailableDatabaseVersionsServiceConnectionIdempotencyPolicy>
+  static std::unique_ptr<sql_v1::SqlAvailableDatabaseVersionsServiceConnectionIdempotencyPolicy>
   idempotency_policy(Options const& options) {
-    return options
-        .get<
-            sql_v1::
-                SqlAvailableDatabaseVersionsServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
+    return options.get<sql_v1::SqlAvailableDatabaseVersionsServiceConnectionIdempotencyPolicyOption>()->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<sql_v1_internal::SqlAvailableDatabaseVersionsServiceRestStub>
-      stub_;
+  std::shared_ptr<sql_v1_internal::SqlAvailableDatabaseVersionsServiceRestStub> stub_;
   Options options_;
 };
 

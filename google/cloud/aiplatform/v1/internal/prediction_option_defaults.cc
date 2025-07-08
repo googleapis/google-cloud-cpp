@@ -19,9 +19,9 @@
 #include "google/cloud/aiplatform/v1/internal/prediction_option_defaults.h"
 #include "google/cloud/aiplatform/v1/prediction_connection.h"
 #include "google/cloud/aiplatform/v1/prediction_options.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include <memory>
 #include <utility>
 
@@ -34,32 +34,25 @@ namespace {
 auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
-Options PredictionServiceDefaultOptions(std::string const& location,
-                                        Options options) {
+Options PredictionServiceDefaultOptions(std::string const& location, Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_PREDICTION_SERVICE_ENDPOINT", "",
-      "GOOGLE_CLOUD_CPP_PREDICTION_SERVICE_AUTHORITY",
+      std::move(options), "GOOGLE_CLOUD_CPP_PREDICTION_SERVICE_ENDPOINT",
+      "", "GOOGLE_CLOUD_CPP_PREDICTION_SERVICE_AUTHORITY",
       absl::StrCat(location, "-", "aiplatform.googleapis.com"));
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<aiplatform_v1::PredictionServiceRetryPolicyOption>()) {
     options.set<aiplatform_v1::PredictionServiceRetryPolicyOption>(
         aiplatform_v1::PredictionServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
-            .clone());
+            std::chrono::minutes(30)).clone());
   }
   if (!options.has<aiplatform_v1::PredictionServiceBackoffPolicyOption>()) {
     options.set<aiplatform_v1::PredictionServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(
-            std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
-            .clone());
+        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
   }
-  if (!options.has<aiplatform_v1::
-                       PredictionServiceConnectionIdempotencyPolicyOption>()) {
-    options
-        .set<aiplatform_v1::PredictionServiceConnectionIdempotencyPolicyOption>(
-            aiplatform_v1::
-                MakeDefaultPredictionServiceConnectionIdempotencyPolicy());
+  if (!options.has<aiplatform_v1::PredictionServiceConnectionIdempotencyPolicyOption>()) {
+    options.set<aiplatform_v1::PredictionServiceConnectionIdempotencyPolicyOption>(
+        aiplatform_v1::MakeDefaultPredictionServiceConnectionIdempotencyPolicy());
   }
 
   return options;

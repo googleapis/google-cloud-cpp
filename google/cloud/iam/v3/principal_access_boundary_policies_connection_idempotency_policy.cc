@@ -26,63 +26,44 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-PrincipalAccessBoundaryPoliciesConnectionIdempotencyPolicy::
-    ~PrincipalAccessBoundaryPoliciesConnectionIdempotencyPolicy() = default;
+PrincipalAccessBoundaryPoliciesConnectionIdempotencyPolicy::~PrincipalAccessBoundaryPoliciesConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<PrincipalAccessBoundaryPoliciesConnectionIdempotencyPolicy>
 PrincipalAccessBoundaryPoliciesConnectionIdempotencyPolicy::clone() const {
-  return std::make_unique<
-      PrincipalAccessBoundaryPoliciesConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<PrincipalAccessBoundaryPoliciesConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency PrincipalAccessBoundaryPoliciesConnectionIdempotencyPolicy::
-    CreatePrincipalAccessBoundaryPolicy(
-        google::iam::v3::CreatePrincipalAccessBoundaryPolicyRequest const&) {
+Idempotency PrincipalAccessBoundaryPoliciesConnectionIdempotencyPolicy::CreatePrincipalAccessBoundaryPolicy(google::iam::v3::CreatePrincipalAccessBoundaryPolicyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency PrincipalAccessBoundaryPoliciesConnectionIdempotencyPolicy::
-    GetPrincipalAccessBoundaryPolicy(
-        google::iam::v3::GetPrincipalAccessBoundaryPolicyRequest const&) {
+Idempotency PrincipalAccessBoundaryPoliciesConnectionIdempotencyPolicy::GetPrincipalAccessBoundaryPolicy(google::iam::v3::GetPrincipalAccessBoundaryPolicyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency PrincipalAccessBoundaryPoliciesConnectionIdempotencyPolicy::
-    UpdatePrincipalAccessBoundaryPolicy(
-        google::iam::v3::UpdatePrincipalAccessBoundaryPolicyRequest const&) {
+Idempotency PrincipalAccessBoundaryPoliciesConnectionIdempotencyPolicy::UpdatePrincipalAccessBoundaryPolicy(google::iam::v3::UpdatePrincipalAccessBoundaryPolicyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency PrincipalAccessBoundaryPoliciesConnectionIdempotencyPolicy::
-    DeletePrincipalAccessBoundaryPolicy(
-        google::iam::v3::DeletePrincipalAccessBoundaryPolicyRequest const&) {
+Idempotency PrincipalAccessBoundaryPoliciesConnectionIdempotencyPolicy::DeletePrincipalAccessBoundaryPolicy(google::iam::v3::DeletePrincipalAccessBoundaryPolicyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency PrincipalAccessBoundaryPoliciesConnectionIdempotencyPolicy::
-    ListPrincipalAccessBoundaryPolicies(
-        google::iam::v3::
-            ListPrincipalAccessBoundaryPoliciesRequest) {  // NOLINT
+Idempotency PrincipalAccessBoundaryPoliciesConnectionIdempotencyPolicy::ListPrincipalAccessBoundaryPolicies(google::iam::v3::ListPrincipalAccessBoundaryPoliciesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency PrincipalAccessBoundaryPoliciesConnectionIdempotencyPolicy::
-    SearchPrincipalAccessBoundaryPolicyBindings(
-        google::iam::v3::
-            SearchPrincipalAccessBoundaryPolicyBindingsRequest) {  // NOLINT
+Idempotency PrincipalAccessBoundaryPoliciesConnectionIdempotencyPolicy::SearchPrincipalAccessBoundaryPolicyBindings(google::iam::v3::SearchPrincipalAccessBoundaryPolicyBindingsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency
-PrincipalAccessBoundaryPoliciesConnectionIdempotencyPolicy::GetOperation(
-    google::longrunning::GetOperationRequest const&) {
+Idempotency PrincipalAccessBoundaryPoliciesConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<PrincipalAccessBoundaryPoliciesConnectionIdempotencyPolicy>
-MakeDefaultPrincipalAccessBoundaryPoliciesConnectionIdempotencyPolicy() {
-  return std::make_unique<
-      PrincipalAccessBoundaryPoliciesConnectionIdempotencyPolicy>();
+    MakeDefaultPrincipalAccessBoundaryPoliciesConnectionIdempotencyPolicy() {
+  return std::make_unique<PrincipalAccessBoundaryPoliciesConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -39,28 +39,19 @@ Options RecommendationServiceDefaultOptions(Options options) {
       "", "GOOGLE_CLOUD_CPP_RECOMMENDATION_SERVICE_AUTHORITY",
       "discoveryengine.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
-  if (!options
-           .has<discoveryengine_v1::RecommendationServiceRetryPolicyOption>()) {
+  if (!options.has<discoveryengine_v1::RecommendationServiceRetryPolicyOption>()) {
     options.set<discoveryengine_v1::RecommendationServiceRetryPolicyOption>(
         discoveryengine_v1::RecommendationServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
-            .clone());
+            std::chrono::minutes(30)).clone());
   }
-  if (!options.has<
-          discoveryengine_v1::RecommendationServiceBackoffPolicyOption>()) {
+  if (!options.has<discoveryengine_v1::RecommendationServiceBackoffPolicyOption>()) {
     options.set<discoveryengine_v1::RecommendationServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(
-            std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
-            .clone());
+        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
   }
-  if (!options
-           .has<discoveryengine_v1::
-                    RecommendationServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<discoveryengine_v1::
-                    RecommendationServiceConnectionIdempotencyPolicyOption>(
-        discoveryengine_v1::
-            MakeDefaultRecommendationServiceConnectionIdempotencyPolicy());
+  if (!options.has<discoveryengine_v1::RecommendationServiceConnectionIdempotencyPolicyOption>()) {
+    options.set<discoveryengine_v1::RecommendationServiceConnectionIdempotencyPolicyOption>(
+        discoveryengine_v1::MakeDefaultRecommendationServiceConnectionIdempotencyPolicy());
   }
 
   return options;

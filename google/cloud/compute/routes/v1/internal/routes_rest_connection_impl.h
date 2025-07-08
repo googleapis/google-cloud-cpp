@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_ROUTES_V1_INTERNAL_ROUTES_REST_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_ROUTES_V1_INTERNAL_ROUTES_REST_CONNECTION_IMPL_H
 
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/routes/v1/internal/routes_rest_stub.h"
 #include "google/cloud/compute/routes/v1/internal/routes_retry_traits.h"
 #include "google/cloud/compute/routes/v1/routes_connection.h"
 #include "google/cloud/compute/routes/v1/routes_connection_idempotency_policy.h"
 #include "google/cloud/compute/routes/v1/routes_options.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -38,52 +38,49 @@ namespace cloud {
 namespace compute_routes_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class RoutesRestConnectionImpl : public compute_routes_v1::RoutesConnection {
+class RoutesRestConnectionImpl
+    : public compute_routes_v1::RoutesConnection {
  public:
   ~RoutesRestConnectionImpl() override = default;
 
   RoutesRestConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<compute_routes_v1_internal::RoutesRestStub> stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<compute_routes_v1_internal::RoutesRestStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteRoute(
-      google::cloud::cpp::compute::routes::v1::DeleteRouteRequest const&
-          request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteRoute(google::cloud::cpp::compute::routes::v1::DeleteRouteRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteRoute(
-      NoAwaitTag,
-      google::cloud::cpp::compute::routes::v1::DeleteRouteRequest const&
-          request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeleteRoute(NoAwaitTag,
+      google::cloud::cpp::compute::routes::v1::DeleteRouteRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteRoute(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteRoute(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Route> GetRoute(
-      google::cloud::cpp::compute::routes::v1::GetRouteRequest const& request)
-      override;
+  StatusOr<google::cloud::cpp::compute::v1::Route>
+  GetRoute(google::cloud::cpp::compute::routes::v1::GetRouteRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertRoute(
-      google::cloud::cpp::compute::routes::v1::InsertRouteRequest const&
-          request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  InsertRoute(google::cloud::cpp::compute::routes::v1::InsertRouteRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertRoute(
-      NoAwaitTag,
-      google::cloud::cpp::compute::routes::v1::InsertRouteRequest const&
-          request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  InsertRoute(NoAwaitTag,
+      google::cloud::cpp::compute::routes::v1::InsertRouteRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertRoute(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  InsertRoute(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
-  StreamRange<google::cloud::cpp::compute::v1::Route> ListRoutes(
-      google::cloud::cpp::compute::routes::v1::ListRoutesRequest request)
-      override;
+  StreamRange<google::cloud::cpp::compute::v1::Route>
+  ListRoutes(google::cloud::cpp::compute::routes::v1::ListRoutesRequest request) override;
 
  private:
-  static std::unique_ptr<compute_routes_v1::RoutesRetryPolicy> retry_policy(
-      Options const& options) {
+  static std::unique_ptr<compute_routes_v1::RoutesRetryPolicy>
+  retry_policy(Options const& options) {
     return options.get<compute_routes_v1::RoutesRetryPolicyOption>()->clone();
   }
 
@@ -93,9 +90,7 @@ class RoutesRestConnectionImpl : public compute_routes_v1::RoutesConnection {
 
   static std::unique_ptr<compute_routes_v1::RoutesConnectionIdempotencyPolicy>
   idempotency_policy(Options const& options) {
-    return options
-        .get<compute_routes_v1::RoutesConnectionIdempotencyPolicyOption>()
-        ->clone();
+    return options.get<compute_routes_v1::RoutesConnectionIdempotencyPolicyOption>()->clone();
   }
 
   static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {

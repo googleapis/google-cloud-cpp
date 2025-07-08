@@ -19,9 +19,9 @@
 #include "google/cloud/gkemulticloud/v1/internal/azure_clusters_option_defaults.h"
 #include "google/cloud/gkemulticloud/v1/azure_clusters_connection.h"
 #include "google/cloud/gkemulticloud/v1/azure_clusters_options.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include <memory>
 #include <utility>
 
@@ -34,44 +34,34 @@ namespace {
 auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
-Options AzureClustersDefaultOptions(std::string const& location,
-                                    Options options) {
+Options AzureClustersDefaultOptions(std::string const& location, Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_AZURE_CLUSTERS_ENDPOINT", "",
-      "GOOGLE_CLOUD_CPP_AZURE_CLUSTERS_AUTHORITY",
+      std::move(options), "GOOGLE_CLOUD_CPP_AZURE_CLUSTERS_ENDPOINT",
+      "", "GOOGLE_CLOUD_CPP_AZURE_CLUSTERS_AUTHORITY",
       absl::StrCat(location, "-", "gkemulticloud.googleapis.com"));
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<gkemulticloud_v1::AzureClustersRetryPolicyOption>()) {
     options.set<gkemulticloud_v1::AzureClustersRetryPolicyOption>(
         gkemulticloud_v1::AzureClustersLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
-            .clone());
+            std::chrono::minutes(30)).clone());
   }
   if (!options.has<gkemulticloud_v1::AzureClustersBackoffPolicyOption>()) {
     options.set<gkemulticloud_v1::AzureClustersBackoffPolicyOption>(
-        ExponentialBackoffPolicy(
-            std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
-            .clone());
+        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
   }
   if (!options.has<gkemulticloud_v1::AzureClustersPollingPolicyOption>()) {
     options.set<gkemulticloud_v1::AzureClustersPollingPolicyOption>(
         GenericPollingPolicy<
             gkemulticloud_v1::AzureClustersRetryPolicyOption::Type,
             gkemulticloud_v1::AzureClustersBackoffPolicyOption::Type>(
-            options.get<gkemulticloud_v1::AzureClustersRetryPolicyOption>()
-                ->clone(),
+            options.get<gkemulticloud_v1::AzureClustersRetryPolicyOption>()->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                     std::chrono::minutes(5), kBackoffScaling)
-                .clone())
-            .clone());
+            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
   }
-  if (!options.has<
-          gkemulticloud_v1::AzureClustersConnectionIdempotencyPolicyOption>()) {
-    options
-        .set<gkemulticloud_v1::AzureClustersConnectionIdempotencyPolicyOption>(
-            gkemulticloud_v1::
-                MakeDefaultAzureClustersConnectionIdempotencyPolicy());
+  if (!options.has<gkemulticloud_v1::AzureClustersConnectionIdempotencyPolicyOption>()) {
+    options.set<gkemulticloud_v1::AzureClustersConnectionIdempotencyPolicyOption>(
+        gkemulticloud_v1::MakeDefaultAzureClustersConnectionIdempotencyPolicy());
   }
 
   return options;

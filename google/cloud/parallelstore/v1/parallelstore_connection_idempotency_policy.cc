@@ -26,81 +26,67 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-ParallelstoreConnectionIdempotencyPolicy::
-    ~ParallelstoreConnectionIdempotencyPolicy() = default;
+ParallelstoreConnectionIdempotencyPolicy::~ParallelstoreConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<ParallelstoreConnectionIdempotencyPolicy>
 ParallelstoreConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<ParallelstoreConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency ParallelstoreConnectionIdempotencyPolicy::ListInstances(
-    google::cloud::parallelstore::v1::ListInstancesRequest) {  // NOLINT
+Idempotency ParallelstoreConnectionIdempotencyPolicy::ListInstances(google::cloud::parallelstore::v1::ListInstancesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency ParallelstoreConnectionIdempotencyPolicy::GetInstance(
-    google::cloud::parallelstore::v1::GetInstanceRequest const&) {
+Idempotency ParallelstoreConnectionIdempotencyPolicy::GetInstance(google::cloud::parallelstore::v1::GetInstanceRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ParallelstoreConnectionIdempotencyPolicy::CreateInstance(
-    google::cloud::parallelstore::v1::CreateInstanceRequest const&) {
+Idempotency ParallelstoreConnectionIdempotencyPolicy::CreateInstance(google::cloud::parallelstore::v1::CreateInstanceRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ParallelstoreConnectionIdempotencyPolicy::UpdateInstance(
-    google::cloud::parallelstore::v1::UpdateInstanceRequest const&) {
+Idempotency ParallelstoreConnectionIdempotencyPolicy::UpdateInstance(google::cloud::parallelstore::v1::UpdateInstanceRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ParallelstoreConnectionIdempotencyPolicy::DeleteInstance(
-    google::cloud::parallelstore::v1::DeleteInstanceRequest const&) {
+Idempotency ParallelstoreConnectionIdempotencyPolicy::DeleteInstance(google::cloud::parallelstore::v1::DeleteInstanceRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ParallelstoreConnectionIdempotencyPolicy::ImportData(
-    google::cloud::parallelstore::v1::ImportDataRequest const&) {
+Idempotency ParallelstoreConnectionIdempotencyPolicy::ImportData(google::cloud::parallelstore::v1::ImportDataRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ParallelstoreConnectionIdempotencyPolicy::ExportData(
-    google::cloud::parallelstore::v1::ExportDataRequest const&) {
+Idempotency ParallelstoreConnectionIdempotencyPolicy::ExportData(google::cloud::parallelstore::v1::ExportDataRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ParallelstoreConnectionIdempotencyPolicy::ListLocations(
-    google::cloud::location::ListLocationsRequest) {  // NOLINT
+Idempotency ParallelstoreConnectionIdempotencyPolicy::ListLocations(google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency ParallelstoreConnectionIdempotencyPolicy::GetLocation(
-    google::cloud::location::GetLocationRequest const&) {
+Idempotency ParallelstoreConnectionIdempotencyPolicy::GetLocation(google::cloud::location::GetLocationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ParallelstoreConnectionIdempotencyPolicy::ListOperations(
-    google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency ParallelstoreConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency ParallelstoreConnectionIdempotencyPolicy::GetOperation(
-    google::longrunning::GetOperationRequest const&) {
+Idempotency ParallelstoreConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ParallelstoreConnectionIdempotencyPolicy::DeleteOperation(
-    google::longrunning::DeleteOperationRequest const&) {
+Idempotency ParallelstoreConnectionIdempotencyPolicy::DeleteOperation(google::longrunning::DeleteOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ParallelstoreConnectionIdempotencyPolicy::CancelOperation(
-    google::longrunning::CancelOperationRequest const&) {
+Idempotency ParallelstoreConnectionIdempotencyPolicy::CancelOperation(google::longrunning::CancelOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<ParallelstoreConnectionIdempotencyPolicy>
-MakeDefaultParallelstoreConnectionIdempotencyPolicy() {
+    MakeDefaultParallelstoreConnectionIdempotencyPolicy() {
   return std::make_unique<ParallelstoreConnectionIdempotencyPolicy>();
 }
 

@@ -19,11 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TRACE_V2_TRACE_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TRACE_V2_TRACE_CLIENT_H
 
-#include "google/cloud/trace/v2/trace_connection.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
+#include "google/cloud/trace/v2/trace_connection.h"
 #include "google/cloud/version.h"
 #include <memory>
 #include <string>
@@ -67,8 +67,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class TraceServiceClient {
  public:
-  explicit TraceServiceClient(
-      std::shared_ptr<TraceServiceConnection> connection, Options opts = {});
+  explicit TraceServiceClient(std::shared_ptr<TraceServiceConnection> connection, Options opts = {});
   ~TraceServiceClient();
 
   ///@{
@@ -81,12 +80,10 @@ class TraceServiceClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(TraceServiceClient const& a,
-                         TraceServiceClient const& b) {
+  friend bool operator==(TraceServiceClient const& a, TraceServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(TraceServiceClient const& a,
-                         TraceServiceClient const& b) {
+  friend bool operator!=(TraceServiceClient const& a, TraceServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -114,10 +111,8 @@ class TraceServiceClient {
   /// [google.devtools.cloudtrace.v2.BatchWriteSpansRequest]: @googleapis_reference_link{google/devtools/cloudtrace/v2/tracing.proto#L67}
   ///
   // clang-format on
-  Status BatchWriteSpans(
-      std::string const& name,
-      std::vector<google::devtools::cloudtrace::v2::Span> const& spans,
-      Options opts = {});
+  Status
+  BatchWriteSpans(std::string const& name, std::vector<google::devtools::cloudtrace::v2::Span> const& spans, Options opts = {});
 
   // clang-format off
   ///
@@ -144,9 +139,8 @@ class TraceServiceClient {
   /// [google.devtools.cloudtrace.v2.BatchWriteSpansRequest]: @googleapis_reference_link{google/devtools/cloudtrace/v2/tracing.proto#L67}
   ///
   // clang-format on
-  Status BatchWriteSpans(
-      google::devtools::cloudtrace::v2::BatchWriteSpansRequest const& request,
-      Options opts = {});
+  Status
+  BatchWriteSpans(google::devtools::cloudtrace::v2::BatchWriteSpansRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -174,8 +168,8 @@ class TraceServiceClient {
   /// [google.devtools.cloudtrace.v2.Span]: @googleapis_reference_link{google/devtools/cloudtrace/v2/trace.proto#L41}
   ///
   // clang-format on
-  StatusOr<google::devtools::cloudtrace::v2::Span> CreateSpan(
-      google::devtools::cloudtrace::v2::Span const& request, Options opts = {});
+  StatusOr<google::devtools::cloudtrace::v2::Span>
+  CreateSpan(google::devtools::cloudtrace::v2::Span const& request, Options opts = {});
 
  private:
   std::shared_ptr<TraceServiceConnection> connection_;

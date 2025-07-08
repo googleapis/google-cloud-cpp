@@ -26,17 +26,11 @@ namespace cloud {
 namespace binaryauthorization {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use
-/// binaryauthorization_v1::MakeDefaultBinauthzManagementServiceV1ConnectionIdempotencyPolicy
-/// directly.
-using ::google::cloud::binaryauthorization_v1::
-    MakeDefaultBinauthzManagementServiceV1ConnectionIdempotencyPolicy;
+/// @deprecated Use binaryauthorization_v1::MakeDefaultBinauthzManagementServiceV1ConnectionIdempotencyPolicy directly.
+using ::google::cloud::binaryauthorization_v1::MakeDefaultBinauthzManagementServiceV1ConnectionIdempotencyPolicy;
 
-/// @deprecated Use
-/// binaryauthorization_v1::BinauthzManagementServiceV1ConnectionIdempotencyPolicy
-/// directly.
-using ::google::cloud::binaryauthorization_v1::
-    BinauthzManagementServiceV1ConnectionIdempotencyPolicy;
+/// @deprecated Use binaryauthorization_v1::BinauthzManagementServiceV1ConnectionIdempotencyPolicy directly.
+using ::google::cloud::binaryauthorization_v1::BinauthzManagementServiceV1ConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace binaryauthorization

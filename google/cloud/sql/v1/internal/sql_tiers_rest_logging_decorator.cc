@@ -29,17 +29,19 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 SqlTiersServiceRestLogging::SqlTiersServiceRestLogging(
     std::shared_ptr<SqlTiersServiceRestStub> child,
-    TracingOptions tracing_options, std::set<std::string> components)
-    : child_(std::move(child)),
-      tracing_options_(std::move(tracing_options)),
+    TracingOptions tracing_options,
+    std::set<std::string> components)
+    : child_(std::move(child)), tracing_options_(std::move(tracing_options)),
       components_(std::move(components)) {}
 
 StatusOr<google::cloud::sql::v1::TiersListResponse>
 SqlTiersServiceRestLogging::List(
-    rest_internal::RestContext& rest_context, Options const& options,
+    rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::sql::v1::SqlTiersListRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context, Options const& options,
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
              google::cloud::sql::v1::SqlTiersListRequest const& request) {
         return child_->List(rest_context, options, request);
       },

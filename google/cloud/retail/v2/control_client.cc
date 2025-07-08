@@ -28,15 +28,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ControlServiceClient::ControlServiceClient(
     std::shared_ptr<ControlServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 ControlServiceClient::~ControlServiceClient() = default;
 
 StatusOr<google::cloud::retail::v2::Control>
-ControlServiceClient::CreateControl(
-    std::string const& parent,
-    google::cloud::retail::v2::Control const& control,
-    std::string const& control_id, Options opts) {
+ControlServiceClient::CreateControl(std::string const& parent, google::cloud::retail::v2::Control const& control, std::string const& control_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::retail::v2::CreateControlRequest request;
   request.set_parent(parent);
@@ -46,32 +43,27 @@ ControlServiceClient::CreateControl(
 }
 
 StatusOr<google::cloud::retail::v2::Control>
-ControlServiceClient::CreateControl(
-    google::cloud::retail::v2::CreateControlRequest const& request,
-    Options opts) {
+ControlServiceClient::CreateControl(google::cloud::retail::v2::CreateControlRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateControl(request);
 }
 
-Status ControlServiceClient::DeleteControl(std::string const& name,
-                                           Options opts) {
+Status
+ControlServiceClient::DeleteControl(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::retail::v2::DeleteControlRequest request;
   request.set_name(name);
   return connection_->DeleteControl(request);
 }
 
-Status ControlServiceClient::DeleteControl(
-    google::cloud::retail::v2::DeleteControlRequest const& request,
-    Options opts) {
+Status
+ControlServiceClient::DeleteControl(google::cloud::retail::v2::DeleteControlRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteControl(request);
 }
 
 StatusOr<google::cloud::retail::v2::Control>
-ControlServiceClient::UpdateControl(
-    google::cloud::retail::v2::Control const& control,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+ControlServiceClient::UpdateControl(google::cloud::retail::v2::Control const& control, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::retail::v2::UpdateControlRequest request;
   *request.mutable_control() = control;
@@ -80,23 +72,21 @@ ControlServiceClient::UpdateControl(
 }
 
 StatusOr<google::cloud::retail::v2::Control>
-ControlServiceClient::UpdateControl(
-    google::cloud::retail::v2::UpdateControlRequest const& request,
-    Options opts) {
+ControlServiceClient::UpdateControl(google::cloud::retail::v2::UpdateControlRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateControl(request);
 }
 
-StatusOr<google::cloud::retail::v2::Control> ControlServiceClient::GetControl(
-    std::string const& name, Options opts) {
+StatusOr<google::cloud::retail::v2::Control>
+ControlServiceClient::GetControl(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::retail::v2::GetControlRequest request;
   request.set_name(name);
   return connection_->GetControl(request);
 }
 
-StatusOr<google::cloud::retail::v2::Control> ControlServiceClient::GetControl(
-    google::cloud::retail::v2::GetControlRequest const& request, Options opts) {
+StatusOr<google::cloud::retail::v2::Control>
+ControlServiceClient::GetControl(google::cloud::retail::v2::GetControlRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetControl(request);
 }
@@ -110,15 +100,13 @@ ControlServiceClient::ListControls(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::retail::v2::Control>
-ControlServiceClient::ListControls(
-    google::cloud::retail::v2::ListControlsRequest request, Options opts) {
+ControlServiceClient::ListControls(google::cloud::retail::v2::ListControlsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListControls(std::move(request));
 }
 
 StreamRange<google::longrunning::Operation>
-ControlServiceClient::ListOperations(std::string const& name,
-                                     std::string const& filter, Options opts) {
+ControlServiceClient::ListOperations(std::string const& name, std::string const& filter, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::ListOperationsRequest request;
   request.set_name(name);
@@ -127,22 +115,21 @@ ControlServiceClient::ListOperations(std::string const& name,
 }
 
 StreamRange<google::longrunning::Operation>
-ControlServiceClient::ListOperations(
-    google::longrunning::ListOperationsRequest request, Options opts) {
+ControlServiceClient::ListOperations(google::longrunning::ListOperationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOperations(std::move(request));
 }
 
-StatusOr<google::longrunning::Operation> ControlServiceClient::GetOperation(
-    std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation>
+ControlServiceClient::GetOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
   return connection_->GetOperation(request);
 }
 
-StatusOr<google::longrunning::Operation> ControlServiceClient::GetOperation(
-    google::longrunning::GetOperationRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation>
+ControlServiceClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }

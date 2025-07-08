@@ -62,9 +62,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class ImageFamilyViewsClient {
  public:
-  explicit ImageFamilyViewsClient(
-      std::shared_ptr<ImageFamilyViewsConnection> connection,
-      Options opts = {});
+  explicit ImageFamilyViewsClient(std::shared_ptr<ImageFamilyViewsConnection> connection, Options opts = {});
   ~ImageFamilyViewsClient();
 
   ///@{
@@ -77,12 +75,10 @@ class ImageFamilyViewsClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(ImageFamilyViewsClient const& a,
-                         ImageFamilyViewsClient const& b) {
+  friend bool operator==(ImageFamilyViewsClient const& a, ImageFamilyViewsClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(ImageFamilyViewsClient const& a,
-                         ImageFamilyViewsClient const& b) {
+  friend bool operator!=(ImageFamilyViewsClient const& a, ImageFamilyViewsClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -113,9 +109,8 @@ class ImageFamilyViewsClient {
   /// [google.cloud.cpp.compute.v1.ImageFamilyView]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_056.proto#L26}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::ImageFamilyView> GetImageFamilyView(
-      std::string const& project, std::string const& zone,
-      std::string const& family, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::ImageFamilyView>
+  GetImageFamilyView(std::string const& project, std::string const& zone, std::string const& family, Options opts = {});
 
   // clang-format off
   ///
@@ -146,10 +141,8 @@ class ImageFamilyViewsClient {
   /// [google.cloud.cpp.compute.v1.ImageFamilyView]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_056.proto#L26}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::ImageFamilyView> GetImageFamilyView(
-      google::cloud::cpp::compute::image_family_views::v1::
-          GetImageFamilyViewRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::ImageFamilyView>
+  GetImageFamilyView(google::cloud::cpp::compute::image_family_views::v1::GetImageFamilyViewRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<ImageFamilyViewsConnection> connection_;

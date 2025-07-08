@@ -28,13 +28,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 DatastreamClient::DatastreamClient(
     std::shared_ptr<DatastreamConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 DatastreamClient::~DatastreamClient() = default;
 
 StreamRange<google::cloud::datastream::v1::ConnectionProfile>
-DatastreamClient::ListConnectionProfiles(std::string const& parent,
-                                         Options opts) {
+DatastreamClient::ListConnectionProfiles(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::datastream::v1::ListConnectionProfilesRequest request;
   request.set_parent(parent);
@@ -42,9 +41,7 @@ DatastreamClient::ListConnectionProfiles(std::string const& parent,
 }
 
 StreamRange<google::cloud::datastream::v1::ConnectionProfile>
-DatastreamClient::ListConnectionProfiles(
-    google::cloud::datastream::v1::ListConnectionProfilesRequest request,
-    Options opts) {
+DatastreamClient::ListConnectionProfiles(google::cloud::datastream::v1::ListConnectionProfilesRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListConnectionProfiles(std::move(request));
 }
@@ -58,18 +55,13 @@ DatastreamClient::GetConnectionProfile(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::datastream::v1::ConnectionProfile>
-DatastreamClient::GetConnectionProfile(
-    google::cloud::datastream::v1::GetConnectionProfileRequest const& request,
-    Options opts) {
+DatastreamClient::GetConnectionProfile(google::cloud::datastream::v1::GetConnectionProfileRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetConnectionProfile(request);
 }
 
 future<StatusOr<google::cloud::datastream::v1::ConnectionProfile>>
-DatastreamClient::CreateConnectionProfile(
-    std::string const& parent,
-    google::cloud::datastream::v1::ConnectionProfile const& connection_profile,
-    std::string const& connection_profile_id, Options opts) {
+DatastreamClient::CreateConnectionProfile(std::string const& parent, google::cloud::datastream::v1::ConnectionProfile const& connection_profile, std::string const& connection_profile_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::datastream::v1::CreateConnectionProfileRequest request;
   request.set_parent(parent);
@@ -79,10 +71,7 @@ DatastreamClient::CreateConnectionProfile(
 }
 
 StatusOr<google::longrunning::Operation>
-DatastreamClient::CreateConnectionProfile(
-    NoAwaitTag, std::string const& parent,
-    google::cloud::datastream::v1::ConnectionProfile const& connection_profile,
-    std::string const& connection_profile_id, Options opts) {
+DatastreamClient::CreateConnectionProfile(NoAwaitTag, std::string const& parent, google::cloud::datastream::v1::ConnectionProfile const& connection_profile, std::string const& connection_profile_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::datastream::v1::CreateConnectionProfileRequest request;
   request.set_parent(parent);
@@ -92,35 +81,25 @@ DatastreamClient::CreateConnectionProfile(
 }
 
 future<StatusOr<google::cloud::datastream::v1::ConnectionProfile>>
-DatastreamClient::CreateConnectionProfile(
-    google::cloud::datastream::v1::CreateConnectionProfileRequest const&
-        request,
-    Options opts) {
+DatastreamClient::CreateConnectionProfile(google::cloud::datastream::v1::CreateConnectionProfileRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateConnectionProfile(request);
 }
 
 StatusOr<google::longrunning::Operation>
-DatastreamClient::CreateConnectionProfile(
-    NoAwaitTag,
-    google::cloud::datastream::v1::CreateConnectionProfileRequest const&
-        request,
-    Options opts) {
+DatastreamClient::CreateConnectionProfile(NoAwaitTag, google::cloud::datastream::v1::CreateConnectionProfileRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateConnectionProfile(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::datastream::v1::ConnectionProfile>>
-DatastreamClient::CreateConnectionProfile(
-    google::longrunning::Operation const& operation, Options opts) {
+DatastreamClient::CreateConnectionProfile(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateConnectionProfile(operation);
 }
 
 future<StatusOr<google::cloud::datastream::v1::ConnectionProfile>>
-DatastreamClient::UpdateConnectionProfile(
-    google::cloud::datastream::v1::ConnectionProfile const& connection_profile,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+DatastreamClient::UpdateConnectionProfile(google::cloud::datastream::v1::ConnectionProfile const& connection_profile, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::datastream::v1::UpdateConnectionProfileRequest request;
   *request.mutable_connection_profile() = connection_profile;
@@ -129,10 +108,7 @@ DatastreamClient::UpdateConnectionProfile(
 }
 
 StatusOr<google::longrunning::Operation>
-DatastreamClient::UpdateConnectionProfile(
-    NoAwaitTag,
-    google::cloud::datastream::v1::ConnectionProfile const& connection_profile,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+DatastreamClient::UpdateConnectionProfile(NoAwaitTag, google::cloud::datastream::v1::ConnectionProfile const& connection_profile, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::datastream::v1::UpdateConnectionProfileRequest request;
   *request.mutable_connection_profile() = connection_profile;
@@ -141,34 +117,25 @@ DatastreamClient::UpdateConnectionProfile(
 }
 
 future<StatusOr<google::cloud::datastream::v1::ConnectionProfile>>
-DatastreamClient::UpdateConnectionProfile(
-    google::cloud::datastream::v1::UpdateConnectionProfileRequest const&
-        request,
-    Options opts) {
+DatastreamClient::UpdateConnectionProfile(google::cloud::datastream::v1::UpdateConnectionProfileRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateConnectionProfile(request);
 }
 
 StatusOr<google::longrunning::Operation>
-DatastreamClient::UpdateConnectionProfile(
-    NoAwaitTag,
-    google::cloud::datastream::v1::UpdateConnectionProfileRequest const&
-        request,
-    Options opts) {
+DatastreamClient::UpdateConnectionProfile(NoAwaitTag, google::cloud::datastream::v1::UpdateConnectionProfileRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateConnectionProfile(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::datastream::v1::ConnectionProfile>>
-DatastreamClient::UpdateConnectionProfile(
-    google::longrunning::Operation const& operation, Options opts) {
+DatastreamClient::UpdateConnectionProfile(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateConnectionProfile(operation);
 }
 
 future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>
-DatastreamClient::DeleteConnectionProfile(std::string const& name,
-                                          Options opts) {
+DatastreamClient::DeleteConnectionProfile(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::datastream::v1::DeleteConnectionProfileRequest request;
   request.set_name(name);
@@ -176,8 +143,7 @@ DatastreamClient::DeleteConnectionProfile(std::string const& name,
 }
 
 StatusOr<google::longrunning::Operation>
-DatastreamClient::DeleteConnectionProfile(NoAwaitTag, std::string const& name,
-                                          Options opts) {
+DatastreamClient::DeleteConnectionProfile(NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::datastream::v1::DeleteConnectionProfileRequest request;
   request.set_name(name);
@@ -185,36 +151,25 @@ DatastreamClient::DeleteConnectionProfile(NoAwaitTag, std::string const& name,
 }
 
 future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>
-DatastreamClient::DeleteConnectionProfile(
-    google::cloud::datastream::v1::DeleteConnectionProfileRequest const&
-        request,
-    Options opts) {
+DatastreamClient::DeleteConnectionProfile(google::cloud::datastream::v1::DeleteConnectionProfileRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteConnectionProfile(request);
 }
 
 StatusOr<google::longrunning::Operation>
-DatastreamClient::DeleteConnectionProfile(
-    NoAwaitTag,
-    google::cloud::datastream::v1::DeleteConnectionProfileRequest const&
-        request,
-    Options opts) {
+DatastreamClient::DeleteConnectionProfile(NoAwaitTag, google::cloud::datastream::v1::DeleteConnectionProfileRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteConnectionProfile(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>
-DatastreamClient::DeleteConnectionProfile(
-    google::longrunning::Operation const& operation, Options opts) {
+DatastreamClient::DeleteConnectionProfile(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteConnectionProfile(operation);
 }
 
 StatusOr<google::cloud::datastream::v1::DiscoverConnectionProfileResponse>
-DatastreamClient::DiscoverConnectionProfile(
-    google::cloud::datastream::v1::DiscoverConnectionProfileRequest const&
-        request,
-    Options opts) {
+DatastreamClient::DiscoverConnectionProfile(google::cloud::datastream::v1::DiscoverConnectionProfileRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DiscoverConnectionProfile(request);
 }
@@ -228,32 +183,27 @@ DatastreamClient::ListStreams(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::datastream::v1::Stream>
-DatastreamClient::ListStreams(
-    google::cloud::datastream::v1::ListStreamsRequest request, Options opts) {
+DatastreamClient::ListStreams(google::cloud::datastream::v1::ListStreamsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListStreams(std::move(request));
 }
 
-StatusOr<google::cloud::datastream::v1::Stream> DatastreamClient::GetStream(
-    std::string const& name, Options opts) {
+StatusOr<google::cloud::datastream::v1::Stream>
+DatastreamClient::GetStream(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::datastream::v1::GetStreamRequest request;
   request.set_name(name);
   return connection_->GetStream(request);
 }
 
-StatusOr<google::cloud::datastream::v1::Stream> DatastreamClient::GetStream(
-    google::cloud::datastream::v1::GetStreamRequest const& request,
-    Options opts) {
+StatusOr<google::cloud::datastream::v1::Stream>
+DatastreamClient::GetStream(google::cloud::datastream::v1::GetStreamRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetStream(request);
 }
 
 future<StatusOr<google::cloud::datastream::v1::Stream>>
-DatastreamClient::CreateStream(
-    std::string const& parent,
-    google::cloud::datastream::v1::Stream const& stream,
-    std::string const& stream_id, Options opts) {
+DatastreamClient::CreateStream(std::string const& parent, google::cloud::datastream::v1::Stream const& stream, std::string const& stream_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::datastream::v1::CreateStreamRequest request;
   request.set_parent(parent);
@@ -262,10 +212,8 @@ DatastreamClient::CreateStream(
   return connection_->CreateStream(request);
 }
 
-StatusOr<google::longrunning::Operation> DatastreamClient::CreateStream(
-    NoAwaitTag, std::string const& parent,
-    google::cloud::datastream::v1::Stream const& stream,
-    std::string const& stream_id, Options opts) {
+StatusOr<google::longrunning::Operation>
+DatastreamClient::CreateStream(NoAwaitTag, std::string const& parent, google::cloud::datastream::v1::Stream const& stream, std::string const& stream_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::datastream::v1::CreateStreamRequest request;
   request.set_parent(parent);
@@ -275,32 +223,25 @@ StatusOr<google::longrunning::Operation> DatastreamClient::CreateStream(
 }
 
 future<StatusOr<google::cloud::datastream::v1::Stream>>
-DatastreamClient::CreateStream(
-    google::cloud::datastream::v1::CreateStreamRequest const& request,
-    Options opts) {
+DatastreamClient::CreateStream(google::cloud::datastream::v1::CreateStreamRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateStream(request);
 }
 
-StatusOr<google::longrunning::Operation> DatastreamClient::CreateStream(
-    NoAwaitTag,
-    google::cloud::datastream::v1::CreateStreamRequest const& request,
-    Options opts) {
+StatusOr<google::longrunning::Operation>
+DatastreamClient::CreateStream(NoAwaitTag, google::cloud::datastream::v1::CreateStreamRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateStream(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::datastream::v1::Stream>>
-DatastreamClient::CreateStream(google::longrunning::Operation const& operation,
-                               Options opts) {
+DatastreamClient::CreateStream(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateStream(operation);
 }
 
 future<StatusOr<google::cloud::datastream::v1::Stream>>
-DatastreamClient::UpdateStream(
-    google::cloud::datastream::v1::Stream const& stream,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+DatastreamClient::UpdateStream(google::cloud::datastream::v1::Stream const& stream, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::datastream::v1::UpdateStreamRequest request;
   *request.mutable_stream() = stream;
@@ -308,9 +249,8 @@ DatastreamClient::UpdateStream(
   return connection_->UpdateStream(request);
 }
 
-StatusOr<google::longrunning::Operation> DatastreamClient::UpdateStream(
-    NoAwaitTag, google::cloud::datastream::v1::Stream const& stream,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+StatusOr<google::longrunning::Operation>
+DatastreamClient::UpdateStream(NoAwaitTag, google::cloud::datastream::v1::Stream const& stream, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::datastream::v1::UpdateStreamRequest request;
   *request.mutable_stream() = stream;
@@ -319,24 +259,19 @@ StatusOr<google::longrunning::Operation> DatastreamClient::UpdateStream(
 }
 
 future<StatusOr<google::cloud::datastream::v1::Stream>>
-DatastreamClient::UpdateStream(
-    google::cloud::datastream::v1::UpdateStreamRequest const& request,
-    Options opts) {
+DatastreamClient::UpdateStream(google::cloud::datastream::v1::UpdateStreamRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateStream(request);
 }
 
-StatusOr<google::longrunning::Operation> DatastreamClient::UpdateStream(
-    NoAwaitTag,
-    google::cloud::datastream::v1::UpdateStreamRequest const& request,
-    Options opts) {
+StatusOr<google::longrunning::Operation>
+DatastreamClient::UpdateStream(NoAwaitTag, google::cloud::datastream::v1::UpdateStreamRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateStream(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::datastream::v1::Stream>>
-DatastreamClient::UpdateStream(google::longrunning::Operation const& operation,
-                               Options opts) {
+DatastreamClient::UpdateStream(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateStream(operation);
 }
@@ -349,8 +284,8 @@ DatastreamClient::DeleteStream(std::string const& name, Options opts) {
   return connection_->DeleteStream(request);
 }
 
-StatusOr<google::longrunning::Operation> DatastreamClient::DeleteStream(
-    NoAwaitTag, std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation>
+DatastreamClient::DeleteStream(NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::datastream::v1::DeleteStreamRequest request;
   request.set_name(name);
@@ -358,46 +293,37 @@ StatusOr<google::longrunning::Operation> DatastreamClient::DeleteStream(
 }
 
 future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>
-DatastreamClient::DeleteStream(
-    google::cloud::datastream::v1::DeleteStreamRequest const& request,
-    Options opts) {
+DatastreamClient::DeleteStream(google::cloud::datastream::v1::DeleteStreamRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteStream(request);
 }
 
-StatusOr<google::longrunning::Operation> DatastreamClient::DeleteStream(
-    NoAwaitTag,
-    google::cloud::datastream::v1::DeleteStreamRequest const& request,
-    Options opts) {
+StatusOr<google::longrunning::Operation>
+DatastreamClient::DeleteStream(NoAwaitTag, google::cloud::datastream::v1::DeleteStreamRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteStream(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>
-DatastreamClient::DeleteStream(google::longrunning::Operation const& operation,
-                               Options opts) {
+DatastreamClient::DeleteStream(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteStream(operation);
 }
 
 future<StatusOr<google::cloud::datastream::v1::Stream>>
-DatastreamClient::RunStream(
-    google::cloud::datastream::v1::RunStreamRequest const& request,
-    Options opts) {
+DatastreamClient::RunStream(google::cloud::datastream::v1::RunStreamRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RunStream(request);
 }
 
-StatusOr<google::longrunning::Operation> DatastreamClient::RunStream(
-    NoAwaitTag, google::cloud::datastream::v1::RunStreamRequest const& request,
-    Options opts) {
+StatusOr<google::longrunning::Operation>
+DatastreamClient::RunStream(NoAwaitTag, google::cloud::datastream::v1::RunStreamRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RunStream(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::datastream::v1::Stream>>
-DatastreamClient::RunStream(google::longrunning::Operation const& operation,
-                            Options opts) {
+DatastreamClient::RunStream(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RunStream(operation);
 }
@@ -411,17 +337,13 @@ DatastreamClient::GetStreamObject(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::datastream::v1::StreamObject>
-DatastreamClient::GetStreamObject(
-    google::cloud::datastream::v1::GetStreamObjectRequest const& request,
-    Options opts) {
+DatastreamClient::GetStreamObject(google::cloud::datastream::v1::GetStreamObjectRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetStreamObject(request);
 }
 
 StatusOr<google::cloud::datastream::v1::StreamObject>
-DatastreamClient::LookupStreamObject(
-    google::cloud::datastream::v1::LookupStreamObjectRequest const& request,
-    Options opts) {
+DatastreamClient::LookupStreamObject(google::cloud::datastream::v1::LookupStreamObjectRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->LookupStreamObject(request);
 }
@@ -435,9 +357,7 @@ DatastreamClient::ListStreamObjects(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::datastream::v1::StreamObject>
-DatastreamClient::ListStreamObjects(
-    google::cloud::datastream::v1::ListStreamObjectsRequest request,
-    Options opts) {
+DatastreamClient::ListStreamObjects(google::cloud::datastream::v1::ListStreamObjectsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListStreamObjects(std::move(request));
 }
@@ -451,9 +371,7 @@ DatastreamClient::StartBackfillJob(std::string const& object, Options opts) {
 }
 
 StatusOr<google::cloud::datastream::v1::StartBackfillJobResponse>
-DatastreamClient::StartBackfillJob(
-    google::cloud::datastream::v1::StartBackfillJobRequest const& request,
-    Options opts) {
+DatastreamClient::StartBackfillJob(google::cloud::datastream::v1::StartBackfillJobRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->StartBackfillJob(request);
 }
@@ -467,33 +385,27 @@ DatastreamClient::StopBackfillJob(std::string const& object, Options opts) {
 }
 
 StatusOr<google::cloud::datastream::v1::StopBackfillJobResponse>
-DatastreamClient::StopBackfillJob(
-    google::cloud::datastream::v1::StopBackfillJobRequest const& request,
-    Options opts) {
+DatastreamClient::StopBackfillJob(google::cloud::datastream::v1::StopBackfillJobRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->StopBackfillJob(request);
 }
 
-StreamRange<std::string> DatastreamClient::FetchStaticIps(
-    std::string const& name, Options opts) {
+StreamRange<std::string>
+DatastreamClient::FetchStaticIps(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::datastream::v1::FetchStaticIpsRequest request;
   request.set_name(name);
   return connection_->FetchStaticIps(request);
 }
 
-StreamRange<std::string> DatastreamClient::FetchStaticIps(
-    google::cloud::datastream::v1::FetchStaticIpsRequest request,
-    Options opts) {
+StreamRange<std::string>
+DatastreamClient::FetchStaticIps(google::cloud::datastream::v1::FetchStaticIpsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->FetchStaticIps(std::move(request));
 }
 
 future<StatusOr<google::cloud::datastream::v1::PrivateConnection>>
-DatastreamClient::CreatePrivateConnection(
-    std::string const& parent,
-    google::cloud::datastream::v1::PrivateConnection const& private_connection,
-    std::string const& private_connection_id, Options opts) {
+DatastreamClient::CreatePrivateConnection(std::string const& parent, google::cloud::datastream::v1::PrivateConnection const& private_connection, std::string const& private_connection_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::datastream::v1::CreatePrivateConnectionRequest request;
   request.set_parent(parent);
@@ -503,10 +415,7 @@ DatastreamClient::CreatePrivateConnection(
 }
 
 StatusOr<google::longrunning::Operation>
-DatastreamClient::CreatePrivateConnection(
-    NoAwaitTag, std::string const& parent,
-    google::cloud::datastream::v1::PrivateConnection const& private_connection,
-    std::string const& private_connection_id, Options opts) {
+DatastreamClient::CreatePrivateConnection(NoAwaitTag, std::string const& parent, google::cloud::datastream::v1::PrivateConnection const& private_connection, std::string const& private_connection_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::datastream::v1::CreatePrivateConnectionRequest request;
   request.set_parent(parent);
@@ -516,27 +425,19 @@ DatastreamClient::CreatePrivateConnection(
 }
 
 future<StatusOr<google::cloud::datastream::v1::PrivateConnection>>
-DatastreamClient::CreatePrivateConnection(
-    google::cloud::datastream::v1::CreatePrivateConnectionRequest const&
-        request,
-    Options opts) {
+DatastreamClient::CreatePrivateConnection(google::cloud::datastream::v1::CreatePrivateConnectionRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreatePrivateConnection(request);
 }
 
 StatusOr<google::longrunning::Operation>
-DatastreamClient::CreatePrivateConnection(
-    NoAwaitTag,
-    google::cloud::datastream::v1::CreatePrivateConnectionRequest const&
-        request,
-    Options opts) {
+DatastreamClient::CreatePrivateConnection(NoAwaitTag, google::cloud::datastream::v1::CreatePrivateConnectionRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreatePrivateConnection(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::datastream::v1::PrivateConnection>>
-DatastreamClient::CreatePrivateConnection(
-    google::longrunning::Operation const& operation, Options opts) {
+DatastreamClient::CreatePrivateConnection(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreatePrivateConnection(operation);
 }
@@ -550,16 +451,13 @@ DatastreamClient::GetPrivateConnection(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::datastream::v1::PrivateConnection>
-DatastreamClient::GetPrivateConnection(
-    google::cloud::datastream::v1::GetPrivateConnectionRequest const& request,
-    Options opts) {
+DatastreamClient::GetPrivateConnection(google::cloud::datastream::v1::GetPrivateConnectionRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetPrivateConnection(request);
 }
 
 StreamRange<google::cloud::datastream::v1::PrivateConnection>
-DatastreamClient::ListPrivateConnections(std::string const& parent,
-                                         Options opts) {
+DatastreamClient::ListPrivateConnections(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::datastream::v1::ListPrivateConnectionsRequest request;
   request.set_parent(parent);
@@ -567,16 +465,13 @@ DatastreamClient::ListPrivateConnections(std::string const& parent,
 }
 
 StreamRange<google::cloud::datastream::v1::PrivateConnection>
-DatastreamClient::ListPrivateConnections(
-    google::cloud::datastream::v1::ListPrivateConnectionsRequest request,
-    Options opts) {
+DatastreamClient::ListPrivateConnections(google::cloud::datastream::v1::ListPrivateConnectionsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListPrivateConnections(std::move(request));
 }
 
 future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>
-DatastreamClient::DeletePrivateConnection(std::string const& name,
-                                          Options opts) {
+DatastreamClient::DeletePrivateConnection(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::datastream::v1::DeletePrivateConnectionRequest request;
   request.set_name(name);
@@ -584,8 +479,7 @@ DatastreamClient::DeletePrivateConnection(std::string const& name,
 }
 
 StatusOr<google::longrunning::Operation>
-DatastreamClient::DeletePrivateConnection(NoAwaitTag, std::string const& name,
-                                          Options opts) {
+DatastreamClient::DeletePrivateConnection(NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::datastream::v1::DeletePrivateConnectionRequest request;
   request.set_name(name);
@@ -593,35 +487,25 @@ DatastreamClient::DeletePrivateConnection(NoAwaitTag, std::string const& name,
 }
 
 future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>
-DatastreamClient::DeletePrivateConnection(
-    google::cloud::datastream::v1::DeletePrivateConnectionRequest const&
-        request,
-    Options opts) {
+DatastreamClient::DeletePrivateConnection(google::cloud::datastream::v1::DeletePrivateConnectionRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeletePrivateConnection(request);
 }
 
 StatusOr<google::longrunning::Operation>
-DatastreamClient::DeletePrivateConnection(
-    NoAwaitTag,
-    google::cloud::datastream::v1::DeletePrivateConnectionRequest const&
-        request,
-    Options opts) {
+DatastreamClient::DeletePrivateConnection(NoAwaitTag, google::cloud::datastream::v1::DeletePrivateConnectionRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeletePrivateConnection(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>
-DatastreamClient::DeletePrivateConnection(
-    google::longrunning::Operation const& operation, Options opts) {
+DatastreamClient::DeletePrivateConnection(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeletePrivateConnection(operation);
 }
 
 future<StatusOr<google::cloud::datastream::v1::Route>>
-DatastreamClient::CreateRoute(std::string const& parent,
-                              google::cloud::datastream::v1::Route const& route,
-                              std::string const& route_id, Options opts) {
+DatastreamClient::CreateRoute(std::string const& parent, google::cloud::datastream::v1::Route const& route, std::string const& route_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::datastream::v1::CreateRouteRequest request;
   request.set_parent(parent);
@@ -630,10 +514,8 @@ DatastreamClient::CreateRoute(std::string const& parent,
   return connection_->CreateRoute(request);
 }
 
-StatusOr<google::longrunning::Operation> DatastreamClient::CreateRoute(
-    NoAwaitTag, std::string const& parent,
-    google::cloud::datastream::v1::Route const& route,
-    std::string const& route_id, Options opts) {
+StatusOr<google::longrunning::Operation>
+DatastreamClient::CreateRoute(NoAwaitTag, std::string const& parent, google::cloud::datastream::v1::Route const& route, std::string const& route_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::datastream::v1::CreateRouteRequest request;
   request.set_parent(parent);
@@ -643,53 +525,47 @@ StatusOr<google::longrunning::Operation> DatastreamClient::CreateRoute(
 }
 
 future<StatusOr<google::cloud::datastream::v1::Route>>
-DatastreamClient::CreateRoute(
-    google::cloud::datastream::v1::CreateRouteRequest const& request,
-    Options opts) {
+DatastreamClient::CreateRoute(google::cloud::datastream::v1::CreateRouteRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateRoute(request);
 }
 
-StatusOr<google::longrunning::Operation> DatastreamClient::CreateRoute(
-    NoAwaitTag,
-    google::cloud::datastream::v1::CreateRouteRequest const& request,
-    Options opts) {
+StatusOr<google::longrunning::Operation>
+DatastreamClient::CreateRoute(NoAwaitTag, google::cloud::datastream::v1::CreateRouteRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateRoute(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::datastream::v1::Route>>
-DatastreamClient::CreateRoute(google::longrunning::Operation const& operation,
-                              Options opts) {
+DatastreamClient::CreateRoute(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateRoute(operation);
 }
 
-StatusOr<google::cloud::datastream::v1::Route> DatastreamClient::GetRoute(
-    std::string const& name, Options opts) {
+StatusOr<google::cloud::datastream::v1::Route>
+DatastreamClient::GetRoute(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::datastream::v1::GetRouteRequest request;
   request.set_name(name);
   return connection_->GetRoute(request);
 }
 
-StatusOr<google::cloud::datastream::v1::Route> DatastreamClient::GetRoute(
-    google::cloud::datastream::v1::GetRouteRequest const& request,
-    Options opts) {
+StatusOr<google::cloud::datastream::v1::Route>
+DatastreamClient::GetRoute(google::cloud::datastream::v1::GetRouteRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetRoute(request);
 }
 
-StreamRange<google::cloud::datastream::v1::Route> DatastreamClient::ListRoutes(
-    std::string const& parent, Options opts) {
+StreamRange<google::cloud::datastream::v1::Route>
+DatastreamClient::ListRoutes(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::datastream::v1::ListRoutesRequest request;
   request.set_parent(parent);
   return connection_->ListRoutes(request);
 }
 
-StreamRange<google::cloud::datastream::v1::Route> DatastreamClient::ListRoutes(
-    google::cloud::datastream::v1::ListRoutesRequest request, Options opts) {
+StreamRange<google::cloud::datastream::v1::Route>
+DatastreamClient::ListRoutes(google::cloud::datastream::v1::ListRoutesRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListRoutes(std::move(request));
 }
@@ -702,8 +578,8 @@ DatastreamClient::DeleteRoute(std::string const& name, Options opts) {
   return connection_->DeleteRoute(request);
 }
 
-StatusOr<google::longrunning::Operation> DatastreamClient::DeleteRoute(
-    NoAwaitTag, std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation>
+DatastreamClient::DeleteRoute(NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::datastream::v1::DeleteRouteRequest request;
   request.set_name(name);
@@ -711,42 +587,37 @@ StatusOr<google::longrunning::Operation> DatastreamClient::DeleteRoute(
 }
 
 future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>
-DatastreamClient::DeleteRoute(
-    google::cloud::datastream::v1::DeleteRouteRequest const& request,
-    Options opts) {
+DatastreamClient::DeleteRoute(google::cloud::datastream::v1::DeleteRouteRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteRoute(request);
 }
 
-StatusOr<google::longrunning::Operation> DatastreamClient::DeleteRoute(
-    NoAwaitTag,
-    google::cloud::datastream::v1::DeleteRouteRequest const& request,
-    Options opts) {
+StatusOr<google::longrunning::Operation>
+DatastreamClient::DeleteRoute(NoAwaitTag, google::cloud::datastream::v1::DeleteRouteRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteRoute(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>
-DatastreamClient::DeleteRoute(google::longrunning::Operation const& operation,
-                              Options opts) {
+DatastreamClient::DeleteRoute(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteRoute(operation);
 }
 
-StreamRange<google::cloud::location::Location> DatastreamClient::ListLocations(
-    google::cloud::location::ListLocationsRequest request, Options opts) {
+StreamRange<google::cloud::location::Location>
+DatastreamClient::ListLocations(google::cloud::location::ListLocationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListLocations(std::move(request));
 }
 
-StatusOr<google::cloud::location::Location> DatastreamClient::GetLocation(
-    google::cloud::location::GetLocationRequest const& request, Options opts) {
+StatusOr<google::cloud::location::Location>
+DatastreamClient::GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetLocation(request);
 }
 
-StreamRange<google::longrunning::Operation> DatastreamClient::ListOperations(
-    std::string const& name, std::string const& filter, Options opts) {
+StreamRange<google::longrunning::Operation>
+DatastreamClient::ListOperations(std::string const& name, std::string const& filter, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::ListOperationsRequest request;
   request.set_name(name);
@@ -754,50 +625,50 @@ StreamRange<google::longrunning::Operation> DatastreamClient::ListOperations(
   return connection_->ListOperations(request);
 }
 
-StreamRange<google::longrunning::Operation> DatastreamClient::ListOperations(
-    google::longrunning::ListOperationsRequest request, Options opts) {
+StreamRange<google::longrunning::Operation>
+DatastreamClient::ListOperations(google::longrunning::ListOperationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOperations(std::move(request));
 }
 
-StatusOr<google::longrunning::Operation> DatastreamClient::GetOperation(
-    std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation>
+DatastreamClient::GetOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
   return connection_->GetOperation(request);
 }
 
-StatusOr<google::longrunning::Operation> DatastreamClient::GetOperation(
-    google::longrunning::GetOperationRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation>
+DatastreamClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }
 
-Status DatastreamClient::DeleteOperation(std::string const& name,
-                                         Options opts) {
+Status
+DatastreamClient::DeleteOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::DeleteOperationRequest request;
   request.set_name(name);
   return connection_->DeleteOperation(request);
 }
 
-Status DatastreamClient::DeleteOperation(
-    google::longrunning::DeleteOperationRequest const& request, Options opts) {
+Status
+DatastreamClient::DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteOperation(request);
 }
 
-Status DatastreamClient::CancelOperation(std::string const& name,
-                                         Options opts) {
+Status
+DatastreamClient::CancelOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::CancelOperationRequest request;
   request.set_name(name);
   return connection_->CancelOperation(request);
 }
 
-Status DatastreamClient::CancelOperation(
-    google::longrunning::CancelOperationRequest const& request, Options opts) {
+Status
+DatastreamClient::CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelOperation(request);
 }

@@ -40,114 +40,81 @@ class InterconnectGroupsRestMetadata : public InterconnectGroupsRestStub {
       std::shared_ptr<InterconnectGroupsRestStub> child,
       std::string api_client_header = "");
 
-  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncCreateMembers(
+  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncCreateMembers(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::interconnect_groups::v1::
-          CreateMembersRequest const& request) override;
+      google::cloud::cpp::compute::interconnect_groups::v1::CreateMembersRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> CreateMembers(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::interconnect_groups::v1::
-          CreateMembersRequest const& request) override;
+      Options const& options, google::cloud::cpp::compute::interconnect_groups::v1::CreateMembersRequest const& request) override;
 
-  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncDeleteInterconnectGroup(
+  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncDeleteInterconnectGroup(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::interconnect_groups::v1::
-          DeleteInterconnectGroupRequest const& request) override;
+      google::cloud::cpp::compute::interconnect_groups::v1::DeleteInterconnectGroupRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteInterconnectGroup(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::interconnect_groups::v1::
-          DeleteInterconnectGroupRequest const& request) override;
+      Options const& options, google::cloud::cpp::compute::interconnect_groups::v1::DeleteInterconnectGroupRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::InterconnectGroup>
-  GetInterconnectGroup(google::cloud::rest_internal::RestContext& rest_context,
-                       Options const& options,
-                       google::cloud::cpp::compute::interconnect_groups::v1::
-                           GetInterconnectGroupRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::InterconnectGroup> GetInterconnectGroup(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options, google::cloud::cpp::compute::interconnect_groups::v1::GetInterconnectGroupRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::interconnect_groups::v1::
-          GetIamPolicyRequest const& request) override;
+      Options const& options, google::cloud::cpp::compute::interconnect_groups::v1::GetIamPolicyRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::
-               InterconnectGroupsGetOperationalStatusResponse>
-  GetOperationalStatus(google::cloud::rest_internal::RestContext& rest_context,
-                       Options const& options,
-                       google::cloud::cpp::compute::interconnect_groups::v1::
-                           GetOperationalStatusRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::InterconnectGroupsGetOperationalStatusResponse> GetOperationalStatus(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options, google::cloud::cpp::compute::interconnect_groups::v1::GetOperationalStatusRequest const& request) override;
 
-  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncInsertInterconnectGroup(
+  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncInsertInterconnectGroup(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::interconnect_groups::v1::
-          InsertInterconnectGroupRequest const& request) override;
+      google::cloud::cpp::compute::interconnect_groups::v1::InsertInterconnectGroupRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertInterconnectGroup(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::interconnect_groups::v1::
-          InsertInterconnectGroupRequest const& request) override;
+      Options const& options, google::cloud::cpp::compute::interconnect_groups::v1::InsertInterconnectGroupRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::InterconnectGroupsListResponse>
-  ListInterconnectGroups(
+  StatusOr<google::cloud::cpp::compute::v1::InterconnectGroupsListResponse> ListInterconnectGroups(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::interconnect_groups::v1::
-          ListInterconnectGroupsRequest const& request) override;
+      Options const& options, google::cloud::cpp::compute::interconnect_groups::v1::ListInterconnectGroupsRequest const& request) override;
 
-  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncPatchInterconnectGroup(
+  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncPatchInterconnectGroup(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::interconnect_groups::v1::
-          PatchInterconnectGroupRequest const& request) override;
+      google::cloud::cpp::compute::interconnect_groups::v1::PatchInterconnectGroupRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchInterconnectGroup(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::interconnect_groups::v1::
-          PatchInterconnectGroupRequest const& request) override;
+      Options const& options, google::cloud::cpp::compute::interconnect_groups::v1::PatchInterconnectGroupRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::interconnect_groups::v1::
-          SetIamPolicyRequest const& request) override;
+      Options const& options, google::cloud::cpp::compute::interconnect_groups::v1::SetIamPolicyRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(google::cloud::rest_internal::RestContext& rest_context,
-                     Options const& options,
-                     google::cloud::cpp::compute::interconnect_groups::v1::
-                         TestIamPermissionsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse> TestIamPermissions(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options, google::cloud::cpp::compute::interconnect_groups::v1::TestIamPermissionsRequest const& request) override;
 
-  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncGetOperation(
+  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::global_operations::v1::
-          GetOperationRequest const& request) override;
+      google::cloud::cpp::compute::global_operations::v1::GetOperationRequest const& request) override;
 
   google::cloud::future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::global_operations::v1::
-          DeleteOperationRequest const& request) override;
+      google::cloud::cpp::compute::global_operations::v1::DeleteOperationRequest const& request) override;
 
  private:
   void SetMetadata(rest_internal::RestContext& rest_context,

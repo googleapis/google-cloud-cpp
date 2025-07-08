@@ -17,11 +17,11 @@
 // source: google/cloud/compute/resource_policies/v1/resource_policies.proto
 
 #include "google/cloud/compute/resource_policies/v1/internal/resource_policies_rest_metadata_decorator.h"
+#include "absl/strings/str_format.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/internal/rest_set_metadata.h"
 #include "google/cloud/status_or.h"
-#include "absl/strings/str_format.h"
 #include <memory>
 #include <utility>
 
@@ -41,117 +41,105 @@ ResourcePoliciesRestMetadata::ResourcePoliciesRestMetadata(
 
 StatusOr<google::cloud::cpp::compute::v1::ResourcePolicyAggregatedList>
 ResourcePoliciesRestMetadata::AggregatedListResourcePolicies(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::resource_policies::v1::
-        AggregatedListResourcePoliciesRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::resource_policies::v1::AggregatedListResourcePoliciesRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->AggregatedListResourcePolicies(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ResourcePoliciesRestMetadata::AsyncDeleteResourcePolicy(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::resource_policies::v1::
-        DeleteResourcePolicyRequest const& request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::resource_policies::v1::DeleteResourcePolicyRequest const& request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncDeleteResourcePolicy(cq, std::move(rest_context),
-                                           std::move(options), request);
+  return child_->AsyncDeleteResourcePolicy(
+      cq, std::move(rest_context), std::move(options), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ResourcePoliciesRestMetadata::DeleteResourcePolicy(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::resource_policies::v1::
-        DeleteResourcePolicyRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::resource_policies::v1::DeleteResourcePolicyRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->DeleteResourcePolicy(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::ResourcePolicy>
 ResourcePoliciesRestMetadata::GetResourcePolicy(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::resource_policies::v1::
-        GetResourcePolicyRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::resource_policies::v1::GetResourcePolicyRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->GetResourcePolicy(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 ResourcePoliciesRestMetadata::GetIamPolicy(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::resource_policies::v1::
-        GetIamPolicyRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::resource_policies::v1::GetIamPolicyRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->GetIamPolicy(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ResourcePoliciesRestMetadata::AsyncInsertResourcePolicy(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::resource_policies::v1::
-        InsertResourcePolicyRequest const& request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::resource_policies::v1::InsertResourcePolicyRequest const& request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncInsertResourcePolicy(cq, std::move(rest_context),
-                                           std::move(options), request);
+  return child_->AsyncInsertResourcePolicy(
+      cq, std::move(rest_context), std::move(options), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ResourcePoliciesRestMetadata::InsertResourcePolicy(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::resource_policies::v1::
-        InsertResourcePolicyRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::resource_policies::v1::InsertResourcePolicyRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->InsertResourcePolicy(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::ResourcePolicyList>
 ResourcePoliciesRestMetadata::ListResourcePolicies(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::resource_policies::v1::
-        ListResourcePoliciesRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::resource_policies::v1::ListResourcePoliciesRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->ListResourcePolicies(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ResourcePoliciesRestMetadata::AsyncPatchResourcePolicy(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::resource_policies::v1::
-        PatchResourcePolicyRequest const& request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::resource_policies::v1::PatchResourcePolicyRequest const& request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncPatchResourcePolicy(cq, std::move(rest_context),
-                                          std::move(options), request);
+  return child_->AsyncPatchResourcePolicy(
+      cq, std::move(rest_context), std::move(options), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ResourcePoliciesRestMetadata::PatchResourcePolicy(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::resource_policies::v1::
-        PatchResourcePolicyRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::resource_policies::v1::PatchResourcePolicyRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->PatchResourcePolicy(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 ResourcePoliciesRestMetadata::SetIamPolicy(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::resource_policies::v1::
-        SetIamPolicyRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::resource_policies::v1::SetIamPolicyRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->SetIamPolicy(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
 ResourcePoliciesRestMetadata::TestIamPermissions(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::resource_policies::v1::
-        TestIamPermissionsRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::resource_policies::v1::TestIamPermissionsRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->TestIamPermissions(rest_context, options, request);
 }
@@ -161,29 +149,28 @@ ResourcePoliciesRestMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::region_operations::v1::
-        GetOperationRequest const& request) {
+    google::cloud::cpp::compute::region_operations::v1::GetOperationRequest const& request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncGetOperation(cq, std::move(rest_context),
-                                   std::move(options), request);
+  return child_->AsyncGetOperation(
+      cq, std::move(rest_context), std::move(options), request);
 }
 
-future<Status> ResourcePoliciesRestMetadata::AsyncCancelOperation(
+future<Status>
+ResourcePoliciesRestMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::region_operations::v1::
-        DeleteOperationRequest const& request) {
+    google::cloud::cpp::compute::region_operations::v1::DeleteOperationRequest const& request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncCancelOperation(cq, std::move(rest_context),
-                                      std::move(options), request);
+  return child_->AsyncCancelOperation(
+      cq, std::move(rest_context), std::move(options), request);
 }
 
 void ResourcePoliciesRestMetadata::SetMetadata(
-    rest_internal::RestContext& rest_context, Options const& options,
-    std::vector<std::string> const& params) {
-  google::cloud::rest_internal::SetMetadata(rest_context, options, params,
-                                            api_client_header_);
+      rest_internal::RestContext& rest_context,
+      Options const& options, std::vector<std::string> const& params) {
+  google::cloud::rest_internal::SetMetadata(
+      rest_context, options, params, api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

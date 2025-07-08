@@ -26,57 +26,47 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-LicensesConnectionIdempotencyPolicy::~LicensesConnectionIdempotencyPolicy() =
-    default;
+LicensesConnectionIdempotencyPolicy::~LicensesConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<LicensesConnectionIdempotencyPolicy>
 LicensesConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<LicensesConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency LicensesConnectionIdempotencyPolicy::DeleteLicense(
-    google::cloud::cpp::compute::licenses::v1::DeleteLicenseRequest const&) {
+Idempotency LicensesConnectionIdempotencyPolicy::DeleteLicense(google::cloud::cpp::compute::licenses::v1::DeleteLicenseRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency LicensesConnectionIdempotencyPolicy::GetLicense(
-    google::cloud::cpp::compute::licenses::v1::GetLicenseRequest const&) {
+Idempotency LicensesConnectionIdempotencyPolicy::GetLicense(google::cloud::cpp::compute::licenses::v1::GetLicenseRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency LicensesConnectionIdempotencyPolicy::GetIamPolicy(
-    google::cloud::cpp::compute::licenses::v1::GetIamPolicyRequest const&) {
+Idempotency LicensesConnectionIdempotencyPolicy::GetIamPolicy(google::cloud::cpp::compute::licenses::v1::GetIamPolicyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency LicensesConnectionIdempotencyPolicy::InsertLicense(
-    google::cloud::cpp::compute::licenses::v1::InsertLicenseRequest const&) {
+Idempotency LicensesConnectionIdempotencyPolicy::InsertLicense(google::cloud::cpp::compute::licenses::v1::InsertLicenseRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency LicensesConnectionIdempotencyPolicy::ListLicenses(
-    google::cloud::cpp::compute::licenses::v1::ListLicensesRequest) {  // NOLINT
+Idempotency LicensesConnectionIdempotencyPolicy::ListLicenses(google::cloud::cpp::compute::licenses::v1::ListLicensesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency LicensesConnectionIdempotencyPolicy::SetIamPolicy(
-    google::cloud::cpp::compute::licenses::v1::SetIamPolicyRequest const&) {
+Idempotency LicensesConnectionIdempotencyPolicy::SetIamPolicy(google::cloud::cpp::compute::licenses::v1::SetIamPolicyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency LicensesConnectionIdempotencyPolicy::TestIamPermissions(
-    google::cloud::cpp::compute::licenses::v1::
-        TestIamPermissionsRequest const&) {
+Idempotency LicensesConnectionIdempotencyPolicy::TestIamPermissions(google::cloud::cpp::compute::licenses::v1::TestIamPermissionsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency LicensesConnectionIdempotencyPolicy::UpdateLicense(
-    google::cloud::cpp::compute::licenses::v1::UpdateLicenseRequest const&) {
+Idempotency LicensesConnectionIdempotencyPolicy::UpdateLicense(google::cloud::cpp::compute::licenses::v1::UpdateLicenseRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<LicensesConnectionIdempotencyPolicy>
-MakeDefaultLicensesConnectionIdempotencyPolicy() {
+    MakeDefaultLicensesConnectionIdempotencyPolicy() {
   return std::make_unique<LicensesConnectionIdempotencyPolicy>();
 }
 

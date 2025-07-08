@@ -30,61 +30,51 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-class OrgPolicyTracingConnection : public orgpolicy_v2::OrgPolicyConnection {
+class OrgPolicyTracingConnection
+    : public orgpolicy_v2::OrgPolicyConnection {
  public:
   ~OrgPolicyTracingConnection() override = default;
 
   explicit OrgPolicyTracingConnection(
-      std::shared_ptr<orgpolicy_v2::OrgPolicyConnection> child);
+    std::shared_ptr<orgpolicy_v2::OrgPolicyConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StreamRange<google::cloud::orgpolicy::v2::Constraint> ListConstraints(
-      google::cloud::orgpolicy::v2::ListConstraintsRequest request) override;
+  StreamRange<google::cloud::orgpolicy::v2::Constraint>
+  ListConstraints(google::cloud::orgpolicy::v2::ListConstraintsRequest request) override;
 
-  StreamRange<google::cloud::orgpolicy::v2::Policy> ListPolicies(
-      google::cloud::orgpolicy::v2::ListPoliciesRequest request) override;
+  StreamRange<google::cloud::orgpolicy::v2::Policy>
+  ListPolicies(google::cloud::orgpolicy::v2::ListPoliciesRequest request) override;
 
-  StatusOr<google::cloud::orgpolicy::v2::Policy> GetPolicy(
-      google::cloud::orgpolicy::v2::GetPolicyRequest const& request) override;
+  StatusOr<google::cloud::orgpolicy::v2::Policy>
+  GetPolicy(google::cloud::orgpolicy::v2::GetPolicyRequest const& request) override;
 
-  StatusOr<google::cloud::orgpolicy::v2::Policy> GetEffectivePolicy(
-      google::cloud::orgpolicy::v2::GetEffectivePolicyRequest const& request)
-      override;
+  StatusOr<google::cloud::orgpolicy::v2::Policy>
+  GetEffectivePolicy(google::cloud::orgpolicy::v2::GetEffectivePolicyRequest const& request) override;
 
-  StatusOr<google::cloud::orgpolicy::v2::Policy> CreatePolicy(
-      google::cloud::orgpolicy::v2::CreatePolicyRequest const& request)
-      override;
+  StatusOr<google::cloud::orgpolicy::v2::Policy>
+  CreatePolicy(google::cloud::orgpolicy::v2::CreatePolicyRequest const& request) override;
 
-  StatusOr<google::cloud::orgpolicy::v2::Policy> UpdatePolicy(
-      google::cloud::orgpolicy::v2::UpdatePolicyRequest const& request)
-      override;
+  StatusOr<google::cloud::orgpolicy::v2::Policy>
+  UpdatePolicy(google::cloud::orgpolicy::v2::UpdatePolicyRequest const& request) override;
 
-  Status DeletePolicy(google::cloud::orgpolicy::v2::DeletePolicyRequest const&
-                          request) override;
+  Status
+  DeletePolicy(google::cloud::orgpolicy::v2::DeletePolicyRequest const& request) override;
 
   StatusOr<google::cloud::orgpolicy::v2::CustomConstraint>
-  CreateCustomConstraint(
-      google::cloud::orgpolicy::v2::CreateCustomConstraintRequest const&
-          request) override;
+  CreateCustomConstraint(google::cloud::orgpolicy::v2::CreateCustomConstraintRequest const& request) override;
 
   StatusOr<google::cloud::orgpolicy::v2::CustomConstraint>
-  UpdateCustomConstraint(
-      google::cloud::orgpolicy::v2::UpdateCustomConstraintRequest const&
-          request) override;
+  UpdateCustomConstraint(google::cloud::orgpolicy::v2::UpdateCustomConstraintRequest const& request) override;
 
-  StatusOr<google::cloud::orgpolicy::v2::CustomConstraint> GetCustomConstraint(
-      google::cloud::orgpolicy::v2::GetCustomConstraintRequest const& request)
-      override;
+  StatusOr<google::cloud::orgpolicy::v2::CustomConstraint>
+  GetCustomConstraint(google::cloud::orgpolicy::v2::GetCustomConstraintRequest const& request) override;
 
   StreamRange<google::cloud::orgpolicy::v2::CustomConstraint>
-  ListCustomConstraints(
-      google::cloud::orgpolicy::v2::ListCustomConstraintsRequest request)
-      override;
+  ListCustomConstraints(google::cloud::orgpolicy::v2::ListCustomConstraintsRequest request) override;
 
-  Status DeleteCustomConstraint(
-      google::cloud::orgpolicy::v2::DeleteCustomConstraintRequest const&
-          request) override;
+  Status
+  DeleteCustomConstraint(google::cloud::orgpolicy::v2::DeleteCustomConstraintRequest const& request) override;
 
  private:
   std::shared_ptr<orgpolicy_v2::OrgPolicyConnection> child_;

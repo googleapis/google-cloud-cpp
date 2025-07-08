@@ -31,10 +31,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * A class to mock `AdvisoryNotificationsServiceConnection`.
  *
  * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type
- * `AdvisoryNotificationsServiceClient`. To do so, construct an object of type
- * `AdvisoryNotificationsServiceClient` with an instance of this class. Then use
- * the Google Test framework functions to program the behavior of this mock.
+ * including errors, from an object of type `AdvisoryNotificationsServiceClient`. To do so,
+ * construct an object of type `AdvisoryNotificationsServiceClient` with an instance of this
+ * class. Then use the Google Test framework functions to program the behavior
+ * of this mock.
  *
  * @see [This example][bq-mock] for how to test your application with GoogleTest.
  * While the example showcases types from the BigQuery library, the underlying
@@ -42,37 +42,25 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockAdvisoryNotificationsServiceConnection
-    : public advisorynotifications_v1::AdvisoryNotificationsServiceConnection {
+class MockAdvisoryNotificationsServiceConnection : public advisorynotifications_v1::AdvisoryNotificationsServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(
-      (StreamRange<google::cloud::advisorynotifications::v1::Notification>),
-      ListNotifications,
-      (google::cloud::advisorynotifications::v1::ListNotificationsRequest
-           request),
-      (override));
+  MOCK_METHOD((StreamRange<google::cloud::advisorynotifications::v1::Notification>),
+  ListNotifications,
+  (google::cloud::advisorynotifications::v1::ListNotificationsRequest request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::advisorynotifications::v1::Notification>,
-      GetNotification,
-      (google::cloud::advisorynotifications::v1::GetNotificationRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::advisorynotifications::v1::Notification>,
+  GetNotification,
+  (google::cloud::advisorynotifications::v1::GetNotificationRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::advisorynotifications::v1::Settings>, GetSettings,
-      (google::cloud::advisorynotifications::v1::GetSettingsRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::advisorynotifications::v1::Settings>,
+  GetSettings,
+  (google::cloud::advisorynotifications::v1::GetSettingsRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::advisorynotifications::v1::Settings>,
-      UpdateSettings,
-      (google::cloud::advisorynotifications::v1::UpdateSettingsRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::advisorynotifications::v1::Settings>,
+  UpdateSettings,
+  (google::cloud::advisorynotifications::v1::UpdateSettingsRequest const& request), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

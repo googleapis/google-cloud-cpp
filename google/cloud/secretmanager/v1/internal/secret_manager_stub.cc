@@ -32,208 +32,223 @@ SecretManagerServiceStub::~SecretManagerServiceStub() = default;
 
 StatusOr<google::cloud::secretmanager::v1::ListSecretsResponse>
 DefaultSecretManagerServiceStub::ListSecrets(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::secretmanager::v1::ListSecretsRequest const& request) {
-  google::cloud::secretmanager::v1::ListSecretsResponse response;
-  auto status = grpc_stub_->ListSecrets(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::secretmanager::v1::ListSecretsRequest const& request) {
+    google::cloud::secretmanager::v1::ListSecretsResponse response;
+    auto status =
+        grpc_stub_->ListSecrets(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::secretmanager::v1::Secret>
 DefaultSecretManagerServiceStub::CreateSecret(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::secretmanager::v1::CreateSecretRequest const& request) {
-  google::cloud::secretmanager::v1::Secret response;
-  auto status = grpc_stub_->CreateSecret(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::secretmanager::v1::CreateSecretRequest const& request) {
+    google::cloud::secretmanager::v1::Secret response;
+    auto status =
+        grpc_stub_->CreateSecret(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::secretmanager::v1::SecretVersion>
 DefaultSecretManagerServiceStub::AddSecretVersion(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::secretmanager::v1::AddSecretVersionRequest const& request) {
-  google::cloud::secretmanager::v1::SecretVersion response;
-  auto status = grpc_stub_->AddSecretVersion(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::secretmanager::v1::AddSecretVersionRequest const& request) {
+    google::cloud::secretmanager::v1::SecretVersion response;
+    auto status =
+        grpc_stub_->AddSecretVersion(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::secretmanager::v1::Secret>
 DefaultSecretManagerServiceStub::GetSecret(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::secretmanager::v1::GetSecretRequest const& request) {
-  google::cloud::secretmanager::v1::Secret response;
-  auto status = grpc_stub_->GetSecret(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::secretmanager::v1::GetSecretRequest const& request) {
+    google::cloud::secretmanager::v1::Secret response;
+    auto status =
+        grpc_stub_->GetSecret(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::secretmanager::v1::Secret>
 DefaultSecretManagerServiceStub::UpdateSecret(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::secretmanager::v1::UpdateSecretRequest const& request) {
-  google::cloud::secretmanager::v1::Secret response;
-  auto status = grpc_stub_->UpdateSecret(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::secretmanager::v1::UpdateSecretRequest const& request) {
+    google::cloud::secretmanager::v1::Secret response;
+    auto status =
+        grpc_stub_->UpdateSecret(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-Status DefaultSecretManagerServiceStub::DeleteSecret(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::secretmanager::v1::DeleteSecretRequest const& request) {
-  google::protobuf::Empty response;
-  auto status = grpc_stub_->DeleteSecret(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return google::cloud::Status();
+Status
+DefaultSecretManagerServiceStub::DeleteSecret(
+  grpc::ClientContext& context, Options const&,
+  google::cloud::secretmanager::v1::DeleteSecretRequest const& request) {
+    google::protobuf::Empty response;
+    auto status =
+        grpc_stub_->DeleteSecret(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return google::cloud::Status();
 }
 
 StatusOr<google::cloud::secretmanager::v1::ListSecretVersionsResponse>
 DefaultSecretManagerServiceStub::ListSecretVersions(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::secretmanager::v1::ListSecretVersionsRequest const&
-        request) {
-  google::cloud::secretmanager::v1::ListSecretVersionsResponse response;
-  auto status = grpc_stub_->ListSecretVersions(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::secretmanager::v1::ListSecretVersionsRequest const& request) {
+    google::cloud::secretmanager::v1::ListSecretVersionsResponse response;
+    auto status =
+        grpc_stub_->ListSecretVersions(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::secretmanager::v1::SecretVersion>
 DefaultSecretManagerServiceStub::GetSecretVersion(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::secretmanager::v1::GetSecretVersionRequest const& request) {
-  google::cloud::secretmanager::v1::SecretVersion response;
-  auto status = grpc_stub_->GetSecretVersion(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::secretmanager::v1::GetSecretVersionRequest const& request) {
+    google::cloud::secretmanager::v1::SecretVersion response;
+    auto status =
+        grpc_stub_->GetSecretVersion(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::secretmanager::v1::AccessSecretVersionResponse>
 DefaultSecretManagerServiceStub::AccessSecretVersion(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::secretmanager::v1::AccessSecretVersionRequest const&
-        request) {
-  google::cloud::secretmanager::v1::AccessSecretVersionResponse response;
-  auto status = grpc_stub_->AccessSecretVersion(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::secretmanager::v1::AccessSecretVersionRequest const& request) {
+    google::cloud::secretmanager::v1::AccessSecretVersionResponse response;
+    auto status =
+        grpc_stub_->AccessSecretVersion(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::secretmanager::v1::SecretVersion>
 DefaultSecretManagerServiceStub::DisableSecretVersion(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::secretmanager::v1::DisableSecretVersionRequest const&
-        request) {
-  google::cloud::secretmanager::v1::SecretVersion response;
-  auto status = grpc_stub_->DisableSecretVersion(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::secretmanager::v1::DisableSecretVersionRequest const& request) {
+    google::cloud::secretmanager::v1::SecretVersion response;
+    auto status =
+        grpc_stub_->DisableSecretVersion(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::secretmanager::v1::SecretVersion>
 DefaultSecretManagerServiceStub::EnableSecretVersion(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::secretmanager::v1::EnableSecretVersionRequest const&
-        request) {
-  google::cloud::secretmanager::v1::SecretVersion response;
-  auto status = grpc_stub_->EnableSecretVersion(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::secretmanager::v1::EnableSecretVersionRequest const& request) {
+    google::cloud::secretmanager::v1::SecretVersion response;
+    auto status =
+        grpc_stub_->EnableSecretVersion(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::secretmanager::v1::SecretVersion>
 DefaultSecretManagerServiceStub::DestroySecretVersion(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::secretmanager::v1::DestroySecretVersionRequest const&
-        request) {
-  google::cloud::secretmanager::v1::SecretVersion response;
-  auto status = grpc_stub_->DestroySecretVersion(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::secretmanager::v1::DestroySecretVersionRequest const& request) {
+    google::cloud::secretmanager::v1::SecretVersion response;
+    auto status =
+        grpc_stub_->DestroySecretVersion(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-StatusOr<google::iam::v1::Policy> DefaultSecretManagerServiceStub::SetIamPolicy(
-    grpc::ClientContext& context, Options const&,
-    google::iam::v1::SetIamPolicyRequest const& request) {
-  google::iam::v1::Policy response;
-  auto status = grpc_stub_->SetIamPolicy(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::iam::v1::Policy>
+DefaultSecretManagerServiceStub::SetIamPolicy(
+  grpc::ClientContext& context, Options const&,
+  google::iam::v1::SetIamPolicyRequest const& request) {
+    google::iam::v1::Policy response;
+    auto status =
+        grpc_stub_->SetIamPolicy(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-StatusOr<google::iam::v1::Policy> DefaultSecretManagerServiceStub::GetIamPolicy(
-    grpc::ClientContext& context, Options const&,
-    google::iam::v1::GetIamPolicyRequest const& request) {
-  google::iam::v1::Policy response;
-  auto status = grpc_stub_->GetIamPolicy(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::iam::v1::Policy>
+DefaultSecretManagerServiceStub::GetIamPolicy(
+  grpc::ClientContext& context, Options const&,
+  google::iam::v1::GetIamPolicyRequest const& request) {
+    google::iam::v1::Policy response;
+    auto status =
+        grpc_stub_->GetIamPolicy(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 DefaultSecretManagerServiceStub::TestIamPermissions(
-    grpc::ClientContext& context, Options const&,
-    google::iam::v1::TestIamPermissionsRequest const& request) {
-  google::iam::v1::TestIamPermissionsResponse response;
-  auto status = grpc_stub_->TestIamPermissions(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::iam::v1::TestIamPermissionsRequest const& request) {
+    google::iam::v1::TestIamPermissionsResponse response;
+    auto status =
+        grpc_stub_->TestIamPermissions(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 DefaultSecretManagerServiceStub::ListLocations(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::location::ListLocationsRequest const& request) {
-  google::cloud::location::ListLocationsResponse response;
-  auto status = locations_stub_->ListLocations(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::location::ListLocationsRequest const& request) {
+    google::cloud::location::ListLocationsResponse response;
+    auto status =
+        locations_stub_->ListLocations(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::location::Location>
 DefaultSecretManagerServiceStub::GetLocation(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::location::GetLocationRequest const& request) {
-  google::cloud::location::Location response;
-  auto status = locations_stub_->GetLocation(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::location::GetLocationRequest const& request) {
+    google::cloud::location::Location response;
+    auto status =
+        locations_stub_->GetLocation(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

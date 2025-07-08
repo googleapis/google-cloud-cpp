@@ -35,33 +35,29 @@ class SynonymSetServiceConnectionIdempotencyPolicy {
   virtual ~SynonymSetServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<SynonymSetServiceConnectionIdempotencyPolicy> clone()
-      const;
+  virtual std::unique_ptr<SynonymSetServiceConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency CreateSynonymSet(
-      google::cloud::contentwarehouse::v1::CreateSynonymSetRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  CreateSynonymSet(google::cloud::contentwarehouse::v1::CreateSynonymSetRequest const& request);
 
-  virtual google::cloud::Idempotency GetSynonymSet(
-      google::cloud::contentwarehouse::v1::GetSynonymSetRequest const& request);
+  virtual google::cloud::Idempotency
+  GetSynonymSet(google::cloud::contentwarehouse::v1::GetSynonymSetRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateSynonymSet(
-      google::cloud::contentwarehouse::v1::UpdateSynonymSetRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  UpdateSynonymSet(google::cloud::contentwarehouse::v1::UpdateSynonymSetRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteSynonymSet(
-      google::cloud::contentwarehouse::v1::DeleteSynonymSetRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  DeleteSynonymSet(google::cloud::contentwarehouse::v1::DeleteSynonymSetRequest const& request);
 
-  virtual google::cloud::Idempotency ListSynonymSets(
-      google::cloud::contentwarehouse::v1::ListSynonymSetsRequest request);
+  virtual google::cloud::Idempotency
+  ListSynonymSets(google::cloud::contentwarehouse::v1::ListSynonymSetsRequest request);
 
-  virtual google::cloud::Idempotency GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 };
 
 std::unique_ptr<SynonymSetServiceConnectionIdempotencyPolicy>
-MakeDefaultSynonymSetServiceConnectionIdempotencyPolicy();
+    MakeDefaultSynonymSetServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace contentwarehouse_v1

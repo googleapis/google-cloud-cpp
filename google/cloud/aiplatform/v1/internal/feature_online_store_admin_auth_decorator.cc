@@ -33,16 +33,14 @@ FeatureOnlineStoreAdminServiceAuth::FeatureOnlineStoreAdminServiceAuth(
 
 future<StatusOr<google::longrunning::Operation>>
 FeatureOnlineStoreAdminServiceAuth::AsyncCreateFeatureOnlineStore(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::aiplatform::v1::CreateFeatureOnlineStoreRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::CreateFeatureOnlineStoreRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
@@ -54,29 +52,27 @@ FeatureOnlineStoreAdminServiceAuth::AsyncCreateFeatureOnlineStore(
 
 StatusOr<google::longrunning::Operation>
 FeatureOnlineStoreAdminServiceAuth::CreateFeatureOnlineStore(
-    grpc::ClientContext& context, Options options,
-    google::cloud::aiplatform::v1::CreateFeatureOnlineStoreRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::aiplatform::v1::CreateFeatureOnlineStoreRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateFeatureOnlineStore(context, options, request);
 }
 
-StatusOr<google::cloud::aiplatform::v1::FeatureOnlineStore>
-FeatureOnlineStoreAdminServiceAuth::GetFeatureOnlineStore(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::aiplatform::v1::GetFeatureOnlineStoreRequest const&
-        request) {
+StatusOr<google::cloud::aiplatform::v1::FeatureOnlineStore> FeatureOnlineStoreAdminServiceAuth::GetFeatureOnlineStore(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::aiplatform::v1::GetFeatureOnlineStoreRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetFeatureOnlineStore(context, options, request);
 }
 
-StatusOr<google::cloud::aiplatform::v1::ListFeatureOnlineStoresResponse>
-FeatureOnlineStoreAdminServiceAuth::ListFeatureOnlineStores(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::aiplatform::v1::ListFeatureOnlineStoresRequest const&
-        request) {
+StatusOr<google::cloud::aiplatform::v1::ListFeatureOnlineStoresResponse> FeatureOnlineStoreAdminServiceAuth::ListFeatureOnlineStores(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::aiplatform::v1::ListFeatureOnlineStoresRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListFeatureOnlineStores(context, options, request);
@@ -84,16 +80,14 @@ FeatureOnlineStoreAdminServiceAuth::ListFeatureOnlineStores(
 
 future<StatusOr<google::longrunning::Operation>>
 FeatureOnlineStoreAdminServiceAuth::AsyncUpdateFeatureOnlineStore(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::aiplatform::v1::UpdateFeatureOnlineStoreRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::UpdateFeatureOnlineStoreRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
@@ -105,9 +99,9 @@ FeatureOnlineStoreAdminServiceAuth::AsyncUpdateFeatureOnlineStore(
 
 StatusOr<google::longrunning::Operation>
 FeatureOnlineStoreAdminServiceAuth::UpdateFeatureOnlineStore(
-    grpc::ClientContext& context, Options options,
-    google::cloud::aiplatform::v1::UpdateFeatureOnlineStoreRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::aiplatform::v1::UpdateFeatureOnlineStoreRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateFeatureOnlineStore(context, options, request);
@@ -115,16 +109,14 @@ FeatureOnlineStoreAdminServiceAuth::UpdateFeatureOnlineStore(
 
 future<StatusOr<google::longrunning::Operation>>
 FeatureOnlineStoreAdminServiceAuth::AsyncDeleteFeatureOnlineStore(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::aiplatform::v1::DeleteFeatureOnlineStoreRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::DeleteFeatureOnlineStoreRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
@@ -136,9 +128,9 @@ FeatureOnlineStoreAdminServiceAuth::AsyncDeleteFeatureOnlineStore(
 
 StatusOr<google::longrunning::Operation>
 FeatureOnlineStoreAdminServiceAuth::DeleteFeatureOnlineStore(
-    grpc::ClientContext& context, Options options,
-    google::cloud::aiplatform::v1::DeleteFeatureOnlineStoreRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::aiplatform::v1::DeleteFeatureOnlineStoreRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteFeatureOnlineStore(context, options, request);
@@ -146,45 +138,45 @@ FeatureOnlineStoreAdminServiceAuth::DeleteFeatureOnlineStore(
 
 future<StatusOr<google::longrunning::Operation>>
 FeatureOnlineStoreAdminServiceAuth::AsyncCreateFeatureView(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::aiplatform::v1::CreateFeatureViewRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::CreateFeatureViewRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreateFeatureView(cq, *std::move(context),
-                                             std::move(options), request);
+        return child->AsyncCreateFeatureView(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 FeatureOnlineStoreAdminServiceAuth::CreateFeatureView(
-    grpc::ClientContext& context, Options options,
-    google::cloud::aiplatform::v1::CreateFeatureViewRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::aiplatform::v1::CreateFeatureViewRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateFeatureView(context, options, request);
 }
 
-StatusOr<google::cloud::aiplatform::v1::FeatureView>
-FeatureOnlineStoreAdminServiceAuth::GetFeatureView(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::aiplatform::v1::FeatureView> FeatureOnlineStoreAdminServiceAuth::GetFeatureView(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::GetFeatureViewRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetFeatureView(context, options, request);
 }
 
-StatusOr<google::cloud::aiplatform::v1::ListFeatureViewsResponse>
-FeatureOnlineStoreAdminServiceAuth::ListFeatureViews(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::aiplatform::v1::ListFeatureViewsResponse> FeatureOnlineStoreAdminServiceAuth::ListFeatureViews(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::ListFeatureViewsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -193,28 +185,28 @@ FeatureOnlineStoreAdminServiceAuth::ListFeatureViews(
 
 future<StatusOr<google::longrunning::Operation>>
 FeatureOnlineStoreAdminServiceAuth::AsyncUpdateFeatureView(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::aiplatform::v1::UpdateFeatureViewRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::UpdateFeatureViewRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncUpdateFeatureView(cq, *std::move(context),
-                                             std::move(options), request);
+        return child->AsyncUpdateFeatureView(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 FeatureOnlineStoreAdminServiceAuth::UpdateFeatureView(
-    grpc::ClientContext& context, Options options,
-    google::cloud::aiplatform::v1::UpdateFeatureViewRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::aiplatform::v1::UpdateFeatureViewRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateFeatureView(context, options, request);
@@ -222,117 +214,117 @@ FeatureOnlineStoreAdminServiceAuth::UpdateFeatureView(
 
 future<StatusOr<google::longrunning::Operation>>
 FeatureOnlineStoreAdminServiceAuth::AsyncDeleteFeatureView(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::aiplatform::v1::DeleteFeatureViewRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::DeleteFeatureViewRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDeleteFeatureView(cq, *std::move(context),
-                                             std::move(options), request);
+        return child->AsyncDeleteFeatureView(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 FeatureOnlineStoreAdminServiceAuth::DeleteFeatureView(
-    grpc::ClientContext& context, Options options,
-    google::cloud::aiplatform::v1::DeleteFeatureViewRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::aiplatform::v1::DeleteFeatureViewRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteFeatureView(context, options, request);
 }
 
-StatusOr<google::cloud::aiplatform::v1::SyncFeatureViewResponse>
-FeatureOnlineStoreAdminServiceAuth::SyncFeatureView(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::aiplatform::v1::SyncFeatureViewResponse> FeatureOnlineStoreAdminServiceAuth::SyncFeatureView(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::SyncFeatureViewRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->SyncFeatureView(context, options, request);
 }
 
-StatusOr<google::cloud::aiplatform::v1::FeatureViewSync>
-FeatureOnlineStoreAdminServiceAuth::GetFeatureViewSync(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::aiplatform::v1::FeatureViewSync> FeatureOnlineStoreAdminServiceAuth::GetFeatureViewSync(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::GetFeatureViewSyncRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetFeatureViewSync(context, options, request);
 }
 
-StatusOr<google::cloud::aiplatform::v1::ListFeatureViewSyncsResponse>
-FeatureOnlineStoreAdminServiceAuth::ListFeatureViewSyncs(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::aiplatform::v1::ListFeatureViewSyncsResponse> FeatureOnlineStoreAdminServiceAuth::ListFeatureViewSyncs(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::ListFeatureViewSyncsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListFeatureViewSyncs(context, options, request);
 }
 
-StatusOr<google::cloud::location::ListLocationsResponse>
-FeatureOnlineStoreAdminServiceAuth::ListLocations(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::location::ListLocationsResponse> FeatureOnlineStoreAdminServiceAuth::ListLocations(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListLocations(context, options, request);
 }
 
-StatusOr<google::cloud::location::Location>
-FeatureOnlineStoreAdminServiceAuth::GetLocation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::location::Location> FeatureOnlineStoreAdminServiceAuth::GetLocation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetLocation(context, options, request);
 }
 
-StatusOr<google::iam::v1::Policy>
-FeatureOnlineStoreAdminServiceAuth::SetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::iam::v1::Policy> FeatureOnlineStoreAdminServiceAuth::SetIamPolicy(
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->SetIamPolicy(context, options, request);
 }
 
-StatusOr<google::iam::v1::Policy>
-FeatureOnlineStoreAdminServiceAuth::GetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::iam::v1::Policy> FeatureOnlineStoreAdminServiceAuth::GetIamPolicy(
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetIamPolicy(context, options, request);
 }
 
-StatusOr<google::iam::v1::TestIamPermissionsResponse>
-FeatureOnlineStoreAdminServiceAuth::TestIamPermissions(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::iam::v1::TestIamPermissionsResponse> FeatureOnlineStoreAdminServiceAuth::TestIamPermissions(
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->TestIamPermissions(context, options, request);
 }
 
-StatusOr<google::longrunning::ListOperationsResponse>
-FeatureOnlineStoreAdminServiceAuth::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse> FeatureOnlineStoreAdminServiceAuth::ListOperations(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListOperations(context, options, request);
 }
 
-StatusOr<google::longrunning::Operation>
-FeatureOnlineStoreAdminServiceAuth::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::Operation> FeatureOnlineStoreAdminServiceAuth::GetOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -340,7 +332,8 @@ FeatureOnlineStoreAdminServiceAuth::GetOperation(
 }
 
 Status FeatureOnlineStoreAdminServiceAuth::DeleteOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -348,16 +341,17 @@ Status FeatureOnlineStoreAdminServiceAuth::DeleteOperation(
 }
 
 Status FeatureOnlineStoreAdminServiceAuth::CancelOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CancelOperation(context, options, request);
 }
 
-StatusOr<google::longrunning::Operation>
-FeatureOnlineStoreAdminServiceAuth::WaitOperation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::Operation> FeatureOnlineStoreAdminServiceAuth::WaitOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::WaitOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -371,16 +365,15 @@ FeatureOnlineStoreAdminServiceAuth::AsyncGetOperation(
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncGetOperation(cq, *std::move(context),
-                                        std::move(options), request);
+        return child->AsyncGetOperation(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
@@ -389,14 +382,13 @@ future<Status> FeatureOnlineStoreAdminServiceAuth::AsyncCancelOperation(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) return make_ready_future(std::move(context).status());
-        return child->AsyncCancelOperation(cq, *std::move(context),
-                                           std::move(options), request);
+        return child->AsyncCancelOperation(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 

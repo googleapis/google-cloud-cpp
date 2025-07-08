@@ -32,25 +32,22 @@ DeveloperConnectTracingStub::DeveloperConnectTracingStub(
     std::shared_ptr<DeveloperConnectStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
-StatusOr<google::cloud::developerconnect::v1::ListConnectionsResponse>
-DeveloperConnectTracingStub::ListConnections(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::developerconnect::v1::ListConnectionsRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.developerconnect.v1.DeveloperConnect", "ListConnections");
+StatusOr<google::cloud::developerconnect::v1::ListConnectionsResponse> DeveloperConnectTracingStub::ListConnections(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::developerconnect::v1::ListConnectionsRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.developerconnect.v1.DeveloperConnect", "ListConnections");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListConnections(context, options, request));
 }
 
-StatusOr<google::cloud::developerconnect::v1::Connection>
-DeveloperConnectTracingStub::GetConnection(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::developerconnect::v1::Connection> DeveloperConnectTracingStub::GetConnection(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::developerconnect::v1::GetConnectionRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.developerconnect.v1.DeveloperConnect", "GetConnection");
+  auto span = internal::MakeSpanGrpc("google.cloud.developerconnect.v1.DeveloperConnect", "GetConnection");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -59,27 +56,23 @@ DeveloperConnectTracingStub::GetConnection(
 
 future<StatusOr<google::longrunning::Operation>>
 DeveloperConnectTracingStub::AsyncCreateConnection(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::developerconnect::v1::CreateConnectionRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.developerconnect.v1.DeveloperConnect", "CreateConnection");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::developerconnect::v1::CreateConnectionRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.developerconnect.v1.DeveloperConnect", "CreateConnection");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f =
-      child_->AsyncCreateConnection(cq, context, std::move(options), request);
+  auto f = child_->AsyncCreateConnection(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 DeveloperConnectTracingStub::CreateConnection(
-    grpc::ClientContext& context, Options options,
-    google::cloud::developerconnect::v1::CreateConnectionRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.developerconnect.v1.DeveloperConnect", "CreateConnection");
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::developerconnect::v1::CreateConnectionRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.developerconnect.v1.DeveloperConnect", "CreateConnection");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -88,27 +81,23 @@ DeveloperConnectTracingStub::CreateConnection(
 
 future<StatusOr<google::longrunning::Operation>>
 DeveloperConnectTracingStub::AsyncUpdateConnection(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::developerconnect::v1::UpdateConnectionRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.developerconnect.v1.DeveloperConnect", "UpdateConnection");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::developerconnect::v1::UpdateConnectionRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.developerconnect.v1.DeveloperConnect", "UpdateConnection");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f =
-      child_->AsyncUpdateConnection(cq, context, std::move(options), request);
+  auto f = child_->AsyncUpdateConnection(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 DeveloperConnectTracingStub::UpdateConnection(
-    grpc::ClientContext& context, Options options,
-    google::cloud::developerconnect::v1::UpdateConnectionRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.developerconnect.v1.DeveloperConnect", "UpdateConnection");
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::developerconnect::v1::UpdateConnectionRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.developerconnect.v1.DeveloperConnect", "UpdateConnection");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -117,27 +106,23 @@ DeveloperConnectTracingStub::UpdateConnection(
 
 future<StatusOr<google::longrunning::Operation>>
 DeveloperConnectTracingStub::AsyncDeleteConnection(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::developerconnect::v1::DeleteConnectionRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.developerconnect.v1.DeveloperConnect", "DeleteConnection");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::developerconnect::v1::DeleteConnectionRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.developerconnect.v1.DeveloperConnect", "DeleteConnection");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f =
-      child_->AsyncDeleteConnection(cq, context, std::move(options), request);
+  auto f = child_->AsyncDeleteConnection(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 DeveloperConnectTracingStub::DeleteConnection(
-    grpc::ClientContext& context, Options options,
-    google::cloud::developerconnect::v1::DeleteConnectionRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.developerconnect.v1.DeveloperConnect", "DeleteConnection");
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::developerconnect::v1::DeleteConnectionRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.developerconnect.v1.DeveloperConnect", "DeleteConnection");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -146,208 +131,349 @@ DeveloperConnectTracingStub::DeleteConnection(
 
 future<StatusOr<google::longrunning::Operation>>
 DeveloperConnectTracingStub::AsyncCreateGitRepositoryLink(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::developerconnect::v1::CreateGitRepositoryLinkRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.developerconnect.v1.DeveloperConnect",
-      "CreateGitRepositoryLink");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::developerconnect::v1::CreateGitRepositoryLinkRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.developerconnect.v1.DeveloperConnect", "CreateGitRepositoryLink");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCreateGitRepositoryLink(cq, context, std::move(options),
-                                                request);
+  auto f = child_->AsyncCreateGitRepositoryLink(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 DeveloperConnectTracingStub::CreateGitRepositoryLink(
-    grpc::ClientContext& context, Options options,
-    google::cloud::developerconnect::v1::CreateGitRepositoryLinkRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.developerconnect.v1.DeveloperConnect",
-      "CreateGitRepositoryLink");
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::developerconnect::v1::CreateGitRepositoryLinkRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.developerconnect.v1.DeveloperConnect", "CreateGitRepositoryLink");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span,
-      child_->CreateGitRepositoryLink(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->CreateGitRepositoryLink(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DeveloperConnectTracingStub::AsyncDeleteGitRepositoryLink(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::developerconnect::v1::DeleteGitRepositoryLinkRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.developerconnect.v1.DeveloperConnect",
-      "DeleteGitRepositoryLink");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::developerconnect::v1::DeleteGitRepositoryLinkRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.developerconnect.v1.DeveloperConnect", "DeleteGitRepositoryLink");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncDeleteGitRepositoryLink(cq, context, std::move(options),
-                                                request);
+  auto f = child_->AsyncDeleteGitRepositoryLink(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 DeveloperConnectTracingStub::DeleteGitRepositoryLink(
-    grpc::ClientContext& context, Options options,
-    google::cloud::developerconnect::v1::DeleteGitRepositoryLinkRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.developerconnect.v1.DeveloperConnect",
-      "DeleteGitRepositoryLink");
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::developerconnect::v1::DeleteGitRepositoryLinkRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.developerconnect.v1.DeveloperConnect", "DeleteGitRepositoryLink");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span,
-      child_->DeleteGitRepositoryLink(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->DeleteGitRepositoryLink(context, options, request));
 }
 
-StatusOr<google::cloud::developerconnect::v1::ListGitRepositoryLinksResponse>
-DeveloperConnectTracingStub::ListGitRepositoryLinks(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::developerconnect::v1::ListGitRepositoryLinksRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.developerconnect.v1.DeveloperConnect",
-      "ListGitRepositoryLinks");
+StatusOr<google::cloud::developerconnect::v1::ListGitRepositoryLinksResponse> DeveloperConnectTracingStub::ListGitRepositoryLinks(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::developerconnect::v1::ListGitRepositoryLinksRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.developerconnect.v1.DeveloperConnect", "ListGitRepositoryLinks");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span,
-      child_->ListGitRepositoryLinks(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->ListGitRepositoryLinks(context, options, request));
 }
 
-StatusOr<google::cloud::developerconnect::v1::GitRepositoryLink>
-DeveloperConnectTracingStub::GetGitRepositoryLink(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::developerconnect::v1::GetGitRepositoryLinkRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.developerconnect.v1.DeveloperConnect",
-      "GetGitRepositoryLink");
+StatusOr<google::cloud::developerconnect::v1::GitRepositoryLink> DeveloperConnectTracingStub::GetGitRepositoryLink(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::developerconnect::v1::GetGitRepositoryLinkRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.developerconnect.v1.DeveloperConnect", "GetGitRepositoryLink");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->GetGitRepositoryLink(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->GetGitRepositoryLink(context, options, request));
 }
 
-StatusOr<google::cloud::developerconnect::v1::FetchReadWriteTokenResponse>
-DeveloperConnectTracingStub::FetchReadWriteToken(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::developerconnect::v1::FetchReadWriteTokenRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.developerconnect.v1.DeveloperConnect",
-      "FetchReadWriteToken");
+StatusOr<google::cloud::developerconnect::v1::FetchReadWriteTokenResponse> DeveloperConnectTracingStub::FetchReadWriteToken(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::developerconnect::v1::FetchReadWriteTokenRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.developerconnect.v1.DeveloperConnect", "FetchReadWriteToken");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->FetchReadWriteToken(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->FetchReadWriteToken(context, options, request));
 }
 
-StatusOr<google::cloud::developerconnect::v1::FetchReadTokenResponse>
-DeveloperConnectTracingStub::FetchReadToken(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::developerconnect::v1::FetchReadTokenResponse> DeveloperConnectTracingStub::FetchReadToken(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::developerconnect::v1::FetchReadTokenRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.developerconnect.v1.DeveloperConnect", "FetchReadToken");
+  auto span = internal::MakeSpanGrpc("google.cloud.developerconnect.v1.DeveloperConnect", "FetchReadToken");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->FetchReadToken(context, options, request));
 }
 
-StatusOr<
-    google::cloud::developerconnect::v1::FetchLinkableGitRepositoriesResponse>
-DeveloperConnectTracingStub::FetchLinkableGitRepositories(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::developerconnect::v1::
-        FetchLinkableGitRepositoriesRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.developerconnect.v1.DeveloperConnect",
-      "FetchLinkableGitRepositories");
+StatusOr<google::cloud::developerconnect::v1::FetchLinkableGitRepositoriesResponse> DeveloperConnectTracingStub::FetchLinkableGitRepositories(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::developerconnect::v1::FetchLinkableGitRepositoriesRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.developerconnect.v1.DeveloperConnect", "FetchLinkableGitRepositories");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span,
-      child_->FetchLinkableGitRepositories(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->FetchLinkableGitRepositories(context, options, request));
 }
 
-StatusOr<google::cloud::developerconnect::v1::FetchGitHubInstallationsResponse>
-DeveloperConnectTracingStub::FetchGitHubInstallations(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::developerconnect::v1::FetchGitHubInstallationsRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.developerconnect.v1.DeveloperConnect",
-      "FetchGitHubInstallations");
+StatusOr<google::cloud::developerconnect::v1::FetchGitHubInstallationsResponse> DeveloperConnectTracingStub::FetchGitHubInstallations(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::developerconnect::v1::FetchGitHubInstallationsRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.developerconnect.v1.DeveloperConnect", "FetchGitHubInstallations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span,
-      child_->FetchGitHubInstallations(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->FetchGitHubInstallations(context, options, request));
 }
 
-StatusOr<google::cloud::developerconnect::v1::FetchGitRefsResponse>
-DeveloperConnectTracingStub::FetchGitRefs(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::developerconnect::v1::FetchGitRefsResponse> DeveloperConnectTracingStub::FetchGitRefs(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::developerconnect::v1::FetchGitRefsRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.developerconnect.v1.DeveloperConnect", "FetchGitRefs");
+  auto span = internal::MakeSpanGrpc("google.cloud.developerconnect.v1.DeveloperConnect", "FetchGitRefs");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->FetchGitRefs(context, options, request));
 }
 
-StatusOr<google::cloud::location::ListLocationsResponse>
-DeveloperConnectTracingStub::ListLocations(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::developerconnect::v1::ListAccountConnectorsResponse> DeveloperConnectTracingStub::ListAccountConnectors(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::developerconnect::v1::ListAccountConnectorsRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.developerconnect.v1.DeveloperConnect", "ListAccountConnectors");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->ListAccountConnectors(context, options, request));
+}
+
+StatusOr<google::cloud::developerconnect::v1::AccountConnector> DeveloperConnectTracingStub::GetAccountConnector(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::developerconnect::v1::GetAccountConnectorRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.developerconnect.v1.DeveloperConnect", "GetAccountConnector");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->GetAccountConnector(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DeveloperConnectTracingStub::AsyncCreateAccountConnector(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::developerconnect::v1::CreateAccountConnectorRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.developerconnect.v1.DeveloperConnect", "CreateAccountConnector");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncCreateAccountConnector(cq, context, std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+DeveloperConnectTracingStub::CreateAccountConnector(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::developerconnect::v1::CreateAccountConnectorRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.developerconnect.v1.DeveloperConnect", "CreateAccountConnector");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->CreateAccountConnector(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DeveloperConnectTracingStub::AsyncUpdateAccountConnector(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::developerconnect::v1::UpdateAccountConnectorRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.developerconnect.v1.DeveloperConnect", "UpdateAccountConnector");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncUpdateAccountConnector(cq, context, std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+DeveloperConnectTracingStub::UpdateAccountConnector(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::developerconnect::v1::UpdateAccountConnectorRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.developerconnect.v1.DeveloperConnect", "UpdateAccountConnector");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->UpdateAccountConnector(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DeveloperConnectTracingStub::AsyncDeleteAccountConnector(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::developerconnect::v1::DeleteAccountConnectorRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.developerconnect.v1.DeveloperConnect", "DeleteAccountConnector");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncDeleteAccountConnector(cq, context, std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+DeveloperConnectTracingStub::DeleteAccountConnector(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::developerconnect::v1::DeleteAccountConnectorRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.developerconnect.v1.DeveloperConnect", "DeleteAccountConnector");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->DeleteAccountConnector(context, options, request));
+}
+
+StatusOr<google::cloud::developerconnect::v1::FetchAccessTokenResponse> DeveloperConnectTracingStub::FetchAccessToken(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::developerconnect::v1::FetchAccessTokenRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.developerconnect.v1.DeveloperConnect", "FetchAccessToken");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->FetchAccessToken(context, options, request));
+}
+
+StatusOr<google::cloud::developerconnect::v1::ListUsersResponse> DeveloperConnectTracingStub::ListUsers(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::developerconnect::v1::ListUsersRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.developerconnect.v1.DeveloperConnect", "ListUsers");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->ListUsers(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DeveloperConnectTracingStub::AsyncDeleteUser(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::developerconnect::v1::DeleteUserRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.developerconnect.v1.DeveloperConnect", "DeleteUser");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncDeleteUser(cq, context, std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+DeveloperConnectTracingStub::DeleteUser(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::developerconnect::v1::DeleteUserRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.developerconnect.v1.DeveloperConnect", "DeleteUser");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->DeleteUser(context, options, request));
+}
+
+StatusOr<google::cloud::developerconnect::v1::User> DeveloperConnectTracingStub::FetchSelf(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::developerconnect::v1::FetchSelfRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.developerconnect.v1.DeveloperConnect", "FetchSelf");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->FetchSelf(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DeveloperConnectTracingStub::AsyncDeleteSelf(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::developerconnect::v1::DeleteSelfRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.developerconnect.v1.DeveloperConnect", "DeleteSelf");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncDeleteSelf(cq, context, std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+DeveloperConnectTracingStub::DeleteSelf(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::developerconnect::v1::DeleteSelfRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.developerconnect.v1.DeveloperConnect", "DeleteSelf");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->DeleteSelf(context, options, request));
+}
+
+StatusOr<google::cloud::location::ListLocationsResponse> DeveloperConnectTracingStub::ListLocations(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.developerconnect.v1.DeveloperConnect", "ListLocations");
+  auto span = internal::MakeSpanGrpc("google.cloud.developerconnect.v1.DeveloperConnect", "ListLocations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListLocations(context, options, request));
 }
 
-StatusOr<google::cloud::location::Location>
-DeveloperConnectTracingStub::GetLocation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::location::Location> DeveloperConnectTracingStub::GetLocation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.developerconnect.v1.DeveloperConnect", "GetLocation");
+  auto span = internal::MakeSpanGrpc("google.cloud.developerconnect.v1.DeveloperConnect", "GetLocation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetLocation(context, options, request));
 }
 
-StatusOr<google::longrunning::ListOperationsResponse>
-DeveloperConnectTracingStub::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse> DeveloperConnectTracingStub::ListOperations(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.developerconnect.v1.DeveloperConnect", "ListOperations");
+  auto span = internal::MakeSpanGrpc("google.cloud.developerconnect.v1.DeveloperConnect", "ListOperations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListOperations(context, options, request));
 }
 
-StatusOr<google::longrunning::Operation>
-DeveloperConnectTracingStub::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::Operation> DeveloperConnectTracingStub::GetOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.developerconnect.v1.DeveloperConnect", "GetOperation");
+  auto span = internal::MakeSpanGrpc("google.cloud.developerconnect.v1.DeveloperConnect", "GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -355,10 +481,10 @@ DeveloperConnectTracingStub::GetOperation(
 }
 
 Status DeveloperConnectTracingStub::DeleteOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.developerconnect.v1.DeveloperConnect", "DeleteOperation");
+  auto span = internal::MakeSpanGrpc("google.cloud.developerconnect.v1.DeveloperConnect", "DeleteOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -366,10 +492,10 @@ Status DeveloperConnectTracingStub::DeleteOperation(
 }
 
 Status DeveloperConnectTracingStub::CancelOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.developerconnect.v1.DeveloperConnect", "CancelOperation");
+  auto span = internal::MakeSpanGrpc("google.cloud.developerconnect.v1.DeveloperConnect", "CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -386,7 +512,8 @@ DeveloperConnectTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncGetOperation(cq, context, std::move(options), request);
+  auto f = child_->AsyncGetOperation(
+      cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -399,8 +526,8 @@ future<Status> DeveloperConnectTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f =
-      child_->AsyncCancelOperation(cq, context, std::move(options), request);
+  auto f = child_->AsyncCancelOperation(
+      cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 

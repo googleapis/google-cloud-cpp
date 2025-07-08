@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_IMAGE_FAMILY_VIEWS_V1_INTERNAL_IMAGE_FAMILY_VIEWS_REST_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_IMAGE_FAMILY_VIEWS_V1_INTERNAL_IMAGE_FAMILY_VIEWS_REST_CONNECTION_IMPL_H
 
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/image_family_views/v1/image_family_views_connection.h"
 #include "google/cloud/compute/image_family_views/v1/image_family_views_connection_idempotency_policy.h"
 #include "google/cloud/compute/image_family_views/v1/image_family_views_options.h"
 #include "google/cloud/compute/image_family_views/v1/internal/image_family_views_rest_stub.h"
 #include "google/cloud/compute/image_family_views/v1/internal/image_family_views_retry_traits.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
@@ -42,47 +42,32 @@ class ImageFamilyViewsRestConnectionImpl
   ~ImageFamilyViewsRestConnectionImpl() override = default;
 
   ImageFamilyViewsRestConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<
-          compute_image_family_views_v1_internal::ImageFamilyViewsRestStub>
-          stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<compute_image_family_views_v1_internal::ImageFamilyViewsRestStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
-  StatusOr<google::cloud::cpp::compute::v1::ImageFamilyView> GetImageFamilyView(
-      google::cloud::cpp::compute::image_family_views::v1::
-          GetImageFamilyViewRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::ImageFamilyView>
+  GetImageFamilyView(google::cloud::cpp::compute::image_family_views::v1::GetImageFamilyViewRequest const& request) override;
 
  private:
-  static std::unique_ptr<
-      compute_image_family_views_v1::ImageFamilyViewsRetryPolicy>
+  static std::unique_ptr<compute_image_family_views_v1::ImageFamilyViewsRetryPolicy>
   retry_policy(Options const& options) {
-    return options
-        .get<compute_image_family_views_v1::ImageFamilyViewsRetryPolicyOption>()
-        ->clone();
+    return options.get<compute_image_family_views_v1::ImageFamilyViewsRetryPolicyOption>()->clone();
   }
 
   static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options
-        .get<compute_image_family_views_v1::
-                 ImageFamilyViewsBackoffPolicyOption>()
-        ->clone();
+    return options.get<compute_image_family_views_v1::ImageFamilyViewsBackoffPolicyOption>()->clone();
   }
 
-  static std::unique_ptr<compute_image_family_views_v1::
-                             ImageFamilyViewsConnectionIdempotencyPolicy>
+  static std::unique_ptr<compute_image_family_views_v1::ImageFamilyViewsConnectionIdempotencyPolicy>
   idempotency_policy(Options const& options) {
-    return options
-        .get<compute_image_family_views_v1::
-                 ImageFamilyViewsConnectionIdempotencyPolicyOption>()
-        ->clone();
+    return options.get<compute_image_family_views_v1::ImageFamilyViewsConnectionIdempotencyPolicyOption>()->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<
-      compute_image_family_views_v1_internal::ImageFamilyViewsRestStub>
-      stub_;
+  std::shared_ptr<compute_image_family_views_v1_internal::ImageFamilyViewsRestStub> stub_;
   Options options_;
 };
 

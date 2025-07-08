@@ -25,13 +25,12 @@
 namespace google {
 namespace cloud {
 /// @deprecated This namespace exists for backwards compatibility. Use the
-///     types defined in beyondcorp_appgateways_v1 instead of the aliases
-///     defined in this namespace.
+///     types defined in beyondcorp_appgateways_v1 instead of the aliases defined in
+///     this namespace.
 namespace beyondcorp {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use beyondcorp_appgateways_v1::AppGatewaysServiceClient
-/// directly.
+/// @deprecated Use beyondcorp_appgateways_v1::AppGatewaysServiceClient directly.
 using ::google::cloud::beyondcorp_appgateways_v1::AppGatewaysServiceClient;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

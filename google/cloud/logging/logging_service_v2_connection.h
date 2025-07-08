@@ -33,8 +33,7 @@ using ::google::cloud::logging_v2::MakeLoggingServiceV2Connection;
 /// @deprecated Use logging_v2::LoggingServiceV2Connection directly.
 using ::google::cloud::logging_v2::LoggingServiceV2Connection;
 
-/// @deprecated Use logging_v2::LoggingServiceV2LimitedErrorCountRetryPolicy
-/// directly.
+/// @deprecated Use logging_v2::LoggingServiceV2LimitedErrorCountRetryPolicy directly.
 using ::google::cloud::logging_v2::LoggingServiceV2LimitedErrorCountRetryPolicy;
 
 /// @deprecated Use logging_v2::LoggingServiceV2LimitedTimeRetryPolicy directly.

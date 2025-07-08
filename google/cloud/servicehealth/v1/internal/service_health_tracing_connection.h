@@ -36,42 +36,33 @@ class ServiceHealthTracingConnection
   ~ServiceHealthTracingConnection() override = default;
 
   explicit ServiceHealthTracingConnection(
-      std::shared_ptr<servicehealth_v1::ServiceHealthConnection> child);
+    std::shared_ptr<servicehealth_v1::ServiceHealthConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StreamRange<google::cloud::servicehealth::v1::Event> ListEvents(
-      google::cloud::servicehealth::v1::ListEventsRequest request) override;
+  StreamRange<google::cloud::servicehealth::v1::Event>
+  ListEvents(google::cloud::servicehealth::v1::ListEventsRequest request) override;
 
-  StatusOr<google::cloud::servicehealth::v1::Event> GetEvent(
-      google::cloud::servicehealth::v1::GetEventRequest const& request)
-      override;
+  StatusOr<google::cloud::servicehealth::v1::Event>
+  GetEvent(google::cloud::servicehealth::v1::GetEventRequest const& request) override;
 
   StreamRange<google::cloud::servicehealth::v1::OrganizationEvent>
-  ListOrganizationEvents(
-      google::cloud::servicehealth::v1::ListOrganizationEventsRequest request)
-      override;
+  ListOrganizationEvents(google::cloud::servicehealth::v1::ListOrganizationEventsRequest request) override;
 
   StatusOr<google::cloud::servicehealth::v1::OrganizationEvent>
-  GetOrganizationEvent(
-      google::cloud::servicehealth::v1::GetOrganizationEventRequest const&
-          request) override;
+  GetOrganizationEvent(google::cloud::servicehealth::v1::GetOrganizationEventRequest const& request) override;
 
   StreamRange<google::cloud::servicehealth::v1::OrganizationImpact>
-  ListOrganizationImpacts(
-      google::cloud::servicehealth::v1::ListOrganizationImpactsRequest request)
-      override;
+  ListOrganizationImpacts(google::cloud::servicehealth::v1::ListOrganizationImpactsRequest request) override;
 
   StatusOr<google::cloud::servicehealth::v1::OrganizationImpact>
-  GetOrganizationImpact(
-      google::cloud::servicehealth::v1::GetOrganizationImpactRequest const&
-          request) override;
+  GetOrganizationImpact(google::cloud::servicehealth::v1::GetOrganizationImpactRequest const& request) override;
 
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request) override;
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request) override;
 
-  StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request) override;
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request) override;
 
  private:
   std::shared_ptr<servicehealth_v1::ServiceHealthConnection> child_;

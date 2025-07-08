@@ -17,14 +17,14 @@
 // source: google/cloud/datacatalog/lineage/v1/lineage.proto
 
 #include "google/cloud/datacatalog/lineage/v1/lineage_connection.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/datacatalog/lineage/v1/internal/lineage_connection_impl.h"
 #include "google/cloud/datacatalog/lineage/v1/internal/lineage_option_defaults.h"
 #include "google/cloud/datacatalog/lineage/v1/internal/lineage_stub_factory.h"
 #include "google/cloud/datacatalog/lineage/v1/internal/lineage_tracing_connection.h"
 #include "google/cloud/datacatalog/lineage/v1/lineage_options.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
-#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
@@ -38,11 +38,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 LineageConnection::~LineageConnection() = default;
 
-StatusOr<
-    google::cloud::datacatalog::lineage::v1::ProcessOpenLineageRunEventResponse>
+StatusOr<google::cloud::datacatalog::lineage::v1::ProcessOpenLineageRunEventResponse>
 LineageConnection::ProcessOpenLineageRunEvent(
-    google::cloud::datacatalog::lineage::v1::
-        ProcessOpenLineageRunEventRequest const&) {
+    google::cloud::datacatalog::lineage::v1::ProcessOpenLineageRunEventRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
@@ -64,10 +62,8 @@ LineageConnection::GetProcess(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::datacatalog::lineage::v1::Process>
-LineageConnection::ListProcesses(
-    google::cloud::datacatalog::lineage::v1::
-        ListProcessesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::datacatalog::lineage::v1::Process> LineageConnection::ListProcesses(
+    google::cloud::datacatalog::lineage::v1::ListProcessesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::datacatalog::lineage::v1::Process>>();
 }
@@ -76,22 +72,24 @@ future<StatusOr<google::cloud::datacatalog::lineage::v1::OperationMetadata>>
 LineageConnection::DeleteProcess(
     google::cloud::datacatalog::lineage::v1::DeleteProcessRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::datacatalog::lineage::v1::OperationMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::datacatalog::lineage::v1::OperationMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation> LineageConnection::DeleteProcess(
+StatusOr<google::longrunning::Operation>
+LineageConnection::DeleteProcess(
     NoAwaitTag,
     google::cloud::datacatalog::lineage::v1::DeleteProcessRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::datacatalog::lineage::v1::OperationMetadata>>
-LineageConnection::DeleteProcess(google::longrunning::Operation const&) {
+LineageConnection::DeleteProcess(
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::datacatalog::lineage::v1::OperationMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::datacatalog::lineage::v1::OperationMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::datacatalog::lineage::v1::Run>
@@ -112,10 +110,8 @@ LineageConnection::GetRun(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::datacatalog::lineage::v1::Run>
-LineageConnection::ListRuns(
-    google::cloud::datacatalog::lineage::v1::
-        ListRunsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::datacatalog::lineage::v1::Run> LineageConnection::ListRuns(
+    google::cloud::datacatalog::lineage::v1::ListRunsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::datacatalog::lineage::v1::Run>>();
 }
@@ -124,22 +120,24 @@ future<StatusOr<google::cloud::datacatalog::lineage::v1::OperationMetadata>>
 LineageConnection::DeleteRun(
     google::cloud::datacatalog::lineage::v1::DeleteRunRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::datacatalog::lineage::v1::OperationMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::datacatalog::lineage::v1::OperationMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation> LineageConnection::DeleteRun(
+StatusOr<google::longrunning::Operation>
+LineageConnection::DeleteRun(
     NoAwaitTag,
     google::cloud::datacatalog::lineage::v1::DeleteRunRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::datacatalog::lineage::v1::OperationMetadata>>
-LineageConnection::DeleteRun(google::longrunning::Operation const&) {
+LineageConnection::DeleteRun(
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::datacatalog::lineage::v1::OperationMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::datacatalog::lineage::v1::OperationMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::datacatalog::lineage::v1::LineageEvent>
@@ -154,70 +152,68 @@ LineageConnection::GetLineageEvent(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::datacatalog::lineage::v1::LineageEvent>
-LineageConnection::ListLineageEvents(
-    google::cloud::datacatalog::lineage::v1::
-        ListLineageEventsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::datacatalog::lineage::v1::LineageEvent> LineageConnection::ListLineageEvents(
+    google::cloud::datacatalog::lineage::v1::ListLineageEventsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::datacatalog::lineage::v1::LineageEvent>>();
 }
 
-Status LineageConnection::DeleteLineageEvent(
+Status
+LineageConnection::DeleteLineageEvent(
     google::cloud::datacatalog::lineage::v1::DeleteLineageEventRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::datacatalog::lineage::v1::Link>
-LineageConnection::SearchLinks(
-    google::cloud::datacatalog::lineage::v1::
-        SearchLinksRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::datacatalog::lineage::v1::Link> LineageConnection::SearchLinks(
+    google::cloud::datacatalog::lineage::v1::SearchLinksRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::datacatalog::lineage::v1::Link>>();
 }
 
-StreamRange<google::cloud::datacatalog::lineage::v1::ProcessLinks>
-LineageConnection::BatchSearchLinkProcesses(
-    google::cloud::datacatalog::lineage::v1::
-        BatchSearchLinkProcessesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::datacatalog::lineage::v1::ProcessLinks> LineageConnection::BatchSearchLinkProcesses(
+    google::cloud::datacatalog::lineage::v1::BatchSearchLinkProcessesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::datacatalog::lineage::v1::ProcessLinks>>();
 }
 
 StreamRange<google::longrunning::Operation> LineageConnection::ListOperations(
-    google::longrunning::
-        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+    google::longrunning::ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }
 
-StatusOr<google::longrunning::Operation> LineageConnection::GetOperation(
+StatusOr<google::longrunning::Operation>
+LineageConnection::GetOperation(
     google::longrunning::GetOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status LineageConnection::DeleteOperation(
+Status
+LineageConnection::DeleteOperation(
     google::longrunning::DeleteOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status LineageConnection::CancelOperation(
+Status
+LineageConnection::CancelOperation(
     google::longrunning::CancelOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-std::shared_ptr<LineageConnection> MakeLineageConnection(Options options) {
+std::shared_ptr<LineageConnection> MakeLineageConnection(
+    Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 LineagePolicyOptionList>(options, __func__);
+      UnifiedCredentialsOptionList,
+      LineagePolicyOptionList>(options, __func__);
   options = datacatalog_lineage_v1_internal::LineageDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = datacatalog_lineage_v1_internal::CreateDefaultLineageStub(
-      std::move(auth), options);
+    std::move(auth), options);
   return datacatalog_lineage_v1_internal::MakeLineageTracingConnection(
       std::make_shared<datacatalog_lineage_v1_internal::LineageConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options)));
+      std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

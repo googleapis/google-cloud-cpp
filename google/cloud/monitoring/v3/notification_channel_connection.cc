@@ -17,17 +17,17 @@
 // source: google/monitoring/v3/notification_service.proto
 
 #include "google/cloud/monitoring/v3/notification_channel_connection.h"
-#include "google/cloud/monitoring/v3/internal/notification_channel_connection_impl.h"
-#include "google/cloud/monitoring/v3/internal/notification_channel_option_defaults.h"
-#include "google/cloud/monitoring/v3/internal/notification_channel_stub_factory.h"
-#include "google/cloud/monitoring/v3/internal/notification_channel_tracing_connection.h"
-#include "google/cloud/monitoring/v3/notification_channel_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/monitoring/v3/internal/notification_channel_connection_impl.h"
+#include "google/cloud/monitoring/v3/internal/notification_channel_option_defaults.h"
+#include "google/cloud/monitoring/v3/internal/notification_channel_stub_factory.h"
+#include "google/cloud/monitoring/v3/internal/notification_channel_tracing_connection.h"
+#include "google/cloud/monitoring/v3/notification_channel_options.h"
 #include <memory>
 #include <utility>
 
@@ -36,13 +36,10 @@ namespace cloud {
 namespace monitoring_v3 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-NotificationChannelServiceConnection::~NotificationChannelServiceConnection() =
-    default;
+NotificationChannelServiceConnection::~NotificationChannelServiceConnection() = default;
 
-StreamRange<google::monitoring::v3::NotificationChannelDescriptor>
-NotificationChannelServiceConnection::ListNotificationChannelDescriptors(
-    google::monitoring::v3::
-        ListNotificationChannelDescriptorsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::monitoring::v3::NotificationChannelDescriptor> NotificationChannelServiceConnection::ListNotificationChannelDescriptors(
+    google::monitoring::v3::ListNotificationChannelDescriptorsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::monitoring::v3::NotificationChannelDescriptor>>();
 }
@@ -53,10 +50,8 @@ NotificationChannelServiceConnection::GetNotificationChannelDescriptor(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::monitoring::v3::NotificationChannel>
-NotificationChannelServiceConnection::ListNotificationChannels(
-    google::monitoring::v3::
-        ListNotificationChannelsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::monitoring::v3::NotificationChannel> NotificationChannelServiceConnection::ListNotificationChannels(
+    google::monitoring::v3::ListNotificationChannelsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::monitoring::v3::NotificationChannel>>();
 }
@@ -79,22 +74,21 @@ NotificationChannelServiceConnection::UpdateNotificationChannel(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status NotificationChannelServiceConnection::DeleteNotificationChannel(
+Status
+NotificationChannelServiceConnection::DeleteNotificationChannel(
     google::monitoring::v3::DeleteNotificationChannelRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 Status
 NotificationChannelServiceConnection::SendNotificationChannelVerificationCode(
-    google::monitoring::v3::
-        SendNotificationChannelVerificationCodeRequest const&) {
+    google::monitoring::v3::SendNotificationChannelVerificationCodeRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::monitoring::v3::GetNotificationChannelVerificationCodeResponse>
 NotificationChannelServiceConnection::GetNotificationChannelVerificationCode(
-    google::monitoring::v3::
-        GetNotificationChannelVerificationCodeRequest const&) {
+    google::monitoring::v3::GetNotificationChannelVerificationCodeRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
@@ -104,24 +98,20 @@ NotificationChannelServiceConnection::VerifyNotificationChannel(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-std::shared_ptr<NotificationChannelServiceConnection>
-MakeNotificationChannelServiceConnection(Options options) {
+std::shared_ptr<NotificationChannelServiceConnection> MakeNotificationChannelServiceConnection(
+    Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 NotificationChannelServicePolicyOptionList>(
-      options, __func__);
+      UnifiedCredentialsOptionList,
+      NotificationChannelServicePolicyOptionList>(options, __func__);
   options = monitoring_v3_internal::NotificationChannelServiceDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
-  auto stub =
-      monitoring_v3_internal::CreateDefaultNotificationChannelServiceStub(
-          std::move(auth), options);
-  return monitoring_v3_internal::
-      MakeNotificationChannelServiceTracingConnection(
-          std::make_shared<
-              monitoring_v3_internal::NotificationChannelServiceConnectionImpl>(
-              std::move(background), std::move(stub), std::move(options)));
+  auto stub = monitoring_v3_internal::CreateDefaultNotificationChannelServiceStub(
+    std::move(auth), options);
+  return monitoring_v3_internal::MakeNotificationChannelServiceTracingConnection(
+      std::make_shared<monitoring_v3_internal::NotificationChannelServiceConnectionImpl>(
+      std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

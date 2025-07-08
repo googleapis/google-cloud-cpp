@@ -26,22 +26,19 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-RegionZonesConnectionIdempotencyPolicy::
-    ~RegionZonesConnectionIdempotencyPolicy() = default;
+RegionZonesConnectionIdempotencyPolicy::~RegionZonesConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<RegionZonesConnectionIdempotencyPolicy>
 RegionZonesConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<RegionZonesConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency RegionZonesConnectionIdempotencyPolicy::ListRegionZones(
-    google::cloud::cpp::compute::region_zones::v1::
-        ListRegionZonesRequest) {  // NOLINT
+Idempotency RegionZonesConnectionIdempotencyPolicy::ListRegionZones(google::cloud::cpp::compute::region_zones::v1::ListRegionZonesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<RegionZonesConnectionIdempotencyPolicy>
-MakeDefaultRegionZonesConnectionIdempotencyPolicy() {
+    MakeDefaultRegionZonesConnectionIdempotencyPolicy() {
   return std::make_unique<RegionZonesConnectionIdempotencyPolicy>();
 }
 

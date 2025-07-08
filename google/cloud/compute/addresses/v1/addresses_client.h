@@ -64,8 +64,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class AddressesClient {
  public:
-  explicit AddressesClient(std::shared_ptr<AddressesConnection> connection,
-                           Options opts = {});
+  explicit AddressesClient(std::shared_ptr<AddressesConnection> connection, Options opts = {});
   ~AddressesClient();
 
   ///@{
@@ -119,8 +118,7 @@ class AddressesClient {
   /// [google.cloud.cpp.compute.v1.AddressesScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_005.proto#L137}
   ///
   // clang-format on
-  StreamRange<std::pair<std::string,
-                        google::cloud::cpp::compute::v1::AddressesScopedList>>
+  StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::AddressesScopedList>>
   AggregatedListAddresses(std::string const& project, Options opts = {});
 
   // clang-format off
@@ -161,12 +159,8 @@ class AddressesClient {
   /// [google.cloud.cpp.compute.v1.AddressesScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_005.proto#L137}
   ///
   // clang-format on
-  StreamRange<std::pair<std::string,
-                        google::cloud::cpp::compute::v1::AddressesScopedList>>
-  AggregatedListAddresses(
-      google::cloud::cpp::compute::addresses::v1::AggregatedListAddressesRequest
-          request,
-      Options opts = {});
+  StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::AddressesScopedList>>
+  AggregatedListAddresses(google::cloud::cpp::compute::addresses::v1::AggregatedListAddressesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -199,9 +193,8 @@ class AddressesClient {
   /// [google.cloud.cpp.compute.addresses.v1.DeleteAddressRequest]: @cloud_cpp_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L207}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteAddress(
-      std::string const& project, std::string const& region,
-      std::string const& address, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteAddress(std::string const& project, std::string const& region, std::string const& address, Options opts = {});
 
   // clang-format off
   ///
@@ -214,9 +207,8 @@ class AddressesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteAddress(
-      NoAwaitTag, std::string const& project, std::string const& region,
-      std::string const& address, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeleteAddress(NoAwaitTag, std::string const& project, std::string const& region, std::string const& address, Options opts = {});
 
   // clang-format off
   ///
@@ -252,10 +244,8 @@ class AddressesClient {
   /// [google.cloud.cpp.compute.addresses.v1.DeleteAddressRequest]: @cloud_cpp_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L207}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteAddress(
-      google::cloud::cpp::compute::addresses::v1::DeleteAddressRequest const&
-          request,
-      Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteAddress(google::cloud::cpp::compute::addresses::v1::DeleteAddressRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -268,11 +258,8 @@ class AddressesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteAddress(
-      NoAwaitTag,
-      google::cloud::cpp::compute::addresses::v1::DeleteAddressRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeleteAddress(NoAwaitTag, google::cloud::cpp::compute::addresses::v1::DeleteAddressRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -283,9 +270,8 @@ class AddressesClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteAddress(
-      google::cloud::cpp::compute::v1::Operation const& operation,
-      Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteAddress(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -312,9 +298,8 @@ class AddressesClient {
   /// [google.cloud.cpp.compute.v1.Address]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_004.proto#L30}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Address> GetAddress(
-      std::string const& project, std::string const& region,
-      std::string const& address, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Address>
+  GetAddress(std::string const& project, std::string const& region, std::string const& address, Options opts = {});
 
   // clang-format off
   ///
@@ -344,10 +329,8 @@ class AddressesClient {
   /// [google.cloud.cpp.compute.v1.Address]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_004.proto#L30}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Address> GetAddress(
-      google::cloud::cpp::compute::addresses::v1::GetAddressRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Address>
+  GetAddress(google::cloud::cpp::compute::addresses::v1::GetAddressRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -381,10 +364,8 @@ class AddressesClient {
   /// [google.cloud.cpp.compute.addresses.v1.InsertAddressRequest]: @cloud_cpp_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L255}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertAddress(
-      std::string const& project, std::string const& region,
-      google::cloud::cpp::compute::v1::Address const& address_resource,
-      Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  InsertAddress(std::string const& project, std::string const& region, google::cloud::cpp::compute::v1::Address const& address_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -397,10 +378,8 @@ class AddressesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertAddress(
-      NoAwaitTag, std::string const& project, std::string const& region,
-      google::cloud::cpp::compute::v1::Address const& address_resource,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  InsertAddress(NoAwaitTag, std::string const& project, std::string const& region, google::cloud::cpp::compute::v1::Address const& address_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -437,10 +416,8 @@ class AddressesClient {
   /// [google.cloud.cpp.compute.addresses.v1.InsertAddressRequest]: @cloud_cpp_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L255}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertAddress(
-      google::cloud::cpp::compute::addresses::v1::InsertAddressRequest const&
-          request,
-      Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  InsertAddress(google::cloud::cpp::compute::addresses::v1::InsertAddressRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -453,11 +430,8 @@ class AddressesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertAddress(
-      NoAwaitTag,
-      google::cloud::cpp::compute::addresses::v1::InsertAddressRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  InsertAddress(NoAwaitTag, google::cloud::cpp::compute::addresses::v1::InsertAddressRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -468,9 +442,8 @@ class AddressesClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertAddress(
-      google::cloud::cpp::compute::v1::Operation const& operation,
-      Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  InsertAddress(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -505,8 +478,8 @@ class AddressesClient {
   /// [google.cloud.cpp.compute.v1.Address]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_004.proto#L30}
   ///
   // clang-format on
-  StreamRange<google::cloud::cpp::compute::v1::Address> ListAddresses(
-      std::string const& project, std::string const& region, Options opts = {});
+  StreamRange<google::cloud::cpp::compute::v1::Address>
+  ListAddresses(std::string const& project, std::string const& region, Options opts = {});
 
   // clang-format off
   ///
@@ -545,9 +518,8 @@ class AddressesClient {
   /// [google.cloud.cpp.compute.v1.Address]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_004.proto#L30}
   ///
   // clang-format on
-  StreamRange<google::cloud::cpp::compute::v1::Address> ListAddresses(
-      google::cloud::cpp::compute::addresses::v1::ListAddressesRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::cpp::compute::v1::Address>
+  ListAddresses(google::cloud::cpp::compute::addresses::v1::ListAddressesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -581,12 +553,8 @@ class AddressesClient {
   /// [google.cloud.cpp.compute.addresses.v1.MoveRequest]: @cloud_cpp_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L360}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Move(
-      std::string const& project, std::string const& region,
-      std::string const& address,
-      google::cloud::cpp::compute::v1::RegionAddressesMoveRequest const&
-          region_addresses_move_request_resource,
-      Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  Move(std::string const& project, std::string const& region, std::string const& address, google::cloud::cpp::compute::v1::RegionAddressesMoveRequest const& region_addresses_move_request_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -599,12 +567,8 @@ class AddressesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> Move(
-      NoAwaitTag, std::string const& project, std::string const& region,
-      std::string const& address,
-      google::cloud::cpp::compute::v1::RegionAddressesMoveRequest const&
-          region_addresses_move_request_resource,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  Move(NoAwaitTag, std::string const& project, std::string const& region, std::string const& address, google::cloud::cpp::compute::v1::RegionAddressesMoveRequest const& region_addresses_move_request_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -640,9 +604,8 @@ class AddressesClient {
   /// [google.cloud.cpp.compute.addresses.v1.MoveRequest]: @cloud_cpp_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L360}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Move(
-      google::cloud::cpp::compute::addresses::v1::MoveRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  Move(google::cloud::cpp::compute::addresses::v1::MoveRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -655,10 +618,8 @@ class AddressesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> Move(
-      NoAwaitTag,
-      google::cloud::cpp::compute::addresses::v1::MoveRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  Move(NoAwaitTag, google::cloud::cpp::compute::addresses::v1::MoveRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -669,9 +630,8 @@ class AddressesClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Move(
-      google::cloud::cpp::compute::v1::Operation const& operation,
-      Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  Move(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -706,12 +666,8 @@ class AddressesClient {
   /// [google.cloud.cpp.compute.addresses.v1.SetLabelsRequest]: @cloud_cpp_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L398}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
-      std::string const& project, std::string const& region,
-      std::string const& resource,
-      google::cloud::cpp::compute::v1::RegionSetLabelsRequest const&
-          region_set_labels_request_resource,
-      Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  SetLabels(std::string const& project, std::string const& region, std::string const& resource, google::cloud::cpp::compute::v1::RegionSetLabelsRequest const& region_set_labels_request_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -724,12 +680,8 @@ class AddressesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
-      NoAwaitTag, std::string const& project, std::string const& region,
-      std::string const& resource,
-      google::cloud::cpp::compute::v1::RegionSetLabelsRequest const&
-          region_set_labels_request_resource,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  SetLabels(NoAwaitTag, std::string const& project, std::string const& region, std::string const& resource, google::cloud::cpp::compute::v1::RegionSetLabelsRequest const& region_set_labels_request_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -766,10 +718,8 @@ class AddressesClient {
   /// [google.cloud.cpp.compute.addresses.v1.SetLabelsRequest]: @cloud_cpp_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L398}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
-      google::cloud::cpp::compute::addresses::v1::SetLabelsRequest const&
-          request,
-      Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  SetLabels(google::cloud::cpp::compute::addresses::v1::SetLabelsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -782,11 +732,8 @@ class AddressesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
-      NoAwaitTag,
-      google::cloud::cpp::compute::addresses::v1::SetLabelsRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  SetLabels(NoAwaitTag, google::cloud::cpp::compute::addresses::v1::SetLabelsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -797,9 +744,8 @@ class AddressesClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
-      google::cloud::cpp::compute::v1::Operation const& operation,
-      Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  SetLabels(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
 
  private:
   std::shared_ptr<AddressesConnection> connection_;

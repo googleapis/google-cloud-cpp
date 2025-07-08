@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RETAIL_V2_INTERNAL_COMPLETION_AUTH_DECORATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RETAIL_V2_INTERNAL_COMPLETION_AUTH_DECORATOR_H
 
-#include "google/cloud/retail/v2/internal/completion_stub.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/retail/v2/internal/completion_stub.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
@@ -40,27 +40,29 @@ class CompletionServiceAuth : public CompletionServiceStub {
       std::shared_ptr<CompletionServiceStub> child);
 
   StatusOr<google::cloud::retail::v2::CompleteQueryResponse> CompleteQuery(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::retail::v2::CompleteQueryRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncImportCompletionData(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::retail::v2::ImportCompletionDataRequest const& request)
-      override;
+      google::cloud::retail::v2::ImportCompletionDataRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> ImportCompletionData(
-      grpc::ClientContext& context, Options options,
-      google::cloud::retail::v2::ImportCompletionDataRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::retail::v2::ImportCompletionDataRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(

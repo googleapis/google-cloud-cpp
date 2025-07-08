@@ -29,39 +29,36 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ServiceAttachmentsRestLogging::ServiceAttachmentsRestLogging(
     std::shared_ptr<ServiceAttachmentsRestStub> child,
-    TracingOptions tracing_options, std::set<std::string> components)
-    : child_(std::move(child)),
-      tracing_options_(std::move(tracing_options)),
+    TracingOptions tracing_options,
+    std::set<std::string> components)
+    : child_(std::move(child)), tracing_options_(std::move(tracing_options)),
       components_(std::move(components)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::ServiceAttachmentAggregatedList>
 ServiceAttachmentsRestLogging::AggregatedListServiceAttachments(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::service_attachments::v1::
-        AggregatedListServiceAttachmentsRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::service_attachments::v1::AggregatedListServiceAttachmentsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::cloud::cpp::compute::service_attachments::v1::
-                 AggregatedListServiceAttachmentsRequest const& request) {
-        return child_->AggregatedListServiceAttachments(rest_context, options,
-                                                        request);
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
+             google::cloud::cpp::compute::service_attachments::v1::AggregatedListServiceAttachmentsRequest const& request) {
+        return child_->AggregatedListServiceAttachments(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ServiceAttachmentsRestLogging::AsyncDeleteServiceAttachment(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::service_attachments::v1::
-        DeleteServiceAttachmentRequest const& request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::service_attachments::v1::DeleteServiceAttachmentRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::cpp::compute::service_attachments::v1::
-                 DeleteServiceAttachmentRequest const& request) {
+             google::cloud::cpp::compute::service_attachments::v1::DeleteServiceAttachmentRequest const& request) {
         return child_->AsyncDeleteServiceAttachment(
             cq, std::move(rest_context), std::move(options), request);
       },
@@ -71,13 +68,13 @@ ServiceAttachmentsRestLogging::AsyncDeleteServiceAttachment(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ServiceAttachmentsRestLogging::DeleteServiceAttachment(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::service_attachments::v1::
-        DeleteServiceAttachmentRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::service_attachments::v1::DeleteServiceAttachmentRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::cloud::cpp::compute::service_attachments::v1::
-                 DeleteServiceAttachmentRequest const& request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
+             google::cloud::cpp::compute::service_attachments::v1::DeleteServiceAttachmentRequest const& request) {
         return child_->DeleteServiceAttachment(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -85,13 +82,13 @@ ServiceAttachmentsRestLogging::DeleteServiceAttachment(
 
 StatusOr<google::cloud::cpp::compute::v1::ServiceAttachment>
 ServiceAttachmentsRestLogging::GetServiceAttachment(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::service_attachments::v1::
-        GetServiceAttachmentRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::service_attachments::v1::GetServiceAttachmentRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::cloud::cpp::compute::service_attachments::v1::
-                 GetServiceAttachmentRequest const& request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
+             google::cloud::cpp::compute::service_attachments::v1::GetServiceAttachmentRequest const& request) {
         return child_->GetServiceAttachment(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -99,13 +96,13 @@ ServiceAttachmentsRestLogging::GetServiceAttachment(
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 ServiceAttachmentsRestLogging::GetIamPolicy(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::service_attachments::v1::
-        GetIamPolicyRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::service_attachments::v1::GetIamPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::cloud::cpp::compute::service_attachments::v1::
-                 GetIamPolicyRequest const& request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
+             google::cloud::cpp::compute::service_attachments::v1::GetIamPolicyRequest const& request) {
         return child_->GetIamPolicy(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -113,17 +110,15 @@ ServiceAttachmentsRestLogging::GetIamPolicy(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ServiceAttachmentsRestLogging::AsyncInsertServiceAttachment(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::service_attachments::v1::
-        InsertServiceAttachmentRequest const& request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::service_attachments::v1::InsertServiceAttachmentRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::cpp::compute::service_attachments::v1::
-                 InsertServiceAttachmentRequest const& request) {
+             google::cloud::cpp::compute::service_attachments::v1::InsertServiceAttachmentRequest const& request) {
         return child_->AsyncInsertServiceAttachment(
             cq, std::move(rest_context), std::move(options), request);
       },
@@ -133,13 +128,13 @@ ServiceAttachmentsRestLogging::AsyncInsertServiceAttachment(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ServiceAttachmentsRestLogging::InsertServiceAttachment(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::service_attachments::v1::
-        InsertServiceAttachmentRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::service_attachments::v1::InsertServiceAttachmentRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::cloud::cpp::compute::service_attachments::v1::
-                 InsertServiceAttachmentRequest const& request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
+             google::cloud::cpp::compute::service_attachments::v1::InsertServiceAttachmentRequest const& request) {
         return child_->InsertServiceAttachment(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -147,13 +142,13 @@ ServiceAttachmentsRestLogging::InsertServiceAttachment(
 
 StatusOr<google::cloud::cpp::compute::v1::ServiceAttachmentList>
 ServiceAttachmentsRestLogging::ListServiceAttachments(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::service_attachments::v1::
-        ListServiceAttachmentsRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::service_attachments::v1::ListServiceAttachmentsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::cloud::cpp::compute::service_attachments::v1::
-                 ListServiceAttachmentsRequest const& request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
+             google::cloud::cpp::compute::service_attachments::v1::ListServiceAttachmentsRequest const& request) {
         return child_->ListServiceAttachments(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -161,19 +156,17 @@ ServiceAttachmentsRestLogging::ListServiceAttachments(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ServiceAttachmentsRestLogging::AsyncPatchServiceAttachment(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::service_attachments::v1::
-        PatchServiceAttachmentRequest const& request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::service_attachments::v1::PatchServiceAttachmentRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::cpp::compute::service_attachments::v1::
-                 PatchServiceAttachmentRequest const& request) {
-        return child_->AsyncPatchServiceAttachment(cq, std::move(rest_context),
-                                                   std::move(options), request);
+             google::cloud::cpp::compute::service_attachments::v1::PatchServiceAttachmentRequest const& request) {
+        return child_->AsyncPatchServiceAttachment(
+            cq, std::move(rest_context), std::move(options), request);
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
@@ -181,13 +174,13 @@ ServiceAttachmentsRestLogging::AsyncPatchServiceAttachment(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ServiceAttachmentsRestLogging::PatchServiceAttachment(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::service_attachments::v1::
-        PatchServiceAttachmentRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::service_attachments::v1::PatchServiceAttachmentRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::cloud::cpp::compute::service_attachments::v1::
-                 PatchServiceAttachmentRequest const& request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
+             google::cloud::cpp::compute::service_attachments::v1::PatchServiceAttachmentRequest const& request) {
         return child_->PatchServiceAttachment(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -195,13 +188,13 @@ ServiceAttachmentsRestLogging::PatchServiceAttachment(
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 ServiceAttachmentsRestLogging::SetIamPolicy(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::service_attachments::v1::
-        SetIamPolicyRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::service_attachments::v1::SetIamPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::cloud::cpp::compute::service_attachments::v1::
-                 SetIamPolicyRequest const& request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
+             google::cloud::cpp::compute::service_attachments::v1::SetIamPolicyRequest const& request) {
         return child_->SetIamPolicy(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -209,13 +202,13 @@ ServiceAttachmentsRestLogging::SetIamPolicy(
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
 ServiceAttachmentsRestLogging::TestIamPermissions(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::service_attachments::v1::
-        TestIamPermissionsRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::service_attachments::v1::TestIamPermissionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::cloud::cpp::compute::service_attachments::v1::
-                 TestIamPermissionsRequest const& request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
+             google::cloud::cpp::compute::service_attachments::v1::TestIamPermissionsRequest const& request) {
         return child_->TestIamPermissions(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -226,35 +219,32 @@ ServiceAttachmentsRestLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::region_operations::v1::
-        GetOperationRequest const& request) {
+    google::cloud::cpp::compute::region_operations::v1::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::cpp::compute::region_operations::v1::
-                 GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(cq, std::move(rest_context),
-                                         std::move(options), request);
+             google::cloud::cpp::compute::region_operations::v1::GetOperationRequest const& request) {
+        return child_->AsyncGetOperation(
+            cq, std::move(rest_context), std::move(options), request);
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-future<Status> ServiceAttachmentsRestLogging::AsyncCancelOperation(
+future<Status>
+ServiceAttachmentsRestLogging::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::region_operations::v1::
-        DeleteOperationRequest const& request) {
+    google::cloud::cpp::compute::region_operations::v1::DeleteOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::cpp::compute::region_operations::v1::
-                 DeleteOperationRequest const& request) {
-        return child_->AsyncCancelOperation(cq, std::move(rest_context),
-                                            std::move(options), request);
+             google::cloud::cpp::compute::region_operations::v1::DeleteOperationRequest const& request) {
+        return child_->AsyncCancelOperation(
+            cq, std::move(rest_context), std::move(options), request);
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);

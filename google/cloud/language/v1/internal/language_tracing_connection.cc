@@ -33,64 +33,50 @@ LanguageServiceTracingConnection::LanguageServiceTracingConnection(
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::language::v1::AnalyzeSentimentResponse>
-LanguageServiceTracingConnection::AnalyzeSentiment(
-    google::cloud::language::v1::AnalyzeSentimentRequest const& request) {
-  auto span = internal::MakeSpan(
-      "language_v1::LanguageServiceConnection::AnalyzeSentiment");
+LanguageServiceTracingConnection::AnalyzeSentiment(google::cloud::language::v1::AnalyzeSentimentRequest const& request) {
+  auto span = internal::MakeSpan("language_v1::LanguageServiceConnection::AnalyzeSentiment");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->AnalyzeSentiment(request));
 }
 
 StatusOr<google::cloud::language::v1::AnalyzeEntitiesResponse>
-LanguageServiceTracingConnection::AnalyzeEntities(
-    google::cloud::language::v1::AnalyzeEntitiesRequest const& request) {
-  auto span = internal::MakeSpan(
-      "language_v1::LanguageServiceConnection::AnalyzeEntities");
+LanguageServiceTracingConnection::AnalyzeEntities(google::cloud::language::v1::AnalyzeEntitiesRequest const& request) {
+  auto span = internal::MakeSpan("language_v1::LanguageServiceConnection::AnalyzeEntities");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->AnalyzeEntities(request));
 }
 
 StatusOr<google::cloud::language::v1::AnalyzeEntitySentimentResponse>
-LanguageServiceTracingConnection::AnalyzeEntitySentiment(
-    google::cloud::language::v1::AnalyzeEntitySentimentRequest const& request) {
-  auto span = internal::MakeSpan(
-      "language_v1::LanguageServiceConnection::AnalyzeEntitySentiment");
+LanguageServiceTracingConnection::AnalyzeEntitySentiment(google::cloud::language::v1::AnalyzeEntitySentimentRequest const& request) {
+  auto span = internal::MakeSpan("language_v1::LanguageServiceConnection::AnalyzeEntitySentiment");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->AnalyzeEntitySentiment(request));
 }
 
 StatusOr<google::cloud::language::v1::AnalyzeSyntaxResponse>
-LanguageServiceTracingConnection::AnalyzeSyntax(
-    google::cloud::language::v1::AnalyzeSyntaxRequest const& request) {
-  auto span = internal::MakeSpan(
-      "language_v1::LanguageServiceConnection::AnalyzeSyntax");
+LanguageServiceTracingConnection::AnalyzeSyntax(google::cloud::language::v1::AnalyzeSyntaxRequest const& request) {
+  auto span = internal::MakeSpan("language_v1::LanguageServiceConnection::AnalyzeSyntax");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->AnalyzeSyntax(request));
 }
 
 StatusOr<google::cloud::language::v1::ClassifyTextResponse>
-LanguageServiceTracingConnection::ClassifyText(
-    google::cloud::language::v1::ClassifyTextRequest const& request) {
-  auto span = internal::MakeSpan(
-      "language_v1::LanguageServiceConnection::ClassifyText");
+LanguageServiceTracingConnection::ClassifyText(google::cloud::language::v1::ClassifyTextRequest const& request) {
+  auto span = internal::MakeSpan("language_v1::LanguageServiceConnection::ClassifyText");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->ClassifyText(request));
 }
 
 StatusOr<google::cloud::language::v1::ModerateTextResponse>
-LanguageServiceTracingConnection::ModerateText(
-    google::cloud::language::v1::ModerateTextRequest const& request) {
-  auto span = internal::MakeSpan(
-      "language_v1::LanguageServiceConnection::ModerateText");
+LanguageServiceTracingConnection::ModerateText(google::cloud::language::v1::ModerateTextRequest const& request) {
+  auto span = internal::MakeSpan("language_v1::LanguageServiceConnection::ModerateText");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->ModerateText(request));
 }
 
 StatusOr<google::cloud::language::v1::AnnotateTextResponse>
-LanguageServiceTracingConnection::AnnotateText(
-    google::cloud::language::v1::AnnotateTextRequest const& request) {
-  auto span = internal::MakeSpan(
-      "language_v1::LanguageServiceConnection::AnnotateText");
+LanguageServiceTracingConnection::AnnotateText(google::cloud::language::v1::AnnotateTextRequest const& request) {
+  auto span = internal::MakeSpan("language_v1::LanguageServiceConnection::AnnotateText");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->AnnotateText(request));
 }

@@ -32,24 +32,22 @@ CloudCatalogTracingStub::CloudCatalogTracingStub(
     std::shared_ptr<CloudCatalogStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
-StatusOr<google::cloud::billing::v1::ListServicesResponse>
-CloudCatalogTracingStub::ListServices(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::billing::v1::ListServicesResponse> CloudCatalogTracingStub::ListServices(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::billing::v1::ListServicesRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.billing.v1.CloudCatalog",
-                                     "ListServices");
+  auto span = internal::MakeSpanGrpc("google.cloud.billing.v1.CloudCatalog", "ListServices");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListServices(context, options, request));
 }
 
-StatusOr<google::cloud::billing::v1::ListSkusResponse>
-CloudCatalogTracingStub::ListSkus(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::billing::v1::ListSkusResponse> CloudCatalogTracingStub::ListSkus(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::billing::v1::ListSkusRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.billing.v1.CloudCatalog",
-                                     "ListSkus");
+  auto span = internal::MakeSpanGrpc("google.cloud.billing.v1.CloudCatalog", "ListSkus");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,

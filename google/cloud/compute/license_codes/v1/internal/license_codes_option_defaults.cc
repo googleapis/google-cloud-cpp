@@ -35,29 +35,23 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options LicenseCodesDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_LICENSE_CODES_ENDPOINT", "",
-      "GOOGLE_CLOUD_CPP_LICENSE_CODES_AUTHORITY", "compute.googleapis.com");
+      std::move(options), "GOOGLE_CLOUD_CPP_LICENSE_CODES_ENDPOINT",
+      "", "GOOGLE_CLOUD_CPP_LICENSE_CODES_AUTHORITY",
+      "compute.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<compute_license_codes_v1::LicenseCodesRetryPolicyOption>()) {
     options.set<compute_license_codes_v1::LicenseCodesRetryPolicyOption>(
         compute_license_codes_v1::LicenseCodesLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
-            .clone());
+            std::chrono::minutes(30)).clone());
   }
-  if (!options
-           .has<compute_license_codes_v1::LicenseCodesBackoffPolicyOption>()) {
+  if (!options.has<compute_license_codes_v1::LicenseCodesBackoffPolicyOption>()) {
     options.set<compute_license_codes_v1::LicenseCodesBackoffPolicyOption>(
-        ExponentialBackoffPolicy(
-            std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
-            .clone());
+        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
   }
-  if (!options.has<compute_license_codes_v1::
-                       LicenseCodesConnectionIdempotencyPolicyOption>()) {
-    options.set<compute_license_codes_v1::
-                    LicenseCodesConnectionIdempotencyPolicyOption>(
-        compute_license_codes_v1::
-            MakeDefaultLicenseCodesConnectionIdempotencyPolicy());
+  if (!options.has<compute_license_codes_v1::LicenseCodesConnectionIdempotencyPolicyOption>()) {
+    options.set<compute_license_codes_v1::LicenseCodesConnectionIdempotencyPolicyOption>(
+        compute_license_codes_v1::MakeDefaultLicenseCodesConnectionIdempotencyPolicy());
   }
 
   return options;

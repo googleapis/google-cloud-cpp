@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_INTERNAL_ENVIRONMENTS_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_INTERNAL_ENVIRONMENTS_CONNECTION_IMPL_H
 
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/dialogflow_cx/environments_connection.h"
 #include "google/cloud/dialogflow_cx/environments_connection_idempotency_policy.h"
 #include "google/cloud/dialogflow_cx/environments_options.h"
 #include "google/cloud/dialogflow_cx/internal/environments_retry_traits.h"
 #include "google/cloud/dialogflow_cx/internal/environments_stub.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -46,99 +46,85 @@ class EnvironmentsConnectionImpl
   ~EnvironmentsConnectionImpl() override = default;
 
   EnvironmentsConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<dialogflow_cx_internal::EnvironmentsStub> stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<dialogflow_cx_internal::EnvironmentsStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
-  StreamRange<google::cloud::dialogflow::cx::v3::Environment> ListEnvironments(
-      google::cloud::dialogflow::cx::v3::ListEnvironmentsRequest request)
-      override;
+  StreamRange<google::cloud::dialogflow::cx::v3::Environment>
+  ListEnvironments(google::cloud::dialogflow::cx::v3::ListEnvironmentsRequest request) override;
 
-  StatusOr<google::cloud::dialogflow::cx::v3::Environment> GetEnvironment(
-      google::cloud::dialogflow::cx::v3::GetEnvironmentRequest const& request)
-      override;
+  StatusOr<google::cloud::dialogflow::cx::v3::Environment>
+  GetEnvironment(google::cloud::dialogflow::cx::v3::GetEnvironmentRequest const& request) override;
+
+  future<StatusOr<google::cloud::dialogflow::cx::v3::Environment>>
+  CreateEnvironment(google::cloud::dialogflow::cx::v3::CreateEnvironmentRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  CreateEnvironment(NoAwaitTag,
+      google::cloud::dialogflow::cx::v3::CreateEnvironmentRequest const& request) override;
 
   future<StatusOr<google::cloud::dialogflow::cx::v3::Environment>>
   CreateEnvironment(
-      google::cloud::dialogflow::cx::v3::CreateEnvironmentRequest const&
-          request) override;
-
-  StatusOr<google::longrunning::Operation> CreateEnvironment(
-      NoAwaitTag,
-      google::cloud::dialogflow::cx::v3::CreateEnvironmentRequest const&
-          request) override;
+      google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::dialogflow::cx::v3::Environment>>
-  CreateEnvironment(google::longrunning::Operation const& operation) override;
+  UpdateEnvironment(google::cloud::dialogflow::cx::v3::UpdateEnvironmentRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  UpdateEnvironment(NoAwaitTag,
+      google::cloud::dialogflow::cx::v3::UpdateEnvironmentRequest const& request) override;
 
   future<StatusOr<google::cloud::dialogflow::cx::v3::Environment>>
   UpdateEnvironment(
-      google::cloud::dialogflow::cx::v3::UpdateEnvironmentRequest const&
-          request) override;
+      google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::longrunning::Operation> UpdateEnvironment(
-      NoAwaitTag,
-      google::cloud::dialogflow::cx::v3::UpdateEnvironmentRequest const&
-          request) override;
-
-  future<StatusOr<google::cloud::dialogflow::cx::v3::Environment>>
-  UpdateEnvironment(google::longrunning::Operation const& operation) override;
-
-  Status DeleteEnvironment(
-      google::cloud::dialogflow::cx::v3::DeleteEnvironmentRequest const&
-          request) override;
+  Status
+  DeleteEnvironment(google::cloud::dialogflow::cx::v3::DeleteEnvironmentRequest const& request) override;
 
   StreamRange<google::cloud::dialogflow::cx::v3::Environment>
-  LookupEnvironmentHistory(
-      google::cloud::dialogflow::cx::v3::LookupEnvironmentHistoryRequest
-          request) override;
+  LookupEnvironmentHistory(google::cloud::dialogflow::cx::v3::LookupEnvironmentHistoryRequest request) override;
+
+  future<StatusOr<google::cloud::dialogflow::cx::v3::RunContinuousTestResponse>>
+  RunContinuousTest(google::cloud::dialogflow::cx::v3::RunContinuousTestRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  RunContinuousTest(NoAwaitTag,
+      google::cloud::dialogflow::cx::v3::RunContinuousTestRequest const& request) override;
 
   future<StatusOr<google::cloud::dialogflow::cx::v3::RunContinuousTestResponse>>
   RunContinuousTest(
-      google::cloud::dialogflow::cx::v3::RunContinuousTestRequest const&
-          request) override;
-
-  StatusOr<google::longrunning::Operation> RunContinuousTest(
-      NoAwaitTag,
-      google::cloud::dialogflow::cx::v3::RunContinuousTestRequest const&
-          request) override;
-
-  future<StatusOr<google::cloud::dialogflow::cx::v3::RunContinuousTestResponse>>
-  RunContinuousTest(google::longrunning::Operation const& operation) override;
+      google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::dialogflow::cx::v3::ContinuousTestResult>
-  ListContinuousTestResults(
-      google::cloud::dialogflow::cx::v3::ListContinuousTestResultsRequest
-          request) override;
+  ListContinuousTestResults(google::cloud::dialogflow::cx::v3::ListContinuousTestResultsRequest request) override;
 
   future<StatusOr<google::cloud::dialogflow::cx::v3::DeployFlowResponse>>
-  DeployFlow(google::cloud::dialogflow::cx::v3::DeployFlowRequest const&
-                 request) override;
+  DeployFlow(google::cloud::dialogflow::cx::v3::DeployFlowRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> DeployFlow(
-      NoAwaitTag,
-      google::cloud::dialogflow::cx::v3::DeployFlowRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  DeployFlow(NoAwaitTag,
+      google::cloud::dialogflow::cx::v3::DeployFlowRequest const& request) override;
 
   future<StatusOr<google::cloud::dialogflow::cx::v3::DeployFlowResponse>>
-  DeployFlow(google::longrunning::Operation const& operation) override;
+  DeployFlow(
+      google::longrunning::Operation const& operation) override;
 
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request) override;
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request) override;
 
-  StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request) override;
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request) override;
 
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request) override;
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

@@ -34,150 +34,114 @@ MetastoreServiceTracingConnection::MetastoreServiceTracingConnection(
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::bigquery::biglake::v1::Catalog>
-MetastoreServiceTracingConnection::CreateCatalog(
-    google::cloud::bigquery::biglake::v1::CreateCatalogRequest const& request) {
-  auto span = internal::MakeSpan(
-      "bigquery_biglake_v1::MetastoreServiceConnection::CreateCatalog");
+MetastoreServiceTracingConnection::CreateCatalog(google::cloud::bigquery::biglake::v1::CreateCatalogRequest const& request) {
+  auto span = internal::MakeSpan("bigquery_biglake_v1::MetastoreServiceConnection::CreateCatalog");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateCatalog(request));
 }
 
 StatusOr<google::cloud::bigquery::biglake::v1::Catalog>
-MetastoreServiceTracingConnection::DeleteCatalog(
-    google::cloud::bigquery::biglake::v1::DeleteCatalogRequest const& request) {
-  auto span = internal::MakeSpan(
-      "bigquery_biglake_v1::MetastoreServiceConnection::DeleteCatalog");
+MetastoreServiceTracingConnection::DeleteCatalog(google::cloud::bigquery::biglake::v1::DeleteCatalogRequest const& request) {
+  auto span = internal::MakeSpan("bigquery_biglake_v1::MetastoreServiceConnection::DeleteCatalog");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteCatalog(request));
 }
 
 StatusOr<google::cloud::bigquery::biglake::v1::Catalog>
-MetastoreServiceTracingConnection::GetCatalog(
-    google::cloud::bigquery::biglake::v1::GetCatalogRequest const& request) {
-  auto span = internal::MakeSpan(
-      "bigquery_biglake_v1::MetastoreServiceConnection::GetCatalog");
+MetastoreServiceTracingConnection::GetCatalog(google::cloud::bigquery::biglake::v1::GetCatalogRequest const& request) {
+  auto span = internal::MakeSpan("bigquery_biglake_v1::MetastoreServiceConnection::GetCatalog");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetCatalog(request));
 }
 
 StreamRange<google::cloud::bigquery::biglake::v1::Catalog>
-MetastoreServiceTracingConnection::ListCatalogs(
-    google::cloud::bigquery::biglake::v1::ListCatalogsRequest request) {
-  auto span = internal::MakeSpan(
-      "bigquery_biglake_v1::MetastoreServiceConnection::ListCatalogs");
+MetastoreServiceTracingConnection::ListCatalogs(google::cloud::bigquery::biglake::v1::ListCatalogsRequest request) {
+  auto span = internal::MakeSpan("bigquery_biglake_v1::MetastoreServiceConnection::ListCatalogs");
   internal::OTelScope scope(span);
   auto sr = child_->ListCatalogs(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::bigquery::biglake::v1::Catalog>(std::move(span),
-                                                     std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::bigquery::biglake::v1::Catalog>(
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::bigquery::biglake::v1::Database>
-MetastoreServiceTracingConnection::CreateDatabase(
-    google::cloud::bigquery::biglake::v1::CreateDatabaseRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "bigquery_biglake_v1::MetastoreServiceConnection::CreateDatabase");
+MetastoreServiceTracingConnection::CreateDatabase(google::cloud::bigquery::biglake::v1::CreateDatabaseRequest const& request) {
+  auto span = internal::MakeSpan("bigquery_biglake_v1::MetastoreServiceConnection::CreateDatabase");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateDatabase(request));
 }
 
 StatusOr<google::cloud::bigquery::biglake::v1::Database>
-MetastoreServiceTracingConnection::DeleteDatabase(
-    google::cloud::bigquery::biglake::v1::DeleteDatabaseRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "bigquery_biglake_v1::MetastoreServiceConnection::DeleteDatabase");
+MetastoreServiceTracingConnection::DeleteDatabase(google::cloud::bigquery::biglake::v1::DeleteDatabaseRequest const& request) {
+  auto span = internal::MakeSpan("bigquery_biglake_v1::MetastoreServiceConnection::DeleteDatabase");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteDatabase(request));
 }
 
 StatusOr<google::cloud::bigquery::biglake::v1::Database>
-MetastoreServiceTracingConnection::UpdateDatabase(
-    google::cloud::bigquery::biglake::v1::UpdateDatabaseRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "bigquery_biglake_v1::MetastoreServiceConnection::UpdateDatabase");
+MetastoreServiceTracingConnection::UpdateDatabase(google::cloud::bigquery::biglake::v1::UpdateDatabaseRequest const& request) {
+  auto span = internal::MakeSpan("bigquery_biglake_v1::MetastoreServiceConnection::UpdateDatabase");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateDatabase(request));
 }
 
 StatusOr<google::cloud::bigquery::biglake::v1::Database>
-MetastoreServiceTracingConnection::GetDatabase(
-    google::cloud::bigquery::biglake::v1::GetDatabaseRequest const& request) {
-  auto span = internal::MakeSpan(
-      "bigquery_biglake_v1::MetastoreServiceConnection::GetDatabase");
+MetastoreServiceTracingConnection::GetDatabase(google::cloud::bigquery::biglake::v1::GetDatabaseRequest const& request) {
+  auto span = internal::MakeSpan("bigquery_biglake_v1::MetastoreServiceConnection::GetDatabase");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetDatabase(request));
 }
 
 StreamRange<google::cloud::bigquery::biglake::v1::Database>
-MetastoreServiceTracingConnection::ListDatabases(
-    google::cloud::bigquery::biglake::v1::ListDatabasesRequest request) {
-  auto span = internal::MakeSpan(
-      "bigquery_biglake_v1::MetastoreServiceConnection::ListDatabases");
+MetastoreServiceTracingConnection::ListDatabases(google::cloud::bigquery::biglake::v1::ListDatabasesRequest request) {
+  auto span = internal::MakeSpan("bigquery_biglake_v1::MetastoreServiceConnection::ListDatabases");
   internal::OTelScope scope(span);
   auto sr = child_->ListDatabases(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::bigquery::biglake::v1::Database>(std::move(span),
-                                                      std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::bigquery::biglake::v1::Database>(
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::bigquery::biglake::v1::Table>
-MetastoreServiceTracingConnection::CreateTable(
-    google::cloud::bigquery::biglake::v1::CreateTableRequest const& request) {
-  auto span = internal::MakeSpan(
-      "bigquery_biglake_v1::MetastoreServiceConnection::CreateTable");
+MetastoreServiceTracingConnection::CreateTable(google::cloud::bigquery::biglake::v1::CreateTableRequest const& request) {
+  auto span = internal::MakeSpan("bigquery_biglake_v1::MetastoreServiceConnection::CreateTable");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateTable(request));
 }
 
 StatusOr<google::cloud::bigquery::biglake::v1::Table>
-MetastoreServiceTracingConnection::DeleteTable(
-    google::cloud::bigquery::biglake::v1::DeleteTableRequest const& request) {
-  auto span = internal::MakeSpan(
-      "bigquery_biglake_v1::MetastoreServiceConnection::DeleteTable");
+MetastoreServiceTracingConnection::DeleteTable(google::cloud::bigquery::biglake::v1::DeleteTableRequest const& request) {
+  auto span = internal::MakeSpan("bigquery_biglake_v1::MetastoreServiceConnection::DeleteTable");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteTable(request));
 }
 
 StatusOr<google::cloud::bigquery::biglake::v1::Table>
-MetastoreServiceTracingConnection::UpdateTable(
-    google::cloud::bigquery::biglake::v1::UpdateTableRequest const& request) {
-  auto span = internal::MakeSpan(
-      "bigquery_biglake_v1::MetastoreServiceConnection::UpdateTable");
+MetastoreServiceTracingConnection::UpdateTable(google::cloud::bigquery::biglake::v1::UpdateTableRequest const& request) {
+  auto span = internal::MakeSpan("bigquery_biglake_v1::MetastoreServiceConnection::UpdateTable");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateTable(request));
 }
 
 StatusOr<google::cloud::bigquery::biglake::v1::Table>
-MetastoreServiceTracingConnection::RenameTable(
-    google::cloud::bigquery::biglake::v1::RenameTableRequest const& request) {
-  auto span = internal::MakeSpan(
-      "bigquery_biglake_v1::MetastoreServiceConnection::RenameTable");
+MetastoreServiceTracingConnection::RenameTable(google::cloud::bigquery::biglake::v1::RenameTableRequest const& request) {
+  auto span = internal::MakeSpan("bigquery_biglake_v1::MetastoreServiceConnection::RenameTable");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->RenameTable(request));
 }
 
 StatusOr<google::cloud::bigquery::biglake::v1::Table>
-MetastoreServiceTracingConnection::GetTable(
-    google::cloud::bigquery::biglake::v1::GetTableRequest const& request) {
-  auto span = internal::MakeSpan(
-      "bigquery_biglake_v1::MetastoreServiceConnection::GetTable");
+MetastoreServiceTracingConnection::GetTable(google::cloud::bigquery::biglake::v1::GetTableRequest const& request) {
+  auto span = internal::MakeSpan("bigquery_biglake_v1::MetastoreServiceConnection::GetTable");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetTable(request));
 }
 
 StreamRange<google::cloud::bigquery::biglake::v1::Table>
-MetastoreServiceTracingConnection::ListTables(
-    google::cloud::bigquery::biglake::v1::ListTablesRequest request) {
-  auto span = internal::MakeSpan(
-      "bigquery_biglake_v1::MetastoreServiceConnection::ListTables");
+MetastoreServiceTracingConnection::ListTables(google::cloud::bigquery::biglake::v1::ListTablesRequest request) {
+  auto span = internal::MakeSpan("bigquery_biglake_v1::MetastoreServiceConnection::ListTables");
   internal::OTelScope scope(span);
   auto sr = child_->ListTables(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::bigquery::biglake::v1::Table>(std::move(span),
-                                                   std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::bigquery::biglake::v1::Table>(
+        std::move(span), std::move(sr));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

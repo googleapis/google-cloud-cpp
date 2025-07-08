@@ -28,56 +28,48 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 JobServiceClient::JobServiceClient(
     std::shared_ptr<JobServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 JobServiceClient::~JobServiceClient() = default;
 
 StatusOr<google::cloud::bigquery::v2::JobCancelResponse>
-JobServiceClient::CancelJob(
-    google::cloud::bigquery::v2::CancelJobRequest const& request,
-    Options opts) {
+JobServiceClient::CancelJob(google::cloud::bigquery::v2::CancelJobRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelJob(request);
 }
 
-StatusOr<google::cloud::bigquery::v2::Job> JobServiceClient::GetJob(
-    google::cloud::bigquery::v2::GetJobRequest const& request, Options opts) {
+StatusOr<google::cloud::bigquery::v2::Job>
+JobServiceClient::GetJob(google::cloud::bigquery::v2::GetJobRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetJob(request);
 }
 
-StatusOr<google::cloud::bigquery::v2::Job> JobServiceClient::InsertJob(
-    google::cloud::bigquery::v2::InsertJobRequest const& request,
-    Options opts) {
+StatusOr<google::cloud::bigquery::v2::Job>
+JobServiceClient::InsertJob(google::cloud::bigquery::v2::InsertJobRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->InsertJob(request);
 }
 
-Status JobServiceClient::DeleteJob(
-    google::cloud::bigquery::v2::DeleteJobRequest const& request,
-    Options opts) {
+Status
+JobServiceClient::DeleteJob(google::cloud::bigquery::v2::DeleteJobRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteJob(request);
 }
 
 StreamRange<google::cloud::bigquery::v2::ListFormatJob>
-JobServiceClient::ListJobs(google::cloud::bigquery::v2::ListJobsRequest request,
-                           Options opts) {
+JobServiceClient::ListJobs(google::cloud::bigquery::v2::ListJobsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListJobs(std::move(request));
 }
 
 StatusOr<google::cloud::bigquery::v2::GetQueryResultsResponse>
-JobServiceClient::GetQueryResults(
-    google::cloud::bigquery::v2::GetQueryResultsRequest const& request,
-    Options opts) {
+JobServiceClient::GetQueryResults(google::cloud::bigquery::v2::GetQueryResultsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetQueryResults(request);
 }
 
-StatusOr<google::cloud::bigquery::v2::QueryResponse> JobServiceClient::Query(
-    google::cloud::bigquery::v2::PostQueryRequest const& request,
-    Options opts) {
+StatusOr<google::cloud::bigquery::v2::QueryResponse>
+JobServiceClient::Query(google::cloud::bigquery::v2::PostQueryRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->Query(request);
 }

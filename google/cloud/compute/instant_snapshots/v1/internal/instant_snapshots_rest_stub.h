@@ -37,100 +37,71 @@ class InstantSnapshotsRestStub {
  public:
   virtual ~InstantSnapshotsRestStub() = default;
 
-  virtual StatusOr<
-      google::cloud::cpp::compute::v1::InstantSnapshotAggregatedList>
-  AggregatedListInstantSnapshots(
+  virtual StatusOr<google::cloud::cpp::compute::v1::InstantSnapshotAggregatedList> AggregatedListInstantSnapshots(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::instant_snapshots::v1::
-          AggregatedListInstantSnapshotsRequest const& request) = 0;
+      Options const& options, google::cloud::cpp::compute::instant_snapshots::v1::AggregatedListInstantSnapshotsRequest const& request) = 0;
 
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncDeleteInstantSnapshot(
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncDeleteInstantSnapshot(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::instant_snapshots::v1::
-          DeleteInstantSnapshotRequest const& request) = 0;
+      google::cloud::cpp::compute::instant_snapshots::v1::DeleteInstantSnapshotRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteInstantSnapshot(google::cloud::rest_internal::RestContext& rest_context,
-                        Options const& options,
-                        google::cloud::cpp::compute::instant_snapshots::v1::
-                            DeleteInstantSnapshotRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteInstantSnapshot(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options, google::cloud::cpp::compute::instant_snapshots::v1::DeleteInstantSnapshotRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::InstantSnapshot>
-  GetInstantSnapshot(google::cloud::rest_internal::RestContext& rest_context,
-                     Options const& options,
-                     google::cloud::cpp::compute::instant_snapshots::v1::
-                         GetInstantSnapshotRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::InstantSnapshot> GetInstantSnapshot(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options, google::cloud::cpp::compute::instant_snapshots::v1::GetInstantSnapshotRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::instant_snapshots::v1::
-          GetIamPolicyRequest const& request) = 0;
+      Options const& options, google::cloud::cpp::compute::instant_snapshots::v1::GetIamPolicyRequest const& request) = 0;
 
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncInsertInstantSnapshot(
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncInsertInstantSnapshot(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::instant_snapshots::v1::
-          InsertInstantSnapshotRequest const& request) = 0;
+      google::cloud::cpp::compute::instant_snapshots::v1::InsertInstantSnapshotRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertInstantSnapshot(google::cloud::rest_internal::RestContext& rest_context,
-                        Options const& options,
-                        google::cloud::cpp::compute::instant_snapshots::v1::
-                            InsertInstantSnapshotRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> InsertInstantSnapshot(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options, google::cloud::cpp::compute::instant_snapshots::v1::InsertInstantSnapshotRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::InstantSnapshotList>
-  ListInstantSnapshots(google::cloud::rest_internal::RestContext& rest_context,
-                       Options const& options,
-                       google::cloud::cpp::compute::instant_snapshots::v1::
-                           ListInstantSnapshotsRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::InstantSnapshotList> ListInstantSnapshots(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options, google::cloud::cpp::compute::instant_snapshots::v1::ListInstantSnapshotsRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::instant_snapshots::v1::
-          SetIamPolicyRequest const& request) = 0;
+      Options const& options, google::cloud::cpp::compute::instant_snapshots::v1::SetIamPolicyRequest const& request) = 0;
 
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncSetLabels(
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncSetLabels(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::instant_snapshots::v1::
-          SetLabelsRequest const& request) = 0;
+      google::cloud::cpp::compute::instant_snapshots::v1::SetLabelsRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::instant_snapshots::v1::
-          SetLabelsRequest const& request) = 0;
+      Options const& options, google::cloud::cpp::compute::instant_snapshots::v1::SetLabelsRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(google::cloud::rest_internal::RestContext& rest_context,
-                     Options const& options,
-                     google::cloud::cpp::compute::instant_snapshots::v1::
-                         TestIamPermissionsRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse> TestIamPermissions(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options, google::cloud::cpp::compute::instant_snapshots::v1::TestIamPermissionsRequest const& request) = 0;
 
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncGetOperation(
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::zone_operations::v1::
-          GetOperationRequest const& request) = 0;
+      google::cloud::cpp::compute::zone_operations::v1::GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::zone_operations::v1::
-          DeleteOperationRequest const& request) = 0;
+      google::cloud::cpp::compute::zone_operations::v1::DeleteOperationRequest const& request) = 0;
 };
 
 class DefaultInstantSnapshotsRestStub : public InstantSnapshotsRestStub {
@@ -140,100 +111,74 @@ class DefaultInstantSnapshotsRestStub : public InstantSnapshotsRestStub {
   explicit DefaultInstantSnapshotsRestStub(Options options);
   DefaultInstantSnapshotsRestStub(
       std::shared_ptr<rest_internal::RestClient> service,
-      std::shared_ptr<rest_internal::RestClient> operations, Options options);
+      std::shared_ptr<rest_internal::RestClient> operations,
+      Options options);
 
-  StatusOr<google::cloud::cpp::compute::v1::InstantSnapshotAggregatedList>
-  AggregatedListInstantSnapshots(
+  StatusOr<google::cloud::cpp::compute::v1::InstantSnapshotAggregatedList> AggregatedListInstantSnapshots(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::instant_snapshots::v1::
-          AggregatedListInstantSnapshotsRequest const& request) override;
+      Options const& options, google::cloud::cpp::compute::instant_snapshots::v1::AggregatedListInstantSnapshotsRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncDeleteInstantSnapshot(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncDeleteInstantSnapshot(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::instant_snapshots::v1::
-          DeleteInstantSnapshotRequest const& request) override;
+      google::cloud::cpp::compute::instant_snapshots::v1::DeleteInstantSnapshotRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteInstantSnapshot(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::instant_snapshots::v1::
-          DeleteInstantSnapshotRequest const& request) override;
+      Options const& options, google::cloud::cpp::compute::instant_snapshots::v1::DeleteInstantSnapshotRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::InstantSnapshot> GetInstantSnapshot(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::instant_snapshots::v1::
-          GetInstantSnapshotRequest const& request) override;
+      Options const& options, google::cloud::cpp::compute::instant_snapshots::v1::GetInstantSnapshotRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::instant_snapshots::v1::
-          GetIamPolicyRequest const& request) override;
+      Options const& options, google::cloud::cpp::compute::instant_snapshots::v1::GetIamPolicyRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncInsertInstantSnapshot(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncInsertInstantSnapshot(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::instant_snapshots::v1::
-          InsertInstantSnapshotRequest const& request) override;
+      google::cloud::cpp::compute::instant_snapshots::v1::InsertInstantSnapshotRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertInstantSnapshot(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::instant_snapshots::v1::
-          InsertInstantSnapshotRequest const& request) override;
+      Options const& options, google::cloud::cpp::compute::instant_snapshots::v1::InsertInstantSnapshotRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::InstantSnapshotList>
-  ListInstantSnapshots(google::cloud::rest_internal::RestContext& rest_context,
-                       Options const& options,
-                       google::cloud::cpp::compute::instant_snapshots::v1::
-                           ListInstantSnapshotsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::InstantSnapshotList> ListInstantSnapshots(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options, google::cloud::cpp::compute::instant_snapshots::v1::ListInstantSnapshotsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::instant_snapshots::v1::
-          SetIamPolicyRequest const& request) override;
+      Options const& options, google::cloud::cpp::compute::instant_snapshots::v1::SetIamPolicyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncSetLabels(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::instant_snapshots::v1::
-          SetLabelsRequest const& request) override;
+      google::cloud::cpp::compute::instant_snapshots::v1::SetLabelsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::instant_snapshots::v1::
-          SetLabelsRequest const& request) override;
+      Options const& options, google::cloud::cpp::compute::instant_snapshots::v1::SetLabelsRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(google::cloud::rest_internal::RestContext& rest_context,
-                     Options const& options,
-                     google::cloud::cpp::compute::instant_snapshots::v1::
-                         TestIamPermissionsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse> TestIamPermissions(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options, google::cloud::cpp::compute::instant_snapshots::v1::TestIamPermissionsRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncGetOperation(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::zone_operations::v1::
-          GetOperationRequest const& request) override;
+      google::cloud::cpp::compute::zone_operations::v1::GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::zone_operations::v1::
-          DeleteOperationRequest const& request) override;
+      google::cloud::cpp::compute::zone_operations::v1::DeleteOperationRequest const& request) override;
 
  private:
   std::shared_ptr<rest_internal::RestClient> service_;

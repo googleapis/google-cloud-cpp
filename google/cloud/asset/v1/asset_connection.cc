@@ -42,26 +42,28 @@ future<StatusOr<google::cloud::asset::v1::ExportAssetsResponse>>
 AssetServiceConnection::ExportAssets(
     google::cloud::asset::v1::ExportAssetsRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::asset::v1::ExportAssetsResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::asset::v1::ExportAssetsResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation> AssetServiceConnection::ExportAssets(
-    NoAwaitTag, google::cloud::asset::v1::ExportAssetsRequest const&) {
+StatusOr<google::longrunning::Operation>
+AssetServiceConnection::ExportAssets(
+    NoAwaitTag,
+    google::cloud::asset::v1::ExportAssetsRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::asset::v1::ExportAssetsResponse>>
-AssetServiceConnection::ExportAssets(google::longrunning::Operation const&) {
+AssetServiceConnection::ExportAssets(
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::asset::v1::ExportAssetsResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::asset::v1::ExportAssetsResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StreamRange<google::cloud::asset::v1::Asset> AssetServiceConnection::ListAssets(
-    google::cloud::asset::v1::
-        ListAssetsRequest) {  // NOLINT(performance-unnecessary-value-param)
+    google::cloud::asset::v1::ListAssetsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::asset::v1::Asset>>();
 }
@@ -72,12 +74,14 @@ AssetServiceConnection::BatchGetAssetsHistory(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::cloud::asset::v1::Feed> AssetServiceConnection::CreateFeed(
+StatusOr<google::cloud::asset::v1::Feed>
+AssetServiceConnection::CreateFeed(
     google::cloud::asset::v1::CreateFeedRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::cloud::asset::v1::Feed> AssetServiceConnection::GetFeed(
+StatusOr<google::cloud::asset::v1::Feed>
+AssetServiceConnection::GetFeed(
     google::cloud::asset::v1::GetFeedRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -88,28 +92,26 @@ AssetServiceConnection::ListFeeds(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::cloud::asset::v1::Feed> AssetServiceConnection::UpdateFeed(
+StatusOr<google::cloud::asset::v1::Feed>
+AssetServiceConnection::UpdateFeed(
     google::cloud::asset::v1::UpdateFeedRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status AssetServiceConnection::DeleteFeed(
+Status
+AssetServiceConnection::DeleteFeed(
     google::cloud::asset::v1::DeleteFeedRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::asset::v1::ResourceSearchResult>
-AssetServiceConnection::SearchAllResources(
-    google::cloud::asset::v1::
-        SearchAllResourcesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::asset::v1::ResourceSearchResult> AssetServiceConnection::SearchAllResources(
+    google::cloud::asset::v1::SearchAllResourcesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::asset::v1::ResourceSearchResult>>();
 }
 
-StreamRange<google::cloud::asset::v1::IamPolicySearchResult>
-AssetServiceConnection::SearchAllIamPolicies(
-    google::cloud::asset::v1::
-        SearchAllIamPoliciesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::asset::v1::IamPolicySearchResult> AssetServiceConnection::SearchAllIamPolicies(
+    google::cloud::asset::v1::SearchAllIamPoliciesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::asset::v1::IamPolicySearchResult>>();
 }
@@ -124,8 +126,8 @@ future<StatusOr<google::cloud::asset::v1::AnalyzeIamPolicyLongrunningResponse>>
 AssetServiceConnection::AnalyzeIamPolicyLongrunning(
     google::cloud::asset::v1::AnalyzeIamPolicyLongrunningRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::asset::v1::AnalyzeIamPolicyLongrunningResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::asset::v1::AnalyzeIamPolicyLongrunningResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -133,15 +135,15 @@ AssetServiceConnection::AnalyzeIamPolicyLongrunning(
     NoAwaitTag,
     google::cloud::asset::v1::AnalyzeIamPolicyLongrunningRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::asset::v1::AnalyzeIamPolicyLongrunningResponse>>
 AssetServiceConnection::AnalyzeIamPolicyLongrunning(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::asset::v1::AnalyzeIamPolicyLongrunningResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::asset::v1::AnalyzeIamPolicyLongrunningResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::asset::v1::AnalyzeMoveResponse>
@@ -168,10 +170,8 @@ AssetServiceConnection::GetSavedQuery(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::asset::v1::SavedQuery>
-AssetServiceConnection::ListSavedQueries(
-    google::cloud::asset::v1::
-        ListSavedQueriesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::asset::v1::SavedQuery> AssetServiceConnection::ListSavedQueries(
+    google::cloud::asset::v1::ListSavedQueriesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::asset::v1::SavedQuery>>();
 }
@@ -182,7 +182,8 @@ AssetServiceConnection::UpdateSavedQuery(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status AssetServiceConnection::DeleteSavedQuery(
+Status
+AssetServiceConnection::DeleteSavedQuery(
     google::cloud::asset::v1::DeleteSavedQueryRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -193,36 +194,26 @@ AssetServiceConnection::BatchGetEffectiveIamPolicies(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<
-    google::cloud::asset::v1::AnalyzeOrgPoliciesResponse::OrgPolicyResult>
-AssetServiceConnection::AnalyzeOrgPolicies(
-    google::cloud::asset::v1::
-        AnalyzeOrgPoliciesRequest) {  // NOLINT(performance-unnecessary-value-param)
-  return google::cloud::internal::MakeUnimplementedPaginationRange<StreamRange<
-      google::cloud::asset::v1::AnalyzeOrgPoliciesResponse::OrgPolicyResult>>();
-}
-
-StreamRange<google::cloud::asset::v1::
-                AnalyzeOrgPolicyGovernedContainersResponse::GovernedContainer>
-AssetServiceConnection::AnalyzeOrgPolicyGovernedContainers(
-    google::cloud::asset::v1::
-        AnalyzeOrgPolicyGovernedContainersRequest) {  // NOLINT(performance-unnecessary-value-param)
-  return google::cloud::internal::MakeUnimplementedPaginationRange<StreamRange<
-      google::cloud::asset::v1::AnalyzeOrgPolicyGovernedContainersResponse::
-          GovernedContainer>>();
-}
-
-StreamRange<google::cloud::asset::v1::AnalyzeOrgPolicyGovernedAssetsResponse::
-                GovernedAsset>
-AssetServiceConnection::AnalyzeOrgPolicyGovernedAssets(
-    google::cloud::asset::v1::
-        AnalyzeOrgPolicyGovernedAssetsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::asset::v1::AnalyzeOrgPoliciesResponse::OrgPolicyResult> AssetServiceConnection::AnalyzeOrgPolicies(
+    google::cloud::asset::v1::AnalyzeOrgPoliciesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
-      StreamRange<google::cloud::asset::v1::
-                      AnalyzeOrgPolicyGovernedAssetsResponse::GovernedAsset>>();
+      StreamRange<google::cloud::asset::v1::AnalyzeOrgPoliciesResponse::OrgPolicyResult>>();
 }
 
-StatusOr<google::longrunning::Operation> AssetServiceConnection::GetOperation(
+StreamRange<google::cloud::asset::v1::AnalyzeOrgPolicyGovernedContainersResponse::GovernedContainer> AssetServiceConnection::AnalyzeOrgPolicyGovernedContainers(
+    google::cloud::asset::v1::AnalyzeOrgPolicyGovernedContainersRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::asset::v1::AnalyzeOrgPolicyGovernedContainersResponse::GovernedContainer>>();
+}
+
+StreamRange<google::cloud::asset::v1::AnalyzeOrgPolicyGovernedAssetsResponse::GovernedAsset> AssetServiceConnection::AnalyzeOrgPolicyGovernedAssets(
+    google::cloud::asset::v1::AnalyzeOrgPolicyGovernedAssetsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::asset::v1::AnalyzeOrgPolicyGovernedAssetsResponse::GovernedAsset>>();
+}
+
+StatusOr<google::longrunning::Operation>
+AssetServiceConnection::GetOperation(
     google::longrunning::GetOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -230,17 +221,17 @@ StatusOr<google::longrunning::Operation> AssetServiceConnection::GetOperation(
 std::shared_ptr<AssetServiceConnection> MakeAssetServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 AssetServicePolicyOptionList>(options,
-                                                               __func__);
-  options = asset_v1_internal::AssetServiceDefaultOptions(std::move(options));
+      UnifiedCredentialsOptionList,
+      AssetServicePolicyOptionList>(options, __func__);
+  options = asset_v1_internal::AssetServiceDefaultOptions(
+      std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
-  auto stub = asset_v1_internal::CreateDefaultAssetServiceStub(std::move(auth),
-                                                               options);
+  auto stub = asset_v1_internal::CreateDefaultAssetServiceStub(
+    std::move(auth), options);
   return asset_v1_internal::MakeAssetServiceTracingConnection(
       std::make_shared<asset_v1_internal::AssetServiceConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options)));
+      std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

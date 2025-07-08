@@ -17,12 +17,12 @@
 // source: google/privacy/dlp/v2/dlp.proto
 
 #include "google/cloud/dlp/v2/internal/dlp_stub_factory.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/dlp/v2/internal/dlp_auth_decorator.h"
 #include "google/cloud/dlp/v2/internal/dlp_logging_decorator.h"
 #include "google/cloud/dlp/v2/internal/dlp_metadata_decorator.h"
 #include "google/cloud/dlp/v2/internal/dlp_stub.h"
 #include "google/cloud/dlp/v2/internal/dlp_tracing_stub.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/opentelemetry.h"
@@ -37,25 +37,28 @@ namespace cloud {
 namespace dlp_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<DlpServiceStub> CreateDefaultDlpServiceStub(
+std::shared_ptr<DlpServiceStub>
+CreateDefaultDlpServiceStub(
     std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
     Options const& options) {
-  auto channel = auth->CreateChannel(options.get<EndpointOption>(),
-                                     internal::MakeChannelArguments(options));
-  auto service_grpc_stub =
-      google::privacy::dlp::v2::DlpService::NewStub(channel);
+  auto channel = auth->CreateChannel(
+    options.get<EndpointOption>(), internal::MakeChannelArguments(options));
+  auto service_grpc_stub = google::privacy::dlp::v2::DlpService::NewStub(channel);
   std::shared_ptr<DlpServiceStub> stub =
-      std::make_shared<DefaultDlpServiceStub>(std::move(service_grpc_stub));
+    std::make_shared<DefaultDlpServiceStub>(std::move(service_grpc_stub));
 
   if (auth->RequiresConfigureContext()) {
-    stub = std::make_shared<DlpServiceAuth>(std::move(auth), std::move(stub));
+    stub = std::make_shared<DlpServiceAuth>(
+        std::move(auth), std::move(stub));
   }
   stub = std::make_shared<DlpServiceMetadata>(
       std::move(stub), std::multimap<std::string, std::string>{});
-  if (internal::Contains(options.get<LoggingComponentsOption>(), "rpc")) {
+  if (internal::Contains(
+      options.get<LoggingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<DlpServiceLogging>(
-        std::move(stub), options.get<GrpcTracingOptionsOption>(),
+        std::move(stub),
+        options.get<GrpcTracingOptionsOption>(),
         options.get<LoggingComponentsOption>());
   }
   if (internal::TracingEnabled(options)) {

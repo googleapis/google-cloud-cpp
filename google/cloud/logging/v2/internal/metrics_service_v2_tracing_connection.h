@@ -36,33 +36,33 @@ class MetricsServiceV2TracingConnection
   ~MetricsServiceV2TracingConnection() override = default;
 
   explicit MetricsServiceV2TracingConnection(
-      std::shared_ptr<logging_v2::MetricsServiceV2Connection> child);
+    std::shared_ptr<logging_v2::MetricsServiceV2Connection> child);
 
   Options options() override { return child_->options(); }
 
-  StreamRange<google::logging::v2::LogMetric> ListLogMetrics(
-      google::logging::v2::ListLogMetricsRequest request) override;
+  StreamRange<google::logging::v2::LogMetric>
+  ListLogMetrics(google::logging::v2::ListLogMetricsRequest request) override;
 
-  StatusOr<google::logging::v2::LogMetric> GetLogMetric(
-      google::logging::v2::GetLogMetricRequest const& request) override;
+  StatusOr<google::logging::v2::LogMetric>
+  GetLogMetric(google::logging::v2::GetLogMetricRequest const& request) override;
 
-  StatusOr<google::logging::v2::LogMetric> CreateLogMetric(
-      google::logging::v2::CreateLogMetricRequest const& request) override;
+  StatusOr<google::logging::v2::LogMetric>
+  CreateLogMetric(google::logging::v2::CreateLogMetricRequest const& request) override;
 
-  StatusOr<google::logging::v2::LogMetric> UpdateLogMetric(
-      google::logging::v2::UpdateLogMetricRequest const& request) override;
+  StatusOr<google::logging::v2::LogMetric>
+  UpdateLogMetric(google::logging::v2::UpdateLogMetricRequest const& request) override;
 
-  Status DeleteLogMetric(
-      google::logging::v2::DeleteLogMetricRequest const& request) override;
+  Status
+  DeleteLogMetric(google::logging::v2::DeleteLogMetricRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request) override;
 
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request) override;
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::shared_ptr<logging_v2::MetricsServiceV2Connection> child_;

@@ -19,11 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LUSTRE_V1_LUSTRE_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LUSTRE_V1_LUSTRE_CONNECTION_H
 
-#include "google/cloud/lustre/v1/internal/lustre_retry_traits.h"
-#include "google/cloud/lustre/v1/lustre_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/lustre/v1/internal/lustre_retry_traits.h"
+#include "google/cloud/lustre/v1/lustre_connection_idempotency_policy.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -66,14 +66,14 @@ class LustreLimitedErrorCountRetryPolicy : public LustreRetryPolicy {
    *     @p maximum_failures == 0.
    */
   explicit LustreLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   LustreLimitedErrorCountRetryPolicy(
       LustreLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : LustreLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : LustreLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   LustreLimitedErrorCountRetryPolicy(
       LustreLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : LustreLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : LustreLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -93,9 +93,7 @@ class LustreLimitedErrorCountRetryPolicy : public LustreRetryPolicy {
   using BaseType = LustreRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      lustre_v1_internal::LustreRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<lustre_v1_internal::LustreRetryTraits> impl_;
 };
 
 /**
@@ -133,12 +131,12 @@ class LustreLimitedTimeRetryPolicy : public LustreRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit LustreLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
   LustreLimitedTimeRetryPolicy(LustreLimitedTimeRetryPolicy&& rhs) noexcept
-      : LustreLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+    : LustreLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
   LustreLimitedTimeRetryPolicy(LustreLimitedTimeRetryPolicy const& rhs) noexcept
-      : LustreLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+    : LustreLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -152,16 +150,15 @@ class LustreLimitedTimeRetryPolicy : public LustreRetryPolicy {
     return impl_.IsPermanentFailure(status);
   }
   std::unique_ptr<LustreRetryPolicy> clone() const override {
-    return std::make_unique<LustreLimitedTimeRetryPolicy>(maximum_duration());
+    return std::make_unique<LustreLimitedTimeRetryPolicy>(
+        maximum_duration());
   }
 
   // This is provided only for backwards compatibility.
   using BaseType = LustreRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      lustre_v1_internal::LustreRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<lustre_v1_internal::LustreRetryTraits> impl_;
 };
 
 /**
@@ -182,78 +179,74 @@ class LustreConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StreamRange<google::cloud::lustre::v1::Instance> ListInstances(
-      google::cloud::lustre::v1::ListInstancesRequest request);
+  virtual StreamRange<google::cloud::lustre::v1::Instance>
+  ListInstances(google::cloud::lustre::v1::ListInstancesRequest request);
 
-  virtual StatusOr<google::cloud::lustre::v1::Instance> GetInstance(
-      google::cloud::lustre::v1::GetInstanceRequest const& request);
+  virtual StatusOr<google::cloud::lustre::v1::Instance>
+  GetInstance(google::cloud::lustre::v1::GetInstanceRequest const& request);
 
-  virtual future<StatusOr<google::cloud::lustre::v1::Instance>> CreateInstance(
-      google::cloud::lustre::v1::CreateInstanceRequest const& request);
+  virtual future<StatusOr<google::cloud::lustre::v1::Instance>>
+  CreateInstance(google::cloud::lustre::v1::CreateInstanceRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> CreateInstance(
-      NoAwaitTag,
-      google::cloud::lustre::v1::CreateInstanceRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  CreateInstance(NoAwaitTag, google::cloud::lustre::v1::CreateInstanceRequest const& request);
 
-  virtual future<StatusOr<google::cloud::lustre::v1::Instance>> CreateInstance(
-      google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::lustre::v1::Instance>>
+  CreateInstance( google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<google::cloud::lustre::v1::Instance>> UpdateInstance(
-      google::cloud::lustre::v1::UpdateInstanceRequest const& request);
+  virtual future<StatusOr<google::cloud::lustre::v1::Instance>>
+  UpdateInstance(google::cloud::lustre::v1::UpdateInstanceRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> UpdateInstance(
-      NoAwaitTag,
-      google::cloud::lustre::v1::UpdateInstanceRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  UpdateInstance(NoAwaitTag, google::cloud::lustre::v1::UpdateInstanceRequest const& request);
 
-  virtual future<StatusOr<google::cloud::lustre::v1::Instance>> UpdateInstance(
-      google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::lustre::v1::Instance>>
+  UpdateInstance( google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::lustre::v1::OperationMetadata>>
-  DeleteInstance(
-      google::cloud::lustre::v1::DeleteInstanceRequest const& request);
+  DeleteInstance(google::cloud::lustre::v1::DeleteInstanceRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> DeleteInstance(
-      NoAwaitTag,
-      google::cloud::lustre::v1::DeleteInstanceRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  DeleteInstance(NoAwaitTag, google::cloud::lustre::v1::DeleteInstanceRequest const& request);
 
   virtual future<StatusOr<google::cloud::lustre::v1::OperationMetadata>>
-  DeleteInstance(google::longrunning::Operation const& operation);
+  DeleteInstance( google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::lustre::v1::ImportDataResponse>>
   ImportData(google::cloud::lustre::v1::ImportDataRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> ImportData(
-      NoAwaitTag, google::cloud::lustre::v1::ImportDataRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  ImportData(NoAwaitTag, google::cloud::lustre::v1::ImportDataRequest const& request);
 
   virtual future<StatusOr<google::cloud::lustre::v1::ImportDataResponse>>
-  ImportData(google::longrunning::Operation const& operation);
+  ImportData( google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::lustre::v1::ExportDataResponse>>
   ExportData(google::cloud::lustre::v1::ExportDataRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> ExportData(
-      NoAwaitTag, google::cloud::lustre::v1::ExportDataRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  ExportData(NoAwaitTag, google::cloud::lustre::v1::ExportDataRequest const& request);
 
   virtual future<StatusOr<google::cloud::lustre::v1::ExportDataResponse>>
-  ExportData(google::longrunning::Operation const& operation);
+  ExportData( google::longrunning::Operation const& operation);
 
-  virtual StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request);
+  virtual StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request);
 
-  virtual StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request);
+  virtual StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request);
 
-  virtual StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 
-  virtual Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request);
+  virtual Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
 
-  virtual Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request);
+  virtual Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request);
 };
 
 /**
@@ -277,7 +270,8 @@ class LustreConnection {
  * @param options (optional) Configure the `LustreConnection` created by
  * this function.
  */
-std::shared_ptr<LustreConnection> MakeLustreConnection(Options options = {});
+std::shared_ptr<LustreConnection> MakeLustreConnection(
+    Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace lustre_v1

@@ -26,16 +26,11 @@ namespace cloud {
 namespace apigateway {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use
-/// apigateway_v1::MakeDefaultApiGatewayServiceConnectionIdempotencyPolicy
-/// directly.
-using ::google::cloud::apigateway_v1::
-    MakeDefaultApiGatewayServiceConnectionIdempotencyPolicy;
+/// @deprecated Use apigateway_v1::MakeDefaultApiGatewayServiceConnectionIdempotencyPolicy directly.
+using ::google::cloud::apigateway_v1::MakeDefaultApiGatewayServiceConnectionIdempotencyPolicy;
 
-/// @deprecated Use apigateway_v1::ApiGatewayServiceConnectionIdempotencyPolicy
-/// directly.
-using ::google::cloud::apigateway_v1::
-    ApiGatewayServiceConnectionIdempotencyPolicy;
+/// @deprecated Use apigateway_v1::ApiGatewayServiceConnectionIdempotencyPolicy directly.
+using ::google::cloud::apigateway_v1::ApiGatewayServiceConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace apigateway

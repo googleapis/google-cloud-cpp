@@ -31,19 +31,21 @@ namespace bigquery_migration_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 MigrationServiceLogging::MigrationServiceLogging(
-    std::shared_ptr<MigrationServiceStub> child, TracingOptions tracing_options,
+    std::shared_ptr<MigrationServiceStub> child,
+    TracingOptions tracing_options,
     std::set<std::string> const&)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::cloud::bigquery::migration::v2::MigrationWorkflow>
 MigrationServiceLogging::CreateMigrationWorkflow(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::migration::v2::
-        CreateMigrationWorkflowRequest const& request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::migration::v2::CreateMigrationWorkflowRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::bigquery::migration::v2::
-                 CreateMigrationWorkflowRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::bigquery::migration::v2::CreateMigrationWorkflowRequest const& request) {
         return child_->CreateMigrationWorkflow(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -51,13 +53,13 @@ MigrationServiceLogging::CreateMigrationWorkflow(
 
 StatusOr<google::cloud::bigquery::migration::v2::MigrationWorkflow>
 MigrationServiceLogging::GetMigrationWorkflow(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::migration::v2::GetMigrationWorkflowRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::migration::v2::GetMigrationWorkflowRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::bigquery::migration::v2::
-                 GetMigrationWorkflowRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::bigquery::migration::v2::GetMigrationWorkflowRequest const& request) {
         return child_->GetMigrationWorkflow(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -65,39 +67,41 @@ MigrationServiceLogging::GetMigrationWorkflow(
 
 StatusOr<google::cloud::bigquery::migration::v2::ListMigrationWorkflowsResponse>
 MigrationServiceLogging::ListMigrationWorkflows(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::migration::v2::ListMigrationWorkflowsRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::migration::v2::ListMigrationWorkflowsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::bigquery::migration::v2::
-                 ListMigrationWorkflowsRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::bigquery::migration::v2::ListMigrationWorkflowsRequest const& request) {
         return child_->ListMigrationWorkflows(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status MigrationServiceLogging::DeleteMigrationWorkflow(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::migration::v2::
-        DeleteMigrationWorkflowRequest const& request) {
+Status
+MigrationServiceLogging::DeleteMigrationWorkflow(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::migration::v2::DeleteMigrationWorkflowRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::bigquery::migration::v2::
-                 DeleteMigrationWorkflowRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::bigquery::migration::v2::DeleteMigrationWorkflowRequest const& request) {
         return child_->DeleteMigrationWorkflow(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status MigrationServiceLogging::StartMigrationWorkflow(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::migration::v2::StartMigrationWorkflowRequest const&
-        request) {
+Status
+MigrationServiceLogging::StartMigrationWorkflow(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::migration::v2::StartMigrationWorkflowRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::bigquery::migration::v2::
-                 StartMigrationWorkflowRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::bigquery::migration::v2::StartMigrationWorkflowRequest const& request) {
         return child_->StartMigrationWorkflow(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -105,13 +109,13 @@ Status MigrationServiceLogging::StartMigrationWorkflow(
 
 StatusOr<google::cloud::bigquery::migration::v2::MigrationSubtask>
 MigrationServiceLogging::GetMigrationSubtask(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::migration::v2::GetMigrationSubtaskRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::migration::v2::GetMigrationSubtaskRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::bigquery::migration::v2::
-                 GetMigrationSubtaskRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::bigquery::migration::v2::GetMigrationSubtaskRequest const& request) {
         return child_->GetMigrationSubtask(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -119,13 +123,13 @@ MigrationServiceLogging::GetMigrationSubtask(
 
 StatusOr<google::cloud::bigquery::migration::v2::ListMigrationSubtasksResponse>
 MigrationServiceLogging::ListMigrationSubtasks(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::migration::v2::ListMigrationSubtasksRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::migration::v2::ListMigrationSubtasksRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::bigquery::migration::v2::
-                 ListMigrationSubtasksRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::bigquery::migration::v2::ListMigrationSubtasksRequest const& request) {
         return child_->ListMigrationSubtasks(context, options, request);
       },
       context, options, request, __func__, tracing_options_);

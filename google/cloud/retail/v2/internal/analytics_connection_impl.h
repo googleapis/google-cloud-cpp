@@ -19,16 +19,16 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RETAIL_V2_INTERNAL_ANALYTICS_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RETAIL_V2_INTERNAL_ANALYTICS_CONNECTION_IMPL_H
 
-#include "google/cloud/retail/v2/analytics_connection.h"
-#include "google/cloud/retail/v2/analytics_connection_idempotency_policy.h"
-#include "google/cloud/retail/v2/analytics_options.h"
-#include "google/cloud/retail/v2/internal/analytics_retry_traits.h"
-#include "google/cloud/retail/v2/internal/analytics_stub.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
+#include "google/cloud/retail/v2/analytics_connection.h"
+#include "google/cloud/retail/v2/analytics_connection_idempotency_policy.h"
+#include "google/cloud/retail/v2/analytics_options.h"
+#include "google/cloud/retail/v2/internal/analytics_retry_traits.h"
+#include "google/cloud/retail/v2/internal/analytics_stub.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
@@ -46,31 +46,28 @@ class AnalyticsServiceConnectionImpl
   ~AnalyticsServiceConnectionImpl() override = default;
 
   AnalyticsServiceConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<retail_v2_internal::AnalyticsServiceStub> stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<retail_v2_internal::AnalyticsServiceStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
   future<StatusOr<google::cloud::retail::v2::ExportAnalyticsMetricsResponse>>
-  ExportAnalyticsMetrics(
-      google::cloud::retail::v2::ExportAnalyticsMetricsRequest const& request)
-      override;
+  ExportAnalyticsMetrics(google::cloud::retail::v2::ExportAnalyticsMetricsRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> ExportAnalyticsMetrics(
-      NoAwaitTag,
-      google::cloud::retail::v2::ExportAnalyticsMetricsRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  ExportAnalyticsMetrics(NoAwaitTag,
+      google::cloud::retail::v2::ExportAnalyticsMetricsRequest const& request) override;
 
   future<StatusOr<google::cloud::retail::v2::ExportAnalyticsMetricsResponse>>
   ExportAnalyticsMetrics(
       google::longrunning::Operation const& operation) override;
 
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

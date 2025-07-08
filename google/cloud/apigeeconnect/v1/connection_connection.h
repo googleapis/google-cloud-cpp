@@ -53,8 +53,7 @@ class ConnectionServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  * - [`kUnknown`](@ref google::cloud::StatusCode)
  */
-class ConnectionServiceLimitedErrorCountRetryPolicy
-    : public ConnectionServiceRetryPolicy {
+class ConnectionServiceLimitedErrorCountRetryPolicy : public ConnectionServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -64,14 +63,14 @@ class ConnectionServiceLimitedErrorCountRetryPolicy
    *     @p maximum_failures == 0.
    */
   explicit ConnectionServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   ConnectionServiceLimitedErrorCountRetryPolicy(
       ConnectionServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : ConnectionServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : ConnectionServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   ConnectionServiceLimitedErrorCountRetryPolicy(
       ConnectionServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : ConnectionServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : ConnectionServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -91,9 +90,7 @@ class ConnectionServiceLimitedErrorCountRetryPolicy
   using BaseType = ConnectionServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      apigeeconnect_v1_internal::ConnectionServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<apigeeconnect_v1_internal::ConnectionServiceRetryTraits> impl_;
 };
 
 /**
@@ -107,8 +104,7 @@ class ConnectionServiceLimitedErrorCountRetryPolicy
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  * - [`kUnknown`](@ref google::cloud::StatusCode)
  */
-class ConnectionServiceLimitedTimeRetryPolicy
-    : public ConnectionServiceRetryPolicy {
+class ConnectionServiceLimitedTimeRetryPolicy : public ConnectionServiceRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -133,14 +129,12 @@ class ConnectionServiceLimitedTimeRetryPolicy
   template <typename DurationRep, typename DurationPeriod>
   explicit ConnectionServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  ConnectionServiceLimitedTimeRetryPolicy(
-      ConnectionServiceLimitedTimeRetryPolicy&& rhs) noexcept
-      : ConnectionServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  ConnectionServiceLimitedTimeRetryPolicy(
-      ConnectionServiceLimitedTimeRetryPolicy const& rhs) noexcept
-      : ConnectionServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  ConnectionServiceLimitedTimeRetryPolicy(ConnectionServiceLimitedTimeRetryPolicy&& rhs) noexcept
+    : ConnectionServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  ConnectionServiceLimitedTimeRetryPolicy(ConnectionServiceLimitedTimeRetryPolicy const& rhs) noexcept
+    : ConnectionServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -162,18 +156,16 @@ class ConnectionServiceLimitedTimeRetryPolicy
   using BaseType = ConnectionServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      apigeeconnect_v1_internal::ConnectionServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<apigeeconnect_v1_internal::ConnectionServiceRetryTraits> impl_;
 };
 
 /**
  * The `ConnectionServiceConnection` object for `ConnectionServiceClient`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `ConnectionServiceClient`. This allows users to inject custom
- * behavior (e.g., with a Google Mock object) when writing tests that use
- * objects of type `ConnectionServiceClient`.
+ * sets in `ConnectionServiceClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `ConnectionServiceClient`.
  *
  * To create a concrete instance, see `MakeConnectionServiceConnection()`.
  *
@@ -186,21 +178,18 @@ class ConnectionServiceConnection {
   virtual Options options() { return Options{}; }
 
   virtual StreamRange<google::cloud::apigeeconnect::v1::Connection>
-  ListConnections(
-      google::cloud::apigeeconnect::v1::ListConnectionsRequest request);
+  ListConnections(google::cloud::apigeeconnect::v1::ListConnectionsRequest request);
 };
 
 /**
- * A factory function to construct an object of type
- * `ConnectionServiceConnection`.
+ * A factory function to construct an object of type `ConnectionServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of
- * ConnectionServiceClient.
+ * should be passed as an argument to the constructor of ConnectionServiceClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `ConnectionServiceConnection`. Expected options are any of the types
- * in the following option lists:
+ * returned `ConnectionServiceConnection`. Expected options are any of the types in
+ * the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
@@ -210,8 +199,8 @@ class ConnectionServiceConnection {
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
- * @param options (optional) Configure the `ConnectionServiceConnection` created
- * by this function.
+ * @param options (optional) Configure the `ConnectionServiceConnection` created by
+ * this function.
  */
 std::shared_ptr<ConnectionServiceConnection> MakeConnectionServiceConnection(
     Options options = {});

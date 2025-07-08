@@ -33,7 +33,8 @@ SubscriberAuth::SubscriberAuth(
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
 StatusOr<google::pubsub::v1::Subscription> SubscriberAuth::CreateSubscription(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::pubsub::v1::Subscription const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -41,7 +42,8 @@ StatusOr<google::pubsub::v1::Subscription> SubscriberAuth::CreateSubscription(
 }
 
 StatusOr<google::pubsub::v1::Subscription> SubscriberAuth::GetSubscription(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::pubsub::v1::GetSubscriptionRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -49,16 +51,17 @@ StatusOr<google::pubsub::v1::Subscription> SubscriberAuth::GetSubscription(
 }
 
 StatusOr<google::pubsub::v1::Subscription> SubscriberAuth::UpdateSubscription(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::pubsub::v1::UpdateSubscriptionRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateSubscription(context, options, request);
 }
 
-StatusOr<google::pubsub::v1::ListSubscriptionsResponse>
-SubscriberAuth::ListSubscriptions(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::pubsub::v1::ListSubscriptionsResponse> SubscriberAuth::ListSubscriptions(
+    grpc::ClientContext& context,
+    Options const& options,
     google::pubsub::v1::ListSubscriptionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -66,7 +69,8 @@ SubscriberAuth::ListSubscriptions(
 }
 
 Status SubscriberAuth::DeleteSubscription(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::pubsub::v1::DeleteSubscriptionRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -74,7 +78,8 @@ Status SubscriberAuth::DeleteSubscription(
 }
 
 StatusOr<google::pubsub::v1::PullResponse> SubscriberAuth::Pull(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::pubsub::v1::PullRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -89,19 +94,19 @@ SubscriberAuth::AsyncStreamingPull(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options) {
   using StreamAuth = google::cloud::internal::AsyncStreamingReadWriteRpcAuth<
-      google::pubsub::v1::StreamingPullRequest,
-      google::pubsub::v1::StreamingPullResponse>;
+    google::pubsub::v1::StreamingPullRequest, google::pubsub::v1::StreamingPullResponse>;
 
   auto call = [child = child_, cq, options = std::move(options)](
                   std::shared_ptr<grpc::ClientContext> ctx) {
     return child->AsyncStreamingPull(cq, std::move(ctx), options);
   };
   return std::make_unique<StreamAuth>(
-      std::move(context), auth_, StreamAuth::StreamFactory(std::move(call)));
+    std::move(context), auth_, StreamAuth::StreamFactory(std::move(call)));
 }
 
 Status SubscriberAuth::ModifyPushConfig(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::pubsub::v1::ModifyPushConfigRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -109,16 +114,17 @@ Status SubscriberAuth::ModifyPushConfig(
 }
 
 StatusOr<google::pubsub::v1::Snapshot> SubscriberAuth::GetSnapshot(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::pubsub::v1::GetSnapshotRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetSnapshot(context, options, request);
 }
 
-StatusOr<google::pubsub::v1::ListSnapshotsResponse>
-SubscriberAuth::ListSnapshots(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::pubsub::v1::ListSnapshotsResponse> SubscriberAuth::ListSnapshots(
+    grpc::ClientContext& context,
+    Options const& options,
     google::pubsub::v1::ListSnapshotsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -126,7 +132,8 @@ SubscriberAuth::ListSnapshots(
 }
 
 StatusOr<google::pubsub::v1::Snapshot> SubscriberAuth::CreateSnapshot(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::pubsub::v1::CreateSnapshotRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -134,7 +141,8 @@ StatusOr<google::pubsub::v1::Snapshot> SubscriberAuth::CreateSnapshot(
 }
 
 StatusOr<google::pubsub::v1::Snapshot> SubscriberAuth::UpdateSnapshot(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::pubsub::v1::UpdateSnapshotRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -142,7 +150,8 @@ StatusOr<google::pubsub::v1::Snapshot> SubscriberAuth::UpdateSnapshot(
 }
 
 Status SubscriberAuth::DeleteSnapshot(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::pubsub::v1::DeleteSnapshotRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -150,7 +159,8 @@ Status SubscriberAuth::DeleteSnapshot(
 }
 
 StatusOr<google::pubsub::v1::SeekResponse> SubscriberAuth::Seek(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::pubsub::v1::SeekRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -158,7 +168,8 @@ StatusOr<google::pubsub::v1::SeekResponse> SubscriberAuth::Seek(
 }
 
 StatusOr<google::iam::v1::Policy> SubscriberAuth::SetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -166,51 +177,52 @@ StatusOr<google::iam::v1::Policy> SubscriberAuth::SetIamPolicy(
 }
 
 StatusOr<google::iam::v1::Policy> SubscriberAuth::GetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetIamPolicy(context, options, request);
 }
 
-StatusOr<google::iam::v1::TestIamPermissionsResponse>
-SubscriberAuth::TestIamPermissions(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::iam::v1::TestIamPermissionsResponse> SubscriberAuth::TestIamPermissions(
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->TestIamPermissions(context, options, request);
 }
 
-future<Status> SubscriberAuth::AsyncModifyAckDeadline(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::pubsub::v1::ModifyAckDeadlineRequest const& request) {
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+future<Status>
+SubscriberAuth::AsyncModifyAckDeadline(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::pubsub::v1::ModifyAckDeadlineRequest const& request) {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) return make_ready_future(std::move(context).status());
-        return child->AsyncModifyAckDeadline(cq, *std::move(context),
-                                             std::move(options), request);
+        return child->AsyncModifyAckDeadline(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
-future<Status> SubscriberAuth::AsyncAcknowledge(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::pubsub::v1::AcknowledgeRequest const& request) {
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+future<Status>
+SubscriberAuth::AsyncAcknowledge(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::pubsub::v1::AcknowledgeRequest const& request) {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) return make_ready_future(std::move(context).status());
-        return child->AsyncAcknowledge(cq, *std::move(context),
-                                       std::move(options), request);
+        return child->AsyncAcknowledge(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 

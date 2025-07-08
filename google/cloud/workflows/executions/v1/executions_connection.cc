@@ -17,17 +17,17 @@
 // source: google/cloud/workflows/executions/v1/executions.proto
 
 #include "google/cloud/workflows/executions/v1/executions_connection.h"
-#include "google/cloud/workflows/executions/v1/executions_options.h"
-#include "google/cloud/workflows/executions/v1/internal/executions_connection_impl.h"
-#include "google/cloud/workflows/executions/v1/internal/executions_option_defaults.h"
-#include "google/cloud/workflows/executions/v1/internal/executions_stub_factory.h"
-#include "google/cloud/workflows/executions/v1/internal/executions_tracing_connection.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/workflows/executions/v1/executions_options.h"
+#include "google/cloud/workflows/executions/v1/internal/executions_connection_impl.h"
+#include "google/cloud/workflows/executions/v1/internal/executions_option_defaults.h"
+#include "google/cloud/workflows/executions/v1/internal/executions_stub_factory.h"
+#include "google/cloud/workflows/executions/v1/internal/executions_tracing_connection.h"
 #include <memory>
 #include <utility>
 
@@ -38,10 +38,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ExecutionsConnection::~ExecutionsConnection() = default;
 
-StreamRange<google::cloud::workflows::executions::v1::Execution>
-ExecutionsConnection::ListExecutions(
-    google::cloud::workflows::executions::v1::
-        ListExecutionsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::workflows::executions::v1::Execution> ExecutionsConnection::ListExecutions(
+    google::cloud::workflows::executions::v1::ListExecutionsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::workflows::executions::v1::Execution>>();
 }
@@ -67,18 +65,17 @@ ExecutionsConnection::CancelExecution(
 std::shared_ptr<ExecutionsConnection> MakeExecutionsConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 ExecutionsPolicyOptionList>(options, __func__);
+      UnifiedCredentialsOptionList,
+      ExecutionsPolicyOptionList>(options, __func__);
   options = workflows_executions_v1_internal::ExecutionsDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = workflows_executions_v1_internal::CreateDefaultExecutionsStub(
-      std::move(auth), options);
+    std::move(auth), options);
   return workflows_executions_v1_internal::MakeExecutionsTracingConnection(
-      std::make_shared<
-          workflows_executions_v1_internal::ExecutionsConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options)));
+      std::make_shared<workflows_executions_v1_internal::ExecutionsConnectionImpl>(
+      std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -36,27 +36,28 @@ class AnalyticsServiceLogging : public AnalyticsServiceStub {
  public:
   ~AnalyticsServiceLogging() override = default;
   AnalyticsServiceLogging(std::shared_ptr<AnalyticsServiceStub> child,
-                          TracingOptions tracing_options,
-                          std::set<std::string> const& components);
+                       TracingOptions tracing_options,
+                       std::set<std::string> const& components);
 
   future<StatusOr<google::longrunning::Operation>> AsyncExportAnalyticsMetrics(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::retail::v2::ExportAnalyticsMetricsRequest const& request)
-      override;
+      google::cloud::retail::v2::ExportAnalyticsMetricsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> ExportAnalyticsMetrics(
-      grpc::ClientContext& context, Options options,
-      google::cloud::retail::v2::ExportAnalyticsMetricsRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::retail::v2::ExportAnalyticsMetricsRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(

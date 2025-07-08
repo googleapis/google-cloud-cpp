@@ -17,9 +17,9 @@
 // source: google/cloud/dialogflow/cx/v3/transition_route_group.proto
 
 #include "google/cloud/dialogflow_cx/internal/transition_route_groups_connection_impl.h"
-#include "google/cloud/dialogflow_cx/internal/transition_route_groups_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/dialogflow_cx/internal/transition_route_groups_option_defaults.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
@@ -32,68 +32,54 @@ namespace dialogflow_cx_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<dialogflow_cx::TransitionRouteGroupsRetryPolicy> retry_policy(
-    Options const& options) {
-  return options.get<dialogflow_cx::TransitionRouteGroupsRetryPolicyOption>()
-      ->clone();
+std::unique_ptr<dialogflow_cx::TransitionRouteGroupsRetryPolicy>
+retry_policy(Options const& options) {
+  return options.get<dialogflow_cx::TransitionRouteGroupsRetryPolicyOption>()->clone();
 }
 
-std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-  return options.get<dialogflow_cx::TransitionRouteGroupsBackoffPolicyOption>()
-      ->clone();
+std::unique_ptr<BackoffPolicy>
+backoff_policy(Options const& options) {
+  return options.get<dialogflow_cx::TransitionRouteGroupsBackoffPolicyOption>()->clone();
 }
 
 std::unique_ptr<dialogflow_cx::TransitionRouteGroupsConnectionIdempotencyPolicy>
 idempotency_policy(Options const& options) {
-  return options
-      .get<dialogflow_cx::
-               TransitionRouteGroupsConnectionIdempotencyPolicyOption>()
-      ->clone();
+  return options.get<dialogflow_cx::TransitionRouteGroupsConnectionIdempotencyPolicyOption>()->clone();
 }
 
-}  // namespace
+} // namespace
 
 TransitionRouteGroupsConnectionImpl::TransitionRouteGroupsConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<dialogflow_cx_internal::TransitionRouteGroupsStub> stub,
     Options options)
-    : background_(std::move(background)),
-      stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options), TransitionRouteGroupsConnection::options())) {}
+  : background_(std::move(background)), stub_(std::move(stub)),
+    options_(internal::MergeOptions(
+        std::move(options),
+        TransitionRouteGroupsConnection::options())) {}
 
 StreamRange<google::cloud::dialogflow::cx::v3::TransitionRouteGroup>
-TransitionRouteGroupsConnectionImpl::ListTransitionRouteGroups(
-    google::cloud::dialogflow::cx::v3::ListTransitionRouteGroupsRequest
-        request) {
+TransitionRouteGroupsConnectionImpl::ListTransitionRouteGroups(google::cloud::dialogflow::cx::v3::ListTransitionRouteGroupsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
-  auto idempotency =
-      idempotency_policy(*current)->ListTransitionRouteGroups(request);
+  auto idempotency = idempotency_policy(*current)->ListTransitionRouteGroups(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::dialogflow::cx::v3::TransitionRouteGroup>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::dialogflow::cx::v3::TransitionRouteGroup>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<dialogflow_cx::TransitionRouteGroupsRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<dialogflow_cx::TransitionRouteGroupsRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::dialogflow::cx::v3::
-              ListTransitionRouteGroupsRequest const& r) {
+          Options const& options, google::cloud::dialogflow::cx::v3::ListTransitionRouteGroupsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::dialogflow::cx::v3::
-                       ListTransitionRouteGroupsRequest const& request) {
+                   google::cloud::dialogflow::cx::v3::ListTransitionRouteGroupsRequest const& request) {
               return stub->ListTransitionRouteGroups(context, options, request);
             },
             options, r, function_name);
       },
-      [](google::cloud::dialogflow::cx::v3::ListTransitionRouteGroupsResponse
-             r) {
-        std::vector<google::cloud::dialogflow::cx::v3::TransitionRouteGroup>
-            result(r.transition_route_groups().size());
+      [](google::cloud::dialogflow::cx::v3::ListTransitionRouteGroupsResponse r) {
+        std::vector<google::cloud::dialogflow::cx::v3::TransitionRouteGroup> result(r.transition_route_groups().size());
         auto& messages = *r.mutable_transition_route_groups();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -101,96 +87,79 @@ TransitionRouteGroupsConnectionImpl::ListTransitionRouteGroups(
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::TransitionRouteGroup>
-TransitionRouteGroupsConnectionImpl::GetTransitionRouteGroup(
-    google::cloud::dialogflow::cx::v3::GetTransitionRouteGroupRequest const&
-        request) {
+TransitionRouteGroupsConnectionImpl::GetTransitionRouteGroup(google::cloud::dialogflow::cx::v3::GetTransitionRouteGroupRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetTransitionRouteGroup(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dialogflow::cx::v3::
-                 GetTransitionRouteGroupRequest const& request) {
+             google::cloud::dialogflow::cx::v3::GetTransitionRouteGroupRequest const& request) {
         return stub_->GetTransitionRouteGroup(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::TransitionRouteGroup>
-TransitionRouteGroupsConnectionImpl::CreateTransitionRouteGroup(
-    google::cloud::dialogflow::cx::v3::CreateTransitionRouteGroupRequest const&
-        request) {
+TransitionRouteGroupsConnectionImpl::CreateTransitionRouteGroup(google::cloud::dialogflow::cx::v3::CreateTransitionRouteGroupRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateTransitionRouteGroup(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dialogflow::cx::v3::
-                 CreateTransitionRouteGroupRequest const& request) {
+             google::cloud::dialogflow::cx::v3::CreateTransitionRouteGroupRequest const& request) {
         return stub_->CreateTransitionRouteGroup(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::TransitionRouteGroup>
-TransitionRouteGroupsConnectionImpl::UpdateTransitionRouteGroup(
-    google::cloud::dialogflow::cx::v3::UpdateTransitionRouteGroupRequest const&
-        request) {
+TransitionRouteGroupsConnectionImpl::UpdateTransitionRouteGroup(google::cloud::dialogflow::cx::v3::UpdateTransitionRouteGroupRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateTransitionRouteGroup(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dialogflow::cx::v3::
-                 UpdateTransitionRouteGroupRequest const& request) {
+             google::cloud::dialogflow::cx::v3::UpdateTransitionRouteGroupRequest const& request) {
         return stub_->UpdateTransitionRouteGroup(context, options, request);
       },
       *current, request, __func__);
 }
 
-Status TransitionRouteGroupsConnectionImpl::DeleteTransitionRouteGroup(
-    google::cloud::dialogflow::cx::v3::DeleteTransitionRouteGroupRequest const&
-        request) {
+Status
+TransitionRouteGroupsConnectionImpl::DeleteTransitionRouteGroup(google::cloud::dialogflow::cx::v3::DeleteTransitionRouteGroupRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteTransitionRouteGroup(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dialogflow::cx::v3::
-                 DeleteTransitionRouteGroupRequest const& request) {
+             google::cloud::dialogflow::cx::v3::DeleteTransitionRouteGroupRequest const& request) {
         return stub_->DeleteTransitionRouteGroup(context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::cloud::location::Location>
-TransitionRouteGroupsConnectionImpl::ListLocations(
-    google::cloud::location::ListLocationsRequest request) {
+TransitionRouteGroupsConnectionImpl::ListLocations(google::cloud::location::ListLocationsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListLocations(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::location::Location>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::location::Location>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<dialogflow_cx::TransitionRouteGroupsRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<dialogflow_cx::TransitionRouteGroupsRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::location::ListLocationsRequest const& r) {
+          Options const& options, google::cloud::location::ListLocationsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](
-                grpc::ClientContext& context, Options const& options,
-                google::cloud::location::ListLocationsRequest const& request) {
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::cloud::location::ListLocationsRequest const& request) {
               return stub->ListLocations(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::location::ListLocationsResponse r) {
-        std::vector<google::cloud::location::Location> result(
-            r.locations().size());
+        std::vector<google::cloud::location::Location> result(r.locations().size());
         auto& messages = *r.mutable_locations();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -198,8 +167,7 @@ TransitionRouteGroupsConnectionImpl::ListLocations(
 }
 
 StatusOr<google::cloud::location::Location>
-TransitionRouteGroupsConnectionImpl::GetLocation(
-    google::cloud::location::GetLocationRequest const& request) {
+TransitionRouteGroupsConnectionImpl::GetLocation(google::cloud::location::GetLocationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -212,21 +180,17 @@ TransitionRouteGroupsConnectionImpl::GetLocation(
 }
 
 StreamRange<google::longrunning::Operation>
-TransitionRouteGroupsConnectionImpl::ListOperations(
-    google::longrunning::ListOperationsRequest request) {
+TransitionRouteGroupsConnectionImpl::ListOperations(google::longrunning::ListOperationsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListOperations(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::longrunning::Operation>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::longrunning::Operation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<dialogflow_cx::TransitionRouteGroupsRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<dialogflow_cx::TransitionRouteGroupsRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::longrunning::ListOperationsRequest const& r) {
+          Options const& options, google::longrunning::ListOperationsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
@@ -236,8 +200,7 @@ TransitionRouteGroupsConnectionImpl::ListOperations(
             options, r, function_name);
       },
       [](google::longrunning::ListOperationsResponse r) {
-        std::vector<google::longrunning::Operation> result(
-            r.operations().size());
+        std::vector<google::longrunning::Operation> result(r.operations().size());
         auto& messages = *r.mutable_operations();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -245,8 +208,7 @@ TransitionRouteGroupsConnectionImpl::ListOperations(
 }
 
 StatusOr<google::longrunning::Operation>
-TransitionRouteGroupsConnectionImpl::GetOperation(
-    google::longrunning::GetOperationRequest const& request) {
+TransitionRouteGroupsConnectionImpl::GetOperation(google::longrunning::GetOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -258,8 +220,8 @@ TransitionRouteGroupsConnectionImpl::GetOperation(
       *current, request, __func__);
 }
 
-Status TransitionRouteGroupsConnectionImpl::CancelOperation(
-    google::longrunning::CancelOperationRequest const& request) {
+Status
+TransitionRouteGroupsConnectionImpl::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),

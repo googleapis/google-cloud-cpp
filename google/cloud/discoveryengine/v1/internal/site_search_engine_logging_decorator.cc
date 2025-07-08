@@ -32,19 +32,20 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 SiteSearchEngineServiceLogging::SiteSearchEngineServiceLogging(
     std::shared_ptr<SiteSearchEngineServiceStub> child,
-    TracingOptions tracing_options, std::set<std::string> const&)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
+    TracingOptions tracing_options,
+    std::set<std::string> const&)
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::cloud::discoveryengine::v1::SiteSearchEngine>
 SiteSearchEngineServiceLogging::GetSiteSearchEngine(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::discoveryengine::v1::GetSiteSearchEngineRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::discoveryengine::v1::GetSiteSearchEngineRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::discoveryengine::v1::GetSiteSearchEngineRequest const&
-              request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::discoveryengine::v1::GetSiteSearchEngineRequest const& request) {
         return child_->GetSiteSearchEngine(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -52,19 +53,17 @@ SiteSearchEngineServiceLogging::GetSiteSearchEngine(
 
 future<StatusOr<google::longrunning::Operation>>
 SiteSearchEngineServiceLogging::AsyncCreateTargetSite(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::discoveryengine::v1::CreateTargetSiteRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::discoveryengine::v1::CreateTargetSiteRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::discoveryengine::v1::CreateTargetSiteRequest const&
-                 request) {
-        return child_->AsyncCreateTargetSite(cq, std::move(context),
-                                             std::move(options), request);
+             google::cloud::discoveryengine::v1::CreateTargetSiteRequest const& request) {
+        return child_->AsyncCreateTargetSite(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -72,13 +71,13 @@ SiteSearchEngineServiceLogging::AsyncCreateTargetSite(
 
 StatusOr<google::longrunning::Operation>
 SiteSearchEngineServiceLogging::CreateTargetSite(
-    grpc::ClientContext& context, Options options,
-    google::cloud::discoveryengine::v1::CreateTargetSiteRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::discoveryengine::v1::CreateTargetSiteRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::discoveryengine::v1::CreateTargetSiteRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::discoveryengine::v1::CreateTargetSiteRequest const& request) {
         return child_->CreateTargetSite(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -86,19 +85,17 @@ SiteSearchEngineServiceLogging::CreateTargetSite(
 
 future<StatusOr<google::longrunning::Operation>>
 SiteSearchEngineServiceLogging::AsyncBatchCreateTargetSites(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::discoveryengine::v1::BatchCreateTargetSitesRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::discoveryengine::v1::BatchCreateTargetSitesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::discoveryengine::v1::
-                 BatchCreateTargetSitesRequest const& request) {
-        return child_->AsyncBatchCreateTargetSites(cq, std::move(context),
-                                                   std::move(options), request);
+             google::cloud::discoveryengine::v1::BatchCreateTargetSitesRequest const& request) {
+        return child_->AsyncBatchCreateTargetSites(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -106,13 +103,13 @@ SiteSearchEngineServiceLogging::AsyncBatchCreateTargetSites(
 
 StatusOr<google::longrunning::Operation>
 SiteSearchEngineServiceLogging::BatchCreateTargetSites(
-    grpc::ClientContext& context, Options options,
-    google::cloud::discoveryengine::v1::BatchCreateTargetSitesRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::discoveryengine::v1::BatchCreateTargetSitesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::discoveryengine::v1::
-                 BatchCreateTargetSitesRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::discoveryengine::v1::BatchCreateTargetSitesRequest const& request) {
         return child_->BatchCreateTargetSites(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -120,12 +117,13 @@ SiteSearchEngineServiceLogging::BatchCreateTargetSites(
 
 StatusOr<google::cloud::discoveryengine::v1::TargetSite>
 SiteSearchEngineServiceLogging::GetTargetSite(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::discoveryengine::v1::GetTargetSiteRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::discoveryengine::v1::GetTargetSiteRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::discoveryengine::v1::GetTargetSiteRequest const& request) {
         return child_->GetTargetSite(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -133,19 +131,17 @@ SiteSearchEngineServiceLogging::GetTargetSite(
 
 future<StatusOr<google::longrunning::Operation>>
 SiteSearchEngineServiceLogging::AsyncUpdateTargetSite(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::discoveryengine::v1::UpdateTargetSiteRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::discoveryengine::v1::UpdateTargetSiteRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::discoveryengine::v1::UpdateTargetSiteRequest const&
-                 request) {
-        return child_->AsyncUpdateTargetSite(cq, std::move(context),
-                                             std::move(options), request);
+             google::cloud::discoveryengine::v1::UpdateTargetSiteRequest const& request) {
+        return child_->AsyncUpdateTargetSite(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -153,13 +149,13 @@ SiteSearchEngineServiceLogging::AsyncUpdateTargetSite(
 
 StatusOr<google::longrunning::Operation>
 SiteSearchEngineServiceLogging::UpdateTargetSite(
-    grpc::ClientContext& context, Options options,
-    google::cloud::discoveryengine::v1::UpdateTargetSiteRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::discoveryengine::v1::UpdateTargetSiteRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::discoveryengine::v1::UpdateTargetSiteRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::discoveryengine::v1::UpdateTargetSiteRequest const& request) {
         return child_->UpdateTargetSite(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -167,19 +163,17 @@ SiteSearchEngineServiceLogging::UpdateTargetSite(
 
 future<StatusOr<google::longrunning::Operation>>
 SiteSearchEngineServiceLogging::AsyncDeleteTargetSite(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::discoveryengine::v1::DeleteTargetSiteRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::discoveryengine::v1::DeleteTargetSiteRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::discoveryengine::v1::DeleteTargetSiteRequest const&
-                 request) {
-        return child_->AsyncDeleteTargetSite(cq, std::move(context),
-                                             std::move(options), request);
+             google::cloud::discoveryengine::v1::DeleteTargetSiteRequest const& request) {
+        return child_->AsyncDeleteTargetSite(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -187,13 +181,13 @@ SiteSearchEngineServiceLogging::AsyncDeleteTargetSite(
 
 StatusOr<google::longrunning::Operation>
 SiteSearchEngineServiceLogging::DeleteTargetSite(
-    grpc::ClientContext& context, Options options,
-    google::cloud::discoveryengine::v1::DeleteTargetSiteRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::discoveryengine::v1::DeleteTargetSiteRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::discoveryengine::v1::DeleteTargetSiteRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::discoveryengine::v1::DeleteTargetSiteRequest const& request) {
         return child_->DeleteTargetSite(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -201,12 +195,13 @@ SiteSearchEngineServiceLogging::DeleteTargetSite(
 
 StatusOr<google::cloud::discoveryengine::v1::ListTargetSitesResponse>
 SiteSearchEngineServiceLogging::ListTargetSites(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::discoveryengine::v1::ListTargetSitesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::discoveryengine::v1::ListTargetSitesRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::discoveryengine::v1::ListTargetSitesRequest const& request) {
         return child_->ListTargetSites(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -214,18 +209,17 @@ SiteSearchEngineServiceLogging::ListTargetSites(
 
 future<StatusOr<google::longrunning::Operation>>
 SiteSearchEngineServiceLogging::AsyncCreateSitemap(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::discoveryengine::v1::CreateSitemapRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::discoveryengine::v1::CreateSitemapRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::discoveryengine::v1::CreateSitemapRequest const&
-                 request) {
-        return child_->AsyncCreateSitemap(cq, std::move(context),
-                                          std::move(options), request);
+             google::cloud::discoveryengine::v1::CreateSitemapRequest const& request) {
+        return child_->AsyncCreateSitemap(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -233,12 +227,13 @@ SiteSearchEngineServiceLogging::AsyncCreateSitemap(
 
 StatusOr<google::longrunning::Operation>
 SiteSearchEngineServiceLogging::CreateSitemap(
-    grpc::ClientContext& context, Options options,
-    google::cloud::discoveryengine::v1::CreateSitemapRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::discoveryengine::v1::CreateSitemapRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::discoveryengine::v1::CreateSitemapRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::discoveryengine::v1::CreateSitemapRequest const& request) {
         return child_->CreateSitemap(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -246,18 +241,17 @@ SiteSearchEngineServiceLogging::CreateSitemap(
 
 future<StatusOr<google::longrunning::Operation>>
 SiteSearchEngineServiceLogging::AsyncDeleteSitemap(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::discoveryengine::v1::DeleteSitemapRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::discoveryengine::v1::DeleteSitemapRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::discoveryengine::v1::DeleteSitemapRequest const&
-                 request) {
-        return child_->AsyncDeleteSitemap(cq, std::move(context),
-                                          std::move(options), request);
+             google::cloud::discoveryengine::v1::DeleteSitemapRequest const& request) {
+        return child_->AsyncDeleteSitemap(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -265,12 +259,13 @@ SiteSearchEngineServiceLogging::AsyncDeleteSitemap(
 
 StatusOr<google::longrunning::Operation>
 SiteSearchEngineServiceLogging::DeleteSitemap(
-    grpc::ClientContext& context, Options options,
-    google::cloud::discoveryengine::v1::DeleteSitemapRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::discoveryengine::v1::DeleteSitemapRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::discoveryengine::v1::DeleteSitemapRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::discoveryengine::v1::DeleteSitemapRequest const& request) {
         return child_->DeleteSitemap(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -278,12 +273,13 @@ SiteSearchEngineServiceLogging::DeleteSitemap(
 
 StatusOr<google::cloud::discoveryengine::v1::FetchSitemapsResponse>
 SiteSearchEngineServiceLogging::FetchSitemaps(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::discoveryengine::v1::FetchSitemapsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::discoveryengine::v1::FetchSitemapsRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::discoveryengine::v1::FetchSitemapsRequest const& request) {
         return child_->FetchSitemaps(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -291,17 +287,15 @@ SiteSearchEngineServiceLogging::FetchSitemaps(
 
 future<StatusOr<google::longrunning::Operation>>
 SiteSearchEngineServiceLogging::AsyncEnableAdvancedSiteSearch(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::discoveryengine::v1::EnableAdvancedSiteSearchRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::discoveryengine::v1::EnableAdvancedSiteSearchRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::discoveryengine::v1::
-                 EnableAdvancedSiteSearchRequest const& request) {
+             google::cloud::discoveryengine::v1::EnableAdvancedSiteSearchRequest const& request) {
         return child_->AsyncEnableAdvancedSiteSearch(
             cq, std::move(context), std::move(options), request);
       },
@@ -311,13 +305,13 @@ SiteSearchEngineServiceLogging::AsyncEnableAdvancedSiteSearch(
 
 StatusOr<google::longrunning::Operation>
 SiteSearchEngineServiceLogging::EnableAdvancedSiteSearch(
-    grpc::ClientContext& context, Options options,
-    google::cloud::discoveryengine::v1::EnableAdvancedSiteSearchRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::discoveryengine::v1::EnableAdvancedSiteSearchRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::discoveryengine::v1::
-                 EnableAdvancedSiteSearchRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::discoveryengine::v1::EnableAdvancedSiteSearchRequest const& request) {
         return child_->EnableAdvancedSiteSearch(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -325,17 +319,15 @@ SiteSearchEngineServiceLogging::EnableAdvancedSiteSearch(
 
 future<StatusOr<google::longrunning::Operation>>
 SiteSearchEngineServiceLogging::AsyncDisableAdvancedSiteSearch(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::discoveryengine::v1::DisableAdvancedSiteSearchRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::discoveryengine::v1::DisableAdvancedSiteSearchRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::discoveryengine::v1::
-                 DisableAdvancedSiteSearchRequest const& request) {
+             google::cloud::discoveryengine::v1::DisableAdvancedSiteSearchRequest const& request) {
         return child_->AsyncDisableAdvancedSiteSearch(
             cq, std::move(context), std::move(options), request);
       },
@@ -345,13 +337,13 @@ SiteSearchEngineServiceLogging::AsyncDisableAdvancedSiteSearch(
 
 StatusOr<google::longrunning::Operation>
 SiteSearchEngineServiceLogging::DisableAdvancedSiteSearch(
-    grpc::ClientContext& context, Options options,
-    google::cloud::discoveryengine::v1::DisableAdvancedSiteSearchRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::discoveryengine::v1::DisableAdvancedSiteSearchRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::discoveryengine::v1::
-                 DisableAdvancedSiteSearchRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::discoveryengine::v1::DisableAdvancedSiteSearchRequest const& request) {
         return child_->DisableAdvancedSiteSearch(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -359,18 +351,17 @@ SiteSearchEngineServiceLogging::DisableAdvancedSiteSearch(
 
 future<StatusOr<google::longrunning::Operation>>
 SiteSearchEngineServiceLogging::AsyncRecrawlUris(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::discoveryengine::v1::RecrawlUrisRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::discoveryengine::v1::RecrawlUrisRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::discoveryengine::v1::RecrawlUrisRequest const&
-                 request) {
-        return child_->AsyncRecrawlUris(cq, std::move(context),
-                                        std::move(options), request);
+             google::cloud::discoveryengine::v1::RecrawlUrisRequest const& request) {
+        return child_->AsyncRecrawlUris(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -378,12 +369,13 @@ SiteSearchEngineServiceLogging::AsyncRecrawlUris(
 
 StatusOr<google::longrunning::Operation>
 SiteSearchEngineServiceLogging::RecrawlUris(
-    grpc::ClientContext& context, Options options,
-    google::cloud::discoveryengine::v1::RecrawlUrisRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::discoveryengine::v1::RecrawlUrisRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::discoveryengine::v1::RecrawlUrisRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::discoveryengine::v1::RecrawlUrisRequest const& request) {
         return child_->RecrawlUris(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -391,19 +383,17 @@ SiteSearchEngineServiceLogging::RecrawlUris(
 
 future<StatusOr<google::longrunning::Operation>>
 SiteSearchEngineServiceLogging::AsyncBatchVerifyTargetSites(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::discoveryengine::v1::BatchVerifyTargetSitesRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::discoveryengine::v1::BatchVerifyTargetSitesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::discoveryengine::v1::
-                 BatchVerifyTargetSitesRequest const& request) {
-        return child_->AsyncBatchVerifyTargetSites(cq, std::move(context),
-                                                   std::move(options), request);
+             google::cloud::discoveryengine::v1::BatchVerifyTargetSitesRequest const& request) {
+        return child_->AsyncBatchVerifyTargetSites(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -411,28 +401,27 @@ SiteSearchEngineServiceLogging::AsyncBatchVerifyTargetSites(
 
 StatusOr<google::longrunning::Operation>
 SiteSearchEngineServiceLogging::BatchVerifyTargetSites(
-    grpc::ClientContext& context, Options options,
-    google::cloud::discoveryengine::v1::BatchVerifyTargetSitesRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::discoveryengine::v1::BatchVerifyTargetSitesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::discoveryengine::v1::
-                 BatchVerifyTargetSitesRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::discoveryengine::v1::BatchVerifyTargetSitesRequest const& request) {
         return child_->BatchVerifyTargetSites(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<
-    google::cloud::discoveryengine::v1::FetchDomainVerificationStatusResponse>
+StatusOr<google::cloud::discoveryengine::v1::FetchDomainVerificationStatusResponse>
 SiteSearchEngineServiceLogging::FetchDomainVerificationStatus(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::discoveryengine::v1::
-        FetchDomainVerificationStatusRequest const& request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::discoveryengine::v1::FetchDomainVerificationStatusRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::discoveryengine::v1::
-                 FetchDomainVerificationStatusRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::discoveryengine::v1::FetchDomainVerificationStatusRequest const& request) {
         return child_->FetchDomainVerificationStatus(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -440,10 +429,12 @@ SiteSearchEngineServiceLogging::FetchDomainVerificationStatus(
 
 StatusOr<google::longrunning::ListOperationsResponse>
 SiteSearchEngineServiceLogging::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::ListOperationsRequest const& request) {
         return child_->ListOperations(context, options, request);
       },
@@ -452,21 +443,26 @@ SiteSearchEngineServiceLogging::ListOperations(
 
 StatusOr<google::longrunning::Operation>
 SiteSearchEngineServiceLogging::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::GetOperationRequest const& request) {
         return child_->GetOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status SiteSearchEngineServiceLogging::CancelOperation(
-    grpc::ClientContext& context, Options const& options,
+Status
+SiteSearchEngineServiceLogging::CancelOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::CancelOperationRequest const& request) {
         return child_->CancelOperation(context, options, request);
       },
@@ -484,8 +480,8 @@ SiteSearchEngineServiceLogging::AsyncGetOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(cq, std::move(context),
-                                         std::move(options), request);
+        return child_->AsyncGetOperation(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -501,8 +497,8 @@ future<Status> SiteSearchEngineServiceLogging::AsyncCancelOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::CancelOperationRequest const& request) {
-        return child_->AsyncCancelOperation(cq, std::move(context),
-                                            std::move(options), request);
+        return child_->AsyncCancelOperation(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);

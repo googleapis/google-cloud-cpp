@@ -31,9 +31,9 @@ WebhooksAuth::WebhooksAuth(
     std::shared_ptr<WebhooksStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::dialogflow::cx::v3::ListWebhooksResponse>
-WebhooksAuth::ListWebhooks(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::dialogflow::cx::v3::ListWebhooksResponse> WebhooksAuth::ListWebhooks(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dialogflow::cx::v3::ListWebhooksRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -41,25 +41,26 @@ WebhooksAuth::ListWebhooks(
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Webhook> WebhooksAuth::GetWebhook(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dialogflow::cx::v3::GetWebhookRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetWebhook(context, options, request);
 }
 
-StatusOr<google::cloud::dialogflow::cx::v3::Webhook>
-WebhooksAuth::CreateWebhook(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::dialogflow::cx::v3::Webhook> WebhooksAuth::CreateWebhook(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dialogflow::cx::v3::CreateWebhookRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateWebhook(context, options, request);
 }
 
-StatusOr<google::cloud::dialogflow::cx::v3::Webhook>
-WebhooksAuth::UpdateWebhook(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::dialogflow::cx::v3::Webhook> WebhooksAuth::UpdateWebhook(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dialogflow::cx::v3::UpdateWebhookRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -67,16 +68,17 @@ WebhooksAuth::UpdateWebhook(
 }
 
 Status WebhooksAuth::DeleteWebhook(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dialogflow::cx::v3::DeleteWebhookRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteWebhook(context, options, request);
 }
 
-StatusOr<google::cloud::location::ListLocationsResponse>
-WebhooksAuth::ListLocations(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::location::ListLocationsResponse> WebhooksAuth::ListLocations(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -84,16 +86,17 @@ WebhooksAuth::ListLocations(
 }
 
 StatusOr<google::cloud::location::Location> WebhooksAuth::GetLocation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetLocation(context, options, request);
 }
 
-StatusOr<google::longrunning::ListOperationsResponse>
-WebhooksAuth::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse> WebhooksAuth::ListOperations(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -101,7 +104,8 @@ WebhooksAuth::ListOperations(
 }
 
 StatusOr<google::longrunning::Operation> WebhooksAuth::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -109,7 +113,8 @@ StatusOr<google::longrunning::Operation> WebhooksAuth::GetOperation(
 }
 
 Status WebhooksAuth::CancelOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;

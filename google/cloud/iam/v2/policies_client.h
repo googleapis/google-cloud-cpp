@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAM_V2_POLICIES_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAM_V2_POLICIES_CLIENT_H
 
-#include "google/cloud/iam/v2/policies_connection.h"
 #include "google/cloud/future.h"
+#include "google/cloud/iam/v2/policies_connection.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -64,8 +64,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class PoliciesClient {
  public:
-  explicit PoliciesClient(std::shared_ptr<PoliciesConnection> connection,
-                          Options opts = {});
+  explicit PoliciesClient(std::shared_ptr<PoliciesConnection> connection, Options opts = {});
   ~PoliciesClient();
 
   ///@{
@@ -131,8 +130,8 @@ class PoliciesClient {
   /// [google.iam.v2.Policy]: @googleapis_reference_link{google/iam/v2/policy.proto#L107}
   ///
   // clang-format on
-  StreamRange<google::iam::v2::Policy> ListPolicies(std::string const& parent,
-                                                    Options opts = {});
+  StreamRange<google::iam::v2::Policy>
+  ListPolicies(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -174,8 +173,8 @@ class PoliciesClient {
   /// [google.iam.v2.Policy]: @googleapis_reference_link{google/iam/v2/policy.proto#L107}
   ///
   // clang-format on
-  StreamRange<google::iam::v2::Policy> ListPolicies(
-      google::iam::v2::ListPoliciesRequest request, Options opts = {});
+  StreamRange<google::iam::v2::Policy>
+  ListPolicies(google::iam::v2::ListPoliciesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -207,8 +206,8 @@ class PoliciesClient {
   /// [google.iam.v2.Policy]: @googleapis_reference_link{google/iam/v2/policy.proto#L107}
   ///
   // clang-format on
-  StatusOr<google::iam::v2::Policy> GetPolicy(std::string const& name,
-                                              Options opts = {});
+  StatusOr<google::iam::v2::Policy>
+  GetPolicy(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -237,8 +236,8 @@ class PoliciesClient {
   /// [google.iam.v2.Policy]: @googleapis_reference_link{google/iam/v2/policy.proto#L107}
   ///
   // clang-format on
-  StatusOr<google::iam::v2::Policy> GetPolicy(
-      google::iam::v2::GetPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v2::Policy>
+  GetPolicy(google::iam::v2::GetPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -283,9 +282,8 @@ class PoliciesClient {
   /// [google.iam.v2.Policy]: @googleapis_reference_link{google/iam/v2/policy.proto#L107}
   ///
   // clang-format on
-  future<StatusOr<google::iam::v2::Policy>> CreatePolicy(
-      std::string const& parent, google::iam::v2::Policy const& policy,
-      std::string const& policy_id, Options opts = {});
+  future<StatusOr<google::iam::v2::Policy>>
+  CreatePolicy(std::string const& parent, google::iam::v2::Policy const& policy, std::string const& policy_id, Options opts = {});
 
   // clang-format off
   ///
@@ -298,10 +296,8 @@ class PoliciesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreatePolicy(
-      NoAwaitTag, std::string const& parent,
-      google::iam::v2::Policy const& policy, std::string const& policy_id,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreatePolicy(NoAwaitTag, std::string const& parent, google::iam::v2::Policy const& policy, std::string const& policy_id, Options opts = {});
 
   // clang-format off
   ///
@@ -337,8 +333,8 @@ class PoliciesClient {
   /// [google.iam.v2.Policy]: @googleapis_reference_link{google/iam/v2/policy.proto#L107}
   ///
   // clang-format on
-  future<StatusOr<google::iam::v2::Policy>> CreatePolicy(
-      google::iam::v2::CreatePolicyRequest const& request, Options opts = {});
+  future<StatusOr<google::iam::v2::Policy>>
+  CreatePolicy(google::iam::v2::CreatePolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -351,9 +347,8 @@ class PoliciesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreatePolicy(
-      NoAwaitTag, google::iam::v2::CreatePolicyRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreatePolicy(NoAwaitTag, google::iam::v2::CreatePolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -364,8 +359,8 @@ class PoliciesClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::iam::v2::Policy>> CreatePolicy(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::iam::v2::Policy>>
+  CreatePolicy(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -412,8 +407,8 @@ class PoliciesClient {
   /// [google.iam.v2.UpdatePolicyRequest]: @googleapis_reference_link{google/iam/v2/policy.proto#L251}
   ///
   // clang-format on
-  future<StatusOr<google::iam::v2::Policy>> UpdatePolicy(
-      google::iam::v2::UpdatePolicyRequest const& request, Options opts = {});
+  future<StatusOr<google::iam::v2::Policy>>
+  UpdatePolicy(google::iam::v2::UpdatePolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -426,9 +421,8 @@ class PoliciesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdatePolicy(
-      NoAwaitTag, google::iam::v2::UpdatePolicyRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdatePolicy(NoAwaitTag, google::iam::v2::UpdatePolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -439,8 +433,8 @@ class PoliciesClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::iam::v2::Policy>> UpdatePolicy(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::iam::v2::Policy>>
+  UpdatePolicy(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -479,8 +473,8 @@ class PoliciesClient {
   /// [google.iam.v2.Policy]: @googleapis_reference_link{google/iam/v2/policy.proto#L107}
   ///
   // clang-format on
-  future<StatusOr<google::iam::v2::Policy>> DeletePolicy(
-      std::string const& name, Options opts = {});
+  future<StatusOr<google::iam::v2::Policy>>
+  DeletePolicy(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -493,9 +487,8 @@ class PoliciesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeletePolicy(NoAwaitTag,
-                                                        std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeletePolicy(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -531,8 +524,8 @@ class PoliciesClient {
   /// [google.iam.v2.Policy]: @googleapis_reference_link{google/iam/v2/policy.proto#L107}
   ///
   // clang-format on
-  future<StatusOr<google::iam::v2::Policy>> DeletePolicy(
-      google::iam::v2::DeletePolicyRequest const& request, Options opts = {});
+  future<StatusOr<google::iam::v2::Policy>>
+  DeletePolicy(google::iam::v2::DeletePolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -545,9 +538,8 @@ class PoliciesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeletePolicy(
-      NoAwaitTag, google::iam::v2::DeletePolicyRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeletePolicy(NoAwaitTag, google::iam::v2::DeletePolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -558,8 +550,8 @@ class PoliciesClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::iam::v2::Policy>> DeletePolicy(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::iam::v2::Policy>>
+  DeletePolicy(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -585,8 +577,8 @@ class PoliciesClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -617,9 +609,8 @@ class PoliciesClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<PoliciesConnection> connection_;

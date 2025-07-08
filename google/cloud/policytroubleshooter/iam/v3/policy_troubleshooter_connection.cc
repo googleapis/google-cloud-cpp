@@ -17,16 +17,16 @@
 // source: google/cloud/policytroubleshooter/iam/v3/troubleshooter.proto
 
 #include "google/cloud/policytroubleshooter/iam/v3/policy_troubleshooter_connection.h"
-#include "google/cloud/policytroubleshooter/iam/v3/internal/policy_troubleshooter_connection_impl.h"
-#include "google/cloud/policytroubleshooter/iam/v3/internal/policy_troubleshooter_option_defaults.h"
-#include "google/cloud/policytroubleshooter/iam/v3/internal/policy_troubleshooter_stub_factory.h"
-#include "google/cloud/policytroubleshooter/iam/v3/internal/policy_troubleshooter_tracing_connection.h"
-#include "google/cloud/policytroubleshooter/iam/v3/policy_troubleshooter_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/policytroubleshooter/iam/v3/internal/policy_troubleshooter_connection_impl.h"
+#include "google/cloud/policytroubleshooter/iam/v3/internal/policy_troubleshooter_option_defaults.h"
+#include "google/cloud/policytroubleshooter/iam/v3/internal/policy_troubleshooter_stub_factory.h"
+#include "google/cloud/policytroubleshooter/iam/v3/internal/policy_troubleshooter_tracing_connection.h"
+#include "google/cloud/policytroubleshooter/iam/v3/policy_troubleshooter_options.h"
 #include <memory>
 #include <utility>
 
@@ -37,32 +37,26 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 PolicyTroubleshooterConnection::~PolicyTroubleshooterConnection() = default;
 
-StatusOr<
-    google::cloud::policytroubleshooter::iam::v3::TroubleshootIamPolicyResponse>
+StatusOr<google::cloud::policytroubleshooter::iam::v3::TroubleshootIamPolicyResponse>
 PolicyTroubleshooterConnection::TroubleshootIamPolicy(
-    google::cloud::policytroubleshooter::iam::v3::
-        TroubleshootIamPolicyRequest const&) {
+    google::cloud::policytroubleshooter::iam::v3::TroubleshootIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-std::shared_ptr<PolicyTroubleshooterConnection>
-MakePolicyTroubleshooterConnection(Options options) {
+std::shared_ptr<PolicyTroubleshooterConnection> MakePolicyTroubleshooterConnection(
+    Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 PolicyTroubleshooterPolicyOptionList>(
-      options, __func__);
-  options =
-      policytroubleshooter_iam_v3_internal::PolicyTroubleshooterDefaultOptions(
-          std::move(options));
+      UnifiedCredentialsOptionList,
+      PolicyTroubleshooterPolicyOptionList>(options, __func__);
+  options = policytroubleshooter_iam_v3_internal::PolicyTroubleshooterDefaultOptions(
+      std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
-  auto stub = policytroubleshooter_iam_v3_internal::
-      CreateDefaultPolicyTroubleshooterStub(std::move(auth), options);
-  return policytroubleshooter_iam_v3_internal::
-      MakePolicyTroubleshooterTracingConnection(
-          std::make_shared<policytroubleshooter_iam_v3_internal::
-                               PolicyTroubleshooterConnectionImpl>(
-              std::move(background), std::move(stub), std::move(options)));
+  auto stub = policytroubleshooter_iam_v3_internal::CreateDefaultPolicyTroubleshooterStub(
+    std::move(auth), options);
+  return policytroubleshooter_iam_v3_internal::MakePolicyTroubleshooterTracingConnection(
+      std::make_shared<policytroubleshooter_iam_v3_internal::PolicyTroubleshooterConnectionImpl>(
+      std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

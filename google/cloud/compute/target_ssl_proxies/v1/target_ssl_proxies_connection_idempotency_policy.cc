@@ -26,70 +26,51 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-TargetSslProxiesConnectionIdempotencyPolicy::
-    ~TargetSslProxiesConnectionIdempotencyPolicy() = default;
+TargetSslProxiesConnectionIdempotencyPolicy::~TargetSslProxiesConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<TargetSslProxiesConnectionIdempotencyPolicy>
 TargetSslProxiesConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<TargetSslProxiesConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency TargetSslProxiesConnectionIdempotencyPolicy::DeleteTargetSslProxy(
-    google::cloud::cpp::compute::target_ssl_proxies::v1::
-        DeleteTargetSslProxyRequest const&) {
+Idempotency TargetSslProxiesConnectionIdempotencyPolicy::DeleteTargetSslProxy(google::cloud::cpp::compute::target_ssl_proxies::v1::DeleteTargetSslProxyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TargetSslProxiesConnectionIdempotencyPolicy::GetTargetSslProxy(
-    google::cloud::cpp::compute::target_ssl_proxies::v1::
-        GetTargetSslProxyRequest const&) {
+Idempotency TargetSslProxiesConnectionIdempotencyPolicy::GetTargetSslProxy(google::cloud::cpp::compute::target_ssl_proxies::v1::GetTargetSslProxyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency TargetSslProxiesConnectionIdempotencyPolicy::InsertTargetSslProxy(
-    google::cloud::cpp::compute::target_ssl_proxies::v1::
-        InsertTargetSslProxyRequest const&) {
+Idempotency TargetSslProxiesConnectionIdempotencyPolicy::InsertTargetSslProxy(google::cloud::cpp::compute::target_ssl_proxies::v1::InsertTargetSslProxyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TargetSslProxiesConnectionIdempotencyPolicy::ListTargetSslProxies(
-    google::cloud::cpp::compute::target_ssl_proxies::v1::
-        ListTargetSslProxiesRequest) {  // NOLINT
+Idempotency TargetSslProxiesConnectionIdempotencyPolicy::ListTargetSslProxies(google::cloud::cpp::compute::target_ssl_proxies::v1::ListTargetSslProxiesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency TargetSslProxiesConnectionIdempotencyPolicy::SetBackendService(
-    google::cloud::cpp::compute::target_ssl_proxies::v1::
-        SetBackendServiceRequest const&) {
+Idempotency TargetSslProxiesConnectionIdempotencyPolicy::SetBackendService(google::cloud::cpp::compute::target_ssl_proxies::v1::SetBackendServiceRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TargetSslProxiesConnectionIdempotencyPolicy::SetCertificateMap(
-    google::cloud::cpp::compute::target_ssl_proxies::v1::
-        SetCertificateMapRequest const&) {
+Idempotency TargetSslProxiesConnectionIdempotencyPolicy::SetCertificateMap(google::cloud::cpp::compute::target_ssl_proxies::v1::SetCertificateMapRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TargetSslProxiesConnectionIdempotencyPolicy::SetProxyHeader(
-    google::cloud::cpp::compute::target_ssl_proxies::v1::
-        SetProxyHeaderRequest const&) {
+Idempotency TargetSslProxiesConnectionIdempotencyPolicy::SetProxyHeader(google::cloud::cpp::compute::target_ssl_proxies::v1::SetProxyHeaderRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TargetSslProxiesConnectionIdempotencyPolicy::SetSslCertificates(
-    google::cloud::cpp::compute::target_ssl_proxies::v1::
-        SetSslCertificatesRequest const&) {
+Idempotency TargetSslProxiesConnectionIdempotencyPolicy::SetSslCertificates(google::cloud::cpp::compute::target_ssl_proxies::v1::SetSslCertificatesRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TargetSslProxiesConnectionIdempotencyPolicy::SetSslPolicy(
-    google::cloud::cpp::compute::target_ssl_proxies::v1::
-        SetSslPolicyRequest const&) {
+Idempotency TargetSslProxiesConnectionIdempotencyPolicy::SetSslPolicy(google::cloud::cpp::compute::target_ssl_proxies::v1::SetSslPolicyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<TargetSslProxiesConnectionIdempotencyPolicy>
-MakeDefaultTargetSslProxiesConnectionIdempotencyPolicy() {
+    MakeDefaultTargetSslProxiesConnectionIdempotencyPolicy() {
   return std::make_unique<TargetSslProxiesConnectionIdempotencyPolicy>();
 }
 

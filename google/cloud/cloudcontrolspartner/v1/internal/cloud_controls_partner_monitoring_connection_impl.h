@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CLOUDCONTROLSPARTNER_V1_INTERNAL_CLOUD_CONTROLS_PARTNER_MONITORING_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CLOUDCONTROLSPARTNER_V1_INTERNAL_CLOUD_CONTROLS_PARTNER_MONITORING_CONNECTION_IMPL_H
 
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/cloudcontrolspartner/v1/cloud_controls_partner_monitoring_connection.h"
 #include "google/cloud/cloudcontrolspartner/v1/cloud_controls_partner_monitoring_connection_idempotency_policy.h"
 #include "google/cloud/cloudcontrolspartner/v1/cloud_controls_partner_monitoring_options.h"
 #include "google/cloud/cloudcontrolspartner/v1/internal/cloud_controls_partner_monitoring_retry_traits.h"
 #include "google/cloud/cloudcontrolspartner/v1/internal/cloud_controls_partner_monitoring_stub.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -43,27 +43,21 @@ class CloudControlsPartnerMonitoringConnectionImpl
   ~CloudControlsPartnerMonitoringConnectionImpl() override = default;
 
   CloudControlsPartnerMonitoringConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<
-          cloudcontrolspartner_v1_internal::CloudControlsPartnerMonitoringStub>
-          stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<cloudcontrolspartner_v1_internal::CloudControlsPartnerMonitoringStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
   StreamRange<google::cloud::cloudcontrolspartner::v1::Violation>
-  ListViolations(google::cloud::cloudcontrolspartner::v1::ListViolationsRequest
-                     request) override;
+  ListViolations(google::cloud::cloudcontrolspartner::v1::ListViolationsRequest request) override;
 
-  StatusOr<google::cloud::cloudcontrolspartner::v1::Violation> GetViolation(
-      google::cloud::cloudcontrolspartner::v1::GetViolationRequest const&
-          request) override;
+  StatusOr<google::cloud::cloudcontrolspartner::v1::Violation>
+  GetViolation(google::cloud::cloudcontrolspartner::v1::GetViolationRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<
-      cloudcontrolspartner_v1_internal::CloudControlsPartnerMonitoringStub>
-      stub_;
+  std::shared_ptr<cloudcontrolspartner_v1_internal::CloudControlsPartnerMonitoringStub> stub_;
   Options options_;
 };
 

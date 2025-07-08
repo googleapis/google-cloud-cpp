@@ -34,10 +34,8 @@ using ::google::cloud::cloudbuild_v1::CloudBuildPollingPolicyOption;
 /// @deprecated Use cloudbuild_v1::CloudBuildBackoffPolicyOption directly.
 using ::google::cloud::cloudbuild_v1::CloudBuildBackoffPolicyOption;
 
-/// @deprecated Use cloudbuild_v1::CloudBuildConnectionIdempotencyPolicyOption
-/// directly.
-using ::google::cloud::cloudbuild_v1::
-    CloudBuildConnectionIdempotencyPolicyOption;
+/// @deprecated Use cloudbuild_v1::CloudBuildConnectionIdempotencyPolicyOption directly.
+using ::google::cloud::cloudbuild_v1::CloudBuildConnectionIdempotencyPolicyOption;
 
 /// @deprecated Use cloudbuild_v1::CloudBuildPolicyOptionList directly.
 using ::google::cloud::cloudbuild_v1::CloudBuildPolicyOptionList;

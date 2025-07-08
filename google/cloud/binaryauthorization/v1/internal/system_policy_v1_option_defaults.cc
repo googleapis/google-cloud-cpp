@@ -35,30 +35,23 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options SystemPolicyV1DefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_SYSTEM_POLICY_V1_ENDPOINT", "",
-      "GOOGLE_CLOUD_CPP_SYSTEM_POLICY_V1_AUTHORITY",
+      std::move(options), "GOOGLE_CLOUD_CPP_SYSTEM_POLICY_V1_ENDPOINT",
+      "", "GOOGLE_CLOUD_CPP_SYSTEM_POLICY_V1_AUTHORITY",
       "binaryauthorization.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<binaryauthorization_v1::SystemPolicyV1RetryPolicyOption>()) {
     options.set<binaryauthorization_v1::SystemPolicyV1RetryPolicyOption>(
         binaryauthorization_v1::SystemPolicyV1LimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
-            .clone());
+            std::chrono::minutes(30)).clone());
   }
-  if (!options
-           .has<binaryauthorization_v1::SystemPolicyV1BackoffPolicyOption>()) {
+  if (!options.has<binaryauthorization_v1::SystemPolicyV1BackoffPolicyOption>()) {
     options.set<binaryauthorization_v1::SystemPolicyV1BackoffPolicyOption>(
-        ExponentialBackoffPolicy(
-            std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
-            .clone());
+        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
   }
-  if (!options.has<binaryauthorization_v1::
-                       SystemPolicyV1ConnectionIdempotencyPolicyOption>()) {
-    options.set<binaryauthorization_v1::
-                    SystemPolicyV1ConnectionIdempotencyPolicyOption>(
-        binaryauthorization_v1::
-            MakeDefaultSystemPolicyV1ConnectionIdempotencyPolicy());
+  if (!options.has<binaryauthorization_v1::SystemPolicyV1ConnectionIdempotencyPolicyOption>()) {
+    options.set<binaryauthorization_v1::SystemPolicyV1ConnectionIdempotencyPolicyOption>(
+        binaryauthorization_v1::MakeDefaultSystemPolicyV1ConnectionIdempotencyPolicy());
   }
 
   return options;

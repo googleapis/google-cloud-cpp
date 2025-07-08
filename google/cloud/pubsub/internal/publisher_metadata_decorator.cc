@@ -44,134 +44,136 @@ PublisherMetadata::PublisherMetadata(
               ? google::cloud::internal::GeneratedLibClientHeader()
               : std::move(api_client_header)) {}
 
-StatusOr<google::pubsub::v1::Topic> PublisherMetadata::CreateTopic(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::pubsub::v1::Topic>
+PublisherMetadata::CreateTopic(
+    grpc::ClientContext& context,
+    Options const& options,
     google::pubsub::v1::Topic const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->CreateTopic(context, options, request);
 }
 
-StatusOr<google::pubsub::v1::Topic> PublisherMetadata::UpdateTopic(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::pubsub::v1::Topic>
+PublisherMetadata::UpdateTopic(
+    grpc::ClientContext& context,
+    Options const& options,
     google::pubsub::v1::UpdateTopicRequest const& request) {
-  SetMetadata(
-      context, options,
-      absl::StrCat("topic.name=", internal::UrlEncode(request.topic().name())));
+  SetMetadata(context, options, absl::StrCat("topic.name=", internal::UrlEncode(request.topic().name())));
   return child_->UpdateTopic(context, options, request);
 }
 
-StatusOr<google::pubsub::v1::PublishResponse> PublisherMetadata::Publish(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::pubsub::v1::PublishResponse>
+PublisherMetadata::Publish(
+    grpc::ClientContext& context,
+    Options const& options,
     google::pubsub::v1::PublishRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("topic=", internal::UrlEncode(request.topic())));
+  SetMetadata(context, options, absl::StrCat("topic=", internal::UrlEncode(request.topic())));
   return child_->Publish(context, options, request);
 }
 
-StatusOr<google::pubsub::v1::Topic> PublisherMetadata::GetTopic(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::pubsub::v1::Topic>
+PublisherMetadata::GetTopic(
+    grpc::ClientContext& context,
+    Options const& options,
     google::pubsub::v1::GetTopicRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("topic=", internal::UrlEncode(request.topic())));
+  SetMetadata(context, options, absl::StrCat("topic=", internal::UrlEncode(request.topic())));
   return child_->GetTopic(context, options, request);
 }
 
-StatusOr<google::pubsub::v1::ListTopicsResponse> PublisherMetadata::ListTopics(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::pubsub::v1::ListTopicsResponse>
+PublisherMetadata::ListTopics(
+    grpc::ClientContext& context,
+    Options const& options,
     google::pubsub::v1::ListTopicsRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("project=", internal::UrlEncode(request.project())));
+  SetMetadata(context, options, absl::StrCat("project=", internal::UrlEncode(request.project())));
   return child_->ListTopics(context, options, request);
 }
 
 StatusOr<google::pubsub::v1::ListTopicSubscriptionsResponse>
 PublisherMetadata::ListTopicSubscriptions(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::pubsub::v1::ListTopicSubscriptionsRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("topic=", internal::UrlEncode(request.topic())));
+  SetMetadata(context, options, absl::StrCat("topic=", internal::UrlEncode(request.topic())));
   return child_->ListTopicSubscriptions(context, options, request);
 }
 
 StatusOr<google::pubsub::v1::ListTopicSnapshotsResponse>
 PublisherMetadata::ListTopicSnapshots(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::pubsub::v1::ListTopicSnapshotsRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("topic=", internal::UrlEncode(request.topic())));
+  SetMetadata(context, options, absl::StrCat("topic=", internal::UrlEncode(request.topic())));
   return child_->ListTopicSnapshots(context, options, request);
 }
 
-Status PublisherMetadata::DeleteTopic(
-    grpc::ClientContext& context, Options const& options,
+Status
+PublisherMetadata::DeleteTopic(
+    grpc::ClientContext& context,
+    Options const& options,
     google::pubsub::v1::DeleteTopicRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("topic=", internal::UrlEncode(request.topic())));
+  SetMetadata(context, options, absl::StrCat("topic=", internal::UrlEncode(request.topic())));
   return child_->DeleteTopic(context, options, request);
 }
 
 StatusOr<google::pubsub::v1::DetachSubscriptionResponse>
 PublisherMetadata::DetachSubscription(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::pubsub::v1::DetachSubscriptionRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("subscription=",
-                           internal::UrlEncode(request.subscription())));
+  SetMetadata(context, options, absl::StrCat("subscription=", internal::UrlEncode(request.subscription())));
   return child_->DetachSubscription(context, options, request);
 }
 
-StatusOr<google::iam::v1::Policy> PublisherMetadata::SetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::iam::v1::Policy>
+PublisherMetadata::SetIamPolicy(
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
-  SetMetadata(
-      context, options,
-      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
+  SetMetadata(context, options, absl::StrCat("resource=", internal::UrlEncode(request.resource())));
   return child_->SetIamPolicy(context, options, request);
 }
 
-StatusOr<google::iam::v1::Policy> PublisherMetadata::GetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::iam::v1::Policy>
+PublisherMetadata::GetIamPolicy(
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
-  SetMetadata(
-      context, options,
-      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
+  SetMetadata(context, options, absl::StrCat("resource=", internal::UrlEncode(request.resource())));
   return child_->GetIamPolicy(context, options, request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 PublisherMetadata::TestIamPermissions(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  SetMetadata(
-      context, options,
-      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
+  SetMetadata(context, options, absl::StrCat("resource=", internal::UrlEncode(request.resource())));
   return child_->TestIamPermissions(context, options, request);
 }
 
 future<StatusOr<google::pubsub::v1::PublishResponse>>
 PublisherMetadata::AsyncPublish(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::pubsub::v1::PublishRequest const& request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("topic=", internal::UrlEncode(request.topic())));
-  return child_->AsyncPublish(cq, std::move(context), std::move(options),
-                              request);
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::pubsub::v1::PublishRequest const& request) {
+  SetMetadata(*context, *options, absl::StrCat("topic=", internal::UrlEncode(request.topic())));
+  return child_->AsyncPublish(
+      cq, std::move(context), std::move(options), request);
 }
 
 void PublisherMetadata::SetMetadata(grpc::ClientContext& context,
-                                    Options const& options,
-                                    std::string const& request_params) {
+                                        Options const& options,
+                                        std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
 void PublisherMetadata::SetMetadata(grpc::ClientContext& context,
-                                    Options const& options) {
-  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
-                                       api_client_header_);
+                                        Options const& options) {
+  google::cloud::internal::SetMetadata(
+      context, options, fixed_metadata_, api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

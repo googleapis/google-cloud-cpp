@@ -26,10 +26,8 @@ namespace cloud {
 namespace apikeys {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use apikeys_v2::MakeDefaultApiKeysConnectionIdempotencyPolicy
-/// directly.
-using ::google::cloud::apikeys_v2::
-    MakeDefaultApiKeysConnectionIdempotencyPolicy;
+/// @deprecated Use apikeys_v2::MakeDefaultApiKeysConnectionIdempotencyPolicy directly.
+using ::google::cloud::apikeys_v2::MakeDefaultApiKeysConnectionIdempotencyPolicy;
 
 /// @deprecated Use apikeys_v2::ApiKeysConnectionIdempotencyPolicy directly.
 using ::google::cloud::apikeys_v2::ApiKeysConnectionIdempotencyPolicy;

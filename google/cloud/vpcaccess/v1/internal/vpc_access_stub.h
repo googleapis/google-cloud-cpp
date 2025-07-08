@@ -25,8 +25,8 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/location/locations.grpc.pb.h>
-#include <google/cloud/vpcaccess/v1/vpc_access.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
+#include <google/cloud/vpcaccess/v1/vpc_access.grpc.pb.h>
 #include <memory>
 #include <utility>
 
@@ -46,16 +46,18 @@ class VpcAccessServiceStub {
       google::cloud::vpcaccess::v1::CreateConnectorRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> CreateConnector(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::cloud::vpcaccess::v1::CreateConnectorRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::vpcaccess::v1::Connector> GetConnector(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::vpcaccess::v1::GetConnectorRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::vpcaccess::v1::ListConnectorsResponse>
-  ListConnectors(
-      grpc::ClientContext& context, Options const& options,
+  virtual StatusOr<google::cloud::vpcaccess::v1::ListConnectorsResponse> ListConnectors(
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::vpcaccess::v1::ListConnectorsRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteConnector(
@@ -65,26 +67,29 @@ class VpcAccessServiceStub {
       google::cloud::vpcaccess::v1::DeleteConnectorRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> DeleteConnector(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::cloud::vpcaccess::v1::DeleteConnectorRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::location::ListLocationsResponse>
-  ListLocations(
-      grpc::ClientContext& context, Options const& options,
+  virtual StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::location::ListLocationsRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::ListOperationsRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
+    google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
@@ -97,13 +102,9 @@ class VpcAccessServiceStub {
 class DefaultVpcAccessServiceStub : public VpcAccessServiceStub {
  public:
   DefaultVpcAccessServiceStub(
-      std::unique_ptr<
-          google::cloud::vpcaccess::v1::VpcAccessService::StubInterface>
-          grpc_stub,
-      std::unique_ptr<google::cloud::location::Locations::StubInterface>
-          locations_stub,
-      std::unique_ptr<google::longrunning::Operations::StubInterface>
-          operations_stub)
+      std::unique_ptr<google::cloud::vpcaccess::v1::VpcAccessService::StubInterface> grpc_stub,
+      std::unique_ptr<google::cloud::location::Locations::StubInterface> locations_stub,
+      std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub)
       : grpc_stub_(std::move(grpc_stub)),
         locations_stub_(std::move(locations_stub)),
         operations_stub_(std::move(operations_stub)) {}
@@ -112,46 +113,47 @@ class DefaultVpcAccessServiceStub : public VpcAccessServiceStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::vpcaccess::v1::CreateConnectorRequest const& request)
-      override;
+      google::cloud::vpcaccess::v1::CreateConnectorRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateConnector(
-      grpc::ClientContext& context, Options options,
-      google::cloud::vpcaccess::v1::CreateConnectorRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::vpcaccess::v1::CreateConnectorRequest const& request) override;
 
   StatusOr<google::cloud::vpcaccess::v1::Connector> GetConnector(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::vpcaccess::v1::GetConnectorRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::vpcaccess::v1::GetConnectorRequest const& request) override;
 
   StatusOr<google::cloud::vpcaccess::v1::ListConnectorsResponse> ListConnectors(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::vpcaccess::v1::ListConnectorsRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::vpcaccess::v1::ListConnectorsRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteConnector(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::vpcaccess::v1::DeleteConnectorRequest const& request)
-      override;
+      google::cloud::vpcaccess::v1::DeleteConnectorRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteConnector(
-      grpc::ClientContext& context, Options options,
-      google::cloud::vpcaccess::v1::DeleteConnectorRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::vpcaccess::v1::DeleteConnectorRequest const& request) override;
 
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::location::ListLocationsRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -167,12 +169,9 @@ class DefaultVpcAccessServiceStub : public VpcAccessServiceStub {
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  std::unique_ptr<google::cloud::vpcaccess::v1::VpcAccessService::StubInterface>
-      grpc_stub_;
-  std::unique_ptr<google::cloud::location::Locations::StubInterface>
-      locations_stub_;
-  std::unique_ptr<google::longrunning::Operations::StubInterface>
-      operations_stub_;
+  std::unique_ptr<google::cloud::vpcaccess::v1::VpcAccessService::StubInterface> grpc_stub_;
+  std::unique_ptr<google::cloud::location::Locations::StubInterface> locations_stub_;
+  std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

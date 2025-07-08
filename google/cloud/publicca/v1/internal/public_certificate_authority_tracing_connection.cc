@@ -28,20 +28,13 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-PublicCertificateAuthorityServiceTracingConnection::
-    PublicCertificateAuthorityServiceTracingConnection(
-        std::shared_ptr<
-            publicca_v1::PublicCertificateAuthorityServiceConnection>
-            child)
+PublicCertificateAuthorityServiceTracingConnection::PublicCertificateAuthorityServiceTracingConnection(
+    std::shared_ptr<publicca_v1::PublicCertificateAuthorityServiceConnection> child)
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::security::publicca::v1::ExternalAccountKey>
-PublicCertificateAuthorityServiceTracingConnection::CreateExternalAccountKey(
-    google::cloud::security::publicca::v1::
-        CreateExternalAccountKeyRequest const& request) {
-  auto span = internal::MakeSpan(
-      "publicca_v1::PublicCertificateAuthorityServiceConnection::"
-      "CreateExternalAccountKey");
+PublicCertificateAuthorityServiceTracingConnection::CreateExternalAccountKey(google::cloud::security::publicca::v1::CreateExternalAccountKeyRequest const& request) {
+  auto span = internal::MakeSpan("publicca_v1::PublicCertificateAuthorityServiceConnection::CreateExternalAccountKey");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateExternalAccountKey(request));
 }
@@ -50,12 +43,10 @@ PublicCertificateAuthorityServiceTracingConnection::CreateExternalAccountKey(
 
 std::shared_ptr<publicca_v1::PublicCertificateAuthorityServiceConnection>
 MakePublicCertificateAuthorityServiceTracingConnection(
-    std::shared_ptr<publicca_v1::PublicCertificateAuthorityServiceConnection>
-        conn) {
+    std::shared_ptr<publicca_v1::PublicCertificateAuthorityServiceConnection> conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
-    conn = std::make_shared<PublicCertificateAuthorityServiceTracingConnection>(
-        std::move(conn));
+    conn = std::make_shared<PublicCertificateAuthorityServiceTracingConnection>(std::move(conn));
   }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;

@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LANGUAGE_V2_INTERNAL_LANGUAGE_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LANGUAGE_V2_INTERNAL_LANGUAGE_CONNECTION_IMPL_H
 
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/language/v2/internal/language_retry_traits.h"
 #include "google/cloud/language/v2/internal/language_stub.h"
 #include "google/cloud/language/v2/language_connection.h"
 #include "google/cloud/language/v2/language_connection_idempotency_policy.h"
 #include "google/cloud/language/v2/language_options.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
@@ -42,28 +42,26 @@ class LanguageServiceConnectionImpl
   ~LanguageServiceConnectionImpl() override = default;
 
   LanguageServiceConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<language_v2_internal::LanguageServiceStub> stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<language_v2_internal::LanguageServiceStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
   StatusOr<google::cloud::language::v2::AnalyzeSentimentResponse>
-  AnalyzeSentiment(google::cloud::language::v2::AnalyzeSentimentRequest const&
-                       request) override;
+  AnalyzeSentiment(google::cloud::language::v2::AnalyzeSentimentRequest const& request) override;
 
   StatusOr<google::cloud::language::v2::AnalyzeEntitiesResponse>
-  AnalyzeEntities(google::cloud::language::v2::AnalyzeEntitiesRequest const&
-                      request) override;
+  AnalyzeEntities(google::cloud::language::v2::AnalyzeEntitiesRequest const& request) override;
 
-  StatusOr<google::cloud::language::v2::ClassifyTextResponse> ClassifyText(
-      google::cloud::language::v2::ClassifyTextRequest const& request) override;
+  StatusOr<google::cloud::language::v2::ClassifyTextResponse>
+  ClassifyText(google::cloud::language::v2::ClassifyTextRequest const& request) override;
 
-  StatusOr<google::cloud::language::v2::ModerateTextResponse> ModerateText(
-      google::cloud::language::v2::ModerateTextRequest const& request) override;
+  StatusOr<google::cloud::language::v2::ModerateTextResponse>
+  ModerateText(google::cloud::language::v2::ModerateTextRequest const& request) override;
 
-  StatusOr<google::cloud::language::v2::AnnotateTextResponse> AnnotateText(
-      google::cloud::language::v2::AnnotateTextRequest const& request) override;
+  StatusOr<google::cloud::language::v2::AnnotateTextResponse>
+  AnnotateText(google::cloud::language::v2::AnnotateTextRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

@@ -31,9 +31,9 @@ ClusterManagerAuth::ClusterManagerAuth(
     std::shared_ptr<ClusterManagerStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::container::v1::ListClustersResponse>
-ClusterManagerAuth::ListClusters(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::container::v1::ListClustersResponse> ClusterManagerAuth::ListClusters(
+    grpc::ClientContext& context,
+    Options const& options,
     google::container::v1::ListClustersRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -41,7 +41,8 @@ ClusterManagerAuth::ListClusters(
 }
 
 StatusOr<google::container::v1::Cluster> ClusterManagerAuth::GetCluster(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::container::v1::GetClusterRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -49,7 +50,8 @@ StatusOr<google::container::v1::Cluster> ClusterManagerAuth::GetCluster(
 }
 
 StatusOr<google::container::v1::Operation> ClusterManagerAuth::CreateCluster(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::container::v1::CreateClusterRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -57,7 +59,8 @@ StatusOr<google::container::v1::Operation> ClusterManagerAuth::CreateCluster(
 }
 
 StatusOr<google::container::v1::Operation> ClusterManagerAuth::UpdateCluster(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::container::v1::UpdateClusterRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -65,34 +68,35 @@ StatusOr<google::container::v1::Operation> ClusterManagerAuth::UpdateCluster(
 }
 
 StatusOr<google::container::v1::Operation> ClusterManagerAuth::UpdateNodePool(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::container::v1::UpdateNodePoolRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateNodePool(context, options, request);
 }
 
-StatusOr<google::container::v1::Operation>
-ClusterManagerAuth::SetNodePoolAutoscaling(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::container::v1::Operation> ClusterManagerAuth::SetNodePoolAutoscaling(
+    grpc::ClientContext& context,
+    Options const& options,
     google::container::v1::SetNodePoolAutoscalingRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->SetNodePoolAutoscaling(context, options, request);
 }
 
-StatusOr<google::container::v1::Operation>
-ClusterManagerAuth::SetLoggingService(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::container::v1::Operation> ClusterManagerAuth::SetLoggingService(
+    grpc::ClientContext& context,
+    Options const& options,
     google::container::v1::SetLoggingServiceRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->SetLoggingService(context, options, request);
 }
 
-StatusOr<google::container::v1::Operation>
-ClusterManagerAuth::SetMonitoringService(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::container::v1::Operation> ClusterManagerAuth::SetMonitoringService(
+    grpc::ClientContext& context,
+    Options const& options,
     google::container::v1::SetMonitoringServiceRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -100,7 +104,8 @@ ClusterManagerAuth::SetMonitoringService(
 }
 
 StatusOr<google::container::v1::Operation> ClusterManagerAuth::SetAddonsConfig(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::container::v1::SetAddonsConfigRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -108,7 +113,8 @@ StatusOr<google::container::v1::Operation> ClusterManagerAuth::SetAddonsConfig(
 }
 
 StatusOr<google::container::v1::Operation> ClusterManagerAuth::SetLocations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::container::v1::SetLocationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -116,7 +122,8 @@ StatusOr<google::container::v1::Operation> ClusterManagerAuth::SetLocations(
 }
 
 StatusOr<google::container::v1::Operation> ClusterManagerAuth::UpdateMaster(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::container::v1::UpdateMasterRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -124,7 +131,8 @@ StatusOr<google::container::v1::Operation> ClusterManagerAuth::UpdateMaster(
 }
 
 StatusOr<google::container::v1::Operation> ClusterManagerAuth::SetMasterAuth(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::container::v1::SetMasterAuthRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -132,16 +140,17 @@ StatusOr<google::container::v1::Operation> ClusterManagerAuth::SetMasterAuth(
 }
 
 StatusOr<google::container::v1::Operation> ClusterManagerAuth::DeleteCluster(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::container::v1::DeleteClusterRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteCluster(context, options, request);
 }
 
-StatusOr<google::container::v1::ListOperationsResponse>
-ClusterManagerAuth::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::container::v1::ListOperationsResponse> ClusterManagerAuth::ListOperations(
+    grpc::ClientContext& context,
+    Options const& options,
     google::container::v1::ListOperationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -149,7 +158,8 @@ ClusterManagerAuth::ListOperations(
 }
 
 StatusOr<google::container::v1::Operation> ClusterManagerAuth::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::container::v1::GetOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -157,34 +167,35 @@ StatusOr<google::container::v1::Operation> ClusterManagerAuth::GetOperation(
 }
 
 Status ClusterManagerAuth::CancelOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::container::v1::CancelOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CancelOperation(context, options, request);
 }
 
-StatusOr<google::container::v1::ServerConfig>
-ClusterManagerAuth::GetServerConfig(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::container::v1::ServerConfig> ClusterManagerAuth::GetServerConfig(
+    grpc::ClientContext& context,
+    Options const& options,
     google::container::v1::GetServerConfigRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetServerConfig(context, options, request);
 }
 
-StatusOr<google::container::v1::GetJSONWebKeysResponse>
-ClusterManagerAuth::GetJSONWebKeys(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::container::v1::GetJSONWebKeysResponse> ClusterManagerAuth::GetJSONWebKeys(
+    grpc::ClientContext& context,
+    Options const& options,
     google::container::v1::GetJSONWebKeysRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetJSONWebKeys(context, options, request);
 }
 
-StatusOr<google::container::v1::ListNodePoolsResponse>
-ClusterManagerAuth::ListNodePools(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::container::v1::ListNodePoolsResponse> ClusterManagerAuth::ListNodePools(
+    grpc::ClientContext& context,
+    Options const& options,
     google::container::v1::ListNodePoolsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -192,7 +203,8 @@ ClusterManagerAuth::ListNodePools(
 }
 
 StatusOr<google::container::v1::NodePool> ClusterManagerAuth::GetNodePool(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::container::v1::GetNodePoolRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -200,7 +212,8 @@ StatusOr<google::container::v1::NodePool> ClusterManagerAuth::GetNodePool(
 }
 
 StatusOr<google::container::v1::Operation> ClusterManagerAuth::CreateNodePool(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::container::v1::CreateNodePoolRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -208,7 +221,8 @@ StatusOr<google::container::v1::Operation> ClusterManagerAuth::CreateNodePool(
 }
 
 StatusOr<google::container::v1::Operation> ClusterManagerAuth::DeleteNodePool(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::container::v1::DeleteNodePoolRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -216,25 +230,26 @@ StatusOr<google::container::v1::Operation> ClusterManagerAuth::DeleteNodePool(
 }
 
 Status ClusterManagerAuth::CompleteNodePoolUpgrade(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::container::v1::CompleteNodePoolUpgradeRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CompleteNodePoolUpgrade(context, options, request);
 }
 
-StatusOr<google::container::v1::Operation>
-ClusterManagerAuth::RollbackNodePoolUpgrade(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::container::v1::Operation> ClusterManagerAuth::RollbackNodePoolUpgrade(
+    grpc::ClientContext& context,
+    Options const& options,
     google::container::v1::RollbackNodePoolUpgradeRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->RollbackNodePoolUpgrade(context, options, request);
 }
 
-StatusOr<google::container::v1::Operation>
-ClusterManagerAuth::SetNodePoolManagement(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::container::v1::Operation> ClusterManagerAuth::SetNodePoolManagement(
+    grpc::ClientContext& context,
+    Options const& options,
     google::container::v1::SetNodePoolManagementRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -242,7 +257,8 @@ ClusterManagerAuth::SetNodePoolManagement(
 }
 
 StatusOr<google::container::v1::Operation> ClusterManagerAuth::SetLabels(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::container::v1::SetLabelsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -250,7 +266,8 @@ StatusOr<google::container::v1::Operation> ClusterManagerAuth::SetLabels(
 }
 
 StatusOr<google::container::v1::Operation> ClusterManagerAuth::SetLegacyAbac(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::container::v1::SetLegacyAbacRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -258,16 +275,17 @@ StatusOr<google::container::v1::Operation> ClusterManagerAuth::SetLegacyAbac(
 }
 
 StatusOr<google::container::v1::Operation> ClusterManagerAuth::StartIPRotation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::container::v1::StartIPRotationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->StartIPRotation(context, options, request);
 }
 
-StatusOr<google::container::v1::Operation>
-ClusterManagerAuth::CompleteIPRotation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::container::v1::Operation> ClusterManagerAuth::CompleteIPRotation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::container::v1::CompleteIPRotationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -275,7 +293,8 @@ ClusterManagerAuth::CompleteIPRotation(
 }
 
 StatusOr<google::container::v1::Operation> ClusterManagerAuth::SetNodePoolSize(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::container::v1::SetNodePoolSizeRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -283,52 +302,53 @@ StatusOr<google::container::v1::Operation> ClusterManagerAuth::SetNodePoolSize(
 }
 
 StatusOr<google::container::v1::Operation> ClusterManagerAuth::SetNetworkPolicy(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::container::v1::SetNetworkPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->SetNetworkPolicy(context, options, request);
 }
 
-StatusOr<google::container::v1::Operation>
-ClusterManagerAuth::SetMaintenancePolicy(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::container::v1::Operation> ClusterManagerAuth::SetMaintenancePolicy(
+    grpc::ClientContext& context,
+    Options const& options,
     google::container::v1::SetMaintenancePolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->SetMaintenancePolicy(context, options, request);
 }
 
-StatusOr<google::container::v1::ListUsableSubnetworksResponse>
-ClusterManagerAuth::ListUsableSubnetworks(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::container::v1::ListUsableSubnetworksResponse> ClusterManagerAuth::ListUsableSubnetworks(
+    grpc::ClientContext& context,
+    Options const& options,
     google::container::v1::ListUsableSubnetworksRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListUsableSubnetworks(context, options, request);
 }
 
-StatusOr<google::container::v1::CheckAutopilotCompatibilityResponse>
-ClusterManagerAuth::CheckAutopilotCompatibility(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::container::v1::CheckAutopilotCompatibilityResponse> ClusterManagerAuth::CheckAutopilotCompatibility(
+    grpc::ClientContext& context,
+    Options const& options,
     google::container::v1::CheckAutopilotCompatibilityRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CheckAutopilotCompatibility(context, options, request);
 }
 
-StatusOr<google::container::v1::ClusterUpgradeInfo>
-ClusterManagerAuth::FetchClusterUpgradeInfo(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::container::v1::ClusterUpgradeInfo> ClusterManagerAuth::FetchClusterUpgradeInfo(
+    grpc::ClientContext& context,
+    Options const& options,
     google::container::v1::FetchClusterUpgradeInfoRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->FetchClusterUpgradeInfo(context, options, request);
 }
 
-StatusOr<google::container::v1::NodePoolUpgradeInfo>
-ClusterManagerAuth::FetchNodePoolUpgradeInfo(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::container::v1::NodePoolUpgradeInfo> ClusterManagerAuth::FetchNodePoolUpgradeInfo(
+    grpc::ClientContext& context,
+    Options const& options,
     google::container::v1::FetchNodePoolUpgradeInfoRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;

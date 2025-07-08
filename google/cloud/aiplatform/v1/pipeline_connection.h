@@ -57,8 +57,7 @@ class PipelineServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class PipelineServiceLimitedErrorCountRetryPolicy
-    : public PipelineServiceRetryPolicy {
+class PipelineServiceLimitedErrorCountRetryPolicy : public PipelineServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -68,14 +67,14 @@ class PipelineServiceLimitedErrorCountRetryPolicy
    *     @p maximum_failures == 0.
    */
   explicit PipelineServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   PipelineServiceLimitedErrorCountRetryPolicy(
       PipelineServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : PipelineServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : PipelineServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   PipelineServiceLimitedErrorCountRetryPolicy(
       PipelineServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : PipelineServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : PipelineServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -95,9 +94,7 @@ class PipelineServiceLimitedErrorCountRetryPolicy
   using BaseType = PipelineServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      aiplatform_v1_internal::PipelineServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<aiplatform_v1_internal::PipelineServiceRetryTraits> impl_;
 };
 
 /**
@@ -110,8 +107,7 @@ class PipelineServiceLimitedErrorCountRetryPolicy
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class PipelineServiceLimitedTimeRetryPolicy
-    : public PipelineServiceRetryPolicy {
+class PipelineServiceLimitedTimeRetryPolicy : public PipelineServiceRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -136,14 +132,12 @@ class PipelineServiceLimitedTimeRetryPolicy
   template <typename DurationRep, typename DurationPeriod>
   explicit PipelineServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  PipelineServiceLimitedTimeRetryPolicy(
-      PipelineServiceLimitedTimeRetryPolicy&& rhs) noexcept
-      : PipelineServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  PipelineServiceLimitedTimeRetryPolicy(
-      PipelineServiceLimitedTimeRetryPolicy const& rhs) noexcept
-      : PipelineServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  PipelineServiceLimitedTimeRetryPolicy(PipelineServiceLimitedTimeRetryPolicy&& rhs) noexcept
+    : PipelineServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  PipelineServiceLimitedTimeRetryPolicy(PipelineServiceLimitedTimeRetryPolicy const& rhs) noexcept
+    : PipelineServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -165,9 +159,7 @@ class PipelineServiceLimitedTimeRetryPolicy
   using BaseType = PipelineServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      aiplatform_v1_internal::PipelineServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<aiplatform_v1_internal::PipelineServiceRetryTraits> impl_;
 };
 
 /**
@@ -189,135 +181,105 @@ class PipelineServiceConnection {
   virtual Options options() { return Options{}; }
 
   virtual StatusOr<google::cloud::aiplatform::v1::TrainingPipeline>
-  CreateTrainingPipeline(
-      google::cloud::aiplatform::v1::CreateTrainingPipelineRequest const&
-          request);
+  CreateTrainingPipeline(google::cloud::aiplatform::v1::CreateTrainingPipelineRequest const& request);
 
   virtual StatusOr<google::cloud::aiplatform::v1::TrainingPipeline>
-  GetTrainingPipeline(
-      google::cloud::aiplatform::v1::GetTrainingPipelineRequest const& request);
+  GetTrainingPipeline(google::cloud::aiplatform::v1::GetTrainingPipelineRequest const& request);
 
   virtual StreamRange<google::cloud::aiplatform::v1::TrainingPipeline>
-  ListTrainingPipelines(
-      google::cloud::aiplatform::v1::ListTrainingPipelinesRequest request);
+  ListTrainingPipelines(google::cloud::aiplatform::v1::ListTrainingPipelinesRequest request);
 
-  virtual future<
-      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteTrainingPipeline(
-      google::cloud::aiplatform::v1::DeleteTrainingPipelineRequest const&
-          request);
+  virtual future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteTrainingPipeline(google::cloud::aiplatform::v1::DeleteTrainingPipelineRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> DeleteTrainingPipeline(
-      NoAwaitTag,
-      google::cloud::aiplatform::v1::DeleteTrainingPipelineRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  DeleteTrainingPipeline(NoAwaitTag, google::cloud::aiplatform::v1::DeleteTrainingPipelineRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteTrainingPipeline(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteTrainingPipeline( google::longrunning::Operation const& operation);
 
-  virtual Status CancelTrainingPipeline(
-      google::cloud::aiplatform::v1::CancelTrainingPipelineRequest const&
-          request);
+  virtual Status
+  CancelTrainingPipeline(google::cloud::aiplatform::v1::CancelTrainingPipelineRequest const& request);
 
   virtual StatusOr<google::cloud::aiplatform::v1::PipelineJob>
-  CreatePipelineJob(
-      google::cloud::aiplatform::v1::CreatePipelineJobRequest const& request);
+  CreatePipelineJob(google::cloud::aiplatform::v1::CreatePipelineJobRequest const& request);
 
-  virtual StatusOr<google::cloud::aiplatform::v1::PipelineJob> GetPipelineJob(
-      google::cloud::aiplatform::v1::GetPipelineJobRequest const& request);
+  virtual StatusOr<google::cloud::aiplatform::v1::PipelineJob>
+  GetPipelineJob(google::cloud::aiplatform::v1::GetPipelineJobRequest const& request);
 
   virtual StreamRange<google::cloud::aiplatform::v1::PipelineJob>
-  ListPipelineJobs(
-      google::cloud::aiplatform::v1::ListPipelineJobsRequest request);
+  ListPipelineJobs(google::cloud::aiplatform::v1::ListPipelineJobsRequest request);
 
-  virtual future<
-      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeletePipelineJob(
-      google::cloud::aiplatform::v1::DeletePipelineJobRequest const& request);
+  virtual future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeletePipelineJob(google::cloud::aiplatform::v1::DeletePipelineJobRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> DeletePipelineJob(
-      NoAwaitTag,
-      google::cloud::aiplatform::v1::DeletePipelineJobRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  DeletePipelineJob(NoAwaitTag, google::cloud::aiplatform::v1::DeletePipelineJobRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeletePipelineJob(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeletePipelineJob( google::longrunning::Operation const& operation);
 
-  virtual future<
-      StatusOr<google::cloud::aiplatform::v1::BatchDeletePipelineJobsResponse>>
-  BatchDeletePipelineJobs(
-      google::cloud::aiplatform::v1::BatchDeletePipelineJobsRequest const&
-          request);
+  virtual future<StatusOr<google::cloud::aiplatform::v1::BatchDeletePipelineJobsResponse>>
+  BatchDeletePipelineJobs(google::cloud::aiplatform::v1::BatchDeletePipelineJobsRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> BatchDeletePipelineJobs(
-      NoAwaitTag,
-      google::cloud::aiplatform::v1::BatchDeletePipelineJobsRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  BatchDeletePipelineJobs(NoAwaitTag, google::cloud::aiplatform::v1::BatchDeletePipelineJobsRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::aiplatform::v1::BatchDeletePipelineJobsResponse>>
-  BatchDeletePipelineJobs(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::aiplatform::v1::BatchDeletePipelineJobsResponse>>
+  BatchDeletePipelineJobs( google::longrunning::Operation const& operation);
 
-  virtual Status CancelPipelineJob(
-      google::cloud::aiplatform::v1::CancelPipelineJobRequest const& request);
+  virtual Status
+  CancelPipelineJob(google::cloud::aiplatform::v1::CancelPipelineJobRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::aiplatform::v1::BatchCancelPipelineJobsResponse>>
-  BatchCancelPipelineJobs(
-      google::cloud::aiplatform::v1::BatchCancelPipelineJobsRequest const&
-          request);
+  virtual future<StatusOr<google::cloud::aiplatform::v1::BatchCancelPipelineJobsResponse>>
+  BatchCancelPipelineJobs(google::cloud::aiplatform::v1::BatchCancelPipelineJobsRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> BatchCancelPipelineJobs(
-      NoAwaitTag,
-      google::cloud::aiplatform::v1::BatchCancelPipelineJobsRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  BatchCancelPipelineJobs(NoAwaitTag, google::cloud::aiplatform::v1::BatchCancelPipelineJobsRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::aiplatform::v1::BatchCancelPipelineJobsResponse>>
-  BatchCancelPipelineJobs(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::aiplatform::v1::BatchCancelPipelineJobsResponse>>
+  BatchCancelPipelineJobs( google::longrunning::Operation const& operation);
 
-  virtual StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request);
+  virtual StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request);
 
-  virtual StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request);
+  virtual StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
 
   virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
   TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
 
-  virtual StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 
-  virtual Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request);
+  virtual Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
 
-  virtual Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request);
+  virtual Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> WaitOperation(
-      google::longrunning::WaitOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  WaitOperation(google::longrunning::WaitOperationRequest const& request);
 };
 
 /**
- * A factory function to construct an object of type
- * `PipelineServiceConnection`.
+ * A factory function to construct an object of type `PipelineServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
  * should be passed as an argument to the constructor of PipelineServiceClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `PipelineServiceConnection`. Expected options are any of the types
- * in the following option lists:
+ * returned `PipelineServiceConnection`. Expected options are any of the types in
+ * the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
@@ -328,8 +290,8 @@ class PipelineServiceConnection {
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
  * @param location Sets the prefix for the default `EndpointOption` value.
- * @param options (optional) Configure the `PipelineServiceConnection` created
- * by this function.
+ * @param options (optional) Configure the `PipelineServiceConnection` created by
+ * this function.
  */
 std::shared_ptr<PipelineServiceConnection> MakePipelineServiceConnection(
     std::string const& location, Options options = {});

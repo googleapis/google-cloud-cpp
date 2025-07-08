@@ -43,7 +43,8 @@ class DefaultSqlEventsServiceRestStub : public SqlEventsServiceRestStub {
 
   explicit DefaultSqlEventsServiceRestStub(Options options);
   DefaultSqlEventsServiceRestStub(
-      std::shared_ptr<rest_internal::RestClient> service, Options options);
+      std::shared_ptr<rest_internal::RestClient> service,
+      Options options);
 
  private:
   std::shared_ptr<rest_internal::RestClient> service_;

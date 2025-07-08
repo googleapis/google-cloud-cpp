@@ -34,31 +34,34 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class IAMCredentialsMetadata : public IAMCredentialsStub {
  public:
   ~IAMCredentialsMetadata() override = default;
-  IAMCredentialsMetadata(std::shared_ptr<IAMCredentialsStub> child,
-                         std::multimap<std::string, std::string> fixed_metadata,
-                         std::string api_client_header = "");
+  IAMCredentialsMetadata(
+      std::shared_ptr<IAMCredentialsStub> child,
+      std::multimap<std::string, std::string> fixed_metadata,
+      std::string api_client_header = "");
 
-  StatusOr<google::iam::credentials::v1::GenerateAccessTokenResponse>
-  GenerateAccessToken(
-      grpc::ClientContext& context, Options const& options,
-      google::iam::credentials::v1::GenerateAccessTokenRequest const& request)
-      override;
+  StatusOr<google::iam::credentials::v1::GenerateAccessTokenResponse> GenerateAccessToken(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::iam::credentials::v1::GenerateAccessTokenRequest const& request) override;
 
-  StatusOr<google::iam::credentials::v1::GenerateIdTokenResponse>
-  GenerateIdToken(grpc::ClientContext& context, Options const& options,
-                  google::iam::credentials::v1::GenerateIdTokenRequest const&
-                      request) override;
+  StatusOr<google::iam::credentials::v1::GenerateIdTokenResponse> GenerateIdToken(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::iam::credentials::v1::GenerateIdTokenRequest const& request) override;
 
   StatusOr<google::iam::credentials::v1::SignBlobResponse> SignBlob(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::credentials::v1::SignBlobRequest const& request) override;
 
   StatusOr<google::iam::credentials::v1::SignJwtResponse> SignJwt(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::credentials::v1::SignJwtRequest const& request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context, Options const& options,
+  void SetMetadata(grpc::ClientContext& context,
+                   Options const& options,
                    std::string const& request_params);
   void SetMetadata(grpc::ClientContext& context, Options const& options);
 
@@ -68,7 +71,7 @@ class IAMCredentialsMetadata : public IAMCredentialsStub {
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS;  // NOLINT(misc-unused-alias-decls)
+namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS; // NOLINT(misc-unused-alias-decls)
 }  // namespace iam_credentials_v1_internal
 }  // namespace cloud
 }  // namespace google

@@ -30,144 +30,118 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-class RoutersTracingConnection : public compute_routers_v1::RoutersConnection {
+class RoutersTracingConnection
+    : public compute_routers_v1::RoutersConnection {
  public:
   ~RoutersTracingConnection() override = default;
 
   explicit RoutersTracingConnection(
-      std::shared_ptr<compute_routers_v1::RoutersConnection> child);
+    std::shared_ptr<compute_routers_v1::RoutersConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StreamRange<std::pair<std::string,
-                        google::cloud::cpp::compute::v1::RoutersScopedList>>
-  AggregatedListRouters(
-      google::cloud::cpp::compute::routers::v1::AggregatedListRoutersRequest
-          request) override;
+  StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::RoutersScopedList>>
+  AggregatedListRouters(google::cloud::cpp::compute::routers::v1::AggregatedListRoutersRequest request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteRouter(
-      google::cloud::cpp::compute::routers::v1::DeleteRouterRequest const&
-          request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteRouter(google::cloud::cpp::compute::routers::v1::DeleteRouterRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteRouter(
-      NoAwaitTag,
-      google::cloud::cpp::compute::routers::v1::DeleteRouterRequest const&
-          request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeleteRouter(NoAwaitTag,
+      google::cloud::cpp::compute::routers::v1::DeleteRouterRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteRouter(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteRouter(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteRoutePolicy(
-      google::cloud::cpp::compute::routers::v1::DeleteRoutePolicyRequest const&
-          request) override;
+  DeleteRoutePolicy(google::cloud::cpp::compute::routers::v1::DeleteRoutePolicyRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteRoutePolicy(
-      NoAwaitTag,
-      google::cloud::cpp::compute::routers::v1::DeleteRoutePolicyRequest const&
-          request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeleteRoutePolicy(NoAwaitTag,
+      google::cloud::cpp::compute::routers::v1::DeleteRoutePolicyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteRoutePolicy(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Router> GetRouter(
-      google::cloud::cpp::compute::routers::v1::GetRouterRequest const& request)
-      override;
+  StatusOr<google::cloud::cpp::compute::v1::Router>
+  GetRouter(google::cloud::cpp::compute::routers::v1::GetRouterRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::NatIpInfoResponse> GetNatIpInfo(
-      google::cloud::cpp::compute::routers::v1::GetNatIpInfoRequest const&
-          request) override;
+  StatusOr<google::cloud::cpp::compute::v1::NatIpInfoResponse>
+  GetNatIpInfo(google::cloud::cpp::compute::routers::v1::GetNatIpInfoRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::VmEndpointNatMappingsList>
-  GetNatMappingInfo(
-      google::cloud::cpp::compute::routers::v1::GetNatMappingInfoRequest const&
-          request) override;
+  GetNatMappingInfo(google::cloud::cpp::compute::routers::v1::GetNatMappingInfoRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::RoutersGetRoutePolicyResponse>
-  GetRoutePolicy(
-      google::cloud::cpp::compute::routers::v1::GetRoutePolicyRequest const&
-          request) override;
+  GetRoutePolicy(google::cloud::cpp::compute::routers::v1::GetRoutePolicyRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::RouterStatusResponse>
-  GetRouterStatus(
-      google::cloud::cpp::compute::routers::v1::GetRouterStatusRequest const&
-          request) override;
+  GetRouterStatus(google::cloud::cpp::compute::routers::v1::GetRouterStatusRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertRouter(
-      google::cloud::cpp::compute::routers::v1::InsertRouterRequest const&
-          request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  InsertRouter(google::cloud::cpp::compute::routers::v1::InsertRouterRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertRouter(
-      NoAwaitTag,
-      google::cloud::cpp::compute::routers::v1::InsertRouterRequest const&
-          request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  InsertRouter(NoAwaitTag,
+      google::cloud::cpp::compute::routers::v1::InsertRouterRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertRouter(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  InsertRouter(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
-  StreamRange<google::cloud::cpp::compute::v1::Router> ListRouters(
-      google::cloud::cpp::compute::routers::v1::ListRoutersRequest request)
-      override;
+  StreamRange<google::cloud::cpp::compute::v1::Router>
+  ListRouters(google::cloud::cpp::compute::routers::v1::ListRoutersRequest request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::RoutersListBgpRoutes> ListBgpRoutes(
-      google::cloud::cpp::compute::routers::v1::ListBgpRoutesRequest const&
-          request) override;
+  StatusOr<google::cloud::cpp::compute::v1::RoutersListBgpRoutes>
+  ListBgpRoutes(google::cloud::cpp::compute::routers::v1::ListBgpRoutesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::RoutersListRoutePolicies>
-  ListRoutePolicies(
-      google::cloud::cpp::compute::routers::v1::ListRoutePoliciesRequest const&
-          request) override;
+  ListRoutePolicies(google::cloud::cpp::compute::routers::v1::ListRoutePoliciesRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchRouter(
-      google::cloud::cpp::compute::routers::v1::PatchRouterRequest const&
-          request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  PatchRouter(google::cloud::cpp::compute::routers::v1::PatchRouterRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchRouter(
-      NoAwaitTag,
-      google::cloud::cpp::compute::routers::v1::PatchRouterRequest const&
-          request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  PatchRouter(NoAwaitTag,
+      google::cloud::cpp::compute::routers::v1::PatchRouterRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchRouter(
-      google::cloud::cpp::compute::v1::Operation const& operation) override;
-
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchRoutePolicy(
-      google::cloud::cpp::compute::routers::v1::PatchRoutePolicyRequest const&
-          request) override;
-
-  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchRoutePolicy(
-      NoAwaitTag,
-      google::cloud::cpp::compute::routers::v1::PatchRoutePolicyRequest const&
-          request) override;
-
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchRoutePolicy(
-      google::cloud::cpp::compute::v1::Operation const& operation) override;
-
-  StatusOr<google::cloud::cpp::compute::v1::RoutersPreviewResponse> Preview(
-      google::cloud::cpp::compute::routers::v1::PreviewRequest const& request)
-      override;
-
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateRouter(
-      google::cloud::cpp::compute::routers::v1::UpdateRouterRequest const&
-          request) override;
-
-  StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateRouter(
-      NoAwaitTag,
-      google::cloud::cpp::compute::routers::v1::UpdateRouterRequest const&
-          request) override;
-
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateRouter(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  PatchRouter(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateRoutePolicy(
-      google::cloud::cpp::compute::routers::v1::UpdateRoutePolicyRequest const&
-          request) override;
+  PatchRoutePolicy(google::cloud::cpp::compute::routers::v1::PatchRoutePolicyRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateRoutePolicy(
-      NoAwaitTag,
-      google::cloud::cpp::compute::routers::v1::UpdateRoutePolicyRequest const&
-          request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  PatchRoutePolicy(NoAwaitTag,
+      google::cloud::cpp::compute::routers::v1::PatchRoutePolicyRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  PatchRoutePolicy(
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::RoutersPreviewResponse>
+  Preview(google::cloud::cpp::compute::routers::v1::PreviewRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  UpdateRouter(google::cloud::cpp::compute::routers::v1::UpdateRouterRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  UpdateRouter(NoAwaitTag,
+      google::cloud::cpp::compute::routers::v1::UpdateRouterRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  UpdateRouter(
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  UpdateRoutePolicy(google::cloud::cpp::compute::routers::v1::UpdateRoutePolicyRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  UpdateRoutePolicy(NoAwaitTag,
+      google::cloud::cpp::compute::routers::v1::UpdateRoutePolicyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   UpdateRoutePolicy(

@@ -17,12 +17,12 @@
 // source: google/cloud/compute/http_health_checks/v1/http_health_checks.proto
 
 #include "google/cloud/compute/http_health_checks/v1/http_health_checks_rest_connection.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/compute/http_health_checks/v1/http_health_checks_options.h"
 #include "google/cloud/compute/http_health_checks/v1/internal/http_health_checks_option_defaults.h"
 #include "google/cloud/compute/http_health_checks/v1/internal/http_health_checks_rest_connection_impl.h"
 #include "google/cloud/compute/http_health_checks/v1/internal/http_health_checks_rest_stub_factory.h"
 #include "google/cloud/compute/http_health_checks/v1/internal/http_health_checks_tracing_connection.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/rest_background_threads_impl.h"
 #include "google/cloud/internal/rest_options.h"
@@ -36,22 +36,19 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<HttpHealthChecksConnection> MakeHttpHealthChecksConnectionRest(
     Options options) {
-  internal::CheckExpectedOptions<
-      CommonOptionList, RestOptionList, UnifiedCredentialsOptionList,
-      rest_internal::TargetApiVersionOption, HttpHealthChecksPolicyOptionList>(
-      options, __func__);
-  options =
-      compute_http_health_checks_v1_internal::HttpHealthChecksDefaultOptions(
-          std::move(options));
+  internal::CheckExpectedOptions<CommonOptionList, RestOptionList,
+      UnifiedCredentialsOptionList, rest_internal::TargetApiVersionOption,
+      HttpHealthChecksPolicyOptionList>(options, __func__);
+  options = compute_http_health_checks_v1_internal::HttpHealthChecksDefaultOptions(
+      std::move(options));
   auto background = std::make_unique<
       rest_internal::AutomaticallyCreatedRestBackgroundThreads>();
-  auto stub = compute_http_health_checks_v1_internal::
-      CreateDefaultHttpHealthChecksRestStub(options);
-  return compute_http_health_checks_v1_internal::
-      MakeHttpHealthChecksTracingConnection(
-          std::make_shared<compute_http_health_checks_v1_internal::
-                               HttpHealthChecksRestConnectionImpl>(
-              std::move(background), std::move(stub), std::move(options)));
+  auto stub = compute_http_health_checks_v1_internal::CreateDefaultHttpHealthChecksRestStub(
+      options);
+  return compute_http_health_checks_v1_internal::MakeHttpHealthChecksTracingConnection(
+      std::make_shared<
+          compute_http_health_checks_v1_internal::HttpHealthChecksRestConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

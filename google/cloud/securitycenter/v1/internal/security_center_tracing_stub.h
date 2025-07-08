@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SECURITYCENTER_V1_INTERNAL_SECURITY_CENTER_TRACING_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SECURITYCENTER_V1_INTERNAL_SECURITY_CENTER_TRACING_STUB_H
 
-#include "google/cloud/securitycenter/v1/internal/security_center_stub.h"
 #include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/options.h"
+#include "google/cloud/securitycenter/v1/internal/security_center_stub.h"
 #include "google/cloud/version.h"
 #include <memory>
 
@@ -42,406 +42,347 @@ class SecurityCenterTracingStub : public SecurityCenterStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::securitycenter::v1::BulkMuteFindingsRequest const& request)
-      override;
+      google::cloud::securitycenter::v1::BulkMuteFindingsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> BulkMuteFindings(
-      grpc::ClientContext& context, Options options,
-      google::cloud::securitycenter::v1::BulkMuteFindingsRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::securitycenter::v1::BulkMuteFindingsRequest const& request) override;
 
-  StatusOr<
-      google::cloud::securitycenter::v1::SecurityHealthAnalyticsCustomModule>
-  CreateSecurityHealthAnalyticsCustomModule(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::securitycenter::v1::
-          CreateSecurityHealthAnalyticsCustomModuleRequest const& request)
-      override;
+  StatusOr<google::cloud::securitycenter::v1::SecurityHealthAnalyticsCustomModule> CreateSecurityHealthAnalyticsCustomModule(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::securitycenter::v1::CreateSecurityHealthAnalyticsCustomModuleRequest const& request) override;
 
   StatusOr<google::cloud::securitycenter::v1::Source> CreateSource(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::securitycenter::v1::CreateSourceRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::securitycenter::v1::CreateSourceRequest const& request) override;
 
   StatusOr<google::cloud::securitycenter::v1::Finding> CreateFinding(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::securitycenter::v1::CreateFindingRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::securitycenter::v1::CreateFindingRequest const& request) override;
 
   StatusOr<google::cloud::securitycenter::v1::MuteConfig> CreateMuteConfig(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::securitycenter::v1::CreateMuteConfigRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::securitycenter::v1::CreateMuteConfigRequest const& request) override;
 
-  StatusOr<google::cloud::securitycenter::v1::NotificationConfig>
-  CreateNotificationConfig(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::securitycenter::v1::CreateNotificationConfigRequest const&
-          request) override;
+  StatusOr<google::cloud::securitycenter::v1::NotificationConfig> CreateNotificationConfig(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::securitycenter::v1::CreateNotificationConfigRequest const& request) override;
 
   Status DeleteMuteConfig(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::securitycenter::v1::DeleteMuteConfigRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::securitycenter::v1::DeleteMuteConfigRequest const& request) override;
 
   Status DeleteNotificationConfig(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::securitycenter::v1::DeleteNotificationConfigRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::securitycenter::v1::DeleteNotificationConfigRequest const& request) override;
 
   Status DeleteSecurityHealthAnalyticsCustomModule(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::securitycenter::v1::
-          DeleteSecurityHealthAnalyticsCustomModuleRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::securitycenter::v1::DeleteSecurityHealthAnalyticsCustomModuleRequest const& request) override;
 
   StatusOr<google::cloud::securitycenter::v1::Simulation> GetSimulation(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::securitycenter::v1::GetSimulationRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::securitycenter::v1::GetSimulationRequest const& request) override;
 
   StatusOr<google::cloud::securitycenter::v1::ValuedResource> GetValuedResource(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::securitycenter::v1::GetValuedResourceRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::securitycenter::v1::GetValuedResourceRequest const& request) override;
 
   StatusOr<google::cloud::securitycenter::v1::BigQueryExport> GetBigQueryExport(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::securitycenter::v1::GetBigQueryExportRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::securitycenter::v1::GetBigQueryExportRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) override;
 
   StatusOr<google::cloud::securitycenter::v1::MuteConfig> GetMuteConfig(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::securitycenter::v1::GetMuteConfigRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::securitycenter::v1::GetMuteConfigRequest const& request) override;
 
-  StatusOr<google::cloud::securitycenter::v1::NotificationConfig>
-  GetNotificationConfig(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::securitycenter::v1::GetNotificationConfigRequest const&
-          request) override;
+  StatusOr<google::cloud::securitycenter::v1::NotificationConfig> GetNotificationConfig(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::securitycenter::v1::GetNotificationConfigRequest const& request) override;
 
-  StatusOr<google::cloud::securitycenter::v1::OrganizationSettings>
-  GetOrganizationSettings(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::securitycenter::v1::GetOrganizationSettingsRequest const&
-          request) override;
+  StatusOr<google::cloud::securitycenter::v1::OrganizationSettings> GetOrganizationSettings(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::securitycenter::v1::GetOrganizationSettingsRequest const& request) override;
 
-  StatusOr<google::cloud::securitycenter::v1::
-               EffectiveSecurityHealthAnalyticsCustomModule>
-  GetEffectiveSecurityHealthAnalyticsCustomModule(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::securitycenter::v1::
-          GetEffectiveSecurityHealthAnalyticsCustomModuleRequest const& request)
-      override;
+  StatusOr<google::cloud::securitycenter::v1::EffectiveSecurityHealthAnalyticsCustomModule> GetEffectiveSecurityHealthAnalyticsCustomModule(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::securitycenter::v1::GetEffectiveSecurityHealthAnalyticsCustomModuleRequest const& request) override;
 
-  StatusOr<
-      google::cloud::securitycenter::v1::SecurityHealthAnalyticsCustomModule>
-  GetSecurityHealthAnalyticsCustomModule(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::securitycenter::v1::
-          GetSecurityHealthAnalyticsCustomModuleRequest const& request)
-      override;
+  StatusOr<google::cloud::securitycenter::v1::SecurityHealthAnalyticsCustomModule> GetSecurityHealthAnalyticsCustomModule(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::securitycenter::v1::GetSecurityHealthAnalyticsCustomModuleRequest const& request) override;
 
   StatusOr<google::cloud::securitycenter::v1::Source> GetSource(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::securitycenter::v1::GetSourceRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::securitycenter::v1::GetSourceRequest const& request) override;
 
   StatusOr<google::cloud::securitycenter::v1::GroupAssetsResponse> GroupAssets(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::securitycenter::v1::GroupAssetsRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::securitycenter::v1::GroupAssetsRequest const& request) override;
 
-  StatusOr<google::cloud::securitycenter::v1::GroupFindingsResponse>
-  GroupFindings(grpc::ClientContext& context, Options const& options,
-                google::cloud::securitycenter::v1::GroupFindingsRequest const&
-                    request) override;
+  StatusOr<google::cloud::securitycenter::v1::GroupFindingsResponse> GroupFindings(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::securitycenter::v1::GroupFindingsRequest const& request) override;
 
   StatusOr<google::cloud::securitycenter::v1::ListAssetsResponse> ListAssets(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::securitycenter::v1::ListAssetsRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::securitycenter::v1::ListAssetsRequest const& request) override;
 
-  StatusOr<google::cloud::securitycenter::v1::
-               ListDescendantSecurityHealthAnalyticsCustomModulesResponse>
-  ListDescendantSecurityHealthAnalyticsCustomModules(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::securitycenter::v1::
-          ListDescendantSecurityHealthAnalyticsCustomModulesRequest const&
-              request) override;
+  StatusOr<google::cloud::securitycenter::v1::ListDescendantSecurityHealthAnalyticsCustomModulesResponse> ListDescendantSecurityHealthAnalyticsCustomModules(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::securitycenter::v1::ListDescendantSecurityHealthAnalyticsCustomModulesRequest const& request) override;
 
-  StatusOr<google::cloud::securitycenter::v1::ListFindingsResponse>
-  ListFindings(grpc::ClientContext& context, Options const& options,
-               google::cloud::securitycenter::v1::ListFindingsRequest const&
-                   request) override;
+  StatusOr<google::cloud::securitycenter::v1::ListFindingsResponse> ListFindings(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::securitycenter::v1::ListFindingsRequest const& request) override;
 
-  StatusOr<google::cloud::securitycenter::v1::ListMuteConfigsResponse>
-  ListMuteConfigs(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::securitycenter::v1::ListMuteConfigsRequest const& request)
-      override;
+  StatusOr<google::cloud::securitycenter::v1::ListMuteConfigsResponse> ListMuteConfigs(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::securitycenter::v1::ListMuteConfigsRequest const& request) override;
 
-  StatusOr<google::cloud::securitycenter::v1::ListNotificationConfigsResponse>
-  ListNotificationConfigs(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::securitycenter::v1::ListNotificationConfigsRequest const&
-          request) override;
+  StatusOr<google::cloud::securitycenter::v1::ListNotificationConfigsResponse> ListNotificationConfigs(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::securitycenter::v1::ListNotificationConfigsRequest const& request) override;
 
-  StatusOr<google::cloud::securitycenter::v1::
-               ListEffectiveSecurityHealthAnalyticsCustomModulesResponse>
-  ListEffectiveSecurityHealthAnalyticsCustomModules(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::securitycenter::v1::
-          ListEffectiveSecurityHealthAnalyticsCustomModulesRequest const&
-              request) override;
+  StatusOr<google::cloud::securitycenter::v1::ListEffectiveSecurityHealthAnalyticsCustomModulesResponse> ListEffectiveSecurityHealthAnalyticsCustomModules(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::securitycenter::v1::ListEffectiveSecurityHealthAnalyticsCustomModulesRequest const& request) override;
 
-  StatusOr<google::cloud::securitycenter::v1::
-               ListSecurityHealthAnalyticsCustomModulesResponse>
-  ListSecurityHealthAnalyticsCustomModules(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::securitycenter::v1::
-          ListSecurityHealthAnalyticsCustomModulesRequest const& request)
-      override;
+  StatusOr<google::cloud::securitycenter::v1::ListSecurityHealthAnalyticsCustomModulesResponse> ListSecurityHealthAnalyticsCustomModules(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::securitycenter::v1::ListSecurityHealthAnalyticsCustomModulesRequest const& request) override;
 
   StatusOr<google::cloud::securitycenter::v1::ListSourcesResponse> ListSources(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::securitycenter::v1::ListSourcesRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::securitycenter::v1::ListSourcesRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncRunAssetDiscovery(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::securitycenter::v1::RunAssetDiscoveryRequest const&
-          request) override;
+      google::cloud::securitycenter::v1::RunAssetDiscoveryRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> RunAssetDiscovery(
-      grpc::ClientContext& context, Options options,
-      google::cloud::securitycenter::v1::RunAssetDiscoveryRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::securitycenter::v1::RunAssetDiscoveryRequest const& request) override;
 
   StatusOr<google::cloud::securitycenter::v1::Finding> SetFindingState(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::securitycenter::v1::SetFindingStateRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::securitycenter::v1::SetFindingStateRequest const& request) override;
 
   StatusOr<google::cloud::securitycenter::v1::Finding> SetMute(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::securitycenter::v1::SetMuteRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::securitycenter::v1::SetMuteRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
-  StatusOr<google::cloud::securitycenter::v1::
-               SimulateSecurityHealthAnalyticsCustomModuleResponse>
-  SimulateSecurityHealthAnalyticsCustomModule(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::securitycenter::v1::
-          SimulateSecurityHealthAnalyticsCustomModuleRequest const& request)
-      override;
+  StatusOr<google::cloud::securitycenter::v1::SimulateSecurityHealthAnalyticsCustomModuleResponse> SimulateSecurityHealthAnalyticsCustomModule(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::securitycenter::v1::SimulateSecurityHealthAnalyticsCustomModuleRequest const& request) override;
 
-  StatusOr<google::cloud::securitycenter::v1::ExternalSystem>
-  UpdateExternalSystem(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::securitycenter::v1::UpdateExternalSystemRequest const&
-          request) override;
+  StatusOr<google::cloud::securitycenter::v1::ExternalSystem> UpdateExternalSystem(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::securitycenter::v1::UpdateExternalSystemRequest const& request) override;
 
   StatusOr<google::cloud::securitycenter::v1::Finding> UpdateFinding(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::securitycenter::v1::UpdateFindingRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::securitycenter::v1::UpdateFindingRequest const& request) override;
 
   StatusOr<google::cloud::securitycenter::v1::MuteConfig> UpdateMuteConfig(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::securitycenter::v1::UpdateMuteConfigRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::securitycenter::v1::UpdateMuteConfigRequest const& request) override;
 
-  StatusOr<google::cloud::securitycenter::v1::NotificationConfig>
-  UpdateNotificationConfig(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::securitycenter::v1::UpdateNotificationConfigRequest const&
-          request) override;
+  StatusOr<google::cloud::securitycenter::v1::NotificationConfig> UpdateNotificationConfig(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::securitycenter::v1::UpdateNotificationConfigRequest const& request) override;
 
-  StatusOr<google::cloud::securitycenter::v1::OrganizationSettings>
-  UpdateOrganizationSettings(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::securitycenter::v1::
-          UpdateOrganizationSettingsRequest const& request) override;
+  StatusOr<google::cloud::securitycenter::v1::OrganizationSettings> UpdateOrganizationSettings(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::securitycenter::v1::UpdateOrganizationSettingsRequest const& request) override;
 
-  StatusOr<
-      google::cloud::securitycenter::v1::SecurityHealthAnalyticsCustomModule>
-  UpdateSecurityHealthAnalyticsCustomModule(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::securitycenter::v1::
-          UpdateSecurityHealthAnalyticsCustomModuleRequest const& request)
-      override;
+  StatusOr<google::cloud::securitycenter::v1::SecurityHealthAnalyticsCustomModule> UpdateSecurityHealthAnalyticsCustomModule(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::securitycenter::v1::UpdateSecurityHealthAnalyticsCustomModuleRequest const& request) override;
 
   StatusOr<google::cloud::securitycenter::v1::Source> UpdateSource(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::securitycenter::v1::UpdateSourceRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::securitycenter::v1::UpdateSourceRequest const& request) override;
 
-  StatusOr<google::cloud::securitycenter::v1::SecurityMarks>
-  UpdateSecurityMarks(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::securitycenter::v1::UpdateSecurityMarksRequest const&
-          request) override;
+  StatusOr<google::cloud::securitycenter::v1::SecurityMarks> UpdateSecurityMarks(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::securitycenter::v1::UpdateSecurityMarksRequest const& request) override;
 
-  StatusOr<google::cloud::securitycenter::v1::BigQueryExport>
-  CreateBigQueryExport(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::securitycenter::v1::CreateBigQueryExportRequest const&
-          request) override;
+  StatusOr<google::cloud::securitycenter::v1::BigQueryExport> CreateBigQueryExport(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::securitycenter::v1::CreateBigQueryExportRequest const& request) override;
 
   Status DeleteBigQueryExport(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::securitycenter::v1::DeleteBigQueryExportRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::securitycenter::v1::DeleteBigQueryExportRequest const& request) override;
 
-  StatusOr<google::cloud::securitycenter::v1::BigQueryExport>
-  UpdateBigQueryExport(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::securitycenter::v1::UpdateBigQueryExportRequest const&
-          request) override;
+  StatusOr<google::cloud::securitycenter::v1::BigQueryExport> UpdateBigQueryExport(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::securitycenter::v1::UpdateBigQueryExportRequest const& request) override;
 
-  StatusOr<google::cloud::securitycenter::v1::ListBigQueryExportsResponse>
-  ListBigQueryExports(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::securitycenter::v1::ListBigQueryExportsRequest const&
-          request) override;
+  StatusOr<google::cloud::securitycenter::v1::ListBigQueryExportsResponse> ListBigQueryExports(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::securitycenter::v1::ListBigQueryExportsRequest const& request) override;
 
-  StatusOr<google::cloud::securitycenter::v1::EventThreatDetectionCustomModule>
-  CreateEventThreatDetectionCustomModule(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::securitycenter::v1::
-          CreateEventThreatDetectionCustomModuleRequest const& request)
-      override;
+  StatusOr<google::cloud::securitycenter::v1::EventThreatDetectionCustomModule> CreateEventThreatDetectionCustomModule(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::securitycenter::v1::CreateEventThreatDetectionCustomModuleRequest const& request) override;
 
   Status DeleteEventThreatDetectionCustomModule(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::securitycenter::v1::
-          DeleteEventThreatDetectionCustomModuleRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::securitycenter::v1::DeleteEventThreatDetectionCustomModuleRequest const& request) override;
 
-  StatusOr<google::cloud::securitycenter::v1::EventThreatDetectionCustomModule>
-  GetEventThreatDetectionCustomModule(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::securitycenter::v1::
-          GetEventThreatDetectionCustomModuleRequest const& request) override;
+  StatusOr<google::cloud::securitycenter::v1::EventThreatDetectionCustomModule> GetEventThreatDetectionCustomModule(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::securitycenter::v1::GetEventThreatDetectionCustomModuleRequest const& request) override;
 
-  StatusOr<google::cloud::securitycenter::v1::
-               ListDescendantEventThreatDetectionCustomModulesResponse>
-  ListDescendantEventThreatDetectionCustomModules(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::securitycenter::v1::
-          ListDescendantEventThreatDetectionCustomModulesRequest const& request)
-      override;
+  StatusOr<google::cloud::securitycenter::v1::ListDescendantEventThreatDetectionCustomModulesResponse> ListDescendantEventThreatDetectionCustomModules(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::securitycenter::v1::ListDescendantEventThreatDetectionCustomModulesRequest const& request) override;
 
-  StatusOr<google::cloud::securitycenter::v1::
-               ListEventThreatDetectionCustomModulesResponse>
-  ListEventThreatDetectionCustomModules(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::securitycenter::v1::
-          ListEventThreatDetectionCustomModulesRequest const& request) override;
+  StatusOr<google::cloud::securitycenter::v1::ListEventThreatDetectionCustomModulesResponse> ListEventThreatDetectionCustomModules(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::securitycenter::v1::ListEventThreatDetectionCustomModulesRequest const& request) override;
 
-  StatusOr<google::cloud::securitycenter::v1::EventThreatDetectionCustomModule>
-  UpdateEventThreatDetectionCustomModule(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::securitycenter::v1::
-          UpdateEventThreatDetectionCustomModuleRequest const& request)
-      override;
+  StatusOr<google::cloud::securitycenter::v1::EventThreatDetectionCustomModule> UpdateEventThreatDetectionCustomModule(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::securitycenter::v1::UpdateEventThreatDetectionCustomModuleRequest const& request) override;
 
-  StatusOr<google::cloud::securitycenter::v1::
-               ValidateEventThreatDetectionCustomModuleResponse>
-  ValidateEventThreatDetectionCustomModule(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::securitycenter::v1::
-          ValidateEventThreatDetectionCustomModuleRequest const& request)
-      override;
+  StatusOr<google::cloud::securitycenter::v1::ValidateEventThreatDetectionCustomModuleResponse> ValidateEventThreatDetectionCustomModule(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::securitycenter::v1::ValidateEventThreatDetectionCustomModuleRequest const& request) override;
 
-  StatusOr<google::cloud::securitycenter::v1::
-               EffectiveEventThreatDetectionCustomModule>
-  GetEffectiveEventThreatDetectionCustomModule(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::securitycenter::v1::
-          GetEffectiveEventThreatDetectionCustomModuleRequest const& request)
-      override;
+  StatusOr<google::cloud::securitycenter::v1::EffectiveEventThreatDetectionCustomModule> GetEffectiveEventThreatDetectionCustomModule(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::securitycenter::v1::GetEffectiveEventThreatDetectionCustomModuleRequest const& request) override;
 
-  StatusOr<google::cloud::securitycenter::v1::
-               ListEffectiveEventThreatDetectionCustomModulesResponse>
-  ListEffectiveEventThreatDetectionCustomModules(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::securitycenter::v1::
-          ListEffectiveEventThreatDetectionCustomModulesRequest const& request)
-      override;
+  StatusOr<google::cloud::securitycenter::v1::ListEffectiveEventThreatDetectionCustomModulesResponse> ListEffectiveEventThreatDetectionCustomModules(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::securitycenter::v1::ListEffectiveEventThreatDetectionCustomModulesRequest const& request) override;
 
-  StatusOr<google::cloud::securitycenter::v1::
-               BatchCreateResourceValueConfigsResponse>
-  BatchCreateResourceValueConfigs(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::securitycenter::v1::
-          BatchCreateResourceValueConfigsRequest const& request) override;
+  StatusOr<google::cloud::securitycenter::v1::BatchCreateResourceValueConfigsResponse> BatchCreateResourceValueConfigs(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::securitycenter::v1::BatchCreateResourceValueConfigsRequest const& request) override;
 
   Status DeleteResourceValueConfig(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::securitycenter::v1::DeleteResourceValueConfigRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::securitycenter::v1::DeleteResourceValueConfigRequest const& request) override;
 
-  StatusOr<google::cloud::securitycenter::v1::ResourceValueConfig>
-  GetResourceValueConfig(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::securitycenter::v1::GetResourceValueConfigRequest const&
-          request) override;
+  StatusOr<google::cloud::securitycenter::v1::ResourceValueConfig> GetResourceValueConfig(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::securitycenter::v1::GetResourceValueConfigRequest const& request) override;
 
-  StatusOr<google::cloud::securitycenter::v1::ListResourceValueConfigsResponse>
-  ListResourceValueConfigs(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::securitycenter::v1::ListResourceValueConfigsRequest const&
-          request) override;
+  StatusOr<google::cloud::securitycenter::v1::ListResourceValueConfigsResponse> ListResourceValueConfigs(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::securitycenter::v1::ListResourceValueConfigsRequest const& request) override;
 
-  StatusOr<google::cloud::securitycenter::v1::ResourceValueConfig>
-  UpdateResourceValueConfig(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::securitycenter::v1::UpdateResourceValueConfigRequest const&
-          request) override;
+  StatusOr<google::cloud::securitycenter::v1::ResourceValueConfig> UpdateResourceValueConfig(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::securitycenter::v1::UpdateResourceValueConfigRequest const& request) override;
 
-  StatusOr<google::cloud::securitycenter::v1::ListValuedResourcesResponse>
-  ListValuedResources(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::securitycenter::v1::ListValuedResourcesRequest const&
-          request) override;
+  StatusOr<google::cloud::securitycenter::v1::ListValuedResourcesResponse> ListValuedResources(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::securitycenter::v1::ListValuedResourcesRequest const& request) override;
 
-  StatusOr<google::cloud::securitycenter::v1::ListAttackPathsResponse>
-  ListAttackPaths(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::securitycenter::v1::ListAttackPathsRequest const& request)
-      override;
+  StatusOr<google::cloud::securitycenter::v1::ListAttackPathsResponse> ListAttackPaths(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::securitycenter::v1::ListAttackPathsRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status DeleteOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::DeleteOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -458,8 +399,7 @@ class SecurityCenterTracingStub : public SecurityCenterStub {
 
  private:
   std::shared_ptr<SecurityCenterStub> child_;
-  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
-      propagator_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

@@ -19,17 +19,17 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGEBATCHOPERATIONS_V1_INTERNAL_STORAGE_BATCH_OPERATIONS_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGEBATCHOPERATIONS_V1_INTERNAL_STORAGE_BATCH_OPERATIONS_CONNECTION_IMPL_H
 
-#include "google/cloud/storagebatchoperations/v1/internal/storage_batch_operations_retry_traits.h"
-#include "google/cloud/storagebatchoperations/v1/internal/storage_batch_operations_stub.h"
-#include "google/cloud/storagebatchoperations/v1/storage_batch_operations_connection.h"
-#include "google/cloud/storagebatchoperations/v1/storage_batch_operations_connection_idempotency_policy.h"
-#include "google/cloud/storagebatchoperations/v1/storage_batch_operations_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
+#include "google/cloud/storagebatchoperations/v1/internal/storage_batch_operations_retry_traits.h"
+#include "google/cloud/storagebatchoperations/v1/internal/storage_batch_operations_stub.h"
+#include "google/cloud/storagebatchoperations/v1/storage_batch_operations_connection.h"
+#include "google/cloud/storagebatchoperations/v1/storage_batch_operations_connection_idempotency_policy.h"
+#include "google/cloud/storagebatchoperations/v1/storage_batch_operations_options.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
@@ -46,65 +46,56 @@ class StorageBatchOperationsConnectionImpl
   ~StorageBatchOperationsConnectionImpl() override = default;
 
   StorageBatchOperationsConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<
-          storagebatchoperations_v1_internal::StorageBatchOperationsStub>
-          stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<storagebatchoperations_v1_internal::StorageBatchOperationsStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
-  StreamRange<google::cloud::storagebatchoperations::v1::Job> ListJobs(
-      google::cloud::storagebatchoperations::v1::ListJobsRequest request)
-      override;
+  StreamRange<google::cloud::storagebatchoperations::v1::Job>
+  ListJobs(google::cloud::storagebatchoperations::v1::ListJobsRequest request) override;
 
-  StatusOr<google::cloud::storagebatchoperations::v1::Job> GetJob(
-      google::cloud::storagebatchoperations::v1::GetJobRequest const& request)
-      override;
+  StatusOr<google::cloud::storagebatchoperations::v1::Job>
+  GetJob(google::cloud::storagebatchoperations::v1::GetJobRequest const& request) override;
 
-  future<StatusOr<google::cloud::storagebatchoperations::v1::Job>> CreateJob(
-      google::cloud::storagebatchoperations::v1::CreateJobRequest const&
-          request) override;
+  future<StatusOr<google::cloud::storagebatchoperations::v1::Job>>
+  CreateJob(google::cloud::storagebatchoperations::v1::CreateJobRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> CreateJob(
-      NoAwaitTag,
-      google::cloud::storagebatchoperations::v1::CreateJobRequest const&
-          request) override;
+  StatusOr<google::longrunning::Operation>
+  CreateJob(NoAwaitTag,
+      google::cloud::storagebatchoperations::v1::CreateJobRequest const& request) override;
 
-  future<StatusOr<google::cloud::storagebatchoperations::v1::Job>> CreateJob(
+  future<StatusOr<google::cloud::storagebatchoperations::v1::Job>>
+  CreateJob(
       google::longrunning::Operation const& operation) override;
 
-  Status DeleteJob(
-      google::cloud::storagebatchoperations::v1::DeleteJobRequest const&
-          request) override;
+  Status
+  DeleteJob(google::cloud::storagebatchoperations::v1::DeleteJobRequest const& request) override;
 
   StatusOr<google::cloud::storagebatchoperations::v1::CancelJobResponse>
-  CancelJob(google::cloud::storagebatchoperations::v1::CancelJobRequest const&
-                request) override;
+  CancelJob(google::cloud::storagebatchoperations::v1::CancelJobRequest const& request) override;
 
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request) override;
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request) override;
 
-  StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request) override;
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request) override;
 
-  Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request) override;
+  Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request) override;
 
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request) override;
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<
-      storagebatchoperations_v1_internal::StorageBatchOperationsStub>
-      stub_;
+  std::shared_ptr<storagebatchoperations_v1_internal::StorageBatchOperationsStub> stub_;
   Options options_;
 };
 

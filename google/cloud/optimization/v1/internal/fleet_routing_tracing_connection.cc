@@ -33,33 +33,28 @@ FleetRoutingTracingConnection::FleetRoutingTracingConnection(
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::optimization::v1::OptimizeToursResponse>
-FleetRoutingTracingConnection::OptimizeTours(
-    google::cloud::optimization::v1::OptimizeToursRequest const& request) {
-  auto span = internal::MakeSpan(
-      "optimization_v1::FleetRoutingConnection::OptimizeTours");
+FleetRoutingTracingConnection::OptimizeTours(google::cloud::optimization::v1::OptimizeToursRequest const& request) {
+  auto span = internal::MakeSpan("optimization_v1::FleetRoutingConnection::OptimizeTours");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->OptimizeTours(request));
 }
 
 future<StatusOr<google::cloud::optimization::v1::BatchOptimizeToursResponse>>
-FleetRoutingTracingConnection::BatchOptimizeTours(
-    google::cloud::optimization::v1::BatchOptimizeToursRequest const& request) {
+FleetRoutingTracingConnection::BatchOptimizeTours(google::cloud::optimization::v1::BatchOptimizeToursRequest const& request) {
   auto span = internal::MakeSpan(
       "optimization_v1::FleetRoutingConnection::BatchOptimizeTours");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->BatchOptimizeTours(request));
+  return internal::EndSpan(std::move(span), child_->BatchOptimizeTours(request));
 }
 
 StatusOr<google::longrunning::Operation>
 FleetRoutingTracingConnection::BatchOptimizeTours(
-    NoAwaitTag,
-    google::cloud::optimization::v1::BatchOptimizeToursRequest const& request) {
+    NoAwaitTag, google::cloud::optimization::v1::BatchOptimizeToursRequest const& request) {
   auto span = internal::MakeSpan(
       "optimization_v1::FleetRoutingConnection::BatchOptimizeTours");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span,
-                           child_->BatchOptimizeTours(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->BatchOptimizeTours(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::optimization::v1::BatchOptimizeToursResponse>>
@@ -69,14 +64,12 @@ FleetRoutingTracingConnection::BatchOptimizeTours(
       "optimization_v1::FleetRoutingConnection::BatchOptimizeTours");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->BatchOptimizeTours(operation));
+      child_->BatchOptimizeTours(operation));
 }
 
 StatusOr<google::longrunning::Operation>
-FleetRoutingTracingConnection::GetOperation(
-    google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpan(
-      "optimization_v1::FleetRoutingConnection::GetOperation");
+FleetRoutingTracingConnection::GetOperation(google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpan("optimization_v1::FleetRoutingConnection::GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOperation(request));
 }

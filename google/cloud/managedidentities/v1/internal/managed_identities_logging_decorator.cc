@@ -32,22 +32,22 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ManagedIdentitiesServiceLogging::ManagedIdentitiesServiceLogging(
     std::shared_ptr<ManagedIdentitiesServiceStub> child,
-    TracingOptions tracing_options, std::set<std::string> const&)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
+    TracingOptions tracing_options,
+    std::set<std::string> const&)
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)) {}
 
 future<StatusOr<google::longrunning::Operation>>
 ManagedIdentitiesServiceLogging::AsyncCreateMicrosoftAdDomain(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::managedidentities::v1::CreateMicrosoftAdDomainRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::managedidentities::v1::CreateMicrosoftAdDomainRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::managedidentities::v1::
-                 CreateMicrosoftAdDomainRequest const& request) {
+             google::cloud::managedidentities::v1::CreateMicrosoftAdDomainRequest const& request) {
         return child_->AsyncCreateMicrosoftAdDomain(
             cq, std::move(context), std::move(options), request);
       },
@@ -57,13 +57,13 @@ ManagedIdentitiesServiceLogging::AsyncCreateMicrosoftAdDomain(
 
 StatusOr<google::longrunning::Operation>
 ManagedIdentitiesServiceLogging::CreateMicrosoftAdDomain(
-    grpc::ClientContext& context, Options options,
-    google::cloud::managedidentities::v1::CreateMicrosoftAdDomainRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::managedidentities::v1::CreateMicrosoftAdDomainRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::managedidentities::v1::
-                 CreateMicrosoftAdDomainRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::managedidentities::v1::CreateMicrosoftAdDomainRequest const& request) {
         return child_->CreateMicrosoftAdDomain(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -71,14 +71,13 @@ ManagedIdentitiesServiceLogging::CreateMicrosoftAdDomain(
 
 StatusOr<google::cloud::managedidentities::v1::ResetAdminPasswordResponse>
 ManagedIdentitiesServiceLogging::ResetAdminPassword(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::managedidentities::v1::ResetAdminPasswordRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::managedidentities::v1::ResetAdminPasswordRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::managedidentities::v1::ResetAdminPasswordRequest const&
-              request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::managedidentities::v1::ResetAdminPasswordRequest const& request) {
         return child_->ResetAdminPassword(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -86,12 +85,13 @@ ManagedIdentitiesServiceLogging::ResetAdminPassword(
 
 StatusOr<google::cloud::managedidentities::v1::ListDomainsResponse>
 ManagedIdentitiesServiceLogging::ListDomains(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::managedidentities::v1::ListDomainsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::managedidentities::v1::ListDomainsRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::managedidentities::v1::ListDomainsRequest const& request) {
         return child_->ListDomains(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -99,12 +99,13 @@ ManagedIdentitiesServiceLogging::ListDomains(
 
 StatusOr<google::cloud::managedidentities::v1::Domain>
 ManagedIdentitiesServiceLogging::GetDomain(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::managedidentities::v1::GetDomainRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::managedidentities::v1::GetDomainRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::managedidentities::v1::GetDomainRequest const& request) {
         return child_->GetDomain(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -112,18 +113,17 @@ ManagedIdentitiesServiceLogging::GetDomain(
 
 future<StatusOr<google::longrunning::Operation>>
 ManagedIdentitiesServiceLogging::AsyncUpdateDomain(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::managedidentities::v1::UpdateDomainRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::managedidentities::v1::UpdateDomainRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::managedidentities::v1::UpdateDomainRequest const&
-                 request) {
-        return child_->AsyncUpdateDomain(cq, std::move(context),
-                                         std::move(options), request);
+             google::cloud::managedidentities::v1::UpdateDomainRequest const& request) {
+        return child_->AsyncUpdateDomain(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -131,12 +131,13 @@ ManagedIdentitiesServiceLogging::AsyncUpdateDomain(
 
 StatusOr<google::longrunning::Operation>
 ManagedIdentitiesServiceLogging::UpdateDomain(
-    grpc::ClientContext& context, Options options,
-    google::cloud::managedidentities::v1::UpdateDomainRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::managedidentities::v1::UpdateDomainRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::managedidentities::v1::UpdateDomainRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::managedidentities::v1::UpdateDomainRequest const& request) {
         return child_->UpdateDomain(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -144,18 +145,17 @@ ManagedIdentitiesServiceLogging::UpdateDomain(
 
 future<StatusOr<google::longrunning::Operation>>
 ManagedIdentitiesServiceLogging::AsyncDeleteDomain(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::managedidentities::v1::DeleteDomainRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::managedidentities::v1::DeleteDomainRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::managedidentities::v1::DeleteDomainRequest const&
-                 request) {
-        return child_->AsyncDeleteDomain(cq, std::move(context),
-                                         std::move(options), request);
+             google::cloud::managedidentities::v1::DeleteDomainRequest const& request) {
+        return child_->AsyncDeleteDomain(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -163,12 +163,13 @@ ManagedIdentitiesServiceLogging::AsyncDeleteDomain(
 
 StatusOr<google::longrunning::Operation>
 ManagedIdentitiesServiceLogging::DeleteDomain(
-    grpc::ClientContext& context, Options options,
-    google::cloud::managedidentities::v1::DeleteDomainRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::managedidentities::v1::DeleteDomainRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::managedidentities::v1::DeleteDomainRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::managedidentities::v1::DeleteDomainRequest const& request) {
         return child_->DeleteDomain(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -176,18 +177,17 @@ ManagedIdentitiesServiceLogging::DeleteDomain(
 
 future<StatusOr<google::longrunning::Operation>>
 ManagedIdentitiesServiceLogging::AsyncAttachTrust(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::managedidentities::v1::AttachTrustRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::managedidentities::v1::AttachTrustRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::managedidentities::v1::AttachTrustRequest const&
-                 request) {
-        return child_->AsyncAttachTrust(cq, std::move(context),
-                                        std::move(options), request);
+             google::cloud::managedidentities::v1::AttachTrustRequest const& request) {
+        return child_->AsyncAttachTrust(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -195,12 +195,13 @@ ManagedIdentitiesServiceLogging::AsyncAttachTrust(
 
 StatusOr<google::longrunning::Operation>
 ManagedIdentitiesServiceLogging::AttachTrust(
-    grpc::ClientContext& context, Options options,
-    google::cloud::managedidentities::v1::AttachTrustRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::managedidentities::v1::AttachTrustRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::managedidentities::v1::AttachTrustRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::managedidentities::v1::AttachTrustRequest const& request) {
         return child_->AttachTrust(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -208,20 +209,17 @@ ManagedIdentitiesServiceLogging::AttachTrust(
 
 future<StatusOr<google::longrunning::Operation>>
 ManagedIdentitiesServiceLogging::AsyncReconfigureTrust(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::managedidentities::v1::ReconfigureTrustRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::managedidentities::v1::ReconfigureTrustRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::managedidentities::v1::ReconfigureTrustRequest const&
-              request) {
-        return child_->AsyncReconfigureTrust(cq, std::move(context),
-                                             std::move(options), request);
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::managedidentities::v1::ReconfigureTrustRequest const& request) {
+        return child_->AsyncReconfigureTrust(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -229,14 +227,13 @@ ManagedIdentitiesServiceLogging::AsyncReconfigureTrust(
 
 StatusOr<google::longrunning::Operation>
 ManagedIdentitiesServiceLogging::ReconfigureTrust(
-    grpc::ClientContext& context, Options options,
-    google::cloud::managedidentities::v1::ReconfigureTrustRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::managedidentities::v1::ReconfigureTrustRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::managedidentities::v1::ReconfigureTrustRequest const&
-              request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::managedidentities::v1::ReconfigureTrustRequest const& request) {
         return child_->ReconfigureTrust(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -244,18 +241,17 @@ ManagedIdentitiesServiceLogging::ReconfigureTrust(
 
 future<StatusOr<google::longrunning::Operation>>
 ManagedIdentitiesServiceLogging::AsyncDetachTrust(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::managedidentities::v1::DetachTrustRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::managedidentities::v1::DetachTrustRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::managedidentities::v1::DetachTrustRequest const&
-                 request) {
-        return child_->AsyncDetachTrust(cq, std::move(context),
-                                        std::move(options), request);
+             google::cloud::managedidentities::v1::DetachTrustRequest const& request) {
+        return child_->AsyncDetachTrust(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -263,12 +259,13 @@ ManagedIdentitiesServiceLogging::AsyncDetachTrust(
 
 StatusOr<google::longrunning::Operation>
 ManagedIdentitiesServiceLogging::DetachTrust(
-    grpc::ClientContext& context, Options options,
-    google::cloud::managedidentities::v1::DetachTrustRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::managedidentities::v1::DetachTrustRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::managedidentities::v1::DetachTrustRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::managedidentities::v1::DetachTrustRequest const& request) {
         return child_->DetachTrust(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -276,18 +273,17 @@ ManagedIdentitiesServiceLogging::DetachTrust(
 
 future<StatusOr<google::longrunning::Operation>>
 ManagedIdentitiesServiceLogging::AsyncValidateTrust(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::managedidentities::v1::ValidateTrustRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::managedidentities::v1::ValidateTrustRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::managedidentities::v1::ValidateTrustRequest const&
-                 request) {
-        return child_->AsyncValidateTrust(cq, std::move(context),
-                                          std::move(options), request);
+             google::cloud::managedidentities::v1::ValidateTrustRequest const& request) {
+        return child_->AsyncValidateTrust(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -295,12 +291,13 @@ ManagedIdentitiesServiceLogging::AsyncValidateTrust(
 
 StatusOr<google::longrunning::Operation>
 ManagedIdentitiesServiceLogging::ValidateTrust(
-    grpc::ClientContext& context, Options options,
-    google::cloud::managedidentities::v1::ValidateTrustRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::managedidentities::v1::ValidateTrustRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::managedidentities::v1::ValidateTrustRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::managedidentities::v1::ValidateTrustRequest const& request) {
         return child_->ValidateTrust(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -317,8 +314,8 @@ ManagedIdentitiesServiceLogging::AsyncGetOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(cq, std::move(context),
-                                         std::move(options), request);
+        return child_->AsyncGetOperation(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -334,8 +331,8 @@ future<Status> ManagedIdentitiesServiceLogging::AsyncCancelOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::CancelOperationRequest const& request) {
-        return child_->AsyncCancelOperation(cq, std::move(context),
-                                            std::move(options), request);
+        return child_->AsyncCancelOperation(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);

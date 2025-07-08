@@ -28,36 +28,27 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 MigrationServiceClient::MigrationServiceClient(
     std::shared_ptr<MigrationServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 MigrationServiceClient::~MigrationServiceClient() = default;
 
 StatusOr<google::cloud::bigquery::migration::v2::MigrationWorkflow>
-MigrationServiceClient::CreateMigrationWorkflow(
-    std::string const& parent,
-    google::cloud::bigquery::migration::v2::MigrationWorkflow const&
-        migration_workflow,
-    Options opts) {
+MigrationServiceClient::CreateMigrationWorkflow(std::string const& parent, google::cloud::bigquery::migration::v2::MigrationWorkflow const& migration_workflow, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::bigquery::migration::v2::CreateMigrationWorkflowRequest
-      request;
+  google::cloud::bigquery::migration::v2::CreateMigrationWorkflowRequest request;
   request.set_parent(parent);
   *request.mutable_migration_workflow() = migration_workflow;
   return connection_->CreateMigrationWorkflow(request);
 }
 
 StatusOr<google::cloud::bigquery::migration::v2::MigrationWorkflow>
-MigrationServiceClient::CreateMigrationWorkflow(
-    google::cloud::bigquery::migration::v2::
-        CreateMigrationWorkflowRequest const& request,
-    Options opts) {
+MigrationServiceClient::CreateMigrationWorkflow(google::cloud::bigquery::migration::v2::CreateMigrationWorkflowRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateMigrationWorkflow(request);
 }
 
 StatusOr<google::cloud::bigquery::migration::v2::MigrationWorkflow>
-MigrationServiceClient::GetMigrationWorkflow(std::string const& name,
-                                             Options opts) {
+MigrationServiceClient::GetMigrationWorkflow(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::bigquery::migration::v2::GetMigrationWorkflowRequest request;
   request.set_name(name);
@@ -65,17 +56,13 @@ MigrationServiceClient::GetMigrationWorkflow(std::string const& name,
 }
 
 StatusOr<google::cloud::bigquery::migration::v2::MigrationWorkflow>
-MigrationServiceClient::GetMigrationWorkflow(
-    google::cloud::bigquery::migration::v2::GetMigrationWorkflowRequest const&
-        request,
-    Options opts) {
+MigrationServiceClient::GetMigrationWorkflow(google::cloud::bigquery::migration::v2::GetMigrationWorkflowRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetMigrationWorkflow(request);
 }
 
 StreamRange<google::cloud::bigquery::migration::v2::MigrationWorkflow>
-MigrationServiceClient::ListMigrationWorkflows(std::string const& parent,
-                                               Options opts) {
+MigrationServiceClient::ListMigrationWorkflows(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::bigquery::migration::v2::ListMigrationWorkflowsRequest request;
   request.set_parent(parent);
@@ -83,50 +70,41 @@ MigrationServiceClient::ListMigrationWorkflows(std::string const& parent,
 }
 
 StreamRange<google::cloud::bigquery::migration::v2::MigrationWorkflow>
-MigrationServiceClient::ListMigrationWorkflows(
-    google::cloud::bigquery::migration::v2::ListMigrationWorkflowsRequest
-        request,
-    Options opts) {
+MigrationServiceClient::ListMigrationWorkflows(google::cloud::bigquery::migration::v2::ListMigrationWorkflowsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListMigrationWorkflows(std::move(request));
 }
 
-Status MigrationServiceClient::DeleteMigrationWorkflow(std::string const& name,
-                                                       Options opts) {
+Status
+MigrationServiceClient::DeleteMigrationWorkflow(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::bigquery::migration::v2::DeleteMigrationWorkflowRequest
-      request;
+  google::cloud::bigquery::migration::v2::DeleteMigrationWorkflowRequest request;
   request.set_name(name);
   return connection_->DeleteMigrationWorkflow(request);
 }
 
-Status MigrationServiceClient::DeleteMigrationWorkflow(
-    google::cloud::bigquery::migration::v2::
-        DeleteMigrationWorkflowRequest const& request,
-    Options opts) {
+Status
+MigrationServiceClient::DeleteMigrationWorkflow(google::cloud::bigquery::migration::v2::DeleteMigrationWorkflowRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteMigrationWorkflow(request);
 }
 
-Status MigrationServiceClient::StartMigrationWorkflow(std::string const& name,
-                                                      Options opts) {
+Status
+MigrationServiceClient::StartMigrationWorkflow(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::bigquery::migration::v2::StartMigrationWorkflowRequest request;
   request.set_name(name);
   return connection_->StartMigrationWorkflow(request);
 }
 
-Status MigrationServiceClient::StartMigrationWorkflow(
-    google::cloud::bigquery::migration::v2::StartMigrationWorkflowRequest const&
-        request,
-    Options opts) {
+Status
+MigrationServiceClient::StartMigrationWorkflow(google::cloud::bigquery::migration::v2::StartMigrationWorkflowRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->StartMigrationWorkflow(request);
 }
 
 StatusOr<google::cloud::bigquery::migration::v2::MigrationSubtask>
-MigrationServiceClient::GetMigrationSubtask(std::string const& name,
-                                            Options opts) {
+MigrationServiceClient::GetMigrationSubtask(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::bigquery::migration::v2::GetMigrationSubtaskRequest request;
   request.set_name(name);
@@ -134,17 +112,13 @@ MigrationServiceClient::GetMigrationSubtask(std::string const& name,
 }
 
 StatusOr<google::cloud::bigquery::migration::v2::MigrationSubtask>
-MigrationServiceClient::GetMigrationSubtask(
-    google::cloud::bigquery::migration::v2::GetMigrationSubtaskRequest const&
-        request,
-    Options opts) {
+MigrationServiceClient::GetMigrationSubtask(google::cloud::bigquery::migration::v2::GetMigrationSubtaskRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetMigrationSubtask(request);
 }
 
 StreamRange<google::cloud::bigquery::migration::v2::MigrationSubtask>
-MigrationServiceClient::ListMigrationSubtasks(std::string const& parent,
-                                              Options opts) {
+MigrationServiceClient::ListMigrationSubtasks(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::bigquery::migration::v2::ListMigrationSubtasksRequest request;
   request.set_parent(parent);
@@ -152,10 +126,7 @@ MigrationServiceClient::ListMigrationSubtasks(std::string const& parent,
 }
 
 StreamRange<google::cloud::bigquery::migration::v2::MigrationSubtask>
-MigrationServiceClient::ListMigrationSubtasks(
-    google::cloud::bigquery::migration::v2::ListMigrationSubtasksRequest
-        request,
-    Options opts) {
+MigrationServiceClient::ListMigrationSubtasks(google::cloud::bigquery::migration::v2::ListMigrationSubtasksRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListMigrationSubtasks(std::move(request));
 }

@@ -35,34 +35,29 @@ class DocumentSchemaServiceConnectionIdempotencyPolicy {
   virtual ~DocumentSchemaServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<DocumentSchemaServiceConnectionIdempotencyPolicy>
-  clone() const;
+  virtual std::unique_ptr<DocumentSchemaServiceConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency CreateDocumentSchema(
-      google::cloud::contentwarehouse::v1::CreateDocumentSchemaRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  CreateDocumentSchema(google::cloud::contentwarehouse::v1::CreateDocumentSchemaRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateDocumentSchema(
-      google::cloud::contentwarehouse::v1::UpdateDocumentSchemaRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  UpdateDocumentSchema(google::cloud::contentwarehouse::v1::UpdateDocumentSchemaRequest const& request);
 
-  virtual google::cloud::Idempotency GetDocumentSchema(
-      google::cloud::contentwarehouse::v1::GetDocumentSchemaRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  GetDocumentSchema(google::cloud::contentwarehouse::v1::GetDocumentSchemaRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteDocumentSchema(
-      google::cloud::contentwarehouse::v1::DeleteDocumentSchemaRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  DeleteDocumentSchema(google::cloud::contentwarehouse::v1::DeleteDocumentSchemaRequest const& request);
 
-  virtual google::cloud::Idempotency ListDocumentSchemas(
-      google::cloud::contentwarehouse::v1::ListDocumentSchemasRequest request);
+  virtual google::cloud::Idempotency
+  ListDocumentSchemas(google::cloud::contentwarehouse::v1::ListDocumentSchemasRequest request);
 
-  virtual google::cloud::Idempotency GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 };
 
 std::unique_ptr<DocumentSchemaServiceConnectionIdempotencyPolicy>
-MakeDefaultDocumentSchemaServiceConnectionIdempotencyPolicy();
+    MakeDefaultDocumentSchemaServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace contentwarehouse_v1

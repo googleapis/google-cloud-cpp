@@ -17,12 +17,12 @@
 // source: google/cloud/bigquery/biglake/v1/metastore.proto
 
 #include "google/cloud/bigquery/biglake/v1/metastore_connection.h"
+#include "google/cloud/background_threads.h"
 #include "google/cloud/bigquery/biglake/v1/internal/metastore_connection_impl.h"
 #include "google/cloud/bigquery/biglake/v1/internal/metastore_option_defaults.h"
 #include "google/cloud/bigquery/biglake/v1/internal/metastore_stub_factory.h"
 #include "google/cloud/bigquery/biglake/v1/internal/metastore_tracing_connection.h"
 #include "google/cloud/bigquery/biglake/v1/metastore_options.h"
-#include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
@@ -56,10 +56,8 @@ MetastoreServiceConnection::GetCatalog(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::bigquery::biglake::v1::Catalog>
-MetastoreServiceConnection::ListCatalogs(
-    google::cloud::bigquery::biglake::v1::
-        ListCatalogsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::bigquery::biglake::v1::Catalog> MetastoreServiceConnection::ListCatalogs(
+    google::cloud::bigquery::biglake::v1::ListCatalogsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::bigquery::biglake::v1::Catalog>>();
 }
@@ -88,10 +86,8 @@ MetastoreServiceConnection::GetDatabase(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::bigquery::biglake::v1::Database>
-MetastoreServiceConnection::ListDatabases(
-    google::cloud::bigquery::biglake::v1::
-        ListDatabasesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::bigquery::biglake::v1::Database> MetastoreServiceConnection::ListDatabases(
+    google::cloud::bigquery::biglake::v1::ListDatabasesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::bigquery::biglake::v1::Database>>();
 }
@@ -126,10 +122,8 @@ MetastoreServiceConnection::GetTable(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::bigquery::biglake::v1::Table>
-MetastoreServiceConnection::ListTables(
-    google::cloud::bigquery::biglake::v1::
-        ListTablesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::bigquery::biglake::v1::Table> MetastoreServiceConnection::ListTables(
+    google::cloud::bigquery::biglake::v1::ListTablesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::bigquery::biglake::v1::Table>>();
 }
@@ -137,19 +131,17 @@ MetastoreServiceConnection::ListTables(
 std::shared_ptr<MetastoreServiceConnection> MakeMetastoreServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 MetastoreServicePolicyOptionList>(options,
-                                                                   __func__);
+      UnifiedCredentialsOptionList,
+      MetastoreServicePolicyOptionList>(options, __func__);
   options = bigquery_biglake_v1_internal::MetastoreServiceDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = bigquery_biglake_v1_internal::CreateDefaultMetastoreServiceStub(
-      std::move(auth), options);
+    std::move(auth), options);
   return bigquery_biglake_v1_internal::MakeMetastoreServiceTracingConnection(
-      std::make_shared<
-          bigquery_biglake_v1_internal::MetastoreServiceConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options)));
+      std::make_shared<bigquery_biglake_v1_internal::MetastoreServiceConnectionImpl>(
+      std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

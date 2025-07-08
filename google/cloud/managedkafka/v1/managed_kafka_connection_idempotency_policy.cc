@@ -26,151 +26,123 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-ManagedKafkaConnectionIdempotencyPolicy::
-    ~ManagedKafkaConnectionIdempotencyPolicy() = default;
+ManagedKafkaConnectionIdempotencyPolicy::~ManagedKafkaConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<ManagedKafkaConnectionIdempotencyPolicy>
 ManagedKafkaConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<ManagedKafkaConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency ManagedKafkaConnectionIdempotencyPolicy::ListClusters(
-    google::cloud::managedkafka::v1::ListClustersRequest) {  // NOLINT
+Idempotency ManagedKafkaConnectionIdempotencyPolicy::ListClusters(google::cloud::managedkafka::v1::ListClustersRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency ManagedKafkaConnectionIdempotencyPolicy::GetCluster(
-    google::cloud::managedkafka::v1::GetClusterRequest const&) {
+Idempotency ManagedKafkaConnectionIdempotencyPolicy::GetCluster(google::cloud::managedkafka::v1::GetClusterRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ManagedKafkaConnectionIdempotencyPolicy::CreateCluster(
-    google::cloud::managedkafka::v1::CreateClusterRequest const&) {
+Idempotency ManagedKafkaConnectionIdempotencyPolicy::CreateCluster(google::cloud::managedkafka::v1::CreateClusterRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ManagedKafkaConnectionIdempotencyPolicy::UpdateCluster(
-    google::cloud::managedkafka::v1::UpdateClusterRequest const&) {
+Idempotency ManagedKafkaConnectionIdempotencyPolicy::UpdateCluster(google::cloud::managedkafka::v1::UpdateClusterRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ManagedKafkaConnectionIdempotencyPolicy::DeleteCluster(
-    google::cloud::managedkafka::v1::DeleteClusterRequest const&) {
+Idempotency ManagedKafkaConnectionIdempotencyPolicy::DeleteCluster(google::cloud::managedkafka::v1::DeleteClusterRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ManagedKafkaConnectionIdempotencyPolicy::ListTopics(
-    google::cloud::managedkafka::v1::ListTopicsRequest) {  // NOLINT
+Idempotency ManagedKafkaConnectionIdempotencyPolicy::ListTopics(google::cloud::managedkafka::v1::ListTopicsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency ManagedKafkaConnectionIdempotencyPolicy::GetTopic(
-    google::cloud::managedkafka::v1::GetTopicRequest const&) {
+Idempotency ManagedKafkaConnectionIdempotencyPolicy::GetTopic(google::cloud::managedkafka::v1::GetTopicRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ManagedKafkaConnectionIdempotencyPolicy::CreateTopic(
-    google::cloud::managedkafka::v1::CreateTopicRequest const&) {
+Idempotency ManagedKafkaConnectionIdempotencyPolicy::CreateTopic(google::cloud::managedkafka::v1::CreateTopicRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ManagedKafkaConnectionIdempotencyPolicy::UpdateTopic(
-    google::cloud::managedkafka::v1::UpdateTopicRequest const&) {
+Idempotency ManagedKafkaConnectionIdempotencyPolicy::UpdateTopic(google::cloud::managedkafka::v1::UpdateTopicRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ManagedKafkaConnectionIdempotencyPolicy::DeleteTopic(
-    google::cloud::managedkafka::v1::DeleteTopicRequest const&) {
+Idempotency ManagedKafkaConnectionIdempotencyPolicy::DeleteTopic(google::cloud::managedkafka::v1::DeleteTopicRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ManagedKafkaConnectionIdempotencyPolicy::ListConsumerGroups(
-    google::cloud::managedkafka::v1::ListConsumerGroupsRequest) {  // NOLINT
+Idempotency ManagedKafkaConnectionIdempotencyPolicy::ListConsumerGroups(google::cloud::managedkafka::v1::ListConsumerGroupsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency ManagedKafkaConnectionIdempotencyPolicy::GetConsumerGroup(
-    google::cloud::managedkafka::v1::GetConsumerGroupRequest const&) {
+Idempotency ManagedKafkaConnectionIdempotencyPolicy::GetConsumerGroup(google::cloud::managedkafka::v1::GetConsumerGroupRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ManagedKafkaConnectionIdempotencyPolicy::UpdateConsumerGroup(
-    google::cloud::managedkafka::v1::UpdateConsumerGroupRequest const&) {
+Idempotency ManagedKafkaConnectionIdempotencyPolicy::UpdateConsumerGroup(google::cloud::managedkafka::v1::UpdateConsumerGroupRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ManagedKafkaConnectionIdempotencyPolicy::DeleteConsumerGroup(
-    google::cloud::managedkafka::v1::DeleteConsumerGroupRequest const&) {
+Idempotency ManagedKafkaConnectionIdempotencyPolicy::DeleteConsumerGroup(google::cloud::managedkafka::v1::DeleteConsumerGroupRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ManagedKafkaConnectionIdempotencyPolicy::ListAcls(
-    google::cloud::managedkafka::v1::ListAclsRequest) {  // NOLINT
+Idempotency ManagedKafkaConnectionIdempotencyPolicy::ListAcls(google::cloud::managedkafka::v1::ListAclsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency ManagedKafkaConnectionIdempotencyPolicy::GetAcl(
-    google::cloud::managedkafka::v1::GetAclRequest const&) {
+Idempotency ManagedKafkaConnectionIdempotencyPolicy::GetAcl(google::cloud::managedkafka::v1::GetAclRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ManagedKafkaConnectionIdempotencyPolicy::CreateAcl(
-    google::cloud::managedkafka::v1::CreateAclRequest const&) {
+Idempotency ManagedKafkaConnectionIdempotencyPolicy::CreateAcl(google::cloud::managedkafka::v1::CreateAclRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ManagedKafkaConnectionIdempotencyPolicy::UpdateAcl(
-    google::cloud::managedkafka::v1::UpdateAclRequest const&) {
+Idempotency ManagedKafkaConnectionIdempotencyPolicy::UpdateAcl(google::cloud::managedkafka::v1::UpdateAclRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ManagedKafkaConnectionIdempotencyPolicy::DeleteAcl(
-    google::cloud::managedkafka::v1::DeleteAclRequest const&) {
+Idempotency ManagedKafkaConnectionIdempotencyPolicy::DeleteAcl(google::cloud::managedkafka::v1::DeleteAclRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ManagedKafkaConnectionIdempotencyPolicy::AddAclEntry(
-    google::cloud::managedkafka::v1::AddAclEntryRequest const&) {
+Idempotency ManagedKafkaConnectionIdempotencyPolicy::AddAclEntry(google::cloud::managedkafka::v1::AddAclEntryRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ManagedKafkaConnectionIdempotencyPolicy::RemoveAclEntry(
-    google::cloud::managedkafka::v1::RemoveAclEntryRequest const&) {
+Idempotency ManagedKafkaConnectionIdempotencyPolicy::RemoveAclEntry(google::cloud::managedkafka::v1::RemoveAclEntryRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ManagedKafkaConnectionIdempotencyPolicy::ListLocations(
-    google::cloud::location::ListLocationsRequest) {  // NOLINT
+Idempotency ManagedKafkaConnectionIdempotencyPolicy::ListLocations(google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency ManagedKafkaConnectionIdempotencyPolicy::GetLocation(
-    google::cloud::location::GetLocationRequest const&) {
+Idempotency ManagedKafkaConnectionIdempotencyPolicy::GetLocation(google::cloud::location::GetLocationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ManagedKafkaConnectionIdempotencyPolicy::ListOperations(
-    google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency ManagedKafkaConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency ManagedKafkaConnectionIdempotencyPolicy::GetOperation(
-    google::longrunning::GetOperationRequest const&) {
+Idempotency ManagedKafkaConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ManagedKafkaConnectionIdempotencyPolicy::DeleteOperation(
-    google::longrunning::DeleteOperationRequest const&) {
+Idempotency ManagedKafkaConnectionIdempotencyPolicy::DeleteOperation(google::longrunning::DeleteOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ManagedKafkaConnectionIdempotencyPolicy::CancelOperation(
-    google::longrunning::CancelOperationRequest const&) {
+Idempotency ManagedKafkaConnectionIdempotencyPolicy::CancelOperation(google::longrunning::CancelOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<ManagedKafkaConnectionIdempotencyPolicy>
-MakeDefaultManagedKafkaConnectionIdempotencyPolicy() {
+    MakeDefaultManagedKafkaConnectionIdempotencyPolicy() {
   return std::make_unique<ManagedKafkaConnectionIdempotencyPolicy>();
 }
 

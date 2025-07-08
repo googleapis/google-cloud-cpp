@@ -32,9 +32,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * Application developers may want to test their code with simulated responses,
  * including errors, from an object of type `ContainerAnalysisClient`. To do so,
- * construct an object of type `ContainerAnalysisClient` with an instance of
- * this class. Then use the Google Test framework functions to program the
- * behavior of this mock.
+ * construct an object of type `ContainerAnalysisClient` with an instance of this
+ * class. Then use the Google Test framework functions to program the behavior
+ * of this mock.
  *
  * @see [This example][bq-mock] for how to test your application with GoogleTest.
  * While the example showcases types from the BigQuery library, the underlying
@@ -42,37 +42,29 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockContainerAnalysisConnection
-    : public containeranalysis_v1::ContainerAnalysisConnection {
+class MockContainerAnalysisConnection : public containeranalysis_v1::ContainerAnalysisConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, SetIamPolicy,
-              (google::iam::v1::SetIamPolicyRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::iam::v1::Policy>,
+  SetIamPolicy,
+  (google::iam::v1::SetIamPolicyRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, GetIamPolicy,
-              (google::iam::v1::GetIamPolicyRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::iam::v1::Policy>,
+  GetIamPolicy,
+  (google::iam::v1::GetIamPolicyRequest const& request), (override));
 
   MOCK_METHOD(StatusOr<google::iam::v1::TestIamPermissionsResponse>,
-              TestIamPermissions,
-              (google::iam::v1::TestIamPermissionsRequest const& request),
-              (override));
+  TestIamPermissions,
+  (google::iam::v1::TestIamPermissionsRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::devtools::containeranalysis::v1::
-                           VulnerabilityOccurrencesSummary>,
-              GetVulnerabilityOccurrencesSummary,
-              (google::devtools::containeranalysis::v1::
-                   GetVulnerabilityOccurrencesSummaryRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::devtools::containeranalysis::v1::VulnerabilityOccurrencesSummary>,
+  GetVulnerabilityOccurrencesSummary,
+  (google::devtools::containeranalysis::v1::GetVulnerabilityOccurrencesSummaryRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::devtools::containeranalysis::v1::ExportSBOMResponse>,
-      ExportSBOM,
-      (google::devtools::containeranalysis::v1::ExportSBOMRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::devtools::containeranalysis::v1::ExportSBOMResponse>,
+  ExportSBOM,
+  (google::devtools::containeranalysis::v1::ExportSBOMRequest const& request), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

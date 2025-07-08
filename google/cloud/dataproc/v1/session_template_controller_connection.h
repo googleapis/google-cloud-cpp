@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAPROC_V1_SESSION_TEMPLATE_CONTROLLER_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAPROC_V1_SESSION_TEMPLATE_CONTROLLER_CONNECTION_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/dataproc/v1/internal/session_template_controller_retry_traits.h"
 #include "google/cloud/dataproc/v1/session_template_controller_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -37,17 +37,14 @@ namespace dataproc_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `SessionTemplateControllerConnection`.
-class SessionTemplateControllerRetryPolicy
-    : public ::google::cloud::RetryPolicy {
+class SessionTemplateControllerRetryPolicy : public ::google::cloud::RetryPolicy {
  public:
   /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<SessionTemplateControllerRetryPolicy> clone()
-      const = 0;
+  virtual std::unique_ptr<SessionTemplateControllerRetryPolicy> clone() const = 0;
 };
 
 /**
- * A retry policy for `SessionTemplateControllerConnection` based on counting
- * errors.
+ * A retry policy for `SessionTemplateControllerConnection` based on counting errors.
  *
  * This policy stops retrying if:
  * - An RPC returns a non-transient error.
@@ -56,8 +53,7 @@ class SessionTemplateControllerRetryPolicy
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class SessionTemplateControllerLimitedErrorCountRetryPolicy
-    : public SessionTemplateControllerRetryPolicy {
+class SessionTemplateControllerLimitedErrorCountRetryPolicy : public SessionTemplateControllerRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -66,18 +62,15 @@ class SessionTemplateControllerLimitedErrorCountRetryPolicy
    * @note Disable the retry loop by providing an instance of this policy with
    *     @p maximum_failures == 0.
    */
-  explicit SessionTemplateControllerLimitedErrorCountRetryPolicy(
-      int maximum_failures)
-      : impl_(maximum_failures) {}
+  explicit SessionTemplateControllerLimitedErrorCountRetryPolicy(int maximum_failures)
+    : impl_(maximum_failures) {}
 
   SessionTemplateControllerLimitedErrorCountRetryPolicy(
       SessionTemplateControllerLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : SessionTemplateControllerLimitedErrorCountRetryPolicy(
-            rhs.maximum_failures()) {}
+    : SessionTemplateControllerLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   SessionTemplateControllerLimitedErrorCountRetryPolicy(
       SessionTemplateControllerLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : SessionTemplateControllerLimitedErrorCountRetryPolicy(
-            rhs.maximum_failures()) {}
+    : SessionTemplateControllerLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -89,8 +82,7 @@ class SessionTemplateControllerLimitedErrorCountRetryPolicy
     return impl_.IsPermanentFailure(status);
   }
   std::unique_ptr<SessionTemplateControllerRetryPolicy> clone() const override {
-    return std::make_unique<
-        SessionTemplateControllerLimitedErrorCountRetryPolicy>(
+    return std::make_unique<SessionTemplateControllerLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
 
@@ -98,14 +90,11 @@ class SessionTemplateControllerLimitedErrorCountRetryPolicy
   using BaseType = SessionTemplateControllerRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      dataproc_v1_internal::SessionTemplateControllerRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<dataproc_v1_internal::SessionTemplateControllerRetryTraits> impl_;
 };
 
 /**
- * A retry policy for `SessionTemplateControllerConnection` based on elapsed
- * time.
+ * A retry policy for `SessionTemplateControllerConnection` based on elapsed time.
  *
  * This policy stops retrying if:
  * - An RPC returns a non-transient error.
@@ -114,8 +103,7 @@ class SessionTemplateControllerLimitedErrorCountRetryPolicy
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class SessionTemplateControllerLimitedTimeRetryPolicy
-    : public SessionTemplateControllerRetryPolicy {
+class SessionTemplateControllerLimitedTimeRetryPolicy : public SessionTemplateControllerRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -140,16 +128,12 @@ class SessionTemplateControllerLimitedTimeRetryPolicy
   template <typename DurationRep, typename DurationPeriod>
   explicit SessionTemplateControllerLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  SessionTemplateControllerLimitedTimeRetryPolicy(
-      SessionTemplateControllerLimitedTimeRetryPolicy&& rhs) noexcept
-      : SessionTemplateControllerLimitedTimeRetryPolicy(
-            rhs.maximum_duration()) {}
-  SessionTemplateControllerLimitedTimeRetryPolicy(
-      SessionTemplateControllerLimitedTimeRetryPolicy const& rhs) noexcept
-      : SessionTemplateControllerLimitedTimeRetryPolicy(
-            rhs.maximum_duration()) {}
+  SessionTemplateControllerLimitedTimeRetryPolicy(SessionTemplateControllerLimitedTimeRetryPolicy&& rhs) noexcept
+    : SessionTemplateControllerLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  SessionTemplateControllerLimitedTimeRetryPolicy(SessionTemplateControllerLimitedTimeRetryPolicy const& rhs) noexcept
+    : SessionTemplateControllerLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -171,25 +155,20 @@ class SessionTemplateControllerLimitedTimeRetryPolicy
   using BaseType = SessionTemplateControllerRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      dataproc_v1_internal::SessionTemplateControllerRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<dataproc_v1_internal::SessionTemplateControllerRetryTraits> impl_;
 };
 
 /**
- * The `SessionTemplateControllerConnection` object for
- * `SessionTemplateControllerClient`.
+ * The `SessionTemplateControllerConnection` object for `SessionTemplateControllerClient`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `SessionTemplateControllerClient`. This allows users to inject custom
- * behavior (e.g., with a Google Mock object) when writing tests that use
- * objects of type `SessionTemplateControllerClient`.
+ * sets in `SessionTemplateControllerClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `SessionTemplateControllerClient`.
  *
- * To create a concrete instance, see
- * `MakeSessionTemplateControllerConnection()`.
+ * To create a concrete instance, see `MakeSessionTemplateControllerConnection()`.
  *
- * For mocking, see
- * `dataproc_v1_mocks::MockSessionTemplateControllerConnection`.
+ * For mocking, see `dataproc_v1_mocks::MockSessionTemplateControllerConnection`.
  */
 class SessionTemplateControllerConnection {
  public:
@@ -198,57 +177,51 @@ class SessionTemplateControllerConnection {
   virtual Options options() { return Options{}; }
 
   virtual StatusOr<google::cloud::dataproc::v1::SessionTemplate>
-  CreateSessionTemplate(
-      google::cloud::dataproc::v1::CreateSessionTemplateRequest const& request);
+  CreateSessionTemplate(google::cloud::dataproc::v1::CreateSessionTemplateRequest const& request);
 
   virtual StatusOr<google::cloud::dataproc::v1::SessionTemplate>
-  UpdateSessionTemplate(
-      google::cloud::dataproc::v1::UpdateSessionTemplateRequest const& request);
+  UpdateSessionTemplate(google::cloud::dataproc::v1::UpdateSessionTemplateRequest const& request);
 
   virtual StatusOr<google::cloud::dataproc::v1::SessionTemplate>
-  GetSessionTemplate(
-      google::cloud::dataproc::v1::GetSessionTemplateRequest const& request);
+  GetSessionTemplate(google::cloud::dataproc::v1::GetSessionTemplateRequest const& request);
 
   virtual StreamRange<google::cloud::dataproc::v1::SessionTemplate>
-  ListSessionTemplates(
-      google::cloud::dataproc::v1::ListSessionTemplatesRequest request);
+  ListSessionTemplates(google::cloud::dataproc::v1::ListSessionTemplatesRequest request);
 
-  virtual Status DeleteSessionTemplate(
-      google::cloud::dataproc::v1::DeleteSessionTemplateRequest const& request);
+  virtual Status
+  DeleteSessionTemplate(google::cloud::dataproc::v1::DeleteSessionTemplateRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
 
   virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
   TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
 
-  virtual StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 
-  virtual Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request);
+  virtual Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
 
-  virtual Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request);
+  virtual Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request);
 };
 
 /**
- * A factory function to construct an object of type
- * `SessionTemplateControllerConnection`.
+ * A factory function to construct an object of type `SessionTemplateControllerConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of
- * SessionTemplateControllerClient.
+ * should be passed as an argument to the constructor of SessionTemplateControllerClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `SessionTemplateControllerConnection`. Expected options are any of
- * the types in the following option lists:
+ * returned `SessionTemplateControllerConnection`. Expected options are any of the types in
+ * the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
@@ -259,12 +232,11 @@ class SessionTemplateControllerConnection {
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
  * @param location Sets the prefix for the default `EndpointOption` value.
- * @param options (optional) Configure the `SessionTemplateControllerConnection`
- * created by this function.
+ * @param options (optional) Configure the `SessionTemplateControllerConnection` created by
+ * this function.
  */
-std::shared_ptr<SessionTemplateControllerConnection>
-MakeSessionTemplateControllerConnection(std::string const& location,
-                                        Options options = {});
+std::shared_ptr<SessionTemplateControllerConnection> MakeSessionTemplateControllerConnection(
+    std::string const& location, Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataproc_v1

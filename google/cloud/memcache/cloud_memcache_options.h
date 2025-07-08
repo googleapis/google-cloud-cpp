@@ -34,10 +34,8 @@ using ::google::cloud::memcache_v1::CloudMemcachePollingPolicyOption;
 /// @deprecated Use memcache_v1::CloudMemcacheBackoffPolicyOption directly.
 using ::google::cloud::memcache_v1::CloudMemcacheBackoffPolicyOption;
 
-/// @deprecated Use memcache_v1::CloudMemcacheConnectionIdempotencyPolicyOption
-/// directly.
-using ::google::cloud::memcache_v1::
-    CloudMemcacheConnectionIdempotencyPolicyOption;
+/// @deprecated Use memcache_v1::CloudMemcacheConnectionIdempotencyPolicyOption directly.
+using ::google::cloud::memcache_v1::CloudMemcacheConnectionIdempotencyPolicyOption;
 
 /// @deprecated Use memcache_v1::CloudMemcachePolicyOptionList directly.
 using ::google::cloud::memcache_v1::CloudMemcachePolicyOptionList;

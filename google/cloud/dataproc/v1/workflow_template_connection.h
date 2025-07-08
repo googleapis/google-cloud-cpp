@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAPROC_V1_WORKFLOW_TEMPLATE_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAPROC_V1_WORKFLOW_TEMPLATE_CONNECTION_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/dataproc/v1/internal/workflow_template_retry_traits.h"
 #include "google/cloud/dataproc/v1/workflow_template_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -48,8 +48,7 @@ class WorkflowTemplateServiceRetryPolicy : public ::google::cloud::RetryPolicy {
 };
 
 /**
- * A retry policy for `WorkflowTemplateServiceConnection` based on counting
- * errors.
+ * A retry policy for `WorkflowTemplateServiceConnection` based on counting errors.
  *
  * This policy stops retrying if:
  * - An RPC returns a non-transient error.
@@ -58,8 +57,7 @@ class WorkflowTemplateServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class WorkflowTemplateServiceLimitedErrorCountRetryPolicy
-    : public WorkflowTemplateServiceRetryPolicy {
+class WorkflowTemplateServiceLimitedErrorCountRetryPolicy : public WorkflowTemplateServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -68,18 +66,15 @@ class WorkflowTemplateServiceLimitedErrorCountRetryPolicy
    * @note Disable the retry loop by providing an instance of this policy with
    *     @p maximum_failures == 0.
    */
-  explicit WorkflowTemplateServiceLimitedErrorCountRetryPolicy(
-      int maximum_failures)
-      : impl_(maximum_failures) {}
+  explicit WorkflowTemplateServiceLimitedErrorCountRetryPolicy(int maximum_failures)
+    : impl_(maximum_failures) {}
 
   WorkflowTemplateServiceLimitedErrorCountRetryPolicy(
       WorkflowTemplateServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : WorkflowTemplateServiceLimitedErrorCountRetryPolicy(
-            rhs.maximum_failures()) {}
+    : WorkflowTemplateServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   WorkflowTemplateServiceLimitedErrorCountRetryPolicy(
       WorkflowTemplateServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : WorkflowTemplateServiceLimitedErrorCountRetryPolicy(
-            rhs.maximum_failures()) {}
+    : WorkflowTemplateServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -91,8 +86,7 @@ class WorkflowTemplateServiceLimitedErrorCountRetryPolicy
     return impl_.IsPermanentFailure(status);
   }
   std::unique_ptr<WorkflowTemplateServiceRetryPolicy> clone() const override {
-    return std::make_unique<
-        WorkflowTemplateServiceLimitedErrorCountRetryPolicy>(
+    return std::make_unique<WorkflowTemplateServiceLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
 
@@ -100,9 +94,7 @@ class WorkflowTemplateServiceLimitedErrorCountRetryPolicy
   using BaseType = WorkflowTemplateServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      dataproc_v1_internal::WorkflowTemplateServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<dataproc_v1_internal::WorkflowTemplateServiceRetryTraits> impl_;
 };
 
 /**
@@ -115,8 +107,7 @@ class WorkflowTemplateServiceLimitedErrorCountRetryPolicy
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class WorkflowTemplateServiceLimitedTimeRetryPolicy
-    : public WorkflowTemplateServiceRetryPolicy {
+class WorkflowTemplateServiceLimitedTimeRetryPolicy : public WorkflowTemplateServiceRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -141,14 +132,12 @@ class WorkflowTemplateServiceLimitedTimeRetryPolicy
   template <typename DurationRep, typename DurationPeriod>
   explicit WorkflowTemplateServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  WorkflowTemplateServiceLimitedTimeRetryPolicy(
-      WorkflowTemplateServiceLimitedTimeRetryPolicy&& rhs) noexcept
-      : WorkflowTemplateServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  WorkflowTemplateServiceLimitedTimeRetryPolicy(
-      WorkflowTemplateServiceLimitedTimeRetryPolicy const& rhs) noexcept
-      : WorkflowTemplateServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  WorkflowTemplateServiceLimitedTimeRetryPolicy(WorkflowTemplateServiceLimitedTimeRetryPolicy&& rhs) noexcept
+    : WorkflowTemplateServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  WorkflowTemplateServiceLimitedTimeRetryPolicy(WorkflowTemplateServiceLimitedTimeRetryPolicy const& rhs) noexcept
+    : WorkflowTemplateServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -170,19 +159,16 @@ class WorkflowTemplateServiceLimitedTimeRetryPolicy
   using BaseType = WorkflowTemplateServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      dataproc_v1_internal::WorkflowTemplateServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<dataproc_v1_internal::WorkflowTemplateServiceRetryTraits> impl_;
 };
 
 /**
- * The `WorkflowTemplateServiceConnection` object for
- * `WorkflowTemplateServiceClient`.
+ * The `WorkflowTemplateServiceConnection` object for `WorkflowTemplateServiceClient`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `WorkflowTemplateServiceClient`. This allows users to inject custom
- * behavior (e.g., with a Google Mock object) when writing tests that use
- * objects of type `WorkflowTemplateServiceClient`.
+ * sets in `WorkflowTemplateServiceClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `WorkflowTemplateServiceClient`.
  *
  * To create a concrete instance, see `MakeWorkflowTemplateServiceConnection()`.
  *
@@ -195,87 +181,69 @@ class WorkflowTemplateServiceConnection {
   virtual Options options() { return Options{}; }
 
   virtual StatusOr<google::cloud::dataproc::v1::WorkflowTemplate>
-  CreateWorkflowTemplate(
-      google::cloud::dataproc::v1::CreateWorkflowTemplateRequest const&
-          request);
+  CreateWorkflowTemplate(google::cloud::dataproc::v1::CreateWorkflowTemplateRequest const& request);
 
   virtual StatusOr<google::cloud::dataproc::v1::WorkflowTemplate>
-  GetWorkflowTemplate(
-      google::cloud::dataproc::v1::GetWorkflowTemplateRequest const& request);
+  GetWorkflowTemplate(google::cloud::dataproc::v1::GetWorkflowTemplateRequest const& request);
 
   virtual future<StatusOr<google::cloud::dataproc::v1::WorkflowMetadata>>
-  InstantiateWorkflowTemplate(
-      google::cloud::dataproc::v1::InstantiateWorkflowTemplateRequest const&
-          request);
-
-  virtual StatusOr<google::longrunning::Operation> InstantiateWorkflowTemplate(
-      NoAwaitTag,
-      google::cloud::dataproc::v1::InstantiateWorkflowTemplateRequest const&
-          request);
-
-  virtual future<StatusOr<google::cloud::dataproc::v1::WorkflowMetadata>>
-  InstantiateWorkflowTemplate(google::longrunning::Operation const& operation);
-
-  virtual future<StatusOr<google::cloud::dataproc::v1::WorkflowMetadata>>
-  InstantiateInlineWorkflowTemplate(
-      google::cloud::dataproc::v1::
-          InstantiateInlineWorkflowTemplateRequest const& request);
+  InstantiateWorkflowTemplate(google::cloud::dataproc::v1::InstantiateWorkflowTemplateRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation>
-  InstantiateInlineWorkflowTemplate(
-      NoAwaitTag, google::cloud::dataproc::v1::
-                      InstantiateInlineWorkflowTemplateRequest const& request);
+  InstantiateWorkflowTemplate(NoAwaitTag, google::cloud::dataproc::v1::InstantiateWorkflowTemplateRequest const& request);
 
   virtual future<StatusOr<google::cloud::dataproc::v1::WorkflowMetadata>>
-  InstantiateInlineWorkflowTemplate(
-      google::longrunning::Operation const& operation);
+  InstantiateWorkflowTemplate( google::longrunning::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::dataproc::v1::WorkflowMetadata>>
+  InstantiateInlineWorkflowTemplate(google::cloud::dataproc::v1::InstantiateInlineWorkflowTemplateRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation>
+  InstantiateInlineWorkflowTemplate(NoAwaitTag, google::cloud::dataproc::v1::InstantiateInlineWorkflowTemplateRequest const& request);
+
+  virtual future<StatusOr<google::cloud::dataproc::v1::WorkflowMetadata>>
+  InstantiateInlineWorkflowTemplate( google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::dataproc::v1::WorkflowTemplate>
-  UpdateWorkflowTemplate(
-      google::cloud::dataproc::v1::UpdateWorkflowTemplateRequest const&
-          request);
+  UpdateWorkflowTemplate(google::cloud::dataproc::v1::UpdateWorkflowTemplateRequest const& request);
 
   virtual StreamRange<google::cloud::dataproc::v1::WorkflowTemplate>
-  ListWorkflowTemplates(
-      google::cloud::dataproc::v1::ListWorkflowTemplatesRequest request);
+  ListWorkflowTemplates(google::cloud::dataproc::v1::ListWorkflowTemplatesRequest request);
 
-  virtual Status DeleteWorkflowTemplate(
-      google::cloud::dataproc::v1::DeleteWorkflowTemplateRequest const&
-          request);
+  virtual Status
+  DeleteWorkflowTemplate(google::cloud::dataproc::v1::DeleteWorkflowTemplateRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
 
   virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
   TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
 
-  virtual StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 
-  virtual Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request);
+  virtual Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
 
-  virtual Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request);
+  virtual Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request);
 };
 
 /**
- * A factory function to construct an object of type
- * `WorkflowTemplateServiceConnection`.
+ * A factory function to construct an object of type `WorkflowTemplateServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of
- * WorkflowTemplateServiceClient.
+ * should be passed as an argument to the constructor of WorkflowTemplateServiceClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `WorkflowTemplateServiceConnection`. Expected options are any of the
- * types in the following option lists:
+ * returned `WorkflowTemplateServiceConnection`. Expected options are any of the types in
+ * the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
@@ -286,12 +254,11 @@ class WorkflowTemplateServiceConnection {
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
  * @param location Sets the prefix for the default `EndpointOption` value.
- * @param options (optional) Configure the `WorkflowTemplateServiceConnection`
- * created by this function.
+ * @param options (optional) Configure the `WorkflowTemplateServiceConnection` created by
+ * this function.
  */
-std::shared_ptr<WorkflowTemplateServiceConnection>
-MakeWorkflowTemplateServiceConnection(std::string const& location,
-                                      Options options = {});
+std::shared_ptr<WorkflowTemplateServiceConnection> MakeWorkflowTemplateServiceConnection(
+    std::string const& location, Options options = {});
 
 /**
  * A backwards-compatible version of the previous factory function.  Unless
@@ -300,8 +267,8 @@ MakeWorkflowTemplateServiceConnection(std::string const& location,
  *
  * @deprecated Please use the `location` overload instead.
  */
-std::shared_ptr<WorkflowTemplateServiceConnection>
-MakeWorkflowTemplateServiceConnection(Options options = {});
+std::shared_ptr<WorkflowTemplateServiceConnection> MakeWorkflowTemplateServiceConnection(
+    Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataproc_v1

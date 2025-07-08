@@ -17,16 +17,16 @@
 // source: google/logging/v2/logging_metrics.proto
 
 #include "google/cloud/logging/v2/internal/metrics_service_v2_stub_factory.h"
-#include "google/cloud/logging/v2/internal/metrics_service_v2_auth_decorator.h"
-#include "google/cloud/logging/v2/internal/metrics_service_v2_logging_decorator.h"
-#include "google/cloud/logging/v2/internal/metrics_service_v2_metadata_decorator.h"
-#include "google/cloud/logging/v2/internal/metrics_service_v2_stub.h"
-#include "google/cloud/logging/v2/internal/metrics_service_v2_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
+#include "google/cloud/logging/v2/internal/metrics_service_v2_auth_decorator.h"
+#include "google/cloud/logging/v2/internal/metrics_service_v2_logging_decorator.h"
+#include "google/cloud/logging/v2/internal/metrics_service_v2_metadata_decorator.h"
+#include "google/cloud/logging/v2/internal/metrics_service_v2_stub.h"
+#include "google/cloud/logging/v2/internal/metrics_service_v2_tracing_stub.h"
 #include "google/cloud/options.h"
 #include <google/logging/v2/logging_metrics.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
@@ -38,29 +38,29 @@ namespace cloud {
 namespace logging_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<MetricsServiceV2Stub> CreateDefaultMetricsServiceV2Stub(
+std::shared_ptr<MetricsServiceV2Stub>
+CreateDefaultMetricsServiceV2Stub(
     std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
     Options const& options) {
-  auto channel = auth->CreateChannel(options.get<EndpointOption>(),
-                                     internal::MakeChannelArguments(options));
-  auto service_grpc_stub =
-      google::logging::v2::MetricsServiceV2::NewStub(channel);
-  auto service_operations_stub =
-      google::longrunning::Operations::NewStub(channel);
+  auto channel = auth->CreateChannel(
+    options.get<EndpointOption>(), internal::MakeChannelArguments(options));
+  auto service_grpc_stub = google::logging::v2::MetricsServiceV2::NewStub(channel);
+  auto service_operations_stub = google::longrunning::Operations::NewStub(channel);
   std::shared_ptr<MetricsServiceV2Stub> stub =
-      std::make_shared<DefaultMetricsServiceV2Stub>(
-          std::move(service_grpc_stub), std::move(service_operations_stub));
+    std::make_shared<DefaultMetricsServiceV2Stub>(std::move(service_grpc_stub), std::move(service_operations_stub));
 
   if (auth->RequiresConfigureContext()) {
-    stub = std::make_shared<MetricsServiceV2Auth>(std::move(auth),
-                                                  std::move(stub));
+    stub = std::make_shared<MetricsServiceV2Auth>(
+        std::move(auth), std::move(stub));
   }
   stub = std::make_shared<MetricsServiceV2Metadata>(
       std::move(stub), std::multimap<std::string, std::string>{});
-  if (internal::Contains(options.get<LoggingComponentsOption>(), "rpc")) {
+  if (internal::Contains(
+      options.get<LoggingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<MetricsServiceV2Logging>(
-        std::move(stub), options.get<GrpcTracingOptionsOption>(),
+        std::move(stub),
+        options.get<GrpcTracingOptionsOption>(),
         options.get<LoggingComponentsOption>());
   }
   if (internal::TracingEnabled(options)) {

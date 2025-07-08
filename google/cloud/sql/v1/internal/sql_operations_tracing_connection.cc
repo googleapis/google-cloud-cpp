@@ -34,28 +34,24 @@ SqlOperationsServiceTracingConnection::SqlOperationsServiceTracingConnection(
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::sql::v1::Operation>
-SqlOperationsServiceTracingConnection::Get(
-    google::cloud::sql::v1::SqlOperationsGetRequest const& request) {
+SqlOperationsServiceTracingConnection::Get(google::cloud::sql::v1::SqlOperationsGetRequest const& request) {
   auto span = internal::MakeSpan("sql_v1::SqlOperationsServiceConnection::Get");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->Get(request));
 }
 
 StreamRange<google::cloud::sql::v1::Operation>
-SqlOperationsServiceTracingConnection::List(
-    google::cloud::sql::v1::SqlOperationsListRequest request) {
-  auto span =
-      internal::MakeSpan("sql_v1::SqlOperationsServiceConnection::List");
+SqlOperationsServiceTracingConnection::List(google::cloud::sql::v1::SqlOperationsListRequest request) {
+  auto span = internal::MakeSpan("sql_v1::SqlOperationsServiceConnection::List");
   internal::OTelScope scope(span);
   auto sr = child_->List(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::sql::v1::Operation>(
-      std::move(span), std::move(sr));
+        std::move(span), std::move(sr));
 }
 
-Status SqlOperationsServiceTracingConnection::Cancel(
-    google::cloud::sql::v1::SqlOperationsCancelRequest const& request) {
-  auto span =
-      internal::MakeSpan("sql_v1::SqlOperationsServiceConnection::Cancel");
+Status
+SqlOperationsServiceTracingConnection::Cancel(google::cloud::sql::v1::SqlOperationsCancelRequest const& request) {
+  auto span = internal::MakeSpan("sql_v1::SqlOperationsServiceConnection::Cancel");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->Cancel(request));
 }
@@ -67,8 +63,7 @@ MakeSqlOperationsServiceTracingConnection(
     std::shared_ptr<sql_v1::SqlOperationsServiceConnection> conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
-    conn = std::make_shared<SqlOperationsServiceTracingConnection>(
-        std::move(conn));
+    conn = std::make_shared<SqlOperationsServiceTracingConnection>(std::move(conn));
   }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;

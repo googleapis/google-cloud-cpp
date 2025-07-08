@@ -36,56 +36,45 @@ class SubnetworksConnectionIdempotencyPolicy {
   /// Create a new copy of this object.
   virtual std::unique_ptr<SubnetworksConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency AggregatedListSubnetworks(
-      google::cloud::cpp::compute::subnetworks::v1::
-          AggregatedListSubnetworksRequest request);
+  virtual google::cloud::Idempotency
+  AggregatedListSubnetworks(google::cloud::cpp::compute::subnetworks::v1::AggregatedListSubnetworksRequest request);
 
-  virtual google::cloud::Idempotency DeleteSubnetwork(
-      google::cloud::cpp::compute::subnetworks::v1::
-          DeleteSubnetworkRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteSubnetwork(google::cloud::cpp::compute::subnetworks::v1::DeleteSubnetworkRequest const& request);
 
-  virtual google::cloud::Idempotency ExpandIpCidrRange(
-      google::cloud::cpp::compute::subnetworks::v1::
-          ExpandIpCidrRangeRequest const& request);
+  virtual google::cloud::Idempotency
+  ExpandIpCidrRange(google::cloud::cpp::compute::subnetworks::v1::ExpandIpCidrRangeRequest const& request);
 
-  virtual google::cloud::Idempotency GetSubnetwork(
-      google::cloud::cpp::compute::subnetworks::v1::GetSubnetworkRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  GetSubnetwork(google::cloud::cpp::compute::subnetworks::v1::GetSubnetworkRequest const& request);
 
-  virtual google::cloud::Idempotency GetIamPolicy(
-      google::cloud::cpp::compute::subnetworks::v1::GetIamPolicyRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  GetIamPolicy(google::cloud::cpp::compute::subnetworks::v1::GetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency InsertSubnetwork(
-      google::cloud::cpp::compute::subnetworks::v1::
-          InsertSubnetworkRequest const& request);
+  virtual google::cloud::Idempotency
+  InsertSubnetwork(google::cloud::cpp::compute::subnetworks::v1::InsertSubnetworkRequest const& request);
 
-  virtual google::cloud::Idempotency ListSubnetworks(
-      google::cloud::cpp::compute::subnetworks::v1::ListSubnetworksRequest
-          request);
+  virtual google::cloud::Idempotency
+  ListSubnetworks(google::cloud::cpp::compute::subnetworks::v1::ListSubnetworksRequest request);
 
-  virtual google::cloud::Idempotency ListUsable(
-      google::cloud::cpp::compute::subnetworks::v1::ListUsableRequest request);
+  virtual google::cloud::Idempotency
+  ListUsable(google::cloud::cpp::compute::subnetworks::v1::ListUsableRequest request);
 
-  virtual google::cloud::Idempotency PatchSubnetwork(
-      google::cloud::cpp::compute::subnetworks::v1::
-          PatchSubnetworkRequest const& request);
+  virtual google::cloud::Idempotency
+  PatchSubnetwork(google::cloud::cpp::compute::subnetworks::v1::PatchSubnetworkRequest const& request);
 
-  virtual google::cloud::Idempotency SetIamPolicy(
-      google::cloud::cpp::compute::subnetworks::v1::SetIamPolicyRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  SetIamPolicy(google::cloud::cpp::compute::subnetworks::v1::SetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency SetPrivateIpGoogleAccess(
-      google::cloud::cpp::compute::subnetworks::v1::
-          SetPrivateIpGoogleAccessRequest const& request);
+  virtual google::cloud::Idempotency
+  SetPrivateIpGoogleAccess(google::cloud::cpp::compute::subnetworks::v1::SetPrivateIpGoogleAccessRequest const& request);
 
-  virtual google::cloud::Idempotency TestIamPermissions(
-      google::cloud::cpp::compute::subnetworks::v1::
-          TestIamPermissionsRequest const& request);
+  virtual google::cloud::Idempotency
+  TestIamPermissions(google::cloud::cpp::compute::subnetworks::v1::TestIamPermissionsRequest const& request);
 };
 
 std::unique_ptr<SubnetworksConnectionIdempotencyPolicy>
-MakeDefaultSubnetworksConnectionIdempotencyPolicy();
+    MakeDefaultSubnetworksConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_subnetworks_v1

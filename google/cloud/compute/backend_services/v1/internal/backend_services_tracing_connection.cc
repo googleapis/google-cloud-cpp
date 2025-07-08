@@ -30,387 +30,300 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 BackendServicesTracingConnection::BackendServicesTracingConnection(
-    std::shared_ptr<compute_backend_services_v1::BackendServicesConnection>
-        child)
+    std::shared_ptr<compute_backend_services_v1::BackendServicesConnection> child)
     : child_(std::move(child)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-BackendServicesTracingConnection::AddSignedUrlKey(
-    google::cloud::cpp::compute::backend_services::v1::
-        AddSignedUrlKeyRequest const& request) {
+BackendServicesTracingConnection::AddSignedUrlKey(google::cloud::cpp::compute::backend_services::v1::AddSignedUrlKeyRequest const& request) {
   auto span = internal::MakeSpan(
-      "compute_backend_services_v1::BackendServicesConnection::"
-      "AddSignedUrlKey");
+      "compute_backend_services_v1::BackendServicesConnection::AddSignedUrlKey");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->AddSignedUrlKey(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 BackendServicesTracingConnection::AddSignedUrlKey(
-    NoAwaitTag, google::cloud::cpp::compute::backend_services::v1::
-                    AddSignedUrlKeyRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::backend_services::v1::AddSignedUrlKeyRequest const& request) {
   auto span = internal::MakeSpan(
-      "compute_backend_services_v1::BackendServicesConnection::"
-      "AddSignedUrlKey");
+      "compute_backend_services_v1::BackendServicesConnection::AddSignedUrlKey");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span,
-                           child_->AddSignedUrlKey(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->AddSignedUrlKey(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 BackendServicesTracingConnection::AddSignedUrlKey(
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
-      "compute_backend_services_v1::BackendServicesConnection::"
-      "AddSignedUrlKey");
+      "compute_backend_services_v1::BackendServicesConnection::AddSignedUrlKey");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->AddSignedUrlKey(operation));
+  return internal::EndSpan(std::move(span),
+      child_->AddSignedUrlKey(operation));
 }
 
-StreamRange<std::pair<
-    std::string, google::cloud::cpp::compute::v1::BackendServicesScopedList>>
-BackendServicesTracingConnection::AggregatedListBackendServices(
-    google::cloud::cpp::compute::backend_services::v1::
-        AggregatedListBackendServicesRequest request) {
-  auto span = internal::MakeSpan(
-      "compute_backend_services_v1::BackendServicesConnection::"
-      "AggregatedListBackendServices");
+StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::BackendServicesScopedList>>
+BackendServicesTracingConnection::AggregatedListBackendServices(google::cloud::cpp::compute::backend_services::v1::AggregatedListBackendServicesRequest request) {
+  auto span = internal::MakeSpan("compute_backend_services_v1::BackendServicesConnection::AggregatedListBackendServices");
   internal::OTelScope scope(span);
   auto sr = child_->AggregatedListBackendServices(std::move(request));
-  return internal::MakeTracedStreamRange<std::pair<
-      std::string, google::cloud::cpp::compute::v1::BackendServicesScopedList>>(
-      std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::BackendServicesScopedList>>(
+        std::move(span), std::move(sr));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-BackendServicesTracingConnection::DeleteBackendService(
-    google::cloud::cpp::compute::backend_services::v1::
-        DeleteBackendServiceRequest const& request) {
+BackendServicesTracingConnection::DeleteBackendService(google::cloud::cpp::compute::backend_services::v1::DeleteBackendServiceRequest const& request) {
   auto span = internal::MakeSpan(
-      "compute_backend_services_v1::BackendServicesConnection::"
-      "DeleteBackendService");
+      "compute_backend_services_v1::BackendServicesConnection::DeleteBackendService");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->DeleteBackendService(request));
+  return internal::EndSpan(std::move(span), child_->DeleteBackendService(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 BackendServicesTracingConnection::DeleteBackendService(
-    NoAwaitTag, google::cloud::cpp::compute::backend_services::v1::
-                    DeleteBackendServiceRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::backend_services::v1::DeleteBackendServiceRequest const& request) {
   auto span = internal::MakeSpan(
-      "compute_backend_services_v1::BackendServicesConnection::"
-      "DeleteBackendService");
+      "compute_backend_services_v1::BackendServicesConnection::DeleteBackendService");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span,
-                           child_->DeleteBackendService(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->DeleteBackendService(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 BackendServicesTracingConnection::DeleteBackendService(
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
-      "compute_backend_services_v1::BackendServicesConnection::"
-      "DeleteBackendService");
+      "compute_backend_services_v1::BackendServicesConnection::DeleteBackendService");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->DeleteBackendService(operation));
+      child_->DeleteBackendService(operation));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-BackendServicesTracingConnection::DeleteSignedUrlKey(
-    google::cloud::cpp::compute::backend_services::v1::
-        DeleteSignedUrlKeyRequest const& request) {
+BackendServicesTracingConnection::DeleteSignedUrlKey(google::cloud::cpp::compute::backend_services::v1::DeleteSignedUrlKeyRequest const& request) {
   auto span = internal::MakeSpan(
-      "compute_backend_services_v1::BackendServicesConnection::"
-      "DeleteSignedUrlKey");
+      "compute_backend_services_v1::BackendServicesConnection::DeleteSignedUrlKey");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->DeleteSignedUrlKey(request));
+  return internal::EndSpan(std::move(span), child_->DeleteSignedUrlKey(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 BackendServicesTracingConnection::DeleteSignedUrlKey(
-    NoAwaitTag, google::cloud::cpp::compute::backend_services::v1::
-                    DeleteSignedUrlKeyRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::backend_services::v1::DeleteSignedUrlKeyRequest const& request) {
   auto span = internal::MakeSpan(
-      "compute_backend_services_v1::BackendServicesConnection::"
-      "DeleteSignedUrlKey");
+      "compute_backend_services_v1::BackendServicesConnection::DeleteSignedUrlKey");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span,
-                           child_->DeleteSignedUrlKey(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->DeleteSignedUrlKey(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 BackendServicesTracingConnection::DeleteSignedUrlKey(
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
-      "compute_backend_services_v1::BackendServicesConnection::"
-      "DeleteSignedUrlKey");
+      "compute_backend_services_v1::BackendServicesConnection::DeleteSignedUrlKey");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->DeleteSignedUrlKey(operation));
+      child_->DeleteSignedUrlKey(operation));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::BackendService>
-BackendServicesTracingConnection::GetBackendService(
-    google::cloud::cpp::compute::backend_services::v1::
-        GetBackendServiceRequest const& request) {
-  auto span = internal::MakeSpan(
-      "compute_backend_services_v1::BackendServicesConnection::"
-      "GetBackendService");
+BackendServicesTracingConnection::GetBackendService(google::cloud::cpp::compute::backend_services::v1::GetBackendServiceRequest const& request) {
+  auto span = internal::MakeSpan("compute_backend_services_v1::BackendServicesConnection::GetBackendService");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetBackendService(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::BackendServiceGroupHealth>
-BackendServicesTracingConnection::GetHealth(
-    google::cloud::cpp::compute::backend_services::v1::GetHealthRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "compute_backend_services_v1::BackendServicesConnection::GetHealth");
+BackendServicesTracingConnection::GetHealth(google::cloud::cpp::compute::backend_services::v1::GetHealthRequest const& request) {
+  auto span = internal::MakeSpan("compute_backend_services_v1::BackendServicesConnection::GetHealth");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetHealth(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
-BackendServicesTracingConnection::GetIamPolicy(
-    google::cloud::cpp::compute::backend_services::v1::
-        GetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpan(
-      "compute_backend_services_v1::BackendServicesConnection::GetIamPolicy");
+BackendServicesTracingConnection::GetIamPolicy(google::cloud::cpp::compute::backend_services::v1::GetIamPolicyRequest const& request) {
+  auto span = internal::MakeSpan("compute_backend_services_v1::BackendServicesConnection::GetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetIamPolicy(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-BackendServicesTracingConnection::InsertBackendService(
-    google::cloud::cpp::compute::backend_services::v1::
-        InsertBackendServiceRequest const& request) {
+BackendServicesTracingConnection::InsertBackendService(google::cloud::cpp::compute::backend_services::v1::InsertBackendServiceRequest const& request) {
   auto span = internal::MakeSpan(
-      "compute_backend_services_v1::BackendServicesConnection::"
-      "InsertBackendService");
+      "compute_backend_services_v1::BackendServicesConnection::InsertBackendService");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->InsertBackendService(request));
+  return internal::EndSpan(std::move(span), child_->InsertBackendService(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 BackendServicesTracingConnection::InsertBackendService(
-    NoAwaitTag, google::cloud::cpp::compute::backend_services::v1::
-                    InsertBackendServiceRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::backend_services::v1::InsertBackendServiceRequest const& request) {
   auto span = internal::MakeSpan(
-      "compute_backend_services_v1::BackendServicesConnection::"
-      "InsertBackendService");
+      "compute_backend_services_v1::BackendServicesConnection::InsertBackendService");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span,
-                           child_->InsertBackendService(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->InsertBackendService(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 BackendServicesTracingConnection::InsertBackendService(
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
-      "compute_backend_services_v1::BackendServicesConnection::"
-      "InsertBackendService");
+      "compute_backend_services_v1::BackendServicesConnection::InsertBackendService");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->InsertBackendService(operation));
+      child_->InsertBackendService(operation));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::BackendService>
-BackendServicesTracingConnection::ListBackendServices(
-    google::cloud::cpp::compute::backend_services::v1::
-        ListBackendServicesRequest request) {
-  auto span = internal::MakeSpan(
-      "compute_backend_services_v1::BackendServicesConnection::"
-      "ListBackendServices");
+BackendServicesTracingConnection::ListBackendServices(google::cloud::cpp::compute::backend_services::v1::ListBackendServicesRequest request) {
+  auto span = internal::MakeSpan("compute_backend_services_v1::BackendServicesConnection::ListBackendServices");
   internal::OTelScope scope(span);
   auto sr = child_->ListBackendServices(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::cpp::compute::v1::BackendService>(std::move(span),
-                                                       std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::cpp::compute::v1::BackendService>(
+        std::move(span), std::move(sr));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::BackendService>
-BackendServicesTracingConnection::ListUsable(
-    google::cloud::cpp::compute::backend_services::v1::ListUsableRequest
-        request) {
-  auto span = internal::MakeSpan(
-      "compute_backend_services_v1::BackendServicesConnection::ListUsable");
+BackendServicesTracingConnection::ListUsable(google::cloud::cpp::compute::backend_services::v1::ListUsableRequest request) {
+  auto span = internal::MakeSpan("compute_backend_services_v1::BackendServicesConnection::ListUsable");
   internal::OTelScope scope(span);
   auto sr = child_->ListUsable(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::cpp::compute::v1::BackendService>(std::move(span),
-                                                       std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::cpp::compute::v1::BackendService>(
+        std::move(span), std::move(sr));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-BackendServicesTracingConnection::PatchBackendService(
-    google::cloud::cpp::compute::backend_services::v1::
-        PatchBackendServiceRequest const& request) {
+BackendServicesTracingConnection::PatchBackendService(google::cloud::cpp::compute::backend_services::v1::PatchBackendServiceRequest const& request) {
   auto span = internal::MakeSpan(
-      "compute_backend_services_v1::BackendServicesConnection::"
-      "PatchBackendService");
+      "compute_backend_services_v1::BackendServicesConnection::PatchBackendService");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->PatchBackendService(request));
+  return internal::EndSpan(std::move(span), child_->PatchBackendService(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 BackendServicesTracingConnection::PatchBackendService(
-    NoAwaitTag, google::cloud::cpp::compute::backend_services::v1::
-                    PatchBackendServiceRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::backend_services::v1::PatchBackendServiceRequest const& request) {
   auto span = internal::MakeSpan(
-      "compute_backend_services_v1::BackendServicesConnection::"
-      "PatchBackendService");
+      "compute_backend_services_v1::BackendServicesConnection::PatchBackendService");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span,
-                           child_->PatchBackendService(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->PatchBackendService(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 BackendServicesTracingConnection::PatchBackendService(
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
-      "compute_backend_services_v1::BackendServicesConnection::"
-      "PatchBackendService");
+      "compute_backend_services_v1::BackendServicesConnection::PatchBackendService");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->PatchBackendService(operation));
+      child_->PatchBackendService(operation));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-BackendServicesTracingConnection::SetEdgeSecurityPolicy(
-    google::cloud::cpp::compute::backend_services::v1::
-        SetEdgeSecurityPolicyRequest const& request) {
+BackendServicesTracingConnection::SetEdgeSecurityPolicy(google::cloud::cpp::compute::backend_services::v1::SetEdgeSecurityPolicyRequest const& request) {
   auto span = internal::MakeSpan(
-      "compute_backend_services_v1::BackendServicesConnection::"
-      "SetEdgeSecurityPolicy");
+      "compute_backend_services_v1::BackendServicesConnection::SetEdgeSecurityPolicy");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->SetEdgeSecurityPolicy(request));
+  return internal::EndSpan(std::move(span), child_->SetEdgeSecurityPolicy(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 BackendServicesTracingConnection::SetEdgeSecurityPolicy(
-    NoAwaitTag, google::cloud::cpp::compute::backend_services::v1::
-                    SetEdgeSecurityPolicyRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::backend_services::v1::SetEdgeSecurityPolicyRequest const& request) {
   auto span = internal::MakeSpan(
-      "compute_backend_services_v1::BackendServicesConnection::"
-      "SetEdgeSecurityPolicy");
+      "compute_backend_services_v1::BackendServicesConnection::SetEdgeSecurityPolicy");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->SetEdgeSecurityPolicy(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->SetEdgeSecurityPolicy(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 BackendServicesTracingConnection::SetEdgeSecurityPolicy(
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
-      "compute_backend_services_v1::BackendServicesConnection::"
-      "SetEdgeSecurityPolicy");
+      "compute_backend_services_v1::BackendServicesConnection::SetEdgeSecurityPolicy");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->SetEdgeSecurityPolicy(operation));
+      child_->SetEdgeSecurityPolicy(operation));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
-BackendServicesTracingConnection::SetIamPolicy(
-    google::cloud::cpp::compute::backend_services::v1::
-        SetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpan(
-      "compute_backend_services_v1::BackendServicesConnection::SetIamPolicy");
+BackendServicesTracingConnection::SetIamPolicy(google::cloud::cpp::compute::backend_services::v1::SetIamPolicyRequest const& request) {
+  auto span = internal::MakeSpan("compute_backend_services_v1::BackendServicesConnection::SetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->SetIamPolicy(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-BackendServicesTracingConnection::SetSecurityPolicy(
-    google::cloud::cpp::compute::backend_services::v1::
-        SetSecurityPolicyRequest const& request) {
+BackendServicesTracingConnection::SetSecurityPolicy(google::cloud::cpp::compute::backend_services::v1::SetSecurityPolicyRequest const& request) {
   auto span = internal::MakeSpan(
-      "compute_backend_services_v1::BackendServicesConnection::"
-      "SetSecurityPolicy");
+      "compute_backend_services_v1::BackendServicesConnection::SetSecurityPolicy");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->SetSecurityPolicy(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 BackendServicesTracingConnection::SetSecurityPolicy(
-    NoAwaitTag, google::cloud::cpp::compute::backend_services::v1::
-                    SetSecurityPolicyRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::backend_services::v1::SetSecurityPolicyRequest const& request) {
   auto span = internal::MakeSpan(
-      "compute_backend_services_v1::BackendServicesConnection::"
-      "SetSecurityPolicy");
+      "compute_backend_services_v1::BackendServicesConnection::SetSecurityPolicy");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span,
-                           child_->SetSecurityPolicy(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->SetSecurityPolicy(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 BackendServicesTracingConnection::SetSecurityPolicy(
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
-      "compute_backend_services_v1::BackendServicesConnection::"
-      "SetSecurityPolicy");
+      "compute_backend_services_v1::BackendServicesConnection::SetSecurityPolicy");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->SetSecurityPolicy(operation));
+      child_->SetSecurityPolicy(operation));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-BackendServicesTracingConnection::TestIamPermissions(
-    google::cloud::cpp::compute::backend_services::v1::
-        TestIamPermissionsRequest const& request) {
-  auto span = internal::MakeSpan(
-      "compute_backend_services_v1::BackendServicesConnection::"
-      "TestIamPermissions");
+BackendServicesTracingConnection::TestIamPermissions(google::cloud::cpp::compute::backend_services::v1::TestIamPermissionsRequest const& request) {
+  auto span = internal::MakeSpan("compute_backend_services_v1::BackendServicesConnection::TestIamPermissions");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->TestIamPermissions(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-BackendServicesTracingConnection::UpdateBackendService(
-    google::cloud::cpp::compute::backend_services::v1::
-        UpdateBackendServiceRequest const& request) {
+BackendServicesTracingConnection::UpdateBackendService(google::cloud::cpp::compute::backend_services::v1::UpdateBackendServiceRequest const& request) {
   auto span = internal::MakeSpan(
-      "compute_backend_services_v1::BackendServicesConnection::"
-      "UpdateBackendService");
+      "compute_backend_services_v1::BackendServicesConnection::UpdateBackendService");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->UpdateBackendService(request));
+  return internal::EndSpan(std::move(span), child_->UpdateBackendService(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 BackendServicesTracingConnection::UpdateBackendService(
-    NoAwaitTag, google::cloud::cpp::compute::backend_services::v1::
-                    UpdateBackendServiceRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::backend_services::v1::UpdateBackendServiceRequest const& request) {
   auto span = internal::MakeSpan(
-      "compute_backend_services_v1::BackendServicesConnection::"
-      "UpdateBackendService");
+      "compute_backend_services_v1::BackendServicesConnection::UpdateBackendService");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span,
-                           child_->UpdateBackendService(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->UpdateBackendService(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 BackendServicesTracingConnection::UpdateBackendService(
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
-      "compute_backend_services_v1::BackendServicesConnection::"
-      "UpdateBackendService");
+      "compute_backend_services_v1::BackendServicesConnection::UpdateBackendService");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->UpdateBackendService(operation));
+      child_->UpdateBackendService(operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<compute_backend_services_v1::BackendServicesConnection>
 MakeBackendServicesTracingConnection(
-    std::shared_ptr<compute_backend_services_v1::BackendServicesConnection>
-        conn) {
+    std::shared_ptr<compute_backend_services_v1::BackendServicesConnection> conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<BackendServicesTracingConnection>(std::move(conn));

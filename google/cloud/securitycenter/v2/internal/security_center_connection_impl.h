@@ -19,16 +19,16 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SECURITYCENTER_V2_INTERNAL_SECURITY_CENTER_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SECURITYCENTER_V2_INTERNAL_SECURITY_CENTER_CONNECTION_IMPL_H
 
-#include "google/cloud/securitycenter/v2/internal/security_center_retry_traits.h"
-#include "google/cloud/securitycenter/v2/internal/security_center_stub.h"
-#include "google/cloud/securitycenter/v2/security_center_connection.h"
-#include "google/cloud/securitycenter/v2/security_center_connection_idempotency_policy.h"
-#include "google/cloud/securitycenter/v2/security_center_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
+#include "google/cloud/securitycenter/v2/internal/security_center_retry_traits.h"
+#include "google/cloud/securitycenter/v2/internal/security_center_stub.h"
+#include "google/cloud/securitycenter/v2/security_center_connection.h"
+#include "google/cloud/securitycenter/v2/security_center_connection_idempotency_policy.h"
+#include "google/cloud/securitycenter/v2/security_center_options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
@@ -46,203 +46,151 @@ class SecurityCenterConnectionImpl
   ~SecurityCenterConnectionImpl() override = default;
 
   SecurityCenterConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<securitycenter_v2_internal::SecurityCenterStub> stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<securitycenter_v2_internal::SecurityCenterStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
-  StatusOr<google::cloud::securitycenter::v2::
-               BatchCreateResourceValueConfigsResponse>
-  BatchCreateResourceValueConfigs(
-      google::cloud::securitycenter::v2::
-          BatchCreateResourceValueConfigsRequest const& request) override;
+  StatusOr<google::cloud::securitycenter::v2::BatchCreateResourceValueConfigsResponse>
+  BatchCreateResourceValueConfigs(google::cloud::securitycenter::v2::BatchCreateResourceValueConfigsRequest const& request) override;
+
+  future<StatusOr<google::cloud::securitycenter::v2::BulkMuteFindingsResponse>>
+  BulkMuteFindings(google::cloud::securitycenter::v2::BulkMuteFindingsRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  BulkMuteFindings(NoAwaitTag,
+      google::cloud::securitycenter::v2::BulkMuteFindingsRequest const& request) override;
 
   future<StatusOr<google::cloud::securitycenter::v2::BulkMuteFindingsResponse>>
   BulkMuteFindings(
-      google::cloud::securitycenter::v2::BulkMuteFindingsRequest const& request)
-      override;
-
-  StatusOr<google::longrunning::Operation> BulkMuteFindings(
-      NoAwaitTag,
-      google::cloud::securitycenter::v2::BulkMuteFindingsRequest const& request)
-      override;
-
-  future<StatusOr<google::cloud::securitycenter::v2::BulkMuteFindingsResponse>>
-  BulkMuteFindings(google::longrunning::Operation const& operation) override;
+      google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::securitycenter::v2::BigQueryExport>
-  CreateBigQueryExport(
-      google::cloud::securitycenter::v2::CreateBigQueryExportRequest const&
-          request) override;
+  CreateBigQueryExport(google::cloud::securitycenter::v2::CreateBigQueryExportRequest const& request) override;
 
-  StatusOr<google::cloud::securitycenter::v2::Finding> CreateFinding(
-      google::cloud::securitycenter::v2::CreateFindingRequest const& request)
-      override;
+  StatusOr<google::cloud::securitycenter::v2::Finding>
+  CreateFinding(google::cloud::securitycenter::v2::CreateFindingRequest const& request) override;
 
-  StatusOr<google::cloud::securitycenter::v2::MuteConfig> CreateMuteConfig(
-      google::cloud::securitycenter::v2::CreateMuteConfigRequest const& request)
-      override;
+  StatusOr<google::cloud::securitycenter::v2::MuteConfig>
+  CreateMuteConfig(google::cloud::securitycenter::v2::CreateMuteConfigRequest const& request) override;
 
   StatusOr<google::cloud::securitycenter::v2::NotificationConfig>
-  CreateNotificationConfig(
-      google::cloud::securitycenter::v2::CreateNotificationConfigRequest const&
-          request) override;
+  CreateNotificationConfig(google::cloud::securitycenter::v2::CreateNotificationConfigRequest const& request) override;
 
-  StatusOr<google::cloud::securitycenter::v2::Source> CreateSource(
-      google::cloud::securitycenter::v2::CreateSourceRequest const& request)
-      override;
+  StatusOr<google::cloud::securitycenter::v2::Source>
+  CreateSource(google::cloud::securitycenter::v2::CreateSourceRequest const& request) override;
 
-  Status DeleteBigQueryExport(
-      google::cloud::securitycenter::v2::DeleteBigQueryExportRequest const&
-          request) override;
+  Status
+  DeleteBigQueryExport(google::cloud::securitycenter::v2::DeleteBigQueryExportRequest const& request) override;
 
-  Status DeleteMuteConfig(
-      google::cloud::securitycenter::v2::DeleteMuteConfigRequest const& request)
-      override;
+  Status
+  DeleteMuteConfig(google::cloud::securitycenter::v2::DeleteMuteConfigRequest const& request) override;
 
-  Status DeleteNotificationConfig(
-      google::cloud::securitycenter::v2::DeleteNotificationConfigRequest const&
-          request) override;
+  Status
+  DeleteNotificationConfig(google::cloud::securitycenter::v2::DeleteNotificationConfigRequest const& request) override;
 
-  Status DeleteResourceValueConfig(
-      google::cloud::securitycenter::v2::DeleteResourceValueConfigRequest const&
-          request) override;
+  Status
+  DeleteResourceValueConfig(google::cloud::securitycenter::v2::DeleteResourceValueConfigRequest const& request) override;
 
-  StatusOr<google::cloud::securitycenter::v2::BigQueryExport> GetBigQueryExport(
-      google::cloud::securitycenter::v2::GetBigQueryExportRequest const&
-          request) override;
+  StatusOr<google::cloud::securitycenter::v2::BigQueryExport>
+  GetBigQueryExport(google::cloud::securitycenter::v2::GetBigQueryExportRequest const& request) override;
 
-  StatusOr<google::cloud::securitycenter::v2::Simulation> GetSimulation(
-      google::cloud::securitycenter::v2::GetSimulationRequest const& request)
-      override;
+  StatusOr<google::cloud::securitycenter::v2::Simulation>
+  GetSimulation(google::cloud::securitycenter::v2::GetSimulationRequest const& request) override;
 
-  StatusOr<google::cloud::securitycenter::v2::ValuedResource> GetValuedResource(
-      google::cloud::securitycenter::v2::GetValuedResourceRequest const&
-          request) override;
+  StatusOr<google::cloud::securitycenter::v2::ValuedResource>
+  GetValuedResource(google::cloud::securitycenter::v2::GetValuedResourceRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) override;
 
-  StatusOr<google::cloud::securitycenter::v2::MuteConfig> GetMuteConfig(
-      google::cloud::securitycenter::v2::GetMuteConfigRequest const& request)
-      override;
+  StatusOr<google::cloud::securitycenter::v2::MuteConfig>
+  GetMuteConfig(google::cloud::securitycenter::v2::GetMuteConfigRequest const& request) override;
 
   StatusOr<google::cloud::securitycenter::v2::NotificationConfig>
-  GetNotificationConfig(
-      google::cloud::securitycenter::v2::GetNotificationConfigRequest const&
-          request) override;
+  GetNotificationConfig(google::cloud::securitycenter::v2::GetNotificationConfigRequest const& request) override;
 
   StatusOr<google::cloud::securitycenter::v2::ResourceValueConfig>
-  GetResourceValueConfig(
-      google::cloud::securitycenter::v2::GetResourceValueConfigRequest const&
-          request) override;
+  GetResourceValueConfig(google::cloud::securitycenter::v2::GetResourceValueConfigRequest const& request) override;
 
-  StatusOr<google::cloud::securitycenter::v2::Source> GetSource(
-      google::cloud::securitycenter::v2::GetSourceRequest const& request)
-      override;
+  StatusOr<google::cloud::securitycenter::v2::Source>
+  GetSource(google::cloud::securitycenter::v2::GetSourceRequest const& request) override;
 
-  StreamRange<google::cloud::securitycenter::v2::GroupResult> GroupFindings(
-      google::cloud::securitycenter::v2::GroupFindingsRequest request) override;
+  StreamRange<google::cloud::securitycenter::v2::GroupResult>
+  GroupFindings(google::cloud::securitycenter::v2::GroupFindingsRequest request) override;
 
-  StreamRange<google::cloud::securitycenter::v2::AttackPath> ListAttackPaths(
-      google::cloud::securitycenter::v2::ListAttackPathsRequest request)
-      override;
+  StreamRange<google::cloud::securitycenter::v2::AttackPath>
+  ListAttackPaths(google::cloud::securitycenter::v2::ListAttackPathsRequest request) override;
 
   StreamRange<google::cloud::securitycenter::v2::BigQueryExport>
-  ListBigQueryExports(
-      google::cloud::securitycenter::v2::ListBigQueryExportsRequest request)
-      override;
+  ListBigQueryExports(google::cloud::securitycenter::v2::ListBigQueryExportsRequest request) override;
 
-  StreamRange<google::cloud::securitycenter::v2::ListFindingsResponse::
-                  ListFindingsResult>
-  ListFindings(
-      google::cloud::securitycenter::v2::ListFindingsRequest request) override;
+  StreamRange<google::cloud::securitycenter::v2::ListFindingsResponse::ListFindingsResult>
+  ListFindings(google::cloud::securitycenter::v2::ListFindingsRequest request) override;
 
-  StreamRange<google::cloud::securitycenter::v2::MuteConfig> ListMuteConfigs(
-      google::cloud::securitycenter::v2::ListMuteConfigsRequest request)
-      override;
+  StreamRange<google::cloud::securitycenter::v2::MuteConfig>
+  ListMuteConfigs(google::cloud::securitycenter::v2::ListMuteConfigsRequest request) override;
 
   StreamRange<google::cloud::securitycenter::v2::NotificationConfig>
-  ListNotificationConfigs(
-      google::cloud::securitycenter::v2::ListNotificationConfigsRequest request)
-      override;
+  ListNotificationConfigs(google::cloud::securitycenter::v2::ListNotificationConfigsRequest request) override;
 
   StreamRange<google::cloud::securitycenter::v2::ResourceValueConfig>
-  ListResourceValueConfigs(
-      google::cloud::securitycenter::v2::ListResourceValueConfigsRequest
-          request) override;
+  ListResourceValueConfigs(google::cloud::securitycenter::v2::ListResourceValueConfigsRequest request) override;
 
-  StreamRange<google::cloud::securitycenter::v2::Source> ListSources(
-      google::cloud::securitycenter::v2::ListSourcesRequest request) override;
+  StreamRange<google::cloud::securitycenter::v2::Source>
+  ListSources(google::cloud::securitycenter::v2::ListSourcesRequest request) override;
 
   StreamRange<google::cloud::securitycenter::v2::ValuedResource>
-  ListValuedResources(
-      google::cloud::securitycenter::v2::ListValuedResourcesRequest request)
-      override;
+  ListValuedResources(google::cloud::securitycenter::v2::ListValuedResourcesRequest request) override;
 
-  StatusOr<google::cloud::securitycenter::v2::Finding> SetFindingState(
-      google::cloud::securitycenter::v2::SetFindingStateRequest const& request)
-      override;
+  StatusOr<google::cloud::securitycenter::v2::Finding>
+  SetFindingState(google::cloud::securitycenter::v2::SetFindingStateRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) override;
 
-  StatusOr<google::cloud::securitycenter::v2::Finding> SetMute(
-      google::cloud::securitycenter::v2::SetMuteRequest const& request)
-      override;
+  StatusOr<google::cloud::securitycenter::v2::Finding>
+  SetMute(google::cloud::securitycenter::v2::SetMuteRequest const& request) override;
 
-  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request) override;
+  StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) override;
 
   StatusOr<google::cloud::securitycenter::v2::BigQueryExport>
-  UpdateBigQueryExport(
-      google::cloud::securitycenter::v2::UpdateBigQueryExportRequest const&
-          request) override;
+  UpdateBigQueryExport(google::cloud::securitycenter::v2::UpdateBigQueryExportRequest const& request) override;
 
   StatusOr<google::cloud::securitycenter::v2::ExternalSystem>
-  UpdateExternalSystem(
-      google::cloud::securitycenter::v2::UpdateExternalSystemRequest const&
-          request) override;
+  UpdateExternalSystem(google::cloud::securitycenter::v2::UpdateExternalSystemRequest const& request) override;
 
-  StatusOr<google::cloud::securitycenter::v2::Finding> UpdateFinding(
-      google::cloud::securitycenter::v2::UpdateFindingRequest const& request)
-      override;
+  StatusOr<google::cloud::securitycenter::v2::Finding>
+  UpdateFinding(google::cloud::securitycenter::v2::UpdateFindingRequest const& request) override;
 
-  StatusOr<google::cloud::securitycenter::v2::MuteConfig> UpdateMuteConfig(
-      google::cloud::securitycenter::v2::UpdateMuteConfigRequest const& request)
-      override;
+  StatusOr<google::cloud::securitycenter::v2::MuteConfig>
+  UpdateMuteConfig(google::cloud::securitycenter::v2::UpdateMuteConfigRequest const& request) override;
 
   StatusOr<google::cloud::securitycenter::v2::NotificationConfig>
-  UpdateNotificationConfig(
-      google::cloud::securitycenter::v2::UpdateNotificationConfigRequest const&
-          request) override;
+  UpdateNotificationConfig(google::cloud::securitycenter::v2::UpdateNotificationConfigRequest const& request) override;
 
   StatusOr<google::cloud::securitycenter::v2::ResourceValueConfig>
-  UpdateResourceValueConfig(
-      google::cloud::securitycenter::v2::UpdateResourceValueConfigRequest const&
-          request) override;
+  UpdateResourceValueConfig(google::cloud::securitycenter::v2::UpdateResourceValueConfigRequest const& request) override;
 
   StatusOr<google::cloud::securitycenter::v2::SecurityMarks>
-  UpdateSecurityMarks(
-      google::cloud::securitycenter::v2::UpdateSecurityMarksRequest const&
-          request) override;
+  UpdateSecurityMarks(google::cloud::securitycenter::v2::UpdateSecurityMarksRequest const& request) override;
 
-  StatusOr<google::cloud::securitycenter::v2::Source> UpdateSource(
-      google::cloud::securitycenter::v2::UpdateSourceRequest const& request)
-      override;
+  StatusOr<google::cloud::securitycenter::v2::Source>
+  UpdateSource(google::cloud::securitycenter::v2::UpdateSourceRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request) override;
 
-  Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request) override;
+  Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request) override;
 
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request) override;
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

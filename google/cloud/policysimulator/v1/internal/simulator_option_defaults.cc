@@ -17,10 +17,10 @@
 // source: google/cloud/policysimulator/v1/simulator.proto
 
 #include "google/cloud/policysimulator/v1/internal/simulator_option_defaults.h"
-#include "google/cloud/policysimulator/v1/simulator_connection.h"
-#include "google/cloud/policysimulator/v1/simulator_options.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
+#include "google/cloud/policysimulator/v1/simulator_connection.h"
+#include "google/cloud/policysimulator/v1/simulator_options.h"
 #include <memory>
 #include <utility>
 
@@ -35,36 +35,30 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options SimulatorDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_SIMULATOR_ENDPOINT", "",
-      "GOOGLE_CLOUD_CPP_SIMULATOR_AUTHORITY", "policysimulator.googleapis.com");
+      std::move(options), "GOOGLE_CLOUD_CPP_SIMULATOR_ENDPOINT",
+      "", "GOOGLE_CLOUD_CPP_SIMULATOR_AUTHORITY",
+      "policysimulator.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<policysimulator_v1::SimulatorRetryPolicyOption>()) {
     options.set<policysimulator_v1::SimulatorRetryPolicyOption>(
         policysimulator_v1::SimulatorLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
-            .clone());
+            std::chrono::minutes(30)).clone());
   }
   if (!options.has<policysimulator_v1::SimulatorBackoffPolicyOption>()) {
     options.set<policysimulator_v1::SimulatorBackoffPolicyOption>(
-        ExponentialBackoffPolicy(
-            std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
-            .clone());
+        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
   }
   if (!options.has<policysimulator_v1::SimulatorPollingPolicyOption>()) {
     options.set<policysimulator_v1::SimulatorPollingPolicyOption>(
         GenericPollingPolicy<
             policysimulator_v1::SimulatorRetryPolicyOption::Type,
             policysimulator_v1::SimulatorBackoffPolicyOption::Type>(
-            options.get<policysimulator_v1::SimulatorRetryPolicyOption>()
-                ->clone(),
+            options.get<policysimulator_v1::SimulatorRetryPolicyOption>()->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                     std::chrono::minutes(5), kBackoffScaling)
-                .clone())
-            .clone());
+            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
   }
-  if (!options.has<
-          policysimulator_v1::SimulatorConnectionIdempotencyPolicyOption>()) {
+  if (!options.has<policysimulator_v1::SimulatorConnectionIdempotencyPolicyOption>()) {
     options.set<policysimulator_v1::SimulatorConnectionIdempotencyPolicyOption>(
         policysimulator_v1::MakeDefaultSimulatorConnectionIdempotencyPolicy());
   }

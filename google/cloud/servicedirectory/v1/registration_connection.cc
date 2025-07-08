@@ -17,17 +17,17 @@
 // source: google/cloud/servicedirectory/v1/registration_service.proto
 
 #include "google/cloud/servicedirectory/v1/registration_connection.h"
-#include "google/cloud/servicedirectory/v1/internal/registration_connection_impl.h"
-#include "google/cloud/servicedirectory/v1/internal/registration_option_defaults.h"
-#include "google/cloud/servicedirectory/v1/internal/registration_stub_factory.h"
-#include "google/cloud/servicedirectory/v1/internal/registration_tracing_connection.h"
-#include "google/cloud/servicedirectory/v1/registration_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/servicedirectory/v1/internal/registration_connection_impl.h"
+#include "google/cloud/servicedirectory/v1/internal/registration_option_defaults.h"
+#include "google/cloud/servicedirectory/v1/internal/registration_stub_factory.h"
+#include "google/cloud/servicedirectory/v1/internal/registration_tracing_connection.h"
+#include "google/cloud/servicedirectory/v1/registration_options.h"
 #include <memory>
 #include <utility>
 
@@ -44,10 +44,8 @@ RegistrationServiceConnection::CreateNamespace(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::servicedirectory::v1::Namespace>
-RegistrationServiceConnection::ListNamespaces(
-    google::cloud::servicedirectory::v1::
-        ListNamespacesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::servicedirectory::v1::Namespace> RegistrationServiceConnection::ListNamespaces(
+    google::cloud::servicedirectory::v1::ListNamespacesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::servicedirectory::v1::Namespace>>();
 }
@@ -64,7 +62,8 @@ RegistrationServiceConnection::UpdateNamespace(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status RegistrationServiceConnection::DeleteNamespace(
+Status
+RegistrationServiceConnection::DeleteNamespace(
     google::cloud::servicedirectory::v1::DeleteNamespaceRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -75,10 +74,8 @@ RegistrationServiceConnection::CreateService(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::servicedirectory::v1::Service>
-RegistrationServiceConnection::ListServices(
-    google::cloud::servicedirectory::v1::
-        ListServicesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::servicedirectory::v1::Service> RegistrationServiceConnection::ListServices(
+    google::cloud::servicedirectory::v1::ListServicesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::servicedirectory::v1::Service>>();
 }
@@ -95,7 +92,8 @@ RegistrationServiceConnection::UpdateService(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status RegistrationServiceConnection::DeleteService(
+Status
+RegistrationServiceConnection::DeleteService(
     google::cloud::servicedirectory::v1::DeleteServiceRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -106,10 +104,8 @@ RegistrationServiceConnection::CreateEndpoint(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::servicedirectory::v1::Endpoint>
-RegistrationServiceConnection::ListEndpoints(
-    google::cloud::servicedirectory::v1::
-        ListEndpointsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::servicedirectory::v1::Endpoint> RegistrationServiceConnection::ListEndpoints(
+    google::cloud::servicedirectory::v1::ListEndpointsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::servicedirectory::v1::Endpoint>>();
 }
@@ -126,17 +122,20 @@ RegistrationServiceConnection::UpdateEndpoint(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status RegistrationServiceConnection::DeleteEndpoint(
+Status
+RegistrationServiceConnection::DeleteEndpoint(
     google::cloud::servicedirectory::v1::DeleteEndpointRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::iam::v1::Policy> RegistrationServiceConnection::GetIamPolicy(
+StatusOr<google::iam::v1::Policy>
+RegistrationServiceConnection::GetIamPolicy(
     google::iam::v1::GetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::iam::v1::Policy> RegistrationServiceConnection::SetIamPolicy(
+StatusOr<google::iam::v1::Policy>
+RegistrationServiceConnection::SetIamPolicy(
     google::iam::v1::SetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -147,10 +146,8 @@ RegistrationServiceConnection::TestIamPermissions(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::location::Location>
-RegistrationServiceConnection::ListLocations(
-    google::cloud::location::
-        ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::location::Location> RegistrationServiceConnection::ListLocations(
+    google::cloud::location::ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::location::Location>>();
 }
@@ -161,23 +158,20 @@ RegistrationServiceConnection::GetLocation(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-std::shared_ptr<RegistrationServiceConnection>
-MakeRegistrationServiceConnection(Options options) {
+std::shared_ptr<RegistrationServiceConnection> MakeRegistrationServiceConnection(
+    Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 RegistrationServicePolicyOptionList>(options,
-                                                                      __func__);
+      UnifiedCredentialsOptionList,
+      RegistrationServicePolicyOptionList>(options, __func__);
   options = servicedirectory_v1_internal::RegistrationServiceDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
-  auto stub =
-      servicedirectory_v1_internal::CreateDefaultRegistrationServiceStub(
-          std::move(auth), options);
+  auto stub = servicedirectory_v1_internal::CreateDefaultRegistrationServiceStub(
+    std::move(auth), options);
   return servicedirectory_v1_internal::MakeRegistrationServiceTracingConnection(
-      std::make_shared<
-          servicedirectory_v1_internal::RegistrationServiceConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options)));
+      std::make_shared<servicedirectory_v1_internal::RegistrationServiceConnectionImpl>(
+      std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

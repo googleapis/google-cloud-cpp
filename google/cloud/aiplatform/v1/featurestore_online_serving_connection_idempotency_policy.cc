@@ -26,92 +26,66 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-FeaturestoreOnlineServingServiceConnectionIdempotencyPolicy::
-    ~FeaturestoreOnlineServingServiceConnectionIdempotencyPolicy() = default;
+FeaturestoreOnlineServingServiceConnectionIdempotencyPolicy::~FeaturestoreOnlineServingServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<FeaturestoreOnlineServingServiceConnectionIdempotencyPolicy>
 FeaturestoreOnlineServingServiceConnectionIdempotencyPolicy::clone() const {
-  return std::make_unique<
-      FeaturestoreOnlineServingServiceConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<FeaturestoreOnlineServingServiceConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency
-FeaturestoreOnlineServingServiceConnectionIdempotencyPolicy::ReadFeatureValues(
-    google::cloud::aiplatform::v1::ReadFeatureValuesRequest const&) {
+Idempotency FeaturestoreOnlineServingServiceConnectionIdempotencyPolicy::ReadFeatureValues(google::cloud::aiplatform::v1::ReadFeatureValuesRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency
-FeaturestoreOnlineServingServiceConnectionIdempotencyPolicy::WriteFeatureValues(
-    google::cloud::aiplatform::v1::WriteFeatureValuesRequest const&) {
+Idempotency FeaturestoreOnlineServingServiceConnectionIdempotencyPolicy::WriteFeatureValues(google::cloud::aiplatform::v1::WriteFeatureValuesRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency
-FeaturestoreOnlineServingServiceConnectionIdempotencyPolicy::ListLocations(
-    google::cloud::location::ListLocationsRequest) {  // NOLINT
+Idempotency FeaturestoreOnlineServingServiceConnectionIdempotencyPolicy::ListLocations(google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency
-FeaturestoreOnlineServingServiceConnectionIdempotencyPolicy::GetLocation(
-    google::cloud::location::GetLocationRequest const&) {
+Idempotency FeaturestoreOnlineServingServiceConnectionIdempotencyPolicy::GetLocation(google::cloud::location::GetLocationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency
-FeaturestoreOnlineServingServiceConnectionIdempotencyPolicy::SetIamPolicy(
+Idempotency FeaturestoreOnlineServingServiceConnectionIdempotencyPolicy::SetIamPolicy(
     google::iam::v1::SetIamPolicyRequest const& request) {
   return request.policy().etag().empty() ? Idempotency::kNonIdempotent
                                          : Idempotency::kIdempotent;
 }
 
-Idempotency
-FeaturestoreOnlineServingServiceConnectionIdempotencyPolicy::GetIamPolicy(
-    google::iam::v1::GetIamPolicyRequest const&) {
+Idempotency FeaturestoreOnlineServingServiceConnectionIdempotencyPolicy::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency
-FeaturestoreOnlineServingServiceConnectionIdempotencyPolicy::TestIamPermissions(
-    google::iam::v1::TestIamPermissionsRequest const&) {
+Idempotency FeaturestoreOnlineServingServiceConnectionIdempotencyPolicy::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency
-FeaturestoreOnlineServingServiceConnectionIdempotencyPolicy::ListOperations(
-    google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency FeaturestoreOnlineServingServiceConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency
-FeaturestoreOnlineServingServiceConnectionIdempotencyPolicy::GetOperation(
-    google::longrunning::GetOperationRequest const&) {
+Idempotency FeaturestoreOnlineServingServiceConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency
-FeaturestoreOnlineServingServiceConnectionIdempotencyPolicy::DeleteOperation(
-    google::longrunning::DeleteOperationRequest const&) {
+Idempotency FeaturestoreOnlineServingServiceConnectionIdempotencyPolicy::DeleteOperation(google::longrunning::DeleteOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency
-FeaturestoreOnlineServingServiceConnectionIdempotencyPolicy::CancelOperation(
-    google::longrunning::CancelOperationRequest const&) {
+Idempotency FeaturestoreOnlineServingServiceConnectionIdempotencyPolicy::CancelOperation(google::longrunning::CancelOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency
-FeaturestoreOnlineServingServiceConnectionIdempotencyPolicy::WaitOperation(
-    google::longrunning::WaitOperationRequest const&) {
+Idempotency FeaturestoreOnlineServingServiceConnectionIdempotencyPolicy::WaitOperation(google::longrunning::WaitOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<FeaturestoreOnlineServingServiceConnectionIdempotencyPolicy>
-MakeDefaultFeaturestoreOnlineServingServiceConnectionIdempotencyPolicy() {
-  return std::make_unique<
-      FeaturestoreOnlineServingServiceConnectionIdempotencyPolicy>();
+    MakeDefaultFeaturestoreOnlineServingServiceConnectionIdempotencyPolicy() {
+  return std::make_unique<FeaturestoreOnlineServingServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

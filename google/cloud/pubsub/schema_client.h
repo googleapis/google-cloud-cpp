@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_SCHEMA_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_SCHEMA_CLIENT_H
 
-#include "google/cloud/pubsub/schema_connection.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
+#include "google/cloud/pubsub/schema_connection.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -61,8 +61,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class SchemaServiceClient {
  public:
-  explicit SchemaServiceClient(
-      std::shared_ptr<SchemaServiceConnection> connection, Options opts = {});
+  explicit SchemaServiceClient(std::shared_ptr<SchemaServiceConnection> connection, Options opts = {});
   ~SchemaServiceClient();
 
   ///@{
@@ -75,12 +74,10 @@ class SchemaServiceClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(SchemaServiceClient const& a,
-                         SchemaServiceClient const& b) {
+  friend bool operator==(SchemaServiceClient const& a, SchemaServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(SchemaServiceClient const& a,
-                         SchemaServiceClient const& b) {
+  friend bool operator!=(SchemaServiceClient const& a, SchemaServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -118,9 +115,8 @@ class SchemaServiceClient {
   /// [google.pubsub.v1.Schema]: @googleapis_reference_link{google/pubsub/v1/schema.proto#L129}
   ///
   // clang-format on
-  StatusOr<google::pubsub::v1::Schema> CreateSchema(
-      std::string const& parent, google::pubsub::v1::Schema const& schema,
-      std::string const& schema_id, Options opts = {});
+  StatusOr<google::pubsub::v1::Schema>
+  CreateSchema(std::string const& parent, google::pubsub::v1::Schema const& schema, std::string const& schema_id, Options opts = {});
 
   // clang-format off
   ///
@@ -149,9 +145,8 @@ class SchemaServiceClient {
   /// [google.pubsub.v1.Schema]: @googleapis_reference_link{google/pubsub/v1/schema.proto#L129}
   ///
   // clang-format on
-  StatusOr<google::pubsub::v1::Schema> CreateSchema(
-      google::pubsub::v1::CreateSchemaRequest const& request,
-      Options opts = {});
+  StatusOr<google::pubsub::v1::Schema>
+  CreateSchema(google::pubsub::v1::CreateSchemaRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -176,8 +171,8 @@ class SchemaServiceClient {
   /// [google.pubsub.v1.Schema]: @googleapis_reference_link{google/pubsub/v1/schema.proto#L129}
   ///
   // clang-format on
-  StatusOr<google::pubsub::v1::Schema> GetSchema(std::string const& name,
-                                                 Options opts = {});
+  StatusOr<google::pubsub::v1::Schema>
+  GetSchema(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -206,8 +201,8 @@ class SchemaServiceClient {
   /// [google.pubsub.v1.Schema]: @googleapis_reference_link{google/pubsub/v1/schema.proto#L129}
   ///
   // clang-format on
-  StatusOr<google::pubsub::v1::Schema> GetSchema(
-      google::pubsub::v1::GetSchemaRequest const& request, Options opts = {});
+  StatusOr<google::pubsub::v1::Schema>
+  GetSchema(google::pubsub::v1::GetSchemaRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -241,8 +236,8 @@ class SchemaServiceClient {
   /// [google.pubsub.v1.Schema]: @googleapis_reference_link{google/pubsub/v1/schema.proto#L129}
   ///
   // clang-format on
-  StreamRange<google::pubsub::v1::Schema> ListSchemas(std::string const& parent,
-                                                      Options opts = {});
+  StreamRange<google::pubsub::v1::Schema>
+  ListSchemas(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -280,8 +275,8 @@ class SchemaServiceClient {
   /// [google.pubsub.v1.Schema]: @googleapis_reference_link{google/pubsub/v1/schema.proto#L129}
   ///
   // clang-format on
-  StreamRange<google::pubsub::v1::Schema> ListSchemas(
-      google::pubsub::v1::ListSchemasRequest request, Options opts = {});
+  StreamRange<google::pubsub::v1::Schema>
+  ListSchemas(google::pubsub::v1::ListSchemasRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -314,8 +309,8 @@ class SchemaServiceClient {
   /// [google.pubsub.v1.Schema]: @googleapis_reference_link{google/pubsub/v1/schema.proto#L129}
   ///
   // clang-format on
-  StreamRange<google::pubsub::v1::Schema> ListSchemaRevisions(
-      std::string const& name, Options opts = {});
+  StreamRange<google::pubsub::v1::Schema>
+  ListSchemaRevisions(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -353,9 +348,8 @@ class SchemaServiceClient {
   /// [google.pubsub.v1.Schema]: @googleapis_reference_link{google/pubsub/v1/schema.proto#L129}
   ///
   // clang-format on
-  StreamRange<google::pubsub::v1::Schema> ListSchemaRevisions(
-      google::pubsub::v1::ListSchemaRevisionsRequest request,
-      Options opts = {});
+  StreamRange<google::pubsub::v1::Schema>
+  ListSchemaRevisions(google::pubsub::v1::ListSchemaRevisionsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -381,9 +375,8 @@ class SchemaServiceClient {
   /// [google.pubsub.v1.Schema]: @googleapis_reference_link{google/pubsub/v1/schema.proto#L129}
   ///
   // clang-format on
-  StatusOr<google::pubsub::v1::Schema> CommitSchema(
-      std::string const& name, google::pubsub::v1::Schema const& schema,
-      Options opts = {});
+  StatusOr<google::pubsub::v1::Schema>
+  CommitSchema(std::string const& name, google::pubsub::v1::Schema const& schema, Options opts = {});
 
   // clang-format off
   ///
@@ -412,9 +405,8 @@ class SchemaServiceClient {
   /// [google.pubsub.v1.Schema]: @googleapis_reference_link{google/pubsub/v1/schema.proto#L129}
   ///
   // clang-format on
-  StatusOr<google::pubsub::v1::Schema> CommitSchema(
-      google::pubsub::v1::CommitSchemaRequest const& request,
-      Options opts = {});
+  StatusOr<google::pubsub::v1::Schema>
+  CommitSchema(google::pubsub::v1::CommitSchemaRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -442,9 +434,8 @@ class SchemaServiceClient {
   /// [google.pubsub.v1.Schema]: @googleapis_reference_link{google/pubsub/v1/schema.proto#L129}
   ///
   // clang-format on
-  StatusOr<google::pubsub::v1::Schema> RollbackSchema(
-      std::string const& name, std::string const& revision_id,
-      Options opts = {});
+  StatusOr<google::pubsub::v1::Schema>
+  RollbackSchema(std::string const& name, std::string const& revision_id, Options opts = {});
 
   // clang-format off
   ///
@@ -473,9 +464,8 @@ class SchemaServiceClient {
   /// [google.pubsub.v1.Schema]: @googleapis_reference_link{google/pubsub/v1/schema.proto#L129}
   ///
   // clang-format on
-  StatusOr<google::pubsub::v1::Schema> RollbackSchema(
-      google::pubsub::v1::RollbackSchemaRequest const& request,
-      Options opts = {});
+  StatusOr<google::pubsub::v1::Schema>
+  RollbackSchema(google::pubsub::v1::RollbackSchemaRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -505,9 +495,8 @@ class SchemaServiceClient {
   /// [google.pubsub.v1.Schema]: @googleapis_reference_link{google/pubsub/v1/schema.proto#L129}
   ///
   // clang-format on
-  StatusOr<google::pubsub::v1::Schema> DeleteSchemaRevision(
-      std::string const& name, std::string const& revision_id,
-      Options opts = {});
+  StatusOr<google::pubsub::v1::Schema>
+  DeleteSchemaRevision(std::string const& name, std::string const& revision_id, Options opts = {});
 
   // clang-format off
   ///
@@ -536,9 +525,8 @@ class SchemaServiceClient {
   /// [google.pubsub.v1.Schema]: @googleapis_reference_link{google/pubsub/v1/schema.proto#L129}
   ///
   // clang-format on
-  StatusOr<google::pubsub::v1::Schema> DeleteSchemaRevision(
-      google::pubsub::v1::DeleteSchemaRevisionRequest const& request,
-      Options opts = {});
+  StatusOr<google::pubsub::v1::Schema>
+  DeleteSchemaRevision(google::pubsub::v1::DeleteSchemaRevisionRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -560,7 +548,8 @@ class SchemaServiceClient {
   /// [google.pubsub.v1.DeleteSchemaRequest]: @googleapis_reference_link{google/pubsub/v1/schema.proto#L336}
   ///
   // clang-format on
-  Status DeleteSchema(std::string const& name, Options opts = {});
+  Status
+  DeleteSchema(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -586,8 +575,8 @@ class SchemaServiceClient {
   /// [google.pubsub.v1.DeleteSchemaRequest]: @googleapis_reference_link{google/pubsub/v1/schema.proto#L336}
   ///
   // clang-format on
-  Status DeleteSchema(google::pubsub::v1::DeleteSchemaRequest const& request,
-                      Options opts = {});
+  Status
+  DeleteSchema(google::pubsub::v1::DeleteSchemaRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -613,9 +602,8 @@ class SchemaServiceClient {
   /// [google.pubsub.v1.ValidateSchemaResponse]: @googleapis_reference_link{google/pubsub/v1/schema.proto#L362}
   ///
   // clang-format on
-  StatusOr<google::pubsub::v1::ValidateSchemaResponse> ValidateSchema(
-      std::string const& parent, google::pubsub::v1::Schema const& schema,
-      Options opts = {});
+  StatusOr<google::pubsub::v1::ValidateSchemaResponse>
+  ValidateSchema(std::string const& parent, google::pubsub::v1::Schema const& schema, Options opts = {});
 
   // clang-format off
   ///
@@ -644,9 +632,8 @@ class SchemaServiceClient {
   /// [google.pubsub.v1.ValidateSchemaResponse]: @googleapis_reference_link{google/pubsub/v1/schema.proto#L362}
   ///
   // clang-format on
-  StatusOr<google::pubsub::v1::ValidateSchemaResponse> ValidateSchema(
-      google::pubsub::v1::ValidateSchemaRequest const& request,
-      Options opts = {});
+  StatusOr<google::pubsub::v1::ValidateSchemaResponse>
+  ValidateSchema(google::pubsub::v1::ValidateSchemaRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -675,9 +662,8 @@ class SchemaServiceClient {
   /// [google.pubsub.v1.ValidateMessageResponse]: @googleapis_reference_link{google/pubsub/v1/schema.proto#L396}
   ///
   // clang-format on
-  StatusOr<google::pubsub::v1::ValidateMessageResponse> ValidateMessage(
-      google::pubsub::v1::ValidateMessageRequest const& request,
-      Options opts = {});
+  StatusOr<google::pubsub::v1::ValidateMessageResponse>
+  ValidateMessage(google::pubsub::v1::ValidateMessageRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -709,8 +695,8 @@ class SchemaServiceClient {
   /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L100}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -741,8 +727,8 @@ class SchemaServiceClient {
   /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -777,9 +763,8 @@ class SchemaServiceClient {
   /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L153}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request,
-      Options opts = {});
+  StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<SchemaServiceConnection> connection_;

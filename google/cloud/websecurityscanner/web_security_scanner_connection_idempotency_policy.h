@@ -26,17 +26,11 @@ namespace cloud {
 namespace websecurityscanner {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use
-/// websecurityscanner_v1::MakeDefaultWebSecurityScannerConnectionIdempotencyPolicy
-/// directly.
-using ::google::cloud::websecurityscanner_v1::
-    MakeDefaultWebSecurityScannerConnectionIdempotencyPolicy;
+/// @deprecated Use websecurityscanner_v1::MakeDefaultWebSecurityScannerConnectionIdempotencyPolicy directly.
+using ::google::cloud::websecurityscanner_v1::MakeDefaultWebSecurityScannerConnectionIdempotencyPolicy;
 
-/// @deprecated Use
-/// websecurityscanner_v1::WebSecurityScannerConnectionIdempotencyPolicy
-/// directly.
-using ::google::cloud::websecurityscanner_v1::
-    WebSecurityScannerConnectionIdempotencyPolicy;
+/// @deprecated Use websecurityscanner_v1::WebSecurityScannerConnectionIdempotencyPolicy directly.
+using ::google::cloud::websecurityscanner_v1::WebSecurityScannerConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace websecurityscanner

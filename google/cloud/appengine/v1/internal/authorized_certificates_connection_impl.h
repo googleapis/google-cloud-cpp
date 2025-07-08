@@ -43,35 +43,26 @@ class AuthorizedCertificatesConnectionImpl
   ~AuthorizedCertificatesConnectionImpl() override = default;
 
   AuthorizedCertificatesConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<appengine_v1_internal::AuthorizedCertificatesStub> stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<appengine_v1_internal::AuthorizedCertificatesStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
   StreamRange<google::appengine::v1::AuthorizedCertificate>
-  ListAuthorizedCertificates(
-      google::appengine::v1::ListAuthorizedCertificatesRequest request)
-      override;
+  ListAuthorizedCertificates(google::appengine::v1::ListAuthorizedCertificatesRequest request) override;
 
   StatusOr<google::appengine::v1::AuthorizedCertificate>
-  GetAuthorizedCertificate(
-      google::appengine::v1::GetAuthorizedCertificateRequest const& request)
-      override;
+  GetAuthorizedCertificate(google::appengine::v1::GetAuthorizedCertificateRequest const& request) override;
 
   StatusOr<google::appengine::v1::AuthorizedCertificate>
-  CreateAuthorizedCertificate(
-      google::appengine::v1::CreateAuthorizedCertificateRequest const& request)
-      override;
+  CreateAuthorizedCertificate(google::appengine::v1::CreateAuthorizedCertificateRequest const& request) override;
 
   StatusOr<google::appengine::v1::AuthorizedCertificate>
-  UpdateAuthorizedCertificate(
-      google::appengine::v1::UpdateAuthorizedCertificateRequest const& request)
-      override;
+  UpdateAuthorizedCertificate(google::appengine::v1::UpdateAuthorizedCertificateRequest const& request) override;
 
-  Status DeleteAuthorizedCertificate(
-      google::appengine::v1::DeleteAuthorizedCertificateRequest const& request)
-      override;
+  Status
+  DeleteAuthorizedCertificate(google::appengine::v1::DeleteAuthorizedCertificateRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

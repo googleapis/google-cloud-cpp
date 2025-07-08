@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_V3_UPTIME_CHECK_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_V3_UPTIME_CHECK_CLIENT_H
 
-#include "google/cloud/monitoring/v3/uptime_check_connection.h"
 #include "google/cloud/future.h"
+#include "google/cloud/monitoring/v3/uptime_check_connection.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -69,28 +69,23 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class UptimeCheckServiceClient {
  public:
-  explicit UptimeCheckServiceClient(
-      std::shared_ptr<UptimeCheckServiceConnection> connection,
-      Options opts = {});
+  explicit UptimeCheckServiceClient(std::shared_ptr<UptimeCheckServiceConnection> connection, Options opts = {});
   ~UptimeCheckServiceClient();
 
   ///@{
   /// @name Copy and move support
   UptimeCheckServiceClient(UptimeCheckServiceClient const&) = default;
-  UptimeCheckServiceClient& operator=(UptimeCheckServiceClient const&) =
-      default;
+  UptimeCheckServiceClient& operator=(UptimeCheckServiceClient const&) = default;
   UptimeCheckServiceClient(UptimeCheckServiceClient&&) = default;
   UptimeCheckServiceClient& operator=(UptimeCheckServiceClient&&) = default;
   ///@}
 
   ///@{
   /// @name Equality
-  friend bool operator==(UptimeCheckServiceClient const& a,
-                         UptimeCheckServiceClient const& b) {
+  friend bool operator==(UptimeCheckServiceClient const& a, UptimeCheckServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(UptimeCheckServiceClient const& a,
-                         UptimeCheckServiceClient const& b) {
+  friend bool operator!=(UptimeCheckServiceClient const& a, UptimeCheckServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -131,8 +126,8 @@ class UptimeCheckServiceClient {
   /// [google.monitoring.v3.UptimeCheckConfig]: @googleapis_reference_link{google/monitoring/v3/uptime.proto#L124}
   ///
   // clang-format on
-  StreamRange<google::monitoring::v3::UptimeCheckConfig> ListUptimeCheckConfigs(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::monitoring::v3::UptimeCheckConfig>
+  ListUptimeCheckConfigs(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -171,9 +166,8 @@ class UptimeCheckServiceClient {
   /// [google.monitoring.v3.UptimeCheckConfig]: @googleapis_reference_link{google/monitoring/v3/uptime.proto#L124}
   ///
   // clang-format on
-  StreamRange<google::monitoring::v3::UptimeCheckConfig> ListUptimeCheckConfigs(
-      google::monitoring::v3::ListUptimeCheckConfigsRequest request,
-      Options opts = {});
+  StreamRange<google::monitoring::v3::UptimeCheckConfig>
+  ListUptimeCheckConfigs(google::monitoring::v3::ListUptimeCheckConfigsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -199,8 +193,8 @@ class UptimeCheckServiceClient {
   /// [google.monitoring.v3.UptimeCheckConfig]: @googleapis_reference_link{google/monitoring/v3/uptime.proto#L124}
   ///
   // clang-format on
-  StatusOr<google::monitoring::v3::UptimeCheckConfig> GetUptimeCheckConfig(
-      std::string const& name, Options opts = {});
+  StatusOr<google::monitoring::v3::UptimeCheckConfig>
+  GetUptimeCheckConfig(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -229,9 +223,8 @@ class UptimeCheckServiceClient {
   /// [google.monitoring.v3.UptimeCheckConfig]: @googleapis_reference_link{google/monitoring/v3/uptime.proto#L124}
   ///
   // clang-format on
-  StatusOr<google::monitoring::v3::UptimeCheckConfig> GetUptimeCheckConfig(
-      google::monitoring::v3::GetUptimeCheckConfigRequest const& request,
-      Options opts = {});
+  StatusOr<google::monitoring::v3::UptimeCheckConfig>
+  GetUptimeCheckConfig(google::monitoring::v3::GetUptimeCheckConfigRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -260,10 +253,8 @@ class UptimeCheckServiceClient {
   /// [google.monitoring.v3.UptimeCheckConfig]: @googleapis_reference_link{google/monitoring/v3/uptime.proto#L124}
   ///
   // clang-format on
-  StatusOr<google::monitoring::v3::UptimeCheckConfig> CreateUptimeCheckConfig(
-      std::string const& parent,
-      google::monitoring::v3::UptimeCheckConfig const& uptime_check_config,
-      Options opts = {});
+  StatusOr<google::monitoring::v3::UptimeCheckConfig>
+  CreateUptimeCheckConfig(std::string const& parent, google::monitoring::v3::UptimeCheckConfig const& uptime_check_config, Options opts = {});
 
   // clang-format off
   ///
@@ -292,9 +283,8 @@ class UptimeCheckServiceClient {
   /// [google.monitoring.v3.UptimeCheckConfig]: @googleapis_reference_link{google/monitoring/v3/uptime.proto#L124}
   ///
   // clang-format on
-  StatusOr<google::monitoring::v3::UptimeCheckConfig> CreateUptimeCheckConfig(
-      google::monitoring::v3::CreateUptimeCheckConfigRequest const& request,
-      Options opts = {});
+  StatusOr<google::monitoring::v3::UptimeCheckConfig>
+  CreateUptimeCheckConfig(google::monitoring::v3::CreateUptimeCheckConfigRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -331,9 +321,8 @@ class UptimeCheckServiceClient {
   /// [google.monitoring.v3.UptimeCheckConfig]: @googleapis_reference_link{google/monitoring/v3/uptime.proto#L124}
   ///
   // clang-format on
-  StatusOr<google::monitoring::v3::UptimeCheckConfig> UpdateUptimeCheckConfig(
-      google::monitoring::v3::UptimeCheckConfig const& uptime_check_config,
-      Options opts = {});
+  StatusOr<google::monitoring::v3::UptimeCheckConfig>
+  UpdateUptimeCheckConfig(google::monitoring::v3::UptimeCheckConfig const& uptime_check_config, Options opts = {});
 
   // clang-format off
   ///
@@ -365,9 +354,8 @@ class UptimeCheckServiceClient {
   /// [google.monitoring.v3.UptimeCheckConfig]: @googleapis_reference_link{google/monitoring/v3/uptime.proto#L124}
   ///
   // clang-format on
-  StatusOr<google::monitoring::v3::UptimeCheckConfig> UpdateUptimeCheckConfig(
-      google::monitoring::v3::UpdateUptimeCheckConfigRequest const& request,
-      Options opts = {});
+  StatusOr<google::monitoring::v3::UptimeCheckConfig>
+  UpdateUptimeCheckConfig(google::monitoring::v3::UpdateUptimeCheckConfigRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -392,7 +380,8 @@ class UptimeCheckServiceClient {
   /// [google.monitoring.v3.DeleteUptimeCheckConfigRequest]: @googleapis_reference_link{google/monitoring/v3/uptime_service.proto#L218}
   ///
   // clang-format on
-  Status DeleteUptimeCheckConfig(std::string const& name, Options opts = {});
+  Status
+  DeleteUptimeCheckConfig(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -420,9 +409,8 @@ class UptimeCheckServiceClient {
   /// [google.monitoring.v3.DeleteUptimeCheckConfigRequest]: @googleapis_reference_link{google/monitoring/v3/uptime_service.proto#L218}
   ///
   // clang-format on
-  Status DeleteUptimeCheckConfig(
-      google::monitoring::v3::DeleteUptimeCheckConfigRequest const& request,
-      Options opts = {});
+  Status
+  DeleteUptimeCheckConfig(google::monitoring::v3::DeleteUptimeCheckConfigRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -460,9 +448,8 @@ class UptimeCheckServiceClient {
   /// [google.monitoring.v3.UptimeCheckIp]: @googleapis_reference_link{google/monitoring/v3/uptime.proto#L568}
   ///
   // clang-format on
-  StreamRange<google::monitoring::v3::UptimeCheckIp> ListUptimeCheckIps(
-      google::monitoring::v3::ListUptimeCheckIpsRequest request,
-      Options opts = {});
+  StreamRange<google::monitoring::v3::UptimeCheckIp>
+  ListUptimeCheckIps(google::monitoring::v3::ListUptimeCheckIpsRequest request, Options opts = {});
 
  private:
   std::shared_ptr<UptimeCheckServiceConnection> connection_;

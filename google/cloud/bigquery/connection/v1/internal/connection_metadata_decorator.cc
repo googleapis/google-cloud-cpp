@@ -46,92 +46,87 @@ ConnectionServiceMetadata::ConnectionServiceMetadata(
 
 StatusOr<google::cloud::bigquery::connection::v1::Connection>
 ConnectionServiceMetadata::CreateConnection(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::connection::v1::CreateConnectionRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::connection::v1::CreateConnectionRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateConnection(context, options, request);
 }
 
 StatusOr<google::cloud::bigquery::connection::v1::Connection>
 ConnectionServiceMetadata::GetConnection(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::connection::v1::GetConnectionRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::connection::v1::GetConnectionRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetConnection(context, options, request);
 }
 
 StatusOr<google::cloud::bigquery::connection::v1::ListConnectionsResponse>
 ConnectionServiceMetadata::ListConnections(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::connection::v1::ListConnectionsRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::connection::v1::ListConnectionsRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListConnections(context, options, request);
 }
 
 StatusOr<google::cloud::bigquery::connection::v1::Connection>
 ConnectionServiceMetadata::UpdateConnection(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::connection::v1::UpdateConnectionRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::connection::v1::UpdateConnectionRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->UpdateConnection(context, options, request);
 }
 
-Status ConnectionServiceMetadata::DeleteConnection(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::connection::v1::DeleteConnectionRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+Status
+ConnectionServiceMetadata::DeleteConnection(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::connection::v1::DeleteConnectionRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteConnection(context, options, request);
 }
 
-StatusOr<google::iam::v1::Policy> ConnectionServiceMetadata::GetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::iam::v1::Policy>
+ConnectionServiceMetadata::GetIamPolicy(
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
-  SetMetadata(
-      context, options,
-      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
+  SetMetadata(context, options, absl::StrCat("resource=", internal::UrlEncode(request.resource())));
   return child_->GetIamPolicy(context, options, request);
 }
 
-StatusOr<google::iam::v1::Policy> ConnectionServiceMetadata::SetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::iam::v1::Policy>
+ConnectionServiceMetadata::SetIamPolicy(
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
-  SetMetadata(
-      context, options,
-      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
+  SetMetadata(context, options, absl::StrCat("resource=", internal::UrlEncode(request.resource())));
   return child_->SetIamPolicy(context, options, request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 ConnectionServiceMetadata::TestIamPermissions(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  SetMetadata(
-      context, options,
-      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
+  SetMetadata(context, options, absl::StrCat("resource=", internal::UrlEncode(request.resource())));
   return child_->TestIamPermissions(context, options, request);
 }
 
 void ConnectionServiceMetadata::SetMetadata(grpc::ClientContext& context,
-                                            Options const& options,
-                                            std::string const& request_params) {
+                                        Options const& options,
+                                        std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
 void ConnectionServiceMetadata::SetMetadata(grpc::ClientContext& context,
-                                            Options const& options) {
-  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
-                                       api_client_header_);
+                                        Options const& options) {
+  google::cloud::internal::SetMetadata(
+      context, options, fixed_metadata_, api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

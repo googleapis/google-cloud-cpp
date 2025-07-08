@@ -33,8 +33,7 @@ using ::google::cloud::composer_v1::MakeImageVersionsConnection;
 /// @deprecated Use composer_v1::ImageVersionsConnection directly.
 using ::google::cloud::composer_v1::ImageVersionsConnection;
 
-/// @deprecated Use composer_v1::ImageVersionsLimitedErrorCountRetryPolicy
-/// directly.
+/// @deprecated Use composer_v1::ImageVersionsLimitedErrorCountRetryPolicy directly.
 using ::google::cloud::composer_v1::ImageVersionsLimitedErrorCountRetryPolicy;
 
 /// @deprecated Use composer_v1::ImageVersionsLimitedTimeRetryPolicy directly.

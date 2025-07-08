@@ -22,9 +22,9 @@
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/cloud/dataproc/v1/autoscaling_policies.grpc.pb.h>
 #include <google/iam/v1/iam_policy.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
+#include <google/cloud/dataproc/v1/autoscaling_policies.grpc.pb.h>
 #include <memory>
 #include <utility>
 
@@ -37,141 +37,142 @@ class AutoscalingPolicyServiceStub {
  public:
   virtual ~AutoscalingPolicyServiceStub() = 0;
 
-  virtual StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy>
-  CreateAutoscalingPolicy(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::dataproc::v1::CreateAutoscalingPolicyRequest const&
-          request) = 0;
+  virtual StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy> CreateAutoscalingPolicy(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::dataproc::v1::CreateAutoscalingPolicyRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy>
-  UpdateAutoscalingPolicy(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::dataproc::v1::UpdateAutoscalingPolicyRequest const&
-          request) = 0;
+  virtual StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy> UpdateAutoscalingPolicy(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::dataproc::v1::UpdateAutoscalingPolicyRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy>
-  GetAutoscalingPolicy(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::dataproc::v1::GetAutoscalingPolicyRequest const&
-          request) = 0;
+  virtual StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy> GetAutoscalingPolicy(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::dataproc::v1::GetAutoscalingPolicyRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::dataproc::v1::ListAutoscalingPoliciesResponse>
-  ListAutoscalingPolicies(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::dataproc::v1::ListAutoscalingPoliciesRequest const&
-          request) = 0;
+  virtual StatusOr<google::cloud::dataproc::v1::ListAutoscalingPoliciesResponse> ListAutoscalingPolicies(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::dataproc::v1::ListAutoscalingPoliciesRequest const& request) = 0;
 
   virtual Status DeleteAutoscalingPolicy(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::dataproc::v1::DeleteAutoscalingPolicyRequest const&
-          request) = 0;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::dataproc::v1::DeleteAutoscalingPolicyRequest const& request) = 0;
 
   virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) = 0;
 
   virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) = 0;
 
-  virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
-  TestIamPermissions(
-      grpc::ClientContext& context, Options const& options,
+  virtual StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::ListOperationsRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual Status DeleteOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::DeleteOperationRequest const& request) = 0;
 
   virtual Status CancelOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::CancelOperationRequest const& request) = 0;
 };
 
-class DefaultAutoscalingPolicyServiceStub
-    : public AutoscalingPolicyServiceStub {
+class DefaultAutoscalingPolicyServiceStub : public AutoscalingPolicyServiceStub {
  public:
   explicit DefaultAutoscalingPolicyServiceStub(
-      std::unique_ptr<
-          google::cloud::dataproc::v1::AutoscalingPolicyService::StubInterface>
-          grpc_stub,
-      std::unique_ptr<google::longrunning::Operations::StubInterface>
-          operations_stub,
-      std::unique_ptr<google::iam::v1::IAMPolicy::StubInterface> iampolicy_stub)
+      std::unique_ptr<google::cloud::dataproc::v1::AutoscalingPolicyService::StubInterface> grpc_stub,
+      std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub
+,
+      std::unique_ptr<google::iam::v1::IAMPolicy::StubInterface> iampolicy_stub
+)
       : grpc_stub_(std::move(grpc_stub)),
         operations_stub_(std::move(operations_stub)),
         iampolicy_stub_(std::move(iampolicy_stub)) {}
 
-  StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy>
-  CreateAutoscalingPolicy(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::dataproc::v1::CreateAutoscalingPolicyRequest const&
-          request) override;
+  StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy> CreateAutoscalingPolicy(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::dataproc::v1::CreateAutoscalingPolicyRequest const& request) override;
 
-  StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy>
-  UpdateAutoscalingPolicy(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::dataproc::v1::UpdateAutoscalingPolicyRequest const&
-          request) override;
+  StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy> UpdateAutoscalingPolicy(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::dataproc::v1::UpdateAutoscalingPolicyRequest const& request) override;
 
   StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy> GetAutoscalingPolicy(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::dataproc::v1::GetAutoscalingPolicyRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::dataproc::v1::GetAutoscalingPolicyRequest const& request) override;
 
-  StatusOr<google::cloud::dataproc::v1::ListAutoscalingPoliciesResponse>
-  ListAutoscalingPolicies(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::dataproc::v1::ListAutoscalingPoliciesRequest const&
-          request) override;
+  StatusOr<google::cloud::dataproc::v1::ListAutoscalingPoliciesResponse> ListAutoscalingPolicies(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::dataproc::v1::ListAutoscalingPoliciesRequest const& request) override;
 
   Status DeleteAutoscalingPolicy(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::dataproc::v1::DeleteAutoscalingPolicyRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::dataproc::v1::DeleteAutoscalingPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status DeleteOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::DeleteOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  std::unique_ptr<
-      google::cloud::dataproc::v1::AutoscalingPolicyService::StubInterface>
-      grpc_stub_;
-  std::unique_ptr<google::longrunning::Operations::StubInterface>
-      operations_stub_;
+  std::unique_ptr<google::cloud::dataproc::v1::AutoscalingPolicyService::StubInterface> grpc_stub_;
+  std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub_;
   std::unique_ptr<google::iam::v1::IAMPolicy::StubInterface> iampolicy_stub_;
 };
 

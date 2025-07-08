@@ -26,97 +26,78 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-VizierServiceConnectionIdempotencyPolicy::
-    ~VizierServiceConnectionIdempotencyPolicy() = default;
+VizierServiceConnectionIdempotencyPolicy::~VizierServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<VizierServiceConnectionIdempotencyPolicy>
 VizierServiceConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<VizierServiceConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency VizierServiceConnectionIdempotencyPolicy::CreateStudy(
-    google::cloud::aiplatform::v1::CreateStudyRequest const&) {
+Idempotency VizierServiceConnectionIdempotencyPolicy::CreateStudy(google::cloud::aiplatform::v1::CreateStudyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency VizierServiceConnectionIdempotencyPolicy::GetStudy(
-    google::cloud::aiplatform::v1::GetStudyRequest const&) {
+Idempotency VizierServiceConnectionIdempotencyPolicy::GetStudy(google::cloud::aiplatform::v1::GetStudyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency VizierServiceConnectionIdempotencyPolicy::ListStudies(
-    google::cloud::aiplatform::v1::ListStudiesRequest) {  // NOLINT
+Idempotency VizierServiceConnectionIdempotencyPolicy::ListStudies(google::cloud::aiplatform::v1::ListStudiesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency VizierServiceConnectionIdempotencyPolicy::DeleteStudy(
-    google::cloud::aiplatform::v1::DeleteStudyRequest const&) {
+Idempotency VizierServiceConnectionIdempotencyPolicy::DeleteStudy(google::cloud::aiplatform::v1::DeleteStudyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency VizierServiceConnectionIdempotencyPolicy::LookupStudy(
-    google::cloud::aiplatform::v1::LookupStudyRequest const&) {
+Idempotency VizierServiceConnectionIdempotencyPolicy::LookupStudy(google::cloud::aiplatform::v1::LookupStudyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency VizierServiceConnectionIdempotencyPolicy::SuggestTrials(
-    google::cloud::aiplatform::v1::SuggestTrialsRequest const&) {
+Idempotency VizierServiceConnectionIdempotencyPolicy::SuggestTrials(google::cloud::aiplatform::v1::SuggestTrialsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency VizierServiceConnectionIdempotencyPolicy::CreateTrial(
-    google::cloud::aiplatform::v1::CreateTrialRequest const&) {
+Idempotency VizierServiceConnectionIdempotencyPolicy::CreateTrial(google::cloud::aiplatform::v1::CreateTrialRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency VizierServiceConnectionIdempotencyPolicy::GetTrial(
-    google::cloud::aiplatform::v1::GetTrialRequest const&) {
+Idempotency VizierServiceConnectionIdempotencyPolicy::GetTrial(google::cloud::aiplatform::v1::GetTrialRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency VizierServiceConnectionIdempotencyPolicy::ListTrials(
-    google::cloud::aiplatform::v1::ListTrialsRequest) {  // NOLINT
+Idempotency VizierServiceConnectionIdempotencyPolicy::ListTrials(google::cloud::aiplatform::v1::ListTrialsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency VizierServiceConnectionIdempotencyPolicy::AddTrialMeasurement(
-    google::cloud::aiplatform::v1::AddTrialMeasurementRequest const&) {
+Idempotency VizierServiceConnectionIdempotencyPolicy::AddTrialMeasurement(google::cloud::aiplatform::v1::AddTrialMeasurementRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency VizierServiceConnectionIdempotencyPolicy::CompleteTrial(
-    google::cloud::aiplatform::v1::CompleteTrialRequest const&) {
+Idempotency VizierServiceConnectionIdempotencyPolicy::CompleteTrial(google::cloud::aiplatform::v1::CompleteTrialRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency VizierServiceConnectionIdempotencyPolicy::DeleteTrial(
-    google::cloud::aiplatform::v1::DeleteTrialRequest const&) {
+Idempotency VizierServiceConnectionIdempotencyPolicy::DeleteTrial(google::cloud::aiplatform::v1::DeleteTrialRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency
-VizierServiceConnectionIdempotencyPolicy::CheckTrialEarlyStoppingState(
-    google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateRequest const&) {
+Idempotency VizierServiceConnectionIdempotencyPolicy::CheckTrialEarlyStoppingState(google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency VizierServiceConnectionIdempotencyPolicy::StopTrial(
-    google::cloud::aiplatform::v1::StopTrialRequest const&) {
+Idempotency VizierServiceConnectionIdempotencyPolicy::StopTrial(google::cloud::aiplatform::v1::StopTrialRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency VizierServiceConnectionIdempotencyPolicy::ListOptimalTrials(
-    google::cloud::aiplatform::v1::ListOptimalTrialsRequest const&) {
+Idempotency VizierServiceConnectionIdempotencyPolicy::ListOptimalTrials(google::cloud::aiplatform::v1::ListOptimalTrialsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency VizierServiceConnectionIdempotencyPolicy::ListLocations(
-    google::cloud::location::ListLocationsRequest) {  // NOLINT
+Idempotency VizierServiceConnectionIdempotencyPolicy::ListLocations(google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency VizierServiceConnectionIdempotencyPolicy::GetLocation(
-    google::cloud::location::GetLocationRequest const&) {
+Idempotency VizierServiceConnectionIdempotencyPolicy::GetLocation(google::cloud::location::GetLocationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
@@ -126,43 +107,36 @@ Idempotency VizierServiceConnectionIdempotencyPolicy::SetIamPolicy(
                                          : Idempotency::kIdempotent;
 }
 
-Idempotency VizierServiceConnectionIdempotencyPolicy::GetIamPolicy(
-    google::iam::v1::GetIamPolicyRequest const&) {
+Idempotency VizierServiceConnectionIdempotencyPolicy::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency VizierServiceConnectionIdempotencyPolicy::TestIamPermissions(
-    google::iam::v1::TestIamPermissionsRequest const&) {
+Idempotency VizierServiceConnectionIdempotencyPolicy::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency VizierServiceConnectionIdempotencyPolicy::ListOperations(
-    google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency VizierServiceConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency VizierServiceConnectionIdempotencyPolicy::GetOperation(
-    google::longrunning::GetOperationRequest const&) {
+Idempotency VizierServiceConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency VizierServiceConnectionIdempotencyPolicy::DeleteOperation(
-    google::longrunning::DeleteOperationRequest const&) {
+Idempotency VizierServiceConnectionIdempotencyPolicy::DeleteOperation(google::longrunning::DeleteOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency VizierServiceConnectionIdempotencyPolicy::CancelOperation(
-    google::longrunning::CancelOperationRequest const&) {
+Idempotency VizierServiceConnectionIdempotencyPolicy::CancelOperation(google::longrunning::CancelOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency VizierServiceConnectionIdempotencyPolicy::WaitOperation(
-    google::longrunning::WaitOperationRequest const&) {
+Idempotency VizierServiceConnectionIdempotencyPolicy::WaitOperation(google::longrunning::WaitOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<VizierServiceConnectionIdempotencyPolicy>
-MakeDefaultVizierServiceConnectionIdempotencyPolicy() {
+    MakeDefaultVizierServiceConnectionIdempotencyPolicy() {
   return std::make_unique<VizierServiceConnectionIdempotencyPolicy>();
 }
 

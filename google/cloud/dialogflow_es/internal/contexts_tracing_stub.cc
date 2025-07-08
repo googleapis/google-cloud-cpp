@@ -28,51 +28,48 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-ContextsTracingStub::ContextsTracingStub(std::shared_ptr<ContextsStub> child)
+ContextsTracingStub::ContextsTracingStub(
+    std::shared_ptr<ContextsStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
-StatusOr<google::cloud::dialogflow::v2::ListContextsResponse>
-ContextsTracingStub::ListContexts(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::dialogflow::v2::ListContextsResponse> ContextsTracingStub::ListContexts(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dialogflow::v2::ListContextsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Contexts",
-                                     "ListContexts");
+  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Contexts", "ListContexts");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListContexts(context, options, request));
 }
 
-StatusOr<google::cloud::dialogflow::v2::Context>
-ContextsTracingStub::GetContext(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::dialogflow::v2::Context> ContextsTracingStub::GetContext(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dialogflow::v2::GetContextRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Contexts",
-                                     "GetContext");
+  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Contexts", "GetContext");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetContext(context, options, request));
 }
 
-StatusOr<google::cloud::dialogflow::v2::Context>
-ContextsTracingStub::CreateContext(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::dialogflow::v2::Context> ContextsTracingStub::CreateContext(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dialogflow::v2::CreateContextRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Contexts",
-                                     "CreateContext");
+  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Contexts", "CreateContext");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateContext(context, options, request));
 }
 
-StatusOr<google::cloud::dialogflow::v2::Context>
-ContextsTracingStub::UpdateContext(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::dialogflow::v2::Context> ContextsTracingStub::UpdateContext(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dialogflow::v2::UpdateContextRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Contexts",
-                                     "UpdateContext");
+  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Contexts", "UpdateContext");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -80,10 +77,10 @@ ContextsTracingStub::UpdateContext(
 }
 
 Status ContextsTracingStub::DeleteContext(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dialogflow::v2::DeleteContextRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Contexts",
-                                     "DeleteContext");
+  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Contexts", "DeleteContext");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -91,22 +88,21 @@ Status ContextsTracingStub::DeleteContext(
 }
 
 Status ContextsTracingStub::DeleteAllContexts(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dialogflow::v2::DeleteAllContextsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Contexts",
-                                     "DeleteAllContexts");
+  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Contexts", "DeleteAllContexts");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->DeleteAllContexts(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->DeleteAllContexts(context, options, request));
 }
 
-StatusOr<google::cloud::location::ListLocationsResponse>
-ContextsTracingStub::ListLocations(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::location::ListLocationsResponse> ContextsTracingStub::ListLocations(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Contexts",
-                                     "ListLocations");
+  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Contexts", "ListLocations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -114,22 +110,21 @@ ContextsTracingStub::ListLocations(
 }
 
 StatusOr<google::cloud::location::Location> ContextsTracingStub::GetLocation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Contexts",
-                                     "GetLocation");
+  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Contexts", "GetLocation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetLocation(context, options, request));
 }
 
-StatusOr<google::longrunning::ListOperationsResponse>
-ContextsTracingStub::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse> ContextsTracingStub::ListOperations(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Contexts",
-                                     "ListOperations");
+  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Contexts", "ListOperations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -137,10 +132,10 @@ ContextsTracingStub::ListOperations(
 }
 
 StatusOr<google::longrunning::Operation> ContextsTracingStub::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Contexts",
-                                     "GetOperation");
+  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Contexts", "GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -148,10 +143,10 @@ StatusOr<google::longrunning::Operation> ContextsTracingStub::GetOperation(
 }
 
 Status ContextsTracingStub::CancelOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Contexts",
-                                     "CancelOperation");
+  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Contexts", "CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,

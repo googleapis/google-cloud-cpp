@@ -27,27 +27,19 @@ namespace cloud {
 namespace networkmanagement {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use networkmanagement_v1::MakeReachabilityServiceConnection
-/// directly.
+/// @deprecated Use networkmanagement_v1::MakeReachabilityServiceConnection directly.
 using ::google::cloud::networkmanagement_v1::MakeReachabilityServiceConnection;
 
-/// @deprecated Use networkmanagement_v1::ReachabilityServiceConnection
-/// directly.
+/// @deprecated Use networkmanagement_v1::ReachabilityServiceConnection directly.
 using ::google::cloud::networkmanagement_v1::ReachabilityServiceConnection;
 
-/// @deprecated Use
-/// networkmanagement_v1::ReachabilityServiceLimitedErrorCountRetryPolicy
-/// directly.
-using ::google::cloud::networkmanagement_v1::
-    ReachabilityServiceLimitedErrorCountRetryPolicy;
+/// @deprecated Use networkmanagement_v1::ReachabilityServiceLimitedErrorCountRetryPolicy directly.
+using ::google::cloud::networkmanagement_v1::ReachabilityServiceLimitedErrorCountRetryPolicy;
 
-/// @deprecated Use
-/// networkmanagement_v1::ReachabilityServiceLimitedTimeRetryPolicy directly.
-using ::google::cloud::networkmanagement_v1::
-    ReachabilityServiceLimitedTimeRetryPolicy;
+/// @deprecated Use networkmanagement_v1::ReachabilityServiceLimitedTimeRetryPolicy directly.
+using ::google::cloud::networkmanagement_v1::ReachabilityServiceLimitedTimeRetryPolicy;
 
-/// @deprecated Use networkmanagement_v1::ReachabilityServiceRetryPolicy
-/// directly.
+/// @deprecated Use networkmanagement_v1::ReachabilityServiceRetryPolicy directly.
 using ::google::cloud::networkmanagement_v1::ReachabilityServiceRetryPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

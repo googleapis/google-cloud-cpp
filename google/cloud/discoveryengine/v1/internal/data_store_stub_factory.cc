@@ -17,12 +17,12 @@
 // source: google/cloud/discoveryengine/v1/data_store_service.proto
 
 #include "google/cloud/discoveryengine/v1/internal/data_store_stub_factory.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/discoveryengine/v1/internal/data_store_auth_decorator.h"
 #include "google/cloud/discoveryengine/v1/internal/data_store_logging_decorator.h"
 #include "google/cloud/discoveryengine/v1/internal/data_store_metadata_decorator.h"
 #include "google/cloud/discoveryengine/v1/internal/data_store_stub.h"
 #include "google/cloud/discoveryengine/v1/internal/data_store_tracing_stub.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/opentelemetry.h"
@@ -38,28 +38,30 @@ namespace cloud {
 namespace discoveryengine_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<DataStoreServiceStub> CreateDefaultDataStoreServiceStub(
+std::shared_ptr<DataStoreServiceStub>
+CreateDefaultDataStoreServiceStub(
     std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
     Options const& options) {
-  auto channel = auth->CreateChannel(options.get<EndpointOption>(),
-                                     internal::MakeChannelArguments(options));
-  auto service_grpc_stub =
-      google::cloud::discoveryengine::v1::DataStoreService::NewStub(channel);
+  auto channel = auth->CreateChannel(
+    options.get<EndpointOption>(), internal::MakeChannelArguments(options));
+  auto service_grpc_stub = google::cloud::discoveryengine::v1::DataStoreService::NewStub(channel);
   std::shared_ptr<DataStoreServiceStub> stub =
-      std::make_shared<DefaultDataStoreServiceStub>(
-          std::move(service_grpc_stub),
-          google::longrunning::Operations::NewStub(channel));
+    std::make_shared<DefaultDataStoreServiceStub>(
+      std::move(service_grpc_stub),
+      google::longrunning::Operations::NewStub(channel));
 
   if (auth->RequiresConfigureContext()) {
-    stub = std::make_shared<DataStoreServiceAuth>(std::move(auth),
-                                                  std::move(stub));
+    stub = std::make_shared<DataStoreServiceAuth>(
+        std::move(auth), std::move(stub));
   }
   stub = std::make_shared<DataStoreServiceMetadata>(
       std::move(stub), std::multimap<std::string, std::string>{});
-  if (internal::Contains(options.get<LoggingComponentsOption>(), "rpc")) {
+  if (internal::Contains(
+      options.get<LoggingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<DataStoreServiceLogging>(
-        std::move(stub), options.get<GrpcTracingOptionsOption>(),
+        std::move(stub),
+        options.get<GrpcTracingOptionsOption>(),
         options.get<LoggingComponentsOption>());
   }
   if (internal::TracingEnabled(options)) {

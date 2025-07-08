@@ -42,52 +42,50 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockLoggingServiceV2Connection
-    : public logging_v2::LoggingServiceV2Connection {
+class MockLoggingServiceV2Connection : public logging_v2::LoggingServiceV2Connection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(Status, DeleteLog,
-              (google::logging::v2::DeleteLogRequest const& request),
-              (override));
+  MOCK_METHOD(Status,
+  DeleteLog,
+  (google::logging::v2::DeleteLogRequest const& request), (override));
 
   MOCK_METHOD(StatusOr<google::logging::v2::WriteLogEntriesResponse>,
-              WriteLogEntries,
-              (google::logging::v2::WriteLogEntriesRequest const& request),
-              (override));
+  WriteLogEntries,
+  (google::logging::v2::WriteLogEntriesRequest const& request), (override));
 
-  MOCK_METHOD((StreamRange<google::logging::v2::LogEntry>), ListLogEntries,
-              (google::logging::v2::ListLogEntriesRequest request), (override));
+  MOCK_METHOD((StreamRange<google::logging::v2::LogEntry>),
+  ListLogEntries,
+  (google::logging::v2::ListLogEntriesRequest request), (override));
 
-  MOCK_METHOD(
-      (StreamRange<google::api::MonitoredResourceDescriptor>),
-      ListMonitoredResourceDescriptors,
-      (google::logging::v2::ListMonitoredResourceDescriptorsRequest request),
-      (override));
+  MOCK_METHOD((StreamRange<google::api::MonitoredResourceDescriptor>),
+  ListMonitoredResourceDescriptors,
+  (google::logging::v2::ListMonitoredResourceDescriptorsRequest request), (override));
 
-  MOCK_METHOD((StreamRange<std::string>), ListLogs,
-              (google::logging::v2::ListLogsRequest request), (override));
+  MOCK_METHOD((StreamRange<std::string>),
+  ListLogs,
+  (google::logging::v2::ListLogsRequest request), (override));
 
-  MOCK_METHOD((std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
-                   google::logging::v2::TailLogEntriesRequest,
-                   google::logging::v2::TailLogEntriesResponse>>),
-              AsyncTailLogEntries, (), (override));
+  MOCK_METHOD((std::unique_ptr<
+      ::google::cloud::AsyncStreamingReadWriteRpc<
+          google::logging::v2::TailLogEntriesRequest, google::logging::v2::TailLogEntriesResponse>>),
+      AsyncTailLogEntries, (), (override));
 
-  MOCK_METHOD((StreamRange<google::longrunning::Operation>), ListOperations,
-              (google::longrunning::ListOperationsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::longrunning::Operation>),
+  ListOperations,
+  (google::longrunning::ListOperationsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
-              (google::longrunning::GetOperationRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  GetOperation,
+  (google::longrunning::GetOperationRequest const& request), (override));
 
-  MOCK_METHOD(Status, CancelOperation,
-              (google::longrunning::CancelOperationRequest const& request),
-              (override));
+  MOCK_METHOD(Status,
+  CancelOperation,
+  (google::longrunning::CancelOperationRequest const& request), (override));
 
   MOCK_METHOD(future<StatusOr<google::logging::v2::WriteLogEntriesResponse>>,
-              AsyncWriteLogEntries,
-              (google::logging::v2::WriteLogEntriesRequest const& request),
-              (override));
+  AsyncWriteLogEntries,
+  (google::logging::v2::WriteLogEntriesRequest const& request), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

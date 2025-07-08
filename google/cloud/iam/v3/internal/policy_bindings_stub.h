@@ -24,8 +24,8 @@
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/iam/v3/policy_bindings_service.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
+#include <google/iam/v3/policy_bindings_service.grpc.pb.h>
 #include <memory>
 #include <utility>
 
@@ -38,61 +38,63 @@ class PolicyBindingsStub {
  public:
   virtual ~PolicyBindingsStub() = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>>
-  AsyncCreatePolicyBinding(
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncCreatePolicyBinding(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
       google::iam::v3::CreatePolicyBindingRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> CreatePolicyBinding(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::iam::v3::CreatePolicyBindingRequest const& request) = 0;
 
   virtual StatusOr<google::iam::v3::PolicyBinding> GetPolicyBinding(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v3::GetPolicyBindingRequest const& request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>>
-  AsyncUpdatePolicyBinding(
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncUpdatePolicyBinding(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
       google::iam::v3::UpdatePolicyBindingRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> UpdatePolicyBinding(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::iam::v3::UpdatePolicyBindingRequest const& request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>>
-  AsyncDeletePolicyBinding(
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncDeletePolicyBinding(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
       google::iam::v3::DeletePolicyBindingRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> DeletePolicyBinding(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::iam::v3::DeletePolicyBindingRequest const& request) = 0;
 
-  virtual StatusOr<google::iam::v3::ListPolicyBindingsResponse>
-  ListPolicyBindings(
-      grpc::ClientContext& context, Options const& options,
+  virtual StatusOr<google::iam::v3::ListPolicyBindingsResponse> ListPolicyBindings(
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v3::ListPolicyBindingsRequest const& request) = 0;
 
-  virtual StatusOr<google::iam::v3::SearchTargetPolicyBindingsResponse>
-  SearchTargetPolicyBindings(
-      grpc::ClientContext& context, Options const& options,
+  virtual StatusOr<google::iam::v3::SearchTargetPolicyBindingsResponse> SearchTargetPolicyBindings(
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v3::SearchTargetPolicyBindingsRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
+    google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
@@ -106,8 +108,7 @@ class DefaultPolicyBindingsStub : public PolicyBindingsStub {
  public:
   DefaultPolicyBindingsStub(
       std::unique_ptr<google::iam::v3::PolicyBindings::StubInterface> grpc_stub,
-      std::unique_ptr<google::longrunning::Operations::StubInterface>
-          operations_stub)
+      std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub)
       : grpc_stub_(std::move(grpc_stub)),
         operations_stub_(std::move(operations_stub)) {}
 
@@ -118,11 +119,13 @@ class DefaultPolicyBindingsStub : public PolicyBindingsStub {
       google::iam::v3::CreatePolicyBindingRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreatePolicyBinding(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::iam::v3::CreatePolicyBindingRequest const& request) override;
 
   StatusOr<google::iam::v3::PolicyBinding> GetPolicyBinding(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v3::GetPolicyBindingRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdatePolicyBinding(
@@ -132,7 +135,8 @@ class DefaultPolicyBindingsStub : public PolicyBindingsStub {
       google::iam::v3::UpdatePolicyBindingRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdatePolicyBinding(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::iam::v3::UpdatePolicyBindingRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeletePolicyBinding(
@@ -142,21 +146,23 @@ class DefaultPolicyBindingsStub : public PolicyBindingsStub {
       google::iam::v3::DeletePolicyBindingRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeletePolicyBinding(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::iam::v3::DeletePolicyBindingRequest const& request) override;
 
   StatusOr<google::iam::v3::ListPolicyBindingsResponse> ListPolicyBindings(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v3::ListPolicyBindingsRequest const& request) override;
 
-  StatusOr<google::iam::v3::SearchTargetPolicyBindingsResponse>
-  SearchTargetPolicyBindings(
-      grpc::ClientContext& context, Options const& options,
-      google::iam::v3::SearchTargetPolicyBindingsRequest const& request)
-      override;
+  StatusOr<google::iam::v3::SearchTargetPolicyBindingsResponse> SearchTargetPolicyBindings(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::iam::v3::SearchTargetPolicyBindingsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -173,8 +179,7 @@ class DefaultPolicyBindingsStub : public PolicyBindingsStub {
 
  private:
   std::unique_ptr<google::iam::v3::PolicyBindings::StubInterface> grpc_stub_;
-  std::unique_ptr<google::longrunning::Operations::StubInterface>
-      operations_stub_;
+  std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

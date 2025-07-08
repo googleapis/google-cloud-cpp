@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BILLING_BUDGETS_V1_BUDGET_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BILLING_BUDGETS_V1_BUDGET_CONNECTION_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/billing/budgets/v1/budget_connection_idempotency_policy.h"
 #include "google/cloud/billing/budgets/v1/internal/budget_retry_traits.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -52,8 +52,7 @@ class BudgetServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class BudgetServiceLimitedErrorCountRetryPolicy
-    : public BudgetServiceRetryPolicy {
+class BudgetServiceLimitedErrorCountRetryPolicy : public BudgetServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -63,14 +62,14 @@ class BudgetServiceLimitedErrorCountRetryPolicy
    *     @p maximum_failures == 0.
    */
   explicit BudgetServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   BudgetServiceLimitedErrorCountRetryPolicy(
       BudgetServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : BudgetServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : BudgetServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   BudgetServiceLimitedErrorCountRetryPolicy(
       BudgetServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : BudgetServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : BudgetServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -90,9 +89,7 @@ class BudgetServiceLimitedErrorCountRetryPolicy
   using BaseType = BudgetServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      billing_budgets_v1_internal::BudgetServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<billing_budgets_v1_internal::BudgetServiceRetryTraits> impl_;
 };
 
 /**
@@ -130,14 +127,12 @@ class BudgetServiceLimitedTimeRetryPolicy : public BudgetServiceRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit BudgetServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  BudgetServiceLimitedTimeRetryPolicy(
-      BudgetServiceLimitedTimeRetryPolicy&& rhs) noexcept
-      : BudgetServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  BudgetServiceLimitedTimeRetryPolicy(
-      BudgetServiceLimitedTimeRetryPolicy const& rhs) noexcept
-      : BudgetServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  BudgetServiceLimitedTimeRetryPolicy(BudgetServiceLimitedTimeRetryPolicy&& rhs) noexcept
+    : BudgetServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  BudgetServiceLimitedTimeRetryPolicy(BudgetServiceLimitedTimeRetryPolicy const& rhs) noexcept
+    : BudgetServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -159,9 +154,7 @@ class BudgetServiceLimitedTimeRetryPolicy : public BudgetServiceRetryPolicy {
   using BaseType = BudgetServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      billing_budgets_v1_internal::BudgetServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<billing_budgets_v1_internal::BudgetServiceRetryTraits> impl_;
 };
 
 /**
@@ -182,20 +175,20 @@ class BudgetServiceConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<google::cloud::billing::budgets::v1::Budget> CreateBudget(
-      google::cloud::billing::budgets::v1::CreateBudgetRequest const& request);
+  virtual StatusOr<google::cloud::billing::budgets::v1::Budget>
+  CreateBudget(google::cloud::billing::budgets::v1::CreateBudgetRequest const& request);
 
-  virtual StatusOr<google::cloud::billing::budgets::v1::Budget> UpdateBudget(
-      google::cloud::billing::budgets::v1::UpdateBudgetRequest const& request);
+  virtual StatusOr<google::cloud::billing::budgets::v1::Budget>
+  UpdateBudget(google::cloud::billing::budgets::v1::UpdateBudgetRequest const& request);
 
-  virtual StatusOr<google::cloud::billing::budgets::v1::Budget> GetBudget(
-      google::cloud::billing::budgets::v1::GetBudgetRequest const& request);
+  virtual StatusOr<google::cloud::billing::budgets::v1::Budget>
+  GetBudget(google::cloud::billing::budgets::v1::GetBudgetRequest const& request);
 
-  virtual StreamRange<google::cloud::billing::budgets::v1::Budget> ListBudgets(
-      google::cloud::billing::budgets::v1::ListBudgetsRequest request);
+  virtual StreamRange<google::cloud::billing::budgets::v1::Budget>
+  ListBudgets(google::cloud::billing::budgets::v1::ListBudgetsRequest request);
 
-  virtual Status DeleteBudget(
-      google::cloud::billing::budgets::v1::DeleteBudgetRequest const& request);
+  virtual Status
+  DeleteBudget(google::cloud::billing::budgets::v1::DeleteBudgetRequest const& request);
 };
 
 /**

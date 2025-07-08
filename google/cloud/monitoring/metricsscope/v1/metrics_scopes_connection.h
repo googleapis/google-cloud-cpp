@@ -19,18 +19,18 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_METRICSSCOPE_V1_METRICS_SCOPES_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_METRICSSCOPE_V1_METRICS_SCOPES_CONNECTION_H
 
-#include "google/cloud/monitoring/metricsscope/v1/internal/metrics_scopes_retry_traits.h"
-#include "google/cloud/monitoring/metricsscope/v1/metrics_scopes_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/monitoring/metricsscope/v1/internal/metrics_scopes_retry_traits.h"
+#include "google/cloud/monitoring/metricsscope/v1/metrics_scopes_connection_idempotency_policy.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
 #include <google/monitoring/metricsscope/v1/metrics_scopes.pb.h>
+#include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 
 namespace google {
@@ -55,8 +55,7 @@ class MetricsScopesRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class MetricsScopesLimitedErrorCountRetryPolicy
-    : public MetricsScopesRetryPolicy {
+class MetricsScopesLimitedErrorCountRetryPolicy : public MetricsScopesRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -66,14 +65,14 @@ class MetricsScopesLimitedErrorCountRetryPolicy
    *     @p maximum_failures == 0.
    */
   explicit MetricsScopesLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   MetricsScopesLimitedErrorCountRetryPolicy(
       MetricsScopesLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : MetricsScopesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : MetricsScopesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   MetricsScopesLimitedErrorCountRetryPolicy(
       MetricsScopesLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : MetricsScopesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : MetricsScopesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -93,9 +92,7 @@ class MetricsScopesLimitedErrorCountRetryPolicy
   using BaseType = MetricsScopesRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      monitoring_metricsscope_v1_internal::MetricsScopesRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<monitoring_metricsscope_v1_internal::MetricsScopesRetryTraits> impl_;
 };
 
 /**
@@ -133,14 +130,12 @@ class MetricsScopesLimitedTimeRetryPolicy : public MetricsScopesRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit MetricsScopesLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  MetricsScopesLimitedTimeRetryPolicy(
-      MetricsScopesLimitedTimeRetryPolicy&& rhs) noexcept
-      : MetricsScopesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  MetricsScopesLimitedTimeRetryPolicy(
-      MetricsScopesLimitedTimeRetryPolicy const& rhs) noexcept
-      : MetricsScopesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  MetricsScopesLimitedTimeRetryPolicy(MetricsScopesLimitedTimeRetryPolicy&& rhs) noexcept
+    : MetricsScopesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  MetricsScopesLimitedTimeRetryPolicy(MetricsScopesLimitedTimeRetryPolicy const& rhs) noexcept
+    : MetricsScopesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -162,9 +157,7 @@ class MetricsScopesLimitedTimeRetryPolicy : public MetricsScopesRetryPolicy {
   using BaseType = MetricsScopesRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      monitoring_metricsscope_v1_internal::MetricsScopesRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<monitoring_metricsscope_v1_internal::MetricsScopesRetryTraits> impl_;
 };
 
 /**
@@ -177,8 +170,7 @@ class MetricsScopesLimitedTimeRetryPolicy : public MetricsScopesRetryPolicy {
  *
  * To create a concrete instance, see `MakeMetricsScopesConnection()`.
  *
- * For mocking, see
- * `monitoring_metricsscope_v1_mocks::MockMetricsScopesConnection`.
+ * For mocking, see `monitoring_metricsscope_v1_mocks::MockMetricsScopesConnection`.
  */
 class MetricsScopesConnection {
  public:
@@ -187,45 +179,28 @@ class MetricsScopesConnection {
   virtual Options options() { return Options{}; }
 
   virtual StatusOr<google::monitoring::metricsscope::v1::MetricsScope>
-  GetMetricsScope(
-      google::monitoring::metricsscope::v1::GetMetricsScopeRequest const&
-          request);
+  GetMetricsScope(google::monitoring::metricsscope::v1::GetMetricsScopeRequest const& request);
 
-  virtual StatusOr<google::monitoring::metricsscope::v1::
-                       ListMetricsScopesByMonitoredProjectResponse>
-  ListMetricsScopesByMonitoredProject(
-      google::monitoring::metricsscope::v1::
-          ListMetricsScopesByMonitoredProjectRequest const& request);
+  virtual StatusOr<google::monitoring::metricsscope::v1::ListMetricsScopesByMonitoredProjectResponse>
+  ListMetricsScopesByMonitoredProject(google::monitoring::metricsscope::v1::ListMetricsScopesByMonitoredProjectRequest const& request);
 
-  virtual future<
-      StatusOr<google::monitoring::metricsscope::v1::MonitoredProject>>
-  CreateMonitoredProject(
-      google::monitoring::metricsscope::v1::CreateMonitoredProjectRequest const&
-          request);
+  virtual future<StatusOr<google::monitoring::metricsscope::v1::MonitoredProject>>
+  CreateMonitoredProject(google::monitoring::metricsscope::v1::CreateMonitoredProjectRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> CreateMonitoredProject(
-      NoAwaitTag,
-      google::monitoring::metricsscope::v1::CreateMonitoredProjectRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  CreateMonitoredProject(NoAwaitTag, google::monitoring::metricsscope::v1::CreateMonitoredProjectRequest const& request);
 
-  virtual future<
-      StatusOr<google::monitoring::metricsscope::v1::MonitoredProject>>
-  CreateMonitoredProject(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::monitoring::metricsscope::v1::MonitoredProject>>
+  CreateMonitoredProject( google::longrunning::Operation const& operation);
 
-  virtual future<
-      StatusOr<google::monitoring::metricsscope::v1::OperationMetadata>>
-  DeleteMonitoredProject(
-      google::monitoring::metricsscope::v1::DeleteMonitoredProjectRequest const&
-          request);
+  virtual future<StatusOr<google::monitoring::metricsscope::v1::OperationMetadata>>
+  DeleteMonitoredProject(google::monitoring::metricsscope::v1::DeleteMonitoredProjectRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> DeleteMonitoredProject(
-      NoAwaitTag,
-      google::monitoring::metricsscope::v1::DeleteMonitoredProjectRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  DeleteMonitoredProject(NoAwaitTag, google::monitoring::metricsscope::v1::DeleteMonitoredProjectRequest const& request);
 
-  virtual future<
-      StatusOr<google::monitoring::metricsscope::v1::OperationMetadata>>
-  DeleteMonitoredProject(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::monitoring::metricsscope::v1::OperationMetadata>>
+  DeleteMonitoredProject( google::longrunning::Operation const& operation);
 };
 
 /**

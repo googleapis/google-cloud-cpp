@@ -17,14 +17,14 @@
 // source: google/cloud/datacatalog/v1/policytagmanager.proto
 
 #include "google/cloud/datacatalog/v1/policy_tag_manager_connection.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/datacatalog/v1/internal/policy_tag_manager_connection_impl.h"
 #include "google/cloud/datacatalog/v1/internal/policy_tag_manager_option_defaults.h"
 #include "google/cloud/datacatalog/v1/internal/policy_tag_manager_stub_factory.h"
 #include "google/cloud/datacatalog/v1/internal/policy_tag_manager_tracing_connection.h"
 #include "google/cloud/datacatalog/v1/policy_tag_manager_options.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
-#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
@@ -44,7 +44,8 @@ PolicyTagManagerConnection::CreateTaxonomy(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status PolicyTagManagerConnection::DeleteTaxonomy(
+Status
+PolicyTagManagerConnection::DeleteTaxonomy(
     google::cloud::datacatalog::v1::DeleteTaxonomyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -55,10 +56,8 @@ PolicyTagManagerConnection::UpdateTaxonomy(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::datacatalog::v1::Taxonomy>
-PolicyTagManagerConnection::ListTaxonomies(
-    google::cloud::datacatalog::v1::
-        ListTaxonomiesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::datacatalog::v1::Taxonomy> PolicyTagManagerConnection::ListTaxonomies(
+    google::cloud::datacatalog::v1::ListTaxonomiesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::datacatalog::v1::Taxonomy>>();
 }
@@ -75,7 +74,8 @@ PolicyTagManagerConnection::CreatePolicyTag(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status PolicyTagManagerConnection::DeletePolicyTag(
+Status
+PolicyTagManagerConnection::DeletePolicyTag(
     google::cloud::datacatalog::v1::DeletePolicyTagRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -86,10 +86,8 @@ PolicyTagManagerConnection::UpdatePolicyTag(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::datacatalog::v1::PolicyTag>
-PolicyTagManagerConnection::ListPolicyTags(
-    google::cloud::datacatalog::v1::
-        ListPolicyTagsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::datacatalog::v1::PolicyTag> PolicyTagManagerConnection::ListPolicyTags(
+    google::cloud::datacatalog::v1::ListPolicyTagsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::datacatalog::v1::PolicyTag>>();
 }
@@ -100,12 +98,14 @@ PolicyTagManagerConnection::GetPolicyTag(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::iam::v1::Policy> PolicyTagManagerConnection::GetIamPolicy(
+StatusOr<google::iam::v1::Policy>
+PolicyTagManagerConnection::GetIamPolicy(
     google::iam::v1::GetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::iam::v1::Policy> PolicyTagManagerConnection::SetIamPolicy(
+StatusOr<google::iam::v1::Policy>
+PolicyTagManagerConnection::SetIamPolicy(
     google::iam::v1::SetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -116,10 +116,8 @@ PolicyTagManagerConnection::TestIamPermissions(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::longrunning::Operation>
-PolicyTagManagerConnection::ListOperations(
-    google::longrunning::
-        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::longrunning::Operation> PolicyTagManagerConnection::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }
@@ -130,12 +128,14 @@ PolicyTagManagerConnection::GetOperation(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status PolicyTagManagerConnection::DeleteOperation(
+Status
+PolicyTagManagerConnection::DeleteOperation(
     google::longrunning::DeleteOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status PolicyTagManagerConnection::CancelOperation(
+Status
+PolicyTagManagerConnection::CancelOperation(
     google::longrunning::CancelOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -143,18 +143,17 @@ Status PolicyTagManagerConnection::CancelOperation(
 std::shared_ptr<PolicyTagManagerConnection> MakePolicyTagManagerConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 PolicyTagManagerPolicyOptionList>(options,
-                                                                   __func__);
+      UnifiedCredentialsOptionList,
+      PolicyTagManagerPolicyOptionList>(options, __func__);
   options = datacatalog_v1_internal::PolicyTagManagerDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = datacatalog_v1_internal::CreateDefaultPolicyTagManagerStub(
-      std::move(auth), options);
+    std::move(auth), options);
   return datacatalog_v1_internal::MakePolicyTagManagerTracingConnection(
       std::make_shared<datacatalog_v1_internal::PolicyTagManagerConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options)));
+      std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

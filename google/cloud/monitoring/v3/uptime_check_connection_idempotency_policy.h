@@ -34,30 +34,29 @@ class UptimeCheckServiceConnectionIdempotencyPolicy {
   virtual ~UptimeCheckServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<UptimeCheckServiceConnectionIdempotencyPolicy> clone()
-      const;
+  virtual std::unique_ptr<UptimeCheckServiceConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency ListUptimeCheckConfigs(
-      google::monitoring::v3::ListUptimeCheckConfigsRequest request);
+  virtual google::cloud::Idempotency
+  ListUptimeCheckConfigs(google::monitoring::v3::ListUptimeCheckConfigsRequest request);
 
-  virtual google::cloud::Idempotency GetUptimeCheckConfig(
-      google::monitoring::v3::GetUptimeCheckConfigRequest const& request);
+  virtual google::cloud::Idempotency
+  GetUptimeCheckConfig(google::monitoring::v3::GetUptimeCheckConfigRequest const& request);
 
-  virtual google::cloud::Idempotency CreateUptimeCheckConfig(
-      google::monitoring::v3::CreateUptimeCheckConfigRequest const& request);
+  virtual google::cloud::Idempotency
+  CreateUptimeCheckConfig(google::monitoring::v3::CreateUptimeCheckConfigRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateUptimeCheckConfig(
-      google::monitoring::v3::UpdateUptimeCheckConfigRequest const& request);
+  virtual google::cloud::Idempotency
+  UpdateUptimeCheckConfig(google::monitoring::v3::UpdateUptimeCheckConfigRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteUptimeCheckConfig(
-      google::monitoring::v3::DeleteUptimeCheckConfigRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteUptimeCheckConfig(google::monitoring::v3::DeleteUptimeCheckConfigRequest const& request);
 
-  virtual google::cloud::Idempotency ListUptimeCheckIps(
-      google::monitoring::v3::ListUptimeCheckIpsRequest request);
+  virtual google::cloud::Idempotency
+  ListUptimeCheckIps(google::monitoring::v3::ListUptimeCheckIpsRequest request);
 };
 
 std::unique_ptr<UptimeCheckServiceConnectionIdempotencyPolicy>
-MakeDefaultUptimeCheckServiceConnectionIdempotencyPolicy();
+    MakeDefaultUptimeCheckServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace monitoring_v3

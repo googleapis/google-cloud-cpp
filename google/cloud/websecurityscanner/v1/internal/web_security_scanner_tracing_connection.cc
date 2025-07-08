@@ -34,135 +34,100 @@ WebSecurityScannerTracingConnection::WebSecurityScannerTracingConnection(
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::websecurityscanner::v1::ScanConfig>
-WebSecurityScannerTracingConnection::CreateScanConfig(
-    google::cloud::websecurityscanner::v1::CreateScanConfigRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "websecurityscanner_v1::WebSecurityScannerConnection::CreateScanConfig");
+WebSecurityScannerTracingConnection::CreateScanConfig(google::cloud::websecurityscanner::v1::CreateScanConfigRequest const& request) {
+  auto span = internal::MakeSpan("websecurityscanner_v1::WebSecurityScannerConnection::CreateScanConfig");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateScanConfig(request));
 }
 
-Status WebSecurityScannerTracingConnection::DeleteScanConfig(
-    google::cloud::websecurityscanner::v1::DeleteScanConfigRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "websecurityscanner_v1::WebSecurityScannerConnection::DeleteScanConfig");
+Status
+WebSecurityScannerTracingConnection::DeleteScanConfig(google::cloud::websecurityscanner::v1::DeleteScanConfigRequest const& request) {
+  auto span = internal::MakeSpan("websecurityscanner_v1::WebSecurityScannerConnection::DeleteScanConfig");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteScanConfig(request));
 }
 
 StatusOr<google::cloud::websecurityscanner::v1::ScanConfig>
-WebSecurityScannerTracingConnection::GetScanConfig(
-    google::cloud::websecurityscanner::v1::GetScanConfigRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "websecurityscanner_v1::WebSecurityScannerConnection::GetScanConfig");
+WebSecurityScannerTracingConnection::GetScanConfig(google::cloud::websecurityscanner::v1::GetScanConfigRequest const& request) {
+  auto span = internal::MakeSpan("websecurityscanner_v1::WebSecurityScannerConnection::GetScanConfig");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetScanConfig(request));
 }
 
 StreamRange<google::cloud::websecurityscanner::v1::ScanConfig>
-WebSecurityScannerTracingConnection::ListScanConfigs(
-    google::cloud::websecurityscanner::v1::ListScanConfigsRequest request) {
-  auto span = internal::MakeSpan(
-      "websecurityscanner_v1::WebSecurityScannerConnection::ListScanConfigs");
+WebSecurityScannerTracingConnection::ListScanConfigs(google::cloud::websecurityscanner::v1::ListScanConfigsRequest request) {
+  auto span = internal::MakeSpan("websecurityscanner_v1::WebSecurityScannerConnection::ListScanConfigs");
   internal::OTelScope scope(span);
   auto sr = child_->ListScanConfigs(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::websecurityscanner::v1::ScanConfig>(std::move(span),
-                                                         std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::websecurityscanner::v1::ScanConfig>(
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::websecurityscanner::v1::ScanConfig>
-WebSecurityScannerTracingConnection::UpdateScanConfig(
-    google::cloud::websecurityscanner::v1::UpdateScanConfigRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "websecurityscanner_v1::WebSecurityScannerConnection::UpdateScanConfig");
+WebSecurityScannerTracingConnection::UpdateScanConfig(google::cloud::websecurityscanner::v1::UpdateScanConfigRequest const& request) {
+  auto span = internal::MakeSpan("websecurityscanner_v1::WebSecurityScannerConnection::UpdateScanConfig");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateScanConfig(request));
 }
 
 StatusOr<google::cloud::websecurityscanner::v1::ScanRun>
-WebSecurityScannerTracingConnection::StartScanRun(
-    google::cloud::websecurityscanner::v1::StartScanRunRequest const& request) {
-  auto span = internal::MakeSpan(
-      "websecurityscanner_v1::WebSecurityScannerConnection::StartScanRun");
+WebSecurityScannerTracingConnection::StartScanRun(google::cloud::websecurityscanner::v1::StartScanRunRequest const& request) {
+  auto span = internal::MakeSpan("websecurityscanner_v1::WebSecurityScannerConnection::StartScanRun");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->StartScanRun(request));
 }
 
 StatusOr<google::cloud::websecurityscanner::v1::ScanRun>
-WebSecurityScannerTracingConnection::GetScanRun(
-    google::cloud::websecurityscanner::v1::GetScanRunRequest const& request) {
-  auto span = internal::MakeSpan(
-      "websecurityscanner_v1::WebSecurityScannerConnection::GetScanRun");
+WebSecurityScannerTracingConnection::GetScanRun(google::cloud::websecurityscanner::v1::GetScanRunRequest const& request) {
+  auto span = internal::MakeSpan("websecurityscanner_v1::WebSecurityScannerConnection::GetScanRun");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetScanRun(request));
 }
 
 StreamRange<google::cloud::websecurityscanner::v1::ScanRun>
-WebSecurityScannerTracingConnection::ListScanRuns(
-    google::cloud::websecurityscanner::v1::ListScanRunsRequest request) {
-  auto span = internal::MakeSpan(
-      "websecurityscanner_v1::WebSecurityScannerConnection::ListScanRuns");
+WebSecurityScannerTracingConnection::ListScanRuns(google::cloud::websecurityscanner::v1::ListScanRunsRequest request) {
+  auto span = internal::MakeSpan("websecurityscanner_v1::WebSecurityScannerConnection::ListScanRuns");
   internal::OTelScope scope(span);
   auto sr = child_->ListScanRuns(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::websecurityscanner::v1::ScanRun>(std::move(span),
-                                                      std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::websecurityscanner::v1::ScanRun>(
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::websecurityscanner::v1::ScanRun>
-WebSecurityScannerTracingConnection::StopScanRun(
-    google::cloud::websecurityscanner::v1::StopScanRunRequest const& request) {
-  auto span = internal::MakeSpan(
-      "websecurityscanner_v1::WebSecurityScannerConnection::StopScanRun");
+WebSecurityScannerTracingConnection::StopScanRun(google::cloud::websecurityscanner::v1::StopScanRunRequest const& request) {
+  auto span = internal::MakeSpan("websecurityscanner_v1::WebSecurityScannerConnection::StopScanRun");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->StopScanRun(request));
 }
 
 StreamRange<google::cloud::websecurityscanner::v1::CrawledUrl>
-WebSecurityScannerTracingConnection::ListCrawledUrls(
-    google::cloud::websecurityscanner::v1::ListCrawledUrlsRequest request) {
-  auto span = internal::MakeSpan(
-      "websecurityscanner_v1::WebSecurityScannerConnection::ListCrawledUrls");
+WebSecurityScannerTracingConnection::ListCrawledUrls(google::cloud::websecurityscanner::v1::ListCrawledUrlsRequest request) {
+  auto span = internal::MakeSpan("websecurityscanner_v1::WebSecurityScannerConnection::ListCrawledUrls");
   internal::OTelScope scope(span);
   auto sr = child_->ListCrawledUrls(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::websecurityscanner::v1::CrawledUrl>(std::move(span),
-                                                         std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::websecurityscanner::v1::CrawledUrl>(
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::websecurityscanner::v1::Finding>
-WebSecurityScannerTracingConnection::GetFinding(
-    google::cloud::websecurityscanner::v1::GetFindingRequest const& request) {
-  auto span = internal::MakeSpan(
-      "websecurityscanner_v1::WebSecurityScannerConnection::GetFinding");
+WebSecurityScannerTracingConnection::GetFinding(google::cloud::websecurityscanner::v1::GetFindingRequest const& request) {
+  auto span = internal::MakeSpan("websecurityscanner_v1::WebSecurityScannerConnection::GetFinding");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetFinding(request));
 }
 
 StreamRange<google::cloud::websecurityscanner::v1::Finding>
-WebSecurityScannerTracingConnection::ListFindings(
-    google::cloud::websecurityscanner::v1::ListFindingsRequest request) {
-  auto span = internal::MakeSpan(
-      "websecurityscanner_v1::WebSecurityScannerConnection::ListFindings");
+WebSecurityScannerTracingConnection::ListFindings(google::cloud::websecurityscanner::v1::ListFindingsRequest request) {
+  auto span = internal::MakeSpan("websecurityscanner_v1::WebSecurityScannerConnection::ListFindings");
   internal::OTelScope scope(span);
   auto sr = child_->ListFindings(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::websecurityscanner::v1::Finding>(std::move(span),
-                                                      std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::websecurityscanner::v1::Finding>(
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::websecurityscanner::v1::ListFindingTypeStatsResponse>
-WebSecurityScannerTracingConnection::ListFindingTypeStats(
-    google::cloud::websecurityscanner::v1::ListFindingTypeStatsRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "websecurityscanner_v1::WebSecurityScannerConnection::"
-      "ListFindingTypeStats");
+WebSecurityScannerTracingConnection::ListFindingTypeStats(google::cloud::websecurityscanner::v1::ListFindingTypeStatsRequest const& request) {
+  auto span = internal::MakeSpan("websecurityscanner_v1::WebSecurityScannerConnection::ListFindingTypeStats");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->ListFindingTypeStats(request));
 }
@@ -174,8 +139,7 @@ MakeWebSecurityScannerTracingConnection(
     std::shared_ptr<websecurityscanner_v1::WebSecurityScannerConnection> conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
-    conn =
-        std::make_shared<WebSecurityScannerTracingConnection>(std::move(conn));
+    conn = std::make_shared<WebSecurityScannerTracingConnection>(std::move(conn));
   }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;

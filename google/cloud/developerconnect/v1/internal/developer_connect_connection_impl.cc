@@ -17,9 +17,9 @@
 // source: google/cloud/developerconnect/v1/developer_connect.proto
 
 #include "google/cloud/developerconnect/v1/internal/developer_connect_connection_impl.h"
-#include "google/cloud/developerconnect/v1/internal/developer_connect_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/developerconnect/v1/internal/developer_connect_option_defaults.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/async_long_running_operation.h"
 #include "google/cloud/internal/pagination_range.h"
@@ -33,74 +33,58 @@ namespace developerconnect_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<developerconnect_v1::DeveloperConnectRetryPolicy> retry_policy(
-    Options const& options) {
-  return options.get<developerconnect_v1::DeveloperConnectRetryPolicyOption>()
-      ->clone();
+std::unique_ptr<developerconnect_v1::DeveloperConnectRetryPolicy>
+retry_policy(Options const& options) {
+  return options.get<developerconnect_v1::DeveloperConnectRetryPolicyOption>()->clone();
 }
 
-std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-  return options
-      .get<developerconnect_v1::DeveloperConnectBackoffPolicyOption>()
-      ->clone();
+std::unique_ptr<BackoffPolicy>
+backoff_policy(Options const& options) {
+  return options.get<developerconnect_v1::DeveloperConnectBackoffPolicyOption>()->clone();
 }
 
-std::unique_ptr<
-    developerconnect_v1::DeveloperConnectConnectionIdempotencyPolicy>
+std::unique_ptr<developerconnect_v1::DeveloperConnectConnectionIdempotencyPolicy>
 idempotency_policy(Options const& options) {
-  return options
-      .get<developerconnect_v1::
-               DeveloperConnectConnectionIdempotencyPolicyOption>()
-      ->clone();
+  return options.get<developerconnect_v1::DeveloperConnectConnectionIdempotencyPolicyOption>()->clone();
 }
 
 std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-  return options
-      .get<developerconnect_v1::DeveloperConnectPollingPolicyOption>()
-      ->clone();
+  return options.get<developerconnect_v1::DeveloperConnectPollingPolicyOption>()->clone();
 }
 
-}  // namespace
+} // namespace
 
 DeveloperConnectConnectionImpl::DeveloperConnectConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<developerconnect_v1_internal::DeveloperConnectStub> stub,
     Options options)
-    : background_(std::move(background)),
-      stub_(std::move(stub)),
-      options_(internal::MergeOptions(std::move(options),
-                                      DeveloperConnectConnection::options())) {}
+  : background_(std::move(background)), stub_(std::move(stub)),
+    options_(internal::MergeOptions(
+        std::move(options),
+        DeveloperConnectConnection::options())) {}
 
 StreamRange<google::cloud::developerconnect::v1::Connection>
-DeveloperConnectConnectionImpl::ListConnections(
-    google::cloud::developerconnect::v1::ListConnectionsRequest request) {
+DeveloperConnectConnectionImpl::ListConnections(google::cloud::developerconnect::v1::ListConnectionsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListConnections(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::developerconnect::v1::Connection>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::developerconnect::v1::Connection>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry =
-           std::shared_ptr<developerconnect_v1::DeveloperConnectRetryPolicy>(
-               retry_policy(*current)),
+       retry = std::shared_ptr<developerconnect_v1::DeveloperConnectRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::developerconnect::v1::ListConnectionsRequest const&
-              r) {
+          Options const& options, google::cloud::developerconnect::v1::ListConnectionsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::developerconnect::v1::
-                       ListConnectionsRequest const& request) {
+                   google::cloud::developerconnect::v1::ListConnectionsRequest const& request) {
               return stub->ListConnections(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::developerconnect::v1::ListConnectionsResponse r) {
-        std::vector<google::cloud::developerconnect::v1::Connection> result(
-            r.connections().size());
+        std::vector<google::cloud::developerconnect::v1::Connection> result(r.connections().size());
         auto& messages = *r.mutable_connections();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -108,73 +92,62 @@ DeveloperConnectConnectionImpl::ListConnections(
 }
 
 StatusOr<google::cloud::developerconnect::v1::Connection>
-DeveloperConnectConnectionImpl::GetConnection(
-    google::cloud::developerconnect::v1::GetConnectionRequest const& request) {
+DeveloperConnectConnectionImpl::GetConnection(google::cloud::developerconnect::v1::GetConnectionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetConnection(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::developerconnect::v1::GetConnectionRequest const&
-                 request) {
+             google::cloud::developerconnect::v1::GetConnectionRequest const& request) {
         return stub_->GetConnection(context, options, request);
       },
       *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::developerconnect::v1::Connection>>
-DeveloperConnectConnectionImpl::CreateConnection(
-    google::cloud::developerconnect::v1::CreateConnectionRequest const&
-        request) {
+DeveloperConnectConnectionImpl::CreateConnection(google::cloud::developerconnect::v1::CreateConnectionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->CreateConnection(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<
-      google::cloud::developerconnect::v1::Connection>(
-      background_->cq(), current, std::move(request_copy),
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::developerconnect::v1::CreateConnectionRequest const&
-              request) {
-        return stub->AsyncCreateConnection(cq, std::move(context),
-                                           std::move(options), request);
-      },
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::developerconnect::v1::Connection>,
-      retry_policy(*current), backoff_policy(*current), idempotent,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::developerconnect::v1::Connection>(
+    background_->cq(), current, std::move(request_copy),
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::cloud::developerconnect::v1::CreateConnectionRequest const& request) {
+     return stub->AsyncCreateConnection(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::developerconnect::v1::Connection>,
+    retry_policy(*current), backoff_policy(*current), idempotent,
+    polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 DeveloperConnectConnectionImpl::CreateConnection(
-    NoAwaitTag,
-    google::cloud::developerconnect::v1::CreateConnectionRequest const&
-        request) {
+      NoAwaitTag, google::cloud::developerconnect::v1::CreateConnectionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateConnection(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::developerconnect::v1::CreateConnectionRequest const&
-                 request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::developerconnect::v1::CreateConnectionRequest const& request) {
         return stub_->CreateConnection(context, options, request);
       },
       *current, request, __func__);
@@ -182,95 +155,78 @@ DeveloperConnectConnectionImpl::CreateConnection(
 
 future<StatusOr<google::cloud::developerconnect::v1::Connection>>
 DeveloperConnectConnectionImpl::CreateConnection(
-    google::longrunning::Operation const& operation) {
+      google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata()
-           .Is<typename google::cloud::developerconnect::v1::
-                   OperationMetadata>()) {
-    return make_ready_future<
-        StatusOr<google::cloud::developerconnect::v1::Connection>>(
-        internal::InvalidArgumentError(
-            "operation does not correspond to CreateConnection",
-            GCP_ERROR_INFO().WithMetadata("operation",
-                                          operation.metadata().DebugString())));
+  if (!operation.metadata().Is<typename google::cloud::developerconnect::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::developerconnect::v1::Connection>>(
+        internal::InvalidArgumentError("operation does not correspond to CreateConnection",
+                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<
-      google::cloud::developerconnect::v1::Connection>(
-      background_->cq(), current, operation,
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::developerconnect::v1::Connection>,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::developerconnect::v1::Connection>(
+    background_->cq(), current, operation,
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::developerconnect::v1::Connection>,
+    polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::developerconnect::v1::Connection>>
-DeveloperConnectConnectionImpl::UpdateConnection(
-    google::cloud::developerconnect::v1::UpdateConnectionRequest const&
-        request) {
+DeveloperConnectConnectionImpl::UpdateConnection(google::cloud::developerconnect::v1::UpdateConnectionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->UpdateConnection(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<
-      google::cloud::developerconnect::v1::Connection>(
-      background_->cq(), current, std::move(request_copy),
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::developerconnect::v1::UpdateConnectionRequest const&
-              request) {
-        return stub->AsyncUpdateConnection(cq, std::move(context),
-                                           std::move(options), request);
-      },
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::developerconnect::v1::Connection>,
-      retry_policy(*current), backoff_policy(*current), idempotent,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::developerconnect::v1::Connection>(
+    background_->cq(), current, std::move(request_copy),
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::cloud::developerconnect::v1::UpdateConnectionRequest const& request) {
+     return stub->AsyncUpdateConnection(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::developerconnect::v1::Connection>,
+    retry_policy(*current), backoff_policy(*current), idempotent,
+    polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 DeveloperConnectConnectionImpl::UpdateConnection(
-    NoAwaitTag,
-    google::cloud::developerconnect::v1::UpdateConnectionRequest const&
-        request) {
+      NoAwaitTag, google::cloud::developerconnect::v1::UpdateConnectionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateConnection(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::developerconnect::v1::UpdateConnectionRequest const&
-                 request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::developerconnect::v1::UpdateConnectionRequest const& request) {
         return stub_->UpdateConnection(context, options, request);
       },
       *current, request, __func__);
@@ -278,95 +234,78 @@ DeveloperConnectConnectionImpl::UpdateConnection(
 
 future<StatusOr<google::cloud::developerconnect::v1::Connection>>
 DeveloperConnectConnectionImpl::UpdateConnection(
-    google::longrunning::Operation const& operation) {
+      google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata()
-           .Is<typename google::cloud::developerconnect::v1::
-                   OperationMetadata>()) {
-    return make_ready_future<
-        StatusOr<google::cloud::developerconnect::v1::Connection>>(
-        internal::InvalidArgumentError(
-            "operation does not correspond to UpdateConnection",
-            GCP_ERROR_INFO().WithMetadata("operation",
-                                          operation.metadata().DebugString())));
+  if (!operation.metadata().Is<typename google::cloud::developerconnect::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::developerconnect::v1::Connection>>(
+        internal::InvalidArgumentError("operation does not correspond to UpdateConnection",
+                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<
-      google::cloud::developerconnect::v1::Connection>(
-      background_->cq(), current, operation,
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::developerconnect::v1::Connection>,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::developerconnect::v1::Connection>(
+    background_->cq(), current, operation,
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::developerconnect::v1::Connection>,
+    polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
-DeveloperConnectConnectionImpl::DeleteConnection(
-    google::cloud::developerconnect::v1::DeleteConnectionRequest const&
-        request) {
+DeveloperConnectConnectionImpl::DeleteConnection(google::cloud::developerconnect::v1::DeleteConnectionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->DeleteConnection(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<
-      google::cloud::developerconnect::v1::OperationMetadata>(
-      background_->cq(), current, std::move(request_copy),
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::developerconnect::v1::DeleteConnectionRequest const&
-              request) {
-        return stub->AsyncDeleteConnection(cq, std::move(context),
-                                           std::move(options), request);
-      },
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultMetadata<
-          google::cloud::developerconnect::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current), idempotent,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::developerconnect::v1::OperationMetadata>(
+    background_->cq(), current, std::move(request_copy),
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::cloud::developerconnect::v1::DeleteConnectionRequest const& request) {
+     return stub->AsyncDeleteConnection(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultMetadata<google::cloud::developerconnect::v1::OperationMetadata>,
+    retry_policy(*current), backoff_policy(*current), idempotent,
+    polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 DeveloperConnectConnectionImpl::DeleteConnection(
-    NoAwaitTag,
-    google::cloud::developerconnect::v1::DeleteConnectionRequest const&
-        request) {
+      NoAwaitTag, google::cloud::developerconnect::v1::DeleteConnectionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteConnection(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::developerconnect::v1::DeleteConnectionRequest const&
-                 request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::developerconnect::v1::DeleteConnectionRequest const& request) {
         return stub_->DeleteConnection(context, options, request);
       },
       *current, request, __func__);
@@ -374,94 +313,78 @@ DeveloperConnectConnectionImpl::DeleteConnection(
 
 future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
 DeveloperConnectConnectionImpl::DeleteConnection(
-    google::longrunning::Operation const& operation) {
+      google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata()
-           .Is<typename google::cloud::developerconnect::v1::
-                   OperationMetadata>()) {
-    return make_ready_future<
-        StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>(
-        internal::InvalidArgumentError(
-            "operation does not correspond to DeleteConnection",
-            GCP_ERROR_INFO().WithMetadata("operation",
-                                          operation.metadata().DebugString())));
+  if (!operation.metadata().Is<typename google::cloud::developerconnect::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>(
+        internal::InvalidArgumentError("operation does not correspond to DeleteConnection",
+                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<
-      google::cloud::developerconnect::v1::OperationMetadata>(
-      background_->cq(), current, operation,
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultMetadata<
-          google::cloud::developerconnect::v1::OperationMetadata>,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::developerconnect::v1::OperationMetadata>(
+    background_->cq(), current, operation,
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultMetadata<google::cloud::developerconnect::v1::OperationMetadata>,
+    polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::developerconnect::v1::GitRepositoryLink>>
-DeveloperConnectConnectionImpl::CreateGitRepositoryLink(
-    google::cloud::developerconnect::v1::CreateGitRepositoryLinkRequest const&
-        request) {
+DeveloperConnectConnectionImpl::CreateGitRepositoryLink(google::cloud::developerconnect::v1::CreateGitRepositoryLinkRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->CreateGitRepositoryLink(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<
-      google::cloud::developerconnect::v1::GitRepositoryLink>(
-      background_->cq(), current, std::move(request_copy),
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::cloud::developerconnect::v1::
-                         CreateGitRepositoryLinkRequest const& request) {
-        return stub->AsyncCreateGitRepositoryLink(cq, std::move(context),
-                                                  std::move(options), request);
-      },
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::developerconnect::v1::GitRepositoryLink>,
-      retry_policy(*current), backoff_policy(*current), idempotent,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::developerconnect::v1::GitRepositoryLink>(
+    background_->cq(), current, std::move(request_copy),
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::cloud::developerconnect::v1::CreateGitRepositoryLinkRequest const& request) {
+     return stub->AsyncCreateGitRepositoryLink(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::developerconnect::v1::GitRepositoryLink>,
+    retry_policy(*current), backoff_policy(*current), idempotent,
+    polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 DeveloperConnectConnectionImpl::CreateGitRepositoryLink(
-    NoAwaitTag,
-    google::cloud::developerconnect::v1::CreateGitRepositoryLinkRequest const&
-        request) {
+      NoAwaitTag, google::cloud::developerconnect::v1::CreateGitRepositoryLinkRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateGitRepositoryLink(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::developerconnect::v1::
-                 CreateGitRepositoryLinkRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::developerconnect::v1::CreateGitRepositoryLinkRequest const& request) {
         return stub_->CreateGitRepositoryLink(context, options, request);
       },
       *current, request, __func__);
@@ -469,94 +392,78 @@ DeveloperConnectConnectionImpl::CreateGitRepositoryLink(
 
 future<StatusOr<google::cloud::developerconnect::v1::GitRepositoryLink>>
 DeveloperConnectConnectionImpl::CreateGitRepositoryLink(
-    google::longrunning::Operation const& operation) {
+      google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata()
-           .Is<typename google::cloud::developerconnect::v1::
-                   OperationMetadata>()) {
-    return make_ready_future<
-        StatusOr<google::cloud::developerconnect::v1::GitRepositoryLink>>(
-        internal::InvalidArgumentError(
-            "operation does not correspond to CreateGitRepositoryLink",
-            GCP_ERROR_INFO().WithMetadata("operation",
-                                          operation.metadata().DebugString())));
+  if (!operation.metadata().Is<typename google::cloud::developerconnect::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::developerconnect::v1::GitRepositoryLink>>(
+        internal::InvalidArgumentError("operation does not correspond to CreateGitRepositoryLink",
+                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<
-      google::cloud::developerconnect::v1::GitRepositoryLink>(
-      background_->cq(), current, operation,
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::developerconnect::v1::GitRepositoryLink>,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::developerconnect::v1::GitRepositoryLink>(
+    background_->cq(), current, operation,
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::developerconnect::v1::GitRepositoryLink>,
+    polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
-DeveloperConnectConnectionImpl::DeleteGitRepositoryLink(
-    google::cloud::developerconnect::v1::DeleteGitRepositoryLinkRequest const&
-        request) {
+DeveloperConnectConnectionImpl::DeleteGitRepositoryLink(google::cloud::developerconnect::v1::DeleteGitRepositoryLinkRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->DeleteGitRepositoryLink(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<
-      google::cloud::developerconnect::v1::OperationMetadata>(
-      background_->cq(), current, std::move(request_copy),
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::cloud::developerconnect::v1::
-                         DeleteGitRepositoryLinkRequest const& request) {
-        return stub->AsyncDeleteGitRepositoryLink(cq, std::move(context),
-                                                  std::move(options), request);
-      },
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultMetadata<
-          google::cloud::developerconnect::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current), idempotent,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::developerconnect::v1::OperationMetadata>(
+    background_->cq(), current, std::move(request_copy),
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::cloud::developerconnect::v1::DeleteGitRepositoryLinkRequest const& request) {
+     return stub->AsyncDeleteGitRepositoryLink(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultMetadata<google::cloud::developerconnect::v1::OperationMetadata>,
+    retry_policy(*current), backoff_policy(*current), idempotent,
+    polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 DeveloperConnectConnectionImpl::DeleteGitRepositoryLink(
-    NoAwaitTag,
-    google::cloud::developerconnect::v1::DeleteGitRepositoryLinkRequest const&
-        request) {
+      NoAwaitTag, google::cloud::developerconnect::v1::DeleteGitRepositoryLinkRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteGitRepositoryLink(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::developerconnect::v1::
-                 DeleteGitRepositoryLinkRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::developerconnect::v1::DeleteGitRepositoryLinkRequest const& request) {
         return stub_->DeleteGitRepositoryLink(context, options, request);
       },
       *current, request, __func__);
@@ -564,74 +471,56 @@ DeveloperConnectConnectionImpl::DeleteGitRepositoryLink(
 
 future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
 DeveloperConnectConnectionImpl::DeleteGitRepositoryLink(
-    google::longrunning::Operation const& operation) {
+      google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata()
-           .Is<typename google::cloud::developerconnect::v1::
-                   OperationMetadata>()) {
-    return make_ready_future<
-        StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>(
-        internal::InvalidArgumentError(
-            "operation does not correspond to DeleteGitRepositoryLink",
-            GCP_ERROR_INFO().WithMetadata("operation",
-                                          operation.metadata().DebugString())));
+  if (!operation.metadata().Is<typename google::cloud::developerconnect::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>(
+        internal::InvalidArgumentError("operation does not correspond to DeleteGitRepositoryLink",
+                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<
-      google::cloud::developerconnect::v1::OperationMetadata>(
-      background_->cq(), current, operation,
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultMetadata<
-          google::cloud::developerconnect::v1::OperationMetadata>,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::developerconnect::v1::OperationMetadata>(
+    background_->cq(), current, operation,
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultMetadata<google::cloud::developerconnect::v1::OperationMetadata>,
+    polling_policy(*current), __func__);
 }
 
 StreamRange<google::cloud::developerconnect::v1::GitRepositoryLink>
-DeveloperConnectConnectionImpl::ListGitRepositoryLinks(
-    google::cloud::developerconnect::v1::ListGitRepositoryLinksRequest
-        request) {
+DeveloperConnectConnectionImpl::ListGitRepositoryLinks(google::cloud::developerconnect::v1::ListGitRepositoryLinksRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
-  auto idempotency =
-      idempotency_policy(*current)->ListGitRepositoryLinks(request);
+  auto idempotency = idempotency_policy(*current)->ListGitRepositoryLinks(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::developerconnect::v1::GitRepositoryLink>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::developerconnect::v1::GitRepositoryLink>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry =
-           std::shared_ptr<developerconnect_v1::DeveloperConnectRetryPolicy>(
-               retry_policy(*current)),
+       retry = std::shared_ptr<developerconnect_v1::DeveloperConnectRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::developerconnect::v1::
-                                      ListGitRepositoryLinksRequest const& r) {
+          Options const& options, google::cloud::developerconnect::v1::ListGitRepositoryLinksRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::developerconnect::v1::
-                       ListGitRepositoryLinksRequest const& request) {
+                   google::cloud::developerconnect::v1::ListGitRepositoryLinksRequest const& request) {
               return stub->ListGitRepositoryLinks(context, options, request);
             },
             options, r, function_name);
       },
-      [](google::cloud::developerconnect::v1::ListGitRepositoryLinksResponse
-             r) {
-        std::vector<google::cloud::developerconnect::v1::GitRepositoryLink>
-            result(r.git_repository_links().size());
+      [](google::cloud::developerconnect::v1::ListGitRepositoryLinksResponse r) {
+        std::vector<google::cloud::developerconnect::v1::GitRepositoryLink> result(r.git_repository_links().size());
         auto& messages = *r.mutable_git_repository_links();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -639,87 +528,66 @@ DeveloperConnectConnectionImpl::ListGitRepositoryLinks(
 }
 
 StatusOr<google::cloud::developerconnect::v1::GitRepositoryLink>
-DeveloperConnectConnectionImpl::GetGitRepositoryLink(
-    google::cloud::developerconnect::v1::GetGitRepositoryLinkRequest const&
-        request) {
+DeveloperConnectConnectionImpl::GetGitRepositoryLink(google::cloud::developerconnect::v1::GetGitRepositoryLinkRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetGitRepositoryLink(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::developerconnect::v1::
-                 GetGitRepositoryLinkRequest const& request) {
+             google::cloud::developerconnect::v1::GetGitRepositoryLinkRequest const& request) {
         return stub_->GetGitRepositoryLink(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::developerconnect::v1::FetchReadWriteTokenResponse>
-DeveloperConnectConnectionImpl::FetchReadWriteToken(
-    google::cloud::developerconnect::v1::FetchReadWriteTokenRequest const&
-        request) {
+DeveloperConnectConnectionImpl::FetchReadWriteToken(google::cloud::developerconnect::v1::FetchReadWriteTokenRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->FetchReadWriteToken(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::developerconnect::v1::FetchReadWriteTokenRequest const&
-              request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::developerconnect::v1::FetchReadWriteTokenRequest const& request) {
         return stub_->FetchReadWriteToken(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::developerconnect::v1::FetchReadTokenResponse>
-DeveloperConnectConnectionImpl::FetchReadToken(
-    google::cloud::developerconnect::v1::FetchReadTokenRequest const& request) {
+DeveloperConnectConnectionImpl::FetchReadToken(google::cloud::developerconnect::v1::FetchReadTokenRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->FetchReadToken(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::developerconnect::v1::FetchReadTokenRequest const&
-                 request) {
+             google::cloud::developerconnect::v1::FetchReadTokenRequest const& request) {
         return stub_->FetchReadToken(context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::cloud::developerconnect::v1::LinkableGitRepository>
-DeveloperConnectConnectionImpl::FetchLinkableGitRepositories(
-    google::cloud::developerconnect::v1::FetchLinkableGitRepositoriesRequest
-        request) {
+DeveloperConnectConnectionImpl::FetchLinkableGitRepositories(google::cloud::developerconnect::v1::FetchLinkableGitRepositoriesRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
-  auto idempotency =
-      idempotency_policy(*current)->FetchLinkableGitRepositories(request);
+  auto idempotency = idempotency_policy(*current)->FetchLinkableGitRepositories(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::developerconnect::v1::LinkableGitRepository>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::developerconnect::v1::LinkableGitRepository>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry =
-           std::shared_ptr<developerconnect_v1::DeveloperConnectRetryPolicy>(
-               retry_policy(*current)),
+       retry = std::shared_ptr<developerconnect_v1::DeveloperConnectRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::developerconnect::v1::
-              FetchLinkableGitRepositoriesRequest const& r) {
+          Options const& options, google::cloud::developerconnect::v1::FetchLinkableGitRepositoriesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::developerconnect::v1::
-                       FetchLinkableGitRepositoriesRequest const& request) {
-              return stub->FetchLinkableGitRepositories(context, options,
-                                                        request);
+                   google::cloud::developerconnect::v1::FetchLinkableGitRepositoriesRequest const& request) {
+              return stub->FetchLinkableGitRepositories(context, options, request);
             },
             options, r, function_name);
       },
-      [](google::cloud::developerconnect::v1::
-             FetchLinkableGitRepositoriesResponse r) {
-        std::vector<google::cloud::developerconnect::v1::LinkableGitRepository>
-            result(r.linkable_git_repositories().size());
+      [](google::cloud::developerconnect::v1::FetchLinkableGitRepositoriesResponse r) {
+        std::vector<google::cloud::developerconnect::v1::LinkableGitRepository> result(r.linkable_git_repositories().size());
         auto& messages = *r.mutable_linkable_git_repositories();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -727,23 +595,20 @@ DeveloperConnectConnectionImpl::FetchLinkableGitRepositories(
 }
 
 StatusOr<google::cloud::developerconnect::v1::FetchGitHubInstallationsResponse>
-DeveloperConnectConnectionImpl::FetchGitHubInstallations(
-    google::cloud::developerconnect::v1::FetchGitHubInstallationsRequest const&
-        request) {
+DeveloperConnectConnectionImpl::FetchGitHubInstallations(google::cloud::developerconnect::v1::FetchGitHubInstallationsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->FetchGitHubInstallations(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::developerconnect::v1::
-                 FetchGitHubInstallationsRequest const& request) {
+             google::cloud::developerconnect::v1::FetchGitHubInstallationsRequest const& request) {
         return stub_->FetchGitHubInstallations(context, options, request);
       },
       *current, request, __func__);
 }
 
-StreamRange<std::string> DeveloperConnectConnectionImpl::FetchGitRefs(
-    google::cloud::developerconnect::v1::FetchGitRefsRequest request) {
+StreamRange<std::string>
+DeveloperConnectConnectionImpl::FetchGitRefs(google::cloud::developerconnect::v1::FetchGitRefsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->FetchGitRefs(request);
@@ -751,18 +616,13 @@ StreamRange<std::string> DeveloperConnectConnectionImpl::FetchGitRefs(
   return google::cloud::internal::MakePaginationRange<StreamRange<std::string>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry =
-           std::shared_ptr<developerconnect_v1::DeveloperConnectRetryPolicy>(
-               retry_policy(*current)),
+       retry = std::shared_ptr<developerconnect_v1::DeveloperConnectRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::developerconnect::v1::FetchGitRefsRequest const& r) {
+          Options const& options, google::cloud::developerconnect::v1::FetchGitRefsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](
-                grpc::ClientContext& context, Options const& options,
-                google::cloud::developerconnect::v1::FetchGitRefsRequest const&
-                    request) {
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::cloud::developerconnect::v1::FetchGitRefsRequest const& request) {
               return stub->FetchGitRefs(context, options, request);
             },
             options, r, function_name);
@@ -775,35 +635,518 @@ StreamRange<std::string> DeveloperConnectConnectionImpl::FetchGitRefs(
       });
 }
 
+StreamRange<google::cloud::developerconnect::v1::AccountConnector>
+DeveloperConnectConnectionImpl::ListAccountConnectors(google::cloud::developerconnect::v1::ListAccountConnectorsRequest request) {
+  request.clear_page_token();
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListAccountConnectors(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::developerconnect::v1::AccountConnector>>(
+      current, std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<developerconnect_v1::DeveloperConnectRetryPolicy>(retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options, google::cloud::developerconnect::v1::ListAccountConnectorsRequest const& r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::cloud::developerconnect::v1::ListAccountConnectorsRequest const& request) {
+              return stub->ListAccountConnectors(context, options, request);
+            },
+            options, r, function_name);
+      },
+      [](google::cloud::developerconnect::v1::ListAccountConnectorsResponse r) {
+        std::vector<google::cloud::developerconnect::v1::AccountConnector> result(r.account_connectors().size());
+        auto& messages = *r.mutable_account_connectors();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
+StatusOr<google::cloud::developerconnect::v1::AccountConnector>
+DeveloperConnectConnectionImpl::GetAccountConnector(google::cloud::developerconnect::v1::GetAccountConnectorRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetAccountConnector(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::developerconnect::v1::GetAccountConnectorRequest const& request) {
+        return stub_->GetAccountConnector(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::developerconnect::v1::AccountConnector>>
+DeveloperConnectConnectionImpl::CreateAccountConnector(google::cloud::developerconnect::v1::CreateAccountConnectorRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateAccountConnector(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::developerconnect::v1::AccountConnector>(
+    background_->cq(), current, std::move(request_copy),
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::cloud::developerconnect::v1::CreateAccountConnectorRequest const& request) {
+     return stub->AsyncCreateAccountConnector(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::developerconnect::v1::AccountConnector>,
+    retry_policy(*current), backoff_policy(*current), idempotent,
+    polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+DeveloperConnectConnectionImpl::CreateAccountConnector(
+      NoAwaitTag, google::cloud::developerconnect::v1::CreateAccountConnectorRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateAccountConnector(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::developerconnect::v1::CreateAccountConnectorRequest const& request) {
+        return stub_->CreateAccountConnector(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::developerconnect::v1::AccountConnector>>
+DeveloperConnectConnectionImpl::CreateAccountConnector(
+      google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata().Is<typename google::cloud::developerconnect::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::developerconnect::v1::AccountConnector>>(
+        internal::InvalidArgumentError("operation does not correspond to CreateAccountConnector",
+                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::developerconnect::v1::AccountConnector>(
+    background_->cq(), current, operation,
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::developerconnect::v1::AccountConnector>,
+    polling_policy(*current), __func__);
+}
+
+future<StatusOr<google::cloud::developerconnect::v1::AccountConnector>>
+DeveloperConnectConnectionImpl::UpdateAccountConnector(google::cloud::developerconnect::v1::UpdateAccountConnectorRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateAccountConnector(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::developerconnect::v1::AccountConnector>(
+    background_->cq(), current, std::move(request_copy),
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::cloud::developerconnect::v1::UpdateAccountConnectorRequest const& request) {
+     return stub->AsyncUpdateAccountConnector(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::developerconnect::v1::AccountConnector>,
+    retry_policy(*current), backoff_policy(*current), idempotent,
+    polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+DeveloperConnectConnectionImpl::UpdateAccountConnector(
+      NoAwaitTag, google::cloud::developerconnect::v1::UpdateAccountConnectorRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateAccountConnector(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::developerconnect::v1::UpdateAccountConnectorRequest const& request) {
+        return stub_->UpdateAccountConnector(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::developerconnect::v1::AccountConnector>>
+DeveloperConnectConnectionImpl::UpdateAccountConnector(
+      google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata().Is<typename google::cloud::developerconnect::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::developerconnect::v1::AccountConnector>>(
+        internal::InvalidArgumentError("operation does not correspond to UpdateAccountConnector",
+                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::developerconnect::v1::AccountConnector>(
+    background_->cq(), current, operation,
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::developerconnect::v1::AccountConnector>,
+    polling_policy(*current), __func__);
+}
+
+future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
+DeveloperConnectConnectionImpl::DeleteAccountConnector(google::cloud::developerconnect::v1::DeleteAccountConnectorRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteAccountConnector(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::developerconnect::v1::OperationMetadata>(
+    background_->cq(), current, std::move(request_copy),
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::cloud::developerconnect::v1::DeleteAccountConnectorRequest const& request) {
+     return stub->AsyncDeleteAccountConnector(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultMetadata<google::cloud::developerconnect::v1::OperationMetadata>,
+    retry_policy(*current), backoff_policy(*current), idempotent,
+    polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+DeveloperConnectConnectionImpl::DeleteAccountConnector(
+      NoAwaitTag, google::cloud::developerconnect::v1::DeleteAccountConnectorRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteAccountConnector(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::developerconnect::v1::DeleteAccountConnectorRequest const& request) {
+        return stub_->DeleteAccountConnector(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
+DeveloperConnectConnectionImpl::DeleteAccountConnector(
+      google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata().Is<typename google::cloud::developerconnect::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>(
+        internal::InvalidArgumentError("operation does not correspond to DeleteAccountConnector",
+                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::developerconnect::v1::OperationMetadata>(
+    background_->cq(), current, operation,
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultMetadata<google::cloud::developerconnect::v1::OperationMetadata>,
+    polling_policy(*current), __func__);
+}
+
+StatusOr<google::cloud::developerconnect::v1::FetchAccessTokenResponse>
+DeveloperConnectConnectionImpl::FetchAccessToken(google::cloud::developerconnect::v1::FetchAccessTokenRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->FetchAccessToken(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::developerconnect::v1::FetchAccessTokenRequest const& request) {
+        return stub_->FetchAccessToken(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+StreamRange<google::cloud::developerconnect::v1::User>
+DeveloperConnectConnectionImpl::ListUsers(google::cloud::developerconnect::v1::ListUsersRequest request) {
+  request.clear_page_token();
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListUsers(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::developerconnect::v1::User>>(
+      current, std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<developerconnect_v1::DeveloperConnectRetryPolicy>(retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options, google::cloud::developerconnect::v1::ListUsersRequest const& r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::cloud::developerconnect::v1::ListUsersRequest const& request) {
+              return stub->ListUsers(context, options, request);
+            },
+            options, r, function_name);
+      },
+      [](google::cloud::developerconnect::v1::ListUsersResponse r) {
+        std::vector<google::cloud::developerconnect::v1::User> result(r.users().size());
+        auto& messages = *r.mutable_users();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
+future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
+DeveloperConnectConnectionImpl::DeleteUser(google::cloud::developerconnect::v1::DeleteUserRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteUser(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::developerconnect::v1::OperationMetadata>(
+    background_->cq(), current, std::move(request_copy),
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::cloud::developerconnect::v1::DeleteUserRequest const& request) {
+     return stub->AsyncDeleteUser(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultMetadata<google::cloud::developerconnect::v1::OperationMetadata>,
+    retry_policy(*current), backoff_policy(*current), idempotent,
+    polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+DeveloperConnectConnectionImpl::DeleteUser(
+      NoAwaitTag, google::cloud::developerconnect::v1::DeleteUserRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteUser(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::developerconnect::v1::DeleteUserRequest const& request) {
+        return stub_->DeleteUser(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
+DeveloperConnectConnectionImpl::DeleteUser(
+      google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata().Is<typename google::cloud::developerconnect::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>(
+        internal::InvalidArgumentError("operation does not correspond to DeleteUser",
+                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::developerconnect::v1::OperationMetadata>(
+    background_->cq(), current, operation,
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultMetadata<google::cloud::developerconnect::v1::OperationMetadata>,
+    polling_policy(*current), __func__);
+}
+
+StatusOr<google::cloud::developerconnect::v1::User>
+DeveloperConnectConnectionImpl::FetchSelf(google::cloud::developerconnect::v1::FetchSelfRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->FetchSelf(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::developerconnect::v1::FetchSelfRequest const& request) {
+        return stub_->FetchSelf(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
+DeveloperConnectConnectionImpl::DeleteSelf(google::cloud::developerconnect::v1::DeleteSelfRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteSelf(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::developerconnect::v1::OperationMetadata>(
+    background_->cq(), current, std::move(request_copy),
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::cloud::developerconnect::v1::DeleteSelfRequest const& request) {
+     return stub->AsyncDeleteSelf(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultMetadata<google::cloud::developerconnect::v1::OperationMetadata>,
+    retry_policy(*current), backoff_policy(*current), idempotent,
+    polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+DeveloperConnectConnectionImpl::DeleteSelf(
+      NoAwaitTag, google::cloud::developerconnect::v1::DeleteSelfRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteSelf(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::developerconnect::v1::DeleteSelfRequest const& request) {
+        return stub_->DeleteSelf(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
+DeveloperConnectConnectionImpl::DeleteSelf(
+      google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata().Is<typename google::cloud::developerconnect::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>(
+        internal::InvalidArgumentError("operation does not correspond to DeleteSelf",
+                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::developerconnect::v1::OperationMetadata>(
+    background_->cq(), current, operation,
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultMetadata<google::cloud::developerconnect::v1::OperationMetadata>,
+    polling_policy(*current), __func__);
+}
+
 StreamRange<google::cloud::location::Location>
-DeveloperConnectConnectionImpl::ListLocations(
-    google::cloud::location::ListLocationsRequest request) {
+DeveloperConnectConnectionImpl::ListLocations(google::cloud::location::ListLocationsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListLocations(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::location::Location>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::location::Location>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry =
-           std::shared_ptr<developerconnect_v1::DeveloperConnectRetryPolicy>(
-               retry_policy(*current)),
+       retry = std::shared_ptr<developerconnect_v1::DeveloperConnectRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::location::ListLocationsRequest const& r) {
+          Options const& options, google::cloud::location::ListLocationsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](
-                grpc::ClientContext& context, Options const& options,
-                google::cloud::location::ListLocationsRequest const& request) {
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::cloud::location::ListLocationsRequest const& request) {
               return stub->ListLocations(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::location::ListLocationsResponse r) {
-        std::vector<google::cloud::location::Location> result(
-            r.locations().size());
+        std::vector<google::cloud::location::Location> result(r.locations().size());
         auto& messages = *r.mutable_locations();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -811,8 +1154,7 @@ DeveloperConnectConnectionImpl::ListLocations(
 }
 
 StatusOr<google::cloud::location::Location>
-DeveloperConnectConnectionImpl::GetLocation(
-    google::cloud::location::GetLocationRequest const& request) {
+DeveloperConnectConnectionImpl::GetLocation(google::cloud::location::GetLocationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -825,22 +1167,17 @@ DeveloperConnectConnectionImpl::GetLocation(
 }
 
 StreamRange<google::longrunning::Operation>
-DeveloperConnectConnectionImpl::ListOperations(
-    google::longrunning::ListOperationsRequest request) {
+DeveloperConnectConnectionImpl::ListOperations(google::longrunning::ListOperationsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListOperations(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::longrunning::Operation>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::longrunning::Operation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry =
-           std::shared_ptr<developerconnect_v1::DeveloperConnectRetryPolicy>(
-               retry_policy(*current)),
+       retry = std::shared_ptr<developerconnect_v1::DeveloperConnectRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::longrunning::ListOperationsRequest const& r) {
+          Options const& options, google::longrunning::ListOperationsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
@@ -850,8 +1187,7 @@ DeveloperConnectConnectionImpl::ListOperations(
             options, r, function_name);
       },
       [](google::longrunning::ListOperationsResponse r) {
-        std::vector<google::longrunning::Operation> result(
-            r.operations().size());
+        std::vector<google::longrunning::Operation> result(r.operations().size());
         auto& messages = *r.mutable_operations();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -859,8 +1195,7 @@ DeveloperConnectConnectionImpl::ListOperations(
 }
 
 StatusOr<google::longrunning::Operation>
-DeveloperConnectConnectionImpl::GetOperation(
-    google::longrunning::GetOperationRequest const& request) {
+DeveloperConnectConnectionImpl::GetOperation(google::longrunning::GetOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -872,8 +1207,8 @@ DeveloperConnectConnectionImpl::GetOperation(
       *current, request, __func__);
 }
 
-Status DeveloperConnectConnectionImpl::DeleteOperation(
-    google::longrunning::DeleteOperationRequest const& request) {
+Status
+DeveloperConnectConnectionImpl::DeleteOperation(google::longrunning::DeleteOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -885,8 +1220,8 @@ Status DeveloperConnectConnectionImpl::DeleteOperation(
       *current, request, __func__);
 }
 
-Status DeveloperConnectConnectionImpl::CancelOperation(
-    google::longrunning::CancelOperationRequest const& request) {
+Status
+DeveloperConnectConnectionImpl::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),

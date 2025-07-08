@@ -42,34 +42,25 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockReservationsConnection
-    : public compute_reservations_v1::ReservationsConnection {
+class MockReservationsConnection : public compute_reservations_v1::ReservationsConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(
-      (StreamRange<
-          std::pair<std::string,
-                    google::cloud::cpp::compute::v1::ReservationsScopedList>>),
-      AggregatedListReservations,
-      (google::cloud::cpp::compute::reservations::v1::
-           AggregatedListReservationsRequest request),
-      (override));
+  MOCK_METHOD((StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::ReservationsScopedList>>),
+  AggregatedListReservations,
+  (google::cloud::cpp::compute::reservations::v1::AggregatedListReservationsRequest request), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteReservation(Matcher<google::cloud::cpp::compute::reservations::v1::DeleteReservationRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteReservation(Matcher<google::cloud::cpp::compute::reservations::v1::DeleteReservationRequest const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              DeleteReservation,
-              (google::cloud::cpp::compute::reservations::v1::
-                   DeleteReservationRequest const& request),
-              (override));
+  DeleteReservation,
+  (google::cloud::cpp::compute::reservations::v1::DeleteReservationRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -78,51 +69,40 @@ class MockReservationsConnection
   /// EXPECT_CALL(*mock, DeleteReservation(_, _))
   /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-              DeleteReservation,
-              (NoAwaitTag, google::cloud::cpp::compute::reservations::v1::
-                               DeleteReservationRequest const& request),
-              (override));
+  DeleteReservation, (NoAwaitTag,
+    google::cloud::cpp::compute::reservations::v1::DeleteReservationRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteReservation(Matcher<google::cloud::cpp::compute::v1::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteReservation(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              DeleteReservation,
-              (google::cloud::cpp::compute::v1::Operation const& operation),
-              (override));
+  DeleteReservation, (
+    google::cloud::cpp::compute::v1::Operation const& operation), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Reservation>,
-              GetReservation,
-              (google::cloud::cpp::compute::reservations::v1::
-                   GetReservationRequest const& request),
-              (override));
+  GetReservation,
+  (google::cloud::cpp::compute::reservations::v1::GetReservationRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::Policy>, GetIamPolicy,
-      (google::cloud::cpp::compute::reservations::v1::GetIamPolicyRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Policy>,
+  GetIamPolicy,
+  (google::cloud::cpp::compute::reservations::v1::GetIamPolicyRequest const& request), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// InsertReservation(Matcher<google::cloud::cpp::compute::reservations::v1::InsertReservationRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, InsertReservation(Matcher<google::cloud::cpp::compute::reservations::v1::InsertReservationRequest const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              InsertReservation,
-              (google::cloud::cpp::compute::reservations::v1::
-                   InsertReservationRequest const& request),
-              (override));
+  InsertReservation,
+  (google::cloud::cpp::compute::reservations::v1::InsertReservationRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -131,46 +111,36 @@ class MockReservationsConnection
   /// EXPECT_CALL(*mock, InsertReservation(_, _))
   /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-              InsertReservation,
-              (NoAwaitTag, google::cloud::cpp::compute::reservations::v1::
-                               InsertReservationRequest const& request),
-              (override));
+  InsertReservation, (NoAwaitTag,
+    google::cloud::cpp::compute::reservations::v1::InsertReservationRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// InsertReservation(Matcher<google::cloud::cpp::compute::v1::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, InsertReservation(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              InsertReservation,
-              (google::cloud::cpp::compute::v1::Operation const& operation),
-              (override));
+  InsertReservation, (
+    google::cloud::cpp::compute::v1::Operation const& operation), (override));
 
-  MOCK_METHOD(
-      (StreamRange<google::cloud::cpp::compute::v1::Reservation>),
-      ListReservations,
-      (google::cloud::cpp::compute::reservations::v1::ListReservationsRequest
-           request),
-      (override));
+  MOCK_METHOD((StreamRange<google::cloud::cpp::compute::v1::Reservation>),
+  ListReservations,
+  (google::cloud::cpp::compute::reservations::v1::ListReservationsRequest request), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// PerformMaintenance(Matcher<google::cloud::cpp::compute::reservations::v1::PerformMaintenanceRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, PerformMaintenance(Matcher<google::cloud::cpp::compute::reservations::v1::PerformMaintenanceRequest const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              PerformMaintenance,
-              (google::cloud::cpp::compute::reservations::v1::
-                   PerformMaintenanceRequest const& request),
-              (override));
+  PerformMaintenance,
+  (google::cloud::cpp::compute::reservations::v1::PerformMaintenanceRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -179,39 +149,32 @@ class MockReservationsConnection
   /// EXPECT_CALL(*mock, PerformMaintenance(_, _))
   /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-              PerformMaintenance,
-              (NoAwaitTag, google::cloud::cpp::compute::reservations::v1::
-                               PerformMaintenanceRequest const& request),
-              (override));
+  PerformMaintenance, (NoAwaitTag,
+    google::cloud::cpp::compute::reservations::v1::PerformMaintenanceRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// PerformMaintenance(Matcher<google::cloud::cpp::compute::v1::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, PerformMaintenance(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              PerformMaintenance,
-              (google::cloud::cpp::compute::v1::Operation const& operation),
-              (override));
+  PerformMaintenance, (
+    google::cloud::cpp::compute::v1::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// Resize(Matcher<google::cloud::cpp::compute::reservations::v1::ResizeRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, Resize(Matcher<google::cloud::cpp::compute::reservations::v1::ResizeRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::cpp::compute::v1::Operation>>, Resize,
-      (google::cloud::cpp::compute::reservations::v1::ResizeRequest const&
-           request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  Resize,
+  (google::cloud::cpp::compute::reservations::v1::ResizeRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -219,53 +182,41 @@ class MockReservationsConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, Resize(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::Operation>, Resize,
-      (NoAwaitTag,
-       google::cloud::cpp::compute::reservations::v1::ResizeRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+  Resize, (NoAwaitTag,
+    google::cloud::cpp::compute::reservations::v1::ResizeRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// Resize(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
+  /// EXPECT_CALL(*mock, Resize(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              Resize,
-              (google::cloud::cpp::compute::v1::Operation const& operation),
-              (override));
+  Resize, (
+    google::cloud::cpp::compute::v1::Operation const& operation), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::Policy>, SetIamPolicy,
-      (google::cloud::cpp::compute::reservations::v1::SetIamPolicyRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Policy>,
+  SetIamPolicy,
+  (google::cloud::cpp::compute::reservations::v1::SetIamPolicyRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>,
-      TestIamPermissions,
-      (google::cloud::cpp::compute::reservations::v1::
-           TestIamPermissionsRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>,
+  TestIamPermissions,
+  (google::cloud::cpp::compute::reservations::v1::TestIamPermissionsRequest const& request), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// UpdateReservation(Matcher<google::cloud::cpp::compute::reservations::v1::UpdateReservationRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, UpdateReservation(Matcher<google::cloud::cpp::compute::reservations::v1::UpdateReservationRequest const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              UpdateReservation,
-              (google::cloud::cpp::compute::reservations::v1::
-                   UpdateReservationRequest const& request),
-              (override));
+  UpdateReservation,
+  (google::cloud::cpp::compute::reservations::v1::UpdateReservationRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -274,24 +225,20 @@ class MockReservationsConnection
   /// EXPECT_CALL(*mock, UpdateReservation(_, _))
   /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-              UpdateReservation,
-              (NoAwaitTag, google::cloud::cpp::compute::reservations::v1::
-                               UpdateReservationRequest const& request),
-              (override));
+  UpdateReservation, (NoAwaitTag,
+    google::cloud::cpp::compute::reservations::v1::UpdateReservationRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// UpdateReservation(Matcher<google::cloud::cpp::compute::v1::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, UpdateReservation(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              UpdateReservation,
-              (google::cloud::cpp::compute::v1::Operation const& operation),
-              (override));
+  UpdateReservation, (
+    google::cloud::cpp::compute::v1::Operation const& operation), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

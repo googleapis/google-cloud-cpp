@@ -36,42 +36,33 @@ class EssentialContactsServiceTracingConnection
   ~EssentialContactsServiceTracingConnection() override = default;
 
   explicit EssentialContactsServiceTracingConnection(
-      std::shared_ptr<essentialcontacts_v1::EssentialContactsServiceConnection>
-          child);
+    std::shared_ptr<essentialcontacts_v1::EssentialContactsServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::essentialcontacts::v1::Contact> CreateContact(
-      google::cloud::essentialcontacts::v1::CreateContactRequest const& request)
-      override;
+  StatusOr<google::cloud::essentialcontacts::v1::Contact>
+  CreateContact(google::cloud::essentialcontacts::v1::CreateContactRequest const& request) override;
 
-  StatusOr<google::cloud::essentialcontacts::v1::Contact> UpdateContact(
-      google::cloud::essentialcontacts::v1::UpdateContactRequest const& request)
-      override;
+  StatusOr<google::cloud::essentialcontacts::v1::Contact>
+  UpdateContact(google::cloud::essentialcontacts::v1::UpdateContactRequest const& request) override;
 
-  StreamRange<google::cloud::essentialcontacts::v1::Contact> ListContacts(
-      google::cloud::essentialcontacts::v1::ListContactsRequest request)
-      override;
+  StreamRange<google::cloud::essentialcontacts::v1::Contact>
+  ListContacts(google::cloud::essentialcontacts::v1::ListContactsRequest request) override;
 
-  StatusOr<google::cloud::essentialcontacts::v1::Contact> GetContact(
-      google::cloud::essentialcontacts::v1::GetContactRequest const& request)
-      override;
+  StatusOr<google::cloud::essentialcontacts::v1::Contact>
+  GetContact(google::cloud::essentialcontacts::v1::GetContactRequest const& request) override;
 
-  Status DeleteContact(
-      google::cloud::essentialcontacts::v1::DeleteContactRequest const& request)
-      override;
+  Status
+  DeleteContact(google::cloud::essentialcontacts::v1::DeleteContactRequest const& request) override;
 
-  StreamRange<google::cloud::essentialcontacts::v1::Contact> ComputeContacts(
-      google::cloud::essentialcontacts::v1::ComputeContactsRequest request)
-      override;
+  StreamRange<google::cloud::essentialcontacts::v1::Contact>
+  ComputeContacts(google::cloud::essentialcontacts::v1::ComputeContactsRequest request) override;
 
-  Status SendTestMessage(
-      google::cloud::essentialcontacts::v1::SendTestMessageRequest const&
-          request) override;
+  Status
+  SendTestMessage(google::cloud::essentialcontacts::v1::SendTestMessageRequest const& request) override;
 
  private:
-  std::shared_ptr<essentialcontacts_v1::EssentialContactsServiceConnection>
-      child_;
+  std::shared_ptr<essentialcontacts_v1::EssentialContactsServiceConnection> child_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -84,8 +75,7 @@ class EssentialContactsServiceTracingConnection
  */
 std::shared_ptr<essentialcontacts_v1::EssentialContactsServiceConnection>
 MakeEssentialContactsServiceTracingConnection(
-    std::shared_ptr<essentialcontacts_v1::EssentialContactsServiceConnection>
-        conn);
+    std::shared_ptr<essentialcontacts_v1::EssentialContactsServiceConnection> conn);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace essentialcontacts_v1_internal

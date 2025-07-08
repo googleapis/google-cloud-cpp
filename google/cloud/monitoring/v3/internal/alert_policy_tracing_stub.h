@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_V3_INTERNAL_ALERT_POLICY_TRACING_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_V3_INTERNAL_ALERT_POLICY_TRACING_STUB_H
 
-#include "google/cloud/monitoring/v3/internal/alert_policy_stub.h"
 #include "google/cloud/internal/trace_propagator.h"
+#include "google/cloud/monitoring/v3/internal/alert_policy_stub.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -36,33 +36,36 @@ class AlertPolicyServiceTracingStub : public AlertPolicyServiceStub {
  public:
   ~AlertPolicyServiceTracingStub() override = default;
 
-  explicit AlertPolicyServiceTracingStub(
-      std::shared_ptr<AlertPolicyServiceStub> child);
+  explicit AlertPolicyServiceTracingStub(std::shared_ptr<AlertPolicyServiceStub> child);
 
   StatusOr<google::monitoring::v3::ListAlertPoliciesResponse> ListAlertPolicies(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::monitoring::v3::ListAlertPoliciesRequest const& request) override;
 
   StatusOr<google::monitoring::v3::AlertPolicy> GetAlertPolicy(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::monitoring::v3::GetAlertPolicyRequest const& request) override;
 
   StatusOr<google::monitoring::v3::AlertPolicy> CreateAlertPolicy(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::monitoring::v3::CreateAlertPolicyRequest const& request) override;
 
   Status DeleteAlertPolicy(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::monitoring::v3::DeleteAlertPolicyRequest const& request) override;
 
   StatusOr<google::monitoring::v3::AlertPolicy> UpdateAlertPolicy(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::monitoring::v3::UpdateAlertPolicyRequest const& request) override;
 
  private:
   std::shared_ptr<AlertPolicyServiceStub> child_;
-  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
-      propagator_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

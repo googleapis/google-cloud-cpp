@@ -32,147 +32,158 @@ OsConfigServiceStub::~OsConfigServiceStub() = default;
 
 StatusOr<google::cloud::osconfig::v1::PatchJob>
 DefaultOsConfigServiceStub::ExecutePatchJob(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::osconfig::v1::ExecutePatchJobRequest const& request) {
-  google::cloud::osconfig::v1::PatchJob response;
-  auto status = grpc_stub_->ExecutePatchJob(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::osconfig::v1::ExecutePatchJobRequest const& request) {
+    google::cloud::osconfig::v1::PatchJob response;
+    auto status =
+        grpc_stub_->ExecutePatchJob(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::osconfig::v1::PatchJob>
 DefaultOsConfigServiceStub::GetPatchJob(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::osconfig::v1::GetPatchJobRequest const& request) {
-  google::cloud::osconfig::v1::PatchJob response;
-  auto status = grpc_stub_->GetPatchJob(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::osconfig::v1::GetPatchJobRequest const& request) {
+    google::cloud::osconfig::v1::PatchJob response;
+    auto status =
+        grpc_stub_->GetPatchJob(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::osconfig::v1::PatchJob>
 DefaultOsConfigServiceStub::CancelPatchJob(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::osconfig::v1::CancelPatchJobRequest const& request) {
-  google::cloud::osconfig::v1::PatchJob response;
-  auto status = grpc_stub_->CancelPatchJob(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::osconfig::v1::CancelPatchJobRequest const& request) {
+    google::cloud::osconfig::v1::PatchJob response;
+    auto status =
+        grpc_stub_->CancelPatchJob(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::osconfig::v1::ListPatchJobsResponse>
 DefaultOsConfigServiceStub::ListPatchJobs(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::osconfig::v1::ListPatchJobsRequest const& request) {
-  google::cloud::osconfig::v1::ListPatchJobsResponse response;
-  auto status = grpc_stub_->ListPatchJobs(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::osconfig::v1::ListPatchJobsRequest const& request) {
+    google::cloud::osconfig::v1::ListPatchJobsResponse response;
+    auto status =
+        grpc_stub_->ListPatchJobs(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::osconfig::v1::ListPatchJobInstanceDetailsResponse>
 DefaultOsConfigServiceStub::ListPatchJobInstanceDetails(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::osconfig::v1::ListPatchJobInstanceDetailsRequest const&
-        request) {
-  google::cloud::osconfig::v1::ListPatchJobInstanceDetailsResponse response;
-  auto status =
-      grpc_stub_->ListPatchJobInstanceDetails(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::osconfig::v1::ListPatchJobInstanceDetailsRequest const& request) {
+    google::cloud::osconfig::v1::ListPatchJobInstanceDetailsResponse response;
+    auto status =
+        grpc_stub_->ListPatchJobInstanceDetails(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::osconfig::v1::PatchDeployment>
 DefaultOsConfigServiceStub::CreatePatchDeployment(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::osconfig::v1::CreatePatchDeploymentRequest const& request) {
-  google::cloud::osconfig::v1::PatchDeployment response;
-  auto status = grpc_stub_->CreatePatchDeployment(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::osconfig::v1::CreatePatchDeploymentRequest const& request) {
+    google::cloud::osconfig::v1::PatchDeployment response;
+    auto status =
+        grpc_stub_->CreatePatchDeployment(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::osconfig::v1::PatchDeployment>
 DefaultOsConfigServiceStub::GetPatchDeployment(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::osconfig::v1::GetPatchDeploymentRequest const& request) {
-  google::cloud::osconfig::v1::PatchDeployment response;
-  auto status = grpc_stub_->GetPatchDeployment(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::osconfig::v1::GetPatchDeploymentRequest const& request) {
+    google::cloud::osconfig::v1::PatchDeployment response;
+    auto status =
+        grpc_stub_->GetPatchDeployment(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::osconfig::v1::ListPatchDeploymentsResponse>
 DefaultOsConfigServiceStub::ListPatchDeployments(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::osconfig::v1::ListPatchDeploymentsRequest const& request) {
-  google::cloud::osconfig::v1::ListPatchDeploymentsResponse response;
-  auto status = grpc_stub_->ListPatchDeployments(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::osconfig::v1::ListPatchDeploymentsRequest const& request) {
+    google::cloud::osconfig::v1::ListPatchDeploymentsResponse response;
+    auto status =
+        grpc_stub_->ListPatchDeployments(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-Status DefaultOsConfigServiceStub::DeletePatchDeployment(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::osconfig::v1::DeletePatchDeploymentRequest const& request) {
-  google::protobuf::Empty response;
-  auto status = grpc_stub_->DeletePatchDeployment(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return google::cloud::Status();
+Status
+DefaultOsConfigServiceStub::DeletePatchDeployment(
+  grpc::ClientContext& context, Options const&,
+  google::cloud::osconfig::v1::DeletePatchDeploymentRequest const& request) {
+    google::protobuf::Empty response;
+    auto status =
+        grpc_stub_->DeletePatchDeployment(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return google::cloud::Status();
 }
 
 StatusOr<google::cloud::osconfig::v1::PatchDeployment>
 DefaultOsConfigServiceStub::UpdatePatchDeployment(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::osconfig::v1::UpdatePatchDeploymentRequest const& request) {
-  google::cloud::osconfig::v1::PatchDeployment response;
-  auto status = grpc_stub_->UpdatePatchDeployment(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::osconfig::v1::UpdatePatchDeploymentRequest const& request) {
+    google::cloud::osconfig::v1::PatchDeployment response;
+    auto status =
+        grpc_stub_->UpdatePatchDeployment(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::osconfig::v1::PatchDeployment>
 DefaultOsConfigServiceStub::PausePatchDeployment(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::osconfig::v1::PausePatchDeploymentRequest const& request) {
-  google::cloud::osconfig::v1::PatchDeployment response;
-  auto status = grpc_stub_->PausePatchDeployment(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::osconfig::v1::PausePatchDeploymentRequest const& request) {
+    google::cloud::osconfig::v1::PatchDeployment response;
+    auto status =
+        grpc_stub_->PausePatchDeployment(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::osconfig::v1::PatchDeployment>
 DefaultOsConfigServiceStub::ResumePatchDeployment(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::osconfig::v1::ResumePatchDeploymentRequest const& request) {
-  google::cloud::osconfig::v1::PatchDeployment response;
-  auto status = grpc_stub_->ResumePatchDeployment(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::osconfig::v1::ResumePatchDeploymentRequest const& request) {
+    google::cloud::osconfig::v1::PatchDeployment response;
+    auto status =
+        grpc_stub_->ResumePatchDeployment(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

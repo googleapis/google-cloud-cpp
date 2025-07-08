@@ -32,23 +32,24 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 LivestreamServiceLogging::LivestreamServiceLogging(
     std::shared_ptr<LivestreamServiceStub> child,
-    TracingOptions tracing_options, std::set<std::string> const&)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
+    TracingOptions tracing_options,
+    std::set<std::string> const&)
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)) {}
 
 future<StatusOr<google::longrunning::Operation>>
 LivestreamServiceLogging::AsyncCreateChannel(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::video::livestream::v1::CreateChannelRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::video::livestream::v1::CreateChannelRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::video::livestream::v1::CreateChannelRequest const&
-                 request) {
-        return child_->AsyncCreateChannel(cq, std::move(context),
-                                          std::move(options), request);
+             google::cloud::video::livestream::v1::CreateChannelRequest const& request) {
+        return child_->AsyncCreateChannel(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -56,12 +57,13 @@ LivestreamServiceLogging::AsyncCreateChannel(
 
 StatusOr<google::longrunning::Operation>
 LivestreamServiceLogging::CreateChannel(
-    grpc::ClientContext& context, Options options,
-    google::cloud::video::livestream::v1::CreateChannelRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::video::livestream::v1::CreateChannelRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::video::livestream::v1::CreateChannelRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::video::livestream::v1::CreateChannelRequest const& request) {
         return child_->CreateChannel(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -69,12 +71,13 @@ LivestreamServiceLogging::CreateChannel(
 
 StatusOr<google::cloud::video::livestream::v1::ListChannelsResponse>
 LivestreamServiceLogging::ListChannels(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::video::livestream::v1::ListChannelsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::video::livestream::v1::ListChannelsRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::video::livestream::v1::ListChannelsRequest const& request) {
         return child_->ListChannels(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -82,12 +85,13 @@ LivestreamServiceLogging::ListChannels(
 
 StatusOr<google::cloud::video::livestream::v1::Channel>
 LivestreamServiceLogging::GetChannel(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::video::livestream::v1::GetChannelRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::video::livestream::v1::GetChannelRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::video::livestream::v1::GetChannelRequest const& request) {
         return child_->GetChannel(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -95,18 +99,17 @@ LivestreamServiceLogging::GetChannel(
 
 future<StatusOr<google::longrunning::Operation>>
 LivestreamServiceLogging::AsyncDeleteChannel(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::video::livestream::v1::DeleteChannelRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::video::livestream::v1::DeleteChannelRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::video::livestream::v1::DeleteChannelRequest const&
-                 request) {
-        return child_->AsyncDeleteChannel(cq, std::move(context),
-                                          std::move(options), request);
+             google::cloud::video::livestream::v1::DeleteChannelRequest const& request) {
+        return child_->AsyncDeleteChannel(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -114,12 +117,13 @@ LivestreamServiceLogging::AsyncDeleteChannel(
 
 StatusOr<google::longrunning::Operation>
 LivestreamServiceLogging::DeleteChannel(
-    grpc::ClientContext& context, Options options,
-    google::cloud::video::livestream::v1::DeleteChannelRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::video::livestream::v1::DeleteChannelRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::video::livestream::v1::DeleteChannelRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::video::livestream::v1::DeleteChannelRequest const& request) {
         return child_->DeleteChannel(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -127,18 +131,17 @@ LivestreamServiceLogging::DeleteChannel(
 
 future<StatusOr<google::longrunning::Operation>>
 LivestreamServiceLogging::AsyncUpdateChannel(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::video::livestream::v1::UpdateChannelRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::video::livestream::v1::UpdateChannelRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::video::livestream::v1::UpdateChannelRequest const&
-                 request) {
-        return child_->AsyncUpdateChannel(cq, std::move(context),
-                                          std::move(options), request);
+             google::cloud::video::livestream::v1::UpdateChannelRequest const& request) {
+        return child_->AsyncUpdateChannel(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -146,12 +149,13 @@ LivestreamServiceLogging::AsyncUpdateChannel(
 
 StatusOr<google::longrunning::Operation>
 LivestreamServiceLogging::UpdateChannel(
-    grpc::ClientContext& context, Options options,
-    google::cloud::video::livestream::v1::UpdateChannelRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::video::livestream::v1::UpdateChannelRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::video::livestream::v1::UpdateChannelRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::video::livestream::v1::UpdateChannelRequest const& request) {
         return child_->UpdateChannel(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -159,30 +163,31 @@ LivestreamServiceLogging::UpdateChannel(
 
 future<StatusOr<google::longrunning::Operation>>
 LivestreamServiceLogging::AsyncStartChannel(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::video::livestream::v1::StartChannelRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::video::livestream::v1::StartChannelRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::video::livestream::v1::StartChannelRequest const&
-                 request) {
-        return child_->AsyncStartChannel(cq, std::move(context),
-                                         std::move(options), request);
+             google::cloud::video::livestream::v1::StartChannelRequest const& request) {
+        return child_->AsyncStartChannel(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> LivestreamServiceLogging::StartChannel(
-    grpc::ClientContext& context, Options options,
-    google::cloud::video::livestream::v1::StartChannelRequest const& request) {
+StatusOr<google::longrunning::Operation>
+LivestreamServiceLogging::StartChannel(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::video::livestream::v1::StartChannelRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::video::livestream::v1::StartChannelRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::video::livestream::v1::StartChannelRequest const& request) {
         return child_->StartChannel(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -190,30 +195,31 @@ StatusOr<google::longrunning::Operation> LivestreamServiceLogging::StartChannel(
 
 future<StatusOr<google::longrunning::Operation>>
 LivestreamServiceLogging::AsyncStopChannel(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::video::livestream::v1::StopChannelRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::video::livestream::v1::StopChannelRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::video::livestream::v1::StopChannelRequest const&
-                 request) {
-        return child_->AsyncStopChannel(cq, std::move(context),
-                                        std::move(options), request);
+             google::cloud::video::livestream::v1::StopChannelRequest const& request) {
+        return child_->AsyncStopChannel(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> LivestreamServiceLogging::StopChannel(
-    grpc::ClientContext& context, Options options,
-    google::cloud::video::livestream::v1::StopChannelRequest const& request) {
+StatusOr<google::longrunning::Operation>
+LivestreamServiceLogging::StopChannel(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::video::livestream::v1::StopChannelRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::video::livestream::v1::StopChannelRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::video::livestream::v1::StopChannelRequest const& request) {
         return child_->StopChannel(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -221,30 +227,31 @@ StatusOr<google::longrunning::Operation> LivestreamServiceLogging::StopChannel(
 
 future<StatusOr<google::longrunning::Operation>>
 LivestreamServiceLogging::AsyncCreateInput(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::video::livestream::v1::CreateInputRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::video::livestream::v1::CreateInputRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::video::livestream::v1::CreateInputRequest const&
-                 request) {
-        return child_->AsyncCreateInput(cq, std::move(context),
-                                        std::move(options), request);
+             google::cloud::video::livestream::v1::CreateInputRequest const& request) {
+        return child_->AsyncCreateInput(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> LivestreamServiceLogging::CreateInput(
-    grpc::ClientContext& context, Options options,
-    google::cloud::video::livestream::v1::CreateInputRequest const& request) {
+StatusOr<google::longrunning::Operation>
+LivestreamServiceLogging::CreateInput(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::video::livestream::v1::CreateInputRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::video::livestream::v1::CreateInputRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::video::livestream::v1::CreateInputRequest const& request) {
         return child_->CreateInput(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -252,12 +259,13 @@ StatusOr<google::longrunning::Operation> LivestreamServiceLogging::CreateInput(
 
 StatusOr<google::cloud::video::livestream::v1::ListInputsResponse>
 LivestreamServiceLogging::ListInputs(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::video::livestream::v1::ListInputsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::video::livestream::v1::ListInputsRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::video::livestream::v1::ListInputsRequest const& request) {
         return child_->ListInputs(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -265,12 +273,13 @@ LivestreamServiceLogging::ListInputs(
 
 StatusOr<google::cloud::video::livestream::v1::Input>
 LivestreamServiceLogging::GetInput(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::video::livestream::v1::GetInputRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::video::livestream::v1::GetInputRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::video::livestream::v1::GetInputRequest const& request) {
         return child_->GetInput(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -278,30 +287,31 @@ LivestreamServiceLogging::GetInput(
 
 future<StatusOr<google::longrunning::Operation>>
 LivestreamServiceLogging::AsyncDeleteInput(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::video::livestream::v1::DeleteInputRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::video::livestream::v1::DeleteInputRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::video::livestream::v1::DeleteInputRequest const&
-                 request) {
-        return child_->AsyncDeleteInput(cq, std::move(context),
-                                        std::move(options), request);
+             google::cloud::video::livestream::v1::DeleteInputRequest const& request) {
+        return child_->AsyncDeleteInput(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> LivestreamServiceLogging::DeleteInput(
-    grpc::ClientContext& context, Options options,
-    google::cloud::video::livestream::v1::DeleteInputRequest const& request) {
+StatusOr<google::longrunning::Operation>
+LivestreamServiceLogging::DeleteInput(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::video::livestream::v1::DeleteInputRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::video::livestream::v1::DeleteInputRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::video::livestream::v1::DeleteInputRequest const& request) {
         return child_->DeleteInput(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -309,30 +319,31 @@ StatusOr<google::longrunning::Operation> LivestreamServiceLogging::DeleteInput(
 
 future<StatusOr<google::longrunning::Operation>>
 LivestreamServiceLogging::AsyncUpdateInput(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::video::livestream::v1::UpdateInputRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::video::livestream::v1::UpdateInputRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::video::livestream::v1::UpdateInputRequest const&
-                 request) {
-        return child_->AsyncUpdateInput(cq, std::move(context),
-                                        std::move(options), request);
+             google::cloud::video::livestream::v1::UpdateInputRequest const& request) {
+        return child_->AsyncUpdateInput(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> LivestreamServiceLogging::UpdateInput(
-    grpc::ClientContext& context, Options options,
-    google::cloud::video::livestream::v1::UpdateInputRequest const& request) {
+StatusOr<google::longrunning::Operation>
+LivestreamServiceLogging::UpdateInput(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::video::livestream::v1::UpdateInputRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::video::livestream::v1::UpdateInputRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::video::livestream::v1::UpdateInputRequest const& request) {
         return child_->UpdateInput(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -340,12 +351,13 @@ StatusOr<google::longrunning::Operation> LivestreamServiceLogging::UpdateInput(
 
 StatusOr<google::cloud::video::livestream::v1::Event>
 LivestreamServiceLogging::CreateEvent(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::video::livestream::v1::CreateEventRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::video::livestream::v1::CreateEventRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::video::livestream::v1::CreateEventRequest const& request) {
         return child_->CreateEvent(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -353,12 +365,13 @@ LivestreamServiceLogging::CreateEvent(
 
 StatusOr<google::cloud::video::livestream::v1::ListEventsResponse>
 LivestreamServiceLogging::ListEvents(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::video::livestream::v1::ListEventsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::video::livestream::v1::ListEventsRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::video::livestream::v1::ListEventsRequest const& request) {
         return child_->ListEvents(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -366,24 +379,27 @@ LivestreamServiceLogging::ListEvents(
 
 StatusOr<google::cloud::video::livestream::v1::Event>
 LivestreamServiceLogging::GetEvent(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::video::livestream::v1::GetEventRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::video::livestream::v1::GetEventRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::video::livestream::v1::GetEventRequest const& request) {
         return child_->GetEvent(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status LivestreamServiceLogging::DeleteEvent(
-    grpc::ClientContext& context, Options const& options,
+Status
+LivestreamServiceLogging::DeleteEvent(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::video::livestream::v1::DeleteEventRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::video::livestream::v1::DeleteEventRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::video::livestream::v1::DeleteEventRequest const& request) {
         return child_->DeleteEvent(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -391,12 +407,13 @@ Status LivestreamServiceLogging::DeleteEvent(
 
 StatusOr<google::cloud::video::livestream::v1::ListClipsResponse>
 LivestreamServiceLogging::ListClips(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::video::livestream::v1::ListClipsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::video::livestream::v1::ListClipsRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::video::livestream::v1::ListClipsRequest const& request) {
         return child_->ListClips(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -404,12 +421,13 @@ LivestreamServiceLogging::ListClips(
 
 StatusOr<google::cloud::video::livestream::v1::Clip>
 LivestreamServiceLogging::GetClip(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::video::livestream::v1::GetClipRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::video::livestream::v1::GetClipRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::video::livestream::v1::GetClipRequest const& request) {
         return child_->GetClip(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -417,30 +435,31 @@ LivestreamServiceLogging::GetClip(
 
 future<StatusOr<google::longrunning::Operation>>
 LivestreamServiceLogging::AsyncCreateClip(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::video::livestream::v1::CreateClipRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::video::livestream::v1::CreateClipRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::video::livestream::v1::CreateClipRequest const&
-                 request) {
-        return child_->AsyncCreateClip(cq, std::move(context),
-                                       std::move(options), request);
+             google::cloud::video::livestream::v1::CreateClipRequest const& request) {
+        return child_->AsyncCreateClip(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> LivestreamServiceLogging::CreateClip(
-    grpc::ClientContext& context, Options options,
-    google::cloud::video::livestream::v1::CreateClipRequest const& request) {
+StatusOr<google::longrunning::Operation>
+LivestreamServiceLogging::CreateClip(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::video::livestream::v1::CreateClipRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::video::livestream::v1::CreateClipRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::video::livestream::v1::CreateClipRequest const& request) {
         return child_->CreateClip(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -448,30 +467,31 @@ StatusOr<google::longrunning::Operation> LivestreamServiceLogging::CreateClip(
 
 future<StatusOr<google::longrunning::Operation>>
 LivestreamServiceLogging::AsyncDeleteClip(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::video::livestream::v1::DeleteClipRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::video::livestream::v1::DeleteClipRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::video::livestream::v1::DeleteClipRequest const&
-                 request) {
-        return child_->AsyncDeleteClip(cq, std::move(context),
-                                       std::move(options), request);
+             google::cloud::video::livestream::v1::DeleteClipRequest const& request) {
+        return child_->AsyncDeleteClip(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> LivestreamServiceLogging::DeleteClip(
-    grpc::ClientContext& context, Options options,
-    google::cloud::video::livestream::v1::DeleteClipRequest const& request) {
+StatusOr<google::longrunning::Operation>
+LivestreamServiceLogging::DeleteClip(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::video::livestream::v1::DeleteClipRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::video::livestream::v1::DeleteClipRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::video::livestream::v1::DeleteClipRequest const& request) {
         return child_->DeleteClip(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -479,20 +499,17 @@ StatusOr<google::longrunning::Operation> LivestreamServiceLogging::DeleteClip(
 
 future<StatusOr<google::longrunning::Operation>>
 LivestreamServiceLogging::AsyncCreateDvrSession(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::video::livestream::v1::CreateDvrSessionRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::video::livestream::v1::CreateDvrSessionRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::video::livestream::v1::CreateDvrSessionRequest const&
-              request) {
-        return child_->AsyncCreateDvrSession(cq, std::move(context),
-                                             std::move(options), request);
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::video::livestream::v1::CreateDvrSessionRequest const& request) {
+        return child_->AsyncCreateDvrSession(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -500,14 +517,13 @@ LivestreamServiceLogging::AsyncCreateDvrSession(
 
 StatusOr<google::longrunning::Operation>
 LivestreamServiceLogging::CreateDvrSession(
-    grpc::ClientContext& context, Options options,
-    google::cloud::video::livestream::v1::CreateDvrSessionRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::video::livestream::v1::CreateDvrSessionRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::video::livestream::v1::CreateDvrSessionRequest const&
-              request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::video::livestream::v1::CreateDvrSessionRequest const& request) {
         return child_->CreateDvrSession(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -515,13 +531,13 @@ LivestreamServiceLogging::CreateDvrSession(
 
 StatusOr<google::cloud::video::livestream::v1::ListDvrSessionsResponse>
 LivestreamServiceLogging::ListDvrSessions(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::video::livestream::v1::ListDvrSessionsRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::video::livestream::v1::ListDvrSessionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::video::livestream::v1::ListDvrSessionsRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::video::livestream::v1::ListDvrSessionsRequest const& request) {
         return child_->ListDvrSessions(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -529,12 +545,13 @@ LivestreamServiceLogging::ListDvrSessions(
 
 StatusOr<google::cloud::video::livestream::v1::DvrSession>
 LivestreamServiceLogging::GetDvrSession(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::video::livestream::v1::GetDvrSessionRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::video::livestream::v1::GetDvrSessionRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::video::livestream::v1::GetDvrSessionRequest const& request) {
         return child_->GetDvrSession(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -542,20 +559,17 @@ LivestreamServiceLogging::GetDvrSession(
 
 future<StatusOr<google::longrunning::Operation>>
 LivestreamServiceLogging::AsyncDeleteDvrSession(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::video::livestream::v1::DeleteDvrSessionRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::video::livestream::v1::DeleteDvrSessionRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::video::livestream::v1::DeleteDvrSessionRequest const&
-              request) {
-        return child_->AsyncDeleteDvrSession(cq, std::move(context),
-                                             std::move(options), request);
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::video::livestream::v1::DeleteDvrSessionRequest const& request) {
+        return child_->AsyncDeleteDvrSession(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -563,14 +577,13 @@ LivestreamServiceLogging::AsyncDeleteDvrSession(
 
 StatusOr<google::longrunning::Operation>
 LivestreamServiceLogging::DeleteDvrSession(
-    grpc::ClientContext& context, Options options,
-    google::cloud::video::livestream::v1::DeleteDvrSessionRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::video::livestream::v1::DeleteDvrSessionRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::video::livestream::v1::DeleteDvrSessionRequest const&
-              request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::video::livestream::v1::DeleteDvrSessionRequest const& request) {
         return child_->DeleteDvrSession(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -578,20 +591,17 @@ LivestreamServiceLogging::DeleteDvrSession(
 
 future<StatusOr<google::longrunning::Operation>>
 LivestreamServiceLogging::AsyncUpdateDvrSession(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::video::livestream::v1::UpdateDvrSessionRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::video::livestream::v1::UpdateDvrSessionRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::video::livestream::v1::UpdateDvrSessionRequest const&
-              request) {
-        return child_->AsyncUpdateDvrSession(cq, std::move(context),
-                                             std::move(options), request);
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::video::livestream::v1::UpdateDvrSessionRequest const& request) {
+        return child_->AsyncUpdateDvrSession(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -599,14 +609,13 @@ LivestreamServiceLogging::AsyncUpdateDvrSession(
 
 StatusOr<google::longrunning::Operation>
 LivestreamServiceLogging::UpdateDvrSession(
-    grpc::ClientContext& context, Options options,
-    google::cloud::video::livestream::v1::UpdateDvrSessionRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::video::livestream::v1::UpdateDvrSessionRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::video::livestream::v1::UpdateDvrSessionRequest const&
-              request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::video::livestream::v1::UpdateDvrSessionRequest const& request) {
         return child_->UpdateDvrSession(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -614,30 +623,31 @@ LivestreamServiceLogging::UpdateDvrSession(
 
 future<StatusOr<google::longrunning::Operation>>
 LivestreamServiceLogging::AsyncCreateAsset(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::video::livestream::v1::CreateAssetRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::video::livestream::v1::CreateAssetRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::video::livestream::v1::CreateAssetRequest const&
-                 request) {
-        return child_->AsyncCreateAsset(cq, std::move(context),
-                                        std::move(options), request);
+             google::cloud::video::livestream::v1::CreateAssetRequest const& request) {
+        return child_->AsyncCreateAsset(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> LivestreamServiceLogging::CreateAsset(
-    grpc::ClientContext& context, Options options,
-    google::cloud::video::livestream::v1::CreateAssetRequest const& request) {
+StatusOr<google::longrunning::Operation>
+LivestreamServiceLogging::CreateAsset(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::video::livestream::v1::CreateAssetRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::video::livestream::v1::CreateAssetRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::video::livestream::v1::CreateAssetRequest const& request) {
         return child_->CreateAsset(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -645,30 +655,31 @@ StatusOr<google::longrunning::Operation> LivestreamServiceLogging::CreateAsset(
 
 future<StatusOr<google::longrunning::Operation>>
 LivestreamServiceLogging::AsyncDeleteAsset(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::video::livestream::v1::DeleteAssetRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::video::livestream::v1::DeleteAssetRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::video::livestream::v1::DeleteAssetRequest const&
-                 request) {
-        return child_->AsyncDeleteAsset(cq, std::move(context),
-                                        std::move(options), request);
+             google::cloud::video::livestream::v1::DeleteAssetRequest const& request) {
+        return child_->AsyncDeleteAsset(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> LivestreamServiceLogging::DeleteAsset(
-    grpc::ClientContext& context, Options options,
-    google::cloud::video::livestream::v1::DeleteAssetRequest const& request) {
+StatusOr<google::longrunning::Operation>
+LivestreamServiceLogging::DeleteAsset(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::video::livestream::v1::DeleteAssetRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::video::livestream::v1::DeleteAssetRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::video::livestream::v1::DeleteAssetRequest const& request) {
         return child_->DeleteAsset(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -676,12 +687,13 @@ StatusOr<google::longrunning::Operation> LivestreamServiceLogging::DeleteAsset(
 
 StatusOr<google::cloud::video::livestream::v1::Asset>
 LivestreamServiceLogging::GetAsset(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::video::livestream::v1::GetAssetRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::video::livestream::v1::GetAssetRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::video::livestream::v1::GetAssetRequest const& request) {
         return child_->GetAsset(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -689,12 +701,13 @@ LivestreamServiceLogging::GetAsset(
 
 StatusOr<google::cloud::video::livestream::v1::ListAssetsResponse>
 LivestreamServiceLogging::ListAssets(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::video::livestream::v1::ListAssetsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::video::livestream::v1::ListAssetsRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::video::livestream::v1::ListAssetsRequest const& request) {
         return child_->ListAssets(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -702,12 +715,13 @@ LivestreamServiceLogging::ListAssets(
 
 StatusOr<google::cloud::video::livestream::v1::Pool>
 LivestreamServiceLogging::GetPool(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::video::livestream::v1::GetPoolRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::video::livestream::v1::GetPoolRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::video::livestream::v1::GetPoolRequest const& request) {
         return child_->GetPool(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -715,30 +729,31 @@ LivestreamServiceLogging::GetPool(
 
 future<StatusOr<google::longrunning::Operation>>
 LivestreamServiceLogging::AsyncUpdatePool(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::video::livestream::v1::UpdatePoolRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::video::livestream::v1::UpdatePoolRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::video::livestream::v1::UpdatePoolRequest const&
-                 request) {
-        return child_->AsyncUpdatePool(cq, std::move(context),
-                                       std::move(options), request);
+             google::cloud::video::livestream::v1::UpdatePoolRequest const& request) {
+        return child_->AsyncUpdatePool(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> LivestreamServiceLogging::UpdatePool(
-    grpc::ClientContext& context, Options options,
-    google::cloud::video::livestream::v1::UpdatePoolRequest const& request) {
+StatusOr<google::longrunning::Operation>
+LivestreamServiceLogging::UpdatePool(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::video::livestream::v1::UpdatePoolRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::video::livestream::v1::UpdatePoolRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::video::livestream::v1::UpdatePoolRequest const& request) {
         return child_->UpdatePool(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -746,10 +761,12 @@ StatusOr<google::longrunning::Operation> LivestreamServiceLogging::UpdatePool(
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 LivestreamServiceLogging::ListLocations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::location::ListLocationsRequest const& request) {
         return child_->ListLocations(context, options, request);
       },
@@ -758,10 +775,12 @@ LivestreamServiceLogging::ListLocations(
 
 StatusOr<google::cloud::location::Location>
 LivestreamServiceLogging::GetLocation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::location::GetLocationRequest const& request) {
         return child_->GetLocation(context, options, request);
       },
@@ -770,43 +789,54 @@ LivestreamServiceLogging::GetLocation(
 
 StatusOr<google::longrunning::ListOperationsResponse>
 LivestreamServiceLogging::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::ListOperationsRequest const& request) {
         return child_->ListOperations(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> LivestreamServiceLogging::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::Operation>
+LivestreamServiceLogging::GetOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::GetOperationRequest const& request) {
         return child_->GetOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status LivestreamServiceLogging::DeleteOperation(
-    grpc::ClientContext& context, Options const& options,
+Status
+LivestreamServiceLogging::DeleteOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::DeleteOperationRequest const& request) {
         return child_->DeleteOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status LivestreamServiceLogging::CancelOperation(
-    grpc::ClientContext& context, Options const& options,
+Status
+LivestreamServiceLogging::CancelOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::CancelOperationRequest const& request) {
         return child_->CancelOperation(context, options, request);
       },
@@ -824,8 +854,8 @@ LivestreamServiceLogging::AsyncGetOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(cq, std::move(context),
-                                         std::move(options), request);
+        return child_->AsyncGetOperation(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -841,8 +871,8 @@ future<Status> LivestreamServiceLogging::AsyncCancelOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::CancelOperationRequest const& request) {
-        return child_->AsyncCancelOperation(cq, std::move(context),
-                                            std::move(options), request);
+        return child_->AsyncCancelOperation(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);

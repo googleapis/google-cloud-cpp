@@ -26,44 +26,35 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-AgentEndpointServiceConnectionIdempotencyPolicy::
-    ~AgentEndpointServiceConnectionIdempotencyPolicy() = default;
+AgentEndpointServiceConnectionIdempotencyPolicy::~AgentEndpointServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<AgentEndpointServiceConnectionIdempotencyPolicy>
 AgentEndpointServiceConnectionIdempotencyPolicy::clone() const {
-  return std::make_unique<AgentEndpointServiceConnectionIdempotencyPolicy>(
-      *this);
+  return std::make_unique<AgentEndpointServiceConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency AgentEndpointServiceConnectionIdempotencyPolicy::StartNextTask(
-    google::cloud::osconfig::agentendpoint::v1::StartNextTaskRequest const&) {
+Idempotency AgentEndpointServiceConnectionIdempotencyPolicy::StartNextTask(google::cloud::osconfig::agentendpoint::v1::StartNextTaskRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency AgentEndpointServiceConnectionIdempotencyPolicy::ReportTaskProgress(
-    google::cloud::osconfig::agentendpoint::v1::
-        ReportTaskProgressRequest const&) {
+Idempotency AgentEndpointServiceConnectionIdempotencyPolicy::ReportTaskProgress(google::cloud::osconfig::agentendpoint::v1::ReportTaskProgressRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency AgentEndpointServiceConnectionIdempotencyPolicy::ReportTaskComplete(
-    google::cloud::osconfig::agentendpoint::v1::
-        ReportTaskCompleteRequest const&) {
+Idempotency AgentEndpointServiceConnectionIdempotencyPolicy::ReportTaskComplete(google::cloud::osconfig::agentendpoint::v1::ReportTaskCompleteRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency AgentEndpointServiceConnectionIdempotencyPolicy::RegisterAgent(
-    google::cloud::osconfig::agentendpoint::v1::RegisterAgentRequest const&) {
+Idempotency AgentEndpointServiceConnectionIdempotencyPolicy::RegisterAgent(google::cloud::osconfig::agentendpoint::v1::RegisterAgentRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency AgentEndpointServiceConnectionIdempotencyPolicy::ReportInventory(
-    google::cloud::osconfig::agentendpoint::v1::ReportInventoryRequest const&) {
+Idempotency AgentEndpointServiceConnectionIdempotencyPolicy::ReportInventory(google::cloud::osconfig::agentendpoint::v1::ReportInventoryRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<AgentEndpointServiceConnectionIdempotencyPolicy>
-MakeDefaultAgentEndpointServiceConnectionIdempotencyPolicy() {
+    MakeDefaultAgentEndpointServiceConnectionIdempotencyPolicy() {
   return std::make_unique<AgentEndpointServiceConnectionIdempotencyPolicy>();
 }
 

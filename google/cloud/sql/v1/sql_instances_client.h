@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_SQL_INSTANCES_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_SQL_INSTANCES_CLIENT_H
 
-#include "google/cloud/sql/v1/sql_instances_rest_connection.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
+#include "google/cloud/sql/v1/sql_instances_rest_connection.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -61,28 +61,23 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class SqlInstancesServiceClient {
  public:
-  explicit SqlInstancesServiceClient(
-      std::shared_ptr<SqlInstancesServiceConnection> connection,
-      Options opts = {});
+  explicit SqlInstancesServiceClient(std::shared_ptr<SqlInstancesServiceConnection> connection, Options opts = {});
   ~SqlInstancesServiceClient();
 
   ///@{
   /// @name Copy and move support
   SqlInstancesServiceClient(SqlInstancesServiceClient const&) = default;
-  SqlInstancesServiceClient& operator=(SqlInstancesServiceClient const&) =
-      default;
+  SqlInstancesServiceClient& operator=(SqlInstancesServiceClient const&) = default;
   SqlInstancesServiceClient(SqlInstancesServiceClient&&) = default;
   SqlInstancesServiceClient& operator=(SqlInstancesServiceClient&&) = default;
   ///@}
 
   ///@{
   /// @name Equality
-  friend bool operator==(SqlInstancesServiceClient const& a,
-                         SqlInstancesServiceClient const& b) {
+  friend bool operator==(SqlInstancesServiceClient const& a, SqlInstancesServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(SqlInstancesServiceClient const& a,
-                         SqlInstancesServiceClient const& b) {
+  friend bool operator!=(SqlInstancesServiceClient const& a, SqlInstancesServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -120,9 +115,8 @@ class SqlInstancesServiceClient {
   /// [google.cloud.sql.v1.SqlInstancesAddServerCaRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L346}
   ///
   // clang-format on
-  StatusOr<google::cloud::sql::v1::Operation> AddServerCa(
-      google::cloud::sql::v1::SqlInstancesAddServerCaRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::sql::v1::Operation>
+  AddServerCa(google::cloud::sql::v1::SqlInstancesAddServerCaRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -152,9 +146,8 @@ class SqlInstancesServiceClient {
   /// [google.cloud.sql.v1.SqlInstancesCloneRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L355}
   ///
   // clang-format on
-  StatusOr<google::cloud::sql::v1::Operation> Clone(
-      google::cloud::sql::v1::SqlInstancesCloneRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::sql::v1::Operation>
+  Clone(google::cloud::sql::v1::SqlInstancesCloneRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -183,9 +176,8 @@ class SqlInstancesServiceClient {
   /// [google.cloud.sql.v1.SqlInstancesDeleteRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L367}
   ///
   // clang-format on
-  StatusOr<google::cloud::sql::v1::Operation> Delete(
-      google::cloud::sql::v1::SqlInstancesDeleteRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::sql::v1::Operation>
+  Delete(google::cloud::sql::v1::SqlInstancesDeleteRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -215,9 +207,8 @@ class SqlInstancesServiceClient {
   /// [google.cloud.sql.v1.SqlInstancesDemoteMasterRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L376}
   ///
   // clang-format on
-  StatusOr<google::cloud::sql::v1::Operation> DemoteMaster(
-      google::cloud::sql::v1::SqlInstancesDemoteMasterRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::sql::v1::Operation>
+  DemoteMaster(google::cloud::sql::v1::SqlInstancesDemoteMasterRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -247,9 +238,8 @@ class SqlInstancesServiceClient {
   /// [google.cloud.sql.v1.SqlInstancesDemoteRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L387}
   ///
   // clang-format on
-  StatusOr<google::cloud::sql::v1::Operation> Demote(
-      google::cloud::sql::v1::SqlInstancesDemoteRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::sql::v1::Operation>
+  Demote(google::cloud::sql::v1::SqlInstancesDemoteRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -279,9 +269,8 @@ class SqlInstancesServiceClient {
   /// [google.cloud.sql.v1.SqlInstancesExportRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L399}
   ///
   // clang-format on
-  StatusOr<google::cloud::sql::v1::Operation> Export(
-      google::cloud::sql::v1::SqlInstancesExportRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::sql::v1::Operation>
+  Export(google::cloud::sql::v1::SqlInstancesExportRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -317,9 +306,8 @@ class SqlInstancesServiceClient {
   /// [google.cloud.sql.v1.SqlInstancesFailoverRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L410}
   ///
   // clang-format on
-  StatusOr<google::cloud::sql::v1::Operation> Failover(
-      google::cloud::sql::v1::SqlInstancesFailoverRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::sql::v1::Operation>
+  Failover(google::cloud::sql::v1::SqlInstancesFailoverRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -348,9 +336,8 @@ class SqlInstancesServiceClient {
   /// [google.cloud.sql.v1.SqlInstancesReencryptRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L633}
   ///
   // clang-format on
-  StatusOr<google::cloud::sql::v1::Operation> Reencrypt(
-      google::cloud::sql::v1::SqlInstancesReencryptRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::sql::v1::Operation>
+  Reencrypt(google::cloud::sql::v1::SqlInstancesReencryptRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -379,9 +366,8 @@ class SqlInstancesServiceClient {
   /// [google.cloud.sql.v1.SqlInstancesGetRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L421}
   ///
   // clang-format on
-  StatusOr<google::cloud::sql::v1::DatabaseInstance> Get(
-      google::cloud::sql::v1::SqlInstancesGetRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::sql::v1::DatabaseInstance>
+  Get(google::cloud::sql::v1::SqlInstancesGetRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -411,9 +397,8 @@ class SqlInstancesServiceClient {
   /// [google.cloud.sql.v1.SqlInstancesImportRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L430}
   ///
   // clang-format on
-  StatusOr<google::cloud::sql::v1::Operation> Import(
-      google::cloud::sql::v1::SqlInstancesImportRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::sql::v1::Operation>
+  Import(google::cloud::sql::v1::SqlInstancesImportRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -442,9 +427,8 @@ class SqlInstancesServiceClient {
   /// [google.cloud.sql.v1.SqlInstancesInsertRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L441}
   ///
   // clang-format on
-  StatusOr<google::cloud::sql::v1::Operation> Insert(
-      google::cloud::sql::v1::SqlInstancesInsertRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::sql::v1::Operation>
+  Insert(google::cloud::sql::v1::SqlInstancesInsertRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -482,9 +466,8 @@ class SqlInstancesServiceClient {
   /// [google.cloud.sql.v1.SqlInstancesListRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L450}
   ///
   // clang-format on
-  StreamRange<google::cloud::sql::v1::DatabaseInstance> List(
-      google::cloud::sql::v1::SqlInstancesListRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::sql::v1::DatabaseInstance>
+  List(google::cloud::sql::v1::SqlInstancesListRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -518,9 +501,7 @@ class SqlInstancesServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::sql::v1::InstancesListServerCasResponse>
-  ListServerCas(
-      google::cloud::sql::v1::SqlInstancesListServerCasRequest const& request,
-      Options opts = {});
+  ListServerCas(google::cloud::sql::v1::SqlInstancesListServerCasRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -550,9 +531,8 @@ class SqlInstancesServiceClient {
   /// [google.cloud.sql.v1.SqlInstancesPatchRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L486}
   ///
   // clang-format on
-  StatusOr<google::cloud::sql::v1::Operation> Patch(
-      google::cloud::sql::v1::SqlInstancesPatchRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::sql::v1::Operation>
+  Patch(google::cloud::sql::v1::SqlInstancesPatchRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -583,9 +563,8 @@ class SqlInstancesServiceClient {
   /// [google.cloud.sql.v1.SqlInstancesPromoteReplicaRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L497}
   ///
   // clang-format on
-  StatusOr<google::cloud::sql::v1::Operation> PromoteReplica(
-      google::cloud::sql::v1::SqlInstancesPromoteReplicaRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::sql::v1::Operation>
+  PromoteReplica(google::cloud::sql::v1::SqlInstancesPromoteReplicaRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -615,9 +594,8 @@ class SqlInstancesServiceClient {
   /// [google.cloud.sql.v1.SqlInstancesSwitchoverRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L515}
   ///
   // clang-format on
-  StatusOr<google::cloud::sql::v1::Operation> Switchover(
-      google::cloud::sql::v1::SqlInstancesSwitchoverRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::sql::v1::Operation>
+  Switchover(google::cloud::sql::v1::SqlInstancesSwitchoverRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -647,9 +625,8 @@ class SqlInstancesServiceClient {
   /// [google.cloud.sql.v1.SqlInstancesResetSslConfigRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L530}
   ///
   // clang-format on
-  StatusOr<google::cloud::sql::v1::Operation> ResetSslConfig(
-      google::cloud::sql::v1::SqlInstancesResetSslConfigRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::sql::v1::Operation>
+  ResetSslConfig(google::cloud::sql::v1::SqlInstancesResetSslConfigRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -678,9 +655,8 @@ class SqlInstancesServiceClient {
   /// [google.cloud.sql.v1.SqlInstancesRestartRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L539}
   ///
   // clang-format on
-  StatusOr<google::cloud::sql::v1::Operation> Restart(
-      google::cloud::sql::v1::SqlInstancesRestartRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::sql::v1::Operation>
+  Restart(google::cloud::sql::v1::SqlInstancesRestartRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -710,9 +686,8 @@ class SqlInstancesServiceClient {
   /// [google.cloud.sql.v1.SqlInstancesRestoreBackupRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L548}
   ///
   // clang-format on
-  StatusOr<google::cloud::sql::v1::Operation> RestoreBackup(
-      google::cloud::sql::v1::SqlInstancesRestoreBackupRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::sql::v1::Operation>
+  RestoreBackup(google::cloud::sql::v1::SqlInstancesRestoreBackupRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -744,9 +719,8 @@ class SqlInstancesServiceClient {
   /// [google.cloud.sql.v1.SqlInstancesRotateServerCaRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L559}
   ///
   // clang-format on
-  StatusOr<google::cloud::sql::v1::Operation> RotateServerCa(
-      google::cloud::sql::v1::SqlInstancesRotateServerCaRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::sql::v1::Operation>
+  RotateServerCa(google::cloud::sql::v1::SqlInstancesRotateServerCaRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -775,9 +749,8 @@ class SqlInstancesServiceClient {
   /// [google.cloud.sql.v1.SqlInstancesStartReplicaRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L570}
   ///
   // clang-format on
-  StatusOr<google::cloud::sql::v1::Operation> StartReplica(
-      google::cloud::sql::v1::SqlInstancesStartReplicaRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::sql::v1::Operation>
+  StartReplica(google::cloud::sql::v1::SqlInstancesStartReplicaRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -806,9 +779,8 @@ class SqlInstancesServiceClient {
   /// [google.cloud.sql.v1.SqlInstancesStopReplicaRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L579}
   ///
   // clang-format on
-  StatusOr<google::cloud::sql::v1::Operation> StopReplica(
-      google::cloud::sql::v1::SqlInstancesStopReplicaRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::sql::v1::Operation>
+  StopReplica(google::cloud::sql::v1::SqlInstancesStopReplicaRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -838,9 +810,8 @@ class SqlInstancesServiceClient {
   /// [google.cloud.sql.v1.SqlInstancesTruncateLogRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L588}
   ///
   // clang-format on
-  StatusOr<google::cloud::sql::v1::Operation> TruncateLog(
-      google::cloud::sql::v1::SqlInstancesTruncateLogRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::sql::v1::Operation>
+  TruncateLog(google::cloud::sql::v1::SqlInstancesTruncateLogRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -870,9 +841,8 @@ class SqlInstancesServiceClient {
   /// [google.cloud.sql.v1.SqlInstancesUpdateRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L611}
   ///
   // clang-format on
-  StatusOr<google::cloud::sql::v1::Operation> Update(
-      google::cloud::sql::v1::SqlInstancesUpdateRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::sql::v1::Operation>
+  Update(google::cloud::sql::v1::SqlInstancesUpdateRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -904,10 +874,8 @@ class SqlInstancesServiceClient {
   /// [google.cloud.sql.v1.SslCert]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L1418}
   ///
   // clang-format on
-  StatusOr<google::cloud::sql::v1::SslCert> CreateEphemeral(
-      google::cloud::sql::v1::SqlInstancesCreateEphemeralCertRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::cloud::sql::v1::SslCert>
+  CreateEphemeral(google::cloud::sql::v1::SqlInstancesCreateEphemeralCertRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -936,10 +904,8 @@ class SqlInstancesServiceClient {
   /// [google.cloud.sql.v1.SqlInstancesRescheduleMaintenanceRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L622}
   ///
   // clang-format on
-  StatusOr<google::cloud::sql::v1::Operation> RescheduleMaintenance(
-      google::cloud::sql::v1::SqlInstancesRescheduleMaintenanceRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::cloud::sql::v1::Operation>
+  RescheduleMaintenance(google::cloud::sql::v1::SqlInstancesRescheduleMaintenanceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -968,12 +934,8 @@ class SqlInstancesServiceClient {
   /// [google.cloud.sql.v1.SqlInstancesVerifyExternalSyncSettingsResponse]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L904}
   ///
   // clang-format on
-  StatusOr<
-      google::cloud::sql::v1::SqlInstancesVerifyExternalSyncSettingsResponse>
-  VerifyExternalSyncSettings(
-      google::cloud::sql::v1::
-          SqlInstancesVerifyExternalSyncSettingsRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::sql::v1::SqlInstancesVerifyExternalSyncSettingsResponse>
+  VerifyExternalSyncSettings(google::cloud::sql::v1::SqlInstancesVerifyExternalSyncSettingsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1002,10 +964,8 @@ class SqlInstancesServiceClient {
   /// [google.cloud.sql.v1.SqlInstancesStartExternalSyncRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L756}
   ///
   // clang-format on
-  StatusOr<google::cloud::sql::v1::Operation> StartExternalSync(
-      google::cloud::sql::v1::SqlInstancesStartExternalSyncRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::cloud::sql::v1::Operation>
+  StartExternalSync(google::cloud::sql::v1::SqlInstancesStartExternalSyncRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1034,10 +994,8 @@ class SqlInstancesServiceClient {
   /// [google.cloud.sql.v1.SqlInstancesPerformDiskShrinkRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L599}
   ///
   // clang-format on
-  StatusOr<google::cloud::sql::v1::Operation> PerformDiskShrink(
-      google::cloud::sql::v1::SqlInstancesPerformDiskShrinkRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::cloud::sql::v1::Operation>
+  PerformDiskShrink(google::cloud::sql::v1::SqlInstancesPerformDiskShrinkRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1067,10 +1025,7 @@ class SqlInstancesServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::sql::v1::SqlInstancesGetDiskShrinkConfigResponse>
-  GetDiskShrinkConfig(
-      google::cloud::sql::v1::SqlInstancesGetDiskShrinkConfigRequest const&
-          request,
-      Options opts = {});
+  GetDiskShrinkConfig(google::cloud::sql::v1::SqlInstancesGetDiskShrinkConfigRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1099,10 +1054,8 @@ class SqlInstancesServiceClient {
   /// [google.cloud.sql.v1.SqlInstancesResetReplicaSizeRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L787}
   ///
   // clang-format on
-  StatusOr<google::cloud::sql::v1::Operation> ResetReplicaSize(
-      google::cloud::sql::v1::SqlInstancesResetReplicaSizeRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::cloud::sql::v1::Operation>
+  ResetReplicaSize(google::cloud::sql::v1::SqlInstancesResetReplicaSizeRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1132,10 +1085,7 @@ class SqlInstancesServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::sql::v1::SqlInstancesGetLatestRecoveryTimeResponse>
-  GetLatestRecoveryTime(
-      google::cloud::sql::v1::SqlInstancesGetLatestRecoveryTimeRequest const&
-          request,
-      Options opts = {});
+  GetLatestRecoveryTime(google::cloud::sql::v1::SqlInstancesGetLatestRecoveryTimeRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1165,10 +1115,7 @@ class SqlInstancesServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::sql::v1::SqlInstancesAcquireSsrsLeaseResponse>
-  AcquireSsrsLease(
-      google::cloud::sql::v1::SqlInstancesAcquireSsrsLeaseRequest const&
-          request,
-      Options opts = {});
+  AcquireSsrsLease(google::cloud::sql::v1::SqlInstancesAcquireSsrsLeaseRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1198,10 +1145,7 @@ class SqlInstancesServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::sql::v1::SqlInstancesReleaseSsrsLeaseResponse>
-  ReleaseSsrsLease(
-      google::cloud::sql::v1::SqlInstancesReleaseSsrsLeaseRequest const&
-          request,
-      Options opts = {});
+  ReleaseSsrsLease(google::cloud::sql::v1::SqlInstancesReleaseSsrsLeaseRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<SqlInstancesServiceConnection> connection_;

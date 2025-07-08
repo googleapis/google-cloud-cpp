@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAM_V3_PRINCIPAL_ACCESS_BOUNDARY_POLICIES_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAM_V3_PRINCIPAL_ACCESS_BOUNDARY_POLICIES_OPTIONS_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/iam/v3/principal_access_boundary_policies_connection.h"
 #include "google/cloud/iam/v3/principal_access_boundary_policies_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -55,8 +55,7 @@ struct PrincipalAccessBoundaryPoliciesBackoffPolicyOption {
  * @ingroup google-cloud-iam-options
  */
 struct PrincipalAccessBoundaryPoliciesConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<
-      PrincipalAccessBoundaryPoliciesConnectionIdempotencyPolicy>;
+  using Type = std::shared_ptr<PrincipalAccessBoundaryPoliciesConnectionIdempotencyPolicy>;
 };
 
 /**
@@ -74,11 +73,11 @@ struct PrincipalAccessBoundaryPoliciesPollingPolicyOption {
  *
  * @ingroup google-cloud-iam-options
  */
-using PrincipalAccessBoundaryPoliciesPolicyOptionList = OptionList<
-    PrincipalAccessBoundaryPoliciesRetryPolicyOption,
-    PrincipalAccessBoundaryPoliciesBackoffPolicyOption,
-    PrincipalAccessBoundaryPoliciesPollingPolicyOption,
-    PrincipalAccessBoundaryPoliciesConnectionIdempotencyPolicyOption>;
+using PrincipalAccessBoundaryPoliciesPolicyOptionList =
+    OptionList<PrincipalAccessBoundaryPoliciesRetryPolicyOption,
+               PrincipalAccessBoundaryPoliciesBackoffPolicyOption,
+               PrincipalAccessBoundaryPoliciesPollingPolicyOption,
+               PrincipalAccessBoundaryPoliciesConnectionIdempotencyPolicyOption>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace iam_v3

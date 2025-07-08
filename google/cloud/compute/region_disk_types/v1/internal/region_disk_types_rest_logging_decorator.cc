@@ -29,20 +29,20 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 RegionDiskTypesRestLogging::RegionDiskTypesRestLogging(
     std::shared_ptr<RegionDiskTypesRestStub> child,
-    TracingOptions tracing_options, std::set<std::string> components)
-    : child_(std::move(child)),
-      tracing_options_(std::move(tracing_options)),
+    TracingOptions tracing_options,
+    std::set<std::string> components)
+    : child_(std::move(child)), tracing_options_(std::move(tracing_options)),
       components_(std::move(components)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::DiskType>
 RegionDiskTypesRestLogging::GetDiskType(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::region_disk_types::v1::
-        GetDiskTypeRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::region_disk_types::v1::GetDiskTypeRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::cloud::cpp::compute::region_disk_types::v1::
-                 GetDiskTypeRequest const& request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
+             google::cloud::cpp::compute::region_disk_types::v1::GetDiskTypeRequest const& request) {
         return child_->GetDiskType(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -50,13 +50,13 @@ RegionDiskTypesRestLogging::GetDiskType(
 
 StatusOr<google::cloud::cpp::compute::v1::RegionDiskTypeList>
 RegionDiskTypesRestLogging::ListRegionDiskTypes(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::region_disk_types::v1::
-        ListRegionDiskTypesRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::region_disk_types::v1::ListRegionDiskTypesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::cloud::cpp::compute::region_disk_types::v1::
-                 ListRegionDiskTypesRequest const& request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
+             google::cloud::cpp::compute::region_disk_types::v1::ListRegionDiskTypesRequest const& request) {
         return child_->ListRegionDiskTypes(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);

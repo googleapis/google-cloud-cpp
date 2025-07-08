@@ -31,11 +31,10 @@ SystemPolicyV1Auth::SystemPolicyV1Auth(
     std::shared_ptr<SystemPolicyV1Stub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::binaryauthorization::v1::Policy>
-SystemPolicyV1Auth::GetSystemPolicy(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::binaryauthorization::v1::GetSystemPolicyRequest const&
-        request) {
+StatusOr<google::cloud::binaryauthorization::v1::Policy> SystemPolicyV1Auth::GetSystemPolicy(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::binaryauthorization::v1::GetSystemPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetSystemPolicy(context, options, request);

@@ -33,8 +33,7 @@ using ::google::cloud::container_v1::MakeClusterManagerConnection;
 /// @deprecated Use container_v1::ClusterManagerConnection directly.
 using ::google::cloud::container_v1::ClusterManagerConnection;
 
-/// @deprecated Use container_v1::ClusterManagerLimitedErrorCountRetryPolicy
-/// directly.
+/// @deprecated Use container_v1::ClusterManagerLimitedErrorCountRetryPolicy directly.
 using ::google::cloud::container_v1::ClusterManagerLimitedErrorCountRetryPolicy;
 
 /// @deprecated Use container_v1::ClusterManagerLimitedTimeRetryPolicy directly.

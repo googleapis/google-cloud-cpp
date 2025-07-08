@@ -30,10 +30,8 @@ namespace cloud {
 namespace videointelligence_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use
-/// videointelligence_v1_mocks::MockVideoIntelligenceServiceConnection directly.
-using ::google::cloud::videointelligence_v1_mocks::
-    MockVideoIntelligenceServiceConnection;
+/// @deprecated Use videointelligence_v1_mocks::MockVideoIntelligenceServiceConnection directly.
+using ::google::cloud::videointelligence_v1_mocks::MockVideoIntelligenceServiceConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace videointelligence_mocks

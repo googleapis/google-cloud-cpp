@@ -17,12 +17,12 @@
 // source: google/devtools/cloudprofiler/v2/profiler.proto
 
 #include "google/cloud/profiler/v2/internal/export_connection_impl.h"
-#include "google/cloud/profiler/v2/internal/export_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
+#include "google/cloud/profiler/v2/internal/export_option_defaults.h"
 #include <memory>
 #include <utility>
 
@@ -32,62 +32,54 @@ namespace profiler_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<profiler_v2::ExportServiceRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<profiler_v2::ExportServiceRetryPolicy>
+retry_policy(Options const& options) {
   return options.get<profiler_v2::ExportServiceRetryPolicyOption>()->clone();
 }
 
-std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+std::unique_ptr<BackoffPolicy>
+backoff_policy(Options const& options) {
   return options.get<profiler_v2::ExportServiceBackoffPolicyOption>()->clone();
 }
 
 std::unique_ptr<profiler_v2::ExportServiceConnectionIdempotencyPolicy>
 idempotency_policy(Options const& options) {
-  return options
-      .get<profiler_v2::ExportServiceConnectionIdempotencyPolicyOption>()
-      ->clone();
+  return options.get<profiler_v2::ExportServiceConnectionIdempotencyPolicyOption>()->clone();
 }
 
-}  // namespace
+} // namespace
 
 ExportServiceConnectionImpl::ExportServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<profiler_v2_internal::ExportServiceStub> stub,
     Options options)
-    : background_(std::move(background)),
-      stub_(std::move(stub)),
-      options_(internal::MergeOptions(std::move(options),
-                                      ExportServiceConnection::options())) {}
+  : background_(std::move(background)), stub_(std::move(stub)),
+    options_(internal::MergeOptions(
+        std::move(options),
+        ExportServiceConnection::options())) {}
 
 StreamRange<google::devtools::cloudprofiler::v2::Profile>
-ExportServiceConnectionImpl::ListProfiles(
-    google::devtools::cloudprofiler::v2::ListProfilesRequest request) {
+ExportServiceConnectionImpl::ListProfiles(google::devtools::cloudprofiler::v2::ListProfilesRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListProfiles(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::devtools::cloudprofiler::v2::Profile>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::devtools::cloudprofiler::v2::Profile>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<profiler_v2::ExportServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<profiler_v2::ExportServiceRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::devtools::cloudprofiler::v2::ListProfilesRequest const& r) {
+          Options const& options, google::devtools::cloudprofiler::v2::ListProfilesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](
-                grpc::ClientContext& context, Options const& options,
-                google::devtools::cloudprofiler::v2::ListProfilesRequest const&
-                    request) {
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::devtools::cloudprofiler::v2::ListProfilesRequest const& request) {
               return stub->ListProfiles(context, options, request);
             },
             options, r, function_name);
       },
       [](google::devtools::cloudprofiler::v2::ListProfilesResponse r) {
-        std::vector<google::devtools::cloudprofiler::v2::Profile> result(
-            r.profiles().size());
+        std::vector<google::devtools::cloudprofiler::v2::Profile> result(r.profiles().size());
         auto& messages = *r.mutable_profiles();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;

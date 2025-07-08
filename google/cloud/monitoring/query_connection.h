@@ -33,8 +33,7 @@ using ::google::cloud::monitoring_v3::MakeQueryServiceConnection;
 /// @deprecated Use monitoring_v3::QueryServiceConnection directly.
 using ::google::cloud::monitoring_v3::QueryServiceConnection;
 
-/// @deprecated Use monitoring_v3::QueryServiceLimitedErrorCountRetryPolicy
-/// directly.
+/// @deprecated Use monitoring_v3::QueryServiceLimitedErrorCountRetryPolicy directly.
 using ::google::cloud::monitoring_v3::QueryServiceLimitedErrorCountRetryPolicy;
 
 /// @deprecated Use monitoring_v3::QueryServiceLimitedTimeRetryPolicy directly.

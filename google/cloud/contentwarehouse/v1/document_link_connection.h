@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTENTWAREHOUSE_V1_DOCUMENT_LINK_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTENTWAREHOUSE_V1_DOCUMENT_LINK_CONNECTION_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/contentwarehouse/v1/document_link_connection_idempotency_policy.h"
 #include "google/cloud/contentwarehouse/v1/internal/document_link_retry_traits.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -52,8 +52,7 @@ class DocumentLinkServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class DocumentLinkServiceLimitedErrorCountRetryPolicy
-    : public DocumentLinkServiceRetryPolicy {
+class DocumentLinkServiceLimitedErrorCountRetryPolicy : public DocumentLinkServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -63,16 +62,14 @@ class DocumentLinkServiceLimitedErrorCountRetryPolicy
    *     @p maximum_failures == 0.
    */
   explicit DocumentLinkServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   DocumentLinkServiceLimitedErrorCountRetryPolicy(
       DocumentLinkServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : DocumentLinkServiceLimitedErrorCountRetryPolicy(
-            rhs.maximum_failures()) {}
+    : DocumentLinkServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   DocumentLinkServiceLimitedErrorCountRetryPolicy(
       DocumentLinkServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : DocumentLinkServiceLimitedErrorCountRetryPolicy(
-            rhs.maximum_failures()) {}
+    : DocumentLinkServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -92,9 +89,7 @@ class DocumentLinkServiceLimitedErrorCountRetryPolicy
   using BaseType = DocumentLinkServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      contentwarehouse_v1_internal::DocumentLinkServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<contentwarehouse_v1_internal::DocumentLinkServiceRetryTraits> impl_;
 };
 
 /**
@@ -107,8 +102,7 @@ class DocumentLinkServiceLimitedErrorCountRetryPolicy
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class DocumentLinkServiceLimitedTimeRetryPolicy
-    : public DocumentLinkServiceRetryPolicy {
+class DocumentLinkServiceLimitedTimeRetryPolicy : public DocumentLinkServiceRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -133,14 +127,12 @@ class DocumentLinkServiceLimitedTimeRetryPolicy
   template <typename DurationRep, typename DurationPeriod>
   explicit DocumentLinkServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  DocumentLinkServiceLimitedTimeRetryPolicy(
-      DocumentLinkServiceLimitedTimeRetryPolicy&& rhs) noexcept
-      : DocumentLinkServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  DocumentLinkServiceLimitedTimeRetryPolicy(
-      DocumentLinkServiceLimitedTimeRetryPolicy const& rhs) noexcept
-      : DocumentLinkServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  DocumentLinkServiceLimitedTimeRetryPolicy(DocumentLinkServiceLimitedTimeRetryPolicy&& rhs) noexcept
+    : DocumentLinkServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  DocumentLinkServiceLimitedTimeRetryPolicy(DocumentLinkServiceLimitedTimeRetryPolicy const& rhs) noexcept
+    : DocumentLinkServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -162,23 +154,20 @@ class DocumentLinkServiceLimitedTimeRetryPolicy
   using BaseType = DocumentLinkServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      contentwarehouse_v1_internal::DocumentLinkServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<contentwarehouse_v1_internal::DocumentLinkServiceRetryTraits> impl_;
 };
 
 /**
  * The `DocumentLinkServiceConnection` object for `DocumentLinkServiceClient`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `DocumentLinkServiceClient`. This allows users to inject custom
- * behavior (e.g., with a Google Mock object) when writing tests that use
- * objects of type `DocumentLinkServiceClient`.
+ * sets in `DocumentLinkServiceClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `DocumentLinkServiceClient`.
  *
  * To create a concrete instance, see `MakeDocumentLinkServiceConnection()`.
  *
- * For mocking, see
- * `contentwarehouse_v1_mocks::MockDocumentLinkServiceConnection`.
+ * For mocking, see `contentwarehouse_v1_mocks::MockDocumentLinkServiceConnection`.
  */
 class DocumentLinkServiceConnection {
  public:
@@ -186,40 +175,31 @@ class DocumentLinkServiceConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<
-      google::cloud::contentwarehouse::v1::ListLinkedTargetsResponse>
-  ListLinkedTargets(
-      google::cloud::contentwarehouse::v1::ListLinkedTargetsRequest const&
-          request);
+  virtual StatusOr<google::cloud::contentwarehouse::v1::ListLinkedTargetsResponse>
+  ListLinkedTargets(google::cloud::contentwarehouse::v1::ListLinkedTargetsRequest const& request);
 
   virtual StreamRange<google::cloud::contentwarehouse::v1::DocumentLink>
-  ListLinkedSources(
-      google::cloud::contentwarehouse::v1::ListLinkedSourcesRequest request);
+  ListLinkedSources(google::cloud::contentwarehouse::v1::ListLinkedSourcesRequest request);
 
   virtual StatusOr<google::cloud::contentwarehouse::v1::DocumentLink>
-  CreateDocumentLink(
-      google::cloud::contentwarehouse::v1::CreateDocumentLinkRequest const&
-          request);
+  CreateDocumentLink(google::cloud::contentwarehouse::v1::CreateDocumentLinkRequest const& request);
 
-  virtual Status DeleteDocumentLink(
-      google::cloud::contentwarehouse::v1::DeleteDocumentLinkRequest const&
-          request);
+  virtual Status
+  DeleteDocumentLink(google::cloud::contentwarehouse::v1::DeleteDocumentLinkRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 };
 
 /**
- * A factory function to construct an object of type
- * `DocumentLinkServiceConnection`.
+ * A factory function to construct an object of type `DocumentLinkServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of
- * DocumentLinkServiceClient.
+ * should be passed as an argument to the constructor of DocumentLinkServiceClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `DocumentLinkServiceConnection`. Expected options are any of the
- * types in the following option lists:
+ * returned `DocumentLinkServiceConnection`. Expected options are any of the types in
+ * the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
@@ -229,11 +209,11 @@ class DocumentLinkServiceConnection {
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
- * @param options (optional) Configure the `DocumentLinkServiceConnection`
- * created by this function.
+ * @param options (optional) Configure the `DocumentLinkServiceConnection` created by
+ * this function.
  */
-std::shared_ptr<DocumentLinkServiceConnection>
-MakeDocumentLinkServiceConnection(Options options = {});
+std::shared_ptr<DocumentLinkServiceConnection> MakeDocumentLinkServiceConnection(
+    Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace contentwarehouse_v1

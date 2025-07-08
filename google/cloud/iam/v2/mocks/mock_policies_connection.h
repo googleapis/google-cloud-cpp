@@ -46,23 +46,25 @@ class MockPoliciesConnection : public iam_v2::PoliciesConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD((StreamRange<google::iam::v2::Policy>), ListPolicies,
-              (google::iam::v2::ListPoliciesRequest request), (override));
+  MOCK_METHOD((StreamRange<google::iam::v2::Policy>),
+  ListPolicies,
+  (google::iam::v2::ListPoliciesRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v2::Policy>, GetPolicy,
-              (google::iam::v2::GetPolicyRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::iam::v2::Policy>,
+  GetPolicy,
+  (google::iam::v2::GetPolicyRequest const& request), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// CreatePolicy(Matcher<google::iam::v2::CreatePolicyRequest const&>(_)))
+  /// EXPECT_CALL(*mock, CreatePolicy(Matcher<google::iam::v2::CreatePolicyRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::iam::v2::Policy>>, CreatePolicy,
-              (google::iam::v2::CreatePolicyRequest const& request),
-              (override));
+  MOCK_METHOD(future<StatusOr<google::iam::v2::Policy>>,
+  CreatePolicy,
+  (google::iam::v2::CreatePolicyRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -70,32 +72,33 @@ class MockPoliciesConnection : public iam_v2::PoliciesConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, CreatePolicy(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreatePolicy,
-              (NoAwaitTag, google::iam::v2::CreatePolicyRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  CreatePolicy, (NoAwaitTag,
+    google::iam::v2::CreatePolicyRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreatePolicy(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, CreatePolicy(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::iam::v2::Policy>>, CreatePolicy,
-              (google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(future<StatusOr<google::iam::v2::Policy>>,
+  CreatePolicy, (
+    google::longrunning::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// UpdatePolicy(Matcher<google::iam::v2::UpdatePolicyRequest const&>(_)))
+  /// EXPECT_CALL(*mock, UpdatePolicy(Matcher<google::iam::v2::UpdatePolicyRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::iam::v2::Policy>>, UpdatePolicy,
-              (google::iam::v2::UpdatePolicyRequest const& request),
-              (override));
+  MOCK_METHOD(future<StatusOr<google::iam::v2::Policy>>,
+  UpdatePolicy,
+  (google::iam::v2::UpdatePolicyRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -103,32 +106,33 @@ class MockPoliciesConnection : public iam_v2::PoliciesConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, UpdatePolicy(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, UpdatePolicy,
-              (NoAwaitTag, google::iam::v2::UpdatePolicyRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  UpdatePolicy, (NoAwaitTag,
+    google::iam::v2::UpdatePolicyRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UpdatePolicy(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, UpdatePolicy(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::iam::v2::Policy>>, UpdatePolicy,
-              (google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(future<StatusOr<google::iam::v2::Policy>>,
+  UpdatePolicy, (
+    google::longrunning::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeletePolicy(Matcher<google::iam::v2::DeletePolicyRequest const&>(_)))
+  /// EXPECT_CALL(*mock, DeletePolicy(Matcher<google::iam::v2::DeletePolicyRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::iam::v2::Policy>>, DeletePolicy,
-              (google::iam::v2::DeletePolicyRequest const& request),
-              (override));
+  MOCK_METHOD(future<StatusOr<google::iam::v2::Policy>>,
+  DeletePolicy,
+  (google::iam::v2::DeletePolicyRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -136,24 +140,25 @@ class MockPoliciesConnection : public iam_v2::PoliciesConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, DeletePolicy(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeletePolicy,
-              (NoAwaitTag, google::iam::v2::DeletePolicyRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  DeletePolicy, (NoAwaitTag,
+    google::iam::v2::DeletePolicyRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeletePolicy(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, DeletePolicy(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::iam::v2::Policy>>, DeletePolicy,
-              (google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(future<StatusOr<google::iam::v2::Policy>>,
+  DeletePolicy, (
+    google::longrunning::Operation const& operation), (override));
 
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
-              (google::longrunning::GetOperationRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  GetOperation,
+  (google::longrunning::GetOperationRequest const& request), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

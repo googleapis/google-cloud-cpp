@@ -31,11 +31,10 @@ SiteSearchEngineServiceAuth::SiteSearchEngineServiceAuth(
     std::shared_ptr<SiteSearchEngineServiceStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::discoveryengine::v1::SiteSearchEngine>
-SiteSearchEngineServiceAuth::GetSiteSearchEngine(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::discoveryengine::v1::GetSiteSearchEngineRequest const&
-        request) {
+StatusOr<google::cloud::discoveryengine::v1::SiteSearchEngine> SiteSearchEngineServiceAuth::GetSiteSearchEngine(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::discoveryengine::v1::GetSiteSearchEngineRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetSiteSearchEngine(context, options, request);
@@ -43,30 +42,28 @@ SiteSearchEngineServiceAuth::GetSiteSearchEngine(
 
 future<StatusOr<google::longrunning::Operation>>
 SiteSearchEngineServiceAuth::AsyncCreateTargetSite(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::discoveryengine::v1::CreateTargetSiteRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::discoveryengine::v1::CreateTargetSiteRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreateTargetSite(cq, *std::move(context),
-                                            std::move(options), request);
+        return child->AsyncCreateTargetSite(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 SiteSearchEngineServiceAuth::CreateTargetSite(
-    grpc::ClientContext& context, Options options,
-    google::cloud::discoveryengine::v1::CreateTargetSiteRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::discoveryengine::v1::CreateTargetSiteRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateTargetSite(context, options, request);
@@ -74,38 +71,36 @@ SiteSearchEngineServiceAuth::CreateTargetSite(
 
 future<StatusOr<google::longrunning::Operation>>
 SiteSearchEngineServiceAuth::AsyncBatchCreateTargetSites(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::discoveryengine::v1::BatchCreateTargetSitesRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::discoveryengine::v1::BatchCreateTargetSitesRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncBatchCreateTargetSites(cq, *std::move(context),
-                                                  std::move(options), request);
+        return child->AsyncBatchCreateTargetSites(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 SiteSearchEngineServiceAuth::BatchCreateTargetSites(
-    grpc::ClientContext& context, Options options,
-    google::cloud::discoveryengine::v1::BatchCreateTargetSitesRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::discoveryengine::v1::BatchCreateTargetSitesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->BatchCreateTargetSites(context, options, request);
 }
 
-StatusOr<google::cloud::discoveryengine::v1::TargetSite>
-SiteSearchEngineServiceAuth::GetTargetSite(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::discoveryengine::v1::TargetSite> SiteSearchEngineServiceAuth::GetTargetSite(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::discoveryengine::v1::GetTargetSiteRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -114,30 +109,28 @@ SiteSearchEngineServiceAuth::GetTargetSite(
 
 future<StatusOr<google::longrunning::Operation>>
 SiteSearchEngineServiceAuth::AsyncUpdateTargetSite(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::discoveryengine::v1::UpdateTargetSiteRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::discoveryengine::v1::UpdateTargetSiteRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncUpdateTargetSite(cq, *std::move(context),
-                                            std::move(options), request);
+        return child->AsyncUpdateTargetSite(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 SiteSearchEngineServiceAuth::UpdateTargetSite(
-    grpc::ClientContext& context, Options options,
-    google::cloud::discoveryengine::v1::UpdateTargetSiteRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::discoveryengine::v1::UpdateTargetSiteRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateTargetSite(context, options, request);
@@ -145,38 +138,36 @@ SiteSearchEngineServiceAuth::UpdateTargetSite(
 
 future<StatusOr<google::longrunning::Operation>>
 SiteSearchEngineServiceAuth::AsyncDeleteTargetSite(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::discoveryengine::v1::DeleteTargetSiteRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::discoveryengine::v1::DeleteTargetSiteRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDeleteTargetSite(cq, *std::move(context),
-                                            std::move(options), request);
+        return child->AsyncDeleteTargetSite(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 SiteSearchEngineServiceAuth::DeleteTargetSite(
-    grpc::ClientContext& context, Options options,
-    google::cloud::discoveryengine::v1::DeleteTargetSiteRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::discoveryengine::v1::DeleteTargetSiteRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteTargetSite(context, options, request);
 }
 
-StatusOr<google::cloud::discoveryengine::v1::ListTargetSitesResponse>
-SiteSearchEngineServiceAuth::ListTargetSites(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::discoveryengine::v1::ListTargetSitesResponse> SiteSearchEngineServiceAuth::ListTargetSites(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::discoveryengine::v1::ListTargetSitesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -185,28 +176,28 @@ SiteSearchEngineServiceAuth::ListTargetSites(
 
 future<StatusOr<google::longrunning::Operation>>
 SiteSearchEngineServiceAuth::AsyncCreateSitemap(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::discoveryengine::v1::CreateSitemapRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::discoveryengine::v1::CreateSitemapRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreateSitemap(cq, *std::move(context),
-                                         std::move(options), request);
+        return child->AsyncCreateSitemap(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 SiteSearchEngineServiceAuth::CreateSitemap(
-    grpc::ClientContext& context, Options options,
-    google::cloud::discoveryengine::v1::CreateSitemapRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::discoveryengine::v1::CreateSitemapRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateSitemap(context, options, request);
@@ -214,36 +205,36 @@ SiteSearchEngineServiceAuth::CreateSitemap(
 
 future<StatusOr<google::longrunning::Operation>>
 SiteSearchEngineServiceAuth::AsyncDeleteSitemap(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::discoveryengine::v1::DeleteSitemapRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::discoveryengine::v1::DeleteSitemapRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDeleteSitemap(cq, *std::move(context),
-                                         std::move(options), request);
+        return child->AsyncDeleteSitemap(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 SiteSearchEngineServiceAuth::DeleteSitemap(
-    grpc::ClientContext& context, Options options,
-    google::cloud::discoveryengine::v1::DeleteSitemapRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::discoveryengine::v1::DeleteSitemapRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteSitemap(context, options, request);
 }
 
-StatusOr<google::cloud::discoveryengine::v1::FetchSitemapsResponse>
-SiteSearchEngineServiceAuth::FetchSitemaps(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::discoveryengine::v1::FetchSitemapsResponse> SiteSearchEngineServiceAuth::FetchSitemaps(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::discoveryengine::v1::FetchSitemapsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -252,16 +243,14 @@ SiteSearchEngineServiceAuth::FetchSitemaps(
 
 future<StatusOr<google::longrunning::Operation>>
 SiteSearchEngineServiceAuth::AsyncEnableAdvancedSiteSearch(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::discoveryengine::v1::EnableAdvancedSiteSearchRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::discoveryengine::v1::EnableAdvancedSiteSearchRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
@@ -273,9 +262,9 @@ SiteSearchEngineServiceAuth::AsyncEnableAdvancedSiteSearch(
 
 StatusOr<google::longrunning::Operation>
 SiteSearchEngineServiceAuth::EnableAdvancedSiteSearch(
-    grpc::ClientContext& context, Options options,
-    google::cloud::discoveryengine::v1::EnableAdvancedSiteSearchRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::discoveryengine::v1::EnableAdvancedSiteSearchRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->EnableAdvancedSiteSearch(context, options, request);
@@ -283,16 +272,14 @@ SiteSearchEngineServiceAuth::EnableAdvancedSiteSearch(
 
 future<StatusOr<google::longrunning::Operation>>
 SiteSearchEngineServiceAuth::AsyncDisableAdvancedSiteSearch(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::discoveryengine::v1::DisableAdvancedSiteSearchRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::discoveryengine::v1::DisableAdvancedSiteSearchRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
@@ -304,9 +291,9 @@ SiteSearchEngineServiceAuth::AsyncDisableAdvancedSiteSearch(
 
 StatusOr<google::longrunning::Operation>
 SiteSearchEngineServiceAuth::DisableAdvancedSiteSearch(
-    grpc::ClientContext& context, Options options,
-    google::cloud::discoveryengine::v1::DisableAdvancedSiteSearchRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::discoveryengine::v1::DisableAdvancedSiteSearchRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DisableAdvancedSiteSearch(context, options, request);
@@ -314,28 +301,28 @@ SiteSearchEngineServiceAuth::DisableAdvancedSiteSearch(
 
 future<StatusOr<google::longrunning::Operation>>
 SiteSearchEngineServiceAuth::AsyncRecrawlUris(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::discoveryengine::v1::RecrawlUrisRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::discoveryengine::v1::RecrawlUrisRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncRecrawlUris(cq, *std::move(context),
-                                       std::move(options), request);
+        return child->AsyncRecrawlUris(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 SiteSearchEngineServiceAuth::RecrawlUris(
-    grpc::ClientContext& context, Options options,
-    google::cloud::discoveryengine::v1::RecrawlUrisRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::discoveryengine::v1::RecrawlUrisRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->RecrawlUris(context, options, request);
@@ -343,58 +330,54 @@ SiteSearchEngineServiceAuth::RecrawlUris(
 
 future<StatusOr<google::longrunning::Operation>>
 SiteSearchEngineServiceAuth::AsyncBatchVerifyTargetSites(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::discoveryengine::v1::BatchVerifyTargetSitesRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::discoveryengine::v1::BatchVerifyTargetSitesRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncBatchVerifyTargetSites(cq, *std::move(context),
-                                                  std::move(options), request);
+        return child->AsyncBatchVerifyTargetSites(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 SiteSearchEngineServiceAuth::BatchVerifyTargetSites(
-    grpc::ClientContext& context, Options options,
-    google::cloud::discoveryengine::v1::BatchVerifyTargetSitesRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::discoveryengine::v1::BatchVerifyTargetSitesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->BatchVerifyTargetSites(context, options, request);
 }
 
-StatusOr<
-    google::cloud::discoveryengine::v1::FetchDomainVerificationStatusResponse>
-SiteSearchEngineServiceAuth::FetchDomainVerificationStatus(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::discoveryengine::v1::
-        FetchDomainVerificationStatusRequest const& request) {
+StatusOr<google::cloud::discoveryengine::v1::FetchDomainVerificationStatusResponse> SiteSearchEngineServiceAuth::FetchDomainVerificationStatus(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::discoveryengine::v1::FetchDomainVerificationStatusRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->FetchDomainVerificationStatus(context, options, request);
 }
 
-StatusOr<google::longrunning::ListOperationsResponse>
-SiteSearchEngineServiceAuth::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse> SiteSearchEngineServiceAuth::ListOperations(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListOperations(context, options, request);
 }
 
-StatusOr<google::longrunning::Operation>
-SiteSearchEngineServiceAuth::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::Operation> SiteSearchEngineServiceAuth::GetOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -402,7 +385,8 @@ SiteSearchEngineServiceAuth::GetOperation(
 }
 
 Status SiteSearchEngineServiceAuth::CancelOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -416,16 +400,15 @@ SiteSearchEngineServiceAuth::AsyncGetOperation(
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncGetOperation(cq, *std::move(context),
-                                        std::move(options), request);
+        return child->AsyncGetOperation(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
@@ -434,14 +417,13 @@ future<Status> SiteSearchEngineServiceAuth::AsyncCancelOperation(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) return make_ready_future(std::move(context).status());
-        return child->AsyncCancelOperation(cq, *std::move(context),
-                                           std::move(options), request);
+        return child->AsyncCancelOperation(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 

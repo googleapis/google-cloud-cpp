@@ -17,14 +17,14 @@
 // source: google/cloud/financialservices/v1/service.proto
 
 #include "google/cloud/financialservices/v1/aml_connection.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/financialservices/v1/aml_options.h"
 #include "google/cloud/financialservices/v1/internal/aml_connection_impl.h"
 #include "google/cloud/financialservices/v1/internal/aml_option_defaults.h"
 #include "google/cloud/financialservices/v1/internal/aml_stub_factory.h"
 #include "google/cloud/financialservices/v1/internal/aml_tracing_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
-#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
@@ -38,10 +38,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 AMLConnection::~AMLConnection() = default;
 
-StreamRange<google::cloud::financialservices::v1::Instance>
-AMLConnection::ListInstances(
-    google::cloud::financialservices::v1::
-        ListInstancesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::financialservices::v1::Instance> AMLConnection::ListInstances(
+    google::cloud::financialservices::v1::ListInstancesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::financialservices::v1::Instance>>();
 }
@@ -56,122 +54,124 @@ future<StatusOr<google::cloud::financialservices::v1::Instance>>
 AMLConnection::CreateInstance(
     google::cloud::financialservices::v1::CreateInstanceRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::financialservices::v1::Instance>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::financialservices::v1::Instance>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation> AMLConnection::CreateInstance(
+StatusOr<google::longrunning::Operation>
+AMLConnection::CreateInstance(
     NoAwaitTag,
     google::cloud::financialservices::v1::CreateInstanceRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::financialservices::v1::Instance>>
-AMLConnection::CreateInstance(google::longrunning::Operation const&) {
+AMLConnection::CreateInstance(
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::financialservices::v1::Instance>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::financialservices::v1::Instance>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::financialservices::v1::Instance>>
 AMLConnection::UpdateInstance(
     google::cloud::financialservices::v1::UpdateInstanceRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::financialservices::v1::Instance>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::financialservices::v1::Instance>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation> AMLConnection::UpdateInstance(
+StatusOr<google::longrunning::Operation>
+AMLConnection::UpdateInstance(
     NoAwaitTag,
     google::cloud::financialservices::v1::UpdateInstanceRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::financialservices::v1::Instance>>
-AMLConnection::UpdateInstance(google::longrunning::Operation const&) {
+AMLConnection::UpdateInstance(
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::financialservices::v1::Instance>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::financialservices::v1::Instance>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::financialservices::v1::OperationMetadata>>
 AMLConnection::DeleteInstance(
     google::cloud::financialservices::v1::DeleteInstanceRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::financialservices::v1::OperationMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::financialservices::v1::OperationMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation> AMLConnection::DeleteInstance(
+StatusOr<google::longrunning::Operation>
+AMLConnection::DeleteInstance(
     NoAwaitTag,
     google::cloud::financialservices::v1::DeleteInstanceRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::financialservices::v1::OperationMetadata>>
-AMLConnection::DeleteInstance(google::longrunning::Operation const&) {
+AMLConnection::DeleteInstance(
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::financialservices::v1::OperationMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::financialservices::v1::OperationMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<StatusOr<
-    google::cloud::financialservices::v1::ImportRegisteredPartiesResponse>>
+future<StatusOr<google::cloud::financialservices::v1::ImportRegisteredPartiesResponse>>
 AMLConnection::ImportRegisteredParties(
-    google::cloud::financialservices::v1::
-        ImportRegisteredPartiesRequest const&) {
-  return google::cloud::make_ready_future<StatusOr<
-      google::cloud::financialservices::v1::ImportRegisteredPartiesResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    google::cloud::financialservices::v1::ImportRegisteredPartiesRequest const&) {
+  return google::cloud::make_ready_future<
+    StatusOr<google::cloud::financialservices::v1::ImportRegisteredPartiesResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation> AMLConnection::ImportRegisteredParties(
-    NoAwaitTag, google::cloud::financialservices::v1::
-                    ImportRegisteredPartiesRequest const&) {
+StatusOr<google::longrunning::Operation>
+AMLConnection::ImportRegisteredParties(
+    NoAwaitTag,
+    google::cloud::financialservices::v1::ImportRegisteredPartiesRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<StatusOr<
-    google::cloud::financialservices::v1::ImportRegisteredPartiesResponse>>
-AMLConnection::ImportRegisteredParties(google::longrunning::Operation const&) {
-  return google::cloud::make_ready_future<StatusOr<
-      google::cloud::financialservices::v1::ImportRegisteredPartiesResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+future<StatusOr<google::cloud::financialservices::v1::ImportRegisteredPartiesResponse>>
+AMLConnection::ImportRegisteredParties(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+    StatusOr<google::cloud::financialservices::v1::ImportRegisteredPartiesResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<StatusOr<
-    google::cloud::financialservices::v1::ExportRegisteredPartiesResponse>>
+future<StatusOr<google::cloud::financialservices::v1::ExportRegisteredPartiesResponse>>
 AMLConnection::ExportRegisteredParties(
-    google::cloud::financialservices::v1::
-        ExportRegisteredPartiesRequest const&) {
-  return google::cloud::make_ready_future<StatusOr<
-      google::cloud::financialservices::v1::ExportRegisteredPartiesResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    google::cloud::financialservices::v1::ExportRegisteredPartiesRequest const&) {
+  return google::cloud::make_ready_future<
+    StatusOr<google::cloud::financialservices::v1::ExportRegisteredPartiesResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation> AMLConnection::ExportRegisteredParties(
-    NoAwaitTag, google::cloud::financialservices::v1::
-                    ExportRegisteredPartiesRequest const&) {
+StatusOr<google::longrunning::Operation>
+AMLConnection::ExportRegisteredParties(
+    NoAwaitTag,
+    google::cloud::financialservices::v1::ExportRegisteredPartiesRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<StatusOr<
-    google::cloud::financialservices::v1::ExportRegisteredPartiesResponse>>
-AMLConnection::ExportRegisteredParties(google::longrunning::Operation const&) {
-  return google::cloud::make_ready_future<StatusOr<
-      google::cloud::financialservices::v1::ExportRegisteredPartiesResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+future<StatusOr<google::cloud::financialservices::v1::ExportRegisteredPartiesResponse>>
+AMLConnection::ExportRegisteredParties(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+    StatusOr<google::cloud::financialservices::v1::ExportRegisteredPartiesResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StreamRange<google::cloud::financialservices::v1::Dataset>
-AMLConnection::ListDatasets(
-    google::cloud::financialservices::v1::
-        ListDatasetsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::financialservices::v1::Dataset> AMLConnection::ListDatasets(
+    google::cloud::financialservices::v1::ListDatasetsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::financialservices::v1::Dataset>>();
 }
@@ -186,77 +186,82 @@ future<StatusOr<google::cloud::financialservices::v1::Dataset>>
 AMLConnection::CreateDataset(
     google::cloud::financialservices::v1::CreateDatasetRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::financialservices::v1::Dataset>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::financialservices::v1::Dataset>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation> AMLConnection::CreateDataset(
+StatusOr<google::longrunning::Operation>
+AMLConnection::CreateDataset(
     NoAwaitTag,
     google::cloud::financialservices::v1::CreateDatasetRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::financialservices::v1::Dataset>>
-AMLConnection::CreateDataset(google::longrunning::Operation const&) {
+AMLConnection::CreateDataset(
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::financialservices::v1::Dataset>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::financialservices::v1::Dataset>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::financialservices::v1::Dataset>>
 AMLConnection::UpdateDataset(
     google::cloud::financialservices::v1::UpdateDatasetRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::financialservices::v1::Dataset>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::financialservices::v1::Dataset>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation> AMLConnection::UpdateDataset(
+StatusOr<google::longrunning::Operation>
+AMLConnection::UpdateDataset(
     NoAwaitTag,
     google::cloud::financialservices::v1::UpdateDatasetRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::financialservices::v1::Dataset>>
-AMLConnection::UpdateDataset(google::longrunning::Operation const&) {
+AMLConnection::UpdateDataset(
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::financialservices::v1::Dataset>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::financialservices::v1::Dataset>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::financialservices::v1::OperationMetadata>>
 AMLConnection::DeleteDataset(
     google::cloud::financialservices::v1::DeleteDatasetRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::financialservices::v1::OperationMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::financialservices::v1::OperationMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation> AMLConnection::DeleteDataset(
+StatusOr<google::longrunning::Operation>
+AMLConnection::DeleteDataset(
     NoAwaitTag,
     google::cloud::financialservices::v1::DeleteDatasetRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::financialservices::v1::OperationMetadata>>
-AMLConnection::DeleteDataset(google::longrunning::Operation const&) {
+AMLConnection::DeleteDataset(
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::financialservices::v1::OperationMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::financialservices::v1::OperationMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StreamRange<google::cloud::financialservices::v1::Model>
-AMLConnection::ListModels(
-    google::cloud::financialservices::v1::
-        ListModelsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::financialservices::v1::Model> AMLConnection::ListModels(
+    google::cloud::financialservices::v1::ListModelsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::financialservices::v1::Model>>();
 }
 
-StatusOr<google::cloud::financialservices::v1::Model> AMLConnection::GetModel(
+StatusOr<google::cloud::financialservices::v1::Model>
+AMLConnection::GetModel(
     google::cloud::financialservices::v1::GetModelRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -265,96 +270,100 @@ future<StatusOr<google::cloud::financialservices::v1::Model>>
 AMLConnection::CreateModel(
     google::cloud::financialservices::v1::CreateModelRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::financialservices::v1::Model>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::financialservices::v1::Model>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation> AMLConnection::CreateModel(
+StatusOr<google::longrunning::Operation>
+AMLConnection::CreateModel(
     NoAwaitTag,
     google::cloud::financialservices::v1::CreateModelRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::financialservices::v1::Model>>
-AMLConnection::CreateModel(google::longrunning::Operation const&) {
+AMLConnection::CreateModel(
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::financialservices::v1::Model>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::financialservices::v1::Model>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::financialservices::v1::Model>>
 AMLConnection::UpdateModel(
     google::cloud::financialservices::v1::UpdateModelRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::financialservices::v1::Model>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::financialservices::v1::Model>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation> AMLConnection::UpdateModel(
+StatusOr<google::longrunning::Operation>
+AMLConnection::UpdateModel(
     NoAwaitTag,
     google::cloud::financialservices::v1::UpdateModelRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::financialservices::v1::Model>>
-AMLConnection::UpdateModel(google::longrunning::Operation const&) {
+AMLConnection::UpdateModel(
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::financialservices::v1::Model>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::financialservices::v1::Model>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<
-    StatusOr<google::cloud::financialservices::v1::ExportModelMetadataResponse>>
+future<StatusOr<google::cloud::financialservices::v1::ExportModelMetadataResponse>>
 AMLConnection::ExportModelMetadata(
     google::cloud::financialservices::v1::ExportModelMetadataRequest const&) {
-  return google::cloud::make_ready_future<StatusOr<
-      google::cloud::financialservices::v1::ExportModelMetadataResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+  return google::cloud::make_ready_future<
+    StatusOr<google::cloud::financialservices::v1::ExportModelMetadataResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation> AMLConnection::ExportModelMetadata(
+StatusOr<google::longrunning::Operation>
+AMLConnection::ExportModelMetadata(
     NoAwaitTag,
     google::cloud::financialservices::v1::ExportModelMetadataRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<
-    StatusOr<google::cloud::financialservices::v1::ExportModelMetadataResponse>>
-AMLConnection::ExportModelMetadata(google::longrunning::Operation const&) {
-  return google::cloud::make_ready_future<StatusOr<
-      google::cloud::financialservices::v1::ExportModelMetadataResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+future<StatusOr<google::cloud::financialservices::v1::ExportModelMetadataResponse>>
+AMLConnection::ExportModelMetadata(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+    StatusOr<google::cloud::financialservices::v1::ExportModelMetadataResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::financialservices::v1::OperationMetadata>>
 AMLConnection::DeleteModel(
     google::cloud::financialservices::v1::DeleteModelRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::financialservices::v1::OperationMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::financialservices::v1::OperationMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation> AMLConnection::DeleteModel(
+StatusOr<google::longrunning::Operation>
+AMLConnection::DeleteModel(
     NoAwaitTag,
     google::cloud::financialservices::v1::DeleteModelRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::financialservices::v1::OperationMetadata>>
-AMLConnection::DeleteModel(google::longrunning::Operation const&) {
+AMLConnection::DeleteModel(
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::financialservices::v1::OperationMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::financialservices::v1::OperationMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StreamRange<google::cloud::financialservices::v1::EngineConfig>
-AMLConnection::ListEngineConfigs(
-    google::cloud::financialservices::v1::
-        ListEngineConfigsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::financialservices::v1::EngineConfig> AMLConnection::ListEngineConfigs(
+    google::cloud::financialservices::v1::ListEngineConfigsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::financialservices::v1::EngineConfig>>();
 }
@@ -369,95 +378,96 @@ future<StatusOr<google::cloud::financialservices::v1::EngineConfig>>
 AMLConnection::CreateEngineConfig(
     google::cloud::financialservices::v1::CreateEngineConfigRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::financialservices::v1::EngineConfig>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::financialservices::v1::EngineConfig>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation> AMLConnection::CreateEngineConfig(
+StatusOr<google::longrunning::Operation>
+AMLConnection::CreateEngineConfig(
     NoAwaitTag,
     google::cloud::financialservices::v1::CreateEngineConfigRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::financialservices::v1::EngineConfig>>
-AMLConnection::CreateEngineConfig(google::longrunning::Operation const&) {
+AMLConnection::CreateEngineConfig(
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::financialservices::v1::EngineConfig>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::financialservices::v1::EngineConfig>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::financialservices::v1::EngineConfig>>
 AMLConnection::UpdateEngineConfig(
     google::cloud::financialservices::v1::UpdateEngineConfigRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::financialservices::v1::EngineConfig>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::financialservices::v1::EngineConfig>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation> AMLConnection::UpdateEngineConfig(
+StatusOr<google::longrunning::Operation>
+AMLConnection::UpdateEngineConfig(
     NoAwaitTag,
     google::cloud::financialservices::v1::UpdateEngineConfigRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::financialservices::v1::EngineConfig>>
-AMLConnection::UpdateEngineConfig(google::longrunning::Operation const&) {
+AMLConnection::UpdateEngineConfig(
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::financialservices::v1::EngineConfig>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::financialservices::v1::EngineConfig>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<StatusOr<
-    google::cloud::financialservices::v1::ExportEngineConfigMetadataResponse>>
+future<StatusOr<google::cloud::financialservices::v1::ExportEngineConfigMetadataResponse>>
 AMLConnection::ExportEngineConfigMetadata(
-    google::cloud::financialservices::v1::
-        ExportEngineConfigMetadataRequest const&) {
+    google::cloud::financialservices::v1::ExportEngineConfigMetadataRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::financialservices::v1::
-                   ExportEngineConfigMetadataResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::financialservices::v1::ExportEngineConfigMetadataResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 AMLConnection::ExportEngineConfigMetadata(
-    NoAwaitTag, google::cloud::financialservices::v1::
-                    ExportEngineConfigMetadataRequest const&) {
+    NoAwaitTag,
+    google::cloud::financialservices::v1::ExportEngineConfigMetadataRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<StatusOr<
-    google::cloud::financialservices::v1::ExportEngineConfigMetadataResponse>>
+future<StatusOr<google::cloud::financialservices::v1::ExportEngineConfigMetadataResponse>>
 AMLConnection::ExportEngineConfigMetadata(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::financialservices::v1::
-                   ExportEngineConfigMetadataResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::financialservices::v1::ExportEngineConfigMetadataResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::financialservices::v1::OperationMetadata>>
 AMLConnection::DeleteEngineConfig(
     google::cloud::financialservices::v1::DeleteEngineConfigRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::financialservices::v1::OperationMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::financialservices::v1::OperationMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation> AMLConnection::DeleteEngineConfig(
+StatusOr<google::longrunning::Operation>
+AMLConnection::DeleteEngineConfig(
     NoAwaitTag,
     google::cloud::financialservices::v1::DeleteEngineConfigRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::financialservices::v1::OperationMetadata>>
-AMLConnection::DeleteEngineConfig(google::longrunning::Operation const&) {
+AMLConnection::DeleteEngineConfig(
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::financialservices::v1::OperationMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::financialservices::v1::OperationMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::financialservices::v1::EngineVersion>
@@ -466,18 +476,14 @@ AMLConnection::GetEngineVersion(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::financialservices::v1::EngineVersion>
-AMLConnection::ListEngineVersions(
-    google::cloud::financialservices::v1::
-        ListEngineVersionsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::financialservices::v1::EngineVersion> AMLConnection::ListEngineVersions(
+    google::cloud::financialservices::v1::ListEngineVersionsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::financialservices::v1::EngineVersion>>();
 }
 
-StreamRange<google::cloud::financialservices::v1::PredictionResult>
-AMLConnection::ListPredictionResults(
-    google::cloud::financialservices::v1::
-        ListPredictionResultsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::financialservices::v1::PredictionResult> AMLConnection::ListPredictionResults(
+    google::cloud::financialservices::v1::ListPredictionResultsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::financialservices::v1::PredictionResult>>();
 }
@@ -490,106 +496,102 @@ AMLConnection::GetPredictionResult(
 
 future<StatusOr<google::cloud::financialservices::v1::PredictionResult>>
 AMLConnection::CreatePredictionResult(
-    google::cloud::financialservices::v1::
-        CreatePredictionResultRequest const&) {
+    google::cloud::financialservices::v1::CreatePredictionResultRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::financialservices::v1::PredictionResult>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::financialservices::v1::PredictionResult>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation> AMLConnection::CreatePredictionResult(
-    NoAwaitTag, google::cloud::financialservices::v1::
-                    CreatePredictionResultRequest const&) {
+StatusOr<google::longrunning::Operation>
+AMLConnection::CreatePredictionResult(
+    NoAwaitTag,
+    google::cloud::financialservices::v1::CreatePredictionResultRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::financialservices::v1::PredictionResult>>
-AMLConnection::CreatePredictionResult(google::longrunning::Operation const&) {
+AMLConnection::CreatePredictionResult(
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::financialservices::v1::PredictionResult>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::financialservices::v1::PredictionResult>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::financialservices::v1::PredictionResult>>
 AMLConnection::UpdatePredictionResult(
-    google::cloud::financialservices::v1::
-        UpdatePredictionResultRequest const&) {
+    google::cloud::financialservices::v1::UpdatePredictionResultRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::financialservices::v1::PredictionResult>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::financialservices::v1::PredictionResult>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation> AMLConnection::UpdatePredictionResult(
-    NoAwaitTag, google::cloud::financialservices::v1::
-                    UpdatePredictionResultRequest const&) {
+StatusOr<google::longrunning::Operation>
+AMLConnection::UpdatePredictionResult(
+    NoAwaitTag,
+    google::cloud::financialservices::v1::UpdatePredictionResultRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::financialservices::v1::PredictionResult>>
-AMLConnection::UpdatePredictionResult(google::longrunning::Operation const&) {
+AMLConnection::UpdatePredictionResult(
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::financialservices::v1::PredictionResult>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::financialservices::v1::PredictionResult>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<StatusOr<google::cloud::financialservices::v1::
-                    ExportPredictionResultMetadataResponse>>
+future<StatusOr<google::cloud::financialservices::v1::ExportPredictionResultMetadataResponse>>
 AMLConnection::ExportPredictionResultMetadata(
-    google::cloud::financialservices::v1::
-        ExportPredictionResultMetadataRequest const&) {
+    google::cloud::financialservices::v1::ExportPredictionResultMetadataRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::financialservices::v1::
-                   ExportPredictionResultMetadataResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::financialservices::v1::ExportPredictionResultMetadataResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 AMLConnection::ExportPredictionResultMetadata(
-    NoAwaitTag, google::cloud::financialservices::v1::
-                    ExportPredictionResultMetadataRequest const&) {
+    NoAwaitTag,
+    google::cloud::financialservices::v1::ExportPredictionResultMetadataRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<StatusOr<google::cloud::financialservices::v1::
-                    ExportPredictionResultMetadataResponse>>
+future<StatusOr<google::cloud::financialservices::v1::ExportPredictionResultMetadataResponse>>
 AMLConnection::ExportPredictionResultMetadata(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::financialservices::v1::
-                   ExportPredictionResultMetadataResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::financialservices::v1::ExportPredictionResultMetadataResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::financialservices::v1::OperationMetadata>>
 AMLConnection::DeletePredictionResult(
-    google::cloud::financialservices::v1::
-        DeletePredictionResultRequest const&) {
+    google::cloud::financialservices::v1::DeletePredictionResultRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::financialservices::v1::OperationMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::financialservices::v1::OperationMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation> AMLConnection::DeletePredictionResult(
-    NoAwaitTag, google::cloud::financialservices::v1::
-                    DeletePredictionResultRequest const&) {
+StatusOr<google::longrunning::Operation>
+AMLConnection::DeletePredictionResult(
+    NoAwaitTag,
+    google::cloud::financialservices::v1::DeletePredictionResultRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::financialservices::v1::OperationMetadata>>
-AMLConnection::DeletePredictionResult(google::longrunning::Operation const&) {
+AMLConnection::DeletePredictionResult(
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::financialservices::v1::OperationMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::financialservices::v1::OperationMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StreamRange<google::cloud::financialservices::v1::BacktestResult>
-AMLConnection::ListBacktestResults(
-    google::cloud::financialservices::v1::
-        ListBacktestResultsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::financialservices::v1::BacktestResult> AMLConnection::ListBacktestResults(
+    google::cloud::financialservices::v1::ListBacktestResultsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::financialservices::v1::BacktestResult>>();
 }
@@ -604,144 +606,148 @@ future<StatusOr<google::cloud::financialservices::v1::BacktestResult>>
 AMLConnection::CreateBacktestResult(
     google::cloud::financialservices::v1::CreateBacktestResultRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::financialservices::v1::BacktestResult>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::financialservices::v1::BacktestResult>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation> AMLConnection::CreateBacktestResult(
+StatusOr<google::longrunning::Operation>
+AMLConnection::CreateBacktestResult(
     NoAwaitTag,
     google::cloud::financialservices::v1::CreateBacktestResultRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::financialservices::v1::BacktestResult>>
-AMLConnection::CreateBacktestResult(google::longrunning::Operation const&) {
+AMLConnection::CreateBacktestResult(
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::financialservices::v1::BacktestResult>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::financialservices::v1::BacktestResult>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::financialservices::v1::BacktestResult>>
 AMLConnection::UpdateBacktestResult(
     google::cloud::financialservices::v1::UpdateBacktestResultRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::financialservices::v1::BacktestResult>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::financialservices::v1::BacktestResult>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation> AMLConnection::UpdateBacktestResult(
+StatusOr<google::longrunning::Operation>
+AMLConnection::UpdateBacktestResult(
     NoAwaitTag,
     google::cloud::financialservices::v1::UpdateBacktestResultRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::financialservices::v1::BacktestResult>>
-AMLConnection::UpdateBacktestResult(google::longrunning::Operation const&) {
+AMLConnection::UpdateBacktestResult(
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::financialservices::v1::BacktestResult>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::financialservices::v1::BacktestResult>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<StatusOr<
-    google::cloud::financialservices::v1::ExportBacktestResultMetadataResponse>>
+future<StatusOr<google::cloud::financialservices::v1::ExportBacktestResultMetadataResponse>>
 AMLConnection::ExportBacktestResultMetadata(
-    google::cloud::financialservices::v1::
-        ExportBacktestResultMetadataRequest const&) {
+    google::cloud::financialservices::v1::ExportBacktestResultMetadataRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::financialservices::v1::
-                   ExportBacktestResultMetadataResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::financialservices::v1::ExportBacktestResultMetadataResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 AMLConnection::ExportBacktestResultMetadata(
-    NoAwaitTag, google::cloud::financialservices::v1::
-                    ExportBacktestResultMetadataRequest const&) {
+    NoAwaitTag,
+    google::cloud::financialservices::v1::ExportBacktestResultMetadataRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<StatusOr<
-    google::cloud::financialservices::v1::ExportBacktestResultMetadataResponse>>
+future<StatusOr<google::cloud::financialservices::v1::ExportBacktestResultMetadataResponse>>
 AMLConnection::ExportBacktestResultMetadata(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::financialservices::v1::
-                   ExportBacktestResultMetadataResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::financialservices::v1::ExportBacktestResultMetadataResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::financialservices::v1::OperationMetadata>>
 AMLConnection::DeleteBacktestResult(
     google::cloud::financialservices::v1::DeleteBacktestResultRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::financialservices::v1::OperationMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::financialservices::v1::OperationMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation> AMLConnection::DeleteBacktestResult(
+StatusOr<google::longrunning::Operation>
+AMLConnection::DeleteBacktestResult(
     NoAwaitTag,
     google::cloud::financialservices::v1::DeleteBacktestResultRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::financialservices::v1::OperationMetadata>>
-AMLConnection::DeleteBacktestResult(google::longrunning::Operation const&) {
+AMLConnection::DeleteBacktestResult(
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::financialservices::v1::OperationMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::financialservices::v1::OperationMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StreamRange<google::cloud::location::Location> AMLConnection::ListLocations(
-    google::cloud::location::
-        ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+    google::cloud::location::ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::location::Location>>();
 }
 
-StatusOr<google::cloud::location::Location> AMLConnection::GetLocation(
+StatusOr<google::cloud::location::Location>
+AMLConnection::GetLocation(
     google::cloud::location::GetLocationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StreamRange<google::longrunning::Operation> AMLConnection::ListOperations(
-    google::longrunning::
-        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+    google::longrunning::ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }
 
-StatusOr<google::longrunning::Operation> AMLConnection::GetOperation(
+StatusOr<google::longrunning::Operation>
+AMLConnection::GetOperation(
     google::longrunning::GetOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status AMLConnection::DeleteOperation(
+Status
+AMLConnection::DeleteOperation(
     google::longrunning::DeleteOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status AMLConnection::CancelOperation(
+Status
+AMLConnection::CancelOperation(
     google::longrunning::CancelOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-std::shared_ptr<AMLConnection> MakeAMLConnection(Options options) {
+std::shared_ptr<AMLConnection> MakeAMLConnection(
+    Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 AMLPolicyOptionList>(options, __func__);
-  options =
-      financialservices_v1_internal::AMLDefaultOptions(std::move(options));
+      UnifiedCredentialsOptionList,
+      AMLPolicyOptionList>(options, __func__);
+  options = financialservices_v1_internal::AMLDefaultOptions(
+      std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = financialservices_v1_internal::CreateDefaultAMLStub(
-      std::move(auth), options);
+    std::move(auth), options);
   return financialservices_v1_internal::MakeAMLTracingConnection(
       std::make_shared<financialservices_v1_internal::AMLConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options)));
+      std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

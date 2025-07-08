@@ -40,51 +40,55 @@ namespace cloud {
 namespace appengine_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class VersionsConnectionImpl : public appengine_v1::VersionsConnection {
+class VersionsConnectionImpl
+    : public appengine_v1::VersionsConnection {
  public:
   ~VersionsConnectionImpl() override = default;
 
   VersionsConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<appengine_v1_internal::VersionsStub> stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<appengine_v1_internal::VersionsStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
-  StreamRange<google::appengine::v1::Version> ListVersions(
-      google::appengine::v1::ListVersionsRequest request) override;
+  StreamRange<google::appengine::v1::Version>
+  ListVersions(google::appengine::v1::ListVersionsRequest request) override;
 
-  StatusOr<google::appengine::v1::Version> GetVersion(
-      google::appengine::v1::GetVersionRequest const& request) override;
+  StatusOr<google::appengine::v1::Version>
+  GetVersion(google::appengine::v1::GetVersionRequest const& request) override;
 
-  future<StatusOr<google::appengine::v1::Version>> CreateVersion(
+  future<StatusOr<google::appengine::v1::Version>>
+  CreateVersion(google::appengine::v1::CreateVersionRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  CreateVersion(NoAwaitTag,
       google::appengine::v1::CreateVersionRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> CreateVersion(
-      NoAwaitTag,
-      google::appengine::v1::CreateVersionRequest const& request) override;
-
-  future<StatusOr<google::appengine::v1::Version>> CreateVersion(
+  future<StatusOr<google::appengine::v1::Version>>
+  CreateVersion(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::appengine::v1::Version>> UpdateVersion(
+  future<StatusOr<google::appengine::v1::Version>>
+  UpdateVersion(google::appengine::v1::UpdateVersionRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  UpdateVersion(NoAwaitTag,
       google::appengine::v1::UpdateVersionRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> UpdateVersion(
-      NoAwaitTag,
-      google::appengine::v1::UpdateVersionRequest const& request) override;
-
-  future<StatusOr<google::appengine::v1::Version>> UpdateVersion(
+  future<StatusOr<google::appengine::v1::Version>>
+  UpdateVersion(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::appengine::v1::OperationMetadataV1>> DeleteVersion(
+  future<StatusOr<google::appengine::v1::OperationMetadataV1>>
+  DeleteVersion(google::appengine::v1::DeleteVersionRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  DeleteVersion(NoAwaitTag,
       google::appengine::v1::DeleteVersionRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> DeleteVersion(
-      NoAwaitTag,
-      google::appengine::v1::DeleteVersionRequest const& request) override;
-
-  future<StatusOr<google::appengine::v1::OperationMetadataV1>> DeleteVersion(
+  future<StatusOr<google::appengine::v1::OperationMetadataV1>>
+  DeleteVersion(
       google::longrunning::Operation const& operation) override;
 
  private:

@@ -17,14 +17,14 @@
 // source: google/cloud/dialogflow/v2/conversation_profile.proto
 
 #include "google/cloud/dialogflow_es/conversation_profiles_connection.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/dialogflow_es/conversation_profiles_options.h"
 #include "google/cloud/dialogflow_es/internal/conversation_profiles_connection_impl.h"
 #include "google/cloud/dialogflow_es/internal/conversation_profiles_option_defaults.h"
 #include "google/cloud/dialogflow_es/internal/conversation_profiles_stub_factory.h"
 #include "google/cloud/dialogflow_es/internal/conversation_profiles_tracing_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
-#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
@@ -38,10 +38,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ConversationProfilesConnection::~ConversationProfilesConnection() = default;
 
-StreamRange<google::cloud::dialogflow::v2::ConversationProfile>
-ConversationProfilesConnection::ListConversationProfiles(
-    google::cloud::dialogflow::v2::
-        ListConversationProfilesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::dialogflow::v2::ConversationProfile> ConversationProfilesConnection::ListConversationProfiles(
+    google::cloud::dialogflow::v2::ListConversationProfilesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::dialogflow::v2::ConversationProfile>>();
 }
@@ -64,7 +62,8 @@ ConversationProfilesConnection::UpdateConversationProfile(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status ConversationProfilesConnection::DeleteConversationProfile(
+Status
+ConversationProfilesConnection::DeleteConversationProfile(
     google::cloud::dialogflow::v2::DeleteConversationProfileRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -73,8 +72,8 @@ future<StatusOr<google::cloud::dialogflow::v2::ConversationProfile>>
 ConversationProfilesConnection::SetSuggestionFeatureConfig(
     google::cloud::dialogflow::v2::SetSuggestionFeatureConfigRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::dialogflow::v2::ConversationProfile>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::dialogflow::v2::ConversationProfile>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -82,23 +81,23 @@ ConversationProfilesConnection::SetSuggestionFeatureConfig(
     NoAwaitTag,
     google::cloud::dialogflow::v2::SetSuggestionFeatureConfigRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::dialogflow::v2::ConversationProfile>>
 ConversationProfilesConnection::SetSuggestionFeatureConfig(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::dialogflow::v2::ConversationProfile>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::dialogflow::v2::ConversationProfile>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::dialogflow::v2::ConversationProfile>>
 ConversationProfilesConnection::ClearSuggestionFeatureConfig(
     google::cloud::dialogflow::v2::ClearSuggestionFeatureConfigRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::dialogflow::v2::ConversationProfile>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::dialogflow::v2::ConversationProfile>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -106,21 +105,19 @@ ConversationProfilesConnection::ClearSuggestionFeatureConfig(
     NoAwaitTag,
     google::cloud::dialogflow::v2::ClearSuggestionFeatureConfigRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::dialogflow::v2::ConversationProfile>>
 ConversationProfilesConnection::ClearSuggestionFeatureConfig(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::dialogflow::v2::ConversationProfile>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::dialogflow::v2::ConversationProfile>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StreamRange<google::cloud::location::Location>
-ConversationProfilesConnection::ListLocations(
-    google::cloud::location::
-        ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::location::Location> ConversationProfilesConnection::ListLocations(
+    google::cloud::location::ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::location::Location>>();
 }
@@ -131,10 +128,8 @@ ConversationProfilesConnection::GetLocation(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::longrunning::Operation>
-ConversationProfilesConnection::ListOperations(
-    google::longrunning::
-        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::longrunning::Operation> ConversationProfilesConnection::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }
@@ -145,32 +140,30 @@ ConversationProfilesConnection::GetOperation(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status ConversationProfilesConnection::CancelOperation(
+Status
+ConversationProfilesConnection::CancelOperation(
     google::longrunning::CancelOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-std::shared_ptr<ConversationProfilesConnection>
-MakeConversationProfilesConnection(std::string const& location,
-                                   Options options) {
+std::shared_ptr<ConversationProfilesConnection> MakeConversationProfilesConnection(
+    std::string const& location, Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 ConversationProfilesPolicyOptionList>(
-      options, __func__);
+      UnifiedCredentialsOptionList,
+      ConversationProfilesPolicyOptionList>(options, __func__);
   options = dialogflow_es_internal::ConversationProfilesDefaultOptions(
       location, std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = dialogflow_es_internal::CreateDefaultConversationProfilesStub(
-      std::move(auth), options);
+    std::move(auth), options);
   return dialogflow_es_internal::MakeConversationProfilesTracingConnection(
-      std::make_shared<
-          dialogflow_es_internal::ConversationProfilesConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options)));
+      std::make_shared<dialogflow_es_internal::ConversationProfilesConnectionImpl>(
+      std::move(background), std::move(stub), std::move(options)));
 }
 
-std::shared_ptr<ConversationProfilesConnection>
-MakeConversationProfilesConnection(Options options) {
+std::shared_ptr<ConversationProfilesConnection> MakeConversationProfilesConnection(
+    Options options) {
   return MakeConversationProfilesConnection(std::string{}, std::move(options));
 }
 

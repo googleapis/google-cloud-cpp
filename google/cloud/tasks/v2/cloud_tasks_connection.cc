@@ -17,17 +17,17 @@
 // source: google/cloud/tasks/v2/cloudtasks.proto
 
 #include "google/cloud/tasks/v2/cloud_tasks_connection.h"
-#include "google/cloud/tasks/v2/cloud_tasks_options.h"
-#include "google/cloud/tasks/v2/internal/cloud_tasks_connection_impl.h"
-#include "google/cloud/tasks/v2/internal/cloud_tasks_option_defaults.h"
-#include "google/cloud/tasks/v2/internal/cloud_tasks_stub_factory.h"
-#include "google/cloud/tasks/v2/internal/cloud_tasks_tracing_connection.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/tasks/v2/cloud_tasks_options.h"
+#include "google/cloud/tasks/v2/internal/cloud_tasks_connection_impl.h"
+#include "google/cloud/tasks/v2/internal/cloud_tasks_option_defaults.h"
+#include "google/cloud/tasks/v2/internal/cloud_tasks_stub_factory.h"
+#include "google/cloud/tasks/v2/internal/cloud_tasks_tracing_connection.h"
 #include <memory>
 #include <utility>
 
@@ -39,53 +39,61 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 CloudTasksConnection::~CloudTasksConnection() = default;
 
 StreamRange<google::cloud::tasks::v2::Queue> CloudTasksConnection::ListQueues(
-    google::cloud::tasks::v2::
-        ListQueuesRequest) {  // NOLINT(performance-unnecessary-value-param)
+    google::cloud::tasks::v2::ListQueuesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::tasks::v2::Queue>>();
 }
 
-StatusOr<google::cloud::tasks::v2::Queue> CloudTasksConnection::GetQueue(
+StatusOr<google::cloud::tasks::v2::Queue>
+CloudTasksConnection::GetQueue(
     google::cloud::tasks::v2::GetQueueRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::cloud::tasks::v2::Queue> CloudTasksConnection::CreateQueue(
+StatusOr<google::cloud::tasks::v2::Queue>
+CloudTasksConnection::CreateQueue(
     google::cloud::tasks::v2::CreateQueueRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::cloud::tasks::v2::Queue> CloudTasksConnection::UpdateQueue(
+StatusOr<google::cloud::tasks::v2::Queue>
+CloudTasksConnection::UpdateQueue(
     google::cloud::tasks::v2::UpdateQueueRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status CloudTasksConnection::DeleteQueue(
+Status
+CloudTasksConnection::DeleteQueue(
     google::cloud::tasks::v2::DeleteQueueRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::cloud::tasks::v2::Queue> CloudTasksConnection::PurgeQueue(
+StatusOr<google::cloud::tasks::v2::Queue>
+CloudTasksConnection::PurgeQueue(
     google::cloud::tasks::v2::PurgeQueueRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::cloud::tasks::v2::Queue> CloudTasksConnection::PauseQueue(
+StatusOr<google::cloud::tasks::v2::Queue>
+CloudTasksConnection::PauseQueue(
     google::cloud::tasks::v2::PauseQueueRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::cloud::tasks::v2::Queue> CloudTasksConnection::ResumeQueue(
+StatusOr<google::cloud::tasks::v2::Queue>
+CloudTasksConnection::ResumeQueue(
     google::cloud::tasks::v2::ResumeQueueRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::iam::v1::Policy> CloudTasksConnection::GetIamPolicy(
+StatusOr<google::iam::v1::Policy>
+CloudTasksConnection::GetIamPolicy(
     google::iam::v1::GetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::iam::v1::Policy> CloudTasksConnection::SetIamPolicy(
+StatusOr<google::iam::v1::Policy>
+CloudTasksConnection::SetIamPolicy(
     google::iam::v1::SetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -97,41 +105,43 @@ CloudTasksConnection::TestIamPermissions(
 }
 
 StreamRange<google::cloud::tasks::v2::Task> CloudTasksConnection::ListTasks(
-    google::cloud::tasks::v2::
-        ListTasksRequest) {  // NOLINT(performance-unnecessary-value-param)
+    google::cloud::tasks::v2::ListTasksRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::tasks::v2::Task>>();
 }
 
-StatusOr<google::cloud::tasks::v2::Task> CloudTasksConnection::GetTask(
+StatusOr<google::cloud::tasks::v2::Task>
+CloudTasksConnection::GetTask(
     google::cloud::tasks::v2::GetTaskRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::cloud::tasks::v2::Task> CloudTasksConnection::CreateTask(
+StatusOr<google::cloud::tasks::v2::Task>
+CloudTasksConnection::CreateTask(
     google::cloud::tasks::v2::CreateTaskRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status CloudTasksConnection::DeleteTask(
+Status
+CloudTasksConnection::DeleteTask(
     google::cloud::tasks::v2::DeleteTaskRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::cloud::tasks::v2::Task> CloudTasksConnection::RunTask(
+StatusOr<google::cloud::tasks::v2::Task>
+CloudTasksConnection::RunTask(
     google::cloud::tasks::v2::RunTaskRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::location::Location>
-CloudTasksConnection::ListLocations(
-    google::cloud::location::
-        ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::location::Location> CloudTasksConnection::ListLocations(
+    google::cloud::location::ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::location::Location>>();
 }
 
-StatusOr<google::cloud::location::Location> CloudTasksConnection::GetLocation(
+StatusOr<google::cloud::location::Location>
+CloudTasksConnection::GetLocation(
     google::cloud::location::GetLocationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -139,16 +149,17 @@ StatusOr<google::cloud::location::Location> CloudTasksConnection::GetLocation(
 std::shared_ptr<CloudTasksConnection> MakeCloudTasksConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 CloudTasksPolicyOptionList>(options, __func__);
-  options = tasks_v2_internal::CloudTasksDefaultOptions(std::move(options));
+      UnifiedCredentialsOptionList,
+      CloudTasksPolicyOptionList>(options, __func__);
+  options = tasks_v2_internal::CloudTasksDefaultOptions(
+      std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
-  auto stub =
-      tasks_v2_internal::CreateDefaultCloudTasksStub(std::move(auth), options);
+  auto stub = tasks_v2_internal::CreateDefaultCloudTasksStub(
+    std::move(auth), options);
   return tasks_v2_internal::MakeCloudTasksTracingConnection(
       std::make_shared<tasks_v2_internal::CloudTasksConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options)));
+      std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

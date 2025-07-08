@@ -17,11 +17,11 @@
 // source: google/cloud/resourcemanager/v3/projects.proto
 
 #include "google/cloud/resourcemanager/v3/internal/projects_option_defaults.h"
+#include "google/cloud/internal/populate_common_options.h"
+#include "google/cloud/internal/populate_grpc_options.h"
 #include "google/cloud/resourcemanager/v3/projects_connection.h"
 #include "google/cloud/resourcemanager/v3/projects_options.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
-#include "google/cloud/internal/populate_common_options.h"
-#include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 #include <utility>
 
@@ -36,39 +36,31 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options ProjectsDefaultOptions(std::string const& location, Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_PROJECTS_ENDPOINT", "",
-      "GOOGLE_CLOUD_CPP_PROJECTS_AUTHORITY",
+      std::move(options), "GOOGLE_CLOUD_CPP_PROJECTS_ENDPOINT",
+      "", "GOOGLE_CLOUD_CPP_PROJECTS_AUTHORITY",
       // optional location tag for generating docs
-      absl::StrCat(location, location.empty() ? "" : "-",
-                   "cloudresourcemanager.googleapis.com"));
+      absl::StrCat(location, location.empty() ? "" : "-", "cloudresourcemanager.googleapis.com"));
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<resourcemanager_v3::ProjectsRetryPolicyOption>()) {
     options.set<resourcemanager_v3::ProjectsRetryPolicyOption>(
         resourcemanager_v3::ProjectsLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
-            .clone());
+            std::chrono::minutes(30)).clone());
   }
   if (!options.has<resourcemanager_v3::ProjectsBackoffPolicyOption>()) {
     options.set<resourcemanager_v3::ProjectsBackoffPolicyOption>(
-        ExponentialBackoffPolicy(
-            std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
-            .clone());
+        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
   }
   if (!options.has<resourcemanager_v3::ProjectsPollingPolicyOption>()) {
     options.set<resourcemanager_v3::ProjectsPollingPolicyOption>(
         GenericPollingPolicy<
             resourcemanager_v3::ProjectsRetryPolicyOption::Type,
             resourcemanager_v3::ProjectsBackoffPolicyOption::Type>(
-            options.get<resourcemanager_v3::ProjectsRetryPolicyOption>()
-                ->clone(),
+            options.get<resourcemanager_v3::ProjectsRetryPolicyOption>()->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                     std::chrono::minutes(5), kBackoffScaling)
-                .clone())
-            .clone());
+            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
   }
-  if (!options.has<
-          resourcemanager_v3::ProjectsConnectionIdempotencyPolicyOption>()) {
+  if (!options.has<resourcemanager_v3::ProjectsConnectionIdempotencyPolicyOption>()) {
     options.set<resourcemanager_v3::ProjectsConnectionIdempotencyPolicyOption>(
         resourcemanager_v3::MakeDefaultProjectsConnectionIdempotencyPolicy());
   }

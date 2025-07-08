@@ -62,29 +62,23 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class AuthorizedCertificatesClient {
  public:
-  explicit AuthorizedCertificatesClient(
-      std::shared_ptr<AuthorizedCertificatesConnection> connection,
-      Options opts = {});
+  explicit AuthorizedCertificatesClient(std::shared_ptr<AuthorizedCertificatesConnection> connection, Options opts = {});
   ~AuthorizedCertificatesClient();
 
   ///@{
   /// @name Copy and move support
   AuthorizedCertificatesClient(AuthorizedCertificatesClient const&) = default;
-  AuthorizedCertificatesClient& operator=(AuthorizedCertificatesClient const&) =
-      default;
+  AuthorizedCertificatesClient& operator=(AuthorizedCertificatesClient const&) = default;
   AuthorizedCertificatesClient(AuthorizedCertificatesClient&&) = default;
-  AuthorizedCertificatesClient& operator=(AuthorizedCertificatesClient&&) =
-      default;
+  AuthorizedCertificatesClient& operator=(AuthorizedCertificatesClient&&) = default;
   ///@}
 
   ///@{
   /// @name Equality
-  friend bool operator==(AuthorizedCertificatesClient const& a,
-                         AuthorizedCertificatesClient const& b) {
+  friend bool operator==(AuthorizedCertificatesClient const& a, AuthorizedCertificatesClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(AuthorizedCertificatesClient const& a,
-                         AuthorizedCertificatesClient const& b) {
+  friend bool operator!=(AuthorizedCertificatesClient const& a, AuthorizedCertificatesClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -126,9 +120,7 @@ class AuthorizedCertificatesClient {
   ///
   // clang-format on
   StreamRange<google::appengine::v1::AuthorizedCertificate>
-  ListAuthorizedCertificates(
-      google::appengine::v1::ListAuthorizedCertificatesRequest request,
-      Options opts = {});
+  ListAuthorizedCertificates(google::appengine::v1::ListAuthorizedCertificatesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -158,9 +150,7 @@ class AuthorizedCertificatesClient {
   ///
   // clang-format on
   StatusOr<google::appengine::v1::AuthorizedCertificate>
-  GetAuthorizedCertificate(
-      google::appengine::v1::GetAuthorizedCertificateRequest const& request,
-      Options opts = {});
+  GetAuthorizedCertificate(google::appengine::v1::GetAuthorizedCertificateRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -190,9 +180,7 @@ class AuthorizedCertificatesClient {
   ///
   // clang-format on
   StatusOr<google::appengine::v1::AuthorizedCertificate>
-  CreateAuthorizedCertificate(
-      google::appengine::v1::CreateAuthorizedCertificateRequest const& request,
-      Options opts = {});
+  CreateAuthorizedCertificate(google::appengine::v1::CreateAuthorizedCertificateRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -226,9 +214,7 @@ class AuthorizedCertificatesClient {
   ///
   // clang-format on
   StatusOr<google::appengine::v1::AuthorizedCertificate>
-  UpdateAuthorizedCertificate(
-      google::appengine::v1::UpdateAuthorizedCertificateRequest const& request,
-      Options opts = {});
+  UpdateAuthorizedCertificate(google::appengine::v1::UpdateAuthorizedCertificateRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -254,9 +240,8 @@ class AuthorizedCertificatesClient {
   /// [google.appengine.v1.DeleteAuthorizedCertificateRequest]: @googleapis_reference_link{google/appengine/v1/appengine.proto#L860}
   ///
   // clang-format on
-  Status DeleteAuthorizedCertificate(
-      google::appengine::v1::DeleteAuthorizedCertificateRequest const& request,
-      Options opts = {});
+  Status
+  DeleteAuthorizedCertificate(google::appengine::v1::DeleteAuthorizedCertificateRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<AuthorizedCertificatesConnection> connection_;

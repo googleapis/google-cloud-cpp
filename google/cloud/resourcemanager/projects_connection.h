@@ -33,8 +33,7 @@ using ::google::cloud::resourcemanager_v3::MakeProjectsConnection;
 /// @deprecated Use resourcemanager_v3::ProjectsConnection directly.
 using ::google::cloud::resourcemanager_v3::ProjectsConnection;
 
-/// @deprecated Use resourcemanager_v3::ProjectsLimitedErrorCountRetryPolicy
-/// directly.
+/// @deprecated Use resourcemanager_v3::ProjectsLimitedErrorCountRetryPolicy directly.
 using ::google::cloud::resourcemanager_v3::ProjectsLimitedErrorCountRetryPolicy;
 
 /// @deprecated Use resourcemanager_v3::ProjectsLimitedTimeRetryPolicy directly.

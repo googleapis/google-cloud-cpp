@@ -36,57 +36,45 @@ class TargetPoolsConnectionIdempotencyPolicy {
   /// Create a new copy of this object.
   virtual std::unique_ptr<TargetPoolsConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency AddHealthCheck(
-      google::cloud::cpp::compute::target_pools::v1::
-          AddHealthCheckRequest const& request);
+  virtual google::cloud::Idempotency
+  AddHealthCheck(google::cloud::cpp::compute::target_pools::v1::AddHealthCheckRequest const& request);
 
-  virtual google::cloud::Idempotency AddInstance(
-      google::cloud::cpp::compute::target_pools::v1::AddInstanceRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  AddInstance(google::cloud::cpp::compute::target_pools::v1::AddInstanceRequest const& request);
 
-  virtual google::cloud::Idempotency AggregatedListTargetPools(
-      google::cloud::cpp::compute::target_pools::v1::
-          AggregatedListTargetPoolsRequest request);
+  virtual google::cloud::Idempotency
+  AggregatedListTargetPools(google::cloud::cpp::compute::target_pools::v1::AggregatedListTargetPoolsRequest request);
 
-  virtual google::cloud::Idempotency DeleteTargetPool(
-      google::cloud::cpp::compute::target_pools::v1::
-          DeleteTargetPoolRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteTargetPool(google::cloud::cpp::compute::target_pools::v1::DeleteTargetPoolRequest const& request);
 
-  virtual google::cloud::Idempotency GetTargetPool(
-      google::cloud::cpp::compute::target_pools::v1::GetTargetPoolRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  GetTargetPool(google::cloud::cpp::compute::target_pools::v1::GetTargetPoolRequest const& request);
 
-  virtual google::cloud::Idempotency GetHealth(
-      google::cloud::cpp::compute::target_pools::v1::GetHealthRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  GetHealth(google::cloud::cpp::compute::target_pools::v1::GetHealthRequest const& request);
 
-  virtual google::cloud::Idempotency InsertTargetPool(
-      google::cloud::cpp::compute::target_pools::v1::
-          InsertTargetPoolRequest const& request);
+  virtual google::cloud::Idempotency
+  InsertTargetPool(google::cloud::cpp::compute::target_pools::v1::InsertTargetPoolRequest const& request);
 
-  virtual google::cloud::Idempotency ListTargetPools(
-      google::cloud::cpp::compute::target_pools::v1::ListTargetPoolsRequest
-          request);
+  virtual google::cloud::Idempotency
+  ListTargetPools(google::cloud::cpp::compute::target_pools::v1::ListTargetPoolsRequest request);
 
-  virtual google::cloud::Idempotency RemoveHealthCheck(
-      google::cloud::cpp::compute::target_pools::v1::
-          RemoveHealthCheckRequest const& request);
+  virtual google::cloud::Idempotency
+  RemoveHealthCheck(google::cloud::cpp::compute::target_pools::v1::RemoveHealthCheckRequest const& request);
 
-  virtual google::cloud::Idempotency RemoveInstance(
-      google::cloud::cpp::compute::target_pools::v1::
-          RemoveInstanceRequest const& request);
+  virtual google::cloud::Idempotency
+  RemoveInstance(google::cloud::cpp::compute::target_pools::v1::RemoveInstanceRequest const& request);
 
-  virtual google::cloud::Idempotency SetBackup(
-      google::cloud::cpp::compute::target_pools::v1::SetBackupRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  SetBackup(google::cloud::cpp::compute::target_pools::v1::SetBackupRequest const& request);
 
-  virtual google::cloud::Idempotency SetSecurityPolicy(
-      google::cloud::cpp::compute::target_pools::v1::
-          SetSecurityPolicyRequest const& request);
+  virtual google::cloud::Idempotency
+  SetSecurityPolicy(google::cloud::cpp::compute::target_pools::v1::SetSecurityPolicyRequest const& request);
 };
 
 std::unique_ptr<TargetPoolsConnectionIdempotencyPolicy>
-MakeDefaultTargetPoolsConnectionIdempotencyPolicy();
+    MakeDefaultTargetPoolsConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_target_pools_v1

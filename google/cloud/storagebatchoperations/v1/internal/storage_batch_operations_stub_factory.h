@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGEBATCHOPERATIONS_V1_INTERNAL_STORAGE_BATCH_OPERATIONS_STUB_FACTORY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGEBATCHOPERATIONS_V1_INTERNAL_STORAGE_BATCH_OPERATIONS_STUB_FACTORY_H
 
-#include "google/cloud/storagebatchoperations/v1/internal/storage_batch_operations_stub.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/options.h"
+#include "google/cloud/storagebatchoperations/v1/internal/storage_batch_operations_stub.h"
 #include "google/cloud/version.h"
 #include <memory>
 
@@ -30,8 +30,7 @@ namespace cloud {
 namespace storagebatchoperations_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<StorageBatchOperationsStub>
-CreateDefaultStorageBatchOperationsStub(
+std::shared_ptr<StorageBatchOperationsStub> CreateDefaultStorageBatchOperationsStub(
     std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
     Options const& options);
 

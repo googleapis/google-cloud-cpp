@@ -32,18 +32,20 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 DataPolicyServiceLogging::DataPolicyServiceLogging(
     std::shared_ptr<DataPolicyServiceStub> child,
-    TracingOptions tracing_options, std::set<std::string> const&)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
+    TracingOptions tracing_options,
+    std::set<std::string> const&)
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::cloud::bigquery::datapolicies::v1::DataPolicy>
 DataPolicyServiceLogging::CreateDataPolicy(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::datapolicies::v1::CreateDataPolicyRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::datapolicies::v1::CreateDataPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::bigquery::datapolicies::v1::
-                 CreateDataPolicyRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::bigquery::datapolicies::v1::CreateDataPolicyRequest const& request) {
         return child_->CreateDataPolicy(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -51,13 +53,13 @@ DataPolicyServiceLogging::CreateDataPolicy(
 
 StatusOr<google::cloud::bigquery::datapolicies::v1::DataPolicy>
 DataPolicyServiceLogging::UpdateDataPolicy(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::datapolicies::v1::UpdateDataPolicyRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::datapolicies::v1::UpdateDataPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::bigquery::datapolicies::v1::
-                 UpdateDataPolicyRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::bigquery::datapolicies::v1::UpdateDataPolicyRequest const& request) {
         return child_->UpdateDataPolicy(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -65,26 +67,27 @@ DataPolicyServiceLogging::UpdateDataPolicy(
 
 StatusOr<google::cloud::bigquery::datapolicies::v1::DataPolicy>
 DataPolicyServiceLogging::RenameDataPolicy(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::datapolicies::v1::RenameDataPolicyRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::datapolicies::v1::RenameDataPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::bigquery::datapolicies::v1::
-                 RenameDataPolicyRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::bigquery::datapolicies::v1::RenameDataPolicyRequest const& request) {
         return child_->RenameDataPolicy(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status DataPolicyServiceLogging::DeleteDataPolicy(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::datapolicies::v1::DeleteDataPolicyRequest const&
-        request) {
+Status
+DataPolicyServiceLogging::DeleteDataPolicy(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::datapolicies::v1::DeleteDataPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::bigquery::datapolicies::v1::
-                 DeleteDataPolicyRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::bigquery::datapolicies::v1::DeleteDataPolicyRequest const& request) {
         return child_->DeleteDataPolicy(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -92,14 +95,13 @@ Status DataPolicyServiceLogging::DeleteDataPolicy(
 
 StatusOr<google::cloud::bigquery::datapolicies::v1::DataPolicy>
 DataPolicyServiceLogging::GetDataPolicy(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::datapolicies::v1::GetDataPolicyRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::datapolicies::v1::GetDataPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::bigquery::datapolicies::v1::GetDataPolicyRequest const&
-              request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::bigquery::datapolicies::v1::GetDataPolicyRequest const& request) {
         return child_->GetDataPolicy(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -107,34 +109,40 @@ DataPolicyServiceLogging::GetDataPolicy(
 
 StatusOr<google::cloud::bigquery::datapolicies::v1::ListDataPoliciesResponse>
 DataPolicyServiceLogging::ListDataPolicies(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::datapolicies::v1::ListDataPoliciesRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::datapolicies::v1::ListDataPoliciesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::bigquery::datapolicies::v1::
-                 ListDataPoliciesRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::bigquery::datapolicies::v1::ListDataPoliciesRequest const& request) {
         return child_->ListDataPolicies(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::iam::v1::Policy> DataPolicyServiceLogging::GetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::iam::v1::Policy>
+DataPolicyServiceLogging::GetIamPolicy(
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::iam::v1::GetIamPolicyRequest const& request) {
         return child_->GetIamPolicy(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::iam::v1::Policy> DataPolicyServiceLogging::SetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::iam::v1::Policy>
+DataPolicyServiceLogging::SetIamPolicy(
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::iam::v1::SetIamPolicyRequest const& request) {
         return child_->SetIamPolicy(context, options, request);
       },
@@ -143,10 +151,12 @@ StatusOr<google::iam::v1::Policy> DataPolicyServiceLogging::SetIamPolicy(
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 DataPolicyServiceLogging::TestIamPermissions(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::iam::v1::TestIamPermissionsRequest const& request) {
         return child_->TestIamPermissions(context, options, request);
       },

@@ -19,14 +19,14 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VIDEO_TRANSCODER_V1_TRANSCODER_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VIDEO_TRANSCODER_V1_TRANSCODER_CONNECTION_H
 
-#include "google/cloud/video/transcoder/v1/internal/transcoder_retry_traits.h"
-#include "google/cloud/video/transcoder/v1/transcoder_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
+#include "google/cloud/video/transcoder/v1/internal/transcoder_retry_traits.h"
+#include "google/cloud/video/transcoder/v1/transcoder_connection_idempotency_policy.h"
 #include <google/cloud/video/transcoder/v1/services.pb.h>
 #include <memory>
 
@@ -52,8 +52,7 @@ class TranscoderServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class TranscoderServiceLimitedErrorCountRetryPolicy
-    : public TranscoderServiceRetryPolicy {
+class TranscoderServiceLimitedErrorCountRetryPolicy : public TranscoderServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -63,14 +62,14 @@ class TranscoderServiceLimitedErrorCountRetryPolicy
    *     @p maximum_failures == 0.
    */
   explicit TranscoderServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   TranscoderServiceLimitedErrorCountRetryPolicy(
       TranscoderServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : TranscoderServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : TranscoderServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   TranscoderServiceLimitedErrorCountRetryPolicy(
       TranscoderServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : TranscoderServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : TranscoderServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -90,9 +89,7 @@ class TranscoderServiceLimitedErrorCountRetryPolicy
   using BaseType = TranscoderServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      video_transcoder_v1_internal::TranscoderServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<video_transcoder_v1_internal::TranscoderServiceRetryTraits> impl_;
 };
 
 /**
@@ -105,8 +102,7 @@ class TranscoderServiceLimitedErrorCountRetryPolicy
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class TranscoderServiceLimitedTimeRetryPolicy
-    : public TranscoderServiceRetryPolicy {
+class TranscoderServiceLimitedTimeRetryPolicy : public TranscoderServiceRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -131,14 +127,12 @@ class TranscoderServiceLimitedTimeRetryPolicy
   template <typename DurationRep, typename DurationPeriod>
   explicit TranscoderServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  TranscoderServiceLimitedTimeRetryPolicy(
-      TranscoderServiceLimitedTimeRetryPolicy&& rhs) noexcept
-      : TranscoderServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  TranscoderServiceLimitedTimeRetryPolicy(
-      TranscoderServiceLimitedTimeRetryPolicy const& rhs) noexcept
-      : TranscoderServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  TranscoderServiceLimitedTimeRetryPolicy(TranscoderServiceLimitedTimeRetryPolicy&& rhs) noexcept
+    : TranscoderServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  TranscoderServiceLimitedTimeRetryPolicy(TranscoderServiceLimitedTimeRetryPolicy const& rhs) noexcept
+    : TranscoderServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -160,23 +154,20 @@ class TranscoderServiceLimitedTimeRetryPolicy
   using BaseType = TranscoderServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      video_transcoder_v1_internal::TranscoderServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<video_transcoder_v1_internal::TranscoderServiceRetryTraits> impl_;
 };
 
 /**
  * The `TranscoderServiceConnection` object for `TranscoderServiceClient`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `TranscoderServiceClient`. This allows users to inject custom
- * behavior (e.g., with a Google Mock object) when writing tests that use
- * objects of type `TranscoderServiceClient`.
+ * sets in `TranscoderServiceClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `TranscoderServiceClient`.
  *
  * To create a concrete instance, see `MakeTranscoderServiceConnection()`.
  *
- * For mocking, see
- * `video_transcoder_v1_mocks::MockTranscoderServiceConnection`.
+ * For mocking, see `video_transcoder_v1_mocks::MockTranscoderServiceConnection`.
  */
 class TranscoderServiceConnection {
  public:
@@ -184,48 +175,40 @@ class TranscoderServiceConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<google::cloud::video::transcoder::v1::Job> CreateJob(
-      google::cloud::video::transcoder::v1::CreateJobRequest const& request);
+  virtual StatusOr<google::cloud::video::transcoder::v1::Job>
+  CreateJob(google::cloud::video::transcoder::v1::CreateJobRequest const& request);
 
-  virtual StreamRange<google::cloud::video::transcoder::v1::Job> ListJobs(
-      google::cloud::video::transcoder::v1::ListJobsRequest request);
+  virtual StreamRange<google::cloud::video::transcoder::v1::Job>
+  ListJobs(google::cloud::video::transcoder::v1::ListJobsRequest request);
 
-  virtual StatusOr<google::cloud::video::transcoder::v1::Job> GetJob(
-      google::cloud::video::transcoder::v1::GetJobRequest const& request);
+  virtual StatusOr<google::cloud::video::transcoder::v1::Job>
+  GetJob(google::cloud::video::transcoder::v1::GetJobRequest const& request);
 
-  virtual Status DeleteJob(
-      google::cloud::video::transcoder::v1::DeleteJobRequest const& request);
+  virtual Status
+  DeleteJob(google::cloud::video::transcoder::v1::DeleteJobRequest const& request);
 
   virtual StatusOr<google::cloud::video::transcoder::v1::JobTemplate>
-  CreateJobTemplate(
-      google::cloud::video::transcoder::v1::CreateJobTemplateRequest const&
-          request);
+  CreateJobTemplate(google::cloud::video::transcoder::v1::CreateJobTemplateRequest const& request);
 
   virtual StreamRange<google::cloud::video::transcoder::v1::JobTemplate>
-  ListJobTemplates(
-      google::cloud::video::transcoder::v1::ListJobTemplatesRequest request);
+  ListJobTemplates(google::cloud::video::transcoder::v1::ListJobTemplatesRequest request);
 
   virtual StatusOr<google::cloud::video::transcoder::v1::JobTemplate>
-  GetJobTemplate(
-      google::cloud::video::transcoder::v1::GetJobTemplateRequest const&
-          request);
+  GetJobTemplate(google::cloud::video::transcoder::v1::GetJobTemplateRequest const& request);
 
-  virtual Status DeleteJobTemplate(
-      google::cloud::video::transcoder::v1::DeleteJobTemplateRequest const&
-          request);
+  virtual Status
+  DeleteJobTemplate(google::cloud::video::transcoder::v1::DeleteJobTemplateRequest const& request);
 };
 
 /**
- * A factory function to construct an object of type
- * `TranscoderServiceConnection`.
+ * A factory function to construct an object of type `TranscoderServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of
- * TranscoderServiceClient.
+ * should be passed as an argument to the constructor of TranscoderServiceClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `TranscoderServiceConnection`. Expected options are any of the types
- * in the following option lists:
+ * returned `TranscoderServiceConnection`. Expected options are any of the types in
+ * the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
@@ -235,8 +218,8 @@ class TranscoderServiceConnection {
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
- * @param options (optional) Configure the `TranscoderServiceConnection` created
- * by this function.
+ * @param options (optional) Configure the `TranscoderServiceConnection` created by
+ * this function.
  */
 std::shared_ptr<TranscoderServiceConnection> MakeTranscoderServiceConnection(
     Options options = {});

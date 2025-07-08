@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCEMANAGER_V3_INTERNAL_ORGANIZATIONS_TRACING_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCEMANAGER_V3_INTERNAL_ORGANIZATIONS_TRACING_STUB_H
 
-#include "google/cloud/resourcemanager/v3/internal/organizations_stub.h"
 #include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/options.h"
+#include "google/cloud/resourcemanager/v3/internal/organizations_stub.h"
 #include "google/cloud/version.h"
 #include <memory>
 
@@ -39,36 +39,38 @@ class OrganizationsTracingStub : public OrganizationsStub {
   explicit OrganizationsTracingStub(std::shared_ptr<OrganizationsStub> child);
 
   StatusOr<google::cloud::resourcemanager::v3::Organization> GetOrganization(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::resourcemanager::v3::GetOrganizationRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::resourcemanager::v3::GetOrganizationRequest const& request) override;
 
-  StatusOr<google::cloud::resourcemanager::v3::SearchOrganizationsResponse>
-  SearchOrganizations(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::resourcemanager::v3::SearchOrganizationsRequest const&
-          request) override;
+  StatusOr<google::cloud::resourcemanager::v3::SearchOrganizationsResponse> SearchOrganizations(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::resourcemanager::v3::SearchOrganizationsRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
  private:
   std::shared_ptr<OrganizationsStub> child_;
-  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
-      propagator_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

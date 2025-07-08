@@ -50,18 +50,17 @@ DataTaxonomyServiceMetadata::AsyncCreateDataTaxonomy(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::dataplex::v1::CreateDataTaxonomyRequest const& request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateDataTaxonomy(cq, std::move(context),
-                                         std::move(options), request);
+  SetMetadata(*context, *options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateDataTaxonomy(
+      cq, std::move(context), std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 DataTaxonomyServiceMetadata::CreateDataTaxonomy(
-    grpc::ClientContext& context, Options options,
+    grpc::ClientContext& context,
+    Options options,
     google::cloud::dataplex::v1::CreateDataTaxonomyRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateDataTaxonomy(context, options, request);
 }
 
@@ -71,22 +70,17 @@ DataTaxonomyServiceMetadata::AsyncUpdateDataTaxonomy(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::dataplex::v1::UpdateDataTaxonomyRequest const& request) {
-  SetMetadata(
-      *context, *options,
-      absl::StrCat("data_taxonomy.name=",
-                   internal::UrlEncode(request.data_taxonomy().name())));
-  return child_->AsyncUpdateDataTaxonomy(cq, std::move(context),
-                                         std::move(options), request);
+  SetMetadata(*context, *options, absl::StrCat("data_taxonomy.name=", internal::UrlEncode(request.data_taxonomy().name())));
+  return child_->AsyncUpdateDataTaxonomy(
+      cq, std::move(context), std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 DataTaxonomyServiceMetadata::UpdateDataTaxonomy(
-    grpc::ClientContext& context, Options options,
+    grpc::ClientContext& context,
+    Options options,
     google::cloud::dataplex::v1::UpdateDataTaxonomyRequest const& request) {
-  SetMetadata(
-      context, options,
-      absl::StrCat("data_taxonomy.name=",
-                   internal::UrlEncode(request.data_taxonomy().name())));
+  SetMetadata(context, options, absl::StrCat("data_taxonomy.name=", internal::UrlEncode(request.data_taxonomy().name())));
   return child_->UpdateDataTaxonomy(context, options, request);
 }
 
@@ -96,36 +90,35 @@ DataTaxonomyServiceMetadata::AsyncDeleteDataTaxonomy(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::dataplex::v1::DeleteDataTaxonomyRequest const& request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteDataTaxonomy(cq, std::move(context),
-                                         std::move(options), request);
+  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteDataTaxonomy(
+      cq, std::move(context), std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 DataTaxonomyServiceMetadata::DeleteDataTaxonomy(
-    grpc::ClientContext& context, Options options,
+    grpc::ClientContext& context,
+    Options options,
     google::cloud::dataplex::v1::DeleteDataTaxonomyRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteDataTaxonomy(context, options, request);
 }
 
 StatusOr<google::cloud::dataplex::v1::ListDataTaxonomiesResponse>
 DataTaxonomyServiceMetadata::ListDataTaxonomies(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dataplex::v1::ListDataTaxonomiesRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListDataTaxonomies(context, options, request);
 }
 
 StatusOr<google::cloud::dataplex::v1::DataTaxonomy>
 DataTaxonomyServiceMetadata::GetDataTaxonomy(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dataplex::v1::GetDataTaxonomyRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetDataTaxonomy(context, options, request);
 }
 
@@ -134,21 +127,18 @@ DataTaxonomyServiceMetadata::AsyncCreateDataAttributeBinding(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::dataplex::v1::CreateDataAttributeBindingRequest const&
-        request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateDataAttributeBinding(cq, std::move(context),
-                                                 std::move(options), request);
+    google::cloud::dataplex::v1::CreateDataAttributeBindingRequest const& request) {
+  SetMetadata(*context, *options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateDataAttributeBinding(
+      cq, std::move(context), std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 DataTaxonomyServiceMetadata::CreateDataAttributeBinding(
-    grpc::ClientContext& context, Options options,
-    google::cloud::dataplex::v1::CreateDataAttributeBindingRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context,
+    Options options,
+    google::cloud::dataplex::v1::CreateDataAttributeBindingRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateDataAttributeBinding(context, options, request);
 }
 
@@ -157,25 +147,18 @@ DataTaxonomyServiceMetadata::AsyncUpdateDataAttributeBinding(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::dataplex::v1::UpdateDataAttributeBindingRequest const&
-        request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("data_attribute_binding.name=",
-                           internal::UrlEncode(
-                               request.data_attribute_binding().name())));
-  return child_->AsyncUpdateDataAttributeBinding(cq, std::move(context),
-                                                 std::move(options), request);
+    google::cloud::dataplex::v1::UpdateDataAttributeBindingRequest const& request) {
+  SetMetadata(*context, *options, absl::StrCat("data_attribute_binding.name=", internal::UrlEncode(request.data_attribute_binding().name())));
+  return child_->AsyncUpdateDataAttributeBinding(
+      cq, std::move(context), std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 DataTaxonomyServiceMetadata::UpdateDataAttributeBinding(
-    grpc::ClientContext& context, Options options,
-    google::cloud::dataplex::v1::UpdateDataAttributeBindingRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("data_attribute_binding.name=",
-                           internal::UrlEncode(
-                               request.data_attribute_binding().name())));
+    grpc::ClientContext& context,
+    Options options,
+    google::cloud::dataplex::v1::UpdateDataAttributeBindingRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("data_attribute_binding.name=", internal::UrlEncode(request.data_attribute_binding().name())));
   return child_->UpdateDataAttributeBinding(context, options, request);
 }
 
@@ -184,41 +167,36 @@ DataTaxonomyServiceMetadata::AsyncDeleteDataAttributeBinding(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::dataplex::v1::DeleteDataAttributeBindingRequest const&
-        request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteDataAttributeBinding(cq, std::move(context),
-                                                 std::move(options), request);
+    google::cloud::dataplex::v1::DeleteDataAttributeBindingRequest const& request) {
+  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteDataAttributeBinding(
+      cq, std::move(context), std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 DataTaxonomyServiceMetadata::DeleteDataAttributeBinding(
-    grpc::ClientContext& context, Options options,
-    google::cloud::dataplex::v1::DeleteDataAttributeBindingRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context,
+    Options options,
+    google::cloud::dataplex::v1::DeleteDataAttributeBindingRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteDataAttributeBinding(context, options, request);
 }
 
 StatusOr<google::cloud::dataplex::v1::ListDataAttributeBindingsResponse>
 DataTaxonomyServiceMetadata::ListDataAttributeBindings(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::dataplex::v1::ListDataAttributeBindingsRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::dataplex::v1::ListDataAttributeBindingsRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListDataAttributeBindings(context, options, request);
 }
 
 StatusOr<google::cloud::dataplex::v1::DataAttributeBinding>
 DataTaxonomyServiceMetadata::GetDataAttributeBinding(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::dataplex::v1::GetDataAttributeBindingRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::dataplex::v1::GetDataAttributeBindingRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetDataAttributeBinding(context, options, request);
 }
 
@@ -228,18 +206,17 @@ DataTaxonomyServiceMetadata::AsyncCreateDataAttribute(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::dataplex::v1::CreateDataAttributeRequest const& request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateDataAttribute(cq, std::move(context),
-                                          std::move(options), request);
+  SetMetadata(*context, *options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateDataAttribute(
+      cq, std::move(context), std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 DataTaxonomyServiceMetadata::CreateDataAttribute(
-    grpc::ClientContext& context, Options options,
+    grpc::ClientContext& context,
+    Options options,
     google::cloud::dataplex::v1::CreateDataAttributeRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateDataAttribute(context, options, request);
 }
 
@@ -249,22 +226,17 @@ DataTaxonomyServiceMetadata::AsyncUpdateDataAttribute(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::dataplex::v1::UpdateDataAttributeRequest const& request) {
-  SetMetadata(
-      *context, *options,
-      absl::StrCat("data_attribute.name=",
-                   internal::UrlEncode(request.data_attribute().name())));
-  return child_->AsyncUpdateDataAttribute(cq, std::move(context),
-                                          std::move(options), request);
+  SetMetadata(*context, *options, absl::StrCat("data_attribute.name=", internal::UrlEncode(request.data_attribute().name())));
+  return child_->AsyncUpdateDataAttribute(
+      cq, std::move(context), std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 DataTaxonomyServiceMetadata::UpdateDataAttribute(
-    grpc::ClientContext& context, Options options,
+    grpc::ClientContext& context,
+    Options options,
     google::cloud::dataplex::v1::UpdateDataAttributeRequest const& request) {
-  SetMetadata(
-      context, options,
-      absl::StrCat("data_attribute.name=",
-                   internal::UrlEncode(request.data_attribute().name())));
+  SetMetadata(context, options, absl::StrCat("data_attribute.name=", internal::UrlEncode(request.data_attribute().name())));
   return child_->UpdateDataAttribute(context, options, request);
 }
 
@@ -274,116 +246,116 @@ DataTaxonomyServiceMetadata::AsyncDeleteDataAttribute(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::dataplex::v1::DeleteDataAttributeRequest const& request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteDataAttribute(cq, std::move(context),
-                                          std::move(options), request);
+  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteDataAttribute(
+      cq, std::move(context), std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 DataTaxonomyServiceMetadata::DeleteDataAttribute(
-    grpc::ClientContext& context, Options options,
+    grpc::ClientContext& context,
+    Options options,
     google::cloud::dataplex::v1::DeleteDataAttributeRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteDataAttribute(context, options, request);
 }
 
 StatusOr<google::cloud::dataplex::v1::ListDataAttributesResponse>
 DataTaxonomyServiceMetadata::ListDataAttributes(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dataplex::v1::ListDataAttributesRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListDataAttributes(context, options, request);
 }
 
 StatusOr<google::cloud::dataplex::v1::DataAttribute>
 DataTaxonomyServiceMetadata::GetDataAttribute(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dataplex::v1::GetDataAttributeRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetDataAttribute(context, options, request);
 }
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 DataTaxonomyServiceMetadata::ListLocations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ListLocations(context, options, request);
 }
 
 StatusOr<google::cloud::location::Location>
 DataTaxonomyServiceMetadata::GetLocation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetLocation(context, options, request);
 }
 
-StatusOr<google::iam::v1::Policy> DataTaxonomyServiceMetadata::SetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::iam::v1::Policy>
+DataTaxonomyServiceMetadata::SetIamPolicy(
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
-  SetMetadata(
-      context, options,
-      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
+  SetMetadata(context, options, absl::StrCat("resource=", internal::UrlEncode(request.resource())));
   return child_->SetIamPolicy(context, options, request);
 }
 
-StatusOr<google::iam::v1::Policy> DataTaxonomyServiceMetadata::GetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::iam::v1::Policy>
+DataTaxonomyServiceMetadata::GetIamPolicy(
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
-  SetMetadata(
-      context, options,
-      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
+  SetMetadata(context, options, absl::StrCat("resource=", internal::UrlEncode(request.resource())));
   return child_->GetIamPolicy(context, options, request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 DataTaxonomyServiceMetadata::TestIamPermissions(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  SetMetadata(
-      context, options,
-      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
+  SetMetadata(context, options, absl::StrCat("resource=", internal::UrlEncode(request.resource())));
   return child_->TestIamPermissions(context, options, request);
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
 DataTaxonomyServiceMetadata::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ListOperations(context, options, request);
 }
 
 StatusOr<google::longrunning::Operation>
 DataTaxonomyServiceMetadata::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetOperation(context, options, request);
 }
 
-Status DataTaxonomyServiceMetadata::DeleteOperation(
-    grpc::ClientContext& context, Options const& options,
+Status
+DataTaxonomyServiceMetadata::DeleteOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteOperation(context, options, request);
 }
 
-Status DataTaxonomyServiceMetadata::CancelOperation(
-    grpc::ClientContext& context, Options const& options,
+Status
+DataTaxonomyServiceMetadata::CancelOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->CancelOperation(context, options, request);
 }
 
@@ -395,8 +367,8 @@ DataTaxonomyServiceMetadata::AsyncGetOperation(
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(cq, std::move(context), std::move(options),
-                                   request);
+  return child_->AsyncGetOperation(
+      cq, std::move(context), std::move(options), request);
 }
 
 future<Status> DataTaxonomyServiceMetadata::AsyncCancelOperation(
@@ -406,21 +378,21 @@ future<Status> DataTaxonomyServiceMetadata::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(cq, std::move(context),
-                                      std::move(options), request);
+  return child_->AsyncCancelOperation(
+      cq, std::move(context), std::move(options), request);
 }
 
-void DataTaxonomyServiceMetadata::SetMetadata(
-    grpc::ClientContext& context, Options const& options,
-    std::string const& request_params) {
+void DataTaxonomyServiceMetadata::SetMetadata(grpc::ClientContext& context,
+                                        Options const& options,
+                                        std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
 void DataTaxonomyServiceMetadata::SetMetadata(grpc::ClientContext& context,
-                                              Options const& options) {
-  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
-                                       api_client_header_);
+                                        Options const& options) {
+  google::cloud::internal::SetMetadata(
+      context, options, fixed_metadata_, api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

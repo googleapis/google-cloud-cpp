@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_TARGET_VPN_GATEWAYS_V1_TARGET_VPN_GATEWAYS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_TARGET_VPN_GATEWAYS_V1_TARGET_VPN_GATEWAYS_CONNECTION_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/target_vpn_gateways/v1/internal/target_vpn_gateways_retry_traits.h"
 #include "google/cloud/compute/target_vpn_gateways/v1/target_vpn_gateways_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -55,8 +55,7 @@ class TargetVpnGatewaysRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class TargetVpnGatewaysLimitedErrorCountRetryPolicy
-    : public TargetVpnGatewaysRetryPolicy {
+class TargetVpnGatewaysLimitedErrorCountRetryPolicy : public TargetVpnGatewaysRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -66,14 +65,14 @@ class TargetVpnGatewaysLimitedErrorCountRetryPolicy
    *     @p maximum_failures == 0.
    */
   explicit TargetVpnGatewaysLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   TargetVpnGatewaysLimitedErrorCountRetryPolicy(
       TargetVpnGatewaysLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : TargetVpnGatewaysLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : TargetVpnGatewaysLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   TargetVpnGatewaysLimitedErrorCountRetryPolicy(
       TargetVpnGatewaysLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : TargetVpnGatewaysLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : TargetVpnGatewaysLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -93,9 +92,7 @@ class TargetVpnGatewaysLimitedErrorCountRetryPolicy
   using BaseType = TargetVpnGatewaysRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      compute_target_vpn_gateways_v1_internal::TargetVpnGatewaysRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<compute_target_vpn_gateways_v1_internal::TargetVpnGatewaysRetryTraits> impl_;
 };
 
 /**
@@ -108,8 +105,7 @@ class TargetVpnGatewaysLimitedErrorCountRetryPolicy
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class TargetVpnGatewaysLimitedTimeRetryPolicy
-    : public TargetVpnGatewaysRetryPolicy {
+class TargetVpnGatewaysLimitedTimeRetryPolicy : public TargetVpnGatewaysRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -134,14 +130,12 @@ class TargetVpnGatewaysLimitedTimeRetryPolicy
   template <typename DurationRep, typename DurationPeriod>
   explicit TargetVpnGatewaysLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  TargetVpnGatewaysLimitedTimeRetryPolicy(
-      TargetVpnGatewaysLimitedTimeRetryPolicy&& rhs) noexcept
-      : TargetVpnGatewaysLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  TargetVpnGatewaysLimitedTimeRetryPolicy(
-      TargetVpnGatewaysLimitedTimeRetryPolicy const& rhs) noexcept
-      : TargetVpnGatewaysLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  TargetVpnGatewaysLimitedTimeRetryPolicy(TargetVpnGatewaysLimitedTimeRetryPolicy&& rhs) noexcept
+    : TargetVpnGatewaysLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  TargetVpnGatewaysLimitedTimeRetryPolicy(TargetVpnGatewaysLimitedTimeRetryPolicy const& rhs) noexcept
+    : TargetVpnGatewaysLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -163,23 +157,20 @@ class TargetVpnGatewaysLimitedTimeRetryPolicy
   using BaseType = TargetVpnGatewaysRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      compute_target_vpn_gateways_v1_internal::TargetVpnGatewaysRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<compute_target_vpn_gateways_v1_internal::TargetVpnGatewaysRetryTraits> impl_;
 };
 
 /**
  * The `TargetVpnGatewaysConnection` object for `TargetVpnGatewaysClient`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `TargetVpnGatewaysClient`. This allows users to inject custom
- * behavior (e.g., with a Google Mock object) when writing tests that use
- * objects of type `TargetVpnGatewaysClient`.
+ * sets in `TargetVpnGatewaysClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `TargetVpnGatewaysClient`.
  *
  * To create a concrete instance, see `MakeTargetVpnGatewaysConnection()`.
  *
- * For mocking, see
- * `compute_target_vpn_gateways_v1_mocks::MockTargetVpnGatewaysConnection`.
+ * For mocking, see `compute_target_vpn_gateways_v1_mocks::MockTargetVpnGatewaysConnection`.
  */
 class TargetVpnGatewaysConnection {
  public:
@@ -187,57 +178,41 @@ class TargetVpnGatewaysConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StreamRange<
-      std::pair<std::string,
-                google::cloud::cpp::compute::v1::TargetVpnGatewaysScopedList>>
-  AggregatedListTargetVpnGateways(
-      google::cloud::cpp::compute::target_vpn_gateways::v1::
-          AggregatedListTargetVpnGatewaysRequest request);
+  virtual StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::TargetVpnGatewaysScopedList>>
+  AggregatedListTargetVpnGateways(google::cloud::cpp::compute::target_vpn_gateways::v1::AggregatedListTargetVpnGatewaysRequest request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteTargetVpnGateway(google::cloud::cpp::compute::target_vpn_gateways::v1::
-                             DeleteTargetVpnGatewayRequest const& request);
+  DeleteTargetVpnGateway(google::cloud::cpp::compute::target_vpn_gateways::v1::DeleteTargetVpnGatewayRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteTargetVpnGateway(NoAwaitTag,
-                         google::cloud::cpp::compute::target_vpn_gateways::v1::
-                             DeleteTargetVpnGatewayRequest const& request);
+  DeleteTargetVpnGateway(NoAwaitTag, google::cloud::cpp::compute::target_vpn_gateways::v1::DeleteTargetVpnGatewayRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteTargetVpnGateway(
-      google::cloud::cpp::compute::v1::Operation const& operation);
+  DeleteTargetVpnGateway( google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::TargetVpnGateway>
-  GetTargetVpnGateway(google::cloud::cpp::compute::target_vpn_gateways::v1::
-                          GetTargetVpnGatewayRequest const& request);
+  GetTargetVpnGateway(google::cloud::cpp::compute::target_vpn_gateways::v1::GetTargetVpnGatewayRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertTargetVpnGateway(google::cloud::cpp::compute::target_vpn_gateways::v1::
-                             InsertTargetVpnGatewayRequest const& request);
+  InsertTargetVpnGateway(google::cloud::cpp::compute::target_vpn_gateways::v1::InsertTargetVpnGatewayRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertTargetVpnGateway(NoAwaitTag,
-                         google::cloud::cpp::compute::target_vpn_gateways::v1::
-                             InsertTargetVpnGatewayRequest const& request);
+  InsertTargetVpnGateway(NoAwaitTag, google::cloud::cpp::compute::target_vpn_gateways::v1::InsertTargetVpnGatewayRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertTargetVpnGateway(
-      google::cloud::cpp::compute::v1::Operation const& operation);
+  InsertTargetVpnGateway( google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::TargetVpnGateway>
-  ListTargetVpnGateways(google::cloud::cpp::compute::target_vpn_gateways::v1::
-                            ListTargetVpnGatewaysRequest request);
+  ListTargetVpnGateways(google::cloud::cpp::compute::target_vpn_gateways::v1::ListTargetVpnGatewaysRequest request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetLabels(google::cloud::cpp::compute::target_vpn_gateways::v1::
-                SetLabelsRequest const& request);
+  SetLabels(google::cloud::cpp::compute::target_vpn_gateways::v1::SetLabelsRequest const& request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
-      NoAwaitTag, google::cloud::cpp::compute::target_vpn_gateways::v1::
-                      SetLabelsRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  SetLabels(NoAwaitTag, google::cloud::cpp::compute::target_vpn_gateways::v1::SetLabelsRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetLabels(google::cloud::cpp::compute::v1::Operation const& operation);
+  SetLabels( google::cloud::cpp::compute::v1::Operation const& operation);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

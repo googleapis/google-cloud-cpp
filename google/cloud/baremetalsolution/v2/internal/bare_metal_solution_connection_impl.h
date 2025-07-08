@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BAREMETALSOLUTION_V2_INTERNAL_BARE_METAL_SOLUTION_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BAREMETALSOLUTION_V2_INTERNAL_BARE_METAL_SOLUTION_CONNECTION_IMPL_H
 
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/baremetalsolution/v2/bare_metal_solution_connection.h"
 #include "google/cloud/baremetalsolution/v2/bare_metal_solution_connection_idempotency_policy.h"
 #include "google/cloud/baremetalsolution/v2/bare_metal_solution_options.h"
 #include "google/cloud/baremetalsolution/v2/internal/bare_metal_solution_retry_traits.h"
 #include "google/cloud/baremetalsolution/v2/internal/bare_metal_solution_stub.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -46,347 +46,277 @@ class BareMetalSolutionConnectionImpl
   ~BareMetalSolutionConnectionImpl() override = default;
 
   BareMetalSolutionConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<baremetalsolution_v2_internal::BareMetalSolutionStub>
-          stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<baremetalsolution_v2_internal::BareMetalSolutionStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
-  StreamRange<google::cloud::baremetalsolution::v2::Instance> ListInstances(
-      google::cloud::baremetalsolution::v2::ListInstancesRequest request)
-      override;
+  StreamRange<google::cloud::baremetalsolution::v2::Instance>
+  ListInstances(google::cloud::baremetalsolution::v2::ListInstancesRequest request) override;
 
-  StatusOr<google::cloud::baremetalsolution::v2::Instance> GetInstance(
-      google::cloud::baremetalsolution::v2::GetInstanceRequest const& request)
-      override;
+  StatusOr<google::cloud::baremetalsolution::v2::Instance>
+  GetInstance(google::cloud::baremetalsolution::v2::GetInstanceRequest const& request) override;
+
+  future<StatusOr<google::cloud::baremetalsolution::v2::Instance>>
+  UpdateInstance(google::cloud::baremetalsolution::v2::UpdateInstanceRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  UpdateInstance(NoAwaitTag,
+      google::cloud::baremetalsolution::v2::UpdateInstanceRequest const& request) override;
 
   future<StatusOr<google::cloud::baremetalsolution::v2::Instance>>
   UpdateInstance(
-      google::cloud::baremetalsolution::v2::UpdateInstanceRequest const&
-          request) override;
+      google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::longrunning::Operation> UpdateInstance(
-      NoAwaitTag,
-      google::cloud::baremetalsolution::v2::UpdateInstanceRequest const&
-          request) override;
+  StatusOr<google::cloud::baremetalsolution::v2::Instance>
+  RenameInstance(google::cloud::baremetalsolution::v2::RenameInstanceRequest const& request) override;
 
-  future<StatusOr<google::cloud::baremetalsolution::v2::Instance>>
-  UpdateInstance(google::longrunning::Operation const& operation) override;
+  future<StatusOr<google::cloud::baremetalsolution::v2::ResetInstanceResponse>>
+  ResetInstance(google::cloud::baremetalsolution::v2::ResetInstanceRequest const& request) override;
 
-  StatusOr<google::cloud::baremetalsolution::v2::Instance> RenameInstance(
-      google::cloud::baremetalsolution::v2::RenameInstanceRequest const&
-          request) override;
+  StatusOr<google::longrunning::Operation>
+  ResetInstance(NoAwaitTag,
+      google::cloud::baremetalsolution::v2::ResetInstanceRequest const& request) override;
 
   future<StatusOr<google::cloud::baremetalsolution::v2::ResetInstanceResponse>>
   ResetInstance(
-      google::cloud::baremetalsolution::v2::ResetInstanceRequest const& request)
-      override;
+      google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::longrunning::Operation> ResetInstance(
-      NoAwaitTag,
-      google::cloud::baremetalsolution::v2::ResetInstanceRequest const& request)
-      override;
+  future<StatusOr<google::cloud::baremetalsolution::v2::StartInstanceResponse>>
+  StartInstance(google::cloud::baremetalsolution::v2::StartInstanceRequest const& request) override;
 
-  future<StatusOr<google::cloud::baremetalsolution::v2::ResetInstanceResponse>>
-  ResetInstance(google::longrunning::Operation const& operation) override;
+  StatusOr<google::longrunning::Operation>
+  StartInstance(NoAwaitTag,
+      google::cloud::baremetalsolution::v2::StartInstanceRequest const& request) override;
 
   future<StatusOr<google::cloud::baremetalsolution::v2::StartInstanceResponse>>
   StartInstance(
-      google::cloud::baremetalsolution::v2::StartInstanceRequest const& request)
-      override;
-
-  StatusOr<google::longrunning::Operation> StartInstance(
-      NoAwaitTag,
-      google::cloud::baremetalsolution::v2::StartInstanceRequest const& request)
-      override;
-
-  future<StatusOr<google::cloud::baremetalsolution::v2::StartInstanceResponse>>
-  StartInstance(google::longrunning::Operation const& operation) override;
+      google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::baremetalsolution::v2::StopInstanceResponse>>
-  StopInstance(google::cloud::baremetalsolution::v2::StopInstanceRequest const&
-                   request) override;
+  StopInstance(google::cloud::baremetalsolution::v2::StopInstanceRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> StopInstance(
-      NoAwaitTag,
-      google::cloud::baremetalsolution::v2::StopInstanceRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  StopInstance(NoAwaitTag,
+      google::cloud::baremetalsolution::v2::StopInstanceRequest const& request) override;
 
   future<StatusOr<google::cloud::baremetalsolution::v2::StopInstanceResponse>>
-  StopInstance(google::longrunning::Operation const& operation) override;
+  StopInstance(
+      google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::baremetalsolution::v2::
-                      EnableInteractiveSerialConsoleResponse>>
-  EnableInteractiveSerialConsole(
-      google::cloud::baremetalsolution::v2::
-          EnableInteractiveSerialConsoleRequest const& request) override;
+  future<StatusOr<google::cloud::baremetalsolution::v2::EnableInteractiveSerialConsoleResponse>>
+  EnableInteractiveSerialConsole(google::cloud::baremetalsolution::v2::EnableInteractiveSerialConsoleRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> EnableInteractiveSerialConsole(
-      NoAwaitTag,
-      google::cloud::baremetalsolution::v2::
-          EnableInteractiveSerialConsoleRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  EnableInteractiveSerialConsole(NoAwaitTag,
+      google::cloud::baremetalsolution::v2::EnableInteractiveSerialConsoleRequest const& request) override;
 
-  future<StatusOr<google::cloud::baremetalsolution::v2::
-                      EnableInteractiveSerialConsoleResponse>>
+  future<StatusOr<google::cloud::baremetalsolution::v2::EnableInteractiveSerialConsoleResponse>>
   EnableInteractiveSerialConsole(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::baremetalsolution::v2::
-                      DisableInteractiveSerialConsoleResponse>>
-  DisableInteractiveSerialConsole(
-      google::cloud::baremetalsolution::v2::
-          DisableInteractiveSerialConsoleRequest const& request) override;
+  future<StatusOr<google::cloud::baremetalsolution::v2::DisableInteractiveSerialConsoleResponse>>
+  DisableInteractiveSerialConsole(google::cloud::baremetalsolution::v2::DisableInteractiveSerialConsoleRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> DisableInteractiveSerialConsole(
-      NoAwaitTag,
-      google::cloud::baremetalsolution::v2::
-          DisableInteractiveSerialConsoleRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  DisableInteractiveSerialConsole(NoAwaitTag,
+      google::cloud::baremetalsolution::v2::DisableInteractiveSerialConsoleRequest const& request) override;
 
-  future<StatusOr<google::cloud::baremetalsolution::v2::
-                      DisableInteractiveSerialConsoleResponse>>
+  future<StatusOr<google::cloud::baremetalsolution::v2::DisableInteractiveSerialConsoleResponse>>
   DisableInteractiveSerialConsole(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::baremetalsolution::v2::Instance>> DetachLun(
-      google::cloud::baremetalsolution::v2::DetachLunRequest const& request)
-      override;
+  future<StatusOr<google::cloud::baremetalsolution::v2::Instance>>
+  DetachLun(google::cloud::baremetalsolution::v2::DetachLunRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> DetachLun(
-      NoAwaitTag,
-      google::cloud::baremetalsolution::v2::DetachLunRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  DetachLun(NoAwaitTag,
+      google::cloud::baremetalsolution::v2::DetachLunRequest const& request) override;
 
-  future<StatusOr<google::cloud::baremetalsolution::v2::Instance>> DetachLun(
+  future<StatusOr<google::cloud::baremetalsolution::v2::Instance>>
+  DetachLun(
       google::longrunning::Operation const& operation) override;
 
-  StreamRange<google::cloud::baremetalsolution::v2::SSHKey> ListSSHKeys(
-      google::cloud::baremetalsolution::v2::ListSSHKeysRequest request)
-      override;
+  StreamRange<google::cloud::baremetalsolution::v2::SSHKey>
+  ListSSHKeys(google::cloud::baremetalsolution::v2::ListSSHKeysRequest request) override;
 
-  StatusOr<google::cloud::baremetalsolution::v2::SSHKey> CreateSSHKey(
-      google::cloud::baremetalsolution::v2::CreateSSHKeyRequest const& request)
-      override;
+  StatusOr<google::cloud::baremetalsolution::v2::SSHKey>
+  CreateSSHKey(google::cloud::baremetalsolution::v2::CreateSSHKeyRequest const& request) override;
 
-  Status DeleteSSHKey(
-      google::cloud::baremetalsolution::v2::DeleteSSHKeyRequest const& request)
-      override;
+  Status
+  DeleteSSHKey(google::cloud::baremetalsolution::v2::DeleteSSHKeyRequest const& request) override;
 
-  StreamRange<google::cloud::baremetalsolution::v2::Volume> ListVolumes(
-      google::cloud::baremetalsolution::v2::ListVolumesRequest request)
-      override;
+  StreamRange<google::cloud::baremetalsolution::v2::Volume>
+  ListVolumes(google::cloud::baremetalsolution::v2::ListVolumesRequest request) override;
 
-  StatusOr<google::cloud::baremetalsolution::v2::Volume> GetVolume(
-      google::cloud::baremetalsolution::v2::GetVolumeRequest const& request)
-      override;
+  StatusOr<google::cloud::baremetalsolution::v2::Volume>
+  GetVolume(google::cloud::baremetalsolution::v2::GetVolumeRequest const& request) override;
 
-  future<StatusOr<google::cloud::baremetalsolution::v2::Volume>> UpdateVolume(
-      google::cloud::baremetalsolution::v2::UpdateVolumeRequest const& request)
-      override;
+  future<StatusOr<google::cloud::baremetalsolution::v2::Volume>>
+  UpdateVolume(google::cloud::baremetalsolution::v2::UpdateVolumeRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> UpdateVolume(
-      NoAwaitTag,
-      google::cloud::baremetalsolution::v2::UpdateVolumeRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  UpdateVolume(NoAwaitTag,
+      google::cloud::baremetalsolution::v2::UpdateVolumeRequest const& request) override;
 
-  future<StatusOr<google::cloud::baremetalsolution::v2::Volume>> UpdateVolume(
+  future<StatusOr<google::cloud::baremetalsolution::v2::Volume>>
+  UpdateVolume(
       google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::cloud::baremetalsolution::v2::Volume> RenameVolume(
-      google::cloud::baremetalsolution::v2::RenameVolumeRequest const& request)
-      override;
+  StatusOr<google::cloud::baremetalsolution::v2::Volume>
+  RenameVolume(google::cloud::baremetalsolution::v2::RenameVolumeRequest const& request) override;
 
   future<StatusOr<google::cloud::baremetalsolution::v2::OperationMetadata>>
-  EvictVolume(google::cloud::baremetalsolution::v2::EvictVolumeRequest const&
-                  request) override;
+  EvictVolume(google::cloud::baremetalsolution::v2::EvictVolumeRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> EvictVolume(
-      NoAwaitTag,
-      google::cloud::baremetalsolution::v2::EvictVolumeRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  EvictVolume(NoAwaitTag,
+      google::cloud::baremetalsolution::v2::EvictVolumeRequest const& request) override;
 
   future<StatusOr<google::cloud::baremetalsolution::v2::OperationMetadata>>
-  EvictVolume(google::longrunning::Operation const& operation) override;
-
-  future<StatusOr<google::cloud::baremetalsolution::v2::Volume>> ResizeVolume(
-      google::cloud::baremetalsolution::v2::ResizeVolumeRequest const& request)
-      override;
-
-  StatusOr<google::longrunning::Operation> ResizeVolume(
-      NoAwaitTag,
-      google::cloud::baremetalsolution::v2::ResizeVolumeRequest const& request)
-      override;
-
-  future<StatusOr<google::cloud::baremetalsolution::v2::Volume>> ResizeVolume(
+  EvictVolume(
       google::longrunning::Operation const& operation) override;
 
-  StreamRange<google::cloud::baremetalsolution::v2::Network> ListNetworks(
-      google::cloud::baremetalsolution::v2::ListNetworksRequest request)
-      override;
+  future<StatusOr<google::cloud::baremetalsolution::v2::Volume>>
+  ResizeVolume(google::cloud::baremetalsolution::v2::ResizeVolumeRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  ResizeVolume(NoAwaitTag,
+      google::cloud::baremetalsolution::v2::ResizeVolumeRequest const& request) override;
+
+  future<StatusOr<google::cloud::baremetalsolution::v2::Volume>>
+  ResizeVolume(
+      google::longrunning::Operation const& operation) override;
+
+  StreamRange<google::cloud::baremetalsolution::v2::Network>
+  ListNetworks(google::cloud::baremetalsolution::v2::ListNetworksRequest request) override;
 
   StatusOr<google::cloud::baremetalsolution::v2::ListNetworkUsageResponse>
-  ListNetworkUsage(
-      google::cloud::baremetalsolution::v2::ListNetworkUsageRequest const&
-          request) override;
+  ListNetworkUsage(google::cloud::baremetalsolution::v2::ListNetworkUsageRequest const& request) override;
 
-  StatusOr<google::cloud::baremetalsolution::v2::Network> GetNetwork(
-      google::cloud::baremetalsolution::v2::GetNetworkRequest const& request)
-      override;
+  StatusOr<google::cloud::baremetalsolution::v2::Network>
+  GetNetwork(google::cloud::baremetalsolution::v2::GetNetworkRequest const& request) override;
 
-  future<StatusOr<google::cloud::baremetalsolution::v2::Network>> UpdateNetwork(
-      google::cloud::baremetalsolution::v2::UpdateNetworkRequest const& request)
-      override;
+  future<StatusOr<google::cloud::baremetalsolution::v2::Network>>
+  UpdateNetwork(google::cloud::baremetalsolution::v2::UpdateNetworkRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> UpdateNetwork(
-      NoAwaitTag,
-      google::cloud::baremetalsolution::v2::UpdateNetworkRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  UpdateNetwork(NoAwaitTag,
+      google::cloud::baremetalsolution::v2::UpdateNetworkRequest const& request) override;
 
-  future<StatusOr<google::cloud::baremetalsolution::v2::Network>> UpdateNetwork(
+  future<StatusOr<google::cloud::baremetalsolution::v2::Network>>
+  UpdateNetwork(
       google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::baremetalsolution::v2::VolumeSnapshot>
-  CreateVolumeSnapshot(
-      google::cloud::baremetalsolution::v2::CreateVolumeSnapshotRequest const&
-          request) override;
+  CreateVolumeSnapshot(google::cloud::baremetalsolution::v2::CreateVolumeSnapshotRequest const& request) override;
 
   future<StatusOr<google::cloud::baremetalsolution::v2::VolumeSnapshot>>
-  RestoreVolumeSnapshot(
-      google::cloud::baremetalsolution::v2::RestoreVolumeSnapshotRequest const&
-          request) override;
+  RestoreVolumeSnapshot(google::cloud::baremetalsolution::v2::RestoreVolumeSnapshotRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> RestoreVolumeSnapshot(
-      NoAwaitTag,
-      google::cloud::baremetalsolution::v2::RestoreVolumeSnapshotRequest const&
-          request) override;
+  StatusOr<google::longrunning::Operation>
+  RestoreVolumeSnapshot(NoAwaitTag,
+      google::cloud::baremetalsolution::v2::RestoreVolumeSnapshotRequest const& request) override;
 
   future<StatusOr<google::cloud::baremetalsolution::v2::VolumeSnapshot>>
   RestoreVolumeSnapshot(
       google::longrunning::Operation const& operation) override;
 
-  Status DeleteVolumeSnapshot(
-      google::cloud::baremetalsolution::v2::DeleteVolumeSnapshotRequest const&
-          request) override;
+  Status
+  DeleteVolumeSnapshot(google::cloud::baremetalsolution::v2::DeleteVolumeSnapshotRequest const& request) override;
 
   StatusOr<google::cloud::baremetalsolution::v2::VolumeSnapshot>
-  GetVolumeSnapshot(
-      google::cloud::baremetalsolution::v2::GetVolumeSnapshotRequest const&
-          request) override;
+  GetVolumeSnapshot(google::cloud::baremetalsolution::v2::GetVolumeSnapshotRequest const& request) override;
 
   StreamRange<google::cloud::baremetalsolution::v2::VolumeSnapshot>
-  ListVolumeSnapshots(
-      google::cloud::baremetalsolution::v2::ListVolumeSnapshotsRequest request)
-      override;
+  ListVolumeSnapshots(google::cloud::baremetalsolution::v2::ListVolumeSnapshotsRequest request) override;
 
-  StatusOr<google::cloud::baremetalsolution::v2::Lun> GetLun(
-      google::cloud::baremetalsolution::v2::GetLunRequest const& request)
-      override;
+  StatusOr<google::cloud::baremetalsolution::v2::Lun>
+  GetLun(google::cloud::baremetalsolution::v2::GetLunRequest const& request) override;
 
-  StreamRange<google::cloud::baremetalsolution::v2::Lun> ListLuns(
-      google::cloud::baremetalsolution::v2::ListLunsRequest request) override;
+  StreamRange<google::cloud::baremetalsolution::v2::Lun>
+  ListLuns(google::cloud::baremetalsolution::v2::ListLunsRequest request) override;
 
   future<StatusOr<google::cloud::baremetalsolution::v2::OperationMetadata>>
-  EvictLun(google::cloud::baremetalsolution::v2::EvictLunRequest const& request)
-      override;
+  EvictLun(google::cloud::baremetalsolution::v2::EvictLunRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> EvictLun(
-      NoAwaitTag,
-      google::cloud::baremetalsolution::v2::EvictLunRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  EvictLun(NoAwaitTag,
+      google::cloud::baremetalsolution::v2::EvictLunRequest const& request) override;
 
   future<StatusOr<google::cloud::baremetalsolution::v2::OperationMetadata>>
-  EvictLun(google::longrunning::Operation const& operation) override;
+  EvictLun(
+      google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::cloud::baremetalsolution::v2::NfsShare> GetNfsShare(
-      google::cloud::baremetalsolution::v2::GetNfsShareRequest const& request)
-      override;
+  StatusOr<google::cloud::baremetalsolution::v2::NfsShare>
+  GetNfsShare(google::cloud::baremetalsolution::v2::GetNfsShareRequest const& request) override;
 
-  StreamRange<google::cloud::baremetalsolution::v2::NfsShare> ListNfsShares(
-      google::cloud::baremetalsolution::v2::ListNfsSharesRequest request)
-      override;
+  StreamRange<google::cloud::baremetalsolution::v2::NfsShare>
+  ListNfsShares(google::cloud::baremetalsolution::v2::ListNfsSharesRequest request) override;
+
+  future<StatusOr<google::cloud::baremetalsolution::v2::NfsShare>>
+  UpdateNfsShare(google::cloud::baremetalsolution::v2::UpdateNfsShareRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  UpdateNfsShare(NoAwaitTag,
+      google::cloud::baremetalsolution::v2::UpdateNfsShareRequest const& request) override;
 
   future<StatusOr<google::cloud::baremetalsolution::v2::NfsShare>>
   UpdateNfsShare(
-      google::cloud::baremetalsolution::v2::UpdateNfsShareRequest const&
-          request) override;
-
-  StatusOr<google::longrunning::Operation> UpdateNfsShare(
-      NoAwaitTag,
-      google::cloud::baremetalsolution::v2::UpdateNfsShareRequest const&
-          request) override;
+      google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::baremetalsolution::v2::NfsShare>>
-  UpdateNfsShare(google::longrunning::Operation const& operation) override;
+  CreateNfsShare(google::cloud::baremetalsolution::v2::CreateNfsShareRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  CreateNfsShare(NoAwaitTag,
+      google::cloud::baremetalsolution::v2::CreateNfsShareRequest const& request) override;
 
   future<StatusOr<google::cloud::baremetalsolution::v2::NfsShare>>
   CreateNfsShare(
-      google::cloud::baremetalsolution::v2::CreateNfsShareRequest const&
-          request) override;
+      google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::longrunning::Operation> CreateNfsShare(
-      NoAwaitTag,
-      google::cloud::baremetalsolution::v2::CreateNfsShareRequest const&
-          request) override;
+  StatusOr<google::cloud::baremetalsolution::v2::NfsShare>
+  RenameNfsShare(google::cloud::baremetalsolution::v2::RenameNfsShareRequest const& request) override;
 
-  future<StatusOr<google::cloud::baremetalsolution::v2::NfsShare>>
-  CreateNfsShare(google::longrunning::Operation const& operation) override;
+  future<StatusOr<google::cloud::baremetalsolution::v2::OperationMetadata>>
+  DeleteNfsShare(google::cloud::baremetalsolution::v2::DeleteNfsShareRequest const& request) override;
 
-  StatusOr<google::cloud::baremetalsolution::v2::NfsShare> RenameNfsShare(
-      google::cloud::baremetalsolution::v2::RenameNfsShareRequest const&
-          request) override;
+  StatusOr<google::longrunning::Operation>
+  DeleteNfsShare(NoAwaitTag,
+      google::cloud::baremetalsolution::v2::DeleteNfsShareRequest const& request) override;
 
   future<StatusOr<google::cloud::baremetalsolution::v2::OperationMetadata>>
   DeleteNfsShare(
-      google::cloud::baremetalsolution::v2::DeleteNfsShareRequest const&
-          request) override;
-
-  StatusOr<google::longrunning::Operation> DeleteNfsShare(
-      NoAwaitTag,
-      google::cloud::baremetalsolution::v2::DeleteNfsShareRequest const&
-          request) override;
-
-  future<StatusOr<google::cloud::baremetalsolution::v2::OperationMetadata>>
-  DeleteNfsShare(google::longrunning::Operation const& operation) override;
+      google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::baremetalsolution::v2::ProvisioningQuota>
-  ListProvisioningQuotas(
-      google::cloud::baremetalsolution::v2::ListProvisioningQuotasRequest
-          request) override;
+  ListProvisioningQuotas(google::cloud::baremetalsolution::v2::ListProvisioningQuotasRequest request) override;
 
-  StatusOr<
-      google::cloud::baremetalsolution::v2::SubmitProvisioningConfigResponse>
-  SubmitProvisioningConfig(
-      google::cloud::baremetalsolution::v2::
-          SubmitProvisioningConfigRequest const& request) override;
+  StatusOr<google::cloud::baremetalsolution::v2::SubmitProvisioningConfigResponse>
+  SubmitProvisioningConfig(google::cloud::baremetalsolution::v2::SubmitProvisioningConfigRequest const& request) override;
 
   StatusOr<google::cloud::baremetalsolution::v2::ProvisioningConfig>
-  GetProvisioningConfig(
-      google::cloud::baremetalsolution::v2::GetProvisioningConfigRequest const&
-          request) override;
+  GetProvisioningConfig(google::cloud::baremetalsolution::v2::GetProvisioningConfigRequest const& request) override;
 
   StatusOr<google::cloud::baremetalsolution::v2::ProvisioningConfig>
-  CreateProvisioningConfig(
-      google::cloud::baremetalsolution::v2::
-          CreateProvisioningConfigRequest const& request) override;
+  CreateProvisioningConfig(google::cloud::baremetalsolution::v2::CreateProvisioningConfigRequest const& request) override;
 
   StatusOr<google::cloud::baremetalsolution::v2::ProvisioningConfig>
-  UpdateProvisioningConfig(
-      google::cloud::baremetalsolution::v2::
-          UpdateProvisioningConfigRequest const& request) override;
+  UpdateProvisioningConfig(google::cloud::baremetalsolution::v2::UpdateProvisioningConfigRequest const& request) override;
 
-  StatusOr<google::cloud::baremetalsolution::v2::Network> RenameNetwork(
-      google::cloud::baremetalsolution::v2::RenameNetworkRequest const& request)
-      override;
+  StatusOr<google::cloud::baremetalsolution::v2::Network>
+  RenameNetwork(google::cloud::baremetalsolution::v2::RenameNetworkRequest const& request) override;
 
-  StreamRange<google::cloud::baremetalsolution::v2::OSImage> ListOSImages(
-      google::cloud::baremetalsolution::v2::ListOSImagesRequest request)
-      override;
+  StreamRange<google::cloud::baremetalsolution::v2::OSImage>
+  ListOSImages(google::cloud::baremetalsolution::v2::ListOSImagesRequest request) override;
 
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request) override;
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request) override;
 
-  StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request) override;
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

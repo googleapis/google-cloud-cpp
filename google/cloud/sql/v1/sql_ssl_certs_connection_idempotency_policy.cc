@@ -26,36 +26,31 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-SqlSslCertsServiceConnectionIdempotencyPolicy::
-    ~SqlSslCertsServiceConnectionIdempotencyPolicy() = default;
+SqlSslCertsServiceConnectionIdempotencyPolicy::~SqlSslCertsServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<SqlSslCertsServiceConnectionIdempotencyPolicy>
 SqlSslCertsServiceConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<SqlSslCertsServiceConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency SqlSslCertsServiceConnectionIdempotencyPolicy::Delete(
-    google::cloud::sql::v1::SqlSslCertsDeleteRequest const&) {
+Idempotency SqlSslCertsServiceConnectionIdempotencyPolicy::Delete(google::cloud::sql::v1::SqlSslCertsDeleteRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SqlSslCertsServiceConnectionIdempotencyPolicy::Get(
-    google::cloud::sql::v1::SqlSslCertsGetRequest const&) {
+Idempotency SqlSslCertsServiceConnectionIdempotencyPolicy::Get(google::cloud::sql::v1::SqlSslCertsGetRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency SqlSslCertsServiceConnectionIdempotencyPolicy::Insert(
-    google::cloud::sql::v1::SqlSslCertsInsertRequest const&) {
+Idempotency SqlSslCertsServiceConnectionIdempotencyPolicy::Insert(google::cloud::sql::v1::SqlSslCertsInsertRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SqlSslCertsServiceConnectionIdempotencyPolicy::List(
-    google::cloud::sql::v1::SqlSslCertsListRequest const&) {
+Idempotency SqlSslCertsServiceConnectionIdempotencyPolicy::List(google::cloud::sql::v1::SqlSslCertsListRequest const&) {
   return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<SqlSslCertsServiceConnectionIdempotencyPolicy>
-MakeDefaultSqlSslCertsServiceConnectionIdempotencyPolicy() {
+    MakeDefaultSqlSslCertsServiceConnectionIdempotencyPolicy() {
   return std::make_unique<SqlSslCertsServiceConnectionIdempotencyPolicy>();
 }
 

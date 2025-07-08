@@ -30,46 +30,43 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-class RoutesTracingConnection : public compute_routes_v1::RoutesConnection {
+class RoutesTracingConnection
+    : public compute_routes_v1::RoutesConnection {
  public:
   ~RoutesTracingConnection() override = default;
 
   explicit RoutesTracingConnection(
-      std::shared_ptr<compute_routes_v1::RoutesConnection> child);
+    std::shared_ptr<compute_routes_v1::RoutesConnection> child);
 
   Options options() override { return child_->options(); }
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteRoute(
-      google::cloud::cpp::compute::routes::v1::DeleteRouteRequest const&
-          request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteRoute(google::cloud::cpp::compute::routes::v1::DeleteRouteRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteRoute(
-      NoAwaitTag,
-      google::cloud::cpp::compute::routes::v1::DeleteRouteRequest const&
-          request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeleteRoute(NoAwaitTag,
+      google::cloud::cpp::compute::routes::v1::DeleteRouteRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteRoute(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteRoute(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Route> GetRoute(
-      google::cloud::cpp::compute::routes::v1::GetRouteRequest const& request)
-      override;
+  StatusOr<google::cloud::cpp::compute::v1::Route>
+  GetRoute(google::cloud::cpp::compute::routes::v1::GetRouteRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertRoute(
-      google::cloud::cpp::compute::routes::v1::InsertRouteRequest const&
-          request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  InsertRoute(google::cloud::cpp::compute::routes::v1::InsertRouteRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertRoute(
-      NoAwaitTag,
-      google::cloud::cpp::compute::routes::v1::InsertRouteRequest const&
-          request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  InsertRoute(NoAwaitTag,
+      google::cloud::cpp::compute::routes::v1::InsertRouteRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertRoute(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  InsertRoute(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
-  StreamRange<google::cloud::cpp::compute::v1::Route> ListRoutes(
-      google::cloud::cpp::compute::routes::v1::ListRoutesRequest request)
-      override;
+  StreamRange<google::cloud::cpp::compute::v1::Route>
+  ListRoutes(google::cloud::cpp::compute::routes::v1::ListRoutesRequest request) override;
 
  private:
   std::shared_ptr<compute_routes_v1::RoutesConnection> child_;

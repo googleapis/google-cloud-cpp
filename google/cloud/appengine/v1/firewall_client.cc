@@ -25,51 +25,45 @@ namespace cloud {
 namespace appengine_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-FirewallClient::FirewallClient(std::shared_ptr<FirewallConnection> connection,
-                               Options opts)
+FirewallClient::FirewallClient(
+    std::shared_ptr<FirewallConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 FirewallClient::~FirewallClient() = default;
 
 StreamRange<google::appengine::v1::FirewallRule>
-FirewallClient::ListIngressRules(
-    google::appengine::v1::ListIngressRulesRequest request, Options opts) {
+FirewallClient::ListIngressRules(google::appengine::v1::ListIngressRulesRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListIngressRules(std::move(request));
 }
 
 StatusOr<google::appengine::v1::BatchUpdateIngressRulesResponse>
-FirewallClient::BatchUpdateIngressRules(
-    google::appengine::v1::BatchUpdateIngressRulesRequest const& request,
-    Options opts) {
+FirewallClient::BatchUpdateIngressRules(google::appengine::v1::BatchUpdateIngressRulesRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->BatchUpdateIngressRules(request);
 }
 
-StatusOr<google::appengine::v1::FirewallRule> FirewallClient::CreateIngressRule(
-    google::appengine::v1::CreateIngressRuleRequest const& request,
-    Options opts) {
+StatusOr<google::appengine::v1::FirewallRule>
+FirewallClient::CreateIngressRule(google::appengine::v1::CreateIngressRuleRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateIngressRule(request);
 }
 
-StatusOr<google::appengine::v1::FirewallRule> FirewallClient::GetIngressRule(
-    google::appengine::v1::GetIngressRuleRequest const& request, Options opts) {
+StatusOr<google::appengine::v1::FirewallRule>
+FirewallClient::GetIngressRule(google::appengine::v1::GetIngressRuleRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetIngressRule(request);
 }
 
-StatusOr<google::appengine::v1::FirewallRule> FirewallClient::UpdateIngressRule(
-    google::appengine::v1::UpdateIngressRuleRequest const& request,
-    Options opts) {
+StatusOr<google::appengine::v1::FirewallRule>
+FirewallClient::UpdateIngressRule(google::appengine::v1::UpdateIngressRuleRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateIngressRule(request);
 }
 
-Status FirewallClient::DeleteIngressRule(
-    google::appengine::v1::DeleteIngressRuleRequest const& request,
-    Options opts) {
+Status
+FirewallClient::DeleteIngressRule(google::appengine::v1::DeleteIngressRuleRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteIngressRule(request);
 }

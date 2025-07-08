@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BINARYAUTHORIZATION_V1_SYSTEM_POLICY_V1_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BINARYAUTHORIZATION_V1_SYSTEM_POLICY_V1_CONNECTION_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/binaryauthorization/v1/internal/system_policy_v1_retry_traits.h"
 #include "google/cloud/binaryauthorization/v1/system_policy_v1_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -51,8 +51,7 @@ class SystemPolicyV1RetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class SystemPolicyV1LimitedErrorCountRetryPolicy
-    : public SystemPolicyV1RetryPolicy {
+class SystemPolicyV1LimitedErrorCountRetryPolicy : public SystemPolicyV1RetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -62,14 +61,14 @@ class SystemPolicyV1LimitedErrorCountRetryPolicy
    *     @p maximum_failures == 0.
    */
   explicit SystemPolicyV1LimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   SystemPolicyV1LimitedErrorCountRetryPolicy(
       SystemPolicyV1LimitedErrorCountRetryPolicy&& rhs) noexcept
-      : SystemPolicyV1LimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : SystemPolicyV1LimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   SystemPolicyV1LimitedErrorCountRetryPolicy(
       SystemPolicyV1LimitedErrorCountRetryPolicy const& rhs) noexcept
-      : SystemPolicyV1LimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : SystemPolicyV1LimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -89,9 +88,7 @@ class SystemPolicyV1LimitedErrorCountRetryPolicy
   using BaseType = SystemPolicyV1RetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      binaryauthorization_v1_internal::SystemPolicyV1RetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<binaryauthorization_v1_internal::SystemPolicyV1RetryTraits> impl_;
 };
 
 /**
@@ -129,14 +126,12 @@ class SystemPolicyV1LimitedTimeRetryPolicy : public SystemPolicyV1RetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit SystemPolicyV1LimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  SystemPolicyV1LimitedTimeRetryPolicy(
-      SystemPolicyV1LimitedTimeRetryPolicy&& rhs) noexcept
-      : SystemPolicyV1LimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  SystemPolicyV1LimitedTimeRetryPolicy(
-      SystemPolicyV1LimitedTimeRetryPolicy const& rhs) noexcept
-      : SystemPolicyV1LimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  SystemPolicyV1LimitedTimeRetryPolicy(SystemPolicyV1LimitedTimeRetryPolicy&& rhs) noexcept
+    : SystemPolicyV1LimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  SystemPolicyV1LimitedTimeRetryPolicy(SystemPolicyV1LimitedTimeRetryPolicy const& rhs) noexcept
+    : SystemPolicyV1LimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -158,9 +153,7 @@ class SystemPolicyV1LimitedTimeRetryPolicy : public SystemPolicyV1RetryPolicy {
   using BaseType = SystemPolicyV1RetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      binaryauthorization_v1_internal::SystemPolicyV1RetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<binaryauthorization_v1_internal::SystemPolicyV1RetryTraits> impl_;
 };
 
 /**
@@ -173,8 +166,7 @@ class SystemPolicyV1LimitedTimeRetryPolicy : public SystemPolicyV1RetryPolicy {
  *
  * To create a concrete instance, see `MakeSystemPolicyV1Connection()`.
  *
- * For mocking, see
- * `binaryauthorization_v1_mocks::MockSystemPolicyV1Connection`.
+ * For mocking, see `binaryauthorization_v1_mocks::MockSystemPolicyV1Connection`.
  */
 class SystemPolicyV1Connection {
  public:
@@ -183,9 +175,7 @@ class SystemPolicyV1Connection {
   virtual Options options() { return Options{}; }
 
   virtual StatusOr<google::cloud::binaryauthorization::v1::Policy>
-  GetSystemPolicy(
-      google::cloud::binaryauthorization::v1::GetSystemPolicyRequest const&
-          request);
+  GetSystemPolicy(google::cloud::binaryauthorization::v1::GetSystemPolicyRequest const& request);
 };
 
 /**

@@ -34,8 +34,7 @@ using ::google::cloud::eventarc_v1::EventarcPollingPolicyOption;
 /// @deprecated Use eventarc_v1::EventarcBackoffPolicyOption directly.
 using ::google::cloud::eventarc_v1::EventarcBackoffPolicyOption;
 
-/// @deprecated Use eventarc_v1::EventarcConnectionIdempotencyPolicyOption
-/// directly.
+/// @deprecated Use eventarc_v1::EventarcConnectionIdempotencyPolicyOption directly.
 using ::google::cloud::eventarc_v1::EventarcConnectionIdempotencyPolicyOption;
 
 /// @deprecated Use eventarc_v1::EventarcPolicyOptionList directly.

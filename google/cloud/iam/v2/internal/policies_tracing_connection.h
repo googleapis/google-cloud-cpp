@@ -30,50 +30,57 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-class PoliciesTracingConnection : public iam_v2::PoliciesConnection {
+class PoliciesTracingConnection
+    : public iam_v2::PoliciesConnection {
  public:
   ~PoliciesTracingConnection() override = default;
 
   explicit PoliciesTracingConnection(
-      std::shared_ptr<iam_v2::PoliciesConnection> child);
+    std::shared_ptr<iam_v2::PoliciesConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StreamRange<google::iam::v2::Policy> ListPolicies(
-      google::iam::v2::ListPoliciesRequest request) override;
+  StreamRange<google::iam::v2::Policy>
+  ListPolicies(google::iam::v2::ListPoliciesRequest request) override;
 
-  StatusOr<google::iam::v2::Policy> GetPolicy(
-      google::iam::v2::GetPolicyRequest const& request) override;
+  StatusOr<google::iam::v2::Policy>
+  GetPolicy(google::iam::v2::GetPolicyRequest const& request) override;
 
-  future<StatusOr<google::iam::v2::Policy>> CreatePolicy(
+  future<StatusOr<google::iam::v2::Policy>>
+  CreatePolicy(google::iam::v2::CreatePolicyRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  CreatePolicy(NoAwaitTag,
       google::iam::v2::CreatePolicyRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> CreatePolicy(
-      NoAwaitTag, google::iam::v2::CreatePolicyRequest const& request) override;
-
-  future<StatusOr<google::iam::v2::Policy>> CreatePolicy(
+  future<StatusOr<google::iam::v2::Policy>>
+  CreatePolicy(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::iam::v2::Policy>> UpdatePolicy(
+  future<StatusOr<google::iam::v2::Policy>>
+  UpdatePolicy(google::iam::v2::UpdatePolicyRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  UpdatePolicy(NoAwaitTag,
       google::iam::v2::UpdatePolicyRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> UpdatePolicy(
-      NoAwaitTag, google::iam::v2::UpdatePolicyRequest const& request) override;
-
-  future<StatusOr<google::iam::v2::Policy>> UpdatePolicy(
+  future<StatusOr<google::iam::v2::Policy>>
+  UpdatePolicy(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::iam::v2::Policy>> DeletePolicy(
+  future<StatusOr<google::iam::v2::Policy>>
+  DeletePolicy(google::iam::v2::DeletePolicyRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  DeletePolicy(NoAwaitTag,
       google::iam::v2::DeletePolicyRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> DeletePolicy(
-      NoAwaitTag, google::iam::v2::DeletePolicyRequest const& request) override;
-
-  future<StatusOr<google::iam::v2::Policy>> DeletePolicy(
+  future<StatusOr<google::iam::v2::Policy>>
+  DeletePolicy(
       google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request) override;
 
  private:
   std::shared_ptr<iam_v2::PoliciesConnection> child_;
@@ -87,7 +94,8 @@ class PoliciesTracingConnection : public iam_v2::PoliciesConnection {
  * The connection is only decorated if tracing is enabled (as determined by the
  * connection's options).
  */
-std::shared_ptr<iam_v2::PoliciesConnection> MakePoliciesTracingConnection(
+std::shared_ptr<iam_v2::PoliciesConnection>
+MakePoliciesTracingConnection(
     std::shared_ptr<iam_v2::PoliciesConnection> conn);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERYCONTROL_V2_TABLE_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERYCONTROL_V2_TABLE_CONNECTION_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/bigquerycontrol/v2/internal/table_retry_traits.h"
 #include "google/cloud/bigquerycontrol/v2/table_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -52,8 +52,7 @@ class TableServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class TableServiceLimitedErrorCountRetryPolicy
-    : public TableServiceRetryPolicy {
+class TableServiceLimitedErrorCountRetryPolicy : public TableServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -63,14 +62,14 @@ class TableServiceLimitedErrorCountRetryPolicy
    *     @p maximum_failures == 0.
    */
   explicit TableServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   TableServiceLimitedErrorCountRetryPolicy(
       TableServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : TableServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : TableServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   TableServiceLimitedErrorCountRetryPolicy(
       TableServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : TableServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : TableServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -90,9 +89,7 @@ class TableServiceLimitedErrorCountRetryPolicy
   using BaseType = TableServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      bigquerycontrol_v2_internal::TableServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<bigquerycontrol_v2_internal::TableServiceRetryTraits> impl_;
 };
 
 /**
@@ -130,14 +127,12 @@ class TableServiceLimitedTimeRetryPolicy : public TableServiceRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit TableServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  TableServiceLimitedTimeRetryPolicy(
-      TableServiceLimitedTimeRetryPolicy&& rhs) noexcept
-      : TableServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  TableServiceLimitedTimeRetryPolicy(
-      TableServiceLimitedTimeRetryPolicy const& rhs) noexcept
-      : TableServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  TableServiceLimitedTimeRetryPolicy(TableServiceLimitedTimeRetryPolicy&& rhs) noexcept
+    : TableServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  TableServiceLimitedTimeRetryPolicy(TableServiceLimitedTimeRetryPolicy const& rhs) noexcept
+    : TableServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -159,9 +154,7 @@ class TableServiceLimitedTimeRetryPolicy : public TableServiceRetryPolicy {
   using BaseType = TableServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      bigquerycontrol_v2_internal::TableServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<bigquerycontrol_v2_internal::TableServiceRetryTraits> impl_;
 };
 
 /**
@@ -182,23 +175,23 @@ class TableServiceConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<google::cloud::bigquery::v2::Table> GetTable(
-      google::cloud::bigquery::v2::GetTableRequest const& request);
+  virtual StatusOr<google::cloud::bigquery::v2::Table>
+  GetTable(google::cloud::bigquery::v2::GetTableRequest const& request);
 
-  virtual StatusOr<google::cloud::bigquery::v2::Table> InsertTable(
-      google::cloud::bigquery::v2::InsertTableRequest const& request);
+  virtual StatusOr<google::cloud::bigquery::v2::Table>
+  InsertTable(google::cloud::bigquery::v2::InsertTableRequest const& request);
 
-  virtual StatusOr<google::cloud::bigquery::v2::Table> PatchTable(
-      google::cloud::bigquery::v2::UpdateOrPatchTableRequest const& request);
+  virtual StatusOr<google::cloud::bigquery::v2::Table>
+  PatchTable(google::cloud::bigquery::v2::UpdateOrPatchTableRequest const& request);
 
-  virtual StatusOr<google::cloud::bigquery::v2::Table> UpdateTable(
-      google::cloud::bigquery::v2::UpdateOrPatchTableRequest const& request);
+  virtual StatusOr<google::cloud::bigquery::v2::Table>
+  UpdateTable(google::cloud::bigquery::v2::UpdateOrPatchTableRequest const& request);
 
-  virtual Status DeleteTable(
-      google::cloud::bigquery::v2::DeleteTableRequest const& request);
+  virtual Status
+  DeleteTable(google::cloud::bigquery::v2::DeleteTableRequest const& request);
 
-  virtual StreamRange<google::cloud::bigquery::v2::ListFormatTable> ListTables(
-      google::cloud::bigquery::v2::ListTablesRequest request);
+  virtual StreamRange<google::cloud::bigquery::v2::ListFormatTable>
+  ListTables(google::cloud::bigquery::v2::ListTablesRequest request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

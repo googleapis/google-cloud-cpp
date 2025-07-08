@@ -26,44 +26,32 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-AdvisoryNotificationsServiceConnectionIdempotencyPolicy::
-    ~AdvisoryNotificationsServiceConnectionIdempotencyPolicy() = default;
+AdvisoryNotificationsServiceConnectionIdempotencyPolicy::~AdvisoryNotificationsServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<AdvisoryNotificationsServiceConnectionIdempotencyPolicy>
 AdvisoryNotificationsServiceConnectionIdempotencyPolicy::clone() const {
-  return std::make_unique<
-      AdvisoryNotificationsServiceConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<AdvisoryNotificationsServiceConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency
-AdvisoryNotificationsServiceConnectionIdempotencyPolicy::ListNotifications(
-    google::cloud::advisorynotifications::v1::
-        ListNotificationsRequest) {  // NOLINT
+Idempotency AdvisoryNotificationsServiceConnectionIdempotencyPolicy::ListNotifications(google::cloud::advisorynotifications::v1::ListNotificationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency
-AdvisoryNotificationsServiceConnectionIdempotencyPolicy::GetNotification(
-    google::cloud::advisorynotifications::v1::GetNotificationRequest const&) {
+Idempotency AdvisoryNotificationsServiceConnectionIdempotencyPolicy::GetNotification(google::cloud::advisorynotifications::v1::GetNotificationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency
-AdvisoryNotificationsServiceConnectionIdempotencyPolicy::GetSettings(
-    google::cloud::advisorynotifications::v1::GetSettingsRequest const&) {
+Idempotency AdvisoryNotificationsServiceConnectionIdempotencyPolicy::GetSettings(google::cloud::advisorynotifications::v1::GetSettingsRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency
-AdvisoryNotificationsServiceConnectionIdempotencyPolicy::UpdateSettings(
-    google::cloud::advisorynotifications::v1::UpdateSettingsRequest const&) {
+Idempotency AdvisoryNotificationsServiceConnectionIdempotencyPolicy::UpdateSettings(google::cloud::advisorynotifications::v1::UpdateSettingsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<AdvisoryNotificationsServiceConnectionIdempotencyPolicy>
-MakeDefaultAdvisoryNotificationsServiceConnectionIdempotencyPolicy() {
-  return std::make_unique<
-      AdvisoryNotificationsServiceConnectionIdempotencyPolicy>();
+    MakeDefaultAdvisoryNotificationsServiceConnectionIdempotencyPolicy() {
+  return std::make_unique<AdvisoryNotificationsServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

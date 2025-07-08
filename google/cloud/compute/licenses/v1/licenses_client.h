@@ -63,8 +63,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class LicensesClient {
  public:
-  explicit LicensesClient(std::shared_ptr<LicensesConnection> connection,
-                          Options opts = {});
+  explicit LicensesClient(std::shared_ptr<LicensesConnection> connection, Options opts = {});
   ~LicensesClient();
 
   ///@{
@@ -116,9 +115,8 @@ class LicensesClient {
   /// [google.cloud.cpp.compute.licenses.v1.DeleteLicenseRequest]: @cloud_cpp_reference_link{google/cloud/compute/licenses/v1/licenses.proto#L157}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteLicense(
-      std::string const& project, std::string const& license,
-      Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteLicense(std::string const& project, std::string const& license, Options opts = {});
 
   // clang-format off
   ///
@@ -131,9 +129,8 @@ class LicensesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteLicense(
-      NoAwaitTag, std::string const& project, std::string const& license,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeleteLicense(NoAwaitTag, std::string const& project, std::string const& license, Options opts = {});
 
   // clang-format off
   ///
@@ -170,10 +167,8 @@ class LicensesClient {
   /// [google.cloud.cpp.compute.licenses.v1.DeleteLicenseRequest]: @cloud_cpp_reference_link{google/cloud/compute/licenses/v1/licenses.proto#L157}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteLicense(
-      google::cloud::cpp::compute::licenses::v1::DeleteLicenseRequest const&
-          request,
-      Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteLicense(google::cloud::cpp::compute::licenses::v1::DeleteLicenseRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -186,11 +181,8 @@ class LicensesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteLicense(
-      NoAwaitTag,
-      google::cloud::cpp::compute::licenses::v1::DeleteLicenseRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeleteLicense(NoAwaitTag, google::cloud::cpp::compute::licenses::v1::DeleteLicenseRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -201,9 +193,8 @@ class LicensesClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteLicense(
-      google::cloud::cpp::compute::v1::Operation const& operation,
-      Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteLicense(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -231,9 +222,8 @@ class LicensesClient {
   /// [google.cloud.cpp.compute.v1.License]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_076.proto#L30}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::License> GetLicense(
-      std::string const& project, std::string const& license,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::License>
+  GetLicense(std::string const& project, std::string const& license, Options opts = {});
 
   // clang-format off
   ///
@@ -265,10 +255,8 @@ class LicensesClient {
   /// [google.cloud.cpp.compute.v1.License]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_076.proto#L30}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::License> GetLicense(
-      google::cloud::cpp::compute::licenses::v1::GetLicenseRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::License>
+  GetLicense(google::cloud::cpp::compute::licenses::v1::GetLicenseRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -296,9 +284,8 @@ class LicensesClient {
   /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_007.proto#L178}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
-      std::string const& project, std::string const& resource,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Policy>
+  GetIamPolicy(std::string const& project, std::string const& resource, Options opts = {});
 
   // clang-format off
   ///
@@ -330,10 +317,8 @@ class LicensesClient {
   /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_007.proto#L178}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
-      google::cloud::cpp::compute::licenses::v1::GetIamPolicyRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Policy>
+  GetIamPolicy(google::cloud::cpp::compute::licenses::v1::GetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -367,10 +352,8 @@ class LicensesClient {
   /// [google.cloud.cpp.compute.licenses.v1.InsertLicenseRequest]: @cloud_cpp_reference_link{google/cloud/compute/licenses/v1/licenses.proto#L209}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertLicense(
-      std::string const& project,
-      google::cloud::cpp::compute::v1::License const& license_resource,
-      Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  InsertLicense(std::string const& project, google::cloud::cpp::compute::v1::License const& license_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -383,10 +366,8 @@ class LicensesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertLicense(
-      NoAwaitTag, std::string const& project,
-      google::cloud::cpp::compute::v1::License const& license_resource,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  InsertLicense(NoAwaitTag, std::string const& project, google::cloud::cpp::compute::v1::License const& license_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -424,10 +405,8 @@ class LicensesClient {
   /// [google.cloud.cpp.compute.licenses.v1.InsertLicenseRequest]: @cloud_cpp_reference_link{google/cloud/compute/licenses/v1/licenses.proto#L209}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertLicense(
-      google::cloud::cpp::compute::licenses::v1::InsertLicenseRequest const&
-          request,
-      Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  InsertLicense(google::cloud::cpp::compute::licenses::v1::InsertLicenseRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -440,11 +419,8 @@ class LicensesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertLicense(
-      NoAwaitTag,
-      google::cloud::cpp::compute::licenses::v1::InsertLicenseRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  InsertLicense(NoAwaitTag, google::cloud::cpp::compute::licenses::v1::InsertLicenseRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -455,9 +431,8 @@ class LicensesClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertLicense(
-      google::cloud::cpp::compute::v1::Operation const& operation,
-      Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  InsertLicense(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -497,8 +472,8 @@ class LicensesClient {
   /// [google.cloud.cpp.compute.v1.License]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_076.proto#L30}
   ///
   // clang-format on
-  StreamRange<google::cloud::cpp::compute::v1::License> ListLicenses(
-      std::string const& project, Options opts = {});
+  StreamRange<google::cloud::cpp::compute::v1::License>
+  ListLicenses(std::string const& project, Options opts = {});
 
   // clang-format off
   ///
@@ -543,9 +518,8 @@ class LicensesClient {
   /// [google.cloud.cpp.compute.v1.License]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_076.proto#L30}
   ///
   // clang-format on
-  StreamRange<google::cloud::cpp::compute::v1::License> ListLicenses(
-      google::cloud::cpp::compute::licenses::v1::ListLicensesRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::cpp::compute::v1::License>
+  ListLicenses(google::cloud::cpp::compute::licenses::v1::ListLicensesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -574,11 +548,8 @@ class LicensesClient {
   /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_007.proto#L178}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
-      std::string const& project, std::string const& resource,
-      google::cloud::cpp::compute::v1::GlobalSetPolicyRequest const&
-          global_set_policy_request_resource,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Policy>
+  SetIamPolicy(std::string const& project, std::string const& resource, google::cloud::cpp::compute::v1::GlobalSetPolicyRequest const& global_set_policy_request_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -610,10 +581,8 @@ class LicensesClient {
   /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_007.proto#L178}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
-      google::cloud::cpp::compute::licenses::v1::SetIamPolicyRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Policy>
+  SetIamPolicy(google::cloud::cpp::compute::licenses::v1::SetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -643,11 +612,7 @@ class LicensesClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(
-      std::string const& project, std::string const& resource,
-      google::cloud::cpp::compute::v1::TestPermissionsRequest const&
-          test_permissions_request_resource,
-      Options opts = {});
+  TestIamPermissions(std::string const& project, std::string const& resource, google::cloud::cpp::compute::v1::TestPermissionsRequest const& test_permissions_request_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -680,9 +645,7 @@ class LicensesClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(google::cloud::cpp::compute::licenses::v1::
-                         TestIamPermissionsRequest const& request,
-                     Options opts = {});
+  TestIamPermissions(google::cloud::cpp::compute::licenses::v1::TestIamPermissionsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -718,11 +681,8 @@ class LicensesClient {
   /// [google.cloud.cpp.compute.licenses.v1.UpdateLicenseRequest]: @cloud_cpp_reference_link{google/cloud/compute/licenses/v1/licenses.proto#L334}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateLicense(
-      std::string const& project, std::string const& license,
-      std::string const& update_mask,
-      google::cloud::cpp::compute::v1::License const& license_resource,
-      Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  UpdateLicense(std::string const& project, std::string const& license, std::string const& update_mask, google::cloud::cpp::compute::v1::License const& license_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -735,11 +695,8 @@ class LicensesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateLicense(
-      NoAwaitTag, std::string const& project, std::string const& license,
-      std::string const& update_mask,
-      google::cloud::cpp::compute::v1::License const& license_resource,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  UpdateLicense(NoAwaitTag, std::string const& project, std::string const& license, std::string const& update_mask, google::cloud::cpp::compute::v1::License const& license_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -777,10 +734,8 @@ class LicensesClient {
   /// [google.cloud.cpp.compute.licenses.v1.UpdateLicenseRequest]: @cloud_cpp_reference_link{google/cloud/compute/licenses/v1/licenses.proto#L334}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateLicense(
-      google::cloud::cpp::compute::licenses::v1::UpdateLicenseRequest const&
-          request,
-      Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  UpdateLicense(google::cloud::cpp::compute::licenses::v1::UpdateLicenseRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -793,11 +748,8 @@ class LicensesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateLicense(
-      NoAwaitTag,
-      google::cloud::cpp::compute::licenses::v1::UpdateLicenseRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  UpdateLicense(NoAwaitTag, google::cloud::cpp::compute::licenses::v1::UpdateLicenseRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -808,9 +760,8 @@ class LicensesClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateLicense(
-      google::cloud::cpp::compute::v1::Operation const& operation,
-      Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  UpdateLicense(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
 
  private:
   std::shared_ptr<LicensesConnection> connection_;

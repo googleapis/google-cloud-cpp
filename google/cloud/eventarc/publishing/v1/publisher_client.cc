@@ -28,33 +28,24 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 PublisherClient::PublisherClient(
     std::shared_ptr<PublisherConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 PublisherClient::~PublisherClient() = default;
 
-StatusOr<google::cloud::eventarc::publishing::v1::
-             PublishChannelConnectionEventsResponse>
-PublisherClient::PublishChannelConnectionEvents(
-    google::cloud::eventarc::publishing::v1::
-        PublishChannelConnectionEventsRequest const& request,
-    Options opts) {
+StatusOr<google::cloud::eventarc::publishing::v1::PublishChannelConnectionEventsResponse>
+PublisherClient::PublishChannelConnectionEvents(google::cloud::eventarc::publishing::v1::PublishChannelConnectionEventsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PublishChannelConnectionEvents(request);
 }
 
 StatusOr<google::cloud::eventarc::publishing::v1::PublishEventsResponse>
-PublisherClient::PublishEvents(
-    google::cloud::eventarc::publishing::v1::PublishEventsRequest const&
-        request,
-    Options opts) {
+PublisherClient::PublishEvents(google::cloud::eventarc::publishing::v1::PublishEventsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PublishEvents(request);
 }
 
 StatusOr<google::cloud::eventarc::publishing::v1::PublishResponse>
-PublisherClient::Publish(
-    google::cloud::eventarc::publishing::v1::PublishRequest const& request,
-    Options opts) {
+PublisherClient::Publish(google::cloud::eventarc::publishing::v1::PublishRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->Publish(request);
 }

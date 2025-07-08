@@ -31,36 +31,36 @@ IAMCredentialsAuth::IAMCredentialsAuth(
     std::shared_ptr<IAMCredentialsStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::iam::credentials::v1::GenerateAccessTokenResponse>
-IAMCredentialsAuth::GenerateAccessToken(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::iam::credentials::v1::GenerateAccessTokenResponse> IAMCredentialsAuth::GenerateAccessToken(
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::credentials::v1::GenerateAccessTokenRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GenerateAccessToken(context, options, request);
 }
 
-StatusOr<google::iam::credentials::v1::GenerateIdTokenResponse>
-IAMCredentialsAuth::GenerateIdToken(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::iam::credentials::v1::GenerateIdTokenResponse> IAMCredentialsAuth::GenerateIdToken(
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::credentials::v1::GenerateIdTokenRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GenerateIdToken(context, options, request);
 }
 
-StatusOr<google::iam::credentials::v1::SignBlobResponse>
-IAMCredentialsAuth::SignBlob(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::iam::credentials::v1::SignBlobResponse> IAMCredentialsAuth::SignBlob(
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::credentials::v1::SignBlobRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->SignBlob(context, options, request);
 }
 
-StatusOr<google::iam::credentials::v1::SignJwtResponse>
-IAMCredentialsAuth::SignJwt(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::iam::credentials::v1::SignJwtResponse> IAMCredentialsAuth::SignJwt(
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::credentials::v1::SignJwtRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;

@@ -34,51 +34,45 @@ ProjectServiceTracingStub::ProjectServiceTracingStub(
 
 future<StatusOr<google::longrunning::Operation>>
 ProjectServiceTracingStub::AsyncProvisionProject(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::discoveryengine::v1::ProvisionProjectRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.discoveryengine.v1.ProjectService", "ProvisionProject");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::discoveryengine::v1::ProvisionProjectRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.discoveryengine.v1.ProjectService", "ProvisionProject");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f =
-      child_->AsyncProvisionProject(cq, context, std::move(options), request);
+  auto f = child_->AsyncProvisionProject(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 ProjectServiceTracingStub::ProvisionProject(
-    grpc::ClientContext& context, Options options,
-    google::cloud::discoveryengine::v1::ProvisionProjectRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.discoveryengine.v1.ProjectService", "ProvisionProject");
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::discoveryengine::v1::ProvisionProjectRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.discoveryengine.v1.ProjectService", "ProvisionProject");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ProvisionProject(context, options, request));
 }
 
-StatusOr<google::longrunning::ListOperationsResponse>
-ProjectServiceTracingStub::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse> ProjectServiceTracingStub::ListOperations(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.discoveryengine.v1.ProjectService", "ListOperations");
+  auto span = internal::MakeSpanGrpc("google.cloud.discoveryengine.v1.ProjectService", "ListOperations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListOperations(context, options, request));
 }
 
-StatusOr<google::longrunning::Operation>
-ProjectServiceTracingStub::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::Operation> ProjectServiceTracingStub::GetOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.discoveryengine.v1.ProjectService", "GetOperation");
+  auto span = internal::MakeSpanGrpc("google.cloud.discoveryengine.v1.ProjectService", "GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -86,10 +80,10 @@ ProjectServiceTracingStub::GetOperation(
 }
 
 Status ProjectServiceTracingStub::CancelOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.discoveryengine.v1.ProjectService", "CancelOperation");
+  auto span = internal::MakeSpanGrpc("google.cloud.discoveryengine.v1.ProjectService", "CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -106,7 +100,8 @@ ProjectServiceTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncGetOperation(cq, context, std::move(options), request);
+  auto f = child_->AsyncGetOperation(
+      cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -119,8 +114,8 @@ future<Status> ProjectServiceTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f =
-      child_->AsyncCancelOperation(cq, context, std::move(options), request);
+  auto f = child_->AsyncCancelOperation(
+      cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 

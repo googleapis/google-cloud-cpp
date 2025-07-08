@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_OPTIMIZATION_V1_INTERNAL_FLEET_ROUTING_TRACING_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_OPTIMIZATION_V1_INTERNAL_FLEET_ROUTING_TRACING_STUB_H
 
-#include "google/cloud/optimization/v1/internal/fleet_routing_stub.h"
 #include "google/cloud/internal/trace_propagator.h"
+#include "google/cloud/optimization/v1/internal/fleet_routing_stub.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -38,25 +38,25 @@ class FleetRoutingTracingStub : public FleetRoutingStub {
 
   explicit FleetRoutingTracingStub(std::shared_ptr<FleetRoutingStub> child);
 
-  StatusOr<google::cloud::optimization::v1::OptimizeToursResponse>
-  OptimizeTours(grpc::ClientContext& context, Options const& options,
-                google::cloud::optimization::v1::OptimizeToursRequest const&
-                    request) override;
+  StatusOr<google::cloud::optimization::v1::OptimizeToursResponse> OptimizeTours(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::optimization::v1::OptimizeToursRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncBatchOptimizeTours(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::optimization::v1::BatchOptimizeToursRequest const& request)
-      override;
+      google::cloud::optimization::v1::BatchOptimizeToursRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> BatchOptimizeTours(
-      grpc::ClientContext& context, Options options,
-      google::cloud::optimization::v1::BatchOptimizeToursRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::optimization::v1::BatchOptimizeToursRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -73,8 +73,7 @@ class FleetRoutingTracingStub : public FleetRoutingStub {
 
  private:
   std::shared_ptr<FleetRoutingStub> child_;
-  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
-      propagator_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

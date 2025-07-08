@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CHRONICLE_V1_DATA_ACCESS_CONTROL_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CHRONICLE_V1_DATA_ACCESS_CONTROL_CONNECTION_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/chronicle/v1/data_access_control_connection_idempotency_policy.h"
 #include "google/cloud/chronicle/v1/internal/data_access_control_retry_traits.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -36,17 +36,14 @@ namespace chronicle_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `DataAccessControlServiceConnection`.
-class DataAccessControlServiceRetryPolicy
-    : public ::google::cloud::RetryPolicy {
+class DataAccessControlServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  public:
   /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<DataAccessControlServiceRetryPolicy> clone()
-      const = 0;
+  virtual std::unique_ptr<DataAccessControlServiceRetryPolicy> clone() const = 0;
 };
 
 /**
- * A retry policy for `DataAccessControlServiceConnection` based on counting
- * errors.
+ * A retry policy for `DataAccessControlServiceConnection` based on counting errors.
  *
  * This policy stops retrying if:
  * - An RPC returns a non-transient error.
@@ -55,8 +52,7 @@ class DataAccessControlServiceRetryPolicy
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class DataAccessControlServiceLimitedErrorCountRetryPolicy
-    : public DataAccessControlServiceRetryPolicy {
+class DataAccessControlServiceLimitedErrorCountRetryPolicy : public DataAccessControlServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -65,18 +61,15 @@ class DataAccessControlServiceLimitedErrorCountRetryPolicy
    * @note Disable the retry loop by providing an instance of this policy with
    *     @p maximum_failures == 0.
    */
-  explicit DataAccessControlServiceLimitedErrorCountRetryPolicy(
-      int maximum_failures)
-      : impl_(maximum_failures) {}
+  explicit DataAccessControlServiceLimitedErrorCountRetryPolicy(int maximum_failures)
+    : impl_(maximum_failures) {}
 
   DataAccessControlServiceLimitedErrorCountRetryPolicy(
       DataAccessControlServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : DataAccessControlServiceLimitedErrorCountRetryPolicy(
-            rhs.maximum_failures()) {}
+    : DataAccessControlServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   DataAccessControlServiceLimitedErrorCountRetryPolicy(
       DataAccessControlServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : DataAccessControlServiceLimitedErrorCountRetryPolicy(
-            rhs.maximum_failures()) {}
+    : DataAccessControlServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -88,8 +81,7 @@ class DataAccessControlServiceLimitedErrorCountRetryPolicy
     return impl_.IsPermanentFailure(status);
   }
   std::unique_ptr<DataAccessControlServiceRetryPolicy> clone() const override {
-    return std::make_unique<
-        DataAccessControlServiceLimitedErrorCountRetryPolicy>(
+    return std::make_unique<DataAccessControlServiceLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
 
@@ -97,14 +89,11 @@ class DataAccessControlServiceLimitedErrorCountRetryPolicy
   using BaseType = DataAccessControlServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      chronicle_v1_internal::DataAccessControlServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<chronicle_v1_internal::DataAccessControlServiceRetryTraits> impl_;
 };
 
 /**
- * A retry policy for `DataAccessControlServiceConnection` based on elapsed
- * time.
+ * A retry policy for `DataAccessControlServiceConnection` based on elapsed time.
  *
  * This policy stops retrying if:
  * - An RPC returns a non-transient error.
@@ -113,8 +102,7 @@ class DataAccessControlServiceLimitedErrorCountRetryPolicy
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class DataAccessControlServiceLimitedTimeRetryPolicy
-    : public DataAccessControlServiceRetryPolicy {
+class DataAccessControlServiceLimitedTimeRetryPolicy : public DataAccessControlServiceRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -139,16 +127,12 @@ class DataAccessControlServiceLimitedTimeRetryPolicy
   template <typename DurationRep, typename DurationPeriod>
   explicit DataAccessControlServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  DataAccessControlServiceLimitedTimeRetryPolicy(
-      DataAccessControlServiceLimitedTimeRetryPolicy&& rhs) noexcept
-      : DataAccessControlServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {
-  }
-  DataAccessControlServiceLimitedTimeRetryPolicy(
-      DataAccessControlServiceLimitedTimeRetryPolicy const& rhs) noexcept
-      : DataAccessControlServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {
-  }
+  DataAccessControlServiceLimitedTimeRetryPolicy(DataAccessControlServiceLimitedTimeRetryPolicy&& rhs) noexcept
+    : DataAccessControlServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  DataAccessControlServiceLimitedTimeRetryPolicy(DataAccessControlServiceLimitedTimeRetryPolicy const& rhs) noexcept
+    : DataAccessControlServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -170,25 +154,20 @@ class DataAccessControlServiceLimitedTimeRetryPolicy
   using BaseType = DataAccessControlServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      chronicle_v1_internal::DataAccessControlServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<chronicle_v1_internal::DataAccessControlServiceRetryTraits> impl_;
 };
 
 /**
- * The `DataAccessControlServiceConnection` object for
- * `DataAccessControlServiceClient`.
+ * The `DataAccessControlServiceConnection` object for `DataAccessControlServiceClient`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `DataAccessControlServiceClient`. This allows users to inject custom
- * behavior (e.g., with a Google Mock object) when writing tests that use
- * objects of type `DataAccessControlServiceClient`.
+ * sets in `DataAccessControlServiceClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `DataAccessControlServiceClient`.
  *
- * To create a concrete instance, see
- * `MakeDataAccessControlServiceConnection()`.
+ * To create a concrete instance, see `MakeDataAccessControlServiceConnection()`.
  *
- * For mocking, see
- * `chronicle_v1_mocks::MockDataAccessControlServiceConnection`.
+ * For mocking, see `chronicle_v1_mocks::MockDataAccessControlServiceConnection`.
  */
 class DataAccessControlServiceConnection {
  public:
@@ -197,73 +176,57 @@ class DataAccessControlServiceConnection {
   virtual Options options() { return Options{}; }
 
   virtual StatusOr<google::cloud::chronicle::v1::DataAccessLabel>
-  CreateDataAccessLabel(
-      google::cloud::chronicle::v1::CreateDataAccessLabelRequest const&
-          request);
+  CreateDataAccessLabel(google::cloud::chronicle::v1::CreateDataAccessLabelRequest const& request);
 
   virtual StatusOr<google::cloud::chronicle::v1::DataAccessLabel>
-  GetDataAccessLabel(
-      google::cloud::chronicle::v1::GetDataAccessLabelRequest const& request);
+  GetDataAccessLabel(google::cloud::chronicle::v1::GetDataAccessLabelRequest const& request);
 
   virtual StreamRange<google::cloud::chronicle::v1::DataAccessLabel>
-  ListDataAccessLabels(
-      google::cloud::chronicle::v1::ListDataAccessLabelsRequest request);
+  ListDataAccessLabels(google::cloud::chronicle::v1::ListDataAccessLabelsRequest request);
 
   virtual StatusOr<google::cloud::chronicle::v1::DataAccessLabel>
-  UpdateDataAccessLabel(
-      google::cloud::chronicle::v1::UpdateDataAccessLabelRequest const&
-          request);
+  UpdateDataAccessLabel(google::cloud::chronicle::v1::UpdateDataAccessLabelRequest const& request);
 
-  virtual Status DeleteDataAccessLabel(
-      google::cloud::chronicle::v1::DeleteDataAccessLabelRequest const&
-          request);
+  virtual Status
+  DeleteDataAccessLabel(google::cloud::chronicle::v1::DeleteDataAccessLabelRequest const& request);
 
   virtual StatusOr<google::cloud::chronicle::v1::DataAccessScope>
-  CreateDataAccessScope(
-      google::cloud::chronicle::v1::CreateDataAccessScopeRequest const&
-          request);
+  CreateDataAccessScope(google::cloud::chronicle::v1::CreateDataAccessScopeRequest const& request);
 
   virtual StatusOr<google::cloud::chronicle::v1::DataAccessScope>
-  GetDataAccessScope(
-      google::cloud::chronicle::v1::GetDataAccessScopeRequest const& request);
+  GetDataAccessScope(google::cloud::chronicle::v1::GetDataAccessScopeRequest const& request);
 
   virtual StreamRange<google::cloud::chronicle::v1::DataAccessScope>
-  ListDataAccessScopes(
-      google::cloud::chronicle::v1::ListDataAccessScopesRequest request);
+  ListDataAccessScopes(google::cloud::chronicle::v1::ListDataAccessScopesRequest request);
 
   virtual StatusOr<google::cloud::chronicle::v1::DataAccessScope>
-  UpdateDataAccessScope(
-      google::cloud::chronicle::v1::UpdateDataAccessScopeRequest const&
-          request);
+  UpdateDataAccessScope(google::cloud::chronicle::v1::UpdateDataAccessScopeRequest const& request);
 
-  virtual Status DeleteDataAccessScope(
-      google::cloud::chronicle::v1::DeleteDataAccessScopeRequest const&
-          request);
+  virtual Status
+  DeleteDataAccessScope(google::cloud::chronicle::v1::DeleteDataAccessScopeRequest const& request);
 
-  virtual StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 
-  virtual Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request);
+  virtual Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
 
-  virtual Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request);
+  virtual Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request);
 };
 
 /**
- * A factory function to construct an object of type
- * `DataAccessControlServiceConnection`.
+ * A factory function to construct an object of type `DataAccessControlServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of
- * DataAccessControlServiceClient.
+ * should be passed as an argument to the constructor of DataAccessControlServiceClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `DataAccessControlServiceConnection`. Expected options are any of
- * the types in the following option lists:
+ * returned `DataAccessControlServiceConnection`. Expected options are any of the types in
+ * the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
@@ -273,11 +236,11 @@ class DataAccessControlServiceConnection {
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
- * @param options (optional) Configure the `DataAccessControlServiceConnection`
- * created by this function.
+ * @param options (optional) Configure the `DataAccessControlServiceConnection` created by
+ * this function.
  */
-std::shared_ptr<DataAccessControlServiceConnection>
-MakeDataAccessControlServiceConnection(Options options = {});
+std::shared_ptr<DataAccessControlServiceConnection> MakeDataAccessControlServiceConnection(
+    Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace chronicle_v1

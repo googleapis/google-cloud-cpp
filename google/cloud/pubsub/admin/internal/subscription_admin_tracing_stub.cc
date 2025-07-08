@@ -32,118 +32,110 @@ SubscriptionAdminTracingStub::SubscriptionAdminTracingStub(
     std::shared_ptr<SubscriptionAdminStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
-StatusOr<google::pubsub::v1::Subscription>
-SubscriptionAdminTracingStub::CreateSubscription(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::pubsub::v1::Subscription> SubscriptionAdminTracingStub::CreateSubscription(
+    grpc::ClientContext& context,
+    Options const& options,
     google::pubsub::v1::Subscription const& request) {
-  auto span = internal::MakeSpanGrpc("google.pubsub.v1.Subscriber",
-                                     "CreateSubscription");
+  auto span = internal::MakeSpanGrpc("google.pubsub.v1.Subscriber", "CreateSubscription");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->CreateSubscription(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->CreateSubscription(context, options, request));
 }
 
-StatusOr<google::pubsub::v1::Subscription>
-SubscriptionAdminTracingStub::GetSubscription(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::pubsub::v1::Subscription> SubscriptionAdminTracingStub::GetSubscription(
+    grpc::ClientContext& context,
+    Options const& options,
     google::pubsub::v1::GetSubscriptionRequest const& request) {
-  auto span =
-      internal::MakeSpanGrpc("google.pubsub.v1.Subscriber", "GetSubscription");
+  auto span = internal::MakeSpanGrpc("google.pubsub.v1.Subscriber", "GetSubscription");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetSubscription(context, options, request));
 }
 
-StatusOr<google::pubsub::v1::Subscription>
-SubscriptionAdminTracingStub::UpdateSubscription(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::pubsub::v1::Subscription> SubscriptionAdminTracingStub::UpdateSubscription(
+    grpc::ClientContext& context,
+    Options const& options,
     google::pubsub::v1::UpdateSubscriptionRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.pubsub.v1.Subscriber",
-                                     "UpdateSubscription");
+  auto span = internal::MakeSpanGrpc("google.pubsub.v1.Subscriber", "UpdateSubscription");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->UpdateSubscription(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->UpdateSubscription(context, options, request));
 }
 
-StatusOr<google::pubsub::v1::ListSubscriptionsResponse>
-SubscriptionAdminTracingStub::ListSubscriptions(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::pubsub::v1::ListSubscriptionsResponse> SubscriptionAdminTracingStub::ListSubscriptions(
+    grpc::ClientContext& context,
+    Options const& options,
     google::pubsub::v1::ListSubscriptionsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.pubsub.v1.Subscriber",
-                                     "ListSubscriptions");
+  auto span = internal::MakeSpanGrpc("google.pubsub.v1.Subscriber", "ListSubscriptions");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->ListSubscriptions(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->ListSubscriptions(context, options, request));
 }
 
 Status SubscriptionAdminTracingStub::DeleteSubscription(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::pubsub::v1::DeleteSubscriptionRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.pubsub.v1.Subscriber",
-                                     "DeleteSubscription");
+  auto span = internal::MakeSpanGrpc("google.pubsub.v1.Subscriber", "DeleteSubscription");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->DeleteSubscription(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->DeleteSubscription(context, options, request));
 }
 
 Status SubscriptionAdminTracingStub::ModifyPushConfig(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::pubsub::v1::ModifyPushConfigRequest const& request) {
-  auto span =
-      internal::MakeSpanGrpc("google.pubsub.v1.Subscriber", "ModifyPushConfig");
+  auto span = internal::MakeSpanGrpc("google.pubsub.v1.Subscriber", "ModifyPushConfig");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ModifyPushConfig(context, options, request));
 }
 
-StatusOr<google::pubsub::v1::Snapshot>
-SubscriptionAdminTracingStub::GetSnapshot(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::pubsub::v1::Snapshot> SubscriptionAdminTracingStub::GetSnapshot(
+    grpc::ClientContext& context,
+    Options const& options,
     google::pubsub::v1::GetSnapshotRequest const& request) {
-  auto span =
-      internal::MakeSpanGrpc("google.pubsub.v1.Subscriber", "GetSnapshot");
+  auto span = internal::MakeSpanGrpc("google.pubsub.v1.Subscriber", "GetSnapshot");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetSnapshot(context, options, request));
 }
 
-StatusOr<google::pubsub::v1::ListSnapshotsResponse>
-SubscriptionAdminTracingStub::ListSnapshots(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::pubsub::v1::ListSnapshotsResponse> SubscriptionAdminTracingStub::ListSnapshots(
+    grpc::ClientContext& context,
+    Options const& options,
     google::pubsub::v1::ListSnapshotsRequest const& request) {
-  auto span =
-      internal::MakeSpanGrpc("google.pubsub.v1.Subscriber", "ListSnapshots");
+  auto span = internal::MakeSpanGrpc("google.pubsub.v1.Subscriber", "ListSnapshots");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListSnapshots(context, options, request));
 }
 
-StatusOr<google::pubsub::v1::Snapshot>
-SubscriptionAdminTracingStub::CreateSnapshot(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::pubsub::v1::Snapshot> SubscriptionAdminTracingStub::CreateSnapshot(
+    grpc::ClientContext& context,
+    Options const& options,
     google::pubsub::v1::CreateSnapshotRequest const& request) {
-  auto span =
-      internal::MakeSpanGrpc("google.pubsub.v1.Subscriber", "CreateSnapshot");
+  auto span = internal::MakeSpanGrpc("google.pubsub.v1.Subscriber", "CreateSnapshot");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateSnapshot(context, options, request));
 }
 
-StatusOr<google::pubsub::v1::Snapshot>
-SubscriptionAdminTracingStub::UpdateSnapshot(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::pubsub::v1::Snapshot> SubscriptionAdminTracingStub::UpdateSnapshot(
+    grpc::ClientContext& context,
+    Options const& options,
     google::pubsub::v1::UpdateSnapshotRequest const& request) {
-  auto span =
-      internal::MakeSpanGrpc("google.pubsub.v1.Subscriber", "UpdateSnapshot");
+  auto span = internal::MakeSpanGrpc("google.pubsub.v1.Subscriber", "UpdateSnapshot");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -151,10 +143,10 @@ SubscriptionAdminTracingStub::UpdateSnapshot(
 }
 
 Status SubscriptionAdminTracingStub::DeleteSnapshot(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::pubsub::v1::DeleteSnapshotRequest const& request) {
-  auto span =
-      internal::MakeSpanGrpc("google.pubsub.v1.Subscriber", "DeleteSnapshot");
+  auto span = internal::MakeSpanGrpc("google.pubsub.v1.Subscriber", "DeleteSnapshot");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -162,7 +154,8 @@ Status SubscriptionAdminTracingStub::DeleteSnapshot(
 }
 
 StatusOr<google::pubsub::v1::SeekResponse> SubscriptionAdminTracingStub::Seek(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::pubsub::v1::SeekRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.pubsub.v1.Subscriber", "Seek");
   auto scope = opentelemetry::trace::Scope(span);
@@ -172,10 +165,10 @@ StatusOr<google::pubsub::v1::SeekResponse> SubscriptionAdminTracingStub::Seek(
 }
 
 StatusOr<google::iam::v1::Policy> SubscriptionAdminTracingStub::SetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
-  auto span =
-      internal::MakeSpanGrpc("google.pubsub.v1.Subscriber", "SetIamPolicy");
+  auto span = internal::MakeSpanGrpc("google.pubsub.v1.Subscriber", "SetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -183,26 +176,25 @@ StatusOr<google::iam::v1::Policy> SubscriptionAdminTracingStub::SetIamPolicy(
 }
 
 StatusOr<google::iam::v1::Policy> SubscriptionAdminTracingStub::GetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
-  auto span =
-      internal::MakeSpanGrpc("google.pubsub.v1.Subscriber", "GetIamPolicy");
+  auto span = internal::MakeSpanGrpc("google.pubsub.v1.Subscriber", "GetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetIamPolicy(context, options, request));
 }
 
-StatusOr<google::iam::v1::TestIamPermissionsResponse>
-SubscriptionAdminTracingStub::TestIamPermissions(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::iam::v1::TestIamPermissionsResponse> SubscriptionAdminTracingStub::TestIamPermissions(
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.pubsub.v1.Subscriber",
-                                     "TestIamPermissions");
+  auto span = internal::MakeSpanGrpc("google.pubsub.v1.Subscriber", "TestIamPermissions");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->TestIamPermissions(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->TestIamPermissions(context, options, request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

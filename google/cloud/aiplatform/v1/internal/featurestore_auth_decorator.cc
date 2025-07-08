@@ -33,45 +33,45 @@ FeaturestoreServiceAuth::FeaturestoreServiceAuth(
 
 future<StatusOr<google::longrunning::Operation>>
 FeaturestoreServiceAuth::AsyncCreateFeaturestore(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::aiplatform::v1::CreateFeaturestoreRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::CreateFeaturestoreRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreateFeaturestore(cq, *std::move(context),
-                                              std::move(options), request);
+        return child->AsyncCreateFeaturestore(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 FeaturestoreServiceAuth::CreateFeaturestore(
-    grpc::ClientContext& context, Options options,
-    google::cloud::aiplatform::v1::CreateFeaturestoreRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::aiplatform::v1::CreateFeaturestoreRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateFeaturestore(context, options, request);
 }
 
-StatusOr<google::cloud::aiplatform::v1::Featurestore>
-FeaturestoreServiceAuth::GetFeaturestore(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::aiplatform::v1::Featurestore> FeaturestoreServiceAuth::GetFeaturestore(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::GetFeaturestoreRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetFeaturestore(context, options, request);
 }
 
-StatusOr<google::cloud::aiplatform::v1::ListFeaturestoresResponse>
-FeaturestoreServiceAuth::ListFeaturestores(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::aiplatform::v1::ListFeaturestoresResponse> FeaturestoreServiceAuth::ListFeaturestores(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::ListFeaturestoresRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -80,28 +80,28 @@ FeaturestoreServiceAuth::ListFeaturestores(
 
 future<StatusOr<google::longrunning::Operation>>
 FeaturestoreServiceAuth::AsyncUpdateFeaturestore(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::aiplatform::v1::UpdateFeaturestoreRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::UpdateFeaturestoreRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncUpdateFeaturestore(cq, *std::move(context),
-                                              std::move(options), request);
+        return child->AsyncUpdateFeaturestore(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 FeaturestoreServiceAuth::UpdateFeaturestore(
-    grpc::ClientContext& context, Options options,
-    google::cloud::aiplatform::v1::UpdateFeaturestoreRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::aiplatform::v1::UpdateFeaturestoreRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateFeaturestore(context, options, request);
@@ -109,28 +109,28 @@ FeaturestoreServiceAuth::UpdateFeaturestore(
 
 future<StatusOr<google::longrunning::Operation>>
 FeaturestoreServiceAuth::AsyncDeleteFeaturestore(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::aiplatform::v1::DeleteFeaturestoreRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::DeleteFeaturestoreRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDeleteFeaturestore(cq, *std::move(context),
-                                              std::move(options), request);
+        return child->AsyncDeleteFeaturestore(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 FeaturestoreServiceAuth::DeleteFeaturestore(
-    grpc::ClientContext& context, Options options,
-    google::cloud::aiplatform::v1::DeleteFeaturestoreRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::aiplatform::v1::DeleteFeaturestoreRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteFeaturestore(context, options, request);
@@ -138,54 +138,54 @@ FeaturestoreServiceAuth::DeleteFeaturestore(
 
 future<StatusOr<google::longrunning::Operation>>
 FeaturestoreServiceAuth::AsyncCreateEntityType(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::aiplatform::v1::CreateEntityTypeRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::CreateEntityTypeRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreateEntityType(cq, *std::move(context),
-                                            std::move(options), request);
+        return child->AsyncCreateEntityType(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 FeaturestoreServiceAuth::CreateEntityType(
-    grpc::ClientContext& context, Options options,
-    google::cloud::aiplatform::v1::CreateEntityTypeRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::aiplatform::v1::CreateEntityTypeRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateEntityType(context, options, request);
 }
 
-StatusOr<google::cloud::aiplatform::v1::EntityType>
-FeaturestoreServiceAuth::GetEntityType(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::aiplatform::v1::EntityType> FeaturestoreServiceAuth::GetEntityType(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::GetEntityTypeRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetEntityType(context, options, request);
 }
 
-StatusOr<google::cloud::aiplatform::v1::ListEntityTypesResponse>
-FeaturestoreServiceAuth::ListEntityTypes(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::aiplatform::v1::ListEntityTypesResponse> FeaturestoreServiceAuth::ListEntityTypes(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::ListEntityTypesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListEntityTypes(context, options, request);
 }
 
-StatusOr<google::cloud::aiplatform::v1::EntityType>
-FeaturestoreServiceAuth::UpdateEntityType(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::aiplatform::v1::EntityType> FeaturestoreServiceAuth::UpdateEntityType(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::UpdateEntityTypeRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -194,28 +194,28 @@ FeaturestoreServiceAuth::UpdateEntityType(
 
 future<StatusOr<google::longrunning::Operation>>
 FeaturestoreServiceAuth::AsyncDeleteEntityType(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::aiplatform::v1::DeleteEntityTypeRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::DeleteEntityTypeRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDeleteEntityType(cq, *std::move(context),
-                                            std::move(options), request);
+        return child->AsyncDeleteEntityType(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 FeaturestoreServiceAuth::DeleteEntityType(
-    grpc::ClientContext& context, Options options,
-    google::cloud::aiplatform::v1::DeleteEntityTypeRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::aiplatform::v1::DeleteEntityTypeRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteEntityType(context, options, request);
@@ -223,27 +223,28 @@ FeaturestoreServiceAuth::DeleteEntityType(
 
 future<StatusOr<google::longrunning::Operation>>
 FeaturestoreServiceAuth::AsyncCreateFeature(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::aiplatform::v1::CreateFeatureRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::CreateFeatureRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreateFeature(cq, *std::move(context),
-                                         std::move(options), request);
+        return child->AsyncCreateFeature(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation> FeaturestoreServiceAuth::CreateFeature(
-    grpc::ClientContext& context, Options options,
-    google::cloud::aiplatform::v1::CreateFeatureRequest const& request) {
+StatusOr<google::longrunning::Operation>
+FeaturestoreServiceAuth::CreateFeature(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::aiplatform::v1::CreateFeatureRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateFeature(context, options, request);
@@ -251,54 +252,54 @@ StatusOr<google::longrunning::Operation> FeaturestoreServiceAuth::CreateFeature(
 
 future<StatusOr<google::longrunning::Operation>>
 FeaturestoreServiceAuth::AsyncBatchCreateFeatures(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::aiplatform::v1::BatchCreateFeaturesRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::BatchCreateFeaturesRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncBatchCreateFeatures(cq, *std::move(context),
-                                               std::move(options), request);
+        return child->AsyncBatchCreateFeatures(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 FeaturestoreServiceAuth::BatchCreateFeatures(
-    grpc::ClientContext& context, Options options,
-    google::cloud::aiplatform::v1::BatchCreateFeaturesRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::aiplatform::v1::BatchCreateFeaturesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->BatchCreateFeatures(context, options, request);
 }
 
-StatusOr<google::cloud::aiplatform::v1::Feature>
-FeaturestoreServiceAuth::GetFeature(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::aiplatform::v1::Feature> FeaturestoreServiceAuth::GetFeature(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::GetFeatureRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetFeature(context, options, request);
 }
 
-StatusOr<google::cloud::aiplatform::v1::ListFeaturesResponse>
-FeaturestoreServiceAuth::ListFeatures(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::aiplatform::v1::ListFeaturesResponse> FeaturestoreServiceAuth::ListFeatures(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::ListFeaturesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListFeatures(context, options, request);
 }
 
-StatusOr<google::cloud::aiplatform::v1::Feature>
-FeaturestoreServiceAuth::UpdateFeature(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::aiplatform::v1::Feature> FeaturestoreServiceAuth::UpdateFeature(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::UpdateFeatureRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -307,27 +308,28 @@ FeaturestoreServiceAuth::UpdateFeature(
 
 future<StatusOr<google::longrunning::Operation>>
 FeaturestoreServiceAuth::AsyncDeleteFeature(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::aiplatform::v1::DeleteFeatureRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::DeleteFeatureRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDeleteFeature(cq, *std::move(context),
-                                         std::move(options), request);
+        return child->AsyncDeleteFeature(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation> FeaturestoreServiceAuth::DeleteFeature(
-    grpc::ClientContext& context, Options options,
-    google::cloud::aiplatform::v1::DeleteFeatureRequest const& request) {
+StatusOr<google::longrunning::Operation>
+FeaturestoreServiceAuth::DeleteFeature(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::aiplatform::v1::DeleteFeatureRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteFeature(context, options, request);
@@ -335,28 +337,28 @@ StatusOr<google::longrunning::Operation> FeaturestoreServiceAuth::DeleteFeature(
 
 future<StatusOr<google::longrunning::Operation>>
 FeaturestoreServiceAuth::AsyncImportFeatureValues(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::aiplatform::v1::ImportFeatureValuesRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::ImportFeatureValuesRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncImportFeatureValues(cq, *std::move(context),
-                                               std::move(options), request);
+        return child->AsyncImportFeatureValues(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 FeaturestoreServiceAuth::ImportFeatureValues(
-    grpc::ClientContext& context, Options options,
-    google::cloud::aiplatform::v1::ImportFeatureValuesRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::aiplatform::v1::ImportFeatureValuesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ImportFeatureValues(context, options, request);
@@ -364,30 +366,28 @@ FeaturestoreServiceAuth::ImportFeatureValues(
 
 future<StatusOr<google::longrunning::Operation>>
 FeaturestoreServiceAuth::AsyncBatchReadFeatureValues(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::aiplatform::v1::BatchReadFeatureValuesRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::BatchReadFeatureValuesRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncBatchReadFeatureValues(cq, *std::move(context),
-                                                  std::move(options), request);
+        return child->AsyncBatchReadFeatureValues(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 FeaturestoreServiceAuth::BatchReadFeatureValues(
-    grpc::ClientContext& context, Options options,
-    google::cloud::aiplatform::v1::BatchReadFeatureValuesRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::aiplatform::v1::BatchReadFeatureValuesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->BatchReadFeatureValues(context, options, request);
@@ -395,28 +395,28 @@ FeaturestoreServiceAuth::BatchReadFeatureValues(
 
 future<StatusOr<google::longrunning::Operation>>
 FeaturestoreServiceAuth::AsyncExportFeatureValues(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::aiplatform::v1::ExportFeatureValuesRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::ExportFeatureValuesRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncExportFeatureValues(cq, *std::move(context),
-                                               std::move(options), request);
+        return child->AsyncExportFeatureValues(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 FeaturestoreServiceAuth::ExportFeatureValues(
-    grpc::ClientContext& context, Options options,
-    google::cloud::aiplatform::v1::ExportFeatureValuesRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::aiplatform::v1::ExportFeatureValuesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ExportFeatureValues(context, options, request);
@@ -424,54 +424,54 @@ FeaturestoreServiceAuth::ExportFeatureValues(
 
 future<StatusOr<google::longrunning::Operation>>
 FeaturestoreServiceAuth::AsyncDeleteFeatureValues(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::aiplatform::v1::DeleteFeatureValuesRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::DeleteFeatureValuesRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDeleteFeatureValues(cq, *std::move(context),
-                                               std::move(options), request);
+        return child->AsyncDeleteFeatureValues(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 FeaturestoreServiceAuth::DeleteFeatureValues(
-    grpc::ClientContext& context, Options options,
-    google::cloud::aiplatform::v1::DeleteFeatureValuesRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::aiplatform::v1::DeleteFeatureValuesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteFeatureValues(context, options, request);
 }
 
-StatusOr<google::cloud::aiplatform::v1::SearchFeaturesResponse>
-FeaturestoreServiceAuth::SearchFeatures(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::aiplatform::v1::SearchFeaturesResponse> FeaturestoreServiceAuth::SearchFeatures(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::SearchFeaturesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->SearchFeatures(context, options, request);
 }
 
-StatusOr<google::cloud::location::ListLocationsResponse>
-FeaturestoreServiceAuth::ListLocations(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::location::ListLocationsResponse> FeaturestoreServiceAuth::ListLocations(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListLocations(context, options, request);
 }
 
-StatusOr<google::cloud::location::Location>
-FeaturestoreServiceAuth::GetLocation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::location::Location> FeaturestoreServiceAuth::GetLocation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -479,7 +479,8 @@ FeaturestoreServiceAuth::GetLocation(
 }
 
 StatusOr<google::iam::v1::Policy> FeaturestoreServiceAuth::SetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -487,25 +488,26 @@ StatusOr<google::iam::v1::Policy> FeaturestoreServiceAuth::SetIamPolicy(
 }
 
 StatusOr<google::iam::v1::Policy> FeaturestoreServiceAuth::GetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetIamPolicy(context, options, request);
 }
 
-StatusOr<google::iam::v1::TestIamPermissionsResponse>
-FeaturestoreServiceAuth::TestIamPermissions(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::iam::v1::TestIamPermissionsResponse> FeaturestoreServiceAuth::TestIamPermissions(
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->TestIamPermissions(context, options, request);
 }
 
-StatusOr<google::longrunning::ListOperationsResponse>
-FeaturestoreServiceAuth::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse> FeaturestoreServiceAuth::ListOperations(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -513,7 +515,8 @@ FeaturestoreServiceAuth::ListOperations(
 }
 
 StatusOr<google::longrunning::Operation> FeaturestoreServiceAuth::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -521,7 +524,8 @@ StatusOr<google::longrunning::Operation> FeaturestoreServiceAuth::GetOperation(
 }
 
 Status FeaturestoreServiceAuth::DeleteOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -529,7 +533,8 @@ Status FeaturestoreServiceAuth::DeleteOperation(
 }
 
 Status FeaturestoreServiceAuth::CancelOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -537,7 +542,8 @@ Status FeaturestoreServiceAuth::CancelOperation(
 }
 
 StatusOr<google::longrunning::Operation> FeaturestoreServiceAuth::WaitOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::WaitOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -551,16 +557,15 @@ FeaturestoreServiceAuth::AsyncGetOperation(
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncGetOperation(cq, *std::move(context),
-                                        std::move(options), request);
+        return child->AsyncGetOperation(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
@@ -569,14 +574,13 @@ future<Status> FeaturestoreServiceAuth::AsyncCancelOperation(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) return make_ready_future(std::move(context).status());
-        return child->AsyncCancelOperation(cq, *std::move(context),
-                                           std::move(options), request);
+        return child->AsyncCancelOperation(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 

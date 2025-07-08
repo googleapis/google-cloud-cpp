@@ -46,21 +46,19 @@ DepServiceMetadata::DepServiceMetadata(
 
 StatusOr<google::cloud::networkservices::v1::ListLbTrafficExtensionsResponse>
 DepServiceMetadata::ListLbTrafficExtensions(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::networkservices::v1::ListLbTrafficExtensionsRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::networkservices::v1::ListLbTrafficExtensionsRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListLbTrafficExtensions(context, options, request);
 }
 
 StatusOr<google::cloud::networkservices::v1::LbTrafficExtension>
 DepServiceMetadata::GetLbTrafficExtension(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::networkservices::v1::GetLbTrafficExtensionRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::networkservices::v1::GetLbTrafficExtensionRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetLbTrafficExtension(context, options, request);
 }
 
@@ -69,21 +67,18 @@ DepServiceMetadata::AsyncCreateLbTrafficExtension(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::networkservices::v1::CreateLbTrafficExtensionRequest const&
-        request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateLbTrafficExtension(cq, std::move(context),
-                                               std::move(options), request);
+    google::cloud::networkservices::v1::CreateLbTrafficExtensionRequest const& request) {
+  SetMetadata(*context, *options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateLbTrafficExtension(
+      cq, std::move(context), std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 DepServiceMetadata::CreateLbTrafficExtension(
-    grpc::ClientContext& context, Options options,
-    google::cloud::networkservices::v1::CreateLbTrafficExtensionRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context,
+    Options options,
+    google::cloud::networkservices::v1::CreateLbTrafficExtensionRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateLbTrafficExtension(context, options, request);
 }
 
@@ -92,25 +87,18 @@ DepServiceMetadata::AsyncUpdateLbTrafficExtension(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::networkservices::v1::UpdateLbTrafficExtensionRequest const&
-        request) {
-  SetMetadata(
-      *context, *options,
-      absl::StrCat("lb_traffic_extension.name=",
-                   internal::UrlEncode(request.lb_traffic_extension().name())));
-  return child_->AsyncUpdateLbTrafficExtension(cq, std::move(context),
-                                               std::move(options), request);
+    google::cloud::networkservices::v1::UpdateLbTrafficExtensionRequest const& request) {
+  SetMetadata(*context, *options, absl::StrCat("lb_traffic_extension.name=", internal::UrlEncode(request.lb_traffic_extension().name())));
+  return child_->AsyncUpdateLbTrafficExtension(
+      cq, std::move(context), std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 DepServiceMetadata::UpdateLbTrafficExtension(
-    grpc::ClientContext& context, Options options,
-    google::cloud::networkservices::v1::UpdateLbTrafficExtensionRequest const&
-        request) {
-  SetMetadata(
-      context, options,
-      absl::StrCat("lb_traffic_extension.name=",
-                   internal::UrlEncode(request.lb_traffic_extension().name())));
+    grpc::ClientContext& context,
+    Options options,
+    google::cloud::networkservices::v1::UpdateLbTrafficExtensionRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("lb_traffic_extension.name=", internal::UrlEncode(request.lb_traffic_extension().name())));
   return child_->UpdateLbTrafficExtension(context, options, request);
 }
 
@@ -119,41 +107,36 @@ DepServiceMetadata::AsyncDeleteLbTrafficExtension(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::networkservices::v1::DeleteLbTrafficExtensionRequest const&
-        request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteLbTrafficExtension(cq, std::move(context),
-                                               std::move(options), request);
+    google::cloud::networkservices::v1::DeleteLbTrafficExtensionRequest const& request) {
+  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteLbTrafficExtension(
+      cq, std::move(context), std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 DepServiceMetadata::DeleteLbTrafficExtension(
-    grpc::ClientContext& context, Options options,
-    google::cloud::networkservices::v1::DeleteLbTrafficExtensionRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context,
+    Options options,
+    google::cloud::networkservices::v1::DeleteLbTrafficExtensionRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteLbTrafficExtension(context, options, request);
 }
 
 StatusOr<google::cloud::networkservices::v1::ListLbRouteExtensionsResponse>
 DepServiceMetadata::ListLbRouteExtensions(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::networkservices::v1::ListLbRouteExtensionsRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::networkservices::v1::ListLbRouteExtensionsRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListLbRouteExtensions(context, options, request);
 }
 
 StatusOr<google::cloud::networkservices::v1::LbRouteExtension>
 DepServiceMetadata::GetLbRouteExtension(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::networkservices::v1::GetLbRouteExtensionRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::networkservices::v1::GetLbRouteExtensionRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetLbRouteExtension(context, options, request);
 }
 
@@ -162,21 +145,18 @@ DepServiceMetadata::AsyncCreateLbRouteExtension(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::networkservices::v1::CreateLbRouteExtensionRequest const&
-        request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateLbRouteExtension(cq, std::move(context),
-                                             std::move(options), request);
+    google::cloud::networkservices::v1::CreateLbRouteExtensionRequest const& request) {
+  SetMetadata(*context, *options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateLbRouteExtension(
+      cq, std::move(context), std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 DepServiceMetadata::CreateLbRouteExtension(
-    grpc::ClientContext& context, Options options,
-    google::cloud::networkservices::v1::CreateLbRouteExtensionRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context,
+    Options options,
+    google::cloud::networkservices::v1::CreateLbRouteExtensionRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateLbRouteExtension(context, options, request);
 }
 
@@ -185,25 +165,18 @@ DepServiceMetadata::AsyncUpdateLbRouteExtension(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::networkservices::v1::UpdateLbRouteExtensionRequest const&
-        request) {
-  SetMetadata(
-      *context, *options,
-      absl::StrCat("lb_route_extension.name=",
-                   internal::UrlEncode(request.lb_route_extension().name())));
-  return child_->AsyncUpdateLbRouteExtension(cq, std::move(context),
-                                             std::move(options), request);
+    google::cloud::networkservices::v1::UpdateLbRouteExtensionRequest const& request) {
+  SetMetadata(*context, *options, absl::StrCat("lb_route_extension.name=", internal::UrlEncode(request.lb_route_extension().name())));
+  return child_->AsyncUpdateLbRouteExtension(
+      cq, std::move(context), std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 DepServiceMetadata::UpdateLbRouteExtension(
-    grpc::ClientContext& context, Options options,
-    google::cloud::networkservices::v1::UpdateLbRouteExtensionRequest const&
-        request) {
-  SetMetadata(
-      context, options,
-      absl::StrCat("lb_route_extension.name=",
-                   internal::UrlEncode(request.lb_route_extension().name())));
+    grpc::ClientContext& context,
+    Options options,
+    google::cloud::networkservices::v1::UpdateLbRouteExtensionRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("lb_route_extension.name=", internal::UrlEncode(request.lb_route_extension().name())));
   return child_->UpdateLbRouteExtension(context, options, request);
 }
 
@@ -212,99 +185,177 @@ DepServiceMetadata::AsyncDeleteLbRouteExtension(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::networkservices::v1::DeleteLbRouteExtensionRequest const&
-        request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteLbRouteExtension(cq, std::move(context),
-                                             std::move(options), request);
+    google::cloud::networkservices::v1::DeleteLbRouteExtensionRequest const& request) {
+  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteLbRouteExtension(
+      cq, std::move(context), std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 DepServiceMetadata::DeleteLbRouteExtension(
-    grpc::ClientContext& context, Options options,
-    google::cloud::networkservices::v1::DeleteLbRouteExtensionRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context,
+    Options options,
+    google::cloud::networkservices::v1::DeleteLbRouteExtensionRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteLbRouteExtension(context, options, request);
+}
+
+StatusOr<google::cloud::networkservices::v1::ListAuthzExtensionsResponse>
+DepServiceMetadata::ListAuthzExtensions(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::networkservices::v1::ListAuthzExtensionsRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListAuthzExtensions(context, options, request);
+}
+
+StatusOr<google::cloud::networkservices::v1::AuthzExtension>
+DepServiceMetadata::GetAuthzExtension(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::networkservices::v1::GetAuthzExtensionRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetAuthzExtension(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DepServiceMetadata::AsyncCreateAuthzExtension(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::networkservices::v1::CreateAuthzExtensionRequest const& request) {
+  SetMetadata(*context, *options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateAuthzExtension(
+      cq, std::move(context), std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+DepServiceMetadata::CreateAuthzExtension(
+    grpc::ClientContext& context,
+    Options options,
+    google::cloud::networkservices::v1::CreateAuthzExtensionRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateAuthzExtension(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DepServiceMetadata::AsyncUpdateAuthzExtension(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::networkservices::v1::UpdateAuthzExtensionRequest const& request) {
+  SetMetadata(*context, *options, absl::StrCat("authz_extension.name=", internal::UrlEncode(request.authz_extension().name())));
+  return child_->AsyncUpdateAuthzExtension(
+      cq, std::move(context), std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+DepServiceMetadata::UpdateAuthzExtension(
+    grpc::ClientContext& context,
+    Options options,
+    google::cloud::networkservices::v1::UpdateAuthzExtensionRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("authz_extension.name=", internal::UrlEncode(request.authz_extension().name())));
+  return child_->UpdateAuthzExtension(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DepServiceMetadata::AsyncDeleteAuthzExtension(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::networkservices::v1::DeleteAuthzExtensionRequest const& request) {
+  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteAuthzExtension(
+      cq, std::move(context), std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+DepServiceMetadata::DeleteAuthzExtension(
+    grpc::ClientContext& context,
+    Options options,
+    google::cloud::networkservices::v1::DeleteAuthzExtensionRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteAuthzExtension(context, options, request);
 }
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 DepServiceMetadata::ListLocations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ListLocations(context, options, request);
 }
 
-StatusOr<google::cloud::location::Location> DepServiceMetadata::GetLocation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::location::Location>
+DepServiceMetadata::GetLocation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetLocation(context, options, request);
 }
 
-StatusOr<google::iam::v1::Policy> DepServiceMetadata::SetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::iam::v1::Policy>
+DepServiceMetadata::SetIamPolicy(
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
-  SetMetadata(
-      context, options,
-      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
+  SetMetadata(context, options, absl::StrCat("resource=", internal::UrlEncode(request.resource())));
   return child_->SetIamPolicy(context, options, request);
 }
 
-StatusOr<google::iam::v1::Policy> DepServiceMetadata::GetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::iam::v1::Policy>
+DepServiceMetadata::GetIamPolicy(
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
-  SetMetadata(
-      context, options,
-      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
+  SetMetadata(context, options, absl::StrCat("resource=", internal::UrlEncode(request.resource())));
   return child_->GetIamPolicy(context, options, request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 DepServiceMetadata::TestIamPermissions(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  SetMetadata(
-      context, options,
-      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
+  SetMetadata(context, options, absl::StrCat("resource=", internal::UrlEncode(request.resource())));
   return child_->TestIamPermissions(context, options, request);
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
 DepServiceMetadata::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ListOperations(context, options, request);
 }
 
-StatusOr<google::longrunning::Operation> DepServiceMetadata::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::Operation>
+DepServiceMetadata::GetOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetOperation(context, options, request);
 }
 
-Status DepServiceMetadata::DeleteOperation(
-    grpc::ClientContext& context, Options const& options,
+Status
+DepServiceMetadata::DeleteOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteOperation(context, options, request);
 }
 
-Status DepServiceMetadata::CancelOperation(
-    grpc::ClientContext& context, Options const& options,
+Status
+DepServiceMetadata::CancelOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->CancelOperation(context, options, request);
 }
 
@@ -316,8 +367,8 @@ DepServiceMetadata::AsyncGetOperation(
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(cq, std::move(context), std::move(options),
-                                   request);
+  return child_->AsyncGetOperation(
+      cq, std::move(context), std::move(options), request);
 }
 
 future<Status> DepServiceMetadata::AsyncCancelOperation(
@@ -327,21 +378,21 @@ future<Status> DepServiceMetadata::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(cq, std::move(context),
-                                      std::move(options), request);
+  return child_->AsyncCancelOperation(
+      cq, std::move(context), std::move(options), request);
 }
 
 void DepServiceMetadata::SetMetadata(grpc::ClientContext& context,
-                                     Options const& options,
-                                     std::string const& request_params) {
+                                        Options const& options,
+                                        std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
 void DepServiceMetadata::SetMetadata(grpc::ClientContext& context,
-                                     Options const& options) {
-  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
-                                       api_client_header_);
+                                        Options const& options) {
+  google::cloud::internal::SetMetadata(
+      context, options, fixed_metadata_, api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

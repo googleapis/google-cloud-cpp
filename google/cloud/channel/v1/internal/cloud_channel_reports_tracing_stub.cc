@@ -34,12 +34,11 @@ CloudChannelReportsServiceTracingStub::CloudChannelReportsServiceTracingStub(
 
 future<StatusOr<google::longrunning::Operation>>
 CloudChannelReportsServiceTracingStub::AsyncRunReportJob(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::channel::v1::RunReportJobRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.channel.v1.CloudChannelReportsService", "RunReportJob");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::channel::v1::RunReportJobRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.channel.v1.CloudChannelReportsService", "RunReportJob");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncRunReportJob(cq, context, std::move(options), request);
@@ -48,59 +47,54 @@ CloudChannelReportsServiceTracingStub::AsyncRunReportJob(
 
 StatusOr<google::longrunning::Operation>
 CloudChannelReportsServiceTracingStub::RunReportJob(
-    grpc::ClientContext& context, Options options,
-    google::cloud::channel::v1::RunReportJobRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.channel.v1.CloudChannelReportsService", "RunReportJob");
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::channel::v1::RunReportJobRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.channel.v1.CloudChannelReportsService", "RunReportJob");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->RunReportJob(context, options, request));
 }
 
-StatusOr<google::cloud::channel::v1::FetchReportResultsResponse>
-CloudChannelReportsServiceTracingStub::FetchReportResults(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::channel::v1::FetchReportResultsResponse> CloudChannelReportsServiceTracingStub::FetchReportResults(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::channel::v1::FetchReportResultsRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.channel.v1.CloudChannelReportsService",
-      "FetchReportResults");
+  auto span = internal::MakeSpanGrpc("google.cloud.channel.v1.CloudChannelReportsService", "FetchReportResults");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->FetchReportResults(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->FetchReportResults(context, options, request));
 }
 
-StatusOr<google::cloud::channel::v1::ListReportsResponse>
-CloudChannelReportsServiceTracingStub::ListReports(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::channel::v1::ListReportsResponse> CloudChannelReportsServiceTracingStub::ListReports(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::channel::v1::ListReportsRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.channel.v1.CloudChannelReportsService", "ListReports");
+  auto span = internal::MakeSpanGrpc("google.cloud.channel.v1.CloudChannelReportsService", "ListReports");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListReports(context, options, request));
 }
 
-StatusOr<google::longrunning::ListOperationsResponse>
-CloudChannelReportsServiceTracingStub::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse> CloudChannelReportsServiceTracingStub::ListOperations(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.channel.v1.CloudChannelReportsService", "ListOperations");
+  auto span = internal::MakeSpanGrpc("google.cloud.channel.v1.CloudChannelReportsService", "ListOperations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListOperations(context, options, request));
 }
 
-StatusOr<google::longrunning::Operation>
-CloudChannelReportsServiceTracingStub::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::Operation> CloudChannelReportsServiceTracingStub::GetOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.channel.v1.CloudChannelReportsService", "GetOperation");
+  auto span = internal::MakeSpanGrpc("google.cloud.channel.v1.CloudChannelReportsService", "GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -108,10 +102,10 @@ CloudChannelReportsServiceTracingStub::GetOperation(
 }
 
 Status CloudChannelReportsServiceTracingStub::DeleteOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.channel.v1.CloudChannelReportsService", "DeleteOperation");
+  auto span = internal::MakeSpanGrpc("google.cloud.channel.v1.CloudChannelReportsService", "DeleteOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -119,10 +113,10 @@ Status CloudChannelReportsServiceTracingStub::DeleteOperation(
 }
 
 Status CloudChannelReportsServiceTracingStub::CancelOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.channel.v1.CloudChannelReportsService", "CancelOperation");
+  auto span = internal::MakeSpanGrpc("google.cloud.channel.v1.CloudChannelReportsService", "CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -139,7 +133,8 @@ CloudChannelReportsServiceTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncGetOperation(cq, context, std::move(options), request);
+  auto f = child_->AsyncGetOperation(
+      cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -152,19 +147,17 @@ future<Status> CloudChannelReportsServiceTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f =
-      child_->AsyncCancelOperation(cq, context, std::move(options), request);
+  auto f = child_->AsyncCancelOperation(
+      cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-std::shared_ptr<CloudChannelReportsServiceStub>
-MakeCloudChannelReportsServiceTracingStub(
+std::shared_ptr<CloudChannelReportsServiceStub> MakeCloudChannelReportsServiceTracingStub(
     std::shared_ptr<CloudChannelReportsServiceStub> stub) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-  return std::make_shared<CloudChannelReportsServiceTracingStub>(
-      std::move(stub));
+  return std::make_shared<CloudChannelReportsServiceTracingStub>(std::move(stub));
 #else
   return stub;
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

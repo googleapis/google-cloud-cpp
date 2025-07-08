@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_SQL_FLAGS_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_SQL_FLAGS_CLIENT_H
 
-#include "google/cloud/sql/v1/sql_flags_rest_connection.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
+#include "google/cloud/sql/v1/sql_flags_rest_connection.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -61,8 +61,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class SqlFlagsServiceClient {
  public:
-  explicit SqlFlagsServiceClient(
-      std::shared_ptr<SqlFlagsServiceConnection> connection, Options opts = {});
+  explicit SqlFlagsServiceClient(std::shared_ptr<SqlFlagsServiceConnection> connection, Options opts = {});
   ~SqlFlagsServiceClient();
 
   ///@{
@@ -75,12 +74,10 @@ class SqlFlagsServiceClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(SqlFlagsServiceClient const& a,
-                         SqlFlagsServiceClient const& b) {
+  friend bool operator==(SqlFlagsServiceClient const& a, SqlFlagsServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(SqlFlagsServiceClient const& a,
-                         SqlFlagsServiceClient const& b) {
+  friend bool operator!=(SqlFlagsServiceClient const& a, SqlFlagsServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -112,9 +109,8 @@ class SqlFlagsServiceClient {
   /// [google.cloud.sql.v1.SqlFlagsListRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_flags.proto#L47}
   ///
   // clang-format on
-  StatusOr<google::cloud::sql::v1::FlagsListResponse> List(
-      google::cloud::sql::v1::SqlFlagsListRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::sql::v1::FlagsListResponse>
+  List(google::cloud::sql::v1::SqlFlagsListRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<SqlFlagsServiceConnection> connection_;

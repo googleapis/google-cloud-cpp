@@ -42,50 +42,45 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockEntityServiceConnection
-    : public chronicle_v1::EntityServiceConnection {
+class MockEntityServiceConnection : public chronicle_v1::EntityServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::chronicle::v1::Watchlist>, GetWatchlist,
-      (google::cloud::chronicle::v1::GetWatchlistRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::chronicle::v1::Watchlist>,
+  GetWatchlist,
+  (google::cloud::chronicle::v1::GetWatchlistRequest const& request), (override));
 
   MOCK_METHOD((StreamRange<google::cloud::chronicle::v1::Watchlist>),
-              ListWatchlists,
-              (google::cloud::chronicle::v1::ListWatchlistsRequest request),
-              (override));
+  ListWatchlists,
+  (google::cloud::chronicle::v1::ListWatchlistsRequest request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::chronicle::v1::Watchlist>, CreateWatchlist,
-      (google::cloud::chronicle::v1::CreateWatchlistRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::chronicle::v1::Watchlist>,
+  CreateWatchlist,
+  (google::cloud::chronicle::v1::CreateWatchlistRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::chronicle::v1::Watchlist>, UpdateWatchlist,
-      (google::cloud::chronicle::v1::UpdateWatchlistRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::chronicle::v1::Watchlist>,
+  UpdateWatchlist,
+  (google::cloud::chronicle::v1::UpdateWatchlistRequest const& request), (override));
 
-  MOCK_METHOD(
-      Status, DeleteWatchlist,
-      (google::cloud::chronicle::v1::DeleteWatchlistRequest const& request),
-      (override));
+  MOCK_METHOD(Status,
+  DeleteWatchlist,
+  (google::cloud::chronicle::v1::DeleteWatchlistRequest const& request), (override));
 
-  MOCK_METHOD((StreamRange<google::longrunning::Operation>), ListOperations,
-              (google::longrunning::ListOperationsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::longrunning::Operation>),
+  ListOperations,
+  (google::longrunning::ListOperationsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
-              (google::longrunning::GetOperationRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  GetOperation,
+  (google::longrunning::GetOperationRequest const& request), (override));
 
-  MOCK_METHOD(Status, DeleteOperation,
-              (google::longrunning::DeleteOperationRequest const& request),
-              (override));
+  MOCK_METHOD(Status,
+  DeleteOperation,
+  (google::longrunning::DeleteOperationRequest const& request), (override));
 
-  MOCK_METHOD(Status, CancelOperation,
-              (google::longrunning::CancelOperationRequest const& request),
-              (override));
+  MOCK_METHOD(Status,
+  CancelOperation,
+  (google::longrunning::CancelOperationRequest const& request), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

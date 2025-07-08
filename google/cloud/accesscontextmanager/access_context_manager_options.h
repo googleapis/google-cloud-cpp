@@ -28,31 +28,20 @@ namespace cloud {
 namespace accesscontextmanager {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use
-/// accesscontextmanager_v1::AccessContextManagerPollingPolicyOption directly.
-using ::google::cloud::accesscontextmanager_v1::
-    AccessContextManagerPollingPolicyOption;
+/// @deprecated Use accesscontextmanager_v1::AccessContextManagerPollingPolicyOption directly.
+using ::google::cloud::accesscontextmanager_v1::AccessContextManagerPollingPolicyOption;
 
-/// @deprecated Use
-/// accesscontextmanager_v1::AccessContextManagerBackoffPolicyOption directly.
-using ::google::cloud::accesscontextmanager_v1::
-    AccessContextManagerBackoffPolicyOption;
+/// @deprecated Use accesscontextmanager_v1::AccessContextManagerBackoffPolicyOption directly.
+using ::google::cloud::accesscontextmanager_v1::AccessContextManagerBackoffPolicyOption;
 
-/// @deprecated Use
-/// accesscontextmanager_v1::AccessContextManagerConnectionIdempotencyPolicyOption
-/// directly.
-using ::google::cloud::accesscontextmanager_v1::
-    AccessContextManagerConnectionIdempotencyPolicyOption;
+/// @deprecated Use accesscontextmanager_v1::AccessContextManagerConnectionIdempotencyPolicyOption directly.
+using ::google::cloud::accesscontextmanager_v1::AccessContextManagerConnectionIdempotencyPolicyOption;
 
-/// @deprecated Use
-/// accesscontextmanager_v1::AccessContextManagerPolicyOptionList directly.
-using ::google::cloud::accesscontextmanager_v1::
-    AccessContextManagerPolicyOptionList;
+/// @deprecated Use accesscontextmanager_v1::AccessContextManagerPolicyOptionList directly.
+using ::google::cloud::accesscontextmanager_v1::AccessContextManagerPolicyOptionList;
 
-/// @deprecated Use
-/// accesscontextmanager_v1::AccessContextManagerRetryPolicyOption directly.
-using ::google::cloud::accesscontextmanager_v1::
-    AccessContextManagerRetryPolicyOption;
+/// @deprecated Use accesscontextmanager_v1::AccessContextManagerRetryPolicyOption directly.
+using ::google::cloud::accesscontextmanager_v1::AccessContextManagerRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace accesscontextmanager

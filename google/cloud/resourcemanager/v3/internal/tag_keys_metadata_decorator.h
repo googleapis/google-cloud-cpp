@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCEMANAGER_V3_INTERNAL_TAG_KEYS_METADATA_DECORATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCEMANAGER_V3_INTERNAL_TAG_KEYS_METADATA_DECORATOR_H
 
-#include "google/cloud/resourcemanager/v3/internal/tag_keys_stub.h"
 #include "google/cloud/options.h"
+#include "google/cloud/resourcemanager/v3/internal/tag_keys_stub.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
 #include <map>
@@ -35,75 +35,77 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class TagKeysMetadata : public TagKeysStub {
  public:
   ~TagKeysMetadata() override = default;
-  TagKeysMetadata(std::shared_ptr<TagKeysStub> child,
-                  std::multimap<std::string, std::string> fixed_metadata,
-                  std::string api_client_header = "");
+  TagKeysMetadata(
+      std::shared_ptr<TagKeysStub> child,
+      std::multimap<std::string, std::string> fixed_metadata,
+      std::string api_client_header = "");
 
   StatusOr<google::cloud::resourcemanager::v3::ListTagKeysResponse> ListTagKeys(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::resourcemanager::v3::ListTagKeysRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::resourcemanager::v3::ListTagKeysRequest const& request) override;
 
   StatusOr<google::cloud::resourcemanager::v3::TagKey> GetTagKey(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::resourcemanager::v3::GetTagKeyRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::resourcemanager::v3::GetTagKeyRequest const& request) override;
 
   StatusOr<google::cloud::resourcemanager::v3::TagKey> GetNamespacedTagKey(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::resourcemanager::v3::GetNamespacedTagKeyRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::resourcemanager::v3::GetNamespacedTagKeyRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateTagKey(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::resourcemanager::v3::CreateTagKeyRequest const& request)
-      override;
+      google::cloud::resourcemanager::v3::CreateTagKeyRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateTagKey(
-      grpc::ClientContext& context, Options options,
-      google::cloud::resourcemanager::v3::CreateTagKeyRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::resourcemanager::v3::CreateTagKeyRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateTagKey(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::resourcemanager::v3::UpdateTagKeyRequest const& request)
-      override;
+      google::cloud::resourcemanager::v3::UpdateTagKeyRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateTagKey(
-      grpc::ClientContext& context, Options options,
-      google::cloud::resourcemanager::v3::UpdateTagKeyRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::resourcemanager::v3::UpdateTagKeyRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteTagKey(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::resourcemanager::v3::DeleteTagKeyRequest const& request)
-      override;
+      google::cloud::resourcemanager::v3::DeleteTagKeyRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteTagKey(
-      grpc::ClientContext& context, Options options,
-      google::cloud::resourcemanager::v3::DeleteTagKeyRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::resourcemanager::v3::DeleteTagKeyRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -119,7 +121,8 @@ class TagKeysMetadata : public TagKeysStub {
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context, Options const& options,
+  void SetMetadata(grpc::ClientContext& context,
+                   Options const& options,
                    std::string const& request_params);
   void SetMetadata(grpc::ClientContext& context, Options const& options);
 

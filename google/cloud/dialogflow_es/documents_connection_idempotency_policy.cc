@@ -26,81 +26,67 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-DocumentsConnectionIdempotencyPolicy::~DocumentsConnectionIdempotencyPolicy() =
-    default;
+DocumentsConnectionIdempotencyPolicy::~DocumentsConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<DocumentsConnectionIdempotencyPolicy>
 DocumentsConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<DocumentsConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency DocumentsConnectionIdempotencyPolicy::ListDocuments(
-    google::cloud::dialogflow::v2::ListDocumentsRequest) {  // NOLINT
+Idempotency DocumentsConnectionIdempotencyPolicy::ListDocuments(google::cloud::dialogflow::v2::ListDocumentsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency DocumentsConnectionIdempotencyPolicy::GetDocument(
-    google::cloud::dialogflow::v2::GetDocumentRequest const&) {
+Idempotency DocumentsConnectionIdempotencyPolicy::GetDocument(google::cloud::dialogflow::v2::GetDocumentRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DocumentsConnectionIdempotencyPolicy::CreateDocument(
-    google::cloud::dialogflow::v2::CreateDocumentRequest const&) {
+Idempotency DocumentsConnectionIdempotencyPolicy::CreateDocument(google::cloud::dialogflow::v2::CreateDocumentRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DocumentsConnectionIdempotencyPolicy::ImportDocuments(
-    google::cloud::dialogflow::v2::ImportDocumentsRequest const&) {
+Idempotency DocumentsConnectionIdempotencyPolicy::ImportDocuments(google::cloud::dialogflow::v2::ImportDocumentsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DocumentsConnectionIdempotencyPolicy::DeleteDocument(
-    google::cloud::dialogflow::v2::DeleteDocumentRequest const&) {
+Idempotency DocumentsConnectionIdempotencyPolicy::DeleteDocument(google::cloud::dialogflow::v2::DeleteDocumentRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DocumentsConnectionIdempotencyPolicy::UpdateDocument(
-    google::cloud::dialogflow::v2::UpdateDocumentRequest const&) {
+Idempotency DocumentsConnectionIdempotencyPolicy::UpdateDocument(google::cloud::dialogflow::v2::UpdateDocumentRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DocumentsConnectionIdempotencyPolicy::ReloadDocument(
-    google::cloud::dialogflow::v2::ReloadDocumentRequest const&) {
+Idempotency DocumentsConnectionIdempotencyPolicy::ReloadDocument(google::cloud::dialogflow::v2::ReloadDocumentRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DocumentsConnectionIdempotencyPolicy::ExportDocument(
-    google::cloud::dialogflow::v2::ExportDocumentRequest const&) {
+Idempotency DocumentsConnectionIdempotencyPolicy::ExportDocument(google::cloud::dialogflow::v2::ExportDocumentRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DocumentsConnectionIdempotencyPolicy::ListLocations(
-    google::cloud::location::ListLocationsRequest) {  // NOLINT
+Idempotency DocumentsConnectionIdempotencyPolicy::ListLocations(google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency DocumentsConnectionIdempotencyPolicy::GetLocation(
-    google::cloud::location::GetLocationRequest const&) {
+Idempotency DocumentsConnectionIdempotencyPolicy::GetLocation(google::cloud::location::GetLocationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DocumentsConnectionIdempotencyPolicy::ListOperations(
-    google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency DocumentsConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency DocumentsConnectionIdempotencyPolicy::GetOperation(
-    google::longrunning::GetOperationRequest const&) {
+Idempotency DocumentsConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DocumentsConnectionIdempotencyPolicy::CancelOperation(
-    google::longrunning::CancelOperationRequest const&) {
+Idempotency DocumentsConnectionIdempotencyPolicy::CancelOperation(google::longrunning::CancelOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<DocumentsConnectionIdempotencyPolicy>
-MakeDefaultDocumentsConnectionIdempotencyPolicy() {
+    MakeDefaultDocumentsConnectionIdempotencyPolicy() {
   return std::make_unique<DocumentsConnectionIdempotencyPolicy>();
 }
 

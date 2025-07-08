@@ -32,172 +32,171 @@ RecommenderStub::~RecommenderStub() = default;
 
 StatusOr<google::cloud::recommender::v1::ListInsightsResponse>
 DefaultRecommenderStub::ListInsights(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::recommender::v1::ListInsightsRequest const& request) {
-  google::cloud::recommender::v1::ListInsightsResponse response;
-  auto status = grpc_stub_->ListInsights(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::recommender::v1::ListInsightsRequest const& request) {
+    google::cloud::recommender::v1::ListInsightsResponse response;
+    auto status =
+        grpc_stub_->ListInsights(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::recommender::v1::Insight>
 DefaultRecommenderStub::GetInsight(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::recommender::v1::GetInsightRequest const& request) {
-  google::cloud::recommender::v1::Insight response;
-  auto status = grpc_stub_->GetInsight(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::recommender::v1::GetInsightRequest const& request) {
+    google::cloud::recommender::v1::Insight response;
+    auto status =
+        grpc_stub_->GetInsight(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::recommender::v1::Insight>
 DefaultRecommenderStub::MarkInsightAccepted(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::recommender::v1::MarkInsightAcceptedRequest const& request) {
-  google::cloud::recommender::v1::Insight response;
-  auto status = grpc_stub_->MarkInsightAccepted(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::recommender::v1::MarkInsightAcceptedRequest const& request) {
+    google::cloud::recommender::v1::Insight response;
+    auto status =
+        grpc_stub_->MarkInsightAccepted(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::recommender::v1::ListRecommendationsResponse>
 DefaultRecommenderStub::ListRecommendations(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::recommender::v1::ListRecommendationsRequest const& request) {
-  google::cloud::recommender::v1::ListRecommendationsResponse response;
-  auto status = grpc_stub_->ListRecommendations(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::recommender::v1::ListRecommendationsRequest const& request) {
+    google::cloud::recommender::v1::ListRecommendationsResponse response;
+    auto status =
+        grpc_stub_->ListRecommendations(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::recommender::v1::Recommendation>
 DefaultRecommenderStub::GetRecommendation(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::recommender::v1::GetRecommendationRequest const& request) {
-  google::cloud::recommender::v1::Recommendation response;
-  auto status = grpc_stub_->GetRecommendation(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::recommender::v1::GetRecommendationRequest const& request) {
+    google::cloud::recommender::v1::Recommendation response;
+    auto status =
+        grpc_stub_->GetRecommendation(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::recommender::v1::Recommendation>
 DefaultRecommenderStub::MarkRecommendationDismissed(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::recommender::v1::MarkRecommendationDismissedRequest const&
-        request) {
-  google::cloud::recommender::v1::Recommendation response;
-  auto status =
-      grpc_stub_->MarkRecommendationDismissed(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::recommender::v1::MarkRecommendationDismissedRequest const& request) {
+    google::cloud::recommender::v1::Recommendation response;
+    auto status =
+        grpc_stub_->MarkRecommendationDismissed(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::recommender::v1::Recommendation>
 DefaultRecommenderStub::MarkRecommendationClaimed(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::recommender::v1::MarkRecommendationClaimedRequest const&
-        request) {
-  google::cloud::recommender::v1::Recommendation response;
-  auto status =
-      grpc_stub_->MarkRecommendationClaimed(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::recommender::v1::MarkRecommendationClaimedRequest const& request) {
+    google::cloud::recommender::v1::Recommendation response;
+    auto status =
+        grpc_stub_->MarkRecommendationClaimed(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::recommender::v1::Recommendation>
 DefaultRecommenderStub::MarkRecommendationSucceeded(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::recommender::v1::MarkRecommendationSucceededRequest const&
-        request) {
-  google::cloud::recommender::v1::Recommendation response;
-  auto status =
-      grpc_stub_->MarkRecommendationSucceeded(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::recommender::v1::MarkRecommendationSucceededRequest const& request) {
+    google::cloud::recommender::v1::Recommendation response;
+    auto status =
+        grpc_stub_->MarkRecommendationSucceeded(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::recommender::v1::Recommendation>
 DefaultRecommenderStub::MarkRecommendationFailed(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::recommender::v1::MarkRecommendationFailedRequest const&
-        request) {
-  google::cloud::recommender::v1::Recommendation response;
-  auto status =
-      grpc_stub_->MarkRecommendationFailed(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::recommender::v1::MarkRecommendationFailedRequest const& request) {
+    google::cloud::recommender::v1::Recommendation response;
+    auto status =
+        grpc_stub_->MarkRecommendationFailed(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::recommender::v1::RecommenderConfig>
 DefaultRecommenderStub::GetRecommenderConfig(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::recommender::v1::GetRecommenderConfigRequest const&
-        request) {
-  google::cloud::recommender::v1::RecommenderConfig response;
-  auto status = grpc_stub_->GetRecommenderConfig(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::recommender::v1::GetRecommenderConfigRequest const& request) {
+    google::cloud::recommender::v1::RecommenderConfig response;
+    auto status =
+        grpc_stub_->GetRecommenderConfig(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::recommender::v1::RecommenderConfig>
 DefaultRecommenderStub::UpdateRecommenderConfig(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::recommender::v1::UpdateRecommenderConfigRequest const&
-        request) {
-  google::cloud::recommender::v1::RecommenderConfig response;
-  auto status =
-      grpc_stub_->UpdateRecommenderConfig(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::recommender::v1::UpdateRecommenderConfigRequest const& request) {
+    google::cloud::recommender::v1::RecommenderConfig response;
+    auto status =
+        grpc_stub_->UpdateRecommenderConfig(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::recommender::v1::InsightTypeConfig>
 DefaultRecommenderStub::GetInsightTypeConfig(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::recommender::v1::GetInsightTypeConfigRequest const&
-        request) {
-  google::cloud::recommender::v1::InsightTypeConfig response;
-  auto status = grpc_stub_->GetInsightTypeConfig(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::recommender::v1::GetInsightTypeConfigRequest const& request) {
+    google::cloud::recommender::v1::InsightTypeConfig response;
+    auto status =
+        grpc_stub_->GetInsightTypeConfig(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::recommender::v1::InsightTypeConfig>
 DefaultRecommenderStub::UpdateInsightTypeConfig(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::recommender::v1::UpdateInsightTypeConfigRequest const&
-        request) {
-  google::cloud::recommender::v1::InsightTypeConfig response;
-  auto status =
-      grpc_stub_->UpdateInsightTypeConfig(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::recommender::v1::UpdateInsightTypeConfigRequest const& request) {
+    google::cloud::recommender::v1::InsightTypeConfig response;
+    auto status =
+        grpc_stub_->UpdateInsightTypeConfig(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

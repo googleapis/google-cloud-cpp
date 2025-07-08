@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATACATALOG_V1_DATA_CATALOG_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATACATALOG_V1_DATA_CATALOG_OPTIONS_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/datacatalog/v1/data_catalog_connection.h"
 #include "google/cloud/datacatalog/v1/data_catalog_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -74,7 +74,8 @@ struct DataCatalogPollingPolicyOption {
  * @ingroup google-cloud-datacatalog-options
  */
 using DataCatalogPolicyOptionList =
-    OptionList<DataCatalogRetryPolicyOption, DataCatalogBackoffPolicyOption,
+    OptionList<DataCatalogRetryPolicyOption,
+               DataCatalogBackoffPolicyOption,
                DataCatalogPollingPolicyOption,
                DataCatalogConnectionIdempotencyPolicyOption>;
 

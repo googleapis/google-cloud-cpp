@@ -33,8 +33,7 @@ SqlTiersServiceTracingConnection::SqlTiersServiceTracingConnection(
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::sql::v1::TiersListResponse>
-SqlTiersServiceTracingConnection::List(
-    google::cloud::sql::v1::SqlTiersListRequest const& request) {
+SqlTiersServiceTracingConnection::List(google::cloud::sql::v1::SqlTiersListRequest const& request) {
   auto span = internal::MakeSpan("sql_v1::SqlTiersServiceConnection::List");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->List(request));

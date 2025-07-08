@@ -33,8 +33,7 @@ using ::google::cloud::recommender_v1::MakeRecommenderConnection;
 /// @deprecated Use recommender_v1::RecommenderConnection directly.
 using ::google::cloud::recommender_v1::RecommenderConnection;
 
-/// @deprecated Use recommender_v1::RecommenderLimitedErrorCountRetryPolicy
-/// directly.
+/// @deprecated Use recommender_v1::RecommenderLimitedErrorCountRetryPolicy directly.
 using ::google::cloud::recommender_v1::RecommenderLimitedErrorCountRetryPolicy;
 
 /// @deprecated Use recommender_v1::RecommenderLimitedTimeRetryPolicy directly.

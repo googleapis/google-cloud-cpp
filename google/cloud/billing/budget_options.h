@@ -28,14 +28,11 @@ namespace cloud {
 namespace billing {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use billing_budgets_v1::BudgetServiceBackoffPolicyOption
-/// directly.
+/// @deprecated Use billing_budgets_v1::BudgetServiceBackoffPolicyOption directly.
 using ::google::cloud::billing_budgets_v1::BudgetServiceBackoffPolicyOption;
 
-/// @deprecated Use
-/// billing_budgets_v1::BudgetServiceConnectionIdempotencyPolicyOption directly.
-using ::google::cloud::billing_budgets_v1::
-    BudgetServiceConnectionIdempotencyPolicyOption;
+/// @deprecated Use billing_budgets_v1::BudgetServiceConnectionIdempotencyPolicyOption directly.
+using ::google::cloud::billing_budgets_v1::BudgetServiceConnectionIdempotencyPolicyOption;
 
 /// @deprecated Use billing_budgets_v1::BudgetServicePolicyOptionList directly.
 using ::google::cloud::billing_budgets_v1::BudgetServicePolicyOptionList;

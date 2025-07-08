@@ -31,10 +31,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// @deprecated Use talent_v4::TenantServiceBackoffPolicyOption directly.
 using ::google::cloud::talent_v4::TenantServiceBackoffPolicyOption;
 
-/// @deprecated Use talent_v4::TenantServiceConnectionIdempotencyPolicyOption
-/// directly.
-using ::google::cloud::talent_v4::
-    TenantServiceConnectionIdempotencyPolicyOption;
+/// @deprecated Use talent_v4::TenantServiceConnectionIdempotencyPolicyOption directly.
+using ::google::cloud::talent_v4::TenantServiceConnectionIdempotencyPolicyOption;
 
 /// @deprecated Use talent_v4::TenantServicePolicyOptionList directly.
 using ::google::cloud::talent_v4::TenantServicePolicyOptionList;

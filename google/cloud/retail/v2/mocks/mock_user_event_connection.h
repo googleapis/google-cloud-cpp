@@ -42,34 +42,29 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockUserEventServiceConnection
-    : public retail_v2::UserEventServiceConnection {
+class MockUserEventServiceConnection : public retail_v2::UserEventServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::retail::v2::UserEvent>, WriteUserEvent,
-              (google::cloud::retail::v2::WriteUserEventRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::retail::v2::UserEvent>,
+  WriteUserEvent,
+  (google::cloud::retail::v2::WriteUserEventRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::api::HttpBody>, CollectUserEvent,
-      (google::cloud::retail::v2::CollectUserEventRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::api::HttpBody>,
+  CollectUserEvent,
+  (google::cloud::retail::v2::CollectUserEventRequest const& request), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// PurgeUserEvents(Matcher<google::cloud::retail::v2::PurgeUserEventsRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, PurgeUserEvents(Matcher<google::cloud::retail::v2::PurgeUserEventsRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::retail::v2::PurgeUserEventsResponse>>,
-      PurgeUserEvents,
-      (google::cloud::retail::v2::PurgeUserEventsRequest const& request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::retail::v2::PurgeUserEventsResponse>>,
+  PurgeUserEvents,
+  (google::cloud::retail::v2::PurgeUserEventsRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -77,39 +72,33 @@ class MockUserEventServiceConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, PurgeUserEvents(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, PurgeUserEvents,
-      (NoAwaitTag,
-       google::cloud::retail::v2::PurgeUserEventsRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  PurgeUserEvents, (NoAwaitTag,
+    google::cloud::retail::v2::PurgeUserEventsRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, PurgeUserEvents(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, PurgeUserEvents(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::retail::v2::PurgeUserEventsResponse>>,
-      PurgeUserEvents, (google::longrunning::Operation const& operation),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::retail::v2::PurgeUserEventsResponse>>,
+  PurgeUserEvents, (
+    google::longrunning::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// ImportUserEvents(Matcher<google::cloud::retail::v2::ImportUserEventsRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, ImportUserEvents(Matcher<google::cloud::retail::v2::ImportUserEventsRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::retail::v2::ImportUserEventsResponse>>,
-      ImportUserEvents,
-      (google::cloud::retail::v2::ImportUserEventsRequest const& request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::retail::v2::ImportUserEventsResponse>>,
+  ImportUserEvents,
+  (google::cloud::retail::v2::ImportUserEventsRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -117,39 +106,33 @@ class MockUserEventServiceConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, ImportUserEvents(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, ImportUserEvents,
-      (NoAwaitTag,
-       google::cloud::retail::v2::ImportUserEventsRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  ImportUserEvents, (NoAwaitTag,
+    google::cloud::retail::v2::ImportUserEventsRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, ImportUserEvents(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, ImportUserEvents(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::retail::v2::ImportUserEventsResponse>>,
-      ImportUserEvents, (google::longrunning::Operation const& operation),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::retail::v2::ImportUserEventsResponse>>,
+  ImportUserEvents, (
+    google::longrunning::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// RejoinUserEvents(Matcher<google::cloud::retail::v2::RejoinUserEventsRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, RejoinUserEvents(Matcher<google::cloud::retail::v2::RejoinUserEventsRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::retail::v2::RejoinUserEventsResponse>>,
-      RejoinUserEvents,
-      (google::cloud::retail::v2::RejoinUserEventsRequest const& request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::retail::v2::RejoinUserEventsResponse>>,
+  RejoinUserEvents,
+  (google::cloud::retail::v2::RejoinUserEventsRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -157,31 +140,29 @@ class MockUserEventServiceConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, RejoinUserEvents(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, RejoinUserEvents,
-      (NoAwaitTag,
-       google::cloud::retail::v2::RejoinUserEventsRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  RejoinUserEvents, (NoAwaitTag,
+    google::cloud::retail::v2::RejoinUserEventsRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, RejoinUserEvents(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, RejoinUserEvents(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::retail::v2::RejoinUserEventsResponse>>,
-      RejoinUserEvents, (google::longrunning::Operation const& operation),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::retail::v2::RejoinUserEventsResponse>>,
+  RejoinUserEvents, (
+    google::longrunning::Operation const& operation), (override));
 
-  MOCK_METHOD((StreamRange<google::longrunning::Operation>), ListOperations,
-              (google::longrunning::ListOperationsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::longrunning::Operation>),
+  ListOperations,
+  (google::longrunning::ListOperationsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
-              (google::longrunning::GetOperationRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  GetOperation,
+  (google::longrunning::GetOperationRequest const& request), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

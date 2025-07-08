@@ -28,16 +28,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 SecuritySettingsServiceClient::SecuritySettingsServiceClient(
     std::shared_ptr<SecuritySettingsServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 SecuritySettingsServiceClient::~SecuritySettingsServiceClient() = default;
 
 StatusOr<google::cloud::dialogflow::cx::v3::SecuritySettings>
-SecuritySettingsServiceClient::CreateSecuritySettings(
-    std::string const& parent,
-    google::cloud::dialogflow::cx::v3::SecuritySettings const&
-        security_settings,
-    Options opts) {
+SecuritySettingsServiceClient::CreateSecuritySettings(std::string const& parent, google::cloud::dialogflow::cx::v3::SecuritySettings const& security_settings, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dialogflow::cx::v3::CreateSecuritySettingsRequest request;
   request.set_parent(parent);
@@ -46,17 +42,13 @@ SecuritySettingsServiceClient::CreateSecuritySettings(
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::SecuritySettings>
-SecuritySettingsServiceClient::CreateSecuritySettings(
-    google::cloud::dialogflow::cx::v3::CreateSecuritySettingsRequest const&
-        request,
-    Options opts) {
+SecuritySettingsServiceClient::CreateSecuritySettings(google::cloud::dialogflow::cx::v3::CreateSecuritySettingsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateSecuritySettings(request);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::SecuritySettings>
-SecuritySettingsServiceClient::GetSecuritySettings(std::string const& name,
-                                                   Options opts) {
+SecuritySettingsServiceClient::GetSecuritySettings(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dialogflow::cx::v3::GetSecuritySettingsRequest request;
   request.set_name(name);
@@ -64,19 +56,13 @@ SecuritySettingsServiceClient::GetSecuritySettings(std::string const& name,
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::SecuritySettings>
-SecuritySettingsServiceClient::GetSecuritySettings(
-    google::cloud::dialogflow::cx::v3::GetSecuritySettingsRequest const&
-        request,
-    Options opts) {
+SecuritySettingsServiceClient::GetSecuritySettings(google::cloud::dialogflow::cx::v3::GetSecuritySettingsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetSecuritySettings(request);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::SecuritySettings>
-SecuritySettingsServiceClient::UpdateSecuritySettings(
-    google::cloud::dialogflow::cx::v3::SecuritySettings const&
-        security_settings,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+SecuritySettingsServiceClient::UpdateSecuritySettings(google::cloud::dialogflow::cx::v3::SecuritySettings const& security_settings, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dialogflow::cx::v3::UpdateSecuritySettingsRequest request;
   *request.mutable_security_settings() = security_settings;
@@ -85,17 +71,13 @@ SecuritySettingsServiceClient::UpdateSecuritySettings(
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::SecuritySettings>
-SecuritySettingsServiceClient::UpdateSecuritySettings(
-    google::cloud::dialogflow::cx::v3::UpdateSecuritySettingsRequest const&
-        request,
-    Options opts) {
+SecuritySettingsServiceClient::UpdateSecuritySettings(google::cloud::dialogflow::cx::v3::UpdateSecuritySettingsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateSecuritySettings(request);
 }
 
 StreamRange<google::cloud::dialogflow::cx::v3::SecuritySettings>
-SecuritySettingsServiceClient::ListSecuritySettings(std::string const& parent,
-                                                    Options opts) {
+SecuritySettingsServiceClient::ListSecuritySettings(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dialogflow::cx::v3::ListSecuritySettingsRequest request;
   request.set_parent(parent);
@@ -103,47 +85,39 @@ SecuritySettingsServiceClient::ListSecuritySettings(std::string const& parent,
 }
 
 StreamRange<google::cloud::dialogflow::cx::v3::SecuritySettings>
-SecuritySettingsServiceClient::ListSecuritySettings(
-    google::cloud::dialogflow::cx::v3::ListSecuritySettingsRequest request,
-    Options opts) {
+SecuritySettingsServiceClient::ListSecuritySettings(google::cloud::dialogflow::cx::v3::ListSecuritySettingsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListSecuritySettings(std::move(request));
 }
 
-Status SecuritySettingsServiceClient::DeleteSecuritySettings(
-    std::string const& name, Options opts) {
+Status
+SecuritySettingsServiceClient::DeleteSecuritySettings(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dialogflow::cx::v3::DeleteSecuritySettingsRequest request;
   request.set_name(name);
   return connection_->DeleteSecuritySettings(request);
 }
 
-Status SecuritySettingsServiceClient::DeleteSecuritySettings(
-    google::cloud::dialogflow::cx::v3::DeleteSecuritySettingsRequest const&
-        request,
-    Options opts) {
+Status
+SecuritySettingsServiceClient::DeleteSecuritySettings(google::cloud::dialogflow::cx::v3::DeleteSecuritySettingsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteSecuritySettings(request);
 }
 
 StreamRange<google::cloud::location::Location>
-SecuritySettingsServiceClient::ListLocations(
-    google::cloud::location::ListLocationsRequest request, Options opts) {
+SecuritySettingsServiceClient::ListLocations(google::cloud::location::ListLocationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListLocations(std::move(request));
 }
 
 StatusOr<google::cloud::location::Location>
-SecuritySettingsServiceClient::GetLocation(
-    google::cloud::location::GetLocationRequest const& request, Options opts) {
+SecuritySettingsServiceClient::GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetLocation(request);
 }
 
 StreamRange<google::longrunning::Operation>
-SecuritySettingsServiceClient::ListOperations(std::string const& name,
-                                              std::string const& filter,
-                                              Options opts) {
+SecuritySettingsServiceClient::ListOperations(std::string const& name, std::string const& filter, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::ListOperationsRequest request;
   request.set_name(name);
@@ -152,15 +126,13 @@ SecuritySettingsServiceClient::ListOperations(std::string const& name,
 }
 
 StreamRange<google::longrunning::Operation>
-SecuritySettingsServiceClient::ListOperations(
-    google::longrunning::ListOperationsRequest request, Options opts) {
+SecuritySettingsServiceClient::ListOperations(google::longrunning::ListOperationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOperations(std::move(request));
 }
 
 StatusOr<google::longrunning::Operation>
-SecuritySettingsServiceClient::GetOperation(std::string const& name,
-                                            Options opts) {
+SecuritySettingsServiceClient::GetOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
@@ -168,22 +140,21 @@ SecuritySettingsServiceClient::GetOperation(std::string const& name,
 }
 
 StatusOr<google::longrunning::Operation>
-SecuritySettingsServiceClient::GetOperation(
-    google::longrunning::GetOperationRequest const& request, Options opts) {
+SecuritySettingsServiceClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }
 
-Status SecuritySettingsServiceClient::CancelOperation(std::string const& name,
-                                                      Options opts) {
+Status
+SecuritySettingsServiceClient::CancelOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::CancelOperationRequest request;
   request.set_name(name);
   return connection_->CancelOperation(request);
 }
 
-Status SecuritySettingsServiceClient::CancelOperation(
-    google::longrunning::CancelOperationRequest const& request, Options opts) {
+Status
+SecuritySettingsServiceClient::CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelOperation(request);
 }

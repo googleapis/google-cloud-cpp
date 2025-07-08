@@ -30,28 +30,35 @@ namespace cloud {
 namespace config_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-ConfigLogging::ConfigLogging(std::shared_ptr<ConfigStub> child,
-                             TracingOptions tracing_options,
-                             std::set<std::string> const&)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
+ConfigLogging::ConfigLogging(
+    std::shared_ptr<ConfigStub> child,
+    TracingOptions tracing_options,
+    std::set<std::string> const&)
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::cloud::config::v1::ListDeploymentsResponse>
 ConfigLogging::ListDeployments(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::config::v1::ListDeploymentsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::config::v1::ListDeploymentsRequest const& request) {
         return child_->ListDeployments(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::cloud::config::v1::Deployment> ConfigLogging::GetDeployment(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::config::v1::Deployment>
+ConfigLogging::GetDeployment(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::config::v1::GetDeploymentRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::config::v1::GetDeploymentRequest const& request) {
         return child_->GetDeployment(context, options, request);
       },
@@ -60,30 +67,31 @@ StatusOr<google::cloud::config::v1::Deployment> ConfigLogging::GetDeployment(
 
 future<StatusOr<google::longrunning::Operation>>
 ConfigLogging::AsyncCreateDeployment(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::config::v1::CreateDeploymentRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::config::v1::CreateDeploymentRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::config::v1::CreateDeploymentRequest const& request) {
-        return child_->AsyncCreateDeployment(cq, std::move(context),
-                                             std::move(options), request);
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::config::v1::CreateDeploymentRequest const& request) {
+        return child_->AsyncCreateDeployment(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> ConfigLogging::CreateDeployment(
-    grpc::ClientContext& context, Options options,
-    google::cloud::config::v1::CreateDeploymentRequest const& request) {
+StatusOr<google::longrunning::Operation>
+ConfigLogging::CreateDeployment(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::config::v1::CreateDeploymentRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::config::v1::CreateDeploymentRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::config::v1::CreateDeploymentRequest const& request) {
         return child_->CreateDeployment(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -91,30 +99,31 @@ StatusOr<google::longrunning::Operation> ConfigLogging::CreateDeployment(
 
 future<StatusOr<google::longrunning::Operation>>
 ConfigLogging::AsyncUpdateDeployment(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::config::v1::UpdateDeploymentRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::config::v1::UpdateDeploymentRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::config::v1::UpdateDeploymentRequest const& request) {
-        return child_->AsyncUpdateDeployment(cq, std::move(context),
-                                             std::move(options), request);
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::config::v1::UpdateDeploymentRequest const& request) {
+        return child_->AsyncUpdateDeployment(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> ConfigLogging::UpdateDeployment(
-    grpc::ClientContext& context, Options options,
-    google::cloud::config::v1::UpdateDeploymentRequest const& request) {
+StatusOr<google::longrunning::Operation>
+ConfigLogging::UpdateDeployment(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::config::v1::UpdateDeploymentRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::config::v1::UpdateDeploymentRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::config::v1::UpdateDeploymentRequest const& request) {
         return child_->UpdateDeployment(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -122,30 +131,31 @@ StatusOr<google::longrunning::Operation> ConfigLogging::UpdateDeployment(
 
 future<StatusOr<google::longrunning::Operation>>
 ConfigLogging::AsyncDeleteDeployment(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::config::v1::DeleteDeploymentRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::config::v1::DeleteDeploymentRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::config::v1::DeleteDeploymentRequest const& request) {
-        return child_->AsyncDeleteDeployment(cq, std::move(context),
-                                             std::move(options), request);
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::config::v1::DeleteDeploymentRequest const& request) {
+        return child_->AsyncDeleteDeployment(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> ConfigLogging::DeleteDeployment(
-    grpc::ClientContext& context, Options options,
-    google::cloud::config::v1::DeleteDeploymentRequest const& request) {
+StatusOr<google::longrunning::Operation>
+ConfigLogging::DeleteDeployment(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::config::v1::DeleteDeploymentRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::config::v1::DeleteDeploymentRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::config::v1::DeleteDeploymentRequest const& request) {
         return child_->DeleteDeployment(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -153,32 +163,40 @@ StatusOr<google::longrunning::Operation> ConfigLogging::DeleteDeployment(
 
 StatusOr<google::cloud::config::v1::ListRevisionsResponse>
 ConfigLogging::ListRevisions(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::config::v1::ListRevisionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::config::v1::ListRevisionsRequest const& request) {
         return child_->ListRevisions(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::cloud::config::v1::Revision> ConfigLogging::GetRevision(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::config::v1::Revision>
+ConfigLogging::GetRevision(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::config::v1::GetRevisionRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::config::v1::GetRevisionRequest const& request) {
         return child_->GetRevision(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::cloud::config::v1::Resource> ConfigLogging::GetResource(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::config::v1::Resource>
+ConfigLogging::GetResource(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::config::v1::GetResourceRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::config::v1::GetResourceRequest const& request) {
         return child_->GetResource(context, options, request);
       },
@@ -187,10 +205,12 @@ StatusOr<google::cloud::config::v1::Resource> ConfigLogging::GetResource(
 
 StatusOr<google::cloud::config::v1::ListResourcesResponse>
 ConfigLogging::ListResources(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::config::v1::ListResourcesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::config::v1::ListResourcesRequest const& request) {
         return child_->ListResources(context, options, request);
       },
@@ -199,13 +219,13 @@ ConfigLogging::ListResources(
 
 StatusOr<google::cloud::config::v1::Statefile>
 ConfigLogging::ExportDeploymentStatefile(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::config::v1::ExportDeploymentStatefileRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::config::v1::ExportDeploymentStatefileRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::config::v1::ExportDeploymentStatefileRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::config::v1::ExportDeploymentStatefileRequest const& request) {
         return child_->ExportDeploymentStatefile(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -213,33 +233,40 @@ ConfigLogging::ExportDeploymentStatefile(
 
 StatusOr<google::cloud::config::v1::Statefile>
 ConfigLogging::ExportRevisionStatefile(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::config::v1::ExportRevisionStatefileRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::config::v1::ExportRevisionStatefileRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::config::v1::ExportRevisionStatefileRequest const& request) {
         return child_->ExportRevisionStatefile(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::cloud::config::v1::Statefile> ConfigLogging::ImportStatefile(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::config::v1::Statefile>
+ConfigLogging::ImportStatefile(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::config::v1::ImportStatefileRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::config::v1::ImportStatefileRequest const& request) {
         return child_->ImportStatefile(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status ConfigLogging::DeleteStatefile(
-    grpc::ClientContext& context, Options const& options,
+Status
+ConfigLogging::DeleteStatefile(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::config::v1::DeleteStatefileRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::config::v1::DeleteStatefileRequest const& request) {
         return child_->DeleteStatefile(context, options, request);
       },
@@ -248,27 +275,30 @@ Status ConfigLogging::DeleteStatefile(
 
 future<StatusOr<google::longrunning::Operation>>
 ConfigLogging::AsyncLockDeployment(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::config::v1::LockDeploymentRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::config::v1::LockDeploymentRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::cloud::config::v1::LockDeploymentRequest const& request) {
-        return child_->AsyncLockDeployment(cq, std::move(context),
-                                           std::move(options), request);
+        return child_->AsyncLockDeployment(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> ConfigLogging::LockDeployment(
-    grpc::ClientContext& context, Options options,
-    google::cloud::config::v1::LockDeploymentRequest const& request) {
+StatusOr<google::longrunning::Operation>
+ConfigLogging::LockDeployment(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::config::v1::LockDeploymentRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::config::v1::LockDeploymentRequest const& request) {
         return child_->LockDeployment(context, options, request);
       },
@@ -277,40 +307,44 @@ StatusOr<google::longrunning::Operation> ConfigLogging::LockDeployment(
 
 future<StatusOr<google::longrunning::Operation>>
 ConfigLogging::AsyncUnlockDeployment(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::config::v1::UnlockDeploymentRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::config::v1::UnlockDeploymentRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::config::v1::UnlockDeploymentRequest const& request) {
-        return child_->AsyncUnlockDeployment(cq, std::move(context),
-                                             std::move(options), request);
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::config::v1::UnlockDeploymentRequest const& request) {
+        return child_->AsyncUnlockDeployment(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> ConfigLogging::UnlockDeployment(
-    grpc::ClientContext& context, Options options,
-    google::cloud::config::v1::UnlockDeploymentRequest const& request) {
+StatusOr<google::longrunning::Operation>
+ConfigLogging::UnlockDeployment(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::config::v1::UnlockDeploymentRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::config::v1::UnlockDeploymentRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::config::v1::UnlockDeploymentRequest const& request) {
         return child_->UnlockDeployment(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::cloud::config::v1::LockInfo> ConfigLogging::ExportLockInfo(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::config::v1::LockInfo>
+ConfigLogging::ExportLockInfo(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::config::v1::ExportLockInfoRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::config::v1::ExportLockInfoRequest const& request) {
         return child_->ExportLockInfo(context, options, request);
       },
@@ -319,38 +353,44 @@ StatusOr<google::cloud::config::v1::LockInfo> ConfigLogging::ExportLockInfo(
 
 future<StatusOr<google::longrunning::Operation>>
 ConfigLogging::AsyncCreatePreview(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::config::v1::CreatePreviewRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::config::v1::CreatePreviewRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::cloud::config::v1::CreatePreviewRequest const& request) {
-        return child_->AsyncCreatePreview(cq, std::move(context),
-                                          std::move(options), request);
+        return child_->AsyncCreatePreview(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> ConfigLogging::CreatePreview(
-    grpc::ClientContext& context, Options options,
-    google::cloud::config::v1::CreatePreviewRequest const& request) {
+StatusOr<google::longrunning::Operation>
+ConfigLogging::CreatePreview(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::config::v1::CreatePreviewRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::config::v1::CreatePreviewRequest const& request) {
         return child_->CreatePreview(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::cloud::config::v1::Preview> ConfigLogging::GetPreview(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::config::v1::Preview>
+ConfigLogging::GetPreview(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::config::v1::GetPreviewRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::config::v1::GetPreviewRequest const& request) {
         return child_->GetPreview(context, options, request);
       },
@@ -359,10 +399,12 @@ StatusOr<google::cloud::config::v1::Preview> ConfigLogging::GetPreview(
 
 StatusOr<google::cloud::config::v1::ListPreviewsResponse>
 ConfigLogging::ListPreviews(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::config::v1::ListPreviewsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::config::v1::ListPreviewsRequest const& request) {
         return child_->ListPreviews(context, options, request);
       },
@@ -371,27 +413,30 @@ ConfigLogging::ListPreviews(
 
 future<StatusOr<google::longrunning::Operation>>
 ConfigLogging::AsyncDeletePreview(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::config::v1::DeletePreviewRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::config::v1::DeletePreviewRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::cloud::config::v1::DeletePreviewRequest const& request) {
-        return child_->AsyncDeletePreview(cq, std::move(context),
-                                          std::move(options), request);
+        return child_->AsyncDeletePreview(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> ConfigLogging::DeletePreview(
-    grpc::ClientContext& context, Options options,
-    google::cloud::config::v1::DeletePreviewRequest const& request) {
+StatusOr<google::longrunning::Operation>
+ConfigLogging::DeletePreview(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::config::v1::DeletePreviewRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::config::v1::DeletePreviewRequest const& request) {
         return child_->DeletePreview(context, options, request);
       },
@@ -400,12 +445,13 @@ StatusOr<google::longrunning::Operation> ConfigLogging::DeletePreview(
 
 StatusOr<google::cloud::config::v1::ExportPreviewResultResponse>
 ConfigLogging::ExportPreviewResult(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::config::v1::ExportPreviewResultRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::config::v1::ExportPreviewResultRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::config::v1::ExportPreviewResultRequest const& request) {
         return child_->ExportPreviewResult(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -413,12 +459,13 @@ ConfigLogging::ExportPreviewResult(
 
 StatusOr<google::cloud::config::v1::ListTerraformVersionsResponse>
 ConfigLogging::ListTerraformVersions(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::config::v1::ListTerraformVersionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::config::v1::ListTerraformVersionsRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::config::v1::ListTerraformVersionsRequest const& request) {
         return child_->ListTerraformVersions(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -426,12 +473,13 @@ ConfigLogging::ListTerraformVersions(
 
 StatusOr<google::cloud::config::v1::TerraformVersion>
 ConfigLogging::GetTerraformVersion(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::config::v1::GetTerraformVersionRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::config::v1::GetTerraformVersionRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::config::v1::GetTerraformVersionRequest const& request) {
         return child_->GetTerraformVersion(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -439,43 +487,54 @@ ConfigLogging::GetTerraformVersion(
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 ConfigLogging::ListLocations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::location::ListLocationsRequest const& request) {
         return child_->ListLocations(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::cloud::location::Location> ConfigLogging::GetLocation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::location::Location>
+ConfigLogging::GetLocation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::location::GetLocationRequest const& request) {
         return child_->GetLocation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::iam::v1::Policy> ConfigLogging::SetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::iam::v1::Policy>
+ConfigLogging::SetIamPolicy(
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::iam::v1::SetIamPolicyRequest const& request) {
         return child_->SetIamPolicy(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::iam::v1::Policy> ConfigLogging::GetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::iam::v1::Policy>
+ConfigLogging::GetIamPolicy(
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::iam::v1::GetIamPolicyRequest const& request) {
         return child_->GetIamPolicy(context, options, request);
       },
@@ -484,10 +543,12 @@ StatusOr<google::iam::v1::Policy> ConfigLogging::GetIamPolicy(
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 ConfigLogging::TestIamPermissions(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::iam::v1::TestIamPermissionsRequest const& request) {
         return child_->TestIamPermissions(context, options, request);
       },
@@ -496,43 +557,54 @@ ConfigLogging::TestIamPermissions(
 
 StatusOr<google::longrunning::ListOperationsResponse>
 ConfigLogging::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::ListOperationsRequest const& request) {
         return child_->ListOperations(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> ConfigLogging::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::Operation>
+ConfigLogging::GetOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::GetOperationRequest const& request) {
         return child_->GetOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status ConfigLogging::DeleteOperation(
-    grpc::ClientContext& context, Options const& options,
+Status
+ConfigLogging::DeleteOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::DeleteOperationRequest const& request) {
         return child_->DeleteOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status ConfigLogging::CancelOperation(
-    grpc::ClientContext& context, Options const& options,
+Status
+ConfigLogging::CancelOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::CancelOperationRequest const& request) {
         return child_->CancelOperation(context, options, request);
       },
@@ -550,8 +622,8 @@ ConfigLogging::AsyncGetOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(cq, std::move(context),
-                                         std::move(options), request);
+        return child_->AsyncGetOperation(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -567,8 +639,8 @@ future<Status> ConfigLogging::AsyncCancelOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::CancelOperationRequest const& request) {
-        return child_->AsyncCancelOperation(cq, std::move(context),
-                                            std::move(options), request);
+        return child_->AsyncCancelOperation(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);

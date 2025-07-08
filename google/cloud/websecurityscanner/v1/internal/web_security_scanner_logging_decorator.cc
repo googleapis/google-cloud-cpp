@@ -32,33 +32,34 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 WebSecurityScannerLogging::WebSecurityScannerLogging(
     std::shared_ptr<WebSecurityScannerStub> child,
-    TracingOptions tracing_options, std::set<std::string> const&)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
+    TracingOptions tracing_options,
+    std::set<std::string> const&)
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::cloud::websecurityscanner::v1::ScanConfig>
 WebSecurityScannerLogging::CreateScanConfig(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::websecurityscanner::v1::CreateScanConfigRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::websecurityscanner::v1::CreateScanConfigRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::websecurityscanner::v1::CreateScanConfigRequest const&
-              request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::websecurityscanner::v1::CreateScanConfigRequest const& request) {
         return child_->CreateScanConfig(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status WebSecurityScannerLogging::DeleteScanConfig(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::websecurityscanner::v1::DeleteScanConfigRequest const&
-        request) {
+Status
+WebSecurityScannerLogging::DeleteScanConfig(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::websecurityscanner::v1::DeleteScanConfigRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::websecurityscanner::v1::DeleteScanConfigRequest const&
-              request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::websecurityscanner::v1::DeleteScanConfigRequest const& request) {
         return child_->DeleteScanConfig(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -66,13 +67,13 @@ Status WebSecurityScannerLogging::DeleteScanConfig(
 
 StatusOr<google::cloud::websecurityscanner::v1::ScanConfig>
 WebSecurityScannerLogging::GetScanConfig(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::websecurityscanner::v1::GetScanConfigRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::websecurityscanner::v1::GetScanConfigRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::websecurityscanner::v1::GetScanConfigRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::websecurityscanner::v1::GetScanConfigRequest const& request) {
         return child_->GetScanConfig(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -80,14 +81,13 @@ WebSecurityScannerLogging::GetScanConfig(
 
 StatusOr<google::cloud::websecurityscanner::v1::ListScanConfigsResponse>
 WebSecurityScannerLogging::ListScanConfigs(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::websecurityscanner::v1::ListScanConfigsRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::websecurityscanner::v1::ListScanConfigsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::websecurityscanner::v1::ListScanConfigsRequest const&
-              request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::websecurityscanner::v1::ListScanConfigsRequest const& request) {
         return child_->ListScanConfigs(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -95,14 +95,13 @@ WebSecurityScannerLogging::ListScanConfigs(
 
 StatusOr<google::cloud::websecurityscanner::v1::ScanConfig>
 WebSecurityScannerLogging::UpdateScanConfig(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::websecurityscanner::v1::UpdateScanConfigRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::websecurityscanner::v1::UpdateScanConfigRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::websecurityscanner::v1::UpdateScanConfigRequest const&
-              request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::websecurityscanner::v1::UpdateScanConfigRequest const& request) {
         return child_->UpdateScanConfig(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -110,12 +109,13 @@ WebSecurityScannerLogging::UpdateScanConfig(
 
 StatusOr<google::cloud::websecurityscanner::v1::ScanRun>
 WebSecurityScannerLogging::StartScanRun(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::websecurityscanner::v1::StartScanRunRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::websecurityscanner::v1::StartScanRunRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::websecurityscanner::v1::StartScanRunRequest const& request) {
         return child_->StartScanRun(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -123,12 +123,13 @@ WebSecurityScannerLogging::StartScanRun(
 
 StatusOr<google::cloud::websecurityscanner::v1::ScanRun>
 WebSecurityScannerLogging::GetScanRun(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::websecurityscanner::v1::GetScanRunRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::websecurityscanner::v1::GetScanRunRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::websecurityscanner::v1::GetScanRunRequest const& request) {
         return child_->GetScanRun(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -136,12 +137,13 @@ WebSecurityScannerLogging::GetScanRun(
 
 StatusOr<google::cloud::websecurityscanner::v1::ListScanRunsResponse>
 WebSecurityScannerLogging::ListScanRuns(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::websecurityscanner::v1::ListScanRunsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::websecurityscanner::v1::ListScanRunsRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::websecurityscanner::v1::ListScanRunsRequest const& request) {
         return child_->ListScanRuns(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -149,12 +151,13 @@ WebSecurityScannerLogging::ListScanRuns(
 
 StatusOr<google::cloud::websecurityscanner::v1::ScanRun>
 WebSecurityScannerLogging::StopScanRun(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::websecurityscanner::v1::StopScanRunRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::websecurityscanner::v1::StopScanRunRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::websecurityscanner::v1::StopScanRunRequest const& request) {
         return child_->StopScanRun(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -162,14 +165,13 @@ WebSecurityScannerLogging::StopScanRun(
 
 StatusOr<google::cloud::websecurityscanner::v1::ListCrawledUrlsResponse>
 WebSecurityScannerLogging::ListCrawledUrls(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::websecurityscanner::v1::ListCrawledUrlsRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::websecurityscanner::v1::ListCrawledUrlsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::websecurityscanner::v1::ListCrawledUrlsRequest const&
-              request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::websecurityscanner::v1::ListCrawledUrlsRequest const& request) {
         return child_->ListCrawledUrls(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -177,12 +179,13 @@ WebSecurityScannerLogging::ListCrawledUrls(
 
 StatusOr<google::cloud::websecurityscanner::v1::Finding>
 WebSecurityScannerLogging::GetFinding(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::websecurityscanner::v1::GetFindingRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::websecurityscanner::v1::GetFindingRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::websecurityscanner::v1::GetFindingRequest const& request) {
         return child_->GetFinding(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -190,12 +193,13 @@ WebSecurityScannerLogging::GetFinding(
 
 StatusOr<google::cloud::websecurityscanner::v1::ListFindingsResponse>
 WebSecurityScannerLogging::ListFindings(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::websecurityscanner::v1::ListFindingsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::websecurityscanner::v1::ListFindingsRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::websecurityscanner::v1::ListFindingsRequest const& request) {
         return child_->ListFindings(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -203,13 +207,13 @@ WebSecurityScannerLogging::ListFindings(
 
 StatusOr<google::cloud::websecurityscanner::v1::ListFindingTypeStatsResponse>
 WebSecurityScannerLogging::ListFindingTypeStats(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::websecurityscanner::v1::ListFindingTypeStatsRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::websecurityscanner::v1::ListFindingTypeStatsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::websecurityscanner::v1::
-                 ListFindingTypeStatsRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::websecurityscanner::v1::ListFindingTypeStatsRequest const& request) {
         return child_->ListFindingTypeStats(context, options, request);
       },
       context, options, request, __func__, tracing_options_);

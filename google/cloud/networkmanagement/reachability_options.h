@@ -28,31 +28,20 @@ namespace cloud {
 namespace networkmanagement {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use networkmanagement_v1::ReachabilityServicePollingPolicyOption
-/// directly.
-using ::google::cloud::networkmanagement_v1::
-    ReachabilityServicePollingPolicyOption;
+/// @deprecated Use networkmanagement_v1::ReachabilityServicePollingPolicyOption directly.
+using ::google::cloud::networkmanagement_v1::ReachabilityServicePollingPolicyOption;
 
-/// @deprecated Use networkmanagement_v1::ReachabilityServiceBackoffPolicyOption
-/// directly.
-using ::google::cloud::networkmanagement_v1::
-    ReachabilityServiceBackoffPolicyOption;
+/// @deprecated Use networkmanagement_v1::ReachabilityServiceBackoffPolicyOption directly.
+using ::google::cloud::networkmanagement_v1::ReachabilityServiceBackoffPolicyOption;
 
-/// @deprecated Use
-/// networkmanagement_v1::ReachabilityServiceConnectionIdempotencyPolicyOption
-/// directly.
-using ::google::cloud::networkmanagement_v1::
-    ReachabilityServiceConnectionIdempotencyPolicyOption;
+/// @deprecated Use networkmanagement_v1::ReachabilityServiceConnectionIdempotencyPolicyOption directly.
+using ::google::cloud::networkmanagement_v1::ReachabilityServiceConnectionIdempotencyPolicyOption;
 
-/// @deprecated Use networkmanagement_v1::ReachabilityServicePolicyOptionList
-/// directly.
-using ::google::cloud::networkmanagement_v1::
-    ReachabilityServicePolicyOptionList;
+/// @deprecated Use networkmanagement_v1::ReachabilityServicePolicyOptionList directly.
+using ::google::cloud::networkmanagement_v1::ReachabilityServicePolicyOptionList;
 
-/// @deprecated Use networkmanagement_v1::ReachabilityServiceRetryPolicyOption
-/// directly.
-using ::google::cloud::networkmanagement_v1::
-    ReachabilityServiceRetryPolicyOption;
+/// @deprecated Use networkmanagement_v1::ReachabilityServiceRetryPolicyOption directly.
+using ::google::cloud::networkmanagement_v1::ReachabilityServiceRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace networkmanagement

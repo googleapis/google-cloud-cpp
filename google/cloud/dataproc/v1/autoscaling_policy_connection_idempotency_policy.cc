@@ -26,42 +26,30 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-AutoscalingPolicyServiceConnectionIdempotencyPolicy::
-    ~AutoscalingPolicyServiceConnectionIdempotencyPolicy() = default;
+AutoscalingPolicyServiceConnectionIdempotencyPolicy::~AutoscalingPolicyServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<AutoscalingPolicyServiceConnectionIdempotencyPolicy>
 AutoscalingPolicyServiceConnectionIdempotencyPolicy::clone() const {
-  return std::make_unique<AutoscalingPolicyServiceConnectionIdempotencyPolicy>(
-      *this);
+  return std::make_unique<AutoscalingPolicyServiceConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency
-AutoscalingPolicyServiceConnectionIdempotencyPolicy::CreateAutoscalingPolicy(
-    google::cloud::dataproc::v1::CreateAutoscalingPolicyRequest const&) {
+Idempotency AutoscalingPolicyServiceConnectionIdempotencyPolicy::CreateAutoscalingPolicy(google::cloud::dataproc::v1::CreateAutoscalingPolicyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency
-AutoscalingPolicyServiceConnectionIdempotencyPolicy::UpdateAutoscalingPolicy(
-    google::cloud::dataproc::v1::UpdateAutoscalingPolicyRequest const&) {
+Idempotency AutoscalingPolicyServiceConnectionIdempotencyPolicy::UpdateAutoscalingPolicy(google::cloud::dataproc::v1::UpdateAutoscalingPolicyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency
-AutoscalingPolicyServiceConnectionIdempotencyPolicy::GetAutoscalingPolicy(
-    google::cloud::dataproc::v1::GetAutoscalingPolicyRequest const&) {
+Idempotency AutoscalingPolicyServiceConnectionIdempotencyPolicy::GetAutoscalingPolicy(google::cloud::dataproc::v1::GetAutoscalingPolicyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency
-AutoscalingPolicyServiceConnectionIdempotencyPolicy::ListAutoscalingPolicies(
-    google::cloud::dataproc::v1::ListAutoscalingPoliciesRequest) {  // NOLINT
+Idempotency AutoscalingPolicyServiceConnectionIdempotencyPolicy::ListAutoscalingPolicies(google::cloud::dataproc::v1::ListAutoscalingPoliciesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency
-AutoscalingPolicyServiceConnectionIdempotencyPolicy::DeleteAutoscalingPolicy(
-    google::cloud::dataproc::v1::DeleteAutoscalingPolicyRequest const&) {
+Idempotency AutoscalingPolicyServiceConnectionIdempotencyPolicy::DeleteAutoscalingPolicy(google::cloud::dataproc::v1::DeleteAutoscalingPolicyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
@@ -71,43 +59,33 @@ Idempotency AutoscalingPolicyServiceConnectionIdempotencyPolicy::SetIamPolicy(
                                          : Idempotency::kIdempotent;
 }
 
-Idempotency AutoscalingPolicyServiceConnectionIdempotencyPolicy::GetIamPolicy(
-    google::iam::v1::GetIamPolicyRequest const&) {
+Idempotency AutoscalingPolicyServiceConnectionIdempotencyPolicy::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency
-AutoscalingPolicyServiceConnectionIdempotencyPolicy::TestIamPermissions(
-    google::iam::v1::TestIamPermissionsRequest const&) {
+Idempotency AutoscalingPolicyServiceConnectionIdempotencyPolicy::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency AutoscalingPolicyServiceConnectionIdempotencyPolicy::ListOperations(
-    google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency AutoscalingPolicyServiceConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency AutoscalingPolicyServiceConnectionIdempotencyPolicy::GetOperation(
-    google::longrunning::GetOperationRequest const&) {
+Idempotency AutoscalingPolicyServiceConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency
-AutoscalingPolicyServiceConnectionIdempotencyPolicy::DeleteOperation(
-    google::longrunning::DeleteOperationRequest const&) {
+Idempotency AutoscalingPolicyServiceConnectionIdempotencyPolicy::DeleteOperation(google::longrunning::DeleteOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency
-AutoscalingPolicyServiceConnectionIdempotencyPolicy::CancelOperation(
-    google::longrunning::CancelOperationRequest const&) {
+Idempotency AutoscalingPolicyServiceConnectionIdempotencyPolicy::CancelOperation(google::longrunning::CancelOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<AutoscalingPolicyServiceConnectionIdempotencyPolicy>
-MakeDefaultAutoscalingPolicyServiceConnectionIdempotencyPolicy() {
-  return std::make_unique<
-      AutoscalingPolicyServiceConnectionIdempotencyPolicy>();
+    MakeDefaultAutoscalingPolicyServiceConnectionIdempotencyPolicy() {
+  return std::make_unique<AutoscalingPolicyServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

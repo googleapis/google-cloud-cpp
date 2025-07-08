@@ -29,39 +29,36 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 NetworkAttachmentsRestLogging::NetworkAttachmentsRestLogging(
     std::shared_ptr<NetworkAttachmentsRestStub> child,
-    TracingOptions tracing_options, std::set<std::string> components)
-    : child_(std::move(child)),
-      tracing_options_(std::move(tracing_options)),
+    TracingOptions tracing_options,
+    std::set<std::string> components)
+    : child_(std::move(child)), tracing_options_(std::move(tracing_options)),
       components_(std::move(components)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::NetworkAttachmentAggregatedList>
 NetworkAttachmentsRestLogging::AggregatedListNetworkAttachments(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::network_attachments::v1::
-        AggregatedListNetworkAttachmentsRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::network_attachments::v1::AggregatedListNetworkAttachmentsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::cloud::cpp::compute::network_attachments::v1::
-                 AggregatedListNetworkAttachmentsRequest const& request) {
-        return child_->AggregatedListNetworkAttachments(rest_context, options,
-                                                        request);
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
+             google::cloud::cpp::compute::network_attachments::v1::AggregatedListNetworkAttachmentsRequest const& request) {
+        return child_->AggregatedListNetworkAttachments(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NetworkAttachmentsRestLogging::AsyncDeleteNetworkAttachment(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::network_attachments::v1::
-        DeleteNetworkAttachmentRequest const& request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::network_attachments::v1::DeleteNetworkAttachmentRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::cpp::compute::network_attachments::v1::
-                 DeleteNetworkAttachmentRequest const& request) {
+             google::cloud::cpp::compute::network_attachments::v1::DeleteNetworkAttachmentRequest const& request) {
         return child_->AsyncDeleteNetworkAttachment(
             cq, std::move(rest_context), std::move(options), request);
       },
@@ -71,13 +68,13 @@ NetworkAttachmentsRestLogging::AsyncDeleteNetworkAttachment(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 NetworkAttachmentsRestLogging::DeleteNetworkAttachment(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::network_attachments::v1::
-        DeleteNetworkAttachmentRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::network_attachments::v1::DeleteNetworkAttachmentRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::cloud::cpp::compute::network_attachments::v1::
-                 DeleteNetworkAttachmentRequest const& request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
+             google::cloud::cpp::compute::network_attachments::v1::DeleteNetworkAttachmentRequest const& request) {
         return child_->DeleteNetworkAttachment(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -85,13 +82,13 @@ NetworkAttachmentsRestLogging::DeleteNetworkAttachment(
 
 StatusOr<google::cloud::cpp::compute::v1::NetworkAttachment>
 NetworkAttachmentsRestLogging::GetNetworkAttachment(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::network_attachments::v1::
-        GetNetworkAttachmentRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::network_attachments::v1::GetNetworkAttachmentRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::cloud::cpp::compute::network_attachments::v1::
-                 GetNetworkAttachmentRequest const& request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
+             google::cloud::cpp::compute::network_attachments::v1::GetNetworkAttachmentRequest const& request) {
         return child_->GetNetworkAttachment(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -99,13 +96,13 @@ NetworkAttachmentsRestLogging::GetNetworkAttachment(
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 NetworkAttachmentsRestLogging::GetIamPolicy(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::network_attachments::v1::
-        GetIamPolicyRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::network_attachments::v1::GetIamPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::cloud::cpp::compute::network_attachments::v1::
-                 GetIamPolicyRequest const& request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
+             google::cloud::cpp::compute::network_attachments::v1::GetIamPolicyRequest const& request) {
         return child_->GetIamPolicy(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -113,17 +110,15 @@ NetworkAttachmentsRestLogging::GetIamPolicy(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NetworkAttachmentsRestLogging::AsyncInsertNetworkAttachment(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::network_attachments::v1::
-        InsertNetworkAttachmentRequest const& request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::network_attachments::v1::InsertNetworkAttachmentRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::cpp::compute::network_attachments::v1::
-                 InsertNetworkAttachmentRequest const& request) {
+             google::cloud::cpp::compute::network_attachments::v1::InsertNetworkAttachmentRequest const& request) {
         return child_->AsyncInsertNetworkAttachment(
             cq, std::move(rest_context), std::move(options), request);
       },
@@ -133,13 +128,13 @@ NetworkAttachmentsRestLogging::AsyncInsertNetworkAttachment(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 NetworkAttachmentsRestLogging::InsertNetworkAttachment(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::network_attachments::v1::
-        InsertNetworkAttachmentRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::network_attachments::v1::InsertNetworkAttachmentRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::cloud::cpp::compute::network_attachments::v1::
-                 InsertNetworkAttachmentRequest const& request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
+             google::cloud::cpp::compute::network_attachments::v1::InsertNetworkAttachmentRequest const& request) {
         return child_->InsertNetworkAttachment(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -147,13 +142,13 @@ NetworkAttachmentsRestLogging::InsertNetworkAttachment(
 
 StatusOr<google::cloud::cpp::compute::v1::NetworkAttachmentList>
 NetworkAttachmentsRestLogging::ListNetworkAttachments(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::network_attachments::v1::
-        ListNetworkAttachmentsRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::network_attachments::v1::ListNetworkAttachmentsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::cloud::cpp::compute::network_attachments::v1::
-                 ListNetworkAttachmentsRequest const& request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
+             google::cloud::cpp::compute::network_attachments::v1::ListNetworkAttachmentsRequest const& request) {
         return child_->ListNetworkAttachments(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -161,19 +156,17 @@ NetworkAttachmentsRestLogging::ListNetworkAttachments(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NetworkAttachmentsRestLogging::AsyncPatchNetworkAttachment(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::network_attachments::v1::
-        PatchNetworkAttachmentRequest const& request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::network_attachments::v1::PatchNetworkAttachmentRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::cpp::compute::network_attachments::v1::
-                 PatchNetworkAttachmentRequest const& request) {
-        return child_->AsyncPatchNetworkAttachment(cq, std::move(rest_context),
-                                                   std::move(options), request);
+             google::cloud::cpp::compute::network_attachments::v1::PatchNetworkAttachmentRequest const& request) {
+        return child_->AsyncPatchNetworkAttachment(
+            cq, std::move(rest_context), std::move(options), request);
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
@@ -181,13 +174,13 @@ NetworkAttachmentsRestLogging::AsyncPatchNetworkAttachment(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 NetworkAttachmentsRestLogging::PatchNetworkAttachment(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::network_attachments::v1::
-        PatchNetworkAttachmentRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::network_attachments::v1::PatchNetworkAttachmentRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::cloud::cpp::compute::network_attachments::v1::
-                 PatchNetworkAttachmentRequest const& request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
+             google::cloud::cpp::compute::network_attachments::v1::PatchNetworkAttachmentRequest const& request) {
         return child_->PatchNetworkAttachment(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -195,13 +188,13 @@ NetworkAttachmentsRestLogging::PatchNetworkAttachment(
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 NetworkAttachmentsRestLogging::SetIamPolicy(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::network_attachments::v1::
-        SetIamPolicyRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::network_attachments::v1::SetIamPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::cloud::cpp::compute::network_attachments::v1::
-                 SetIamPolicyRequest const& request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
+             google::cloud::cpp::compute::network_attachments::v1::SetIamPolicyRequest const& request) {
         return child_->SetIamPolicy(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -209,13 +202,13 @@ NetworkAttachmentsRestLogging::SetIamPolicy(
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
 NetworkAttachmentsRestLogging::TestIamPermissions(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::network_attachments::v1::
-        TestIamPermissionsRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::network_attachments::v1::TestIamPermissionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::cloud::cpp::compute::network_attachments::v1::
-                 TestIamPermissionsRequest const& request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
+             google::cloud::cpp::compute::network_attachments::v1::TestIamPermissionsRequest const& request) {
         return child_->TestIamPermissions(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -226,35 +219,32 @@ NetworkAttachmentsRestLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::region_operations::v1::
-        GetOperationRequest const& request) {
+    google::cloud::cpp::compute::region_operations::v1::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::cpp::compute::region_operations::v1::
-                 GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(cq, std::move(rest_context),
-                                         std::move(options), request);
+             google::cloud::cpp::compute::region_operations::v1::GetOperationRequest const& request) {
+        return child_->AsyncGetOperation(
+            cq, std::move(rest_context), std::move(options), request);
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-future<Status> NetworkAttachmentsRestLogging::AsyncCancelOperation(
+future<Status>
+NetworkAttachmentsRestLogging::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::region_operations::v1::
-        DeleteOperationRequest const& request) {
+    google::cloud::cpp::compute::region_operations::v1::DeleteOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::cpp::compute::region_operations::v1::
-                 DeleteOperationRequest const& request) {
-        return child_->AsyncCancelOperation(cq, std::move(rest_context),
-                                            std::move(options), request);
+             google::cloud::cpp::compute::region_operations::v1::DeleteOperationRequest const& request) {
+        return child_->AsyncCancelOperation(
+            cq, std::move(rest_context), std::move(options), request);
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);

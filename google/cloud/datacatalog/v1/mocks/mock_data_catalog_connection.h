@@ -46,160 +46,125 @@ class MockDataCatalogConnection : public datacatalog_v1::DataCatalogConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(
-      (StreamRange<google::cloud::datacatalog::v1::SearchCatalogResult>),
-      SearchCatalog,
-      (google::cloud::datacatalog::v1::SearchCatalogRequest request),
-      (override));
+  MOCK_METHOD((StreamRange<google::cloud::datacatalog::v1::SearchCatalogResult>),
+  SearchCatalog,
+  (google::cloud::datacatalog::v1::SearchCatalogRequest request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::datacatalog::v1::EntryGroup>, CreateEntryGroup,
-      (google::cloud::datacatalog::v1::CreateEntryGroupRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::datacatalog::v1::EntryGroup>,
+  CreateEntryGroup,
+  (google::cloud::datacatalog::v1::CreateEntryGroupRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::datacatalog::v1::EntryGroup>, GetEntryGroup,
-      (google::cloud::datacatalog::v1::GetEntryGroupRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::datacatalog::v1::EntryGroup>,
+  GetEntryGroup,
+  (google::cloud::datacatalog::v1::GetEntryGroupRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::datacatalog::v1::EntryGroup>, UpdateEntryGroup,
-      (google::cloud::datacatalog::v1::UpdateEntryGroupRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::datacatalog::v1::EntryGroup>,
+  UpdateEntryGroup,
+  (google::cloud::datacatalog::v1::UpdateEntryGroupRequest const& request), (override));
 
-  MOCK_METHOD(
-      Status, DeleteEntryGroup,
-      (google::cloud::datacatalog::v1::DeleteEntryGroupRequest const& request),
-      (override));
+  MOCK_METHOD(Status,
+  DeleteEntryGroup,
+  (google::cloud::datacatalog::v1::DeleteEntryGroupRequest const& request), (override));
 
   MOCK_METHOD((StreamRange<google::cloud::datacatalog::v1::EntryGroup>),
-              ListEntryGroups,
-              (google::cloud::datacatalog::v1::ListEntryGroupsRequest request),
-              (override));
+  ListEntryGroups,
+  (google::cloud::datacatalog::v1::ListEntryGroupsRequest request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::datacatalog::v1::Entry>, CreateEntry,
-      (google::cloud::datacatalog::v1::CreateEntryRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::datacatalog::v1::Entry>,
+  CreateEntry,
+  (google::cloud::datacatalog::v1::CreateEntryRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::datacatalog::v1::Entry>, UpdateEntry,
-      (google::cloud::datacatalog::v1::UpdateEntryRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::datacatalog::v1::Entry>,
+  UpdateEntry,
+  (google::cloud::datacatalog::v1::UpdateEntryRequest const& request), (override));
 
-  MOCK_METHOD(
-      Status, DeleteEntry,
-      (google::cloud::datacatalog::v1::DeleteEntryRequest const& request),
-      (override));
+  MOCK_METHOD(Status,
+  DeleteEntry,
+  (google::cloud::datacatalog::v1::DeleteEntryRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::datacatalog::v1::Entry>, GetEntry,
-              (google::cloud::datacatalog::v1::GetEntryRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::datacatalog::v1::Entry>,
+  GetEntry,
+  (google::cloud::datacatalog::v1::GetEntryRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::datacatalog::v1::Entry>, LookupEntry,
-      (google::cloud::datacatalog::v1::LookupEntryRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::datacatalog::v1::Entry>,
+  LookupEntry,
+  (google::cloud::datacatalog::v1::LookupEntryRequest const& request), (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::datacatalog::v1::Entry>), ListEntries,
-              (google::cloud::datacatalog::v1::ListEntriesRequest request),
-              (override));
+  MOCK_METHOD((StreamRange<google::cloud::datacatalog::v1::Entry>),
+  ListEntries,
+  (google::cloud::datacatalog::v1::ListEntriesRequest request), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::datacatalog::v1::EntryOverview>,
-              ModifyEntryOverview,
-              (google::cloud::datacatalog::v1::ModifyEntryOverviewRequest const&
-                   request),
-              (override));
+  ModifyEntryOverview,
+  (google::cloud::datacatalog::v1::ModifyEntryOverviewRequest const& request), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::datacatalog::v1::Contacts>,
-              ModifyEntryContacts,
-              (google::cloud::datacatalog::v1::ModifyEntryContactsRequest const&
-                   request),
-              (override));
+  ModifyEntryContacts,
+  (google::cloud::datacatalog::v1::ModifyEntryContactsRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::datacatalog::v1::TagTemplate>, CreateTagTemplate,
-      (google::cloud::datacatalog::v1::CreateTagTemplateRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::datacatalog::v1::TagTemplate>,
+  CreateTagTemplate,
+  (google::cloud::datacatalog::v1::CreateTagTemplateRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::datacatalog::v1::TagTemplate>, GetTagTemplate,
-      (google::cloud::datacatalog::v1::GetTagTemplateRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::datacatalog::v1::TagTemplate>,
+  GetTagTemplate,
+  (google::cloud::datacatalog::v1::GetTagTemplateRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::datacatalog::v1::TagTemplate>, UpdateTagTemplate,
-      (google::cloud::datacatalog::v1::UpdateTagTemplateRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::datacatalog::v1::TagTemplate>,
+  UpdateTagTemplate,
+  (google::cloud::datacatalog::v1::UpdateTagTemplateRequest const& request), (override));
 
-  MOCK_METHOD(
-      Status, DeleteTagTemplate,
-      (google::cloud::datacatalog::v1::DeleteTagTemplateRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::datacatalog::v1::TagTemplateField>,
-      CreateTagTemplateField,
-      (google::cloud::datacatalog::v1::CreateTagTemplateFieldRequest const&
-           request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::datacatalog::v1::TagTemplateField>,
-      UpdateTagTemplateField,
-      (google::cloud::datacatalog::v1::UpdateTagTemplateFieldRequest const&
-           request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::datacatalog::v1::TagTemplateField>,
-      RenameTagTemplateField,
-      (google::cloud::datacatalog::v1::RenameTagTemplateFieldRequest const&
-           request),
-      (override));
+  MOCK_METHOD(Status,
+  DeleteTagTemplate,
+  (google::cloud::datacatalog::v1::DeleteTagTemplateRequest const& request), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::datacatalog::v1::TagTemplateField>,
-              RenameTagTemplateFieldEnumValue,
-              (google::cloud::datacatalog::v1::
-                   RenameTagTemplateFieldEnumValueRequest const& request),
-              (override));
+  CreateTagTemplateField,
+  (google::cloud::datacatalog::v1::CreateTagTemplateFieldRequest const& request), (override));
 
-  MOCK_METHOD(
-      Status, DeleteTagTemplateField,
-      (google::cloud::datacatalog::v1::DeleteTagTemplateFieldRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::datacatalog::v1::TagTemplateField>,
+  UpdateTagTemplateField,
+  (google::cloud::datacatalog::v1::UpdateTagTemplateFieldRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::datacatalog::v1::Tag>, CreateTag,
-              (google::cloud::datacatalog::v1::CreateTagRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::datacatalog::v1::TagTemplateField>,
+  RenameTagTemplateField,
+  (google::cloud::datacatalog::v1::RenameTagTemplateFieldRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::datacatalog::v1::Tag>, UpdateTag,
-              (google::cloud::datacatalog::v1::UpdateTagRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::datacatalog::v1::TagTemplateField>,
+  RenameTagTemplateFieldEnumValue,
+  (google::cloud::datacatalog::v1::RenameTagTemplateFieldEnumValueRequest const& request), (override));
 
-  MOCK_METHOD(Status, DeleteTag,
-              (google::cloud::datacatalog::v1::DeleteTagRequest const& request),
-              (override));
+  MOCK_METHOD(Status,
+  DeleteTagTemplateField,
+  (google::cloud::datacatalog::v1::DeleteTagTemplateFieldRequest const& request), (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::datacatalog::v1::Tag>), ListTags,
-              (google::cloud::datacatalog::v1::ListTagsRequest request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::datacatalog::v1::Tag>,
+  CreateTag,
+  (google::cloud::datacatalog::v1::CreateTagRequest const& request), (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::datacatalog::v1::Tag>,
+  UpdateTag,
+  (google::cloud::datacatalog::v1::UpdateTagRequest const& request), (override));
+
+  MOCK_METHOD(Status,
+  DeleteTag,
+  (google::cloud::datacatalog::v1::DeleteTagRequest const& request), (override));
+
+  MOCK_METHOD((StreamRange<google::cloud::datacatalog::v1::Tag>),
+  ListTags,
+  (google::cloud::datacatalog::v1::ListTagsRequest request), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// ReconcileTags(Matcher<google::cloud::datacatalog::v1::ReconcileTagsRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, ReconcileTags(Matcher<google::cloud::datacatalog::v1::ReconcileTagsRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::datacatalog::v1::ReconcileTagsResponse>>,
-      ReconcileTags,
-      (google::cloud::datacatalog::v1::ReconcileTagsRequest const& request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::datacatalog::v1::ReconcileTagsResponse>>,
+  ReconcileTags,
+  (google::cloud::datacatalog::v1::ReconcileTagsRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -207,63 +172,53 @@ class MockDataCatalogConnection : public datacatalog_v1::DataCatalogConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, ReconcileTags(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, ReconcileTags,
-      (NoAwaitTag,
-       google::cloud::datacatalog::v1::ReconcileTagsRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  ReconcileTags, (NoAwaitTag,
+    google::cloud::datacatalog::v1::ReconcileTagsRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, ReconcileTags(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, ReconcileTags(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::datacatalog::v1::ReconcileTagsResponse>>,
-      ReconcileTags, (google::longrunning::Operation const& operation),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::datacatalog::v1::ReconcileTagsResponse>>,
+  ReconcileTags, (
+    google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::datacatalog::v1::StarEntryResponse>,
-              StarEntry,
-              (google::cloud::datacatalog::v1::StarEntryRequest const& request),
-              (override));
+  StarEntry,
+  (google::cloud::datacatalog::v1::StarEntryRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::datacatalog::v1::UnstarEntryResponse>,
-      UnstarEntry,
-      (google::cloud::datacatalog::v1::UnstarEntryRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::datacatalog::v1::UnstarEntryResponse>,
+  UnstarEntry,
+  (google::cloud::datacatalog::v1::UnstarEntryRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, SetIamPolicy,
-              (google::iam::v1::SetIamPolicyRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::iam::v1::Policy>,
+  SetIamPolicy,
+  (google::iam::v1::SetIamPolicyRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, GetIamPolicy,
-              (google::iam::v1::GetIamPolicyRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::iam::v1::Policy>,
+  GetIamPolicy,
+  (google::iam::v1::GetIamPolicyRequest const& request), (override));
 
   MOCK_METHOD(StatusOr<google::iam::v1::TestIamPermissionsResponse>,
-              TestIamPermissions,
-              (google::iam::v1::TestIamPermissionsRequest const& request),
-              (override));
+  TestIamPermissions,
+  (google::iam::v1::TestIamPermissionsRequest const& request), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// ImportEntries(Matcher<google::cloud::datacatalog::v1::ImportEntriesRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, ImportEntries(Matcher<google::cloud::datacatalog::v1::ImportEntriesRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::datacatalog::v1::ImportEntriesResponse>>,
-      ImportEntries,
-      (google::cloud::datacatalog::v1::ImportEntriesRequest const& request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::datacatalog::v1::ImportEntriesResponse>>,
+  ImportEntries,
+  (google::cloud::datacatalog::v1::ImportEntriesRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -271,57 +226,49 @@ class MockDataCatalogConnection : public datacatalog_v1::DataCatalogConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, ImportEntries(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, ImportEntries,
-      (NoAwaitTag,
-       google::cloud::datacatalog::v1::ImportEntriesRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  ImportEntries, (NoAwaitTag,
+    google::cloud::datacatalog::v1::ImportEntriesRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, ImportEntries(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, ImportEntries(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::datacatalog::v1::ImportEntriesResponse>>,
-      ImportEntries, (google::longrunning::Operation const& operation),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::datacatalog::v1::ImportEntriesResponse>>,
+  ImportEntries, (
+    google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::datacatalog::v1::MigrationConfig>,
-              SetConfig,
-              (google::cloud::datacatalog::v1::SetConfigRequest const& request),
-              (override));
+  SetConfig,
+  (google::cloud::datacatalog::v1::SetConfigRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::datacatalog::v1::OrganizationConfig>,
-      RetrieveConfig,
-      (google::cloud::datacatalog::v1::RetrieveConfigRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::datacatalog::v1::OrganizationConfig>,
+  RetrieveConfig,
+  (google::cloud::datacatalog::v1::RetrieveConfigRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::datacatalog::v1::MigrationConfig>,
-      RetrieveEffectiveConfig,
-      (google::cloud::datacatalog::v1::RetrieveEffectiveConfigRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::datacatalog::v1::MigrationConfig>,
+  RetrieveEffectiveConfig,
+  (google::cloud::datacatalog::v1::RetrieveEffectiveConfigRequest const& request), (override));
 
-  MOCK_METHOD((StreamRange<google::longrunning::Operation>), ListOperations,
-              (google::longrunning::ListOperationsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::longrunning::Operation>),
+  ListOperations,
+  (google::longrunning::ListOperationsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
-              (google::longrunning::GetOperationRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  GetOperation,
+  (google::longrunning::GetOperationRequest const& request), (override));
 
-  MOCK_METHOD(Status, DeleteOperation,
-              (google::longrunning::DeleteOperationRequest const& request),
-              (override));
+  MOCK_METHOD(Status,
+  DeleteOperation,
+  (google::longrunning::DeleteOperationRequest const& request), (override));
 
-  MOCK_METHOD(Status, CancelOperation,
-              (google::longrunning::CancelOperationRequest const& request),
-              (override));
+  MOCK_METHOD(Status,
+  CancelOperation,
+  (google::longrunning::CancelOperationRequest const& request), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

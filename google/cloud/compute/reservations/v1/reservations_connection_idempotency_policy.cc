@@ -26,79 +26,59 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-ReservationsConnectionIdempotencyPolicy::
-    ~ReservationsConnectionIdempotencyPolicy() = default;
+ReservationsConnectionIdempotencyPolicy::~ReservationsConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<ReservationsConnectionIdempotencyPolicy>
 ReservationsConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<ReservationsConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency ReservationsConnectionIdempotencyPolicy::AggregatedListReservations(
-    google::cloud::cpp::compute::reservations::v1::
-        AggregatedListReservationsRequest) {  // NOLINT
+Idempotency ReservationsConnectionIdempotencyPolicy::AggregatedListReservations(google::cloud::cpp::compute::reservations::v1::AggregatedListReservationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency ReservationsConnectionIdempotencyPolicy::DeleteReservation(
-    google::cloud::cpp::compute::reservations::v1::
-        DeleteReservationRequest const&) {
+Idempotency ReservationsConnectionIdempotencyPolicy::DeleteReservation(google::cloud::cpp::compute::reservations::v1::DeleteReservationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ReservationsConnectionIdempotencyPolicy::GetReservation(
-    google::cloud::cpp::compute::reservations::v1::
-        GetReservationRequest const&) {
+Idempotency ReservationsConnectionIdempotencyPolicy::GetReservation(google::cloud::cpp::compute::reservations::v1::GetReservationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ReservationsConnectionIdempotencyPolicy::GetIamPolicy(
-    google::cloud::cpp::compute::reservations::v1::GetIamPolicyRequest const&) {
+Idempotency ReservationsConnectionIdempotencyPolicy::GetIamPolicy(google::cloud::cpp::compute::reservations::v1::GetIamPolicyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ReservationsConnectionIdempotencyPolicy::InsertReservation(
-    google::cloud::cpp::compute::reservations::v1::
-        InsertReservationRequest const&) {
+Idempotency ReservationsConnectionIdempotencyPolicy::InsertReservation(google::cloud::cpp::compute::reservations::v1::InsertReservationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ReservationsConnectionIdempotencyPolicy::ListReservations(
-    google::cloud::cpp::compute::reservations::v1::
-        ListReservationsRequest) {  // NOLINT
+Idempotency ReservationsConnectionIdempotencyPolicy::ListReservations(google::cloud::cpp::compute::reservations::v1::ListReservationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency ReservationsConnectionIdempotencyPolicy::PerformMaintenance(
-    google::cloud::cpp::compute::reservations::v1::
-        PerformMaintenanceRequest const&) {
+Idempotency ReservationsConnectionIdempotencyPolicy::PerformMaintenance(google::cloud::cpp::compute::reservations::v1::PerformMaintenanceRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ReservationsConnectionIdempotencyPolicy::Resize(
-    google::cloud::cpp::compute::reservations::v1::ResizeRequest const&) {
+Idempotency ReservationsConnectionIdempotencyPolicy::Resize(google::cloud::cpp::compute::reservations::v1::ResizeRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ReservationsConnectionIdempotencyPolicy::SetIamPolicy(
-    google::cloud::cpp::compute::reservations::v1::SetIamPolicyRequest const&) {
+Idempotency ReservationsConnectionIdempotencyPolicy::SetIamPolicy(google::cloud::cpp::compute::reservations::v1::SetIamPolicyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ReservationsConnectionIdempotencyPolicy::TestIamPermissions(
-    google::cloud::cpp::compute::reservations::v1::
-        TestIamPermissionsRequest const&) {
+Idempotency ReservationsConnectionIdempotencyPolicy::TestIamPermissions(google::cloud::cpp::compute::reservations::v1::TestIamPermissionsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ReservationsConnectionIdempotencyPolicy::UpdateReservation(
-    google::cloud::cpp::compute::reservations::v1::
-        UpdateReservationRequest const&) {
+Idempotency ReservationsConnectionIdempotencyPolicy::UpdateReservation(google::cloud::cpp::compute::reservations::v1::UpdateReservationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<ReservationsConnectionIdempotencyPolicy>
-MakeDefaultReservationsConnectionIdempotencyPolicy() {
+    MakeDefaultReservationsConnectionIdempotencyPolicy() {
   return std::make_unique<ReservationsConnectionIdempotencyPolicy>();
 }
 

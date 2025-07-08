@@ -36,62 +36,53 @@ class ConversationModelsConnectionIdempotencyPolicy {
   virtual ~ConversationModelsConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<ConversationModelsConnectionIdempotencyPolicy> clone()
-      const;
+  virtual std::unique_ptr<ConversationModelsConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency CreateConversationModel(
-      google::cloud::dialogflow::v2::CreateConversationModelRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  CreateConversationModel(google::cloud::dialogflow::v2::CreateConversationModelRequest const& request);
 
-  virtual google::cloud::Idempotency GetConversationModel(
-      google::cloud::dialogflow::v2::GetConversationModelRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  GetConversationModel(google::cloud::dialogflow::v2::GetConversationModelRequest const& request);
 
-  virtual google::cloud::Idempotency ListConversationModels(
-      google::cloud::dialogflow::v2::ListConversationModelsRequest request);
+  virtual google::cloud::Idempotency
+  ListConversationModels(google::cloud::dialogflow::v2::ListConversationModelsRequest request);
 
-  virtual google::cloud::Idempotency DeleteConversationModel(
-      google::cloud::dialogflow::v2::DeleteConversationModelRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  DeleteConversationModel(google::cloud::dialogflow::v2::DeleteConversationModelRequest const& request);
 
-  virtual google::cloud::Idempotency DeployConversationModel(
-      google::cloud::dialogflow::v2::DeployConversationModelRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  DeployConversationModel(google::cloud::dialogflow::v2::DeployConversationModelRequest const& request);
 
-  virtual google::cloud::Idempotency UndeployConversationModel(
-      google::cloud::dialogflow::v2::UndeployConversationModelRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  UndeployConversationModel(google::cloud::dialogflow::v2::UndeployConversationModelRequest const& request);
 
-  virtual google::cloud::Idempotency GetConversationModelEvaluation(
-      google::cloud::dialogflow::v2::
-          GetConversationModelEvaluationRequest const& request);
+  virtual google::cloud::Idempotency
+  GetConversationModelEvaluation(google::cloud::dialogflow::v2::GetConversationModelEvaluationRequest const& request);
 
-  virtual google::cloud::Idempotency ListConversationModelEvaluations(
-      google::cloud::dialogflow::v2::ListConversationModelEvaluationsRequest
-          request);
+  virtual google::cloud::Idempotency
+  ListConversationModelEvaluations(google::cloud::dialogflow::v2::ListConversationModelEvaluationsRequest request);
 
-  virtual google::cloud::Idempotency CreateConversationModelEvaluation(
-      google::cloud::dialogflow::v2::
-          CreateConversationModelEvaluationRequest const& request);
+  virtual google::cloud::Idempotency
+  CreateConversationModelEvaluation(google::cloud::dialogflow::v2::CreateConversationModelEvaluationRequest const& request);
 
-  virtual google::cloud::Idempotency ListLocations(
-      google::cloud::location::ListLocationsRequest request);
+  virtual google::cloud::Idempotency
+  ListLocations(google::cloud::location::ListLocationsRequest request);
 
-  virtual google::cloud::Idempotency GetLocation(
-      google::cloud::location::GetLocationRequest const& request);
+  virtual google::cloud::Idempotency
+  GetLocation(google::cloud::location::GetLocationRequest const& request);
 
-  virtual google::cloud::Idempotency ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual google::cloud::Idempotency
+  ListOperations(google::longrunning::ListOperationsRequest request);
 
-  virtual google::cloud::Idempotency GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 
-  virtual google::cloud::Idempotency CancelOperation(
-      google::longrunning::CancelOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  CancelOperation(google::longrunning::CancelOperationRequest const& request);
 };
 
 std::unique_ptr<ConversationModelsConnectionIdempotencyPolicy>
-MakeDefaultConversationModelsConnectionIdempotencyPolicy();
+    MakeDefaultConversationModelsConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_es

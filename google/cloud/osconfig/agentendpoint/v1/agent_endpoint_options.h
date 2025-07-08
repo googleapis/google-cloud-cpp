@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_OSCONFIG_AGENTENDPOINT_V1_AGENT_ENDPOINT_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_OSCONFIG_AGENTENDPOINT_V1_AGENT_ENDPOINT_OPTIONS_H
 
-#include "google/cloud/osconfig/agentendpoint/v1/agent_endpoint_connection.h"
-#include "google/cloud/osconfig/agentendpoint/v1/agent_endpoint_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
+#include "google/cloud/osconfig/agentendpoint/v1/agent_endpoint_connection.h"
+#include "google/cloud/osconfig/agentendpoint/v1/agent_endpoint_connection_idempotency_policy.h"
 #include "google/cloud/version.h"
 #include <memory>
 

@@ -34,24 +34,21 @@ FeaturestoreServiceTracingConnection::FeaturestoreServiceTracingConnection(
     : child_(std::move(child)) {}
 
 future<StatusOr<google::cloud::aiplatform::v1::Featurestore>>
-FeaturestoreServiceTracingConnection::CreateFeaturestore(
-    google::cloud::aiplatform::v1::CreateFeaturestoreRequest const& request) {
+FeaturestoreServiceTracingConnection::CreateFeaturestore(google::cloud::aiplatform::v1::CreateFeaturestoreRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::FeaturestoreServiceConnection::CreateFeaturestore");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->CreateFeaturestore(request));
+  return internal::EndSpan(std::move(span), child_->CreateFeaturestore(request));
 }
 
 StatusOr<google::longrunning::Operation>
 FeaturestoreServiceTracingConnection::CreateFeaturestore(
-    NoAwaitTag,
-    google::cloud::aiplatform::v1::CreateFeaturestoreRequest const& request) {
+    NoAwaitTag, google::cloud::aiplatform::v1::CreateFeaturestoreRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::FeaturestoreServiceConnection::CreateFeaturestore");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span,
-                           child_->CreateFeaturestore(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->CreateFeaturestore(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::Featurestore>>
@@ -61,49 +58,41 @@ FeaturestoreServiceTracingConnection::CreateFeaturestore(
       "aiplatform_v1::FeaturestoreServiceConnection::CreateFeaturestore");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->CreateFeaturestore(operation));
+      child_->CreateFeaturestore(operation));
 }
 
 StatusOr<google::cloud::aiplatform::v1::Featurestore>
-FeaturestoreServiceTracingConnection::GetFeaturestore(
-    google::cloud::aiplatform::v1::GetFeaturestoreRequest const& request) {
-  auto span = internal::MakeSpan(
-      "aiplatform_v1::FeaturestoreServiceConnection::GetFeaturestore");
+FeaturestoreServiceTracingConnection::GetFeaturestore(google::cloud::aiplatform::v1::GetFeaturestoreRequest const& request) {
+  auto span = internal::MakeSpan("aiplatform_v1::FeaturestoreServiceConnection::GetFeaturestore");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetFeaturestore(request));
 }
 
 StreamRange<google::cloud::aiplatform::v1::Featurestore>
-FeaturestoreServiceTracingConnection::ListFeaturestores(
-    google::cloud::aiplatform::v1::ListFeaturestoresRequest request) {
-  auto span = internal::MakeSpan(
-      "aiplatform_v1::FeaturestoreServiceConnection::ListFeaturestores");
+FeaturestoreServiceTracingConnection::ListFeaturestores(google::cloud::aiplatform::v1::ListFeaturestoresRequest request) {
+  auto span = internal::MakeSpan("aiplatform_v1::FeaturestoreServiceConnection::ListFeaturestores");
   internal::OTelScope scope(span);
   auto sr = child_->ListFeaturestores(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::aiplatform::v1::Featurestore>(std::move(span),
-                                                   std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::aiplatform::v1::Featurestore>(
+        std::move(span), std::move(sr));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::Featurestore>>
-FeaturestoreServiceTracingConnection::UpdateFeaturestore(
-    google::cloud::aiplatform::v1::UpdateFeaturestoreRequest const& request) {
+FeaturestoreServiceTracingConnection::UpdateFeaturestore(google::cloud::aiplatform::v1::UpdateFeaturestoreRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::FeaturestoreServiceConnection::UpdateFeaturestore");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->UpdateFeaturestore(request));
+  return internal::EndSpan(std::move(span), child_->UpdateFeaturestore(request));
 }
 
 StatusOr<google::longrunning::Operation>
 FeaturestoreServiceTracingConnection::UpdateFeaturestore(
-    NoAwaitTag,
-    google::cloud::aiplatform::v1::UpdateFeaturestoreRequest const& request) {
+    NoAwaitTag, google::cloud::aiplatform::v1::UpdateFeaturestoreRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::FeaturestoreServiceConnection::UpdateFeaturestore");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span,
-                           child_->UpdateFeaturestore(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->UpdateFeaturestore(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::Featurestore>>
@@ -113,28 +102,25 @@ FeaturestoreServiceTracingConnection::UpdateFeaturestore(
       "aiplatform_v1::FeaturestoreServiceConnection::UpdateFeaturestore");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->UpdateFeaturestore(operation));
+      child_->UpdateFeaturestore(operation));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-FeaturestoreServiceTracingConnection::DeleteFeaturestore(
-    google::cloud::aiplatform::v1::DeleteFeaturestoreRequest const& request) {
+FeaturestoreServiceTracingConnection::DeleteFeaturestore(google::cloud::aiplatform::v1::DeleteFeaturestoreRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::FeaturestoreServiceConnection::DeleteFeaturestore");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->DeleteFeaturestore(request));
+  return internal::EndSpan(std::move(span), child_->DeleteFeaturestore(request));
 }
 
 StatusOr<google::longrunning::Operation>
 FeaturestoreServiceTracingConnection::DeleteFeaturestore(
-    NoAwaitTag,
-    google::cloud::aiplatform::v1::DeleteFeaturestoreRequest const& request) {
+    NoAwaitTag, google::cloud::aiplatform::v1::DeleteFeaturestoreRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::FeaturestoreServiceConnection::DeleteFeaturestore");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span,
-                           child_->DeleteFeaturestore(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->DeleteFeaturestore(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
@@ -144,12 +130,11 @@ FeaturestoreServiceTracingConnection::DeleteFeaturestore(
       "aiplatform_v1::FeaturestoreServiceConnection::DeleteFeaturestore");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->DeleteFeaturestore(operation));
+      child_->DeleteFeaturestore(operation));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::EntityType>>
-FeaturestoreServiceTracingConnection::CreateEntityType(
-    google::cloud::aiplatform::v1::CreateEntityTypeRequest const& request) {
+FeaturestoreServiceTracingConnection::CreateEntityType(google::cloud::aiplatform::v1::CreateEntityTypeRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::FeaturestoreServiceConnection::CreateEntityType");
   internal::OTelScope scope(span);
@@ -158,13 +143,12 @@ FeaturestoreServiceTracingConnection::CreateEntityType(
 
 StatusOr<google::longrunning::Operation>
 FeaturestoreServiceTracingConnection::CreateEntityType(
-    NoAwaitTag,
-    google::cloud::aiplatform::v1::CreateEntityTypeRequest const& request) {
+    NoAwaitTag, google::cloud::aiplatform::v1::CreateEntityTypeRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::FeaturestoreServiceConnection::CreateEntityType");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span,
-                           child_->CreateEntityType(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->CreateEntityType(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::EntityType>>
@@ -174,42 +158,34 @@ FeaturestoreServiceTracingConnection::CreateEntityType(
       "aiplatform_v1::FeaturestoreServiceConnection::CreateEntityType");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->CreateEntityType(operation));
+      child_->CreateEntityType(operation));
 }
 
 StatusOr<google::cloud::aiplatform::v1::EntityType>
-FeaturestoreServiceTracingConnection::GetEntityType(
-    google::cloud::aiplatform::v1::GetEntityTypeRequest const& request) {
-  auto span = internal::MakeSpan(
-      "aiplatform_v1::FeaturestoreServiceConnection::GetEntityType");
+FeaturestoreServiceTracingConnection::GetEntityType(google::cloud::aiplatform::v1::GetEntityTypeRequest const& request) {
+  auto span = internal::MakeSpan("aiplatform_v1::FeaturestoreServiceConnection::GetEntityType");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetEntityType(request));
 }
 
 StreamRange<google::cloud::aiplatform::v1::EntityType>
-FeaturestoreServiceTracingConnection::ListEntityTypes(
-    google::cloud::aiplatform::v1::ListEntityTypesRequest request) {
-  auto span = internal::MakeSpan(
-      "aiplatform_v1::FeaturestoreServiceConnection::ListEntityTypes");
+FeaturestoreServiceTracingConnection::ListEntityTypes(google::cloud::aiplatform::v1::ListEntityTypesRequest request) {
+  auto span = internal::MakeSpan("aiplatform_v1::FeaturestoreServiceConnection::ListEntityTypes");
   internal::OTelScope scope(span);
   auto sr = child_->ListEntityTypes(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::aiplatform::v1::EntityType>(std::move(span),
-                                                 std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::aiplatform::v1::EntityType>(
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::aiplatform::v1::EntityType>
-FeaturestoreServiceTracingConnection::UpdateEntityType(
-    google::cloud::aiplatform::v1::UpdateEntityTypeRequest const& request) {
-  auto span = internal::MakeSpan(
-      "aiplatform_v1::FeaturestoreServiceConnection::UpdateEntityType");
+FeaturestoreServiceTracingConnection::UpdateEntityType(google::cloud::aiplatform::v1::UpdateEntityTypeRequest const& request) {
+  auto span = internal::MakeSpan("aiplatform_v1::FeaturestoreServiceConnection::UpdateEntityType");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateEntityType(request));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-FeaturestoreServiceTracingConnection::DeleteEntityType(
-    google::cloud::aiplatform::v1::DeleteEntityTypeRequest const& request) {
+FeaturestoreServiceTracingConnection::DeleteEntityType(google::cloud::aiplatform::v1::DeleteEntityTypeRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::FeaturestoreServiceConnection::DeleteEntityType");
   internal::OTelScope scope(span);
@@ -218,13 +194,12 @@ FeaturestoreServiceTracingConnection::DeleteEntityType(
 
 StatusOr<google::longrunning::Operation>
 FeaturestoreServiceTracingConnection::DeleteEntityType(
-    NoAwaitTag,
-    google::cloud::aiplatform::v1::DeleteEntityTypeRequest const& request) {
+    NoAwaitTag, google::cloud::aiplatform::v1::DeleteEntityTypeRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::FeaturestoreServiceConnection::DeleteEntityType");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span,
-                           child_->DeleteEntityType(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->DeleteEntityType(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
@@ -234,12 +209,11 @@ FeaturestoreServiceTracingConnection::DeleteEntityType(
       "aiplatform_v1::FeaturestoreServiceConnection::DeleteEntityType");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->DeleteEntityType(operation));
+      child_->DeleteEntityType(operation));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::Feature>>
-FeaturestoreServiceTracingConnection::CreateFeature(
-    google::cloud::aiplatform::v1::CreateFeatureRequest const& request) {
+FeaturestoreServiceTracingConnection::CreateFeature(google::cloud::aiplatform::v1::CreateFeatureRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::FeaturestoreServiceConnection::CreateFeature");
   internal::OTelScope scope(span);
@@ -248,12 +222,12 @@ FeaturestoreServiceTracingConnection::CreateFeature(
 
 StatusOr<google::longrunning::Operation>
 FeaturestoreServiceTracingConnection::CreateFeature(
-    NoAwaitTag,
-    google::cloud::aiplatform::v1::CreateFeatureRequest const& request) {
+    NoAwaitTag, google::cloud::aiplatform::v1::CreateFeatureRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::FeaturestoreServiceConnection::CreateFeature");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->CreateFeature(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->CreateFeature(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::Feature>>
@@ -262,28 +236,26 @@ FeaturestoreServiceTracingConnection::CreateFeature(
   auto span = internal::MakeSpan(
       "aiplatform_v1::FeaturestoreServiceConnection::CreateFeature");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->CreateFeature(operation));
+  return internal::EndSpan(std::move(span),
+      child_->CreateFeature(operation));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::BatchCreateFeaturesResponse>>
-FeaturestoreServiceTracingConnection::BatchCreateFeatures(
-    google::cloud::aiplatform::v1::BatchCreateFeaturesRequest const& request) {
+FeaturestoreServiceTracingConnection::BatchCreateFeatures(google::cloud::aiplatform::v1::BatchCreateFeaturesRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::FeaturestoreServiceConnection::BatchCreateFeatures");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->BatchCreateFeatures(request));
+  return internal::EndSpan(std::move(span), child_->BatchCreateFeatures(request));
 }
 
 StatusOr<google::longrunning::Operation>
 FeaturestoreServiceTracingConnection::BatchCreateFeatures(
-    NoAwaitTag,
-    google::cloud::aiplatform::v1::BatchCreateFeaturesRequest const& request) {
+    NoAwaitTag, google::cloud::aiplatform::v1::BatchCreateFeaturesRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::FeaturestoreServiceConnection::BatchCreateFeatures");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span,
-                           child_->BatchCreateFeatures(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->BatchCreateFeatures(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::BatchCreateFeaturesResponse>>
@@ -293,41 +265,34 @@ FeaturestoreServiceTracingConnection::BatchCreateFeatures(
       "aiplatform_v1::FeaturestoreServiceConnection::BatchCreateFeatures");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->BatchCreateFeatures(operation));
+      child_->BatchCreateFeatures(operation));
 }
 
 StatusOr<google::cloud::aiplatform::v1::Feature>
-FeaturestoreServiceTracingConnection::GetFeature(
-    google::cloud::aiplatform::v1::GetFeatureRequest const& request) {
-  auto span = internal::MakeSpan(
-      "aiplatform_v1::FeaturestoreServiceConnection::GetFeature");
+FeaturestoreServiceTracingConnection::GetFeature(google::cloud::aiplatform::v1::GetFeatureRequest const& request) {
+  auto span = internal::MakeSpan("aiplatform_v1::FeaturestoreServiceConnection::GetFeature");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetFeature(request));
 }
 
 StreamRange<google::cloud::aiplatform::v1::Feature>
-FeaturestoreServiceTracingConnection::ListFeatures(
-    google::cloud::aiplatform::v1::ListFeaturesRequest request) {
-  auto span = internal::MakeSpan(
-      "aiplatform_v1::FeaturestoreServiceConnection::ListFeatures");
+FeaturestoreServiceTracingConnection::ListFeatures(google::cloud::aiplatform::v1::ListFeaturesRequest request) {
+  auto span = internal::MakeSpan("aiplatform_v1::FeaturestoreServiceConnection::ListFeatures");
   internal::OTelScope scope(span);
   auto sr = child_->ListFeatures(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::aiplatform::v1::Feature>(std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::aiplatform::v1::Feature>(
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::aiplatform::v1::Feature>
-FeaturestoreServiceTracingConnection::UpdateFeature(
-    google::cloud::aiplatform::v1::UpdateFeatureRequest const& request) {
-  auto span = internal::MakeSpan(
-      "aiplatform_v1::FeaturestoreServiceConnection::UpdateFeature");
+FeaturestoreServiceTracingConnection::UpdateFeature(google::cloud::aiplatform::v1::UpdateFeatureRequest const& request) {
+  auto span = internal::MakeSpan("aiplatform_v1::FeaturestoreServiceConnection::UpdateFeature");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateFeature(request));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-FeaturestoreServiceTracingConnection::DeleteFeature(
-    google::cloud::aiplatform::v1::DeleteFeatureRequest const& request) {
+FeaturestoreServiceTracingConnection::DeleteFeature(google::cloud::aiplatform::v1::DeleteFeatureRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::FeaturestoreServiceConnection::DeleteFeature");
   internal::OTelScope scope(span);
@@ -336,12 +301,12 @@ FeaturestoreServiceTracingConnection::DeleteFeature(
 
 StatusOr<google::longrunning::Operation>
 FeaturestoreServiceTracingConnection::DeleteFeature(
-    NoAwaitTag,
-    google::cloud::aiplatform::v1::DeleteFeatureRequest const& request) {
+    NoAwaitTag, google::cloud::aiplatform::v1::DeleteFeatureRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::FeaturestoreServiceConnection::DeleteFeature");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->DeleteFeature(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->DeleteFeature(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
@@ -350,28 +315,26 @@ FeaturestoreServiceTracingConnection::DeleteFeature(
   auto span = internal::MakeSpan(
       "aiplatform_v1::FeaturestoreServiceConnection::DeleteFeature");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->DeleteFeature(operation));
+  return internal::EndSpan(std::move(span),
+      child_->DeleteFeature(operation));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::ImportFeatureValuesResponse>>
-FeaturestoreServiceTracingConnection::ImportFeatureValues(
-    google::cloud::aiplatform::v1::ImportFeatureValuesRequest const& request) {
+FeaturestoreServiceTracingConnection::ImportFeatureValues(google::cloud::aiplatform::v1::ImportFeatureValuesRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::FeaturestoreServiceConnection::ImportFeatureValues");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->ImportFeatureValues(request));
+  return internal::EndSpan(std::move(span), child_->ImportFeatureValues(request));
 }
 
 StatusOr<google::longrunning::Operation>
 FeaturestoreServiceTracingConnection::ImportFeatureValues(
-    NoAwaitTag,
-    google::cloud::aiplatform::v1::ImportFeatureValuesRequest const& request) {
+    NoAwaitTag, google::cloud::aiplatform::v1::ImportFeatureValuesRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::FeaturestoreServiceConnection::ImportFeatureValues");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span,
-                           child_->ImportFeatureValues(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->ImportFeatureValues(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::ImportFeatureValuesResponse>>
@@ -381,30 +344,25 @@ FeaturestoreServiceTracingConnection::ImportFeatureValues(
       "aiplatform_v1::FeaturestoreServiceConnection::ImportFeatureValues");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->ImportFeatureValues(operation));
+      child_->ImportFeatureValues(operation));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::BatchReadFeatureValuesResponse>>
-FeaturestoreServiceTracingConnection::BatchReadFeatureValues(
-    google::cloud::aiplatform::v1::BatchReadFeatureValuesRequest const&
-        request) {
+FeaturestoreServiceTracingConnection::BatchReadFeatureValues(google::cloud::aiplatform::v1::BatchReadFeatureValuesRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::FeaturestoreServiceConnection::BatchReadFeatureValues");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->BatchReadFeatureValues(request));
+  return internal::EndSpan(std::move(span), child_->BatchReadFeatureValues(request));
 }
 
 StatusOr<google::longrunning::Operation>
 FeaturestoreServiceTracingConnection::BatchReadFeatureValues(
-    NoAwaitTag,
-    google::cloud::aiplatform::v1::BatchReadFeatureValuesRequest const&
-        request) {
+    NoAwaitTag, google::cloud::aiplatform::v1::BatchReadFeatureValuesRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::FeaturestoreServiceConnection::BatchReadFeatureValues");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->BatchReadFeatureValues(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->BatchReadFeatureValues(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::BatchReadFeatureValuesResponse>>
@@ -414,28 +372,25 @@ FeaturestoreServiceTracingConnection::BatchReadFeatureValues(
       "aiplatform_v1::FeaturestoreServiceConnection::BatchReadFeatureValues");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->BatchReadFeatureValues(operation));
+      child_->BatchReadFeatureValues(operation));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::ExportFeatureValuesResponse>>
-FeaturestoreServiceTracingConnection::ExportFeatureValues(
-    google::cloud::aiplatform::v1::ExportFeatureValuesRequest const& request) {
+FeaturestoreServiceTracingConnection::ExportFeatureValues(google::cloud::aiplatform::v1::ExportFeatureValuesRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::FeaturestoreServiceConnection::ExportFeatureValues");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->ExportFeatureValues(request));
+  return internal::EndSpan(std::move(span), child_->ExportFeatureValues(request));
 }
 
 StatusOr<google::longrunning::Operation>
 FeaturestoreServiceTracingConnection::ExportFeatureValues(
-    NoAwaitTag,
-    google::cloud::aiplatform::v1::ExportFeatureValuesRequest const& request) {
+    NoAwaitTag, google::cloud::aiplatform::v1::ExportFeatureValuesRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::FeaturestoreServiceConnection::ExportFeatureValues");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span,
-                           child_->ExportFeatureValues(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->ExportFeatureValues(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::ExportFeatureValuesResponse>>
@@ -445,28 +400,25 @@ FeaturestoreServiceTracingConnection::ExportFeatureValues(
       "aiplatform_v1::FeaturestoreServiceConnection::ExportFeatureValues");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->ExportFeatureValues(operation));
+      child_->ExportFeatureValues(operation));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteFeatureValuesResponse>>
-FeaturestoreServiceTracingConnection::DeleteFeatureValues(
-    google::cloud::aiplatform::v1::DeleteFeatureValuesRequest const& request) {
+FeaturestoreServiceTracingConnection::DeleteFeatureValues(google::cloud::aiplatform::v1::DeleteFeatureValuesRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::FeaturestoreServiceConnection::DeleteFeatureValues");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->DeleteFeatureValues(request));
+  return internal::EndSpan(std::move(span), child_->DeleteFeatureValues(request));
 }
 
 StatusOr<google::longrunning::Operation>
 FeaturestoreServiceTracingConnection::DeleteFeatureValues(
-    NoAwaitTag,
-    google::cloud::aiplatform::v1::DeleteFeatureValuesRequest const& request) {
+    NoAwaitTag, google::cloud::aiplatform::v1::DeleteFeatureValuesRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::FeaturestoreServiceConnection::DeleteFeatureValues");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span,
-                           child_->DeleteFeatureValues(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->DeleteFeatureValues(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteFeatureValuesResponse>>
@@ -476,108 +428,88 @@ FeaturestoreServiceTracingConnection::DeleteFeatureValues(
       "aiplatform_v1::FeaturestoreServiceConnection::DeleteFeatureValues");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->DeleteFeatureValues(operation));
+      child_->DeleteFeatureValues(operation));
 }
 
 StreamRange<google::cloud::aiplatform::v1::Feature>
-FeaturestoreServiceTracingConnection::SearchFeatures(
-    google::cloud::aiplatform::v1::SearchFeaturesRequest request) {
-  auto span = internal::MakeSpan(
-      "aiplatform_v1::FeaturestoreServiceConnection::SearchFeatures");
+FeaturestoreServiceTracingConnection::SearchFeatures(google::cloud::aiplatform::v1::SearchFeaturesRequest request) {
+  auto span = internal::MakeSpan("aiplatform_v1::FeaturestoreServiceConnection::SearchFeatures");
   internal::OTelScope scope(span);
   auto sr = child_->SearchFeatures(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::aiplatform::v1::Feature>(std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::aiplatform::v1::Feature>(
+        std::move(span), std::move(sr));
 }
 
 StreamRange<google::cloud::location::Location>
-FeaturestoreServiceTracingConnection::ListLocations(
-    google::cloud::location::ListLocationsRequest request) {
-  auto span = internal::MakeSpan(
-      "aiplatform_v1::FeaturestoreServiceConnection::ListLocations");
+FeaturestoreServiceTracingConnection::ListLocations(google::cloud::location::ListLocationsRequest request) {
+  auto span = internal::MakeSpan("aiplatform_v1::FeaturestoreServiceConnection::ListLocations");
   internal::OTelScope scope(span);
   auto sr = child_->ListLocations(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::location::Location>(
-      std::move(span), std::move(sr));
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::location::Location>
-FeaturestoreServiceTracingConnection::GetLocation(
-    google::cloud::location::GetLocationRequest const& request) {
-  auto span = internal::MakeSpan(
-      "aiplatform_v1::FeaturestoreServiceConnection::GetLocation");
+FeaturestoreServiceTracingConnection::GetLocation(google::cloud::location::GetLocationRequest const& request) {
+  auto span = internal::MakeSpan("aiplatform_v1::FeaturestoreServiceConnection::GetLocation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetLocation(request));
 }
 
 StatusOr<google::iam::v1::Policy>
-FeaturestoreServiceTracingConnection::SetIamPolicy(
-    google::iam::v1::SetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpan(
-      "aiplatform_v1::FeaturestoreServiceConnection::SetIamPolicy");
+FeaturestoreServiceTracingConnection::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) {
+  auto span = internal::MakeSpan("aiplatform_v1::FeaturestoreServiceConnection::SetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->SetIamPolicy(request));
 }
 
 StatusOr<google::iam::v1::Policy>
-FeaturestoreServiceTracingConnection::GetIamPolicy(
-    google::iam::v1::GetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpan(
-      "aiplatform_v1::FeaturestoreServiceConnection::GetIamPolicy");
+FeaturestoreServiceTracingConnection::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) {
+  auto span = internal::MakeSpan("aiplatform_v1::FeaturestoreServiceConnection::GetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetIamPolicy(request));
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-FeaturestoreServiceTracingConnection::TestIamPermissions(
-    google::iam::v1::TestIamPermissionsRequest const& request) {
-  auto span = internal::MakeSpan(
-      "aiplatform_v1::FeaturestoreServiceConnection::TestIamPermissions");
+FeaturestoreServiceTracingConnection::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) {
+  auto span = internal::MakeSpan("aiplatform_v1::FeaturestoreServiceConnection::TestIamPermissions");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->TestIamPermissions(request));
 }
 
 StreamRange<google::longrunning::Operation>
-FeaturestoreServiceTracingConnection::ListOperations(
-    google::longrunning::ListOperationsRequest request) {
-  auto span = internal::MakeSpan(
-      "aiplatform_v1::FeaturestoreServiceConnection::ListOperations");
+FeaturestoreServiceTracingConnection::ListOperations(google::longrunning::ListOperationsRequest request) {
+  auto span = internal::MakeSpan("aiplatform_v1::FeaturestoreServiceConnection::ListOperations");
   internal::OTelScope scope(span);
   auto sr = child_->ListOperations(std::move(request));
   return internal::MakeTracedStreamRange<google::longrunning::Operation>(
-      std::move(span), std::move(sr));
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::longrunning::Operation>
-FeaturestoreServiceTracingConnection::GetOperation(
-    google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpan(
-      "aiplatform_v1::FeaturestoreServiceConnection::GetOperation");
+FeaturestoreServiceTracingConnection::GetOperation(google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpan("aiplatform_v1::FeaturestoreServiceConnection::GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOperation(request));
 }
 
-Status FeaturestoreServiceTracingConnection::DeleteOperation(
-    google::longrunning::DeleteOperationRequest const& request) {
-  auto span = internal::MakeSpan(
-      "aiplatform_v1::FeaturestoreServiceConnection::DeleteOperation");
+Status
+FeaturestoreServiceTracingConnection::DeleteOperation(google::longrunning::DeleteOperationRequest const& request) {
+  auto span = internal::MakeSpan("aiplatform_v1::FeaturestoreServiceConnection::DeleteOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteOperation(request));
 }
 
-Status FeaturestoreServiceTracingConnection::CancelOperation(
-    google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpan(
-      "aiplatform_v1::FeaturestoreServiceConnection::CancelOperation");
+Status
+FeaturestoreServiceTracingConnection::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
+  auto span = internal::MakeSpan("aiplatform_v1::FeaturestoreServiceConnection::CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CancelOperation(request));
 }
 
 StatusOr<google::longrunning::Operation>
-FeaturestoreServiceTracingConnection::WaitOperation(
-    google::longrunning::WaitOperationRequest const& request) {
-  auto span = internal::MakeSpan(
-      "aiplatform_v1::FeaturestoreServiceConnection::WaitOperation");
+FeaturestoreServiceTracingConnection::WaitOperation(google::longrunning::WaitOperationRequest const& request) {
+  auto span = internal::MakeSpan("aiplatform_v1::FeaturestoreServiceConnection::WaitOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->WaitOperation(request));
 }
@@ -589,8 +521,7 @@ MakeFeaturestoreServiceTracingConnection(
     std::shared_ptr<aiplatform_v1::FeaturestoreServiceConnection> conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
-    conn =
-        std::make_shared<FeaturestoreServiceTracingConnection>(std::move(conn));
+    conn = std::make_shared<FeaturestoreServiceTracingConnection>(std::move(conn));
   }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;

@@ -19,19 +19,19 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_ADMIN_DATABASE_ADMIN_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_ADMIN_DATABASE_ADMIN_CONNECTION_H
 
-#include "google/cloud/spanner/admin/database_admin_connection_idempotency_policy.h"
-#include "google/cloud/spanner/admin/internal/database_admin_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
+#include "google/cloud/spanner/admin/database_admin_connection_idempotency_policy.h"
+#include "google/cloud/spanner/admin/internal/database_admin_retry_traits.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
 #include <google/spanner/admin/database/v1/spanner_database_admin.pb.h>
+#include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 
 namespace google {
@@ -56,8 +56,7 @@ class DatabaseAdminRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class DatabaseAdminLimitedErrorCountRetryPolicy
-    : public DatabaseAdminRetryPolicy {
+class DatabaseAdminLimitedErrorCountRetryPolicy : public DatabaseAdminRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -67,14 +66,14 @@ class DatabaseAdminLimitedErrorCountRetryPolicy
    *     @p maximum_failures == 0.
    */
   explicit DatabaseAdminLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   DatabaseAdminLimitedErrorCountRetryPolicy(
       DatabaseAdminLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : DatabaseAdminLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : DatabaseAdminLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   DatabaseAdminLimitedErrorCountRetryPolicy(
       DatabaseAdminLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : DatabaseAdminLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : DatabaseAdminLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -94,9 +93,7 @@ class DatabaseAdminLimitedErrorCountRetryPolicy
   using BaseType = DatabaseAdminRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      spanner_admin_internal::DatabaseAdminRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<spanner_admin_internal::DatabaseAdminRetryTraits> impl_;
 };
 
 /**
@@ -134,14 +131,12 @@ class DatabaseAdminLimitedTimeRetryPolicy : public DatabaseAdminRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit DatabaseAdminLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  DatabaseAdminLimitedTimeRetryPolicy(
-      DatabaseAdminLimitedTimeRetryPolicy&& rhs) noexcept
-      : DatabaseAdminLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  DatabaseAdminLimitedTimeRetryPolicy(
-      DatabaseAdminLimitedTimeRetryPolicy const& rhs) noexcept
-      : DatabaseAdminLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  DatabaseAdminLimitedTimeRetryPolicy(DatabaseAdminLimitedTimeRetryPolicy&& rhs) noexcept
+    : DatabaseAdminLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  DatabaseAdminLimitedTimeRetryPolicy(DatabaseAdminLimitedTimeRetryPolicy const& rhs) noexcept
+    : DatabaseAdminLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -163,9 +158,7 @@ class DatabaseAdminLimitedTimeRetryPolicy : public DatabaseAdminRetryPolicy {
   using BaseType = DatabaseAdminRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      spanner_admin_internal::DatabaseAdminRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<spanner_admin_internal::DatabaseAdminRetryTraits> impl_;
 };
 
 /**
@@ -187,168 +180,130 @@ class DatabaseAdminConnection {
   virtual Options options() { return Options{}; }
 
   virtual StreamRange<google::spanner::admin::database::v1::Database>
-  ListDatabases(
-      google::spanner::admin::database::v1::ListDatabasesRequest request);
+  ListDatabases(google::spanner::admin::database::v1::ListDatabasesRequest request);
 
   virtual future<StatusOr<google::spanner::admin::database::v1::Database>>
-  CreateDatabase(
-      google::spanner::admin::database::v1::CreateDatabaseRequest const&
-          request);
+  CreateDatabase(google::spanner::admin::database::v1::CreateDatabaseRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> CreateDatabase(
-      NoAwaitTag,
-      google::spanner::admin::database::v1::CreateDatabaseRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  CreateDatabase(NoAwaitTag, google::spanner::admin::database::v1::CreateDatabaseRequest const& request);
 
   virtual future<StatusOr<google::spanner::admin::database::v1::Database>>
-  CreateDatabase(google::longrunning::Operation const& operation);
+  CreateDatabase( google::longrunning::Operation const& operation);
 
-  virtual StatusOr<google::spanner::admin::database::v1::Database> GetDatabase(
-      google::spanner::admin::database::v1::GetDatabaseRequest const& request);
-
-  virtual future<StatusOr<google::spanner::admin::database::v1::Database>>
-  UpdateDatabase(
-      google::spanner::admin::database::v1::UpdateDatabaseRequest const&
-          request);
-
-  virtual StatusOr<google::longrunning::Operation> UpdateDatabase(
-      NoAwaitTag,
-      google::spanner::admin::database::v1::UpdateDatabaseRequest const&
-          request);
+  virtual StatusOr<google::spanner::admin::database::v1::Database>
+  GetDatabase(google::spanner::admin::database::v1::GetDatabaseRequest const& request);
 
   virtual future<StatusOr<google::spanner::admin::database::v1::Database>>
-  UpdateDatabase(google::longrunning::Operation const& operation);
+  UpdateDatabase(google::spanner::admin::database::v1::UpdateDatabaseRequest const& request);
 
-  virtual future<
-      StatusOr<google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>>
-  UpdateDatabaseDdl(
-      google::spanner::admin::database::v1::UpdateDatabaseDdlRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  UpdateDatabase(NoAwaitTag, google::spanner::admin::database::v1::UpdateDatabaseRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> UpdateDatabaseDdl(
-      NoAwaitTag,
-      google::spanner::admin::database::v1::UpdateDatabaseDdlRequest const&
-          request);
+  virtual future<StatusOr<google::spanner::admin::database::v1::Database>>
+  UpdateDatabase( google::longrunning::Operation const& operation);
 
-  virtual future<
-      StatusOr<google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>>
-  UpdateDatabaseDdl(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>>
+  UpdateDatabaseDdl(google::spanner::admin::database::v1::UpdateDatabaseDdlRequest const& request);
 
-  virtual Status DropDatabase(
-      google::spanner::admin::database::v1::DropDatabaseRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  UpdateDatabaseDdl(NoAwaitTag, google::spanner::admin::database::v1::UpdateDatabaseDdlRequest const& request);
+
+  virtual future<StatusOr<google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>>
+  UpdateDatabaseDdl( google::longrunning::Operation const& operation);
+
+  virtual Status
+  DropDatabase(google::spanner::admin::database::v1::DropDatabaseRequest const& request);
 
   virtual StatusOr<google::spanner::admin::database::v1::GetDatabaseDdlResponse>
-  GetDatabaseDdl(
-      google::spanner::admin::database::v1::GetDatabaseDdlRequest const&
-          request);
+  GetDatabaseDdl(google::spanner::admin::database::v1::GetDatabaseDdlRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
 
   virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
   TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
 
   virtual future<StatusOr<google::spanner::admin::database::v1::Backup>>
-  CreateBackup(
-      google::spanner::admin::database::v1::CreateBackupRequest const& request);
+  CreateBackup(google::spanner::admin::database::v1::CreateBackupRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> CreateBackup(
-      NoAwaitTag,
-      google::spanner::admin::database::v1::CreateBackupRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  CreateBackup(NoAwaitTag, google::spanner::admin::database::v1::CreateBackupRequest const& request);
 
   virtual future<StatusOr<google::spanner::admin::database::v1::Backup>>
-  CreateBackup(google::longrunning::Operation const& operation);
+  CreateBackup( google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::spanner::admin::database::v1::Backup>>
-  CopyBackup(
-      google::spanner::admin::database::v1::CopyBackupRequest const& request);
+  CopyBackup(google::spanner::admin::database::v1::CopyBackupRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> CopyBackup(
-      NoAwaitTag,
-      google::spanner::admin::database::v1::CopyBackupRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  CopyBackup(NoAwaitTag, google::spanner::admin::database::v1::CopyBackupRequest const& request);
 
   virtual future<StatusOr<google::spanner::admin::database::v1::Backup>>
-  CopyBackup(google::longrunning::Operation const& operation);
+  CopyBackup( google::longrunning::Operation const& operation);
 
-  virtual StatusOr<google::spanner::admin::database::v1::Backup> GetBackup(
-      google::spanner::admin::database::v1::GetBackupRequest const& request);
+  virtual StatusOr<google::spanner::admin::database::v1::Backup>
+  GetBackup(google::spanner::admin::database::v1::GetBackupRequest const& request);
 
-  virtual StatusOr<google::spanner::admin::database::v1::Backup> UpdateBackup(
-      google::spanner::admin::database::v1::UpdateBackupRequest const& request);
+  virtual StatusOr<google::spanner::admin::database::v1::Backup>
+  UpdateBackup(google::spanner::admin::database::v1::UpdateBackupRequest const& request);
 
-  virtual Status DeleteBackup(
-      google::spanner::admin::database::v1::DeleteBackupRequest const& request);
+  virtual Status
+  DeleteBackup(google::spanner::admin::database::v1::DeleteBackupRequest const& request);
 
-  virtual StreamRange<google::spanner::admin::database::v1::Backup> ListBackups(
-      google::spanner::admin::database::v1::ListBackupsRequest request);
+  virtual StreamRange<google::spanner::admin::database::v1::Backup>
+  ListBackups(google::spanner::admin::database::v1::ListBackupsRequest request);
 
   virtual future<StatusOr<google::spanner::admin::database::v1::Database>>
-  RestoreDatabase(
-      google::spanner::admin::database::v1::RestoreDatabaseRequest const&
-          request);
+  RestoreDatabase(google::spanner::admin::database::v1::RestoreDatabaseRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> RestoreDatabase(
-      NoAwaitTag,
-      google::spanner::admin::database::v1::RestoreDatabaseRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  RestoreDatabase(NoAwaitTag, google::spanner::admin::database::v1::RestoreDatabaseRequest const& request);
 
   virtual future<StatusOr<google::spanner::admin::database::v1::Database>>
-  RestoreDatabase(google::longrunning::Operation const& operation);
+  RestoreDatabase( google::longrunning::Operation const& operation);
 
-  virtual StreamRange<google::longrunning::Operation> ListDatabaseOperations(
-      google::spanner::admin::database::v1::ListDatabaseOperationsRequest
-          request);
+  virtual StreamRange<google::longrunning::Operation>
+  ListDatabaseOperations(google::spanner::admin::database::v1::ListDatabaseOperationsRequest request);
 
-  virtual StreamRange<google::longrunning::Operation> ListBackupOperations(
-      google::spanner::admin::database::v1::ListBackupOperationsRequest
-          request);
+  virtual StreamRange<google::longrunning::Operation>
+  ListBackupOperations(google::spanner::admin::database::v1::ListBackupOperationsRequest request);
 
   virtual StreamRange<google::spanner::admin::database::v1::DatabaseRole>
-  ListDatabaseRoles(
-      google::spanner::admin::database::v1::ListDatabaseRolesRequest request);
+  ListDatabaseRoles(google::spanner::admin::database::v1::ListDatabaseRolesRequest request);
 
   virtual StatusOr<google::spanner::admin::database::v1::AddSplitPointsResponse>
-  AddSplitPoints(
-      google::spanner::admin::database::v1::AddSplitPointsRequest const&
-          request);
+  AddSplitPoints(google::spanner::admin::database::v1::AddSplitPointsRequest const& request);
 
   virtual StatusOr<google::spanner::admin::database::v1::BackupSchedule>
-  CreateBackupSchedule(
-      google::spanner::admin::database::v1::CreateBackupScheduleRequest const&
-          request);
+  CreateBackupSchedule(google::spanner::admin::database::v1::CreateBackupScheduleRequest const& request);
 
   virtual StatusOr<google::spanner::admin::database::v1::BackupSchedule>
-  GetBackupSchedule(
-      google::spanner::admin::database::v1::GetBackupScheduleRequest const&
-          request);
+  GetBackupSchedule(google::spanner::admin::database::v1::GetBackupScheduleRequest const& request);
 
   virtual StatusOr<google::spanner::admin::database::v1::BackupSchedule>
-  UpdateBackupSchedule(
-      google::spanner::admin::database::v1::UpdateBackupScheduleRequest const&
-          request);
+  UpdateBackupSchedule(google::spanner::admin::database::v1::UpdateBackupScheduleRequest const& request);
 
-  virtual Status DeleteBackupSchedule(
-      google::spanner::admin::database::v1::DeleteBackupScheduleRequest const&
-          request);
+  virtual Status
+  DeleteBackupSchedule(google::spanner::admin::database::v1::DeleteBackupScheduleRequest const& request);
 
   virtual StreamRange<google::spanner::admin::database::v1::BackupSchedule>
-  ListBackupSchedules(
-      google::spanner::admin::database::v1::ListBackupSchedulesRequest request);
+  ListBackupSchedules(google::spanner::admin::database::v1::ListBackupSchedulesRequest request);
 
-  virtual StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 
-  virtual Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request);
+  virtual Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
 
-  virtual Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request);
+  virtual Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request);
 };
 
 /**
@@ -376,7 +331,7 @@ std::shared_ptr<DatabaseAdminConnection> MakeDatabaseAdminConnection(
     Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS;  // NOLINT(misc-unused-alias-decls)
+namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS; // NOLINT(misc-unused-alias-decls)
 }  // namespace spanner_admin
 }  // namespace cloud
 }  // namespace google

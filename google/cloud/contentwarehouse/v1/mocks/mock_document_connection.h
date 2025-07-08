@@ -42,60 +42,45 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockDocumentServiceConnection
-    : public contentwarehouse_v1::DocumentServiceConnection {
+class MockDocumentServiceConnection : public contentwarehouse_v1::DocumentServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::contentwarehouse::v1::CreateDocumentResponse>,
-      CreateDocument,
-      (google::cloud::contentwarehouse::v1::CreateDocumentRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::contentwarehouse::v1::CreateDocumentResponse>,
+  CreateDocument,
+  (google::cloud::contentwarehouse::v1::CreateDocumentRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::contentwarehouse::v1::Document>, GetDocument,
-      (google::cloud::contentwarehouse::v1::GetDocumentRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::contentwarehouse::v1::Document>,
+  GetDocument,
+  (google::cloud::contentwarehouse::v1::GetDocumentRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::contentwarehouse::v1::UpdateDocumentResponse>,
-      UpdateDocument,
-      (google::cloud::contentwarehouse::v1::UpdateDocumentRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::contentwarehouse::v1::UpdateDocumentResponse>,
+  UpdateDocument,
+  (google::cloud::contentwarehouse::v1::UpdateDocumentRequest const& request), (override));
 
-  MOCK_METHOD(Status, DeleteDocument,
-              (google::cloud::contentwarehouse::v1::DeleteDocumentRequest const&
-                   request),
-              (override));
+  MOCK_METHOD(Status,
+  DeleteDocument,
+  (google::cloud::contentwarehouse::v1::DeleteDocumentRequest const& request), (override));
 
-  MOCK_METHOD(
-      (StreamRange<google::cloud::contentwarehouse::v1::
-                       SearchDocumentsResponse::MatchingDocument>),
-      SearchDocuments,
-      (google::cloud::contentwarehouse::v1::SearchDocumentsRequest request),
-      (override));
+  MOCK_METHOD((StreamRange<google::cloud::contentwarehouse::v1::SearchDocumentsResponse::MatchingDocument>),
+  SearchDocuments,
+  (google::cloud::contentwarehouse::v1::SearchDocumentsRequest request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::contentwarehouse::v1::Document>, LockDocument,
-      (google::cloud::contentwarehouse::v1::LockDocumentRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::contentwarehouse::v1::Document>,
+  LockDocument,
+  (google::cloud::contentwarehouse::v1::LockDocumentRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::contentwarehouse::v1::FetchAclResponse>, FetchAcl,
-      (google::cloud::contentwarehouse::v1::FetchAclRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::contentwarehouse::v1::FetchAclResponse>,
+  FetchAcl,
+  (google::cloud::contentwarehouse::v1::FetchAclRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::contentwarehouse::v1::SetAclResponse>, SetAcl,
-      (google::cloud::contentwarehouse::v1::SetAclRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::contentwarehouse::v1::SetAclResponse>,
+  SetAcl,
+  (google::cloud::contentwarehouse::v1::SetAclRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
-              (google::longrunning::GetOperationRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  GetOperation,
+  (google::longrunning::GetOperationRequest const& request), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

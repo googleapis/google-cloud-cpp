@@ -19,9 +19,9 @@
 #include "google/cloud/aiplatform/v1/internal/index_endpoint_option_defaults.h"
 #include "google/cloud/aiplatform/v1/index_endpoint_connection.h"
 #include "google/cloud/aiplatform/v1/index_endpoint_options.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include <memory>
 #include <utility>
 
@@ -34,8 +34,7 @@ namespace {
 auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
-Options IndexEndpointServiceDefaultOptions(std::string const& location,
-                                           Options options) {
+Options IndexEndpointServiceDefaultOptions(std::string const& location, Options options) {
   options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_INDEX_ENDPOINT_SERVICE_ENDPOINT",
       "", "GOOGLE_CLOUD_CPP_INDEX_ENDPOINT_SERVICE_AUTHORITY",
@@ -44,35 +43,25 @@ Options IndexEndpointServiceDefaultOptions(std::string const& location,
   if (!options.has<aiplatform_v1::IndexEndpointServiceRetryPolicyOption>()) {
     options.set<aiplatform_v1::IndexEndpointServiceRetryPolicyOption>(
         aiplatform_v1::IndexEndpointServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
-            .clone());
+            std::chrono::minutes(30)).clone());
   }
   if (!options.has<aiplatform_v1::IndexEndpointServiceBackoffPolicyOption>()) {
     options.set<aiplatform_v1::IndexEndpointServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(
-            std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
-            .clone());
+        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
   }
   if (!options.has<aiplatform_v1::IndexEndpointServicePollingPolicyOption>()) {
     options.set<aiplatform_v1::IndexEndpointServicePollingPolicyOption>(
         GenericPollingPolicy<
             aiplatform_v1::IndexEndpointServiceRetryPolicyOption::Type,
             aiplatform_v1::IndexEndpointServiceBackoffPolicyOption::Type>(
-            options.get<aiplatform_v1::IndexEndpointServiceRetryPolicyOption>()
-                ->clone(),
+            options.get<aiplatform_v1::IndexEndpointServiceRetryPolicyOption>()->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                     std::chrono::minutes(5), kBackoffScaling)
-                .clone())
-            .clone());
+            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
   }
-  if (!options
-           .has<aiplatform_v1::
-                    IndexEndpointServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<
-        aiplatform_v1::IndexEndpointServiceConnectionIdempotencyPolicyOption>(
-        aiplatform_v1::
-            MakeDefaultIndexEndpointServiceConnectionIdempotencyPolicy());
+  if (!options.has<aiplatform_v1::IndexEndpointServiceConnectionIdempotencyPolicyOption>()) {
+    options.set<aiplatform_v1::IndexEndpointServiceConnectionIdempotencyPolicyOption>(
+        aiplatform_v1::MakeDefaultIndexEndpointServiceConnectionIdempotencyPolicy());
   }
 
   return options;

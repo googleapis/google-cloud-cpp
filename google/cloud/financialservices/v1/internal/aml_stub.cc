@@ -33,138 +33,134 @@ AMLStub::~AMLStub() = default;
 
 StatusOr<google::cloud::financialservices::v1::ListInstancesResponse>
 DefaultAMLStub::ListInstances(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::financialservices::v1::ListInstancesRequest const& request) {
-  google::cloud::financialservices::v1::ListInstancesResponse response;
-  auto status = grpc_stub_->ListInstances(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::financialservices::v1::ListInstancesRequest const& request) {
+    google::cloud::financialservices::v1::ListInstancesResponse response;
+    auto status =
+        grpc_stub_->ListInstances(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::financialservices::v1::Instance>
 DefaultAMLStub::GetInstance(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::financialservices::v1::GetInstanceRequest const& request) {
-  google::cloud::financialservices::v1::Instance response;
-  auto status = grpc_stub_->GetInstance(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::financialservices::v1::GetInstanceRequest const& request) {
+    google::cloud::financialservices::v1::Instance response;
+    auto status =
+        grpc_stub_->GetInstance(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultAMLStub::AsyncCreateInstance(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::financialservices::v1::CreateInstanceRequest const&
-        request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::financialservices::v1::CreateInstanceRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::financialservices::v1::CreateInstanceRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::financialservices::v1::CreateInstanceRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::financialservices::v1::CreateInstanceRequest const&
-                 request,
+             google::cloud::financialservices::v1::CreateInstanceRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncCreateInstance(context, request, cq);
       },
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation> DefaultAMLStub::CreateInstance(
-    grpc::ClientContext& context, Options,
-    google::cloud::financialservices::v1::CreateInstanceRequest const&
-        request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->CreateInstance(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::longrunning::Operation>
+DefaultAMLStub::CreateInstance(
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::financialservices::v1::CreateInstanceRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->CreateInstance(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultAMLStub::AsyncUpdateInstance(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::financialservices::v1::UpdateInstanceRequest const&
-        request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::financialservices::v1::UpdateInstanceRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::financialservices::v1::UpdateInstanceRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::financialservices::v1::UpdateInstanceRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::financialservices::v1::UpdateInstanceRequest const&
-                 request,
+             google::cloud::financialservices::v1::UpdateInstanceRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncUpdateInstance(context, request, cq);
       },
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation> DefaultAMLStub::UpdateInstance(
-    grpc::ClientContext& context, Options,
-    google::cloud::financialservices::v1::UpdateInstanceRequest const&
-        request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->UpdateInstance(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::longrunning::Operation>
+DefaultAMLStub::UpdateInstance(
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::financialservices::v1::UpdateInstanceRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->UpdateInstance(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultAMLStub::AsyncDeleteInstance(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::financialservices::v1::DeleteInstanceRequest const&
-        request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::financialservices::v1::DeleteInstanceRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::financialservices::v1::DeleteInstanceRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::financialservices::v1::DeleteInstanceRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::financialservices::v1::DeleteInstanceRequest const&
-                 request,
+             google::cloud::financialservices::v1::DeleteInstanceRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncDeleteInstance(context, request, cq);
       },
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation> DefaultAMLStub::DeleteInstance(
-    grpc::ClientContext& context, Options,
-    google::cloud::financialservices::v1::DeleteInstanceRequest const&
-        request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->DeleteInstance(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::longrunning::Operation>
+DefaultAMLStub::DeleteInstance(
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::financialservices::v1::DeleteInstanceRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->DeleteInstance(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultAMLStub::AsyncImportRegisteredParties(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::financialservices::v1::ImportRegisteredPartiesRequest const&
-        request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::financialservices::v1::ImportRegisteredPartiesRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::financialservices::v1::ImportRegisteredPartiesRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::financialservices::v1::ImportRegisteredPartiesRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::financialservices::v1::
-                 ImportRegisteredPartiesRequest const& request,
+             google::cloud::financialservices::v1::ImportRegisteredPartiesRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncImportRegisteredParties(context, request, cq);
       },
@@ -173,32 +169,29 @@ DefaultAMLStub::AsyncImportRegisteredParties(
 
 StatusOr<google::longrunning::Operation>
 DefaultAMLStub::ImportRegisteredParties(
-    grpc::ClientContext& context, Options,
-    google::cloud::financialservices::v1::ImportRegisteredPartiesRequest const&
-        request) {
-  google::longrunning::Operation response;
-  auto status =
-      grpc_stub_->ImportRegisteredParties(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::financialservices::v1::ImportRegisteredPartiesRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->ImportRegisteredParties(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultAMLStub::AsyncExportRegisteredParties(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::financialservices::v1::ExportRegisteredPartiesRequest const&
-        request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::financialservices::v1::ExportRegisteredPartiesRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::financialservices::v1::ExportRegisteredPartiesRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::financialservices::v1::ExportRegisteredPartiesRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::financialservices::v1::
-                 ExportRegisteredPartiesRequest const& request,
+             google::cloud::financialservices::v1::ExportRegisteredPartiesRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncExportRegisteredParties(context, request, cq);
       },
@@ -207,846 +200,839 @@ DefaultAMLStub::AsyncExportRegisteredParties(
 
 StatusOr<google::longrunning::Operation>
 DefaultAMLStub::ExportRegisteredParties(
-    grpc::ClientContext& context, Options,
-    google::cloud::financialservices::v1::ExportRegisteredPartiesRequest const&
-        request) {
-  google::longrunning::Operation response;
-  auto status =
-      grpc_stub_->ExportRegisteredParties(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::financialservices::v1::ExportRegisteredPartiesRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->ExportRegisteredParties(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::financialservices::v1::ListDatasetsResponse>
 DefaultAMLStub::ListDatasets(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::financialservices::v1::ListDatasetsRequest const& request) {
-  google::cloud::financialservices::v1::ListDatasetsResponse response;
-  auto status = grpc_stub_->ListDatasets(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::financialservices::v1::ListDatasetsRequest const& request) {
+    google::cloud::financialservices::v1::ListDatasetsResponse response;
+    auto status =
+        grpc_stub_->ListDatasets(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::financialservices::v1::Dataset>
 DefaultAMLStub::GetDataset(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::financialservices::v1::GetDatasetRequest const& request) {
-  google::cloud::financialservices::v1::Dataset response;
-  auto status = grpc_stub_->GetDataset(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::financialservices::v1::GetDatasetRequest const& request) {
+    google::cloud::financialservices::v1::Dataset response;
+    auto status =
+        grpc_stub_->GetDataset(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultAMLStub::AsyncCreateDataset(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::financialservices::v1::CreateDatasetRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::financialservices::v1::CreateDatasetRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::financialservices::v1::CreateDatasetRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::financialservices::v1::CreateDatasetRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::financialservices::v1::CreateDatasetRequest const&
-                 request,
+             google::cloud::financialservices::v1::CreateDatasetRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncCreateDataset(context, request, cq);
       },
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation> DefaultAMLStub::CreateDataset(
-    grpc::ClientContext& context, Options,
-    google::cloud::financialservices::v1::CreateDatasetRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->CreateDataset(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::longrunning::Operation>
+DefaultAMLStub::CreateDataset(
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::financialservices::v1::CreateDatasetRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->CreateDataset(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultAMLStub::AsyncUpdateDataset(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::financialservices::v1::UpdateDatasetRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::financialservices::v1::UpdateDatasetRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::financialservices::v1::UpdateDatasetRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::financialservices::v1::UpdateDatasetRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::financialservices::v1::UpdateDatasetRequest const&
-                 request,
+             google::cloud::financialservices::v1::UpdateDatasetRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncUpdateDataset(context, request, cq);
       },
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation> DefaultAMLStub::UpdateDataset(
-    grpc::ClientContext& context, Options,
-    google::cloud::financialservices::v1::UpdateDatasetRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->UpdateDataset(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::longrunning::Operation>
+DefaultAMLStub::UpdateDataset(
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::financialservices::v1::UpdateDatasetRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->UpdateDataset(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultAMLStub::AsyncDeleteDataset(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::financialservices::v1::DeleteDatasetRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::financialservices::v1::DeleteDatasetRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::financialservices::v1::DeleteDatasetRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::financialservices::v1::DeleteDatasetRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::financialservices::v1::DeleteDatasetRequest const&
-                 request,
+             google::cloud::financialservices::v1::DeleteDatasetRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncDeleteDataset(context, request, cq);
       },
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation> DefaultAMLStub::DeleteDataset(
-    grpc::ClientContext& context, Options,
-    google::cloud::financialservices::v1::DeleteDatasetRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->DeleteDataset(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::longrunning::Operation>
+DefaultAMLStub::DeleteDataset(
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::financialservices::v1::DeleteDatasetRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->DeleteDataset(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::financialservices::v1::ListModelsResponse>
 DefaultAMLStub::ListModels(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::financialservices::v1::ListModelsRequest const& request) {
-  google::cloud::financialservices::v1::ListModelsResponse response;
-  auto status = grpc_stub_->ListModels(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::financialservices::v1::ListModelsRequest const& request) {
+    google::cloud::financialservices::v1::ListModelsResponse response;
+    auto status =
+        grpc_stub_->ListModels(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-StatusOr<google::cloud::financialservices::v1::Model> DefaultAMLStub::GetModel(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::financialservices::v1::GetModelRequest const& request) {
-  google::cloud::financialservices::v1::Model response;
-  auto status = grpc_stub_->GetModel(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::cloud::financialservices::v1::Model>
+DefaultAMLStub::GetModel(
+  grpc::ClientContext& context, Options const&,
+  google::cloud::financialservices::v1::GetModelRequest const& request) {
+    google::cloud::financialservices::v1::Model response;
+    auto status =
+        grpc_stub_->GetModel(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultAMLStub::AsyncCreateModel(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::financialservices::v1::CreateModelRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::financialservices::v1::CreateModelRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::financialservices::v1::CreateModelRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::financialservices::v1::CreateModelRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::financialservices::v1::CreateModelRequest const&
-                 request,
+             google::cloud::financialservices::v1::CreateModelRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncCreateModel(context, request, cq);
       },
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation> DefaultAMLStub::CreateModel(
-    grpc::ClientContext& context, Options,
-    google::cloud::financialservices::v1::CreateModelRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->CreateModel(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::longrunning::Operation>
+DefaultAMLStub::CreateModel(
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::financialservices::v1::CreateModelRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->CreateModel(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultAMLStub::AsyncUpdateModel(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::financialservices::v1::UpdateModelRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::financialservices::v1::UpdateModelRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::financialservices::v1::UpdateModelRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::financialservices::v1::UpdateModelRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::financialservices::v1::UpdateModelRequest const&
-                 request,
+             google::cloud::financialservices::v1::UpdateModelRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncUpdateModel(context, request, cq);
       },
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation> DefaultAMLStub::UpdateModel(
-    grpc::ClientContext& context, Options,
-    google::cloud::financialservices::v1::UpdateModelRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->UpdateModel(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::longrunning::Operation>
+DefaultAMLStub::UpdateModel(
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::financialservices::v1::UpdateModelRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->UpdateModel(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultAMLStub::AsyncExportModelMetadata(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::financialservices::v1::ExportModelMetadataRequest const&
-        request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::financialservices::v1::ExportModelMetadataRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::financialservices::v1::ExportModelMetadataRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::financialservices::v1::ExportModelMetadataRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::financialservices::v1::
-                 ExportModelMetadataRequest const& request,
+             google::cloud::financialservices::v1::ExportModelMetadataRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncExportModelMetadata(context, request, cq);
       },
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation> DefaultAMLStub::ExportModelMetadata(
-    grpc::ClientContext& context, Options,
-    google::cloud::financialservices::v1::ExportModelMetadataRequest const&
-        request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->ExportModelMetadata(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::longrunning::Operation>
+DefaultAMLStub::ExportModelMetadata(
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::financialservices::v1::ExportModelMetadataRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->ExportModelMetadata(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultAMLStub::AsyncDeleteModel(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::financialservices::v1::DeleteModelRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::financialservices::v1::DeleteModelRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::financialservices::v1::DeleteModelRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::financialservices::v1::DeleteModelRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::financialservices::v1::DeleteModelRequest const&
-                 request,
+             google::cloud::financialservices::v1::DeleteModelRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncDeleteModel(context, request, cq);
       },
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation> DefaultAMLStub::DeleteModel(
-    grpc::ClientContext& context, Options,
-    google::cloud::financialservices::v1::DeleteModelRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->DeleteModel(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::longrunning::Operation>
+DefaultAMLStub::DeleteModel(
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::financialservices::v1::DeleteModelRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->DeleteModel(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::financialservices::v1::ListEngineConfigsResponse>
 DefaultAMLStub::ListEngineConfigs(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::financialservices::v1::ListEngineConfigsRequest const&
-        request) {
-  google::cloud::financialservices::v1::ListEngineConfigsResponse response;
-  auto status = grpc_stub_->ListEngineConfigs(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::financialservices::v1::ListEngineConfigsRequest const& request) {
+    google::cloud::financialservices::v1::ListEngineConfigsResponse response;
+    auto status =
+        grpc_stub_->ListEngineConfigs(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::financialservices::v1::EngineConfig>
 DefaultAMLStub::GetEngineConfig(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::financialservices::v1::GetEngineConfigRequest const&
-        request) {
-  google::cloud::financialservices::v1::EngineConfig response;
-  auto status = grpc_stub_->GetEngineConfig(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::financialservices::v1::GetEngineConfigRequest const& request) {
+    google::cloud::financialservices::v1::EngineConfig response;
+    auto status =
+        grpc_stub_->GetEngineConfig(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultAMLStub::AsyncCreateEngineConfig(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::financialservices::v1::CreateEngineConfigRequest const&
-        request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::financialservices::v1::CreateEngineConfigRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::financialservices::v1::CreateEngineConfigRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::financialservices::v1::CreateEngineConfigRequest,
+                                    google::longrunning::Operation>(
       cq,
-      [this](
-          grpc::ClientContext* context,
-          google::cloud::financialservices::v1::CreateEngineConfigRequest const&
-              request,
-          grpc::CompletionQueue* cq) {
+      [this](grpc::ClientContext* context,
+             google::cloud::financialservices::v1::CreateEngineConfigRequest const& request,
+             grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncCreateEngineConfig(context, request, cq);
       },
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation> DefaultAMLStub::CreateEngineConfig(
-    grpc::ClientContext& context, Options,
-    google::cloud::financialservices::v1::CreateEngineConfigRequest const&
-        request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->CreateEngineConfig(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::longrunning::Operation>
+DefaultAMLStub::CreateEngineConfig(
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::financialservices::v1::CreateEngineConfigRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->CreateEngineConfig(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultAMLStub::AsyncUpdateEngineConfig(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::financialservices::v1::UpdateEngineConfigRequest const&
-        request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::financialservices::v1::UpdateEngineConfigRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::financialservices::v1::UpdateEngineConfigRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::financialservices::v1::UpdateEngineConfigRequest,
+                                    google::longrunning::Operation>(
       cq,
-      [this](
-          grpc::ClientContext* context,
-          google::cloud::financialservices::v1::UpdateEngineConfigRequest const&
-              request,
-          grpc::CompletionQueue* cq) {
+      [this](grpc::ClientContext* context,
+             google::cloud::financialservices::v1::UpdateEngineConfigRequest const& request,
+             grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncUpdateEngineConfig(context, request, cq);
       },
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation> DefaultAMLStub::UpdateEngineConfig(
-    grpc::ClientContext& context, Options,
-    google::cloud::financialservices::v1::UpdateEngineConfigRequest const&
-        request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->UpdateEngineConfig(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::longrunning::Operation>
+DefaultAMLStub::UpdateEngineConfig(
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::financialservices::v1::UpdateEngineConfigRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->UpdateEngineConfig(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultAMLStub::AsyncExportEngineConfigMetadata(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::financialservices::v1::
-        ExportEngineConfigMetadataRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::financialservices::v1::ExportEngineConfigMetadataRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::financialservices::v1::ExportEngineConfigMetadataRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::financialservices::v1::ExportEngineConfigMetadataRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::financialservices::v1::
-                 ExportEngineConfigMetadataRequest const& request,
+             google::cloud::financialservices::v1::ExportEngineConfigMetadataRequest const& request,
              grpc::CompletionQueue* cq) {
-        return grpc_stub_->AsyncExportEngineConfigMetadata(context, request,
-                                                           cq);
+        return grpc_stub_->AsyncExportEngineConfigMetadata(context, request, cq);
       },
       request, std::move(context));
 }
 
 StatusOr<google::longrunning::Operation>
 DefaultAMLStub::ExportEngineConfigMetadata(
-    grpc::ClientContext& context, Options,
-    google::cloud::financialservices::v1::
-        ExportEngineConfigMetadataRequest const& request) {
-  google::longrunning::Operation response;
-  auto status =
-      grpc_stub_->ExportEngineConfigMetadata(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::financialservices::v1::ExportEngineConfigMetadataRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->ExportEngineConfigMetadata(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultAMLStub::AsyncDeleteEngineConfig(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::financialservices::v1::DeleteEngineConfigRequest const&
-        request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::financialservices::v1::DeleteEngineConfigRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::financialservices::v1::DeleteEngineConfigRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::financialservices::v1::DeleteEngineConfigRequest,
+                                    google::longrunning::Operation>(
       cq,
-      [this](
-          grpc::ClientContext* context,
-          google::cloud::financialservices::v1::DeleteEngineConfigRequest const&
-              request,
-          grpc::CompletionQueue* cq) {
+      [this](grpc::ClientContext* context,
+             google::cloud::financialservices::v1::DeleteEngineConfigRequest const& request,
+             grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncDeleteEngineConfig(context, request, cq);
       },
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation> DefaultAMLStub::DeleteEngineConfig(
-    grpc::ClientContext& context, Options,
-    google::cloud::financialservices::v1::DeleteEngineConfigRequest const&
-        request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->DeleteEngineConfig(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::longrunning::Operation>
+DefaultAMLStub::DeleteEngineConfig(
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::financialservices::v1::DeleteEngineConfigRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->DeleteEngineConfig(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::financialservices::v1::EngineVersion>
 DefaultAMLStub::GetEngineVersion(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::financialservices::v1::GetEngineVersionRequest const&
-        request) {
-  google::cloud::financialservices::v1::EngineVersion response;
-  auto status = grpc_stub_->GetEngineVersion(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::financialservices::v1::GetEngineVersionRequest const& request) {
+    google::cloud::financialservices::v1::EngineVersion response;
+    auto status =
+        grpc_stub_->GetEngineVersion(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::financialservices::v1::ListEngineVersionsResponse>
 DefaultAMLStub::ListEngineVersions(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::financialservices::v1::ListEngineVersionsRequest const&
-        request) {
-  google::cloud::financialservices::v1::ListEngineVersionsResponse response;
-  auto status = grpc_stub_->ListEngineVersions(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::financialservices::v1::ListEngineVersionsRequest const& request) {
+    google::cloud::financialservices::v1::ListEngineVersionsResponse response;
+    auto status =
+        grpc_stub_->ListEngineVersions(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::financialservices::v1::ListPredictionResultsResponse>
 DefaultAMLStub::ListPredictionResults(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::financialservices::v1::ListPredictionResultsRequest const&
-        request) {
-  google::cloud::financialservices::v1::ListPredictionResultsResponse response;
-  auto status = grpc_stub_->ListPredictionResults(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::financialservices::v1::ListPredictionResultsRequest const& request) {
+    google::cloud::financialservices::v1::ListPredictionResultsResponse response;
+    auto status =
+        grpc_stub_->ListPredictionResults(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::financialservices::v1::PredictionResult>
 DefaultAMLStub::GetPredictionResult(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::financialservices::v1::GetPredictionResultRequest const&
-        request) {
-  google::cloud::financialservices::v1::PredictionResult response;
-  auto status = grpc_stub_->GetPredictionResult(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::financialservices::v1::GetPredictionResultRequest const& request) {
+    google::cloud::financialservices::v1::PredictionResult response;
+    auto status =
+        grpc_stub_->GetPredictionResult(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultAMLStub::AsyncCreatePredictionResult(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::financialservices::v1::CreatePredictionResultRequest const&
-        request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::financialservices::v1::CreatePredictionResultRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::financialservices::v1::CreatePredictionResultRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::financialservices::v1::CreatePredictionResultRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::financialservices::v1::
-                 CreatePredictionResultRequest const& request,
+             google::cloud::financialservices::v1::CreatePredictionResultRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncCreatePredictionResult(context, request, cq);
       },
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation> DefaultAMLStub::CreatePredictionResult(
-    grpc::ClientContext& context, Options,
-    google::cloud::financialservices::v1::CreatePredictionResultRequest const&
-        request) {
-  google::longrunning::Operation response;
-  auto status =
-      grpc_stub_->CreatePredictionResult(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::longrunning::Operation>
+DefaultAMLStub::CreatePredictionResult(
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::financialservices::v1::CreatePredictionResultRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->CreatePredictionResult(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultAMLStub::AsyncUpdatePredictionResult(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::financialservices::v1::UpdatePredictionResultRequest const&
-        request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::financialservices::v1::UpdatePredictionResultRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::financialservices::v1::UpdatePredictionResultRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::financialservices::v1::UpdatePredictionResultRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::financialservices::v1::
-                 UpdatePredictionResultRequest const& request,
+             google::cloud::financialservices::v1::UpdatePredictionResultRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncUpdatePredictionResult(context, request, cq);
       },
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation> DefaultAMLStub::UpdatePredictionResult(
-    grpc::ClientContext& context, Options,
-    google::cloud::financialservices::v1::UpdatePredictionResultRequest const&
-        request) {
-  google::longrunning::Operation response;
-  auto status =
-      grpc_stub_->UpdatePredictionResult(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::longrunning::Operation>
+DefaultAMLStub::UpdatePredictionResult(
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::financialservices::v1::UpdatePredictionResultRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->UpdatePredictionResult(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultAMLStub::AsyncExportPredictionResultMetadata(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::financialservices::v1::
-        ExportPredictionResultMetadataRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::financialservices::v1::
-                                        ExportPredictionResultMetadataRequest,
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::financialservices::v1::ExportPredictionResultMetadataRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::financialservices::v1::ExportPredictionResultMetadataRequest,
                                     google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::financialservices::v1::
-                 ExportPredictionResultMetadataRequest const& request,
+             google::cloud::financialservices::v1::ExportPredictionResultMetadataRequest const& request,
              grpc::CompletionQueue* cq) {
-        return grpc_stub_->AsyncExportPredictionResultMetadata(context, request,
-                                                               cq);
+        return grpc_stub_->AsyncExportPredictionResultMetadata(context, request, cq);
       },
       request, std::move(context));
 }
 
 StatusOr<google::longrunning::Operation>
 DefaultAMLStub::ExportPredictionResultMetadata(
-    grpc::ClientContext& context, Options,
-    google::cloud::financialservices::v1::
-        ExportPredictionResultMetadataRequest const& request) {
-  google::longrunning::Operation response;
-  auto status =
-      grpc_stub_->ExportPredictionResultMetadata(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::financialservices::v1::ExportPredictionResultMetadataRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->ExportPredictionResultMetadata(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultAMLStub::AsyncDeletePredictionResult(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::financialservices::v1::DeletePredictionResultRequest const&
-        request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::financialservices::v1::DeletePredictionResultRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::financialservices::v1::DeletePredictionResultRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::financialservices::v1::DeletePredictionResultRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::financialservices::v1::
-                 DeletePredictionResultRequest const& request,
+             google::cloud::financialservices::v1::DeletePredictionResultRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncDeletePredictionResult(context, request, cq);
       },
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation> DefaultAMLStub::DeletePredictionResult(
-    grpc::ClientContext& context, Options,
-    google::cloud::financialservices::v1::DeletePredictionResultRequest const&
-        request) {
-  google::longrunning::Operation response;
-  auto status =
-      grpc_stub_->DeletePredictionResult(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::longrunning::Operation>
+DefaultAMLStub::DeletePredictionResult(
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::financialservices::v1::DeletePredictionResultRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->DeletePredictionResult(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::financialservices::v1::ListBacktestResultsResponse>
 DefaultAMLStub::ListBacktestResults(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::financialservices::v1::ListBacktestResultsRequest const&
-        request) {
-  google::cloud::financialservices::v1::ListBacktestResultsResponse response;
-  auto status = grpc_stub_->ListBacktestResults(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::financialservices::v1::ListBacktestResultsRequest const& request) {
+    google::cloud::financialservices::v1::ListBacktestResultsResponse response;
+    auto status =
+        grpc_stub_->ListBacktestResults(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::financialservices::v1::BacktestResult>
 DefaultAMLStub::GetBacktestResult(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::financialservices::v1::GetBacktestResultRequest const&
-        request) {
-  google::cloud::financialservices::v1::BacktestResult response;
-  auto status = grpc_stub_->GetBacktestResult(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::financialservices::v1::GetBacktestResultRequest const& request) {
+    google::cloud::financialservices::v1::BacktestResult response;
+    auto status =
+        grpc_stub_->GetBacktestResult(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultAMLStub::AsyncCreateBacktestResult(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::financialservices::v1::CreateBacktestResultRequest const&
-        request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::financialservices::v1::CreateBacktestResultRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::financialservices::v1::CreateBacktestResultRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::financialservices::v1::CreateBacktestResultRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::financialservices::v1::
-                 CreateBacktestResultRequest const& request,
+             google::cloud::financialservices::v1::CreateBacktestResultRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncCreateBacktestResult(context, request, cq);
       },
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation> DefaultAMLStub::CreateBacktestResult(
-    grpc::ClientContext& context, Options,
-    google::cloud::financialservices::v1::CreateBacktestResultRequest const&
-        request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->CreateBacktestResult(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::longrunning::Operation>
+DefaultAMLStub::CreateBacktestResult(
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::financialservices::v1::CreateBacktestResultRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->CreateBacktestResult(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultAMLStub::AsyncUpdateBacktestResult(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::financialservices::v1::UpdateBacktestResultRequest const&
-        request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::financialservices::v1::UpdateBacktestResultRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::financialservices::v1::UpdateBacktestResultRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::financialservices::v1::UpdateBacktestResultRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::financialservices::v1::
-                 UpdateBacktestResultRequest const& request,
+             google::cloud::financialservices::v1::UpdateBacktestResultRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncUpdateBacktestResult(context, request, cq);
       },
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation> DefaultAMLStub::UpdateBacktestResult(
-    grpc::ClientContext& context, Options,
-    google::cloud::financialservices::v1::UpdateBacktestResultRequest const&
-        request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->UpdateBacktestResult(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::longrunning::Operation>
+DefaultAMLStub::UpdateBacktestResult(
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::financialservices::v1::UpdateBacktestResultRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->UpdateBacktestResult(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultAMLStub::AsyncExportBacktestResultMetadata(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::financialservices::v1::
-        ExportBacktestResultMetadataRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::financialservices::v1::ExportBacktestResultMetadataRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::financialservices::v1::ExportBacktestResultMetadataRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::financialservices::v1::ExportBacktestResultMetadataRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::financialservices::v1::
-                 ExportBacktestResultMetadataRequest const& request,
+             google::cloud::financialservices::v1::ExportBacktestResultMetadataRequest const& request,
              grpc::CompletionQueue* cq) {
-        return grpc_stub_->AsyncExportBacktestResultMetadata(context, request,
-                                                             cq);
+        return grpc_stub_->AsyncExportBacktestResultMetadata(context, request, cq);
       },
       request, std::move(context));
 }
 
 StatusOr<google::longrunning::Operation>
 DefaultAMLStub::ExportBacktestResultMetadata(
-    grpc::ClientContext& context, Options,
-    google::cloud::financialservices::v1::
-        ExportBacktestResultMetadataRequest const& request) {
-  google::longrunning::Operation response;
-  auto status =
-      grpc_stub_->ExportBacktestResultMetadata(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::financialservices::v1::ExportBacktestResultMetadataRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->ExportBacktestResultMetadata(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultAMLStub::AsyncDeleteBacktestResult(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::financialservices::v1::DeleteBacktestResultRequest const&
-        request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::financialservices::v1::DeleteBacktestResultRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::financialservices::v1::DeleteBacktestResultRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::financialservices::v1::DeleteBacktestResultRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::financialservices::v1::
-                 DeleteBacktestResultRequest const& request,
+             google::cloud::financialservices::v1::DeleteBacktestResultRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncDeleteBacktestResult(context, request, cq);
       },
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation> DefaultAMLStub::DeleteBacktestResult(
-    grpc::ClientContext& context, Options,
-    google::cloud::financialservices::v1::DeleteBacktestResultRequest const&
-        request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->DeleteBacktestResult(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::longrunning::Operation>
+DefaultAMLStub::DeleteBacktestResult(
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::financialservices::v1::DeleteBacktestResultRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->DeleteBacktestResult(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 DefaultAMLStub::ListLocations(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::location::ListLocationsRequest const& request) {
-  google::cloud::location::ListLocationsResponse response;
-  auto status = locations_stub_->ListLocations(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::location::ListLocationsRequest const& request) {
+    google::cloud::location::ListLocationsResponse response;
+    auto status =
+        locations_stub_->ListLocations(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-StatusOr<google::cloud::location::Location> DefaultAMLStub::GetLocation(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::location::GetLocationRequest const& request) {
-  google::cloud::location::Location response;
-  auto status = locations_stub_->GetLocation(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::cloud::location::Location>
+DefaultAMLStub::GetLocation(
+  grpc::ClientContext& context, Options const&,
+  google::cloud::location::GetLocationRequest const& request) {
+    google::cloud::location::Location response;
+    auto status =
+        locations_stub_->GetLocation(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
 DefaultAMLStub::ListOperations(
-    grpc::ClientContext& context, Options const&,
-    google::longrunning::ListOperationsRequest const& request) {
-  google::longrunning::ListOperationsResponse response;
-  auto status = operations_stub_->ListOperations(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::longrunning::ListOperationsRequest const& request) {
+    google::longrunning::ListOperationsResponse response;
+    auto status =
+        operations_stub_->ListOperations(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-StatusOr<google::longrunning::Operation> DefaultAMLStub::GetOperation(
-    grpc::ClientContext& context, Options const&,
-    google::longrunning::GetOperationRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = operations_stub_->GetOperation(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::longrunning::Operation>
+DefaultAMLStub::GetOperation(
+  grpc::ClientContext& context, Options const&,
+  google::longrunning::GetOperationRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        operations_stub_->GetOperation(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-Status DefaultAMLStub::DeleteOperation(
-    grpc::ClientContext& context, Options const&,
-    google::longrunning::DeleteOperationRequest const& request) {
-  google::protobuf::Empty response;
-  auto status = operations_stub_->DeleteOperation(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return google::cloud::Status();
+Status
+DefaultAMLStub::DeleteOperation(
+  grpc::ClientContext& context, Options const&,
+  google::longrunning::DeleteOperationRequest const& request) {
+    google::protobuf::Empty response;
+    auto status =
+        operations_stub_->DeleteOperation(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return google::cloud::Status();
 }
 
-Status DefaultAMLStub::CancelOperation(
-    grpc::ClientContext& context, Options const&,
-    google::longrunning::CancelOperationRequest const& request) {
-  google::protobuf::Empty response;
-  auto status = operations_stub_->CancelOperation(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return google::cloud::Status();
+Status
+DefaultAMLStub::CancelOperation(
+  grpc::ClientContext& context, Options const&,
+  google::longrunning::CancelOperationRequest const& request) {
+    google::protobuf::Empty response;
+    auto status =
+        operations_stub_->CancelOperation(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return google::cloud::Status();
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -1075,14 +1061,13 @@ future<Status> DefaultAMLStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(
-             cq,
-             [this](grpc::ClientContext* context,
-                    google::longrunning::CancelOperationRequest const& request,
-                    grpc::CompletionQueue* cq) {
-               return operations_stub_->AsyncCancelOperation(context, request,
-                                                             cq);
-             },
-             request, std::move(context))
+      cq,
+      [this](grpc::ClientContext* context,
+             google::longrunning::CancelOperationRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return operations_stub_->AsyncCancelOperation(context, request, cq);
+      },
+      request, std::move(context))
       .then([](future<StatusOr<google::protobuf::Empty>> f) {
         return f.get().status();
       });

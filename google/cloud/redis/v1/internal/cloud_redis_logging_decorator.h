@@ -36,21 +36,23 @@ class CloudRedisLogging : public CloudRedisStub {
  public:
   ~CloudRedisLogging() override = default;
   CloudRedisLogging(std::shared_ptr<CloudRedisStub> child,
-                    TracingOptions tracing_options,
-                    std::set<std::string> const& components);
+                       TracingOptions tracing_options,
+                       std::set<std::string> const& components);
 
   StatusOr<google::cloud::redis::v1::ListInstancesResponse> ListInstances(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::redis::v1::ListInstancesRequest const& request) override;
 
   StatusOr<google::cloud::redis::v1::Instance> GetInstance(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::redis::v1::GetInstanceRequest const& request) override;
 
   StatusOr<google::cloud::redis::v1::InstanceAuthString> GetInstanceAuthString(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::redis::v1::GetInstanceAuthStringRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::redis::v1::GetInstanceAuthStringRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateInstance(
       google::cloud::CompletionQueue& cq,
@@ -59,7 +61,8 @@ class CloudRedisLogging : public CloudRedisStub {
       google::cloud::redis::v1::CreateInstanceRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateInstance(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::cloud::redis::v1::CreateInstanceRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateInstance(
@@ -69,7 +72,8 @@ class CloudRedisLogging : public CloudRedisStub {
       google::cloud::redis::v1::UpdateInstanceRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateInstance(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::cloud::redis::v1::UpdateInstanceRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpgradeInstance(
@@ -79,7 +83,8 @@ class CloudRedisLogging : public CloudRedisStub {
       google::cloud::redis::v1::UpgradeInstanceRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpgradeInstance(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::cloud::redis::v1::UpgradeInstanceRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncImportInstance(
@@ -89,7 +94,8 @@ class CloudRedisLogging : public CloudRedisStub {
       google::cloud::redis::v1::ImportInstanceRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> ImportInstance(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::cloud::redis::v1::ImportInstanceRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncExportInstance(
@@ -99,20 +105,20 @@ class CloudRedisLogging : public CloudRedisStub {
       google::cloud::redis::v1::ExportInstanceRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> ExportInstance(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::cloud::redis::v1::ExportInstanceRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncFailoverInstance(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::redis::v1::FailoverInstanceRequest const& request)
-      override;
+      google::cloud::redis::v1::FailoverInstanceRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> FailoverInstance(
-      grpc::ClientContext& context, Options options,
-      google::cloud::redis::v1::FailoverInstanceRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::redis::v1::FailoverInstanceRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteInstance(
       google::cloud::CompletionQueue& cq,
@@ -121,43 +127,49 @@ class CloudRedisLogging : public CloudRedisStub {
       google::cloud::redis::v1::DeleteInstanceRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteInstance(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::cloud::redis::v1::DeleteInstanceRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncRescheduleMaintenance(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::redis::v1::RescheduleMaintenanceRequest const& request)
-      override;
+      google::cloud::redis::v1::RescheduleMaintenanceRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> RescheduleMaintenance(
-      grpc::ClientContext& context, Options options,
-      google::cloud::redis::v1::RescheduleMaintenanceRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::redis::v1::RescheduleMaintenanceRequest const& request) override;
 
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::location::ListLocationsRequest const& request) override;
 
   StatusOr<google::cloud::location::Location> GetLocation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::location::GetLocationRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status DeleteOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::DeleteOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(

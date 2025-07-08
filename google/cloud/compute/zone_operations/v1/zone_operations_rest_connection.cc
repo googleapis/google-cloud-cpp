@@ -17,12 +17,12 @@
 // source: google/cloud/compute/zone_operations/v1/zone_operations.proto
 
 #include "google/cloud/compute/zone_operations/v1/zone_operations_rest_connection.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/compute/zone_operations/v1/internal/zone_operations_option_defaults.h"
 #include "google/cloud/compute/zone_operations/v1/internal/zone_operations_rest_connection_impl.h"
 #include "google/cloud/compute/zone_operations/v1/internal/zone_operations_rest_stub_factory.h"
 #include "google/cloud/compute/zone_operations/v1/internal/zone_operations_tracing_connection.h"
 #include "google/cloud/compute/zone_operations/v1/zone_operations_options.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/rest_background_threads_impl.h"
 #include "google/cloud/internal/rest_options.h"
@@ -36,22 +36,19 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<ZoneOperationsConnection> MakeZoneOperationsConnectionRest(
     Options options) {
-  internal::CheckExpectedOptions<
-      CommonOptionList, RestOptionList, UnifiedCredentialsOptionList,
-      rest_internal::TargetApiVersionOption, ZoneOperationsPolicyOptionList>(
-      options, __func__);
+  internal::CheckExpectedOptions<CommonOptionList, RestOptionList,
+      UnifiedCredentialsOptionList, rest_internal::TargetApiVersionOption,
+      ZoneOperationsPolicyOptionList>(options, __func__);
   options = compute_zone_operations_v1_internal::ZoneOperationsDefaultOptions(
       std::move(options));
   auto background = std::make_unique<
       rest_internal::AutomaticallyCreatedRestBackgroundThreads>();
-  auto stub =
-      compute_zone_operations_v1_internal::CreateDefaultZoneOperationsRestStub(
-          options);
-  return compute_zone_operations_v1_internal::
-      MakeZoneOperationsTracingConnection(
-          std::make_shared<compute_zone_operations_v1_internal::
-                               ZoneOperationsRestConnectionImpl>(
-              std::move(background), std::move(stub), std::move(options)));
+  auto stub = compute_zone_operations_v1_internal::CreateDefaultZoneOperationsRestStub(
+      options);
+  return compute_zone_operations_v1_internal::MakeZoneOperationsTracingConnection(
+      std::make_shared<
+          compute_zone_operations_v1_internal::ZoneOperationsRestConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

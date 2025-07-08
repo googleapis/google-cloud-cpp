@@ -36,48 +36,44 @@ class StorageBatchOperationsConnectionIdempotencyPolicy {
   virtual ~StorageBatchOperationsConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<StorageBatchOperationsConnectionIdempotencyPolicy>
-  clone() const;
+  virtual std::unique_ptr<StorageBatchOperationsConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency ListJobs(
-      google::cloud::storagebatchoperations::v1::ListJobsRequest request);
+  virtual google::cloud::Idempotency
+  ListJobs(google::cloud::storagebatchoperations::v1::ListJobsRequest request);
 
-  virtual google::cloud::Idempotency GetJob(
-      google::cloud::storagebatchoperations::v1::GetJobRequest const& request);
+  virtual google::cloud::Idempotency
+  GetJob(google::cloud::storagebatchoperations::v1::GetJobRequest const& request);
 
-  virtual google::cloud::Idempotency CreateJob(
-      google::cloud::storagebatchoperations::v1::CreateJobRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  CreateJob(google::cloud::storagebatchoperations::v1::CreateJobRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteJob(
-      google::cloud::storagebatchoperations::v1::DeleteJobRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  DeleteJob(google::cloud::storagebatchoperations::v1::DeleteJobRequest const& request);
 
-  virtual google::cloud::Idempotency CancelJob(
-      google::cloud::storagebatchoperations::v1::CancelJobRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  CancelJob(google::cloud::storagebatchoperations::v1::CancelJobRequest const& request);
 
-  virtual google::cloud::Idempotency ListLocations(
-      google::cloud::location::ListLocationsRequest request);
+  virtual google::cloud::Idempotency
+  ListLocations(google::cloud::location::ListLocationsRequest request);
 
-  virtual google::cloud::Idempotency GetLocation(
-      google::cloud::location::GetLocationRequest const& request);
+  virtual google::cloud::Idempotency
+  GetLocation(google::cloud::location::GetLocationRequest const& request);
 
-  virtual google::cloud::Idempotency ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual google::cloud::Idempotency
+  ListOperations(google::longrunning::ListOperationsRequest request);
 
-  virtual google::cloud::Idempotency GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
 
-  virtual google::cloud::Idempotency CancelOperation(
-      google::longrunning::CancelOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  CancelOperation(google::longrunning::CancelOperationRequest const& request);
 };
 
 std::unique_ptr<StorageBatchOperationsConnectionIdempotencyPolicy>
-MakeDefaultStorageBatchOperationsConnectionIdempotencyPolicy();
+    MakeDefaultStorageBatchOperationsConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storagebatchoperations_v1

@@ -42,33 +42,25 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockZoneOperationsConnection
-    : public compute_zone_operations_v1::ZoneOperationsConnection {
+class MockZoneOperationsConnection : public compute_zone_operations_v1::ZoneOperationsConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(Status, DeleteOperation,
-              (google::cloud::cpp::compute::zone_operations::v1::
-                   DeleteOperationRequest const& request),
-              (override));
+  MOCK_METHOD(Status,
+  DeleteOperation,
+  (google::cloud::cpp::compute::zone_operations::v1::DeleteOperationRequest const& request), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-              GetOperation,
-              (google::cloud::cpp::compute::zone_operations::v1::
-                   GetOperationRequest const& request),
-              (override));
+  GetOperation,
+  (google::cloud::cpp::compute::zone_operations::v1::GetOperationRequest const& request), (override));
 
   MOCK_METHOD((StreamRange<google::cloud::cpp::compute::v1::Operation>),
-              ListZoneOperations,
-              (google::cloud::cpp::compute::zone_operations::v1::
-                   ListZoneOperationsRequest request),
-              (override));
+  ListZoneOperations,
+  (google::cloud::cpp::compute::zone_operations::v1::ListZoneOperationsRequest request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::Operation>, Wait,
-      (google::cloud::cpp::compute::zone_operations::v1::WaitRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+  Wait,
+  (google::cloud::cpp::compute::zone_operations::v1::WaitRequest const& request), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

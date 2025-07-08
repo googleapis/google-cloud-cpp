@@ -32,18 +32,20 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 SessionEntityTypesLogging::SessionEntityTypesLogging(
     std::shared_ptr<SessionEntityTypesStub> child,
-    TracingOptions tracing_options, std::set<std::string> const&)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
+    TracingOptions tracing_options,
+    std::set<std::string> const&)
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::cloud::dialogflow::v2::ListSessionEntityTypesResponse>
 SessionEntityTypesLogging::ListSessionEntityTypes(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::dialogflow::v2::ListSessionEntityTypesRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::dialogflow::v2::ListSessionEntityTypesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dialogflow::v2::ListSessionEntityTypesRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::dialogflow::v2::ListSessionEntityTypesRequest const& request) {
         return child_->ListSessionEntityTypes(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -51,12 +53,13 @@ SessionEntityTypesLogging::ListSessionEntityTypes(
 
 StatusOr<google::cloud::dialogflow::v2::SessionEntityType>
 SessionEntityTypesLogging::GetSessionEntityType(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dialogflow::v2::GetSessionEntityTypeRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dialogflow::v2::GetSessionEntityTypeRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::dialogflow::v2::GetSessionEntityTypeRequest const& request) {
         return child_->GetSessionEntityType(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -64,14 +67,13 @@ SessionEntityTypesLogging::GetSessionEntityType(
 
 StatusOr<google::cloud::dialogflow::v2::SessionEntityType>
 SessionEntityTypesLogging::CreateSessionEntityType(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::dialogflow::v2::CreateSessionEntityTypeRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::dialogflow::v2::CreateSessionEntityTypeRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::dialogflow::v2::CreateSessionEntityTypeRequest const&
-              request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::dialogflow::v2::CreateSessionEntityTypeRequest const& request) {
         return child_->CreateSessionEntityType(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -79,28 +81,27 @@ SessionEntityTypesLogging::CreateSessionEntityType(
 
 StatusOr<google::cloud::dialogflow::v2::SessionEntityType>
 SessionEntityTypesLogging::UpdateSessionEntityType(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::dialogflow::v2::UpdateSessionEntityTypeRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::dialogflow::v2::UpdateSessionEntityTypeRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::dialogflow::v2::UpdateSessionEntityTypeRequest const&
-              request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::dialogflow::v2::UpdateSessionEntityTypeRequest const& request) {
         return child_->UpdateSessionEntityType(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status SessionEntityTypesLogging::DeleteSessionEntityType(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::dialogflow::v2::DeleteSessionEntityTypeRequest const&
-        request) {
+Status
+SessionEntityTypesLogging::DeleteSessionEntityType(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::dialogflow::v2::DeleteSessionEntityTypeRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::dialogflow::v2::DeleteSessionEntityTypeRequest const&
-              request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::dialogflow::v2::DeleteSessionEntityTypeRequest const& request) {
         return child_->DeleteSessionEntityType(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -108,10 +109,12 @@ Status SessionEntityTypesLogging::DeleteSessionEntityType(
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 SessionEntityTypesLogging::ListLocations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::location::ListLocationsRequest const& request) {
         return child_->ListLocations(context, options, request);
       },
@@ -120,10 +123,12 @@ SessionEntityTypesLogging::ListLocations(
 
 StatusOr<google::cloud::location::Location>
 SessionEntityTypesLogging::GetLocation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::location::GetLocationRequest const& request) {
         return child_->GetLocation(context, options, request);
       },
@@ -132,10 +137,12 @@ SessionEntityTypesLogging::GetLocation(
 
 StatusOr<google::longrunning::ListOperationsResponse>
 SessionEntityTypesLogging::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::ListOperationsRequest const& request) {
         return child_->ListOperations(context, options, request);
       },
@@ -144,21 +151,26 @@ SessionEntityTypesLogging::ListOperations(
 
 StatusOr<google::longrunning::Operation>
 SessionEntityTypesLogging::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::GetOperationRequest const& request) {
         return child_->GetOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status SessionEntityTypesLogging::CancelOperation(
-    grpc::ClientContext& context, Options const& options,
+Status
+SessionEntityTypesLogging::CancelOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::CancelOperationRequest const& request) {
         return child_->CancelOperation(context, options, request);
       },

@@ -24,8 +24,8 @@
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/cloud/resourcemanager/v3/tag_values.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
+#include <google/cloud/resourcemanager/v3/tag_values.grpc.pb.h>
 #include <memory>
 #include <utility>
 
@@ -38,79 +38,78 @@ class TagValuesStub {
  public:
   virtual ~TagValuesStub() = 0;
 
-  virtual StatusOr<google::cloud::resourcemanager::v3::ListTagValuesResponse>
-  ListTagValues(grpc::ClientContext& context, Options const& options,
-                google::cloud::resourcemanager::v3::ListTagValuesRequest const&
-                    request) = 0;
+  virtual StatusOr<google::cloud::resourcemanager::v3::ListTagValuesResponse> ListTagValues(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::resourcemanager::v3::ListTagValuesRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::resourcemanager::v3::TagValue> GetTagValue(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::resourcemanager::v3::GetTagValueRequest const&
-          request) = 0;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::resourcemanager::v3::GetTagValueRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::resourcemanager::v3::TagValue>
-  GetNamespacedTagValue(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::resourcemanager::v3::GetNamespacedTagValueRequest const&
-          request) = 0;
+  virtual StatusOr<google::cloud::resourcemanager::v3::TagValue> GetNamespacedTagValue(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::resourcemanager::v3::GetNamespacedTagValueRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateTagValue(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::resourcemanager::v3::CreateTagValueRequest const&
-          request) = 0;
+      google::cloud::resourcemanager::v3::CreateTagValueRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> CreateTagValue(
-      grpc::ClientContext& context, Options options,
-      google::cloud::resourcemanager::v3::CreateTagValueRequest const&
-          request) = 0;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::resourcemanager::v3::CreateTagValueRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncUpdateTagValue(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::resourcemanager::v3::UpdateTagValueRequest const&
-          request) = 0;
+      google::cloud::resourcemanager::v3::UpdateTagValueRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> UpdateTagValue(
-      grpc::ClientContext& context, Options options,
-      google::cloud::resourcemanager::v3::UpdateTagValueRequest const&
-          request) = 0;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::resourcemanager::v3::UpdateTagValueRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteTagValue(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::resourcemanager::v3::DeleteTagValueRequest const&
-          request) = 0;
+      google::cloud::resourcemanager::v3::DeleteTagValueRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> DeleteTagValue(
-      grpc::ClientContext& context, Options options,
-      google::cloud::resourcemanager::v3::DeleteTagValueRequest const&
-          request) = 0;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::resourcemanager::v3::DeleteTagValueRequest const& request) = 0;
 
   virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) = 0;
 
   virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) = 0;
 
-  virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
-  TestIamPermissions(
-      grpc::ClientContext& context, Options const& options,
+  virtual StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
+    google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
@@ -123,79 +122,77 @@ class TagValuesStub {
 class DefaultTagValuesStub : public TagValuesStub {
  public:
   DefaultTagValuesStub(
-      std::unique_ptr<
-          google::cloud::resourcemanager::v3::TagValues::StubInterface>
-          grpc_stub,
-      std::unique_ptr<google::longrunning::Operations::StubInterface>
-          operations_stub)
+      std::unique_ptr<google::cloud::resourcemanager::v3::TagValues::StubInterface> grpc_stub,
+      std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub)
       : grpc_stub_(std::move(grpc_stub)),
         operations_stub_(std::move(operations_stub)) {}
 
-  StatusOr<google::cloud::resourcemanager::v3::ListTagValuesResponse>
-  ListTagValues(grpc::ClientContext& context, Options const& options,
-                google::cloud::resourcemanager::v3::ListTagValuesRequest const&
-                    request) override;
+  StatusOr<google::cloud::resourcemanager::v3::ListTagValuesResponse> ListTagValues(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::resourcemanager::v3::ListTagValuesRequest const& request) override;
 
   StatusOr<google::cloud::resourcemanager::v3::TagValue> GetTagValue(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::resourcemanager::v3::GetTagValueRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::resourcemanager::v3::GetTagValueRequest const& request) override;
 
   StatusOr<google::cloud::resourcemanager::v3::TagValue> GetNamespacedTagValue(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::resourcemanager::v3::GetNamespacedTagValueRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::resourcemanager::v3::GetNamespacedTagValueRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateTagValue(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::resourcemanager::v3::CreateTagValueRequest const& request)
-      override;
+      google::cloud::resourcemanager::v3::CreateTagValueRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateTagValue(
-      grpc::ClientContext& context, Options options,
-      google::cloud::resourcemanager::v3::CreateTagValueRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::resourcemanager::v3::CreateTagValueRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateTagValue(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::resourcemanager::v3::UpdateTagValueRequest const& request)
-      override;
+      google::cloud::resourcemanager::v3::UpdateTagValueRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateTagValue(
-      grpc::ClientContext& context, Options options,
-      google::cloud::resourcemanager::v3::UpdateTagValueRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::resourcemanager::v3::UpdateTagValueRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteTagValue(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::resourcemanager::v3::DeleteTagValueRequest const& request)
-      override;
+      google::cloud::resourcemanager::v3::DeleteTagValueRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteTagValue(
-      grpc::ClientContext& context, Options options,
-      google::cloud::resourcemanager::v3::DeleteTagValueRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::resourcemanager::v3::DeleteTagValueRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -211,10 +208,8 @@ class DefaultTagValuesStub : public TagValuesStub {
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  std::unique_ptr<google::cloud::resourcemanager::v3::TagValues::StubInterface>
-      grpc_stub_;
-  std::unique_ptr<google::longrunning::Operations::StubInterface>
-      operations_stub_;
+  std::unique_ptr<google::cloud::resourcemanager::v3::TagValues::StubInterface> grpc_stub_;
+  std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

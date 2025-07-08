@@ -46,49 +46,41 @@ class MockEdgeNetworkConnection : public edgenetwork_v1::EdgeNetworkConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::edgenetwork::v1::InitializeZoneResponse>,
-      InitializeZone,
-      (google::cloud::edgenetwork::v1::InitializeZoneRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::edgenetwork::v1::InitializeZoneResponse>,
+  InitializeZone,
+  (google::cloud::edgenetwork::v1::InitializeZoneRequest const& request), (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::edgenetwork::v1::Zone>), ListZones,
-              (google::cloud::edgenetwork::v1::ListZonesRequest request),
-              (override));
+  MOCK_METHOD((StreamRange<google::cloud::edgenetwork::v1::Zone>),
+  ListZones,
+  (google::cloud::edgenetwork::v1::ListZonesRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::edgenetwork::v1::Zone>, GetZone,
-              (google::cloud::edgenetwork::v1::GetZoneRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::edgenetwork::v1::Zone>,
+  GetZone,
+  (google::cloud::edgenetwork::v1::GetZoneRequest const& request), (override));
 
   MOCK_METHOD((StreamRange<google::cloud::edgenetwork::v1::Network>),
-              ListNetworks,
-              (google::cloud::edgenetwork::v1::ListNetworksRequest request),
-              (override));
+  ListNetworks,
+  (google::cloud::edgenetwork::v1::ListNetworksRequest request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::edgenetwork::v1::Network>, GetNetwork,
-      (google::cloud::edgenetwork::v1::GetNetworkRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::edgenetwork::v1::Network>,
+  GetNetwork,
+  (google::cloud::edgenetwork::v1::GetNetworkRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::edgenetwork::v1::DiagnoseNetworkResponse>,
-      DiagnoseNetwork,
-      (google::cloud::edgenetwork::v1::DiagnoseNetworkRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::edgenetwork::v1::DiagnoseNetworkResponse>,
+  DiagnoseNetwork,
+  (google::cloud::edgenetwork::v1::DiagnoseNetworkRequest const& request), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// CreateNetwork(Matcher<google::cloud::edgenetwork::v1::CreateNetworkRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, CreateNetwork(Matcher<google::cloud::edgenetwork::v1::CreateNetworkRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::edgenetwork::v1::Network>>, CreateNetwork,
-      (google::cloud::edgenetwork::v1::CreateNetworkRequest const& request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::edgenetwork::v1::Network>>,
+  CreateNetwork,
+  (google::cloud::edgenetwork::v1::CreateNetworkRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -96,38 +88,33 @@ class MockEdgeNetworkConnection : public edgenetwork_v1::EdgeNetworkConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, CreateNetwork(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, CreateNetwork,
-      (NoAwaitTag,
-       google::cloud::edgenetwork::v1::CreateNetworkRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  CreateNetwork, (NoAwaitTag,
+    google::cloud::edgenetwork::v1::CreateNetworkRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateNetwork(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, CreateNetwork(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::edgenetwork::v1::Network>>,
-              CreateNetwork, (google::longrunning::Operation const& operation),
-              (override));
+  CreateNetwork, (
+    google::longrunning::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteNetwork(Matcher<google::cloud::edgenetwork::v1::DeleteNetworkRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteNetwork(Matcher<google::cloud::edgenetwork::v1::DeleteNetworkRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>,
-      DeleteNetwork,
-      (google::cloud::edgenetwork::v1::DeleteNetworkRequest const& request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>,
+  DeleteNetwork,
+  (google::cloud::edgenetwork::v1::DeleteNetworkRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -135,47 +122,41 @@ class MockEdgeNetworkConnection : public edgenetwork_v1::EdgeNetworkConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, DeleteNetwork(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, DeleteNetwork,
-      (NoAwaitTag,
-       google::cloud::edgenetwork::v1::DeleteNetworkRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  DeleteNetwork, (NoAwaitTag,
+    google::cloud::edgenetwork::v1::DeleteNetworkRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteNetwork(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteNetwork(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>,
-      DeleteNetwork, (google::longrunning::Operation const& operation),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>,
+  DeleteNetwork, (
+    google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD((StreamRange<google::cloud::edgenetwork::v1::Subnet>),
-              ListSubnets,
-              (google::cloud::edgenetwork::v1::ListSubnetsRequest request),
-              (override));
+  ListSubnets,
+  (google::cloud::edgenetwork::v1::ListSubnetsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::edgenetwork::v1::Subnet>, GetSubnet,
-              (google::cloud::edgenetwork::v1::GetSubnetRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::edgenetwork::v1::Subnet>,
+  GetSubnet,
+  (google::cloud::edgenetwork::v1::GetSubnetRequest const& request), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// CreateSubnet(Matcher<google::cloud::edgenetwork::v1::CreateSubnetRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, CreateSubnet(Matcher<google::cloud::edgenetwork::v1::CreateSubnetRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::edgenetwork::v1::Subnet>>, CreateSubnet,
-      (google::cloud::edgenetwork::v1::CreateSubnetRequest const& request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::edgenetwork::v1::Subnet>>,
+  CreateSubnet,
+  (google::cloud::edgenetwork::v1::CreateSubnetRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -183,37 +164,33 @@ class MockEdgeNetworkConnection : public edgenetwork_v1::EdgeNetworkConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, CreateSubnet(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, CreateSubnet,
-      (NoAwaitTag,
-       google::cloud::edgenetwork::v1::CreateSubnetRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  CreateSubnet, (NoAwaitTag,
+    google::cloud::edgenetwork::v1::CreateSubnetRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateSubnet(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, CreateSubnet(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::edgenetwork::v1::Subnet>>,
-              CreateSubnet, (google::longrunning::Operation const& operation),
-              (override));
+  CreateSubnet, (
+    google::longrunning::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// UpdateSubnet(Matcher<google::cloud::edgenetwork::v1::UpdateSubnetRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, UpdateSubnet(Matcher<google::cloud::edgenetwork::v1::UpdateSubnetRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::edgenetwork::v1::Subnet>>, UpdateSubnet,
-      (google::cloud::edgenetwork::v1::UpdateSubnetRequest const& request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::edgenetwork::v1::Subnet>>,
+  UpdateSubnet,
+  (google::cloud::edgenetwork::v1::UpdateSubnetRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -221,38 +198,33 @@ class MockEdgeNetworkConnection : public edgenetwork_v1::EdgeNetworkConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, UpdateSubnet(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, UpdateSubnet,
-      (NoAwaitTag,
-       google::cloud::edgenetwork::v1::UpdateSubnetRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  UpdateSubnet, (NoAwaitTag,
+    google::cloud::edgenetwork::v1::UpdateSubnetRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UpdateSubnet(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, UpdateSubnet(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::edgenetwork::v1::Subnet>>,
-              UpdateSubnet, (google::longrunning::Operation const& operation),
-              (override));
+  UpdateSubnet, (
+    google::longrunning::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteSubnet(Matcher<google::cloud::edgenetwork::v1::DeleteSubnetRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteSubnet(Matcher<google::cloud::edgenetwork::v1::DeleteSubnetRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>,
-      DeleteSubnet,
-      (google::cloud::edgenetwork::v1::DeleteSubnetRequest const& request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>,
+  DeleteSubnet,
+  (google::cloud::edgenetwork::v1::DeleteSubnetRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -260,72 +232,53 @@ class MockEdgeNetworkConnection : public edgenetwork_v1::EdgeNetworkConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, DeleteSubnet(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, DeleteSubnet,
-      (NoAwaitTag,
-       google::cloud::edgenetwork::v1::DeleteSubnetRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  DeleteSubnet, (NoAwaitTag,
+    google::cloud::edgenetwork::v1::DeleteSubnetRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteSubnet(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteSubnet(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>,
-      DeleteSubnet, (google::longrunning::Operation const& operation),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>,
+  DeleteSubnet, (
+    google::longrunning::Operation const& operation), (override));
 
-  MOCK_METHOD(
-      (StreamRange<google::cloud::edgenetwork::v1::Interconnect>),
-      ListInterconnects,
-      (google::cloud::edgenetwork::v1::ListInterconnectsRequest request),
-      (override));
+  MOCK_METHOD((StreamRange<google::cloud::edgenetwork::v1::Interconnect>),
+  ListInterconnects,
+  (google::cloud::edgenetwork::v1::ListInterconnectsRequest request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::edgenetwork::v1::Interconnect>, GetInterconnect,
-      (google::cloud::edgenetwork::v1::GetInterconnectRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::edgenetwork::v1::Interconnect>,
+  GetInterconnect,
+  (google::cloud::edgenetwork::v1::GetInterconnectRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::edgenetwork::v1::DiagnoseInterconnectResponse>,
-      DiagnoseInterconnect,
-      (google::cloud::edgenetwork::v1::DiagnoseInterconnectRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::edgenetwork::v1::DiagnoseInterconnectResponse>,
+  DiagnoseInterconnect,
+  (google::cloud::edgenetwork::v1::DiagnoseInterconnectRequest const& request), (override));
 
-  MOCK_METHOD(
-      (StreamRange<google::cloud::edgenetwork::v1::InterconnectAttachment>),
-      ListInterconnectAttachments,
-      (google::cloud::edgenetwork::v1::ListInterconnectAttachmentsRequest
-           request),
-      (override));
+  MOCK_METHOD((StreamRange<google::cloud::edgenetwork::v1::InterconnectAttachment>),
+  ListInterconnectAttachments,
+  (google::cloud::edgenetwork::v1::ListInterconnectAttachmentsRequest request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::edgenetwork::v1::InterconnectAttachment>,
-      GetInterconnectAttachment,
-      (google::cloud::edgenetwork::v1::GetInterconnectAttachmentRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::edgenetwork::v1::InterconnectAttachment>,
+  GetInterconnectAttachment,
+  (google::cloud::edgenetwork::v1::GetInterconnectAttachmentRequest const& request), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// CreateInterconnectAttachment(Matcher<google::cloud::edgenetwork::v1::CreateInterconnectAttachmentRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, CreateInterconnectAttachment(Matcher<google::cloud::edgenetwork::v1::CreateInterconnectAttachmentRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::edgenetwork::v1::InterconnectAttachment>>,
-      CreateInterconnectAttachment,
-      (google::cloud::edgenetwork::v1::
-           CreateInterconnectAttachmentRequest const& request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::edgenetwork::v1::InterconnectAttachment>>,
+  CreateInterconnectAttachment,
+  (google::cloud::edgenetwork::v1::CreateInterconnectAttachmentRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -334,41 +287,32 @@ class MockEdgeNetworkConnection : public edgenetwork_v1::EdgeNetworkConnection {
   /// EXPECT_CALL(*mock, CreateInterconnectAttachment(_, _))
   /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-              CreateInterconnectAttachment,
-              (NoAwaitTag,
-               google::cloud::edgenetwork::v1::
-                   CreateInterconnectAttachmentRequest const& request),
-              (override));
+  CreateInterconnectAttachment, (NoAwaitTag,
+    google::cloud::edgenetwork::v1::CreateInterconnectAttachmentRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// CreateInterconnectAttachment(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, CreateInterconnectAttachment(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::edgenetwork::v1::InterconnectAttachment>>,
-      CreateInterconnectAttachment,
-      (google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::edgenetwork::v1::InterconnectAttachment>>,
+  CreateInterconnectAttachment, (
+    google::longrunning::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteInterconnectAttachment(Matcher<google::cloud::edgenetwork::v1::DeleteInterconnectAttachmentRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteInterconnectAttachment(Matcher<google::cloud::edgenetwork::v1::DeleteInterconnectAttachmentRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>,
-      DeleteInterconnectAttachment,
-      (google::cloud::edgenetwork::v1::
-           DeleteInterconnectAttachmentRequest const& request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>,
+  DeleteInterconnectAttachment,
+  (google::cloud::edgenetwork::v1::DeleteInterconnectAttachmentRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -377,54 +321,44 @@ class MockEdgeNetworkConnection : public edgenetwork_v1::EdgeNetworkConnection {
   /// EXPECT_CALL(*mock, DeleteInterconnectAttachment(_, _))
   /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-              DeleteInterconnectAttachment,
-              (NoAwaitTag,
-               google::cloud::edgenetwork::v1::
-                   DeleteInterconnectAttachmentRequest const& request),
-              (override));
+  DeleteInterconnectAttachment, (NoAwaitTag,
+    google::cloud::edgenetwork::v1::DeleteInterconnectAttachmentRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteInterconnectAttachment(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteInterconnectAttachment(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>,
-      DeleteInterconnectAttachment,
-      (google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>,
+  DeleteInterconnectAttachment, (
+    google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD((StreamRange<google::cloud::edgenetwork::v1::Router>),
-              ListRouters,
-              (google::cloud::edgenetwork::v1::ListRoutersRequest request),
-              (override));
+  ListRouters,
+  (google::cloud::edgenetwork::v1::ListRoutersRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::edgenetwork::v1::Router>, GetRouter,
-              (google::cloud::edgenetwork::v1::GetRouterRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::edgenetwork::v1::Router>,
+  GetRouter,
+  (google::cloud::edgenetwork::v1::GetRouterRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::edgenetwork::v1::DiagnoseRouterResponse>,
-      DiagnoseRouter,
-      (google::cloud::edgenetwork::v1::DiagnoseRouterRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::edgenetwork::v1::DiagnoseRouterResponse>,
+  DiagnoseRouter,
+  (google::cloud::edgenetwork::v1::DiagnoseRouterRequest const& request), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// CreateRouter(Matcher<google::cloud::edgenetwork::v1::CreateRouterRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, CreateRouter(Matcher<google::cloud::edgenetwork::v1::CreateRouterRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::edgenetwork::v1::Router>>, CreateRouter,
-      (google::cloud::edgenetwork::v1::CreateRouterRequest const& request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::edgenetwork::v1::Router>>,
+  CreateRouter,
+  (google::cloud::edgenetwork::v1::CreateRouterRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -432,37 +366,33 @@ class MockEdgeNetworkConnection : public edgenetwork_v1::EdgeNetworkConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, CreateRouter(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, CreateRouter,
-      (NoAwaitTag,
-       google::cloud::edgenetwork::v1::CreateRouterRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  CreateRouter, (NoAwaitTag,
+    google::cloud::edgenetwork::v1::CreateRouterRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateRouter(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, CreateRouter(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::edgenetwork::v1::Router>>,
-              CreateRouter, (google::longrunning::Operation const& operation),
-              (override));
+  CreateRouter, (
+    google::longrunning::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// UpdateRouter(Matcher<google::cloud::edgenetwork::v1::UpdateRouterRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, UpdateRouter(Matcher<google::cloud::edgenetwork::v1::UpdateRouterRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::edgenetwork::v1::Router>>, UpdateRouter,
-      (google::cloud::edgenetwork::v1::UpdateRouterRequest const& request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::edgenetwork::v1::Router>>,
+  UpdateRouter,
+  (google::cloud::edgenetwork::v1::UpdateRouterRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -470,38 +400,33 @@ class MockEdgeNetworkConnection : public edgenetwork_v1::EdgeNetworkConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, UpdateRouter(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, UpdateRouter,
-      (NoAwaitTag,
-       google::cloud::edgenetwork::v1::UpdateRouterRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  UpdateRouter, (NoAwaitTag,
+    google::cloud::edgenetwork::v1::UpdateRouterRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UpdateRouter(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, UpdateRouter(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::edgenetwork::v1::Router>>,
-              UpdateRouter, (google::longrunning::Operation const& operation),
-              (override));
+  UpdateRouter, (
+    google::longrunning::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteRouter(Matcher<google::cloud::edgenetwork::v1::DeleteRouterRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteRouter(Matcher<google::cloud::edgenetwork::v1::DeleteRouterRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>,
-      DeleteRouter,
-      (google::cloud::edgenetwork::v1::DeleteRouterRequest const& request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>,
+  DeleteRouter,
+  (google::cloud::edgenetwork::v1::DeleteRouterRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -509,47 +434,45 @@ class MockEdgeNetworkConnection : public edgenetwork_v1::EdgeNetworkConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, DeleteRouter(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, DeleteRouter,
-      (NoAwaitTag,
-       google::cloud::edgenetwork::v1::DeleteRouterRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  DeleteRouter, (NoAwaitTag,
+    google::cloud::edgenetwork::v1::DeleteRouterRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteRouter(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteRouter(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>,
-      DeleteRouter, (google::longrunning::Operation const& operation),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>,
+  DeleteRouter, (
+    google::longrunning::Operation const& operation), (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::location::Location>), ListLocations,
-              (google::cloud::location::ListLocationsRequest request),
-              (override));
+  MOCK_METHOD((StreamRange<google::cloud::location::Location>),
+  ListLocations,
+  (google::cloud::location::ListLocationsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::location::Location>, GetLocation,
-              (google::cloud::location::GetLocationRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::location::Location>,
+  GetLocation,
+  (google::cloud::location::GetLocationRequest const& request), (override));
 
-  MOCK_METHOD((StreamRange<google::longrunning::Operation>), ListOperations,
-              (google::longrunning::ListOperationsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::longrunning::Operation>),
+  ListOperations,
+  (google::longrunning::ListOperationsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
-              (google::longrunning::GetOperationRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  GetOperation,
+  (google::longrunning::GetOperationRequest const& request), (override));
 
-  MOCK_METHOD(Status, DeleteOperation,
-              (google::longrunning::DeleteOperationRequest const& request),
-              (override));
+  MOCK_METHOD(Status,
+  DeleteOperation,
+  (google::longrunning::DeleteOperationRequest const& request), (override));
 
-  MOCK_METHOD(Status, CancelOperation,
-              (google::longrunning::CancelOperationRequest const& request),
-              (override));
+  MOCK_METHOD(Status,
+  CancelOperation,
+  (google::longrunning::CancelOperationRequest const& request), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

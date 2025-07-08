@@ -42,34 +42,29 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockManagedKafkaConnection
-    : public managedkafka_v1::ManagedKafkaConnection {
+class MockManagedKafkaConnection : public managedkafka_v1::ManagedKafkaConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD((StreamRange<google::cloud::managedkafka::v1::Cluster>),
-              ListClusters,
-              (google::cloud::managedkafka::v1::ListClustersRequest request),
-              (override));
+  ListClusters,
+  (google::cloud::managedkafka::v1::ListClustersRequest request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::managedkafka::v1::Cluster>, GetCluster,
-      (google::cloud::managedkafka::v1::GetClusterRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::managedkafka::v1::Cluster>,
+  GetCluster,
+  (google::cloud::managedkafka::v1::GetClusterRequest const& request), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// CreateCluster(Matcher<google::cloud::managedkafka::v1::CreateClusterRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, CreateCluster(Matcher<google::cloud::managedkafka::v1::CreateClusterRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::managedkafka::v1::Cluster>>, CreateCluster,
-      (google::cloud::managedkafka::v1::CreateClusterRequest const& request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::managedkafka::v1::Cluster>>,
+  CreateCluster,
+  (google::cloud::managedkafka::v1::CreateClusterRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -77,37 +72,33 @@ class MockManagedKafkaConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, CreateCluster(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, CreateCluster,
-      (NoAwaitTag,
-       google::cloud::managedkafka::v1::CreateClusterRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  CreateCluster, (NoAwaitTag,
+    google::cloud::managedkafka::v1::CreateClusterRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateCluster(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, CreateCluster(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::managedkafka::v1::Cluster>>,
-              CreateCluster, (google::longrunning::Operation const& operation),
-              (override));
+  CreateCluster, (
+    google::longrunning::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// UpdateCluster(Matcher<google::cloud::managedkafka::v1::UpdateClusterRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, UpdateCluster(Matcher<google::cloud::managedkafka::v1::UpdateClusterRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::managedkafka::v1::Cluster>>, UpdateCluster,
-      (google::cloud::managedkafka::v1::UpdateClusterRequest const& request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::managedkafka::v1::Cluster>>,
+  UpdateCluster,
+  (google::cloud::managedkafka::v1::UpdateClusterRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -115,38 +106,33 @@ class MockManagedKafkaConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, UpdateCluster(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, UpdateCluster,
-      (NoAwaitTag,
-       google::cloud::managedkafka::v1::UpdateClusterRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  UpdateCluster, (NoAwaitTag,
+    google::cloud::managedkafka::v1::UpdateClusterRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UpdateCluster(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, UpdateCluster(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::managedkafka::v1::Cluster>>,
-              UpdateCluster, (google::longrunning::Operation const& operation),
-              (override));
+  UpdateCluster, (
+    google::longrunning::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteCluster(Matcher<google::cloud::managedkafka::v1::DeleteClusterRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteCluster(Matcher<google::cloud::managedkafka::v1::DeleteClusterRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::managedkafka::v1::OperationMetadata>>,
-      DeleteCluster,
-      (google::cloud::managedkafka::v1::DeleteClusterRequest const& request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::managedkafka::v1::OperationMetadata>>,
+  DeleteCluster,
+  (google::cloud::managedkafka::v1::DeleteClusterRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -154,130 +140,109 @@ class MockManagedKafkaConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, DeleteCluster(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, DeleteCluster,
-      (NoAwaitTag,
-       google::cloud::managedkafka::v1::DeleteClusterRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  DeleteCluster, (NoAwaitTag,
+    google::cloud::managedkafka::v1::DeleteClusterRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteCluster(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteCluster(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::managedkafka::v1::OperationMetadata>>,
-      DeleteCluster, (google::longrunning::Operation const& operation),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::managedkafka::v1::OperationMetadata>>,
+  DeleteCluster, (
+    google::longrunning::Operation const& operation), (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::managedkafka::v1::Topic>), ListTopics,
-              (google::cloud::managedkafka::v1::ListTopicsRequest request),
-              (override));
+  MOCK_METHOD((StreamRange<google::cloud::managedkafka::v1::Topic>),
+  ListTopics,
+  (google::cloud::managedkafka::v1::ListTopicsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::managedkafka::v1::Topic>, GetTopic,
-              (google::cloud::managedkafka::v1::GetTopicRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::managedkafka::v1::Topic>,
+  GetTopic,
+  (google::cloud::managedkafka::v1::GetTopicRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::managedkafka::v1::Topic>, CreateTopic,
-      (google::cloud::managedkafka::v1::CreateTopicRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::managedkafka::v1::Topic>,
+  CreateTopic,
+  (google::cloud::managedkafka::v1::CreateTopicRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::managedkafka::v1::Topic>, UpdateTopic,
-      (google::cloud::managedkafka::v1::UpdateTopicRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::managedkafka::v1::Topic>,
+  UpdateTopic,
+  (google::cloud::managedkafka::v1::UpdateTopicRequest const& request), (override));
 
-  MOCK_METHOD(
-      Status, DeleteTopic,
-      (google::cloud::managedkafka::v1::DeleteTopicRequest const& request),
-      (override));
+  MOCK_METHOD(Status,
+  DeleteTopic,
+  (google::cloud::managedkafka::v1::DeleteTopicRequest const& request), (override));
 
-  MOCK_METHOD(
-      (StreamRange<google::cloud::managedkafka::v1::ConsumerGroup>),
-      ListConsumerGroups,
-      (google::cloud::managedkafka::v1::ListConsumerGroupsRequest request),
-      (override));
+  MOCK_METHOD((StreamRange<google::cloud::managedkafka::v1::ConsumerGroup>),
+  ListConsumerGroups,
+  (google::cloud::managedkafka::v1::ListConsumerGroupsRequest request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::managedkafka::v1::ConsumerGroup>,
-      GetConsumerGroup,
-      (google::cloud::managedkafka::v1::GetConsumerGroupRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::managedkafka::v1::ConsumerGroup>,
+  GetConsumerGroup,
+  (google::cloud::managedkafka::v1::GetConsumerGroupRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::managedkafka::v1::ConsumerGroup>,
-      UpdateConsumerGroup,
-      (google::cloud::managedkafka::v1::UpdateConsumerGroupRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::managedkafka::v1::ConsumerGroup>,
+  UpdateConsumerGroup,
+  (google::cloud::managedkafka::v1::UpdateConsumerGroupRequest const& request), (override));
 
-  MOCK_METHOD(
-      Status, DeleteConsumerGroup,
-      (google::cloud::managedkafka::v1::DeleteConsumerGroupRequest const&
-           request),
-      (override));
+  MOCK_METHOD(Status,
+  DeleteConsumerGroup,
+  (google::cloud::managedkafka::v1::DeleteConsumerGroupRequest const& request), (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::managedkafka::v1::Acl>), ListAcls,
-              (google::cloud::managedkafka::v1::ListAclsRequest request),
-              (override));
+  MOCK_METHOD((StreamRange<google::cloud::managedkafka::v1::Acl>),
+  ListAcls,
+  (google::cloud::managedkafka::v1::ListAclsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::managedkafka::v1::Acl>, GetAcl,
-              (google::cloud::managedkafka::v1::GetAclRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::managedkafka::v1::Acl>,
+  GetAcl,
+  (google::cloud::managedkafka::v1::GetAclRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::managedkafka::v1::Acl>, CreateAcl,
-      (google::cloud::managedkafka::v1::CreateAclRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::managedkafka::v1::Acl>,
+  CreateAcl,
+  (google::cloud::managedkafka::v1::CreateAclRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::managedkafka::v1::Acl>, UpdateAcl,
-      (google::cloud::managedkafka::v1::UpdateAclRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::managedkafka::v1::Acl>,
+  UpdateAcl,
+  (google::cloud::managedkafka::v1::UpdateAclRequest const& request), (override));
 
-  MOCK_METHOD(
-      Status, DeleteAcl,
-      (google::cloud::managedkafka::v1::DeleteAclRequest const& request),
-      (override));
+  MOCK_METHOD(Status,
+  DeleteAcl,
+  (google::cloud::managedkafka::v1::DeleteAclRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::managedkafka::v1::AddAclEntryResponse>,
-      AddAclEntry,
-      (google::cloud::managedkafka::v1::AddAclEntryRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::managedkafka::v1::AddAclEntryResponse>,
+  AddAclEntry,
+  (google::cloud::managedkafka::v1::AddAclEntryRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::managedkafka::v1::RemoveAclEntryResponse>,
-      RemoveAclEntry,
-      (google::cloud::managedkafka::v1::RemoveAclEntryRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::managedkafka::v1::RemoveAclEntryResponse>,
+  RemoveAclEntry,
+  (google::cloud::managedkafka::v1::RemoveAclEntryRequest const& request), (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::location::Location>), ListLocations,
-              (google::cloud::location::ListLocationsRequest request),
-              (override));
+  MOCK_METHOD((StreamRange<google::cloud::location::Location>),
+  ListLocations,
+  (google::cloud::location::ListLocationsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::location::Location>, GetLocation,
-              (google::cloud::location::GetLocationRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::location::Location>,
+  GetLocation,
+  (google::cloud::location::GetLocationRequest const& request), (override));
 
-  MOCK_METHOD((StreamRange<google::longrunning::Operation>), ListOperations,
-              (google::longrunning::ListOperationsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::longrunning::Operation>),
+  ListOperations,
+  (google::longrunning::ListOperationsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
-              (google::longrunning::GetOperationRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  GetOperation,
+  (google::longrunning::GetOperationRequest const& request), (override));
 
-  MOCK_METHOD(Status, DeleteOperation,
-              (google::longrunning::DeleteOperationRequest const& request),
-              (override));
+  MOCK_METHOD(Status,
+  DeleteOperation,
+  (google::longrunning::DeleteOperationRequest const& request), (override));
 
-  MOCK_METHOD(Status, CancelOperation,
-              (google::longrunning::CancelOperationRequest const& request),
-              (override));
+  MOCK_METHOD(Status,
+  CancelOperation,
+  (google::longrunning::CancelOperationRequest const& request), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

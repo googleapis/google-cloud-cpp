@@ -31,10 +31,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// @deprecated Use retail_v2::SearchServiceBackoffPolicyOption directly.
 using ::google::cloud::retail_v2::SearchServiceBackoffPolicyOption;
 
-/// @deprecated Use retail_v2::SearchServiceConnectionIdempotencyPolicyOption
-/// directly.
-using ::google::cloud::retail_v2::
-    SearchServiceConnectionIdempotencyPolicyOption;
+/// @deprecated Use retail_v2::SearchServiceConnectionIdempotencyPolicyOption directly.
+using ::google::cloud::retail_v2::SearchServiceConnectionIdempotencyPolicyOption;
 
 /// @deprecated Use retail_v2::SearchServicePolicyOptionList directly.
 using ::google::cloud::retail_v2::SearchServicePolicyOptionList;

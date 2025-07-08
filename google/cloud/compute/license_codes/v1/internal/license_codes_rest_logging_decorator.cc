@@ -28,21 +28,21 @@ namespace compute_license_codes_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 LicenseCodesRestLogging::LicenseCodesRestLogging(
-    std::shared_ptr<LicenseCodesRestStub> child, TracingOptions tracing_options,
+    std::shared_ptr<LicenseCodesRestStub> child,
+    TracingOptions tracing_options,
     std::set<std::string> components)
-    : child_(std::move(child)),
-      tracing_options_(std::move(tracing_options)),
+    : child_(std::move(child)), tracing_options_(std::move(tracing_options)),
       components_(std::move(components)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::LicenseCode>
 LicenseCodesRestLogging::GetLicenseCode(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::license_codes::v1::GetLicenseCodeRequest const&
-        request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::license_codes::v1::GetLicenseCodeRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::cloud::cpp::compute::license_codes::v1::
-                 GetLicenseCodeRequest const& request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
+             google::cloud::cpp::compute::license_codes::v1::GetLicenseCodeRequest const& request) {
         return child_->GetLicenseCode(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -50,13 +50,13 @@ LicenseCodesRestLogging::GetLicenseCode(
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
 LicenseCodesRestLogging::TestIamPermissions(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::license_codes::v1::
-        TestIamPermissionsRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::license_codes::v1::TestIamPermissionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::cloud::cpp::compute::license_codes::v1::
-                 TestIamPermissionsRequest const& request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
+             google::cloud::cpp::compute::license_codes::v1::TestIamPermissionsRequest const& request) {
         return child_->TestIamPermissions(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);

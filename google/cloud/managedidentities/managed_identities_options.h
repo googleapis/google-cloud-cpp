@@ -28,31 +28,20 @@ namespace cloud {
 namespace managedidentities {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use
-/// managedidentities_v1::ManagedIdentitiesServicePollingPolicyOption directly.
-using ::google::cloud::managedidentities_v1::
-    ManagedIdentitiesServicePollingPolicyOption;
+/// @deprecated Use managedidentities_v1::ManagedIdentitiesServicePollingPolicyOption directly.
+using ::google::cloud::managedidentities_v1::ManagedIdentitiesServicePollingPolicyOption;
 
-/// @deprecated Use
-/// managedidentities_v1::ManagedIdentitiesServiceBackoffPolicyOption directly.
-using ::google::cloud::managedidentities_v1::
-    ManagedIdentitiesServiceBackoffPolicyOption;
+/// @deprecated Use managedidentities_v1::ManagedIdentitiesServiceBackoffPolicyOption directly.
+using ::google::cloud::managedidentities_v1::ManagedIdentitiesServiceBackoffPolicyOption;
 
-/// @deprecated Use
-/// managedidentities_v1::ManagedIdentitiesServiceConnectionIdempotencyPolicyOption
-/// directly.
-using ::google::cloud::managedidentities_v1::
-    ManagedIdentitiesServiceConnectionIdempotencyPolicyOption;
+/// @deprecated Use managedidentities_v1::ManagedIdentitiesServiceConnectionIdempotencyPolicyOption directly.
+using ::google::cloud::managedidentities_v1::ManagedIdentitiesServiceConnectionIdempotencyPolicyOption;
 
-/// @deprecated Use
-/// managedidentities_v1::ManagedIdentitiesServicePolicyOptionList directly.
-using ::google::cloud::managedidentities_v1::
-    ManagedIdentitiesServicePolicyOptionList;
+/// @deprecated Use managedidentities_v1::ManagedIdentitiesServicePolicyOptionList directly.
+using ::google::cloud::managedidentities_v1::ManagedIdentitiesServicePolicyOptionList;
 
-/// @deprecated Use
-/// managedidentities_v1::ManagedIdentitiesServiceRetryPolicyOption directly.
-using ::google::cloud::managedidentities_v1::
-    ManagedIdentitiesServiceRetryPolicyOption;
+/// @deprecated Use managedidentities_v1::ManagedIdentitiesServiceRetryPolicyOption directly.
+using ::google::cloud::managedidentities_v1::ManagedIdentitiesServiceRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace managedidentities

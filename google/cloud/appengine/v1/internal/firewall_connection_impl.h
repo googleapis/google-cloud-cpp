@@ -37,36 +37,35 @@ namespace cloud {
 namespace appengine_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class FirewallConnectionImpl : public appengine_v1::FirewallConnection {
+class FirewallConnectionImpl
+    : public appengine_v1::FirewallConnection {
  public:
   ~FirewallConnectionImpl() override = default;
 
   FirewallConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<appengine_v1_internal::FirewallStub> stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<appengine_v1_internal::FirewallStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
-  StreamRange<google::appengine::v1::FirewallRule> ListIngressRules(
-      google::appengine::v1::ListIngressRulesRequest request) override;
+  StreamRange<google::appengine::v1::FirewallRule>
+  ListIngressRules(google::appengine::v1::ListIngressRulesRequest request) override;
 
   StatusOr<google::appengine::v1::BatchUpdateIngressRulesResponse>
-  BatchUpdateIngressRules(
-      google::appengine::v1::BatchUpdateIngressRulesRequest const& request)
-      override;
+  BatchUpdateIngressRules(google::appengine::v1::BatchUpdateIngressRulesRequest const& request) override;
 
-  StatusOr<google::appengine::v1::FirewallRule> CreateIngressRule(
-      google::appengine::v1::CreateIngressRuleRequest const& request) override;
+  StatusOr<google::appengine::v1::FirewallRule>
+  CreateIngressRule(google::appengine::v1::CreateIngressRuleRequest const& request) override;
 
-  StatusOr<google::appengine::v1::FirewallRule> GetIngressRule(
-      google::appengine::v1::GetIngressRuleRequest const& request) override;
+  StatusOr<google::appengine::v1::FirewallRule>
+  GetIngressRule(google::appengine::v1::GetIngressRuleRequest const& request) override;
 
-  StatusOr<google::appengine::v1::FirewallRule> UpdateIngressRule(
-      google::appengine::v1::UpdateIngressRuleRequest const& request) override;
+  StatusOr<google::appengine::v1::FirewallRule>
+  UpdateIngressRule(google::appengine::v1::UpdateIngressRuleRequest const& request) override;
 
-  Status DeleteIngressRule(
-      google::appengine::v1::DeleteIngressRuleRequest const& request) override;
+  Status
+  DeleteIngressRule(google::appengine::v1::DeleteIngressRuleRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

@@ -31,18 +31,18 @@ CloudFilestoreManagerAuth::CloudFilestoreManagerAuth(
     std::shared_ptr<CloudFilestoreManagerStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::filestore::v1::ListInstancesResponse>
-CloudFilestoreManagerAuth::ListInstances(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::filestore::v1::ListInstancesResponse> CloudFilestoreManagerAuth::ListInstances(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::filestore::v1::ListInstancesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListInstances(context, options, request);
 }
 
-StatusOr<google::cloud::filestore::v1::Instance>
-CloudFilestoreManagerAuth::GetInstance(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::filestore::v1::Instance> CloudFilestoreManagerAuth::GetInstance(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::filestore::v1::GetInstanceRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -51,28 +51,28 @@ CloudFilestoreManagerAuth::GetInstance(
 
 future<StatusOr<google::longrunning::Operation>>
 CloudFilestoreManagerAuth::AsyncCreateInstance(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::filestore::v1::CreateInstanceRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::filestore::v1::CreateInstanceRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreateInstance(cq, *std::move(context),
-                                          std::move(options), request);
+        return child->AsyncCreateInstance(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 CloudFilestoreManagerAuth::CreateInstance(
-    grpc::ClientContext& context, Options options,
-    google::cloud::filestore::v1::CreateInstanceRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::filestore::v1::CreateInstanceRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateInstance(context, options, request);
@@ -80,28 +80,28 @@ CloudFilestoreManagerAuth::CreateInstance(
 
 future<StatusOr<google::longrunning::Operation>>
 CloudFilestoreManagerAuth::AsyncUpdateInstance(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::filestore::v1::UpdateInstanceRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::filestore::v1::UpdateInstanceRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncUpdateInstance(cq, *std::move(context),
-                                          std::move(options), request);
+        return child->AsyncUpdateInstance(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 CloudFilestoreManagerAuth::UpdateInstance(
-    grpc::ClientContext& context, Options options,
-    google::cloud::filestore::v1::UpdateInstanceRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::filestore::v1::UpdateInstanceRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateInstance(context, options, request);
@@ -109,28 +109,28 @@ CloudFilestoreManagerAuth::UpdateInstance(
 
 future<StatusOr<google::longrunning::Operation>>
 CloudFilestoreManagerAuth::AsyncRestoreInstance(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::filestore::v1::RestoreInstanceRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::filestore::v1::RestoreInstanceRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncRestoreInstance(cq, *std::move(context),
-                                           std::move(options), request);
+        return child->AsyncRestoreInstance(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 CloudFilestoreManagerAuth::RestoreInstance(
-    grpc::ClientContext& context, Options options,
-    google::cloud::filestore::v1::RestoreInstanceRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::filestore::v1::RestoreInstanceRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->RestoreInstance(context, options, request);
@@ -138,28 +138,28 @@ CloudFilestoreManagerAuth::RestoreInstance(
 
 future<StatusOr<google::longrunning::Operation>>
 CloudFilestoreManagerAuth::AsyncRevertInstance(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::filestore::v1::RevertInstanceRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::filestore::v1::RevertInstanceRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncRevertInstance(cq, *std::move(context),
-                                          std::move(options), request);
+        return child->AsyncRevertInstance(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 CloudFilestoreManagerAuth::RevertInstance(
-    grpc::ClientContext& context, Options options,
-    google::cloud::filestore::v1::RevertInstanceRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::filestore::v1::RevertInstanceRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->RevertInstance(context, options, request);
@@ -167,45 +167,45 @@ CloudFilestoreManagerAuth::RevertInstance(
 
 future<StatusOr<google::longrunning::Operation>>
 CloudFilestoreManagerAuth::AsyncDeleteInstance(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::filestore::v1::DeleteInstanceRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::filestore::v1::DeleteInstanceRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDeleteInstance(cq, *std::move(context),
-                                          std::move(options), request);
+        return child->AsyncDeleteInstance(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 CloudFilestoreManagerAuth::DeleteInstance(
-    grpc::ClientContext& context, Options options,
-    google::cloud::filestore::v1::DeleteInstanceRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::filestore::v1::DeleteInstanceRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteInstance(context, options, request);
 }
 
-StatusOr<google::cloud::filestore::v1::ListSnapshotsResponse>
-CloudFilestoreManagerAuth::ListSnapshots(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::filestore::v1::ListSnapshotsResponse> CloudFilestoreManagerAuth::ListSnapshots(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::filestore::v1::ListSnapshotsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListSnapshots(context, options, request);
 }
 
-StatusOr<google::cloud::filestore::v1::Snapshot>
-CloudFilestoreManagerAuth::GetSnapshot(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::filestore::v1::Snapshot> CloudFilestoreManagerAuth::GetSnapshot(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::filestore::v1::GetSnapshotRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -214,28 +214,28 @@ CloudFilestoreManagerAuth::GetSnapshot(
 
 future<StatusOr<google::longrunning::Operation>>
 CloudFilestoreManagerAuth::AsyncCreateSnapshot(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::filestore::v1::CreateSnapshotRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::filestore::v1::CreateSnapshotRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreateSnapshot(cq, *std::move(context),
-                                          std::move(options), request);
+        return child->AsyncCreateSnapshot(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 CloudFilestoreManagerAuth::CreateSnapshot(
-    grpc::ClientContext& context, Options options,
-    google::cloud::filestore::v1::CreateSnapshotRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::filestore::v1::CreateSnapshotRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateSnapshot(context, options, request);
@@ -243,28 +243,28 @@ CloudFilestoreManagerAuth::CreateSnapshot(
 
 future<StatusOr<google::longrunning::Operation>>
 CloudFilestoreManagerAuth::AsyncDeleteSnapshot(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::filestore::v1::DeleteSnapshotRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::filestore::v1::DeleteSnapshotRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDeleteSnapshot(cq, *std::move(context),
-                                          std::move(options), request);
+        return child->AsyncDeleteSnapshot(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 CloudFilestoreManagerAuth::DeleteSnapshot(
-    grpc::ClientContext& context, Options options,
-    google::cloud::filestore::v1::DeleteSnapshotRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::filestore::v1::DeleteSnapshotRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteSnapshot(context, options, request);
@@ -272,45 +272,45 @@ CloudFilestoreManagerAuth::DeleteSnapshot(
 
 future<StatusOr<google::longrunning::Operation>>
 CloudFilestoreManagerAuth::AsyncUpdateSnapshot(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::filestore::v1::UpdateSnapshotRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::filestore::v1::UpdateSnapshotRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncUpdateSnapshot(cq, *std::move(context),
-                                          std::move(options), request);
+        return child->AsyncUpdateSnapshot(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 CloudFilestoreManagerAuth::UpdateSnapshot(
-    grpc::ClientContext& context, Options options,
-    google::cloud::filestore::v1::UpdateSnapshotRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::filestore::v1::UpdateSnapshotRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateSnapshot(context, options, request);
 }
 
-StatusOr<google::cloud::filestore::v1::ListBackupsResponse>
-CloudFilestoreManagerAuth::ListBackups(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::filestore::v1::ListBackupsResponse> CloudFilestoreManagerAuth::ListBackups(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::filestore::v1::ListBackupsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListBackups(context, options, request);
 }
 
-StatusOr<google::cloud::filestore::v1::Backup>
-CloudFilestoreManagerAuth::GetBackup(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::filestore::v1::Backup> CloudFilestoreManagerAuth::GetBackup(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::filestore::v1::GetBackupRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -319,28 +319,28 @@ CloudFilestoreManagerAuth::GetBackup(
 
 future<StatusOr<google::longrunning::Operation>>
 CloudFilestoreManagerAuth::AsyncCreateBackup(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::filestore::v1::CreateBackupRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::filestore::v1::CreateBackupRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreateBackup(cq, *std::move(context),
-                                        std::move(options), request);
+        return child->AsyncCreateBackup(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 CloudFilestoreManagerAuth::CreateBackup(
-    grpc::ClientContext& context, Options options,
-    google::cloud::filestore::v1::CreateBackupRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::filestore::v1::CreateBackupRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateBackup(context, options, request);
@@ -348,28 +348,28 @@ CloudFilestoreManagerAuth::CreateBackup(
 
 future<StatusOr<google::longrunning::Operation>>
 CloudFilestoreManagerAuth::AsyncDeleteBackup(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::filestore::v1::DeleteBackupRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::filestore::v1::DeleteBackupRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDeleteBackup(cq, *std::move(context),
-                                        std::move(options), request);
+        return child->AsyncDeleteBackup(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 CloudFilestoreManagerAuth::DeleteBackup(
-    grpc::ClientContext& context, Options options,
-    google::cloud::filestore::v1::DeleteBackupRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::filestore::v1::DeleteBackupRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteBackup(context, options, request);
@@ -377,28 +377,28 @@ CloudFilestoreManagerAuth::DeleteBackup(
 
 future<StatusOr<google::longrunning::Operation>>
 CloudFilestoreManagerAuth::AsyncUpdateBackup(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::filestore::v1::UpdateBackupRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::filestore::v1::UpdateBackupRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncUpdateBackup(cq, *std::move(context),
-                                        std::move(options), request);
+        return child->AsyncUpdateBackup(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 CloudFilestoreManagerAuth::UpdateBackup(
-    grpc::ClientContext& context, Options options,
-    google::cloud::filestore::v1::UpdateBackupRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::filestore::v1::UpdateBackupRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateBackup(context, options, request);
@@ -406,63 +406,63 @@ CloudFilestoreManagerAuth::UpdateBackup(
 
 future<StatusOr<google::longrunning::Operation>>
 CloudFilestoreManagerAuth::AsyncPromoteReplica(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::filestore::v1::PromoteReplicaRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::filestore::v1::PromoteReplicaRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncPromoteReplica(cq, *std::move(context),
-                                          std::move(options), request);
+        return child->AsyncPromoteReplica(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 CloudFilestoreManagerAuth::PromoteReplica(
-    grpc::ClientContext& context, Options options,
-    google::cloud::filestore::v1::PromoteReplicaRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::filestore::v1::PromoteReplicaRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->PromoteReplica(context, options, request);
 }
 
-StatusOr<google::cloud::location::ListLocationsResponse>
-CloudFilestoreManagerAuth::ListLocations(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::location::ListLocationsResponse> CloudFilestoreManagerAuth::ListLocations(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListLocations(context, options, request);
 }
 
-StatusOr<google::cloud::location::Location>
-CloudFilestoreManagerAuth::GetLocation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::location::Location> CloudFilestoreManagerAuth::GetLocation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetLocation(context, options, request);
 }
 
-StatusOr<google::longrunning::ListOperationsResponse>
-CloudFilestoreManagerAuth::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse> CloudFilestoreManagerAuth::ListOperations(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListOperations(context, options, request);
 }
 
-StatusOr<google::longrunning::Operation>
-CloudFilestoreManagerAuth::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::Operation> CloudFilestoreManagerAuth::GetOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -470,7 +470,8 @@ CloudFilestoreManagerAuth::GetOperation(
 }
 
 Status CloudFilestoreManagerAuth::DeleteOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -478,7 +479,8 @@ Status CloudFilestoreManagerAuth::DeleteOperation(
 }
 
 Status CloudFilestoreManagerAuth::CancelOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -492,16 +494,15 @@ CloudFilestoreManagerAuth::AsyncGetOperation(
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncGetOperation(cq, *std::move(context),
-                                        std::move(options), request);
+        return child->AsyncGetOperation(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
@@ -510,14 +511,13 @@ future<Status> CloudFilestoreManagerAuth::AsyncCancelOperation(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) return make_ready_future(std::move(context).status());
-        return child->AsyncCancelOperation(cq, *std::move(context),
-                                           std::move(options), request);
+        return child->AsyncCancelOperation(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 

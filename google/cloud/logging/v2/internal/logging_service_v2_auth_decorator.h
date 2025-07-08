@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LOGGING_V2_INTERNAL_LOGGING_SERVICE_V2_AUTH_DECORATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LOGGING_V2_INTERNAL_LOGGING_SERVICE_V2_AUTH_DECORATOR_H
 
-#include "google/cloud/logging/v2/internal/logging_service_v2_stub.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/logging/v2/internal/logging_service_v2_stub.h"
 #include "google/cloud/version.h"
 #include <memory>
 #include <set>
@@ -39,25 +39,28 @@ class LoggingServiceV2Auth : public LoggingServiceV2Stub {
       std::shared_ptr<LoggingServiceV2Stub> child);
 
   Status DeleteLog(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::logging::v2::DeleteLogRequest const& request) override;
 
   StatusOr<google::logging::v2::WriteLogEntriesResponse> WriteLogEntries(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::logging::v2::WriteLogEntriesRequest const& request) override;
 
   StatusOr<google::logging::v2::ListLogEntriesResponse> ListLogEntries(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::logging::v2::ListLogEntriesRequest const& request) override;
 
-  StatusOr<google::logging::v2::ListMonitoredResourceDescriptorsResponse>
-  ListMonitoredResourceDescriptors(
-      grpc::ClientContext& context, Options const& options,
-      google::logging::v2::ListMonitoredResourceDescriptorsRequest const&
-          request) override;
+  StatusOr<google::logging::v2::ListMonitoredResourceDescriptorsResponse> ListMonitoredResourceDescriptors(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::logging::v2::ListMonitoredResourceDescriptorsRequest const& request) override;
 
   StatusOr<google::logging::v2::ListLogsResponse> ListLogs(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::logging::v2::ListLogsRequest const& request) override;
 
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
@@ -69,19 +72,21 @@ class LoggingServiceV2Auth : public LoggingServiceV2Stub {
       google::cloud::internal::ImmutableOptions options) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
-  future<StatusOr<google::logging::v2::WriteLogEntriesResponse>>
-  AsyncWriteLogEntries(
+  future<StatusOr<google::logging::v2::WriteLogEntriesResponse>> AsyncWriteLogEntries(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,

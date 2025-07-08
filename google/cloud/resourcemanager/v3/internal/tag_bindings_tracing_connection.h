@@ -36,46 +36,40 @@ class TagBindingsTracingConnection
   ~TagBindingsTracingConnection() override = default;
 
   explicit TagBindingsTracingConnection(
-      std::shared_ptr<resourcemanager_v3::TagBindingsConnection> child);
+    std::shared_ptr<resourcemanager_v3::TagBindingsConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StreamRange<google::cloud::resourcemanager::v3::TagBinding> ListTagBindings(
-      google::cloud::resourcemanager::v3::ListTagBindingsRequest request)
-      override;
+  StreamRange<google::cloud::resourcemanager::v3::TagBinding>
+  ListTagBindings(google::cloud::resourcemanager::v3::ListTagBindingsRequest request) override;
+
+  future<StatusOr<google::cloud::resourcemanager::v3::TagBinding>>
+  CreateTagBinding(google::cloud::resourcemanager::v3::CreateTagBindingRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  CreateTagBinding(NoAwaitTag,
+      google::cloud::resourcemanager::v3::CreateTagBindingRequest const& request) override;
 
   future<StatusOr<google::cloud::resourcemanager::v3::TagBinding>>
   CreateTagBinding(
-      google::cloud::resourcemanager::v3::CreateTagBindingRequest const&
-          request) override;
+      google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::longrunning::Operation> CreateTagBinding(
-      NoAwaitTag,
-      google::cloud::resourcemanager::v3::CreateTagBindingRequest const&
-          request) override;
+  future<StatusOr<google::cloud::resourcemanager::v3::DeleteTagBindingMetadata>>
+  DeleteTagBinding(google::cloud::resourcemanager::v3::DeleteTagBindingRequest const& request) override;
 
-  future<StatusOr<google::cloud::resourcemanager::v3::TagBinding>>
-  CreateTagBinding(google::longrunning::Operation const& operation) override;
+  StatusOr<google::longrunning::Operation>
+  DeleteTagBinding(NoAwaitTag,
+      google::cloud::resourcemanager::v3::DeleteTagBindingRequest const& request) override;
 
   future<StatusOr<google::cloud::resourcemanager::v3::DeleteTagBindingMetadata>>
   DeleteTagBinding(
-      google::cloud::resourcemanager::v3::DeleteTagBindingRequest const&
-          request) override;
-
-  StatusOr<google::longrunning::Operation> DeleteTagBinding(
-      NoAwaitTag,
-      google::cloud::resourcemanager::v3::DeleteTagBindingRequest const&
-          request) override;
-
-  future<StatusOr<google::cloud::resourcemanager::v3::DeleteTagBindingMetadata>>
-  DeleteTagBinding(google::longrunning::Operation const& operation) override;
+      google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::resourcemanager::v3::EffectiveTag>
-  ListEffectiveTags(google::cloud::resourcemanager::v3::ListEffectiveTagsRequest
-                        request) override;
+  ListEffectiveTags(google::cloud::resourcemanager::v3::ListEffectiveTagsRequest request) override;
 
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request) override;
 
  private:
   std::shared_ptr<resourcemanager_v3::TagBindingsConnection> child_;

@@ -33,8 +33,7 @@ using ::google::cloud::webrisk_v1::MakeWebRiskServiceConnection;
 /// @deprecated Use webrisk_v1::WebRiskServiceConnection directly.
 using ::google::cloud::webrisk_v1::WebRiskServiceConnection;
 
-/// @deprecated Use webrisk_v1::WebRiskServiceLimitedErrorCountRetryPolicy
-/// directly.
+/// @deprecated Use webrisk_v1::WebRiskServiceLimitedErrorCountRetryPolicy directly.
 using ::google::cloud::webrisk_v1::WebRiskServiceLimitedErrorCountRetryPolicy;
 
 /// @deprecated Use webrisk_v1::WebRiskServiceLimitedTimeRetryPolicy directly.

@@ -28,14 +28,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 GenAiTuningServiceClient::GenAiTuningServiceClient(
     std::shared_ptr<GenAiTuningServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 GenAiTuningServiceClient::~GenAiTuningServiceClient() = default;
 
 StatusOr<google::cloud::aiplatform::v1::TuningJob>
-GenAiTuningServiceClient::CreateTuningJob(
-    std::string const& parent,
-    google::cloud::aiplatform::v1::TuningJob const& tuning_job, Options opts) {
+GenAiTuningServiceClient::CreateTuningJob(std::string const& parent, google::cloud::aiplatform::v1::TuningJob const& tuning_job, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::CreateTuningJobRequest request;
   request.set_parent(parent);
@@ -44,9 +42,7 @@ GenAiTuningServiceClient::CreateTuningJob(
 }
 
 StatusOr<google::cloud::aiplatform::v1::TuningJob>
-GenAiTuningServiceClient::CreateTuningJob(
-    google::cloud::aiplatform::v1::CreateTuningJobRequest const& request,
-    Options opts) {
+GenAiTuningServiceClient::CreateTuningJob(google::cloud::aiplatform::v1::CreateTuningJobRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateTuningJob(request);
 }
@@ -60,16 +56,13 @@ GenAiTuningServiceClient::GetTuningJob(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::aiplatform::v1::TuningJob>
-GenAiTuningServiceClient::GetTuningJob(
-    google::cloud::aiplatform::v1::GetTuningJobRequest const& request,
-    Options opts) {
+GenAiTuningServiceClient::GetTuningJob(google::cloud::aiplatform::v1::GetTuningJobRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetTuningJob(request);
 }
 
 StreamRange<google::cloud::aiplatform::v1::TuningJob>
-GenAiTuningServiceClient::ListTuningJobs(std::string const& parent,
-                                         Options opts) {
+GenAiTuningServiceClient::ListTuningJobs(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::ListTuningJobsRequest request;
   request.set_parent(parent);
@@ -77,33 +70,27 @@ GenAiTuningServiceClient::ListTuningJobs(std::string const& parent,
 }
 
 StreamRange<google::cloud::aiplatform::v1::TuningJob>
-GenAiTuningServiceClient::ListTuningJobs(
-    google::cloud::aiplatform::v1::ListTuningJobsRequest request,
-    Options opts) {
+GenAiTuningServiceClient::ListTuningJobs(google::cloud::aiplatform::v1::ListTuningJobsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListTuningJobs(std::move(request));
 }
 
-Status GenAiTuningServiceClient::CancelTuningJob(std::string const& name,
-                                                 Options opts) {
+Status
+GenAiTuningServiceClient::CancelTuningJob(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::CancelTuningJobRequest request;
   request.set_name(name);
   return connection_->CancelTuningJob(request);
 }
 
-Status GenAiTuningServiceClient::CancelTuningJob(
-    google::cloud::aiplatform::v1::CancelTuningJobRequest const& request,
-    Options opts) {
+Status
+GenAiTuningServiceClient::CancelTuningJob(google::cloud::aiplatform::v1::CancelTuningJobRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelTuningJob(request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::TuningJob>>
-GenAiTuningServiceClient::RebaseTunedModel(
-    std::string const& parent,
-    google::cloud::aiplatform::v1::TunedModelRef const& tuned_model_ref,
-    Options opts) {
+GenAiTuningServiceClient::RebaseTunedModel(std::string const& parent, google::cloud::aiplatform::v1::TunedModelRef const& tuned_model_ref, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::RebaseTunedModelRequest request;
   request.set_parent(parent);
@@ -112,10 +99,7 @@ GenAiTuningServiceClient::RebaseTunedModel(
 }
 
 StatusOr<google::longrunning::Operation>
-GenAiTuningServiceClient::RebaseTunedModel(
-    NoAwaitTag, std::string const& parent,
-    google::cloud::aiplatform::v1::TunedModelRef const& tuned_model_ref,
-    Options opts) {
+GenAiTuningServiceClient::RebaseTunedModel(NoAwaitTag, std::string const& parent, google::cloud::aiplatform::v1::TunedModelRef const& tuned_model_ref, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::RebaseTunedModelRequest request;
   request.set_parent(parent);
@@ -124,66 +108,55 @@ GenAiTuningServiceClient::RebaseTunedModel(
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::TuningJob>>
-GenAiTuningServiceClient::RebaseTunedModel(
-    google::cloud::aiplatform::v1::RebaseTunedModelRequest const& request,
-    Options opts) {
+GenAiTuningServiceClient::RebaseTunedModel(google::cloud::aiplatform::v1::RebaseTunedModelRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RebaseTunedModel(request);
 }
 
 StatusOr<google::longrunning::Operation>
-GenAiTuningServiceClient::RebaseTunedModel(
-    NoAwaitTag,
-    google::cloud::aiplatform::v1::RebaseTunedModelRequest const& request,
-    Options opts) {
+GenAiTuningServiceClient::RebaseTunedModel(NoAwaitTag, google::cloud::aiplatform::v1::RebaseTunedModelRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RebaseTunedModel(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::TuningJob>>
-GenAiTuningServiceClient::RebaseTunedModel(
-    google::longrunning::Operation const& operation, Options opts) {
+GenAiTuningServiceClient::RebaseTunedModel(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RebaseTunedModel(operation);
 }
 
 StreamRange<google::cloud::location::Location>
-GenAiTuningServiceClient::ListLocations(
-    google::cloud::location::ListLocationsRequest request, Options opts) {
+GenAiTuningServiceClient::ListLocations(google::cloud::location::ListLocationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListLocations(std::move(request));
 }
 
 StatusOr<google::cloud::location::Location>
-GenAiTuningServiceClient::GetLocation(
-    google::cloud::location::GetLocationRequest const& request, Options opts) {
+GenAiTuningServiceClient::GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetLocation(request);
 }
 
-StatusOr<google::iam::v1::Policy> GenAiTuningServiceClient::SetIamPolicy(
-    google::iam::v1::SetIamPolicyRequest const& request, Options opts) {
+StatusOr<google::iam::v1::Policy>
+GenAiTuningServiceClient::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetIamPolicy(request);
 }
 
-StatusOr<google::iam::v1::Policy> GenAiTuningServiceClient::GetIamPolicy(
-    google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
+StatusOr<google::iam::v1::Policy>
+GenAiTuningServiceClient::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetIamPolicy(request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-GenAiTuningServiceClient::TestIamPermissions(
-    google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
+GenAiTuningServiceClient::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->TestIamPermissions(request);
 }
 
 StreamRange<google::longrunning::Operation>
-GenAiTuningServiceClient::ListOperations(std::string const& name,
-                                         std::string const& filter,
-                                         Options opts) {
+GenAiTuningServiceClient::ListOperations(std::string const& name, std::string const& filter, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::ListOperationsRequest request;
   request.set_name(name);
@@ -192,57 +165,55 @@ GenAiTuningServiceClient::ListOperations(std::string const& name,
 }
 
 StreamRange<google::longrunning::Operation>
-GenAiTuningServiceClient::ListOperations(
-    google::longrunning::ListOperationsRequest request, Options opts) {
+GenAiTuningServiceClient::ListOperations(google::longrunning::ListOperationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOperations(std::move(request));
 }
 
-StatusOr<google::longrunning::Operation> GenAiTuningServiceClient::GetOperation(
-    std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation>
+GenAiTuningServiceClient::GetOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
   return connection_->GetOperation(request);
 }
 
-StatusOr<google::longrunning::Operation> GenAiTuningServiceClient::GetOperation(
-    google::longrunning::GetOperationRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation>
+GenAiTuningServiceClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }
 
-Status GenAiTuningServiceClient::DeleteOperation(std::string const& name,
-                                                 Options opts) {
+Status
+GenAiTuningServiceClient::DeleteOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::DeleteOperationRequest request;
   request.set_name(name);
   return connection_->DeleteOperation(request);
 }
 
-Status GenAiTuningServiceClient::DeleteOperation(
-    google::longrunning::DeleteOperationRequest const& request, Options opts) {
+Status
+GenAiTuningServiceClient::DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteOperation(request);
 }
 
-Status GenAiTuningServiceClient::CancelOperation(std::string const& name,
-                                                 Options opts) {
+Status
+GenAiTuningServiceClient::CancelOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::CancelOperationRequest request;
   request.set_name(name);
   return connection_->CancelOperation(request);
 }
 
-Status GenAiTuningServiceClient::CancelOperation(
-    google::longrunning::CancelOperationRequest const& request, Options opts) {
+Status
+GenAiTuningServiceClient::CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelOperation(request);
 }
 
 StatusOr<google::longrunning::Operation>
-GenAiTuningServiceClient::WaitOperation(
-    google::longrunning::WaitOperationRequest const& request, Options opts) {
+GenAiTuningServiceClient::WaitOperation(google::longrunning::WaitOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->WaitOperation(request);
 }

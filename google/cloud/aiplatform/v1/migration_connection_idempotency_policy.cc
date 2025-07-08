@@ -26,33 +26,26 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-MigrationServiceConnectionIdempotencyPolicy::
-    ~MigrationServiceConnectionIdempotencyPolicy() = default;
+MigrationServiceConnectionIdempotencyPolicy::~MigrationServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<MigrationServiceConnectionIdempotencyPolicy>
 MigrationServiceConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<MigrationServiceConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency
-MigrationServiceConnectionIdempotencyPolicy::SearchMigratableResources(
-    google::cloud::aiplatform::v1::
-        SearchMigratableResourcesRequest) {  // NOLINT
+Idempotency MigrationServiceConnectionIdempotencyPolicy::SearchMigratableResources(google::cloud::aiplatform::v1::SearchMigratableResourcesRequest) {  // NOLINT
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency MigrationServiceConnectionIdempotencyPolicy::BatchMigrateResources(
-    google::cloud::aiplatform::v1::BatchMigrateResourcesRequest const&) {
+Idempotency MigrationServiceConnectionIdempotencyPolicy::BatchMigrateResources(google::cloud::aiplatform::v1::BatchMigrateResourcesRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency MigrationServiceConnectionIdempotencyPolicy::ListLocations(
-    google::cloud::location::ListLocationsRequest) {  // NOLINT
+Idempotency MigrationServiceConnectionIdempotencyPolicy::ListLocations(google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency MigrationServiceConnectionIdempotencyPolicy::GetLocation(
-    google::cloud::location::GetLocationRequest const&) {
+Idempotency MigrationServiceConnectionIdempotencyPolicy::GetLocation(google::cloud::location::GetLocationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
@@ -62,43 +55,36 @@ Idempotency MigrationServiceConnectionIdempotencyPolicy::SetIamPolicy(
                                          : Idempotency::kIdempotent;
 }
 
-Idempotency MigrationServiceConnectionIdempotencyPolicy::GetIamPolicy(
-    google::iam::v1::GetIamPolicyRequest const&) {
+Idempotency MigrationServiceConnectionIdempotencyPolicy::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency MigrationServiceConnectionIdempotencyPolicy::TestIamPermissions(
-    google::iam::v1::TestIamPermissionsRequest const&) {
+Idempotency MigrationServiceConnectionIdempotencyPolicy::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency MigrationServiceConnectionIdempotencyPolicy::ListOperations(
-    google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency MigrationServiceConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency MigrationServiceConnectionIdempotencyPolicy::GetOperation(
-    google::longrunning::GetOperationRequest const&) {
+Idempotency MigrationServiceConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency MigrationServiceConnectionIdempotencyPolicy::DeleteOperation(
-    google::longrunning::DeleteOperationRequest const&) {
+Idempotency MigrationServiceConnectionIdempotencyPolicy::DeleteOperation(google::longrunning::DeleteOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency MigrationServiceConnectionIdempotencyPolicy::CancelOperation(
-    google::longrunning::CancelOperationRequest const&) {
+Idempotency MigrationServiceConnectionIdempotencyPolicy::CancelOperation(google::longrunning::CancelOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency MigrationServiceConnectionIdempotencyPolicy::WaitOperation(
-    google::longrunning::WaitOperationRequest const&) {
+Idempotency MigrationServiceConnectionIdempotencyPolicy::WaitOperation(google::longrunning::WaitOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<MigrationServiceConnectionIdempotencyPolicy>
-MakeDefaultMigrationServiceConnectionIdempotencyPolicy() {
+    MakeDefaultMigrationServiceConnectionIdempotencyPolicy() {
   return std::make_unique<MigrationServiceConnectionIdempotencyPolicy>();
 }
 

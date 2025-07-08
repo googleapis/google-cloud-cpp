@@ -30,33 +30,31 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-SessionsTracingStub::SessionsTracingStub(std::shared_ptr<SessionsStub> child)
+SessionsTracingStub::SessionsTracingStub(
+    std::shared_ptr<SessionsStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
-StatusOr<google::cloud::dialogflow::cx::v3::DetectIntentResponse>
-SessionsTracingStub::DetectIntent(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::dialogflow::cx::v3::DetectIntentResponse> SessionsTracingStub::DetectIntent(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dialogflow::cx::v3::DetectIntentRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.Sessions",
-                                     "DetectIntent");
+  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.Sessions", "DetectIntent");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DetectIntent(context, options, request));
 }
 
-std::unique_ptr<google::cloud::internal::StreamingReadRpc<
-    google::cloud::dialogflow::cx::v3::DetectIntentResponse>>
+std::unique_ptr<google::cloud::internal::StreamingReadRpc<google::cloud::dialogflow::cx::v3::DetectIntentResponse>>
 SessionsTracingStub::ServerStreamingDetectIntent(
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    Options const& options,
     google::cloud::dialogflow::cx::v3::DetectIntentRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.Sessions",
-                                     "ServerStreamingDetectIntent");
+  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.Sessions", "ServerStreamingDetectIntent");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(*context, *propagator_);
   auto stream = child_->ServerStreamingDetectIntent(context, options, request);
-  return std::make_unique<internal::StreamingReadRpcTracing<
-      google::cloud::dialogflow::cx::v3::DetectIntentResponse>>(
+  return std::make_unique<internal::StreamingReadRpcTracing<google::cloud::dialogflow::cx::v3::DetectIntentResponse>>(
       std::move(context), std::move(stream), std::move(span));
 }
 
@@ -66,61 +64,54 @@ std::unique_ptr<AsyncStreamingReadWriteRpc<
 SessionsTracingStub::AsyncStreamingDetectIntent(
     CompletionQueue const& cq, std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.Sessions",
-                                     "StreamingDetectIntent");
+  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.Sessions", "StreamingDetectIntent");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto stream =
-      child_->AsyncStreamingDetectIntent(cq, context, std::move(options));
+  auto stream = child_->AsyncStreamingDetectIntent(cq, context, std::move(options));
   return std::make_unique<internal::AsyncStreamingReadWriteRpcTracing<
       google::cloud::dialogflow::cx::v3::StreamingDetectIntentRequest,
       google::cloud::dialogflow::cx::v3::StreamingDetectIntentResponse>>(
       std::move(context), std::move(stream), std::move(span));
 }
 
-StatusOr<google::cloud::dialogflow::cx::v3::MatchIntentResponse>
-SessionsTracingStub::MatchIntent(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::dialogflow::cx::v3::MatchIntentResponse> SessionsTracingStub::MatchIntent(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dialogflow::cx::v3::MatchIntentRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.Sessions",
-                                     "MatchIntent");
+  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.Sessions", "MatchIntent");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->MatchIntent(context, options, request));
 }
 
-StatusOr<google::cloud::dialogflow::cx::v3::FulfillIntentResponse>
-SessionsTracingStub::FulfillIntent(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::dialogflow::cx::v3::FulfillIntentResponse> SessionsTracingStub::FulfillIntent(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dialogflow::cx::v3::FulfillIntentRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.Sessions",
-                                     "FulfillIntent");
+  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.Sessions", "FulfillIntent");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->FulfillIntent(context, options, request));
 }
 
-StatusOr<google::cloud::dialogflow::cx::v3::AnswerFeedback>
-SessionsTracingStub::SubmitAnswerFeedback(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::dialogflow::cx::v3::SubmitAnswerFeedbackRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.Sessions",
-                                     "SubmitAnswerFeedback");
+StatusOr<google::cloud::dialogflow::cx::v3::AnswerFeedback> SessionsTracingStub::SubmitAnswerFeedback(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::dialogflow::cx::v3::SubmitAnswerFeedbackRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.Sessions", "SubmitAnswerFeedback");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->SubmitAnswerFeedback(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->SubmitAnswerFeedback(context, options, request));
 }
 
-StatusOr<google::cloud::location::ListLocationsResponse>
-SessionsTracingStub::ListLocations(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::location::ListLocationsResponse> SessionsTracingStub::ListLocations(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.Sessions",
-                                     "ListLocations");
+  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.Sessions", "ListLocations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -128,22 +119,21 @@ SessionsTracingStub::ListLocations(
 }
 
 StatusOr<google::cloud::location::Location> SessionsTracingStub::GetLocation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.Sessions",
-                                     "GetLocation");
+  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.Sessions", "GetLocation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetLocation(context, options, request));
 }
 
-StatusOr<google::longrunning::ListOperationsResponse>
-SessionsTracingStub::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse> SessionsTracingStub::ListOperations(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.Sessions",
-                                     "ListOperations");
+  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.Sessions", "ListOperations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -151,10 +141,10 @@ SessionsTracingStub::ListOperations(
 }
 
 StatusOr<google::longrunning::Operation> SessionsTracingStub::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.Sessions",
-                                     "GetOperation");
+  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.Sessions", "GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -162,10 +152,10 @@ StatusOr<google::longrunning::Operation> SessionsTracingStub::GetOperation(
 }
 
 Status SessionsTracingStub::CancelOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.Sessions",
-                                     "CancelOperation");
+  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.Sessions", "CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,

@@ -26,14 +26,10 @@ namespace cloud {
 namespace notebooks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use
-/// notebooks_v1::MakeDefaultNotebookServiceConnectionIdempotencyPolicy
-/// directly.
-using ::google::cloud::notebooks_v1::
-    MakeDefaultNotebookServiceConnectionIdempotencyPolicy;
+/// @deprecated Use notebooks_v1::MakeDefaultNotebookServiceConnectionIdempotencyPolicy directly.
+using ::google::cloud::notebooks_v1::MakeDefaultNotebookServiceConnectionIdempotencyPolicy;
 
-/// @deprecated Use notebooks_v1::NotebookServiceConnectionIdempotencyPolicy
-/// directly.
+/// @deprecated Use notebooks_v1::NotebookServiceConnectionIdempotencyPolicy directly.
 using ::google::cloud::notebooks_v1::NotebookServiceConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

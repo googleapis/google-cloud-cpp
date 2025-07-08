@@ -42,57 +42,49 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockKnowledgeBasesConnection
-    : public dialogflow_es::KnowledgeBasesConnection {
+class MockKnowledgeBasesConnection : public dialogflow_es::KnowledgeBasesConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(
-      (StreamRange<google::cloud::dialogflow::v2::KnowledgeBase>),
-      ListKnowledgeBases,
-      (google::cloud::dialogflow::v2::ListKnowledgeBasesRequest request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::v2::KnowledgeBase>, GetKnowledgeBase,
-      (google::cloud::dialogflow::v2::GetKnowledgeBaseRequest const& request),
-      (override));
+  MOCK_METHOD((StreamRange<google::cloud::dialogflow::v2::KnowledgeBase>),
+  ListKnowledgeBases,
+  (google::cloud::dialogflow::v2::ListKnowledgeBasesRequest request), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::dialogflow::v2::KnowledgeBase>,
-              CreateKnowledgeBase,
-              (google::cloud::dialogflow::v2::CreateKnowledgeBaseRequest const&
-                   request),
-              (override));
-
-  MOCK_METHOD(Status, DeleteKnowledgeBase,
-              (google::cloud::dialogflow::v2::DeleteKnowledgeBaseRequest const&
-                   request),
-              (override));
+  GetKnowledgeBase,
+  (google::cloud::dialogflow::v2::GetKnowledgeBaseRequest const& request), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::dialogflow::v2::KnowledgeBase>,
-              UpdateKnowledgeBase,
-              (google::cloud::dialogflow::v2::UpdateKnowledgeBaseRequest const&
-                   request),
-              (override));
+  CreateKnowledgeBase,
+  (google::cloud::dialogflow::v2::CreateKnowledgeBaseRequest const& request), (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::location::Location>), ListLocations,
-              (google::cloud::location::ListLocationsRequest request),
-              (override));
+  MOCK_METHOD(Status,
+  DeleteKnowledgeBase,
+  (google::cloud::dialogflow::v2::DeleteKnowledgeBaseRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::location::Location>, GetLocation,
-              (google::cloud::location::GetLocationRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::dialogflow::v2::KnowledgeBase>,
+  UpdateKnowledgeBase,
+  (google::cloud::dialogflow::v2::UpdateKnowledgeBaseRequest const& request), (override));
 
-  MOCK_METHOD((StreamRange<google::longrunning::Operation>), ListOperations,
-              (google::longrunning::ListOperationsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::cloud::location::Location>),
+  ListLocations,
+  (google::cloud::location::ListLocationsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
-              (google::longrunning::GetOperationRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::location::Location>,
+  GetLocation,
+  (google::cloud::location::GetLocationRequest const& request), (override));
 
-  MOCK_METHOD(Status, CancelOperation,
-              (google::longrunning::CancelOperationRequest const& request),
-              (override));
+  MOCK_METHOD((StreamRange<google::longrunning::Operation>),
+  ListOperations,
+  (google::longrunning::ListOperationsRequest request), (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  GetOperation,
+  (google::longrunning::GetOperationRequest const& request), (override));
+
+  MOCK_METHOD(Status,
+  CancelOperation,
+  (google::longrunning::CancelOperationRequest const& request), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

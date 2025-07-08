@@ -30,10 +30,8 @@ namespace cloud {
 namespace networkmanagement_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use
-/// networkmanagement_v1_mocks::MockReachabilityServiceConnection directly.
-using ::google::cloud::networkmanagement_v1_mocks::
-    MockReachabilityServiceConnection;
+/// @deprecated Use networkmanagement_v1_mocks::MockReachabilityServiceConnection directly.
+using ::google::cloud::networkmanagement_v1_mocks::MockReachabilityServiceConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace networkmanagement_mocks

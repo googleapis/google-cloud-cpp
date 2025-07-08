@@ -36,61 +36,53 @@ class StorageBatchOperationsTracingConnection
   ~StorageBatchOperationsTracingConnection() override = default;
 
   explicit StorageBatchOperationsTracingConnection(
-      std::shared_ptr<
-          storagebatchoperations_v1::StorageBatchOperationsConnection>
-          child);
+    std::shared_ptr<storagebatchoperations_v1::StorageBatchOperationsConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StreamRange<google::cloud::storagebatchoperations::v1::Job> ListJobs(
-      google::cloud::storagebatchoperations::v1::ListJobsRequest request)
-      override;
+  StreamRange<google::cloud::storagebatchoperations::v1::Job>
+  ListJobs(google::cloud::storagebatchoperations::v1::ListJobsRequest request) override;
 
-  StatusOr<google::cloud::storagebatchoperations::v1::Job> GetJob(
-      google::cloud::storagebatchoperations::v1::GetJobRequest const& request)
-      override;
+  StatusOr<google::cloud::storagebatchoperations::v1::Job>
+  GetJob(google::cloud::storagebatchoperations::v1::GetJobRequest const& request) override;
 
-  future<StatusOr<google::cloud::storagebatchoperations::v1::Job>> CreateJob(
-      google::cloud::storagebatchoperations::v1::CreateJobRequest const&
-          request) override;
+  future<StatusOr<google::cloud::storagebatchoperations::v1::Job>>
+  CreateJob(google::cloud::storagebatchoperations::v1::CreateJobRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> CreateJob(
-      NoAwaitTag,
-      google::cloud::storagebatchoperations::v1::CreateJobRequest const&
-          request) override;
+  StatusOr<google::longrunning::Operation>
+  CreateJob(NoAwaitTag,
+      google::cloud::storagebatchoperations::v1::CreateJobRequest const& request) override;
 
-  future<StatusOr<google::cloud::storagebatchoperations::v1::Job>> CreateJob(
+  future<StatusOr<google::cloud::storagebatchoperations::v1::Job>>
+  CreateJob(
       google::longrunning::Operation const& operation) override;
 
-  Status DeleteJob(
-      google::cloud::storagebatchoperations::v1::DeleteJobRequest const&
-          request) override;
+  Status
+  DeleteJob(google::cloud::storagebatchoperations::v1::DeleteJobRequest const& request) override;
 
   StatusOr<google::cloud::storagebatchoperations::v1::CancelJobResponse>
-  CancelJob(google::cloud::storagebatchoperations::v1::CancelJobRequest const&
-                request) override;
+  CancelJob(google::cloud::storagebatchoperations::v1::CancelJobRequest const& request) override;
 
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request) override;
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request) override;
 
-  StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request) override;
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request) override;
 
-  Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request) override;
+  Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request) override;
 
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request) override;
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  std::shared_ptr<storagebatchoperations_v1::StorageBatchOperationsConnection>
-      child_;
+  std::shared_ptr<storagebatchoperations_v1::StorageBatchOperationsConnection> child_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -103,8 +95,7 @@ class StorageBatchOperationsTracingConnection
  */
 std::shared_ptr<storagebatchoperations_v1::StorageBatchOperationsConnection>
 MakeStorageBatchOperationsTracingConnection(
-    std::shared_ptr<storagebatchoperations_v1::StorageBatchOperationsConnection>
-        conn);
+    std::shared_ptr<storagebatchoperations_v1::StorageBatchOperationsConnection> conn);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storagebatchoperations_v1_internal

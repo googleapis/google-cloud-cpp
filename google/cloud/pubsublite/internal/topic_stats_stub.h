@@ -22,8 +22,8 @@
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/cloud/pubsublite/v1/topic_stats.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
+#include <google/cloud/pubsublite/v1/topic_stats.grpc.pb.h>
 #include <memory>
 #include <utility>
 
@@ -36,92 +36,89 @@ class TopicStatsServiceStub {
  public:
   virtual ~TopicStatsServiceStub() = 0;
 
-  virtual StatusOr<google::cloud::pubsublite::v1::ComputeMessageStatsResponse>
-  ComputeMessageStats(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::pubsublite::v1::ComputeMessageStatsRequest const&
-          request) = 0;
+  virtual StatusOr<google::cloud::pubsublite::v1::ComputeMessageStatsResponse> ComputeMessageStats(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::pubsublite::v1::ComputeMessageStatsRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::pubsublite::v1::ComputeHeadCursorResponse>
-  ComputeHeadCursor(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::pubsublite::v1::ComputeHeadCursorRequest const&
-          request) = 0;
+  virtual StatusOr<google::cloud::pubsublite::v1::ComputeHeadCursorResponse> ComputeHeadCursor(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::pubsublite::v1::ComputeHeadCursorRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::pubsublite::v1::ComputeTimeCursorResponse>
-  ComputeTimeCursor(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::pubsublite::v1::ComputeTimeCursorRequest const&
-          request) = 0;
+  virtual StatusOr<google::cloud::pubsublite::v1::ComputeTimeCursorResponse> ComputeTimeCursor(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::pubsublite::v1::ComputeTimeCursorRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::ListOperationsRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual Status DeleteOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::DeleteOperationRequest const& request) = 0;
 
   virtual Status CancelOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::CancelOperationRequest const& request) = 0;
 };
 
 class DefaultTopicStatsServiceStub : public TopicStatsServiceStub {
  public:
   explicit DefaultTopicStatsServiceStub(
-      std::unique_ptr<
-          google::cloud::pubsublite::v1::TopicStatsService::StubInterface>
-          grpc_stub,
-      std::unique_ptr<google::longrunning::Operations::StubInterface>
-          operations_stub)
+      std::unique_ptr<google::cloud::pubsublite::v1::TopicStatsService::StubInterface> grpc_stub,
+      std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub
+)
       : grpc_stub_(std::move(grpc_stub)),
         operations_stub_(std::move(operations_stub)) {}
 
-  StatusOr<google::cloud::pubsublite::v1::ComputeMessageStatsResponse>
-  ComputeMessageStats(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::pubsublite::v1::ComputeMessageStatsRequest const& request)
-      override;
+  StatusOr<google::cloud::pubsublite::v1::ComputeMessageStatsResponse> ComputeMessageStats(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::pubsublite::v1::ComputeMessageStatsRequest const& request) override;
 
-  StatusOr<google::cloud::pubsublite::v1::ComputeHeadCursorResponse>
-  ComputeHeadCursor(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::pubsublite::v1::ComputeHeadCursorRequest const& request)
-      override;
+  StatusOr<google::cloud::pubsublite::v1::ComputeHeadCursorResponse> ComputeHeadCursor(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::pubsublite::v1::ComputeHeadCursorRequest const& request) override;
 
-  StatusOr<google::cloud::pubsublite::v1::ComputeTimeCursorResponse>
-  ComputeTimeCursor(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::pubsublite::v1::ComputeTimeCursorRequest const& request)
-      override;
+  StatusOr<google::cloud::pubsublite::v1::ComputeTimeCursorResponse> ComputeTimeCursor(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::pubsublite::v1::ComputeTimeCursorRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status DeleteOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::DeleteOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  std::unique_ptr<
-      google::cloud::pubsublite::v1::TopicStatsService::StubInterface>
-      grpc_stub_;
-  std::unique_ptr<google::longrunning::Operations::StubInterface>
-      operations_stub_;
+  std::unique_ptr<google::cloud::pubsublite::v1::TopicStatsService::StubInterface> grpc_stub_;
+  std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

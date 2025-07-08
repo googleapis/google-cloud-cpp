@@ -28,21 +28,19 @@ namespace cloud {
 namespace publicca_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-PublicCertificateAuthorityServiceStub::
-    ~PublicCertificateAuthorityServiceStub() = default;
+PublicCertificateAuthorityServiceStub::~PublicCertificateAuthorityServiceStub() = default;
 
 StatusOr<google::cloud::security::publicca::v1::ExternalAccountKey>
 DefaultPublicCertificateAuthorityServiceStub::CreateExternalAccountKey(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::security::publicca::v1::
-        CreateExternalAccountKeyRequest const& request) {
-  google::cloud::security::publicca::v1::ExternalAccountKey response;
-  auto status =
-      grpc_stub_->CreateExternalAccountKey(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::security::publicca::v1::CreateExternalAccountKeyRequest const& request) {
+    google::cloud::security::publicca::v1::ExternalAccountKey response;
+    auto status =
+        grpc_stub_->CreateExternalAccountKey(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

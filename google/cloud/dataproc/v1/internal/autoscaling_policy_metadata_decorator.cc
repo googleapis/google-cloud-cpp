@@ -46,128 +46,123 @@ AutoscalingPolicyServiceMetadata::AutoscalingPolicyServiceMetadata(
 
 StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy>
 AutoscalingPolicyServiceMetadata::CreateAutoscalingPolicy(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::dataproc::v1::CreateAutoscalingPolicyRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::dataproc::v1::CreateAutoscalingPolicyRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateAutoscalingPolicy(context, options, request);
 }
 
 StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy>
 AutoscalingPolicyServiceMetadata::UpdateAutoscalingPolicy(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::dataproc::v1::UpdateAutoscalingPolicyRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("policy.name=",
-                           internal::UrlEncode(request.policy().name())));
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::dataproc::v1::UpdateAutoscalingPolicyRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("policy.name=", internal::UrlEncode(request.policy().name())));
   return child_->UpdateAutoscalingPolicy(context, options, request);
 }
 
 StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy>
 AutoscalingPolicyServiceMetadata::GetAutoscalingPolicy(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dataproc::v1::GetAutoscalingPolicyRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetAutoscalingPolicy(context, options, request);
 }
 
 StatusOr<google::cloud::dataproc::v1::ListAutoscalingPoliciesResponse>
 AutoscalingPolicyServiceMetadata::ListAutoscalingPolicies(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::dataproc::v1::ListAutoscalingPoliciesRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::dataproc::v1::ListAutoscalingPoliciesRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListAutoscalingPolicies(context, options, request);
 }
 
-Status AutoscalingPolicyServiceMetadata::DeleteAutoscalingPolicy(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::dataproc::v1::DeleteAutoscalingPolicyRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+Status
+AutoscalingPolicyServiceMetadata::DeleteAutoscalingPolicy(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::dataproc::v1::DeleteAutoscalingPolicyRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteAutoscalingPolicy(context, options, request);
 }
 
 StatusOr<google::iam::v1::Policy>
 AutoscalingPolicyServiceMetadata::SetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
-  SetMetadata(
-      context, options,
-      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
+  SetMetadata(context, options, absl::StrCat("resource=", internal::UrlEncode(request.resource())));
   return child_->SetIamPolicy(context, options, request);
 }
 
 StatusOr<google::iam::v1::Policy>
 AutoscalingPolicyServiceMetadata::GetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
-  SetMetadata(
-      context, options,
-      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
+  SetMetadata(context, options, absl::StrCat("resource=", internal::UrlEncode(request.resource())));
   return child_->GetIamPolicy(context, options, request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 AutoscalingPolicyServiceMetadata::TestIamPermissions(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  SetMetadata(
-      context, options,
-      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
+  SetMetadata(context, options, absl::StrCat("resource=", internal::UrlEncode(request.resource())));
   return child_->TestIamPermissions(context, options, request);
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
 AutoscalingPolicyServiceMetadata::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ListOperations(context, options, request);
 }
 
 StatusOr<google::longrunning::Operation>
 AutoscalingPolicyServiceMetadata::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetOperation(context, options, request);
 }
 
-Status AutoscalingPolicyServiceMetadata::DeleteOperation(
-    grpc::ClientContext& context, Options const& options,
+Status
+AutoscalingPolicyServiceMetadata::DeleteOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteOperation(context, options, request);
 }
 
-Status AutoscalingPolicyServiceMetadata::CancelOperation(
-    grpc::ClientContext& context, Options const& options,
+Status
+AutoscalingPolicyServiceMetadata::CancelOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->CancelOperation(context, options, request);
 }
 
-void AutoscalingPolicyServiceMetadata::SetMetadata(
-    grpc::ClientContext& context, Options const& options,
-    std::string const& request_params) {
+void AutoscalingPolicyServiceMetadata::SetMetadata(grpc::ClientContext& context,
+                                        Options const& options,
+                                        std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
 void AutoscalingPolicyServiceMetadata::SetMetadata(grpc::ClientContext& context,
-                                                   Options const& options) {
-  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
-                                       api_client_header_);
+                                        Options const& options) {
+  google::cloud::internal::SetMetadata(
+      context, options, fixed_metadata_, api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

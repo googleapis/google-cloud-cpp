@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_ES_CONVERSATION_DATASETS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_ES_CONVERSATION_DATASETS_CONNECTION_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/dialogflow_es/conversation_datasets_connection_idempotency_policy.h"
 #include "google/cloud/dialogflow_es/internal/conversation_datasets_retry_traits.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -57,8 +57,7 @@ class ConversationDatasetsRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class ConversationDatasetsLimitedErrorCountRetryPolicy
-    : public ConversationDatasetsRetryPolicy {
+class ConversationDatasetsLimitedErrorCountRetryPolicy : public ConversationDatasetsRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -67,18 +66,15 @@ class ConversationDatasetsLimitedErrorCountRetryPolicy
    * @note Disable the retry loop by providing an instance of this policy with
    *     @p maximum_failures == 0.
    */
-  explicit ConversationDatasetsLimitedErrorCountRetryPolicy(
-      int maximum_failures)
-      : impl_(maximum_failures) {}
+  explicit ConversationDatasetsLimitedErrorCountRetryPolicy(int maximum_failures)
+    : impl_(maximum_failures) {}
 
   ConversationDatasetsLimitedErrorCountRetryPolicy(
       ConversationDatasetsLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : ConversationDatasetsLimitedErrorCountRetryPolicy(
-            rhs.maximum_failures()) {}
+    : ConversationDatasetsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   ConversationDatasetsLimitedErrorCountRetryPolicy(
       ConversationDatasetsLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : ConversationDatasetsLimitedErrorCountRetryPolicy(
-            rhs.maximum_failures()) {}
+    : ConversationDatasetsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -98,9 +94,7 @@ class ConversationDatasetsLimitedErrorCountRetryPolicy
   using BaseType = ConversationDatasetsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      dialogflow_es_internal::ConversationDatasetsRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<dialogflow_es_internal::ConversationDatasetsRetryTraits> impl_;
 };
 
 /**
@@ -113,8 +107,7 @@ class ConversationDatasetsLimitedErrorCountRetryPolicy
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class ConversationDatasetsLimitedTimeRetryPolicy
-    : public ConversationDatasetsRetryPolicy {
+class ConversationDatasetsLimitedTimeRetryPolicy : public ConversationDatasetsRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -139,14 +132,12 @@ class ConversationDatasetsLimitedTimeRetryPolicy
   template <typename DurationRep, typename DurationPeriod>
   explicit ConversationDatasetsLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  ConversationDatasetsLimitedTimeRetryPolicy(
-      ConversationDatasetsLimitedTimeRetryPolicy&& rhs) noexcept
-      : ConversationDatasetsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  ConversationDatasetsLimitedTimeRetryPolicy(
-      ConversationDatasetsLimitedTimeRetryPolicy const& rhs) noexcept
-      : ConversationDatasetsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  ConversationDatasetsLimitedTimeRetryPolicy(ConversationDatasetsLimitedTimeRetryPolicy&& rhs) noexcept
+    : ConversationDatasetsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  ConversationDatasetsLimitedTimeRetryPolicy(ConversationDatasetsLimitedTimeRetryPolicy const& rhs) noexcept
+    : ConversationDatasetsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -168,18 +159,16 @@ class ConversationDatasetsLimitedTimeRetryPolicy
   using BaseType = ConversationDatasetsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      dialogflow_es_internal::ConversationDatasetsRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<dialogflow_es_internal::ConversationDatasetsRetryTraits> impl_;
 };
 
 /**
  * The `ConversationDatasetsConnection` object for `ConversationDatasetsClient`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `ConversationDatasetsClient`. This allows users to inject custom
- * behavior (e.g., with a Google Mock object) when writing tests that use
- * objects of type `ConversationDatasetsClient`.
+ * sets in `ConversationDatasetsClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `ConversationDatasetsClient`.
  *
  * To create a concrete instance, see `MakeConversationDatasetsConnection()`.
  *
@@ -192,84 +181,63 @@ class ConversationDatasetsConnection {
   virtual Options options() { return Options{}; }
 
   virtual future<StatusOr<google::cloud::dialogflow::v2::ConversationDataset>>
-  CreateConversationDataset(
-      google::cloud::dialogflow::v2::CreateConversationDatasetRequest const&
-          request);
+  CreateConversationDataset(google::cloud::dialogflow::v2::CreateConversationDatasetRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> CreateConversationDataset(
-      NoAwaitTag,
-      google::cloud::dialogflow::v2::CreateConversationDatasetRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  CreateConversationDataset(NoAwaitTag, google::cloud::dialogflow::v2::CreateConversationDatasetRequest const& request);
 
   virtual future<StatusOr<google::cloud::dialogflow::v2::ConversationDataset>>
-  CreateConversationDataset(google::longrunning::Operation const& operation);
+  CreateConversationDataset( google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::dialogflow::v2::ConversationDataset>
-  GetConversationDataset(
-      google::cloud::dialogflow::v2::GetConversationDatasetRequest const&
-          request);
+  GetConversationDataset(google::cloud::dialogflow::v2::GetConversationDatasetRequest const& request);
 
   virtual StreamRange<google::cloud::dialogflow::v2::ConversationDataset>
-  ListConversationDatasets(
-      google::cloud::dialogflow::v2::ListConversationDatasetsRequest request);
+  ListConversationDatasets(google::cloud::dialogflow::v2::ListConversationDatasetsRequest request);
 
-  virtual future<StatusOr<google::cloud::dialogflow::v2::
-                              DeleteConversationDatasetOperationMetadata>>
-  DeleteConversationDataset(
-      google::cloud::dialogflow::v2::DeleteConversationDatasetRequest const&
-          request);
+  virtual future<StatusOr<google::cloud::dialogflow::v2::DeleteConversationDatasetOperationMetadata>>
+  DeleteConversationDataset(google::cloud::dialogflow::v2::DeleteConversationDatasetRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> DeleteConversationDataset(
-      NoAwaitTag,
-      google::cloud::dialogflow::v2::DeleteConversationDatasetRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  DeleteConversationDataset(NoAwaitTag, google::cloud::dialogflow::v2::DeleteConversationDatasetRequest const& request);
 
-  virtual future<StatusOr<google::cloud::dialogflow::v2::
-                              DeleteConversationDatasetOperationMetadata>>
-  DeleteConversationDataset(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::dialogflow::v2::DeleteConversationDatasetOperationMetadata>>
+  DeleteConversationDataset( google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<
-      google::cloud::dialogflow::v2::ImportConversationDataOperationResponse>>
-  ImportConversationData(
-      google::cloud::dialogflow::v2::ImportConversationDataRequest const&
-          request);
+  virtual future<StatusOr<google::cloud::dialogflow::v2::ImportConversationDataOperationResponse>>
+  ImportConversationData(google::cloud::dialogflow::v2::ImportConversationDataRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> ImportConversationData(
-      NoAwaitTag,
-      google::cloud::dialogflow::v2::ImportConversationDataRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  ImportConversationData(NoAwaitTag, google::cloud::dialogflow::v2::ImportConversationDataRequest const& request);
 
-  virtual future<StatusOr<
-      google::cloud::dialogflow::v2::ImportConversationDataOperationResponse>>
-  ImportConversationData(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::dialogflow::v2::ImportConversationDataOperationResponse>>
+  ImportConversationData( google::longrunning::Operation const& operation);
 
-  virtual StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request);
+  virtual StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request);
 
-  virtual StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request);
+  virtual StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request);
 
-  virtual StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 
-  virtual Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request);
+  virtual Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request);
 };
 
 /**
- * A factory function to construct an object of type
- * `ConversationDatasetsConnection`.
+ * A factory function to construct an object of type `ConversationDatasetsConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of
- * ConversationDatasetsClient.
+ * should be passed as an argument to the constructor of ConversationDatasetsClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `ConversationDatasetsConnection`. Expected options are any of the
- * types in the following option lists:
+ * returned `ConversationDatasetsConnection`. Expected options are any of the types in
+ * the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
@@ -280,12 +248,11 @@ class ConversationDatasetsConnection {
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
  * @param location Sets the prefix for the default `EndpointOption` value.
- * @param options (optional) Configure the `ConversationDatasetsConnection`
- * created by this function.
+ * @param options (optional) Configure the `ConversationDatasetsConnection` created by
+ * this function.
  */
-std::shared_ptr<ConversationDatasetsConnection>
-MakeConversationDatasetsConnection(std::string const& location,
-                                   Options options = {});
+std::shared_ptr<ConversationDatasetsConnection> MakeConversationDatasetsConnection(
+    std::string const& location, Options options = {});
 
 /**
  * A backwards-compatible version of the previous factory function.  Unless
@@ -294,8 +261,8 @@ MakeConversationDatasetsConnection(std::string const& location,
  *
  * @deprecated Please use the `location` overload instead.
  */
-std::shared_ptr<ConversationDatasetsConnection>
-MakeConversationDatasetsConnection(Options options = {});
+std::shared_ptr<ConversationDatasetsConnection> MakeConversationDatasetsConnection(
+    Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_es

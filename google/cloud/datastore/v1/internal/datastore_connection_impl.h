@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATASTORE_V1_INTERNAL_DATASTORE_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATASTORE_V1_INTERNAL_DATASTORE_CONNECTION_IMPL_H
 
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/datastore/v1/datastore_connection.h"
 #include "google/cloud/datastore/v1/datastore_connection_idempotency_policy.h"
 #include "google/cloud/datastore/v1/datastore_options.h"
 #include "google/cloud/datastore/v1/internal/datastore_retry_traits.h"
 #include "google/cloud/datastore/v1/internal/datastore_stub.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -37,53 +37,53 @@ namespace cloud {
 namespace datastore_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class DatastoreConnectionImpl : public datastore_v1::DatastoreConnection {
+class DatastoreConnectionImpl
+    : public datastore_v1::DatastoreConnection {
  public:
   ~DatastoreConnectionImpl() override = default;
 
   DatastoreConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<datastore_v1_internal::DatastoreStub> stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<datastore_v1_internal::DatastoreStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
-  StatusOr<google::datastore::v1::LookupResponse> Lookup(
-      google::datastore::v1::LookupRequest const& request) override;
+  StatusOr<google::datastore::v1::LookupResponse>
+  Lookup(google::datastore::v1::LookupRequest const& request) override;
 
-  StatusOr<google::datastore::v1::RunQueryResponse> RunQuery(
-      google::datastore::v1::RunQueryRequest const& request) override;
+  StatusOr<google::datastore::v1::RunQueryResponse>
+  RunQuery(google::datastore::v1::RunQueryRequest const& request) override;
 
   StatusOr<google::datastore::v1::RunAggregationQueryResponse>
-  RunAggregationQuery(google::datastore::v1::RunAggregationQueryRequest const&
-                          request) override;
+  RunAggregationQuery(google::datastore::v1::RunAggregationQueryRequest const& request) override;
 
-  StatusOr<google::datastore::v1::BeginTransactionResponse> BeginTransaction(
-      google::datastore::v1::BeginTransactionRequest const& request) override;
+  StatusOr<google::datastore::v1::BeginTransactionResponse>
+  BeginTransaction(google::datastore::v1::BeginTransactionRequest const& request) override;
 
-  StatusOr<google::datastore::v1::CommitResponse> Commit(
-      google::datastore::v1::CommitRequest const& request) override;
+  StatusOr<google::datastore::v1::CommitResponse>
+  Commit(google::datastore::v1::CommitRequest const& request) override;
 
-  StatusOr<google::datastore::v1::RollbackResponse> Rollback(
-      google::datastore::v1::RollbackRequest const& request) override;
+  StatusOr<google::datastore::v1::RollbackResponse>
+  Rollback(google::datastore::v1::RollbackRequest const& request) override;
 
-  StatusOr<google::datastore::v1::AllocateIdsResponse> AllocateIds(
-      google::datastore::v1::AllocateIdsRequest const& request) override;
+  StatusOr<google::datastore::v1::AllocateIdsResponse>
+  AllocateIds(google::datastore::v1::AllocateIdsRequest const& request) override;
 
-  StatusOr<google::datastore::v1::ReserveIdsResponse> ReserveIds(
-      google::datastore::v1::ReserveIdsRequest const& request) override;
+  StatusOr<google::datastore::v1::ReserveIdsResponse>
+  ReserveIds(google::datastore::v1::ReserveIdsRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request) override;
 
-  Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request) override;
+  Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request) override;
 
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request) override;
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

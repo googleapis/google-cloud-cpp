@@ -40,11 +40,13 @@ class InstancesAuth : public InstancesStub {
       std::shared_ptr<InstancesStub> child);
 
   StatusOr<google::appengine::v1::ListInstancesResponse> ListInstances(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::appengine::v1::ListInstancesRequest const& request) override;
 
   StatusOr<google::appengine::v1::Instance> GetInstance(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::appengine::v1::GetInstanceRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteInstance(
@@ -54,7 +56,8 @@ class InstancesAuth : public InstancesStub {
       google::appengine::v1::DeleteInstanceRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteInstance(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::appengine::v1::DeleteInstanceRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDebugInstance(
@@ -64,7 +67,8 @@ class InstancesAuth : public InstancesStub {
       google::appengine::v1::DebugInstanceRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DebugInstance(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::appengine::v1::DebugInstanceRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(

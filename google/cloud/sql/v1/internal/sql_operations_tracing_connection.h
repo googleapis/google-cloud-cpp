@@ -36,18 +36,18 @@ class SqlOperationsServiceTracingConnection
   ~SqlOperationsServiceTracingConnection() override = default;
 
   explicit SqlOperationsServiceTracingConnection(
-      std::shared_ptr<sql_v1::SqlOperationsServiceConnection> child);
+    std::shared_ptr<sql_v1::SqlOperationsServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::sql::v1::Operation> Get(
-      google::cloud::sql::v1::SqlOperationsGetRequest const& request) override;
+  StatusOr<google::cloud::sql::v1::Operation>
+  Get(google::cloud::sql::v1::SqlOperationsGetRequest const& request) override;
 
-  StreamRange<google::cloud::sql::v1::Operation> List(
-      google::cloud::sql::v1::SqlOperationsListRequest request) override;
+  StreamRange<google::cloud::sql::v1::Operation>
+  List(google::cloud::sql::v1::SqlOperationsListRequest request) override;
 
-  Status Cancel(google::cloud::sql::v1::SqlOperationsCancelRequest const&
-                    request) override;
+  Status
+  Cancel(google::cloud::sql::v1::SqlOperationsCancelRequest const& request) override;
 
  private:
   std::shared_ptr<sql_v1::SqlOperationsServiceConnection> child_;

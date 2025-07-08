@@ -34,9 +34,7 @@ FirewallsTracingConnection::FirewallsTracingConnection(
     : child_(std::move(child)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-FirewallsTracingConnection::DeleteFirewall(
-    google::cloud::cpp::compute::firewalls::v1::DeleteFirewallRequest const&
-        request) {
+FirewallsTracingConnection::DeleteFirewall(google::cloud::cpp::compute::firewalls::v1::DeleteFirewallRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_firewalls_v1::FirewallsConnection::DeleteFirewall");
   internal::OTelScope scope(span);
@@ -45,14 +43,12 @@ FirewallsTracingConnection::DeleteFirewall(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 FirewallsTracingConnection::DeleteFirewall(
-    NoAwaitTag,
-    google::cloud::cpp::compute::firewalls::v1::DeleteFirewallRequest const&
-        request) {
+    NoAwaitTag, google::cloud::cpp::compute::firewalls::v1::DeleteFirewallRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_firewalls_v1::FirewallsConnection::DeleteFirewall");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span,
-                           child_->DeleteFirewall(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->DeleteFirewall(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -61,23 +57,19 @@ FirewallsTracingConnection::DeleteFirewall(
   auto span = internal::MakeSpan(
       "compute_firewalls_v1::FirewallsConnection::DeleteFirewall");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->DeleteFirewall(operation));
+  return internal::EndSpan(std::move(span),
+      child_->DeleteFirewall(operation));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Firewall>
-FirewallsTracingConnection::GetFirewall(
-    google::cloud::cpp::compute::firewalls::v1::GetFirewallRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "compute_firewalls_v1::FirewallsConnection::GetFirewall");
+FirewallsTracingConnection::GetFirewall(google::cloud::cpp::compute::firewalls::v1::GetFirewallRequest const& request) {
+  auto span = internal::MakeSpan("compute_firewalls_v1::FirewallsConnection::GetFirewall");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetFirewall(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-FirewallsTracingConnection::InsertFirewall(
-    google::cloud::cpp::compute::firewalls::v1::InsertFirewallRequest const&
-        request) {
+FirewallsTracingConnection::InsertFirewall(google::cloud::cpp::compute::firewalls::v1::InsertFirewallRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_firewalls_v1::FirewallsConnection::InsertFirewall");
   internal::OTelScope scope(span);
@@ -86,14 +78,12 @@ FirewallsTracingConnection::InsertFirewall(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 FirewallsTracingConnection::InsertFirewall(
-    NoAwaitTag,
-    google::cloud::cpp::compute::firewalls::v1::InsertFirewallRequest const&
-        request) {
+    NoAwaitTag, google::cloud::cpp::compute::firewalls::v1::InsertFirewallRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_firewalls_v1::FirewallsConnection::InsertFirewall");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span,
-                           child_->InsertFirewall(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->InsertFirewall(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -102,25 +92,21 @@ FirewallsTracingConnection::InsertFirewall(
   auto span = internal::MakeSpan(
       "compute_firewalls_v1::FirewallsConnection::InsertFirewall");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->InsertFirewall(operation));
+  return internal::EndSpan(std::move(span),
+      child_->InsertFirewall(operation));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::Firewall>
-FirewallsTracingConnection::ListFirewalls(
-    google::cloud::cpp::compute::firewalls::v1::ListFirewallsRequest request) {
-  auto span = internal::MakeSpan(
-      "compute_firewalls_v1::FirewallsConnection::ListFirewalls");
+FirewallsTracingConnection::ListFirewalls(google::cloud::cpp::compute::firewalls::v1::ListFirewallsRequest request) {
+  auto span = internal::MakeSpan("compute_firewalls_v1::FirewallsConnection::ListFirewalls");
   internal::OTelScope scope(span);
   auto sr = child_->ListFirewalls(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::cpp::compute::v1::Firewall>(std::move(span),
-                                                 std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::cpp::compute::v1::Firewall>(
+        std::move(span), std::move(sr));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-FirewallsTracingConnection::PatchFirewall(
-    google::cloud::cpp::compute::firewalls::v1::PatchFirewallRequest const&
-        request) {
+FirewallsTracingConnection::PatchFirewall(google::cloud::cpp::compute::firewalls::v1::PatchFirewallRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_firewalls_v1::FirewallsConnection::PatchFirewall");
   internal::OTelScope scope(span);
@@ -129,13 +115,12 @@ FirewallsTracingConnection::PatchFirewall(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 FirewallsTracingConnection::PatchFirewall(
-    NoAwaitTag,
-    google::cloud::cpp::compute::firewalls::v1::PatchFirewallRequest const&
-        request) {
+    NoAwaitTag, google::cloud::cpp::compute::firewalls::v1::PatchFirewallRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_firewalls_v1::FirewallsConnection::PatchFirewall");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->PatchFirewall(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->PatchFirewall(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -144,13 +129,12 @@ FirewallsTracingConnection::PatchFirewall(
   auto span = internal::MakeSpan(
       "compute_firewalls_v1::FirewallsConnection::PatchFirewall");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->PatchFirewall(operation));
+  return internal::EndSpan(std::move(span),
+      child_->PatchFirewall(operation));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-FirewallsTracingConnection::UpdateFirewall(
-    google::cloud::cpp::compute::firewalls::v1::UpdateFirewallRequest const&
-        request) {
+FirewallsTracingConnection::UpdateFirewall(google::cloud::cpp::compute::firewalls::v1::UpdateFirewallRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_firewalls_v1::FirewallsConnection::UpdateFirewall");
   internal::OTelScope scope(span);
@@ -159,14 +143,12 @@ FirewallsTracingConnection::UpdateFirewall(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 FirewallsTracingConnection::UpdateFirewall(
-    NoAwaitTag,
-    google::cloud::cpp::compute::firewalls::v1::UpdateFirewallRequest const&
-        request) {
+    NoAwaitTag, google::cloud::cpp::compute::firewalls::v1::UpdateFirewallRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_firewalls_v1::FirewallsConnection::UpdateFirewall");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span,
-                           child_->UpdateFirewall(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->UpdateFirewall(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -175,7 +157,8 @@ FirewallsTracingConnection::UpdateFirewall(
   auto span = internal::MakeSpan(
       "compute_firewalls_v1::FirewallsConnection::UpdateFirewall");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->UpdateFirewall(operation));
+  return internal::EndSpan(std::move(span),
+      child_->UpdateFirewall(operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

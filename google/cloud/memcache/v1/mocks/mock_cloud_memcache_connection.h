@@ -42,33 +42,29 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockCloudMemcacheConnection
-    : public memcache_v1::CloudMemcacheConnection {
+class MockCloudMemcacheConnection : public memcache_v1::CloudMemcacheConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD((StreamRange<google::cloud::memcache::v1::Instance>),
-              ListInstances,
-              (google::cloud::memcache::v1::ListInstancesRequest request),
-              (override));
+  ListInstances,
+  (google::cloud::memcache::v1::ListInstancesRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::memcache::v1::Instance>, GetInstance,
-              (google::cloud::memcache::v1::GetInstanceRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::memcache::v1::Instance>,
+  GetInstance,
+  (google::cloud::memcache::v1::GetInstanceRequest const& request), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// CreateInstance(Matcher<google::cloud::memcache::v1::CreateInstanceRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, CreateInstance(Matcher<google::cloud::memcache::v1::CreateInstanceRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::memcache::v1::Instance>>, CreateInstance,
-      (google::cloud::memcache::v1::CreateInstanceRequest const& request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::memcache::v1::Instance>>,
+  CreateInstance,
+  (google::cloud::memcache::v1::CreateInstanceRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -76,37 +72,33 @@ class MockCloudMemcacheConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, CreateInstance(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, CreateInstance,
-      (NoAwaitTag,
-       google::cloud::memcache::v1::CreateInstanceRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  CreateInstance, (NoAwaitTag,
+    google::cloud::memcache::v1::CreateInstanceRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateInstance(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, CreateInstance(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::memcache::v1::Instance>>,
-              CreateInstance, (google::longrunning::Operation const& operation),
-              (override));
+  CreateInstance, (
+    google::longrunning::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// UpdateInstance(Matcher<google::cloud::memcache::v1::UpdateInstanceRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, UpdateInstance(Matcher<google::cloud::memcache::v1::UpdateInstanceRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::memcache::v1::Instance>>, UpdateInstance,
-      (google::cloud::memcache::v1::UpdateInstanceRequest const& request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::memcache::v1::Instance>>,
+  UpdateInstance,
+  (google::cloud::memcache::v1::UpdateInstanceRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -114,37 +106,33 @@ class MockCloudMemcacheConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, UpdateInstance(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, UpdateInstance,
-      (NoAwaitTag,
-       google::cloud::memcache::v1::UpdateInstanceRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  UpdateInstance, (NoAwaitTag,
+    google::cloud::memcache::v1::UpdateInstanceRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UpdateInstance(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, UpdateInstance(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::memcache::v1::Instance>>,
-              UpdateInstance, (google::longrunning::Operation const& operation),
-              (override));
+  UpdateInstance, (
+    google::longrunning::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// UpdateParameters(Matcher<google::cloud::memcache::v1::UpdateParametersRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, UpdateParameters(Matcher<google::cloud::memcache::v1::UpdateParametersRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::memcache::v1::Instance>>, UpdateParameters,
-      (google::cloud::memcache::v1::UpdateParametersRequest const& request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::memcache::v1::Instance>>,
+  UpdateParameters,
+  (google::cloud::memcache::v1::UpdateParametersRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -152,38 +140,33 @@ class MockCloudMemcacheConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, UpdateParameters(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, UpdateParameters,
-      (NoAwaitTag,
-       google::cloud::memcache::v1::UpdateParametersRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  UpdateParameters, (NoAwaitTag,
+    google::cloud::memcache::v1::UpdateParametersRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UpdateParameters(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, UpdateParameters(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::memcache::v1::Instance>>,
-              UpdateParameters,
-              (google::longrunning::Operation const& operation), (override));
+  UpdateParameters, (
+    google::longrunning::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteInstance(Matcher<google::cloud::memcache::v1::DeleteInstanceRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteInstance(Matcher<google::cloud::memcache::v1::DeleteInstanceRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::memcache::v1::OperationMetadata>>,
-      DeleteInstance,
-      (google::cloud::memcache::v1::DeleteInstanceRequest const& request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::memcache::v1::OperationMetadata>>,
+  DeleteInstance,
+  (google::cloud::memcache::v1::DeleteInstanceRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -191,37 +174,33 @@ class MockCloudMemcacheConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, DeleteInstance(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, DeleteInstance,
-      (NoAwaitTag,
-       google::cloud::memcache::v1::DeleteInstanceRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  DeleteInstance, (NoAwaitTag,
+    google::cloud::memcache::v1::DeleteInstanceRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteInstance(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteInstance(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::memcache::v1::OperationMetadata>>,
-              DeleteInstance, (google::longrunning::Operation const& operation),
-              (override));
+  DeleteInstance, (
+    google::longrunning::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// ApplyParameters(Matcher<google::cloud::memcache::v1::ApplyParametersRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, ApplyParameters(Matcher<google::cloud::memcache::v1::ApplyParametersRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::memcache::v1::Instance>>, ApplyParameters,
-      (google::cloud::memcache::v1::ApplyParametersRequest const& request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::memcache::v1::Instance>>,
+  ApplyParameters,
+  (google::cloud::memcache::v1::ApplyParametersRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -229,38 +208,33 @@ class MockCloudMemcacheConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, ApplyParameters(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, ApplyParameters,
-      (NoAwaitTag,
-       google::cloud::memcache::v1::ApplyParametersRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  ApplyParameters, (NoAwaitTag,
+    google::cloud::memcache::v1::ApplyParametersRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, ApplyParameters(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, ApplyParameters(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::memcache::v1::Instance>>,
-              ApplyParameters,
-              (google::longrunning::Operation const& operation), (override));
+  ApplyParameters, (
+    google::longrunning::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// RescheduleMaintenance(Matcher<google::cloud::memcache::v1::RescheduleMaintenanceRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, RescheduleMaintenance(Matcher<google::cloud::memcache::v1::RescheduleMaintenanceRequest const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::memcache::v1::Instance>>,
-              RescheduleMaintenance,
-              (google::cloud::memcache::v1::RescheduleMaintenanceRequest const&
-                   request),
-              (override));
+  RescheduleMaintenance,
+  (google::cloud::memcache::v1::RescheduleMaintenanceRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -268,46 +242,45 @@ class MockCloudMemcacheConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, RescheduleMaintenance(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, RescheduleMaintenance,
-              (NoAwaitTag,
-               google::cloud::memcache::v1::RescheduleMaintenanceRequest const&
-                   request),
-              (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  RescheduleMaintenance, (NoAwaitTag,
+    google::cloud::memcache::v1::RescheduleMaintenanceRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// RescheduleMaintenance(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock, RescheduleMaintenance(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::memcache::v1::Instance>>,
-              RescheduleMaintenance,
-              (google::longrunning::Operation const& operation), (override));
+  RescheduleMaintenance, (
+    google::longrunning::Operation const& operation), (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::location::Location>), ListLocations,
-              (google::cloud::location::ListLocationsRequest request),
-              (override));
+  MOCK_METHOD((StreamRange<google::cloud::location::Location>),
+  ListLocations,
+  (google::cloud::location::ListLocationsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::location::Location>, GetLocation,
-              (google::cloud::location::GetLocationRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::location::Location>,
+  GetLocation,
+  (google::cloud::location::GetLocationRequest const& request), (override));
 
-  MOCK_METHOD((StreamRange<google::longrunning::Operation>), ListOperations,
-              (google::longrunning::ListOperationsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::longrunning::Operation>),
+  ListOperations,
+  (google::longrunning::ListOperationsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
-              (google::longrunning::GetOperationRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  GetOperation,
+  (google::longrunning::GetOperationRequest const& request), (override));
 
-  MOCK_METHOD(Status, DeleteOperation,
-              (google::longrunning::DeleteOperationRequest const& request),
-              (override));
+  MOCK_METHOD(Status,
+  DeleteOperation,
+  (google::longrunning::DeleteOperationRequest const& request), (override));
 
-  MOCK_METHOD(Status, CancelOperation,
-              (google::longrunning::CancelOperationRequest const& request),
-              (override));
+  MOCK_METHOD(Status,
+  CancelOperation,
+  (google::longrunning::CancelOperationRequest const& request), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

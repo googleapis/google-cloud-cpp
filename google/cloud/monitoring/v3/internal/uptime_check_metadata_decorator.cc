@@ -46,69 +46,69 @@ UptimeCheckServiceMetadata::UptimeCheckServiceMetadata(
 
 StatusOr<google::monitoring::v3::ListUptimeCheckConfigsResponse>
 UptimeCheckServiceMetadata::ListUptimeCheckConfigs(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::monitoring::v3::ListUptimeCheckConfigsRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListUptimeCheckConfigs(context, options, request);
 }
 
 StatusOr<google::monitoring::v3::UptimeCheckConfig>
 UptimeCheckServiceMetadata::GetUptimeCheckConfig(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::monitoring::v3::GetUptimeCheckConfigRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetUptimeCheckConfig(context, options, request);
 }
 
 StatusOr<google::monitoring::v3::UptimeCheckConfig>
 UptimeCheckServiceMetadata::CreateUptimeCheckConfig(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::monitoring::v3::CreateUptimeCheckConfigRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateUptimeCheckConfig(context, options, request);
 }
 
 StatusOr<google::monitoring::v3::UptimeCheckConfig>
 UptimeCheckServiceMetadata::UpdateUptimeCheckConfig(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::monitoring::v3::UpdateUptimeCheckConfigRequest const& request) {
-  SetMetadata(
-      context, options,
-      absl::StrCat("uptime_check_config.name=",
-                   internal::UrlEncode(request.uptime_check_config().name())));
+  SetMetadata(context, options, absl::StrCat("uptime_check_config.name=", internal::UrlEncode(request.uptime_check_config().name())));
   return child_->UpdateUptimeCheckConfig(context, options, request);
 }
 
-Status UptimeCheckServiceMetadata::DeleteUptimeCheckConfig(
-    grpc::ClientContext& context, Options const& options,
+Status
+UptimeCheckServiceMetadata::DeleteUptimeCheckConfig(
+    grpc::ClientContext& context,
+    Options const& options,
     google::monitoring::v3::DeleteUptimeCheckConfigRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteUptimeCheckConfig(context, options, request);
 }
 
 StatusOr<google::monitoring::v3::ListUptimeCheckIpsResponse>
 UptimeCheckServiceMetadata::ListUptimeCheckIps(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::monitoring::v3::ListUptimeCheckIpsRequest const& request) {
   SetMetadata(context, options);
   return child_->ListUptimeCheckIps(context, options, request);
 }
 
-void UptimeCheckServiceMetadata::SetMetadata(
-    grpc::ClientContext& context, Options const& options,
-    std::string const& request_params) {
+void UptimeCheckServiceMetadata::SetMetadata(grpc::ClientContext& context,
+                                        Options const& options,
+                                        std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
 void UptimeCheckServiceMetadata::SetMetadata(grpc::ClientContext& context,
-                                             Options const& options) {
-  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
-                                       api_client_header_);
+                                        Options const& options) {
+  google::cloud::internal::SetMetadata(
+      context, options, fixed_metadata_, api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GKEHUB_V1_GKE_HUB_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GKEHUB_V1_GKE_HUB_CLIENT_H
 
-#include "google/cloud/gkehub/v1/gke_hub_connection.h"
 #include "google/cloud/future.h"
+#include "google/cloud/gkehub/v1/gke_hub_connection.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -78,15 +78,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// and move-construction is a relatively efficient operation, consider using
 /// such a copy when using this class from multiple threads.
 ///
-/// [google.cloud.gkehub.v1.Feature]:
-/// @googleapis_reference_link{google/cloud/gkehub/v1/feature.proto#L34}
-/// [google.cloud.gkehub.v1.Membership]:
-/// @googleapis_reference_link{google/cloud/gkehub/v1/membership.proto#L32}
+/// [google.cloud.gkehub.v1.Feature]: @googleapis_reference_link{google/cloud/gkehub/v1/feature.proto#L34}
+/// [google.cloud.gkehub.v1.Membership]: @googleapis_reference_link{google/cloud/gkehub/v1/membership.proto#L32}
 ///
 class GkeHubClient {
  public:
-  explicit GkeHubClient(std::shared_ptr<GkeHubConnection> connection,
-                        Options opts = {});
+  explicit GkeHubClient(std::shared_ptr<GkeHubConnection> connection, Options opts = {});
   ~GkeHubClient();
 
   ///@{
@@ -140,8 +137,8 @@ class GkeHubClient {
   /// [google.cloud.gkehub.v1.Membership]: @googleapis_reference_link{google/cloud/gkehub/v1/membership.proto#L32}
   ///
   // clang-format on
-  StreamRange<google::cloud::gkehub::v1::Membership> ListMemberships(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::gkehub::v1::Membership>
+  ListMemberships(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -179,9 +176,8 @@ class GkeHubClient {
   /// [google.cloud.gkehub.v1.Membership]: @googleapis_reference_link{google/cloud/gkehub/v1/membership.proto#L32}
   ///
   // clang-format on
-  StreamRange<google::cloud::gkehub::v1::Membership> ListMemberships(
-      google::cloud::gkehub::v1::ListMembershipsRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::gkehub::v1::Membership>
+  ListMemberships(google::cloud::gkehub::v1::ListMembershipsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -215,8 +211,8 @@ class GkeHubClient {
   /// [google.cloud.gkehub.v1.ListFeaturesRequest]: @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L457}
   ///
   // clang-format on
-  StreamRange<google::cloud::gkehub::v1::Feature> ListFeatures(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::gkehub::v1::Feature>
+  ListFeatures(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -254,9 +250,8 @@ class GkeHubClient {
   /// [google.cloud.gkehub.v1.ListFeaturesRequest]: @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L457}
   ///
   // clang-format on
-  StreamRange<google::cloud::gkehub::v1::Feature> ListFeatures(
-      google::cloud::gkehub::v1::ListFeaturesRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::gkehub::v1::Feature>
+  ListFeatures(google::cloud::gkehub::v1::ListFeaturesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -281,8 +276,8 @@ class GkeHubClient {
   /// [google.cloud.gkehub.v1.Membership]: @googleapis_reference_link{google/cloud/gkehub/v1/membership.proto#L32}
   ///
   // clang-format on
-  StatusOr<google::cloud::gkehub::v1::Membership> GetMembership(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::gkehub::v1::Membership>
+  GetMembership(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -311,9 +306,8 @@ class GkeHubClient {
   /// [google.cloud.gkehub.v1.Membership]: @googleapis_reference_link{google/cloud/gkehub/v1/membership.proto#L32}
   ///
   // clang-format on
-  StatusOr<google::cloud::gkehub::v1::Membership> GetMembership(
-      google::cloud::gkehub::v1::GetMembershipRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::gkehub::v1::Membership>
+  GetMembership(google::cloud::gkehub::v1::GetMembershipRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -338,8 +332,8 @@ class GkeHubClient {
   /// [google.cloud.gkehub.v1.GetFeatureRequest]: @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L511}
   ///
   // clang-format on
-  StatusOr<google::cloud::gkehub::v1::Feature> GetFeature(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::gkehub::v1::Feature>
+  GetFeature(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -368,9 +362,8 @@ class GkeHubClient {
   /// [google.cloud.gkehub.v1.GetFeatureRequest]: @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L511}
   ///
   // clang-format on
-  StatusOr<google::cloud::gkehub::v1::Feature> GetFeature(
-      google::cloud::gkehub::v1::GetFeatureRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::gkehub::v1::Feature>
+  GetFeature(google::cloud::gkehub::v1::GetFeatureRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -416,10 +409,8 @@ class GkeHubClient {
   /// [google.cloud.gkehub.v1.Membership]: @googleapis_reference_link{google/cloud/gkehub/v1/membership.proto#L32}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::gkehub::v1::Membership>> CreateMembership(
-      std::string const& parent,
-      google::cloud::gkehub::v1::Membership const& resource,
-      std::string const& membership_id, Options opts = {});
+  future<StatusOr<google::cloud::gkehub::v1::Membership>>
+  CreateMembership(std::string const& parent, google::cloud::gkehub::v1::Membership const& resource, std::string const& membership_id, Options opts = {});
 
   // clang-format off
   ///
@@ -432,10 +423,8 @@ class GkeHubClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateMembership(
-      NoAwaitTag, std::string const& parent,
-      google::cloud::gkehub::v1::Membership const& resource,
-      std::string const& membership_id, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateMembership(NoAwaitTag, std::string const& parent, google::cloud::gkehub::v1::Membership const& resource, std::string const& membership_id, Options opts = {});
 
   // clang-format off
   ///
@@ -475,9 +464,8 @@ class GkeHubClient {
   /// [google.cloud.gkehub.v1.Membership]: @googleapis_reference_link{google/cloud/gkehub/v1/membership.proto#L32}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::gkehub::v1::Membership>> CreateMembership(
-      google::cloud::gkehub::v1::CreateMembershipRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::gkehub::v1::Membership>>
+  CreateMembership(google::cloud::gkehub::v1::CreateMembershipRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -490,10 +478,8 @@ class GkeHubClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateMembership(
-      NoAwaitTag,
-      google::cloud::gkehub::v1::CreateMembershipRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateMembership(NoAwaitTag, google::cloud::gkehub::v1::CreateMembershipRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -504,8 +490,8 @@ class GkeHubClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::gkehub::v1::Membership>> CreateMembership(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::gkehub::v1::Membership>>
+  CreateMembership(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -539,10 +525,8 @@ class GkeHubClient {
   /// [google.cloud.gkehub.v1.Feature]: @googleapis_reference_link{google/cloud/gkehub/v1/feature.proto#L34}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::gkehub::v1::Feature>> CreateFeature(
-      std::string const& parent,
-      google::cloud::gkehub::v1::Feature const& resource,
-      std::string const& feature_id, Options opts = {});
+  future<StatusOr<google::cloud::gkehub::v1::Feature>>
+  CreateFeature(std::string const& parent, google::cloud::gkehub::v1::Feature const& resource, std::string const& feature_id, Options opts = {});
 
   // clang-format off
   ///
@@ -555,10 +539,8 @@ class GkeHubClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateFeature(
-      NoAwaitTag, std::string const& parent,
-      google::cloud::gkehub::v1::Feature const& resource,
-      std::string const& feature_id, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateFeature(NoAwaitTag, std::string const& parent, google::cloud::gkehub::v1::Feature const& resource, std::string const& feature_id, Options opts = {});
 
   // clang-format off
   ///
@@ -594,9 +576,8 @@ class GkeHubClient {
   /// [google.cloud.gkehub.v1.Feature]: @googleapis_reference_link{google/cloud/gkehub/v1/feature.proto#L34}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::gkehub::v1::Feature>> CreateFeature(
-      google::cloud::gkehub::v1::CreateFeatureRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::gkehub::v1::Feature>>
+  CreateFeature(google::cloud::gkehub::v1::CreateFeatureRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -609,10 +590,8 @@ class GkeHubClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateFeature(
-      NoAwaitTag,
-      google::cloud::gkehub::v1::CreateFeatureRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateFeature(NoAwaitTag, google::cloud::gkehub::v1::CreateFeatureRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -623,8 +602,8 @@ class GkeHubClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::gkehub::v1::Feature>> CreateFeature(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::gkehub::v1::Feature>>
+  CreateFeature(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -674,8 +653,8 @@ class GkeHubClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteMembership(
-      NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteMembership(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -716,9 +695,7 @@ class GkeHubClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>
-  DeleteMembership(
-      google::cloud::gkehub::v1::DeleteMembershipRequest const& request,
-      Options opts = {});
+  DeleteMembership(google::cloud::gkehub::v1::DeleteMembershipRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -731,10 +708,8 @@ class GkeHubClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteMembership(
-      NoAwaitTag,
-      google::cloud::gkehub::v1::DeleteMembershipRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteMembership(NoAwaitTag, google::cloud::gkehub::v1::DeleteMembershipRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -746,8 +721,7 @@ class GkeHubClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>
-  DeleteMembership(google::longrunning::Operation const& operation,
-                   Options opts = {});
+  DeleteMembership(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -779,8 +753,8 @@ class GkeHubClient {
   /// [google.cloud.gkehub.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L624}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>> DeleteFeature(
-      std::string const& name, Options opts = {});
+  future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>
+  DeleteFeature(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -793,8 +767,8 @@ class GkeHubClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteFeature(
-      NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteFeature(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -830,9 +804,8 @@ class GkeHubClient {
   /// [google.cloud.gkehub.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L624}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>> DeleteFeature(
-      google::cloud::gkehub::v1::DeleteFeatureRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>
+  DeleteFeature(google::cloud::gkehub::v1::DeleteFeatureRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -845,10 +818,8 @@ class GkeHubClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteFeature(
-      NoAwaitTag,
-      google::cloud::gkehub::v1::DeleteFeatureRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteFeature(NoAwaitTag, google::cloud::gkehub::v1::DeleteFeatureRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -859,8 +830,8 @@ class GkeHubClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>> DeleteFeature(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>
+  DeleteFeature(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -901,10 +872,8 @@ class GkeHubClient {
   /// [google.cloud.gkehub.v1.UpdateMembershipRequest]: @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L344}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::gkehub::v1::Membership>> UpdateMembership(
-      std::string const& name,
-      google::cloud::gkehub::v1::Membership const& resource,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  future<StatusOr<google::cloud::gkehub::v1::Membership>>
+  UpdateMembership(std::string const& name, google::cloud::gkehub::v1::Membership const& resource, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -917,10 +886,8 @@ class GkeHubClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateMembership(
-      NoAwaitTag, std::string const& name,
-      google::cloud::gkehub::v1::Membership const& resource,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateMembership(NoAwaitTag, std::string const& name, google::cloud::gkehub::v1::Membership const& resource, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -956,9 +923,8 @@ class GkeHubClient {
   /// [google.cloud.gkehub.v1.UpdateMembershipRequest]: @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L344}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::gkehub::v1::Membership>> UpdateMembership(
-      google::cloud::gkehub::v1::UpdateMembershipRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::gkehub::v1::Membership>>
+  UpdateMembership(google::cloud::gkehub::v1::UpdateMembershipRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -971,10 +937,8 @@ class GkeHubClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateMembership(
-      NoAwaitTag,
-      google::cloud::gkehub::v1::UpdateMembershipRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateMembership(NoAwaitTag, google::cloud::gkehub::v1::UpdateMembershipRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -985,8 +949,8 @@ class GkeHubClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::gkehub::v1::Membership>> UpdateMembership(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::gkehub::v1::Membership>>
+  UpdateMembership(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1027,10 +991,8 @@ class GkeHubClient {
   /// [google.cloud.gkehub.v1.UpdateFeatureRequest]: @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L585}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::gkehub::v1::Feature>> UpdateFeature(
-      std::string const& name,
-      google::cloud::gkehub::v1::Feature const& resource,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  future<StatusOr<google::cloud::gkehub::v1::Feature>>
+  UpdateFeature(std::string const& name, google::cloud::gkehub::v1::Feature const& resource, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -1043,10 +1005,8 @@ class GkeHubClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateFeature(
-      NoAwaitTag, std::string const& name,
-      google::cloud::gkehub::v1::Feature const& resource,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateFeature(NoAwaitTag, std::string const& name, google::cloud::gkehub::v1::Feature const& resource, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -1082,9 +1042,8 @@ class GkeHubClient {
   /// [google.cloud.gkehub.v1.UpdateFeatureRequest]: @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L585}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::gkehub::v1::Feature>> UpdateFeature(
-      google::cloud::gkehub::v1::UpdateFeatureRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::gkehub::v1::Feature>>
+  UpdateFeature(google::cloud::gkehub::v1::UpdateFeatureRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1097,10 +1056,8 @@ class GkeHubClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateFeature(
-      NoAwaitTag,
-      google::cloud::gkehub::v1::UpdateFeatureRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateFeature(NoAwaitTag, google::cloud::gkehub::v1::UpdateFeatureRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1111,8 +1068,8 @@ class GkeHubClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::gkehub::v1::Feature>> UpdateFeature(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::gkehub::v1::Feature>>
+  UpdateFeature(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1145,9 +1102,7 @@ class GkeHubClient {
   ///
   // clang-format on
   StatusOr<google::cloud::gkehub::v1::GenerateConnectManifestResponse>
-  GenerateConnectManifest(
-      google::cloud::gkehub::v1::GenerateConnectManifestRequest const& request,
-      Options opts = {});
+  GenerateConnectManifest(google::cloud::gkehub::v1::GenerateConnectManifestRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<GkeHubConnection> connection_;

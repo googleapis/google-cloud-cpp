@@ -31,58 +31,54 @@ DocumentSchemaServiceAuth::DocumentSchemaServiceAuth(
     std::shared_ptr<DocumentSchemaServiceStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::contentwarehouse::v1::DocumentSchema>
-DocumentSchemaServiceAuth::CreateDocumentSchema(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::contentwarehouse::v1::CreateDocumentSchemaRequest const&
-        request) {
+StatusOr<google::cloud::contentwarehouse::v1::DocumentSchema> DocumentSchemaServiceAuth::CreateDocumentSchema(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::contentwarehouse::v1::CreateDocumentSchemaRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateDocumentSchema(context, options, request);
 }
 
-StatusOr<google::cloud::contentwarehouse::v1::DocumentSchema>
-DocumentSchemaServiceAuth::UpdateDocumentSchema(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::contentwarehouse::v1::UpdateDocumentSchemaRequest const&
-        request) {
+StatusOr<google::cloud::contentwarehouse::v1::DocumentSchema> DocumentSchemaServiceAuth::UpdateDocumentSchema(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::contentwarehouse::v1::UpdateDocumentSchemaRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateDocumentSchema(context, options, request);
 }
 
-StatusOr<google::cloud::contentwarehouse::v1::DocumentSchema>
-DocumentSchemaServiceAuth::GetDocumentSchema(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::contentwarehouse::v1::GetDocumentSchemaRequest const&
-        request) {
+StatusOr<google::cloud::contentwarehouse::v1::DocumentSchema> DocumentSchemaServiceAuth::GetDocumentSchema(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::contentwarehouse::v1::GetDocumentSchemaRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetDocumentSchema(context, options, request);
 }
 
 Status DocumentSchemaServiceAuth::DeleteDocumentSchema(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::contentwarehouse::v1::DeleteDocumentSchemaRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::contentwarehouse::v1::DeleteDocumentSchemaRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteDocumentSchema(context, options, request);
 }
 
-StatusOr<google::cloud::contentwarehouse::v1::ListDocumentSchemasResponse>
-DocumentSchemaServiceAuth::ListDocumentSchemas(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::contentwarehouse::v1::ListDocumentSchemasRequest const&
-        request) {
+StatusOr<google::cloud::contentwarehouse::v1::ListDocumentSchemasResponse> DocumentSchemaServiceAuth::ListDocumentSchemas(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::contentwarehouse::v1::ListDocumentSchemasRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListDocumentSchemas(context, options, request);
 }
 
-StatusOr<google::longrunning::Operation>
-DocumentSchemaServiceAuth::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::Operation> DocumentSchemaServiceAuth::GetOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;

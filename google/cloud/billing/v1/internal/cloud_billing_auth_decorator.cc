@@ -31,72 +31,72 @@ CloudBillingAuth::CloudBillingAuth(
     std::shared_ptr<CloudBillingStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::billing::v1::BillingAccount>
-CloudBillingAuth::GetBillingAccount(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::billing::v1::BillingAccount> CloudBillingAuth::GetBillingAccount(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::billing::v1::GetBillingAccountRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetBillingAccount(context, options, request);
 }
 
-StatusOr<google::cloud::billing::v1::ListBillingAccountsResponse>
-CloudBillingAuth::ListBillingAccounts(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::billing::v1::ListBillingAccountsResponse> CloudBillingAuth::ListBillingAccounts(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::billing::v1::ListBillingAccountsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListBillingAccounts(context, options, request);
 }
 
-StatusOr<google::cloud::billing::v1::BillingAccount>
-CloudBillingAuth::UpdateBillingAccount(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::billing::v1::BillingAccount> CloudBillingAuth::UpdateBillingAccount(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::billing::v1::UpdateBillingAccountRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateBillingAccount(context, options, request);
 }
 
-StatusOr<google::cloud::billing::v1::BillingAccount>
-CloudBillingAuth::CreateBillingAccount(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::billing::v1::BillingAccount> CloudBillingAuth::CreateBillingAccount(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::billing::v1::CreateBillingAccountRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateBillingAccount(context, options, request);
 }
 
-StatusOr<google::cloud::billing::v1::ListProjectBillingInfoResponse>
-CloudBillingAuth::ListProjectBillingInfo(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::billing::v1::ListProjectBillingInfoResponse> CloudBillingAuth::ListProjectBillingInfo(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::billing::v1::ListProjectBillingInfoRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListProjectBillingInfo(context, options, request);
 }
 
-StatusOr<google::cloud::billing::v1::ProjectBillingInfo>
-CloudBillingAuth::GetProjectBillingInfo(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::billing::v1::ProjectBillingInfo> CloudBillingAuth::GetProjectBillingInfo(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::billing::v1::GetProjectBillingInfoRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetProjectBillingInfo(context, options, request);
 }
 
-StatusOr<google::cloud::billing::v1::ProjectBillingInfo>
-CloudBillingAuth::UpdateProjectBillingInfo(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::billing::v1::UpdateProjectBillingInfoRequest const&
-        request) {
+StatusOr<google::cloud::billing::v1::ProjectBillingInfo> CloudBillingAuth::UpdateProjectBillingInfo(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::billing::v1::UpdateProjectBillingInfoRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateProjectBillingInfo(context, options, request);
 }
 
 StatusOr<google::iam::v1::Policy> CloudBillingAuth::GetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -104,25 +104,26 @@ StatusOr<google::iam::v1::Policy> CloudBillingAuth::GetIamPolicy(
 }
 
 StatusOr<google::iam::v1::Policy> CloudBillingAuth::SetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->SetIamPolicy(context, options, request);
 }
 
-StatusOr<google::iam::v1::TestIamPermissionsResponse>
-CloudBillingAuth::TestIamPermissions(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::iam::v1::TestIamPermissionsResponse> CloudBillingAuth::TestIamPermissions(
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->TestIamPermissions(context, options, request);
 }
 
-StatusOr<google::cloud::billing::v1::BillingAccount>
-CloudBillingAuth::MoveBillingAccount(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::billing::v1::BillingAccount> CloudBillingAuth::MoveBillingAccount(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::billing::v1::MoveBillingAccountRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;

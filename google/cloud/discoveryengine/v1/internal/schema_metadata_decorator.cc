@@ -46,19 +46,19 @@ SchemaServiceMetadata::SchemaServiceMetadata(
 
 StatusOr<google::cloud::discoveryengine::v1::Schema>
 SchemaServiceMetadata::GetSchema(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::discoveryengine::v1::GetSchemaRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetSchema(context, options, request);
 }
 
 StatusOr<google::cloud::discoveryengine::v1::ListSchemasResponse>
 SchemaServiceMetadata::ListSchemas(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::discoveryengine::v1::ListSchemasRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListSchemas(context, options, request);
 }
 
@@ -68,17 +68,17 @@ SchemaServiceMetadata::AsyncCreateSchema(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::discoveryengine::v1::CreateSchemaRequest const& request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateSchema(cq, std::move(context), std::move(options),
-                                   request);
+  SetMetadata(*context, *options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateSchema(
+      cq, std::move(context), std::move(options), request);
 }
 
-StatusOr<google::longrunning::Operation> SchemaServiceMetadata::CreateSchema(
-    grpc::ClientContext& context, Options options,
+StatusOr<google::longrunning::Operation>
+SchemaServiceMetadata::CreateSchema(
+    grpc::ClientContext& context,
+    Options options,
     google::cloud::discoveryengine::v1::CreateSchemaRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateSchema(context, options, request);
 }
 
@@ -88,19 +88,17 @@ SchemaServiceMetadata::AsyncUpdateSchema(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::discoveryengine::v1::UpdateSchemaRequest const& request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("schema.name=",
-                           internal::UrlEncode(request.schema().name())));
-  return child_->AsyncUpdateSchema(cq, std::move(context), std::move(options),
-                                   request);
+  SetMetadata(*context, *options, absl::StrCat("schema.name=", internal::UrlEncode(request.schema().name())));
+  return child_->AsyncUpdateSchema(
+      cq, std::move(context), std::move(options), request);
 }
 
-StatusOr<google::longrunning::Operation> SchemaServiceMetadata::UpdateSchema(
-    grpc::ClientContext& context, Options options,
+StatusOr<google::longrunning::Operation>
+SchemaServiceMetadata::UpdateSchema(
+    grpc::ClientContext& context,
+    Options options,
     google::cloud::discoveryengine::v1::UpdateSchemaRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("schema.name=",
-                           internal::UrlEncode(request.schema().name())));
+  SetMetadata(context, options, absl::StrCat("schema.name=", internal::UrlEncode(request.schema().name())));
   return child_->UpdateSchema(context, options, request);
 }
 
@@ -110,42 +108,44 @@ SchemaServiceMetadata::AsyncDeleteSchema(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::discoveryengine::v1::DeleteSchemaRequest const& request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteSchema(cq, std::move(context), std::move(options),
-                                   request);
+  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteSchema(
+      cq, std::move(context), std::move(options), request);
 }
 
-StatusOr<google::longrunning::Operation> SchemaServiceMetadata::DeleteSchema(
-    grpc::ClientContext& context, Options options,
+StatusOr<google::longrunning::Operation>
+SchemaServiceMetadata::DeleteSchema(
+    grpc::ClientContext& context,
+    Options options,
     google::cloud::discoveryengine::v1::DeleteSchemaRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteSchema(context, options, request);
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
 SchemaServiceMetadata::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ListOperations(context, options, request);
 }
 
-StatusOr<google::longrunning::Operation> SchemaServiceMetadata::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::Operation>
+SchemaServiceMetadata::GetOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetOperation(context, options, request);
 }
 
-Status SchemaServiceMetadata::CancelOperation(
-    grpc::ClientContext& context, Options const& options,
+Status
+SchemaServiceMetadata::CancelOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->CancelOperation(context, options, request);
 }
 
@@ -157,8 +157,8 @@ SchemaServiceMetadata::AsyncGetOperation(
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(cq, std::move(context), std::move(options),
-                                   request);
+  return child_->AsyncGetOperation(
+      cq, std::move(context), std::move(options), request);
 }
 
 future<Status> SchemaServiceMetadata::AsyncCancelOperation(
@@ -168,8 +168,8 @@ future<Status> SchemaServiceMetadata::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(cq, std::move(context),
-                                      std::move(options), request);
+  return child_->AsyncCancelOperation(
+      cq, std::move(context), std::move(options), request);
 }
 
 void SchemaServiceMetadata::SetMetadata(grpc::ClientContext& context,
@@ -181,8 +181,8 @@ void SchemaServiceMetadata::SetMetadata(grpc::ClientContext& context,
 
 void SchemaServiceMetadata::SetMetadata(grpc::ClientContext& context,
                                         Options const& options) {
-  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
-                                       api_client_header_);
+  google::cloud::internal::SetMetadata(
+      context, options, fixed_metadata_, api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

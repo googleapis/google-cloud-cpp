@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAPROC_V1_AUTOSCALING_POLICY_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAPROC_V1_AUTOSCALING_POLICY_OPTIONS_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/dataproc/v1/autoscaling_policy_connection.h"
 #include "google/cloud/dataproc/v1/autoscaling_policy_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -55,8 +55,7 @@ struct AutoscalingPolicyServiceBackoffPolicyOption {
  * @ingroup google-cloud-dataproc-options
  */
 struct AutoscalingPolicyServiceConnectionIdempotencyPolicyOption {
-  using Type =
-      std::shared_ptr<AutoscalingPolicyServiceConnectionIdempotencyPolicy>;
+  using Type = std::shared_ptr<AutoscalingPolicyServiceConnectionIdempotencyPolicy>;
 };
 
 /**

@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GKECONNECT_GATEWAY_V1_GATEWAY_CONTROL_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GKECONNECT_GATEWAY_V1_GATEWAY_CONTROL_CLIENT_H
 
-#include "google/cloud/gkeconnect/gateway/v1/gateway_control_rest_connection.h"
 #include "google/cloud/future.h"
+#include "google/cloud/gkeconnect/gateway/v1/gateway_control_rest_connection.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -61,8 +61,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class GatewayControlClient {
  public:
-  explicit GatewayControlClient(
-      std::shared_ptr<GatewayControlConnection> connection, Options opts = {});
+  explicit GatewayControlClient(std::shared_ptr<GatewayControlConnection> connection, Options opts = {});
   ~GatewayControlClient();
 
   ///@{
@@ -75,12 +74,10 @@ class GatewayControlClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(GatewayControlClient const& a,
-                         GatewayControlClient const& b) {
+  friend bool operator==(GatewayControlClient const& a, GatewayControlClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(GatewayControlClient const& a,
-                         GatewayControlClient const& b) {
+  friend bool operator!=(GatewayControlClient const& a, GatewayControlClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -114,10 +111,7 @@ class GatewayControlClient {
   ///
   // clang-format on
   StatusOr<google::cloud::gkeconnect::gateway::v1::GenerateCredentialsResponse>
-  GenerateCredentials(
-      google::cloud::gkeconnect::gateway::v1::GenerateCredentialsRequest const&
-          request,
-      Options opts = {});
+  GenerateCredentials(google::cloud::gkeconnect::gateway::v1::GenerateCredentialsRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<GatewayControlConnection> connection_;

@@ -55,8 +55,7 @@ struct SpecialistPoolServiceBackoffPolicyOption {
  * @ingroup google-cloud-aiplatform-options
  */
 struct SpecialistPoolServiceConnectionIdempotencyPolicyOption {
-  using Type =
-      std::shared_ptr<SpecialistPoolServiceConnectionIdempotencyPolicy>;
+  using Type = std::shared_ptr<SpecialistPoolServiceConnectionIdempotencyPolicy>;
 };
 
 /**

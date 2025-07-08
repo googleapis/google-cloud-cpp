@@ -19,8 +19,6 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_WORKFLOWS_V1_WORKFLOWS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_WORKFLOWS_V1_WORKFLOWS_CONNECTION_H
 
-#include "google/cloud/workflows/v1/internal/workflows_retry_traits.h"
-#include "google/cloud/workflows/v1/workflows_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
@@ -30,6 +28,8 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
+#include "google/cloud/workflows/v1/internal/workflows_retry_traits.h"
+#include "google/cloud/workflows/v1/workflows_connection_idempotency_policy.h"
 #include <google/cloud/workflows/v1/workflows.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
@@ -66,14 +66,14 @@ class WorkflowsLimitedErrorCountRetryPolicy : public WorkflowsRetryPolicy {
    *     @p maximum_failures == 0.
    */
   explicit WorkflowsLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   WorkflowsLimitedErrorCountRetryPolicy(
       WorkflowsLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : WorkflowsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : WorkflowsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   WorkflowsLimitedErrorCountRetryPolicy(
       WorkflowsLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : WorkflowsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : WorkflowsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -93,9 +93,7 @@ class WorkflowsLimitedErrorCountRetryPolicy : public WorkflowsRetryPolicy {
   using BaseType = WorkflowsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      workflows_v1_internal::WorkflowsRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<workflows_v1_internal::WorkflowsRetryTraits> impl_;
 };
 
 /**
@@ -133,14 +131,12 @@ class WorkflowsLimitedTimeRetryPolicy : public WorkflowsRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit WorkflowsLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  WorkflowsLimitedTimeRetryPolicy(
-      WorkflowsLimitedTimeRetryPolicy&& rhs) noexcept
-      : WorkflowsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  WorkflowsLimitedTimeRetryPolicy(
-      WorkflowsLimitedTimeRetryPolicy const& rhs) noexcept
-      : WorkflowsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  WorkflowsLimitedTimeRetryPolicy(WorkflowsLimitedTimeRetryPolicy&& rhs) noexcept
+    : WorkflowsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  WorkflowsLimitedTimeRetryPolicy(WorkflowsLimitedTimeRetryPolicy const& rhs) noexcept
+    : WorkflowsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -162,9 +158,7 @@ class WorkflowsLimitedTimeRetryPolicy : public WorkflowsRetryPolicy {
   using BaseType = WorkflowsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      workflows_v1_internal::WorkflowsRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<workflows_v1_internal::WorkflowsRetryTraits> impl_;
 };
 
 /**
@@ -185,63 +179,56 @@ class WorkflowsConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StreamRange<google::cloud::workflows::v1::Workflow> ListWorkflows(
-      google::cloud::workflows::v1::ListWorkflowsRequest request);
+  virtual StreamRange<google::cloud::workflows::v1::Workflow>
+  ListWorkflows(google::cloud::workflows::v1::ListWorkflowsRequest request);
 
-  virtual StatusOr<google::cloud::workflows::v1::Workflow> GetWorkflow(
-      google::cloud::workflows::v1::GetWorkflowRequest const& request);
-
-  virtual future<StatusOr<google::cloud::workflows::v1::Workflow>>
-  CreateWorkflow(
-      google::cloud::workflows::v1::CreateWorkflowRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation> CreateWorkflow(
-      NoAwaitTag,
-      google::cloud::workflows::v1::CreateWorkflowRequest const& request);
+  virtual StatusOr<google::cloud::workflows::v1::Workflow>
+  GetWorkflow(google::cloud::workflows::v1::GetWorkflowRequest const& request);
 
   virtual future<StatusOr<google::cloud::workflows::v1::Workflow>>
-  CreateWorkflow(google::longrunning::Operation const& operation);
+  CreateWorkflow(google::cloud::workflows::v1::CreateWorkflowRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation>
+  CreateWorkflow(NoAwaitTag, google::cloud::workflows::v1::CreateWorkflowRequest const& request);
+
+  virtual future<StatusOr<google::cloud::workflows::v1::Workflow>>
+  CreateWorkflow( google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::workflows::v1::OperationMetadata>>
-  DeleteWorkflow(
-      google::cloud::workflows::v1::DeleteWorkflowRequest const& request);
+  DeleteWorkflow(google::cloud::workflows::v1::DeleteWorkflowRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> DeleteWorkflow(
-      NoAwaitTag,
-      google::cloud::workflows::v1::DeleteWorkflowRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  DeleteWorkflow(NoAwaitTag, google::cloud::workflows::v1::DeleteWorkflowRequest const& request);
 
   virtual future<StatusOr<google::cloud::workflows::v1::OperationMetadata>>
-  DeleteWorkflow(google::longrunning::Operation const& operation);
+  DeleteWorkflow( google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::workflows::v1::Workflow>>
-  UpdateWorkflow(
-      google::cloud::workflows::v1::UpdateWorkflowRequest const& request);
+  UpdateWorkflow(google::cloud::workflows::v1::UpdateWorkflowRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> UpdateWorkflow(
-      NoAwaitTag,
-      google::cloud::workflows::v1::UpdateWorkflowRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  UpdateWorkflow(NoAwaitTag, google::cloud::workflows::v1::UpdateWorkflowRequest const& request);
 
   virtual future<StatusOr<google::cloud::workflows::v1::Workflow>>
-  UpdateWorkflow(google::longrunning::Operation const& operation);
+  UpdateWorkflow( google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::workflows::v1::Workflow>
-  ListWorkflowRevisions(
-      google::cloud::workflows::v1::ListWorkflowRevisionsRequest request);
+  ListWorkflowRevisions(google::cloud::workflows::v1::ListWorkflowRevisionsRequest request);
 
-  virtual StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request);
+  virtual StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request);
 
-  virtual StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request);
+  virtual StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request);
 
-  virtual StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 
-  virtual Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request);
+  virtual Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
 };
 
 /**

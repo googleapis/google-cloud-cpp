@@ -32,76 +32,70 @@ CloudQuotasTracingStub::CloudQuotasTracingStub(
     std::shared_ptr<CloudQuotasStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
-StatusOr<google::api::cloudquotas::v1::ListQuotaInfosResponse>
-CloudQuotasTracingStub::ListQuotaInfos(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::api::cloudquotas::v1::ListQuotaInfosResponse> CloudQuotasTracingStub::ListQuotaInfos(
+    grpc::ClientContext& context,
+    Options const& options,
     google::api::cloudquotas::v1::ListQuotaInfosRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.api.cloudquotas.v1.CloudQuotas",
-                                     "ListQuotaInfos");
+  auto span = internal::MakeSpanGrpc("google.api.cloudquotas.v1.CloudQuotas", "ListQuotaInfos");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListQuotaInfos(context, options, request));
 }
 
-StatusOr<google::api::cloudquotas::v1::QuotaInfo>
-CloudQuotasTracingStub::GetQuotaInfo(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::api::cloudquotas::v1::QuotaInfo> CloudQuotasTracingStub::GetQuotaInfo(
+    grpc::ClientContext& context,
+    Options const& options,
     google::api::cloudquotas::v1::GetQuotaInfoRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.api.cloudquotas.v1.CloudQuotas",
-                                     "GetQuotaInfo");
+  auto span = internal::MakeSpanGrpc("google.api.cloudquotas.v1.CloudQuotas", "GetQuotaInfo");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetQuotaInfo(context, options, request));
 }
 
-StatusOr<google::api::cloudquotas::v1::ListQuotaPreferencesResponse>
-CloudQuotasTracingStub::ListQuotaPreferences(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::api::cloudquotas::v1::ListQuotaPreferencesResponse> CloudQuotasTracingStub::ListQuotaPreferences(
+    grpc::ClientContext& context,
+    Options const& options,
     google::api::cloudquotas::v1::ListQuotaPreferencesRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.api.cloudquotas.v1.CloudQuotas",
-                                     "ListQuotaPreferences");
+  auto span = internal::MakeSpanGrpc("google.api.cloudquotas.v1.CloudQuotas", "ListQuotaPreferences");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->ListQuotaPreferences(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->ListQuotaPreferences(context, options, request));
 }
 
-StatusOr<google::api::cloudquotas::v1::QuotaPreference>
-CloudQuotasTracingStub::GetQuotaPreference(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::api::cloudquotas::v1::QuotaPreference> CloudQuotasTracingStub::GetQuotaPreference(
+    grpc::ClientContext& context,
+    Options const& options,
     google::api::cloudquotas::v1::GetQuotaPreferenceRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.api.cloudquotas.v1.CloudQuotas",
-                                     "GetQuotaPreference");
+  auto span = internal::MakeSpanGrpc("google.api.cloudquotas.v1.CloudQuotas", "GetQuotaPreference");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->GetQuotaPreference(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->GetQuotaPreference(context, options, request));
 }
 
-StatusOr<google::api::cloudquotas::v1::QuotaPreference>
-CloudQuotasTracingStub::CreateQuotaPreference(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::api::cloudquotas::v1::QuotaPreference> CloudQuotasTracingStub::CreateQuotaPreference(
+    grpc::ClientContext& context,
+    Options const& options,
     google::api::cloudquotas::v1::CreateQuotaPreferenceRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.api.cloudquotas.v1.CloudQuotas",
-                                     "CreateQuotaPreference");
+  auto span = internal::MakeSpanGrpc("google.api.cloudquotas.v1.CloudQuotas", "CreateQuotaPreference");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->CreateQuotaPreference(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->CreateQuotaPreference(context, options, request));
 }
 
-StatusOr<google::api::cloudquotas::v1::QuotaPreference>
-CloudQuotasTracingStub::UpdateQuotaPreference(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::api::cloudquotas::v1::QuotaPreference> CloudQuotasTracingStub::UpdateQuotaPreference(
+    grpc::ClientContext& context,
+    Options const& options,
     google::api::cloudquotas::v1::UpdateQuotaPreferenceRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.api.cloudquotas.v1.CloudQuotas",
-                                     "UpdateQuotaPreference");
+  auto span = internal::MakeSpanGrpc("google.api.cloudquotas.v1.CloudQuotas", "UpdateQuotaPreference");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->UpdateQuotaPreference(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->UpdateQuotaPreference(context, options, request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

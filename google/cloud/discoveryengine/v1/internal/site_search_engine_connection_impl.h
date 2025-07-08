@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DISCOVERYENGINE_V1_INTERNAL_SITE_SEARCH_ENGINE_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DISCOVERYENGINE_V1_INTERNAL_SITE_SEARCH_ENGINE_CONNECTION_IMPL_H
 
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/discoveryengine/v1/internal/site_search_engine_retry_traits.h"
 #include "google/cloud/discoveryengine/v1/internal/site_search_engine_stub.h"
 #include "google/cloud/discoveryengine/v1/site_search_engine_connection.h"
 #include "google/cloud/discoveryengine/v1/site_search_engine_connection_idempotency_policy.h"
 #include "google/cloud/discoveryengine/v1/site_search_engine_options.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -46,186 +46,149 @@ class SiteSearchEngineServiceConnectionImpl
   ~SiteSearchEngineServiceConnectionImpl() override = default;
 
   SiteSearchEngineServiceConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<discoveryengine_v1_internal::SiteSearchEngineServiceStub>
-          stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<discoveryengine_v1_internal::SiteSearchEngineServiceStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
   StatusOr<google::cloud::discoveryengine::v1::SiteSearchEngine>
-  GetSiteSearchEngine(
-      google::cloud::discoveryengine::v1::GetSiteSearchEngineRequest const&
-          request) override;
+  GetSiteSearchEngine(google::cloud::discoveryengine::v1::GetSiteSearchEngineRequest const& request) override;
+
+  future<StatusOr<google::cloud::discoveryengine::v1::TargetSite>>
+  CreateTargetSite(google::cloud::discoveryengine::v1::CreateTargetSiteRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  CreateTargetSite(NoAwaitTag,
+      google::cloud::discoveryengine::v1::CreateTargetSiteRequest const& request) override;
 
   future<StatusOr<google::cloud::discoveryengine::v1::TargetSite>>
   CreateTargetSite(
-      google::cloud::discoveryengine::v1::CreateTargetSiteRequest const&
-          request) override;
+      google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::longrunning::Operation> CreateTargetSite(
-      NoAwaitTag,
-      google::cloud::discoveryengine::v1::CreateTargetSiteRequest const&
-          request) override;
+  future<StatusOr<google::cloud::discoveryengine::v1::BatchCreateTargetSitesResponse>>
+  BatchCreateTargetSites(google::cloud::discoveryengine::v1::BatchCreateTargetSitesRequest const& request) override;
 
-  future<StatusOr<google::cloud::discoveryengine::v1::TargetSite>>
-  CreateTargetSite(google::longrunning::Operation const& operation) override;
+  StatusOr<google::longrunning::Operation>
+  BatchCreateTargetSites(NoAwaitTag,
+      google::cloud::discoveryengine::v1::BatchCreateTargetSitesRequest const& request) override;
 
-  future<StatusOr<
-      google::cloud::discoveryengine::v1::BatchCreateTargetSitesResponse>>
-  BatchCreateTargetSites(
-      google::cloud::discoveryengine::v1::BatchCreateTargetSitesRequest const&
-          request) override;
-
-  StatusOr<google::longrunning::Operation> BatchCreateTargetSites(
-      NoAwaitTag,
-      google::cloud::discoveryengine::v1::BatchCreateTargetSitesRequest const&
-          request) override;
-
-  future<StatusOr<
-      google::cloud::discoveryengine::v1::BatchCreateTargetSitesResponse>>
+  future<StatusOr<google::cloud::discoveryengine::v1::BatchCreateTargetSitesResponse>>
   BatchCreateTargetSites(
       google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::cloud::discoveryengine::v1::TargetSite> GetTargetSite(
-      google::cloud::discoveryengine::v1::GetTargetSiteRequest const& request)
-      override;
+  StatusOr<google::cloud::discoveryengine::v1::TargetSite>
+  GetTargetSite(google::cloud::discoveryengine::v1::GetTargetSiteRequest const& request) override;
+
+  future<StatusOr<google::cloud::discoveryengine::v1::TargetSite>>
+  UpdateTargetSite(google::cloud::discoveryengine::v1::UpdateTargetSiteRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  UpdateTargetSite(NoAwaitTag,
+      google::cloud::discoveryengine::v1::UpdateTargetSiteRequest const& request) override;
 
   future<StatusOr<google::cloud::discoveryengine::v1::TargetSite>>
   UpdateTargetSite(
-      google::cloud::discoveryengine::v1::UpdateTargetSiteRequest const&
-          request) override;
+      google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::longrunning::Operation> UpdateTargetSite(
-      NoAwaitTag,
-      google::cloud::discoveryengine::v1::UpdateTargetSiteRequest const&
-          request) override;
+  future<StatusOr<google::cloud::discoveryengine::v1::DeleteTargetSiteMetadata>>
+  DeleteTargetSite(google::cloud::discoveryengine::v1::DeleteTargetSiteRequest const& request) override;
 
-  future<StatusOr<google::cloud::discoveryengine::v1::TargetSite>>
-  UpdateTargetSite(google::longrunning::Operation const& operation) override;
+  StatusOr<google::longrunning::Operation>
+  DeleteTargetSite(NoAwaitTag,
+      google::cloud::discoveryengine::v1::DeleteTargetSiteRequest const& request) override;
 
   future<StatusOr<google::cloud::discoveryengine::v1::DeleteTargetSiteMetadata>>
   DeleteTargetSite(
-      google::cloud::discoveryengine::v1::DeleteTargetSiteRequest const&
-          request) override;
+      google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::longrunning::Operation> DeleteTargetSite(
-      NoAwaitTag,
-      google::cloud::discoveryengine::v1::DeleteTargetSiteRequest const&
-          request) override;
+  StreamRange<google::cloud::discoveryengine::v1::TargetSite>
+  ListTargetSites(google::cloud::discoveryengine::v1::ListTargetSitesRequest request) override;
 
-  future<StatusOr<google::cloud::discoveryengine::v1::DeleteTargetSiteMetadata>>
-  DeleteTargetSite(google::longrunning::Operation const& operation) override;
+  future<StatusOr<google::cloud::discoveryengine::v1::Sitemap>>
+  CreateSitemap(google::cloud::discoveryengine::v1::CreateSitemapRequest const& request) override;
 
-  StreamRange<google::cloud::discoveryengine::v1::TargetSite> ListTargetSites(
-      google::cloud::discoveryengine::v1::ListTargetSitesRequest request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  CreateSitemap(NoAwaitTag,
+      google::cloud::discoveryengine::v1::CreateSitemapRequest const& request) override;
 
-  future<StatusOr<google::cloud::discoveryengine::v1::Sitemap>> CreateSitemap(
-      google::cloud::discoveryengine::v1::CreateSitemapRequest const& request)
-      override;
-
-  StatusOr<google::longrunning::Operation> CreateSitemap(
-      NoAwaitTag,
-      google::cloud::discoveryengine::v1::CreateSitemapRequest const& request)
-      override;
-
-  future<StatusOr<google::cloud::discoveryengine::v1::Sitemap>> CreateSitemap(
+  future<StatusOr<google::cloud::discoveryengine::v1::Sitemap>>
+  CreateSitemap(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::discoveryengine::v1::DeleteSitemapMetadata>>
-  DeleteSitemap(google::cloud::discoveryengine::v1::DeleteSitemapRequest const&
-                    request) override;
+  DeleteSitemap(google::cloud::discoveryengine::v1::DeleteSitemapRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> DeleteSitemap(
-      NoAwaitTag,
-      google::cloud::discoveryengine::v1::DeleteSitemapRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  DeleteSitemap(NoAwaitTag,
+      google::cloud::discoveryengine::v1::DeleteSitemapRequest const& request) override;
 
   future<StatusOr<google::cloud::discoveryengine::v1::DeleteSitemapMetadata>>
-  DeleteSitemap(google::longrunning::Operation const& operation) override;
+  DeleteSitemap(
+      google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::discoveryengine::v1::FetchSitemapsResponse>
-  FetchSitemaps(google::cloud::discoveryengine::v1::FetchSitemapsRequest const&
-                    request) override;
+  FetchSitemaps(google::cloud::discoveryengine::v1::FetchSitemapsRequest const& request) override;
 
-  future<StatusOr<
-      google::cloud::discoveryengine::v1::EnableAdvancedSiteSearchResponse>>
-  EnableAdvancedSiteSearch(
-      google::cloud::discoveryengine::v1::EnableAdvancedSiteSearchRequest const&
-          request) override;
+  future<StatusOr<google::cloud::discoveryengine::v1::EnableAdvancedSiteSearchResponse>>
+  EnableAdvancedSiteSearch(google::cloud::discoveryengine::v1::EnableAdvancedSiteSearchRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> EnableAdvancedSiteSearch(
-      NoAwaitTag,
-      google::cloud::discoveryengine::v1::EnableAdvancedSiteSearchRequest const&
-          request) override;
+  StatusOr<google::longrunning::Operation>
+  EnableAdvancedSiteSearch(NoAwaitTag,
+      google::cloud::discoveryengine::v1::EnableAdvancedSiteSearchRequest const& request) override;
 
-  future<StatusOr<
-      google::cloud::discoveryengine::v1::EnableAdvancedSiteSearchResponse>>
+  future<StatusOr<google::cloud::discoveryengine::v1::EnableAdvancedSiteSearchResponse>>
   EnableAdvancedSiteSearch(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<
-      google::cloud::discoveryengine::v1::DisableAdvancedSiteSearchResponse>>
-  DisableAdvancedSiteSearch(
-      google::cloud::discoveryengine::v1::
-          DisableAdvancedSiteSearchRequest const& request) override;
+  future<StatusOr<google::cloud::discoveryengine::v1::DisableAdvancedSiteSearchResponse>>
+  DisableAdvancedSiteSearch(google::cloud::discoveryengine::v1::DisableAdvancedSiteSearchRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> DisableAdvancedSiteSearch(
-      NoAwaitTag, google::cloud::discoveryengine::v1::
-                      DisableAdvancedSiteSearchRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  DisableAdvancedSiteSearch(NoAwaitTag,
+      google::cloud::discoveryengine::v1::DisableAdvancedSiteSearchRequest const& request) override;
 
-  future<StatusOr<
-      google::cloud::discoveryengine::v1::DisableAdvancedSiteSearchResponse>>
+  future<StatusOr<google::cloud::discoveryengine::v1::DisableAdvancedSiteSearchResponse>>
   DisableAdvancedSiteSearch(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::discoveryengine::v1::RecrawlUrisResponse>>
-  RecrawlUris(google::cloud::discoveryengine::v1::RecrawlUrisRequest const&
-                  request) override;
+  RecrawlUris(google::cloud::discoveryengine::v1::RecrawlUrisRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> RecrawlUris(
-      NoAwaitTag,
-      google::cloud::discoveryengine::v1::RecrawlUrisRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  RecrawlUris(NoAwaitTag,
+      google::cloud::discoveryengine::v1::RecrawlUrisRequest const& request) override;
 
   future<StatusOr<google::cloud::discoveryengine::v1::RecrawlUrisResponse>>
-  RecrawlUris(google::longrunning::Operation const& operation) override;
+  RecrawlUris(
+      google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<
-      google::cloud::discoveryengine::v1::BatchVerifyTargetSitesResponse>>
-  BatchVerifyTargetSites(
-      google::cloud::discoveryengine::v1::BatchVerifyTargetSitesRequest const&
-          request) override;
+  future<StatusOr<google::cloud::discoveryengine::v1::BatchVerifyTargetSitesResponse>>
+  BatchVerifyTargetSites(google::cloud::discoveryengine::v1::BatchVerifyTargetSitesRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> BatchVerifyTargetSites(
-      NoAwaitTag,
-      google::cloud::discoveryengine::v1::BatchVerifyTargetSitesRequest const&
-          request) override;
+  StatusOr<google::longrunning::Operation>
+  BatchVerifyTargetSites(NoAwaitTag,
+      google::cloud::discoveryengine::v1::BatchVerifyTargetSitesRequest const& request) override;
 
-  future<StatusOr<
-      google::cloud::discoveryengine::v1::BatchVerifyTargetSitesResponse>>
+  future<StatusOr<google::cloud::discoveryengine::v1::BatchVerifyTargetSitesResponse>>
   BatchVerifyTargetSites(
       google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::discoveryengine::v1::TargetSite>
-  FetchDomainVerificationStatus(
-      google::cloud::discoveryengine::v1::FetchDomainVerificationStatusRequest
-          request) override;
+  FetchDomainVerificationStatus(google::cloud::discoveryengine::v1::FetchDomainVerificationStatusRequest request) override;
 
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request) override;
 
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request) override;
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<discoveryengine_v1_internal::SiteSearchEngineServiceStub>
-      stub_;
+  std::shared_ptr<discoveryengine_v1_internal::SiteSearchEngineServiceStub> stub_;
   Options options_;
 };
 

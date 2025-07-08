@@ -26,33 +26,27 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-NodeTypesConnectionIdempotencyPolicy::~NodeTypesConnectionIdempotencyPolicy() =
-    default;
+NodeTypesConnectionIdempotencyPolicy::~NodeTypesConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<NodeTypesConnectionIdempotencyPolicy>
 NodeTypesConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<NodeTypesConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency NodeTypesConnectionIdempotencyPolicy::AggregatedListNodeTypes(
-    google::cloud::cpp::compute::node_types::v1::
-        AggregatedListNodeTypesRequest) {  // NOLINT
+Idempotency NodeTypesConnectionIdempotencyPolicy::AggregatedListNodeTypes(google::cloud::cpp::compute::node_types::v1::AggregatedListNodeTypesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency NodeTypesConnectionIdempotencyPolicy::GetNodeType(
-    google::cloud::cpp::compute::node_types::v1::GetNodeTypeRequest const&) {
+Idempotency NodeTypesConnectionIdempotencyPolicy::GetNodeType(google::cloud::cpp::compute::node_types::v1::GetNodeTypeRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency NodeTypesConnectionIdempotencyPolicy::ListNodeTypes(
-    google::cloud::cpp::compute::node_types::v1::
-        ListNodeTypesRequest) {  // NOLINT
+Idempotency NodeTypesConnectionIdempotencyPolicy::ListNodeTypes(google::cloud::cpp::compute::node_types::v1::ListNodeTypesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<NodeTypesConnectionIdempotencyPolicy>
-MakeDefaultNodeTypesConnectionIdempotencyPolicy() {
+    MakeDefaultNodeTypesConnectionIdempotencyPolicy() {
   return std::make_unique<NodeTypesConnectionIdempotencyPolicy>();
 }
 

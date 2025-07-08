@@ -31,9 +31,9 @@ ControlServiceAuth::ControlServiceAuth(
     std::shared_ptr<ControlServiceStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::discoveryengine::v1::Control>
-ControlServiceAuth::CreateControl(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::discoveryengine::v1::Control> ControlServiceAuth::CreateControl(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::discoveryengine::v1::CreateControlRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -41,43 +41,44 @@ ControlServiceAuth::CreateControl(
 }
 
 Status ControlServiceAuth::DeleteControl(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::discoveryengine::v1::DeleteControlRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteControl(context, options, request);
 }
 
-StatusOr<google::cloud::discoveryengine::v1::Control>
-ControlServiceAuth::UpdateControl(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::discoveryengine::v1::Control> ControlServiceAuth::UpdateControl(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::discoveryengine::v1::UpdateControlRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateControl(context, options, request);
 }
 
-StatusOr<google::cloud::discoveryengine::v1::Control>
-ControlServiceAuth::GetControl(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::discoveryengine::v1::Control> ControlServiceAuth::GetControl(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::discoveryengine::v1::GetControlRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetControl(context, options, request);
 }
 
-StatusOr<google::cloud::discoveryengine::v1::ListControlsResponse>
-ControlServiceAuth::ListControls(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::discoveryengine::v1::ListControlsResponse> ControlServiceAuth::ListControls(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::discoveryengine::v1::ListControlsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListControls(context, options, request);
 }
 
-StatusOr<google::longrunning::ListOperationsResponse>
-ControlServiceAuth::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse> ControlServiceAuth::ListOperations(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -85,7 +86,8 @@ ControlServiceAuth::ListOperations(
 }
 
 StatusOr<google::longrunning::Operation> ControlServiceAuth::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -93,7 +95,8 @@ StatusOr<google::longrunning::Operation> ControlServiceAuth::GetOperation(
 }
 
 Status ControlServiceAuth::CancelOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;

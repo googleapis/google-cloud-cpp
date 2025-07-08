@@ -36,15 +36,17 @@ class PoliciesLogging : public PoliciesStub {
  public:
   ~PoliciesLogging() override = default;
   PoliciesLogging(std::shared_ptr<PoliciesStub> child,
-                  TracingOptions tracing_options,
-                  std::set<std::string> const& components);
+                       TracingOptions tracing_options,
+                       std::set<std::string> const& components);
 
   StatusOr<google::iam::v2::ListPoliciesResponse> ListPolicies(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v2::ListPoliciesRequest const& request) override;
 
   StatusOr<google::iam::v2::Policy> GetPolicy(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v2::GetPolicyRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreatePolicy(
@@ -54,7 +56,8 @@ class PoliciesLogging : public PoliciesStub {
       google::iam::v2::CreatePolicyRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreatePolicy(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::iam::v2::CreatePolicyRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdatePolicy(
@@ -64,7 +67,8 @@ class PoliciesLogging : public PoliciesStub {
       google::iam::v2::UpdatePolicyRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdatePolicy(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::iam::v2::UpdatePolicyRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeletePolicy(
@@ -74,11 +78,13 @@ class PoliciesLogging : public PoliciesStub {
       google::iam::v2::DeletePolicyRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeletePolicy(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::iam::v2::DeletePolicyRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(

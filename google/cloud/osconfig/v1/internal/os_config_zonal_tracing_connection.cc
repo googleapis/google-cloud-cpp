@@ -34,26 +34,21 @@ OsConfigZonalServiceTracingConnection::OsConfigZonalServiceTracingConnection(
     : child_(std::move(child)) {}
 
 future<StatusOr<google::cloud::osconfig::v1::OSPolicyAssignment>>
-OsConfigZonalServiceTracingConnection::CreateOSPolicyAssignment(
-    google::cloud::osconfig::v1::CreateOSPolicyAssignmentRequest const&
-        request) {
+OsConfigZonalServiceTracingConnection::CreateOSPolicyAssignment(google::cloud::osconfig::v1::CreateOSPolicyAssignmentRequest const& request) {
   auto span = internal::MakeSpan(
       "osconfig_v1::OsConfigZonalServiceConnection::CreateOSPolicyAssignment");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->CreateOSPolicyAssignment(request));
+  return internal::EndSpan(std::move(span), child_->CreateOSPolicyAssignment(request));
 }
 
 StatusOr<google::longrunning::Operation>
 OsConfigZonalServiceTracingConnection::CreateOSPolicyAssignment(
-    NoAwaitTag,
-    google::cloud::osconfig::v1::CreateOSPolicyAssignmentRequest const&
-        request) {
+    NoAwaitTag, google::cloud::osconfig::v1::CreateOSPolicyAssignmentRequest const& request) {
   auto span = internal::MakeSpan(
       "osconfig_v1::OsConfigZonalServiceConnection::CreateOSPolicyAssignment");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->CreateOSPolicyAssignment(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->CreateOSPolicyAssignment(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::osconfig::v1::OSPolicyAssignment>>
@@ -63,30 +58,25 @@ OsConfigZonalServiceTracingConnection::CreateOSPolicyAssignment(
       "osconfig_v1::OsConfigZonalServiceConnection::CreateOSPolicyAssignment");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->CreateOSPolicyAssignment(operation));
+      child_->CreateOSPolicyAssignment(operation));
 }
 
 future<StatusOr<google::cloud::osconfig::v1::OSPolicyAssignment>>
-OsConfigZonalServiceTracingConnection::UpdateOSPolicyAssignment(
-    google::cloud::osconfig::v1::UpdateOSPolicyAssignmentRequest const&
-        request) {
+OsConfigZonalServiceTracingConnection::UpdateOSPolicyAssignment(google::cloud::osconfig::v1::UpdateOSPolicyAssignmentRequest const& request) {
   auto span = internal::MakeSpan(
       "osconfig_v1::OsConfigZonalServiceConnection::UpdateOSPolicyAssignment");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->UpdateOSPolicyAssignment(request));
+  return internal::EndSpan(std::move(span), child_->UpdateOSPolicyAssignment(request));
 }
 
 StatusOr<google::longrunning::Operation>
 OsConfigZonalServiceTracingConnection::UpdateOSPolicyAssignment(
-    NoAwaitTag,
-    google::cloud::osconfig::v1::UpdateOSPolicyAssignmentRequest const&
-        request) {
+    NoAwaitTag, google::cloud::osconfig::v1::UpdateOSPolicyAssignmentRequest const& request) {
   auto span = internal::MakeSpan(
       "osconfig_v1::OsConfigZonalServiceConnection::UpdateOSPolicyAssignment");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->UpdateOSPolicyAssignment(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->UpdateOSPolicyAssignment(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::osconfig::v1::OSPolicyAssignment>>
@@ -96,142 +86,108 @@ OsConfigZonalServiceTracingConnection::UpdateOSPolicyAssignment(
       "osconfig_v1::OsConfigZonalServiceConnection::UpdateOSPolicyAssignment");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->UpdateOSPolicyAssignment(operation));
+      child_->UpdateOSPolicyAssignment(operation));
 }
 
 StatusOr<google::cloud::osconfig::v1::OSPolicyAssignment>
-OsConfigZonalServiceTracingConnection::GetOSPolicyAssignment(
-    google::cloud::osconfig::v1::GetOSPolicyAssignmentRequest const& request) {
-  auto span = internal::MakeSpan(
-      "osconfig_v1::OsConfigZonalServiceConnection::GetOSPolicyAssignment");
+OsConfigZonalServiceTracingConnection::GetOSPolicyAssignment(google::cloud::osconfig::v1::GetOSPolicyAssignmentRequest const& request) {
+  auto span = internal::MakeSpan("osconfig_v1::OsConfigZonalServiceConnection::GetOSPolicyAssignment");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOSPolicyAssignment(request));
 }
 
 StreamRange<google::cloud::osconfig::v1::OSPolicyAssignment>
-OsConfigZonalServiceTracingConnection::ListOSPolicyAssignments(
-    google::cloud::osconfig::v1::ListOSPolicyAssignmentsRequest request) {
-  auto span = internal::MakeSpan(
-      "osconfig_v1::OsConfigZonalServiceConnection::ListOSPolicyAssignments");
+OsConfigZonalServiceTracingConnection::ListOSPolicyAssignments(google::cloud::osconfig::v1::ListOSPolicyAssignmentsRequest request) {
+  auto span = internal::MakeSpan("osconfig_v1::OsConfigZonalServiceConnection::ListOSPolicyAssignments");
   internal::OTelScope scope(span);
   auto sr = child_->ListOSPolicyAssignments(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::osconfig::v1::OSPolicyAssignment>(std::move(span),
-                                                       std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::osconfig::v1::OSPolicyAssignment>(
+        std::move(span), std::move(sr));
 }
 
 StreamRange<google::cloud::osconfig::v1::OSPolicyAssignment>
-OsConfigZonalServiceTracingConnection::ListOSPolicyAssignmentRevisions(
-    google::cloud::osconfig::v1::ListOSPolicyAssignmentRevisionsRequest
-        request) {
-  auto span = internal::MakeSpan(
-      "osconfig_v1::OsConfigZonalServiceConnection::"
-      "ListOSPolicyAssignmentRevisions");
+OsConfigZonalServiceTracingConnection::ListOSPolicyAssignmentRevisions(google::cloud::osconfig::v1::ListOSPolicyAssignmentRevisionsRequest request) {
+  auto span = internal::MakeSpan("osconfig_v1::OsConfigZonalServiceConnection::ListOSPolicyAssignmentRevisions");
   internal::OTelScope scope(span);
   auto sr = child_->ListOSPolicyAssignmentRevisions(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::osconfig::v1::OSPolicyAssignment>(std::move(span),
-                                                       std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::osconfig::v1::OSPolicyAssignment>(
+        std::move(span), std::move(sr));
 }
 
-future<
-    StatusOr<google::cloud::osconfig::v1::OSPolicyAssignmentOperationMetadata>>
-OsConfigZonalServiceTracingConnection::DeleteOSPolicyAssignment(
-    google::cloud::osconfig::v1::DeleteOSPolicyAssignmentRequest const&
-        request) {
+future<StatusOr<google::cloud::osconfig::v1::OSPolicyAssignmentOperationMetadata>>
+OsConfigZonalServiceTracingConnection::DeleteOSPolicyAssignment(google::cloud::osconfig::v1::DeleteOSPolicyAssignmentRequest const& request) {
   auto span = internal::MakeSpan(
       "osconfig_v1::OsConfigZonalServiceConnection::DeleteOSPolicyAssignment");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->DeleteOSPolicyAssignment(request));
+  return internal::EndSpan(std::move(span), child_->DeleteOSPolicyAssignment(request));
 }
 
 StatusOr<google::longrunning::Operation>
 OsConfigZonalServiceTracingConnection::DeleteOSPolicyAssignment(
-    NoAwaitTag,
-    google::cloud::osconfig::v1::DeleteOSPolicyAssignmentRequest const&
-        request) {
+    NoAwaitTag, google::cloud::osconfig::v1::DeleteOSPolicyAssignmentRequest const& request) {
   auto span = internal::MakeSpan(
       "osconfig_v1::OsConfigZonalServiceConnection::DeleteOSPolicyAssignment");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->DeleteOSPolicyAssignment(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->DeleteOSPolicyAssignment(
+      NoAwaitTag{}, request));
 }
 
-future<
-    StatusOr<google::cloud::osconfig::v1::OSPolicyAssignmentOperationMetadata>>
+future<StatusOr<google::cloud::osconfig::v1::OSPolicyAssignmentOperationMetadata>>
 OsConfigZonalServiceTracingConnection::DeleteOSPolicyAssignment(
     google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "osconfig_v1::OsConfigZonalServiceConnection::DeleteOSPolicyAssignment");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->DeleteOSPolicyAssignment(operation));
+      child_->DeleteOSPolicyAssignment(operation));
 }
 
 StatusOr<google::cloud::osconfig::v1::OSPolicyAssignmentReport>
-OsConfigZonalServiceTracingConnection::GetOSPolicyAssignmentReport(
-    google::cloud::osconfig::v1::GetOSPolicyAssignmentReportRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "osconfig_v1::OsConfigZonalServiceConnection::"
-      "GetOSPolicyAssignmentReport");
+OsConfigZonalServiceTracingConnection::GetOSPolicyAssignmentReport(google::cloud::osconfig::v1::GetOSPolicyAssignmentReportRequest const& request) {
+  auto span = internal::MakeSpan("osconfig_v1::OsConfigZonalServiceConnection::GetOSPolicyAssignmentReport");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOSPolicyAssignmentReport(request));
 }
 
 StreamRange<google::cloud::osconfig::v1::OSPolicyAssignmentReport>
-OsConfigZonalServiceTracingConnection::ListOSPolicyAssignmentReports(
-    google::cloud::osconfig::v1::ListOSPolicyAssignmentReportsRequest request) {
-  auto span = internal::MakeSpan(
-      "osconfig_v1::OsConfigZonalServiceConnection::"
-      "ListOSPolicyAssignmentReports");
+OsConfigZonalServiceTracingConnection::ListOSPolicyAssignmentReports(google::cloud::osconfig::v1::ListOSPolicyAssignmentReportsRequest request) {
+  auto span = internal::MakeSpan("osconfig_v1::OsConfigZonalServiceConnection::ListOSPolicyAssignmentReports");
   internal::OTelScope scope(span);
   auto sr = child_->ListOSPolicyAssignmentReports(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::osconfig::v1::OSPolicyAssignmentReport>(std::move(span),
-                                                             std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::osconfig::v1::OSPolicyAssignmentReport>(
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::osconfig::v1::Inventory>
-OsConfigZonalServiceTracingConnection::GetInventory(
-    google::cloud::osconfig::v1::GetInventoryRequest const& request) {
-  auto span = internal::MakeSpan(
-      "osconfig_v1::OsConfigZonalServiceConnection::GetInventory");
+OsConfigZonalServiceTracingConnection::GetInventory(google::cloud::osconfig::v1::GetInventoryRequest const& request) {
+  auto span = internal::MakeSpan("osconfig_v1::OsConfigZonalServiceConnection::GetInventory");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetInventory(request));
 }
 
 StreamRange<google::cloud::osconfig::v1::Inventory>
-OsConfigZonalServiceTracingConnection::ListInventories(
-    google::cloud::osconfig::v1::ListInventoriesRequest request) {
-  auto span = internal::MakeSpan(
-      "osconfig_v1::OsConfigZonalServiceConnection::ListInventories");
+OsConfigZonalServiceTracingConnection::ListInventories(google::cloud::osconfig::v1::ListInventoriesRequest request) {
+  auto span = internal::MakeSpan("osconfig_v1::OsConfigZonalServiceConnection::ListInventories");
   internal::OTelScope scope(span);
   auto sr = child_->ListInventories(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::osconfig::v1::Inventory>(std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::osconfig::v1::Inventory>(
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::osconfig::v1::VulnerabilityReport>
-OsConfigZonalServiceTracingConnection::GetVulnerabilityReport(
-    google::cloud::osconfig::v1::GetVulnerabilityReportRequest const& request) {
-  auto span = internal::MakeSpan(
-      "osconfig_v1::OsConfigZonalServiceConnection::GetVulnerabilityReport");
+OsConfigZonalServiceTracingConnection::GetVulnerabilityReport(google::cloud::osconfig::v1::GetVulnerabilityReportRequest const& request) {
+  auto span = internal::MakeSpan("osconfig_v1::OsConfigZonalServiceConnection::GetVulnerabilityReport");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetVulnerabilityReport(request));
 }
 
 StreamRange<google::cloud::osconfig::v1::VulnerabilityReport>
-OsConfigZonalServiceTracingConnection::ListVulnerabilityReports(
-    google::cloud::osconfig::v1::ListVulnerabilityReportsRequest request) {
-  auto span = internal::MakeSpan(
-      "osconfig_v1::OsConfigZonalServiceConnection::ListVulnerabilityReports");
+OsConfigZonalServiceTracingConnection::ListVulnerabilityReports(google::cloud::osconfig::v1::ListVulnerabilityReportsRequest request) {
+  auto span = internal::MakeSpan("osconfig_v1::OsConfigZonalServiceConnection::ListVulnerabilityReports");
   internal::OTelScope scope(span);
   auto sr = child_->ListVulnerabilityReports(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::osconfig::v1::VulnerabilityReport>(std::move(span),
-                                                        std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::osconfig::v1::VulnerabilityReport>(
+        std::move(span), std::move(sr));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -241,8 +197,7 @@ MakeOsConfigZonalServiceTracingConnection(
     std::shared_ptr<osconfig_v1::OsConfigZonalServiceConnection> conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
-    conn = std::make_shared<OsConfigZonalServiceTracingConnection>(
-        std::move(conn));
+    conn = std::make_shared<OsConfigZonalServiceTracingConnection>(std::move(conn));
   }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;

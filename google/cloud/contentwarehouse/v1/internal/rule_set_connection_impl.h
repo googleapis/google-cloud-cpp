@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTENTWAREHOUSE_V1_INTERNAL_RULE_SET_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTENTWAREHOUSE_V1_INTERNAL_RULE_SET_CONNECTION_IMPL_H
 
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/contentwarehouse/v1/internal/rule_set_retry_traits.h"
 #include "google/cloud/contentwarehouse/v1/internal/rule_set_stub.h"
 #include "google/cloud/contentwarehouse/v1/rule_set_connection.h"
 #include "google/cloud/contentwarehouse/v1/rule_set_connection_idempotency_policy.h"
 #include "google/cloud/contentwarehouse/v1/rule_set_options.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -43,34 +43,29 @@ class RuleSetServiceConnectionImpl
   ~RuleSetServiceConnectionImpl() override = default;
 
   RuleSetServiceConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<contentwarehouse_v1_internal::RuleSetServiceStub> stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<contentwarehouse_v1_internal::RuleSetServiceStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
-  StatusOr<google::cloud::contentwarehouse::v1::RuleSet> CreateRuleSet(
-      google::cloud::contentwarehouse::v1::CreateRuleSetRequest const& request)
-      override;
+  StatusOr<google::cloud::contentwarehouse::v1::RuleSet>
+  CreateRuleSet(google::cloud::contentwarehouse::v1::CreateRuleSetRequest const& request) override;
 
-  StatusOr<google::cloud::contentwarehouse::v1::RuleSet> GetRuleSet(
-      google::cloud::contentwarehouse::v1::GetRuleSetRequest const& request)
-      override;
+  StatusOr<google::cloud::contentwarehouse::v1::RuleSet>
+  GetRuleSet(google::cloud::contentwarehouse::v1::GetRuleSetRequest const& request) override;
 
-  StatusOr<google::cloud::contentwarehouse::v1::RuleSet> UpdateRuleSet(
-      google::cloud::contentwarehouse::v1::UpdateRuleSetRequest const& request)
-      override;
+  StatusOr<google::cloud::contentwarehouse::v1::RuleSet>
+  UpdateRuleSet(google::cloud::contentwarehouse::v1::UpdateRuleSetRequest const& request) override;
 
-  Status DeleteRuleSet(
-      google::cloud::contentwarehouse::v1::DeleteRuleSetRequest const& request)
-      override;
+  Status
+  DeleteRuleSet(google::cloud::contentwarehouse::v1::DeleteRuleSetRequest const& request) override;
 
-  StreamRange<google::cloud::contentwarehouse::v1::RuleSet> ListRuleSets(
-      google::cloud::contentwarehouse::v1::ListRuleSetsRequest request)
-      override;
+  StreamRange<google::cloud::contentwarehouse::v1::RuleSet>
+  ListRuleSets(google::cloud::contentwarehouse::v1::ListRuleSetsRequest request) override;
 
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

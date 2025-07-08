@@ -39,31 +39,33 @@ class SearchServiceTracingStub : public SearchServiceStub {
   explicit SearchServiceTracingStub(std::shared_ptr<SearchServiceStub> child);
 
   StatusOr<google::cloud::discoveryengine::v1::SearchResponse> Search(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::discoveryengine::v1::SearchRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::discoveryengine::v1::SearchRequest const& request) override;
 
   StatusOr<google::cloud::discoveryengine::v1::SearchResponse> SearchLite(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::discoveryengine::v1::SearchRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::discoveryengine::v1::SearchRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::shared_ptr<SearchServiceStub> child_;
-  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
-      propagator_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

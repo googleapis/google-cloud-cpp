@@ -33,8 +33,7 @@ using ::google::cloud::vision_v1::MakeImageAnnotatorConnection;
 /// @deprecated Use vision_v1::ImageAnnotatorConnection directly.
 using ::google::cloud::vision_v1::ImageAnnotatorConnection;
 
-/// @deprecated Use vision_v1::ImageAnnotatorLimitedErrorCountRetryPolicy
-/// directly.
+/// @deprecated Use vision_v1::ImageAnnotatorLimitedErrorCountRetryPolicy directly.
 using ::google::cloud::vision_v1::ImageAnnotatorLimitedErrorCountRetryPolicy;
 
 /// @deprecated Use vision_v1::ImageAnnotatorLimitedTimeRetryPolicy directly.

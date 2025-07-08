@@ -33,37 +33,38 @@ DomainMappingsStub::~DomainMappingsStub() = default;
 
 StatusOr<google::appengine::v1::ListDomainMappingsResponse>
 DefaultDomainMappingsStub::ListDomainMappings(
-    grpc::ClientContext& context, Options const&,
-    google::appengine::v1::ListDomainMappingsRequest const& request) {
-  google::appengine::v1::ListDomainMappingsResponse response;
-  auto status = grpc_stub_->ListDomainMappings(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::appengine::v1::ListDomainMappingsRequest const& request) {
+    google::appengine::v1::ListDomainMappingsResponse response;
+    auto status =
+        grpc_stub_->ListDomainMappings(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::appengine::v1::DomainMapping>
 DefaultDomainMappingsStub::GetDomainMapping(
-    grpc::ClientContext& context, Options const&,
-    google::appengine::v1::GetDomainMappingRequest const& request) {
-  google::appengine::v1::DomainMapping response;
-  auto status = grpc_stub_->GetDomainMapping(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::appengine::v1::GetDomainMappingRequest const& request) {
+    google::appengine::v1::DomainMapping response;
+    auto status =
+        grpc_stub_->GetDomainMapping(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultDomainMappingsStub::AsyncCreateDomainMapping(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::appengine::v1::CreateDomainMappingRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::appengine::v1::CreateDomainMappingRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::appengine::v1::CreateDomainMappingRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::appengine::v1::CreateDomainMappingRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
              google::appengine::v1::CreateDomainMappingRequest const& request,
@@ -75,25 +76,26 @@ DefaultDomainMappingsStub::AsyncCreateDomainMapping(
 
 StatusOr<google::longrunning::Operation>
 DefaultDomainMappingsStub::CreateDomainMapping(
-    grpc::ClientContext& context, Options,
-    google::appengine::v1::CreateDomainMappingRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->CreateDomainMapping(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::appengine::v1::CreateDomainMappingRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->CreateDomainMapping(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultDomainMappingsStub::AsyncUpdateDomainMapping(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::appengine::v1::UpdateDomainMappingRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::appengine::v1::UpdateDomainMappingRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::appengine::v1::UpdateDomainMappingRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::appengine::v1::UpdateDomainMappingRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
              google::appengine::v1::UpdateDomainMappingRequest const& request,
@@ -105,25 +107,26 @@ DefaultDomainMappingsStub::AsyncUpdateDomainMapping(
 
 StatusOr<google::longrunning::Operation>
 DefaultDomainMappingsStub::UpdateDomainMapping(
-    grpc::ClientContext& context, Options,
-    google::appengine::v1::UpdateDomainMappingRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->UpdateDomainMapping(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::appengine::v1::UpdateDomainMappingRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->UpdateDomainMapping(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultDomainMappingsStub::AsyncDeleteDomainMapping(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::appengine::v1::DeleteDomainMappingRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::appengine::v1::DeleteDomainMappingRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::appengine::v1::DeleteDomainMappingRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::appengine::v1::DeleteDomainMappingRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
              google::appengine::v1::DeleteDomainMappingRequest const& request,
@@ -135,14 +138,16 @@ DefaultDomainMappingsStub::AsyncDeleteDomainMapping(
 
 StatusOr<google::longrunning::Operation>
 DefaultDomainMappingsStub::DeleteDomainMapping(
-    grpc::ClientContext& context, Options,
-    google::appengine::v1::DeleteDomainMappingRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->DeleteDomainMapping(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::appengine::v1::DeleteDomainMappingRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->DeleteDomainMapping(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -171,14 +176,13 @@ future<Status> DefaultDomainMappingsStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(
-             cq,
-             [this](grpc::ClientContext* context,
-                    google::longrunning::CancelOperationRequest const& request,
-                    grpc::CompletionQueue* cq) {
-               return operations_stub_->AsyncCancelOperation(context, request,
-                                                             cq);
-             },
-             request, std::move(context))
+      cq,
+      [this](grpc::ClientContext* context,
+             google::longrunning::CancelOperationRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return operations_stub_->AsyncCancelOperation(context, request, cq);
+      },
+      request, std::move(context))
       .then([](future<StatusOr<google::protobuf::Empty>> f) {
         return f.get().status();
       });

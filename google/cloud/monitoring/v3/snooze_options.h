@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_V3_SNOOZE_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_V3_SNOOZE_OPTIONS_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/monitoring/v3/snooze_connection.h"
 #include "google/cloud/monitoring/v3/snooze_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -64,7 +64,8 @@ struct SnoozeServiceConnectionIdempotencyPolicyOption {
  * @ingroup google-cloud-monitoring-options
  */
 using SnoozeServicePolicyOptionList =
-    OptionList<SnoozeServiceRetryPolicyOption, SnoozeServiceBackoffPolicyOption,
+    OptionList<SnoozeServiceRetryPolicyOption,
+               SnoozeServiceBackoffPolicyOption,
                SnoozeServiceConnectionIdempotencyPolicyOption>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

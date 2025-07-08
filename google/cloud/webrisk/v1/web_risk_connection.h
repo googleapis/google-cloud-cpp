@@ -19,8 +19,6 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_WEBRISK_V1_WEB_RISK_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_WEBRISK_V1_WEB_RISK_CONNECTION_H
 
-#include "google/cloud/webrisk/v1/internal/web_risk_retry_traits.h"
-#include "google/cloud/webrisk/v1/web_risk_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
@@ -30,6 +28,8 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
+#include "google/cloud/webrisk/v1/internal/web_risk_retry_traits.h"
+#include "google/cloud/webrisk/v1/web_risk_connection_idempotency_policy.h"
 #include <google/cloud/webrisk/v1/webrisk.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
@@ -56,8 +56,7 @@ class WebRiskServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class WebRiskServiceLimitedErrorCountRetryPolicy
-    : public WebRiskServiceRetryPolicy {
+class WebRiskServiceLimitedErrorCountRetryPolicy : public WebRiskServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -67,14 +66,14 @@ class WebRiskServiceLimitedErrorCountRetryPolicy
    *     @p maximum_failures == 0.
    */
   explicit WebRiskServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   WebRiskServiceLimitedErrorCountRetryPolicy(
       WebRiskServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : WebRiskServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : WebRiskServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   WebRiskServiceLimitedErrorCountRetryPolicy(
       WebRiskServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : WebRiskServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : WebRiskServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -94,9 +93,7 @@ class WebRiskServiceLimitedErrorCountRetryPolicy
   using BaseType = WebRiskServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      webrisk_v1_internal::WebRiskServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<webrisk_v1_internal::WebRiskServiceRetryTraits> impl_;
 };
 
 /**
@@ -134,14 +131,12 @@ class WebRiskServiceLimitedTimeRetryPolicy : public WebRiskServiceRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit WebRiskServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  WebRiskServiceLimitedTimeRetryPolicy(
-      WebRiskServiceLimitedTimeRetryPolicy&& rhs) noexcept
-      : WebRiskServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  WebRiskServiceLimitedTimeRetryPolicy(
-      WebRiskServiceLimitedTimeRetryPolicy const& rhs) noexcept
-      : WebRiskServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  WebRiskServiceLimitedTimeRetryPolicy(WebRiskServiceLimitedTimeRetryPolicy&& rhs) noexcept
+    : WebRiskServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  WebRiskServiceLimitedTimeRetryPolicy(WebRiskServiceLimitedTimeRetryPolicy const& rhs) noexcept
+    : WebRiskServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -163,9 +158,7 @@ class WebRiskServiceLimitedTimeRetryPolicy : public WebRiskServiceRetryPolicy {
   using BaseType = WebRiskServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      webrisk_v1_internal::WebRiskServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<webrisk_v1_internal::WebRiskServiceRetryTraits> impl_;
 };
 
 /**
@@ -187,38 +180,37 @@ class WebRiskServiceConnection {
   virtual Options options() { return Options{}; }
 
   virtual StatusOr<google::cloud::webrisk::v1::ComputeThreatListDiffResponse>
-  ComputeThreatListDiff(
-      google::cloud::webrisk::v1::ComputeThreatListDiffRequest const& request);
+  ComputeThreatListDiff(google::cloud::webrisk::v1::ComputeThreatListDiffRequest const& request);
 
-  virtual StatusOr<google::cloud::webrisk::v1::SearchUrisResponse> SearchUris(
-      google::cloud::webrisk::v1::SearchUrisRequest const& request);
+  virtual StatusOr<google::cloud::webrisk::v1::SearchUrisResponse>
+  SearchUris(google::cloud::webrisk::v1::SearchUrisRequest const& request);
 
   virtual StatusOr<google::cloud::webrisk::v1::SearchHashesResponse>
   SearchHashes(google::cloud::webrisk::v1::SearchHashesRequest const& request);
 
-  virtual StatusOr<google::cloud::webrisk::v1::Submission> CreateSubmission(
-      google::cloud::webrisk::v1::CreateSubmissionRequest const& request);
+  virtual StatusOr<google::cloud::webrisk::v1::Submission>
+  CreateSubmission(google::cloud::webrisk::v1::CreateSubmissionRequest const& request);
 
-  virtual future<StatusOr<google::cloud::webrisk::v1::Submission>> SubmitUri(
-      google::cloud::webrisk::v1::SubmitUriRequest const& request);
+  virtual future<StatusOr<google::cloud::webrisk::v1::Submission>>
+  SubmitUri(google::cloud::webrisk::v1::SubmitUriRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> SubmitUri(
-      NoAwaitTag, google::cloud::webrisk::v1::SubmitUriRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  SubmitUri(NoAwaitTag, google::cloud::webrisk::v1::SubmitUriRequest const& request);
 
-  virtual future<StatusOr<google::cloud::webrisk::v1::Submission>> SubmitUri(
-      google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::webrisk::v1::Submission>>
+  SubmitUri( google::longrunning::Operation const& operation);
 
-  virtual StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 
-  virtual Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request);
+  virtual Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
 
-  virtual Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request);
+  virtual Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request);
 };
 
 /**

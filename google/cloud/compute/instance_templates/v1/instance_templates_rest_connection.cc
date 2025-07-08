@@ -17,12 +17,12 @@
 // source: google/cloud/compute/instance_templates/v1/instance_templates.proto
 
 #include "google/cloud/compute/instance_templates/v1/instance_templates_rest_connection.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/compute/instance_templates/v1/instance_templates_options.h"
 #include "google/cloud/compute/instance_templates/v1/internal/instance_templates_option_defaults.h"
 #include "google/cloud/compute/instance_templates/v1/internal/instance_templates_rest_connection_impl.h"
 #include "google/cloud/compute/instance_templates/v1/internal/instance_templates_rest_stub_factory.h"
 #include "google/cloud/compute/instance_templates/v1/internal/instance_templates_tracing_connection.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/rest_background_threads_impl.h"
 #include "google/cloud/internal/rest_options.h"
@@ -34,24 +34,21 @@ namespace cloud {
 namespace compute_instance_templates_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<InstanceTemplatesConnection>
-MakeInstanceTemplatesConnectionRest(Options options) {
-  internal::CheckExpectedOptions<
-      CommonOptionList, RestOptionList, UnifiedCredentialsOptionList,
-      rest_internal::TargetApiVersionOption, InstanceTemplatesPolicyOptionList>(
-      options, __func__);
-  options =
-      compute_instance_templates_v1_internal::InstanceTemplatesDefaultOptions(
-          std::move(options));
+std::shared_ptr<InstanceTemplatesConnection> MakeInstanceTemplatesConnectionRest(
+    Options options) {
+  internal::CheckExpectedOptions<CommonOptionList, RestOptionList,
+      UnifiedCredentialsOptionList, rest_internal::TargetApiVersionOption,
+      InstanceTemplatesPolicyOptionList>(options, __func__);
+  options = compute_instance_templates_v1_internal::InstanceTemplatesDefaultOptions(
+      std::move(options));
   auto background = std::make_unique<
       rest_internal::AutomaticallyCreatedRestBackgroundThreads>();
-  auto stub = compute_instance_templates_v1_internal::
-      CreateDefaultInstanceTemplatesRestStub(options);
-  return compute_instance_templates_v1_internal::
-      MakeInstanceTemplatesTracingConnection(
-          std::make_shared<compute_instance_templates_v1_internal::
-                               InstanceTemplatesRestConnectionImpl>(
-              std::move(background), std::move(stub), std::move(options)));
+  auto stub = compute_instance_templates_v1_internal::CreateDefaultInstanceTemplatesRestStub(
+      options);
+  return compute_instance_templates_v1_internal::MakeInstanceTemplatesTracingConnection(
+      std::make_shared<
+          compute_instance_templates_v1_internal::InstanceTemplatesRestConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

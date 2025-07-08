@@ -26,21 +26,19 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-SystemPolicyV1ConnectionIdempotencyPolicy::
-    ~SystemPolicyV1ConnectionIdempotencyPolicy() = default;
+SystemPolicyV1ConnectionIdempotencyPolicy::~SystemPolicyV1ConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<SystemPolicyV1ConnectionIdempotencyPolicy>
 SystemPolicyV1ConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<SystemPolicyV1ConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency SystemPolicyV1ConnectionIdempotencyPolicy::GetSystemPolicy(
-    google::cloud::binaryauthorization::v1::GetSystemPolicyRequest const&) {
+Idempotency SystemPolicyV1ConnectionIdempotencyPolicy::GetSystemPolicy(google::cloud::binaryauthorization::v1::GetSystemPolicyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<SystemPolicyV1ConnectionIdempotencyPolicy>
-MakeDefaultSystemPolicyV1ConnectionIdempotencyPolicy() {
+    MakeDefaultSystemPolicyV1ConnectionIdempotencyPolicy() {
   return std::make_unique<SystemPolicyV1ConnectionIdempotencyPolicy>();
 }
 

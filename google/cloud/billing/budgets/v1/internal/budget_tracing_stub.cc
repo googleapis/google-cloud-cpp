@@ -32,48 +32,44 @@ BudgetServiceTracingStub::BudgetServiceTracingStub(
     std::shared_ptr<BudgetServiceStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
-StatusOr<google::cloud::billing::budgets::v1::Budget>
-BudgetServiceTracingStub::CreateBudget(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::billing::budgets::v1::Budget> BudgetServiceTracingStub::CreateBudget(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::billing::budgets::v1::CreateBudgetRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.billing.budgets.v1.BudgetService", "CreateBudget");
+  auto span = internal::MakeSpanGrpc("google.cloud.billing.budgets.v1.BudgetService", "CreateBudget");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateBudget(context, options, request));
 }
 
-StatusOr<google::cloud::billing::budgets::v1::Budget>
-BudgetServiceTracingStub::UpdateBudget(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::billing::budgets::v1::Budget> BudgetServiceTracingStub::UpdateBudget(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::billing::budgets::v1::UpdateBudgetRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.billing.budgets.v1.BudgetService", "UpdateBudget");
+  auto span = internal::MakeSpanGrpc("google.cloud.billing.budgets.v1.BudgetService", "UpdateBudget");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->UpdateBudget(context, options, request));
 }
 
-StatusOr<google::cloud::billing::budgets::v1::Budget>
-BudgetServiceTracingStub::GetBudget(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::billing::budgets::v1::Budget> BudgetServiceTracingStub::GetBudget(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::billing::budgets::v1::GetBudgetRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.billing.budgets.v1.BudgetService", "GetBudget");
+  auto span = internal::MakeSpanGrpc("google.cloud.billing.budgets.v1.BudgetService", "GetBudget");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetBudget(context, options, request));
 }
 
-StatusOr<google::cloud::billing::budgets::v1::ListBudgetsResponse>
-BudgetServiceTracingStub::ListBudgets(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::billing::budgets::v1::ListBudgetsResponse> BudgetServiceTracingStub::ListBudgets(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::billing::budgets::v1::ListBudgetsRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.billing.budgets.v1.BudgetService", "ListBudgets");
+  auto span = internal::MakeSpanGrpc("google.cloud.billing.budgets.v1.BudgetService", "ListBudgets");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -81,10 +77,10 @@ BudgetServiceTracingStub::ListBudgets(
 }
 
 Status BudgetServiceTracingStub::DeleteBudget(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::billing::budgets::v1::DeleteBudgetRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.billing.budgets.v1.BudgetService", "DeleteBudget");
+  auto span = internal::MakeSpanGrpc("google.cloud.billing.budgets.v1.BudgetService", "DeleteBudget");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,

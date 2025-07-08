@@ -32,29 +32,21 @@ ValidationHelperV1TracingConnection::ValidationHelperV1TracingConnection(
     std::shared_ptr<binaryauthorization_v1::ValidationHelperV1Connection> child)
     : child_(std::move(child)) {}
 
-StatusOr<google::cloud::binaryauthorization::v1::
-             ValidateAttestationOccurrenceResponse>
-ValidationHelperV1TracingConnection::ValidateAttestationOccurrence(
-    google::cloud::binaryauthorization::v1::
-        ValidateAttestationOccurrenceRequest const& request) {
-  auto span = internal::MakeSpan(
-      "binaryauthorization_v1::ValidationHelperV1Connection::"
-      "ValidateAttestationOccurrence");
+StatusOr<google::cloud::binaryauthorization::v1::ValidateAttestationOccurrenceResponse>
+ValidationHelperV1TracingConnection::ValidateAttestationOccurrence(google::cloud::binaryauthorization::v1::ValidateAttestationOccurrenceRequest const& request) {
+  auto span = internal::MakeSpan("binaryauthorization_v1::ValidationHelperV1Connection::ValidateAttestationOccurrence");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span,
-                           child_->ValidateAttestationOccurrence(request));
+  return internal::EndSpan(*span, child_->ValidateAttestationOccurrence(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<binaryauthorization_v1::ValidationHelperV1Connection>
 MakeValidationHelperV1TracingConnection(
-    std::shared_ptr<binaryauthorization_v1::ValidationHelperV1Connection>
-        conn) {
+    std::shared_ptr<binaryauthorization_v1::ValidationHelperV1Connection> conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
-    conn =
-        std::make_shared<ValidationHelperV1TracingConnection>(std::move(conn));
+    conn = std::make_shared<ValidationHelperV1TracingConnection>(std::move(conn));
   }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;

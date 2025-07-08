@@ -17,11 +17,11 @@
 // source: google/cloud/talent/v4/event_service.proto
 
 #include "google/cloud/talent/v4/internal/event_connection_impl.h"
-#include "google/cloud/talent/v4/internal/event_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/retry_loop.h"
+#include "google/cloud/talent/v4/internal/event_option_defaults.h"
 #include <memory>
 #include <utility>
 
@@ -31,50 +31,47 @@ namespace talent_v4_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<talent_v4::EventServiceRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<talent_v4::EventServiceRetryPolicy>
+retry_policy(Options const& options) {
   return options.get<talent_v4::EventServiceRetryPolicyOption>()->clone();
 }
 
-std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+std::unique_ptr<BackoffPolicy>
+backoff_policy(Options const& options) {
   return options.get<talent_v4::EventServiceBackoffPolicyOption>()->clone();
 }
 
 std::unique_ptr<talent_v4::EventServiceConnectionIdempotencyPolicy>
 idempotency_policy(Options const& options) {
-  return options
-      .get<talent_v4::EventServiceConnectionIdempotencyPolicyOption>()
-      ->clone();
+  return options.get<talent_v4::EventServiceConnectionIdempotencyPolicyOption>()->clone();
 }
 
-}  // namespace
+} // namespace
 
 EventServiceConnectionImpl::EventServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<talent_v4_internal::EventServiceStub> stub, Options options)
-    : background_(std::move(background)),
-      stub_(std::move(stub)),
-      options_(internal::MergeOptions(std::move(options),
-                                      EventServiceConnection::options())) {}
+    std::shared_ptr<talent_v4_internal::EventServiceStub> stub,
+    Options options)
+  : background_(std::move(background)), stub_(std::move(stub)),
+    options_(internal::MergeOptions(
+        std::move(options),
+        EventServiceConnection::options())) {}
 
 StatusOr<google::cloud::talent::v4::ClientEvent>
-EventServiceConnectionImpl::CreateClientEvent(
-    google::cloud::talent::v4::CreateClientEventRequest const& request) {
+EventServiceConnectionImpl::CreateClientEvent(google::cloud::talent::v4::CreateClientEventRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateClientEvent(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::talent::v4::CreateClientEventRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::talent::v4::CreateClientEventRequest const& request) {
         return stub_->CreateClientEvent(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::longrunning::Operation>
-EventServiceConnectionImpl::GetOperation(
-    google::longrunning::GetOperationRequest const& request) {
+EventServiceConnectionImpl::GetOperation(google::longrunning::GetOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),

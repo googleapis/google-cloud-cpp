@@ -63,13 +63,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// and move-construction is a relatively efficient operation, consider using
 /// such a copy when using this class from multiple threads.
 ///
-/// [google.cloud.dialogflow.cx.v3.Environment]:
-/// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L195}
+/// [google.cloud.dialogflow.cx.v3.Environment]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L195}
 ///
 class EnvironmentsClient {
  public:
-  explicit EnvironmentsClient(
-      std::shared_ptr<EnvironmentsConnection> connection, Options opts = {});
+  explicit EnvironmentsClient(std::shared_ptr<EnvironmentsConnection> connection, Options opts = {});
   ~EnvironmentsClient();
 
   ///@{
@@ -82,12 +80,10 @@ class EnvironmentsClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(EnvironmentsClient const& a,
-                         EnvironmentsClient const& b) {
+  friend bool operator==(EnvironmentsClient const& a, EnvironmentsClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(EnvironmentsClient const& a,
-                         EnvironmentsClient const& b) {
+  friend bool operator!=(EnvironmentsClient const& a, EnvironmentsClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -126,8 +122,8 @@ class EnvironmentsClient {
   /// [google.cloud.dialogflow.cx.v3.ListEnvironmentsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L278}
   ///
   // clang-format on
-  StreamRange<google::cloud::dialogflow::cx::v3::Environment> ListEnvironments(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::dialogflow::cx::v3::Environment>
+  ListEnvironments(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -166,9 +162,8 @@ class EnvironmentsClient {
   /// [google.cloud.dialogflow.cx.v3.ListEnvironmentsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L278}
   ///
   // clang-format on
-  StreamRange<google::cloud::dialogflow::cx::v3::Environment> ListEnvironments(
-      google::cloud::dialogflow::cx::v3::ListEnvironmentsRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::dialogflow::cx::v3::Environment>
+  ListEnvironments(google::cloud::dialogflow::cx::v3::ListEnvironmentsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -195,8 +190,8 @@ class EnvironmentsClient {
   /// [google.cloud.dialogflow.cx.v3.GetEnvironmentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L313}
   ///
   // clang-format on
-  StatusOr<google::cloud::dialogflow::cx::v3::Environment> GetEnvironment(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::dialogflow::cx::v3::Environment>
+  GetEnvironment(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -226,9 +221,8 @@ class EnvironmentsClient {
   /// [google.cloud.dialogflow.cx.v3.GetEnvironmentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L313}
   ///
   // clang-format on
-  StatusOr<google::cloud::dialogflow::cx::v3::Environment> GetEnvironment(
-      google::cloud::dialogflow::cx::v3::GetEnvironmentRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::dialogflow::cx::v3::Environment>
+  GetEnvironment(google::cloud::dialogflow::cx::v3::GetEnvironmentRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -272,10 +266,7 @@ class EnvironmentsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dialogflow::cx::v3::Environment>>
-  CreateEnvironment(
-      std::string const& parent,
-      google::cloud::dialogflow::cx::v3::Environment const& environment,
-      Options opts = {});
+  CreateEnvironment(std::string const& parent, google::cloud::dialogflow::cx::v3::Environment const& environment, Options opts = {});
 
   // clang-format off
   ///
@@ -288,10 +279,8 @@ class EnvironmentsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateEnvironment(
-      NoAwaitTag, std::string const& parent,
-      google::cloud::dialogflow::cx::v3::Environment const& environment,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateEnvironment(NoAwaitTag, std::string const& parent, google::cloud::dialogflow::cx::v3::Environment const& environment, Options opts = {});
 
   // clang-format off
   ///
@@ -337,10 +326,7 @@ class EnvironmentsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dialogflow::cx::v3::Environment>>
-  CreateEnvironment(
-      google::cloud::dialogflow::cx::v3::CreateEnvironmentRequest const&
-          request,
-      Options opts = {});
+  CreateEnvironment(google::cloud::dialogflow::cx::v3::CreateEnvironmentRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -353,11 +339,8 @@ class EnvironmentsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateEnvironment(
-      NoAwaitTag,
-      google::cloud::dialogflow::cx::v3::CreateEnvironmentRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateEnvironment(NoAwaitTag, google::cloud::dialogflow::cx::v3::CreateEnvironmentRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -369,8 +352,7 @@ class EnvironmentsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dialogflow::cx::v3::Environment>>
-  CreateEnvironment(google::longrunning::Operation const& operation,
-                    Options opts = {});
+  CreateEnvironment(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -412,9 +394,7 @@ class EnvironmentsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dialogflow::cx::v3::Environment>>
-  UpdateEnvironment(
-      google::cloud::dialogflow::cx::v3::Environment const& environment,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  UpdateEnvironment(google::cloud::dialogflow::cx::v3::Environment const& environment, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -427,10 +407,8 @@ class EnvironmentsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateEnvironment(
-      NoAwaitTag,
-      google::cloud::dialogflow::cx::v3::Environment const& environment,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateEnvironment(NoAwaitTag, google::cloud::dialogflow::cx::v3::Environment const& environment, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -476,10 +454,7 @@ class EnvironmentsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dialogflow::cx::v3::Environment>>
-  UpdateEnvironment(
-      google::cloud::dialogflow::cx::v3::UpdateEnvironmentRequest const&
-          request,
-      Options opts = {});
+  UpdateEnvironment(google::cloud::dialogflow::cx::v3::UpdateEnvironmentRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -492,11 +467,8 @@ class EnvironmentsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateEnvironment(
-      NoAwaitTag,
-      google::cloud::dialogflow::cx::v3::UpdateEnvironmentRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateEnvironment(NoAwaitTag, google::cloud::dialogflow::cx::v3::UpdateEnvironmentRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -508,8 +480,7 @@ class EnvironmentsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dialogflow::cx::v3::Environment>>
-  UpdateEnvironment(google::longrunning::Operation const& operation,
-                    Options opts = {});
+  UpdateEnvironment(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -534,7 +505,8 @@ class EnvironmentsClient {
   /// [google.cloud.dialogflow.cx.v3.Environment]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L195}
   ///
   // clang-format on
-  Status DeleteEnvironment(std::string const& name, Options opts = {});
+  Status
+  DeleteEnvironment(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -562,10 +534,8 @@ class EnvironmentsClient {
   /// [google.cloud.dialogflow.cx.v3.Environment]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L195}
   ///
   // clang-format on
-  Status DeleteEnvironment(
-      google::cloud::dialogflow::cx::v3::DeleteEnvironmentRequest const&
-          request,
-      Options opts = {});
+  Status
+  DeleteEnvironment(google::cloud::dialogflow::cx::v3::DeleteEnvironmentRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -642,10 +612,7 @@ class EnvironmentsClient {
   ///
   // clang-format on
   StreamRange<google::cloud::dialogflow::cx::v3::Environment>
-  LookupEnvironmentHistory(
-      google::cloud::dialogflow::cx::v3::LookupEnvironmentHistoryRequest
-          request,
-      Options opts = {});
+  LookupEnvironmentHistory(google::cloud::dialogflow::cx::v3::LookupEnvironmentHistoryRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -694,10 +661,7 @@ class EnvironmentsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dialogflow::cx::v3::RunContinuousTestResponse>>
-  RunContinuousTest(
-      google::cloud::dialogflow::cx::v3::RunContinuousTestRequest const&
-          request,
-      Options opts = {});
+  RunContinuousTest(google::cloud::dialogflow::cx::v3::RunContinuousTestRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -710,11 +674,8 @@ class EnvironmentsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> RunContinuousTest(
-      NoAwaitTag,
-      google::cloud::dialogflow::cx::v3::RunContinuousTestRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  RunContinuousTest(NoAwaitTag, google::cloud::dialogflow::cx::v3::RunContinuousTestRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -726,8 +687,7 @@ class EnvironmentsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dialogflow::cx::v3::RunContinuousTestResponse>>
-  RunContinuousTest(google::longrunning::Operation const& operation,
-                    Options opts = {});
+  RunContinuousTest(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -802,10 +762,7 @@ class EnvironmentsClient {
   ///
   // clang-format on
   StreamRange<google::cloud::dialogflow::cx::v3::ContinuousTestResult>
-  ListContinuousTestResults(
-      google::cloud::dialogflow::cx::v3::ListContinuousTestResultsRequest
-          request,
-      Options opts = {});
+  ListContinuousTestResults(google::cloud::dialogflow::cx::v3::ListContinuousTestResultsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -854,9 +811,7 @@ class EnvironmentsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dialogflow::cx::v3::DeployFlowResponse>>
-  DeployFlow(
-      google::cloud::dialogflow::cx::v3::DeployFlowRequest const& request,
-      Options opts = {});
+  DeployFlow(google::cloud::dialogflow::cx::v3::DeployFlowRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -869,10 +824,8 @@ class EnvironmentsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeployFlow(
-      NoAwaitTag,
-      google::cloud::dialogflow::cx::v3::DeployFlowRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeployFlow(NoAwaitTag, google::cloud::dialogflow::cx::v3::DeployFlowRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -884,8 +837,7 @@ class EnvironmentsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dialogflow::cx::v3::DeployFlowResponse>>
-  DeployFlow(google::longrunning::Operation const& operation,
-             Options opts = {});
+  DeployFlow(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -923,8 +875,8 @@ class EnvironmentsClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request, Options opts = {});
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -953,9 +905,8 @@ class EnvironmentsClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -990,8 +941,8 @@ class EnvironmentsClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -1030,8 +981,8 @@ class EnvironmentsClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1057,8 +1008,8 @@ class EnvironmentsClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1089,9 +1040,8 @@ class EnvironmentsClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1125,7 +1075,8 @@ class EnvironmentsClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(std::string const& name, Options opts = {});
+  Status
+  CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1164,9 +1115,8 @@ class EnvironmentsClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request,
-      Options opts = {});
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<EnvironmentsConnection> connection_;

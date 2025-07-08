@@ -22,8 +22,8 @@
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/datastore/v1/datastore.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
+#include <google/datastore/v1/datastore.grpc.pb.h>
 #include <memory>
 #include <utility>
 
@@ -37,119 +37,138 @@ class DatastoreStub {
   virtual ~DatastoreStub() = 0;
 
   virtual StatusOr<google::datastore::v1::LookupResponse> Lookup(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::datastore::v1::LookupRequest const& request) = 0;
 
   virtual StatusOr<google::datastore::v1::RunQueryResponse> RunQuery(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::datastore::v1::RunQueryRequest const& request) = 0;
 
-  virtual StatusOr<google::datastore::v1::RunAggregationQueryResponse>
-  RunAggregationQuery(
-      grpc::ClientContext& context, Options const& options,
+  virtual StatusOr<google::datastore::v1::RunAggregationQueryResponse> RunAggregationQuery(
+      grpc::ClientContext& context,
+      Options const& options,
       google::datastore::v1::RunAggregationQueryRequest const& request) = 0;
 
-  virtual StatusOr<google::datastore::v1::BeginTransactionResponse>
-  BeginTransaction(
-      grpc::ClientContext& context, Options const& options,
+  virtual StatusOr<google::datastore::v1::BeginTransactionResponse> BeginTransaction(
+      grpc::ClientContext& context,
+      Options const& options,
       google::datastore::v1::BeginTransactionRequest const& request) = 0;
 
   virtual StatusOr<google::datastore::v1::CommitResponse> Commit(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::datastore::v1::CommitRequest const& request) = 0;
 
   virtual StatusOr<google::datastore::v1::RollbackResponse> Rollback(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::datastore::v1::RollbackRequest const& request) = 0;
 
   virtual StatusOr<google::datastore::v1::AllocateIdsResponse> AllocateIds(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::datastore::v1::AllocateIdsRequest const& request) = 0;
 
   virtual StatusOr<google::datastore::v1::ReserveIdsResponse> ReserveIds(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::datastore::v1::ReserveIdsRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::ListOperationsRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual Status DeleteOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::DeleteOperationRequest const& request) = 0;
 
   virtual Status CancelOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::CancelOperationRequest const& request) = 0;
 };
 
 class DefaultDatastoreStub : public DatastoreStub {
  public:
   explicit DefaultDatastoreStub(
-      std::unique_ptr<google::datastore::v1::Datastore::StubInterface>
-          grpc_stub,
-      std::unique_ptr<google::longrunning::Operations::StubInterface>
-          operations_stub)
+      std::unique_ptr<google::datastore::v1::Datastore::StubInterface> grpc_stub,
+      std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub
+)
       : grpc_stub_(std::move(grpc_stub)),
         operations_stub_(std::move(operations_stub)) {}
 
   StatusOr<google::datastore::v1::LookupResponse> Lookup(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::datastore::v1::LookupRequest const& request) override;
 
   StatusOr<google::datastore::v1::RunQueryResponse> RunQuery(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::datastore::v1::RunQueryRequest const& request) override;
 
-  StatusOr<google::datastore::v1::RunAggregationQueryResponse>
-  RunAggregationQuery(grpc::ClientContext& context, Options const& options,
-                      google::datastore::v1::RunAggregationQueryRequest const&
-                          request) override;
+  StatusOr<google::datastore::v1::RunAggregationQueryResponse> RunAggregationQuery(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::datastore::v1::RunAggregationQueryRequest const& request) override;
 
   StatusOr<google::datastore::v1::BeginTransactionResponse> BeginTransaction(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::datastore::v1::BeginTransactionRequest const& request) override;
 
   StatusOr<google::datastore::v1::CommitResponse> Commit(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::datastore::v1::CommitRequest const& request) override;
 
   StatusOr<google::datastore::v1::RollbackResponse> Rollback(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::datastore::v1::RollbackRequest const& request) override;
 
   StatusOr<google::datastore::v1::AllocateIdsResponse> AllocateIds(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::datastore::v1::AllocateIdsRequest const& request) override;
 
   StatusOr<google::datastore::v1::ReserveIdsResponse> ReserveIds(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::datastore::v1::ReserveIdsRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status DeleteOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::DeleteOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::unique_ptr<google::datastore::v1::Datastore::StubInterface> grpc_stub_;
-  std::unique_ptr<google::longrunning::Operations::StubInterface>
-      operations_stub_;
+  std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

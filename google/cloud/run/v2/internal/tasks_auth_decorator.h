@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RUN_V2_INTERNAL_TASKS_AUTH_DECORATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RUN_V2_INTERNAL_TASKS_AUTH_DECORATOR_H
 
-#include "google/cloud/run/v2/internal/tasks_stub.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/run/v2/internal/tasks_stub.h"
 #include "google/cloud/version.h"
 #include <memory>
 #include <set>
@@ -39,27 +39,33 @@ class TasksAuth : public TasksStub {
       std::shared_ptr<TasksStub> child);
 
   StatusOr<google::cloud::run::v2::Task> GetTask(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::run::v2::GetTaskRequest const& request) override;
 
   StatusOr<google::cloud::run::v2::ListTasksResponse> ListTasks(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::run::v2::ListTasksRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status DeleteOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::DeleteOperationRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> WaitOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::WaitOperationRequest const& request) override;
 
  private:

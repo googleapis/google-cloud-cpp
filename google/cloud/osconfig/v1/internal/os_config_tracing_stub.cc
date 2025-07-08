@@ -32,149 +32,136 @@ OsConfigServiceTracingStub::OsConfigServiceTracingStub(
     std::shared_ptr<OsConfigServiceStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
-StatusOr<google::cloud::osconfig::v1::PatchJob>
-OsConfigServiceTracingStub::ExecutePatchJob(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::osconfig::v1::PatchJob> OsConfigServiceTracingStub::ExecutePatchJob(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::osconfig::v1::ExecutePatchJobRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.osconfig.v1.OsConfigService",
-                                     "ExecutePatchJob");
+  auto span = internal::MakeSpanGrpc("google.cloud.osconfig.v1.OsConfigService", "ExecutePatchJob");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ExecutePatchJob(context, options, request));
 }
 
-StatusOr<google::cloud::osconfig::v1::PatchJob>
-OsConfigServiceTracingStub::GetPatchJob(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::osconfig::v1::PatchJob> OsConfigServiceTracingStub::GetPatchJob(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::osconfig::v1::GetPatchJobRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.osconfig.v1.OsConfigService",
-                                     "GetPatchJob");
+  auto span = internal::MakeSpanGrpc("google.cloud.osconfig.v1.OsConfigService", "GetPatchJob");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetPatchJob(context, options, request));
 }
 
-StatusOr<google::cloud::osconfig::v1::PatchJob>
-OsConfigServiceTracingStub::CancelPatchJob(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::osconfig::v1::PatchJob> OsConfigServiceTracingStub::CancelPatchJob(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::osconfig::v1::CancelPatchJobRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.osconfig.v1.OsConfigService",
-                                     "CancelPatchJob");
+  auto span = internal::MakeSpanGrpc("google.cloud.osconfig.v1.OsConfigService", "CancelPatchJob");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CancelPatchJob(context, options, request));
 }
 
-StatusOr<google::cloud::osconfig::v1::ListPatchJobsResponse>
-OsConfigServiceTracingStub::ListPatchJobs(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::osconfig::v1::ListPatchJobsResponse> OsConfigServiceTracingStub::ListPatchJobs(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::osconfig::v1::ListPatchJobsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.osconfig.v1.OsConfigService",
-                                     "ListPatchJobs");
+  auto span = internal::MakeSpanGrpc("google.cloud.osconfig.v1.OsConfigService", "ListPatchJobs");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListPatchJobs(context, options, request));
 }
 
-StatusOr<google::cloud::osconfig::v1::ListPatchJobInstanceDetailsResponse>
-OsConfigServiceTracingStub::ListPatchJobInstanceDetails(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::osconfig::v1::ListPatchJobInstanceDetailsRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.osconfig.v1.OsConfigService",
-                                     "ListPatchJobInstanceDetails");
+StatusOr<google::cloud::osconfig::v1::ListPatchJobInstanceDetailsResponse> OsConfigServiceTracingStub::ListPatchJobInstanceDetails(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::osconfig::v1::ListPatchJobInstanceDetailsRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.osconfig.v1.OsConfigService", "ListPatchJobInstanceDetails");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span,
-      child_->ListPatchJobInstanceDetails(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->ListPatchJobInstanceDetails(context, options, request));
 }
 
-StatusOr<google::cloud::osconfig::v1::PatchDeployment>
-OsConfigServiceTracingStub::CreatePatchDeployment(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::osconfig::v1::PatchDeployment> OsConfigServiceTracingStub::CreatePatchDeployment(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::osconfig::v1::CreatePatchDeploymentRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.osconfig.v1.OsConfigService",
-                                     "CreatePatchDeployment");
+  auto span = internal::MakeSpanGrpc("google.cloud.osconfig.v1.OsConfigService", "CreatePatchDeployment");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->CreatePatchDeployment(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->CreatePatchDeployment(context, options, request));
 }
 
-StatusOr<google::cloud::osconfig::v1::PatchDeployment>
-OsConfigServiceTracingStub::GetPatchDeployment(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::osconfig::v1::PatchDeployment> OsConfigServiceTracingStub::GetPatchDeployment(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::osconfig::v1::GetPatchDeploymentRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.osconfig.v1.OsConfigService",
-                                     "GetPatchDeployment");
+  auto span = internal::MakeSpanGrpc("google.cloud.osconfig.v1.OsConfigService", "GetPatchDeployment");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->GetPatchDeployment(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->GetPatchDeployment(context, options, request));
 }
 
-StatusOr<google::cloud::osconfig::v1::ListPatchDeploymentsResponse>
-OsConfigServiceTracingStub::ListPatchDeployments(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::osconfig::v1::ListPatchDeploymentsResponse> OsConfigServiceTracingStub::ListPatchDeployments(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::osconfig::v1::ListPatchDeploymentsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.osconfig.v1.OsConfigService",
-                                     "ListPatchDeployments");
+  auto span = internal::MakeSpanGrpc("google.cloud.osconfig.v1.OsConfigService", "ListPatchDeployments");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->ListPatchDeployments(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->ListPatchDeployments(context, options, request));
 }
 
 Status OsConfigServiceTracingStub::DeletePatchDeployment(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::osconfig::v1::DeletePatchDeploymentRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.osconfig.v1.OsConfigService",
-                                     "DeletePatchDeployment");
+  auto span = internal::MakeSpanGrpc("google.cloud.osconfig.v1.OsConfigService", "DeletePatchDeployment");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->DeletePatchDeployment(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->DeletePatchDeployment(context, options, request));
 }
 
-StatusOr<google::cloud::osconfig::v1::PatchDeployment>
-OsConfigServiceTracingStub::UpdatePatchDeployment(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::osconfig::v1::PatchDeployment> OsConfigServiceTracingStub::UpdatePatchDeployment(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::osconfig::v1::UpdatePatchDeploymentRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.osconfig.v1.OsConfigService",
-                                     "UpdatePatchDeployment");
+  auto span = internal::MakeSpanGrpc("google.cloud.osconfig.v1.OsConfigService", "UpdatePatchDeployment");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->UpdatePatchDeployment(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->UpdatePatchDeployment(context, options, request));
 }
 
-StatusOr<google::cloud::osconfig::v1::PatchDeployment>
-OsConfigServiceTracingStub::PausePatchDeployment(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::osconfig::v1::PatchDeployment> OsConfigServiceTracingStub::PausePatchDeployment(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::osconfig::v1::PausePatchDeploymentRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.osconfig.v1.OsConfigService",
-                                     "PausePatchDeployment");
+  auto span = internal::MakeSpanGrpc("google.cloud.osconfig.v1.OsConfigService", "PausePatchDeployment");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->PausePatchDeployment(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->PausePatchDeployment(context, options, request));
 }
 
-StatusOr<google::cloud::osconfig::v1::PatchDeployment>
-OsConfigServiceTracingStub::ResumePatchDeployment(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::osconfig::v1::PatchDeployment> OsConfigServiceTracingStub::ResumePatchDeployment(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::osconfig::v1::ResumePatchDeploymentRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.osconfig.v1.OsConfigService",
-                                     "ResumePatchDeployment");
+  auto span = internal::MakeSpanGrpc("google.cloud.osconfig.v1.OsConfigService", "ResumePatchDeployment");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->ResumePatchDeployment(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->ResumePatchDeployment(context, options, request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

@@ -31,10 +31,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * A class to mock `SqlDatabasesServiceConnection`.
  *
  * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `SqlDatabasesServiceClient`. To do
- * so, construct an object of type `SqlDatabasesServiceClient` with an instance
- * of this class. Then use the Google Test framework functions to program the
- * behavior of this mock.
+ * including errors, from an object of type `SqlDatabasesServiceClient`. To do so,
+ * construct an object of type `SqlDatabasesServiceClient` with an instance of this
+ * class. Then use the Google Test framework functions to program the behavior
+ * of this mock.
  *
  * @see [This example][bq-mock] for how to test your application with GoogleTest.
  * While the example showcases types from the BigQuery library, the underlying
@@ -42,38 +42,33 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockSqlDatabasesServiceConnection
-    : public sql_v1::SqlDatabasesServiceConnection {
+class MockSqlDatabasesServiceConnection : public sql_v1::SqlDatabasesServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::sql::v1::Operation>, Delete,
-      (google::cloud::sql::v1::SqlDatabasesDeleteRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::sql::v1::Operation>,
+  Delete,
+  (google::cloud::sql::v1::SqlDatabasesDeleteRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::sql::v1::Database>, Get,
-              (google::cloud::sql::v1::SqlDatabasesGetRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::sql::v1::Database>,
+  Get,
+  (google::cloud::sql::v1::SqlDatabasesGetRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::sql::v1::Operation>, Insert,
-      (google::cloud::sql::v1::SqlDatabasesInsertRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::sql::v1::Operation>,
+  Insert,
+  (google::cloud::sql::v1::SqlDatabasesInsertRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::sql::v1::DatabasesListResponse>, List,
-              (google::cloud::sql::v1::SqlDatabasesListRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::sql::v1::DatabasesListResponse>,
+  List,
+  (google::cloud::sql::v1::SqlDatabasesListRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::sql::v1::Operation>, Patch,
-      (google::cloud::sql::v1::SqlDatabasesUpdateRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::sql::v1::Operation>,
+  Patch,
+  (google::cloud::sql::v1::SqlDatabasesUpdateRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::sql::v1::Operation>, Update,
-      (google::cloud::sql::v1::SqlDatabasesUpdateRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::sql::v1::Operation>,
+  Update,
+  (google::cloud::sql::v1::SqlDatabasesUpdateRequest const& request), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

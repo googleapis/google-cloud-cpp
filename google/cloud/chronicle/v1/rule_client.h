@@ -64,8 +64,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class RuleServiceClient {
  public:
-  explicit RuleServiceClient(std::shared_ptr<RuleServiceConnection> connection,
-                             Options opts = {});
+  explicit RuleServiceClient(std::shared_ptr<RuleServiceConnection> connection, Options opts = {});
   ~RuleServiceClient();
 
   ///@{
@@ -78,12 +77,10 @@ class RuleServiceClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(RuleServiceClient const& a,
-                         RuleServiceClient const& b) {
+  friend bool operator==(RuleServiceClient const& a, RuleServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(RuleServiceClient const& a,
-                         RuleServiceClient const& b) {
+  friend bool operator!=(RuleServiceClient const& a, RuleServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -112,9 +109,8 @@ class RuleServiceClient {
   /// [google.cloud.chronicle.v1.Rule]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L210}
   ///
   // clang-format on
-  StatusOr<google::cloud::chronicle::v1::Rule> CreateRule(
-      std::string const& parent, google::cloud::chronicle::v1::Rule const& rule,
-      Options opts = {});
+  StatusOr<google::cloud::chronicle::v1::Rule>
+  CreateRule(std::string const& parent, google::cloud::chronicle::v1::Rule const& rule, Options opts = {});
 
   // clang-format off
   ///
@@ -143,9 +139,8 @@ class RuleServiceClient {
   /// [google.cloud.chronicle.v1.Rule]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L210}
   ///
   // clang-format on
-  StatusOr<google::cloud::chronicle::v1::Rule> CreateRule(
-      google::cloud::chronicle::v1::CreateRuleRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::chronicle::v1::Rule>
+  CreateRule(google::cloud::chronicle::v1::CreateRuleRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -171,8 +166,8 @@ class RuleServiceClient {
   /// [google.cloud.chronicle.v1.Rule]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L210}
   ///
   // clang-format on
-  StatusOr<google::cloud::chronicle::v1::Rule> GetRule(std::string const& name,
-                                                       Options opts = {});
+  StatusOr<google::cloud::chronicle::v1::Rule>
+  GetRule(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -201,9 +196,8 @@ class RuleServiceClient {
   /// [google.cloud.chronicle.v1.Rule]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L210}
   ///
   // clang-format on
-  StatusOr<google::cloud::chronicle::v1::Rule> GetRule(
-      google::cloud::chronicle::v1::GetRuleRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::chronicle::v1::Rule>
+  GetRule(google::cloud::chronicle::v1::GetRuleRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -238,8 +232,8 @@ class RuleServiceClient {
   /// [google.cloud.chronicle.v1.Rule]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L210}
   ///
   // clang-format on
-  StreamRange<google::cloud::chronicle::v1::Rule> ListRules(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::chronicle::v1::Rule>
+  ListRules(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -277,9 +271,8 @@ class RuleServiceClient {
   /// [google.cloud.chronicle.v1.Rule]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L210}
   ///
   // clang-format on
-  StreamRange<google::cloud::chronicle::v1::Rule> ListRules(
-      google::cloud::chronicle::v1::ListRulesRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::chronicle::v1::Rule>
+  ListRules(google::cloud::chronicle::v1::ListRulesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -309,9 +302,8 @@ class RuleServiceClient {
   /// [google.cloud.chronicle.v1.UpdateRuleRequest]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L543}
   ///
   // clang-format on
-  StatusOr<google::cloud::chronicle::v1::Rule> UpdateRule(
-      google::cloud::chronicle::v1::Rule const& rule,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::cloud::chronicle::v1::Rule>
+  UpdateRule(google::cloud::chronicle::v1::Rule const& rule, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -340,9 +332,8 @@ class RuleServiceClient {
   /// [google.cloud.chronicle.v1.UpdateRuleRequest]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L543}
   ///
   // clang-format on
-  StatusOr<google::cloud::chronicle::v1::Rule> UpdateRule(
-      google::cloud::chronicle::v1::UpdateRuleRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::chronicle::v1::Rule>
+  UpdateRule(google::cloud::chronicle::v1::UpdateRuleRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -367,7 +358,8 @@ class RuleServiceClient {
   /// [google.cloud.chronicle.v1.DeleteRuleRequest]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L557}
   ///
   // clang-format on
-  Status DeleteRule(std::string const& name, Options opts = {});
+  Status
+  DeleteRule(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -393,9 +385,8 @@ class RuleServiceClient {
   /// [google.cloud.chronicle.v1.DeleteRuleRequest]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L557}
   ///
   // clang-format on
-  Status DeleteRule(
-      google::cloud::chronicle::v1::DeleteRuleRequest const& request,
-      Options opts = {});
+  Status
+  DeleteRule(google::cloud::chronicle::v1::DeleteRuleRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -430,8 +421,8 @@ class RuleServiceClient {
   /// [google.cloud.chronicle.v1.Rule]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L210}
   ///
   // clang-format on
-  StreamRange<google::cloud::chronicle::v1::Rule> ListRuleRevisions(
-      std::string const& name, Options opts = {});
+  StreamRange<google::cloud::chronicle::v1::Rule>
+  ListRuleRevisions(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -469,9 +460,8 @@ class RuleServiceClient {
   /// [google.cloud.chronicle.v1.Rule]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L210}
   ///
   // clang-format on
-  StreamRange<google::cloud::chronicle::v1::Rule> ListRuleRevisions(
-      google::cloud::chronicle::v1::ListRuleRevisionsRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::chronicle::v1::Rule>
+  ListRuleRevisions(google::cloud::chronicle::v1::ListRuleRevisionsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -505,10 +495,8 @@ class RuleServiceClient {
   /// [google.cloud.chronicle.v1.Retrohunt]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L417}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::chronicle::v1::Retrohunt>> CreateRetrohunt(
-      std::string const& parent,
-      google::cloud::chronicle::v1::Retrohunt const& retrohunt,
-      Options opts = {});
+  future<StatusOr<google::cloud::chronicle::v1::Retrohunt>>
+  CreateRetrohunt(std::string const& parent, google::cloud::chronicle::v1::Retrohunt const& retrohunt, Options opts = {});
 
   // clang-format off
   ///
@@ -521,10 +509,8 @@ class RuleServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateRetrohunt(
-      NoAwaitTag, std::string const& parent,
-      google::cloud::chronicle::v1::Retrohunt const& retrohunt,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateRetrohunt(NoAwaitTag, std::string const& parent, google::cloud::chronicle::v1::Retrohunt const& retrohunt, Options opts = {});
 
   // clang-format off
   ///
@@ -560,9 +546,8 @@ class RuleServiceClient {
   /// [google.cloud.chronicle.v1.Retrohunt]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L417}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::chronicle::v1::Retrohunt>> CreateRetrohunt(
-      google::cloud::chronicle::v1::CreateRetrohuntRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::chronicle::v1::Retrohunt>>
+  CreateRetrohunt(google::cloud::chronicle::v1::CreateRetrohuntRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -575,10 +560,8 @@ class RuleServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateRetrohunt(
-      NoAwaitTag,
-      google::cloud::chronicle::v1::CreateRetrohuntRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateRetrohunt(NoAwaitTag, google::cloud::chronicle::v1::CreateRetrohuntRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -589,8 +572,8 @@ class RuleServiceClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::chronicle::v1::Retrohunt>> CreateRetrohunt(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::chronicle::v1::Retrohunt>>
+  CreateRetrohunt(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -616,8 +599,8 @@ class RuleServiceClient {
   /// [google.cloud.chronicle.v1.Retrohunt]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L417}
   ///
   // clang-format on
-  StatusOr<google::cloud::chronicle::v1::Retrohunt> GetRetrohunt(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::chronicle::v1::Retrohunt>
+  GetRetrohunt(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -646,9 +629,8 @@ class RuleServiceClient {
   /// [google.cloud.chronicle.v1.Retrohunt]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L417}
   ///
   // clang-format on
-  StatusOr<google::cloud::chronicle::v1::Retrohunt> GetRetrohunt(
-      google::cloud::chronicle::v1::GetRetrohuntRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::chronicle::v1::Retrohunt>
+  GetRetrohunt(google::cloud::chronicle::v1::GetRetrohuntRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -683,8 +665,8 @@ class RuleServiceClient {
   /// [google.cloud.chronicle.v1.Retrohunt]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L417}
   ///
   // clang-format on
-  StreamRange<google::cloud::chronicle::v1::Retrohunt> ListRetrohunts(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::chronicle::v1::Retrohunt>
+  ListRetrohunts(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -722,9 +704,8 @@ class RuleServiceClient {
   /// [google.cloud.chronicle.v1.Retrohunt]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L417}
   ///
   // clang-format on
-  StreamRange<google::cloud::chronicle::v1::Retrohunt> ListRetrohunts(
-      google::cloud::chronicle::v1::ListRetrohuntsRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::chronicle::v1::Retrohunt>
+  ListRetrohunts(google::cloud::chronicle::v1::ListRetrohuntsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -750,8 +731,8 @@ class RuleServiceClient {
   /// [google.cloud.chronicle.v1.RuleDeployment]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L330}
   ///
   // clang-format on
-  StatusOr<google::cloud::chronicle::v1::RuleDeployment> GetRuleDeployment(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::chronicle::v1::RuleDeployment>
+  GetRuleDeployment(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -780,9 +761,8 @@ class RuleServiceClient {
   /// [google.cloud.chronicle.v1.RuleDeployment]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L330}
   ///
   // clang-format on
-  StatusOr<google::cloud::chronicle::v1::RuleDeployment> GetRuleDeployment(
-      google::cloud::chronicle::v1::GetRuleDeploymentRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::chronicle::v1::RuleDeployment>
+  GetRuleDeployment(google::cloud::chronicle::v1::GetRuleDeploymentRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -818,8 +798,8 @@ class RuleServiceClient {
   /// [google.cloud.chronicle.v1.RuleDeployment]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L330}
   ///
   // clang-format on
-  StreamRange<google::cloud::chronicle::v1::RuleDeployment> ListRuleDeployments(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::chronicle::v1::RuleDeployment>
+  ListRuleDeployments(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -857,9 +837,8 @@ class RuleServiceClient {
   /// [google.cloud.chronicle.v1.RuleDeployment]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L330}
   ///
   // clang-format on
-  StreamRange<google::cloud::chronicle::v1::RuleDeployment> ListRuleDeployments(
-      google::cloud::chronicle::v1::ListRuleDeploymentsRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::chronicle::v1::RuleDeployment>
+  ListRuleDeployments(google::cloud::chronicle::v1::ListRuleDeploymentsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -891,9 +870,8 @@ class RuleServiceClient {
   /// [google.cloud.chronicle.v1.UpdateRuleDeploymentRequest]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L740}
   ///
   // clang-format on
-  StatusOr<google::cloud::chronicle::v1::RuleDeployment> UpdateRuleDeployment(
-      google::cloud::chronicle::v1::RuleDeployment const& rule_deployment,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::cloud::chronicle::v1::RuleDeployment>
+  UpdateRuleDeployment(google::cloud::chronicle::v1::RuleDeployment const& rule_deployment, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -925,9 +903,8 @@ class RuleServiceClient {
   /// [google.cloud.chronicle.v1.UpdateRuleDeploymentRequest]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L740}
   ///
   // clang-format on
-  StatusOr<google::cloud::chronicle::v1::RuleDeployment> UpdateRuleDeployment(
-      google::cloud::chronicle::v1::UpdateRuleDeploymentRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::chronicle::v1::RuleDeployment>
+  UpdateRuleDeployment(google::cloud::chronicle::v1::UpdateRuleDeploymentRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -962,8 +939,8 @@ class RuleServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -1002,8 +979,8 @@ class RuleServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1029,8 +1006,8 @@ class RuleServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1061,9 +1038,8 @@ class RuleServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1087,7 +1063,8 @@ class RuleServiceClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status DeleteOperation(std::string const& name, Options opts = {});
+  Status
+  DeleteOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1116,9 +1093,8 @@ class RuleServiceClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request,
-      Options opts = {});
+  Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1152,7 +1128,8 @@ class RuleServiceClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(std::string const& name, Options opts = {});
+  Status
+  CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1191,9 +1168,8 @@ class RuleServiceClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request,
-      Options opts = {});
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<RuleServiceConnection> connection_;

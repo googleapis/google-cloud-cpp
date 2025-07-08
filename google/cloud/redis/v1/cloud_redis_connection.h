@@ -19,14 +19,14 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_REDIS_V1_CLOUD_REDIS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_REDIS_V1_CLOUD_REDIS_CONNECTION_H
 
-#include "google/cloud/redis/v1/cloud_redis_connection_idempotency_policy.h"
-#include "google/cloud/redis/v1/internal/cloud_redis_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
+#include "google/cloud/redis/v1/cloud_redis_connection_idempotency_policy.h"
+#include "google/cloud/redis/v1/internal/cloud_redis_retry_traits.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
@@ -66,14 +66,14 @@ class CloudRedisLimitedErrorCountRetryPolicy : public CloudRedisRetryPolicy {
    *     @p maximum_failures == 0.
    */
   explicit CloudRedisLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   CloudRedisLimitedErrorCountRetryPolicy(
       CloudRedisLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : CloudRedisLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : CloudRedisLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   CloudRedisLimitedErrorCountRetryPolicy(
       CloudRedisLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : CloudRedisLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : CloudRedisLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -93,9 +93,7 @@ class CloudRedisLimitedErrorCountRetryPolicy : public CloudRedisRetryPolicy {
   using BaseType = CloudRedisRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      redis_v1_internal::CloudRedisRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<redis_v1_internal::CloudRedisRetryTraits> impl_;
 };
 
 /**
@@ -133,14 +131,12 @@ class CloudRedisLimitedTimeRetryPolicy : public CloudRedisRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit CloudRedisLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  CloudRedisLimitedTimeRetryPolicy(
-      CloudRedisLimitedTimeRetryPolicy&& rhs) noexcept
-      : CloudRedisLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  CloudRedisLimitedTimeRetryPolicy(
-      CloudRedisLimitedTimeRetryPolicy const& rhs) noexcept
-      : CloudRedisLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  CloudRedisLimitedTimeRetryPolicy(CloudRedisLimitedTimeRetryPolicy&& rhs) noexcept
+    : CloudRedisLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  CloudRedisLimitedTimeRetryPolicy(CloudRedisLimitedTimeRetryPolicy const& rhs) noexcept
+    : CloudRedisLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -162,9 +158,7 @@ class CloudRedisLimitedTimeRetryPolicy : public CloudRedisRetryPolicy {
   using BaseType = CloudRedisRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      redis_v1_internal::CloudRedisRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<redis_v1_internal::CloudRedisRetryTraits> impl_;
 };
 
 /**
@@ -185,115 +179,104 @@ class CloudRedisConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StreamRange<google::cloud::redis::v1::Instance> ListInstances(
-      google::cloud::redis::v1::ListInstancesRequest request);
+  virtual StreamRange<google::cloud::redis::v1::Instance>
+  ListInstances(google::cloud::redis::v1::ListInstancesRequest request);
 
-  virtual StatusOr<google::cloud::redis::v1::Instance> GetInstance(
-      google::cloud::redis::v1::GetInstanceRequest const& request);
+  virtual StatusOr<google::cloud::redis::v1::Instance>
+  GetInstance(google::cloud::redis::v1::GetInstanceRequest const& request);
 
   virtual StatusOr<google::cloud::redis::v1::InstanceAuthString>
-  GetInstanceAuthString(
-      google::cloud::redis::v1::GetInstanceAuthStringRequest const& request);
-
-  virtual future<StatusOr<google::cloud::redis::v1::Instance>> CreateInstance(
-      google::cloud::redis::v1::CreateInstanceRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation> CreateInstance(
-      NoAwaitTag,
-      google::cloud::redis::v1::CreateInstanceRequest const& request);
-
-  virtual future<StatusOr<google::cloud::redis::v1::Instance>> CreateInstance(
-      google::longrunning::Operation const& operation);
-
-  virtual future<StatusOr<google::cloud::redis::v1::Instance>> UpdateInstance(
-      google::cloud::redis::v1::UpdateInstanceRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation> UpdateInstance(
-      NoAwaitTag,
-      google::cloud::redis::v1::UpdateInstanceRequest const& request);
-
-  virtual future<StatusOr<google::cloud::redis::v1::Instance>> UpdateInstance(
-      google::longrunning::Operation const& operation);
-
-  virtual future<StatusOr<google::cloud::redis::v1::Instance>> UpgradeInstance(
-      google::cloud::redis::v1::UpgradeInstanceRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation> UpgradeInstance(
-      NoAwaitTag,
-      google::cloud::redis::v1::UpgradeInstanceRequest const& request);
-
-  virtual future<StatusOr<google::cloud::redis::v1::Instance>> UpgradeInstance(
-      google::longrunning::Operation const& operation);
-
-  virtual future<StatusOr<google::cloud::redis::v1::Instance>> ImportInstance(
-      google::cloud::redis::v1::ImportInstanceRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation> ImportInstance(
-      NoAwaitTag,
-      google::cloud::redis::v1::ImportInstanceRequest const& request);
-
-  virtual future<StatusOr<google::cloud::redis::v1::Instance>> ImportInstance(
-      google::longrunning::Operation const& operation);
-
-  virtual future<StatusOr<google::cloud::redis::v1::Instance>> ExportInstance(
-      google::cloud::redis::v1::ExportInstanceRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation> ExportInstance(
-      NoAwaitTag,
-      google::cloud::redis::v1::ExportInstanceRequest const& request);
-
-  virtual future<StatusOr<google::cloud::redis::v1::Instance>> ExportInstance(
-      google::longrunning::Operation const& operation);
-
-  virtual future<StatusOr<google::cloud::redis::v1::Instance>> FailoverInstance(
-      google::cloud::redis::v1::FailoverInstanceRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation> FailoverInstance(
-      NoAwaitTag,
-      google::cloud::redis::v1::FailoverInstanceRequest const& request);
-
-  virtual future<StatusOr<google::cloud::redis::v1::Instance>> FailoverInstance(
-      google::longrunning::Operation const& operation);
-
-  virtual future<StatusOr<google::cloud::redis::v1::OperationMetadata>>
-  DeleteInstance(
-      google::cloud::redis::v1::DeleteInstanceRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation> DeleteInstance(
-      NoAwaitTag,
-      google::cloud::redis::v1::DeleteInstanceRequest const& request);
-
-  virtual future<StatusOr<google::cloud::redis::v1::OperationMetadata>>
-  DeleteInstance(google::longrunning::Operation const& operation);
+  GetInstanceAuthString(google::cloud::redis::v1::GetInstanceAuthStringRequest const& request);
 
   virtual future<StatusOr<google::cloud::redis::v1::Instance>>
-  RescheduleMaintenance(
-      google::cloud::redis::v1::RescheduleMaintenanceRequest const& request);
+  CreateInstance(google::cloud::redis::v1::CreateInstanceRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> RescheduleMaintenance(
-      NoAwaitTag,
-      google::cloud::redis::v1::RescheduleMaintenanceRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  CreateInstance(NoAwaitTag, google::cloud::redis::v1::CreateInstanceRequest const& request);
 
   virtual future<StatusOr<google::cloud::redis::v1::Instance>>
-  RescheduleMaintenance(google::longrunning::Operation const& operation);
+  CreateInstance( google::longrunning::Operation const& operation);
 
-  virtual StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request);
+  virtual future<StatusOr<google::cloud::redis::v1::Instance>>
+  UpdateInstance(google::cloud::redis::v1::UpdateInstanceRequest const& request);
 
-  virtual StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  UpdateInstance(NoAwaitTag, google::cloud::redis::v1::UpdateInstanceRequest const& request);
 
-  virtual StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual future<StatusOr<google::cloud::redis::v1::Instance>>
+  UpdateInstance( google::longrunning::Operation const& operation);
 
-  virtual StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual future<StatusOr<google::cloud::redis::v1::Instance>>
+  UpgradeInstance(google::cloud::redis::v1::UpgradeInstanceRequest const& request);
 
-  virtual Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  UpgradeInstance(NoAwaitTag, google::cloud::redis::v1::UpgradeInstanceRequest const& request);
 
-  virtual Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request);
+  virtual future<StatusOr<google::cloud::redis::v1::Instance>>
+  UpgradeInstance( google::longrunning::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::redis::v1::Instance>>
+  ImportInstance(google::cloud::redis::v1::ImportInstanceRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation>
+  ImportInstance(NoAwaitTag, google::cloud::redis::v1::ImportInstanceRequest const& request);
+
+  virtual future<StatusOr<google::cloud::redis::v1::Instance>>
+  ImportInstance( google::longrunning::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::redis::v1::Instance>>
+  ExportInstance(google::cloud::redis::v1::ExportInstanceRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation>
+  ExportInstance(NoAwaitTag, google::cloud::redis::v1::ExportInstanceRequest const& request);
+
+  virtual future<StatusOr<google::cloud::redis::v1::Instance>>
+  ExportInstance( google::longrunning::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::redis::v1::Instance>>
+  FailoverInstance(google::cloud::redis::v1::FailoverInstanceRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation>
+  FailoverInstance(NoAwaitTag, google::cloud::redis::v1::FailoverInstanceRequest const& request);
+
+  virtual future<StatusOr<google::cloud::redis::v1::Instance>>
+  FailoverInstance( google::longrunning::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::redis::v1::OperationMetadata>>
+  DeleteInstance(google::cloud::redis::v1::DeleteInstanceRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation>
+  DeleteInstance(NoAwaitTag, google::cloud::redis::v1::DeleteInstanceRequest const& request);
+
+  virtual future<StatusOr<google::cloud::redis::v1::OperationMetadata>>
+  DeleteInstance( google::longrunning::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::redis::v1::Instance>>
+  RescheduleMaintenance(google::cloud::redis::v1::RescheduleMaintenanceRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation>
+  RescheduleMaintenance(NoAwaitTag, google::cloud::redis::v1::RescheduleMaintenanceRequest const& request);
+
+  virtual future<StatusOr<google::cloud::redis::v1::Instance>>
+  RescheduleMaintenance( google::longrunning::Operation const& operation);
+
+  virtual StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request);
+
+  virtual StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request);
+
+  virtual StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request);
+
+  virtual StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request);
+
+  virtual Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
+
+  virtual Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request);
 };
 
 /**

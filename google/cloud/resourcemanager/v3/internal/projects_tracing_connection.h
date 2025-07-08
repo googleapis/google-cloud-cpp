@@ -36,92 +36,85 @@ class ProjectsTracingConnection
   ~ProjectsTracingConnection() override = default;
 
   explicit ProjectsTracingConnection(
-      std::shared_ptr<resourcemanager_v3::ProjectsConnection> child);
+    std::shared_ptr<resourcemanager_v3::ProjectsConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::resourcemanager::v3::Project> GetProject(
-      google::cloud::resourcemanager::v3::GetProjectRequest const& request)
-      override;
+  StatusOr<google::cloud::resourcemanager::v3::Project>
+  GetProject(google::cloud::resourcemanager::v3::GetProjectRequest const& request) override;
 
-  StreamRange<google::cloud::resourcemanager::v3::Project> ListProjects(
-      google::cloud::resourcemanager::v3::ListProjectsRequest request) override;
+  StreamRange<google::cloud::resourcemanager::v3::Project>
+  ListProjects(google::cloud::resourcemanager::v3::ListProjectsRequest request) override;
 
-  StreamRange<google::cloud::resourcemanager::v3::Project> SearchProjects(
-      google::cloud::resourcemanager::v3::SearchProjectsRequest request)
-      override;
+  StreamRange<google::cloud::resourcemanager::v3::Project>
+  SearchProjects(google::cloud::resourcemanager::v3::SearchProjectsRequest request) override;
 
-  future<StatusOr<google::cloud::resourcemanager::v3::Project>> CreateProject(
-      google::cloud::resourcemanager::v3::CreateProjectRequest const& request)
-      override;
+  future<StatusOr<google::cloud::resourcemanager::v3::Project>>
+  CreateProject(google::cloud::resourcemanager::v3::CreateProjectRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> CreateProject(
-      NoAwaitTag,
-      google::cloud::resourcemanager::v3::CreateProjectRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  CreateProject(NoAwaitTag,
+      google::cloud::resourcemanager::v3::CreateProjectRequest const& request) override;
 
-  future<StatusOr<google::cloud::resourcemanager::v3::Project>> CreateProject(
+  future<StatusOr<google::cloud::resourcemanager::v3::Project>>
+  CreateProject(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::resourcemanager::v3::Project>> UpdateProject(
-      google::cloud::resourcemanager::v3::UpdateProjectRequest const& request)
-      override;
+  future<StatusOr<google::cloud::resourcemanager::v3::Project>>
+  UpdateProject(google::cloud::resourcemanager::v3::UpdateProjectRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> UpdateProject(
-      NoAwaitTag,
-      google::cloud::resourcemanager::v3::UpdateProjectRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  UpdateProject(NoAwaitTag,
+      google::cloud::resourcemanager::v3::UpdateProjectRequest const& request) override;
 
-  future<StatusOr<google::cloud::resourcemanager::v3::Project>> UpdateProject(
+  future<StatusOr<google::cloud::resourcemanager::v3::Project>>
+  UpdateProject(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::resourcemanager::v3::Project>> MoveProject(
-      google::cloud::resourcemanager::v3::MoveProjectRequest const& request)
-      override;
+  future<StatusOr<google::cloud::resourcemanager::v3::Project>>
+  MoveProject(google::cloud::resourcemanager::v3::MoveProjectRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> MoveProject(
-      NoAwaitTag,
-      google::cloud::resourcemanager::v3::MoveProjectRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  MoveProject(NoAwaitTag,
+      google::cloud::resourcemanager::v3::MoveProjectRequest const& request) override;
 
-  future<StatusOr<google::cloud::resourcemanager::v3::Project>> MoveProject(
+  future<StatusOr<google::cloud::resourcemanager::v3::Project>>
+  MoveProject(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::resourcemanager::v3::Project>> DeleteProject(
-      google::cloud::resourcemanager::v3::DeleteProjectRequest const& request)
-      override;
+  future<StatusOr<google::cloud::resourcemanager::v3::Project>>
+  DeleteProject(google::cloud::resourcemanager::v3::DeleteProjectRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> DeleteProject(
-      NoAwaitTag,
-      google::cloud::resourcemanager::v3::DeleteProjectRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  DeleteProject(NoAwaitTag,
+      google::cloud::resourcemanager::v3::DeleteProjectRequest const& request) override;
 
-  future<StatusOr<google::cloud::resourcemanager::v3::Project>> DeleteProject(
+  future<StatusOr<google::cloud::resourcemanager::v3::Project>>
+  DeleteProject(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::resourcemanager::v3::Project>> UndeleteProject(
-      google::cloud::resourcemanager::v3::UndeleteProjectRequest const& request)
-      override;
+  future<StatusOr<google::cloud::resourcemanager::v3::Project>>
+  UndeleteProject(google::cloud::resourcemanager::v3::UndeleteProjectRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> UndeleteProject(
-      NoAwaitTag,
-      google::cloud::resourcemanager::v3::UndeleteProjectRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  UndeleteProject(NoAwaitTag,
+      google::cloud::resourcemanager::v3::UndeleteProjectRequest const& request) override;
 
-  future<StatusOr<google::cloud::resourcemanager::v3::Project>> UndeleteProject(
+  future<StatusOr<google::cloud::resourcemanager::v3::Project>>
+  UndeleteProject(
       google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request) override;
+  StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request) override;
 
  private:
   std::shared_ptr<resourcemanager_v3::ProjectsConnection> child_;

@@ -39,17 +39,18 @@ class CloudCatalogTracingStub : public CloudCatalogStub {
   explicit CloudCatalogTracingStub(std::shared_ptr<CloudCatalogStub> child);
 
   StatusOr<google::cloud::billing::v1::ListServicesResponse> ListServices(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::billing::v1::ListServicesRequest const& request) override;
 
   StatusOr<google::cloud::billing::v1::ListSkusResponse> ListSkus(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::billing::v1::ListSkusRequest const& request) override;
 
  private:
   std::shared_ptr<CloudCatalogStub> child_;
-  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
-      propagator_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_SSL_CERTIFICATES_V1_SSL_CERTIFICATES_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_SSL_CERTIFICATES_V1_SSL_CERTIFICATES_CONNECTION_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/ssl_certificates/v1/internal/ssl_certificates_retry_traits.h"
 #include "google/cloud/compute/ssl_certificates/v1/ssl_certificates_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -55,8 +55,7 @@ class SslCertificatesRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class SslCertificatesLimitedErrorCountRetryPolicy
-    : public SslCertificatesRetryPolicy {
+class SslCertificatesLimitedErrorCountRetryPolicy : public SslCertificatesRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -66,14 +65,14 @@ class SslCertificatesLimitedErrorCountRetryPolicy
    *     @p maximum_failures == 0.
    */
   explicit SslCertificatesLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   SslCertificatesLimitedErrorCountRetryPolicy(
       SslCertificatesLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : SslCertificatesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : SslCertificatesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   SslCertificatesLimitedErrorCountRetryPolicy(
       SslCertificatesLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : SslCertificatesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : SslCertificatesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -93,9 +92,7 @@ class SslCertificatesLimitedErrorCountRetryPolicy
   using BaseType = SslCertificatesRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      compute_ssl_certificates_v1_internal::SslCertificatesRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<compute_ssl_certificates_v1_internal::SslCertificatesRetryTraits> impl_;
 };
 
 /**
@@ -108,8 +105,7 @@ class SslCertificatesLimitedErrorCountRetryPolicy
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class SslCertificatesLimitedTimeRetryPolicy
-    : public SslCertificatesRetryPolicy {
+class SslCertificatesLimitedTimeRetryPolicy : public SslCertificatesRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -134,14 +130,12 @@ class SslCertificatesLimitedTimeRetryPolicy
   template <typename DurationRep, typename DurationPeriod>
   explicit SslCertificatesLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  SslCertificatesLimitedTimeRetryPolicy(
-      SslCertificatesLimitedTimeRetryPolicy&& rhs) noexcept
-      : SslCertificatesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  SslCertificatesLimitedTimeRetryPolicy(
-      SslCertificatesLimitedTimeRetryPolicy const& rhs) noexcept
-      : SslCertificatesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  SslCertificatesLimitedTimeRetryPolicy(SslCertificatesLimitedTimeRetryPolicy&& rhs) noexcept
+    : SslCertificatesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  SslCertificatesLimitedTimeRetryPolicy(SslCertificatesLimitedTimeRetryPolicy const& rhs) noexcept
+    : SslCertificatesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -163,9 +157,7 @@ class SslCertificatesLimitedTimeRetryPolicy
   using BaseType = SslCertificatesRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      compute_ssl_certificates_v1_internal::SslCertificatesRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<compute_ssl_certificates_v1_internal::SslCertificatesRetryTraits> impl_;
 };
 
 /**
@@ -178,8 +170,7 @@ class SslCertificatesLimitedTimeRetryPolicy
  *
  * To create a concrete instance, see `MakeSslCertificatesConnection()`.
  *
- * For mocking, see
- * `compute_ssl_certificates_v1_mocks::MockSslCertificatesConnection`.
+ * For mocking, see `compute_ssl_certificates_v1_mocks::MockSslCertificatesConnection`.
  */
 class SslCertificatesConnection {
  public:
@@ -187,45 +178,32 @@ class SslCertificatesConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StreamRange<std::pair<
-      std::string, google::cloud::cpp::compute::v1::SslCertificatesScopedList>>
-  AggregatedListSslCertificates(
-      google::cloud::cpp::compute::ssl_certificates::v1::
-          AggregatedListSslCertificatesRequest request);
+  virtual StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::SslCertificatesScopedList>>
+  AggregatedListSslCertificates(google::cloud::cpp::compute::ssl_certificates::v1::AggregatedListSslCertificatesRequest request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteSslCertificate(google::cloud::cpp::compute::ssl_certificates::v1::
-                           DeleteSslCertificateRequest const& request);
+  DeleteSslCertificate(google::cloud::cpp::compute::ssl_certificates::v1::DeleteSslCertificateRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteSslCertificate(NoAwaitTag,
-                       google::cloud::cpp::compute::ssl_certificates::v1::
-                           DeleteSslCertificateRequest const& request);
+  DeleteSslCertificate(NoAwaitTag, google::cloud::cpp::compute::ssl_certificates::v1::DeleteSslCertificateRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteSslCertificate(
-      google::cloud::cpp::compute::v1::Operation const& operation);
+  DeleteSslCertificate( google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::SslCertificate>
-  GetSslCertificate(google::cloud::cpp::compute::ssl_certificates::v1::
-                        GetSslCertificateRequest const& request);
+  GetSslCertificate(google::cloud::cpp::compute::ssl_certificates::v1::GetSslCertificateRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertSslCertificate(google::cloud::cpp::compute::ssl_certificates::v1::
-                           InsertSslCertificateRequest const& request);
+  InsertSslCertificate(google::cloud::cpp::compute::ssl_certificates::v1::InsertSslCertificateRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertSslCertificate(NoAwaitTag,
-                       google::cloud::cpp::compute::ssl_certificates::v1::
-                           InsertSslCertificateRequest const& request);
+  InsertSslCertificate(NoAwaitTag, google::cloud::cpp::compute::ssl_certificates::v1::InsertSslCertificateRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertSslCertificate(
-      google::cloud::cpp::compute::v1::Operation const& operation);
+  InsertSslCertificate( google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::SslCertificate>
-  ListSslCertificates(google::cloud::cpp::compute::ssl_certificates::v1::
-                          ListSslCertificatesRequest request);
+  ListSslCertificates(google::cloud::cpp::compute::ssl_certificates::v1::ListSslCertificatesRequest request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

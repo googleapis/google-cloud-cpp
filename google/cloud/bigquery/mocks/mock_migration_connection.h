@@ -30,10 +30,8 @@ namespace cloud {
 namespace bigquery_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use bigquery_migration_v2_mocks::MockMigrationServiceConnection
-/// directly.
-using ::google::cloud::bigquery_migration_v2_mocks::
-    MockMigrationServiceConnection;
+/// @deprecated Use bigquery_migration_v2_mocks::MockMigrationServiceConnection directly.
+using ::google::cloud::bigquery_migration_v2_mocks::MockMigrationServiceConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_mocks

@@ -30,19 +30,17 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 PolicyTroubleshooterStub::~PolicyTroubleshooterStub() = default;
 
-StatusOr<
-    google::cloud::policytroubleshooter::iam::v3::TroubleshootIamPolicyResponse>
+StatusOr<google::cloud::policytroubleshooter::iam::v3::TroubleshootIamPolicyResponse>
 DefaultPolicyTroubleshooterStub::TroubleshootIamPolicy(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::policytroubleshooter::iam::v3::
-        TroubleshootIamPolicyRequest const& request) {
-  google::cloud::policytroubleshooter::iam::v3::TroubleshootIamPolicyResponse
-      response;
-  auto status = grpc_stub_->TroubleshootIamPolicy(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::policytroubleshooter::iam::v3::TroubleshootIamPolicyRequest const& request) {
+    google::cloud::policytroubleshooter::iam::v3::TroubleshootIamPolicyResponse response;
+    auto status =
+        grpc_stub_->TroubleshootIamPolicy(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

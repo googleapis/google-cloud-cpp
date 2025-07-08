@@ -28,169 +28,142 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-AppHubTracingStub::AppHubTracingStub(std::shared_ptr<AppHubStub> child)
+AppHubTracingStub::AppHubTracingStub(
+    std::shared_ptr<AppHubStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
-StatusOr<google::cloud::apphub::v1::LookupServiceProjectAttachmentResponse>
-AppHubTracingStub::LookupServiceProjectAttachment(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::apphub::v1::LookupServiceProjectAttachmentRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.apphub.v1.AppHub",
-                                     "LookupServiceProjectAttachment");
+StatusOr<google::cloud::apphub::v1::LookupServiceProjectAttachmentResponse> AppHubTracingStub::LookupServiceProjectAttachment(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::apphub::v1::LookupServiceProjectAttachmentRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.apphub.v1.AppHub", "LookupServiceProjectAttachment");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span,
-      child_->LookupServiceProjectAttachment(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->LookupServiceProjectAttachment(context, options, request));
 }
 
-StatusOr<google::cloud::apphub::v1::ListServiceProjectAttachmentsResponse>
-AppHubTracingStub::ListServiceProjectAttachments(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::apphub::v1::ListServiceProjectAttachmentsRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.apphub.v1.AppHub",
-                                     "ListServiceProjectAttachments");
+StatusOr<google::cloud::apphub::v1::ListServiceProjectAttachmentsResponse> AppHubTracingStub::ListServiceProjectAttachments(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::apphub::v1::ListServiceProjectAttachmentsRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.apphub.v1.AppHub", "ListServiceProjectAttachments");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span,
-      child_->ListServiceProjectAttachments(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->ListServiceProjectAttachments(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 AppHubTracingStub::AsyncCreateServiceProjectAttachment(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::apphub::v1::CreateServiceProjectAttachmentRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.apphub.v1.AppHub",
-                                     "CreateServiceProjectAttachment");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::apphub::v1::CreateServiceProjectAttachmentRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.apphub.v1.AppHub", "CreateServiceProjectAttachment");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCreateServiceProjectAttachment(
-      cq, context, std::move(options), request);
+  auto f = child_->AsyncCreateServiceProjectAttachment(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 AppHubTracingStub::CreateServiceProjectAttachment(
-    grpc::ClientContext& context, Options options,
-    google::cloud::apphub::v1::CreateServiceProjectAttachmentRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.apphub.v1.AppHub",
-                                     "CreateServiceProjectAttachment");
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::apphub::v1::CreateServiceProjectAttachmentRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.apphub.v1.AppHub", "CreateServiceProjectAttachment");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span,
-      child_->CreateServiceProjectAttachment(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->CreateServiceProjectAttachment(context, options, request));
 }
 
-StatusOr<google::cloud::apphub::v1::ServiceProjectAttachment>
-AppHubTracingStub::GetServiceProjectAttachment(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::apphub::v1::GetServiceProjectAttachmentRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.apphub.v1.AppHub",
-                                     "GetServiceProjectAttachment");
+StatusOr<google::cloud::apphub::v1::ServiceProjectAttachment> AppHubTracingStub::GetServiceProjectAttachment(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::apphub::v1::GetServiceProjectAttachmentRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.apphub.v1.AppHub", "GetServiceProjectAttachment");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span,
-      child_->GetServiceProjectAttachment(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->GetServiceProjectAttachment(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 AppHubTracingStub::AsyncDeleteServiceProjectAttachment(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::apphub::v1::DeleteServiceProjectAttachmentRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.apphub.v1.AppHub",
-                                     "DeleteServiceProjectAttachment");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::apphub::v1::DeleteServiceProjectAttachmentRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.apphub.v1.AppHub", "DeleteServiceProjectAttachment");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncDeleteServiceProjectAttachment(
-      cq, context, std::move(options), request);
+  auto f = child_->AsyncDeleteServiceProjectAttachment(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 AppHubTracingStub::DeleteServiceProjectAttachment(
-    grpc::ClientContext& context, Options options,
-    google::cloud::apphub::v1::DeleteServiceProjectAttachmentRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.apphub.v1.AppHub",
-                                     "DeleteServiceProjectAttachment");
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::apphub::v1::DeleteServiceProjectAttachmentRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.apphub.v1.AppHub", "DeleteServiceProjectAttachment");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span,
-      child_->DeleteServiceProjectAttachment(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->DeleteServiceProjectAttachment(context, options, request));
 }
 
-StatusOr<google::cloud::apphub::v1::DetachServiceProjectAttachmentResponse>
-AppHubTracingStub::DetachServiceProjectAttachment(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::apphub::v1::DetachServiceProjectAttachmentRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.apphub.v1.AppHub",
-                                     "DetachServiceProjectAttachment");
+StatusOr<google::cloud::apphub::v1::DetachServiceProjectAttachmentResponse> AppHubTracingStub::DetachServiceProjectAttachment(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::apphub::v1::DetachServiceProjectAttachmentRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.apphub.v1.AppHub", "DetachServiceProjectAttachment");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span,
-      child_->DetachServiceProjectAttachment(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->DetachServiceProjectAttachment(context, options, request));
 }
 
-StatusOr<google::cloud::apphub::v1::ListDiscoveredServicesResponse>
-AppHubTracingStub::ListDiscoveredServices(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::apphub::v1::ListDiscoveredServicesResponse> AppHubTracingStub::ListDiscoveredServices(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::apphub::v1::ListDiscoveredServicesRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.apphub.v1.AppHub",
-                                     "ListDiscoveredServices");
+  auto span = internal::MakeSpanGrpc("google.cloud.apphub.v1.AppHub", "ListDiscoveredServices");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span,
-      child_->ListDiscoveredServices(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->ListDiscoveredServices(context, options, request));
 }
 
-StatusOr<google::cloud::apphub::v1::DiscoveredService>
-AppHubTracingStub::GetDiscoveredService(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::apphub::v1::DiscoveredService> AppHubTracingStub::GetDiscoveredService(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::apphub::v1::GetDiscoveredServiceRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.apphub.v1.AppHub",
-                                     "GetDiscoveredService");
+  auto span = internal::MakeSpanGrpc("google.cloud.apphub.v1.AppHub", "GetDiscoveredService");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->GetDiscoveredService(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->GetDiscoveredService(context, options, request));
 }
 
-StatusOr<google::cloud::apphub::v1::LookupDiscoveredServiceResponse>
-AppHubTracingStub::LookupDiscoveredService(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::apphub::v1::LookupDiscoveredServiceResponse> AppHubTracingStub::LookupDiscoveredService(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::apphub::v1::LookupDiscoveredServiceRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.apphub.v1.AppHub",
-                                     "LookupDiscoveredService");
+  auto span = internal::MakeSpanGrpc("google.cloud.apphub.v1.AppHub", "LookupDiscoveredService");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span,
-      child_->LookupDiscoveredService(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->LookupDiscoveredService(context, options, request));
 }
 
-StatusOr<google::cloud::apphub::v1::ListServicesResponse>
-AppHubTracingStub::ListServices(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::apphub::v1::ListServicesResponse> AppHubTracingStub::ListServices(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::apphub::v1::ListServicesRequest const& request) {
-  auto span =
-      internal::MakeSpanGrpc("google.cloud.apphub.v1.AppHub", "ListServices");
+  auto span = internal::MakeSpanGrpc("google.cloud.apphub.v1.AppHub", "ListServices");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -199,23 +172,23 @@ AppHubTracingStub::ListServices(
 
 future<StatusOr<google::longrunning::Operation>>
 AppHubTracingStub::AsyncCreateService(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::apphub::v1::CreateServiceRequest const& request) {
-  auto span =
-      internal::MakeSpanGrpc("google.cloud.apphub.v1.AppHub", "CreateService");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::apphub::v1::CreateServiceRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.apphub.v1.AppHub", "CreateService");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCreateService(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
-StatusOr<google::longrunning::Operation> AppHubTracingStub::CreateService(
-    grpc::ClientContext& context, Options options,
-    google::cloud::apphub::v1::CreateServiceRequest const& request) {
-  auto span =
-      internal::MakeSpanGrpc("google.cloud.apphub.v1.AppHub", "CreateService");
+StatusOr<google::longrunning::Operation>
+AppHubTracingStub::CreateService(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::apphub::v1::CreateServiceRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.apphub.v1.AppHub", "CreateService");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -223,10 +196,10 @@ StatusOr<google::longrunning::Operation> AppHubTracingStub::CreateService(
 }
 
 StatusOr<google::cloud::apphub::v1::Service> AppHubTracingStub::GetService(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::apphub::v1::GetServiceRequest const& request) {
-  auto span =
-      internal::MakeSpanGrpc("google.cloud.apphub.v1.AppHub", "GetService");
+  auto span = internal::MakeSpanGrpc("google.cloud.apphub.v1.AppHub", "GetService");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -235,23 +208,23 @@ StatusOr<google::cloud::apphub::v1::Service> AppHubTracingStub::GetService(
 
 future<StatusOr<google::longrunning::Operation>>
 AppHubTracingStub::AsyncUpdateService(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::apphub::v1::UpdateServiceRequest const& request) {
-  auto span =
-      internal::MakeSpanGrpc("google.cloud.apphub.v1.AppHub", "UpdateService");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::apphub::v1::UpdateServiceRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.apphub.v1.AppHub", "UpdateService");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncUpdateService(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
-StatusOr<google::longrunning::Operation> AppHubTracingStub::UpdateService(
-    grpc::ClientContext& context, Options options,
-    google::cloud::apphub::v1::UpdateServiceRequest const& request) {
-  auto span =
-      internal::MakeSpanGrpc("google.cloud.apphub.v1.AppHub", "UpdateService");
+StatusOr<google::longrunning::Operation>
+AppHubTracingStub::UpdateService(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::apphub::v1::UpdateServiceRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.apphub.v1.AppHub", "UpdateService");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -260,73 +233,67 @@ StatusOr<google::longrunning::Operation> AppHubTracingStub::UpdateService(
 
 future<StatusOr<google::longrunning::Operation>>
 AppHubTracingStub::AsyncDeleteService(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::apphub::v1::DeleteServiceRequest const& request) {
-  auto span =
-      internal::MakeSpanGrpc("google.cloud.apphub.v1.AppHub", "DeleteService");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::apphub::v1::DeleteServiceRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.apphub.v1.AppHub", "DeleteService");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncDeleteService(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
-StatusOr<google::longrunning::Operation> AppHubTracingStub::DeleteService(
-    grpc::ClientContext& context, Options options,
-    google::cloud::apphub::v1::DeleteServiceRequest const& request) {
-  auto span =
-      internal::MakeSpanGrpc("google.cloud.apphub.v1.AppHub", "DeleteService");
+StatusOr<google::longrunning::Operation>
+AppHubTracingStub::DeleteService(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::apphub::v1::DeleteServiceRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.apphub.v1.AppHub", "DeleteService");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeleteService(context, options, request));
 }
 
-StatusOr<google::cloud::apphub::v1::ListDiscoveredWorkloadsResponse>
-AppHubTracingStub::ListDiscoveredWorkloads(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::apphub::v1::ListDiscoveredWorkloadsResponse> AppHubTracingStub::ListDiscoveredWorkloads(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::apphub::v1::ListDiscoveredWorkloadsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.apphub.v1.AppHub",
-                                     "ListDiscoveredWorkloads");
+  auto span = internal::MakeSpanGrpc("google.cloud.apphub.v1.AppHub", "ListDiscoveredWorkloads");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span,
-      child_->ListDiscoveredWorkloads(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->ListDiscoveredWorkloads(context, options, request));
 }
 
-StatusOr<google::cloud::apphub::v1::DiscoveredWorkload>
-AppHubTracingStub::GetDiscoveredWorkload(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::apphub::v1::DiscoveredWorkload> AppHubTracingStub::GetDiscoveredWorkload(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::apphub::v1::GetDiscoveredWorkloadRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.apphub.v1.AppHub",
-                                     "GetDiscoveredWorkload");
+  auto span = internal::MakeSpanGrpc("google.cloud.apphub.v1.AppHub", "GetDiscoveredWorkload");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->GetDiscoveredWorkload(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->GetDiscoveredWorkload(context, options, request));
 }
 
-StatusOr<google::cloud::apphub::v1::LookupDiscoveredWorkloadResponse>
-AppHubTracingStub::LookupDiscoveredWorkload(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::apphub::v1::LookupDiscoveredWorkloadResponse> AppHubTracingStub::LookupDiscoveredWorkload(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::apphub::v1::LookupDiscoveredWorkloadRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.apphub.v1.AppHub",
-                                     "LookupDiscoveredWorkload");
+  auto span = internal::MakeSpanGrpc("google.cloud.apphub.v1.AppHub", "LookupDiscoveredWorkload");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span,
-      child_->LookupDiscoveredWorkload(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->LookupDiscoveredWorkload(context, options, request));
 }
 
-StatusOr<google::cloud::apphub::v1::ListWorkloadsResponse>
-AppHubTracingStub::ListWorkloads(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::apphub::v1::ListWorkloadsResponse> AppHubTracingStub::ListWorkloads(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::apphub::v1::ListWorkloadsRequest const& request) {
-  auto span =
-      internal::MakeSpanGrpc("google.cloud.apphub.v1.AppHub", "ListWorkloads");
+  auto span = internal::MakeSpanGrpc("google.cloud.apphub.v1.AppHub", "ListWorkloads");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -335,24 +302,23 @@ AppHubTracingStub::ListWorkloads(
 
 future<StatusOr<google::longrunning::Operation>>
 AppHubTracingStub::AsyncCreateWorkload(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::apphub::v1::CreateWorkloadRequest const& request) {
-  auto span =
-      internal::MakeSpanGrpc("google.cloud.apphub.v1.AppHub", "CreateWorkload");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::apphub::v1::CreateWorkloadRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.apphub.v1.AppHub", "CreateWorkload");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f =
-      child_->AsyncCreateWorkload(cq, context, std::move(options), request);
+  auto f = child_->AsyncCreateWorkload(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
-StatusOr<google::longrunning::Operation> AppHubTracingStub::CreateWorkload(
-    grpc::ClientContext& context, Options options,
-    google::cloud::apphub::v1::CreateWorkloadRequest const& request) {
-  auto span =
-      internal::MakeSpanGrpc("google.cloud.apphub.v1.AppHub", "CreateWorkload");
+StatusOr<google::longrunning::Operation>
+AppHubTracingStub::CreateWorkload(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::apphub::v1::CreateWorkloadRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.apphub.v1.AppHub", "CreateWorkload");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -360,10 +326,10 @@ StatusOr<google::longrunning::Operation> AppHubTracingStub::CreateWorkload(
 }
 
 StatusOr<google::cloud::apphub::v1::Workload> AppHubTracingStub::GetWorkload(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::apphub::v1::GetWorkloadRequest const& request) {
-  auto span =
-      internal::MakeSpanGrpc("google.cloud.apphub.v1.AppHub", "GetWorkload");
+  auto span = internal::MakeSpanGrpc("google.cloud.apphub.v1.AppHub", "GetWorkload");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -372,24 +338,23 @@ StatusOr<google::cloud::apphub::v1::Workload> AppHubTracingStub::GetWorkload(
 
 future<StatusOr<google::longrunning::Operation>>
 AppHubTracingStub::AsyncUpdateWorkload(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::apphub::v1::UpdateWorkloadRequest const& request) {
-  auto span =
-      internal::MakeSpanGrpc("google.cloud.apphub.v1.AppHub", "UpdateWorkload");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::apphub::v1::UpdateWorkloadRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.apphub.v1.AppHub", "UpdateWorkload");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f =
-      child_->AsyncUpdateWorkload(cq, context, std::move(options), request);
+  auto f = child_->AsyncUpdateWorkload(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
-StatusOr<google::longrunning::Operation> AppHubTracingStub::UpdateWorkload(
-    grpc::ClientContext& context, Options options,
-    google::cloud::apphub::v1::UpdateWorkloadRequest const& request) {
-  auto span =
-      internal::MakeSpanGrpc("google.cloud.apphub.v1.AppHub", "UpdateWorkload");
+StatusOr<google::longrunning::Operation>
+AppHubTracingStub::UpdateWorkload(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::apphub::v1::UpdateWorkloadRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.apphub.v1.AppHub", "UpdateWorkload");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -398,36 +363,34 @@ StatusOr<google::longrunning::Operation> AppHubTracingStub::UpdateWorkload(
 
 future<StatusOr<google::longrunning::Operation>>
 AppHubTracingStub::AsyncDeleteWorkload(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::apphub::v1::DeleteWorkloadRequest const& request) {
-  auto span =
-      internal::MakeSpanGrpc("google.cloud.apphub.v1.AppHub", "DeleteWorkload");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::apphub::v1::DeleteWorkloadRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.apphub.v1.AppHub", "DeleteWorkload");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f =
-      child_->AsyncDeleteWorkload(cq, context, std::move(options), request);
+  auto f = child_->AsyncDeleteWorkload(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
-StatusOr<google::longrunning::Operation> AppHubTracingStub::DeleteWorkload(
-    grpc::ClientContext& context, Options options,
-    google::cloud::apphub::v1::DeleteWorkloadRequest const& request) {
-  auto span =
-      internal::MakeSpanGrpc("google.cloud.apphub.v1.AppHub", "DeleteWorkload");
+StatusOr<google::longrunning::Operation>
+AppHubTracingStub::DeleteWorkload(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::apphub::v1::DeleteWorkloadRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.apphub.v1.AppHub", "DeleteWorkload");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeleteWorkload(context, options, request));
 }
 
-StatusOr<google::cloud::apphub::v1::ListApplicationsResponse>
-AppHubTracingStub::ListApplications(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::apphub::v1::ListApplicationsResponse> AppHubTracingStub::ListApplications(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::apphub::v1::ListApplicationsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.apphub.v1.AppHub",
-                                     "ListApplications");
+  auto span = internal::MakeSpanGrpc("google.cloud.apphub.v1.AppHub", "ListApplications");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -436,36 +399,34 @@ AppHubTracingStub::ListApplications(
 
 future<StatusOr<google::longrunning::Operation>>
 AppHubTracingStub::AsyncCreateApplication(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::apphub::v1::CreateApplicationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.apphub.v1.AppHub",
-                                     "CreateApplication");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::apphub::v1::CreateApplicationRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.apphub.v1.AppHub", "CreateApplication");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f =
-      child_->AsyncCreateApplication(cq, context, std::move(options), request);
+  auto f = child_->AsyncCreateApplication(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
-StatusOr<google::longrunning::Operation> AppHubTracingStub::CreateApplication(
-    grpc::ClientContext& context, Options options,
-    google::cloud::apphub::v1::CreateApplicationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.apphub.v1.AppHub",
-                                     "CreateApplication");
+StatusOr<google::longrunning::Operation>
+AppHubTracingStub::CreateApplication(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::apphub::v1::CreateApplicationRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.apphub.v1.AppHub", "CreateApplication");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->CreateApplication(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->CreateApplication(context, options, request));
 }
 
-StatusOr<google::cloud::apphub::v1::Application>
-AppHubTracingStub::GetApplication(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::apphub::v1::Application> AppHubTracingStub::GetApplication(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::apphub::v1::GetApplicationRequest const& request) {
-  auto span =
-      internal::MakeSpanGrpc("google.cloud.apphub.v1.AppHub", "GetApplication");
+  auto span = internal::MakeSpanGrpc("google.cloud.apphub.v1.AppHub", "GetApplication");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -474,62 +435,59 @@ AppHubTracingStub::GetApplication(
 
 future<StatusOr<google::longrunning::Operation>>
 AppHubTracingStub::AsyncUpdateApplication(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::apphub::v1::UpdateApplicationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.apphub.v1.AppHub",
-                                     "UpdateApplication");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::apphub::v1::UpdateApplicationRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.apphub.v1.AppHub", "UpdateApplication");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f =
-      child_->AsyncUpdateApplication(cq, context, std::move(options), request);
+  auto f = child_->AsyncUpdateApplication(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
-StatusOr<google::longrunning::Operation> AppHubTracingStub::UpdateApplication(
-    grpc::ClientContext& context, Options options,
-    google::cloud::apphub::v1::UpdateApplicationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.apphub.v1.AppHub",
-                                     "UpdateApplication");
+StatusOr<google::longrunning::Operation>
+AppHubTracingStub::UpdateApplication(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::apphub::v1::UpdateApplicationRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.apphub.v1.AppHub", "UpdateApplication");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->UpdateApplication(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->UpdateApplication(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 AppHubTracingStub::AsyncDeleteApplication(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::apphub::v1::DeleteApplicationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.apphub.v1.AppHub",
-                                     "DeleteApplication");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::apphub::v1::DeleteApplicationRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.apphub.v1.AppHub", "DeleteApplication");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f =
-      child_->AsyncDeleteApplication(cq, context, std::move(options), request);
+  auto f = child_->AsyncDeleteApplication(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
-StatusOr<google::longrunning::Operation> AppHubTracingStub::DeleteApplication(
-    grpc::ClientContext& context, Options options,
-    google::cloud::apphub::v1::DeleteApplicationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.apphub.v1.AppHub",
-                                     "DeleteApplication");
+StatusOr<google::longrunning::Operation>
+AppHubTracingStub::DeleteApplication(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::apphub::v1::DeleteApplicationRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.apphub.v1.AppHub", "DeleteApplication");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->DeleteApplication(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->DeleteApplication(context, options, request));
 }
 
-StatusOr<google::cloud::location::ListLocationsResponse>
-AppHubTracingStub::ListLocations(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::location::ListLocationsResponse> AppHubTracingStub::ListLocations(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
-  auto span =
-      internal::MakeSpanGrpc("google.cloud.apphub.v1.AppHub", "ListLocations");
+  auto span = internal::MakeSpanGrpc("google.cloud.apphub.v1.AppHub", "ListLocations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -537,10 +495,10 @@ AppHubTracingStub::ListLocations(
 }
 
 StatusOr<google::cloud::location::Location> AppHubTracingStub::GetLocation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
-  auto span =
-      internal::MakeSpanGrpc("google.cloud.apphub.v1.AppHub", "GetLocation");
+  auto span = internal::MakeSpanGrpc("google.cloud.apphub.v1.AppHub", "GetLocation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -548,10 +506,10 @@ StatusOr<google::cloud::location::Location> AppHubTracingStub::GetLocation(
 }
 
 StatusOr<google::iam::v1::Policy> AppHubTracingStub::SetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
-  auto span =
-      internal::MakeSpanGrpc("google.cloud.apphub.v1.AppHub", "SetIamPolicy");
+  auto span = internal::MakeSpanGrpc("google.cloud.apphub.v1.AppHub", "SetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -559,34 +517,32 @@ StatusOr<google::iam::v1::Policy> AppHubTracingStub::SetIamPolicy(
 }
 
 StatusOr<google::iam::v1::Policy> AppHubTracingStub::GetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
-  auto span =
-      internal::MakeSpanGrpc("google.cloud.apphub.v1.AppHub", "GetIamPolicy");
+  auto span = internal::MakeSpanGrpc("google.cloud.apphub.v1.AppHub", "GetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetIamPolicy(context, options, request));
 }
 
-StatusOr<google::iam::v1::TestIamPermissionsResponse>
-AppHubTracingStub::TestIamPermissions(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::iam::v1::TestIamPermissionsResponse> AppHubTracingStub::TestIamPermissions(
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.apphub.v1.AppHub",
-                                     "TestIamPermissions");
+  auto span = internal::MakeSpanGrpc("google.cloud.apphub.v1.AppHub", "TestIamPermissions");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->TestIamPermissions(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->TestIamPermissions(context, options, request));
 }
 
-StatusOr<google::longrunning::ListOperationsResponse>
-AppHubTracingStub::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse> AppHubTracingStub::ListOperations(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  auto span =
-      internal::MakeSpanGrpc("google.cloud.apphub.v1.AppHub", "ListOperations");
+  auto span = internal::MakeSpanGrpc("google.cloud.apphub.v1.AppHub", "ListOperations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -594,10 +550,10 @@ AppHubTracingStub::ListOperations(
 }
 
 StatusOr<google::longrunning::Operation> AppHubTracingStub::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  auto span =
-      internal::MakeSpanGrpc("google.cloud.apphub.v1.AppHub", "GetOperation");
+  auto span = internal::MakeSpanGrpc("google.cloud.apphub.v1.AppHub", "GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -605,10 +561,10 @@ StatusOr<google::longrunning::Operation> AppHubTracingStub::GetOperation(
 }
 
 Status AppHubTracingStub::DeleteOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.apphub.v1.AppHub",
-                                     "DeleteOperation");
+  auto span = internal::MakeSpanGrpc("google.cloud.apphub.v1.AppHub", "DeleteOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -616,10 +572,10 @@ Status AppHubTracingStub::DeleteOperation(
 }
 
 Status AppHubTracingStub::CancelOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.apphub.v1.AppHub",
-                                     "CancelOperation");
+  auto span = internal::MakeSpanGrpc("google.cloud.apphub.v1.AppHub", "CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -636,7 +592,8 @@ AppHubTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncGetOperation(cq, context, std::move(options), request);
+  auto f = child_->AsyncGetOperation(
+      cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -649,8 +606,8 @@ future<Status> AppHubTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f =
-      child_->AsyncCancelOperation(cq, context, std::move(options), request);
+  auto f = child_->AsyncCancelOperation(
+      cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 

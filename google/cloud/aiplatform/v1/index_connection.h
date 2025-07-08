@@ -57,8 +57,7 @@ class IndexServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class IndexServiceLimitedErrorCountRetryPolicy
-    : public IndexServiceRetryPolicy {
+class IndexServiceLimitedErrorCountRetryPolicy : public IndexServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -68,14 +67,14 @@ class IndexServiceLimitedErrorCountRetryPolicy
    *     @p maximum_failures == 0.
    */
   explicit IndexServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   IndexServiceLimitedErrorCountRetryPolicy(
       IndexServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : IndexServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : IndexServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   IndexServiceLimitedErrorCountRetryPolicy(
       IndexServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : IndexServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : IndexServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -95,9 +94,7 @@ class IndexServiceLimitedErrorCountRetryPolicy
   using BaseType = IndexServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      aiplatform_v1_internal::IndexServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<aiplatform_v1_internal::IndexServiceRetryTraits> impl_;
 };
 
 /**
@@ -135,14 +132,12 @@ class IndexServiceLimitedTimeRetryPolicy : public IndexServiceRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit IndexServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  IndexServiceLimitedTimeRetryPolicy(
-      IndexServiceLimitedTimeRetryPolicy&& rhs) noexcept
-      : IndexServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  IndexServiceLimitedTimeRetryPolicy(
-      IndexServiceLimitedTimeRetryPolicy const& rhs) noexcept
-      : IndexServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  IndexServiceLimitedTimeRetryPolicy(IndexServiceLimitedTimeRetryPolicy&& rhs) noexcept
+    : IndexServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  IndexServiceLimitedTimeRetryPolicy(IndexServiceLimitedTimeRetryPolicy const& rhs) noexcept
+    : IndexServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -164,9 +159,7 @@ class IndexServiceLimitedTimeRetryPolicy : public IndexServiceRetryPolicy {
   using BaseType = IndexServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      aiplatform_v1_internal::IndexServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<aiplatform_v1_internal::IndexServiceRetryTraits> impl_;
 };
 
 /**
@@ -187,81 +180,74 @@ class IndexServiceConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual future<StatusOr<google::cloud::aiplatform::v1::Index>> CreateIndex(
-      google::cloud::aiplatform::v1::CreateIndexRequest const& request);
+  virtual future<StatusOr<google::cloud::aiplatform::v1::Index>>
+  CreateIndex(google::cloud::aiplatform::v1::CreateIndexRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> CreateIndex(
-      NoAwaitTag,
-      google::cloud::aiplatform::v1::CreateIndexRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  CreateIndex(NoAwaitTag, google::cloud::aiplatform::v1::CreateIndexRequest const& request);
 
-  virtual future<StatusOr<google::cloud::aiplatform::v1::Index>> CreateIndex(
-      google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::aiplatform::v1::Index>>
+  CreateIndex( google::longrunning::Operation const& operation);
 
-  virtual StatusOr<google::cloud::aiplatform::v1::Index> GetIndex(
-      google::cloud::aiplatform::v1::GetIndexRequest const& request);
+  virtual StatusOr<google::cloud::aiplatform::v1::Index>
+  GetIndex(google::cloud::aiplatform::v1::GetIndexRequest const& request);
 
-  virtual StreamRange<google::cloud::aiplatform::v1::Index> ListIndexes(
-      google::cloud::aiplatform::v1::ListIndexesRequest request);
+  virtual StreamRange<google::cloud::aiplatform::v1::Index>
+  ListIndexes(google::cloud::aiplatform::v1::ListIndexesRequest request);
 
-  virtual future<StatusOr<google::cloud::aiplatform::v1::Index>> UpdateIndex(
-      google::cloud::aiplatform::v1::UpdateIndexRequest const& request);
+  virtual future<StatusOr<google::cloud::aiplatform::v1::Index>>
+  UpdateIndex(google::cloud::aiplatform::v1::UpdateIndexRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> UpdateIndex(
-      NoAwaitTag,
-      google::cloud::aiplatform::v1::UpdateIndexRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  UpdateIndex(NoAwaitTag, google::cloud::aiplatform::v1::UpdateIndexRequest const& request);
 
-  virtual future<StatusOr<google::cloud::aiplatform::v1::Index>> UpdateIndex(
-      google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::aiplatform::v1::Index>>
+  UpdateIndex( google::longrunning::Operation const& operation);
 
-  virtual future<
-      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  virtual future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
   DeleteIndex(google::cloud::aiplatform::v1::DeleteIndexRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> DeleteIndex(
-      NoAwaitTag,
-      google::cloud::aiplatform::v1::DeleteIndexRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  DeleteIndex(NoAwaitTag, google::cloud::aiplatform::v1::DeleteIndexRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteIndex(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteIndex( google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::aiplatform::v1::UpsertDatapointsResponse>
-  UpsertDatapoints(
-      google::cloud::aiplatform::v1::UpsertDatapointsRequest const& request);
+  UpsertDatapoints(google::cloud::aiplatform::v1::UpsertDatapointsRequest const& request);
 
   virtual StatusOr<google::cloud::aiplatform::v1::RemoveDatapointsResponse>
-  RemoveDatapoints(
-      google::cloud::aiplatform::v1::RemoveDatapointsRequest const& request);
+  RemoveDatapoints(google::cloud::aiplatform::v1::RemoveDatapointsRequest const& request);
 
-  virtual StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request);
+  virtual StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request);
 
-  virtual StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request);
+  virtual StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
 
   virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
   TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
 
-  virtual StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 
-  virtual Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request);
+  virtual Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
 
-  virtual Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request);
+  virtual Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> WaitOperation(
-      google::longrunning::WaitOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  WaitOperation(google::longrunning::WaitOperationRequest const& request);
 };
 
 /**

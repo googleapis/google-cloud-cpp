@@ -33,8 +33,7 @@ PipelineServiceTracingConnection::PipelineServiceTracingConnection(
     : child_(std::move(child)) {}
 
 future<StatusOr<google::cloud::contentwarehouse::v1::RunPipelineResponse>>
-PipelineServiceTracingConnection::RunPipeline(
-    google::cloud::contentwarehouse::v1::RunPipelineRequest const& request) {
+PipelineServiceTracingConnection::RunPipeline(google::cloud::contentwarehouse::v1::RunPipelineRequest const& request) {
   auto span = internal::MakeSpan(
       "contentwarehouse_v1::PipelineServiceConnection::RunPipeline");
   internal::OTelScope scope(span);
@@ -43,12 +42,12 @@ PipelineServiceTracingConnection::RunPipeline(
 
 StatusOr<google::longrunning::Operation>
 PipelineServiceTracingConnection::RunPipeline(
-    NoAwaitTag,
-    google::cloud::contentwarehouse::v1::RunPipelineRequest const& request) {
+    NoAwaitTag, google::cloud::contentwarehouse::v1::RunPipelineRequest const& request) {
   auto span = internal::MakeSpan(
       "contentwarehouse_v1::PipelineServiceConnection::RunPipeline");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->RunPipeline(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->RunPipeline(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::contentwarehouse::v1::RunPipelineResponse>>
@@ -57,14 +56,13 @@ PipelineServiceTracingConnection::RunPipeline(
   auto span = internal::MakeSpan(
       "contentwarehouse_v1::PipelineServiceConnection::RunPipeline");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->RunPipeline(operation));
+  return internal::EndSpan(std::move(span),
+      child_->RunPipeline(operation));
 }
 
 StatusOr<google::longrunning::Operation>
-PipelineServiceTracingConnection::GetOperation(
-    google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpan(
-      "contentwarehouse_v1::PipelineServiceConnection::GetOperation");
+PipelineServiceTracingConnection::GetOperation(google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpan("contentwarehouse_v1::PipelineServiceConnection::GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOperation(request));
 }

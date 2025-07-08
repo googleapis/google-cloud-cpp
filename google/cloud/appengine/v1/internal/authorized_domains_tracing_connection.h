@@ -36,12 +36,12 @@ class AuthorizedDomainsTracingConnection
   ~AuthorizedDomainsTracingConnection() override = default;
 
   explicit AuthorizedDomainsTracingConnection(
-      std::shared_ptr<appengine_v1::AuthorizedDomainsConnection> child);
+    std::shared_ptr<appengine_v1::AuthorizedDomainsConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StreamRange<google::appengine::v1::AuthorizedDomain> ListAuthorizedDomains(
-      google::appengine::v1::ListAuthorizedDomainsRequest request) override;
+  StreamRange<google::appengine::v1::AuthorizedDomain>
+  ListAuthorizedDomains(google::appengine::v1::ListAuthorizedDomainsRequest request) override;
 
  private:
   std::shared_ptr<appengine_v1::AuthorizedDomainsConnection> child_;

@@ -42,8 +42,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockSqlEventsServiceConnection
-    : public sql_v1::SqlEventsServiceConnection {
+class MockSqlEventsServiceConnection : public sql_v1::SqlEventsServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 };

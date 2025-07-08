@@ -34,36 +34,44 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class GroupServiceMetadata : public GroupServiceStub {
  public:
   ~GroupServiceMetadata() override = default;
-  GroupServiceMetadata(std::shared_ptr<GroupServiceStub> child,
-                       std::multimap<std::string, std::string> fixed_metadata,
-                       std::string api_client_header = "");
+  GroupServiceMetadata(
+      std::shared_ptr<GroupServiceStub> child,
+      std::multimap<std::string, std::string> fixed_metadata,
+      std::string api_client_header = "");
 
   StatusOr<google::monitoring::v3::ListGroupsResponse> ListGroups(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::monitoring::v3::ListGroupsRequest const& request) override;
 
   StatusOr<google::monitoring::v3::Group> GetGroup(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::monitoring::v3::GetGroupRequest const& request) override;
 
   StatusOr<google::monitoring::v3::Group> CreateGroup(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::monitoring::v3::CreateGroupRequest const& request) override;
 
   StatusOr<google::monitoring::v3::Group> UpdateGroup(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::monitoring::v3::UpdateGroupRequest const& request) override;
 
   Status DeleteGroup(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::monitoring::v3::DeleteGroupRequest const& request) override;
 
   StatusOr<google::monitoring::v3::ListGroupMembersResponse> ListGroupMembers(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::monitoring::v3::ListGroupMembersRequest const& request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context, Options const& options,
+  void SetMetadata(grpc::ClientContext& context,
+                   Options const& options,
                    std::string const& request_params);
   void SetMetadata(grpc::ClientContext& context, Options const& options);
 

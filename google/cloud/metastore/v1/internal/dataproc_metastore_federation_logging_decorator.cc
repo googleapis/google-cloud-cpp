@@ -32,17 +32,20 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 DataprocMetastoreFederationLogging::DataprocMetastoreFederationLogging(
     std::shared_ptr<DataprocMetastoreFederationStub> child,
-    TracingOptions tracing_options, std::set<std::string> const&)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
+    TracingOptions tracing_options,
+    std::set<std::string> const&)
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::cloud::metastore::v1::ListFederationsResponse>
 DataprocMetastoreFederationLogging::ListFederations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::metastore::v1::ListFederationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::metastore::v1::ListFederationsRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::metastore::v1::ListFederationsRequest const& request) {
         return child_->ListFederations(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -50,12 +53,13 @@ DataprocMetastoreFederationLogging::ListFederations(
 
 StatusOr<google::cloud::metastore::v1::Federation>
 DataprocMetastoreFederationLogging::GetFederation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::metastore::v1::GetFederationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::metastore::v1::GetFederationRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::metastore::v1::GetFederationRequest const& request) {
         return child_->GetFederation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -63,18 +67,17 @@ DataprocMetastoreFederationLogging::GetFederation(
 
 future<StatusOr<google::longrunning::Operation>>
 DataprocMetastoreFederationLogging::AsyncCreateFederation(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::metastore::v1::CreateFederationRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::metastore::v1::CreateFederationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::metastore::v1::CreateFederationRequest const&
-                 request) {
-        return child_->AsyncCreateFederation(cq, std::move(context),
-                                             std::move(options), request);
+             google::cloud::metastore::v1::CreateFederationRequest const& request) {
+        return child_->AsyncCreateFederation(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -82,12 +85,13 @@ DataprocMetastoreFederationLogging::AsyncCreateFederation(
 
 StatusOr<google::longrunning::Operation>
 DataprocMetastoreFederationLogging::CreateFederation(
-    grpc::ClientContext& context, Options options,
-    google::cloud::metastore::v1::CreateFederationRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::metastore::v1::CreateFederationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::metastore::v1::CreateFederationRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::metastore::v1::CreateFederationRequest const& request) {
         return child_->CreateFederation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -95,18 +99,17 @@ DataprocMetastoreFederationLogging::CreateFederation(
 
 future<StatusOr<google::longrunning::Operation>>
 DataprocMetastoreFederationLogging::AsyncUpdateFederation(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::metastore::v1::UpdateFederationRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::metastore::v1::UpdateFederationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::metastore::v1::UpdateFederationRequest const&
-                 request) {
-        return child_->AsyncUpdateFederation(cq, std::move(context),
-                                             std::move(options), request);
+             google::cloud::metastore::v1::UpdateFederationRequest const& request) {
+        return child_->AsyncUpdateFederation(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -114,12 +117,13 @@ DataprocMetastoreFederationLogging::AsyncUpdateFederation(
 
 StatusOr<google::longrunning::Operation>
 DataprocMetastoreFederationLogging::UpdateFederation(
-    grpc::ClientContext& context, Options options,
-    google::cloud::metastore::v1::UpdateFederationRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::metastore::v1::UpdateFederationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::metastore::v1::UpdateFederationRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::metastore::v1::UpdateFederationRequest const& request) {
         return child_->UpdateFederation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -127,18 +131,17 @@ DataprocMetastoreFederationLogging::UpdateFederation(
 
 future<StatusOr<google::longrunning::Operation>>
 DataprocMetastoreFederationLogging::AsyncDeleteFederation(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::metastore::v1::DeleteFederationRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::metastore::v1::DeleteFederationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::metastore::v1::DeleteFederationRequest const&
-                 request) {
-        return child_->AsyncDeleteFederation(cq, std::move(context),
-                                             std::move(options), request);
+             google::cloud::metastore::v1::DeleteFederationRequest const& request) {
+        return child_->AsyncDeleteFederation(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -146,12 +149,13 @@ DataprocMetastoreFederationLogging::AsyncDeleteFederation(
 
 StatusOr<google::longrunning::Operation>
 DataprocMetastoreFederationLogging::DeleteFederation(
-    grpc::ClientContext& context, Options options,
-    google::cloud::metastore::v1::DeleteFederationRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::metastore::v1::DeleteFederationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::metastore::v1::DeleteFederationRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::metastore::v1::DeleteFederationRequest const& request) {
         return child_->DeleteFederation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -159,10 +163,12 @@ DataprocMetastoreFederationLogging::DeleteFederation(
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 DataprocMetastoreFederationLogging::ListLocations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::location::ListLocationsRequest const& request) {
         return child_->ListLocations(context, options, request);
       },
@@ -171,10 +177,12 @@ DataprocMetastoreFederationLogging::ListLocations(
 
 StatusOr<google::cloud::location::Location>
 DataprocMetastoreFederationLogging::GetLocation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::location::GetLocationRequest const& request) {
         return child_->GetLocation(context, options, request);
       },
@@ -183,10 +191,12 @@ DataprocMetastoreFederationLogging::GetLocation(
 
 StatusOr<google::iam::v1::Policy>
 DataprocMetastoreFederationLogging::SetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::iam::v1::SetIamPolicyRequest const& request) {
         return child_->SetIamPolicy(context, options, request);
       },
@@ -195,10 +205,12 @@ DataprocMetastoreFederationLogging::SetIamPolicy(
 
 StatusOr<google::iam::v1::Policy>
 DataprocMetastoreFederationLogging::GetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::iam::v1::GetIamPolicyRequest const& request) {
         return child_->GetIamPolicy(context, options, request);
       },
@@ -207,10 +219,12 @@ DataprocMetastoreFederationLogging::GetIamPolicy(
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 DataprocMetastoreFederationLogging::TestIamPermissions(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::iam::v1::TestIamPermissionsRequest const& request) {
         return child_->TestIamPermissions(context, options, request);
       },
@@ -219,10 +233,12 @@ DataprocMetastoreFederationLogging::TestIamPermissions(
 
 StatusOr<google::longrunning::ListOperationsResponse>
 DataprocMetastoreFederationLogging::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::ListOperationsRequest const& request) {
         return child_->ListOperations(context, options, request);
       },
@@ -231,32 +247,40 @@ DataprocMetastoreFederationLogging::ListOperations(
 
 StatusOr<google::longrunning::Operation>
 DataprocMetastoreFederationLogging::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::GetOperationRequest const& request) {
         return child_->GetOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status DataprocMetastoreFederationLogging::DeleteOperation(
-    grpc::ClientContext& context, Options const& options,
+Status
+DataprocMetastoreFederationLogging::DeleteOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::DeleteOperationRequest const& request) {
         return child_->DeleteOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status DataprocMetastoreFederationLogging::CancelOperation(
-    grpc::ClientContext& context, Options const& options,
+Status
+DataprocMetastoreFederationLogging::CancelOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::CancelOperationRequest const& request) {
         return child_->CancelOperation(context, options, request);
       },
@@ -274,8 +298,8 @@ DataprocMetastoreFederationLogging::AsyncGetOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(cq, std::move(context),
-                                         std::move(options), request);
+        return child_->AsyncGetOperation(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -291,8 +315,8 @@ future<Status> DataprocMetastoreFederationLogging::AsyncCancelOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::CancelOperationRequest const& request) {
-        return child_->AsyncCancelOperation(cq, std::move(context),
-                                            std::move(options), request);
+        return child_->AsyncCancelOperation(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);

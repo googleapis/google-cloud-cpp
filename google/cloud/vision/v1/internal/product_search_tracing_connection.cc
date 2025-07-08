@@ -34,166 +34,134 @@ ProductSearchTracingConnection::ProductSearchTracingConnection(
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::vision::v1::ProductSet>
-ProductSearchTracingConnection::CreateProductSet(
-    google::cloud::vision::v1::CreateProductSetRequest const& request) {
-  auto span = internal::MakeSpan(
-      "vision_v1::ProductSearchConnection::CreateProductSet");
+ProductSearchTracingConnection::CreateProductSet(google::cloud::vision::v1::CreateProductSetRequest const& request) {
+  auto span = internal::MakeSpan("vision_v1::ProductSearchConnection::CreateProductSet");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateProductSet(request));
 }
 
 StreamRange<google::cloud::vision::v1::ProductSet>
-ProductSearchTracingConnection::ListProductSets(
-    google::cloud::vision::v1::ListProductSetsRequest request) {
-  auto span =
-      internal::MakeSpan("vision_v1::ProductSearchConnection::ListProductSets");
+ProductSearchTracingConnection::ListProductSets(google::cloud::vision::v1::ListProductSetsRequest request) {
+  auto span = internal::MakeSpan("vision_v1::ProductSearchConnection::ListProductSets");
   internal::OTelScope scope(span);
   auto sr = child_->ListProductSets(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::vision::v1::ProductSet>(
-      std::move(span), std::move(sr));
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::vision::v1::ProductSet>
-ProductSearchTracingConnection::GetProductSet(
-    google::cloud::vision::v1::GetProductSetRequest const& request) {
-  auto span =
-      internal::MakeSpan("vision_v1::ProductSearchConnection::GetProductSet");
+ProductSearchTracingConnection::GetProductSet(google::cloud::vision::v1::GetProductSetRequest const& request) {
+  auto span = internal::MakeSpan("vision_v1::ProductSearchConnection::GetProductSet");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetProductSet(request));
 }
 
 StatusOr<google::cloud::vision::v1::ProductSet>
-ProductSearchTracingConnection::UpdateProductSet(
-    google::cloud::vision::v1::UpdateProductSetRequest const& request) {
-  auto span = internal::MakeSpan(
-      "vision_v1::ProductSearchConnection::UpdateProductSet");
+ProductSearchTracingConnection::UpdateProductSet(google::cloud::vision::v1::UpdateProductSetRequest const& request) {
+  auto span = internal::MakeSpan("vision_v1::ProductSearchConnection::UpdateProductSet");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateProductSet(request));
 }
 
-Status ProductSearchTracingConnection::DeleteProductSet(
-    google::cloud::vision::v1::DeleteProductSetRequest const& request) {
-  auto span = internal::MakeSpan(
-      "vision_v1::ProductSearchConnection::DeleteProductSet");
+Status
+ProductSearchTracingConnection::DeleteProductSet(google::cloud::vision::v1::DeleteProductSetRequest const& request) {
+  auto span = internal::MakeSpan("vision_v1::ProductSearchConnection::DeleteProductSet");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteProductSet(request));
 }
 
 StatusOr<google::cloud::vision::v1::Product>
-ProductSearchTracingConnection::CreateProduct(
-    google::cloud::vision::v1::CreateProductRequest const& request) {
-  auto span =
-      internal::MakeSpan("vision_v1::ProductSearchConnection::CreateProduct");
+ProductSearchTracingConnection::CreateProduct(google::cloud::vision::v1::CreateProductRequest const& request) {
+  auto span = internal::MakeSpan("vision_v1::ProductSearchConnection::CreateProduct");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateProduct(request));
 }
 
 StreamRange<google::cloud::vision::v1::Product>
-ProductSearchTracingConnection::ListProducts(
-    google::cloud::vision::v1::ListProductsRequest request) {
-  auto span =
-      internal::MakeSpan("vision_v1::ProductSearchConnection::ListProducts");
+ProductSearchTracingConnection::ListProducts(google::cloud::vision::v1::ListProductsRequest request) {
+  auto span = internal::MakeSpan("vision_v1::ProductSearchConnection::ListProducts");
   internal::OTelScope scope(span);
   auto sr = child_->ListProducts(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::vision::v1::Product>(
-      std::move(span), std::move(sr));
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::vision::v1::Product>
-ProductSearchTracingConnection::GetProduct(
-    google::cloud::vision::v1::GetProductRequest const& request) {
-  auto span =
-      internal::MakeSpan("vision_v1::ProductSearchConnection::GetProduct");
+ProductSearchTracingConnection::GetProduct(google::cloud::vision::v1::GetProductRequest const& request) {
+  auto span = internal::MakeSpan("vision_v1::ProductSearchConnection::GetProduct");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetProduct(request));
 }
 
 StatusOr<google::cloud::vision::v1::Product>
-ProductSearchTracingConnection::UpdateProduct(
-    google::cloud::vision::v1::UpdateProductRequest const& request) {
-  auto span =
-      internal::MakeSpan("vision_v1::ProductSearchConnection::UpdateProduct");
+ProductSearchTracingConnection::UpdateProduct(google::cloud::vision::v1::UpdateProductRequest const& request) {
+  auto span = internal::MakeSpan("vision_v1::ProductSearchConnection::UpdateProduct");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateProduct(request));
 }
 
-Status ProductSearchTracingConnection::DeleteProduct(
-    google::cloud::vision::v1::DeleteProductRequest const& request) {
-  auto span =
-      internal::MakeSpan("vision_v1::ProductSearchConnection::DeleteProduct");
+Status
+ProductSearchTracingConnection::DeleteProduct(google::cloud::vision::v1::DeleteProductRequest const& request) {
+  auto span = internal::MakeSpan("vision_v1::ProductSearchConnection::DeleteProduct");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteProduct(request));
 }
 
 StatusOr<google::cloud::vision::v1::ReferenceImage>
-ProductSearchTracingConnection::CreateReferenceImage(
-    google::cloud::vision::v1::CreateReferenceImageRequest const& request) {
-  auto span = internal::MakeSpan(
-      "vision_v1::ProductSearchConnection::CreateReferenceImage");
+ProductSearchTracingConnection::CreateReferenceImage(google::cloud::vision::v1::CreateReferenceImageRequest const& request) {
+  auto span = internal::MakeSpan("vision_v1::ProductSearchConnection::CreateReferenceImage");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateReferenceImage(request));
 }
 
-Status ProductSearchTracingConnection::DeleteReferenceImage(
-    google::cloud::vision::v1::DeleteReferenceImageRequest const& request) {
-  auto span = internal::MakeSpan(
-      "vision_v1::ProductSearchConnection::DeleteReferenceImage");
+Status
+ProductSearchTracingConnection::DeleteReferenceImage(google::cloud::vision::v1::DeleteReferenceImageRequest const& request) {
+  auto span = internal::MakeSpan("vision_v1::ProductSearchConnection::DeleteReferenceImage");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteReferenceImage(request));
 }
 
 StreamRange<google::cloud::vision::v1::ReferenceImage>
-ProductSearchTracingConnection::ListReferenceImages(
-    google::cloud::vision::v1::ListReferenceImagesRequest request) {
-  auto span = internal::MakeSpan(
-      "vision_v1::ProductSearchConnection::ListReferenceImages");
+ProductSearchTracingConnection::ListReferenceImages(google::cloud::vision::v1::ListReferenceImagesRequest request) {
+  auto span = internal::MakeSpan("vision_v1::ProductSearchConnection::ListReferenceImages");
   internal::OTelScope scope(span);
   auto sr = child_->ListReferenceImages(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::vision::v1::ReferenceImage>(std::move(span),
-                                                 std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::vision::v1::ReferenceImage>(
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::vision::v1::ReferenceImage>
-ProductSearchTracingConnection::GetReferenceImage(
-    google::cloud::vision::v1::GetReferenceImageRequest const& request) {
-  auto span = internal::MakeSpan(
-      "vision_v1::ProductSearchConnection::GetReferenceImage");
+ProductSearchTracingConnection::GetReferenceImage(google::cloud::vision::v1::GetReferenceImageRequest const& request) {
+  auto span = internal::MakeSpan("vision_v1::ProductSearchConnection::GetReferenceImage");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetReferenceImage(request));
 }
 
-Status ProductSearchTracingConnection::AddProductToProductSet(
-    google::cloud::vision::v1::AddProductToProductSetRequest const& request) {
-  auto span = internal::MakeSpan(
-      "vision_v1::ProductSearchConnection::AddProductToProductSet");
+Status
+ProductSearchTracingConnection::AddProductToProductSet(google::cloud::vision::v1::AddProductToProductSetRequest const& request) {
+  auto span = internal::MakeSpan("vision_v1::ProductSearchConnection::AddProductToProductSet");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->AddProductToProductSet(request));
 }
 
-Status ProductSearchTracingConnection::RemoveProductFromProductSet(
-    google::cloud::vision::v1::RemoveProductFromProductSetRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "vision_v1::ProductSearchConnection::RemoveProductFromProductSet");
+Status
+ProductSearchTracingConnection::RemoveProductFromProductSet(google::cloud::vision::v1::RemoveProductFromProductSetRequest const& request) {
+  auto span = internal::MakeSpan("vision_v1::ProductSearchConnection::RemoveProductFromProductSet");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->RemoveProductFromProductSet(request));
 }
 
 StreamRange<google::cloud::vision::v1::Product>
-ProductSearchTracingConnection::ListProductsInProductSet(
-    google::cloud::vision::v1::ListProductsInProductSetRequest request) {
-  auto span = internal::MakeSpan(
-      "vision_v1::ProductSearchConnection::ListProductsInProductSet");
+ProductSearchTracingConnection::ListProductsInProductSet(google::cloud::vision::v1::ListProductsInProductSetRequest request) {
+  auto span = internal::MakeSpan("vision_v1::ProductSearchConnection::ListProductsInProductSet");
   internal::OTelScope scope(span);
   auto sr = child_->ListProductsInProductSet(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::vision::v1::Product>(
-      std::move(span), std::move(sr));
+        std::move(span), std::move(sr));
 }
 
 future<StatusOr<google::cloud::vision::v1::ImportProductSetsResponse>>
-ProductSearchTracingConnection::ImportProductSets(
-    google::cloud::vision::v1::ImportProductSetsRequest const& request) {
+ProductSearchTracingConnection::ImportProductSets(google::cloud::vision::v1::ImportProductSetsRequest const& request) {
   auto span = internal::MakeSpan(
       "vision_v1::ProductSearchConnection::ImportProductSets");
   internal::OTelScope scope(span);
@@ -202,13 +170,12 @@ ProductSearchTracingConnection::ImportProductSets(
 
 StatusOr<google::longrunning::Operation>
 ProductSearchTracingConnection::ImportProductSets(
-    NoAwaitTag,
-    google::cloud::vision::v1::ImportProductSetsRequest const& request) {
+    NoAwaitTag, google::cloud::vision::v1::ImportProductSetsRequest const& request) {
   auto span = internal::MakeSpan(
       "vision_v1::ProductSearchConnection::ImportProductSets");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span,
-                           child_->ImportProductSets(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->ImportProductSets(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::vision::v1::ImportProductSetsResponse>>
@@ -218,42 +185,40 @@ ProductSearchTracingConnection::ImportProductSets(
       "vision_v1::ProductSearchConnection::ImportProductSets");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->ImportProductSets(operation));
+      child_->ImportProductSets(operation));
 }
 
 future<StatusOr<google::cloud::vision::v1::BatchOperationMetadata>>
-ProductSearchTracingConnection::PurgeProducts(
-    google::cloud::vision::v1::PurgeProductsRequest const& request) {
-  auto span =
-      internal::MakeSpan("vision_v1::ProductSearchConnection::PurgeProducts");
+ProductSearchTracingConnection::PurgeProducts(google::cloud::vision::v1::PurgeProductsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "vision_v1::ProductSearchConnection::PurgeProducts");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->PurgeProducts(request));
 }
 
 StatusOr<google::longrunning::Operation>
 ProductSearchTracingConnection::PurgeProducts(
-    NoAwaitTag,
-    google::cloud::vision::v1::PurgeProductsRequest const& request) {
-  auto span =
-      internal::MakeSpan("vision_v1::ProductSearchConnection::PurgeProducts");
+    NoAwaitTag, google::cloud::vision::v1::PurgeProductsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "vision_v1::ProductSearchConnection::PurgeProducts");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->PurgeProducts(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->PurgeProducts(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::vision::v1::BatchOperationMetadata>>
 ProductSearchTracingConnection::PurgeProducts(
     google::longrunning::Operation const& operation) {
-  auto span =
-      internal::MakeSpan("vision_v1::ProductSearchConnection::PurgeProducts");
+  auto span = internal::MakeSpan(
+      "vision_v1::ProductSearchConnection::PurgeProducts");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->PurgeProducts(operation));
+  return internal::EndSpan(std::move(span),
+      child_->PurgeProducts(operation));
 }
 
 StatusOr<google::longrunning::Operation>
-ProductSearchTracingConnection::GetOperation(
-    google::longrunning::GetOperationRequest const& request) {
-  auto span =
-      internal::MakeSpan("vision_v1::ProductSearchConnection::GetOperation");
+ProductSearchTracingConnection::GetOperation(google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpan("vision_v1::ProductSearchConnection::GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOperation(request));
 }

@@ -35,30 +35,28 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options ApiKeysDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_API_KEYS_ENDPOINT", "",
-      "GOOGLE_CLOUD_CPP_API_KEYS_AUTHORITY", "apikeys.googleapis.com");
+      std::move(options), "GOOGLE_CLOUD_CPP_API_KEYS_ENDPOINT",
+      "", "GOOGLE_CLOUD_CPP_API_KEYS_AUTHORITY",
+      "apikeys.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<apikeys_v2::ApiKeysRetryPolicyOption>()) {
     options.set<apikeys_v2::ApiKeysRetryPolicyOption>(
-        apikeys_v2::ApiKeysLimitedTimeRetryPolicy(std::chrono::minutes(30))
-            .clone());
+        apikeys_v2::ApiKeysLimitedTimeRetryPolicy(
+            std::chrono::minutes(30)).clone());
   }
   if (!options.has<apikeys_v2::ApiKeysBackoffPolicyOption>()) {
     options.set<apikeys_v2::ApiKeysBackoffPolicyOption>(
-        ExponentialBackoffPolicy(
-            std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
-            .clone());
+        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
   }
   if (!options.has<apikeys_v2::ApiKeysPollingPolicyOption>()) {
     options.set<apikeys_v2::ApiKeysPollingPolicyOption>(
-        GenericPollingPolicy<apikeys_v2::ApiKeysRetryPolicyOption::Type,
-                             apikeys_v2::ApiKeysBackoffPolicyOption::Type>(
+        GenericPollingPolicy<
+            apikeys_v2::ApiKeysRetryPolicyOption::Type,
+            apikeys_v2::ApiKeysBackoffPolicyOption::Type>(
             options.get<apikeys_v2::ApiKeysRetryPolicyOption>()->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                     std::chrono::minutes(5), kBackoffScaling)
-                .clone())
-            .clone());
+            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
   }
   if (!options.has<apikeys_v2::ApiKeysConnectionIdempotencyPolicyOption>()) {
     options.set<apikeys_v2::ApiKeysConnectionIdempotencyPolicyOption>(

@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAPROC_V1_BATCH_CONTROLLER_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAPROC_V1_BATCH_CONTROLLER_CONNECTION_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/dataproc/v1/batch_controller_connection_idempotency_policy.h"
 #include "google/cloud/dataproc/v1/internal/batch_controller_retry_traits.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -30,8 +30,8 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/cloud/dataproc/v1/batches.pb.h>
 #include <google/cloud/dataproc/v1/operations.pb.h>
+#include <google/cloud/dataproc/v1/batches.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 #include <string>
@@ -58,8 +58,7 @@ class BatchControllerRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class BatchControllerLimitedErrorCountRetryPolicy
-    : public BatchControllerRetryPolicy {
+class BatchControllerLimitedErrorCountRetryPolicy : public BatchControllerRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -69,14 +68,14 @@ class BatchControllerLimitedErrorCountRetryPolicy
    *     @p maximum_failures == 0.
    */
   explicit BatchControllerLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   BatchControllerLimitedErrorCountRetryPolicy(
       BatchControllerLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : BatchControllerLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : BatchControllerLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   BatchControllerLimitedErrorCountRetryPolicy(
       BatchControllerLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : BatchControllerLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : BatchControllerLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -96,9 +95,7 @@ class BatchControllerLimitedErrorCountRetryPolicy
   using BaseType = BatchControllerRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      dataproc_v1_internal::BatchControllerRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<dataproc_v1_internal::BatchControllerRetryTraits> impl_;
 };
 
 /**
@@ -111,8 +108,7 @@ class BatchControllerLimitedErrorCountRetryPolicy
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class BatchControllerLimitedTimeRetryPolicy
-    : public BatchControllerRetryPolicy {
+class BatchControllerLimitedTimeRetryPolicy : public BatchControllerRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -137,14 +133,12 @@ class BatchControllerLimitedTimeRetryPolicy
   template <typename DurationRep, typename DurationPeriod>
   explicit BatchControllerLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  BatchControllerLimitedTimeRetryPolicy(
-      BatchControllerLimitedTimeRetryPolicy&& rhs) noexcept
-      : BatchControllerLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  BatchControllerLimitedTimeRetryPolicy(
-      BatchControllerLimitedTimeRetryPolicy const& rhs) noexcept
-      : BatchControllerLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  BatchControllerLimitedTimeRetryPolicy(BatchControllerLimitedTimeRetryPolicy&& rhs) noexcept
+    : BatchControllerLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  BatchControllerLimitedTimeRetryPolicy(BatchControllerLimitedTimeRetryPolicy const& rhs) noexcept
+    : BatchControllerLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -166,9 +160,7 @@ class BatchControllerLimitedTimeRetryPolicy
   using BaseType = BatchControllerRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      dataproc_v1_internal::BatchControllerRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<dataproc_v1_internal::BatchControllerRetryTraits> impl_;
 };
 
 /**
@@ -189,57 +181,55 @@ class BatchControllerConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual future<StatusOr<google::cloud::dataproc::v1::Batch>> CreateBatch(
-      google::cloud::dataproc::v1::CreateBatchRequest const& request);
+  virtual future<StatusOr<google::cloud::dataproc::v1::Batch>>
+  CreateBatch(google::cloud::dataproc::v1::CreateBatchRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> CreateBatch(
-      NoAwaitTag,
-      google::cloud::dataproc::v1::CreateBatchRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  CreateBatch(NoAwaitTag, google::cloud::dataproc::v1::CreateBatchRequest const& request);
 
-  virtual future<StatusOr<google::cloud::dataproc::v1::Batch>> CreateBatch(
-      google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::dataproc::v1::Batch>>
+  CreateBatch( google::longrunning::Operation const& operation);
 
-  virtual StatusOr<google::cloud::dataproc::v1::Batch> GetBatch(
-      google::cloud::dataproc::v1::GetBatchRequest const& request);
+  virtual StatusOr<google::cloud::dataproc::v1::Batch>
+  GetBatch(google::cloud::dataproc::v1::GetBatchRequest const& request);
 
-  virtual StreamRange<google::cloud::dataproc::v1::Batch> ListBatches(
-      google::cloud::dataproc::v1::ListBatchesRequest request);
+  virtual StreamRange<google::cloud::dataproc::v1::Batch>
+  ListBatches(google::cloud::dataproc::v1::ListBatchesRequest request);
 
-  virtual Status DeleteBatch(
-      google::cloud::dataproc::v1::DeleteBatchRequest const& request);
+  virtual Status
+  DeleteBatch(google::cloud::dataproc::v1::DeleteBatchRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
 
   virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
   TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
 
-  virtual StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 
-  virtual Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request);
+  virtual Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
 
-  virtual Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request);
+  virtual Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request);
 };
 
 /**
- * A factory function to construct an object of type
- * `BatchControllerConnection`.
+ * A factory function to construct an object of type `BatchControllerConnection`.
  *
  * The returned connection object should not be used directly; instead it
  * should be passed as an argument to the constructor of BatchControllerClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `BatchControllerConnection`. Expected options are any of the types
- * in the following option lists:
+ * returned `BatchControllerConnection`. Expected options are any of the types in
+ * the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
@@ -250,8 +240,8 @@ class BatchControllerConnection {
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
  * @param location Sets the prefix for the default `EndpointOption` value.
- * @param options (optional) Configure the `BatchControllerConnection` created
- * by this function.
+ * @param options (optional) Configure the `BatchControllerConnection` created by
+ * this function.
  */
 std::shared_ptr<BatchControllerConnection> MakeBatchControllerConnection(
     std::string const& location, Options options = {});

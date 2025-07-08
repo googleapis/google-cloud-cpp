@@ -61,8 +61,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class ProjectServiceClient {
  public:
-  explicit ProjectServiceClient(
-      std::shared_ptr<ProjectServiceConnection> connection, Options opts = {});
+  explicit ProjectServiceClient(std::shared_ptr<ProjectServiceConnection> connection, Options opts = {});
   ~ProjectServiceClient();
 
   ///@{
@@ -75,12 +74,10 @@ class ProjectServiceClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(ProjectServiceClient const& a,
-                         ProjectServiceClient const& b) {
+  friend bool operator==(ProjectServiceClient const& a, ProjectServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(ProjectServiceClient const& a,
-                         ProjectServiceClient const& b) {
+  friend bool operator!=(ProjectServiceClient const& a, ProjectServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -114,9 +111,7 @@ class ProjectServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::v2::GetServiceAccountResponse>
-  GetServiceAccount(
-      google::cloud::bigquery::v2::GetServiceAccountRequest const& request,
-      Options opts = {});
+  GetServiceAccount(google::cloud::bigquery::v2::GetServiceAccountRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<ProjectServiceConnection> connection_;

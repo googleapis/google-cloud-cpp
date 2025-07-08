@@ -26,191 +26,151 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-SqlInstancesServiceConnectionIdempotencyPolicy::
-    ~SqlInstancesServiceConnectionIdempotencyPolicy() = default;
+SqlInstancesServiceConnectionIdempotencyPolicy::~SqlInstancesServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<SqlInstancesServiceConnectionIdempotencyPolicy>
 SqlInstancesServiceConnectionIdempotencyPolicy::clone() const {
-  return std::make_unique<SqlInstancesServiceConnectionIdempotencyPolicy>(
-      *this);
+  return std::make_unique<SqlInstancesServiceConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency SqlInstancesServiceConnectionIdempotencyPolicy::AddServerCa(
-    google::cloud::sql::v1::SqlInstancesAddServerCaRequest const&) {
+Idempotency SqlInstancesServiceConnectionIdempotencyPolicy::AddServerCa(google::cloud::sql::v1::SqlInstancesAddServerCaRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SqlInstancesServiceConnectionIdempotencyPolicy::Clone(
-    google::cloud::sql::v1::SqlInstancesCloneRequest const&) {
+Idempotency SqlInstancesServiceConnectionIdempotencyPolicy::Clone(google::cloud::sql::v1::SqlInstancesCloneRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SqlInstancesServiceConnectionIdempotencyPolicy::Delete(
-    google::cloud::sql::v1::SqlInstancesDeleteRequest const&) {
+Idempotency SqlInstancesServiceConnectionIdempotencyPolicy::Delete(google::cloud::sql::v1::SqlInstancesDeleteRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SqlInstancesServiceConnectionIdempotencyPolicy::DemoteMaster(
-    google::cloud::sql::v1::SqlInstancesDemoteMasterRequest const&) {
+Idempotency SqlInstancesServiceConnectionIdempotencyPolicy::DemoteMaster(google::cloud::sql::v1::SqlInstancesDemoteMasterRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SqlInstancesServiceConnectionIdempotencyPolicy::Demote(
-    google::cloud::sql::v1::SqlInstancesDemoteRequest const&) {
+Idempotency SqlInstancesServiceConnectionIdempotencyPolicy::Demote(google::cloud::sql::v1::SqlInstancesDemoteRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SqlInstancesServiceConnectionIdempotencyPolicy::Export(
-    google::cloud::sql::v1::SqlInstancesExportRequest const&) {
+Idempotency SqlInstancesServiceConnectionIdempotencyPolicy::Export(google::cloud::sql::v1::SqlInstancesExportRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SqlInstancesServiceConnectionIdempotencyPolicy::Failover(
-    google::cloud::sql::v1::SqlInstancesFailoverRequest const&) {
+Idempotency SqlInstancesServiceConnectionIdempotencyPolicy::Failover(google::cloud::sql::v1::SqlInstancesFailoverRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SqlInstancesServiceConnectionIdempotencyPolicy::Reencrypt(
-    google::cloud::sql::v1::SqlInstancesReencryptRequest const&) {
+Idempotency SqlInstancesServiceConnectionIdempotencyPolicy::Reencrypt(google::cloud::sql::v1::SqlInstancesReencryptRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SqlInstancesServiceConnectionIdempotencyPolicy::Get(
-    google::cloud::sql::v1::SqlInstancesGetRequest const&) {
+Idempotency SqlInstancesServiceConnectionIdempotencyPolicy::Get(google::cloud::sql::v1::SqlInstancesGetRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency SqlInstancesServiceConnectionIdempotencyPolicy::Import(
-    google::cloud::sql::v1::SqlInstancesImportRequest const&) {
+Idempotency SqlInstancesServiceConnectionIdempotencyPolicy::Import(google::cloud::sql::v1::SqlInstancesImportRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SqlInstancesServiceConnectionIdempotencyPolicy::Insert(
-    google::cloud::sql::v1::SqlInstancesInsertRequest const&) {
+Idempotency SqlInstancesServiceConnectionIdempotencyPolicy::Insert(google::cloud::sql::v1::SqlInstancesInsertRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SqlInstancesServiceConnectionIdempotencyPolicy::List(
-    google::cloud::sql::v1::SqlInstancesListRequest) {  // NOLINT
+Idempotency SqlInstancesServiceConnectionIdempotencyPolicy::List(google::cloud::sql::v1::SqlInstancesListRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency SqlInstancesServiceConnectionIdempotencyPolicy::ListServerCas(
-    google::cloud::sql::v1::SqlInstancesListServerCasRequest const&) {
+Idempotency SqlInstancesServiceConnectionIdempotencyPolicy::ListServerCas(google::cloud::sql::v1::SqlInstancesListServerCasRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency SqlInstancesServiceConnectionIdempotencyPolicy::Patch(
-    google::cloud::sql::v1::SqlInstancesPatchRequest const&) {
+Idempotency SqlInstancesServiceConnectionIdempotencyPolicy::Patch(google::cloud::sql::v1::SqlInstancesPatchRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SqlInstancesServiceConnectionIdempotencyPolicy::PromoteReplica(
-    google::cloud::sql::v1::SqlInstancesPromoteReplicaRequest const&) {
+Idempotency SqlInstancesServiceConnectionIdempotencyPolicy::PromoteReplica(google::cloud::sql::v1::SqlInstancesPromoteReplicaRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SqlInstancesServiceConnectionIdempotencyPolicy::Switchover(
-    google::cloud::sql::v1::SqlInstancesSwitchoverRequest const&) {
+Idempotency SqlInstancesServiceConnectionIdempotencyPolicy::Switchover(google::cloud::sql::v1::SqlInstancesSwitchoverRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SqlInstancesServiceConnectionIdempotencyPolicy::ResetSslConfig(
-    google::cloud::sql::v1::SqlInstancesResetSslConfigRequest const&) {
+Idempotency SqlInstancesServiceConnectionIdempotencyPolicy::ResetSslConfig(google::cloud::sql::v1::SqlInstancesResetSslConfigRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SqlInstancesServiceConnectionIdempotencyPolicy::Restart(
-    google::cloud::sql::v1::SqlInstancesRestartRequest const&) {
+Idempotency SqlInstancesServiceConnectionIdempotencyPolicy::Restart(google::cloud::sql::v1::SqlInstancesRestartRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SqlInstancesServiceConnectionIdempotencyPolicy::RestoreBackup(
-    google::cloud::sql::v1::SqlInstancesRestoreBackupRequest const&) {
+Idempotency SqlInstancesServiceConnectionIdempotencyPolicy::RestoreBackup(google::cloud::sql::v1::SqlInstancesRestoreBackupRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SqlInstancesServiceConnectionIdempotencyPolicy::RotateServerCa(
-    google::cloud::sql::v1::SqlInstancesRotateServerCaRequest const&) {
+Idempotency SqlInstancesServiceConnectionIdempotencyPolicy::RotateServerCa(google::cloud::sql::v1::SqlInstancesRotateServerCaRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SqlInstancesServiceConnectionIdempotencyPolicy::StartReplica(
-    google::cloud::sql::v1::SqlInstancesStartReplicaRequest const&) {
+Idempotency SqlInstancesServiceConnectionIdempotencyPolicy::StartReplica(google::cloud::sql::v1::SqlInstancesStartReplicaRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SqlInstancesServiceConnectionIdempotencyPolicy::StopReplica(
-    google::cloud::sql::v1::SqlInstancesStopReplicaRequest const&) {
+Idempotency SqlInstancesServiceConnectionIdempotencyPolicy::StopReplica(google::cloud::sql::v1::SqlInstancesStopReplicaRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SqlInstancesServiceConnectionIdempotencyPolicy::TruncateLog(
-    google::cloud::sql::v1::SqlInstancesTruncateLogRequest const&) {
+Idempotency SqlInstancesServiceConnectionIdempotencyPolicy::TruncateLog(google::cloud::sql::v1::SqlInstancesTruncateLogRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SqlInstancesServiceConnectionIdempotencyPolicy::Update(
-    google::cloud::sql::v1::SqlInstancesUpdateRequest const&) {
+Idempotency SqlInstancesServiceConnectionIdempotencyPolicy::Update(google::cloud::sql::v1::SqlInstancesUpdateRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency SqlInstancesServiceConnectionIdempotencyPolicy::CreateEphemeral(
-    google::cloud::sql::v1::SqlInstancesCreateEphemeralCertRequest const&) {
+Idempotency SqlInstancesServiceConnectionIdempotencyPolicy::CreateEphemeral(google::cloud::sql::v1::SqlInstancesCreateEphemeralCertRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency
-SqlInstancesServiceConnectionIdempotencyPolicy::RescheduleMaintenance(
-    google::cloud::sql::v1::SqlInstancesRescheduleMaintenanceRequest const&) {
+Idempotency SqlInstancesServiceConnectionIdempotencyPolicy::RescheduleMaintenance(google::cloud::sql::v1::SqlInstancesRescheduleMaintenanceRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency
-SqlInstancesServiceConnectionIdempotencyPolicy::VerifyExternalSyncSettings(
-    google::cloud::sql::v1::
-        SqlInstancesVerifyExternalSyncSettingsRequest const&) {
+Idempotency SqlInstancesServiceConnectionIdempotencyPolicy::VerifyExternalSyncSettings(google::cloud::sql::v1::SqlInstancesVerifyExternalSyncSettingsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SqlInstancesServiceConnectionIdempotencyPolicy::StartExternalSync(
-    google::cloud::sql::v1::SqlInstancesStartExternalSyncRequest const&) {
+Idempotency SqlInstancesServiceConnectionIdempotencyPolicy::StartExternalSync(google::cloud::sql::v1::SqlInstancesStartExternalSyncRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SqlInstancesServiceConnectionIdempotencyPolicy::PerformDiskShrink(
-    google::cloud::sql::v1::SqlInstancesPerformDiskShrinkRequest const&) {
+Idempotency SqlInstancesServiceConnectionIdempotencyPolicy::PerformDiskShrink(google::cloud::sql::v1::SqlInstancesPerformDiskShrinkRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SqlInstancesServiceConnectionIdempotencyPolicy::GetDiskShrinkConfig(
-    google::cloud::sql::v1::SqlInstancesGetDiskShrinkConfigRequest const&) {
+Idempotency SqlInstancesServiceConnectionIdempotencyPolicy::GetDiskShrinkConfig(google::cloud::sql::v1::SqlInstancesGetDiskShrinkConfigRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency SqlInstancesServiceConnectionIdempotencyPolicy::ResetReplicaSize(
-    google::cloud::sql::v1::SqlInstancesResetReplicaSizeRequest const&) {
+Idempotency SqlInstancesServiceConnectionIdempotencyPolicy::ResetReplicaSize(google::cloud::sql::v1::SqlInstancesResetReplicaSizeRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency
-SqlInstancesServiceConnectionIdempotencyPolicy::GetLatestRecoveryTime(
-    google::cloud::sql::v1::SqlInstancesGetLatestRecoveryTimeRequest const&) {
+Idempotency SqlInstancesServiceConnectionIdempotencyPolicy::GetLatestRecoveryTime(google::cloud::sql::v1::SqlInstancesGetLatestRecoveryTimeRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency SqlInstancesServiceConnectionIdempotencyPolicy::AcquireSsrsLease(
-    google::cloud::sql::v1::SqlInstancesAcquireSsrsLeaseRequest const&) {
+Idempotency SqlInstancesServiceConnectionIdempotencyPolicy::AcquireSsrsLease(google::cloud::sql::v1::SqlInstancesAcquireSsrsLeaseRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SqlInstancesServiceConnectionIdempotencyPolicy::ReleaseSsrsLease(
-    google::cloud::sql::v1::SqlInstancesReleaseSsrsLeaseRequest const&) {
+Idempotency SqlInstancesServiceConnectionIdempotencyPolicy::ReleaseSsrsLease(google::cloud::sql::v1::SqlInstancesReleaseSsrsLeaseRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<SqlInstancesServiceConnectionIdempotencyPolicy>
-MakeDefaultSqlInstancesServiceConnectionIdempotencyPolicy() {
+    MakeDefaultSqlInstancesServiceConnectionIdempotencyPolicy() {
   return std::make_unique<SqlInstancesServiceConnectionIdempotencyPolicy>();
 }
 

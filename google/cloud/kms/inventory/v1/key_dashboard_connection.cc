@@ -17,17 +17,17 @@
 // source: google/cloud/kms/inventory/v1/key_dashboard_service.proto
 
 #include "google/cloud/kms/inventory/v1/key_dashboard_connection.h"
-#include "google/cloud/kms/inventory/v1/internal/key_dashboard_connection_impl.h"
-#include "google/cloud/kms/inventory/v1/internal/key_dashboard_option_defaults.h"
-#include "google/cloud/kms/inventory/v1/internal/key_dashboard_stub_factory.h"
-#include "google/cloud/kms/inventory/v1/internal/key_dashboard_tracing_connection.h"
-#include "google/cloud/kms/inventory/v1/key_dashboard_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/kms/inventory/v1/internal/key_dashboard_connection_impl.h"
+#include "google/cloud/kms/inventory/v1/internal/key_dashboard_option_defaults.h"
+#include "google/cloud/kms/inventory/v1/internal/key_dashboard_stub_factory.h"
+#include "google/cloud/kms/inventory/v1/internal/key_dashboard_tracing_connection.h"
+#include "google/cloud/kms/inventory/v1/key_dashboard_options.h"
 #include <memory>
 #include <utility>
 
@@ -38,30 +38,26 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 KeyDashboardServiceConnection::~KeyDashboardServiceConnection() = default;
 
-StreamRange<google::cloud::kms::v1::CryptoKey>
-KeyDashboardServiceConnection::ListCryptoKeys(
-    google::cloud::kms::inventory::v1::
-        ListCryptoKeysRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::kms::v1::CryptoKey> KeyDashboardServiceConnection::ListCryptoKeys(
+    google::cloud::kms::inventory::v1::ListCryptoKeysRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::kms::v1::CryptoKey>>();
 }
 
-std::shared_ptr<KeyDashboardServiceConnection>
-MakeKeyDashboardServiceConnection(Options options) {
+std::shared_ptr<KeyDashboardServiceConnection> MakeKeyDashboardServiceConnection(
+    Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 KeyDashboardServicePolicyOptionList>(options,
-                                                                      __func__);
+      UnifiedCredentialsOptionList,
+      KeyDashboardServicePolicyOptionList>(options, __func__);
   options = kms_inventory_v1_internal::KeyDashboardServiceDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = kms_inventory_v1_internal::CreateDefaultKeyDashboardServiceStub(
-      std::move(auth), options);
+    std::move(auth), options);
   return kms_inventory_v1_internal::MakeKeyDashboardServiceTracingConnection(
-      std::make_shared<
-          kms_inventory_v1_internal::KeyDashboardServiceConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options)));
+      std::make_shared<kms_inventory_v1_internal::KeyDashboardServiceConnectionImpl>(
+      std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

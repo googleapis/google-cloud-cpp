@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTENTWAREHOUSE_V1_DOCUMENT_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTENTWAREHOUSE_V1_DOCUMENT_CONNECTION_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/contentwarehouse/v1/document_connection_idempotency_policy.h"
 #include "google/cloud/contentwarehouse/v1/internal/document_retry_traits.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -52,8 +52,7 @@ class DocumentServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class DocumentServiceLimitedErrorCountRetryPolicy
-    : public DocumentServiceRetryPolicy {
+class DocumentServiceLimitedErrorCountRetryPolicy : public DocumentServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -63,14 +62,14 @@ class DocumentServiceLimitedErrorCountRetryPolicy
    *     @p maximum_failures == 0.
    */
   explicit DocumentServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   DocumentServiceLimitedErrorCountRetryPolicy(
       DocumentServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : DocumentServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : DocumentServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   DocumentServiceLimitedErrorCountRetryPolicy(
       DocumentServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : DocumentServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : DocumentServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -90,9 +89,7 @@ class DocumentServiceLimitedErrorCountRetryPolicy
   using BaseType = DocumentServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      contentwarehouse_v1_internal::DocumentServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<contentwarehouse_v1_internal::DocumentServiceRetryTraits> impl_;
 };
 
 /**
@@ -105,8 +102,7 @@ class DocumentServiceLimitedErrorCountRetryPolicy
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class DocumentServiceLimitedTimeRetryPolicy
-    : public DocumentServiceRetryPolicy {
+class DocumentServiceLimitedTimeRetryPolicy : public DocumentServiceRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -131,14 +127,12 @@ class DocumentServiceLimitedTimeRetryPolicy
   template <typename DurationRep, typename DurationPeriod>
   explicit DocumentServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  DocumentServiceLimitedTimeRetryPolicy(
-      DocumentServiceLimitedTimeRetryPolicy&& rhs) noexcept
-      : DocumentServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  DocumentServiceLimitedTimeRetryPolicy(
-      DocumentServiceLimitedTimeRetryPolicy const& rhs) noexcept
-      : DocumentServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  DocumentServiceLimitedTimeRetryPolicy(DocumentServiceLimitedTimeRetryPolicy&& rhs) noexcept
+    : DocumentServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  DocumentServiceLimitedTimeRetryPolicy(DocumentServiceLimitedTimeRetryPolicy const& rhs) noexcept
+    : DocumentServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -160,9 +154,7 @@ class DocumentServiceLimitedTimeRetryPolicy
   using BaseType = DocumentServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      contentwarehouse_v1_internal::DocumentServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<contentwarehouse_v1_internal::DocumentServiceRetryTraits> impl_;
 };
 
 /**
@@ -184,50 +176,42 @@ class DocumentServiceConnection {
   virtual Options options() { return Options{}; }
 
   virtual StatusOr<google::cloud::contentwarehouse::v1::CreateDocumentResponse>
-  CreateDocument(
-      google::cloud::contentwarehouse::v1::CreateDocumentRequest const&
-          request);
+  CreateDocument(google::cloud::contentwarehouse::v1::CreateDocumentRequest const& request);
 
-  virtual StatusOr<google::cloud::contentwarehouse::v1::Document> GetDocument(
-      google::cloud::contentwarehouse::v1::GetDocumentRequest const& request);
+  virtual StatusOr<google::cloud::contentwarehouse::v1::Document>
+  GetDocument(google::cloud::contentwarehouse::v1::GetDocumentRequest const& request);
 
   virtual StatusOr<google::cloud::contentwarehouse::v1::UpdateDocumentResponse>
-  UpdateDocument(
-      google::cloud::contentwarehouse::v1::UpdateDocumentRequest const&
-          request);
+  UpdateDocument(google::cloud::contentwarehouse::v1::UpdateDocumentRequest const& request);
 
-  virtual Status DeleteDocument(
-      google::cloud::contentwarehouse::v1::DeleteDocumentRequest const&
-          request);
+  virtual Status
+  DeleteDocument(google::cloud::contentwarehouse::v1::DeleteDocumentRequest const& request);
 
-  virtual StreamRange<google::cloud::contentwarehouse::v1::
-                          SearchDocumentsResponse::MatchingDocument>
-  SearchDocuments(
-      google::cloud::contentwarehouse::v1::SearchDocumentsRequest request);
+  virtual StreamRange<google::cloud::contentwarehouse::v1::SearchDocumentsResponse::MatchingDocument>
+  SearchDocuments(google::cloud::contentwarehouse::v1::SearchDocumentsRequest request);
 
-  virtual StatusOr<google::cloud::contentwarehouse::v1::Document> LockDocument(
-      google::cloud::contentwarehouse::v1::LockDocumentRequest const& request);
+  virtual StatusOr<google::cloud::contentwarehouse::v1::Document>
+  LockDocument(google::cloud::contentwarehouse::v1::LockDocumentRequest const& request);
 
   virtual StatusOr<google::cloud::contentwarehouse::v1::FetchAclResponse>
   FetchAcl(google::cloud::contentwarehouse::v1::FetchAclRequest const& request);
 
-  virtual StatusOr<google::cloud::contentwarehouse::v1::SetAclResponse> SetAcl(
-      google::cloud::contentwarehouse::v1::SetAclRequest const& request);
+  virtual StatusOr<google::cloud::contentwarehouse::v1::SetAclResponse>
+  SetAcl(google::cloud::contentwarehouse::v1::SetAclRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 };
 
 /**
- * A factory function to construct an object of type
- * `DocumentServiceConnection`.
+ * A factory function to construct an object of type `DocumentServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
  * should be passed as an argument to the constructor of DocumentServiceClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `DocumentServiceConnection`. Expected options are any of the types
- * in the following option lists:
+ * returned `DocumentServiceConnection`. Expected options are any of the types in
+ * the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
@@ -237,8 +221,8 @@ class DocumentServiceConnection {
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
- * @param options (optional) Configure the `DocumentServiceConnection` created
- * by this function.
+ * @param options (optional) Configure the `DocumentServiceConnection` created by
+ * this function.
  */
 std::shared_ptr<DocumentServiceConnection> MakeDocumentServiceConnection(
     Options options = {});

@@ -46,99 +46,96 @@ ServingConfigServiceMetadata::ServingConfigServiceMetadata(
 
 StatusOr<google::cloud::retail::v2::ServingConfig>
 ServingConfigServiceMetadata::CreateServingConfig(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::retail::v2::CreateServingConfigRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateServingConfig(context, options, request);
 }
 
-Status ServingConfigServiceMetadata::DeleteServingConfig(
-    grpc::ClientContext& context, Options const& options,
+Status
+ServingConfigServiceMetadata::DeleteServingConfig(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::retail::v2::DeleteServingConfigRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteServingConfig(context, options, request);
 }
 
 StatusOr<google::cloud::retail::v2::ServingConfig>
 ServingConfigServiceMetadata::UpdateServingConfig(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::retail::v2::UpdateServingConfigRequest const& request) {
-  SetMetadata(
-      context, options,
-      absl::StrCat("serving_config.name=",
-                   internal::UrlEncode(request.serving_config().name())));
+  SetMetadata(context, options, absl::StrCat("serving_config.name=", internal::UrlEncode(request.serving_config().name())));
   return child_->UpdateServingConfig(context, options, request);
 }
 
 StatusOr<google::cloud::retail::v2::ServingConfig>
 ServingConfigServiceMetadata::GetServingConfig(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::retail::v2::GetServingConfigRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetServingConfig(context, options, request);
 }
 
 StatusOr<google::cloud::retail::v2::ListServingConfigsResponse>
 ServingConfigServiceMetadata::ListServingConfigs(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::retail::v2::ListServingConfigsRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListServingConfigs(context, options, request);
 }
 
 StatusOr<google::cloud::retail::v2::ServingConfig>
 ServingConfigServiceMetadata::AddControl(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::retail::v2::AddControlRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("serving_config=",
-                           internal::UrlEncode(request.serving_config())));
+  SetMetadata(context, options, absl::StrCat("serving_config=", internal::UrlEncode(request.serving_config())));
   return child_->AddControl(context, options, request);
 }
 
 StatusOr<google::cloud::retail::v2::ServingConfig>
 ServingConfigServiceMetadata::RemoveControl(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::retail::v2::RemoveControlRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("serving_config=",
-                           internal::UrlEncode(request.serving_config())));
+  SetMetadata(context, options, absl::StrCat("serving_config=", internal::UrlEncode(request.serving_config())));
   return child_->RemoveControl(context, options, request);
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
 ServingConfigServiceMetadata::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ListOperations(context, options, request);
 }
 
 StatusOr<google::longrunning::Operation>
 ServingConfigServiceMetadata::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetOperation(context, options, request);
 }
 
-void ServingConfigServiceMetadata::SetMetadata(
-    grpc::ClientContext& context, Options const& options,
-    std::string const& request_params) {
+void ServingConfigServiceMetadata::SetMetadata(grpc::ClientContext& context,
+                                        Options const& options,
+                                        std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
 void ServingConfigServiceMetadata::SetMetadata(grpc::ClientContext& context,
-                                               Options const& options) {
-  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
-                                       api_client_header_);
+                                        Options const& options) {
+  google::cloud::internal::SetMetadata(
+      context, options, fixed_metadata_, api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

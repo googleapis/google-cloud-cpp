@@ -17,11 +17,11 @@
 // source: google/cloud/compute/ssl_policies/v1/ssl_policies.proto
 
 #include "google/cloud/compute/ssl_policies/v1/ssl_policies_connection.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/compute/ssl_policies/v1/internal/ssl_policies_option_defaults.h"
 #include "google/cloud/compute/ssl_policies/v1/internal/ssl_policies_tracing_connection.h"
 #include "google/cloud/compute/ssl_policies/v1/ssl_policies_options.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
@@ -36,39 +36,34 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 SslPoliciesConnection::~SslPoliciesConnection() = default;
 
-StreamRange<std::pair<std::string,
-                      google::cloud::cpp::compute::v1::SslPoliciesScopedList>>
-SslPoliciesConnection::AggregatedListSslPolicies(
-    google::cloud::cpp::compute::ssl_policies::v1::
-        AggregatedListSslPoliciesRequest) {  // NOLINT(performance-unnecessary-value-param)
-  return google::cloud::internal::MakeUnimplementedPaginationRange<StreamRange<
-      std::pair<std::string,
-                google::cloud::cpp::compute::v1::SslPoliciesScopedList>>>();
+StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::SslPoliciesScopedList>> SslPoliciesConnection::AggregatedListSslPolicies(
+    google::cloud::cpp::compute::ssl_policies::v1::AggregatedListSslPoliciesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::SslPoliciesScopedList>>>();
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 SslPoliciesConnection::DeleteSslPolicy(
-    google::cloud::cpp::compute::ssl_policies::v1::
-        DeleteSslPolicyRequest const&) {
+    google::cloud::cpp::compute::ssl_policies::v1::DeleteSslPolicyRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 SslPoliciesConnection::DeleteSslPolicy(
-    NoAwaitTag, google::cloud::cpp::compute::ssl_policies::v1::
-                    DeleteSslPolicyRequest const&) {
+    NoAwaitTag,
+    google::cloud::cpp::compute::ssl_policies::v1::DeleteSslPolicyRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 SslPoliciesConnection::DeleteSslPolicy(
     google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::SslPolicy>
@@ -79,68 +74,62 @@ SslPoliciesConnection::GetSslPolicy(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 SslPoliciesConnection::InsertSslPolicy(
-    google::cloud::cpp::compute::ssl_policies::v1::
-        InsertSslPolicyRequest const&) {
+    google::cloud::cpp::compute::ssl_policies::v1::InsertSslPolicyRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 SslPoliciesConnection::InsertSslPolicy(
-    NoAwaitTag, google::cloud::cpp::compute::ssl_policies::v1::
-                    InsertSslPolicyRequest const&) {
+    NoAwaitTag,
+    google::cloud::cpp::compute::ssl_policies::v1::InsertSslPolicyRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 SslPoliciesConnection::InsertSslPolicy(
     google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StreamRange<google::cloud::cpp::compute::v1::SslPolicy>
-SslPoliciesConnection::ListSslPolicies(
-    google::cloud::cpp::compute::ssl_policies::v1::
-        ListSslPoliciesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::cpp::compute::v1::SslPolicy> SslPoliciesConnection::ListSslPolicies(
+    google::cloud::cpp::compute::ssl_policies::v1::ListSslPoliciesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::cpp::compute::v1::SslPolicy>>();
 }
 
-StatusOr<
-    google::cloud::cpp::compute::v1::SslPoliciesListAvailableFeaturesResponse>
+StatusOr<google::cloud::cpp::compute::v1::SslPoliciesListAvailableFeaturesResponse>
 SslPoliciesConnection::ListAvailableFeatures(
-    google::cloud::cpp::compute::ssl_policies::v1::
-        ListAvailableFeaturesRequest const&) {
+    google::cloud::cpp::compute::ssl_policies::v1::ListAvailableFeaturesRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 SslPoliciesConnection::PatchSslPolicy(
-    google::cloud::cpp::compute::ssl_policies::v1::
-        PatchSslPolicyRequest const&) {
+    google::cloud::cpp::compute::ssl_policies::v1::PatchSslPolicyRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 SslPoliciesConnection::PatchSslPolicy(
-    NoAwaitTag, google::cloud::cpp::compute::ssl_policies::v1::
-                    PatchSslPolicyRequest const&) {
+    NoAwaitTag,
+    google::cloud::cpp::compute::ssl_policies::v1::PatchSslPolicyRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 SslPoliciesConnection::PatchSslPolicy(
     google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

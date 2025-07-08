@@ -27,22 +27,17 @@ namespace cloud {
 namespace video {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use video_livestream_v1::MakeLivestreamServiceConnection
-/// directly.
+/// @deprecated Use video_livestream_v1::MakeLivestreamServiceConnection directly.
 using ::google::cloud::video_livestream_v1::MakeLivestreamServiceConnection;
 
 /// @deprecated Use video_livestream_v1::LivestreamServiceConnection directly.
 using ::google::cloud::video_livestream_v1::LivestreamServiceConnection;
 
-/// @deprecated Use
-/// video_livestream_v1::LivestreamServiceLimitedErrorCountRetryPolicy directly.
-using ::google::cloud::video_livestream_v1::
-    LivestreamServiceLimitedErrorCountRetryPolicy;
+/// @deprecated Use video_livestream_v1::LivestreamServiceLimitedErrorCountRetryPolicy directly.
+using ::google::cloud::video_livestream_v1::LivestreamServiceLimitedErrorCountRetryPolicy;
 
-/// @deprecated Use video_livestream_v1::LivestreamServiceLimitedTimeRetryPolicy
-/// directly.
-using ::google::cloud::video_livestream_v1::
-    LivestreamServiceLimitedTimeRetryPolicy;
+/// @deprecated Use video_livestream_v1::LivestreamServiceLimitedTimeRetryPolicy directly.
+using ::google::cloud::video_livestream_v1::LivestreamServiceLimitedTimeRetryPolicy;
 
 /// @deprecated Use video_livestream_v1::LivestreamServiceRetryPolicy directly.
 using ::google::cloud::video_livestream_v1::LivestreamServiceRetryPolicy;

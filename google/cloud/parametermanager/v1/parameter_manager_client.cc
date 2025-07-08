@@ -28,13 +28,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ParameterManagerClient::ParameterManagerClient(
     std::shared_ptr<ParameterManagerConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 ParameterManagerClient::~ParameterManagerClient() = default;
 
 StreamRange<google::cloud::parametermanager::v1::Parameter>
-ParameterManagerClient::ListParameters(std::string const& parent,
-                                       Options opts) {
+ParameterManagerClient::ListParameters(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::parametermanager::v1::ListParametersRequest request;
   request.set_parent(parent);
@@ -42,9 +41,7 @@ ParameterManagerClient::ListParameters(std::string const& parent,
 }
 
 StreamRange<google::cloud::parametermanager::v1::Parameter>
-ParameterManagerClient::ListParameters(
-    google::cloud::parametermanager::v1::ListParametersRequest request,
-    Options opts) {
+ParameterManagerClient::ListParameters(google::cloud::parametermanager::v1::ListParametersRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListParameters(std::move(request));
 }
@@ -58,18 +55,13 @@ ParameterManagerClient::GetParameter(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::parametermanager::v1::Parameter>
-ParameterManagerClient::GetParameter(
-    google::cloud::parametermanager::v1::GetParameterRequest const& request,
-    Options opts) {
+ParameterManagerClient::GetParameter(google::cloud::parametermanager::v1::GetParameterRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetParameter(request);
 }
 
 StatusOr<google::cloud::parametermanager::v1::Parameter>
-ParameterManagerClient::CreateParameter(
-    std::string const& parent,
-    google::cloud::parametermanager::v1::Parameter const& parameter,
-    std::string const& parameter_id, Options opts) {
+ParameterManagerClient::CreateParameter(std::string const& parent, google::cloud::parametermanager::v1::Parameter const& parameter, std::string const& parameter_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::parametermanager::v1::CreateParameterRequest request;
   request.set_parent(parent);
@@ -79,17 +71,13 @@ ParameterManagerClient::CreateParameter(
 }
 
 StatusOr<google::cloud::parametermanager::v1::Parameter>
-ParameterManagerClient::CreateParameter(
-    google::cloud::parametermanager::v1::CreateParameterRequest const& request,
-    Options opts) {
+ParameterManagerClient::CreateParameter(google::cloud::parametermanager::v1::CreateParameterRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateParameter(request);
 }
 
 StatusOr<google::cloud::parametermanager::v1::Parameter>
-ParameterManagerClient::UpdateParameter(
-    google::cloud::parametermanager::v1::Parameter const& parameter,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+ParameterManagerClient::UpdateParameter(google::cloud::parametermanager::v1::Parameter const& parameter, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::parametermanager::v1::UpdateParameterRequest request;
   *request.mutable_parameter() = parameter;
@@ -98,31 +86,27 @@ ParameterManagerClient::UpdateParameter(
 }
 
 StatusOr<google::cloud::parametermanager::v1::Parameter>
-ParameterManagerClient::UpdateParameter(
-    google::cloud::parametermanager::v1::UpdateParameterRequest const& request,
-    Options opts) {
+ParameterManagerClient::UpdateParameter(google::cloud::parametermanager::v1::UpdateParameterRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateParameter(request);
 }
 
-Status ParameterManagerClient::DeleteParameter(std::string const& name,
-                                               Options opts) {
+Status
+ParameterManagerClient::DeleteParameter(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::parametermanager::v1::DeleteParameterRequest request;
   request.set_name(name);
   return connection_->DeleteParameter(request);
 }
 
-Status ParameterManagerClient::DeleteParameter(
-    google::cloud::parametermanager::v1::DeleteParameterRequest const& request,
-    Options opts) {
+Status
+ParameterManagerClient::DeleteParameter(google::cloud::parametermanager::v1::DeleteParameterRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteParameter(request);
 }
 
 StreamRange<google::cloud::parametermanager::v1::ParameterVersion>
-ParameterManagerClient::ListParameterVersions(std::string const& parent,
-                                              Options opts) {
+ParameterManagerClient::ListParameterVersions(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::parametermanager::v1::ListParameterVersionsRequest request;
   request.set_parent(parent);
@@ -130,16 +114,13 @@ ParameterManagerClient::ListParameterVersions(std::string const& parent,
 }
 
 StreamRange<google::cloud::parametermanager::v1::ParameterVersion>
-ParameterManagerClient::ListParameterVersions(
-    google::cloud::parametermanager::v1::ListParameterVersionsRequest request,
-    Options opts) {
+ParameterManagerClient::ListParameterVersions(google::cloud::parametermanager::v1::ListParameterVersionsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListParameterVersions(std::move(request));
 }
 
 StatusOr<google::cloud::parametermanager::v1::ParameterVersion>
-ParameterManagerClient::GetParameterVersion(std::string const& name,
-                                            Options opts) {
+ParameterManagerClient::GetParameterVersion(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::parametermanager::v1::GetParameterVersionRequest request;
   request.set_name(name);
@@ -147,17 +128,13 @@ ParameterManagerClient::GetParameterVersion(std::string const& name,
 }
 
 StatusOr<google::cloud::parametermanager::v1::ParameterVersion>
-ParameterManagerClient::GetParameterVersion(
-    google::cloud::parametermanager::v1::GetParameterVersionRequest const&
-        request,
-    Options opts) {
+ParameterManagerClient::GetParameterVersion(google::cloud::parametermanager::v1::GetParameterVersionRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetParameterVersion(request);
 }
 
 StatusOr<google::cloud::parametermanager::v1::RenderParameterVersionResponse>
-ParameterManagerClient::RenderParameterVersion(std::string const& name,
-                                               Options opts) {
+ParameterManagerClient::RenderParameterVersion(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::parametermanager::v1::RenderParameterVersionRequest request;
   request.set_name(name);
@@ -165,20 +142,13 @@ ParameterManagerClient::RenderParameterVersion(std::string const& name,
 }
 
 StatusOr<google::cloud::parametermanager::v1::RenderParameterVersionResponse>
-ParameterManagerClient::RenderParameterVersion(
-    google::cloud::parametermanager::v1::RenderParameterVersionRequest const&
-        request,
-    Options opts) {
+ParameterManagerClient::RenderParameterVersion(google::cloud::parametermanager::v1::RenderParameterVersionRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RenderParameterVersion(request);
 }
 
 StatusOr<google::cloud::parametermanager::v1::ParameterVersion>
-ParameterManagerClient::CreateParameterVersion(
-    std::string const& parent,
-    google::cloud::parametermanager::v1::ParameterVersion const&
-        parameter_version,
-    std::string const& parameter_version_id, Options opts) {
+ParameterManagerClient::CreateParameterVersion(std::string const& parent, google::cloud::parametermanager::v1::ParameterVersion const& parameter_version, std::string const& parameter_version_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::parametermanager::v1::CreateParameterVersionRequest request;
   request.set_parent(parent);
@@ -188,19 +158,13 @@ ParameterManagerClient::CreateParameterVersion(
 }
 
 StatusOr<google::cloud::parametermanager::v1::ParameterVersion>
-ParameterManagerClient::CreateParameterVersion(
-    google::cloud::parametermanager::v1::CreateParameterVersionRequest const&
-        request,
-    Options opts) {
+ParameterManagerClient::CreateParameterVersion(google::cloud::parametermanager::v1::CreateParameterVersionRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateParameterVersion(request);
 }
 
 StatusOr<google::cloud::parametermanager::v1::ParameterVersion>
-ParameterManagerClient::UpdateParameterVersion(
-    google::cloud::parametermanager::v1::ParameterVersion const&
-        parameter_version,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+ParameterManagerClient::UpdateParameterVersion(google::cloud::parametermanager::v1::ParameterVersion const& parameter_version, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::parametermanager::v1::UpdateParameterVersionRequest request;
   *request.mutable_parameter_version() = parameter_version;
@@ -209,39 +173,33 @@ ParameterManagerClient::UpdateParameterVersion(
 }
 
 StatusOr<google::cloud::parametermanager::v1::ParameterVersion>
-ParameterManagerClient::UpdateParameterVersion(
-    google::cloud::parametermanager::v1::UpdateParameterVersionRequest const&
-        request,
-    Options opts) {
+ParameterManagerClient::UpdateParameterVersion(google::cloud::parametermanager::v1::UpdateParameterVersionRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateParameterVersion(request);
 }
 
-Status ParameterManagerClient::DeleteParameterVersion(std::string const& name,
-                                                      Options opts) {
+Status
+ParameterManagerClient::DeleteParameterVersion(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::parametermanager::v1::DeleteParameterVersionRequest request;
   request.set_name(name);
   return connection_->DeleteParameterVersion(request);
 }
 
-Status ParameterManagerClient::DeleteParameterVersion(
-    google::cloud::parametermanager::v1::DeleteParameterVersionRequest const&
-        request,
-    Options opts) {
+Status
+ParameterManagerClient::DeleteParameterVersion(google::cloud::parametermanager::v1::DeleteParameterVersionRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteParameterVersion(request);
 }
 
 StreamRange<google::cloud::location::Location>
-ParameterManagerClient::ListLocations(
-    google::cloud::location::ListLocationsRequest request, Options opts) {
+ParameterManagerClient::ListLocations(google::cloud::location::ListLocationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListLocations(std::move(request));
 }
 
-StatusOr<google::cloud::location::Location> ParameterManagerClient::GetLocation(
-    google::cloud::location::GetLocationRequest const& request, Options opts) {
+StatusOr<google::cloud::location::Location>
+ParameterManagerClient::GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetLocation(request);
 }

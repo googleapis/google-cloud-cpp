@@ -17,9 +17,9 @@
 // source: google/cloud/contentwarehouse/v1/document_schema_service.proto
 
 #include "google/cloud/contentwarehouse/v1/internal/document_schema_connection_impl.h"
-#include "google/cloud/contentwarehouse/v1/internal/document_schema_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/contentwarehouse/v1/internal/document_schema_option_defaults.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
@@ -34,132 +34,104 @@ namespace {
 
 std::unique_ptr<contentwarehouse_v1::DocumentSchemaServiceRetryPolicy>
 retry_policy(Options const& options) {
-  return options
-      .get<contentwarehouse_v1::DocumentSchemaServiceRetryPolicyOption>()
-      ->clone();
+  return options.get<contentwarehouse_v1::DocumentSchemaServiceRetryPolicyOption>()->clone();
 }
 
-std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-  return options
-      .get<contentwarehouse_v1::DocumentSchemaServiceBackoffPolicyOption>()
-      ->clone();
+std::unique_ptr<BackoffPolicy>
+backoff_policy(Options const& options) {
+  return options.get<contentwarehouse_v1::DocumentSchemaServiceBackoffPolicyOption>()->clone();
 }
 
-std::unique_ptr<
-    contentwarehouse_v1::DocumentSchemaServiceConnectionIdempotencyPolicy>
+std::unique_ptr<contentwarehouse_v1::DocumentSchemaServiceConnectionIdempotencyPolicy>
 idempotency_policy(Options const& options) {
-  return options
-      .get<contentwarehouse_v1::
-               DocumentSchemaServiceConnectionIdempotencyPolicyOption>()
-      ->clone();
+  return options.get<contentwarehouse_v1::DocumentSchemaServiceConnectionIdempotencyPolicyOption>()->clone();
 }
 
-}  // namespace
+} // namespace
 
 DocumentSchemaServiceConnectionImpl::DocumentSchemaServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<contentwarehouse_v1_internal::DocumentSchemaServiceStub>
-        stub,
+    std::shared_ptr<contentwarehouse_v1_internal::DocumentSchemaServiceStub> stub,
     Options options)
-    : background_(std::move(background)),
-      stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options), DocumentSchemaServiceConnection::options())) {}
+  : background_(std::move(background)), stub_(std::move(stub)),
+    options_(internal::MergeOptions(
+        std::move(options),
+        DocumentSchemaServiceConnection::options())) {}
 
 StatusOr<google::cloud::contentwarehouse::v1::DocumentSchema>
-DocumentSchemaServiceConnectionImpl::CreateDocumentSchema(
-    google::cloud::contentwarehouse::v1::CreateDocumentSchemaRequest const&
-        request) {
+DocumentSchemaServiceConnectionImpl::CreateDocumentSchema(google::cloud::contentwarehouse::v1::CreateDocumentSchemaRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateDocumentSchema(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::contentwarehouse::v1::
-                 CreateDocumentSchemaRequest const& request) {
+             google::cloud::contentwarehouse::v1::CreateDocumentSchemaRequest const& request) {
         return stub_->CreateDocumentSchema(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::contentwarehouse::v1::DocumentSchema>
-DocumentSchemaServiceConnectionImpl::UpdateDocumentSchema(
-    google::cloud::contentwarehouse::v1::UpdateDocumentSchemaRequest const&
-        request) {
+DocumentSchemaServiceConnectionImpl::UpdateDocumentSchema(google::cloud::contentwarehouse::v1::UpdateDocumentSchemaRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateDocumentSchema(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::contentwarehouse::v1::
-                 UpdateDocumentSchemaRequest const& request) {
+             google::cloud::contentwarehouse::v1::UpdateDocumentSchemaRequest const& request) {
         return stub_->UpdateDocumentSchema(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::contentwarehouse::v1::DocumentSchema>
-DocumentSchemaServiceConnectionImpl::GetDocumentSchema(
-    google::cloud::contentwarehouse::v1::GetDocumentSchemaRequest const&
-        request) {
+DocumentSchemaServiceConnectionImpl::GetDocumentSchema(google::cloud::contentwarehouse::v1::GetDocumentSchemaRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetDocumentSchema(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::contentwarehouse::v1::GetDocumentSchemaRequest const&
-              request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::contentwarehouse::v1::GetDocumentSchemaRequest const& request) {
         return stub_->GetDocumentSchema(context, options, request);
       },
       *current, request, __func__);
 }
 
-Status DocumentSchemaServiceConnectionImpl::DeleteDocumentSchema(
-    google::cloud::contentwarehouse::v1::DeleteDocumentSchemaRequest const&
-        request) {
+Status
+DocumentSchemaServiceConnectionImpl::DeleteDocumentSchema(google::cloud::contentwarehouse::v1::DeleteDocumentSchemaRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteDocumentSchema(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::contentwarehouse::v1::
-                 DeleteDocumentSchemaRequest const& request) {
+             google::cloud::contentwarehouse::v1::DeleteDocumentSchemaRequest const& request) {
         return stub_->DeleteDocumentSchema(context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::cloud::contentwarehouse::v1::DocumentSchema>
-DocumentSchemaServiceConnectionImpl::ListDocumentSchemas(
-    google::cloud::contentwarehouse::v1::ListDocumentSchemasRequest request) {
+DocumentSchemaServiceConnectionImpl::ListDocumentSchemas(google::cloud::contentwarehouse::v1::ListDocumentSchemasRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListDocumentSchemas(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::contentwarehouse::v1::DocumentSchema>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::contentwarehouse::v1::DocumentSchema>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<
-           contentwarehouse_v1::DocumentSchemaServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<contentwarehouse_v1::DocumentSchemaServiceRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::contentwarehouse::v1::ListDocumentSchemasRequest const&
-              r) {
+          Options const& options, google::cloud::contentwarehouse::v1::ListDocumentSchemasRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::contentwarehouse::v1::
-                       ListDocumentSchemasRequest const& request) {
+                   google::cloud::contentwarehouse::v1::ListDocumentSchemasRequest const& request) {
               return stub->ListDocumentSchemas(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::contentwarehouse::v1::ListDocumentSchemasResponse r) {
-        std::vector<google::cloud::contentwarehouse::v1::DocumentSchema> result(
-            r.document_schemas().size());
+        std::vector<google::cloud::contentwarehouse::v1::DocumentSchema> result(r.document_schemas().size());
         auto& messages = *r.mutable_document_schemas();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -167,8 +139,7 @@ DocumentSchemaServiceConnectionImpl::ListDocumentSchemas(
 }
 
 StatusOr<google::longrunning::Operation>
-DocumentSchemaServiceConnectionImpl::GetOperation(
-    google::longrunning::GetOperationRequest const& request) {
+DocumentSchemaServiceConnectionImpl::GetOperation(google::longrunning::GetOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),

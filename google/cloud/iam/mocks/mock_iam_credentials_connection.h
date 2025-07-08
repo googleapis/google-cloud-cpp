@@ -30,8 +30,7 @@ namespace cloud {
 namespace iam_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use iam_credentials_v1_mocks::MockIAMCredentialsConnection
-/// directly.
+/// @deprecated Use iam_credentials_v1_mocks::MockIAMCredentialsConnection directly.
 using ::google::cloud::iam_credentials_v1_mocks::MockIAMCredentialsConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

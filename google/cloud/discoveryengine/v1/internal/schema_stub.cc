@@ -33,150 +33,160 @@ SchemaServiceStub::~SchemaServiceStub() = default;
 
 StatusOr<google::cloud::discoveryengine::v1::Schema>
 DefaultSchemaServiceStub::GetSchema(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::discoveryengine::v1::GetSchemaRequest const& request) {
-  google::cloud::discoveryengine::v1::Schema response;
-  auto status = grpc_stub_->GetSchema(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::discoveryengine::v1::GetSchemaRequest const& request) {
+    google::cloud::discoveryengine::v1::Schema response;
+    auto status =
+        grpc_stub_->GetSchema(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::discoveryengine::v1::ListSchemasResponse>
 DefaultSchemaServiceStub::ListSchemas(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::discoveryengine::v1::ListSchemasRequest const& request) {
-  google::cloud::discoveryengine::v1::ListSchemasResponse response;
-  auto status = grpc_stub_->ListSchemas(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::discoveryengine::v1::ListSchemasRequest const& request) {
+    google::cloud::discoveryengine::v1::ListSchemasResponse response;
+    auto status =
+        grpc_stub_->ListSchemas(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultSchemaServiceStub::AsyncCreateSchema(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::discoveryengine::v1::CreateSchemaRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::discoveryengine::v1::CreateSchemaRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::discoveryengine::v1::CreateSchemaRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::discoveryengine::v1::CreateSchemaRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::discoveryengine::v1::CreateSchemaRequest const&
-                 request,
+             google::cloud::discoveryengine::v1::CreateSchemaRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncCreateSchema(context, request, cq);
       },
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation> DefaultSchemaServiceStub::CreateSchema(
-    grpc::ClientContext& context, Options,
-    google::cloud::discoveryengine::v1::CreateSchemaRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->CreateSchema(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::longrunning::Operation>
+DefaultSchemaServiceStub::CreateSchema(
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::discoveryengine::v1::CreateSchemaRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->CreateSchema(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultSchemaServiceStub::AsyncUpdateSchema(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::discoveryengine::v1::UpdateSchemaRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::discoveryengine::v1::UpdateSchemaRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::discoveryengine::v1::UpdateSchemaRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::discoveryengine::v1::UpdateSchemaRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::discoveryengine::v1::UpdateSchemaRequest const&
-                 request,
+             google::cloud::discoveryengine::v1::UpdateSchemaRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncUpdateSchema(context, request, cq);
       },
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation> DefaultSchemaServiceStub::UpdateSchema(
-    grpc::ClientContext& context, Options,
-    google::cloud::discoveryengine::v1::UpdateSchemaRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->UpdateSchema(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::longrunning::Operation>
+DefaultSchemaServiceStub::UpdateSchema(
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::discoveryengine::v1::UpdateSchemaRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->UpdateSchema(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultSchemaServiceStub::AsyncDeleteSchema(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::discoveryengine::v1::DeleteSchemaRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::discoveryengine::v1::DeleteSchemaRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::discoveryengine::v1::DeleteSchemaRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::discoveryengine::v1::DeleteSchemaRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::discoveryengine::v1::DeleteSchemaRequest const&
-                 request,
+             google::cloud::discoveryengine::v1::DeleteSchemaRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncDeleteSchema(context, request, cq);
       },
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation> DefaultSchemaServiceStub::DeleteSchema(
-    grpc::ClientContext& context, Options,
-    google::cloud::discoveryengine::v1::DeleteSchemaRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->DeleteSchema(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::longrunning::Operation>
+DefaultSchemaServiceStub::DeleteSchema(
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::discoveryengine::v1::DeleteSchemaRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->DeleteSchema(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
 DefaultSchemaServiceStub::ListOperations(
-    grpc::ClientContext& context, Options const&,
-    google::longrunning::ListOperationsRequest const& request) {
-  google::longrunning::ListOperationsResponse response;
-  auto status = operations_stub_->ListOperations(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::longrunning::ListOperationsRequest const& request) {
+    google::longrunning::ListOperationsResponse response;
+    auto status =
+        operations_stub_->ListOperations(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-StatusOr<google::longrunning::Operation> DefaultSchemaServiceStub::GetOperation(
-    grpc::ClientContext& context, Options const&,
-    google::longrunning::GetOperationRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = operations_stub_->GetOperation(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::longrunning::Operation>
+DefaultSchemaServiceStub::GetOperation(
+  grpc::ClientContext& context, Options const&,
+  google::longrunning::GetOperationRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        operations_stub_->GetOperation(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-Status DefaultSchemaServiceStub::CancelOperation(
-    grpc::ClientContext& context, Options const&,
-    google::longrunning::CancelOperationRequest const& request) {
-  google::protobuf::Empty response;
-  auto status = operations_stub_->CancelOperation(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return google::cloud::Status();
+Status
+DefaultSchemaServiceStub::CancelOperation(
+  grpc::ClientContext& context, Options const&,
+  google::longrunning::CancelOperationRequest const& request) {
+    google::protobuf::Empty response;
+    auto status =
+        operations_stub_->CancelOperation(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return google::cloud::Status();
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -205,14 +215,13 @@ future<Status> DefaultSchemaServiceStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(
-             cq,
-             [this](grpc::ClientContext* context,
-                    google::longrunning::CancelOperationRequest const& request,
-                    grpc::CompletionQueue* cq) {
-               return operations_stub_->AsyncCancelOperation(context, request,
-                                                             cq);
-             },
-             request, std::move(context))
+      cq,
+      [this](grpc::ClientContext* context,
+             google::longrunning::CancelOperationRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return operations_stub_->AsyncCancelOperation(context, request, cq);
+      },
+      request, std::move(context))
       .then([](future<StatusOr<google::protobuf::Empty>> f) {
         return f.get().status();
       });

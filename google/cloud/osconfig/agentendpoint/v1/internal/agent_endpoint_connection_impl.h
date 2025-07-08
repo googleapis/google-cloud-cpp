@@ -19,14 +19,14 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_OSCONFIG_AGENTENDPOINT_V1_INTERNAL_AGENT_ENDPOINT_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_OSCONFIG_AGENTENDPOINT_V1_INTERNAL_AGENT_ENDPOINT_CONNECTION_IMPL_H
 
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/options.h"
 #include "google/cloud/osconfig/agentendpoint/v1/agent_endpoint_connection.h"
 #include "google/cloud/osconfig/agentendpoint/v1/agent_endpoint_connection_idempotency_policy.h"
 #include "google/cloud/osconfig/agentendpoint/v1/agent_endpoint_options.h"
 #include "google/cloud/osconfig/agentendpoint/v1/internal/agent_endpoint_retry_traits.h"
 #include "google/cloud/osconfig/agentendpoint/v1/internal/agent_endpoint_stub.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
@@ -38,10 +38,8 @@ namespace osconfig_agentendpoint_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 void AgentEndpointServiceReceiveTaskNotificationStreamingUpdater(
-    google::cloud::osconfig::agentendpoint::v1::
-        ReceiveTaskNotificationResponse const& response,
-    google::cloud::osconfig::agentendpoint::v1::ReceiveTaskNotificationRequest&
-        request);
+    google::cloud::osconfig::agentendpoint::v1::ReceiveTaskNotificationResponse const& response,
+    google::cloud::osconfig::agentendpoint::v1::ReceiveTaskNotificationRequest& request);
 
 class AgentEndpointServiceConnectionImpl
     : public osconfig_agentendpoint_v1::AgentEndpointServiceConnection {
@@ -49,49 +47,33 @@ class AgentEndpointServiceConnectionImpl
   ~AgentEndpointServiceConnectionImpl() override = default;
 
   AgentEndpointServiceConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<
-          osconfig_agentendpoint_v1_internal::AgentEndpointServiceStub>
-          stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<osconfig_agentendpoint_v1_internal::AgentEndpointServiceStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
-  StreamRange<google::cloud::osconfig::agentendpoint::v1::
-                  ReceiveTaskNotificationResponse>
-  ReceiveTaskNotification(
-      google::cloud::osconfig::agentendpoint::v1::
-          ReceiveTaskNotificationRequest const& request) override;
+  StreamRange<google::cloud::osconfig::agentendpoint::v1::ReceiveTaskNotificationResponse>
+  ReceiveTaskNotification(google::cloud::osconfig::agentendpoint::v1::ReceiveTaskNotificationRequest const& request) override;
 
   StatusOr<google::cloud::osconfig::agentendpoint::v1::StartNextTaskResponse>
-  StartNextTask(
-      google::cloud::osconfig::agentendpoint::v1::StartNextTaskRequest const&
-          request) override;
+  StartNextTask(google::cloud::osconfig::agentendpoint::v1::StartNextTaskRequest const& request) override;
 
-  StatusOr<
-      google::cloud::osconfig::agentendpoint::v1::ReportTaskProgressResponse>
-  ReportTaskProgress(google::cloud::osconfig::agentendpoint::v1::
-                         ReportTaskProgressRequest const& request) override;
+  StatusOr<google::cloud::osconfig::agentendpoint::v1::ReportTaskProgressResponse>
+  ReportTaskProgress(google::cloud::osconfig::agentendpoint::v1::ReportTaskProgressRequest const& request) override;
 
-  StatusOr<
-      google::cloud::osconfig::agentendpoint::v1::ReportTaskCompleteResponse>
-  ReportTaskComplete(google::cloud::osconfig::agentendpoint::v1::
-                         ReportTaskCompleteRequest const& request) override;
+  StatusOr<google::cloud::osconfig::agentendpoint::v1::ReportTaskCompleteResponse>
+  ReportTaskComplete(google::cloud::osconfig::agentendpoint::v1::ReportTaskCompleteRequest const& request) override;
 
   StatusOr<google::cloud::osconfig::agentendpoint::v1::RegisterAgentResponse>
-  RegisterAgent(
-      google::cloud::osconfig::agentendpoint::v1::RegisterAgentRequest const&
-          request) override;
+  RegisterAgent(google::cloud::osconfig::agentendpoint::v1::RegisterAgentRequest const& request) override;
 
   StatusOr<google::cloud::osconfig::agentendpoint::v1::ReportInventoryResponse>
-  ReportInventory(
-      google::cloud::osconfig::agentendpoint::v1::ReportInventoryRequest const&
-          request) override;
+  ReportInventory(google::cloud::osconfig::agentendpoint::v1::ReportInventoryRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<osconfig_agentendpoint_v1_internal::AgentEndpointServiceStub>
-      stub_;
+  std::shared_ptr<osconfig_agentendpoint_v1_internal::AgentEndpointServiceStub> stub_;
   Options options_;
 };
 

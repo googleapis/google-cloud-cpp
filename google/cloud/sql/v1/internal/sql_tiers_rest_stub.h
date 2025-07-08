@@ -38,8 +38,7 @@ class SqlTiersServiceRestStub {
 
   virtual StatusOr<google::cloud::sql::v1::TiersListResponse> List(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::sql::v1::SqlTiersListRequest const& request) = 0;
+      Options const& options, google::cloud::sql::v1::SqlTiersListRequest const& request) = 0;
 };
 
 class DefaultSqlTiersServiceRestStub : public SqlTiersServiceRestStub {
@@ -48,12 +47,12 @@ class DefaultSqlTiersServiceRestStub : public SqlTiersServiceRestStub {
 
   explicit DefaultSqlTiersServiceRestStub(Options options);
   DefaultSqlTiersServiceRestStub(
-      std::shared_ptr<rest_internal::RestClient> service, Options options);
+      std::shared_ptr<rest_internal::RestClient> service,
+      Options options);
 
   StatusOr<google::cloud::sql::v1::TiersListResponse> List(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::sql::v1::SqlTiersListRequest const& request) override;
+      Options const& options, google::cloud::sql::v1::SqlTiersListRequest const& request) override;
 
  private:
   std::shared_ptr<rest_internal::RestClient> service_;

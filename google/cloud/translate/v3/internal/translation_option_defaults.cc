@@ -17,10 +17,10 @@
 // source: google/cloud/translate/v3/translation_service.proto
 
 #include "google/cloud/translate/v3/internal/translation_option_defaults.h"
-#include "google/cloud/translate/v3/translation_connection.h"
-#include "google/cloud/translate/v3/translation_options.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
+#include "google/cloud/translate/v3/translation_connection.h"
+#include "google/cloud/translate/v3/translation_options.h"
 #include <memory>
 #include <utility>
 
@@ -35,41 +35,32 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options TranslationServiceDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_TRANSLATION_SERVICE_ENDPOINT", "",
-      "GOOGLE_CLOUD_CPP_TRANSLATION_SERVICE_AUTHORITY",
+      std::move(options), "GOOGLE_CLOUD_CPP_TRANSLATION_SERVICE_ENDPOINT",
+      "", "GOOGLE_CLOUD_CPP_TRANSLATION_SERVICE_AUTHORITY",
       "translate.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<translate_v3::TranslationServiceRetryPolicyOption>()) {
     options.set<translate_v3::TranslationServiceRetryPolicyOption>(
         translate_v3::TranslationServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
-            .clone());
+            std::chrono::minutes(30)).clone());
   }
   if (!options.has<translate_v3::TranslationServiceBackoffPolicyOption>()) {
     options.set<translate_v3::TranslationServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(
-            std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
-            .clone());
+        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
   }
   if (!options.has<translate_v3::TranslationServicePollingPolicyOption>()) {
     options.set<translate_v3::TranslationServicePollingPolicyOption>(
         GenericPollingPolicy<
             translate_v3::TranslationServiceRetryPolicyOption::Type,
             translate_v3::TranslationServiceBackoffPolicyOption::Type>(
-            options.get<translate_v3::TranslationServiceRetryPolicyOption>()
-                ->clone(),
+            options.get<translate_v3::TranslationServiceRetryPolicyOption>()->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                     std::chrono::minutes(5), kBackoffScaling)
-                .clone())
-            .clone());
+            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
   }
-  if (!options.has<translate_v3::
-                       TranslationServiceConnectionIdempotencyPolicyOption>()) {
-    options
-        .set<translate_v3::TranslationServiceConnectionIdempotencyPolicyOption>(
-            translate_v3::
-                MakeDefaultTranslationServiceConnectionIdempotencyPolicy());
+  if (!options.has<translate_v3::TranslationServiceConnectionIdempotencyPolicyOption>()) {
+    options.set<translate_v3::TranslationServiceConnectionIdempotencyPolicyOption>(
+        translate_v3::MakeDefaultTranslationServiceConnectionIdempotencyPolicy());
   }
 
   return options;

@@ -17,11 +17,11 @@
 // source: google/pubsub/v1/pubsub.proto
 
 #include "google/cloud/pubsub/admin/internal/subscription_admin_option_defaults.h"
+#include "google/cloud/internal/populate_common_options.h"
+#include "google/cloud/internal/populate_grpc_options.h"
 #include "google/cloud/pubsub/admin/subscription_admin_connection.h"
 #include "google/cloud/pubsub/admin/subscription_admin_options.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
-#include "google/cloud/internal/populate_common_options.h"
-#include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 #include <utility>
 
@@ -34,34 +34,26 @@ namespace {
 auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
-Options SubscriptionAdminDefaultOptions(std::string const& location,
-                                        Options options) {
+Options SubscriptionAdminDefaultOptions(std::string const& location, Options options) {
   options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_SUBSCRIBER_ENDPOINT",
       "PUBSUB_EMULATOR_HOST", "GOOGLE_CLOUD_CPP_SUBSCRIBER_AUTHORITY",
       // optional location tag for generating docs
-      absl::StrCat(location, location.empty() ? "" : "-",
-                   "pubsub.googleapis.com"));
+      absl::StrCat(location, location.empty() ? "" : "-", "pubsub.googleapis.com"));
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<pubsub_admin::SubscriptionAdminRetryPolicyOption>()) {
     options.set<pubsub_admin::SubscriptionAdminRetryPolicyOption>(
         pubsub_admin::SubscriptionAdminLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
-            .clone());
+            std::chrono::minutes(30)).clone());
   }
   if (!options.has<pubsub_admin::SubscriptionAdminBackoffPolicyOption>()) {
     options.set<pubsub_admin::SubscriptionAdminBackoffPolicyOption>(
-        ExponentialBackoffPolicy(
-            std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
-            .clone());
+        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
   }
-  if (!options.has<
-          pubsub_admin::SubscriptionAdminConnectionIdempotencyPolicyOption>()) {
-    options
-        .set<pubsub_admin::SubscriptionAdminConnectionIdempotencyPolicyOption>(
-            pubsub_admin::
-                MakeDefaultSubscriptionAdminConnectionIdempotencyPolicy());
+  if (!options.has<pubsub_admin::SubscriptionAdminConnectionIdempotencyPolicyOption>()) {
+    options.set<pubsub_admin::SubscriptionAdminConnectionIdempotencyPolicyOption>(
+        pubsub_admin::MakeDefaultSubscriptionAdminConnectionIdempotencyPolicy());
   }
 
   return options;

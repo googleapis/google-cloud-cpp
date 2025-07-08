@@ -19,11 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_ADMIN_SUBSCRIPTION_ADMIN_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_ADMIN_SUBSCRIPTION_ADMIN_CONNECTION_H
 
-#include "google/cloud/pubsub/admin/internal/subscription_admin_retry_traits.h"
-#include "google/cloud/pubsub/admin/subscription_admin_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
+#include "google/cloud/pubsub/admin/internal/subscription_admin_retry_traits.h"
+#include "google/cloud/pubsub/admin/subscription_admin_connection_idempotency_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
@@ -53,8 +53,7 @@ class SubscriptionAdminRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class SubscriptionAdminLimitedErrorCountRetryPolicy
-    : public SubscriptionAdminRetryPolicy {
+class SubscriptionAdminLimitedErrorCountRetryPolicy : public SubscriptionAdminRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -64,14 +63,14 @@ class SubscriptionAdminLimitedErrorCountRetryPolicy
    *     @p maximum_failures == 0.
    */
   explicit SubscriptionAdminLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   SubscriptionAdminLimitedErrorCountRetryPolicy(
       SubscriptionAdminLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : SubscriptionAdminLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : SubscriptionAdminLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   SubscriptionAdminLimitedErrorCountRetryPolicy(
       SubscriptionAdminLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : SubscriptionAdminLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : SubscriptionAdminLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -91,9 +90,7 @@ class SubscriptionAdminLimitedErrorCountRetryPolicy
   using BaseType = SubscriptionAdminRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      pubsub_admin_internal::SubscriptionAdminRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<pubsub_admin_internal::SubscriptionAdminRetryTraits> impl_;
 };
 
 /**
@@ -106,8 +103,7 @@ class SubscriptionAdminLimitedErrorCountRetryPolicy
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class SubscriptionAdminLimitedTimeRetryPolicy
-    : public SubscriptionAdminRetryPolicy {
+class SubscriptionAdminLimitedTimeRetryPolicy : public SubscriptionAdminRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -132,14 +128,12 @@ class SubscriptionAdminLimitedTimeRetryPolicy
   template <typename DurationRep, typename DurationPeriod>
   explicit SubscriptionAdminLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  SubscriptionAdminLimitedTimeRetryPolicy(
-      SubscriptionAdminLimitedTimeRetryPolicy&& rhs) noexcept
-      : SubscriptionAdminLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  SubscriptionAdminLimitedTimeRetryPolicy(
-      SubscriptionAdminLimitedTimeRetryPolicy const& rhs) noexcept
-      : SubscriptionAdminLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  SubscriptionAdminLimitedTimeRetryPolicy(SubscriptionAdminLimitedTimeRetryPolicy&& rhs) noexcept
+    : SubscriptionAdminLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  SubscriptionAdminLimitedTimeRetryPolicy(SubscriptionAdminLimitedTimeRetryPolicy const& rhs) noexcept
+    : SubscriptionAdminLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -161,18 +155,16 @@ class SubscriptionAdminLimitedTimeRetryPolicy
   using BaseType = SubscriptionAdminRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      pubsub_admin_internal::SubscriptionAdminRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<pubsub_admin_internal::SubscriptionAdminRetryTraits> impl_;
 };
 
 /**
  * The `SubscriptionAdminConnection` object for `SubscriptionAdminClient`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `SubscriptionAdminClient`. This allows users to inject custom
- * behavior (e.g., with a Google Mock object) when writing tests that use
- * objects of type `SubscriptionAdminClient`.
+ * sets in `SubscriptionAdminClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `SubscriptionAdminClient`.
  *
  * To create a concrete instance, see `MakeSubscriptionAdminConnection()`.
  *
@@ -184,63 +176,61 @@ class SubscriptionAdminConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<google::pubsub::v1::Subscription> CreateSubscription(
-      google::pubsub::v1::Subscription const& request);
+  virtual StatusOr<google::pubsub::v1::Subscription>
+  CreateSubscription(google::pubsub::v1::Subscription const& request);
 
-  virtual StatusOr<google::pubsub::v1::Subscription> GetSubscription(
-      google::pubsub::v1::GetSubscriptionRequest const& request);
+  virtual StatusOr<google::pubsub::v1::Subscription>
+  GetSubscription(google::pubsub::v1::GetSubscriptionRequest const& request);
 
-  virtual StatusOr<google::pubsub::v1::Subscription> UpdateSubscription(
-      google::pubsub::v1::UpdateSubscriptionRequest const& request);
+  virtual StatusOr<google::pubsub::v1::Subscription>
+  UpdateSubscription(google::pubsub::v1::UpdateSubscriptionRequest const& request);
 
-  virtual StreamRange<google::pubsub::v1::Subscription> ListSubscriptions(
-      google::pubsub::v1::ListSubscriptionsRequest request);
+  virtual StreamRange<google::pubsub::v1::Subscription>
+  ListSubscriptions(google::pubsub::v1::ListSubscriptionsRequest request);
 
-  virtual Status DeleteSubscription(
-      google::pubsub::v1::DeleteSubscriptionRequest const& request);
+  virtual Status
+  DeleteSubscription(google::pubsub::v1::DeleteSubscriptionRequest const& request);
 
-  virtual Status ModifyPushConfig(
-      google::pubsub::v1::ModifyPushConfigRequest const& request);
+  virtual Status
+  ModifyPushConfig(google::pubsub::v1::ModifyPushConfigRequest const& request);
 
-  virtual StatusOr<google::pubsub::v1::Snapshot> GetSnapshot(
-      google::pubsub::v1::GetSnapshotRequest const& request);
+  virtual StatusOr<google::pubsub::v1::Snapshot>
+  GetSnapshot(google::pubsub::v1::GetSnapshotRequest const& request);
 
-  virtual StreamRange<google::pubsub::v1::Snapshot> ListSnapshots(
-      google::pubsub::v1::ListSnapshotsRequest request);
+  virtual StreamRange<google::pubsub::v1::Snapshot>
+  ListSnapshots(google::pubsub::v1::ListSnapshotsRequest request);
 
-  virtual StatusOr<google::pubsub::v1::Snapshot> CreateSnapshot(
-      google::pubsub::v1::CreateSnapshotRequest const& request);
+  virtual StatusOr<google::pubsub::v1::Snapshot>
+  CreateSnapshot(google::pubsub::v1::CreateSnapshotRequest const& request);
 
-  virtual StatusOr<google::pubsub::v1::Snapshot> UpdateSnapshot(
-      google::pubsub::v1::UpdateSnapshotRequest const& request);
+  virtual StatusOr<google::pubsub::v1::Snapshot>
+  UpdateSnapshot(google::pubsub::v1::UpdateSnapshotRequest const& request);
 
-  virtual Status DeleteSnapshot(
-      google::pubsub::v1::DeleteSnapshotRequest const& request);
+  virtual Status
+  DeleteSnapshot(google::pubsub::v1::DeleteSnapshotRequest const& request);
 
-  virtual StatusOr<google::pubsub::v1::SeekResponse> Seek(
-      google::pubsub::v1::SeekRequest const& request);
+  virtual StatusOr<google::pubsub::v1::SeekResponse>
+  Seek(google::pubsub::v1::SeekRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
 
   virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
   TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
 };
 
 /**
- * A factory function to construct an object of type
- * `SubscriptionAdminConnection`.
+ * A factory function to construct an object of type `SubscriptionAdminConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of
- * SubscriptionAdminClient.
+ * should be passed as an argument to the constructor of SubscriptionAdminClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `SubscriptionAdminConnection`. Expected options are any of the types
- * in the following option lists:
+ * returned `SubscriptionAdminConnection`. Expected options are any of the types in
+ * the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
@@ -251,18 +241,17 @@ class SubscriptionAdminConnection {
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
  * @param location Sets the prefix for the default `EndpointOption` value.
- * @param options (optional) Configure the `SubscriptionAdminConnection` created
- * by this function.
+ * @param options (optional) Configure the `SubscriptionAdminConnection` created by
+ * this function.
  */
 std::shared_ptr<SubscriptionAdminConnection> MakeSubscriptionAdminConnection(
     std::string const& location, Options options = {});
 
 /**
- * A factory function to construct an object of type
- * `SubscriptionAdminConnection`.
+ * A factory function to construct an object of type `SubscriptionAdminConnection`.
  *
- * This overload of `MakeSubscriptionAdminConnection` does not require a
- * location argument, creating a connection to the global service endpoint.
+ * This overload of `MakeSubscriptionAdminConnection` does not require a location
+ * argument, creating a connection to the global service endpoint.
  */
 std::shared_ptr<SubscriptionAdminConnection> MakeSubscriptionAdminConnection(
     Options options = {});

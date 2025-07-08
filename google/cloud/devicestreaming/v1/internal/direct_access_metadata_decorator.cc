@@ -46,58 +46,52 @@ DirectAccessServiceMetadata::DirectAccessServiceMetadata(
 
 StatusOr<google::cloud::devicestreaming::v1::DeviceSession>
 DirectAccessServiceMetadata::CreateDeviceSession(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::devicestreaming::v1::CreateDeviceSessionRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::devicestreaming::v1::CreateDeviceSessionRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateDeviceSession(context, options, request);
 }
 
 StatusOr<google::cloud::devicestreaming::v1::ListDeviceSessionsResponse>
 DirectAccessServiceMetadata::ListDeviceSessions(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::devicestreaming::v1::ListDeviceSessionsRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::devicestreaming::v1::ListDeviceSessionsRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListDeviceSessions(context, options, request);
 }
 
 StatusOr<google::cloud::devicestreaming::v1::DeviceSession>
 DirectAccessServiceMetadata::GetDeviceSession(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::devicestreaming::v1::GetDeviceSessionRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::devicestreaming::v1::GetDeviceSessionRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetDeviceSession(context, options, request);
 }
 
-Status DirectAccessServiceMetadata::CancelDeviceSession(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::devicestreaming::v1::CancelDeviceSessionRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+Status
+DirectAccessServiceMetadata::CancelDeviceSession(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::devicestreaming::v1::CancelDeviceSessionRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->CancelDeviceSession(context, options, request);
 }
 
 StatusOr<google::cloud::devicestreaming::v1::DeviceSession>
 DirectAccessServiceMetadata::UpdateDeviceSession(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::devicestreaming::v1::UpdateDeviceSessionRequest const&
-        request) {
-  SetMetadata(
-      context, options,
-      absl::StrCat("device_session.name=",
-                   internal::UrlEncode(request.device_session().name())));
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::devicestreaming::v1::UpdateDeviceSessionRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("device_session.name=", internal::UrlEncode(request.device_session().name())));
   return child_->UpdateDeviceSession(context, options, request);
 }
 
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
-    google::cloud::devicestreaming::v1::AdbMessage,
-    google::cloud::devicestreaming::v1::DeviceMessage>>
+      google::cloud::devicestreaming::v1::AdbMessage,
+      google::cloud::devicestreaming::v1::DeviceMessage>>
 DirectAccessServiceMetadata::AsyncAdbConnect(
     google::cloud::CompletionQueue const& cq,
     std::shared_ptr<grpc::ClientContext> context,
@@ -106,17 +100,17 @@ DirectAccessServiceMetadata::AsyncAdbConnect(
   return child_->AsyncAdbConnect(cq, std::move(context), std::move(options));
 }
 
-void DirectAccessServiceMetadata::SetMetadata(
-    grpc::ClientContext& context, Options const& options,
-    std::string const& request_params) {
+void DirectAccessServiceMetadata::SetMetadata(grpc::ClientContext& context,
+                                        Options const& options,
+                                        std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
 void DirectAccessServiceMetadata::SetMetadata(grpc::ClientContext& context,
-                                              Options const& options) {
-  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
-                                       api_client_header_);
+                                        Options const& options) {
+  google::cloud::internal::SetMetadata(
+      context, options, fixed_metadata_, api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

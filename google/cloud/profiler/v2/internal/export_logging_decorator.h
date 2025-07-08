@@ -38,10 +38,10 @@ class ExportServiceLogging : public ExportServiceStub {
                        TracingOptions tracing_options,
                        std::set<std::string> const& components);
 
-  StatusOr<google::devtools::cloudprofiler::v2::ListProfilesResponse>
-  ListProfiles(grpc::ClientContext& context, Options const& options,
-               google::devtools::cloudprofiler::v2::ListProfilesRequest const&
-                   request) override;
+  StatusOr<google::devtools::cloudprofiler::v2::ListProfilesResponse> ListProfiles(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::devtools::cloudprofiler::v2::ListProfilesRequest const& request) override;
 
  private:
   std::shared_ptr<ExportServiceStub> child_;

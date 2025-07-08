@@ -26,76 +26,62 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-ServiceManagerConnectionIdempotencyPolicy::
-    ~ServiceManagerConnectionIdempotencyPolicy() = default;
+ServiceManagerConnectionIdempotencyPolicy::~ServiceManagerConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<ServiceManagerConnectionIdempotencyPolicy>
 ServiceManagerConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<ServiceManagerConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency ServiceManagerConnectionIdempotencyPolicy::ListServices(
-    google::api::servicemanagement::v1::ListServicesRequest) {  // NOLINT
+Idempotency ServiceManagerConnectionIdempotencyPolicy::ListServices(google::api::servicemanagement::v1::ListServicesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency ServiceManagerConnectionIdempotencyPolicy::GetService(
-    google::api::servicemanagement::v1::GetServiceRequest const&) {
+Idempotency ServiceManagerConnectionIdempotencyPolicy::GetService(google::api::servicemanagement::v1::GetServiceRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ServiceManagerConnectionIdempotencyPolicy::CreateService(
-    google::api::servicemanagement::v1::CreateServiceRequest const&) {
+Idempotency ServiceManagerConnectionIdempotencyPolicy::CreateService(google::api::servicemanagement::v1::CreateServiceRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ServiceManagerConnectionIdempotencyPolicy::DeleteService(
-    google::api::servicemanagement::v1::DeleteServiceRequest const&) {
+Idempotency ServiceManagerConnectionIdempotencyPolicy::DeleteService(google::api::servicemanagement::v1::DeleteServiceRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ServiceManagerConnectionIdempotencyPolicy::UndeleteService(
-    google::api::servicemanagement::v1::UndeleteServiceRequest const&) {
+Idempotency ServiceManagerConnectionIdempotencyPolicy::UndeleteService(google::api::servicemanagement::v1::UndeleteServiceRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ServiceManagerConnectionIdempotencyPolicy::ListServiceConfigs(
-    google::api::servicemanagement::v1::ListServiceConfigsRequest) {  // NOLINT
+Idempotency ServiceManagerConnectionIdempotencyPolicy::ListServiceConfigs(google::api::servicemanagement::v1::ListServiceConfigsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency ServiceManagerConnectionIdempotencyPolicy::GetServiceConfig(
-    google::api::servicemanagement::v1::GetServiceConfigRequest const&) {
+Idempotency ServiceManagerConnectionIdempotencyPolicy::GetServiceConfig(google::api::servicemanagement::v1::GetServiceConfigRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ServiceManagerConnectionIdempotencyPolicy::CreateServiceConfig(
-    google::api::servicemanagement::v1::CreateServiceConfigRequest const&) {
+Idempotency ServiceManagerConnectionIdempotencyPolicy::CreateServiceConfig(google::api::servicemanagement::v1::CreateServiceConfigRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ServiceManagerConnectionIdempotencyPolicy::SubmitConfigSource(
-    google::api::servicemanagement::v1::SubmitConfigSourceRequest const&) {
+Idempotency ServiceManagerConnectionIdempotencyPolicy::SubmitConfigSource(google::api::servicemanagement::v1::SubmitConfigSourceRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ServiceManagerConnectionIdempotencyPolicy::ListServiceRollouts(
-    google::api::servicemanagement::v1::ListServiceRolloutsRequest) {  // NOLINT
+Idempotency ServiceManagerConnectionIdempotencyPolicy::ListServiceRollouts(google::api::servicemanagement::v1::ListServiceRolloutsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency ServiceManagerConnectionIdempotencyPolicy::GetServiceRollout(
-    google::api::servicemanagement::v1::GetServiceRolloutRequest const&) {
+Idempotency ServiceManagerConnectionIdempotencyPolicy::GetServiceRollout(google::api::servicemanagement::v1::GetServiceRolloutRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ServiceManagerConnectionIdempotencyPolicy::CreateServiceRollout(
-    google::api::servicemanagement::v1::CreateServiceRolloutRequest const&) {
+Idempotency ServiceManagerConnectionIdempotencyPolicy::CreateServiceRollout(google::api::servicemanagement::v1::CreateServiceRolloutRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ServiceManagerConnectionIdempotencyPolicy::GenerateConfigReport(
-    google::api::servicemanagement::v1::GenerateConfigReportRequest const&) {
+Idempotency ServiceManagerConnectionIdempotencyPolicy::GenerateConfigReport(google::api::servicemanagement::v1::GenerateConfigReportRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
@@ -105,23 +91,20 @@ Idempotency ServiceManagerConnectionIdempotencyPolicy::SetIamPolicy(
                                          : Idempotency::kIdempotent;
 }
 
-Idempotency ServiceManagerConnectionIdempotencyPolicy::GetIamPolicy(
-    google::iam::v1::GetIamPolicyRequest const&) {
+Idempotency ServiceManagerConnectionIdempotencyPolicy::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ServiceManagerConnectionIdempotencyPolicy::TestIamPermissions(
-    google::iam::v1::TestIamPermissionsRequest const&) {
+Idempotency ServiceManagerConnectionIdempotencyPolicy::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ServiceManagerConnectionIdempotencyPolicy::ListOperations(
-    google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency ServiceManagerConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<ServiceManagerConnectionIdempotencyPolicy>
-MakeDefaultServiceManagerConnectionIdempotencyPolicy() {
+    MakeDefaultServiceManagerConnectionIdempotencyPolicy() {
   return std::make_unique<ServiceManagerConnectionIdempotencyPolicy>();
 }
 

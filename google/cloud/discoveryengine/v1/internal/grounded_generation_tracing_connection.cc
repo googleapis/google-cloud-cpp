@@ -29,67 +29,50 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-GroundedGenerationServiceTracingConnection::
-    GroundedGenerationServiceTracingConnection(
-        std::shared_ptr<discoveryengine_v1::GroundedGenerationServiceConnection>
-            child)
+GroundedGenerationServiceTracingConnection::GroundedGenerationServiceTracingConnection(
+    std::shared_ptr<discoveryengine_v1::GroundedGenerationServiceConnection> child)
     : child_(std::move(child)) {}
 
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::cloud::discoveryengine::v1::GenerateGroundedContentRequest,
     google::cloud::discoveryengine::v1::GenerateGroundedContentResponse>>
-GroundedGenerationServiceTracingConnection::
-    AsyncStreamGenerateGroundedContent() {
+GroundedGenerationServiceTracingConnection::AsyncStreamGenerateGroundedContent() {
   return child_->AsyncStreamGenerateGroundedContent();
 }
 
 StatusOr<google::cloud::discoveryengine::v1::GenerateGroundedContentResponse>
-GroundedGenerationServiceTracingConnection::GenerateGroundedContent(
-    google::cloud::discoveryengine::v1::GenerateGroundedContentRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "discoveryengine_v1::GroundedGenerationServiceConnection::"
-      "GenerateGroundedContent");
+GroundedGenerationServiceTracingConnection::GenerateGroundedContent(google::cloud::discoveryengine::v1::GenerateGroundedContentRequest const& request) {
+  auto span = internal::MakeSpan("discoveryengine_v1::GroundedGenerationServiceConnection::GenerateGroundedContent");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GenerateGroundedContent(request));
 }
 
 StatusOr<google::cloud::discoveryengine::v1::CheckGroundingResponse>
-GroundedGenerationServiceTracingConnection::CheckGrounding(
-    google::cloud::discoveryengine::v1::CheckGroundingRequest const& request) {
-  auto span = internal::MakeSpan(
-      "discoveryengine_v1::GroundedGenerationServiceConnection::"
-      "CheckGrounding");
+GroundedGenerationServiceTracingConnection::CheckGrounding(google::cloud::discoveryengine::v1::CheckGroundingRequest const& request) {
+  auto span = internal::MakeSpan("discoveryengine_v1::GroundedGenerationServiceConnection::CheckGrounding");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CheckGrounding(request));
 }
 
 StreamRange<google::longrunning::Operation>
-GroundedGenerationServiceTracingConnection::ListOperations(
-    google::longrunning::ListOperationsRequest request) {
-  auto span = internal::MakeSpan(
-      "discoveryengine_v1::GroundedGenerationServiceConnection::"
-      "ListOperations");
+GroundedGenerationServiceTracingConnection::ListOperations(google::longrunning::ListOperationsRequest request) {
+  auto span = internal::MakeSpan("discoveryengine_v1::GroundedGenerationServiceConnection::ListOperations");
   internal::OTelScope scope(span);
   auto sr = child_->ListOperations(std::move(request));
   return internal::MakeTracedStreamRange<google::longrunning::Operation>(
-      std::move(span), std::move(sr));
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::longrunning::Operation>
-GroundedGenerationServiceTracingConnection::GetOperation(
-    google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpan(
-      "discoveryengine_v1::GroundedGenerationServiceConnection::GetOperation");
+GroundedGenerationServiceTracingConnection::GetOperation(google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpan("discoveryengine_v1::GroundedGenerationServiceConnection::GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOperation(request));
 }
 
-Status GroundedGenerationServiceTracingConnection::CancelOperation(
-    google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpan(
-      "discoveryengine_v1::GroundedGenerationServiceConnection::"
-      "CancelOperation");
+Status
+GroundedGenerationServiceTracingConnection::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
+  auto span = internal::MakeSpan("discoveryengine_v1::GroundedGenerationServiceConnection::CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CancelOperation(request));
 }
@@ -98,12 +81,10 @@ Status GroundedGenerationServiceTracingConnection::CancelOperation(
 
 std::shared_ptr<discoveryengine_v1::GroundedGenerationServiceConnection>
 MakeGroundedGenerationServiceTracingConnection(
-    std::shared_ptr<discoveryengine_v1::GroundedGenerationServiceConnection>
-        conn) {
+    std::shared_ptr<discoveryengine_v1::GroundedGenerationServiceConnection> conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
-    conn = std::make_shared<GroundedGenerationServiceTracingConnection>(
-        std::move(conn));
+    conn = std::make_shared<GroundedGenerationServiceTracingConnection>(std::move(conn));
   }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;

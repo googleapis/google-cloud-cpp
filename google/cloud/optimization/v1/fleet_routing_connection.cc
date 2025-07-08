@@ -17,16 +17,16 @@
 // source: google/cloud/optimization/v1/fleet_routing.proto
 
 #include "google/cloud/optimization/v1/fleet_routing_connection.h"
-#include "google/cloud/optimization/v1/fleet_routing_options.h"
-#include "google/cloud/optimization/v1/internal/fleet_routing_connection_impl.h"
-#include "google/cloud/optimization/v1/internal/fleet_routing_option_defaults.h"
-#include "google/cloud/optimization/v1/internal/fleet_routing_stub_factory.h"
-#include "google/cloud/optimization/v1/internal/fleet_routing_tracing_connection.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/optimization/v1/fleet_routing_options.h"
+#include "google/cloud/optimization/v1/internal/fleet_routing_connection_impl.h"
+#include "google/cloud/optimization/v1/internal/fleet_routing_option_defaults.h"
+#include "google/cloud/optimization/v1/internal/fleet_routing_stub_factory.h"
+#include "google/cloud/optimization/v1/internal/fleet_routing_tracing_connection.h"
 #include <memory>
 #include <utility>
 
@@ -47,8 +47,8 @@ future<StatusOr<google::cloud::optimization::v1::BatchOptimizeToursResponse>>
 FleetRoutingConnection::BatchOptimizeTours(
     google::cloud::optimization::v1::BatchOptimizeToursRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::optimization::v1::BatchOptimizeToursResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::optimization::v1::BatchOptimizeToursResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -56,18 +56,19 @@ FleetRoutingConnection::BatchOptimizeTours(
     NoAwaitTag,
     google::cloud::optimization::v1::BatchOptimizeToursRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::optimization::v1::BatchOptimizeToursResponse>>
 FleetRoutingConnection::BatchOptimizeTours(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::optimization::v1::BatchOptimizeToursResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::optimization::v1::BatchOptimizeToursResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation> FleetRoutingConnection::GetOperation(
+StatusOr<google::longrunning::Operation>
+FleetRoutingConnection::GetOperation(
     google::longrunning::GetOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -75,18 +76,17 @@ StatusOr<google::longrunning::Operation> FleetRoutingConnection::GetOperation(
 std::shared_ptr<FleetRoutingConnection> MakeFleetRoutingConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 FleetRoutingPolicyOptionList>(options,
-                                                               __func__);
-  options =
-      optimization_v1_internal::FleetRoutingDefaultOptions(std::move(options));
+      UnifiedCredentialsOptionList,
+      FleetRoutingPolicyOptionList>(options, __func__);
+  options = optimization_v1_internal::FleetRoutingDefaultOptions(
+      std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = optimization_v1_internal::CreateDefaultFleetRoutingStub(
-      std::move(auth), options);
+    std::move(auth), options);
   return optimization_v1_internal::MakeFleetRoutingTracingConnection(
       std::make_shared<optimization_v1_internal::FleetRoutingConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options)));
+      std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

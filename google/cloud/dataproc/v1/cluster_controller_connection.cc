@@ -17,14 +17,14 @@
 // source: google/cloud/dataproc/v1/clusters.proto
 
 #include "google/cloud/dataproc/v1/cluster_controller_connection.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/dataproc/v1/cluster_controller_options.h"
 #include "google/cloud/dataproc/v1/internal/cluster_controller_connection_impl.h"
 #include "google/cloud/dataproc/v1/internal/cluster_controller_option_defaults.h"
 #include "google/cloud/dataproc/v1/internal/cluster_controller_stub_factory.h"
 #include "google/cloud/dataproc/v1/internal/cluster_controller_tracing_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
-#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
@@ -42,115 +42,120 @@ future<StatusOr<google::cloud::dataproc::v1::Cluster>>
 ClusterControllerConnection::CreateCluster(
     google::cloud::dataproc::v1::CreateClusterRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::dataproc::v1::Cluster>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::dataproc::v1::Cluster>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 ClusterControllerConnection::CreateCluster(
-    NoAwaitTag, google::cloud::dataproc::v1::CreateClusterRequest const&) {
+    NoAwaitTag,
+    google::cloud::dataproc::v1::CreateClusterRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::dataproc::v1::Cluster>>
 ClusterControllerConnection::CreateCluster(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::dataproc::v1::Cluster>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::dataproc::v1::Cluster>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::dataproc::v1::Cluster>>
 ClusterControllerConnection::UpdateCluster(
     google::cloud::dataproc::v1::UpdateClusterRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::dataproc::v1::Cluster>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::dataproc::v1::Cluster>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 ClusterControllerConnection::UpdateCluster(
-    NoAwaitTag, google::cloud::dataproc::v1::UpdateClusterRequest const&) {
+    NoAwaitTag,
+    google::cloud::dataproc::v1::UpdateClusterRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::dataproc::v1::Cluster>>
 ClusterControllerConnection::UpdateCluster(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::dataproc::v1::Cluster>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::dataproc::v1::Cluster>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::dataproc::v1::Cluster>>
 ClusterControllerConnection::StopCluster(
     google::cloud::dataproc::v1::StopClusterRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::dataproc::v1::Cluster>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::dataproc::v1::Cluster>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 ClusterControllerConnection::StopCluster(
-    NoAwaitTag, google::cloud::dataproc::v1::StopClusterRequest const&) {
+    NoAwaitTag,
+    google::cloud::dataproc::v1::StopClusterRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::dataproc::v1::Cluster>>
 ClusterControllerConnection::StopCluster(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::dataproc::v1::Cluster>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::dataproc::v1::Cluster>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::dataproc::v1::Cluster>>
 ClusterControllerConnection::StartCluster(
     google::cloud::dataproc::v1::StartClusterRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::dataproc::v1::Cluster>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::dataproc::v1::Cluster>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 ClusterControllerConnection::StartCluster(
-    NoAwaitTag, google::cloud::dataproc::v1::StartClusterRequest const&) {
+    NoAwaitTag,
+    google::cloud::dataproc::v1::StartClusterRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::dataproc::v1::Cluster>>
 ClusterControllerConnection::StartCluster(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::dataproc::v1::Cluster>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::dataproc::v1::Cluster>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::dataproc::v1::ClusterOperationMetadata>>
 ClusterControllerConnection::DeleteCluster(
     google::cloud::dataproc::v1::DeleteClusterRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::dataproc::v1::ClusterOperationMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::dataproc::v1::ClusterOperationMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 ClusterControllerConnection::DeleteCluster(
-    NoAwaitTag, google::cloud::dataproc::v1::DeleteClusterRequest const&) {
+    NoAwaitTag,
+    google::cloud::dataproc::v1::DeleteClusterRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::dataproc::v1::ClusterOperationMetadata>>
 ClusterControllerConnection::DeleteCluster(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::dataproc::v1::ClusterOperationMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::dataproc::v1::ClusterOperationMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::dataproc::v1::Cluster>
@@ -159,10 +164,8 @@ ClusterControllerConnection::GetCluster(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::dataproc::v1::Cluster>
-ClusterControllerConnection::ListClusters(
-    google::cloud::dataproc::v1::
-        ListClustersRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::dataproc::v1::Cluster> ClusterControllerConnection::ListClusters(
+    google::cloud::dataproc::v1::ListClustersRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::dataproc::v1::Cluster>>();
 }
@@ -171,31 +174,34 @@ future<StatusOr<google::cloud::dataproc::v1::DiagnoseClusterResults>>
 ClusterControllerConnection::DiagnoseCluster(
     google::cloud::dataproc::v1::DiagnoseClusterRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::dataproc::v1::DiagnoseClusterResults>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::dataproc::v1::DiagnoseClusterResults>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 ClusterControllerConnection::DiagnoseCluster(
-    NoAwaitTag, google::cloud::dataproc::v1::DiagnoseClusterRequest const&) {
+    NoAwaitTag,
+    google::cloud::dataproc::v1::DiagnoseClusterRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::dataproc::v1::DiagnoseClusterResults>>
 ClusterControllerConnection::DiagnoseCluster(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::dataproc::v1::DiagnoseClusterResults>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::dataproc::v1::DiagnoseClusterResults>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::iam::v1::Policy> ClusterControllerConnection::SetIamPolicy(
+StatusOr<google::iam::v1::Policy>
+ClusterControllerConnection::SetIamPolicy(
     google::iam::v1::SetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::iam::v1::Policy> ClusterControllerConnection::GetIamPolicy(
+StatusOr<google::iam::v1::Policy>
+ClusterControllerConnection::GetIamPolicy(
     google::iam::v1::GetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -206,10 +212,8 @@ ClusterControllerConnection::TestIamPermissions(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::longrunning::Operation>
-ClusterControllerConnection::ListOperations(
-    google::longrunning::
-        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::longrunning::Operation> ClusterControllerConnection::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }
@@ -220,12 +224,14 @@ ClusterControllerConnection::GetOperation(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status ClusterControllerConnection::DeleteOperation(
+Status
+ClusterControllerConnection::DeleteOperation(
     google::longrunning::DeleteOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status ClusterControllerConnection::CancelOperation(
+Status
+ClusterControllerConnection::CancelOperation(
     google::longrunning::CancelOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -233,18 +239,17 @@ Status ClusterControllerConnection::CancelOperation(
 std::shared_ptr<ClusterControllerConnection> MakeClusterControllerConnection(
     std::string const& location, Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 ClusterControllerPolicyOptionList>(options,
-                                                                    __func__);
+      UnifiedCredentialsOptionList,
+      ClusterControllerPolicyOptionList>(options, __func__);
   options = dataproc_v1_internal::ClusterControllerDefaultOptions(
       location, std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = dataproc_v1_internal::CreateDefaultClusterControllerStub(
-      std::move(auth), options);
+    std::move(auth), options);
   return dataproc_v1_internal::MakeClusterControllerTracingConnection(
       std::make_shared<dataproc_v1_internal::ClusterControllerConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options)));
+      std::move(background), std::move(stub), std::move(options)));
 }
 
 std::shared_ptr<ClusterControllerConnection> MakeClusterControllerConnection(

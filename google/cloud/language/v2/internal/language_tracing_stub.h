@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LANGUAGE_V2_INTERNAL_LANGUAGE_TRACING_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LANGUAGE_V2_INTERNAL_LANGUAGE_TRACING_STUB_H
 
-#include "google/cloud/language/v2/internal/language_stub.h"
 #include "google/cloud/internal/trace_propagator.h"
+#include "google/cloud/language/v2/internal/language_stub.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -36,35 +36,36 @@ class LanguageServiceTracingStub : public LanguageServiceStub {
  public:
   ~LanguageServiceTracingStub() override = default;
 
-  explicit LanguageServiceTracingStub(
-      std::shared_ptr<LanguageServiceStub> child);
+  explicit LanguageServiceTracingStub(std::shared_ptr<LanguageServiceStub> child);
 
-  StatusOr<google::cloud::language::v2::AnalyzeSentimentResponse>
-  AnalyzeSentiment(grpc::ClientContext& context, Options const& options,
-                   google::cloud::language::v2::AnalyzeSentimentRequest const&
-                       request) override;
+  StatusOr<google::cloud::language::v2::AnalyzeSentimentResponse> AnalyzeSentiment(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::language::v2::AnalyzeSentimentRequest const& request) override;
 
-  StatusOr<google::cloud::language::v2::AnalyzeEntitiesResponse>
-  AnalyzeEntities(grpc::ClientContext& context, Options const& options,
-                  google::cloud::language::v2::AnalyzeEntitiesRequest const&
-                      request) override;
+  StatusOr<google::cloud::language::v2::AnalyzeEntitiesResponse> AnalyzeEntities(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::language::v2::AnalyzeEntitiesRequest const& request) override;
 
   StatusOr<google::cloud::language::v2::ClassifyTextResponse> ClassifyText(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::language::v2::ClassifyTextRequest const& request) override;
 
   StatusOr<google::cloud::language::v2::ModerateTextResponse> ModerateText(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::language::v2::ModerateTextRequest const& request) override;
 
   StatusOr<google::cloud::language::v2::AnnotateTextResponse> AnnotateText(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::language::v2::AnnotateTextRequest const& request) override;
 
  private:
   std::shared_ptr<LanguageServiceStub> child_;
-  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
-      propagator_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

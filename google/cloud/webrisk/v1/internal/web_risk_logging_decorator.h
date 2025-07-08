@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_WEBRISK_V1_INTERNAL_WEB_RISK_LOGGING_DECORATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_WEBRISK_V1_INTERNAL_WEB_RISK_LOGGING_DECORATOR_H
 
-#include "google/cloud/webrisk/v1/internal/web_risk_stub.h"
 #include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
+#include "google/cloud/webrisk/v1/internal/web_risk_stub.h"
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 #include <set>
@@ -36,27 +36,28 @@ class WebRiskServiceLogging : public WebRiskServiceStub {
  public:
   ~WebRiskServiceLogging() override = default;
   WebRiskServiceLogging(std::shared_ptr<WebRiskServiceStub> child,
-                        TracingOptions tracing_options,
-                        std::set<std::string> const& components);
+                       TracingOptions tracing_options,
+                       std::set<std::string> const& components);
 
-  StatusOr<google::cloud::webrisk::v1::ComputeThreatListDiffResponse>
-  ComputeThreatListDiff(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::webrisk::v1::ComputeThreatListDiffRequest const& request)
-      override;
+  StatusOr<google::cloud::webrisk::v1::ComputeThreatListDiffResponse> ComputeThreatListDiff(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::webrisk::v1::ComputeThreatListDiffRequest const& request) override;
 
   StatusOr<google::cloud::webrisk::v1::SearchUrisResponse> SearchUris(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::webrisk::v1::SearchUrisRequest const& request) override;
 
   StatusOr<google::cloud::webrisk::v1::SearchHashesResponse> SearchHashes(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::webrisk::v1::SearchHashesRequest const& request) override;
 
   StatusOr<google::cloud::webrisk::v1::Submission> CreateSubmission(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::webrisk::v1::CreateSubmissionRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::webrisk::v1::CreateSubmissionRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncSubmitUri(
       google::cloud::CompletionQueue& cq,
@@ -65,23 +66,28 @@ class WebRiskServiceLogging : public WebRiskServiceStub {
       google::cloud::webrisk::v1::SubmitUriRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> SubmitUri(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::cloud::webrisk::v1::SubmitUriRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status DeleteOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::DeleteOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(

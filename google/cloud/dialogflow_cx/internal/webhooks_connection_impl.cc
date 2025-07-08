@@ -17,9 +17,9 @@
 // source: google/cloud/dialogflow/cx/v3/webhook.proto
 
 #include "google/cloud/dialogflow_cx/internal/webhooks_connection_impl.h"
-#include "google/cloud/dialogflow_cx/internal/webhooks_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/dialogflow_cx/internal/webhooks_option_defaults.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
@@ -32,60 +32,54 @@ namespace dialogflow_cx_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<dialogflow_cx::WebhooksRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<dialogflow_cx::WebhooksRetryPolicy>
+retry_policy(Options const& options) {
   return options.get<dialogflow_cx::WebhooksRetryPolicyOption>()->clone();
 }
 
-std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+std::unique_ptr<BackoffPolicy>
+backoff_policy(Options const& options) {
   return options.get<dialogflow_cx::WebhooksBackoffPolicyOption>()->clone();
 }
 
 std::unique_ptr<dialogflow_cx::WebhooksConnectionIdempotencyPolicy>
 idempotency_policy(Options const& options) {
-  return options
-      .get<dialogflow_cx::WebhooksConnectionIdempotencyPolicyOption>()
-      ->clone();
+  return options.get<dialogflow_cx::WebhooksConnectionIdempotencyPolicyOption>()->clone();
 }
 
-}  // namespace
+} // namespace
 
 WebhooksConnectionImpl::WebhooksConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<dialogflow_cx_internal::WebhooksStub> stub, Options options)
-    : background_(std::move(background)),
-      stub_(std::move(stub)),
-      options_(internal::MergeOptions(std::move(options),
-                                      WebhooksConnection::options())) {}
+    std::shared_ptr<dialogflow_cx_internal::WebhooksStub> stub,
+    Options options)
+  : background_(std::move(background)), stub_(std::move(stub)),
+    options_(internal::MergeOptions(
+        std::move(options),
+        WebhooksConnection::options())) {}
 
 StreamRange<google::cloud::dialogflow::cx::v3::Webhook>
-WebhooksConnectionImpl::ListWebhooks(
-    google::cloud::dialogflow::cx::v3::ListWebhooksRequest request) {
+WebhooksConnectionImpl::ListWebhooks(google::cloud::dialogflow::cx::v3::ListWebhooksRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListWebhooks(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::dialogflow::cx::v3::Webhook>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::dialogflow::cx::v3::Webhook>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<dialogflow_cx::WebhooksRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<dialogflow_cx::WebhooksRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::dialogflow::cx::v3::ListWebhooksRequest const& r) {
+          Options const& options, google::cloud::dialogflow::cx::v3::ListWebhooksRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::dialogflow::cx::v3::ListWebhooksRequest const&
-                       request) {
+                   google::cloud::dialogflow::cx::v3::ListWebhooksRequest const& request) {
               return stub->ListWebhooks(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::dialogflow::cx::v3::ListWebhooksResponse r) {
-        std::vector<google::cloud::dialogflow::cx::v3::Webhook> result(
-            r.webhooks().size());
+        std::vector<google::cloud::dialogflow::cx::v3::Webhook> result(r.webhooks().size());
         auto& messages = *r.mutable_webhooks();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -93,100 +87,87 @@ WebhooksConnectionImpl::ListWebhooks(
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Webhook>
-WebhooksConnectionImpl::GetWebhook(
-    google::cloud::dialogflow::cx::v3::GetWebhookRequest const& request) {
+WebhooksConnectionImpl::GetWebhook(google::cloud::dialogflow::cx::v3::GetWebhookRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetWebhook(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::dialogflow::cx::v3::GetWebhookRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dialogflow::cx::v3::GetWebhookRequest const& request) {
         return stub_->GetWebhook(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Webhook>
-WebhooksConnectionImpl::CreateWebhook(
-    google::cloud::dialogflow::cx::v3::CreateWebhookRequest const& request) {
+WebhooksConnectionImpl::CreateWebhook(google::cloud::dialogflow::cx::v3::CreateWebhookRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateWebhook(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dialogflow::cx::v3::CreateWebhookRequest const&
-                 request) {
+             google::cloud::dialogflow::cx::v3::CreateWebhookRequest const& request) {
         return stub_->CreateWebhook(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Webhook>
-WebhooksConnectionImpl::UpdateWebhook(
-    google::cloud::dialogflow::cx::v3::UpdateWebhookRequest const& request) {
+WebhooksConnectionImpl::UpdateWebhook(google::cloud::dialogflow::cx::v3::UpdateWebhookRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateWebhook(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dialogflow::cx::v3::UpdateWebhookRequest const&
-                 request) {
+             google::cloud::dialogflow::cx::v3::UpdateWebhookRequest const& request) {
         return stub_->UpdateWebhook(context, options, request);
       },
       *current, request, __func__);
 }
 
-Status WebhooksConnectionImpl::DeleteWebhook(
-    google::cloud::dialogflow::cx::v3::DeleteWebhookRequest const& request) {
+Status
+WebhooksConnectionImpl::DeleteWebhook(google::cloud::dialogflow::cx::v3::DeleteWebhookRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteWebhook(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dialogflow::cx::v3::DeleteWebhookRequest const&
-                 request) {
+             google::cloud::dialogflow::cx::v3::DeleteWebhookRequest const& request) {
         return stub_->DeleteWebhook(context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::cloud::location::Location>
-WebhooksConnectionImpl::ListLocations(
-    google::cloud::location::ListLocationsRequest request) {
+WebhooksConnectionImpl::ListLocations(google::cloud::location::ListLocationsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListLocations(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::location::Location>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::location::Location>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<dialogflow_cx::WebhooksRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<dialogflow_cx::WebhooksRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::location::ListLocationsRequest const& r) {
+          Options const& options, google::cloud::location::ListLocationsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](
-                grpc::ClientContext& context, Options const& options,
-                google::cloud::location::ListLocationsRequest const& request) {
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::cloud::location::ListLocationsRequest const& request) {
               return stub->ListLocations(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::location::ListLocationsResponse r) {
-        std::vector<google::cloud::location::Location> result(
-            r.locations().size());
+        std::vector<google::cloud::location::Location> result(r.locations().size());
         auto& messages = *r.mutable_locations();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
       });
 }
 
-StatusOr<google::cloud::location::Location> WebhooksConnectionImpl::GetLocation(
-    google::cloud::location::GetLocationRequest const& request) {
+StatusOr<google::cloud::location::Location>
+WebhooksConnectionImpl::GetLocation(google::cloud::location::GetLocationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -199,21 +180,17 @@ StatusOr<google::cloud::location::Location> WebhooksConnectionImpl::GetLocation(
 }
 
 StreamRange<google::longrunning::Operation>
-WebhooksConnectionImpl::ListOperations(
-    google::longrunning::ListOperationsRequest request) {
+WebhooksConnectionImpl::ListOperations(google::longrunning::ListOperationsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListOperations(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::longrunning::Operation>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::longrunning::Operation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<dialogflow_cx::WebhooksRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<dialogflow_cx::WebhooksRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::longrunning::ListOperationsRequest const& r) {
+          Options const& options, google::longrunning::ListOperationsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
@@ -223,16 +200,15 @@ WebhooksConnectionImpl::ListOperations(
             options, r, function_name);
       },
       [](google::longrunning::ListOperationsResponse r) {
-        std::vector<google::longrunning::Operation> result(
-            r.operations().size());
+        std::vector<google::longrunning::Operation> result(r.operations().size());
         auto& messages = *r.mutable_operations();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
       });
 }
 
-StatusOr<google::longrunning::Operation> WebhooksConnectionImpl::GetOperation(
-    google::longrunning::GetOperationRequest const& request) {
+StatusOr<google::longrunning::Operation>
+WebhooksConnectionImpl::GetOperation(google::longrunning::GetOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -244,8 +220,8 @@ StatusOr<google::longrunning::Operation> WebhooksConnectionImpl::GetOperation(
       *current, request, __func__);
 }
 
-Status WebhooksConnectionImpl::CancelOperation(
-    google::longrunning::CancelOperationRequest const& request) {
+Status
+WebhooksConnectionImpl::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),

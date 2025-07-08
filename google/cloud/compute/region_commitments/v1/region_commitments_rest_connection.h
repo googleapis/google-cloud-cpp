@@ -30,33 +30,31 @@ namespace compute_region_commitments_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /**
- * A factory function to construct an object of type
- * `RegionCommitmentsConnection` that uses REST over HTTP as transport in lieu
- * of gRPC. REST transport should only be used for services that do not support
- * gRPC or if the existing network configuration precludes using gRPC.
+ * A factory function to construct an object of type `RegionCommitmentsConnection`
+ * that uses REST over HTTP as transport in lieu of gRPC. REST transport should
+ * only be used for services that do not support gRPC or if the existing network
+ * configuration precludes using gRPC.
  *
  * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of
- * RegionCommitmentsClient.
+ * should be passed as an argument to the constructor of RegionCommitmentsClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `RegionCommitmentsConnection`. Expected options are any of the types
- * in the following option lists:
+ * returned `RegionCommitmentsConnection`. Expected options are any of the types in
+ * the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::RestOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * -
- * `google::cloud::compute_region_commitments_v1::RegionCommitmentsPolicyOptionList`
+ * - `google::cloud::compute_region_commitments_v1::RegionCommitmentsPolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
- * @param options (optional) Configure the `RegionCommitmentsConnection` created
- * by this function.
+ * @param options (optional) Configure the `RegionCommitmentsConnection` created by
+ * this function.
  */
-std::shared_ptr<RegionCommitmentsConnection>
-MakeRegionCommitmentsConnectionRest(Options options = {});
+std::shared_ptr<RegionCommitmentsConnection> MakeRegionCommitmentsConnectionRest(
+    Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_region_commitments_v1

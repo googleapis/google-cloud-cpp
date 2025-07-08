@@ -32,36 +32,33 @@ OrganizationsTracingStub::OrganizationsTracingStub(
     std::shared_ptr<OrganizationsStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
-StatusOr<google::cloud::resourcemanager::v3::Organization>
-OrganizationsTracingStub::GetOrganization(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::resourcemanager::v3::Organization> OrganizationsTracingStub::GetOrganization(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::resourcemanager::v3::GetOrganizationRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.resourcemanager.v3.Organizations", "GetOrganization");
+  auto span = internal::MakeSpanGrpc("google.cloud.resourcemanager.v3.Organizations", "GetOrganization");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetOrganization(context, options, request));
 }
 
-StatusOr<google::cloud::resourcemanager::v3::SearchOrganizationsResponse>
-OrganizationsTracingStub::SearchOrganizations(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::resourcemanager::v3::SearchOrganizationsRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.resourcemanager.v3.Organizations", "SearchOrganizations");
+StatusOr<google::cloud::resourcemanager::v3::SearchOrganizationsResponse> OrganizationsTracingStub::SearchOrganizations(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::resourcemanager::v3::SearchOrganizationsRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.resourcemanager.v3.Organizations", "SearchOrganizations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->SearchOrganizations(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->SearchOrganizations(context, options, request));
 }
 
 StatusOr<google::iam::v1::Policy> OrganizationsTracingStub::GetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.resourcemanager.v3.Organizations", "GetIamPolicy");
+  auto span = internal::MakeSpanGrpc("google.cloud.resourcemanager.v3.Organizations", "GetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -69,33 +66,32 @@ StatusOr<google::iam::v1::Policy> OrganizationsTracingStub::GetIamPolicy(
 }
 
 StatusOr<google::iam::v1::Policy> OrganizationsTracingStub::SetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.resourcemanager.v3.Organizations", "SetIamPolicy");
+  auto span = internal::MakeSpanGrpc("google.cloud.resourcemanager.v3.Organizations", "SetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->SetIamPolicy(context, options, request));
 }
 
-StatusOr<google::iam::v1::TestIamPermissionsResponse>
-OrganizationsTracingStub::TestIamPermissions(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::iam::v1::TestIamPermissionsResponse> OrganizationsTracingStub::TestIamPermissions(
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.resourcemanager.v3.Organizations", "TestIamPermissions");
+  auto span = internal::MakeSpanGrpc("google.cloud.resourcemanager.v3.Organizations", "TestIamPermissions");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->TestIamPermissions(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->TestIamPermissions(context, options, request));
 }
 
 StatusOr<google::longrunning::Operation> OrganizationsTracingStub::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.resourcemanager.v3.Organizations", "GetOperation");
+  auto span = internal::MakeSpanGrpc("google.cloud.resourcemanager.v3.Organizations", "GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,

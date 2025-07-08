@@ -32,78 +32,80 @@ DocumentSchemaServiceStub::~DocumentSchemaServiceStub() = default;
 
 StatusOr<google::cloud::contentwarehouse::v1::DocumentSchema>
 DefaultDocumentSchemaServiceStub::CreateDocumentSchema(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::contentwarehouse::v1::CreateDocumentSchemaRequest const&
-        request) {
-  google::cloud::contentwarehouse::v1::DocumentSchema response;
-  auto status = grpc_stub_->CreateDocumentSchema(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::contentwarehouse::v1::CreateDocumentSchemaRequest const& request) {
+    google::cloud::contentwarehouse::v1::DocumentSchema response;
+    auto status =
+        grpc_stub_->CreateDocumentSchema(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::contentwarehouse::v1::DocumentSchema>
 DefaultDocumentSchemaServiceStub::UpdateDocumentSchema(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::contentwarehouse::v1::UpdateDocumentSchemaRequest const&
-        request) {
-  google::cloud::contentwarehouse::v1::DocumentSchema response;
-  auto status = grpc_stub_->UpdateDocumentSchema(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::contentwarehouse::v1::UpdateDocumentSchemaRequest const& request) {
+    google::cloud::contentwarehouse::v1::DocumentSchema response;
+    auto status =
+        grpc_stub_->UpdateDocumentSchema(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::contentwarehouse::v1::DocumentSchema>
 DefaultDocumentSchemaServiceStub::GetDocumentSchema(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::contentwarehouse::v1::GetDocumentSchemaRequest const&
-        request) {
-  google::cloud::contentwarehouse::v1::DocumentSchema response;
-  auto status = grpc_stub_->GetDocumentSchema(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::contentwarehouse::v1::GetDocumentSchemaRequest const& request) {
+    google::cloud::contentwarehouse::v1::DocumentSchema response;
+    auto status =
+        grpc_stub_->GetDocumentSchema(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-Status DefaultDocumentSchemaServiceStub::DeleteDocumentSchema(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::contentwarehouse::v1::DeleteDocumentSchemaRequest const&
-        request) {
-  google::protobuf::Empty response;
-  auto status = grpc_stub_->DeleteDocumentSchema(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return google::cloud::Status();
+Status
+DefaultDocumentSchemaServiceStub::DeleteDocumentSchema(
+  grpc::ClientContext& context, Options const&,
+  google::cloud::contentwarehouse::v1::DeleteDocumentSchemaRequest const& request) {
+    google::protobuf::Empty response;
+    auto status =
+        grpc_stub_->DeleteDocumentSchema(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return google::cloud::Status();
 }
 
 StatusOr<google::cloud::contentwarehouse::v1::ListDocumentSchemasResponse>
 DefaultDocumentSchemaServiceStub::ListDocumentSchemas(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::contentwarehouse::v1::ListDocumentSchemasRequest const&
-        request) {
-  google::cloud::contentwarehouse::v1::ListDocumentSchemasResponse response;
-  auto status = grpc_stub_->ListDocumentSchemas(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::contentwarehouse::v1::ListDocumentSchemasRequest const& request) {
+    google::cloud::contentwarehouse::v1::ListDocumentSchemasResponse response;
+    auto status =
+        grpc_stub_->ListDocumentSchemas(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::longrunning::Operation>
 DefaultDocumentSchemaServiceStub::GetOperation(
-    grpc::ClientContext& context, Options const&,
-    google::longrunning::GetOperationRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = operations_stub_->GetOperation(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::longrunning::GetOperationRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        operations_stub_->GetOperation(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

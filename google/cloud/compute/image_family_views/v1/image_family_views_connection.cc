@@ -17,11 +17,11 @@
 // source: google/cloud/compute/image_family_views/v1/image_family_views.proto
 
 #include "google/cloud/compute/image_family_views/v1/image_family_views_connection.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/compute/image_family_views/v1/image_family_views_options.h"
 #include "google/cloud/compute/image_family_views/v1/internal/image_family_views_option_defaults.h"
 #include "google/cloud/compute/image_family_views/v1/internal/image_family_views_tracing_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
@@ -37,8 +37,7 @@ ImageFamilyViewsConnection::~ImageFamilyViewsConnection() = default;
 
 StatusOr<google::cloud::cpp::compute::v1::ImageFamilyView>
 ImageFamilyViewsConnection::GetImageFamilyView(
-    google::cloud::cpp::compute::image_family_views::v1::
-        GetImageFamilyViewRequest const&) {
+    google::cloud::cpp::compute::image_family_views::v1::GetImageFamilyViewRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 

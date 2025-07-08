@@ -28,38 +28,30 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 TopicStatsServiceClient::TopicStatsServiceClient(
     std::shared_ptr<TopicStatsServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 TopicStatsServiceClient::~TopicStatsServiceClient() = default;
 
 StatusOr<google::cloud::pubsublite::v1::ComputeMessageStatsResponse>
-TopicStatsServiceClient::ComputeMessageStats(
-    google::cloud::pubsublite::v1::ComputeMessageStatsRequest const& request,
-    Options opts) {
+TopicStatsServiceClient::ComputeMessageStats(google::cloud::pubsublite::v1::ComputeMessageStatsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ComputeMessageStats(request);
 }
 
 StatusOr<google::cloud::pubsublite::v1::ComputeHeadCursorResponse>
-TopicStatsServiceClient::ComputeHeadCursor(
-    google::cloud::pubsublite::v1::ComputeHeadCursorRequest const& request,
-    Options opts) {
+TopicStatsServiceClient::ComputeHeadCursor(google::cloud::pubsublite::v1::ComputeHeadCursorRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ComputeHeadCursor(request);
 }
 
 StatusOr<google::cloud::pubsublite::v1::ComputeTimeCursorResponse>
-TopicStatsServiceClient::ComputeTimeCursor(
-    google::cloud::pubsublite::v1::ComputeTimeCursorRequest const& request,
-    Options opts) {
+TopicStatsServiceClient::ComputeTimeCursor(google::cloud::pubsublite::v1::ComputeTimeCursorRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ComputeTimeCursor(request);
 }
 
 StreamRange<google::longrunning::Operation>
-TopicStatsServiceClient::ListOperations(std::string const& name,
-                                        std::string const& filter,
-                                        Options opts) {
+TopicStatsServiceClient::ListOperations(std::string const& name, std::string const& filter, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::ListOperationsRequest request;
   request.set_name(name);
@@ -68,50 +60,49 @@ TopicStatsServiceClient::ListOperations(std::string const& name,
 }
 
 StreamRange<google::longrunning::Operation>
-TopicStatsServiceClient::ListOperations(
-    google::longrunning::ListOperationsRequest request, Options opts) {
+TopicStatsServiceClient::ListOperations(google::longrunning::ListOperationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOperations(std::move(request));
 }
 
-StatusOr<google::longrunning::Operation> TopicStatsServiceClient::GetOperation(
-    std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation>
+TopicStatsServiceClient::GetOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
   return connection_->GetOperation(request);
 }
 
-StatusOr<google::longrunning::Operation> TopicStatsServiceClient::GetOperation(
-    google::longrunning::GetOperationRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation>
+TopicStatsServiceClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }
 
-Status TopicStatsServiceClient::DeleteOperation(std::string const& name,
-                                                Options opts) {
+Status
+TopicStatsServiceClient::DeleteOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::DeleteOperationRequest request;
   request.set_name(name);
   return connection_->DeleteOperation(request);
 }
 
-Status TopicStatsServiceClient::DeleteOperation(
-    google::longrunning::DeleteOperationRequest const& request, Options opts) {
+Status
+TopicStatsServiceClient::DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteOperation(request);
 }
 
-Status TopicStatsServiceClient::CancelOperation(std::string const& name,
-                                                Options opts) {
+Status
+TopicStatsServiceClient::CancelOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::CancelOperationRequest request;
   request.set_name(name);
   return connection_->CancelOperation(request);
 }
 
-Status TopicStatsServiceClient::CancelOperation(
-    google::longrunning::CancelOperationRequest const& request, Options opts) {
+Status
+TopicStatsServiceClient::CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelOperation(request);
 }

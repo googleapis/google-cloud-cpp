@@ -36,30 +36,30 @@ class DataFusionConnectionIdempotencyPolicy {
   /// Create a new copy of this object.
   virtual std::unique_ptr<DataFusionConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency ListAvailableVersions(
-      google::cloud::datafusion::v1::ListAvailableVersionsRequest request);
+  virtual google::cloud::Idempotency
+  ListAvailableVersions(google::cloud::datafusion::v1::ListAvailableVersionsRequest request);
 
-  virtual google::cloud::Idempotency ListInstances(
-      google::cloud::datafusion::v1::ListInstancesRequest request);
+  virtual google::cloud::Idempotency
+  ListInstances(google::cloud::datafusion::v1::ListInstancesRequest request);
 
-  virtual google::cloud::Idempotency GetInstance(
-      google::cloud::datafusion::v1::GetInstanceRequest const& request);
+  virtual google::cloud::Idempotency
+  GetInstance(google::cloud::datafusion::v1::GetInstanceRequest const& request);
 
-  virtual google::cloud::Idempotency CreateInstance(
-      google::cloud::datafusion::v1::CreateInstanceRequest const& request);
+  virtual google::cloud::Idempotency
+  CreateInstance(google::cloud::datafusion::v1::CreateInstanceRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteInstance(
-      google::cloud::datafusion::v1::DeleteInstanceRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteInstance(google::cloud::datafusion::v1::DeleteInstanceRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateInstance(
-      google::cloud::datafusion::v1::UpdateInstanceRequest const& request);
+  virtual google::cloud::Idempotency
+  UpdateInstance(google::cloud::datafusion::v1::UpdateInstanceRequest const& request);
 
-  virtual google::cloud::Idempotency RestartInstance(
-      google::cloud::datafusion::v1::RestartInstanceRequest const& request);
+  virtual google::cloud::Idempotency
+  RestartInstance(google::cloud::datafusion::v1::RestartInstanceRequest const& request);
 };
 
 std::unique_ptr<DataFusionConnectionIdempotencyPolicy>
-MakeDefaultDataFusionConnectionIdempotencyPolicy();
+    MakeDefaultDataFusionConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace datafusion_v1

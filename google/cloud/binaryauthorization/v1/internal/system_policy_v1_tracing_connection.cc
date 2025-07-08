@@ -33,11 +33,8 @@ SystemPolicyV1TracingConnection::SystemPolicyV1TracingConnection(
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::binaryauthorization::v1::Policy>
-SystemPolicyV1TracingConnection::GetSystemPolicy(
-    google::cloud::binaryauthorization::v1::GetSystemPolicyRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "binaryauthorization_v1::SystemPolicyV1Connection::GetSystemPolicy");
+SystemPolicyV1TracingConnection::GetSystemPolicy(google::cloud::binaryauthorization::v1::GetSystemPolicyRequest const& request) {
+  auto span = internal::MakeSpan("binaryauthorization_v1::SystemPolicyV1Connection::GetSystemPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetSystemPolicy(request));
 }

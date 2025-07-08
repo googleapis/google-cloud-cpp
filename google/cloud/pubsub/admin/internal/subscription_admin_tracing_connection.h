@@ -36,54 +36,54 @@ class SubscriptionAdminTracingConnection
   ~SubscriptionAdminTracingConnection() override = default;
 
   explicit SubscriptionAdminTracingConnection(
-      std::shared_ptr<pubsub_admin::SubscriptionAdminConnection> child);
+    std::shared_ptr<pubsub_admin::SubscriptionAdminConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::pubsub::v1::Subscription> CreateSubscription(
-      google::pubsub::v1::Subscription const& request) override;
+  StatusOr<google::pubsub::v1::Subscription>
+  CreateSubscription(google::pubsub::v1::Subscription const& request) override;
 
-  StatusOr<google::pubsub::v1::Subscription> GetSubscription(
-      google::pubsub::v1::GetSubscriptionRequest const& request) override;
+  StatusOr<google::pubsub::v1::Subscription>
+  GetSubscription(google::pubsub::v1::GetSubscriptionRequest const& request) override;
 
-  StatusOr<google::pubsub::v1::Subscription> UpdateSubscription(
-      google::pubsub::v1::UpdateSubscriptionRequest const& request) override;
+  StatusOr<google::pubsub::v1::Subscription>
+  UpdateSubscription(google::pubsub::v1::UpdateSubscriptionRequest const& request) override;
 
-  StreamRange<google::pubsub::v1::Subscription> ListSubscriptions(
-      google::pubsub::v1::ListSubscriptionsRequest request) override;
+  StreamRange<google::pubsub::v1::Subscription>
+  ListSubscriptions(google::pubsub::v1::ListSubscriptionsRequest request) override;
 
-  Status DeleteSubscription(
-      google::pubsub::v1::DeleteSubscriptionRequest const& request) override;
+  Status
+  DeleteSubscription(google::pubsub::v1::DeleteSubscriptionRequest const& request) override;
 
-  Status ModifyPushConfig(
-      google::pubsub::v1::ModifyPushConfigRequest const& request) override;
+  Status
+  ModifyPushConfig(google::pubsub::v1::ModifyPushConfigRequest const& request) override;
 
-  StatusOr<google::pubsub::v1::Snapshot> GetSnapshot(
-      google::pubsub::v1::GetSnapshotRequest const& request) override;
+  StatusOr<google::pubsub::v1::Snapshot>
+  GetSnapshot(google::pubsub::v1::GetSnapshotRequest const& request) override;
 
-  StreamRange<google::pubsub::v1::Snapshot> ListSnapshots(
-      google::pubsub::v1::ListSnapshotsRequest request) override;
+  StreamRange<google::pubsub::v1::Snapshot>
+  ListSnapshots(google::pubsub::v1::ListSnapshotsRequest request) override;
 
-  StatusOr<google::pubsub::v1::Snapshot> CreateSnapshot(
-      google::pubsub::v1::CreateSnapshotRequest const& request) override;
+  StatusOr<google::pubsub::v1::Snapshot>
+  CreateSnapshot(google::pubsub::v1::CreateSnapshotRequest const& request) override;
 
-  StatusOr<google::pubsub::v1::Snapshot> UpdateSnapshot(
-      google::pubsub::v1::UpdateSnapshotRequest const& request) override;
+  StatusOr<google::pubsub::v1::Snapshot>
+  UpdateSnapshot(google::pubsub::v1::UpdateSnapshotRequest const& request) override;
 
-  Status DeleteSnapshot(
-      google::pubsub::v1::DeleteSnapshotRequest const& request) override;
+  Status
+  DeleteSnapshot(google::pubsub::v1::DeleteSnapshotRequest const& request) override;
 
-  StatusOr<google::pubsub::v1::SeekResponse> Seek(
-      google::pubsub::v1::SeekRequest const& request) override;
+  StatusOr<google::pubsub::v1::SeekResponse>
+  Seek(google::pubsub::v1::SeekRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request) override;
+  StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) override;
 
  private:
   std::shared_ptr<pubsub_admin::SubscriptionAdminConnection> child_;

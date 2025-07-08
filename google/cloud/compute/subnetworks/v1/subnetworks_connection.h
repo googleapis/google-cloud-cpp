@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_SUBNETWORKS_V1_SUBNETWORKS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_SUBNETWORKS_V1_SUBNETWORKS_CONNECTION_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/subnetworks/v1/internal/subnetworks_retry_traits.h"
 #include "google/cloud/compute/subnetworks/v1/subnetworks_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -65,14 +65,14 @@ class SubnetworksLimitedErrorCountRetryPolicy : public SubnetworksRetryPolicy {
    *     @p maximum_failures == 0.
    */
   explicit SubnetworksLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   SubnetworksLimitedErrorCountRetryPolicy(
       SubnetworksLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : SubnetworksLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : SubnetworksLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   SubnetworksLimitedErrorCountRetryPolicy(
       SubnetworksLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : SubnetworksLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : SubnetworksLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -92,9 +92,7 @@ class SubnetworksLimitedErrorCountRetryPolicy : public SubnetworksRetryPolicy {
   using BaseType = SubnetworksRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      compute_subnetworks_v1_internal::SubnetworksRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<compute_subnetworks_v1_internal::SubnetworksRetryTraits> impl_;
 };
 
 /**
@@ -132,14 +130,12 @@ class SubnetworksLimitedTimeRetryPolicy : public SubnetworksRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit SubnetworksLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  SubnetworksLimitedTimeRetryPolicy(
-      SubnetworksLimitedTimeRetryPolicy&& rhs) noexcept
-      : SubnetworksLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  SubnetworksLimitedTimeRetryPolicy(
-      SubnetworksLimitedTimeRetryPolicy const& rhs) noexcept
-      : SubnetworksLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  SubnetworksLimitedTimeRetryPolicy(SubnetworksLimitedTimeRetryPolicy&& rhs) noexcept
+    : SubnetworksLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  SubnetworksLimitedTimeRetryPolicy(SubnetworksLimitedTimeRetryPolicy const& rhs) noexcept
+    : SubnetworksLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -161,9 +157,7 @@ class SubnetworksLimitedTimeRetryPolicy : public SubnetworksRetryPolicy {
   using BaseType = SubnetworksRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      compute_subnetworks_v1_internal::SubnetworksRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<compute_subnetworks_v1_internal::SubnetworksRetryTraits> impl_;
 };
 
 /**
@@ -184,93 +178,71 @@ class SubnetworksConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StreamRange<std::pair<
-      std::string, google::cloud::cpp::compute::v1::SubnetworksScopedList>>
-  AggregatedListSubnetworks(google::cloud::cpp::compute::subnetworks::v1::
-                                AggregatedListSubnetworksRequest request);
+  virtual StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::SubnetworksScopedList>>
+  AggregatedListSubnetworks(google::cloud::cpp::compute::subnetworks::v1::AggregatedListSubnetworksRequest request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteSubnetwork(google::cloud::cpp::compute::subnetworks::v1::
-                       DeleteSubnetworkRequest const& request);
-
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteSubnetwork(
-      NoAwaitTag, google::cloud::cpp::compute::subnetworks::v1::
-                      DeleteSubnetworkRequest const& request);
-
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteSubnetwork(google::cloud::cpp::compute::v1::Operation const& operation);
-
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  ExpandIpCidrRange(google::cloud::cpp::compute::subnetworks::v1::
-                        ExpandIpCidrRangeRequest const& request);
+  DeleteSubnetwork(google::cloud::cpp::compute::subnetworks::v1::DeleteSubnetworkRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  ExpandIpCidrRange(NoAwaitTag, google::cloud::cpp::compute::subnetworks::v1::
-                                    ExpandIpCidrRangeRequest const& request);
+  DeleteSubnetwork(NoAwaitTag, google::cloud::cpp::compute::subnetworks::v1::DeleteSubnetworkRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  ExpandIpCidrRange(
-      google::cloud::cpp::compute::v1::Operation const& operation);
-
-  virtual StatusOr<google::cloud::cpp::compute::v1::Subnetwork> GetSubnetwork(
-      google::cloud::cpp::compute::subnetworks::v1::GetSubnetworkRequest const&
-          request);
-
-  virtual StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
-      google::cloud::cpp::compute::subnetworks::v1::GetIamPolicyRequest const&
-          request);
+  DeleteSubnetwork( google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertSubnetwork(google::cloud::cpp::compute::subnetworks::v1::
-                       InsertSubnetworkRequest const& request);
+  ExpandIpCidrRange(google::cloud::cpp::compute::subnetworks::v1::ExpandIpCidrRangeRequest const& request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> InsertSubnetwork(
-      NoAwaitTag, google::cloud::cpp::compute::subnetworks::v1::
-                      InsertSubnetworkRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  ExpandIpCidrRange(NoAwaitTag, google::cloud::cpp::compute::subnetworks::v1::ExpandIpCidrRangeRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertSubnetwork(google::cloud::cpp::compute::v1::Operation const& operation);
+  ExpandIpCidrRange( google::cloud::cpp::compute::v1::Operation const& operation);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Subnetwork>
+  GetSubnetwork(google::cloud::cpp::compute::subnetworks::v1::GetSubnetworkRequest const& request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Policy>
+  GetIamPolicy(google::cloud::cpp::compute::subnetworks::v1::GetIamPolicyRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  InsertSubnetwork(google::cloud::cpp::compute::subnetworks::v1::InsertSubnetworkRequest const& request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  InsertSubnetwork(NoAwaitTag, google::cloud::cpp::compute::subnetworks::v1::InsertSubnetworkRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  InsertSubnetwork( google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::Subnetwork>
-  ListSubnetworks(
-      google::cloud::cpp::compute::subnetworks::v1::ListSubnetworksRequest
-          request);
+  ListSubnetworks(google::cloud::cpp::compute::subnetworks::v1::ListSubnetworksRequest request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::UsableSubnetwork>
-  ListUsable(
-      google::cloud::cpp::compute::subnetworks::v1::ListUsableRequest request);
+  ListUsable(google::cloud::cpp::compute::subnetworks::v1::ListUsableRequest request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchSubnetwork(google::cloud::cpp::compute::subnetworks::v1::
-                      PatchSubnetworkRequest const& request);
-
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> PatchSubnetwork(
-      NoAwaitTag, google::cloud::cpp::compute::subnetworks::v1::
-                      PatchSubnetworkRequest const& request);
-
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchSubnetwork(google::cloud::cpp::compute::v1::Operation const& operation);
-
-  virtual StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
-      google::cloud::cpp::compute::subnetworks::v1::SetIamPolicyRequest const&
-          request);
-
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetPrivateIpGoogleAccess(google::cloud::cpp::compute::subnetworks::v1::
-                               SetPrivateIpGoogleAccessRequest const& request);
+  PatchSubnetwork(google::cloud::cpp::compute::subnetworks::v1::PatchSubnetworkRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetPrivateIpGoogleAccess(NoAwaitTag,
-                           google::cloud::cpp::compute::subnetworks::v1::
-                               SetPrivateIpGoogleAccessRequest const& request);
+  PatchSubnetwork(NoAwaitTag, google::cloud::cpp::compute::subnetworks::v1::PatchSubnetworkRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetPrivateIpGoogleAccess(
-      google::cloud::cpp::compute::v1::Operation const& operation);
+  PatchSubnetwork( google::cloud::cpp::compute::v1::Operation const& operation);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Policy>
+  SetIamPolicy(google::cloud::cpp::compute::subnetworks::v1::SetIamPolicyRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  SetPrivateIpGoogleAccess(google::cloud::cpp::compute::subnetworks::v1::SetPrivateIpGoogleAccessRequest const& request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  SetPrivateIpGoogleAccess(NoAwaitTag, google::cloud::cpp::compute::subnetworks::v1::SetPrivateIpGoogleAccessRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  SetPrivateIpGoogleAccess( google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(google::cloud::cpp::compute::subnetworks::v1::
-                         TestIamPermissionsRequest const& request);
+  TestIamPermissions(google::cloud::cpp::compute::subnetworks::v1::TestIamPermissionsRequest const& request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

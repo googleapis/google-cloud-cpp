@@ -61,33 +61,27 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// and move-construction is a relatively efficient operation, consider using
 /// such a copy when using this class from multiple threads.
 ///
-/// [google.cloud.dialogflow.v2.SessionEntityType]:
-/// @googleapis_reference_link{google/cloud/dialogflow/v2/session_entity_type.proto#L173}
+/// [google.cloud.dialogflow.v2.SessionEntityType]: @googleapis_reference_link{google/cloud/dialogflow/v2/session_entity_type.proto#L173}
 ///
 class SessionEntityTypesClient {
  public:
-  explicit SessionEntityTypesClient(
-      std::shared_ptr<SessionEntityTypesConnection> connection,
-      Options opts = {});
+  explicit SessionEntityTypesClient(std::shared_ptr<SessionEntityTypesConnection> connection, Options opts = {});
   ~SessionEntityTypesClient();
 
   ///@{
   /// @name Copy and move support
   SessionEntityTypesClient(SessionEntityTypesClient const&) = default;
-  SessionEntityTypesClient& operator=(SessionEntityTypesClient const&) =
-      default;
+  SessionEntityTypesClient& operator=(SessionEntityTypesClient const&) = default;
   SessionEntityTypesClient(SessionEntityTypesClient&&) = default;
   SessionEntityTypesClient& operator=(SessionEntityTypesClient&&) = default;
   ///@}
 
   ///@{
   /// @name Equality
-  friend bool operator==(SessionEntityTypesClient const& a,
-                         SessionEntityTypesClient const& b) {
+  friend bool operator==(SessionEntityTypesClient const& a, SessionEntityTypesClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(SessionEntityTypesClient const& a,
-                         SessionEntityTypesClient const& b) {
+  friend bool operator!=(SessionEntityTypesClient const& a, SessionEntityTypesClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -175,9 +169,7 @@ class SessionEntityTypesClient {
   ///
   // clang-format on
   StreamRange<google::cloud::dialogflow::v2::SessionEntityType>
-  ListSessionEntityTypes(
-      google::cloud::dialogflow::v2::ListSessionEntityTypesRequest request,
-      Options opts = {});
+  ListSessionEntityTypes(google::cloud::dialogflow::v2::ListSessionEntityTypesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -243,9 +235,7 @@ class SessionEntityTypesClient {
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::v2::SessionEntityType>
-  GetSessionEntityType(
-      google::cloud::dialogflow::v2::GetSessionEntityTypeRequest const& request,
-      Options opts = {});
+  GetSessionEntityType(google::cloud::dialogflow::v2::GetSessionEntityTypeRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -282,11 +272,7 @@ class SessionEntityTypesClient {
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::v2::SessionEntityType>
-  CreateSessionEntityType(
-      std::string const& parent,
-      google::cloud::dialogflow::v2::SessionEntityType const&
-          session_entity_type,
-      Options opts = {});
+  CreateSessionEntityType(std::string const& parent, google::cloud::dialogflow::v2::SessionEntityType const& session_entity_type, Options opts = {});
 
   // clang-format off
   ///
@@ -323,10 +309,7 @@ class SessionEntityTypesClient {
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::v2::SessionEntityType>
-  CreateSessionEntityType(
-      google::cloud::dialogflow::v2::CreateSessionEntityTypeRequest const&
-          request,
-      Options opts = {});
+  CreateSessionEntityType(google::cloud::dialogflow::v2::CreateSessionEntityTypeRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -355,10 +338,7 @@ class SessionEntityTypesClient {
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::v2::SessionEntityType>
-  UpdateSessionEntityType(
-      google::cloud::dialogflow::v2::SessionEntityType const&
-          session_entity_type,
-      Options opts = {});
+  UpdateSessionEntityType(google::cloud::dialogflow::v2::SessionEntityType const& session_entity_type, Options opts = {});
 
   // clang-format off
   ///
@@ -388,10 +368,7 @@ class SessionEntityTypesClient {
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::v2::SessionEntityType>
-  UpdateSessionEntityType(
-      google::cloud::dialogflow::v2::SessionEntityType const&
-          session_entity_type,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  UpdateSessionEntityType(google::cloud::dialogflow::v2::SessionEntityType const& session_entity_type, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -425,10 +402,7 @@ class SessionEntityTypesClient {
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::v2::SessionEntityType>
-  UpdateSessionEntityType(
-      google::cloud::dialogflow::v2::UpdateSessionEntityTypeRequest const&
-          request,
-      Options opts = {});
+  UpdateSessionEntityType(google::cloud::dialogflow::v2::UpdateSessionEntityTypeRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -456,7 +430,8 @@ class SessionEntityTypesClient {
   /// [google.cloud.dialogflow.v2.DeleteSessionEntityTypeRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/session_entity_type.proto#L316}
   ///
   // clang-format on
-  Status DeleteSessionEntityType(std::string const& name, Options opts = {});
+  Status
+  DeleteSessionEntityType(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -486,10 +461,8 @@ class SessionEntityTypesClient {
   /// [google.cloud.dialogflow.v2.DeleteSessionEntityTypeRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/session_entity_type.proto#L316}
   ///
   // clang-format on
-  Status DeleteSessionEntityType(
-      google::cloud::dialogflow::v2::DeleteSessionEntityTypeRequest const&
-          request,
-      Options opts = {});
+  Status
+  DeleteSessionEntityType(google::cloud::dialogflow::v2::DeleteSessionEntityTypeRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -527,8 +500,8 @@ class SessionEntityTypesClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request, Options opts = {});
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -557,9 +530,8 @@ class SessionEntityTypesClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -594,8 +566,8 @@ class SessionEntityTypesClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -634,8 +606,8 @@ class SessionEntityTypesClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -661,8 +633,8 @@ class SessionEntityTypesClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -693,9 +665,8 @@ class SessionEntityTypesClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -729,7 +700,8 @@ class SessionEntityTypesClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(std::string const& name, Options opts = {});
+  Status
+  CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -768,9 +740,8 @@ class SessionEntityTypesClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request,
-      Options opts = {});
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<SessionEntityTypesConnection> connection_;

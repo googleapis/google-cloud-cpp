@@ -35,39 +35,38 @@ class WebRiskServiceConnectionIdempotencyPolicy {
   virtual ~WebRiskServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<WebRiskServiceConnectionIdempotencyPolicy> clone()
-      const;
+  virtual std::unique_ptr<WebRiskServiceConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency ComputeThreatListDiff(
-      google::cloud::webrisk::v1::ComputeThreatListDiffRequest const& request);
+  virtual google::cloud::Idempotency
+  ComputeThreatListDiff(google::cloud::webrisk::v1::ComputeThreatListDiffRequest const& request);
 
-  virtual google::cloud::Idempotency SearchUris(
-      google::cloud::webrisk::v1::SearchUrisRequest const& request);
+  virtual google::cloud::Idempotency
+  SearchUris(google::cloud::webrisk::v1::SearchUrisRequest const& request);
 
-  virtual google::cloud::Idempotency SearchHashes(
-      google::cloud::webrisk::v1::SearchHashesRequest const& request);
+  virtual google::cloud::Idempotency
+  SearchHashes(google::cloud::webrisk::v1::SearchHashesRequest const& request);
 
-  virtual google::cloud::Idempotency CreateSubmission(
-      google::cloud::webrisk::v1::CreateSubmissionRequest const& request);
+  virtual google::cloud::Idempotency
+  CreateSubmission(google::cloud::webrisk::v1::CreateSubmissionRequest const& request);
 
-  virtual google::cloud::Idempotency SubmitUri(
-      google::cloud::webrisk::v1::SubmitUriRequest const& request);
+  virtual google::cloud::Idempotency
+  SubmitUri(google::cloud::webrisk::v1::SubmitUriRequest const& request);
 
-  virtual google::cloud::Idempotency ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual google::cloud::Idempotency
+  ListOperations(google::longrunning::ListOperationsRequest request);
 
-  virtual google::cloud::Idempotency GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
 
-  virtual google::cloud::Idempotency CancelOperation(
-      google::longrunning::CancelOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  CancelOperation(google::longrunning::CancelOperationRequest const& request);
 };
 
 std::unique_ptr<WebRiskServiceConnectionIdempotencyPolicy>
-MakeDefaultWebRiskServiceConnectionIdempotencyPolicy();
+    MakeDefaultWebRiskServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace webrisk_v1

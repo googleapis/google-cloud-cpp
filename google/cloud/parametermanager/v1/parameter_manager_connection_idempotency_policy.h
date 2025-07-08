@@ -35,60 +35,50 @@ class ParameterManagerConnectionIdempotencyPolicy {
   virtual ~ParameterManagerConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<ParameterManagerConnectionIdempotencyPolicy> clone()
-      const;
+  virtual std::unique_ptr<ParameterManagerConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency ListParameters(
-      google::cloud::parametermanager::v1::ListParametersRequest request);
+  virtual google::cloud::Idempotency
+  ListParameters(google::cloud::parametermanager::v1::ListParametersRequest request);
 
-  virtual google::cloud::Idempotency GetParameter(
-      google::cloud::parametermanager::v1::GetParameterRequest const& request);
+  virtual google::cloud::Idempotency
+  GetParameter(google::cloud::parametermanager::v1::GetParameterRequest const& request);
 
-  virtual google::cloud::Idempotency CreateParameter(
-      google::cloud::parametermanager::v1::CreateParameterRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  CreateParameter(google::cloud::parametermanager::v1::CreateParameterRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateParameter(
-      google::cloud::parametermanager::v1::UpdateParameterRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  UpdateParameter(google::cloud::parametermanager::v1::UpdateParameterRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteParameter(
-      google::cloud::parametermanager::v1::DeleteParameterRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  DeleteParameter(google::cloud::parametermanager::v1::DeleteParameterRequest const& request);
 
-  virtual google::cloud::Idempotency ListParameterVersions(
-      google::cloud::parametermanager::v1::ListParameterVersionsRequest
-          request);
+  virtual google::cloud::Idempotency
+  ListParameterVersions(google::cloud::parametermanager::v1::ListParameterVersionsRequest request);
 
-  virtual google::cloud::Idempotency GetParameterVersion(
-      google::cloud::parametermanager::v1::GetParameterVersionRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  GetParameterVersion(google::cloud::parametermanager::v1::GetParameterVersionRequest const& request);
 
-  virtual google::cloud::Idempotency RenderParameterVersion(
-      google::cloud::parametermanager::v1::RenderParameterVersionRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  RenderParameterVersion(google::cloud::parametermanager::v1::RenderParameterVersionRequest const& request);
 
-  virtual google::cloud::Idempotency CreateParameterVersion(
-      google::cloud::parametermanager::v1::CreateParameterVersionRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  CreateParameterVersion(google::cloud::parametermanager::v1::CreateParameterVersionRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateParameterVersion(
-      google::cloud::parametermanager::v1::UpdateParameterVersionRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  UpdateParameterVersion(google::cloud::parametermanager::v1::UpdateParameterVersionRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteParameterVersion(
-      google::cloud::parametermanager::v1::DeleteParameterVersionRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  DeleteParameterVersion(google::cloud::parametermanager::v1::DeleteParameterVersionRequest const& request);
 
-  virtual google::cloud::Idempotency ListLocations(
-      google::cloud::location::ListLocationsRequest request);
+  virtual google::cloud::Idempotency
+  ListLocations(google::cloud::location::ListLocationsRequest request);
 
-  virtual google::cloud::Idempotency GetLocation(
-      google::cloud::location::GetLocationRequest const& request);
+  virtual google::cloud::Idempotency
+  GetLocation(google::cloud::location::GetLocationRequest const& request);
 };
 
 std::unique_ptr<ParameterManagerConnectionIdempotencyPolicy>
-MakeDefaultParameterManagerConnectionIdempotencyPolicy();
+    MakeDefaultParameterManagerConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace parametermanager_v1

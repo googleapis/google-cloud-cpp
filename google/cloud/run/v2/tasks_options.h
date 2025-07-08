@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RUN_V2_TASKS_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RUN_V2_TASKS_OPTIONS_H
 
-#include "google/cloud/run/v2/tasks_connection.h"
-#include "google/cloud/run/v2/tasks_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
+#include "google/cloud/run/v2/tasks_connection.h"
+#include "google/cloud/run/v2/tasks_connection_idempotency_policy.h"
 #include "google/cloud/version.h"
 #include <memory>
 
@@ -64,7 +64,8 @@ struct TasksConnectionIdempotencyPolicyOption {
  * @ingroup google-cloud-run-options
  */
 using TasksPolicyOptionList =
-    OptionList<TasksRetryPolicyOption, TasksBackoffPolicyOption,
+    OptionList<TasksRetryPolicyOption,
+               TasksBackoffPolicyOption,
                TasksConnectionIdempotencyPolicyOption>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

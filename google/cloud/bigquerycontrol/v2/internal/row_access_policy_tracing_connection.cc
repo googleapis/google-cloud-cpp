@@ -29,85 +29,62 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-RowAccessPolicyServiceTracingConnection::
-    RowAccessPolicyServiceTracingConnection(
-        std::shared_ptr<bigquerycontrol_v2::RowAccessPolicyServiceConnection>
-            child)
+RowAccessPolicyServiceTracingConnection::RowAccessPolicyServiceTracingConnection(
+    std::shared_ptr<bigquerycontrol_v2::RowAccessPolicyServiceConnection> child)
     : child_(std::move(child)) {}
 
 StreamRange<google::cloud::bigquery::v2::RowAccessPolicy>
-RowAccessPolicyServiceTracingConnection::ListRowAccessPolicies(
-    google::cloud::bigquery::v2::ListRowAccessPoliciesRequest request) {
-  auto span = internal::MakeSpan(
-      "bigquerycontrol_v2::RowAccessPolicyServiceConnection::"
-      "ListRowAccessPolicies");
+RowAccessPolicyServiceTracingConnection::ListRowAccessPolicies(google::cloud::bigquery::v2::ListRowAccessPoliciesRequest request) {
+  auto span = internal::MakeSpan("bigquerycontrol_v2::RowAccessPolicyServiceConnection::ListRowAccessPolicies");
   internal::OTelScope scope(span);
   auto sr = child_->ListRowAccessPolicies(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::bigquery::v2::RowAccessPolicy>(std::move(span),
-                                                    std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::bigquery::v2::RowAccessPolicy>(
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::bigquery::v2::RowAccessPolicy>
-RowAccessPolicyServiceTracingConnection::GetRowAccessPolicy(
-    google::cloud::bigquery::v2::GetRowAccessPolicyRequest const& request) {
-  auto span = internal::MakeSpan(
-      "bigquerycontrol_v2::RowAccessPolicyServiceConnection::"
-      "GetRowAccessPolicy");
+RowAccessPolicyServiceTracingConnection::GetRowAccessPolicy(google::cloud::bigquery::v2::GetRowAccessPolicyRequest const& request) {
+  auto span = internal::MakeSpan("bigquerycontrol_v2::RowAccessPolicyServiceConnection::GetRowAccessPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetRowAccessPolicy(request));
 }
 
 StatusOr<google::cloud::bigquery::v2::RowAccessPolicy>
-RowAccessPolicyServiceTracingConnection::CreateRowAccessPolicy(
-    google::cloud::bigquery::v2::CreateRowAccessPolicyRequest const& request) {
-  auto span = internal::MakeSpan(
-      "bigquerycontrol_v2::RowAccessPolicyServiceConnection::"
-      "CreateRowAccessPolicy");
+RowAccessPolicyServiceTracingConnection::CreateRowAccessPolicy(google::cloud::bigquery::v2::CreateRowAccessPolicyRequest const& request) {
+  auto span = internal::MakeSpan("bigquerycontrol_v2::RowAccessPolicyServiceConnection::CreateRowAccessPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateRowAccessPolicy(request));
 }
 
 StatusOr<google::cloud::bigquery::v2::RowAccessPolicy>
-RowAccessPolicyServiceTracingConnection::UpdateRowAccessPolicy(
-    google::cloud::bigquery::v2::UpdateRowAccessPolicyRequest const& request) {
-  auto span = internal::MakeSpan(
-      "bigquerycontrol_v2::RowAccessPolicyServiceConnection::"
-      "UpdateRowAccessPolicy");
+RowAccessPolicyServiceTracingConnection::UpdateRowAccessPolicy(google::cloud::bigquery::v2::UpdateRowAccessPolicyRequest const& request) {
+  auto span = internal::MakeSpan("bigquerycontrol_v2::RowAccessPolicyServiceConnection::UpdateRowAccessPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateRowAccessPolicy(request));
 }
 
-Status RowAccessPolicyServiceTracingConnection::DeleteRowAccessPolicy(
-    google::cloud::bigquery::v2::DeleteRowAccessPolicyRequest const& request) {
-  auto span = internal::MakeSpan(
-      "bigquerycontrol_v2::RowAccessPolicyServiceConnection::"
-      "DeleteRowAccessPolicy");
+Status
+RowAccessPolicyServiceTracingConnection::DeleteRowAccessPolicy(google::cloud::bigquery::v2::DeleteRowAccessPolicyRequest const& request) {
+  auto span = internal::MakeSpan("bigquerycontrol_v2::RowAccessPolicyServiceConnection::DeleteRowAccessPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteRowAccessPolicy(request));
 }
 
-Status RowAccessPolicyServiceTracingConnection::BatchDeleteRowAccessPolicies(
-    google::cloud::bigquery::v2::BatchDeleteRowAccessPoliciesRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "bigquerycontrol_v2::RowAccessPolicyServiceConnection::"
-      "BatchDeleteRowAccessPolicies");
+Status
+RowAccessPolicyServiceTracingConnection::BatchDeleteRowAccessPolicies(google::cloud::bigquery::v2::BatchDeleteRowAccessPoliciesRequest const& request) {
+  auto span = internal::MakeSpan("bigquerycontrol_v2::RowAccessPolicyServiceConnection::BatchDeleteRowAccessPolicies");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span,
-                           child_->BatchDeleteRowAccessPolicies(request));
+  return internal::EndSpan(*span, child_->BatchDeleteRowAccessPolicies(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<bigquerycontrol_v2::RowAccessPolicyServiceConnection>
 MakeRowAccessPolicyServiceTracingConnection(
-    std::shared_ptr<bigquerycontrol_v2::RowAccessPolicyServiceConnection>
-        conn) {
+    std::shared_ptr<bigquerycontrol_v2::RowAccessPolicyServiceConnection> conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
-    conn = std::make_shared<RowAccessPolicyServiceTracingConnection>(
-        std::move(conn));
+    conn = std::make_shared<RowAccessPolicyServiceTracingConnection>(std::move(conn));
   }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;

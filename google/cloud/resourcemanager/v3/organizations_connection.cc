@@ -17,17 +17,17 @@
 // source: google/cloud/resourcemanager/v3/organizations.proto
 
 #include "google/cloud/resourcemanager/v3/organizations_connection.h"
-#include "google/cloud/resourcemanager/v3/internal/organizations_connection_impl.h"
-#include "google/cloud/resourcemanager/v3/internal/organizations_option_defaults.h"
-#include "google/cloud/resourcemanager/v3/internal/organizations_stub_factory.h"
-#include "google/cloud/resourcemanager/v3/internal/organizations_tracing_connection.h"
-#include "google/cloud/resourcemanager/v3/organizations_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/resourcemanager/v3/internal/organizations_connection_impl.h"
+#include "google/cloud/resourcemanager/v3/internal/organizations_option_defaults.h"
+#include "google/cloud/resourcemanager/v3/internal/organizations_stub_factory.h"
+#include "google/cloud/resourcemanager/v3/internal/organizations_tracing_connection.h"
+#include "google/cloud/resourcemanager/v3/organizations_options.h"
 #include <memory>
 #include <utility>
 
@@ -44,20 +44,20 @@ OrganizationsConnection::GetOrganization(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::resourcemanager::v3::Organization>
-OrganizationsConnection::SearchOrganizations(
-    google::cloud::resourcemanager::v3::
-        SearchOrganizationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::resourcemanager::v3::Organization> OrganizationsConnection::SearchOrganizations(
+    google::cloud::resourcemanager::v3::SearchOrganizationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::resourcemanager::v3::Organization>>();
 }
 
-StatusOr<google::iam::v1::Policy> OrganizationsConnection::GetIamPolicy(
+StatusOr<google::iam::v1::Policy>
+OrganizationsConnection::GetIamPolicy(
     google::iam::v1::GetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::iam::v1::Policy> OrganizationsConnection::SetIamPolicy(
+StatusOr<google::iam::v1::Policy>
+OrganizationsConnection::SetIamPolicy(
     google::iam::v1::SetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -68,7 +68,8 @@ OrganizationsConnection::TestIamPermissions(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::longrunning::Operation> OrganizationsConnection::GetOperation(
+StatusOr<google::longrunning::Operation>
+OrganizationsConnection::GetOperation(
     google::longrunning::GetOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -76,19 +77,17 @@ StatusOr<google::longrunning::Operation> OrganizationsConnection::GetOperation(
 std::shared_ptr<OrganizationsConnection> MakeOrganizationsConnection(
     std::string const& location, Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 OrganizationsPolicyOptionList>(options,
-                                                                __func__);
+      UnifiedCredentialsOptionList,
+      OrganizationsPolicyOptionList>(options, __func__);
   options = resourcemanager_v3_internal::OrganizationsDefaultOptions(
       location, std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = resourcemanager_v3_internal::CreateDefaultOrganizationsStub(
-      std::move(auth), options);
+    std::move(auth), options);
   return resourcemanager_v3_internal::MakeOrganizationsTracingConnection(
-      std::make_shared<
-          resourcemanager_v3_internal::OrganizationsConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options)));
+      std::make_shared<resourcemanager_v3_internal::OrganizationsConnectionImpl>(
+      std::move(background), std::move(stub), std::move(options)));
 }
 
 std::shared_ptr<OrganizationsConnection> MakeOrganizationsConnection(

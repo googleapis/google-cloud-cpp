@@ -35,39 +35,32 @@ class PrincipalAccessBoundaryPoliciesConnectionIdempotencyPolicy {
   virtual ~PrincipalAccessBoundaryPoliciesConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<
-      PrincipalAccessBoundaryPoliciesConnectionIdempotencyPolicy>
-  clone() const;
-
-  virtual google::cloud::Idempotency CreatePrincipalAccessBoundaryPolicy(
-      google::iam::v3::CreatePrincipalAccessBoundaryPolicyRequest const&
-          request);
-
-  virtual google::cloud::Idempotency GetPrincipalAccessBoundaryPolicy(
-      google::iam::v3::GetPrincipalAccessBoundaryPolicyRequest const& request);
-
-  virtual google::cloud::Idempotency UpdatePrincipalAccessBoundaryPolicy(
-      google::iam::v3::UpdatePrincipalAccessBoundaryPolicyRequest const&
-          request);
-
-  virtual google::cloud::Idempotency DeletePrincipalAccessBoundaryPolicy(
-      google::iam::v3::DeletePrincipalAccessBoundaryPolicyRequest const&
-          request);
-
-  virtual google::cloud::Idempotency ListPrincipalAccessBoundaryPolicies(
-      google::iam::v3::ListPrincipalAccessBoundaryPoliciesRequest request);
+  virtual std::unique_ptr<PrincipalAccessBoundaryPoliciesConnectionIdempotencyPolicy> clone() const;
 
   virtual google::cloud::Idempotency
-  SearchPrincipalAccessBoundaryPolicyBindings(
-      google::iam::v3::SearchPrincipalAccessBoundaryPolicyBindingsRequest
-          request);
+  CreatePrincipalAccessBoundaryPolicy(google::iam::v3::CreatePrincipalAccessBoundaryPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  GetPrincipalAccessBoundaryPolicy(google::iam::v3::GetPrincipalAccessBoundaryPolicyRequest const& request);
+
+  virtual google::cloud::Idempotency
+  UpdatePrincipalAccessBoundaryPolicy(google::iam::v3::UpdatePrincipalAccessBoundaryPolicyRequest const& request);
+
+  virtual google::cloud::Idempotency
+  DeletePrincipalAccessBoundaryPolicy(google::iam::v3::DeletePrincipalAccessBoundaryPolicyRequest const& request);
+
+  virtual google::cloud::Idempotency
+  ListPrincipalAccessBoundaryPolicies(google::iam::v3::ListPrincipalAccessBoundaryPoliciesRequest request);
+
+  virtual google::cloud::Idempotency
+  SearchPrincipalAccessBoundaryPolicyBindings(google::iam::v3::SearchPrincipalAccessBoundaryPolicyBindingsRequest request);
+
+  virtual google::cloud::Idempotency
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 };
 
 std::unique_ptr<PrincipalAccessBoundaryPoliciesConnectionIdempotencyPolicy>
-MakeDefaultPrincipalAccessBoundaryPoliciesConnectionIdempotencyPolicy();
+    MakeDefaultPrincipalAccessBoundaryPoliciesConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace iam_v3

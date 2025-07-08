@@ -26,36 +26,30 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-AutokeyAdminConnectionIdempotencyPolicy::
-    ~AutokeyAdminConnectionIdempotencyPolicy() = default;
+AutokeyAdminConnectionIdempotencyPolicy::~AutokeyAdminConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<AutokeyAdminConnectionIdempotencyPolicy>
 AutokeyAdminConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<AutokeyAdminConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency AutokeyAdminConnectionIdempotencyPolicy::UpdateAutokeyConfig(
-    google::cloud::kms::v1::UpdateAutokeyConfigRequest const&) {
+Idempotency AutokeyAdminConnectionIdempotencyPolicy::UpdateAutokeyConfig(google::cloud::kms::v1::UpdateAutokeyConfigRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency AutokeyAdminConnectionIdempotencyPolicy::GetAutokeyConfig(
-    google::cloud::kms::v1::GetAutokeyConfigRequest const&) {
+Idempotency AutokeyAdminConnectionIdempotencyPolicy::GetAutokeyConfig(google::cloud::kms::v1::GetAutokeyConfigRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency AutokeyAdminConnectionIdempotencyPolicy::ShowEffectiveAutokeyConfig(
-    google::cloud::kms::v1::ShowEffectiveAutokeyConfigRequest const&) {
+Idempotency AutokeyAdminConnectionIdempotencyPolicy::ShowEffectiveAutokeyConfig(google::cloud::kms::v1::ShowEffectiveAutokeyConfigRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency AutokeyAdminConnectionIdempotencyPolicy::ListLocations(
-    google::cloud::location::ListLocationsRequest) {  // NOLINT
+Idempotency AutokeyAdminConnectionIdempotencyPolicy::ListLocations(google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency AutokeyAdminConnectionIdempotencyPolicy::GetLocation(
-    google::cloud::location::GetLocationRequest const&) {
+Idempotency AutokeyAdminConnectionIdempotencyPolicy::GetLocation(google::cloud::location::GetLocationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
@@ -65,23 +59,20 @@ Idempotency AutokeyAdminConnectionIdempotencyPolicy::SetIamPolicy(
                                          : Idempotency::kIdempotent;
 }
 
-Idempotency AutokeyAdminConnectionIdempotencyPolicy::GetIamPolicy(
-    google::iam::v1::GetIamPolicyRequest const&) {
+Idempotency AutokeyAdminConnectionIdempotencyPolicy::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency AutokeyAdminConnectionIdempotencyPolicy::TestIamPermissions(
-    google::iam::v1::TestIamPermissionsRequest const&) {
+Idempotency AutokeyAdminConnectionIdempotencyPolicy::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency AutokeyAdminConnectionIdempotencyPolicy::GetOperation(
-    google::longrunning::GetOperationRequest const&) {
+Idempotency AutokeyAdminConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<AutokeyAdminConnectionIdempotencyPolicy>
-MakeDefaultAutokeyAdminConnectionIdempotencyPolicy() {
+    MakeDefaultAutokeyAdminConnectionIdempotencyPolicy() {
   return std::make_unique<AutokeyAdminConnectionIdempotencyPolicy>();
 }
 

@@ -33,174 +33,186 @@ TagKeysStub::~TagKeysStub() = default;
 
 StatusOr<google::cloud::resourcemanager::v3::ListTagKeysResponse>
 DefaultTagKeysStub::ListTagKeys(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::resourcemanager::v3::ListTagKeysRequest const& request) {
-  google::cloud::resourcemanager::v3::ListTagKeysResponse response;
-  auto status = grpc_stub_->ListTagKeys(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::resourcemanager::v3::ListTagKeysRequest const& request) {
+    google::cloud::resourcemanager::v3::ListTagKeysResponse response;
+    auto status =
+        grpc_stub_->ListTagKeys(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::resourcemanager::v3::TagKey>
 DefaultTagKeysStub::GetTagKey(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::resourcemanager::v3::GetTagKeyRequest const& request) {
-  google::cloud::resourcemanager::v3::TagKey response;
-  auto status = grpc_stub_->GetTagKey(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::resourcemanager::v3::GetTagKeyRequest const& request) {
+    google::cloud::resourcemanager::v3::TagKey response;
+    auto status =
+        grpc_stub_->GetTagKey(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::resourcemanager::v3::TagKey>
 DefaultTagKeysStub::GetNamespacedTagKey(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::resourcemanager::v3::GetNamespacedTagKeyRequest const&
-        request) {
-  google::cloud::resourcemanager::v3::TagKey response;
-  auto status = grpc_stub_->GetNamespacedTagKey(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::resourcemanager::v3::GetNamespacedTagKeyRequest const& request) {
+    google::cloud::resourcemanager::v3::TagKey response;
+    auto status =
+        grpc_stub_->GetNamespacedTagKey(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultTagKeysStub::AsyncCreateTagKey(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::resourcemanager::v3::CreateTagKeyRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::resourcemanager::v3::CreateTagKeyRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::resourcemanager::v3::CreateTagKeyRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::resourcemanager::v3::CreateTagKeyRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::resourcemanager::v3::CreateTagKeyRequest const&
-                 request,
+             google::cloud::resourcemanager::v3::CreateTagKeyRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncCreateTagKey(context, request, cq);
       },
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation> DefaultTagKeysStub::CreateTagKey(
-    grpc::ClientContext& context, Options,
-    google::cloud::resourcemanager::v3::CreateTagKeyRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->CreateTagKey(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::longrunning::Operation>
+DefaultTagKeysStub::CreateTagKey(
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::resourcemanager::v3::CreateTagKeyRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->CreateTagKey(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultTagKeysStub::AsyncUpdateTagKey(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::resourcemanager::v3::UpdateTagKeyRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::resourcemanager::v3::UpdateTagKeyRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::resourcemanager::v3::UpdateTagKeyRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::resourcemanager::v3::UpdateTagKeyRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::resourcemanager::v3::UpdateTagKeyRequest const&
-                 request,
+             google::cloud::resourcemanager::v3::UpdateTagKeyRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncUpdateTagKey(context, request, cq);
       },
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation> DefaultTagKeysStub::UpdateTagKey(
-    grpc::ClientContext& context, Options,
-    google::cloud::resourcemanager::v3::UpdateTagKeyRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->UpdateTagKey(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::longrunning::Operation>
+DefaultTagKeysStub::UpdateTagKey(
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::resourcemanager::v3::UpdateTagKeyRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->UpdateTagKey(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultTagKeysStub::AsyncDeleteTagKey(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::resourcemanager::v3::DeleteTagKeyRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::resourcemanager::v3::DeleteTagKeyRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::resourcemanager::v3::DeleteTagKeyRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::resourcemanager::v3::DeleteTagKeyRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::resourcemanager::v3::DeleteTagKeyRequest const&
-                 request,
+             google::cloud::resourcemanager::v3::DeleteTagKeyRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncDeleteTagKey(context, request, cq);
       },
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation> DefaultTagKeysStub::DeleteTagKey(
-    grpc::ClientContext& context, Options,
-    google::cloud::resourcemanager::v3::DeleteTagKeyRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->DeleteTagKey(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::longrunning::Operation>
+DefaultTagKeysStub::DeleteTagKey(
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::resourcemanager::v3::DeleteTagKeyRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->DeleteTagKey(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-StatusOr<google::iam::v1::Policy> DefaultTagKeysStub::GetIamPolicy(
-    grpc::ClientContext& context, Options const&,
-    google::iam::v1::GetIamPolicyRequest const& request) {
-  google::iam::v1::Policy response;
-  auto status = grpc_stub_->GetIamPolicy(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::iam::v1::Policy>
+DefaultTagKeysStub::GetIamPolicy(
+  grpc::ClientContext& context, Options const&,
+  google::iam::v1::GetIamPolicyRequest const& request) {
+    google::iam::v1::Policy response;
+    auto status =
+        grpc_stub_->GetIamPolicy(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-StatusOr<google::iam::v1::Policy> DefaultTagKeysStub::SetIamPolicy(
-    grpc::ClientContext& context, Options const&,
-    google::iam::v1::SetIamPolicyRequest const& request) {
-  google::iam::v1::Policy response;
-  auto status = grpc_stub_->SetIamPolicy(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::iam::v1::Policy>
+DefaultTagKeysStub::SetIamPolicy(
+  grpc::ClientContext& context, Options const&,
+  google::iam::v1::SetIamPolicyRequest const& request) {
+    google::iam::v1::Policy response;
+    auto status =
+        grpc_stub_->SetIamPolicy(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 DefaultTagKeysStub::TestIamPermissions(
-    grpc::ClientContext& context, Options const&,
-    google::iam::v1::TestIamPermissionsRequest const& request) {
-  google::iam::v1::TestIamPermissionsResponse response;
-  auto status = grpc_stub_->TestIamPermissions(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::iam::v1::TestIamPermissionsRequest const& request) {
+    google::iam::v1::TestIamPermissionsResponse response;
+    auto status =
+        grpc_stub_->TestIamPermissions(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-StatusOr<google::longrunning::Operation> DefaultTagKeysStub::GetOperation(
-    grpc::ClientContext& context, Options const&,
-    google::longrunning::GetOperationRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = operations_stub_->GetOperation(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::longrunning::Operation>
+DefaultTagKeysStub::GetOperation(
+  grpc::ClientContext& context, Options const&,
+  google::longrunning::GetOperationRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        operations_stub_->GetOperation(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -229,14 +241,13 @@ future<Status> DefaultTagKeysStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(
-             cq,
-             [this](grpc::ClientContext* context,
-                    google::longrunning::CancelOperationRequest const& request,
-                    grpc::CompletionQueue* cq) {
-               return operations_stub_->AsyncCancelOperation(context, request,
-                                                             cq);
-             },
-             request, std::move(context))
+      cq,
+      [this](grpc::ClientContext* context,
+             google::longrunning::CancelOperationRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return operations_stub_->AsyncCancelOperation(context, request, cq);
+      },
+      request, std::move(context))
       .then([](future<StatusOr<google::protobuf::Empty>> f) {
         return f.get().status();
       });

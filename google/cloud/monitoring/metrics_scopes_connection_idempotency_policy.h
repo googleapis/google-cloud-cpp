@@ -26,17 +26,11 @@ namespace cloud {
 namespace monitoring {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use
-/// monitoring_metricsscope_v1::MakeDefaultMetricsScopesConnectionIdempotencyPolicy
-/// directly.
-using ::google::cloud::monitoring_metricsscope_v1::
-    MakeDefaultMetricsScopesConnectionIdempotencyPolicy;
+/// @deprecated Use monitoring_metricsscope_v1::MakeDefaultMetricsScopesConnectionIdempotencyPolicy directly.
+using ::google::cloud::monitoring_metricsscope_v1::MakeDefaultMetricsScopesConnectionIdempotencyPolicy;
 
-/// @deprecated Use
-/// monitoring_metricsscope_v1::MetricsScopesConnectionIdempotencyPolicy
-/// directly.
-using ::google::cloud::monitoring_metricsscope_v1::
-    MetricsScopesConnectionIdempotencyPolicy;
+/// @deprecated Use monitoring_metricsscope_v1::MetricsScopesConnectionIdempotencyPolicy directly.
+using ::google::cloud::monitoring_metricsscope_v1::MetricsScopesConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace monitoring

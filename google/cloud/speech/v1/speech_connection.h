@@ -19,8 +19,6 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPEECH_V1_SPEECH_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPEECH_V1_SPEECH_CONNECTION_H
 
-#include "google/cloud/speech/v1/internal/speech_retry_traits.h"
-#include "google/cloud/speech/v1/speech_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/async_read_write_stream_impl.h"
@@ -28,6 +26,8 @@
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
+#include "google/cloud/speech/v1/internal/speech_retry_traits.h"
+#include "google/cloud/speech/v1/speech_connection_idempotency_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
@@ -67,14 +67,14 @@ class SpeechLimitedErrorCountRetryPolicy : public SpeechRetryPolicy {
    *     @p maximum_failures == 0.
    */
   explicit SpeechLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   SpeechLimitedErrorCountRetryPolicy(
       SpeechLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : SpeechLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : SpeechLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   SpeechLimitedErrorCountRetryPolicy(
       SpeechLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : SpeechLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : SpeechLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -94,9 +94,7 @@ class SpeechLimitedErrorCountRetryPolicy : public SpeechRetryPolicy {
   using BaseType = SpeechRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      speech_v1_internal::SpeechRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<speech_v1_internal::SpeechRetryTraits> impl_;
 };
 
 /**
@@ -134,12 +132,12 @@ class SpeechLimitedTimeRetryPolicy : public SpeechRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit SpeechLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
   SpeechLimitedTimeRetryPolicy(SpeechLimitedTimeRetryPolicy&& rhs) noexcept
-      : SpeechLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+    : SpeechLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
   SpeechLimitedTimeRetryPolicy(SpeechLimitedTimeRetryPolicy const& rhs) noexcept
-      : SpeechLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+    : SpeechLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -153,16 +151,15 @@ class SpeechLimitedTimeRetryPolicy : public SpeechRetryPolicy {
     return impl_.IsPermanentFailure(status);
   }
   std::unique_ptr<SpeechRetryPolicy> clone() const override {
-    return std::make_unique<SpeechLimitedTimeRetryPolicy>(maximum_duration());
+    return std::make_unique<SpeechLimitedTimeRetryPolicy>(
+        maximum_duration());
   }
 
   // This is provided only for backwards compatibility.
   using BaseType = SpeechRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      speech_v1_internal::SpeechRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<speech_v1_internal::SpeechRetryTraits> impl_;
 };
 
 /**
@@ -183,32 +180,28 @@ class SpeechConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<google::cloud::speech::v1::RecognizeResponse> Recognize(
-      google::cloud::speech::v1::RecognizeRequest const& request);
+  virtual StatusOr<google::cloud::speech::v1::RecognizeResponse>
+  Recognize(google::cloud::speech::v1::RecognizeRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::speech::v1::LongRunningRecognizeResponse>>
-  LongRunningRecognize(
-      google::cloud::speech::v1::LongRunningRecognizeRequest const& request);
+  virtual future<StatusOr<google::cloud::speech::v1::LongRunningRecognizeResponse>>
+  LongRunningRecognize(google::cloud::speech::v1::LongRunningRecognizeRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> LongRunningRecognize(
-      NoAwaitTag,
-      google::cloud::speech::v1::LongRunningRecognizeRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  LongRunningRecognize(NoAwaitTag, google::cloud::speech::v1::LongRunningRecognizeRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::speech::v1::LongRunningRecognizeResponse>>
-  LongRunningRecognize(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::speech::v1::LongRunningRecognizeResponse>>
+  LongRunningRecognize( google::longrunning::Operation const& operation);
 
   virtual std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::speech::v1::StreamingRecognizeRequest,
       google::cloud::speech::v1::StreamingRecognizeResponse>>
   AsyncStreamingRecognize();
 
-  virtual StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 };
 
 /**
@@ -232,7 +225,8 @@ class SpeechConnection {
  * @param options (optional) Configure the `SpeechConnection` created by
  * this function.
  */
-std::shared_ptr<SpeechConnection> MakeSpeechConnection(Options options = {});
+std::shared_ptr<SpeechConnection> MakeSpeechConnection(
+    Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace speech_v1

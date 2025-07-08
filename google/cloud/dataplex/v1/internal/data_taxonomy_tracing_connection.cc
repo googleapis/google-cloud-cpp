@@ -34,24 +34,21 @@ DataTaxonomyServiceTracingConnection::DataTaxonomyServiceTracingConnection(
     : child_(std::move(child)) {}
 
 future<StatusOr<google::cloud::dataplex::v1::DataTaxonomy>>
-DataTaxonomyServiceTracingConnection::CreateDataTaxonomy(
-    google::cloud::dataplex::v1::CreateDataTaxonomyRequest const& request) {
+DataTaxonomyServiceTracingConnection::CreateDataTaxonomy(google::cloud::dataplex::v1::CreateDataTaxonomyRequest const& request) {
   auto span = internal::MakeSpan(
       "dataplex_v1::DataTaxonomyServiceConnection::CreateDataTaxonomy");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->CreateDataTaxonomy(request));
+  return internal::EndSpan(std::move(span), child_->CreateDataTaxonomy(request));
 }
 
 StatusOr<google::longrunning::Operation>
 DataTaxonomyServiceTracingConnection::CreateDataTaxonomy(
-    NoAwaitTag,
-    google::cloud::dataplex::v1::CreateDataTaxonomyRequest const& request) {
+    NoAwaitTag, google::cloud::dataplex::v1::CreateDataTaxonomyRequest const& request) {
   auto span = internal::MakeSpan(
       "dataplex_v1::DataTaxonomyServiceConnection::CreateDataTaxonomy");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span,
-                           child_->CreateDataTaxonomy(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->CreateDataTaxonomy(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::dataplex::v1::DataTaxonomy>>
@@ -61,28 +58,25 @@ DataTaxonomyServiceTracingConnection::CreateDataTaxonomy(
       "dataplex_v1::DataTaxonomyServiceConnection::CreateDataTaxonomy");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->CreateDataTaxonomy(operation));
+      child_->CreateDataTaxonomy(operation));
 }
 
 future<StatusOr<google::cloud::dataplex::v1::DataTaxonomy>>
-DataTaxonomyServiceTracingConnection::UpdateDataTaxonomy(
-    google::cloud::dataplex::v1::UpdateDataTaxonomyRequest const& request) {
+DataTaxonomyServiceTracingConnection::UpdateDataTaxonomy(google::cloud::dataplex::v1::UpdateDataTaxonomyRequest const& request) {
   auto span = internal::MakeSpan(
       "dataplex_v1::DataTaxonomyServiceConnection::UpdateDataTaxonomy");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->UpdateDataTaxonomy(request));
+  return internal::EndSpan(std::move(span), child_->UpdateDataTaxonomy(request));
 }
 
 StatusOr<google::longrunning::Operation>
 DataTaxonomyServiceTracingConnection::UpdateDataTaxonomy(
-    NoAwaitTag,
-    google::cloud::dataplex::v1::UpdateDataTaxonomyRequest const& request) {
+    NoAwaitTag, google::cloud::dataplex::v1::UpdateDataTaxonomyRequest const& request) {
   auto span = internal::MakeSpan(
       "dataplex_v1::DataTaxonomyServiceConnection::UpdateDataTaxonomy");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span,
-                           child_->UpdateDataTaxonomy(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->UpdateDataTaxonomy(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::dataplex::v1::DataTaxonomy>>
@@ -92,28 +86,25 @@ DataTaxonomyServiceTracingConnection::UpdateDataTaxonomy(
       "dataplex_v1::DataTaxonomyServiceConnection::UpdateDataTaxonomy");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->UpdateDataTaxonomy(operation));
+      child_->UpdateDataTaxonomy(operation));
 }
 
 future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
-DataTaxonomyServiceTracingConnection::DeleteDataTaxonomy(
-    google::cloud::dataplex::v1::DeleteDataTaxonomyRequest const& request) {
+DataTaxonomyServiceTracingConnection::DeleteDataTaxonomy(google::cloud::dataplex::v1::DeleteDataTaxonomyRequest const& request) {
   auto span = internal::MakeSpan(
       "dataplex_v1::DataTaxonomyServiceConnection::DeleteDataTaxonomy");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->DeleteDataTaxonomy(request));
+  return internal::EndSpan(std::move(span), child_->DeleteDataTaxonomy(request));
 }
 
 StatusOr<google::longrunning::Operation>
 DataTaxonomyServiceTracingConnection::DeleteDataTaxonomy(
-    NoAwaitTag,
-    google::cloud::dataplex::v1::DeleteDataTaxonomyRequest const& request) {
+    NoAwaitTag, google::cloud::dataplex::v1::DeleteDataTaxonomyRequest const& request) {
   auto span = internal::MakeSpan(
       "dataplex_v1::DataTaxonomyServiceConnection::DeleteDataTaxonomy");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span,
-                           child_->DeleteDataTaxonomy(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->DeleteDataTaxonomy(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
@@ -123,51 +114,41 @@ DataTaxonomyServiceTracingConnection::DeleteDataTaxonomy(
       "dataplex_v1::DataTaxonomyServiceConnection::DeleteDataTaxonomy");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->DeleteDataTaxonomy(operation));
+      child_->DeleteDataTaxonomy(operation));
 }
 
 StreamRange<google::cloud::dataplex::v1::DataTaxonomy>
-DataTaxonomyServiceTracingConnection::ListDataTaxonomies(
-    google::cloud::dataplex::v1::ListDataTaxonomiesRequest request) {
-  auto span = internal::MakeSpan(
-      "dataplex_v1::DataTaxonomyServiceConnection::ListDataTaxonomies");
+DataTaxonomyServiceTracingConnection::ListDataTaxonomies(google::cloud::dataplex::v1::ListDataTaxonomiesRequest request) {
+  auto span = internal::MakeSpan("dataplex_v1::DataTaxonomyServiceConnection::ListDataTaxonomies");
   internal::OTelScope scope(span);
   auto sr = child_->ListDataTaxonomies(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::dataplex::v1::DataTaxonomy>(std::move(span),
-                                                 std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::dataplex::v1::DataTaxonomy>(
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::dataplex::v1::DataTaxonomy>
-DataTaxonomyServiceTracingConnection::GetDataTaxonomy(
-    google::cloud::dataplex::v1::GetDataTaxonomyRequest const& request) {
-  auto span = internal::MakeSpan(
-      "dataplex_v1::DataTaxonomyServiceConnection::GetDataTaxonomy");
+DataTaxonomyServiceTracingConnection::GetDataTaxonomy(google::cloud::dataplex::v1::GetDataTaxonomyRequest const& request) {
+  auto span = internal::MakeSpan("dataplex_v1::DataTaxonomyServiceConnection::GetDataTaxonomy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetDataTaxonomy(request));
 }
 
 future<StatusOr<google::cloud::dataplex::v1::DataAttributeBinding>>
-DataTaxonomyServiceTracingConnection::CreateDataAttributeBinding(
-    google::cloud::dataplex::v1::CreateDataAttributeBindingRequest const&
-        request) {
+DataTaxonomyServiceTracingConnection::CreateDataAttributeBinding(google::cloud::dataplex::v1::CreateDataAttributeBindingRequest const& request) {
   auto span = internal::MakeSpan(
       "dataplex_v1::DataTaxonomyServiceConnection::CreateDataAttributeBinding");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->CreateDataAttributeBinding(request));
+  return internal::EndSpan(std::move(span), child_->CreateDataAttributeBinding(request));
 }
 
 StatusOr<google::longrunning::Operation>
 DataTaxonomyServiceTracingConnection::CreateDataAttributeBinding(
-    NoAwaitTag,
-    google::cloud::dataplex::v1::CreateDataAttributeBindingRequest const&
-        request) {
+    NoAwaitTag, google::cloud::dataplex::v1::CreateDataAttributeBindingRequest const& request) {
   auto span = internal::MakeSpan(
       "dataplex_v1::DataTaxonomyServiceConnection::CreateDataAttributeBinding");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->CreateDataAttributeBinding(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->CreateDataAttributeBinding(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::dataplex::v1::DataAttributeBinding>>
@@ -177,30 +158,25 @@ DataTaxonomyServiceTracingConnection::CreateDataAttributeBinding(
       "dataplex_v1::DataTaxonomyServiceConnection::CreateDataAttributeBinding");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->CreateDataAttributeBinding(operation));
+      child_->CreateDataAttributeBinding(operation));
 }
 
 future<StatusOr<google::cloud::dataplex::v1::DataAttributeBinding>>
-DataTaxonomyServiceTracingConnection::UpdateDataAttributeBinding(
-    google::cloud::dataplex::v1::UpdateDataAttributeBindingRequest const&
-        request) {
+DataTaxonomyServiceTracingConnection::UpdateDataAttributeBinding(google::cloud::dataplex::v1::UpdateDataAttributeBindingRequest const& request) {
   auto span = internal::MakeSpan(
       "dataplex_v1::DataTaxonomyServiceConnection::UpdateDataAttributeBinding");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->UpdateDataAttributeBinding(request));
+  return internal::EndSpan(std::move(span), child_->UpdateDataAttributeBinding(request));
 }
 
 StatusOr<google::longrunning::Operation>
 DataTaxonomyServiceTracingConnection::UpdateDataAttributeBinding(
-    NoAwaitTag,
-    google::cloud::dataplex::v1::UpdateDataAttributeBindingRequest const&
-        request) {
+    NoAwaitTag, google::cloud::dataplex::v1::UpdateDataAttributeBindingRequest const& request) {
   auto span = internal::MakeSpan(
       "dataplex_v1::DataTaxonomyServiceConnection::UpdateDataAttributeBinding");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->UpdateDataAttributeBinding(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->UpdateDataAttributeBinding(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::dataplex::v1::DataAttributeBinding>>
@@ -210,30 +186,25 @@ DataTaxonomyServiceTracingConnection::UpdateDataAttributeBinding(
       "dataplex_v1::DataTaxonomyServiceConnection::UpdateDataAttributeBinding");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->UpdateDataAttributeBinding(operation));
+      child_->UpdateDataAttributeBinding(operation));
 }
 
 future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
-DataTaxonomyServiceTracingConnection::DeleteDataAttributeBinding(
-    google::cloud::dataplex::v1::DeleteDataAttributeBindingRequest const&
-        request) {
+DataTaxonomyServiceTracingConnection::DeleteDataAttributeBinding(google::cloud::dataplex::v1::DeleteDataAttributeBindingRequest const& request) {
   auto span = internal::MakeSpan(
       "dataplex_v1::DataTaxonomyServiceConnection::DeleteDataAttributeBinding");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->DeleteDataAttributeBinding(request));
+  return internal::EndSpan(std::move(span), child_->DeleteDataAttributeBinding(request));
 }
 
 StatusOr<google::longrunning::Operation>
 DataTaxonomyServiceTracingConnection::DeleteDataAttributeBinding(
-    NoAwaitTag,
-    google::cloud::dataplex::v1::DeleteDataAttributeBindingRequest const&
-        request) {
+    NoAwaitTag, google::cloud::dataplex::v1::DeleteDataAttributeBindingRequest const& request) {
   auto span = internal::MakeSpan(
       "dataplex_v1::DataTaxonomyServiceConnection::DeleteDataAttributeBinding");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->DeleteDataAttributeBinding(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->DeleteDataAttributeBinding(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
@@ -243,50 +214,41 @@ DataTaxonomyServiceTracingConnection::DeleteDataAttributeBinding(
       "dataplex_v1::DataTaxonomyServiceConnection::DeleteDataAttributeBinding");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->DeleteDataAttributeBinding(operation));
+      child_->DeleteDataAttributeBinding(operation));
 }
 
 StreamRange<google::cloud::dataplex::v1::DataAttributeBinding>
-DataTaxonomyServiceTracingConnection::ListDataAttributeBindings(
-    google::cloud::dataplex::v1::ListDataAttributeBindingsRequest request) {
-  auto span = internal::MakeSpan(
-      "dataplex_v1::DataTaxonomyServiceConnection::ListDataAttributeBindings");
+DataTaxonomyServiceTracingConnection::ListDataAttributeBindings(google::cloud::dataplex::v1::ListDataAttributeBindingsRequest request) {
+  auto span = internal::MakeSpan("dataplex_v1::DataTaxonomyServiceConnection::ListDataAttributeBindings");
   internal::OTelScope scope(span);
   auto sr = child_->ListDataAttributeBindings(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::dataplex::v1::DataAttributeBinding>(std::move(span),
-                                                         std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::dataplex::v1::DataAttributeBinding>(
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::dataplex::v1::DataAttributeBinding>
-DataTaxonomyServiceTracingConnection::GetDataAttributeBinding(
-    google::cloud::dataplex::v1::GetDataAttributeBindingRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "dataplex_v1::DataTaxonomyServiceConnection::GetDataAttributeBinding");
+DataTaxonomyServiceTracingConnection::GetDataAttributeBinding(google::cloud::dataplex::v1::GetDataAttributeBindingRequest const& request) {
+  auto span = internal::MakeSpan("dataplex_v1::DataTaxonomyServiceConnection::GetDataAttributeBinding");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetDataAttributeBinding(request));
 }
 
 future<StatusOr<google::cloud::dataplex::v1::DataAttribute>>
-DataTaxonomyServiceTracingConnection::CreateDataAttribute(
-    google::cloud::dataplex::v1::CreateDataAttributeRequest const& request) {
+DataTaxonomyServiceTracingConnection::CreateDataAttribute(google::cloud::dataplex::v1::CreateDataAttributeRequest const& request) {
   auto span = internal::MakeSpan(
       "dataplex_v1::DataTaxonomyServiceConnection::CreateDataAttribute");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->CreateDataAttribute(request));
+  return internal::EndSpan(std::move(span), child_->CreateDataAttribute(request));
 }
 
 StatusOr<google::longrunning::Operation>
 DataTaxonomyServiceTracingConnection::CreateDataAttribute(
-    NoAwaitTag,
-    google::cloud::dataplex::v1::CreateDataAttributeRequest const& request) {
+    NoAwaitTag, google::cloud::dataplex::v1::CreateDataAttributeRequest const& request) {
   auto span = internal::MakeSpan(
       "dataplex_v1::DataTaxonomyServiceConnection::CreateDataAttribute");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span,
-                           child_->CreateDataAttribute(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->CreateDataAttribute(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::dataplex::v1::DataAttribute>>
@@ -296,28 +258,25 @@ DataTaxonomyServiceTracingConnection::CreateDataAttribute(
       "dataplex_v1::DataTaxonomyServiceConnection::CreateDataAttribute");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->CreateDataAttribute(operation));
+      child_->CreateDataAttribute(operation));
 }
 
 future<StatusOr<google::cloud::dataplex::v1::DataAttribute>>
-DataTaxonomyServiceTracingConnection::UpdateDataAttribute(
-    google::cloud::dataplex::v1::UpdateDataAttributeRequest const& request) {
+DataTaxonomyServiceTracingConnection::UpdateDataAttribute(google::cloud::dataplex::v1::UpdateDataAttributeRequest const& request) {
   auto span = internal::MakeSpan(
       "dataplex_v1::DataTaxonomyServiceConnection::UpdateDataAttribute");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->UpdateDataAttribute(request));
+  return internal::EndSpan(std::move(span), child_->UpdateDataAttribute(request));
 }
 
 StatusOr<google::longrunning::Operation>
 DataTaxonomyServiceTracingConnection::UpdateDataAttribute(
-    NoAwaitTag,
-    google::cloud::dataplex::v1::UpdateDataAttributeRequest const& request) {
+    NoAwaitTag, google::cloud::dataplex::v1::UpdateDataAttributeRequest const& request) {
   auto span = internal::MakeSpan(
       "dataplex_v1::DataTaxonomyServiceConnection::UpdateDataAttribute");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span,
-                           child_->UpdateDataAttribute(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->UpdateDataAttribute(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::dataplex::v1::DataAttribute>>
@@ -327,28 +286,25 @@ DataTaxonomyServiceTracingConnection::UpdateDataAttribute(
       "dataplex_v1::DataTaxonomyServiceConnection::UpdateDataAttribute");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->UpdateDataAttribute(operation));
+      child_->UpdateDataAttribute(operation));
 }
 
 future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
-DataTaxonomyServiceTracingConnection::DeleteDataAttribute(
-    google::cloud::dataplex::v1::DeleteDataAttributeRequest const& request) {
+DataTaxonomyServiceTracingConnection::DeleteDataAttribute(google::cloud::dataplex::v1::DeleteDataAttributeRequest const& request) {
   auto span = internal::MakeSpan(
       "dataplex_v1::DataTaxonomyServiceConnection::DeleteDataAttribute");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->DeleteDataAttribute(request));
+  return internal::EndSpan(std::move(span), child_->DeleteDataAttribute(request));
 }
 
 StatusOr<google::longrunning::Operation>
 DataTaxonomyServiceTracingConnection::DeleteDataAttribute(
-    NoAwaitTag,
-    google::cloud::dataplex::v1::DeleteDataAttributeRequest const& request) {
+    NoAwaitTag, google::cloud::dataplex::v1::DeleteDataAttributeRequest const& request) {
   auto span = internal::MakeSpan(
       "dataplex_v1::DataTaxonomyServiceConnection::DeleteDataAttribute");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span,
-                           child_->DeleteDataAttribute(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->DeleteDataAttribute(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
@@ -358,109 +314,88 @@ DataTaxonomyServiceTracingConnection::DeleteDataAttribute(
       "dataplex_v1::DataTaxonomyServiceConnection::DeleteDataAttribute");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->DeleteDataAttribute(operation));
+      child_->DeleteDataAttribute(operation));
 }
 
 StreamRange<google::cloud::dataplex::v1::DataAttribute>
-DataTaxonomyServiceTracingConnection::ListDataAttributes(
-    google::cloud::dataplex::v1::ListDataAttributesRequest request) {
-  auto span = internal::MakeSpan(
-      "dataplex_v1::DataTaxonomyServiceConnection::ListDataAttributes");
+DataTaxonomyServiceTracingConnection::ListDataAttributes(google::cloud::dataplex::v1::ListDataAttributesRequest request) {
+  auto span = internal::MakeSpan("dataplex_v1::DataTaxonomyServiceConnection::ListDataAttributes");
   internal::OTelScope scope(span);
   auto sr = child_->ListDataAttributes(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::dataplex::v1::DataAttribute>(std::move(span),
-                                                  std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::dataplex::v1::DataAttribute>(
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::dataplex::v1::DataAttribute>
-DataTaxonomyServiceTracingConnection::GetDataAttribute(
-    google::cloud::dataplex::v1::GetDataAttributeRequest const& request) {
-  auto span = internal::MakeSpan(
-      "dataplex_v1::DataTaxonomyServiceConnection::GetDataAttribute");
+DataTaxonomyServiceTracingConnection::GetDataAttribute(google::cloud::dataplex::v1::GetDataAttributeRequest const& request) {
+  auto span = internal::MakeSpan("dataplex_v1::DataTaxonomyServiceConnection::GetDataAttribute");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetDataAttribute(request));
 }
 
 StreamRange<google::cloud::location::Location>
-DataTaxonomyServiceTracingConnection::ListLocations(
-    google::cloud::location::ListLocationsRequest request) {
-  auto span = internal::MakeSpan(
-      "dataplex_v1::DataTaxonomyServiceConnection::ListLocations");
+DataTaxonomyServiceTracingConnection::ListLocations(google::cloud::location::ListLocationsRequest request) {
+  auto span = internal::MakeSpan("dataplex_v1::DataTaxonomyServiceConnection::ListLocations");
   internal::OTelScope scope(span);
   auto sr = child_->ListLocations(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::location::Location>(
-      std::move(span), std::move(sr));
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::location::Location>
-DataTaxonomyServiceTracingConnection::GetLocation(
-    google::cloud::location::GetLocationRequest const& request) {
-  auto span = internal::MakeSpan(
-      "dataplex_v1::DataTaxonomyServiceConnection::GetLocation");
+DataTaxonomyServiceTracingConnection::GetLocation(google::cloud::location::GetLocationRequest const& request) {
+  auto span = internal::MakeSpan("dataplex_v1::DataTaxonomyServiceConnection::GetLocation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetLocation(request));
 }
 
 StatusOr<google::iam::v1::Policy>
-DataTaxonomyServiceTracingConnection::SetIamPolicy(
-    google::iam::v1::SetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpan(
-      "dataplex_v1::DataTaxonomyServiceConnection::SetIamPolicy");
+DataTaxonomyServiceTracingConnection::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) {
+  auto span = internal::MakeSpan("dataplex_v1::DataTaxonomyServiceConnection::SetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->SetIamPolicy(request));
 }
 
 StatusOr<google::iam::v1::Policy>
-DataTaxonomyServiceTracingConnection::GetIamPolicy(
-    google::iam::v1::GetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpan(
-      "dataplex_v1::DataTaxonomyServiceConnection::GetIamPolicy");
+DataTaxonomyServiceTracingConnection::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) {
+  auto span = internal::MakeSpan("dataplex_v1::DataTaxonomyServiceConnection::GetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetIamPolicy(request));
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-DataTaxonomyServiceTracingConnection::TestIamPermissions(
-    google::iam::v1::TestIamPermissionsRequest const& request) {
-  auto span = internal::MakeSpan(
-      "dataplex_v1::DataTaxonomyServiceConnection::TestIamPermissions");
+DataTaxonomyServiceTracingConnection::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) {
+  auto span = internal::MakeSpan("dataplex_v1::DataTaxonomyServiceConnection::TestIamPermissions");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->TestIamPermissions(request));
 }
 
 StreamRange<google::longrunning::Operation>
-DataTaxonomyServiceTracingConnection::ListOperations(
-    google::longrunning::ListOperationsRequest request) {
-  auto span = internal::MakeSpan(
-      "dataplex_v1::DataTaxonomyServiceConnection::ListOperations");
+DataTaxonomyServiceTracingConnection::ListOperations(google::longrunning::ListOperationsRequest request) {
+  auto span = internal::MakeSpan("dataplex_v1::DataTaxonomyServiceConnection::ListOperations");
   internal::OTelScope scope(span);
   auto sr = child_->ListOperations(std::move(request));
   return internal::MakeTracedStreamRange<google::longrunning::Operation>(
-      std::move(span), std::move(sr));
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::longrunning::Operation>
-DataTaxonomyServiceTracingConnection::GetOperation(
-    google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpan(
-      "dataplex_v1::DataTaxonomyServiceConnection::GetOperation");
+DataTaxonomyServiceTracingConnection::GetOperation(google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpan("dataplex_v1::DataTaxonomyServiceConnection::GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOperation(request));
 }
 
-Status DataTaxonomyServiceTracingConnection::DeleteOperation(
-    google::longrunning::DeleteOperationRequest const& request) {
-  auto span = internal::MakeSpan(
-      "dataplex_v1::DataTaxonomyServiceConnection::DeleteOperation");
+Status
+DataTaxonomyServiceTracingConnection::DeleteOperation(google::longrunning::DeleteOperationRequest const& request) {
+  auto span = internal::MakeSpan("dataplex_v1::DataTaxonomyServiceConnection::DeleteOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteOperation(request));
 }
 
-Status DataTaxonomyServiceTracingConnection::CancelOperation(
-    google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpan(
-      "dataplex_v1::DataTaxonomyServiceConnection::CancelOperation");
+Status
+DataTaxonomyServiceTracingConnection::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
+  auto span = internal::MakeSpan("dataplex_v1::DataTaxonomyServiceConnection::CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CancelOperation(request));
 }
@@ -472,8 +407,7 @@ MakeDataTaxonomyServiceTracingConnection(
     std::shared_ptr<dataplex_v1::DataTaxonomyServiceConnection> conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
-    conn =
-        std::make_shared<DataTaxonomyServiceTracingConnection>(std::move(conn));
+    conn = std::make_shared<DataTaxonomyServiceTracingConnection>(std::move(conn));
   }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;

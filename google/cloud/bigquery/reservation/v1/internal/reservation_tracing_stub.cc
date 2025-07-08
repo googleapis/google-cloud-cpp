@@ -32,42 +32,33 @@ ReservationServiceTracingStub::ReservationServiceTracingStub(
     std::shared_ptr<ReservationServiceStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
-StatusOr<google::cloud::bigquery::reservation::v1::Reservation>
-ReservationServiceTracingStub::CreateReservation(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::reservation::v1::CreateReservationRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.bigquery.reservation.v1.ReservationService",
-      "CreateReservation");
+StatusOr<google::cloud::bigquery::reservation::v1::Reservation> ReservationServiceTracingStub::CreateReservation(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::reservation::v1::CreateReservationRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.bigquery.reservation.v1.ReservationService", "CreateReservation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->CreateReservation(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->CreateReservation(context, options, request));
 }
 
-StatusOr<google::cloud::bigquery::reservation::v1::ListReservationsResponse>
-ReservationServiceTracingStub::ListReservations(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::reservation::v1::ListReservationsRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.bigquery.reservation.v1.ReservationService",
-      "ListReservations");
+StatusOr<google::cloud::bigquery::reservation::v1::ListReservationsResponse> ReservationServiceTracingStub::ListReservations(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::reservation::v1::ListReservationsRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.bigquery.reservation.v1.ReservationService", "ListReservations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListReservations(context, options, request));
 }
 
-StatusOr<google::cloud::bigquery::reservation::v1::Reservation>
-ReservationServiceTracingStub::GetReservation(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::reservation::v1::GetReservationRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.bigquery.reservation.v1.ReservationService",
-      "GetReservation");
+StatusOr<google::cloud::bigquery::reservation::v1::Reservation> ReservationServiceTracingStub::GetReservation(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::reservation::v1::GetReservationRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.bigquery.reservation.v1.ReservationService", "GetReservation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -75,173 +66,131 @@ ReservationServiceTracingStub::GetReservation(
 }
 
 Status ReservationServiceTracingStub::DeleteReservation(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::reservation::v1::DeleteReservationRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.bigquery.reservation.v1.ReservationService",
-      "DeleteReservation");
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::reservation::v1::DeleteReservationRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.bigquery.reservation.v1.ReservationService", "DeleteReservation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->DeleteReservation(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->DeleteReservation(context, options, request));
 }
 
-StatusOr<google::cloud::bigquery::reservation::v1::Reservation>
-ReservationServiceTracingStub::UpdateReservation(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::reservation::v1::UpdateReservationRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.bigquery.reservation.v1.ReservationService",
-      "UpdateReservation");
+StatusOr<google::cloud::bigquery::reservation::v1::Reservation> ReservationServiceTracingStub::UpdateReservation(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::reservation::v1::UpdateReservationRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.bigquery.reservation.v1.ReservationService", "UpdateReservation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->UpdateReservation(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->UpdateReservation(context, options, request));
 }
 
-StatusOr<google::cloud::bigquery::reservation::v1::Reservation>
-ReservationServiceTracingStub::FailoverReservation(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::reservation::v1::FailoverReservationRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.bigquery.reservation.v1.ReservationService",
-      "FailoverReservation");
+StatusOr<google::cloud::bigquery::reservation::v1::Reservation> ReservationServiceTracingStub::FailoverReservation(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::reservation::v1::FailoverReservationRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.bigquery.reservation.v1.ReservationService", "FailoverReservation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->FailoverReservation(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->FailoverReservation(context, options, request));
 }
 
-StatusOr<google::cloud::bigquery::reservation::v1::CapacityCommitment>
-ReservationServiceTracingStub::CreateCapacityCommitment(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::reservation::v1::
-        CreateCapacityCommitmentRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.bigquery.reservation.v1.ReservationService",
-      "CreateCapacityCommitment");
+StatusOr<google::cloud::bigquery::reservation::v1::CapacityCommitment> ReservationServiceTracingStub::CreateCapacityCommitment(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::reservation::v1::CreateCapacityCommitmentRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.bigquery.reservation.v1.ReservationService", "CreateCapacityCommitment");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span,
-      child_->CreateCapacityCommitment(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->CreateCapacityCommitment(context, options, request));
 }
 
-StatusOr<
-    google::cloud::bigquery::reservation::v1::ListCapacityCommitmentsResponse>
-ReservationServiceTracingStub::ListCapacityCommitments(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::reservation::v1::
-        ListCapacityCommitmentsRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.bigquery.reservation.v1.ReservationService",
-      "ListCapacityCommitments");
+StatusOr<google::cloud::bigquery::reservation::v1::ListCapacityCommitmentsResponse> ReservationServiceTracingStub::ListCapacityCommitments(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::reservation::v1::ListCapacityCommitmentsRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.bigquery.reservation.v1.ReservationService", "ListCapacityCommitments");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span,
-      child_->ListCapacityCommitments(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->ListCapacityCommitments(context, options, request));
 }
 
-StatusOr<google::cloud::bigquery::reservation::v1::CapacityCommitment>
-ReservationServiceTracingStub::GetCapacityCommitment(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::reservation::v1::
-        GetCapacityCommitmentRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.bigquery.reservation.v1.ReservationService",
-      "GetCapacityCommitment");
+StatusOr<google::cloud::bigquery::reservation::v1::CapacityCommitment> ReservationServiceTracingStub::GetCapacityCommitment(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::reservation::v1::GetCapacityCommitmentRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.bigquery.reservation.v1.ReservationService", "GetCapacityCommitment");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->GetCapacityCommitment(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->GetCapacityCommitment(context, options, request));
 }
 
 Status ReservationServiceTracingStub::DeleteCapacityCommitment(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::reservation::v1::
-        DeleteCapacityCommitmentRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.bigquery.reservation.v1.ReservationService",
-      "DeleteCapacityCommitment");
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::reservation::v1::DeleteCapacityCommitmentRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.bigquery.reservation.v1.ReservationService", "DeleteCapacityCommitment");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span,
-      child_->DeleteCapacityCommitment(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->DeleteCapacityCommitment(context, options, request));
 }
 
-StatusOr<google::cloud::bigquery::reservation::v1::CapacityCommitment>
-ReservationServiceTracingStub::UpdateCapacityCommitment(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::reservation::v1::
-        UpdateCapacityCommitmentRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.bigquery.reservation.v1.ReservationService",
-      "UpdateCapacityCommitment");
+StatusOr<google::cloud::bigquery::reservation::v1::CapacityCommitment> ReservationServiceTracingStub::UpdateCapacityCommitment(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::reservation::v1::UpdateCapacityCommitmentRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.bigquery.reservation.v1.ReservationService", "UpdateCapacityCommitment");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span,
-      child_->UpdateCapacityCommitment(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->UpdateCapacityCommitment(context, options, request));
 }
 
-StatusOr<
-    google::cloud::bigquery::reservation::v1::SplitCapacityCommitmentResponse>
-ReservationServiceTracingStub::SplitCapacityCommitment(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::reservation::v1::
-        SplitCapacityCommitmentRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.bigquery.reservation.v1.ReservationService",
-      "SplitCapacityCommitment");
+StatusOr<google::cloud::bigquery::reservation::v1::SplitCapacityCommitmentResponse> ReservationServiceTracingStub::SplitCapacityCommitment(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::reservation::v1::SplitCapacityCommitmentRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.bigquery.reservation.v1.ReservationService", "SplitCapacityCommitment");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span,
-      child_->SplitCapacityCommitment(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->SplitCapacityCommitment(context, options, request));
 }
 
-StatusOr<google::cloud::bigquery::reservation::v1::CapacityCommitment>
-ReservationServiceTracingStub::MergeCapacityCommitments(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::reservation::v1::
-        MergeCapacityCommitmentsRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.bigquery.reservation.v1.ReservationService",
-      "MergeCapacityCommitments");
+StatusOr<google::cloud::bigquery::reservation::v1::CapacityCommitment> ReservationServiceTracingStub::MergeCapacityCommitments(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::reservation::v1::MergeCapacityCommitmentsRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.bigquery.reservation.v1.ReservationService", "MergeCapacityCommitments");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span,
-      child_->MergeCapacityCommitments(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->MergeCapacityCommitments(context, options, request));
 }
 
-StatusOr<google::cloud::bigquery::reservation::v1::Assignment>
-ReservationServiceTracingStub::CreateAssignment(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::reservation::v1::CreateAssignmentRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.bigquery.reservation.v1.ReservationService",
-      "CreateAssignment");
+StatusOr<google::cloud::bigquery::reservation::v1::Assignment> ReservationServiceTracingStub::CreateAssignment(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::reservation::v1::CreateAssignmentRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.bigquery.reservation.v1.ReservationService", "CreateAssignment");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateAssignment(context, options, request));
 }
 
-StatusOr<google::cloud::bigquery::reservation::v1::ListAssignmentsResponse>
-ReservationServiceTracingStub::ListAssignments(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::reservation::v1::ListAssignmentsRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.bigquery.reservation.v1.ReservationService",
-      "ListAssignments");
+StatusOr<google::cloud::bigquery::reservation::v1::ListAssignmentsResponse> ReservationServiceTracingStub::ListAssignments(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::reservation::v1::ListAssignmentsRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.bigquery.reservation.v1.ReservationService", "ListAssignments");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -249,100 +198,80 @@ ReservationServiceTracingStub::ListAssignments(
 }
 
 Status ReservationServiceTracingStub::DeleteAssignment(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::reservation::v1::DeleteAssignmentRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.bigquery.reservation.v1.ReservationService",
-      "DeleteAssignment");
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::reservation::v1::DeleteAssignmentRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.bigquery.reservation.v1.ReservationService", "DeleteAssignment");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeleteAssignment(context, options, request));
 }
 
-StatusOr<google::cloud::bigquery::reservation::v1::SearchAssignmentsResponse>
-ReservationServiceTracingStub::SearchAssignments(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::reservation::v1::SearchAssignmentsRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.bigquery.reservation.v1.ReservationService",
-      "SearchAssignments");
+StatusOr<google::cloud::bigquery::reservation::v1::SearchAssignmentsResponse> ReservationServiceTracingStub::SearchAssignments(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::reservation::v1::SearchAssignmentsRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.bigquery.reservation.v1.ReservationService", "SearchAssignments");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->SearchAssignments(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->SearchAssignments(context, options, request));
 }
 
-StatusOr<google::cloud::bigquery::reservation::v1::SearchAllAssignmentsResponse>
-ReservationServiceTracingStub::SearchAllAssignments(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::reservation::v1::SearchAllAssignmentsRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.bigquery.reservation.v1.ReservationService",
-      "SearchAllAssignments");
+StatusOr<google::cloud::bigquery::reservation::v1::SearchAllAssignmentsResponse> ReservationServiceTracingStub::SearchAllAssignments(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::reservation::v1::SearchAllAssignmentsRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.bigquery.reservation.v1.ReservationService", "SearchAllAssignments");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->SearchAllAssignments(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->SearchAllAssignments(context, options, request));
 }
 
-StatusOr<google::cloud::bigquery::reservation::v1::Assignment>
-ReservationServiceTracingStub::MoveAssignment(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::reservation::v1::MoveAssignmentRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.bigquery.reservation.v1.ReservationService",
-      "MoveAssignment");
+StatusOr<google::cloud::bigquery::reservation::v1::Assignment> ReservationServiceTracingStub::MoveAssignment(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::reservation::v1::MoveAssignmentRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.bigquery.reservation.v1.ReservationService", "MoveAssignment");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->MoveAssignment(context, options, request));
 }
 
-StatusOr<google::cloud::bigquery::reservation::v1::Assignment>
-ReservationServiceTracingStub::UpdateAssignment(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::reservation::v1::UpdateAssignmentRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.bigquery.reservation.v1.ReservationService",
-      "UpdateAssignment");
+StatusOr<google::cloud::bigquery::reservation::v1::Assignment> ReservationServiceTracingStub::UpdateAssignment(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::reservation::v1::UpdateAssignmentRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.bigquery.reservation.v1.ReservationService", "UpdateAssignment");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->UpdateAssignment(context, options, request));
 }
 
-StatusOr<google::cloud::bigquery::reservation::v1::BiReservation>
-ReservationServiceTracingStub::GetBiReservation(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::reservation::v1::GetBiReservationRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.bigquery.reservation.v1.ReservationService",
-      "GetBiReservation");
+StatusOr<google::cloud::bigquery::reservation::v1::BiReservation> ReservationServiceTracingStub::GetBiReservation(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::reservation::v1::GetBiReservationRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.bigquery.reservation.v1.ReservationService", "GetBiReservation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetBiReservation(context, options, request));
 }
 
-StatusOr<google::cloud::bigquery::reservation::v1::BiReservation>
-ReservationServiceTracingStub::UpdateBiReservation(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::reservation::v1::UpdateBiReservationRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.bigquery.reservation.v1.ReservationService",
-      "UpdateBiReservation");
+StatusOr<google::cloud::bigquery::reservation::v1::BiReservation> ReservationServiceTracingStub::UpdateBiReservation(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::reservation::v1::UpdateBiReservationRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.bigquery.reservation.v1.ReservationService", "UpdateBiReservation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->UpdateBiReservation(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->UpdateBiReservation(context, options, request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

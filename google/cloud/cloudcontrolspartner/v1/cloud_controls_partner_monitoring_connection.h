@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CLOUDCONTROLSPARTNER_V1_CLOUD_CONTROLS_PARTNER_MONITORING_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CLOUDCONTROLSPARTNER_V1_CLOUD_CONTROLS_PARTNER_MONITORING_CONNECTION_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/cloudcontrolspartner/v1/cloud_controls_partner_monitoring_connection_idempotency_policy.h"
 #include "google/cloud/cloudcontrolspartner/v1/internal/cloud_controls_partner_monitoring_retry_traits.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -36,17 +36,14 @@ namespace cloudcontrolspartner_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `CloudControlsPartnerMonitoringConnection`.
-class CloudControlsPartnerMonitoringRetryPolicy
-    : public ::google::cloud::RetryPolicy {
+class CloudControlsPartnerMonitoringRetryPolicy : public ::google::cloud::RetryPolicy {
  public:
   /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<CloudControlsPartnerMonitoringRetryPolicy> clone()
-      const = 0;
+  virtual std::unique_ptr<CloudControlsPartnerMonitoringRetryPolicy> clone() const = 0;
 };
 
 /**
- * A retry policy for `CloudControlsPartnerMonitoringConnection` based on
- * counting errors.
+ * A retry policy for `CloudControlsPartnerMonitoringConnection` based on counting errors.
  *
  * This policy stops retrying if:
  * - An RPC returns a non-transient error.
@@ -55,8 +52,7 @@ class CloudControlsPartnerMonitoringRetryPolicy
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class CloudControlsPartnerMonitoringLimitedErrorCountRetryPolicy
-    : public CloudControlsPartnerMonitoringRetryPolicy {
+class CloudControlsPartnerMonitoringLimitedErrorCountRetryPolicy : public CloudControlsPartnerMonitoringRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -65,19 +61,15 @@ class CloudControlsPartnerMonitoringLimitedErrorCountRetryPolicy
    * @note Disable the retry loop by providing an instance of this policy with
    *     @p maximum_failures == 0.
    */
-  explicit CloudControlsPartnerMonitoringLimitedErrorCountRetryPolicy(
-      int maximum_failures)
-      : impl_(maximum_failures) {}
+  explicit CloudControlsPartnerMonitoringLimitedErrorCountRetryPolicy(int maximum_failures)
+    : impl_(maximum_failures) {}
 
   CloudControlsPartnerMonitoringLimitedErrorCountRetryPolicy(
       CloudControlsPartnerMonitoringLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : CloudControlsPartnerMonitoringLimitedErrorCountRetryPolicy(
-            rhs.maximum_failures()) {}
+    : CloudControlsPartnerMonitoringLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   CloudControlsPartnerMonitoringLimitedErrorCountRetryPolicy(
-      CloudControlsPartnerMonitoringLimitedErrorCountRetryPolicy const&
-          rhs) noexcept
-      : CloudControlsPartnerMonitoringLimitedErrorCountRetryPolicy(
-            rhs.maximum_failures()) {}
+      CloudControlsPartnerMonitoringLimitedErrorCountRetryPolicy const& rhs) noexcept
+    : CloudControlsPartnerMonitoringLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -88,10 +80,8 @@ class CloudControlsPartnerMonitoringLimitedErrorCountRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<CloudControlsPartnerMonitoringRetryPolicy> clone()
-      const override {
-    return std::make_unique<
-        CloudControlsPartnerMonitoringLimitedErrorCountRetryPolicy>(
+  std::unique_ptr<CloudControlsPartnerMonitoringRetryPolicy> clone() const override {
+    return std::make_unique<CloudControlsPartnerMonitoringLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
 
@@ -99,15 +89,11 @@ class CloudControlsPartnerMonitoringLimitedErrorCountRetryPolicy
   using BaseType = CloudControlsPartnerMonitoringRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      cloudcontrolspartner_v1_internal::
-          CloudControlsPartnerMonitoringRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<cloudcontrolspartner_v1_internal::CloudControlsPartnerMonitoringRetryTraits> impl_;
 };
 
 /**
- * A retry policy for `CloudControlsPartnerMonitoringConnection` based on
- * elapsed time.
+ * A retry policy for `CloudControlsPartnerMonitoringConnection` based on elapsed time.
  *
  * This policy stops retrying if:
  * - An RPC returns a non-transient error.
@@ -116,8 +102,7 @@ class CloudControlsPartnerMonitoringLimitedErrorCountRetryPolicy
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class CloudControlsPartnerMonitoringLimitedTimeRetryPolicy
-    : public CloudControlsPartnerMonitoringRetryPolicy {
+class CloudControlsPartnerMonitoringLimitedTimeRetryPolicy : public CloudControlsPartnerMonitoringRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -142,16 +127,12 @@ class CloudControlsPartnerMonitoringLimitedTimeRetryPolicy
   template <typename DurationRep, typename DurationPeriod>
   explicit CloudControlsPartnerMonitoringLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  CloudControlsPartnerMonitoringLimitedTimeRetryPolicy(
-      CloudControlsPartnerMonitoringLimitedTimeRetryPolicy&& rhs) noexcept
-      : CloudControlsPartnerMonitoringLimitedTimeRetryPolicy(
-            rhs.maximum_duration()) {}
-  CloudControlsPartnerMonitoringLimitedTimeRetryPolicy(
-      CloudControlsPartnerMonitoringLimitedTimeRetryPolicy const& rhs) noexcept
-      : CloudControlsPartnerMonitoringLimitedTimeRetryPolicy(
-            rhs.maximum_duration()) {}
+  CloudControlsPartnerMonitoringLimitedTimeRetryPolicy(CloudControlsPartnerMonitoringLimitedTimeRetryPolicy&& rhs) noexcept
+    : CloudControlsPartnerMonitoringLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  CloudControlsPartnerMonitoringLimitedTimeRetryPolicy(CloudControlsPartnerMonitoringLimitedTimeRetryPolicy const& rhs) noexcept
+    : CloudControlsPartnerMonitoringLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -164,10 +145,8 @@ class CloudControlsPartnerMonitoringLimitedTimeRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<CloudControlsPartnerMonitoringRetryPolicy> clone()
-      const override {
-    return std::make_unique<
-        CloudControlsPartnerMonitoringLimitedTimeRetryPolicy>(
+  std::unique_ptr<CloudControlsPartnerMonitoringRetryPolicy> clone() const override {
+    return std::make_unique<CloudControlsPartnerMonitoringLimitedTimeRetryPolicy>(
         maximum_duration());
   }
 
@@ -175,26 +154,20 @@ class CloudControlsPartnerMonitoringLimitedTimeRetryPolicy
   using BaseType = CloudControlsPartnerMonitoringRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      cloudcontrolspartner_v1_internal::
-          CloudControlsPartnerMonitoringRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<cloudcontrolspartner_v1_internal::CloudControlsPartnerMonitoringRetryTraits> impl_;
 };
 
 /**
- * The `CloudControlsPartnerMonitoringConnection` object for
- * `CloudControlsPartnerMonitoringClient`.
+ * The `CloudControlsPartnerMonitoringConnection` object for `CloudControlsPartnerMonitoringClient`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `CloudControlsPartnerMonitoringClient`. This allows users to inject
- * custom behavior (e.g., with a Google Mock object) when writing tests that use
- * objects of type `CloudControlsPartnerMonitoringClient`.
+ * sets in `CloudControlsPartnerMonitoringClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `CloudControlsPartnerMonitoringClient`.
  *
- * To create a concrete instance, see
- * `MakeCloudControlsPartnerMonitoringConnection()`.
+ * To create a concrete instance, see `MakeCloudControlsPartnerMonitoringConnection()`.
  *
- * For mocking, see
- * `cloudcontrolspartner_v1_mocks::MockCloudControlsPartnerMonitoringConnection`.
+ * For mocking, see `cloudcontrolspartner_v1_mocks::MockCloudControlsPartnerMonitoringConnection`.
  */
 class CloudControlsPartnerMonitoringConnection {
  public:
@@ -203,41 +176,35 @@ class CloudControlsPartnerMonitoringConnection {
   virtual Options options() { return Options{}; }
 
   virtual StreamRange<google::cloud::cloudcontrolspartner::v1::Violation>
-  ListViolations(
-      google::cloud::cloudcontrolspartner::v1::ListViolationsRequest request);
+  ListViolations(google::cloud::cloudcontrolspartner::v1::ListViolationsRequest request);
 
   virtual StatusOr<google::cloud::cloudcontrolspartner::v1::Violation>
-  GetViolation(
-      google::cloud::cloudcontrolspartner::v1::GetViolationRequest const&
-          request);
+  GetViolation(google::cloud::cloudcontrolspartner::v1::GetViolationRequest const& request);
 };
 
 /**
- * A factory function to construct an object of type
- * `CloudControlsPartnerMonitoringConnection`.
+ * A factory function to construct an object of type `CloudControlsPartnerMonitoringConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of
- * CloudControlsPartnerMonitoringClient.
+ * should be passed as an argument to the constructor of CloudControlsPartnerMonitoringClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `CloudControlsPartnerMonitoringConnection`. Expected options are any
- * of the types in the following option lists:
+ * returned `CloudControlsPartnerMonitoringConnection`. Expected options are any of the types in
+ * the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * -
- * `google::cloud::cloudcontrolspartner_v1::CloudControlsPartnerMonitoringPolicyOptionList`
+ * - `google::cloud::cloudcontrolspartner_v1::CloudControlsPartnerMonitoringPolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
- * @param options (optional) Configure the
- * `CloudControlsPartnerMonitoringConnection` created by this function.
+ * @param options (optional) Configure the `CloudControlsPartnerMonitoringConnection` created by
+ * this function.
  */
-std::shared_ptr<CloudControlsPartnerMonitoringConnection>
-MakeCloudControlsPartnerMonitoringConnection(Options options = {});
+std::shared_ptr<CloudControlsPartnerMonitoringConnection> MakeCloudControlsPartnerMonitoringConnection(
+    Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloudcontrolspartner_v1

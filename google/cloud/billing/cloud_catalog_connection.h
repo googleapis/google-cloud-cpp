@@ -33,8 +33,7 @@ using ::google::cloud::billing_v1::MakeCloudCatalogConnection;
 /// @deprecated Use billing_v1::CloudCatalogConnection directly.
 using ::google::cloud::billing_v1::CloudCatalogConnection;
 
-/// @deprecated Use billing_v1::CloudCatalogLimitedErrorCountRetryPolicy
-/// directly.
+/// @deprecated Use billing_v1::CloudCatalogLimitedErrorCountRetryPolicy directly.
 using ::google::cloud::billing_v1::CloudCatalogLimitedErrorCountRetryPolicy;
 
 /// @deprecated Use billing_v1::CloudCatalogLimitedTimeRetryPolicy directly.

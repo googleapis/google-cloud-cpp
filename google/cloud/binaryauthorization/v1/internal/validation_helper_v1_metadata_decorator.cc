@@ -44,29 +44,26 @@ ValidationHelperV1Metadata::ValidationHelperV1Metadata(
               ? google::cloud::internal::GeneratedLibClientHeader()
               : std::move(api_client_header)) {}
 
-StatusOr<google::cloud::binaryauthorization::v1::
-             ValidateAttestationOccurrenceResponse>
+StatusOr<google::cloud::binaryauthorization::v1::ValidateAttestationOccurrenceResponse>
 ValidationHelperV1Metadata::ValidateAttestationOccurrence(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::binaryauthorization::v1::
-        ValidateAttestationOccurrenceRequest const& request) {
-  SetMetadata(
-      context, options,
-      absl::StrCat("attestor=", internal::UrlEncode(request.attestor())));
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::binaryauthorization::v1::ValidateAttestationOccurrenceRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("attestor=", internal::UrlEncode(request.attestor())));
   return child_->ValidateAttestationOccurrence(context, options, request);
 }
 
-void ValidationHelperV1Metadata::SetMetadata(
-    grpc::ClientContext& context, Options const& options,
-    std::string const& request_params) {
+void ValidationHelperV1Metadata::SetMetadata(grpc::ClientContext& context,
+                                        Options const& options,
+                                        std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
 void ValidationHelperV1Metadata::SetMetadata(grpc::ClientContext& context,
-                                             Options const& options) {
-  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
-                                       api_client_header_);
+                                        Options const& options) {
+  google::cloud::internal::SetMetadata(
+      context, options, fixed_metadata_, api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

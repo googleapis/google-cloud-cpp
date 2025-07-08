@@ -26,23 +26,19 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-ValidationHelperV1ConnectionIdempotencyPolicy::
-    ~ValidationHelperV1ConnectionIdempotencyPolicy() = default;
+ValidationHelperV1ConnectionIdempotencyPolicy::~ValidationHelperV1ConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<ValidationHelperV1ConnectionIdempotencyPolicy>
 ValidationHelperV1ConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<ValidationHelperV1ConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency
-ValidationHelperV1ConnectionIdempotencyPolicy::ValidateAttestationOccurrence(
-    google::cloud::binaryauthorization::v1::
-        ValidateAttestationOccurrenceRequest const&) {
+Idempotency ValidationHelperV1ConnectionIdempotencyPolicy::ValidateAttestationOccurrence(google::cloud::binaryauthorization::v1::ValidateAttestationOccurrenceRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<ValidationHelperV1ConnectionIdempotencyPolicy>
-MakeDefaultValidationHelperV1ConnectionIdempotencyPolicy() {
+    MakeDefaultValidationHelperV1ConnectionIdempotencyPolicy() {
   return std::make_unique<ValidationHelperV1ConnectionIdempotencyPolicy>();
 }
 

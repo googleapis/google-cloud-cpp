@@ -35,30 +35,29 @@ class CompanyServiceConnectionIdempotencyPolicy {
   virtual ~CompanyServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<CompanyServiceConnectionIdempotencyPolicy> clone()
-      const;
+  virtual std::unique_ptr<CompanyServiceConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency CreateCompany(
-      google::cloud::talent::v4::CreateCompanyRequest const& request);
+  virtual google::cloud::Idempotency
+  CreateCompany(google::cloud::talent::v4::CreateCompanyRequest const& request);
 
-  virtual google::cloud::Idempotency GetCompany(
-      google::cloud::talent::v4::GetCompanyRequest const& request);
+  virtual google::cloud::Idempotency
+  GetCompany(google::cloud::talent::v4::GetCompanyRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateCompany(
-      google::cloud::talent::v4::UpdateCompanyRequest const& request);
+  virtual google::cloud::Idempotency
+  UpdateCompany(google::cloud::talent::v4::UpdateCompanyRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteCompany(
-      google::cloud::talent::v4::DeleteCompanyRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteCompany(google::cloud::talent::v4::DeleteCompanyRequest const& request);
 
-  virtual google::cloud::Idempotency ListCompanies(
-      google::cloud::talent::v4::ListCompaniesRequest request);
+  virtual google::cloud::Idempotency
+  ListCompanies(google::cloud::talent::v4::ListCompaniesRequest request);
 
-  virtual google::cloud::Idempotency GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 };
 
 std::unique_ptr<CompanyServiceConnectionIdempotencyPolicy>
-MakeDefaultCompanyServiceConnectionIdempotencyPolicy();
+    MakeDefaultCompanyServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace talent_v4

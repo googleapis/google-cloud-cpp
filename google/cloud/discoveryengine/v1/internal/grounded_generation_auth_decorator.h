@@ -46,28 +46,29 @@ class GroundedGenerationServiceAuth : public GroundedGenerationServiceStub {
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options) override;
 
-  StatusOr<google::cloud::discoveryengine::v1::GenerateGroundedContentResponse>
-  GenerateGroundedContent(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::discoveryengine::v1::GenerateGroundedContentRequest const&
-          request) override;
+  StatusOr<google::cloud::discoveryengine::v1::GenerateGroundedContentResponse> GenerateGroundedContent(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::discoveryengine::v1::GenerateGroundedContentRequest const& request) override;
 
-  StatusOr<google::cloud::discoveryengine::v1::CheckGroundingResponse>
-  CheckGrounding(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::discoveryengine::v1::CheckGroundingRequest const& request)
-      override;
+  StatusOr<google::cloud::discoveryengine::v1::CheckGroundingResponse> CheckGrounding(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::discoveryengine::v1::CheckGroundingRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:

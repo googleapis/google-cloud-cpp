@@ -36,13 +36,12 @@ class ExportServiceTracingConnection
   ~ExportServiceTracingConnection() override = default;
 
   explicit ExportServiceTracingConnection(
-      std::shared_ptr<profiler_v2::ExportServiceConnection> child);
+    std::shared_ptr<profiler_v2::ExportServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StreamRange<google::devtools::cloudprofiler::v2::Profile> ListProfiles(
-      google::devtools::cloudprofiler::v2::ListProfilesRequest request)
-      override;
+  StreamRange<google::devtools::cloudprofiler::v2::Profile>
+  ListProfiles(google::devtools::cloudprofiler::v2::ListProfilesRequest request) override;
 
  private:
   std::shared_ptr<profiler_v2::ExportServiceConnection> child_;

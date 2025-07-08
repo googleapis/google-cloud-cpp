@@ -31,10 +31,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * A class to mock `ServingConfigServiceConnection`.
  *
  * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `ServingConfigServiceClient`. To do
- * so, construct an object of type `ServingConfigServiceClient` with an instance
- * of this class. Then use the Google Test framework functions to program the
- * behavior of this mock.
+ * including errors, from an object of type `ServingConfigServiceClient`. To do so,
+ * construct an object of type `ServingConfigServiceClient` with an instance of this
+ * class. Then use the Google Test framework functions to program the behavior
+ * of this mock.
  *
  * @see [This example][bq-mock] for how to test your application with GoogleTest.
  * While the example showcases types from the BigQuery library, the underlying
@@ -42,50 +42,45 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockServingConfigServiceConnection
-    : public retail_v2::ServingConfigServiceConnection {
+class MockServingConfigServiceConnection : public retail_v2::ServingConfigServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::retail::v2::ServingConfig>, CreateServingConfig,
-      (google::cloud::retail::v2::CreateServingConfigRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::retail::v2::ServingConfig>,
+  CreateServingConfig,
+  (google::cloud::retail::v2::CreateServingConfigRequest const& request), (override));
 
-  MOCK_METHOD(
-      Status, DeleteServingConfig,
-      (google::cloud::retail::v2::DeleteServingConfigRequest const& request),
-      (override));
+  MOCK_METHOD(Status,
+  DeleteServingConfig,
+  (google::cloud::retail::v2::DeleteServingConfigRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::retail::v2::ServingConfig>, UpdateServingConfig,
-      (google::cloud::retail::v2::UpdateServingConfigRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::retail::v2::ServingConfig>,
+  UpdateServingConfig,
+  (google::cloud::retail::v2::UpdateServingConfigRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::retail::v2::ServingConfig>, GetServingConfig,
-      (google::cloud::retail::v2::GetServingConfigRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::retail::v2::ServingConfig>,
+  GetServingConfig,
+  (google::cloud::retail::v2::GetServingConfigRequest const& request), (override));
 
   MOCK_METHOD((StreamRange<google::cloud::retail::v2::ServingConfig>),
-              ListServingConfigs,
-              (google::cloud::retail::v2::ListServingConfigsRequest request),
-              (override));
+  ListServingConfigs,
+  (google::cloud::retail::v2::ListServingConfigsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::retail::v2::ServingConfig>, AddControl,
-              (google::cloud::retail::v2::AddControlRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::retail::v2::ServingConfig>,
+  AddControl,
+  (google::cloud::retail::v2::AddControlRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::retail::v2::ServingConfig>, RemoveControl,
-              (google::cloud::retail::v2::RemoveControlRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::retail::v2::ServingConfig>,
+  RemoveControl,
+  (google::cloud::retail::v2::RemoveControlRequest const& request), (override));
 
-  MOCK_METHOD((StreamRange<google::longrunning::Operation>), ListOperations,
-              (google::longrunning::ListOperationsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::longrunning::Operation>),
+  ListOperations,
+  (google::longrunning::ListOperationsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
-              (google::longrunning::GetOperationRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  GetOperation,
+  (google::longrunning::GetOperationRequest const& request), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

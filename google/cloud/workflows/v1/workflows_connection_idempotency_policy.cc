@@ -26,71 +26,59 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-WorkflowsConnectionIdempotencyPolicy::~WorkflowsConnectionIdempotencyPolicy() =
-    default;
+WorkflowsConnectionIdempotencyPolicy::~WorkflowsConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<WorkflowsConnectionIdempotencyPolicy>
 WorkflowsConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<WorkflowsConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency WorkflowsConnectionIdempotencyPolicy::ListWorkflows(
-    google::cloud::workflows::v1::ListWorkflowsRequest) {  // NOLINT
+Idempotency WorkflowsConnectionIdempotencyPolicy::ListWorkflows(google::cloud::workflows::v1::ListWorkflowsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency WorkflowsConnectionIdempotencyPolicy::GetWorkflow(
-    google::cloud::workflows::v1::GetWorkflowRequest const&) {
+Idempotency WorkflowsConnectionIdempotencyPolicy::GetWorkflow(google::cloud::workflows::v1::GetWorkflowRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency WorkflowsConnectionIdempotencyPolicy::CreateWorkflow(
-    google::cloud::workflows::v1::CreateWorkflowRequest const&) {
+Idempotency WorkflowsConnectionIdempotencyPolicy::CreateWorkflow(google::cloud::workflows::v1::CreateWorkflowRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency WorkflowsConnectionIdempotencyPolicy::DeleteWorkflow(
-    google::cloud::workflows::v1::DeleteWorkflowRequest const&) {
+Idempotency WorkflowsConnectionIdempotencyPolicy::DeleteWorkflow(google::cloud::workflows::v1::DeleteWorkflowRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency WorkflowsConnectionIdempotencyPolicy::UpdateWorkflow(
-    google::cloud::workflows::v1::UpdateWorkflowRequest const&) {
+Idempotency WorkflowsConnectionIdempotencyPolicy::UpdateWorkflow(google::cloud::workflows::v1::UpdateWorkflowRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency WorkflowsConnectionIdempotencyPolicy::ListWorkflowRevisions(
-    google::cloud::workflows::v1::ListWorkflowRevisionsRequest) {  // NOLINT
+Idempotency WorkflowsConnectionIdempotencyPolicy::ListWorkflowRevisions(google::cloud::workflows::v1::ListWorkflowRevisionsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency WorkflowsConnectionIdempotencyPolicy::ListLocations(
-    google::cloud::location::ListLocationsRequest) {  // NOLINT
+Idempotency WorkflowsConnectionIdempotencyPolicy::ListLocations(google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency WorkflowsConnectionIdempotencyPolicy::GetLocation(
-    google::cloud::location::GetLocationRequest const&) {
+Idempotency WorkflowsConnectionIdempotencyPolicy::GetLocation(google::cloud::location::GetLocationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency WorkflowsConnectionIdempotencyPolicy::ListOperations(
-    google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency WorkflowsConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency WorkflowsConnectionIdempotencyPolicy::GetOperation(
-    google::longrunning::GetOperationRequest const&) {
+Idempotency WorkflowsConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency WorkflowsConnectionIdempotencyPolicy::DeleteOperation(
-    google::longrunning::DeleteOperationRequest const&) {
+Idempotency WorkflowsConnectionIdempotencyPolicy::DeleteOperation(google::longrunning::DeleteOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<WorkflowsConnectionIdempotencyPolicy>
-MakeDefaultWorkflowsConnectionIdempotencyPolicy() {
+    MakeDefaultWorkflowsConnectionIdempotencyPolicy() {
   return std::make_unique<WorkflowsConnectionIdempotencyPolicy>();
 }
 

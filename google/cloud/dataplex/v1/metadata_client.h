@@ -63,8 +63,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class MetadataServiceClient {
  public:
-  explicit MetadataServiceClient(
-      std::shared_ptr<MetadataServiceConnection> connection, Options opts = {});
+  explicit MetadataServiceClient(std::shared_ptr<MetadataServiceConnection> connection, Options opts = {});
   ~MetadataServiceClient();
 
   ///@{
@@ -77,12 +76,10 @@ class MetadataServiceClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(MetadataServiceClient const& a,
-                         MetadataServiceClient const& b) {
+  friend bool operator==(MetadataServiceClient const& a, MetadataServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(MetadataServiceClient const& a,
-                         MetadataServiceClient const& b) {
+  friend bool operator!=(MetadataServiceClient const& a, MetadataServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -111,9 +108,8 @@ class MetadataServiceClient {
   /// [google.cloud.dataplex.v1.Entity]: @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L347}
   ///
   // clang-format on
-  StatusOr<google::cloud::dataplex::v1::Entity> CreateEntity(
-      std::string const& parent,
-      google::cloud::dataplex::v1::Entity const& entity, Options opts = {});
+  StatusOr<google::cloud::dataplex::v1::Entity>
+  CreateEntity(std::string const& parent, google::cloud::dataplex::v1::Entity const& entity, Options opts = {});
 
   // clang-format off
   ///
@@ -142,9 +138,8 @@ class MetadataServiceClient {
   /// [google.cloud.dataplex.v1.Entity]: @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L347}
   ///
   // clang-format on
-  StatusOr<google::cloud::dataplex::v1::Entity> CreateEntity(
-      google::cloud::dataplex::v1::CreateEntityRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::dataplex::v1::Entity>
+  CreateEntity(google::cloud::dataplex::v1::CreateEntityRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -173,9 +168,8 @@ class MetadataServiceClient {
   /// [google.cloud.dataplex.v1.UpdateEntityRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L134}
   ///
   // clang-format on
-  StatusOr<google::cloud::dataplex::v1::Entity> UpdateEntity(
-      google::cloud::dataplex::v1::UpdateEntityRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::dataplex::v1::Entity>
+  UpdateEntity(google::cloud::dataplex::v1::UpdateEntityRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -197,7 +191,8 @@ class MetadataServiceClient {
   /// [google.cloud.dataplex.v1.DeleteEntityRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L144}
   ///
   // clang-format on
-  Status DeleteEntity(std::string const& name, Options opts = {});
+  Status
+  DeleteEntity(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -223,9 +218,8 @@ class MetadataServiceClient {
   /// [google.cloud.dataplex.v1.DeleteEntityRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L144}
   ///
   // clang-format on
-  Status DeleteEntity(
-      google::cloud::dataplex::v1::DeleteEntityRequest const& request,
-      Options opts = {});
+  Status
+  DeleteEntity(google::cloud::dataplex::v1::DeleteEntityRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -250,8 +244,8 @@ class MetadataServiceClient {
   /// [google.cloud.dataplex.v1.GetEntityRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L216}
   ///
   // clang-format on
-  StatusOr<google::cloud::dataplex::v1::Entity> GetEntity(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::dataplex::v1::Entity>
+  GetEntity(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -280,9 +274,8 @@ class MetadataServiceClient {
   /// [google.cloud.dataplex.v1.GetEntityRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L216}
   ///
   // clang-format on
-  StatusOr<google::cloud::dataplex::v1::Entity> GetEntity(
-      google::cloud::dataplex::v1::GetEntityRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::dataplex::v1::Entity>
+  GetEntity(google::cloud::dataplex::v1::GetEntityRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -316,8 +309,8 @@ class MetadataServiceClient {
   /// [google.cloud.dataplex.v1.ListEntitiesRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L158}
   ///
   // clang-format on
-  StreamRange<google::cloud::dataplex::v1::Entity> ListEntities(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::dataplex::v1::Entity>
+  ListEntities(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -355,9 +348,8 @@ class MetadataServiceClient {
   /// [google.cloud.dataplex.v1.ListEntitiesRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L158}
   ///
   // clang-format on
-  StreamRange<google::cloud::dataplex::v1::Entity> ListEntities(
-      google::cloud::dataplex::v1::ListEntitiesRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::dataplex::v1::Entity>
+  ListEntities(google::cloud::dataplex::v1::ListEntitiesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -383,10 +375,8 @@ class MetadataServiceClient {
   /// [google.cloud.dataplex.v1.Partition]: @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L480}
   ///
   // clang-format on
-  StatusOr<google::cloud::dataplex::v1::Partition> CreatePartition(
-      std::string const& parent,
-      google::cloud::dataplex::v1::Partition const& partition,
-      Options opts = {});
+  StatusOr<google::cloud::dataplex::v1::Partition>
+  CreatePartition(std::string const& parent, google::cloud::dataplex::v1::Partition const& partition, Options opts = {});
 
   // clang-format off
   ///
@@ -415,9 +405,8 @@ class MetadataServiceClient {
   /// [google.cloud.dataplex.v1.Partition]: @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L480}
   ///
   // clang-format on
-  StatusOr<google::cloud::dataplex::v1::Partition> CreatePartition(
-      google::cloud::dataplex::v1::CreatePartitionRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::dataplex::v1::Partition>
+  CreatePartition(google::cloud::dataplex::v1::CreatePartitionRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -442,7 +431,8 @@ class MetadataServiceClient {
   /// [google.cloud.dataplex.v1.DeletePartitionRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L305}
   ///
   // clang-format on
-  Status DeletePartition(std::string const& name, Options opts = {});
+  Status
+  DeletePartition(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -468,9 +458,8 @@ class MetadataServiceClient {
   /// [google.cloud.dataplex.v1.DeletePartitionRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L305}
   ///
   // clang-format on
-  Status DeletePartition(
-      google::cloud::dataplex::v1::DeletePartitionRequest const& request,
-      Options opts = {});
+  Status
+  DeletePartition(google::cloud::dataplex::v1::DeletePartitionRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -497,8 +486,8 @@ class MetadataServiceClient {
   /// [google.cloud.dataplex.v1.Partition]: @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L480}
   ///
   // clang-format on
-  StatusOr<google::cloud::dataplex::v1::Partition> GetPartition(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::dataplex::v1::Partition>
+  GetPartition(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -527,9 +516,8 @@ class MetadataServiceClient {
   /// [google.cloud.dataplex.v1.Partition]: @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L480}
   ///
   // clang-format on
-  StatusOr<google::cloud::dataplex::v1::Partition> GetPartition(
-      google::cloud::dataplex::v1::GetPartitionRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::dataplex::v1::Partition>
+  GetPartition(google::cloud::dataplex::v1::GetPartitionRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -563,8 +551,8 @@ class MetadataServiceClient {
   /// [google.cloud.dataplex.v1.Partition]: @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L480}
   ///
   // clang-format on
-  StreamRange<google::cloud::dataplex::v1::Partition> ListPartitions(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::dataplex::v1::Partition>
+  ListPartitions(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -602,9 +590,8 @@ class MetadataServiceClient {
   /// [google.cloud.dataplex.v1.Partition]: @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L480}
   ///
   // clang-format on
-  StreamRange<google::cloud::dataplex::v1::Partition> ListPartitions(
-      google::cloud::dataplex::v1::ListPartitionsRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::dataplex::v1::Partition>
+  ListPartitions(google::cloud::dataplex::v1::ListPartitionsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -642,8 +629,8 @@ class MetadataServiceClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request, Options opts = {});
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -672,9 +659,8 @@ class MetadataServiceClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -706,8 +692,8 @@ class MetadataServiceClient {
   /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L100}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -738,8 +724,8 @@ class MetadataServiceClient {
   /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -774,9 +760,8 @@ class MetadataServiceClient {
   /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L153}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request,
-      Options opts = {});
+  StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -811,8 +796,8 @@ class MetadataServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -851,8 +836,8 @@ class MetadataServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -878,8 +863,8 @@ class MetadataServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -910,9 +895,8 @@ class MetadataServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -936,7 +920,8 @@ class MetadataServiceClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status DeleteOperation(std::string const& name, Options opts = {});
+  Status
+  DeleteOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -965,9 +950,8 @@ class MetadataServiceClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request,
-      Options opts = {});
+  Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1001,7 +985,8 @@ class MetadataServiceClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(std::string const& name, Options opts = {});
+  Status
+  CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1040,9 +1025,8 @@ class MetadataServiceClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request,
-      Options opts = {});
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<MetadataServiceConnection> connection_;

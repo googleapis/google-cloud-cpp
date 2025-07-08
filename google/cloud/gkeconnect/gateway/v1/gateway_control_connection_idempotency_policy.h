@@ -34,16 +34,14 @@ class GatewayControlConnectionIdempotencyPolicy {
   virtual ~GatewayControlConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<GatewayControlConnectionIdempotencyPolicy> clone()
-      const;
+  virtual std::unique_ptr<GatewayControlConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency GenerateCredentials(
-      google::cloud::gkeconnect::gateway::v1::GenerateCredentialsRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  GenerateCredentials(google::cloud::gkeconnect::gateway::v1::GenerateCredentialsRequest const& request);
 };
 
 std::unique_ptr<GatewayControlConnectionIdempotencyPolicy>
-MakeDefaultGatewayControlConnectionIdempotencyPolicy();
+    MakeDefaultGatewayControlConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace gkeconnect_gateway_v1

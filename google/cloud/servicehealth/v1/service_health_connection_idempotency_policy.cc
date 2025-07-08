@@ -26,58 +26,47 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-ServiceHealthConnectionIdempotencyPolicy::
-    ~ServiceHealthConnectionIdempotencyPolicy() = default;
+ServiceHealthConnectionIdempotencyPolicy::~ServiceHealthConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<ServiceHealthConnectionIdempotencyPolicy>
 ServiceHealthConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<ServiceHealthConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency ServiceHealthConnectionIdempotencyPolicy::ListEvents(
-    google::cloud::servicehealth::v1::ListEventsRequest) {  // NOLINT
+Idempotency ServiceHealthConnectionIdempotencyPolicy::ListEvents(google::cloud::servicehealth::v1::ListEventsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency ServiceHealthConnectionIdempotencyPolicy::GetEvent(
-    google::cloud::servicehealth::v1::GetEventRequest const&) {
+Idempotency ServiceHealthConnectionIdempotencyPolicy::GetEvent(google::cloud::servicehealth::v1::GetEventRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ServiceHealthConnectionIdempotencyPolicy::ListOrganizationEvents(
-    google::cloud::servicehealth::v1::
-        ListOrganizationEventsRequest) {  // NOLINT
+Idempotency ServiceHealthConnectionIdempotencyPolicy::ListOrganizationEvents(google::cloud::servicehealth::v1::ListOrganizationEventsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency ServiceHealthConnectionIdempotencyPolicy::GetOrganizationEvent(
-    google::cloud::servicehealth::v1::GetOrganizationEventRequest const&) {
+Idempotency ServiceHealthConnectionIdempotencyPolicy::GetOrganizationEvent(google::cloud::servicehealth::v1::GetOrganizationEventRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ServiceHealthConnectionIdempotencyPolicy::ListOrganizationImpacts(
-    google::cloud::servicehealth::v1::
-        ListOrganizationImpactsRequest) {  // NOLINT
+Idempotency ServiceHealthConnectionIdempotencyPolicy::ListOrganizationImpacts(google::cloud::servicehealth::v1::ListOrganizationImpactsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency ServiceHealthConnectionIdempotencyPolicy::GetOrganizationImpact(
-    google::cloud::servicehealth::v1::GetOrganizationImpactRequest const&) {
+Idempotency ServiceHealthConnectionIdempotencyPolicy::GetOrganizationImpact(google::cloud::servicehealth::v1::GetOrganizationImpactRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ServiceHealthConnectionIdempotencyPolicy::ListLocations(
-    google::cloud::location::ListLocationsRequest) {  // NOLINT
+Idempotency ServiceHealthConnectionIdempotencyPolicy::ListLocations(google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency ServiceHealthConnectionIdempotencyPolicy::GetLocation(
-    google::cloud::location::GetLocationRequest const&) {
+Idempotency ServiceHealthConnectionIdempotencyPolicy::GetLocation(google::cloud::location::GetLocationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<ServiceHealthConnectionIdempotencyPolicy>
-MakeDefaultServiceHealthConnectionIdempotencyPolicy() {
+    MakeDefaultServiceHealthConnectionIdempotencyPolicy() {
   return std::make_unique<ServiceHealthConnectionIdempotencyPolicy>();
 }
 

@@ -66,8 +66,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class DlpServiceClient {
  public:
-  explicit DlpServiceClient(std::shared_ptr<DlpServiceConnection> connection,
-                            Options opts = {});
+  explicit DlpServiceClient(std::shared_ptr<DlpServiceConnection> connection, Options opts = {});
   ~DlpServiceClient();
 
   ///@{
@@ -125,9 +124,8 @@ class DlpServiceClient {
   /// [google.privacy.dlp.v2.InspectContentResponse]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L1837}
   ///
   // clang-format on
-  StatusOr<google::privacy::dlp::v2::InspectContentResponse> InspectContent(
-      google::privacy::dlp::v2::InspectContentRequest const& request,
-      Options opts = {});
+  StatusOr<google::privacy::dlp::v2::InspectContentResponse>
+  InspectContent(google::privacy::dlp::v2::InspectContentRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -167,9 +165,8 @@ class DlpServiceClient {
   /// [google.privacy.dlp.v2.RedactImageResponse]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L1642}
   ///
   // clang-format on
-  StatusOr<google::privacy::dlp::v2::RedactImageResponse> RedactImage(
-      google::privacy::dlp::v2::RedactImageRequest const& request,
-      Options opts = {});
+  StatusOr<google::privacy::dlp::v2::RedactImageResponse>
+  RedactImage(google::privacy::dlp::v2::RedactImageRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -207,9 +204,7 @@ class DlpServiceClient {
   ///
   // clang-format on
   StatusOr<google::privacy::dlp::v2::DeidentifyContentResponse>
-  DeidentifyContent(
-      google::privacy::dlp::v2::DeidentifyContentRequest const& request,
-      Options opts = {});
+  DeidentifyContent(google::privacy::dlp::v2::DeidentifyContentRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -242,9 +237,7 @@ class DlpServiceClient {
   ///
   // clang-format on
   StatusOr<google::privacy::dlp::v2::ReidentifyContentResponse>
-  ReidentifyContent(
-      google::privacy::dlp::v2::ReidentifyContentRequest const& request,
-      Options opts = {});
+  ReidentifyContent(google::privacy::dlp::v2::ReidentifyContentRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -275,8 +268,8 @@ class DlpServiceClient {
   /// [google.privacy.dlp.v2.ListInfoTypesResponse]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L2323}
   ///
   // clang-format on
-  StatusOr<google::privacy::dlp::v2::ListInfoTypesResponse> ListInfoTypes(
-      std::string const& parent, Options opts = {});
+  StatusOr<google::privacy::dlp::v2::ListInfoTypesResponse>
+  ListInfoTypes(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -308,9 +301,8 @@ class DlpServiceClient {
   /// [google.privacy.dlp.v2.ListInfoTypesResponse]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L2323}
   ///
   // clang-format on
-  StatusOr<google::privacy::dlp::v2::ListInfoTypesResponse> ListInfoTypes(
-      google::privacy::dlp::v2::ListInfoTypesRequest const& request,
-      Options opts = {});
+  StatusOr<google::privacy::dlp::v2::ListInfoTypesResponse>
+  ListInfoTypes(google::privacy::dlp::v2::ListInfoTypesRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -358,10 +350,8 @@ class DlpServiceClient {
   /// [google.privacy.dlp.v2.InspectTemplate]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3963}
   ///
   // clang-format on
-  StatusOr<google::privacy::dlp::v2::InspectTemplate> CreateInspectTemplate(
-      std::string const& parent,
-      google::privacy::dlp::v2::InspectTemplate const& inspect_template,
-      Options opts = {});
+  StatusOr<google::privacy::dlp::v2::InspectTemplate>
+  CreateInspectTemplate(std::string const& parent, google::privacy::dlp::v2::InspectTemplate const& inspect_template, Options opts = {});
 
   // clang-format off
   ///
@@ -394,9 +384,8 @@ class DlpServiceClient {
   /// [google.privacy.dlp.v2.InspectTemplate]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3963}
   ///
   // clang-format on
-  StatusOr<google::privacy::dlp::v2::InspectTemplate> CreateInspectTemplate(
-      google::privacy::dlp::v2::CreateInspectTemplateRequest const& request,
-      Options opts = {});
+  StatusOr<google::privacy::dlp::v2::InspectTemplate>
+  CreateInspectTemplate(google::privacy::dlp::v2::CreateInspectTemplateRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -427,10 +416,8 @@ class DlpServiceClient {
   /// [google.privacy.dlp.v2.UpdateInspectTemplateRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4409}
   ///
   // clang-format on
-  StatusOr<google::privacy::dlp::v2::InspectTemplate> UpdateInspectTemplate(
-      std::string const& name,
-      google::privacy::dlp::v2::InspectTemplate const& inspect_template,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::privacy::dlp::v2::InspectTemplate>
+  UpdateInspectTemplate(std::string const& name, google::privacy::dlp::v2::InspectTemplate const& inspect_template, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -462,9 +449,8 @@ class DlpServiceClient {
   /// [google.privacy.dlp.v2.UpdateInspectTemplateRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4409}
   ///
   // clang-format on
-  StatusOr<google::privacy::dlp::v2::InspectTemplate> UpdateInspectTemplate(
-      google::privacy::dlp::v2::UpdateInspectTemplateRequest const& request,
-      Options opts = {});
+  StatusOr<google::privacy::dlp::v2::InspectTemplate>
+  UpdateInspectTemplate(google::privacy::dlp::v2::UpdateInspectTemplateRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -493,8 +479,8 @@ class DlpServiceClient {
   /// [google.privacy.dlp.v2.InspectTemplate]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3963}
   ///
   // clang-format on
-  StatusOr<google::privacy::dlp::v2::InspectTemplate> GetInspectTemplate(
-      std::string const& name, Options opts = {});
+  StatusOr<google::privacy::dlp::v2::InspectTemplate>
+  GetInspectTemplate(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -526,9 +512,8 @@ class DlpServiceClient {
   /// [google.privacy.dlp.v2.InspectTemplate]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3963}
   ///
   // clang-format on
-  StatusOr<google::privacy::dlp::v2::InspectTemplate> GetInspectTemplate(
-      google::privacy::dlp::v2::GetInspectTemplateRequest const& request,
-      Options opts = {});
+  StatusOr<google::privacy::dlp::v2::InspectTemplate>
+  GetInspectTemplate(google::privacy::dlp::v2::GetInspectTemplateRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -583,8 +568,8 @@ class DlpServiceClient {
   /// [google.privacy.dlp.v2.ListInspectTemplatesRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4441}
   ///
   // clang-format on
-  StreamRange<google::privacy::dlp::v2::InspectTemplate> ListInspectTemplates(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::privacy::dlp::v2::InspectTemplate>
+  ListInspectTemplates(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -625,9 +610,8 @@ class DlpServiceClient {
   /// [google.privacy.dlp.v2.ListInspectTemplatesRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4441}
   ///
   // clang-format on
-  StreamRange<google::privacy::dlp::v2::InspectTemplate> ListInspectTemplates(
-      google::privacy::dlp::v2::ListInspectTemplatesRequest request,
-      Options opts = {});
+  StreamRange<google::privacy::dlp::v2::InspectTemplate>
+  ListInspectTemplates(google::privacy::dlp::v2::ListInspectTemplatesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -653,7 +637,8 @@ class DlpServiceClient {
   /// [google.privacy.dlp.v2.DeleteInspectTemplateRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4507}
   ///
   // clang-format on
-  Status DeleteInspectTemplate(std::string const& name, Options opts = {});
+  Status
+  DeleteInspectTemplate(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -682,9 +667,8 @@ class DlpServiceClient {
   /// [google.privacy.dlp.v2.DeleteInspectTemplateRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4507}
   ///
   // clang-format on
-  Status DeleteInspectTemplate(
-      google::privacy::dlp::v2::DeleteInspectTemplateRequest const& request,
-      Options opts = {});
+  Status
+  DeleteInspectTemplate(google::privacy::dlp::v2::DeleteInspectTemplateRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -733,10 +717,7 @@ class DlpServiceClient {
   ///
   // clang-format on
   StatusOr<google::privacy::dlp::v2::DeidentifyTemplate>
-  CreateDeidentifyTemplate(
-      std::string const& parent,
-      google::privacy::dlp::v2::DeidentifyTemplate const& deidentify_template,
-      Options opts = {});
+  CreateDeidentifyTemplate(std::string const& parent, google::privacy::dlp::v2::DeidentifyTemplate const& deidentify_template, Options opts = {});
 
   // clang-format off
   ///
@@ -770,9 +751,7 @@ class DlpServiceClient {
   ///
   // clang-format on
   StatusOr<google::privacy::dlp::v2::DeidentifyTemplate>
-  CreateDeidentifyTemplate(
-      google::privacy::dlp::v2::CreateDeidentifyTemplateRequest const& request,
-      Options opts = {});
+  CreateDeidentifyTemplate(google::privacy::dlp::v2::CreateDeidentifyTemplateRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -805,10 +784,7 @@ class DlpServiceClient {
   ///
   // clang-format on
   StatusOr<google::privacy::dlp::v2::DeidentifyTemplate>
-  UpdateDeidentifyTemplate(
-      std::string const& name,
-      google::privacy::dlp::v2::DeidentifyTemplate const& deidentify_template,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  UpdateDeidentifyTemplate(std::string const& name, google::privacy::dlp::v2::DeidentifyTemplate const& deidentify_template, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -841,9 +817,7 @@ class DlpServiceClient {
   ///
   // clang-format on
   StatusOr<google::privacy::dlp::v2::DeidentifyTemplate>
-  UpdateDeidentifyTemplate(
-      google::privacy::dlp::v2::UpdateDeidentifyTemplateRequest const& request,
-      Options opts = {});
+  UpdateDeidentifyTemplate(google::privacy::dlp::v2::UpdateDeidentifyTemplateRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -872,8 +846,8 @@ class DlpServiceClient {
   /// [google.privacy.dlp.v2.GetDeidentifyTemplateRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L6673}
   ///
   // clang-format on
-  StatusOr<google::privacy::dlp::v2::DeidentifyTemplate> GetDeidentifyTemplate(
-      std::string const& name, Options opts = {});
+  StatusOr<google::privacy::dlp::v2::DeidentifyTemplate>
+  GetDeidentifyTemplate(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -905,9 +879,8 @@ class DlpServiceClient {
   /// [google.privacy.dlp.v2.GetDeidentifyTemplateRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L6673}
   ///
   // clang-format on
-  StatusOr<google::privacy::dlp::v2::DeidentifyTemplate> GetDeidentifyTemplate(
-      google::privacy::dlp::v2::GetDeidentifyTemplateRequest const& request,
-      Options opts = {});
+  StatusOr<google::privacy::dlp::v2::DeidentifyTemplate>
+  GetDeidentifyTemplate(google::privacy::dlp::v2::GetDeidentifyTemplateRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1005,9 +978,7 @@ class DlpServiceClient {
   ///
   // clang-format on
   StreamRange<google::privacy::dlp::v2::DeidentifyTemplate>
-  ListDeidentifyTemplates(
-      google::privacy::dlp::v2::ListDeidentifyTemplatesRequest request,
-      Options opts = {});
+  ListDeidentifyTemplates(google::privacy::dlp::v2::ListDeidentifyTemplatesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1034,7 +1005,8 @@ class DlpServiceClient {
   /// [google.privacy.dlp.v2.DeleteDeidentifyTemplateRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L6753}
   ///
   // clang-format on
-  Status DeleteDeidentifyTemplate(std::string const& name, Options opts = {});
+  Status
+  DeleteDeidentifyTemplate(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1063,9 +1035,8 @@ class DlpServiceClient {
   /// [google.privacy.dlp.v2.DeleteDeidentifyTemplateRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L6753}
   ///
   // clang-format on
-  Status DeleteDeidentifyTemplate(
-      google::privacy::dlp::v2::DeleteDeidentifyTemplateRequest const& request,
-      Options opts = {});
+  Status
+  DeleteDeidentifyTemplate(google::privacy::dlp::v2::DeleteDeidentifyTemplateRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1109,10 +1080,8 @@ class DlpServiceClient {
   /// [google.privacy.dlp.v2.JobTrigger]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4065}
   ///
   // clang-format on
-  StatusOr<google::privacy::dlp::v2::JobTrigger> CreateJobTrigger(
-      std::string const& parent,
-      google::privacy::dlp::v2::JobTrigger const& job_trigger,
-      Options opts = {});
+  StatusOr<google::privacy::dlp::v2::JobTrigger>
+  CreateJobTrigger(std::string const& parent, google::privacy::dlp::v2::JobTrigger const& job_trigger, Options opts = {});
 
   // clang-format off
   ///
@@ -1145,9 +1114,8 @@ class DlpServiceClient {
   /// [google.privacy.dlp.v2.JobTrigger]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4065}
   ///
   // clang-format on
-  StatusOr<google::privacy::dlp::v2::JobTrigger> CreateJobTrigger(
-      google::privacy::dlp::v2::CreateJobTriggerRequest const& request,
-      Options opts = {});
+  StatusOr<google::privacy::dlp::v2::JobTrigger>
+  CreateJobTrigger(google::privacy::dlp::v2::CreateJobTriggerRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1177,10 +1145,8 @@ class DlpServiceClient {
   /// [google.privacy.dlp.v2.UpdateJobTriggerRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4568}
   ///
   // clang-format on
-  StatusOr<google::privacy::dlp::v2::JobTrigger> UpdateJobTrigger(
-      std::string const& name,
-      google::privacy::dlp::v2::JobTrigger const& job_trigger,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::privacy::dlp::v2::JobTrigger>
+  UpdateJobTrigger(std::string const& name, google::privacy::dlp::v2::JobTrigger const& job_trigger, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -1212,9 +1178,8 @@ class DlpServiceClient {
   /// [google.privacy.dlp.v2.UpdateJobTriggerRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4568}
   ///
   // clang-format on
-  StatusOr<google::privacy::dlp::v2::JobTrigger> UpdateJobTrigger(
-      google::privacy::dlp::v2::UpdateJobTriggerRequest const& request,
-      Options opts = {});
+  StatusOr<google::privacy::dlp::v2::JobTrigger>
+  UpdateJobTrigger(google::privacy::dlp::v2::UpdateJobTriggerRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1274,9 +1239,7 @@ class DlpServiceClient {
   ///
   // clang-format on
   StatusOr<google::privacy::dlp::v2::HybridInspectResponse>
-  HybridInspectJobTrigger(
-      google::privacy::dlp::v2::HybridInspectJobTriggerRequest const& request,
-      Options opts = {});
+  HybridInspectJobTrigger(google::privacy::dlp::v2::HybridInspectJobTriggerRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1304,8 +1267,8 @@ class DlpServiceClient {
   /// [google.privacy.dlp.v2.JobTrigger]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4065}
   ///
   // clang-format on
-  StatusOr<google::privacy::dlp::v2::JobTrigger> GetJobTrigger(
-      std::string const& name, Options opts = {});
+  StatusOr<google::privacy::dlp::v2::JobTrigger>
+  GetJobTrigger(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1337,9 +1300,8 @@ class DlpServiceClient {
   /// [google.privacy.dlp.v2.JobTrigger]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4065}
   ///
   // clang-format on
-  StatusOr<google::privacy::dlp::v2::JobTrigger> GetJobTrigger(
-      google::privacy::dlp::v2::GetJobTriggerRequest const& request,
-      Options opts = {});
+  StatusOr<google::privacy::dlp::v2::JobTrigger>
+  GetJobTrigger(google::privacy::dlp::v2::GetJobTriggerRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1390,8 +1352,8 @@ class DlpServiceClient {
   /// [google.privacy.dlp.v2.ListJobTriggersRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4769}
   ///
   // clang-format on
-  StreamRange<google::privacy::dlp::v2::JobTrigger> ListJobTriggers(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::privacy::dlp::v2::JobTrigger>
+  ListJobTriggers(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -1432,9 +1394,8 @@ class DlpServiceClient {
   /// [google.privacy.dlp.v2.ListJobTriggersRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4769}
   ///
   // clang-format on
-  StreamRange<google::privacy::dlp::v2::JobTrigger> ListJobTriggers(
-      google::privacy::dlp::v2::ListJobTriggersRequest request,
-      Options opts = {});
+  StreamRange<google::privacy::dlp::v2::JobTrigger>
+  ListJobTriggers(google::privacy::dlp::v2::ListJobTriggersRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1459,7 +1420,8 @@ class DlpServiceClient {
   /// [google.privacy.dlp.v2.DeleteJobTriggerRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4862}
   ///
   // clang-format on
-  Status DeleteJobTrigger(std::string const& name, Options opts = {});
+  Status
+  DeleteJobTrigger(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1488,9 +1450,8 @@ class DlpServiceClient {
   /// [google.privacy.dlp.v2.DeleteJobTriggerRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4862}
   ///
   // clang-format on
-  Status DeleteJobTrigger(
-      google::privacy::dlp::v2::DeleteJobTriggerRequest const& request,
-      Options opts = {});
+  Status
+  DeleteJobTrigger(google::privacy::dlp::v2::DeleteJobTriggerRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1520,9 +1481,8 @@ class DlpServiceClient {
   /// [google.privacy.dlp.v2.DlpJob]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L6404}
   ///
   // clang-format on
-  StatusOr<google::privacy::dlp::v2::DlpJob> ActivateJobTrigger(
-      google::privacy::dlp::v2::ActivateJobTriggerRequest const& request,
-      Options opts = {});
+  StatusOr<google::privacy::dlp::v2::DlpJob>
+  ActivateJobTrigger(google::privacy::dlp::v2::ActivateJobTriggerRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1561,10 +1521,8 @@ class DlpServiceClient {
   /// [google.privacy.dlp.v2.DiscoveryConfig]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5311}
   ///
   // clang-format on
-  StatusOr<google::privacy::dlp::v2::DiscoveryConfig> CreateDiscoveryConfig(
-      std::string const& parent,
-      google::privacy::dlp::v2::DiscoveryConfig const& discovery_config,
-      Options opts = {});
+  StatusOr<google::privacy::dlp::v2::DiscoveryConfig>
+  CreateDiscoveryConfig(std::string const& parent, google::privacy::dlp::v2::DiscoveryConfig const& discovery_config, Options opts = {});
 
   // clang-format off
   ///
@@ -1593,9 +1551,8 @@ class DlpServiceClient {
   /// [google.privacy.dlp.v2.DiscoveryConfig]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5311}
   ///
   // clang-format on
-  StatusOr<google::privacy::dlp::v2::DiscoveryConfig> CreateDiscoveryConfig(
-      google::privacy::dlp::v2::CreateDiscoveryConfigRequest const& request,
-      Options opts = {});
+  StatusOr<google::privacy::dlp::v2::DiscoveryConfig>
+  CreateDiscoveryConfig(google::privacy::dlp::v2::CreateDiscoveryConfigRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1622,10 +1579,8 @@ class DlpServiceClient {
   /// [google.privacy.dlp.v2.UpdateDiscoveryConfigRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4628}
   ///
   // clang-format on
-  StatusOr<google::privacy::dlp::v2::DiscoveryConfig> UpdateDiscoveryConfig(
-      std::string const& name,
-      google::privacy::dlp::v2::DiscoveryConfig const& discovery_config,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::privacy::dlp::v2::DiscoveryConfig>
+  UpdateDiscoveryConfig(std::string const& name, google::privacy::dlp::v2::DiscoveryConfig const& discovery_config, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -1654,9 +1609,8 @@ class DlpServiceClient {
   /// [google.privacy.dlp.v2.UpdateDiscoveryConfigRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4628}
   ///
   // clang-format on
-  StatusOr<google::privacy::dlp::v2::DiscoveryConfig> UpdateDiscoveryConfig(
-      google::privacy::dlp::v2::UpdateDiscoveryConfigRequest const& request,
-      Options opts = {});
+  StatusOr<google::privacy::dlp::v2::DiscoveryConfig>
+  UpdateDiscoveryConfig(google::privacy::dlp::v2::UpdateDiscoveryConfigRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1681,8 +1635,8 @@ class DlpServiceClient {
   /// [google.privacy.dlp.v2.GetDiscoveryConfigRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4646}
   ///
   // clang-format on
-  StatusOr<google::privacy::dlp::v2::DiscoveryConfig> GetDiscoveryConfig(
-      std::string const& name, Options opts = {});
+  StatusOr<google::privacy::dlp::v2::DiscoveryConfig>
+  GetDiscoveryConfig(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1711,9 +1665,8 @@ class DlpServiceClient {
   /// [google.privacy.dlp.v2.GetDiscoveryConfigRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4646}
   ///
   // clang-format on
-  StatusOr<google::privacy::dlp::v2::DiscoveryConfig> GetDiscoveryConfig(
-      google::privacy::dlp::v2::GetDiscoveryConfigRequest const& request,
-      Options opts = {});
+  StatusOr<google::privacy::dlp::v2::DiscoveryConfig>
+  GetDiscoveryConfig(google::privacy::dlp::v2::GetDiscoveryConfigRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1755,8 +1708,8 @@ class DlpServiceClient {
   /// [google.privacy.dlp.v2.ListDiscoveryConfigsRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4658}
   ///
   // clang-format on
-  StreamRange<google::privacy::dlp::v2::DiscoveryConfig> ListDiscoveryConfigs(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::privacy::dlp::v2::DiscoveryConfig>
+  ListDiscoveryConfigs(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -1794,9 +1747,8 @@ class DlpServiceClient {
   /// [google.privacy.dlp.v2.ListDiscoveryConfigsRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4658}
   ///
   // clang-format on
-  StreamRange<google::privacy::dlp::v2::DiscoveryConfig> ListDiscoveryConfigs(
-      google::privacy::dlp::v2::ListDiscoveryConfigsRequest request,
-      Options opts = {});
+  StreamRange<google::privacy::dlp::v2::DiscoveryConfig>
+  ListDiscoveryConfigs(google::privacy::dlp::v2::ListDiscoveryConfigsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1818,7 +1770,8 @@ class DlpServiceClient {
   /// [google.privacy.dlp.v2.DeleteDiscoveryConfigRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4710}
   ///
   // clang-format on
-  Status DeleteDiscoveryConfig(std::string const& name, Options opts = {});
+  Status
+  DeleteDiscoveryConfig(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1844,9 +1797,8 @@ class DlpServiceClient {
   /// [google.privacy.dlp.v2.DeleteDiscoveryConfigRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4710}
   ///
   // clang-format on
-  Status DeleteDiscoveryConfig(
-      google::privacy::dlp::v2::DeleteDiscoveryConfigRequest const& request,
-      Options opts = {});
+  Status
+  DeleteDiscoveryConfig(google::privacy::dlp::v2::DeleteDiscoveryConfigRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1895,10 +1847,8 @@ class DlpServiceClient {
   /// [google.privacy.dlp.v2.DlpJob]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L6404}
   ///
   // clang-format on
-  StatusOr<google::privacy::dlp::v2::DlpJob> CreateDlpJob(
-      std::string const& parent,
-      google::privacy::dlp::v2::InspectJobConfig const& inspect_job,
-      Options opts = {});
+  StatusOr<google::privacy::dlp::v2::DlpJob>
+  CreateDlpJob(std::string const& parent, google::privacy::dlp::v2::InspectJobConfig const& inspect_job, Options opts = {});
 
   // clang-format off
   ///
@@ -1948,10 +1898,8 @@ class DlpServiceClient {
   /// [google.privacy.dlp.v2.DlpJob]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L6404}
   ///
   // clang-format on
-  StatusOr<google::privacy::dlp::v2::DlpJob> CreateDlpJob(
-      std::string const& parent,
-      google::privacy::dlp::v2::RiskAnalysisJobConfig const& risk_job,
-      Options opts = {});
+  StatusOr<google::privacy::dlp::v2::DlpJob>
+  CreateDlpJob(std::string const& parent, google::privacy::dlp::v2::RiskAnalysisJobConfig const& risk_job, Options opts = {});
 
   // clang-format off
   ///
@@ -1989,9 +1937,8 @@ class DlpServiceClient {
   /// [google.privacy.dlp.v2.DlpJob]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L6404}
   ///
   // clang-format on
-  StatusOr<google::privacy::dlp::v2::DlpJob> CreateDlpJob(
-      google::privacy::dlp::v2::CreateDlpJobRequest const& request,
-      Options opts = {});
+  StatusOr<google::privacy::dlp::v2::DlpJob>
+  CreateDlpJob(google::privacy::dlp::v2::CreateDlpJobRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2044,8 +1991,8 @@ class DlpServiceClient {
   /// [google.privacy.dlp.v2.ListDlpJobsRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L6491}
   ///
   // clang-format on
-  StreamRange<google::privacy::dlp::v2::DlpJob> ListDlpJobs(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::privacy::dlp::v2::DlpJob>
+  ListDlpJobs(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -2088,8 +2035,8 @@ class DlpServiceClient {
   /// [google.privacy.dlp.v2.ListDlpJobsRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L6491}
   ///
   // clang-format on
-  StreamRange<google::privacy::dlp::v2::DlpJob> ListDlpJobs(
-      google::privacy::dlp::v2::ListDlpJobsRequest request, Options opts = {});
+  StreamRange<google::privacy::dlp::v2::DlpJob>
+  ListDlpJobs(google::privacy::dlp::v2::ListDlpJobsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -2118,8 +2065,8 @@ class DlpServiceClient {
   /// [google.privacy.dlp.v2.GetDlpJobRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L6482}
   ///
   // clang-format on
-  StatusOr<google::privacy::dlp::v2::DlpJob> GetDlpJob(std::string const& name,
-                                                       Options opts = {});
+  StatusOr<google::privacy::dlp::v2::DlpJob>
+  GetDlpJob(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2153,9 +2100,8 @@ class DlpServiceClient {
   /// [google.privacy.dlp.v2.GetDlpJobRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L6482}
   ///
   // clang-format on
-  StatusOr<google::privacy::dlp::v2::DlpJob> GetDlpJob(
-      google::privacy::dlp::v2::GetDlpJobRequest const& request,
-      Options opts = {});
+  StatusOr<google::privacy::dlp::v2::DlpJob>
+  GetDlpJob(google::privacy::dlp::v2::GetDlpJobRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2183,7 +2129,8 @@ class DlpServiceClient {
   /// [google.privacy.dlp.v2.DeleteDlpJobRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L6601}
   ///
   // clang-format on
-  Status DeleteDlpJob(std::string const& name, Options opts = {});
+  Status
+  DeleteDlpJob(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2216,9 +2163,8 @@ class DlpServiceClient {
   /// [google.privacy.dlp.v2.DeleteDlpJobRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L6601}
   ///
   // clang-format on
-  Status DeleteDlpJob(
-      google::privacy::dlp::v2::DeleteDlpJobRequest const& request,
-      Options opts = {});
+  Status
+  DeleteDlpJob(google::privacy::dlp::v2::DeleteDlpJobRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2251,9 +2197,8 @@ class DlpServiceClient {
   /// [google.privacy.dlp.v2.CancelDlpJobRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L6583}
   ///
   // clang-format on
-  Status CancelDlpJob(
-      google::privacy::dlp::v2::CancelDlpJobRequest const& request,
-      Options opts = {});
+  Status
+  CancelDlpJob(google::privacy::dlp::v2::CancelDlpJobRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2300,10 +2245,8 @@ class DlpServiceClient {
   /// [google.privacy.dlp.v2.StoredInfoType]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L6862}
   ///
   // clang-format on
-  StatusOr<google::privacy::dlp::v2::StoredInfoType> CreateStoredInfoType(
-      std::string const& parent,
-      google::privacy::dlp::v2::StoredInfoTypeConfig const& config,
-      Options opts = {});
+  StatusOr<google::privacy::dlp::v2::StoredInfoType>
+  CreateStoredInfoType(std::string const& parent, google::privacy::dlp::v2::StoredInfoTypeConfig const& config, Options opts = {});
 
   // clang-format off
   ///
@@ -2335,9 +2278,8 @@ class DlpServiceClient {
   /// [google.privacy.dlp.v2.StoredInfoType]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L6862}
   ///
   // clang-format on
-  StatusOr<google::privacy::dlp::v2::StoredInfoType> CreateStoredInfoType(
-      google::privacy::dlp::v2::CreateStoredInfoTypeRequest const& request,
-      Options opts = {});
+  StatusOr<google::privacy::dlp::v2::StoredInfoType>
+  CreateStoredInfoType(google::privacy::dlp::v2::CreateStoredInfoTypeRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2371,10 +2313,8 @@ class DlpServiceClient {
   /// [google.privacy.dlp.v2.UpdateStoredInfoTypeRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L6925}
   ///
   // clang-format on
-  StatusOr<google::privacy::dlp::v2::StoredInfoType> UpdateStoredInfoType(
-      std::string const& name,
-      google::privacy::dlp::v2::StoredInfoTypeConfig const& config,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::privacy::dlp::v2::StoredInfoType>
+  UpdateStoredInfoType(std::string const& name, google::privacy::dlp::v2::StoredInfoTypeConfig const& config, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -2407,9 +2347,8 @@ class DlpServiceClient {
   /// [google.privacy.dlp.v2.UpdateStoredInfoTypeRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L6925}
   ///
   // clang-format on
-  StatusOr<google::privacy::dlp::v2::StoredInfoType> UpdateStoredInfoType(
-      google::privacy::dlp::v2::UpdateStoredInfoTypeRequest const& request,
-      Options opts = {});
+  StatusOr<google::privacy::dlp::v2::StoredInfoType>
+  UpdateStoredInfoType(google::privacy::dlp::v2::UpdateStoredInfoTypeRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2438,8 +2377,8 @@ class DlpServiceClient {
   /// [google.privacy.dlp.v2.StoredInfoType]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L6862}
   ///
   // clang-format on
-  StatusOr<google::privacy::dlp::v2::StoredInfoType> GetStoredInfoType(
-      std::string const& name, Options opts = {});
+  StatusOr<google::privacy::dlp::v2::StoredInfoType>
+  GetStoredInfoType(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2471,9 +2410,8 @@ class DlpServiceClient {
   /// [google.privacy.dlp.v2.StoredInfoType]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L6862}
   ///
   // clang-format on
-  StatusOr<google::privacy::dlp::v2::StoredInfoType> GetStoredInfoType(
-      google::privacy::dlp::v2::GetStoredInfoTypeRequest const& request,
-      Options opts = {});
+  StatusOr<google::privacy::dlp::v2::StoredInfoType>
+  GetStoredInfoType(google::privacy::dlp::v2::GetStoredInfoTypeRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2524,8 +2462,8 @@ class DlpServiceClient {
   /// [google.privacy.dlp.v2.StoredInfoType]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L6862}
   ///
   // clang-format on
-  StreamRange<google::privacy::dlp::v2::StoredInfoType> ListStoredInfoTypes(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::privacy::dlp::v2::StoredInfoType>
+  ListStoredInfoTypes(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -2566,9 +2504,8 @@ class DlpServiceClient {
   /// [google.privacy.dlp.v2.StoredInfoType]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L6862}
   ///
   // clang-format on
-  StreamRange<google::privacy::dlp::v2::StoredInfoType> ListStoredInfoTypes(
-      google::privacy::dlp::v2::ListStoredInfoTypesRequest request,
-      Options opts = {});
+  StreamRange<google::privacy::dlp::v2::StoredInfoType>
+  ListStoredInfoTypes(google::privacy::dlp::v2::ListStoredInfoTypesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -2594,7 +2531,8 @@ class DlpServiceClient {
   /// [google.privacy.dlp.v2.DeleteStoredInfoTypeRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L7022}
   ///
   // clang-format on
-  Status DeleteStoredInfoType(std::string const& name, Options opts = {});
+  Status
+  DeleteStoredInfoType(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2623,9 +2561,8 @@ class DlpServiceClient {
   /// [google.privacy.dlp.v2.DeleteStoredInfoTypeRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L7022}
   ///
   // clang-format on
-  Status DeleteStoredInfoType(
-      google::privacy::dlp::v2::DeleteStoredInfoTypeRequest const& request,
-      Options opts = {});
+  Status
+  DeleteStoredInfoType(google::privacy::dlp::v2::DeleteStoredInfoTypeRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2698,9 +2635,7 @@ class DlpServiceClient {
   ///
   // clang-format on
   StreamRange<google::privacy::dlp::v2::ProjectDataProfile>
-  ListProjectDataProfiles(
-      google::privacy::dlp::v2::ListProjectDataProfilesRequest request,
-      Options opts = {});
+  ListProjectDataProfiles(google::privacy::dlp::v2::ListProjectDataProfilesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -2735,8 +2670,8 @@ class DlpServiceClient {
   /// [google.privacy.dlp.v2.TableDataProfile]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L7577}
   ///
   // clang-format on
-  StreamRange<google::privacy::dlp::v2::TableDataProfile> ListTableDataProfiles(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::privacy::dlp::v2::TableDataProfile>
+  ListTableDataProfiles(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -2774,9 +2709,8 @@ class DlpServiceClient {
   /// [google.privacy.dlp.v2.TableDataProfile]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L7577}
   ///
   // clang-format on
-  StreamRange<google::privacy::dlp::v2::TableDataProfile> ListTableDataProfiles(
-      google::privacy::dlp::v2::ListTableDataProfilesRequest request,
-      Options opts = {});
+  StreamRange<google::privacy::dlp::v2::TableDataProfile>
+  ListTableDataProfiles(google::privacy::dlp::v2::ListTableDataProfilesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -2851,9 +2785,7 @@ class DlpServiceClient {
   ///
   // clang-format on
   StreamRange<google::privacy::dlp::v2::ColumnDataProfile>
-  ListColumnDataProfiles(
-      google::privacy::dlp::v2::ListColumnDataProfilesRequest request,
-      Options opts = {});
+  ListColumnDataProfiles(google::privacy::dlp::v2::ListColumnDataProfilesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -2878,8 +2810,8 @@ class DlpServiceClient {
   /// [google.privacy.dlp.v2.ProjectDataProfile]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L7503}
   ///
   // clang-format on
-  StatusOr<google::privacy::dlp::v2::ProjectDataProfile> GetProjectDataProfile(
-      std::string const& name, Options opts = {});
+  StatusOr<google::privacy::dlp::v2::ProjectDataProfile>
+  GetProjectDataProfile(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2908,9 +2840,8 @@ class DlpServiceClient {
   /// [google.privacy.dlp.v2.ProjectDataProfile]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L7503}
   ///
   // clang-format on
-  StatusOr<google::privacy::dlp::v2::ProjectDataProfile> GetProjectDataProfile(
-      google::privacy::dlp::v2::GetProjectDataProfileRequest const& request,
-      Options opts = {});
+  StatusOr<google::privacy::dlp::v2::ProjectDataProfile>
+  GetProjectDataProfile(google::privacy::dlp::v2::GetProjectDataProfileRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2985,9 +2916,7 @@ class DlpServiceClient {
   ///
   // clang-format on
   StreamRange<google::privacy::dlp::v2::FileStoreDataProfile>
-  ListFileStoreDataProfiles(
-      google::privacy::dlp::v2::ListFileStoreDataProfilesRequest request,
-      Options opts = {});
+  ListFileStoreDataProfiles(google::privacy::dlp::v2::ListFileStoreDataProfilesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -3043,9 +2972,7 @@ class DlpServiceClient {
   ///
   // clang-format on
   StatusOr<google::privacy::dlp::v2::FileStoreDataProfile>
-  GetFileStoreDataProfile(
-      google::privacy::dlp::v2::GetFileStoreDataProfileRequest const& request,
-      Options opts = {});
+  GetFileStoreDataProfile(google::privacy::dlp::v2::GetFileStoreDataProfileRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -3067,7 +2994,8 @@ class DlpServiceClient {
   /// [google.privacy.dlp.v2.DeleteFileStoreDataProfileRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L8261}
   ///
   // clang-format on
-  Status DeleteFileStoreDataProfile(std::string const& name, Options opts = {});
+  Status
+  DeleteFileStoreDataProfile(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -3094,10 +3022,8 @@ class DlpServiceClient {
   /// [google.privacy.dlp.v2.DeleteFileStoreDataProfileRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L8261}
   ///
   // clang-format on
-  Status DeleteFileStoreDataProfile(
-      google::privacy::dlp::v2::DeleteFileStoreDataProfileRequest const&
-          request,
-      Options opts = {});
+  Status
+  DeleteFileStoreDataProfile(google::privacy::dlp::v2::DeleteFileStoreDataProfileRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -3122,8 +3048,8 @@ class DlpServiceClient {
   /// [google.privacy.dlp.v2.TableDataProfile]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L7577}
   ///
   // clang-format on
-  StatusOr<google::privacy::dlp::v2::TableDataProfile> GetTableDataProfile(
-      std::string const& name, Options opts = {});
+  StatusOr<google::privacy::dlp::v2::TableDataProfile>
+  GetTableDataProfile(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -3152,9 +3078,8 @@ class DlpServiceClient {
   /// [google.privacy.dlp.v2.TableDataProfile]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L7577}
   ///
   // clang-format on
-  StatusOr<google::privacy::dlp::v2::TableDataProfile> GetTableDataProfile(
-      google::privacy::dlp::v2::GetTableDataProfileRequest const& request,
-      Options opts = {});
+  StatusOr<google::privacy::dlp::v2::TableDataProfile>
+  GetTableDataProfile(google::privacy::dlp::v2::GetTableDataProfileRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -3179,8 +3104,8 @@ class DlpServiceClient {
   /// [google.privacy.dlp.v2.GetColumnDataProfileRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L8284}
   ///
   // clang-format on
-  StatusOr<google::privacy::dlp::v2::ColumnDataProfile> GetColumnDataProfile(
-      std::string const& name, Options opts = {});
+  StatusOr<google::privacy::dlp::v2::ColumnDataProfile>
+  GetColumnDataProfile(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -3209,9 +3134,8 @@ class DlpServiceClient {
   /// [google.privacy.dlp.v2.GetColumnDataProfileRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L8284}
   ///
   // clang-format on
-  StatusOr<google::privacy::dlp::v2::ColumnDataProfile> GetColumnDataProfile(
-      google::privacy::dlp::v2::GetColumnDataProfileRequest const& request,
-      Options opts = {});
+  StatusOr<google::privacy::dlp::v2::ColumnDataProfile>
+  GetColumnDataProfile(google::privacy::dlp::v2::GetColumnDataProfileRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -3233,7 +3157,8 @@ class DlpServiceClient {
   /// [google.privacy.dlp.v2.DeleteTableDataProfileRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L8610}
   ///
   // clang-format on
-  Status DeleteTableDataProfile(std::string const& name, Options opts = {});
+  Status
+  DeleteTableDataProfile(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -3260,9 +3185,8 @@ class DlpServiceClient {
   /// [google.privacy.dlp.v2.DeleteTableDataProfileRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L8610}
   ///
   // clang-format on
-  Status DeleteTableDataProfile(
-      google::privacy::dlp::v2::DeleteTableDataProfileRequest const& request,
-      Options opts = {});
+  Status
+  DeleteTableDataProfile(google::privacy::dlp::v2::DeleteTableDataProfileRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -3289,8 +3213,8 @@ class DlpServiceClient {
   /// [google.privacy.dlp.v2.HybridInspectResponse]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L7114}
   ///
   // clang-format on
-  StatusOr<google::privacy::dlp::v2::HybridInspectResponse> HybridInspectDlpJob(
-      std::string const& name, Options opts = {});
+  StatusOr<google::privacy::dlp::v2::HybridInspectResponse>
+  HybridInspectDlpJob(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -3321,9 +3245,8 @@ class DlpServiceClient {
   /// [google.privacy.dlp.v2.HybridInspectResponse]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L7114}
   ///
   // clang-format on
-  StatusOr<google::privacy::dlp::v2::HybridInspectResponse> HybridInspectDlpJob(
-      google::privacy::dlp::v2::HybridInspectDlpJobRequest const& request,
-      Options opts = {});
+  StatusOr<google::privacy::dlp::v2::HybridInspectResponse>
+  HybridInspectDlpJob(google::privacy::dlp::v2::HybridInspectDlpJobRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -3350,9 +3273,8 @@ class DlpServiceClient {
   /// [google.privacy.dlp.v2.FinishDlpJobRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L6592}
   ///
   // clang-format on
-  Status FinishDlpJob(
-      google::privacy::dlp::v2::FinishDlpJobRequest const& request,
-      Options opts = {});
+  Status
+  FinishDlpJob(google::privacy::dlp::v2::FinishDlpJobRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -3385,10 +3307,8 @@ class DlpServiceClient {
   /// [google.privacy.dlp.v2.CreateConnectionRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L8365}
   ///
   // clang-format on
-  StatusOr<google::privacy::dlp::v2::Connection> CreateConnection(
-      std::string const& parent,
-      google::privacy::dlp::v2::Connection const& connection,
-      Options opts = {});
+  StatusOr<google::privacy::dlp::v2::Connection>
+  CreateConnection(std::string const& parent, google::privacy::dlp::v2::Connection const& connection, Options opts = {});
 
   // clang-format off
   ///
@@ -3417,9 +3337,8 @@ class DlpServiceClient {
   /// [google.privacy.dlp.v2.CreateConnectionRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L8365}
   ///
   // clang-format on
-  StatusOr<google::privacy::dlp::v2::Connection> CreateConnection(
-      google::privacy::dlp::v2::CreateConnectionRequest const& request,
-      Options opts = {});
+  StatusOr<google::privacy::dlp::v2::Connection>
+  CreateConnection(google::privacy::dlp::v2::CreateConnectionRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -3444,8 +3363,8 @@ class DlpServiceClient {
   /// [google.privacy.dlp.v2.GetConnectionRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L8387}
   ///
   // clang-format on
-  StatusOr<google::privacy::dlp::v2::Connection> GetConnection(
-      std::string const& name, Options opts = {});
+  StatusOr<google::privacy::dlp::v2::Connection>
+  GetConnection(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -3474,9 +3393,8 @@ class DlpServiceClient {
   /// [google.privacy.dlp.v2.GetConnectionRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L8387}
   ///
   // clang-format on
-  StatusOr<google::privacy::dlp::v2::Connection> GetConnection(
-      google::privacy::dlp::v2::GetConnectionRequest const& request,
-      Options opts = {});
+  StatusOr<google::privacy::dlp::v2::Connection>
+  GetConnection(google::privacy::dlp::v2::GetConnectionRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -3512,8 +3430,8 @@ class DlpServiceClient {
   /// [google.privacy.dlp.v2.ListConnectionsRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L8397}
   ///
   // clang-format on
-  StreamRange<google::privacy::dlp::v2::Connection> ListConnections(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::privacy::dlp::v2::Connection>
+  ListConnections(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -3552,9 +3470,8 @@ class DlpServiceClient {
   /// [google.privacy.dlp.v2.ListConnectionsRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L8397}
   ///
   // clang-format on
-  StreamRange<google::privacy::dlp::v2::Connection> ListConnections(
-      google::privacy::dlp::v2::ListConnectionsRequest request,
-      Options opts = {});
+  StreamRange<google::privacy::dlp::v2::Connection>
+  ListConnections(google::privacy::dlp::v2::ListConnectionsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -3589,8 +3506,8 @@ class DlpServiceClient {
   /// [google.privacy.dlp.v2.SearchConnectionsRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L8420}
   ///
   // clang-format on
-  StreamRange<google::privacy::dlp::v2::Connection> SearchConnections(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::privacy::dlp::v2::Connection>
+  SearchConnections(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -3628,9 +3545,8 @@ class DlpServiceClient {
   /// [google.privacy.dlp.v2.SearchConnectionsRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L8420}
   ///
   // clang-format on
-  StreamRange<google::privacy::dlp::v2::Connection> SearchConnections(
-      google::privacy::dlp::v2::SearchConnectionsRequest request,
-      Options opts = {});
+  StreamRange<google::privacy::dlp::v2::Connection>
+  SearchConnections(google::privacy::dlp::v2::SearchConnectionsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -3652,7 +3568,8 @@ class DlpServiceClient {
   /// [google.privacy.dlp.v2.DeleteConnectionRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L8482}
   ///
   // clang-format on
-  Status DeleteConnection(std::string const& name, Options opts = {});
+  Status
+  DeleteConnection(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -3678,9 +3595,8 @@ class DlpServiceClient {
   /// [google.privacy.dlp.v2.DeleteConnectionRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L8482}
   ///
   // clang-format on
-  Status DeleteConnection(
-      google::privacy::dlp::v2::DeleteConnectionRequest const& request,
-      Options opts = {});
+  Status
+  DeleteConnection(google::privacy::dlp::v2::DeleteConnectionRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -3705,8 +3621,8 @@ class DlpServiceClient {
   /// [google.privacy.dlp.v2.UpdateConnectionRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L8465}
   ///
   // clang-format on
-  StatusOr<google::privacy::dlp::v2::Connection> UpdateConnection(
-      std::string const& name, Options opts = {});
+  StatusOr<google::privacy::dlp::v2::Connection>
+  UpdateConnection(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -3735,9 +3651,8 @@ class DlpServiceClient {
   /// [google.privacy.dlp.v2.UpdateConnectionRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L8465}
   ///
   // clang-format on
-  StatusOr<google::privacy::dlp::v2::Connection> UpdateConnection(
-      google::privacy::dlp::v2::UpdateConnectionRequest const& request,
-      Options opts = {});
+  StatusOr<google::privacy::dlp::v2::Connection>
+  UpdateConnection(google::privacy::dlp::v2::UpdateConnectionRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<DlpServiceConnection> connection_;

@@ -34,38 +34,31 @@ ModelServiceTracingConnection::ModelServiceTracingConnection(
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::bigquery::v2::Model>
-ModelServiceTracingConnection::GetModel(
-    google::cloud::bigquery::v2::GetModelRequest const& request) {
-  auto span = internal::MakeSpan(
-      "bigquerycontrol_v2::ModelServiceConnection::GetModel");
+ModelServiceTracingConnection::GetModel(google::cloud::bigquery::v2::GetModelRequest const& request) {
+  auto span = internal::MakeSpan("bigquerycontrol_v2::ModelServiceConnection::GetModel");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetModel(request));
 }
 
 StreamRange<google::cloud::bigquery::v2::Model>
-ModelServiceTracingConnection::ListModels(
-    google::cloud::bigquery::v2::ListModelsRequest request) {
-  auto span = internal::MakeSpan(
-      "bigquerycontrol_v2::ModelServiceConnection::ListModels");
+ModelServiceTracingConnection::ListModels(google::cloud::bigquery::v2::ListModelsRequest request) {
+  auto span = internal::MakeSpan("bigquerycontrol_v2::ModelServiceConnection::ListModels");
   internal::OTelScope scope(span);
   auto sr = child_->ListModels(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::bigquery::v2::Model>(
-      std::move(span), std::move(sr));
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::bigquery::v2::Model>
-ModelServiceTracingConnection::PatchModel(
-    google::cloud::bigquery::v2::PatchModelRequest const& request) {
-  auto span = internal::MakeSpan(
-      "bigquerycontrol_v2::ModelServiceConnection::PatchModel");
+ModelServiceTracingConnection::PatchModel(google::cloud::bigquery::v2::PatchModelRequest const& request) {
+  auto span = internal::MakeSpan("bigquerycontrol_v2::ModelServiceConnection::PatchModel");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->PatchModel(request));
 }
 
-Status ModelServiceTracingConnection::DeleteModel(
-    google::cloud::bigquery::v2::DeleteModelRequest const& request) {
-  auto span = internal::MakeSpan(
-      "bigquerycontrol_v2::ModelServiceConnection::DeleteModel");
+Status
+ModelServiceTracingConnection::DeleteModel(google::cloud::bigquery::v2::DeleteModelRequest const& request) {
+  auto span = internal::MakeSpan("bigquerycontrol_v2::ModelServiceConnection::DeleteModel");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteModel(request));
 }

@@ -28,31 +28,20 @@ namespace cloud {
 namespace monitoring {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use monitoring_metricsscope_v1::MetricsScopesPollingPolicyOption
-/// directly.
-using ::google::cloud::monitoring_metricsscope_v1::
-    MetricsScopesPollingPolicyOption;
+/// @deprecated Use monitoring_metricsscope_v1::MetricsScopesPollingPolicyOption directly.
+using ::google::cloud::monitoring_metricsscope_v1::MetricsScopesPollingPolicyOption;
 
-/// @deprecated Use monitoring_metricsscope_v1::MetricsScopesBackoffPolicyOption
-/// directly.
-using ::google::cloud::monitoring_metricsscope_v1::
-    MetricsScopesBackoffPolicyOption;
+/// @deprecated Use monitoring_metricsscope_v1::MetricsScopesBackoffPolicyOption directly.
+using ::google::cloud::monitoring_metricsscope_v1::MetricsScopesBackoffPolicyOption;
 
-/// @deprecated Use
-/// monitoring_metricsscope_v1::MetricsScopesConnectionIdempotencyPolicyOption
-/// directly.
-using ::google::cloud::monitoring_metricsscope_v1::
-    MetricsScopesConnectionIdempotencyPolicyOption;
+/// @deprecated Use monitoring_metricsscope_v1::MetricsScopesConnectionIdempotencyPolicyOption directly.
+using ::google::cloud::monitoring_metricsscope_v1::MetricsScopesConnectionIdempotencyPolicyOption;
 
-/// @deprecated Use monitoring_metricsscope_v1::MetricsScopesPolicyOptionList
-/// directly.
-using ::google::cloud::monitoring_metricsscope_v1::
-    MetricsScopesPolicyOptionList;
+/// @deprecated Use monitoring_metricsscope_v1::MetricsScopesPolicyOptionList directly.
+using ::google::cloud::monitoring_metricsscope_v1::MetricsScopesPolicyOptionList;
 
-/// @deprecated Use monitoring_metricsscope_v1::MetricsScopesRetryPolicyOption
-/// directly.
-using ::google::cloud::monitoring_metricsscope_v1::
-    MetricsScopesRetryPolicyOption;
+/// @deprecated Use monitoring_metricsscope_v1::MetricsScopesRetryPolicyOption directly.
+using ::google::cloud::monitoring_metricsscope_v1::MetricsScopesRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace monitoring

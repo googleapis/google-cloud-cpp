@@ -25,61 +25,57 @@ namespace cloud {
 namespace appengine_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-ServicesClient::ServicesClient(std::shared_ptr<ServicesConnection> connection,
-                               Options opts)
+ServicesClient::ServicesClient(
+    std::shared_ptr<ServicesConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 ServicesClient::~ServicesClient() = default;
 
-StreamRange<google::appengine::v1::Service> ServicesClient::ListServices(
-    google::appengine::v1::ListServicesRequest request, Options opts) {
+StreamRange<google::appengine::v1::Service>
+ServicesClient::ListServices(google::appengine::v1::ListServicesRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListServices(std::move(request));
 }
 
-StatusOr<google::appengine::v1::Service> ServicesClient::GetService(
-    google::appengine::v1::GetServiceRequest const& request, Options opts) {
+StatusOr<google::appengine::v1::Service>
+ServicesClient::GetService(google::appengine::v1::GetServiceRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetService(request);
 }
 
-future<StatusOr<google::appengine::v1::Service>> ServicesClient::UpdateService(
-    google::appengine::v1::UpdateServiceRequest const& request, Options opts) {
+future<StatusOr<google::appengine::v1::Service>>
+ServicesClient::UpdateService(google::appengine::v1::UpdateServiceRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateService(request);
 }
 
-StatusOr<google::longrunning::Operation> ServicesClient::UpdateService(
-    NoAwaitTag, google::appengine::v1::UpdateServiceRequest const& request,
-    Options opts) {
+StatusOr<google::longrunning::Operation>
+ServicesClient::UpdateService(NoAwaitTag, google::appengine::v1::UpdateServiceRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateService(NoAwaitTag{}, request);
 }
 
-future<StatusOr<google::appengine::v1::Service>> ServicesClient::UpdateService(
-    google::longrunning::Operation const& operation, Options opts) {
+future<StatusOr<google::appengine::v1::Service>>
+ServicesClient::UpdateService(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateService(operation);
 }
 
 future<StatusOr<google::appengine::v1::OperationMetadataV1>>
-ServicesClient::DeleteService(
-    google::appengine::v1::DeleteServiceRequest const& request, Options opts) {
+ServicesClient::DeleteService(google::appengine::v1::DeleteServiceRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteService(request);
 }
 
-StatusOr<google::longrunning::Operation> ServicesClient::DeleteService(
-    NoAwaitTag, google::appengine::v1::DeleteServiceRequest const& request,
-    Options opts) {
+StatusOr<google::longrunning::Operation>
+ServicesClient::DeleteService(NoAwaitTag, google::appengine::v1::DeleteServiceRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteService(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::appengine::v1::OperationMetadataV1>>
-ServicesClient::DeleteService(google::longrunning::Operation const& operation,
-                              Options opts) {
+ServicesClient::DeleteService(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteService(operation);
 }

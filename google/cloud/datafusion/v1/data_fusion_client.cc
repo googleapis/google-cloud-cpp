@@ -28,13 +28,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 DataFusionClient::DataFusionClient(
     std::shared_ptr<DataFusionConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 DataFusionClient::~DataFusionClient() = default;
 
 StreamRange<google::cloud::datafusion::v1::Version>
-DataFusionClient::ListAvailableVersions(std::string const& parent,
-                                        Options opts) {
+DataFusionClient::ListAvailableVersions(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::datafusion::v1::ListAvailableVersionsRequest request;
   request.set_parent(parent);
@@ -42,32 +41,25 @@ DataFusionClient::ListAvailableVersions(std::string const& parent,
 }
 
 StreamRange<google::cloud::datafusion::v1::Version>
-DataFusionClient::ListAvailableVersions(
-    google::cloud::datafusion::v1::ListAvailableVersionsRequest request,
-    Options opts) {
+DataFusionClient::ListAvailableVersions(google::cloud::datafusion::v1::ListAvailableVersionsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListAvailableVersions(std::move(request));
 }
 
 StreamRange<google::cloud::datafusion::v1::Instance>
-DataFusionClient::ListInstances(
-    google::cloud::datafusion::v1::ListInstancesRequest request, Options opts) {
+DataFusionClient::ListInstances(google::cloud::datafusion::v1::ListInstancesRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListInstances(std::move(request));
 }
 
-StatusOr<google::cloud::datafusion::v1::Instance> DataFusionClient::GetInstance(
-    google::cloud::datafusion::v1::GetInstanceRequest const& request,
-    Options opts) {
+StatusOr<google::cloud::datafusion::v1::Instance>
+DataFusionClient::GetInstance(google::cloud::datafusion::v1::GetInstanceRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetInstance(request);
 }
 
 future<StatusOr<google::cloud::datafusion::v1::Instance>>
-DataFusionClient::CreateInstance(
-    std::string const& parent,
-    google::cloud::datafusion::v1::Instance const& instance,
-    std::string const& instance_id, Options opts) {
+DataFusionClient::CreateInstance(std::string const& parent, google::cloud::datafusion::v1::Instance const& instance, std::string const& instance_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::datafusion::v1::CreateInstanceRequest request;
   request.set_parent(parent);
@@ -76,10 +68,8 @@ DataFusionClient::CreateInstance(
   return connection_->CreateInstance(request);
 }
 
-StatusOr<google::longrunning::Operation> DataFusionClient::CreateInstance(
-    NoAwaitTag, std::string const& parent,
-    google::cloud::datafusion::v1::Instance const& instance,
-    std::string const& instance_id, Options opts) {
+StatusOr<google::longrunning::Operation>
+DataFusionClient::CreateInstance(NoAwaitTag, std::string const& parent, google::cloud::datafusion::v1::Instance const& instance, std::string const& instance_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::datafusion::v1::CreateInstanceRequest request;
   request.set_parent(parent);
@@ -89,24 +79,19 @@ StatusOr<google::longrunning::Operation> DataFusionClient::CreateInstance(
 }
 
 future<StatusOr<google::cloud::datafusion::v1::Instance>>
-DataFusionClient::CreateInstance(
-    google::cloud::datafusion::v1::CreateInstanceRequest const& request,
-    Options opts) {
+DataFusionClient::CreateInstance(google::cloud::datafusion::v1::CreateInstanceRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateInstance(request);
 }
 
-StatusOr<google::longrunning::Operation> DataFusionClient::CreateInstance(
-    NoAwaitTag,
-    google::cloud::datafusion::v1::CreateInstanceRequest const& request,
-    Options opts) {
+StatusOr<google::longrunning::Operation>
+DataFusionClient::CreateInstance(NoAwaitTag, google::cloud::datafusion::v1::CreateInstanceRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateInstance(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::datafusion::v1::Instance>>
-DataFusionClient::CreateInstance(
-    google::longrunning::Operation const& operation, Options opts) {
+DataFusionClient::CreateInstance(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateInstance(operation);
 }
@@ -119,8 +104,8 @@ DataFusionClient::DeleteInstance(std::string const& name, Options opts) {
   return connection_->DeleteInstance(request);
 }
 
-StatusOr<google::longrunning::Operation> DataFusionClient::DeleteInstance(
-    NoAwaitTag, std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation>
+DataFusionClient::DeleteInstance(NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::datafusion::v1::DeleteInstanceRequest request;
   request.set_name(name);
@@ -128,32 +113,25 @@ StatusOr<google::longrunning::Operation> DataFusionClient::DeleteInstance(
 }
 
 future<StatusOr<google::cloud::datafusion::v1::OperationMetadata>>
-DataFusionClient::DeleteInstance(
-    google::cloud::datafusion::v1::DeleteInstanceRequest const& request,
-    Options opts) {
+DataFusionClient::DeleteInstance(google::cloud::datafusion::v1::DeleteInstanceRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteInstance(request);
 }
 
-StatusOr<google::longrunning::Operation> DataFusionClient::DeleteInstance(
-    NoAwaitTag,
-    google::cloud::datafusion::v1::DeleteInstanceRequest const& request,
-    Options opts) {
+StatusOr<google::longrunning::Operation>
+DataFusionClient::DeleteInstance(NoAwaitTag, google::cloud::datafusion::v1::DeleteInstanceRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteInstance(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::datafusion::v1::OperationMetadata>>
-DataFusionClient::DeleteInstance(
-    google::longrunning::Operation const& operation, Options opts) {
+DataFusionClient::DeleteInstance(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteInstance(operation);
 }
 
 future<StatusOr<google::cloud::datafusion::v1::Instance>>
-DataFusionClient::UpdateInstance(
-    google::cloud::datafusion::v1::Instance const& instance,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+DataFusionClient::UpdateInstance(google::cloud::datafusion::v1::Instance const& instance, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::datafusion::v1::UpdateInstanceRequest request;
   *request.mutable_instance() = instance;
@@ -161,9 +139,8 @@ DataFusionClient::UpdateInstance(
   return connection_->UpdateInstance(request);
 }
 
-StatusOr<google::longrunning::Operation> DataFusionClient::UpdateInstance(
-    NoAwaitTag, google::cloud::datafusion::v1::Instance const& instance,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+StatusOr<google::longrunning::Operation>
+DataFusionClient::UpdateInstance(NoAwaitTag, google::cloud::datafusion::v1::Instance const& instance, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::datafusion::v1::UpdateInstanceRequest request;
   *request.mutable_instance() = instance;
@@ -172,47 +149,37 @@ StatusOr<google::longrunning::Operation> DataFusionClient::UpdateInstance(
 }
 
 future<StatusOr<google::cloud::datafusion::v1::Instance>>
-DataFusionClient::UpdateInstance(
-    google::cloud::datafusion::v1::UpdateInstanceRequest const& request,
-    Options opts) {
+DataFusionClient::UpdateInstance(google::cloud::datafusion::v1::UpdateInstanceRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateInstance(request);
 }
 
-StatusOr<google::longrunning::Operation> DataFusionClient::UpdateInstance(
-    NoAwaitTag,
-    google::cloud::datafusion::v1::UpdateInstanceRequest const& request,
-    Options opts) {
+StatusOr<google::longrunning::Operation>
+DataFusionClient::UpdateInstance(NoAwaitTag, google::cloud::datafusion::v1::UpdateInstanceRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateInstance(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::datafusion::v1::Instance>>
-DataFusionClient::UpdateInstance(
-    google::longrunning::Operation const& operation, Options opts) {
+DataFusionClient::UpdateInstance(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateInstance(operation);
 }
 
 future<StatusOr<google::cloud::datafusion::v1::Instance>>
-DataFusionClient::RestartInstance(
-    google::cloud::datafusion::v1::RestartInstanceRequest const& request,
-    Options opts) {
+DataFusionClient::RestartInstance(google::cloud::datafusion::v1::RestartInstanceRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RestartInstance(request);
 }
 
-StatusOr<google::longrunning::Operation> DataFusionClient::RestartInstance(
-    NoAwaitTag,
-    google::cloud::datafusion::v1::RestartInstanceRequest const& request,
-    Options opts) {
+StatusOr<google::longrunning::Operation>
+DataFusionClient::RestartInstance(NoAwaitTag, google::cloud::datafusion::v1::RestartInstanceRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RestartInstance(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::datafusion::v1::Instance>>
-DataFusionClient::RestartInstance(
-    google::longrunning::Operation const& operation, Options opts) {
+DataFusionClient::RestartInstance(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RestartInstance(operation);
 }

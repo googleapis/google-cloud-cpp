@@ -28,36 +28,27 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 AgentEndpointServiceClient::AgentEndpointServiceClient(
     std::shared_ptr<AgentEndpointServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 AgentEndpointServiceClient::~AgentEndpointServiceClient() = default;
 
-StreamRange<
-    google::cloud::osconfig::agentendpoint::v1::ReceiveTaskNotificationResponse>
-AgentEndpointServiceClient::ReceiveTaskNotification(
-    std::string const& instance_id_token, std::string const& agent_version,
-    Options opts) {
+StreamRange<google::cloud::osconfig::agentendpoint::v1::ReceiveTaskNotificationResponse>
+AgentEndpointServiceClient::ReceiveTaskNotification(std::string const& instance_id_token, std::string const& agent_version, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::osconfig::agentendpoint::v1::ReceiveTaskNotificationRequest
-      request;
+  google::cloud::osconfig::agentendpoint::v1::ReceiveTaskNotificationRequest request;
   request.set_instance_id_token(instance_id_token);
   request.set_agent_version(agent_version);
   return connection_->ReceiveTaskNotification(request);
 }
 
-StreamRange<
-    google::cloud::osconfig::agentendpoint::v1::ReceiveTaskNotificationResponse>
-AgentEndpointServiceClient::ReceiveTaskNotification(
-    google::cloud::osconfig::agentendpoint::v1::
-        ReceiveTaskNotificationRequest const& request,
-    Options opts) {
+StreamRange<google::cloud::osconfig::agentendpoint::v1::ReceiveTaskNotificationResponse>
+AgentEndpointServiceClient::ReceiveTaskNotification(google::cloud::osconfig::agentendpoint::v1::ReceiveTaskNotificationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ReceiveTaskNotification(request);
 }
 
 StatusOr<google::cloud::osconfig::agentendpoint::v1::StartNextTaskResponse>
-AgentEndpointServiceClient::StartNextTask(std::string const& instance_id_token,
-                                          Options opts) {
+AgentEndpointServiceClient::StartNextTask(std::string const& instance_id_token, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::osconfig::agentendpoint::v1::StartNextTaskRequest request;
   request.set_instance_id_token(instance_id_token);
@@ -65,19 +56,13 @@ AgentEndpointServiceClient::StartNextTask(std::string const& instance_id_token,
 }
 
 StatusOr<google::cloud::osconfig::agentendpoint::v1::StartNextTaskResponse>
-AgentEndpointServiceClient::StartNextTask(
-    google::cloud::osconfig::agentendpoint::v1::StartNextTaskRequest const&
-        request,
-    Options opts) {
+AgentEndpointServiceClient::StartNextTask(google::cloud::osconfig::agentendpoint::v1::StartNextTaskRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->StartNextTask(request);
 }
 
 StatusOr<google::cloud::osconfig::agentendpoint::v1::ReportTaskProgressResponse>
-AgentEndpointServiceClient::ReportTaskProgress(
-    std::string const& instance_id_token, std::string const& task_id,
-    google::cloud::osconfig::agentendpoint::v1::TaskType task_type,
-    Options opts) {
+AgentEndpointServiceClient::ReportTaskProgress(std::string const& instance_id_token, std::string const& task_id, google::cloud::osconfig::agentendpoint::v1::TaskType task_type, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::osconfig::agentendpoint::v1::ReportTaskProgressRequest request;
   request.set_instance_id_token(instance_id_token);
@@ -87,19 +72,13 @@ AgentEndpointServiceClient::ReportTaskProgress(
 }
 
 StatusOr<google::cloud::osconfig::agentendpoint::v1::ReportTaskProgressResponse>
-AgentEndpointServiceClient::ReportTaskProgress(
-    google::cloud::osconfig::agentendpoint::v1::ReportTaskProgressRequest const&
-        request,
-    Options opts) {
+AgentEndpointServiceClient::ReportTaskProgress(google::cloud::osconfig::agentendpoint::v1::ReportTaskProgressRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ReportTaskProgress(request);
 }
 
 StatusOr<google::cloud::osconfig::agentendpoint::v1::ReportTaskCompleteResponse>
-AgentEndpointServiceClient::ReportTaskComplete(
-    std::string const& instance_id_token, std::string const& task_id,
-    google::cloud::osconfig::agentendpoint::v1::TaskType task_type,
-    std::string const& error_message, Options opts) {
+AgentEndpointServiceClient::ReportTaskComplete(std::string const& instance_id_token, std::string const& task_id, google::cloud::osconfig::agentendpoint::v1::TaskType task_type, std::string const& error_message, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::osconfig::agentendpoint::v1::ReportTaskCompleteRequest request;
   request.set_instance_id_token(instance_id_token);
@@ -110,41 +89,29 @@ AgentEndpointServiceClient::ReportTaskComplete(
 }
 
 StatusOr<google::cloud::osconfig::agentendpoint::v1::ReportTaskCompleteResponse>
-AgentEndpointServiceClient::ReportTaskComplete(
-    google::cloud::osconfig::agentendpoint::v1::ReportTaskCompleteRequest const&
-        request,
-    Options opts) {
+AgentEndpointServiceClient::ReportTaskComplete(google::cloud::osconfig::agentendpoint::v1::ReportTaskCompleteRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ReportTaskComplete(request);
 }
 
 StatusOr<google::cloud::osconfig::agentendpoint::v1::RegisterAgentResponse>
-AgentEndpointServiceClient::RegisterAgent(
-    std::string const& instance_id_token, std::string const& agent_version,
-    std::vector<std::string> const& supported_capabilities, Options opts) {
+AgentEndpointServiceClient::RegisterAgent(std::string const& instance_id_token, std::string const& agent_version, std::vector<std::string> const& supported_capabilities, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::osconfig::agentendpoint::v1::RegisterAgentRequest request;
   request.set_instance_id_token(instance_id_token);
   request.set_agent_version(agent_version);
-  *request.mutable_supported_capabilities() = {supported_capabilities.begin(),
-                                               supported_capabilities.end()};
+  *request.mutable_supported_capabilities() = {supported_capabilities.begin(), supported_capabilities.end()};
   return connection_->RegisterAgent(request);
 }
 
 StatusOr<google::cloud::osconfig::agentendpoint::v1::RegisterAgentResponse>
-AgentEndpointServiceClient::RegisterAgent(
-    google::cloud::osconfig::agentendpoint::v1::RegisterAgentRequest const&
-        request,
-    Options opts) {
+AgentEndpointServiceClient::RegisterAgent(google::cloud::osconfig::agentendpoint::v1::RegisterAgentRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RegisterAgent(request);
 }
 
 StatusOr<google::cloud::osconfig::agentendpoint::v1::ReportInventoryResponse>
-AgentEndpointServiceClient::ReportInventory(
-    std::string const& instance_id_token, std::string const& inventory_checksum,
-    google::cloud::osconfig::agentendpoint::v1::Inventory const& inventory,
-    Options opts) {
+AgentEndpointServiceClient::ReportInventory(std::string const& instance_id_token, std::string const& inventory_checksum, google::cloud::osconfig::agentendpoint::v1::Inventory const& inventory, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::osconfig::agentendpoint::v1::ReportInventoryRequest request;
   request.set_instance_id_token(instance_id_token);
@@ -154,10 +121,7 @@ AgentEndpointServiceClient::ReportInventory(
 }
 
 StatusOr<google::cloud::osconfig::agentendpoint::v1::ReportInventoryResponse>
-AgentEndpointServiceClient::ReportInventory(
-    google::cloud::osconfig::agentendpoint::v1::ReportInventoryRequest const&
-        request,
-    Options opts) {
+AgentEndpointServiceClient::ReportInventory(google::cloud::osconfig::agentendpoint::v1::ReportInventoryRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ReportInventory(request);
 }

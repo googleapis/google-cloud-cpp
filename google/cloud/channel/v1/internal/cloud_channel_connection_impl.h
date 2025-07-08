@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CHANNEL_V1_INTERNAL_CLOUD_CHANNEL_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CHANNEL_V1_INTERNAL_CLOUD_CHANNEL_CONNECTION_IMPL_H
 
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/channel/v1/cloud_channel_connection.h"
 #include "google/cloud/channel/v1/cloud_channel_connection_idempotency_policy.h"
 #include "google/cloud/channel/v1/cloud_channel_options.h"
 #include "google/cloud/channel/v1/internal/cloud_channel_retry_traits.h"
 #include "google/cloud/channel/v1/internal/cloud_channel_stub.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -46,317 +46,258 @@ class CloudChannelServiceConnectionImpl
   ~CloudChannelServiceConnectionImpl() override = default;
 
   CloudChannelServiceConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<channel_v1_internal::CloudChannelServiceStub> stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<channel_v1_internal::CloudChannelServiceStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
-  StreamRange<google::cloud::channel::v1::Customer> ListCustomers(
-      google::cloud::channel::v1::ListCustomersRequest request) override;
+  StreamRange<google::cloud::channel::v1::Customer>
+  ListCustomers(google::cloud::channel::v1::ListCustomersRequest request) override;
 
-  StatusOr<google::cloud::channel::v1::Customer> GetCustomer(
-      google::cloud::channel::v1::GetCustomerRequest const& request) override;
+  StatusOr<google::cloud::channel::v1::Customer>
+  GetCustomer(google::cloud::channel::v1::GetCustomerRequest const& request) override;
 
   StatusOr<google::cloud::channel::v1::CheckCloudIdentityAccountsExistResponse>
-  CheckCloudIdentityAccountsExist(
-      google::cloud::channel::v1::CheckCloudIdentityAccountsExistRequest const&
-          request) override;
+  CheckCloudIdentityAccountsExist(google::cloud::channel::v1::CheckCloudIdentityAccountsExistRequest const& request) override;
 
-  StatusOr<google::cloud::channel::v1::Customer> CreateCustomer(
-      google::cloud::channel::v1::CreateCustomerRequest const& request)
-      override;
+  StatusOr<google::cloud::channel::v1::Customer>
+  CreateCustomer(google::cloud::channel::v1::CreateCustomerRequest const& request) override;
 
-  StatusOr<google::cloud::channel::v1::Customer> UpdateCustomer(
-      google::cloud::channel::v1::UpdateCustomerRequest const& request)
-      override;
+  StatusOr<google::cloud::channel::v1::Customer>
+  UpdateCustomer(google::cloud::channel::v1::UpdateCustomerRequest const& request) override;
 
-  Status DeleteCustomer(google::cloud::channel::v1::DeleteCustomerRequest const&
-                            request) override;
+  Status
+  DeleteCustomer(google::cloud::channel::v1::DeleteCustomerRequest const& request) override;
 
-  StatusOr<google::cloud::channel::v1::Customer> ImportCustomer(
-      google::cloud::channel::v1::ImportCustomerRequest const& request)
-      override;
+  StatusOr<google::cloud::channel::v1::Customer>
+  ImportCustomer(google::cloud::channel::v1::ImportCustomerRequest const& request) override;
 
-  future<StatusOr<google::cloud::channel::v1::Customer>> ProvisionCloudIdentity(
-      google::cloud::channel::v1::ProvisionCloudIdentityRequest const& request)
-      override;
+  future<StatusOr<google::cloud::channel::v1::Customer>>
+  ProvisionCloudIdentity(google::cloud::channel::v1::ProvisionCloudIdentityRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> ProvisionCloudIdentity(
-      NoAwaitTag,
-      google::cloud::channel::v1::ProvisionCloudIdentityRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  ProvisionCloudIdentity(NoAwaitTag,
+      google::cloud::channel::v1::ProvisionCloudIdentityRequest const& request) override;
 
-  future<StatusOr<google::cloud::channel::v1::Customer>> ProvisionCloudIdentity(
+  future<StatusOr<google::cloud::channel::v1::Customer>>
+  ProvisionCloudIdentity(
       google::longrunning::Operation const& operation) override;
 
-  StreamRange<google::cloud::channel::v1::Entitlement> ListEntitlements(
-      google::cloud::channel::v1::ListEntitlementsRequest request) override;
+  StreamRange<google::cloud::channel::v1::Entitlement>
+  ListEntitlements(google::cloud::channel::v1::ListEntitlementsRequest request) override;
 
-  StreamRange<google::cloud::channel::v1::TransferableSku> ListTransferableSkus(
-      google::cloud::channel::v1::ListTransferableSkusRequest request) override;
+  StreamRange<google::cloud::channel::v1::TransferableSku>
+  ListTransferableSkus(google::cloud::channel::v1::ListTransferableSkusRequest request) override;
 
   StreamRange<google::cloud::channel::v1::TransferableOffer>
-  ListTransferableOffers(
-      google::cloud::channel::v1::ListTransferableOffersRequest request)
-      override;
+  ListTransferableOffers(google::cloud::channel::v1::ListTransferableOffersRequest request) override;
 
-  StatusOr<google::cloud::channel::v1::Entitlement> GetEntitlement(
-      google::cloud::channel::v1::GetEntitlementRequest const& request)
-      override;
+  StatusOr<google::cloud::channel::v1::Entitlement>
+  GetEntitlement(google::cloud::channel::v1::GetEntitlementRequest const& request) override;
 
-  future<StatusOr<google::cloud::channel::v1::Entitlement>> CreateEntitlement(
-      google::cloud::channel::v1::CreateEntitlementRequest const& request)
-      override;
+  future<StatusOr<google::cloud::channel::v1::Entitlement>>
+  CreateEntitlement(google::cloud::channel::v1::CreateEntitlementRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> CreateEntitlement(
-      NoAwaitTag,
-      google::cloud::channel::v1::CreateEntitlementRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  CreateEntitlement(NoAwaitTag,
+      google::cloud::channel::v1::CreateEntitlementRequest const& request) override;
 
-  future<StatusOr<google::cloud::channel::v1::Entitlement>> CreateEntitlement(
-      google::longrunning::Operation const& operation) override;
-
-  future<StatusOr<google::cloud::channel::v1::Entitlement>> ChangeParameters(
-      google::cloud::channel::v1::ChangeParametersRequest const& request)
-      override;
-
-  StatusOr<google::longrunning::Operation> ChangeParameters(
-      NoAwaitTag,
-      google::cloud::channel::v1::ChangeParametersRequest const& request)
-      override;
-
-  future<StatusOr<google::cloud::channel::v1::Entitlement>> ChangeParameters(
+  future<StatusOr<google::cloud::channel::v1::Entitlement>>
+  CreateEntitlement(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::channel::v1::Entitlement>>
-  ChangeRenewalSettings(
-      google::cloud::channel::v1::ChangeRenewalSettingsRequest const& request)
-      override;
+  ChangeParameters(google::cloud::channel::v1::ChangeParametersRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> ChangeRenewalSettings(
-      NoAwaitTag,
-      google::cloud::channel::v1::ChangeRenewalSettingsRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  ChangeParameters(NoAwaitTag,
+      google::cloud::channel::v1::ChangeParametersRequest const& request) override;
+
+  future<StatusOr<google::cloud::channel::v1::Entitlement>>
+  ChangeParameters(
+      google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::channel::v1::Entitlement>>
+  ChangeRenewalSettings(google::cloud::channel::v1::ChangeRenewalSettingsRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  ChangeRenewalSettings(NoAwaitTag,
+      google::cloud::channel::v1::ChangeRenewalSettingsRequest const& request) override;
 
   future<StatusOr<google::cloud::channel::v1::Entitlement>>
   ChangeRenewalSettings(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::channel::v1::Entitlement>> ChangeOffer(
+  future<StatusOr<google::cloud::channel::v1::Entitlement>>
+  ChangeOffer(google::cloud::channel::v1::ChangeOfferRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  ChangeOffer(NoAwaitTag,
       google::cloud::channel::v1::ChangeOfferRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> ChangeOffer(
-      NoAwaitTag,
-      google::cloud::channel::v1::ChangeOfferRequest const& request) override;
-
-  future<StatusOr<google::cloud::channel::v1::Entitlement>> ChangeOffer(
+  future<StatusOr<google::cloud::channel::v1::Entitlement>>
+  ChangeOffer(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::channel::v1::Entitlement>> StartPaidService(
-      google::cloud::channel::v1::StartPaidServiceRequest const& request)
-      override;
+  future<StatusOr<google::cloud::channel::v1::Entitlement>>
+  StartPaidService(google::cloud::channel::v1::StartPaidServiceRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> StartPaidService(
-      NoAwaitTag,
-      google::cloud::channel::v1::StartPaidServiceRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  StartPaidService(NoAwaitTag,
+      google::cloud::channel::v1::StartPaidServiceRequest const& request) override;
 
-  future<StatusOr<google::cloud::channel::v1::Entitlement>> StartPaidService(
+  future<StatusOr<google::cloud::channel::v1::Entitlement>>
+  StartPaidService(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::channel::v1::Entitlement>> SuspendEntitlement(
-      google::cloud::channel::v1::SuspendEntitlementRequest const& request)
-      override;
+  future<StatusOr<google::cloud::channel::v1::Entitlement>>
+  SuspendEntitlement(google::cloud::channel::v1::SuspendEntitlementRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> SuspendEntitlement(
-      NoAwaitTag,
-      google::cloud::channel::v1::SuspendEntitlementRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  SuspendEntitlement(NoAwaitTag,
+      google::cloud::channel::v1::SuspendEntitlementRequest const& request) override;
 
-  future<StatusOr<google::cloud::channel::v1::Entitlement>> SuspendEntitlement(
+  future<StatusOr<google::cloud::channel::v1::Entitlement>>
+  SuspendEntitlement(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::channel::v1::OperationMetadata>>
-  CancelEntitlement(google::cloud::channel::v1::CancelEntitlementRequest const&
-                        request) override;
+  CancelEntitlement(google::cloud::channel::v1::CancelEntitlementRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> CancelEntitlement(
-      NoAwaitTag,
-      google::cloud::channel::v1::CancelEntitlementRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  CancelEntitlement(NoAwaitTag,
+      google::cloud::channel::v1::CancelEntitlementRequest const& request) override;
 
   future<StatusOr<google::cloud::channel::v1::OperationMetadata>>
-  CancelEntitlement(google::longrunning::Operation const& operation) override;
+  CancelEntitlement(
+      google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::channel::v1::Entitlement>> ActivateEntitlement(
-      google::cloud::channel::v1::ActivateEntitlementRequest const& request)
-      override;
+  future<StatusOr<google::cloud::channel::v1::Entitlement>>
+  ActivateEntitlement(google::cloud::channel::v1::ActivateEntitlementRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> ActivateEntitlement(
-      NoAwaitTag,
-      google::cloud::channel::v1::ActivateEntitlementRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  ActivateEntitlement(NoAwaitTag,
+      google::cloud::channel::v1::ActivateEntitlementRequest const& request) override;
 
-  future<StatusOr<google::cloud::channel::v1::Entitlement>> ActivateEntitlement(
+  future<StatusOr<google::cloud::channel::v1::Entitlement>>
+  ActivateEntitlement(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::channel::v1::TransferEntitlementsResponse>>
-  TransferEntitlements(
-      google::cloud::channel::v1::TransferEntitlementsRequest const& request)
-      override;
+  TransferEntitlements(google::cloud::channel::v1::TransferEntitlementsRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> TransferEntitlements(
-      NoAwaitTag,
-      google::cloud::channel::v1::TransferEntitlementsRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  TransferEntitlements(NoAwaitTag,
+      google::cloud::channel::v1::TransferEntitlementsRequest const& request) override;
 
   future<StatusOr<google::cloud::channel::v1::TransferEntitlementsResponse>>
   TransferEntitlements(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::channel::v1::OperationMetadata>>
-  TransferEntitlementsToGoogle(
-      google::cloud::channel::v1::TransferEntitlementsToGoogleRequest const&
-          request) override;
+  TransferEntitlementsToGoogle(google::cloud::channel::v1::TransferEntitlementsToGoogleRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> TransferEntitlementsToGoogle(
-      NoAwaitTag,
-      google::cloud::channel::v1::TransferEntitlementsToGoogleRequest const&
-          request) override;
+  StatusOr<google::longrunning::Operation>
+  TransferEntitlementsToGoogle(NoAwaitTag,
+      google::cloud::channel::v1::TransferEntitlementsToGoogleRequest const& request) override;
 
   future<StatusOr<google::cloud::channel::v1::OperationMetadata>>
   TransferEntitlementsToGoogle(
       google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::channel::v1::ChannelPartnerLink>
-  ListChannelPartnerLinks(
-      google::cloud::channel::v1::ListChannelPartnerLinksRequest request)
-      override;
+  ListChannelPartnerLinks(google::cloud::channel::v1::ListChannelPartnerLinksRequest request) override;
 
   StatusOr<google::cloud::channel::v1::ChannelPartnerLink>
-  GetChannelPartnerLink(
-      google::cloud::channel::v1::GetChannelPartnerLinkRequest const& request)
-      override;
+  GetChannelPartnerLink(google::cloud::channel::v1::GetChannelPartnerLinkRequest const& request) override;
 
   StatusOr<google::cloud::channel::v1::ChannelPartnerLink>
-  CreateChannelPartnerLink(
-      google::cloud::channel::v1::CreateChannelPartnerLinkRequest const&
-          request) override;
+  CreateChannelPartnerLink(google::cloud::channel::v1::CreateChannelPartnerLinkRequest const& request) override;
 
   StatusOr<google::cloud::channel::v1::ChannelPartnerLink>
-  UpdateChannelPartnerLink(
-      google::cloud::channel::v1::UpdateChannelPartnerLinkRequest const&
-          request) override;
+  UpdateChannelPartnerLink(google::cloud::channel::v1::UpdateChannelPartnerLinkRequest const& request) override;
 
   StatusOr<google::cloud::channel::v1::CustomerRepricingConfig>
-  GetCustomerRepricingConfig(
-      google::cloud::channel::v1::GetCustomerRepricingConfigRequest const&
-          request) override;
+  GetCustomerRepricingConfig(google::cloud::channel::v1::GetCustomerRepricingConfigRequest const& request) override;
 
   StreamRange<google::cloud::channel::v1::CustomerRepricingConfig>
-  ListCustomerRepricingConfigs(
-      google::cloud::channel::v1::ListCustomerRepricingConfigsRequest request)
-      override;
+  ListCustomerRepricingConfigs(google::cloud::channel::v1::ListCustomerRepricingConfigsRequest request) override;
 
   StatusOr<google::cloud::channel::v1::CustomerRepricingConfig>
-  CreateCustomerRepricingConfig(
-      google::cloud::channel::v1::CreateCustomerRepricingConfigRequest const&
-          request) override;
+  CreateCustomerRepricingConfig(google::cloud::channel::v1::CreateCustomerRepricingConfigRequest const& request) override;
 
   StatusOr<google::cloud::channel::v1::CustomerRepricingConfig>
-  UpdateCustomerRepricingConfig(
-      google::cloud::channel::v1::UpdateCustomerRepricingConfigRequest const&
-          request) override;
+  UpdateCustomerRepricingConfig(google::cloud::channel::v1::UpdateCustomerRepricingConfigRequest const& request) override;
 
-  Status DeleteCustomerRepricingConfig(
-      google::cloud::channel::v1::DeleteCustomerRepricingConfigRequest const&
-          request) override;
+  Status
+  DeleteCustomerRepricingConfig(google::cloud::channel::v1::DeleteCustomerRepricingConfigRequest const& request) override;
 
   StatusOr<google::cloud::channel::v1::ChannelPartnerRepricingConfig>
-  GetChannelPartnerRepricingConfig(
-      google::cloud::channel::v1::GetChannelPartnerRepricingConfigRequest const&
-          request) override;
+  GetChannelPartnerRepricingConfig(google::cloud::channel::v1::GetChannelPartnerRepricingConfigRequest const& request) override;
 
   StreamRange<google::cloud::channel::v1::ChannelPartnerRepricingConfig>
-  ListChannelPartnerRepricingConfigs(
-      google::cloud::channel::v1::ListChannelPartnerRepricingConfigsRequest
-          request) override;
+  ListChannelPartnerRepricingConfigs(google::cloud::channel::v1::ListChannelPartnerRepricingConfigsRequest request) override;
 
   StatusOr<google::cloud::channel::v1::ChannelPartnerRepricingConfig>
-  CreateChannelPartnerRepricingConfig(
-      google::cloud::channel::v1::
-          CreateChannelPartnerRepricingConfigRequest const& request) override;
+  CreateChannelPartnerRepricingConfig(google::cloud::channel::v1::CreateChannelPartnerRepricingConfigRequest const& request) override;
 
   StatusOr<google::cloud::channel::v1::ChannelPartnerRepricingConfig>
-  UpdateChannelPartnerRepricingConfig(
-      google::cloud::channel::v1::
-          UpdateChannelPartnerRepricingConfigRequest const& request) override;
+  UpdateChannelPartnerRepricingConfig(google::cloud::channel::v1::UpdateChannelPartnerRepricingConfigRequest const& request) override;
 
-  Status DeleteChannelPartnerRepricingConfig(
-      google::cloud::channel::v1::
-          DeleteChannelPartnerRepricingConfigRequest const& request) override;
+  Status
+  DeleteChannelPartnerRepricingConfig(google::cloud::channel::v1::DeleteChannelPartnerRepricingConfigRequest const& request) override;
 
-  StreamRange<google::cloud::channel::v1::SkuGroup> ListSkuGroups(
-      google::cloud::channel::v1::ListSkuGroupsRequest request) override;
+  StreamRange<google::cloud::channel::v1::SkuGroup>
+  ListSkuGroups(google::cloud::channel::v1::ListSkuGroupsRequest request) override;
 
-  StreamRange<google::cloud::channel::v1::BillableSku> ListSkuGroupBillableSkus(
-      google::cloud::channel::v1::ListSkuGroupBillableSkusRequest request)
-      override;
+  StreamRange<google::cloud::channel::v1::BillableSku>
+  ListSkuGroupBillableSkus(google::cloud::channel::v1::ListSkuGroupBillableSkusRequest request) override;
 
-  StatusOr<google::cloud::channel::v1::Offer> LookupOffer(
-      google::cloud::channel::v1::LookupOfferRequest const& request) override;
+  StatusOr<google::cloud::channel::v1::Offer>
+  LookupOffer(google::cloud::channel::v1::LookupOfferRequest const& request) override;
 
-  StreamRange<google::cloud::channel::v1::Product> ListProducts(
-      google::cloud::channel::v1::ListProductsRequest request) override;
+  StreamRange<google::cloud::channel::v1::Product>
+  ListProducts(google::cloud::channel::v1::ListProductsRequest request) override;
 
-  StreamRange<google::cloud::channel::v1::Sku> ListSkus(
-      google::cloud::channel::v1::ListSkusRequest request) override;
+  StreamRange<google::cloud::channel::v1::Sku>
+  ListSkus(google::cloud::channel::v1::ListSkusRequest request) override;
 
-  StreamRange<google::cloud::channel::v1::Offer> ListOffers(
-      google::cloud::channel::v1::ListOffersRequest request) override;
+  StreamRange<google::cloud::channel::v1::Offer>
+  ListOffers(google::cloud::channel::v1::ListOffersRequest request) override;
 
-  StreamRange<google::cloud::channel::v1::PurchasableSku> ListPurchasableSkus(
-      google::cloud::channel::v1::ListPurchasableSkusRequest request) override;
+  StreamRange<google::cloud::channel::v1::PurchasableSku>
+  ListPurchasableSkus(google::cloud::channel::v1::ListPurchasableSkusRequest request) override;
 
   StreamRange<google::cloud::channel::v1::PurchasableOffer>
-  ListPurchasableOffers(google::cloud::channel::v1::ListPurchasableOffersRequest
-                            request) override;
+  ListPurchasableOffers(google::cloud::channel::v1::ListPurchasableOffersRequest request) override;
 
   StatusOr<google::cloud::channel::v1::QueryEligibleBillingAccountsResponse>
-  QueryEligibleBillingAccounts(
-      google::cloud::channel::v1::QueryEligibleBillingAccountsRequest const&
-          request) override;
+  QueryEligibleBillingAccounts(google::cloud::channel::v1::QueryEligibleBillingAccountsRequest const& request) override;
 
   StatusOr<google::cloud::channel::v1::RegisterSubscriberResponse>
-  RegisterSubscriber(
-      google::cloud::channel::v1::RegisterSubscriberRequest const& request)
-      override;
+  RegisterSubscriber(google::cloud::channel::v1::RegisterSubscriberRequest const& request) override;
 
   StatusOr<google::cloud::channel::v1::UnregisterSubscriberResponse>
-  UnregisterSubscriber(
-      google::cloud::channel::v1::UnregisterSubscriberRequest const& request)
-      override;
+  UnregisterSubscriber(google::cloud::channel::v1::UnregisterSubscriberRequest const& request) override;
 
-  StreamRange<std::string> ListSubscribers(
-      google::cloud::channel::v1::ListSubscribersRequest request) override;
+  StreamRange<std::string>
+  ListSubscribers(google::cloud::channel::v1::ListSubscribersRequest request) override;
 
   StreamRange<google::cloud::channel::v1::EntitlementChange>
-  ListEntitlementChanges(
-      google::cloud::channel::v1::ListEntitlementChangesRequest request)
-      override;
+  ListEntitlementChanges(google::cloud::channel::v1::ListEntitlementChangesRequest request) override;
 
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request) override;
 
-  Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request) override;
+  Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request) override;
 
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request) override;
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

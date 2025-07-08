@@ -25,29 +25,29 @@ namespace cloud {
 namespace containeranalysis_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-GrafeasClient::GrafeasClient(std::shared_ptr<GrafeasConnection> connection,
-                             Options opts)
+GrafeasClient::GrafeasClient(
+    std::shared_ptr<GrafeasConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 GrafeasClient::~GrafeasClient() = default;
 
-StatusOr<grafeas::v1::Occurrence> GrafeasClient::GetOccurrence(
-    std::string const& name, Options opts) {
+StatusOr<grafeas::v1::Occurrence>
+GrafeasClient::GetOccurrence(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   grafeas::v1::GetOccurrenceRequest request;
   request.set_name(name);
   return connection_->GetOccurrence(request);
 }
 
-StatusOr<grafeas::v1::Occurrence> GrafeasClient::GetOccurrence(
-    grafeas::v1::GetOccurrenceRequest const& request, Options opts) {
+StatusOr<grafeas::v1::Occurrence>
+GrafeasClient::GetOccurrence(grafeas::v1::GetOccurrenceRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOccurrence(request);
 }
 
-StreamRange<grafeas::v1::Occurrence> GrafeasClient::ListOccurrences(
-    std::string const& parent, std::string const& filter, Options opts) {
+StreamRange<grafeas::v1::Occurrence>
+GrafeasClient::ListOccurrences(std::string const& parent, std::string const& filter, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   grafeas::v1::ListOccurrencesRequest request;
   request.set_parent(parent);
@@ -55,28 +55,28 @@ StreamRange<grafeas::v1::Occurrence> GrafeasClient::ListOccurrences(
   return connection_->ListOccurrences(request);
 }
 
-StreamRange<grafeas::v1::Occurrence> GrafeasClient::ListOccurrences(
-    grafeas::v1::ListOccurrencesRequest request, Options opts) {
+StreamRange<grafeas::v1::Occurrence>
+GrafeasClient::ListOccurrences(grafeas::v1::ListOccurrencesRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOccurrences(std::move(request));
 }
 
-Status GrafeasClient::DeleteOccurrence(std::string const& name, Options opts) {
+Status
+GrafeasClient::DeleteOccurrence(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   grafeas::v1::DeleteOccurrenceRequest request;
   request.set_name(name);
   return connection_->DeleteOccurrence(request);
 }
 
-Status GrafeasClient::DeleteOccurrence(
-    grafeas::v1::DeleteOccurrenceRequest const& request, Options opts) {
+Status
+GrafeasClient::DeleteOccurrence(grafeas::v1::DeleteOccurrenceRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteOccurrence(request);
 }
 
-StatusOr<grafeas::v1::Occurrence> GrafeasClient::CreateOccurrence(
-    std::string const& parent, grafeas::v1::Occurrence const& occurrence,
-    Options opts) {
+StatusOr<grafeas::v1::Occurrence>
+GrafeasClient::CreateOccurrence(std::string const& parent, grafeas::v1::Occurrence const& occurrence, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   grafeas::v1::CreateOccurrenceRequest request;
   request.set_parent(parent);
@@ -84,16 +84,14 @@ StatusOr<grafeas::v1::Occurrence> GrafeasClient::CreateOccurrence(
   return connection_->CreateOccurrence(request);
 }
 
-StatusOr<grafeas::v1::Occurrence> GrafeasClient::CreateOccurrence(
-    grafeas::v1::CreateOccurrenceRequest const& request, Options opts) {
+StatusOr<grafeas::v1::Occurrence>
+GrafeasClient::CreateOccurrence(grafeas::v1::CreateOccurrenceRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateOccurrence(request);
 }
 
 StatusOr<grafeas::v1::BatchCreateOccurrencesResponse>
-GrafeasClient::BatchCreateOccurrences(
-    std::string const& parent,
-    std::vector<grafeas::v1::Occurrence> const& occurrences, Options opts) {
+GrafeasClient::BatchCreateOccurrences(std::string const& parent, std::vector<grafeas::v1::Occurrence> const& occurrences, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   grafeas::v1::BatchCreateOccurrencesRequest request;
   request.set_parent(parent);
@@ -102,15 +100,13 @@ GrafeasClient::BatchCreateOccurrences(
 }
 
 StatusOr<grafeas::v1::BatchCreateOccurrencesResponse>
-GrafeasClient::BatchCreateOccurrences(
-    grafeas::v1::BatchCreateOccurrencesRequest const& request, Options opts) {
+GrafeasClient::BatchCreateOccurrences(grafeas::v1::BatchCreateOccurrencesRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->BatchCreateOccurrences(request);
 }
 
-StatusOr<grafeas::v1::Occurrence> GrafeasClient::UpdateOccurrence(
-    std::string const& name, grafeas::v1::Occurrence const& occurrence,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+StatusOr<grafeas::v1::Occurrence>
+GrafeasClient::UpdateOccurrence(std::string const& name, grafeas::v1::Occurrence const& occurrence, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   grafeas::v1::UpdateOccurrenceRequest request;
   request.set_name(name);
@@ -119,42 +115,42 @@ StatusOr<grafeas::v1::Occurrence> GrafeasClient::UpdateOccurrence(
   return connection_->UpdateOccurrence(request);
 }
 
-StatusOr<grafeas::v1::Occurrence> GrafeasClient::UpdateOccurrence(
-    grafeas::v1::UpdateOccurrenceRequest const& request, Options opts) {
+StatusOr<grafeas::v1::Occurrence>
+GrafeasClient::UpdateOccurrence(grafeas::v1::UpdateOccurrenceRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateOccurrence(request);
 }
 
-StatusOr<grafeas::v1::Note> GrafeasClient::GetOccurrenceNote(
-    std::string const& name, Options opts) {
+StatusOr<grafeas::v1::Note>
+GrafeasClient::GetOccurrenceNote(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   grafeas::v1::GetOccurrenceNoteRequest request;
   request.set_name(name);
   return connection_->GetOccurrenceNote(request);
 }
 
-StatusOr<grafeas::v1::Note> GrafeasClient::GetOccurrenceNote(
-    grafeas::v1::GetOccurrenceNoteRequest const& request, Options opts) {
+StatusOr<grafeas::v1::Note>
+GrafeasClient::GetOccurrenceNote(grafeas::v1::GetOccurrenceNoteRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOccurrenceNote(request);
 }
 
-StatusOr<grafeas::v1::Note> GrafeasClient::GetNote(std::string const& name,
-                                                   Options opts) {
+StatusOr<grafeas::v1::Note>
+GrafeasClient::GetNote(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   grafeas::v1::GetNoteRequest request;
   request.set_name(name);
   return connection_->GetNote(request);
 }
 
-StatusOr<grafeas::v1::Note> GrafeasClient::GetNote(
-    grafeas::v1::GetNoteRequest const& request, Options opts) {
+StatusOr<grafeas::v1::Note>
+GrafeasClient::GetNote(grafeas::v1::GetNoteRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetNote(request);
 }
 
-StreamRange<grafeas::v1::Note> GrafeasClient::ListNotes(
-    std::string const& parent, std::string const& filter, Options opts) {
+StreamRange<grafeas::v1::Note>
+GrafeasClient::ListNotes(std::string const& parent, std::string const& filter, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   grafeas::v1::ListNotesRequest request;
   request.set_parent(parent);
@@ -162,28 +158,28 @@ StreamRange<grafeas::v1::Note> GrafeasClient::ListNotes(
   return connection_->ListNotes(request);
 }
 
-StreamRange<grafeas::v1::Note> GrafeasClient::ListNotes(
-    grafeas::v1::ListNotesRequest request, Options opts) {
+StreamRange<grafeas::v1::Note>
+GrafeasClient::ListNotes(grafeas::v1::ListNotesRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListNotes(std::move(request));
 }
 
-Status GrafeasClient::DeleteNote(std::string const& name, Options opts) {
+Status
+GrafeasClient::DeleteNote(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   grafeas::v1::DeleteNoteRequest request;
   request.set_name(name);
   return connection_->DeleteNote(request);
 }
 
-Status GrafeasClient::DeleteNote(grafeas::v1::DeleteNoteRequest const& request,
-                                 Options opts) {
+Status
+GrafeasClient::DeleteNote(grafeas::v1::DeleteNoteRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteNote(request);
 }
 
-StatusOr<grafeas::v1::Note> GrafeasClient::CreateNote(
-    std::string const& parent, std::string const& note_id,
-    grafeas::v1::Note const& note, Options opts) {
+StatusOr<grafeas::v1::Note>
+GrafeasClient::CreateNote(std::string const& parent, std::string const& note_id, grafeas::v1::Note const& note, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   grafeas::v1::CreateNoteRequest request;
   request.set_parent(parent);
@@ -192,15 +188,14 @@ StatusOr<grafeas::v1::Note> GrafeasClient::CreateNote(
   return connection_->CreateNote(request);
 }
 
-StatusOr<grafeas::v1::Note> GrafeasClient::CreateNote(
-    grafeas::v1::CreateNoteRequest const& request, Options opts) {
+StatusOr<grafeas::v1::Note>
+GrafeasClient::CreateNote(grafeas::v1::CreateNoteRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateNote(request);
 }
 
-StatusOr<grafeas::v1::BatchCreateNotesResponse> GrafeasClient::BatchCreateNotes(
-    std::string const& parent,
-    std::map<std::string, grafeas::v1::Note> const& notes, Options opts) {
+StatusOr<grafeas::v1::BatchCreateNotesResponse>
+GrafeasClient::BatchCreateNotes(std::string const& parent, std::map<std::string, grafeas::v1::Note> const& notes, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   grafeas::v1::BatchCreateNotesRequest request;
   request.set_parent(parent);
@@ -208,15 +203,14 @@ StatusOr<grafeas::v1::BatchCreateNotesResponse> GrafeasClient::BatchCreateNotes(
   return connection_->BatchCreateNotes(request);
 }
 
-StatusOr<grafeas::v1::BatchCreateNotesResponse> GrafeasClient::BatchCreateNotes(
-    grafeas::v1::BatchCreateNotesRequest const& request, Options opts) {
+StatusOr<grafeas::v1::BatchCreateNotesResponse>
+GrafeasClient::BatchCreateNotes(grafeas::v1::BatchCreateNotesRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->BatchCreateNotes(request);
 }
 
-StatusOr<grafeas::v1::Note> GrafeasClient::UpdateNote(
-    std::string const& name, grafeas::v1::Note const& note,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+StatusOr<grafeas::v1::Note>
+GrafeasClient::UpdateNote(std::string const& name, grafeas::v1::Note const& note, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   grafeas::v1::UpdateNoteRequest request;
   request.set_name(name);
@@ -225,14 +219,14 @@ StatusOr<grafeas::v1::Note> GrafeasClient::UpdateNote(
   return connection_->UpdateNote(request);
 }
 
-StatusOr<grafeas::v1::Note> GrafeasClient::UpdateNote(
-    grafeas::v1::UpdateNoteRequest const& request, Options opts) {
+StatusOr<grafeas::v1::Note>
+GrafeasClient::UpdateNote(grafeas::v1::UpdateNoteRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateNote(request);
 }
 
-StreamRange<grafeas::v1::Occurrence> GrafeasClient::ListNoteOccurrences(
-    std::string const& name, std::string const& filter, Options opts) {
+StreamRange<grafeas::v1::Occurrence>
+GrafeasClient::ListNoteOccurrences(std::string const& name, std::string const& filter, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   grafeas::v1::ListNoteOccurrencesRequest request;
   request.set_name(name);
@@ -240,8 +234,8 @@ StreamRange<grafeas::v1::Occurrence> GrafeasClient::ListNoteOccurrences(
   return connection_->ListNoteOccurrences(request);
 }
 
-StreamRange<grafeas::v1::Occurrence> GrafeasClient::ListNoteOccurrences(
-    grafeas::v1::ListNoteOccurrencesRequest request, Options opts) {
+StreamRange<grafeas::v1::Occurrence>
+GrafeasClient::ListNoteOccurrences(grafeas::v1::ListNoteOccurrencesRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListNoteOccurrences(std::move(request));
 }

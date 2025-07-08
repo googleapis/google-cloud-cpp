@@ -36,67 +36,62 @@ class RegionAutoscalersTracingConnection
   ~RegionAutoscalersTracingConnection() override = default;
 
   explicit RegionAutoscalersTracingConnection(
-      std::shared_ptr<
-          compute_region_autoscalers_v1::RegionAutoscalersConnection>
-          child);
+    std::shared_ptr<compute_region_autoscalers_v1::RegionAutoscalersConnection> child);
 
   Options options() override { return child_->options(); }
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteAutoscaler(
-      google::cloud::cpp::compute::region_autoscalers::v1::
-          DeleteAutoscalerRequest const& request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteAutoscaler(google::cloud::cpp::compute::region_autoscalers::v1::DeleteAutoscalerRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteAutoscaler(
-      NoAwaitTag, google::cloud::cpp::compute::region_autoscalers::v1::
-                      DeleteAutoscalerRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeleteAutoscaler(NoAwaitTag,
+      google::cloud::cpp::compute::region_autoscalers::v1::DeleteAutoscalerRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteAutoscaler(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteAutoscaler(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Autoscaler> GetAutoscaler(
-      google::cloud::cpp::compute::region_autoscalers::v1::
-          GetAutoscalerRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Autoscaler>
+  GetAutoscaler(google::cloud::cpp::compute::region_autoscalers::v1::GetAutoscalerRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertAutoscaler(
-      google::cloud::cpp::compute::region_autoscalers::v1::
-          InsertAutoscalerRequest const& request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  InsertAutoscaler(google::cloud::cpp::compute::region_autoscalers::v1::InsertAutoscalerRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertAutoscaler(
-      NoAwaitTag, google::cloud::cpp::compute::region_autoscalers::v1::
-                      InsertAutoscalerRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  InsertAutoscaler(NoAwaitTag,
+      google::cloud::cpp::compute::region_autoscalers::v1::InsertAutoscalerRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertAutoscaler(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  InsertAutoscaler(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StreamRange<google::cloud::cpp::compute::v1::Autoscaler>
-  ListRegionAutoscalers(google::cloud::cpp::compute::region_autoscalers::v1::
-                            ListRegionAutoscalersRequest request) override;
+  ListRegionAutoscalers(google::cloud::cpp::compute::region_autoscalers::v1::ListRegionAutoscalersRequest request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchAutoscaler(
-      google::cloud::cpp::compute::region_autoscalers::v1::
-          PatchAutoscalerRequest const& request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  PatchAutoscaler(google::cloud::cpp::compute::region_autoscalers::v1::PatchAutoscalerRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchAutoscaler(
-      NoAwaitTag, google::cloud::cpp::compute::region_autoscalers::v1::
-                      PatchAutoscalerRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  PatchAutoscaler(NoAwaitTag,
+      google::cloud::cpp::compute::region_autoscalers::v1::PatchAutoscalerRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchAutoscaler(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  PatchAutoscaler(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateAutoscaler(
-      google::cloud::cpp::compute::region_autoscalers::v1::
-          UpdateAutoscalerRequest const& request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  UpdateAutoscaler(google::cloud::cpp::compute::region_autoscalers::v1::UpdateAutoscalerRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateAutoscaler(
-      NoAwaitTag, google::cloud::cpp::compute::region_autoscalers::v1::
-                      UpdateAutoscalerRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  UpdateAutoscaler(NoAwaitTag,
+      google::cloud::cpp::compute::region_autoscalers::v1::UpdateAutoscalerRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateAutoscaler(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  UpdateAutoscaler(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
  private:
-  std::shared_ptr<compute_region_autoscalers_v1::RegionAutoscalersConnection>
-      child_;
+  std::shared_ptr<compute_region_autoscalers_v1::RegionAutoscalersConnection> child_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -109,8 +104,7 @@ class RegionAutoscalersTracingConnection
  */
 std::shared_ptr<compute_region_autoscalers_v1::RegionAutoscalersConnection>
 MakeRegionAutoscalersTracingConnection(
-    std::shared_ptr<compute_region_autoscalers_v1::RegionAutoscalersConnection>
-        conn);
+    std::shared_ptr<compute_region_autoscalers_v1::RegionAutoscalersConnection> conn);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_region_autoscalers_v1_internal

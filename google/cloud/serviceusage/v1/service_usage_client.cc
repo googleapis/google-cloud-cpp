@@ -28,104 +28,84 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ServiceUsageClient::ServiceUsageClient(
     std::shared_ptr<ServiceUsageConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 ServiceUsageClient::~ServiceUsageClient() = default;
 
 future<StatusOr<google::api::serviceusage::v1::EnableServiceResponse>>
-ServiceUsageClient::EnableService(
-    google::api::serviceusage::v1::EnableServiceRequest const& request,
-    Options opts) {
+ServiceUsageClient::EnableService(google::api::serviceusage::v1::EnableServiceRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->EnableService(request);
 }
 
-StatusOr<google::longrunning::Operation> ServiceUsageClient::EnableService(
-    NoAwaitTag,
-    google::api::serviceusage::v1::EnableServiceRequest const& request,
-    Options opts) {
+StatusOr<google::longrunning::Operation>
+ServiceUsageClient::EnableService(NoAwaitTag, google::api::serviceusage::v1::EnableServiceRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->EnableService(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::api::serviceusage::v1::EnableServiceResponse>>
-ServiceUsageClient::EnableService(
-    google::longrunning::Operation const& operation, Options opts) {
+ServiceUsageClient::EnableService(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->EnableService(operation);
 }
 
 future<StatusOr<google::api::serviceusage::v1::DisableServiceResponse>>
-ServiceUsageClient::DisableService(
-    google::api::serviceusage::v1::DisableServiceRequest const& request,
-    Options opts) {
+ServiceUsageClient::DisableService(google::api::serviceusage::v1::DisableServiceRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DisableService(request);
 }
 
-StatusOr<google::longrunning::Operation> ServiceUsageClient::DisableService(
-    NoAwaitTag,
-    google::api::serviceusage::v1::DisableServiceRequest const& request,
-    Options opts) {
+StatusOr<google::longrunning::Operation>
+ServiceUsageClient::DisableService(NoAwaitTag, google::api::serviceusage::v1::DisableServiceRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DisableService(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::api::serviceusage::v1::DisableServiceResponse>>
-ServiceUsageClient::DisableService(
-    google::longrunning::Operation const& operation, Options opts) {
+ServiceUsageClient::DisableService(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DisableService(operation);
 }
 
-StatusOr<google::api::serviceusage::v1::Service> ServiceUsageClient::GetService(
-    google::api::serviceusage::v1::GetServiceRequest const& request,
-    Options opts) {
+StatusOr<google::api::serviceusage::v1::Service>
+ServiceUsageClient::GetService(google::api::serviceusage::v1::GetServiceRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetService(request);
 }
 
 StreamRange<google::api::serviceusage::v1::Service>
-ServiceUsageClient::ListServices(
-    google::api::serviceusage::v1::ListServicesRequest request, Options opts) {
+ServiceUsageClient::ListServices(google::api::serviceusage::v1::ListServicesRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListServices(std::move(request));
 }
 
 future<StatusOr<google::api::serviceusage::v1::BatchEnableServicesResponse>>
-ServiceUsageClient::BatchEnableServices(
-    google::api::serviceusage::v1::BatchEnableServicesRequest const& request,
-    Options opts) {
+ServiceUsageClient::BatchEnableServices(google::api::serviceusage::v1::BatchEnableServicesRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->BatchEnableServices(request);
 }
 
 StatusOr<google::longrunning::Operation>
-ServiceUsageClient::BatchEnableServices(
-    NoAwaitTag,
-    google::api::serviceusage::v1::BatchEnableServicesRequest const& request,
-    Options opts) {
+ServiceUsageClient::BatchEnableServices(NoAwaitTag, google::api::serviceusage::v1::BatchEnableServicesRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->BatchEnableServices(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::api::serviceusage::v1::BatchEnableServicesResponse>>
-ServiceUsageClient::BatchEnableServices(
-    google::longrunning::Operation const& operation, Options opts) {
+ServiceUsageClient::BatchEnableServices(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->BatchEnableServices(operation);
 }
 
 StatusOr<google::api::serviceusage::v1::BatchGetServicesResponse>
-ServiceUsageClient::BatchGetServices(
-    google::api::serviceusage::v1::BatchGetServicesRequest const& request,
-    Options opts) {
+ServiceUsageClient::BatchGetServices(google::api::serviceusage::v1::BatchGetServicesRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->BatchGetServices(request);
 }
 
-StreamRange<google::longrunning::Operation> ServiceUsageClient::ListOperations(
-    std::string const& name, std::string const& filter, Options opts) {
+StreamRange<google::longrunning::Operation>
+ServiceUsageClient::ListOperations(std::string const& name, std::string const& filter, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::ListOperationsRequest request;
   request.set_name(name);
@@ -133,22 +113,22 @@ StreamRange<google::longrunning::Operation> ServiceUsageClient::ListOperations(
   return connection_->ListOperations(request);
 }
 
-StreamRange<google::longrunning::Operation> ServiceUsageClient::ListOperations(
-    google::longrunning::ListOperationsRequest request, Options opts) {
+StreamRange<google::longrunning::Operation>
+ServiceUsageClient::ListOperations(google::longrunning::ListOperationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOperations(std::move(request));
 }
 
-StatusOr<google::longrunning::Operation> ServiceUsageClient::GetOperation(
-    std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation>
+ServiceUsageClient::GetOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
   return connection_->GetOperation(request);
 }
 
-StatusOr<google::longrunning::Operation> ServiceUsageClient::GetOperation(
-    google::longrunning::GetOperationRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation>
+ServiceUsageClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }

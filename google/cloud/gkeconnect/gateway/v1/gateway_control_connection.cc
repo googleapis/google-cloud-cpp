@@ -17,12 +17,12 @@
 // source: google/cloud/gkeconnect/gateway/v1/control.proto
 
 #include "google/cloud/gkeconnect/gateway/v1/gateway_control_connection.h"
-#include "google/cloud/gkeconnect/gateway/v1/gateway_control_options.h"
-#include "google/cloud/gkeconnect/gateway/v1/internal/gateway_control_option_defaults.h"
-#include "google/cloud/gkeconnect/gateway/v1/internal/gateway_control_tracing_connection.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
+#include "google/cloud/gkeconnect/gateway/v1/gateway_control_options.h"
+#include "google/cloud/gkeconnect/gateway/v1/internal/gateway_control_option_defaults.h"
+#include "google/cloud/gkeconnect/gateway/v1/internal/gateway_control_tracing_connection.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>

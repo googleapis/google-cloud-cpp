@@ -36,53 +36,51 @@ class DomainMappingsLogging : public DomainMappingsStub {
  public:
   ~DomainMappingsLogging() override = default;
   DomainMappingsLogging(std::shared_ptr<DomainMappingsStub> child,
-                        TracingOptions tracing_options,
-                        std::set<std::string> const& components);
+                       TracingOptions tracing_options,
+                       std::set<std::string> const& components);
 
-  StatusOr<google::appengine::v1::ListDomainMappingsResponse>
-  ListDomainMappings(
-      grpc::ClientContext& context, Options const& options,
+  StatusOr<google::appengine::v1::ListDomainMappingsResponse> ListDomainMappings(
+      grpc::ClientContext& context,
+      Options const& options,
       google::appengine::v1::ListDomainMappingsRequest const& request) override;
 
   StatusOr<google::appengine::v1::DomainMapping> GetDomainMapping(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::appengine::v1::GetDomainMappingRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateDomainMapping(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::appengine::v1::CreateDomainMappingRequest const& request)
-      override;
+      google::appengine::v1::CreateDomainMappingRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateDomainMapping(
-      grpc::ClientContext& context, Options options,
-      google::appengine::v1::CreateDomainMappingRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::appengine::v1::CreateDomainMappingRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateDomainMapping(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::appengine::v1::UpdateDomainMappingRequest const& request)
-      override;
+      google::appengine::v1::UpdateDomainMappingRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateDomainMapping(
-      grpc::ClientContext& context, Options options,
-      google::appengine::v1::UpdateDomainMappingRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::appengine::v1::UpdateDomainMappingRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteDomainMapping(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::appengine::v1::DeleteDomainMappingRequest const& request)
-      override;
+      google::appengine::v1::DeleteDomainMappingRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteDomainMapping(
-      grpc::ClientContext& context, Options options,
-      google::appengine::v1::DeleteDomainMappingRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::appengine::v1::DeleteDomainMappingRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,

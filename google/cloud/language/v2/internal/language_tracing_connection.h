@@ -36,26 +36,24 @@ class LanguageServiceTracingConnection
   ~LanguageServiceTracingConnection() override = default;
 
   explicit LanguageServiceTracingConnection(
-      std::shared_ptr<language_v2::LanguageServiceConnection> child);
+    std::shared_ptr<language_v2::LanguageServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
   StatusOr<google::cloud::language::v2::AnalyzeSentimentResponse>
-  AnalyzeSentiment(google::cloud::language::v2::AnalyzeSentimentRequest const&
-                       request) override;
+  AnalyzeSentiment(google::cloud::language::v2::AnalyzeSentimentRequest const& request) override;
 
   StatusOr<google::cloud::language::v2::AnalyzeEntitiesResponse>
-  AnalyzeEntities(google::cloud::language::v2::AnalyzeEntitiesRequest const&
-                      request) override;
+  AnalyzeEntities(google::cloud::language::v2::AnalyzeEntitiesRequest const& request) override;
 
-  StatusOr<google::cloud::language::v2::ClassifyTextResponse> ClassifyText(
-      google::cloud::language::v2::ClassifyTextRequest const& request) override;
+  StatusOr<google::cloud::language::v2::ClassifyTextResponse>
+  ClassifyText(google::cloud::language::v2::ClassifyTextRequest const& request) override;
 
-  StatusOr<google::cloud::language::v2::ModerateTextResponse> ModerateText(
-      google::cloud::language::v2::ModerateTextRequest const& request) override;
+  StatusOr<google::cloud::language::v2::ModerateTextResponse>
+  ModerateText(google::cloud::language::v2::ModerateTextRequest const& request) override;
 
-  StatusOr<google::cloud::language::v2::AnnotateTextResponse> AnnotateText(
-      google::cloud::language::v2::AnnotateTextRequest const& request) override;
+  StatusOr<google::cloud::language::v2::AnnotateTextResponse>
+  AnnotateText(google::cloud::language::v2::AnnotateTextRequest const& request) override;
 
  private:
   std::shared_ptr<language_v2::LanguageServiceConnection> child_;

@@ -17,13 +17,13 @@
 // source: grafeas/v1/grafeas.proto
 
 #include "google/cloud/containeranalysis/v1/grafeas_connection.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/containeranalysis/v1/grafeas_options.h"
 #include "google/cloud/containeranalysis/v1/internal/grafeas_connection_impl.h"
 #include "google/cloud/containeranalysis/v1/internal/grafeas_option_defaults.h"
 #include "google/cloud/containeranalysis/v1/internal/grafeas_stub_factory.h"
 #include "google/cloud/containeranalysis/v1/internal/grafeas_tracing_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
@@ -38,24 +38,26 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 GrafeasConnection::~GrafeasConnection() = default;
 
-StatusOr<grafeas::v1::Occurrence> GrafeasConnection::GetOccurrence(
+StatusOr<grafeas::v1::Occurrence>
+GrafeasConnection::GetOccurrence(
     grafeas::v1::GetOccurrenceRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StreamRange<grafeas::v1::Occurrence> GrafeasConnection::ListOccurrences(
-    grafeas::v1::
-        ListOccurrencesRequest) {  // NOLINT(performance-unnecessary-value-param)
+    grafeas::v1::ListOccurrencesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<grafeas::v1::Occurrence>>();
 }
 
-Status GrafeasConnection::DeleteOccurrence(
+Status
+GrafeasConnection::DeleteOccurrence(
     grafeas::v1::DeleteOccurrenceRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<grafeas::v1::Occurrence> GrafeasConnection::CreateOccurrence(
+StatusOr<grafeas::v1::Occurrence>
+GrafeasConnection::CreateOccurrence(
     grafeas::v1::CreateOccurrenceRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -66,33 +68,38 @@ GrafeasConnection::BatchCreateOccurrences(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<grafeas::v1::Occurrence> GrafeasConnection::UpdateOccurrence(
+StatusOr<grafeas::v1::Occurrence>
+GrafeasConnection::UpdateOccurrence(
     grafeas::v1::UpdateOccurrenceRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<grafeas::v1::Note> GrafeasConnection::GetOccurrenceNote(
+StatusOr<grafeas::v1::Note>
+GrafeasConnection::GetOccurrenceNote(
     grafeas::v1::GetOccurrenceNoteRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<grafeas::v1::Note> GrafeasConnection::GetNote(
+StatusOr<grafeas::v1::Note>
+GrafeasConnection::GetNote(
     grafeas::v1::GetNoteRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StreamRange<grafeas::v1::Note> GrafeasConnection::ListNotes(
-    grafeas::v1::
-        ListNotesRequest) {  // NOLINT(performance-unnecessary-value-param)
+    grafeas::v1::ListNotesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<grafeas::v1::Note>>();
 }
 
-Status GrafeasConnection::DeleteNote(grafeas::v1::DeleteNoteRequest const&) {
+Status
+GrafeasConnection::DeleteNote(
+    grafeas::v1::DeleteNoteRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<grafeas::v1::Note> GrafeasConnection::CreateNote(
+StatusOr<grafeas::v1::Note>
+GrafeasConnection::CreateNote(
     grafeas::v1::CreateNoteRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -103,31 +110,32 @@ GrafeasConnection::BatchCreateNotes(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<grafeas::v1::Note> GrafeasConnection::UpdateNote(
+StatusOr<grafeas::v1::Note>
+GrafeasConnection::UpdateNote(
     grafeas::v1::UpdateNoteRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StreamRange<grafeas::v1::Occurrence> GrafeasConnection::ListNoteOccurrences(
-    grafeas::v1::
-        ListNoteOccurrencesRequest) {  // NOLINT(performance-unnecessary-value-param)
+    grafeas::v1::ListNoteOccurrencesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<grafeas::v1::Occurrence>>();
 }
 
-std::shared_ptr<GrafeasConnection> MakeGrafeasConnection(Options options) {
+std::shared_ptr<GrafeasConnection> MakeGrafeasConnection(
+    Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 GrafeasPolicyOptionList>(options, __func__);
-  options =
-      containeranalysis_v1_internal::GrafeasDefaultOptions(std::move(options));
+      UnifiedCredentialsOptionList,
+      GrafeasPolicyOptionList>(options, __func__);
+  options = containeranalysis_v1_internal::GrafeasDefaultOptions(
+      std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = containeranalysis_v1_internal::CreateDefaultGrafeasStub(
-      std::move(auth), options);
+    std::move(auth), options);
   return containeranalysis_v1_internal::MakeGrafeasTracingConnection(
       std::make_shared<containeranalysis_v1_internal::GrafeasConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options)));
+      std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

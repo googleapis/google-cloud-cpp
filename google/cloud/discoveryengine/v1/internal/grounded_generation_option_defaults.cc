@@ -35,34 +35,23 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options GroundedGenerationServiceDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options),
-      "GOOGLE_CLOUD_CPP_GROUNDED_GENERATION_SERVICE_ENDPOINT", "",
-      "GOOGLE_CLOUD_CPP_GROUNDED_GENERATION_SERVICE_AUTHORITY",
+      std::move(options), "GOOGLE_CLOUD_CPP_GROUNDED_GENERATION_SERVICE_ENDPOINT",
+      "", "GOOGLE_CLOUD_CPP_GROUNDED_GENERATION_SERVICE_AUTHORITY",
       "discoveryengine.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
-  if (!options.has<
-          discoveryengine_v1::GroundedGenerationServiceRetryPolicyOption>()) {
+  if (!options.has<discoveryengine_v1::GroundedGenerationServiceRetryPolicyOption>()) {
     options.set<discoveryengine_v1::GroundedGenerationServiceRetryPolicyOption>(
         discoveryengine_v1::GroundedGenerationServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
-            .clone());
+            std::chrono::minutes(30)).clone());
   }
-  if (!options.has<
-          discoveryengine_v1::GroundedGenerationServiceBackoffPolicyOption>()) {
-    options
-        .set<discoveryengine_v1::GroundedGenerationServiceBackoffPolicyOption>(
-            ExponentialBackoffPolicy(
-                std::chrono::seconds(0), std::chrono::seconds(1),
-                std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
-                .clone());
+  if (!options.has<discoveryengine_v1::GroundedGenerationServiceBackoffPolicyOption>()) {
+    options.set<discoveryengine_v1::GroundedGenerationServiceBackoffPolicyOption>(
+        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
   }
-  if (!options.has<
-          discoveryengine_v1::
-              GroundedGenerationServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<discoveryengine_v1::
-                    GroundedGenerationServiceConnectionIdempotencyPolicyOption>(
-        discoveryengine_v1::
-            MakeDefaultGroundedGenerationServiceConnectionIdempotencyPolicy());
+  if (!options.has<discoveryengine_v1::GroundedGenerationServiceConnectionIdempotencyPolicyOption>()) {
+    options.set<discoveryengine_v1::GroundedGenerationServiceConnectionIdempotencyPolicyOption>(
+        discoveryengine_v1::MakeDefaultGroundedGenerationServiceConnectionIdempotencyPolicy());
   }
 
   return options;

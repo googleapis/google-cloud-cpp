@@ -28,8 +28,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ParallelstoreClient::ParallelstoreClient(
     std::shared_ptr<ParallelstoreConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 ParallelstoreClient::~ParallelstoreClient() = default;
 
 StreamRange<google::cloud::parallelstore::v1::Instance>
@@ -41,9 +41,7 @@ ParallelstoreClient::ListInstances(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::parallelstore::v1::Instance>
-ParallelstoreClient::ListInstances(
-    google::cloud::parallelstore::v1::ListInstancesRequest request,
-    Options opts) {
+ParallelstoreClient::ListInstances(google::cloud::parallelstore::v1::ListInstancesRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListInstances(std::move(request));
 }
@@ -57,18 +55,13 @@ ParallelstoreClient::GetInstance(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::parallelstore::v1::Instance>
-ParallelstoreClient::GetInstance(
-    google::cloud::parallelstore::v1::GetInstanceRequest const& request,
-    Options opts) {
+ParallelstoreClient::GetInstance(google::cloud::parallelstore::v1::GetInstanceRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetInstance(request);
 }
 
 future<StatusOr<google::cloud::parallelstore::v1::Instance>>
-ParallelstoreClient::CreateInstance(
-    std::string const& parent,
-    google::cloud::parallelstore::v1::Instance const& instance,
-    std::string const& instance_id, Options opts) {
+ParallelstoreClient::CreateInstance(std::string const& parent, google::cloud::parallelstore::v1::Instance const& instance, std::string const& instance_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::parallelstore::v1::CreateInstanceRequest request;
   request.set_parent(parent);
@@ -77,10 +70,8 @@ ParallelstoreClient::CreateInstance(
   return connection_->CreateInstance(request);
 }
 
-StatusOr<google::longrunning::Operation> ParallelstoreClient::CreateInstance(
-    NoAwaitTag, std::string const& parent,
-    google::cloud::parallelstore::v1::Instance const& instance,
-    std::string const& instance_id, Options opts) {
+StatusOr<google::longrunning::Operation>
+ParallelstoreClient::CreateInstance(NoAwaitTag, std::string const& parent, google::cloud::parallelstore::v1::Instance const& instance, std::string const& instance_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::parallelstore::v1::CreateInstanceRequest request;
   request.set_parent(parent);
@@ -90,32 +81,25 @@ StatusOr<google::longrunning::Operation> ParallelstoreClient::CreateInstance(
 }
 
 future<StatusOr<google::cloud::parallelstore::v1::Instance>>
-ParallelstoreClient::CreateInstance(
-    google::cloud::parallelstore::v1::CreateInstanceRequest const& request,
-    Options opts) {
+ParallelstoreClient::CreateInstance(google::cloud::parallelstore::v1::CreateInstanceRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateInstance(request);
 }
 
-StatusOr<google::longrunning::Operation> ParallelstoreClient::CreateInstance(
-    NoAwaitTag,
-    google::cloud::parallelstore::v1::CreateInstanceRequest const& request,
-    Options opts) {
+StatusOr<google::longrunning::Operation>
+ParallelstoreClient::CreateInstance(NoAwaitTag, google::cloud::parallelstore::v1::CreateInstanceRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateInstance(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::parallelstore::v1::Instance>>
-ParallelstoreClient::CreateInstance(
-    google::longrunning::Operation const& operation, Options opts) {
+ParallelstoreClient::CreateInstance(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateInstance(operation);
 }
 
 future<StatusOr<google::cloud::parallelstore::v1::Instance>>
-ParallelstoreClient::UpdateInstance(
-    google::cloud::parallelstore::v1::Instance const& instance,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+ParallelstoreClient::UpdateInstance(google::cloud::parallelstore::v1::Instance const& instance, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::parallelstore::v1::UpdateInstanceRequest request;
   *request.mutable_instance() = instance;
@@ -123,9 +107,8 @@ ParallelstoreClient::UpdateInstance(
   return connection_->UpdateInstance(request);
 }
 
-StatusOr<google::longrunning::Operation> ParallelstoreClient::UpdateInstance(
-    NoAwaitTag, google::cloud::parallelstore::v1::Instance const& instance,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+StatusOr<google::longrunning::Operation>
+ParallelstoreClient::UpdateInstance(NoAwaitTag, google::cloud::parallelstore::v1::Instance const& instance, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::parallelstore::v1::UpdateInstanceRequest request;
   *request.mutable_instance() = instance;
@@ -134,24 +117,19 @@ StatusOr<google::longrunning::Operation> ParallelstoreClient::UpdateInstance(
 }
 
 future<StatusOr<google::cloud::parallelstore::v1::Instance>>
-ParallelstoreClient::UpdateInstance(
-    google::cloud::parallelstore::v1::UpdateInstanceRequest const& request,
-    Options opts) {
+ParallelstoreClient::UpdateInstance(google::cloud::parallelstore::v1::UpdateInstanceRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateInstance(request);
 }
 
-StatusOr<google::longrunning::Operation> ParallelstoreClient::UpdateInstance(
-    NoAwaitTag,
-    google::cloud::parallelstore::v1::UpdateInstanceRequest const& request,
-    Options opts) {
+StatusOr<google::longrunning::Operation>
+ParallelstoreClient::UpdateInstance(NoAwaitTag, google::cloud::parallelstore::v1::UpdateInstanceRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateInstance(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::parallelstore::v1::Instance>>
-ParallelstoreClient::UpdateInstance(
-    google::longrunning::Operation const& operation, Options opts) {
+ParallelstoreClient::UpdateInstance(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateInstance(operation);
 }
@@ -164,8 +142,8 @@ ParallelstoreClient::DeleteInstance(std::string const& name, Options opts) {
   return connection_->DeleteInstance(request);
 }
 
-StatusOr<google::longrunning::Operation> ParallelstoreClient::DeleteInstance(
-    NoAwaitTag, std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation>
+ParallelstoreClient::DeleteInstance(NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::parallelstore::v1::DeleteInstanceRequest request;
   request.set_name(name);
@@ -173,89 +151,73 @@ StatusOr<google::longrunning::Operation> ParallelstoreClient::DeleteInstance(
 }
 
 future<StatusOr<google::cloud::parallelstore::v1::OperationMetadata>>
-ParallelstoreClient::DeleteInstance(
-    google::cloud::parallelstore::v1::DeleteInstanceRequest const& request,
-    Options opts) {
+ParallelstoreClient::DeleteInstance(google::cloud::parallelstore::v1::DeleteInstanceRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteInstance(request);
 }
 
-StatusOr<google::longrunning::Operation> ParallelstoreClient::DeleteInstance(
-    NoAwaitTag,
-    google::cloud::parallelstore::v1::DeleteInstanceRequest const& request,
-    Options opts) {
+StatusOr<google::longrunning::Operation>
+ParallelstoreClient::DeleteInstance(NoAwaitTag, google::cloud::parallelstore::v1::DeleteInstanceRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteInstance(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::parallelstore::v1::OperationMetadata>>
-ParallelstoreClient::DeleteInstance(
-    google::longrunning::Operation const& operation, Options opts) {
+ParallelstoreClient::DeleteInstance(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteInstance(operation);
 }
 
 future<StatusOr<google::cloud::parallelstore::v1::ImportDataResponse>>
-ParallelstoreClient::ImportData(
-    google::cloud::parallelstore::v1::ImportDataRequest const& request,
-    Options opts) {
+ParallelstoreClient::ImportData(google::cloud::parallelstore::v1::ImportDataRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ImportData(request);
 }
 
-StatusOr<google::longrunning::Operation> ParallelstoreClient::ImportData(
-    NoAwaitTag,
-    google::cloud::parallelstore::v1::ImportDataRequest const& request,
-    Options opts) {
+StatusOr<google::longrunning::Operation>
+ParallelstoreClient::ImportData(NoAwaitTag, google::cloud::parallelstore::v1::ImportDataRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ImportData(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::parallelstore::v1::ImportDataResponse>>
-ParallelstoreClient::ImportData(google::longrunning::Operation const& operation,
-                                Options opts) {
+ParallelstoreClient::ImportData(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ImportData(operation);
 }
 
 future<StatusOr<google::cloud::parallelstore::v1::ExportDataResponse>>
-ParallelstoreClient::ExportData(
-    google::cloud::parallelstore::v1::ExportDataRequest const& request,
-    Options opts) {
+ParallelstoreClient::ExportData(google::cloud::parallelstore::v1::ExportDataRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ExportData(request);
 }
 
-StatusOr<google::longrunning::Operation> ParallelstoreClient::ExportData(
-    NoAwaitTag,
-    google::cloud::parallelstore::v1::ExportDataRequest const& request,
-    Options opts) {
+StatusOr<google::longrunning::Operation>
+ParallelstoreClient::ExportData(NoAwaitTag, google::cloud::parallelstore::v1::ExportDataRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ExportData(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::parallelstore::v1::ExportDataResponse>>
-ParallelstoreClient::ExportData(google::longrunning::Operation const& operation,
-                                Options opts) {
+ParallelstoreClient::ExportData(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ExportData(operation);
 }
 
 StreamRange<google::cloud::location::Location>
-ParallelstoreClient::ListLocations(
-    google::cloud::location::ListLocationsRequest request, Options opts) {
+ParallelstoreClient::ListLocations(google::cloud::location::ListLocationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListLocations(std::move(request));
 }
 
-StatusOr<google::cloud::location::Location> ParallelstoreClient::GetLocation(
-    google::cloud::location::GetLocationRequest const& request, Options opts) {
+StatusOr<google::cloud::location::Location>
+ParallelstoreClient::GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetLocation(request);
 }
 
-StreamRange<google::longrunning::Operation> ParallelstoreClient::ListOperations(
-    std::string const& name, std::string const& filter, Options opts) {
+StreamRange<google::longrunning::Operation>
+ParallelstoreClient::ListOperations(std::string const& name, std::string const& filter, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::ListOperationsRequest request;
   request.set_name(name);
@@ -263,50 +225,50 @@ StreamRange<google::longrunning::Operation> ParallelstoreClient::ListOperations(
   return connection_->ListOperations(request);
 }
 
-StreamRange<google::longrunning::Operation> ParallelstoreClient::ListOperations(
-    google::longrunning::ListOperationsRequest request, Options opts) {
+StreamRange<google::longrunning::Operation>
+ParallelstoreClient::ListOperations(google::longrunning::ListOperationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOperations(std::move(request));
 }
 
-StatusOr<google::longrunning::Operation> ParallelstoreClient::GetOperation(
-    std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation>
+ParallelstoreClient::GetOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
   return connection_->GetOperation(request);
 }
 
-StatusOr<google::longrunning::Operation> ParallelstoreClient::GetOperation(
-    google::longrunning::GetOperationRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation>
+ParallelstoreClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }
 
-Status ParallelstoreClient::DeleteOperation(std::string const& name,
-                                            Options opts) {
+Status
+ParallelstoreClient::DeleteOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::DeleteOperationRequest request;
   request.set_name(name);
   return connection_->DeleteOperation(request);
 }
 
-Status ParallelstoreClient::DeleteOperation(
-    google::longrunning::DeleteOperationRequest const& request, Options opts) {
+Status
+ParallelstoreClient::DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteOperation(request);
 }
 
-Status ParallelstoreClient::CancelOperation(std::string const& name,
-                                            Options opts) {
+Status
+ParallelstoreClient::CancelOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::CancelOperationRequest request;
   request.set_name(name);
   return connection_->CancelOperation(request);
 }
 
-Status ParallelstoreClient::CancelOperation(
-    google::longrunning::CancelOperationRequest const& request, Options opts) {
+Status
+ParallelstoreClient::CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelOperation(request);
 }

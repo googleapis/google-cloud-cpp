@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPEECH_V1_ADAPTATION_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPEECH_V1_ADAPTATION_CLIENT_H
 
-#include "google/cloud/speech/v1/adaptation_connection.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
+#include "google/cloud/speech/v1/adaptation_connection.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -61,8 +61,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class AdaptationClient {
  public:
-  explicit AdaptationClient(std::shared_ptr<AdaptationConnection> connection,
-                            Options opts = {});
+  explicit AdaptationClient(std::shared_ptr<AdaptationConnection> connection, Options opts = {});
   ~AdaptationClient();
 
   ///@{
@@ -122,10 +121,8 @@ class AdaptationClient {
   /// [google.cloud.speech.v1.PhraseSet]: @googleapis_reference_link{google/cloud/speech/v1/resource.proto#L56}
   ///
   // clang-format on
-  StatusOr<google::cloud::speech::v1::PhraseSet> CreatePhraseSet(
-      std::string const& parent,
-      google::cloud::speech::v1::PhraseSet const& phrase_set,
-      std::string const& phrase_set_id, Options opts = {});
+  StatusOr<google::cloud::speech::v1::PhraseSet>
+  CreatePhraseSet(std::string const& parent, google::cloud::speech::v1::PhraseSet const& phrase_set, std::string const& phrase_set_id, Options opts = {});
 
   // clang-format off
   ///
@@ -156,9 +153,8 @@ class AdaptationClient {
   /// [google.cloud.speech.v1.PhraseSet]: @googleapis_reference_link{google/cloud/speech/v1/resource.proto#L56}
   ///
   // clang-format on
-  StatusOr<google::cloud::speech::v1::PhraseSet> CreatePhraseSet(
-      google::cloud::speech::v1::CreatePhraseSetRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::speech::v1::PhraseSet>
+  CreatePhraseSet(google::cloud::speech::v1::CreatePhraseSetRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -190,8 +186,8 @@ class AdaptationClient {
   /// [google.cloud.speech.v1.PhraseSet]: @googleapis_reference_link{google/cloud/speech/v1/resource.proto#L56}
   ///
   // clang-format on
-  StatusOr<google::cloud::speech::v1::PhraseSet> GetPhraseSet(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::speech::v1::PhraseSet>
+  GetPhraseSet(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -220,9 +216,8 @@ class AdaptationClient {
   /// [google.cloud.speech.v1.PhraseSet]: @googleapis_reference_link{google/cloud/speech/v1/resource.proto#L56}
   ///
   // clang-format on
-  StatusOr<google::cloud::speech::v1::PhraseSet> GetPhraseSet(
-      google::cloud::speech::v1::GetPhraseSetRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::speech::v1::PhraseSet>
+  GetPhraseSet(google::cloud::speech::v1::GetPhraseSetRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -263,8 +258,8 @@ class AdaptationClient {
   /// [google.cloud.speech.v1.PhraseSet]: @googleapis_reference_link{google/cloud/speech/v1/resource.proto#L56}
   ///
   // clang-format on
-  StreamRange<google::cloud::speech::v1::PhraseSet> ListPhraseSet(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::speech::v1::PhraseSet>
+  ListPhraseSet(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -302,9 +297,8 @@ class AdaptationClient {
   /// [google.cloud.speech.v1.PhraseSet]: @googleapis_reference_link{google/cloud/speech/v1/resource.proto#L56}
   ///
   // clang-format on
-  StreamRange<google::cloud::speech::v1::PhraseSet> ListPhraseSet(
-      google::cloud::speech::v1::ListPhraseSetRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::speech::v1::PhraseSet>
+  ListPhraseSet(google::cloud::speech::v1::ListPhraseSetRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -340,9 +334,8 @@ class AdaptationClient {
   /// [google.cloud.speech.v1.UpdatePhraseSetRequest]: @googleapis_reference_link{google/cloud/speech/v1/cloud_speech_adaptation.proto#L161}
   ///
   // clang-format on
-  StatusOr<google::cloud::speech::v1::PhraseSet> UpdatePhraseSet(
-      google::cloud::speech::v1::PhraseSet const& phrase_set,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::cloud::speech::v1::PhraseSet>
+  UpdatePhraseSet(google::cloud::speech::v1::PhraseSet const& phrase_set, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -371,9 +364,8 @@ class AdaptationClient {
   /// [google.cloud.speech.v1.UpdatePhraseSetRequest]: @googleapis_reference_link{google/cloud/speech/v1/cloud_speech_adaptation.proto#L161}
   ///
   // clang-format on
-  StatusOr<google::cloud::speech::v1::PhraseSet> UpdatePhraseSet(
-      google::cloud::speech::v1::UpdatePhraseSetRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::speech::v1::PhraseSet>
+  UpdatePhraseSet(google::cloud::speech::v1::UpdatePhraseSetRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -396,7 +388,8 @@ class AdaptationClient {
   /// [google.cloud.speech.v1.DeletePhraseSetRequest]: @googleapis_reference_link{google/cloud/speech/v1/cloud_speech_adaptation.proto#L242}
   ///
   // clang-format on
-  Status DeletePhraseSet(std::string const& name, Options opts = {});
+  Status
+  DeletePhraseSet(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -422,9 +415,8 @@ class AdaptationClient {
   /// [google.cloud.speech.v1.DeletePhraseSetRequest]: @googleapis_reference_link{google/cloud/speech/v1/cloud_speech_adaptation.proto#L242}
   ///
   // clang-format on
-  Status DeletePhraseSet(
-      google::cloud::speech::v1::DeletePhraseSetRequest const& request,
-      Options opts = {});
+  Status
+  DeletePhraseSet(google::cloud::speech::v1::DeletePhraseSetRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -463,10 +455,8 @@ class AdaptationClient {
   /// [google.cloud.speech.v1.CustomClass]: @googleapis_reference_link{google/cloud/speech/v1/resource.proto#L31}
   ///
   // clang-format on
-  StatusOr<google::cloud::speech::v1::CustomClass> CreateCustomClass(
-      std::string const& parent,
-      google::cloud::speech::v1::CustomClass const& custom_class,
-      std::string const& custom_class_id, Options opts = {});
+  StatusOr<google::cloud::speech::v1::CustomClass>
+  CreateCustomClass(std::string const& parent, google::cloud::speech::v1::CustomClass const& custom_class, std::string const& custom_class_id, Options opts = {});
 
   // clang-format off
   ///
@@ -495,9 +485,8 @@ class AdaptationClient {
   /// [google.cloud.speech.v1.CustomClass]: @googleapis_reference_link{google/cloud/speech/v1/resource.proto#L31}
   ///
   // clang-format on
-  StatusOr<google::cloud::speech::v1::CustomClass> CreateCustomClass(
-      google::cloud::speech::v1::CreateCustomClassRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::speech::v1::CustomClass>
+  CreateCustomClass(google::cloud::speech::v1::CreateCustomClassRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -523,8 +512,8 @@ class AdaptationClient {
   /// [google.cloud.speech.v1.GetCustomClassRequest]: @googleapis_reference_link{google/cloud/speech/v1/cloud_speech_adaptation.proto#L305}
   ///
   // clang-format on
-  StatusOr<google::cloud::speech::v1::CustomClass> GetCustomClass(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::speech::v1::CustomClass>
+  GetCustomClass(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -553,9 +542,8 @@ class AdaptationClient {
   /// [google.cloud.speech.v1.GetCustomClassRequest]: @googleapis_reference_link{google/cloud/speech/v1/cloud_speech_adaptation.proto#L305}
   ///
   // clang-format on
-  StatusOr<google::cloud::speech::v1::CustomClass> GetCustomClass(
-      google::cloud::speech::v1::GetCustomClassRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::speech::v1::CustomClass>
+  GetCustomClass(google::cloud::speech::v1::GetCustomClassRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -596,8 +584,8 @@ class AdaptationClient {
   /// [google.cloud.speech.v1.ListCustomClassesRequest]: @googleapis_reference_link{google/cloud/speech/v1/cloud_speech_adaptation.proto#L318}
   ///
   // clang-format on
-  StreamRange<google::cloud::speech::v1::CustomClass> ListCustomClasses(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::speech::v1::CustomClass>
+  ListCustomClasses(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -635,9 +623,8 @@ class AdaptationClient {
   /// [google.cloud.speech.v1.ListCustomClassesRequest]: @googleapis_reference_link{google/cloud/speech/v1/cloud_speech_adaptation.proto#L318}
   ///
   // clang-format on
-  StreamRange<google::cloud::speech::v1::CustomClass> ListCustomClasses(
-      google::cloud::speech::v1::ListCustomClassesRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::speech::v1::CustomClass>
+  ListCustomClasses(google::cloud::speech::v1::ListCustomClassesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -673,9 +660,8 @@ class AdaptationClient {
   /// [google.cloud.speech.v1.UpdateCustomClassRequest]: @googleapis_reference_link{google/cloud/speech/v1/cloud_speech_adaptation.proto#L285}
   ///
   // clang-format on
-  StatusOr<google::cloud::speech::v1::CustomClass> UpdateCustomClass(
-      google::cloud::speech::v1::CustomClass const& custom_class,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::cloud::speech::v1::CustomClass>
+  UpdateCustomClass(google::cloud::speech::v1::CustomClass const& custom_class, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -704,9 +690,8 @@ class AdaptationClient {
   /// [google.cloud.speech.v1.UpdateCustomClassRequest]: @googleapis_reference_link{google/cloud/speech/v1/cloud_speech_adaptation.proto#L285}
   ///
   // clang-format on
-  StatusOr<google::cloud::speech::v1::CustomClass> UpdateCustomClass(
-      google::cloud::speech::v1::UpdateCustomClassRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::speech::v1::CustomClass>
+  UpdateCustomClass(google::cloud::speech::v1::UpdateCustomClassRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -735,7 +720,8 @@ class AdaptationClient {
   /// [google.cloud.speech.v1.DeleteCustomClassRequest]: @googleapis_reference_link{google/cloud/speech/v1/cloud_speech_adaptation.proto#L360}
   ///
   // clang-format on
-  Status DeleteCustomClass(std::string const& name, Options opts = {});
+  Status
+  DeleteCustomClass(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -761,9 +747,8 @@ class AdaptationClient {
   /// [google.cloud.speech.v1.DeleteCustomClassRequest]: @googleapis_reference_link{google/cloud/speech/v1/cloud_speech_adaptation.proto#L360}
   ///
   // clang-format on
-  Status DeleteCustomClass(
-      google::cloud::speech::v1::DeleteCustomClassRequest const& request,
-      Options opts = {});
+  Status
+  DeleteCustomClass(google::cloud::speech::v1::DeleteCustomClassRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -798,8 +783,8 @@ class AdaptationClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -838,8 +823,8 @@ class AdaptationClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -865,8 +850,8 @@ class AdaptationClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -897,9 +882,8 @@ class AdaptationClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<AdaptationConnection> connection_;

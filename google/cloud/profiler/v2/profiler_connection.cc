@@ -17,16 +17,16 @@
 // source: google/devtools/cloudprofiler/v2/profiler.proto
 
 #include "google/cloud/profiler/v2/profiler_connection.h"
-#include "google/cloud/profiler/v2/internal/profiler_connection_impl.h"
-#include "google/cloud/profiler/v2/internal/profiler_option_defaults.h"
-#include "google/cloud/profiler/v2/internal/profiler_stub_factory.h"
-#include "google/cloud/profiler/v2/internal/profiler_tracing_connection.h"
-#include "google/cloud/profiler/v2/profiler_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/profiler/v2/internal/profiler_connection_impl.h"
+#include "google/cloud/profiler/v2/internal/profiler_option_defaults.h"
+#include "google/cloud/profiler/v2/internal/profiler_stub_factory.h"
+#include "google/cloud/profiler/v2/internal/profiler_tracing_connection.h"
+#include "google/cloud/profiler/v2/profiler_options.h"
 #include <memory>
 #include <utility>
 
@@ -58,18 +58,17 @@ ProfilerServiceConnection::UpdateProfile(
 std::shared_ptr<ProfilerServiceConnection> MakeProfilerServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 ProfilerServicePolicyOptionList>(options,
-                                                                  __func__);
-  options =
-      profiler_v2_internal::ProfilerServiceDefaultOptions(std::move(options));
+      UnifiedCredentialsOptionList,
+      ProfilerServicePolicyOptionList>(options, __func__);
+  options = profiler_v2_internal::ProfilerServiceDefaultOptions(
+      std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = profiler_v2_internal::CreateDefaultProfilerServiceStub(
-      std::move(auth), options);
+    std::move(auth), options);
   return profiler_v2_internal::MakeProfilerServiceTracingConnection(
       std::make_shared<profiler_v2_internal::ProfilerServiceConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options)));
+      std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

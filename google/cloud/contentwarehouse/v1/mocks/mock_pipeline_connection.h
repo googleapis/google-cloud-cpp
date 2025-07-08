@@ -42,8 +42,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockPipelineServiceConnection
-    : public contentwarehouse_v1::PipelineServiceConnection {
+class MockPipelineServiceConnection : public contentwarehouse_v1::PipelineServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
@@ -52,16 +51,12 @@ class MockPipelineServiceConnection
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// RunPipeline(Matcher<google::cloud::contentwarehouse::v1::RunPipelineRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, RunPipeline(Matcher<google::cloud::contentwarehouse::v1::RunPipelineRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<
-          StatusOr<google::cloud::contentwarehouse::v1::RunPipelineResponse>>,
-      RunPipeline,
-      (google::cloud::contentwarehouse::v1::RunPipelineRequest const& request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::contentwarehouse::v1::RunPipelineResponse>>,
+  RunPipeline,
+  (google::cloud::contentwarehouse::v1::RunPipelineRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -69,29 +64,25 @@ class MockPipelineServiceConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, RunPipeline(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, RunPipeline,
-      (NoAwaitTag,
-       google::cloud::contentwarehouse::v1::RunPipelineRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  RunPipeline, (NoAwaitTag,
+    google::cloud::contentwarehouse::v1::RunPipelineRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, RunPipeline(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, RunPipeline(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<
-          StatusOr<google::cloud::contentwarehouse::v1::RunPipelineResponse>>,
-      RunPipeline, (google::longrunning::Operation const& operation),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::contentwarehouse::v1::RunPipelineResponse>>,
+  RunPipeline, (
+    google::longrunning::Operation const& operation), (override));
 
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
-              (google::longrunning::GetOperationRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  GetOperation,
+  (google::longrunning::GetOperationRequest const& request), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

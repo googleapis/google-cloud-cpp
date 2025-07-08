@@ -36,314 +36,250 @@ class CertificateManagerTracingConnection
   ~CertificateManagerTracingConnection() override = default;
 
   explicit CertificateManagerTracingConnection(
-      std::shared_ptr<certificatemanager_v1::CertificateManagerConnection>
-          child);
+    std::shared_ptr<certificatemanager_v1::CertificateManagerConnection> child);
 
   Options options() override { return child_->options(); }
 
   StreamRange<google::cloud::certificatemanager::v1::Certificate>
-  ListCertificates(
-      google::cloud::certificatemanager::v1::ListCertificatesRequest request)
-      override;
+  ListCertificates(google::cloud::certificatemanager::v1::ListCertificatesRequest request) override;
 
-  StatusOr<google::cloud::certificatemanager::v1::Certificate> GetCertificate(
-      google::cloud::certificatemanager::v1::GetCertificateRequest const&
-          request) override;
+  StatusOr<google::cloud::certificatemanager::v1::Certificate>
+  GetCertificate(google::cloud::certificatemanager::v1::GetCertificateRequest const& request) override;
+
+  future<StatusOr<google::cloud::certificatemanager::v1::Certificate>>
+  CreateCertificate(google::cloud::certificatemanager::v1::CreateCertificateRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  CreateCertificate(NoAwaitTag,
+      google::cloud::certificatemanager::v1::CreateCertificateRequest const& request) override;
 
   future<StatusOr<google::cloud::certificatemanager::v1::Certificate>>
   CreateCertificate(
-      google::cloud::certificatemanager::v1::CreateCertificateRequest const&
-          request) override;
-
-  StatusOr<google::longrunning::Operation> CreateCertificate(
-      NoAwaitTag,
-      google::cloud::certificatemanager::v1::CreateCertificateRequest const&
-          request) override;
+      google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::certificatemanager::v1::Certificate>>
-  CreateCertificate(google::longrunning::Operation const& operation) override;
+  UpdateCertificate(google::cloud::certificatemanager::v1::UpdateCertificateRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  UpdateCertificate(NoAwaitTag,
+      google::cloud::certificatemanager::v1::UpdateCertificateRequest const& request) override;
 
   future<StatusOr<google::cloud::certificatemanager::v1::Certificate>>
   UpdateCertificate(
-      google::cloud::certificatemanager::v1::UpdateCertificateRequest const&
-          request) override;
+      google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::longrunning::Operation> UpdateCertificate(
-      NoAwaitTag,
-      google::cloud::certificatemanager::v1::UpdateCertificateRequest const&
-          request) override;
+  future<StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
+  DeleteCertificate(google::cloud::certificatemanager::v1::DeleteCertificateRequest const& request) override;
 
-  future<StatusOr<google::cloud::certificatemanager::v1::Certificate>>
-  UpdateCertificate(google::longrunning::Operation const& operation) override;
+  StatusOr<google::longrunning::Operation>
+  DeleteCertificate(NoAwaitTag,
+      google::cloud::certificatemanager::v1::DeleteCertificateRequest const& request) override;
 
   future<StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
   DeleteCertificate(
-      google::cloud::certificatemanager::v1::DeleteCertificateRequest const&
-          request) override;
-
-  StatusOr<google::longrunning::Operation> DeleteCertificate(
-      NoAwaitTag,
-      google::cloud::certificatemanager::v1::DeleteCertificateRequest const&
-          request) override;
-
-  future<StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
-  DeleteCertificate(google::longrunning::Operation const& operation) override;
+      google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::certificatemanager::v1::CertificateMap>
-  ListCertificateMaps(
-      google::cloud::certificatemanager::v1::ListCertificateMapsRequest request)
-      override;
+  ListCertificateMaps(google::cloud::certificatemanager::v1::ListCertificateMapsRequest request) override;
 
   StatusOr<google::cloud::certificatemanager::v1::CertificateMap>
-  GetCertificateMap(
-      google::cloud::certificatemanager::v1::GetCertificateMapRequest const&
-          request) override;
+  GetCertificateMap(google::cloud::certificatemanager::v1::GetCertificateMapRequest const& request) override;
 
   future<StatusOr<google::cloud::certificatemanager::v1::CertificateMap>>
-  CreateCertificateMap(
-      google::cloud::certificatemanager::v1::CreateCertificateMapRequest const&
-          request) override;
+  CreateCertificateMap(google::cloud::certificatemanager::v1::CreateCertificateMapRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> CreateCertificateMap(
-      NoAwaitTag,
-      google::cloud::certificatemanager::v1::CreateCertificateMapRequest const&
-          request) override;
+  StatusOr<google::longrunning::Operation>
+  CreateCertificateMap(NoAwaitTag,
+      google::cloud::certificatemanager::v1::CreateCertificateMapRequest const& request) override;
 
   future<StatusOr<google::cloud::certificatemanager::v1::CertificateMap>>
   CreateCertificateMap(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::certificatemanager::v1::CertificateMap>>
-  UpdateCertificateMap(
-      google::cloud::certificatemanager::v1::UpdateCertificateMapRequest const&
-          request) override;
+  UpdateCertificateMap(google::cloud::certificatemanager::v1::UpdateCertificateMapRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> UpdateCertificateMap(
-      NoAwaitTag,
-      google::cloud::certificatemanager::v1::UpdateCertificateMapRequest const&
-          request) override;
+  StatusOr<google::longrunning::Operation>
+  UpdateCertificateMap(NoAwaitTag,
+      google::cloud::certificatemanager::v1::UpdateCertificateMapRequest const& request) override;
 
   future<StatusOr<google::cloud::certificatemanager::v1::CertificateMap>>
   UpdateCertificateMap(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
-  DeleteCertificateMap(
-      google::cloud::certificatemanager::v1::DeleteCertificateMapRequest const&
-          request) override;
+  DeleteCertificateMap(google::cloud::certificatemanager::v1::DeleteCertificateMapRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> DeleteCertificateMap(
-      NoAwaitTag,
-      google::cloud::certificatemanager::v1::DeleteCertificateMapRequest const&
-          request) override;
+  StatusOr<google::longrunning::Operation>
+  DeleteCertificateMap(NoAwaitTag,
+      google::cloud::certificatemanager::v1::DeleteCertificateMapRequest const& request) override;
 
   future<StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
   DeleteCertificateMap(
       google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::certificatemanager::v1::CertificateMapEntry>
-  ListCertificateMapEntries(
-      google::cloud::certificatemanager::v1::ListCertificateMapEntriesRequest
-          request) override;
+  ListCertificateMapEntries(google::cloud::certificatemanager::v1::ListCertificateMapEntriesRequest request) override;
 
   StatusOr<google::cloud::certificatemanager::v1::CertificateMapEntry>
-  GetCertificateMapEntry(
-      google::cloud::certificatemanager::v1::
-          GetCertificateMapEntryRequest const& request) override;
+  GetCertificateMapEntry(google::cloud::certificatemanager::v1::GetCertificateMapEntryRequest const& request) override;
 
   future<StatusOr<google::cloud::certificatemanager::v1::CertificateMapEntry>>
-  CreateCertificateMapEntry(
-      google::cloud::certificatemanager::v1::
-          CreateCertificateMapEntryRequest const& request) override;
+  CreateCertificateMapEntry(google::cloud::certificatemanager::v1::CreateCertificateMapEntryRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> CreateCertificateMapEntry(
-      NoAwaitTag, google::cloud::certificatemanager::v1::
-                      CreateCertificateMapEntryRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  CreateCertificateMapEntry(NoAwaitTag,
+      google::cloud::certificatemanager::v1::CreateCertificateMapEntryRequest const& request) override;
 
   future<StatusOr<google::cloud::certificatemanager::v1::CertificateMapEntry>>
   CreateCertificateMapEntry(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::certificatemanager::v1::CertificateMapEntry>>
-  UpdateCertificateMapEntry(
-      google::cloud::certificatemanager::v1::
-          UpdateCertificateMapEntryRequest const& request) override;
+  UpdateCertificateMapEntry(google::cloud::certificatemanager::v1::UpdateCertificateMapEntryRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> UpdateCertificateMapEntry(
-      NoAwaitTag, google::cloud::certificatemanager::v1::
-                      UpdateCertificateMapEntryRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  UpdateCertificateMapEntry(NoAwaitTag,
+      google::cloud::certificatemanager::v1::UpdateCertificateMapEntryRequest const& request) override;
 
   future<StatusOr<google::cloud::certificatemanager::v1::CertificateMapEntry>>
   UpdateCertificateMapEntry(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
-  DeleteCertificateMapEntry(
-      google::cloud::certificatemanager::v1::
-          DeleteCertificateMapEntryRequest const& request) override;
+  DeleteCertificateMapEntry(google::cloud::certificatemanager::v1::DeleteCertificateMapEntryRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> DeleteCertificateMapEntry(
-      NoAwaitTag, google::cloud::certificatemanager::v1::
-                      DeleteCertificateMapEntryRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  DeleteCertificateMapEntry(NoAwaitTag,
+      google::cloud::certificatemanager::v1::DeleteCertificateMapEntryRequest const& request) override;
 
   future<StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
   DeleteCertificateMapEntry(
       google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::certificatemanager::v1::DnsAuthorization>
-  ListDnsAuthorizations(
-      google::cloud::certificatemanager::v1::ListDnsAuthorizationsRequest
-          request) override;
+  ListDnsAuthorizations(google::cloud::certificatemanager::v1::ListDnsAuthorizationsRequest request) override;
 
   StatusOr<google::cloud::certificatemanager::v1::DnsAuthorization>
-  GetDnsAuthorization(
-      google::cloud::certificatemanager::v1::GetDnsAuthorizationRequest const&
-          request) override;
+  GetDnsAuthorization(google::cloud::certificatemanager::v1::GetDnsAuthorizationRequest const& request) override;
 
   future<StatusOr<google::cloud::certificatemanager::v1::DnsAuthorization>>
-  CreateDnsAuthorization(
-      google::cloud::certificatemanager::v1::
-          CreateDnsAuthorizationRequest const& request) override;
+  CreateDnsAuthorization(google::cloud::certificatemanager::v1::CreateDnsAuthorizationRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> CreateDnsAuthorization(
-      NoAwaitTag, google::cloud::certificatemanager::v1::
-                      CreateDnsAuthorizationRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  CreateDnsAuthorization(NoAwaitTag,
+      google::cloud::certificatemanager::v1::CreateDnsAuthorizationRequest const& request) override;
 
   future<StatusOr<google::cloud::certificatemanager::v1::DnsAuthorization>>
   CreateDnsAuthorization(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::certificatemanager::v1::DnsAuthorization>>
-  UpdateDnsAuthorization(
-      google::cloud::certificatemanager::v1::
-          UpdateDnsAuthorizationRequest const& request) override;
+  UpdateDnsAuthorization(google::cloud::certificatemanager::v1::UpdateDnsAuthorizationRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> UpdateDnsAuthorization(
-      NoAwaitTag, google::cloud::certificatemanager::v1::
-                      UpdateDnsAuthorizationRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  UpdateDnsAuthorization(NoAwaitTag,
+      google::cloud::certificatemanager::v1::UpdateDnsAuthorizationRequest const& request) override;
 
   future<StatusOr<google::cloud::certificatemanager::v1::DnsAuthorization>>
   UpdateDnsAuthorization(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
-  DeleteDnsAuthorization(
-      google::cloud::certificatemanager::v1::
-          DeleteDnsAuthorizationRequest const& request) override;
+  DeleteDnsAuthorization(google::cloud::certificatemanager::v1::DeleteDnsAuthorizationRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> DeleteDnsAuthorization(
-      NoAwaitTag, google::cloud::certificatemanager::v1::
-                      DeleteDnsAuthorizationRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  DeleteDnsAuthorization(NoAwaitTag,
+      google::cloud::certificatemanager::v1::DeleteDnsAuthorizationRequest const& request) override;
 
   future<StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
   DeleteDnsAuthorization(
       google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::certificatemanager::v1::CertificateIssuanceConfig>
-  ListCertificateIssuanceConfigs(
-      google::cloud::certificatemanager::v1::
-          ListCertificateIssuanceConfigsRequest request) override;
+  ListCertificateIssuanceConfigs(google::cloud::certificatemanager::v1::ListCertificateIssuanceConfigsRequest request) override;
 
   StatusOr<google::cloud::certificatemanager::v1::CertificateIssuanceConfig>
-  GetCertificateIssuanceConfig(
-      google::cloud::certificatemanager::v1::
-          GetCertificateIssuanceConfigRequest const& request) override;
+  GetCertificateIssuanceConfig(google::cloud::certificatemanager::v1::GetCertificateIssuanceConfigRequest const& request) override;
 
-  future<StatusOr<
-      google::cloud::certificatemanager::v1::CertificateIssuanceConfig>>
-  CreateCertificateIssuanceConfig(
-      google::cloud::certificatemanager::v1::
-          CreateCertificateIssuanceConfigRequest const& request) override;
+  future<StatusOr<google::cloud::certificatemanager::v1::CertificateIssuanceConfig>>
+  CreateCertificateIssuanceConfig(google::cloud::certificatemanager::v1::CreateCertificateIssuanceConfigRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> CreateCertificateIssuanceConfig(
-      NoAwaitTag,
-      google::cloud::certificatemanager::v1::
-          CreateCertificateIssuanceConfigRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  CreateCertificateIssuanceConfig(NoAwaitTag,
+      google::cloud::certificatemanager::v1::CreateCertificateIssuanceConfigRequest const& request) override;
 
-  future<StatusOr<
-      google::cloud::certificatemanager::v1::CertificateIssuanceConfig>>
+  future<StatusOr<google::cloud::certificatemanager::v1::CertificateIssuanceConfig>>
   CreateCertificateIssuanceConfig(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
-  DeleteCertificateIssuanceConfig(
-      google::cloud::certificatemanager::v1::
-          DeleteCertificateIssuanceConfigRequest const& request) override;
+  DeleteCertificateIssuanceConfig(google::cloud::certificatemanager::v1::DeleteCertificateIssuanceConfigRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> DeleteCertificateIssuanceConfig(
-      NoAwaitTag,
-      google::cloud::certificatemanager::v1::
-          DeleteCertificateIssuanceConfigRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  DeleteCertificateIssuanceConfig(NoAwaitTag,
+      google::cloud::certificatemanager::v1::DeleteCertificateIssuanceConfigRequest const& request) override;
 
   future<StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
   DeleteCertificateIssuanceConfig(
       google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::certificatemanager::v1::TrustConfig>
-  ListTrustConfigs(
-      google::cloud::certificatemanager::v1::ListTrustConfigsRequest request)
-      override;
+  ListTrustConfigs(google::cloud::certificatemanager::v1::ListTrustConfigsRequest request) override;
 
-  StatusOr<google::cloud::certificatemanager::v1::TrustConfig> GetTrustConfig(
-      google::cloud::certificatemanager::v1::GetTrustConfigRequest const&
-          request) override;
+  StatusOr<google::cloud::certificatemanager::v1::TrustConfig>
+  GetTrustConfig(google::cloud::certificatemanager::v1::GetTrustConfigRequest const& request) override;
+
+  future<StatusOr<google::cloud::certificatemanager::v1::TrustConfig>>
+  CreateTrustConfig(google::cloud::certificatemanager::v1::CreateTrustConfigRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  CreateTrustConfig(NoAwaitTag,
+      google::cloud::certificatemanager::v1::CreateTrustConfigRequest const& request) override;
 
   future<StatusOr<google::cloud::certificatemanager::v1::TrustConfig>>
   CreateTrustConfig(
-      google::cloud::certificatemanager::v1::CreateTrustConfigRequest const&
-          request) override;
-
-  StatusOr<google::longrunning::Operation> CreateTrustConfig(
-      NoAwaitTag,
-      google::cloud::certificatemanager::v1::CreateTrustConfigRequest const&
-          request) override;
+      google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::certificatemanager::v1::TrustConfig>>
-  CreateTrustConfig(google::longrunning::Operation const& operation) override;
+  UpdateTrustConfig(google::cloud::certificatemanager::v1::UpdateTrustConfigRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  UpdateTrustConfig(NoAwaitTag,
+      google::cloud::certificatemanager::v1::UpdateTrustConfigRequest const& request) override;
 
   future<StatusOr<google::cloud::certificatemanager::v1::TrustConfig>>
   UpdateTrustConfig(
-      google::cloud::certificatemanager::v1::UpdateTrustConfigRequest const&
-          request) override;
+      google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::longrunning::Operation> UpdateTrustConfig(
-      NoAwaitTag,
-      google::cloud::certificatemanager::v1::UpdateTrustConfigRequest const&
-          request) override;
+  future<StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
+  DeleteTrustConfig(google::cloud::certificatemanager::v1::DeleteTrustConfigRequest const& request) override;
 
-  future<StatusOr<google::cloud::certificatemanager::v1::TrustConfig>>
-  UpdateTrustConfig(google::longrunning::Operation const& operation) override;
+  StatusOr<google::longrunning::Operation>
+  DeleteTrustConfig(NoAwaitTag,
+      google::cloud::certificatemanager::v1::DeleteTrustConfigRequest const& request) override;
 
   future<StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
   DeleteTrustConfig(
-      google::cloud::certificatemanager::v1::DeleteTrustConfigRequest const&
-          request) override;
+      google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::longrunning::Operation> DeleteTrustConfig(
-      NoAwaitTag,
-      google::cloud::certificatemanager::v1::DeleteTrustConfigRequest const&
-          request) override;
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request) override;
 
-  future<StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
-  DeleteTrustConfig(google::longrunning::Operation const& operation) override;
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request) override;
 
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request) override;
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request) override;
+  Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request) override;
-
-  Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request) override;
-
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request) override;
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::shared_ptr<certificatemanager_v1::CertificateManagerConnection> child_;

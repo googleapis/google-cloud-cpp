@@ -32,7 +32,8 @@ RuleServiceAuth::RuleServiceAuth(
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
 StatusOr<google::cloud::chronicle::v1::Rule> RuleServiceAuth::CreateRule(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::chronicle::v1::CreateRuleRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -40,16 +41,17 @@ StatusOr<google::cloud::chronicle::v1::Rule> RuleServiceAuth::CreateRule(
 }
 
 StatusOr<google::cloud::chronicle::v1::Rule> RuleServiceAuth::GetRule(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::chronicle::v1::GetRuleRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetRule(context, options, request);
 }
 
-StatusOr<google::cloud::chronicle::v1::ListRulesResponse>
-RuleServiceAuth::ListRules(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::chronicle::v1::ListRulesResponse> RuleServiceAuth::ListRules(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::chronicle::v1::ListRulesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -57,7 +59,8 @@ RuleServiceAuth::ListRules(
 }
 
 StatusOr<google::cloud::chronicle::v1::Rule> RuleServiceAuth::UpdateRule(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::chronicle::v1::UpdateRuleRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -65,16 +68,17 @@ StatusOr<google::cloud::chronicle::v1::Rule> RuleServiceAuth::UpdateRule(
 }
 
 Status RuleServiceAuth::DeleteRule(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::chronicle::v1::DeleteRuleRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteRule(context, options, request);
 }
 
-StatusOr<google::cloud::chronicle::v1::ListRuleRevisionsResponse>
-RuleServiceAuth::ListRuleRevisions(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::chronicle::v1::ListRuleRevisionsResponse> RuleServiceAuth::ListRuleRevisions(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::chronicle::v1::ListRuleRevisionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -83,79 +87,81 @@ RuleServiceAuth::ListRuleRevisions(
 
 future<StatusOr<google::longrunning::Operation>>
 RuleServiceAuth::AsyncCreateRetrohunt(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::chronicle::v1::CreateRetrohuntRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::chronicle::v1::CreateRetrohuntRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreateRetrohunt(cq, *std::move(context),
-                                           std::move(options), request);
+        return child->AsyncCreateRetrohunt(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation> RuleServiceAuth::CreateRetrohunt(
-    grpc::ClientContext& context, Options options,
-    google::cloud::chronicle::v1::CreateRetrohuntRequest const& request) {
+StatusOr<google::longrunning::Operation>
+RuleServiceAuth::CreateRetrohunt(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::chronicle::v1::CreateRetrohuntRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateRetrohunt(context, options, request);
 }
 
 StatusOr<google::cloud::chronicle::v1::Retrohunt> RuleServiceAuth::GetRetrohunt(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::chronicle::v1::GetRetrohuntRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetRetrohunt(context, options, request);
 }
 
-StatusOr<google::cloud::chronicle::v1::ListRetrohuntsResponse>
-RuleServiceAuth::ListRetrohunts(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::chronicle::v1::ListRetrohuntsResponse> RuleServiceAuth::ListRetrohunts(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::chronicle::v1::ListRetrohuntsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListRetrohunts(context, options, request);
 }
 
-StatusOr<google::cloud::chronicle::v1::RuleDeployment>
-RuleServiceAuth::GetRuleDeployment(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::chronicle::v1::RuleDeployment> RuleServiceAuth::GetRuleDeployment(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::chronicle::v1::GetRuleDeploymentRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetRuleDeployment(context, options, request);
 }
 
-StatusOr<google::cloud::chronicle::v1::ListRuleDeploymentsResponse>
-RuleServiceAuth::ListRuleDeployments(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::chronicle::v1::ListRuleDeploymentsResponse> RuleServiceAuth::ListRuleDeployments(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::chronicle::v1::ListRuleDeploymentsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListRuleDeployments(context, options, request);
 }
 
-StatusOr<google::cloud::chronicle::v1::RuleDeployment>
-RuleServiceAuth::UpdateRuleDeployment(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::chronicle::v1::RuleDeployment> RuleServiceAuth::UpdateRuleDeployment(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::chronicle::v1::UpdateRuleDeploymentRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateRuleDeployment(context, options, request);
 }
 
-StatusOr<google::longrunning::ListOperationsResponse>
-RuleServiceAuth::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse> RuleServiceAuth::ListOperations(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -163,7 +169,8 @@ RuleServiceAuth::ListOperations(
 }
 
 StatusOr<google::longrunning::Operation> RuleServiceAuth::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -171,7 +178,8 @@ StatusOr<google::longrunning::Operation> RuleServiceAuth::GetOperation(
 }
 
 Status RuleServiceAuth::DeleteOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -179,7 +187,8 @@ Status RuleServiceAuth::DeleteOperation(
 }
 
 Status RuleServiceAuth::CancelOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -193,16 +202,15 @@ RuleServiceAuth::AsyncGetOperation(
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncGetOperation(cq, *std::move(context),
-                                        std::move(options), request);
+        return child->AsyncGetOperation(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
@@ -211,14 +219,13 @@ future<Status> RuleServiceAuth::AsyncCancelOperation(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) return make_ready_future(std::move(context).status());
-        return child->AsyncCancelOperation(cq, *std::move(context),
-                                           std::move(options), request);
+        return child->AsyncCancelOperation(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 

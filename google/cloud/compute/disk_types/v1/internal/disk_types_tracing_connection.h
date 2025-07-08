@@ -36,22 +36,18 @@ class DiskTypesTracingConnection
   ~DiskTypesTracingConnection() override = default;
 
   explicit DiskTypesTracingConnection(
-      std::shared_ptr<compute_disk_types_v1::DiskTypesConnection> child);
+    std::shared_ptr<compute_disk_types_v1::DiskTypesConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StreamRange<std::pair<std::string,
-                        google::cloud::cpp::compute::v1::DiskTypesScopedList>>
-  AggregatedListDiskTypes(google::cloud::cpp::compute::disk_types::v1::
-                              AggregatedListDiskTypesRequest request) override;
+  StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::DiskTypesScopedList>>
+  AggregatedListDiskTypes(google::cloud::cpp::compute::disk_types::v1::AggregatedListDiskTypesRequest request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::DiskType> GetDiskType(
-      google::cloud::cpp::compute::disk_types::v1::GetDiskTypeRequest const&
-          request) override;
+  StatusOr<google::cloud::cpp::compute::v1::DiskType>
+  GetDiskType(google::cloud::cpp::compute::disk_types::v1::GetDiskTypeRequest const& request) override;
 
-  StreamRange<google::cloud::cpp::compute::v1::DiskType> ListDiskTypes(
-      google::cloud::cpp::compute::disk_types::v1::ListDiskTypesRequest request)
-      override;
+  StreamRange<google::cloud::cpp::compute::v1::DiskType>
+  ListDiskTypes(google::cloud::cpp::compute::disk_types::v1::ListDiskTypesRequest request) override;
 
  private:
   std::shared_ptr<compute_disk_types_v1::DiskTypesConnection> child_;

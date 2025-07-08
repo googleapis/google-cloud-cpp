@@ -36,15 +36,15 @@ class CloudCatalogTracingConnection
   ~CloudCatalogTracingConnection() override = default;
 
   explicit CloudCatalogTracingConnection(
-      std::shared_ptr<billing_v1::CloudCatalogConnection> child);
+    std::shared_ptr<billing_v1::CloudCatalogConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StreamRange<google::cloud::billing::v1::Service> ListServices(
-      google::cloud::billing::v1::ListServicesRequest request) override;
+  StreamRange<google::cloud::billing::v1::Service>
+  ListServices(google::cloud::billing::v1::ListServicesRequest request) override;
 
-  StreamRange<google::cloud::billing::v1::Sku> ListSkus(
-      google::cloud::billing::v1::ListSkusRequest request) override;
+  StreamRange<google::cloud::billing::v1::Sku>
+  ListSkus(google::cloud::billing::v1::ListSkusRequest request) override;
 
  private:
   std::shared_ptr<billing_v1::CloudCatalogConnection> child_;

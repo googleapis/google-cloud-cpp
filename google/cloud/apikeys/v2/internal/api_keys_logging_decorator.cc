@@ -30,55 +30,67 @@ namespace cloud {
 namespace apikeys_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-ApiKeysLogging::ApiKeysLogging(std::shared_ptr<ApiKeysStub> child,
-                               TracingOptions tracing_options,
-                               std::set<std::string> const&)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
+ApiKeysLogging::ApiKeysLogging(
+    std::shared_ptr<ApiKeysStub> child,
+    TracingOptions tracing_options,
+    std::set<std::string> const&)
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)) {}
 
-future<StatusOr<google::longrunning::Operation>> ApiKeysLogging::AsyncCreateKey(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::api::apikeys::v2::CreateKeyRequest const& request) {
+future<StatusOr<google::longrunning::Operation>>
+ApiKeysLogging::AsyncCreateKey(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::api::apikeys::v2::CreateKeyRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::api::apikeys::v2::CreateKeyRequest const& request) {
-        return child_->AsyncCreateKey(cq, std::move(context),
-                                      std::move(options), request);
+        return child_->AsyncCreateKey(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> ApiKeysLogging::CreateKey(
-    grpc::ClientContext& context, Options options,
-    google::api::apikeys::v2::CreateKeyRequest const& request) {
+StatusOr<google::longrunning::Operation>
+ApiKeysLogging::CreateKey(
+      grpc::ClientContext& context,
+      Options options,
+      google::api::apikeys::v2::CreateKeyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::api::apikeys::v2::CreateKeyRequest const& request) {
         return child_->CreateKey(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::api::apikeys::v2::ListKeysResponse> ApiKeysLogging::ListKeys(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::api::apikeys::v2::ListKeysResponse>
+ApiKeysLogging::ListKeys(
+    grpc::ClientContext& context,
+    Options const& options,
     google::api::apikeys::v2::ListKeysRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::api::apikeys::v2::ListKeysRequest const& request) {
         return child_->ListKeys(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::api::apikeys::v2::Key> ApiKeysLogging::GetKey(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::api::apikeys::v2::Key>
+ApiKeysLogging::GetKey(
+    grpc::ClientContext& context,
+    Options const& options,
     google::api::apikeys::v2::GetKeyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::api::apikeys::v2::GetKeyRequest const& request) {
         return child_->GetKey(context, options, request);
       },
@@ -87,66 +99,76 @@ StatusOr<google::api::apikeys::v2::Key> ApiKeysLogging::GetKey(
 
 StatusOr<google::api::apikeys::v2::GetKeyStringResponse>
 ApiKeysLogging::GetKeyString(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::api::apikeys::v2::GetKeyStringRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::api::apikeys::v2::GetKeyStringRequest const& request) {
         return child_->GetKeyString(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-future<StatusOr<google::longrunning::Operation>> ApiKeysLogging::AsyncUpdateKey(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::api::apikeys::v2::UpdateKeyRequest const& request) {
+future<StatusOr<google::longrunning::Operation>>
+ApiKeysLogging::AsyncUpdateKey(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::api::apikeys::v2::UpdateKeyRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::api::apikeys::v2::UpdateKeyRequest const& request) {
-        return child_->AsyncUpdateKey(cq, std::move(context),
-                                      std::move(options), request);
+        return child_->AsyncUpdateKey(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> ApiKeysLogging::UpdateKey(
-    grpc::ClientContext& context, Options options,
-    google::api::apikeys::v2::UpdateKeyRequest const& request) {
+StatusOr<google::longrunning::Operation>
+ApiKeysLogging::UpdateKey(
+      grpc::ClientContext& context,
+      Options options,
+      google::api::apikeys::v2::UpdateKeyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::api::apikeys::v2::UpdateKeyRequest const& request) {
         return child_->UpdateKey(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-future<StatusOr<google::longrunning::Operation>> ApiKeysLogging::AsyncDeleteKey(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::api::apikeys::v2::DeleteKeyRequest const& request) {
+future<StatusOr<google::longrunning::Operation>>
+ApiKeysLogging::AsyncDeleteKey(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::api::apikeys::v2::DeleteKeyRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::api::apikeys::v2::DeleteKeyRequest const& request) {
-        return child_->AsyncDeleteKey(cq, std::move(context),
-                                      std::move(options), request);
+        return child_->AsyncDeleteKey(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> ApiKeysLogging::DeleteKey(
-    grpc::ClientContext& context, Options options,
-    google::api::apikeys::v2::DeleteKeyRequest const& request) {
+StatusOr<google::longrunning::Operation>
+ApiKeysLogging::DeleteKey(
+      grpc::ClientContext& context,
+      Options options,
+      google::api::apikeys::v2::DeleteKeyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::api::apikeys::v2::DeleteKeyRequest const& request) {
         return child_->DeleteKey(context, options, request);
       },
@@ -155,49 +177,58 @@ StatusOr<google::longrunning::Operation> ApiKeysLogging::DeleteKey(
 
 future<StatusOr<google::longrunning::Operation>>
 ApiKeysLogging::AsyncUndeleteKey(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::api::apikeys::v2::UndeleteKeyRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::api::apikeys::v2::UndeleteKeyRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::api::apikeys::v2::UndeleteKeyRequest const& request) {
-        return child_->AsyncUndeleteKey(cq, std::move(context),
-                                        std::move(options), request);
+        return child_->AsyncUndeleteKey(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> ApiKeysLogging::UndeleteKey(
-    grpc::ClientContext& context, Options options,
-    google::api::apikeys::v2::UndeleteKeyRequest const& request) {
+StatusOr<google::longrunning::Operation>
+ApiKeysLogging::UndeleteKey(
+      grpc::ClientContext& context,
+      Options options,
+      google::api::apikeys::v2::UndeleteKeyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::api::apikeys::v2::UndeleteKeyRequest const& request) {
         return child_->UndeleteKey(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::api::apikeys::v2::LookupKeyResponse> ApiKeysLogging::LookupKey(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::api::apikeys::v2::LookupKeyResponse>
+ApiKeysLogging::LookupKey(
+    grpc::ClientContext& context,
+    Options const& options,
     google::api::apikeys::v2::LookupKeyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::api::apikeys::v2::LookupKeyRequest const& request) {
         return child_->LookupKey(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> ApiKeysLogging::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::Operation>
+ApiKeysLogging::GetOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::GetOperationRequest const& request) {
         return child_->GetOperation(context, options, request);
       },
@@ -215,8 +246,8 @@ ApiKeysLogging::AsyncGetOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(cq, std::move(context),
-                                         std::move(options), request);
+        return child_->AsyncGetOperation(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -232,8 +263,8 @@ future<Status> ApiKeysLogging::AsyncCancelOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::CancelOperationRequest const& request) {
-        return child_->AsyncCancelOperation(cq, std::move(context),
-                                            std::move(options), request);
+        return child_->AsyncCancelOperation(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);

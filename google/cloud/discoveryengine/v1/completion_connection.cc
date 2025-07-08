@@ -17,14 +17,14 @@
 // source: google/cloud/discoveryengine/v1/completion_service.proto
 
 #include "google/cloud/discoveryengine/v1/completion_connection.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/discoveryengine/v1/completion_options.h"
 #include "google/cloud/discoveryengine/v1/internal/completion_connection_impl.h"
 #include "google/cloud/discoveryengine/v1/internal/completion_option_defaults.h"
 #include "google/cloud/discoveryengine/v1/internal/completion_stub_factory.h"
 #include "google/cloud/discoveryengine/v1/internal/completion_tracing_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
-#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
@@ -44,122 +44,104 @@ CompletionServiceConnection::CompleteQuery(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-future<StatusOr<google::cloud::discoveryengine::v1::
-                    ImportSuggestionDenyListEntriesResponse>>
+future<StatusOr<google::cloud::discoveryengine::v1::ImportSuggestionDenyListEntriesResponse>>
 CompletionServiceConnection::ImportSuggestionDenyListEntries(
-    google::cloud::discoveryengine::v1::
-        ImportSuggestionDenyListEntriesRequest const&) {
+    google::cloud::discoveryengine::v1::ImportSuggestionDenyListEntriesRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::discoveryengine::v1::
-                   ImportSuggestionDenyListEntriesResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::discoveryengine::v1::ImportSuggestionDenyListEntriesResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 CompletionServiceConnection::ImportSuggestionDenyListEntries(
-    NoAwaitTag, google::cloud::discoveryengine::v1::
-                    ImportSuggestionDenyListEntriesRequest const&) {
+    NoAwaitTag,
+    google::cloud::discoveryengine::v1::ImportSuggestionDenyListEntriesRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<StatusOr<google::cloud::discoveryengine::v1::
-                    ImportSuggestionDenyListEntriesResponse>>
+future<StatusOr<google::cloud::discoveryengine::v1::ImportSuggestionDenyListEntriesResponse>>
 CompletionServiceConnection::ImportSuggestionDenyListEntries(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::discoveryengine::v1::
-                   ImportSuggestionDenyListEntriesResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::discoveryengine::v1::ImportSuggestionDenyListEntriesResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<StatusOr<
-    google::cloud::discoveryengine::v1::PurgeSuggestionDenyListEntriesResponse>>
+future<StatusOr<google::cloud::discoveryengine::v1::PurgeSuggestionDenyListEntriesResponse>>
 CompletionServiceConnection::PurgeSuggestionDenyListEntries(
-    google::cloud::discoveryengine::v1::
-        PurgeSuggestionDenyListEntriesRequest const&) {
+    google::cloud::discoveryengine::v1::PurgeSuggestionDenyListEntriesRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::discoveryengine::v1::
-                   PurgeSuggestionDenyListEntriesResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::discoveryengine::v1::PurgeSuggestionDenyListEntriesResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 CompletionServiceConnection::PurgeSuggestionDenyListEntries(
-    NoAwaitTag, google::cloud::discoveryengine::v1::
-                    PurgeSuggestionDenyListEntriesRequest const&) {
+    NoAwaitTag,
+    google::cloud::discoveryengine::v1::PurgeSuggestionDenyListEntriesRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<StatusOr<
-    google::cloud::discoveryengine::v1::PurgeSuggestionDenyListEntriesResponse>>
+future<StatusOr<google::cloud::discoveryengine::v1::PurgeSuggestionDenyListEntriesResponse>>
 CompletionServiceConnection::PurgeSuggestionDenyListEntries(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::discoveryengine::v1::
-                   PurgeSuggestionDenyListEntriesResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::discoveryengine::v1::PurgeSuggestionDenyListEntriesResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<StatusOr<
-    google::cloud::discoveryengine::v1::ImportCompletionSuggestionsResponse>>
+future<StatusOr<google::cloud::discoveryengine::v1::ImportCompletionSuggestionsResponse>>
 CompletionServiceConnection::ImportCompletionSuggestions(
-    google::cloud::discoveryengine::v1::
-        ImportCompletionSuggestionsRequest const&) {
-  return google::cloud::make_ready_future<StatusOr<
-      google::cloud::discoveryengine::v1::ImportCompletionSuggestionsResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    google::cloud::discoveryengine::v1::ImportCompletionSuggestionsRequest const&) {
+  return google::cloud::make_ready_future<
+    StatusOr<google::cloud::discoveryengine::v1::ImportCompletionSuggestionsResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 CompletionServiceConnection::ImportCompletionSuggestions(
-    NoAwaitTag, google::cloud::discoveryengine::v1::
-                    ImportCompletionSuggestionsRequest const&) {
+    NoAwaitTag,
+    google::cloud::discoveryengine::v1::ImportCompletionSuggestionsRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<StatusOr<
-    google::cloud::discoveryengine::v1::ImportCompletionSuggestionsResponse>>
+future<StatusOr<google::cloud::discoveryengine::v1::ImportCompletionSuggestionsResponse>>
 CompletionServiceConnection::ImportCompletionSuggestions(
     google::longrunning::Operation const&) {
-  return google::cloud::make_ready_future<StatusOr<
-      google::cloud::discoveryengine::v1::ImportCompletionSuggestionsResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+  return google::cloud::make_ready_future<
+    StatusOr<google::cloud::discoveryengine::v1::ImportCompletionSuggestionsResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<StatusOr<
-    google::cloud::discoveryengine::v1::PurgeCompletionSuggestionsResponse>>
+future<StatusOr<google::cloud::discoveryengine::v1::PurgeCompletionSuggestionsResponse>>
 CompletionServiceConnection::PurgeCompletionSuggestions(
-    google::cloud::discoveryengine::v1::
-        PurgeCompletionSuggestionsRequest const&) {
-  return google::cloud::make_ready_future<StatusOr<
-      google::cloud::discoveryengine::v1::PurgeCompletionSuggestionsResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    google::cloud::discoveryengine::v1::PurgeCompletionSuggestionsRequest const&) {
+  return google::cloud::make_ready_future<
+    StatusOr<google::cloud::discoveryengine::v1::PurgeCompletionSuggestionsResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 CompletionServiceConnection::PurgeCompletionSuggestions(
-    NoAwaitTag, google::cloud::discoveryengine::v1::
-                    PurgeCompletionSuggestionsRequest const&) {
+    NoAwaitTag,
+    google::cloud::discoveryengine::v1::PurgeCompletionSuggestionsRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<StatusOr<
-    google::cloud::discoveryengine::v1::PurgeCompletionSuggestionsResponse>>
+future<StatusOr<google::cloud::discoveryengine::v1::PurgeCompletionSuggestionsResponse>>
 CompletionServiceConnection::PurgeCompletionSuggestions(
     google::longrunning::Operation const&) {
-  return google::cloud::make_ready_future<StatusOr<
-      google::cloud::discoveryengine::v1::PurgeCompletionSuggestionsResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+  return google::cloud::make_ready_future<
+    StatusOr<google::cloud::discoveryengine::v1::PurgeCompletionSuggestionsResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StreamRange<google::longrunning::Operation>
-CompletionServiceConnection::ListOperations(
-    google::longrunning::
-        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::longrunning::Operation> CompletionServiceConnection::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }
@@ -170,7 +152,8 @@ CompletionServiceConnection::GetOperation(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status CompletionServiceConnection::CancelOperation(
+Status
+CompletionServiceConnection::CancelOperation(
     google::longrunning::CancelOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -178,19 +161,17 @@ Status CompletionServiceConnection::CancelOperation(
 std::shared_ptr<CompletionServiceConnection> MakeCompletionServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 CompletionServicePolicyOptionList>(options,
-                                                                    __func__);
+      UnifiedCredentialsOptionList,
+      CompletionServicePolicyOptionList>(options, __func__);
   options = discoveryengine_v1_internal::CompletionServiceDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = discoveryengine_v1_internal::CreateDefaultCompletionServiceStub(
-      std::move(auth), options);
+    std::move(auth), options);
   return discoveryengine_v1_internal::MakeCompletionServiceTracingConnection(
-      std::make_shared<
-          discoveryengine_v1_internal::CompletionServiceConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options)));
+      std::make_shared<discoveryengine_v1_internal::CompletionServiceConnectionImpl>(
+      std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

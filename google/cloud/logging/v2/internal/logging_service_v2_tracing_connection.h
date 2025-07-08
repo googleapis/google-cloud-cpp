@@ -36,44 +36,41 @@ class LoggingServiceV2TracingConnection
   ~LoggingServiceV2TracingConnection() override = default;
 
   explicit LoggingServiceV2TracingConnection(
-      std::shared_ptr<logging_v2::LoggingServiceV2Connection> child);
+    std::shared_ptr<logging_v2::LoggingServiceV2Connection> child);
 
   Options options() override { return child_->options(); }
 
-  Status DeleteLog(
-      google::logging::v2::DeleteLogRequest const& request) override;
+  Status
+  DeleteLog(google::logging::v2::DeleteLogRequest const& request) override;
 
-  StatusOr<google::logging::v2::WriteLogEntriesResponse> WriteLogEntries(
-      google::logging::v2::WriteLogEntriesRequest const& request) override;
+  StatusOr<google::logging::v2::WriteLogEntriesResponse>
+  WriteLogEntries(google::logging::v2::WriteLogEntriesRequest const& request) override;
 
-  StreamRange<google::logging::v2::LogEntry> ListLogEntries(
-      google::logging::v2::ListLogEntriesRequest request) override;
+  StreamRange<google::logging::v2::LogEntry>
+  ListLogEntries(google::logging::v2::ListLogEntriesRequest request) override;
 
   StreamRange<google::api::MonitoredResourceDescriptor>
-  ListMonitoredResourceDescriptors(
-      google::logging::v2::ListMonitoredResourceDescriptorsRequest request)
-      override;
+  ListMonitoredResourceDescriptors(google::logging::v2::ListMonitoredResourceDescriptorsRequest request) override;
 
-  StreamRange<std::string> ListLogs(
-      google::logging::v2::ListLogsRequest request) override;
+  StreamRange<std::string>
+  ListLogs(google::logging::v2::ListLogsRequest request) override;
 
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::logging::v2::TailLogEntriesRequest,
       google::logging::v2::TailLogEntriesResponse>>
   AsyncTailLogEntries() override;
 
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request) override;
 
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request) override;
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
 
   future<StatusOr<google::logging::v2::WriteLogEntriesResponse>>
-  AsyncWriteLogEntries(
-      google::logging::v2::WriteLogEntriesRequest const& request) override;
+  AsyncWriteLogEntries(google::logging::v2::WriteLogEntriesRequest const& request) override;
 
  private:
   std::shared_ptr<logging_v2::LoggingServiceV2Connection> child_;

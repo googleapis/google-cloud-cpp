@@ -34,46 +34,41 @@ class NotificationChannelServiceConnectionIdempotencyPolicy {
   virtual ~NotificationChannelServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<NotificationChannelServiceConnectionIdempotencyPolicy>
-  clone() const;
+  virtual std::unique_ptr<NotificationChannelServiceConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency ListNotificationChannelDescriptors(
-      google::monitoring::v3::ListNotificationChannelDescriptorsRequest
-          request);
+  virtual google::cloud::Idempotency
+  ListNotificationChannelDescriptors(google::monitoring::v3::ListNotificationChannelDescriptorsRequest request);
 
-  virtual google::cloud::Idempotency GetNotificationChannelDescriptor(
-      google::monitoring::v3::GetNotificationChannelDescriptorRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  GetNotificationChannelDescriptor(google::monitoring::v3::GetNotificationChannelDescriptorRequest const& request);
 
-  virtual google::cloud::Idempotency ListNotificationChannels(
-      google::monitoring::v3::ListNotificationChannelsRequest request);
+  virtual google::cloud::Idempotency
+  ListNotificationChannels(google::monitoring::v3::ListNotificationChannelsRequest request);
 
-  virtual google::cloud::Idempotency GetNotificationChannel(
-      google::monitoring::v3::GetNotificationChannelRequest const& request);
+  virtual google::cloud::Idempotency
+  GetNotificationChannel(google::monitoring::v3::GetNotificationChannelRequest const& request);
 
-  virtual google::cloud::Idempotency CreateNotificationChannel(
-      google::monitoring::v3::CreateNotificationChannelRequest const& request);
+  virtual google::cloud::Idempotency
+  CreateNotificationChannel(google::monitoring::v3::CreateNotificationChannelRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateNotificationChannel(
-      google::monitoring::v3::UpdateNotificationChannelRequest const& request);
+  virtual google::cloud::Idempotency
+  UpdateNotificationChannel(google::monitoring::v3::UpdateNotificationChannelRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteNotificationChannel(
-      google::monitoring::v3::DeleteNotificationChannelRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteNotificationChannel(google::monitoring::v3::DeleteNotificationChannelRequest const& request);
 
-  virtual google::cloud::Idempotency SendNotificationChannelVerificationCode(
-      google::monitoring::v3::
-          SendNotificationChannelVerificationCodeRequest const& request);
+  virtual google::cloud::Idempotency
+  SendNotificationChannelVerificationCode(google::monitoring::v3::SendNotificationChannelVerificationCodeRequest const& request);
 
-  virtual google::cloud::Idempotency GetNotificationChannelVerificationCode(
-      google::monitoring::v3::
-          GetNotificationChannelVerificationCodeRequest const& request);
+  virtual google::cloud::Idempotency
+  GetNotificationChannelVerificationCode(google::monitoring::v3::GetNotificationChannelVerificationCodeRequest const& request);
 
-  virtual google::cloud::Idempotency VerifyNotificationChannel(
-      google::monitoring::v3::VerifyNotificationChannelRequest const& request);
+  virtual google::cloud::Idempotency
+  VerifyNotificationChannel(google::monitoring::v3::VerifyNotificationChannelRequest const& request);
 };
 
 std::unique_ptr<NotificationChannelServiceConnectionIdempotencyPolicy>
-MakeDefaultNotificationChannelServiceConnectionIdempotencyPolicy();
+    MakeDefaultNotificationChannelServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace monitoring_v3

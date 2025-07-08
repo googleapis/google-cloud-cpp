@@ -31,27 +31,27 @@ SearchServiceAuth::SearchServiceAuth(
     std::shared_ptr<SearchServiceStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::discoveryengine::v1::SearchResponse>
-SearchServiceAuth::Search(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::discoveryengine::v1::SearchResponse> SearchServiceAuth::Search(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::discoveryengine::v1::SearchRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->Search(context, options, request);
 }
 
-StatusOr<google::cloud::discoveryengine::v1::SearchResponse>
-SearchServiceAuth::SearchLite(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::discoveryengine::v1::SearchResponse> SearchServiceAuth::SearchLite(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::discoveryengine::v1::SearchRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->SearchLite(context, options, request);
 }
 
-StatusOr<google::longrunning::ListOperationsResponse>
-SearchServiceAuth::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse> SearchServiceAuth::ListOperations(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -59,7 +59,8 @@ SearchServiceAuth::ListOperations(
 }
 
 StatusOr<google::longrunning::Operation> SearchServiceAuth::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -67,7 +68,8 @@ StatusOr<google::longrunning::Operation> SearchServiceAuth::GetOperation(
 }
 
 Status SearchServiceAuth::CancelOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;

@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAP_V1_INTERNAL_IDENTITY_AWARE_PROXY_O_AUTH_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAP_V1_INTERNAL_IDENTITY_AWARE_PROXY_O_AUTH_CONNECTION_IMPL_H
 
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/iap/v1/identity_aware_proxy_o_auth_connection.h"
 #include "google/cloud/iap/v1/identity_aware_proxy_o_auth_connection_idempotency_policy.h"
 #include "google/cloud/iap/v1/identity_aware_proxy_o_auth_options.h"
 #include "google/cloud/iap/v1/internal/identity_aware_proxy_o_auth_retry_traits.h"
 #include "google/cloud/iap/v1/internal/identity_aware_proxy_o_auth_stub.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -43,44 +43,35 @@ class IdentityAwareProxyOAuthServiceConnectionImpl
   ~IdentityAwareProxyOAuthServiceConnectionImpl() override = default;
 
   IdentityAwareProxyOAuthServiceConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<iap_v1_internal::IdentityAwareProxyOAuthServiceStub> stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<iap_v1_internal::IdentityAwareProxyOAuthServiceStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
-  StatusOr<google::cloud::iap::v1::ListBrandsResponse> ListBrands(
-      google::cloud::iap::v1::ListBrandsRequest const& request) override;
+  StatusOr<google::cloud::iap::v1::ListBrandsResponse>
+  ListBrands(google::cloud::iap::v1::ListBrandsRequest const& request) override;
 
-  StatusOr<google::cloud::iap::v1::Brand> CreateBrand(
-      google::cloud::iap::v1::CreateBrandRequest const& request) override;
+  StatusOr<google::cloud::iap::v1::Brand>
+  CreateBrand(google::cloud::iap::v1::CreateBrandRequest const& request) override;
 
-  StatusOr<google::cloud::iap::v1::Brand> GetBrand(
-      google::cloud::iap::v1::GetBrandRequest const& request) override;
+  StatusOr<google::cloud::iap::v1::Brand>
+  GetBrand(google::cloud::iap::v1::GetBrandRequest const& request) override;
 
   StatusOr<google::cloud::iap::v1::IdentityAwareProxyClient>
-  CreateIdentityAwareProxyClient(
-      google::cloud::iap::v1::CreateIdentityAwareProxyClientRequest const&
-          request) override;
+  CreateIdentityAwareProxyClient(google::cloud::iap::v1::CreateIdentityAwareProxyClientRequest const& request) override;
 
   StreamRange<google::cloud::iap::v1::IdentityAwareProxyClient>
-  ListIdentityAwareProxyClients(
-      google::cloud::iap::v1::ListIdentityAwareProxyClientsRequest request)
-      override;
+  ListIdentityAwareProxyClients(google::cloud::iap::v1::ListIdentityAwareProxyClientsRequest request) override;
 
   StatusOr<google::cloud::iap::v1::IdentityAwareProxyClient>
-  GetIdentityAwareProxyClient(
-      google::cloud::iap::v1::GetIdentityAwareProxyClientRequest const& request)
-      override;
+  GetIdentityAwareProxyClient(google::cloud::iap::v1::GetIdentityAwareProxyClientRequest const& request) override;
 
   StatusOr<google::cloud::iap::v1::IdentityAwareProxyClient>
-  ResetIdentityAwareProxyClientSecret(
-      google::cloud::iap::v1::ResetIdentityAwareProxyClientSecretRequest const&
-          request) override;
+  ResetIdentityAwareProxyClientSecret(google::cloud::iap::v1::ResetIdentityAwareProxyClientSecretRequest const& request) override;
 
-  Status DeleteIdentityAwareProxyClient(
-      google::cloud::iap::v1::DeleteIdentityAwareProxyClientRequest const&
-          request) override;
+  Status
+  DeleteIdentityAwareProxyClient(google::cloud::iap::v1::DeleteIdentityAwareProxyClientRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

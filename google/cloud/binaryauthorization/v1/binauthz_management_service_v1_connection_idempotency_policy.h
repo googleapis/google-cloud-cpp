@@ -34,39 +34,32 @@ class BinauthzManagementServiceV1ConnectionIdempotencyPolicy {
   virtual ~BinauthzManagementServiceV1ConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<
-      BinauthzManagementServiceV1ConnectionIdempotencyPolicy>
-  clone() const;
+  virtual std::unique_ptr<BinauthzManagementServiceV1ConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency GetPolicy(
-      google::cloud::binaryauthorization::v1::GetPolicyRequest const& request);
+  virtual google::cloud::Idempotency
+  GetPolicy(google::cloud::binaryauthorization::v1::GetPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency UpdatePolicy(
-      google::cloud::binaryauthorization::v1::UpdatePolicyRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  UpdatePolicy(google::cloud::binaryauthorization::v1::UpdatePolicyRequest const& request);
 
-  virtual google::cloud::Idempotency CreateAttestor(
-      google::cloud::binaryauthorization::v1::CreateAttestorRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  CreateAttestor(google::cloud::binaryauthorization::v1::CreateAttestorRequest const& request);
 
-  virtual google::cloud::Idempotency GetAttestor(
-      google::cloud::binaryauthorization::v1::GetAttestorRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  GetAttestor(google::cloud::binaryauthorization::v1::GetAttestorRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateAttestor(
-      google::cloud::binaryauthorization::v1::UpdateAttestorRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  UpdateAttestor(google::cloud::binaryauthorization::v1::UpdateAttestorRequest const& request);
 
-  virtual google::cloud::Idempotency ListAttestors(
-      google::cloud::binaryauthorization::v1::ListAttestorsRequest request);
+  virtual google::cloud::Idempotency
+  ListAttestors(google::cloud::binaryauthorization::v1::ListAttestorsRequest request);
 
-  virtual google::cloud::Idempotency DeleteAttestor(
-      google::cloud::binaryauthorization::v1::DeleteAttestorRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  DeleteAttestor(google::cloud::binaryauthorization::v1::DeleteAttestorRequest const& request);
 };
 
 std::unique_ptr<BinauthzManagementServiceV1ConnectionIdempotencyPolicy>
-MakeDefaultBinauthzManagementServiceV1ConnectionIdempotencyPolicy();
+    MakeDefaultBinauthzManagementServiceV1ConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace binaryauthorization_v1

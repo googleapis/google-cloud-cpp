@@ -17,12 +17,12 @@
 // source: google/cloud/compute/vpn_tunnels/v1/vpn_tunnels.proto
 
 #include "google/cloud/compute/vpn_tunnels/v1/vpn_tunnels_rest_connection.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/compute/vpn_tunnels/v1/internal/vpn_tunnels_option_defaults.h"
 #include "google/cloud/compute/vpn_tunnels/v1/internal/vpn_tunnels_rest_connection_impl.h"
 #include "google/cloud/compute/vpn_tunnels/v1/internal/vpn_tunnels_rest_stub_factory.h"
 #include "google/cloud/compute/vpn_tunnels/v1/internal/vpn_tunnels_tracing_connection.h"
 #include "google/cloud/compute/vpn_tunnels/v1/vpn_tunnels_options.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/rest_background_threads_impl.h"
 #include "google/cloud/internal/rest_options.h"
@@ -36,16 +36,15 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<VpnTunnelsConnection> MakeVpnTunnelsConnectionRest(
     Options options) {
-  internal::CheckExpectedOptions<
-      CommonOptionList, RestOptionList, UnifiedCredentialsOptionList,
-      rest_internal::TargetApiVersionOption, VpnTunnelsPolicyOptionList>(
-      options, __func__);
+  internal::CheckExpectedOptions<CommonOptionList, RestOptionList,
+      UnifiedCredentialsOptionList, rest_internal::TargetApiVersionOption,
+      VpnTunnelsPolicyOptionList>(options, __func__);
   options = compute_vpn_tunnels_v1_internal::VpnTunnelsDefaultOptions(
       std::move(options));
   auto background = std::make_unique<
       rest_internal::AutomaticallyCreatedRestBackgroundThreads>();
-  auto stub =
-      compute_vpn_tunnels_v1_internal::CreateDefaultVpnTunnelsRestStub(options);
+  auto stub = compute_vpn_tunnels_v1_internal::CreateDefaultVpnTunnelsRestStub(
+      options);
   return compute_vpn_tunnels_v1_internal::MakeVpnTunnelsTracingConnection(
       std::make_shared<
           compute_vpn_tunnels_v1_internal::VpnTunnelsRestConnectionImpl>(

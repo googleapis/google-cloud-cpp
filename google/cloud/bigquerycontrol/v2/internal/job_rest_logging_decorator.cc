@@ -28,62 +28,76 @@ namespace bigquerycontrol_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 JobServiceRestLogging::JobServiceRestLogging(
-    std::shared_ptr<JobServiceRestStub> child, TracingOptions tracing_options,
+    std::shared_ptr<JobServiceRestStub> child,
+    TracingOptions tracing_options,
     std::set<std::string> components)
-    : child_(std::move(child)),
-      tracing_options_(std::move(tracing_options)),
+    : child_(std::move(child)), tracing_options_(std::move(tracing_options)),
       components_(std::move(components)) {}
 
 StatusOr<google::cloud::bigquery::v2::JobCancelResponse>
 JobServiceRestLogging::CancelJob(
-    rest_internal::RestContext& rest_context, Options const& options,
+    rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::bigquery::v2::CancelJobRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context, Options const& options,
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
              google::cloud::bigquery::v2::CancelJobRequest const& request) {
         return child_->CancelJob(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::cloud::bigquery::v2::Job> JobServiceRestLogging::GetJob(
-    rest_internal::RestContext& rest_context, Options const& options,
+StatusOr<google::cloud::bigquery::v2::Job>
+JobServiceRestLogging::GetJob(
+    rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::bigquery::v2::GetJobRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context, Options const& options,
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
              google::cloud::bigquery::v2::GetJobRequest const& request) {
         return child_->GetJob(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::cloud::bigquery::v2::Job> JobServiceRestLogging::InsertJob(
-    rest_internal::RestContext& rest_context, Options const& options,
+StatusOr<google::cloud::bigquery::v2::Job>
+JobServiceRestLogging::InsertJob(
+    rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::bigquery::v2::InsertJobRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context, Options const& options,
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
              google::cloud::bigquery::v2::InsertJobRequest const& request) {
         return child_->InsertJob(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
 }
 
-Status JobServiceRestLogging::DeleteJob(
-    rest_internal::RestContext& rest_context, Options const& options,
+Status
+JobServiceRestLogging::DeleteJob(
+    rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::bigquery::v2::DeleteJobRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context, Options const& options,
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
              google::cloud::bigquery::v2::DeleteJobRequest const& request) {
         return child_->DeleteJob(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::cloud::bigquery::v2::JobList> JobServiceRestLogging::ListJobs(
-    rest_internal::RestContext& rest_context, Options const& options,
+StatusOr<google::cloud::bigquery::v2::JobList>
+JobServiceRestLogging::ListJobs(
+    rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::bigquery::v2::ListJobsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context, Options const& options,
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
              google::cloud::bigquery::v2::ListJobsRequest const& request) {
         return child_->ListJobs(rest_context, options, request);
       },
@@ -92,12 +106,13 @@ StatusOr<google::cloud::bigquery::v2::JobList> JobServiceRestLogging::ListJobs(
 
 StatusOr<google::cloud::bigquery::v2::GetQueryResultsResponse>
 JobServiceRestLogging::GetQueryResults(
-    rest_internal::RestContext& rest_context, Options const& options,
+    rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::bigquery::v2::GetQueryResultsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          rest_internal::RestContext& rest_context, Options const& options,
-          google::cloud::bigquery::v2::GetQueryResultsRequest const& request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
+             google::cloud::bigquery::v2::GetQueryResultsRequest const& request) {
         return child_->GetQueryResults(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -105,10 +120,12 @@ JobServiceRestLogging::GetQueryResults(
 
 StatusOr<google::cloud::bigquery::v2::QueryResponse>
 JobServiceRestLogging::Query(
-    rest_internal::RestContext& rest_context, Options const& options,
+    rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::bigquery::v2::PostQueryRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context, Options const& options,
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
              google::cloud::bigquery::v2::PostQueryRequest const& request) {
         return child_->Query(rest_context, options, request);
       },

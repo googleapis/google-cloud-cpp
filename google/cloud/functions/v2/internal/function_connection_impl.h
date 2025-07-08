@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_FUNCTIONS_V2_INTERNAL_FUNCTION_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_FUNCTIONS_V2_INTERNAL_FUNCTION_CONNECTION_IMPL_H
 
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/functions/v2/function_connection.h"
 #include "google/cloud/functions/v2/function_connection_idempotency_policy.h"
 #include "google/cloud/functions/v2/function_options.h"
 #include "google/cloud/functions/v2/internal/function_retry_traits.h"
 #include "google/cloud/functions/v2/internal/function_stub.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -46,85 +46,77 @@ class FunctionServiceConnectionImpl
   ~FunctionServiceConnectionImpl() override = default;
 
   FunctionServiceConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<functions_v2_internal::FunctionServiceStub> stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<functions_v2_internal::FunctionServiceStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
-  StatusOr<google::cloud::functions::v2::Function> GetFunction(
-      google::cloud::functions::v2::GetFunctionRequest const& request) override;
+  StatusOr<google::cloud::functions::v2::Function>
+  GetFunction(google::cloud::functions::v2::GetFunctionRequest const& request) override;
 
-  StreamRange<google::cloud::functions::v2::Function> ListFunctions(
-      google::cloud::functions::v2::ListFunctionsRequest request) override;
+  StreamRange<google::cloud::functions::v2::Function>
+  ListFunctions(google::cloud::functions::v2::ListFunctionsRequest request) override;
 
-  future<StatusOr<google::cloud::functions::v2::Function>> CreateFunction(
-      google::cloud::functions::v2::CreateFunctionRequest const& request)
-      override;
+  future<StatusOr<google::cloud::functions::v2::Function>>
+  CreateFunction(google::cloud::functions::v2::CreateFunctionRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> CreateFunction(
-      NoAwaitTag,
-      google::cloud::functions::v2::CreateFunctionRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  CreateFunction(NoAwaitTag,
+      google::cloud::functions::v2::CreateFunctionRequest const& request) override;
 
-  future<StatusOr<google::cloud::functions::v2::Function>> CreateFunction(
+  future<StatusOr<google::cloud::functions::v2::Function>>
+  CreateFunction(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::functions::v2::Function>> UpdateFunction(
-      google::cloud::functions::v2::UpdateFunctionRequest const& request)
-      override;
+  future<StatusOr<google::cloud::functions::v2::Function>>
+  UpdateFunction(google::cloud::functions::v2::UpdateFunctionRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> UpdateFunction(
-      NoAwaitTag,
-      google::cloud::functions::v2::UpdateFunctionRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  UpdateFunction(NoAwaitTag,
+      google::cloud::functions::v2::UpdateFunctionRequest const& request) override;
 
-  future<StatusOr<google::cloud::functions::v2::Function>> UpdateFunction(
+  future<StatusOr<google::cloud::functions::v2::Function>>
+  UpdateFunction(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::functions::v2::OperationMetadata>>
-  DeleteFunction(google::cloud::functions::v2::DeleteFunctionRequest const&
-                     request) override;
+  DeleteFunction(google::cloud::functions::v2::DeleteFunctionRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> DeleteFunction(
-      NoAwaitTag,
-      google::cloud::functions::v2::DeleteFunctionRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  DeleteFunction(NoAwaitTag,
+      google::cloud::functions::v2::DeleteFunctionRequest const& request) override;
 
   future<StatusOr<google::cloud::functions::v2::OperationMetadata>>
-  DeleteFunction(google::longrunning::Operation const& operation) override;
+  DeleteFunction(
+      google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::functions::v2::GenerateUploadUrlResponse>
-  GenerateUploadUrl(
-      google::cloud::functions::v2::GenerateUploadUrlRequest const& request)
-      override;
+  GenerateUploadUrl(google::cloud::functions::v2::GenerateUploadUrlRequest const& request) override;
 
   StatusOr<google::cloud::functions::v2::GenerateDownloadUrlResponse>
-  GenerateDownloadUrl(
-      google::cloud::functions::v2::GenerateDownloadUrlRequest const& request)
-      override;
+  GenerateDownloadUrl(google::cloud::functions::v2::GenerateDownloadUrlRequest const& request) override;
 
-  StatusOr<google::cloud::functions::v2::ListRuntimesResponse> ListRuntimes(
-      google::cloud::functions::v2::ListRuntimesRequest const& request)
-      override;
+  StatusOr<google::cloud::functions::v2::ListRuntimesResponse>
+  ListRuntimes(google::cloud::functions::v2::ListRuntimesRequest const& request) override;
 
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request) override;
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request) override;
 
-  StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request) override;
+  StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

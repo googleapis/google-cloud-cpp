@@ -17,17 +17,17 @@
 // source: google/pubsub/v1/pubsub.proto
 
 #include "google/cloud/pubsub/admin/subscription_admin_connection.h"
-#include "google/cloud/pubsub/admin/internal/subscription_admin_connection_impl.h"
-#include "google/cloud/pubsub/admin/internal/subscription_admin_option_defaults.h"
-#include "google/cloud/pubsub/admin/internal/subscription_admin_stub_factory.h"
-#include "google/cloud/pubsub/admin/internal/subscription_admin_tracing_connection.h"
-#include "google/cloud/pubsub/admin/subscription_admin_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/pubsub/admin/internal/subscription_admin_connection_impl.h"
+#include "google/cloud/pubsub/admin/internal/subscription_admin_option_defaults.h"
+#include "google/cloud/pubsub/admin/internal/subscription_admin_stub_factory.h"
+#include "google/cloud/pubsub/admin/internal/subscription_admin_tracing_connection.h"
+#include "google/cloud/pubsub/admin/subscription_admin_options.h"
 #include <memory>
 #include <utility>
 
@@ -56,33 +56,32 @@ SubscriptionAdminConnection::UpdateSubscription(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::pubsub::v1::Subscription>
-SubscriptionAdminConnection::ListSubscriptions(
-    google::pubsub::v1::
-        ListSubscriptionsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::pubsub::v1::Subscription> SubscriptionAdminConnection::ListSubscriptions(
+    google::pubsub::v1::ListSubscriptionsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::pubsub::v1::Subscription>>();
 }
 
-Status SubscriptionAdminConnection::DeleteSubscription(
+Status
+SubscriptionAdminConnection::DeleteSubscription(
     google::pubsub::v1::DeleteSubscriptionRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status SubscriptionAdminConnection::ModifyPushConfig(
+Status
+SubscriptionAdminConnection::ModifyPushConfig(
     google::pubsub::v1::ModifyPushConfigRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::pubsub::v1::Snapshot> SubscriptionAdminConnection::GetSnapshot(
+StatusOr<google::pubsub::v1::Snapshot>
+SubscriptionAdminConnection::GetSnapshot(
     google::pubsub::v1::GetSnapshotRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::pubsub::v1::Snapshot>
-SubscriptionAdminConnection::ListSnapshots(
-    google::pubsub::v1::
-        ListSnapshotsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::pubsub::v1::Snapshot> SubscriptionAdminConnection::ListSnapshots(
+    google::pubsub::v1::ListSnapshotsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::pubsub::v1::Snapshot>>();
 }
@@ -99,22 +98,26 @@ SubscriptionAdminConnection::UpdateSnapshot(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status SubscriptionAdminConnection::DeleteSnapshot(
+Status
+SubscriptionAdminConnection::DeleteSnapshot(
     google::pubsub::v1::DeleteSnapshotRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::pubsub::v1::SeekResponse> SubscriptionAdminConnection::Seek(
+StatusOr<google::pubsub::v1::SeekResponse>
+SubscriptionAdminConnection::Seek(
     google::pubsub::v1::SeekRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::iam::v1::Policy> SubscriptionAdminConnection::SetIamPolicy(
+StatusOr<google::iam::v1::Policy>
+SubscriptionAdminConnection::SetIamPolicy(
     google::iam::v1::SetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::iam::v1::Policy> SubscriptionAdminConnection::GetIamPolicy(
+StatusOr<google::iam::v1::Policy>
+SubscriptionAdminConnection::GetIamPolicy(
     google::iam::v1::GetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -128,18 +131,17 @@ SubscriptionAdminConnection::TestIamPermissions(
 std::shared_ptr<SubscriptionAdminConnection> MakeSubscriptionAdminConnection(
     std::string const& location, Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 SubscriptionAdminPolicyOptionList>(options,
-                                                                    __func__);
+      UnifiedCredentialsOptionList,
+      SubscriptionAdminPolicyOptionList>(options, __func__);
   options = pubsub_admin_internal::SubscriptionAdminDefaultOptions(
       location, std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = pubsub_admin_internal::CreateDefaultSubscriptionAdminStub(
-      std::move(auth), options);
+    std::move(auth), options);
   return pubsub_admin_internal::MakeSubscriptionAdminTracingConnection(
       std::make_shared<pubsub_admin_internal::SubscriptionAdminConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options)));
+      std::move(background), std::move(stub), std::move(options)));
 }
 
 std::shared_ptr<SubscriptionAdminConnection> MakeSubscriptionAdminConnection(

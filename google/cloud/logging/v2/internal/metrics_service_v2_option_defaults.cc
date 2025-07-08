@@ -17,10 +17,10 @@
 // source: google/logging/v2/logging_metrics.proto
 
 #include "google/cloud/logging/v2/internal/metrics_service_v2_option_defaults.h"
-#include "google/cloud/logging/v2/metrics_service_v2_connection.h"
-#include "google/cloud/logging/v2/metrics_service_v2_options.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
+#include "google/cloud/logging/v2/metrics_service_v2_connection.h"
+#include "google/cloud/logging/v2/metrics_service_v2_options.h"
 #include <memory>
 #include <utility>
 
@@ -35,25 +35,21 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options MetricsServiceV2DefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_METRICS_SERVICE_V2_ENDPOINT", "",
-      "GOOGLE_CLOUD_CPP_METRICS_SERVICE_V2_AUTHORITY",
+      std::move(options), "GOOGLE_CLOUD_CPP_METRICS_SERVICE_V2_ENDPOINT",
+      "", "GOOGLE_CLOUD_CPP_METRICS_SERVICE_V2_AUTHORITY",
       "logging.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<logging_v2::MetricsServiceV2RetryPolicyOption>()) {
     options.set<logging_v2::MetricsServiceV2RetryPolicyOption>(
         logging_v2::MetricsServiceV2LimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
-            .clone());
+            std::chrono::minutes(30)).clone());
   }
   if (!options.has<logging_v2::MetricsServiceV2BackoffPolicyOption>()) {
     options.set<logging_v2::MetricsServiceV2BackoffPolicyOption>(
-        ExponentialBackoffPolicy(
-            std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
-            .clone());
+        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
   }
-  if (!options.has<
-          logging_v2::MetricsServiceV2ConnectionIdempotencyPolicyOption>()) {
+  if (!options.has<logging_v2::MetricsServiceV2ConnectionIdempotencyPolicyOption>()) {
     options.set<logging_v2::MetricsServiceV2ConnectionIdempotencyPolicyOption>(
         logging_v2::MakeDefaultMetricsServiceV2ConnectionIdempotencyPolicy());
   }

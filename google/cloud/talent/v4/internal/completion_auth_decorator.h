@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TALENT_V4_INTERNAL_COMPLETION_AUTH_DECORATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TALENT_V4_INTERNAL_COMPLETION_AUTH_DECORATOR_H
 
-#include "google/cloud/talent/v4/internal/completion_stub.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/talent/v4/internal/completion_stub.h"
 #include "google/cloud/version.h"
 #include <memory>
 #include <set>
@@ -39,11 +39,13 @@ class CompletionAuth : public CompletionStub {
       std::shared_ptr<CompletionStub> child);
 
   StatusOr<google::cloud::talent::v4::CompleteQueryResponse> CompleteQuery(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::talent::v4::CompleteQueryRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
  private:

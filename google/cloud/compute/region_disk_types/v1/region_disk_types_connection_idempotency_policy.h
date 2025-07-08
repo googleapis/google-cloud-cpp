@@ -34,20 +34,17 @@ class RegionDiskTypesConnectionIdempotencyPolicy {
   virtual ~RegionDiskTypesConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<RegionDiskTypesConnectionIdempotencyPolicy> clone()
-      const;
+  virtual std::unique_ptr<RegionDiskTypesConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency GetDiskType(
-      google::cloud::cpp::compute::region_disk_types::v1::
-          GetDiskTypeRequest const& request);
+  virtual google::cloud::Idempotency
+  GetDiskType(google::cloud::cpp::compute::region_disk_types::v1::GetDiskTypeRequest const& request);
 
-  virtual google::cloud::Idempotency ListRegionDiskTypes(
-      google::cloud::cpp::compute::region_disk_types::v1::
-          ListRegionDiskTypesRequest request);
+  virtual google::cloud::Idempotency
+  ListRegionDiskTypes(google::cloud::cpp::compute::region_disk_types::v1::ListRegionDiskTypesRequest request);
 };
 
 std::unique_ptr<RegionDiskTypesConnectionIdempotencyPolicy>
-MakeDefaultRegionDiskTypesConnectionIdempotencyPolicy();
+    MakeDefaultRegionDiskTypesConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_region_disk_types_v1

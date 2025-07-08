@@ -26,41 +26,34 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-ServicesConnectionIdempotencyPolicy::~ServicesConnectionIdempotencyPolicy() =
-    default;
+ServicesConnectionIdempotencyPolicy::~ServicesConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<ServicesConnectionIdempotencyPolicy>
 ServicesConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<ServicesConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency ServicesConnectionIdempotencyPolicy::CreateService(
-    google::cloud::run::v2::CreateServiceRequest const&) {
+Idempotency ServicesConnectionIdempotencyPolicy::CreateService(google::cloud::run::v2::CreateServiceRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ServicesConnectionIdempotencyPolicy::GetService(
-    google::cloud::run::v2::GetServiceRequest const&) {
+Idempotency ServicesConnectionIdempotencyPolicy::GetService(google::cloud::run::v2::GetServiceRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ServicesConnectionIdempotencyPolicy::ListServices(
-    google::cloud::run::v2::ListServicesRequest) {  // NOLINT
+Idempotency ServicesConnectionIdempotencyPolicy::ListServices(google::cloud::run::v2::ListServicesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency ServicesConnectionIdempotencyPolicy::UpdateService(
-    google::cloud::run::v2::UpdateServiceRequest const&) {
+Idempotency ServicesConnectionIdempotencyPolicy::UpdateService(google::cloud::run::v2::UpdateServiceRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ServicesConnectionIdempotencyPolicy::DeleteService(
-    google::cloud::run::v2::DeleteServiceRequest const&) {
+Idempotency ServicesConnectionIdempotencyPolicy::DeleteService(google::cloud::run::v2::DeleteServiceRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ServicesConnectionIdempotencyPolicy::GetIamPolicy(
-    google::iam::v1::GetIamPolicyRequest const&) {
+Idempotency ServicesConnectionIdempotencyPolicy::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
@@ -70,33 +63,28 @@ Idempotency ServicesConnectionIdempotencyPolicy::SetIamPolicy(
                                          : Idempotency::kIdempotent;
 }
 
-Idempotency ServicesConnectionIdempotencyPolicy::TestIamPermissions(
-    google::iam::v1::TestIamPermissionsRequest const&) {
+Idempotency ServicesConnectionIdempotencyPolicy::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ServicesConnectionIdempotencyPolicy::ListOperations(
-    google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency ServicesConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency ServicesConnectionIdempotencyPolicy::GetOperation(
-    google::longrunning::GetOperationRequest const&) {
+Idempotency ServicesConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ServicesConnectionIdempotencyPolicy::DeleteOperation(
-    google::longrunning::DeleteOperationRequest const&) {
+Idempotency ServicesConnectionIdempotencyPolicy::DeleteOperation(google::longrunning::DeleteOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ServicesConnectionIdempotencyPolicy::WaitOperation(
-    google::longrunning::WaitOperationRequest const&) {
+Idempotency ServicesConnectionIdempotencyPolicy::WaitOperation(google::longrunning::WaitOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<ServicesConnectionIdempotencyPolicy>
-MakeDefaultServicesConnectionIdempotencyPolicy() {
+    MakeDefaultServicesConnectionIdempotencyPolicy() {
   return std::make_unique<ServicesConnectionIdempotencyPolicy>();
 }
 

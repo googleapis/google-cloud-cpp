@@ -26,51 +26,43 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-ControlServiceConnectionIdempotencyPolicy::
-    ~ControlServiceConnectionIdempotencyPolicy() = default;
+ControlServiceConnectionIdempotencyPolicy::~ControlServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<ControlServiceConnectionIdempotencyPolicy>
 ControlServiceConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<ControlServiceConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency ControlServiceConnectionIdempotencyPolicy::CreateControl(
-    google::cloud::retail::v2::CreateControlRequest const&) {
+Idempotency ControlServiceConnectionIdempotencyPolicy::CreateControl(google::cloud::retail::v2::CreateControlRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ControlServiceConnectionIdempotencyPolicy::DeleteControl(
-    google::cloud::retail::v2::DeleteControlRequest const&) {
+Idempotency ControlServiceConnectionIdempotencyPolicy::DeleteControl(google::cloud::retail::v2::DeleteControlRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ControlServiceConnectionIdempotencyPolicy::UpdateControl(
-    google::cloud::retail::v2::UpdateControlRequest const&) {
+Idempotency ControlServiceConnectionIdempotencyPolicy::UpdateControl(google::cloud::retail::v2::UpdateControlRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ControlServiceConnectionIdempotencyPolicy::GetControl(
-    google::cloud::retail::v2::GetControlRequest const&) {
+Idempotency ControlServiceConnectionIdempotencyPolicy::GetControl(google::cloud::retail::v2::GetControlRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ControlServiceConnectionIdempotencyPolicy::ListControls(
-    google::cloud::retail::v2::ListControlsRequest) {  // NOLINT
+Idempotency ControlServiceConnectionIdempotencyPolicy::ListControls(google::cloud::retail::v2::ListControlsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency ControlServiceConnectionIdempotencyPolicy::ListOperations(
-    google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency ControlServiceConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency ControlServiceConnectionIdempotencyPolicy::GetOperation(
-    google::longrunning::GetOperationRequest const&) {
+Idempotency ControlServiceConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<ControlServiceConnectionIdempotencyPolicy>
-MakeDefaultControlServiceConnectionIdempotencyPolicy() {
+    MakeDefaultControlServiceConnectionIdempotencyPolicy() {
   return std::make_unique<ControlServiceConnectionIdempotencyPolicy>();
 }
 

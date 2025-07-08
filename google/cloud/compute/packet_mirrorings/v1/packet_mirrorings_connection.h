@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_PACKET_MIRRORINGS_V1_PACKET_MIRRORINGS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_PACKET_MIRRORINGS_V1_PACKET_MIRRORINGS_CONNECTION_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/packet_mirrorings/v1/internal/packet_mirrorings_retry_traits.h"
 #include "google/cloud/compute/packet_mirrorings/v1/packet_mirrorings_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -55,8 +55,7 @@ class PacketMirroringsRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class PacketMirroringsLimitedErrorCountRetryPolicy
-    : public PacketMirroringsRetryPolicy {
+class PacketMirroringsLimitedErrorCountRetryPolicy : public PacketMirroringsRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -66,14 +65,14 @@ class PacketMirroringsLimitedErrorCountRetryPolicy
    *     @p maximum_failures == 0.
    */
   explicit PacketMirroringsLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   PacketMirroringsLimitedErrorCountRetryPolicy(
       PacketMirroringsLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : PacketMirroringsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : PacketMirroringsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   PacketMirroringsLimitedErrorCountRetryPolicy(
       PacketMirroringsLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : PacketMirroringsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : PacketMirroringsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -93,9 +92,7 @@ class PacketMirroringsLimitedErrorCountRetryPolicy
   using BaseType = PacketMirroringsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      compute_packet_mirrorings_v1_internal::PacketMirroringsRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<compute_packet_mirrorings_v1_internal::PacketMirroringsRetryTraits> impl_;
 };
 
 /**
@@ -108,8 +105,7 @@ class PacketMirroringsLimitedErrorCountRetryPolicy
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class PacketMirroringsLimitedTimeRetryPolicy
-    : public PacketMirroringsRetryPolicy {
+class PacketMirroringsLimitedTimeRetryPolicy : public PacketMirroringsRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -134,14 +130,12 @@ class PacketMirroringsLimitedTimeRetryPolicy
   template <typename DurationRep, typename DurationPeriod>
   explicit PacketMirroringsLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  PacketMirroringsLimitedTimeRetryPolicy(
-      PacketMirroringsLimitedTimeRetryPolicy&& rhs) noexcept
-      : PacketMirroringsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  PacketMirroringsLimitedTimeRetryPolicy(
-      PacketMirroringsLimitedTimeRetryPolicy const& rhs) noexcept
-      : PacketMirroringsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  PacketMirroringsLimitedTimeRetryPolicy(PacketMirroringsLimitedTimeRetryPolicy&& rhs) noexcept
+    : PacketMirroringsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  PacketMirroringsLimitedTimeRetryPolicy(PacketMirroringsLimitedTimeRetryPolicy const& rhs) noexcept
+    : PacketMirroringsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -163,9 +157,7 @@ class PacketMirroringsLimitedTimeRetryPolicy
   using BaseType = PacketMirroringsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      compute_packet_mirrorings_v1_internal::PacketMirroringsRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<compute_packet_mirrorings_v1_internal::PacketMirroringsRetryTraits> impl_;
 };
 
 /**
@@ -178,8 +170,7 @@ class PacketMirroringsLimitedTimeRetryPolicy
  *
  * To create a concrete instance, see `MakePacketMirroringsConnection()`.
  *
- * For mocking, see
- * `compute_packet_mirrorings_v1_mocks::MockPacketMirroringsConnection`.
+ * For mocking, see `compute_packet_mirrorings_v1_mocks::MockPacketMirroringsConnection`.
  */
 class PacketMirroringsConnection {
  public:
@@ -187,62 +178,44 @@ class PacketMirroringsConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StreamRange<std::pair<
-      std::string, google::cloud::cpp::compute::v1::PacketMirroringsScopedList>>
-  AggregatedListPacketMirrorings(
-      google::cloud::cpp::compute::packet_mirrorings::v1::
-          AggregatedListPacketMirroringsRequest request);
+  virtual StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::PacketMirroringsScopedList>>
+  AggregatedListPacketMirrorings(google::cloud::cpp::compute::packet_mirrorings::v1::AggregatedListPacketMirroringsRequest request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeletePacketMirroring(google::cloud::cpp::compute::packet_mirrorings::v1::
-                            DeletePacketMirroringRequest const& request);
+  DeletePacketMirroring(google::cloud::cpp::compute::packet_mirrorings::v1::DeletePacketMirroringRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeletePacketMirroring(NoAwaitTag,
-                        google::cloud::cpp::compute::packet_mirrorings::v1::
-                            DeletePacketMirroringRequest const& request);
+  DeletePacketMirroring(NoAwaitTag, google::cloud::cpp::compute::packet_mirrorings::v1::DeletePacketMirroringRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeletePacketMirroring(
-      google::cloud::cpp::compute::v1::Operation const& operation);
+  DeletePacketMirroring( google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::PacketMirroring>
-  GetPacketMirroring(google::cloud::cpp::compute::packet_mirrorings::v1::
-                         GetPacketMirroringRequest const& request);
+  GetPacketMirroring(google::cloud::cpp::compute::packet_mirrorings::v1::GetPacketMirroringRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertPacketMirroring(google::cloud::cpp::compute::packet_mirrorings::v1::
-                            InsertPacketMirroringRequest const& request);
+  InsertPacketMirroring(google::cloud::cpp::compute::packet_mirrorings::v1::InsertPacketMirroringRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertPacketMirroring(NoAwaitTag,
-                        google::cloud::cpp::compute::packet_mirrorings::v1::
-                            InsertPacketMirroringRequest const& request);
+  InsertPacketMirroring(NoAwaitTag, google::cloud::cpp::compute::packet_mirrorings::v1::InsertPacketMirroringRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertPacketMirroring(
-      google::cloud::cpp::compute::v1::Operation const& operation);
+  InsertPacketMirroring( google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::PacketMirroring>
-  ListPacketMirrorings(google::cloud::cpp::compute::packet_mirrorings::v1::
-                           ListPacketMirroringsRequest request);
+  ListPacketMirrorings(google::cloud::cpp::compute::packet_mirrorings::v1::ListPacketMirroringsRequest request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchPacketMirroring(google::cloud::cpp::compute::packet_mirrorings::v1::
-                           PatchPacketMirroringRequest const& request);
+  PatchPacketMirroring(google::cloud::cpp::compute::packet_mirrorings::v1::PatchPacketMirroringRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  PatchPacketMirroring(NoAwaitTag,
-                       google::cloud::cpp::compute::packet_mirrorings::v1::
-                           PatchPacketMirroringRequest const& request);
+  PatchPacketMirroring(NoAwaitTag, google::cloud::cpp::compute::packet_mirrorings::v1::PatchPacketMirroringRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchPacketMirroring(
-      google::cloud::cpp::compute::v1::Operation const& operation);
+  PatchPacketMirroring( google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(google::cloud::cpp::compute::packet_mirrorings::v1::
-                         TestIamPermissionsRequest const& request);
+  TestIamPermissions(google::cloud::cpp::compute::packet_mirrorings::v1::TestIamPermissionsRequest const& request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

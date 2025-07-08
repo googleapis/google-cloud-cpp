@@ -37,48 +37,47 @@ class ModelGardenServiceConnectionIdempotencyPolicy {
   virtual ~ModelGardenServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<ModelGardenServiceConnectionIdempotencyPolicy> clone()
-      const;
+  virtual std::unique_ptr<ModelGardenServiceConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency GetPublisherModel(
-      google::cloud::aiplatform::v1::GetPublisherModelRequest const& request);
+  virtual google::cloud::Idempotency
+  GetPublisherModel(google::cloud::aiplatform::v1::GetPublisherModelRequest const& request);
 
-  virtual google::cloud::Idempotency Deploy(
-      google::cloud::aiplatform::v1::DeployRequest const& request);
+  virtual google::cloud::Idempotency
+  Deploy(google::cloud::aiplatform::v1::DeployRequest const& request);
 
-  virtual google::cloud::Idempotency ListLocations(
-      google::cloud::location::ListLocationsRequest request);
+  virtual google::cloud::Idempotency
+  ListLocations(google::cloud::location::ListLocationsRequest request);
 
-  virtual google::cloud::Idempotency GetLocation(
-      google::cloud::location::GetLocationRequest const& request);
+  virtual google::cloud::Idempotency
+  GetLocation(google::cloud::location::GetLocationRequest const& request);
 
-  virtual google::cloud::Idempotency SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request);
+  virtual google::cloud::Idempotency
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
 
-  virtual google::cloud::Idempotency ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual google::cloud::Idempotency
+  ListOperations(google::longrunning::ListOperationsRequest request);
 
-  virtual google::cloud::Idempotency GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
 
-  virtual google::cloud::Idempotency CancelOperation(
-      google::longrunning::CancelOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  CancelOperation(google::longrunning::CancelOperationRequest const& request);
 
-  virtual google::cloud::Idempotency WaitOperation(
-      google::longrunning::WaitOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  WaitOperation(google::longrunning::WaitOperationRequest const& request);
 };
 
 std::unique_ptr<ModelGardenServiceConnectionIdempotencyPolicy>
-MakeDefaultModelGardenServiceConnectionIdempotencyPolicy();
+    MakeDefaultModelGardenServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace aiplatform_v1

@@ -28,13 +28,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ConnectionServiceClient::ConnectionServiceClient(
     std::shared_ptr<ConnectionServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 ConnectionServiceClient::~ConnectionServiceClient() = default;
 
 StreamRange<google::cloud::apigeeconnect::v1::Connection>
-ConnectionServiceClient::ListConnections(std::string const& parent,
-                                         Options opts) {
+ConnectionServiceClient::ListConnections(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::apigeeconnect::v1::ListConnectionsRequest request;
   request.set_parent(parent);
@@ -42,9 +41,7 @@ ConnectionServiceClient::ListConnections(std::string const& parent,
 }
 
 StreamRange<google::cloud::apigeeconnect::v1::Connection>
-ConnectionServiceClient::ListConnections(
-    google::cloud::apigeeconnect::v1::ListConnectionsRequest request,
-    Options opts) {
+ConnectionServiceClient::ListConnections(google::cloud::apigeeconnect::v1::ListConnectionsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListConnections(std::move(request));
 }

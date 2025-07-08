@@ -26,46 +26,39 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-RuleSetServiceConnectionIdempotencyPolicy::
-    ~RuleSetServiceConnectionIdempotencyPolicy() = default;
+RuleSetServiceConnectionIdempotencyPolicy::~RuleSetServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<RuleSetServiceConnectionIdempotencyPolicy>
 RuleSetServiceConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<RuleSetServiceConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency RuleSetServiceConnectionIdempotencyPolicy::CreateRuleSet(
-    google::cloud::contentwarehouse::v1::CreateRuleSetRequest const&) {
+Idempotency RuleSetServiceConnectionIdempotencyPolicy::CreateRuleSet(google::cloud::contentwarehouse::v1::CreateRuleSetRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency RuleSetServiceConnectionIdempotencyPolicy::GetRuleSet(
-    google::cloud::contentwarehouse::v1::GetRuleSetRequest const&) {
+Idempotency RuleSetServiceConnectionIdempotencyPolicy::GetRuleSet(google::cloud::contentwarehouse::v1::GetRuleSetRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency RuleSetServiceConnectionIdempotencyPolicy::UpdateRuleSet(
-    google::cloud::contentwarehouse::v1::UpdateRuleSetRequest const&) {
+Idempotency RuleSetServiceConnectionIdempotencyPolicy::UpdateRuleSet(google::cloud::contentwarehouse::v1::UpdateRuleSetRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency RuleSetServiceConnectionIdempotencyPolicy::DeleteRuleSet(
-    google::cloud::contentwarehouse::v1::DeleteRuleSetRequest const&) {
+Idempotency RuleSetServiceConnectionIdempotencyPolicy::DeleteRuleSet(google::cloud::contentwarehouse::v1::DeleteRuleSetRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency RuleSetServiceConnectionIdempotencyPolicy::ListRuleSets(
-    google::cloud::contentwarehouse::v1::ListRuleSetsRequest) {  // NOLINT
+Idempotency RuleSetServiceConnectionIdempotencyPolicy::ListRuleSets(google::cloud::contentwarehouse::v1::ListRuleSetsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency RuleSetServiceConnectionIdempotencyPolicy::GetOperation(
-    google::longrunning::GetOperationRequest const&) {
+Idempotency RuleSetServiceConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<RuleSetServiceConnectionIdempotencyPolicy>
-MakeDefaultRuleSetServiceConnectionIdempotencyPolicy() {
+    MakeDefaultRuleSetServiceConnectionIdempotencyPolicy() {
   return std::make_unique<RuleSetServiceConnectionIdempotencyPolicy>();
 }
 

@@ -39,20 +39,19 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * should be passed as an argument to the constructor of GlobalAddressesClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `GlobalAddressesConnection`. Expected options are any of the types
- * in the following option lists:
+ * returned `GlobalAddressesConnection`. Expected options are any of the types in
+ * the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::RestOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * -
- * `google::cloud::compute_global_addresses_v1::GlobalAddressesPolicyOptionList`
+ * - `google::cloud::compute_global_addresses_v1::GlobalAddressesPolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
- * @param options (optional) Configure the `GlobalAddressesConnection` created
- * by this function.
+ * @param options (optional) Configure the `GlobalAddressesConnection` created by
+ * this function.
  */
 std::shared_ptr<GlobalAddressesConnection> MakeGlobalAddressesConnectionRest(
     Options options = {});

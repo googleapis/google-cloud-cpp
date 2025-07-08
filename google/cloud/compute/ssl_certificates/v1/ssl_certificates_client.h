@@ -64,8 +64,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class SslCertificatesClient {
  public:
-  explicit SslCertificatesClient(
-      std::shared_ptr<SslCertificatesConnection> connection, Options opts = {});
+  explicit SslCertificatesClient(std::shared_ptr<SslCertificatesConnection> connection, Options opts = {});
   ~SslCertificatesClient();
 
   ///@{
@@ -78,12 +77,10 @@ class SslCertificatesClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(SslCertificatesClient const& a,
-                         SslCertificatesClient const& b) {
+  friend bool operator==(SslCertificatesClient const& a, SslCertificatesClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(SslCertificatesClient const& a,
-                         SslCertificatesClient const& b) {
+  friend bool operator!=(SslCertificatesClient const& a, SslCertificatesClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -122,8 +119,7 @@ class SslCertificatesClient {
   /// [google.cloud.cpp.compute.v1.SslCertificatesScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_126.proto#L137}
   ///
   // clang-format on
-  StreamRange<std::pair<
-      std::string, google::cloud::cpp::compute::v1::SslCertificatesScopedList>>
+  StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::SslCertificatesScopedList>>
   AggregatedListSslCertificates(std::string const& project, Options opts = {});
 
   // clang-format off
@@ -165,12 +161,8 @@ class SslCertificatesClient {
   /// [google.cloud.cpp.compute.v1.SslCertificatesScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_126.proto#L137}
   ///
   // clang-format on
-  StreamRange<std::pair<
-      std::string, google::cloud::cpp::compute::v1::SslCertificatesScopedList>>
-  AggregatedListSslCertificates(
-      google::cloud::cpp::compute::ssl_certificates::v1::
-          AggregatedListSslCertificatesRequest request,
-      Options opts = {});
+  StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::SslCertificatesScopedList>>
+  AggregatedListSslCertificates(google::cloud::cpp::compute::ssl_certificates::v1::AggregatedListSslCertificatesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -203,8 +195,7 @@ class SslCertificatesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteSslCertificate(std::string const& project,
-                       std::string const& ssl_certificate, Options opts = {});
+  DeleteSslCertificate(std::string const& project, std::string const& ssl_certificate, Options opts = {});
 
   // clang-format off
   ///
@@ -217,9 +208,8 @@ class SslCertificatesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteSslCertificate(
-      NoAwaitTag, std::string const& project,
-      std::string const& ssl_certificate, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeleteSslCertificate(NoAwaitTag, std::string const& project, std::string const& ssl_certificate, Options opts = {});
 
   // clang-format off
   ///
@@ -256,9 +246,7 @@ class SslCertificatesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteSslCertificate(google::cloud::cpp::compute::ssl_certificates::v1::
-                           DeleteSslCertificateRequest const& request,
-                       Options opts = {});
+  DeleteSslCertificate(google::cloud::cpp::compute::ssl_certificates::v1::DeleteSslCertificateRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -271,11 +259,8 @@ class SslCertificatesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteSslCertificate(
-      NoAwaitTag,
-      google::cloud::cpp::compute::ssl_certificates::v1::
-          DeleteSslCertificateRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeleteSslCertificate(NoAwaitTag, google::cloud::cpp::compute::ssl_certificates::v1::DeleteSslCertificateRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -287,9 +272,7 @@ class SslCertificatesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteSslCertificate(
-      google::cloud::cpp::compute::v1::Operation const& operation,
-      Options opts = {});
+  DeleteSslCertificate(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -315,9 +298,8 @@ class SslCertificatesClient {
   /// [google.cloud.cpp.compute.v1.SslCertificate]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_125.proto#L39}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::SslCertificate> GetSslCertificate(
-      std::string const& project, std::string const& ssl_certificate,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::SslCertificate>
+  GetSslCertificate(std::string const& project, std::string const& ssl_certificate, Options opts = {});
 
   // clang-format off
   ///
@@ -347,10 +329,8 @@ class SslCertificatesClient {
   /// [google.cloud.cpp.compute.v1.SslCertificate]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_125.proto#L39}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::SslCertificate> GetSslCertificate(
-      google::cloud::cpp::compute::ssl_certificates::v1::
-          GetSslCertificateRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::SslCertificate>
+  GetSslCertificate(google::cloud::cpp::compute::ssl_certificates::v1::GetSslCertificateRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -384,10 +364,7 @@ class SslCertificatesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertSslCertificate(std::string const& project,
-                       google::cloud::cpp::compute::v1::SslCertificate const&
-                           ssl_certificate_resource,
-                       Options opts = {});
+  InsertSslCertificate(std::string const& project, google::cloud::cpp::compute::v1::SslCertificate const& ssl_certificate_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -400,11 +377,8 @@ class SslCertificatesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertSslCertificate(
-      NoAwaitTag, std::string const& project,
-      google::cloud::cpp::compute::v1::SslCertificate const&
-          ssl_certificate_resource,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  InsertSslCertificate(NoAwaitTag, std::string const& project, google::cloud::cpp::compute::v1::SslCertificate const& ssl_certificate_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -442,9 +416,7 @@ class SslCertificatesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertSslCertificate(google::cloud::cpp::compute::ssl_certificates::v1::
-                           InsertSslCertificateRequest const& request,
-                       Options opts = {});
+  InsertSslCertificate(google::cloud::cpp::compute::ssl_certificates::v1::InsertSslCertificateRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -457,11 +429,8 @@ class SslCertificatesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertSslCertificate(
-      NoAwaitTag,
-      google::cloud::cpp::compute::ssl_certificates::v1::
-          InsertSslCertificateRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  InsertSslCertificate(NoAwaitTag, google::cloud::cpp::compute::ssl_certificates::v1::InsertSslCertificateRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -473,9 +442,7 @@ class SslCertificatesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertSslCertificate(
-      google::cloud::cpp::compute::v1::Operation const& operation,
-      Options opts = {});
+  InsertSslCertificate(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -552,9 +519,7 @@ class SslCertificatesClient {
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::SslCertificate>
-  ListSslCertificates(google::cloud::cpp::compute::ssl_certificates::v1::
-                          ListSslCertificatesRequest request,
-                      Options opts = {});
+  ListSslCertificates(google::cloud::cpp::compute::ssl_certificates::v1::ListSslCertificatesRequest request, Options opts = {});
 
  private:
   std::shared_ptr<SslCertificatesConnection> connection_;

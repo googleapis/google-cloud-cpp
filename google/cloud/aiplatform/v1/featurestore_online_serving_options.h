@@ -55,8 +55,7 @@ struct FeaturestoreOnlineServingServiceBackoffPolicyOption {
  * @ingroup google-cloud-aiplatform-options
  */
 struct FeaturestoreOnlineServingServiceConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<
-      FeaturestoreOnlineServingServiceConnectionIdempotencyPolicy>;
+  using Type = std::shared_ptr<FeaturestoreOnlineServingServiceConnectionIdempotencyPolicy>;
 };
 
 /**
@@ -64,10 +63,10 @@ struct FeaturestoreOnlineServingServiceConnectionIdempotencyPolicyOption {
  *
  * @ingroup google-cloud-aiplatform-options
  */
-using FeaturestoreOnlineServingServicePolicyOptionList = OptionList<
-    FeaturestoreOnlineServingServiceRetryPolicyOption,
-    FeaturestoreOnlineServingServiceBackoffPolicyOption,
-    FeaturestoreOnlineServingServiceConnectionIdempotencyPolicyOption>;
+using FeaturestoreOnlineServingServicePolicyOptionList =
+    OptionList<FeaturestoreOnlineServingServiceRetryPolicyOption,
+               FeaturestoreOnlineServingServiceBackoffPolicyOption,
+               FeaturestoreOnlineServingServiceConnectionIdempotencyPolicyOption>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace aiplatform_v1

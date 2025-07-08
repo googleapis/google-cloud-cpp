@@ -26,16 +26,11 @@ namespace cloud {
 namespace workflows {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use
-/// workflows_executions_v1::MakeDefaultExecutionsConnectionIdempotencyPolicy
-/// directly.
-using ::google::cloud::workflows_executions_v1::
-    MakeDefaultExecutionsConnectionIdempotencyPolicy;
+/// @deprecated Use workflows_executions_v1::MakeDefaultExecutionsConnectionIdempotencyPolicy directly.
+using ::google::cloud::workflows_executions_v1::MakeDefaultExecutionsConnectionIdempotencyPolicy;
 
-/// @deprecated Use
-/// workflows_executions_v1::ExecutionsConnectionIdempotencyPolicy directly.
-using ::google::cloud::workflows_executions_v1::
-    ExecutionsConnectionIdempotencyPolicy;
+/// @deprecated Use workflows_executions_v1::ExecutionsConnectionIdempotencyPolicy directly.
+using ::google::cloud::workflows_executions_v1::ExecutionsConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace workflows

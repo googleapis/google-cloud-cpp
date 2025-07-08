@@ -38,81 +38,81 @@ class TpuConnectionIdempotencyPolicy {
   /// Create a new copy of this object.
   virtual std::unique_ptr<TpuConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency ListNodes(
-      google::cloud::tpu::v2::ListNodesRequest request);
+  virtual google::cloud::Idempotency
+  ListNodes(google::cloud::tpu::v2::ListNodesRequest request);
 
-  virtual google::cloud::Idempotency GetNode(
-      google::cloud::tpu::v2::GetNodeRequest const& request);
+  virtual google::cloud::Idempotency
+  GetNode(google::cloud::tpu::v2::GetNodeRequest const& request);
 
-  virtual google::cloud::Idempotency CreateNode(
-      google::cloud::tpu::v2::CreateNodeRequest const& request);
+  virtual google::cloud::Idempotency
+  CreateNode(google::cloud::tpu::v2::CreateNodeRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteNode(
-      google::cloud::tpu::v2::DeleteNodeRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteNode(google::cloud::tpu::v2::DeleteNodeRequest const& request);
 
-  virtual google::cloud::Idempotency StopNode(
-      google::cloud::tpu::v2::StopNodeRequest const& request);
+  virtual google::cloud::Idempotency
+  StopNode(google::cloud::tpu::v2::StopNodeRequest const& request);
 
-  virtual google::cloud::Idempotency StartNode(
-      google::cloud::tpu::v2::StartNodeRequest const& request);
+  virtual google::cloud::Idempotency
+  StartNode(google::cloud::tpu::v2::StartNodeRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateNode(
-      google::cloud::tpu::v2::UpdateNodeRequest const& request);
+  virtual google::cloud::Idempotency
+  UpdateNode(google::cloud::tpu::v2::UpdateNodeRequest const& request);
 
-  virtual google::cloud::Idempotency ListQueuedResources(
-      google::cloud::tpu::v2::ListQueuedResourcesRequest request);
+  virtual google::cloud::Idempotency
+  ListQueuedResources(google::cloud::tpu::v2::ListQueuedResourcesRequest request);
 
-  virtual google::cloud::Idempotency GetQueuedResource(
-      google::cloud::tpu::v2::GetQueuedResourceRequest const& request);
+  virtual google::cloud::Idempotency
+  GetQueuedResource(google::cloud::tpu::v2::GetQueuedResourceRequest const& request);
 
-  virtual google::cloud::Idempotency CreateQueuedResource(
-      google::cloud::tpu::v2::CreateQueuedResourceRequest const& request);
+  virtual google::cloud::Idempotency
+  CreateQueuedResource(google::cloud::tpu::v2::CreateQueuedResourceRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteQueuedResource(
-      google::cloud::tpu::v2::DeleteQueuedResourceRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteQueuedResource(google::cloud::tpu::v2::DeleteQueuedResourceRequest const& request);
 
-  virtual google::cloud::Idempotency ResetQueuedResource(
-      google::cloud::tpu::v2::ResetQueuedResourceRequest const& request);
+  virtual google::cloud::Idempotency
+  ResetQueuedResource(google::cloud::tpu::v2::ResetQueuedResourceRequest const& request);
 
-  virtual google::cloud::Idempotency GenerateServiceIdentity(
-      google::cloud::tpu::v2::GenerateServiceIdentityRequest const& request);
+  virtual google::cloud::Idempotency
+  GenerateServiceIdentity(google::cloud::tpu::v2::GenerateServiceIdentityRequest const& request);
 
-  virtual google::cloud::Idempotency ListAcceleratorTypes(
-      google::cloud::tpu::v2::ListAcceleratorTypesRequest request);
+  virtual google::cloud::Idempotency
+  ListAcceleratorTypes(google::cloud::tpu::v2::ListAcceleratorTypesRequest request);
 
-  virtual google::cloud::Idempotency GetAcceleratorType(
-      google::cloud::tpu::v2::GetAcceleratorTypeRequest const& request);
+  virtual google::cloud::Idempotency
+  GetAcceleratorType(google::cloud::tpu::v2::GetAcceleratorTypeRequest const& request);
 
-  virtual google::cloud::Idempotency ListRuntimeVersions(
-      google::cloud::tpu::v2::ListRuntimeVersionsRequest request);
+  virtual google::cloud::Idempotency
+  ListRuntimeVersions(google::cloud::tpu::v2::ListRuntimeVersionsRequest request);
 
-  virtual google::cloud::Idempotency GetRuntimeVersion(
-      google::cloud::tpu::v2::GetRuntimeVersionRequest const& request);
+  virtual google::cloud::Idempotency
+  GetRuntimeVersion(google::cloud::tpu::v2::GetRuntimeVersionRequest const& request);
 
-  virtual google::cloud::Idempotency GetGuestAttributes(
-      google::cloud::tpu::v2::GetGuestAttributesRequest const& request);
+  virtual google::cloud::Idempotency
+  GetGuestAttributes(google::cloud::tpu::v2::GetGuestAttributesRequest const& request);
 
-  virtual google::cloud::Idempotency ListLocations(
-      google::cloud::location::ListLocationsRequest request);
+  virtual google::cloud::Idempotency
+  ListLocations(google::cloud::location::ListLocationsRequest request);
 
-  virtual google::cloud::Idempotency GetLocation(
-      google::cloud::location::GetLocationRequest const& request);
+  virtual google::cloud::Idempotency
+  GetLocation(google::cloud::location::GetLocationRequest const& request);
 
-  virtual google::cloud::Idempotency ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual google::cloud::Idempotency
+  ListOperations(google::longrunning::ListOperationsRequest request);
 
-  virtual google::cloud::Idempotency GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
 
-  virtual google::cloud::Idempotency CancelOperation(
-      google::longrunning::CancelOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  CancelOperation(google::longrunning::CancelOperationRequest const& request);
 };
 
 std::unique_ptr<TpuConnectionIdempotencyPolicy>
-MakeDefaultTpuConnectionIdempotencyPolicy();
+    MakeDefaultTpuConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace tpu_v2

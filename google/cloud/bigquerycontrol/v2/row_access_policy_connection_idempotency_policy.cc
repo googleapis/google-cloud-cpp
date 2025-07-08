@@ -26,53 +26,39 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-RowAccessPolicyServiceConnectionIdempotencyPolicy::
-    ~RowAccessPolicyServiceConnectionIdempotencyPolicy() = default;
+RowAccessPolicyServiceConnectionIdempotencyPolicy::~RowAccessPolicyServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<RowAccessPolicyServiceConnectionIdempotencyPolicy>
 RowAccessPolicyServiceConnectionIdempotencyPolicy::clone() const {
-  return std::make_unique<RowAccessPolicyServiceConnectionIdempotencyPolicy>(
-      *this);
+  return std::make_unique<RowAccessPolicyServiceConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency
-RowAccessPolicyServiceConnectionIdempotencyPolicy::ListRowAccessPolicies(
-    google::cloud::bigquery::v2::ListRowAccessPoliciesRequest) {  // NOLINT
+Idempotency RowAccessPolicyServiceConnectionIdempotencyPolicy::ListRowAccessPolicies(google::cloud::bigquery::v2::ListRowAccessPoliciesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency
-RowAccessPolicyServiceConnectionIdempotencyPolicy::GetRowAccessPolicy(
-    google::cloud::bigquery::v2::GetRowAccessPolicyRequest const&) {
+Idempotency RowAccessPolicyServiceConnectionIdempotencyPolicy::GetRowAccessPolicy(google::cloud::bigquery::v2::GetRowAccessPolicyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency
-RowAccessPolicyServiceConnectionIdempotencyPolicy::CreateRowAccessPolicy(
-    google::cloud::bigquery::v2::CreateRowAccessPolicyRequest const&) {
+Idempotency RowAccessPolicyServiceConnectionIdempotencyPolicy::CreateRowAccessPolicy(google::cloud::bigquery::v2::CreateRowAccessPolicyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency
-RowAccessPolicyServiceConnectionIdempotencyPolicy::UpdateRowAccessPolicy(
-    google::cloud::bigquery::v2::UpdateRowAccessPolicyRequest const&) {
+Idempotency RowAccessPolicyServiceConnectionIdempotencyPolicy::UpdateRowAccessPolicy(google::cloud::bigquery::v2::UpdateRowAccessPolicyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency
-RowAccessPolicyServiceConnectionIdempotencyPolicy::DeleteRowAccessPolicy(
-    google::cloud::bigquery::v2::DeleteRowAccessPolicyRequest const&) {
+Idempotency RowAccessPolicyServiceConnectionIdempotencyPolicy::DeleteRowAccessPolicy(google::cloud::bigquery::v2::DeleteRowAccessPolicyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency
-RowAccessPolicyServiceConnectionIdempotencyPolicy::BatchDeleteRowAccessPolicies(
-    google::cloud::bigquery::v2::BatchDeleteRowAccessPoliciesRequest const&) {
+Idempotency RowAccessPolicyServiceConnectionIdempotencyPolicy::BatchDeleteRowAccessPolicies(google::cloud::bigquery::v2::BatchDeleteRowAccessPoliciesRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<RowAccessPolicyServiceConnectionIdempotencyPolicy>
-MakeDefaultRowAccessPolicyServiceConnectionIdempotencyPolicy() {
+    MakeDefaultRowAccessPolicyServiceConnectionIdempotencyPolicy() {
   return std::make_unique<RowAccessPolicyServiceConnectionIdempotencyPolicy>();
 }
 

@@ -42,172 +42,153 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockClusterManagerConnection
-    : public container_v1::ClusterManagerConnection {
+class MockClusterManagerConnection : public container_v1::ClusterManagerConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(StatusOr<google::container::v1::ListClustersResponse>,
-              ListClusters,
-              (google::container::v1::ListClustersRequest const& request),
-              (override));
+  ListClusters,
+  (google::container::v1::ListClustersRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::container::v1::Cluster>, GetCluster,
-              (google::container::v1::GetClusterRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::container::v1::Cluster>,
+  GetCluster,
+  (google::container::v1::GetClusterRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::container::v1::Operation>, CreateCluster,
-              (google::container::v1::CreateClusterRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::container::v1::Operation>,
+  CreateCluster,
+  (google::container::v1::CreateClusterRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::container::v1::Operation>, UpdateCluster,
-              (google::container::v1::UpdateClusterRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::container::v1::Operation>,
+  UpdateCluster,
+  (google::container::v1::UpdateClusterRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::container::v1::Operation>, UpdateNodePool,
-              (google::container::v1::UpdateNodePoolRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::container::v1::Operation>,
+  UpdateNodePool,
+  (google::container::v1::UpdateNodePoolRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::container::v1::Operation>, SetNodePoolAutoscaling,
-      (google::container::v1::SetNodePoolAutoscalingRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::container::v1::Operation>,
+  SetNodePoolAutoscaling,
+  (google::container::v1::SetNodePoolAutoscalingRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::container::v1::Operation>, SetLoggingService,
-              (google::container::v1::SetLoggingServiceRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::container::v1::Operation>,
+  SetLoggingService,
+  (google::container::v1::SetLoggingServiceRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::container::v1::Operation>, SetMonitoringService,
-      (google::container::v1::SetMonitoringServiceRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::container::v1::Operation>,
+  SetMonitoringService,
+  (google::container::v1::SetMonitoringServiceRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::container::v1::Operation>, SetAddonsConfig,
-              (google::container::v1::SetAddonsConfigRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::container::v1::Operation>,
+  SetAddonsConfig,
+  (google::container::v1::SetAddonsConfigRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::container::v1::Operation>, SetLocations,
-              (google::container::v1::SetLocationsRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::container::v1::Operation>,
+  SetLocations,
+  (google::container::v1::SetLocationsRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::container::v1::Operation>, UpdateMaster,
-              (google::container::v1::UpdateMasterRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::container::v1::Operation>,
+  UpdateMaster,
+  (google::container::v1::UpdateMasterRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::container::v1::Operation>, SetMasterAuth,
-              (google::container::v1::SetMasterAuthRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::container::v1::Operation>,
+  SetMasterAuth,
+  (google::container::v1::SetMasterAuthRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::container::v1::Operation>, DeleteCluster,
-              (google::container::v1::DeleteClusterRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::container::v1::Operation>,
+  DeleteCluster,
+  (google::container::v1::DeleteClusterRequest const& request), (override));
 
   MOCK_METHOD(StatusOr<google::container::v1::ListOperationsResponse>,
-              ListOperations,
-              (google::container::v1::ListOperationsRequest const& request),
-              (override));
+  ListOperations,
+  (google::container::v1::ListOperationsRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::container::v1::Operation>, GetOperation,
-              (google::container::v1::GetOperationRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::container::v1::Operation>,
+  GetOperation,
+  (google::container::v1::GetOperationRequest const& request), (override));
 
-  MOCK_METHOD(Status, CancelOperation,
-              (google::container::v1::CancelOperationRequest const& request),
-              (override));
+  MOCK_METHOD(Status,
+  CancelOperation,
+  (google::container::v1::CancelOperationRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::container::v1::ServerConfig>, GetServerConfig,
-              (google::container::v1::GetServerConfigRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::container::v1::ServerConfig>,
+  GetServerConfig,
+  (google::container::v1::GetServerConfigRequest const& request), (override));
 
   MOCK_METHOD(StatusOr<google::container::v1::GetJSONWebKeysResponse>,
-              GetJSONWebKeys,
-              (google::container::v1::GetJSONWebKeysRequest const& request),
-              (override));
+  GetJSONWebKeys,
+  (google::container::v1::GetJSONWebKeysRequest const& request), (override));
 
   MOCK_METHOD(StatusOr<google::container::v1::ListNodePoolsResponse>,
-              ListNodePools,
-              (google::container::v1::ListNodePoolsRequest const& request),
-              (override));
+  ListNodePools,
+  (google::container::v1::ListNodePoolsRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::container::v1::NodePool>, GetNodePool,
-              (google::container::v1::GetNodePoolRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::container::v1::NodePool>,
+  GetNodePool,
+  (google::container::v1::GetNodePoolRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::container::v1::Operation>, CreateNodePool,
-              (google::container::v1::CreateNodePoolRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::container::v1::Operation>,
+  CreateNodePool,
+  (google::container::v1::CreateNodePoolRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::container::v1::Operation>, DeleteNodePool,
-              (google::container::v1::DeleteNodePoolRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::container::v1::Operation>,
+  DeleteNodePool,
+  (google::container::v1::DeleteNodePoolRequest const& request), (override));
 
-  MOCK_METHOD(
-      Status, CompleteNodePoolUpgrade,
-      (google::container::v1::CompleteNodePoolUpgradeRequest const& request),
-      (override));
+  MOCK_METHOD(Status,
+  CompleteNodePoolUpgrade,
+  (google::container::v1::CompleteNodePoolUpgradeRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::container::v1::Operation>, RollbackNodePoolUpgrade,
-      (google::container::v1::RollbackNodePoolUpgradeRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::container::v1::Operation>,
+  RollbackNodePoolUpgrade,
+  (google::container::v1::RollbackNodePoolUpgradeRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::container::v1::Operation>, SetNodePoolManagement,
-      (google::container::v1::SetNodePoolManagementRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::container::v1::Operation>,
+  SetNodePoolManagement,
+  (google::container::v1::SetNodePoolManagementRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::container::v1::Operation>, SetLabels,
-              (google::container::v1::SetLabelsRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::container::v1::Operation>,
+  SetLabels,
+  (google::container::v1::SetLabelsRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::container::v1::Operation>, SetLegacyAbac,
-              (google::container::v1::SetLegacyAbacRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::container::v1::Operation>,
+  SetLegacyAbac,
+  (google::container::v1::SetLegacyAbacRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::container::v1::Operation>, StartIPRotation,
-              (google::container::v1::StartIPRotationRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::container::v1::Operation>,
+  StartIPRotation,
+  (google::container::v1::StartIPRotationRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::container::v1::Operation>, CompleteIPRotation,
-              (google::container::v1::CompleteIPRotationRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::container::v1::Operation>,
+  CompleteIPRotation,
+  (google::container::v1::CompleteIPRotationRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::container::v1::Operation>, SetNodePoolSize,
-              (google::container::v1::SetNodePoolSizeRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::container::v1::Operation>,
+  SetNodePoolSize,
+  (google::container::v1::SetNodePoolSizeRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::container::v1::Operation>, SetNetworkPolicy,
-              (google::container::v1::SetNetworkPolicyRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::container::v1::Operation>,
+  SetNetworkPolicy,
+  (google::container::v1::SetNetworkPolicyRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::container::v1::Operation>, SetMaintenancePolicy,
-      (google::container::v1::SetMaintenancePolicyRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::container::v1::Operation>,
+  SetMaintenancePolicy,
+  (google::container::v1::SetMaintenancePolicyRequest const& request), (override));
 
   MOCK_METHOD((StreamRange<google::container::v1::UsableSubnetwork>),
-              ListUsableSubnetworks,
-              (google::container::v1::ListUsableSubnetworksRequest request),
-              (override));
+  ListUsableSubnetworks,
+  (google::container::v1::ListUsableSubnetworksRequest request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::container::v1::CheckAutopilotCompatibilityResponse>,
-      CheckAutopilotCompatibility,
-      (google::container::v1::CheckAutopilotCompatibilityRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::container::v1::CheckAutopilotCompatibilityResponse>,
+  CheckAutopilotCompatibility,
+  (google::container::v1::CheckAutopilotCompatibilityRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::container::v1::ClusterUpgradeInfo>,
-      FetchClusterUpgradeInfo,
-      (google::container::v1::FetchClusterUpgradeInfoRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::container::v1::ClusterUpgradeInfo>,
+  FetchClusterUpgradeInfo,
+  (google::container::v1::FetchClusterUpgradeInfoRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::container::v1::NodePoolUpgradeInfo>,
-      FetchNodePoolUpgradeInfo,
-      (google::container::v1::FetchNodePoolUpgradeInfoRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::container::v1::NodePoolUpgradeInfo>,
+  FetchNodePoolUpgradeInfo,
+  (google::container::v1::FetchNodePoolUpgradeInfoRequest const& request), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

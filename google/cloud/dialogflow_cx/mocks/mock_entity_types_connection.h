@@ -46,50 +46,37 @@ class MockEntityTypesConnection : public dialogflow_cx::EntityTypesConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::cx::v3::EntityType>, GetEntityType,
-      (google::cloud::dialogflow::cx::v3::GetEntityTypeRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::dialogflow::cx::v3::EntityType>,
+  GetEntityType,
+  (google::cloud::dialogflow::cx::v3::GetEntityTypeRequest const& request), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::dialogflow::cx::v3::EntityType>,
-              CreateEntityType,
-              (google::cloud::dialogflow::cx::v3::CreateEntityTypeRequest const&
-                   request),
-              (override));
+  CreateEntityType,
+  (google::cloud::dialogflow::cx::v3::CreateEntityTypeRequest const& request), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::dialogflow::cx::v3::EntityType>,
-              UpdateEntityType,
-              (google::cloud::dialogflow::cx::v3::UpdateEntityTypeRequest const&
-                   request),
-              (override));
+  UpdateEntityType,
+  (google::cloud::dialogflow::cx::v3::UpdateEntityTypeRequest const& request), (override));
 
-  MOCK_METHOD(Status, DeleteEntityType,
-              (google::cloud::dialogflow::cx::v3::DeleteEntityTypeRequest const&
-                   request),
-              (override));
+  MOCK_METHOD(Status,
+  DeleteEntityType,
+  (google::cloud::dialogflow::cx::v3::DeleteEntityTypeRequest const& request), (override));
 
-  MOCK_METHOD(
-      (StreamRange<google::cloud::dialogflow::cx::v3::EntityType>),
-      ListEntityTypes,
-      (google::cloud::dialogflow::cx::v3::ListEntityTypesRequest request),
-      (override));
+  MOCK_METHOD((StreamRange<google::cloud::dialogflow::cx::v3::EntityType>),
+  ListEntityTypes,
+  (google::cloud::dialogflow::cx::v3::ListEntityTypesRequest request), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// ExportEntityTypes(Matcher<google::cloud::dialogflow::cx::v3::ExportEntityTypesRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, ExportEntityTypes(Matcher<google::cloud::dialogflow::cx::v3::ExportEntityTypesRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<
-          google::cloud::dialogflow::cx::v3::ExportEntityTypesResponse>>,
-      ExportEntityTypes,
-      (google::cloud::dialogflow::cx::v3::ExportEntityTypesRequest const&
-           request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::dialogflow::cx::v3::ExportEntityTypesResponse>>,
+  ExportEntityTypes,
+  (google::cloud::dialogflow::cx::v3::ExportEntityTypesRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -97,43 +84,33 @@ class MockEntityTypesConnection : public dialogflow_cx::EntityTypesConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, ExportEntityTypes(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, ExportEntityTypes,
-      (NoAwaitTag,
-       google::cloud::dialogflow::cx::v3::ExportEntityTypesRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  ExportEntityTypes, (NoAwaitTag,
+    google::cloud::dialogflow::cx::v3::ExportEntityTypesRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// ExportEntityTypes(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock, ExportEntityTypes(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<
-          google::cloud::dialogflow::cx::v3::ExportEntityTypesResponse>>,
-      ExportEntityTypes, (google::longrunning::Operation const& operation),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::dialogflow::cx::v3::ExportEntityTypesResponse>>,
+  ExportEntityTypes, (
+    google::longrunning::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// ImportEntityTypes(Matcher<google::cloud::dialogflow::cx::v3::ImportEntityTypesRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, ImportEntityTypes(Matcher<google::cloud::dialogflow::cx::v3::ImportEntityTypesRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<
-          google::cloud::dialogflow::cx::v3::ImportEntityTypesResponse>>,
-      ImportEntityTypes,
-      (google::cloud::dialogflow::cx::v3::ImportEntityTypesRequest const&
-           request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::dialogflow::cx::v3::ImportEntityTypesResponse>>,
+  ImportEntityTypes,
+  (google::cloud::dialogflow::cx::v3::ImportEntityTypesRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -141,45 +118,41 @@ class MockEntityTypesConnection : public dialogflow_cx::EntityTypesConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, ImportEntityTypes(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, ImportEntityTypes,
-      (NoAwaitTag,
-       google::cloud::dialogflow::cx::v3::ImportEntityTypesRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  ImportEntityTypes, (NoAwaitTag,
+    google::cloud::dialogflow::cx::v3::ImportEntityTypesRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// ImportEntityTypes(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock, ImportEntityTypes(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<
-          google::cloud::dialogflow::cx::v3::ImportEntityTypesResponse>>,
-      ImportEntityTypes, (google::longrunning::Operation const& operation),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::dialogflow::cx::v3::ImportEntityTypesResponse>>,
+  ImportEntityTypes, (
+    google::longrunning::Operation const& operation), (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::location::Location>), ListLocations,
-              (google::cloud::location::ListLocationsRequest request),
-              (override));
+  MOCK_METHOD((StreamRange<google::cloud::location::Location>),
+  ListLocations,
+  (google::cloud::location::ListLocationsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::location::Location>, GetLocation,
-              (google::cloud::location::GetLocationRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::location::Location>,
+  GetLocation,
+  (google::cloud::location::GetLocationRequest const& request), (override));
 
-  MOCK_METHOD((StreamRange<google::longrunning::Operation>), ListOperations,
-              (google::longrunning::ListOperationsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::longrunning::Operation>),
+  ListOperations,
+  (google::longrunning::ListOperationsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
-              (google::longrunning::GetOperationRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  GetOperation,
+  (google::longrunning::GetOperationRequest const& request), (override));
 
-  MOCK_METHOD(Status, CancelOperation,
-              (google::longrunning::CancelOperationRequest const& request),
-              (override));
+  MOCK_METHOD(Status,
+  CancelOperation,
+  (google::longrunning::CancelOperationRequest const& request), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -32,9 +32,9 @@ SessionsAuth::SessionsAuth(
     std::shared_ptr<SessionsStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::dialogflow::v2::DetectIntentResponse>
-SessionsAuth::DetectIntent(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::dialogflow::v2::DetectIntentResponse> SessionsAuth::DetectIntent(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dialogflow::v2::DetectIntentRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -49,20 +49,19 @@ SessionsAuth::AsyncStreamingDetectIntent(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options) {
   using StreamAuth = google::cloud::internal::AsyncStreamingReadWriteRpcAuth<
-      google::cloud::dialogflow::v2::StreamingDetectIntentRequest,
-      google::cloud::dialogflow::v2::StreamingDetectIntentResponse>;
+    google::cloud::dialogflow::v2::StreamingDetectIntentRequest, google::cloud::dialogflow::v2::StreamingDetectIntentResponse>;
 
   auto call = [child = child_, cq, options = std::move(options)](
                   std::shared_ptr<grpc::ClientContext> ctx) {
     return child->AsyncStreamingDetectIntent(cq, std::move(ctx), options);
   };
   return std::make_unique<StreamAuth>(
-      std::move(context), auth_, StreamAuth::StreamFactory(std::move(call)));
+    std::move(context), auth_, StreamAuth::StreamFactory(std::move(call)));
 }
 
-StatusOr<google::cloud::location::ListLocationsResponse>
-SessionsAuth::ListLocations(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::location::ListLocationsResponse> SessionsAuth::ListLocations(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -70,16 +69,17 @@ SessionsAuth::ListLocations(
 }
 
 StatusOr<google::cloud::location::Location> SessionsAuth::GetLocation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetLocation(context, options, request);
 }
 
-StatusOr<google::longrunning::ListOperationsResponse>
-SessionsAuth::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse> SessionsAuth::ListOperations(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -87,7 +87,8 @@ SessionsAuth::ListOperations(
 }
 
 StatusOr<google::longrunning::Operation> SessionsAuth::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -95,7 +96,8 @@ StatusOr<google::longrunning::Operation> SessionsAuth::GetOperation(
 }
 
 Status SessionsAuth::CancelOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;

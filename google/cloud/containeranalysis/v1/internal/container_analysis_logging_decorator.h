@@ -35,32 +35,33 @@ class ContainerAnalysisLogging : public ContainerAnalysisStub {
  public:
   ~ContainerAnalysisLogging() override = default;
   ContainerAnalysisLogging(std::shared_ptr<ContainerAnalysisStub> child,
-                           TracingOptions tracing_options,
-                           std::set<std::string> const& components);
+                       TracingOptions tracing_options,
+                       std::set<std::string> const& components);
 
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
-  StatusOr<
-      google::devtools::containeranalysis::v1::VulnerabilityOccurrencesSummary>
-  GetVulnerabilityOccurrencesSummary(
-      grpc::ClientContext& context, Options const& options,
-      google::devtools::containeranalysis::v1::
-          GetVulnerabilityOccurrencesSummaryRequest const& request) override;
+  StatusOr<google::devtools::containeranalysis::v1::VulnerabilityOccurrencesSummary> GetVulnerabilityOccurrencesSummary(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::devtools::containeranalysis::v1::GetVulnerabilityOccurrencesSummaryRequest const& request) override;
 
-  StatusOr<google::devtools::containeranalysis::v1::ExportSBOMResponse>
-  ExportSBOM(grpc::ClientContext& context, Options const& options,
-             google::devtools::containeranalysis::v1::ExportSBOMRequest const&
-                 request) override;
+  StatusOr<google::devtools::containeranalysis::v1::ExportSBOMResponse> ExportSBOM(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::devtools::containeranalysis::v1::ExportSBOMRequest const& request) override;
 
  private:
   std::shared_ptr<ContainerAnalysisStub> child_;

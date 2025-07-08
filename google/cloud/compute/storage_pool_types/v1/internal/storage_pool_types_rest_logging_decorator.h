@@ -38,27 +38,20 @@ class StoragePoolTypesRestLogging : public StoragePoolTypesRestStub {
  public:
   ~StoragePoolTypesRestLogging() override = default;
   StoragePoolTypesRestLogging(std::shared_ptr<StoragePoolTypesRestStub> child,
-                              TracingOptions tracing_options,
-                              std::set<std::string> components);
+                       TracingOptions tracing_options,
+                       std::set<std::string> components);
 
-  StatusOr<google::cloud::cpp::compute::v1::StoragePoolTypeAggregatedList>
-  AggregatedListStoragePoolTypes(
+  StatusOr<google::cloud::cpp::compute::v1::StoragePoolTypeAggregatedList> AggregatedListStoragePoolTypes(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::storage_pool_types::v1::
-          AggregatedListStoragePoolTypesRequest const& request) override;
+      Options const& options, google::cloud::cpp::compute::storage_pool_types::v1::AggregatedListStoragePoolTypesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::StoragePoolType> GetStoragePoolType(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::storage_pool_types::v1::
-          GetStoragePoolTypeRequest const& request) override;
+      Options const& options, google::cloud::cpp::compute::storage_pool_types::v1::GetStoragePoolTypeRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::StoragePoolTypeList>
-  ListStoragePoolTypes(google::cloud::rest_internal::RestContext& rest_context,
-                       Options const& options,
-                       google::cloud::cpp::compute::storage_pool_types::v1::
-                           ListStoragePoolTypesRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::StoragePoolTypeList> ListStoragePoolTypes(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options, google::cloud::cpp::compute::storage_pool_types::v1::ListStoragePoolTypesRequest const& request) override;
 
  private:
   std::shared_ptr<StoragePoolTypesRestStub> child_;

@@ -17,10 +17,10 @@
 // source: google/iam/v3/principal_access_boundary_policies_service.proto
 
 #include "google/cloud/iam/v3/internal/principal_access_boundary_policies_connection_impl.h"
-#include "google/cloud/iam/v3/internal/principal_access_boundary_policies_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
+#include "google/cloud/iam/v3/internal/principal_access_boundary_policies_option_defaults.h"
 #include "google/cloud/internal/async_long_running_operation.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
@@ -35,400 +35,306 @@ namespace {
 
 std::unique_ptr<iam_v3::PrincipalAccessBoundaryPoliciesRetryPolicy>
 retry_policy(Options const& options) {
-  return options
-      .get<iam_v3::PrincipalAccessBoundaryPoliciesRetryPolicyOption>()
-      ->clone();
+  return options.get<iam_v3::PrincipalAccessBoundaryPoliciesRetryPolicyOption>()->clone();
 }
 
-std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-  return options
-      .get<iam_v3::PrincipalAccessBoundaryPoliciesBackoffPolicyOption>()
-      ->clone();
+std::unique_ptr<BackoffPolicy>
+backoff_policy(Options const& options) {
+  return options.get<iam_v3::PrincipalAccessBoundaryPoliciesBackoffPolicyOption>()->clone();
 }
 
-std::unique_ptr<
-    iam_v3::PrincipalAccessBoundaryPoliciesConnectionIdempotencyPolicy>
+std::unique_ptr<iam_v3::PrincipalAccessBoundaryPoliciesConnectionIdempotencyPolicy>
 idempotency_policy(Options const& options) {
-  return options
-      .get<
-          iam_v3::
-              PrincipalAccessBoundaryPoliciesConnectionIdempotencyPolicyOption>()
-      ->clone();
+  return options.get<iam_v3::PrincipalAccessBoundaryPoliciesConnectionIdempotencyPolicyOption>()->clone();
 }
 
 std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-  return options
-      .get<iam_v3::PrincipalAccessBoundaryPoliciesPollingPolicyOption>()
-      ->clone();
+  return options.get<iam_v3::PrincipalAccessBoundaryPoliciesPollingPolicyOption>()->clone();
 }
 
-}  // namespace
+} // namespace
 
-PrincipalAccessBoundaryPoliciesConnectionImpl::
-    PrincipalAccessBoundaryPoliciesConnectionImpl(
-        std::unique_ptr<google::cloud::BackgroundThreads> background,
-        std::shared_ptr<iam_v3_internal::PrincipalAccessBoundaryPoliciesStub>
-            stub,
-        Options options)
-    : background_(std::move(background)),
-      stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options),
-          PrincipalAccessBoundaryPoliciesConnection::options())) {}
+PrincipalAccessBoundaryPoliciesConnectionImpl::PrincipalAccessBoundaryPoliciesConnectionImpl(
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<iam_v3_internal::PrincipalAccessBoundaryPoliciesStub> stub,
+    Options options)
+  : background_(std::move(background)), stub_(std::move(stub)),
+    options_(internal::MergeOptions(
+        std::move(options),
+        PrincipalAccessBoundaryPoliciesConnection::options())) {}
 
 future<StatusOr<google::iam::v3::PrincipalAccessBoundaryPolicy>>
-PrincipalAccessBoundaryPoliciesConnectionImpl::
-    CreatePrincipalAccessBoundaryPolicy(
-        google::iam::v3::CreatePrincipalAccessBoundaryPolicyRequest const&
-            request) {
+PrincipalAccessBoundaryPoliciesConnectionImpl::CreatePrincipalAccessBoundaryPolicy(google::iam::v3::CreatePrincipalAccessBoundaryPolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
-      idempotency_policy(*current)->CreatePrincipalAccessBoundaryPolicy(
-          request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<
-      google::iam::v3::PrincipalAccessBoundaryPolicy>(
-      background_->cq(), current, std::move(request_copy),
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::iam::v3::CreatePrincipalAccessBoundaryPolicyRequest const&
-              request) {
-        return stub->AsyncCreatePrincipalAccessBoundaryPolicy(
-            cq, std::move(context), std::move(options), request);
-      },
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::iam::v3::PrincipalAccessBoundaryPolicy>,
-      retry_policy(*current), backoff_policy(*current), idempotent,
-      polling_policy(*current), __func__);
+      idempotency_policy(*current)->CreatePrincipalAccessBoundaryPolicy(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<google::iam::v3::PrincipalAccessBoundaryPolicy>(
+    background_->cq(), current, std::move(request_copy),
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::iam::v3::CreatePrincipalAccessBoundaryPolicyRequest const& request) {
+     return stub->AsyncCreatePrincipalAccessBoundaryPolicy(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::iam::v3::PrincipalAccessBoundaryPolicy>,
+    retry_policy(*current), backoff_policy(*current), idempotent,
+    polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
-PrincipalAccessBoundaryPoliciesConnectionImpl::
-    CreatePrincipalAccessBoundaryPolicy(
-        NoAwaitTag,
-        google::iam::v3::CreatePrincipalAccessBoundaryPolicyRequest const&
-            request) {
+PrincipalAccessBoundaryPoliciesConnectionImpl::CreatePrincipalAccessBoundaryPolicy(
+      NoAwaitTag, google::iam::v3::CreatePrincipalAccessBoundaryPolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreatePrincipalAccessBoundaryPolicy(
-          request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::iam::v3::CreatePrincipalAccessBoundaryPolicyRequest const&
-                 request) {
-        return stub_->CreatePrincipalAccessBoundaryPolicy(context, options,
-                                                          request);
+      idempotency_policy(*current)->CreatePrincipalAccessBoundaryPolicy(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::iam::v3::CreatePrincipalAccessBoundaryPolicyRequest const& request) {
+        return stub_->CreatePrincipalAccessBoundaryPolicy(context, options, request);
       },
       *current, request, __func__);
 }
 
 future<StatusOr<google::iam::v3::PrincipalAccessBoundaryPolicy>>
-PrincipalAccessBoundaryPoliciesConnectionImpl::
-    CreatePrincipalAccessBoundaryPolicy(
-        google::longrunning::Operation const& operation) {
+PrincipalAccessBoundaryPoliciesConnectionImpl::CreatePrincipalAccessBoundaryPolicy(
+      google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata().Is<typename google::iam::v3::OperationMetadata>()) {
-    return make_ready_future<
-        StatusOr<google::iam::v3::PrincipalAccessBoundaryPolicy>>(
-        internal::InvalidArgumentError(
-            "operation does not correspond to "
-            "CreatePrincipalAccessBoundaryPolicy",
-            GCP_ERROR_INFO().WithMetadata("operation",
-                                          operation.metadata().DebugString())));
+    return make_ready_future<StatusOr<google::iam::v3::PrincipalAccessBoundaryPolicy>>(
+        internal::InvalidArgumentError("operation does not correspond to CreatePrincipalAccessBoundaryPolicy",
+                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<
-      google::iam::v3::PrincipalAccessBoundaryPolicy>(
-      background_->cq(), current, operation,
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::iam::v3::PrincipalAccessBoundaryPolicy>,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::iam::v3::PrincipalAccessBoundaryPolicy>(
+    background_->cq(), current, operation,
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::iam::v3::PrincipalAccessBoundaryPolicy>,
+    polling_policy(*current), __func__);
 }
 
 StatusOr<google::iam::v3::PrincipalAccessBoundaryPolicy>
-PrincipalAccessBoundaryPoliciesConnectionImpl::GetPrincipalAccessBoundaryPolicy(
-    google::iam::v3::GetPrincipalAccessBoundaryPolicyRequest const& request) {
+PrincipalAccessBoundaryPoliciesConnectionImpl::GetPrincipalAccessBoundaryPolicy(google::iam::v3::GetPrincipalAccessBoundaryPolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetPrincipalAccessBoundaryPolicy(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::iam::v3::GetPrincipalAccessBoundaryPolicyRequest const&
-                 request) {
-        return stub_->GetPrincipalAccessBoundaryPolicy(context, options,
-                                                       request);
+             google::iam::v3::GetPrincipalAccessBoundaryPolicyRequest const& request) {
+        return stub_->GetPrincipalAccessBoundaryPolicy(context, options, request);
       },
       *current, request, __func__);
 }
 
 future<StatusOr<google::iam::v3::PrincipalAccessBoundaryPolicy>>
-PrincipalAccessBoundaryPoliciesConnectionImpl::
-    UpdatePrincipalAccessBoundaryPolicy(
-        google::iam::v3::UpdatePrincipalAccessBoundaryPolicyRequest const&
-            request) {
+PrincipalAccessBoundaryPoliciesConnectionImpl::UpdatePrincipalAccessBoundaryPolicy(google::iam::v3::UpdatePrincipalAccessBoundaryPolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
-      idempotency_policy(*current)->UpdatePrincipalAccessBoundaryPolicy(
-          request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<
-      google::iam::v3::PrincipalAccessBoundaryPolicy>(
-      background_->cq(), current, std::move(request_copy),
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::iam::v3::UpdatePrincipalAccessBoundaryPolicyRequest const&
-              request) {
-        return stub->AsyncUpdatePrincipalAccessBoundaryPolicy(
-            cq, std::move(context), std::move(options), request);
-      },
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::iam::v3::PrincipalAccessBoundaryPolicy>,
-      retry_policy(*current), backoff_policy(*current), idempotent,
-      polling_policy(*current), __func__);
+      idempotency_policy(*current)->UpdatePrincipalAccessBoundaryPolicy(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<google::iam::v3::PrincipalAccessBoundaryPolicy>(
+    background_->cq(), current, std::move(request_copy),
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::iam::v3::UpdatePrincipalAccessBoundaryPolicyRequest const& request) {
+     return stub->AsyncUpdatePrincipalAccessBoundaryPolicy(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::iam::v3::PrincipalAccessBoundaryPolicy>,
+    retry_policy(*current), backoff_policy(*current), idempotent,
+    polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
-PrincipalAccessBoundaryPoliciesConnectionImpl::
-    UpdatePrincipalAccessBoundaryPolicy(
-        NoAwaitTag,
-        google::iam::v3::UpdatePrincipalAccessBoundaryPolicyRequest const&
-            request) {
+PrincipalAccessBoundaryPoliciesConnectionImpl::UpdatePrincipalAccessBoundaryPolicy(
+      NoAwaitTag, google::iam::v3::UpdatePrincipalAccessBoundaryPolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdatePrincipalAccessBoundaryPolicy(
-          request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::iam::v3::UpdatePrincipalAccessBoundaryPolicyRequest const&
-                 request) {
-        return stub_->UpdatePrincipalAccessBoundaryPolicy(context, options,
-                                                          request);
+      idempotency_policy(*current)->UpdatePrincipalAccessBoundaryPolicy(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::iam::v3::UpdatePrincipalAccessBoundaryPolicyRequest const& request) {
+        return stub_->UpdatePrincipalAccessBoundaryPolicy(context, options, request);
       },
       *current, request, __func__);
 }
 
 future<StatusOr<google::iam::v3::PrincipalAccessBoundaryPolicy>>
-PrincipalAccessBoundaryPoliciesConnectionImpl::
-    UpdatePrincipalAccessBoundaryPolicy(
-        google::longrunning::Operation const& operation) {
+PrincipalAccessBoundaryPoliciesConnectionImpl::UpdatePrincipalAccessBoundaryPolicy(
+      google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata().Is<typename google::iam::v3::OperationMetadata>()) {
-    return make_ready_future<
-        StatusOr<google::iam::v3::PrincipalAccessBoundaryPolicy>>(
-        internal::InvalidArgumentError(
-            "operation does not correspond to "
-            "UpdatePrincipalAccessBoundaryPolicy",
-            GCP_ERROR_INFO().WithMetadata("operation",
-                                          operation.metadata().DebugString())));
+    return make_ready_future<StatusOr<google::iam::v3::PrincipalAccessBoundaryPolicy>>(
+        internal::InvalidArgumentError("operation does not correspond to UpdatePrincipalAccessBoundaryPolicy",
+                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<
-      google::iam::v3::PrincipalAccessBoundaryPolicy>(
-      background_->cq(), current, operation,
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::iam::v3::PrincipalAccessBoundaryPolicy>,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::iam::v3::PrincipalAccessBoundaryPolicy>(
+    background_->cq(), current, operation,
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::iam::v3::PrincipalAccessBoundaryPolicy>,
+    polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::iam::v3::OperationMetadata>>
-PrincipalAccessBoundaryPoliciesConnectionImpl::
-    DeletePrincipalAccessBoundaryPolicy(
-        google::iam::v3::DeletePrincipalAccessBoundaryPolicyRequest const&
-            request) {
+PrincipalAccessBoundaryPoliciesConnectionImpl::DeletePrincipalAccessBoundaryPolicy(google::iam::v3::DeletePrincipalAccessBoundaryPolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
-      idempotency_policy(*current)->DeletePrincipalAccessBoundaryPolicy(
-          request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<
-      google::iam::v3::OperationMetadata>(
-      background_->cq(), current, std::move(request_copy),
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::iam::v3::DeletePrincipalAccessBoundaryPolicyRequest const&
-              request) {
-        return stub->AsyncDeletePrincipalAccessBoundaryPolicy(
-            cq, std::move(context), std::move(options), request);
-      },
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultMetadata<
-          google::iam::v3::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current), idempotent,
-      polling_policy(*current), __func__);
+      idempotency_policy(*current)->DeletePrincipalAccessBoundaryPolicy(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<google::iam::v3::OperationMetadata>(
+    background_->cq(), current, std::move(request_copy),
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::iam::v3::DeletePrincipalAccessBoundaryPolicyRequest const& request) {
+     return stub->AsyncDeletePrincipalAccessBoundaryPolicy(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultMetadata<google::iam::v3::OperationMetadata>,
+    retry_policy(*current), backoff_policy(*current), idempotent,
+    polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
-PrincipalAccessBoundaryPoliciesConnectionImpl::
-    DeletePrincipalAccessBoundaryPolicy(
-        NoAwaitTag,
-        google::iam::v3::DeletePrincipalAccessBoundaryPolicyRequest const&
-            request) {
+PrincipalAccessBoundaryPoliciesConnectionImpl::DeletePrincipalAccessBoundaryPolicy(
+      NoAwaitTag, google::iam::v3::DeletePrincipalAccessBoundaryPolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeletePrincipalAccessBoundaryPolicy(
-          request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::iam::v3::DeletePrincipalAccessBoundaryPolicyRequest const&
-                 request) {
-        return stub_->DeletePrincipalAccessBoundaryPolicy(context, options,
-                                                          request);
+      idempotency_policy(*current)->DeletePrincipalAccessBoundaryPolicy(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::iam::v3::DeletePrincipalAccessBoundaryPolicyRequest const& request) {
+        return stub_->DeletePrincipalAccessBoundaryPolicy(context, options, request);
       },
       *current, request, __func__);
 }
 
 future<StatusOr<google::iam::v3::OperationMetadata>>
-PrincipalAccessBoundaryPoliciesConnectionImpl::
-    DeletePrincipalAccessBoundaryPolicy(
-        google::longrunning::Operation const& operation) {
+PrincipalAccessBoundaryPoliciesConnectionImpl::DeletePrincipalAccessBoundaryPolicy(
+      google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata().Is<typename google::iam::v3::OperationMetadata>()) {
     return make_ready_future<StatusOr<google::iam::v3::OperationMetadata>>(
-        internal::InvalidArgumentError(
-            "operation does not correspond to "
-            "DeletePrincipalAccessBoundaryPolicy",
-            GCP_ERROR_INFO().WithMetadata("operation",
-                                          operation.metadata().DebugString())));
+        internal::InvalidArgumentError("operation does not correspond to DeletePrincipalAccessBoundaryPolicy",
+                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<
-      google::iam::v3::OperationMetadata>(
-      background_->cq(), current, operation,
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultMetadata<
-          google::iam::v3::OperationMetadata>,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::iam::v3::OperationMetadata>(
+    background_->cq(), current, operation,
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultMetadata<google::iam::v3::OperationMetadata>,
+    polling_policy(*current), __func__);
 }
 
 StreamRange<google::iam::v3::PrincipalAccessBoundaryPolicy>
-PrincipalAccessBoundaryPoliciesConnectionImpl::
-    ListPrincipalAccessBoundaryPolicies(
-        google::iam::v3::ListPrincipalAccessBoundaryPoliciesRequest request) {
+PrincipalAccessBoundaryPoliciesConnectionImpl::ListPrincipalAccessBoundaryPolicies(google::iam::v3::ListPrincipalAccessBoundaryPoliciesRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
-  auto idempotency =
-      idempotency_policy(*current)->ListPrincipalAccessBoundaryPolicies(
-          request);
+  auto idempotency = idempotency_policy(*current)->ListPrincipalAccessBoundaryPolicies(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::iam::v3::PrincipalAccessBoundaryPolicy>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::iam::v3::PrincipalAccessBoundaryPolicy>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry =
-           std::shared_ptr<iam_v3::PrincipalAccessBoundaryPoliciesRetryPolicy>(
-               retry_policy(*current)),
+       retry = std::shared_ptr<iam_v3::PrincipalAccessBoundaryPoliciesRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::iam::v3::ListPrincipalAccessBoundaryPoliciesRequest const&
-              r) {
+          Options const& options, google::iam::v3::ListPrincipalAccessBoundaryPoliciesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](
-                grpc::ClientContext& context, Options const& options,
-                google::iam::v3::
-                    ListPrincipalAccessBoundaryPoliciesRequest const& request) {
-              return stub->ListPrincipalAccessBoundaryPolicies(context, options,
-                                                               request);
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::iam::v3::ListPrincipalAccessBoundaryPoliciesRequest const& request) {
+              return stub->ListPrincipalAccessBoundaryPolicies(context, options, request);
             },
             options, r, function_name);
       },
       [](google::iam::v3::ListPrincipalAccessBoundaryPoliciesResponse r) {
-        std::vector<google::iam::v3::PrincipalAccessBoundaryPolicy> result(
-            r.principal_access_boundary_policies().size());
+        std::vector<google::iam::v3::PrincipalAccessBoundaryPolicy> result(r.principal_access_boundary_policies().size());
         auto& messages = *r.mutable_principal_access_boundary_policies();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -436,42 +342,27 @@ PrincipalAccessBoundaryPoliciesConnectionImpl::
 }
 
 StreamRange<google::iam::v3::PolicyBinding>
-PrincipalAccessBoundaryPoliciesConnectionImpl::
-    SearchPrincipalAccessBoundaryPolicyBindings(
-        google::iam::v3::SearchPrincipalAccessBoundaryPolicyBindingsRequest
-            request) {
+PrincipalAccessBoundaryPoliciesConnectionImpl::SearchPrincipalAccessBoundaryPolicyBindings(google::iam::v3::SearchPrincipalAccessBoundaryPolicyBindingsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
-  auto idempotency =
-      idempotency_policy(*current)->SearchPrincipalAccessBoundaryPolicyBindings(
-          request);
+  auto idempotency = idempotency_policy(*current)->SearchPrincipalAccessBoundaryPolicyBindings(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::iam::v3::PolicyBinding>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::iam::v3::PolicyBinding>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry =
-           std::shared_ptr<iam_v3::PrincipalAccessBoundaryPoliciesRetryPolicy>(
-               retry_policy(*current)),
+       retry = std::shared_ptr<iam_v3::PrincipalAccessBoundaryPoliciesRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::iam::v3::
-              SearchPrincipalAccessBoundaryPolicyBindingsRequest const& r) {
+          Options const& options, google::iam::v3::SearchPrincipalAccessBoundaryPolicyBindingsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::iam::v3::
-                       SearchPrincipalAccessBoundaryPolicyBindingsRequest const&
-                           request) {
-              return stub->SearchPrincipalAccessBoundaryPolicyBindings(
-                  context, options, request);
+                   google::iam::v3::SearchPrincipalAccessBoundaryPolicyBindingsRequest const& request) {
+              return stub->SearchPrincipalAccessBoundaryPolicyBindings(context, options, request);
             },
             options, r, function_name);
       },
-      [](google::iam::v3::SearchPrincipalAccessBoundaryPolicyBindingsResponse
-             r) {
-        std::vector<google::iam::v3::PolicyBinding> result(
-            r.policy_bindings().size());
+      [](google::iam::v3::SearchPrincipalAccessBoundaryPolicyBindingsResponse r) {
+        std::vector<google::iam::v3::PolicyBinding> result(r.policy_bindings().size());
         auto& messages = *r.mutable_policy_bindings();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -479,8 +370,7 @@ PrincipalAccessBoundaryPoliciesConnectionImpl::
 }
 
 StatusOr<google::longrunning::Operation>
-PrincipalAccessBoundaryPoliciesConnectionImpl::GetOperation(
-    google::longrunning::GetOperationRequest const& request) {
+PrincipalAccessBoundaryPoliciesConnectionImpl::GetOperation(google::longrunning::GetOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),

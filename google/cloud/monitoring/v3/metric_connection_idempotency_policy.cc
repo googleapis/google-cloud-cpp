@@ -26,64 +26,51 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-MetricServiceConnectionIdempotencyPolicy::
-    ~MetricServiceConnectionIdempotencyPolicy() = default;
+MetricServiceConnectionIdempotencyPolicy::~MetricServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<MetricServiceConnectionIdempotencyPolicy>
 MetricServiceConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<MetricServiceConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency
-MetricServiceConnectionIdempotencyPolicy::ListMonitoredResourceDescriptors(
-    google::monitoring::v3::
-        ListMonitoredResourceDescriptorsRequest) {  // NOLINT
+Idempotency MetricServiceConnectionIdempotencyPolicy::ListMonitoredResourceDescriptors(google::monitoring::v3::ListMonitoredResourceDescriptorsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency
-MetricServiceConnectionIdempotencyPolicy::GetMonitoredResourceDescriptor(
-    google::monitoring::v3::GetMonitoredResourceDescriptorRequest const&) {
+Idempotency MetricServiceConnectionIdempotencyPolicy::GetMonitoredResourceDescriptor(google::monitoring::v3::GetMonitoredResourceDescriptorRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency MetricServiceConnectionIdempotencyPolicy::ListMetricDescriptors(
-    google::monitoring::v3::ListMetricDescriptorsRequest) {  // NOLINT
+Idempotency MetricServiceConnectionIdempotencyPolicy::ListMetricDescriptors(google::monitoring::v3::ListMetricDescriptorsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency MetricServiceConnectionIdempotencyPolicy::GetMetricDescriptor(
-    google::monitoring::v3::GetMetricDescriptorRequest const&) {
+Idempotency MetricServiceConnectionIdempotencyPolicy::GetMetricDescriptor(google::monitoring::v3::GetMetricDescriptorRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency MetricServiceConnectionIdempotencyPolicy::CreateMetricDescriptor(
-    google::monitoring::v3::CreateMetricDescriptorRequest const&) {
+Idempotency MetricServiceConnectionIdempotencyPolicy::CreateMetricDescriptor(google::monitoring::v3::CreateMetricDescriptorRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency MetricServiceConnectionIdempotencyPolicy::DeleteMetricDescriptor(
-    google::monitoring::v3::DeleteMetricDescriptorRequest const&) {
+Idempotency MetricServiceConnectionIdempotencyPolicy::DeleteMetricDescriptor(google::monitoring::v3::DeleteMetricDescriptorRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency MetricServiceConnectionIdempotencyPolicy::ListTimeSeries(
-    google::monitoring::v3::ListTimeSeriesRequest) {  // NOLINT
+Idempotency MetricServiceConnectionIdempotencyPolicy::ListTimeSeries(google::monitoring::v3::ListTimeSeriesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency MetricServiceConnectionIdempotencyPolicy::CreateTimeSeries(
-    google::monitoring::v3::CreateTimeSeriesRequest const&) {
+Idempotency MetricServiceConnectionIdempotencyPolicy::CreateTimeSeries(google::monitoring::v3::CreateTimeSeriesRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency MetricServiceConnectionIdempotencyPolicy::CreateServiceTimeSeries(
-    google::monitoring::v3::CreateTimeSeriesRequest const&) {
+Idempotency MetricServiceConnectionIdempotencyPolicy::CreateServiceTimeSeries(google::monitoring::v3::CreateTimeSeriesRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<MetricServiceConnectionIdempotencyPolicy>
-MakeDefaultMetricServiceConnectionIdempotencyPolicy() {
+    MakeDefaultMetricServiceConnectionIdempotencyPolicy() {
   return std::make_unique<MetricServiceConnectionIdempotencyPolicy>();
 }
 

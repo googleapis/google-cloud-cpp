@@ -39,28 +39,19 @@ Options DocumentSchemaServiceDefaultOptions(Options options) {
       "", "GOOGLE_CLOUD_CPP_DOCUMENT_SCHEMA_SERVICE_AUTHORITY",
       "contentwarehouse.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
-  if (!options.has<
-          contentwarehouse_v1::DocumentSchemaServiceRetryPolicyOption>()) {
+  if (!options.has<contentwarehouse_v1::DocumentSchemaServiceRetryPolicyOption>()) {
     options.set<contentwarehouse_v1::DocumentSchemaServiceRetryPolicyOption>(
         contentwarehouse_v1::DocumentSchemaServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
-            .clone());
+            std::chrono::minutes(30)).clone());
   }
-  if (!options.has<
-          contentwarehouse_v1::DocumentSchemaServiceBackoffPolicyOption>()) {
+  if (!options.has<contentwarehouse_v1::DocumentSchemaServiceBackoffPolicyOption>()) {
     options.set<contentwarehouse_v1::DocumentSchemaServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(
-            std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
-            .clone());
+        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
   }
-  if (!options
-           .has<contentwarehouse_v1::
-                    DocumentSchemaServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<contentwarehouse_v1::
-                    DocumentSchemaServiceConnectionIdempotencyPolicyOption>(
-        contentwarehouse_v1::
-            MakeDefaultDocumentSchemaServiceConnectionIdempotencyPolicy());
+  if (!options.has<contentwarehouse_v1::DocumentSchemaServiceConnectionIdempotencyPolicyOption>()) {
+    options.set<contentwarehouse_v1::DocumentSchemaServiceConnectionIdempotencyPolicyOption>(
+        contentwarehouse_v1::MakeDefaultDocumentSchemaServiceConnectionIdempotencyPolicy());
   }
 
   return options;

@@ -28,39 +28,28 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 TargetInstancesClient::TargetInstancesClient(
     std::shared_ptr<TargetInstancesConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 TargetInstancesClient::~TargetInstancesClient() = default;
 
-StreamRange<std::pair<
-    std::string, google::cloud::cpp::compute::v1::TargetInstancesScopedList>>
-TargetInstancesClient::AggregatedListTargetInstances(std::string const& project,
-                                                     Options opts) {
+StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::TargetInstancesScopedList>>
+TargetInstancesClient::AggregatedListTargetInstances(std::string const& project, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::target_instances::v1::
-      AggregatedListTargetInstancesRequest request;
+  google::cloud::cpp::compute::target_instances::v1::AggregatedListTargetInstancesRequest request;
   request.set_project(project);
   return connection_->AggregatedListTargetInstances(request);
 }
 
-StreamRange<std::pair<
-    std::string, google::cloud::cpp::compute::v1::TargetInstancesScopedList>>
-TargetInstancesClient::AggregatedListTargetInstances(
-    google::cloud::cpp::compute::target_instances::v1::
-        AggregatedListTargetInstancesRequest request,
-    Options opts) {
+StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::TargetInstancesScopedList>>
+TargetInstancesClient::AggregatedListTargetInstances(google::cloud::cpp::compute::target_instances::v1::AggregatedListTargetInstancesRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->AggregatedListTargetInstances(std::move(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-TargetInstancesClient::DeleteTargetInstance(std::string const& project,
-                                            std::string const& zone,
-                                            std::string const& target_instance,
-                                            Options opts) {
+TargetInstancesClient::DeleteTargetInstance(std::string const& project, std::string const& zone, std::string const& target_instance, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::target_instances::v1::DeleteTargetInstanceRequest
-      request;
+  google::cloud::cpp::compute::target_instances::v1::DeleteTargetInstanceRequest request;
   request.set_project(project);
   request.set_zone(zone);
   request.set_target_instance(target_instance);
@@ -68,14 +57,9 @@ TargetInstancesClient::DeleteTargetInstance(std::string const& project,
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-TargetInstancesClient::DeleteTargetInstance(NoAwaitTag,
-                                            std::string const& project,
-                                            std::string const& zone,
-                                            std::string const& target_instance,
-                                            Options opts) {
+TargetInstancesClient::DeleteTargetInstance(NoAwaitTag, std::string const& project, std::string const& zone, std::string const& target_instance, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::target_instances::v1::DeleteTargetInstanceRequest
-      request;
+  google::cloud::cpp::compute::target_instances::v1::DeleteTargetInstanceRequest request;
   request.set_project(project);
   request.set_zone(zone);
   request.set_target_instance(target_instance);
@@ -83,39 +67,27 @@ TargetInstancesClient::DeleteTargetInstance(NoAwaitTag,
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-TargetInstancesClient::DeleteTargetInstance(
-    google::cloud::cpp::compute::target_instances::v1::
-        DeleteTargetInstanceRequest const& request,
-    Options opts) {
+TargetInstancesClient::DeleteTargetInstance(google::cloud::cpp::compute::target_instances::v1::DeleteTargetInstanceRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteTargetInstance(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-TargetInstancesClient::DeleteTargetInstance(
-    NoAwaitTag,
-    google::cloud::cpp::compute::target_instances::v1::
-        DeleteTargetInstanceRequest const& request,
-    Options opts) {
+TargetInstancesClient::DeleteTargetInstance(NoAwaitTag, google::cloud::cpp::compute::target_instances::v1::DeleteTargetInstanceRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteTargetInstance(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-TargetInstancesClient::DeleteTargetInstance(
-    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+TargetInstancesClient::DeleteTargetInstance(google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteTargetInstance(operation);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TargetInstance>
-TargetInstancesClient::GetTargetInstance(std::string const& project,
-                                         std::string const& zone,
-                                         std::string const& target_instance,
-                                         Options opts) {
+TargetInstancesClient::GetTargetInstance(std::string const& project, std::string const& zone, std::string const& target_instance, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::target_instances::v1::GetTargetInstanceRequest
-      request;
+  google::cloud::cpp::compute::target_instances::v1::GetTargetInstanceRequest request;
   request.set_project(project);
   request.set_zone(zone);
   request.set_target_instance(target_instance);
@@ -123,23 +95,15 @@ TargetInstancesClient::GetTargetInstance(std::string const& project,
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TargetInstance>
-TargetInstancesClient::GetTargetInstance(
-    google::cloud::cpp::compute::target_instances::v1::
-        GetTargetInstanceRequest const& request,
-    Options opts) {
+TargetInstancesClient::GetTargetInstance(google::cloud::cpp::compute::target_instances::v1::GetTargetInstanceRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetTargetInstance(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-TargetInstancesClient::InsertTargetInstance(
-    std::string const& project, std::string const& zone,
-    google::cloud::cpp::compute::v1::TargetInstance const&
-        target_instance_resource,
-    Options opts) {
+TargetInstancesClient::InsertTargetInstance(std::string const& project, std::string const& zone, google::cloud::cpp::compute::v1::TargetInstance const& target_instance_resource, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::target_instances::v1::InsertTargetInstanceRequest
-      request;
+  google::cloud::cpp::compute::target_instances::v1::InsertTargetInstanceRequest request;
   request.set_project(project);
   request.set_zone(zone);
   *request.mutable_target_instance_resource() = target_instance_resource;
@@ -147,14 +111,9 @@ TargetInstancesClient::InsertTargetInstance(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-TargetInstancesClient::InsertTargetInstance(
-    NoAwaitTag, std::string const& project, std::string const& zone,
-    google::cloud::cpp::compute::v1::TargetInstance const&
-        target_instance_resource,
-    Options opts) {
+TargetInstancesClient::InsertTargetInstance(NoAwaitTag, std::string const& project, std::string const& zone, google::cloud::cpp::compute::v1::TargetInstance const& target_instance_resource, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::target_instances::v1::InsertTargetInstanceRequest
-      request;
+  google::cloud::cpp::compute::target_instances::v1::InsertTargetInstanceRequest request;
   request.set_project(project);
   request.set_zone(zone);
   *request.mutable_target_instance_resource() = target_instance_resource;
@@ -162,110 +121,74 @@ TargetInstancesClient::InsertTargetInstance(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-TargetInstancesClient::InsertTargetInstance(
-    google::cloud::cpp::compute::target_instances::v1::
-        InsertTargetInstanceRequest const& request,
-    Options opts) {
+TargetInstancesClient::InsertTargetInstance(google::cloud::cpp::compute::target_instances::v1::InsertTargetInstanceRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->InsertTargetInstance(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-TargetInstancesClient::InsertTargetInstance(
-    NoAwaitTag,
-    google::cloud::cpp::compute::target_instances::v1::
-        InsertTargetInstanceRequest const& request,
-    Options opts) {
+TargetInstancesClient::InsertTargetInstance(NoAwaitTag, google::cloud::cpp::compute::target_instances::v1::InsertTargetInstanceRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->InsertTargetInstance(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-TargetInstancesClient::InsertTargetInstance(
-    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+TargetInstancesClient::InsertTargetInstance(google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->InsertTargetInstance(operation);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::TargetInstance>
-TargetInstancesClient::ListTargetInstances(std::string const& project,
-                                           std::string const& zone,
-                                           Options opts) {
+TargetInstancesClient::ListTargetInstances(std::string const& project, std::string const& zone, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::target_instances::v1::ListTargetInstancesRequest
-      request;
+  google::cloud::cpp::compute::target_instances::v1::ListTargetInstancesRequest request;
   request.set_project(project);
   request.set_zone(zone);
   return connection_->ListTargetInstances(request);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::TargetInstance>
-TargetInstancesClient::ListTargetInstances(
-    google::cloud::cpp::compute::target_instances::v1::
-        ListTargetInstancesRequest request,
-    Options opts) {
+TargetInstancesClient::ListTargetInstances(google::cloud::cpp::compute::target_instances::v1::ListTargetInstancesRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListTargetInstances(std::move(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-TargetInstancesClient::SetSecurityPolicy(
-    std::string const& project, std::string const& zone,
-    std::string const& target_instance,
-    google::cloud::cpp::compute::v1::SecurityPolicyReference const&
-        security_policy_reference_resource,
-    Options opts) {
+TargetInstancesClient::SetSecurityPolicy(std::string const& project, std::string const& zone, std::string const& target_instance, google::cloud::cpp::compute::v1::SecurityPolicyReference const& security_policy_reference_resource, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::target_instances::v1::SetSecurityPolicyRequest
-      request;
+  google::cloud::cpp::compute::target_instances::v1::SetSecurityPolicyRequest request;
   request.set_project(project);
   request.set_zone(zone);
   request.set_target_instance(target_instance);
-  *request.mutable_security_policy_reference_resource() =
-      security_policy_reference_resource;
+  *request.mutable_security_policy_reference_resource() = security_policy_reference_resource;
   return connection_->SetSecurityPolicy(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-TargetInstancesClient::SetSecurityPolicy(
-    NoAwaitTag, std::string const& project, std::string const& zone,
-    std::string const& target_instance,
-    google::cloud::cpp::compute::v1::SecurityPolicyReference const&
-        security_policy_reference_resource,
-    Options opts) {
+TargetInstancesClient::SetSecurityPolicy(NoAwaitTag, std::string const& project, std::string const& zone, std::string const& target_instance, google::cloud::cpp::compute::v1::SecurityPolicyReference const& security_policy_reference_resource, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::target_instances::v1::SetSecurityPolicyRequest
-      request;
+  google::cloud::cpp::compute::target_instances::v1::SetSecurityPolicyRequest request;
   request.set_project(project);
   request.set_zone(zone);
   request.set_target_instance(target_instance);
-  *request.mutable_security_policy_reference_resource() =
-      security_policy_reference_resource;
+  *request.mutable_security_policy_reference_resource() = security_policy_reference_resource;
   return connection_->SetSecurityPolicy(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-TargetInstancesClient::SetSecurityPolicy(
-    google::cloud::cpp::compute::target_instances::v1::
-        SetSecurityPolicyRequest const& request,
-    Options opts) {
+TargetInstancesClient::SetSecurityPolicy(google::cloud::cpp::compute::target_instances::v1::SetSecurityPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetSecurityPolicy(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-TargetInstancesClient::SetSecurityPolicy(
-    NoAwaitTag,
-    google::cloud::cpp::compute::target_instances::v1::
-        SetSecurityPolicyRequest const& request,
-    Options opts) {
+TargetInstancesClient::SetSecurityPolicy(NoAwaitTag, google::cloud::cpp::compute::target_instances::v1::SetSecurityPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetSecurityPolicy(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-TargetInstancesClient::SetSecurityPolicy(
-    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+TargetInstancesClient::SetSecurityPolicy(google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetSecurityPolicy(operation);
 }

@@ -17,17 +17,17 @@
 // source: google/cloud/retail/v2/completion_service.proto
 
 #include "google/cloud/retail/v2/completion_connection.h"
-#include "google/cloud/retail/v2/completion_options.h"
-#include "google/cloud/retail/v2/internal/completion_connection_impl.h"
-#include "google/cloud/retail/v2/internal/completion_option_defaults.h"
-#include "google/cloud/retail/v2/internal/completion_stub_factory.h"
-#include "google/cloud/retail/v2/internal/completion_tracing_connection.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/retail/v2/completion_options.h"
+#include "google/cloud/retail/v2/internal/completion_connection_impl.h"
+#include "google/cloud/retail/v2/internal/completion_option_defaults.h"
+#include "google/cloud/retail/v2/internal/completion_stub_factory.h"
+#include "google/cloud/retail/v2/internal/completion_tracing_connection.h"
 #include <memory>
 #include <utility>
 
@@ -48,29 +48,28 @@ future<StatusOr<google::cloud::retail::v2::ImportCompletionDataResponse>>
 CompletionServiceConnection::ImportCompletionData(
     google::cloud::retail::v2::ImportCompletionDataRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::retail::v2::ImportCompletionDataResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::retail::v2::ImportCompletionDataResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 CompletionServiceConnection::ImportCompletionData(
-    NoAwaitTag, google::cloud::retail::v2::ImportCompletionDataRequest const&) {
+    NoAwaitTag,
+    google::cloud::retail::v2::ImportCompletionDataRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::retail::v2::ImportCompletionDataResponse>>
 CompletionServiceConnection::ImportCompletionData(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::retail::v2::ImportCompletionDataResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::retail::v2::ImportCompletionDataResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StreamRange<google::longrunning::Operation>
-CompletionServiceConnection::ListOperations(
-    google::longrunning::
-        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::longrunning::Operation> CompletionServiceConnection::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }
@@ -84,18 +83,17 @@ CompletionServiceConnection::GetOperation(
 std::shared_ptr<CompletionServiceConnection> MakeCompletionServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 CompletionServicePolicyOptionList>(options,
-                                                                    __func__);
-  options =
-      retail_v2_internal::CompletionServiceDefaultOptions(std::move(options));
+      UnifiedCredentialsOptionList,
+      CompletionServicePolicyOptionList>(options, __func__);
+  options = retail_v2_internal::CompletionServiceDefaultOptions(
+      std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = retail_v2_internal::CreateDefaultCompletionServiceStub(
-      std::move(auth), options);
+    std::move(auth), options);
   return retail_v2_internal::MakeCompletionServiceTracingConnection(
       std::make_shared<retail_v2_internal::CompletionServiceConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options)));
+      std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

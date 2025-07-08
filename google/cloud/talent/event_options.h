@@ -31,8 +31,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// @deprecated Use talent_v4::EventServiceBackoffPolicyOption directly.
 using ::google::cloud::talent_v4::EventServiceBackoffPolicyOption;
 
-/// @deprecated Use talent_v4::EventServiceConnectionIdempotencyPolicyOption
-/// directly.
+/// @deprecated Use talent_v4::EventServiceConnectionIdempotencyPolicyOption directly.
 using ::google::cloud::talent_v4::EventServiceConnectionIdempotencyPolicyOption;
 
 /// @deprecated Use talent_v4::EventServicePolicyOptionList directly.

@@ -25,8 +25,8 @@
 namespace google {
 namespace cloud {
 /// @deprecated This namespace exists for backwards compatibility. Use the
-///     types defined in workflows_executions_v1 instead of the aliases defined
-///     in this namespace.
+///     types defined in workflows_executions_v1 instead of the aliases defined in
+///     this namespace.
 namespace workflows {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 

@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PROFILER_V2_INTERNAL_PROFILER_AUTH_DECORATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PROFILER_V2_INTERNAL_PROFILER_AUTH_DECORATOR_H
 
-#include "google/cloud/profiler/v2/internal/profiler_stub.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/profiler/v2/internal/profiler_stub.h"
 #include "google/cloud/version.h"
 #include <memory>
 #include <set>
@@ -39,19 +39,19 @@ class ProfilerServiceAuth : public ProfilerServiceStub {
       std::shared_ptr<ProfilerServiceStub> child);
 
   StatusOr<google::devtools::cloudprofiler::v2::Profile> CreateProfile(
-      grpc::ClientContext& context, Options const& options,
-      google::devtools::cloudprofiler::v2::CreateProfileRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::devtools::cloudprofiler::v2::CreateProfileRequest const& request) override;
 
   StatusOr<google::devtools::cloudprofiler::v2::Profile> CreateOfflineProfile(
-      grpc::ClientContext& context, Options const& options,
-      google::devtools::cloudprofiler::v2::CreateOfflineProfileRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::devtools::cloudprofiler::v2::CreateOfflineProfileRequest const& request) override;
 
   StatusOr<google::devtools::cloudprofiler::v2::Profile> UpdateProfile(
-      grpc::ClientContext& context, Options const& options,
-      google::devtools::cloudprofiler::v2::UpdateProfileRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::devtools::cloudprofiler::v2::UpdateProfileRequest const& request) override;
 
  private:
   std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth_;

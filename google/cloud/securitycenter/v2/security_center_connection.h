@@ -19,14 +19,14 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SECURITYCENTER_V2_SECURITY_CENTER_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SECURITYCENTER_V2_SECURITY_CENTER_CONNECTION_H
 
-#include "google/cloud/securitycenter/v2/internal/security_center_retry_traits.h"
-#include "google/cloud/securitycenter/v2/security_center_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
+#include "google/cloud/securitycenter/v2/internal/security_center_retry_traits.h"
+#include "google/cloud/securitycenter/v2/security_center_connection_idempotency_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
@@ -56,8 +56,7 @@ class SecurityCenterRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class SecurityCenterLimitedErrorCountRetryPolicy
-    : public SecurityCenterRetryPolicy {
+class SecurityCenterLimitedErrorCountRetryPolicy : public SecurityCenterRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -67,14 +66,14 @@ class SecurityCenterLimitedErrorCountRetryPolicy
    *     @p maximum_failures == 0.
    */
   explicit SecurityCenterLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   SecurityCenterLimitedErrorCountRetryPolicy(
       SecurityCenterLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : SecurityCenterLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : SecurityCenterLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   SecurityCenterLimitedErrorCountRetryPolicy(
       SecurityCenterLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : SecurityCenterLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : SecurityCenterLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -94,9 +93,7 @@ class SecurityCenterLimitedErrorCountRetryPolicy
   using BaseType = SecurityCenterRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      securitycenter_v2_internal::SecurityCenterRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<securitycenter_v2_internal::SecurityCenterRetryTraits> impl_;
 };
 
 /**
@@ -134,14 +131,12 @@ class SecurityCenterLimitedTimeRetryPolicy : public SecurityCenterRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit SecurityCenterLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  SecurityCenterLimitedTimeRetryPolicy(
-      SecurityCenterLimitedTimeRetryPolicy&& rhs) noexcept
-      : SecurityCenterLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  SecurityCenterLimitedTimeRetryPolicy(
-      SecurityCenterLimitedTimeRetryPolicy const& rhs) noexcept
-      : SecurityCenterLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  SecurityCenterLimitedTimeRetryPolicy(SecurityCenterLimitedTimeRetryPolicy&& rhs) noexcept
+    : SecurityCenterLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  SecurityCenterLimitedTimeRetryPolicy(SecurityCenterLimitedTimeRetryPolicy const& rhs) noexcept
+    : SecurityCenterLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -163,9 +158,7 @@ class SecurityCenterLimitedTimeRetryPolicy : public SecurityCenterRetryPolicy {
   using BaseType = SecurityCenterRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      securitycenter_v2_internal::SecurityCenterRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<securitycenter_v2_internal::SecurityCenterRetryTraits> impl_;
 };
 
 /**
@@ -186,192 +179,143 @@ class SecurityCenterConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<google::cloud::securitycenter::v2::
-                       BatchCreateResourceValueConfigsResponse>
-  BatchCreateResourceValueConfigs(
-      google::cloud::securitycenter::v2::
-          BatchCreateResourceValueConfigsRequest const& request);
+  virtual StatusOr<google::cloud::securitycenter::v2::BatchCreateResourceValueConfigsResponse>
+  BatchCreateResourceValueConfigs(google::cloud::securitycenter::v2::BatchCreateResourceValueConfigsRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::securitycenter::v2::BulkMuteFindingsResponse>>
-  BulkMuteFindings(
-      google::cloud::securitycenter::v2::BulkMuteFindingsRequest const&
-          request);
+  virtual future<StatusOr<google::cloud::securitycenter::v2::BulkMuteFindingsResponse>>
+  BulkMuteFindings(google::cloud::securitycenter::v2::BulkMuteFindingsRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> BulkMuteFindings(
-      NoAwaitTag,
-      google::cloud::securitycenter::v2::BulkMuteFindingsRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  BulkMuteFindings(NoAwaitTag, google::cloud::securitycenter::v2::BulkMuteFindingsRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::securitycenter::v2::BulkMuteFindingsResponse>>
-  BulkMuteFindings(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::securitycenter::v2::BulkMuteFindingsResponse>>
+  BulkMuteFindings( google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::securitycenter::v2::BigQueryExport>
-  CreateBigQueryExport(
-      google::cloud::securitycenter::v2::CreateBigQueryExportRequest const&
-          request);
+  CreateBigQueryExport(google::cloud::securitycenter::v2::CreateBigQueryExportRequest const& request);
 
-  virtual StatusOr<google::cloud::securitycenter::v2::Finding> CreateFinding(
-      google::cloud::securitycenter::v2::CreateFindingRequest const& request);
+  virtual StatusOr<google::cloud::securitycenter::v2::Finding>
+  CreateFinding(google::cloud::securitycenter::v2::CreateFindingRequest const& request);
 
   virtual StatusOr<google::cloud::securitycenter::v2::MuteConfig>
-  CreateMuteConfig(
-      google::cloud::securitycenter::v2::CreateMuteConfigRequest const&
-          request);
+  CreateMuteConfig(google::cloud::securitycenter::v2::CreateMuteConfigRequest const& request);
 
   virtual StatusOr<google::cloud::securitycenter::v2::NotificationConfig>
-  CreateNotificationConfig(
-      google::cloud::securitycenter::v2::CreateNotificationConfigRequest const&
-          request);
+  CreateNotificationConfig(google::cloud::securitycenter::v2::CreateNotificationConfigRequest const& request);
 
-  virtual StatusOr<google::cloud::securitycenter::v2::Source> CreateSource(
-      google::cloud::securitycenter::v2::CreateSourceRequest const& request);
+  virtual StatusOr<google::cloud::securitycenter::v2::Source>
+  CreateSource(google::cloud::securitycenter::v2::CreateSourceRequest const& request);
 
-  virtual Status DeleteBigQueryExport(
-      google::cloud::securitycenter::v2::DeleteBigQueryExportRequest const&
-          request);
+  virtual Status
+  DeleteBigQueryExport(google::cloud::securitycenter::v2::DeleteBigQueryExportRequest const& request);
 
-  virtual Status DeleteMuteConfig(
-      google::cloud::securitycenter::v2::DeleteMuteConfigRequest const&
-          request);
+  virtual Status
+  DeleteMuteConfig(google::cloud::securitycenter::v2::DeleteMuteConfigRequest const& request);
 
-  virtual Status DeleteNotificationConfig(
-      google::cloud::securitycenter::v2::DeleteNotificationConfigRequest const&
-          request);
+  virtual Status
+  DeleteNotificationConfig(google::cloud::securitycenter::v2::DeleteNotificationConfigRequest const& request);
 
-  virtual Status DeleteResourceValueConfig(
-      google::cloud::securitycenter::v2::DeleteResourceValueConfigRequest const&
-          request);
+  virtual Status
+  DeleteResourceValueConfig(google::cloud::securitycenter::v2::DeleteResourceValueConfigRequest const& request);
 
   virtual StatusOr<google::cloud::securitycenter::v2::BigQueryExport>
-  GetBigQueryExport(
-      google::cloud::securitycenter::v2::GetBigQueryExportRequest const&
-          request);
+  GetBigQueryExport(google::cloud::securitycenter::v2::GetBigQueryExportRequest const& request);
 
-  virtual StatusOr<google::cloud::securitycenter::v2::Simulation> GetSimulation(
-      google::cloud::securitycenter::v2::GetSimulationRequest const& request);
+  virtual StatusOr<google::cloud::securitycenter::v2::Simulation>
+  GetSimulation(google::cloud::securitycenter::v2::GetSimulationRequest const& request);
 
   virtual StatusOr<google::cloud::securitycenter::v2::ValuedResource>
-  GetValuedResource(
-      google::cloud::securitycenter::v2::GetValuedResourceRequest const&
-          request);
+  GetValuedResource(google::cloud::securitycenter::v2::GetValuedResourceRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
 
-  virtual StatusOr<google::cloud::securitycenter::v2::MuteConfig> GetMuteConfig(
-      google::cloud::securitycenter::v2::GetMuteConfigRequest const& request);
+  virtual StatusOr<google::cloud::securitycenter::v2::MuteConfig>
+  GetMuteConfig(google::cloud::securitycenter::v2::GetMuteConfigRequest const& request);
 
   virtual StatusOr<google::cloud::securitycenter::v2::NotificationConfig>
-  GetNotificationConfig(
-      google::cloud::securitycenter::v2::GetNotificationConfigRequest const&
-          request);
+  GetNotificationConfig(google::cloud::securitycenter::v2::GetNotificationConfigRequest const& request);
 
   virtual StatusOr<google::cloud::securitycenter::v2::ResourceValueConfig>
-  GetResourceValueConfig(
-      google::cloud::securitycenter::v2::GetResourceValueConfigRequest const&
-          request);
+  GetResourceValueConfig(google::cloud::securitycenter::v2::GetResourceValueConfigRequest const& request);
 
-  virtual StatusOr<google::cloud::securitycenter::v2::Source> GetSource(
-      google::cloud::securitycenter::v2::GetSourceRequest const& request);
+  virtual StatusOr<google::cloud::securitycenter::v2::Source>
+  GetSource(google::cloud::securitycenter::v2::GetSourceRequest const& request);
 
   virtual StreamRange<google::cloud::securitycenter::v2::GroupResult>
-  GroupFindings(
-      google::cloud::securitycenter::v2::GroupFindingsRequest request);
+  GroupFindings(google::cloud::securitycenter::v2::GroupFindingsRequest request);
 
   virtual StreamRange<google::cloud::securitycenter::v2::AttackPath>
-  ListAttackPaths(
-      google::cloud::securitycenter::v2::ListAttackPathsRequest request);
+  ListAttackPaths(google::cloud::securitycenter::v2::ListAttackPathsRequest request);
 
   virtual StreamRange<google::cloud::securitycenter::v2::BigQueryExport>
-  ListBigQueryExports(
-      google::cloud::securitycenter::v2::ListBigQueryExportsRequest request);
+  ListBigQueryExports(google::cloud::securitycenter::v2::ListBigQueryExportsRequest request);
 
-  virtual StreamRange<google::cloud::securitycenter::v2::ListFindingsResponse::
-                          ListFindingsResult>
+  virtual StreamRange<google::cloud::securitycenter::v2::ListFindingsResponse::ListFindingsResult>
   ListFindings(google::cloud::securitycenter::v2::ListFindingsRequest request);
 
   virtual StreamRange<google::cloud::securitycenter::v2::MuteConfig>
-  ListMuteConfigs(
-      google::cloud::securitycenter::v2::ListMuteConfigsRequest request);
+  ListMuteConfigs(google::cloud::securitycenter::v2::ListMuteConfigsRequest request);
 
   virtual StreamRange<google::cloud::securitycenter::v2::NotificationConfig>
-  ListNotificationConfigs(
-      google::cloud::securitycenter::v2::ListNotificationConfigsRequest
-          request);
+  ListNotificationConfigs(google::cloud::securitycenter::v2::ListNotificationConfigsRequest request);
 
   virtual StreamRange<google::cloud::securitycenter::v2::ResourceValueConfig>
-  ListResourceValueConfigs(
-      google::cloud::securitycenter::v2::ListResourceValueConfigsRequest
-          request);
+  ListResourceValueConfigs(google::cloud::securitycenter::v2::ListResourceValueConfigsRequest request);
 
-  virtual StreamRange<google::cloud::securitycenter::v2::Source> ListSources(
-      google::cloud::securitycenter::v2::ListSourcesRequest request);
+  virtual StreamRange<google::cloud::securitycenter::v2::Source>
+  ListSources(google::cloud::securitycenter::v2::ListSourcesRequest request);
 
   virtual StreamRange<google::cloud::securitycenter::v2::ValuedResource>
-  ListValuedResources(
-      google::cloud::securitycenter::v2::ListValuedResourcesRequest request);
+  ListValuedResources(google::cloud::securitycenter::v2::ListValuedResourcesRequest request);
 
-  virtual StatusOr<google::cloud::securitycenter::v2::Finding> SetFindingState(
-      google::cloud::securitycenter::v2::SetFindingStateRequest const& request);
+  virtual StatusOr<google::cloud::securitycenter::v2::Finding>
+  SetFindingState(google::cloud::securitycenter::v2::SetFindingStateRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
 
-  virtual StatusOr<google::cloud::securitycenter::v2::Finding> SetMute(
-      google::cloud::securitycenter::v2::SetMuteRequest const& request);
+  virtual StatusOr<google::cloud::securitycenter::v2::Finding>
+  SetMute(google::cloud::securitycenter::v2::SetMuteRequest const& request);
 
   virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
   TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
 
   virtual StatusOr<google::cloud::securitycenter::v2::BigQueryExport>
-  UpdateBigQueryExport(
-      google::cloud::securitycenter::v2::UpdateBigQueryExportRequest const&
-          request);
+  UpdateBigQueryExport(google::cloud::securitycenter::v2::UpdateBigQueryExportRequest const& request);
 
   virtual StatusOr<google::cloud::securitycenter::v2::ExternalSystem>
-  UpdateExternalSystem(
-      google::cloud::securitycenter::v2::UpdateExternalSystemRequest const&
-          request);
+  UpdateExternalSystem(google::cloud::securitycenter::v2::UpdateExternalSystemRequest const& request);
 
-  virtual StatusOr<google::cloud::securitycenter::v2::Finding> UpdateFinding(
-      google::cloud::securitycenter::v2::UpdateFindingRequest const& request);
+  virtual StatusOr<google::cloud::securitycenter::v2::Finding>
+  UpdateFinding(google::cloud::securitycenter::v2::UpdateFindingRequest const& request);
 
   virtual StatusOr<google::cloud::securitycenter::v2::MuteConfig>
-  UpdateMuteConfig(
-      google::cloud::securitycenter::v2::UpdateMuteConfigRequest const&
-          request);
+  UpdateMuteConfig(google::cloud::securitycenter::v2::UpdateMuteConfigRequest const& request);
 
   virtual StatusOr<google::cloud::securitycenter::v2::NotificationConfig>
-  UpdateNotificationConfig(
-      google::cloud::securitycenter::v2::UpdateNotificationConfigRequest const&
-          request);
+  UpdateNotificationConfig(google::cloud::securitycenter::v2::UpdateNotificationConfigRequest const& request);
 
   virtual StatusOr<google::cloud::securitycenter::v2::ResourceValueConfig>
-  UpdateResourceValueConfig(
-      google::cloud::securitycenter::v2::UpdateResourceValueConfigRequest const&
-          request);
+  UpdateResourceValueConfig(google::cloud::securitycenter::v2::UpdateResourceValueConfigRequest const& request);
 
   virtual StatusOr<google::cloud::securitycenter::v2::SecurityMarks>
-  UpdateSecurityMarks(
-      google::cloud::securitycenter::v2::UpdateSecurityMarksRequest const&
-          request);
+  UpdateSecurityMarks(google::cloud::securitycenter::v2::UpdateSecurityMarksRequest const& request);
 
-  virtual StatusOr<google::cloud::securitycenter::v2::Source> UpdateSource(
-      google::cloud::securitycenter::v2::UpdateSourceRequest const& request);
+  virtual StatusOr<google::cloud::securitycenter::v2::Source>
+  UpdateSource(google::cloud::securitycenter::v2::UpdateSourceRequest const& request);
 
-  virtual StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 
-  virtual Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request);
+  virtual Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
 
-  virtual Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request);
+  virtual Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request);
 };
 
 /**

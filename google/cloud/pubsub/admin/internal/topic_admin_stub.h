@@ -37,51 +37,58 @@ class TopicAdminStub {
   virtual ~TopicAdminStub() = 0;
 
   virtual StatusOr<google::pubsub::v1::Topic> CreateTopic(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::pubsub::v1::Topic const& request) = 0;
 
   virtual StatusOr<google::pubsub::v1::Topic> UpdateTopic(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::pubsub::v1::UpdateTopicRequest const& request) = 0;
 
   virtual StatusOr<google::pubsub::v1::Topic> GetTopic(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::pubsub::v1::GetTopicRequest const& request) = 0;
 
   virtual StatusOr<google::pubsub::v1::ListTopicsResponse> ListTopics(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::pubsub::v1::ListTopicsRequest const& request) = 0;
 
-  virtual StatusOr<google::pubsub::v1::ListTopicSubscriptionsResponse>
-  ListTopicSubscriptions(
-      grpc::ClientContext& context, Options const& options,
+  virtual StatusOr<google::pubsub::v1::ListTopicSubscriptionsResponse> ListTopicSubscriptions(
+      grpc::ClientContext& context,
+      Options const& options,
       google::pubsub::v1::ListTopicSubscriptionsRequest const& request) = 0;
 
-  virtual StatusOr<google::pubsub::v1::ListTopicSnapshotsResponse>
-  ListTopicSnapshots(
-      grpc::ClientContext& context, Options const& options,
+  virtual StatusOr<google::pubsub::v1::ListTopicSnapshotsResponse> ListTopicSnapshots(
+      grpc::ClientContext& context,
+      Options const& options,
       google::pubsub::v1::ListTopicSnapshotsRequest const& request) = 0;
 
   virtual Status DeleteTopic(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::pubsub::v1::DeleteTopicRequest const& request) = 0;
 
-  virtual StatusOr<google::pubsub::v1::DetachSubscriptionResponse>
-  DetachSubscription(
-      grpc::ClientContext& context, Options const& options,
+  virtual StatusOr<google::pubsub::v1::DetachSubscriptionResponse> DetachSubscription(
+      grpc::ClientContext& context,
+      Options const& options,
       google::pubsub::v1::DetachSubscriptionRequest const& request) = 0;
 
   virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) = 0;
 
   virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) = 0;
 
-  virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
-  TestIamPermissions(
-      grpc::ClientContext& context, Options const& options,
+  virtual StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) = 0;
 };
 
@@ -89,54 +96,64 @@ class DefaultTopicAdminStub : public TopicAdminStub {
  public:
   explicit DefaultTopicAdminStub(
       std::unique_ptr<google::pubsub::v1::Publisher::StubInterface> grpc_stub,
-      std::unique_ptr<google::iam::v1::IAMPolicy::StubInterface> iampolicy_stub)
+      std::unique_ptr<google::iam::v1::IAMPolicy::StubInterface> iampolicy_stub
+)
       : grpc_stub_(std::move(grpc_stub)),
         iampolicy_stub_(std::move(iampolicy_stub)) {}
 
   StatusOr<google::pubsub::v1::Topic> CreateTopic(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::pubsub::v1::Topic const& request) override;
 
   StatusOr<google::pubsub::v1::Topic> UpdateTopic(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::pubsub::v1::UpdateTopicRequest const& request) override;
 
   StatusOr<google::pubsub::v1::Topic> GetTopic(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::pubsub::v1::GetTopicRequest const& request) override;
 
   StatusOr<google::pubsub::v1::ListTopicsResponse> ListTopics(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::pubsub::v1::ListTopicsRequest const& request) override;
 
-  StatusOr<google::pubsub::v1::ListTopicSubscriptionsResponse>
-  ListTopicSubscriptions(
-      grpc::ClientContext& context, Options const& options,
-      google::pubsub::v1::ListTopicSubscriptionsRequest const& request)
-      override;
+  StatusOr<google::pubsub::v1::ListTopicSubscriptionsResponse> ListTopicSubscriptions(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::pubsub::v1::ListTopicSubscriptionsRequest const& request) override;
 
   StatusOr<google::pubsub::v1::ListTopicSnapshotsResponse> ListTopicSnapshots(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::pubsub::v1::ListTopicSnapshotsRequest const& request) override;
 
   Status DeleteTopic(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::pubsub::v1::DeleteTopicRequest const& request) override;
 
   StatusOr<google::pubsub::v1::DetachSubscriptionResponse> DetachSubscription(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::pubsub::v1::DetachSubscriptionRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
  private:

@@ -17,11 +17,11 @@
 // source: google/cloud/compute/global_addresses/v1/global_addresses.proto
 
 #include "google/cloud/compute/global_addresses/v1/internal/global_addresses_rest_metadata_decorator.h"
+#include "absl/strings/str_format.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/internal/rest_set_metadata.h"
 #include "google/cloud/status_or.h"
-#include "absl/strings/str_format.h"
 #include <memory>
 #include <utility>
 
@@ -41,102 +41,92 @@ GlobalAddressesRestMetadata::GlobalAddressesRestMetadata(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 GlobalAddressesRestMetadata::AsyncDeleteAddress(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::global_addresses::v1::
-        DeleteAddressRequest const& request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::global_addresses::v1::DeleteAddressRequest const& request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncDeleteAddress(cq, std::move(rest_context),
-                                    std::move(options), request);
+  return child_->AsyncDeleteAddress(
+      cq, std::move(rest_context), std::move(options), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 GlobalAddressesRestMetadata::DeleteAddress(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::global_addresses::v1::
-        DeleteAddressRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::global_addresses::v1::DeleteAddressRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->DeleteAddress(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Address>
 GlobalAddressesRestMetadata::GetAddress(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::global_addresses::v1::GetAddressRequest const&
-        request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::global_addresses::v1::GetAddressRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->GetAddress(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 GlobalAddressesRestMetadata::AsyncInsertAddress(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::global_addresses::v1::
-        InsertAddressRequest const& request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::global_addresses::v1::InsertAddressRequest const& request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncInsertAddress(cq, std::move(rest_context),
-                                    std::move(options), request);
+  return child_->AsyncInsertAddress(
+      cq, std::move(rest_context), std::move(options), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 GlobalAddressesRestMetadata::InsertAddress(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::global_addresses::v1::
-        InsertAddressRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::global_addresses::v1::InsertAddressRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->InsertAddress(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::AddressList>
 GlobalAddressesRestMetadata::ListGlobalAddresses(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::global_addresses::v1::
-        ListGlobalAddressesRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::global_addresses::v1::ListGlobalAddressesRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->ListGlobalAddresses(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 GlobalAddressesRestMetadata::AsyncMove(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::global_addresses::v1::MoveRequest const&
-        request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::global_addresses::v1::MoveRequest const& request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncMove(cq, std::move(rest_context), std::move(options),
-                           request);
+  return child_->AsyncMove(
+      cq, std::move(rest_context), std::move(options), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 GlobalAddressesRestMetadata::Move(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::global_addresses::v1::MoveRequest const&
-        request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::global_addresses::v1::MoveRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->Move(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 GlobalAddressesRestMetadata::AsyncSetLabels(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::global_addresses::v1::SetLabelsRequest const&
-        request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::global_addresses::v1::SetLabelsRequest const& request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncSetLabels(cq, std::move(rest_context), std::move(options),
-                                request);
+  return child_->AsyncSetLabels(
+      cq, std::move(rest_context), std::move(options), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 GlobalAddressesRestMetadata::SetLabels(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::global_addresses::v1::SetLabelsRequest const&
-        request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::global_addresses::v1::SetLabelsRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->SetLabels(rest_context, options, request);
 }
@@ -146,29 +136,28 @@ GlobalAddressesRestMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::global_operations::v1::
-        GetOperationRequest const& request) {
+    google::cloud::cpp::compute::global_operations::v1::GetOperationRequest const& request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncGetOperation(cq, std::move(rest_context),
-                                   std::move(options), request);
+  return child_->AsyncGetOperation(
+      cq, std::move(rest_context), std::move(options), request);
 }
 
-future<Status> GlobalAddressesRestMetadata::AsyncCancelOperation(
+future<Status>
+GlobalAddressesRestMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::global_operations::v1::
-        DeleteOperationRequest const& request) {
+    google::cloud::cpp::compute::global_operations::v1::DeleteOperationRequest const& request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncCancelOperation(cq, std::move(rest_context),
-                                      std::move(options), request);
+  return child_->AsyncCancelOperation(
+      cq, std::move(rest_context), std::move(options), request);
 }
 
 void GlobalAddressesRestMetadata::SetMetadata(
-    rest_internal::RestContext& rest_context, Options const& options,
-    std::vector<std::string> const& params) {
-  google::cloud::rest_internal::SetMetadata(rest_context, options, params,
-                                            api_client_header_);
+      rest_internal::RestContext& rest_context,
+      Options const& options, std::vector<std::string> const& params) {
+  google::cloud::rest_internal::SetMetadata(
+      rest_context, options, params, api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

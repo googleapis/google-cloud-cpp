@@ -61,34 +61,27 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// and move-construction is a relatively efficient operation, consider using
 /// such a copy when using this class from multiple threads.
 ///
-/// [google.cloud.dialogflow.cx.v3.TransitionRouteGroup]:
-/// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/transition_route_group.proto#L128}
+/// [google.cloud.dialogflow.cx.v3.TransitionRouteGroup]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/transition_route_group.proto#L128}
 ///
 class TransitionRouteGroupsClient {
  public:
-  explicit TransitionRouteGroupsClient(
-      std::shared_ptr<TransitionRouteGroupsConnection> connection,
-      Options opts = {});
+  explicit TransitionRouteGroupsClient(std::shared_ptr<TransitionRouteGroupsConnection> connection, Options opts = {});
   ~TransitionRouteGroupsClient();
 
   ///@{
   /// @name Copy and move support
   TransitionRouteGroupsClient(TransitionRouteGroupsClient const&) = default;
-  TransitionRouteGroupsClient& operator=(TransitionRouteGroupsClient const&) =
-      default;
+  TransitionRouteGroupsClient& operator=(TransitionRouteGroupsClient const&) = default;
   TransitionRouteGroupsClient(TransitionRouteGroupsClient&&) = default;
-  TransitionRouteGroupsClient& operator=(TransitionRouteGroupsClient&&) =
-      default;
+  TransitionRouteGroupsClient& operator=(TransitionRouteGroupsClient&&) = default;
   ///@}
 
   ///@{
   /// @name Equality
-  friend bool operator==(TransitionRouteGroupsClient const& a,
-                         TransitionRouteGroupsClient const& b) {
+  friend bool operator==(TransitionRouteGroupsClient const& a, TransitionRouteGroupsClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(TransitionRouteGroupsClient const& a,
-                         TransitionRouteGroupsClient const& b) {
+  friend bool operator!=(TransitionRouteGroupsClient const& a, TransitionRouteGroupsClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -167,10 +160,7 @@ class TransitionRouteGroupsClient {
   ///
   // clang-format on
   StreamRange<google::cloud::dialogflow::cx::v3::TransitionRouteGroup>
-  ListTransitionRouteGroups(
-      google::cloud::dialogflow::cx::v3::ListTransitionRouteGroupsRequest
-          request,
-      Options opts = {});
+  ListTransitionRouteGroups(google::cloud::dialogflow::cx::v3::ListTransitionRouteGroupsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -232,10 +222,7 @@ class TransitionRouteGroupsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::TransitionRouteGroup>
-  GetTransitionRouteGroup(
-      google::cloud::dialogflow::cx::v3::GetTransitionRouteGroupRequest const&
-          request,
-      Options opts = {});
+  GetTransitionRouteGroup(google::cloud::dialogflow::cx::v3::GetTransitionRouteGroupRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -272,11 +259,7 @@ class TransitionRouteGroupsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::TransitionRouteGroup>
-  CreateTransitionRouteGroup(
-      std::string const& parent,
-      google::cloud::dialogflow::cx::v3::TransitionRouteGroup const&
-          transition_route_group,
-      Options opts = {});
+  CreateTransitionRouteGroup(std::string const& parent, google::cloud::dialogflow::cx::v3::TransitionRouteGroup const& transition_route_group, Options opts = {});
 
   // clang-format off
   ///
@@ -312,10 +295,7 @@ class TransitionRouteGroupsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::TransitionRouteGroup>
-  CreateTransitionRouteGroup(
-      google::cloud::dialogflow::cx::v3::
-          CreateTransitionRouteGroupRequest const& request,
-      Options opts = {});
+  CreateTransitionRouteGroup(google::cloud::dialogflow::cx::v3::CreateTransitionRouteGroupRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -346,10 +326,7 @@ class TransitionRouteGroupsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::TransitionRouteGroup>
-  UpdateTransitionRouteGroup(
-      google::cloud::dialogflow::cx::v3::TransitionRouteGroup const&
-          transition_route_group,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  UpdateTransitionRouteGroup(google::cloud::dialogflow::cx::v3::TransitionRouteGroup const& transition_route_group, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -384,10 +361,7 @@ class TransitionRouteGroupsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::TransitionRouteGroup>
-  UpdateTransitionRouteGroup(
-      google::cloud::dialogflow::cx::v3::
-          UpdateTransitionRouteGroupRequest const& request,
-      Options opts = {});
+  UpdateTransitionRouteGroup(google::cloud::dialogflow::cx::v3::UpdateTransitionRouteGroupRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -419,7 +393,8 @@ class TransitionRouteGroupsClient {
   /// [google.cloud.dialogflow.cx.v3.TransitionRouteGroup]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/transition_route_group.proto#L128}
   ///
   // clang-format on
-  Status DeleteTransitionRouteGroup(std::string const& name, Options opts = {});
+  Status
+  DeleteTransitionRouteGroup(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -451,10 +426,8 @@ class TransitionRouteGroupsClient {
   /// [google.cloud.dialogflow.cx.v3.TransitionRouteGroup]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/transition_route_group.proto#L128}
   ///
   // clang-format on
-  Status DeleteTransitionRouteGroup(
-      google::cloud::dialogflow::cx::v3::
-          DeleteTransitionRouteGroupRequest const& request,
-      Options opts = {});
+  Status
+  DeleteTransitionRouteGroup(google::cloud::dialogflow::cx::v3::DeleteTransitionRouteGroupRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -492,8 +465,8 @@ class TransitionRouteGroupsClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request, Options opts = {});
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -522,9 +495,8 @@ class TransitionRouteGroupsClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -559,8 +531,8 @@ class TransitionRouteGroupsClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -599,8 +571,8 @@ class TransitionRouteGroupsClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -626,8 +598,8 @@ class TransitionRouteGroupsClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -658,9 +630,8 @@ class TransitionRouteGroupsClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -694,7 +665,8 @@ class TransitionRouteGroupsClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(std::string const& name, Options opts = {});
+  Status
+  CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -733,9 +705,8 @@ class TransitionRouteGroupsClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request,
-      Options opts = {});
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<TransitionRouteGroupsConnection> connection_;

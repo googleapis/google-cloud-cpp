@@ -34,10 +34,8 @@ using ::google::cloud::appengine_v1::DomainMappingsPollingPolicyOption;
 /// @deprecated Use appengine_v1::DomainMappingsBackoffPolicyOption directly.
 using ::google::cloud::appengine_v1::DomainMappingsBackoffPolicyOption;
 
-/// @deprecated Use
-/// appengine_v1::DomainMappingsConnectionIdempotencyPolicyOption directly.
-using ::google::cloud::appengine_v1::
-    DomainMappingsConnectionIdempotencyPolicyOption;
+/// @deprecated Use appengine_v1::DomainMappingsConnectionIdempotencyPolicyOption directly.
+using ::google::cloud::appengine_v1::DomainMappingsConnectionIdempotencyPolicyOption;
 
 /// @deprecated Use appengine_v1::DomainMappingsPolicyOptionList directly.
 using ::google::cloud::appengine_v1::DomainMappingsPolicyOptionList;

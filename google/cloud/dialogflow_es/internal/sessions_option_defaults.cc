@@ -19,9 +19,9 @@
 #include "google/cloud/dialogflow_es/internal/sessions_option_defaults.h"
 #include "google/cloud/dialogflow_es/sessions_connection.h"
 #include "google/cloud/dialogflow_es/sessions_options.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include <memory>
 #include <utility>
 
@@ -36,25 +36,21 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options SessionsDefaultOptions(std::string const& location, Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_SESSIONS_ENDPOINT", "",
-      "GOOGLE_CLOUD_CPP_SESSIONS_AUTHORITY",
-      absl::StrCat(location, location.empty() ? "" : "-",
-                   "dialogflow.googleapis.com"));
+      std::move(options), "GOOGLE_CLOUD_CPP_SESSIONS_ENDPOINT",
+      "", "GOOGLE_CLOUD_CPP_SESSIONS_AUTHORITY",
+      absl::StrCat(location, location.empty() ? "" : "-", "dialogflow.googleapis.com"));
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<dialogflow_es::SessionsRetryPolicyOption>()) {
     options.set<dialogflow_es::SessionsRetryPolicyOption>(
-        dialogflow_es::SessionsLimitedTimeRetryPolicy(std::chrono::minutes(30))
-            .clone());
+        dialogflow_es::SessionsLimitedTimeRetryPolicy(
+            std::chrono::minutes(30)).clone());
   }
   if (!options.has<dialogflow_es::SessionsBackoffPolicyOption>()) {
     options.set<dialogflow_es::SessionsBackoffPolicyOption>(
-        ExponentialBackoffPolicy(
-            std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
-            .clone());
+        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
   }
-  if (!options
-           .has<dialogflow_es::SessionsConnectionIdempotencyPolicyOption>()) {
+  if (!options.has<dialogflow_es::SessionsConnectionIdempotencyPolicyOption>()) {
     options.set<dialogflow_es::SessionsConnectionIdempotencyPolicyOption>(
         dialogflow_es::MakeDefaultSessionsConnectionIdempotencyPolicy());
   }

@@ -34,9 +34,7 @@ ProjectServiceTracingConnection::ProjectServiceTracingConnection(
     : child_(std::move(child)) {}
 
 future<StatusOr<google::cloud::discoveryengine::v1::Project>>
-ProjectServiceTracingConnection::ProvisionProject(
-    google::cloud::discoveryengine::v1::ProvisionProjectRequest const&
-        request) {
+ProjectServiceTracingConnection::ProvisionProject(google::cloud::discoveryengine::v1::ProvisionProjectRequest const& request) {
   auto span = internal::MakeSpan(
       "discoveryengine_v1::ProjectServiceConnection::ProvisionProject");
   internal::OTelScope scope(span);
@@ -45,14 +43,12 @@ ProjectServiceTracingConnection::ProvisionProject(
 
 StatusOr<google::longrunning::Operation>
 ProjectServiceTracingConnection::ProvisionProject(
-    NoAwaitTag,
-    google::cloud::discoveryengine::v1::ProvisionProjectRequest const&
-        request) {
+    NoAwaitTag, google::cloud::discoveryengine::v1::ProvisionProjectRequest const& request) {
   auto span = internal::MakeSpan(
       "discoveryengine_v1::ProjectServiceConnection::ProvisionProject");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span,
-                           child_->ProvisionProject(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->ProvisionProject(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::discoveryengine::v1::Project>>
@@ -62,33 +58,28 @@ ProjectServiceTracingConnection::ProvisionProject(
       "discoveryengine_v1::ProjectServiceConnection::ProvisionProject");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->ProvisionProject(operation));
+      child_->ProvisionProject(operation));
 }
 
 StreamRange<google::longrunning::Operation>
-ProjectServiceTracingConnection::ListOperations(
-    google::longrunning::ListOperationsRequest request) {
-  auto span = internal::MakeSpan(
-      "discoveryengine_v1::ProjectServiceConnection::ListOperations");
+ProjectServiceTracingConnection::ListOperations(google::longrunning::ListOperationsRequest request) {
+  auto span = internal::MakeSpan("discoveryengine_v1::ProjectServiceConnection::ListOperations");
   internal::OTelScope scope(span);
   auto sr = child_->ListOperations(std::move(request));
   return internal::MakeTracedStreamRange<google::longrunning::Operation>(
-      std::move(span), std::move(sr));
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::longrunning::Operation>
-ProjectServiceTracingConnection::GetOperation(
-    google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpan(
-      "discoveryengine_v1::ProjectServiceConnection::GetOperation");
+ProjectServiceTracingConnection::GetOperation(google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpan("discoveryengine_v1::ProjectServiceConnection::GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOperation(request));
 }
 
-Status ProjectServiceTracingConnection::CancelOperation(
-    google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpan(
-      "discoveryengine_v1::ProjectServiceConnection::CancelOperation");
+Status
+ProjectServiceTracingConnection::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
+  auto span = internal::MakeSpan("discoveryengine_v1::ProjectServiceConnection::CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CancelOperation(request));
 }

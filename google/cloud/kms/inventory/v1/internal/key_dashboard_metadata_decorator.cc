@@ -46,24 +46,24 @@ KeyDashboardServiceMetadata::KeyDashboardServiceMetadata(
 
 StatusOr<google::cloud::kms::inventory::v1::ListCryptoKeysResponse>
 KeyDashboardServiceMetadata::ListCryptoKeys(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::kms::inventory::v1::ListCryptoKeysRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListCryptoKeys(context, options, request);
 }
 
-void KeyDashboardServiceMetadata::SetMetadata(
-    grpc::ClientContext& context, Options const& options,
-    std::string const& request_params) {
+void KeyDashboardServiceMetadata::SetMetadata(grpc::ClientContext& context,
+                                        Options const& options,
+                                        std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
 void KeyDashboardServiceMetadata::SetMetadata(grpc::ClientContext& context,
-                                              Options const& options) {
-  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
-                                       api_client_header_);
+                                        Options const& options) {
+  google::cloud::internal::SetMetadata(
+      context, options, fixed_metadata_, api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

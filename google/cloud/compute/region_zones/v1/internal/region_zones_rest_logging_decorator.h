@@ -38,14 +38,12 @@ class RegionZonesRestLogging : public RegionZonesRestStub {
  public:
   ~RegionZonesRestLogging() override = default;
   RegionZonesRestLogging(std::shared_ptr<RegionZonesRestStub> child,
-                         TracingOptions tracing_options,
-                         std::set<std::string> components);
+                       TracingOptions tracing_options,
+                       std::set<std::string> components);
 
   StatusOr<google::cloud::cpp::compute::v1::ZoneList> ListRegionZones(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::region_zones::v1::
-          ListRegionZonesRequest const& request) override;
+      Options const& options, google::cloud::cpp::compute::region_zones::v1::ListRegionZonesRequest const& request) override;
 
  private:
   std::shared_ptr<RegionZonesRestStub> child_;

@@ -42,54 +42,41 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockDocumentServiceConnection
-    : public discoveryengine_v1::DocumentServiceConnection {
+class MockDocumentServiceConnection : public discoveryengine_v1::DocumentServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::discoveryengine::v1::Document>, GetDocument,
-      (google::cloud::discoveryengine::v1::GetDocumentRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::discoveryengine::v1::Document>,
+  GetDocument,
+  (google::cloud::discoveryengine::v1::GetDocumentRequest const& request), (override));
 
-  MOCK_METHOD(
-      (StreamRange<google::cloud::discoveryengine::v1::Document>),
-      ListDocuments,
-      (google::cloud::discoveryengine::v1::ListDocumentsRequest request),
-      (override));
+  MOCK_METHOD((StreamRange<google::cloud::discoveryengine::v1::Document>),
+  ListDocuments,
+  (google::cloud::discoveryengine::v1::ListDocumentsRequest request), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::discoveryengine::v1::Document>,
-              CreateDocument,
-              (google::cloud::discoveryengine::v1::CreateDocumentRequest const&
-                   request),
-              (override));
+  CreateDocument,
+  (google::cloud::discoveryengine::v1::CreateDocumentRequest const& request), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::discoveryengine::v1::Document>,
-              UpdateDocument,
-              (google::cloud::discoveryengine::v1::UpdateDocumentRequest const&
-                   request),
-              (override));
+  UpdateDocument,
+  (google::cloud::discoveryengine::v1::UpdateDocumentRequest const& request), (override));
 
-  MOCK_METHOD(Status, DeleteDocument,
-              (google::cloud::discoveryengine::v1::DeleteDocumentRequest const&
-                   request),
-              (override));
+  MOCK_METHOD(Status,
+  DeleteDocument,
+  (google::cloud::discoveryengine::v1::DeleteDocumentRequest const& request), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// ImportDocuments(Matcher<google::cloud::discoveryengine::v1::ImportDocumentsRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, ImportDocuments(Matcher<google::cloud::discoveryengine::v1::ImportDocumentsRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<
-                  google::cloud::discoveryengine::v1::ImportDocumentsResponse>>,
-              ImportDocuments,
-              (google::cloud::discoveryengine::v1::ImportDocumentsRequest const&
-                   request),
-              (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::discoveryengine::v1::ImportDocumentsResponse>>,
+  ImportDocuments,
+  (google::cloud::discoveryengine::v1::ImportDocumentsRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -97,41 +84,33 @@ class MockDocumentServiceConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, ImportDocuments(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, ImportDocuments,
-              (NoAwaitTag,
-               google::cloud::discoveryengine::v1::ImportDocumentsRequest const&
-                   request),
-              (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  ImportDocuments, (NoAwaitTag,
+    google::cloud::discoveryengine::v1::ImportDocumentsRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, ImportDocuments(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, ImportDocuments(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<
-                  google::cloud::discoveryengine::v1::ImportDocumentsResponse>>,
-              ImportDocuments,
-              (google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::discoveryengine::v1::ImportDocumentsResponse>>,
+  ImportDocuments, (
+    google::longrunning::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// PurgeDocuments(Matcher<google::cloud::discoveryengine::v1::PurgeDocumentsRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, PurgeDocuments(Matcher<google::cloud::discoveryengine::v1::PurgeDocumentsRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<
-          StatusOr<google::cloud::discoveryengine::v1::PurgeDocumentsResponse>>,
-      PurgeDocuments,
-      (google::cloud::discoveryengine::v1::PurgeDocumentsRequest const&
-           request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::discoveryengine::v1::PurgeDocumentsResponse>>,
+  PurgeDocuments,
+  (google::cloud::discoveryengine::v1::PurgeDocumentsRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -139,43 +118,37 @@ class MockDocumentServiceConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, PurgeDocuments(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, PurgeDocuments,
-              (NoAwaitTag,
-               google::cloud::discoveryengine::v1::PurgeDocumentsRequest const&
-                   request),
-              (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  PurgeDocuments, (NoAwaitTag,
+    google::cloud::discoveryengine::v1::PurgeDocumentsRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, PurgeDocuments(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, PurgeDocuments(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<
-          StatusOr<google::cloud::discoveryengine::v1::PurgeDocumentsResponse>>,
-      PurgeDocuments, (google::longrunning::Operation const& operation),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::discoveryengine::v1::PurgeDocumentsResponse>>,
+  PurgeDocuments, (
+    google::longrunning::Operation const& operation), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::discoveryengine::v1::
-                           BatchGetDocumentsMetadataResponse>,
-              BatchGetDocumentsMetadata,
-              (google::cloud::discoveryengine::v1::
-                   BatchGetDocumentsMetadataRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::discoveryengine::v1::BatchGetDocumentsMetadataResponse>,
+  BatchGetDocumentsMetadata,
+  (google::cloud::discoveryengine::v1::BatchGetDocumentsMetadataRequest const& request), (override));
 
-  MOCK_METHOD((StreamRange<google::longrunning::Operation>), ListOperations,
-              (google::longrunning::ListOperationsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::longrunning::Operation>),
+  ListOperations,
+  (google::longrunning::ListOperationsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
-              (google::longrunning::GetOperationRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  GetOperation,
+  (google::longrunning::GetOperationRequest const& request), (override));
 
-  MOCK_METHOD(Status, CancelOperation,
-              (google::longrunning::CancelOperationRequest const& request),
-              (override));
+  MOCK_METHOD(Status,
+  CancelOperation,
+  (google::longrunning::CancelOperationRequest const& request), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

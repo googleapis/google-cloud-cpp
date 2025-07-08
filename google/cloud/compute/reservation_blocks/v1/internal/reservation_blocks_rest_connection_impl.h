@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_RESERVATION_BLOCKS_V1_INTERNAL_RESERVATION_BLOCKS_REST_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_RESERVATION_BLOCKS_V1_INTERNAL_RESERVATION_BLOCKS_REST_CONNECTION_IMPL_H
 
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/reservation_blocks/v1/internal/reservation_blocks_rest_stub.h"
 #include "google/cloud/compute/reservation_blocks/v1/internal/reservation_blocks_retry_traits.h"
 #include "google/cloud/compute/reservation_blocks/v1/reservation_blocks_connection.h"
 #include "google/cloud/compute/reservation_blocks/v1/reservation_blocks_connection_idempotency_policy.h"
 #include "google/cloud/compute/reservation_blocks/v1/reservation_blocks_options.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -44,72 +44,50 @@ class ReservationBlocksRestConnectionImpl
   ~ReservationBlocksRestConnectionImpl() override = default;
 
   ReservationBlocksRestConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<
-          compute_reservation_blocks_v1_internal::ReservationBlocksRestStub>
-          stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<compute_reservation_blocks_v1_internal::ReservationBlocksRestStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
   StatusOr<google::cloud::cpp::compute::v1::ReservationBlocksGetResponse>
-  GetReservationBlocksGetResponse(
-      google::cloud::cpp::compute::reservation_blocks::v1::
-          GetReservationBlocksGetResponseRequest const& request) override;
+  GetReservationBlocksGetResponse(google::cloud::cpp::compute::reservation_blocks::v1::GetReservationBlocksGetResponseRequest const& request) override;
 
   StreamRange<google::cloud::cpp::compute::v1::ReservationBlock>
-  ListReservationBlocks(google::cloud::cpp::compute::reservation_blocks::v1::
-                            ListReservationBlocksRequest request) override;
+  ListReservationBlocks(google::cloud::cpp::compute::reservation_blocks::v1::ListReservationBlocksRequest request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PerformMaintenance(google::cloud::cpp::compute::reservation_blocks::v1::
-                         PerformMaintenanceRequest const& request) override;
+  PerformMaintenance(google::cloud::cpp::compute::reservation_blocks::v1::PerformMaintenanceRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation> PerformMaintenance(
-      NoAwaitTag, google::cloud::cpp::compute::reservation_blocks::v1::
-                      PerformMaintenanceRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  PerformMaintenance(NoAwaitTag,
+      google::cloud::cpp::compute::reservation_blocks::v1::PerformMaintenanceRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   PerformMaintenance(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
  private:
-  static std::unique_ptr<
-      compute_reservation_blocks_v1::ReservationBlocksRetryPolicy>
+  static std::unique_ptr<compute_reservation_blocks_v1::ReservationBlocksRetryPolicy>
   retry_policy(Options const& options) {
-    return options
-        .get<
-            compute_reservation_blocks_v1::ReservationBlocksRetryPolicyOption>()
-        ->clone();
+    return options.get<compute_reservation_blocks_v1::ReservationBlocksRetryPolicyOption>()->clone();
   }
 
   static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options
-        .get<compute_reservation_blocks_v1::
-                 ReservationBlocksBackoffPolicyOption>()
-        ->clone();
+    return options.get<compute_reservation_blocks_v1::ReservationBlocksBackoffPolicyOption>()->clone();
   }
 
-  static std::unique_ptr<compute_reservation_blocks_v1::
-                             ReservationBlocksConnectionIdempotencyPolicy>
+  static std::unique_ptr<compute_reservation_blocks_v1::ReservationBlocksConnectionIdempotencyPolicy>
   idempotency_policy(Options const& options) {
-    return options
-        .get<compute_reservation_blocks_v1::
-                 ReservationBlocksConnectionIdempotencyPolicyOption>()
-        ->clone();
+    return options.get<compute_reservation_blocks_v1::ReservationBlocksConnectionIdempotencyPolicyOption>()->clone();
   }
 
   static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-    return options
-        .get<compute_reservation_blocks_v1::
-                 ReservationBlocksPollingPolicyOption>()
-        ->clone();
+    return options.get<compute_reservation_blocks_v1::ReservationBlocksPollingPolicyOption>()->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<
-      compute_reservation_blocks_v1_internal::ReservationBlocksRestStub>
-      stub_;
+  std::shared_ptr<compute_reservation_blocks_v1_internal::ReservationBlocksRestStub> stub_;
   Options options_;
 };
 

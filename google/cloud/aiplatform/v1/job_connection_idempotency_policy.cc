@@ -26,219 +26,158 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-JobServiceConnectionIdempotencyPolicy::
-    ~JobServiceConnectionIdempotencyPolicy() = default;
+JobServiceConnectionIdempotencyPolicy::~JobServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<JobServiceConnectionIdempotencyPolicy>
 JobServiceConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<JobServiceConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency JobServiceConnectionIdempotencyPolicy::CreateCustomJob(
-    google::cloud::aiplatform::v1::CreateCustomJobRequest const&) {
+Idempotency JobServiceConnectionIdempotencyPolicy::CreateCustomJob(google::cloud::aiplatform::v1::CreateCustomJobRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency JobServiceConnectionIdempotencyPolicy::GetCustomJob(
-    google::cloud::aiplatform::v1::GetCustomJobRequest const&) {
+Idempotency JobServiceConnectionIdempotencyPolicy::GetCustomJob(google::cloud::aiplatform::v1::GetCustomJobRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency JobServiceConnectionIdempotencyPolicy::ListCustomJobs(
-    google::cloud::aiplatform::v1::ListCustomJobsRequest) {  // NOLINT
+Idempotency JobServiceConnectionIdempotencyPolicy::ListCustomJobs(google::cloud::aiplatform::v1::ListCustomJobsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency JobServiceConnectionIdempotencyPolicy::DeleteCustomJob(
-    google::cloud::aiplatform::v1::DeleteCustomJobRequest const&) {
+Idempotency JobServiceConnectionIdempotencyPolicy::DeleteCustomJob(google::cloud::aiplatform::v1::DeleteCustomJobRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency JobServiceConnectionIdempotencyPolicy::CancelCustomJob(
-    google::cloud::aiplatform::v1::CancelCustomJobRequest const&) {
+Idempotency JobServiceConnectionIdempotencyPolicy::CancelCustomJob(google::cloud::aiplatform::v1::CancelCustomJobRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency JobServiceConnectionIdempotencyPolicy::CreateDataLabelingJob(
-    google::cloud::aiplatform::v1::CreateDataLabelingJobRequest const&) {
+Idempotency JobServiceConnectionIdempotencyPolicy::CreateDataLabelingJob(google::cloud::aiplatform::v1::CreateDataLabelingJobRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency JobServiceConnectionIdempotencyPolicy::GetDataLabelingJob(
-    google::cloud::aiplatform::v1::GetDataLabelingJobRequest const&) {
+Idempotency JobServiceConnectionIdempotencyPolicy::GetDataLabelingJob(google::cloud::aiplatform::v1::GetDataLabelingJobRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency JobServiceConnectionIdempotencyPolicy::ListDataLabelingJobs(
-    google::cloud::aiplatform::v1::ListDataLabelingJobsRequest) {  // NOLINT
+Idempotency JobServiceConnectionIdempotencyPolicy::ListDataLabelingJobs(google::cloud::aiplatform::v1::ListDataLabelingJobsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency JobServiceConnectionIdempotencyPolicy::DeleteDataLabelingJob(
-    google::cloud::aiplatform::v1::DeleteDataLabelingJobRequest const&) {
+Idempotency JobServiceConnectionIdempotencyPolicy::DeleteDataLabelingJob(google::cloud::aiplatform::v1::DeleteDataLabelingJobRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency JobServiceConnectionIdempotencyPolicy::CancelDataLabelingJob(
-    google::cloud::aiplatform::v1::CancelDataLabelingJobRequest const&) {
+Idempotency JobServiceConnectionIdempotencyPolicy::CancelDataLabelingJob(google::cloud::aiplatform::v1::CancelDataLabelingJobRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency
-JobServiceConnectionIdempotencyPolicy::CreateHyperparameterTuningJob(
-    google::cloud::aiplatform::v1::
-        CreateHyperparameterTuningJobRequest const&) {
+Idempotency JobServiceConnectionIdempotencyPolicy::CreateHyperparameterTuningJob(google::cloud::aiplatform::v1::CreateHyperparameterTuningJobRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency JobServiceConnectionIdempotencyPolicy::GetHyperparameterTuningJob(
-    google::cloud::aiplatform::v1::GetHyperparameterTuningJobRequest const&) {
+Idempotency JobServiceConnectionIdempotencyPolicy::GetHyperparameterTuningJob(google::cloud::aiplatform::v1::GetHyperparameterTuningJobRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency JobServiceConnectionIdempotencyPolicy::ListHyperparameterTuningJobs(
-    google::cloud::aiplatform::v1::
-        ListHyperparameterTuningJobsRequest) {  // NOLINT
+Idempotency JobServiceConnectionIdempotencyPolicy::ListHyperparameterTuningJobs(google::cloud::aiplatform::v1::ListHyperparameterTuningJobsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency
-JobServiceConnectionIdempotencyPolicy::DeleteHyperparameterTuningJob(
-    google::cloud::aiplatform::v1::
-        DeleteHyperparameterTuningJobRequest const&) {
+Idempotency JobServiceConnectionIdempotencyPolicy::DeleteHyperparameterTuningJob(google::cloud::aiplatform::v1::DeleteHyperparameterTuningJobRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency
-JobServiceConnectionIdempotencyPolicy::CancelHyperparameterTuningJob(
-    google::cloud::aiplatform::v1::
-        CancelHyperparameterTuningJobRequest const&) {
+Idempotency JobServiceConnectionIdempotencyPolicy::CancelHyperparameterTuningJob(google::cloud::aiplatform::v1::CancelHyperparameterTuningJobRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency JobServiceConnectionIdempotencyPolicy::CreateNasJob(
-    google::cloud::aiplatform::v1::CreateNasJobRequest const&) {
+Idempotency JobServiceConnectionIdempotencyPolicy::CreateNasJob(google::cloud::aiplatform::v1::CreateNasJobRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency JobServiceConnectionIdempotencyPolicy::GetNasJob(
-    google::cloud::aiplatform::v1::GetNasJobRequest const&) {
+Idempotency JobServiceConnectionIdempotencyPolicy::GetNasJob(google::cloud::aiplatform::v1::GetNasJobRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency JobServiceConnectionIdempotencyPolicy::ListNasJobs(
-    google::cloud::aiplatform::v1::ListNasJobsRequest) {  // NOLINT
+Idempotency JobServiceConnectionIdempotencyPolicy::ListNasJobs(google::cloud::aiplatform::v1::ListNasJobsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency JobServiceConnectionIdempotencyPolicy::DeleteNasJob(
-    google::cloud::aiplatform::v1::DeleteNasJobRequest const&) {
+Idempotency JobServiceConnectionIdempotencyPolicy::DeleteNasJob(google::cloud::aiplatform::v1::DeleteNasJobRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency JobServiceConnectionIdempotencyPolicy::CancelNasJob(
-    google::cloud::aiplatform::v1::CancelNasJobRequest const&) {
+Idempotency JobServiceConnectionIdempotencyPolicy::CancelNasJob(google::cloud::aiplatform::v1::CancelNasJobRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency JobServiceConnectionIdempotencyPolicy::GetNasTrialDetail(
-    google::cloud::aiplatform::v1::GetNasTrialDetailRequest const&) {
+Idempotency JobServiceConnectionIdempotencyPolicy::GetNasTrialDetail(google::cloud::aiplatform::v1::GetNasTrialDetailRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency JobServiceConnectionIdempotencyPolicy::ListNasTrialDetails(
-    google::cloud::aiplatform::v1::ListNasTrialDetailsRequest) {  // NOLINT
+Idempotency JobServiceConnectionIdempotencyPolicy::ListNasTrialDetails(google::cloud::aiplatform::v1::ListNasTrialDetailsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency JobServiceConnectionIdempotencyPolicy::CreateBatchPredictionJob(
-    google::cloud::aiplatform::v1::CreateBatchPredictionJobRequest const&) {
+Idempotency JobServiceConnectionIdempotencyPolicy::CreateBatchPredictionJob(google::cloud::aiplatform::v1::CreateBatchPredictionJobRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency JobServiceConnectionIdempotencyPolicy::GetBatchPredictionJob(
-    google::cloud::aiplatform::v1::GetBatchPredictionJobRequest const&) {
+Idempotency JobServiceConnectionIdempotencyPolicy::GetBatchPredictionJob(google::cloud::aiplatform::v1::GetBatchPredictionJobRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency JobServiceConnectionIdempotencyPolicy::ListBatchPredictionJobs(
-    google::cloud::aiplatform::v1::ListBatchPredictionJobsRequest) {  // NOLINT
+Idempotency JobServiceConnectionIdempotencyPolicy::ListBatchPredictionJobs(google::cloud::aiplatform::v1::ListBatchPredictionJobsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency JobServiceConnectionIdempotencyPolicy::DeleteBatchPredictionJob(
-    google::cloud::aiplatform::v1::DeleteBatchPredictionJobRequest const&) {
+Idempotency JobServiceConnectionIdempotencyPolicy::DeleteBatchPredictionJob(google::cloud::aiplatform::v1::DeleteBatchPredictionJobRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency JobServiceConnectionIdempotencyPolicy::CancelBatchPredictionJob(
-    google::cloud::aiplatform::v1::CancelBatchPredictionJobRequest const&) {
+Idempotency JobServiceConnectionIdempotencyPolicy::CancelBatchPredictionJob(google::cloud::aiplatform::v1::CancelBatchPredictionJobRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency
-JobServiceConnectionIdempotencyPolicy::CreateModelDeploymentMonitoringJob(
-    google::cloud::aiplatform::v1::
-        CreateModelDeploymentMonitoringJobRequest const&) {
+Idempotency JobServiceConnectionIdempotencyPolicy::CreateModelDeploymentMonitoringJob(google::cloud::aiplatform::v1::CreateModelDeploymentMonitoringJobRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency JobServiceConnectionIdempotencyPolicy::
-    SearchModelDeploymentMonitoringStatsAnomalies(
-        google::cloud::aiplatform::v1::
-            SearchModelDeploymentMonitoringStatsAnomaliesRequest) {  // NOLINT
+Idempotency JobServiceConnectionIdempotencyPolicy::SearchModelDeploymentMonitoringStatsAnomalies(google::cloud::aiplatform::v1::SearchModelDeploymentMonitoringStatsAnomaliesRequest) {  // NOLINT
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency
-JobServiceConnectionIdempotencyPolicy::GetModelDeploymentMonitoringJob(
-    google::cloud::aiplatform::v1::
-        GetModelDeploymentMonitoringJobRequest const&) {
+Idempotency JobServiceConnectionIdempotencyPolicy::GetModelDeploymentMonitoringJob(google::cloud::aiplatform::v1::GetModelDeploymentMonitoringJobRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency
-JobServiceConnectionIdempotencyPolicy::ListModelDeploymentMonitoringJobs(
-    google::cloud::aiplatform::v1::
-        ListModelDeploymentMonitoringJobsRequest) {  // NOLINT
+Idempotency JobServiceConnectionIdempotencyPolicy::ListModelDeploymentMonitoringJobs(google::cloud::aiplatform::v1::ListModelDeploymentMonitoringJobsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency
-JobServiceConnectionIdempotencyPolicy::UpdateModelDeploymentMonitoringJob(
-    google::cloud::aiplatform::v1::
-        UpdateModelDeploymentMonitoringJobRequest const&) {
+Idempotency JobServiceConnectionIdempotencyPolicy::UpdateModelDeploymentMonitoringJob(google::cloud::aiplatform::v1::UpdateModelDeploymentMonitoringJobRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency
-JobServiceConnectionIdempotencyPolicy::DeleteModelDeploymentMonitoringJob(
-    google::cloud::aiplatform::v1::
-        DeleteModelDeploymentMonitoringJobRequest const&) {
+Idempotency JobServiceConnectionIdempotencyPolicy::DeleteModelDeploymentMonitoringJob(google::cloud::aiplatform::v1::DeleteModelDeploymentMonitoringJobRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency
-JobServiceConnectionIdempotencyPolicy::PauseModelDeploymentMonitoringJob(
-    google::cloud::aiplatform::v1::
-        PauseModelDeploymentMonitoringJobRequest const&) {
+Idempotency JobServiceConnectionIdempotencyPolicy::PauseModelDeploymentMonitoringJob(google::cloud::aiplatform::v1::PauseModelDeploymentMonitoringJobRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency
-JobServiceConnectionIdempotencyPolicy::ResumeModelDeploymentMonitoringJob(
-    google::cloud::aiplatform::v1::
-        ResumeModelDeploymentMonitoringJobRequest const&) {
+Idempotency JobServiceConnectionIdempotencyPolicy::ResumeModelDeploymentMonitoringJob(google::cloud::aiplatform::v1::ResumeModelDeploymentMonitoringJobRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency JobServiceConnectionIdempotencyPolicy::ListLocations(
-    google::cloud::location::ListLocationsRequest) {  // NOLINT
+Idempotency JobServiceConnectionIdempotencyPolicy::ListLocations(google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency JobServiceConnectionIdempotencyPolicy::GetLocation(
-    google::cloud::location::GetLocationRequest const&) {
+Idempotency JobServiceConnectionIdempotencyPolicy::GetLocation(google::cloud::location::GetLocationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
@@ -248,43 +187,36 @@ Idempotency JobServiceConnectionIdempotencyPolicy::SetIamPolicy(
                                          : Idempotency::kIdempotent;
 }
 
-Idempotency JobServiceConnectionIdempotencyPolicy::GetIamPolicy(
-    google::iam::v1::GetIamPolicyRequest const&) {
+Idempotency JobServiceConnectionIdempotencyPolicy::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency JobServiceConnectionIdempotencyPolicy::TestIamPermissions(
-    google::iam::v1::TestIamPermissionsRequest const&) {
+Idempotency JobServiceConnectionIdempotencyPolicy::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency JobServiceConnectionIdempotencyPolicy::ListOperations(
-    google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency JobServiceConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency JobServiceConnectionIdempotencyPolicy::GetOperation(
-    google::longrunning::GetOperationRequest const&) {
+Idempotency JobServiceConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency JobServiceConnectionIdempotencyPolicy::DeleteOperation(
-    google::longrunning::DeleteOperationRequest const&) {
+Idempotency JobServiceConnectionIdempotencyPolicy::DeleteOperation(google::longrunning::DeleteOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency JobServiceConnectionIdempotencyPolicy::CancelOperation(
-    google::longrunning::CancelOperationRequest const&) {
+Idempotency JobServiceConnectionIdempotencyPolicy::CancelOperation(google::longrunning::CancelOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency JobServiceConnectionIdempotencyPolicy::WaitOperation(
-    google::longrunning::WaitOperationRequest const&) {
+Idempotency JobServiceConnectionIdempotencyPolicy::WaitOperation(google::longrunning::WaitOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<JobServiceConnectionIdempotencyPolicy>
-MakeDefaultJobServiceConnectionIdempotencyPolicy() {
+    MakeDefaultJobServiceConnectionIdempotencyPolicy() {
   return std::make_unique<JobServiceConnectionIdempotencyPolicy>();
 }
 

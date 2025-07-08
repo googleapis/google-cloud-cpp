@@ -29,19 +29,20 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ProjectServiceRestLogging::ProjectServiceRestLogging(
     std::shared_ptr<ProjectServiceRestStub> child,
-    TracingOptions tracing_options, std::set<std::string> components)
-    : child_(std::move(child)),
-      tracing_options_(std::move(tracing_options)),
+    TracingOptions tracing_options,
+    std::set<std::string> components)
+    : child_(std::move(child)), tracing_options_(std::move(tracing_options)),
       components_(std::move(components)) {}
 
 StatusOr<google::cloud::bigquery::v2::GetServiceAccountResponse>
 ProjectServiceRestLogging::GetServiceAccount(
-    rest_internal::RestContext& rest_context, Options const& options,
+    rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::bigquery::v2::GetServiceAccountRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::cloud::bigquery::v2::GetServiceAccountRequest const&
-                 request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
+             google::cloud::bigquery::v2::GetServiceAccountRequest const& request) {
         return child_->GetServiceAccount(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);

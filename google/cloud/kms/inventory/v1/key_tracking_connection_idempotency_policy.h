@@ -34,20 +34,17 @@ class KeyTrackingServiceConnectionIdempotencyPolicy {
   virtual ~KeyTrackingServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<KeyTrackingServiceConnectionIdempotencyPolicy> clone()
-      const;
+  virtual std::unique_ptr<KeyTrackingServiceConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency GetProtectedResourcesSummary(
-      google::cloud::kms::inventory::v1::
-          GetProtectedResourcesSummaryRequest const& request);
+  virtual google::cloud::Idempotency
+  GetProtectedResourcesSummary(google::cloud::kms::inventory::v1::GetProtectedResourcesSummaryRequest const& request);
 
-  virtual google::cloud::Idempotency SearchProtectedResources(
-      google::cloud::kms::inventory::v1::SearchProtectedResourcesRequest
-          request);
+  virtual google::cloud::Idempotency
+  SearchProtectedResources(google::cloud::kms::inventory::v1::SearchProtectedResourcesRequest request);
 };
 
 std::unique_ptr<KeyTrackingServiceConnectionIdempotencyPolicy>
-MakeDefaultKeyTrackingServiceConnectionIdempotencyPolicy();
+    MakeDefaultKeyTrackingServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace kms_inventory_v1

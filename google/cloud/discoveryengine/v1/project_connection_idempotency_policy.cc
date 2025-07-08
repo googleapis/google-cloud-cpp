@@ -26,36 +26,31 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-ProjectServiceConnectionIdempotencyPolicy::
-    ~ProjectServiceConnectionIdempotencyPolicy() = default;
+ProjectServiceConnectionIdempotencyPolicy::~ProjectServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<ProjectServiceConnectionIdempotencyPolicy>
 ProjectServiceConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<ProjectServiceConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency ProjectServiceConnectionIdempotencyPolicy::ProvisionProject(
-    google::cloud::discoveryengine::v1::ProvisionProjectRequest const&) {
+Idempotency ProjectServiceConnectionIdempotencyPolicy::ProvisionProject(google::cloud::discoveryengine::v1::ProvisionProjectRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ProjectServiceConnectionIdempotencyPolicy::ListOperations(
-    google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency ProjectServiceConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency ProjectServiceConnectionIdempotencyPolicy::GetOperation(
-    google::longrunning::GetOperationRequest const&) {
+Idempotency ProjectServiceConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ProjectServiceConnectionIdempotencyPolicy::CancelOperation(
-    google::longrunning::CancelOperationRequest const&) {
+Idempotency ProjectServiceConnectionIdempotencyPolicy::CancelOperation(google::longrunning::CancelOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<ProjectServiceConnectionIdempotencyPolicy>
-MakeDefaultProjectServiceConnectionIdempotencyPolicy() {
+    MakeDefaultProjectServiceConnectionIdempotencyPolicy() {
   return std::make_unique<ProjectServiceConnectionIdempotencyPolicy>();
 }
 

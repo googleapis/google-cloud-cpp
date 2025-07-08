@@ -17,12 +17,12 @@
 // source: google/cloud/kms/inventory/v1/key_tracking_service.proto
 
 #include "google/cloud/kms/inventory/v1/internal/key_tracking_connection_impl.h"
-#include "google/cloud/kms/inventory/v1/internal/key_tracking_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
+#include "google/cloud/kms/inventory/v1/internal/key_tracking_option_defaults.h"
 #include <memory>
 #include <utility>
 
@@ -32,84 +32,67 @@ namespace kms_inventory_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<kms_inventory_v1::KeyTrackingServiceRetryPolicy> retry_policy(
-    Options const& options) {
-  return options.get<kms_inventory_v1::KeyTrackingServiceRetryPolicyOption>()
-      ->clone();
+std::unique_ptr<kms_inventory_v1::KeyTrackingServiceRetryPolicy>
+retry_policy(Options const& options) {
+  return options.get<kms_inventory_v1::KeyTrackingServiceRetryPolicyOption>()->clone();
 }
 
-std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-  return options.get<kms_inventory_v1::KeyTrackingServiceBackoffPolicyOption>()
-      ->clone();
+std::unique_ptr<BackoffPolicy>
+backoff_policy(Options const& options) {
+  return options.get<kms_inventory_v1::KeyTrackingServiceBackoffPolicyOption>()->clone();
 }
 
 std::unique_ptr<kms_inventory_v1::KeyTrackingServiceConnectionIdempotencyPolicy>
 idempotency_policy(Options const& options) {
-  return options
-      .get<kms_inventory_v1::
-               KeyTrackingServiceConnectionIdempotencyPolicyOption>()
-      ->clone();
+  return options.get<kms_inventory_v1::KeyTrackingServiceConnectionIdempotencyPolicyOption>()->clone();
 }
 
-}  // namespace
+} // namespace
 
 KeyTrackingServiceConnectionImpl::KeyTrackingServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<kms_inventory_v1_internal::KeyTrackingServiceStub> stub,
     Options options)
-    : background_(std::move(background)),
-      stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options), KeyTrackingServiceConnection::options())) {}
+  : background_(std::move(background)), stub_(std::move(stub)),
+    options_(internal::MergeOptions(
+        std::move(options),
+        KeyTrackingServiceConnection::options())) {}
 
 StatusOr<google::cloud::kms::inventory::v1::ProtectedResourcesSummary>
-KeyTrackingServiceConnectionImpl::GetProtectedResourcesSummary(
-    google::cloud::kms::inventory::v1::
-        GetProtectedResourcesSummaryRequest const& request) {
+KeyTrackingServiceConnectionImpl::GetProtectedResourcesSummary(google::cloud::kms::inventory::v1::GetProtectedResourcesSummaryRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetProtectedResourcesSummary(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::kms::inventory::v1::
-                 GetProtectedResourcesSummaryRequest const& request) {
+             google::cloud::kms::inventory::v1::GetProtectedResourcesSummaryRequest const& request) {
         return stub_->GetProtectedResourcesSummary(context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::cloud::kms::inventory::v1::ProtectedResource>
-KeyTrackingServiceConnectionImpl::SearchProtectedResources(
-    google::cloud::kms::inventory::v1::SearchProtectedResourcesRequest
-        request) {
+KeyTrackingServiceConnectionImpl::SearchProtectedResources(google::cloud::kms::inventory::v1::SearchProtectedResourcesRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
-  auto idempotency =
-      idempotency_policy(*current)->SearchProtectedResources(request);
+  auto idempotency = idempotency_policy(*current)->SearchProtectedResources(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::kms::inventory::v1::ProtectedResource>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::kms::inventory::v1::ProtectedResource>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<kms_inventory_v1::KeyTrackingServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<kms_inventory_v1::KeyTrackingServiceRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::kms::inventory::v1::
-              SearchProtectedResourcesRequest const& r) {
+          Options const& options, google::cloud::kms::inventory::v1::SearchProtectedResourcesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::kms::inventory::v1::
-                       SearchProtectedResourcesRequest const& request) {
+                   google::cloud::kms::inventory::v1::SearchProtectedResourcesRequest const& request) {
               return stub->SearchProtectedResources(context, options, request);
             },
             options, r, function_name);
       },
-      [](google::cloud::kms::inventory::v1::SearchProtectedResourcesResponse
-             r) {
-        std::vector<google::cloud::kms::inventory::v1::ProtectedResource>
-            result(r.protected_resources().size());
+      [](google::cloud::kms::inventory::v1::SearchProtectedResourcesResponse r) {
+        std::vector<google::cloud::kms::inventory::v1::ProtectedResource> result(r.protected_resources().size());
         auto& messages = *r.mutable_protected_resources();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;

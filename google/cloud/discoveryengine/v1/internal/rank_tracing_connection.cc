@@ -34,38 +34,31 @@ RankServiceTracingConnection::RankServiceTracingConnection(
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::discoveryengine::v1::RankResponse>
-RankServiceTracingConnection::Rank(
-    google::cloud::discoveryengine::v1::RankRequest const& request) {
-  auto span =
-      internal::MakeSpan("discoveryengine_v1::RankServiceConnection::Rank");
+RankServiceTracingConnection::Rank(google::cloud::discoveryengine::v1::RankRequest const& request) {
+  auto span = internal::MakeSpan("discoveryengine_v1::RankServiceConnection::Rank");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->Rank(request));
 }
 
 StreamRange<google::longrunning::Operation>
-RankServiceTracingConnection::ListOperations(
-    google::longrunning::ListOperationsRequest request) {
-  auto span = internal::MakeSpan(
-      "discoveryengine_v1::RankServiceConnection::ListOperations");
+RankServiceTracingConnection::ListOperations(google::longrunning::ListOperationsRequest request) {
+  auto span = internal::MakeSpan("discoveryengine_v1::RankServiceConnection::ListOperations");
   internal::OTelScope scope(span);
   auto sr = child_->ListOperations(std::move(request));
   return internal::MakeTracedStreamRange<google::longrunning::Operation>(
-      std::move(span), std::move(sr));
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::longrunning::Operation>
-RankServiceTracingConnection::GetOperation(
-    google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpan(
-      "discoveryengine_v1::RankServiceConnection::GetOperation");
+RankServiceTracingConnection::GetOperation(google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpan("discoveryengine_v1::RankServiceConnection::GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOperation(request));
 }
 
-Status RankServiceTracingConnection::CancelOperation(
-    google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpan(
-      "discoveryengine_v1::RankServiceConnection::CancelOperation");
+Status
+RankServiceTracingConnection::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
+  auto span = internal::MakeSpan("discoveryengine_v1::RankServiceConnection::CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CancelOperation(request));
 }

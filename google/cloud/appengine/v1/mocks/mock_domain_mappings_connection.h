@@ -42,34 +42,29 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockDomainMappingsConnection
-    : public appengine_v1::DomainMappingsConnection {
+class MockDomainMappingsConnection : public appengine_v1::DomainMappingsConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD((StreamRange<google::appengine::v1::DomainMapping>),
-              ListDomainMappings,
-              (google::appengine::v1::ListDomainMappingsRequest request),
-              (override));
+  ListDomainMappings,
+  (google::appengine::v1::ListDomainMappingsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::appengine::v1::DomainMapping>, GetDomainMapping,
-              (google::appengine::v1::GetDomainMappingRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::appengine::v1::DomainMapping>,
+  GetDomainMapping,
+  (google::appengine::v1::GetDomainMappingRequest const& request), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// CreateDomainMapping(Matcher<google::appengine::v1::CreateDomainMappingRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, CreateDomainMapping(Matcher<google::appengine::v1::CreateDomainMappingRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::appengine::v1::DomainMapping>>,
-      CreateDomainMapping,
-      (google::appengine::v1::CreateDomainMappingRequest const& request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::appengine::v1::DomainMapping>>,
+  CreateDomainMapping,
+  (google::appengine::v1::CreateDomainMappingRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -77,38 +72,33 @@ class MockDomainMappingsConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, CreateDomainMapping(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, CreateDomainMapping,
-      (NoAwaitTag,
-       google::appengine::v1::CreateDomainMappingRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  CreateDomainMapping, (NoAwaitTag,
+    google::appengine::v1::CreateDomainMappingRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// CreateDomainMapping(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock, CreateDomainMapping(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::appengine::v1::DomainMapping>>,
-              CreateDomainMapping,
-              (google::longrunning::Operation const& operation), (override));
+  CreateDomainMapping, (
+    google::longrunning::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// UpdateDomainMapping(Matcher<google::appengine::v1::UpdateDomainMappingRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, UpdateDomainMapping(Matcher<google::appengine::v1::UpdateDomainMappingRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::appengine::v1::DomainMapping>>,
-      UpdateDomainMapping,
-      (google::appengine::v1::UpdateDomainMappingRequest const& request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::appengine::v1::DomainMapping>>,
+  UpdateDomainMapping,
+  (google::appengine::v1::UpdateDomainMappingRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -116,38 +106,33 @@ class MockDomainMappingsConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, UpdateDomainMapping(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, UpdateDomainMapping,
-      (NoAwaitTag,
-       google::appengine::v1::UpdateDomainMappingRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  UpdateDomainMapping, (NoAwaitTag,
+    google::appengine::v1::UpdateDomainMappingRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// UpdateDomainMapping(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock, UpdateDomainMapping(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::appengine::v1::DomainMapping>>,
-              UpdateDomainMapping,
-              (google::longrunning::Operation const& operation), (override));
+  UpdateDomainMapping, (
+    google::longrunning::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteDomainMapping(Matcher<google::appengine::v1::DeleteDomainMappingRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteDomainMapping(Matcher<google::appengine::v1::DeleteDomainMappingRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::appengine::v1::OperationMetadataV1>>,
-      DeleteDomainMapping,
-      (google::appengine::v1::DeleteDomainMappingRequest const& request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::appengine::v1::OperationMetadataV1>>,
+  DeleteDomainMapping,
+  (google::appengine::v1::DeleteDomainMappingRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -155,23 +140,21 @@ class MockDomainMappingsConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, DeleteDomainMapping(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, DeleteDomainMapping,
-      (NoAwaitTag,
-       google::appengine::v1::DeleteDomainMappingRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  DeleteDomainMapping, (NoAwaitTag,
+    google::appengine::v1::DeleteDomainMappingRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteDomainMapping(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteDomainMapping(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::appengine::v1::OperationMetadataV1>>,
-              DeleteDomainMapping,
-              (google::longrunning::Operation const& operation), (override));
+  DeleteDomainMapping, (
+    google::longrunning::Operation const& operation), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

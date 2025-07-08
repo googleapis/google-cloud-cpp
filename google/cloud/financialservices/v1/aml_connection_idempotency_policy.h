@@ -38,167 +38,141 @@ class AMLConnectionIdempotencyPolicy {
   /// Create a new copy of this object.
   virtual std::unique_ptr<AMLConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency ListInstances(
-      google::cloud::financialservices::v1::ListInstancesRequest request);
+  virtual google::cloud::Idempotency
+  ListInstances(google::cloud::financialservices::v1::ListInstancesRequest request);
 
-  virtual google::cloud::Idempotency GetInstance(
-      google::cloud::financialservices::v1::GetInstanceRequest const& request);
+  virtual google::cloud::Idempotency
+  GetInstance(google::cloud::financialservices::v1::GetInstanceRequest const& request);
 
-  virtual google::cloud::Idempotency CreateInstance(
-      google::cloud::financialservices::v1::CreateInstanceRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  CreateInstance(google::cloud::financialservices::v1::CreateInstanceRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateInstance(
-      google::cloud::financialservices::v1::UpdateInstanceRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  UpdateInstance(google::cloud::financialservices::v1::UpdateInstanceRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteInstance(
-      google::cloud::financialservices::v1::DeleteInstanceRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  DeleteInstance(google::cloud::financialservices::v1::DeleteInstanceRequest const& request);
 
-  virtual google::cloud::Idempotency ImportRegisteredParties(
-      google::cloud::financialservices::v1::
-          ImportRegisteredPartiesRequest const& request);
+  virtual google::cloud::Idempotency
+  ImportRegisteredParties(google::cloud::financialservices::v1::ImportRegisteredPartiesRequest const& request);
 
-  virtual google::cloud::Idempotency ExportRegisteredParties(
-      google::cloud::financialservices::v1::
-          ExportRegisteredPartiesRequest const& request);
+  virtual google::cloud::Idempotency
+  ExportRegisteredParties(google::cloud::financialservices::v1::ExportRegisteredPartiesRequest const& request);
 
-  virtual google::cloud::Idempotency ListDatasets(
-      google::cloud::financialservices::v1::ListDatasetsRequest request);
+  virtual google::cloud::Idempotency
+  ListDatasets(google::cloud::financialservices::v1::ListDatasetsRequest request);
 
-  virtual google::cloud::Idempotency GetDataset(
-      google::cloud::financialservices::v1::GetDatasetRequest const& request);
+  virtual google::cloud::Idempotency
+  GetDataset(google::cloud::financialservices::v1::GetDatasetRequest const& request);
 
-  virtual google::cloud::Idempotency CreateDataset(
-      google::cloud::financialservices::v1::CreateDatasetRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  CreateDataset(google::cloud::financialservices::v1::CreateDatasetRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateDataset(
-      google::cloud::financialservices::v1::UpdateDatasetRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  UpdateDataset(google::cloud::financialservices::v1::UpdateDatasetRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteDataset(
-      google::cloud::financialservices::v1::DeleteDatasetRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  DeleteDataset(google::cloud::financialservices::v1::DeleteDatasetRequest const& request);
 
-  virtual google::cloud::Idempotency ListModels(
-      google::cloud::financialservices::v1::ListModelsRequest request);
+  virtual google::cloud::Idempotency
+  ListModels(google::cloud::financialservices::v1::ListModelsRequest request);
 
-  virtual google::cloud::Idempotency GetModel(
-      google::cloud::financialservices::v1::GetModelRequest const& request);
+  virtual google::cloud::Idempotency
+  GetModel(google::cloud::financialservices::v1::GetModelRequest const& request);
 
-  virtual google::cloud::Idempotency CreateModel(
-      google::cloud::financialservices::v1::CreateModelRequest const& request);
+  virtual google::cloud::Idempotency
+  CreateModel(google::cloud::financialservices::v1::CreateModelRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateModel(
-      google::cloud::financialservices::v1::UpdateModelRequest const& request);
+  virtual google::cloud::Idempotency
+  UpdateModel(google::cloud::financialservices::v1::UpdateModelRequest const& request);
 
-  virtual google::cloud::Idempotency ExportModelMetadata(
-      google::cloud::financialservices::v1::ExportModelMetadataRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  ExportModelMetadata(google::cloud::financialservices::v1::ExportModelMetadataRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteModel(
-      google::cloud::financialservices::v1::DeleteModelRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteModel(google::cloud::financialservices::v1::DeleteModelRequest const& request);
 
-  virtual google::cloud::Idempotency ListEngineConfigs(
-      google::cloud::financialservices::v1::ListEngineConfigsRequest request);
+  virtual google::cloud::Idempotency
+  ListEngineConfigs(google::cloud::financialservices::v1::ListEngineConfigsRequest request);
 
-  virtual google::cloud::Idempotency GetEngineConfig(
-      google::cloud::financialservices::v1::GetEngineConfigRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  GetEngineConfig(google::cloud::financialservices::v1::GetEngineConfigRequest const& request);
 
-  virtual google::cloud::Idempotency CreateEngineConfig(
-      google::cloud::financialservices::v1::CreateEngineConfigRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  CreateEngineConfig(google::cloud::financialservices::v1::CreateEngineConfigRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateEngineConfig(
-      google::cloud::financialservices::v1::UpdateEngineConfigRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  UpdateEngineConfig(google::cloud::financialservices::v1::UpdateEngineConfigRequest const& request);
 
-  virtual google::cloud::Idempotency ExportEngineConfigMetadata(
-      google::cloud::financialservices::v1::
-          ExportEngineConfigMetadataRequest const& request);
+  virtual google::cloud::Idempotency
+  ExportEngineConfigMetadata(google::cloud::financialservices::v1::ExportEngineConfigMetadataRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteEngineConfig(
-      google::cloud::financialservices::v1::DeleteEngineConfigRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  DeleteEngineConfig(google::cloud::financialservices::v1::DeleteEngineConfigRequest const& request);
 
-  virtual google::cloud::Idempotency GetEngineVersion(
-      google::cloud::financialservices::v1::GetEngineVersionRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  GetEngineVersion(google::cloud::financialservices::v1::GetEngineVersionRequest const& request);
 
-  virtual google::cloud::Idempotency ListEngineVersions(
-      google::cloud::financialservices::v1::ListEngineVersionsRequest request);
+  virtual google::cloud::Idempotency
+  ListEngineVersions(google::cloud::financialservices::v1::ListEngineVersionsRequest request);
 
-  virtual google::cloud::Idempotency ListPredictionResults(
-      google::cloud::financialservices::v1::ListPredictionResultsRequest
-          request);
+  virtual google::cloud::Idempotency
+  ListPredictionResults(google::cloud::financialservices::v1::ListPredictionResultsRequest request);
 
-  virtual google::cloud::Idempotency GetPredictionResult(
-      google::cloud::financialservices::v1::GetPredictionResultRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  GetPredictionResult(google::cloud::financialservices::v1::GetPredictionResultRequest const& request);
 
-  virtual google::cloud::Idempotency CreatePredictionResult(
-      google::cloud::financialservices::v1::CreatePredictionResultRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  CreatePredictionResult(google::cloud::financialservices::v1::CreatePredictionResultRequest const& request);
 
-  virtual google::cloud::Idempotency UpdatePredictionResult(
-      google::cloud::financialservices::v1::UpdatePredictionResultRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  UpdatePredictionResult(google::cloud::financialservices::v1::UpdatePredictionResultRequest const& request);
 
-  virtual google::cloud::Idempotency ExportPredictionResultMetadata(
-      google::cloud::financialservices::v1::
-          ExportPredictionResultMetadataRequest const& request);
+  virtual google::cloud::Idempotency
+  ExportPredictionResultMetadata(google::cloud::financialservices::v1::ExportPredictionResultMetadataRequest const& request);
 
-  virtual google::cloud::Idempotency DeletePredictionResult(
-      google::cloud::financialservices::v1::DeletePredictionResultRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  DeletePredictionResult(google::cloud::financialservices::v1::DeletePredictionResultRequest const& request);
 
-  virtual google::cloud::Idempotency ListBacktestResults(
-      google::cloud::financialservices::v1::ListBacktestResultsRequest request);
+  virtual google::cloud::Idempotency
+  ListBacktestResults(google::cloud::financialservices::v1::ListBacktestResultsRequest request);
 
-  virtual google::cloud::Idempotency GetBacktestResult(
-      google::cloud::financialservices::v1::GetBacktestResultRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  GetBacktestResult(google::cloud::financialservices::v1::GetBacktestResultRequest const& request);
 
-  virtual google::cloud::Idempotency CreateBacktestResult(
-      google::cloud::financialservices::v1::CreateBacktestResultRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  CreateBacktestResult(google::cloud::financialservices::v1::CreateBacktestResultRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateBacktestResult(
-      google::cloud::financialservices::v1::UpdateBacktestResultRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  UpdateBacktestResult(google::cloud::financialservices::v1::UpdateBacktestResultRequest const& request);
 
-  virtual google::cloud::Idempotency ExportBacktestResultMetadata(
-      google::cloud::financialservices::v1::
-          ExportBacktestResultMetadataRequest const& request);
+  virtual google::cloud::Idempotency
+  ExportBacktestResultMetadata(google::cloud::financialservices::v1::ExportBacktestResultMetadataRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteBacktestResult(
-      google::cloud::financialservices::v1::DeleteBacktestResultRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  DeleteBacktestResult(google::cloud::financialservices::v1::DeleteBacktestResultRequest const& request);
 
-  virtual google::cloud::Idempotency ListLocations(
-      google::cloud::location::ListLocationsRequest request);
+  virtual google::cloud::Idempotency
+  ListLocations(google::cloud::location::ListLocationsRequest request);
 
-  virtual google::cloud::Idempotency GetLocation(
-      google::cloud::location::GetLocationRequest const& request);
+  virtual google::cloud::Idempotency
+  GetLocation(google::cloud::location::GetLocationRequest const& request);
 
-  virtual google::cloud::Idempotency ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual google::cloud::Idempotency
+  ListOperations(google::longrunning::ListOperationsRequest request);
 
-  virtual google::cloud::Idempotency GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
 
-  virtual google::cloud::Idempotency CancelOperation(
-      google::longrunning::CancelOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  CancelOperation(google::longrunning::CancelOperationRequest const& request);
 };
 
 std::unique_ptr<AMLConnectionIdempotencyPolicy>
-MakeDefaultAMLConnectionIdempotencyPolicy();
+    MakeDefaultAMLConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace financialservices_v1

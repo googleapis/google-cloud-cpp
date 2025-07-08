@@ -17,14 +17,14 @@
 // source: google/cloud/datastream/v1/datastream.proto
 
 #include "google/cloud/datastream/v1/datastream_connection.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/datastream/v1/datastream_options.h"
 #include "google/cloud/datastream/v1/internal/datastream_connection_impl.h"
 #include "google/cloud/datastream/v1/internal/datastream_option_defaults.h"
 #include "google/cloud/datastream/v1/internal/datastream_stub_factory.h"
 #include "google/cloud/datastream/v1/internal/datastream_tracing_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
-#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
@@ -38,10 +38,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 DatastreamConnection::~DatastreamConnection() = default;
 
-StreamRange<google::cloud::datastream::v1::ConnectionProfile>
-DatastreamConnection::ListConnectionProfiles(
-    google::cloud::datastream::v1::
-        ListConnectionProfilesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::datastream::v1::ConnectionProfile> DatastreamConnection::ListConnectionProfiles(
+    google::cloud::datastream::v1::ListConnectionProfilesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::datastream::v1::ConnectionProfile>>();
 }
@@ -56,8 +54,8 @@ future<StatusOr<google::cloud::datastream::v1::ConnectionProfile>>
 DatastreamConnection::CreateConnectionProfile(
     google::cloud::datastream::v1::CreateConnectionProfileRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::datastream::v1::ConnectionProfile>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::datastream::v1::ConnectionProfile>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -65,23 +63,23 @@ DatastreamConnection::CreateConnectionProfile(
     NoAwaitTag,
     google::cloud::datastream::v1::CreateConnectionProfileRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::datastream::v1::ConnectionProfile>>
 DatastreamConnection::CreateConnectionProfile(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::datastream::v1::ConnectionProfile>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::datastream::v1::ConnectionProfile>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::datastream::v1::ConnectionProfile>>
 DatastreamConnection::UpdateConnectionProfile(
     google::cloud::datastream::v1::UpdateConnectionProfileRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::datastream::v1::ConnectionProfile>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::datastream::v1::ConnectionProfile>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -89,23 +87,23 @@ DatastreamConnection::UpdateConnectionProfile(
     NoAwaitTag,
     google::cloud::datastream::v1::UpdateConnectionProfileRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::datastream::v1::ConnectionProfile>>
 DatastreamConnection::UpdateConnectionProfile(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::datastream::v1::ConnectionProfile>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::datastream::v1::ConnectionProfile>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>
 DatastreamConnection::DeleteConnectionProfile(
     google::cloud::datastream::v1::DeleteConnectionProfileRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::datastream::v1::OperationMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::datastream::v1::OperationMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -113,15 +111,15 @@ DatastreamConnection::DeleteConnectionProfile(
     NoAwaitTag,
     google::cloud::datastream::v1::DeleteConnectionProfileRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>
 DatastreamConnection::DeleteConnectionProfile(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::datastream::v1::OperationMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::datastream::v1::OperationMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::datastream::v1::DiscoverConnectionProfileResponse>
@@ -130,15 +128,14 @@ DatastreamConnection::DiscoverConnectionProfile(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::datastream::v1::Stream>
-DatastreamConnection::ListStreams(
-    google::cloud::datastream::v1::
-        ListStreamsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::datastream::v1::Stream> DatastreamConnection::ListStreams(
+    google::cloud::datastream::v1::ListStreamsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::datastream::v1::Stream>>();
 }
 
-StatusOr<google::cloud::datastream::v1::Stream> DatastreamConnection::GetStream(
+StatusOr<google::cloud::datastream::v1::Stream>
+DatastreamConnection::GetStream(
     google::cloud::datastream::v1::GetStreamRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -147,84 +144,96 @@ future<StatusOr<google::cloud::datastream::v1::Stream>>
 DatastreamConnection::CreateStream(
     google::cloud::datastream::v1::CreateStreamRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::datastream::v1::Stream>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::datastream::v1::Stream>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation> DatastreamConnection::CreateStream(
-    NoAwaitTag, google::cloud::datastream::v1::CreateStreamRequest const&) {
+StatusOr<google::longrunning::Operation>
+DatastreamConnection::CreateStream(
+    NoAwaitTag,
+    google::cloud::datastream::v1::CreateStreamRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::datastream::v1::Stream>>
-DatastreamConnection::CreateStream(google::longrunning::Operation const&) {
+DatastreamConnection::CreateStream(
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::datastream::v1::Stream>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::datastream::v1::Stream>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::datastream::v1::Stream>>
 DatastreamConnection::UpdateStream(
     google::cloud::datastream::v1::UpdateStreamRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::datastream::v1::Stream>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::datastream::v1::Stream>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation> DatastreamConnection::UpdateStream(
-    NoAwaitTag, google::cloud::datastream::v1::UpdateStreamRequest const&) {
+StatusOr<google::longrunning::Operation>
+DatastreamConnection::UpdateStream(
+    NoAwaitTag,
+    google::cloud::datastream::v1::UpdateStreamRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::datastream::v1::Stream>>
-DatastreamConnection::UpdateStream(google::longrunning::Operation const&) {
+DatastreamConnection::UpdateStream(
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::datastream::v1::Stream>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::datastream::v1::Stream>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>
 DatastreamConnection::DeleteStream(
     google::cloud::datastream::v1::DeleteStreamRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::datastream::v1::OperationMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::datastream::v1::OperationMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation> DatastreamConnection::DeleteStream(
-    NoAwaitTag, google::cloud::datastream::v1::DeleteStreamRequest const&) {
+StatusOr<google::longrunning::Operation>
+DatastreamConnection::DeleteStream(
+    NoAwaitTag,
+    google::cloud::datastream::v1::DeleteStreamRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>
-DatastreamConnection::DeleteStream(google::longrunning::Operation const&) {
+DatastreamConnection::DeleteStream(
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::datastream::v1::OperationMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::datastream::v1::OperationMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::datastream::v1::Stream>>
 DatastreamConnection::RunStream(
     google::cloud::datastream::v1::RunStreamRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::datastream::v1::Stream>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::datastream::v1::Stream>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation> DatastreamConnection::RunStream(
-    NoAwaitTag, google::cloud::datastream::v1::RunStreamRequest const&) {
+StatusOr<google::longrunning::Operation>
+DatastreamConnection::RunStream(
+    NoAwaitTag,
+    google::cloud::datastream::v1::RunStreamRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::datastream::v1::Stream>>
-DatastreamConnection::RunStream(google::longrunning::Operation const&) {
+DatastreamConnection::RunStream(
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::datastream::v1::Stream>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::datastream::v1::Stream>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::datastream::v1::StreamObject>
@@ -239,10 +248,8 @@ DatastreamConnection::LookupStreamObject(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::datastream::v1::StreamObject>
-DatastreamConnection::ListStreamObjects(
-    google::cloud::datastream::v1::
-        ListStreamObjectsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::datastream::v1::StreamObject> DatastreamConnection::ListStreamObjects(
+    google::cloud::datastream::v1::ListStreamObjectsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::datastream::v1::StreamObject>>();
 }
@@ -260,8 +267,7 @@ DatastreamConnection::StopBackfillJob(
 }
 
 StreamRange<std::string> DatastreamConnection::FetchStaticIps(
-    google::cloud::datastream::v1::
-        FetchStaticIpsRequest) {  // NOLINT(performance-unnecessary-value-param)
+    google::cloud::datastream::v1::FetchStaticIpsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<std::string>>();
 }
@@ -270,8 +276,8 @@ future<StatusOr<google::cloud::datastream::v1::PrivateConnection>>
 DatastreamConnection::CreatePrivateConnection(
     google::cloud::datastream::v1::CreatePrivateConnectionRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::datastream::v1::PrivateConnection>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::datastream::v1::PrivateConnection>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -279,15 +285,15 @@ DatastreamConnection::CreatePrivateConnection(
     NoAwaitTag,
     google::cloud::datastream::v1::CreatePrivateConnectionRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::datastream::v1::PrivateConnection>>
 DatastreamConnection::CreatePrivateConnection(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::datastream::v1::PrivateConnection>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::datastream::v1::PrivateConnection>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::datastream::v1::PrivateConnection>
@@ -296,10 +302,8 @@ DatastreamConnection::GetPrivateConnection(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::datastream::v1::PrivateConnection>
-DatastreamConnection::ListPrivateConnections(
-    google::cloud::datastream::v1::
-        ListPrivateConnectionsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::datastream::v1::PrivateConnection> DatastreamConnection::ListPrivateConnections(
+    google::cloud::datastream::v1::ListPrivateConnectionsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::datastream::v1::PrivateConnection>>();
 }
@@ -308,8 +312,8 @@ future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>
 DatastreamConnection::DeletePrivateConnection(
     google::cloud::datastream::v1::DeletePrivateConnectionRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::datastream::v1::OperationMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::datastream::v1::OperationMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -317,47 +321,49 @@ DatastreamConnection::DeletePrivateConnection(
     NoAwaitTag,
     google::cloud::datastream::v1::DeletePrivateConnectionRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>
 DatastreamConnection::DeletePrivateConnection(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::datastream::v1::OperationMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::datastream::v1::OperationMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::datastream::v1::Route>>
 DatastreamConnection::CreateRoute(
     google::cloud::datastream::v1::CreateRouteRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::datastream::v1::Route>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::datastream::v1::Route>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation> DatastreamConnection::CreateRoute(
-    NoAwaitTag, google::cloud::datastream::v1::CreateRouteRequest const&) {
+StatusOr<google::longrunning::Operation>
+DatastreamConnection::CreateRoute(
+    NoAwaitTag,
+    google::cloud::datastream::v1::CreateRouteRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::datastream::v1::Route>>
-DatastreamConnection::CreateRoute(google::longrunning::Operation const&) {
+DatastreamConnection::CreateRoute(
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::datastream::v1::Route>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::datastream::v1::Route>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::cloud::datastream::v1::Route> DatastreamConnection::GetRoute(
+StatusOr<google::cloud::datastream::v1::Route>
+DatastreamConnection::GetRoute(
     google::cloud::datastream::v1::GetRouteRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::datastream::v1::Route>
-DatastreamConnection::ListRoutes(
-    google::cloud::datastream::v1::
-        ListRoutesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::datastream::v1::Route> DatastreamConnection::ListRoutes(
+    google::cloud::datastream::v1::ListRoutesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::datastream::v1::Route>>();
 }
@@ -366,55 +372,58 @@ future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>
 DatastreamConnection::DeleteRoute(
     google::cloud::datastream::v1::DeleteRouteRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::datastream::v1::OperationMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::datastream::v1::OperationMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation> DatastreamConnection::DeleteRoute(
-    NoAwaitTag, google::cloud::datastream::v1::DeleteRouteRequest const&) {
+StatusOr<google::longrunning::Operation>
+DatastreamConnection::DeleteRoute(
+    NoAwaitTag,
+    google::cloud::datastream::v1::DeleteRouteRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>
-DatastreamConnection::DeleteRoute(google::longrunning::Operation const&) {
+DatastreamConnection::DeleteRoute(
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::datastream::v1::OperationMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::datastream::v1::OperationMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StreamRange<google::cloud::location::Location>
-DatastreamConnection::ListLocations(
-    google::cloud::location::
-        ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::location::Location> DatastreamConnection::ListLocations(
+    google::cloud::location::ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::location::Location>>();
 }
 
-StatusOr<google::cloud::location::Location> DatastreamConnection::GetLocation(
+StatusOr<google::cloud::location::Location>
+DatastreamConnection::GetLocation(
     google::cloud::location::GetLocationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::longrunning::Operation>
-DatastreamConnection::ListOperations(
-    google::longrunning::
-        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::longrunning::Operation> DatastreamConnection::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }
 
-StatusOr<google::longrunning::Operation> DatastreamConnection::GetOperation(
+StatusOr<google::longrunning::Operation>
+DatastreamConnection::GetOperation(
     google::longrunning::GetOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status DatastreamConnection::DeleteOperation(
+Status
+DatastreamConnection::DeleteOperation(
     google::longrunning::DeleteOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status DatastreamConnection::CancelOperation(
+Status
+DatastreamConnection::CancelOperation(
     google::longrunning::CancelOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -422,17 +431,17 @@ Status DatastreamConnection::CancelOperation(
 std::shared_ptr<DatastreamConnection> MakeDatastreamConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 DatastreamPolicyOptionList>(options, __func__);
-  options =
-      datastream_v1_internal::DatastreamDefaultOptions(std::move(options));
+      UnifiedCredentialsOptionList,
+      DatastreamPolicyOptionList>(options, __func__);
+  options = datastream_v1_internal::DatastreamDefaultOptions(
+      std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = datastream_v1_internal::CreateDefaultDatastreamStub(
-      std::move(auth), options);
+    std::move(auth), options);
   return datastream_v1_internal::MakeDatastreamTracingConnection(
       std::make_shared<datastream_v1_internal::DatastreamConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options)));
+      std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

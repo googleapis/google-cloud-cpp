@@ -24,8 +24,8 @@
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/cloud/discoveryengine/v1/schema_service.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
+#include <google/cloud/discoveryengine/v1/schema_service.grpc.pb.h>
 #include <memory>
 #include <utility>
 
@@ -39,66 +39,67 @@ class SchemaServiceStub {
   virtual ~SchemaServiceStub() = 0;
 
   virtual StatusOr<google::cloud::discoveryengine::v1::Schema> GetSchema(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::discoveryengine::v1::GetSchemaRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::discoveryengine::v1::ListSchemasResponse>
-  ListSchemas(grpc::ClientContext& context, Options const& options,
-              google::cloud::discoveryengine::v1::ListSchemasRequest const&
-                  request) = 0;
+  virtual StatusOr<google::cloud::discoveryengine::v1::ListSchemasResponse> ListSchemas(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::discoveryengine::v1::ListSchemasRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateSchema(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::discoveryengine::v1::CreateSchemaRequest const&
-          request) = 0;
+      google::cloud::discoveryengine::v1::CreateSchemaRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> CreateSchema(
-      grpc::ClientContext& context, Options options,
-      google::cloud::discoveryengine::v1::CreateSchemaRequest const&
-          request) = 0;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::discoveryengine::v1::CreateSchemaRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncUpdateSchema(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::discoveryengine::v1::UpdateSchemaRequest const&
-          request) = 0;
+      google::cloud::discoveryengine::v1::UpdateSchemaRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> UpdateSchema(
-      grpc::ClientContext& context, Options options,
-      google::cloud::discoveryengine::v1::UpdateSchemaRequest const&
-          request) = 0;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::discoveryengine::v1::UpdateSchemaRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteSchema(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::discoveryengine::v1::DeleteSchemaRequest const&
-          request) = 0;
+      google::cloud::discoveryengine::v1::DeleteSchemaRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> DeleteSchema(
-      grpc::ClientContext& context, Options options,
-      google::cloud::discoveryengine::v1::DeleteSchemaRequest const&
-          request) = 0;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::discoveryengine::v1::DeleteSchemaRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::ListOperationsRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual Status CancelOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::CancelOperationRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
+    google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
@@ -111,70 +112,67 @@ class SchemaServiceStub {
 class DefaultSchemaServiceStub : public SchemaServiceStub {
  public:
   DefaultSchemaServiceStub(
-      std::unique_ptr<
-          google::cloud::discoveryengine::v1::SchemaService::StubInterface>
-          grpc_stub,
-      std::unique_ptr<google::longrunning::Operations::StubInterface>
-          operations_stub)
+      std::unique_ptr<google::cloud::discoveryengine::v1::SchemaService::StubInterface> grpc_stub,
+      std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub)
       : grpc_stub_(std::move(grpc_stub)),
         operations_stub_(std::move(operations_stub)) {}
 
   StatusOr<google::cloud::discoveryengine::v1::Schema> GetSchema(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::discoveryengine::v1::GetSchemaRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::discoveryengine::v1::GetSchemaRequest const& request) override;
 
   StatusOr<google::cloud::discoveryengine::v1::ListSchemasResponse> ListSchemas(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::discoveryengine::v1::ListSchemasRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::discoveryengine::v1::ListSchemasRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateSchema(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::discoveryengine::v1::CreateSchemaRequest const& request)
-      override;
+      google::cloud::discoveryengine::v1::CreateSchemaRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateSchema(
-      grpc::ClientContext& context, Options options,
-      google::cloud::discoveryengine::v1::CreateSchemaRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::discoveryengine::v1::CreateSchemaRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateSchema(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::discoveryengine::v1::UpdateSchemaRequest const& request)
-      override;
+      google::cloud::discoveryengine::v1::UpdateSchemaRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateSchema(
-      grpc::ClientContext& context, Options options,
-      google::cloud::discoveryengine::v1::UpdateSchemaRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::discoveryengine::v1::UpdateSchemaRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteSchema(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::discoveryengine::v1::DeleteSchemaRequest const& request)
-      override;
+      google::cloud::discoveryengine::v1::DeleteSchemaRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteSchema(
-      grpc::ClientContext& context, Options options,
-      google::cloud::discoveryengine::v1::DeleteSchemaRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::discoveryengine::v1::DeleteSchemaRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -190,11 +188,8 @@ class DefaultSchemaServiceStub : public SchemaServiceStub {
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  std::unique_ptr<
-      google::cloud::discoveryengine::v1::SchemaService::StubInterface>
-      grpc_stub_;
-  std::unique_ptr<google::longrunning::Operations::StubInterface>
-      operations_stub_;
+  std::unique_ptr<google::cloud::discoveryengine::v1::SchemaService::StubInterface> grpc_stub_;
+  std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -32,36 +32,33 @@ DocumentServiceTracingStub::DocumentServiceTracingStub(
     std::shared_ptr<DocumentServiceStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
-StatusOr<google::cloud::contentwarehouse::v1::CreateDocumentResponse>
-DocumentServiceTracingStub::CreateDocument(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::contentwarehouse::v1::CreateDocumentResponse> DocumentServiceTracingStub::CreateDocument(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::contentwarehouse::v1::CreateDocumentRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.contentwarehouse.v1.DocumentService", "CreateDocument");
+  auto span = internal::MakeSpanGrpc("google.cloud.contentwarehouse.v1.DocumentService", "CreateDocument");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateDocument(context, options, request));
 }
 
-StatusOr<google::cloud::contentwarehouse::v1::Document>
-DocumentServiceTracingStub::GetDocument(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::contentwarehouse::v1::Document> DocumentServiceTracingStub::GetDocument(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::contentwarehouse::v1::GetDocumentRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.contentwarehouse.v1.DocumentService", "GetDocument");
+  auto span = internal::MakeSpanGrpc("google.cloud.contentwarehouse.v1.DocumentService", "GetDocument");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetDocument(context, options, request));
 }
 
-StatusOr<google::cloud::contentwarehouse::v1::UpdateDocumentResponse>
-DocumentServiceTracingStub::UpdateDocument(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::contentwarehouse::v1::UpdateDocumentResponse> DocumentServiceTracingStub::UpdateDocument(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::contentwarehouse::v1::UpdateDocumentRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.contentwarehouse.v1.DocumentService", "UpdateDocument");
+  auto span = internal::MakeSpanGrpc("google.cloud.contentwarehouse.v1.DocumentService", "UpdateDocument");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -69,71 +66,65 @@ DocumentServiceTracingStub::UpdateDocument(
 }
 
 Status DocumentServiceTracingStub::DeleteDocument(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::contentwarehouse::v1::DeleteDocumentRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.contentwarehouse.v1.DocumentService", "DeleteDocument");
+  auto span = internal::MakeSpanGrpc("google.cloud.contentwarehouse.v1.DocumentService", "DeleteDocument");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeleteDocument(context, options, request));
 }
 
-StatusOr<google::cloud::contentwarehouse::v1::SearchDocumentsResponse>
-DocumentServiceTracingStub::SearchDocuments(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::contentwarehouse::v1::SearchDocumentsRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.contentwarehouse.v1.DocumentService", "SearchDocuments");
+StatusOr<google::cloud::contentwarehouse::v1::SearchDocumentsResponse> DocumentServiceTracingStub::SearchDocuments(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::contentwarehouse::v1::SearchDocumentsRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.contentwarehouse.v1.DocumentService", "SearchDocuments");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->SearchDocuments(context, options, request));
 }
 
-StatusOr<google::cloud::contentwarehouse::v1::Document>
-DocumentServiceTracingStub::LockDocument(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::contentwarehouse::v1::Document> DocumentServiceTracingStub::LockDocument(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::contentwarehouse::v1::LockDocumentRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.contentwarehouse.v1.DocumentService", "LockDocument");
+  auto span = internal::MakeSpanGrpc("google.cloud.contentwarehouse.v1.DocumentService", "LockDocument");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->LockDocument(context, options, request));
 }
 
-StatusOr<google::cloud::contentwarehouse::v1::FetchAclResponse>
-DocumentServiceTracingStub::FetchAcl(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::contentwarehouse::v1::FetchAclResponse> DocumentServiceTracingStub::FetchAcl(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::contentwarehouse::v1::FetchAclRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.contentwarehouse.v1.DocumentService", "FetchAcl");
+  auto span = internal::MakeSpanGrpc("google.cloud.contentwarehouse.v1.DocumentService", "FetchAcl");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->FetchAcl(context, options, request));
 }
 
-StatusOr<google::cloud::contentwarehouse::v1::SetAclResponse>
-DocumentServiceTracingStub::SetAcl(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::contentwarehouse::v1::SetAclResponse> DocumentServiceTracingStub::SetAcl(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::contentwarehouse::v1::SetAclRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.contentwarehouse.v1.DocumentService", "SetAcl");
+  auto span = internal::MakeSpanGrpc("google.cloud.contentwarehouse.v1.DocumentService", "SetAcl");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->SetAcl(context, options, request));
 }
 
-StatusOr<google::longrunning::Operation>
-DocumentServiceTracingStub::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::Operation> DocumentServiceTracingStub::GetOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.contentwarehouse.v1.DocumentService", "GetOperation");
+  auto span = internal::MakeSpanGrpc("google.cloud.contentwarehouse.v1.DocumentService", "GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,

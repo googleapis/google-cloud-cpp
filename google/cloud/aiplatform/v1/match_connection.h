@@ -53,8 +53,7 @@ class MatchServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class MatchServiceLimitedErrorCountRetryPolicy
-    : public MatchServiceRetryPolicy {
+class MatchServiceLimitedErrorCountRetryPolicy : public MatchServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -64,14 +63,14 @@ class MatchServiceLimitedErrorCountRetryPolicy
    *     @p maximum_failures == 0.
    */
   explicit MatchServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   MatchServiceLimitedErrorCountRetryPolicy(
       MatchServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : MatchServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : MatchServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   MatchServiceLimitedErrorCountRetryPolicy(
       MatchServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : MatchServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : MatchServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -91,9 +90,7 @@ class MatchServiceLimitedErrorCountRetryPolicy
   using BaseType = MatchServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      aiplatform_v1_internal::MatchServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<aiplatform_v1_internal::MatchServiceRetryTraits> impl_;
 };
 
 /**
@@ -131,14 +128,12 @@ class MatchServiceLimitedTimeRetryPolicy : public MatchServiceRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit MatchServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  MatchServiceLimitedTimeRetryPolicy(
-      MatchServiceLimitedTimeRetryPolicy&& rhs) noexcept
-      : MatchServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  MatchServiceLimitedTimeRetryPolicy(
-      MatchServiceLimitedTimeRetryPolicy const& rhs) noexcept
-      : MatchServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  MatchServiceLimitedTimeRetryPolicy(MatchServiceLimitedTimeRetryPolicy&& rhs) noexcept
+    : MatchServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  MatchServiceLimitedTimeRetryPolicy(MatchServiceLimitedTimeRetryPolicy const& rhs) noexcept
+    : MatchServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -160,9 +155,7 @@ class MatchServiceLimitedTimeRetryPolicy : public MatchServiceRetryPolicy {
   using BaseType = MatchServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      aiplatform_v1_internal::MatchServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<aiplatform_v1_internal::MatchServiceRetryTraits> impl_;
 };
 
 /**
@@ -184,42 +177,40 @@ class MatchServiceConnection {
   virtual Options options() { return Options{}; }
 
   virtual StatusOr<google::cloud::aiplatform::v1::FindNeighborsResponse>
-  FindNeighbors(
-      google::cloud::aiplatform::v1::FindNeighborsRequest const& request);
+  FindNeighbors(google::cloud::aiplatform::v1::FindNeighborsRequest const& request);
 
   virtual StatusOr<google::cloud::aiplatform::v1::ReadIndexDatapointsResponse>
-  ReadIndexDatapoints(
-      google::cloud::aiplatform::v1::ReadIndexDatapointsRequest const& request);
+  ReadIndexDatapoints(google::cloud::aiplatform::v1::ReadIndexDatapointsRequest const& request);
 
-  virtual StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request);
+  virtual StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request);
 
-  virtual StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request);
+  virtual StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
 
   virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
   TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
 
-  virtual StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 
-  virtual Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request);
+  virtual Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
 
-  virtual Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request);
+  virtual Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> WaitOperation(
-      google::longrunning::WaitOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  WaitOperation(google::longrunning::WaitOperationRequest const& request);
 };
 
 /**

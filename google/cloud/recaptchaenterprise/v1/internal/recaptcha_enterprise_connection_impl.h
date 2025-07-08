@@ -19,14 +19,14 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RECAPTCHAENTERPRISE_V1_INTERNAL_RECAPTCHA_ENTERPRISE_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RECAPTCHAENTERPRISE_V1_INTERNAL_RECAPTCHA_ENTERPRISE_CONNECTION_IMPL_H
 
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/options.h"
 #include "google/cloud/recaptchaenterprise/v1/internal/recaptcha_enterprise_retry_traits.h"
 #include "google/cloud/recaptchaenterprise/v1/internal/recaptcha_enterprise_stub.h"
 #include "google/cloud/recaptchaenterprise/v1/recaptcha_enterprise_connection.h"
 #include "google/cloud/recaptchaenterprise/v1/recaptcha_enterprise_connection_idempotency_policy.h"
 #include "google/cloud/recaptchaenterprise/v1/recaptcha_enterprise_options.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
@@ -43,122 +43,81 @@ class RecaptchaEnterpriseServiceConnectionImpl
   ~RecaptchaEnterpriseServiceConnectionImpl() override = default;
 
   RecaptchaEnterpriseServiceConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<
-          recaptchaenterprise_v1_internal::RecaptchaEnterpriseServiceStub>
-          stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<recaptchaenterprise_v1_internal::RecaptchaEnterpriseServiceStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
-  StatusOr<google::cloud::recaptchaenterprise::v1::Assessment> CreateAssessment(
-      google::cloud::recaptchaenterprise::v1::CreateAssessmentRequest const&
-          request) override;
+  StatusOr<google::cloud::recaptchaenterprise::v1::Assessment>
+  CreateAssessment(google::cloud::recaptchaenterprise::v1::CreateAssessmentRequest const& request) override;
 
   StatusOr<google::cloud::recaptchaenterprise::v1::AnnotateAssessmentResponse>
-  AnnotateAssessment(
-      google::cloud::recaptchaenterprise::v1::AnnotateAssessmentRequest const&
-          request) override;
+  AnnotateAssessment(google::cloud::recaptchaenterprise::v1::AnnotateAssessmentRequest const& request) override;
 
-  StatusOr<google::cloud::recaptchaenterprise::v1::Key> CreateKey(
-      google::cloud::recaptchaenterprise::v1::CreateKeyRequest const& request)
-      override;
+  StatusOr<google::cloud::recaptchaenterprise::v1::Key>
+  CreateKey(google::cloud::recaptchaenterprise::v1::CreateKeyRequest const& request) override;
 
-  StreamRange<google::cloud::recaptchaenterprise::v1::Key> ListKeys(
-      google::cloud::recaptchaenterprise::v1::ListKeysRequest request) override;
+  StreamRange<google::cloud::recaptchaenterprise::v1::Key>
+  ListKeys(google::cloud::recaptchaenterprise::v1::ListKeysRequest request) override;
 
-  StatusOr<
-      google::cloud::recaptchaenterprise::v1::RetrieveLegacySecretKeyResponse>
-  RetrieveLegacySecretKey(
-      google::cloud::recaptchaenterprise::v1::
-          RetrieveLegacySecretKeyRequest const& request) override;
+  StatusOr<google::cloud::recaptchaenterprise::v1::RetrieveLegacySecretKeyResponse>
+  RetrieveLegacySecretKey(google::cloud::recaptchaenterprise::v1::RetrieveLegacySecretKeyRequest const& request) override;
 
-  StatusOr<google::cloud::recaptchaenterprise::v1::Key> GetKey(
-      google::cloud::recaptchaenterprise::v1::GetKeyRequest const& request)
-      override;
+  StatusOr<google::cloud::recaptchaenterprise::v1::Key>
+  GetKey(google::cloud::recaptchaenterprise::v1::GetKeyRequest const& request) override;
 
-  StatusOr<google::cloud::recaptchaenterprise::v1::Key> UpdateKey(
-      google::cloud::recaptchaenterprise::v1::UpdateKeyRequest const& request)
-      override;
+  StatusOr<google::cloud::recaptchaenterprise::v1::Key>
+  UpdateKey(google::cloud::recaptchaenterprise::v1::UpdateKeyRequest const& request) override;
 
-  Status DeleteKey(
-      google::cloud::recaptchaenterprise::v1::DeleteKeyRequest const& request)
-      override;
+  Status
+  DeleteKey(google::cloud::recaptchaenterprise::v1::DeleteKeyRequest const& request) override;
 
-  StatusOr<google::cloud::recaptchaenterprise::v1::Key> MigrateKey(
-      google::cloud::recaptchaenterprise::v1::MigrateKeyRequest const& request)
-      override;
+  StatusOr<google::cloud::recaptchaenterprise::v1::Key>
+  MigrateKey(google::cloud::recaptchaenterprise::v1::MigrateKeyRequest const& request) override;
 
   StatusOr<google::cloud::recaptchaenterprise::v1::AddIpOverrideResponse>
-  AddIpOverride(
-      google::cloud::recaptchaenterprise::v1::AddIpOverrideRequest const&
-          request) override;
+  AddIpOverride(google::cloud::recaptchaenterprise::v1::AddIpOverrideRequest const& request) override;
 
   StatusOr<google::cloud::recaptchaenterprise::v1::RemoveIpOverrideResponse>
-  RemoveIpOverride(
-      google::cloud::recaptchaenterprise::v1::RemoveIpOverrideRequest const&
-          request) override;
+  RemoveIpOverride(google::cloud::recaptchaenterprise::v1::RemoveIpOverrideRequest const& request) override;
 
   StreamRange<google::cloud::recaptchaenterprise::v1::IpOverrideData>
-  ListIpOverrides(google::cloud::recaptchaenterprise::v1::ListIpOverridesRequest
-                      request) override;
+  ListIpOverrides(google::cloud::recaptchaenterprise::v1::ListIpOverridesRequest request) override;
 
-  StatusOr<google::cloud::recaptchaenterprise::v1::Metrics> GetMetrics(
-      google::cloud::recaptchaenterprise::v1::GetMetricsRequest const& request)
-      override;
+  StatusOr<google::cloud::recaptchaenterprise::v1::Metrics>
+  GetMetrics(google::cloud::recaptchaenterprise::v1::GetMetricsRequest const& request) override;
 
   StatusOr<google::cloud::recaptchaenterprise::v1::FirewallPolicy>
-  CreateFirewallPolicy(
-      google::cloud::recaptchaenterprise::v1::CreateFirewallPolicyRequest const&
-          request) override;
+  CreateFirewallPolicy(google::cloud::recaptchaenterprise::v1::CreateFirewallPolicyRequest const& request) override;
 
   StreamRange<google::cloud::recaptchaenterprise::v1::FirewallPolicy>
-  ListFirewallPolicies(
-      google::cloud::recaptchaenterprise::v1::ListFirewallPoliciesRequest
-          request) override;
+  ListFirewallPolicies(google::cloud::recaptchaenterprise::v1::ListFirewallPoliciesRequest request) override;
 
   StatusOr<google::cloud::recaptchaenterprise::v1::FirewallPolicy>
-  GetFirewallPolicy(
-      google::cloud::recaptchaenterprise::v1::GetFirewallPolicyRequest const&
-          request) override;
+  GetFirewallPolicy(google::cloud::recaptchaenterprise::v1::GetFirewallPolicyRequest const& request) override;
 
   StatusOr<google::cloud::recaptchaenterprise::v1::FirewallPolicy>
-  UpdateFirewallPolicy(
-      google::cloud::recaptchaenterprise::v1::UpdateFirewallPolicyRequest const&
-          request) override;
+  UpdateFirewallPolicy(google::cloud::recaptchaenterprise::v1::UpdateFirewallPolicyRequest const& request) override;
 
-  Status DeleteFirewallPolicy(
-      google::cloud::recaptchaenterprise::v1::DeleteFirewallPolicyRequest const&
-          request) override;
+  Status
+  DeleteFirewallPolicy(google::cloud::recaptchaenterprise::v1::DeleteFirewallPolicyRequest const& request) override;
 
-  StatusOr<
-      google::cloud::recaptchaenterprise::v1::ReorderFirewallPoliciesResponse>
-  ReorderFirewallPolicies(
-      google::cloud::recaptchaenterprise::v1::
-          ReorderFirewallPoliciesRequest const& request) override;
+  StatusOr<google::cloud::recaptchaenterprise::v1::ReorderFirewallPoliciesResponse>
+  ReorderFirewallPolicies(google::cloud::recaptchaenterprise::v1::ReorderFirewallPoliciesRequest const& request) override;
 
   StreamRange<google::cloud::recaptchaenterprise::v1::RelatedAccountGroup>
-  ListRelatedAccountGroups(
-      google::cloud::recaptchaenterprise::v1::ListRelatedAccountGroupsRequest
-          request) override;
+  ListRelatedAccountGroups(google::cloud::recaptchaenterprise::v1::ListRelatedAccountGroupsRequest request) override;
 
-  StreamRange<
-      google::cloud::recaptchaenterprise::v1::RelatedAccountGroupMembership>
-  ListRelatedAccountGroupMemberships(
-      google::cloud::recaptchaenterprise::v1::
-          ListRelatedAccountGroupMembershipsRequest request) override;
+  StreamRange<google::cloud::recaptchaenterprise::v1::RelatedAccountGroupMembership>
+  ListRelatedAccountGroupMemberships(google::cloud::recaptchaenterprise::v1::ListRelatedAccountGroupMembershipsRequest request) override;
 
-  StreamRange<
-      google::cloud::recaptchaenterprise::v1::RelatedAccountGroupMembership>
-  SearchRelatedAccountGroupMemberships(
-      google::cloud::recaptchaenterprise::v1::
-          SearchRelatedAccountGroupMembershipsRequest request) override;
+  StreamRange<google::cloud::recaptchaenterprise::v1::RelatedAccountGroupMembership>
+  SearchRelatedAccountGroupMemberships(google::cloud::recaptchaenterprise::v1::SearchRelatedAccountGroupMembershipsRequest request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<
-      recaptchaenterprise_v1_internal::RecaptchaEnterpriseServiceStub>
-      stub_;
+  std::shared_ptr<recaptchaenterprise_v1_internal::RecaptchaEnterpriseServiceStub> stub_;
   Options options_;
 };
 

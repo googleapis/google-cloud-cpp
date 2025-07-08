@@ -19,9 +19,9 @@
 #include "google/cloud/documentai/v1/internal/document_processor_option_defaults.h"
 #include "google/cloud/documentai/v1/document_processor_connection.h"
 #include "google/cloud/documentai/v1/document_processor_options.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include <memory>
 #include <utility>
 
@@ -34,51 +34,34 @@ namespace {
 auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
-Options DocumentProcessorServiceDefaultOptions(std::string const& location,
-                                               Options options) {
+Options DocumentProcessorServiceDefaultOptions(std::string const& location, Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options),
-      "GOOGLE_CLOUD_CPP_DOCUMENT_PROCESSOR_SERVICE_ENDPOINT", "",
-      "GOOGLE_CLOUD_CPP_DOCUMENT_PROCESSOR_SERVICE_AUTHORITY",
-      absl::StrCat(location, location.empty() ? "" : "-",
-                   "documentai.googleapis.com"));
+      std::move(options), "GOOGLE_CLOUD_CPP_DOCUMENT_PROCESSOR_SERVICE_ENDPOINT",
+      "", "GOOGLE_CLOUD_CPP_DOCUMENT_PROCESSOR_SERVICE_AUTHORITY",
+      absl::StrCat(location, location.empty() ? "" : "-", "documentai.googleapis.com"));
   options = internal::PopulateGrpcOptions(std::move(options));
-  if (!options
-           .has<documentai_v1::DocumentProcessorServiceRetryPolicyOption>()) {
+  if (!options.has<documentai_v1::DocumentProcessorServiceRetryPolicyOption>()) {
     options.set<documentai_v1::DocumentProcessorServiceRetryPolicyOption>(
         documentai_v1::DocumentProcessorServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
-            .clone());
+            std::chrono::minutes(30)).clone());
   }
-  if (!options
-           .has<documentai_v1::DocumentProcessorServiceBackoffPolicyOption>()) {
+  if (!options.has<documentai_v1::DocumentProcessorServiceBackoffPolicyOption>()) {
     options.set<documentai_v1::DocumentProcessorServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(
-            std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
-            .clone());
+        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
   }
-  if (!options
-           .has<documentai_v1::DocumentProcessorServicePollingPolicyOption>()) {
+  if (!options.has<documentai_v1::DocumentProcessorServicePollingPolicyOption>()) {
     options.set<documentai_v1::DocumentProcessorServicePollingPolicyOption>(
         GenericPollingPolicy<
             documentai_v1::DocumentProcessorServiceRetryPolicyOption::Type,
             documentai_v1::DocumentProcessorServiceBackoffPolicyOption::Type>(
-            options
-                .get<documentai_v1::DocumentProcessorServiceRetryPolicyOption>()
-                ->clone(),
+            options.get<documentai_v1::DocumentProcessorServiceRetryPolicyOption>()->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                     std::chrono::minutes(5), kBackoffScaling)
-                .clone())
-            .clone());
+            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
   }
-  if (!options.has<
-          documentai_v1::
-              DocumentProcessorServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<documentai_v1::
-                    DocumentProcessorServiceConnectionIdempotencyPolicyOption>(
-        documentai_v1::
-            MakeDefaultDocumentProcessorServiceConnectionIdempotencyPolicy());
+  if (!options.has<documentai_v1::DocumentProcessorServiceConnectionIdempotencyPolicyOption>()) {
+    options.set<documentai_v1::DocumentProcessorServiceConnectionIdempotencyPolicyOption>(
+        documentai_v1::MakeDefaultDocumentProcessorServiceConnectionIdempotencyPolicy());
   }
 
   return options;

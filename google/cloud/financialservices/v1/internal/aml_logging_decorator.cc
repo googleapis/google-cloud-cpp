@@ -30,19 +30,22 @@ namespace cloud {
 namespace financialservices_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-AMLLogging::AMLLogging(std::shared_ptr<AMLStub> child,
-                       TracingOptions tracing_options,
-                       std::set<std::string> const&)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
+AMLLogging::AMLLogging(
+    std::shared_ptr<AMLStub> child,
+    TracingOptions tracing_options,
+    std::set<std::string> const&)
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::cloud::financialservices::v1::ListInstancesResponse>
 AMLLogging::ListInstances(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::financialservices::v1::ListInstancesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::financialservices::v1::ListInstancesRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::financialservices::v1::ListInstancesRequest const& request) {
         return child_->ListInstances(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -50,12 +53,13 @@ AMLLogging::ListInstances(
 
 StatusOr<google::cloud::financialservices::v1::Instance>
 AMLLogging::GetInstance(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::financialservices::v1::GetInstanceRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::financialservices::v1::GetInstanceRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::financialservices::v1::GetInstanceRequest const& request) {
         return child_->GetInstance(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -63,32 +67,31 @@ AMLLogging::GetInstance(
 
 future<StatusOr<google::longrunning::Operation>>
 AMLLogging::AsyncCreateInstance(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::financialservices::v1::CreateInstanceRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::financialservices::v1::CreateInstanceRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::financialservices::v1::CreateInstanceRequest const&
-                 request) {
-        return child_->AsyncCreateInstance(cq, std::move(context),
-                                           std::move(options), request);
+             google::cloud::financialservices::v1::CreateInstanceRequest const& request) {
+        return child_->AsyncCreateInstance(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> AMLLogging::CreateInstance(
-    grpc::ClientContext& context, Options options,
-    google::cloud::financialservices::v1::CreateInstanceRequest const&
-        request) {
+StatusOr<google::longrunning::Operation>
+AMLLogging::CreateInstance(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::financialservices::v1::CreateInstanceRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::financialservices::v1::CreateInstanceRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::financialservices::v1::CreateInstanceRequest const& request) {
         return child_->CreateInstance(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -96,32 +99,31 @@ StatusOr<google::longrunning::Operation> AMLLogging::CreateInstance(
 
 future<StatusOr<google::longrunning::Operation>>
 AMLLogging::AsyncUpdateInstance(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::financialservices::v1::UpdateInstanceRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::financialservices::v1::UpdateInstanceRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::financialservices::v1::UpdateInstanceRequest const&
-                 request) {
-        return child_->AsyncUpdateInstance(cq, std::move(context),
-                                           std::move(options), request);
+             google::cloud::financialservices::v1::UpdateInstanceRequest const& request) {
+        return child_->AsyncUpdateInstance(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> AMLLogging::UpdateInstance(
-    grpc::ClientContext& context, Options options,
-    google::cloud::financialservices::v1::UpdateInstanceRequest const&
-        request) {
+StatusOr<google::longrunning::Operation>
+AMLLogging::UpdateInstance(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::financialservices::v1::UpdateInstanceRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::financialservices::v1::UpdateInstanceRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::financialservices::v1::UpdateInstanceRequest const& request) {
         return child_->UpdateInstance(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -129,32 +131,31 @@ StatusOr<google::longrunning::Operation> AMLLogging::UpdateInstance(
 
 future<StatusOr<google::longrunning::Operation>>
 AMLLogging::AsyncDeleteInstance(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::financialservices::v1::DeleteInstanceRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::financialservices::v1::DeleteInstanceRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::financialservices::v1::DeleteInstanceRequest const&
-                 request) {
-        return child_->AsyncDeleteInstance(cq, std::move(context),
-                                           std::move(options), request);
+             google::cloud::financialservices::v1::DeleteInstanceRequest const& request) {
+        return child_->AsyncDeleteInstance(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> AMLLogging::DeleteInstance(
-    grpc::ClientContext& context, Options options,
-    google::cloud::financialservices::v1::DeleteInstanceRequest const&
-        request) {
+StatusOr<google::longrunning::Operation>
+AMLLogging::DeleteInstance(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::financialservices::v1::DeleteInstanceRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::financialservices::v1::DeleteInstanceRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::financialservices::v1::DeleteInstanceRequest const& request) {
         return child_->DeleteInstance(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -162,17 +163,15 @@ StatusOr<google::longrunning::Operation> AMLLogging::DeleteInstance(
 
 future<StatusOr<google::longrunning::Operation>>
 AMLLogging::AsyncImportRegisteredParties(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::financialservices::v1::ImportRegisteredPartiesRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::financialservices::v1::ImportRegisteredPartiesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::financialservices::v1::
-                 ImportRegisteredPartiesRequest const& request) {
+             google::cloud::financialservices::v1::ImportRegisteredPartiesRequest const& request) {
         return child_->AsyncImportRegisteredParties(
             cq, std::move(context), std::move(options), request);
       },
@@ -180,14 +179,15 @@ AMLLogging::AsyncImportRegisteredParties(
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> AMLLogging::ImportRegisteredParties(
-    grpc::ClientContext& context, Options options,
-    google::cloud::financialservices::v1::ImportRegisteredPartiesRequest const&
-        request) {
+StatusOr<google::longrunning::Operation>
+AMLLogging::ImportRegisteredParties(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::financialservices::v1::ImportRegisteredPartiesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::financialservices::v1::
-                 ImportRegisteredPartiesRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::financialservices::v1::ImportRegisteredPartiesRequest const& request) {
         return child_->ImportRegisteredParties(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -195,17 +195,15 @@ StatusOr<google::longrunning::Operation> AMLLogging::ImportRegisteredParties(
 
 future<StatusOr<google::longrunning::Operation>>
 AMLLogging::AsyncExportRegisteredParties(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::financialservices::v1::ExportRegisteredPartiesRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::financialservices::v1::ExportRegisteredPartiesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::financialservices::v1::
-                 ExportRegisteredPartiesRequest const& request) {
+             google::cloud::financialservices::v1::ExportRegisteredPartiesRequest const& request) {
         return child_->AsyncExportRegisteredParties(
             cq, std::move(context), std::move(options), request);
       },
@@ -213,14 +211,15 @@ AMLLogging::AsyncExportRegisteredParties(
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> AMLLogging::ExportRegisteredParties(
-    grpc::ClientContext& context, Options options,
-    google::cloud::financialservices::v1::ExportRegisteredPartiesRequest const&
-        request) {
+StatusOr<google::longrunning::Operation>
+AMLLogging::ExportRegisteredParties(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::financialservices::v1::ExportRegisteredPartiesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::financialservices::v1::
-                 ExportRegisteredPartiesRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::financialservices::v1::ExportRegisteredPartiesRequest const& request) {
         return child_->ExportRegisteredParties(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -228,114 +227,123 @@ StatusOr<google::longrunning::Operation> AMLLogging::ExportRegisteredParties(
 
 StatusOr<google::cloud::financialservices::v1::ListDatasetsResponse>
 AMLLogging::ListDatasets(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::financialservices::v1::ListDatasetsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::financialservices::v1::ListDatasetsRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::financialservices::v1::ListDatasetsRequest const& request) {
         return child_->ListDatasets(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::cloud::financialservices::v1::Dataset> AMLLogging::GetDataset(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::financialservices::v1::Dataset>
+AMLLogging::GetDataset(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::financialservices::v1::GetDatasetRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::financialservices::v1::GetDatasetRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::financialservices::v1::GetDatasetRequest const& request) {
         return child_->GetDataset(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-future<StatusOr<google::longrunning::Operation>> AMLLogging::AsyncCreateDataset(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::financialservices::v1::CreateDatasetRequest const& request) {
+future<StatusOr<google::longrunning::Operation>>
+AMLLogging::AsyncCreateDataset(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::financialservices::v1::CreateDatasetRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::financialservices::v1::CreateDatasetRequest const&
-                 request) {
-        return child_->AsyncCreateDataset(cq, std::move(context),
-                                          std::move(options), request);
+             google::cloud::financialservices::v1::CreateDatasetRequest const& request) {
+        return child_->AsyncCreateDataset(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> AMLLogging::CreateDataset(
-    grpc::ClientContext& context, Options options,
-    google::cloud::financialservices::v1::CreateDatasetRequest const& request) {
+StatusOr<google::longrunning::Operation>
+AMLLogging::CreateDataset(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::financialservices::v1::CreateDatasetRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::financialservices::v1::CreateDatasetRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::financialservices::v1::CreateDatasetRequest const& request) {
         return child_->CreateDataset(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-future<StatusOr<google::longrunning::Operation>> AMLLogging::AsyncUpdateDataset(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::financialservices::v1::UpdateDatasetRequest const& request) {
+future<StatusOr<google::longrunning::Operation>>
+AMLLogging::AsyncUpdateDataset(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::financialservices::v1::UpdateDatasetRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::financialservices::v1::UpdateDatasetRequest const&
-                 request) {
-        return child_->AsyncUpdateDataset(cq, std::move(context),
-                                          std::move(options), request);
+             google::cloud::financialservices::v1::UpdateDatasetRequest const& request) {
+        return child_->AsyncUpdateDataset(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> AMLLogging::UpdateDataset(
-    grpc::ClientContext& context, Options options,
-    google::cloud::financialservices::v1::UpdateDatasetRequest const& request) {
+StatusOr<google::longrunning::Operation>
+AMLLogging::UpdateDataset(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::financialservices::v1::UpdateDatasetRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::financialservices::v1::UpdateDatasetRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::financialservices::v1::UpdateDatasetRequest const& request) {
         return child_->UpdateDataset(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-future<StatusOr<google::longrunning::Operation>> AMLLogging::AsyncDeleteDataset(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::financialservices::v1::DeleteDatasetRequest const& request) {
+future<StatusOr<google::longrunning::Operation>>
+AMLLogging::AsyncDeleteDataset(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::financialservices::v1::DeleteDatasetRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::financialservices::v1::DeleteDatasetRequest const&
-                 request) {
-        return child_->AsyncDeleteDataset(cq, std::move(context),
-                                          std::move(options), request);
+             google::cloud::financialservices::v1::DeleteDatasetRequest const& request) {
+        return child_->AsyncDeleteDataset(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> AMLLogging::DeleteDataset(
-    grpc::ClientContext& context, Options options,
-    google::cloud::financialservices::v1::DeleteDatasetRequest const& request) {
+StatusOr<google::longrunning::Operation>
+AMLLogging::DeleteDataset(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::financialservices::v1::DeleteDatasetRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::financialservices::v1::DeleteDatasetRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::financialservices::v1::DeleteDatasetRequest const& request) {
         return child_->DeleteDataset(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -343,84 +351,91 @@ StatusOr<google::longrunning::Operation> AMLLogging::DeleteDataset(
 
 StatusOr<google::cloud::financialservices::v1::ListModelsResponse>
 AMLLogging::ListModels(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::financialservices::v1::ListModelsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::financialservices::v1::ListModelsRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::financialservices::v1::ListModelsRequest const& request) {
         return child_->ListModels(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::cloud::financialservices::v1::Model> AMLLogging::GetModel(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::financialservices::v1::Model>
+AMLLogging::GetModel(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::financialservices::v1::GetModelRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::financialservices::v1::GetModelRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::financialservices::v1::GetModelRequest const& request) {
         return child_->GetModel(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-future<StatusOr<google::longrunning::Operation>> AMLLogging::AsyncCreateModel(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::financialservices::v1::CreateModelRequest const& request) {
+future<StatusOr<google::longrunning::Operation>>
+AMLLogging::AsyncCreateModel(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::financialservices::v1::CreateModelRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::financialservices::v1::CreateModelRequest const&
-                 request) {
-        return child_->AsyncCreateModel(cq, std::move(context),
-                                        std::move(options), request);
+             google::cloud::financialservices::v1::CreateModelRequest const& request) {
+        return child_->AsyncCreateModel(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> AMLLogging::CreateModel(
-    grpc::ClientContext& context, Options options,
-    google::cloud::financialservices::v1::CreateModelRequest const& request) {
+StatusOr<google::longrunning::Operation>
+AMLLogging::CreateModel(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::financialservices::v1::CreateModelRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::financialservices::v1::CreateModelRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::financialservices::v1::CreateModelRequest const& request) {
         return child_->CreateModel(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-future<StatusOr<google::longrunning::Operation>> AMLLogging::AsyncUpdateModel(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::financialservices::v1::UpdateModelRequest const& request) {
+future<StatusOr<google::longrunning::Operation>>
+AMLLogging::AsyncUpdateModel(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::financialservices::v1::UpdateModelRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::financialservices::v1::UpdateModelRequest const&
-                 request) {
-        return child_->AsyncUpdateModel(cq, std::move(context),
-                                        std::move(options), request);
+             google::cloud::financialservices::v1::UpdateModelRequest const& request) {
+        return child_->AsyncUpdateModel(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> AMLLogging::UpdateModel(
-    grpc::ClientContext& context, Options options,
-    google::cloud::financialservices::v1::UpdateModelRequest const& request) {
+StatusOr<google::longrunning::Operation>
+AMLLogging::UpdateModel(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::financialservices::v1::UpdateModelRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::financialservices::v1::UpdateModelRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::financialservices::v1::UpdateModelRequest const& request) {
         return child_->UpdateModel(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -428,62 +443,63 @@ StatusOr<google::longrunning::Operation> AMLLogging::UpdateModel(
 
 future<StatusOr<google::longrunning::Operation>>
 AMLLogging::AsyncExportModelMetadata(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::financialservices::v1::ExportModelMetadataRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::financialservices::v1::ExportModelMetadataRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::financialservices::v1::
-                 ExportModelMetadataRequest const& request) {
-        return child_->AsyncExportModelMetadata(cq, std::move(context),
-                                                std::move(options), request);
+             google::cloud::financialservices::v1::ExportModelMetadataRequest const& request) {
+        return child_->AsyncExportModelMetadata(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> AMLLogging::ExportModelMetadata(
-    grpc::ClientContext& context, Options options,
-    google::cloud::financialservices::v1::ExportModelMetadataRequest const&
-        request) {
+StatusOr<google::longrunning::Operation>
+AMLLogging::ExportModelMetadata(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::financialservices::v1::ExportModelMetadataRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::financialservices::v1::
-                 ExportModelMetadataRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::financialservices::v1::ExportModelMetadataRequest const& request) {
         return child_->ExportModelMetadata(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-future<StatusOr<google::longrunning::Operation>> AMLLogging::AsyncDeleteModel(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::financialservices::v1::DeleteModelRequest const& request) {
+future<StatusOr<google::longrunning::Operation>>
+AMLLogging::AsyncDeleteModel(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::financialservices::v1::DeleteModelRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::financialservices::v1::DeleteModelRequest const&
-                 request) {
-        return child_->AsyncDeleteModel(cq, std::move(context),
-                                        std::move(options), request);
+             google::cloud::financialservices::v1::DeleteModelRequest const& request) {
+        return child_->AsyncDeleteModel(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> AMLLogging::DeleteModel(
-    grpc::ClientContext& context, Options options,
-    google::cloud::financialservices::v1::DeleteModelRequest const& request) {
+StatusOr<google::longrunning::Operation>
+AMLLogging::DeleteModel(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::financialservices::v1::DeleteModelRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::financialservices::v1::DeleteModelRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::financialservices::v1::DeleteModelRequest const& request) {
         return child_->DeleteModel(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -491,14 +507,13 @@ StatusOr<google::longrunning::Operation> AMLLogging::DeleteModel(
 
 StatusOr<google::cloud::financialservices::v1::ListEngineConfigsResponse>
 AMLLogging::ListEngineConfigs(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::financialservices::v1::ListEngineConfigsRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::financialservices::v1::ListEngineConfigsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::financialservices::v1::ListEngineConfigsRequest const&
-              request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::financialservices::v1::ListEngineConfigsRequest const& request) {
         return child_->ListEngineConfigs(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -506,13 +521,13 @@ AMLLogging::ListEngineConfigs(
 
 StatusOr<google::cloud::financialservices::v1::EngineConfig>
 AMLLogging::GetEngineConfig(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::financialservices::v1::GetEngineConfigRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::financialservices::v1::GetEngineConfigRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::financialservices::v1::GetEngineConfigRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::financialservices::v1::GetEngineConfigRequest const& request) {
         return child_->GetEngineConfig(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -520,34 +535,31 @@ AMLLogging::GetEngineConfig(
 
 future<StatusOr<google::longrunning::Operation>>
 AMLLogging::AsyncCreateEngineConfig(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::financialservices::v1::CreateEngineConfigRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::financialservices::v1::CreateEngineConfigRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::financialservices::v1::CreateEngineConfigRequest const&
-              request) {
-        return child_->AsyncCreateEngineConfig(cq, std::move(context),
-                                               std::move(options), request);
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::financialservices::v1::CreateEngineConfigRequest const& request) {
+        return child_->AsyncCreateEngineConfig(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> AMLLogging::CreateEngineConfig(
-    grpc::ClientContext& context, Options options,
-    google::cloud::financialservices::v1::CreateEngineConfigRequest const&
-        request) {
+StatusOr<google::longrunning::Operation>
+AMLLogging::CreateEngineConfig(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::financialservices::v1::CreateEngineConfigRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::financialservices::v1::CreateEngineConfigRequest const&
-              request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::financialservices::v1::CreateEngineConfigRequest const& request) {
         return child_->CreateEngineConfig(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -555,34 +567,31 @@ StatusOr<google::longrunning::Operation> AMLLogging::CreateEngineConfig(
 
 future<StatusOr<google::longrunning::Operation>>
 AMLLogging::AsyncUpdateEngineConfig(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::financialservices::v1::UpdateEngineConfigRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::financialservices::v1::UpdateEngineConfigRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::financialservices::v1::UpdateEngineConfigRequest const&
-              request) {
-        return child_->AsyncUpdateEngineConfig(cq, std::move(context),
-                                               std::move(options), request);
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::financialservices::v1::UpdateEngineConfigRequest const& request) {
+        return child_->AsyncUpdateEngineConfig(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> AMLLogging::UpdateEngineConfig(
-    grpc::ClientContext& context, Options options,
-    google::cloud::financialservices::v1::UpdateEngineConfigRequest const&
-        request) {
+StatusOr<google::longrunning::Operation>
+AMLLogging::UpdateEngineConfig(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::financialservices::v1::UpdateEngineConfigRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::financialservices::v1::UpdateEngineConfigRequest const&
-              request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::financialservices::v1::UpdateEngineConfigRequest const& request) {
         return child_->UpdateEngineConfig(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -590,17 +599,15 @@ StatusOr<google::longrunning::Operation> AMLLogging::UpdateEngineConfig(
 
 future<StatusOr<google::longrunning::Operation>>
 AMLLogging::AsyncExportEngineConfigMetadata(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::financialservices::v1::
-        ExportEngineConfigMetadataRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::financialservices::v1::ExportEngineConfigMetadataRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::financialservices::v1::
-                 ExportEngineConfigMetadataRequest const& request) {
+             google::cloud::financialservices::v1::ExportEngineConfigMetadataRequest const& request) {
         return child_->AsyncExportEngineConfigMetadata(
             cq, std::move(context), std::move(options), request);
       },
@@ -608,14 +615,15 @@ AMLLogging::AsyncExportEngineConfigMetadata(
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> AMLLogging::ExportEngineConfigMetadata(
-    grpc::ClientContext& context, Options options,
-    google::cloud::financialservices::v1::
-        ExportEngineConfigMetadataRequest const& request) {
+StatusOr<google::longrunning::Operation>
+AMLLogging::ExportEngineConfigMetadata(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::financialservices::v1::ExportEngineConfigMetadataRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::financialservices::v1::
-                 ExportEngineConfigMetadataRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::financialservices::v1::ExportEngineConfigMetadataRequest const& request) {
         return child_->ExportEngineConfigMetadata(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -623,34 +631,31 @@ StatusOr<google::longrunning::Operation> AMLLogging::ExportEngineConfigMetadata(
 
 future<StatusOr<google::longrunning::Operation>>
 AMLLogging::AsyncDeleteEngineConfig(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::financialservices::v1::DeleteEngineConfigRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::financialservices::v1::DeleteEngineConfigRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::financialservices::v1::DeleteEngineConfigRequest const&
-              request) {
-        return child_->AsyncDeleteEngineConfig(cq, std::move(context),
-                                               std::move(options), request);
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::financialservices::v1::DeleteEngineConfigRequest const& request) {
+        return child_->AsyncDeleteEngineConfig(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> AMLLogging::DeleteEngineConfig(
-    grpc::ClientContext& context, Options options,
-    google::cloud::financialservices::v1::DeleteEngineConfigRequest const&
-        request) {
+StatusOr<google::longrunning::Operation>
+AMLLogging::DeleteEngineConfig(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::financialservices::v1::DeleteEngineConfigRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::financialservices::v1::DeleteEngineConfigRequest const&
-              request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::financialservices::v1::DeleteEngineConfigRequest const& request) {
         return child_->DeleteEngineConfig(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -658,14 +663,13 @@ StatusOr<google::longrunning::Operation> AMLLogging::DeleteEngineConfig(
 
 StatusOr<google::cloud::financialservices::v1::EngineVersion>
 AMLLogging::GetEngineVersion(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::financialservices::v1::GetEngineVersionRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::financialservices::v1::GetEngineVersionRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::financialservices::v1::GetEngineVersionRequest const&
-              request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::financialservices::v1::GetEngineVersionRequest const& request) {
         return child_->GetEngineVersion(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -673,14 +677,13 @@ AMLLogging::GetEngineVersion(
 
 StatusOr<google::cloud::financialservices::v1::ListEngineVersionsResponse>
 AMLLogging::ListEngineVersions(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::financialservices::v1::ListEngineVersionsRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::financialservices::v1::ListEngineVersionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::financialservices::v1::ListEngineVersionsRequest const&
-              request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::financialservices::v1::ListEngineVersionsRequest const& request) {
         return child_->ListEngineVersions(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -688,13 +691,13 @@ AMLLogging::ListEngineVersions(
 
 StatusOr<google::cloud::financialservices::v1::ListPredictionResultsResponse>
 AMLLogging::ListPredictionResults(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::financialservices::v1::ListPredictionResultsRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::financialservices::v1::ListPredictionResultsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::financialservices::v1::
-                 ListPredictionResultsRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::financialservices::v1::ListPredictionResultsRequest const& request) {
         return child_->ListPredictionResults(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -702,13 +705,13 @@ AMLLogging::ListPredictionResults(
 
 StatusOr<google::cloud::financialservices::v1::PredictionResult>
 AMLLogging::GetPredictionResult(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::financialservices::v1::GetPredictionResultRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::financialservices::v1::GetPredictionResultRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::financialservices::v1::
-                 GetPredictionResultRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::financialservices::v1::GetPredictionResultRequest const& request) {
         return child_->GetPredictionResult(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -716,32 +719,31 @@ AMLLogging::GetPredictionResult(
 
 future<StatusOr<google::longrunning::Operation>>
 AMLLogging::AsyncCreatePredictionResult(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::financialservices::v1::CreatePredictionResultRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::financialservices::v1::CreatePredictionResultRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::financialservices::v1::
-                 CreatePredictionResultRequest const& request) {
-        return child_->AsyncCreatePredictionResult(cq, std::move(context),
-                                                   std::move(options), request);
+             google::cloud::financialservices::v1::CreatePredictionResultRequest const& request) {
+        return child_->AsyncCreatePredictionResult(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> AMLLogging::CreatePredictionResult(
-    grpc::ClientContext& context, Options options,
-    google::cloud::financialservices::v1::CreatePredictionResultRequest const&
-        request) {
+StatusOr<google::longrunning::Operation>
+AMLLogging::CreatePredictionResult(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::financialservices::v1::CreatePredictionResultRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::financialservices::v1::
-                 CreatePredictionResultRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::financialservices::v1::CreatePredictionResultRequest const& request) {
         return child_->CreatePredictionResult(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -749,32 +751,31 @@ StatusOr<google::longrunning::Operation> AMLLogging::CreatePredictionResult(
 
 future<StatusOr<google::longrunning::Operation>>
 AMLLogging::AsyncUpdatePredictionResult(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::financialservices::v1::UpdatePredictionResultRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::financialservices::v1::UpdatePredictionResultRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::financialservices::v1::
-                 UpdatePredictionResultRequest const& request) {
-        return child_->AsyncUpdatePredictionResult(cq, std::move(context),
-                                                   std::move(options), request);
+             google::cloud::financialservices::v1::UpdatePredictionResultRequest const& request) {
+        return child_->AsyncUpdatePredictionResult(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> AMLLogging::UpdatePredictionResult(
-    grpc::ClientContext& context, Options options,
-    google::cloud::financialservices::v1::UpdatePredictionResultRequest const&
-        request) {
+StatusOr<google::longrunning::Operation>
+AMLLogging::UpdatePredictionResult(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::financialservices::v1::UpdatePredictionResultRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::financialservices::v1::
-                 UpdatePredictionResultRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::financialservices::v1::UpdatePredictionResultRequest const& request) {
         return child_->UpdatePredictionResult(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -782,17 +783,15 @@ StatusOr<google::longrunning::Operation> AMLLogging::UpdatePredictionResult(
 
 future<StatusOr<google::longrunning::Operation>>
 AMLLogging::AsyncExportPredictionResultMetadata(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::financialservices::v1::
-        ExportPredictionResultMetadataRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::financialservices::v1::ExportPredictionResultMetadataRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::financialservices::v1::
-                 ExportPredictionResultMetadataRequest const& request) {
+             google::cloud::financialservices::v1::ExportPredictionResultMetadataRequest const& request) {
         return child_->AsyncExportPredictionResultMetadata(
             cq, std::move(context), std::move(options), request);
       },
@@ -802,47 +801,45 @@ AMLLogging::AsyncExportPredictionResultMetadata(
 
 StatusOr<google::longrunning::Operation>
 AMLLogging::ExportPredictionResultMetadata(
-    grpc::ClientContext& context, Options options,
-    google::cloud::financialservices::v1::
-        ExportPredictionResultMetadataRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::financialservices::v1::ExportPredictionResultMetadataRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::financialservices::v1::
-                 ExportPredictionResultMetadataRequest const& request) {
-        return child_->ExportPredictionResultMetadata(context, options,
-                                                      request);
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::financialservices::v1::ExportPredictionResultMetadataRequest const& request) {
+        return child_->ExportPredictionResultMetadata(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 AMLLogging::AsyncDeletePredictionResult(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::financialservices::v1::DeletePredictionResultRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::financialservices::v1::DeletePredictionResultRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::financialservices::v1::
-                 DeletePredictionResultRequest const& request) {
-        return child_->AsyncDeletePredictionResult(cq, std::move(context),
-                                                   std::move(options), request);
+             google::cloud::financialservices::v1::DeletePredictionResultRequest const& request) {
+        return child_->AsyncDeletePredictionResult(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> AMLLogging::DeletePredictionResult(
-    grpc::ClientContext& context, Options options,
-    google::cloud::financialservices::v1::DeletePredictionResultRequest const&
-        request) {
+StatusOr<google::longrunning::Operation>
+AMLLogging::DeletePredictionResult(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::financialservices::v1::DeletePredictionResultRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::financialservices::v1::
-                 DeletePredictionResultRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::financialservices::v1::DeletePredictionResultRequest const& request) {
         return child_->DeletePredictionResult(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -850,13 +847,13 @@ StatusOr<google::longrunning::Operation> AMLLogging::DeletePredictionResult(
 
 StatusOr<google::cloud::financialservices::v1::ListBacktestResultsResponse>
 AMLLogging::ListBacktestResults(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::financialservices::v1::ListBacktestResultsRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::financialservices::v1::ListBacktestResultsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::financialservices::v1::
-                 ListBacktestResultsRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::financialservices::v1::ListBacktestResultsRequest const& request) {
         return child_->ListBacktestResults(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -864,14 +861,13 @@ AMLLogging::ListBacktestResults(
 
 StatusOr<google::cloud::financialservices::v1::BacktestResult>
 AMLLogging::GetBacktestResult(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::financialservices::v1::GetBacktestResultRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::financialservices::v1::GetBacktestResultRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::financialservices::v1::GetBacktestResultRequest const&
-              request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::financialservices::v1::GetBacktestResultRequest const& request) {
         return child_->GetBacktestResult(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -879,32 +875,31 @@ AMLLogging::GetBacktestResult(
 
 future<StatusOr<google::longrunning::Operation>>
 AMLLogging::AsyncCreateBacktestResult(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::financialservices::v1::CreateBacktestResultRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::financialservices::v1::CreateBacktestResultRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::financialservices::v1::
-                 CreateBacktestResultRequest const& request) {
-        return child_->AsyncCreateBacktestResult(cq, std::move(context),
-                                                 std::move(options), request);
+             google::cloud::financialservices::v1::CreateBacktestResultRequest const& request) {
+        return child_->AsyncCreateBacktestResult(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> AMLLogging::CreateBacktestResult(
-    grpc::ClientContext& context, Options options,
-    google::cloud::financialservices::v1::CreateBacktestResultRequest const&
-        request) {
+StatusOr<google::longrunning::Operation>
+AMLLogging::CreateBacktestResult(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::financialservices::v1::CreateBacktestResultRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::financialservices::v1::
-                 CreateBacktestResultRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::financialservices::v1::CreateBacktestResultRequest const& request) {
         return child_->CreateBacktestResult(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -912,32 +907,31 @@ StatusOr<google::longrunning::Operation> AMLLogging::CreateBacktestResult(
 
 future<StatusOr<google::longrunning::Operation>>
 AMLLogging::AsyncUpdateBacktestResult(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::financialservices::v1::UpdateBacktestResultRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::financialservices::v1::UpdateBacktestResultRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::financialservices::v1::
-                 UpdateBacktestResultRequest const& request) {
-        return child_->AsyncUpdateBacktestResult(cq, std::move(context),
-                                                 std::move(options), request);
+             google::cloud::financialservices::v1::UpdateBacktestResultRequest const& request) {
+        return child_->AsyncUpdateBacktestResult(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> AMLLogging::UpdateBacktestResult(
-    grpc::ClientContext& context, Options options,
-    google::cloud::financialservices::v1::UpdateBacktestResultRequest const&
-        request) {
+StatusOr<google::longrunning::Operation>
+AMLLogging::UpdateBacktestResult(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::financialservices::v1::UpdateBacktestResultRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::financialservices::v1::
-                 UpdateBacktestResultRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::financialservices::v1::UpdateBacktestResultRequest const& request) {
         return child_->UpdateBacktestResult(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -945,17 +939,15 @@ StatusOr<google::longrunning::Operation> AMLLogging::UpdateBacktestResult(
 
 future<StatusOr<google::longrunning::Operation>>
 AMLLogging::AsyncExportBacktestResultMetadata(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::financialservices::v1::
-        ExportBacktestResultMetadataRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::financialservices::v1::ExportBacktestResultMetadataRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::financialservices::v1::
-                 ExportBacktestResultMetadataRequest const& request) {
+             google::cloud::financialservices::v1::ExportBacktestResultMetadataRequest const& request) {
         return child_->AsyncExportBacktestResultMetadata(
             cq, std::move(context), std::move(options), request);
       },
@@ -965,13 +957,13 @@ AMLLogging::AsyncExportBacktestResultMetadata(
 
 StatusOr<google::longrunning::Operation>
 AMLLogging::ExportBacktestResultMetadata(
-    grpc::ClientContext& context, Options options,
-    google::cloud::financialservices::v1::
-        ExportBacktestResultMetadataRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::financialservices::v1::ExportBacktestResultMetadataRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::financialservices::v1::
-                 ExportBacktestResultMetadataRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::financialservices::v1::ExportBacktestResultMetadataRequest const& request) {
         return child_->ExportBacktestResultMetadata(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -979,32 +971,31 @@ AMLLogging::ExportBacktestResultMetadata(
 
 future<StatusOr<google::longrunning::Operation>>
 AMLLogging::AsyncDeleteBacktestResult(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::financialservices::v1::DeleteBacktestResultRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::financialservices::v1::DeleteBacktestResultRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::financialservices::v1::
-                 DeleteBacktestResultRequest const& request) {
-        return child_->AsyncDeleteBacktestResult(cq, std::move(context),
-                                                 std::move(options), request);
+             google::cloud::financialservices::v1::DeleteBacktestResultRequest const& request) {
+        return child_->AsyncDeleteBacktestResult(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> AMLLogging::DeleteBacktestResult(
-    grpc::ClientContext& context, Options options,
-    google::cloud::financialservices::v1::DeleteBacktestResultRequest const&
-        request) {
+StatusOr<google::longrunning::Operation>
+AMLLogging::DeleteBacktestResult(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::financialservices::v1::DeleteBacktestResultRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::financialservices::v1::
-                 DeleteBacktestResultRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::financialservices::v1::DeleteBacktestResultRequest const& request) {
         return child_->DeleteBacktestResult(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -1012,21 +1003,26 @@ StatusOr<google::longrunning::Operation> AMLLogging::DeleteBacktestResult(
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 AMLLogging::ListLocations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::location::ListLocationsRequest const& request) {
         return child_->ListLocations(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::cloud::location::Location> AMLLogging::GetLocation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::location::Location>
+AMLLogging::GetLocation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::location::GetLocationRequest const& request) {
         return child_->GetLocation(context, options, request);
       },
@@ -1035,50 +1031,62 @@ StatusOr<google::cloud::location::Location> AMLLogging::GetLocation(
 
 StatusOr<google::longrunning::ListOperationsResponse>
 AMLLogging::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::ListOperationsRequest const& request) {
         return child_->ListOperations(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> AMLLogging::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::Operation>
+AMLLogging::GetOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::GetOperationRequest const& request) {
         return child_->GetOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status AMLLogging::DeleteOperation(
-    grpc::ClientContext& context, Options const& options,
+Status
+AMLLogging::DeleteOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::DeleteOperationRequest const& request) {
         return child_->DeleteOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status AMLLogging::CancelOperation(
-    grpc::ClientContext& context, Options const& options,
+Status
+AMLLogging::CancelOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::CancelOperationRequest const& request) {
         return child_->CancelOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-future<StatusOr<google::longrunning::Operation>> AMLLogging::AsyncGetOperation(
+future<StatusOr<google::longrunning::Operation>>
+AMLLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
@@ -1088,8 +1096,8 @@ future<StatusOr<google::longrunning::Operation>> AMLLogging::AsyncGetOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(cq, std::move(context),
-                                         std::move(options), request);
+        return child_->AsyncGetOperation(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -1105,8 +1113,8 @@ future<Status> AMLLogging::AsyncCancelOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::CancelOperationRequest const& request) {
-        return child_->AsyncCancelOperation(cq, std::move(context),
-                                            std::move(options), request);
+        return child_->AsyncCancelOperation(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);

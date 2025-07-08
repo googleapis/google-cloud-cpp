@@ -36,68 +36,54 @@ class NodeGroupsConnectionIdempotencyPolicy {
   /// Create a new copy of this object.
   virtual std::unique_ptr<NodeGroupsConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency AddNodes(
-      google::cloud::cpp::compute::node_groups::v1::AddNodesRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  AddNodes(google::cloud::cpp::compute::node_groups::v1::AddNodesRequest const& request);
 
-  virtual google::cloud::Idempotency AggregatedListNodeGroups(
-      google::cloud::cpp::compute::node_groups::v1::
-          AggregatedListNodeGroupsRequest request);
+  virtual google::cloud::Idempotency
+  AggregatedListNodeGroups(google::cloud::cpp::compute::node_groups::v1::AggregatedListNodeGroupsRequest request);
 
-  virtual google::cloud::Idempotency DeleteNodeGroup(
-      google::cloud::cpp::compute::node_groups::v1::
-          DeleteNodeGroupRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteNodeGroup(google::cloud::cpp::compute::node_groups::v1::DeleteNodeGroupRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteNodes(
-      google::cloud::cpp::compute::node_groups::v1::DeleteNodesRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  DeleteNodes(google::cloud::cpp::compute::node_groups::v1::DeleteNodesRequest const& request);
 
-  virtual google::cloud::Idempotency GetNodeGroup(
-      google::cloud::cpp::compute::node_groups::v1::GetNodeGroupRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  GetNodeGroup(google::cloud::cpp::compute::node_groups::v1::GetNodeGroupRequest const& request);
 
-  virtual google::cloud::Idempotency GetIamPolicy(
-      google::cloud::cpp::compute::node_groups::v1::GetIamPolicyRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  GetIamPolicy(google::cloud::cpp::compute::node_groups::v1::GetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency InsertNodeGroup(
-      google::cloud::cpp::compute::node_groups::v1::
-          InsertNodeGroupRequest const& request);
+  virtual google::cloud::Idempotency
+  InsertNodeGroup(google::cloud::cpp::compute::node_groups::v1::InsertNodeGroupRequest const& request);
 
-  virtual google::cloud::Idempotency ListNodeGroups(
-      google::cloud::cpp::compute::node_groups::v1::ListNodeGroupsRequest
-          request);
+  virtual google::cloud::Idempotency
+  ListNodeGroups(google::cloud::cpp::compute::node_groups::v1::ListNodeGroupsRequest request);
 
-  virtual google::cloud::Idempotency ListNodes(
-      google::cloud::cpp::compute::node_groups::v1::ListNodesRequest request);
+  virtual google::cloud::Idempotency
+  ListNodes(google::cloud::cpp::compute::node_groups::v1::ListNodesRequest request);
 
-  virtual google::cloud::Idempotency PatchNodeGroup(
-      google::cloud::cpp::compute::node_groups::v1::PatchNodeGroupRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  PatchNodeGroup(google::cloud::cpp::compute::node_groups::v1::PatchNodeGroupRequest const& request);
 
-  virtual google::cloud::Idempotency PerformMaintenance(
-      google::cloud::cpp::compute::node_groups::v1::
-          PerformMaintenanceRequest const& request);
+  virtual google::cloud::Idempotency
+  PerformMaintenance(google::cloud::cpp::compute::node_groups::v1::PerformMaintenanceRequest const& request);
 
-  virtual google::cloud::Idempotency SetIamPolicy(
-      google::cloud::cpp::compute::node_groups::v1::SetIamPolicyRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  SetIamPolicy(google::cloud::cpp::compute::node_groups::v1::SetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency SetNodeTemplate(
-      google::cloud::cpp::compute::node_groups::v1::
-          SetNodeTemplateRequest const& request);
+  virtual google::cloud::Idempotency
+  SetNodeTemplate(google::cloud::cpp::compute::node_groups::v1::SetNodeTemplateRequest const& request);
 
-  virtual google::cloud::Idempotency SimulateMaintenanceEvent(
-      google::cloud::cpp::compute::node_groups::v1::
-          SimulateMaintenanceEventRequest const& request);
+  virtual google::cloud::Idempotency
+  SimulateMaintenanceEvent(google::cloud::cpp::compute::node_groups::v1::SimulateMaintenanceEventRequest const& request);
 
-  virtual google::cloud::Idempotency TestIamPermissions(
-      google::cloud::cpp::compute::node_groups::v1::
-          TestIamPermissionsRequest const& request);
+  virtual google::cloud::Idempotency
+  TestIamPermissions(google::cloud::cpp::compute::node_groups::v1::TestIamPermissionsRequest const& request);
 };
 
 std::unique_ptr<NodeGroupsConnectionIdempotencyPolicy>
-MakeDefaultNodeGroupsConnectionIdempotencyPolicy();
+    MakeDefaultNodeGroupsConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_node_groups_v1

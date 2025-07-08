@@ -35,37 +35,23 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options BinauthzManagementServiceV1DefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options),
-      "GOOGLE_CLOUD_CPP_BINAUTHZ_MANAGEMENT_SERVICE_V1_ENDPOINT", "",
-      "GOOGLE_CLOUD_CPP_BINAUTHZ_MANAGEMENT_SERVICE_V1_AUTHORITY",
+      std::move(options), "GOOGLE_CLOUD_CPP_BINAUTHZ_MANAGEMENT_SERVICE_V1_ENDPOINT",
+      "", "GOOGLE_CLOUD_CPP_BINAUTHZ_MANAGEMENT_SERVICE_V1_AUTHORITY",
       "binaryauthorization.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
-  if (!options.has<binaryauthorization_v1::
-                       BinauthzManagementServiceV1RetryPolicyOption>()) {
-    options.set<
-        binaryauthorization_v1::BinauthzManagementServiceV1RetryPolicyOption>(
-        binaryauthorization_v1::
-            BinauthzManagementServiceV1LimitedTimeRetryPolicy(
-                std::chrono::minutes(30))
-                .clone());
+  if (!options.has<binaryauthorization_v1::BinauthzManagementServiceV1RetryPolicyOption>()) {
+    options.set<binaryauthorization_v1::BinauthzManagementServiceV1RetryPolicyOption>(
+        binaryauthorization_v1::BinauthzManagementServiceV1LimitedTimeRetryPolicy(
+            std::chrono::minutes(30)).clone());
   }
-  if (!options.has<binaryauthorization_v1::
-                       BinauthzManagementServiceV1BackoffPolicyOption>()) {
-    options.set<
-        binaryauthorization_v1::BinauthzManagementServiceV1BackoffPolicyOption>(
-        ExponentialBackoffPolicy(
-            std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
-            .clone());
+  if (!options.has<binaryauthorization_v1::BinauthzManagementServiceV1BackoffPolicyOption>()) {
+    options.set<binaryauthorization_v1::BinauthzManagementServiceV1BackoffPolicyOption>(
+        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
   }
-  if (!options.has<
-          binaryauthorization_v1::
-              BinauthzManagementServiceV1ConnectionIdempotencyPolicyOption>()) {
-    options.set<
-        binaryauthorization_v1::
-            BinauthzManagementServiceV1ConnectionIdempotencyPolicyOption>(
-        binaryauthorization_v1::
-            MakeDefaultBinauthzManagementServiceV1ConnectionIdempotencyPolicy());
+  if (!options.has<binaryauthorization_v1::BinauthzManagementServiceV1ConnectionIdempotencyPolicyOption>()) {
+    options.set<binaryauthorization_v1::BinauthzManagementServiceV1ConnectionIdempotencyPolicyOption>(
+        binaryauthorization_v1::MakeDefaultBinauthzManagementServiceV1ConnectionIdempotencyPolicy());
   }
 
   return options;

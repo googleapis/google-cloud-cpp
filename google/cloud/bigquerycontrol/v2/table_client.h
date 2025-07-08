@@ -63,8 +63,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class TableServiceClient {
  public:
-  explicit TableServiceClient(
-      std::shared_ptr<TableServiceConnection> connection, Options opts = {});
+  explicit TableServiceClient(std::shared_ptr<TableServiceConnection> connection, Options opts = {});
   ~TableServiceClient();
 
   ///@{
@@ -77,12 +76,10 @@ class TableServiceClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(TableServiceClient const& a,
-                         TableServiceClient const& b) {
+  friend bool operator==(TableServiceClient const& a, TableServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(TableServiceClient const& a,
-                         TableServiceClient const& b) {
+  friend bool operator!=(TableServiceClient const& a, TableServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -116,9 +113,8 @@ class TableServiceClient {
   /// [google.cloud.bigquery.v2.Table]: @googleapis_reference_link{google/cloud/bigquery/v2/table.proto#L284}
   ///
   // clang-format on
-  StatusOr<google::cloud::bigquery::v2::Table> GetTable(
-      google::cloud::bigquery::v2::GetTableRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::bigquery::v2::Table>
+  GetTable(google::cloud::bigquery::v2::GetTableRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -147,9 +143,8 @@ class TableServiceClient {
   /// [google.cloud.bigquery.v2.Table]: @googleapis_reference_link{google/cloud/bigquery/v2/table.proto#L284}
   ///
   // clang-format on
-  StatusOr<google::cloud::bigquery::v2::Table> InsertTable(
-      google::cloud::bigquery::v2::InsertTableRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::bigquery::v2::Table>
+  InsertTable(google::cloud::bigquery::v2::InsertTableRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -181,9 +176,8 @@ class TableServiceClient {
   /// [google.cloud.bigquery.v2.UpdateOrPatchTableRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/table.proto#L619}
   ///
   // clang-format on
-  StatusOr<google::cloud::bigquery::v2::Table> PatchTable(
-      google::cloud::bigquery::v2::UpdateOrPatchTableRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::bigquery::v2::Table>
+  PatchTable(google::cloud::bigquery::v2::UpdateOrPatchTableRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -214,9 +208,8 @@ class TableServiceClient {
   /// [google.cloud.bigquery.v2.UpdateOrPatchTableRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/table.proto#L619}
   ///
   // clang-format on
-  StatusOr<google::cloud::bigquery::v2::Table> UpdateTable(
-      google::cloud::bigquery::v2::UpdateOrPatchTableRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::bigquery::v2::Table>
+  UpdateTable(google::cloud::bigquery::v2::UpdateOrPatchTableRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -243,9 +236,8 @@ class TableServiceClient {
   /// [google.cloud.bigquery.v2.DeleteTableRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/table.proto#L637}
   ///
   // clang-format on
-  Status DeleteTable(
-      google::cloud::bigquery::v2::DeleteTableRequest const& request,
-      Options opts = {});
+  Status
+  DeleteTable(google::cloud::bigquery::v2::DeleteTableRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -284,9 +276,8 @@ class TableServiceClient {
   /// [google.cloud.bigquery.v2.ListTablesRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/table.proto#L649}
   ///
   // clang-format on
-  StreamRange<google::cloud::bigquery::v2::ListFormatTable> ListTables(
-      google::cloud::bigquery::v2::ListTablesRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::bigquery::v2::ListFormatTable>
+  ListTables(google::cloud::bigquery::v2::ListTablesRequest request, Options opts = {});
 
  private:
   std::shared_ptr<TableServiceConnection> connection_;

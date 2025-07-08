@@ -40,56 +40,58 @@ class ServiceMonitoringServiceMetadata : public ServiceMonitoringServiceStub {
       std::string api_client_header = "");
 
   StatusOr<google::monitoring::v3::Service> CreateService(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::monitoring::v3::CreateServiceRequest const& request) override;
 
   StatusOr<google::monitoring::v3::Service> GetService(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::monitoring::v3::GetServiceRequest const& request) override;
 
   StatusOr<google::monitoring::v3::ListServicesResponse> ListServices(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::monitoring::v3::ListServicesRequest const& request) override;
 
   StatusOr<google::monitoring::v3::Service> UpdateService(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::monitoring::v3::UpdateServiceRequest const& request) override;
 
   Status DeleteService(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::monitoring::v3::DeleteServiceRequest const& request) override;
 
-  StatusOr<google::monitoring::v3::ServiceLevelObjective>
-  CreateServiceLevelObjective(
-      grpc::ClientContext& context, Options const& options,
-      google::monitoring::v3::CreateServiceLevelObjectiveRequest const& request)
-      override;
+  StatusOr<google::monitoring::v3::ServiceLevelObjective> CreateServiceLevelObjective(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::monitoring::v3::CreateServiceLevelObjectiveRequest const& request) override;
 
-  StatusOr<google::monitoring::v3::ServiceLevelObjective>
-  GetServiceLevelObjective(
-      grpc::ClientContext& context, Options const& options,
-      google::monitoring::v3::GetServiceLevelObjectiveRequest const& request)
-      override;
+  StatusOr<google::monitoring::v3::ServiceLevelObjective> GetServiceLevelObjective(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::monitoring::v3::GetServiceLevelObjectiveRequest const& request) override;
 
-  StatusOr<google::monitoring::v3::ListServiceLevelObjectivesResponse>
-  ListServiceLevelObjectives(
-      grpc::ClientContext& context, Options const& options,
-      google::monitoring::v3::ListServiceLevelObjectivesRequest const& request)
-      override;
+  StatusOr<google::monitoring::v3::ListServiceLevelObjectivesResponse> ListServiceLevelObjectives(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::monitoring::v3::ListServiceLevelObjectivesRequest const& request) override;
 
-  StatusOr<google::monitoring::v3::ServiceLevelObjective>
-  UpdateServiceLevelObjective(
-      grpc::ClientContext& context, Options const& options,
-      google::monitoring::v3::UpdateServiceLevelObjectiveRequest const& request)
-      override;
+  StatusOr<google::monitoring::v3::ServiceLevelObjective> UpdateServiceLevelObjective(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::monitoring::v3::UpdateServiceLevelObjectiveRequest const& request) override;
 
   Status DeleteServiceLevelObjective(
-      grpc::ClientContext& context, Options const& options,
-      google::monitoring::v3::DeleteServiceLevelObjectiveRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::monitoring::v3::DeleteServiceLevelObjectiveRequest const& request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context, Options const& options,
+  void SetMetadata(grpc::ClientContext& context,
+                   Options const& options,
                    std::string const& request_params);
   void SetMetadata(grpc::ClientContext& context, Options const& options);
 

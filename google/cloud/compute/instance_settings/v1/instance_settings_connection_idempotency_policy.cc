@@ -26,28 +26,23 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-InstanceSettingsConnectionIdempotencyPolicy::
-    ~InstanceSettingsConnectionIdempotencyPolicy() = default;
+InstanceSettingsConnectionIdempotencyPolicy::~InstanceSettingsConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<InstanceSettingsConnectionIdempotencyPolicy>
 InstanceSettingsConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<InstanceSettingsConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency InstanceSettingsConnectionIdempotencyPolicy::GetInstanceSettings(
-    google::cloud::cpp::compute::instance_settings::v1::
-        GetInstanceSettingsRequest const&) {
+Idempotency InstanceSettingsConnectionIdempotencyPolicy::GetInstanceSettings(google::cloud::cpp::compute::instance_settings::v1::GetInstanceSettingsRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency InstanceSettingsConnectionIdempotencyPolicy::PatchInstanceSettings(
-    google::cloud::cpp::compute::instance_settings::v1::
-        PatchInstanceSettingsRequest const&) {
+Idempotency InstanceSettingsConnectionIdempotencyPolicy::PatchInstanceSettings(google::cloud::cpp::compute::instance_settings::v1::PatchInstanceSettingsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<InstanceSettingsConnectionIdempotencyPolicy>
-MakeDefaultInstanceSettingsConnectionIdempotencyPolicy() {
+    MakeDefaultInstanceSettingsConnectionIdempotencyPolicy() {
   return std::make_unique<InstanceSettingsConnectionIdempotencyPolicy>();
 }
 

@@ -36,70 +36,57 @@ class PacketMirroringsTracingConnection
   ~PacketMirroringsTracingConnection() override = default;
 
   explicit PacketMirroringsTracingConnection(
-      std::shared_ptr<compute_packet_mirrorings_v1::PacketMirroringsConnection>
-          child);
+    std::shared_ptr<compute_packet_mirrorings_v1::PacketMirroringsConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StreamRange<std::pair<
-      std::string, google::cloud::cpp::compute::v1::PacketMirroringsScopedList>>
-  AggregatedListPacketMirrorings(
-      google::cloud::cpp::compute::packet_mirrorings::v1::
-          AggregatedListPacketMirroringsRequest request) override;
+  StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::PacketMirroringsScopedList>>
+  AggregatedListPacketMirrorings(google::cloud::cpp::compute::packet_mirrorings::v1::AggregatedListPacketMirroringsRequest request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeletePacketMirroring(
-      google::cloud::cpp::compute::packet_mirrorings::v1::
-          DeletePacketMirroringRequest const& request) override;
+  DeletePacketMirroring(google::cloud::cpp::compute::packet_mirrorings::v1::DeletePacketMirroringRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation> DeletePacketMirroring(
-      NoAwaitTag, google::cloud::cpp::compute::packet_mirrorings::v1::
-                      DeletePacketMirroringRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeletePacketMirroring(NoAwaitTag,
+      google::cloud::cpp::compute::packet_mirrorings::v1::DeletePacketMirroringRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeletePacketMirroring(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::PacketMirroring> GetPacketMirroring(
-      google::cloud::cpp::compute::packet_mirrorings::v1::
-          GetPacketMirroringRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::PacketMirroring>
+  GetPacketMirroring(google::cloud::cpp::compute::packet_mirrorings::v1::GetPacketMirroringRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertPacketMirroring(
-      google::cloud::cpp::compute::packet_mirrorings::v1::
-          InsertPacketMirroringRequest const& request) override;
+  InsertPacketMirroring(google::cloud::cpp::compute::packet_mirrorings::v1::InsertPacketMirroringRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertPacketMirroring(
-      NoAwaitTag, google::cloud::cpp::compute::packet_mirrorings::v1::
-                      InsertPacketMirroringRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  InsertPacketMirroring(NoAwaitTag,
+      google::cloud::cpp::compute::packet_mirrorings::v1::InsertPacketMirroringRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertPacketMirroring(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StreamRange<google::cloud::cpp::compute::v1::PacketMirroring>
-  ListPacketMirrorings(google::cloud::cpp::compute::packet_mirrorings::v1::
-                           ListPacketMirroringsRequest request) override;
+  ListPacketMirrorings(google::cloud::cpp::compute::packet_mirrorings::v1::ListPacketMirroringsRequest request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchPacketMirroring(google::cloud::cpp::compute::packet_mirrorings::v1::
-                           PatchPacketMirroringRequest const& request) override;
+  PatchPacketMirroring(google::cloud::cpp::compute::packet_mirrorings::v1::PatchPacketMirroringRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchPacketMirroring(
-      NoAwaitTag, google::cloud::cpp::compute::packet_mirrorings::v1::
-                      PatchPacketMirroringRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  PatchPacketMirroring(NoAwaitTag,
+      google::cloud::cpp::compute::packet_mirrorings::v1::PatchPacketMirroringRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   PatchPacketMirroring(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(google::cloud::cpp::compute::packet_mirrorings::v1::
-                         TestIamPermissionsRequest const& request) override;
+  TestIamPermissions(google::cloud::cpp::compute::packet_mirrorings::v1::TestIamPermissionsRequest const& request) override;
 
  private:
-  std::shared_ptr<compute_packet_mirrorings_v1::PacketMirroringsConnection>
-      child_;
+  std::shared_ptr<compute_packet_mirrorings_v1::PacketMirroringsConnection> child_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -112,8 +99,7 @@ class PacketMirroringsTracingConnection
  */
 std::shared_ptr<compute_packet_mirrorings_v1::PacketMirroringsConnection>
 MakePacketMirroringsTracingConnection(
-    std::shared_ptr<compute_packet_mirrorings_v1::PacketMirroringsConnection>
-        conn);
+    std::shared_ptr<compute_packet_mirrorings_v1::PacketMirroringsConnection> conn);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_packet_mirrorings_v1_internal

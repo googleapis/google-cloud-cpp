@@ -47,31 +47,28 @@ class MockFirewallConnection : public appengine_v1::FirewallConnection {
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD((StreamRange<google::appengine::v1::FirewallRule>),
-              ListIngressRules,
-              (google::appengine::v1::ListIngressRulesRequest request),
-              (override));
+  ListIngressRules,
+  (google::appengine::v1::ListIngressRulesRequest request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::appengine::v1::BatchUpdateIngressRulesResponse>,
-      BatchUpdateIngressRules,
-      (google::appengine::v1::BatchUpdateIngressRulesRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::appengine::v1::BatchUpdateIngressRulesResponse>,
+  BatchUpdateIngressRules,
+  (google::appengine::v1::BatchUpdateIngressRulesRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::appengine::v1::FirewallRule>, CreateIngressRule,
-              (google::appengine::v1::CreateIngressRuleRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::appengine::v1::FirewallRule>,
+  CreateIngressRule,
+  (google::appengine::v1::CreateIngressRuleRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::appengine::v1::FirewallRule>, GetIngressRule,
-              (google::appengine::v1::GetIngressRuleRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::appengine::v1::FirewallRule>,
+  GetIngressRule,
+  (google::appengine::v1::GetIngressRuleRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::appengine::v1::FirewallRule>, UpdateIngressRule,
-              (google::appengine::v1::UpdateIngressRuleRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::appengine::v1::FirewallRule>,
+  UpdateIngressRule,
+  (google::appengine::v1::UpdateIngressRuleRequest const& request), (override));
 
-  MOCK_METHOD(Status, DeleteIngressRule,
-              (google::appengine::v1::DeleteIngressRuleRequest const& request),
-              (override));
+  MOCK_METHOD(Status,
+  DeleteIngressRule,
+  (google::appengine::v1::DeleteIngressRuleRequest const& request), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

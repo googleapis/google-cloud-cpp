@@ -33,45 +33,45 @@ RepositoryManagerAuth::RepositoryManagerAuth(
 
 future<StatusOr<google::longrunning::Operation>>
 RepositoryManagerAuth::AsyncCreateConnection(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::devtools::cloudbuild::v2::CreateConnectionRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::devtools::cloudbuild::v2::CreateConnectionRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreateConnection(cq, *std::move(context),
-                                            std::move(options), request);
+        return child->AsyncCreateConnection(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 RepositoryManagerAuth::CreateConnection(
-    grpc::ClientContext& context, Options options,
-    google::devtools::cloudbuild::v2::CreateConnectionRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::devtools::cloudbuild::v2::CreateConnectionRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateConnection(context, options, request);
 }
 
-StatusOr<google::devtools::cloudbuild::v2::Connection>
-RepositoryManagerAuth::GetConnection(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::devtools::cloudbuild::v2::Connection> RepositoryManagerAuth::GetConnection(
+    grpc::ClientContext& context,
+    Options const& options,
     google::devtools::cloudbuild::v2::GetConnectionRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetConnection(context, options, request);
 }
 
-StatusOr<google::devtools::cloudbuild::v2::ListConnectionsResponse>
-RepositoryManagerAuth::ListConnections(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::devtools::cloudbuild::v2::ListConnectionsResponse> RepositoryManagerAuth::ListConnections(
+    grpc::ClientContext& context,
+    Options const& options,
     google::devtools::cloudbuild::v2::ListConnectionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -80,28 +80,28 @@ RepositoryManagerAuth::ListConnections(
 
 future<StatusOr<google::longrunning::Operation>>
 RepositoryManagerAuth::AsyncUpdateConnection(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::devtools::cloudbuild::v2::UpdateConnectionRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::devtools::cloudbuild::v2::UpdateConnectionRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncUpdateConnection(cq, *std::move(context),
-                                            std::move(options), request);
+        return child->AsyncUpdateConnection(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 RepositoryManagerAuth::UpdateConnection(
-    grpc::ClientContext& context, Options options,
-    google::devtools::cloudbuild::v2::UpdateConnectionRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::devtools::cloudbuild::v2::UpdateConnectionRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateConnection(context, options, request);
@@ -109,28 +109,28 @@ RepositoryManagerAuth::UpdateConnection(
 
 future<StatusOr<google::longrunning::Operation>>
 RepositoryManagerAuth::AsyncDeleteConnection(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::devtools::cloudbuild::v2::DeleteConnectionRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::devtools::cloudbuild::v2::DeleteConnectionRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDeleteConnection(cq, *std::move(context),
-                                            std::move(options), request);
+        return child->AsyncDeleteConnection(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 RepositoryManagerAuth::DeleteConnection(
-    grpc::ClientContext& context, Options options,
-    google::devtools::cloudbuild::v2::DeleteConnectionRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::devtools::cloudbuild::v2::DeleteConnectionRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteConnection(context, options, request);
@@ -138,28 +138,28 @@ RepositoryManagerAuth::DeleteConnection(
 
 future<StatusOr<google::longrunning::Operation>>
 RepositoryManagerAuth::AsyncCreateRepository(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::devtools::cloudbuild::v2::CreateRepositoryRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::devtools::cloudbuild::v2::CreateRepositoryRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreateRepository(cq, *std::move(context),
-                                            std::move(options), request);
+        return child->AsyncCreateRepository(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 RepositoryManagerAuth::CreateRepository(
-    grpc::ClientContext& context, Options options,
-    google::devtools::cloudbuild::v2::CreateRepositoryRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::devtools::cloudbuild::v2::CreateRepositoryRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateRepository(context, options, request);
@@ -167,47 +167,45 @@ RepositoryManagerAuth::CreateRepository(
 
 future<StatusOr<google::longrunning::Operation>>
 RepositoryManagerAuth::AsyncBatchCreateRepositories(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::devtools::cloudbuild::v2::BatchCreateRepositoriesRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::devtools::cloudbuild::v2::BatchCreateRepositoriesRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncBatchCreateRepositories(cq, *std::move(context),
-                                                   std::move(options), request);
+        return child->AsyncBatchCreateRepositories(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 RepositoryManagerAuth::BatchCreateRepositories(
-    grpc::ClientContext& context, Options options,
-    google::devtools::cloudbuild::v2::BatchCreateRepositoriesRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::devtools::cloudbuild::v2::BatchCreateRepositoriesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->BatchCreateRepositories(context, options, request);
 }
 
-StatusOr<google::devtools::cloudbuild::v2::Repository>
-RepositoryManagerAuth::GetRepository(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::devtools::cloudbuild::v2::Repository> RepositoryManagerAuth::GetRepository(
+    grpc::ClientContext& context,
+    Options const& options,
     google::devtools::cloudbuild::v2::GetRepositoryRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetRepository(context, options, request);
 }
 
-StatusOr<google::devtools::cloudbuild::v2::ListRepositoriesResponse>
-RepositoryManagerAuth::ListRepositories(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::devtools::cloudbuild::v2::ListRepositoriesResponse> RepositoryManagerAuth::ListRepositories(
+    grpc::ClientContext& context,
+    Options const& options,
     google::devtools::cloudbuild::v2::ListRepositoriesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -216,65 +214,63 @@ RepositoryManagerAuth::ListRepositories(
 
 future<StatusOr<google::longrunning::Operation>>
 RepositoryManagerAuth::AsyncDeleteRepository(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::devtools::cloudbuild::v2::DeleteRepositoryRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::devtools::cloudbuild::v2::DeleteRepositoryRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDeleteRepository(cq, *std::move(context),
-                                            std::move(options), request);
+        return child->AsyncDeleteRepository(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 RepositoryManagerAuth::DeleteRepository(
-    grpc::ClientContext& context, Options options,
-    google::devtools::cloudbuild::v2::DeleteRepositoryRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::devtools::cloudbuild::v2::DeleteRepositoryRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteRepository(context, options, request);
 }
 
-StatusOr<google::devtools::cloudbuild::v2::FetchReadWriteTokenResponse>
-RepositoryManagerAuth::FetchReadWriteToken(
-    grpc::ClientContext& context, Options const& options,
-    google::devtools::cloudbuild::v2::FetchReadWriteTokenRequest const&
-        request) {
+StatusOr<google::devtools::cloudbuild::v2::FetchReadWriteTokenResponse> RepositoryManagerAuth::FetchReadWriteToken(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::devtools::cloudbuild::v2::FetchReadWriteTokenRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->FetchReadWriteToken(context, options, request);
 }
 
-StatusOr<google::devtools::cloudbuild::v2::FetchReadTokenResponse>
-RepositoryManagerAuth::FetchReadToken(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::devtools::cloudbuild::v2::FetchReadTokenResponse> RepositoryManagerAuth::FetchReadToken(
+    grpc::ClientContext& context,
+    Options const& options,
     google::devtools::cloudbuild::v2::FetchReadTokenRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->FetchReadToken(context, options, request);
 }
 
-StatusOr<google::devtools::cloudbuild::v2::FetchLinkableRepositoriesResponse>
-RepositoryManagerAuth::FetchLinkableRepositories(
-    grpc::ClientContext& context, Options const& options,
-    google::devtools::cloudbuild::v2::FetchLinkableRepositoriesRequest const&
-        request) {
+StatusOr<google::devtools::cloudbuild::v2::FetchLinkableRepositoriesResponse> RepositoryManagerAuth::FetchLinkableRepositories(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::devtools::cloudbuild::v2::FetchLinkableRepositoriesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->FetchLinkableRepositories(context, options, request);
 }
 
-StatusOr<google::devtools::cloudbuild::v2::FetchGitRefsResponse>
-RepositoryManagerAuth::FetchGitRefs(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::devtools::cloudbuild::v2::FetchGitRefsResponse> RepositoryManagerAuth::FetchGitRefs(
+    grpc::ClientContext& context,
+    Options const& options,
     google::devtools::cloudbuild::v2::FetchGitRefsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -282,7 +278,8 @@ RepositoryManagerAuth::FetchGitRefs(
 }
 
 StatusOr<google::iam::v1::Policy> RepositoryManagerAuth::SetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -290,16 +287,17 @@ StatusOr<google::iam::v1::Policy> RepositoryManagerAuth::SetIamPolicy(
 }
 
 StatusOr<google::iam::v1::Policy> RepositoryManagerAuth::GetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetIamPolicy(context, options, request);
 }
 
-StatusOr<google::iam::v1::TestIamPermissionsResponse>
-RepositoryManagerAuth::TestIamPermissions(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::iam::v1::TestIamPermissionsResponse> RepositoryManagerAuth::TestIamPermissions(
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -307,7 +305,8 @@ RepositoryManagerAuth::TestIamPermissions(
 }
 
 StatusOr<google::longrunning::Operation> RepositoryManagerAuth::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -315,7 +314,8 @@ StatusOr<google::longrunning::Operation> RepositoryManagerAuth::GetOperation(
 }
 
 Status RepositoryManagerAuth::CancelOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -329,16 +329,15 @@ RepositoryManagerAuth::AsyncGetOperation(
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncGetOperation(cq, *std::move(context),
-                                        std::move(options), request);
+        return child->AsyncGetOperation(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
@@ -347,14 +346,13 @@ future<Status> RepositoryManagerAuth::AsyncCancelOperation(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) return make_ready_future(std::move(context).status());
-        return child->AsyncCancelOperation(cq, *std::move(context),
-                                           std::move(options), request);
+        return child->AsyncCancelOperation(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 

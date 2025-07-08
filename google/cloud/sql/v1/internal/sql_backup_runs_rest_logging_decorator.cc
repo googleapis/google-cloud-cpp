@@ -29,19 +29,20 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 SqlBackupRunsServiceRestLogging::SqlBackupRunsServiceRestLogging(
     std::shared_ptr<SqlBackupRunsServiceRestStub> child,
-    TracingOptions tracing_options, std::set<std::string> components)
-    : child_(std::move(child)),
-      tracing_options_(std::move(tracing_options)),
+    TracingOptions tracing_options,
+    std::set<std::string> components)
+    : child_(std::move(child)), tracing_options_(std::move(tracing_options)),
       components_(std::move(components)) {}
 
 StatusOr<google::cloud::sql::v1::Operation>
 SqlBackupRunsServiceRestLogging::Delete(
-    rest_internal::RestContext& rest_context, Options const& options,
+    rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::sql::v1::SqlBackupRunsDeleteRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          rest_internal::RestContext& rest_context, Options const& options,
-          google::cloud::sql::v1::SqlBackupRunsDeleteRequest const& request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
+             google::cloud::sql::v1::SqlBackupRunsDeleteRequest const& request) {
         return child_->Delete(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -49,10 +50,12 @@ SqlBackupRunsServiceRestLogging::Delete(
 
 StatusOr<google::cloud::sql::v1::BackupRun>
 SqlBackupRunsServiceRestLogging::Get(
-    rest_internal::RestContext& rest_context, Options const& options,
+    rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::sql::v1::SqlBackupRunsGetRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context, Options const& options,
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
              google::cloud::sql::v1::SqlBackupRunsGetRequest const& request) {
         return child_->Get(rest_context, options, request);
       },
@@ -61,12 +64,13 @@ SqlBackupRunsServiceRestLogging::Get(
 
 StatusOr<google::cloud::sql::v1::Operation>
 SqlBackupRunsServiceRestLogging::Insert(
-    rest_internal::RestContext& rest_context, Options const& options,
+    rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::sql::v1::SqlBackupRunsInsertRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          rest_internal::RestContext& rest_context, Options const& options,
-          google::cloud::sql::v1::SqlBackupRunsInsertRequest const& request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
+             google::cloud::sql::v1::SqlBackupRunsInsertRequest const& request) {
         return child_->Insert(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -74,10 +78,12 @@ SqlBackupRunsServiceRestLogging::Insert(
 
 StatusOr<google::cloud::sql::v1::BackupRunsListResponse>
 SqlBackupRunsServiceRestLogging::List(
-    rest_internal::RestContext& rest_context, Options const& options,
+    rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::sql::v1::SqlBackupRunsListRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context, Options const& options,
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
              google::cloud::sql::v1::SqlBackupRunsListRequest const& request) {
         return child_->List(rest_context, options, request);
       },

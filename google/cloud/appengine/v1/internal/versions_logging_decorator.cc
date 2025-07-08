@@ -30,28 +30,35 @@ namespace cloud {
 namespace appengine_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-VersionsLogging::VersionsLogging(std::shared_ptr<VersionsStub> child,
-                                 TracingOptions tracing_options,
-                                 std::set<std::string> const&)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
+VersionsLogging::VersionsLogging(
+    std::shared_ptr<VersionsStub> child,
+    TracingOptions tracing_options,
+    std::set<std::string> const&)
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::appengine::v1::ListVersionsResponse>
 VersionsLogging::ListVersions(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::appengine::v1::ListVersionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::appengine::v1::ListVersionsRequest const& request) {
         return child_->ListVersions(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::appengine::v1::Version> VersionsLogging::GetVersion(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::appengine::v1::Version>
+VersionsLogging::GetVersion(
+    grpc::ClientContext& context,
+    Options const& options,
     google::appengine::v1::GetVersionRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::appengine::v1::GetVersionRequest const& request) {
         return child_->GetVersion(context, options, request);
       },
@@ -60,27 +67,30 @@ StatusOr<google::appengine::v1::Version> VersionsLogging::GetVersion(
 
 future<StatusOr<google::longrunning::Operation>>
 VersionsLogging::AsyncCreateVersion(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::appengine::v1::CreateVersionRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::appengine::v1::CreateVersionRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::appengine::v1::CreateVersionRequest const& request) {
-        return child_->AsyncCreateVersion(cq, std::move(context),
-                                          std::move(options), request);
+        return child_->AsyncCreateVersion(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> VersionsLogging::CreateVersion(
-    grpc::ClientContext& context, Options options,
-    google::appengine::v1::CreateVersionRequest const& request) {
+StatusOr<google::longrunning::Operation>
+VersionsLogging::CreateVersion(
+      grpc::ClientContext& context,
+      Options options,
+      google::appengine::v1::CreateVersionRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::appengine::v1::CreateVersionRequest const& request) {
         return child_->CreateVersion(context, options, request);
       },
@@ -89,27 +99,30 @@ StatusOr<google::longrunning::Operation> VersionsLogging::CreateVersion(
 
 future<StatusOr<google::longrunning::Operation>>
 VersionsLogging::AsyncUpdateVersion(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::appengine::v1::UpdateVersionRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::appengine::v1::UpdateVersionRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::appengine::v1::UpdateVersionRequest const& request) {
-        return child_->AsyncUpdateVersion(cq, std::move(context),
-                                          std::move(options), request);
+        return child_->AsyncUpdateVersion(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> VersionsLogging::UpdateVersion(
-    grpc::ClientContext& context, Options options,
-    google::appengine::v1::UpdateVersionRequest const& request) {
+StatusOr<google::longrunning::Operation>
+VersionsLogging::UpdateVersion(
+      grpc::ClientContext& context,
+      Options options,
+      google::appengine::v1::UpdateVersionRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::appengine::v1::UpdateVersionRequest const& request) {
         return child_->UpdateVersion(context, options, request);
       },
@@ -118,27 +131,30 @@ StatusOr<google::longrunning::Operation> VersionsLogging::UpdateVersion(
 
 future<StatusOr<google::longrunning::Operation>>
 VersionsLogging::AsyncDeleteVersion(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::appengine::v1::DeleteVersionRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::appengine::v1::DeleteVersionRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::appengine::v1::DeleteVersionRequest const& request) {
-        return child_->AsyncDeleteVersion(cq, std::move(context),
-                                          std::move(options), request);
+        return child_->AsyncDeleteVersion(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> VersionsLogging::DeleteVersion(
-    grpc::ClientContext& context, Options options,
-    google::appengine::v1::DeleteVersionRequest const& request) {
+StatusOr<google::longrunning::Operation>
+VersionsLogging::DeleteVersion(
+      grpc::ClientContext& context,
+      Options options,
+      google::appengine::v1::DeleteVersionRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::appengine::v1::DeleteVersionRequest const& request) {
         return child_->DeleteVersion(context, options, request);
       },
@@ -156,8 +172,8 @@ VersionsLogging::AsyncGetOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(cq, std::move(context),
-                                         std::move(options), request);
+        return child_->AsyncGetOperation(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -173,8 +189,8 @@ future<Status> VersionsLogging::AsyncCancelOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::CancelOperationRequest const& request) {
-        return child_->AsyncCancelOperation(cq, std::move(context),
-                                            std::move(options), request);
+        return child_->AsyncCancelOperation(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);

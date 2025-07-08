@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BILLING_V1_CLOUD_BILLING_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BILLING_V1_CLOUD_BILLING_CONNECTION_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/billing/v1/cloud_billing_connection_idempotency_policy.h"
 #include "google/cloud/billing/v1/internal/cloud_billing_retry_traits.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -52,8 +52,7 @@ class CloudBillingRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class CloudBillingLimitedErrorCountRetryPolicy
-    : public CloudBillingRetryPolicy {
+class CloudBillingLimitedErrorCountRetryPolicy : public CloudBillingRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -63,14 +62,14 @@ class CloudBillingLimitedErrorCountRetryPolicy
    *     @p maximum_failures == 0.
    */
   explicit CloudBillingLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   CloudBillingLimitedErrorCountRetryPolicy(
       CloudBillingLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : CloudBillingLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : CloudBillingLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   CloudBillingLimitedErrorCountRetryPolicy(
       CloudBillingLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : CloudBillingLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : CloudBillingLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -90,9 +89,7 @@ class CloudBillingLimitedErrorCountRetryPolicy
   using BaseType = CloudBillingRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      billing_v1_internal::CloudBillingRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<billing_v1_internal::CloudBillingRetryTraits> impl_;
 };
 
 /**
@@ -130,14 +127,12 @@ class CloudBillingLimitedTimeRetryPolicy : public CloudBillingRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit CloudBillingLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  CloudBillingLimitedTimeRetryPolicy(
-      CloudBillingLimitedTimeRetryPolicy&& rhs) noexcept
-      : CloudBillingLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  CloudBillingLimitedTimeRetryPolicy(
-      CloudBillingLimitedTimeRetryPolicy const& rhs) noexcept
-      : CloudBillingLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  CloudBillingLimitedTimeRetryPolicy(CloudBillingLimitedTimeRetryPolicy&& rhs) noexcept
+    : CloudBillingLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  CloudBillingLimitedTimeRetryPolicy(CloudBillingLimitedTimeRetryPolicy const& rhs) noexcept
+    : CloudBillingLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -159,9 +154,7 @@ class CloudBillingLimitedTimeRetryPolicy : public CloudBillingRetryPolicy {
   using BaseType = CloudBillingRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      billing_v1_internal::CloudBillingRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<billing_v1_internal::CloudBillingRetryTraits> impl_;
 };
 
 /**
@@ -183,46 +176,37 @@ class CloudBillingConnection {
   virtual Options options() { return Options{}; }
 
   virtual StatusOr<google::cloud::billing::v1::BillingAccount>
-  GetBillingAccount(
-      google::cloud::billing::v1::GetBillingAccountRequest const& request);
+  GetBillingAccount(google::cloud::billing::v1::GetBillingAccountRequest const& request);
 
   virtual StreamRange<google::cloud::billing::v1::BillingAccount>
-  ListBillingAccounts(
-      google::cloud::billing::v1::ListBillingAccountsRequest request);
+  ListBillingAccounts(google::cloud::billing::v1::ListBillingAccountsRequest request);
 
   virtual StatusOr<google::cloud::billing::v1::BillingAccount>
-  UpdateBillingAccount(
-      google::cloud::billing::v1::UpdateBillingAccountRequest const& request);
+  UpdateBillingAccount(google::cloud::billing::v1::UpdateBillingAccountRequest const& request);
 
   virtual StatusOr<google::cloud::billing::v1::BillingAccount>
-  CreateBillingAccount(
-      google::cloud::billing::v1::CreateBillingAccountRequest const& request);
+  CreateBillingAccount(google::cloud::billing::v1::CreateBillingAccountRequest const& request);
 
   virtual StreamRange<google::cloud::billing::v1::ProjectBillingInfo>
-  ListProjectBillingInfo(
-      google::cloud::billing::v1::ListProjectBillingInfoRequest request);
+  ListProjectBillingInfo(google::cloud::billing::v1::ListProjectBillingInfoRequest request);
 
   virtual StatusOr<google::cloud::billing::v1::ProjectBillingInfo>
-  GetProjectBillingInfo(
-      google::cloud::billing::v1::GetProjectBillingInfoRequest const& request);
+  GetProjectBillingInfo(google::cloud::billing::v1::GetProjectBillingInfoRequest const& request);
 
   virtual StatusOr<google::cloud::billing::v1::ProjectBillingInfo>
-  UpdateProjectBillingInfo(
-      google::cloud::billing::v1::UpdateProjectBillingInfoRequest const&
-          request);
+  UpdateProjectBillingInfo(google::cloud::billing::v1::UpdateProjectBillingInfoRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
 
   virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
   TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
 
   virtual StatusOr<google::cloud::billing::v1::BillingAccount>
-  MoveBillingAccount(
-      google::cloud::billing::v1::MoveBillingAccountRequest const& request);
+  MoveBillingAccount(google::cloud::billing::v1::MoveBillingAccountRequest const& request);
 };
 
 /**

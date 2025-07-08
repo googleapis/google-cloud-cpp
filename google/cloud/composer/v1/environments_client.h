@@ -64,8 +64,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class EnvironmentsClient {
  public:
-  explicit EnvironmentsClient(
-      std::shared_ptr<EnvironmentsConnection> connection, Options opts = {});
+  explicit EnvironmentsClient(std::shared_ptr<EnvironmentsConnection> connection, Options opts = {});
   ~EnvironmentsClient();
 
   ///@{
@@ -78,12 +77,10 @@ class EnvironmentsClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(EnvironmentsClient const& a,
-                         EnvironmentsClient const& b) {
+  friend bool operator==(EnvironmentsClient const& a, EnvironmentsClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(EnvironmentsClient const& a,
-                         EnvironmentsClient const& b) {
+  friend bool operator!=(EnvironmentsClient const& a, EnvironmentsClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -119,13 +116,8 @@ class EnvironmentsClient {
   /// [google.cloud.orchestration.airflow.service.v1.Environment]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L1902}
   ///
   // clang-format on
-  future<
-      StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>>
-  CreateEnvironment(
-      std::string const& parent,
-      google::cloud::orchestration::airflow::service::v1::Environment const&
-          environment,
-      Options opts = {});
+  future<StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>>
+  CreateEnvironment(std::string const& parent, google::cloud::orchestration::airflow::service::v1::Environment const& environment, Options opts = {});
 
   // clang-format off
   ///
@@ -138,11 +130,8 @@ class EnvironmentsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateEnvironment(
-      NoAwaitTag, std::string const& parent,
-      google::cloud::orchestration::airflow::service::v1::Environment const&
-          environment,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateEnvironment(NoAwaitTag, std::string const& parent, google::cloud::orchestration::airflow::service::v1::Environment const& environment, Options opts = {});
 
   // clang-format off
   ///
@@ -178,11 +167,8 @@ class EnvironmentsClient {
   /// [google.cloud.orchestration.airflow.service.v1.Environment]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L1902}
   ///
   // clang-format on
-  future<
-      StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>>
-  CreateEnvironment(google::cloud::orchestration::airflow::service::v1::
-                        CreateEnvironmentRequest const& request,
-                    Options opts = {});
+  future<StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>>
+  CreateEnvironment(google::cloud::orchestration::airflow::service::v1::CreateEnvironmentRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -195,11 +181,8 @@ class EnvironmentsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateEnvironment(
-      NoAwaitTag,
-      google::cloud::orchestration::airflow::service::v1::
-          CreateEnvironmentRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateEnvironment(NoAwaitTag, google::cloud::orchestration::airflow::service::v1::CreateEnvironmentRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -210,10 +193,8 @@ class EnvironmentsClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<
-      StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>>
-  CreateEnvironment(google::longrunning::Operation const& operation,
-                    Options opts = {});
+  future<StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>>
+  CreateEnvironment(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -269,9 +250,7 @@ class EnvironmentsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>
-  GetEnvironment(google::cloud::orchestration::airflow::service::v1::
-                     GetEnvironmentRequest const& request,
-                 Options opts = {});
+  GetEnvironment(google::cloud::orchestration::airflow::service::v1::GetEnvironmentRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -345,9 +324,7 @@ class EnvironmentsClient {
   ///
   // clang-format on
   StreamRange<google::cloud::orchestration::airflow::service::v1::Environment>
-  ListEnvironments(google::cloud::orchestration::airflow::service::v1::
-                       ListEnvironmentsRequest request,
-                   Options opts = {});
+  ListEnvironments(google::cloud::orchestration::airflow::service::v1::ListEnvironmentsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -390,13 +367,8 @@ class EnvironmentsClient {
   /// [google.cloud.orchestration.airflow.service.v1.UpdateEnvironmentRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L374}
   ///
   // clang-format on
-  future<
-      StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>>
-  UpdateEnvironment(
-      std::string const& name,
-      google::cloud::orchestration::airflow::service::v1::Environment const&
-          environment,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  future<StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>>
+  UpdateEnvironment(std::string const& name, google::cloud::orchestration::airflow::service::v1::Environment const& environment, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -409,11 +381,8 @@ class EnvironmentsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateEnvironment(
-      NoAwaitTag, std::string const& name,
-      google::cloud::orchestration::airflow::service::v1::Environment const&
-          environment,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateEnvironment(NoAwaitTag, std::string const& name, google::cloud::orchestration::airflow::service::v1::Environment const& environment, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -449,11 +418,8 @@ class EnvironmentsClient {
   /// [google.cloud.orchestration.airflow.service.v1.UpdateEnvironmentRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L374}
   ///
   // clang-format on
-  future<
-      StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>>
-  UpdateEnvironment(google::cloud::orchestration::airflow::service::v1::
-                        UpdateEnvironmentRequest const& request,
-                    Options opts = {});
+  future<StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>>
+  UpdateEnvironment(google::cloud::orchestration::airflow::service::v1::UpdateEnvironmentRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -466,11 +432,8 @@ class EnvironmentsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateEnvironment(
-      NoAwaitTag,
-      google::cloud::orchestration::airflow::service::v1::
-          UpdateEnvironmentRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateEnvironment(NoAwaitTag, google::cloud::orchestration::airflow::service::v1::UpdateEnvironmentRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -481,10 +444,8 @@ class EnvironmentsClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<
-      StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>>
-  UpdateEnvironment(google::longrunning::Operation const& operation,
-                    Options opts = {});
+  future<StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>>
+  UpdateEnvironment(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -516,8 +477,7 @@ class EnvironmentsClient {
   /// [google.cloud.orchestration.airflow.service.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/operations.proto#L27}
   ///
   // clang-format on
-  future<StatusOr<
-      google::cloud::orchestration::airflow::service::v1::OperationMetadata>>
+  future<StatusOr<google::cloud::orchestration::airflow::service::v1::OperationMetadata>>
   DeleteEnvironment(std::string const& name, Options opts = {});
 
   // clang-format off
@@ -531,8 +491,8 @@ class EnvironmentsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteEnvironment(
-      NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteEnvironment(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -568,11 +528,8 @@ class EnvironmentsClient {
   /// [google.cloud.orchestration.airflow.service.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/operations.proto#L27}
   ///
   // clang-format on
-  future<StatusOr<
-      google::cloud::orchestration::airflow::service::v1::OperationMetadata>>
-  DeleteEnvironment(google::cloud::orchestration::airflow::service::v1::
-                        DeleteEnvironmentRequest const& request,
-                    Options opts = {});
+  future<StatusOr<google::cloud::orchestration::airflow::service::v1::OperationMetadata>>
+  DeleteEnvironment(google::cloud::orchestration::airflow::service::v1::DeleteEnvironmentRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -585,11 +542,8 @@ class EnvironmentsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteEnvironment(
-      NoAwaitTag,
-      google::cloud::orchestration::airflow::service::v1::
-          DeleteEnvironmentRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteEnvironment(NoAwaitTag, google::cloud::orchestration::airflow::service::v1::DeleteEnvironmentRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -600,10 +554,8 @@ class EnvironmentsClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<
-      google::cloud::orchestration::airflow::service::v1::OperationMetadata>>
-  DeleteEnvironment(google::longrunning::Operation const& operation,
-                    Options opts = {});
+  future<StatusOr<google::cloud::orchestration::airflow::service::v1::OperationMetadata>>
+  DeleteEnvironment(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -632,11 +584,8 @@ class EnvironmentsClient {
   /// [google.cloud.orchestration.airflow.service.v1.ExecuteAirflowCommandResponse]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L529}
   ///
   // clang-format on
-  StatusOr<google::cloud::orchestration::airflow::service::v1::
-               ExecuteAirflowCommandResponse>
-  ExecuteAirflowCommand(google::cloud::orchestration::airflow::service::v1::
-                            ExecuteAirflowCommandRequest const& request,
-                        Options opts = {});
+  StatusOr<google::cloud::orchestration::airflow::service::v1::ExecuteAirflowCommandResponse>
+  ExecuteAirflowCommand(google::cloud::orchestration::airflow::service::v1::ExecuteAirflowCommandRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -665,11 +614,8 @@ class EnvironmentsClient {
   /// [google.cloud.orchestration.airflow.service.v1.StopAirflowCommandResponse]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L564}
   ///
   // clang-format on
-  StatusOr<google::cloud::orchestration::airflow::service::v1::
-               StopAirflowCommandResponse>
-  StopAirflowCommand(google::cloud::orchestration::airflow::service::v1::
-                         StopAirflowCommandRequest const& request,
-                     Options opts = {});
+  StatusOr<google::cloud::orchestration::airflow::service::v1::StopAirflowCommandResponse>
+  StopAirflowCommand(google::cloud::orchestration::airflow::service::v1::StopAirflowCommandRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -698,11 +644,8 @@ class EnvironmentsClient {
   /// [google.cloud.orchestration.airflow.service.v1.PollAirflowCommandResponse]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L592}
   ///
   // clang-format on
-  StatusOr<google::cloud::orchestration::airflow::service::v1::
-               PollAirflowCommandResponse>
-  PollAirflowCommand(google::cloud::orchestration::airflow::service::v1::
-                         PollAirflowCommandRequest const& request,
-                     Options opts = {});
+  StatusOr<google::cloud::orchestration::airflow::service::v1::PollAirflowCommandResponse>
+  PollAirflowCommand(google::cloud::orchestration::airflow::service::v1::PollAirflowCommandRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -740,8 +683,7 @@ class EnvironmentsClient {
   /// [google.cloud.orchestration.airflow.service.v1.ListWorkloadsResponse.ComposerWorkload]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L857}
   ///
   // clang-format on
-  StreamRange<google::cloud::orchestration::airflow::service::v1::
-                  ListWorkloadsResponse::ComposerWorkload>
+  StreamRange<google::cloud::orchestration::airflow::service::v1::ListWorkloadsResponse::ComposerWorkload>
   ListWorkloads(std::string const& parent, Options opts = {});
 
   // clang-format off
@@ -784,12 +726,8 @@ class EnvironmentsClient {
   /// [google.cloud.orchestration.airflow.service.v1.ListWorkloadsResponse.ComposerWorkload]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L857}
   ///
   // clang-format on
-  StreamRange<google::cloud::orchestration::airflow::service::v1::
-                  ListWorkloadsResponse::ComposerWorkload>
-  ListWorkloads(
-      google::cloud::orchestration::airflow::service::v1::ListWorkloadsRequest
-          request,
-      Options opts = {});
+  StreamRange<google::cloud::orchestration::airflow::service::v1::ListWorkloadsResponse::ComposerWorkload>
+  ListWorkloads(google::cloud::orchestration::airflow::service::v1::ListWorkloadsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -827,11 +765,8 @@ class EnvironmentsClient {
   /// [google.cloud.orchestration.airflow.service.v1.CheckUpgradeResponse]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L2009}
   ///
   // clang-format on
-  future<StatusOr<
-      google::cloud::orchestration::airflow::service::v1::CheckUpgradeResponse>>
-  CheckUpgrade(google::cloud::orchestration::airflow::service::v1::
-                   CheckUpgradeRequest const& request,
-               Options opts = {});
+  future<StatusOr<google::cloud::orchestration::airflow::service::v1::CheckUpgradeResponse>>
+  CheckUpgrade(google::cloud::orchestration::airflow::service::v1::CheckUpgradeRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -844,11 +779,8 @@ class EnvironmentsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CheckUpgrade(
-      NoAwaitTag,
-      google::cloud::orchestration::airflow::service::v1::
-          CheckUpgradeRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CheckUpgrade(NoAwaitTag, google::cloud::orchestration::airflow::service::v1::CheckUpgradeRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -859,10 +791,8 @@ class EnvironmentsClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<
-      google::cloud::orchestration::airflow::service::v1::CheckUpgradeResponse>>
-  CheckUpgrade(google::longrunning::Operation const& operation,
-               Options opts = {});
+  future<StatusOr<google::cloud::orchestration::airflow::service::v1::CheckUpgradeResponse>>
+  CheckUpgrade(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -891,13 +821,8 @@ class EnvironmentsClient {
   /// [google.cloud.orchestration.airflow.service.v1.UserWorkloadsSecret]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L756}
   ///
   // clang-format on
-  StatusOr<
-      google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
-  CreateUserWorkloadsSecret(
-      std::string const& parent,
-      google::cloud::orchestration::airflow::service::v1::
-          UserWorkloadsSecret const& user_workloads_secret,
-      Options opts = {});
+  StatusOr<google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
+  CreateUserWorkloadsSecret(std::string const& parent, google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret const& user_workloads_secret, Options opts = {});
 
   // clang-format off
   ///
@@ -929,11 +854,8 @@ class EnvironmentsClient {
   /// [google.cloud.orchestration.airflow.service.v1.UserWorkloadsSecret]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L756}
   ///
   // clang-format on
-  StatusOr<
-      google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
-  CreateUserWorkloadsSecret(google::cloud::orchestration::airflow::service::v1::
-                                CreateUserWorkloadsSecretRequest const& request,
-                            Options opts = {});
+  StatusOr<google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
+  CreateUserWorkloadsSecret(google::cloud::orchestration::airflow::service::v1::CreateUserWorkloadsSecretRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -962,8 +884,7 @@ class EnvironmentsClient {
   /// [google.cloud.orchestration.airflow.service.v1.UserWorkloadsSecret]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L756}
   ///
   // clang-format on
-  StatusOr<
-      google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
+  StatusOr<google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
   GetUserWorkloadsSecret(std::string const& name, Options opts = {});
 
   // clang-format off
@@ -997,11 +918,8 @@ class EnvironmentsClient {
   /// [google.cloud.orchestration.airflow.service.v1.UserWorkloadsSecret]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L756}
   ///
   // clang-format on
-  StatusOr<
-      google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
-  GetUserWorkloadsSecret(google::cloud::orchestration::airflow::service::v1::
-                             GetUserWorkloadsSecretRequest const& request,
-                         Options opts = {});
+  StatusOr<google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
+  GetUserWorkloadsSecret(google::cloud::orchestration::airflow::service::v1::GetUserWorkloadsSecretRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1038,8 +956,7 @@ class EnvironmentsClient {
   /// [google.cloud.orchestration.airflow.service.v1.UserWorkloadsSecret]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L756}
   ///
   // clang-format on
-  StreamRange<
-      google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
+  StreamRange<google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
   ListUserWorkloadsSecrets(std::string const& parent, Options opts = {});
 
   // clang-format off
@@ -1081,11 +998,8 @@ class EnvironmentsClient {
   /// [google.cloud.orchestration.airflow.service.v1.UserWorkloadsSecret]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L756}
   ///
   // clang-format on
-  StreamRange<
-      google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
-  ListUserWorkloadsSecrets(google::cloud::orchestration::airflow::service::v1::
-                               ListUserWorkloadsSecretsRequest request,
-                           Options opts = {});
+  StreamRange<google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
+  ListUserWorkloadsSecrets(google::cloud::orchestration::airflow::service::v1::ListUserWorkloadsSecretsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1112,12 +1026,8 @@ class EnvironmentsClient {
   /// [google.cloud.orchestration.airflow.service.v1.UserWorkloadsSecret]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L756}
   ///
   // clang-format on
-  StatusOr<
-      google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
-  UpdateUserWorkloadsSecret(
-      google::cloud::orchestration::airflow::service::v1::
-          UserWorkloadsSecret const& user_workloads_secret,
-      Options opts = {});
+  StatusOr<google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
+  UpdateUserWorkloadsSecret(google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret const& user_workloads_secret, Options opts = {});
 
   // clang-format off
   ///
@@ -1149,11 +1059,8 @@ class EnvironmentsClient {
   /// [google.cloud.orchestration.airflow.service.v1.UserWorkloadsSecret]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L756}
   ///
   // clang-format on
-  StatusOr<
-      google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
-  UpdateUserWorkloadsSecret(google::cloud::orchestration::airflow::service::v1::
-                                UpdateUserWorkloadsSecretRequest const& request,
-                            Options opts = {});
+  StatusOr<google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
+  UpdateUserWorkloadsSecret(google::cloud::orchestration::airflow::service::v1::UpdateUserWorkloadsSecretRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1178,7 +1085,8 @@ class EnvironmentsClient {
   /// [google.cloud.orchestration.airflow.service.v1.DeleteUserWorkloadsSecretRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L677}
   ///
   // clang-format on
-  Status DeleteUserWorkloadsSecret(std::string const& name, Options opts = {});
+  Status
+  DeleteUserWorkloadsSecret(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1207,10 +1115,8 @@ class EnvironmentsClient {
   /// [google.cloud.orchestration.airflow.service.v1.DeleteUserWorkloadsSecretRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L677}
   ///
   // clang-format on
-  Status DeleteUserWorkloadsSecret(
-      google::cloud::orchestration::airflow::service::v1::
-          DeleteUserWorkloadsSecretRequest const& request,
-      Options opts = {});
+  Status
+  DeleteUserWorkloadsSecret(google::cloud::orchestration::airflow::service::v1::DeleteUserWorkloadsSecretRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1239,13 +1145,8 @@ class EnvironmentsClient {
   /// [google.cloud.orchestration.airflow.service.v1.UserWorkloadsConfigMap]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L793}
   ///
   // clang-format on
-  StatusOr<google::cloud::orchestration::airflow::service::v1::
-               UserWorkloadsConfigMap>
-  CreateUserWorkloadsConfigMap(
-      std::string const& parent,
-      google::cloud::orchestration::airflow::service::v1::
-          UserWorkloadsConfigMap const& user_workloads_config_map,
-      Options opts = {});
+  StatusOr<google::cloud::orchestration::airflow::service::v1::UserWorkloadsConfigMap>
+  CreateUserWorkloadsConfigMap(std::string const& parent, google::cloud::orchestration::airflow::service::v1::UserWorkloadsConfigMap const& user_workloads_config_map, Options opts = {});
 
   // clang-format off
   ///
@@ -1277,12 +1178,8 @@ class EnvironmentsClient {
   /// [google.cloud.orchestration.airflow.service.v1.UserWorkloadsConfigMap]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L793}
   ///
   // clang-format on
-  StatusOr<google::cloud::orchestration::airflow::service::v1::
-               UserWorkloadsConfigMap>
-  CreateUserWorkloadsConfigMap(
-      google::cloud::orchestration::airflow::service::v1::
-          CreateUserWorkloadsConfigMapRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::orchestration::airflow::service::v1::UserWorkloadsConfigMap>
+  CreateUserWorkloadsConfigMap(google::cloud::orchestration::airflow::service::v1::CreateUserWorkloadsConfigMapRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1310,8 +1207,7 @@ class EnvironmentsClient {
   /// [google.cloud.orchestration.airflow.service.v1.UserWorkloadsConfigMap]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L793}
   ///
   // clang-format on
-  StatusOr<google::cloud::orchestration::airflow::service::v1::
-               UserWorkloadsConfigMap>
+  StatusOr<google::cloud::orchestration::airflow::service::v1::UserWorkloadsConfigMap>
   GetUserWorkloadsConfigMap(std::string const& name, Options opts = {});
 
   // clang-format off
@@ -1344,11 +1240,8 @@ class EnvironmentsClient {
   /// [google.cloud.orchestration.airflow.service.v1.UserWorkloadsConfigMap]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L793}
   ///
   // clang-format on
-  StatusOr<google::cloud::orchestration::airflow::service::v1::
-               UserWorkloadsConfigMap>
-  GetUserWorkloadsConfigMap(google::cloud::orchestration::airflow::service::v1::
-                                GetUserWorkloadsConfigMapRequest const& request,
-                            Options opts = {});
+  StatusOr<google::cloud::orchestration::airflow::service::v1::UserWorkloadsConfigMap>
+  GetUserWorkloadsConfigMap(google::cloud::orchestration::airflow::service::v1::GetUserWorkloadsConfigMapRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1385,8 +1278,7 @@ class EnvironmentsClient {
   /// [google.cloud.orchestration.airflow.service.v1.UserWorkloadsConfigMap]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L793}
   ///
   // clang-format on
-  StreamRange<google::cloud::orchestration::airflow::service::v1::
-                  UserWorkloadsConfigMap>
+  StreamRange<google::cloud::orchestration::airflow::service::v1::UserWorkloadsConfigMap>
   ListUserWorkloadsConfigMaps(std::string const& parent, Options opts = {});
 
   // clang-format off
@@ -1428,12 +1320,8 @@ class EnvironmentsClient {
   /// [google.cloud.orchestration.airflow.service.v1.UserWorkloadsConfigMap]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L793}
   ///
   // clang-format on
-  StreamRange<google::cloud::orchestration::airflow::service::v1::
-                  UserWorkloadsConfigMap>
-  ListUserWorkloadsConfigMaps(
-      google::cloud::orchestration::airflow::service::v1::
-          ListUserWorkloadsConfigMapsRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::orchestration::airflow::service::v1::UserWorkloadsConfigMap>
+  ListUserWorkloadsConfigMaps(google::cloud::orchestration::airflow::service::v1::ListUserWorkloadsConfigMapsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1460,12 +1348,8 @@ class EnvironmentsClient {
   /// [google.cloud.orchestration.airflow.service.v1.UserWorkloadsConfigMap]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L793}
   ///
   // clang-format on
-  StatusOr<google::cloud::orchestration::airflow::service::v1::
-               UserWorkloadsConfigMap>
-  UpdateUserWorkloadsConfigMap(
-      google::cloud::orchestration::airflow::service::v1::
-          UserWorkloadsConfigMap const& user_workloads_config_map,
-      Options opts = {});
+  StatusOr<google::cloud::orchestration::airflow::service::v1::UserWorkloadsConfigMap>
+  UpdateUserWorkloadsConfigMap(google::cloud::orchestration::airflow::service::v1::UserWorkloadsConfigMap const& user_workloads_config_map, Options opts = {});
 
   // clang-format off
   ///
@@ -1497,12 +1381,8 @@ class EnvironmentsClient {
   /// [google.cloud.orchestration.airflow.service.v1.UserWorkloadsConfigMap]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L793}
   ///
   // clang-format on
-  StatusOr<google::cloud::orchestration::airflow::service::v1::
-               UserWorkloadsConfigMap>
-  UpdateUserWorkloadsConfigMap(
-      google::cloud::orchestration::airflow::service::v1::
-          UpdateUserWorkloadsConfigMapRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::orchestration::airflow::service::v1::UserWorkloadsConfigMap>
+  UpdateUserWorkloadsConfigMap(google::cloud::orchestration::airflow::service::v1::UpdateUserWorkloadsConfigMapRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1527,8 +1407,8 @@ class EnvironmentsClient {
   /// [google.cloud.orchestration.airflow.service.v1.DeleteUserWorkloadsConfigMapRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L743}
   ///
   // clang-format on
-  Status DeleteUserWorkloadsConfigMap(std::string const& name,
-                                      Options opts = {});
+  Status
+  DeleteUserWorkloadsConfigMap(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1557,10 +1437,8 @@ class EnvironmentsClient {
   /// [google.cloud.orchestration.airflow.service.v1.DeleteUserWorkloadsConfigMapRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L743}
   ///
   // clang-format on
-  Status DeleteUserWorkloadsConfigMap(
-      google::cloud::orchestration::airflow::service::v1::
-          DeleteUserWorkloadsConfigMapRequest const& request,
-      Options opts = {});
+  Status
+  DeleteUserWorkloadsConfigMap(google::cloud::orchestration::airflow::service::v1::DeleteUserWorkloadsConfigMapRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1599,11 +1477,8 @@ class EnvironmentsClient {
   /// [google.cloud.orchestration.airflow.service.v1.SaveSnapshotResponse]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L955}
   ///
   // clang-format on
-  future<StatusOr<
-      google::cloud::orchestration::airflow::service::v1::SaveSnapshotResponse>>
-  SaveSnapshot(google::cloud::orchestration::airflow::service::v1::
-                   SaveSnapshotRequest const& request,
-               Options opts = {});
+  future<StatusOr<google::cloud::orchestration::airflow::service::v1::SaveSnapshotResponse>>
+  SaveSnapshot(google::cloud::orchestration::airflow::service::v1::SaveSnapshotRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1616,11 +1491,8 @@ class EnvironmentsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> SaveSnapshot(
-      NoAwaitTag,
-      google::cloud::orchestration::airflow::service::v1::
-          SaveSnapshotRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  SaveSnapshot(NoAwaitTag, google::cloud::orchestration::airflow::service::v1::SaveSnapshotRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1631,10 +1503,8 @@ class EnvironmentsClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<
-      google::cloud::orchestration::airflow::service::v1::SaveSnapshotResponse>>
-  SaveSnapshot(google::longrunning::Operation const& operation,
-               Options opts = {});
+  future<StatusOr<google::cloud::orchestration::airflow::service::v1::SaveSnapshotResponse>>
+  SaveSnapshot(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1673,11 +1543,8 @@ class EnvironmentsClient {
   /// [google.cloud.orchestration.airflow.service.v1.LoadSnapshotResponse]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L991}
   ///
   // clang-format on
-  future<StatusOr<
-      google::cloud::orchestration::airflow::service::v1::LoadSnapshotResponse>>
-  LoadSnapshot(google::cloud::orchestration::airflow::service::v1::
-                   LoadSnapshotRequest const& request,
-               Options opts = {});
+  future<StatusOr<google::cloud::orchestration::airflow::service::v1::LoadSnapshotResponse>>
+  LoadSnapshot(google::cloud::orchestration::airflow::service::v1::LoadSnapshotRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1690,11 +1557,8 @@ class EnvironmentsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> LoadSnapshot(
-      NoAwaitTag,
-      google::cloud::orchestration::airflow::service::v1::
-          LoadSnapshotRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  LoadSnapshot(NoAwaitTag, google::cloud::orchestration::airflow::service::v1::LoadSnapshotRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1705,10 +1569,8 @@ class EnvironmentsClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<
-      google::cloud::orchestration::airflow::service::v1::LoadSnapshotResponse>>
-  LoadSnapshot(google::longrunning::Operation const& operation,
-               Options opts = {});
+  future<StatusOr<google::cloud::orchestration::airflow::service::v1::LoadSnapshotResponse>>
+  LoadSnapshot(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1744,11 +1606,8 @@ class EnvironmentsClient {
   /// [google.cloud.orchestration.airflow.service.v1.DatabaseFailoverResponse]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L1002}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::orchestration::airflow::service::v1::
-                      DatabaseFailoverResponse>>
-  DatabaseFailover(google::cloud::orchestration::airflow::service::v1::
-                       DatabaseFailoverRequest const& request,
-                   Options opts = {});
+  future<StatusOr<google::cloud::orchestration::airflow::service::v1::DatabaseFailoverResponse>>
+  DatabaseFailover(google::cloud::orchestration::airflow::service::v1::DatabaseFailoverRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1761,11 +1620,8 @@ class EnvironmentsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DatabaseFailover(
-      NoAwaitTag,
-      google::cloud::orchestration::airflow::service::v1::
-          DatabaseFailoverRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DatabaseFailover(NoAwaitTag, google::cloud::orchestration::airflow::service::v1::DatabaseFailoverRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1776,10 +1632,8 @@ class EnvironmentsClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::orchestration::airflow::service::v1::
-                      DatabaseFailoverResponse>>
-  DatabaseFailover(google::longrunning::Operation const& operation,
-                   Options opts = {});
+  future<StatusOr<google::cloud::orchestration::airflow::service::v1::DatabaseFailoverResponse>>
+  DatabaseFailover(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1808,11 +1662,8 @@ class EnvironmentsClient {
   /// [google.cloud.orchestration.airflow.service.v1.FetchDatabasePropertiesResponse]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L1017}
   ///
   // clang-format on
-  StatusOr<google::cloud::orchestration::airflow::service::v1::
-               FetchDatabasePropertiesResponse>
-  FetchDatabaseProperties(google::cloud::orchestration::airflow::service::v1::
-                              FetchDatabasePropertiesRequest const& request,
-                          Options opts = {});
+  StatusOr<google::cloud::orchestration::airflow::service::v1::FetchDatabasePropertiesResponse>
+  FetchDatabaseProperties(google::cloud::orchestration::airflow::service::v1::FetchDatabasePropertiesRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1847,8 +1698,8 @@ class EnvironmentsClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -1887,8 +1738,8 @@ class EnvironmentsClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1914,8 +1765,8 @@ class EnvironmentsClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1946,9 +1797,8 @@ class EnvironmentsClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1972,7 +1822,8 @@ class EnvironmentsClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status DeleteOperation(std::string const& name, Options opts = {});
+  Status
+  DeleteOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2001,9 +1852,8 @@ class EnvironmentsClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request,
-      Options opts = {});
+  Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<EnvironmentsConnection> connection_;

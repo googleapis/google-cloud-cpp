@@ -35,32 +35,23 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options DocumentLinkServiceDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_DOCUMENT_LINK_SERVICE_ENDPOINT", "",
-      "GOOGLE_CLOUD_CPP_DOCUMENT_LINK_SERVICE_AUTHORITY",
+      std::move(options), "GOOGLE_CLOUD_CPP_DOCUMENT_LINK_SERVICE_ENDPOINT",
+      "", "GOOGLE_CLOUD_CPP_DOCUMENT_LINK_SERVICE_AUTHORITY",
       "contentwarehouse.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
-  if (!options
-           .has<contentwarehouse_v1::DocumentLinkServiceRetryPolicyOption>()) {
+  if (!options.has<contentwarehouse_v1::DocumentLinkServiceRetryPolicyOption>()) {
     options.set<contentwarehouse_v1::DocumentLinkServiceRetryPolicyOption>(
         contentwarehouse_v1::DocumentLinkServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
-            .clone());
+            std::chrono::minutes(30)).clone());
   }
-  if (!options.has<
-          contentwarehouse_v1::DocumentLinkServiceBackoffPolicyOption>()) {
+  if (!options.has<contentwarehouse_v1::DocumentLinkServiceBackoffPolicyOption>()) {
     options.set<contentwarehouse_v1::DocumentLinkServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(
-            std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
-            .clone());
+        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
   }
-  if (!options
-           .has<contentwarehouse_v1::
-                    DocumentLinkServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<contentwarehouse_v1::
-                    DocumentLinkServiceConnectionIdempotencyPolicyOption>(
-        contentwarehouse_v1::
-            MakeDefaultDocumentLinkServiceConnectionIdempotencyPolicy());
+  if (!options.has<contentwarehouse_v1::DocumentLinkServiceConnectionIdempotencyPolicyOption>()) {
+    options.set<contentwarehouse_v1::DocumentLinkServiceConnectionIdempotencyPolicyOption>(
+        contentwarehouse_v1::MakeDefaultDocumentLinkServiceConnectionIdempotencyPolicy());
   }
 
   return options;

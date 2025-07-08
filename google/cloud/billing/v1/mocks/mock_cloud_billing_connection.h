@@ -46,64 +46,49 @@ class MockCloudBillingConnection : public billing_v1::CloudBillingConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::billing::v1::BillingAccount>, GetBillingAccount,
-      (google::cloud::billing::v1::GetBillingAccountRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::billing::v1::BillingAccount>,
+  GetBillingAccount,
+  (google::cloud::billing::v1::GetBillingAccountRequest const& request), (override));
 
   MOCK_METHOD((StreamRange<google::cloud::billing::v1::BillingAccount>),
-              ListBillingAccounts,
-              (google::cloud::billing::v1::ListBillingAccountsRequest request),
-              (override));
+  ListBillingAccounts,
+  (google::cloud::billing::v1::ListBillingAccountsRequest request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::billing::v1::BillingAccount>,
-      UpdateBillingAccount,
-      (google::cloud::billing::v1::UpdateBillingAccountRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::billing::v1::BillingAccount>,
+  UpdateBillingAccount,
+  (google::cloud::billing::v1::UpdateBillingAccountRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::billing::v1::BillingAccount>,
-      CreateBillingAccount,
-      (google::cloud::billing::v1::CreateBillingAccountRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::billing::v1::BillingAccount>,
+  CreateBillingAccount,
+  (google::cloud::billing::v1::CreateBillingAccountRequest const& request), (override));
 
-  MOCK_METHOD(
-      (StreamRange<google::cloud::billing::v1::ProjectBillingInfo>),
-      ListProjectBillingInfo,
-      (google::cloud::billing::v1::ListProjectBillingInfoRequest request),
-      (override));
+  MOCK_METHOD((StreamRange<google::cloud::billing::v1::ProjectBillingInfo>),
+  ListProjectBillingInfo,
+  (google::cloud::billing::v1::ListProjectBillingInfoRequest request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::billing::v1::ProjectBillingInfo>,
-      GetProjectBillingInfo,
-      (google::cloud::billing::v1::GetProjectBillingInfoRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::billing::v1::ProjectBillingInfo>,
+  GetProjectBillingInfo,
+  (google::cloud::billing::v1::GetProjectBillingInfoRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::billing::v1::ProjectBillingInfo>,
-      UpdateProjectBillingInfo,
-      (google::cloud::billing::v1::UpdateProjectBillingInfoRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::billing::v1::ProjectBillingInfo>,
+  UpdateProjectBillingInfo,
+  (google::cloud::billing::v1::UpdateProjectBillingInfoRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, GetIamPolicy,
-              (google::iam::v1::GetIamPolicyRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::iam::v1::Policy>,
+  GetIamPolicy,
+  (google::iam::v1::GetIamPolicyRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, SetIamPolicy,
-              (google::iam::v1::SetIamPolicyRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::iam::v1::Policy>,
+  SetIamPolicy,
+  (google::iam::v1::SetIamPolicyRequest const& request), (override));
 
   MOCK_METHOD(StatusOr<google::iam::v1::TestIamPermissionsResponse>,
-              TestIamPermissions,
-              (google::iam::v1::TestIamPermissionsRequest const& request),
-              (override));
+  TestIamPermissions,
+  (google::iam::v1::TestIamPermissionsRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::billing::v1::BillingAccount>, MoveBillingAccount,
-      (google::cloud::billing::v1::MoveBillingAccountRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::billing::v1::BillingAccount>,
+  MoveBillingAccount,
+  (google::cloud::billing::v1::MoveBillingAccountRequest const& request), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

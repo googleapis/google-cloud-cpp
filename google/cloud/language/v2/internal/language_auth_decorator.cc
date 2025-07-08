@@ -31,45 +31,45 @@ LanguageServiceAuth::LanguageServiceAuth(
     std::shared_ptr<LanguageServiceStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::language::v2::AnalyzeSentimentResponse>
-LanguageServiceAuth::AnalyzeSentiment(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::language::v2::AnalyzeSentimentResponse> LanguageServiceAuth::AnalyzeSentiment(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::language::v2::AnalyzeSentimentRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->AnalyzeSentiment(context, options, request);
 }
 
-StatusOr<google::cloud::language::v2::AnalyzeEntitiesResponse>
-LanguageServiceAuth::AnalyzeEntities(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::language::v2::AnalyzeEntitiesResponse> LanguageServiceAuth::AnalyzeEntities(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::language::v2::AnalyzeEntitiesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->AnalyzeEntities(context, options, request);
 }
 
-StatusOr<google::cloud::language::v2::ClassifyTextResponse>
-LanguageServiceAuth::ClassifyText(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::language::v2::ClassifyTextResponse> LanguageServiceAuth::ClassifyText(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::language::v2::ClassifyTextRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ClassifyText(context, options, request);
 }
 
-StatusOr<google::cloud::language::v2::ModerateTextResponse>
-LanguageServiceAuth::ModerateText(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::language::v2::ModerateTextResponse> LanguageServiceAuth::ModerateText(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::language::v2::ModerateTextRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ModerateText(context, options, request);
 }
 
-StatusOr<google::cloud::language::v2::AnnotateTextResponse>
-LanguageServiceAuth::AnnotateText(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::language::v2::AnnotateTextResponse> LanguageServiceAuth::AnnotateText(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::language::v2::AnnotateTextRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;

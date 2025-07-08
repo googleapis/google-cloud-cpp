@@ -17,14 +17,14 @@
 // source: google/cloud/gkemulticloud/v1/aws_service.proto
 
 #include "google/cloud/gkemulticloud/v1/aws_clusters_connection.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/gkemulticloud/v1/aws_clusters_options.h"
 #include "google/cloud/gkemulticloud/v1/internal/aws_clusters_connection_impl.h"
 #include "google/cloud/gkemulticloud/v1/internal/aws_clusters_option_defaults.h"
 #include "google/cloud/gkemulticloud/v1/internal/aws_clusters_stub_factory.h"
 #include "google/cloud/gkemulticloud/v1/internal/aws_clusters_tracing_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
-#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
@@ -42,8 +42,8 @@ future<StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>>
 AwsClustersConnection::CreateAwsCluster(
     google::cloud::gkemulticloud::v1::CreateAwsClusterRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -51,22 +51,23 @@ AwsClustersConnection::CreateAwsCluster(
     NoAwaitTag,
     google::cloud::gkemulticloud::v1::CreateAwsClusterRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>>
-AwsClustersConnection::CreateAwsCluster(google::longrunning::Operation const&) {
+AwsClustersConnection::CreateAwsCluster(
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>>
 AwsClustersConnection::UpdateAwsCluster(
     google::cloud::gkemulticloud::v1::UpdateAwsClusterRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -74,14 +75,15 @@ AwsClustersConnection::UpdateAwsCluster(
     NoAwaitTag,
     google::cloud::gkemulticloud::v1::UpdateAwsClusterRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>>
-AwsClustersConnection::UpdateAwsCluster(google::longrunning::Operation const&) {
+AwsClustersConnection::UpdateAwsCluster(
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>
@@ -90,10 +92,8 @@ AwsClustersConnection::GetAwsCluster(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::gkemulticloud::v1::AwsCluster>
-AwsClustersConnection::ListAwsClusters(
-    google::cloud::gkemulticloud::v1::
-        ListAwsClustersRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::gkemulticloud::v1::AwsCluster> AwsClustersConnection::ListAwsClusters(
+    google::cloud::gkemulticloud::v1::ListAwsClustersRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::gkemulticloud::v1::AwsCluster>>();
 }
@@ -102,8 +102,8 @@ future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
 AwsClustersConnection::DeleteAwsCluster(
     google::cloud::gkemulticloud::v1::DeleteAwsClusterRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -111,20 +111,20 @@ AwsClustersConnection::DeleteAwsCluster(
     NoAwaitTag,
     google::cloud::gkemulticloud::v1::DeleteAwsClusterRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
-AwsClustersConnection::DeleteAwsCluster(google::longrunning::Operation const&) {
+AwsClustersConnection::DeleteAwsCluster(
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::GenerateAwsClusterAgentTokenResponse>
 AwsClustersConnection::GenerateAwsClusterAgentToken(
-    google::cloud::gkemulticloud::v1::
-        GenerateAwsClusterAgentTokenRequest const&) {
+    google::cloud::gkemulticloud::v1::GenerateAwsClusterAgentTokenRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
@@ -138,8 +138,8 @@ future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
 AwsClustersConnection::CreateAwsNodePool(
     google::cloud::gkemulticloud::v1::CreateAwsNodePoolRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -147,23 +147,23 @@ AwsClustersConnection::CreateAwsNodePool(
     NoAwaitTag,
     google::cloud::gkemulticloud::v1::CreateAwsNodePoolRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
 AwsClustersConnection::CreateAwsNodePool(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
 AwsClustersConnection::UpdateAwsNodePool(
     google::cloud::gkemulticloud::v1::UpdateAwsNodePoolRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -171,23 +171,23 @@ AwsClustersConnection::UpdateAwsNodePool(
     NoAwaitTag,
     google::cloud::gkemulticloud::v1::UpdateAwsNodePoolRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
 AwsClustersConnection::UpdateAwsNodePool(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
 AwsClustersConnection::RollbackAwsNodePoolUpdate(
     google::cloud::gkemulticloud::v1::RollbackAwsNodePoolUpdateRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -195,15 +195,15 @@ AwsClustersConnection::RollbackAwsNodePoolUpdate(
     NoAwaitTag,
     google::cloud::gkemulticloud::v1::RollbackAwsNodePoolUpdateRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
 AwsClustersConnection::RollbackAwsNodePoolUpdate(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>
@@ -212,10 +212,8 @@ AwsClustersConnection::GetAwsNodePool(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::gkemulticloud::v1::AwsNodePool>
-AwsClustersConnection::ListAwsNodePools(
-    google::cloud::gkemulticloud::v1::
-        ListAwsNodePoolsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::gkemulticloud::v1::AwsNodePool> AwsClustersConnection::ListAwsNodePools(
+    google::cloud::gkemulticloud::v1::ListAwsNodePoolsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::gkemulticloud::v1::AwsNodePool>>();
 }
@@ -224,8 +222,8 @@ future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
 AwsClustersConnection::DeleteAwsNodePool(
     google::cloud::gkemulticloud::v1::DeleteAwsNodePoolRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -233,15 +231,15 @@ AwsClustersConnection::DeleteAwsNodePool(
     NoAwaitTag,
     google::cloud::gkemulticloud::v1::DeleteAwsNodePoolRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
 AwsClustersConnection::DeleteAwsNodePool(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::AwsOpenIdConfig>
@@ -262,25 +260,26 @@ AwsClustersConnection::GetAwsServerConfig(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::longrunning::Operation>
-AwsClustersConnection::ListOperations(
-    google::longrunning::
-        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::longrunning::Operation> AwsClustersConnection::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }
 
-StatusOr<google::longrunning::Operation> AwsClustersConnection::GetOperation(
+StatusOr<google::longrunning::Operation>
+AwsClustersConnection::GetOperation(
     google::longrunning::GetOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status AwsClustersConnection::DeleteOperation(
+Status
+AwsClustersConnection::DeleteOperation(
     google::longrunning::DeleteOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status AwsClustersConnection::CancelOperation(
+Status
+AwsClustersConnection::CancelOperation(
     google::longrunning::CancelOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -288,18 +287,17 @@ Status AwsClustersConnection::CancelOperation(
 std::shared_ptr<AwsClustersConnection> MakeAwsClustersConnection(
     std::string const& location, Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 AwsClustersPolicyOptionList>(options,
-                                                              __func__);
+      UnifiedCredentialsOptionList,
+      AwsClustersPolicyOptionList>(options, __func__);
   options = gkemulticloud_v1_internal::AwsClustersDefaultOptions(
       location, std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = gkemulticloud_v1_internal::CreateDefaultAwsClustersStub(
-      std::move(auth), options);
+    std::move(auth), options);
   return gkemulticloud_v1_internal::MakeAwsClustersTracingConnection(
       std::make_shared<gkemulticloud_v1_internal::AwsClustersConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options)));
+      std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

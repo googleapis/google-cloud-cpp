@@ -30,19 +30,22 @@ namespace cloud {
 namespace dialogflow_cx_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-EntityTypesLogging::EntityTypesLogging(std::shared_ptr<EntityTypesStub> child,
-                                       TracingOptions tracing_options,
-                                       std::set<std::string> const&)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
+EntityTypesLogging::EntityTypesLogging(
+    std::shared_ptr<EntityTypesStub> child,
+    TracingOptions tracing_options,
+    std::set<std::string> const&)
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::cloud::dialogflow::cx::v3::EntityType>
 EntityTypesLogging::GetEntityType(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dialogflow::cx::v3::GetEntityTypeRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dialogflow::cx::v3::GetEntityTypeRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::dialogflow::cx::v3::GetEntityTypeRequest const& request) {
         return child_->GetEntityType(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -50,12 +53,13 @@ EntityTypesLogging::GetEntityType(
 
 StatusOr<google::cloud::dialogflow::cx::v3::EntityType>
 EntityTypesLogging::CreateEntityType(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dialogflow::cx::v3::CreateEntityTypeRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dialogflow::cx::v3::CreateEntityTypeRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::dialogflow::cx::v3::CreateEntityTypeRequest const& request) {
         return child_->CreateEntityType(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -63,24 +67,27 @@ EntityTypesLogging::CreateEntityType(
 
 StatusOr<google::cloud::dialogflow::cx::v3::EntityType>
 EntityTypesLogging::UpdateEntityType(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dialogflow::cx::v3::UpdateEntityTypeRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dialogflow::cx::v3::UpdateEntityTypeRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::dialogflow::cx::v3::UpdateEntityTypeRequest const& request) {
         return child_->UpdateEntityType(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status EntityTypesLogging::DeleteEntityType(
-    grpc::ClientContext& context, Options const& options,
+Status
+EntityTypesLogging::DeleteEntityType(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dialogflow::cx::v3::DeleteEntityTypeRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dialogflow::cx::v3::DeleteEntityTypeRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::dialogflow::cx::v3::DeleteEntityTypeRequest const& request) {
         return child_->DeleteEntityType(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -88,12 +95,13 @@ Status EntityTypesLogging::DeleteEntityType(
 
 StatusOr<google::cloud::dialogflow::cx::v3::ListEntityTypesResponse>
 EntityTypesLogging::ListEntityTypes(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dialogflow::cx::v3::ListEntityTypesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dialogflow::cx::v3::ListEntityTypesRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::dialogflow::cx::v3::ListEntityTypesRequest const& request) {
         return child_->ListEntityTypes(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -101,32 +109,31 @@ EntityTypesLogging::ListEntityTypes(
 
 future<StatusOr<google::longrunning::Operation>>
 EntityTypesLogging::AsyncExportEntityTypes(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::dialogflow::cx::v3::ExportEntityTypesRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::dialogflow::cx::v3::ExportEntityTypesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::dialogflow::cx::v3::ExportEntityTypesRequest const&
-                 request) {
-        return child_->AsyncExportEntityTypes(cq, std::move(context),
-                                              std::move(options), request);
+             google::cloud::dialogflow::cx::v3::ExportEntityTypesRequest const& request) {
+        return child_->AsyncExportEntityTypes(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> EntityTypesLogging::ExportEntityTypes(
-    grpc::ClientContext& context, Options options,
-    google::cloud::dialogflow::cx::v3::ExportEntityTypesRequest const&
-        request) {
+StatusOr<google::longrunning::Operation>
+EntityTypesLogging::ExportEntityTypes(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::dialogflow::cx::v3::ExportEntityTypesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dialogflow::cx::v3::ExportEntityTypesRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::dialogflow::cx::v3::ExportEntityTypesRequest const& request) {
         return child_->ExportEntityTypes(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -134,32 +141,31 @@ StatusOr<google::longrunning::Operation> EntityTypesLogging::ExportEntityTypes(
 
 future<StatusOr<google::longrunning::Operation>>
 EntityTypesLogging::AsyncImportEntityTypes(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::dialogflow::cx::v3::ImportEntityTypesRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::dialogflow::cx::v3::ImportEntityTypesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::dialogflow::cx::v3::ImportEntityTypesRequest const&
-                 request) {
-        return child_->AsyncImportEntityTypes(cq, std::move(context),
-                                              std::move(options), request);
+             google::cloud::dialogflow::cx::v3::ImportEntityTypesRequest const& request) {
+        return child_->AsyncImportEntityTypes(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> EntityTypesLogging::ImportEntityTypes(
-    grpc::ClientContext& context, Options options,
-    google::cloud::dialogflow::cx::v3::ImportEntityTypesRequest const&
-        request) {
+StatusOr<google::longrunning::Operation>
+EntityTypesLogging::ImportEntityTypes(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::dialogflow::cx::v3::ImportEntityTypesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dialogflow::cx::v3::ImportEntityTypesRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::dialogflow::cx::v3::ImportEntityTypesRequest const& request) {
         return child_->ImportEntityTypes(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -167,21 +173,26 @@ StatusOr<google::longrunning::Operation> EntityTypesLogging::ImportEntityTypes(
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 EntityTypesLogging::ListLocations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::location::ListLocationsRequest const& request) {
         return child_->ListLocations(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::cloud::location::Location> EntityTypesLogging::GetLocation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::location::Location>
+EntityTypesLogging::GetLocation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::location::GetLocationRequest const& request) {
         return child_->GetLocation(context, options, request);
       },
@@ -190,32 +201,40 @@ StatusOr<google::cloud::location::Location> EntityTypesLogging::GetLocation(
 
 StatusOr<google::longrunning::ListOperationsResponse>
 EntityTypesLogging::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::ListOperationsRequest const& request) {
         return child_->ListOperations(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> EntityTypesLogging::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::Operation>
+EntityTypesLogging::GetOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::GetOperationRequest const& request) {
         return child_->GetOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status EntityTypesLogging::CancelOperation(
-    grpc::ClientContext& context, Options const& options,
+Status
+EntityTypesLogging::CancelOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::CancelOperationRequest const& request) {
         return child_->CancelOperation(context, options, request);
       },
@@ -233,8 +252,8 @@ EntityTypesLogging::AsyncGetOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(cq, std::move(context),
-                                         std::move(options), request);
+        return child_->AsyncGetOperation(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -250,8 +269,8 @@ future<Status> EntityTypesLogging::AsyncCancelOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::CancelOperationRequest const& request) {
-        return child_->AsyncCancelOperation(cq, std::move(context),
-                                            std::move(options), request);
+        return child_->AsyncCancelOperation(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);

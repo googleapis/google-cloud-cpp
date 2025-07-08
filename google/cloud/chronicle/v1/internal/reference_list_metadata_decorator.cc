@@ -46,87 +46,87 @@ ReferenceListServiceMetadata::ReferenceListServiceMetadata(
 
 StatusOr<google::cloud::chronicle::v1::ReferenceList>
 ReferenceListServiceMetadata::GetReferenceList(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::chronicle::v1::GetReferenceListRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetReferenceList(context, options, request);
 }
 
 StatusOr<google::cloud::chronicle::v1::ListReferenceListsResponse>
 ReferenceListServiceMetadata::ListReferenceLists(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::chronicle::v1::ListReferenceListsRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListReferenceLists(context, options, request);
 }
 
 StatusOr<google::cloud::chronicle::v1::ReferenceList>
 ReferenceListServiceMetadata::CreateReferenceList(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::chronicle::v1::CreateReferenceListRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateReferenceList(context, options, request);
 }
 
 StatusOr<google::cloud::chronicle::v1::ReferenceList>
 ReferenceListServiceMetadata::UpdateReferenceList(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::chronicle::v1::UpdateReferenceListRequest const& request) {
-  SetMetadata(
-      context, options,
-      absl::StrCat("reference_list.name=",
-                   internal::UrlEncode(request.reference_list().name())));
+  SetMetadata(context, options, absl::StrCat("reference_list.name=", internal::UrlEncode(request.reference_list().name())));
   return child_->UpdateReferenceList(context, options, request);
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
 ReferenceListServiceMetadata::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ListOperations(context, options, request);
 }
 
 StatusOr<google::longrunning::Operation>
 ReferenceListServiceMetadata::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetOperation(context, options, request);
 }
 
-Status ReferenceListServiceMetadata::DeleteOperation(
-    grpc::ClientContext& context, Options const& options,
+Status
+ReferenceListServiceMetadata::DeleteOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteOperation(context, options, request);
 }
 
-Status ReferenceListServiceMetadata::CancelOperation(
-    grpc::ClientContext& context, Options const& options,
+Status
+ReferenceListServiceMetadata::CancelOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->CancelOperation(context, options, request);
 }
 
-void ReferenceListServiceMetadata::SetMetadata(
-    grpc::ClientContext& context, Options const& options,
-    std::string const& request_params) {
+void ReferenceListServiceMetadata::SetMetadata(grpc::ClientContext& context,
+                                        Options const& options,
+                                        std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
 void ReferenceListServiceMetadata::SetMetadata(grpc::ClientContext& context,
-                                               Options const& options) {
-  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
-                                       api_client_header_);
+                                        Options const& options) {
+  google::cloud::internal::SetMetadata(
+      context, options, fixed_metadata_, api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

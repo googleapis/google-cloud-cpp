@@ -28,14 +28,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ModelServiceClient::ModelServiceClient(
     std::shared_ptr<ModelServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 ModelServiceClient::~ModelServiceClient() = default;
 
 future<StatusOr<google::cloud::aiplatform::v1::UploadModelResponse>>
-ModelServiceClient::UploadModel(
-    std::string const& parent,
-    google::cloud::aiplatform::v1::Model const& model, Options opts) {
+ModelServiceClient::UploadModel(std::string const& parent, google::cloud::aiplatform::v1::Model const& model, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::UploadModelRequest request;
   request.set_parent(parent);
@@ -43,9 +41,8 @@ ModelServiceClient::UploadModel(
   return connection_->UploadModel(request);
 }
 
-StatusOr<google::longrunning::Operation> ModelServiceClient::UploadModel(
-    NoAwaitTag, std::string const& parent,
-    google::cloud::aiplatform::v1::Model const& model, Options opts) {
+StatusOr<google::longrunning::Operation>
+ModelServiceClient::UploadModel(NoAwaitTag, std::string const& parent, google::cloud::aiplatform::v1::Model const& model, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::UploadModelRequest request;
   request.set_parent(parent);
@@ -54,39 +51,33 @@ StatusOr<google::longrunning::Operation> ModelServiceClient::UploadModel(
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::UploadModelResponse>>
-ModelServiceClient::UploadModel(
-    google::cloud::aiplatform::v1::UploadModelRequest const& request,
-    Options opts) {
+ModelServiceClient::UploadModel(google::cloud::aiplatform::v1::UploadModelRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UploadModel(request);
 }
 
-StatusOr<google::longrunning::Operation> ModelServiceClient::UploadModel(
-    NoAwaitTag,
-    google::cloud::aiplatform::v1::UploadModelRequest const& request,
-    Options opts) {
+StatusOr<google::longrunning::Operation>
+ModelServiceClient::UploadModel(NoAwaitTag, google::cloud::aiplatform::v1::UploadModelRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UploadModel(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::UploadModelResponse>>
-ModelServiceClient::UploadModel(google::longrunning::Operation const& operation,
-                                Options opts) {
+ModelServiceClient::UploadModel(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UploadModel(operation);
 }
 
-StatusOr<google::cloud::aiplatform::v1::Model> ModelServiceClient::GetModel(
-    std::string const& name, Options opts) {
+StatusOr<google::cloud::aiplatform::v1::Model>
+ModelServiceClient::GetModel(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::GetModelRequest request;
   request.set_name(name);
   return connection_->GetModel(request);
 }
 
-StatusOr<google::cloud::aiplatform::v1::Model> ModelServiceClient::GetModel(
-    google::cloud::aiplatform::v1::GetModelRequest const& request,
-    Options opts) {
+StatusOr<google::cloud::aiplatform::v1::Model>
+ModelServiceClient::GetModel(google::cloud::aiplatform::v1::GetModelRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetModel(request);
 }
@@ -100,8 +91,7 @@ ModelServiceClient::ListModels(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::aiplatform::v1::Model>
-ModelServiceClient::ListModels(
-    google::cloud::aiplatform::v1::ListModelsRequest request, Options opts) {
+ModelServiceClient::ListModels(google::cloud::aiplatform::v1::ListModelsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListModels(std::move(request));
 }
@@ -115,16 +105,13 @@ ModelServiceClient::ListModelVersions(std::string const& name, Options opts) {
 }
 
 StreamRange<google::cloud::aiplatform::v1::Model>
-ModelServiceClient::ListModelVersions(
-    google::cloud::aiplatform::v1::ListModelVersionsRequest request,
-    Options opts) {
+ModelServiceClient::ListModelVersions(google::cloud::aiplatform::v1::ListModelVersionsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListModelVersions(std::move(request));
 }
 
 StreamRange<google::cloud::aiplatform::v1::ModelVersionCheckpoint>
-ModelServiceClient::ListModelVersionCheckpoints(std::string const& name,
-                                                Options opts) {
+ModelServiceClient::ListModelVersionCheckpoints(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::ListModelVersionCheckpointsRequest request;
   request.set_name(name);
@@ -132,16 +119,13 @@ ModelServiceClient::ListModelVersionCheckpoints(std::string const& name,
 }
 
 StreamRange<google::cloud::aiplatform::v1::ModelVersionCheckpoint>
-ModelServiceClient::ListModelVersionCheckpoints(
-    google::cloud::aiplatform::v1::ListModelVersionCheckpointsRequest request,
-    Options opts) {
+ModelServiceClient::ListModelVersionCheckpoints(google::cloud::aiplatform::v1::ListModelVersionCheckpointsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListModelVersionCheckpoints(std::move(request));
 }
 
-StatusOr<google::cloud::aiplatform::v1::Model> ModelServiceClient::UpdateModel(
-    google::cloud::aiplatform::v1::Model const& model,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+StatusOr<google::cloud::aiplatform::v1::Model>
+ModelServiceClient::UpdateModel(google::cloud::aiplatform::v1::Model const& model, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::UpdateModelRequest request;
   *request.mutable_model() = model;
@@ -149,17 +133,14 @@ StatusOr<google::cloud::aiplatform::v1::Model> ModelServiceClient::UpdateModel(
   return connection_->UpdateModel(request);
 }
 
-StatusOr<google::cloud::aiplatform::v1::Model> ModelServiceClient::UpdateModel(
-    google::cloud::aiplatform::v1::UpdateModelRequest const& request,
-    Options opts) {
+StatusOr<google::cloud::aiplatform::v1::Model>
+ModelServiceClient::UpdateModel(google::cloud::aiplatform::v1::UpdateModelRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateModel(request);
 }
 
-future<
-    StatusOr<google::cloud::aiplatform::v1::UpdateExplanationDatasetResponse>>
-ModelServiceClient::UpdateExplanationDataset(std::string const& model,
-                                             Options opts) {
+future<StatusOr<google::cloud::aiplatform::v1::UpdateExplanationDatasetResponse>>
+ModelServiceClient::UpdateExplanationDataset(std::string const& model, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::UpdateExplanationDatasetRequest request;
   request.set_model(model);
@@ -167,39 +148,27 @@ ModelServiceClient::UpdateExplanationDataset(std::string const& model,
 }
 
 StatusOr<google::longrunning::Operation>
-ModelServiceClient::UpdateExplanationDataset(NoAwaitTag,
-                                             std::string const& model,
-                                             Options opts) {
+ModelServiceClient::UpdateExplanationDataset(NoAwaitTag, std::string const& model, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::UpdateExplanationDatasetRequest request;
   request.set_model(model);
   return connection_->UpdateExplanationDataset(NoAwaitTag{}, request);
 }
 
-future<
-    StatusOr<google::cloud::aiplatform::v1::UpdateExplanationDatasetResponse>>
-ModelServiceClient::UpdateExplanationDataset(
-    google::cloud::aiplatform::v1::UpdateExplanationDatasetRequest const&
-        request,
-    Options opts) {
+future<StatusOr<google::cloud::aiplatform::v1::UpdateExplanationDatasetResponse>>
+ModelServiceClient::UpdateExplanationDataset(google::cloud::aiplatform::v1::UpdateExplanationDatasetRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateExplanationDataset(request);
 }
 
 StatusOr<google::longrunning::Operation>
-ModelServiceClient::UpdateExplanationDataset(
-    NoAwaitTag,
-    google::cloud::aiplatform::v1::UpdateExplanationDatasetRequest const&
-        request,
-    Options opts) {
+ModelServiceClient::UpdateExplanationDataset(NoAwaitTag, google::cloud::aiplatform::v1::UpdateExplanationDatasetRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateExplanationDataset(NoAwaitTag{}, request);
 }
 
-future<
-    StatusOr<google::cloud::aiplatform::v1::UpdateExplanationDatasetResponse>>
-ModelServiceClient::UpdateExplanationDataset(
-    google::longrunning::Operation const& operation, Options opts) {
+future<StatusOr<google::cloud::aiplatform::v1::UpdateExplanationDatasetResponse>>
+ModelServiceClient::UpdateExplanationDataset(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateExplanationDataset(operation);
 }
@@ -212,8 +181,8 @@ ModelServiceClient::DeleteModel(std::string const& name, Options opts) {
   return connection_->DeleteModel(request);
 }
 
-StatusOr<google::longrunning::Operation> ModelServiceClient::DeleteModel(
-    NoAwaitTag, std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation>
+ModelServiceClient::DeleteModel(NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::DeleteModelRequest request;
   request.set_name(name);
@@ -221,24 +190,19 @@ StatusOr<google::longrunning::Operation> ModelServiceClient::DeleteModel(
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-ModelServiceClient::DeleteModel(
-    google::cloud::aiplatform::v1::DeleteModelRequest const& request,
-    Options opts) {
+ModelServiceClient::DeleteModel(google::cloud::aiplatform::v1::DeleteModelRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteModel(request);
 }
 
-StatusOr<google::longrunning::Operation> ModelServiceClient::DeleteModel(
-    NoAwaitTag,
-    google::cloud::aiplatform::v1::DeleteModelRequest const& request,
-    Options opts) {
+StatusOr<google::longrunning::Operation>
+ModelServiceClient::DeleteModel(NoAwaitTag, google::cloud::aiplatform::v1::DeleteModelRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteModel(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-ModelServiceClient::DeleteModel(google::longrunning::Operation const& operation,
-                                Options opts) {
+ModelServiceClient::DeleteModel(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteModel(operation);
 }
@@ -251,8 +215,8 @@ ModelServiceClient::DeleteModelVersion(std::string const& name, Options opts) {
   return connection_->DeleteModelVersion(request);
 }
 
-StatusOr<google::longrunning::Operation> ModelServiceClient::DeleteModelVersion(
-    NoAwaitTag, std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation>
+ModelServiceClient::DeleteModelVersion(NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::DeleteModelVersionRequest request;
   request.set_name(name);
@@ -260,54 +224,40 @@ StatusOr<google::longrunning::Operation> ModelServiceClient::DeleteModelVersion(
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-ModelServiceClient::DeleteModelVersion(
-    google::cloud::aiplatform::v1::DeleteModelVersionRequest const& request,
-    Options opts) {
+ModelServiceClient::DeleteModelVersion(google::cloud::aiplatform::v1::DeleteModelVersionRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteModelVersion(request);
 }
 
-StatusOr<google::longrunning::Operation> ModelServiceClient::DeleteModelVersion(
-    NoAwaitTag,
-    google::cloud::aiplatform::v1::DeleteModelVersionRequest const& request,
-    Options opts) {
+StatusOr<google::longrunning::Operation>
+ModelServiceClient::DeleteModelVersion(NoAwaitTag, google::cloud::aiplatform::v1::DeleteModelVersionRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteModelVersion(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-ModelServiceClient::DeleteModelVersion(
-    google::longrunning::Operation const& operation, Options opts) {
+ModelServiceClient::DeleteModelVersion(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteModelVersion(operation);
 }
 
 StatusOr<google::cloud::aiplatform::v1::Model>
-ModelServiceClient::MergeVersionAliases(
-    std::string const& name, std::vector<std::string> const& version_aliases,
-    Options opts) {
+ModelServiceClient::MergeVersionAliases(std::string const& name, std::vector<std::string> const& version_aliases, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::MergeVersionAliasesRequest request;
   request.set_name(name);
-  *request.mutable_version_aliases() = {version_aliases.begin(),
-                                        version_aliases.end()};
+  *request.mutable_version_aliases() = {version_aliases.begin(), version_aliases.end()};
   return connection_->MergeVersionAliases(request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::Model>
-ModelServiceClient::MergeVersionAliases(
-    google::cloud::aiplatform::v1::MergeVersionAliasesRequest const& request,
-    Options opts) {
+ModelServiceClient::MergeVersionAliases(google::cloud::aiplatform::v1::MergeVersionAliasesRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->MergeVersionAliases(request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::ExportModelResponse>>
-ModelServiceClient::ExportModel(
-    std::string const& name,
-    google::cloud::aiplatform::v1::ExportModelRequest::OutputConfig const&
-        output_config,
-    Options opts) {
+ModelServiceClient::ExportModel(std::string const& name, google::cloud::aiplatform::v1::ExportModelRequest::OutputConfig const& output_config, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::ExportModelRequest request;
   request.set_name(name);
@@ -315,11 +265,8 @@ ModelServiceClient::ExportModel(
   return connection_->ExportModel(request);
 }
 
-StatusOr<google::longrunning::Operation> ModelServiceClient::ExportModel(
-    NoAwaitTag, std::string const& name,
-    google::cloud::aiplatform::v1::ExportModelRequest::OutputConfig const&
-        output_config,
-    Options opts) {
+StatusOr<google::longrunning::Operation>
+ModelServiceClient::ExportModel(NoAwaitTag, std::string const& name, google::cloud::aiplatform::v1::ExportModelRequest::OutputConfig const& output_config, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::ExportModelRequest request;
   request.set_name(name);
@@ -328,31 +275,25 @@ StatusOr<google::longrunning::Operation> ModelServiceClient::ExportModel(
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::ExportModelResponse>>
-ModelServiceClient::ExportModel(
-    google::cloud::aiplatform::v1::ExportModelRequest const& request,
-    Options opts) {
+ModelServiceClient::ExportModel(google::cloud::aiplatform::v1::ExportModelRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ExportModel(request);
 }
 
-StatusOr<google::longrunning::Operation> ModelServiceClient::ExportModel(
-    NoAwaitTag,
-    google::cloud::aiplatform::v1::ExportModelRequest const& request,
-    Options opts) {
+StatusOr<google::longrunning::Operation>
+ModelServiceClient::ExportModel(NoAwaitTag, google::cloud::aiplatform::v1::ExportModelRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ExportModel(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::ExportModelResponse>>
-ModelServiceClient::ExportModel(google::longrunning::Operation const& operation,
-                                Options opts) {
+ModelServiceClient::ExportModel(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ExportModel(operation);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::CopyModelResponse>>
-ModelServiceClient::CopyModel(std::string const& parent,
-                              std::string const& source_model, Options opts) {
+ModelServiceClient::CopyModel(std::string const& parent, std::string const& source_model, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::CopyModelRequest request;
   request.set_parent(parent);
@@ -360,9 +301,8 @@ ModelServiceClient::CopyModel(std::string const& parent,
   return connection_->CopyModel(request);
 }
 
-StatusOr<google::longrunning::Operation> ModelServiceClient::CopyModel(
-    NoAwaitTag, std::string const& parent, std::string const& source_model,
-    Options opts) {
+StatusOr<google::longrunning::Operation>
+ModelServiceClient::CopyModel(NoAwaitTag, std::string const& parent, std::string const& source_model, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::CopyModelRequest request;
   request.set_parent(parent);
@@ -371,32 +311,25 @@ StatusOr<google::longrunning::Operation> ModelServiceClient::CopyModel(
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::CopyModelResponse>>
-ModelServiceClient::CopyModel(
-    google::cloud::aiplatform::v1::CopyModelRequest const& request,
-    Options opts) {
+ModelServiceClient::CopyModel(google::cloud::aiplatform::v1::CopyModelRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CopyModel(request);
 }
 
-StatusOr<google::longrunning::Operation> ModelServiceClient::CopyModel(
-    NoAwaitTag, google::cloud::aiplatform::v1::CopyModelRequest const& request,
-    Options opts) {
+StatusOr<google::longrunning::Operation>
+ModelServiceClient::CopyModel(NoAwaitTag, google::cloud::aiplatform::v1::CopyModelRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CopyModel(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::CopyModelResponse>>
-ModelServiceClient::CopyModel(google::longrunning::Operation const& operation,
-                              Options opts) {
+ModelServiceClient::CopyModel(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CopyModel(operation);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ModelEvaluation>
-ModelServiceClient::ImportModelEvaluation(
-    std::string const& parent,
-    google::cloud::aiplatform::v1::ModelEvaluation const& model_evaluation,
-    Options opts) {
+ModelServiceClient::ImportModelEvaluation(std::string const& parent, google::cloud::aiplatform::v1::ModelEvaluation const& model_evaluation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::ImportModelEvaluationRequest request;
   request.set_parent(parent);
@@ -405,58 +338,37 @@ ModelServiceClient::ImportModelEvaluation(
 }
 
 StatusOr<google::cloud::aiplatform::v1::ModelEvaluation>
-ModelServiceClient::ImportModelEvaluation(
-    google::cloud::aiplatform::v1::ImportModelEvaluationRequest const& request,
-    Options opts) {
+ModelServiceClient::ImportModelEvaluation(google::cloud::aiplatform::v1::ImportModelEvaluationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ImportModelEvaluation(request);
 }
 
-StatusOr<
-    google::cloud::aiplatform::v1::BatchImportModelEvaluationSlicesResponse>
-ModelServiceClient::BatchImportModelEvaluationSlices(
-    std::string const& parent,
-    std::vector<google::cloud::aiplatform::v1::ModelEvaluationSlice> const&
-        model_evaluation_slices,
-    Options opts) {
+StatusOr<google::cloud::aiplatform::v1::BatchImportModelEvaluationSlicesResponse>
+ModelServiceClient::BatchImportModelEvaluationSlices(std::string const& parent, std::vector<google::cloud::aiplatform::v1::ModelEvaluationSlice> const& model_evaluation_slices, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::aiplatform::v1::BatchImportModelEvaluationSlicesRequest
-      request;
+  google::cloud::aiplatform::v1::BatchImportModelEvaluationSlicesRequest request;
   request.set_parent(parent);
-  *request.mutable_model_evaluation_slices() = {model_evaluation_slices.begin(),
-                                                model_evaluation_slices.end()};
+  *request.mutable_model_evaluation_slices() = {model_evaluation_slices.begin(), model_evaluation_slices.end()};
   return connection_->BatchImportModelEvaluationSlices(request);
 }
 
-StatusOr<
-    google::cloud::aiplatform::v1::BatchImportModelEvaluationSlicesResponse>
-ModelServiceClient::BatchImportModelEvaluationSlices(
-    google::cloud::aiplatform::v1::
-        BatchImportModelEvaluationSlicesRequest const& request,
-    Options opts) {
+StatusOr<google::cloud::aiplatform::v1::BatchImportModelEvaluationSlicesResponse>
+ModelServiceClient::BatchImportModelEvaluationSlices(google::cloud::aiplatform::v1::BatchImportModelEvaluationSlicesRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->BatchImportModelEvaluationSlices(request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::BatchImportEvaluatedAnnotationsResponse>
-ModelServiceClient::BatchImportEvaluatedAnnotations(
-    std::string const& parent,
-    std::vector<google::cloud::aiplatform::v1::EvaluatedAnnotation> const&
-        evaluated_annotations,
-    Options opts) {
+ModelServiceClient::BatchImportEvaluatedAnnotations(std::string const& parent, std::vector<google::cloud::aiplatform::v1::EvaluatedAnnotation> const& evaluated_annotations, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::BatchImportEvaluatedAnnotationsRequest request;
   request.set_parent(parent);
-  *request.mutable_evaluated_annotations() = {evaluated_annotations.begin(),
-                                              evaluated_annotations.end()};
+  *request.mutable_evaluated_annotations() = {evaluated_annotations.begin(), evaluated_annotations.end()};
   return connection_->BatchImportEvaluatedAnnotations(request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::BatchImportEvaluatedAnnotationsResponse>
-ModelServiceClient::BatchImportEvaluatedAnnotations(
-    google::cloud::aiplatform::v1::BatchImportEvaluatedAnnotationsRequest const&
-        request,
-    Options opts) {
+ModelServiceClient::BatchImportEvaluatedAnnotations(google::cloud::aiplatform::v1::BatchImportEvaluatedAnnotationsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->BatchImportEvaluatedAnnotations(request);
 }
@@ -470,16 +382,13 @@ ModelServiceClient::GetModelEvaluation(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::aiplatform::v1::ModelEvaluation>
-ModelServiceClient::GetModelEvaluation(
-    google::cloud::aiplatform::v1::GetModelEvaluationRequest const& request,
-    Options opts) {
+ModelServiceClient::GetModelEvaluation(google::cloud::aiplatform::v1::GetModelEvaluationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetModelEvaluation(request);
 }
 
 StreamRange<google::cloud::aiplatform::v1::ModelEvaluation>
-ModelServiceClient::ListModelEvaluations(std::string const& parent,
-                                         Options opts) {
+ModelServiceClient::ListModelEvaluations(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::ListModelEvaluationsRequest request;
   request.set_parent(parent);
@@ -487,16 +396,13 @@ ModelServiceClient::ListModelEvaluations(std::string const& parent,
 }
 
 StreamRange<google::cloud::aiplatform::v1::ModelEvaluation>
-ModelServiceClient::ListModelEvaluations(
-    google::cloud::aiplatform::v1::ListModelEvaluationsRequest request,
-    Options opts) {
+ModelServiceClient::ListModelEvaluations(google::cloud::aiplatform::v1::ListModelEvaluationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListModelEvaluations(std::move(request));
 }
 
 StatusOr<google::cloud::aiplatform::v1::ModelEvaluationSlice>
-ModelServiceClient::GetModelEvaluationSlice(std::string const& name,
-                                            Options opts) {
+ModelServiceClient::GetModelEvaluationSlice(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::GetModelEvaluationSliceRequest request;
   request.set_name(name);
@@ -504,17 +410,13 @@ ModelServiceClient::GetModelEvaluationSlice(std::string const& name,
 }
 
 StatusOr<google::cloud::aiplatform::v1::ModelEvaluationSlice>
-ModelServiceClient::GetModelEvaluationSlice(
-    google::cloud::aiplatform::v1::GetModelEvaluationSliceRequest const&
-        request,
-    Options opts) {
+ModelServiceClient::GetModelEvaluationSlice(google::cloud::aiplatform::v1::GetModelEvaluationSliceRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetModelEvaluationSlice(request);
 }
 
 StreamRange<google::cloud::aiplatform::v1::ModelEvaluationSlice>
-ModelServiceClient::ListModelEvaluationSlices(std::string const& parent,
-                                              Options opts) {
+ModelServiceClient::ListModelEvaluationSlices(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::ListModelEvaluationSlicesRequest request;
   request.set_parent(parent);
@@ -522,47 +424,43 @@ ModelServiceClient::ListModelEvaluationSlices(std::string const& parent,
 }
 
 StreamRange<google::cloud::aiplatform::v1::ModelEvaluationSlice>
-ModelServiceClient::ListModelEvaluationSlices(
-    google::cloud::aiplatform::v1::ListModelEvaluationSlicesRequest request,
-    Options opts) {
+ModelServiceClient::ListModelEvaluationSlices(google::cloud::aiplatform::v1::ListModelEvaluationSlicesRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListModelEvaluationSlices(std::move(request));
 }
 
 StreamRange<google::cloud::location::Location>
-ModelServiceClient::ListLocations(
-    google::cloud::location::ListLocationsRequest request, Options opts) {
+ModelServiceClient::ListLocations(google::cloud::location::ListLocationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListLocations(std::move(request));
 }
 
-StatusOr<google::cloud::location::Location> ModelServiceClient::GetLocation(
-    google::cloud::location::GetLocationRequest const& request, Options opts) {
+StatusOr<google::cloud::location::Location>
+ModelServiceClient::GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetLocation(request);
 }
 
-StatusOr<google::iam::v1::Policy> ModelServiceClient::SetIamPolicy(
-    google::iam::v1::SetIamPolicyRequest const& request, Options opts) {
+StatusOr<google::iam::v1::Policy>
+ModelServiceClient::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetIamPolicy(request);
 }
 
-StatusOr<google::iam::v1::Policy> ModelServiceClient::GetIamPolicy(
-    google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
+StatusOr<google::iam::v1::Policy>
+ModelServiceClient::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetIamPolicy(request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-ModelServiceClient::TestIamPermissions(
-    google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
+ModelServiceClient::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->TestIamPermissions(request);
 }
 
-StreamRange<google::longrunning::Operation> ModelServiceClient::ListOperations(
-    std::string const& name, std::string const& filter, Options opts) {
+StreamRange<google::longrunning::Operation>
+ModelServiceClient::ListOperations(std::string const& name, std::string const& filter, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::ListOperationsRequest request;
   request.set_name(name);
@@ -570,56 +468,56 @@ StreamRange<google::longrunning::Operation> ModelServiceClient::ListOperations(
   return connection_->ListOperations(request);
 }
 
-StreamRange<google::longrunning::Operation> ModelServiceClient::ListOperations(
-    google::longrunning::ListOperationsRequest request, Options opts) {
+StreamRange<google::longrunning::Operation>
+ModelServiceClient::ListOperations(google::longrunning::ListOperationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOperations(std::move(request));
 }
 
-StatusOr<google::longrunning::Operation> ModelServiceClient::GetOperation(
-    std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation>
+ModelServiceClient::GetOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
   return connection_->GetOperation(request);
 }
 
-StatusOr<google::longrunning::Operation> ModelServiceClient::GetOperation(
-    google::longrunning::GetOperationRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation>
+ModelServiceClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }
 
-Status ModelServiceClient::DeleteOperation(std::string const& name,
-                                           Options opts) {
+Status
+ModelServiceClient::DeleteOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::DeleteOperationRequest request;
   request.set_name(name);
   return connection_->DeleteOperation(request);
 }
 
-Status ModelServiceClient::DeleteOperation(
-    google::longrunning::DeleteOperationRequest const& request, Options opts) {
+Status
+ModelServiceClient::DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteOperation(request);
 }
 
-Status ModelServiceClient::CancelOperation(std::string const& name,
-                                           Options opts) {
+Status
+ModelServiceClient::CancelOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::CancelOperationRequest request;
   request.set_name(name);
   return connection_->CancelOperation(request);
 }
 
-Status ModelServiceClient::CancelOperation(
-    google::longrunning::CancelOperationRequest const& request, Options opts) {
+Status
+ModelServiceClient::CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelOperation(request);
 }
 
-StatusOr<google::longrunning::Operation> ModelServiceClient::WaitOperation(
-    google::longrunning::WaitOperationRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation>
+ModelServiceClient::WaitOperation(google::longrunning::WaitOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->WaitOperation(request);
 }

@@ -19,12 +19,12 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TELCOAUTOMATION_V1_TELCO_AUTOMATION_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TELCOAUTOMATION_V1_TELCO_AUTOMATION_CLIENT_H
 
-#include "google/cloud/telcoautomation/v1/telco_automation_connection.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
+#include "google/cloud/telcoautomation/v1/telco_automation_connection.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
 #include <map>
@@ -39,9 +39,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 /// TelcoAutomation Service manages the control plane cluster a.k.a.
 /// Orchestration Cluster (GKE cluster with config controller) of TNA. It also
-/// exposes blueprint APIs which manages the lifecycle of blueprints that
-/// control the infrastructure setup (e.g GDCE clusters) and deployment of
-/// network functions.
+/// exposes blueprint APIs which manages the lifecycle of blueprints that control
+/// the infrastructure setup (e.g GDCE clusters) and deployment of network
+/// functions.
 ///
 /// @par Equality
 ///
@@ -68,8 +68,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class TelcoAutomationClient {
  public:
-  explicit TelcoAutomationClient(
-      std::shared_ptr<TelcoAutomationConnection> connection, Options opts = {});
+  explicit TelcoAutomationClient(std::shared_ptr<TelcoAutomationConnection> connection, Options opts = {});
   ~TelcoAutomationClient();
 
   ///@{
@@ -82,12 +81,10 @@ class TelcoAutomationClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(TelcoAutomationClient const& a,
-                         TelcoAutomationClient const& b) {
+  friend bool operator==(TelcoAutomationClient const& a, TelcoAutomationClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(TelcoAutomationClient const& a,
-                         TelcoAutomationClient const& b) {
+  friend bool operator!=(TelcoAutomationClient const& a, TelcoAutomationClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -163,10 +160,7 @@ class TelcoAutomationClient {
   ///
   // clang-format on
   StreamRange<google::cloud::telcoautomation::v1::OrchestrationCluster>
-  ListOrchestrationClusters(
-      google::cloud::telcoautomation::v1::ListOrchestrationClustersRequest
-          request,
-      Options opts = {});
+  ListOrchestrationClusters(google::cloud::telcoautomation::v1::ListOrchestrationClustersRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -221,10 +215,7 @@ class TelcoAutomationClient {
   ///
   // clang-format on
   StatusOr<google::cloud::telcoautomation::v1::OrchestrationCluster>
-  GetOrchestrationCluster(
-      google::cloud::telcoautomation::v1::GetOrchestrationClusterRequest const&
-          request,
-      Options opts = {});
+  GetOrchestrationCluster(google::cloud::telcoautomation::v1::GetOrchestrationClusterRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -260,11 +251,7 @@ class TelcoAutomationClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::telcoautomation::v1::OrchestrationCluster>>
-  CreateOrchestrationCluster(
-      std::string const& parent,
-      google::cloud::telcoautomation::v1::OrchestrationCluster const&
-          orchestration_cluster,
-      std::string const& orchestration_cluster_id, Options opts = {});
+  CreateOrchestrationCluster(std::string const& parent, google::cloud::telcoautomation::v1::OrchestrationCluster const& orchestration_cluster, std::string const& orchestration_cluster_id, Options opts = {});
 
   // clang-format off
   ///
@@ -277,11 +264,8 @@ class TelcoAutomationClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateOrchestrationCluster(
-      NoAwaitTag, std::string const& parent,
-      google::cloud::telcoautomation::v1::OrchestrationCluster const&
-          orchestration_cluster,
-      std::string const& orchestration_cluster_id, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateOrchestrationCluster(NoAwaitTag, std::string const& parent, google::cloud::telcoautomation::v1::OrchestrationCluster const& orchestration_cluster, std::string const& orchestration_cluster_id, Options opts = {});
 
   // clang-format off
   ///
@@ -318,10 +302,7 @@ class TelcoAutomationClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::telcoautomation::v1::OrchestrationCluster>>
-  CreateOrchestrationCluster(
-      google::cloud::telcoautomation::v1::
-          CreateOrchestrationClusterRequest const& request,
-      Options opts = {});
+  CreateOrchestrationCluster(google::cloud::telcoautomation::v1::CreateOrchestrationClusterRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -334,11 +315,8 @@ class TelcoAutomationClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateOrchestrationCluster(
-      NoAwaitTag,
-      google::cloud::telcoautomation::v1::
-          CreateOrchestrationClusterRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateOrchestrationCluster(NoAwaitTag, google::cloud::telcoautomation::v1::CreateOrchestrationClusterRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -350,8 +328,7 @@ class TelcoAutomationClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::telcoautomation::v1::OrchestrationCluster>>
-  CreateOrchestrationCluster(google::longrunning::Operation const& operation,
-                             Options opts = {});
+  CreateOrchestrationCluster(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -396,8 +373,8 @@ class TelcoAutomationClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteOrchestrationCluster(
-      NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteOrchestrationCluster(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -434,10 +411,7 @@ class TelcoAutomationClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::telcoautomation::v1::OperationMetadata>>
-  DeleteOrchestrationCluster(
-      google::cloud::telcoautomation::v1::
-          DeleteOrchestrationClusterRequest const& request,
-      Options opts = {});
+  DeleteOrchestrationCluster(google::cloud::telcoautomation::v1::DeleteOrchestrationClusterRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -450,11 +424,8 @@ class TelcoAutomationClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteOrchestrationCluster(
-      NoAwaitTag,
-      google::cloud::telcoautomation::v1::
-          DeleteOrchestrationClusterRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteOrchestrationCluster(NoAwaitTag, google::cloud::telcoautomation::v1::DeleteOrchestrationClusterRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -466,8 +437,7 @@ class TelcoAutomationClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::telcoautomation::v1::OperationMetadata>>
-  DeleteOrchestrationCluster(google::longrunning::Operation const& operation,
-                             Options opts = {});
+  DeleteOrchestrationCluster(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -500,8 +470,8 @@ class TelcoAutomationClient {
   /// [google.cloud.telcoautomation.v1.ListEdgeSlmsRequest]: @googleapis_reference_link{google/cloud/telcoautomation/v1/telcoautomation.proto#L1012}
   ///
   // clang-format on
-  StreamRange<google::cloud::telcoautomation::v1::EdgeSlm> ListEdgeSlms(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::telcoautomation::v1::EdgeSlm>
+  ListEdgeSlms(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -539,9 +509,8 @@ class TelcoAutomationClient {
   /// [google.cloud.telcoautomation.v1.ListEdgeSlmsRequest]: @googleapis_reference_link{google/cloud/telcoautomation/v1/telcoautomation.proto#L1012}
   ///
   // clang-format on
-  StreamRange<google::cloud::telcoautomation::v1::EdgeSlm> ListEdgeSlms(
-      google::cloud::telcoautomation::v1::ListEdgeSlmsRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::telcoautomation::v1::EdgeSlm>
+  ListEdgeSlms(google::cloud::telcoautomation::v1::ListEdgeSlmsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -565,8 +534,8 @@ class TelcoAutomationClient {
   /// [google.cloud.telcoautomation.v1.GetEdgeSlmRequest]: @googleapis_reference_link{google/cloud/telcoautomation/v1/telcoautomation.proto#L1048}
   ///
   // clang-format on
-  StatusOr<google::cloud::telcoautomation::v1::EdgeSlm> GetEdgeSlm(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::telcoautomation::v1::EdgeSlm>
+  GetEdgeSlm(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -595,9 +564,8 @@ class TelcoAutomationClient {
   /// [google.cloud.telcoautomation.v1.GetEdgeSlmRequest]: @googleapis_reference_link{google/cloud/telcoautomation/v1/telcoautomation.proto#L1048}
   ///
   // clang-format on
-  StatusOr<google::cloud::telcoautomation::v1::EdgeSlm> GetEdgeSlm(
-      google::cloud::telcoautomation::v1::GetEdgeSlmRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::telcoautomation::v1::EdgeSlm>
+  GetEdgeSlm(google::cloud::telcoautomation::v1::GetEdgeSlmRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -632,10 +600,8 @@ class TelcoAutomationClient {
   /// [google.cloud.telcoautomation.v1.EdgeSlm]: @googleapis_reference_link{google/cloud/telcoautomation/v1/telcoautomation.proto#L546}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::telcoautomation::v1::EdgeSlm>> CreateEdgeSlm(
-      std::string const& parent,
-      google::cloud::telcoautomation::v1::EdgeSlm const& edge_slm,
-      std::string const& edge_slm_id, Options opts = {});
+  future<StatusOr<google::cloud::telcoautomation::v1::EdgeSlm>>
+  CreateEdgeSlm(std::string const& parent, google::cloud::telcoautomation::v1::EdgeSlm const& edge_slm, std::string const& edge_slm_id, Options opts = {});
 
   // clang-format off
   ///
@@ -648,10 +614,8 @@ class TelcoAutomationClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateEdgeSlm(
-      NoAwaitTag, std::string const& parent,
-      google::cloud::telcoautomation::v1::EdgeSlm const& edge_slm,
-      std::string const& edge_slm_id, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateEdgeSlm(NoAwaitTag, std::string const& parent, google::cloud::telcoautomation::v1::EdgeSlm const& edge_slm, std::string const& edge_slm_id, Options opts = {});
 
   // clang-format off
   ///
@@ -687,9 +651,8 @@ class TelcoAutomationClient {
   /// [google.cloud.telcoautomation.v1.EdgeSlm]: @googleapis_reference_link{google/cloud/telcoautomation/v1/telcoautomation.proto#L546}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::telcoautomation::v1::EdgeSlm>> CreateEdgeSlm(
-      google::cloud::telcoautomation::v1::CreateEdgeSlmRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::telcoautomation::v1::EdgeSlm>>
+  CreateEdgeSlm(google::cloud::telcoautomation::v1::CreateEdgeSlmRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -702,10 +665,8 @@ class TelcoAutomationClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateEdgeSlm(
-      NoAwaitTag,
-      google::cloud::telcoautomation::v1::CreateEdgeSlmRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateEdgeSlm(NoAwaitTag, google::cloud::telcoautomation::v1::CreateEdgeSlmRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -716,8 +677,8 @@ class TelcoAutomationClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::telcoautomation::v1::EdgeSlm>> CreateEdgeSlm(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::telcoautomation::v1::EdgeSlm>>
+  CreateEdgeSlm(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -762,8 +723,8 @@ class TelcoAutomationClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteEdgeSlm(
-      NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteEdgeSlm(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -800,9 +761,7 @@ class TelcoAutomationClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::telcoautomation::v1::OperationMetadata>>
-  DeleteEdgeSlm(
-      google::cloud::telcoautomation::v1::DeleteEdgeSlmRequest const& request,
-      Options opts = {});
+  DeleteEdgeSlm(google::cloud::telcoautomation::v1::DeleteEdgeSlmRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -815,10 +774,8 @@ class TelcoAutomationClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteEdgeSlm(
-      NoAwaitTag,
-      google::cloud::telcoautomation::v1::DeleteEdgeSlmRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteEdgeSlm(NoAwaitTag, google::cloud::telcoautomation::v1::DeleteEdgeSlmRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -830,8 +787,7 @@ class TelcoAutomationClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::telcoautomation::v1::OperationMetadata>>
-  DeleteEdgeSlm(google::longrunning::Operation const& operation,
-                Options opts = {});
+  DeleteEdgeSlm(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -859,10 +815,8 @@ class TelcoAutomationClient {
   /// [google.cloud.telcoautomation.v1.CreateBlueprintRequest]: @googleapis_reference_link{google/cloud/telcoautomation/v1/telcoautomation.proto#L1119}
   ///
   // clang-format on
-  StatusOr<google::cloud::telcoautomation::v1::Blueprint> CreateBlueprint(
-      std::string const& parent,
-      google::cloud::telcoautomation::v1::Blueprint const& blueprint,
-      std::string const& blueprint_id, Options opts = {});
+  StatusOr<google::cloud::telcoautomation::v1::Blueprint>
+  CreateBlueprint(std::string const& parent, google::cloud::telcoautomation::v1::Blueprint const& blueprint, std::string const& blueprint_id, Options opts = {});
 
   // clang-format off
   ///
@@ -891,9 +845,8 @@ class TelcoAutomationClient {
   /// [google.cloud.telcoautomation.v1.CreateBlueprintRequest]: @googleapis_reference_link{google/cloud/telcoautomation/v1/telcoautomation.proto#L1119}
   ///
   // clang-format on
-  StatusOr<google::cloud::telcoautomation::v1::Blueprint> CreateBlueprint(
-      google::cloud::telcoautomation::v1::CreateBlueprintRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::telcoautomation::v1::Blueprint>
+  CreateBlueprint(google::cloud::telcoautomation::v1::CreateBlueprintRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -919,9 +872,8 @@ class TelcoAutomationClient {
   /// [google.cloud.telcoautomation.v1.UpdateBlueprintRequest]: @googleapis_reference_link{google/cloud/telcoautomation/v1/telcoautomation.proto#L1138}
   ///
   // clang-format on
-  StatusOr<google::cloud::telcoautomation::v1::Blueprint> UpdateBlueprint(
-      google::cloud::telcoautomation::v1::Blueprint const& blueprint,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::cloud::telcoautomation::v1::Blueprint>
+  UpdateBlueprint(google::cloud::telcoautomation::v1::Blueprint const& blueprint, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -950,9 +902,8 @@ class TelcoAutomationClient {
   /// [google.cloud.telcoautomation.v1.UpdateBlueprintRequest]: @googleapis_reference_link{google/cloud/telcoautomation/v1/telcoautomation.proto#L1138}
   ///
   // clang-format on
-  StatusOr<google::cloud::telcoautomation::v1::Blueprint> UpdateBlueprint(
-      google::cloud::telcoautomation::v1::UpdateBlueprintRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::telcoautomation::v1::Blueprint>
+  UpdateBlueprint(google::cloud::telcoautomation::v1::UpdateBlueprintRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -980,8 +931,8 @@ class TelcoAutomationClient {
   /// [google.cloud.telcoautomation.v1.GetBlueprintRequest]: @googleapis_reference_link{google/cloud/telcoautomation/v1/telcoautomation.proto#L1149}
   ///
   // clang-format on
-  StatusOr<google::cloud::telcoautomation::v1::Blueprint> GetBlueprint(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::telcoautomation::v1::Blueprint>
+  GetBlueprint(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1010,9 +961,8 @@ class TelcoAutomationClient {
   /// [google.cloud.telcoautomation.v1.GetBlueprintRequest]: @googleapis_reference_link{google/cloud/telcoautomation/v1/telcoautomation.proto#L1149}
   ///
   // clang-format on
-  StatusOr<google::cloud::telcoautomation::v1::Blueprint> GetBlueprint(
-      google::cloud::telcoautomation::v1::GetBlueprintRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::telcoautomation::v1::Blueprint>
+  GetBlueprint(google::cloud::telcoautomation::v1::GetBlueprintRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1036,7 +986,8 @@ class TelcoAutomationClient {
   /// [google.cloud.telcoautomation.v1.DeleteBlueprintRequest]: @googleapis_reference_link{google/cloud/telcoautomation/v1/telcoautomation.proto#L1168}
   ///
   // clang-format on
-  Status DeleteBlueprint(std::string const& name, Options opts = {});
+  Status
+  DeleteBlueprint(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1062,9 +1013,8 @@ class TelcoAutomationClient {
   /// [google.cloud.telcoautomation.v1.DeleteBlueprintRequest]: @googleapis_reference_link{google/cloud/telcoautomation/v1/telcoautomation.proto#L1168}
   ///
   // clang-format on
-  Status DeleteBlueprint(
-      google::cloud::telcoautomation::v1::DeleteBlueprintRequest const& request,
-      Options opts = {});
+  Status
+  DeleteBlueprint(google::cloud::telcoautomation::v1::DeleteBlueprintRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1099,8 +1049,8 @@ class TelcoAutomationClient {
   /// [google.cloud.telcoautomation.v1.ListBlueprintsRequest]: @googleapis_reference_link{google/cloud/telcoautomation/v1/telcoautomation.proto#L1182}
   ///
   // clang-format on
-  StreamRange<google::cloud::telcoautomation::v1::Blueprint> ListBlueprints(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::telcoautomation::v1::Blueprint>
+  ListBlueprints(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -1138,9 +1088,8 @@ class TelcoAutomationClient {
   /// [google.cloud.telcoautomation.v1.ListBlueprintsRequest]: @googleapis_reference_link{google/cloud/telcoautomation/v1/telcoautomation.proto#L1182}
   ///
   // clang-format on
-  StreamRange<google::cloud::telcoautomation::v1::Blueprint> ListBlueprints(
-      google::cloud::telcoautomation::v1::ListBlueprintsRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::telcoautomation::v1::Blueprint>
+  ListBlueprints(google::cloud::telcoautomation::v1::ListBlueprintsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1165,8 +1114,8 @@ class TelcoAutomationClient {
   /// [google.cloud.telcoautomation.v1.Blueprint]: @googleapis_reference_link{google/cloud/telcoautomation/v1/telcoautomation.proto#L631}
   ///
   // clang-format on
-  StatusOr<google::cloud::telcoautomation::v1::Blueprint> ApproveBlueprint(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::telcoautomation::v1::Blueprint>
+  ApproveBlueprint(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1195,10 +1144,8 @@ class TelcoAutomationClient {
   /// [google.cloud.telcoautomation.v1.Blueprint]: @googleapis_reference_link{google/cloud/telcoautomation/v1/telcoautomation.proto#L631}
   ///
   // clang-format on
-  StatusOr<google::cloud::telcoautomation::v1::Blueprint> ApproveBlueprint(
-      google::cloud::telcoautomation::v1::ApproveBlueprintRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::cloud::telcoautomation::v1::Blueprint>
+  ApproveBlueprint(google::cloud::telcoautomation::v1::ApproveBlueprintRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1222,8 +1169,8 @@ class TelcoAutomationClient {
   /// [google.cloud.telcoautomation.v1.ProposeBlueprintRequest]: @googleapis_reference_link{google/cloud/telcoautomation/v1/telcoautomation.proto#L1229}
   ///
   // clang-format on
-  StatusOr<google::cloud::telcoautomation::v1::Blueprint> ProposeBlueprint(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::telcoautomation::v1::Blueprint>
+  ProposeBlueprint(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1252,10 +1199,8 @@ class TelcoAutomationClient {
   /// [google.cloud.telcoautomation.v1.ProposeBlueprintRequest]: @googleapis_reference_link{google/cloud/telcoautomation/v1/telcoautomation.proto#L1229}
   ///
   // clang-format on
-  StatusOr<google::cloud::telcoautomation::v1::Blueprint> ProposeBlueprint(
-      google::cloud::telcoautomation::v1::ProposeBlueprintRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::cloud::telcoautomation::v1::Blueprint>
+  ProposeBlueprint(google::cloud::telcoautomation::v1::ProposeBlueprintRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1279,8 +1224,8 @@ class TelcoAutomationClient {
   /// [google.cloud.telcoautomation.v1.RejectBlueprintRequest]: @googleapis_reference_link{google/cloud/telcoautomation/v1/telcoautomation.proto#L1240}
   ///
   // clang-format on
-  StatusOr<google::cloud::telcoautomation::v1::Blueprint> RejectBlueprint(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::telcoautomation::v1::Blueprint>
+  RejectBlueprint(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1309,9 +1254,8 @@ class TelcoAutomationClient {
   /// [google.cloud.telcoautomation.v1.RejectBlueprintRequest]: @googleapis_reference_link{google/cloud/telcoautomation/v1/telcoautomation.proto#L1240}
   ///
   // clang-format on
-  StatusOr<google::cloud::telcoautomation::v1::Blueprint> RejectBlueprint(
-      google::cloud::telcoautomation::v1::RejectBlueprintRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::telcoautomation::v1::Blueprint>
+  RejectBlueprint(google::cloud::telcoautomation::v1::RejectBlueprintRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1384,9 +1328,7 @@ class TelcoAutomationClient {
   ///
   // clang-format on
   StreamRange<google::cloud::telcoautomation::v1::Blueprint>
-  ListBlueprintRevisions(
-      google::cloud::telcoautomation::v1::ListBlueprintRevisionsRequest request,
-      Options opts = {});
+  ListBlueprintRevisions(google::cloud::telcoautomation::v1::ListBlueprintRevisionsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1429,8 +1371,7 @@ class TelcoAutomationClient {
   ///
   // clang-format on
   StreamRange<google::cloud::telcoautomation::v1::Blueprint>
-  SearchBlueprintRevisions(std::string const& parent, std::string const& query,
-                           Options opts = {});
+  SearchBlueprintRevisions(std::string const& parent, std::string const& query, Options opts = {});
 
   // clang-format off
   ///
@@ -1469,10 +1410,7 @@ class TelcoAutomationClient {
   ///
   // clang-format on
   StreamRange<google::cloud::telcoautomation::v1::Blueprint>
-  SearchBlueprintRevisions(
-      google::cloud::telcoautomation::v1::SearchBlueprintRevisionsRequest
-          request,
-      Options opts = {});
+  SearchBlueprintRevisions(google::cloud::telcoautomation::v1::SearchBlueprintRevisionsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1516,8 +1454,7 @@ class TelcoAutomationClient {
   ///
   // clang-format on
   StreamRange<google::cloud::telcoautomation::v1::Deployment>
-  SearchDeploymentRevisions(std::string const& parent, std::string const& query,
-                            Options opts = {});
+  SearchDeploymentRevisions(std::string const& parent, std::string const& query, Options opts = {});
 
   // clang-format off
   ///
@@ -1556,10 +1493,7 @@ class TelcoAutomationClient {
   ///
   // clang-format on
   StreamRange<google::cloud::telcoautomation::v1::Deployment>
-  SearchDeploymentRevisions(
-      google::cloud::telcoautomation::v1::SearchDeploymentRevisionsRequest
-          request,
-      Options opts = {});
+  SearchDeploymentRevisions(google::cloud::telcoautomation::v1::SearchDeploymentRevisionsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1618,10 +1552,7 @@ class TelcoAutomationClient {
   ///
   // clang-format on
   StatusOr<google::cloud::telcoautomation::v1::DiscardBlueprintChangesResponse>
-  DiscardBlueprintChanges(
-      google::cloud::telcoautomation::v1::DiscardBlueprintChangesRequest const&
-          request,
-      Options opts = {});
+  DiscardBlueprintChanges(google::cloud::telcoautomation::v1::DiscardBlueprintChangesRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1698,9 +1629,7 @@ class TelcoAutomationClient {
   ///
   // clang-format on
   StreamRange<google::cloud::telcoautomation::v1::PublicBlueprint>
-  ListPublicBlueprints(
-      google::cloud::telcoautomation::v1::ListPublicBlueprintsRequest request,
-      Options opts = {});
+  ListPublicBlueprints(google::cloud::telcoautomation::v1::ListPublicBlueprintsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1755,10 +1684,7 @@ class TelcoAutomationClient {
   ///
   // clang-format on
   StatusOr<google::cloud::telcoautomation::v1::PublicBlueprint>
-  GetPublicBlueprint(
-      google::cloud::telcoautomation::v1::GetPublicBlueprintRequest const&
-          request,
-      Options opts = {});
+  GetPublicBlueprint(google::cloud::telcoautomation::v1::GetPublicBlueprintRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1786,10 +1712,8 @@ class TelcoAutomationClient {
   /// [google.cloud.telcoautomation.v1.Deployment]: @googleapis_reference_link{google/cloud/telcoautomation/v1/telcoautomation.proto#L762}
   ///
   // clang-format on
-  StatusOr<google::cloud::telcoautomation::v1::Deployment> CreateDeployment(
-      std::string const& parent,
-      google::cloud::telcoautomation::v1::Deployment const& deployment,
-      std::string const& deployment_id, Options opts = {});
+  StatusOr<google::cloud::telcoautomation::v1::Deployment>
+  CreateDeployment(std::string const& parent, google::cloud::telcoautomation::v1::Deployment const& deployment, std::string const& deployment_id, Options opts = {});
 
   // clang-format off
   ///
@@ -1818,10 +1742,8 @@ class TelcoAutomationClient {
   /// [google.cloud.telcoautomation.v1.Deployment]: @googleapis_reference_link{google/cloud/telcoautomation/v1/telcoautomation.proto#L762}
   ///
   // clang-format on
-  StatusOr<google::cloud::telcoautomation::v1::Deployment> CreateDeployment(
-      google::cloud::telcoautomation::v1::CreateDeploymentRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::cloud::telcoautomation::v1::Deployment>
+  CreateDeployment(google::cloud::telcoautomation::v1::CreateDeploymentRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1847,9 +1769,8 @@ class TelcoAutomationClient {
   /// [google.cloud.telcoautomation.v1.UpdateDeploymentRequest]: @googleapis_reference_link{google/cloud/telcoautomation/v1/telcoautomation.proto#L1393}
   ///
   // clang-format on
-  StatusOr<google::cloud::telcoautomation::v1::Deployment> UpdateDeployment(
-      google::cloud::telcoautomation::v1::Deployment const& deployment,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::cloud::telcoautomation::v1::Deployment>
+  UpdateDeployment(google::cloud::telcoautomation::v1::Deployment const& deployment, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -1878,10 +1799,8 @@ class TelcoAutomationClient {
   /// [google.cloud.telcoautomation.v1.UpdateDeploymentRequest]: @googleapis_reference_link{google/cloud/telcoautomation/v1/telcoautomation.proto#L1393}
   ///
   // clang-format on
-  StatusOr<google::cloud::telcoautomation::v1::Deployment> UpdateDeployment(
-      google::cloud::telcoautomation::v1::UpdateDeploymentRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::cloud::telcoautomation::v1::Deployment>
+  UpdateDeployment(google::cloud::telcoautomation::v1::UpdateDeploymentRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1910,8 +1829,8 @@ class TelcoAutomationClient {
   /// [google.cloud.telcoautomation.v1.GetDeploymentRequest]: @googleapis_reference_link{google/cloud/telcoautomation/v1/telcoautomation.proto#L1404}
   ///
   // clang-format on
-  StatusOr<google::cloud::telcoautomation::v1::Deployment> GetDeployment(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::telcoautomation::v1::Deployment>
+  GetDeployment(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1940,9 +1859,8 @@ class TelcoAutomationClient {
   /// [google.cloud.telcoautomation.v1.GetDeploymentRequest]: @googleapis_reference_link{google/cloud/telcoautomation/v1/telcoautomation.proto#L1404}
   ///
   // clang-format on
-  StatusOr<google::cloud::telcoautomation::v1::Deployment> GetDeployment(
-      google::cloud::telcoautomation::v1::GetDeploymentRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::telcoautomation::v1::Deployment>
+  GetDeployment(google::cloud::telcoautomation::v1::GetDeploymentRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1964,7 +1882,8 @@ class TelcoAutomationClient {
   /// [google.cloud.telcoautomation.v1.RemoveDeploymentRequest]: @googleapis_reference_link{google/cloud/telcoautomation/v1/telcoautomation.proto#L1424}
   ///
   // clang-format on
-  Status RemoveDeployment(std::string const& name, Options opts = {});
+  Status
+  RemoveDeployment(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1991,10 +1910,8 @@ class TelcoAutomationClient {
   /// [google.cloud.telcoautomation.v1.RemoveDeploymentRequest]: @googleapis_reference_link{google/cloud/telcoautomation/v1/telcoautomation.proto#L1424}
   ///
   // clang-format on
-  Status RemoveDeployment(
-      google::cloud::telcoautomation::v1::RemoveDeploymentRequest const&
-          request,
-      Options opts = {});
+  Status
+  RemoveDeployment(google::cloud::telcoautomation::v1::RemoveDeploymentRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2029,8 +1946,8 @@ class TelcoAutomationClient {
   /// [google.cloud.telcoautomation.v1.ListDeploymentsRequest]: @googleapis_reference_link{google/cloud/telcoautomation/v1/telcoautomation.proto#L1435}
   ///
   // clang-format on
-  StreamRange<google::cloud::telcoautomation::v1::Deployment> ListDeployments(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::telcoautomation::v1::Deployment>
+  ListDeployments(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -2068,9 +1985,8 @@ class TelcoAutomationClient {
   /// [google.cloud.telcoautomation.v1.ListDeploymentsRequest]: @googleapis_reference_link{google/cloud/telcoautomation/v1/telcoautomation.proto#L1435}
   ///
   // clang-format on
-  StreamRange<google::cloud::telcoautomation::v1::Deployment> ListDeployments(
-      google::cloud::telcoautomation::v1::ListDeploymentsRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::telcoautomation::v1::Deployment>
+  ListDeployments(google::cloud::telcoautomation::v1::ListDeploymentsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -2143,10 +2059,7 @@ class TelcoAutomationClient {
   ///
   // clang-format on
   StreamRange<google::cloud::telcoautomation::v1::Deployment>
-  ListDeploymentRevisions(
-      google::cloud::telcoautomation::v1::ListDeploymentRevisionsRequest
-          request,
-      Options opts = {});
+  ListDeploymentRevisions(google::cloud::telcoautomation::v1::ListDeploymentRevisionsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -2205,10 +2118,7 @@ class TelcoAutomationClient {
   ///
   // clang-format on
   StatusOr<google::cloud::telcoautomation::v1::DiscardDeploymentChangesResponse>
-  DiscardDeploymentChanges(
-      google::cloud::telcoautomation::v1::DiscardDeploymentChangesRequest const&
-          request,
-      Options opts = {});
+  DiscardDeploymentChanges(google::cloud::telcoautomation::v1::DiscardDeploymentChangesRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2232,8 +2142,8 @@ class TelcoAutomationClient {
   /// [google.cloud.telcoautomation.v1.Deployment]: @googleapis_reference_link{google/cloud/telcoautomation/v1/telcoautomation.proto#L762}
   ///
   // clang-format on
-  StatusOr<google::cloud::telcoautomation::v1::Deployment> ApplyDeployment(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::telcoautomation::v1::Deployment>
+  ApplyDeployment(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2262,9 +2172,8 @@ class TelcoAutomationClient {
   /// [google.cloud.telcoautomation.v1.Deployment]: @googleapis_reference_link{google/cloud/telcoautomation/v1/telcoautomation.proto#L762}
   ///
   // clang-format on
-  StatusOr<google::cloud::telcoautomation::v1::Deployment> ApplyDeployment(
-      google::cloud::telcoautomation::v1::ApplyDeploymentRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::telcoautomation::v1::Deployment>
+  ApplyDeployment(google::cloud::telcoautomation::v1::ApplyDeploymentRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2319,10 +2228,7 @@ class TelcoAutomationClient {
   ///
   // clang-format on
   StatusOr<google::cloud::telcoautomation::v1::ComputeDeploymentStatusResponse>
-  ComputeDeploymentStatus(
-      google::cloud::telcoautomation::v1::ComputeDeploymentStatusRequest const&
-          request,
-      Options opts = {});
+  ComputeDeploymentStatus(google::cloud::telcoautomation::v1::ComputeDeploymentStatusRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2348,9 +2254,8 @@ class TelcoAutomationClient {
   /// [google.cloud.telcoautomation.v1.RollbackDeploymentRequest]: @googleapis_reference_link{google/cloud/telcoautomation/v1/telcoautomation.proto#L1590}
   ///
   // clang-format on
-  StatusOr<google::cloud::telcoautomation::v1::Deployment> RollbackDeployment(
-      std::string const& name, std::string const& revision_id,
-      Options opts = {});
+  StatusOr<google::cloud::telcoautomation::v1::Deployment>
+  RollbackDeployment(std::string const& name, std::string const& revision_id, Options opts = {});
 
   // clang-format off
   ///
@@ -2380,10 +2285,8 @@ class TelcoAutomationClient {
   /// [google.cloud.telcoautomation.v1.RollbackDeploymentRequest]: @googleapis_reference_link{google/cloud/telcoautomation/v1/telcoautomation.proto#L1590}
   ///
   // clang-format on
-  StatusOr<google::cloud::telcoautomation::v1::Deployment> RollbackDeployment(
-      google::cloud::telcoautomation::v1::RollbackDeploymentRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::cloud::telcoautomation::v1::Deployment>
+  RollbackDeployment(google::cloud::telcoautomation::v1::RollbackDeploymentRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2438,10 +2341,7 @@ class TelcoAutomationClient {
   ///
   // clang-format on
   StatusOr<google::cloud::telcoautomation::v1::HydratedDeployment>
-  GetHydratedDeployment(
-      google::cloud::telcoautomation::v1::GetHydratedDeploymentRequest const&
-          request,
-      Options opts = {});
+  GetHydratedDeployment(google::cloud::telcoautomation::v1::GetHydratedDeploymentRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2514,10 +2414,7 @@ class TelcoAutomationClient {
   ///
   // clang-format on
   StreamRange<google::cloud::telcoautomation::v1::HydratedDeployment>
-  ListHydratedDeployments(
-      google::cloud::telcoautomation::v1::ListHydratedDeploymentsRequest
-          request,
-      Options opts = {});
+  ListHydratedDeployments(google::cloud::telcoautomation::v1::ListHydratedDeploymentsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -2544,10 +2441,7 @@ class TelcoAutomationClient {
   ///
   // clang-format on
   StatusOr<google::cloud::telcoautomation::v1::HydratedDeployment>
-  UpdateHydratedDeployment(
-      google::cloud::telcoautomation::v1::HydratedDeployment const&
-          hydrated_deployment,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  UpdateHydratedDeployment(google::cloud::telcoautomation::v1::HydratedDeployment const& hydrated_deployment, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -2577,10 +2471,7 @@ class TelcoAutomationClient {
   ///
   // clang-format on
   StatusOr<google::cloud::telcoautomation::v1::HydratedDeployment>
-  UpdateHydratedDeployment(
-      google::cloud::telcoautomation::v1::UpdateHydratedDeploymentRequest const&
-          request,
-      Options opts = {});
+  UpdateHydratedDeployment(google::cloud::telcoautomation::v1::UpdateHydratedDeploymentRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2635,10 +2526,7 @@ class TelcoAutomationClient {
   ///
   // clang-format on
   StatusOr<google::cloud::telcoautomation::v1::HydratedDeployment>
-  ApplyHydratedDeployment(
-      google::cloud::telcoautomation::v1::ApplyHydratedDeploymentRequest const&
-          request,
-      Options opts = {});
+  ApplyHydratedDeployment(google::cloud::telcoautomation::v1::ApplyHydratedDeploymentRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2676,8 +2564,8 @@ class TelcoAutomationClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request, Options opts = {});
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -2706,9 +2594,8 @@ class TelcoAutomationClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2743,8 +2630,8 @@ class TelcoAutomationClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -2783,8 +2670,8 @@ class TelcoAutomationClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -2810,8 +2697,8 @@ class TelcoAutomationClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2842,9 +2729,8 @@ class TelcoAutomationClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2868,7 +2754,8 @@ class TelcoAutomationClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status DeleteOperation(std::string const& name, Options opts = {});
+  Status
+  DeleteOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2897,9 +2784,8 @@ class TelcoAutomationClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request,
-      Options opts = {});
+  Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2933,7 +2819,8 @@ class TelcoAutomationClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(std::string const& name, Options opts = {});
+  Status
+  CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2972,9 +2859,8 @@ class TelcoAutomationClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request,
-      Options opts = {});
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<TelcoAutomationConnection> connection_;

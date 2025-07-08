@@ -36,30 +36,30 @@ class JobServiceConnectionIdempotencyPolicy {
   /// Create a new copy of this object.
   virtual std::unique_ptr<JobServiceConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency CancelJob(
-      google::cloud::bigquery::v2::CancelJobRequest const& request);
+  virtual google::cloud::Idempotency
+  CancelJob(google::cloud::bigquery::v2::CancelJobRequest const& request);
 
-  virtual google::cloud::Idempotency GetJob(
-      google::cloud::bigquery::v2::GetJobRequest const& request);
+  virtual google::cloud::Idempotency
+  GetJob(google::cloud::bigquery::v2::GetJobRequest const& request);
 
-  virtual google::cloud::Idempotency InsertJob(
-      google::cloud::bigquery::v2::InsertJobRequest const& request);
+  virtual google::cloud::Idempotency
+  InsertJob(google::cloud::bigquery::v2::InsertJobRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteJob(
-      google::cloud::bigquery::v2::DeleteJobRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteJob(google::cloud::bigquery::v2::DeleteJobRequest const& request);
 
-  virtual google::cloud::Idempotency ListJobs(
-      google::cloud::bigquery::v2::ListJobsRequest request);
+  virtual google::cloud::Idempotency
+  ListJobs(google::cloud::bigquery::v2::ListJobsRequest request);
 
-  virtual google::cloud::Idempotency GetQueryResults(
-      google::cloud::bigquery::v2::GetQueryResultsRequest const& request);
+  virtual google::cloud::Idempotency
+  GetQueryResults(google::cloud::bigquery::v2::GetQueryResultsRequest const& request);
 
-  virtual google::cloud::Idempotency Query(
-      google::cloud::bigquery::v2::PostQueryRequest const& request);
+  virtual google::cloud::Idempotency
+  Query(google::cloud::bigquery::v2::PostQueryRequest const& request);
 };
 
 std::unique_ptr<JobServiceConnectionIdempotencyPolicy>
-MakeDefaultJobServiceConnectionIdempotencyPolicy();
+    MakeDefaultJobServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquerycontrol_v2

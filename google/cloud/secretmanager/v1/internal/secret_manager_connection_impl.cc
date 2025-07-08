@@ -17,12 +17,12 @@
 // source: google/cloud/secretmanager/v1/service.proto
 
 #include "google/cloud/secretmanager/v1/internal/secret_manager_connection_impl.h"
-#include "google/cloud/secretmanager/v1/internal/secret_manager_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
+#include "google/cloud/secretmanager/v1/internal/secret_manager_option_defaults.h"
 #include <memory>
 #include <utility>
 
@@ -32,67 +32,54 @@ namespace secretmanager_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<secretmanager_v1::SecretManagerServiceRetryPolicy> retry_policy(
-    Options const& options) {
-  return options.get<secretmanager_v1::SecretManagerServiceRetryPolicyOption>()
-      ->clone();
+std::unique_ptr<secretmanager_v1::SecretManagerServiceRetryPolicy>
+retry_policy(Options const& options) {
+  return options.get<secretmanager_v1::SecretManagerServiceRetryPolicyOption>()->clone();
 }
 
-std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-  return options
-      .get<secretmanager_v1::SecretManagerServiceBackoffPolicyOption>()
-      ->clone();
+std::unique_ptr<BackoffPolicy>
+backoff_policy(Options const& options) {
+  return options.get<secretmanager_v1::SecretManagerServiceBackoffPolicyOption>()->clone();
 }
 
-std::unique_ptr<
-    secretmanager_v1::SecretManagerServiceConnectionIdempotencyPolicy>
+std::unique_ptr<secretmanager_v1::SecretManagerServiceConnectionIdempotencyPolicy>
 idempotency_policy(Options const& options) {
-  return options
-      .get<secretmanager_v1::
-               SecretManagerServiceConnectionIdempotencyPolicyOption>()
-      ->clone();
+  return options.get<secretmanager_v1::SecretManagerServiceConnectionIdempotencyPolicyOption>()->clone();
 }
 
-}  // namespace
+} // namespace
 
 SecretManagerServiceConnectionImpl::SecretManagerServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<secretmanager_v1_internal::SecretManagerServiceStub> stub,
     Options options)
-    : background_(std::move(background)),
-      stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options), SecretManagerServiceConnection::options())) {}
+  : background_(std::move(background)), stub_(std::move(stub)),
+    options_(internal::MergeOptions(
+        std::move(options),
+        SecretManagerServiceConnection::options())) {}
 
 StreamRange<google::cloud::secretmanager::v1::Secret>
-SecretManagerServiceConnectionImpl::ListSecrets(
-    google::cloud::secretmanager::v1::ListSecretsRequest request) {
+SecretManagerServiceConnectionImpl::ListSecrets(google::cloud::secretmanager::v1::ListSecretsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListSecrets(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::secretmanager::v1::Secret>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::secretmanager::v1::Secret>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry =
-           std::shared_ptr<secretmanager_v1::SecretManagerServiceRetryPolicy>(
-               retry_policy(*current)),
+       retry = std::shared_ptr<secretmanager_v1::SecretManagerServiceRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::secretmanager::v1::ListSecretsRequest const& r) {
+          Options const& options, google::cloud::secretmanager::v1::ListSecretsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::secretmanager::v1::ListSecretsRequest const&
-                       request) {
+                   google::cloud::secretmanager::v1::ListSecretsRequest const& request) {
               return stub->ListSecrets(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::secretmanager::v1::ListSecretsResponse r) {
-        std::vector<google::cloud::secretmanager::v1::Secret> result(
-            r.secrets().size());
+        std::vector<google::cloud::secretmanager::v1::Secret> result(r.secrets().size());
         auto& messages = *r.mutable_secrets();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -100,109 +87,92 @@ SecretManagerServiceConnectionImpl::ListSecrets(
 }
 
 StatusOr<google::cloud::secretmanager::v1::Secret>
-SecretManagerServiceConnectionImpl::CreateSecret(
-    google::cloud::secretmanager::v1::CreateSecretRequest const& request) {
+SecretManagerServiceConnectionImpl::CreateSecret(google::cloud::secretmanager::v1::CreateSecretRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateSecret(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::secretmanager::v1::CreateSecretRequest const&
-                 request) {
+             google::cloud::secretmanager::v1::CreateSecretRequest const& request) {
         return stub_->CreateSecret(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::secretmanager::v1::SecretVersion>
-SecretManagerServiceConnectionImpl::AddSecretVersion(
-    google::cloud::secretmanager::v1::AddSecretVersionRequest const& request) {
+SecretManagerServiceConnectionImpl::AddSecretVersion(google::cloud::secretmanager::v1::AddSecretVersionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->AddSecretVersion(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::secretmanager::v1::AddSecretVersionRequest const&
-                 request) {
+             google::cloud::secretmanager::v1::AddSecretVersionRequest const& request) {
         return stub_->AddSecretVersion(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::secretmanager::v1::Secret>
-SecretManagerServiceConnectionImpl::GetSecret(
-    google::cloud::secretmanager::v1::GetSecretRequest const& request) {
+SecretManagerServiceConnectionImpl::GetSecret(google::cloud::secretmanager::v1::GetSecretRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetSecret(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::secretmanager::v1::GetSecretRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::secretmanager::v1::GetSecretRequest const& request) {
         return stub_->GetSecret(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::secretmanager::v1::Secret>
-SecretManagerServiceConnectionImpl::UpdateSecret(
-    google::cloud::secretmanager::v1::UpdateSecretRequest const& request) {
+SecretManagerServiceConnectionImpl::UpdateSecret(google::cloud::secretmanager::v1::UpdateSecretRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateSecret(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::secretmanager::v1::UpdateSecretRequest const&
-                 request) {
+             google::cloud::secretmanager::v1::UpdateSecretRequest const& request) {
         return stub_->UpdateSecret(context, options, request);
       },
       *current, request, __func__);
 }
 
-Status SecretManagerServiceConnectionImpl::DeleteSecret(
-    google::cloud::secretmanager::v1::DeleteSecretRequest const& request) {
+Status
+SecretManagerServiceConnectionImpl::DeleteSecret(google::cloud::secretmanager::v1::DeleteSecretRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteSecret(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::secretmanager::v1::DeleteSecretRequest const&
-                 request) {
+             google::cloud::secretmanager::v1::DeleteSecretRequest const& request) {
         return stub_->DeleteSecret(context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::cloud::secretmanager::v1::SecretVersion>
-SecretManagerServiceConnectionImpl::ListSecretVersions(
-    google::cloud::secretmanager::v1::ListSecretVersionsRequest request) {
+SecretManagerServiceConnectionImpl::ListSecretVersions(google::cloud::secretmanager::v1::ListSecretVersionsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListSecretVersions(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::secretmanager::v1::SecretVersion>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::secretmanager::v1::SecretVersion>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry =
-           std::shared_ptr<secretmanager_v1::SecretManagerServiceRetryPolicy>(
-               retry_policy(*current)),
+       retry = std::shared_ptr<secretmanager_v1::SecretManagerServiceRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::secretmanager::v1::ListSecretVersionsRequest const&
-              r) {
+          Options const& options, google::cloud::secretmanager::v1::ListSecretVersionsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::secretmanager::v1::
-                       ListSecretVersionsRequest const& request) {
+                   google::cloud::secretmanager::v1::ListSecretVersionsRequest const& request) {
               return stub->ListSecretVersions(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::secretmanager::v1::ListSecretVersionsResponse r) {
-        std::vector<google::cloud::secretmanager::v1::SecretVersion> result(
-            r.versions().size());
+        std::vector<google::cloud::secretmanager::v1::SecretVersion> result(r.versions().size());
         auto& messages = *r.mutable_versions();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -210,89 +180,72 @@ SecretManagerServiceConnectionImpl::ListSecretVersions(
 }
 
 StatusOr<google::cloud::secretmanager::v1::SecretVersion>
-SecretManagerServiceConnectionImpl::GetSecretVersion(
-    google::cloud::secretmanager::v1::GetSecretVersionRequest const& request) {
+SecretManagerServiceConnectionImpl::GetSecretVersion(google::cloud::secretmanager::v1::GetSecretVersionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetSecretVersion(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::secretmanager::v1::GetSecretVersionRequest const&
-                 request) {
+             google::cloud::secretmanager::v1::GetSecretVersionRequest const& request) {
         return stub_->GetSecretVersion(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::secretmanager::v1::AccessSecretVersionResponse>
-SecretManagerServiceConnectionImpl::AccessSecretVersion(
-    google::cloud::secretmanager::v1::AccessSecretVersionRequest const&
-        request) {
+SecretManagerServiceConnectionImpl::AccessSecretVersion(google::cloud::secretmanager::v1::AccessSecretVersionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->AccessSecretVersion(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::secretmanager::v1::AccessSecretVersionRequest const&
-                 request) {
+             google::cloud::secretmanager::v1::AccessSecretVersionRequest const& request) {
         return stub_->AccessSecretVersion(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::secretmanager::v1::SecretVersion>
-SecretManagerServiceConnectionImpl::DisableSecretVersion(
-    google::cloud::secretmanager::v1::DisableSecretVersionRequest const&
-        request) {
+SecretManagerServiceConnectionImpl::DisableSecretVersion(google::cloud::secretmanager::v1::DisableSecretVersionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DisableSecretVersion(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::secretmanager::v1::DisableSecretVersionRequest const&
-              request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::secretmanager::v1::DisableSecretVersionRequest const& request) {
         return stub_->DisableSecretVersion(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::secretmanager::v1::SecretVersion>
-SecretManagerServiceConnectionImpl::EnableSecretVersion(
-    google::cloud::secretmanager::v1::EnableSecretVersionRequest const&
-        request) {
+SecretManagerServiceConnectionImpl::EnableSecretVersion(google::cloud::secretmanager::v1::EnableSecretVersionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->EnableSecretVersion(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::secretmanager::v1::EnableSecretVersionRequest const&
-                 request) {
+             google::cloud::secretmanager::v1::EnableSecretVersionRequest const& request) {
         return stub_->EnableSecretVersion(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::secretmanager::v1::SecretVersion>
-SecretManagerServiceConnectionImpl::DestroySecretVersion(
-    google::cloud::secretmanager::v1::DestroySecretVersionRequest const&
-        request) {
+SecretManagerServiceConnectionImpl::DestroySecretVersion(google::cloud::secretmanager::v1::DestroySecretVersionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DestroySecretVersion(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::secretmanager::v1::DestroySecretVersionRequest const&
-              request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::secretmanager::v1::DestroySecretVersionRequest const& request) {
         return stub_->DestroySecretVersion(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::iam::v1::Policy>
-SecretManagerServiceConnectionImpl::SetIamPolicy(
-    google::iam::v1::SetIamPolicyRequest const& request) {
+SecretManagerServiceConnectionImpl::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -305,8 +258,7 @@ SecretManagerServiceConnectionImpl::SetIamPolicy(
 }
 
 StatusOr<google::iam::v1::Policy>
-SecretManagerServiceConnectionImpl::GetIamPolicy(
-    google::iam::v1::GetIamPolicyRequest const& request) {
+SecretManagerServiceConnectionImpl::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -319,8 +271,7 @@ SecretManagerServiceConnectionImpl::GetIamPolicy(
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-SecretManagerServiceConnectionImpl::TestIamPermissions(
-    google::iam::v1::TestIamPermissionsRequest const& request) {
+SecretManagerServiceConnectionImpl::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -333,34 +284,27 @@ SecretManagerServiceConnectionImpl::TestIamPermissions(
 }
 
 StreamRange<google::cloud::location::Location>
-SecretManagerServiceConnectionImpl::ListLocations(
-    google::cloud::location::ListLocationsRequest request) {
+SecretManagerServiceConnectionImpl::ListLocations(google::cloud::location::ListLocationsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListLocations(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::location::Location>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::location::Location>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry =
-           std::shared_ptr<secretmanager_v1::SecretManagerServiceRetryPolicy>(
-               retry_policy(*current)),
+       retry = std::shared_ptr<secretmanager_v1::SecretManagerServiceRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::location::ListLocationsRequest const& r) {
+          Options const& options, google::cloud::location::ListLocationsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](
-                grpc::ClientContext& context, Options const& options,
-                google::cloud::location::ListLocationsRequest const& request) {
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::cloud::location::ListLocationsRequest const& request) {
               return stub->ListLocations(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::location::ListLocationsResponse r) {
-        std::vector<google::cloud::location::Location> result(
-            r.locations().size());
+        std::vector<google::cloud::location::Location> result(r.locations().size());
         auto& messages = *r.mutable_locations();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -368,8 +312,7 @@ SecretManagerServiceConnectionImpl::ListLocations(
 }
 
 StatusOr<google::cloud::location::Location>
-SecretManagerServiceConnectionImpl::GetLocation(
-    google::cloud::location::GetLocationRequest const& request) {
+SecretManagerServiceConnectionImpl::GetLocation(google::cloud::location::GetLocationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),

@@ -36,14 +36,12 @@ class GatewayControlTracingConnection
   ~GatewayControlTracingConnection() override = default;
 
   explicit GatewayControlTracingConnection(
-      std::shared_ptr<gkeconnect_gateway_v1::GatewayControlConnection> child);
+    std::shared_ptr<gkeconnect_gateway_v1::GatewayControlConnection> child);
 
   Options options() override { return child_->options(); }
 
   StatusOr<google::cloud::gkeconnect::gateway::v1::GenerateCredentialsResponse>
-  GenerateCredentials(
-      google::cloud::gkeconnect::gateway::v1::GenerateCredentialsRequest const&
-          request) override;
+  GenerateCredentials(google::cloud::gkeconnect::gateway::v1::GenerateCredentialsRequest const& request) override;
 
  private:
   std::shared_ptr<gkeconnect_gateway_v1::GatewayControlConnection> child_;

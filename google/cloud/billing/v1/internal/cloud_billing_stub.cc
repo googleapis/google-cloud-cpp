@@ -32,135 +32,145 @@ CloudBillingStub::~CloudBillingStub() = default;
 
 StatusOr<google::cloud::billing::v1::BillingAccount>
 DefaultCloudBillingStub::GetBillingAccount(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::billing::v1::GetBillingAccountRequest const& request) {
-  google::cloud::billing::v1::BillingAccount response;
-  auto status = grpc_stub_->GetBillingAccount(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::billing::v1::GetBillingAccountRequest const& request) {
+    google::cloud::billing::v1::BillingAccount response;
+    auto status =
+        grpc_stub_->GetBillingAccount(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::billing::v1::ListBillingAccountsResponse>
 DefaultCloudBillingStub::ListBillingAccounts(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::billing::v1::ListBillingAccountsRequest const& request) {
-  google::cloud::billing::v1::ListBillingAccountsResponse response;
-  auto status = grpc_stub_->ListBillingAccounts(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::billing::v1::ListBillingAccountsRequest const& request) {
+    google::cloud::billing::v1::ListBillingAccountsResponse response;
+    auto status =
+        grpc_stub_->ListBillingAccounts(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::billing::v1::BillingAccount>
 DefaultCloudBillingStub::UpdateBillingAccount(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::billing::v1::UpdateBillingAccountRequest const& request) {
-  google::cloud::billing::v1::BillingAccount response;
-  auto status = grpc_stub_->UpdateBillingAccount(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::billing::v1::UpdateBillingAccountRequest const& request) {
+    google::cloud::billing::v1::BillingAccount response;
+    auto status =
+        grpc_stub_->UpdateBillingAccount(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::billing::v1::BillingAccount>
 DefaultCloudBillingStub::CreateBillingAccount(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::billing::v1::CreateBillingAccountRequest const& request) {
-  google::cloud::billing::v1::BillingAccount response;
-  auto status = grpc_stub_->CreateBillingAccount(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::billing::v1::CreateBillingAccountRequest const& request) {
+    google::cloud::billing::v1::BillingAccount response;
+    auto status =
+        grpc_stub_->CreateBillingAccount(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::billing::v1::ListProjectBillingInfoResponse>
 DefaultCloudBillingStub::ListProjectBillingInfo(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::billing::v1::ListProjectBillingInfoRequest const& request) {
-  google::cloud::billing::v1::ListProjectBillingInfoResponse response;
-  auto status =
-      grpc_stub_->ListProjectBillingInfo(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::billing::v1::ListProjectBillingInfoRequest const& request) {
+    google::cloud::billing::v1::ListProjectBillingInfoResponse response;
+    auto status =
+        grpc_stub_->ListProjectBillingInfo(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::billing::v1::ProjectBillingInfo>
 DefaultCloudBillingStub::GetProjectBillingInfo(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::billing::v1::GetProjectBillingInfoRequest const& request) {
-  google::cloud::billing::v1::ProjectBillingInfo response;
-  auto status = grpc_stub_->GetProjectBillingInfo(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::billing::v1::GetProjectBillingInfoRequest const& request) {
+    google::cloud::billing::v1::ProjectBillingInfo response;
+    auto status =
+        grpc_stub_->GetProjectBillingInfo(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::billing::v1::ProjectBillingInfo>
 DefaultCloudBillingStub::UpdateProjectBillingInfo(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::billing::v1::UpdateProjectBillingInfoRequest const&
-        request) {
-  google::cloud::billing::v1::ProjectBillingInfo response;
-  auto status =
-      grpc_stub_->UpdateProjectBillingInfo(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::billing::v1::UpdateProjectBillingInfoRequest const& request) {
+    google::cloud::billing::v1::ProjectBillingInfo response;
+    auto status =
+        grpc_stub_->UpdateProjectBillingInfo(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-StatusOr<google::iam::v1::Policy> DefaultCloudBillingStub::GetIamPolicy(
-    grpc::ClientContext& context, Options const&,
-    google::iam::v1::GetIamPolicyRequest const& request) {
-  google::iam::v1::Policy response;
-  auto status = grpc_stub_->GetIamPolicy(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::iam::v1::Policy>
+DefaultCloudBillingStub::GetIamPolicy(
+  grpc::ClientContext& context, Options const&,
+  google::iam::v1::GetIamPolicyRequest const& request) {
+    google::iam::v1::Policy response;
+    auto status =
+        grpc_stub_->GetIamPolicy(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-StatusOr<google::iam::v1::Policy> DefaultCloudBillingStub::SetIamPolicy(
-    grpc::ClientContext& context, Options const&,
-    google::iam::v1::SetIamPolicyRequest const& request) {
-  google::iam::v1::Policy response;
-  auto status = grpc_stub_->SetIamPolicy(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::iam::v1::Policy>
+DefaultCloudBillingStub::SetIamPolicy(
+  grpc::ClientContext& context, Options const&,
+  google::iam::v1::SetIamPolicyRequest const& request) {
+    google::iam::v1::Policy response;
+    auto status =
+        grpc_stub_->SetIamPolicy(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 DefaultCloudBillingStub::TestIamPermissions(
-    grpc::ClientContext& context, Options const&,
-    google::iam::v1::TestIamPermissionsRequest const& request) {
-  google::iam::v1::TestIamPermissionsResponse response;
-  auto status = grpc_stub_->TestIamPermissions(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::iam::v1::TestIamPermissionsRequest const& request) {
+    google::iam::v1::TestIamPermissionsResponse response;
+    auto status =
+        grpc_stub_->TestIamPermissions(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::billing::v1::BillingAccount>
 DefaultCloudBillingStub::MoveBillingAccount(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::billing::v1::MoveBillingAccountRequest const& request) {
-  google::cloud::billing::v1::BillingAccount response;
-  auto status = grpc_stub_->MoveBillingAccount(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::billing::v1::MoveBillingAccountRequest const& request) {
+    google::cloud::billing::v1::BillingAccount response;
+    auto status =
+        grpc_stub_->MoveBillingAccount(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

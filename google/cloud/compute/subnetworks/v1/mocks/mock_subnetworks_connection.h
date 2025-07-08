@@ -42,34 +42,25 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockSubnetworksConnection
-    : public compute_subnetworks_v1::SubnetworksConnection {
+class MockSubnetworksConnection : public compute_subnetworks_v1::SubnetworksConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(
-      (StreamRange<
-          std::pair<std::string,
-                    google::cloud::cpp::compute::v1::SubnetworksScopedList>>),
-      AggregatedListSubnetworks,
-      (google::cloud::cpp::compute::subnetworks::v1::
-           AggregatedListSubnetworksRequest request),
-      (override));
+  MOCK_METHOD((StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::SubnetworksScopedList>>),
+  AggregatedListSubnetworks,
+  (google::cloud::cpp::compute::subnetworks::v1::AggregatedListSubnetworksRequest request), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteSubnetwork(Matcher<google::cloud::cpp::compute::subnetworks::v1::DeleteSubnetworkRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteSubnetwork(Matcher<google::cloud::cpp::compute::subnetworks::v1::DeleteSubnetworkRequest const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              DeleteSubnetwork,
-              (google::cloud::cpp::compute::subnetworks::v1::
-                   DeleteSubnetworkRequest const& request),
-              (override));
+  DeleteSubnetwork,
+  (google::cloud::cpp::compute::subnetworks::v1::DeleteSubnetworkRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -78,39 +69,32 @@ class MockSubnetworksConnection
   /// EXPECT_CALL(*mock, DeleteSubnetwork(_, _))
   /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-              DeleteSubnetwork,
-              (NoAwaitTag, google::cloud::cpp::compute::subnetworks::v1::
-                               DeleteSubnetworkRequest const& request),
-              (override));
+  DeleteSubnetwork, (NoAwaitTag,
+    google::cloud::cpp::compute::subnetworks::v1::DeleteSubnetworkRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteSubnetwork(Matcher<google::cloud::cpp::compute::v1::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteSubnetwork(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              DeleteSubnetwork,
-              (google::cloud::cpp::compute::v1::Operation const& operation),
-              (override));
+  DeleteSubnetwork, (
+    google::cloud::cpp::compute::v1::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// ExpandIpCidrRange(Matcher<google::cloud::cpp::compute::subnetworks::v1::ExpandIpCidrRangeRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, ExpandIpCidrRange(Matcher<google::cloud::cpp::compute::subnetworks::v1::ExpandIpCidrRangeRequest const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              ExpandIpCidrRange,
-              (google::cloud::cpp::compute::subnetworks::v1::
-                   ExpandIpCidrRangeRequest const& request),
-              (override));
+  ExpandIpCidrRange,
+  (google::cloud::cpp::compute::subnetworks::v1::ExpandIpCidrRangeRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -119,51 +103,40 @@ class MockSubnetworksConnection
   /// EXPECT_CALL(*mock, ExpandIpCidrRange(_, _))
   /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-              ExpandIpCidrRange,
-              (NoAwaitTag, google::cloud::cpp::compute::subnetworks::v1::
-                               ExpandIpCidrRangeRequest const& request),
-              (override));
+  ExpandIpCidrRange, (NoAwaitTag,
+    google::cloud::cpp::compute::subnetworks::v1::ExpandIpCidrRangeRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// ExpandIpCidrRange(Matcher<google::cloud::cpp::compute::v1::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, ExpandIpCidrRange(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              ExpandIpCidrRange,
-              (google::cloud::cpp::compute::v1::Operation const& operation),
-              (override));
+  ExpandIpCidrRange, (
+    google::cloud::cpp::compute::v1::Operation const& operation), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::Subnetwork>, GetSubnetwork,
-      (google::cloud::cpp::compute::subnetworks::v1::GetSubnetworkRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Subnetwork>,
+  GetSubnetwork,
+  (google::cloud::cpp::compute::subnetworks::v1::GetSubnetworkRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::Policy>, GetIamPolicy,
-      (google::cloud::cpp::compute::subnetworks::v1::GetIamPolicyRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Policy>,
+  GetIamPolicy,
+  (google::cloud::cpp::compute::subnetworks::v1::GetIamPolicyRequest const& request), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// InsertSubnetwork(Matcher<google::cloud::cpp::compute::subnetworks::v1::InsertSubnetworkRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, InsertSubnetwork(Matcher<google::cloud::cpp::compute::subnetworks::v1::InsertSubnetworkRequest const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              InsertSubnetwork,
-              (google::cloud::cpp::compute::subnetworks::v1::
-                   InsertSubnetworkRequest const& request),
-              (override));
+  InsertSubnetwork,
+  (google::cloud::cpp::compute::subnetworks::v1::InsertSubnetworkRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -172,52 +145,40 @@ class MockSubnetworksConnection
   /// EXPECT_CALL(*mock, InsertSubnetwork(_, _))
   /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-              InsertSubnetwork,
-              (NoAwaitTag, google::cloud::cpp::compute::subnetworks::v1::
-                               InsertSubnetworkRequest const& request),
-              (override));
+  InsertSubnetwork, (NoAwaitTag,
+    google::cloud::cpp::compute::subnetworks::v1::InsertSubnetworkRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// InsertSubnetwork(Matcher<google::cloud::cpp::compute::v1::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, InsertSubnetwork(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              InsertSubnetwork,
-              (google::cloud::cpp::compute::v1::Operation const& operation),
-              (override));
+  InsertSubnetwork, (
+    google::cloud::cpp::compute::v1::Operation const& operation), (override));
 
-  MOCK_METHOD(
-      (StreamRange<google::cloud::cpp::compute::v1::Subnetwork>),
-      ListSubnetworks,
-      (google::cloud::cpp::compute::subnetworks::v1::ListSubnetworksRequest
-           request),
-      (override));
+  MOCK_METHOD((StreamRange<google::cloud::cpp::compute::v1::Subnetwork>),
+  ListSubnetworks,
+  (google::cloud::cpp::compute::subnetworks::v1::ListSubnetworksRequest request), (override));
 
-  MOCK_METHOD(
-      (StreamRange<google::cloud::cpp::compute::v1::UsableSubnetwork>),
-      ListUsable,
-      (google::cloud::cpp::compute::subnetworks::v1::ListUsableRequest request),
-      (override));
+  MOCK_METHOD((StreamRange<google::cloud::cpp::compute::v1::UsableSubnetwork>),
+  ListUsable,
+  (google::cloud::cpp::compute::subnetworks::v1::ListUsableRequest request), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// PatchSubnetwork(Matcher<google::cloud::cpp::compute::subnetworks::v1::PatchSubnetworkRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, PatchSubnetwork(Matcher<google::cloud::cpp::compute::subnetworks::v1::PatchSubnetworkRequest const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              PatchSubnetwork,
-              (google::cloud::cpp::compute::subnetworks::v1::
-                   PatchSubnetworkRequest const& request),
-              (override));
+  PatchSubnetwork,
+  (google::cloud::cpp::compute::subnetworks::v1::PatchSubnetworkRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -226,45 +187,36 @@ class MockSubnetworksConnection
   /// EXPECT_CALL(*mock, PatchSubnetwork(_, _))
   /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-              PatchSubnetwork,
-              (NoAwaitTag, google::cloud::cpp::compute::subnetworks::v1::
-                               PatchSubnetworkRequest const& request),
-              (override));
+  PatchSubnetwork, (NoAwaitTag,
+    google::cloud::cpp::compute::subnetworks::v1::PatchSubnetworkRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// PatchSubnetwork(Matcher<google::cloud::cpp::compute::v1::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, PatchSubnetwork(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              PatchSubnetwork,
-              (google::cloud::cpp::compute::v1::Operation const& operation),
-              (override));
+  PatchSubnetwork, (
+    google::cloud::cpp::compute::v1::Operation const& operation), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::Policy>, SetIamPolicy,
-      (google::cloud::cpp::compute::subnetworks::v1::SetIamPolicyRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Policy>,
+  SetIamPolicy,
+  (google::cloud::cpp::compute::subnetworks::v1::SetIamPolicyRequest const& request), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// SetPrivateIpGoogleAccess(Matcher<google::cloud::cpp::compute::subnetworks::v1::SetPrivateIpGoogleAccessRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, SetPrivateIpGoogleAccess(Matcher<google::cloud::cpp::compute::subnetworks::v1::SetPrivateIpGoogleAccessRequest const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              SetPrivateIpGoogleAccess,
-              (google::cloud::cpp::compute::subnetworks::v1::
-                   SetPrivateIpGoogleAccessRequest const& request),
-              (override));
+  SetPrivateIpGoogleAccess,
+  (google::cloud::cpp::compute::subnetworks::v1::SetPrivateIpGoogleAccessRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -273,31 +225,24 @@ class MockSubnetworksConnection
   /// EXPECT_CALL(*mock, SetPrivateIpGoogleAccess(_, _))
   /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-              SetPrivateIpGoogleAccess,
-              (NoAwaitTag, google::cloud::cpp::compute::subnetworks::v1::
-                               SetPrivateIpGoogleAccessRequest const& request),
-              (override));
+  SetPrivateIpGoogleAccess, (NoAwaitTag,
+    google::cloud::cpp::compute::subnetworks::v1::SetPrivateIpGoogleAccessRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// SetPrivateIpGoogleAccess(Matcher<google::cloud::cpp::compute::v1::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, SetPrivateIpGoogleAccess(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              SetPrivateIpGoogleAccess,
-              (google::cloud::cpp::compute::v1::Operation const& operation),
-              (override));
+  SetPrivateIpGoogleAccess, (
+    google::cloud::cpp::compute::v1::Operation const& operation), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>,
-      TestIamPermissions,
-      (google::cloud::cpp::compute::subnetworks::v1::
-           TestIamPermissionsRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>,
+  TestIamPermissions,
+  (google::cloud::cpp::compute::subnetworks::v1::TestIamPermissionsRequest const& request), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

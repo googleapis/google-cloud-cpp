@@ -17,10 +17,10 @@
 // source: google/cloud/osconfig/v1/osconfig_service.proto
 
 #include "google/cloud/osconfig/v1/internal/os_config_option_defaults.h"
-#include "google/cloud/osconfig/v1/os_config_connection.h"
-#include "google/cloud/osconfig/v1/os_config_options.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
+#include "google/cloud/osconfig/v1/os_config_connection.h"
+#include "google/cloud/osconfig/v1/os_config_options.h"
 #include <memory>
 #include <utility>
 
@@ -35,25 +35,21 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options OsConfigServiceDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_OS_CONFIG_SERVICE_ENDPOINT", "",
-      "GOOGLE_CLOUD_CPP_OS_CONFIG_SERVICE_AUTHORITY",
+      std::move(options), "GOOGLE_CLOUD_CPP_OS_CONFIG_SERVICE_ENDPOINT",
+      "", "GOOGLE_CLOUD_CPP_OS_CONFIG_SERVICE_AUTHORITY",
       "osconfig.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<osconfig_v1::OsConfigServiceRetryPolicyOption>()) {
     options.set<osconfig_v1::OsConfigServiceRetryPolicyOption>(
         osconfig_v1::OsConfigServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
-            .clone());
+            std::chrono::minutes(30)).clone());
   }
   if (!options.has<osconfig_v1::OsConfigServiceBackoffPolicyOption>()) {
     options.set<osconfig_v1::OsConfigServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(
-            std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
-            .clone());
+        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
   }
-  if (!options.has<
-          osconfig_v1::OsConfigServiceConnectionIdempotencyPolicyOption>()) {
+  if (!options.has<osconfig_v1::OsConfigServiceConnectionIdempotencyPolicyOption>()) {
     options.set<osconfig_v1::OsConfigServiceConnectionIdempotencyPolicyOption>(
         osconfig_v1::MakeDefaultOsConfigServiceConnectionIdempotencyPolicy());
   }

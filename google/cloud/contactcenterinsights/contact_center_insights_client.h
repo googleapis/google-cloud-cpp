@@ -25,13 +25,12 @@
 namespace google {
 namespace cloud {
 /// @deprecated This namespace exists for backwards compatibility. Use the
-///     types defined in contactcenterinsights_v1 instead of the aliases defined
-///     in this namespace.
+///     types defined in contactcenterinsights_v1 instead of the aliases defined in
+///     this namespace.
 namespace contactcenterinsights {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use contactcenterinsights_v1::ContactCenterInsightsClient
-/// directly.
+/// @deprecated Use contactcenterinsights_v1::ContactCenterInsightsClient directly.
 using ::google::cloud::contactcenterinsights_v1::ContactCenterInsightsClient;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

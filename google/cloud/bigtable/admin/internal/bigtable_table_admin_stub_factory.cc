@@ -37,28 +37,30 @@ namespace cloud {
 namespace bigtable_admin_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<BigtableTableAdminStub> CreateDefaultBigtableTableAdminStub(
+std::shared_ptr<BigtableTableAdminStub>
+CreateDefaultBigtableTableAdminStub(
     std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
     Options const& options) {
-  auto channel = auth->CreateChannel(options.get<EndpointOption>(),
-                                     internal::MakeChannelArguments(options));
-  auto service_grpc_stub =
-      google::bigtable::admin::v2::BigtableTableAdmin::NewStub(channel);
+  auto channel = auth->CreateChannel(
+    options.get<EndpointOption>(), internal::MakeChannelArguments(options));
+  auto service_grpc_stub = google::bigtable::admin::v2::BigtableTableAdmin::NewStub(channel);
   std::shared_ptr<BigtableTableAdminStub> stub =
-      std::make_shared<DefaultBigtableTableAdminStub>(
-          std::move(service_grpc_stub),
-          google::longrunning::Operations::NewStub(channel));
+    std::make_shared<DefaultBigtableTableAdminStub>(
+      std::move(service_grpc_stub),
+      google::longrunning::Operations::NewStub(channel));
 
   if (auth->RequiresConfigureContext()) {
-    stub = std::make_shared<BigtableTableAdminAuth>(std::move(auth),
-                                                    std::move(stub));
+    stub = std::make_shared<BigtableTableAdminAuth>(
+        std::move(auth), std::move(stub));
   }
   stub = std::make_shared<BigtableTableAdminMetadata>(
       std::move(stub), std::multimap<std::string, std::string>{});
-  if (internal::Contains(options.get<LoggingComponentsOption>(), "rpc")) {
+  if (internal::Contains(
+      options.get<LoggingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<BigtableTableAdminLogging>(
-        std::move(stub), options.get<GrpcTracingOptionsOption>(),
+        std::move(stub),
+        options.get<GrpcTracingOptionsOption>(),
         options.get<LoggingComponentsOption>());
   }
   if (internal::TracingEnabled(options)) {

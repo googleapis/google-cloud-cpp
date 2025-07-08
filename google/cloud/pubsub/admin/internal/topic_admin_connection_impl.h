@@ -19,14 +19,14 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_ADMIN_INTERNAL_TOPIC_ADMIN_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_ADMIN_INTERNAL_TOPIC_ADMIN_CONNECTION_IMPL_H
 
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/options.h"
 #include "google/cloud/pubsub/admin/internal/topic_admin_retry_traits.h"
 #include "google/cloud/pubsub/admin/internal/topic_admin_stub.h"
 #include "google/cloud/pubsub/admin/topic_admin_connection.h"
 #include "google/cloud/pubsub/admin/topic_admin_connection_idempotency_policy.h"
 #include "google/cloud/pubsub/admin/topic_admin_options.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
@@ -37,49 +37,50 @@ namespace cloud {
 namespace pubsub_admin_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class TopicAdminConnectionImpl : public pubsub_admin::TopicAdminConnection {
+class TopicAdminConnectionImpl
+    : public pubsub_admin::TopicAdminConnection {
  public:
   ~TopicAdminConnectionImpl() override = default;
 
   TopicAdminConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<pubsub_admin_internal::TopicAdminStub> stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<pubsub_admin_internal::TopicAdminStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
-  StatusOr<google::pubsub::v1::Topic> CreateTopic(
-      google::pubsub::v1::Topic const& request) override;
+  StatusOr<google::pubsub::v1::Topic>
+  CreateTopic(google::pubsub::v1::Topic const& request) override;
 
-  StatusOr<google::pubsub::v1::Topic> UpdateTopic(
-      google::pubsub::v1::UpdateTopicRequest const& request) override;
+  StatusOr<google::pubsub::v1::Topic>
+  UpdateTopic(google::pubsub::v1::UpdateTopicRequest const& request) override;
 
-  StatusOr<google::pubsub::v1::Topic> GetTopic(
-      google::pubsub::v1::GetTopicRequest const& request) override;
+  StatusOr<google::pubsub::v1::Topic>
+  GetTopic(google::pubsub::v1::GetTopicRequest const& request) override;
 
-  StreamRange<google::pubsub::v1::Topic> ListTopics(
-      google::pubsub::v1::ListTopicsRequest request) override;
+  StreamRange<google::pubsub::v1::Topic>
+  ListTopics(google::pubsub::v1::ListTopicsRequest request) override;
 
-  StreamRange<std::string> ListTopicSubscriptions(
-      google::pubsub::v1::ListTopicSubscriptionsRequest request) override;
+  StreamRange<std::string>
+  ListTopicSubscriptions(google::pubsub::v1::ListTopicSubscriptionsRequest request) override;
 
-  StreamRange<std::string> ListTopicSnapshots(
-      google::pubsub::v1::ListTopicSnapshotsRequest request) override;
+  StreamRange<std::string>
+  ListTopicSnapshots(google::pubsub::v1::ListTopicSnapshotsRequest request) override;
 
-  Status DeleteTopic(
-      google::pubsub::v1::DeleteTopicRequest const& request) override;
+  Status
+  DeleteTopic(google::pubsub::v1::DeleteTopicRequest const& request) override;
 
-  StatusOr<google::pubsub::v1::DetachSubscriptionResponse> DetachSubscription(
-      google::pubsub::v1::DetachSubscriptionRequest const& request) override;
+  StatusOr<google::pubsub::v1::DetachSubscriptionResponse>
+  DetachSubscription(google::pubsub::v1::DetachSubscriptionRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request) override;
+  StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

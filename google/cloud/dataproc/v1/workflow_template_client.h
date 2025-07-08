@@ -65,29 +65,23 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class WorkflowTemplateServiceClient {
  public:
-  explicit WorkflowTemplateServiceClient(
-      std::shared_ptr<WorkflowTemplateServiceConnection> connection,
-      Options opts = {});
+  explicit WorkflowTemplateServiceClient(std::shared_ptr<WorkflowTemplateServiceConnection> connection, Options opts = {});
   ~WorkflowTemplateServiceClient();
 
   ///@{
   /// @name Copy and move support
   WorkflowTemplateServiceClient(WorkflowTemplateServiceClient const&) = default;
-  WorkflowTemplateServiceClient& operator=(
-      WorkflowTemplateServiceClient const&) = default;
+  WorkflowTemplateServiceClient& operator=(WorkflowTemplateServiceClient const&) = default;
   WorkflowTemplateServiceClient(WorkflowTemplateServiceClient&&) = default;
-  WorkflowTemplateServiceClient& operator=(WorkflowTemplateServiceClient&&) =
-      default;
+  WorkflowTemplateServiceClient& operator=(WorkflowTemplateServiceClient&&) = default;
   ///@}
 
   ///@{
   /// @name Equality
-  friend bool operator==(WorkflowTemplateServiceClient const& a,
-                         WorkflowTemplateServiceClient const& b) {
+  friend bool operator==(WorkflowTemplateServiceClient const& a, WorkflowTemplateServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(WorkflowTemplateServiceClient const& a,
-                         WorkflowTemplateServiceClient const& b) {
+  friend bool operator!=(WorkflowTemplateServiceClient const& a, WorkflowTemplateServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -125,10 +119,7 @@ class WorkflowTemplateServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::dataproc::v1::WorkflowTemplate>
-  CreateWorkflowTemplate(
-      std::string const& parent,
-      google::cloud::dataproc::v1::WorkflowTemplate const& template_,
-      Options opts = {});
+  CreateWorkflowTemplate(std::string const& parent, google::cloud::dataproc::v1::WorkflowTemplate const& template_, Options opts = {});
 
   // clang-format off
   ///
@@ -158,9 +149,7 @@ class WorkflowTemplateServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::dataproc::v1::WorkflowTemplate>
-  CreateWorkflowTemplate(
-      google::cloud::dataproc::v1::CreateWorkflowTemplateRequest const& request,
-      Options opts = {});
+  CreateWorkflowTemplate(google::cloud::dataproc::v1::CreateWorkflowTemplateRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -196,8 +185,8 @@ class WorkflowTemplateServiceClient {
   /// [google.cloud.dataproc.v1.WorkflowTemplate]: @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L193}
   ///
   // clang-format on
-  StatusOr<google::cloud::dataproc::v1::WorkflowTemplate> GetWorkflowTemplate(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::dataproc::v1::WorkflowTemplate>
+  GetWorkflowTemplate(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -229,9 +218,8 @@ class WorkflowTemplateServiceClient {
   /// [google.cloud.dataproc.v1.WorkflowTemplate]: @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L193}
   ///
   // clang-format on
-  StatusOr<google::cloud::dataproc::v1::WorkflowTemplate> GetWorkflowTemplate(
-      google::cloud::dataproc::v1::GetWorkflowTemplateRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::dataproc::v1::WorkflowTemplate>
+  GetWorkflowTemplate(google::cloud::dataproc::v1::GetWorkflowTemplateRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -309,8 +297,8 @@ class WorkflowTemplateServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> InstantiateWorkflowTemplate(
-      NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  InstantiateWorkflowTemplate(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -377,9 +365,7 @@ class WorkflowTemplateServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataproc::v1::WorkflowMetadata>>
-  InstantiateWorkflowTemplate(
-      std::string const& name,
-      std::map<std::string, std::string> const& parameters, Options opts = {});
+  InstantiateWorkflowTemplate(std::string const& name, std::map<std::string, std::string> const& parameters, Options opts = {});
 
   // clang-format off
   ///
@@ -392,9 +378,8 @@ class WorkflowTemplateServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> InstantiateWorkflowTemplate(
-      NoAwaitTag, std::string const& name,
-      std::map<std::string, std::string> const& parameters, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  InstantiateWorkflowTemplate(NoAwaitTag, std::string const& name, std::map<std::string, std::string> const& parameters, Options opts = {});
 
   // clang-format off
   ///
@@ -455,10 +440,7 @@ class WorkflowTemplateServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataproc::v1::WorkflowMetadata>>
-  InstantiateWorkflowTemplate(
-      google::cloud::dataproc::v1::InstantiateWorkflowTemplateRequest const&
-          request,
-      Options opts = {});
+  InstantiateWorkflowTemplate(google::cloud::dataproc::v1::InstantiateWorkflowTemplateRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -471,11 +453,8 @@ class WorkflowTemplateServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> InstantiateWorkflowTemplate(
-      NoAwaitTag,
-      google::cloud::dataproc::v1::InstantiateWorkflowTemplateRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  InstantiateWorkflowTemplate(NoAwaitTag, google::cloud::dataproc::v1::InstantiateWorkflowTemplateRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -487,8 +466,7 @@ class WorkflowTemplateServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataproc::v1::WorkflowMetadata>>
-  InstantiateWorkflowTemplate(google::longrunning::Operation const& operation,
-                              Options opts = {});
+  InstantiateWorkflowTemplate(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -562,10 +540,7 @@ class WorkflowTemplateServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataproc::v1::WorkflowMetadata>>
-  InstantiateInlineWorkflowTemplate(
-      std::string const& parent,
-      google::cloud::dataproc::v1::WorkflowTemplate const& template_,
-      Options opts = {});
+  InstantiateInlineWorkflowTemplate(std::string const& parent, google::cloud::dataproc::v1::WorkflowTemplate const& template_, Options opts = {});
 
   // clang-format off
   ///
@@ -578,10 +553,8 @@ class WorkflowTemplateServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> InstantiateInlineWorkflowTemplate(
-      NoAwaitTag, std::string const& parent,
-      google::cloud::dataproc::v1::WorkflowTemplate const& template_,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  InstantiateInlineWorkflowTemplate(NoAwaitTag, std::string const& parent, google::cloud::dataproc::v1::WorkflowTemplate const& template_, Options opts = {});
 
   // clang-format off
   ///
@@ -650,10 +623,7 @@ class WorkflowTemplateServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataproc::v1::WorkflowMetadata>>
-  InstantiateInlineWorkflowTemplate(
-      google::cloud::dataproc::v1::
-          InstantiateInlineWorkflowTemplateRequest const& request,
-      Options opts = {});
+  InstantiateInlineWorkflowTemplate(google::cloud::dataproc::v1::InstantiateInlineWorkflowTemplateRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -666,11 +636,8 @@ class WorkflowTemplateServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> InstantiateInlineWorkflowTemplate(
-      NoAwaitTag,
-      google::cloud::dataproc::v1::
-          InstantiateInlineWorkflowTemplateRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  InstantiateInlineWorkflowTemplate(NoAwaitTag, google::cloud::dataproc::v1::InstantiateInlineWorkflowTemplateRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -682,8 +649,7 @@ class WorkflowTemplateServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataproc::v1::WorkflowMetadata>>
-  InstantiateInlineWorkflowTemplate(
-      google::longrunning::Operation const& operation, Options opts = {});
+  InstantiateInlineWorkflowTemplate(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -711,9 +677,7 @@ class WorkflowTemplateServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::dataproc::v1::WorkflowTemplate>
-  UpdateWorkflowTemplate(
-      google::cloud::dataproc::v1::WorkflowTemplate const& template_,
-      Options opts = {});
+  UpdateWorkflowTemplate(google::cloud::dataproc::v1::WorkflowTemplate const& template_, Options opts = {});
 
   // clang-format off
   ///
@@ -744,9 +708,7 @@ class WorkflowTemplateServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::dataproc::v1::WorkflowTemplate>
-  UpdateWorkflowTemplate(
-      google::cloud::dataproc::v1::UpdateWorkflowTemplateRequest const& request,
-      Options opts = {});
+  UpdateWorkflowTemplate(google::cloud::dataproc::v1::UpdateWorkflowTemplateRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -828,9 +790,7 @@ class WorkflowTemplateServiceClient {
   ///
   // clang-format on
   StreamRange<google::cloud::dataproc::v1::WorkflowTemplate>
-  ListWorkflowTemplates(
-      google::cloud::dataproc::v1::ListWorkflowTemplatesRequest request,
-      Options opts = {});
+  ListWorkflowTemplates(google::cloud::dataproc::v1::ListWorkflowTemplatesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -860,7 +820,8 @@ class WorkflowTemplateServiceClient {
   /// [google.cloud.dataproc.v1.DeleteWorkflowTemplateRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L868}
   ///
   // clang-format on
-  Status DeleteWorkflowTemplate(std::string const& name, Options opts = {});
+  Status
+  DeleteWorkflowTemplate(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -886,9 +847,8 @@ class WorkflowTemplateServiceClient {
   /// [google.cloud.dataproc.v1.DeleteWorkflowTemplateRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L868}
   ///
   // clang-format on
-  Status DeleteWorkflowTemplate(
-      google::cloud::dataproc::v1::DeleteWorkflowTemplateRequest const& request,
-      Options opts = {});
+  Status
+  DeleteWorkflowTemplate(google::cloud::dataproc::v1::DeleteWorkflowTemplateRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -920,8 +880,8 @@ class WorkflowTemplateServiceClient {
   /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L100}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -952,8 +912,8 @@ class WorkflowTemplateServiceClient {
   /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -988,9 +948,8 @@ class WorkflowTemplateServiceClient {
   /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L153}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request,
-      Options opts = {});
+  StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1025,8 +984,8 @@ class WorkflowTemplateServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -1065,8 +1024,8 @@ class WorkflowTemplateServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1092,8 +1051,8 @@ class WorkflowTemplateServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1124,9 +1083,8 @@ class WorkflowTemplateServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1150,7 +1108,8 @@ class WorkflowTemplateServiceClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status DeleteOperation(std::string const& name, Options opts = {});
+  Status
+  DeleteOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1179,9 +1138,8 @@ class WorkflowTemplateServiceClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request,
-      Options opts = {});
+  Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1215,7 +1173,8 @@ class WorkflowTemplateServiceClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(std::string const& name, Options opts = {});
+  Status
+  CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1254,9 +1213,8 @@ class WorkflowTemplateServiceClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request,
-      Options opts = {});
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<WorkflowTemplateServiceConnection> connection_;

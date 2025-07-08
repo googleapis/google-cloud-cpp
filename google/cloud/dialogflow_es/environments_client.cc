@@ -28,8 +28,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 EnvironmentsClient::EnvironmentsClient(
     std::shared_ptr<EnvironmentsConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 EnvironmentsClient::~EnvironmentsClient() = default;
 
 StreamRange<google::cloud::dialogflow::v2::Environment>
@@ -41,67 +41,55 @@ EnvironmentsClient::ListEnvironments(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::dialogflow::v2::Environment>
-EnvironmentsClient::ListEnvironments(
-    google::cloud::dialogflow::v2::ListEnvironmentsRequest request,
-    Options opts) {
+EnvironmentsClient::ListEnvironments(google::cloud::dialogflow::v2::ListEnvironmentsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListEnvironments(std::move(request));
 }
 
 StatusOr<google::cloud::dialogflow::v2::Environment>
-EnvironmentsClient::GetEnvironment(
-    google::cloud::dialogflow::v2::GetEnvironmentRequest const& request,
-    Options opts) {
+EnvironmentsClient::GetEnvironment(google::cloud::dialogflow::v2::GetEnvironmentRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetEnvironment(request);
 }
 
 StatusOr<google::cloud::dialogflow::v2::Environment>
-EnvironmentsClient::CreateEnvironment(
-    google::cloud::dialogflow::v2::CreateEnvironmentRequest const& request,
-    Options opts) {
+EnvironmentsClient::CreateEnvironment(google::cloud::dialogflow::v2::CreateEnvironmentRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateEnvironment(request);
 }
 
 StatusOr<google::cloud::dialogflow::v2::Environment>
-EnvironmentsClient::UpdateEnvironment(
-    google::cloud::dialogflow::v2::UpdateEnvironmentRequest const& request,
-    Options opts) {
+EnvironmentsClient::UpdateEnvironment(google::cloud::dialogflow::v2::UpdateEnvironmentRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateEnvironment(request);
 }
 
-Status EnvironmentsClient::DeleteEnvironment(
-    google::cloud::dialogflow::v2::DeleteEnvironmentRequest const& request,
-    Options opts) {
+Status
+EnvironmentsClient::DeleteEnvironment(google::cloud::dialogflow::v2::DeleteEnvironmentRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteEnvironment(request);
 }
 
 StreamRange<google::cloud::dialogflow::v2::EnvironmentHistory::Entry>
-EnvironmentsClient::GetEnvironmentHistory(
-    google::cloud::dialogflow::v2::GetEnvironmentHistoryRequest request,
-    Options opts) {
+EnvironmentsClient::GetEnvironmentHistory(google::cloud::dialogflow::v2::GetEnvironmentHistoryRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetEnvironmentHistory(std::move(request));
 }
 
 StreamRange<google::cloud::location::Location>
-EnvironmentsClient::ListLocations(
-    google::cloud::location::ListLocationsRequest request, Options opts) {
+EnvironmentsClient::ListLocations(google::cloud::location::ListLocationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListLocations(std::move(request));
 }
 
-StatusOr<google::cloud::location::Location> EnvironmentsClient::GetLocation(
-    google::cloud::location::GetLocationRequest const& request, Options opts) {
+StatusOr<google::cloud::location::Location>
+EnvironmentsClient::GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetLocation(request);
 }
 
-StreamRange<google::longrunning::Operation> EnvironmentsClient::ListOperations(
-    std::string const& name, std::string const& filter, Options opts) {
+StreamRange<google::longrunning::Operation>
+EnvironmentsClient::ListOperations(std::string const& name, std::string const& filter, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::ListOperationsRequest request;
   request.set_name(name);
@@ -109,36 +97,36 @@ StreamRange<google::longrunning::Operation> EnvironmentsClient::ListOperations(
   return connection_->ListOperations(request);
 }
 
-StreamRange<google::longrunning::Operation> EnvironmentsClient::ListOperations(
-    google::longrunning::ListOperationsRequest request, Options opts) {
+StreamRange<google::longrunning::Operation>
+EnvironmentsClient::ListOperations(google::longrunning::ListOperationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOperations(std::move(request));
 }
 
-StatusOr<google::longrunning::Operation> EnvironmentsClient::GetOperation(
-    std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation>
+EnvironmentsClient::GetOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
   return connection_->GetOperation(request);
 }
 
-StatusOr<google::longrunning::Operation> EnvironmentsClient::GetOperation(
-    google::longrunning::GetOperationRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation>
+EnvironmentsClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }
 
-Status EnvironmentsClient::CancelOperation(std::string const& name,
-                                           Options opts) {
+Status
+EnvironmentsClient::CancelOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::CancelOperationRequest request;
   request.set_name(name);
   return connection_->CancelOperation(request);
 }
 
-Status EnvironmentsClient::CancelOperation(
-    google::longrunning::CancelOperationRequest const& request, Options opts) {
+Status
+EnvironmentsClient::CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelOperation(request);
 }

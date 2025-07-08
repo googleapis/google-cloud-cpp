@@ -17,11 +17,11 @@
 // source: google/cloud/sql/v1/cloud_sql_operations.proto
 
 #include "google/cloud/sql/v1/internal/sql_operations_rest_metadata_decorator.h"
+#include "absl/strings/str_format.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/internal/rest_set_metadata.h"
 #include "google/cloud/status_or.h"
-#include "absl/strings/str_format.h"
 #include <memory>
 #include <utility>
 
@@ -41,32 +41,33 @@ SqlOperationsServiceRestMetadata::SqlOperationsServiceRestMetadata(
 
 StatusOr<google::cloud::sql::v1::Operation>
 SqlOperationsServiceRestMetadata::Get(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::sql::v1::SqlOperationsGetRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::sql::v1::SqlOperationsGetRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->Get(rest_context, options, request);
 }
 
 StatusOr<google::cloud::sql::v1::OperationsListResponse>
 SqlOperationsServiceRestMetadata::List(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::sql::v1::SqlOperationsListRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::sql::v1::SqlOperationsListRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->List(rest_context, options, request);
 }
 
-Status SqlOperationsServiceRestMetadata::Cancel(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::sql::v1::SqlOperationsCancelRequest const& request) {
+Status
+SqlOperationsServiceRestMetadata::Cancel(
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::sql::v1::SqlOperationsCancelRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->Cancel(rest_context, options, request);
 }
 
 void SqlOperationsServiceRestMetadata::SetMetadata(
-    rest_internal::RestContext& rest_context, Options const& options,
-    std::vector<std::string> const& params) {
-  google::cloud::rest_internal::SetMetadata(rest_context, options, params,
-                                            api_client_header_);
+      rest_internal::RestContext& rest_context,
+      Options const& options, std::vector<std::string> const& params) {
+  google::cloud::rest_internal::SetMetadata(
+      rest_context, options, params, api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

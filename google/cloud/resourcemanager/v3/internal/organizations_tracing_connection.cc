@@ -34,56 +34,45 @@ OrganizationsTracingConnection::OrganizationsTracingConnection(
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::resourcemanager::v3::Organization>
-OrganizationsTracingConnection::GetOrganization(
-    google::cloud::resourcemanager::v3::GetOrganizationRequest const& request) {
-  auto span = internal::MakeSpan(
-      "resourcemanager_v3::OrganizationsConnection::GetOrganization");
+OrganizationsTracingConnection::GetOrganization(google::cloud::resourcemanager::v3::GetOrganizationRequest const& request) {
+  auto span = internal::MakeSpan("resourcemanager_v3::OrganizationsConnection::GetOrganization");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOrganization(request));
 }
 
 StreamRange<google::cloud::resourcemanager::v3::Organization>
-OrganizationsTracingConnection::SearchOrganizations(
-    google::cloud::resourcemanager::v3::SearchOrganizationsRequest request) {
-  auto span = internal::MakeSpan(
-      "resourcemanager_v3::OrganizationsConnection::SearchOrganizations");
+OrganizationsTracingConnection::SearchOrganizations(google::cloud::resourcemanager::v3::SearchOrganizationsRequest request) {
+  auto span = internal::MakeSpan("resourcemanager_v3::OrganizationsConnection::SearchOrganizations");
   internal::OTelScope scope(span);
   auto sr = child_->SearchOrganizations(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::resourcemanager::v3::Organization>(std::move(span),
-                                                        std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::resourcemanager::v3::Organization>(
+        std::move(span), std::move(sr));
 }
 
-StatusOr<google::iam::v1::Policy> OrganizationsTracingConnection::GetIamPolicy(
-    google::iam::v1::GetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpan(
-      "resourcemanager_v3::OrganizationsConnection::GetIamPolicy");
+StatusOr<google::iam::v1::Policy>
+OrganizationsTracingConnection::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) {
+  auto span = internal::MakeSpan("resourcemanager_v3::OrganizationsConnection::GetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetIamPolicy(request));
 }
 
-StatusOr<google::iam::v1::Policy> OrganizationsTracingConnection::SetIamPolicy(
-    google::iam::v1::SetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpan(
-      "resourcemanager_v3::OrganizationsConnection::SetIamPolicy");
+StatusOr<google::iam::v1::Policy>
+OrganizationsTracingConnection::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) {
+  auto span = internal::MakeSpan("resourcemanager_v3::OrganizationsConnection::SetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->SetIamPolicy(request));
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-OrganizationsTracingConnection::TestIamPermissions(
-    google::iam::v1::TestIamPermissionsRequest const& request) {
-  auto span = internal::MakeSpan(
-      "resourcemanager_v3::OrganizationsConnection::TestIamPermissions");
+OrganizationsTracingConnection::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) {
+  auto span = internal::MakeSpan("resourcemanager_v3::OrganizationsConnection::TestIamPermissions");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->TestIamPermissions(request));
 }
 
 StatusOr<google::longrunning::Operation>
-OrganizationsTracingConnection::GetOperation(
-    google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpan(
-      "resourcemanager_v3::OrganizationsConnection::GetOperation");
+OrganizationsTracingConnection::GetOperation(google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpan("resourcemanager_v3::OrganizationsConnection::GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOperation(request));
 }

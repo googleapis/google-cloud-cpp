@@ -17,12 +17,12 @@
 // source: google/cloud/gkebackup/v1/gkebackup.proto
 
 #include "google/cloud/gkebackup/v1/internal/backup_for_gke_stub_factory.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/gkebackup/v1/internal/backup_for_gke_auth_decorator.h"
 #include "google/cloud/gkebackup/v1/internal/backup_for_gke_logging_decorator.h"
 #include "google/cloud/gkebackup/v1/internal/backup_for_gke_metadata_decorator.h"
 #include "google/cloud/gkebackup/v1/internal/backup_for_gke_stub.h"
 #include "google/cloud/gkebackup/v1/internal/backup_for_gke_tracing_stub.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/opentelemetry.h"
@@ -40,31 +40,32 @@ namespace cloud {
 namespace gkebackup_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<BackupForGKEStub> CreateDefaultBackupForGKEStub(
+std::shared_ptr<BackupForGKEStub>
+CreateDefaultBackupForGKEStub(
     std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
     Options const& options) {
-  auto channel = auth->CreateChannel(options.get<EndpointOption>(),
-                                     internal::MakeChannelArguments(options));
-  auto service_grpc_stub =
-      google::cloud::gkebackup::v1::BackupForGKE::NewStub(channel);
+  auto channel = auth->CreateChannel(
+    options.get<EndpointOption>(), internal::MakeChannelArguments(options));
+  auto service_grpc_stub = google::cloud::gkebackup::v1::BackupForGKE::NewStub(channel);
   auto service_iampolicy_stub = google::iam::v1::IAMPolicy::NewStub(channel);
-  auto service_locations_stub =
-      google::cloud::location::Locations::NewStub(channel);
+  auto service_locations_stub = google::cloud::location::Locations::NewStub(channel);
   std::shared_ptr<BackupForGKEStub> stub =
-      std::make_shared<DefaultBackupForGKEStub>(
-          std::move(service_grpc_stub), std::move(service_iampolicy_stub),
-          std::move(service_locations_stub),
-          google::longrunning::Operations::NewStub(channel));
+    std::make_shared<DefaultBackupForGKEStub>(
+      std::move(service_grpc_stub), std::move(service_iampolicy_stub), std::move(service_locations_stub),
+      google::longrunning::Operations::NewStub(channel));
 
   if (auth->RequiresConfigureContext()) {
-    stub = std::make_shared<BackupForGKEAuth>(std::move(auth), std::move(stub));
+    stub = std::make_shared<BackupForGKEAuth>(
+        std::move(auth), std::move(stub));
   }
   stub = std::make_shared<BackupForGKEMetadata>(
       std::move(stub), std::multimap<std::string, std::string>{});
-  if (internal::Contains(options.get<LoggingComponentsOption>(), "rpc")) {
+  if (internal::Contains(
+      options.get<LoggingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<BackupForGKELogging>(
-        std::move(stub), options.get<GrpcTracingOptionsOption>(),
+        std::move(stub),
+        options.get<GrpcTracingOptionsOption>(),
         options.get<LoggingComponentsOption>());
   }
   if (internal::TracingEnabled(options)) {

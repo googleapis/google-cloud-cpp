@@ -36,11 +36,12 @@ class PredictionServiceLogging : public PredictionServiceStub {
  public:
   ~PredictionServiceLogging() override = default;
   PredictionServiceLogging(std::shared_ptr<PredictionServiceStub> child,
-                           TracingOptions tracing_options,
-                           std::set<std::string> const& components);
+                       TracingOptions tracing_options,
+                       std::set<std::string> const& components);
 
   StatusOr<google::cloud::automl::v1::PredictResponse> Predict(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::automl::v1::PredictRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncBatchPredict(
@@ -50,7 +51,8 @@ class PredictionServiceLogging : public PredictionServiceStub {
       google::cloud::automl::v1::BatchPredictRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> BatchPredict(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::cloud::automl::v1::BatchPredictRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(

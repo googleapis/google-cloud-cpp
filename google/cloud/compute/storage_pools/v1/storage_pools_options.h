@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_STORAGE_POOLS_V1_STORAGE_POOLS_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_STORAGE_POOLS_V1_STORAGE_POOLS_OPTIONS_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/storage_pools/v1/storage_pools_connection.h"
 #include "google/cloud/compute/storage_pools/v1/storage_pools_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -74,7 +74,8 @@ struct StoragePoolsPollingPolicyOption {
  * @ingroup google-cloud-compute-options
  */
 using StoragePoolsPolicyOptionList =
-    OptionList<StoragePoolsRetryPolicyOption, StoragePoolsBackoffPolicyOption,
+    OptionList<StoragePoolsRetryPolicyOption,
+               StoragePoolsBackoffPolicyOption,
                StoragePoolsPollingPolicyOption,
                StoragePoolsConnectionIdempotencyPolicyOption>;
 

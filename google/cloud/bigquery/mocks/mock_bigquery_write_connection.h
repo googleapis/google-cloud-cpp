@@ -30,8 +30,7 @@ namespace cloud {
 namespace bigquery_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use bigquery_storage_v1_mocks::MockBigQueryWriteConnection
-/// directly.
+/// @deprecated Use bigquery_storage_v1_mocks::MockBigQueryWriteConnection directly.
 using ::google::cloud::bigquery_storage_v1_mocks::MockBigQueryWriteConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

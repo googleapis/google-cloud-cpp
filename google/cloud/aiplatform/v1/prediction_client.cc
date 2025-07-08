@@ -28,15 +28,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 PredictionServiceClient::PredictionServiceClient(
     std::shared_ptr<PredictionServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 PredictionServiceClient::~PredictionServiceClient() = default;
 
 StatusOr<google::cloud::aiplatform::v1::PredictResponse>
-PredictionServiceClient::Predict(
-    std::string const& endpoint,
-    std::vector<google::protobuf::Value> const& instances,
-    google::protobuf::Value const& parameters, Options opts) {
+PredictionServiceClient::Predict(std::string const& endpoint, std::vector<google::protobuf::Value> const& instances, google::protobuf::Value const& parameters, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::PredictRequest request;
   request.set_endpoint(endpoint);
@@ -46,16 +43,13 @@ PredictionServiceClient::Predict(
 }
 
 StatusOr<google::cloud::aiplatform::v1::PredictResponse>
-PredictionServiceClient::Predict(
-    google::cloud::aiplatform::v1::PredictRequest const& request,
-    Options opts) {
+PredictionServiceClient::Predict(google::cloud::aiplatform::v1::PredictRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->Predict(request);
 }
 
-StatusOr<google::api::HttpBody> PredictionServiceClient::RawPredict(
-    std::string const& endpoint, google::api::HttpBody const& http_body,
-    Options opts) {
+StatusOr<google::api::HttpBody>
+PredictionServiceClient::RawPredict(std::string const& endpoint, google::api::HttpBody const& http_body, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::RawPredictRequest request;
   request.set_endpoint(endpoint);
@@ -63,16 +57,14 @@ StatusOr<google::api::HttpBody> PredictionServiceClient::RawPredict(
   return connection_->RawPredict(request);
 }
 
-StatusOr<google::api::HttpBody> PredictionServiceClient::RawPredict(
-    google::cloud::aiplatform::v1::RawPredictRequest const& request,
-    Options opts) {
+StatusOr<google::api::HttpBody>
+PredictionServiceClient::RawPredict(google::cloud::aiplatform::v1::RawPredictRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RawPredict(request);
 }
 
-StreamRange<google::api::HttpBody> PredictionServiceClient::StreamRawPredict(
-    std::string const& endpoint, google::api::HttpBody const& http_body,
-    Options opts) {
+StreamRange<google::api::HttpBody>
+PredictionServiceClient::StreamRawPredict(std::string const& endpoint, google::api::HttpBody const& http_body, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::StreamRawPredictRequest request;
   request.set_endpoint(endpoint);
@@ -80,25 +72,20 @@ StreamRange<google::api::HttpBody> PredictionServiceClient::StreamRawPredict(
   return connection_->StreamRawPredict(request);
 }
 
-StreamRange<google::api::HttpBody> PredictionServiceClient::StreamRawPredict(
-    google::cloud::aiplatform::v1::StreamRawPredictRequest const& request,
-    Options opts) {
+StreamRange<google::api::HttpBody>
+PredictionServiceClient::StreamRawPredict(google::cloud::aiplatform::v1::StreamRawPredictRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->StreamRawPredict(request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::DirectPredictResponse>
-PredictionServiceClient::DirectPredict(
-    google::cloud::aiplatform::v1::DirectPredictRequest const& request,
-    Options opts) {
+PredictionServiceClient::DirectPredict(google::cloud::aiplatform::v1::DirectPredictRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DirectPredict(request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::DirectRawPredictResponse>
-PredictionServiceClient::DirectRawPredict(
-    google::cloud::aiplatform::v1::DirectRawPredictRequest const& request,
-    Options opts) {
+PredictionServiceClient::DirectRawPredict(google::cloud::aiplatform::v1::DirectRawPredictRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DirectRawPredict(request);
 }
@@ -107,7 +94,8 @@ std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::cloud::aiplatform::v1::StreamDirectPredictRequest,
     google::cloud::aiplatform::v1::StreamDirectPredictResponse>>
 PredictionServiceClient::AsyncStreamDirectPredict(Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(opts), options_));
   return connection_->AsyncStreamDirectPredict();
 }
 
@@ -115,7 +103,8 @@ std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::cloud::aiplatform::v1::StreamDirectRawPredictRequest,
     google::cloud::aiplatform::v1::StreamDirectRawPredictResponse>>
 PredictionServiceClient::AsyncStreamDirectRawPredict(Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(opts), options_));
   return connection_->AsyncStreamDirectRawPredict();
 }
 
@@ -123,14 +112,13 @@ std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::cloud::aiplatform::v1::StreamingPredictRequest,
     google::cloud::aiplatform::v1::StreamingPredictResponse>>
 PredictionServiceClient::AsyncStreamingPredict(Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(opts), options_));
   return connection_->AsyncStreamingPredict();
 }
 
 StreamRange<google::cloud::aiplatform::v1::StreamingPredictResponse>
-PredictionServiceClient::ServerStreamingPredict(
-    google::cloud::aiplatform::v1::StreamingPredictRequest const& request,
-    Options opts) {
+PredictionServiceClient::ServerStreamingPredict(google::cloud::aiplatform::v1::StreamingPredictRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ServerStreamingPredict(request);
 }
@@ -139,16 +127,13 @@ std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::cloud::aiplatform::v1::StreamingRawPredictRequest,
     google::cloud::aiplatform::v1::StreamingRawPredictResponse>>
 PredictionServiceClient::AsyncStreamingRawPredict(Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(opts), options_));
   return connection_->AsyncStreamingRawPredict();
 }
 
 StatusOr<google::cloud::aiplatform::v1::ExplainResponse>
-PredictionServiceClient::Explain(
-    std::string const& endpoint,
-    std::vector<google::protobuf::Value> const& instances,
-    google::protobuf::Value const& parameters,
-    std::string const& deployed_model_id, Options opts) {
+PredictionServiceClient::Explain(std::string const& endpoint, std::vector<google::protobuf::Value> const& instances, google::protobuf::Value const& parameters, std::string const& deployed_model_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::ExplainRequest request;
   request.set_endpoint(endpoint);
@@ -159,18 +144,13 @@ PredictionServiceClient::Explain(
 }
 
 StatusOr<google::cloud::aiplatform::v1::ExplainResponse>
-PredictionServiceClient::Explain(
-    google::cloud::aiplatform::v1::ExplainRequest const& request,
-    Options opts) {
+PredictionServiceClient::Explain(google::cloud::aiplatform::v1::ExplainRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->Explain(request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::GenerateContentResponse>
-PredictionServiceClient::GenerateContent(
-    std::string const& model,
-    std::vector<google::cloud::aiplatform::v1::Content> const& contents,
-    Options opts) {
+PredictionServiceClient::GenerateContent(std::string const& model, std::vector<google::cloud::aiplatform::v1::Content> const& contents, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::GenerateContentRequest request;
   request.set_model(model);
@@ -179,18 +159,13 @@ PredictionServiceClient::GenerateContent(
 }
 
 StatusOr<google::cloud::aiplatform::v1::GenerateContentResponse>
-PredictionServiceClient::GenerateContent(
-    google::cloud::aiplatform::v1::GenerateContentRequest const& request,
-    Options opts) {
+PredictionServiceClient::GenerateContent(google::cloud::aiplatform::v1::GenerateContentRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GenerateContent(request);
 }
 
 StreamRange<google::cloud::aiplatform::v1::GenerateContentResponse>
-PredictionServiceClient::StreamGenerateContent(
-    std::string const& model,
-    std::vector<google::cloud::aiplatform::v1::Content> const& contents,
-    Options opts) {
+PredictionServiceClient::StreamGenerateContent(std::string const& model, std::vector<google::cloud::aiplatform::v1::Content> const& contents, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::GenerateContentRequest request;
   request.set_model(model);
@@ -199,50 +174,43 @@ PredictionServiceClient::StreamGenerateContent(
 }
 
 StreamRange<google::cloud::aiplatform::v1::GenerateContentResponse>
-PredictionServiceClient::StreamGenerateContent(
-    google::cloud::aiplatform::v1::GenerateContentRequest const& request,
-    Options opts) {
+PredictionServiceClient::StreamGenerateContent(google::cloud::aiplatform::v1::GenerateContentRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->StreamGenerateContent(request);
 }
 
 StreamRange<google::cloud::location::Location>
-PredictionServiceClient::ListLocations(
-    google::cloud::location::ListLocationsRequest request, Options opts) {
+PredictionServiceClient::ListLocations(google::cloud::location::ListLocationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListLocations(std::move(request));
 }
 
 StatusOr<google::cloud::location::Location>
-PredictionServiceClient::GetLocation(
-    google::cloud::location::GetLocationRequest const& request, Options opts) {
+PredictionServiceClient::GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetLocation(request);
 }
 
-StatusOr<google::iam::v1::Policy> PredictionServiceClient::SetIamPolicy(
-    google::iam::v1::SetIamPolicyRequest const& request, Options opts) {
+StatusOr<google::iam::v1::Policy>
+PredictionServiceClient::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetIamPolicy(request);
 }
 
-StatusOr<google::iam::v1::Policy> PredictionServiceClient::GetIamPolicy(
-    google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
+StatusOr<google::iam::v1::Policy>
+PredictionServiceClient::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetIamPolicy(request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-PredictionServiceClient::TestIamPermissions(
-    google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
+PredictionServiceClient::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->TestIamPermissions(request);
 }
 
 StreamRange<google::longrunning::Operation>
-PredictionServiceClient::ListOperations(std::string const& name,
-                                        std::string const& filter,
-                                        Options opts) {
+PredictionServiceClient::ListOperations(std::string const& name, std::string const& filter, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::ListOperationsRequest request;
   request.set_name(name);
@@ -251,56 +219,55 @@ PredictionServiceClient::ListOperations(std::string const& name,
 }
 
 StreamRange<google::longrunning::Operation>
-PredictionServiceClient::ListOperations(
-    google::longrunning::ListOperationsRequest request, Options opts) {
+PredictionServiceClient::ListOperations(google::longrunning::ListOperationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOperations(std::move(request));
 }
 
-StatusOr<google::longrunning::Operation> PredictionServiceClient::GetOperation(
-    std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation>
+PredictionServiceClient::GetOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
   return connection_->GetOperation(request);
 }
 
-StatusOr<google::longrunning::Operation> PredictionServiceClient::GetOperation(
-    google::longrunning::GetOperationRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation>
+PredictionServiceClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }
 
-Status PredictionServiceClient::DeleteOperation(std::string const& name,
-                                                Options opts) {
+Status
+PredictionServiceClient::DeleteOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::DeleteOperationRequest request;
   request.set_name(name);
   return connection_->DeleteOperation(request);
 }
 
-Status PredictionServiceClient::DeleteOperation(
-    google::longrunning::DeleteOperationRequest const& request, Options opts) {
+Status
+PredictionServiceClient::DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteOperation(request);
 }
 
-Status PredictionServiceClient::CancelOperation(std::string const& name,
-                                                Options opts) {
+Status
+PredictionServiceClient::CancelOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::CancelOperationRequest request;
   request.set_name(name);
   return connection_->CancelOperation(request);
 }
 
-Status PredictionServiceClient::CancelOperation(
-    google::longrunning::CancelOperationRequest const& request, Options opts) {
+Status
+PredictionServiceClient::CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelOperation(request);
 }
 
-StatusOr<google::longrunning::Operation> PredictionServiceClient::WaitOperation(
-    google::longrunning::WaitOperationRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation>
+PredictionServiceClient::WaitOperation(google::longrunning::WaitOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->WaitOperation(request);
 }

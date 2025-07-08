@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_CURSOR_AUTH_DECORATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_CURSOR_AUTH_DECORATOR_H
 
-#include "google/cloud/pubsublite/internal/cursor_stub.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/pubsublite/internal/cursor_stub.h"
 #include "google/cloud/version.h"
 #include <memory>
 #include <set>
@@ -47,30 +47,33 @@ class CursorServiceAuth : public CursorServiceStub {
       google::cloud::internal::ImmutableOptions options) override;
 
   StatusOr<google::cloud::pubsublite::v1::CommitCursorResponse> CommitCursor(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::pubsublite::v1::CommitCursorRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::pubsublite::v1::CommitCursorRequest const& request) override;
 
-  StatusOr<google::cloud::pubsublite::v1::ListPartitionCursorsResponse>
-  ListPartitionCursors(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::pubsublite::v1::ListPartitionCursorsRequest const& request)
-      override;
+  StatusOr<google::cloud::pubsublite::v1::ListPartitionCursorsResponse> ListPartitionCursors(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::pubsublite::v1::ListPartitionCursorsRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status DeleteOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::DeleteOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:

@@ -31,10 +31,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * A class to mock `IdentityAwareProxyAdminServiceConnection`.
  *
  * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type
- * `IdentityAwareProxyAdminServiceClient`. To do so, construct an object of type
- * `IdentityAwareProxyAdminServiceClient` with an instance of this class. Then
- * use the Google Test framework functions to program the behavior of this mock.
+ * including errors, from an object of type `IdentityAwareProxyAdminServiceClient`. To do so,
+ * construct an object of type `IdentityAwareProxyAdminServiceClient` with an instance of this
+ * class. Then use the Google Test framework functions to program the behavior
+ * of this mock.
  *
  * @see [This example][bq-mock] for how to test your application with GoogleTest.
  * While the example showcases types from the BigQuery library, the underlying
@@ -42,63 +42,53 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockIdentityAwareProxyAdminServiceConnection
-    : public iap_v1::IdentityAwareProxyAdminServiceConnection {
+class MockIdentityAwareProxyAdminServiceConnection : public iap_v1::IdentityAwareProxyAdminServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, SetIamPolicy,
-              (google::iam::v1::SetIamPolicyRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::iam::v1::Policy>,
+  SetIamPolicy,
+  (google::iam::v1::SetIamPolicyRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, GetIamPolicy,
-              (google::iam::v1::GetIamPolicyRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::iam::v1::Policy>,
+  GetIamPolicy,
+  (google::iam::v1::GetIamPolicyRequest const& request), (override));
 
   MOCK_METHOD(StatusOr<google::iam::v1::TestIamPermissionsResponse>,
-              TestIamPermissions,
-              (google::iam::v1::TestIamPermissionsRequest const& request),
-              (override));
+  TestIamPermissions,
+  (google::iam::v1::TestIamPermissionsRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::iap::v1::IapSettings>, GetIapSettings,
-              (google::cloud::iap::v1::GetIapSettingsRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::iap::v1::IapSettings>,
+  GetIapSettings,
+  (google::cloud::iap::v1::GetIapSettingsRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::iap::v1::IapSettings>, UpdateIapSettings,
-              (google::cloud::iap::v1::UpdateIapSettingsRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::iap::v1::IapSettings>,
+  UpdateIapSettings,
+  (google::cloud::iap::v1::UpdateIapSettingsRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::iap::v1::ValidateIapAttributeExpressionResponse>,
-      ValidateIapAttributeExpression,
-      (google::cloud::iap::v1::ValidateIapAttributeExpressionRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::iap::v1::ValidateIapAttributeExpressionResponse>,
+  ValidateIapAttributeExpression,
+  (google::cloud::iap::v1::ValidateIapAttributeExpressionRequest const& request), (override));
 
   MOCK_METHOD((StreamRange<google::cloud::iap::v1::TunnelDestGroup>),
-              ListTunnelDestGroups,
-              (google::cloud::iap::v1::ListTunnelDestGroupsRequest request),
-              (override));
+  ListTunnelDestGroups,
+  (google::cloud::iap::v1::ListTunnelDestGroupsRequest request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::iap::v1::TunnelDestGroup>, CreateTunnelDestGroup,
-      (google::cloud::iap::v1::CreateTunnelDestGroupRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::iap::v1::TunnelDestGroup>,
+  CreateTunnelDestGroup,
+  (google::cloud::iap::v1::CreateTunnelDestGroupRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::iap::v1::TunnelDestGroup>, GetTunnelDestGroup,
-      (google::cloud::iap::v1::GetTunnelDestGroupRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::iap::v1::TunnelDestGroup>,
+  GetTunnelDestGroup,
+  (google::cloud::iap::v1::GetTunnelDestGroupRequest const& request), (override));
 
-  MOCK_METHOD(
-      Status, DeleteTunnelDestGroup,
-      (google::cloud::iap::v1::DeleteTunnelDestGroupRequest const& request),
-      (override));
+  MOCK_METHOD(Status,
+  DeleteTunnelDestGroup,
+  (google::cloud::iap::v1::DeleteTunnelDestGroupRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::iap::v1::TunnelDestGroup>, UpdateTunnelDestGroup,
-      (google::cloud::iap::v1::UpdateTunnelDestGroupRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::iap::v1::TunnelDestGroup>,
+  UpdateTunnelDestGroup,
+  (google::cloud::iap::v1::UpdateTunnelDestGroupRequest const& request), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

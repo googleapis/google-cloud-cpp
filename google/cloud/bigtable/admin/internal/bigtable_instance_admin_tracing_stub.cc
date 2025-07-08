@@ -34,61 +34,56 @@ BigtableInstanceAdminTracingStub::BigtableInstanceAdminTracingStub(
 
 future<StatusOr<google::longrunning::Operation>>
 BigtableInstanceAdminTracingStub::AsyncCreateInstance(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::bigtable::admin::v2::CreateInstanceRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.bigtable.admin.v2.BigtableInstanceAdmin", "CreateInstance");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::bigtable::admin::v2::CreateInstanceRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.bigtable.admin.v2.BigtableInstanceAdmin", "CreateInstance");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f =
-      child_->AsyncCreateInstance(cq, context, std::move(options), request);
+  auto f = child_->AsyncCreateInstance(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 BigtableInstanceAdminTracingStub::CreateInstance(
-    grpc::ClientContext& context, Options options,
-    google::bigtable::admin::v2::CreateInstanceRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.bigtable.admin.v2.BigtableInstanceAdmin", "CreateInstance");
+      grpc::ClientContext& context,
+      Options options,
+      google::bigtable::admin::v2::CreateInstanceRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.bigtable.admin.v2.BigtableInstanceAdmin", "CreateInstance");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateInstance(context, options, request));
 }
 
-StatusOr<google::bigtable::admin::v2::Instance>
-BigtableInstanceAdminTracingStub::GetInstance(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::bigtable::admin::v2::Instance> BigtableInstanceAdminTracingStub::GetInstance(
+    grpc::ClientContext& context,
+    Options const& options,
     google::bigtable::admin::v2::GetInstanceRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.bigtable.admin.v2.BigtableInstanceAdmin", "GetInstance");
+  auto span = internal::MakeSpanGrpc("google.bigtable.admin.v2.BigtableInstanceAdmin", "GetInstance");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetInstance(context, options, request));
 }
 
-StatusOr<google::bigtable::admin::v2::ListInstancesResponse>
-BigtableInstanceAdminTracingStub::ListInstances(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::bigtable::admin::v2::ListInstancesResponse> BigtableInstanceAdminTracingStub::ListInstances(
+    grpc::ClientContext& context,
+    Options const& options,
     google::bigtable::admin::v2::ListInstancesRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.bigtable.admin.v2.BigtableInstanceAdmin", "ListInstances");
+  auto span = internal::MakeSpanGrpc("google.bigtable.admin.v2.BigtableInstanceAdmin", "ListInstances");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListInstances(context, options, request));
 }
 
-StatusOr<google::bigtable::admin::v2::Instance>
-BigtableInstanceAdminTracingStub::UpdateInstance(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::bigtable::admin::v2::Instance> BigtableInstanceAdminTracingStub::UpdateInstance(
+    grpc::ClientContext& context,
+    Options const& options,
     google::bigtable::admin::v2::Instance const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.bigtable.admin.v2.BigtableInstanceAdmin", "UpdateInstance");
+  auto span = internal::MakeSpanGrpc("google.bigtable.admin.v2.BigtableInstanceAdmin", "UpdateInstance");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -97,38 +92,34 @@ BigtableInstanceAdminTracingStub::UpdateInstance(
 
 future<StatusOr<google::longrunning::Operation>>
 BigtableInstanceAdminTracingStub::AsyncPartialUpdateInstance(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::bigtable::admin::v2::PartialUpdateInstanceRequest const& request) {
-  auto span =
-      internal::MakeSpanGrpc("google.bigtable.admin.v2.BigtableInstanceAdmin",
-                             "PartialUpdateInstance");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::bigtable::admin::v2::PartialUpdateInstanceRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.bigtable.admin.v2.BigtableInstanceAdmin", "PartialUpdateInstance");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncPartialUpdateInstance(cq, context, std::move(options),
-                                              request);
+  auto f = child_->AsyncPartialUpdateInstance(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 BigtableInstanceAdminTracingStub::PartialUpdateInstance(
-    grpc::ClientContext& context, Options options,
-    google::bigtable::admin::v2::PartialUpdateInstanceRequest const& request) {
-  auto span =
-      internal::MakeSpanGrpc("google.bigtable.admin.v2.BigtableInstanceAdmin",
-                             "PartialUpdateInstance");
+      grpc::ClientContext& context,
+      Options options,
+      google::bigtable::admin::v2::PartialUpdateInstanceRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.bigtable.admin.v2.BigtableInstanceAdmin", "PartialUpdateInstance");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->PartialUpdateInstance(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->PartialUpdateInstance(context, options, request));
 }
 
 Status BigtableInstanceAdminTracingStub::DeleteInstance(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::bigtable::admin::v2::DeleteInstanceRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.bigtable.admin.v2.BigtableInstanceAdmin", "DeleteInstance");
+  auto span = internal::MakeSpanGrpc("google.bigtable.admin.v2.BigtableInstanceAdmin", "DeleteInstance");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -137,12 +128,11 @@ Status BigtableInstanceAdminTracingStub::DeleteInstance(
 
 future<StatusOr<google::longrunning::Operation>>
 BigtableInstanceAdminTracingStub::AsyncCreateCluster(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::bigtable::admin::v2::CreateClusterRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.bigtable.admin.v2.BigtableInstanceAdmin", "CreateCluster");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::bigtable::admin::v2::CreateClusterRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.bigtable.admin.v2.BigtableInstanceAdmin", "CreateCluster");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCreateCluster(cq, context, std::move(options), request);
@@ -151,34 +141,32 @@ BigtableInstanceAdminTracingStub::AsyncCreateCluster(
 
 StatusOr<google::longrunning::Operation>
 BigtableInstanceAdminTracingStub::CreateCluster(
-    grpc::ClientContext& context, Options options,
-    google::bigtable::admin::v2::CreateClusterRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.bigtable.admin.v2.BigtableInstanceAdmin", "CreateCluster");
+      grpc::ClientContext& context,
+      Options options,
+      google::bigtable::admin::v2::CreateClusterRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.bigtable.admin.v2.BigtableInstanceAdmin", "CreateCluster");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateCluster(context, options, request));
 }
 
-StatusOr<google::bigtable::admin::v2::Cluster>
-BigtableInstanceAdminTracingStub::GetCluster(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::bigtable::admin::v2::Cluster> BigtableInstanceAdminTracingStub::GetCluster(
+    grpc::ClientContext& context,
+    Options const& options,
     google::bigtable::admin::v2::GetClusterRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.bigtable.admin.v2.BigtableInstanceAdmin", "GetCluster");
+  auto span = internal::MakeSpanGrpc("google.bigtable.admin.v2.BigtableInstanceAdmin", "GetCluster");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetCluster(context, options, request));
 }
 
-StatusOr<google::bigtable::admin::v2::ListClustersResponse>
-BigtableInstanceAdminTracingStub::ListClusters(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::bigtable::admin::v2::ListClustersResponse> BigtableInstanceAdminTracingStub::ListClusters(
+    grpc::ClientContext& context,
+    Options const& options,
     google::bigtable::admin::v2::ListClustersRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.bigtable.admin.v2.BigtableInstanceAdmin", "ListClusters");
+  auto span = internal::MakeSpanGrpc("google.bigtable.admin.v2.BigtableInstanceAdmin", "ListClusters");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -187,12 +175,11 @@ BigtableInstanceAdminTracingStub::ListClusters(
 
 future<StatusOr<google::longrunning::Operation>>
 BigtableInstanceAdminTracingStub::AsyncUpdateCluster(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::bigtable::admin::v2::Cluster const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.bigtable.admin.v2.BigtableInstanceAdmin", "UpdateCluster");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::bigtable::admin::v2::Cluster const& request) {
+  auto span = internal::MakeSpanGrpc("google.bigtable.admin.v2.BigtableInstanceAdmin", "UpdateCluster");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncUpdateCluster(cq, context, std::move(options), request);
@@ -201,10 +188,10 @@ BigtableInstanceAdminTracingStub::AsyncUpdateCluster(
 
 StatusOr<google::longrunning::Operation>
 BigtableInstanceAdminTracingStub::UpdateCluster(
-    grpc::ClientContext& context, Options options,
-    google::bigtable::admin::v2::Cluster const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.bigtable.admin.v2.BigtableInstanceAdmin", "UpdateCluster");
+      grpc::ClientContext& context,
+      Options options,
+      google::bigtable::admin::v2::Cluster const& request) {
+  auto span = internal::MakeSpanGrpc("google.bigtable.admin.v2.BigtableInstanceAdmin", "UpdateCluster");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -213,72 +200,67 @@ BigtableInstanceAdminTracingStub::UpdateCluster(
 
 future<StatusOr<google::longrunning::Operation>>
 BigtableInstanceAdminTracingStub::AsyncPartialUpdateCluster(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::bigtable::admin::v2::PartialUpdateClusterRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.bigtable.admin.v2.BigtableInstanceAdmin", "PartialUpdateCluster");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::bigtable::admin::v2::PartialUpdateClusterRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.bigtable.admin.v2.BigtableInstanceAdmin", "PartialUpdateCluster");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncPartialUpdateCluster(cq, context, std::move(options),
-                                             request);
+  auto f = child_->AsyncPartialUpdateCluster(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 BigtableInstanceAdminTracingStub::PartialUpdateCluster(
-    grpc::ClientContext& context, Options options,
-    google::bigtable::admin::v2::PartialUpdateClusterRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.bigtable.admin.v2.BigtableInstanceAdmin", "PartialUpdateCluster");
+      grpc::ClientContext& context,
+      Options options,
+      google::bigtable::admin::v2::PartialUpdateClusterRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.bigtable.admin.v2.BigtableInstanceAdmin", "PartialUpdateCluster");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->PartialUpdateCluster(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->PartialUpdateCluster(context, options, request));
 }
 
 Status BigtableInstanceAdminTracingStub::DeleteCluster(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::bigtable::admin::v2::DeleteClusterRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.bigtable.admin.v2.BigtableInstanceAdmin", "DeleteCluster");
+  auto span = internal::MakeSpanGrpc("google.bigtable.admin.v2.BigtableInstanceAdmin", "DeleteCluster");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeleteCluster(context, options, request));
 }
 
-StatusOr<google::bigtable::admin::v2::AppProfile>
-BigtableInstanceAdminTracingStub::CreateAppProfile(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::bigtable::admin::v2::AppProfile> BigtableInstanceAdminTracingStub::CreateAppProfile(
+    grpc::ClientContext& context,
+    Options const& options,
     google::bigtable::admin::v2::CreateAppProfileRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.bigtable.admin.v2.BigtableInstanceAdmin", "CreateAppProfile");
+  auto span = internal::MakeSpanGrpc("google.bigtable.admin.v2.BigtableInstanceAdmin", "CreateAppProfile");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateAppProfile(context, options, request));
 }
 
-StatusOr<google::bigtable::admin::v2::AppProfile>
-BigtableInstanceAdminTracingStub::GetAppProfile(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::bigtable::admin::v2::AppProfile> BigtableInstanceAdminTracingStub::GetAppProfile(
+    grpc::ClientContext& context,
+    Options const& options,
     google::bigtable::admin::v2::GetAppProfileRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.bigtable.admin.v2.BigtableInstanceAdmin", "GetAppProfile");
+  auto span = internal::MakeSpanGrpc("google.bigtable.admin.v2.BigtableInstanceAdmin", "GetAppProfile");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetAppProfile(context, options, request));
 }
 
-StatusOr<google::bigtable::admin::v2::ListAppProfilesResponse>
-BigtableInstanceAdminTracingStub::ListAppProfiles(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::bigtable::admin::v2::ListAppProfilesResponse> BigtableInstanceAdminTracingStub::ListAppProfiles(
+    grpc::ClientContext& context,
+    Options const& options,
     google::bigtable::admin::v2::ListAppProfilesRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.bigtable.admin.v2.BigtableInstanceAdmin", "ListAppProfiles");
+  auto span = internal::MakeSpanGrpc("google.bigtable.admin.v2.BigtableInstanceAdmin", "ListAppProfiles");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -287,25 +269,23 @@ BigtableInstanceAdminTracingStub::ListAppProfiles(
 
 future<StatusOr<google::longrunning::Operation>>
 BigtableInstanceAdminTracingStub::AsyncUpdateAppProfile(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::bigtable::admin::v2::UpdateAppProfileRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.bigtable.admin.v2.BigtableInstanceAdmin", "UpdateAppProfile");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::bigtable::admin::v2::UpdateAppProfileRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.bigtable.admin.v2.BigtableInstanceAdmin", "UpdateAppProfile");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f =
-      child_->AsyncUpdateAppProfile(cq, context, std::move(options), request);
+  auto f = child_->AsyncUpdateAppProfile(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 BigtableInstanceAdminTracingStub::UpdateAppProfile(
-    grpc::ClientContext& context, Options options,
-    google::bigtable::admin::v2::UpdateAppProfileRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.bigtable.admin.v2.BigtableInstanceAdmin", "UpdateAppProfile");
+      grpc::ClientContext& context,
+      Options options,
+      google::bigtable::admin::v2::UpdateAppProfileRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.bigtable.admin.v2.BigtableInstanceAdmin", "UpdateAppProfile");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -313,58 +293,54 @@ BigtableInstanceAdminTracingStub::UpdateAppProfile(
 }
 
 Status BigtableInstanceAdminTracingStub::DeleteAppProfile(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::bigtable::admin::v2::DeleteAppProfileRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.bigtable.admin.v2.BigtableInstanceAdmin", "DeleteAppProfile");
+  auto span = internal::MakeSpanGrpc("google.bigtable.admin.v2.BigtableInstanceAdmin", "DeleteAppProfile");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeleteAppProfile(context, options, request));
 }
 
-StatusOr<google::iam::v1::Policy>
-BigtableInstanceAdminTracingStub::GetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::iam::v1::Policy> BigtableInstanceAdminTracingStub::GetIamPolicy(
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.bigtable.admin.v2.BigtableInstanceAdmin", "GetIamPolicy");
+  auto span = internal::MakeSpanGrpc("google.bigtable.admin.v2.BigtableInstanceAdmin", "GetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetIamPolicy(context, options, request));
 }
 
-StatusOr<google::iam::v1::Policy>
-BigtableInstanceAdminTracingStub::SetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::iam::v1::Policy> BigtableInstanceAdminTracingStub::SetIamPolicy(
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.bigtable.admin.v2.BigtableInstanceAdmin", "SetIamPolicy");
+  auto span = internal::MakeSpanGrpc("google.bigtable.admin.v2.BigtableInstanceAdmin", "SetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->SetIamPolicy(context, options, request));
 }
 
-StatusOr<google::iam::v1::TestIamPermissionsResponse>
-BigtableInstanceAdminTracingStub::TestIamPermissions(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::iam::v1::TestIamPermissionsResponse> BigtableInstanceAdminTracingStub::TestIamPermissions(
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.bigtable.admin.v2.BigtableInstanceAdmin", "TestIamPermissions");
+  auto span = internal::MakeSpanGrpc("google.bigtable.admin.v2.BigtableInstanceAdmin", "TestIamPermissions");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->TestIamPermissions(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->TestIamPermissions(context, options, request));
 }
 
-StatusOr<google::bigtable::admin::v2::ListHotTabletsResponse>
-BigtableInstanceAdminTracingStub::ListHotTablets(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::bigtable::admin::v2::ListHotTabletsResponse> BigtableInstanceAdminTracingStub::ListHotTablets(
+    grpc::ClientContext& context,
+    Options const& options,
     google::bigtable::admin::v2::ListHotTabletsRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.bigtable.admin.v2.BigtableInstanceAdmin", "ListHotTablets");
+  auto span = internal::MakeSpanGrpc("google.bigtable.admin.v2.BigtableInstanceAdmin", "ListHotTablets");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -373,49 +349,45 @@ BigtableInstanceAdminTracingStub::ListHotTablets(
 
 future<StatusOr<google::longrunning::Operation>>
 BigtableInstanceAdminTracingStub::AsyncCreateLogicalView(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::bigtable::admin::v2::CreateLogicalViewRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.bigtable.admin.v2.BigtableInstanceAdmin", "CreateLogicalView");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::bigtable::admin::v2::CreateLogicalViewRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.bigtable.admin.v2.BigtableInstanceAdmin", "CreateLogicalView");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f =
-      child_->AsyncCreateLogicalView(cq, context, std::move(options), request);
+  auto f = child_->AsyncCreateLogicalView(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 BigtableInstanceAdminTracingStub::CreateLogicalView(
-    grpc::ClientContext& context, Options options,
-    google::bigtable::admin::v2::CreateLogicalViewRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.bigtable.admin.v2.BigtableInstanceAdmin", "CreateLogicalView");
+      grpc::ClientContext& context,
+      Options options,
+      google::bigtable::admin::v2::CreateLogicalViewRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.bigtable.admin.v2.BigtableInstanceAdmin", "CreateLogicalView");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->CreateLogicalView(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->CreateLogicalView(context, options, request));
 }
 
-StatusOr<google::bigtable::admin::v2::LogicalView>
-BigtableInstanceAdminTracingStub::GetLogicalView(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::bigtable::admin::v2::LogicalView> BigtableInstanceAdminTracingStub::GetLogicalView(
+    grpc::ClientContext& context,
+    Options const& options,
     google::bigtable::admin::v2::GetLogicalViewRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.bigtable.admin.v2.BigtableInstanceAdmin", "GetLogicalView");
+  auto span = internal::MakeSpanGrpc("google.bigtable.admin.v2.BigtableInstanceAdmin", "GetLogicalView");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetLogicalView(context, options, request));
 }
 
-StatusOr<google::bigtable::admin::v2::ListLogicalViewsResponse>
-BigtableInstanceAdminTracingStub::ListLogicalViews(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::bigtable::admin::v2::ListLogicalViewsResponse> BigtableInstanceAdminTracingStub::ListLogicalViews(
+    grpc::ClientContext& context,
+    Options const& options,
     google::bigtable::admin::v2::ListLogicalViewsRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.bigtable.admin.v2.BigtableInstanceAdmin", "ListLogicalViews");
+  auto span = internal::MakeSpanGrpc("google.bigtable.admin.v2.BigtableInstanceAdmin", "ListLogicalViews");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -424,138 +396,121 @@ BigtableInstanceAdminTracingStub::ListLogicalViews(
 
 future<StatusOr<google::longrunning::Operation>>
 BigtableInstanceAdminTracingStub::AsyncUpdateLogicalView(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::bigtable::admin::v2::UpdateLogicalViewRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.bigtable.admin.v2.BigtableInstanceAdmin", "UpdateLogicalView");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::bigtable::admin::v2::UpdateLogicalViewRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.bigtable.admin.v2.BigtableInstanceAdmin", "UpdateLogicalView");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f =
-      child_->AsyncUpdateLogicalView(cq, context, std::move(options), request);
+  auto f = child_->AsyncUpdateLogicalView(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 BigtableInstanceAdminTracingStub::UpdateLogicalView(
-    grpc::ClientContext& context, Options options,
-    google::bigtable::admin::v2::UpdateLogicalViewRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.bigtable.admin.v2.BigtableInstanceAdmin", "UpdateLogicalView");
+      grpc::ClientContext& context,
+      Options options,
+      google::bigtable::admin::v2::UpdateLogicalViewRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.bigtable.admin.v2.BigtableInstanceAdmin", "UpdateLogicalView");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->UpdateLogicalView(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->UpdateLogicalView(context, options, request));
 }
 
 Status BigtableInstanceAdminTracingStub::DeleteLogicalView(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::bigtable::admin::v2::DeleteLogicalViewRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.bigtable.admin.v2.BigtableInstanceAdmin", "DeleteLogicalView");
+  auto span = internal::MakeSpanGrpc("google.bigtable.admin.v2.BigtableInstanceAdmin", "DeleteLogicalView");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->DeleteLogicalView(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->DeleteLogicalView(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 BigtableInstanceAdminTracingStub::AsyncCreateMaterializedView(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::bigtable::admin::v2::CreateMaterializedViewRequest const& request) {
-  auto span =
-      internal::MakeSpanGrpc("google.bigtable.admin.v2.BigtableInstanceAdmin",
-                             "CreateMaterializedView");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::bigtable::admin::v2::CreateMaterializedViewRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.bigtable.admin.v2.BigtableInstanceAdmin", "CreateMaterializedView");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCreateMaterializedView(cq, context, std::move(options),
-                                               request);
+  auto f = child_->AsyncCreateMaterializedView(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 BigtableInstanceAdminTracingStub::CreateMaterializedView(
-    grpc::ClientContext& context, Options options,
-    google::bigtable::admin::v2::CreateMaterializedViewRequest const& request) {
-  auto span =
-      internal::MakeSpanGrpc("google.bigtable.admin.v2.BigtableInstanceAdmin",
-                             "CreateMaterializedView");
+      grpc::ClientContext& context,
+      Options options,
+      google::bigtable::admin::v2::CreateMaterializedViewRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.bigtable.admin.v2.BigtableInstanceAdmin", "CreateMaterializedView");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span,
-      child_->CreateMaterializedView(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->CreateMaterializedView(context, options, request));
 }
 
-StatusOr<google::bigtable::admin::v2::MaterializedView>
-BigtableInstanceAdminTracingStub::GetMaterializedView(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::bigtable::admin::v2::MaterializedView> BigtableInstanceAdminTracingStub::GetMaterializedView(
+    grpc::ClientContext& context,
+    Options const& options,
     google::bigtable::admin::v2::GetMaterializedViewRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.bigtable.admin.v2.BigtableInstanceAdmin", "GetMaterializedView");
+  auto span = internal::MakeSpanGrpc("google.bigtable.admin.v2.BigtableInstanceAdmin", "GetMaterializedView");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->GetMaterializedView(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->GetMaterializedView(context, options, request));
 }
 
-StatusOr<google::bigtable::admin::v2::ListMaterializedViewsResponse>
-BigtableInstanceAdminTracingStub::ListMaterializedViews(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::bigtable::admin::v2::ListMaterializedViewsResponse> BigtableInstanceAdminTracingStub::ListMaterializedViews(
+    grpc::ClientContext& context,
+    Options const& options,
     google::bigtable::admin::v2::ListMaterializedViewsRequest const& request) {
-  auto span =
-      internal::MakeSpanGrpc("google.bigtable.admin.v2.BigtableInstanceAdmin",
-                             "ListMaterializedViews");
+  auto span = internal::MakeSpanGrpc("google.bigtable.admin.v2.BigtableInstanceAdmin", "ListMaterializedViews");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->ListMaterializedViews(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->ListMaterializedViews(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 BigtableInstanceAdminTracingStub::AsyncUpdateMaterializedView(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::bigtable::admin::v2::UpdateMaterializedViewRequest const& request) {
-  auto span =
-      internal::MakeSpanGrpc("google.bigtable.admin.v2.BigtableInstanceAdmin",
-                             "UpdateMaterializedView");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::bigtable::admin::v2::UpdateMaterializedViewRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.bigtable.admin.v2.BigtableInstanceAdmin", "UpdateMaterializedView");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncUpdateMaterializedView(cq, context, std::move(options),
-                                               request);
+  auto f = child_->AsyncUpdateMaterializedView(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 BigtableInstanceAdminTracingStub::UpdateMaterializedView(
-    grpc::ClientContext& context, Options options,
-    google::bigtable::admin::v2::UpdateMaterializedViewRequest const& request) {
-  auto span =
-      internal::MakeSpanGrpc("google.bigtable.admin.v2.BigtableInstanceAdmin",
-                             "UpdateMaterializedView");
+      grpc::ClientContext& context,
+      Options options,
+      google::bigtable::admin::v2::UpdateMaterializedViewRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.bigtable.admin.v2.BigtableInstanceAdmin", "UpdateMaterializedView");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span,
-      child_->UpdateMaterializedView(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->UpdateMaterializedView(context, options, request));
 }
 
 Status BigtableInstanceAdminTracingStub::DeleteMaterializedView(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::bigtable::admin::v2::DeleteMaterializedViewRequest const& request) {
-  auto span =
-      internal::MakeSpanGrpc("google.bigtable.admin.v2.BigtableInstanceAdmin",
-                             "DeleteMaterializedView");
+  auto span = internal::MakeSpanGrpc("google.bigtable.admin.v2.BigtableInstanceAdmin", "DeleteMaterializedView");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span,
-      child_->DeleteMaterializedView(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->DeleteMaterializedView(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -568,7 +523,8 @@ BigtableInstanceAdminTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncGetOperation(cq, context, std::move(options), request);
+  auto f = child_->AsyncGetOperation(
+      cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -581,8 +537,8 @@ future<Status> BigtableInstanceAdminTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f =
-      child_->AsyncCancelOperation(cq, context, std::move(options), request);
+  auto f = child_->AsyncCancelOperation(
+      cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 

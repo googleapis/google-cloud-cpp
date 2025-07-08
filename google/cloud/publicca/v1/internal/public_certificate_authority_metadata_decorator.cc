@@ -33,11 +33,10 @@ namespace cloud {
 namespace publicca_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-PublicCertificateAuthorityServiceMetadata::
-    PublicCertificateAuthorityServiceMetadata(
-        std::shared_ptr<PublicCertificateAuthorityServiceStub> child,
-        std::multimap<std::string, std::string> fixed_metadata,
-        std::string api_client_header)
+PublicCertificateAuthorityServiceMetadata::PublicCertificateAuthorityServiceMetadata(
+    std::shared_ptr<PublicCertificateAuthorityServiceStub> child,
+    std::multimap<std::string, std::string> fixed_metadata,
+    std::string api_client_header)
     : child_(std::move(child)),
       fixed_metadata_(std::move(fixed_metadata)),
       api_client_header_(
@@ -47,25 +46,24 @@ PublicCertificateAuthorityServiceMetadata::
 
 StatusOr<google::cloud::security::publicca::v1::ExternalAccountKey>
 PublicCertificateAuthorityServiceMetadata::CreateExternalAccountKey(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::security::publicca::v1::
-        CreateExternalAccountKeyRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::security::publicca::v1::CreateExternalAccountKeyRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateExternalAccountKey(context, options, request);
 }
 
-void PublicCertificateAuthorityServiceMetadata::SetMetadata(
-    grpc::ClientContext& context, Options const& options,
-    std::string const& request_params) {
+void PublicCertificateAuthorityServiceMetadata::SetMetadata(grpc::ClientContext& context,
+                                        Options const& options,
+                                        std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
-void PublicCertificateAuthorityServiceMetadata::SetMetadata(
-    grpc::ClientContext& context, Options const& options) {
-  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
-                                       api_client_header_);
+void PublicCertificateAuthorityServiceMetadata::SetMetadata(grpc::ClientContext& context,
+                                        Options const& options) {
+  google::cloud::internal::SetMetadata(
+      context, options, fixed_metadata_, api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

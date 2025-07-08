@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SERVICEDIRECTORY_V1_REGISTRATION_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SERVICEDIRECTORY_V1_REGISTRATION_CLIENT_H
 
-#include "google/cloud/servicedirectory/v1/registration_connection.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
+#include "google/cloud/servicedirectory/v1/registration_connection.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <map>
@@ -74,37 +74,29 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// and move-construction is a relatively efficient operation, consider using
 /// such a copy when using this class from multiple threads.
 ///
-/// [google.cloud.servicedirectory.v1.Endpoint]:
-/// @googleapis_reference_link{google/cloud/servicedirectory/v1/endpoint.proto#L37}
-/// [google.cloud.servicedirectory.v1.Namespace]:
-/// @googleapis_reference_link{google/cloud/servicedirectory/v1/namespace.proto#L33}
-/// [google.cloud.servicedirectory.v1.Service]:
-/// @googleapis_reference_link{google/cloud/servicedirectory/v1/service.proto#L35}
+/// [google.cloud.servicedirectory.v1.Endpoint]: @googleapis_reference_link{google/cloud/servicedirectory/v1/endpoint.proto#L37}
+/// [google.cloud.servicedirectory.v1.Namespace]: @googleapis_reference_link{google/cloud/servicedirectory/v1/namespace.proto#L33}
+/// [google.cloud.servicedirectory.v1.Service]: @googleapis_reference_link{google/cloud/servicedirectory/v1/service.proto#L35}
 ///
 class RegistrationServiceClient {
  public:
-  explicit RegistrationServiceClient(
-      std::shared_ptr<RegistrationServiceConnection> connection,
-      Options opts = {});
+  explicit RegistrationServiceClient(std::shared_ptr<RegistrationServiceConnection> connection, Options opts = {});
   ~RegistrationServiceClient();
 
   ///@{
   /// @name Copy and move support
   RegistrationServiceClient(RegistrationServiceClient const&) = default;
-  RegistrationServiceClient& operator=(RegistrationServiceClient const&) =
-      default;
+  RegistrationServiceClient& operator=(RegistrationServiceClient const&) = default;
   RegistrationServiceClient(RegistrationServiceClient&&) = default;
   RegistrationServiceClient& operator=(RegistrationServiceClient&&) = default;
   ///@}
 
   ///@{
   /// @name Equality
-  friend bool operator==(RegistrationServiceClient const& a,
-                         RegistrationServiceClient const& b) {
+  friend bool operator==(RegistrationServiceClient const& a, RegistrationServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(RegistrationServiceClient const& a,
-                         RegistrationServiceClient const& b) {
+  friend bool operator!=(RegistrationServiceClient const& a, RegistrationServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -140,10 +132,8 @@ class RegistrationServiceClient {
   /// [google.cloud.servicedirectory.v1.Namespace]: @googleapis_reference_link{google/cloud/servicedirectory/v1/namespace.proto#L33}
   ///
   // clang-format on
-  StatusOr<google::cloud::servicedirectory::v1::Namespace> CreateNamespace(
-      std::string const& parent,
-      google::cloud::servicedirectory::v1::Namespace const& namespace_,
-      std::string const& namespace_id, Options opts = {});
+  StatusOr<google::cloud::servicedirectory::v1::Namespace>
+  CreateNamespace(std::string const& parent, google::cloud::servicedirectory::v1::Namespace const& namespace_, std::string const& namespace_id, Options opts = {});
 
   // clang-format off
   ///
@@ -172,10 +162,8 @@ class RegistrationServiceClient {
   /// [google.cloud.servicedirectory.v1.Namespace]: @googleapis_reference_link{google/cloud/servicedirectory/v1/namespace.proto#L33}
   ///
   // clang-format on
-  StatusOr<google::cloud::servicedirectory::v1::Namespace> CreateNamespace(
-      google::cloud::servicedirectory::v1::CreateNamespaceRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::cloud::servicedirectory::v1::Namespace>
+  CreateNamespace(google::cloud::servicedirectory::v1::CreateNamespaceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -209,8 +197,8 @@ class RegistrationServiceClient {
   /// [google.cloud.servicedirectory.v1.Namespace]: @googleapis_reference_link{google/cloud/servicedirectory/v1/namespace.proto#L33}
   ///
   // clang-format on
-  StreamRange<google::cloud::servicedirectory::v1::Namespace> ListNamespaces(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::servicedirectory::v1::Namespace>
+  ListNamespaces(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -248,9 +236,8 @@ class RegistrationServiceClient {
   /// [google.cloud.servicedirectory.v1.Namespace]: @googleapis_reference_link{google/cloud/servicedirectory/v1/namespace.proto#L33}
   ///
   // clang-format on
-  StreamRange<google::cloud::servicedirectory::v1::Namespace> ListNamespaces(
-      google::cloud::servicedirectory::v1::ListNamespacesRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::servicedirectory::v1::Namespace>
+  ListNamespaces(google::cloud::servicedirectory::v1::ListNamespacesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -274,8 +261,8 @@ class RegistrationServiceClient {
   /// [google.cloud.servicedirectory.v1.Namespace]: @googleapis_reference_link{google/cloud/servicedirectory/v1/namespace.proto#L33}
   ///
   // clang-format on
-  StatusOr<google::cloud::servicedirectory::v1::Namespace> GetNamespace(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::servicedirectory::v1::Namespace>
+  GetNamespace(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -304,9 +291,8 @@ class RegistrationServiceClient {
   /// [google.cloud.servicedirectory.v1.Namespace]: @googleapis_reference_link{google/cloud/servicedirectory/v1/namespace.proto#L33}
   ///
   // clang-format on
-  StatusOr<google::cloud::servicedirectory::v1::Namespace> GetNamespace(
-      google::cloud::servicedirectory::v1::GetNamespaceRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::servicedirectory::v1::Namespace>
+  GetNamespace(google::cloud::servicedirectory::v1::GetNamespaceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -331,9 +317,8 @@ class RegistrationServiceClient {
   /// [google.cloud.servicedirectory.v1.UpdateNamespaceRequest]: @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L339}
   ///
   // clang-format on
-  StatusOr<google::cloud::servicedirectory::v1::Namespace> UpdateNamespace(
-      google::cloud::servicedirectory::v1::Namespace const& namespace_,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::cloud::servicedirectory::v1::Namespace>
+  UpdateNamespace(google::cloud::servicedirectory::v1::Namespace const& namespace_, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -362,10 +347,8 @@ class RegistrationServiceClient {
   /// [google.cloud.servicedirectory.v1.UpdateNamespaceRequest]: @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L339}
   ///
   // clang-format on
-  StatusOr<google::cloud::servicedirectory::v1::Namespace> UpdateNamespace(
-      google::cloud::servicedirectory::v1::UpdateNamespaceRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::cloud::servicedirectory::v1::Namespace>
+  UpdateNamespace(google::cloud::servicedirectory::v1::UpdateNamespaceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -387,7 +370,8 @@ class RegistrationServiceClient {
   /// [google.cloud.servicedirectory.v1.DeleteNamespaceRequest]: @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L350}
   ///
   // clang-format on
-  Status DeleteNamespace(std::string const& name, Options opts = {});
+  Status
+  DeleteNamespace(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -414,10 +398,8 @@ class RegistrationServiceClient {
   /// [google.cloud.servicedirectory.v1.DeleteNamespaceRequest]: @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L350}
   ///
   // clang-format on
-  Status DeleteNamespace(
-      google::cloud::servicedirectory::v1::DeleteNamespaceRequest const&
-          request,
-      Options opts = {});
+  Status
+  DeleteNamespace(google::cloud::servicedirectory::v1::DeleteNamespaceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -449,10 +431,8 @@ class RegistrationServiceClient {
   /// [google.cloud.servicedirectory.v1.Service]: @googleapis_reference_link{google/cloud/servicedirectory/v1/service.proto#L35}
   ///
   // clang-format on
-  StatusOr<google::cloud::servicedirectory::v1::Service> CreateService(
-      std::string const& parent,
-      google::cloud::servicedirectory::v1::Service const& service,
-      std::string const& service_id, Options opts = {});
+  StatusOr<google::cloud::servicedirectory::v1::Service>
+  CreateService(std::string const& parent, google::cloud::servicedirectory::v1::Service const& service, std::string const& service_id, Options opts = {});
 
   // clang-format off
   ///
@@ -481,9 +461,8 @@ class RegistrationServiceClient {
   /// [google.cloud.servicedirectory.v1.Service]: @googleapis_reference_link{google/cloud/servicedirectory/v1/service.proto#L35}
   ///
   // clang-format on
-  StatusOr<google::cloud::servicedirectory::v1::Service> CreateService(
-      google::cloud::servicedirectory::v1::CreateServiceRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::servicedirectory::v1::Service>
+  CreateService(google::cloud::servicedirectory::v1::CreateServiceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -517,8 +496,8 @@ class RegistrationServiceClient {
   /// [google.cloud.servicedirectory.v1.Service]: @googleapis_reference_link{google/cloud/servicedirectory/v1/service.proto#L35}
   ///
   // clang-format on
-  StreamRange<google::cloud::servicedirectory::v1::Service> ListServices(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::servicedirectory::v1::Service>
+  ListServices(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -556,9 +535,8 @@ class RegistrationServiceClient {
   /// [google.cloud.servicedirectory.v1.Service]: @googleapis_reference_link{google/cloud/servicedirectory/v1/service.proto#L35}
   ///
   // clang-format on
-  StreamRange<google::cloud::servicedirectory::v1::Service> ListServices(
-      google::cloud::servicedirectory::v1::ListServicesRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::servicedirectory::v1::Service>
+  ListServices(google::cloud::servicedirectory::v1::ListServicesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -582,8 +560,8 @@ class RegistrationServiceClient {
   /// [google.cloud.servicedirectory.v1.Service]: @googleapis_reference_link{google/cloud/servicedirectory/v1/service.proto#L35}
   ///
   // clang-format on
-  StatusOr<google::cloud::servicedirectory::v1::Service> GetService(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::servicedirectory::v1::Service>
+  GetService(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -612,9 +590,8 @@ class RegistrationServiceClient {
   /// [google.cloud.servicedirectory.v1.Service]: @googleapis_reference_link{google/cloud/servicedirectory/v1/service.proto#L35}
   ///
   // clang-format on
-  StatusOr<google::cloud::servicedirectory::v1::Service> GetService(
-      google::cloud::servicedirectory::v1::GetServiceRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::servicedirectory::v1::Service>
+  GetService(google::cloud::servicedirectory::v1::GetServiceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -639,9 +616,8 @@ class RegistrationServiceClient {
   /// [google.cloud.servicedirectory.v1.UpdateServiceRequest]: @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L475}
   ///
   // clang-format on
-  StatusOr<google::cloud::servicedirectory::v1::Service> UpdateService(
-      google::cloud::servicedirectory::v1::Service const& service,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::cloud::servicedirectory::v1::Service>
+  UpdateService(google::cloud::servicedirectory::v1::Service const& service, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -670,9 +646,8 @@ class RegistrationServiceClient {
   /// [google.cloud.servicedirectory.v1.UpdateServiceRequest]: @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L475}
   ///
   // clang-format on
-  StatusOr<google::cloud::servicedirectory::v1::Service> UpdateService(
-      google::cloud::servicedirectory::v1::UpdateServiceRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::servicedirectory::v1::Service>
+  UpdateService(google::cloud::servicedirectory::v1::UpdateServiceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -694,7 +669,8 @@ class RegistrationServiceClient {
   /// [google.cloud.servicedirectory.v1.DeleteServiceRequest]: @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L486}
   ///
   // clang-format on
-  Status DeleteService(std::string const& name, Options opts = {});
+  Status
+  DeleteService(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -721,9 +697,8 @@ class RegistrationServiceClient {
   /// [google.cloud.servicedirectory.v1.DeleteServiceRequest]: @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L486}
   ///
   // clang-format on
-  Status DeleteService(
-      google::cloud::servicedirectory::v1::DeleteServiceRequest const& request,
-      Options opts = {});
+  Status
+  DeleteService(google::cloud::servicedirectory::v1::DeleteServiceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -755,10 +730,8 @@ class RegistrationServiceClient {
   /// [google.cloud.servicedirectory.v1.Endpoint]: @googleapis_reference_link{google/cloud/servicedirectory/v1/endpoint.proto#L37}
   ///
   // clang-format on
-  StatusOr<google::cloud::servicedirectory::v1::Endpoint> CreateEndpoint(
-      std::string const& parent,
-      google::cloud::servicedirectory::v1::Endpoint const& endpoint,
-      std::string const& endpoint_id, Options opts = {});
+  StatusOr<google::cloud::servicedirectory::v1::Endpoint>
+  CreateEndpoint(std::string const& parent, google::cloud::servicedirectory::v1::Endpoint const& endpoint, std::string const& endpoint_id, Options opts = {});
 
   // clang-format off
   ///
@@ -787,9 +760,8 @@ class RegistrationServiceClient {
   /// [google.cloud.servicedirectory.v1.Endpoint]: @googleapis_reference_link{google/cloud/servicedirectory/v1/endpoint.proto#L37}
   ///
   // clang-format on
-  StatusOr<google::cloud::servicedirectory::v1::Endpoint> CreateEndpoint(
-      google::cloud::servicedirectory::v1::CreateEndpointRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::servicedirectory::v1::Endpoint>
+  CreateEndpoint(google::cloud::servicedirectory::v1::CreateEndpointRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -823,8 +795,8 @@ class RegistrationServiceClient {
   /// [google.cloud.servicedirectory.v1.ListEndpointsRequest]: @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L522}
   ///
   // clang-format on
-  StreamRange<google::cloud::servicedirectory::v1::Endpoint> ListEndpoints(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::servicedirectory::v1::Endpoint>
+  ListEndpoints(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -862,9 +834,8 @@ class RegistrationServiceClient {
   /// [google.cloud.servicedirectory.v1.ListEndpointsRequest]: @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L522}
   ///
   // clang-format on
-  StreamRange<google::cloud::servicedirectory::v1::Endpoint> ListEndpoints(
-      google::cloud::servicedirectory::v1::ListEndpointsRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::servicedirectory::v1::Endpoint>
+  ListEndpoints(google::cloud::servicedirectory::v1::ListEndpointsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -888,8 +859,8 @@ class RegistrationServiceClient {
   /// [google.cloud.servicedirectory.v1.GetEndpointRequest]: @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L602}
   ///
   // clang-format on
-  StatusOr<google::cloud::servicedirectory::v1::Endpoint> GetEndpoint(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::servicedirectory::v1::Endpoint>
+  GetEndpoint(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -918,9 +889,8 @@ class RegistrationServiceClient {
   /// [google.cloud.servicedirectory.v1.GetEndpointRequest]: @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L602}
   ///
   // clang-format on
-  StatusOr<google::cloud::servicedirectory::v1::Endpoint> GetEndpoint(
-      google::cloud::servicedirectory::v1::GetEndpointRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::servicedirectory::v1::Endpoint>
+  GetEndpoint(google::cloud::servicedirectory::v1::GetEndpointRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -945,9 +915,8 @@ class RegistrationServiceClient {
   /// [google.cloud.servicedirectory.v1.UpdateEndpointRequest]: @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L614}
   ///
   // clang-format on
-  StatusOr<google::cloud::servicedirectory::v1::Endpoint> UpdateEndpoint(
-      google::cloud::servicedirectory::v1::Endpoint const& endpoint,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::cloud::servicedirectory::v1::Endpoint>
+  UpdateEndpoint(google::cloud::servicedirectory::v1::Endpoint const& endpoint, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -976,9 +945,8 @@ class RegistrationServiceClient {
   /// [google.cloud.servicedirectory.v1.UpdateEndpointRequest]: @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L614}
   ///
   // clang-format on
-  StatusOr<google::cloud::servicedirectory::v1::Endpoint> UpdateEndpoint(
-      google::cloud::servicedirectory::v1::UpdateEndpointRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::servicedirectory::v1::Endpoint>
+  UpdateEndpoint(google::cloud::servicedirectory::v1::UpdateEndpointRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -999,7 +967,8 @@ class RegistrationServiceClient {
   /// [google.cloud.servicedirectory.v1.DeleteEndpointRequest]: @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L625}
   ///
   // clang-format on
-  Status DeleteEndpoint(std::string const& name, Options opts = {});
+  Status
+  DeleteEndpoint(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1025,9 +994,8 @@ class RegistrationServiceClient {
   /// [google.cloud.servicedirectory.v1.DeleteEndpointRequest]: @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L625}
   ///
   // clang-format on
-  Status DeleteEndpoint(
-      google::cloud::servicedirectory::v1::DeleteEndpointRequest const& request,
-      Options opts = {});
+  Status
+  DeleteEndpoint(google::cloud::servicedirectory::v1::DeleteEndpointRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1056,8 +1024,8 @@ class RegistrationServiceClient {
   /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1086,8 +1054,8 @@ class RegistrationServiceClient {
   /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L100}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1116,9 +1084,8 @@ class RegistrationServiceClient {
   /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L153}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request,
-      Options opts = {});
+  StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1156,8 +1123,8 @@ class RegistrationServiceClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request, Options opts = {});
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1186,9 +1153,8 @@ class RegistrationServiceClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<RegistrationServiceConnection> connection_;

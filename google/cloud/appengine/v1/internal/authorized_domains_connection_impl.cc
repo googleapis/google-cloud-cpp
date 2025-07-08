@@ -32,64 +32,54 @@ namespace appengine_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<appengine_v1::AuthorizedDomainsRetryPolicy> retry_policy(
-    Options const& options) {
-  return options.get<appengine_v1::AuthorizedDomainsRetryPolicyOption>()
-      ->clone();
+std::unique_ptr<appengine_v1::AuthorizedDomainsRetryPolicy>
+retry_policy(Options const& options) {
+  return options.get<appengine_v1::AuthorizedDomainsRetryPolicyOption>()->clone();
 }
 
-std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-  return options.get<appengine_v1::AuthorizedDomainsBackoffPolicyOption>()
-      ->clone();
+std::unique_ptr<BackoffPolicy>
+backoff_policy(Options const& options) {
+  return options.get<appengine_v1::AuthorizedDomainsBackoffPolicyOption>()->clone();
 }
 
 std::unique_ptr<appengine_v1::AuthorizedDomainsConnectionIdempotencyPolicy>
 idempotency_policy(Options const& options) {
-  return options
-      .get<appengine_v1::AuthorizedDomainsConnectionIdempotencyPolicyOption>()
-      ->clone();
+  return options.get<appengine_v1::AuthorizedDomainsConnectionIdempotencyPolicyOption>()->clone();
 }
 
-}  // namespace
+} // namespace
 
 AuthorizedDomainsConnectionImpl::AuthorizedDomainsConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<appengine_v1_internal::AuthorizedDomainsStub> stub,
     Options options)
-    : background_(std::move(background)),
-      stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options), AuthorizedDomainsConnection::options())) {}
+  : background_(std::move(background)), stub_(std::move(stub)),
+    options_(internal::MergeOptions(
+        std::move(options),
+        AuthorizedDomainsConnection::options())) {}
 
 StreamRange<google::appengine::v1::AuthorizedDomain>
-AuthorizedDomainsConnectionImpl::ListAuthorizedDomains(
-    google::appengine::v1::ListAuthorizedDomainsRequest request) {
+AuthorizedDomainsConnectionImpl::ListAuthorizedDomains(google::appengine::v1::ListAuthorizedDomainsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
-  auto idempotency =
-      idempotency_policy(*current)->ListAuthorizedDomains(request);
+  auto idempotency = idempotency_policy(*current)->ListAuthorizedDomains(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::appengine::v1::AuthorizedDomain>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::appengine::v1::AuthorizedDomain>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<appengine_v1::AuthorizedDomainsRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<appengine_v1::AuthorizedDomainsRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::appengine::v1::ListAuthorizedDomainsRequest const& r) {
+          Options const& options, google::appengine::v1::ListAuthorizedDomainsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::appengine::v1::ListAuthorizedDomainsRequest const&
-                       request) {
+                   google::appengine::v1::ListAuthorizedDomainsRequest const& request) {
               return stub->ListAuthorizedDomains(context, options, request);
             },
             options, r, function_name);
       },
       [](google::appengine::v1::ListAuthorizedDomainsResponse r) {
-        std::vector<google::appengine::v1::AuthorizedDomain> result(
-            r.domains().size());
+        std::vector<google::appengine::v1::AuthorizedDomain> result(r.domains().size());
         auto& messages = *r.mutable_domains();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;

@@ -63,8 +63,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class ProjectsClient {
  public:
-  explicit ProjectsClient(std::shared_ptr<ProjectsConnection> connection,
-                          Options opts = {});
+  explicit ProjectsClient(std::shared_ptr<ProjectsConnection> connection, Options opts = {});
   ~ProjectsClient();
 
   ///@{
@@ -114,8 +113,8 @@ class ProjectsClient {
   /// [google.cloud.cpp.compute.projects.v1.DisableXpnHostRequest]: @cloud_cpp_reference_link{google/cloud/compute/projects/v1/projects.proto#L237}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DisableXpnHost(
-      std::string const& project, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DisableXpnHost(std::string const& project, Options opts = {});
 
   // clang-format off
   ///
@@ -128,8 +127,8 @@ class ProjectsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> DisableXpnHost(
-      NoAwaitTag, std::string const& project, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DisableXpnHost(NoAwaitTag, std::string const& project, Options opts = {});
 
   // clang-format off
   ///
@@ -165,10 +164,8 @@ class ProjectsClient {
   /// [google.cloud.cpp.compute.projects.v1.DisableXpnHostRequest]: @cloud_cpp_reference_link{google/cloud/compute/projects/v1/projects.proto#L237}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DisableXpnHost(
-      google::cloud::cpp::compute::projects::v1::DisableXpnHostRequest const&
-          request,
-      Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DisableXpnHost(google::cloud::cpp::compute::projects::v1::DisableXpnHostRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -181,11 +178,8 @@ class ProjectsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> DisableXpnHost(
-      NoAwaitTag,
-      google::cloud::cpp::compute::projects::v1::DisableXpnHostRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DisableXpnHost(NoAwaitTag, google::cloud::cpp::compute::projects::v1::DisableXpnHostRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -196,9 +190,8 @@ class ProjectsClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DisableXpnHost(
-      google::cloud::cpp::compute::v1::Operation const& operation,
-      Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DisableXpnHost(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -232,11 +225,7 @@ class ProjectsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DisableXpnResource(
-      std::string const& project,
-      google::cloud::cpp::compute::v1::ProjectsDisableXpnResourceRequest const&
-          projects_disable_xpn_resource_request_resource,
-      Options opts = {});
+  DisableXpnResource(std::string const& project, google::cloud::cpp::compute::v1::ProjectsDisableXpnResourceRequest const& projects_disable_xpn_resource_request_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -249,11 +238,8 @@ class ProjectsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> DisableXpnResource(
-      NoAwaitTag, std::string const& project,
-      google::cloud::cpp::compute::v1::ProjectsDisableXpnResourceRequest const&
-          projects_disable_xpn_resource_request_resource,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DisableXpnResource(NoAwaitTag, std::string const& project, google::cloud::cpp::compute::v1::ProjectsDisableXpnResourceRequest const& projects_disable_xpn_resource_request_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -291,9 +277,7 @@ class ProjectsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DisableXpnResource(google::cloud::cpp::compute::projects::v1::
-                         DisableXpnResourceRequest const& request,
-                     Options opts = {});
+  DisableXpnResource(google::cloud::cpp::compute::projects::v1::DisableXpnResourceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -306,11 +290,8 @@ class ProjectsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> DisableXpnResource(
-      NoAwaitTag,
-      google::cloud::cpp::compute::projects::v1::
-          DisableXpnResourceRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DisableXpnResource(NoAwaitTag, google::cloud::cpp::compute::projects::v1::DisableXpnResourceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -322,9 +303,7 @@ class ProjectsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DisableXpnResource(
-      google::cloud::cpp::compute::v1::Operation const& operation,
-      Options opts = {});
+  DisableXpnResource(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -355,8 +334,8 @@ class ProjectsClient {
   /// [google.cloud.cpp.compute.projects.v1.EnableXpnHostRequest]: @cloud_cpp_reference_link{google/cloud/compute/projects/v1/projects.proto#L286}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> EnableXpnHost(
-      std::string const& project, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  EnableXpnHost(std::string const& project, Options opts = {});
 
   // clang-format off
   ///
@@ -369,8 +348,8 @@ class ProjectsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> EnableXpnHost(
-      NoAwaitTag, std::string const& project, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  EnableXpnHost(NoAwaitTag, std::string const& project, Options opts = {});
 
   // clang-format off
   ///
@@ -406,10 +385,8 @@ class ProjectsClient {
   /// [google.cloud.cpp.compute.projects.v1.EnableXpnHostRequest]: @cloud_cpp_reference_link{google/cloud/compute/projects/v1/projects.proto#L286}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> EnableXpnHost(
-      google::cloud::cpp::compute::projects::v1::EnableXpnHostRequest const&
-          request,
-      Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  EnableXpnHost(google::cloud::cpp::compute::projects::v1::EnableXpnHostRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -422,11 +399,8 @@ class ProjectsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> EnableXpnHost(
-      NoAwaitTag,
-      google::cloud::cpp::compute::projects::v1::EnableXpnHostRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  EnableXpnHost(NoAwaitTag, google::cloud::cpp::compute::projects::v1::EnableXpnHostRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -437,9 +411,8 @@ class ProjectsClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> EnableXpnHost(
-      google::cloud::cpp::compute::v1::Operation const& operation,
-      Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  EnableXpnHost(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -474,11 +447,7 @@ class ProjectsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  EnableXpnResource(
-      std::string const& project,
-      google::cloud::cpp::compute::v1::ProjectsEnableXpnResourceRequest const&
-          projects_enable_xpn_resource_request_resource,
-      Options opts = {});
+  EnableXpnResource(std::string const& project, google::cloud::cpp::compute::v1::ProjectsEnableXpnResourceRequest const& projects_enable_xpn_resource_request_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -491,11 +460,8 @@ class ProjectsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> EnableXpnResource(
-      NoAwaitTag, std::string const& project,
-      google::cloud::cpp::compute::v1::ProjectsEnableXpnResourceRequest const&
-          projects_enable_xpn_resource_request_resource,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  EnableXpnResource(NoAwaitTag, std::string const& project, google::cloud::cpp::compute::v1::ProjectsEnableXpnResourceRequest const& projects_enable_xpn_resource_request_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -534,10 +500,7 @@ class ProjectsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  EnableXpnResource(
-      google::cloud::cpp::compute::projects::v1::EnableXpnResourceRequest const&
-          request,
-      Options opts = {});
+  EnableXpnResource(google::cloud::cpp::compute::projects::v1::EnableXpnResourceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -550,11 +513,8 @@ class ProjectsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> EnableXpnResource(
-      NoAwaitTag,
-      google::cloud::cpp::compute::projects::v1::EnableXpnResourceRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  EnableXpnResource(NoAwaitTag, google::cloud::cpp::compute::projects::v1::EnableXpnResourceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -566,8 +526,7 @@ class ProjectsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  EnableXpnResource(google::cloud::cpp::compute::v1::Operation const& operation,
-                    Options opts = {});
+  EnableXpnResource(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -598,8 +557,8 @@ class ProjectsClient {
   /// [google.cloud.cpp.compute.v1.Project]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_025.proto#L60}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Project> GetProject(
-      std::string const& project, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Project>
+  GetProject(std::string const& project, Options opts = {});
 
   // clang-format off
   ///
@@ -635,10 +594,8 @@ class ProjectsClient {
   /// [google.cloud.cpp.compute.v1.Project]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_025.proto#L60}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Project> GetProject(
-      google::cloud::cpp::compute::projects::v1::GetProjectRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Project>
+  GetProject(google::cloud::cpp::compute::projects::v1::GetProjectRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -664,8 +621,8 @@ class ProjectsClient {
   /// [google.cloud.cpp.compute.v1.Project]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_025.proto#L60}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Project> GetXpnHost(
-      std::string const& project, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Project>
+  GetXpnHost(std::string const& project, Options opts = {});
 
   // clang-format off
   ///
@@ -696,10 +653,8 @@ class ProjectsClient {
   /// [google.cloud.cpp.compute.v1.Project]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_025.proto#L60}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Project> GetXpnHost(
-      google::cloud::cpp::compute::projects::v1::GetXpnHostRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Project>
+  GetXpnHost(google::cloud::cpp::compute::projects::v1::GetXpnHostRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -758,10 +713,7 @@ class ProjectsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::ProjectsGetXpnResources>
-  GetXpnResources(
-      google::cloud::cpp::compute::projects::v1::GetXpnResourcesRequest const&
-          request,
-      Options opts = {});
+  GetXpnResources(google::cloud::cpp::compute::projects::v1::GetXpnResourcesRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -796,11 +748,8 @@ class ProjectsClient {
   /// [google.cloud.cpp.compute.v1.Project]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_025.proto#L60}
   ///
   // clang-format on
-  StreamRange<google::cloud::cpp::compute::v1::Project> ListXpnHosts(
-      std::string const& project,
-      google::cloud::cpp::compute::v1::ProjectsListXpnHostsRequest const&
-          projects_list_xpn_hosts_request_resource,
-      Options opts = {});
+  StreamRange<google::cloud::cpp::compute::v1::Project>
+  ListXpnHosts(std::string const& project, google::cloud::cpp::compute::v1::ProjectsListXpnHostsRequest const& projects_list_xpn_hosts_request_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -839,9 +788,8 @@ class ProjectsClient {
   /// [google.cloud.cpp.compute.v1.Project]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_025.proto#L60}
   ///
   // clang-format on
-  StreamRange<google::cloud::cpp::compute::v1::Project> ListXpnHosts(
-      google::cloud::cpp::compute::projects::v1::ListXpnHostsRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::cpp::compute::v1::Project>
+  ListXpnHosts(google::cloud::cpp::compute::projects::v1::ListXpnHostsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -873,11 +821,8 @@ class ProjectsClient {
   /// [google.cloud.cpp.compute.projects.v1.MoveDiskRequest]: @cloud_cpp_reference_link{google/cloud/compute/projects/v1/projects.proto#L490}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> MoveDisk(
-      std::string const& project,
-      google::cloud::cpp::compute::v1::DiskMoveRequest const&
-          disk_move_request_resource,
-      Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  MoveDisk(std::string const& project, google::cloud::cpp::compute::v1::DiskMoveRequest const& disk_move_request_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -890,11 +835,8 @@ class ProjectsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> MoveDisk(
-      NoAwaitTag, std::string const& project,
-      google::cloud::cpp::compute::v1::DiskMoveRequest const&
-          disk_move_request_resource,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  MoveDisk(NoAwaitTag, std::string const& project, google::cloud::cpp::compute::v1::DiskMoveRequest const& disk_move_request_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -930,9 +872,8 @@ class ProjectsClient {
   /// [google.cloud.cpp.compute.projects.v1.MoveDiskRequest]: @cloud_cpp_reference_link{google/cloud/compute/projects/v1/projects.proto#L490}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> MoveDisk(
-      google::cloud::cpp::compute::projects::v1::MoveDiskRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  MoveDisk(google::cloud::cpp::compute::projects::v1::MoveDiskRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -945,10 +886,8 @@ class ProjectsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> MoveDisk(
-      NoAwaitTag,
-      google::cloud::cpp::compute::projects::v1::MoveDiskRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  MoveDisk(NoAwaitTag, google::cloud::cpp::compute::projects::v1::MoveDiskRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -959,9 +898,8 @@ class ProjectsClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> MoveDisk(
-      google::cloud::cpp::compute::v1::Operation const& operation,
-      Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  MoveDisk(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -998,11 +936,8 @@ class ProjectsClient {
   /// [google.cloud.cpp.compute.projects.v1.MoveInstanceRequest]: @cloud_cpp_reference_link{google/cloud/compute/projects/v1/projects.proto#L516}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> MoveInstance(
-      std::string const& project,
-      google::cloud::cpp::compute::v1::InstanceMoveRequest const&
-          instance_move_request_resource,
-      Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  MoveInstance(std::string const& project, google::cloud::cpp::compute::v1::InstanceMoveRequest const& instance_move_request_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -1015,11 +950,8 @@ class ProjectsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> MoveInstance(
-      NoAwaitTag, std::string const& project,
-      google::cloud::cpp::compute::v1::InstanceMoveRequest const&
-          instance_move_request_resource,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  MoveInstance(NoAwaitTag, std::string const& project, google::cloud::cpp::compute::v1::InstanceMoveRequest const& instance_move_request_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -1060,10 +992,8 @@ class ProjectsClient {
   /// [google.cloud.cpp.compute.projects.v1.MoveInstanceRequest]: @cloud_cpp_reference_link{google/cloud/compute/projects/v1/projects.proto#L516}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> MoveInstance(
-      google::cloud::cpp::compute::projects::v1::MoveInstanceRequest const&
-          request,
-      Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  MoveInstance(google::cloud::cpp::compute::projects::v1::MoveInstanceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1076,11 +1006,8 @@ class ProjectsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> MoveInstance(
-      NoAwaitTag,
-      google::cloud::cpp::compute::projects::v1::MoveInstanceRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  MoveInstance(NoAwaitTag, google::cloud::cpp::compute::projects::v1::MoveInstanceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1091,9 +1018,8 @@ class ProjectsClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> MoveInstance(
-      google::cloud::cpp::compute::v1::Operation const& operation,
-      Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  MoveInstance(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1128,11 +1054,7 @@ class ProjectsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetCloudArmorTier(
-      std::string const& project,
-      google::cloud::cpp::compute::v1::ProjectsSetCloudArmorTierRequest const&
-          projects_set_cloud_armor_tier_request_resource,
-      Options opts = {});
+  SetCloudArmorTier(std::string const& project, google::cloud::cpp::compute::v1::ProjectsSetCloudArmorTierRequest const& projects_set_cloud_armor_tier_request_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -1145,11 +1067,8 @@ class ProjectsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> SetCloudArmorTier(
-      NoAwaitTag, std::string const& project,
-      google::cloud::cpp::compute::v1::ProjectsSetCloudArmorTierRequest const&
-          projects_set_cloud_armor_tier_request_resource,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  SetCloudArmorTier(NoAwaitTag, std::string const& project, google::cloud::cpp::compute::v1::ProjectsSetCloudArmorTierRequest const& projects_set_cloud_armor_tier_request_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -1188,10 +1107,7 @@ class ProjectsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetCloudArmorTier(
-      google::cloud::cpp::compute::projects::v1::SetCloudArmorTierRequest const&
-          request,
-      Options opts = {});
+  SetCloudArmorTier(google::cloud::cpp::compute::projects::v1::SetCloudArmorTierRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1204,11 +1120,8 @@ class ProjectsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> SetCloudArmorTier(
-      NoAwaitTag,
-      google::cloud::cpp::compute::projects::v1::SetCloudArmorTierRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  SetCloudArmorTier(NoAwaitTag, google::cloud::cpp::compute::projects::v1::SetCloudArmorTierRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1220,8 +1133,7 @@ class ProjectsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetCloudArmorTier(google::cloud::cpp::compute::v1::Operation const& operation,
-                    Options opts = {});
+  SetCloudArmorTier(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1255,10 +1167,7 @@ class ProjectsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetCommonInstanceMetadata(
-      std::string const& project,
-      google::cloud::cpp::compute::v1::Metadata const& metadata_resource,
-      Options opts = {});
+  SetCommonInstanceMetadata(std::string const& project, google::cloud::cpp::compute::v1::Metadata const& metadata_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -1272,10 +1181,7 @@ class ProjectsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetCommonInstanceMetadata(
-      NoAwaitTag, std::string const& project,
-      google::cloud::cpp::compute::v1::Metadata const& metadata_resource,
-      Options opts = {});
+  SetCommonInstanceMetadata(NoAwaitTag, std::string const& project, google::cloud::cpp::compute::v1::Metadata const& metadata_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -1313,9 +1219,7 @@ class ProjectsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetCommonInstanceMetadata(google::cloud::cpp::compute::projects::v1::
-                                SetCommonInstanceMetadataRequest const& request,
-                            Options opts = {});
+  SetCommonInstanceMetadata(google::cloud::cpp::compute::projects::v1::SetCommonInstanceMetadataRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1329,10 +1233,7 @@ class ProjectsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetCommonInstanceMetadata(NoAwaitTag,
-                            google::cloud::cpp::compute::projects::v1::
-                                SetCommonInstanceMetadataRequest const& request,
-                            Options opts = {});
+  SetCommonInstanceMetadata(NoAwaitTag, google::cloud::cpp::compute::projects::v1::SetCommonInstanceMetadataRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1344,9 +1245,7 @@ class ProjectsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetCommonInstanceMetadata(
-      google::cloud::cpp::compute::v1::Operation const& operation,
-      Options opts = {});
+  SetCommonInstanceMetadata(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1381,12 +1280,7 @@ class ProjectsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetDefaultNetworkTier(
-      std::string const& project,
-      google::cloud::cpp::compute::v1::
-          ProjectsSetDefaultNetworkTierRequest const&
-              projects_set_default_network_tier_request_resource,
-      Options opts = {});
+  SetDefaultNetworkTier(std::string const& project, google::cloud::cpp::compute::v1::ProjectsSetDefaultNetworkTierRequest const& projects_set_default_network_tier_request_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -1399,12 +1293,8 @@ class ProjectsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> SetDefaultNetworkTier(
-      NoAwaitTag, std::string const& project,
-      google::cloud::cpp::compute::v1::
-          ProjectsSetDefaultNetworkTierRequest const&
-              projects_set_default_network_tier_request_resource,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  SetDefaultNetworkTier(NoAwaitTag, std::string const& project, google::cloud::cpp::compute::v1::ProjectsSetDefaultNetworkTierRequest const& projects_set_default_network_tier_request_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -1443,9 +1333,7 @@ class ProjectsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetDefaultNetworkTier(google::cloud::cpp::compute::projects::v1::
-                            SetDefaultNetworkTierRequest const& request,
-                        Options opts = {});
+  SetDefaultNetworkTier(google::cloud::cpp::compute::projects::v1::SetDefaultNetworkTierRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1458,11 +1346,8 @@ class ProjectsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> SetDefaultNetworkTier(
-      NoAwaitTag,
-      google::cloud::cpp::compute::projects::v1::
-          SetDefaultNetworkTierRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  SetDefaultNetworkTier(NoAwaitTag, google::cloud::cpp::compute::projects::v1::SetDefaultNetworkTierRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1474,9 +1359,7 @@ class ProjectsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetDefaultNetworkTier(
-      google::cloud::cpp::compute::v1::Operation const& operation,
-      Options opts = {});
+  SetDefaultNetworkTier(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1511,11 +1394,7 @@ class ProjectsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetUsageExportBucket(
-      std::string const& project,
-      google::cloud::cpp::compute::v1::UsageExportLocation const&
-          usage_export_location_resource,
-      Options opts = {});
+  SetUsageExportBucket(std::string const& project, google::cloud::cpp::compute::v1::UsageExportLocation const& usage_export_location_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -1528,11 +1407,8 @@ class ProjectsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> SetUsageExportBucket(
-      NoAwaitTag, std::string const& project,
-      google::cloud::cpp::compute::v1::UsageExportLocation const&
-          usage_export_location_resource,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  SetUsageExportBucket(NoAwaitTag, std::string const& project, google::cloud::cpp::compute::v1::UsageExportLocation const& usage_export_location_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -1571,9 +1447,7 @@ class ProjectsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetUsageExportBucket(google::cloud::cpp::compute::projects::v1::
-                           SetUsageExportBucketRequest const& request,
-                       Options opts = {});
+  SetUsageExportBucket(google::cloud::cpp::compute::projects::v1::SetUsageExportBucketRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1586,11 +1460,8 @@ class ProjectsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> SetUsageExportBucket(
-      NoAwaitTag,
-      google::cloud::cpp::compute::projects::v1::
-          SetUsageExportBucketRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  SetUsageExportBucket(NoAwaitTag, google::cloud::cpp::compute::projects::v1::SetUsageExportBucketRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1602,9 +1473,7 @@ class ProjectsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetUsageExportBucket(
-      google::cloud::cpp::compute::v1::Operation const& operation,
-      Options opts = {});
+  SetUsageExportBucket(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
 
  private:
   std::shared_ptr<ProjectsConnection> connection_;

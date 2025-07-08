@@ -26,31 +26,27 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-PredictionServiceConnectionIdempotencyPolicy::
-    ~PredictionServiceConnectionIdempotencyPolicy() = default;
+PredictionServiceConnectionIdempotencyPolicy::~PredictionServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<PredictionServiceConnectionIdempotencyPolicy>
 PredictionServiceConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<PredictionServiceConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency PredictionServiceConnectionIdempotencyPolicy::Predict(
-    google::cloud::retail::v2::PredictRequest const&) {
+Idempotency PredictionServiceConnectionIdempotencyPolicy::Predict(google::cloud::retail::v2::PredictRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency PredictionServiceConnectionIdempotencyPolicy::ListOperations(
-    google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency PredictionServiceConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency PredictionServiceConnectionIdempotencyPolicy::GetOperation(
-    google::longrunning::GetOperationRequest const&) {
+Idempotency PredictionServiceConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<PredictionServiceConnectionIdempotencyPolicy>
-MakeDefaultPredictionServiceConnectionIdempotencyPolicy() {
+    MakeDefaultPredictionServiceConnectionIdempotencyPolicy() {
   return std::make_unique<PredictionServiceConnectionIdempotencyPolicy>();
 }
 

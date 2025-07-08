@@ -17,10 +17,10 @@
 // source: google/cloud/security/privateca/v1/service.proto
 
 #include "google/cloud/privateca/v1/internal/certificate_authority_option_defaults.h"
-#include "google/cloud/privateca/v1/certificate_authority_connection.h"
-#include "google/cloud/privateca/v1/certificate_authority_options.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
+#include "google/cloud/privateca/v1/certificate_authority_connection.h"
+#include "google/cloud/privateca/v1/certificate_authority_options.h"
 #include <memory>
 #include <utility>
 
@@ -35,49 +35,32 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options CertificateAuthorityServiceDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options),
-      "GOOGLE_CLOUD_CPP_CERTIFICATE_AUTHORITY_SERVICE_ENDPOINT", "",
-      "GOOGLE_CLOUD_CPP_CERTIFICATE_AUTHORITY_SERVICE_AUTHORITY",
+      std::move(options), "GOOGLE_CLOUD_CPP_CERTIFICATE_AUTHORITY_SERVICE_ENDPOINT",
+      "", "GOOGLE_CLOUD_CPP_CERTIFICATE_AUTHORITY_SERVICE_AUTHORITY",
       "privateca.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
-  if (!options
-           .has<privateca_v1::CertificateAuthorityServiceRetryPolicyOption>()) {
+  if (!options.has<privateca_v1::CertificateAuthorityServiceRetryPolicyOption>()) {
     options.set<privateca_v1::CertificateAuthorityServiceRetryPolicyOption>(
         privateca_v1::CertificateAuthorityServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
-            .clone());
+            std::chrono::minutes(30)).clone());
   }
-  if (!options.has<
-          privateca_v1::CertificateAuthorityServiceBackoffPolicyOption>()) {
+  if (!options.has<privateca_v1::CertificateAuthorityServiceBackoffPolicyOption>()) {
     options.set<privateca_v1::CertificateAuthorityServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(
-            std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
-            .clone());
+        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
   }
-  if (!options.has<
-          privateca_v1::CertificateAuthorityServicePollingPolicyOption>()) {
+  if (!options.has<privateca_v1::CertificateAuthorityServicePollingPolicyOption>()) {
     options.set<privateca_v1::CertificateAuthorityServicePollingPolicyOption>(
         GenericPollingPolicy<
             privateca_v1::CertificateAuthorityServiceRetryPolicyOption::Type,
             privateca_v1::CertificateAuthorityServiceBackoffPolicyOption::Type>(
-            options
-                .get<privateca_v1::
-                         CertificateAuthorityServiceRetryPolicyOption>()
-                ->clone(),
+            options.get<privateca_v1::CertificateAuthorityServiceRetryPolicyOption>()->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                     std::chrono::minutes(5), kBackoffScaling)
-                .clone())
-            .clone());
+            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
   }
-  if (!options.has<
-          privateca_v1::
-              CertificateAuthorityServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<
-        privateca_v1::
-            CertificateAuthorityServiceConnectionIdempotencyPolicyOption>(
-        privateca_v1::
-            MakeDefaultCertificateAuthorityServiceConnectionIdempotencyPolicy());
+  if (!options.has<privateca_v1::CertificateAuthorityServiceConnectionIdempotencyPolicyOption>()) {
+    options.set<privateca_v1::CertificateAuthorityServiceConnectionIdempotencyPolicyOption>(
+        privateca_v1::MakeDefaultCertificateAuthorityServiceConnectionIdempotencyPolicy());
   }
 
   return options;

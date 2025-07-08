@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATACATALOG_V1_DATA_CATALOG_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATACATALOG_V1_DATA_CATALOG_CONNECTION_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/datacatalog/v1/data_catalog_connection_idempotency_policy.h"
 #include "google/cloud/datacatalog/v1/internal/data_catalog_retry_traits.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -66,14 +66,14 @@ class DataCatalogLimitedErrorCountRetryPolicy : public DataCatalogRetryPolicy {
    *     @p maximum_failures == 0.
    */
   explicit DataCatalogLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   DataCatalogLimitedErrorCountRetryPolicy(
       DataCatalogLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : DataCatalogLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : DataCatalogLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   DataCatalogLimitedErrorCountRetryPolicy(
       DataCatalogLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : DataCatalogLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : DataCatalogLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -93,9 +93,7 @@ class DataCatalogLimitedErrorCountRetryPolicy : public DataCatalogRetryPolicy {
   using BaseType = DataCatalogRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      datacatalog_v1_internal::DataCatalogRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<datacatalog_v1_internal::DataCatalogRetryTraits> impl_;
 };
 
 /**
@@ -133,14 +131,12 @@ class DataCatalogLimitedTimeRetryPolicy : public DataCatalogRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit DataCatalogLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  DataCatalogLimitedTimeRetryPolicy(
-      DataCatalogLimitedTimeRetryPolicy&& rhs) noexcept
-      : DataCatalogLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  DataCatalogLimitedTimeRetryPolicy(
-      DataCatalogLimitedTimeRetryPolicy const& rhs) noexcept
-      : DataCatalogLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  DataCatalogLimitedTimeRetryPolicy(DataCatalogLimitedTimeRetryPolicy&& rhs) noexcept
+    : DataCatalogLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  DataCatalogLimitedTimeRetryPolicy(DataCatalogLimitedTimeRetryPolicy const& rhs) noexcept
+    : DataCatalogLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -162,9 +158,7 @@ class DataCatalogLimitedTimeRetryPolicy : public DataCatalogRetryPolicy {
   using BaseType = DataCatalogRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      datacatalog_v1_internal::DataCatalogRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<datacatalog_v1_internal::DataCatalogRetryTraits> impl_;
 };
 
 /**
@@ -188,165 +182,137 @@ class DataCatalogConnection {
   virtual StreamRange<google::cloud::datacatalog::v1::SearchCatalogResult>
   SearchCatalog(google::cloud::datacatalog::v1::SearchCatalogRequest request);
 
-  virtual StatusOr<google::cloud::datacatalog::v1::EntryGroup> CreateEntryGroup(
-      google::cloud::datacatalog::v1::CreateEntryGroupRequest const& request);
+  virtual StatusOr<google::cloud::datacatalog::v1::EntryGroup>
+  CreateEntryGroup(google::cloud::datacatalog::v1::CreateEntryGroupRequest const& request);
 
-  virtual StatusOr<google::cloud::datacatalog::v1::EntryGroup> GetEntryGroup(
-      google::cloud::datacatalog::v1::GetEntryGroupRequest const& request);
+  virtual StatusOr<google::cloud::datacatalog::v1::EntryGroup>
+  GetEntryGroup(google::cloud::datacatalog::v1::GetEntryGroupRequest const& request);
 
-  virtual StatusOr<google::cloud::datacatalog::v1::EntryGroup> UpdateEntryGroup(
-      google::cloud::datacatalog::v1::UpdateEntryGroupRequest const& request);
+  virtual StatusOr<google::cloud::datacatalog::v1::EntryGroup>
+  UpdateEntryGroup(google::cloud::datacatalog::v1::UpdateEntryGroupRequest const& request);
 
-  virtual Status DeleteEntryGroup(
-      google::cloud::datacatalog::v1::DeleteEntryGroupRequest const& request);
+  virtual Status
+  DeleteEntryGroup(google::cloud::datacatalog::v1::DeleteEntryGroupRequest const& request);
 
   virtual StreamRange<google::cloud::datacatalog::v1::EntryGroup>
-  ListEntryGroups(
-      google::cloud::datacatalog::v1::ListEntryGroupsRequest request);
+  ListEntryGroups(google::cloud::datacatalog::v1::ListEntryGroupsRequest request);
 
-  virtual StatusOr<google::cloud::datacatalog::v1::Entry> CreateEntry(
-      google::cloud::datacatalog::v1::CreateEntryRequest const& request);
+  virtual StatusOr<google::cloud::datacatalog::v1::Entry>
+  CreateEntry(google::cloud::datacatalog::v1::CreateEntryRequest const& request);
 
-  virtual StatusOr<google::cloud::datacatalog::v1::Entry> UpdateEntry(
-      google::cloud::datacatalog::v1::UpdateEntryRequest const& request);
+  virtual StatusOr<google::cloud::datacatalog::v1::Entry>
+  UpdateEntry(google::cloud::datacatalog::v1::UpdateEntryRequest const& request);
 
-  virtual Status DeleteEntry(
-      google::cloud::datacatalog::v1::DeleteEntryRequest const& request);
+  virtual Status
+  DeleteEntry(google::cloud::datacatalog::v1::DeleteEntryRequest const& request);
 
-  virtual StatusOr<google::cloud::datacatalog::v1::Entry> GetEntry(
-      google::cloud::datacatalog::v1::GetEntryRequest const& request);
+  virtual StatusOr<google::cloud::datacatalog::v1::Entry>
+  GetEntry(google::cloud::datacatalog::v1::GetEntryRequest const& request);
 
-  virtual StatusOr<google::cloud::datacatalog::v1::Entry> LookupEntry(
-      google::cloud::datacatalog::v1::LookupEntryRequest const& request);
+  virtual StatusOr<google::cloud::datacatalog::v1::Entry>
+  LookupEntry(google::cloud::datacatalog::v1::LookupEntryRequest const& request);
 
-  virtual StreamRange<google::cloud::datacatalog::v1::Entry> ListEntries(
-      google::cloud::datacatalog::v1::ListEntriesRequest request);
+  virtual StreamRange<google::cloud::datacatalog::v1::Entry>
+  ListEntries(google::cloud::datacatalog::v1::ListEntriesRequest request);
 
   virtual StatusOr<google::cloud::datacatalog::v1::EntryOverview>
-  ModifyEntryOverview(
-      google::cloud::datacatalog::v1::ModifyEntryOverviewRequest const&
-          request);
+  ModifyEntryOverview(google::cloud::datacatalog::v1::ModifyEntryOverviewRequest const& request);
 
   virtual StatusOr<google::cloud::datacatalog::v1::Contacts>
-  ModifyEntryContacts(
-      google::cloud::datacatalog::v1::ModifyEntryContactsRequest const&
-          request);
+  ModifyEntryContacts(google::cloud::datacatalog::v1::ModifyEntryContactsRequest const& request);
 
   virtual StatusOr<google::cloud::datacatalog::v1::TagTemplate>
-  CreateTagTemplate(
-      google::cloud::datacatalog::v1::CreateTagTemplateRequest const& request);
-
-  virtual StatusOr<google::cloud::datacatalog::v1::TagTemplate> GetTagTemplate(
-      google::cloud::datacatalog::v1::GetTagTemplateRequest const& request);
+  CreateTagTemplate(google::cloud::datacatalog::v1::CreateTagTemplateRequest const& request);
 
   virtual StatusOr<google::cloud::datacatalog::v1::TagTemplate>
-  UpdateTagTemplate(
-      google::cloud::datacatalog::v1::UpdateTagTemplateRequest const& request);
+  GetTagTemplate(google::cloud::datacatalog::v1::GetTagTemplateRequest const& request);
 
-  virtual Status DeleteTagTemplate(
-      google::cloud::datacatalog::v1::DeleteTagTemplateRequest const& request);
+  virtual StatusOr<google::cloud::datacatalog::v1::TagTemplate>
+  UpdateTagTemplate(google::cloud::datacatalog::v1::UpdateTagTemplateRequest const& request);
 
-  virtual StatusOr<google::cloud::datacatalog::v1::TagTemplateField>
-  CreateTagTemplateField(
-      google::cloud::datacatalog::v1::CreateTagTemplateFieldRequest const&
-          request);
+  virtual Status
+  DeleteTagTemplate(google::cloud::datacatalog::v1::DeleteTagTemplateRequest const& request);
 
   virtual StatusOr<google::cloud::datacatalog::v1::TagTemplateField>
-  UpdateTagTemplateField(
-      google::cloud::datacatalog::v1::UpdateTagTemplateFieldRequest const&
-          request);
+  CreateTagTemplateField(google::cloud::datacatalog::v1::CreateTagTemplateFieldRequest const& request);
 
   virtual StatusOr<google::cloud::datacatalog::v1::TagTemplateField>
-  RenameTagTemplateField(
-      google::cloud::datacatalog::v1::RenameTagTemplateFieldRequest const&
-          request);
+  UpdateTagTemplateField(google::cloud::datacatalog::v1::UpdateTagTemplateFieldRequest const& request);
 
   virtual StatusOr<google::cloud::datacatalog::v1::TagTemplateField>
-  RenameTagTemplateFieldEnumValue(
-      google::cloud::datacatalog::v1::
-          RenameTagTemplateFieldEnumValueRequest const& request);
+  RenameTagTemplateField(google::cloud::datacatalog::v1::RenameTagTemplateFieldRequest const& request);
 
-  virtual Status DeleteTagTemplateField(
-      google::cloud::datacatalog::v1::DeleteTagTemplateFieldRequest const&
-          request);
+  virtual StatusOr<google::cloud::datacatalog::v1::TagTemplateField>
+  RenameTagTemplateFieldEnumValue(google::cloud::datacatalog::v1::RenameTagTemplateFieldEnumValueRequest const& request);
 
-  virtual StatusOr<google::cloud::datacatalog::v1::Tag> CreateTag(
-      google::cloud::datacatalog::v1::CreateTagRequest const& request);
+  virtual Status
+  DeleteTagTemplateField(google::cloud::datacatalog::v1::DeleteTagTemplateFieldRequest const& request);
 
-  virtual StatusOr<google::cloud::datacatalog::v1::Tag> UpdateTag(
-      google::cloud::datacatalog::v1::UpdateTagRequest const& request);
+  virtual StatusOr<google::cloud::datacatalog::v1::Tag>
+  CreateTag(google::cloud::datacatalog::v1::CreateTagRequest const& request);
 
-  virtual Status DeleteTag(
-      google::cloud::datacatalog::v1::DeleteTagRequest const& request);
+  virtual StatusOr<google::cloud::datacatalog::v1::Tag>
+  UpdateTag(google::cloud::datacatalog::v1::UpdateTagRequest const& request);
 
-  virtual StreamRange<google::cloud::datacatalog::v1::Tag> ListTags(
-      google::cloud::datacatalog::v1::ListTagsRequest request);
+  virtual Status
+  DeleteTag(google::cloud::datacatalog::v1::DeleteTagRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::datacatalog::v1::ReconcileTagsResponse>>
-  ReconcileTags(
-      google::cloud::datacatalog::v1::ReconcileTagsRequest const& request);
+  virtual StreamRange<google::cloud::datacatalog::v1::Tag>
+  ListTags(google::cloud::datacatalog::v1::ListTagsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation> ReconcileTags(
-      NoAwaitTag,
-      google::cloud::datacatalog::v1::ReconcileTagsRequest const& request);
+  virtual future<StatusOr<google::cloud::datacatalog::v1::ReconcileTagsResponse>>
+  ReconcileTags(google::cloud::datacatalog::v1::ReconcileTagsRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::datacatalog::v1::ReconcileTagsResponse>>
-  ReconcileTags(google::longrunning::Operation const& operation);
+  virtual StatusOr<google::longrunning::Operation>
+  ReconcileTags(NoAwaitTag, google::cloud::datacatalog::v1::ReconcileTagsRequest const& request);
 
-  virtual StatusOr<google::cloud::datacatalog::v1::StarEntryResponse> StarEntry(
-      google::cloud::datacatalog::v1::StarEntryRequest const& request);
+  virtual future<StatusOr<google::cloud::datacatalog::v1::ReconcileTagsResponse>>
+  ReconcileTags( google::longrunning::Operation const& operation);
+
+  virtual StatusOr<google::cloud::datacatalog::v1::StarEntryResponse>
+  StarEntry(google::cloud::datacatalog::v1::StarEntryRequest const& request);
 
   virtual StatusOr<google::cloud::datacatalog::v1::UnstarEntryResponse>
-  UnstarEntry(
-      google::cloud::datacatalog::v1::UnstarEntryRequest const& request);
+  UnstarEntry(google::cloud::datacatalog::v1::UnstarEntryRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
 
   virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
   TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::datacatalog::v1::ImportEntriesResponse>>
-  ImportEntries(
-      google::cloud::datacatalog::v1::ImportEntriesRequest const& request);
+  virtual future<StatusOr<google::cloud::datacatalog::v1::ImportEntriesResponse>>
+  ImportEntries(google::cloud::datacatalog::v1::ImportEntriesRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> ImportEntries(
-      NoAwaitTag,
-      google::cloud::datacatalog::v1::ImportEntriesRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  ImportEntries(NoAwaitTag, google::cloud::datacatalog::v1::ImportEntriesRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::datacatalog::v1::ImportEntriesResponse>>
-  ImportEntries(google::longrunning::Operation const& operation);
-
-  virtual StatusOr<google::cloud::datacatalog::v1::MigrationConfig> SetConfig(
-      google::cloud::datacatalog::v1::SetConfigRequest const& request);
-
-  virtual StatusOr<google::cloud::datacatalog::v1::OrganizationConfig>
-  RetrieveConfig(
-      google::cloud::datacatalog::v1::RetrieveConfigRequest const& request);
+  virtual future<StatusOr<google::cloud::datacatalog::v1::ImportEntriesResponse>>
+  ImportEntries( google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::datacatalog::v1::MigrationConfig>
-  RetrieveEffectiveConfig(
-      google::cloud::datacatalog::v1::RetrieveEffectiveConfigRequest const&
-          request);
+  SetConfig(google::cloud::datacatalog::v1::SetConfigRequest const& request);
 
-  virtual StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual StatusOr<google::cloud::datacatalog::v1::OrganizationConfig>
+  RetrieveConfig(google::cloud::datacatalog::v1::RetrieveConfigRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::cloud::datacatalog::v1::MigrationConfig>
+  RetrieveEffectiveConfig(google::cloud::datacatalog::v1::RetrieveEffectiveConfigRequest const& request);
 
-  virtual Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request);
+  virtual StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request);
 
-  virtual Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request);
+
+  virtual Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
+
+  virtual Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request);
 };
 
 /**

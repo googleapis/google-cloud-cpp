@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAM_V3_PRINCIPAL_ACCESS_BOUNDARY_POLICIES_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAM_V3_PRINCIPAL_ACCESS_BOUNDARY_POLICIES_CONNECTION_H
 
-#include "google/cloud/iam/v3/internal/principal_access_boundary_policies_retry_traits.h"
-#include "google/cloud/iam/v3/principal_access_boundary_policies_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
+#include "google/cloud/iam/v3/internal/principal_access_boundary_policies_retry_traits.h"
+#include "google/cloud/iam/v3/principal_access_boundary_policies_connection_idempotency_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -40,17 +40,14 @@ namespace iam_v3 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `PrincipalAccessBoundaryPoliciesConnection`.
-class PrincipalAccessBoundaryPoliciesRetryPolicy
-    : public ::google::cloud::RetryPolicy {
+class PrincipalAccessBoundaryPoliciesRetryPolicy : public ::google::cloud::RetryPolicy {
  public:
   /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<PrincipalAccessBoundaryPoliciesRetryPolicy> clone()
-      const = 0;
+  virtual std::unique_ptr<PrincipalAccessBoundaryPoliciesRetryPolicy> clone() const = 0;
 };
 
 /**
- * A retry policy for `PrincipalAccessBoundaryPoliciesConnection` based on
- * counting errors.
+ * A retry policy for `PrincipalAccessBoundaryPoliciesConnection` based on counting errors.
  *
  * This policy stops retrying if:
  * - An RPC returns a non-transient error.
@@ -59,8 +56,7 @@ class PrincipalAccessBoundaryPoliciesRetryPolicy
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class PrincipalAccessBoundaryPoliciesLimitedErrorCountRetryPolicy
-    : public PrincipalAccessBoundaryPoliciesRetryPolicy {
+class PrincipalAccessBoundaryPoliciesLimitedErrorCountRetryPolicy : public PrincipalAccessBoundaryPoliciesRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -69,20 +65,15 @@ class PrincipalAccessBoundaryPoliciesLimitedErrorCountRetryPolicy
    * @note Disable the retry loop by providing an instance of this policy with
    *     @p maximum_failures == 0.
    */
-  explicit PrincipalAccessBoundaryPoliciesLimitedErrorCountRetryPolicy(
-      int maximum_failures)
-      : impl_(maximum_failures) {}
+  explicit PrincipalAccessBoundaryPoliciesLimitedErrorCountRetryPolicy(int maximum_failures)
+    : impl_(maximum_failures) {}
 
   PrincipalAccessBoundaryPoliciesLimitedErrorCountRetryPolicy(
-      PrincipalAccessBoundaryPoliciesLimitedErrorCountRetryPolicy&&
-          rhs) noexcept
-      : PrincipalAccessBoundaryPoliciesLimitedErrorCountRetryPolicy(
-            rhs.maximum_failures()) {}
+      PrincipalAccessBoundaryPoliciesLimitedErrorCountRetryPolicy&& rhs) noexcept
+    : PrincipalAccessBoundaryPoliciesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   PrincipalAccessBoundaryPoliciesLimitedErrorCountRetryPolicy(
-      PrincipalAccessBoundaryPoliciesLimitedErrorCountRetryPolicy const&
-          rhs) noexcept
-      : PrincipalAccessBoundaryPoliciesLimitedErrorCountRetryPolicy(
-            rhs.maximum_failures()) {}
+      PrincipalAccessBoundaryPoliciesLimitedErrorCountRetryPolicy const& rhs) noexcept
+    : PrincipalAccessBoundaryPoliciesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -93,10 +84,8 @@ class PrincipalAccessBoundaryPoliciesLimitedErrorCountRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<PrincipalAccessBoundaryPoliciesRetryPolicy> clone()
-      const override {
-    return std::make_unique<
-        PrincipalAccessBoundaryPoliciesLimitedErrorCountRetryPolicy>(
+  std::unique_ptr<PrincipalAccessBoundaryPoliciesRetryPolicy> clone() const override {
+    return std::make_unique<PrincipalAccessBoundaryPoliciesLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
 
@@ -104,14 +93,11 @@ class PrincipalAccessBoundaryPoliciesLimitedErrorCountRetryPolicy
   using BaseType = PrincipalAccessBoundaryPoliciesRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      iam_v3_internal::PrincipalAccessBoundaryPoliciesRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<iam_v3_internal::PrincipalAccessBoundaryPoliciesRetryTraits> impl_;
 };
 
 /**
- * A retry policy for `PrincipalAccessBoundaryPoliciesConnection` based on
- * elapsed time.
+ * A retry policy for `PrincipalAccessBoundaryPoliciesConnection` based on elapsed time.
  *
  * This policy stops retrying if:
  * - An RPC returns a non-transient error.
@@ -120,8 +106,7 @@ class PrincipalAccessBoundaryPoliciesLimitedErrorCountRetryPolicy
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class PrincipalAccessBoundaryPoliciesLimitedTimeRetryPolicy
-    : public PrincipalAccessBoundaryPoliciesRetryPolicy {
+class PrincipalAccessBoundaryPoliciesLimitedTimeRetryPolicy : public PrincipalAccessBoundaryPoliciesRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -146,16 +131,12 @@ class PrincipalAccessBoundaryPoliciesLimitedTimeRetryPolicy
   template <typename DurationRep, typename DurationPeriod>
   explicit PrincipalAccessBoundaryPoliciesLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  PrincipalAccessBoundaryPoliciesLimitedTimeRetryPolicy(
-      PrincipalAccessBoundaryPoliciesLimitedTimeRetryPolicy&& rhs) noexcept
-      : PrincipalAccessBoundaryPoliciesLimitedTimeRetryPolicy(
-            rhs.maximum_duration()) {}
-  PrincipalAccessBoundaryPoliciesLimitedTimeRetryPolicy(
-      PrincipalAccessBoundaryPoliciesLimitedTimeRetryPolicy const& rhs) noexcept
-      : PrincipalAccessBoundaryPoliciesLimitedTimeRetryPolicy(
-            rhs.maximum_duration()) {}
+  PrincipalAccessBoundaryPoliciesLimitedTimeRetryPolicy(PrincipalAccessBoundaryPoliciesLimitedTimeRetryPolicy&& rhs) noexcept
+    : PrincipalAccessBoundaryPoliciesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  PrincipalAccessBoundaryPoliciesLimitedTimeRetryPolicy(PrincipalAccessBoundaryPoliciesLimitedTimeRetryPolicy const& rhs) noexcept
+    : PrincipalAccessBoundaryPoliciesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -168,10 +149,8 @@ class PrincipalAccessBoundaryPoliciesLimitedTimeRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<PrincipalAccessBoundaryPoliciesRetryPolicy> clone()
-      const override {
-    return std::make_unique<
-        PrincipalAccessBoundaryPoliciesLimitedTimeRetryPolicy>(
+  std::unique_ptr<PrincipalAccessBoundaryPoliciesRetryPolicy> clone() const override {
+    return std::make_unique<PrincipalAccessBoundaryPoliciesLimitedTimeRetryPolicy>(
         maximum_duration());
   }
 
@@ -179,25 +158,20 @@ class PrincipalAccessBoundaryPoliciesLimitedTimeRetryPolicy
   using BaseType = PrincipalAccessBoundaryPoliciesRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      iam_v3_internal::PrincipalAccessBoundaryPoliciesRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<iam_v3_internal::PrincipalAccessBoundaryPoliciesRetryTraits> impl_;
 };
 
 /**
- * The `PrincipalAccessBoundaryPoliciesConnection` object for
- * `PrincipalAccessBoundaryPoliciesClient`.
+ * The `PrincipalAccessBoundaryPoliciesConnection` object for `PrincipalAccessBoundaryPoliciesClient`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `PrincipalAccessBoundaryPoliciesClient`. This allows users to inject
- * custom behavior (e.g., with a Google Mock object) when writing tests that use
- * objects of type `PrincipalAccessBoundaryPoliciesClient`.
+ * sets in `PrincipalAccessBoundaryPoliciesClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `PrincipalAccessBoundaryPoliciesClient`.
  *
- * To create a concrete instance, see
- * `MakePrincipalAccessBoundaryPoliciesConnection()`.
+ * To create a concrete instance, see `MakePrincipalAccessBoundaryPoliciesConnection()`.
  *
- * For mocking, see
- * `iam_v3_mocks::MockPrincipalAccessBoundaryPoliciesConnection`.
+ * For mocking, see `iam_v3_mocks::MockPrincipalAccessBoundaryPoliciesConnection`.
  */
 class PrincipalAccessBoundaryPoliciesConnection {
  public:
@@ -206,78 +180,54 @@ class PrincipalAccessBoundaryPoliciesConnection {
   virtual Options options() { return Options{}; }
 
   virtual future<StatusOr<google::iam::v3::PrincipalAccessBoundaryPolicy>>
-  CreatePrincipalAccessBoundaryPolicy(
-      google::iam::v3::CreatePrincipalAccessBoundaryPolicyRequest const&
-          request);
+  CreatePrincipalAccessBoundaryPolicy(google::iam::v3::CreatePrincipalAccessBoundaryPolicyRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation>
-  CreatePrincipalAccessBoundaryPolicy(
-      NoAwaitTag,
-      google::iam::v3::CreatePrincipalAccessBoundaryPolicyRequest const&
-          request);
+  CreatePrincipalAccessBoundaryPolicy(NoAwaitTag, google::iam::v3::CreatePrincipalAccessBoundaryPolicyRequest const& request);
 
   virtual future<StatusOr<google::iam::v3::PrincipalAccessBoundaryPolicy>>
-  CreatePrincipalAccessBoundaryPolicy(
-      google::longrunning::Operation const& operation);
+  CreatePrincipalAccessBoundaryPolicy( google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::iam::v3::PrincipalAccessBoundaryPolicy>
-  GetPrincipalAccessBoundaryPolicy(
-      google::iam::v3::GetPrincipalAccessBoundaryPolicyRequest const& request);
+  GetPrincipalAccessBoundaryPolicy(google::iam::v3::GetPrincipalAccessBoundaryPolicyRequest const& request);
 
   virtual future<StatusOr<google::iam::v3::PrincipalAccessBoundaryPolicy>>
-  UpdatePrincipalAccessBoundaryPolicy(
-      google::iam::v3::UpdatePrincipalAccessBoundaryPolicyRequest const&
-          request);
+  UpdatePrincipalAccessBoundaryPolicy(google::iam::v3::UpdatePrincipalAccessBoundaryPolicyRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation>
-  UpdatePrincipalAccessBoundaryPolicy(
-      NoAwaitTag,
-      google::iam::v3::UpdatePrincipalAccessBoundaryPolicyRequest const&
-          request);
+  UpdatePrincipalAccessBoundaryPolicy(NoAwaitTag, google::iam::v3::UpdatePrincipalAccessBoundaryPolicyRequest const& request);
 
   virtual future<StatusOr<google::iam::v3::PrincipalAccessBoundaryPolicy>>
-  UpdatePrincipalAccessBoundaryPolicy(
-      google::longrunning::Operation const& operation);
+  UpdatePrincipalAccessBoundaryPolicy( google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::iam::v3::OperationMetadata>>
-  DeletePrincipalAccessBoundaryPolicy(
-      google::iam::v3::DeletePrincipalAccessBoundaryPolicyRequest const&
-          request);
+  DeletePrincipalAccessBoundaryPolicy(google::iam::v3::DeletePrincipalAccessBoundaryPolicyRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation>
-  DeletePrincipalAccessBoundaryPolicy(
-      NoAwaitTag,
-      google::iam::v3::DeletePrincipalAccessBoundaryPolicyRequest const&
-          request);
+  DeletePrincipalAccessBoundaryPolicy(NoAwaitTag, google::iam::v3::DeletePrincipalAccessBoundaryPolicyRequest const& request);
 
   virtual future<StatusOr<google::iam::v3::OperationMetadata>>
-  DeletePrincipalAccessBoundaryPolicy(
-      google::longrunning::Operation const& operation);
+  DeletePrincipalAccessBoundaryPolicy( google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::iam::v3::PrincipalAccessBoundaryPolicy>
-  ListPrincipalAccessBoundaryPolicies(
-      google::iam::v3::ListPrincipalAccessBoundaryPoliciesRequest request);
+  ListPrincipalAccessBoundaryPolicies(google::iam::v3::ListPrincipalAccessBoundaryPoliciesRequest request);
 
   virtual StreamRange<google::iam::v3::PolicyBinding>
-  SearchPrincipalAccessBoundaryPolicyBindings(
-      google::iam::v3::SearchPrincipalAccessBoundaryPolicyBindingsRequest
-          request);
+  SearchPrincipalAccessBoundaryPolicyBindings(google::iam::v3::SearchPrincipalAccessBoundaryPolicyBindingsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 };
 
 /**
- * A factory function to construct an object of type
- * `PrincipalAccessBoundaryPoliciesConnection`.
+ * A factory function to construct an object of type `PrincipalAccessBoundaryPoliciesConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of
- * PrincipalAccessBoundaryPoliciesClient.
+ * should be passed as an argument to the constructor of PrincipalAccessBoundaryPoliciesClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `PrincipalAccessBoundaryPoliciesConnection`. Expected options are
- * any of the types in the following option lists:
+ * returned `PrincipalAccessBoundaryPoliciesConnection`. Expected options are any of the types in
+ * the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
@@ -287,11 +237,11 @@ class PrincipalAccessBoundaryPoliciesConnection {
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
- * @param options (optional) Configure the
- * `PrincipalAccessBoundaryPoliciesConnection` created by this function.
+ * @param options (optional) Configure the `PrincipalAccessBoundaryPoliciesConnection` created by
+ * this function.
  */
-std::shared_ptr<PrincipalAccessBoundaryPoliciesConnection>
-MakePrincipalAccessBoundaryPoliciesConnection(Options options = {});
+std::shared_ptr<PrincipalAccessBoundaryPoliciesConnection> MakePrincipalAccessBoundaryPoliciesConnection(
+    Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace iam_v3

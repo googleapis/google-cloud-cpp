@@ -35,31 +35,23 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options DataPolicyServiceDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_DATA_POLICY_SERVICE_ENDPOINT", "",
-      "GOOGLE_CLOUD_CPP_DATA_POLICY_SERVICE_AUTHORITY",
+      std::move(options), "GOOGLE_CLOUD_CPP_DATA_POLICY_SERVICE_ENDPOINT",
+      "", "GOOGLE_CLOUD_CPP_DATA_POLICY_SERVICE_AUTHORITY",
       "bigquerydatapolicy.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
-  if (!options.has<
-          bigquery_datapolicies_v1::DataPolicyServiceRetryPolicyOption>()) {
+  if (!options.has<bigquery_datapolicies_v1::DataPolicyServiceRetryPolicyOption>()) {
     options.set<bigquery_datapolicies_v1::DataPolicyServiceRetryPolicyOption>(
         bigquery_datapolicies_v1::DataPolicyServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
-            .clone());
+            std::chrono::minutes(30)).clone());
   }
-  if (!options.has<
-          bigquery_datapolicies_v1::DataPolicyServiceBackoffPolicyOption>()) {
+  if (!options.has<bigquery_datapolicies_v1::DataPolicyServiceBackoffPolicyOption>()) {
     options.set<bigquery_datapolicies_v1::DataPolicyServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(
-            std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
-            .clone());
+        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
   }
-  if (!options.has<bigquery_datapolicies_v1::
-                       DataPolicyServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<bigquery_datapolicies_v1::
-                    DataPolicyServiceConnectionIdempotencyPolicyOption>(
-        bigquery_datapolicies_v1::
-            MakeDefaultDataPolicyServiceConnectionIdempotencyPolicy());
+  if (!options.has<bigquery_datapolicies_v1::DataPolicyServiceConnectionIdempotencyPolicyOption>()) {
+    options.set<bigquery_datapolicies_v1::DataPolicyServiceConnectionIdempotencyPolicyOption>(
+        bigquery_datapolicies_v1::MakeDefaultDataPolicyServiceConnectionIdempotencyPolicy());
   }
 
   return options;

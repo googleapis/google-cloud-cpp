@@ -26,16 +26,11 @@ namespace cloud {
 namespace billing {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use
-/// billing_budgets_v1::MakeDefaultBudgetServiceConnectionIdempotencyPolicy
-/// directly.
-using ::google::cloud::billing_budgets_v1::
-    MakeDefaultBudgetServiceConnectionIdempotencyPolicy;
+/// @deprecated Use billing_budgets_v1::MakeDefaultBudgetServiceConnectionIdempotencyPolicy directly.
+using ::google::cloud::billing_budgets_v1::MakeDefaultBudgetServiceConnectionIdempotencyPolicy;
 
-/// @deprecated Use billing_budgets_v1::BudgetServiceConnectionIdempotencyPolicy
-/// directly.
-using ::google::cloud::billing_budgets_v1::
-    BudgetServiceConnectionIdempotencyPolicy;
+/// @deprecated Use billing_budgets_v1::BudgetServiceConnectionIdempotencyPolicy directly.
+using ::google::cloud::billing_budgets_v1::BudgetServiceConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace billing

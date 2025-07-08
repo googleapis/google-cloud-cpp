@@ -32,84 +32,93 @@ OsLoginServiceStub::~OsLoginServiceStub() = default;
 
 StatusOr<google::cloud::oslogin::common::SshPublicKey>
 DefaultOsLoginServiceStub::CreateSshPublicKey(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::oslogin::v1::CreateSshPublicKeyRequest const& request) {
-  google::cloud::oslogin::common::SshPublicKey response;
-  auto status = grpc_stub_->CreateSshPublicKey(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::oslogin::v1::CreateSshPublicKeyRequest const& request) {
+    google::cloud::oslogin::common::SshPublicKey response;
+    auto status =
+        grpc_stub_->CreateSshPublicKey(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-Status DefaultOsLoginServiceStub::DeletePosixAccount(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::oslogin::v1::DeletePosixAccountRequest const& request) {
-  google::protobuf::Empty response;
-  auto status = grpc_stub_->DeletePosixAccount(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return google::cloud::Status();
+Status
+DefaultOsLoginServiceStub::DeletePosixAccount(
+  grpc::ClientContext& context, Options const&,
+  google::cloud::oslogin::v1::DeletePosixAccountRequest const& request) {
+    google::protobuf::Empty response;
+    auto status =
+        grpc_stub_->DeletePosixAccount(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return google::cloud::Status();
 }
 
-Status DefaultOsLoginServiceStub::DeleteSshPublicKey(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::oslogin::v1::DeleteSshPublicKeyRequest const& request) {
-  google::protobuf::Empty response;
-  auto status = grpc_stub_->DeleteSshPublicKey(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return google::cloud::Status();
+Status
+DefaultOsLoginServiceStub::DeleteSshPublicKey(
+  grpc::ClientContext& context, Options const&,
+  google::cloud::oslogin::v1::DeleteSshPublicKeyRequest const& request) {
+    google::protobuf::Empty response;
+    auto status =
+        grpc_stub_->DeleteSshPublicKey(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return google::cloud::Status();
 }
 
 StatusOr<google::cloud::oslogin::v1::LoginProfile>
 DefaultOsLoginServiceStub::GetLoginProfile(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::oslogin::v1::GetLoginProfileRequest const& request) {
-  google::cloud::oslogin::v1::LoginProfile response;
-  auto status = grpc_stub_->GetLoginProfile(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::oslogin::v1::GetLoginProfileRequest const& request) {
+    google::cloud::oslogin::v1::LoginProfile response;
+    auto status =
+        grpc_stub_->GetLoginProfile(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::oslogin::common::SshPublicKey>
 DefaultOsLoginServiceStub::GetSshPublicKey(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::oslogin::v1::GetSshPublicKeyRequest const& request) {
-  google::cloud::oslogin::common::SshPublicKey response;
-  auto status = grpc_stub_->GetSshPublicKey(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::oslogin::v1::GetSshPublicKeyRequest const& request) {
+    google::cloud::oslogin::common::SshPublicKey response;
+    auto status =
+        grpc_stub_->GetSshPublicKey(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::oslogin::v1::ImportSshPublicKeyResponse>
 DefaultOsLoginServiceStub::ImportSshPublicKey(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::oslogin::v1::ImportSshPublicKeyRequest const& request) {
-  google::cloud::oslogin::v1::ImportSshPublicKeyResponse response;
-  auto status = grpc_stub_->ImportSshPublicKey(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::oslogin::v1::ImportSshPublicKeyRequest const& request) {
+    google::cloud::oslogin::v1::ImportSshPublicKeyResponse response;
+    auto status =
+        grpc_stub_->ImportSshPublicKey(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::oslogin::common::SshPublicKey>
 DefaultOsLoginServiceStub::UpdateSshPublicKey(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::oslogin::v1::UpdateSshPublicKeyRequest const& request) {
-  google::cloud::oslogin::common::SshPublicKey response;
-  auto status = grpc_stub_->UpdateSshPublicKey(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::oslogin::v1::UpdateSshPublicKeyRequest const& request) {
+    google::cloud::oslogin::common::SshPublicKey response;
+    auto status =
+        grpc_stub_->UpdateSshPublicKey(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

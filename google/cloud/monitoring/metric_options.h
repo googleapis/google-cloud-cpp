@@ -31,10 +31,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// @deprecated Use monitoring_v3::MetricServiceBackoffPolicyOption directly.
 using ::google::cloud::monitoring_v3::MetricServiceBackoffPolicyOption;
 
-/// @deprecated Use
-/// monitoring_v3::MetricServiceConnectionIdempotencyPolicyOption directly.
-using ::google::cloud::monitoring_v3::
-    MetricServiceConnectionIdempotencyPolicyOption;
+/// @deprecated Use monitoring_v3::MetricServiceConnectionIdempotencyPolicyOption directly.
+using ::google::cloud::monitoring_v3::MetricServiceConnectionIdempotencyPolicyOption;
 
 /// @deprecated Use monitoring_v3::MetricServicePolicyOptionList directly.
 using ::google::cloud::monitoring_v3::MetricServicePolicyOptionList;

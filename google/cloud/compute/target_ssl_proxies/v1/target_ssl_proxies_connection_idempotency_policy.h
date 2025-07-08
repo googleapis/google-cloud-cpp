@@ -34,48 +34,38 @@ class TargetSslProxiesConnectionIdempotencyPolicy {
   virtual ~TargetSslProxiesConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<TargetSslProxiesConnectionIdempotencyPolicy> clone()
-      const;
+  virtual std::unique_ptr<TargetSslProxiesConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency DeleteTargetSslProxy(
-      google::cloud::cpp::compute::target_ssl_proxies::v1::
-          DeleteTargetSslProxyRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteTargetSslProxy(google::cloud::cpp::compute::target_ssl_proxies::v1::DeleteTargetSslProxyRequest const& request);
 
-  virtual google::cloud::Idempotency GetTargetSslProxy(
-      google::cloud::cpp::compute::target_ssl_proxies::v1::
-          GetTargetSslProxyRequest const& request);
+  virtual google::cloud::Idempotency
+  GetTargetSslProxy(google::cloud::cpp::compute::target_ssl_proxies::v1::GetTargetSslProxyRequest const& request);
 
-  virtual google::cloud::Idempotency InsertTargetSslProxy(
-      google::cloud::cpp::compute::target_ssl_proxies::v1::
-          InsertTargetSslProxyRequest const& request);
+  virtual google::cloud::Idempotency
+  InsertTargetSslProxy(google::cloud::cpp::compute::target_ssl_proxies::v1::InsertTargetSslProxyRequest const& request);
 
-  virtual google::cloud::Idempotency ListTargetSslProxies(
-      google::cloud::cpp::compute::target_ssl_proxies::v1::
-          ListTargetSslProxiesRequest request);
+  virtual google::cloud::Idempotency
+  ListTargetSslProxies(google::cloud::cpp::compute::target_ssl_proxies::v1::ListTargetSslProxiesRequest request);
 
-  virtual google::cloud::Idempotency SetBackendService(
-      google::cloud::cpp::compute::target_ssl_proxies::v1::
-          SetBackendServiceRequest const& request);
+  virtual google::cloud::Idempotency
+  SetBackendService(google::cloud::cpp::compute::target_ssl_proxies::v1::SetBackendServiceRequest const& request);
 
-  virtual google::cloud::Idempotency SetCertificateMap(
-      google::cloud::cpp::compute::target_ssl_proxies::v1::
-          SetCertificateMapRequest const& request);
+  virtual google::cloud::Idempotency
+  SetCertificateMap(google::cloud::cpp::compute::target_ssl_proxies::v1::SetCertificateMapRequest const& request);
 
-  virtual google::cloud::Idempotency SetProxyHeader(
-      google::cloud::cpp::compute::target_ssl_proxies::v1::
-          SetProxyHeaderRequest const& request);
+  virtual google::cloud::Idempotency
+  SetProxyHeader(google::cloud::cpp::compute::target_ssl_proxies::v1::SetProxyHeaderRequest const& request);
 
-  virtual google::cloud::Idempotency SetSslCertificates(
-      google::cloud::cpp::compute::target_ssl_proxies::v1::
-          SetSslCertificatesRequest const& request);
+  virtual google::cloud::Idempotency
+  SetSslCertificates(google::cloud::cpp::compute::target_ssl_proxies::v1::SetSslCertificatesRequest const& request);
 
-  virtual google::cloud::Idempotency SetSslPolicy(
-      google::cloud::cpp::compute::target_ssl_proxies::v1::
-          SetSslPolicyRequest const& request);
+  virtual google::cloud::Idempotency
+  SetSslPolicy(google::cloud::cpp::compute::target_ssl_proxies::v1::SetSslPolicyRequest const& request);
 };
 
 std::unique_ptr<TargetSslProxiesConnectionIdempotencyPolicy>
-MakeDefaultTargetSslProxiesConnectionIdempotencyPolicy();
+    MakeDefaultTargetSslProxiesConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_target_ssl_proxies_v1

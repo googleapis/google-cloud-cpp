@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_DASHBOARD_V1_INTERNAL_DASHBOARDS_TRACING_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_DASHBOARD_V1_INTERNAL_DASHBOARDS_TRACING_STUB_H
 
-#include "google/cloud/monitoring/dashboard/v1/internal/dashboards_stub.h"
 #include "google/cloud/internal/trace_propagator.h"
+#include "google/cloud/monitoring/dashboard/v1/internal/dashboards_stub.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -36,38 +36,36 @@ class DashboardsServiceTracingStub : public DashboardsServiceStub {
  public:
   ~DashboardsServiceTracingStub() override = default;
 
-  explicit DashboardsServiceTracingStub(
-      std::shared_ptr<DashboardsServiceStub> child);
+  explicit DashboardsServiceTracingStub(std::shared_ptr<DashboardsServiceStub> child);
 
   StatusOr<google::monitoring::dashboard::v1::Dashboard> CreateDashboard(
-      grpc::ClientContext& context, Options const& options,
-      google::monitoring::dashboard::v1::CreateDashboardRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::monitoring::dashboard::v1::CreateDashboardRequest const& request) override;
 
-  StatusOr<google::monitoring::dashboard::v1::ListDashboardsResponse>
-  ListDashboards(grpc::ClientContext& context, Options const& options,
-                 google::monitoring::dashboard::v1::ListDashboardsRequest const&
-                     request) override;
+  StatusOr<google::monitoring::dashboard::v1::ListDashboardsResponse> ListDashboards(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::monitoring::dashboard::v1::ListDashboardsRequest const& request) override;
 
   StatusOr<google::monitoring::dashboard::v1::Dashboard> GetDashboard(
-      grpc::ClientContext& context, Options const& options,
-      google::monitoring::dashboard::v1::GetDashboardRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::monitoring::dashboard::v1::GetDashboardRequest const& request) override;
 
   Status DeleteDashboard(
-      grpc::ClientContext& context, Options const& options,
-      google::monitoring::dashboard::v1::DeleteDashboardRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::monitoring::dashboard::v1::DeleteDashboardRequest const& request) override;
 
   StatusOr<google::monitoring::dashboard::v1::Dashboard> UpdateDashboard(
-      grpc::ClientContext& context, Options const& options,
-      google::monitoring::dashboard::v1::UpdateDashboardRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::monitoring::dashboard::v1::UpdateDashboardRequest const& request) override;
 
  private:
   std::shared_ptr<DashboardsServiceStub> child_;
-  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
-      propagator_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

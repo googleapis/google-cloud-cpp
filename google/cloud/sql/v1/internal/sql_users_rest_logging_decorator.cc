@@ -29,38 +29,47 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 SqlUsersServiceRestLogging::SqlUsersServiceRestLogging(
     std::shared_ptr<SqlUsersServiceRestStub> child,
-    TracingOptions tracing_options, std::set<std::string> components)
-    : child_(std::move(child)),
-      tracing_options_(std::move(tracing_options)),
+    TracingOptions tracing_options,
+    std::set<std::string> components)
+    : child_(std::move(child)), tracing_options_(std::move(tracing_options)),
       components_(std::move(components)) {}
 
-StatusOr<google::cloud::sql::v1::Operation> SqlUsersServiceRestLogging::Delete(
-    rest_internal::RestContext& rest_context, Options const& options,
+StatusOr<google::cloud::sql::v1::Operation>
+SqlUsersServiceRestLogging::Delete(
+    rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::sql::v1::SqlUsersDeleteRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context, Options const& options,
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
              google::cloud::sql::v1::SqlUsersDeleteRequest const& request) {
         return child_->Delete(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::cloud::sql::v1::User> SqlUsersServiceRestLogging::Get(
-    rest_internal::RestContext& rest_context, Options const& options,
+StatusOr<google::cloud::sql::v1::User>
+SqlUsersServiceRestLogging::Get(
+    rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::sql::v1::SqlUsersGetRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context, Options const& options,
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
              google::cloud::sql::v1::SqlUsersGetRequest const& request) {
         return child_->Get(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::cloud::sql::v1::Operation> SqlUsersServiceRestLogging::Insert(
-    rest_internal::RestContext& rest_context, Options const& options,
+StatusOr<google::cloud::sql::v1::Operation>
+SqlUsersServiceRestLogging::Insert(
+    rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::sql::v1::SqlUsersInsertRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context, Options const& options,
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
              google::cloud::sql::v1::SqlUsersInsertRequest const& request) {
         return child_->Insert(rest_context, options, request);
       },
@@ -69,21 +78,26 @@ StatusOr<google::cloud::sql::v1::Operation> SqlUsersServiceRestLogging::Insert(
 
 StatusOr<google::cloud::sql::v1::UsersListResponse>
 SqlUsersServiceRestLogging::List(
-    rest_internal::RestContext& rest_context, Options const& options,
+    rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::sql::v1::SqlUsersListRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context, Options const& options,
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
              google::cloud::sql::v1::SqlUsersListRequest const& request) {
         return child_->List(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::cloud::sql::v1::Operation> SqlUsersServiceRestLogging::Update(
-    rest_internal::RestContext& rest_context, Options const& options,
+StatusOr<google::cloud::sql::v1::Operation>
+SqlUsersServiceRestLogging::Update(
+    rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::sql::v1::SqlUsersUpdateRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context, Options const& options,
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
              google::cloud::sql::v1::SqlUsersUpdateRequest const& request) {
         return child_->Update(rest_context, options, request);
       },

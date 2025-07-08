@@ -17,10 +17,10 @@
 // source: google/cloud/secretmanager/v1/service.proto
 
 #include "google/cloud/secretmanager/v1/internal/secret_manager_option_defaults.h"
-#include "google/cloud/secretmanager/v1/secret_manager_connection.h"
-#include "google/cloud/secretmanager/v1/secret_manager_options.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
+#include "google/cloud/secretmanager/v1/secret_manager_connection.h"
+#include "google/cloud/secretmanager/v1/secret_manager_options.h"
 #include <memory>
 #include <utility>
 
@@ -42,24 +42,16 @@ Options SecretManagerServiceDefaultOptions(Options options) {
   if (!options.has<secretmanager_v1::SecretManagerServiceRetryPolicyOption>()) {
     options.set<secretmanager_v1::SecretManagerServiceRetryPolicyOption>(
         secretmanager_v1::SecretManagerServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
-            .clone());
+            std::chrono::minutes(30)).clone());
   }
-  if (!options
-           .has<secretmanager_v1::SecretManagerServiceBackoffPolicyOption>()) {
+  if (!options.has<secretmanager_v1::SecretManagerServiceBackoffPolicyOption>()) {
     options.set<secretmanager_v1::SecretManagerServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(
-            std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
-            .clone());
+        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
   }
-  if (!options
-           .has<secretmanager_v1::
-                    SecretManagerServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<secretmanager_v1::
-                    SecretManagerServiceConnectionIdempotencyPolicyOption>(
-        secretmanager_v1::
-            MakeDefaultSecretManagerServiceConnectionIdempotencyPolicy());
+  if (!options.has<secretmanager_v1::SecretManagerServiceConnectionIdempotencyPolicyOption>()) {
+    options.set<secretmanager_v1::SecretManagerServiceConnectionIdempotencyPolicyOption>(
+        secretmanager_v1::MakeDefaultSecretManagerServiceConnectionIdempotencyPolicy());
   }
 
   return options;

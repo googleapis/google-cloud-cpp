@@ -30,30 +30,36 @@ namespace cloud {
 namespace dialogflow_cx_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-FlowsLogging::FlowsLogging(std::shared_ptr<FlowsStub> child,
-                           TracingOptions tracing_options,
-                           std::set<std::string> const&)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
+FlowsLogging::FlowsLogging(
+    std::shared_ptr<FlowsStub> child,
+    TracingOptions tracing_options,
+    std::set<std::string> const&)
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)) {}
 
-StatusOr<google::cloud::dialogflow::cx::v3::Flow> FlowsLogging::CreateFlow(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::dialogflow::cx::v3::Flow>
+FlowsLogging::CreateFlow(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dialogflow::cx::v3::CreateFlowRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::dialogflow::cx::v3::CreateFlowRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::dialogflow::cx::v3::CreateFlowRequest const& request) {
         return child_->CreateFlow(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status FlowsLogging::DeleteFlow(
-    grpc::ClientContext& context, Options const& options,
+Status
+FlowsLogging::DeleteFlow(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dialogflow::cx::v3::DeleteFlowRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::dialogflow::cx::v3::DeleteFlowRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::dialogflow::cx::v3::DeleteFlowRequest const& request) {
         return child_->DeleteFlow(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -61,65 +67,73 @@ Status FlowsLogging::DeleteFlow(
 
 StatusOr<google::cloud::dialogflow::cx::v3::ListFlowsResponse>
 FlowsLogging::ListFlows(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dialogflow::cx::v3::ListFlowsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::dialogflow::cx::v3::ListFlowsRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::dialogflow::cx::v3::ListFlowsRequest const& request) {
         return child_->ListFlows(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::cloud::dialogflow::cx::v3::Flow> FlowsLogging::GetFlow(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::dialogflow::cx::v3::Flow>
+FlowsLogging::GetFlow(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dialogflow::cx::v3::GetFlowRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::dialogflow::cx::v3::GetFlowRequest const& request) {
         return child_->GetFlow(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::cloud::dialogflow::cx::v3::Flow> FlowsLogging::UpdateFlow(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::dialogflow::cx::v3::Flow>
+FlowsLogging::UpdateFlow(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dialogflow::cx::v3::UpdateFlowRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::dialogflow::cx::v3::UpdateFlowRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::dialogflow::cx::v3::UpdateFlowRequest const& request) {
         return child_->UpdateFlow(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-future<StatusOr<google::longrunning::Operation>> FlowsLogging::AsyncTrainFlow(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::dialogflow::cx::v3::TrainFlowRequest const& request) {
+future<StatusOr<google::longrunning::Operation>>
+FlowsLogging::AsyncTrainFlow(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::dialogflow::cx::v3::TrainFlowRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::dialogflow::cx::v3::TrainFlowRequest const& request) {
-        return child_->AsyncTrainFlow(cq, std::move(context),
-                                      std::move(options), request);
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::dialogflow::cx::v3::TrainFlowRequest const& request) {
+        return child_->AsyncTrainFlow(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> FlowsLogging::TrainFlow(
-    grpc::ClientContext& context, Options options,
-    google::cloud::dialogflow::cx::v3::TrainFlowRequest const& request) {
+StatusOr<google::longrunning::Operation>
+FlowsLogging::TrainFlow(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::dialogflow::cx::v3::TrainFlowRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::dialogflow::cx::v3::TrainFlowRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::dialogflow::cx::v3::TrainFlowRequest const& request) {
         return child_->TrainFlow(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -127,12 +141,13 @@ StatusOr<google::longrunning::Operation> FlowsLogging::TrainFlow(
 
 StatusOr<google::cloud::dialogflow::cx::v3::FlowValidationResult>
 FlowsLogging::ValidateFlow(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dialogflow::cx::v3::ValidateFlowRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dialogflow::cx::v3::ValidateFlowRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::dialogflow::cx::v3::ValidateFlowRequest const& request) {
         return child_->ValidateFlow(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -140,73 +155,77 @@ FlowsLogging::ValidateFlow(
 
 StatusOr<google::cloud::dialogflow::cx::v3::FlowValidationResult>
 FlowsLogging::GetFlowValidationResult(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::dialogflow::cx::v3::GetFlowValidationResultRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::dialogflow::cx::v3::GetFlowValidationResultRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dialogflow::cx::v3::
-                 GetFlowValidationResultRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::dialogflow::cx::v3::GetFlowValidationResultRequest const& request) {
         return child_->GetFlowValidationResult(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-future<StatusOr<google::longrunning::Operation>> FlowsLogging::AsyncImportFlow(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::dialogflow::cx::v3::ImportFlowRequest const& request) {
+future<StatusOr<google::longrunning::Operation>>
+FlowsLogging::AsyncImportFlow(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::dialogflow::cx::v3::ImportFlowRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::dialogflow::cx::v3::ImportFlowRequest const& request) {
-        return child_->AsyncImportFlow(cq, std::move(context),
-                                       std::move(options), request);
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::dialogflow::cx::v3::ImportFlowRequest const& request) {
+        return child_->AsyncImportFlow(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> FlowsLogging::ImportFlow(
-    grpc::ClientContext& context, Options options,
-    google::cloud::dialogflow::cx::v3::ImportFlowRequest const& request) {
+StatusOr<google::longrunning::Operation>
+FlowsLogging::ImportFlow(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::dialogflow::cx::v3::ImportFlowRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::dialogflow::cx::v3::ImportFlowRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::dialogflow::cx::v3::ImportFlowRequest const& request) {
         return child_->ImportFlow(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-future<StatusOr<google::longrunning::Operation>> FlowsLogging::AsyncExportFlow(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::dialogflow::cx::v3::ExportFlowRequest const& request) {
+future<StatusOr<google::longrunning::Operation>>
+FlowsLogging::AsyncExportFlow(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::dialogflow::cx::v3::ExportFlowRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::dialogflow::cx::v3::ExportFlowRequest const& request) {
-        return child_->AsyncExportFlow(cq, std::move(context),
-                                       std::move(options), request);
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::dialogflow::cx::v3::ExportFlowRequest const& request) {
+        return child_->AsyncExportFlow(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> FlowsLogging::ExportFlow(
-    grpc::ClientContext& context, Options options,
-    google::cloud::dialogflow::cx::v3::ExportFlowRequest const& request) {
+StatusOr<google::longrunning::Operation>
+FlowsLogging::ExportFlow(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::dialogflow::cx::v3::ExportFlowRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::dialogflow::cx::v3::ExportFlowRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::dialogflow::cx::v3::ExportFlowRequest const& request) {
         return child_->ExportFlow(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -214,21 +233,26 @@ StatusOr<google::longrunning::Operation> FlowsLogging::ExportFlow(
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 FlowsLogging::ListLocations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::location::ListLocationsRequest const& request) {
         return child_->ListLocations(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::cloud::location::Location> FlowsLogging::GetLocation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::location::Location>
+FlowsLogging::GetLocation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::location::GetLocationRequest const& request) {
         return child_->GetLocation(context, options, request);
       },
@@ -237,32 +261,40 @@ StatusOr<google::cloud::location::Location> FlowsLogging::GetLocation(
 
 StatusOr<google::longrunning::ListOperationsResponse>
 FlowsLogging::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::ListOperationsRequest const& request) {
         return child_->ListOperations(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> FlowsLogging::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::Operation>
+FlowsLogging::GetOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::GetOperationRequest const& request) {
         return child_->GetOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status FlowsLogging::CancelOperation(
-    grpc::ClientContext& context, Options const& options,
+Status
+FlowsLogging::CancelOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::CancelOperationRequest const& request) {
         return child_->CancelOperation(context, options, request);
       },
@@ -280,8 +312,8 @@ FlowsLogging::AsyncGetOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(cq, std::move(context),
-                                         std::move(options), request);
+        return child_->AsyncGetOperation(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -297,8 +329,8 @@ future<Status> FlowsLogging::AsyncCancelOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::CancelOperationRequest const& request) {
-        return child_->AsyncCancelOperation(cq, std::move(context),
-                                            std::move(options), request);
+        return child_->AsyncCancelOperation(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);

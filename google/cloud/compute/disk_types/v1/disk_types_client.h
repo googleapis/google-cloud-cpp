@@ -63,8 +63,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class DiskTypesClient {
  public:
-  explicit DiskTypesClient(std::shared_ptr<DiskTypesConnection> connection,
-                           Options opts = {});
+  explicit DiskTypesClient(std::shared_ptr<DiskTypesConnection> connection, Options opts = {});
   ~DiskTypesClient();
 
   ///@{
@@ -118,8 +117,7 @@ class DiskTypesClient {
   /// [google.cloud.cpp.compute.v1.DiskTypesScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_027.proto#L244}
   ///
   // clang-format on
-  StreamRange<std::pair<std::string,
-                        google::cloud::cpp::compute::v1::DiskTypesScopedList>>
+  StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::DiskTypesScopedList>>
   AggregatedListDiskTypes(std::string const& project, Options opts = {});
 
   // clang-format off
@@ -160,11 +158,8 @@ class DiskTypesClient {
   /// [google.cloud.cpp.compute.v1.DiskTypesScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_027.proto#L244}
   ///
   // clang-format on
-  StreamRange<std::pair<std::string,
-                        google::cloud::cpp::compute::v1::DiskTypesScopedList>>
-  AggregatedListDiskTypes(google::cloud::cpp::compute::disk_types::v1::
-                              AggregatedListDiskTypesRequest request,
-                          Options opts = {});
+  StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::DiskTypesScopedList>>
+  AggregatedListDiskTypes(google::cloud::cpp::compute::disk_types::v1::AggregatedListDiskTypesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -191,9 +186,8 @@ class DiskTypesClient {
   /// [google.cloud.cpp.compute.v1.DiskType]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_026.proto#L34}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::DiskType> GetDiskType(
-      std::string const& project, std::string const& zone,
-      std::string const& disk_type, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::DiskType>
+  GetDiskType(std::string const& project, std::string const& zone, std::string const& disk_type, Options opts = {});
 
   // clang-format off
   ///
@@ -223,10 +217,8 @@ class DiskTypesClient {
   /// [google.cloud.cpp.compute.v1.DiskType]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_026.proto#L34}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::DiskType> GetDiskType(
-      google::cloud::cpp::compute::disk_types::v1::GetDiskTypeRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::DiskType>
+  GetDiskType(google::cloud::cpp::compute::disk_types::v1::GetDiskTypeRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -261,8 +253,8 @@ class DiskTypesClient {
   /// [google.cloud.cpp.compute.v1.DiskType]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_026.proto#L34}
   ///
   // clang-format on
-  StreamRange<google::cloud::cpp::compute::v1::DiskType> ListDiskTypes(
-      std::string const& project, std::string const& zone, Options opts = {});
+  StreamRange<google::cloud::cpp::compute::v1::DiskType>
+  ListDiskTypes(std::string const& project, std::string const& zone, Options opts = {});
 
   // clang-format off
   ///
@@ -301,9 +293,8 @@ class DiskTypesClient {
   /// [google.cloud.cpp.compute.v1.DiskType]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_026.proto#L34}
   ///
   // clang-format on
-  StreamRange<google::cloud::cpp::compute::v1::DiskType> ListDiskTypes(
-      google::cloud::cpp::compute::disk_types::v1::ListDiskTypesRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::cpp::compute::v1::DiskType>
+  ListDiskTypes(google::cloud::cpp::compute::disk_types::v1::ListDiskTypesRequest request, Options opts = {});
 
  private:
   std::shared_ptr<DiskTypesConnection> connection_;

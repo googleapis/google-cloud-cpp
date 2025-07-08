@@ -30,58 +30,61 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-class ModelServiceTracingConnection : public retail_v2::ModelServiceConnection {
+class ModelServiceTracingConnection
+    : public retail_v2::ModelServiceConnection {
  public:
   ~ModelServiceTracingConnection() override = default;
 
   explicit ModelServiceTracingConnection(
-      std::shared_ptr<retail_v2::ModelServiceConnection> child);
+    std::shared_ptr<retail_v2::ModelServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
-  future<StatusOr<google::cloud::retail::v2::Model>> CreateModel(
+  future<StatusOr<google::cloud::retail::v2::Model>>
+  CreateModel(google::cloud::retail::v2::CreateModelRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  CreateModel(NoAwaitTag,
       google::cloud::retail::v2::CreateModelRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> CreateModel(
-      NoAwaitTag,
-      google::cloud::retail::v2::CreateModelRequest const& request) override;
-
-  future<StatusOr<google::cloud::retail::v2::Model>> CreateModel(
+  future<StatusOr<google::cloud::retail::v2::Model>>
+  CreateModel(
       google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::cloud::retail::v2::Model> GetModel(
-      google::cloud::retail::v2::GetModelRequest const& request) override;
+  StatusOr<google::cloud::retail::v2::Model>
+  GetModel(google::cloud::retail::v2::GetModelRequest const& request) override;
 
-  StatusOr<google::cloud::retail::v2::Model> PauseModel(
-      google::cloud::retail::v2::PauseModelRequest const& request) override;
+  StatusOr<google::cloud::retail::v2::Model>
+  PauseModel(google::cloud::retail::v2::PauseModelRequest const& request) override;
 
-  StatusOr<google::cloud::retail::v2::Model> ResumeModel(
-      google::cloud::retail::v2::ResumeModelRequest const& request) override;
+  StatusOr<google::cloud::retail::v2::Model>
+  ResumeModel(google::cloud::retail::v2::ResumeModelRequest const& request) override;
 
-  Status DeleteModel(
-      google::cloud::retail::v2::DeleteModelRequest const& request) override;
+  Status
+  DeleteModel(google::cloud::retail::v2::DeleteModelRequest const& request) override;
 
-  StreamRange<google::cloud::retail::v2::Model> ListModels(
-      google::cloud::retail::v2::ListModelsRequest request) override;
+  StreamRange<google::cloud::retail::v2::Model>
+  ListModels(google::cloud::retail::v2::ListModelsRequest request) override;
 
-  StatusOr<google::cloud::retail::v2::Model> UpdateModel(
-      google::cloud::retail::v2::UpdateModelRequest const& request) override;
+  StatusOr<google::cloud::retail::v2::Model>
+  UpdateModel(google::cloud::retail::v2::UpdateModelRequest const& request) override;
 
-  future<StatusOr<google::cloud::retail::v2::TuneModelResponse>> TuneModel(
+  future<StatusOr<google::cloud::retail::v2::TuneModelResponse>>
+  TuneModel(google::cloud::retail::v2::TuneModelRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  TuneModel(NoAwaitTag,
       google::cloud::retail::v2::TuneModelRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> TuneModel(
-      NoAwaitTag,
-      google::cloud::retail::v2::TuneModelRequest const& request) override;
-
-  future<StatusOr<google::cloud::retail::v2::TuneModelResponse>> TuneModel(
+  future<StatusOr<google::cloud::retail::v2::TuneModelResponse>>
+  TuneModel(
       google::longrunning::Operation const& operation) override;
 
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request) override;
 
  private:
   std::shared_ptr<retail_v2::ModelServiceConnection> child_;

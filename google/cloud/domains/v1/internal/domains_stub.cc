@@ -33,39 +33,38 @@ DomainsStub::~DomainsStub() = default;
 
 StatusOr<google::cloud::domains::v1::SearchDomainsResponse>
 DefaultDomainsStub::SearchDomains(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::domains::v1::SearchDomainsRequest const& request) {
-  google::cloud::domains::v1::SearchDomainsResponse response;
-  auto status = grpc_stub_->SearchDomains(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::domains::v1::SearchDomainsRequest const& request) {
+    google::cloud::domains::v1::SearchDomainsResponse response;
+    auto status =
+        grpc_stub_->SearchDomains(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::domains::v1::RetrieveRegisterParametersResponse>
 DefaultDomainsStub::RetrieveRegisterParameters(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::domains::v1::RetrieveRegisterParametersRequest const&
-        request) {
-  google::cloud::domains::v1::RetrieveRegisterParametersResponse response;
-  auto status =
-      grpc_stub_->RetrieveRegisterParameters(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::domains::v1::RetrieveRegisterParametersRequest const& request) {
+    google::cloud::domains::v1::RetrieveRegisterParametersResponse response;
+    auto status =
+        grpc_stub_->RetrieveRegisterParameters(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultDomainsStub::AsyncRegisterDomain(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::domains::v1::RegisterDomainRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::domains::v1::RegisterDomainRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::domains::v1::RegisterDomainRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::domains::v1::RegisterDomainRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
              google::cloud::domains::v1::RegisterDomainRequest const& request,
@@ -75,40 +74,41 @@ DefaultDomainsStub::AsyncRegisterDomain(
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation> DefaultDomainsStub::RegisterDomain(
-    grpc::ClientContext& context, Options,
-    google::cloud::domains::v1::RegisterDomainRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->RegisterDomain(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::longrunning::Operation>
+DefaultDomainsStub::RegisterDomain(
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::domains::v1::RegisterDomainRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->RegisterDomain(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::domains::v1::RetrieveTransferParametersResponse>
 DefaultDomainsStub::RetrieveTransferParameters(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::domains::v1::RetrieveTransferParametersRequest const&
-        request) {
-  google::cloud::domains::v1::RetrieveTransferParametersResponse response;
-  auto status =
-      grpc_stub_->RetrieveTransferParameters(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::domains::v1::RetrieveTransferParametersRequest const& request) {
+    google::cloud::domains::v1::RetrieveTransferParametersResponse response;
+    auto status =
+        grpc_stub_->RetrieveTransferParameters(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultDomainsStub::AsyncTransferDomain(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::domains::v1::TransferDomainRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::domains::v1::TransferDomainRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::domains::v1::TransferDomainRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::domains::v1::TransferDomainRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
              google::cloud::domains::v1::TransferDomainRequest const& request,
@@ -118,120 +118,119 @@ DefaultDomainsStub::AsyncTransferDomain(
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation> DefaultDomainsStub::TransferDomain(
-    grpc::ClientContext& context, Options,
-    google::cloud::domains::v1::TransferDomainRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->TransferDomain(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::longrunning::Operation>
+DefaultDomainsStub::TransferDomain(
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::domains::v1::TransferDomainRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->TransferDomain(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::domains::v1::ListRegistrationsResponse>
 DefaultDomainsStub::ListRegistrations(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::domains::v1::ListRegistrationsRequest const& request) {
-  google::cloud::domains::v1::ListRegistrationsResponse response;
-  auto status = grpc_stub_->ListRegistrations(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::domains::v1::ListRegistrationsRequest const& request) {
+    google::cloud::domains::v1::ListRegistrationsResponse response;
+    auto status =
+        grpc_stub_->ListRegistrations(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::domains::v1::Registration>
 DefaultDomainsStub::GetRegistration(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::domains::v1::GetRegistrationRequest const& request) {
-  google::cloud::domains::v1::Registration response;
-  auto status = grpc_stub_->GetRegistration(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::domains::v1::GetRegistrationRequest const& request) {
+    google::cloud::domains::v1::Registration response;
+    auto status =
+        grpc_stub_->GetRegistration(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultDomainsStub::AsyncUpdateRegistration(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::domains::v1::UpdateRegistrationRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::domains::v1::UpdateRegistrationRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::domains::v1::UpdateRegistrationRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::domains::v1::UpdateRegistrationRequest,
+                                    google::longrunning::Operation>(
       cq,
-      [this](
-          grpc::ClientContext* context,
-          google::cloud::domains::v1::UpdateRegistrationRequest const& request,
-          grpc::CompletionQueue* cq) {
+      [this](grpc::ClientContext* context,
+             google::cloud::domains::v1::UpdateRegistrationRequest const& request,
+             grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncUpdateRegistration(context, request, cq);
       },
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation> DefaultDomainsStub::UpdateRegistration(
-    grpc::ClientContext& context, Options,
-    google::cloud::domains::v1::UpdateRegistrationRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->UpdateRegistration(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::longrunning::Operation>
+DefaultDomainsStub::UpdateRegistration(
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::domains::v1::UpdateRegistrationRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->UpdateRegistration(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultDomainsStub::AsyncConfigureManagementSettings(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::domains::v1::ConfigureManagementSettingsRequest const&
-        request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::domains::v1::ConfigureManagementSettingsRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::domains::v1::ConfigureManagementSettingsRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::domains::v1::ConfigureManagementSettingsRequest,
+                                    google::longrunning::Operation>(
       cq,
-      [this](
-          grpc::ClientContext* context,
-          google::cloud::domains::v1::ConfigureManagementSettingsRequest const&
-              request,
-          grpc::CompletionQueue* cq) {
-        return grpc_stub_->AsyncConfigureManagementSettings(context, request,
-                                                            cq);
+      [this](grpc::ClientContext* context,
+             google::cloud::domains::v1::ConfigureManagementSettingsRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncConfigureManagementSettings(context, request, cq);
       },
       request, std::move(context));
 }
 
 StatusOr<google::longrunning::Operation>
 DefaultDomainsStub::ConfigureManagementSettings(
-    grpc::ClientContext& context, Options,
-    google::cloud::domains::v1::ConfigureManagementSettingsRequest const&
-        request) {
-  google::longrunning::Operation response;
-  auto status =
-      grpc_stub_->ConfigureManagementSettings(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::domains::v1::ConfigureManagementSettingsRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->ConfigureManagementSettings(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultDomainsStub::AsyncConfigureDnsSettings(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::domains::v1::ConfigureDnsSettingsRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::domains::v1::ConfigureDnsSettingsRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::domains::v1::ConfigureDnsSettingsRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::domains::v1::ConfigureDnsSettingsRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::domains::v1::ConfigureDnsSettingsRequest const&
-                 request,
+             google::cloud::domains::v1::ConfigureDnsSettingsRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncConfigureDnsSettings(context, request, cq);
       },
@@ -240,30 +239,29 @@ DefaultDomainsStub::AsyncConfigureDnsSettings(
 
 StatusOr<google::longrunning::Operation>
 DefaultDomainsStub::ConfigureDnsSettings(
-    grpc::ClientContext& context, Options,
-    google::cloud::domains::v1::ConfigureDnsSettingsRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->ConfigureDnsSettings(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::domains::v1::ConfigureDnsSettingsRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->ConfigureDnsSettings(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultDomainsStub::AsyncConfigureContactSettings(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::domains::v1::ConfigureContactSettingsRequest const&
-        request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::domains::v1::ConfigureContactSettingsRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::domains::v1::ConfigureContactSettingsRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::domains::v1::ConfigureContactSettingsRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::domains::v1::ConfigureContactSettingsRequest const&
-                 request,
+             google::cloud::domains::v1::ConfigureContactSettingsRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncConfigureContactSettings(context, request, cq);
       },
@@ -272,103 +270,104 @@ DefaultDomainsStub::AsyncConfigureContactSettings(
 
 StatusOr<google::longrunning::Operation>
 DefaultDomainsStub::ConfigureContactSettings(
-    grpc::ClientContext& context, Options,
-    google::cloud::domains::v1::ConfigureContactSettingsRequest const&
-        request) {
-  google::longrunning::Operation response;
-  auto status =
-      grpc_stub_->ConfigureContactSettings(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::domains::v1::ConfigureContactSettingsRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->ConfigureContactSettings(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultDomainsStub::AsyncExportRegistration(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::domains::v1::ExportRegistrationRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::domains::v1::ExportRegistrationRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::domains::v1::ExportRegistrationRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::domains::v1::ExportRegistrationRequest,
+                                    google::longrunning::Operation>(
       cq,
-      [this](
-          grpc::ClientContext* context,
-          google::cloud::domains::v1::ExportRegistrationRequest const& request,
-          grpc::CompletionQueue* cq) {
+      [this](grpc::ClientContext* context,
+             google::cloud::domains::v1::ExportRegistrationRequest const& request,
+             grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncExportRegistration(context, request, cq);
       },
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation> DefaultDomainsStub::ExportRegistration(
-    grpc::ClientContext& context, Options,
-    google::cloud::domains::v1::ExportRegistrationRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->ExportRegistration(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::longrunning::Operation>
+DefaultDomainsStub::ExportRegistration(
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::domains::v1::ExportRegistrationRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->ExportRegistration(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultDomainsStub::AsyncDeleteRegistration(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::domains::v1::DeleteRegistrationRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::domains::v1::DeleteRegistrationRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::domains::v1::DeleteRegistrationRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::domains::v1::DeleteRegistrationRequest,
+                                    google::longrunning::Operation>(
       cq,
-      [this](
-          grpc::ClientContext* context,
-          google::cloud::domains::v1::DeleteRegistrationRequest const& request,
-          grpc::CompletionQueue* cq) {
+      [this](grpc::ClientContext* context,
+             google::cloud::domains::v1::DeleteRegistrationRequest const& request,
+             grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncDeleteRegistration(context, request, cq);
       },
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation> DefaultDomainsStub::DeleteRegistration(
-    grpc::ClientContext& context, Options,
-    google::cloud::domains::v1::DeleteRegistrationRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->DeleteRegistration(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::longrunning::Operation>
+DefaultDomainsStub::DeleteRegistration(
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::domains::v1::DeleteRegistrationRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->DeleteRegistration(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::domains::v1::AuthorizationCode>
 DefaultDomainsStub::RetrieveAuthorizationCode(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::domains::v1::RetrieveAuthorizationCodeRequest const&
-        request) {
-  google::cloud::domains::v1::AuthorizationCode response;
-  auto status =
-      grpc_stub_->RetrieveAuthorizationCode(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::domains::v1::RetrieveAuthorizationCodeRequest const& request) {
+    google::cloud::domains::v1::AuthorizationCode response;
+    auto status =
+        grpc_stub_->RetrieveAuthorizationCode(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::domains::v1::AuthorizationCode>
 DefaultDomainsStub::ResetAuthorizationCode(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::domains::v1::ResetAuthorizationCodeRequest const& request) {
-  google::cloud::domains::v1::AuthorizationCode response;
-  auto status =
-      grpc_stub_->ResetAuthorizationCode(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::domains::v1::ResetAuthorizationCodeRequest const& request) {
+    google::cloud::domains::v1::AuthorizationCode response;
+    auto status =
+        grpc_stub_->ResetAuthorizationCode(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -397,14 +396,13 @@ future<Status> DefaultDomainsStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(
-             cq,
-             [this](grpc::ClientContext* context,
-                    google::longrunning::CancelOperationRequest const& request,
-                    grpc::CompletionQueue* cq) {
-               return operations_stub_->AsyncCancelOperation(context, request,
-                                                             cq);
-             },
-             request, std::move(context))
+      cq,
+      [this](grpc::ClientContext* context,
+             google::longrunning::CancelOperationRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return operations_stub_->AsyncCancelOperation(context, request, cq);
+      },
+      request, std::move(context))
       .then([](future<StatusOr<google::protobuf::Empty>> f) {
         return f.get().status();
       });

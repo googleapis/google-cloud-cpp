@@ -25,43 +25,43 @@ namespace cloud {
 namespace tpu_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-TpuClient::TpuClient(std::shared_ptr<TpuConnection> connection, Options opts)
+TpuClient::TpuClient(
+    std::shared_ptr<TpuConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 TpuClient::~TpuClient() = default;
 
-StreamRange<google::cloud::tpu::v1::Node> TpuClient::ListNodes(
-    std::string const& parent, Options opts) {
+StreamRange<google::cloud::tpu::v1::Node>
+TpuClient::ListNodes(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::tpu::v1::ListNodesRequest request;
   request.set_parent(parent);
   return connection_->ListNodes(request);
 }
 
-StreamRange<google::cloud::tpu::v1::Node> TpuClient::ListNodes(
-    google::cloud::tpu::v1::ListNodesRequest request, Options opts) {
+StreamRange<google::cloud::tpu::v1::Node>
+TpuClient::ListNodes(google::cloud::tpu::v1::ListNodesRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListNodes(std::move(request));
 }
 
-StatusOr<google::cloud::tpu::v1::Node> TpuClient::GetNode(
-    std::string const& name, Options opts) {
+StatusOr<google::cloud::tpu::v1::Node>
+TpuClient::GetNode(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::tpu::v1::GetNodeRequest request;
   request.set_name(name);
   return connection_->GetNode(request);
 }
 
-StatusOr<google::cloud::tpu::v1::Node> TpuClient::GetNode(
-    google::cloud::tpu::v1::GetNodeRequest const& request, Options opts) {
+StatusOr<google::cloud::tpu::v1::Node>
+TpuClient::GetNode(google::cloud::tpu::v1::GetNodeRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetNode(request);
 }
 
-future<StatusOr<google::cloud::tpu::v1::Node>> TpuClient::CreateNode(
-    std::string const& parent, google::cloud::tpu::v1::Node const& node,
-    std::string const& node_id, Options opts) {
+future<StatusOr<google::cloud::tpu::v1::Node>>
+TpuClient::CreateNode(std::string const& parent, google::cloud::tpu::v1::Node const& node, std::string const& node_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::tpu::v1::CreateNodeRequest request;
   request.set_parent(parent);
@@ -70,10 +70,8 @@ future<StatusOr<google::cloud::tpu::v1::Node>> TpuClient::CreateNode(
   return connection_->CreateNode(request);
 }
 
-StatusOr<google::longrunning::Operation> TpuClient::CreateNode(
-    NoAwaitTag, std::string const& parent,
-    google::cloud::tpu::v1::Node const& node, std::string const& node_id,
-    Options opts) {
+StatusOr<google::longrunning::Operation>
+TpuClient::CreateNode(NoAwaitTag, std::string const& parent, google::cloud::tpu::v1::Node const& node, std::string const& node_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::tpu::v1::CreateNodeRequest request;
   request.set_parent(parent);
@@ -82,113 +80,108 @@ StatusOr<google::longrunning::Operation> TpuClient::CreateNode(
   return connection_->CreateNode(NoAwaitTag{}, request);
 }
 
-future<StatusOr<google::cloud::tpu::v1::Node>> TpuClient::CreateNode(
-    google::cloud::tpu::v1::CreateNodeRequest const& request, Options opts) {
+future<StatusOr<google::cloud::tpu::v1::Node>>
+TpuClient::CreateNode(google::cloud::tpu::v1::CreateNodeRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateNode(request);
 }
 
-StatusOr<google::longrunning::Operation> TpuClient::CreateNode(
-    NoAwaitTag, google::cloud::tpu::v1::CreateNodeRequest const& request,
-    Options opts) {
+StatusOr<google::longrunning::Operation>
+TpuClient::CreateNode(NoAwaitTag, google::cloud::tpu::v1::CreateNodeRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateNode(NoAwaitTag{}, request);
 }
 
-future<StatusOr<google::cloud::tpu::v1::Node>> TpuClient::CreateNode(
-    google::longrunning::Operation const& operation, Options opts) {
+future<StatusOr<google::cloud::tpu::v1::Node>>
+TpuClient::CreateNode(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateNode(operation);
 }
 
-future<StatusOr<google::cloud::tpu::v1::Node>> TpuClient::DeleteNode(
-    std::string const& name, Options opts) {
+future<StatusOr<google::cloud::tpu::v1::Node>>
+TpuClient::DeleteNode(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::tpu::v1::DeleteNodeRequest request;
   request.set_name(name);
   return connection_->DeleteNode(request);
 }
 
-StatusOr<google::longrunning::Operation> TpuClient::DeleteNode(
-    NoAwaitTag, std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation>
+TpuClient::DeleteNode(NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::tpu::v1::DeleteNodeRequest request;
   request.set_name(name);
   return connection_->DeleteNode(NoAwaitTag{}, request);
 }
 
-future<StatusOr<google::cloud::tpu::v1::Node>> TpuClient::DeleteNode(
-    google::cloud::tpu::v1::DeleteNodeRequest const& request, Options opts) {
+future<StatusOr<google::cloud::tpu::v1::Node>>
+TpuClient::DeleteNode(google::cloud::tpu::v1::DeleteNodeRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteNode(request);
 }
 
-StatusOr<google::longrunning::Operation> TpuClient::DeleteNode(
-    NoAwaitTag, google::cloud::tpu::v1::DeleteNodeRequest const& request,
-    Options opts) {
+StatusOr<google::longrunning::Operation>
+TpuClient::DeleteNode(NoAwaitTag, google::cloud::tpu::v1::DeleteNodeRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteNode(NoAwaitTag{}, request);
 }
 
-future<StatusOr<google::cloud::tpu::v1::Node>> TpuClient::DeleteNode(
-    google::longrunning::Operation const& operation, Options opts) {
+future<StatusOr<google::cloud::tpu::v1::Node>>
+TpuClient::DeleteNode(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteNode(operation);
 }
 
-future<StatusOr<google::cloud::tpu::v1::Node>> TpuClient::ReimageNode(
-    google::cloud::tpu::v1::ReimageNodeRequest const& request, Options opts) {
+future<StatusOr<google::cloud::tpu::v1::Node>>
+TpuClient::ReimageNode(google::cloud::tpu::v1::ReimageNodeRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ReimageNode(request);
 }
 
-StatusOr<google::longrunning::Operation> TpuClient::ReimageNode(
-    NoAwaitTag, google::cloud::tpu::v1::ReimageNodeRequest const& request,
-    Options opts) {
+StatusOr<google::longrunning::Operation>
+TpuClient::ReimageNode(NoAwaitTag, google::cloud::tpu::v1::ReimageNodeRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ReimageNode(NoAwaitTag{}, request);
 }
 
-future<StatusOr<google::cloud::tpu::v1::Node>> TpuClient::ReimageNode(
-    google::longrunning::Operation const& operation, Options opts) {
+future<StatusOr<google::cloud::tpu::v1::Node>>
+TpuClient::ReimageNode(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ReimageNode(operation);
 }
 
-future<StatusOr<google::cloud::tpu::v1::Node>> TpuClient::StopNode(
-    google::cloud::tpu::v1::StopNodeRequest const& request, Options opts) {
+future<StatusOr<google::cloud::tpu::v1::Node>>
+TpuClient::StopNode(google::cloud::tpu::v1::StopNodeRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->StopNode(request);
 }
 
-StatusOr<google::longrunning::Operation> TpuClient::StopNode(
-    NoAwaitTag, google::cloud::tpu::v1::StopNodeRequest const& request,
-    Options opts) {
+StatusOr<google::longrunning::Operation>
+TpuClient::StopNode(NoAwaitTag, google::cloud::tpu::v1::StopNodeRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->StopNode(NoAwaitTag{}, request);
 }
 
-future<StatusOr<google::cloud::tpu::v1::Node>> TpuClient::StopNode(
-    google::longrunning::Operation const& operation, Options opts) {
+future<StatusOr<google::cloud::tpu::v1::Node>>
+TpuClient::StopNode(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->StopNode(operation);
 }
 
-future<StatusOr<google::cloud::tpu::v1::Node>> TpuClient::StartNode(
-    google::cloud::tpu::v1::StartNodeRequest const& request, Options opts) {
+future<StatusOr<google::cloud::tpu::v1::Node>>
+TpuClient::StartNode(google::cloud::tpu::v1::StartNodeRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->StartNode(request);
 }
 
-StatusOr<google::longrunning::Operation> TpuClient::StartNode(
-    NoAwaitTag, google::cloud::tpu::v1::StartNodeRequest const& request,
-    Options opts) {
+StatusOr<google::longrunning::Operation>
+TpuClient::StartNode(NoAwaitTag, google::cloud::tpu::v1::StartNodeRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->StartNode(NoAwaitTag{}, request);
 }
 
-future<StatusOr<google::cloud::tpu::v1::Node>> TpuClient::StartNode(
-    google::longrunning::Operation const& operation, Options opts) {
+future<StatusOr<google::cloud::tpu::v1::Node>>
+TpuClient::StartNode(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->StartNode(operation);
 }
@@ -202,9 +195,7 @@ TpuClient::ListTensorFlowVersions(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::tpu::v1::TensorFlowVersion>
-TpuClient::ListTensorFlowVersions(
-    google::cloud::tpu::v1::ListTensorFlowVersionsRequest request,
-    Options opts) {
+TpuClient::ListTensorFlowVersions(google::cloud::tpu::v1::ListTensorFlowVersionsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListTensorFlowVersions(std::move(request));
 }
@@ -218,9 +209,7 @@ TpuClient::GetTensorFlowVersion(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::tpu::v1::TensorFlowVersion>
-TpuClient::GetTensorFlowVersion(
-    google::cloud::tpu::v1::GetTensorFlowVersionRequest const& request,
-    Options opts) {
+TpuClient::GetTensorFlowVersion(google::cloud::tpu::v1::GetTensorFlowVersionRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetTensorFlowVersion(request);
 }
@@ -234,41 +223,39 @@ TpuClient::ListAcceleratorTypes(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::tpu::v1::AcceleratorType>
-TpuClient::ListAcceleratorTypes(
-    google::cloud::tpu::v1::ListAcceleratorTypesRequest request, Options opts) {
+TpuClient::ListAcceleratorTypes(google::cloud::tpu::v1::ListAcceleratorTypesRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListAcceleratorTypes(std::move(request));
 }
 
-StatusOr<google::cloud::tpu::v1::AcceleratorType> TpuClient::GetAcceleratorType(
-    std::string const& name, Options opts) {
+StatusOr<google::cloud::tpu::v1::AcceleratorType>
+TpuClient::GetAcceleratorType(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::tpu::v1::GetAcceleratorTypeRequest request;
   request.set_name(name);
   return connection_->GetAcceleratorType(request);
 }
 
-StatusOr<google::cloud::tpu::v1::AcceleratorType> TpuClient::GetAcceleratorType(
-    google::cloud::tpu::v1::GetAcceleratorTypeRequest const& request,
-    Options opts) {
+StatusOr<google::cloud::tpu::v1::AcceleratorType>
+TpuClient::GetAcceleratorType(google::cloud::tpu::v1::GetAcceleratorTypeRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetAcceleratorType(request);
 }
 
-StreamRange<google::cloud::location::Location> TpuClient::ListLocations(
-    google::cloud::location::ListLocationsRequest request, Options opts) {
+StreamRange<google::cloud::location::Location>
+TpuClient::ListLocations(google::cloud::location::ListLocationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListLocations(std::move(request));
 }
 
-StatusOr<google::cloud::location::Location> TpuClient::GetLocation(
-    google::cloud::location::GetLocationRequest const& request, Options opts) {
+StatusOr<google::cloud::location::Location>
+TpuClient::GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetLocation(request);
 }
 
-StreamRange<google::longrunning::Operation> TpuClient::ListOperations(
-    std::string const& name, std::string const& filter, Options opts) {
+StreamRange<google::longrunning::Operation>
+TpuClient::ListOperations(std::string const& name, std::string const& filter, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::ListOperationsRequest request;
   request.set_name(name);
@@ -276,48 +263,50 @@ StreamRange<google::longrunning::Operation> TpuClient::ListOperations(
   return connection_->ListOperations(request);
 }
 
-StreamRange<google::longrunning::Operation> TpuClient::ListOperations(
-    google::longrunning::ListOperationsRequest request, Options opts) {
+StreamRange<google::longrunning::Operation>
+TpuClient::ListOperations(google::longrunning::ListOperationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOperations(std::move(request));
 }
 
-StatusOr<google::longrunning::Operation> TpuClient::GetOperation(
-    std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation>
+TpuClient::GetOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
   return connection_->GetOperation(request);
 }
 
-StatusOr<google::longrunning::Operation> TpuClient::GetOperation(
-    google::longrunning::GetOperationRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation>
+TpuClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }
 
-Status TpuClient::DeleteOperation(std::string const& name, Options opts) {
+Status
+TpuClient::DeleteOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::DeleteOperationRequest request;
   request.set_name(name);
   return connection_->DeleteOperation(request);
 }
 
-Status TpuClient::DeleteOperation(
-    google::longrunning::DeleteOperationRequest const& request, Options opts) {
+Status
+TpuClient::DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteOperation(request);
 }
 
-Status TpuClient::CancelOperation(std::string const& name, Options opts) {
+Status
+TpuClient::CancelOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::CancelOperationRequest request;
   request.set_name(name);
   return connection_->CancelOperation(request);
 }
 
-Status TpuClient::CancelOperation(
-    google::longrunning::CancelOperationRequest const& request, Options opts) {
+Status
+TpuClient::CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelOperation(request);
 }

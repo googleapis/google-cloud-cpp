@@ -34,52 +34,38 @@ DirectAccessServiceTracingConnection::DirectAccessServiceTracingConnection(
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::devicestreaming::v1::DeviceSession>
-DirectAccessServiceTracingConnection::CreateDeviceSession(
-    google::cloud::devicestreaming::v1::CreateDeviceSessionRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "devicestreaming_v1::DirectAccessServiceConnection::CreateDeviceSession");
+DirectAccessServiceTracingConnection::CreateDeviceSession(google::cloud::devicestreaming::v1::CreateDeviceSessionRequest const& request) {
+  auto span = internal::MakeSpan("devicestreaming_v1::DirectAccessServiceConnection::CreateDeviceSession");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateDeviceSession(request));
 }
 
 StreamRange<google::cloud::devicestreaming::v1::DeviceSession>
-DirectAccessServiceTracingConnection::ListDeviceSessions(
-    google::cloud::devicestreaming::v1::ListDeviceSessionsRequest request) {
-  auto span = internal::MakeSpan(
-      "devicestreaming_v1::DirectAccessServiceConnection::ListDeviceSessions");
+DirectAccessServiceTracingConnection::ListDeviceSessions(google::cloud::devicestreaming::v1::ListDeviceSessionsRequest request) {
+  auto span = internal::MakeSpan("devicestreaming_v1::DirectAccessServiceConnection::ListDeviceSessions");
   internal::OTelScope scope(span);
   auto sr = child_->ListDeviceSessions(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::devicestreaming::v1::DeviceSession>(std::move(span),
-                                                         std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::devicestreaming::v1::DeviceSession>(
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::devicestreaming::v1::DeviceSession>
-DirectAccessServiceTracingConnection::GetDeviceSession(
-    google::cloud::devicestreaming::v1::GetDeviceSessionRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "devicestreaming_v1::DirectAccessServiceConnection::GetDeviceSession");
+DirectAccessServiceTracingConnection::GetDeviceSession(google::cloud::devicestreaming::v1::GetDeviceSessionRequest const& request) {
+  auto span = internal::MakeSpan("devicestreaming_v1::DirectAccessServiceConnection::GetDeviceSession");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetDeviceSession(request));
 }
 
-Status DirectAccessServiceTracingConnection::CancelDeviceSession(
-    google::cloud::devicestreaming::v1::CancelDeviceSessionRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "devicestreaming_v1::DirectAccessServiceConnection::CancelDeviceSession");
+Status
+DirectAccessServiceTracingConnection::CancelDeviceSession(google::cloud::devicestreaming::v1::CancelDeviceSessionRequest const& request) {
+  auto span = internal::MakeSpan("devicestreaming_v1::DirectAccessServiceConnection::CancelDeviceSession");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CancelDeviceSession(request));
 }
 
 StatusOr<google::cloud::devicestreaming::v1::DeviceSession>
-DirectAccessServiceTracingConnection::UpdateDeviceSession(
-    google::cloud::devicestreaming::v1::UpdateDeviceSessionRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "devicestreaming_v1::DirectAccessServiceConnection::UpdateDeviceSession");
+DirectAccessServiceTracingConnection::UpdateDeviceSession(google::cloud::devicestreaming::v1::UpdateDeviceSessionRequest const& request) {
+  auto span = internal::MakeSpan("devicestreaming_v1::DirectAccessServiceConnection::UpdateDeviceSession");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateDeviceSession(request));
 }
@@ -98,8 +84,7 @@ MakeDirectAccessServiceTracingConnection(
     std::shared_ptr<devicestreaming_v1::DirectAccessServiceConnection> conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
-    conn =
-        std::make_shared<DirectAccessServiceTracingConnection>(std::move(conn));
+    conn = std::make_shared<DirectAccessServiceTracingConnection>(std::move(conn));
   }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;

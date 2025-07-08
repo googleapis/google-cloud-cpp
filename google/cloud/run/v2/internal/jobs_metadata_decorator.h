@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RUN_V2_INTERNAL_JOBS_METADATA_DECORATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RUN_V2_INTERNAL_JOBS_METADATA_DECORATOR_H
 
-#include "google/cloud/run/v2/internal/jobs_stub.h"
 #include "google/cloud/options.h"
+#include "google/cloud/run/v2/internal/jobs_stub.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
 #include <map>
@@ -35,9 +35,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class JobsMetadata : public JobsStub {
  public:
   ~JobsMetadata() override = default;
-  JobsMetadata(std::shared_ptr<JobsStub> child,
-               std::multimap<std::string, std::string> fixed_metadata,
-               std::string api_client_header = "");
+  JobsMetadata(
+      std::shared_ptr<JobsStub> child,
+      std::multimap<std::string, std::string> fixed_metadata,
+      std::string api_client_header = "");
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateJob(
       google::cloud::CompletionQueue& cq,
@@ -46,15 +47,18 @@ class JobsMetadata : public JobsStub {
       google::cloud::run::v2::CreateJobRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateJob(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::cloud::run::v2::CreateJobRequest const& request) override;
 
   StatusOr<google::cloud::run::v2::Job> GetJob(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::run::v2::GetJobRequest const& request) override;
 
   StatusOr<google::cloud::run::v2::ListJobsResponse> ListJobs(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::run::v2::ListJobsRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateJob(
@@ -64,7 +68,8 @@ class JobsMetadata : public JobsStub {
       google::cloud::run::v2::UpdateJobRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateJob(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::cloud::run::v2::UpdateJobRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteJob(
@@ -74,7 +79,8 @@ class JobsMetadata : public JobsStub {
       google::cloud::run::v2::DeleteJobRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteJob(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::cloud::run::v2::DeleteJobRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncRunJob(
@@ -84,35 +90,43 @@ class JobsMetadata : public JobsStub {
       google::cloud::run::v2::RunJobRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> RunJob(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::cloud::run::v2::RunJobRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status DeleteOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::DeleteOperationRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> WaitOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::WaitOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -128,7 +142,8 @@ class JobsMetadata : public JobsStub {
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context, Options const& options,
+  void SetMetadata(grpc::ClientContext& context,
+                   Options const& options,
                    std::string const& request_params);
   void SetMetadata(grpc::ClientContext& context, Options const& options);
 

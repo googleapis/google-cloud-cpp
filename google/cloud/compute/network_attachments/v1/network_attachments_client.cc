@@ -28,38 +28,28 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 NetworkAttachmentsClient::NetworkAttachmentsClient(
     std::shared_ptr<NetworkAttachmentsConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 NetworkAttachmentsClient::~NetworkAttachmentsClient() = default;
 
-StreamRange<std::pair<
-    std::string, google::cloud::cpp::compute::v1::NetworkAttachmentsScopedList>>
-NetworkAttachmentsClient::AggregatedListNetworkAttachments(
-    std::string const& project, Options opts) {
+StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::NetworkAttachmentsScopedList>>
+NetworkAttachmentsClient::AggregatedListNetworkAttachments(std::string const& project, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::network_attachments::v1::
-      AggregatedListNetworkAttachmentsRequest request;
+  google::cloud::cpp::compute::network_attachments::v1::AggregatedListNetworkAttachmentsRequest request;
   request.set_project(project);
   return connection_->AggregatedListNetworkAttachments(request);
 }
 
-StreamRange<std::pair<
-    std::string, google::cloud::cpp::compute::v1::NetworkAttachmentsScopedList>>
-NetworkAttachmentsClient::AggregatedListNetworkAttachments(
-    google::cloud::cpp::compute::network_attachments::v1::
-        AggregatedListNetworkAttachmentsRequest request,
-    Options opts) {
+StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::NetworkAttachmentsScopedList>>
+NetworkAttachmentsClient::AggregatedListNetworkAttachments(google::cloud::cpp::compute::network_attachments::v1::AggregatedListNetworkAttachmentsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->AggregatedListNetworkAttachments(std::move(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-NetworkAttachmentsClient::DeleteNetworkAttachment(
-    std::string const& project, std::string const& region,
-    std::string const& network_attachment, Options opts) {
+NetworkAttachmentsClient::DeleteNetworkAttachment(std::string const& project, std::string const& region, std::string const& network_attachment, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::network_attachments::v1::
-      DeleteNetworkAttachmentRequest request;
+  google::cloud::cpp::compute::network_attachments::v1::DeleteNetworkAttachmentRequest request;
   request.set_project(project);
   request.set_region(region);
   request.set_network_attachment(network_attachment);
@@ -67,12 +57,9 @@ NetworkAttachmentsClient::DeleteNetworkAttachment(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-NetworkAttachmentsClient::DeleteNetworkAttachment(
-    NoAwaitTag, std::string const& project, std::string const& region,
-    std::string const& network_attachment, Options opts) {
+NetworkAttachmentsClient::DeleteNetworkAttachment(NoAwaitTag, std::string const& project, std::string const& region, std::string const& network_attachment, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::network_attachments::v1::
-      DeleteNetworkAttachmentRequest request;
+  google::cloud::cpp::compute::network_attachments::v1::DeleteNetworkAttachmentRequest request;
   request.set_project(project);
   request.set_region(region);
   request.set_network_attachment(network_attachment);
@@ -80,38 +67,27 @@ NetworkAttachmentsClient::DeleteNetworkAttachment(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-NetworkAttachmentsClient::DeleteNetworkAttachment(
-    google::cloud::cpp::compute::network_attachments::v1::
-        DeleteNetworkAttachmentRequest const& request,
-    Options opts) {
+NetworkAttachmentsClient::DeleteNetworkAttachment(google::cloud::cpp::compute::network_attachments::v1::DeleteNetworkAttachmentRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteNetworkAttachment(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-NetworkAttachmentsClient::DeleteNetworkAttachment(
-    NoAwaitTag,
-    google::cloud::cpp::compute::network_attachments::v1::
-        DeleteNetworkAttachmentRequest const& request,
-    Options opts) {
+NetworkAttachmentsClient::DeleteNetworkAttachment(NoAwaitTag, google::cloud::cpp::compute::network_attachments::v1::DeleteNetworkAttachmentRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteNetworkAttachment(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-NetworkAttachmentsClient::DeleteNetworkAttachment(
-    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+NetworkAttachmentsClient::DeleteNetworkAttachment(google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteNetworkAttachment(operation);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NetworkAttachment>
-NetworkAttachmentsClient::GetNetworkAttachment(
-    std::string const& project, std::string const& region,
-    std::string const& network_attachment, Options opts) {
+NetworkAttachmentsClient::GetNetworkAttachment(std::string const& project, std::string const& region, std::string const& network_attachment, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::network_attachments::v1::
-      GetNetworkAttachmentRequest request;
+  google::cloud::cpp::compute::network_attachments::v1::GetNetworkAttachmentRequest request;
   request.set_project(project);
   request.set_region(region);
   request.set_network_attachment(network_attachment);
@@ -119,22 +95,15 @@ NetworkAttachmentsClient::GetNetworkAttachment(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NetworkAttachment>
-NetworkAttachmentsClient::GetNetworkAttachment(
-    google::cloud::cpp::compute::network_attachments::v1::
-        GetNetworkAttachmentRequest const& request,
-    Options opts) {
+NetworkAttachmentsClient::GetNetworkAttachment(google::cloud::cpp::compute::network_attachments::v1::GetNetworkAttachmentRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetNetworkAttachment(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
-NetworkAttachmentsClient::GetIamPolicy(std::string const& project,
-                                       std::string const& region,
-                                       std::string const& resource,
-                                       Options opts) {
+NetworkAttachmentsClient::GetIamPolicy(std::string const& project, std::string const& region, std::string const& resource, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::network_attachments::v1::GetIamPolicyRequest
-      request;
+  google::cloud::cpp::compute::network_attachments::v1::GetIamPolicyRequest request;
   request.set_project(project);
   request.set_region(region);
   request.set_resource(resource);
@@ -142,23 +111,15 @@ NetworkAttachmentsClient::GetIamPolicy(std::string const& project,
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
-NetworkAttachmentsClient::GetIamPolicy(
-    google::cloud::cpp::compute::network_attachments::v1::
-        GetIamPolicyRequest const& request,
-    Options opts) {
+NetworkAttachmentsClient::GetIamPolicy(google::cloud::cpp::compute::network_attachments::v1::GetIamPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetIamPolicy(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-NetworkAttachmentsClient::InsertNetworkAttachment(
-    std::string const& project, std::string const& region,
-    google::cloud::cpp::compute::v1::NetworkAttachment const&
-        network_attachment_resource,
-    Options opts) {
+NetworkAttachmentsClient::InsertNetworkAttachment(std::string const& project, std::string const& region, google::cloud::cpp::compute::v1::NetworkAttachment const& network_attachment_resource, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::network_attachments::v1::
-      InsertNetworkAttachmentRequest request;
+  google::cloud::cpp::compute::network_attachments::v1::InsertNetworkAttachmentRequest request;
   request.set_project(project);
   request.set_region(region);
   *request.mutable_network_attachment_resource() = network_attachment_resource;
@@ -166,14 +127,9 @@ NetworkAttachmentsClient::InsertNetworkAttachment(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-NetworkAttachmentsClient::InsertNetworkAttachment(
-    NoAwaitTag, std::string const& project, std::string const& region,
-    google::cloud::cpp::compute::v1::NetworkAttachment const&
-        network_attachment_resource,
-    Options opts) {
+NetworkAttachmentsClient::InsertNetworkAttachment(NoAwaitTag, std::string const& project, std::string const& region, google::cloud::cpp::compute::v1::NetworkAttachment const& network_attachment_resource, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::network_attachments::v1::
-      InsertNetworkAttachmentRequest request;
+  google::cloud::cpp::compute::network_attachments::v1::InsertNetworkAttachmentRequest request;
   request.set_project(project);
   request.set_region(region);
   *request.mutable_network_attachment_resource() = network_attachment_resource;
@@ -181,62 +137,42 @@ NetworkAttachmentsClient::InsertNetworkAttachment(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-NetworkAttachmentsClient::InsertNetworkAttachment(
-    google::cloud::cpp::compute::network_attachments::v1::
-        InsertNetworkAttachmentRequest const& request,
-    Options opts) {
+NetworkAttachmentsClient::InsertNetworkAttachment(google::cloud::cpp::compute::network_attachments::v1::InsertNetworkAttachmentRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->InsertNetworkAttachment(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-NetworkAttachmentsClient::InsertNetworkAttachment(
-    NoAwaitTag,
-    google::cloud::cpp::compute::network_attachments::v1::
-        InsertNetworkAttachmentRequest const& request,
-    Options opts) {
+NetworkAttachmentsClient::InsertNetworkAttachment(NoAwaitTag, google::cloud::cpp::compute::network_attachments::v1::InsertNetworkAttachmentRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->InsertNetworkAttachment(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-NetworkAttachmentsClient::InsertNetworkAttachment(
-    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+NetworkAttachmentsClient::InsertNetworkAttachment(google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->InsertNetworkAttachment(operation);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::NetworkAttachment>
-NetworkAttachmentsClient::ListNetworkAttachments(std::string const& project,
-                                                 std::string const& region,
-                                                 Options opts) {
+NetworkAttachmentsClient::ListNetworkAttachments(std::string const& project, std::string const& region, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::network_attachments::v1::
-      ListNetworkAttachmentsRequest request;
+  google::cloud::cpp::compute::network_attachments::v1::ListNetworkAttachmentsRequest request;
   request.set_project(project);
   request.set_region(region);
   return connection_->ListNetworkAttachments(request);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::NetworkAttachment>
-NetworkAttachmentsClient::ListNetworkAttachments(
-    google::cloud::cpp::compute::network_attachments::v1::
-        ListNetworkAttachmentsRequest request,
-    Options opts) {
+NetworkAttachmentsClient::ListNetworkAttachments(google::cloud::cpp::compute::network_attachments::v1::ListNetworkAttachmentsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListNetworkAttachments(std::move(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-NetworkAttachmentsClient::PatchNetworkAttachment(
-    std::string const& project, std::string const& region,
-    std::string const& network_attachment,
-    google::cloud::cpp::compute::v1::NetworkAttachment const&
-        network_attachment_resource,
-    Options opts) {
+NetworkAttachmentsClient::PatchNetworkAttachment(std::string const& project, std::string const& region, std::string const& network_attachment, google::cloud::cpp::compute::v1::NetworkAttachment const& network_attachment_resource, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::network_attachments::v1::
-      PatchNetworkAttachmentRequest request;
+  google::cloud::cpp::compute::network_attachments::v1::PatchNetworkAttachmentRequest request;
   request.set_project(project);
   request.set_region(region);
   request.set_network_attachment(network_attachment);
@@ -245,15 +181,9 @@ NetworkAttachmentsClient::PatchNetworkAttachment(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-NetworkAttachmentsClient::PatchNetworkAttachment(
-    NoAwaitTag, std::string const& project, std::string const& region,
-    std::string const& network_attachment,
-    google::cloud::cpp::compute::v1::NetworkAttachment const&
-        network_attachment_resource,
-    Options opts) {
+NetworkAttachmentsClient::PatchNetworkAttachment(NoAwaitTag, std::string const& project, std::string const& region, std::string const& network_attachment, google::cloud::cpp::compute::v1::NetworkAttachment const& network_attachment_resource, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::network_attachments::v1::
-      PatchNetworkAttachmentRequest request;
+  google::cloud::cpp::compute::network_attachments::v1::PatchNetworkAttachmentRequest request;
   request.set_project(project);
   request.set_region(region);
   request.set_network_attachment(network_attachment);
@@ -262,81 +192,53 @@ NetworkAttachmentsClient::PatchNetworkAttachment(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-NetworkAttachmentsClient::PatchNetworkAttachment(
-    google::cloud::cpp::compute::network_attachments::v1::
-        PatchNetworkAttachmentRequest const& request,
-    Options opts) {
+NetworkAttachmentsClient::PatchNetworkAttachment(google::cloud::cpp::compute::network_attachments::v1::PatchNetworkAttachmentRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PatchNetworkAttachment(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-NetworkAttachmentsClient::PatchNetworkAttachment(
-    NoAwaitTag,
-    google::cloud::cpp::compute::network_attachments::v1::
-        PatchNetworkAttachmentRequest const& request,
-    Options opts) {
+NetworkAttachmentsClient::PatchNetworkAttachment(NoAwaitTag, google::cloud::cpp::compute::network_attachments::v1::PatchNetworkAttachmentRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PatchNetworkAttachment(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-NetworkAttachmentsClient::PatchNetworkAttachment(
-    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+NetworkAttachmentsClient::PatchNetworkAttachment(google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PatchNetworkAttachment(operation);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
-NetworkAttachmentsClient::SetIamPolicy(
-    std::string const& project, std::string const& region,
-    std::string const& resource,
-    google::cloud::cpp::compute::v1::RegionSetPolicyRequest const&
-        region_set_policy_request_resource,
-    Options opts) {
+NetworkAttachmentsClient::SetIamPolicy(std::string const& project, std::string const& region, std::string const& resource, google::cloud::cpp::compute::v1::RegionSetPolicyRequest const& region_set_policy_request_resource, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::network_attachments::v1::SetIamPolicyRequest
-      request;
+  google::cloud::cpp::compute::network_attachments::v1::SetIamPolicyRequest request;
   request.set_project(project);
   request.set_region(region);
   request.set_resource(resource);
-  *request.mutable_region_set_policy_request_resource() =
-      region_set_policy_request_resource;
+  *request.mutable_region_set_policy_request_resource() = region_set_policy_request_resource;
   return connection_->SetIamPolicy(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
-NetworkAttachmentsClient::SetIamPolicy(
-    google::cloud::cpp::compute::network_attachments::v1::
-        SetIamPolicyRequest const& request,
-    Options opts) {
+NetworkAttachmentsClient::SetIamPolicy(google::cloud::cpp::compute::network_attachments::v1::SetIamPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetIamPolicy(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-NetworkAttachmentsClient::TestIamPermissions(
-    std::string const& project, std::string const& region,
-    std::string const& resource,
-    google::cloud::cpp::compute::v1::TestPermissionsRequest const&
-        test_permissions_request_resource,
-    Options opts) {
+NetworkAttachmentsClient::TestIamPermissions(std::string const& project, std::string const& region, std::string const& resource, google::cloud::cpp::compute::v1::TestPermissionsRequest const& test_permissions_request_resource, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::network_attachments::v1::
-      TestIamPermissionsRequest request;
+  google::cloud::cpp::compute::network_attachments::v1::TestIamPermissionsRequest request;
   request.set_project(project);
   request.set_region(region);
   request.set_resource(resource);
-  *request.mutable_test_permissions_request_resource() =
-      test_permissions_request_resource;
+  *request.mutable_test_permissions_request_resource() = test_permissions_request_resource;
   return connection_->TestIamPermissions(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-NetworkAttachmentsClient::TestIamPermissions(
-    google::cloud::cpp::compute::network_attachments::v1::
-        TestIamPermissionsRequest const& request,
-    Options opts) {
+NetworkAttachmentsClient::TestIamPermissions(google::cloud::cpp::compute::network_attachments::v1::TestIamPermissionsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->TestIamPermissions(request);
 }

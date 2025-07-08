@@ -34,49 +34,45 @@ DataStoreServiceTracingStub::DataStoreServiceTracingStub(
 
 future<StatusOr<google::longrunning::Operation>>
 DataStoreServiceTracingStub::AsyncCreateDataStore(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::discoveryengine::v1::CreateDataStoreRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.discoveryengine.v1.DataStoreService", "CreateDataStore");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::discoveryengine::v1::CreateDataStoreRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.discoveryengine.v1.DataStoreService", "CreateDataStore");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f =
-      child_->AsyncCreateDataStore(cq, context, std::move(options), request);
+  auto f = child_->AsyncCreateDataStore(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 DataStoreServiceTracingStub::CreateDataStore(
-    grpc::ClientContext& context, Options options,
-    google::cloud::discoveryengine::v1::CreateDataStoreRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.discoveryengine.v1.DataStoreService", "CreateDataStore");
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::discoveryengine::v1::CreateDataStoreRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.discoveryengine.v1.DataStoreService", "CreateDataStore");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateDataStore(context, options, request));
 }
 
-StatusOr<google::cloud::discoveryengine::v1::DataStore>
-DataStoreServiceTracingStub::GetDataStore(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::discoveryengine::v1::DataStore> DataStoreServiceTracingStub::GetDataStore(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::discoveryengine::v1::GetDataStoreRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.discoveryengine.v1.DataStoreService", "GetDataStore");
+  auto span = internal::MakeSpanGrpc("google.cloud.discoveryengine.v1.DataStoreService", "GetDataStore");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetDataStore(context, options, request));
 }
 
-StatusOr<google::cloud::discoveryengine::v1::ListDataStoresResponse>
-DataStoreServiceTracingStub::ListDataStores(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::discoveryengine::v1::ListDataStoresResponse> DataStoreServiceTracingStub::ListDataStores(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::discoveryengine::v1::ListDataStoresRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.discoveryengine.v1.DataStoreService", "ListDataStores");
+  auto span = internal::MakeSpanGrpc("google.cloud.discoveryengine.v1.DataStoreService", "ListDataStores");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -85,61 +81,56 @@ DataStoreServiceTracingStub::ListDataStores(
 
 future<StatusOr<google::longrunning::Operation>>
 DataStoreServiceTracingStub::AsyncDeleteDataStore(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::discoveryengine::v1::DeleteDataStoreRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.discoveryengine.v1.DataStoreService", "DeleteDataStore");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::discoveryengine::v1::DeleteDataStoreRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.discoveryengine.v1.DataStoreService", "DeleteDataStore");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f =
-      child_->AsyncDeleteDataStore(cq, context, std::move(options), request);
+  auto f = child_->AsyncDeleteDataStore(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 DataStoreServiceTracingStub::DeleteDataStore(
-    grpc::ClientContext& context, Options options,
-    google::cloud::discoveryengine::v1::DeleteDataStoreRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.discoveryengine.v1.DataStoreService", "DeleteDataStore");
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::discoveryengine::v1::DeleteDataStoreRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.discoveryengine.v1.DataStoreService", "DeleteDataStore");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeleteDataStore(context, options, request));
 }
 
-StatusOr<google::cloud::discoveryengine::v1::DataStore>
-DataStoreServiceTracingStub::UpdateDataStore(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::discoveryengine::v1::DataStore> DataStoreServiceTracingStub::UpdateDataStore(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::discoveryengine::v1::UpdateDataStoreRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.discoveryengine.v1.DataStoreService", "UpdateDataStore");
+  auto span = internal::MakeSpanGrpc("google.cloud.discoveryengine.v1.DataStoreService", "UpdateDataStore");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->UpdateDataStore(context, options, request));
 }
 
-StatusOr<google::longrunning::ListOperationsResponse>
-DataStoreServiceTracingStub::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse> DataStoreServiceTracingStub::ListOperations(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.discoveryengine.v1.DataStoreService", "ListOperations");
+  auto span = internal::MakeSpanGrpc("google.cloud.discoveryengine.v1.DataStoreService", "ListOperations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListOperations(context, options, request));
 }
 
-StatusOr<google::longrunning::Operation>
-DataStoreServiceTracingStub::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::Operation> DataStoreServiceTracingStub::GetOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.discoveryengine.v1.DataStoreService", "GetOperation");
+  auto span = internal::MakeSpanGrpc("google.cloud.discoveryengine.v1.DataStoreService", "GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -147,10 +138,10 @@ DataStoreServiceTracingStub::GetOperation(
 }
 
 Status DataStoreServiceTracingStub::CancelOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.discoveryengine.v1.DataStoreService", "CancelOperation");
+  auto span = internal::MakeSpanGrpc("google.cloud.discoveryengine.v1.DataStoreService", "CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -167,7 +158,8 @@ DataStoreServiceTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncGetOperation(cq, context, std::move(options), request);
+  auto f = child_->AsyncGetOperation(
+      cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -180,8 +172,8 @@ future<Status> DataStoreServiceTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f =
-      child_->AsyncCancelOperation(cq, context, std::move(options), request);
+  auto f = child_->AsyncCancelOperation(
+      cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 

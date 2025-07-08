@@ -36,111 +36,97 @@ class NetworksTracingConnection
   ~NetworksTracingConnection() override = default;
 
   explicit NetworksTracingConnection(
-      std::shared_ptr<compute_networks_v1::NetworksConnection> child);
+    std::shared_ptr<compute_networks_v1::NetworksConnection> child);
 
   Options options() override { return child_->options(); }
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddPeering(
-      google::cloud::cpp::compute::networks::v1::AddPeeringRequest const&
-          request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AddPeering(google::cloud::cpp::compute::networks::v1::AddPeeringRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation> AddPeering(
-      NoAwaitTag,
-      google::cloud::cpp::compute::networks::v1::AddPeeringRequest const&
-          request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  AddPeering(NoAwaitTag,
+      google::cloud::cpp::compute::networks::v1::AddPeeringRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddPeering(
-      google::cloud::cpp::compute::v1::Operation const& operation) override;
-
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteNetwork(
-      google::cloud::cpp::compute::networks::v1::DeleteNetworkRequest const&
-          request) override;
-
-  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteNetwork(
-      NoAwaitTag,
-      google::cloud::cpp::compute::networks::v1::DeleteNetworkRequest const&
-          request) override;
-
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteNetwork(
-      google::cloud::cpp::compute::v1::Operation const& operation) override;
-
-  StatusOr<google::cloud::cpp::compute::v1::Network> GetNetwork(
-      google::cloud::cpp::compute::networks::v1::GetNetworkRequest const&
-          request) override;
-
-  StatusOr<
-      google::cloud::cpp::compute::v1::NetworksGetEffectiveFirewallsResponse>
-  GetEffectiveFirewalls(
-      google::cloud::cpp::compute::networks::v1::
-          GetEffectiveFirewallsRequest const& request) override;
-
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertNetwork(
-      google::cloud::cpp::compute::networks::v1::InsertNetworkRequest const&
-          request) override;
-
-  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertNetwork(
-      NoAwaitTag,
-      google::cloud::cpp::compute::networks::v1::InsertNetworkRequest const&
-          request) override;
-
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertNetwork(
-      google::cloud::cpp::compute::v1::Operation const& operation) override;
-
-  StreamRange<google::cloud::cpp::compute::v1::Network> ListNetworks(
-      google::cloud::cpp::compute::networks::v1::ListNetworksRequest request)
-      override;
-
-  StreamRange<google::cloud::cpp::compute::v1::ExchangedPeeringRoute>
-  ListPeeringRoutes(
-      google::cloud::cpp::compute::networks::v1::ListPeeringRoutesRequest
-          request) override;
-
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchNetwork(
-      google::cloud::cpp::compute::networks::v1::PatchNetworkRequest const&
-          request) override;
-
-  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchNetwork(
-      NoAwaitTag,
-      google::cloud::cpp::compute::networks::v1::PatchNetworkRequest const&
-          request) override;
-
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchNetwork(
-      google::cloud::cpp::compute::v1::Operation const& operation) override;
-
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> RemovePeering(
-      google::cloud::cpp::compute::networks::v1::RemovePeeringRequest const&
-          request) override;
-
-  StatusOr<google::cloud::cpp::compute::v1::Operation> RemovePeering(
-      NoAwaitTag,
-      google::cloud::cpp::compute::networks::v1::RemovePeeringRequest const&
-          request) override;
-
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> RemovePeering(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AddPeering(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SwitchToCustomMode(google::cloud::cpp::compute::networks::v1::
-                         SwitchToCustomModeRequest const& request) override;
+  DeleteNetwork(google::cloud::cpp::compute::networks::v1::DeleteNetworkRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation> SwitchToCustomMode(
-      NoAwaitTag, google::cloud::cpp::compute::networks::v1::
-                      SwitchToCustomModeRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeleteNetwork(NoAwaitTag,
+      google::cloud::cpp::compute::networks::v1::DeleteNetworkRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteNetwork(
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Network>
+  GetNetwork(google::cloud::cpp::compute::networks::v1::GetNetworkRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::NetworksGetEffectiveFirewallsResponse>
+  GetEffectiveFirewalls(google::cloud::cpp::compute::networks::v1::GetEffectiveFirewallsRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  InsertNetwork(google::cloud::cpp::compute::networks::v1::InsertNetworkRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  InsertNetwork(NoAwaitTag,
+      google::cloud::cpp::compute::networks::v1::InsertNetworkRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  InsertNetwork(
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
+
+  StreamRange<google::cloud::cpp::compute::v1::Network>
+  ListNetworks(google::cloud::cpp::compute::networks::v1::ListNetworksRequest request) override;
+
+  StreamRange<google::cloud::cpp::compute::v1::ExchangedPeeringRoute>
+  ListPeeringRoutes(google::cloud::cpp::compute::networks::v1::ListPeeringRoutesRequest request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  PatchNetwork(google::cloud::cpp::compute::networks::v1::PatchNetworkRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  PatchNetwork(NoAwaitTag,
+      google::cloud::cpp::compute::networks::v1::PatchNetworkRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  PatchNetwork(
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  RemovePeering(google::cloud::cpp::compute::networks::v1::RemovePeeringRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  RemovePeering(NoAwaitTag,
+      google::cloud::cpp::compute::networks::v1::RemovePeeringRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  RemovePeering(
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  SwitchToCustomMode(google::cloud::cpp::compute::networks::v1::SwitchToCustomModeRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  SwitchToCustomMode(NoAwaitTag,
+      google::cloud::cpp::compute::networks::v1::SwitchToCustomModeRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SwitchToCustomMode(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdatePeering(
-      google::cloud::cpp::compute::networks::v1::UpdatePeeringRequest const&
-          request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  UpdatePeering(google::cloud::cpp::compute::networks::v1::UpdatePeeringRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation> UpdatePeering(
-      NoAwaitTag,
-      google::cloud::cpp::compute::networks::v1::UpdatePeeringRequest const&
-          request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  UpdatePeering(NoAwaitTag,
+      google::cloud::cpp::compute::networks::v1::UpdatePeeringRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdatePeering(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  UpdatePeering(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
  private:

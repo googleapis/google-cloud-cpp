@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_SQL_AVAILABLE_DATABASE_VERSIONS_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_SQL_AVAILABLE_DATABASE_VERSIONS_OPTIONS_H
 
-#include "google/cloud/sql/v1/sql_available_database_versions_connection.h"
-#include "google/cloud/sql/v1/sql_available_database_versions_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
+#include "google/cloud/sql/v1/sql_available_database_versions_connection.h"
+#include "google/cloud/sql/v1/sql_available_database_versions_connection_idempotency_policy.h"
 #include "google/cloud/version.h"
 #include <memory>
 
@@ -55,8 +55,7 @@ struct SqlAvailableDatabaseVersionsServiceBackoffPolicyOption {
  * @ingroup google-cloud-sql-options
  */
 struct SqlAvailableDatabaseVersionsServiceConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<
-      SqlAvailableDatabaseVersionsServiceConnectionIdempotencyPolicy>;
+  using Type = std::shared_ptr<SqlAvailableDatabaseVersionsServiceConnectionIdempotencyPolicy>;
 };
 
 /**
@@ -64,10 +63,10 @@ struct SqlAvailableDatabaseVersionsServiceConnectionIdempotencyPolicyOption {
  *
  * @ingroup google-cloud-sql-options
  */
-using SqlAvailableDatabaseVersionsServicePolicyOptionList = OptionList<
-    SqlAvailableDatabaseVersionsServiceRetryPolicyOption,
-    SqlAvailableDatabaseVersionsServiceBackoffPolicyOption,
-    SqlAvailableDatabaseVersionsServiceConnectionIdempotencyPolicyOption>;
+using SqlAvailableDatabaseVersionsServicePolicyOptionList =
+    OptionList<SqlAvailableDatabaseVersionsServiceRetryPolicyOption,
+               SqlAvailableDatabaseVersionsServiceBackoffPolicyOption,
+               SqlAvailableDatabaseVersionsServiceConnectionIdempotencyPolicyOption>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace sql_v1

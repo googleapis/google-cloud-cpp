@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_TRANSITION_ROUTE_GROUPS_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_TRANSITION_ROUTE_GROUPS_OPTIONS_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/dialogflow_cx/transition_route_groups_connection.h"
 #include "google/cloud/dialogflow_cx/transition_route_groups_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -55,8 +55,7 @@ struct TransitionRouteGroupsBackoffPolicyOption {
  * @ingroup google-cloud-dialogflow_cx-options
  */
 struct TransitionRouteGroupsConnectionIdempotencyPolicyOption {
-  using Type =
-      std::shared_ptr<TransitionRouteGroupsConnectionIdempotencyPolicy>;
+  using Type = std::shared_ptr<TransitionRouteGroupsConnectionIdempotencyPolicy>;
 };
 
 /**

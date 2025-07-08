@@ -34,91 +34,72 @@ CloudChannelServiceTracingConnection::CloudChannelServiceTracingConnection(
     : child_(std::move(child)) {}
 
 StreamRange<google::cloud::channel::v1::Customer>
-CloudChannelServiceTracingConnection::ListCustomers(
-    google::cloud::channel::v1::ListCustomersRequest request) {
-  auto span = internal::MakeSpan(
-      "channel_v1::CloudChannelServiceConnection::ListCustomers");
+CloudChannelServiceTracingConnection::ListCustomers(google::cloud::channel::v1::ListCustomersRequest request) {
+  auto span = internal::MakeSpan("channel_v1::CloudChannelServiceConnection::ListCustomers");
   internal::OTelScope scope(span);
   auto sr = child_->ListCustomers(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::channel::v1::Customer>(
-      std::move(span), std::move(sr));
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::channel::v1::Customer>
-CloudChannelServiceTracingConnection::GetCustomer(
-    google::cloud::channel::v1::GetCustomerRequest const& request) {
-  auto span = internal::MakeSpan(
-      "channel_v1::CloudChannelServiceConnection::GetCustomer");
+CloudChannelServiceTracingConnection::GetCustomer(google::cloud::channel::v1::GetCustomerRequest const& request) {
+  auto span = internal::MakeSpan("channel_v1::CloudChannelServiceConnection::GetCustomer");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetCustomer(request));
 }
 
 StatusOr<google::cloud::channel::v1::CheckCloudIdentityAccountsExistResponse>
-CloudChannelServiceTracingConnection::CheckCloudIdentityAccountsExist(
-    google::cloud::channel::v1::CheckCloudIdentityAccountsExistRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "channel_v1::CloudChannelServiceConnection::"
-      "CheckCloudIdentityAccountsExist");
+CloudChannelServiceTracingConnection::CheckCloudIdentityAccountsExist(google::cloud::channel::v1::CheckCloudIdentityAccountsExistRequest const& request) {
+  auto span = internal::MakeSpan("channel_v1::CloudChannelServiceConnection::CheckCloudIdentityAccountsExist");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span,
-                           child_->CheckCloudIdentityAccountsExist(request));
+  return internal::EndSpan(*span, child_->CheckCloudIdentityAccountsExist(request));
 }
 
 StatusOr<google::cloud::channel::v1::Customer>
-CloudChannelServiceTracingConnection::CreateCustomer(
-    google::cloud::channel::v1::CreateCustomerRequest const& request) {
-  auto span = internal::MakeSpan(
-      "channel_v1::CloudChannelServiceConnection::CreateCustomer");
+CloudChannelServiceTracingConnection::CreateCustomer(google::cloud::channel::v1::CreateCustomerRequest const& request) {
+  auto span = internal::MakeSpan("channel_v1::CloudChannelServiceConnection::CreateCustomer");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateCustomer(request));
 }
 
 StatusOr<google::cloud::channel::v1::Customer>
-CloudChannelServiceTracingConnection::UpdateCustomer(
-    google::cloud::channel::v1::UpdateCustomerRequest const& request) {
-  auto span = internal::MakeSpan(
-      "channel_v1::CloudChannelServiceConnection::UpdateCustomer");
+CloudChannelServiceTracingConnection::UpdateCustomer(google::cloud::channel::v1::UpdateCustomerRequest const& request) {
+  auto span = internal::MakeSpan("channel_v1::CloudChannelServiceConnection::UpdateCustomer");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateCustomer(request));
 }
 
-Status CloudChannelServiceTracingConnection::DeleteCustomer(
-    google::cloud::channel::v1::DeleteCustomerRequest const& request) {
-  auto span = internal::MakeSpan(
-      "channel_v1::CloudChannelServiceConnection::DeleteCustomer");
+Status
+CloudChannelServiceTracingConnection::DeleteCustomer(google::cloud::channel::v1::DeleteCustomerRequest const& request) {
+  auto span = internal::MakeSpan("channel_v1::CloudChannelServiceConnection::DeleteCustomer");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteCustomer(request));
 }
 
 StatusOr<google::cloud::channel::v1::Customer>
-CloudChannelServiceTracingConnection::ImportCustomer(
-    google::cloud::channel::v1::ImportCustomerRequest const& request) {
-  auto span = internal::MakeSpan(
-      "channel_v1::CloudChannelServiceConnection::ImportCustomer");
+CloudChannelServiceTracingConnection::ImportCustomer(google::cloud::channel::v1::ImportCustomerRequest const& request) {
+  auto span = internal::MakeSpan("channel_v1::CloudChannelServiceConnection::ImportCustomer");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->ImportCustomer(request));
 }
 
 future<StatusOr<google::cloud::channel::v1::Customer>>
-CloudChannelServiceTracingConnection::ProvisionCloudIdentity(
-    google::cloud::channel::v1::ProvisionCloudIdentityRequest const& request) {
+CloudChannelServiceTracingConnection::ProvisionCloudIdentity(google::cloud::channel::v1::ProvisionCloudIdentityRequest const& request) {
   auto span = internal::MakeSpan(
       "channel_v1::CloudChannelServiceConnection::ProvisionCloudIdentity");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->ProvisionCloudIdentity(request));
+  return internal::EndSpan(std::move(span), child_->ProvisionCloudIdentity(request));
 }
 
 StatusOr<google::longrunning::Operation>
 CloudChannelServiceTracingConnection::ProvisionCloudIdentity(
-    NoAwaitTag,
-    google::cloud::channel::v1::ProvisionCloudIdentityRequest const& request) {
+    NoAwaitTag, google::cloud::channel::v1::ProvisionCloudIdentityRequest const& request) {
   auto span = internal::MakeSpan(
       "channel_v1::CloudChannelServiceConnection::ProvisionCloudIdentity");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->ProvisionCloudIdentity(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->ProvisionCloudIdentity(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::channel::v1::Customer>>
@@ -128,56 +109,45 @@ CloudChannelServiceTracingConnection::ProvisionCloudIdentity(
       "channel_v1::CloudChannelServiceConnection::ProvisionCloudIdentity");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->ProvisionCloudIdentity(operation));
+      child_->ProvisionCloudIdentity(operation));
 }
 
 StreamRange<google::cloud::channel::v1::Entitlement>
-CloudChannelServiceTracingConnection::ListEntitlements(
-    google::cloud::channel::v1::ListEntitlementsRequest request) {
-  auto span = internal::MakeSpan(
-      "channel_v1::CloudChannelServiceConnection::ListEntitlements");
+CloudChannelServiceTracingConnection::ListEntitlements(google::cloud::channel::v1::ListEntitlementsRequest request) {
+  auto span = internal::MakeSpan("channel_v1::CloudChannelServiceConnection::ListEntitlements");
   internal::OTelScope scope(span);
   auto sr = child_->ListEntitlements(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::channel::v1::Entitlement>(std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::channel::v1::Entitlement>(
+        std::move(span), std::move(sr));
 }
 
 StreamRange<google::cloud::channel::v1::TransferableSku>
-CloudChannelServiceTracingConnection::ListTransferableSkus(
-    google::cloud::channel::v1::ListTransferableSkusRequest request) {
-  auto span = internal::MakeSpan(
-      "channel_v1::CloudChannelServiceConnection::ListTransferableSkus");
+CloudChannelServiceTracingConnection::ListTransferableSkus(google::cloud::channel::v1::ListTransferableSkusRequest request) {
+  auto span = internal::MakeSpan("channel_v1::CloudChannelServiceConnection::ListTransferableSkus");
   internal::OTelScope scope(span);
   auto sr = child_->ListTransferableSkus(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::channel::v1::TransferableSku>(std::move(span),
-                                                   std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::channel::v1::TransferableSku>(
+        std::move(span), std::move(sr));
 }
 
 StreamRange<google::cloud::channel::v1::TransferableOffer>
-CloudChannelServiceTracingConnection::ListTransferableOffers(
-    google::cloud::channel::v1::ListTransferableOffersRequest request) {
-  auto span = internal::MakeSpan(
-      "channel_v1::CloudChannelServiceConnection::ListTransferableOffers");
+CloudChannelServiceTracingConnection::ListTransferableOffers(google::cloud::channel::v1::ListTransferableOffersRequest request) {
+  auto span = internal::MakeSpan("channel_v1::CloudChannelServiceConnection::ListTransferableOffers");
   internal::OTelScope scope(span);
   auto sr = child_->ListTransferableOffers(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::channel::v1::TransferableOffer>(std::move(span),
-                                                     std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::channel::v1::TransferableOffer>(
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::channel::v1::Entitlement>
-CloudChannelServiceTracingConnection::GetEntitlement(
-    google::cloud::channel::v1::GetEntitlementRequest const& request) {
-  auto span = internal::MakeSpan(
-      "channel_v1::CloudChannelServiceConnection::GetEntitlement");
+CloudChannelServiceTracingConnection::GetEntitlement(google::cloud::channel::v1::GetEntitlementRequest const& request) {
+  auto span = internal::MakeSpan("channel_v1::CloudChannelServiceConnection::GetEntitlement");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetEntitlement(request));
 }
 
 future<StatusOr<google::cloud::channel::v1::Entitlement>>
-CloudChannelServiceTracingConnection::CreateEntitlement(
-    google::cloud::channel::v1::CreateEntitlementRequest const& request) {
+CloudChannelServiceTracingConnection::CreateEntitlement(google::cloud::channel::v1::CreateEntitlementRequest const& request) {
   auto span = internal::MakeSpan(
       "channel_v1::CloudChannelServiceConnection::CreateEntitlement");
   internal::OTelScope scope(span);
@@ -186,13 +156,12 @@ CloudChannelServiceTracingConnection::CreateEntitlement(
 
 StatusOr<google::longrunning::Operation>
 CloudChannelServiceTracingConnection::CreateEntitlement(
-    NoAwaitTag,
-    google::cloud::channel::v1::CreateEntitlementRequest const& request) {
+    NoAwaitTag, google::cloud::channel::v1::CreateEntitlementRequest const& request) {
   auto span = internal::MakeSpan(
       "channel_v1::CloudChannelServiceConnection::CreateEntitlement");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span,
-                           child_->CreateEntitlement(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->CreateEntitlement(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::channel::v1::Entitlement>>
@@ -202,12 +171,11 @@ CloudChannelServiceTracingConnection::CreateEntitlement(
       "channel_v1::CloudChannelServiceConnection::CreateEntitlement");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->CreateEntitlement(operation));
+      child_->CreateEntitlement(operation));
 }
 
 future<StatusOr<google::cloud::channel::v1::Entitlement>>
-CloudChannelServiceTracingConnection::ChangeParameters(
-    google::cloud::channel::v1::ChangeParametersRequest const& request) {
+CloudChannelServiceTracingConnection::ChangeParameters(google::cloud::channel::v1::ChangeParametersRequest const& request) {
   auto span = internal::MakeSpan(
       "channel_v1::CloudChannelServiceConnection::ChangeParameters");
   internal::OTelScope scope(span);
@@ -216,13 +184,12 @@ CloudChannelServiceTracingConnection::ChangeParameters(
 
 StatusOr<google::longrunning::Operation>
 CloudChannelServiceTracingConnection::ChangeParameters(
-    NoAwaitTag,
-    google::cloud::channel::v1::ChangeParametersRequest const& request) {
+    NoAwaitTag, google::cloud::channel::v1::ChangeParametersRequest const& request) {
   auto span = internal::MakeSpan(
       "channel_v1::CloudChannelServiceConnection::ChangeParameters");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span,
-                           child_->ChangeParameters(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->ChangeParameters(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::channel::v1::Entitlement>>
@@ -232,28 +199,25 @@ CloudChannelServiceTracingConnection::ChangeParameters(
       "channel_v1::CloudChannelServiceConnection::ChangeParameters");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->ChangeParameters(operation));
+      child_->ChangeParameters(operation));
 }
 
 future<StatusOr<google::cloud::channel::v1::Entitlement>>
-CloudChannelServiceTracingConnection::ChangeRenewalSettings(
-    google::cloud::channel::v1::ChangeRenewalSettingsRequest const& request) {
+CloudChannelServiceTracingConnection::ChangeRenewalSettings(google::cloud::channel::v1::ChangeRenewalSettingsRequest const& request) {
   auto span = internal::MakeSpan(
       "channel_v1::CloudChannelServiceConnection::ChangeRenewalSettings");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->ChangeRenewalSettings(request));
+  return internal::EndSpan(std::move(span), child_->ChangeRenewalSettings(request));
 }
 
 StatusOr<google::longrunning::Operation>
 CloudChannelServiceTracingConnection::ChangeRenewalSettings(
-    NoAwaitTag,
-    google::cloud::channel::v1::ChangeRenewalSettingsRequest const& request) {
+    NoAwaitTag, google::cloud::channel::v1::ChangeRenewalSettingsRequest const& request) {
   auto span = internal::MakeSpan(
       "channel_v1::CloudChannelServiceConnection::ChangeRenewalSettings");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->ChangeRenewalSettings(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->ChangeRenewalSettings(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::channel::v1::Entitlement>>
@@ -263,12 +227,11 @@ CloudChannelServiceTracingConnection::ChangeRenewalSettings(
       "channel_v1::CloudChannelServiceConnection::ChangeRenewalSettings");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->ChangeRenewalSettings(operation));
+      child_->ChangeRenewalSettings(operation));
 }
 
 future<StatusOr<google::cloud::channel::v1::Entitlement>>
-CloudChannelServiceTracingConnection::ChangeOffer(
-    google::cloud::channel::v1::ChangeOfferRequest const& request) {
+CloudChannelServiceTracingConnection::ChangeOffer(google::cloud::channel::v1::ChangeOfferRequest const& request) {
   auto span = internal::MakeSpan(
       "channel_v1::CloudChannelServiceConnection::ChangeOffer");
   internal::OTelScope scope(span);
@@ -281,7 +244,8 @@ CloudChannelServiceTracingConnection::ChangeOffer(
   auto span = internal::MakeSpan(
       "channel_v1::CloudChannelServiceConnection::ChangeOffer");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->ChangeOffer(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->ChangeOffer(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::channel::v1::Entitlement>>
@@ -290,12 +254,12 @@ CloudChannelServiceTracingConnection::ChangeOffer(
   auto span = internal::MakeSpan(
       "channel_v1::CloudChannelServiceConnection::ChangeOffer");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->ChangeOffer(operation));
+  return internal::EndSpan(std::move(span),
+      child_->ChangeOffer(operation));
 }
 
 future<StatusOr<google::cloud::channel::v1::Entitlement>>
-CloudChannelServiceTracingConnection::StartPaidService(
-    google::cloud::channel::v1::StartPaidServiceRequest const& request) {
+CloudChannelServiceTracingConnection::StartPaidService(google::cloud::channel::v1::StartPaidServiceRequest const& request) {
   auto span = internal::MakeSpan(
       "channel_v1::CloudChannelServiceConnection::StartPaidService");
   internal::OTelScope scope(span);
@@ -304,13 +268,12 @@ CloudChannelServiceTracingConnection::StartPaidService(
 
 StatusOr<google::longrunning::Operation>
 CloudChannelServiceTracingConnection::StartPaidService(
-    NoAwaitTag,
-    google::cloud::channel::v1::StartPaidServiceRequest const& request) {
+    NoAwaitTag, google::cloud::channel::v1::StartPaidServiceRequest const& request) {
   auto span = internal::MakeSpan(
       "channel_v1::CloudChannelServiceConnection::StartPaidService");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span,
-                           child_->StartPaidService(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->StartPaidService(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::channel::v1::Entitlement>>
@@ -320,28 +283,25 @@ CloudChannelServiceTracingConnection::StartPaidService(
       "channel_v1::CloudChannelServiceConnection::StartPaidService");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->StartPaidService(operation));
+      child_->StartPaidService(operation));
 }
 
 future<StatusOr<google::cloud::channel::v1::Entitlement>>
-CloudChannelServiceTracingConnection::SuspendEntitlement(
-    google::cloud::channel::v1::SuspendEntitlementRequest const& request) {
+CloudChannelServiceTracingConnection::SuspendEntitlement(google::cloud::channel::v1::SuspendEntitlementRequest const& request) {
   auto span = internal::MakeSpan(
       "channel_v1::CloudChannelServiceConnection::SuspendEntitlement");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->SuspendEntitlement(request));
+  return internal::EndSpan(std::move(span), child_->SuspendEntitlement(request));
 }
 
 StatusOr<google::longrunning::Operation>
 CloudChannelServiceTracingConnection::SuspendEntitlement(
-    NoAwaitTag,
-    google::cloud::channel::v1::SuspendEntitlementRequest const& request) {
+    NoAwaitTag, google::cloud::channel::v1::SuspendEntitlementRequest const& request) {
   auto span = internal::MakeSpan(
       "channel_v1::CloudChannelServiceConnection::SuspendEntitlement");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span,
-                           child_->SuspendEntitlement(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->SuspendEntitlement(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::channel::v1::Entitlement>>
@@ -351,12 +311,11 @@ CloudChannelServiceTracingConnection::SuspendEntitlement(
       "channel_v1::CloudChannelServiceConnection::SuspendEntitlement");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->SuspendEntitlement(operation));
+      child_->SuspendEntitlement(operation));
 }
 
 future<StatusOr<google::cloud::channel::v1::OperationMetadata>>
-CloudChannelServiceTracingConnection::CancelEntitlement(
-    google::cloud::channel::v1::CancelEntitlementRequest const& request) {
+CloudChannelServiceTracingConnection::CancelEntitlement(google::cloud::channel::v1::CancelEntitlementRequest const& request) {
   auto span = internal::MakeSpan(
       "channel_v1::CloudChannelServiceConnection::CancelEntitlement");
   internal::OTelScope scope(span);
@@ -365,13 +324,12 @@ CloudChannelServiceTracingConnection::CancelEntitlement(
 
 StatusOr<google::longrunning::Operation>
 CloudChannelServiceTracingConnection::CancelEntitlement(
-    NoAwaitTag,
-    google::cloud::channel::v1::CancelEntitlementRequest const& request) {
+    NoAwaitTag, google::cloud::channel::v1::CancelEntitlementRequest const& request) {
   auto span = internal::MakeSpan(
       "channel_v1::CloudChannelServiceConnection::CancelEntitlement");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span,
-                           child_->CancelEntitlement(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->CancelEntitlement(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::channel::v1::OperationMetadata>>
@@ -381,28 +339,25 @@ CloudChannelServiceTracingConnection::CancelEntitlement(
       "channel_v1::CloudChannelServiceConnection::CancelEntitlement");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->CancelEntitlement(operation));
+      child_->CancelEntitlement(operation));
 }
 
 future<StatusOr<google::cloud::channel::v1::Entitlement>>
-CloudChannelServiceTracingConnection::ActivateEntitlement(
-    google::cloud::channel::v1::ActivateEntitlementRequest const& request) {
+CloudChannelServiceTracingConnection::ActivateEntitlement(google::cloud::channel::v1::ActivateEntitlementRequest const& request) {
   auto span = internal::MakeSpan(
       "channel_v1::CloudChannelServiceConnection::ActivateEntitlement");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->ActivateEntitlement(request));
+  return internal::EndSpan(std::move(span), child_->ActivateEntitlement(request));
 }
 
 StatusOr<google::longrunning::Operation>
 CloudChannelServiceTracingConnection::ActivateEntitlement(
-    NoAwaitTag,
-    google::cloud::channel::v1::ActivateEntitlementRequest const& request) {
+    NoAwaitTag, google::cloud::channel::v1::ActivateEntitlementRequest const& request) {
   auto span = internal::MakeSpan(
       "channel_v1::CloudChannelServiceConnection::ActivateEntitlement");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span,
-                           child_->ActivateEntitlement(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->ActivateEntitlement(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::channel::v1::Entitlement>>
@@ -412,28 +367,25 @@ CloudChannelServiceTracingConnection::ActivateEntitlement(
       "channel_v1::CloudChannelServiceConnection::ActivateEntitlement");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->ActivateEntitlement(operation));
+      child_->ActivateEntitlement(operation));
 }
 
 future<StatusOr<google::cloud::channel::v1::TransferEntitlementsResponse>>
-CloudChannelServiceTracingConnection::TransferEntitlements(
-    google::cloud::channel::v1::TransferEntitlementsRequest const& request) {
+CloudChannelServiceTracingConnection::TransferEntitlements(google::cloud::channel::v1::TransferEntitlementsRequest const& request) {
   auto span = internal::MakeSpan(
       "channel_v1::CloudChannelServiceConnection::TransferEntitlements");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->TransferEntitlements(request));
+  return internal::EndSpan(std::move(span), child_->TransferEntitlements(request));
 }
 
 StatusOr<google::longrunning::Operation>
 CloudChannelServiceTracingConnection::TransferEntitlements(
-    NoAwaitTag,
-    google::cloud::channel::v1::TransferEntitlementsRequest const& request) {
+    NoAwaitTag, google::cloud::channel::v1::TransferEntitlementsRequest const& request) {
   auto span = internal::MakeSpan(
       "channel_v1::CloudChannelServiceConnection::TransferEntitlements");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span,
-                           child_->TransferEntitlements(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->TransferEntitlements(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::channel::v1::TransferEntitlementsResponse>>
@@ -443,378 +395,276 @@ CloudChannelServiceTracingConnection::TransferEntitlements(
       "channel_v1::CloudChannelServiceConnection::TransferEntitlements");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->TransferEntitlements(operation));
+      child_->TransferEntitlements(operation));
 }
 
 future<StatusOr<google::cloud::channel::v1::OperationMetadata>>
-CloudChannelServiceTracingConnection::TransferEntitlementsToGoogle(
-    google::cloud::channel::v1::TransferEntitlementsToGoogleRequest const&
-        request) {
+CloudChannelServiceTracingConnection::TransferEntitlementsToGoogle(google::cloud::channel::v1::TransferEntitlementsToGoogleRequest const& request) {
   auto span = internal::MakeSpan(
-      "channel_v1::CloudChannelServiceConnection::"
-      "TransferEntitlementsToGoogle");
+      "channel_v1::CloudChannelServiceConnection::TransferEntitlementsToGoogle");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->TransferEntitlementsToGoogle(request));
+  return internal::EndSpan(std::move(span), child_->TransferEntitlementsToGoogle(request));
 }
 
 StatusOr<google::longrunning::Operation>
 CloudChannelServiceTracingConnection::TransferEntitlementsToGoogle(
-    NoAwaitTag,
-    google::cloud::channel::v1::TransferEntitlementsToGoogleRequest const&
-        request) {
+    NoAwaitTag, google::cloud::channel::v1::TransferEntitlementsToGoogleRequest const& request) {
   auto span = internal::MakeSpan(
-      "channel_v1::CloudChannelServiceConnection::"
-      "TransferEntitlementsToGoogle");
+      "channel_v1::CloudChannelServiceConnection::TransferEntitlementsToGoogle");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->TransferEntitlementsToGoogle(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->TransferEntitlementsToGoogle(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::channel::v1::OperationMetadata>>
 CloudChannelServiceTracingConnection::TransferEntitlementsToGoogle(
     google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
-      "channel_v1::CloudChannelServiceConnection::"
-      "TransferEntitlementsToGoogle");
+      "channel_v1::CloudChannelServiceConnection::TransferEntitlementsToGoogle");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->TransferEntitlementsToGoogle(operation));
+      child_->TransferEntitlementsToGoogle(operation));
 }
 
 StreamRange<google::cloud::channel::v1::ChannelPartnerLink>
-CloudChannelServiceTracingConnection::ListChannelPartnerLinks(
-    google::cloud::channel::v1::ListChannelPartnerLinksRequest request) {
-  auto span = internal::MakeSpan(
-      "channel_v1::CloudChannelServiceConnection::ListChannelPartnerLinks");
+CloudChannelServiceTracingConnection::ListChannelPartnerLinks(google::cloud::channel::v1::ListChannelPartnerLinksRequest request) {
+  auto span = internal::MakeSpan("channel_v1::CloudChannelServiceConnection::ListChannelPartnerLinks");
   internal::OTelScope scope(span);
   auto sr = child_->ListChannelPartnerLinks(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::channel::v1::ChannelPartnerLink>(std::move(span),
-                                                      std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::channel::v1::ChannelPartnerLink>(
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::channel::v1::ChannelPartnerLink>
-CloudChannelServiceTracingConnection::GetChannelPartnerLink(
-    google::cloud::channel::v1::GetChannelPartnerLinkRequest const& request) {
-  auto span = internal::MakeSpan(
-      "channel_v1::CloudChannelServiceConnection::GetChannelPartnerLink");
+CloudChannelServiceTracingConnection::GetChannelPartnerLink(google::cloud::channel::v1::GetChannelPartnerLinkRequest const& request) {
+  auto span = internal::MakeSpan("channel_v1::CloudChannelServiceConnection::GetChannelPartnerLink");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetChannelPartnerLink(request));
 }
 
 StatusOr<google::cloud::channel::v1::ChannelPartnerLink>
-CloudChannelServiceTracingConnection::CreateChannelPartnerLink(
-    google::cloud::channel::v1::CreateChannelPartnerLinkRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "channel_v1::CloudChannelServiceConnection::CreateChannelPartnerLink");
+CloudChannelServiceTracingConnection::CreateChannelPartnerLink(google::cloud::channel::v1::CreateChannelPartnerLinkRequest const& request) {
+  auto span = internal::MakeSpan("channel_v1::CloudChannelServiceConnection::CreateChannelPartnerLink");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateChannelPartnerLink(request));
 }
 
 StatusOr<google::cloud::channel::v1::ChannelPartnerLink>
-CloudChannelServiceTracingConnection::UpdateChannelPartnerLink(
-    google::cloud::channel::v1::UpdateChannelPartnerLinkRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "channel_v1::CloudChannelServiceConnection::UpdateChannelPartnerLink");
+CloudChannelServiceTracingConnection::UpdateChannelPartnerLink(google::cloud::channel::v1::UpdateChannelPartnerLinkRequest const& request) {
+  auto span = internal::MakeSpan("channel_v1::CloudChannelServiceConnection::UpdateChannelPartnerLink");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateChannelPartnerLink(request));
 }
 
 StatusOr<google::cloud::channel::v1::CustomerRepricingConfig>
-CloudChannelServiceTracingConnection::GetCustomerRepricingConfig(
-    google::cloud::channel::v1::GetCustomerRepricingConfigRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "channel_v1::CloudChannelServiceConnection::GetCustomerRepricingConfig");
+CloudChannelServiceTracingConnection::GetCustomerRepricingConfig(google::cloud::channel::v1::GetCustomerRepricingConfigRequest const& request) {
+  auto span = internal::MakeSpan("channel_v1::CloudChannelServiceConnection::GetCustomerRepricingConfig");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetCustomerRepricingConfig(request));
 }
 
 StreamRange<google::cloud::channel::v1::CustomerRepricingConfig>
-CloudChannelServiceTracingConnection::ListCustomerRepricingConfigs(
-    google::cloud::channel::v1::ListCustomerRepricingConfigsRequest request) {
-  auto span = internal::MakeSpan(
-      "channel_v1::CloudChannelServiceConnection::"
-      "ListCustomerRepricingConfigs");
+CloudChannelServiceTracingConnection::ListCustomerRepricingConfigs(google::cloud::channel::v1::ListCustomerRepricingConfigsRequest request) {
+  auto span = internal::MakeSpan("channel_v1::CloudChannelServiceConnection::ListCustomerRepricingConfigs");
   internal::OTelScope scope(span);
   auto sr = child_->ListCustomerRepricingConfigs(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::channel::v1::CustomerRepricingConfig>(std::move(span),
-                                                           std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::channel::v1::CustomerRepricingConfig>(
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::channel::v1::CustomerRepricingConfig>
-CloudChannelServiceTracingConnection::CreateCustomerRepricingConfig(
-    google::cloud::channel::v1::CreateCustomerRepricingConfigRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "channel_v1::CloudChannelServiceConnection::"
-      "CreateCustomerRepricingConfig");
+CloudChannelServiceTracingConnection::CreateCustomerRepricingConfig(google::cloud::channel::v1::CreateCustomerRepricingConfigRequest const& request) {
+  auto span = internal::MakeSpan("channel_v1::CloudChannelServiceConnection::CreateCustomerRepricingConfig");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span,
-                           child_->CreateCustomerRepricingConfig(request));
+  return internal::EndSpan(*span, child_->CreateCustomerRepricingConfig(request));
 }
 
 StatusOr<google::cloud::channel::v1::CustomerRepricingConfig>
-CloudChannelServiceTracingConnection::UpdateCustomerRepricingConfig(
-    google::cloud::channel::v1::UpdateCustomerRepricingConfigRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "channel_v1::CloudChannelServiceConnection::"
-      "UpdateCustomerRepricingConfig");
+CloudChannelServiceTracingConnection::UpdateCustomerRepricingConfig(google::cloud::channel::v1::UpdateCustomerRepricingConfigRequest const& request) {
+  auto span = internal::MakeSpan("channel_v1::CloudChannelServiceConnection::UpdateCustomerRepricingConfig");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span,
-                           child_->UpdateCustomerRepricingConfig(request));
-}
-
-Status CloudChannelServiceTracingConnection::DeleteCustomerRepricingConfig(
-    google::cloud::channel::v1::DeleteCustomerRepricingConfigRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "channel_v1::CloudChannelServiceConnection::"
-      "DeleteCustomerRepricingConfig");
-  auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span,
-                           child_->DeleteCustomerRepricingConfig(request));
-}
-
-StatusOr<google::cloud::channel::v1::ChannelPartnerRepricingConfig>
-CloudChannelServiceTracingConnection::GetChannelPartnerRepricingConfig(
-    google::cloud::channel::v1::GetChannelPartnerRepricingConfigRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "channel_v1::CloudChannelServiceConnection::"
-      "GetChannelPartnerRepricingConfig");
-  auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span,
-                           child_->GetChannelPartnerRepricingConfig(request));
-}
-
-StreamRange<google::cloud::channel::v1::ChannelPartnerRepricingConfig>
-CloudChannelServiceTracingConnection::ListChannelPartnerRepricingConfigs(
-    google::cloud::channel::v1::ListChannelPartnerRepricingConfigsRequest
-        request) {
-  auto span = internal::MakeSpan(
-      "channel_v1::CloudChannelServiceConnection::"
-      "ListChannelPartnerRepricingConfigs");
-  internal::OTelScope scope(span);
-  auto sr = child_->ListChannelPartnerRepricingConfigs(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::channel::v1::ChannelPartnerRepricingConfig>(
-      std::move(span), std::move(sr));
-}
-
-StatusOr<google::cloud::channel::v1::ChannelPartnerRepricingConfig>
-CloudChannelServiceTracingConnection::CreateChannelPartnerRepricingConfig(
-    google::cloud::channel::v1::
-        CreateChannelPartnerRepricingConfigRequest const& request) {
-  auto span = internal::MakeSpan(
-      "channel_v1::CloudChannelServiceConnection::"
-      "CreateChannelPartnerRepricingConfig");
-  auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(
-      *span, child_->CreateChannelPartnerRepricingConfig(request));
-}
-
-StatusOr<google::cloud::channel::v1::ChannelPartnerRepricingConfig>
-CloudChannelServiceTracingConnection::UpdateChannelPartnerRepricingConfig(
-    google::cloud::channel::v1::
-        UpdateChannelPartnerRepricingConfigRequest const& request) {
-  auto span = internal::MakeSpan(
-      "channel_v1::CloudChannelServiceConnection::"
-      "UpdateChannelPartnerRepricingConfig");
-  auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(
-      *span, child_->UpdateChannelPartnerRepricingConfig(request));
+  return internal::EndSpan(*span, child_->UpdateCustomerRepricingConfig(request));
 }
 
 Status
-CloudChannelServiceTracingConnection::DeleteChannelPartnerRepricingConfig(
-    google::cloud::channel::v1::
-        DeleteChannelPartnerRepricingConfigRequest const& request) {
-  auto span = internal::MakeSpan(
-      "channel_v1::CloudChannelServiceConnection::"
-      "DeleteChannelPartnerRepricingConfig");
+CloudChannelServiceTracingConnection::DeleteCustomerRepricingConfig(google::cloud::channel::v1::DeleteCustomerRepricingConfigRequest const& request) {
+  auto span = internal::MakeSpan("channel_v1::CloudChannelServiceConnection::DeleteCustomerRepricingConfig");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(
-      *span, child_->DeleteChannelPartnerRepricingConfig(request));
+  return internal::EndSpan(*span, child_->DeleteCustomerRepricingConfig(request));
+}
+
+StatusOr<google::cloud::channel::v1::ChannelPartnerRepricingConfig>
+CloudChannelServiceTracingConnection::GetChannelPartnerRepricingConfig(google::cloud::channel::v1::GetChannelPartnerRepricingConfigRequest const& request) {
+  auto span = internal::MakeSpan("channel_v1::CloudChannelServiceConnection::GetChannelPartnerRepricingConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetChannelPartnerRepricingConfig(request));
+}
+
+StreamRange<google::cloud::channel::v1::ChannelPartnerRepricingConfig>
+CloudChannelServiceTracingConnection::ListChannelPartnerRepricingConfigs(google::cloud::channel::v1::ListChannelPartnerRepricingConfigsRequest request) {
+  auto span = internal::MakeSpan("channel_v1::CloudChannelServiceConnection::ListChannelPartnerRepricingConfigs");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListChannelPartnerRepricingConfigs(std::move(request));
+  return internal::MakeTracedStreamRange<google::cloud::channel::v1::ChannelPartnerRepricingConfig>(
+        std::move(span), std::move(sr));
+}
+
+StatusOr<google::cloud::channel::v1::ChannelPartnerRepricingConfig>
+CloudChannelServiceTracingConnection::CreateChannelPartnerRepricingConfig(google::cloud::channel::v1::CreateChannelPartnerRepricingConfigRequest const& request) {
+  auto span = internal::MakeSpan("channel_v1::CloudChannelServiceConnection::CreateChannelPartnerRepricingConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateChannelPartnerRepricingConfig(request));
+}
+
+StatusOr<google::cloud::channel::v1::ChannelPartnerRepricingConfig>
+CloudChannelServiceTracingConnection::UpdateChannelPartnerRepricingConfig(google::cloud::channel::v1::UpdateChannelPartnerRepricingConfigRequest const& request) {
+  auto span = internal::MakeSpan("channel_v1::CloudChannelServiceConnection::UpdateChannelPartnerRepricingConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateChannelPartnerRepricingConfig(request));
+}
+
+Status
+CloudChannelServiceTracingConnection::DeleteChannelPartnerRepricingConfig(google::cloud::channel::v1::DeleteChannelPartnerRepricingConfigRequest const& request) {
+  auto span = internal::MakeSpan("channel_v1::CloudChannelServiceConnection::DeleteChannelPartnerRepricingConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteChannelPartnerRepricingConfig(request));
 }
 
 StreamRange<google::cloud::channel::v1::SkuGroup>
-CloudChannelServiceTracingConnection::ListSkuGroups(
-    google::cloud::channel::v1::ListSkuGroupsRequest request) {
-  auto span = internal::MakeSpan(
-      "channel_v1::CloudChannelServiceConnection::ListSkuGroups");
+CloudChannelServiceTracingConnection::ListSkuGroups(google::cloud::channel::v1::ListSkuGroupsRequest request) {
+  auto span = internal::MakeSpan("channel_v1::CloudChannelServiceConnection::ListSkuGroups");
   internal::OTelScope scope(span);
   auto sr = child_->ListSkuGroups(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::channel::v1::SkuGroup>(
-      std::move(span), std::move(sr));
+        std::move(span), std::move(sr));
 }
 
 StreamRange<google::cloud::channel::v1::BillableSku>
-CloudChannelServiceTracingConnection::ListSkuGroupBillableSkus(
-    google::cloud::channel::v1::ListSkuGroupBillableSkusRequest request) {
-  auto span = internal::MakeSpan(
-      "channel_v1::CloudChannelServiceConnection::ListSkuGroupBillableSkus");
+CloudChannelServiceTracingConnection::ListSkuGroupBillableSkus(google::cloud::channel::v1::ListSkuGroupBillableSkusRequest request) {
+  auto span = internal::MakeSpan("channel_v1::CloudChannelServiceConnection::ListSkuGroupBillableSkus");
   internal::OTelScope scope(span);
   auto sr = child_->ListSkuGroupBillableSkus(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::channel::v1::BillableSku>(std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::channel::v1::BillableSku>(
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::channel::v1::Offer>
-CloudChannelServiceTracingConnection::LookupOffer(
-    google::cloud::channel::v1::LookupOfferRequest const& request) {
-  auto span = internal::MakeSpan(
-      "channel_v1::CloudChannelServiceConnection::LookupOffer");
+CloudChannelServiceTracingConnection::LookupOffer(google::cloud::channel::v1::LookupOfferRequest const& request) {
+  auto span = internal::MakeSpan("channel_v1::CloudChannelServiceConnection::LookupOffer");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->LookupOffer(request));
 }
 
 StreamRange<google::cloud::channel::v1::Product>
-CloudChannelServiceTracingConnection::ListProducts(
-    google::cloud::channel::v1::ListProductsRequest request) {
-  auto span = internal::MakeSpan(
-      "channel_v1::CloudChannelServiceConnection::ListProducts");
+CloudChannelServiceTracingConnection::ListProducts(google::cloud::channel::v1::ListProductsRequest request) {
+  auto span = internal::MakeSpan("channel_v1::CloudChannelServiceConnection::ListProducts");
   internal::OTelScope scope(span);
   auto sr = child_->ListProducts(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::channel::v1::Product>(
-      std::move(span), std::move(sr));
+        std::move(span), std::move(sr));
 }
 
 StreamRange<google::cloud::channel::v1::Sku>
-CloudChannelServiceTracingConnection::ListSkus(
-    google::cloud::channel::v1::ListSkusRequest request) {
-  auto span =
-      internal::MakeSpan("channel_v1::CloudChannelServiceConnection::ListSkus");
+CloudChannelServiceTracingConnection::ListSkus(google::cloud::channel::v1::ListSkusRequest request) {
+  auto span = internal::MakeSpan("channel_v1::CloudChannelServiceConnection::ListSkus");
   internal::OTelScope scope(span);
   auto sr = child_->ListSkus(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::channel::v1::Sku>(
-      std::move(span), std::move(sr));
+        std::move(span), std::move(sr));
 }
 
 StreamRange<google::cloud::channel::v1::Offer>
-CloudChannelServiceTracingConnection::ListOffers(
-    google::cloud::channel::v1::ListOffersRequest request) {
-  auto span = internal::MakeSpan(
-      "channel_v1::CloudChannelServiceConnection::ListOffers");
+CloudChannelServiceTracingConnection::ListOffers(google::cloud::channel::v1::ListOffersRequest request) {
+  auto span = internal::MakeSpan("channel_v1::CloudChannelServiceConnection::ListOffers");
   internal::OTelScope scope(span);
   auto sr = child_->ListOffers(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::channel::v1::Offer>(
-      std::move(span), std::move(sr));
+        std::move(span), std::move(sr));
 }
 
 StreamRange<google::cloud::channel::v1::PurchasableSku>
-CloudChannelServiceTracingConnection::ListPurchasableSkus(
-    google::cloud::channel::v1::ListPurchasableSkusRequest request) {
-  auto span = internal::MakeSpan(
-      "channel_v1::CloudChannelServiceConnection::ListPurchasableSkus");
+CloudChannelServiceTracingConnection::ListPurchasableSkus(google::cloud::channel::v1::ListPurchasableSkusRequest request) {
+  auto span = internal::MakeSpan("channel_v1::CloudChannelServiceConnection::ListPurchasableSkus");
   internal::OTelScope scope(span);
   auto sr = child_->ListPurchasableSkus(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::channel::v1::PurchasableSku>(std::move(span),
-                                                  std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::channel::v1::PurchasableSku>(
+        std::move(span), std::move(sr));
 }
 
 StreamRange<google::cloud::channel::v1::PurchasableOffer>
-CloudChannelServiceTracingConnection::ListPurchasableOffers(
-    google::cloud::channel::v1::ListPurchasableOffersRequest request) {
-  auto span = internal::MakeSpan(
-      "channel_v1::CloudChannelServiceConnection::ListPurchasableOffers");
+CloudChannelServiceTracingConnection::ListPurchasableOffers(google::cloud::channel::v1::ListPurchasableOffersRequest request) {
+  auto span = internal::MakeSpan("channel_v1::CloudChannelServiceConnection::ListPurchasableOffers");
   internal::OTelScope scope(span);
   auto sr = child_->ListPurchasableOffers(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::channel::v1::PurchasableOffer>(std::move(span),
-                                                    std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::channel::v1::PurchasableOffer>(
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::channel::v1::QueryEligibleBillingAccountsResponse>
-CloudChannelServiceTracingConnection::QueryEligibleBillingAccounts(
-    google::cloud::channel::v1::QueryEligibleBillingAccountsRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "channel_v1::CloudChannelServiceConnection::"
-      "QueryEligibleBillingAccounts");
+CloudChannelServiceTracingConnection::QueryEligibleBillingAccounts(google::cloud::channel::v1::QueryEligibleBillingAccountsRequest const& request) {
+  auto span = internal::MakeSpan("channel_v1::CloudChannelServiceConnection::QueryEligibleBillingAccounts");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span,
-                           child_->QueryEligibleBillingAccounts(request));
+  return internal::EndSpan(*span, child_->QueryEligibleBillingAccounts(request));
 }
 
 StatusOr<google::cloud::channel::v1::RegisterSubscriberResponse>
-CloudChannelServiceTracingConnection::RegisterSubscriber(
-    google::cloud::channel::v1::RegisterSubscriberRequest const& request) {
-  auto span = internal::MakeSpan(
-      "channel_v1::CloudChannelServiceConnection::RegisterSubscriber");
+CloudChannelServiceTracingConnection::RegisterSubscriber(google::cloud::channel::v1::RegisterSubscriberRequest const& request) {
+  auto span = internal::MakeSpan("channel_v1::CloudChannelServiceConnection::RegisterSubscriber");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->RegisterSubscriber(request));
 }
 
 StatusOr<google::cloud::channel::v1::UnregisterSubscriberResponse>
-CloudChannelServiceTracingConnection::UnregisterSubscriber(
-    google::cloud::channel::v1::UnregisterSubscriberRequest const& request) {
-  auto span = internal::MakeSpan(
-      "channel_v1::CloudChannelServiceConnection::UnregisterSubscriber");
+CloudChannelServiceTracingConnection::UnregisterSubscriber(google::cloud::channel::v1::UnregisterSubscriberRequest const& request) {
+  auto span = internal::MakeSpan("channel_v1::CloudChannelServiceConnection::UnregisterSubscriber");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UnregisterSubscriber(request));
 }
 
-StreamRange<std::string> CloudChannelServiceTracingConnection::ListSubscribers(
-    google::cloud::channel::v1::ListSubscribersRequest request) {
-  auto span = internal::MakeSpan(
-      "channel_v1::CloudChannelServiceConnection::ListSubscribers");
+StreamRange<std::string>
+CloudChannelServiceTracingConnection::ListSubscribers(google::cloud::channel::v1::ListSubscribersRequest request) {
+  auto span = internal::MakeSpan("channel_v1::CloudChannelServiceConnection::ListSubscribers");
   internal::OTelScope scope(span);
   auto sr = child_->ListSubscribers(std::move(request));
-  return internal::MakeTracedStreamRange<std::string>(std::move(span),
-                                                      std::move(sr));
+  return internal::MakeTracedStreamRange<std::string>(
+        std::move(span), std::move(sr));
 }
 
 StreamRange<google::cloud::channel::v1::EntitlementChange>
-CloudChannelServiceTracingConnection::ListEntitlementChanges(
-    google::cloud::channel::v1::ListEntitlementChangesRequest request) {
-  auto span = internal::MakeSpan(
-      "channel_v1::CloudChannelServiceConnection::ListEntitlementChanges");
+CloudChannelServiceTracingConnection::ListEntitlementChanges(google::cloud::channel::v1::ListEntitlementChangesRequest request) {
+  auto span = internal::MakeSpan("channel_v1::CloudChannelServiceConnection::ListEntitlementChanges");
   internal::OTelScope scope(span);
   auto sr = child_->ListEntitlementChanges(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::channel::v1::EntitlementChange>(std::move(span),
-                                                     std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::channel::v1::EntitlementChange>(
+        std::move(span), std::move(sr));
 }
 
 StreamRange<google::longrunning::Operation>
-CloudChannelServiceTracingConnection::ListOperations(
-    google::longrunning::ListOperationsRequest request) {
-  auto span = internal::MakeSpan(
-      "channel_v1::CloudChannelServiceConnection::ListOperations");
+CloudChannelServiceTracingConnection::ListOperations(google::longrunning::ListOperationsRequest request) {
+  auto span = internal::MakeSpan("channel_v1::CloudChannelServiceConnection::ListOperations");
   internal::OTelScope scope(span);
   auto sr = child_->ListOperations(std::move(request));
   return internal::MakeTracedStreamRange<google::longrunning::Operation>(
-      std::move(span), std::move(sr));
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::longrunning::Operation>
-CloudChannelServiceTracingConnection::GetOperation(
-    google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpan(
-      "channel_v1::CloudChannelServiceConnection::GetOperation");
+CloudChannelServiceTracingConnection::GetOperation(google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpan("channel_v1::CloudChannelServiceConnection::GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOperation(request));
 }
 
-Status CloudChannelServiceTracingConnection::DeleteOperation(
-    google::longrunning::DeleteOperationRequest const& request) {
-  auto span = internal::MakeSpan(
-      "channel_v1::CloudChannelServiceConnection::DeleteOperation");
+Status
+CloudChannelServiceTracingConnection::DeleteOperation(google::longrunning::DeleteOperationRequest const& request) {
+  auto span = internal::MakeSpan("channel_v1::CloudChannelServiceConnection::DeleteOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteOperation(request));
 }
 
-Status CloudChannelServiceTracingConnection::CancelOperation(
-    google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpan(
-      "channel_v1::CloudChannelServiceConnection::CancelOperation");
+Status
+CloudChannelServiceTracingConnection::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
+  auto span = internal::MakeSpan("channel_v1::CloudChannelServiceConnection::CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CancelOperation(request));
 }
@@ -826,8 +676,7 @@ MakeCloudChannelServiceTracingConnection(
     std::shared_ptr<channel_v1::CloudChannelServiceConnection> conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
-    conn =
-        std::make_shared<CloudChannelServiceTracingConnection>(std::move(conn));
+    conn = std::make_shared<CloudChannelServiceTracingConnection>(std::move(conn));
   }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;

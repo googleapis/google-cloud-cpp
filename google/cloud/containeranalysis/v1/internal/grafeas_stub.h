@@ -22,8 +22,8 @@
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <grafeas/v1/grafeas.grpc.pb.h>
 #include <grafeas/v1/grafeas.pb.h>
+#include <grafeas/v1/grafeas.grpc.pb.h>
 #include <memory>
 #include <utility>
 
@@ -37,61 +37,73 @@ class GrafeasStub {
   virtual ~GrafeasStub() = 0;
 
   virtual StatusOr<grafeas::v1::Occurrence> GetOccurrence(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       grafeas::v1::GetOccurrenceRequest const& request) = 0;
 
   virtual StatusOr<grafeas::v1::ListOccurrencesResponse> ListOccurrences(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       grafeas::v1::ListOccurrencesRequest const& request) = 0;
 
   virtual Status DeleteOccurrence(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       grafeas::v1::DeleteOccurrenceRequest const& request) = 0;
 
   virtual StatusOr<grafeas::v1::Occurrence> CreateOccurrence(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       grafeas::v1::CreateOccurrenceRequest const& request) = 0;
 
-  virtual StatusOr<grafeas::v1::BatchCreateOccurrencesResponse>
-  BatchCreateOccurrences(
-      grpc::ClientContext& context, Options const& options,
+  virtual StatusOr<grafeas::v1::BatchCreateOccurrencesResponse> BatchCreateOccurrences(
+      grpc::ClientContext& context,
+      Options const& options,
       grafeas::v1::BatchCreateOccurrencesRequest const& request) = 0;
 
   virtual StatusOr<grafeas::v1::Occurrence> UpdateOccurrence(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       grafeas::v1::UpdateOccurrenceRequest const& request) = 0;
 
   virtual StatusOr<grafeas::v1::Note> GetOccurrenceNote(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       grafeas::v1::GetOccurrenceNoteRequest const& request) = 0;
 
   virtual StatusOr<grafeas::v1::Note> GetNote(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       grafeas::v1::GetNoteRequest const& request) = 0;
 
   virtual StatusOr<grafeas::v1::ListNotesResponse> ListNotes(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       grafeas::v1::ListNotesRequest const& request) = 0;
 
-  virtual Status DeleteNote(grpc::ClientContext& context,
-                            Options const& options,
-                            grafeas::v1::DeleteNoteRequest const& request) = 0;
+  virtual Status DeleteNote(
+      grpc::ClientContext& context,
+      Options const& options,
+      grafeas::v1::DeleteNoteRequest const& request) = 0;
 
   virtual StatusOr<grafeas::v1::Note> CreateNote(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       grafeas::v1::CreateNoteRequest const& request) = 0;
 
   virtual StatusOr<grafeas::v1::BatchCreateNotesResponse> BatchCreateNotes(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       grafeas::v1::BatchCreateNotesRequest const& request) = 0;
 
   virtual StatusOr<grafeas::v1::Note> UpdateNote(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       grafeas::v1::UpdateNoteRequest const& request) = 0;
 
-  virtual StatusOr<grafeas::v1::ListNoteOccurrencesResponse>
-  ListNoteOccurrences(
-      grpc::ClientContext& context, Options const& options,
+  virtual StatusOr<grafeas::v1::ListNoteOccurrencesResponse> ListNoteOccurrences(
+      grpc::ClientContext& context,
+      Options const& options,
       grafeas::v1::ListNoteOccurrencesRequest const& request) = 0;
 };
 
@@ -102,58 +114,73 @@ class DefaultGrafeasStub : public GrafeasStub {
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<grafeas::v1::Occurrence> GetOccurrence(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       grafeas::v1::GetOccurrenceRequest const& request) override;
 
   StatusOr<grafeas::v1::ListOccurrencesResponse> ListOccurrences(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       grafeas::v1::ListOccurrencesRequest const& request) override;
 
   Status DeleteOccurrence(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       grafeas::v1::DeleteOccurrenceRequest const& request) override;
 
   StatusOr<grafeas::v1::Occurrence> CreateOccurrence(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       grafeas::v1::CreateOccurrenceRequest const& request) override;
 
   StatusOr<grafeas::v1::BatchCreateOccurrencesResponse> BatchCreateOccurrences(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       grafeas::v1::BatchCreateOccurrencesRequest const& request) override;
 
   StatusOr<grafeas::v1::Occurrence> UpdateOccurrence(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       grafeas::v1::UpdateOccurrenceRequest const& request) override;
 
   StatusOr<grafeas::v1::Note> GetOccurrenceNote(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       grafeas::v1::GetOccurrenceNoteRequest const& request) override;
 
   StatusOr<grafeas::v1::Note> GetNote(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       grafeas::v1::GetNoteRequest const& request) override;
 
   StatusOr<grafeas::v1::ListNotesResponse> ListNotes(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       grafeas::v1::ListNotesRequest const& request) override;
 
-  Status DeleteNote(grpc::ClientContext& context, Options const& options,
-                    grafeas::v1::DeleteNoteRequest const& request) override;
+  Status DeleteNote(
+      grpc::ClientContext& context,
+      Options const& options,
+      grafeas::v1::DeleteNoteRequest const& request) override;
 
   StatusOr<grafeas::v1::Note> CreateNote(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       grafeas::v1::CreateNoteRequest const& request) override;
 
   StatusOr<grafeas::v1::BatchCreateNotesResponse> BatchCreateNotes(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       grafeas::v1::BatchCreateNotesRequest const& request) override;
 
   StatusOr<grafeas::v1::Note> UpdateNote(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       grafeas::v1::UpdateNoteRequest const& request) override;
 
   StatusOr<grafeas::v1::ListNoteOccurrencesResponse> ListNoteOccurrences(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       grafeas::v1::ListNoteOccurrencesRequest const& request) override;
 
  private:

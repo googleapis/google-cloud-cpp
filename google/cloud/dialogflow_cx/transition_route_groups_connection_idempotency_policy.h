@@ -36,47 +36,41 @@ class TransitionRouteGroupsConnectionIdempotencyPolicy {
   virtual ~TransitionRouteGroupsConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<TransitionRouteGroupsConnectionIdempotencyPolicy>
-  clone() const;
+  virtual std::unique_ptr<TransitionRouteGroupsConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency ListTransitionRouteGroups(
-      google::cloud::dialogflow::cx::v3::ListTransitionRouteGroupsRequest
-          request);
+  virtual google::cloud::Idempotency
+  ListTransitionRouteGroups(google::cloud::dialogflow::cx::v3::ListTransitionRouteGroupsRequest request);
 
-  virtual google::cloud::Idempotency GetTransitionRouteGroup(
-      google::cloud::dialogflow::cx::v3::GetTransitionRouteGroupRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  GetTransitionRouteGroup(google::cloud::dialogflow::cx::v3::GetTransitionRouteGroupRequest const& request);
 
-  virtual google::cloud::Idempotency CreateTransitionRouteGroup(
-      google::cloud::dialogflow::cx::v3::
-          CreateTransitionRouteGroupRequest const& request);
+  virtual google::cloud::Idempotency
+  CreateTransitionRouteGroup(google::cloud::dialogflow::cx::v3::CreateTransitionRouteGroupRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateTransitionRouteGroup(
-      google::cloud::dialogflow::cx::v3::
-          UpdateTransitionRouteGroupRequest const& request);
+  virtual google::cloud::Idempotency
+  UpdateTransitionRouteGroup(google::cloud::dialogflow::cx::v3::UpdateTransitionRouteGroupRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteTransitionRouteGroup(
-      google::cloud::dialogflow::cx::v3::
-          DeleteTransitionRouteGroupRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteTransitionRouteGroup(google::cloud::dialogflow::cx::v3::DeleteTransitionRouteGroupRequest const& request);
 
-  virtual google::cloud::Idempotency ListLocations(
-      google::cloud::location::ListLocationsRequest request);
+  virtual google::cloud::Idempotency
+  ListLocations(google::cloud::location::ListLocationsRequest request);
 
-  virtual google::cloud::Idempotency GetLocation(
-      google::cloud::location::GetLocationRequest const& request);
+  virtual google::cloud::Idempotency
+  GetLocation(google::cloud::location::GetLocationRequest const& request);
 
-  virtual google::cloud::Idempotency ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual google::cloud::Idempotency
+  ListOperations(google::longrunning::ListOperationsRequest request);
 
-  virtual google::cloud::Idempotency GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 
-  virtual google::cloud::Idempotency CancelOperation(
-      google::longrunning::CancelOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  CancelOperation(google::longrunning::CancelOperationRequest const& request);
 };
 
 std::unique_ptr<TransitionRouteGroupsConnectionIdempotencyPolicy>
-MakeDefaultTransitionRouteGroupsConnectionIdempotencyPolicy();
+    MakeDefaultTransitionRouteGroupsConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_cx

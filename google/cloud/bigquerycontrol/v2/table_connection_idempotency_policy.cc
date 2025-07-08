@@ -26,46 +26,39 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-TableServiceConnectionIdempotencyPolicy::
-    ~TableServiceConnectionIdempotencyPolicy() = default;
+TableServiceConnectionIdempotencyPolicy::~TableServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<TableServiceConnectionIdempotencyPolicy>
 TableServiceConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<TableServiceConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency TableServiceConnectionIdempotencyPolicy::GetTable(
-    google::cloud::bigquery::v2::GetTableRequest const&) {
+Idempotency TableServiceConnectionIdempotencyPolicy::GetTable(google::cloud::bigquery::v2::GetTableRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency TableServiceConnectionIdempotencyPolicy::InsertTable(
-    google::cloud::bigquery::v2::InsertTableRequest const&) {
+Idempotency TableServiceConnectionIdempotencyPolicy::InsertTable(google::cloud::bigquery::v2::InsertTableRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TableServiceConnectionIdempotencyPolicy::PatchTable(
-    google::cloud::bigquery::v2::UpdateOrPatchTableRequest const&) {
+Idempotency TableServiceConnectionIdempotencyPolicy::PatchTable(google::cloud::bigquery::v2::UpdateOrPatchTableRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TableServiceConnectionIdempotencyPolicy::UpdateTable(
-    google::cloud::bigquery::v2::UpdateOrPatchTableRequest const&) {
+Idempotency TableServiceConnectionIdempotencyPolicy::UpdateTable(google::cloud::bigquery::v2::UpdateOrPatchTableRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency TableServiceConnectionIdempotencyPolicy::DeleteTable(
-    google::cloud::bigquery::v2::DeleteTableRequest const&) {
+Idempotency TableServiceConnectionIdempotencyPolicy::DeleteTable(google::cloud::bigquery::v2::DeleteTableRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TableServiceConnectionIdempotencyPolicy::ListTables(
-    google::cloud::bigquery::v2::ListTablesRequest) {  // NOLINT
+Idempotency TableServiceConnectionIdempotencyPolicy::ListTables(google::cloud::bigquery::v2::ListTablesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<TableServiceConnectionIdempotencyPolicy>
-MakeDefaultTableServiceConnectionIdempotencyPolicy() {
+    MakeDefaultTableServiceConnectionIdempotencyPolicy() {
   return std::make_unique<TableServiceConnectionIdempotencyPolicy>();
 }
 

@@ -19,11 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SERVICEDIRECTORY_V1_LOOKUP_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SERVICEDIRECTORY_V1_LOOKUP_CONNECTION_H
 
-#include "google/cloud/servicedirectory/v1/internal/lookup_retry_traits.h"
-#include "google/cloud/servicedirectory/v1/lookup_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
+#include "google/cloud/servicedirectory/v1/internal/lookup_retry_traits.h"
+#include "google/cloud/servicedirectory/v1/lookup_connection_idempotency_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
@@ -53,8 +53,7 @@ class LookupServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  * - [`kUnknown`](@ref google::cloud::StatusCode)
  */
-class LookupServiceLimitedErrorCountRetryPolicy
-    : public LookupServiceRetryPolicy {
+class LookupServiceLimitedErrorCountRetryPolicy : public LookupServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -64,14 +63,14 @@ class LookupServiceLimitedErrorCountRetryPolicy
    *     @p maximum_failures == 0.
    */
   explicit LookupServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   LookupServiceLimitedErrorCountRetryPolicy(
       LookupServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : LookupServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : LookupServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   LookupServiceLimitedErrorCountRetryPolicy(
       LookupServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : LookupServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : LookupServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -91,9 +90,7 @@ class LookupServiceLimitedErrorCountRetryPolicy
   using BaseType = LookupServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      servicedirectory_v1_internal::LookupServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<servicedirectory_v1_internal::LookupServiceRetryTraits> impl_;
 };
 
 /**
@@ -132,14 +129,12 @@ class LookupServiceLimitedTimeRetryPolicy : public LookupServiceRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit LookupServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  LookupServiceLimitedTimeRetryPolicy(
-      LookupServiceLimitedTimeRetryPolicy&& rhs) noexcept
-      : LookupServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  LookupServiceLimitedTimeRetryPolicy(
-      LookupServiceLimitedTimeRetryPolicy const& rhs) noexcept
-      : LookupServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  LookupServiceLimitedTimeRetryPolicy(LookupServiceLimitedTimeRetryPolicy&& rhs) noexcept
+    : LookupServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  LookupServiceLimitedTimeRetryPolicy(LookupServiceLimitedTimeRetryPolicy const& rhs) noexcept
+    : LookupServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -161,9 +156,7 @@ class LookupServiceLimitedTimeRetryPolicy : public LookupServiceRetryPolicy {
   using BaseType = LookupServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      servicedirectory_v1_internal::LookupServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<servicedirectory_v1_internal::LookupServiceRetryTraits> impl_;
 };
 
 /**
@@ -185,15 +178,13 @@ class LookupServiceConnection {
   virtual Options options() { return Options{}; }
 
   virtual StatusOr<google::cloud::servicedirectory::v1::ResolveServiceResponse>
-  ResolveService(
-      google::cloud::servicedirectory::v1::ResolveServiceRequest const&
-          request);
+  ResolveService(google::cloud::servicedirectory::v1::ResolveServiceRequest const& request);
 
-  virtual StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request);
+  virtual StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request);
 
-  virtual StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request);
+  virtual StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request);
 };
 
 /**

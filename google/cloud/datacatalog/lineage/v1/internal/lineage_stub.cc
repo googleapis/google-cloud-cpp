@@ -31,307 +31,313 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 LineageStub::~LineageStub() = default;
 
-StatusOr<
-    google::cloud::datacatalog::lineage::v1::ProcessOpenLineageRunEventResponse>
+StatusOr<google::cloud::datacatalog::lineage::v1::ProcessOpenLineageRunEventResponse>
 DefaultLineageStub::ProcessOpenLineageRunEvent(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::datacatalog::lineage::v1::
-        ProcessOpenLineageRunEventRequest const& request) {
-  google::cloud::datacatalog::lineage::v1::ProcessOpenLineageRunEventResponse
-      response;
-  auto status =
-      grpc_stub_->ProcessOpenLineageRunEvent(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::datacatalog::lineage::v1::ProcessOpenLineageRunEventRequest const& request) {
+    google::cloud::datacatalog::lineage::v1::ProcessOpenLineageRunEventResponse response;
+    auto status =
+        grpc_stub_->ProcessOpenLineageRunEvent(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::datacatalog::lineage::v1::Process>
 DefaultLineageStub::CreateProcess(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::datacatalog::lineage::v1::CreateProcessRequest const&
-        request) {
-  google::cloud::datacatalog::lineage::v1::Process response;
-  auto status = grpc_stub_->CreateProcess(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::datacatalog::lineage::v1::CreateProcessRequest const& request) {
+    google::cloud::datacatalog::lineage::v1::Process response;
+    auto status =
+        grpc_stub_->CreateProcess(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::datacatalog::lineage::v1::Process>
 DefaultLineageStub::UpdateProcess(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::datacatalog::lineage::v1::UpdateProcessRequest const&
-        request) {
-  google::cloud::datacatalog::lineage::v1::Process response;
-  auto status = grpc_stub_->UpdateProcess(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::datacatalog::lineage::v1::UpdateProcessRequest const& request) {
+    google::cloud::datacatalog::lineage::v1::Process response;
+    auto status =
+        grpc_stub_->UpdateProcess(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::datacatalog::lineage::v1::Process>
 DefaultLineageStub::GetProcess(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::datacatalog::lineage::v1::GetProcessRequest const& request) {
-  google::cloud::datacatalog::lineage::v1::Process response;
-  auto status = grpc_stub_->GetProcess(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::datacatalog::lineage::v1::GetProcessRequest const& request) {
+    google::cloud::datacatalog::lineage::v1::Process response;
+    auto status =
+        grpc_stub_->GetProcess(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::datacatalog::lineage::v1::ListProcessesResponse>
 DefaultLineageStub::ListProcesses(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::datacatalog::lineage::v1::ListProcessesRequest const&
-        request) {
-  google::cloud::datacatalog::lineage::v1::ListProcessesResponse response;
-  auto status = grpc_stub_->ListProcesses(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::datacatalog::lineage::v1::ListProcessesRequest const& request) {
+    google::cloud::datacatalog::lineage::v1::ListProcessesResponse response;
+    auto status =
+        grpc_stub_->ListProcesses(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultLineageStub::AsyncDeleteProcess(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::datacatalog::lineage::v1::DeleteProcessRequest const&
-        request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::datacatalog::lineage::v1::DeleteProcessRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::datacatalog::lineage::v1::DeleteProcessRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::datacatalog::lineage::v1::DeleteProcessRequest,
+                                    google::longrunning::Operation>(
       cq,
-      [this](
-          grpc::ClientContext* context,
-          google::cloud::datacatalog::lineage::v1::DeleteProcessRequest const&
-              request,
-          grpc::CompletionQueue* cq) {
+      [this](grpc::ClientContext* context,
+             google::cloud::datacatalog::lineage::v1::DeleteProcessRequest const& request,
+             grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncDeleteProcess(context, request, cq);
       },
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation> DefaultLineageStub::DeleteProcess(
-    grpc::ClientContext& context, Options,
-    google::cloud::datacatalog::lineage::v1::DeleteProcessRequest const&
-        request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->DeleteProcess(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::longrunning::Operation>
+DefaultLineageStub::DeleteProcess(
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::datacatalog::lineage::v1::DeleteProcessRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->DeleteProcess(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::datacatalog::lineage::v1::Run>
 DefaultLineageStub::CreateRun(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::datacatalog::lineage::v1::CreateRunRequest const& request) {
-  google::cloud::datacatalog::lineage::v1::Run response;
-  auto status = grpc_stub_->CreateRun(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::datacatalog::lineage::v1::CreateRunRequest const& request) {
+    google::cloud::datacatalog::lineage::v1::Run response;
+    auto status =
+        grpc_stub_->CreateRun(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::datacatalog::lineage::v1::Run>
 DefaultLineageStub::UpdateRun(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::datacatalog::lineage::v1::UpdateRunRequest const& request) {
-  google::cloud::datacatalog::lineage::v1::Run response;
-  auto status = grpc_stub_->UpdateRun(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::datacatalog::lineage::v1::UpdateRunRequest const& request) {
+    google::cloud::datacatalog::lineage::v1::Run response;
+    auto status =
+        grpc_stub_->UpdateRun(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::datacatalog::lineage::v1::Run>
 DefaultLineageStub::GetRun(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::datacatalog::lineage::v1::GetRunRequest const& request) {
-  google::cloud::datacatalog::lineage::v1::Run response;
-  auto status = grpc_stub_->GetRun(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::datacatalog::lineage::v1::GetRunRequest const& request) {
+    google::cloud::datacatalog::lineage::v1::Run response;
+    auto status =
+        grpc_stub_->GetRun(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::datacatalog::lineage::v1::ListRunsResponse>
 DefaultLineageStub::ListRuns(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::datacatalog::lineage::v1::ListRunsRequest const& request) {
-  google::cloud::datacatalog::lineage::v1::ListRunsResponse response;
-  auto status = grpc_stub_->ListRuns(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::datacatalog::lineage::v1::ListRunsRequest const& request) {
+    google::cloud::datacatalog::lineage::v1::ListRunsResponse response;
+    auto status =
+        grpc_stub_->ListRuns(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultLineageStub::AsyncDeleteRun(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::datacatalog::lineage::v1::DeleteRunRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::datacatalog::lineage::v1::DeleteRunRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::datacatalog::lineage::v1::DeleteRunRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::datacatalog::lineage::v1::DeleteRunRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::datacatalog::lineage::v1::DeleteRunRequest const&
-                 request,
+             google::cloud::datacatalog::lineage::v1::DeleteRunRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncDeleteRun(context, request, cq);
       },
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation> DefaultLineageStub::DeleteRun(
-    grpc::ClientContext& context, Options,
-    google::cloud::datacatalog::lineage::v1::DeleteRunRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->DeleteRun(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::longrunning::Operation>
+DefaultLineageStub::DeleteRun(
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::datacatalog::lineage::v1::DeleteRunRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->DeleteRun(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::datacatalog::lineage::v1::LineageEvent>
 DefaultLineageStub::CreateLineageEvent(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::datacatalog::lineage::v1::CreateLineageEventRequest const&
-        request) {
-  google::cloud::datacatalog::lineage::v1::LineageEvent response;
-  auto status = grpc_stub_->CreateLineageEvent(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::datacatalog::lineage::v1::CreateLineageEventRequest const& request) {
+    google::cloud::datacatalog::lineage::v1::LineageEvent response;
+    auto status =
+        grpc_stub_->CreateLineageEvent(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::datacatalog::lineage::v1::LineageEvent>
 DefaultLineageStub::GetLineageEvent(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::datacatalog::lineage::v1::GetLineageEventRequest const&
-        request) {
-  google::cloud::datacatalog::lineage::v1::LineageEvent response;
-  auto status = grpc_stub_->GetLineageEvent(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::datacatalog::lineage::v1::GetLineageEventRequest const& request) {
+    google::cloud::datacatalog::lineage::v1::LineageEvent response;
+    auto status =
+        grpc_stub_->GetLineageEvent(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::datacatalog::lineage::v1::ListLineageEventsResponse>
 DefaultLineageStub::ListLineageEvents(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::datacatalog::lineage::v1::ListLineageEventsRequest const&
-        request) {
-  google::cloud::datacatalog::lineage::v1::ListLineageEventsResponse response;
-  auto status = grpc_stub_->ListLineageEvents(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::datacatalog::lineage::v1::ListLineageEventsRequest const& request) {
+    google::cloud::datacatalog::lineage::v1::ListLineageEventsResponse response;
+    auto status =
+        grpc_stub_->ListLineageEvents(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-Status DefaultLineageStub::DeleteLineageEvent(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::datacatalog::lineage::v1::DeleteLineageEventRequest const&
-        request) {
-  google::protobuf::Empty response;
-  auto status = grpc_stub_->DeleteLineageEvent(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return google::cloud::Status();
+Status
+DefaultLineageStub::DeleteLineageEvent(
+  grpc::ClientContext& context, Options const&,
+  google::cloud::datacatalog::lineage::v1::DeleteLineageEventRequest const& request) {
+    google::protobuf::Empty response;
+    auto status =
+        grpc_stub_->DeleteLineageEvent(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return google::cloud::Status();
 }
 
 StatusOr<google::cloud::datacatalog::lineage::v1::SearchLinksResponse>
 DefaultLineageStub::SearchLinks(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::datacatalog::lineage::v1::SearchLinksRequest const&
-        request) {
-  google::cloud::datacatalog::lineage::v1::SearchLinksResponse response;
-  auto status = grpc_stub_->SearchLinks(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::datacatalog::lineage::v1::SearchLinksRequest const& request) {
+    google::cloud::datacatalog::lineage::v1::SearchLinksResponse response;
+    auto status =
+        grpc_stub_->SearchLinks(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-StatusOr<
-    google::cloud::datacatalog::lineage::v1::BatchSearchLinkProcessesResponse>
+StatusOr<google::cloud::datacatalog::lineage::v1::BatchSearchLinkProcessesResponse>
 DefaultLineageStub::BatchSearchLinkProcesses(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::datacatalog::lineage::v1::
-        BatchSearchLinkProcessesRequest const& request) {
-  google::cloud::datacatalog::lineage::v1::BatchSearchLinkProcessesResponse
-      response;
-  auto status =
-      grpc_stub_->BatchSearchLinkProcesses(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::datacatalog::lineage::v1::BatchSearchLinkProcessesRequest const& request) {
+    google::cloud::datacatalog::lineage::v1::BatchSearchLinkProcessesResponse response;
+    auto status =
+        grpc_stub_->BatchSearchLinkProcesses(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
 DefaultLineageStub::ListOperations(
-    grpc::ClientContext& context, Options const&,
-    google::longrunning::ListOperationsRequest const& request) {
-  google::longrunning::ListOperationsResponse response;
-  auto status = operations_stub_->ListOperations(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::longrunning::ListOperationsRequest const& request) {
+    google::longrunning::ListOperationsResponse response;
+    auto status =
+        operations_stub_->ListOperations(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-StatusOr<google::longrunning::Operation> DefaultLineageStub::GetOperation(
-    grpc::ClientContext& context, Options const&,
-    google::longrunning::GetOperationRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = operations_stub_->GetOperation(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::longrunning::Operation>
+DefaultLineageStub::GetOperation(
+  grpc::ClientContext& context, Options const&,
+  google::longrunning::GetOperationRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        operations_stub_->GetOperation(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-Status DefaultLineageStub::DeleteOperation(
-    grpc::ClientContext& context, Options const&,
-    google::longrunning::DeleteOperationRequest const& request) {
-  google::protobuf::Empty response;
-  auto status = operations_stub_->DeleteOperation(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return google::cloud::Status();
+Status
+DefaultLineageStub::DeleteOperation(
+  grpc::ClientContext& context, Options const&,
+  google::longrunning::DeleteOperationRequest const& request) {
+    google::protobuf::Empty response;
+    auto status =
+        operations_stub_->DeleteOperation(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return google::cloud::Status();
 }
 
-Status DefaultLineageStub::CancelOperation(
-    grpc::ClientContext& context, Options const&,
-    google::longrunning::CancelOperationRequest const& request) {
-  google::protobuf::Empty response;
-  auto status = operations_stub_->CancelOperation(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return google::cloud::Status();
+Status
+DefaultLineageStub::CancelOperation(
+  grpc::ClientContext& context, Options const&,
+  google::longrunning::CancelOperationRequest const& request) {
+    google::protobuf::Empty response;
+    auto status =
+        operations_stub_->CancelOperation(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return google::cloud::Status();
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -360,14 +366,13 @@ future<Status> DefaultLineageStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(
-             cq,
-             [this](grpc::ClientContext* context,
-                    google::longrunning::CancelOperationRequest const& request,
-                    grpc::CompletionQueue* cq) {
-               return operations_stub_->AsyncCancelOperation(context, request,
-                                                             cq);
-             },
-             request, std::move(context))
+      cq,
+      [this](grpc::ClientContext* context,
+             google::longrunning::CancelOperationRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return operations_stub_->AsyncCancelOperation(context, request, cq);
+      },
+      request, std::move(context))
       .then([](future<StatusOr<google::protobuf::Empty>> f) {
         return f.get().status();
       });

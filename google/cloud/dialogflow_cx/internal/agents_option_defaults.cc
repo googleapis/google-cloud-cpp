@@ -19,9 +19,9 @@
 #include "google/cloud/dialogflow_cx/internal/agents_option_defaults.h"
 #include "google/cloud/dialogflow_cx/agents_connection.h"
 #include "google/cloud/dialogflow_cx/agents_options.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include <memory>
 #include <utility>
 
@@ -36,32 +36,28 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options AgentsDefaultOptions(std::string const& location, Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_AGENTS_ENDPOINT", "",
-      "GOOGLE_CLOUD_CPP_AGENTS_AUTHORITY",
-      absl::StrCat(location, location.empty() ? "" : "-",
-                   "dialogflow.googleapis.com"));
+      std::move(options), "GOOGLE_CLOUD_CPP_AGENTS_ENDPOINT",
+      "", "GOOGLE_CLOUD_CPP_AGENTS_AUTHORITY",
+      absl::StrCat(location, location.empty() ? "" : "-", "dialogflow.googleapis.com"));
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<dialogflow_cx::AgentsRetryPolicyOption>()) {
     options.set<dialogflow_cx::AgentsRetryPolicyOption>(
-        dialogflow_cx::AgentsLimitedTimeRetryPolicy(std::chrono::minutes(30))
-            .clone());
+        dialogflow_cx::AgentsLimitedTimeRetryPolicy(
+            std::chrono::minutes(30)).clone());
   }
   if (!options.has<dialogflow_cx::AgentsBackoffPolicyOption>()) {
     options.set<dialogflow_cx::AgentsBackoffPolicyOption>(
-        ExponentialBackoffPolicy(
-            std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
-            .clone());
+        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
   }
   if (!options.has<dialogflow_cx::AgentsPollingPolicyOption>()) {
     options.set<dialogflow_cx::AgentsPollingPolicyOption>(
-        GenericPollingPolicy<dialogflow_cx::AgentsRetryPolicyOption::Type,
-                             dialogflow_cx::AgentsBackoffPolicyOption::Type>(
+        GenericPollingPolicy<
+            dialogflow_cx::AgentsRetryPolicyOption::Type,
+            dialogflow_cx::AgentsBackoffPolicyOption::Type>(
             options.get<dialogflow_cx::AgentsRetryPolicyOption>()->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                     std::chrono::minutes(5), kBackoffScaling)
-                .clone())
-            .clone());
+            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
   }
   if (!options.has<dialogflow_cx::AgentsConnectionIdempotencyPolicyOption>()) {
     options.set<dialogflow_cx::AgentsConnectionIdempotencyPolicyOption>(

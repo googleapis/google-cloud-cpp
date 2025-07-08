@@ -36,64 +36,48 @@ class ParameterManagerTracingConnection
   ~ParameterManagerTracingConnection() override = default;
 
   explicit ParameterManagerTracingConnection(
-      std::shared_ptr<parametermanager_v1::ParameterManagerConnection> child);
+    std::shared_ptr<parametermanager_v1::ParameterManagerConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StreamRange<google::cloud::parametermanager::v1::Parameter> ListParameters(
-      google::cloud::parametermanager::v1::ListParametersRequest request)
-      override;
+  StreamRange<google::cloud::parametermanager::v1::Parameter>
+  ListParameters(google::cloud::parametermanager::v1::ListParametersRequest request) override;
 
-  StatusOr<google::cloud::parametermanager::v1::Parameter> GetParameter(
-      google::cloud::parametermanager::v1::GetParameterRequest const& request)
-      override;
+  StatusOr<google::cloud::parametermanager::v1::Parameter>
+  GetParameter(google::cloud::parametermanager::v1::GetParameterRequest const& request) override;
 
-  StatusOr<google::cloud::parametermanager::v1::Parameter> CreateParameter(
-      google::cloud::parametermanager::v1::CreateParameterRequest const&
-          request) override;
+  StatusOr<google::cloud::parametermanager::v1::Parameter>
+  CreateParameter(google::cloud::parametermanager::v1::CreateParameterRequest const& request) override;
 
-  StatusOr<google::cloud::parametermanager::v1::Parameter> UpdateParameter(
-      google::cloud::parametermanager::v1::UpdateParameterRequest const&
-          request) override;
+  StatusOr<google::cloud::parametermanager::v1::Parameter>
+  UpdateParameter(google::cloud::parametermanager::v1::UpdateParameterRequest const& request) override;
 
-  Status DeleteParameter(
-      google::cloud::parametermanager::v1::DeleteParameterRequest const&
-          request) override;
+  Status
+  DeleteParameter(google::cloud::parametermanager::v1::DeleteParameterRequest const& request) override;
 
   StreamRange<google::cloud::parametermanager::v1::ParameterVersion>
-  ListParameterVersions(
-      google::cloud::parametermanager::v1::ListParameterVersionsRequest request)
-      override;
+  ListParameterVersions(google::cloud::parametermanager::v1::ListParameterVersionsRequest request) override;
 
   StatusOr<google::cloud::parametermanager::v1::ParameterVersion>
-  GetParameterVersion(
-      google::cloud::parametermanager::v1::GetParameterVersionRequest const&
-          request) override;
+  GetParameterVersion(google::cloud::parametermanager::v1::GetParameterVersionRequest const& request) override;
 
   StatusOr<google::cloud::parametermanager::v1::RenderParameterVersionResponse>
-  RenderParameterVersion(
-      google::cloud::parametermanager::v1::RenderParameterVersionRequest const&
-          request) override;
+  RenderParameterVersion(google::cloud::parametermanager::v1::RenderParameterVersionRequest const& request) override;
 
   StatusOr<google::cloud::parametermanager::v1::ParameterVersion>
-  CreateParameterVersion(
-      google::cloud::parametermanager::v1::CreateParameterVersionRequest const&
-          request) override;
+  CreateParameterVersion(google::cloud::parametermanager::v1::CreateParameterVersionRequest const& request) override;
 
   StatusOr<google::cloud::parametermanager::v1::ParameterVersion>
-  UpdateParameterVersion(
-      google::cloud::parametermanager::v1::UpdateParameterVersionRequest const&
-          request) override;
+  UpdateParameterVersion(google::cloud::parametermanager::v1::UpdateParameterVersionRequest const& request) override;
 
-  Status DeleteParameterVersion(
-      google::cloud::parametermanager::v1::DeleteParameterVersionRequest const&
-          request) override;
+  Status
+  DeleteParameterVersion(google::cloud::parametermanager::v1::DeleteParameterVersionRequest const& request) override;
 
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request) override;
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request) override;
 
-  StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request) override;
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request) override;
 
  private:
   std::shared_ptr<parametermanager_v1::ParameterManagerConnection> child_;

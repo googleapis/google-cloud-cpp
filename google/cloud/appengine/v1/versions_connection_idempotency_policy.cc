@@ -26,41 +26,35 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-VersionsConnectionIdempotencyPolicy::~VersionsConnectionIdempotencyPolicy() =
-    default;
+VersionsConnectionIdempotencyPolicy::~VersionsConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<VersionsConnectionIdempotencyPolicy>
 VersionsConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<VersionsConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency VersionsConnectionIdempotencyPolicy::ListVersions(
-    google::appengine::v1::ListVersionsRequest) {  // NOLINT
+Idempotency VersionsConnectionIdempotencyPolicy::ListVersions(google::appengine::v1::ListVersionsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency VersionsConnectionIdempotencyPolicy::GetVersion(
-    google::appengine::v1::GetVersionRequest const&) {
+Idempotency VersionsConnectionIdempotencyPolicy::GetVersion(google::appengine::v1::GetVersionRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency VersionsConnectionIdempotencyPolicy::CreateVersion(
-    google::appengine::v1::CreateVersionRequest const&) {
+Idempotency VersionsConnectionIdempotencyPolicy::CreateVersion(google::appengine::v1::CreateVersionRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency VersionsConnectionIdempotencyPolicy::UpdateVersion(
-    google::appengine::v1::UpdateVersionRequest const&) {
+Idempotency VersionsConnectionIdempotencyPolicy::UpdateVersion(google::appengine::v1::UpdateVersionRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency VersionsConnectionIdempotencyPolicy::DeleteVersion(
-    google::appengine::v1::DeleteVersionRequest const&) {
+Idempotency VersionsConnectionIdempotencyPolicy::DeleteVersion(google::appengine::v1::DeleteVersionRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<VersionsConnectionIdempotencyPolicy>
-MakeDefaultVersionsConnectionIdempotencyPolicy() {
+    MakeDefaultVersionsConnectionIdempotencyPolicy() {
   return std::make_unique<VersionsConnectionIdempotencyPolicy>();
 }
 

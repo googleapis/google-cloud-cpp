@@ -28,8 +28,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 SqlEventsServiceClient::SqlEventsServiceClient(
     std::shared_ptr<SqlEventsServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 SqlEventsServiceClient::~SqlEventsServiceClient() = default;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

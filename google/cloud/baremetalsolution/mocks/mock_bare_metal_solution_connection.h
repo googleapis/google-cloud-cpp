@@ -30,10 +30,8 @@ namespace cloud {
 namespace baremetalsolution_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use baremetalsolution_v2_mocks::MockBareMetalSolutionConnection
-/// directly.
-using ::google::cloud::baremetalsolution_v2_mocks::
-    MockBareMetalSolutionConnection;
+/// @deprecated Use baremetalsolution_v2_mocks::MockBareMetalSolutionConnection directly.
+using ::google::cloud::baremetalsolution_v2_mocks::MockBareMetalSolutionConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace baremetalsolution_mocks

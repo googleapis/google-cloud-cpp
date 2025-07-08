@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RECOMMENDER_V1_INTERNAL_RECOMMENDER_TRACING_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RECOMMENDER_V1_INTERNAL_RECOMMENDER_TRACING_STUB_H
 
-#include "google/cloud/recommender/v1/internal/recommender_stub.h"
 #include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/options.h"
+#include "google/cloud/recommender/v1/internal/recommender_stub.h"
 #include "google/cloud/version.h"
 #include <memory>
 
@@ -39,83 +39,73 @@ class RecommenderTracingStub : public RecommenderStub {
   explicit RecommenderTracingStub(std::shared_ptr<RecommenderStub> child);
 
   StatusOr<google::cloud::recommender::v1::ListInsightsResponse> ListInsights(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::recommender::v1::ListInsightsRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::recommender::v1::ListInsightsRequest const& request) override;
 
   StatusOr<google::cloud::recommender::v1::Insight> GetInsight(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::recommender::v1::GetInsightRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::recommender::v1::GetInsightRequest const& request) override;
 
   StatusOr<google::cloud::recommender::v1::Insight> MarkInsightAccepted(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::recommender::v1::MarkInsightAcceptedRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::recommender::v1::MarkInsightAcceptedRequest const& request) override;
 
-  StatusOr<google::cloud::recommender::v1::ListRecommendationsResponse>
-  ListRecommendations(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::recommender::v1::ListRecommendationsRequest const& request)
-      override;
+  StatusOr<google::cloud::recommender::v1::ListRecommendationsResponse> ListRecommendations(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::recommender::v1::ListRecommendationsRequest const& request) override;
 
   StatusOr<google::cloud::recommender::v1::Recommendation> GetRecommendation(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::recommender::v1::GetRecommendationRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::recommender::v1::GetRecommendationRequest const& request) override;
 
-  StatusOr<google::cloud::recommender::v1::Recommendation>
-  MarkRecommendationDismissed(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::recommender::v1::MarkRecommendationDismissedRequest const&
-          request) override;
+  StatusOr<google::cloud::recommender::v1::Recommendation> MarkRecommendationDismissed(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::recommender::v1::MarkRecommendationDismissedRequest const& request) override;
 
-  StatusOr<google::cloud::recommender::v1::Recommendation>
-  MarkRecommendationClaimed(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::recommender::v1::MarkRecommendationClaimedRequest const&
-          request) override;
+  StatusOr<google::cloud::recommender::v1::Recommendation> MarkRecommendationClaimed(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::recommender::v1::MarkRecommendationClaimedRequest const& request) override;
 
-  StatusOr<google::cloud::recommender::v1::Recommendation>
-  MarkRecommendationSucceeded(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::recommender::v1::MarkRecommendationSucceededRequest const&
-          request) override;
+  StatusOr<google::cloud::recommender::v1::Recommendation> MarkRecommendationSucceeded(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::recommender::v1::MarkRecommendationSucceededRequest const& request) override;
 
-  StatusOr<google::cloud::recommender::v1::Recommendation>
-  MarkRecommendationFailed(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::recommender::v1::MarkRecommendationFailedRequest const&
-          request) override;
+  StatusOr<google::cloud::recommender::v1::Recommendation> MarkRecommendationFailed(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::recommender::v1::MarkRecommendationFailedRequest const& request) override;
 
-  StatusOr<google::cloud::recommender::v1::RecommenderConfig>
-  GetRecommenderConfig(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::recommender::v1::GetRecommenderConfigRequest const&
-          request) override;
+  StatusOr<google::cloud::recommender::v1::RecommenderConfig> GetRecommenderConfig(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::recommender::v1::GetRecommenderConfigRequest const& request) override;
 
-  StatusOr<google::cloud::recommender::v1::RecommenderConfig>
-  UpdateRecommenderConfig(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::recommender::v1::UpdateRecommenderConfigRequest const&
-          request) override;
+  StatusOr<google::cloud::recommender::v1::RecommenderConfig> UpdateRecommenderConfig(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::recommender::v1::UpdateRecommenderConfigRequest const& request) override;
 
-  StatusOr<google::cloud::recommender::v1::InsightTypeConfig>
-  GetInsightTypeConfig(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::recommender::v1::GetInsightTypeConfigRequest const&
-          request) override;
+  StatusOr<google::cloud::recommender::v1::InsightTypeConfig> GetInsightTypeConfig(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::recommender::v1::GetInsightTypeConfigRequest const& request) override;
 
-  StatusOr<google::cloud::recommender::v1::InsightTypeConfig>
-  UpdateInsightTypeConfig(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::recommender::v1::UpdateInsightTypeConfigRequest const&
-          request) override;
+  StatusOr<google::cloud::recommender::v1::InsightTypeConfig> UpdateInsightTypeConfig(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::recommender::v1::UpdateInsightTypeConfigRequest const& request) override;
 
  private:
   std::shared_ptr<RecommenderStub> child_;
-  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
-      propagator_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

@@ -34,20 +34,17 @@ class InstanceSettingsConnectionIdempotencyPolicy {
   virtual ~InstanceSettingsConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<InstanceSettingsConnectionIdempotencyPolicy> clone()
-      const;
+  virtual std::unique_ptr<InstanceSettingsConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency GetInstanceSettings(
-      google::cloud::cpp::compute::instance_settings::v1::
-          GetInstanceSettingsRequest const& request);
+  virtual google::cloud::Idempotency
+  GetInstanceSettings(google::cloud::cpp::compute::instance_settings::v1::GetInstanceSettingsRequest const& request);
 
-  virtual google::cloud::Idempotency PatchInstanceSettings(
-      google::cloud::cpp::compute::instance_settings::v1::
-          PatchInstanceSettingsRequest const& request);
+  virtual google::cloud::Idempotency
+  PatchInstanceSettings(google::cloud::cpp::compute::instance_settings::v1::PatchInstanceSettingsRequest const& request);
 };
 
 std::unique_ptr<InstanceSettingsConnectionIdempotencyPolicy>
-MakeDefaultInstanceSettingsConnectionIdempotencyPolicy();
+    MakeDefaultInstanceSettingsConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_instance_settings_v1

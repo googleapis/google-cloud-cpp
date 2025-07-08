@@ -33,29 +33,22 @@ ProfilerServiceTracingConnection::ProfilerServiceTracingConnection(
     : child_(std::move(child)) {}
 
 StatusOr<google::devtools::cloudprofiler::v2::Profile>
-ProfilerServiceTracingConnection::CreateProfile(
-    google::devtools::cloudprofiler::v2::CreateProfileRequest const& request) {
-  auto span = internal::MakeSpan(
-      "profiler_v2::ProfilerServiceConnection::CreateProfile");
+ProfilerServiceTracingConnection::CreateProfile(google::devtools::cloudprofiler::v2::CreateProfileRequest const& request) {
+  auto span = internal::MakeSpan("profiler_v2::ProfilerServiceConnection::CreateProfile");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateProfile(request));
 }
 
 StatusOr<google::devtools::cloudprofiler::v2::Profile>
-ProfilerServiceTracingConnection::CreateOfflineProfile(
-    google::devtools::cloudprofiler::v2::CreateOfflineProfileRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "profiler_v2::ProfilerServiceConnection::CreateOfflineProfile");
+ProfilerServiceTracingConnection::CreateOfflineProfile(google::devtools::cloudprofiler::v2::CreateOfflineProfileRequest const& request) {
+  auto span = internal::MakeSpan("profiler_v2::ProfilerServiceConnection::CreateOfflineProfile");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateOfflineProfile(request));
 }
 
 StatusOr<google::devtools::cloudprofiler::v2::Profile>
-ProfilerServiceTracingConnection::UpdateProfile(
-    google::devtools::cloudprofiler::v2::UpdateProfileRequest const& request) {
-  auto span = internal::MakeSpan(
-      "profiler_v2::ProfilerServiceConnection::UpdateProfile");
+ProfilerServiceTracingConnection::UpdateProfile(google::devtools::cloudprofiler::v2::UpdateProfileRequest const& request) {
+  auto span = internal::MakeSpan("profiler_v2::ProfilerServiceConnection::UpdateProfile");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateProfile(request));
 }

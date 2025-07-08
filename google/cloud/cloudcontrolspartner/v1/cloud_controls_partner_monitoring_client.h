@@ -61,31 +61,23 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class CloudControlsPartnerMonitoringClient {
  public:
-  explicit CloudControlsPartnerMonitoringClient(
-      std::shared_ptr<CloudControlsPartnerMonitoringConnection> connection,
-      Options opts = {});
+  explicit CloudControlsPartnerMonitoringClient(std::shared_ptr<CloudControlsPartnerMonitoringConnection> connection, Options opts = {});
   ~CloudControlsPartnerMonitoringClient();
 
   ///@{
   /// @name Copy and move support
-  CloudControlsPartnerMonitoringClient(
-      CloudControlsPartnerMonitoringClient const&) = default;
-  CloudControlsPartnerMonitoringClient& operator=(
-      CloudControlsPartnerMonitoringClient const&) = default;
-  CloudControlsPartnerMonitoringClient(CloudControlsPartnerMonitoringClient&&) =
-      default;
-  CloudControlsPartnerMonitoringClient& operator=(
-      CloudControlsPartnerMonitoringClient&&) = default;
+  CloudControlsPartnerMonitoringClient(CloudControlsPartnerMonitoringClient const&) = default;
+  CloudControlsPartnerMonitoringClient& operator=(CloudControlsPartnerMonitoringClient const&) = default;
+  CloudControlsPartnerMonitoringClient(CloudControlsPartnerMonitoringClient&&) = default;
+  CloudControlsPartnerMonitoringClient& operator=(CloudControlsPartnerMonitoringClient&&) = default;
   ///@}
 
   ///@{
   /// @name Equality
-  friend bool operator==(CloudControlsPartnerMonitoringClient const& a,
-                         CloudControlsPartnerMonitoringClient const& b) {
+  friend bool operator==(CloudControlsPartnerMonitoringClient const& a, CloudControlsPartnerMonitoringClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(CloudControlsPartnerMonitoringClient const& a,
-                         CloudControlsPartnerMonitoringClient const& b) {
+  friend bool operator!=(CloudControlsPartnerMonitoringClient const& a, CloudControlsPartnerMonitoringClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -175,9 +167,7 @@ class CloudControlsPartnerMonitoringClient {
   ///
   // clang-format on
   StreamRange<google::cloud::cloudcontrolspartner::v1::Violation>
-  ListViolations(
-      google::cloud::cloudcontrolspartner::v1::ListViolationsRequest request,
-      Options opts = {});
+  ListViolations(google::cloud::cloudcontrolspartner::v1::ListViolationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -202,8 +192,8 @@ class CloudControlsPartnerMonitoringClient {
   /// [google.cloud.cloudcontrolspartner.v1.Violation]: @googleapis_reference_link{google/cloud/cloudcontrolspartner/v1/violations.proto#L33}
   ///
   // clang-format on
-  StatusOr<google::cloud::cloudcontrolspartner::v1::Violation> GetViolation(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::cloudcontrolspartner::v1::Violation>
+  GetViolation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -232,10 +222,8 @@ class CloudControlsPartnerMonitoringClient {
   /// [google.cloud.cloudcontrolspartner.v1.Violation]: @googleapis_reference_link{google/cloud/cloudcontrolspartner/v1/violations.proto#L33}
   ///
   // clang-format on
-  StatusOr<google::cloud::cloudcontrolspartner::v1::Violation> GetViolation(
-      google::cloud::cloudcontrolspartner::v1::GetViolationRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::cloud::cloudcontrolspartner::v1::Violation>
+  GetViolation(google::cloud::cloudcontrolspartner::v1::GetViolationRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<CloudControlsPartnerMonitoringConnection> connection_;

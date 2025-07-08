@@ -34,46 +34,44 @@ class CloudBillingConnectionIdempotencyPolicy {
   virtual ~CloudBillingConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<CloudBillingConnectionIdempotencyPolicy> clone()
-      const;
+  virtual std::unique_ptr<CloudBillingConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency GetBillingAccount(
-      google::cloud::billing::v1::GetBillingAccountRequest const& request);
+  virtual google::cloud::Idempotency
+  GetBillingAccount(google::cloud::billing::v1::GetBillingAccountRequest const& request);
 
-  virtual google::cloud::Idempotency ListBillingAccounts(
-      google::cloud::billing::v1::ListBillingAccountsRequest request);
+  virtual google::cloud::Idempotency
+  ListBillingAccounts(google::cloud::billing::v1::ListBillingAccountsRequest request);
 
-  virtual google::cloud::Idempotency UpdateBillingAccount(
-      google::cloud::billing::v1::UpdateBillingAccountRequest const& request);
+  virtual google::cloud::Idempotency
+  UpdateBillingAccount(google::cloud::billing::v1::UpdateBillingAccountRequest const& request);
 
-  virtual google::cloud::Idempotency CreateBillingAccount(
-      google::cloud::billing::v1::CreateBillingAccountRequest const& request);
+  virtual google::cloud::Idempotency
+  CreateBillingAccount(google::cloud::billing::v1::CreateBillingAccountRequest const& request);
 
-  virtual google::cloud::Idempotency ListProjectBillingInfo(
-      google::cloud::billing::v1::ListProjectBillingInfoRequest request);
+  virtual google::cloud::Idempotency
+  ListProjectBillingInfo(google::cloud::billing::v1::ListProjectBillingInfoRequest request);
 
-  virtual google::cloud::Idempotency GetProjectBillingInfo(
-      google::cloud::billing::v1::GetProjectBillingInfoRequest const& request);
+  virtual google::cloud::Idempotency
+  GetProjectBillingInfo(google::cloud::billing::v1::GetProjectBillingInfoRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateProjectBillingInfo(
-      google::cloud::billing::v1::UpdateProjectBillingInfoRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  UpdateProjectBillingInfo(google::cloud::billing::v1::UpdateProjectBillingInfoRequest const& request);
 
-  virtual google::cloud::Idempotency GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request);
+  virtual google::cloud::Idempotency
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
 
-  virtual google::cloud::Idempotency MoveBillingAccount(
-      google::cloud::billing::v1::MoveBillingAccountRequest const& request);
+  virtual google::cloud::Idempotency
+  MoveBillingAccount(google::cloud::billing::v1::MoveBillingAccountRequest const& request);
 };
 
 std::unique_ptr<CloudBillingConnectionIdempotencyPolicy>
-MakeDefaultCloudBillingConnectionIdempotencyPolicy();
+    MakeDefaultCloudBillingConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace billing_v1

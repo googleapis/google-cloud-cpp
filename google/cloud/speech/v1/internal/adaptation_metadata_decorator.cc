@@ -46,120 +46,123 @@ AdaptationMetadata::AdaptationMetadata(
 
 StatusOr<google::cloud::speech::v1::PhraseSet>
 AdaptationMetadata::CreatePhraseSet(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::speech::v1::CreatePhraseSetRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreatePhraseSet(context, options, request);
 }
 
-StatusOr<google::cloud::speech::v1::PhraseSet> AdaptationMetadata::GetPhraseSet(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::speech::v1::PhraseSet>
+AdaptationMetadata::GetPhraseSet(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::speech::v1::GetPhraseSetRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetPhraseSet(context, options, request);
 }
 
 StatusOr<google::cloud::speech::v1::ListPhraseSetResponse>
 AdaptationMetadata::ListPhraseSet(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::speech::v1::ListPhraseSetRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListPhraseSet(context, options, request);
 }
 
 StatusOr<google::cloud::speech::v1::PhraseSet>
 AdaptationMetadata::UpdatePhraseSet(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::speech::v1::UpdatePhraseSetRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("phrase_set.name=",
-                           internal::UrlEncode(request.phrase_set().name())));
+  SetMetadata(context, options, absl::StrCat("phrase_set.name=", internal::UrlEncode(request.phrase_set().name())));
   return child_->UpdatePhraseSet(context, options, request);
 }
 
-Status AdaptationMetadata::DeletePhraseSet(
-    grpc::ClientContext& context, Options const& options,
+Status
+AdaptationMetadata::DeletePhraseSet(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::speech::v1::DeletePhraseSetRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeletePhraseSet(context, options, request);
 }
 
 StatusOr<google::cloud::speech::v1::CustomClass>
 AdaptationMetadata::CreateCustomClass(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::speech::v1::CreateCustomClassRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateCustomClass(context, options, request);
 }
 
 StatusOr<google::cloud::speech::v1::CustomClass>
 AdaptationMetadata::GetCustomClass(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::speech::v1::GetCustomClassRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetCustomClass(context, options, request);
 }
 
 StatusOr<google::cloud::speech::v1::ListCustomClassesResponse>
 AdaptationMetadata::ListCustomClasses(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::speech::v1::ListCustomClassesRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListCustomClasses(context, options, request);
 }
 
 StatusOr<google::cloud::speech::v1::CustomClass>
 AdaptationMetadata::UpdateCustomClass(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::speech::v1::UpdateCustomClassRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("custom_class.name=",
-                           internal::UrlEncode(request.custom_class().name())));
+  SetMetadata(context, options, absl::StrCat("custom_class.name=", internal::UrlEncode(request.custom_class().name())));
   return child_->UpdateCustomClass(context, options, request);
 }
 
-Status AdaptationMetadata::DeleteCustomClass(
-    grpc::ClientContext& context, Options const& options,
+Status
+AdaptationMetadata::DeleteCustomClass(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::speech::v1::DeleteCustomClassRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteCustomClass(context, options, request);
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
 AdaptationMetadata::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   SetMetadata(context, options, absl::StrCat());
   return child_->ListOperations(context, options, request);
 }
 
-StatusOr<google::longrunning::Operation> AdaptationMetadata::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::Operation>
+AdaptationMetadata::GetOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetOperation(context, options, request);
 }
 
 void AdaptationMetadata::SetMetadata(grpc::ClientContext& context,
-                                     Options const& options,
-                                     std::string const& request_params) {
+                                        Options const& options,
+                                        std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
 void AdaptationMetadata::SetMetadata(grpc::ClientContext& context,
-                                     Options const& options) {
-  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
-                                       api_client_header_);
+                                        Options const& options) {
+  google::cloud::internal::SetMetadata(
+      context, options, fixed_metadata_, api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

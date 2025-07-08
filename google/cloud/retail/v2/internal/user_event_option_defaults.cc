@@ -17,10 +17,10 @@
 // source: google/cloud/retail/v2/user_event_service.proto
 
 #include "google/cloud/retail/v2/internal/user_event_option_defaults.h"
-#include "google/cloud/retail/v2/user_event_connection.h"
-#include "google/cloud/retail/v2/user_event_options.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
+#include "google/cloud/retail/v2/user_event_connection.h"
+#include "google/cloud/retail/v2/user_event_options.h"
 #include <memory>
 #include <utility>
 
@@ -35,36 +35,30 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options UserEventServiceDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_USER_EVENT_SERVICE_ENDPOINT", "",
-      "GOOGLE_CLOUD_CPP_USER_EVENT_SERVICE_AUTHORITY", "retail.googleapis.com");
+      std::move(options), "GOOGLE_CLOUD_CPP_USER_EVENT_SERVICE_ENDPOINT",
+      "", "GOOGLE_CLOUD_CPP_USER_EVENT_SERVICE_AUTHORITY",
+      "retail.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<retail_v2::UserEventServiceRetryPolicyOption>()) {
     options.set<retail_v2::UserEventServiceRetryPolicyOption>(
         retail_v2::UserEventServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
-            .clone());
+            std::chrono::minutes(30)).clone());
   }
   if (!options.has<retail_v2::UserEventServiceBackoffPolicyOption>()) {
     options.set<retail_v2::UserEventServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(
-            std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
-            .clone());
+        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
   }
   if (!options.has<retail_v2::UserEventServicePollingPolicyOption>()) {
     options.set<retail_v2::UserEventServicePollingPolicyOption>(
         GenericPollingPolicy<
             retail_v2::UserEventServiceRetryPolicyOption::Type,
             retail_v2::UserEventServiceBackoffPolicyOption::Type>(
-            options.get<retail_v2::UserEventServiceRetryPolicyOption>()
-                ->clone(),
+            options.get<retail_v2::UserEventServiceRetryPolicyOption>()->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                     std::chrono::minutes(5), kBackoffScaling)
-                .clone())
-            .clone());
+            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
   }
-  if (!options.has<
-          retail_v2::UserEventServiceConnectionIdempotencyPolicyOption>()) {
+  if (!options.has<retail_v2::UserEventServiceConnectionIdempotencyPolicyOption>()) {
     options.set<retail_v2::UserEventServiceConnectionIdempotencyPolicyOption>(
         retail_v2::MakeDefaultUserEventServiceConnectionIdempotencyPolicy());
   }

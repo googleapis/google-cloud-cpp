@@ -33,13 +33,10 @@ using ::google::cloud::translate_v3::MakeTranslationServiceConnection;
 /// @deprecated Use translate_v3::TranslationServiceConnection directly.
 using ::google::cloud::translate_v3::TranslationServiceConnection;
 
-/// @deprecated Use translate_v3::TranslationServiceLimitedErrorCountRetryPolicy
-/// directly.
-using ::google::cloud::translate_v3::
-    TranslationServiceLimitedErrorCountRetryPolicy;
+/// @deprecated Use translate_v3::TranslationServiceLimitedErrorCountRetryPolicy directly.
+using ::google::cloud::translate_v3::TranslationServiceLimitedErrorCountRetryPolicy;
 
-/// @deprecated Use translate_v3::TranslationServiceLimitedTimeRetryPolicy
-/// directly.
+/// @deprecated Use translate_v3::TranslationServiceLimitedTimeRetryPolicy directly.
 using ::google::cloud::translate_v3::TranslationServiceLimitedTimeRetryPolicy;
 
 /// @deprecated Use translate_v3::TranslationServiceRetryPolicy directly.

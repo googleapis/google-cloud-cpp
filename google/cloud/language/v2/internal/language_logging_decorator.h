@@ -35,29 +35,32 @@ class LanguageServiceLogging : public LanguageServiceStub {
  public:
   ~LanguageServiceLogging() override = default;
   LanguageServiceLogging(std::shared_ptr<LanguageServiceStub> child,
-                         TracingOptions tracing_options,
-                         std::set<std::string> const& components);
+                       TracingOptions tracing_options,
+                       std::set<std::string> const& components);
 
-  StatusOr<google::cloud::language::v2::AnalyzeSentimentResponse>
-  AnalyzeSentiment(grpc::ClientContext& context, Options const& options,
-                   google::cloud::language::v2::AnalyzeSentimentRequest const&
-                       request) override;
+  StatusOr<google::cloud::language::v2::AnalyzeSentimentResponse> AnalyzeSentiment(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::language::v2::AnalyzeSentimentRequest const& request) override;
 
-  StatusOr<google::cloud::language::v2::AnalyzeEntitiesResponse>
-  AnalyzeEntities(grpc::ClientContext& context, Options const& options,
-                  google::cloud::language::v2::AnalyzeEntitiesRequest const&
-                      request) override;
+  StatusOr<google::cloud::language::v2::AnalyzeEntitiesResponse> AnalyzeEntities(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::language::v2::AnalyzeEntitiesRequest const& request) override;
 
   StatusOr<google::cloud::language::v2::ClassifyTextResponse> ClassifyText(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::language::v2::ClassifyTextRequest const& request) override;
 
   StatusOr<google::cloud::language::v2::ModerateTextResponse> ModerateText(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::language::v2::ModerateTextRequest const& request) override;
 
   StatusOr<google::cloud::language::v2::AnnotateTextResponse> AnnotateText(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::language::v2::AnnotateTextRequest const& request) override;
 
  private:

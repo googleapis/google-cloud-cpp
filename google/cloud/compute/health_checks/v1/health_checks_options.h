@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_HEALTH_CHECKS_V1_HEALTH_CHECKS_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_HEALTH_CHECKS_V1_HEALTH_CHECKS_OPTIONS_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/health_checks/v1/health_checks_connection.h"
 #include "google/cloud/compute/health_checks/v1/health_checks_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -74,7 +74,8 @@ struct HealthChecksPollingPolicyOption {
  * @ingroup google-cloud-compute-options
  */
 using HealthChecksPolicyOptionList =
-    OptionList<HealthChecksRetryPolicyOption, HealthChecksBackoffPolicyOption,
+    OptionList<HealthChecksRetryPolicyOption,
+               HealthChecksBackoffPolicyOption,
                HealthChecksPollingPolicyOption,
                HealthChecksConnectionIdempotencyPolicyOption>;
 

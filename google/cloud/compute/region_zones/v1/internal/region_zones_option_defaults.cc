@@ -35,28 +35,23 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options RegionZonesDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_REGION_ZONES_ENDPOINT", "",
-      "GOOGLE_CLOUD_CPP_REGION_ZONES_AUTHORITY", "compute.googleapis.com");
+      std::move(options), "GOOGLE_CLOUD_CPP_REGION_ZONES_ENDPOINT",
+      "", "GOOGLE_CLOUD_CPP_REGION_ZONES_AUTHORITY",
+      "compute.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<compute_region_zones_v1::RegionZonesRetryPolicyOption>()) {
     options.set<compute_region_zones_v1::RegionZonesRetryPolicyOption>(
         compute_region_zones_v1::RegionZonesLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
-            .clone());
+            std::chrono::minutes(30)).clone());
   }
   if (!options.has<compute_region_zones_v1::RegionZonesBackoffPolicyOption>()) {
     options.set<compute_region_zones_v1::RegionZonesBackoffPolicyOption>(
-        ExponentialBackoffPolicy(
-            std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
-            .clone());
+        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
   }
-  if (!options.has<compute_region_zones_v1::
-                       RegionZonesConnectionIdempotencyPolicyOption>()) {
-    options.set<
-        compute_region_zones_v1::RegionZonesConnectionIdempotencyPolicyOption>(
-        compute_region_zones_v1::
-            MakeDefaultRegionZonesConnectionIdempotencyPolicy());
+  if (!options.has<compute_region_zones_v1::RegionZonesConnectionIdempotencyPolicyOption>()) {
+    options.set<compute_region_zones_v1::RegionZonesConnectionIdempotencyPolicyOption>(
+        compute_region_zones_v1::MakeDefaultRegionZonesConnectionIdempotencyPolicy());
   }
 
   return options;

@@ -34,121 +34,96 @@ CatalogServiceTracingConnection::CatalogServiceTracingConnection(
     : child_(std::move(child)) {}
 
 StreamRange<google::cloud::retail::v2::Catalog>
-CatalogServiceTracingConnection::ListCatalogs(
-    google::cloud::retail::v2::ListCatalogsRequest request) {
-  auto span =
-      internal::MakeSpan("retail_v2::CatalogServiceConnection::ListCatalogs");
+CatalogServiceTracingConnection::ListCatalogs(google::cloud::retail::v2::ListCatalogsRequest request) {
+  auto span = internal::MakeSpan("retail_v2::CatalogServiceConnection::ListCatalogs");
   internal::OTelScope scope(span);
   auto sr = child_->ListCatalogs(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::retail::v2::Catalog>(
-      std::move(span), std::move(sr));
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::retail::v2::Catalog>
-CatalogServiceTracingConnection::UpdateCatalog(
-    google::cloud::retail::v2::UpdateCatalogRequest const& request) {
-  auto span =
-      internal::MakeSpan("retail_v2::CatalogServiceConnection::UpdateCatalog");
+CatalogServiceTracingConnection::UpdateCatalog(google::cloud::retail::v2::UpdateCatalogRequest const& request) {
+  auto span = internal::MakeSpan("retail_v2::CatalogServiceConnection::UpdateCatalog");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateCatalog(request));
 }
 
-Status CatalogServiceTracingConnection::SetDefaultBranch(
-    google::cloud::retail::v2::SetDefaultBranchRequest const& request) {
-  auto span = internal::MakeSpan(
-      "retail_v2::CatalogServiceConnection::SetDefaultBranch");
+Status
+CatalogServiceTracingConnection::SetDefaultBranch(google::cloud::retail::v2::SetDefaultBranchRequest const& request) {
+  auto span = internal::MakeSpan("retail_v2::CatalogServiceConnection::SetDefaultBranch");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->SetDefaultBranch(request));
 }
 
 StatusOr<google::cloud::retail::v2::GetDefaultBranchResponse>
-CatalogServiceTracingConnection::GetDefaultBranch(
-    google::cloud::retail::v2::GetDefaultBranchRequest const& request) {
-  auto span = internal::MakeSpan(
-      "retail_v2::CatalogServiceConnection::GetDefaultBranch");
+CatalogServiceTracingConnection::GetDefaultBranch(google::cloud::retail::v2::GetDefaultBranchRequest const& request) {
+  auto span = internal::MakeSpan("retail_v2::CatalogServiceConnection::GetDefaultBranch");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetDefaultBranch(request));
 }
 
 StatusOr<google::cloud::retail::v2::CompletionConfig>
-CatalogServiceTracingConnection::GetCompletionConfig(
-    google::cloud::retail::v2::GetCompletionConfigRequest const& request) {
-  auto span = internal::MakeSpan(
-      "retail_v2::CatalogServiceConnection::GetCompletionConfig");
+CatalogServiceTracingConnection::GetCompletionConfig(google::cloud::retail::v2::GetCompletionConfigRequest const& request) {
+  auto span = internal::MakeSpan("retail_v2::CatalogServiceConnection::GetCompletionConfig");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetCompletionConfig(request));
 }
 
 StatusOr<google::cloud::retail::v2::CompletionConfig>
-CatalogServiceTracingConnection::UpdateCompletionConfig(
-    google::cloud::retail::v2::UpdateCompletionConfigRequest const& request) {
-  auto span = internal::MakeSpan(
-      "retail_v2::CatalogServiceConnection::UpdateCompletionConfig");
+CatalogServiceTracingConnection::UpdateCompletionConfig(google::cloud::retail::v2::UpdateCompletionConfigRequest const& request) {
+  auto span = internal::MakeSpan("retail_v2::CatalogServiceConnection::UpdateCompletionConfig");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateCompletionConfig(request));
 }
 
 StatusOr<google::cloud::retail::v2::AttributesConfig>
-CatalogServiceTracingConnection::GetAttributesConfig(
-    google::cloud::retail::v2::GetAttributesConfigRequest const& request) {
-  auto span = internal::MakeSpan(
-      "retail_v2::CatalogServiceConnection::GetAttributesConfig");
+CatalogServiceTracingConnection::GetAttributesConfig(google::cloud::retail::v2::GetAttributesConfigRequest const& request) {
+  auto span = internal::MakeSpan("retail_v2::CatalogServiceConnection::GetAttributesConfig");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetAttributesConfig(request));
 }
 
 StatusOr<google::cloud::retail::v2::AttributesConfig>
-CatalogServiceTracingConnection::UpdateAttributesConfig(
-    google::cloud::retail::v2::UpdateAttributesConfigRequest const& request) {
-  auto span = internal::MakeSpan(
-      "retail_v2::CatalogServiceConnection::UpdateAttributesConfig");
+CatalogServiceTracingConnection::UpdateAttributesConfig(google::cloud::retail::v2::UpdateAttributesConfigRequest const& request) {
+  auto span = internal::MakeSpan("retail_v2::CatalogServiceConnection::UpdateAttributesConfig");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateAttributesConfig(request));
 }
 
 StatusOr<google::cloud::retail::v2::AttributesConfig>
-CatalogServiceTracingConnection::AddCatalogAttribute(
-    google::cloud::retail::v2::AddCatalogAttributeRequest const& request) {
-  auto span = internal::MakeSpan(
-      "retail_v2::CatalogServiceConnection::AddCatalogAttribute");
+CatalogServiceTracingConnection::AddCatalogAttribute(google::cloud::retail::v2::AddCatalogAttributeRequest const& request) {
+  auto span = internal::MakeSpan("retail_v2::CatalogServiceConnection::AddCatalogAttribute");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->AddCatalogAttribute(request));
 }
 
 StatusOr<google::cloud::retail::v2::AttributesConfig>
-CatalogServiceTracingConnection::RemoveCatalogAttribute(
-    google::cloud::retail::v2::RemoveCatalogAttributeRequest const& request) {
-  auto span = internal::MakeSpan(
-      "retail_v2::CatalogServiceConnection::RemoveCatalogAttribute");
+CatalogServiceTracingConnection::RemoveCatalogAttribute(google::cloud::retail::v2::RemoveCatalogAttributeRequest const& request) {
+  auto span = internal::MakeSpan("retail_v2::CatalogServiceConnection::RemoveCatalogAttribute");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->RemoveCatalogAttribute(request));
 }
 
 StatusOr<google::cloud::retail::v2::AttributesConfig>
-CatalogServiceTracingConnection::ReplaceCatalogAttribute(
-    google::cloud::retail::v2::ReplaceCatalogAttributeRequest const& request) {
-  auto span = internal::MakeSpan(
-      "retail_v2::CatalogServiceConnection::ReplaceCatalogAttribute");
+CatalogServiceTracingConnection::ReplaceCatalogAttribute(google::cloud::retail::v2::ReplaceCatalogAttributeRequest const& request) {
+  auto span = internal::MakeSpan("retail_v2::CatalogServiceConnection::ReplaceCatalogAttribute");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->ReplaceCatalogAttribute(request));
 }
 
 StreamRange<google::longrunning::Operation>
-CatalogServiceTracingConnection::ListOperations(
-    google::longrunning::ListOperationsRequest request) {
-  auto span =
-      internal::MakeSpan("retail_v2::CatalogServiceConnection::ListOperations");
+CatalogServiceTracingConnection::ListOperations(google::longrunning::ListOperationsRequest request) {
+  auto span = internal::MakeSpan("retail_v2::CatalogServiceConnection::ListOperations");
   internal::OTelScope scope(span);
   auto sr = child_->ListOperations(std::move(request));
   return internal::MakeTracedStreamRange<google::longrunning::Operation>(
-      std::move(span), std::move(sr));
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::longrunning::Operation>
-CatalogServiceTracingConnection::GetOperation(
-    google::longrunning::GetOperationRequest const& request) {
-  auto span =
-      internal::MakeSpan("retail_v2::CatalogServiceConnection::GetOperation");
+CatalogServiceTracingConnection::GetOperation(google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpan("retail_v2::CatalogServiceConnection::GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOperation(request));
 }

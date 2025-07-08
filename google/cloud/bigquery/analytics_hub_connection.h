@@ -27,29 +27,19 @@ namespace cloud {
 namespace bigquery {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use bigquery_analyticshub_v1::MakeAnalyticsHubServiceConnection
-/// directly.
-using ::google::cloud::bigquery_analyticshub_v1::
-    MakeAnalyticsHubServiceConnection;
+/// @deprecated Use bigquery_analyticshub_v1::MakeAnalyticsHubServiceConnection directly.
+using ::google::cloud::bigquery_analyticshub_v1::MakeAnalyticsHubServiceConnection;
 
-/// @deprecated Use bigquery_analyticshub_v1::AnalyticsHubServiceConnection
-/// directly.
+/// @deprecated Use bigquery_analyticshub_v1::AnalyticsHubServiceConnection directly.
 using ::google::cloud::bigquery_analyticshub_v1::AnalyticsHubServiceConnection;
 
-/// @deprecated Use
-/// bigquery_analyticshub_v1::AnalyticsHubServiceLimitedErrorCountRetryPolicy
-/// directly.
-using ::google::cloud::bigquery_analyticshub_v1::
-    AnalyticsHubServiceLimitedErrorCountRetryPolicy;
+/// @deprecated Use bigquery_analyticshub_v1::AnalyticsHubServiceLimitedErrorCountRetryPolicy directly.
+using ::google::cloud::bigquery_analyticshub_v1::AnalyticsHubServiceLimitedErrorCountRetryPolicy;
 
-/// @deprecated Use
-/// bigquery_analyticshub_v1::AnalyticsHubServiceLimitedTimeRetryPolicy
-/// directly.
-using ::google::cloud::bigquery_analyticshub_v1::
-    AnalyticsHubServiceLimitedTimeRetryPolicy;
+/// @deprecated Use bigquery_analyticshub_v1::AnalyticsHubServiceLimitedTimeRetryPolicy directly.
+using ::google::cloud::bigquery_analyticshub_v1::AnalyticsHubServiceLimitedTimeRetryPolicy;
 
-/// @deprecated Use bigquery_analyticshub_v1::AnalyticsHubServiceRetryPolicy
-/// directly.
+/// @deprecated Use bigquery_analyticshub_v1::AnalyticsHubServiceRetryPolicy directly.
 using ::google::cloud::bigquery_analyticshub_v1::AnalyticsHubServiceRetryPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

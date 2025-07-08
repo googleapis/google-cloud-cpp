@@ -41,8 +41,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// When customers start Data Labeling jobs, they can reuse/create Specialist
 /// Pools to bring their own Specialists to label the data.
 /// Customers can add/remove Managers for the Specialist Pool on Cloud console,
-/// then Managers will get email notifications to manage Specialists and tasks
-/// on CrowdCompute console.
+/// then Managers will get email notifications to manage Specialists and tasks on
+/// CrowdCompute console.
 ///
 /// @par Equality
 ///
@@ -69,29 +69,23 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class SpecialistPoolServiceClient {
  public:
-  explicit SpecialistPoolServiceClient(
-      std::shared_ptr<SpecialistPoolServiceConnection> connection,
-      Options opts = {});
+  explicit SpecialistPoolServiceClient(std::shared_ptr<SpecialistPoolServiceConnection> connection, Options opts = {});
   ~SpecialistPoolServiceClient();
 
   ///@{
   /// @name Copy and move support
   SpecialistPoolServiceClient(SpecialistPoolServiceClient const&) = default;
-  SpecialistPoolServiceClient& operator=(SpecialistPoolServiceClient const&) =
-      default;
+  SpecialistPoolServiceClient& operator=(SpecialistPoolServiceClient const&) = default;
   SpecialistPoolServiceClient(SpecialistPoolServiceClient&&) = default;
-  SpecialistPoolServiceClient& operator=(SpecialistPoolServiceClient&&) =
-      default;
+  SpecialistPoolServiceClient& operator=(SpecialistPoolServiceClient&&) = default;
   ///@}
 
   ///@{
   /// @name Equality
-  friend bool operator==(SpecialistPoolServiceClient const& a,
-                         SpecialistPoolServiceClient const& b) {
+  friend bool operator==(SpecialistPoolServiceClient const& a, SpecialistPoolServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(SpecialistPoolServiceClient const& a,
-                         SpecialistPoolServiceClient const& b) {
+  friend bool operator!=(SpecialistPoolServiceClient const& a, SpecialistPoolServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -128,10 +122,7 @@ class SpecialistPoolServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::SpecialistPool>>
-  CreateSpecialistPool(
-      std::string const& parent,
-      google::cloud::aiplatform::v1::SpecialistPool const& specialist_pool,
-      Options opts = {});
+  CreateSpecialistPool(std::string const& parent, google::cloud::aiplatform::v1::SpecialistPool const& specialist_pool, Options opts = {});
 
   // clang-format off
   ///
@@ -144,10 +135,8 @@ class SpecialistPoolServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateSpecialistPool(
-      NoAwaitTag, std::string const& parent,
-      google::cloud::aiplatform::v1::SpecialistPool const& specialist_pool,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateSpecialistPool(NoAwaitTag, std::string const& parent, google::cloud::aiplatform::v1::SpecialistPool const& specialist_pool, Options opts = {});
 
   // clang-format off
   ///
@@ -184,9 +173,7 @@ class SpecialistPoolServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::SpecialistPool>>
-  CreateSpecialistPool(
-      google::cloud::aiplatform::v1::CreateSpecialistPoolRequest const& request,
-      Options opts = {});
+  CreateSpecialistPool(google::cloud::aiplatform::v1::CreateSpecialistPoolRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -199,10 +186,8 @@ class SpecialistPoolServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateSpecialistPool(
-      NoAwaitTag,
-      google::cloud::aiplatform::v1::CreateSpecialistPoolRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateSpecialistPool(NoAwaitTag, google::cloud::aiplatform::v1::CreateSpecialistPoolRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -214,8 +199,7 @@ class SpecialistPoolServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::SpecialistPool>>
-  CreateSpecialistPool(google::longrunning::Operation const& operation,
-                       Options opts = {});
+  CreateSpecialistPool(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -241,8 +225,8 @@ class SpecialistPoolServiceClient {
   /// [google.cloud.aiplatform.v1.SpecialistPool]: @googleapis_reference_link{google/cloud/aiplatform/v1/specialist_pool.proto#L36}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::SpecialistPool> GetSpecialistPool(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::SpecialistPool>
+  GetSpecialistPool(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -271,9 +255,8 @@ class SpecialistPoolServiceClient {
   /// [google.cloud.aiplatform.v1.SpecialistPool]: @googleapis_reference_link{google/cloud/aiplatform/v1/specialist_pool.proto#L36}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::SpecialistPool> GetSpecialistPool(
-      google::cloud::aiplatform::v1::GetSpecialistPoolRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::SpecialistPool>
+  GetSpecialistPool(google::cloud::aiplatform::v1::GetSpecialistPoolRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -347,9 +330,7 @@ class SpecialistPoolServiceClient {
   ///
   // clang-format on
   StreamRange<google::cloud::aiplatform::v1::SpecialistPool>
-  ListSpecialistPools(
-      google::cloud::aiplatform::v1::ListSpecialistPoolsRequest request,
-      Options opts = {});
+  ListSpecialistPools(google::cloud::aiplatform::v1::ListSpecialistPoolsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -395,8 +376,8 @@ class SpecialistPoolServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteSpecialistPool(
-      NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteSpecialistPool(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -433,9 +414,7 @@ class SpecialistPoolServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteSpecialistPool(
-      google::cloud::aiplatform::v1::DeleteSpecialistPoolRequest const& request,
-      Options opts = {});
+  DeleteSpecialistPool(google::cloud::aiplatform::v1::DeleteSpecialistPoolRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -448,10 +427,8 @@ class SpecialistPoolServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteSpecialistPool(
-      NoAwaitTag,
-      google::cloud::aiplatform::v1::DeleteSpecialistPoolRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteSpecialistPool(NoAwaitTag, google::cloud::aiplatform::v1::DeleteSpecialistPoolRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -463,8 +440,7 @@ class SpecialistPoolServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteSpecialistPool(google::longrunning::Operation const& operation,
-                       Options opts = {});
+  DeleteSpecialistPool(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -497,9 +473,7 @@ class SpecialistPoolServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::SpecialistPool>>
-  UpdateSpecialistPool(
-      google::cloud::aiplatform::v1::SpecialistPool const& specialist_pool,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  UpdateSpecialistPool(google::cloud::aiplatform::v1::SpecialistPool const& specialist_pool, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -512,10 +486,8 @@ class SpecialistPoolServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateSpecialistPool(
-      NoAwaitTag,
-      google::cloud::aiplatform::v1::SpecialistPool const& specialist_pool,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateSpecialistPool(NoAwaitTag, google::cloud::aiplatform::v1::SpecialistPool const& specialist_pool, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -552,9 +524,7 @@ class SpecialistPoolServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::SpecialistPool>>
-  UpdateSpecialistPool(
-      google::cloud::aiplatform::v1::UpdateSpecialistPoolRequest const& request,
-      Options opts = {});
+  UpdateSpecialistPool(google::cloud::aiplatform::v1::UpdateSpecialistPoolRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -567,10 +537,8 @@ class SpecialistPoolServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateSpecialistPool(
-      NoAwaitTag,
-      google::cloud::aiplatform::v1::UpdateSpecialistPoolRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateSpecialistPool(NoAwaitTag, google::cloud::aiplatform::v1::UpdateSpecialistPoolRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -582,8 +550,7 @@ class SpecialistPoolServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::SpecialistPool>>
-  UpdateSpecialistPool(google::longrunning::Operation const& operation,
-                       Options opts = {});
+  UpdateSpecialistPool(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -621,8 +588,8 @@ class SpecialistPoolServiceClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request, Options opts = {});
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -651,9 +618,8 @@ class SpecialistPoolServiceClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -685,8 +651,8 @@ class SpecialistPoolServiceClient {
   /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L100}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -717,8 +683,8 @@ class SpecialistPoolServiceClient {
   /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -753,9 +719,8 @@ class SpecialistPoolServiceClient {
   /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L153}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request,
-      Options opts = {});
+  StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -790,8 +755,8 @@ class SpecialistPoolServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -830,8 +795,8 @@ class SpecialistPoolServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -857,8 +822,8 @@ class SpecialistPoolServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -889,9 +854,8 @@ class SpecialistPoolServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -915,7 +879,8 @@ class SpecialistPoolServiceClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status DeleteOperation(std::string const& name, Options opts = {});
+  Status
+  DeleteOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -944,9 +909,8 @@ class SpecialistPoolServiceClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request,
-      Options opts = {});
+  Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -980,7 +944,8 @@ class SpecialistPoolServiceClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(std::string const& name, Options opts = {});
+  Status
+  CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1019,9 +984,8 @@ class SpecialistPoolServiceClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request,
-      Options opts = {});
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1058,9 +1022,8 @@ class SpecialistPoolServiceClient {
   /// [google.longrunning.WaitOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L207}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> WaitOperation(
-      google::longrunning::WaitOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  WaitOperation(google::longrunning::WaitOperationRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<SpecialistPoolServiceConnection> connection_;

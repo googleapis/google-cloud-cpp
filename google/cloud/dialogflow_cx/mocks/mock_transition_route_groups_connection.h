@@ -31,10 +31,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * A class to mock `TransitionRouteGroupsConnection`.
  *
  * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `TransitionRouteGroupsClient`. To do
- * so, construct an object of type `TransitionRouteGroupsClient` with an
- * instance of this class. Then use the Google Test framework functions to
- * program the behavior of this mock.
+ * including errors, from an object of type `TransitionRouteGroupsClient`. To do so,
+ * construct an object of type `TransitionRouteGroupsClient` with an instance of this
+ * class. Then use the Google Test framework functions to program the behavior
+ * of this mock.
  *
  * @see [This example][bq-mock] for how to test your application with GoogleTest.
  * While the example showcases types from the BigQuery library, the underlying
@@ -42,60 +42,49 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockTransitionRouteGroupsConnection
-    : public dialogflow_cx::TransitionRouteGroupsConnection {
+class MockTransitionRouteGroupsConnection : public dialogflow_cx::TransitionRouteGroupsConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(
-      (StreamRange<google::cloud::dialogflow::cx::v3::TransitionRouteGroup>),
-      ListTransitionRouteGroups,
-      (google::cloud::dialogflow::cx::v3::ListTransitionRouteGroupsRequest
-           request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::cx::v3::TransitionRouteGroup>,
-      GetTransitionRouteGroup,
-      (google::cloud::dialogflow::cx::v3::GetTransitionRouteGroupRequest const&
-           request),
-      (override));
+  MOCK_METHOD((StreamRange<google::cloud::dialogflow::cx::v3::TransitionRouteGroup>),
+  ListTransitionRouteGroups,
+  (google::cloud::dialogflow::cx::v3::ListTransitionRouteGroupsRequest request), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::dialogflow::cx::v3::TransitionRouteGroup>,
-              CreateTransitionRouteGroup,
-              (google::cloud::dialogflow::cx::v3::
-                   CreateTransitionRouteGroupRequest const& request),
-              (override));
+  GetTransitionRouteGroup,
+  (google::cloud::dialogflow::cx::v3::GetTransitionRouteGroupRequest const& request), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::dialogflow::cx::v3::TransitionRouteGroup>,
-              UpdateTransitionRouteGroup,
-              (google::cloud::dialogflow::cx::v3::
-                   UpdateTransitionRouteGroupRequest const& request),
-              (override));
+  CreateTransitionRouteGroup,
+  (google::cloud::dialogflow::cx::v3::CreateTransitionRouteGroupRequest const& request), (override));
 
-  MOCK_METHOD(Status, DeleteTransitionRouteGroup,
-              (google::cloud::dialogflow::cx::v3::
-                   DeleteTransitionRouteGroupRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::dialogflow::cx::v3::TransitionRouteGroup>,
+  UpdateTransitionRouteGroup,
+  (google::cloud::dialogflow::cx::v3::UpdateTransitionRouteGroupRequest const& request), (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::location::Location>), ListLocations,
-              (google::cloud::location::ListLocationsRequest request),
-              (override));
+  MOCK_METHOD(Status,
+  DeleteTransitionRouteGroup,
+  (google::cloud::dialogflow::cx::v3::DeleteTransitionRouteGroupRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::location::Location>, GetLocation,
-              (google::cloud::location::GetLocationRequest const& request),
-              (override));
+  MOCK_METHOD((StreamRange<google::cloud::location::Location>),
+  ListLocations,
+  (google::cloud::location::ListLocationsRequest request), (override));
 
-  MOCK_METHOD((StreamRange<google::longrunning::Operation>), ListOperations,
-              (google::longrunning::ListOperationsRequest request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::location::Location>,
+  GetLocation,
+  (google::cloud::location::GetLocationRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
-              (google::longrunning::GetOperationRequest const& request),
-              (override));
+  MOCK_METHOD((StreamRange<google::longrunning::Operation>),
+  ListOperations,
+  (google::longrunning::ListOperationsRequest request), (override));
 
-  MOCK_METHOD(Status, CancelOperation,
-              (google::longrunning::CancelOperationRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  GetOperation,
+  (google::longrunning::GetOperationRequest const& request), (override));
+
+  MOCK_METHOD(Status,
+  CancelOperation,
+  (google::longrunning::CancelOperationRequest const& request), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

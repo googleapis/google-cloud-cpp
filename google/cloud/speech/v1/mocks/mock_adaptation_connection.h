@@ -46,60 +46,53 @@ class MockAdaptationConnection : public speech_v1::AdaptationConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::speech::v1::PhraseSet>, CreatePhraseSet,
-      (google::cloud::speech::v1::CreatePhraseSetRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::speech::v1::PhraseSet>,
+  CreatePhraseSet,
+  (google::cloud::speech::v1::CreatePhraseSetRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::speech::v1::PhraseSet>, GetPhraseSet,
-              (google::cloud::speech::v1::GetPhraseSetRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::speech::v1::PhraseSet>,
+  GetPhraseSet,
+  (google::cloud::speech::v1::GetPhraseSetRequest const& request), (override));
 
   MOCK_METHOD((StreamRange<google::cloud::speech::v1::PhraseSet>),
-              ListPhraseSet,
-              (google::cloud::speech::v1::ListPhraseSetRequest request),
-              (override));
+  ListPhraseSet,
+  (google::cloud::speech::v1::ListPhraseSetRequest request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::speech::v1::PhraseSet>, UpdatePhraseSet,
-      (google::cloud::speech::v1::UpdatePhraseSetRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::speech::v1::PhraseSet>,
+  UpdatePhraseSet,
+  (google::cloud::speech::v1::UpdatePhraseSetRequest const& request), (override));
 
-  MOCK_METHOD(
-      Status, DeletePhraseSet,
-      (google::cloud::speech::v1::DeletePhraseSetRequest const& request),
-      (override));
+  MOCK_METHOD(Status,
+  DeletePhraseSet,
+  (google::cloud::speech::v1::DeletePhraseSetRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::speech::v1::CustomClass>, CreateCustomClass,
-      (google::cloud::speech::v1::CreateCustomClassRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::speech::v1::CustomClass>,
+  CreateCustomClass,
+  (google::cloud::speech::v1::CreateCustomClassRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::speech::v1::CustomClass>, GetCustomClass,
-              (google::cloud::speech::v1::GetCustomClassRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::speech::v1::CustomClass>,
+  GetCustomClass,
+  (google::cloud::speech::v1::GetCustomClassRequest const& request), (override));
 
   MOCK_METHOD((StreamRange<google::cloud::speech::v1::CustomClass>),
-              ListCustomClasses,
-              (google::cloud::speech::v1::ListCustomClassesRequest request),
-              (override));
+  ListCustomClasses,
+  (google::cloud::speech::v1::ListCustomClassesRequest request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::speech::v1::CustomClass>, UpdateCustomClass,
-      (google::cloud::speech::v1::UpdateCustomClassRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::speech::v1::CustomClass>,
+  UpdateCustomClass,
+  (google::cloud::speech::v1::UpdateCustomClassRequest const& request), (override));
 
-  MOCK_METHOD(
-      Status, DeleteCustomClass,
-      (google::cloud::speech::v1::DeleteCustomClassRequest const& request),
-      (override));
+  MOCK_METHOD(Status,
+  DeleteCustomClass,
+  (google::cloud::speech::v1::DeleteCustomClassRequest const& request), (override));
 
-  MOCK_METHOD((StreamRange<google::longrunning::Operation>), ListOperations,
-              (google::longrunning::ListOperationsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::longrunning::Operation>),
+  ListOperations,
+  (google::longrunning::ListOperationsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
-              (google::longrunning::GetOperationRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  GetOperation,
+  (google::longrunning::GetOperationRequest const& request), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

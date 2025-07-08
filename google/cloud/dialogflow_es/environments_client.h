@@ -60,13 +60,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// and move-construction is a relatively efficient operation, consider using
 /// such a copy when using this class from multiple threads.
 ///
-/// [google.cloud.dialogflow.v2.Environment]:
-/// @googleapis_reference_link{google/cloud/dialogflow/v2/environment.proto#L141}
+/// [google.cloud.dialogflow.v2.Environment]: @googleapis_reference_link{google/cloud/dialogflow/v2/environment.proto#L141}
 ///
 class EnvironmentsClient {
  public:
-  explicit EnvironmentsClient(
-      std::shared_ptr<EnvironmentsConnection> connection, Options opts = {});
+  explicit EnvironmentsClient(std::shared_ptr<EnvironmentsConnection> connection, Options opts = {});
   ~EnvironmentsClient();
 
   ///@{
@@ -79,12 +77,10 @@ class EnvironmentsClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(EnvironmentsClient const& a,
-                         EnvironmentsClient const& b) {
+  friend bool operator==(EnvironmentsClient const& a, EnvironmentsClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(EnvironmentsClient const& a,
-                         EnvironmentsClient const& b) {
+  friend bool operator!=(EnvironmentsClient const& a, EnvironmentsClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -124,8 +120,8 @@ class EnvironmentsClient {
   /// [google.cloud.dialogflow.v2.ListEnvironmentsRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/environment.proto#L237}
   ///
   // clang-format on
-  StreamRange<google::cloud::dialogflow::v2::Environment> ListEnvironments(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::dialogflow::v2::Environment>
+  ListEnvironments(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -163,9 +159,8 @@ class EnvironmentsClient {
   /// [google.cloud.dialogflow.v2.ListEnvironmentsRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/environment.proto#L237}
   ///
   // clang-format on
-  StreamRange<google::cloud::dialogflow::v2::Environment> ListEnvironments(
-      google::cloud::dialogflow::v2::ListEnvironmentsRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::dialogflow::v2::Environment>
+  ListEnvironments(google::cloud::dialogflow::v2::ListEnvironmentsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -194,9 +189,8 @@ class EnvironmentsClient {
   /// [google.cloud.dialogflow.v2.GetEnvironmentRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/environment.proto#L272}
   ///
   // clang-format on
-  StatusOr<google::cloud::dialogflow::v2::Environment> GetEnvironment(
-      google::cloud::dialogflow::v2::GetEnvironmentRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::dialogflow::v2::Environment>
+  GetEnvironment(google::cloud::dialogflow::v2::GetEnvironmentRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -225,9 +219,8 @@ class EnvironmentsClient {
   /// [google.cloud.dialogflow.v2.Environment]: @googleapis_reference_link{google/cloud/dialogflow/v2/environment.proto#L141}
   ///
   // clang-format on
-  StatusOr<google::cloud::dialogflow::v2::Environment> CreateEnvironment(
-      google::cloud::dialogflow::v2::CreateEnvironmentRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::dialogflow::v2::Environment>
+  CreateEnvironment(google::cloud::dialogflow::v2::CreateEnvironmentRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -267,9 +260,8 @@ class EnvironmentsClient {
   /// [google.cloud.dialogflow.v2.UpdateEnvironmentRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/environment.proto#L313}
   ///
   // clang-format on
-  StatusOr<google::cloud::dialogflow::v2::Environment> UpdateEnvironment(
-      google::cloud::dialogflow::v2::UpdateEnvironmentRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::dialogflow::v2::Environment>
+  UpdateEnvironment(google::cloud::dialogflow::v2::UpdateEnvironmentRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -295,9 +287,8 @@ class EnvironmentsClient {
   /// [google.cloud.dialogflow.v2.DeleteEnvironmentRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/environment.proto#L331}
   ///
   // clang-format on
-  Status DeleteEnvironment(
-      google::cloud::dialogflow::v2::DeleteEnvironmentRequest const& request,
-      Options opts = {});
+  Status
+  DeleteEnvironment(google::cloud::dialogflow::v2::DeleteEnvironmentRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -336,9 +327,7 @@ class EnvironmentsClient {
   ///
   // clang-format on
   StreamRange<google::cloud::dialogflow::v2::EnvironmentHistory::Entry>
-  GetEnvironmentHistory(
-      google::cloud::dialogflow::v2::GetEnvironmentHistoryRequest request,
-      Options opts = {});
+  GetEnvironmentHistory(google::cloud::dialogflow::v2::GetEnvironmentHistoryRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -376,8 +365,8 @@ class EnvironmentsClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request, Options opts = {});
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -406,9 +395,8 @@ class EnvironmentsClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -443,8 +431,8 @@ class EnvironmentsClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -483,8 +471,8 @@ class EnvironmentsClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -510,8 +498,8 @@ class EnvironmentsClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -542,9 +530,8 @@ class EnvironmentsClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -578,7 +565,8 @@ class EnvironmentsClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(std::string const& name, Options opts = {});
+  Status
+  CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -617,9 +605,8 @@ class EnvironmentsClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request,
-      Options opts = {});
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<EnvironmentsConnection> connection_;

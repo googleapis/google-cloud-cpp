@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IDS_V1_IDS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IDS_V1_IDS_CONNECTION_H
 
-#include "google/cloud/ids/v1/ids_connection_idempotency_policy.h"
-#include "google/cloud/ids/v1/internal/ids_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
+#include "google/cloud/ids/v1/ids_connection_idempotency_policy.h"
+#include "google/cloud/ids/v1/internal/ids_retry_traits.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -66,14 +66,14 @@ class IDSLimitedErrorCountRetryPolicy : public IDSRetryPolicy {
    *     @p maximum_failures == 0.
    */
   explicit IDSLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   IDSLimitedErrorCountRetryPolicy(
       IDSLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : IDSLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : IDSLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   IDSLimitedErrorCountRetryPolicy(
       IDSLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : IDSLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : IDSLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -93,9 +93,7 @@ class IDSLimitedErrorCountRetryPolicy : public IDSRetryPolicy {
   using BaseType = IDSRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      ids_v1_internal::IDSRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<ids_v1_internal::IDSRetryTraits> impl_;
 };
 
 /**
@@ -133,12 +131,12 @@ class IDSLimitedTimeRetryPolicy : public IDSRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit IDSLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
   IDSLimitedTimeRetryPolicy(IDSLimitedTimeRetryPolicy&& rhs) noexcept
-      : IDSLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+    : IDSLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
   IDSLimitedTimeRetryPolicy(IDSLimitedTimeRetryPolicy const& rhs) noexcept
-      : IDSLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+    : IDSLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -152,16 +150,15 @@ class IDSLimitedTimeRetryPolicy : public IDSRetryPolicy {
     return impl_.IsPermanentFailure(status);
   }
   std::unique_ptr<IDSRetryPolicy> clone() const override {
-    return std::make_unique<IDSLimitedTimeRetryPolicy>(maximum_duration());
+    return std::make_unique<IDSLimitedTimeRetryPolicy>(
+        maximum_duration());
   }
 
   // This is provided only for backwards compatibility.
   using BaseType = IDSRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      ids_v1_internal::IDSRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<ids_v1_internal::IDSRetryTraits> impl_;
 };
 
 /**
@@ -182,29 +179,29 @@ class IDSConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StreamRange<google::cloud::ids::v1::Endpoint> ListEndpoints(
-      google::cloud::ids::v1::ListEndpointsRequest request);
+  virtual StreamRange<google::cloud::ids::v1::Endpoint>
+  ListEndpoints(google::cloud::ids::v1::ListEndpointsRequest request);
 
-  virtual StatusOr<google::cloud::ids::v1::Endpoint> GetEndpoint(
-      google::cloud::ids::v1::GetEndpointRequest const& request);
+  virtual StatusOr<google::cloud::ids::v1::Endpoint>
+  GetEndpoint(google::cloud::ids::v1::GetEndpointRequest const& request);
 
-  virtual future<StatusOr<google::cloud::ids::v1::Endpoint>> CreateEndpoint(
-      google::cloud::ids::v1::CreateEndpointRequest const& request);
+  virtual future<StatusOr<google::cloud::ids::v1::Endpoint>>
+  CreateEndpoint(google::cloud::ids::v1::CreateEndpointRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> CreateEndpoint(
-      NoAwaitTag, google::cloud::ids::v1::CreateEndpointRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  CreateEndpoint(NoAwaitTag, google::cloud::ids::v1::CreateEndpointRequest const& request);
 
-  virtual future<StatusOr<google::cloud::ids::v1::Endpoint>> CreateEndpoint(
-      google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::ids::v1::Endpoint>>
+  CreateEndpoint( google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::ids::v1::OperationMetadata>>
   DeleteEndpoint(google::cloud::ids::v1::DeleteEndpointRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> DeleteEndpoint(
-      NoAwaitTag, google::cloud::ids::v1::DeleteEndpointRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  DeleteEndpoint(NoAwaitTag, google::cloud::ids::v1::DeleteEndpointRequest const& request);
 
   virtual future<StatusOr<google::cloud::ids::v1::OperationMetadata>>
-  DeleteEndpoint(google::longrunning::Operation const& operation);
+  DeleteEndpoint( google::longrunning::Operation const& operation);
 };
 
 /**
@@ -228,7 +225,8 @@ class IDSConnection {
  * @param options (optional) Configure the `IDSConnection` created by
  * this function.
  */
-std::shared_ptr<IDSConnection> MakeIDSConnection(Options options = {});
+std::shared_ptr<IDSConnection> MakeIDSConnection(
+    Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace ids_v1

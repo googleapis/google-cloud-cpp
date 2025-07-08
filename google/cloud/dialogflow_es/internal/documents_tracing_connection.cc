@@ -34,243 +34,224 @@ DocumentsTracingConnection::DocumentsTracingConnection(
     : child_(std::move(child)) {}
 
 StreamRange<google::cloud::dialogflow::v2::Document>
-DocumentsTracingConnection::ListDocuments(
-    google::cloud::dialogflow::v2::ListDocumentsRequest request) {
-  auto span =
-      internal::MakeSpan("dialogflow_es::DocumentsConnection::ListDocuments");
+DocumentsTracingConnection::ListDocuments(google::cloud::dialogflow::v2::ListDocumentsRequest request) {
+  auto span = internal::MakeSpan("dialogflow_es::DocumentsConnection::ListDocuments");
   internal::OTelScope scope(span);
   auto sr = child_->ListDocuments(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::dialogflow::v2::Document>(std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::dialogflow::v2::Document>(
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::dialogflow::v2::Document>
-DocumentsTracingConnection::GetDocument(
-    google::cloud::dialogflow::v2::GetDocumentRequest const& request) {
-  auto span =
-      internal::MakeSpan("dialogflow_es::DocumentsConnection::GetDocument");
+DocumentsTracingConnection::GetDocument(google::cloud::dialogflow::v2::GetDocumentRequest const& request) {
+  auto span = internal::MakeSpan("dialogflow_es::DocumentsConnection::GetDocument");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetDocument(request));
 }
 
 future<StatusOr<google::cloud::dialogflow::v2::Document>>
-DocumentsTracingConnection::CreateDocument(
-    google::cloud::dialogflow::v2::CreateDocumentRequest const& request) {
-  auto span =
-      internal::MakeSpan("dialogflow_es::DocumentsConnection::CreateDocument");
+DocumentsTracingConnection::CreateDocument(google::cloud::dialogflow::v2::CreateDocumentRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dialogflow_es::DocumentsConnection::CreateDocument");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateDocument(request));
 }
 
 StatusOr<google::longrunning::Operation>
 DocumentsTracingConnection::CreateDocument(
-    NoAwaitTag,
-    google::cloud::dialogflow::v2::CreateDocumentRequest const& request) {
-  auto span =
-      internal::MakeSpan("dialogflow_es::DocumentsConnection::CreateDocument");
+    NoAwaitTag, google::cloud::dialogflow::v2::CreateDocumentRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dialogflow_es::DocumentsConnection::CreateDocument");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span,
-                           child_->CreateDocument(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->CreateDocument(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::dialogflow::v2::Document>>
 DocumentsTracingConnection::CreateDocument(
     google::longrunning::Operation const& operation) {
-  auto span =
-      internal::MakeSpan("dialogflow_es::DocumentsConnection::CreateDocument");
+  auto span = internal::MakeSpan(
+      "dialogflow_es::DocumentsConnection::CreateDocument");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->CreateDocument(operation));
+  return internal::EndSpan(std::move(span),
+      child_->CreateDocument(operation));
 }
 
 future<StatusOr<google::cloud::dialogflow::v2::ImportDocumentsResponse>>
-DocumentsTracingConnection::ImportDocuments(
-    google::cloud::dialogflow::v2::ImportDocumentsRequest const& request) {
-  auto span =
-      internal::MakeSpan("dialogflow_es::DocumentsConnection::ImportDocuments");
+DocumentsTracingConnection::ImportDocuments(google::cloud::dialogflow::v2::ImportDocumentsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dialogflow_es::DocumentsConnection::ImportDocuments");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->ImportDocuments(request));
 }
 
 StatusOr<google::longrunning::Operation>
 DocumentsTracingConnection::ImportDocuments(
-    NoAwaitTag,
-    google::cloud::dialogflow::v2::ImportDocumentsRequest const& request) {
-  auto span =
-      internal::MakeSpan("dialogflow_es::DocumentsConnection::ImportDocuments");
+    NoAwaitTag, google::cloud::dialogflow::v2::ImportDocumentsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dialogflow_es::DocumentsConnection::ImportDocuments");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span,
-                           child_->ImportDocuments(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->ImportDocuments(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::dialogflow::v2::ImportDocumentsResponse>>
 DocumentsTracingConnection::ImportDocuments(
     google::longrunning::Operation const& operation) {
-  auto span =
-      internal::MakeSpan("dialogflow_es::DocumentsConnection::ImportDocuments");
+  auto span = internal::MakeSpan(
+      "dialogflow_es::DocumentsConnection::ImportDocuments");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->ImportDocuments(operation));
+  return internal::EndSpan(std::move(span),
+      child_->ImportDocuments(operation));
 }
 
 future<StatusOr<google::cloud::dialogflow::v2::KnowledgeOperationMetadata>>
-DocumentsTracingConnection::DeleteDocument(
-    google::cloud::dialogflow::v2::DeleteDocumentRequest const& request) {
-  auto span =
-      internal::MakeSpan("dialogflow_es::DocumentsConnection::DeleteDocument");
+DocumentsTracingConnection::DeleteDocument(google::cloud::dialogflow::v2::DeleteDocumentRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dialogflow_es::DocumentsConnection::DeleteDocument");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteDocument(request));
 }
 
 StatusOr<google::longrunning::Operation>
 DocumentsTracingConnection::DeleteDocument(
-    NoAwaitTag,
-    google::cloud::dialogflow::v2::DeleteDocumentRequest const& request) {
-  auto span =
-      internal::MakeSpan("dialogflow_es::DocumentsConnection::DeleteDocument");
+    NoAwaitTag, google::cloud::dialogflow::v2::DeleteDocumentRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dialogflow_es::DocumentsConnection::DeleteDocument");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span,
-                           child_->DeleteDocument(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->DeleteDocument(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::dialogflow::v2::KnowledgeOperationMetadata>>
 DocumentsTracingConnection::DeleteDocument(
     google::longrunning::Operation const& operation) {
-  auto span =
-      internal::MakeSpan("dialogflow_es::DocumentsConnection::DeleteDocument");
+  auto span = internal::MakeSpan(
+      "dialogflow_es::DocumentsConnection::DeleteDocument");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->DeleteDocument(operation));
+  return internal::EndSpan(std::move(span),
+      child_->DeleteDocument(operation));
 }
 
 future<StatusOr<google::cloud::dialogflow::v2::Document>>
-DocumentsTracingConnection::UpdateDocument(
-    google::cloud::dialogflow::v2::UpdateDocumentRequest const& request) {
-  auto span =
-      internal::MakeSpan("dialogflow_es::DocumentsConnection::UpdateDocument");
+DocumentsTracingConnection::UpdateDocument(google::cloud::dialogflow::v2::UpdateDocumentRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dialogflow_es::DocumentsConnection::UpdateDocument");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateDocument(request));
 }
 
 StatusOr<google::longrunning::Operation>
 DocumentsTracingConnection::UpdateDocument(
-    NoAwaitTag,
-    google::cloud::dialogflow::v2::UpdateDocumentRequest const& request) {
-  auto span =
-      internal::MakeSpan("dialogflow_es::DocumentsConnection::UpdateDocument");
+    NoAwaitTag, google::cloud::dialogflow::v2::UpdateDocumentRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dialogflow_es::DocumentsConnection::UpdateDocument");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span,
-                           child_->UpdateDocument(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->UpdateDocument(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::dialogflow::v2::Document>>
 DocumentsTracingConnection::UpdateDocument(
     google::longrunning::Operation const& operation) {
-  auto span =
-      internal::MakeSpan("dialogflow_es::DocumentsConnection::UpdateDocument");
+  auto span = internal::MakeSpan(
+      "dialogflow_es::DocumentsConnection::UpdateDocument");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->UpdateDocument(operation));
+  return internal::EndSpan(std::move(span),
+      child_->UpdateDocument(operation));
 }
 
 future<StatusOr<google::cloud::dialogflow::v2::Document>>
-DocumentsTracingConnection::ReloadDocument(
-    google::cloud::dialogflow::v2::ReloadDocumentRequest const& request) {
-  auto span =
-      internal::MakeSpan("dialogflow_es::DocumentsConnection::ReloadDocument");
+DocumentsTracingConnection::ReloadDocument(google::cloud::dialogflow::v2::ReloadDocumentRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dialogflow_es::DocumentsConnection::ReloadDocument");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->ReloadDocument(request));
 }
 
 StatusOr<google::longrunning::Operation>
 DocumentsTracingConnection::ReloadDocument(
-    NoAwaitTag,
-    google::cloud::dialogflow::v2::ReloadDocumentRequest const& request) {
-  auto span =
-      internal::MakeSpan("dialogflow_es::DocumentsConnection::ReloadDocument");
+    NoAwaitTag, google::cloud::dialogflow::v2::ReloadDocumentRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dialogflow_es::DocumentsConnection::ReloadDocument");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span,
-                           child_->ReloadDocument(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->ReloadDocument(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::dialogflow::v2::Document>>
 DocumentsTracingConnection::ReloadDocument(
     google::longrunning::Operation const& operation) {
-  auto span =
-      internal::MakeSpan("dialogflow_es::DocumentsConnection::ReloadDocument");
+  auto span = internal::MakeSpan(
+      "dialogflow_es::DocumentsConnection::ReloadDocument");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->ReloadDocument(operation));
+  return internal::EndSpan(std::move(span),
+      child_->ReloadDocument(operation));
 }
 
 future<StatusOr<google::cloud::dialogflow::v2::Document>>
-DocumentsTracingConnection::ExportDocument(
-    google::cloud::dialogflow::v2::ExportDocumentRequest const& request) {
-  auto span =
-      internal::MakeSpan("dialogflow_es::DocumentsConnection::ExportDocument");
+DocumentsTracingConnection::ExportDocument(google::cloud::dialogflow::v2::ExportDocumentRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dialogflow_es::DocumentsConnection::ExportDocument");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->ExportDocument(request));
 }
 
 StatusOr<google::longrunning::Operation>
 DocumentsTracingConnection::ExportDocument(
-    NoAwaitTag,
-    google::cloud::dialogflow::v2::ExportDocumentRequest const& request) {
-  auto span =
-      internal::MakeSpan("dialogflow_es::DocumentsConnection::ExportDocument");
+    NoAwaitTag, google::cloud::dialogflow::v2::ExportDocumentRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dialogflow_es::DocumentsConnection::ExportDocument");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span,
-                           child_->ExportDocument(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->ExportDocument(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::dialogflow::v2::Document>>
 DocumentsTracingConnection::ExportDocument(
     google::longrunning::Operation const& operation) {
-  auto span =
-      internal::MakeSpan("dialogflow_es::DocumentsConnection::ExportDocument");
+  auto span = internal::MakeSpan(
+      "dialogflow_es::DocumentsConnection::ExportDocument");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->ExportDocument(operation));
+  return internal::EndSpan(std::move(span),
+      child_->ExportDocument(operation));
 }
 
 StreamRange<google::cloud::location::Location>
-DocumentsTracingConnection::ListLocations(
-    google::cloud::location::ListLocationsRequest request) {
-  auto span =
-      internal::MakeSpan("dialogflow_es::DocumentsConnection::ListLocations");
+DocumentsTracingConnection::ListLocations(google::cloud::location::ListLocationsRequest request) {
+  auto span = internal::MakeSpan("dialogflow_es::DocumentsConnection::ListLocations");
   internal::OTelScope scope(span);
   auto sr = child_->ListLocations(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::location::Location>(
-      std::move(span), std::move(sr));
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::location::Location>
-DocumentsTracingConnection::GetLocation(
-    google::cloud::location::GetLocationRequest const& request) {
-  auto span =
-      internal::MakeSpan("dialogflow_es::DocumentsConnection::GetLocation");
+DocumentsTracingConnection::GetLocation(google::cloud::location::GetLocationRequest const& request) {
+  auto span = internal::MakeSpan("dialogflow_es::DocumentsConnection::GetLocation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetLocation(request));
 }
 
 StreamRange<google::longrunning::Operation>
-DocumentsTracingConnection::ListOperations(
-    google::longrunning::ListOperationsRequest request) {
-  auto span =
-      internal::MakeSpan("dialogflow_es::DocumentsConnection::ListOperations");
+DocumentsTracingConnection::ListOperations(google::longrunning::ListOperationsRequest request) {
+  auto span = internal::MakeSpan("dialogflow_es::DocumentsConnection::ListOperations");
   internal::OTelScope scope(span);
   auto sr = child_->ListOperations(std::move(request));
   return internal::MakeTracedStreamRange<google::longrunning::Operation>(
-      std::move(span), std::move(sr));
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::longrunning::Operation>
-DocumentsTracingConnection::GetOperation(
-    google::longrunning::GetOperationRequest const& request) {
-  auto span =
-      internal::MakeSpan("dialogflow_es::DocumentsConnection::GetOperation");
+DocumentsTracingConnection::GetOperation(google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpan("dialogflow_es::DocumentsConnection::GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOperation(request));
 }
 
-Status DocumentsTracingConnection::CancelOperation(
-    google::longrunning::CancelOperationRequest const& request) {
-  auto span =
-      internal::MakeSpan("dialogflow_es::DocumentsConnection::CancelOperation");
+Status
+DocumentsTracingConnection::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
+  auto span = internal::MakeSpan("dialogflow_es::DocumentsConnection::CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CancelOperation(request));
 }

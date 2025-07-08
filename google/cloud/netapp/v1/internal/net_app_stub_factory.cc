@@ -17,16 +17,16 @@
 // source: google/cloud/netapp/v1/cloud_netapp_service.proto
 
 #include "google/cloud/netapp/v1/internal/net_app_stub_factory.h"
-#include "google/cloud/netapp/v1/internal/net_app_auth_decorator.h"
-#include "google/cloud/netapp/v1/internal/net_app_logging_decorator.h"
-#include "google/cloud/netapp/v1/internal/net_app_metadata_decorator.h"
-#include "google/cloud/netapp/v1/internal/net_app_stub.h"
-#include "google/cloud/netapp/v1/internal/net_app_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
+#include "google/cloud/netapp/v1/internal/net_app_auth_decorator.h"
+#include "google/cloud/netapp/v1/internal/net_app_logging_decorator.h"
+#include "google/cloud/netapp/v1/internal/net_app_metadata_decorator.h"
+#include "google/cloud/netapp/v1/internal/net_app_stub.h"
+#include "google/cloud/netapp/v1/internal/net_app_tracing_stub.h"
 #include "google/cloud/options.h"
 #include <google/cloud/location/locations.grpc.pb.h>
 #include <google/cloud/netapp/v1/cloud_netapp_service.grpc.pb.h>
@@ -39,27 +39,31 @@ namespace cloud {
 namespace netapp_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<NetAppStub> CreateDefaultNetAppStub(
+std::shared_ptr<NetAppStub>
+CreateDefaultNetAppStub(
     std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
     Options const& options) {
-  auto channel = auth->CreateChannel(options.get<EndpointOption>(),
-                                     internal::MakeChannelArguments(options));
+  auto channel = auth->CreateChannel(
+    options.get<EndpointOption>(), internal::MakeChannelArguments(options));
   auto service_grpc_stub = google::cloud::netapp::v1::NetApp::NewStub(channel);
-  auto service_locations_stub =
-      google::cloud::location::Locations::NewStub(channel);
-  std::shared_ptr<NetAppStub> stub = std::make_shared<DefaultNetAppStub>(
+  auto service_locations_stub = google::cloud::location::Locations::NewStub(channel);
+  std::shared_ptr<NetAppStub> stub =
+    std::make_shared<DefaultNetAppStub>(
       std::move(service_grpc_stub), std::move(service_locations_stub),
       google::longrunning::Operations::NewStub(channel));
 
   if (auth->RequiresConfigureContext()) {
-    stub = std::make_shared<NetAppAuth>(std::move(auth), std::move(stub));
+    stub = std::make_shared<NetAppAuth>(
+        std::move(auth), std::move(stub));
   }
   stub = std::make_shared<NetAppMetadata>(
       std::move(stub), std::multimap<std::string, std::string>{});
-  if (internal::Contains(options.get<LoggingComponentsOption>(), "rpc")) {
+  if (internal::Contains(
+      options.get<LoggingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<NetAppLogging>(
-        std::move(stub), options.get<GrpcTracingOptionsOption>(),
+        std::move(stub),
+        options.get<GrpcTracingOptionsOption>(),
         options.get<LoggingComponentsOption>());
   }
   if (internal::TracingEnabled(options)) {

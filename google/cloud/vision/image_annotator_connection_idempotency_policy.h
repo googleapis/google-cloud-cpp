@@ -26,13 +26,10 @@ namespace cloud {
 namespace vision {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use
-/// vision_v1::MakeDefaultImageAnnotatorConnectionIdempotencyPolicy directly.
-using ::google::cloud::vision_v1::
-    MakeDefaultImageAnnotatorConnectionIdempotencyPolicy;
+/// @deprecated Use vision_v1::MakeDefaultImageAnnotatorConnectionIdempotencyPolicy directly.
+using ::google::cloud::vision_v1::MakeDefaultImageAnnotatorConnectionIdempotencyPolicy;
 
-/// @deprecated Use vision_v1::ImageAnnotatorConnectionIdempotencyPolicy
-/// directly.
+/// @deprecated Use vision_v1::ImageAnnotatorConnectionIdempotencyPolicy directly.
 using ::google::cloud::vision_v1::ImageAnnotatorConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -34,60 +34,47 @@ CloudQuotasTracingConnection::CloudQuotasTracingConnection(
     : child_(std::move(child)) {}
 
 StreamRange<google::api::cloudquotas::v1::QuotaInfo>
-CloudQuotasTracingConnection::ListQuotaInfos(
-    google::api::cloudquotas::v1::ListQuotaInfosRequest request) {
-  auto span = internal::MakeSpan(
-      "cloudquotas_v1::CloudQuotasConnection::ListQuotaInfos");
+CloudQuotasTracingConnection::ListQuotaInfos(google::api::cloudquotas::v1::ListQuotaInfosRequest request) {
+  auto span = internal::MakeSpan("cloudquotas_v1::CloudQuotasConnection::ListQuotaInfos");
   internal::OTelScope scope(span);
   auto sr = child_->ListQuotaInfos(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::api::cloudquotas::v1::QuotaInfo>(std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<google::api::cloudquotas::v1::QuotaInfo>(
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::api::cloudquotas::v1::QuotaInfo>
-CloudQuotasTracingConnection::GetQuotaInfo(
-    google::api::cloudquotas::v1::GetQuotaInfoRequest const& request) {
-  auto span =
-      internal::MakeSpan("cloudquotas_v1::CloudQuotasConnection::GetQuotaInfo");
+CloudQuotasTracingConnection::GetQuotaInfo(google::api::cloudquotas::v1::GetQuotaInfoRequest const& request) {
+  auto span = internal::MakeSpan("cloudquotas_v1::CloudQuotasConnection::GetQuotaInfo");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetQuotaInfo(request));
 }
 
 StreamRange<google::api::cloudquotas::v1::QuotaPreference>
-CloudQuotasTracingConnection::ListQuotaPreferences(
-    google::api::cloudquotas::v1::ListQuotaPreferencesRequest request) {
-  auto span = internal::MakeSpan(
-      "cloudquotas_v1::CloudQuotasConnection::ListQuotaPreferences");
+CloudQuotasTracingConnection::ListQuotaPreferences(google::api::cloudquotas::v1::ListQuotaPreferencesRequest request) {
+  auto span = internal::MakeSpan("cloudquotas_v1::CloudQuotasConnection::ListQuotaPreferences");
   internal::OTelScope scope(span);
   auto sr = child_->ListQuotaPreferences(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::api::cloudquotas::v1::QuotaPreference>(std::move(span),
-                                                     std::move(sr));
+  return internal::MakeTracedStreamRange<google::api::cloudquotas::v1::QuotaPreference>(
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::api::cloudquotas::v1::QuotaPreference>
-CloudQuotasTracingConnection::GetQuotaPreference(
-    google::api::cloudquotas::v1::GetQuotaPreferenceRequest const& request) {
-  auto span = internal::MakeSpan(
-      "cloudquotas_v1::CloudQuotasConnection::GetQuotaPreference");
+CloudQuotasTracingConnection::GetQuotaPreference(google::api::cloudquotas::v1::GetQuotaPreferenceRequest const& request) {
+  auto span = internal::MakeSpan("cloudquotas_v1::CloudQuotasConnection::GetQuotaPreference");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetQuotaPreference(request));
 }
 
 StatusOr<google::api::cloudquotas::v1::QuotaPreference>
-CloudQuotasTracingConnection::CreateQuotaPreference(
-    google::api::cloudquotas::v1::CreateQuotaPreferenceRequest const& request) {
-  auto span = internal::MakeSpan(
-      "cloudquotas_v1::CloudQuotasConnection::CreateQuotaPreference");
+CloudQuotasTracingConnection::CreateQuotaPreference(google::api::cloudquotas::v1::CreateQuotaPreferenceRequest const& request) {
+  auto span = internal::MakeSpan("cloudquotas_v1::CloudQuotasConnection::CreateQuotaPreference");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateQuotaPreference(request));
 }
 
 StatusOr<google::api::cloudquotas::v1::QuotaPreference>
-CloudQuotasTracingConnection::UpdateQuotaPreference(
-    google::api::cloudquotas::v1::UpdateQuotaPreferenceRequest const& request) {
-  auto span = internal::MakeSpan(
-      "cloudquotas_v1::CloudQuotasConnection::UpdateQuotaPreference");
+CloudQuotasTracingConnection::UpdateQuotaPreference(google::api::cloudquotas::v1::UpdateQuotaPreferenceRequest const& request) {
+  auto span = internal::MakeSpan("cloudquotas_v1::CloudQuotasConnection::UpdateQuotaPreference");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateQuotaPreference(request));
 }

@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_NODE_TYPES_V1_NODE_TYPES_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_NODE_TYPES_V1_NODE_TYPES_CONNECTION_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/node_types/v1/internal/node_types_retry_traits.h"
 #include "google/cloud/compute/node_types/v1/node_types_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -62,14 +62,14 @@ class NodeTypesLimitedErrorCountRetryPolicy : public NodeTypesRetryPolicy {
    *     @p maximum_failures == 0.
    */
   explicit NodeTypesLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   NodeTypesLimitedErrorCountRetryPolicy(
       NodeTypesLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : NodeTypesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : NodeTypesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   NodeTypesLimitedErrorCountRetryPolicy(
       NodeTypesLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : NodeTypesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : NodeTypesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -89,9 +89,7 @@ class NodeTypesLimitedErrorCountRetryPolicy : public NodeTypesRetryPolicy {
   using BaseType = NodeTypesRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      compute_node_types_v1_internal::NodeTypesRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<compute_node_types_v1_internal::NodeTypesRetryTraits> impl_;
 };
 
 /**
@@ -129,14 +127,12 @@ class NodeTypesLimitedTimeRetryPolicy : public NodeTypesRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit NodeTypesLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  NodeTypesLimitedTimeRetryPolicy(
-      NodeTypesLimitedTimeRetryPolicy&& rhs) noexcept
-      : NodeTypesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  NodeTypesLimitedTimeRetryPolicy(
-      NodeTypesLimitedTimeRetryPolicy const& rhs) noexcept
-      : NodeTypesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  NodeTypesLimitedTimeRetryPolicy(NodeTypesLimitedTimeRetryPolicy&& rhs) noexcept
+    : NodeTypesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  NodeTypesLimitedTimeRetryPolicy(NodeTypesLimitedTimeRetryPolicy const& rhs) noexcept
+    : NodeTypesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -158,9 +154,7 @@ class NodeTypesLimitedTimeRetryPolicy : public NodeTypesRetryPolicy {
   using BaseType = NodeTypesRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      compute_node_types_v1_internal::NodeTypesRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<compute_node_types_v1_internal::NodeTypesRetryTraits> impl_;
 };
 
 /**
@@ -181,18 +175,14 @@ class NodeTypesConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StreamRange<std::pair<
-      std::string, google::cloud::cpp::compute::v1::NodeTypesScopedList>>
-  AggregatedListNodeTypes(google::cloud::cpp::compute::node_types::v1::
-                              AggregatedListNodeTypesRequest request);
+  virtual StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::NodeTypesScopedList>>
+  AggregatedListNodeTypes(google::cloud::cpp::compute::node_types::v1::AggregatedListNodeTypesRequest request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::NodeType> GetNodeType(
-      google::cloud::cpp::compute::node_types::v1::GetNodeTypeRequest const&
-          request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::NodeType>
+  GetNodeType(google::cloud::cpp::compute::node_types::v1::GetNodeTypeRequest const& request);
 
-  virtual StreamRange<google::cloud::cpp::compute::v1::NodeType> ListNodeTypes(
-      google::cloud::cpp::compute::node_types::v1::ListNodeTypesRequest
-          request);
+  virtual StreamRange<google::cloud::cpp::compute::v1::NodeType>
+  ListNodeTypes(google::cloud::cpp::compute::node_types::v1::ListNodeTypesRequest request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

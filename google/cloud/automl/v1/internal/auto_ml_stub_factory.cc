@@ -37,25 +37,30 @@ namespace cloud {
 namespace automl_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<AutoMlStub> CreateDefaultAutoMlStub(
+std::shared_ptr<AutoMlStub>
+CreateDefaultAutoMlStub(
     std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
     Options const& options) {
-  auto channel = auth->CreateChannel(options.get<EndpointOption>(),
-                                     internal::MakeChannelArguments(options));
+  auto channel = auth->CreateChannel(
+    options.get<EndpointOption>(), internal::MakeChannelArguments(options));
   auto service_grpc_stub = google::cloud::automl::v1::AutoMl::NewStub(channel);
-  std::shared_ptr<AutoMlStub> stub = std::make_shared<DefaultAutoMlStub>(
+  std::shared_ptr<AutoMlStub> stub =
+    std::make_shared<DefaultAutoMlStub>(
       std::move(service_grpc_stub),
       google::longrunning::Operations::NewStub(channel));
 
   if (auth->RequiresConfigureContext()) {
-    stub = std::make_shared<AutoMlAuth>(std::move(auth), std::move(stub));
+    stub = std::make_shared<AutoMlAuth>(
+        std::move(auth), std::move(stub));
   }
   stub = std::make_shared<AutoMlMetadata>(
       std::move(stub), std::multimap<std::string, std::string>{});
-  if (internal::Contains(options.get<LoggingComponentsOption>(), "rpc")) {
+  if (internal::Contains(
+      options.get<LoggingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<AutoMlLogging>(
-        std::move(stub), options.get<GrpcTracingOptionsOption>(),
+        std::move(stub),
+        options.get<GrpcTracingOptionsOption>(),
         options.get<LoggingComponentsOption>());
   }
   if (internal::TracingEnabled(options)) {

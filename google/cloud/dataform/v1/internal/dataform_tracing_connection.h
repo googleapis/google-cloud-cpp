@@ -30,254 +30,192 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-class DataformTracingConnection : public dataform_v1::DataformConnection {
+class DataformTracingConnection
+    : public dataform_v1::DataformConnection {
  public:
   ~DataformTracingConnection() override = default;
 
   explicit DataformTracingConnection(
-      std::shared_ptr<dataform_v1::DataformConnection> child);
+    std::shared_ptr<dataform_v1::DataformConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StreamRange<google::cloud::dataform::v1::Repository> ListRepositories(
-      google::cloud::dataform::v1::ListRepositoriesRequest request) override;
+  StreamRange<google::cloud::dataform::v1::Repository>
+  ListRepositories(google::cloud::dataform::v1::ListRepositoriesRequest request) override;
 
-  StatusOr<google::cloud::dataform::v1::Repository> GetRepository(
-      google::cloud::dataform::v1::GetRepositoryRequest const& request)
-      override;
+  StatusOr<google::cloud::dataform::v1::Repository>
+  GetRepository(google::cloud::dataform::v1::GetRepositoryRequest const& request) override;
 
-  StatusOr<google::cloud::dataform::v1::Repository> CreateRepository(
-      google::cloud::dataform::v1::CreateRepositoryRequest const& request)
-      override;
+  StatusOr<google::cloud::dataform::v1::Repository>
+  CreateRepository(google::cloud::dataform::v1::CreateRepositoryRequest const& request) override;
 
-  StatusOr<google::cloud::dataform::v1::Repository> UpdateRepository(
-      google::cloud::dataform::v1::UpdateRepositoryRequest const& request)
-      override;
+  StatusOr<google::cloud::dataform::v1::Repository>
+  UpdateRepository(google::cloud::dataform::v1::UpdateRepositoryRequest const& request) override;
 
-  Status DeleteRepository(
-      google::cloud::dataform::v1::DeleteRepositoryRequest const& request)
-      override;
+  Status
+  DeleteRepository(google::cloud::dataform::v1::DeleteRepositoryRequest const& request) override;
 
   StatusOr<google::cloud::dataform::v1::CommitRepositoryChangesResponse>
-  CommitRepositoryChanges(
-      google::cloud::dataform::v1::CommitRepositoryChangesRequest const&
-          request) override;
+  CommitRepositoryChanges(google::cloud::dataform::v1::CommitRepositoryChangesRequest const& request) override;
 
   StatusOr<google::cloud::dataform::v1::ReadRepositoryFileResponse>
-  ReadRepositoryFile(
-      google::cloud::dataform::v1::ReadRepositoryFileRequest const& request)
-      override;
+  ReadRepositoryFile(google::cloud::dataform::v1::ReadRepositoryFileRequest const& request) override;
 
   StreamRange<google::cloud::dataform::v1::DirectoryEntry>
-  QueryRepositoryDirectoryContents(
-      google::cloud::dataform::v1::QueryRepositoryDirectoryContentsRequest
-          request) override;
+  QueryRepositoryDirectoryContents(google::cloud::dataform::v1::QueryRepositoryDirectoryContentsRequest request) override;
 
   StreamRange<google::cloud::dataform::v1::CommitLogEntry>
-  FetchRepositoryHistory(
-      google::cloud::dataform::v1::FetchRepositoryHistoryRequest request)
-      override;
+  FetchRepositoryHistory(google::cloud::dataform::v1::FetchRepositoryHistoryRequest request) override;
 
-  StatusOr<
-      google::cloud::dataform::v1::ComputeRepositoryAccessTokenStatusResponse>
-  ComputeRepositoryAccessTokenStatus(
-      google::cloud::dataform::v1::
-          ComputeRepositoryAccessTokenStatusRequest const& request) override;
+  StatusOr<google::cloud::dataform::v1::ComputeRepositoryAccessTokenStatusResponse>
+  ComputeRepositoryAccessTokenStatus(google::cloud::dataform::v1::ComputeRepositoryAccessTokenStatusRequest const& request) override;
 
   StatusOr<google::cloud::dataform::v1::FetchRemoteBranchesResponse>
-  FetchRemoteBranches(
-      google::cloud::dataform::v1::FetchRemoteBranchesRequest const& request)
-      override;
+  FetchRemoteBranches(google::cloud::dataform::v1::FetchRemoteBranchesRequest const& request) override;
 
-  StreamRange<google::cloud::dataform::v1::Workspace> ListWorkspaces(
-      google::cloud::dataform::v1::ListWorkspacesRequest request) override;
+  StreamRange<google::cloud::dataform::v1::Workspace>
+  ListWorkspaces(google::cloud::dataform::v1::ListWorkspacesRequest request) override;
 
-  StatusOr<google::cloud::dataform::v1::Workspace> GetWorkspace(
-      google::cloud::dataform::v1::GetWorkspaceRequest const& request) override;
+  StatusOr<google::cloud::dataform::v1::Workspace>
+  GetWorkspace(google::cloud::dataform::v1::GetWorkspaceRequest const& request) override;
 
-  StatusOr<google::cloud::dataform::v1::Workspace> CreateWorkspace(
-      google::cloud::dataform::v1::CreateWorkspaceRequest const& request)
-      override;
+  StatusOr<google::cloud::dataform::v1::Workspace>
+  CreateWorkspace(google::cloud::dataform::v1::CreateWorkspaceRequest const& request) override;
 
-  Status DeleteWorkspace(
-      google::cloud::dataform::v1::DeleteWorkspaceRequest const& request)
-      override;
+  Status
+  DeleteWorkspace(google::cloud::dataform::v1::DeleteWorkspaceRequest const& request) override;
 
   StatusOr<google::cloud::dataform::v1::InstallNpmPackagesResponse>
-  InstallNpmPackages(
-      google::cloud::dataform::v1::InstallNpmPackagesRequest const& request)
-      override;
+  InstallNpmPackages(google::cloud::dataform::v1::InstallNpmPackagesRequest const& request) override;
 
-  StatusOr<google::cloud::dataform::v1::PullGitCommitsResponse> PullGitCommits(
-      google::cloud::dataform::v1::PullGitCommitsRequest const& request)
-      override;
+  StatusOr<google::cloud::dataform::v1::PullGitCommitsResponse>
+  PullGitCommits(google::cloud::dataform::v1::PullGitCommitsRequest const& request) override;
 
-  StatusOr<google::cloud::dataform::v1::PushGitCommitsResponse> PushGitCommits(
-      google::cloud::dataform::v1::PushGitCommitsRequest const& request)
-      override;
+  StatusOr<google::cloud::dataform::v1::PushGitCommitsResponse>
+  PushGitCommits(google::cloud::dataform::v1::PushGitCommitsRequest const& request) override;
 
   StatusOr<google::cloud::dataform::v1::FetchFileGitStatusesResponse>
-  FetchFileGitStatuses(
-      google::cloud::dataform::v1::FetchFileGitStatusesRequest const& request)
-      override;
+  FetchFileGitStatuses(google::cloud::dataform::v1::FetchFileGitStatusesRequest const& request) override;
 
   StatusOr<google::cloud::dataform::v1::FetchGitAheadBehindResponse>
-  FetchGitAheadBehind(
-      google::cloud::dataform::v1::FetchGitAheadBehindRequest const& request)
-      override;
+  FetchGitAheadBehind(google::cloud::dataform::v1::FetchGitAheadBehindRequest const& request) override;
 
   StatusOr<google::cloud::dataform::v1::CommitWorkspaceChangesResponse>
-  CommitWorkspaceChanges(
-      google::cloud::dataform::v1::CommitWorkspaceChangesRequest const& request)
-      override;
+  CommitWorkspaceChanges(google::cloud::dataform::v1::CommitWorkspaceChangesRequest const& request) override;
 
   StatusOr<google::cloud::dataform::v1::ResetWorkspaceChangesResponse>
-  ResetWorkspaceChanges(
-      google::cloud::dataform::v1::ResetWorkspaceChangesRequest const& request)
-      override;
+  ResetWorkspaceChanges(google::cloud::dataform::v1::ResetWorkspaceChangesRequest const& request) override;
 
-  StatusOr<google::cloud::dataform::v1::FetchFileDiffResponse> FetchFileDiff(
-      google::cloud::dataform::v1::FetchFileDiffRequest const& request)
-      override;
+  StatusOr<google::cloud::dataform::v1::FetchFileDiffResponse>
+  FetchFileDiff(google::cloud::dataform::v1::FetchFileDiffRequest const& request) override;
 
   StreamRange<google::cloud::dataform::v1::DirectoryEntry>
-  QueryDirectoryContents(
-      google::cloud::dataform::v1::QueryDirectoryContentsRequest request)
-      override;
+  QueryDirectoryContents(google::cloud::dataform::v1::QueryDirectoryContentsRequest request) override;
 
-  StreamRange<google::cloud::dataform::v1::SearchResult> SearchFiles(
-      google::cloud::dataform::v1::SearchFilesRequest request) override;
+  StreamRange<google::cloud::dataform::v1::SearchResult>
+  SearchFiles(google::cloud::dataform::v1::SearchFilesRequest request) override;
 
-  StatusOr<google::cloud::dataform::v1::MakeDirectoryResponse> MakeDirectory(
-      google::cloud::dataform::v1::MakeDirectoryRequest const& request)
-      override;
+  StatusOr<google::cloud::dataform::v1::MakeDirectoryResponse>
+  MakeDirectory(google::cloud::dataform::v1::MakeDirectoryRequest const& request) override;
 
   StatusOr<google::cloud::dataform::v1::RemoveDirectoryResponse>
-  RemoveDirectory(google::cloud::dataform::v1::RemoveDirectoryRequest const&
-                      request) override;
+  RemoveDirectory(google::cloud::dataform::v1::RemoveDirectoryRequest const& request) override;
 
-  StatusOr<google::cloud::dataform::v1::MoveDirectoryResponse> MoveDirectory(
-      google::cloud::dataform::v1::MoveDirectoryRequest const& request)
-      override;
+  StatusOr<google::cloud::dataform::v1::MoveDirectoryResponse>
+  MoveDirectory(google::cloud::dataform::v1::MoveDirectoryRequest const& request) override;
 
-  StatusOr<google::cloud::dataform::v1::ReadFileResponse> ReadFile(
-      google::cloud::dataform::v1::ReadFileRequest const& request) override;
+  StatusOr<google::cloud::dataform::v1::ReadFileResponse>
+  ReadFile(google::cloud::dataform::v1::ReadFileRequest const& request) override;
 
-  StatusOr<google::cloud::dataform::v1::RemoveFileResponse> RemoveFile(
-      google::cloud::dataform::v1::RemoveFileRequest const& request) override;
+  StatusOr<google::cloud::dataform::v1::RemoveFileResponse>
+  RemoveFile(google::cloud::dataform::v1::RemoveFileRequest const& request) override;
 
-  StatusOr<google::cloud::dataform::v1::MoveFileResponse> MoveFile(
-      google::cloud::dataform::v1::MoveFileRequest const& request) override;
+  StatusOr<google::cloud::dataform::v1::MoveFileResponse>
+  MoveFile(google::cloud::dataform::v1::MoveFileRequest const& request) override;
 
-  StatusOr<google::cloud::dataform::v1::WriteFileResponse> WriteFile(
-      google::cloud::dataform::v1::WriteFileRequest const& request) override;
+  StatusOr<google::cloud::dataform::v1::WriteFileResponse>
+  WriteFile(google::cloud::dataform::v1::WriteFileRequest const& request) override;
 
-  StreamRange<google::cloud::dataform::v1::ReleaseConfig> ListReleaseConfigs(
-      google::cloud::dataform::v1::ListReleaseConfigsRequest request) override;
+  StreamRange<google::cloud::dataform::v1::ReleaseConfig>
+  ListReleaseConfigs(google::cloud::dataform::v1::ListReleaseConfigsRequest request) override;
 
-  StatusOr<google::cloud::dataform::v1::ReleaseConfig> GetReleaseConfig(
-      google::cloud::dataform::v1::GetReleaseConfigRequest const& request)
-      override;
+  StatusOr<google::cloud::dataform::v1::ReleaseConfig>
+  GetReleaseConfig(google::cloud::dataform::v1::GetReleaseConfigRequest const& request) override;
 
-  StatusOr<google::cloud::dataform::v1::ReleaseConfig> CreateReleaseConfig(
-      google::cloud::dataform::v1::CreateReleaseConfigRequest const& request)
-      override;
+  StatusOr<google::cloud::dataform::v1::ReleaseConfig>
+  CreateReleaseConfig(google::cloud::dataform::v1::CreateReleaseConfigRequest const& request) override;
 
-  StatusOr<google::cloud::dataform::v1::ReleaseConfig> UpdateReleaseConfig(
-      google::cloud::dataform::v1::UpdateReleaseConfigRequest const& request)
-      override;
+  StatusOr<google::cloud::dataform::v1::ReleaseConfig>
+  UpdateReleaseConfig(google::cloud::dataform::v1::UpdateReleaseConfigRequest const& request) override;
 
-  Status DeleteReleaseConfig(
-      google::cloud::dataform::v1::DeleteReleaseConfigRequest const& request)
-      override;
+  Status
+  DeleteReleaseConfig(google::cloud::dataform::v1::DeleteReleaseConfigRequest const& request) override;
 
   StreamRange<google::cloud::dataform::v1::CompilationResult>
-  ListCompilationResults(
-      google::cloud::dataform::v1::ListCompilationResultsRequest request)
-      override;
-
-  StatusOr<google::cloud::dataform::v1::CompilationResult> GetCompilationResult(
-      google::cloud::dataform::v1::GetCompilationResultRequest const& request)
-      override;
+  ListCompilationResults(google::cloud::dataform::v1::ListCompilationResultsRequest request) override;
 
   StatusOr<google::cloud::dataform::v1::CompilationResult>
-  CreateCompilationResult(
-      google::cloud::dataform::v1::CreateCompilationResultRequest const&
-          request) override;
+  GetCompilationResult(google::cloud::dataform::v1::GetCompilationResultRequest const& request) override;
+
+  StatusOr<google::cloud::dataform::v1::CompilationResult>
+  CreateCompilationResult(google::cloud::dataform::v1::CreateCompilationResultRequest const& request) override;
 
   StreamRange<google::cloud::dataform::v1::CompilationResultAction>
-  QueryCompilationResultActions(
-      google::cloud::dataform::v1::QueryCompilationResultActionsRequest request)
-      override;
+  QueryCompilationResultActions(google::cloud::dataform::v1::QueryCompilationResultActionsRequest request) override;
 
-  StreamRange<google::cloud::dataform::v1::WorkflowConfig> ListWorkflowConfigs(
-      google::cloud::dataform::v1::ListWorkflowConfigsRequest request) override;
+  StreamRange<google::cloud::dataform::v1::WorkflowConfig>
+  ListWorkflowConfigs(google::cloud::dataform::v1::ListWorkflowConfigsRequest request) override;
 
-  StatusOr<google::cloud::dataform::v1::WorkflowConfig> GetWorkflowConfig(
-      google::cloud::dataform::v1::GetWorkflowConfigRequest const& request)
-      override;
+  StatusOr<google::cloud::dataform::v1::WorkflowConfig>
+  GetWorkflowConfig(google::cloud::dataform::v1::GetWorkflowConfigRequest const& request) override;
 
-  StatusOr<google::cloud::dataform::v1::WorkflowConfig> CreateWorkflowConfig(
-      google::cloud::dataform::v1::CreateWorkflowConfigRequest const& request)
-      override;
+  StatusOr<google::cloud::dataform::v1::WorkflowConfig>
+  CreateWorkflowConfig(google::cloud::dataform::v1::CreateWorkflowConfigRequest const& request) override;
 
-  StatusOr<google::cloud::dataform::v1::WorkflowConfig> UpdateWorkflowConfig(
-      google::cloud::dataform::v1::UpdateWorkflowConfigRequest const& request)
-      override;
+  StatusOr<google::cloud::dataform::v1::WorkflowConfig>
+  UpdateWorkflowConfig(google::cloud::dataform::v1::UpdateWorkflowConfigRequest const& request) override;
 
-  Status DeleteWorkflowConfig(
-      google::cloud::dataform::v1::DeleteWorkflowConfigRequest const& request)
-      override;
+  Status
+  DeleteWorkflowConfig(google::cloud::dataform::v1::DeleteWorkflowConfigRequest const& request) override;
 
   StreamRange<google::cloud::dataform::v1::WorkflowInvocation>
-  ListWorkflowInvocations(
-      google::cloud::dataform::v1::ListWorkflowInvocationsRequest request)
-      override;
+  ListWorkflowInvocations(google::cloud::dataform::v1::ListWorkflowInvocationsRequest request) override;
 
   StatusOr<google::cloud::dataform::v1::WorkflowInvocation>
-  GetWorkflowInvocation(
-      google::cloud::dataform::v1::GetWorkflowInvocationRequest const& request)
-      override;
+  GetWorkflowInvocation(google::cloud::dataform::v1::GetWorkflowInvocationRequest const& request) override;
 
   StatusOr<google::cloud::dataform::v1::WorkflowInvocation>
-  CreateWorkflowInvocation(
-      google::cloud::dataform::v1::CreateWorkflowInvocationRequest const&
-          request) override;
+  CreateWorkflowInvocation(google::cloud::dataform::v1::CreateWorkflowInvocationRequest const& request) override;
 
-  Status DeleteWorkflowInvocation(
-      google::cloud::dataform::v1::DeleteWorkflowInvocationRequest const&
-          request) override;
+  Status
+  DeleteWorkflowInvocation(google::cloud::dataform::v1::DeleteWorkflowInvocationRequest const& request) override;
 
   StatusOr<google::cloud::dataform::v1::CancelWorkflowInvocationResponse>
-  CancelWorkflowInvocation(
-      google::cloud::dataform::v1::CancelWorkflowInvocationRequest const&
-          request) override;
+  CancelWorkflowInvocation(google::cloud::dataform::v1::CancelWorkflowInvocationRequest const& request) override;
 
   StreamRange<google::cloud::dataform::v1::WorkflowInvocationAction>
-  QueryWorkflowInvocationActions(
-      google::cloud::dataform::v1::QueryWorkflowInvocationActionsRequest
-          request) override;
+  QueryWorkflowInvocationActions(google::cloud::dataform::v1::QueryWorkflowInvocationActionsRequest request) override;
 
-  StatusOr<google::cloud::dataform::v1::Config> GetConfig(
-      google::cloud::dataform::v1::GetConfigRequest const& request) override;
+  StatusOr<google::cloud::dataform::v1::Config>
+  GetConfig(google::cloud::dataform::v1::GetConfigRequest const& request) override;
 
-  StatusOr<google::cloud::dataform::v1::Config> UpdateConfig(
-      google::cloud::dataform::v1::UpdateConfigRequest const& request) override;
+  StatusOr<google::cloud::dataform::v1::Config>
+  UpdateConfig(google::cloud::dataform::v1::UpdateConfigRequest const& request) override;
 
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request) override;
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request) override;
 
-  StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request) override;
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request) override;
+  StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) override;
 
  private:
   std::shared_ptr<dataform_v1::DataformConnection> child_;
@@ -291,7 +229,8 @@ class DataformTracingConnection : public dataform_v1::DataformConnection {
  * The connection is only decorated if tracing is enabled (as determined by the
  * connection's options).
  */
-std::shared_ptr<dataform_v1::DataformConnection> MakeDataformTracingConnection(
+std::shared_ptr<dataform_v1::DataformConnection>
+MakeDataformTracingConnection(
     std::shared_ptr<dataform_v1::DataformConnection> conn);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

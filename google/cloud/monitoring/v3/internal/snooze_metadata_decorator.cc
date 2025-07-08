@@ -44,37 +44,39 @@ SnoozeServiceMetadata::SnoozeServiceMetadata(
               ? google::cloud::internal::GeneratedLibClientHeader()
               : std::move(api_client_header)) {}
 
-StatusOr<google::monitoring::v3::Snooze> SnoozeServiceMetadata::CreateSnooze(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::monitoring::v3::Snooze>
+SnoozeServiceMetadata::CreateSnooze(
+    grpc::ClientContext& context,
+    Options const& options,
     google::monitoring::v3::CreateSnoozeRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateSnooze(context, options, request);
 }
 
 StatusOr<google::monitoring::v3::ListSnoozesResponse>
 SnoozeServiceMetadata::ListSnoozes(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::monitoring::v3::ListSnoozesRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListSnoozes(context, options, request);
 }
 
-StatusOr<google::monitoring::v3::Snooze> SnoozeServiceMetadata::GetSnooze(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::monitoring::v3::Snooze>
+SnoozeServiceMetadata::GetSnooze(
+    grpc::ClientContext& context,
+    Options const& options,
     google::monitoring::v3::GetSnoozeRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetSnooze(context, options, request);
 }
 
-StatusOr<google::monitoring::v3::Snooze> SnoozeServiceMetadata::UpdateSnooze(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::monitoring::v3::Snooze>
+SnoozeServiceMetadata::UpdateSnooze(
+    grpc::ClientContext& context,
+    Options const& options,
     google::monitoring::v3::UpdateSnoozeRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("snooze.name=",
-                           internal::UrlEncode(request.snooze().name())));
+  SetMetadata(context, options, absl::StrCat("snooze.name=", internal::UrlEncode(request.snooze().name())));
   return child_->UpdateSnooze(context, options, request);
 }
 
@@ -87,8 +89,8 @@ void SnoozeServiceMetadata::SetMetadata(grpc::ClientContext& context,
 
 void SnoozeServiceMetadata::SetMetadata(grpc::ClientContext& context,
                                         Options const& options) {
-  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
-                                       api_client_header_);
+  google::cloud::internal::SetMetadata(
+      context, options, fixed_metadata_, api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

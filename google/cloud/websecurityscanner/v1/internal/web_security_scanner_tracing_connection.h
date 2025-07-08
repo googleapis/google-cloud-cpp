@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_WEBSECURITYSCANNER_V1_INTERNAL_WEB_SECURITY_SCANNER_TRACING_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_WEBSECURITYSCANNER_V1_INTERNAL_WEB_SECURITY_SCANNER_TRACING_CONNECTION_H
 
-#include "google/cloud/websecurityscanner/v1/web_security_scanner_connection.h"
 #include "google/cloud/version.h"
+#include "google/cloud/websecurityscanner/v1/web_security_scanner_connection.h"
 #include <memory>
 
 namespace google {
@@ -36,63 +36,48 @@ class WebSecurityScannerTracingConnection
   ~WebSecurityScannerTracingConnection() override = default;
 
   explicit WebSecurityScannerTracingConnection(
-      std::shared_ptr<websecurityscanner_v1::WebSecurityScannerConnection>
-          child);
+    std::shared_ptr<websecurityscanner_v1::WebSecurityScannerConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::websecurityscanner::v1::ScanConfig> CreateScanConfig(
-      google::cloud::websecurityscanner::v1::CreateScanConfigRequest const&
-          request) override;
+  StatusOr<google::cloud::websecurityscanner::v1::ScanConfig>
+  CreateScanConfig(google::cloud::websecurityscanner::v1::CreateScanConfigRequest const& request) override;
 
-  Status DeleteScanConfig(
-      google::cloud::websecurityscanner::v1::DeleteScanConfigRequest const&
-          request) override;
+  Status
+  DeleteScanConfig(google::cloud::websecurityscanner::v1::DeleteScanConfigRequest const& request) override;
 
-  StatusOr<google::cloud::websecurityscanner::v1::ScanConfig> GetScanConfig(
-      google::cloud::websecurityscanner::v1::GetScanConfigRequest const&
-          request) override;
+  StatusOr<google::cloud::websecurityscanner::v1::ScanConfig>
+  GetScanConfig(google::cloud::websecurityscanner::v1::GetScanConfigRequest const& request) override;
 
   StreamRange<google::cloud::websecurityscanner::v1::ScanConfig>
-  ListScanConfigs(google::cloud::websecurityscanner::v1::ListScanConfigsRequest
-                      request) override;
+  ListScanConfigs(google::cloud::websecurityscanner::v1::ListScanConfigsRequest request) override;
 
-  StatusOr<google::cloud::websecurityscanner::v1::ScanConfig> UpdateScanConfig(
-      google::cloud::websecurityscanner::v1::UpdateScanConfigRequest const&
-          request) override;
+  StatusOr<google::cloud::websecurityscanner::v1::ScanConfig>
+  UpdateScanConfig(google::cloud::websecurityscanner::v1::UpdateScanConfigRequest const& request) override;
 
-  StatusOr<google::cloud::websecurityscanner::v1::ScanRun> StartScanRun(
-      google::cloud::websecurityscanner::v1::StartScanRunRequest const& request)
-      override;
+  StatusOr<google::cloud::websecurityscanner::v1::ScanRun>
+  StartScanRun(google::cloud::websecurityscanner::v1::StartScanRunRequest const& request) override;
 
-  StatusOr<google::cloud::websecurityscanner::v1::ScanRun> GetScanRun(
-      google::cloud::websecurityscanner::v1::GetScanRunRequest const& request)
-      override;
+  StatusOr<google::cloud::websecurityscanner::v1::ScanRun>
+  GetScanRun(google::cloud::websecurityscanner::v1::GetScanRunRequest const& request) override;
 
-  StreamRange<google::cloud::websecurityscanner::v1::ScanRun> ListScanRuns(
-      google::cloud::websecurityscanner::v1::ListScanRunsRequest request)
-      override;
+  StreamRange<google::cloud::websecurityscanner::v1::ScanRun>
+  ListScanRuns(google::cloud::websecurityscanner::v1::ListScanRunsRequest request) override;
 
-  StatusOr<google::cloud::websecurityscanner::v1::ScanRun> StopScanRun(
-      google::cloud::websecurityscanner::v1::StopScanRunRequest const& request)
-      override;
+  StatusOr<google::cloud::websecurityscanner::v1::ScanRun>
+  StopScanRun(google::cloud::websecurityscanner::v1::StopScanRunRequest const& request) override;
 
   StreamRange<google::cloud::websecurityscanner::v1::CrawledUrl>
-  ListCrawledUrls(google::cloud::websecurityscanner::v1::ListCrawledUrlsRequest
-                      request) override;
+  ListCrawledUrls(google::cloud::websecurityscanner::v1::ListCrawledUrlsRequest request) override;
 
-  StatusOr<google::cloud::websecurityscanner::v1::Finding> GetFinding(
-      google::cloud::websecurityscanner::v1::GetFindingRequest const& request)
-      override;
+  StatusOr<google::cloud::websecurityscanner::v1::Finding>
+  GetFinding(google::cloud::websecurityscanner::v1::GetFindingRequest const& request) override;
 
-  StreamRange<google::cloud::websecurityscanner::v1::Finding> ListFindings(
-      google::cloud::websecurityscanner::v1::ListFindingsRequest request)
-      override;
+  StreamRange<google::cloud::websecurityscanner::v1::Finding>
+  ListFindings(google::cloud::websecurityscanner::v1::ListFindingsRequest request) override;
 
   StatusOr<google::cloud::websecurityscanner::v1::ListFindingTypeStatsResponse>
-  ListFindingTypeStats(
-      google::cloud::websecurityscanner::v1::ListFindingTypeStatsRequest const&
-          request) override;
+  ListFindingTypeStats(google::cloud::websecurityscanner::v1::ListFindingTypeStatsRequest const& request) override;
 
  private:
   std::shared_ptr<websecurityscanner_v1::WebSecurityScannerConnection> child_;

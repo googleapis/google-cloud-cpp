@@ -17,10 +17,10 @@
 // source: google/cloud/run/v2/execution.proto
 
 #include "google/cloud/run/v2/internal/executions_option_defaults.h"
-#include "google/cloud/run/v2/executions_connection.h"
-#include "google/cloud/run/v2/executions_options.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
+#include "google/cloud/run/v2/executions_connection.h"
+#include "google/cloud/run/v2/executions_options.h"
 #include <memory>
 #include <utility>
 
@@ -35,30 +35,28 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options ExecutionsDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_EXECUTIONS_ENDPOINT", "",
-      "GOOGLE_CLOUD_CPP_EXECUTIONS_AUTHORITY", "run.googleapis.com");
+      std::move(options), "GOOGLE_CLOUD_CPP_EXECUTIONS_ENDPOINT",
+      "", "GOOGLE_CLOUD_CPP_EXECUTIONS_AUTHORITY",
+      "run.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<run_v2::ExecutionsRetryPolicyOption>()) {
     options.set<run_v2::ExecutionsRetryPolicyOption>(
-        run_v2::ExecutionsLimitedTimeRetryPolicy(std::chrono::minutes(30))
-            .clone());
+        run_v2::ExecutionsLimitedTimeRetryPolicy(
+            std::chrono::minutes(30)).clone());
   }
   if (!options.has<run_v2::ExecutionsBackoffPolicyOption>()) {
     options.set<run_v2::ExecutionsBackoffPolicyOption>(
-        ExponentialBackoffPolicy(
-            std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
-            .clone());
+        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
   }
   if (!options.has<run_v2::ExecutionsPollingPolicyOption>()) {
     options.set<run_v2::ExecutionsPollingPolicyOption>(
-        GenericPollingPolicy<run_v2::ExecutionsRetryPolicyOption::Type,
-                             run_v2::ExecutionsBackoffPolicyOption::Type>(
+        GenericPollingPolicy<
+            run_v2::ExecutionsRetryPolicyOption::Type,
+            run_v2::ExecutionsBackoffPolicyOption::Type>(
             options.get<run_v2::ExecutionsRetryPolicyOption>()->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                     std::chrono::minutes(5), kBackoffScaling)
-                .clone())
-            .clone());
+            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
   }
   if (!options.has<run_v2::ExecutionsConnectionIdempotencyPolicyOption>()) {
     options.set<run_v2::ExecutionsConnectionIdempotencyPolicyOption>(

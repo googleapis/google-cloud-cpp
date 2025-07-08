@@ -34,69 +34,58 @@ IntentsTracingConnection::IntentsTracingConnection(
     : child_(std::move(child)) {}
 
 StreamRange<google::cloud::dialogflow::v2::Intent>
-IntentsTracingConnection::ListIntents(
-    google::cloud::dialogflow::v2::ListIntentsRequest request) {
-  auto span =
-      internal::MakeSpan("dialogflow_es::IntentsConnection::ListIntents");
+IntentsTracingConnection::ListIntents(google::cloud::dialogflow::v2::ListIntentsRequest request) {
+  auto span = internal::MakeSpan("dialogflow_es::IntentsConnection::ListIntents");
   internal::OTelScope scope(span);
   auto sr = child_->ListIntents(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::dialogflow::v2::Intent>(
-      std::move(span), std::move(sr));
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::dialogflow::v2::Intent>
-IntentsTracingConnection::GetIntent(
-    google::cloud::dialogflow::v2::GetIntentRequest const& request) {
+IntentsTracingConnection::GetIntent(google::cloud::dialogflow::v2::GetIntentRequest const& request) {
   auto span = internal::MakeSpan("dialogflow_es::IntentsConnection::GetIntent");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetIntent(request));
 }
 
 StatusOr<google::cloud::dialogflow::v2::Intent>
-IntentsTracingConnection::CreateIntent(
-    google::cloud::dialogflow::v2::CreateIntentRequest const& request) {
-  auto span =
-      internal::MakeSpan("dialogflow_es::IntentsConnection::CreateIntent");
+IntentsTracingConnection::CreateIntent(google::cloud::dialogflow::v2::CreateIntentRequest const& request) {
+  auto span = internal::MakeSpan("dialogflow_es::IntentsConnection::CreateIntent");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateIntent(request));
 }
 
 StatusOr<google::cloud::dialogflow::v2::Intent>
-IntentsTracingConnection::UpdateIntent(
-    google::cloud::dialogflow::v2::UpdateIntentRequest const& request) {
-  auto span =
-      internal::MakeSpan("dialogflow_es::IntentsConnection::UpdateIntent");
+IntentsTracingConnection::UpdateIntent(google::cloud::dialogflow::v2::UpdateIntentRequest const& request) {
+  auto span = internal::MakeSpan("dialogflow_es::IntentsConnection::UpdateIntent");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateIntent(request));
 }
 
-Status IntentsTracingConnection::DeleteIntent(
-    google::cloud::dialogflow::v2::DeleteIntentRequest const& request) {
-  auto span =
-      internal::MakeSpan("dialogflow_es::IntentsConnection::DeleteIntent");
+Status
+IntentsTracingConnection::DeleteIntent(google::cloud::dialogflow::v2::DeleteIntentRequest const& request) {
+  auto span = internal::MakeSpan("dialogflow_es::IntentsConnection::DeleteIntent");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteIntent(request));
 }
 
 future<StatusOr<google::cloud::dialogflow::v2::BatchUpdateIntentsResponse>>
-IntentsTracingConnection::BatchUpdateIntents(
-    google::cloud::dialogflow::v2::BatchUpdateIntentsRequest const& request) {
+IntentsTracingConnection::BatchUpdateIntents(google::cloud::dialogflow::v2::BatchUpdateIntentsRequest const& request) {
   auto span = internal::MakeSpan(
       "dialogflow_es::IntentsConnection::BatchUpdateIntents");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->BatchUpdateIntents(request));
+  return internal::EndSpan(std::move(span), child_->BatchUpdateIntents(request));
 }
 
 StatusOr<google::longrunning::Operation>
 IntentsTracingConnection::BatchUpdateIntents(
-    NoAwaitTag,
-    google::cloud::dialogflow::v2::BatchUpdateIntentsRequest const& request) {
+    NoAwaitTag, google::cloud::dialogflow::v2::BatchUpdateIntentsRequest const& request) {
   auto span = internal::MakeSpan(
       "dialogflow_es::IntentsConnection::BatchUpdateIntents");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span,
-                           child_->BatchUpdateIntents(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->BatchUpdateIntents(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::dialogflow::v2::BatchUpdateIntentsResponse>>
@@ -106,28 +95,25 @@ IntentsTracingConnection::BatchUpdateIntents(
       "dialogflow_es::IntentsConnection::BatchUpdateIntents");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->BatchUpdateIntents(operation));
+      child_->BatchUpdateIntents(operation));
 }
 
 future<StatusOr<google::protobuf::Struct>>
-IntentsTracingConnection::BatchDeleteIntents(
-    google::cloud::dialogflow::v2::BatchDeleteIntentsRequest const& request) {
+IntentsTracingConnection::BatchDeleteIntents(google::cloud::dialogflow::v2::BatchDeleteIntentsRequest const& request) {
   auto span = internal::MakeSpan(
       "dialogflow_es::IntentsConnection::BatchDeleteIntents");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->BatchDeleteIntents(request));
+  return internal::EndSpan(std::move(span), child_->BatchDeleteIntents(request));
 }
 
 StatusOr<google::longrunning::Operation>
 IntentsTracingConnection::BatchDeleteIntents(
-    NoAwaitTag,
-    google::cloud::dialogflow::v2::BatchDeleteIntentsRequest const& request) {
+    NoAwaitTag, google::cloud::dialogflow::v2::BatchDeleteIntentsRequest const& request) {
   auto span = internal::MakeSpan(
       "dialogflow_es::IntentsConnection::BatchDeleteIntents");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span,
-                           child_->BatchDeleteIntents(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->BatchDeleteIntents(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::protobuf::Struct>>
@@ -137,59 +123,52 @@ IntentsTracingConnection::BatchDeleteIntents(
       "dialogflow_es::IntentsConnection::BatchDeleteIntents");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->BatchDeleteIntents(operation));
+      child_->BatchDeleteIntents(operation));
 }
 
 StreamRange<google::cloud::location::Location>
-IntentsTracingConnection::ListLocations(
-    google::cloud::location::ListLocationsRequest request) {
-  auto span =
-      internal::MakeSpan("dialogflow_es::IntentsConnection::ListLocations");
+IntentsTracingConnection::ListLocations(google::cloud::location::ListLocationsRequest request) {
+  auto span = internal::MakeSpan("dialogflow_es::IntentsConnection::ListLocations");
   internal::OTelScope scope(span);
   auto sr = child_->ListLocations(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::location::Location>(
-      std::move(span), std::move(sr));
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::location::Location>
-IntentsTracingConnection::GetLocation(
-    google::cloud::location::GetLocationRequest const& request) {
-  auto span =
-      internal::MakeSpan("dialogflow_es::IntentsConnection::GetLocation");
+IntentsTracingConnection::GetLocation(google::cloud::location::GetLocationRequest const& request) {
+  auto span = internal::MakeSpan("dialogflow_es::IntentsConnection::GetLocation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetLocation(request));
 }
 
 StreamRange<google::longrunning::Operation>
-IntentsTracingConnection::ListOperations(
-    google::longrunning::ListOperationsRequest request) {
-  auto span =
-      internal::MakeSpan("dialogflow_es::IntentsConnection::ListOperations");
+IntentsTracingConnection::ListOperations(google::longrunning::ListOperationsRequest request) {
+  auto span = internal::MakeSpan("dialogflow_es::IntentsConnection::ListOperations");
   internal::OTelScope scope(span);
   auto sr = child_->ListOperations(std::move(request));
   return internal::MakeTracedStreamRange<google::longrunning::Operation>(
-      std::move(span), std::move(sr));
+        std::move(span), std::move(sr));
 }
 
-StatusOr<google::longrunning::Operation> IntentsTracingConnection::GetOperation(
-    google::longrunning::GetOperationRequest const& request) {
-  auto span =
-      internal::MakeSpan("dialogflow_es::IntentsConnection::GetOperation");
+StatusOr<google::longrunning::Operation>
+IntentsTracingConnection::GetOperation(google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpan("dialogflow_es::IntentsConnection::GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOperation(request));
 }
 
-Status IntentsTracingConnection::CancelOperation(
-    google::longrunning::CancelOperationRequest const& request) {
-  auto span =
-      internal::MakeSpan("dialogflow_es::IntentsConnection::CancelOperation");
+Status
+IntentsTracingConnection::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
+  auto span = internal::MakeSpan("dialogflow_es::IntentsConnection::CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CancelOperation(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-std::shared_ptr<dialogflow_es::IntentsConnection> MakeIntentsTracingConnection(
+std::shared_ptr<dialogflow_es::IntentsConnection>
+MakeIntentsTracingConnection(
     std::shared_ptr<dialogflow_es::IntentsConnection> conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {

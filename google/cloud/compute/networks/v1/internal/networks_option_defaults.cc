@@ -35,36 +35,30 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options NetworksDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_NETWORKS_ENDPOINT", "",
-      "GOOGLE_CLOUD_CPP_NETWORKS_AUTHORITY", "compute.googleapis.com");
+      std::move(options), "GOOGLE_CLOUD_CPP_NETWORKS_ENDPOINT",
+      "", "GOOGLE_CLOUD_CPP_NETWORKS_AUTHORITY",
+      "compute.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<compute_networks_v1::NetworksRetryPolicyOption>()) {
     options.set<compute_networks_v1::NetworksRetryPolicyOption>(
         compute_networks_v1::NetworksLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
-            .clone());
+            std::chrono::minutes(30)).clone());
   }
   if (!options.has<compute_networks_v1::NetworksBackoffPolicyOption>()) {
     options.set<compute_networks_v1::NetworksBackoffPolicyOption>(
-        ExponentialBackoffPolicy(
-            std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
-            .clone());
+        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
   }
   if (!options.has<compute_networks_v1::NetworksPollingPolicyOption>()) {
     options.set<compute_networks_v1::NetworksPollingPolicyOption>(
         GenericPollingPolicy<
             compute_networks_v1::NetworksRetryPolicyOption::Type,
             compute_networks_v1::NetworksBackoffPolicyOption::Type>(
-            options.get<compute_networks_v1::NetworksRetryPolicyOption>()
-                ->clone(),
+            options.get<compute_networks_v1::NetworksRetryPolicyOption>()->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                     std::chrono::minutes(5), kBackoffScaling)
-                .clone())
-            .clone());
+            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
   }
-  if (!options.has<
-          compute_networks_v1::NetworksConnectionIdempotencyPolicyOption>()) {
+  if (!options.has<compute_networks_v1::NetworksConnectionIdempotencyPolicyOption>()) {
     options.set<compute_networks_v1::NetworksConnectionIdempotencyPolicyOption>(
         compute_networks_v1::MakeDefaultNetworksConnectionIdempotencyPolicy());
   }

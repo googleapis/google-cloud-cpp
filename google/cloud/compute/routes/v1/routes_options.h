@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_ROUTES_V1_ROUTES_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_ROUTES_V1_ROUTES_OPTIONS_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/routes/v1/routes_connection.h"
 #include "google/cloud/compute/routes/v1/routes_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -74,7 +74,8 @@ struct RoutesPollingPolicyOption {
  * @ingroup google-cloud-compute-options
  */
 using RoutesPolicyOptionList =
-    OptionList<RoutesRetryPolicyOption, RoutesBackoffPolicyOption,
+    OptionList<RoutesRetryPolicyOption,
+               RoutesBackoffPolicyOption,
                RoutesPollingPolicyOption,
                RoutesConnectionIdempotencyPolicyOption>;
 

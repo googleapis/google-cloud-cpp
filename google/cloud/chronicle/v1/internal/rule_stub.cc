@@ -31,88 +31,96 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 RuleServiceStub::~RuleServiceStub() = default;
 
-StatusOr<google::cloud::chronicle::v1::Rule> DefaultRuleServiceStub::CreateRule(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::chronicle::v1::CreateRuleRequest const& request) {
-  google::cloud::chronicle::v1::Rule response;
-  auto status = grpc_stub_->CreateRule(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::cloud::chronicle::v1::Rule>
+DefaultRuleServiceStub::CreateRule(
+  grpc::ClientContext& context, Options const&,
+  google::cloud::chronicle::v1::CreateRuleRequest const& request) {
+    google::cloud::chronicle::v1::Rule response;
+    auto status =
+        grpc_stub_->CreateRule(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-StatusOr<google::cloud::chronicle::v1::Rule> DefaultRuleServiceStub::GetRule(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::chronicle::v1::GetRuleRequest const& request) {
-  google::cloud::chronicle::v1::Rule response;
-  auto status = grpc_stub_->GetRule(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::cloud::chronicle::v1::Rule>
+DefaultRuleServiceStub::GetRule(
+  grpc::ClientContext& context, Options const&,
+  google::cloud::chronicle::v1::GetRuleRequest const& request) {
+    google::cloud::chronicle::v1::Rule response;
+    auto status =
+        grpc_stub_->GetRule(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::chronicle::v1::ListRulesResponse>
 DefaultRuleServiceStub::ListRules(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::chronicle::v1::ListRulesRequest const& request) {
-  google::cloud::chronicle::v1::ListRulesResponse response;
-  auto status = grpc_stub_->ListRules(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::chronicle::v1::ListRulesRequest const& request) {
+    google::cloud::chronicle::v1::ListRulesResponse response;
+    auto status =
+        grpc_stub_->ListRules(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-StatusOr<google::cloud::chronicle::v1::Rule> DefaultRuleServiceStub::UpdateRule(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::chronicle::v1::UpdateRuleRequest const& request) {
-  google::cloud::chronicle::v1::Rule response;
-  auto status = grpc_stub_->UpdateRule(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::cloud::chronicle::v1::Rule>
+DefaultRuleServiceStub::UpdateRule(
+  grpc::ClientContext& context, Options const&,
+  google::cloud::chronicle::v1::UpdateRuleRequest const& request) {
+    google::cloud::chronicle::v1::Rule response;
+    auto status =
+        grpc_stub_->UpdateRule(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-Status DefaultRuleServiceStub::DeleteRule(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::chronicle::v1::DeleteRuleRequest const& request) {
-  google::protobuf::Empty response;
-  auto status = grpc_stub_->DeleteRule(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return google::cloud::Status();
+Status
+DefaultRuleServiceStub::DeleteRule(
+  grpc::ClientContext& context, Options const&,
+  google::cloud::chronicle::v1::DeleteRuleRequest const& request) {
+    google::protobuf::Empty response;
+    auto status =
+        grpc_stub_->DeleteRule(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return google::cloud::Status();
 }
 
 StatusOr<google::cloud::chronicle::v1::ListRuleRevisionsResponse>
 DefaultRuleServiceStub::ListRuleRevisions(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::chronicle::v1::ListRuleRevisionsRequest const& request) {
-  google::cloud::chronicle::v1::ListRuleRevisionsResponse response;
-  auto status = grpc_stub_->ListRuleRevisions(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::chronicle::v1::ListRuleRevisionsRequest const& request) {
+    google::cloud::chronicle::v1::ListRuleRevisionsResponse response;
+    auto status =
+        grpc_stub_->ListRuleRevisions(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultRuleServiceStub::AsyncCreateRetrohunt(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::chronicle::v1::CreateRetrohuntRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::chronicle::v1::CreateRetrohuntRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::chronicle::v1::CreateRetrohuntRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::chronicle::v1::CreateRetrohuntRequest,
+                                    google::longrunning::Operation>(
       cq,
-      [this](
-          grpc::ClientContext* context,
-          google::cloud::chronicle::v1::CreateRetrohuntRequest const& request,
-          grpc::CompletionQueue* cq) {
+      [this](grpc::ClientContext* context,
+             google::cloud::chronicle::v1::CreateRetrohuntRequest const& request,
+             grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncCreateRetrohunt(context, request, cq);
       },
       request, std::move(context));
@@ -120,119 +128,133 @@ DefaultRuleServiceStub::AsyncCreateRetrohunt(
 
 StatusOr<google::longrunning::Operation>
 DefaultRuleServiceStub::CreateRetrohunt(
-    grpc::ClientContext& context, Options,
-    google::cloud::chronicle::v1::CreateRetrohuntRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->CreateRetrohunt(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::chronicle::v1::CreateRetrohuntRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->CreateRetrohunt(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::chronicle::v1::Retrohunt>
 DefaultRuleServiceStub::GetRetrohunt(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::chronicle::v1::GetRetrohuntRequest const& request) {
-  google::cloud::chronicle::v1::Retrohunt response;
-  auto status = grpc_stub_->GetRetrohunt(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::chronicle::v1::GetRetrohuntRequest const& request) {
+    google::cloud::chronicle::v1::Retrohunt response;
+    auto status =
+        grpc_stub_->GetRetrohunt(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::chronicle::v1::ListRetrohuntsResponse>
 DefaultRuleServiceStub::ListRetrohunts(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::chronicle::v1::ListRetrohuntsRequest const& request) {
-  google::cloud::chronicle::v1::ListRetrohuntsResponse response;
-  auto status = grpc_stub_->ListRetrohunts(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::chronicle::v1::ListRetrohuntsRequest const& request) {
+    google::cloud::chronicle::v1::ListRetrohuntsResponse response;
+    auto status =
+        grpc_stub_->ListRetrohunts(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::chronicle::v1::RuleDeployment>
 DefaultRuleServiceStub::GetRuleDeployment(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::chronicle::v1::GetRuleDeploymentRequest const& request) {
-  google::cloud::chronicle::v1::RuleDeployment response;
-  auto status = grpc_stub_->GetRuleDeployment(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::chronicle::v1::GetRuleDeploymentRequest const& request) {
+    google::cloud::chronicle::v1::RuleDeployment response;
+    auto status =
+        grpc_stub_->GetRuleDeployment(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::chronicle::v1::ListRuleDeploymentsResponse>
 DefaultRuleServiceStub::ListRuleDeployments(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::chronicle::v1::ListRuleDeploymentsRequest const& request) {
-  google::cloud::chronicle::v1::ListRuleDeploymentsResponse response;
-  auto status = grpc_stub_->ListRuleDeployments(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::chronicle::v1::ListRuleDeploymentsRequest const& request) {
+    google::cloud::chronicle::v1::ListRuleDeploymentsResponse response;
+    auto status =
+        grpc_stub_->ListRuleDeployments(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::chronicle::v1::RuleDeployment>
 DefaultRuleServiceStub::UpdateRuleDeployment(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::chronicle::v1::UpdateRuleDeploymentRequest const& request) {
-  google::cloud::chronicle::v1::RuleDeployment response;
-  auto status = grpc_stub_->UpdateRuleDeployment(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::chronicle::v1::UpdateRuleDeploymentRequest const& request) {
+    google::cloud::chronicle::v1::RuleDeployment response;
+    auto status =
+        grpc_stub_->UpdateRuleDeployment(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
 DefaultRuleServiceStub::ListOperations(
-    grpc::ClientContext& context, Options const&,
-    google::longrunning::ListOperationsRequest const& request) {
-  google::longrunning::ListOperationsResponse response;
-  auto status = operations_stub_->ListOperations(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::longrunning::ListOperationsRequest const& request) {
+    google::longrunning::ListOperationsResponse response;
+    auto status =
+        operations_stub_->ListOperations(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-StatusOr<google::longrunning::Operation> DefaultRuleServiceStub::GetOperation(
-    grpc::ClientContext& context, Options const&,
-    google::longrunning::GetOperationRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = operations_stub_->GetOperation(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::longrunning::Operation>
+DefaultRuleServiceStub::GetOperation(
+  grpc::ClientContext& context, Options const&,
+  google::longrunning::GetOperationRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        operations_stub_->GetOperation(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-Status DefaultRuleServiceStub::DeleteOperation(
-    grpc::ClientContext& context, Options const&,
-    google::longrunning::DeleteOperationRequest const& request) {
-  google::protobuf::Empty response;
-  auto status = operations_stub_->DeleteOperation(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return google::cloud::Status();
+Status
+DefaultRuleServiceStub::DeleteOperation(
+  grpc::ClientContext& context, Options const&,
+  google::longrunning::DeleteOperationRequest const& request) {
+    google::protobuf::Empty response;
+    auto status =
+        operations_stub_->DeleteOperation(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return google::cloud::Status();
 }
 
-Status DefaultRuleServiceStub::CancelOperation(
-    grpc::ClientContext& context, Options const&,
-    google::longrunning::CancelOperationRequest const& request) {
-  google::protobuf::Empty response;
-  auto status = operations_stub_->CancelOperation(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return google::cloud::Status();
+Status
+DefaultRuleServiceStub::CancelOperation(
+  grpc::ClientContext& context, Options const&,
+  google::longrunning::CancelOperationRequest const& request) {
+    google::protobuf::Empty response;
+    auto status =
+        operations_stub_->CancelOperation(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return google::cloud::Status();
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -261,14 +283,13 @@ future<Status> DefaultRuleServiceStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(
-             cq,
-             [this](grpc::ClientContext* context,
-                    google::longrunning::CancelOperationRequest const& request,
-                    grpc::CompletionQueue* cq) {
-               return operations_stub_->AsyncCancelOperation(context, request,
-                                                             cq);
-             },
-             request, std::move(context))
+      cq,
+      [this](grpc::ClientContext* context,
+             google::longrunning::CancelOperationRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return operations_stub_->AsyncCancelOperation(context, request, cq);
+      },
+      request, std::move(context))
       .then([](future<StatusOr<google::protobuf::Empty>> f) {
         return f.get().status();
       });

@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAP_V1_IDENTITY_AWARE_PROXY_ADMIN_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAP_V1_IDENTITY_AWARE_PROXY_ADMIN_CLIENT_H
 
-#include "google/cloud/iap/v1/identity_aware_proxy_admin_connection.h"
 #include "google/cloud/future.h"
+#include "google/cloud/iap/v1/identity_aware_proxy_admin_connection.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -61,31 +61,23 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class IdentityAwareProxyAdminServiceClient {
  public:
-  explicit IdentityAwareProxyAdminServiceClient(
-      std::shared_ptr<IdentityAwareProxyAdminServiceConnection> connection,
-      Options opts = {});
+  explicit IdentityAwareProxyAdminServiceClient(std::shared_ptr<IdentityAwareProxyAdminServiceConnection> connection, Options opts = {});
   ~IdentityAwareProxyAdminServiceClient();
 
   ///@{
   /// @name Copy and move support
-  IdentityAwareProxyAdminServiceClient(
-      IdentityAwareProxyAdminServiceClient const&) = default;
-  IdentityAwareProxyAdminServiceClient& operator=(
-      IdentityAwareProxyAdminServiceClient const&) = default;
-  IdentityAwareProxyAdminServiceClient(IdentityAwareProxyAdminServiceClient&&) =
-      default;
-  IdentityAwareProxyAdminServiceClient& operator=(
-      IdentityAwareProxyAdminServiceClient&&) = default;
+  IdentityAwareProxyAdminServiceClient(IdentityAwareProxyAdminServiceClient const&) = default;
+  IdentityAwareProxyAdminServiceClient& operator=(IdentityAwareProxyAdminServiceClient const&) = default;
+  IdentityAwareProxyAdminServiceClient(IdentityAwareProxyAdminServiceClient&&) = default;
+  IdentityAwareProxyAdminServiceClient& operator=(IdentityAwareProxyAdminServiceClient&&) = default;
   ///@}
 
   ///@{
   /// @name Equality
-  friend bool operator==(IdentityAwareProxyAdminServiceClient const& a,
-                         IdentityAwareProxyAdminServiceClient const& b) {
+  friend bool operator==(IdentityAwareProxyAdminServiceClient const& a, IdentityAwareProxyAdminServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(IdentityAwareProxyAdminServiceClient const& a,
-                         IdentityAwareProxyAdminServiceClient const& b) {
+  friend bool operator!=(IdentityAwareProxyAdminServiceClient const& a, IdentityAwareProxyAdminServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -120,8 +112,8 @@ class IdentityAwareProxyAdminServiceClient {
   /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L100}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -153,8 +145,8 @@ class IdentityAwareProxyAdminServiceClient {
   /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -186,9 +178,8 @@ class IdentityAwareProxyAdminServiceClient {
   /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L153}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request,
-      Options opts = {});
+  StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -217,9 +208,8 @@ class IdentityAwareProxyAdminServiceClient {
   /// [google.cloud.iap.v1.IapSettings]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L395}
   ///
   // clang-format on
-  StatusOr<google::cloud::iap::v1::IapSettings> GetIapSettings(
-      google::cloud::iap::v1::GetIapSettingsRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::iap::v1::IapSettings>
+  GetIapSettings(google::cloud::iap::v1::GetIapSettingsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -249,9 +239,8 @@ class IdentityAwareProxyAdminServiceClient {
   /// [google.cloud.iap.v1.UpdateIapSettingsRequest]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L379}
   ///
   // clang-format on
-  StatusOr<google::cloud::iap::v1::IapSettings> UpdateIapSettings(
-      google::cloud::iap::v1::UpdateIapSettingsRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::iap::v1::IapSettings>
+  UpdateIapSettings(google::cloud::iap::v1::UpdateIapSettingsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -281,10 +270,7 @@ class IdentityAwareProxyAdminServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::iap::v1::ValidateIapAttributeExpressionResponse>
-  ValidateIapAttributeExpression(
-      google::cloud::iap::v1::ValidateIapAttributeExpressionRequest const&
-          request,
-      Options opts = {});
+  ValidateIapAttributeExpression(google::cloud::iap::v1::ValidateIapAttributeExpressionRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -322,8 +308,8 @@ class IdentityAwareProxyAdminServiceClient {
   /// [google.cloud.iap.v1.TunnelDestGroup]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L347}
   ///
   // clang-format on
-  StreamRange<google::cloud::iap::v1::TunnelDestGroup> ListTunnelDestGroups(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::iap::v1::TunnelDestGroup>
+  ListTunnelDestGroups(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -363,9 +349,8 @@ class IdentityAwareProxyAdminServiceClient {
   /// [google.cloud.iap.v1.TunnelDestGroup]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L347}
   ///
   // clang-format on
-  StreamRange<google::cloud::iap::v1::TunnelDestGroup> ListTunnelDestGroups(
-      google::cloud::iap::v1::ListTunnelDestGroupsRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::iap::v1::TunnelDestGroup>
+  ListTunnelDestGroups(google::cloud::iap::v1::ListTunnelDestGroupsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -397,10 +382,8 @@ class IdentityAwareProxyAdminServiceClient {
   /// [google.cloud.iap.v1.TunnelDestGroup]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L347}
   ///
   // clang-format on
-  StatusOr<google::cloud::iap::v1::TunnelDestGroup> CreateTunnelDestGroup(
-      std::string const& parent,
-      google::cloud::iap::v1::TunnelDestGroup const& tunnel_dest_group,
-      std::string const& tunnel_dest_group_id, Options opts = {});
+  StatusOr<google::cloud::iap::v1::TunnelDestGroup>
+  CreateTunnelDestGroup(std::string const& parent, google::cloud::iap::v1::TunnelDestGroup const& tunnel_dest_group, std::string const& tunnel_dest_group_id, Options opts = {});
 
   // clang-format off
   ///
@@ -429,9 +412,8 @@ class IdentityAwareProxyAdminServiceClient {
   /// [google.cloud.iap.v1.TunnelDestGroup]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L347}
   ///
   // clang-format on
-  StatusOr<google::cloud::iap::v1::TunnelDestGroup> CreateTunnelDestGroup(
-      google::cloud::iap::v1::CreateTunnelDestGroupRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::iap::v1::TunnelDestGroup>
+  CreateTunnelDestGroup(google::cloud::iap::v1::CreateTunnelDestGroupRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -457,8 +439,8 @@ class IdentityAwareProxyAdminServiceClient {
   /// [google.cloud.iap.v1.TunnelDestGroup]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L347}
   ///
   // clang-format on
-  StatusOr<google::cloud::iap::v1::TunnelDestGroup> GetTunnelDestGroup(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::iap::v1::TunnelDestGroup>
+  GetTunnelDestGroup(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -487,9 +469,8 @@ class IdentityAwareProxyAdminServiceClient {
   /// [google.cloud.iap.v1.TunnelDestGroup]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L347}
   ///
   // clang-format on
-  StatusOr<google::cloud::iap::v1::TunnelDestGroup> GetTunnelDestGroup(
-      google::cloud::iap::v1::GetTunnelDestGroupRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::iap::v1::TunnelDestGroup>
+  GetTunnelDestGroup(google::cloud::iap::v1::GetTunnelDestGroupRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -512,7 +493,8 @@ class IdentityAwareProxyAdminServiceClient {
   /// [google.cloud.iap.v1.DeleteTunnelDestGroupRequest]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L322}
   ///
   // clang-format on
-  Status DeleteTunnelDestGroup(std::string const& name, Options opts = {});
+  Status
+  DeleteTunnelDestGroup(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -538,9 +520,8 @@ class IdentityAwareProxyAdminServiceClient {
   /// [google.cloud.iap.v1.DeleteTunnelDestGroupRequest]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L322}
   ///
   // clang-format on
-  Status DeleteTunnelDestGroup(
-      google::cloud::iap::v1::DeleteTunnelDestGroupRequest const& request,
-      Options opts = {});
+  Status
+  DeleteTunnelDestGroup(google::cloud::iap::v1::DeleteTunnelDestGroupRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -567,9 +548,8 @@ class IdentityAwareProxyAdminServiceClient {
   /// [google.cloud.iap.v1.UpdateTunnelDestGroupRequest]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L335}
   ///
   // clang-format on
-  StatusOr<google::cloud::iap::v1::TunnelDestGroup> UpdateTunnelDestGroup(
-      google::cloud::iap::v1::TunnelDestGroup const& tunnel_dest_group,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::cloud::iap::v1::TunnelDestGroup>
+  UpdateTunnelDestGroup(google::cloud::iap::v1::TunnelDestGroup const& tunnel_dest_group, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -598,9 +578,8 @@ class IdentityAwareProxyAdminServiceClient {
   /// [google.cloud.iap.v1.UpdateTunnelDestGroupRequest]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L335}
   ///
   // clang-format on
-  StatusOr<google::cloud::iap::v1::TunnelDestGroup> UpdateTunnelDestGroup(
-      google::cloud::iap::v1::UpdateTunnelDestGroupRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::iap::v1::TunnelDestGroup>
+  UpdateTunnelDestGroup(google::cloud::iap::v1::UpdateTunnelDestGroupRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<IdentityAwareProxyAdminServiceConnection> connection_;

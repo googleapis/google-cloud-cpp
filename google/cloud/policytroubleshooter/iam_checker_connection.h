@@ -33,15 +33,11 @@ using ::google::cloud::policytroubleshooter_v1::MakeIamCheckerConnection;
 /// @deprecated Use policytroubleshooter_v1::IamCheckerConnection directly.
 using ::google::cloud::policytroubleshooter_v1::IamCheckerConnection;
 
-/// @deprecated Use
-/// policytroubleshooter_v1::IamCheckerLimitedErrorCountRetryPolicy directly.
-using ::google::cloud::policytroubleshooter_v1::
-    IamCheckerLimitedErrorCountRetryPolicy;
+/// @deprecated Use policytroubleshooter_v1::IamCheckerLimitedErrorCountRetryPolicy directly.
+using ::google::cloud::policytroubleshooter_v1::IamCheckerLimitedErrorCountRetryPolicy;
 
-/// @deprecated Use policytroubleshooter_v1::IamCheckerLimitedTimeRetryPolicy
-/// directly.
-using ::google::cloud::policytroubleshooter_v1::
-    IamCheckerLimitedTimeRetryPolicy;
+/// @deprecated Use policytroubleshooter_v1::IamCheckerLimitedTimeRetryPolicy directly.
+using ::google::cloud::policytroubleshooter_v1::IamCheckerLimitedTimeRetryPolicy;
 
 /// @deprecated Use policytroubleshooter_v1::IamCheckerRetryPolicy directly.
 using ::google::cloud::policytroubleshooter_v1::IamCheckerRetryPolicy;

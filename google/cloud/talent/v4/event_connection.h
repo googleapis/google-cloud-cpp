@@ -19,12 +19,12 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TALENT_V4_EVENT_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TALENT_V4_EVENT_CONNECTION_H
 
-#include "google/cloud/talent/v4/event_connection_idempotency_policy.h"
-#include "google/cloud/talent/v4/internal/event_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
+#include "google/cloud/talent/v4/event_connection_idempotency_policy.h"
+#include "google/cloud/talent/v4/internal/event_retry_traits.h"
 #include "google/cloud/version.h"
 #include <google/cloud/talent/v4/event_service.pb.h>
 #include <memory>
@@ -51,8 +51,7 @@ class EventServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class EventServiceLimitedErrorCountRetryPolicy
-    : public EventServiceRetryPolicy {
+class EventServiceLimitedErrorCountRetryPolicy : public EventServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -62,14 +61,14 @@ class EventServiceLimitedErrorCountRetryPolicy
    *     @p maximum_failures == 0.
    */
   explicit EventServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   EventServiceLimitedErrorCountRetryPolicy(
       EventServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : EventServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : EventServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   EventServiceLimitedErrorCountRetryPolicy(
       EventServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : EventServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : EventServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -89,9 +88,7 @@ class EventServiceLimitedErrorCountRetryPolicy
   using BaseType = EventServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      talent_v4_internal::EventServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<talent_v4_internal::EventServiceRetryTraits> impl_;
 };
 
 /**
@@ -129,14 +126,12 @@ class EventServiceLimitedTimeRetryPolicy : public EventServiceRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit EventServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  EventServiceLimitedTimeRetryPolicy(
-      EventServiceLimitedTimeRetryPolicy&& rhs) noexcept
-      : EventServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  EventServiceLimitedTimeRetryPolicy(
-      EventServiceLimitedTimeRetryPolicy const& rhs) noexcept
-      : EventServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  EventServiceLimitedTimeRetryPolicy(EventServiceLimitedTimeRetryPolicy&& rhs) noexcept
+    : EventServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  EventServiceLimitedTimeRetryPolicy(EventServiceLimitedTimeRetryPolicy const& rhs) noexcept
+    : EventServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -158,9 +153,7 @@ class EventServiceLimitedTimeRetryPolicy : public EventServiceRetryPolicy {
   using BaseType = EventServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      talent_v4_internal::EventServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<talent_v4_internal::EventServiceRetryTraits> impl_;
 };
 
 /**
@@ -181,11 +174,11 @@ class EventServiceConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<google::cloud::talent::v4::ClientEvent> CreateClientEvent(
-      google::cloud::talent::v4::CreateClientEventRequest const& request);
+  virtual StatusOr<google::cloud::talent::v4::ClientEvent>
+  CreateClientEvent(google::cloud::talent::v4::CreateClientEventRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 };
 
 /**

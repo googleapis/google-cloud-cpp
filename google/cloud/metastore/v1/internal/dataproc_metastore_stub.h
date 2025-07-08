@@ -25,9 +25,9 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/location/locations.grpc.pb.h>
-#include <google/cloud/metastore/v1/metastore.grpc.pb.h>
 #include <google/iam/v1/iam_policy.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
+#include <google/cloud/metastore/v1/metastore.grpc.pb.h>
 #include <memory>
 #include <utility>
 
@@ -40,13 +40,14 @@ class DataprocMetastoreStub {
  public:
   virtual ~DataprocMetastoreStub() = 0;
 
-  virtual StatusOr<google::cloud::metastore::v1::ListServicesResponse>
-  ListServices(
-      grpc::ClientContext& context, Options const& options,
+  virtual StatusOr<google::cloud::metastore::v1::ListServicesResponse> ListServices(
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::metastore::v1::ListServicesRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::metastore::v1::Service> GetService(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::metastore::v1::GetServiceRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateService(
@@ -56,7 +57,8 @@ class DataprocMetastoreStub {
       google::cloud::metastore::v1::CreateServiceRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> CreateService(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::cloud::metastore::v1::CreateServiceRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncUpdateService(
@@ -66,7 +68,8 @@ class DataprocMetastoreStub {
       google::cloud::metastore::v1::UpdateServiceRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> UpdateService(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::cloud::metastore::v1::UpdateServiceRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteService(
@@ -76,46 +79,41 @@ class DataprocMetastoreStub {
       google::cloud::metastore::v1::DeleteServiceRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> DeleteService(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::cloud::metastore::v1::DeleteServiceRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::metastore::v1::ListMetadataImportsResponse>
-  ListMetadataImports(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::metastore::v1::ListMetadataImportsRequest const&
-          request) = 0;
+  virtual StatusOr<google::cloud::metastore::v1::ListMetadataImportsResponse> ListMetadataImports(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::metastore::v1::ListMetadataImportsRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::metastore::v1::MetadataImport>
-  GetMetadataImport(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::metastore::v1::GetMetadataImportRequest const&
-          request) = 0;
+  virtual StatusOr<google::cloud::metastore::v1::MetadataImport> GetMetadataImport(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::metastore::v1::GetMetadataImportRequest const& request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>>
-  AsyncCreateMetadataImport(
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateMetadataImport(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::metastore::v1::CreateMetadataImportRequest const&
-          request) = 0;
+      google::cloud::metastore::v1::CreateMetadataImportRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> CreateMetadataImport(
-      grpc::ClientContext& context, Options options,
-      google::cloud::metastore::v1::CreateMetadataImportRequest const&
-          request) = 0;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::metastore::v1::CreateMetadataImportRequest const& request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>>
-  AsyncUpdateMetadataImport(
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncUpdateMetadataImport(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::metastore::v1::UpdateMetadataImportRequest const&
-          request) = 0;
+      google::cloud::metastore::v1::UpdateMetadataImportRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> UpdateMetadataImport(
-      grpc::ClientContext& context, Options options,
-      google::cloud::metastore::v1::UpdateMetadataImportRequest const&
-          request) = 0;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::metastore::v1::UpdateMetadataImportRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncExportMetadata(
       google::cloud::CompletionQueue& cq,
@@ -124,7 +122,8 @@ class DataprocMetastoreStub {
       google::cloud::metastore::v1::ExportMetadataRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> ExportMetadata(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::cloud::metastore::v1::ExportMetadataRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncRestoreService(
@@ -134,16 +133,18 @@ class DataprocMetastoreStub {
       google::cloud::metastore::v1::RestoreServiceRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> RestoreService(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::cloud::metastore::v1::RestoreServiceRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::metastore::v1::ListBackupsResponse>
-  ListBackups(
-      grpc::ClientContext& context, Options const& options,
+  virtual StatusOr<google::cloud::metastore::v1::ListBackupsResponse> ListBackups(
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::metastore::v1::ListBackupsRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::metastore::v1::Backup> GetBackup(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::metastore::v1::GetBackupRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateBackup(
@@ -153,7 +154,8 @@ class DataprocMetastoreStub {
       google::cloud::metastore::v1::CreateBackupRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> CreateBackup(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::cloud::metastore::v1::CreateBackupRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteBackup(
@@ -163,7 +165,8 @@ class DataprocMetastoreStub {
       google::cloud::metastore::v1::DeleteBackupRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> DeleteBackup(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::cloud::metastore::v1::DeleteBackupRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncQueryMetadata(
@@ -173,78 +176,81 @@ class DataprocMetastoreStub {
       google::cloud::metastore::v1::QueryMetadataRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> QueryMetadata(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::cloud::metastore::v1::QueryMetadataRequest const& request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>>
-  AsyncMoveTableToDatabase(
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncMoveTableToDatabase(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::metastore::v1::MoveTableToDatabaseRequest const&
-          request) = 0;
+      google::cloud::metastore::v1::MoveTableToDatabaseRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> MoveTableToDatabase(
-      grpc::ClientContext& context, Options options,
-      google::cloud::metastore::v1::MoveTableToDatabaseRequest const&
-          request) = 0;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::metastore::v1::MoveTableToDatabaseRequest const& request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>>
-  AsyncAlterMetadataResourceLocation(
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncAlterMetadataResourceLocation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::metastore::v1::AlterMetadataResourceLocationRequest const&
-          request) = 0;
+      google::cloud::metastore::v1::AlterMetadataResourceLocationRequest const& request) = 0;
 
-  virtual StatusOr<google::longrunning::Operation>
-  AlterMetadataResourceLocation(
-      grpc::ClientContext& context, Options options,
-      google::cloud::metastore::v1::AlterMetadataResourceLocationRequest const&
-          request) = 0;
+  virtual StatusOr<google::longrunning::Operation> AlterMetadataResourceLocation(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::metastore::v1::AlterMetadataResourceLocationRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::location::ListLocationsResponse>
-  ListLocations(
-      grpc::ClientContext& context, Options const& options,
+  virtual StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::location::ListLocationsRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::location::Location> GetLocation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::location::GetLocationRequest const& request) = 0;
 
   virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) = 0;
 
   virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) = 0;
 
-  virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
-  TestIamPermissions(
-      grpc::ClientContext& context, Options const& options,
+  virtual StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::ListOperationsRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual Status DeleteOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::DeleteOperationRequest const& request) = 0;
 
   virtual Status CancelOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::CancelOperationRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
+    google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
@@ -257,226 +263,220 @@ class DataprocMetastoreStub {
 class DefaultDataprocMetastoreStub : public DataprocMetastoreStub {
  public:
   DefaultDataprocMetastoreStub(
-      std::unique_ptr<
-          google::cloud::metastore::v1::DataprocMetastore::StubInterface>
-          grpc_stub,
+      std::unique_ptr<google::cloud::metastore::v1::DataprocMetastore::StubInterface> grpc_stub,
       std::unique_ptr<google::iam::v1::IAMPolicy::StubInterface> iampolicy_stub,
-      std::unique_ptr<google::cloud::location::Locations::StubInterface>
-          locations_stub,
-      std::unique_ptr<google::longrunning::Operations::StubInterface>
-          operations_stub)
+      std::unique_ptr<google::cloud::location::Locations::StubInterface> locations_stub,
+      std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub)
       : grpc_stub_(std::move(grpc_stub)),
         iampolicy_stub_(std::move(iampolicy_stub)),
         locations_stub_(std::move(locations_stub)),
         operations_stub_(std::move(operations_stub)) {}
 
   StatusOr<google::cloud::metastore::v1::ListServicesResponse> ListServices(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::metastore::v1::ListServicesRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::metastore::v1::ListServicesRequest const& request) override;
 
   StatusOr<google::cloud::metastore::v1::Service> GetService(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::metastore::v1::GetServiceRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateService(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::metastore::v1::CreateServiceRequest const& request)
-      override;
+      google::cloud::metastore::v1::CreateServiceRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateService(
-      grpc::ClientContext& context, Options options,
-      google::cloud::metastore::v1::CreateServiceRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::metastore::v1::CreateServiceRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateService(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::metastore::v1::UpdateServiceRequest const& request)
-      override;
+      google::cloud::metastore::v1::UpdateServiceRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateService(
-      grpc::ClientContext& context, Options options,
-      google::cloud::metastore::v1::UpdateServiceRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::metastore::v1::UpdateServiceRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteService(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::metastore::v1::DeleteServiceRequest const& request)
-      override;
+      google::cloud::metastore::v1::DeleteServiceRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteService(
-      grpc::ClientContext& context, Options options,
-      google::cloud::metastore::v1::DeleteServiceRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::metastore::v1::DeleteServiceRequest const& request) override;
 
-  StatusOr<google::cloud::metastore::v1::ListMetadataImportsResponse>
-  ListMetadataImports(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::metastore::v1::ListMetadataImportsRequest const& request)
-      override;
+  StatusOr<google::cloud::metastore::v1::ListMetadataImportsResponse> ListMetadataImports(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::metastore::v1::ListMetadataImportsRequest const& request) override;
 
   StatusOr<google::cloud::metastore::v1::MetadataImport> GetMetadataImport(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::metastore::v1::GetMetadataImportRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::metastore::v1::GetMetadataImportRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateMetadataImport(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::metastore::v1::CreateMetadataImportRequest const& request)
-      override;
+      google::cloud::metastore::v1::CreateMetadataImportRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateMetadataImport(
-      grpc::ClientContext& context, Options options,
-      google::cloud::metastore::v1::CreateMetadataImportRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::metastore::v1::CreateMetadataImportRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateMetadataImport(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::metastore::v1::UpdateMetadataImportRequest const& request)
-      override;
+      google::cloud::metastore::v1::UpdateMetadataImportRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateMetadataImport(
-      grpc::ClientContext& context, Options options,
-      google::cloud::metastore::v1::UpdateMetadataImportRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::metastore::v1::UpdateMetadataImportRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncExportMetadata(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::metastore::v1::ExportMetadataRequest const& request)
-      override;
+      google::cloud::metastore::v1::ExportMetadataRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> ExportMetadata(
-      grpc::ClientContext& context, Options options,
-      google::cloud::metastore::v1::ExportMetadataRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::metastore::v1::ExportMetadataRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncRestoreService(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::metastore::v1::RestoreServiceRequest const& request)
-      override;
+      google::cloud::metastore::v1::RestoreServiceRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> RestoreService(
-      grpc::ClientContext& context, Options options,
-      google::cloud::metastore::v1::RestoreServiceRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::metastore::v1::RestoreServiceRequest const& request) override;
 
   StatusOr<google::cloud::metastore::v1::ListBackupsResponse> ListBackups(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::metastore::v1::ListBackupsRequest const& request) override;
 
   StatusOr<google::cloud::metastore::v1::Backup> GetBackup(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::metastore::v1::GetBackupRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateBackup(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::metastore::v1::CreateBackupRequest const& request)
-      override;
+      google::cloud::metastore::v1::CreateBackupRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateBackup(
-      grpc::ClientContext& context, Options options,
-      google::cloud::metastore::v1::CreateBackupRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::metastore::v1::CreateBackupRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteBackup(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::metastore::v1::DeleteBackupRequest const& request)
-      override;
+      google::cloud::metastore::v1::DeleteBackupRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteBackup(
-      grpc::ClientContext& context, Options options,
-      google::cloud::metastore::v1::DeleteBackupRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::metastore::v1::DeleteBackupRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncQueryMetadata(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::metastore::v1::QueryMetadataRequest const& request)
-      override;
+      google::cloud::metastore::v1::QueryMetadataRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> QueryMetadata(
-      grpc::ClientContext& context, Options options,
-      google::cloud::metastore::v1::QueryMetadataRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::metastore::v1::QueryMetadataRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncMoveTableToDatabase(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::metastore::v1::MoveTableToDatabaseRequest const& request)
-      override;
+      google::cloud::metastore::v1::MoveTableToDatabaseRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> MoveTableToDatabase(
-      grpc::ClientContext& context, Options options,
-      google::cloud::metastore::v1::MoveTableToDatabaseRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::metastore::v1::MoveTableToDatabaseRequest const& request) override;
 
-  future<StatusOr<google::longrunning::Operation>>
-  AsyncAlterMetadataResourceLocation(
+  future<StatusOr<google::longrunning::Operation>> AsyncAlterMetadataResourceLocation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::metastore::v1::AlterMetadataResourceLocationRequest const&
-          request) override;
+      google::cloud::metastore::v1::AlterMetadataResourceLocationRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> AlterMetadataResourceLocation(
-      grpc::ClientContext& context, Options options,
-      google::cloud::metastore::v1::AlterMetadataResourceLocationRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::metastore::v1::AlterMetadataResourceLocationRequest const& request) override;
 
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::location::ListLocationsRequest const& request) override;
 
   StatusOr<google::cloud::location::Location> GetLocation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::location::GetLocationRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status DeleteOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::DeleteOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -492,14 +492,10 @@ class DefaultDataprocMetastoreStub : public DataprocMetastoreStub {
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  std::unique_ptr<
-      google::cloud::metastore::v1::DataprocMetastore::StubInterface>
-      grpc_stub_;
+  std::unique_ptr<google::cloud::metastore::v1::DataprocMetastore::StubInterface> grpc_stub_;
   std::unique_ptr<google::iam::v1::IAMPolicy::StubInterface> iampolicy_stub_;
-  std::unique_ptr<google::cloud::location::Locations::StubInterface>
-      locations_stub_;
-  std::unique_ptr<google::longrunning::Operations::StubInterface>
-      operations_stub_;
+  std::unique_ptr<google::cloud::location::Locations::StubInterface> locations_stub_;
+  std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

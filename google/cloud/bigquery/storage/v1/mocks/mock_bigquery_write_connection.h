@@ -42,50 +42,34 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockBigQueryWriteConnection
-    : public bigquery_storage_v1::BigQueryWriteConnection {
+class MockBigQueryWriteConnection : public bigquery_storage_v1::BigQueryWriteConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::bigquery::storage::v1::WriteStream>,
-      CreateWriteStream,
-      (google::cloud::bigquery::storage::v1::CreateWriteStreamRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::bigquery::storage::v1::WriteStream>,
+  CreateWriteStream,
+  (google::cloud::bigquery::storage::v1::CreateWriteStreamRequest const& request), (override));
 
-  MOCK_METHOD((std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
-                   google::cloud::bigquery::storage::v1::AppendRowsRequest,
-                   google::cloud::bigquery::storage::v1::AppendRowsResponse>>),
-              AsyncAppendRows, (), (override));
+  MOCK_METHOD((std::unique_ptr<
+      ::google::cloud::AsyncStreamingReadWriteRpc<
+          google::cloud::bigquery::storage::v1::AppendRowsRequest, google::cloud::bigquery::storage::v1::AppendRowsResponse>>),
+      AsyncAppendRows, (), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::bigquery::storage::v1::WriteStream>,
-      GetWriteStream,
-      (google::cloud::bigquery::storage::v1::GetWriteStreamRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::bigquery::storage::v1::WriteStream>,
+  GetWriteStream,
+  (google::cloud::bigquery::storage::v1::GetWriteStreamRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<
-          google::cloud::bigquery::storage::v1::FinalizeWriteStreamResponse>,
-      FinalizeWriteStream,
-      (google::cloud::bigquery::storage::v1::FinalizeWriteStreamRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::bigquery::storage::v1::FinalizeWriteStreamResponse>,
+  FinalizeWriteStream,
+  (google::cloud::bigquery::storage::v1::FinalizeWriteStreamRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::bigquery::storage::v1::
-                           BatchCommitWriteStreamsResponse>,
-              BatchCommitWriteStreams,
-              (google::cloud::bigquery::storage::v1::
-                   BatchCommitWriteStreamsRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::bigquery::storage::v1::BatchCommitWriteStreamsResponse>,
+  BatchCommitWriteStreams,
+  (google::cloud::bigquery::storage::v1::BatchCommitWriteStreamsRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::bigquery::storage::v1::FlushRowsResponse>,
-      FlushRows,
-      (google::cloud::bigquery::storage::v1::FlushRowsRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::bigquery::storage::v1::FlushRowsResponse>,
+  FlushRows,
+  (google::cloud::bigquery::storage::v1::FlushRowsRequest const& request), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

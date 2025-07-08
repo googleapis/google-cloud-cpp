@@ -17,12 +17,12 @@
 // source: google/cloud/billing/budgets/v1/budget_service.proto
 
 #include "google/cloud/billing/budgets/v1/budget_connection.h"
+#include "google/cloud/background_threads.h"
 #include "google/cloud/billing/budgets/v1/budget_options.h"
 #include "google/cloud/billing/budgets/v1/internal/budget_connection_impl.h"
 #include "google/cloud/billing/budgets/v1/internal/budget_option_defaults.h"
 #include "google/cloud/billing/budgets/v1/internal/budget_stub_factory.h"
 #include "google/cloud/billing/budgets/v1/internal/budget_tracing_connection.h"
-#include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
@@ -56,15 +56,14 @@ BudgetServiceConnection::GetBudget(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::billing::budgets::v1::Budget>
-BudgetServiceConnection::ListBudgets(
-    google::cloud::billing::budgets::v1::
-        ListBudgetsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::billing::budgets::v1::Budget> BudgetServiceConnection::ListBudgets(
+    google::cloud::billing::budgets::v1::ListBudgetsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::billing::budgets::v1::Budget>>();
 }
 
-Status BudgetServiceConnection::DeleteBudget(
+Status
+BudgetServiceConnection::DeleteBudget(
     google::cloud::billing::budgets::v1::DeleteBudgetRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -72,19 +71,17 @@ Status BudgetServiceConnection::DeleteBudget(
 std::shared_ptr<BudgetServiceConnection> MakeBudgetServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 BudgetServicePolicyOptionList>(options,
-                                                                __func__);
+      UnifiedCredentialsOptionList,
+      BudgetServicePolicyOptionList>(options, __func__);
   options = billing_budgets_v1_internal::BudgetServiceDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = billing_budgets_v1_internal::CreateDefaultBudgetServiceStub(
-      std::move(auth), options);
+    std::move(auth), options);
   return billing_budgets_v1_internal::MakeBudgetServiceTracingConnection(
-      std::make_shared<
-          billing_budgets_v1_internal::BudgetServiceConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options)));
+      std::make_shared<billing_budgets_v1_internal::BudgetServiceConnectionImpl>(
+      std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

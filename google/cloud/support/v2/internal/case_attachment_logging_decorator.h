@@ -35,13 +35,13 @@ class CaseAttachmentServiceLogging : public CaseAttachmentServiceStub {
  public:
   ~CaseAttachmentServiceLogging() override = default;
   CaseAttachmentServiceLogging(std::shared_ptr<CaseAttachmentServiceStub> child,
-                               TracingOptions tracing_options,
-                               std::set<std::string> const& components);
+                       TracingOptions tracing_options,
+                       std::set<std::string> const& components);
 
   StatusOr<google::cloud::support::v2::ListAttachmentsResponse> ListAttachments(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::support::v2::ListAttachmentsRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::support::v2::ListAttachmentsRequest const& request) override;
 
  private:
   std::shared_ptr<CaseAttachmentServiceStub> child_;

@@ -35,36 +35,30 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options LicensesDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_LICENSES_ENDPOINT", "",
-      "GOOGLE_CLOUD_CPP_LICENSES_AUTHORITY", "compute.googleapis.com");
+      std::move(options), "GOOGLE_CLOUD_CPP_LICENSES_ENDPOINT",
+      "", "GOOGLE_CLOUD_CPP_LICENSES_AUTHORITY",
+      "compute.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<compute_licenses_v1::LicensesRetryPolicyOption>()) {
     options.set<compute_licenses_v1::LicensesRetryPolicyOption>(
         compute_licenses_v1::LicensesLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
-            .clone());
+            std::chrono::minutes(30)).clone());
   }
   if (!options.has<compute_licenses_v1::LicensesBackoffPolicyOption>()) {
     options.set<compute_licenses_v1::LicensesBackoffPolicyOption>(
-        ExponentialBackoffPolicy(
-            std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
-            .clone());
+        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
   }
   if (!options.has<compute_licenses_v1::LicensesPollingPolicyOption>()) {
     options.set<compute_licenses_v1::LicensesPollingPolicyOption>(
         GenericPollingPolicy<
             compute_licenses_v1::LicensesRetryPolicyOption::Type,
             compute_licenses_v1::LicensesBackoffPolicyOption::Type>(
-            options.get<compute_licenses_v1::LicensesRetryPolicyOption>()
-                ->clone(),
+            options.get<compute_licenses_v1::LicensesRetryPolicyOption>()->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                     std::chrono::minutes(5), kBackoffScaling)
-                .clone())
-            .clone());
+            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
   }
-  if (!options.has<
-          compute_licenses_v1::LicensesConnectionIdempotencyPolicyOption>()) {
+  if (!options.has<compute_licenses_v1::LicensesConnectionIdempotencyPolicyOption>()) {
     options.set<compute_licenses_v1::LicensesConnectionIdempotencyPolicyOption>(
         compute_licenses_v1::MakeDefaultLicensesConnectionIdempotencyPolicy());
   }

@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CHRONICLE_V1_ENTITY_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CHRONICLE_V1_ENTITY_OPTIONS_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/chronicle/v1/entity_connection.h"
 #include "google/cloud/chronicle/v1/entity_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -64,7 +64,8 @@ struct EntityServiceConnectionIdempotencyPolicyOption {
  * @ingroup google-cloud-chronicle-options
  */
 using EntityServicePolicyOptionList =
-    OptionList<EntityServiceRetryPolicyOption, EntityServiceBackoffPolicyOption,
+    OptionList<EntityServiceRetryPolicyOption,
+               EntityServiceBackoffPolicyOption,
                EntityServiceConnectionIdempotencyPolicyOption>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

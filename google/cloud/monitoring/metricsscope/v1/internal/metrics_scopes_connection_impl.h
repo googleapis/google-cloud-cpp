@@ -19,14 +19,14 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_METRICSSCOPE_V1_INTERNAL_METRICS_SCOPES_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_METRICSSCOPE_V1_INTERNAL_METRICS_SCOPES_CONNECTION_IMPL_H
 
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/future.h"
 #include "google/cloud/monitoring/metricsscope/v1/internal/metrics_scopes_retry_traits.h"
 #include "google/cloud/monitoring/metricsscope/v1/internal/metrics_scopes_stub.h"
 #include "google/cloud/monitoring/metricsscope/v1/metrics_scopes_connection.h"
 #include "google/cloud/monitoring/metricsscope/v1/metrics_scopes_connection_idempotency_policy.h"
 #include "google/cloud/monitoring/metricsscope/v1/metrics_scopes_options.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -45,46 +45,35 @@ class MetricsScopesConnectionImpl
   ~MetricsScopesConnectionImpl() override = default;
 
   MetricsScopesConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<monitoring_metricsscope_v1_internal::MetricsScopesStub>
-          stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<monitoring_metricsscope_v1_internal::MetricsScopesStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
-  StatusOr<google::monitoring::metricsscope::v1::MetricsScope> GetMetricsScope(
-      google::monitoring::metricsscope::v1::GetMetricsScopeRequest const&
-          request) override;
+  StatusOr<google::monitoring::metricsscope::v1::MetricsScope>
+  GetMetricsScope(google::monitoring::metricsscope::v1::GetMetricsScopeRequest const& request) override;
 
-  StatusOr<google::monitoring::metricsscope::v1::
-               ListMetricsScopesByMonitoredProjectResponse>
-  ListMetricsScopesByMonitoredProject(
-      google::monitoring::metricsscope::v1::
-          ListMetricsScopesByMonitoredProjectRequest const& request) override;
+  StatusOr<google::monitoring::metricsscope::v1::ListMetricsScopesByMonitoredProjectResponse>
+  ListMetricsScopesByMonitoredProject(google::monitoring::metricsscope::v1::ListMetricsScopesByMonitoredProjectRequest const& request) override;
 
   future<StatusOr<google::monitoring::metricsscope::v1::MonitoredProject>>
-  CreateMonitoredProject(
-      google::monitoring::metricsscope::v1::CreateMonitoredProjectRequest const&
-          request) override;
+  CreateMonitoredProject(google::monitoring::metricsscope::v1::CreateMonitoredProjectRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> CreateMonitoredProject(
-      NoAwaitTag,
-      google::monitoring::metricsscope::v1::CreateMonitoredProjectRequest const&
-          request) override;
+  StatusOr<google::longrunning::Operation>
+  CreateMonitoredProject(NoAwaitTag,
+      google::monitoring::metricsscope::v1::CreateMonitoredProjectRequest const& request) override;
 
   future<StatusOr<google::monitoring::metricsscope::v1::MonitoredProject>>
   CreateMonitoredProject(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::monitoring::metricsscope::v1::OperationMetadata>>
-  DeleteMonitoredProject(
-      google::monitoring::metricsscope::v1::DeleteMonitoredProjectRequest const&
-          request) override;
+  DeleteMonitoredProject(google::monitoring::metricsscope::v1::DeleteMonitoredProjectRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> DeleteMonitoredProject(
-      NoAwaitTag,
-      google::monitoring::metricsscope::v1::DeleteMonitoredProjectRequest const&
-          request) override;
+  StatusOr<google::longrunning::Operation>
+  DeleteMonitoredProject(NoAwaitTag,
+      google::monitoring::metricsscope::v1::DeleteMonitoredProjectRequest const& request) override;
 
   future<StatusOr<google::monitoring::metricsscope::v1::OperationMetadata>>
   DeleteMonitoredProject(

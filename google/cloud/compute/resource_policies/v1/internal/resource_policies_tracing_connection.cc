@@ -30,183 +30,135 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 ResourcePoliciesTracingConnection::ResourcePoliciesTracingConnection(
-    std::shared_ptr<compute_resource_policies_v1::ResourcePoliciesConnection>
-        child)
+    std::shared_ptr<compute_resource_policies_v1::ResourcePoliciesConnection> child)
     : child_(std::move(child)) {}
 
-StreamRange<std::pair<
-    std::string, google::cloud::cpp::compute::v1::ResourcePoliciesScopedList>>
-ResourcePoliciesTracingConnection::AggregatedListResourcePolicies(
-    google::cloud::cpp::compute::resource_policies::v1::
-        AggregatedListResourcePoliciesRequest request) {
-  auto span = internal::MakeSpan(
-      "compute_resource_policies_v1::ResourcePoliciesConnection::"
-      "AggregatedListResourcePolicies");
+StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::ResourcePoliciesScopedList>>
+ResourcePoliciesTracingConnection::AggregatedListResourcePolicies(google::cloud::cpp::compute::resource_policies::v1::AggregatedListResourcePoliciesRequest request) {
+  auto span = internal::MakeSpan("compute_resource_policies_v1::ResourcePoliciesConnection::AggregatedListResourcePolicies");
   internal::OTelScope scope(span);
   auto sr = child_->AggregatedListResourcePolicies(std::move(request));
-  return internal::MakeTracedStreamRange<
-      std::pair<std::string,
-                google::cloud::cpp::compute::v1::ResourcePoliciesScopedList>>(
-      std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::ResourcePoliciesScopedList>>(
+        std::move(span), std::move(sr));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-ResourcePoliciesTracingConnection::DeleteResourcePolicy(
-    google::cloud::cpp::compute::resource_policies::v1::
-        DeleteResourcePolicyRequest const& request) {
+ResourcePoliciesTracingConnection::DeleteResourcePolicy(google::cloud::cpp::compute::resource_policies::v1::DeleteResourcePolicyRequest const& request) {
   auto span = internal::MakeSpan(
-      "compute_resource_policies_v1::ResourcePoliciesConnection::"
-      "DeleteResourcePolicy");
+      "compute_resource_policies_v1::ResourcePoliciesConnection::DeleteResourcePolicy");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->DeleteResourcePolicy(request));
+  return internal::EndSpan(std::move(span), child_->DeleteResourcePolicy(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ResourcePoliciesTracingConnection::DeleteResourcePolicy(
-    NoAwaitTag, google::cloud::cpp::compute::resource_policies::v1::
-                    DeleteResourcePolicyRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::resource_policies::v1::DeleteResourcePolicyRequest const& request) {
   auto span = internal::MakeSpan(
-      "compute_resource_policies_v1::ResourcePoliciesConnection::"
-      "DeleteResourcePolicy");
+      "compute_resource_policies_v1::ResourcePoliciesConnection::DeleteResourcePolicy");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span,
-                           child_->DeleteResourcePolicy(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->DeleteResourcePolicy(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ResourcePoliciesTracingConnection::DeleteResourcePolicy(
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
-      "compute_resource_policies_v1::ResourcePoliciesConnection::"
-      "DeleteResourcePolicy");
+      "compute_resource_policies_v1::ResourcePoliciesConnection::DeleteResourcePolicy");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->DeleteResourcePolicy(operation));
+      child_->DeleteResourcePolicy(operation));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::ResourcePolicy>
-ResourcePoliciesTracingConnection::GetResourcePolicy(
-    google::cloud::cpp::compute::resource_policies::v1::
-        GetResourcePolicyRequest const& request) {
-  auto span = internal::MakeSpan(
-      "compute_resource_policies_v1::ResourcePoliciesConnection::"
-      "GetResourcePolicy");
+ResourcePoliciesTracingConnection::GetResourcePolicy(google::cloud::cpp::compute::resource_policies::v1::GetResourcePolicyRequest const& request) {
+  auto span = internal::MakeSpan("compute_resource_policies_v1::ResourcePoliciesConnection::GetResourcePolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetResourcePolicy(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
-ResourcePoliciesTracingConnection::GetIamPolicy(
-    google::cloud::cpp::compute::resource_policies::v1::
-        GetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpan(
-      "compute_resource_policies_v1::ResourcePoliciesConnection::GetIamPolicy");
+ResourcePoliciesTracingConnection::GetIamPolicy(google::cloud::cpp::compute::resource_policies::v1::GetIamPolicyRequest const& request) {
+  auto span = internal::MakeSpan("compute_resource_policies_v1::ResourcePoliciesConnection::GetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetIamPolicy(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-ResourcePoliciesTracingConnection::InsertResourcePolicy(
-    google::cloud::cpp::compute::resource_policies::v1::
-        InsertResourcePolicyRequest const& request) {
+ResourcePoliciesTracingConnection::InsertResourcePolicy(google::cloud::cpp::compute::resource_policies::v1::InsertResourcePolicyRequest const& request) {
   auto span = internal::MakeSpan(
-      "compute_resource_policies_v1::ResourcePoliciesConnection::"
-      "InsertResourcePolicy");
+      "compute_resource_policies_v1::ResourcePoliciesConnection::InsertResourcePolicy");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->InsertResourcePolicy(request));
+  return internal::EndSpan(std::move(span), child_->InsertResourcePolicy(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ResourcePoliciesTracingConnection::InsertResourcePolicy(
-    NoAwaitTag, google::cloud::cpp::compute::resource_policies::v1::
-                    InsertResourcePolicyRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::resource_policies::v1::InsertResourcePolicyRequest const& request) {
   auto span = internal::MakeSpan(
-      "compute_resource_policies_v1::ResourcePoliciesConnection::"
-      "InsertResourcePolicy");
+      "compute_resource_policies_v1::ResourcePoliciesConnection::InsertResourcePolicy");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span,
-                           child_->InsertResourcePolicy(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->InsertResourcePolicy(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ResourcePoliciesTracingConnection::InsertResourcePolicy(
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
-      "compute_resource_policies_v1::ResourcePoliciesConnection::"
-      "InsertResourcePolicy");
+      "compute_resource_policies_v1::ResourcePoliciesConnection::InsertResourcePolicy");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->InsertResourcePolicy(operation));
+      child_->InsertResourcePolicy(operation));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::ResourcePolicy>
-ResourcePoliciesTracingConnection::ListResourcePolicies(
-    google::cloud::cpp::compute::resource_policies::v1::
-        ListResourcePoliciesRequest request) {
-  auto span = internal::MakeSpan(
-      "compute_resource_policies_v1::ResourcePoliciesConnection::"
-      "ListResourcePolicies");
+ResourcePoliciesTracingConnection::ListResourcePolicies(google::cloud::cpp::compute::resource_policies::v1::ListResourcePoliciesRequest request) {
+  auto span = internal::MakeSpan("compute_resource_policies_v1::ResourcePoliciesConnection::ListResourcePolicies");
   internal::OTelScope scope(span);
   auto sr = child_->ListResourcePolicies(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::cpp::compute::v1::ResourcePolicy>(std::move(span),
-                                                       std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::cpp::compute::v1::ResourcePolicy>(
+        std::move(span), std::move(sr));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-ResourcePoliciesTracingConnection::PatchResourcePolicy(
-    google::cloud::cpp::compute::resource_policies::v1::
-        PatchResourcePolicyRequest const& request) {
+ResourcePoliciesTracingConnection::PatchResourcePolicy(google::cloud::cpp::compute::resource_policies::v1::PatchResourcePolicyRequest const& request) {
   auto span = internal::MakeSpan(
-      "compute_resource_policies_v1::ResourcePoliciesConnection::"
-      "PatchResourcePolicy");
+      "compute_resource_policies_v1::ResourcePoliciesConnection::PatchResourcePolicy");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->PatchResourcePolicy(request));
+  return internal::EndSpan(std::move(span), child_->PatchResourcePolicy(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ResourcePoliciesTracingConnection::PatchResourcePolicy(
-    NoAwaitTag, google::cloud::cpp::compute::resource_policies::v1::
-                    PatchResourcePolicyRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::resource_policies::v1::PatchResourcePolicyRequest const& request) {
   auto span = internal::MakeSpan(
-      "compute_resource_policies_v1::ResourcePoliciesConnection::"
-      "PatchResourcePolicy");
+      "compute_resource_policies_v1::ResourcePoliciesConnection::PatchResourcePolicy");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span,
-                           child_->PatchResourcePolicy(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->PatchResourcePolicy(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ResourcePoliciesTracingConnection::PatchResourcePolicy(
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
-      "compute_resource_policies_v1::ResourcePoliciesConnection::"
-      "PatchResourcePolicy");
+      "compute_resource_policies_v1::ResourcePoliciesConnection::PatchResourcePolicy");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->PatchResourcePolicy(operation));
+      child_->PatchResourcePolicy(operation));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
-ResourcePoliciesTracingConnection::SetIamPolicy(
-    google::cloud::cpp::compute::resource_policies::v1::
-        SetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpan(
-      "compute_resource_policies_v1::ResourcePoliciesConnection::SetIamPolicy");
+ResourcePoliciesTracingConnection::SetIamPolicy(google::cloud::cpp::compute::resource_policies::v1::SetIamPolicyRequest const& request) {
+  auto span = internal::MakeSpan("compute_resource_policies_v1::ResourcePoliciesConnection::SetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->SetIamPolicy(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-ResourcePoliciesTracingConnection::TestIamPermissions(
-    google::cloud::cpp::compute::resource_policies::v1::
-        TestIamPermissionsRequest const& request) {
-  auto span = internal::MakeSpan(
-      "compute_resource_policies_v1::ResourcePoliciesConnection::"
-      "TestIamPermissions");
+ResourcePoliciesTracingConnection::TestIamPermissions(google::cloud::cpp::compute::resource_policies::v1::TestIamPermissionsRequest const& request) {
+  auto span = internal::MakeSpan("compute_resource_policies_v1::ResourcePoliciesConnection::TestIamPermissions");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->TestIamPermissions(request));
 }
@@ -215,8 +167,7 @@ ResourcePoliciesTracingConnection::TestIamPermissions(
 
 std::shared_ptr<compute_resource_policies_v1::ResourcePoliciesConnection>
 MakeResourcePoliciesTracingConnection(
-    std::shared_ptr<compute_resource_policies_v1::ResourcePoliciesConnection>
-        conn) {
+    std::shared_ptr<compute_resource_policies_v1::ResourcePoliciesConnection> conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<ResourcePoliciesTracingConnection>(std::move(conn));

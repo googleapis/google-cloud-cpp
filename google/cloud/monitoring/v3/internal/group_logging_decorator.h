@@ -35,31 +35,37 @@ class GroupServiceLogging : public GroupServiceStub {
  public:
   ~GroupServiceLogging() override = default;
   GroupServiceLogging(std::shared_ptr<GroupServiceStub> child,
-                      TracingOptions tracing_options,
-                      std::set<std::string> const& components);
+                       TracingOptions tracing_options,
+                       std::set<std::string> const& components);
 
   StatusOr<google::monitoring::v3::ListGroupsResponse> ListGroups(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::monitoring::v3::ListGroupsRequest const& request) override;
 
   StatusOr<google::monitoring::v3::Group> GetGroup(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::monitoring::v3::GetGroupRequest const& request) override;
 
   StatusOr<google::monitoring::v3::Group> CreateGroup(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::monitoring::v3::CreateGroupRequest const& request) override;
 
   StatusOr<google::monitoring::v3::Group> UpdateGroup(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::monitoring::v3::UpdateGroupRequest const& request) override;
 
   Status DeleteGroup(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::monitoring::v3::DeleteGroupRequest const& request) override;
 
   StatusOr<google::monitoring::v3::ListGroupMembersResponse> ListGroupMembers(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::monitoring::v3::ListGroupMembersRequest const& request) override;
 
  private:

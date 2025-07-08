@@ -36,35 +36,30 @@ class AddressesConnectionIdempotencyPolicy {
   /// Create a new copy of this object.
   virtual std::unique_ptr<AddressesConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency AggregatedListAddresses(
-      google::cloud::cpp::compute::addresses::v1::AggregatedListAddressesRequest
-          request);
+  virtual google::cloud::Idempotency
+  AggregatedListAddresses(google::cloud::cpp::compute::addresses::v1::AggregatedListAddressesRequest request);
 
-  virtual google::cloud::Idempotency DeleteAddress(
-      google::cloud::cpp::compute::addresses::v1::DeleteAddressRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  DeleteAddress(google::cloud::cpp::compute::addresses::v1::DeleteAddressRequest const& request);
 
-  virtual google::cloud::Idempotency GetAddress(
-      google::cloud::cpp::compute::addresses::v1::GetAddressRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  GetAddress(google::cloud::cpp::compute::addresses::v1::GetAddressRequest const& request);
 
-  virtual google::cloud::Idempotency InsertAddress(
-      google::cloud::cpp::compute::addresses::v1::InsertAddressRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  InsertAddress(google::cloud::cpp::compute::addresses::v1::InsertAddressRequest const& request);
 
-  virtual google::cloud::Idempotency ListAddresses(
-      google::cloud::cpp::compute::addresses::v1::ListAddressesRequest request);
+  virtual google::cloud::Idempotency
+  ListAddresses(google::cloud::cpp::compute::addresses::v1::ListAddressesRequest request);
 
-  virtual google::cloud::Idempotency Move(
-      google::cloud::cpp::compute::addresses::v1::MoveRequest const& request);
+  virtual google::cloud::Idempotency
+  Move(google::cloud::cpp::compute::addresses::v1::MoveRequest const& request);
 
-  virtual google::cloud::Idempotency SetLabels(
-      google::cloud::cpp::compute::addresses::v1::SetLabelsRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  SetLabels(google::cloud::cpp::compute::addresses::v1::SetLabelsRequest const& request);
 };
 
 std::unique_ptr<AddressesConnectionIdempotencyPolicy>
-MakeDefaultAddressesConnectionIdempotencyPolicy();
+    MakeDefaultAddressesConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_addresses_v1

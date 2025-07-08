@@ -28,15 +28,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ReservationServiceClient::ReservationServiceClient(
     std::shared_ptr<ReservationServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 ReservationServiceClient::~ReservationServiceClient() = default;
 
 StatusOr<google::cloud::bigquery::reservation::v1::Reservation>
-ReservationServiceClient::CreateReservation(
-    std::string const& parent,
-    google::cloud::bigquery::reservation::v1::Reservation const& reservation,
-    std::string const& reservation_id, Options opts) {
+ReservationServiceClient::CreateReservation(std::string const& parent, google::cloud::bigquery::reservation::v1::Reservation const& reservation, std::string const& reservation_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::bigquery::reservation::v1::CreateReservationRequest request;
   request.set_parent(parent);
@@ -46,17 +43,13 @@ ReservationServiceClient::CreateReservation(
 }
 
 StatusOr<google::cloud::bigquery::reservation::v1::Reservation>
-ReservationServiceClient::CreateReservation(
-    google::cloud::bigquery::reservation::v1::CreateReservationRequest const&
-        request,
-    Options opts) {
+ReservationServiceClient::CreateReservation(google::cloud::bigquery::reservation::v1::CreateReservationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateReservation(request);
 }
 
 StreamRange<google::cloud::bigquery::reservation::v1::Reservation>
-ReservationServiceClient::ListReservations(std::string const& parent,
-                                           Options opts) {
+ReservationServiceClient::ListReservations(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::bigquery::reservation::v1::ListReservationsRequest request;
   request.set_parent(parent);
@@ -64,16 +57,13 @@ ReservationServiceClient::ListReservations(std::string const& parent,
 }
 
 StreamRange<google::cloud::bigquery::reservation::v1::Reservation>
-ReservationServiceClient::ListReservations(
-    google::cloud::bigquery::reservation::v1::ListReservationsRequest request,
-    Options opts) {
+ReservationServiceClient::ListReservations(google::cloud::bigquery::reservation::v1::ListReservationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListReservations(std::move(request));
 }
 
 StatusOr<google::cloud::bigquery::reservation::v1::Reservation>
-ReservationServiceClient::GetReservation(std::string const& name,
-                                         Options opts) {
+ReservationServiceClient::GetReservation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::bigquery::reservation::v1::GetReservationRequest request;
   request.set_name(name);
@@ -81,34 +71,27 @@ ReservationServiceClient::GetReservation(std::string const& name,
 }
 
 StatusOr<google::cloud::bigquery::reservation::v1::Reservation>
-ReservationServiceClient::GetReservation(
-    google::cloud::bigquery::reservation::v1::GetReservationRequest const&
-        request,
-    Options opts) {
+ReservationServiceClient::GetReservation(google::cloud::bigquery::reservation::v1::GetReservationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetReservation(request);
 }
 
-Status ReservationServiceClient::DeleteReservation(std::string const& name,
-                                                   Options opts) {
+Status
+ReservationServiceClient::DeleteReservation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::bigquery::reservation::v1::DeleteReservationRequest request;
   request.set_name(name);
   return connection_->DeleteReservation(request);
 }
 
-Status ReservationServiceClient::DeleteReservation(
-    google::cloud::bigquery::reservation::v1::DeleteReservationRequest const&
-        request,
-    Options opts) {
+Status
+ReservationServiceClient::DeleteReservation(google::cloud::bigquery::reservation::v1::DeleteReservationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteReservation(request);
 }
 
 StatusOr<google::cloud::bigquery::reservation::v1::Reservation>
-ReservationServiceClient::UpdateReservation(
-    google::cloud::bigquery::reservation::v1::Reservation const& reservation,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+ReservationServiceClient::UpdateReservation(google::cloud::bigquery::reservation::v1::Reservation const& reservation, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::bigquery::reservation::v1::UpdateReservationRequest request;
   *request.mutable_reservation() = reservation;
@@ -117,173 +100,121 @@ ReservationServiceClient::UpdateReservation(
 }
 
 StatusOr<google::cloud::bigquery::reservation::v1::Reservation>
-ReservationServiceClient::UpdateReservation(
-    google::cloud::bigquery::reservation::v1::UpdateReservationRequest const&
-        request,
-    Options opts) {
+ReservationServiceClient::UpdateReservation(google::cloud::bigquery::reservation::v1::UpdateReservationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateReservation(request);
 }
 
 StatusOr<google::cloud::bigquery::reservation::v1::Reservation>
-ReservationServiceClient::FailoverReservation(
-    google::cloud::bigquery::reservation::v1::FailoverReservationRequest const&
-        request,
-    Options opts) {
+ReservationServiceClient::FailoverReservation(google::cloud::bigquery::reservation::v1::FailoverReservationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->FailoverReservation(request);
 }
 
 StatusOr<google::cloud::bigquery::reservation::v1::CapacityCommitment>
-ReservationServiceClient::CreateCapacityCommitment(
-    std::string const& parent,
-    google::cloud::bigquery::reservation::v1::CapacityCommitment const&
-        capacity_commitment,
-    Options opts) {
+ReservationServiceClient::CreateCapacityCommitment(std::string const& parent, google::cloud::bigquery::reservation::v1::CapacityCommitment const& capacity_commitment, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::bigquery::reservation::v1::CreateCapacityCommitmentRequest
-      request;
+  google::cloud::bigquery::reservation::v1::CreateCapacityCommitmentRequest request;
   request.set_parent(parent);
   *request.mutable_capacity_commitment() = capacity_commitment;
   return connection_->CreateCapacityCommitment(request);
 }
 
 StatusOr<google::cloud::bigquery::reservation::v1::CapacityCommitment>
-ReservationServiceClient::CreateCapacityCommitment(
-    google::cloud::bigquery::reservation::v1::
-        CreateCapacityCommitmentRequest const& request,
-    Options opts) {
+ReservationServiceClient::CreateCapacityCommitment(google::cloud::bigquery::reservation::v1::CreateCapacityCommitmentRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateCapacityCommitment(request);
 }
 
 StreamRange<google::cloud::bigquery::reservation::v1::CapacityCommitment>
-ReservationServiceClient::ListCapacityCommitments(std::string const& parent,
-                                                  Options opts) {
+ReservationServiceClient::ListCapacityCommitments(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::bigquery::reservation::v1::ListCapacityCommitmentsRequest
-      request;
+  google::cloud::bigquery::reservation::v1::ListCapacityCommitmentsRequest request;
   request.set_parent(parent);
   return connection_->ListCapacityCommitments(request);
 }
 
 StreamRange<google::cloud::bigquery::reservation::v1::CapacityCommitment>
-ReservationServiceClient::ListCapacityCommitments(
-    google::cloud::bigquery::reservation::v1::ListCapacityCommitmentsRequest
-        request,
-    Options opts) {
+ReservationServiceClient::ListCapacityCommitments(google::cloud::bigquery::reservation::v1::ListCapacityCommitmentsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListCapacityCommitments(std::move(request));
 }
 
 StatusOr<google::cloud::bigquery::reservation::v1::CapacityCommitment>
-ReservationServiceClient::GetCapacityCommitment(std::string const& name,
-                                                Options opts) {
+ReservationServiceClient::GetCapacityCommitment(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::bigquery::reservation::v1::GetCapacityCommitmentRequest
-      request;
+  google::cloud::bigquery::reservation::v1::GetCapacityCommitmentRequest request;
   request.set_name(name);
   return connection_->GetCapacityCommitment(request);
 }
 
 StatusOr<google::cloud::bigquery::reservation::v1::CapacityCommitment>
-ReservationServiceClient::GetCapacityCommitment(
-    google::cloud::bigquery::reservation::v1::
-        GetCapacityCommitmentRequest const& request,
-    Options opts) {
+ReservationServiceClient::GetCapacityCommitment(google::cloud::bigquery::reservation::v1::GetCapacityCommitmentRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetCapacityCommitment(request);
 }
 
-Status ReservationServiceClient::DeleteCapacityCommitment(
-    std::string const& name, Options opts) {
+Status
+ReservationServiceClient::DeleteCapacityCommitment(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::bigquery::reservation::v1::DeleteCapacityCommitmentRequest
-      request;
+  google::cloud::bigquery::reservation::v1::DeleteCapacityCommitmentRequest request;
   request.set_name(name);
   return connection_->DeleteCapacityCommitment(request);
 }
 
-Status ReservationServiceClient::DeleteCapacityCommitment(
-    google::cloud::bigquery::reservation::v1::
-        DeleteCapacityCommitmentRequest const& request,
-    Options opts) {
+Status
+ReservationServiceClient::DeleteCapacityCommitment(google::cloud::bigquery::reservation::v1::DeleteCapacityCommitmentRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteCapacityCommitment(request);
 }
 
 StatusOr<google::cloud::bigquery::reservation::v1::CapacityCommitment>
-ReservationServiceClient::UpdateCapacityCommitment(
-    google::cloud::bigquery::reservation::v1::CapacityCommitment const&
-        capacity_commitment,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+ReservationServiceClient::UpdateCapacityCommitment(google::cloud::bigquery::reservation::v1::CapacityCommitment const& capacity_commitment, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::bigquery::reservation::v1::UpdateCapacityCommitmentRequest
-      request;
+  google::cloud::bigquery::reservation::v1::UpdateCapacityCommitmentRequest request;
   *request.mutable_capacity_commitment() = capacity_commitment;
   *request.mutable_update_mask() = update_mask;
   return connection_->UpdateCapacityCommitment(request);
 }
 
 StatusOr<google::cloud::bigquery::reservation::v1::CapacityCommitment>
-ReservationServiceClient::UpdateCapacityCommitment(
-    google::cloud::bigquery::reservation::v1::
-        UpdateCapacityCommitmentRequest const& request,
-    Options opts) {
+ReservationServiceClient::UpdateCapacityCommitment(google::cloud::bigquery::reservation::v1::UpdateCapacityCommitmentRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateCapacityCommitment(request);
 }
 
-StatusOr<
-    google::cloud::bigquery::reservation::v1::SplitCapacityCommitmentResponse>
-ReservationServiceClient::SplitCapacityCommitment(std::string const& name,
-                                                  std::int64_t slot_count,
-                                                  Options opts) {
+StatusOr<google::cloud::bigquery::reservation::v1::SplitCapacityCommitmentResponse>
+ReservationServiceClient::SplitCapacityCommitment(std::string const& name, std::int64_t slot_count, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::bigquery::reservation::v1::SplitCapacityCommitmentRequest
-      request;
+  google::cloud::bigquery::reservation::v1::SplitCapacityCommitmentRequest request;
   request.set_name(name);
   request.set_slot_count(slot_count);
   return connection_->SplitCapacityCommitment(request);
 }
 
-StatusOr<
-    google::cloud::bigquery::reservation::v1::SplitCapacityCommitmentResponse>
-ReservationServiceClient::SplitCapacityCommitment(
-    google::cloud::bigquery::reservation::v1::
-        SplitCapacityCommitmentRequest const& request,
-    Options opts) {
+StatusOr<google::cloud::bigquery::reservation::v1::SplitCapacityCommitmentResponse>
+ReservationServiceClient::SplitCapacityCommitment(google::cloud::bigquery::reservation::v1::SplitCapacityCommitmentRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SplitCapacityCommitment(request);
 }
 
 StatusOr<google::cloud::bigquery::reservation::v1::CapacityCommitment>
-ReservationServiceClient::MergeCapacityCommitments(
-    std::string const& parent,
-    std::vector<std::string> const& capacity_commitment_ids, Options opts) {
+ReservationServiceClient::MergeCapacityCommitments(std::string const& parent, std::vector<std::string> const& capacity_commitment_ids, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::bigquery::reservation::v1::MergeCapacityCommitmentsRequest
-      request;
+  google::cloud::bigquery::reservation::v1::MergeCapacityCommitmentsRequest request;
   request.set_parent(parent);
-  *request.mutable_capacity_commitment_ids() = {capacity_commitment_ids.begin(),
-                                                capacity_commitment_ids.end()};
+  *request.mutable_capacity_commitment_ids() = {capacity_commitment_ids.begin(), capacity_commitment_ids.end()};
   return connection_->MergeCapacityCommitments(request);
 }
 
 StatusOr<google::cloud::bigquery::reservation::v1::CapacityCommitment>
-ReservationServiceClient::MergeCapacityCommitments(
-    google::cloud::bigquery::reservation::v1::
-        MergeCapacityCommitmentsRequest const& request,
-    Options opts) {
+ReservationServiceClient::MergeCapacityCommitments(google::cloud::bigquery::reservation::v1::MergeCapacityCommitmentsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->MergeCapacityCommitments(request);
 }
 
 StatusOr<google::cloud::bigquery::reservation::v1::Assignment>
-ReservationServiceClient::CreateAssignment(
-    std::string const& parent,
-    google::cloud::bigquery::reservation::v1::Assignment const& assignment,
-    Options opts) {
+ReservationServiceClient::CreateAssignment(std::string const& parent, google::cloud::bigquery::reservation::v1::Assignment const& assignment, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::bigquery::reservation::v1::CreateAssignmentRequest request;
   request.set_parent(parent);
@@ -292,17 +223,13 @@ ReservationServiceClient::CreateAssignment(
 }
 
 StatusOr<google::cloud::bigquery::reservation::v1::Assignment>
-ReservationServiceClient::CreateAssignment(
-    google::cloud::bigquery::reservation::v1::CreateAssignmentRequest const&
-        request,
-    Options opts) {
+ReservationServiceClient::CreateAssignment(google::cloud::bigquery::reservation::v1::CreateAssignmentRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateAssignment(request);
 }
 
 StreamRange<google::cloud::bigquery::reservation::v1::Assignment>
-ReservationServiceClient::ListAssignments(std::string const& parent,
-                                          Options opts) {
+ReservationServiceClient::ListAssignments(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::bigquery::reservation::v1::ListAssignmentsRequest request;
   request.set_parent(parent);
@@ -310,33 +237,27 @@ ReservationServiceClient::ListAssignments(std::string const& parent,
 }
 
 StreamRange<google::cloud::bigquery::reservation::v1::Assignment>
-ReservationServiceClient::ListAssignments(
-    google::cloud::bigquery::reservation::v1::ListAssignmentsRequest request,
-    Options opts) {
+ReservationServiceClient::ListAssignments(google::cloud::bigquery::reservation::v1::ListAssignmentsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListAssignments(std::move(request));
 }
 
-Status ReservationServiceClient::DeleteAssignment(std::string const& name,
-                                                  Options opts) {
+Status
+ReservationServiceClient::DeleteAssignment(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::bigquery::reservation::v1::DeleteAssignmentRequest request;
   request.set_name(name);
   return connection_->DeleteAssignment(request);
 }
 
-Status ReservationServiceClient::DeleteAssignment(
-    google::cloud::bigquery::reservation::v1::DeleteAssignmentRequest const&
-        request,
-    Options opts) {
+Status
+ReservationServiceClient::DeleteAssignment(google::cloud::bigquery::reservation::v1::DeleteAssignmentRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteAssignment(request);
 }
 
 StreamRange<google::cloud::bigquery::reservation::v1::Assignment>
-ReservationServiceClient::SearchAssignments(std::string const& parent,
-                                            std::string const& query,
-                                            Options opts) {
+ReservationServiceClient::SearchAssignments(std::string const& parent, std::string const& query, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::bigquery::reservation::v1::SearchAssignmentsRequest request;
   request.set_parent(parent);
@@ -345,17 +266,13 @@ ReservationServiceClient::SearchAssignments(std::string const& parent,
 }
 
 StreamRange<google::cloud::bigquery::reservation::v1::Assignment>
-ReservationServiceClient::SearchAssignments(
-    google::cloud::bigquery::reservation::v1::SearchAssignmentsRequest request,
-    Options opts) {
+ReservationServiceClient::SearchAssignments(google::cloud::bigquery::reservation::v1::SearchAssignmentsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SearchAssignments(std::move(request));
 }
 
 StreamRange<google::cloud::bigquery::reservation::v1::Assignment>
-ReservationServiceClient::SearchAllAssignments(std::string const& parent,
-                                               std::string const& query,
-                                               Options opts) {
+ReservationServiceClient::SearchAllAssignments(std::string const& parent, std::string const& query, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::bigquery::reservation::v1::SearchAllAssignmentsRequest request;
   request.set_parent(parent);
@@ -364,18 +281,13 @@ ReservationServiceClient::SearchAllAssignments(std::string const& parent,
 }
 
 StreamRange<google::cloud::bigquery::reservation::v1::Assignment>
-ReservationServiceClient::SearchAllAssignments(
-    google::cloud::bigquery::reservation::v1::SearchAllAssignmentsRequest
-        request,
-    Options opts) {
+ReservationServiceClient::SearchAllAssignments(google::cloud::bigquery::reservation::v1::SearchAllAssignmentsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SearchAllAssignments(std::move(request));
 }
 
 StatusOr<google::cloud::bigquery::reservation::v1::Assignment>
-ReservationServiceClient::MoveAssignment(std::string const& name,
-                                         std::string const& destination_id,
-                                         Options opts) {
+ReservationServiceClient::MoveAssignment(std::string const& name, std::string const& destination_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::bigquery::reservation::v1::MoveAssignmentRequest request;
   request.set_name(name);
@@ -384,18 +296,13 @@ ReservationServiceClient::MoveAssignment(std::string const& name,
 }
 
 StatusOr<google::cloud::bigquery::reservation::v1::Assignment>
-ReservationServiceClient::MoveAssignment(
-    google::cloud::bigquery::reservation::v1::MoveAssignmentRequest const&
-        request,
-    Options opts) {
+ReservationServiceClient::MoveAssignment(google::cloud::bigquery::reservation::v1::MoveAssignmentRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->MoveAssignment(request);
 }
 
 StatusOr<google::cloud::bigquery::reservation::v1::Assignment>
-ReservationServiceClient::UpdateAssignment(
-    google::cloud::bigquery::reservation::v1::Assignment const& assignment,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+ReservationServiceClient::UpdateAssignment(google::cloud::bigquery::reservation::v1::Assignment const& assignment, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::bigquery::reservation::v1::UpdateAssignmentRequest request;
   *request.mutable_assignment() = assignment;
@@ -404,17 +311,13 @@ ReservationServiceClient::UpdateAssignment(
 }
 
 StatusOr<google::cloud::bigquery::reservation::v1::Assignment>
-ReservationServiceClient::UpdateAssignment(
-    google::cloud::bigquery::reservation::v1::UpdateAssignmentRequest const&
-        request,
-    Options opts) {
+ReservationServiceClient::UpdateAssignment(google::cloud::bigquery::reservation::v1::UpdateAssignmentRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateAssignment(request);
 }
 
 StatusOr<google::cloud::bigquery::reservation::v1::BiReservation>
-ReservationServiceClient::GetBiReservation(std::string const& name,
-                                           Options opts) {
+ReservationServiceClient::GetBiReservation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::bigquery::reservation::v1::GetBiReservationRequest request;
   request.set_name(name);
@@ -422,19 +325,13 @@ ReservationServiceClient::GetBiReservation(std::string const& name,
 }
 
 StatusOr<google::cloud::bigquery::reservation::v1::BiReservation>
-ReservationServiceClient::GetBiReservation(
-    google::cloud::bigquery::reservation::v1::GetBiReservationRequest const&
-        request,
-    Options opts) {
+ReservationServiceClient::GetBiReservation(google::cloud::bigquery::reservation::v1::GetBiReservationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetBiReservation(request);
 }
 
 StatusOr<google::cloud::bigquery::reservation::v1::BiReservation>
-ReservationServiceClient::UpdateBiReservation(
-    google::cloud::bigquery::reservation::v1::BiReservation const&
-        bi_reservation,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+ReservationServiceClient::UpdateBiReservation(google::cloud::bigquery::reservation::v1::BiReservation const& bi_reservation, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::bigquery::reservation::v1::UpdateBiReservationRequest request;
   *request.mutable_bi_reservation() = bi_reservation;
@@ -443,10 +340,7 @@ ReservationServiceClient::UpdateBiReservation(
 }
 
 StatusOr<google::cloud::bigquery::reservation::v1::BiReservation>
-ReservationServiceClient::UpdateBiReservation(
-    google::cloud::bigquery::reservation::v1::UpdateBiReservationRequest const&
-        request,
-    Options opts) {
+ReservationServiceClient::UpdateBiReservation(google::cloud::bigquery::reservation::v1::UpdateBiReservationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateBiReservation(request);
 }

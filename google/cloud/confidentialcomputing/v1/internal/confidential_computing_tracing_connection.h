@@ -36,29 +36,24 @@ class ConfidentialComputingTracingConnection
   ~ConfidentialComputingTracingConnection() override = default;
 
   explicit ConfidentialComputingTracingConnection(
-      std::shared_ptr<confidentialcomputing_v1::ConfidentialComputingConnection>
-          child);
+    std::shared_ptr<confidentialcomputing_v1::ConfidentialComputingConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::confidentialcomputing::v1::Challenge> CreateChallenge(
-      google::cloud::confidentialcomputing::v1::CreateChallengeRequest const&
-          request) override;
+  StatusOr<google::cloud::confidentialcomputing::v1::Challenge>
+  CreateChallenge(google::cloud::confidentialcomputing::v1::CreateChallengeRequest const& request) override;
 
   StatusOr<google::cloud::confidentialcomputing::v1::VerifyAttestationResponse>
-  VerifyAttestation(
-      google::cloud::confidentialcomputing::v1::VerifyAttestationRequest const&
-          request) override;
+  VerifyAttestation(google::cloud::confidentialcomputing::v1::VerifyAttestationRequest const& request) override;
 
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request) override;
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request) override;
 
-  StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request) override;
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request) override;
 
  private:
-  std::shared_ptr<confidentialcomputing_v1::ConfidentialComputingConnection>
-      child_;
+  std::shared_ptr<confidentialcomputing_v1::ConfidentialComputingConnection> child_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -71,8 +66,7 @@ class ConfidentialComputingTracingConnection
  */
 std::shared_ptr<confidentialcomputing_v1::ConfidentialComputingConnection>
 MakeConfidentialComputingTracingConnection(
-    std::shared_ptr<confidentialcomputing_v1::ConfidentialComputingConnection>
-        conn);
+    std::shared_ptr<confidentialcomputing_v1::ConfidentialComputingConnection> conn);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace confidentialcomputing_v1_internal

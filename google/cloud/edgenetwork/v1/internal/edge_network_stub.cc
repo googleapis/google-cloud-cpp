@@ -33,168 +33,178 @@ EdgeNetworkStub::~EdgeNetworkStub() = default;
 
 StatusOr<google::cloud::edgenetwork::v1::InitializeZoneResponse>
 DefaultEdgeNetworkStub::InitializeZone(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::edgenetwork::v1::InitializeZoneRequest const& request) {
-  google::cloud::edgenetwork::v1::InitializeZoneResponse response;
-  auto status = grpc_stub_->InitializeZone(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::edgenetwork::v1::InitializeZoneRequest const& request) {
+    google::cloud::edgenetwork::v1::InitializeZoneResponse response;
+    auto status =
+        grpc_stub_->InitializeZone(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::edgenetwork::v1::ListZonesResponse>
 DefaultEdgeNetworkStub::ListZones(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::edgenetwork::v1::ListZonesRequest const& request) {
-  google::cloud::edgenetwork::v1::ListZonesResponse response;
-  auto status = grpc_stub_->ListZones(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::edgenetwork::v1::ListZonesRequest const& request) {
+    google::cloud::edgenetwork::v1::ListZonesResponse response;
+    auto status =
+        grpc_stub_->ListZones(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-StatusOr<google::cloud::edgenetwork::v1::Zone> DefaultEdgeNetworkStub::GetZone(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::edgenetwork::v1::GetZoneRequest const& request) {
-  google::cloud::edgenetwork::v1::Zone response;
-  auto status = grpc_stub_->GetZone(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::cloud::edgenetwork::v1::Zone>
+DefaultEdgeNetworkStub::GetZone(
+  grpc::ClientContext& context, Options const&,
+  google::cloud::edgenetwork::v1::GetZoneRequest const& request) {
+    google::cloud::edgenetwork::v1::Zone response;
+    auto status =
+        grpc_stub_->GetZone(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::edgenetwork::v1::ListNetworksResponse>
 DefaultEdgeNetworkStub::ListNetworks(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::edgenetwork::v1::ListNetworksRequest const& request) {
-  google::cloud::edgenetwork::v1::ListNetworksResponse response;
-  auto status = grpc_stub_->ListNetworks(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::edgenetwork::v1::ListNetworksRequest const& request) {
+    google::cloud::edgenetwork::v1::ListNetworksResponse response;
+    auto status =
+        grpc_stub_->ListNetworks(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::edgenetwork::v1::Network>
 DefaultEdgeNetworkStub::GetNetwork(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::edgenetwork::v1::GetNetworkRequest const& request) {
-  google::cloud::edgenetwork::v1::Network response;
-  auto status = grpc_stub_->GetNetwork(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::edgenetwork::v1::GetNetworkRequest const& request) {
+    google::cloud::edgenetwork::v1::Network response;
+    auto status =
+        grpc_stub_->GetNetwork(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::edgenetwork::v1::DiagnoseNetworkResponse>
 DefaultEdgeNetworkStub::DiagnoseNetwork(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::edgenetwork::v1::DiagnoseNetworkRequest const& request) {
-  google::cloud::edgenetwork::v1::DiagnoseNetworkResponse response;
-  auto status = grpc_stub_->DiagnoseNetwork(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::edgenetwork::v1::DiagnoseNetworkRequest const& request) {
+    google::cloud::edgenetwork::v1::DiagnoseNetworkResponse response;
+    auto status =
+        grpc_stub_->DiagnoseNetwork(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultEdgeNetworkStub::AsyncCreateNetwork(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::edgenetwork::v1::CreateNetworkRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::edgenetwork::v1::CreateNetworkRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::edgenetwork::v1::CreateNetworkRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::edgenetwork::v1::CreateNetworkRequest,
+                                    google::longrunning::Operation>(
       cq,
-      [this](
-          grpc::ClientContext* context,
-          google::cloud::edgenetwork::v1::CreateNetworkRequest const& request,
-          grpc::CompletionQueue* cq) {
+      [this](grpc::ClientContext* context,
+             google::cloud::edgenetwork::v1::CreateNetworkRequest const& request,
+             grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncCreateNetwork(context, request, cq);
       },
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation> DefaultEdgeNetworkStub::CreateNetwork(
-    grpc::ClientContext& context, Options,
-    google::cloud::edgenetwork::v1::CreateNetworkRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->CreateNetwork(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::longrunning::Operation>
+DefaultEdgeNetworkStub::CreateNetwork(
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::edgenetwork::v1::CreateNetworkRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->CreateNetwork(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultEdgeNetworkStub::AsyncDeleteNetwork(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::edgenetwork::v1::DeleteNetworkRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::edgenetwork::v1::DeleteNetworkRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::edgenetwork::v1::DeleteNetworkRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::edgenetwork::v1::DeleteNetworkRequest,
+                                    google::longrunning::Operation>(
       cq,
-      [this](
-          grpc::ClientContext* context,
-          google::cloud::edgenetwork::v1::DeleteNetworkRequest const& request,
-          grpc::CompletionQueue* cq) {
+      [this](grpc::ClientContext* context,
+             google::cloud::edgenetwork::v1::DeleteNetworkRequest const& request,
+             grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncDeleteNetwork(context, request, cq);
       },
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation> DefaultEdgeNetworkStub::DeleteNetwork(
-    grpc::ClientContext& context, Options,
-    google::cloud::edgenetwork::v1::DeleteNetworkRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->DeleteNetwork(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::longrunning::Operation>
+DefaultEdgeNetworkStub::DeleteNetwork(
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::edgenetwork::v1::DeleteNetworkRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->DeleteNetwork(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::edgenetwork::v1::ListSubnetsResponse>
 DefaultEdgeNetworkStub::ListSubnets(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::edgenetwork::v1::ListSubnetsRequest const& request) {
-  google::cloud::edgenetwork::v1::ListSubnetsResponse response;
-  auto status = grpc_stub_->ListSubnets(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::edgenetwork::v1::ListSubnetsRequest const& request) {
+    google::cloud::edgenetwork::v1::ListSubnetsResponse response;
+    auto status =
+        grpc_stub_->ListSubnets(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::edgenetwork::v1::Subnet>
 DefaultEdgeNetworkStub::GetSubnet(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::edgenetwork::v1::GetSubnetRequest const& request) {
-  google::cloud::edgenetwork::v1::Subnet response;
-  auto status = grpc_stub_->GetSubnet(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::edgenetwork::v1::GetSubnetRequest const& request) {
+    google::cloud::edgenetwork::v1::Subnet response;
+    auto status =
+        grpc_stub_->GetSubnet(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultEdgeNetworkStub::AsyncCreateSubnet(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::edgenetwork::v1::CreateSubnetRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::edgenetwork::v1::CreateSubnetRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::edgenetwork::v1::CreateSubnetRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::edgenetwork::v1::CreateSubnetRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
              google::cloud::edgenetwork::v1::CreateSubnetRequest const& request,
@@ -204,26 +214,28 @@ DefaultEdgeNetworkStub::AsyncCreateSubnet(
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation> DefaultEdgeNetworkStub::CreateSubnet(
-    grpc::ClientContext& context, Options,
-    google::cloud::edgenetwork::v1::CreateSubnetRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->CreateSubnet(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::longrunning::Operation>
+DefaultEdgeNetworkStub::CreateSubnet(
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::edgenetwork::v1::CreateSubnetRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->CreateSubnet(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultEdgeNetworkStub::AsyncUpdateSubnet(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::edgenetwork::v1::UpdateSubnetRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::edgenetwork::v1::UpdateSubnetRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::edgenetwork::v1::UpdateSubnetRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::edgenetwork::v1::UpdateSubnetRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
              google::cloud::edgenetwork::v1::UpdateSubnetRequest const& request,
@@ -233,26 +245,28 @@ DefaultEdgeNetworkStub::AsyncUpdateSubnet(
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation> DefaultEdgeNetworkStub::UpdateSubnet(
-    grpc::ClientContext& context, Options,
-    google::cloud::edgenetwork::v1::UpdateSubnetRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->UpdateSubnet(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::longrunning::Operation>
+DefaultEdgeNetworkStub::UpdateSubnet(
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::edgenetwork::v1::UpdateSubnetRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->UpdateSubnet(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultEdgeNetworkStub::AsyncDeleteSubnet(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::edgenetwork::v1::DeleteSubnetRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::edgenetwork::v1::DeleteSubnetRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::edgenetwork::v1::DeleteSubnetRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::edgenetwork::v1::DeleteSubnetRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
              google::cloud::edgenetwork::v1::DeleteSubnetRequest const& request,
@@ -262,197 +276,194 @@ DefaultEdgeNetworkStub::AsyncDeleteSubnet(
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation> DefaultEdgeNetworkStub::DeleteSubnet(
-    grpc::ClientContext& context, Options,
-    google::cloud::edgenetwork::v1::DeleteSubnetRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->DeleteSubnet(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::longrunning::Operation>
+DefaultEdgeNetworkStub::DeleteSubnet(
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::edgenetwork::v1::DeleteSubnetRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->DeleteSubnet(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::edgenetwork::v1::ListInterconnectsResponse>
 DefaultEdgeNetworkStub::ListInterconnects(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::edgenetwork::v1::ListInterconnectsRequest const& request) {
-  google::cloud::edgenetwork::v1::ListInterconnectsResponse response;
-  auto status = grpc_stub_->ListInterconnects(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::edgenetwork::v1::ListInterconnectsRequest const& request) {
+    google::cloud::edgenetwork::v1::ListInterconnectsResponse response;
+    auto status =
+        grpc_stub_->ListInterconnects(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::edgenetwork::v1::Interconnect>
 DefaultEdgeNetworkStub::GetInterconnect(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::edgenetwork::v1::GetInterconnectRequest const& request) {
-  google::cloud::edgenetwork::v1::Interconnect response;
-  auto status = grpc_stub_->GetInterconnect(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::edgenetwork::v1::GetInterconnectRequest const& request) {
+    google::cloud::edgenetwork::v1::Interconnect response;
+    auto status =
+        grpc_stub_->GetInterconnect(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::edgenetwork::v1::DiagnoseInterconnectResponse>
 DefaultEdgeNetworkStub::DiagnoseInterconnect(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::edgenetwork::v1::DiagnoseInterconnectRequest const&
-        request) {
-  google::cloud::edgenetwork::v1::DiagnoseInterconnectResponse response;
-  auto status = grpc_stub_->DiagnoseInterconnect(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::edgenetwork::v1::DiagnoseInterconnectRequest const& request) {
+    google::cloud::edgenetwork::v1::DiagnoseInterconnectResponse response;
+    auto status =
+        grpc_stub_->DiagnoseInterconnect(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::edgenetwork::v1::ListInterconnectAttachmentsResponse>
 DefaultEdgeNetworkStub::ListInterconnectAttachments(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::edgenetwork::v1::ListInterconnectAttachmentsRequest const&
-        request) {
-  google::cloud::edgenetwork::v1::ListInterconnectAttachmentsResponse response;
-  auto status =
-      grpc_stub_->ListInterconnectAttachments(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::edgenetwork::v1::ListInterconnectAttachmentsRequest const& request) {
+    google::cloud::edgenetwork::v1::ListInterconnectAttachmentsResponse response;
+    auto status =
+        grpc_stub_->ListInterconnectAttachments(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::edgenetwork::v1::InterconnectAttachment>
 DefaultEdgeNetworkStub::GetInterconnectAttachment(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::edgenetwork::v1::GetInterconnectAttachmentRequest const&
-        request) {
-  google::cloud::edgenetwork::v1::InterconnectAttachment response;
-  auto status =
-      grpc_stub_->GetInterconnectAttachment(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::edgenetwork::v1::GetInterconnectAttachmentRequest const& request) {
+    google::cloud::edgenetwork::v1::InterconnectAttachment response;
+    auto status =
+        grpc_stub_->GetInterconnectAttachment(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultEdgeNetworkStub::AsyncCreateInterconnectAttachment(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::edgenetwork::v1::CreateInterconnectAttachmentRequest const&
-        request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::edgenetwork::v1::CreateInterconnectAttachmentRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::edgenetwork::v1::CreateInterconnectAttachmentRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::edgenetwork::v1::CreateInterconnectAttachmentRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::edgenetwork::v1::
-                 CreateInterconnectAttachmentRequest const& request,
+             google::cloud::edgenetwork::v1::CreateInterconnectAttachmentRequest const& request,
              grpc::CompletionQueue* cq) {
-        return grpc_stub_->AsyncCreateInterconnectAttachment(context, request,
-                                                             cq);
+        return grpc_stub_->AsyncCreateInterconnectAttachment(context, request, cq);
       },
       request, std::move(context));
 }
 
 StatusOr<google::longrunning::Operation>
 DefaultEdgeNetworkStub::CreateInterconnectAttachment(
-    grpc::ClientContext& context, Options,
-    google::cloud::edgenetwork::v1::CreateInterconnectAttachmentRequest const&
-        request) {
-  google::longrunning::Operation response;
-  auto status =
-      grpc_stub_->CreateInterconnectAttachment(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::edgenetwork::v1::CreateInterconnectAttachmentRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->CreateInterconnectAttachment(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultEdgeNetworkStub::AsyncDeleteInterconnectAttachment(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::edgenetwork::v1::DeleteInterconnectAttachmentRequest const&
-        request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::edgenetwork::v1::DeleteInterconnectAttachmentRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::edgenetwork::v1::DeleteInterconnectAttachmentRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::edgenetwork::v1::DeleteInterconnectAttachmentRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::edgenetwork::v1::
-                 DeleteInterconnectAttachmentRequest const& request,
+             google::cloud::edgenetwork::v1::DeleteInterconnectAttachmentRequest const& request,
              grpc::CompletionQueue* cq) {
-        return grpc_stub_->AsyncDeleteInterconnectAttachment(context, request,
-                                                             cq);
+        return grpc_stub_->AsyncDeleteInterconnectAttachment(context, request, cq);
       },
       request, std::move(context));
 }
 
 StatusOr<google::longrunning::Operation>
 DefaultEdgeNetworkStub::DeleteInterconnectAttachment(
-    grpc::ClientContext& context, Options,
-    google::cloud::edgenetwork::v1::DeleteInterconnectAttachmentRequest const&
-        request) {
-  google::longrunning::Operation response;
-  auto status =
-      grpc_stub_->DeleteInterconnectAttachment(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::edgenetwork::v1::DeleteInterconnectAttachmentRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->DeleteInterconnectAttachment(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::edgenetwork::v1::ListRoutersResponse>
 DefaultEdgeNetworkStub::ListRouters(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::edgenetwork::v1::ListRoutersRequest const& request) {
-  google::cloud::edgenetwork::v1::ListRoutersResponse response;
-  auto status = grpc_stub_->ListRouters(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::edgenetwork::v1::ListRoutersRequest const& request) {
+    google::cloud::edgenetwork::v1::ListRoutersResponse response;
+    auto status =
+        grpc_stub_->ListRouters(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::edgenetwork::v1::Router>
 DefaultEdgeNetworkStub::GetRouter(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::edgenetwork::v1::GetRouterRequest const& request) {
-  google::cloud::edgenetwork::v1::Router response;
-  auto status = grpc_stub_->GetRouter(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::edgenetwork::v1::GetRouterRequest const& request) {
+    google::cloud::edgenetwork::v1::Router response;
+    auto status =
+        grpc_stub_->GetRouter(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::edgenetwork::v1::DiagnoseRouterResponse>
 DefaultEdgeNetworkStub::DiagnoseRouter(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::edgenetwork::v1::DiagnoseRouterRequest const& request) {
-  google::cloud::edgenetwork::v1::DiagnoseRouterResponse response;
-  auto status = grpc_stub_->DiagnoseRouter(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::edgenetwork::v1::DiagnoseRouterRequest const& request) {
+    google::cloud::edgenetwork::v1::DiagnoseRouterResponse response;
+    auto status =
+        grpc_stub_->DiagnoseRouter(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultEdgeNetworkStub::AsyncCreateRouter(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::edgenetwork::v1::CreateRouterRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::edgenetwork::v1::CreateRouterRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::edgenetwork::v1::CreateRouterRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::edgenetwork::v1::CreateRouterRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
              google::cloud::edgenetwork::v1::CreateRouterRequest const& request,
@@ -462,26 +473,28 @@ DefaultEdgeNetworkStub::AsyncCreateRouter(
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation> DefaultEdgeNetworkStub::CreateRouter(
-    grpc::ClientContext& context, Options,
-    google::cloud::edgenetwork::v1::CreateRouterRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->CreateRouter(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::longrunning::Operation>
+DefaultEdgeNetworkStub::CreateRouter(
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::edgenetwork::v1::CreateRouterRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->CreateRouter(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultEdgeNetworkStub::AsyncUpdateRouter(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::edgenetwork::v1::UpdateRouterRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::edgenetwork::v1::UpdateRouterRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::edgenetwork::v1::UpdateRouterRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::edgenetwork::v1::UpdateRouterRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
              google::cloud::edgenetwork::v1::UpdateRouterRequest const& request,
@@ -491,26 +504,28 @@ DefaultEdgeNetworkStub::AsyncUpdateRouter(
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation> DefaultEdgeNetworkStub::UpdateRouter(
-    grpc::ClientContext& context, Options,
-    google::cloud::edgenetwork::v1::UpdateRouterRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->UpdateRouter(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::longrunning::Operation>
+DefaultEdgeNetworkStub::UpdateRouter(
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::edgenetwork::v1::UpdateRouterRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->UpdateRouter(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultEdgeNetworkStub::AsyncDeleteRouter(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::edgenetwork::v1::DeleteRouterRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::edgenetwork::v1::DeleteRouterRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::edgenetwork::v1::DeleteRouterRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::edgenetwork::v1::DeleteRouterRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
              google::cloud::edgenetwork::v1::DeleteRouterRequest const& request,
@@ -520,83 +535,96 @@ DefaultEdgeNetworkStub::AsyncDeleteRouter(
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation> DefaultEdgeNetworkStub::DeleteRouter(
-    grpc::ClientContext& context, Options,
-    google::cloud::edgenetwork::v1::DeleteRouterRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->DeleteRouter(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::longrunning::Operation>
+DefaultEdgeNetworkStub::DeleteRouter(
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::edgenetwork::v1::DeleteRouterRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->DeleteRouter(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 DefaultEdgeNetworkStub::ListLocations(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::location::ListLocationsRequest const& request) {
-  google::cloud::location::ListLocationsResponse response;
-  auto status = locations_stub_->ListLocations(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::location::ListLocationsRequest const& request) {
+    google::cloud::location::ListLocationsResponse response;
+    auto status =
+        locations_stub_->ListLocations(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-StatusOr<google::cloud::location::Location> DefaultEdgeNetworkStub::GetLocation(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::location::GetLocationRequest const& request) {
-  google::cloud::location::Location response;
-  auto status = locations_stub_->GetLocation(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::cloud::location::Location>
+DefaultEdgeNetworkStub::GetLocation(
+  grpc::ClientContext& context, Options const&,
+  google::cloud::location::GetLocationRequest const& request) {
+    google::cloud::location::Location response;
+    auto status =
+        locations_stub_->GetLocation(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
 DefaultEdgeNetworkStub::ListOperations(
-    grpc::ClientContext& context, Options const&,
-    google::longrunning::ListOperationsRequest const& request) {
-  google::longrunning::ListOperationsResponse response;
-  auto status = operations_stub_->ListOperations(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::longrunning::ListOperationsRequest const& request) {
+    google::longrunning::ListOperationsResponse response;
+    auto status =
+        operations_stub_->ListOperations(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-StatusOr<google::longrunning::Operation> DefaultEdgeNetworkStub::GetOperation(
-    grpc::ClientContext& context, Options const&,
-    google::longrunning::GetOperationRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = operations_stub_->GetOperation(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::longrunning::Operation>
+DefaultEdgeNetworkStub::GetOperation(
+  grpc::ClientContext& context, Options const&,
+  google::longrunning::GetOperationRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        operations_stub_->GetOperation(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-Status DefaultEdgeNetworkStub::DeleteOperation(
-    grpc::ClientContext& context, Options const&,
-    google::longrunning::DeleteOperationRequest const& request) {
-  google::protobuf::Empty response;
-  auto status = operations_stub_->DeleteOperation(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return google::cloud::Status();
+Status
+DefaultEdgeNetworkStub::DeleteOperation(
+  grpc::ClientContext& context, Options const&,
+  google::longrunning::DeleteOperationRequest const& request) {
+    google::protobuf::Empty response;
+    auto status =
+        operations_stub_->DeleteOperation(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return google::cloud::Status();
 }
 
-Status DefaultEdgeNetworkStub::CancelOperation(
-    grpc::ClientContext& context, Options const&,
-    google::longrunning::CancelOperationRequest const& request) {
-  google::protobuf::Empty response;
-  auto status = operations_stub_->CancelOperation(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return google::cloud::Status();
+Status
+DefaultEdgeNetworkStub::CancelOperation(
+  grpc::ClientContext& context, Options const&,
+  google::longrunning::CancelOperationRequest const& request) {
+    google::protobuf::Empty response;
+    auto status =
+        operations_stub_->CancelOperation(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return google::cloud::Status();
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -625,14 +653,13 @@ future<Status> DefaultEdgeNetworkStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(
-             cq,
-             [this](grpc::ClientContext* context,
-                    google::longrunning::CancelOperationRequest const& request,
-                    grpc::CompletionQueue* cq) {
-               return operations_stub_->AsyncCancelOperation(context, request,
-                                                             cq);
-             },
-             request, std::move(context))
+      cq,
+      [this](grpc::ClientContext* context,
+             google::longrunning::CancelOperationRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return operations_stub_->AsyncCancelOperation(context, request, cq);
+      },
+      request, std::move(context))
       .then([](future<StatusOr<google::protobuf::Empty>> f) {
         return f.get().status();
       });

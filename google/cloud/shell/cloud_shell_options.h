@@ -34,10 +34,8 @@ using ::google::cloud::shell_v1::CloudShellServicePollingPolicyOption;
 /// @deprecated Use shell_v1::CloudShellServiceBackoffPolicyOption directly.
 using ::google::cloud::shell_v1::CloudShellServiceBackoffPolicyOption;
 
-/// @deprecated Use shell_v1::CloudShellServiceConnectionIdempotencyPolicyOption
-/// directly.
-using ::google::cloud::shell_v1::
-    CloudShellServiceConnectionIdempotencyPolicyOption;
+/// @deprecated Use shell_v1::CloudShellServiceConnectionIdempotencyPolicyOption directly.
+using ::google::cloud::shell_v1::CloudShellServiceConnectionIdempotencyPolicyOption;
 
 /// @deprecated Use shell_v1::CloudShellServicePolicyOptionList directly.
 using ::google::cloud::shell_v1::CloudShellServicePolicyOptionList;

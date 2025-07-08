@@ -31,10 +31,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * A class to mock `SqlSslCertsServiceConnection`.
  *
  * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `SqlSslCertsServiceClient`. To do
- * so, construct an object of type `SqlSslCertsServiceClient` with an instance
- * of this class. Then use the Google Test framework functions to program the
- * behavior of this mock.
+ * including errors, from an object of type `SqlSslCertsServiceClient`. To do so,
+ * construct an object of type `SqlSslCertsServiceClient` with an instance of this
+ * class. Then use the Google Test framework functions to program the behavior
+ * of this mock.
  *
  * @see [This example][bq-mock] for how to test your application with GoogleTest.
  * While the example showcases types from the BigQuery library, the underlying
@@ -42,26 +42,25 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockSqlSslCertsServiceConnection
-    : public sql_v1::SqlSslCertsServiceConnection {
+class MockSqlSslCertsServiceConnection : public sql_v1::SqlSslCertsServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::sql::v1::Operation>, Delete,
-              (google::cloud::sql::v1::SqlSslCertsDeleteRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::sql::v1::Operation>,
+  Delete,
+  (google::cloud::sql::v1::SqlSslCertsDeleteRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::sql::v1::SslCert>, Get,
-              (google::cloud::sql::v1::SqlSslCertsGetRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::sql::v1::SslCert>,
+  Get,
+  (google::cloud::sql::v1::SqlSslCertsGetRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::sql::v1::SslCertsInsertResponse>, Insert,
-              (google::cloud::sql::v1::SqlSslCertsInsertRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::sql::v1::SslCertsInsertResponse>,
+  Insert,
+  (google::cloud::sql::v1::SqlSslCertsInsertRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::sql::v1::SslCertsListResponse>, List,
-              (google::cloud::sql::v1::SqlSslCertsListRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::sql::v1::SslCertsListResponse>,
+  List,
+  (google::cloud::sql::v1::SqlSslCertsListRequest const& request), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

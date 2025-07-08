@@ -28,8 +28,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ExperimentsClient::ExperimentsClient(
     std::shared_ptr<ExperimentsConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 ExperimentsClient::~ExperimentsClient() = default;
 
 StreamRange<google::cloud::dialogflow::cx::v3::Experiment>
@@ -41,9 +41,7 @@ ExperimentsClient::ListExperiments(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::dialogflow::cx::v3::Experiment>
-ExperimentsClient::ListExperiments(
-    google::cloud::dialogflow::cx::v3::ListExperimentsRequest request,
-    Options opts) {
+ExperimentsClient::ListExperiments(google::cloud::dialogflow::cx::v3::ListExperimentsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListExperiments(std::move(request));
 }
@@ -57,18 +55,13 @@ ExperimentsClient::GetExperiment(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Experiment>
-ExperimentsClient::GetExperiment(
-    google::cloud::dialogflow::cx::v3::GetExperimentRequest const& request,
-    Options opts) {
+ExperimentsClient::GetExperiment(google::cloud::dialogflow::cx::v3::GetExperimentRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetExperiment(request);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Experiment>
-ExperimentsClient::CreateExperiment(
-    std::string const& parent,
-    google::cloud::dialogflow::cx::v3::Experiment const& experiment,
-    Options opts) {
+ExperimentsClient::CreateExperiment(std::string const& parent, google::cloud::dialogflow::cx::v3::Experiment const& experiment, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dialogflow::cx::v3::CreateExperimentRequest request;
   request.set_parent(parent);
@@ -77,17 +70,13 @@ ExperimentsClient::CreateExperiment(
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Experiment>
-ExperimentsClient::CreateExperiment(
-    google::cloud::dialogflow::cx::v3::CreateExperimentRequest const& request,
-    Options opts) {
+ExperimentsClient::CreateExperiment(google::cloud::dialogflow::cx::v3::CreateExperimentRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateExperiment(request);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Experiment>
-ExperimentsClient::UpdateExperiment(
-    google::cloud::dialogflow::cx::v3::Experiment const& experiment,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+ExperimentsClient::UpdateExperiment(google::cloud::dialogflow::cx::v3::Experiment const& experiment, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dialogflow::cx::v3::UpdateExperimentRequest request;
   *request.mutable_experiment() = experiment;
@@ -96,24 +85,21 @@ ExperimentsClient::UpdateExperiment(
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Experiment>
-ExperimentsClient::UpdateExperiment(
-    google::cloud::dialogflow::cx::v3::UpdateExperimentRequest const& request,
-    Options opts) {
+ExperimentsClient::UpdateExperiment(google::cloud::dialogflow::cx::v3::UpdateExperimentRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateExperiment(request);
 }
 
-Status ExperimentsClient::DeleteExperiment(std::string const& name,
-                                           Options opts) {
+Status
+ExperimentsClient::DeleteExperiment(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dialogflow::cx::v3::DeleteExperimentRequest request;
   request.set_name(name);
   return connection_->DeleteExperiment(request);
 }
 
-Status ExperimentsClient::DeleteExperiment(
-    google::cloud::dialogflow::cx::v3::DeleteExperimentRequest const& request,
-    Options opts) {
+Status
+ExperimentsClient::DeleteExperiment(google::cloud::dialogflow::cx::v3::DeleteExperimentRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteExperiment(request);
 }
@@ -127,9 +113,7 @@ ExperimentsClient::StartExperiment(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Experiment>
-ExperimentsClient::StartExperiment(
-    google::cloud::dialogflow::cx::v3::StartExperimentRequest const& request,
-    Options opts) {
+ExperimentsClient::StartExperiment(google::cloud::dialogflow::cx::v3::StartExperimentRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->StartExperiment(request);
 }
@@ -143,27 +127,25 @@ ExperimentsClient::StopExperiment(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Experiment>
-ExperimentsClient::StopExperiment(
-    google::cloud::dialogflow::cx::v3::StopExperimentRequest const& request,
-    Options opts) {
+ExperimentsClient::StopExperiment(google::cloud::dialogflow::cx::v3::StopExperimentRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->StopExperiment(request);
 }
 
-StreamRange<google::cloud::location::Location> ExperimentsClient::ListLocations(
-    google::cloud::location::ListLocationsRequest request, Options opts) {
+StreamRange<google::cloud::location::Location>
+ExperimentsClient::ListLocations(google::cloud::location::ListLocationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListLocations(std::move(request));
 }
 
-StatusOr<google::cloud::location::Location> ExperimentsClient::GetLocation(
-    google::cloud::location::GetLocationRequest const& request, Options opts) {
+StatusOr<google::cloud::location::Location>
+ExperimentsClient::GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetLocation(request);
 }
 
-StreamRange<google::longrunning::Operation> ExperimentsClient::ListOperations(
-    std::string const& name, std::string const& filter, Options opts) {
+StreamRange<google::longrunning::Operation>
+ExperimentsClient::ListOperations(std::string const& name, std::string const& filter, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::ListOperationsRequest request;
   request.set_name(name);
@@ -171,36 +153,36 @@ StreamRange<google::longrunning::Operation> ExperimentsClient::ListOperations(
   return connection_->ListOperations(request);
 }
 
-StreamRange<google::longrunning::Operation> ExperimentsClient::ListOperations(
-    google::longrunning::ListOperationsRequest request, Options opts) {
+StreamRange<google::longrunning::Operation>
+ExperimentsClient::ListOperations(google::longrunning::ListOperationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOperations(std::move(request));
 }
 
-StatusOr<google::longrunning::Operation> ExperimentsClient::GetOperation(
-    std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation>
+ExperimentsClient::GetOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
   return connection_->GetOperation(request);
 }
 
-StatusOr<google::longrunning::Operation> ExperimentsClient::GetOperation(
-    google::longrunning::GetOperationRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation>
+ExperimentsClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }
 
-Status ExperimentsClient::CancelOperation(std::string const& name,
-                                          Options opts) {
+Status
+ExperimentsClient::CancelOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::CancelOperationRequest request;
   request.set_name(name);
   return connection_->CancelOperation(request);
 }
 
-Status ExperimentsClient::CancelOperation(
-    google::longrunning::CancelOperationRequest const& request, Options opts) {
+Status
+ExperimentsClient::CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelOperation(request);
 }

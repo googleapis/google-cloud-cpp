@@ -19,11 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_NETWORKCONNECTIVITY_V1_POLICY_BASED_ROUTING_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_NETWORKCONNECTIVITY_V1_POLICY_BASED_ROUTING_CONNECTION_H
 
-#include "google/cloud/networkconnectivity/v1/internal/policy_based_routing_retry_traits.h"
-#include "google/cloud/networkconnectivity/v1/policy_based_routing_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/networkconnectivity/v1/internal/policy_based_routing_retry_traits.h"
+#include "google/cloud/networkconnectivity/v1/policy_based_routing_connection_idempotency_policy.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -40,17 +40,14 @@ namespace networkconnectivity_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `PolicyBasedRoutingServiceConnection`.
-class PolicyBasedRoutingServiceRetryPolicy
-    : public ::google::cloud::RetryPolicy {
+class PolicyBasedRoutingServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  public:
   /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<PolicyBasedRoutingServiceRetryPolicy> clone()
-      const = 0;
+  virtual std::unique_ptr<PolicyBasedRoutingServiceRetryPolicy> clone() const = 0;
 };
 
 /**
- * A retry policy for `PolicyBasedRoutingServiceConnection` based on counting
- * errors.
+ * A retry policy for `PolicyBasedRoutingServiceConnection` based on counting errors.
  *
  * This policy stops retrying if:
  * - An RPC returns a non-transient error.
@@ -59,8 +56,7 @@ class PolicyBasedRoutingServiceRetryPolicy
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class PolicyBasedRoutingServiceLimitedErrorCountRetryPolicy
-    : public PolicyBasedRoutingServiceRetryPolicy {
+class PolicyBasedRoutingServiceLimitedErrorCountRetryPolicy : public PolicyBasedRoutingServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -69,18 +65,15 @@ class PolicyBasedRoutingServiceLimitedErrorCountRetryPolicy
    * @note Disable the retry loop by providing an instance of this policy with
    *     @p maximum_failures == 0.
    */
-  explicit PolicyBasedRoutingServiceLimitedErrorCountRetryPolicy(
-      int maximum_failures)
-      : impl_(maximum_failures) {}
+  explicit PolicyBasedRoutingServiceLimitedErrorCountRetryPolicy(int maximum_failures)
+    : impl_(maximum_failures) {}
 
   PolicyBasedRoutingServiceLimitedErrorCountRetryPolicy(
       PolicyBasedRoutingServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : PolicyBasedRoutingServiceLimitedErrorCountRetryPolicy(
-            rhs.maximum_failures()) {}
+    : PolicyBasedRoutingServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   PolicyBasedRoutingServiceLimitedErrorCountRetryPolicy(
       PolicyBasedRoutingServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : PolicyBasedRoutingServiceLimitedErrorCountRetryPolicy(
-            rhs.maximum_failures()) {}
+    : PolicyBasedRoutingServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -92,8 +85,7 @@ class PolicyBasedRoutingServiceLimitedErrorCountRetryPolicy
     return impl_.IsPermanentFailure(status);
   }
   std::unique_ptr<PolicyBasedRoutingServiceRetryPolicy> clone() const override {
-    return std::make_unique<
-        PolicyBasedRoutingServiceLimitedErrorCountRetryPolicy>(
+    return std::make_unique<PolicyBasedRoutingServiceLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
 
@@ -101,14 +93,11 @@ class PolicyBasedRoutingServiceLimitedErrorCountRetryPolicy
   using BaseType = PolicyBasedRoutingServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      networkconnectivity_v1_internal::PolicyBasedRoutingServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<networkconnectivity_v1_internal::PolicyBasedRoutingServiceRetryTraits> impl_;
 };
 
 /**
- * A retry policy for `PolicyBasedRoutingServiceConnection` based on elapsed
- * time.
+ * A retry policy for `PolicyBasedRoutingServiceConnection` based on elapsed time.
  *
  * This policy stops retrying if:
  * - An RPC returns a non-transient error.
@@ -117,8 +106,7 @@ class PolicyBasedRoutingServiceLimitedErrorCountRetryPolicy
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class PolicyBasedRoutingServiceLimitedTimeRetryPolicy
-    : public PolicyBasedRoutingServiceRetryPolicy {
+class PolicyBasedRoutingServiceLimitedTimeRetryPolicy : public PolicyBasedRoutingServiceRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -143,16 +131,12 @@ class PolicyBasedRoutingServiceLimitedTimeRetryPolicy
   template <typename DurationRep, typename DurationPeriod>
   explicit PolicyBasedRoutingServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  PolicyBasedRoutingServiceLimitedTimeRetryPolicy(
-      PolicyBasedRoutingServiceLimitedTimeRetryPolicy&& rhs) noexcept
-      : PolicyBasedRoutingServiceLimitedTimeRetryPolicy(
-            rhs.maximum_duration()) {}
-  PolicyBasedRoutingServiceLimitedTimeRetryPolicy(
-      PolicyBasedRoutingServiceLimitedTimeRetryPolicy const& rhs) noexcept
-      : PolicyBasedRoutingServiceLimitedTimeRetryPolicy(
-            rhs.maximum_duration()) {}
+  PolicyBasedRoutingServiceLimitedTimeRetryPolicy(PolicyBasedRoutingServiceLimitedTimeRetryPolicy&& rhs) noexcept
+    : PolicyBasedRoutingServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  PolicyBasedRoutingServiceLimitedTimeRetryPolicy(PolicyBasedRoutingServiceLimitedTimeRetryPolicy const& rhs) noexcept
+    : PolicyBasedRoutingServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -174,25 +158,20 @@ class PolicyBasedRoutingServiceLimitedTimeRetryPolicy
   using BaseType = PolicyBasedRoutingServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      networkconnectivity_v1_internal::PolicyBasedRoutingServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<networkconnectivity_v1_internal::PolicyBasedRoutingServiceRetryTraits> impl_;
 };
 
 /**
- * The `PolicyBasedRoutingServiceConnection` object for
- * `PolicyBasedRoutingServiceClient`.
+ * The `PolicyBasedRoutingServiceConnection` object for `PolicyBasedRoutingServiceClient`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `PolicyBasedRoutingServiceClient`. This allows users to inject custom
- * behavior (e.g., with a Google Mock object) when writing tests that use
- * objects of type `PolicyBasedRoutingServiceClient`.
+ * sets in `PolicyBasedRoutingServiceClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `PolicyBasedRoutingServiceClient`.
  *
- * To create a concrete instance, see
- * `MakePolicyBasedRoutingServiceConnection()`.
+ * To create a concrete instance, see `MakePolicyBasedRoutingServiceConnection()`.
  *
- * For mocking, see
- * `networkconnectivity_v1_mocks::MockPolicyBasedRoutingServiceConnection`.
+ * For mocking, see `networkconnectivity_v1_mocks::MockPolicyBasedRoutingServiceConnection`.
  */
 class PolicyBasedRoutingServiceConnection {
  public:
@@ -201,95 +180,80 @@ class PolicyBasedRoutingServiceConnection {
   virtual Options options() { return Options{}; }
 
   virtual StreamRange<google::cloud::networkconnectivity::v1::PolicyBasedRoute>
-  ListPolicyBasedRoutes(
-      google::cloud::networkconnectivity::v1::ListPolicyBasedRoutesRequest
-          request);
+  ListPolicyBasedRoutes(google::cloud::networkconnectivity::v1::ListPolicyBasedRoutesRequest request);
 
   virtual StatusOr<google::cloud::networkconnectivity::v1::PolicyBasedRoute>
-  GetPolicyBasedRoute(
-      google::cloud::networkconnectivity::v1::GetPolicyBasedRouteRequest const&
-          request);
+  GetPolicyBasedRoute(google::cloud::networkconnectivity::v1::GetPolicyBasedRouteRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::networkconnectivity::v1::PolicyBasedRoute>>
-  CreatePolicyBasedRoute(google::cloud::networkconnectivity::v1::
-                             CreatePolicyBasedRouteRequest const& request);
+  virtual future<StatusOr<google::cloud::networkconnectivity::v1::PolicyBasedRoute>>
+  CreatePolicyBasedRoute(google::cloud::networkconnectivity::v1::CreatePolicyBasedRouteRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> CreatePolicyBasedRoute(
-      NoAwaitTag, google::cloud::networkconnectivity::v1::
-                      CreatePolicyBasedRouteRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  CreatePolicyBasedRoute(NoAwaitTag, google::cloud::networkconnectivity::v1::CreatePolicyBasedRouteRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::networkconnectivity::v1::PolicyBasedRoute>>
-  CreatePolicyBasedRoute(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::networkconnectivity::v1::PolicyBasedRoute>>
+  CreatePolicyBasedRoute( google::longrunning::Operation const& operation);
 
-  virtual future<
-      StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
-  DeletePolicyBasedRoute(google::cloud::networkconnectivity::v1::
-                             DeletePolicyBasedRouteRequest const& request);
+  virtual future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
+  DeletePolicyBasedRoute(google::cloud::networkconnectivity::v1::DeletePolicyBasedRouteRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> DeletePolicyBasedRoute(
-      NoAwaitTag, google::cloud::networkconnectivity::v1::
-                      DeletePolicyBasedRouteRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  DeletePolicyBasedRoute(NoAwaitTag, google::cloud::networkconnectivity::v1::DeletePolicyBasedRouteRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
-  DeletePolicyBasedRoute(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
+  DeletePolicyBasedRoute( google::longrunning::Operation const& operation);
 
-  virtual StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request);
+  virtual StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request);
 
-  virtual StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request);
+  virtual StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
 
   virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
   TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
 
-  virtual StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 
-  virtual Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request);
+  virtual Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
 
-  virtual Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request);
+  virtual Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request);
 };
 
 /**
- * A factory function to construct an object of type
- * `PolicyBasedRoutingServiceConnection`.
+ * A factory function to construct an object of type `PolicyBasedRoutingServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of
- * PolicyBasedRoutingServiceClient.
+ * should be passed as an argument to the constructor of PolicyBasedRoutingServiceClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `PolicyBasedRoutingServiceConnection`. Expected options are any of
- * the types in the following option lists:
+ * returned `PolicyBasedRoutingServiceConnection`. Expected options are any of the types in
+ * the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * -
- * `google::cloud::networkconnectivity_v1::PolicyBasedRoutingServicePolicyOptionList`
+ * - `google::cloud::networkconnectivity_v1::PolicyBasedRoutingServicePolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
- * @param options (optional) Configure the `PolicyBasedRoutingServiceConnection`
- * created by this function.
+ * @param options (optional) Configure the `PolicyBasedRoutingServiceConnection` created by
+ * this function.
  */
-std::shared_ptr<PolicyBasedRoutingServiceConnection>
-MakePolicyBasedRoutingServiceConnection(Options options = {});
+std::shared_ptr<PolicyBasedRoutingServiceConnection> MakePolicyBasedRoutingServiceConnection(
+    Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace networkconnectivity_v1

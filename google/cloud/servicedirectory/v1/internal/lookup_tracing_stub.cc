@@ -32,36 +32,33 @@ LookupServiceTracingStub::LookupServiceTracingStub(
     std::shared_ptr<LookupServiceStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
-StatusOr<google::cloud::servicedirectory::v1::ResolveServiceResponse>
-LookupServiceTracingStub::ResolveService(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::servicedirectory::v1::ResolveServiceResponse> LookupServiceTracingStub::ResolveService(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::servicedirectory::v1::ResolveServiceRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.servicedirectory.v1.LookupService", "ResolveService");
+  auto span = internal::MakeSpanGrpc("google.cloud.servicedirectory.v1.LookupService", "ResolveService");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ResolveService(context, options, request));
 }
 
-StatusOr<google::cloud::location::ListLocationsResponse>
-LookupServiceTracingStub::ListLocations(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::location::ListLocationsResponse> LookupServiceTracingStub::ListLocations(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.servicedirectory.v1.LookupService", "ListLocations");
+  auto span = internal::MakeSpanGrpc("google.cloud.servicedirectory.v1.LookupService", "ListLocations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListLocations(context, options, request));
 }
 
-StatusOr<google::cloud::location::Location>
-LookupServiceTracingStub::GetLocation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::location::Location> LookupServiceTracingStub::GetLocation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.servicedirectory.v1.LookupService", "GetLocation");
+  auto span = internal::MakeSpanGrpc("google.cloud.servicedirectory.v1.LookupService", "GetLocation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,

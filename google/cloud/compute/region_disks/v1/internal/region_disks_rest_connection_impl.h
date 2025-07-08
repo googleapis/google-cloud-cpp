@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGION_DISKS_V1_INTERNAL_REGION_DISKS_REST_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGION_DISKS_V1_INTERNAL_REGION_DISKS_REST_CONNECTION_IMPL_H
 
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/region_disks/v1/internal/region_disks_rest_stub.h"
 #include "google/cloud/compute/region_disks/v1/internal/region_disks_retry_traits.h"
 #include "google/cloud/compute/region_disks/v1/region_disks_connection.h"
 #include "google/cloud/compute/region_disks/v1/region_disks_connection_idempotency_policy.h"
 #include "google/cloud/compute/region_disks/v1/region_disks_options.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -44,206 +44,176 @@ class RegionDisksRestConnectionImpl
   ~RegionDisksRestConnectionImpl() override = default;
 
   RegionDisksRestConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<compute_region_disks_v1_internal::RegionDisksRestStub>
-          stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<compute_region_disks_v1_internal::RegionDisksRestStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AddResourcePolicies(google::cloud::cpp::compute::region_disks::v1::
-                          AddResourcePoliciesRequest const& request) override;
+  AddResourcePolicies(google::cloud::cpp::compute::region_disks::v1::AddResourcePoliciesRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation> AddResourcePolicies(
-      NoAwaitTag, google::cloud::cpp::compute::region_disks::v1::
-                      AddResourcePoliciesRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  AddResourcePolicies(NoAwaitTag,
+      google::cloud::cpp::compute::region_disks::v1::AddResourcePoliciesRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AddResourcePolicies(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> BulkInsert(
-      google::cloud::cpp::compute::region_disks::v1::BulkInsertRequest const&
-          request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  BulkInsert(google::cloud::cpp::compute::region_disks::v1::BulkInsertRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation> BulkInsert(
-      NoAwaitTag,
-      google::cloud::cpp::compute::region_disks::v1::BulkInsertRequest const&
-          request) override;
-
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> BulkInsert(
-      google::cloud::cpp::compute::v1::Operation const& operation) override;
-
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> CreateSnapshot(
-      google::cloud::cpp::compute::region_disks::v1::
-          CreateSnapshotRequest const& request) override;
-
-  StatusOr<google::cloud::cpp::compute::v1::Operation> CreateSnapshot(
-      NoAwaitTag, google::cloud::cpp::compute::region_disks::v1::
-                      CreateSnapshotRequest const& request) override;
-
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> CreateSnapshot(
-      google::cloud::cpp::compute::v1::Operation const& operation) override;
-
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteDisk(
-      google::cloud::cpp::compute::region_disks::v1::DeleteDiskRequest const&
-          request) override;
-
-  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteDisk(
-      NoAwaitTag,
-      google::cloud::cpp::compute::region_disks::v1::DeleteDiskRequest const&
-          request) override;
-
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteDisk(
-      google::cloud::cpp::compute::v1::Operation const& operation) override;
-
-  StatusOr<google::cloud::cpp::compute::v1::Disk> GetDisk(
-      google::cloud::cpp::compute::region_disks::v1::GetDiskRequest const&
-          request) override;
-
-  StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
-      google::cloud::cpp::compute::region_disks::v1::GetIamPolicyRequest const&
-          request) override;
-
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertDisk(
-      google::cloud::cpp::compute::region_disks::v1::InsertDiskRequest const&
-          request) override;
-
-  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertDisk(
-      NoAwaitTag,
-      google::cloud::cpp::compute::region_disks::v1::InsertDiskRequest const&
-          request) override;
-
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertDisk(
-      google::cloud::cpp::compute::v1::Operation const& operation) override;
-
-  StreamRange<google::cloud::cpp::compute::v1::Disk> ListRegionDisks(
-      google::cloud::cpp::compute::region_disks::v1::ListRegionDisksRequest
-          request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  BulkInsert(NoAwaitTag,
+      google::cloud::cpp::compute::region_disks::v1::BulkInsertRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  RemoveResourcePolicies(
-      google::cloud::cpp::compute::region_disks::v1::
-          RemoveResourcePoliciesRequest const& request) override;
+  BulkInsert(
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation> RemoveResourcePolicies(
-      NoAwaitTag, google::cloud::cpp::compute::region_disks::v1::
-                      RemoveResourcePoliciesRequest const& request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  CreateSnapshot(google::cloud::cpp::compute::region_disks::v1::CreateSnapshotRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  CreateSnapshot(NoAwaitTag,
+      google::cloud::cpp::compute::region_disks::v1::CreateSnapshotRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  CreateSnapshot(
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteDisk(google::cloud::cpp::compute::region_disks::v1::DeleteDiskRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeleteDisk(NoAwaitTag,
+      google::cloud::cpp::compute::region_disks::v1::DeleteDiskRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteDisk(
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Disk>
+  GetDisk(google::cloud::cpp::compute::region_disks::v1::GetDiskRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Policy>
+  GetIamPolicy(google::cloud::cpp::compute::region_disks::v1::GetIamPolicyRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  InsertDisk(google::cloud::cpp::compute::region_disks::v1::InsertDiskRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  InsertDisk(NoAwaitTag,
+      google::cloud::cpp::compute::region_disks::v1::InsertDiskRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  InsertDisk(
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
+
+  StreamRange<google::cloud::cpp::compute::v1::Disk>
+  ListRegionDisks(google::cloud::cpp::compute::region_disks::v1::ListRegionDisksRequest request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  RemoveResourcePolicies(google::cloud::cpp::compute::region_disks::v1::RemoveResourcePoliciesRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  RemoveResourcePolicies(NoAwaitTag,
+      google::cloud::cpp::compute::region_disks::v1::RemoveResourcePoliciesRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   RemoveResourcePolicies(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Resize(
-      google::cloud::cpp::compute::region_disks::v1::ResizeRequest const&
-          request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  Resize(google::cloud::cpp::compute::region_disks::v1::ResizeRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation> Resize(
-      NoAwaitTag,
-      google::cloud::cpp::compute::region_disks::v1::ResizeRequest const&
-          request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  Resize(NoAwaitTag,
+      google::cloud::cpp::compute::region_disks::v1::ResizeRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Resize(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  Resize(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
-      google::cloud::cpp::compute::region_disks::v1::SetIamPolicyRequest const&
-          request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Policy>
+  SetIamPolicy(google::cloud::cpp::compute::region_disks::v1::SetIamPolicyRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
-      google::cloud::cpp::compute::region_disks::v1::SetLabelsRequest const&
-          request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  SetLabels(google::cloud::cpp::compute::region_disks::v1::SetLabelsRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
-      NoAwaitTag,
-      google::cloud::cpp::compute::region_disks::v1::SetLabelsRequest const&
-          request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  SetLabels(NoAwaitTag,
+      google::cloud::cpp::compute::region_disks::v1::SetLabelsRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  SetLabels(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  StartAsyncReplication(
-      google::cloud::cpp::compute::region_disks::v1::
-          StartAsyncReplicationRequest const& request) override;
+  StartAsyncReplication(google::cloud::cpp::compute::region_disks::v1::StartAsyncReplicationRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation> StartAsyncReplication(
-      NoAwaitTag, google::cloud::cpp::compute::region_disks::v1::
-                      StartAsyncReplicationRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  StartAsyncReplication(NoAwaitTag,
+      google::cloud::cpp::compute::region_disks::v1::StartAsyncReplicationRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   StartAsyncReplication(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  StopAsyncReplication(google::cloud::cpp::compute::region_disks::v1::
-                           StopAsyncReplicationRequest const& request) override;
+  StopAsyncReplication(google::cloud::cpp::compute::region_disks::v1::StopAsyncReplicationRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation> StopAsyncReplication(
-      NoAwaitTag, google::cloud::cpp::compute::region_disks::v1::
-                      StopAsyncReplicationRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  StopAsyncReplication(NoAwaitTag,
+      google::cloud::cpp::compute::region_disks::v1::StopAsyncReplicationRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   StopAsyncReplication(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  StopGroupAsyncReplication(
-      google::cloud::cpp::compute::region_disks::v1::
-          StopGroupAsyncReplicationRequest const& request) override;
+  StopGroupAsyncReplication(google::cloud::cpp::compute::region_disks::v1::StopGroupAsyncReplicationRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation>
-  StopGroupAsyncReplication(
-      NoAwaitTag, google::cloud::cpp::compute::region_disks::v1::
-                      StopGroupAsyncReplicationRequest const& request) override;
+  StopGroupAsyncReplication(NoAwaitTag,
+      google::cloud::cpp::compute::region_disks::v1::StopGroupAsyncReplicationRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   StopGroupAsyncReplication(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(google::cloud::cpp::compute::region_disks::v1::
-                         TestIamPermissionsRequest const& request) override;
+  TestIamPermissions(google::cloud::cpp::compute::region_disks::v1::TestIamPermissionsRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateDisk(
-      google::cloud::cpp::compute::region_disks::v1::UpdateDiskRequest const&
-          request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  UpdateDisk(google::cloud::cpp::compute::region_disks::v1::UpdateDiskRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateDisk(
-      NoAwaitTag,
-      google::cloud::cpp::compute::region_disks::v1::UpdateDiskRequest const&
-          request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  UpdateDisk(NoAwaitTag,
+      google::cloud::cpp::compute::region_disks::v1::UpdateDiskRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateDisk(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  UpdateDisk(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
  private:
   static std::unique_ptr<compute_region_disks_v1::RegionDisksRetryPolicy>
   retry_policy(Options const& options) {
-    return options.get<compute_region_disks_v1::RegionDisksRetryPolicyOption>()
-        ->clone();
+    return options.get<compute_region_disks_v1::RegionDisksRetryPolicyOption>()->clone();
   }
 
   static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options
-        .get<compute_region_disks_v1::RegionDisksBackoffPolicyOption>()
-        ->clone();
+    return options.get<compute_region_disks_v1::RegionDisksBackoffPolicyOption>()->clone();
   }
 
-  static std::unique_ptr<
-      compute_region_disks_v1::RegionDisksConnectionIdempotencyPolicy>
+  static std::unique_ptr<compute_region_disks_v1::RegionDisksConnectionIdempotencyPolicy>
   idempotency_policy(Options const& options) {
-    return options
-        .get<compute_region_disks_v1::
-                 RegionDisksConnectionIdempotencyPolicyOption>()
-        ->clone();
+    return options.get<compute_region_disks_v1::RegionDisksConnectionIdempotencyPolicyOption>()->clone();
   }
 
   static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-    return options
-        .get<compute_region_disks_v1::RegionDisksPollingPolicyOption>()
-        ->clone();
+    return options.get<compute_region_disks_v1::RegionDisksPollingPolicyOption>()->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

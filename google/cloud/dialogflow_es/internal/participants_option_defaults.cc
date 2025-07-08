@@ -19,9 +19,9 @@
 #include "google/cloud/dialogflow_es/internal/participants_option_defaults.h"
 #include "google/cloud/dialogflow_es/participants_connection.h"
 #include "google/cloud/dialogflow_es/participants_options.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include <memory>
 #include <utility>
 
@@ -34,29 +34,23 @@ namespace {
 auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
-Options ParticipantsDefaultOptions(std::string const& location,
-                                   Options options) {
+Options ParticipantsDefaultOptions(std::string const& location, Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_PARTICIPANTS_ENDPOINT", "",
-      "GOOGLE_CLOUD_CPP_PARTICIPANTS_AUTHORITY",
-      absl::StrCat(location, location.empty() ? "" : "-",
-                   "dialogflow.googleapis.com"));
+      std::move(options), "GOOGLE_CLOUD_CPP_PARTICIPANTS_ENDPOINT",
+      "", "GOOGLE_CLOUD_CPP_PARTICIPANTS_AUTHORITY",
+      absl::StrCat(location, location.empty() ? "" : "-", "dialogflow.googleapis.com"));
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<dialogflow_es::ParticipantsRetryPolicyOption>()) {
     options.set<dialogflow_es::ParticipantsRetryPolicyOption>(
         dialogflow_es::ParticipantsLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
-            .clone());
+            std::chrono::minutes(30)).clone());
   }
   if (!options.has<dialogflow_es::ParticipantsBackoffPolicyOption>()) {
     options.set<dialogflow_es::ParticipantsBackoffPolicyOption>(
-        ExponentialBackoffPolicy(
-            std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
-            .clone());
+        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
   }
-  if (!options.has<
-          dialogflow_es::ParticipantsConnectionIdempotencyPolicyOption>()) {
+  if (!options.has<dialogflow_es::ParticipantsConnectionIdempotencyPolicyOption>()) {
     options.set<dialogflow_es::ParticipantsConnectionIdempotencyPolicyOption>(
         dialogflow_es::MakeDefaultParticipantsConnectionIdempotencyPolicy());
   }

@@ -29,285 +29,221 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-DocumentProcessorServiceTracingConnection::
-    DocumentProcessorServiceTracingConnection(
-        std::shared_ptr<documentai_v1::DocumentProcessorServiceConnection>
-            child)
+DocumentProcessorServiceTracingConnection::DocumentProcessorServiceTracingConnection(
+    std::shared_ptr<documentai_v1::DocumentProcessorServiceConnection> child)
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::documentai::v1::ProcessResponse>
-DocumentProcessorServiceTracingConnection::ProcessDocument(
-    google::cloud::documentai::v1::ProcessRequest const& request) {
-  auto span = internal::MakeSpan(
-      "documentai_v1::DocumentProcessorServiceConnection::ProcessDocument");
+DocumentProcessorServiceTracingConnection::ProcessDocument(google::cloud::documentai::v1::ProcessRequest const& request) {
+  auto span = internal::MakeSpan("documentai_v1::DocumentProcessorServiceConnection::ProcessDocument");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->ProcessDocument(request));
 }
 
 future<StatusOr<google::cloud::documentai::v1::BatchProcessResponse>>
-DocumentProcessorServiceTracingConnection::BatchProcessDocuments(
-    google::cloud::documentai::v1::BatchProcessRequest const& request) {
+DocumentProcessorServiceTracingConnection::BatchProcessDocuments(google::cloud::documentai::v1::BatchProcessRequest const& request) {
   auto span = internal::MakeSpan(
-      "documentai_v1::DocumentProcessorServiceConnection::"
-      "BatchProcessDocuments");
+      "documentai_v1::DocumentProcessorServiceConnection::BatchProcessDocuments");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->BatchProcessDocuments(request));
+  return internal::EndSpan(std::move(span), child_->BatchProcessDocuments(request));
 }
 
 StatusOr<google::longrunning::Operation>
 DocumentProcessorServiceTracingConnection::BatchProcessDocuments(
-    NoAwaitTag,
-    google::cloud::documentai::v1::BatchProcessRequest const& request) {
+    NoAwaitTag, google::cloud::documentai::v1::BatchProcessRequest const& request) {
   auto span = internal::MakeSpan(
-      "documentai_v1::DocumentProcessorServiceConnection::"
-      "BatchProcessDocuments");
+      "documentai_v1::DocumentProcessorServiceConnection::BatchProcessDocuments");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->BatchProcessDocuments(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->BatchProcessDocuments(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::documentai::v1::BatchProcessResponse>>
 DocumentProcessorServiceTracingConnection::BatchProcessDocuments(
     google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
-      "documentai_v1::DocumentProcessorServiceConnection::"
-      "BatchProcessDocuments");
+      "documentai_v1::DocumentProcessorServiceConnection::BatchProcessDocuments");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->BatchProcessDocuments(operation));
+      child_->BatchProcessDocuments(operation));
 }
 
 StatusOr<google::cloud::documentai::v1::FetchProcessorTypesResponse>
-DocumentProcessorServiceTracingConnection::FetchProcessorTypes(
-    google::cloud::documentai::v1::FetchProcessorTypesRequest const& request) {
-  auto span = internal::MakeSpan(
-      "documentai_v1::DocumentProcessorServiceConnection::FetchProcessorTypes");
+DocumentProcessorServiceTracingConnection::FetchProcessorTypes(google::cloud::documentai::v1::FetchProcessorTypesRequest const& request) {
+  auto span = internal::MakeSpan("documentai_v1::DocumentProcessorServiceConnection::FetchProcessorTypes");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->FetchProcessorTypes(request));
 }
 
 StreamRange<google::cloud::documentai::v1::ProcessorType>
-DocumentProcessorServiceTracingConnection::ListProcessorTypes(
-    google::cloud::documentai::v1::ListProcessorTypesRequest request) {
-  auto span = internal::MakeSpan(
-      "documentai_v1::DocumentProcessorServiceConnection::ListProcessorTypes");
+DocumentProcessorServiceTracingConnection::ListProcessorTypes(google::cloud::documentai::v1::ListProcessorTypesRequest request) {
+  auto span = internal::MakeSpan("documentai_v1::DocumentProcessorServiceConnection::ListProcessorTypes");
   internal::OTelScope scope(span);
   auto sr = child_->ListProcessorTypes(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::documentai::v1::ProcessorType>(std::move(span),
-                                                    std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::documentai::v1::ProcessorType>(
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::documentai::v1::ProcessorType>
-DocumentProcessorServiceTracingConnection::GetProcessorType(
-    google::cloud::documentai::v1::GetProcessorTypeRequest const& request) {
-  auto span = internal::MakeSpan(
-      "documentai_v1::DocumentProcessorServiceConnection::GetProcessorType");
+DocumentProcessorServiceTracingConnection::GetProcessorType(google::cloud::documentai::v1::GetProcessorTypeRequest const& request) {
+  auto span = internal::MakeSpan("documentai_v1::DocumentProcessorServiceConnection::GetProcessorType");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetProcessorType(request));
 }
 
 StreamRange<google::cloud::documentai::v1::Processor>
-DocumentProcessorServiceTracingConnection::ListProcessors(
-    google::cloud::documentai::v1::ListProcessorsRequest request) {
-  auto span = internal::MakeSpan(
-      "documentai_v1::DocumentProcessorServiceConnection::ListProcessors");
+DocumentProcessorServiceTracingConnection::ListProcessors(google::cloud::documentai::v1::ListProcessorsRequest request) {
+  auto span = internal::MakeSpan("documentai_v1::DocumentProcessorServiceConnection::ListProcessors");
   internal::OTelScope scope(span);
   auto sr = child_->ListProcessors(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::documentai::v1::Processor>(std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::documentai::v1::Processor>(
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::documentai::v1::Processor>
-DocumentProcessorServiceTracingConnection::GetProcessor(
-    google::cloud::documentai::v1::GetProcessorRequest const& request) {
-  auto span = internal::MakeSpan(
-      "documentai_v1::DocumentProcessorServiceConnection::GetProcessor");
+DocumentProcessorServiceTracingConnection::GetProcessor(google::cloud::documentai::v1::GetProcessorRequest const& request) {
+  auto span = internal::MakeSpan("documentai_v1::DocumentProcessorServiceConnection::GetProcessor");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetProcessor(request));
 }
 
 future<StatusOr<google::cloud::documentai::v1::TrainProcessorVersionResponse>>
-DocumentProcessorServiceTracingConnection::TrainProcessorVersion(
-    google::cloud::documentai::v1::TrainProcessorVersionRequest const&
-        request) {
+DocumentProcessorServiceTracingConnection::TrainProcessorVersion(google::cloud::documentai::v1::TrainProcessorVersionRequest const& request) {
   auto span = internal::MakeSpan(
-      "documentai_v1::DocumentProcessorServiceConnection::"
-      "TrainProcessorVersion");
+      "documentai_v1::DocumentProcessorServiceConnection::TrainProcessorVersion");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->TrainProcessorVersion(request));
+  return internal::EndSpan(std::move(span), child_->TrainProcessorVersion(request));
 }
 
 StatusOr<google::longrunning::Operation>
 DocumentProcessorServiceTracingConnection::TrainProcessorVersion(
-    NoAwaitTag,
-    google::cloud::documentai::v1::TrainProcessorVersionRequest const&
-        request) {
+    NoAwaitTag, google::cloud::documentai::v1::TrainProcessorVersionRequest const& request) {
   auto span = internal::MakeSpan(
-      "documentai_v1::DocumentProcessorServiceConnection::"
-      "TrainProcessorVersion");
+      "documentai_v1::DocumentProcessorServiceConnection::TrainProcessorVersion");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->TrainProcessorVersion(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->TrainProcessorVersion(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::documentai::v1::TrainProcessorVersionResponse>>
 DocumentProcessorServiceTracingConnection::TrainProcessorVersion(
     google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
-      "documentai_v1::DocumentProcessorServiceConnection::"
-      "TrainProcessorVersion");
+      "documentai_v1::DocumentProcessorServiceConnection::TrainProcessorVersion");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->TrainProcessorVersion(operation));
+      child_->TrainProcessorVersion(operation));
 }
 
 StatusOr<google::cloud::documentai::v1::ProcessorVersion>
-DocumentProcessorServiceTracingConnection::GetProcessorVersion(
-    google::cloud::documentai::v1::GetProcessorVersionRequest const& request) {
-  auto span = internal::MakeSpan(
-      "documentai_v1::DocumentProcessorServiceConnection::GetProcessorVersion");
+DocumentProcessorServiceTracingConnection::GetProcessorVersion(google::cloud::documentai::v1::GetProcessorVersionRequest const& request) {
+  auto span = internal::MakeSpan("documentai_v1::DocumentProcessorServiceConnection::GetProcessorVersion");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetProcessorVersion(request));
 }
 
 StreamRange<google::cloud::documentai::v1::ProcessorVersion>
-DocumentProcessorServiceTracingConnection::ListProcessorVersions(
-    google::cloud::documentai::v1::ListProcessorVersionsRequest request) {
-  auto span = internal::MakeSpan(
-      "documentai_v1::DocumentProcessorServiceConnection::"
-      "ListProcessorVersions");
+DocumentProcessorServiceTracingConnection::ListProcessorVersions(google::cloud::documentai::v1::ListProcessorVersionsRequest request) {
+  auto span = internal::MakeSpan("documentai_v1::DocumentProcessorServiceConnection::ListProcessorVersions");
   internal::OTelScope scope(span);
   auto sr = child_->ListProcessorVersions(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::documentai::v1::ProcessorVersion>(std::move(span),
-                                                       std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::documentai::v1::ProcessorVersion>(
+        std::move(span), std::move(sr));
 }
 
 future<StatusOr<google::cloud::documentai::v1::DeleteProcessorVersionMetadata>>
-DocumentProcessorServiceTracingConnection::DeleteProcessorVersion(
-    google::cloud::documentai::v1::DeleteProcessorVersionRequest const&
-        request) {
+DocumentProcessorServiceTracingConnection::DeleteProcessorVersion(google::cloud::documentai::v1::DeleteProcessorVersionRequest const& request) {
   auto span = internal::MakeSpan(
-      "documentai_v1::DocumentProcessorServiceConnection::"
-      "DeleteProcessorVersion");
+      "documentai_v1::DocumentProcessorServiceConnection::DeleteProcessorVersion");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->DeleteProcessorVersion(request));
+  return internal::EndSpan(std::move(span), child_->DeleteProcessorVersion(request));
 }
 
 StatusOr<google::longrunning::Operation>
 DocumentProcessorServiceTracingConnection::DeleteProcessorVersion(
-    NoAwaitTag,
-    google::cloud::documentai::v1::DeleteProcessorVersionRequest const&
-        request) {
+    NoAwaitTag, google::cloud::documentai::v1::DeleteProcessorVersionRequest const& request) {
   auto span = internal::MakeSpan(
-      "documentai_v1::DocumentProcessorServiceConnection::"
-      "DeleteProcessorVersion");
+      "documentai_v1::DocumentProcessorServiceConnection::DeleteProcessorVersion");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->DeleteProcessorVersion(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->DeleteProcessorVersion(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::documentai::v1::DeleteProcessorVersionMetadata>>
 DocumentProcessorServiceTracingConnection::DeleteProcessorVersion(
     google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
-      "documentai_v1::DocumentProcessorServiceConnection::"
-      "DeleteProcessorVersion");
+      "documentai_v1::DocumentProcessorServiceConnection::DeleteProcessorVersion");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->DeleteProcessorVersion(operation));
+      child_->DeleteProcessorVersion(operation));
 }
 
 future<StatusOr<google::cloud::documentai::v1::DeployProcessorVersionResponse>>
-DocumentProcessorServiceTracingConnection::DeployProcessorVersion(
-    google::cloud::documentai::v1::DeployProcessorVersionRequest const&
-        request) {
+DocumentProcessorServiceTracingConnection::DeployProcessorVersion(google::cloud::documentai::v1::DeployProcessorVersionRequest const& request) {
   auto span = internal::MakeSpan(
-      "documentai_v1::DocumentProcessorServiceConnection::"
-      "DeployProcessorVersion");
+      "documentai_v1::DocumentProcessorServiceConnection::DeployProcessorVersion");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->DeployProcessorVersion(request));
+  return internal::EndSpan(std::move(span), child_->DeployProcessorVersion(request));
 }
 
 StatusOr<google::longrunning::Operation>
 DocumentProcessorServiceTracingConnection::DeployProcessorVersion(
-    NoAwaitTag,
-    google::cloud::documentai::v1::DeployProcessorVersionRequest const&
-        request) {
+    NoAwaitTag, google::cloud::documentai::v1::DeployProcessorVersionRequest const& request) {
   auto span = internal::MakeSpan(
-      "documentai_v1::DocumentProcessorServiceConnection::"
-      "DeployProcessorVersion");
+      "documentai_v1::DocumentProcessorServiceConnection::DeployProcessorVersion");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->DeployProcessorVersion(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->DeployProcessorVersion(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::documentai::v1::DeployProcessorVersionResponse>>
 DocumentProcessorServiceTracingConnection::DeployProcessorVersion(
     google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
-      "documentai_v1::DocumentProcessorServiceConnection::"
-      "DeployProcessorVersion");
+      "documentai_v1::DocumentProcessorServiceConnection::DeployProcessorVersion");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->DeployProcessorVersion(operation));
+      child_->DeployProcessorVersion(operation));
 }
 
-future<
-    StatusOr<google::cloud::documentai::v1::UndeployProcessorVersionResponse>>
-DocumentProcessorServiceTracingConnection::UndeployProcessorVersion(
-    google::cloud::documentai::v1::UndeployProcessorVersionRequest const&
-        request) {
+future<StatusOr<google::cloud::documentai::v1::UndeployProcessorVersionResponse>>
+DocumentProcessorServiceTracingConnection::UndeployProcessorVersion(google::cloud::documentai::v1::UndeployProcessorVersionRequest const& request) {
   auto span = internal::MakeSpan(
-      "documentai_v1::DocumentProcessorServiceConnection::"
-      "UndeployProcessorVersion");
+      "documentai_v1::DocumentProcessorServiceConnection::UndeployProcessorVersion");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->UndeployProcessorVersion(request));
+  return internal::EndSpan(std::move(span), child_->UndeployProcessorVersion(request));
 }
 
 StatusOr<google::longrunning::Operation>
 DocumentProcessorServiceTracingConnection::UndeployProcessorVersion(
-    NoAwaitTag,
-    google::cloud::documentai::v1::UndeployProcessorVersionRequest const&
-        request) {
+    NoAwaitTag, google::cloud::documentai::v1::UndeployProcessorVersionRequest const& request) {
   auto span = internal::MakeSpan(
-      "documentai_v1::DocumentProcessorServiceConnection::"
-      "UndeployProcessorVersion");
+      "documentai_v1::DocumentProcessorServiceConnection::UndeployProcessorVersion");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->UndeployProcessorVersion(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->UndeployProcessorVersion(
+      NoAwaitTag{}, request));
 }
 
-future<
-    StatusOr<google::cloud::documentai::v1::UndeployProcessorVersionResponse>>
+future<StatusOr<google::cloud::documentai::v1::UndeployProcessorVersionResponse>>
 DocumentProcessorServiceTracingConnection::UndeployProcessorVersion(
     google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
-      "documentai_v1::DocumentProcessorServiceConnection::"
-      "UndeployProcessorVersion");
+      "documentai_v1::DocumentProcessorServiceConnection::UndeployProcessorVersion");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->UndeployProcessorVersion(operation));
+      child_->UndeployProcessorVersion(operation));
 }
 
 StatusOr<google::cloud::documentai::v1::Processor>
-DocumentProcessorServiceTracingConnection::CreateProcessor(
-    google::cloud::documentai::v1::CreateProcessorRequest const& request) {
-  auto span = internal::MakeSpan(
-      "documentai_v1::DocumentProcessorServiceConnection::CreateProcessor");
+DocumentProcessorServiceTracingConnection::CreateProcessor(google::cloud::documentai::v1::CreateProcessorRequest const& request) {
+  auto span = internal::MakeSpan("documentai_v1::DocumentProcessorServiceConnection::CreateProcessor");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateProcessor(request));
 }
 
 future<StatusOr<google::cloud::documentai::v1::DeleteProcessorMetadata>>
-DocumentProcessorServiceTracingConnection::DeleteProcessor(
-    google::cloud::documentai::v1::DeleteProcessorRequest const& request) {
+DocumentProcessorServiceTracingConnection::DeleteProcessor(google::cloud::documentai::v1::DeleteProcessorRequest const& request) {
   auto span = internal::MakeSpan(
       "documentai_v1::DocumentProcessorServiceConnection::DeleteProcessor");
   internal::OTelScope scope(span);
@@ -316,13 +252,12 @@ DocumentProcessorServiceTracingConnection::DeleteProcessor(
 
 StatusOr<google::longrunning::Operation>
 DocumentProcessorServiceTracingConnection::DeleteProcessor(
-    NoAwaitTag,
-    google::cloud::documentai::v1::DeleteProcessorRequest const& request) {
+    NoAwaitTag, google::cloud::documentai::v1::DeleteProcessorRequest const& request) {
   auto span = internal::MakeSpan(
       "documentai_v1::DocumentProcessorServiceConnection::DeleteProcessor");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span,
-                           child_->DeleteProcessor(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->DeleteProcessor(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::documentai::v1::DeleteProcessorMetadata>>
@@ -331,12 +266,12 @@ DocumentProcessorServiceTracingConnection::DeleteProcessor(
   auto span = internal::MakeSpan(
       "documentai_v1::DocumentProcessorServiceConnection::DeleteProcessor");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->DeleteProcessor(operation));
+  return internal::EndSpan(std::move(span),
+      child_->DeleteProcessor(operation));
 }
 
 future<StatusOr<google::cloud::documentai::v1::EnableProcessorResponse>>
-DocumentProcessorServiceTracingConnection::EnableProcessor(
-    google::cloud::documentai::v1::EnableProcessorRequest const& request) {
+DocumentProcessorServiceTracingConnection::EnableProcessor(google::cloud::documentai::v1::EnableProcessorRequest const& request) {
   auto span = internal::MakeSpan(
       "documentai_v1::DocumentProcessorServiceConnection::EnableProcessor");
   internal::OTelScope scope(span);
@@ -345,13 +280,12 @@ DocumentProcessorServiceTracingConnection::EnableProcessor(
 
 StatusOr<google::longrunning::Operation>
 DocumentProcessorServiceTracingConnection::EnableProcessor(
-    NoAwaitTag,
-    google::cloud::documentai::v1::EnableProcessorRequest const& request) {
+    NoAwaitTag, google::cloud::documentai::v1::EnableProcessorRequest const& request) {
   auto span = internal::MakeSpan(
       "documentai_v1::DocumentProcessorServiceConnection::EnableProcessor");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span,
-                           child_->EnableProcessor(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->EnableProcessor(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::documentai::v1::EnableProcessorResponse>>
@@ -360,12 +294,12 @@ DocumentProcessorServiceTracingConnection::EnableProcessor(
   auto span = internal::MakeSpan(
       "documentai_v1::DocumentProcessorServiceConnection::EnableProcessor");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->EnableProcessor(operation));
+  return internal::EndSpan(std::move(span),
+      child_->EnableProcessor(operation));
 }
 
 future<StatusOr<google::cloud::documentai::v1::DisableProcessorResponse>>
-DocumentProcessorServiceTracingConnection::DisableProcessor(
-    google::cloud::documentai::v1::DisableProcessorRequest const& request) {
+DocumentProcessorServiceTracingConnection::DisableProcessor(google::cloud::documentai::v1::DisableProcessorRequest const& request) {
   auto span = internal::MakeSpan(
       "documentai_v1::DocumentProcessorServiceConnection::DisableProcessor");
   internal::OTelScope scope(span);
@@ -374,13 +308,12 @@ DocumentProcessorServiceTracingConnection::DisableProcessor(
 
 StatusOr<google::longrunning::Operation>
 DocumentProcessorServiceTracingConnection::DisableProcessor(
-    NoAwaitTag,
-    google::cloud::documentai::v1::DisableProcessorRequest const& request) {
+    NoAwaitTag, google::cloud::documentai::v1::DisableProcessorRequest const& request) {
   auto span = internal::MakeSpan(
       "documentai_v1::DocumentProcessorServiceConnection::DisableProcessor");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span,
-                           child_->DisableProcessor(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->DisableProcessor(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::documentai::v1::DisableProcessorResponse>>
@@ -390,50 +323,39 @@ DocumentProcessorServiceTracingConnection::DisableProcessor(
       "documentai_v1::DocumentProcessorServiceConnection::DisableProcessor");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->DisableProcessor(operation));
+      child_->DisableProcessor(operation));
 }
 
-future<
-    StatusOr<google::cloud::documentai::v1::SetDefaultProcessorVersionResponse>>
-DocumentProcessorServiceTracingConnection::SetDefaultProcessorVersion(
-    google::cloud::documentai::v1::SetDefaultProcessorVersionRequest const&
-        request) {
+future<StatusOr<google::cloud::documentai::v1::SetDefaultProcessorVersionResponse>>
+DocumentProcessorServiceTracingConnection::SetDefaultProcessorVersion(google::cloud::documentai::v1::SetDefaultProcessorVersionRequest const& request) {
   auto span = internal::MakeSpan(
-      "documentai_v1::DocumentProcessorServiceConnection::"
-      "SetDefaultProcessorVersion");
+      "documentai_v1::DocumentProcessorServiceConnection::SetDefaultProcessorVersion");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->SetDefaultProcessorVersion(request));
+  return internal::EndSpan(std::move(span), child_->SetDefaultProcessorVersion(request));
 }
 
 StatusOr<google::longrunning::Operation>
 DocumentProcessorServiceTracingConnection::SetDefaultProcessorVersion(
-    NoAwaitTag,
-    google::cloud::documentai::v1::SetDefaultProcessorVersionRequest const&
-        request) {
+    NoAwaitTag, google::cloud::documentai::v1::SetDefaultProcessorVersionRequest const& request) {
   auto span = internal::MakeSpan(
-      "documentai_v1::DocumentProcessorServiceConnection::"
-      "SetDefaultProcessorVersion");
+      "documentai_v1::DocumentProcessorServiceConnection::SetDefaultProcessorVersion");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->SetDefaultProcessorVersion(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->SetDefaultProcessorVersion(
+      NoAwaitTag{}, request));
 }
 
-future<
-    StatusOr<google::cloud::documentai::v1::SetDefaultProcessorVersionResponse>>
+future<StatusOr<google::cloud::documentai::v1::SetDefaultProcessorVersionResponse>>
 DocumentProcessorServiceTracingConnection::SetDefaultProcessorVersion(
     google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
-      "documentai_v1::DocumentProcessorServiceConnection::"
-      "SetDefaultProcessorVersion");
+      "documentai_v1::DocumentProcessorServiceConnection::SetDefaultProcessorVersion");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->SetDefaultProcessorVersion(operation));
+      child_->SetDefaultProcessorVersion(operation));
 }
 
 future<StatusOr<google::cloud::documentai::v1::ReviewDocumentResponse>>
-DocumentProcessorServiceTracingConnection::ReviewDocument(
-    google::cloud::documentai::v1::ReviewDocumentRequest const& request) {
+DocumentProcessorServiceTracingConnection::ReviewDocument(google::cloud::documentai::v1::ReviewDocumentRequest const& request) {
   auto span = internal::MakeSpan(
       "documentai_v1::DocumentProcessorServiceConnection::ReviewDocument");
   internal::OTelScope scope(span);
@@ -442,13 +364,12 @@ DocumentProcessorServiceTracingConnection::ReviewDocument(
 
 StatusOr<google::longrunning::Operation>
 DocumentProcessorServiceTracingConnection::ReviewDocument(
-    NoAwaitTag,
-    google::cloud::documentai::v1::ReviewDocumentRequest const& request) {
+    NoAwaitTag, google::cloud::documentai::v1::ReviewDocumentRequest const& request) {
   auto span = internal::MakeSpan(
       "documentai_v1::DocumentProcessorServiceConnection::ReviewDocument");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span,
-                           child_->ReviewDocument(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->ReviewDocument(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::documentai::v1::ReviewDocumentResponse>>
@@ -457,112 +378,89 @@ DocumentProcessorServiceTracingConnection::ReviewDocument(
   auto span = internal::MakeSpan(
       "documentai_v1::DocumentProcessorServiceConnection::ReviewDocument");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->ReviewDocument(operation));
+  return internal::EndSpan(std::move(span),
+      child_->ReviewDocument(operation));
 }
 
-future<
-    StatusOr<google::cloud::documentai::v1::EvaluateProcessorVersionResponse>>
-DocumentProcessorServiceTracingConnection::EvaluateProcessorVersion(
-    google::cloud::documentai::v1::EvaluateProcessorVersionRequest const&
-        request) {
+future<StatusOr<google::cloud::documentai::v1::EvaluateProcessorVersionResponse>>
+DocumentProcessorServiceTracingConnection::EvaluateProcessorVersion(google::cloud::documentai::v1::EvaluateProcessorVersionRequest const& request) {
   auto span = internal::MakeSpan(
-      "documentai_v1::DocumentProcessorServiceConnection::"
-      "EvaluateProcessorVersion");
+      "documentai_v1::DocumentProcessorServiceConnection::EvaluateProcessorVersion");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->EvaluateProcessorVersion(request));
+  return internal::EndSpan(std::move(span), child_->EvaluateProcessorVersion(request));
 }
 
 StatusOr<google::longrunning::Operation>
 DocumentProcessorServiceTracingConnection::EvaluateProcessorVersion(
-    NoAwaitTag,
-    google::cloud::documentai::v1::EvaluateProcessorVersionRequest const&
-        request) {
+    NoAwaitTag, google::cloud::documentai::v1::EvaluateProcessorVersionRequest const& request) {
   auto span = internal::MakeSpan(
-      "documentai_v1::DocumentProcessorServiceConnection::"
-      "EvaluateProcessorVersion");
+      "documentai_v1::DocumentProcessorServiceConnection::EvaluateProcessorVersion");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->EvaluateProcessorVersion(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->EvaluateProcessorVersion(
+      NoAwaitTag{}, request));
 }
 
-future<
-    StatusOr<google::cloud::documentai::v1::EvaluateProcessorVersionResponse>>
+future<StatusOr<google::cloud::documentai::v1::EvaluateProcessorVersionResponse>>
 DocumentProcessorServiceTracingConnection::EvaluateProcessorVersion(
     google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
-      "documentai_v1::DocumentProcessorServiceConnection::"
-      "EvaluateProcessorVersion");
+      "documentai_v1::DocumentProcessorServiceConnection::EvaluateProcessorVersion");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->EvaluateProcessorVersion(operation));
+      child_->EvaluateProcessorVersion(operation));
 }
 
 StatusOr<google::cloud::documentai::v1::Evaluation>
-DocumentProcessorServiceTracingConnection::GetEvaluation(
-    google::cloud::documentai::v1::GetEvaluationRequest const& request) {
-  auto span = internal::MakeSpan(
-      "documentai_v1::DocumentProcessorServiceConnection::GetEvaluation");
+DocumentProcessorServiceTracingConnection::GetEvaluation(google::cloud::documentai::v1::GetEvaluationRequest const& request) {
+  auto span = internal::MakeSpan("documentai_v1::DocumentProcessorServiceConnection::GetEvaluation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetEvaluation(request));
 }
 
 StreamRange<google::cloud::documentai::v1::Evaluation>
-DocumentProcessorServiceTracingConnection::ListEvaluations(
-    google::cloud::documentai::v1::ListEvaluationsRequest request) {
-  auto span = internal::MakeSpan(
-      "documentai_v1::DocumentProcessorServiceConnection::ListEvaluations");
+DocumentProcessorServiceTracingConnection::ListEvaluations(google::cloud::documentai::v1::ListEvaluationsRequest request) {
+  auto span = internal::MakeSpan("documentai_v1::DocumentProcessorServiceConnection::ListEvaluations");
   internal::OTelScope scope(span);
   auto sr = child_->ListEvaluations(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::documentai::v1::Evaluation>(std::move(span),
-                                                 std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::documentai::v1::Evaluation>(
+        std::move(span), std::move(sr));
 }
 
 StreamRange<google::cloud::location::Location>
-DocumentProcessorServiceTracingConnection::ListLocations(
-    google::cloud::location::ListLocationsRequest request) {
-  auto span = internal::MakeSpan(
-      "documentai_v1::DocumentProcessorServiceConnection::ListLocations");
+DocumentProcessorServiceTracingConnection::ListLocations(google::cloud::location::ListLocationsRequest request) {
+  auto span = internal::MakeSpan("documentai_v1::DocumentProcessorServiceConnection::ListLocations");
   internal::OTelScope scope(span);
   auto sr = child_->ListLocations(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::location::Location>(
-      std::move(span), std::move(sr));
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::location::Location>
-DocumentProcessorServiceTracingConnection::GetLocation(
-    google::cloud::location::GetLocationRequest const& request) {
-  auto span = internal::MakeSpan(
-      "documentai_v1::DocumentProcessorServiceConnection::GetLocation");
+DocumentProcessorServiceTracingConnection::GetLocation(google::cloud::location::GetLocationRequest const& request) {
+  auto span = internal::MakeSpan("documentai_v1::DocumentProcessorServiceConnection::GetLocation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetLocation(request));
 }
 
 StreamRange<google::longrunning::Operation>
-DocumentProcessorServiceTracingConnection::ListOperations(
-    google::longrunning::ListOperationsRequest request) {
-  auto span = internal::MakeSpan(
-      "documentai_v1::DocumentProcessorServiceConnection::ListOperations");
+DocumentProcessorServiceTracingConnection::ListOperations(google::longrunning::ListOperationsRequest request) {
+  auto span = internal::MakeSpan("documentai_v1::DocumentProcessorServiceConnection::ListOperations");
   internal::OTelScope scope(span);
   auto sr = child_->ListOperations(std::move(request));
   return internal::MakeTracedStreamRange<google::longrunning::Operation>(
-      std::move(span), std::move(sr));
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::longrunning::Operation>
-DocumentProcessorServiceTracingConnection::GetOperation(
-    google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpan(
-      "documentai_v1::DocumentProcessorServiceConnection::GetOperation");
+DocumentProcessorServiceTracingConnection::GetOperation(google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpan("documentai_v1::DocumentProcessorServiceConnection::GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOperation(request));
 }
 
-Status DocumentProcessorServiceTracingConnection::CancelOperation(
-    google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpan(
-      "documentai_v1::DocumentProcessorServiceConnection::CancelOperation");
+Status
+DocumentProcessorServiceTracingConnection::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
+  auto span = internal::MakeSpan("documentai_v1::DocumentProcessorServiceConnection::CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CancelOperation(request));
 }
@@ -574,8 +472,7 @@ MakeDocumentProcessorServiceTracingConnection(
     std::shared_ptr<documentai_v1::DocumentProcessorServiceConnection> conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
-    conn = std::make_shared<DocumentProcessorServiceTracingConnection>(
-        std::move(conn));
+    conn = std::make_shared<DocumentProcessorServiceTracingConnection>(std::move(conn));
   }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;

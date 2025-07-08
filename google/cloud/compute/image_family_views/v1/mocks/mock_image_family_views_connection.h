@@ -42,16 +42,13 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockImageFamilyViewsConnection
-    : public compute_image_family_views_v1::ImageFamilyViewsConnection {
+class MockImageFamilyViewsConnection : public compute_image_family_views_v1::ImageFamilyViewsConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::ImageFamilyView>,
-              GetImageFamilyView,
-              (google::cloud::cpp::compute::image_family_views::v1::
-                   GetImageFamilyViewRequest const& request),
-              (override));
+  GetImageFamilyView,
+  (google::cloud::cpp::compute::image_family_views::v1::GetImageFamilyViewRequest const& request), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

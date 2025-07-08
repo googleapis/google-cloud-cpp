@@ -26,21 +26,19 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-AuthorizedDomainsConnectionIdempotencyPolicy::
-    ~AuthorizedDomainsConnectionIdempotencyPolicy() = default;
+AuthorizedDomainsConnectionIdempotencyPolicy::~AuthorizedDomainsConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<AuthorizedDomainsConnectionIdempotencyPolicy>
 AuthorizedDomainsConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<AuthorizedDomainsConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency AuthorizedDomainsConnectionIdempotencyPolicy::ListAuthorizedDomains(
-    google::appengine::v1::ListAuthorizedDomainsRequest) {  // NOLINT
+Idempotency AuthorizedDomainsConnectionIdempotencyPolicy::ListAuthorizedDomains(google::appengine::v1::ListAuthorizedDomainsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<AuthorizedDomainsConnectionIdempotencyPolicy>
-MakeDefaultAuthorizedDomainsConnectionIdempotencyPolicy() {
+    MakeDefaultAuthorizedDomainsConnectionIdempotencyPolicy() {
   return std::make_unique<AuthorizedDomainsConnectionIdempotencyPolicy>();
 }
 

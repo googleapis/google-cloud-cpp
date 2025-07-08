@@ -46,24 +46,21 @@ class MockJobServiceConnection : public talent_v4::JobServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::talent::v4::Job>, CreateJob,
-              (google::cloud::talent::v4::CreateJobRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::talent::v4::Job>,
+  CreateJob,
+  (google::cloud::talent::v4::CreateJobRequest const& request), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// BatchCreateJobs(Matcher<google::cloud::talent::v4::BatchCreateJobsRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, BatchCreateJobs(Matcher<google::cloud::talent::v4::BatchCreateJobsRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::talent::v4::BatchCreateJobsResponse>>,
-      BatchCreateJobs,
-      (google::cloud::talent::v4::BatchCreateJobsRequest const& request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::talent::v4::BatchCreateJobsResponse>>,
+  BatchCreateJobs,
+  (google::cloud::talent::v4::BatchCreateJobsRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -71,47 +68,41 @@ class MockJobServiceConnection : public talent_v4::JobServiceConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, BatchCreateJobs(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, BatchCreateJobs,
-      (NoAwaitTag,
-       google::cloud::talent::v4::BatchCreateJobsRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  BatchCreateJobs, (NoAwaitTag,
+    google::cloud::talent::v4::BatchCreateJobsRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, BatchCreateJobs(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, BatchCreateJobs(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::talent::v4::BatchCreateJobsResponse>>,
-      BatchCreateJobs, (google::longrunning::Operation const& operation),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::talent::v4::BatchCreateJobsResponse>>,
+  BatchCreateJobs, (
+    google::longrunning::Operation const& operation), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::talent::v4::Job>, GetJob,
-              (google::cloud::talent::v4::GetJobRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::talent::v4::Job>,
+  GetJob,
+  (google::cloud::talent::v4::GetJobRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::talent::v4::Job>, UpdateJob,
-              (google::cloud::talent::v4::UpdateJobRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::talent::v4::Job>,
+  UpdateJob,
+  (google::cloud::talent::v4::UpdateJobRequest const& request), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// BatchUpdateJobs(Matcher<google::cloud::talent::v4::BatchUpdateJobsRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, BatchUpdateJobs(Matcher<google::cloud::talent::v4::BatchUpdateJobsRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::talent::v4::BatchUpdateJobsResponse>>,
-      BatchUpdateJobs,
-      (google::cloud::talent::v4::BatchUpdateJobsRequest const& request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::talent::v4::BatchUpdateJobsResponse>>,
+  BatchUpdateJobs,
+  (google::cloud::talent::v4::BatchUpdateJobsRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -119,43 +110,37 @@ class MockJobServiceConnection : public talent_v4::JobServiceConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, BatchUpdateJobs(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, BatchUpdateJobs,
-      (NoAwaitTag,
-       google::cloud::talent::v4::BatchUpdateJobsRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  BatchUpdateJobs, (NoAwaitTag,
+    google::cloud::talent::v4::BatchUpdateJobsRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, BatchUpdateJobs(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, BatchUpdateJobs(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::talent::v4::BatchUpdateJobsResponse>>,
-      BatchUpdateJobs, (google::longrunning::Operation const& operation),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::talent::v4::BatchUpdateJobsResponse>>,
+  BatchUpdateJobs, (
+    google::longrunning::Operation const& operation), (override));
 
-  MOCK_METHOD(Status, DeleteJob,
-              (google::cloud::talent::v4::DeleteJobRequest const& request),
-              (override));
+  MOCK_METHOD(Status,
+  DeleteJob,
+  (google::cloud::talent::v4::DeleteJobRequest const& request), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// BatchDeleteJobs(Matcher<google::cloud::talent::v4::BatchDeleteJobsRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, BatchDeleteJobs(Matcher<google::cloud::talent::v4::BatchDeleteJobsRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::talent::v4::BatchDeleteJobsResponse>>,
-      BatchDeleteJobs,
-      (google::cloud::talent::v4::BatchDeleteJobsRequest const& request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::talent::v4::BatchDeleteJobsResponse>>,
+  BatchDeleteJobs,
+  (google::cloud::talent::v4::BatchDeleteJobsRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -163,41 +148,37 @@ class MockJobServiceConnection : public talent_v4::JobServiceConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, BatchDeleteJobs(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, BatchDeleteJobs,
-      (NoAwaitTag,
-       google::cloud::talent::v4::BatchDeleteJobsRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  BatchDeleteJobs, (NoAwaitTag,
+    google::cloud::talent::v4::BatchDeleteJobsRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, BatchDeleteJobs(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, BatchDeleteJobs(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::talent::v4::BatchDeleteJobsResponse>>,
-      BatchDeleteJobs, (google::longrunning::Operation const& operation),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::talent::v4::BatchDeleteJobsResponse>>,
+  BatchDeleteJobs, (
+    google::longrunning::Operation const& operation), (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::talent::v4::Job>), ListJobs,
-              (google::cloud::talent::v4::ListJobsRequest request), (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::talent::v4::SearchJobsResponse>,
-              SearchJobs,
-              (google::cloud::talent::v4::SearchJobsRequest const& request),
-              (override));
+  MOCK_METHOD((StreamRange<google::cloud::talent::v4::Job>),
+  ListJobs,
+  (google::cloud::talent::v4::ListJobsRequest request), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::talent::v4::SearchJobsResponse>,
-              SearchJobsForAlert,
-              (google::cloud::talent::v4::SearchJobsRequest const& request),
-              (override));
+  SearchJobs,
+  (google::cloud::talent::v4::SearchJobsRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
-              (google::longrunning::GetOperationRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::talent::v4::SearchJobsResponse>,
+  SearchJobsForAlert,
+  (google::cloud::talent::v4::SearchJobsRequest const& request), (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  GetOperation,
+  (google::longrunning::GetOperationRequest const& request), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

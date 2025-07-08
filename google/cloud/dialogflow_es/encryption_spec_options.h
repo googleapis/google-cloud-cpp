@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_ES_ENCRYPTION_SPEC_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_ES_ENCRYPTION_SPEC_OPTIONS_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/dialogflow_es/encryption_spec_connection.h"
 #include "google/cloud/dialogflow_es/encryption_spec_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -55,8 +55,7 @@ struct EncryptionSpecServiceBackoffPolicyOption {
  * @ingroup google-cloud-dialogflow_es-options
  */
 struct EncryptionSpecServiceConnectionIdempotencyPolicyOption {
-  using Type =
-      std::shared_ptr<EncryptionSpecServiceConnectionIdempotencyPolicy>;
+  using Type = std::shared_ptr<EncryptionSpecServiceConnectionIdempotencyPolicy>;
 };
 
 /**

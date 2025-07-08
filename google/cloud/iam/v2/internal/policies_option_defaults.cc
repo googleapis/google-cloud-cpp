@@ -35,30 +35,28 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options PoliciesDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_POLICIES_ENDPOINT", "",
-      "GOOGLE_CLOUD_CPP_POLICIES_AUTHORITY", "iam.googleapis.com");
+      std::move(options), "GOOGLE_CLOUD_CPP_POLICIES_ENDPOINT",
+      "", "GOOGLE_CLOUD_CPP_POLICIES_AUTHORITY",
+      "iam.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<iam_v2::PoliciesRetryPolicyOption>()) {
     options.set<iam_v2::PoliciesRetryPolicyOption>(
-        iam_v2::PoliciesLimitedTimeRetryPolicy(std::chrono::minutes(30))
-            .clone());
+        iam_v2::PoliciesLimitedTimeRetryPolicy(
+            std::chrono::minutes(30)).clone());
   }
   if (!options.has<iam_v2::PoliciesBackoffPolicyOption>()) {
     options.set<iam_v2::PoliciesBackoffPolicyOption>(
-        ExponentialBackoffPolicy(
-            std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
-            .clone());
+        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
   }
   if (!options.has<iam_v2::PoliciesPollingPolicyOption>()) {
     options.set<iam_v2::PoliciesPollingPolicyOption>(
-        GenericPollingPolicy<iam_v2::PoliciesRetryPolicyOption::Type,
-                             iam_v2::PoliciesBackoffPolicyOption::Type>(
+        GenericPollingPolicy<
+            iam_v2::PoliciesRetryPolicyOption::Type,
+            iam_v2::PoliciesBackoffPolicyOption::Type>(
             options.get<iam_v2::PoliciesRetryPolicyOption>()->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                     std::chrono::minutes(5), kBackoffScaling)
-                .clone())
-            .clone());
+            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
   }
   if (!options.has<iam_v2::PoliciesConnectionIdempotencyPolicyOption>()) {
     options.set<iam_v2::PoliciesConnectionIdempotencyPolicyOption>(

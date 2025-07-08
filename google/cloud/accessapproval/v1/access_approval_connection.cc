@@ -38,10 +38,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 AccessApprovalConnection::~AccessApprovalConnection() = default;
 
-StreamRange<google::cloud::accessapproval::v1::ApprovalRequest>
-AccessApprovalConnection::ListApprovalRequests(
-    google::cloud::accessapproval::v1::
-        ListApprovalRequestsMessage) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::accessapproval::v1::ApprovalRequest> AccessApprovalConnection::ListApprovalRequests(
+    google::cloud::accessapproval::v1::ListApprovalRequestsMessage) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::accessapproval::v1::ApprovalRequest>>();
 }
@@ -66,54 +64,48 @@ AccessApprovalConnection::DismissApprovalRequest(
 
 StatusOr<google::cloud::accessapproval::v1::ApprovalRequest>
 AccessApprovalConnection::InvalidateApprovalRequest(
-    google::cloud::accessapproval::v1::
-        InvalidateApprovalRequestMessage const&) {
+    google::cloud::accessapproval::v1::InvalidateApprovalRequestMessage const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::accessapproval::v1::AccessApprovalSettings>
 AccessApprovalConnection::GetAccessApprovalSettings(
-    google::cloud::accessapproval::v1::
-        GetAccessApprovalSettingsMessage const&) {
+    google::cloud::accessapproval::v1::GetAccessApprovalSettingsMessage const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::accessapproval::v1::AccessApprovalSettings>
 AccessApprovalConnection::UpdateAccessApprovalSettings(
-    google::cloud::accessapproval::v1::
-        UpdateAccessApprovalSettingsMessage const&) {
+    google::cloud::accessapproval::v1::UpdateAccessApprovalSettingsMessage const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status AccessApprovalConnection::DeleteAccessApprovalSettings(
-    google::cloud::accessapproval::v1::
-        DeleteAccessApprovalSettingsMessage const&) {
+Status
+AccessApprovalConnection::DeleteAccessApprovalSettings(
+    google::cloud::accessapproval::v1::DeleteAccessApprovalSettingsMessage const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::accessapproval::v1::AccessApprovalServiceAccount>
 AccessApprovalConnection::GetAccessApprovalServiceAccount(
-    google::cloud::accessapproval::v1::
-        GetAccessApprovalServiceAccountMessage const&) {
+    google::cloud::accessapproval::v1::GetAccessApprovalServiceAccountMessage const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 std::shared_ptr<AccessApprovalConnection> MakeAccessApprovalConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 AccessApprovalPolicyOptionList>(options,
-                                                                 __func__);
+      UnifiedCredentialsOptionList,
+      AccessApprovalPolicyOptionList>(options, __func__);
   options = accessapproval_v1_internal::AccessApprovalDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = accessapproval_v1_internal::CreateDefaultAccessApprovalStub(
-      std::move(auth), options);
+    std::move(auth), options);
   return accessapproval_v1_internal::MakeAccessApprovalTracingConnection(
-      std::make_shared<
-          accessapproval_v1_internal::AccessApprovalConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options)));
+      std::make_shared<accessapproval_v1_internal::AccessApprovalConnectionImpl>(
+      std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -62,30 +62,23 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class SessionTemplateControllerClient {
  public:
-  explicit SessionTemplateControllerClient(
-      std::shared_ptr<SessionTemplateControllerConnection> connection,
-      Options opts = {});
+  explicit SessionTemplateControllerClient(std::shared_ptr<SessionTemplateControllerConnection> connection, Options opts = {});
   ~SessionTemplateControllerClient();
 
   ///@{
   /// @name Copy and move support
-  SessionTemplateControllerClient(SessionTemplateControllerClient const&) =
-      default;
-  SessionTemplateControllerClient& operator=(
-      SessionTemplateControllerClient const&) = default;
+  SessionTemplateControllerClient(SessionTemplateControllerClient const&) = default;
+  SessionTemplateControllerClient& operator=(SessionTemplateControllerClient const&) = default;
   SessionTemplateControllerClient(SessionTemplateControllerClient&&) = default;
-  SessionTemplateControllerClient& operator=(
-      SessionTemplateControllerClient&&) = default;
+  SessionTemplateControllerClient& operator=(SessionTemplateControllerClient&&) = default;
   ///@}
 
   ///@{
   /// @name Equality
-  friend bool operator==(SessionTemplateControllerClient const& a,
-                         SessionTemplateControllerClient const& b) {
+  friend bool operator==(SessionTemplateControllerClient const& a, SessionTemplateControllerClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(SessionTemplateControllerClient const& a,
-                         SessionTemplateControllerClient const& b) {
+  friend bool operator!=(SessionTemplateControllerClient const& a, SessionTemplateControllerClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -113,10 +106,8 @@ class SessionTemplateControllerClient {
   /// [google.cloud.dataproc.v1.SessionTemplate]: @googleapis_reference_link{google/cloud/dataproc/v1/session_templates.proto#L165}
   ///
   // clang-format on
-  StatusOr<google::cloud::dataproc::v1::SessionTemplate> CreateSessionTemplate(
-      std::string const& parent,
-      google::cloud::dataproc::v1::SessionTemplate const& session_template,
-      Options opts = {});
+  StatusOr<google::cloud::dataproc::v1::SessionTemplate>
+  CreateSessionTemplate(std::string const& parent, google::cloud::dataproc::v1::SessionTemplate const& session_template, Options opts = {});
 
   // clang-format off
   ///
@@ -145,9 +136,8 @@ class SessionTemplateControllerClient {
   /// [google.cloud.dataproc.v1.SessionTemplate]: @googleapis_reference_link{google/cloud/dataproc/v1/session_templates.proto#L165}
   ///
   // clang-format on
-  StatusOr<google::cloud::dataproc::v1::SessionTemplate> CreateSessionTemplate(
-      google::cloud::dataproc::v1::CreateSessionTemplateRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::dataproc::v1::SessionTemplate>
+  CreateSessionTemplate(google::cloud::dataproc::v1::CreateSessionTemplateRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -171,9 +161,8 @@ class SessionTemplateControllerClient {
   /// [google.cloud.dataproc.v1.UpdateSessionTemplateRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/session_templates.proto#L101}
   ///
   // clang-format on
-  StatusOr<google::cloud::dataproc::v1::SessionTemplate> UpdateSessionTemplate(
-      google::cloud::dataproc::v1::SessionTemplate const& session_template,
-      Options opts = {});
+  StatusOr<google::cloud::dataproc::v1::SessionTemplate>
+  UpdateSessionTemplate(google::cloud::dataproc::v1::SessionTemplate const& session_template, Options opts = {});
 
   // clang-format off
   ///
@@ -202,9 +191,8 @@ class SessionTemplateControllerClient {
   /// [google.cloud.dataproc.v1.UpdateSessionTemplateRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/session_templates.proto#L101}
   ///
   // clang-format on
-  StatusOr<google::cloud::dataproc::v1::SessionTemplate> UpdateSessionTemplate(
-      google::cloud::dataproc::v1::UpdateSessionTemplateRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::dataproc::v1::SessionTemplate>
+  UpdateSessionTemplate(google::cloud::dataproc::v1::UpdateSessionTemplateRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -228,8 +216,8 @@ class SessionTemplateControllerClient {
   /// [google.cloud.dataproc.v1.SessionTemplate]: @googleapis_reference_link{google/cloud/dataproc/v1/session_templates.proto#L165}
   ///
   // clang-format on
-  StatusOr<google::cloud::dataproc::v1::SessionTemplate> GetSessionTemplate(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::dataproc::v1::SessionTemplate>
+  GetSessionTemplate(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -258,9 +246,8 @@ class SessionTemplateControllerClient {
   /// [google.cloud.dataproc.v1.SessionTemplate]: @googleapis_reference_link{google/cloud/dataproc/v1/session_templates.proto#L165}
   ///
   // clang-format on
-  StatusOr<google::cloud::dataproc::v1::SessionTemplate> GetSessionTemplate(
-      google::cloud::dataproc::v1::GetSessionTemplateRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::dataproc::v1::SessionTemplate>
+  GetSessionTemplate(google::cloud::dataproc::v1::GetSessionTemplateRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -333,9 +320,7 @@ class SessionTemplateControllerClient {
   ///
   // clang-format on
   StreamRange<google::cloud::dataproc::v1::SessionTemplate>
-  ListSessionTemplates(
-      google::cloud::dataproc::v1::ListSessionTemplatesRequest request,
-      Options opts = {});
+  ListSessionTemplates(google::cloud::dataproc::v1::ListSessionTemplatesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -356,7 +341,8 @@ class SessionTemplateControllerClient {
   /// [google.cloud.dataproc.v1.DeleteSessionTemplateRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/session_templates.proto#L154}
   ///
   // clang-format on
-  Status DeleteSessionTemplate(std::string const& name, Options opts = {});
+  Status
+  DeleteSessionTemplate(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -382,9 +368,8 @@ class SessionTemplateControllerClient {
   /// [google.cloud.dataproc.v1.DeleteSessionTemplateRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/session_templates.proto#L154}
   ///
   // clang-format on
-  Status DeleteSessionTemplate(
-      google::cloud::dataproc::v1::DeleteSessionTemplateRequest const& request,
-      Options opts = {});
+  Status
+  DeleteSessionTemplate(google::cloud::dataproc::v1::DeleteSessionTemplateRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -416,8 +401,8 @@ class SessionTemplateControllerClient {
   /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L100}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -448,8 +433,8 @@ class SessionTemplateControllerClient {
   /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -484,9 +469,8 @@ class SessionTemplateControllerClient {
   /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L153}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request,
-      Options opts = {});
+  StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -521,8 +505,8 @@ class SessionTemplateControllerClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -561,8 +545,8 @@ class SessionTemplateControllerClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -588,8 +572,8 @@ class SessionTemplateControllerClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -620,9 +604,8 @@ class SessionTemplateControllerClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -646,7 +629,8 @@ class SessionTemplateControllerClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status DeleteOperation(std::string const& name, Options opts = {});
+  Status
+  DeleteOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -675,9 +659,8 @@ class SessionTemplateControllerClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request,
-      Options opts = {});
+  Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -711,7 +694,8 @@ class SessionTemplateControllerClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(std::string const& name, Options opts = {});
+  Status
+  CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -750,9 +734,8 @@ class SessionTemplateControllerClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request,
-      Options opts = {});
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<SessionTemplateControllerConnection> connection_;

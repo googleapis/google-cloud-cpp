@@ -34,94 +34,85 @@ PagesTracingConnection::PagesTracingConnection(
     : child_(std::move(child)) {}
 
 StreamRange<google::cloud::dialogflow::cx::v3::Page>
-PagesTracingConnection::ListPages(
-    google::cloud::dialogflow::cx::v3::ListPagesRequest request) {
+PagesTracingConnection::ListPages(google::cloud::dialogflow::cx::v3::ListPagesRequest request) {
   auto span = internal::MakeSpan("dialogflow_cx::PagesConnection::ListPages");
   internal::OTelScope scope(span);
   auto sr = child_->ListPages(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::dialogflow::cx::v3::Page>(std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::dialogflow::cx::v3::Page>(
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Page>
-PagesTracingConnection::GetPage(
-    google::cloud::dialogflow::cx::v3::GetPageRequest const& request) {
+PagesTracingConnection::GetPage(google::cloud::dialogflow::cx::v3::GetPageRequest const& request) {
   auto span = internal::MakeSpan("dialogflow_cx::PagesConnection::GetPage");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetPage(request));
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Page>
-PagesTracingConnection::CreatePage(
-    google::cloud::dialogflow::cx::v3::CreatePageRequest const& request) {
+PagesTracingConnection::CreatePage(google::cloud::dialogflow::cx::v3::CreatePageRequest const& request) {
   auto span = internal::MakeSpan("dialogflow_cx::PagesConnection::CreatePage");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreatePage(request));
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Page>
-PagesTracingConnection::UpdatePage(
-    google::cloud::dialogflow::cx::v3::UpdatePageRequest const& request) {
+PagesTracingConnection::UpdatePage(google::cloud::dialogflow::cx::v3::UpdatePageRequest const& request) {
   auto span = internal::MakeSpan("dialogflow_cx::PagesConnection::UpdatePage");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdatePage(request));
 }
 
-Status PagesTracingConnection::DeletePage(
-    google::cloud::dialogflow::cx::v3::DeletePageRequest const& request) {
+Status
+PagesTracingConnection::DeletePage(google::cloud::dialogflow::cx::v3::DeletePageRequest const& request) {
   auto span = internal::MakeSpan("dialogflow_cx::PagesConnection::DeletePage");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeletePage(request));
 }
 
 StreamRange<google::cloud::location::Location>
-PagesTracingConnection::ListLocations(
-    google::cloud::location::ListLocationsRequest request) {
-  auto span =
-      internal::MakeSpan("dialogflow_cx::PagesConnection::ListLocations");
+PagesTracingConnection::ListLocations(google::cloud::location::ListLocationsRequest request) {
+  auto span = internal::MakeSpan("dialogflow_cx::PagesConnection::ListLocations");
   internal::OTelScope scope(span);
   auto sr = child_->ListLocations(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::location::Location>(
-      std::move(span), std::move(sr));
+        std::move(span), std::move(sr));
 }
 
-StatusOr<google::cloud::location::Location> PagesTracingConnection::GetLocation(
-    google::cloud::location::GetLocationRequest const& request) {
+StatusOr<google::cloud::location::Location>
+PagesTracingConnection::GetLocation(google::cloud::location::GetLocationRequest const& request) {
   auto span = internal::MakeSpan("dialogflow_cx::PagesConnection::GetLocation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetLocation(request));
 }
 
 StreamRange<google::longrunning::Operation>
-PagesTracingConnection::ListOperations(
-    google::longrunning::ListOperationsRequest request) {
-  auto span =
-      internal::MakeSpan("dialogflow_cx::PagesConnection::ListOperations");
+PagesTracingConnection::ListOperations(google::longrunning::ListOperationsRequest request) {
+  auto span = internal::MakeSpan("dialogflow_cx::PagesConnection::ListOperations");
   internal::OTelScope scope(span);
   auto sr = child_->ListOperations(std::move(request));
   return internal::MakeTracedStreamRange<google::longrunning::Operation>(
-      std::move(span), std::move(sr));
+        std::move(span), std::move(sr));
 }
 
-StatusOr<google::longrunning::Operation> PagesTracingConnection::GetOperation(
-    google::longrunning::GetOperationRequest const& request) {
-  auto span =
-      internal::MakeSpan("dialogflow_cx::PagesConnection::GetOperation");
+StatusOr<google::longrunning::Operation>
+PagesTracingConnection::GetOperation(google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpan("dialogflow_cx::PagesConnection::GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOperation(request));
 }
 
-Status PagesTracingConnection::CancelOperation(
-    google::longrunning::CancelOperationRequest const& request) {
-  auto span =
-      internal::MakeSpan("dialogflow_cx::PagesConnection::CancelOperation");
+Status
+PagesTracingConnection::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
+  auto span = internal::MakeSpan("dialogflow_cx::PagesConnection::CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CancelOperation(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-std::shared_ptr<dialogflow_cx::PagesConnection> MakePagesTracingConnection(
+std::shared_ptr<dialogflow_cx::PagesConnection>
+MakePagesTracingConnection(
     std::shared_ptr<dialogflow_cx::PagesConnection> conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {

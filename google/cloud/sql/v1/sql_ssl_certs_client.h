@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_SQL_SSL_CERTS_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_SQL_SSL_CERTS_CLIENT_H
 
-#include "google/cloud/sql/v1/sql_ssl_certs_rest_connection.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
+#include "google/cloud/sql/v1/sql_ssl_certs_rest_connection.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -61,28 +61,23 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class SqlSslCertsServiceClient {
  public:
-  explicit SqlSslCertsServiceClient(
-      std::shared_ptr<SqlSslCertsServiceConnection> connection,
-      Options opts = {});
+  explicit SqlSslCertsServiceClient(std::shared_ptr<SqlSslCertsServiceConnection> connection, Options opts = {});
   ~SqlSslCertsServiceClient();
 
   ///@{
   /// @name Copy and move support
   SqlSslCertsServiceClient(SqlSslCertsServiceClient const&) = default;
-  SqlSslCertsServiceClient& operator=(SqlSslCertsServiceClient const&) =
-      default;
+  SqlSslCertsServiceClient& operator=(SqlSslCertsServiceClient const&) = default;
   SqlSslCertsServiceClient(SqlSslCertsServiceClient&&) = default;
   SqlSslCertsServiceClient& operator=(SqlSslCertsServiceClient&&) = default;
   ///@}
 
   ///@{
   /// @name Equality
-  friend bool operator==(SqlSslCertsServiceClient const& a,
-                         SqlSslCertsServiceClient const& b) {
+  friend bool operator==(SqlSslCertsServiceClient const& a, SqlSslCertsServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(SqlSslCertsServiceClient const& a,
-                         SqlSslCertsServiceClient const& b) {
+  friend bool operator!=(SqlSslCertsServiceClient const& a, SqlSslCertsServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -115,9 +110,8 @@ class SqlSslCertsServiceClient {
   /// [google.cloud.sql.v1.SqlSslCertsDeleteRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_ssl_certs.proto#L72}
   ///
   // clang-format on
-  StatusOr<google::cloud::sql::v1::Operation> Delete(
-      google::cloud::sql::v1::SqlSslCertsDeleteRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::sql::v1::Operation>
+  Delete(google::cloud::sql::v1::SqlSslCertsDeleteRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -148,9 +142,8 @@ class SqlSslCertsServiceClient {
   /// [google.cloud.sql.v1.SslCert]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L1418}
   ///
   // clang-format on
-  StatusOr<google::cloud::sql::v1::SslCert> Get(
-      google::cloud::sql::v1::SqlSslCertsGetRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::sql::v1::SslCert>
+  Get(google::cloud::sql::v1::SqlSslCertsGetRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -181,9 +174,8 @@ class SqlSslCertsServiceClient {
   /// [google.cloud.sql.v1.SslCertsInsertResponse]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_ssl_certs.proto#L120}
   ///
   // clang-format on
-  StatusOr<google::cloud::sql::v1::SslCertsInsertResponse> Insert(
-      google::cloud::sql::v1::SqlSslCertsInsertRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::sql::v1::SslCertsInsertResponse>
+  Insert(google::cloud::sql::v1::SqlSslCertsInsertRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -212,9 +204,8 @@ class SqlSslCertsServiceClient {
   /// [google.cloud.sql.v1.SslCertsListResponse]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_ssl_certs.proto#L137}
   ///
   // clang-format on
-  StatusOr<google::cloud::sql::v1::SslCertsListResponse> List(
-      google::cloud::sql::v1::SqlSslCertsListRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::sql::v1::SslCertsListResponse>
+  List(google::cloud::sql::v1::SqlSslCertsListRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<SqlSslCertsServiceConnection> connection_;

@@ -42,34 +42,25 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockNodeTemplatesConnection
-    : public compute_node_templates_v1::NodeTemplatesConnection {
+class MockNodeTemplatesConnection : public compute_node_templates_v1::NodeTemplatesConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(
-      (StreamRange<
-          std::pair<std::string,
-                    google::cloud::cpp::compute::v1::NodeTemplatesScopedList>>),
-      AggregatedListNodeTemplates,
-      (google::cloud::cpp::compute::node_templates::v1::
-           AggregatedListNodeTemplatesRequest request),
-      (override));
+  MOCK_METHOD((StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::NodeTemplatesScopedList>>),
+  AggregatedListNodeTemplates,
+  (google::cloud::cpp::compute::node_templates::v1::AggregatedListNodeTemplatesRequest request), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteNodeTemplate(Matcher<google::cloud::cpp::compute::node_templates::v1::DeleteNodeTemplateRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteNodeTemplate(Matcher<google::cloud::cpp::compute::node_templates::v1::DeleteNodeTemplateRequest const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              DeleteNodeTemplate,
-              (google::cloud::cpp::compute::node_templates::v1::
-                   DeleteNodeTemplateRequest const& request),
-              (override));
+  DeleteNodeTemplate,
+  (google::cloud::cpp::compute::node_templates::v1::DeleteNodeTemplateRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -78,50 +69,40 @@ class MockNodeTemplatesConnection
   /// EXPECT_CALL(*mock, DeleteNodeTemplate(_, _))
   /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-              DeleteNodeTemplate,
-              (NoAwaitTag, google::cloud::cpp::compute::node_templates::v1::
-                               DeleteNodeTemplateRequest const& request),
-              (override));
+  DeleteNodeTemplate, (NoAwaitTag,
+    google::cloud::cpp::compute::node_templates::v1::DeleteNodeTemplateRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteNodeTemplate(Matcher<google::cloud::cpp::compute::v1::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteNodeTemplate(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              DeleteNodeTemplate,
-              (google::cloud::cpp::compute::v1::Operation const& operation),
-              (override));
+  DeleteNodeTemplate, (
+    google::cloud::cpp::compute::v1::Operation const& operation), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::NodeTemplate>,
-              GetNodeTemplate,
-              (google::cloud::cpp::compute::node_templates::v1::
-                   GetNodeTemplateRequest const& request),
-              (override));
+  GetNodeTemplate,
+  (google::cloud::cpp::compute::node_templates::v1::GetNodeTemplateRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Policy>, GetIamPolicy,
-              (google::cloud::cpp::compute::node_templates::v1::
-                   GetIamPolicyRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Policy>,
+  GetIamPolicy,
+  (google::cloud::cpp::compute::node_templates::v1::GetIamPolicyRequest const& request), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// InsertNodeTemplate(Matcher<google::cloud::cpp::compute::node_templates::v1::InsertNodeTemplateRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, InsertNodeTemplate(Matcher<google::cloud::cpp::compute::node_templates::v1::InsertNodeTemplateRequest const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              InsertNodeTemplate,
-              (google::cloud::cpp::compute::node_templates::v1::
-                   InsertNodeTemplateRequest const& request),
-              (override));
+  InsertNodeTemplate,
+  (google::cloud::cpp::compute::node_templates::v1::InsertNodeTemplateRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -130,43 +111,32 @@ class MockNodeTemplatesConnection
   /// EXPECT_CALL(*mock, InsertNodeTemplate(_, _))
   /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-              InsertNodeTemplate,
-              (NoAwaitTag, google::cloud::cpp::compute::node_templates::v1::
-                               InsertNodeTemplateRequest const& request),
-              (override));
+  InsertNodeTemplate, (NoAwaitTag,
+    google::cloud::cpp::compute::node_templates::v1::InsertNodeTemplateRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// InsertNodeTemplate(Matcher<google::cloud::cpp::compute::v1::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, InsertNodeTemplate(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              InsertNodeTemplate,
-              (google::cloud::cpp::compute::v1::Operation const& operation),
-              (override));
+  InsertNodeTemplate, (
+    google::cloud::cpp::compute::v1::Operation const& operation), (override));
 
-  MOCK_METHOD(
-      (StreamRange<google::cloud::cpp::compute::v1::NodeTemplate>),
-      ListNodeTemplates,
-      (google::cloud::cpp::compute::node_templates::v1::ListNodeTemplatesRequest
-           request),
-      (override));
+  MOCK_METHOD((StreamRange<google::cloud::cpp::compute::v1::NodeTemplate>),
+  ListNodeTemplates,
+  (google::cloud::cpp::compute::node_templates::v1::ListNodeTemplatesRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Policy>, SetIamPolicy,
-              (google::cloud::cpp::compute::node_templates::v1::
-                   SetIamPolicyRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Policy>,
+  SetIamPolicy,
+  (google::cloud::cpp::compute::node_templates::v1::SetIamPolicyRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>,
-      TestIamPermissions,
-      (google::cloud::cpp::compute::node_templates::v1::
-           TestIamPermissionsRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>,
+  TestIamPermissions,
+  (google::cloud::cpp::compute::node_templates::v1::TestIamPermissionsRequest const& request), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

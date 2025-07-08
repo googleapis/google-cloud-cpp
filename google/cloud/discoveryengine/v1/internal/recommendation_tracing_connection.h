@@ -36,23 +36,21 @@ class RecommendationServiceTracingConnection
   ~RecommendationServiceTracingConnection() override = default;
 
   explicit RecommendationServiceTracingConnection(
-      std::shared_ptr<discoveryengine_v1::RecommendationServiceConnection>
-          child);
+    std::shared_ptr<discoveryengine_v1::RecommendationServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::discoveryengine::v1::RecommendResponse> Recommend(
-      google::cloud::discoveryengine::v1::RecommendRequest const& request)
-      override;
+  StatusOr<google::cloud::discoveryengine::v1::RecommendResponse>
+  Recommend(google::cloud::discoveryengine::v1::RecommendRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request) override;
 
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request) override;
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::shared_ptr<discoveryengine_v1::RecommendationServiceConnection> child_;

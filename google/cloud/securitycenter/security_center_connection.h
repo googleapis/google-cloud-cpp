@@ -33,13 +33,10 @@ using ::google::cloud::securitycenter_v1::MakeSecurityCenterConnection;
 /// @deprecated Use securitycenter_v1::SecurityCenterConnection directly.
 using ::google::cloud::securitycenter_v1::SecurityCenterConnection;
 
-/// @deprecated Use
-/// securitycenter_v1::SecurityCenterLimitedErrorCountRetryPolicy directly.
-using ::google::cloud::securitycenter_v1::
-    SecurityCenterLimitedErrorCountRetryPolicy;
+/// @deprecated Use securitycenter_v1::SecurityCenterLimitedErrorCountRetryPolicy directly.
+using ::google::cloud::securitycenter_v1::SecurityCenterLimitedErrorCountRetryPolicy;
 
-/// @deprecated Use securitycenter_v1::SecurityCenterLimitedTimeRetryPolicy
-/// directly.
+/// @deprecated Use securitycenter_v1::SecurityCenterLimitedTimeRetryPolicy directly.
 using ::google::cloud::securitycenter_v1::SecurityCenterLimitedTimeRetryPolicy;
 
 /// @deprecated Use securitycenter_v1::SecurityCenterRetryPolicy directly.

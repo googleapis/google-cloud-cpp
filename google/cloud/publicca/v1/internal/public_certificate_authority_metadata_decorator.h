@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBLICCA_V1_INTERNAL_PUBLIC_CERTIFICATE_AUTHORITY_METADATA_DECORATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBLICCA_V1_INTERNAL_PUBLIC_CERTIFICATE_AUTHORITY_METADATA_DECORATOR_H
 
-#include "google/cloud/publicca/v1/internal/public_certificate_authority_stub.h"
 #include "google/cloud/options.h"
+#include "google/cloud/publicca/v1/internal/public_certificate_authority_stub.h"
 #include "google/cloud/version.h"
 #include <map>
 #include <memory>
@@ -31,8 +31,7 @@ namespace cloud {
 namespace publicca_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class PublicCertificateAuthorityServiceMetadata
-    : public PublicCertificateAuthorityServiceStub {
+class PublicCertificateAuthorityServiceMetadata : public PublicCertificateAuthorityServiceStub {
  public:
   ~PublicCertificateAuthorityServiceMetadata() override = default;
   PublicCertificateAuthorityServiceMetadata(
@@ -40,14 +39,14 @@ class PublicCertificateAuthorityServiceMetadata
       std::multimap<std::string, std::string> fixed_metadata,
       std::string api_client_header = "");
 
-  StatusOr<google::cloud::security::publicca::v1::ExternalAccountKey>
-  CreateExternalAccountKey(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::security::publicca::v1::
-          CreateExternalAccountKeyRequest const& request) override;
+  StatusOr<google::cloud::security::publicca::v1::ExternalAccountKey> CreateExternalAccountKey(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::security::publicca::v1::CreateExternalAccountKeyRequest const& request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context, Options const& options,
+  void SetMetadata(grpc::ClientContext& context,
+                   Options const& options,
                    std::string const& request_params);
   void SetMetadata(grpc::ClientContext& context, Options const& options);
 

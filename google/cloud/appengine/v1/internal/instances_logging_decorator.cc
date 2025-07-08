@@ -30,28 +30,35 @@ namespace cloud {
 namespace appengine_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-InstancesLogging::InstancesLogging(std::shared_ptr<InstancesStub> child,
-                                   TracingOptions tracing_options,
-                                   std::set<std::string> const&)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
+InstancesLogging::InstancesLogging(
+    std::shared_ptr<InstancesStub> child,
+    TracingOptions tracing_options,
+    std::set<std::string> const&)
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::appengine::v1::ListInstancesResponse>
 InstancesLogging::ListInstances(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::appengine::v1::ListInstancesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::appengine::v1::ListInstancesRequest const& request) {
         return child_->ListInstances(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::appengine::v1::Instance> InstancesLogging::GetInstance(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::appengine::v1::Instance>
+InstancesLogging::GetInstance(
+    grpc::ClientContext& context,
+    Options const& options,
     google::appengine::v1::GetInstanceRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::appengine::v1::GetInstanceRequest const& request) {
         return child_->GetInstance(context, options, request);
       },
@@ -60,27 +67,30 @@ StatusOr<google::appengine::v1::Instance> InstancesLogging::GetInstance(
 
 future<StatusOr<google::longrunning::Operation>>
 InstancesLogging::AsyncDeleteInstance(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::appengine::v1::DeleteInstanceRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::appengine::v1::DeleteInstanceRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::appengine::v1::DeleteInstanceRequest const& request) {
-        return child_->AsyncDeleteInstance(cq, std::move(context),
-                                           std::move(options), request);
+        return child_->AsyncDeleteInstance(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> InstancesLogging::DeleteInstance(
-    grpc::ClientContext& context, Options options,
-    google::appengine::v1::DeleteInstanceRequest const& request) {
+StatusOr<google::longrunning::Operation>
+InstancesLogging::DeleteInstance(
+      grpc::ClientContext& context,
+      Options options,
+      google::appengine::v1::DeleteInstanceRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::appengine::v1::DeleteInstanceRequest const& request) {
         return child_->DeleteInstance(context, options, request);
       },
@@ -89,27 +99,30 @@ StatusOr<google::longrunning::Operation> InstancesLogging::DeleteInstance(
 
 future<StatusOr<google::longrunning::Operation>>
 InstancesLogging::AsyncDebugInstance(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::appengine::v1::DebugInstanceRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::appengine::v1::DebugInstanceRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::appengine::v1::DebugInstanceRequest const& request) {
-        return child_->AsyncDebugInstance(cq, std::move(context),
-                                          std::move(options), request);
+        return child_->AsyncDebugInstance(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> InstancesLogging::DebugInstance(
-    grpc::ClientContext& context, Options options,
-    google::appengine::v1::DebugInstanceRequest const& request) {
+StatusOr<google::longrunning::Operation>
+InstancesLogging::DebugInstance(
+      grpc::ClientContext& context,
+      Options options,
+      google::appengine::v1::DebugInstanceRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::appengine::v1::DebugInstanceRequest const& request) {
         return child_->DebugInstance(context, options, request);
       },
@@ -127,8 +140,8 @@ InstancesLogging::AsyncGetOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(cq, std::move(context),
-                                         std::move(options), request);
+        return child_->AsyncGetOperation(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -144,8 +157,8 @@ future<Status> InstancesLogging::AsyncCancelOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::CancelOperationRequest const& request) {
-        return child_->AsyncCancelOperation(cq, std::move(context),
-                                            std::move(options), request);
+        return child_->AsyncCancelOperation(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);

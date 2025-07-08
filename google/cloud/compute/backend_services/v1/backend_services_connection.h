@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_BACKEND_SERVICES_V1_BACKEND_SERVICES_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_BACKEND_SERVICES_V1_BACKEND_SERVICES_CONNECTION_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/backend_services/v1/backend_services_connection_idempotency_policy.h"
 #include "google/cloud/compute/backend_services/v1/internal/backend_services_retry_traits.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -55,8 +55,7 @@ class BackendServicesRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class BackendServicesLimitedErrorCountRetryPolicy
-    : public BackendServicesRetryPolicy {
+class BackendServicesLimitedErrorCountRetryPolicy : public BackendServicesRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -66,14 +65,14 @@ class BackendServicesLimitedErrorCountRetryPolicy
    *     @p maximum_failures == 0.
    */
   explicit BackendServicesLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   BackendServicesLimitedErrorCountRetryPolicy(
       BackendServicesLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : BackendServicesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : BackendServicesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   BackendServicesLimitedErrorCountRetryPolicy(
       BackendServicesLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : BackendServicesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : BackendServicesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -93,9 +92,7 @@ class BackendServicesLimitedErrorCountRetryPolicy
   using BaseType = BackendServicesRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      compute_backend_services_v1_internal::BackendServicesRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<compute_backend_services_v1_internal::BackendServicesRetryTraits> impl_;
 };
 
 /**
@@ -108,8 +105,7 @@ class BackendServicesLimitedErrorCountRetryPolicy
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class BackendServicesLimitedTimeRetryPolicy
-    : public BackendServicesRetryPolicy {
+class BackendServicesLimitedTimeRetryPolicy : public BackendServicesRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -134,14 +130,12 @@ class BackendServicesLimitedTimeRetryPolicy
   template <typename DurationRep, typename DurationPeriod>
   explicit BackendServicesLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  BackendServicesLimitedTimeRetryPolicy(
-      BackendServicesLimitedTimeRetryPolicy&& rhs) noexcept
-      : BackendServicesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  BackendServicesLimitedTimeRetryPolicy(
-      BackendServicesLimitedTimeRetryPolicy const& rhs) noexcept
-      : BackendServicesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  BackendServicesLimitedTimeRetryPolicy(BackendServicesLimitedTimeRetryPolicy&& rhs) noexcept
+    : BackendServicesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  BackendServicesLimitedTimeRetryPolicy(BackendServicesLimitedTimeRetryPolicy const& rhs) noexcept
+    : BackendServicesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -163,9 +157,7 @@ class BackendServicesLimitedTimeRetryPolicy
   using BaseType = BackendServicesRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      compute_backend_services_v1_internal::BackendServicesRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<compute_backend_services_v1_internal::BackendServicesRetryTraits> impl_;
 };
 
 /**
@@ -178,8 +170,7 @@ class BackendServicesLimitedTimeRetryPolicy
  *
  * To create a concrete instance, see `MakeBackendServicesConnection()`.
  *
- * For mocking, see
- * `compute_backend_services_v1_mocks::MockBackendServicesConnection`.
+ * For mocking, see `compute_backend_services_v1_mocks::MockBackendServicesConnection`.
  */
 class BackendServicesConnection {
  public:
@@ -188,142 +179,100 @@ class BackendServicesConnection {
   virtual Options options() { return Options{}; }
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AddSignedUrlKey(google::cloud::cpp::compute::backend_services::v1::
-                      AddSignedUrlKeyRequest const& request);
-
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> AddSignedUrlKey(
-      NoAwaitTag, google::cloud::cpp::compute::backend_services::v1::
-                      AddSignedUrlKeyRequest const& request);
-
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AddSignedUrlKey(google::cloud::cpp::compute::v1::Operation const& operation);
-
-  virtual StreamRange<std::pair<
-      std::string, google::cloud::cpp::compute::v1::BackendServicesScopedList>>
-  AggregatedListBackendServices(
-      google::cloud::cpp::compute::backend_services::v1::
-          AggregatedListBackendServicesRequest request);
-
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteBackendService(google::cloud::cpp::compute::backend_services::v1::
-                           DeleteBackendServiceRequest const& request);
+  AddSignedUrlKey(google::cloud::cpp::compute::backend_services::v1::AddSignedUrlKeyRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteBackendService(NoAwaitTag,
-                       google::cloud::cpp::compute::backend_services::v1::
-                           DeleteBackendServiceRequest const& request);
+  AddSignedUrlKey(NoAwaitTag, google::cloud::cpp::compute::backend_services::v1::AddSignedUrlKeyRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteBackendService(
-      google::cloud::cpp::compute::v1::Operation const& operation);
+  AddSignedUrlKey( google::cloud::cpp::compute::v1::Operation const& operation);
+
+  virtual StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::BackendServicesScopedList>>
+  AggregatedListBackendServices(google::cloud::cpp::compute::backend_services::v1::AggregatedListBackendServicesRequest request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteSignedUrlKey(google::cloud::cpp::compute::backend_services::v1::
-                         DeleteSignedUrlKeyRequest const& request);
+  DeleteBackendService(google::cloud::cpp::compute::backend_services::v1::DeleteBackendServiceRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteSignedUrlKey(NoAwaitTag,
-                     google::cloud::cpp::compute::backend_services::v1::
-                         DeleteSignedUrlKeyRequest const& request);
+  DeleteBackendService(NoAwaitTag, google::cloud::cpp::compute::backend_services::v1::DeleteBackendServiceRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteSignedUrlKey(
-      google::cloud::cpp::compute::v1::Operation const& operation);
+  DeleteBackendService( google::cloud::cpp::compute::v1::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteSignedUrlKey(google::cloud::cpp::compute::backend_services::v1::DeleteSignedUrlKeyRequest const& request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeleteSignedUrlKey(NoAwaitTag, google::cloud::cpp::compute::backend_services::v1::DeleteSignedUrlKeyRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteSignedUrlKey( google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::BackendService>
-  GetBackendService(google::cloud::cpp::compute::backend_services::v1::
-                        GetBackendServiceRequest const& request);
+  GetBackendService(google::cloud::cpp::compute::backend_services::v1::GetBackendServiceRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::BackendServiceGroupHealth>
-  GetHealth(
-      google::cloud::cpp::compute::backend_services::v1::GetHealthRequest const&
-          request);
+  GetHealth(google::cloud::cpp::compute::backend_services::v1::GetHealthRequest const& request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
-      google::cloud::cpp::compute::backend_services::v1::
-          GetIamPolicyRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Policy>
+  GetIamPolicy(google::cloud::cpp::compute::backend_services::v1::GetIamPolicyRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertBackendService(google::cloud::cpp::compute::backend_services::v1::
-                           InsertBackendServiceRequest const& request);
+  InsertBackendService(google::cloud::cpp::compute::backend_services::v1::InsertBackendServiceRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertBackendService(NoAwaitTag,
-                       google::cloud::cpp::compute::backend_services::v1::
-                           InsertBackendServiceRequest const& request);
+  InsertBackendService(NoAwaitTag, google::cloud::cpp::compute::backend_services::v1::InsertBackendServiceRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertBackendService(
-      google::cloud::cpp::compute::v1::Operation const& operation);
+  InsertBackendService( google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::BackendService>
-  ListBackendServices(google::cloud::cpp::compute::backend_services::v1::
-                          ListBackendServicesRequest request);
+  ListBackendServices(google::cloud::cpp::compute::backend_services::v1::ListBackendServicesRequest request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::BackendService>
-  ListUsable(
-      google::cloud::cpp::compute::backend_services::v1::ListUsableRequest
-          request);
+  ListUsable(google::cloud::cpp::compute::backend_services::v1::ListUsableRequest request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchBackendService(google::cloud::cpp::compute::backend_services::v1::
-                          PatchBackendServiceRequest const& request);
+  PatchBackendService(google::cloud::cpp::compute::backend_services::v1::PatchBackendServiceRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  PatchBackendService(NoAwaitTag,
-                      google::cloud::cpp::compute::backend_services::v1::
-                          PatchBackendServiceRequest const& request);
+  PatchBackendService(NoAwaitTag, google::cloud::cpp::compute::backend_services::v1::PatchBackendServiceRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchBackendService(
-      google::cloud::cpp::compute::v1::Operation const& operation);
+  PatchBackendService( google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetEdgeSecurityPolicy(google::cloud::cpp::compute::backend_services::v1::
-                            SetEdgeSecurityPolicyRequest const& request);
+  SetEdgeSecurityPolicy(google::cloud::cpp::compute::backend_services::v1::SetEdgeSecurityPolicyRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetEdgeSecurityPolicy(NoAwaitTag,
-                        google::cloud::cpp::compute::backend_services::v1::
-                            SetEdgeSecurityPolicyRequest const& request);
+  SetEdgeSecurityPolicy(NoAwaitTag, google::cloud::cpp::compute::backend_services::v1::SetEdgeSecurityPolicyRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetEdgeSecurityPolicy(
-      google::cloud::cpp::compute::v1::Operation const& operation);
+  SetEdgeSecurityPolicy( google::cloud::cpp::compute::v1::Operation const& operation);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
-      google::cloud::cpp::compute::backend_services::v1::
-          SetIamPolicyRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Policy>
+  SetIamPolicy(google::cloud::cpp::compute::backend_services::v1::SetIamPolicyRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetSecurityPolicy(google::cloud::cpp::compute::backend_services::v1::
-                        SetSecurityPolicyRequest const& request);
+  SetSecurityPolicy(google::cloud::cpp::compute::backend_services::v1::SetSecurityPolicyRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetSecurityPolicy(NoAwaitTag,
-                    google::cloud::cpp::compute::backend_services::v1::
-                        SetSecurityPolicyRequest const& request);
+  SetSecurityPolicy(NoAwaitTag, google::cloud::cpp::compute::backend_services::v1::SetSecurityPolicyRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetSecurityPolicy(
-      google::cloud::cpp::compute::v1::Operation const& operation);
+  SetSecurityPolicy( google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(google::cloud::cpp::compute::backend_services::v1::
-                         TestIamPermissionsRequest const& request);
+  TestIamPermissions(google::cloud::cpp::compute::backend_services::v1::TestIamPermissionsRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateBackendService(google::cloud::cpp::compute::backend_services::v1::
-                           UpdateBackendServiceRequest const& request);
+  UpdateBackendService(google::cloud::cpp::compute::backend_services::v1::UpdateBackendServiceRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  UpdateBackendService(NoAwaitTag,
-                       google::cloud::cpp::compute::backend_services::v1::
-                           UpdateBackendServiceRequest const& request);
+  UpdateBackendService(NoAwaitTag, google::cloud::cpp::compute::backend_services::v1::UpdateBackendServiceRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateBackendService(
-      google::cloud::cpp::compute::v1::Operation const& operation);
+  UpdateBackendService( google::cloud::cpp::compute::v1::Operation const& operation);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

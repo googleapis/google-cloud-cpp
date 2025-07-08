@@ -19,14 +19,14 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAM_V3_INTERNAL_POLICY_BINDINGS_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAM_V3_INTERNAL_POLICY_BINDINGS_CONNECTION_IMPL_H
 
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/future.h"
 #include "google/cloud/iam/v3/internal/policy_bindings_retry_traits.h"
 #include "google/cloud/iam/v3/internal/policy_bindings_stub.h"
 #include "google/cloud/iam/v3/policy_bindings_connection.h"
 #include "google/cloud/iam/v3/policy_bindings_connection_idempotency_policy.h"
 #include "google/cloud/iam/v3/policy_bindings_options.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -40,58 +40,62 @@ namespace cloud {
 namespace iam_v3_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class PolicyBindingsConnectionImpl : public iam_v3::PolicyBindingsConnection {
+class PolicyBindingsConnectionImpl
+    : public iam_v3::PolicyBindingsConnection {
  public:
   ~PolicyBindingsConnectionImpl() override = default;
 
   PolicyBindingsConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<iam_v3_internal::PolicyBindingsStub> stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<iam_v3_internal::PolicyBindingsStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
-  future<StatusOr<google::iam::v3::PolicyBinding>> CreatePolicyBinding(
+  future<StatusOr<google::iam::v3::PolicyBinding>>
+  CreatePolicyBinding(google::iam::v3::CreatePolicyBindingRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  CreatePolicyBinding(NoAwaitTag,
       google::iam::v3::CreatePolicyBindingRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> CreatePolicyBinding(
-      NoAwaitTag,
-      google::iam::v3::CreatePolicyBindingRequest const& request) override;
-
-  future<StatusOr<google::iam::v3::PolicyBinding>> CreatePolicyBinding(
+  future<StatusOr<google::iam::v3::PolicyBinding>>
+  CreatePolicyBinding(
       google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::iam::v3::PolicyBinding> GetPolicyBinding(
-      google::iam::v3::GetPolicyBindingRequest const& request) override;
+  StatusOr<google::iam::v3::PolicyBinding>
+  GetPolicyBinding(google::iam::v3::GetPolicyBindingRequest const& request) override;
 
-  future<StatusOr<google::iam::v3::PolicyBinding>> UpdatePolicyBinding(
+  future<StatusOr<google::iam::v3::PolicyBinding>>
+  UpdatePolicyBinding(google::iam::v3::UpdatePolicyBindingRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  UpdatePolicyBinding(NoAwaitTag,
       google::iam::v3::UpdatePolicyBindingRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> UpdatePolicyBinding(
-      NoAwaitTag,
-      google::iam::v3::UpdatePolicyBindingRequest const& request) override;
-
-  future<StatusOr<google::iam::v3::PolicyBinding>> UpdatePolicyBinding(
+  future<StatusOr<google::iam::v3::PolicyBinding>>
+  UpdatePolicyBinding(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::iam::v3::OperationMetadata>> DeletePolicyBinding(
+  future<StatusOr<google::iam::v3::OperationMetadata>>
+  DeletePolicyBinding(google::iam::v3::DeletePolicyBindingRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  DeletePolicyBinding(NoAwaitTag,
       google::iam::v3::DeletePolicyBindingRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> DeletePolicyBinding(
-      NoAwaitTag,
-      google::iam::v3::DeletePolicyBindingRequest const& request) override;
-
-  future<StatusOr<google::iam::v3::OperationMetadata>> DeletePolicyBinding(
+  future<StatusOr<google::iam::v3::OperationMetadata>>
+  DeletePolicyBinding(
       google::longrunning::Operation const& operation) override;
 
-  StreamRange<google::iam::v3::PolicyBinding> ListPolicyBindings(
-      google::iam::v3::ListPolicyBindingsRequest request) override;
+  StreamRange<google::iam::v3::PolicyBinding>
+  ListPolicyBindings(google::iam::v3::ListPolicyBindingsRequest request) override;
 
-  StreamRange<google::iam::v3::PolicyBinding> SearchTargetPolicyBindings(
-      google::iam::v3::SearchTargetPolicyBindingsRequest request) override;
+  StreamRange<google::iam::v3::PolicyBinding>
+  SearchTargetPolicyBindings(google::iam::v3::SearchTargetPolicyBindingsRequest request) override;
 
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

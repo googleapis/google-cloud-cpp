@@ -19,14 +19,14 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PROFILER_V2_INTERNAL_PROFILER_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PROFILER_V2_INTERNAL_PROFILER_CONNECTION_IMPL_H
 
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/options.h"
 #include "google/cloud/profiler/v2/internal/profiler_retry_traits.h"
 #include "google/cloud/profiler/v2/internal/profiler_stub.h"
 #include "google/cloud/profiler/v2/profiler_connection.h"
 #include "google/cloud/profiler/v2/profiler_connection_idempotency_policy.h"
 #include "google/cloud/profiler/v2/profiler_options.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -42,23 +42,20 @@ class ProfilerServiceConnectionImpl
   ~ProfilerServiceConnectionImpl() override = default;
 
   ProfilerServiceConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<profiler_v2_internal::ProfilerServiceStub> stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<profiler_v2_internal::ProfilerServiceStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
-  StatusOr<google::devtools::cloudprofiler::v2::Profile> CreateProfile(
-      google::devtools::cloudprofiler::v2::CreateProfileRequest const& request)
-      override;
+  StatusOr<google::devtools::cloudprofiler::v2::Profile>
+  CreateProfile(google::devtools::cloudprofiler::v2::CreateProfileRequest const& request) override;
 
-  StatusOr<google::devtools::cloudprofiler::v2::Profile> CreateOfflineProfile(
-      google::devtools::cloudprofiler::v2::CreateOfflineProfileRequest const&
-          request) override;
+  StatusOr<google::devtools::cloudprofiler::v2::Profile>
+  CreateOfflineProfile(google::devtools::cloudprofiler::v2::CreateOfflineProfileRequest const& request) override;
 
-  StatusOr<google::devtools::cloudprofiler::v2::Profile> UpdateProfile(
-      google::devtools::cloudprofiler::v2::UpdateProfileRequest const& request)
-      override;
+  StatusOr<google::devtools::cloudprofiler::v2::Profile>
+  UpdateProfile(google::devtools::cloudprofiler::v2::UpdateProfileRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

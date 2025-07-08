@@ -26,13 +26,10 @@ namespace cloud {
 namespace recommender {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use
-/// recommender_v1::MakeDefaultRecommenderConnectionIdempotencyPolicy directly.
-using ::google::cloud::recommender_v1::
-    MakeDefaultRecommenderConnectionIdempotencyPolicy;
+/// @deprecated Use recommender_v1::MakeDefaultRecommenderConnectionIdempotencyPolicy directly.
+using ::google::cloud::recommender_v1::MakeDefaultRecommenderConnectionIdempotencyPolicy;
 
-/// @deprecated Use recommender_v1::RecommenderConnectionIdempotencyPolicy
-/// directly.
+/// @deprecated Use recommender_v1::RecommenderConnectionIdempotencyPolicy directly.
 using ::google::cloud::recommender_v1::RecommenderConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

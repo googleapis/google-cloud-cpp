@@ -32,15 +32,19 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 CloudShellServiceLogging::CloudShellServiceLogging(
     std::shared_ptr<CloudShellServiceStub> child,
-    TracingOptions tracing_options, std::set<std::string> const&)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
+    TracingOptions tracing_options,
+    std::set<std::string> const&)
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::cloud::shell::v1::Environment>
 CloudShellServiceLogging::GetEnvironment(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::shell::v1::GetEnvironmentRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::shell::v1::GetEnvironmentRequest const& request) {
         return child_->GetEnvironment(context, options, request);
       },
@@ -49,17 +53,17 @@ CloudShellServiceLogging::GetEnvironment(
 
 future<StatusOr<google::longrunning::Operation>>
 CloudShellServiceLogging::AsyncStartEnvironment(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::shell::v1::StartEnvironmentRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::shell::v1::StartEnvironmentRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::cloud::shell::v1::StartEnvironmentRequest const& request) {
-        return child_->AsyncStartEnvironment(cq, std::move(context),
-                                             std::move(options), request);
+        return child_->AsyncStartEnvironment(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -67,10 +71,12 @@ CloudShellServiceLogging::AsyncStartEnvironment(
 
 StatusOr<google::longrunning::Operation>
 CloudShellServiceLogging::StartEnvironment(
-    grpc::ClientContext& context, Options options,
-    google::cloud::shell::v1::StartEnvironmentRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::shell::v1::StartEnvironmentRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::shell::v1::StartEnvironmentRequest const& request) {
         return child_->StartEnvironment(context, options, request);
       },
@@ -79,18 +85,17 @@ CloudShellServiceLogging::StartEnvironment(
 
 future<StatusOr<google::longrunning::Operation>>
 CloudShellServiceLogging::AsyncAuthorizeEnvironment(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::shell::v1::AuthorizeEnvironmentRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::shell::v1::AuthorizeEnvironmentRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::shell::v1::AuthorizeEnvironmentRequest const&
-                 request) {
-        return child_->AsyncAuthorizeEnvironment(cq, std::move(context),
-                                                 std::move(options), request);
+             google::cloud::shell::v1::AuthorizeEnvironmentRequest const& request) {
+        return child_->AsyncAuthorizeEnvironment(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -98,12 +103,13 @@ CloudShellServiceLogging::AsyncAuthorizeEnvironment(
 
 StatusOr<google::longrunning::Operation>
 CloudShellServiceLogging::AuthorizeEnvironment(
-    grpc::ClientContext& context, Options options,
-    google::cloud::shell::v1::AuthorizeEnvironmentRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::shell::v1::AuthorizeEnvironmentRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::shell::v1::AuthorizeEnvironmentRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::shell::v1::AuthorizeEnvironmentRequest const& request) {
         return child_->AuthorizeEnvironment(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -111,27 +117,30 @@ CloudShellServiceLogging::AuthorizeEnvironment(
 
 future<StatusOr<google::longrunning::Operation>>
 CloudShellServiceLogging::AsyncAddPublicKey(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::shell::v1::AddPublicKeyRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::shell::v1::AddPublicKeyRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::cloud::shell::v1::AddPublicKeyRequest const& request) {
-        return child_->AsyncAddPublicKey(cq, std::move(context),
-                                         std::move(options), request);
+        return child_->AsyncAddPublicKey(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> CloudShellServiceLogging::AddPublicKey(
-    grpc::ClientContext& context, Options options,
-    google::cloud::shell::v1::AddPublicKeyRequest const& request) {
+StatusOr<google::longrunning::Operation>
+CloudShellServiceLogging::AddPublicKey(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::shell::v1::AddPublicKeyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::shell::v1::AddPublicKeyRequest const& request) {
         return child_->AddPublicKey(context, options, request);
       },
@@ -140,17 +149,17 @@ StatusOr<google::longrunning::Operation> CloudShellServiceLogging::AddPublicKey(
 
 future<StatusOr<google::longrunning::Operation>>
 CloudShellServiceLogging::AsyncRemovePublicKey(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::shell::v1::RemovePublicKeyRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::shell::v1::RemovePublicKeyRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::cloud::shell::v1::RemovePublicKeyRequest const& request) {
-        return child_->AsyncRemovePublicKey(cq, std::move(context),
-                                            std::move(options), request);
+        return child_->AsyncRemovePublicKey(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -158,10 +167,12 @@ CloudShellServiceLogging::AsyncRemovePublicKey(
 
 StatusOr<google::longrunning::Operation>
 CloudShellServiceLogging::RemovePublicKey(
-    grpc::ClientContext& context, Options options,
-    google::cloud::shell::v1::RemovePublicKeyRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::shell::v1::RemovePublicKeyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::shell::v1::RemovePublicKeyRequest const& request) {
         return child_->RemovePublicKey(context, options, request);
       },
@@ -179,8 +190,8 @@ CloudShellServiceLogging::AsyncGetOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(cq, std::move(context),
-                                         std::move(options), request);
+        return child_->AsyncGetOperation(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -196,8 +207,8 @@ future<Status> CloudShellServiceLogging::AsyncCancelOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::CancelOperationRequest const& request) {
-        return child_->AsyncCancelOperation(cq, std::move(context),
-                                            std::move(options), request);
+        return child_->AsyncCancelOperation(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);

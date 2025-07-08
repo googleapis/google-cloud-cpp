@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_POLICYSIMULATOR_V1_SIMULATOR_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_POLICYSIMULATOR_V1_SIMULATOR_CLIENT_H
 
-#include "google/cloud/policysimulator/v1/simulator_connection.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
+#include "google/cloud/policysimulator/v1/simulator_connection.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
@@ -40,9 +40,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 /// Policy Simulator is a collection of endpoints for creating, running, and
 /// viewing a [Replay][google.cloud.policysimulator.v1.Replay]. A
-/// [Replay][google.cloud.policysimulator.v1.Replay] is a type of simulation
-/// that lets you see how your principals' access to resources might change if
-/// you changed your IAM policy.
+/// [Replay][google.cloud.policysimulator.v1.Replay] is a type of simulation that
+/// lets you see how your principals' access to resources might change if you
+/// changed your IAM policy.
 ///
 /// During a [Replay][google.cloud.policysimulator.v1.Replay], Policy Simulator
 /// re-evaluates, or replays, past access attempts under both the current policy
@@ -72,13 +72,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// and move-construction is a relatively efficient operation, consider using
 /// such a copy when using this class from multiple threads.
 ///
-/// [google.cloud.policysimulator.v1.Replay]:
-/// @googleapis_reference_link{google/cloud/policysimulator/v1/simulator.proto#L109}
+/// [google.cloud.policysimulator.v1.Replay]: @googleapis_reference_link{google/cloud/policysimulator/v1/simulator.proto#L109}
 ///
 class SimulatorClient {
  public:
-  explicit SimulatorClient(std::shared_ptr<SimulatorConnection> connection,
-                           Options opts = {});
+  explicit SimulatorClient(std::shared_ptr<SimulatorConnection> connection, Options opts = {});
   ~SimulatorClient();
 
   ///@{
@@ -130,8 +128,8 @@ class SimulatorClient {
   /// [google.cloud.policysimulator.v1.Replay]: @googleapis_reference_link{google/cloud/policysimulator/v1/simulator.proto#L109}
   ///
   // clang-format on
-  StatusOr<google::cloud::policysimulator::v1::Replay> GetReplay(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::policysimulator::v1::Replay>
+  GetReplay(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -161,9 +159,8 @@ class SimulatorClient {
   /// [google.cloud.policysimulator.v1.Replay]: @googleapis_reference_link{google/cloud/policysimulator/v1/simulator.proto#L109}
   ///
   // clang-format on
-  StatusOr<google::cloud::policysimulator::v1::Replay> GetReplay(
-      google::cloud::policysimulator::v1::GetReplayRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::policysimulator::v1::Replay>
+  GetReplay(google::cloud::policysimulator::v1::GetReplayRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -202,10 +199,8 @@ class SimulatorClient {
   /// [google.cloud.policysimulator.v1.ReplayConfig]: @googleapis_reference_link{google/cloud/policysimulator/v1/simulator.proto#L321}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::policysimulator::v1::Replay>> CreateReplay(
-      std::string const& parent,
-      google::cloud::policysimulator::v1::Replay const& replay,
-      Options opts = {});
+  future<StatusOr<google::cloud::policysimulator::v1::Replay>>
+  CreateReplay(std::string const& parent, google::cloud::policysimulator::v1::Replay const& replay, Options opts = {});
 
   // clang-format off
   ///
@@ -218,10 +213,8 @@ class SimulatorClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateReplay(
-      NoAwaitTag, std::string const& parent,
-      google::cloud::policysimulator::v1::Replay const& replay,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateReplay(NoAwaitTag, std::string const& parent, google::cloud::policysimulator::v1::Replay const& replay, Options opts = {});
 
   // clang-format off
   ///
@@ -259,9 +252,8 @@ class SimulatorClient {
   /// [google.cloud.policysimulator.v1.ReplayConfig]: @googleapis_reference_link{google/cloud/policysimulator/v1/simulator.proto#L321}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::policysimulator::v1::Replay>> CreateReplay(
-      google::cloud::policysimulator::v1::CreateReplayRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::policysimulator::v1::Replay>>
+  CreateReplay(google::cloud::policysimulator::v1::CreateReplayRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -274,10 +266,8 @@ class SimulatorClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateReplay(
-      NoAwaitTag,
-      google::cloud::policysimulator::v1::CreateReplayRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateReplay(NoAwaitTag, google::cloud::policysimulator::v1::CreateReplayRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -288,8 +278,8 @@ class SimulatorClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::policysimulator::v1::Replay>> CreateReplay(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::policysimulator::v1::Replay>>
+  CreateReplay(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -372,9 +362,7 @@ class SimulatorClient {
   ///
   // clang-format on
   StreamRange<google::cloud::policysimulator::v1::ReplayResult>
-  ListReplayResults(
-      google::cloud::policysimulator::v1::ListReplayResultsRequest request,
-      Options opts = {});
+  ListReplayResults(google::cloud::policysimulator::v1::ListReplayResultsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -409,8 +397,8 @@ class SimulatorClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -449,8 +437,8 @@ class SimulatorClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -476,8 +464,8 @@ class SimulatorClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -508,9 +496,8 @@ class SimulatorClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<SimulatorConnection> connection_;

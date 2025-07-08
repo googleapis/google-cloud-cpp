@@ -37,66 +37,65 @@ class IndexEndpointServiceConnectionIdempotencyPolicy {
   virtual ~IndexEndpointServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<IndexEndpointServiceConnectionIdempotencyPolicy>
-  clone() const;
+  virtual std::unique_ptr<IndexEndpointServiceConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency CreateIndexEndpoint(
-      google::cloud::aiplatform::v1::CreateIndexEndpointRequest const& request);
+  virtual google::cloud::Idempotency
+  CreateIndexEndpoint(google::cloud::aiplatform::v1::CreateIndexEndpointRequest const& request);
 
-  virtual google::cloud::Idempotency GetIndexEndpoint(
-      google::cloud::aiplatform::v1::GetIndexEndpointRequest const& request);
+  virtual google::cloud::Idempotency
+  GetIndexEndpoint(google::cloud::aiplatform::v1::GetIndexEndpointRequest const& request);
 
-  virtual google::cloud::Idempotency ListIndexEndpoints(
-      google::cloud::aiplatform::v1::ListIndexEndpointsRequest request);
+  virtual google::cloud::Idempotency
+  ListIndexEndpoints(google::cloud::aiplatform::v1::ListIndexEndpointsRequest request);
 
-  virtual google::cloud::Idempotency UpdateIndexEndpoint(
-      google::cloud::aiplatform::v1::UpdateIndexEndpointRequest const& request);
+  virtual google::cloud::Idempotency
+  UpdateIndexEndpoint(google::cloud::aiplatform::v1::UpdateIndexEndpointRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteIndexEndpoint(
-      google::cloud::aiplatform::v1::DeleteIndexEndpointRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteIndexEndpoint(google::cloud::aiplatform::v1::DeleteIndexEndpointRequest const& request);
 
-  virtual google::cloud::Idempotency DeployIndex(
-      google::cloud::aiplatform::v1::DeployIndexRequest const& request);
+  virtual google::cloud::Idempotency
+  DeployIndex(google::cloud::aiplatform::v1::DeployIndexRequest const& request);
 
-  virtual google::cloud::Idempotency UndeployIndex(
-      google::cloud::aiplatform::v1::UndeployIndexRequest const& request);
+  virtual google::cloud::Idempotency
+  UndeployIndex(google::cloud::aiplatform::v1::UndeployIndexRequest const& request);
 
-  virtual google::cloud::Idempotency MutateDeployedIndex(
-      google::cloud::aiplatform::v1::MutateDeployedIndexRequest const& request);
+  virtual google::cloud::Idempotency
+  MutateDeployedIndex(google::cloud::aiplatform::v1::MutateDeployedIndexRequest const& request);
 
-  virtual google::cloud::Idempotency ListLocations(
-      google::cloud::location::ListLocationsRequest request);
+  virtual google::cloud::Idempotency
+  ListLocations(google::cloud::location::ListLocationsRequest request);
 
-  virtual google::cloud::Idempotency GetLocation(
-      google::cloud::location::GetLocationRequest const& request);
+  virtual google::cloud::Idempotency
+  GetLocation(google::cloud::location::GetLocationRequest const& request);
 
-  virtual google::cloud::Idempotency SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request);
+  virtual google::cloud::Idempotency
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
 
-  virtual google::cloud::Idempotency ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual google::cloud::Idempotency
+  ListOperations(google::longrunning::ListOperationsRequest request);
 
-  virtual google::cloud::Idempotency GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
 
-  virtual google::cloud::Idempotency CancelOperation(
-      google::longrunning::CancelOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  CancelOperation(google::longrunning::CancelOperationRequest const& request);
 
-  virtual google::cloud::Idempotency WaitOperation(
-      google::longrunning::WaitOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  WaitOperation(google::longrunning::WaitOperationRequest const& request);
 };
 
 std::unique_ptr<IndexEndpointServiceConnectionIdempotencyPolicy>
-MakeDefaultIndexEndpointServiceConnectionIdempotencyPolicy();
+    MakeDefaultIndexEndpointServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace aiplatform_v1

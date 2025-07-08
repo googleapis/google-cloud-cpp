@@ -46,81 +46,73 @@ ArtifactRegistryMetadata::ArtifactRegistryMetadata(
 
 StatusOr<google::devtools::artifactregistry::v1::ListDockerImagesResponse>
 ArtifactRegistryMetadata::ListDockerImages(
-    grpc::ClientContext& context, Options const& options,
-    google::devtools::artifactregistry::v1::ListDockerImagesRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context,
+    Options const& options,
+    google::devtools::artifactregistry::v1::ListDockerImagesRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListDockerImages(context, options, request);
 }
 
 StatusOr<google::devtools::artifactregistry::v1::DockerImage>
 ArtifactRegistryMetadata::GetDockerImage(
-    grpc::ClientContext& context, Options const& options,
-    google::devtools::artifactregistry::v1::GetDockerImageRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context,
+    Options const& options,
+    google::devtools::artifactregistry::v1::GetDockerImageRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetDockerImage(context, options, request);
 }
 
 StatusOr<google::devtools::artifactregistry::v1::ListMavenArtifactsResponse>
 ArtifactRegistryMetadata::ListMavenArtifacts(
-    grpc::ClientContext& context, Options const& options,
-    google::devtools::artifactregistry::v1::ListMavenArtifactsRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context,
+    Options const& options,
+    google::devtools::artifactregistry::v1::ListMavenArtifactsRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListMavenArtifacts(context, options, request);
 }
 
 StatusOr<google::devtools::artifactregistry::v1::MavenArtifact>
 ArtifactRegistryMetadata::GetMavenArtifact(
-    grpc::ClientContext& context, Options const& options,
-    google::devtools::artifactregistry::v1::GetMavenArtifactRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context,
+    Options const& options,
+    google::devtools::artifactregistry::v1::GetMavenArtifactRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetMavenArtifact(context, options, request);
 }
 
 StatusOr<google::devtools::artifactregistry::v1::ListNpmPackagesResponse>
 ArtifactRegistryMetadata::ListNpmPackages(
-    grpc::ClientContext& context, Options const& options,
-    google::devtools::artifactregistry::v1::ListNpmPackagesRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context,
+    Options const& options,
+    google::devtools::artifactregistry::v1::ListNpmPackagesRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListNpmPackages(context, options, request);
 }
 
 StatusOr<google::devtools::artifactregistry::v1::NpmPackage>
 ArtifactRegistryMetadata::GetNpmPackage(
-    grpc::ClientContext& context, Options const& options,
-    google::devtools::artifactregistry::v1::GetNpmPackageRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context,
+    Options const& options,
+    google::devtools::artifactregistry::v1::GetNpmPackageRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetNpmPackage(context, options, request);
 }
 
 StatusOr<google::devtools::artifactregistry::v1::ListPythonPackagesResponse>
 ArtifactRegistryMetadata::ListPythonPackages(
-    grpc::ClientContext& context, Options const& options,
-    google::devtools::artifactregistry::v1::ListPythonPackagesRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context,
+    Options const& options,
+    google::devtools::artifactregistry::v1::ListPythonPackagesRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListPythonPackages(context, options, request);
 }
 
 StatusOr<google::devtools::artifactregistry::v1::PythonPackage>
 ArtifactRegistryMetadata::GetPythonPackage(
-    grpc::ClientContext& context, Options const& options,
-    google::devtools::artifactregistry::v1::GetPythonPackageRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context,
+    Options const& options,
+    google::devtools::artifactregistry::v1::GetPythonPackageRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetPythonPackage(context, options, request);
 }
 
@@ -129,21 +121,18 @@ ArtifactRegistryMetadata::AsyncImportAptArtifacts(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::devtools::artifactregistry::v1::ImportAptArtifactsRequest const&
-        request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncImportAptArtifacts(cq, std::move(context),
-                                         std::move(options), request);
+    google::devtools::artifactregistry::v1::ImportAptArtifactsRequest const& request) {
+  SetMetadata(*context, *options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncImportAptArtifacts(
+      cq, std::move(context), std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 ArtifactRegistryMetadata::ImportAptArtifacts(
-    grpc::ClientContext& context, Options options,
-    google::devtools::artifactregistry::v1::ImportAptArtifactsRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context,
+    Options options,
+    google::devtools::artifactregistry::v1::ImportAptArtifactsRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ImportAptArtifacts(context, options, request);
 }
 
@@ -152,41 +141,36 @@ ArtifactRegistryMetadata::AsyncImportYumArtifacts(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::devtools::artifactregistry::v1::ImportYumArtifactsRequest const&
-        request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncImportYumArtifacts(cq, std::move(context),
-                                         std::move(options), request);
+    google::devtools::artifactregistry::v1::ImportYumArtifactsRequest const& request) {
+  SetMetadata(*context, *options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncImportYumArtifacts(
+      cq, std::move(context), std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 ArtifactRegistryMetadata::ImportYumArtifacts(
-    grpc::ClientContext& context, Options options,
-    google::devtools::artifactregistry::v1::ImportYumArtifactsRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context,
+    Options options,
+    google::devtools::artifactregistry::v1::ImportYumArtifactsRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ImportYumArtifacts(context, options, request);
 }
 
 StatusOr<google::devtools::artifactregistry::v1::ListRepositoriesResponse>
 ArtifactRegistryMetadata::ListRepositories(
-    grpc::ClientContext& context, Options const& options,
-    google::devtools::artifactregistry::v1::ListRepositoriesRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context,
+    Options const& options,
+    google::devtools::artifactregistry::v1::ListRepositoriesRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListRepositories(context, options, request);
 }
 
 StatusOr<google::devtools::artifactregistry::v1::Repository>
 ArtifactRegistryMetadata::GetRepository(
-    grpc::ClientContext& context, Options const& options,
-    google::devtools::artifactregistry::v1::GetRepositoryRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context,
+    Options const& options,
+    google::devtools::artifactregistry::v1::GetRepositoryRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetRepository(context, options, request);
 }
 
@@ -195,32 +179,27 @@ ArtifactRegistryMetadata::AsyncCreateRepository(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::devtools::artifactregistry::v1::CreateRepositoryRequest const&
-        request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateRepository(cq, std::move(context),
-                                       std::move(options), request);
+    google::devtools::artifactregistry::v1::CreateRepositoryRequest const& request) {
+  SetMetadata(*context, *options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateRepository(
+      cq, std::move(context), std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 ArtifactRegistryMetadata::CreateRepository(
-    grpc::ClientContext& context, Options options,
-    google::devtools::artifactregistry::v1::CreateRepositoryRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context,
+    Options options,
+    google::devtools::artifactregistry::v1::CreateRepositoryRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateRepository(context, options, request);
 }
 
 StatusOr<google::devtools::artifactregistry::v1::Repository>
 ArtifactRegistryMetadata::UpdateRepository(
-    grpc::ClientContext& context, Options const& options,
-    google::devtools::artifactregistry::v1::UpdateRepositoryRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("repository.name=",
-                           internal::UrlEncode(request.repository().name())));
+    grpc::ClientContext& context,
+    Options const& options,
+    google::devtools::artifactregistry::v1::UpdateRepositoryRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("repository.name=", internal::UrlEncode(request.repository().name())));
   return child_->UpdateRepository(context, options, request);
 }
 
@@ -229,40 +208,36 @@ ArtifactRegistryMetadata::AsyncDeleteRepository(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::devtools::artifactregistry::v1::DeleteRepositoryRequest const&
-        request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteRepository(cq, std::move(context),
-                                       std::move(options), request);
+    google::devtools::artifactregistry::v1::DeleteRepositoryRequest const& request) {
+  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteRepository(
+      cq, std::move(context), std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 ArtifactRegistryMetadata::DeleteRepository(
-    grpc::ClientContext& context, Options options,
-    google::devtools::artifactregistry::v1::DeleteRepositoryRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context,
+    Options options,
+    google::devtools::artifactregistry::v1::DeleteRepositoryRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteRepository(context, options, request);
 }
 
 StatusOr<google::devtools::artifactregistry::v1::ListPackagesResponse>
 ArtifactRegistryMetadata::ListPackages(
-    grpc::ClientContext& context, Options const& options,
-    google::devtools::artifactregistry::v1::ListPackagesRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context,
+    Options const& options,
+    google::devtools::artifactregistry::v1::ListPackagesRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListPackages(context, options, request);
 }
 
 StatusOr<google::devtools::artifactregistry::v1::Package>
 ArtifactRegistryMetadata::GetPackage(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::devtools::artifactregistry::v1::GetPackageRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetPackage(context, options, request);
 }
 
@@ -271,40 +246,36 @@ ArtifactRegistryMetadata::AsyncDeletePackage(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::devtools::artifactregistry::v1::DeletePackageRequest const&
-        request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeletePackage(cq, std::move(context), std::move(options),
-                                    request);
+    google::devtools::artifactregistry::v1::DeletePackageRequest const& request) {
+  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeletePackage(
+      cq, std::move(context), std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 ArtifactRegistryMetadata::DeletePackage(
-    grpc::ClientContext& context, Options options,
-    google::devtools::artifactregistry::v1::DeletePackageRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context,
+    Options options,
+    google::devtools::artifactregistry::v1::DeletePackageRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeletePackage(context, options, request);
 }
 
 StatusOr<google::devtools::artifactregistry::v1::ListVersionsResponse>
 ArtifactRegistryMetadata::ListVersions(
-    grpc::ClientContext& context, Options const& options,
-    google::devtools::artifactregistry::v1::ListVersionsRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context,
+    Options const& options,
+    google::devtools::artifactregistry::v1::ListVersionsRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListVersions(context, options, request);
 }
 
 StatusOr<google::devtools::artifactregistry::v1::Version>
 ArtifactRegistryMetadata::GetVersion(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::devtools::artifactregistry::v1::GetVersionRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetVersion(context, options, request);
 }
 
@@ -313,21 +284,18 @@ ArtifactRegistryMetadata::AsyncDeleteVersion(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::devtools::artifactregistry::v1::DeleteVersionRequest const&
-        request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteVersion(cq, std::move(context), std::move(options),
-                                    request);
+    google::devtools::artifactregistry::v1::DeleteVersionRequest const& request) {
+  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteVersion(
+      cq, std::move(context), std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 ArtifactRegistryMetadata::DeleteVersion(
-    grpc::ClientContext& context, Options options,
-    google::devtools::artifactregistry::v1::DeleteVersionRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context,
+    Options options,
+    google::devtools::artifactregistry::v1::DeleteVersionRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteVersion(context, options, request);
 }
 
@@ -336,50 +304,45 @@ ArtifactRegistryMetadata::AsyncBatchDeleteVersions(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::devtools::artifactregistry::v1::BatchDeleteVersionsRequest const&
-        request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncBatchDeleteVersions(cq, std::move(context),
-                                          std::move(options), request);
+    google::devtools::artifactregistry::v1::BatchDeleteVersionsRequest const& request) {
+  SetMetadata(*context, *options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncBatchDeleteVersions(
+      cq, std::move(context), std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 ArtifactRegistryMetadata::BatchDeleteVersions(
-    grpc::ClientContext& context, Options options,
-    google::devtools::artifactregistry::v1::BatchDeleteVersionsRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context,
+    Options options,
+    google::devtools::artifactregistry::v1::BatchDeleteVersionsRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->BatchDeleteVersions(context, options, request);
 }
 
 StatusOr<google::devtools::artifactregistry::v1::Version>
 ArtifactRegistryMetadata::UpdateVersion(
-    grpc::ClientContext& context, Options const& options,
-    google::devtools::artifactregistry::v1::UpdateVersionRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("version.name=",
-                           internal::UrlEncode(request.version().name())));
+    grpc::ClientContext& context,
+    Options const& options,
+    google::devtools::artifactregistry::v1::UpdateVersionRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("version.name=", internal::UrlEncode(request.version().name())));
   return child_->UpdateVersion(context, options, request);
 }
 
 StatusOr<google::devtools::artifactregistry::v1::ListFilesResponse>
 ArtifactRegistryMetadata::ListFiles(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::devtools::artifactregistry::v1::ListFilesRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListFiles(context, options, request);
 }
 
 StatusOr<google::devtools::artifactregistry::v1::File>
 ArtifactRegistryMetadata::GetFile(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::devtools::artifactregistry::v1::GetFileRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetFile(context, options, request);
 }
 
@@ -389,219 +352,206 @@ ArtifactRegistryMetadata::AsyncDeleteFile(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::devtools::artifactregistry::v1::DeleteFileRequest const& request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteFile(cq, std::move(context), std::move(options),
-                                 request);
+  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteFile(
+      cq, std::move(context), std::move(options), request);
 }
 
-StatusOr<google::longrunning::Operation> ArtifactRegistryMetadata::DeleteFile(
-    grpc::ClientContext& context, Options options,
+StatusOr<google::longrunning::Operation>
+ArtifactRegistryMetadata::DeleteFile(
+    grpc::ClientContext& context,
+    Options options,
     google::devtools::artifactregistry::v1::DeleteFileRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteFile(context, options, request);
 }
 
 StatusOr<google::devtools::artifactregistry::v1::File>
 ArtifactRegistryMetadata::UpdateFile(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::devtools::artifactregistry::v1::UpdateFileRequest const& request) {
-  SetMetadata(
-      context, options,
-      absl::StrCat("file.name=", internal::UrlEncode(request.file().name())));
+  SetMetadata(context, options, absl::StrCat("file.name=", internal::UrlEncode(request.file().name())));
   return child_->UpdateFile(context, options, request);
 }
 
 StatusOr<google::devtools::artifactregistry::v1::ListTagsResponse>
 ArtifactRegistryMetadata::ListTags(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::devtools::artifactregistry::v1::ListTagsRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListTags(context, options, request);
 }
 
 StatusOr<google::devtools::artifactregistry::v1::Tag>
 ArtifactRegistryMetadata::GetTag(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::devtools::artifactregistry::v1::GetTagRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetTag(context, options, request);
 }
 
 StatusOr<google::devtools::artifactregistry::v1::Tag>
 ArtifactRegistryMetadata::CreateTag(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::devtools::artifactregistry::v1::CreateTagRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateTag(context, options, request);
 }
 
 StatusOr<google::devtools::artifactregistry::v1::Tag>
 ArtifactRegistryMetadata::UpdateTag(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::devtools::artifactregistry::v1::UpdateTagRequest const& request) {
-  SetMetadata(
-      context, options,
-      absl::StrCat("tag.name=", internal::UrlEncode(request.tag().name())));
+  SetMetadata(context, options, absl::StrCat("tag.name=", internal::UrlEncode(request.tag().name())));
   return child_->UpdateTag(context, options, request);
 }
 
-Status ArtifactRegistryMetadata::DeleteTag(
-    grpc::ClientContext& context, Options const& options,
+Status
+ArtifactRegistryMetadata::DeleteTag(
+    grpc::ClientContext& context,
+    Options const& options,
     google::devtools::artifactregistry::v1::DeleteTagRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteTag(context, options, request);
 }
 
 StatusOr<google::devtools::artifactregistry::v1::Rule>
 ArtifactRegistryMetadata::CreateRule(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::devtools::artifactregistry::v1::CreateRuleRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateRule(context, options, request);
 }
 
 StatusOr<google::devtools::artifactregistry::v1::ListRulesResponse>
 ArtifactRegistryMetadata::ListRules(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::devtools::artifactregistry::v1::ListRulesRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListRules(context, options, request);
 }
 
 StatusOr<google::devtools::artifactregistry::v1::Rule>
 ArtifactRegistryMetadata::GetRule(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::devtools::artifactregistry::v1::GetRuleRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetRule(context, options, request);
 }
 
 StatusOr<google::devtools::artifactregistry::v1::Rule>
 ArtifactRegistryMetadata::UpdateRule(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::devtools::artifactregistry::v1::UpdateRuleRequest const& request) {
-  SetMetadata(
-      context, options,
-      absl::StrCat("rule.name=", internal::UrlEncode(request.rule().name())));
+  SetMetadata(context, options, absl::StrCat("rule.name=", internal::UrlEncode(request.rule().name())));
   return child_->UpdateRule(context, options, request);
 }
 
-Status ArtifactRegistryMetadata::DeleteRule(
-    grpc::ClientContext& context, Options const& options,
+Status
+ArtifactRegistryMetadata::DeleteRule(
+    grpc::ClientContext& context,
+    Options const& options,
     google::devtools::artifactregistry::v1::DeleteRuleRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteRule(context, options, request);
 }
 
-StatusOr<google::iam::v1::Policy> ArtifactRegistryMetadata::SetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::iam::v1::Policy>
+ArtifactRegistryMetadata::SetIamPolicy(
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
-  SetMetadata(
-      context, options,
-      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
+  SetMetadata(context, options, absl::StrCat("resource=", internal::UrlEncode(request.resource())));
   return child_->SetIamPolicy(context, options, request);
 }
 
-StatusOr<google::iam::v1::Policy> ArtifactRegistryMetadata::GetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::iam::v1::Policy>
+ArtifactRegistryMetadata::GetIamPolicy(
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
-  SetMetadata(
-      context, options,
-      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
+  SetMetadata(context, options, absl::StrCat("resource=", internal::UrlEncode(request.resource())));
   return child_->GetIamPolicy(context, options, request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 ArtifactRegistryMetadata::TestIamPermissions(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  SetMetadata(
-      context, options,
-      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
+  SetMetadata(context, options, absl::StrCat("resource=", internal::UrlEncode(request.resource())));
   return child_->TestIamPermissions(context, options, request);
 }
 
 StatusOr<google::devtools::artifactregistry::v1::ProjectSettings>
 ArtifactRegistryMetadata::GetProjectSettings(
-    grpc::ClientContext& context, Options const& options,
-    google::devtools::artifactregistry::v1::GetProjectSettingsRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context,
+    Options const& options,
+    google::devtools::artifactregistry::v1::GetProjectSettingsRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetProjectSettings(context, options, request);
 }
 
 StatusOr<google::devtools::artifactregistry::v1::ProjectSettings>
 ArtifactRegistryMetadata::UpdateProjectSettings(
-    grpc::ClientContext& context, Options const& options,
-    google::devtools::artifactregistry::v1::UpdateProjectSettingsRequest const&
-        request) {
-  SetMetadata(
-      context, options,
-      absl::StrCat("project_settings.name=",
-                   internal::UrlEncode(request.project_settings().name())));
+    grpc::ClientContext& context,
+    Options const& options,
+    google::devtools::artifactregistry::v1::UpdateProjectSettingsRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("project_settings.name=", internal::UrlEncode(request.project_settings().name())));
   return child_->UpdateProjectSettings(context, options, request);
 }
 
 StatusOr<google::devtools::artifactregistry::v1::VPCSCConfig>
 ArtifactRegistryMetadata::GetVPCSCConfig(
-    grpc::ClientContext& context, Options const& options,
-    google::devtools::artifactregistry::v1::GetVPCSCConfigRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context,
+    Options const& options,
+    google::devtools::artifactregistry::v1::GetVPCSCConfigRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetVPCSCConfig(context, options, request);
 }
 
 StatusOr<google::devtools::artifactregistry::v1::VPCSCConfig>
 ArtifactRegistryMetadata::UpdateVPCSCConfig(
-    grpc::ClientContext& context, Options const& options,
-    google::devtools::artifactregistry::v1::UpdateVPCSCConfigRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("vpcsc_config.name=",
-                           internal::UrlEncode(request.vpcsc_config().name())));
+    grpc::ClientContext& context,
+    Options const& options,
+    google::devtools::artifactregistry::v1::UpdateVPCSCConfigRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("vpcsc_config.name=", internal::UrlEncode(request.vpcsc_config().name())));
   return child_->UpdateVPCSCConfig(context, options, request);
 }
 
 StatusOr<google::devtools::artifactregistry::v1::Package>
 ArtifactRegistryMetadata::UpdatePackage(
-    grpc::ClientContext& context, Options const& options,
-    google::devtools::artifactregistry::v1::UpdatePackageRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("package.name=",
-                           internal::UrlEncode(request.package().name())));
+    grpc::ClientContext& context,
+    Options const& options,
+    google::devtools::artifactregistry::v1::UpdatePackageRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("package.name=", internal::UrlEncode(request.package().name())));
   return child_->UpdatePackage(context, options, request);
 }
 
 StatusOr<google::devtools::artifactregistry::v1::ListAttachmentsResponse>
 ArtifactRegistryMetadata::ListAttachments(
-    grpc::ClientContext& context, Options const& options,
-    google::devtools::artifactregistry::v1::ListAttachmentsRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context,
+    Options const& options,
+    google::devtools::artifactregistry::v1::ListAttachmentsRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListAttachments(context, options, request);
 }
 
 StatusOr<google::devtools::artifactregistry::v1::Attachment>
 ArtifactRegistryMetadata::GetAttachment(
-    grpc::ClientContext& context, Options const& options,
-    google::devtools::artifactregistry::v1::GetAttachmentRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context,
+    Options const& options,
+    google::devtools::artifactregistry::v1::GetAttachmentRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetAttachment(context, options, request);
 }
 
@@ -610,21 +560,18 @@ ArtifactRegistryMetadata::AsyncCreateAttachment(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::devtools::artifactregistry::v1::CreateAttachmentRequest const&
-        request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateAttachment(cq, std::move(context),
-                                       std::move(options), request);
+    google::devtools::artifactregistry::v1::CreateAttachmentRequest const& request) {
+  SetMetadata(*context, *options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateAttachment(
+      cq, std::move(context), std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 ArtifactRegistryMetadata::CreateAttachment(
-    grpc::ClientContext& context, Options options,
-    google::devtools::artifactregistry::v1::CreateAttachmentRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context,
+    Options options,
+    google::devtools::artifactregistry::v1::CreateAttachmentRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateAttachment(context, options, request);
 }
 
@@ -633,47 +580,45 @@ ArtifactRegistryMetadata::AsyncDeleteAttachment(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::devtools::artifactregistry::v1::DeleteAttachmentRequest const&
-        request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteAttachment(cq, std::move(context),
-                                       std::move(options), request);
+    google::devtools::artifactregistry::v1::DeleteAttachmentRequest const& request) {
+  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteAttachment(
+      cq, std::move(context), std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 ArtifactRegistryMetadata::DeleteAttachment(
-    grpc::ClientContext& context, Options options,
-    google::devtools::artifactregistry::v1::DeleteAttachmentRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context,
+    Options options,
+    google::devtools::artifactregistry::v1::DeleteAttachmentRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteAttachment(context, options, request);
 }
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 ArtifactRegistryMetadata::ListLocations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ListLocations(context, options, request);
 }
 
 StatusOr<google::cloud::location::Location>
 ArtifactRegistryMetadata::GetLocation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetLocation(context, options, request);
 }
 
-StatusOr<google::longrunning::Operation> ArtifactRegistryMetadata::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::Operation>
+ArtifactRegistryMetadata::GetOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetOperation(context, options, request);
 }
 
@@ -685,8 +630,8 @@ ArtifactRegistryMetadata::AsyncGetOperation(
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(cq, std::move(context), std::move(options),
-                                   request);
+  return child_->AsyncGetOperation(
+      cq, std::move(context), std::move(options), request);
 }
 
 future<Status> ArtifactRegistryMetadata::AsyncCancelOperation(
@@ -696,21 +641,21 @@ future<Status> ArtifactRegistryMetadata::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(cq, std::move(context),
-                                      std::move(options), request);
+  return child_->AsyncCancelOperation(
+      cq, std::move(context), std::move(options), request);
 }
 
 void ArtifactRegistryMetadata::SetMetadata(grpc::ClientContext& context,
-                                           Options const& options,
-                                           std::string const& request_params) {
+                                        Options const& options,
+                                        std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
 void ArtifactRegistryMetadata::SetMetadata(grpc::ClientContext& context,
-                                           Options const& options) {
-  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
-                                       api_client_header_);
+                                        Options const& options) {
+  google::cloud::internal::SetMetadata(
+      context, options, fixed_metadata_, api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

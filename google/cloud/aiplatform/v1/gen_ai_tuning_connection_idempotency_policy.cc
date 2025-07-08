@@ -26,46 +26,38 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-GenAiTuningServiceConnectionIdempotencyPolicy::
-    ~GenAiTuningServiceConnectionIdempotencyPolicy() = default;
+GenAiTuningServiceConnectionIdempotencyPolicy::~GenAiTuningServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<GenAiTuningServiceConnectionIdempotencyPolicy>
 GenAiTuningServiceConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<GenAiTuningServiceConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency GenAiTuningServiceConnectionIdempotencyPolicy::CreateTuningJob(
-    google::cloud::aiplatform::v1::CreateTuningJobRequest const&) {
+Idempotency GenAiTuningServiceConnectionIdempotencyPolicy::CreateTuningJob(google::cloud::aiplatform::v1::CreateTuningJobRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency GenAiTuningServiceConnectionIdempotencyPolicy::GetTuningJob(
-    google::cloud::aiplatform::v1::GetTuningJobRequest const&) {
+Idempotency GenAiTuningServiceConnectionIdempotencyPolicy::GetTuningJob(google::cloud::aiplatform::v1::GetTuningJobRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency GenAiTuningServiceConnectionIdempotencyPolicy::ListTuningJobs(
-    google::cloud::aiplatform::v1::ListTuningJobsRequest) {  // NOLINT
+Idempotency GenAiTuningServiceConnectionIdempotencyPolicy::ListTuningJobs(google::cloud::aiplatform::v1::ListTuningJobsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency GenAiTuningServiceConnectionIdempotencyPolicy::CancelTuningJob(
-    google::cloud::aiplatform::v1::CancelTuningJobRequest const&) {
+Idempotency GenAiTuningServiceConnectionIdempotencyPolicy::CancelTuningJob(google::cloud::aiplatform::v1::CancelTuningJobRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency GenAiTuningServiceConnectionIdempotencyPolicy::RebaseTunedModel(
-    google::cloud::aiplatform::v1::RebaseTunedModelRequest const&) {
+Idempotency GenAiTuningServiceConnectionIdempotencyPolicy::RebaseTunedModel(google::cloud::aiplatform::v1::RebaseTunedModelRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency GenAiTuningServiceConnectionIdempotencyPolicy::ListLocations(
-    google::cloud::location::ListLocationsRequest) {  // NOLINT
+Idempotency GenAiTuningServiceConnectionIdempotencyPolicy::ListLocations(google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency GenAiTuningServiceConnectionIdempotencyPolicy::GetLocation(
-    google::cloud::location::GetLocationRequest const&) {
+Idempotency GenAiTuningServiceConnectionIdempotencyPolicy::GetLocation(google::cloud::location::GetLocationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
@@ -75,43 +67,36 @@ Idempotency GenAiTuningServiceConnectionIdempotencyPolicy::SetIamPolicy(
                                          : Idempotency::kIdempotent;
 }
 
-Idempotency GenAiTuningServiceConnectionIdempotencyPolicy::GetIamPolicy(
-    google::iam::v1::GetIamPolicyRequest const&) {
+Idempotency GenAiTuningServiceConnectionIdempotencyPolicy::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency GenAiTuningServiceConnectionIdempotencyPolicy::TestIamPermissions(
-    google::iam::v1::TestIamPermissionsRequest const&) {
+Idempotency GenAiTuningServiceConnectionIdempotencyPolicy::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency GenAiTuningServiceConnectionIdempotencyPolicy::ListOperations(
-    google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency GenAiTuningServiceConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency GenAiTuningServiceConnectionIdempotencyPolicy::GetOperation(
-    google::longrunning::GetOperationRequest const&) {
+Idempotency GenAiTuningServiceConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency GenAiTuningServiceConnectionIdempotencyPolicy::DeleteOperation(
-    google::longrunning::DeleteOperationRequest const&) {
+Idempotency GenAiTuningServiceConnectionIdempotencyPolicy::DeleteOperation(google::longrunning::DeleteOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency GenAiTuningServiceConnectionIdempotencyPolicy::CancelOperation(
-    google::longrunning::CancelOperationRequest const&) {
+Idempotency GenAiTuningServiceConnectionIdempotencyPolicy::CancelOperation(google::longrunning::CancelOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency GenAiTuningServiceConnectionIdempotencyPolicy::WaitOperation(
-    google::longrunning::WaitOperationRequest const&) {
+Idempotency GenAiTuningServiceConnectionIdempotencyPolicy::WaitOperation(google::longrunning::WaitOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<GenAiTuningServiceConnectionIdempotencyPolicy>
-MakeDefaultGenAiTuningServiceConnectionIdempotencyPolicy() {
+    MakeDefaultGenAiTuningServiceConnectionIdempotencyPolicy() {
   return std::make_unique<GenAiTuningServiceConnectionIdempotencyPolicy>();
 }
 

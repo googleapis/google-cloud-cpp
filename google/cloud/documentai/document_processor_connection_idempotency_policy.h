@@ -26,16 +26,11 @@ namespace cloud {
 namespace documentai {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use
-/// documentai_v1::MakeDefaultDocumentProcessorServiceConnectionIdempotencyPolicy
-/// directly.
-using ::google::cloud::documentai_v1::
-    MakeDefaultDocumentProcessorServiceConnectionIdempotencyPolicy;
+/// @deprecated Use documentai_v1::MakeDefaultDocumentProcessorServiceConnectionIdempotencyPolicy directly.
+using ::google::cloud::documentai_v1::MakeDefaultDocumentProcessorServiceConnectionIdempotencyPolicy;
 
-/// @deprecated Use
-/// documentai_v1::DocumentProcessorServiceConnectionIdempotencyPolicy directly.
-using ::google::cloud::documentai_v1::
-    DocumentProcessorServiceConnectionIdempotencyPolicy;
+/// @deprecated Use documentai_v1::DocumentProcessorServiceConnectionIdempotencyPolicy directly.
+using ::google::cloud::documentai_v1::DocumentProcessorServiceConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace documentai

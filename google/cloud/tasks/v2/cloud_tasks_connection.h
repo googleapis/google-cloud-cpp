@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TASKS_V2_CLOUD_TASKS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TASKS_V2_CLOUD_TASKS_CONNECTION_H
 
-#include "google/cloud/tasks/v2/cloud_tasks_connection_idempotency_policy.h"
-#include "google/cloud/tasks/v2/internal/cloud_tasks_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
+#include "google/cloud/tasks/v2/cloud_tasks_connection_idempotency_policy.h"
+#include "google/cloud/tasks/v2/internal/cloud_tasks_retry_traits.h"
 #include "google/cloud/version.h"
 #include <google/cloud/tasks/v2/cloudtasks.pb.h>
 #include <memory>
@@ -63,14 +63,14 @@ class CloudTasksLimitedErrorCountRetryPolicy : public CloudTasksRetryPolicy {
    *     @p maximum_failures == 0.
    */
   explicit CloudTasksLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   CloudTasksLimitedErrorCountRetryPolicy(
       CloudTasksLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : CloudTasksLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : CloudTasksLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   CloudTasksLimitedErrorCountRetryPolicy(
       CloudTasksLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : CloudTasksLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : CloudTasksLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -90,9 +90,7 @@ class CloudTasksLimitedErrorCountRetryPolicy : public CloudTasksRetryPolicy {
   using BaseType = CloudTasksRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      tasks_v2_internal::CloudTasksRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<tasks_v2_internal::CloudTasksRetryTraits> impl_;
 };
 
 /**
@@ -131,14 +129,12 @@ class CloudTasksLimitedTimeRetryPolicy : public CloudTasksRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit CloudTasksLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  CloudTasksLimitedTimeRetryPolicy(
-      CloudTasksLimitedTimeRetryPolicy&& rhs) noexcept
-      : CloudTasksLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  CloudTasksLimitedTimeRetryPolicy(
-      CloudTasksLimitedTimeRetryPolicy const& rhs) noexcept
-      : CloudTasksLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  CloudTasksLimitedTimeRetryPolicy(CloudTasksLimitedTimeRetryPolicy&& rhs) noexcept
+    : CloudTasksLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  CloudTasksLimitedTimeRetryPolicy(CloudTasksLimitedTimeRetryPolicy const& rhs) noexcept
+    : CloudTasksLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -160,9 +156,7 @@ class CloudTasksLimitedTimeRetryPolicy : public CloudTasksRetryPolicy {
   using BaseType = CloudTasksRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      tasks_v2_internal::CloudTasksRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<tasks_v2_internal::CloudTasksRetryTraits> impl_;
 };
 
 /**
@@ -183,59 +177,59 @@ class CloudTasksConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StreamRange<google::cloud::tasks::v2::Queue> ListQueues(
-      google::cloud::tasks::v2::ListQueuesRequest request);
+  virtual StreamRange<google::cloud::tasks::v2::Queue>
+  ListQueues(google::cloud::tasks::v2::ListQueuesRequest request);
 
-  virtual StatusOr<google::cloud::tasks::v2::Queue> GetQueue(
-      google::cloud::tasks::v2::GetQueueRequest const& request);
+  virtual StatusOr<google::cloud::tasks::v2::Queue>
+  GetQueue(google::cloud::tasks::v2::GetQueueRequest const& request);
 
-  virtual StatusOr<google::cloud::tasks::v2::Queue> CreateQueue(
-      google::cloud::tasks::v2::CreateQueueRequest const& request);
+  virtual StatusOr<google::cloud::tasks::v2::Queue>
+  CreateQueue(google::cloud::tasks::v2::CreateQueueRequest const& request);
 
-  virtual StatusOr<google::cloud::tasks::v2::Queue> UpdateQueue(
-      google::cloud::tasks::v2::UpdateQueueRequest const& request);
+  virtual StatusOr<google::cloud::tasks::v2::Queue>
+  UpdateQueue(google::cloud::tasks::v2::UpdateQueueRequest const& request);
 
-  virtual Status DeleteQueue(
-      google::cloud::tasks::v2::DeleteQueueRequest const& request);
+  virtual Status
+  DeleteQueue(google::cloud::tasks::v2::DeleteQueueRequest const& request);
 
-  virtual StatusOr<google::cloud::tasks::v2::Queue> PurgeQueue(
-      google::cloud::tasks::v2::PurgeQueueRequest const& request);
+  virtual StatusOr<google::cloud::tasks::v2::Queue>
+  PurgeQueue(google::cloud::tasks::v2::PurgeQueueRequest const& request);
 
-  virtual StatusOr<google::cloud::tasks::v2::Queue> PauseQueue(
-      google::cloud::tasks::v2::PauseQueueRequest const& request);
+  virtual StatusOr<google::cloud::tasks::v2::Queue>
+  PauseQueue(google::cloud::tasks::v2::PauseQueueRequest const& request);
 
-  virtual StatusOr<google::cloud::tasks::v2::Queue> ResumeQueue(
-      google::cloud::tasks::v2::ResumeQueueRequest const& request);
+  virtual StatusOr<google::cloud::tasks::v2::Queue>
+  ResumeQueue(google::cloud::tasks::v2::ResumeQueueRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
 
   virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
   TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
 
-  virtual StreamRange<google::cloud::tasks::v2::Task> ListTasks(
-      google::cloud::tasks::v2::ListTasksRequest request);
+  virtual StreamRange<google::cloud::tasks::v2::Task>
+  ListTasks(google::cloud::tasks::v2::ListTasksRequest request);
 
-  virtual StatusOr<google::cloud::tasks::v2::Task> GetTask(
-      google::cloud::tasks::v2::GetTaskRequest const& request);
+  virtual StatusOr<google::cloud::tasks::v2::Task>
+  GetTask(google::cloud::tasks::v2::GetTaskRequest const& request);
 
-  virtual StatusOr<google::cloud::tasks::v2::Task> CreateTask(
-      google::cloud::tasks::v2::CreateTaskRequest const& request);
+  virtual StatusOr<google::cloud::tasks::v2::Task>
+  CreateTask(google::cloud::tasks::v2::CreateTaskRequest const& request);
 
-  virtual Status DeleteTask(
-      google::cloud::tasks::v2::DeleteTaskRequest const& request);
+  virtual Status
+  DeleteTask(google::cloud::tasks::v2::DeleteTaskRequest const& request);
 
-  virtual StatusOr<google::cloud::tasks::v2::Task> RunTask(
-      google::cloud::tasks::v2::RunTaskRequest const& request);
+  virtual StatusOr<google::cloud::tasks::v2::Task>
+  RunTask(google::cloud::tasks::v2::RunTaskRequest const& request);
 
-  virtual StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request);
+  virtual StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request);
 
-  virtual StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request);
+  virtual StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request);
 };
 
 /**

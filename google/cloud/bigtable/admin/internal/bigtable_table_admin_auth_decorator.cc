@@ -31,18 +31,18 @@ BigtableTableAdminAuth::BigtableTableAdminAuth(
     std::shared_ptr<BigtableTableAdminStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::bigtable::admin::v2::Table>
-BigtableTableAdminAuth::CreateTable(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::bigtable::admin::v2::Table> BigtableTableAdminAuth::CreateTable(
+    grpc::ClientContext& context,
+    Options const& options,
     google::bigtable::admin::v2::CreateTableRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateTable(context, options, request);
 }
 
-StatusOr<google::bigtable::admin::v2::ListTablesResponse>
-BigtableTableAdminAuth::ListTables(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::bigtable::admin::v2::ListTablesResponse> BigtableTableAdminAuth::ListTables(
+    grpc::ClientContext& context,
+    Options const& options,
     google::bigtable::admin::v2::ListTablesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -50,7 +50,8 @@ BigtableTableAdminAuth::ListTables(
 }
 
 StatusOr<google::bigtable::admin::v2::Table> BigtableTableAdminAuth::GetTable(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::bigtable::admin::v2::GetTableRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -59,34 +60,36 @@ StatusOr<google::bigtable::admin::v2::Table> BigtableTableAdminAuth::GetTable(
 
 future<StatusOr<google::longrunning::Operation>>
 BigtableTableAdminAuth::AsyncUpdateTable(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::bigtable::admin::v2::UpdateTableRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::bigtable::admin::v2::UpdateTableRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncUpdateTable(cq, *std::move(context),
-                                       std::move(options), request);
+        return child->AsyncUpdateTable(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation> BigtableTableAdminAuth::UpdateTable(
-    grpc::ClientContext& context, Options options,
-    google::bigtable::admin::v2::UpdateTableRequest const& request) {
+StatusOr<google::longrunning::Operation>
+BigtableTableAdminAuth::UpdateTable(
+      grpc::ClientContext& context,
+      Options options,
+      google::bigtable::admin::v2::UpdateTableRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateTable(context, options, request);
 }
 
 Status BigtableTableAdminAuth::DeleteTable(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::bigtable::admin::v2::DeleteTableRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -95,27 +98,28 @@ Status BigtableTableAdminAuth::DeleteTable(
 
 future<StatusOr<google::longrunning::Operation>>
 BigtableTableAdminAuth::AsyncUndeleteTable(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::bigtable::admin::v2::UndeleteTableRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::bigtable::admin::v2::UndeleteTableRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncUndeleteTable(cq, *std::move(context),
-                                         std::move(options), request);
+        return child->AsyncUndeleteTable(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation> BigtableTableAdminAuth::UndeleteTable(
-    grpc::ClientContext& context, Options options,
-    google::bigtable::admin::v2::UndeleteTableRequest const& request) {
+StatusOr<google::longrunning::Operation>
+BigtableTableAdminAuth::UndeleteTable(
+      grpc::ClientContext& context,
+      Options options,
+      google::bigtable::admin::v2::UndeleteTableRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UndeleteTable(context, options, request);
@@ -123,45 +127,45 @@ StatusOr<google::longrunning::Operation> BigtableTableAdminAuth::UndeleteTable(
 
 future<StatusOr<google::longrunning::Operation>>
 BigtableTableAdminAuth::AsyncCreateAuthorizedView(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::bigtable::admin::v2::CreateAuthorizedViewRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::bigtable::admin::v2::CreateAuthorizedViewRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreateAuthorizedView(cq, *std::move(context),
-                                                std::move(options), request);
+        return child->AsyncCreateAuthorizedView(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 BigtableTableAdminAuth::CreateAuthorizedView(
-    grpc::ClientContext& context, Options options,
-    google::bigtable::admin::v2::CreateAuthorizedViewRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::bigtable::admin::v2::CreateAuthorizedViewRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateAuthorizedView(context, options, request);
 }
 
-StatusOr<google::bigtable::admin::v2::ListAuthorizedViewsResponse>
-BigtableTableAdminAuth::ListAuthorizedViews(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::bigtable::admin::v2::ListAuthorizedViewsResponse> BigtableTableAdminAuth::ListAuthorizedViews(
+    grpc::ClientContext& context,
+    Options const& options,
     google::bigtable::admin::v2::ListAuthorizedViewsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListAuthorizedViews(context, options, request);
 }
 
-StatusOr<google::bigtable::admin::v2::AuthorizedView>
-BigtableTableAdminAuth::GetAuthorizedView(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::bigtable::admin::v2::AuthorizedView> BigtableTableAdminAuth::GetAuthorizedView(
+    grpc::ClientContext& context,
+    Options const& options,
     google::bigtable::admin::v2::GetAuthorizedViewRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -170,44 +174,45 @@ BigtableTableAdminAuth::GetAuthorizedView(
 
 future<StatusOr<google::longrunning::Operation>>
 BigtableTableAdminAuth::AsyncUpdateAuthorizedView(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::bigtable::admin::v2::UpdateAuthorizedViewRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::bigtable::admin::v2::UpdateAuthorizedViewRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncUpdateAuthorizedView(cq, *std::move(context),
-                                                std::move(options), request);
+        return child->AsyncUpdateAuthorizedView(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 BigtableTableAdminAuth::UpdateAuthorizedView(
-    grpc::ClientContext& context, Options options,
-    google::bigtable::admin::v2::UpdateAuthorizedViewRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::bigtable::admin::v2::UpdateAuthorizedViewRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateAuthorizedView(context, options, request);
 }
 
 Status BigtableTableAdminAuth::DeleteAuthorizedView(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::bigtable::admin::v2::DeleteAuthorizedViewRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteAuthorizedView(context, options, request);
 }
 
-StatusOr<google::bigtable::admin::v2::Table>
-BigtableTableAdminAuth::ModifyColumnFamilies(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::bigtable::admin::v2::Table> BigtableTableAdminAuth::ModifyColumnFamilies(
+    grpc::ClientContext& context,
+    Options const& options,
     google::bigtable::admin::v2::ModifyColumnFamiliesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -215,26 +220,26 @@ BigtableTableAdminAuth::ModifyColumnFamilies(
 }
 
 Status BigtableTableAdminAuth::DropRowRange(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::bigtable::admin::v2::DropRowRangeRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DropRowRange(context, options, request);
 }
 
-StatusOr<google::bigtable::admin::v2::GenerateConsistencyTokenResponse>
-BigtableTableAdminAuth::GenerateConsistencyToken(
-    grpc::ClientContext& context, Options const& options,
-    google::bigtable::admin::v2::GenerateConsistencyTokenRequest const&
-        request) {
+StatusOr<google::bigtable::admin::v2::GenerateConsistencyTokenResponse> BigtableTableAdminAuth::GenerateConsistencyToken(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::bigtable::admin::v2::GenerateConsistencyTokenRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GenerateConsistencyToken(context, options, request);
 }
 
-StatusOr<google::bigtable::admin::v2::CheckConsistencyResponse>
-BigtableTableAdminAuth::CheckConsistency(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::bigtable::admin::v2::CheckConsistencyResponse> BigtableTableAdminAuth::CheckConsistency(
+    grpc::ClientContext& context,
+    Options const& options,
     google::bigtable::admin::v2::CheckConsistencyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -243,43 +248,45 @@ BigtableTableAdminAuth::CheckConsistency(
 
 future<StatusOr<google::longrunning::Operation>>
 BigtableTableAdminAuth::AsyncCreateBackup(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::bigtable::admin::v2::CreateBackupRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::bigtable::admin::v2::CreateBackupRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreateBackup(cq, *std::move(context),
-                                        std::move(options), request);
+        return child->AsyncCreateBackup(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation> BigtableTableAdminAuth::CreateBackup(
-    grpc::ClientContext& context, Options options,
-    google::bigtable::admin::v2::CreateBackupRequest const& request) {
+StatusOr<google::longrunning::Operation>
+BigtableTableAdminAuth::CreateBackup(
+      grpc::ClientContext& context,
+      Options options,
+      google::bigtable::admin::v2::CreateBackupRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateBackup(context, options, request);
 }
 
 StatusOr<google::bigtable::admin::v2::Backup> BigtableTableAdminAuth::GetBackup(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::bigtable::admin::v2::GetBackupRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetBackup(context, options, request);
 }
 
-StatusOr<google::bigtable::admin::v2::Backup>
-BigtableTableAdminAuth::UpdateBackup(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::bigtable::admin::v2::Backup> BigtableTableAdminAuth::UpdateBackup(
+    grpc::ClientContext& context,
+    Options const& options,
     google::bigtable::admin::v2::UpdateBackupRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -287,16 +294,17 @@ BigtableTableAdminAuth::UpdateBackup(
 }
 
 Status BigtableTableAdminAuth::DeleteBackup(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::bigtable::admin::v2::DeleteBackupRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteBackup(context, options, request);
 }
 
-StatusOr<google::bigtable::admin::v2::ListBackupsResponse>
-BigtableTableAdminAuth::ListBackups(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::bigtable::admin::v2::ListBackupsResponse> BigtableTableAdminAuth::ListBackups(
+    grpc::ClientContext& context,
+    Options const& options,
     google::bigtable::admin::v2::ListBackupsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -305,27 +313,28 @@ BigtableTableAdminAuth::ListBackups(
 
 future<StatusOr<google::longrunning::Operation>>
 BigtableTableAdminAuth::AsyncRestoreTable(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::bigtable::admin::v2::RestoreTableRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::bigtable::admin::v2::RestoreTableRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncRestoreTable(cq, *std::move(context),
-                                        std::move(options), request);
+        return child->AsyncRestoreTable(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation> BigtableTableAdminAuth::RestoreTable(
-    grpc::ClientContext& context, Options options,
-    google::bigtable::admin::v2::RestoreTableRequest const& request) {
+StatusOr<google::longrunning::Operation>
+BigtableTableAdminAuth::RestoreTable(
+      grpc::ClientContext& context,
+      Options options,
+      google::bigtable::admin::v2::RestoreTableRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->RestoreTable(context, options, request);
@@ -333,34 +342,36 @@ StatusOr<google::longrunning::Operation> BigtableTableAdminAuth::RestoreTable(
 
 future<StatusOr<google::longrunning::Operation>>
 BigtableTableAdminAuth::AsyncCopyBackup(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::bigtable::admin::v2::CopyBackupRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::bigtable::admin::v2::CopyBackupRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCopyBackup(cq, *std::move(context),
-                                      std::move(options), request);
+        return child->AsyncCopyBackup(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation> BigtableTableAdminAuth::CopyBackup(
-    grpc::ClientContext& context, Options options,
-    google::bigtable::admin::v2::CopyBackupRequest const& request) {
+StatusOr<google::longrunning::Operation>
+BigtableTableAdminAuth::CopyBackup(
+      grpc::ClientContext& context,
+      Options options,
+      google::bigtable::admin::v2::CopyBackupRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CopyBackup(context, options, request);
 }
 
 StatusOr<google::iam::v1::Policy> BigtableTableAdminAuth::GetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -368,40 +379,124 @@ StatusOr<google::iam::v1::Policy> BigtableTableAdminAuth::GetIamPolicy(
 }
 
 StatusOr<google::iam::v1::Policy> BigtableTableAdminAuth::SetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->SetIamPolicy(context, options, request);
 }
 
-StatusOr<google::iam::v1::TestIamPermissionsResponse>
-BigtableTableAdminAuth::TestIamPermissions(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::iam::v1::TestIamPermissionsResponse> BigtableTableAdminAuth::TestIamPermissions(
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->TestIamPermissions(context, options, request);
 }
 
-future<StatusOr<google::bigtable::admin::v2::CheckConsistencyResponse>>
-BigtableTableAdminAuth::AsyncCheckConsistency(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::bigtable::admin::v2::CheckConsistencyRequest const& request) {
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+future<StatusOr<google::longrunning::Operation>>
+BigtableTableAdminAuth::AsyncCreateSchemaBundle(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::bigtable::admin::v2::CreateSchemaBundleRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
-          return make_ready_future(
-              StatusOr<google::bigtable::admin::v2::CheckConsistencyResponse>(
-                  std::move(context).status()));
+          return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCheckConsistency(cq, *std::move(context),
-                                            std::move(options), request);
+        return child->AsyncCreateSchemaBundle(
+            cq, *std::move(context), std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation>
+BigtableTableAdminAuth::CreateSchemaBundle(
+      grpc::ClientContext& context,
+      Options options,
+      google::bigtable::admin::v2::CreateSchemaBundleRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateSchemaBundle(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+BigtableTableAdminAuth::AsyncUpdateSchemaBundle(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::bigtable::admin::v2::UpdateSchemaBundleRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncUpdateSchemaBundle(
+            cq, *std::move(context), std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation>
+BigtableTableAdminAuth::UpdateSchemaBundle(
+      grpc::ClientContext& context,
+      Options options,
+      google::bigtable::admin::v2::UpdateSchemaBundleRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateSchemaBundle(context, options, request);
+}
+
+StatusOr<google::bigtable::admin::v2::SchemaBundle> BigtableTableAdminAuth::GetSchemaBundle(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::bigtable::admin::v2::GetSchemaBundleRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetSchemaBundle(context, options, request);
+}
+
+StatusOr<google::bigtable::admin::v2::ListSchemaBundlesResponse> BigtableTableAdminAuth::ListSchemaBundles(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::bigtable::admin::v2::ListSchemaBundlesRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListSchemaBundles(context, options, request);
+}
+
+Status BigtableTableAdminAuth::DeleteSchemaBundle(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::bigtable::admin::v2::DeleteSchemaBundleRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteSchemaBundle(context, options, request);
+}
+
+future<StatusOr<google::bigtable::admin::v2::CheckConsistencyResponse>>
+BigtableTableAdminAuth::AsyncCheckConsistency(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::bigtable::admin::v2::CheckConsistencyRequest const& request) {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(StatusOr<google::bigtable::admin::v2::CheckConsistencyResponse>(
+              std::move(context).status()));
+        }
+        return child->AsyncCheckConsistency(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
@@ -412,16 +507,15 @@ BigtableTableAdminAuth::AsyncGetOperation(
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncGetOperation(cq, *std::move(context),
-                                        std::move(options), request);
+        return child->AsyncGetOperation(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
@@ -430,14 +524,13 @@ future<Status> BigtableTableAdminAuth::AsyncCancelOperation(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) return make_ready_future(std::move(context).status());
-        return child->AsyncCancelOperation(cq, *std::move(context),
-                                           std::move(options), request);
+        return child->AsyncCancelOperation(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 

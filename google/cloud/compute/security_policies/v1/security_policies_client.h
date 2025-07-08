@@ -64,9 +64,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class SecurityPoliciesClient {
  public:
-  explicit SecurityPoliciesClient(
-      std::shared_ptr<SecurityPoliciesConnection> connection,
-      Options opts = {});
+  explicit SecurityPoliciesClient(std::shared_ptr<SecurityPoliciesConnection> connection, Options opts = {});
   ~SecurityPoliciesClient();
 
   ///@{
@@ -79,12 +77,10 @@ class SecurityPoliciesClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(SecurityPoliciesClient const& a,
-                         SecurityPoliciesClient const& b) {
+  friend bool operator==(SecurityPoliciesClient const& a, SecurityPoliciesClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(SecurityPoliciesClient const& a,
-                         SecurityPoliciesClient const& b) {
+  friend bool operator!=(SecurityPoliciesClient const& a, SecurityPoliciesClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -120,11 +116,8 @@ class SecurityPoliciesClient {
   /// [google.cloud.cpp.compute.security_policies.v1.AddRuleRequest]: @cloud_cpp_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L191}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddRule(
-      std::string const& project, std::string const& security_policy,
-      google::cloud::cpp::compute::v1::SecurityPolicyRule const&
-          security_policy_rule_resource,
-      Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AddRule(std::string const& project, std::string const& security_policy, google::cloud::cpp::compute::v1::SecurityPolicyRule const& security_policy_rule_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -137,12 +130,8 @@ class SecurityPoliciesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> AddRule(
-      NoAwaitTag, std::string const& project,
-      std::string const& security_policy,
-      google::cloud::cpp::compute::v1::SecurityPolicyRule const&
-          security_policy_rule_resource,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  AddRule(NoAwaitTag, std::string const& project, std::string const& security_policy, google::cloud::cpp::compute::v1::SecurityPolicyRule const& security_policy_rule_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -178,10 +167,8 @@ class SecurityPoliciesClient {
   /// [google.cloud.cpp.compute.security_policies.v1.AddRuleRequest]: @cloud_cpp_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L191}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddRule(
-      google::cloud::cpp::compute::security_policies::v1::AddRuleRequest const&
-          request,
-      Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AddRule(google::cloud::cpp::compute::security_policies::v1::AddRuleRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -194,11 +181,8 @@ class SecurityPoliciesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> AddRule(
-      NoAwaitTag,
-      google::cloud::cpp::compute::security_policies::v1::AddRuleRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  AddRule(NoAwaitTag, google::cloud::cpp::compute::security_policies::v1::AddRuleRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -209,9 +193,8 @@ class SecurityPoliciesClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddRule(
-      google::cloud::cpp::compute::v1::Operation const& operation,
-      Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AddRule(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -247,8 +230,7 @@ class SecurityPoliciesClient {
   /// [google.cloud.cpp.compute.v1.SecurityPoliciesScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_094.proto#L149}
   ///
   // clang-format on
-  StreamRange<std::pair<
-      std::string, google::cloud::cpp::compute::v1::SecurityPoliciesScopedList>>
+  StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::SecurityPoliciesScopedList>>
   AggregatedListSecurityPolicies(std::string const& project, Options opts = {});
 
   // clang-format off
@@ -290,12 +272,8 @@ class SecurityPoliciesClient {
   /// [google.cloud.cpp.compute.v1.SecurityPoliciesScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_094.proto#L149}
   ///
   // clang-format on
-  StreamRange<std::pair<
-      std::string, google::cloud::cpp::compute::v1::SecurityPoliciesScopedList>>
-  AggregatedListSecurityPolicies(
-      google::cloud::cpp::compute::security_policies::v1::
-          AggregatedListSecurityPoliciesRequest request,
-      Options opts = {});
+  StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::SecurityPoliciesScopedList>>
+  AggregatedListSecurityPolicies(google::cloud::cpp::compute::security_policies::v1::AggregatedListSecurityPoliciesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -328,8 +306,7 @@ class SecurityPoliciesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteSecurityPolicy(std::string const& project,
-                       std::string const& security_policy, Options opts = {});
+  DeleteSecurityPolicy(std::string const& project, std::string const& security_policy, Options opts = {});
 
   // clang-format off
   ///
@@ -342,9 +319,8 @@ class SecurityPoliciesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteSecurityPolicy(
-      NoAwaitTag, std::string const& project,
-      std::string const& security_policy, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeleteSecurityPolicy(NoAwaitTag, std::string const& project, std::string const& security_policy, Options opts = {});
 
   // clang-format off
   ///
@@ -381,9 +357,7 @@ class SecurityPoliciesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteSecurityPolicy(google::cloud::cpp::compute::security_policies::v1::
-                           DeleteSecurityPolicyRequest const& request,
-                       Options opts = {});
+  DeleteSecurityPolicy(google::cloud::cpp::compute::security_policies::v1::DeleteSecurityPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -396,11 +370,8 @@ class SecurityPoliciesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteSecurityPolicy(
-      NoAwaitTag,
-      google::cloud::cpp::compute::security_policies::v1::
-          DeleteSecurityPolicyRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeleteSecurityPolicy(NoAwaitTag, google::cloud::cpp::compute::security_policies::v1::DeleteSecurityPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -412,9 +383,7 @@ class SecurityPoliciesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteSecurityPolicy(
-      google::cloud::cpp::compute::v1::Operation const& operation,
-      Options opts = {});
+  DeleteSecurityPolicy(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -440,9 +409,8 @@ class SecurityPoliciesClient {
   /// [google.cloud.cpp.compute.v1.SecurityPolicy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_117.proto#L29}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::SecurityPolicy> GetSecurityPolicy(
-      std::string const& project, std::string const& security_policy,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::SecurityPolicy>
+  GetSecurityPolicy(std::string const& project, std::string const& security_policy, Options opts = {});
 
   // clang-format off
   ///
@@ -472,10 +440,8 @@ class SecurityPoliciesClient {
   /// [google.cloud.cpp.compute.v1.SecurityPolicy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_117.proto#L29}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::SecurityPolicy> GetSecurityPolicy(
-      google::cloud::cpp::compute::security_policies::v1::
-          GetSecurityPolicyRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::SecurityPolicy>
+  GetSecurityPolicy(google::cloud::cpp::compute::security_policies::v1::GetSecurityPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -501,9 +467,8 @@ class SecurityPoliciesClient {
   /// [google.cloud.cpp.compute.v1.SecurityPolicyRule]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_117.proto#L371}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::SecurityPolicyRule> GetRule(
-      std::string const& project, std::string const& security_policy,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::SecurityPolicyRule>
+  GetRule(std::string const& project, std::string const& security_policy, Options opts = {});
 
   // clang-format off
   ///
@@ -533,10 +498,8 @@ class SecurityPoliciesClient {
   /// [google.cloud.cpp.compute.v1.SecurityPolicyRule]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_117.proto#L371}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::SecurityPolicyRule> GetRule(
-      google::cloud::cpp::compute::security_policies::v1::GetRuleRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::SecurityPolicyRule>
+  GetRule(google::cloud::cpp::compute::security_policies::v1::GetRuleRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -570,10 +533,7 @@ class SecurityPoliciesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertSecurityPolicy(std::string const& project,
-                       google::cloud::cpp::compute::v1::SecurityPolicy const&
-                           security_policy_resource,
-                       Options opts = {});
+  InsertSecurityPolicy(std::string const& project, google::cloud::cpp::compute::v1::SecurityPolicy const& security_policy_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -586,11 +546,8 @@ class SecurityPoliciesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertSecurityPolicy(
-      NoAwaitTag, std::string const& project,
-      google::cloud::cpp::compute::v1::SecurityPolicy const&
-          security_policy_resource,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  InsertSecurityPolicy(NoAwaitTag, std::string const& project, google::cloud::cpp::compute::v1::SecurityPolicy const& security_policy_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -628,9 +585,7 @@ class SecurityPoliciesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertSecurityPolicy(google::cloud::cpp::compute::security_policies::v1::
-                           InsertSecurityPolicyRequest const& request,
-                       Options opts = {});
+  InsertSecurityPolicy(google::cloud::cpp::compute::security_policies::v1::InsertSecurityPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -643,11 +598,8 @@ class SecurityPoliciesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertSecurityPolicy(
-      NoAwaitTag,
-      google::cloud::cpp::compute::security_policies::v1::
-          InsertSecurityPolicyRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  InsertSecurityPolicy(NoAwaitTag, google::cloud::cpp::compute::security_policies::v1::InsertSecurityPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -659,9 +611,7 @@ class SecurityPoliciesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertSecurityPolicy(
-      google::cloud::cpp::compute::v1::Operation const& operation,
-      Options opts = {});
+  InsertSecurityPolicy(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -736,9 +686,7 @@ class SecurityPoliciesClient {
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::SecurityPolicy>
-  ListSecurityPolicies(google::cloud::cpp::compute::security_policies::v1::
-                           ListSecurityPoliciesRequest request,
-                       Options opts = {});
+  ListSecurityPolicies(google::cloud::cpp::compute::security_policies::v1::ListSecurityPoliciesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -764,10 +712,8 @@ class SecurityPoliciesClient {
   /// [google.cloud.cpp.compute.v1.SecurityPoliciesListPreconfiguredExpressionSetsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_094.proto#L144}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::
-               SecurityPoliciesListPreconfiguredExpressionSetsResponse>
-  ListPreconfiguredExpressionSets(std::string const& project,
-                                  Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::SecurityPoliciesListPreconfiguredExpressionSetsResponse>
+  ListPreconfiguredExpressionSets(std::string const& project, Options opts = {});
 
   // clang-format off
   ///
@@ -798,12 +744,8 @@ class SecurityPoliciesClient {
   /// [google.cloud.cpp.compute.v1.SecurityPoliciesListPreconfiguredExpressionSetsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_094.proto#L144}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::
-               SecurityPoliciesListPreconfiguredExpressionSetsResponse>
-  ListPreconfiguredExpressionSets(
-      google::cloud::cpp::compute::security_policies::v1::
-          ListPreconfiguredExpressionSetsRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::SecurityPoliciesListPreconfiguredExpressionSetsResponse>
+  ListPreconfiguredExpressionSets(google::cloud::cpp::compute::security_policies::v1::ListPreconfiguredExpressionSetsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -842,12 +784,7 @@ class SecurityPoliciesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchSecurityPolicy(std::string const& project,
-                      std::string const& security_policy,
-                      std::string const& update_mask,
-                      google::cloud::cpp::compute::v1::SecurityPolicy const&
-                          security_policy_resource,
-                      Options opts = {});
+  PatchSecurityPolicy(std::string const& project, std::string const& security_policy, std::string const& update_mask, google::cloud::cpp::compute::v1::SecurityPolicy const& security_policy_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -860,12 +797,8 @@ class SecurityPoliciesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchSecurityPolicy(
-      NoAwaitTag, std::string const& project,
-      std::string const& security_policy, std::string const& update_mask,
-      google::cloud::cpp::compute::v1::SecurityPolicy const&
-          security_policy_resource,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  PatchSecurityPolicy(NoAwaitTag, std::string const& project, std::string const& security_policy, std::string const& update_mask, google::cloud::cpp::compute::v1::SecurityPolicy const& security_policy_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -906,9 +839,7 @@ class SecurityPoliciesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchSecurityPolicy(google::cloud::cpp::compute::security_policies::v1::
-                          PatchSecurityPolicyRequest const& request,
-                      Options opts = {});
+  PatchSecurityPolicy(google::cloud::cpp::compute::security_policies::v1::PatchSecurityPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -921,11 +852,8 @@ class SecurityPoliciesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchSecurityPolicy(
-      NoAwaitTag,
-      google::cloud::cpp::compute::security_policies::v1::
-          PatchSecurityPolicyRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  PatchSecurityPolicy(NoAwaitTag, google::cloud::cpp::compute::security_policies::v1::PatchSecurityPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -937,9 +865,7 @@ class SecurityPoliciesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchSecurityPolicy(
-      google::cloud::cpp::compute::v1::Operation const& operation,
-      Options opts = {});
+  PatchSecurityPolicy(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -973,11 +899,8 @@ class SecurityPoliciesClient {
   /// [google.cloud.cpp.compute.security_policies.v1.PatchRuleRequest]: @cloud_cpp_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L510}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchRule(
-      std::string const& project, std::string const& security_policy,
-      google::cloud::cpp::compute::v1::SecurityPolicyRule const&
-          security_policy_rule_resource,
-      Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  PatchRule(std::string const& project, std::string const& security_policy, google::cloud::cpp::compute::v1::SecurityPolicyRule const& security_policy_rule_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -990,12 +913,8 @@ class SecurityPoliciesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchRule(
-      NoAwaitTag, std::string const& project,
-      std::string const& security_policy,
-      google::cloud::cpp::compute::v1::SecurityPolicyRule const&
-          security_policy_rule_resource,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  PatchRule(NoAwaitTag, std::string const& project, std::string const& security_policy, google::cloud::cpp::compute::v1::SecurityPolicyRule const& security_policy_rule_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -1032,10 +951,8 @@ class SecurityPoliciesClient {
   /// [google.cloud.cpp.compute.security_policies.v1.PatchRuleRequest]: @cloud_cpp_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L510}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchRule(
-      google::cloud::cpp::compute::security_policies::v1::
-          PatchRuleRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  PatchRule(google::cloud::cpp::compute::security_policies::v1::PatchRuleRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1048,11 +965,8 @@ class SecurityPoliciesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchRule(
-      NoAwaitTag,
-      google::cloud::cpp::compute::security_policies::v1::
-          PatchRuleRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  PatchRule(NoAwaitTag, google::cloud::cpp::compute::security_policies::v1::PatchRuleRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1063,9 +977,8 @@ class SecurityPoliciesClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchRule(
-      google::cloud::cpp::compute::v1::Operation const& operation,
-      Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  PatchRule(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1097,9 +1010,8 @@ class SecurityPoliciesClient {
   /// [google.cloud.cpp.compute.security_policies.v1.RemoveRuleRequest]: @cloud_cpp_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L570}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> RemoveRule(
-      std::string const& project, std::string const& security_policy,
-      Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  RemoveRule(std::string const& project, std::string const& security_policy, Options opts = {});
 
   // clang-format off
   ///
@@ -1112,9 +1024,8 @@ class SecurityPoliciesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> RemoveRule(
-      NoAwaitTag, std::string const& project,
-      std::string const& security_policy, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  RemoveRule(NoAwaitTag, std::string const& project, std::string const& security_policy, Options opts = {});
 
   // clang-format off
   ///
@@ -1150,10 +1061,8 @@ class SecurityPoliciesClient {
   /// [google.cloud.cpp.compute.security_policies.v1.RemoveRuleRequest]: @cloud_cpp_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L570}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> RemoveRule(
-      google::cloud::cpp::compute::security_policies::v1::
-          RemoveRuleRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  RemoveRule(google::cloud::cpp::compute::security_policies::v1::RemoveRuleRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1166,11 +1075,8 @@ class SecurityPoliciesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> RemoveRule(
-      NoAwaitTag,
-      google::cloud::cpp::compute::security_policies::v1::
-          RemoveRuleRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  RemoveRule(NoAwaitTag, google::cloud::cpp::compute::security_policies::v1::RemoveRuleRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1181,9 +1087,8 @@ class SecurityPoliciesClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> RemoveRule(
-      google::cloud::cpp::compute::v1::Operation const& operation,
-      Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  RemoveRule(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1217,11 +1122,8 @@ class SecurityPoliciesClient {
   /// [google.cloud.cpp.compute.security_policies.v1.SetLabelsRequest]: @cloud_cpp_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L587}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
-      std::string const& project, std::string const& resource,
-      google::cloud::cpp::compute::v1::GlobalSetLabelsRequest const&
-          global_set_labels_request_resource,
-      Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  SetLabels(std::string const& project, std::string const& resource, google::cloud::cpp::compute::v1::GlobalSetLabelsRequest const& global_set_labels_request_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -1234,11 +1136,8 @@ class SecurityPoliciesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
-      NoAwaitTag, std::string const& project, std::string const& resource,
-      google::cloud::cpp::compute::v1::GlobalSetLabelsRequest const&
-          global_set_labels_request_resource,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  SetLabels(NoAwaitTag, std::string const& project, std::string const& resource, google::cloud::cpp::compute::v1::GlobalSetLabelsRequest const& global_set_labels_request_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -1275,10 +1174,8 @@ class SecurityPoliciesClient {
   /// [google.cloud.cpp.compute.security_policies.v1.SetLabelsRequest]: @cloud_cpp_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L587}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
-      google::cloud::cpp::compute::security_policies::v1::
-          SetLabelsRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  SetLabels(google::cloud::cpp::compute::security_policies::v1::SetLabelsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1291,11 +1188,8 @@ class SecurityPoliciesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
-      NoAwaitTag,
-      google::cloud::cpp::compute::security_policies::v1::
-          SetLabelsRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  SetLabels(NoAwaitTag, google::cloud::cpp::compute::security_policies::v1::SetLabelsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1306,9 +1200,8 @@ class SecurityPoliciesClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
-      google::cloud::cpp::compute::v1::Operation const& operation,
-      Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  SetLabels(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
 
  private:
   std::shared_ptr<SecurityPoliciesConnection> connection_;

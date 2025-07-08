@@ -62,8 +62,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class RegionZonesClient {
  public:
-  explicit RegionZonesClient(std::shared_ptr<RegionZonesConnection> connection,
-                             Options opts = {});
+  explicit RegionZonesClient(std::shared_ptr<RegionZonesConnection> connection, Options opts = {});
   ~RegionZonesClient();
 
   ///@{
@@ -76,12 +75,10 @@ class RegionZonesClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(RegionZonesClient const& a,
-                         RegionZonesClient const& b) {
+  friend bool operator==(RegionZonesClient const& a, RegionZonesClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(RegionZonesClient const& a,
-                         RegionZonesClient const& b) {
+  friend bool operator!=(RegionZonesClient const& a, RegionZonesClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -120,8 +117,8 @@ class RegionZonesClient {
   /// [google.cloud.cpp.compute.v1.Zone]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_150.proto#L29}
   ///
   // clang-format on
-  StreamRange<google::cloud::cpp::compute::v1::Zone> ListRegionZones(
-      std::string const& project, std::string const& region, Options opts = {});
+  StreamRange<google::cloud::cpp::compute::v1::Zone>
+  ListRegionZones(std::string const& project, std::string const& region, Options opts = {});
 
   // clang-format off
   ///
@@ -161,10 +158,8 @@ class RegionZonesClient {
   /// [google.cloud.cpp.compute.v1.Zone]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_150.proto#L29}
   ///
   // clang-format on
-  StreamRange<google::cloud::cpp::compute::v1::Zone> ListRegionZones(
-      google::cloud::cpp::compute::region_zones::v1::ListRegionZonesRequest
-          request,
-      Options opts = {});
+  StreamRange<google::cloud::cpp::compute::v1::Zone>
+  ListRegionZones(google::cloud::cpp::compute::region_zones::v1::ListRegionZonesRequest request, Options opts = {});
 
  private:
   std::shared_ptr<RegionZonesConnection> connection_;

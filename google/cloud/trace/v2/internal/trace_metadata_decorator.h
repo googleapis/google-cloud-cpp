@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TRACE_V2_INTERNAL_TRACE_METADATA_DECORATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TRACE_V2_INTERNAL_TRACE_METADATA_DECORATOR_H
 
-#include "google/cloud/trace/v2/internal/trace_stub.h"
 #include "google/cloud/options.h"
+#include "google/cloud/trace/v2/internal/trace_stub.h"
 #include "google/cloud/version.h"
 #include <map>
 #include <memory>
@@ -34,21 +34,24 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class TraceServiceMetadata : public TraceServiceStub {
  public:
   ~TraceServiceMetadata() override = default;
-  TraceServiceMetadata(std::shared_ptr<TraceServiceStub> child,
-                       std::multimap<std::string, std::string> fixed_metadata,
-                       std::string api_client_header = "");
+  TraceServiceMetadata(
+      std::shared_ptr<TraceServiceStub> child,
+      std::multimap<std::string, std::string> fixed_metadata,
+      std::string api_client_header = "");
 
   Status BatchWriteSpans(
-      grpc::ClientContext& context, Options const& options,
-      google::devtools::cloudtrace::v2::BatchWriteSpansRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::devtools::cloudtrace::v2::BatchWriteSpansRequest const& request) override;
 
   StatusOr<google::devtools::cloudtrace::v2::Span> CreateSpan(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::devtools::cloudtrace::v2::Span const& request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context, Options const& options,
+  void SetMetadata(grpc::ClientContext& context,
+                   Options const& options,
                    std::string const& request_params);
   void SetMetadata(grpc::ClientContext& context, Options const& options);
 

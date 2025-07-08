@@ -30,16 +30,21 @@ namespace cloud {
 namespace run_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-RevisionsLogging::RevisionsLogging(std::shared_ptr<RevisionsStub> child,
-                                   TracingOptions tracing_options,
-                                   std::set<std::string> const&)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
+RevisionsLogging::RevisionsLogging(
+    std::shared_ptr<RevisionsStub> child,
+    TracingOptions tracing_options,
+    std::set<std::string> const&)
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)) {}
 
-StatusOr<google::cloud::run::v2::Revision> RevisionsLogging::GetRevision(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::run::v2::Revision>
+RevisionsLogging::GetRevision(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::run::v2::GetRevisionRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::run::v2::GetRevisionRequest const& request) {
         return child_->GetRevision(context, options, request);
       },
@@ -48,10 +53,12 @@ StatusOr<google::cloud::run::v2::Revision> RevisionsLogging::GetRevision(
 
 StatusOr<google::cloud::run::v2::ListRevisionsResponse>
 RevisionsLogging::ListRevisions(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::run::v2::ListRevisionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::run::v2::ListRevisionsRequest const& request) {
         return child_->ListRevisions(context, options, request);
       },
@@ -60,27 +67,30 @@ RevisionsLogging::ListRevisions(
 
 future<StatusOr<google::longrunning::Operation>>
 RevisionsLogging::AsyncDeleteRevision(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::run::v2::DeleteRevisionRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::run::v2::DeleteRevisionRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::cloud::run::v2::DeleteRevisionRequest const& request) {
-        return child_->AsyncDeleteRevision(cq, std::move(context),
-                                           std::move(options), request);
+        return child_->AsyncDeleteRevision(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> RevisionsLogging::DeleteRevision(
-    grpc::ClientContext& context, Options options,
-    google::cloud::run::v2::DeleteRevisionRequest const& request) {
+StatusOr<google::longrunning::Operation>
+RevisionsLogging::DeleteRevision(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::run::v2::DeleteRevisionRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::run::v2::DeleteRevisionRequest const& request) {
         return child_->DeleteRevision(context, options, request);
       },
@@ -89,43 +99,54 @@ StatusOr<google::longrunning::Operation> RevisionsLogging::DeleteRevision(
 
 StatusOr<google::longrunning::ListOperationsResponse>
 RevisionsLogging::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::ListOperationsRequest const& request) {
         return child_->ListOperations(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> RevisionsLogging::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::Operation>
+RevisionsLogging::GetOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::GetOperationRequest const& request) {
         return child_->GetOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status RevisionsLogging::DeleteOperation(
-    grpc::ClientContext& context, Options const& options,
+Status
+RevisionsLogging::DeleteOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::DeleteOperationRequest const& request) {
         return child_->DeleteOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> RevisionsLogging::WaitOperation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::Operation>
+RevisionsLogging::WaitOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::WaitOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::WaitOperationRequest const& request) {
         return child_->WaitOperation(context, options, request);
       },
@@ -143,8 +164,8 @@ RevisionsLogging::AsyncGetOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(cq, std::move(context),
-                                         std::move(options), request);
+        return child_->AsyncGetOperation(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -160,8 +181,8 @@ future<Status> RevisionsLogging::AsyncCancelOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::CancelOperationRequest const& request) {
-        return child_->AsyncCancelOperation(cq, std::move(context),
-                                            std::move(options), request);
+        return child_->AsyncCancelOperation(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);

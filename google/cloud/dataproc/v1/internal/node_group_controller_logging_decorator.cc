@@ -32,23 +32,24 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 NodeGroupControllerLogging::NodeGroupControllerLogging(
     std::shared_ptr<NodeGroupControllerStub> child,
-    TracingOptions tracing_options, std::set<std::string> const&)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
+    TracingOptions tracing_options,
+    std::set<std::string> const&)
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)) {}
 
 future<StatusOr<google::longrunning::Operation>>
 NodeGroupControllerLogging::AsyncCreateNodeGroup(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::dataproc::v1::CreateNodeGroupRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::dataproc::v1::CreateNodeGroupRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::dataproc::v1::CreateNodeGroupRequest const& request) {
-        return child_->AsyncCreateNodeGroup(cq, std::move(context),
-                                            std::move(options), request);
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::dataproc::v1::CreateNodeGroupRequest const& request) {
+        return child_->AsyncCreateNodeGroup(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -56,12 +57,13 @@ NodeGroupControllerLogging::AsyncCreateNodeGroup(
 
 StatusOr<google::longrunning::Operation>
 NodeGroupControllerLogging::CreateNodeGroup(
-    grpc::ClientContext& context, Options options,
-    google::cloud::dataproc::v1::CreateNodeGroupRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::dataproc::v1::CreateNodeGroupRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::dataproc::v1::CreateNodeGroupRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::dataproc::v1::CreateNodeGroupRequest const& request) {
         return child_->CreateNodeGroup(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -69,18 +71,17 @@ NodeGroupControllerLogging::CreateNodeGroup(
 
 future<StatusOr<google::longrunning::Operation>>
 NodeGroupControllerLogging::AsyncResizeNodeGroup(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::dataproc::v1::ResizeNodeGroupRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::dataproc::v1::ResizeNodeGroupRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::dataproc::v1::ResizeNodeGroupRequest const& request) {
-        return child_->AsyncResizeNodeGroup(cq, std::move(context),
-                                            std::move(options), request);
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::dataproc::v1::ResizeNodeGroupRequest const& request) {
+        return child_->AsyncResizeNodeGroup(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -88,12 +89,13 @@ NodeGroupControllerLogging::AsyncResizeNodeGroup(
 
 StatusOr<google::longrunning::Operation>
 NodeGroupControllerLogging::ResizeNodeGroup(
-    grpc::ClientContext& context, Options options,
-    google::cloud::dataproc::v1::ResizeNodeGroupRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::dataproc::v1::ResizeNodeGroupRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::dataproc::v1::ResizeNodeGroupRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::dataproc::v1::ResizeNodeGroupRequest const& request) {
         return child_->ResizeNodeGroup(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -101,32 +103,40 @@ NodeGroupControllerLogging::ResizeNodeGroup(
 
 StatusOr<google::cloud::dataproc::v1::NodeGroup>
 NodeGroupControllerLogging::GetNodeGroup(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dataproc::v1::GetNodeGroupRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::dataproc::v1::GetNodeGroupRequest const& request) {
         return child_->GetNodeGroup(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::iam::v1::Policy> NodeGroupControllerLogging::SetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::iam::v1::Policy>
+NodeGroupControllerLogging::SetIamPolicy(
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::iam::v1::SetIamPolicyRequest const& request) {
         return child_->SetIamPolicy(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::iam::v1::Policy> NodeGroupControllerLogging::GetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::iam::v1::Policy>
+NodeGroupControllerLogging::GetIamPolicy(
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::iam::v1::GetIamPolicyRequest const& request) {
         return child_->GetIamPolicy(context, options, request);
       },
@@ -135,10 +145,12 @@ StatusOr<google::iam::v1::Policy> NodeGroupControllerLogging::GetIamPolicy(
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 NodeGroupControllerLogging::TestIamPermissions(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::iam::v1::TestIamPermissionsRequest const& request) {
         return child_->TestIamPermissions(context, options, request);
       },
@@ -147,10 +159,12 @@ NodeGroupControllerLogging::TestIamPermissions(
 
 StatusOr<google::longrunning::ListOperationsResponse>
 NodeGroupControllerLogging::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::ListOperationsRequest const& request) {
         return child_->ListOperations(context, options, request);
       },
@@ -159,32 +173,40 @@ NodeGroupControllerLogging::ListOperations(
 
 StatusOr<google::longrunning::Operation>
 NodeGroupControllerLogging::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::GetOperationRequest const& request) {
         return child_->GetOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status NodeGroupControllerLogging::DeleteOperation(
-    grpc::ClientContext& context, Options const& options,
+Status
+NodeGroupControllerLogging::DeleteOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::DeleteOperationRequest const& request) {
         return child_->DeleteOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status NodeGroupControllerLogging::CancelOperation(
-    grpc::ClientContext& context, Options const& options,
+Status
+NodeGroupControllerLogging::CancelOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::CancelOperationRequest const& request) {
         return child_->CancelOperation(context, options, request);
       },
@@ -202,8 +224,8 @@ NodeGroupControllerLogging::AsyncGetOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(cq, std::move(context),
-                                         std::move(options), request);
+        return child_->AsyncGetOperation(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -219,8 +241,8 @@ future<Status> NodeGroupControllerLogging::AsyncCancelOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::CancelOperationRequest const& request) {
-        return child_->AsyncCancelOperation(cq, std::move(context),
-                                            std::move(options), request);
+        return child_->AsyncCancelOperation(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);

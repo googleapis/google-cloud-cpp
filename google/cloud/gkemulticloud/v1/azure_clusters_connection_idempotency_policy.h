@@ -35,94 +35,80 @@ class AzureClustersConnectionIdempotencyPolicy {
   virtual ~AzureClustersConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<AzureClustersConnectionIdempotencyPolicy> clone()
-      const;
+  virtual std::unique_ptr<AzureClustersConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency CreateAzureClient(
-      google::cloud::gkemulticloud::v1::CreateAzureClientRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  CreateAzureClient(google::cloud::gkemulticloud::v1::CreateAzureClientRequest const& request);
 
-  virtual google::cloud::Idempotency GetAzureClient(
-      google::cloud::gkemulticloud::v1::GetAzureClientRequest const& request);
+  virtual google::cloud::Idempotency
+  GetAzureClient(google::cloud::gkemulticloud::v1::GetAzureClientRequest const& request);
 
-  virtual google::cloud::Idempotency ListAzureClients(
-      google::cloud::gkemulticloud::v1::ListAzureClientsRequest request);
+  virtual google::cloud::Idempotency
+  ListAzureClients(google::cloud::gkemulticloud::v1::ListAzureClientsRequest request);
 
-  virtual google::cloud::Idempotency DeleteAzureClient(
-      google::cloud::gkemulticloud::v1::DeleteAzureClientRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  DeleteAzureClient(google::cloud::gkemulticloud::v1::DeleteAzureClientRequest const& request);
 
-  virtual google::cloud::Idempotency CreateAzureCluster(
-      google::cloud::gkemulticloud::v1::CreateAzureClusterRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  CreateAzureCluster(google::cloud::gkemulticloud::v1::CreateAzureClusterRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateAzureCluster(
-      google::cloud::gkemulticloud::v1::UpdateAzureClusterRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  UpdateAzureCluster(google::cloud::gkemulticloud::v1::UpdateAzureClusterRequest const& request);
 
-  virtual google::cloud::Idempotency GetAzureCluster(
-      google::cloud::gkemulticloud::v1::GetAzureClusterRequest const& request);
+  virtual google::cloud::Idempotency
+  GetAzureCluster(google::cloud::gkemulticloud::v1::GetAzureClusterRequest const& request);
 
-  virtual google::cloud::Idempotency ListAzureClusters(
-      google::cloud::gkemulticloud::v1::ListAzureClustersRequest request);
+  virtual google::cloud::Idempotency
+  ListAzureClusters(google::cloud::gkemulticloud::v1::ListAzureClustersRequest request);
 
-  virtual google::cloud::Idempotency DeleteAzureCluster(
-      google::cloud::gkemulticloud::v1::DeleteAzureClusterRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  DeleteAzureCluster(google::cloud::gkemulticloud::v1::DeleteAzureClusterRequest const& request);
 
-  virtual google::cloud::Idempotency GenerateAzureClusterAgentToken(
-      google::cloud::gkemulticloud::v1::
-          GenerateAzureClusterAgentTokenRequest const& request);
+  virtual google::cloud::Idempotency
+  GenerateAzureClusterAgentToken(google::cloud::gkemulticloud::v1::GenerateAzureClusterAgentTokenRequest const& request);
 
-  virtual google::cloud::Idempotency GenerateAzureAccessToken(
-      google::cloud::gkemulticloud::v1::GenerateAzureAccessTokenRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  GenerateAzureAccessToken(google::cloud::gkemulticloud::v1::GenerateAzureAccessTokenRequest const& request);
 
-  virtual google::cloud::Idempotency CreateAzureNodePool(
-      google::cloud::gkemulticloud::v1::CreateAzureNodePoolRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  CreateAzureNodePool(google::cloud::gkemulticloud::v1::CreateAzureNodePoolRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateAzureNodePool(
-      google::cloud::gkemulticloud::v1::UpdateAzureNodePoolRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  UpdateAzureNodePool(google::cloud::gkemulticloud::v1::UpdateAzureNodePoolRequest const& request);
 
-  virtual google::cloud::Idempotency GetAzureNodePool(
-      google::cloud::gkemulticloud::v1::GetAzureNodePoolRequest const& request);
+  virtual google::cloud::Idempotency
+  GetAzureNodePool(google::cloud::gkemulticloud::v1::GetAzureNodePoolRequest const& request);
 
-  virtual google::cloud::Idempotency ListAzureNodePools(
-      google::cloud::gkemulticloud::v1::ListAzureNodePoolsRequest request);
+  virtual google::cloud::Idempotency
+  ListAzureNodePools(google::cloud::gkemulticloud::v1::ListAzureNodePoolsRequest request);
 
-  virtual google::cloud::Idempotency DeleteAzureNodePool(
-      google::cloud::gkemulticloud::v1::DeleteAzureNodePoolRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  DeleteAzureNodePool(google::cloud::gkemulticloud::v1::DeleteAzureNodePoolRequest const& request);
 
-  virtual google::cloud::Idempotency GetAzureOpenIdConfig(
-      google::cloud::gkemulticloud::v1::GetAzureOpenIdConfigRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  GetAzureOpenIdConfig(google::cloud::gkemulticloud::v1::GetAzureOpenIdConfigRequest const& request);
 
-  virtual google::cloud::Idempotency GetAzureJsonWebKeys(
-      google::cloud::gkemulticloud::v1::GetAzureJsonWebKeysRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  GetAzureJsonWebKeys(google::cloud::gkemulticloud::v1::GetAzureJsonWebKeysRequest const& request);
 
-  virtual google::cloud::Idempotency GetAzureServerConfig(
-      google::cloud::gkemulticloud::v1::GetAzureServerConfigRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  GetAzureServerConfig(google::cloud::gkemulticloud::v1::GetAzureServerConfigRequest const& request);
 
-  virtual google::cloud::Idempotency ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual google::cloud::Idempotency
+  ListOperations(google::longrunning::ListOperationsRequest request);
 
-  virtual google::cloud::Idempotency GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
 
-  virtual google::cloud::Idempotency CancelOperation(
-      google::longrunning::CancelOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  CancelOperation(google::longrunning::CancelOperationRequest const& request);
 };
 
 std::unique_ptr<AzureClustersConnectionIdempotencyPolicy>
-MakeDefaultAzureClustersConnectionIdempotencyPolicy();
+    MakeDefaultAzureClustersConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace gkemulticloud_v1

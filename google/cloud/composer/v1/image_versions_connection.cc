@@ -17,13 +17,13 @@
 // source: google/cloud/orchestration/airflow/service/v1/image_versions.proto
 
 #include "google/cloud/composer/v1/image_versions_connection.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/composer/v1/image_versions_options.h"
 #include "google/cloud/composer/v1/internal/image_versions_connection_impl.h"
 #include "google/cloud/composer/v1/internal/image_versions_option_defaults.h"
 #include "google/cloud/composer/v1/internal/image_versions_stub_factory.h"
 #include "google/cloud/composer/v1/internal/image_versions_tracing_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
@@ -38,28 +38,26 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ImageVersionsConnection::~ImageVersionsConnection() = default;
 
-StreamRange<google::cloud::orchestration::airflow::service::v1::ImageVersion>
-ImageVersionsConnection::ListImageVersions(
-    google::cloud::orchestration::airflow::service::v1::
-        ListImageVersionsRequest) {  // NOLINT(performance-unnecessary-value-param)
-  return google::cloud::internal::MakeUnimplementedPaginationRange<StreamRange<
-      google::cloud::orchestration::airflow::service::v1::ImageVersion>>();
+StreamRange<google::cloud::orchestration::airflow::service::v1::ImageVersion> ImageVersionsConnection::ListImageVersions(
+    google::cloud::orchestration::airflow::service::v1::ListImageVersionsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::orchestration::airflow::service::v1::ImageVersion>>();
 }
 
-StreamRange<google::longrunning::Operation>
-ImageVersionsConnection::ListOperations(
-    google::longrunning::
-        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::longrunning::Operation> ImageVersionsConnection::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }
 
-StatusOr<google::longrunning::Operation> ImageVersionsConnection::GetOperation(
+StatusOr<google::longrunning::Operation>
+ImageVersionsConnection::GetOperation(
     google::longrunning::GetOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status ImageVersionsConnection::DeleteOperation(
+Status
+ImageVersionsConnection::DeleteOperation(
     google::longrunning::DeleteOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -67,18 +65,17 @@ Status ImageVersionsConnection::DeleteOperation(
 std::shared_ptr<ImageVersionsConnection> MakeImageVersionsConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 ImageVersionsPolicyOptionList>(options,
-                                                                __func__);
-  options =
-      composer_v1_internal::ImageVersionsDefaultOptions(std::move(options));
+      UnifiedCredentialsOptionList,
+      ImageVersionsPolicyOptionList>(options, __func__);
+  options = composer_v1_internal::ImageVersionsDefaultOptions(
+      std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = composer_v1_internal::CreateDefaultImageVersionsStub(
-      std::move(auth), options);
+    std::move(auth), options);
   return composer_v1_internal::MakeImageVersionsTracingConnection(
       std::make_shared<composer_v1_internal::ImageVersionsConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options)));
+      std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

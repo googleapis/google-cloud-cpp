@@ -16,11 +16,11 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/discoveryengine/v1/completion_service.proto
 
+#include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/discoveryengine/v1/completion_client.h"
 #include "google/cloud/discoveryengine/v1/completion_connection_idempotency_policy.h"
 #include "google/cloud/discoveryengine/v1/completion_options.h"
-#include "google/cloud/common_options.h"
-#include "google/cloud/credentials.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/testing_util/example_driver.h"
@@ -45,20 +45,16 @@ void SetClientEndpoint(std::vector<std::string> const& argv) {
   auto options = google::cloud::Options{}.set<google::cloud::EndpointOption>(
       "private.googleapis.com");
   auto vpc_client = google::cloud::discoveryengine_v1::CompletionServiceClient(
-      google::cloud::discoveryengine_v1::MakeCompletionServiceConnection(
-          options));
+      google::cloud::discoveryengine_v1::MakeCompletionServiceConnection(options));
   //! [set-client-endpoint]
 }
 
 //! [custom-idempotency-policy]
 class CustomIdempotencyPolicy
-    : public google::cloud::discoveryengine_v1::
-          CompletionServiceConnectionIdempotencyPolicy {
+   : public google::cloud::discoveryengine_v1::CompletionServiceConnectionIdempotencyPolicy {
  public:
   ~CustomIdempotencyPolicy() override = default;
-  std::unique_ptr<google::cloud::discoveryengine_v1::
-                      CompletionServiceConnectionIdempotencyPolicy>
-  clone() const override {
+  std::unique_ptr<google::cloud::discoveryengine_v1::CompletionServiceConnectionIdempotencyPolicy> clone() const override {
     return std::make_unique<CustomIdempotencyPolicy>(*this);
   }
   // Override inherited functions to define as needed.
@@ -70,43 +66,27 @@ void SetRetryPolicy(std::vector<std::string> const& argv) {
     throw google::cloud::testing_util::Usage{"set-client-retry-policy"};
   }
   //! [set-retry-policy]
-  auto options =
-      google::cloud::Options{}
-          .set<google::cloud::discoveryengine_v1::
-                   CompletionServiceConnectionIdempotencyPolicyOption>(
-              CustomIdempotencyPolicy().clone())
-          .set<google::cloud::discoveryengine_v1::
-                   CompletionServiceRetryPolicyOption>(
-              google::cloud::discoveryengine_v1::
-                  CompletionServiceLimitedErrorCountRetryPolicy(3)
-                      .clone())
-          .set<google::cloud::discoveryengine_v1::
-                   CompletionServiceBackoffPolicyOption>(
-              google::cloud::ExponentialBackoffPolicy(
-                  /*initial_delay=*/std::chrono::milliseconds(200),
-                  /*maximum_delay=*/std::chrono::seconds(45),
-                  /*scaling=*/2.0)
-                  .clone());
-  auto connection =
-      google::cloud::discoveryengine_v1::MakeCompletionServiceConnection(
-          options);
+  auto options = google::cloud::Options{}
+    .set<google::cloud::discoveryengine_v1::CompletionServiceConnectionIdempotencyPolicyOption>(
+      CustomIdempotencyPolicy().clone())
+    .set<google::cloud::discoveryengine_v1::CompletionServiceRetryPolicyOption>(
+      google::cloud::discoveryengine_v1::CompletionServiceLimitedErrorCountRetryPolicy(3).clone())
+    .set<google::cloud::discoveryengine_v1::CompletionServiceBackoffPolicyOption>(
+      google::cloud::ExponentialBackoffPolicy(
+          /*initial_delay=*/std::chrono::milliseconds(200),
+          /*maximum_delay=*/std::chrono::seconds(45),
+          /*scaling=*/2.0).clone());
+  auto connection = google::cloud::discoveryengine_v1::MakeCompletionServiceConnection(options);
 
   // c1 and c2 share the same retry policies
-  auto c1 =
-      google::cloud::discoveryengine_v1::CompletionServiceClient(connection);
-  auto c2 =
-      google::cloud::discoveryengine_v1::CompletionServiceClient(connection);
+  auto c1 = google::cloud::discoveryengine_v1::CompletionServiceClient(connection);
+  auto c2 = google::cloud::discoveryengine_v1::CompletionServiceClient(connection);
 
   // You can override any of the policies in a new client. This new client
   // will share the policies from c1 (or c2) *except* for the retry policy.
   auto c3 = google::cloud::discoveryengine_v1::CompletionServiceClient(
-      connection, google::cloud::Options{}
-                      .set<google::cloud::discoveryengine_v1::
-                               CompletionServiceRetryPolicyOption>(
-                          google::cloud::discoveryengine_v1::
-                              CompletionServiceLimitedTimeRetryPolicy(
-                                  std::chrono::minutes(5))
-                                  .clone()));
+    connection, google::cloud::Options{}.set<google::cloud::discoveryengine_v1::CompletionServiceRetryPolicyOption>(
+      google::cloud::discoveryengine_v1::CompletionServiceLimitedTimeRetryPolicy(std::chrono::minutes(5)).clone()));
 
   // You can also override the policies in a single call:
   // c3.SomeRpc(..., google::cloud::Options{}
@@ -127,35 +107,25 @@ void SetPollingPolicy(std::vector<std::string> const& argv) {
   // or error) or 45 minutes, whichever happens first. Initially pause for
   // 10 seconds between polling requests, increasing the pause by a factor
   // of 4 until it becomes 2 minutes.
-  auto options =
-      google::cloud::Options{}
-          .set<google::cloud::discoveryengine_v1::
-                   CompletionServicePollingPolicyOption>(
-              google::cloud::GenericPollingPolicy<
-                  google::cloud::discoveryengine_v1::
-                      CompletionServiceRetryPolicyOption::Type,
-                  google::cloud::discoveryengine_v1::
-                      CompletionServiceBackoffPolicyOption::Type>(
-                  google::cloud::discoveryengine_v1::
-                      CompletionServiceLimitedTimeRetryPolicy(
-                          /*maximum_duration=*/std::chrono::minutes(45))
-                          .clone(),
-                  google::cloud::ExponentialBackoffPolicy(
-                      /*initial_delay=*/std::chrono::seconds(10),
-                      /*maximum_delay=*/std::chrono::minutes(2),
-                      /*scaling=*/4.0)
-                      .clone())
-                  .clone());
+  auto options = google::cloud::Options{}
+    .set<google::cloud::discoveryengine_v1::CompletionServicePollingPolicyOption>(
+        google::cloud::GenericPollingPolicy<
+            google::cloud::discoveryengine_v1::CompletionServiceRetryPolicyOption::Type,
+            google::cloud::discoveryengine_v1::CompletionServiceBackoffPolicyOption::Type>(
+            google::cloud::discoveryengine_v1::CompletionServiceLimitedTimeRetryPolicy(
+                /*maximum_duration=*/std::chrono::minutes(45))
+                .clone(),
+            google::cloud::ExponentialBackoffPolicy(
+                /*initial_delay=*/std::chrono::seconds(10),
+                /*maximum_delay=*/std::chrono::minutes(2),
+                /*scaling=*/4.0).clone())
+            .clone());
 
-  auto connection =
-      google::cloud::discoveryengine_v1::MakeCompletionServiceConnection(
-          options);
+  auto connection = google::cloud::discoveryengine_v1::MakeCompletionServiceConnection(options);
 
   // c1 and c2 share the same polling policies.
-  auto c1 =
-      google::cloud::discoveryengine_v1::CompletionServiceClient(connection);
-  auto c2 =
-      google::cloud::discoveryengine_v1::CompletionServiceClient(connection);
+  auto c1 = google::cloud::discoveryengine_v1::CompletionServiceClient(connection);
+  auto c2 = google::cloud::discoveryengine_v1::CompletionServiceClient(connection);
   //! [set-polling-policy]
 }
 
@@ -172,8 +142,7 @@ void WithServiceAccount(std::vector<std::string> const& argv) {
         google::cloud::Options{}.set<google::cloud::UnifiedCredentialsOption>(
             google::cloud::MakeServiceAccountCredentials(contents));
     return google::cloud::discoveryengine_v1::CompletionServiceClient(
-        google::cloud::discoveryengine_v1::MakeCompletionServiceConnection(
-            options));
+      google::cloud::discoveryengine_v1::MakeCompletionServiceConnection(options));
   }
   //! [with-service-account]
   (argv.at(0));
@@ -183,8 +152,9 @@ void AutoRun(std::vector<std::string> const& argv) {
   namespace examples = ::google::cloud::testing_util;
   using ::google::cloud::internal::GetEnv;
   if (!argv.empty()) throw examples::Usage{"auto"};
-  examples::CheckEnvironmentVariablesAreSet(
-      {"GOOGLE_CLOUD_CPP_TEST_SERVICE_ACCOUNT_KEYFILE"});
+  examples::CheckEnvironmentVariablesAreSet({
+    "GOOGLE_CLOUD_CPP_TEST_SERVICE_ACCOUNT_KEYFILE"
+  });
   auto const keyfile =
       GetEnv("GOOGLE_CLOUD_CPP_TEST_SERVICE_ACCOUNT_KEYFILE").value();
 

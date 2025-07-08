@@ -26,46 +26,39 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-CompanyServiceConnectionIdempotencyPolicy::
-    ~CompanyServiceConnectionIdempotencyPolicy() = default;
+CompanyServiceConnectionIdempotencyPolicy::~CompanyServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<CompanyServiceConnectionIdempotencyPolicy>
 CompanyServiceConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<CompanyServiceConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency CompanyServiceConnectionIdempotencyPolicy::CreateCompany(
-    google::cloud::talent::v4::CreateCompanyRequest const&) {
+Idempotency CompanyServiceConnectionIdempotencyPolicy::CreateCompany(google::cloud::talent::v4::CreateCompanyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CompanyServiceConnectionIdempotencyPolicy::GetCompany(
-    google::cloud::talent::v4::GetCompanyRequest const&) {
+Idempotency CompanyServiceConnectionIdempotencyPolicy::GetCompany(google::cloud::talent::v4::GetCompanyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency CompanyServiceConnectionIdempotencyPolicy::UpdateCompany(
-    google::cloud::talent::v4::UpdateCompanyRequest const&) {
+Idempotency CompanyServiceConnectionIdempotencyPolicy::UpdateCompany(google::cloud::talent::v4::UpdateCompanyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CompanyServiceConnectionIdempotencyPolicy::DeleteCompany(
-    google::cloud::talent::v4::DeleteCompanyRequest const&) {
+Idempotency CompanyServiceConnectionIdempotencyPolicy::DeleteCompany(google::cloud::talent::v4::DeleteCompanyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CompanyServiceConnectionIdempotencyPolicy::ListCompanies(
-    google::cloud::talent::v4::ListCompaniesRequest) {  // NOLINT
+Idempotency CompanyServiceConnectionIdempotencyPolicy::ListCompanies(google::cloud::talent::v4::ListCompaniesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency CompanyServiceConnectionIdempotencyPolicy::GetOperation(
-    google::longrunning::GetOperationRequest const&) {
+Idempotency CompanyServiceConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<CompanyServiceConnectionIdempotencyPolicy>
-MakeDefaultCompanyServiceConnectionIdempotencyPolicy() {
+    MakeDefaultCompanyServiceConnectionIdempotencyPolicy() {
   return std::make_unique<CompanyServiceConnectionIdempotencyPolicy>();
 }
 

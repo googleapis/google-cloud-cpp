@@ -39,20 +39,19 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * should be passed as an argument to the constructor of BackendServicesClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `BackendServicesConnection`. Expected options are any of the types
- * in the following option lists:
+ * returned `BackendServicesConnection`. Expected options are any of the types in
+ * the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::RestOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * -
- * `google::cloud::compute_backend_services_v1::BackendServicesPolicyOptionList`
+ * - `google::cloud::compute_backend_services_v1::BackendServicesPolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
- * @param options (optional) Configure the `BackendServicesConnection` created
- * by this function.
+ * @param options (optional) Configure the `BackendServicesConnection` created by
+ * this function.
  */
 std::shared_ptr<BackendServicesConnection> MakeBackendServicesConnectionRest(
     Options options = {});

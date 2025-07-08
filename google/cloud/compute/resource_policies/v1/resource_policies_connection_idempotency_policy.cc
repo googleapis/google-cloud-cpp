@@ -26,71 +26,51 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-ResourcePoliciesConnectionIdempotencyPolicy::
-    ~ResourcePoliciesConnectionIdempotencyPolicy() = default;
+ResourcePoliciesConnectionIdempotencyPolicy::~ResourcePoliciesConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<ResourcePoliciesConnectionIdempotencyPolicy>
 ResourcePoliciesConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<ResourcePoliciesConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency
-ResourcePoliciesConnectionIdempotencyPolicy::AggregatedListResourcePolicies(
-    google::cloud::cpp::compute::resource_policies::v1::
-        AggregatedListResourcePoliciesRequest) {  // NOLINT
+Idempotency ResourcePoliciesConnectionIdempotencyPolicy::AggregatedListResourcePolicies(google::cloud::cpp::compute::resource_policies::v1::AggregatedListResourcePoliciesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency ResourcePoliciesConnectionIdempotencyPolicy::DeleteResourcePolicy(
-    google::cloud::cpp::compute::resource_policies::v1::
-        DeleteResourcePolicyRequest const&) {
+Idempotency ResourcePoliciesConnectionIdempotencyPolicy::DeleteResourcePolicy(google::cloud::cpp::compute::resource_policies::v1::DeleteResourcePolicyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ResourcePoliciesConnectionIdempotencyPolicy::GetResourcePolicy(
-    google::cloud::cpp::compute::resource_policies::v1::
-        GetResourcePolicyRequest const&) {
+Idempotency ResourcePoliciesConnectionIdempotencyPolicy::GetResourcePolicy(google::cloud::cpp::compute::resource_policies::v1::GetResourcePolicyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ResourcePoliciesConnectionIdempotencyPolicy::GetIamPolicy(
-    google::cloud::cpp::compute::resource_policies::v1::
-        GetIamPolicyRequest const&) {
+Idempotency ResourcePoliciesConnectionIdempotencyPolicy::GetIamPolicy(google::cloud::cpp::compute::resource_policies::v1::GetIamPolicyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ResourcePoliciesConnectionIdempotencyPolicy::InsertResourcePolicy(
-    google::cloud::cpp::compute::resource_policies::v1::
-        InsertResourcePolicyRequest const&) {
+Idempotency ResourcePoliciesConnectionIdempotencyPolicy::InsertResourcePolicy(google::cloud::cpp::compute::resource_policies::v1::InsertResourcePolicyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ResourcePoliciesConnectionIdempotencyPolicy::ListResourcePolicies(
-    google::cloud::cpp::compute::resource_policies::v1::
-        ListResourcePoliciesRequest) {  // NOLINT
+Idempotency ResourcePoliciesConnectionIdempotencyPolicy::ListResourcePolicies(google::cloud::cpp::compute::resource_policies::v1::ListResourcePoliciesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency ResourcePoliciesConnectionIdempotencyPolicy::PatchResourcePolicy(
-    google::cloud::cpp::compute::resource_policies::v1::
-        PatchResourcePolicyRequest const&) {
+Idempotency ResourcePoliciesConnectionIdempotencyPolicy::PatchResourcePolicy(google::cloud::cpp::compute::resource_policies::v1::PatchResourcePolicyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ResourcePoliciesConnectionIdempotencyPolicy::SetIamPolicy(
-    google::cloud::cpp::compute::resource_policies::v1::
-        SetIamPolicyRequest const&) {
+Idempotency ResourcePoliciesConnectionIdempotencyPolicy::SetIamPolicy(google::cloud::cpp::compute::resource_policies::v1::SetIamPolicyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ResourcePoliciesConnectionIdempotencyPolicy::TestIamPermissions(
-    google::cloud::cpp::compute::resource_policies::v1::
-        TestIamPermissionsRequest const&) {
+Idempotency ResourcePoliciesConnectionIdempotencyPolicy::TestIamPermissions(google::cloud::cpp::compute::resource_policies::v1::TestIamPermissionsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<ResourcePoliciesConnectionIdempotencyPolicy>
-MakeDefaultResourcePoliciesConnectionIdempotencyPolicy() {
+    MakeDefaultResourcePoliciesConnectionIdempotencyPolicy() {
   return std::make_unique<ResourcePoliciesConnectionIdempotencyPolicy>();
 }
 

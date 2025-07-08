@@ -36,104 +36,95 @@ class TargetSslProxiesTracingConnection
   ~TargetSslProxiesTracingConnection() override = default;
 
   explicit TargetSslProxiesTracingConnection(
-      std::shared_ptr<compute_target_ssl_proxies_v1::TargetSslProxiesConnection>
-          child);
+    std::shared_ptr<compute_target_ssl_proxies_v1::TargetSslProxiesConnection> child);
 
   Options options() override { return child_->options(); }
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteTargetSslProxy(google::cloud::cpp::compute::target_ssl_proxies::v1::
-                           DeleteTargetSslProxyRequest const& request) override;
+  DeleteTargetSslProxy(google::cloud::cpp::compute::target_ssl_proxies::v1::DeleteTargetSslProxyRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteTargetSslProxy(
-      NoAwaitTag, google::cloud::cpp::compute::target_ssl_proxies::v1::
-                      DeleteTargetSslProxyRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeleteTargetSslProxy(NoAwaitTag,
+      google::cloud::cpp::compute::target_ssl_proxies::v1::DeleteTargetSslProxyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteTargetSslProxy(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::TargetSslProxy> GetTargetSslProxy(
-      google::cloud::cpp::compute::target_ssl_proxies::v1::
-          GetTargetSslProxyRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::TargetSslProxy>
+  GetTargetSslProxy(google::cloud::cpp::compute::target_ssl_proxies::v1::GetTargetSslProxyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertTargetSslProxy(google::cloud::cpp::compute::target_ssl_proxies::v1::
-                           InsertTargetSslProxyRequest const& request) override;
+  InsertTargetSslProxy(google::cloud::cpp::compute::target_ssl_proxies::v1::InsertTargetSslProxyRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertTargetSslProxy(
-      NoAwaitTag, google::cloud::cpp::compute::target_ssl_proxies::v1::
-                      InsertTargetSslProxyRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  InsertTargetSslProxy(NoAwaitTag,
+      google::cloud::cpp::compute::target_ssl_proxies::v1::InsertTargetSslProxyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertTargetSslProxy(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StreamRange<google::cloud::cpp::compute::v1::TargetSslProxy>
-  ListTargetSslProxies(google::cloud::cpp::compute::target_ssl_proxies::v1::
-                           ListTargetSslProxiesRequest request) override;
+  ListTargetSslProxies(google::cloud::cpp::compute::target_ssl_proxies::v1::ListTargetSslProxiesRequest request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetBackendService(google::cloud::cpp::compute::target_ssl_proxies::v1::
-                        SetBackendServiceRequest const& request) override;
+  SetBackendService(google::cloud::cpp::compute::target_ssl_proxies::v1::SetBackendServiceRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation> SetBackendService(
-      NoAwaitTag, google::cloud::cpp::compute::target_ssl_proxies::v1::
-                      SetBackendServiceRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  SetBackendService(NoAwaitTag,
+      google::cloud::cpp::compute::target_ssl_proxies::v1::SetBackendServiceRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SetBackendService(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetCertificateMap(google::cloud::cpp::compute::target_ssl_proxies::v1::
-                        SetCertificateMapRequest const& request) override;
+  SetCertificateMap(google::cloud::cpp::compute::target_ssl_proxies::v1::SetCertificateMapRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation> SetCertificateMap(
-      NoAwaitTag, google::cloud::cpp::compute::target_ssl_proxies::v1::
-                      SetCertificateMapRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  SetCertificateMap(NoAwaitTag,
+      google::cloud::cpp::compute::target_ssl_proxies::v1::SetCertificateMapRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SetCertificateMap(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetProxyHeader(
-      google::cloud::cpp::compute::target_ssl_proxies::v1::
-          SetProxyHeaderRequest const& request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  SetProxyHeader(google::cloud::cpp::compute::target_ssl_proxies::v1::SetProxyHeaderRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation> SetProxyHeader(
-      NoAwaitTag, google::cloud::cpp::compute::target_ssl_proxies::v1::
-                      SetProxyHeaderRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  SetProxyHeader(NoAwaitTag,
+      google::cloud::cpp::compute::target_ssl_proxies::v1::SetProxyHeaderRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetProxyHeader(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  SetProxyHeader(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetSslCertificates(google::cloud::cpp::compute::target_ssl_proxies::v1::
-                         SetSslCertificatesRequest const& request) override;
+  SetSslCertificates(google::cloud::cpp::compute::target_ssl_proxies::v1::SetSslCertificatesRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation> SetSslCertificates(
-      NoAwaitTag, google::cloud::cpp::compute::target_ssl_proxies::v1::
-                      SetSslCertificatesRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  SetSslCertificates(NoAwaitTag,
+      google::cloud::cpp::compute::target_ssl_proxies::v1::SetSslCertificatesRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SetSslCertificates(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetSslPolicy(
-      google::cloud::cpp::compute::target_ssl_proxies::v1::
-          SetSslPolicyRequest const& request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  SetSslPolicy(google::cloud::cpp::compute::target_ssl_proxies::v1::SetSslPolicyRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation> SetSslPolicy(
-      NoAwaitTag, google::cloud::cpp::compute::target_ssl_proxies::v1::
-                      SetSslPolicyRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  SetSslPolicy(NoAwaitTag,
+      google::cloud::cpp::compute::target_ssl_proxies::v1::SetSslPolicyRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetSslPolicy(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  SetSslPolicy(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
  private:
-  std::shared_ptr<compute_target_ssl_proxies_v1::TargetSslProxiesConnection>
-      child_;
+  std::shared_ptr<compute_target_ssl_proxies_v1::TargetSslProxiesConnection> child_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -146,8 +137,7 @@ class TargetSslProxiesTracingConnection
  */
 std::shared_ptr<compute_target_ssl_proxies_v1::TargetSslProxiesConnection>
 MakeTargetSslProxiesTracingConnection(
-    std::shared_ptr<compute_target_ssl_proxies_v1::TargetSslProxiesConnection>
-        conn);
+    std::shared_ptr<compute_target_ssl_proxies_v1::TargetSslProxiesConnection> conn);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_target_ssl_proxies_v1_internal

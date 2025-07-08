@@ -36,18 +36,18 @@ class PredictionServiceTracingConnection
   ~PredictionServiceTracingConnection() override = default;
 
   explicit PredictionServiceTracingConnection(
-      std::shared_ptr<retail_v2::PredictionServiceConnection> child);
+    std::shared_ptr<retail_v2::PredictionServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::retail::v2::PredictResponse> Predict(
-      google::cloud::retail::v2::PredictRequest const& request) override;
+  StatusOr<google::cloud::retail::v2::PredictResponse>
+  Predict(google::cloud::retail::v2::PredictRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request) override;
 
  private:
   std::shared_ptr<retail_v2::PredictionServiceConnection> child_;

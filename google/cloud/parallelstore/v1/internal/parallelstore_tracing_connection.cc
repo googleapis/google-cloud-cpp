@@ -34,29 +34,23 @@ ParallelstoreTracingConnection::ParallelstoreTracingConnection(
     : child_(std::move(child)) {}
 
 StreamRange<google::cloud::parallelstore::v1::Instance>
-ParallelstoreTracingConnection::ListInstances(
-    google::cloud::parallelstore::v1::ListInstancesRequest request) {
-  auto span = internal::MakeSpan(
-      "parallelstore_v1::ParallelstoreConnection::ListInstances");
+ParallelstoreTracingConnection::ListInstances(google::cloud::parallelstore::v1::ListInstancesRequest request) {
+  auto span = internal::MakeSpan("parallelstore_v1::ParallelstoreConnection::ListInstances");
   internal::OTelScope scope(span);
   auto sr = child_->ListInstances(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::parallelstore::v1::Instance>(std::move(span),
-                                                  std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::parallelstore::v1::Instance>(
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::parallelstore::v1::Instance>
-ParallelstoreTracingConnection::GetInstance(
-    google::cloud::parallelstore::v1::GetInstanceRequest const& request) {
-  auto span = internal::MakeSpan(
-      "parallelstore_v1::ParallelstoreConnection::GetInstance");
+ParallelstoreTracingConnection::GetInstance(google::cloud::parallelstore::v1::GetInstanceRequest const& request) {
+  auto span = internal::MakeSpan("parallelstore_v1::ParallelstoreConnection::GetInstance");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetInstance(request));
 }
 
 future<StatusOr<google::cloud::parallelstore::v1::Instance>>
-ParallelstoreTracingConnection::CreateInstance(
-    google::cloud::parallelstore::v1::CreateInstanceRequest const& request) {
+ParallelstoreTracingConnection::CreateInstance(google::cloud::parallelstore::v1::CreateInstanceRequest const& request) {
   auto span = internal::MakeSpan(
       "parallelstore_v1::ParallelstoreConnection::CreateInstance");
   internal::OTelScope scope(span);
@@ -65,13 +59,12 @@ ParallelstoreTracingConnection::CreateInstance(
 
 StatusOr<google::longrunning::Operation>
 ParallelstoreTracingConnection::CreateInstance(
-    NoAwaitTag,
-    google::cloud::parallelstore::v1::CreateInstanceRequest const& request) {
+    NoAwaitTag, google::cloud::parallelstore::v1::CreateInstanceRequest const& request) {
   auto span = internal::MakeSpan(
       "parallelstore_v1::ParallelstoreConnection::CreateInstance");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span,
-                           child_->CreateInstance(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->CreateInstance(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::parallelstore::v1::Instance>>
@@ -80,12 +73,12 @@ ParallelstoreTracingConnection::CreateInstance(
   auto span = internal::MakeSpan(
       "parallelstore_v1::ParallelstoreConnection::CreateInstance");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->CreateInstance(operation));
+  return internal::EndSpan(std::move(span),
+      child_->CreateInstance(operation));
 }
 
 future<StatusOr<google::cloud::parallelstore::v1::Instance>>
-ParallelstoreTracingConnection::UpdateInstance(
-    google::cloud::parallelstore::v1::UpdateInstanceRequest const& request) {
+ParallelstoreTracingConnection::UpdateInstance(google::cloud::parallelstore::v1::UpdateInstanceRequest const& request) {
   auto span = internal::MakeSpan(
       "parallelstore_v1::ParallelstoreConnection::UpdateInstance");
   internal::OTelScope scope(span);
@@ -94,13 +87,12 @@ ParallelstoreTracingConnection::UpdateInstance(
 
 StatusOr<google::longrunning::Operation>
 ParallelstoreTracingConnection::UpdateInstance(
-    NoAwaitTag,
-    google::cloud::parallelstore::v1::UpdateInstanceRequest const& request) {
+    NoAwaitTag, google::cloud::parallelstore::v1::UpdateInstanceRequest const& request) {
   auto span = internal::MakeSpan(
       "parallelstore_v1::ParallelstoreConnection::UpdateInstance");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span,
-                           child_->UpdateInstance(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->UpdateInstance(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::parallelstore::v1::Instance>>
@@ -109,12 +101,12 @@ ParallelstoreTracingConnection::UpdateInstance(
   auto span = internal::MakeSpan(
       "parallelstore_v1::ParallelstoreConnection::UpdateInstance");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->UpdateInstance(operation));
+  return internal::EndSpan(std::move(span),
+      child_->UpdateInstance(operation));
 }
 
 future<StatusOr<google::cloud::parallelstore::v1::OperationMetadata>>
-ParallelstoreTracingConnection::DeleteInstance(
-    google::cloud::parallelstore::v1::DeleteInstanceRequest const& request) {
+ParallelstoreTracingConnection::DeleteInstance(google::cloud::parallelstore::v1::DeleteInstanceRequest const& request) {
   auto span = internal::MakeSpan(
       "parallelstore_v1::ParallelstoreConnection::DeleteInstance");
   internal::OTelScope scope(span);
@@ -123,13 +115,12 @@ ParallelstoreTracingConnection::DeleteInstance(
 
 StatusOr<google::longrunning::Operation>
 ParallelstoreTracingConnection::DeleteInstance(
-    NoAwaitTag,
-    google::cloud::parallelstore::v1::DeleteInstanceRequest const& request) {
+    NoAwaitTag, google::cloud::parallelstore::v1::DeleteInstanceRequest const& request) {
   auto span = internal::MakeSpan(
       "parallelstore_v1::ParallelstoreConnection::DeleteInstance");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span,
-                           child_->DeleteInstance(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->DeleteInstance(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::parallelstore::v1::OperationMetadata>>
@@ -138,12 +129,12 @@ ParallelstoreTracingConnection::DeleteInstance(
   auto span = internal::MakeSpan(
       "parallelstore_v1::ParallelstoreConnection::DeleteInstance");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->DeleteInstance(operation));
+  return internal::EndSpan(std::move(span),
+      child_->DeleteInstance(operation));
 }
 
 future<StatusOr<google::cloud::parallelstore::v1::ImportDataResponse>>
-ParallelstoreTracingConnection::ImportData(
-    google::cloud::parallelstore::v1::ImportDataRequest const& request) {
+ParallelstoreTracingConnection::ImportData(google::cloud::parallelstore::v1::ImportDataRequest const& request) {
   auto span = internal::MakeSpan(
       "parallelstore_v1::ParallelstoreConnection::ImportData");
   internal::OTelScope scope(span);
@@ -152,12 +143,12 @@ ParallelstoreTracingConnection::ImportData(
 
 StatusOr<google::longrunning::Operation>
 ParallelstoreTracingConnection::ImportData(
-    NoAwaitTag,
-    google::cloud::parallelstore::v1::ImportDataRequest const& request) {
+    NoAwaitTag, google::cloud::parallelstore::v1::ImportDataRequest const& request) {
   auto span = internal::MakeSpan(
       "parallelstore_v1::ParallelstoreConnection::ImportData");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->ImportData(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->ImportData(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::parallelstore::v1::ImportDataResponse>>
@@ -166,12 +157,12 @@ ParallelstoreTracingConnection::ImportData(
   auto span = internal::MakeSpan(
       "parallelstore_v1::ParallelstoreConnection::ImportData");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->ImportData(operation));
+  return internal::EndSpan(std::move(span),
+      child_->ImportData(operation));
 }
 
 future<StatusOr<google::cloud::parallelstore::v1::ExportDataResponse>>
-ParallelstoreTracingConnection::ExportData(
-    google::cloud::parallelstore::v1::ExportDataRequest const& request) {
+ParallelstoreTracingConnection::ExportData(google::cloud::parallelstore::v1::ExportDataRequest const& request) {
   auto span = internal::MakeSpan(
       "parallelstore_v1::ParallelstoreConnection::ExportData");
   internal::OTelScope scope(span);
@@ -180,12 +171,12 @@ ParallelstoreTracingConnection::ExportData(
 
 StatusOr<google::longrunning::Operation>
 ParallelstoreTracingConnection::ExportData(
-    NoAwaitTag,
-    google::cloud::parallelstore::v1::ExportDataRequest const& request) {
+    NoAwaitTag, google::cloud::parallelstore::v1::ExportDataRequest const& request) {
   auto span = internal::MakeSpan(
       "parallelstore_v1::ParallelstoreConnection::ExportData");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->ExportData(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->ExportData(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::parallelstore::v1::ExportDataResponse>>
@@ -194,61 +185,52 @@ ParallelstoreTracingConnection::ExportData(
   auto span = internal::MakeSpan(
       "parallelstore_v1::ParallelstoreConnection::ExportData");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->ExportData(operation));
+  return internal::EndSpan(std::move(span),
+      child_->ExportData(operation));
 }
 
 StreamRange<google::cloud::location::Location>
-ParallelstoreTracingConnection::ListLocations(
-    google::cloud::location::ListLocationsRequest request) {
-  auto span = internal::MakeSpan(
-      "parallelstore_v1::ParallelstoreConnection::ListLocations");
+ParallelstoreTracingConnection::ListLocations(google::cloud::location::ListLocationsRequest request) {
+  auto span = internal::MakeSpan("parallelstore_v1::ParallelstoreConnection::ListLocations");
   internal::OTelScope scope(span);
   auto sr = child_->ListLocations(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::location::Location>(
-      std::move(span), std::move(sr));
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::location::Location>
-ParallelstoreTracingConnection::GetLocation(
-    google::cloud::location::GetLocationRequest const& request) {
-  auto span = internal::MakeSpan(
-      "parallelstore_v1::ParallelstoreConnection::GetLocation");
+ParallelstoreTracingConnection::GetLocation(google::cloud::location::GetLocationRequest const& request) {
+  auto span = internal::MakeSpan("parallelstore_v1::ParallelstoreConnection::GetLocation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetLocation(request));
 }
 
 StreamRange<google::longrunning::Operation>
-ParallelstoreTracingConnection::ListOperations(
-    google::longrunning::ListOperationsRequest request) {
-  auto span = internal::MakeSpan(
-      "parallelstore_v1::ParallelstoreConnection::ListOperations");
+ParallelstoreTracingConnection::ListOperations(google::longrunning::ListOperationsRequest request) {
+  auto span = internal::MakeSpan("parallelstore_v1::ParallelstoreConnection::ListOperations");
   internal::OTelScope scope(span);
   auto sr = child_->ListOperations(std::move(request));
   return internal::MakeTracedStreamRange<google::longrunning::Operation>(
-      std::move(span), std::move(sr));
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::longrunning::Operation>
-ParallelstoreTracingConnection::GetOperation(
-    google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpan(
-      "parallelstore_v1::ParallelstoreConnection::GetOperation");
+ParallelstoreTracingConnection::GetOperation(google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpan("parallelstore_v1::ParallelstoreConnection::GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOperation(request));
 }
 
-Status ParallelstoreTracingConnection::DeleteOperation(
-    google::longrunning::DeleteOperationRequest const& request) {
-  auto span = internal::MakeSpan(
-      "parallelstore_v1::ParallelstoreConnection::DeleteOperation");
+Status
+ParallelstoreTracingConnection::DeleteOperation(google::longrunning::DeleteOperationRequest const& request) {
+  auto span = internal::MakeSpan("parallelstore_v1::ParallelstoreConnection::DeleteOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteOperation(request));
 }
 
-Status ParallelstoreTracingConnection::CancelOperation(
-    google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpan(
-      "parallelstore_v1::ParallelstoreConnection::CancelOperation");
+Status
+ParallelstoreTracingConnection::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
+  auto span = internal::MakeSpan("parallelstore_v1::ParallelstoreConnection::CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CancelOperation(request));
 }

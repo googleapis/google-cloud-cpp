@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGION_COMMITMENTS_V1_REGION_COMMITMENTS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGION_COMMITMENTS_V1_REGION_COMMITMENTS_CONNECTION_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/region_commitments/v1/internal/region_commitments_retry_traits.h"
 #include "google/cloud/compute/region_commitments/v1/region_commitments_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -55,8 +55,7 @@ class RegionCommitmentsRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class RegionCommitmentsLimitedErrorCountRetryPolicy
-    : public RegionCommitmentsRetryPolicy {
+class RegionCommitmentsLimitedErrorCountRetryPolicy : public RegionCommitmentsRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -66,14 +65,14 @@ class RegionCommitmentsLimitedErrorCountRetryPolicy
    *     @p maximum_failures == 0.
    */
   explicit RegionCommitmentsLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   RegionCommitmentsLimitedErrorCountRetryPolicy(
       RegionCommitmentsLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : RegionCommitmentsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : RegionCommitmentsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   RegionCommitmentsLimitedErrorCountRetryPolicy(
       RegionCommitmentsLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : RegionCommitmentsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : RegionCommitmentsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -93,9 +92,7 @@ class RegionCommitmentsLimitedErrorCountRetryPolicy
   using BaseType = RegionCommitmentsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      compute_region_commitments_v1_internal::RegionCommitmentsRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<compute_region_commitments_v1_internal::RegionCommitmentsRetryTraits> impl_;
 };
 
 /**
@@ -108,8 +105,7 @@ class RegionCommitmentsLimitedErrorCountRetryPolicy
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class RegionCommitmentsLimitedTimeRetryPolicy
-    : public RegionCommitmentsRetryPolicy {
+class RegionCommitmentsLimitedTimeRetryPolicy : public RegionCommitmentsRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -134,14 +130,12 @@ class RegionCommitmentsLimitedTimeRetryPolicy
   template <typename DurationRep, typename DurationPeriod>
   explicit RegionCommitmentsLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  RegionCommitmentsLimitedTimeRetryPolicy(
-      RegionCommitmentsLimitedTimeRetryPolicy&& rhs) noexcept
-      : RegionCommitmentsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  RegionCommitmentsLimitedTimeRetryPolicy(
-      RegionCommitmentsLimitedTimeRetryPolicy const& rhs) noexcept
-      : RegionCommitmentsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  RegionCommitmentsLimitedTimeRetryPolicy(RegionCommitmentsLimitedTimeRetryPolicy&& rhs) noexcept
+    : RegionCommitmentsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  RegionCommitmentsLimitedTimeRetryPolicy(RegionCommitmentsLimitedTimeRetryPolicy const& rhs) noexcept
+    : RegionCommitmentsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -163,23 +157,20 @@ class RegionCommitmentsLimitedTimeRetryPolicy
   using BaseType = RegionCommitmentsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      compute_region_commitments_v1_internal::RegionCommitmentsRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<compute_region_commitments_v1_internal::RegionCommitmentsRetryTraits> impl_;
 };
 
 /**
  * The `RegionCommitmentsConnection` object for `RegionCommitmentsClient`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `RegionCommitmentsClient`. This allows users to inject custom
- * behavior (e.g., with a Google Mock object) when writing tests that use
- * objects of type `RegionCommitmentsClient`.
+ * sets in `RegionCommitmentsClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `RegionCommitmentsClient`.
  *
  * To create a concrete instance, see `MakeRegionCommitmentsConnection()`.
  *
- * For mocking, see
- * `compute_region_commitments_v1_mocks::MockRegionCommitmentsConnection`.
+ * For mocking, see `compute_region_commitments_v1_mocks::MockRegionCommitmentsConnection`.
  */
 class RegionCommitmentsConnection {
  public:
@@ -187,41 +178,32 @@ class RegionCommitmentsConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StreamRange<std::pair<
-      std::string, google::cloud::cpp::compute::v1::CommitmentsScopedList>>
-  AggregatedListRegionCommitments(
-      google::cloud::cpp::compute::region_commitments::v1::
-          AggregatedListRegionCommitmentsRequest request);
+  virtual StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::CommitmentsScopedList>>
+  AggregatedListRegionCommitments(google::cloud::cpp::compute::region_commitments::v1::AggregatedListRegionCommitmentsRequest request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Commitment> GetCommitment(
-      google::cloud::cpp::compute::region_commitments::v1::
-          GetCommitmentRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Commitment>
+  GetCommitment(google::cloud::cpp::compute::region_commitments::v1::GetCommitmentRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertCommitment(google::cloud::cpp::compute::region_commitments::v1::
-                       InsertCommitmentRequest const& request);
+  InsertCommitment(google::cloud::cpp::compute::region_commitments::v1::InsertCommitmentRequest const& request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> InsertCommitment(
-      NoAwaitTag, google::cloud::cpp::compute::region_commitments::v1::
-                      InsertCommitmentRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  InsertCommitment(NoAwaitTag, google::cloud::cpp::compute::region_commitments::v1::InsertCommitmentRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertCommitment(google::cloud::cpp::compute::v1::Operation const& operation);
+  InsertCommitment( google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::Commitment>
-  ListRegionCommitments(google::cloud::cpp::compute::region_commitments::v1::
-                            ListRegionCommitmentsRequest request);
+  ListRegionCommitments(google::cloud::cpp::compute::region_commitments::v1::ListRegionCommitmentsRequest request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateCommitment(google::cloud::cpp::compute::region_commitments::v1::
-                       UpdateCommitmentRequest const& request);
+  UpdateCommitment(google::cloud::cpp::compute::region_commitments::v1::UpdateCommitmentRequest const& request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateCommitment(
-      NoAwaitTag, google::cloud::cpp::compute::region_commitments::v1::
-                      UpdateCommitmentRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  UpdateCommitment(NoAwaitTag, google::cloud::cpp::compute::region_commitments::v1::UpdateCommitmentRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateCommitment(google::cloud::cpp::compute::v1::Operation const& operation);
+  UpdateCommitment( google::cloud::cpp::compute::v1::Operation const& operation);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -36,71 +36,71 @@ class DatastoreAdminTracingConnection
   ~DatastoreAdminTracingConnection() override = default;
 
   explicit DatastoreAdminTracingConnection(
-      std::shared_ptr<datastore_admin_v1::DatastoreAdminConnection> child);
+    std::shared_ptr<datastore_admin_v1::DatastoreAdminConnection> child);
 
   Options options() override { return child_->options(); }
 
   future<StatusOr<google::datastore::admin::v1::ExportEntitiesResponse>>
-  ExportEntities(google::datastore::admin::v1::ExportEntitiesRequest const&
-                     request) override;
+  ExportEntities(google::datastore::admin::v1::ExportEntitiesRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> ExportEntities(
-      NoAwaitTag,
-      google::datastore::admin::v1::ExportEntitiesRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  ExportEntities(NoAwaitTag,
+      google::datastore::admin::v1::ExportEntitiesRequest const& request) override;
 
   future<StatusOr<google::datastore::admin::v1::ExportEntitiesResponse>>
-  ExportEntities(google::longrunning::Operation const& operation) override;
-
-  future<StatusOr<google::datastore::admin::v1::ImportEntitiesMetadata>>
-  ImportEntities(google::datastore::admin::v1::ImportEntitiesRequest const&
-                     request) override;
-
-  StatusOr<google::longrunning::Operation> ImportEntities(
-      NoAwaitTag,
-      google::datastore::admin::v1::ImportEntitiesRequest const& request)
-      override;
-
-  future<StatusOr<google::datastore::admin::v1::ImportEntitiesMetadata>>
-  ImportEntities(google::longrunning::Operation const& operation) override;
-
-  future<StatusOr<google::datastore::admin::v1::Index>> CreateIndex(
-      google::datastore::admin::v1::CreateIndexRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation> CreateIndex(
-      NoAwaitTag,
-      google::datastore::admin::v1::CreateIndexRequest const& request) override;
-
-  future<StatusOr<google::datastore::admin::v1::Index>> CreateIndex(
+  ExportEntities(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::datastore::admin::v1::Index>> DeleteIndex(
-      google::datastore::admin::v1::DeleteIndexRequest const& request) override;
+  future<StatusOr<google::datastore::admin::v1::ImportEntitiesMetadata>>
+  ImportEntities(google::datastore::admin::v1::ImportEntitiesRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> DeleteIndex(
-      NoAwaitTag,
-      google::datastore::admin::v1::DeleteIndexRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  ImportEntities(NoAwaitTag,
+      google::datastore::admin::v1::ImportEntitiesRequest const& request) override;
 
-  future<StatusOr<google::datastore::admin::v1::Index>> DeleteIndex(
+  future<StatusOr<google::datastore::admin::v1::ImportEntitiesMetadata>>
+  ImportEntities(
       google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::datastore::admin::v1::Index> GetIndex(
-      google::datastore::admin::v1::GetIndexRequest const& request) override;
+  future<StatusOr<google::datastore::admin::v1::Index>>
+  CreateIndex(google::datastore::admin::v1::CreateIndexRequest const& request) override;
 
-  StreamRange<google::datastore::admin::v1::Index> ListIndexes(
-      google::datastore::admin::v1::ListIndexesRequest request) override;
+  StatusOr<google::longrunning::Operation>
+  CreateIndex(NoAwaitTag,
+      google::datastore::admin::v1::CreateIndexRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request) override;
+  future<StatusOr<google::datastore::admin::v1::Index>>
+  CreateIndex(
+      google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request) override;
+  future<StatusOr<google::datastore::admin::v1::Index>>
+  DeleteIndex(google::datastore::admin::v1::DeleteIndexRequest const& request) override;
 
-  Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  DeleteIndex(NoAwaitTag,
+      google::datastore::admin::v1::DeleteIndexRequest const& request) override;
 
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request) override;
+  future<StatusOr<google::datastore::admin::v1::Index>>
+  DeleteIndex(
+      google::longrunning::Operation const& operation) override;
+
+  StatusOr<google::datastore::admin::v1::Index>
+  GetIndex(google::datastore::admin::v1::GetIndexRequest const& request) override;
+
+  StreamRange<google::datastore::admin::v1::Index>
+  ListIndexes(google::datastore::admin::v1::ListIndexesRequest request) override;
+
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request) override;
+
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request) override;
+
+  Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request) override;
+
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::shared_ptr<datastore_admin_v1::DatastoreAdminConnection> child_;

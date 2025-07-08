@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_V3_SERVICE_MONITORING_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_V3_SERVICE_MONITORING_CLIENT_H
 
-#include "google/cloud/monitoring/v3/service_monitoring_connection.h"
 #include "google/cloud/future.h"
+#include "google/cloud/monitoring/v3/service_monitoring_connection.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -65,30 +65,23 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class ServiceMonitoringServiceClient {
  public:
-  explicit ServiceMonitoringServiceClient(
-      std::shared_ptr<ServiceMonitoringServiceConnection> connection,
-      Options opts = {});
+  explicit ServiceMonitoringServiceClient(std::shared_ptr<ServiceMonitoringServiceConnection> connection, Options opts = {});
   ~ServiceMonitoringServiceClient();
 
   ///@{
   /// @name Copy and move support
-  ServiceMonitoringServiceClient(ServiceMonitoringServiceClient const&) =
-      default;
-  ServiceMonitoringServiceClient& operator=(
-      ServiceMonitoringServiceClient const&) = default;
+  ServiceMonitoringServiceClient(ServiceMonitoringServiceClient const&) = default;
+  ServiceMonitoringServiceClient& operator=(ServiceMonitoringServiceClient const&) = default;
   ServiceMonitoringServiceClient(ServiceMonitoringServiceClient&&) = default;
-  ServiceMonitoringServiceClient& operator=(ServiceMonitoringServiceClient&&) =
-      default;
+  ServiceMonitoringServiceClient& operator=(ServiceMonitoringServiceClient&&) = default;
   ///@}
 
   ///@{
   /// @name Equality
-  friend bool operator==(ServiceMonitoringServiceClient const& a,
-                         ServiceMonitoringServiceClient const& b) {
+  friend bool operator==(ServiceMonitoringServiceClient const& a, ServiceMonitoringServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(ServiceMonitoringServiceClient const& a,
-                         ServiceMonitoringServiceClient const& b) {
+  friend bool operator!=(ServiceMonitoringServiceClient const& a, ServiceMonitoringServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -120,9 +113,8 @@ class ServiceMonitoringServiceClient {
   /// [google.monitoring.v3.Service]: @googleapis_reference_link{google/monitoring/v3/service.proto#L37}
   ///
   // clang-format on
-  StatusOr<google::monitoring::v3::Service> CreateService(
-      std::string const& parent, google::monitoring::v3::Service const& service,
-      Options opts = {});
+  StatusOr<google::monitoring::v3::Service>
+  CreateService(std::string const& parent, google::monitoring::v3::Service const& service, Options opts = {});
 
   // clang-format off
   ///
@@ -151,9 +143,8 @@ class ServiceMonitoringServiceClient {
   /// [google.monitoring.v3.Service]: @googleapis_reference_link{google/monitoring/v3/service.proto#L37}
   ///
   // clang-format on
-  StatusOr<google::monitoring::v3::Service> CreateService(
-      google::monitoring::v3::CreateServiceRequest const& request,
-      Options opts = {});
+  StatusOr<google::monitoring::v3::Service>
+  CreateService(google::monitoring::v3::CreateServiceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -179,8 +170,8 @@ class ServiceMonitoringServiceClient {
   /// [google.monitoring.v3.Service]: @googleapis_reference_link{google/monitoring/v3/service.proto#L37}
   ///
   // clang-format on
-  StatusOr<google::monitoring::v3::Service> GetService(std::string const& name,
-                                                       Options opts = {});
+  StatusOr<google::monitoring::v3::Service>
+  GetService(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -209,9 +200,8 @@ class ServiceMonitoringServiceClient {
   /// [google.monitoring.v3.Service]: @googleapis_reference_link{google/monitoring/v3/service.proto#L37}
   ///
   // clang-format on
-  StatusOr<google::monitoring::v3::Service> GetService(
-      google::monitoring::v3::GetServiceRequest const& request,
-      Options opts = {});
+  StatusOr<google::monitoring::v3::Service>
+  GetService(google::monitoring::v3::GetServiceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -249,8 +239,8 @@ class ServiceMonitoringServiceClient {
   /// [google.monitoring.v3.Service]: @googleapis_reference_link{google/monitoring/v3/service.proto#L37}
   ///
   // clang-format on
-  StreamRange<google::monitoring::v3::Service> ListServices(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::monitoring::v3::Service>
+  ListServices(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -288,8 +278,8 @@ class ServiceMonitoringServiceClient {
   /// [google.monitoring.v3.Service]: @googleapis_reference_link{google/monitoring/v3/service.proto#L37}
   ///
   // clang-format on
-  StreamRange<google::monitoring::v3::Service> ListServices(
-      google::monitoring::v3::ListServicesRequest request, Options opts = {});
+  StreamRange<google::monitoring::v3::Service>
+  ListServices(google::monitoring::v3::ListServicesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -314,8 +304,8 @@ class ServiceMonitoringServiceClient {
   /// [google.monitoring.v3.UpdateServiceRequest]: @googleapis_reference_link{google/monitoring/v3/service_service.proto#L228}
   ///
   // clang-format on
-  StatusOr<google::monitoring::v3::Service> UpdateService(
-      google::monitoring::v3::Service const& service, Options opts = {});
+  StatusOr<google::monitoring::v3::Service>
+  UpdateService(google::monitoring::v3::Service const& service, Options opts = {});
 
   // clang-format off
   ///
@@ -344,9 +334,8 @@ class ServiceMonitoringServiceClient {
   /// [google.monitoring.v3.UpdateServiceRequest]: @googleapis_reference_link{google/monitoring/v3/service_service.proto#L228}
   ///
   // clang-format on
-  StatusOr<google::monitoring::v3::Service> UpdateService(
-      google::monitoring::v3::UpdateServiceRequest const& request,
-      Options opts = {});
+  StatusOr<google::monitoring::v3::Service>
+  UpdateService(google::monitoring::v3::UpdateServiceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -369,7 +358,8 @@ class ServiceMonitoringServiceClient {
   /// [google.monitoring.v3.DeleteServiceRequest]: @googleapis_reference_link{google/monitoring/v3/service_service.proto#L238}
   ///
   // clang-format on
-  Status DeleteService(std::string const& name, Options opts = {});
+  Status
+  DeleteService(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -395,9 +385,8 @@ class ServiceMonitoringServiceClient {
   /// [google.monitoring.v3.DeleteServiceRequest]: @googleapis_reference_link{google/monitoring/v3/service_service.proto#L238}
   ///
   // clang-format on
-  Status DeleteService(
-      google::monitoring::v3::DeleteServiceRequest const& request,
-      Options opts = {});
+  Status
+  DeleteService(google::monitoring::v3::DeleteServiceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -427,11 +416,7 @@ class ServiceMonitoringServiceClient {
   ///
   // clang-format on
   StatusOr<google::monitoring::v3::ServiceLevelObjective>
-  CreateServiceLevelObjective(
-      std::string const& parent,
-      google::monitoring::v3::ServiceLevelObjective const&
-          service_level_objective,
-      Options opts = {});
+  CreateServiceLevelObjective(std::string const& parent, google::monitoring::v3::ServiceLevelObjective const& service_level_objective, Options opts = {});
 
   // clang-format off
   ///
@@ -461,9 +446,7 @@ class ServiceMonitoringServiceClient {
   ///
   // clang-format on
   StatusOr<google::monitoring::v3::ServiceLevelObjective>
-  CreateServiceLevelObjective(
-      google::monitoring::v3::CreateServiceLevelObjectiveRequest const& request,
-      Options opts = {});
+  CreateServiceLevelObjective(google::monitoring::v3::CreateServiceLevelObjectiveRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -521,9 +504,7 @@ class ServiceMonitoringServiceClient {
   ///
   // clang-format on
   StatusOr<google::monitoring::v3::ServiceLevelObjective>
-  GetServiceLevelObjective(
-      google::monitoring::v3::GetServiceLevelObjectiveRequest const& request,
-      Options opts = {});
+  GetServiceLevelObjective(google::monitoring::v3::GetServiceLevelObjectiveRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -600,9 +581,7 @@ class ServiceMonitoringServiceClient {
   ///
   // clang-format on
   StreamRange<google::monitoring::v3::ServiceLevelObjective>
-  ListServiceLevelObjectives(
-      google::monitoring::v3::ListServiceLevelObjectivesRequest request,
-      Options opts = {});
+  ListServiceLevelObjectives(google::monitoring::v3::ListServiceLevelObjectivesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -628,10 +607,7 @@ class ServiceMonitoringServiceClient {
   ///
   // clang-format on
   StatusOr<google::monitoring::v3::ServiceLevelObjective>
-  UpdateServiceLevelObjective(
-      google::monitoring::v3::ServiceLevelObjective const&
-          service_level_objective,
-      Options opts = {});
+  UpdateServiceLevelObjective(google::monitoring::v3::ServiceLevelObjective const& service_level_objective, Options opts = {});
 
   // clang-format off
   ///
@@ -661,9 +637,7 @@ class ServiceMonitoringServiceClient {
   ///
   // clang-format on
   StatusOr<google::monitoring::v3::ServiceLevelObjective>
-  UpdateServiceLevelObjective(
-      google::monitoring::v3::UpdateServiceLevelObjectiveRequest const& request,
-      Options opts = {});
+  UpdateServiceLevelObjective(google::monitoring::v3::UpdateServiceLevelObjectiveRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -687,8 +661,8 @@ class ServiceMonitoringServiceClient {
   /// [google.monitoring.v3.DeleteServiceLevelObjectiveRequest]: @googleapis_reference_link{google/monitoring/v3/service_service.proto#L350}
   ///
   // clang-format on
-  Status DeleteServiceLevelObjective(std::string const& name,
-                                     Options opts = {});
+  Status
+  DeleteServiceLevelObjective(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -714,9 +688,8 @@ class ServiceMonitoringServiceClient {
   /// [google.monitoring.v3.DeleteServiceLevelObjectiveRequest]: @googleapis_reference_link{google/monitoring/v3/service_service.proto#L350}
   ///
   // clang-format on
-  Status DeleteServiceLevelObjective(
-      google::monitoring::v3::DeleteServiceLevelObjectiveRequest const& request,
-      Options opts = {});
+  Status
+  DeleteServiceLevelObjective(google::monitoring::v3::DeleteServiceLevelObjectiveRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<ServiceMonitoringServiceConnection> connection_;

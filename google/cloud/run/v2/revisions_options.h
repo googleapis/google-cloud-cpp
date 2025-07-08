@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RUN_V2_REVISIONS_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RUN_V2_REVISIONS_OPTIONS_H
 
-#include "google/cloud/run/v2/revisions_connection.h"
-#include "google/cloud/run/v2/revisions_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
+#include "google/cloud/run/v2/revisions_connection.h"
+#include "google/cloud/run/v2/revisions_connection_idempotency_policy.h"
 #include "google/cloud/version.h"
 #include <memory>
 
@@ -74,7 +74,8 @@ struct RevisionsPollingPolicyOption {
  * @ingroup google-cloud-run-options
  */
 using RevisionsPolicyOptionList =
-    OptionList<RevisionsRetryPolicyOption, RevisionsBackoffPolicyOption,
+    OptionList<RevisionsRetryPolicyOption,
+               RevisionsBackoffPolicyOption,
                RevisionsPollingPolicyOption,
                RevisionsConnectionIdempotencyPolicyOption>;
 

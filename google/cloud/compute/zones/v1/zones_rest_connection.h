@@ -53,7 +53,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * @param options (optional) Configure the `ZonesConnection` created by
  * this function.
  */
-std::shared_ptr<ZonesConnection> MakeZonesConnectionRest(Options options = {});
+std::shared_ptr<ZonesConnection> MakeZonesConnectionRest(
+    Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_zones_v1

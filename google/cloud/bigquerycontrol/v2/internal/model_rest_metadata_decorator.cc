@@ -17,11 +17,11 @@
 // source: google/cloud/bigquery/v2/model.proto
 
 #include "google/cloud/bigquerycontrol/v2/internal/model_rest_metadata_decorator.h"
+#include "absl/strings/str_format.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/internal/rest_set_metadata.h"
 #include "google/cloud/status_or.h"
-#include "absl/strings/str_format.h"
 #include <memory>
 #include <utility>
 
@@ -31,48 +31,51 @@ namespace bigquerycontrol_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ModelServiceRestMetadata::ModelServiceRestMetadata(
-    std::shared_ptr<ModelServiceRestStub> child, std::string api_client_header)
+    std::shared_ptr<ModelServiceRestStub> child,
+    std::string api_client_header)
     : child_(std::move(child)),
       api_client_header_(
           api_client_header.empty()
               ? google::cloud::internal::GeneratedLibClientHeader()
               : std::move(api_client_header)) {}
 
-StatusOr<google::cloud::bigquery::v2::Model> ModelServiceRestMetadata::GetModel(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::bigquery::v2::GetModelRequest const& request) {
+StatusOr<google::cloud::bigquery::v2::Model>
+ModelServiceRestMetadata::GetModel(
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::bigquery::v2::GetModelRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->GetModel(rest_context, options, request);
 }
 
 StatusOr<google::cloud::bigquery::v2::ListModelsResponse>
 ModelServiceRestMetadata::ListModels(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::bigquery::v2::ListModelsRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::bigquery::v2::ListModelsRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->ListModels(rest_context, options, request);
 }
 
 StatusOr<google::cloud::bigquery::v2::Model>
 ModelServiceRestMetadata::PatchModel(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::bigquery::v2::PatchModelRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::bigquery::v2::PatchModelRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->PatchModel(rest_context, options, request);
 }
 
-Status ModelServiceRestMetadata::DeleteModel(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::bigquery::v2::DeleteModelRequest const& request) {
+Status
+ModelServiceRestMetadata::DeleteModel(
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::bigquery::v2::DeleteModelRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->DeleteModel(rest_context, options, request);
 }
 
 void ModelServiceRestMetadata::SetMetadata(
-    rest_internal::RestContext& rest_context, Options const& options,
-    std::vector<std::string> const& params) {
-  google::cloud::rest_internal::SetMetadata(rest_context, options, params,
-                                            api_client_header_);
+      rest_internal::RestContext& rest_context,
+      Options const& options, std::vector<std::string> const& params) {
+  google::cloud::rest_internal::SetMetadata(
+      rest_context, options, params, api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

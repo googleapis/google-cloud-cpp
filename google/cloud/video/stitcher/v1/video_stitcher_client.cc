@@ -28,15 +28,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 VideoStitcherServiceClient::VideoStitcherServiceClient(
     std::shared_ptr<VideoStitcherServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 VideoStitcherServiceClient::~VideoStitcherServiceClient() = default;
 
 future<StatusOr<google::cloud::video::stitcher::v1::CdnKey>>
-VideoStitcherServiceClient::CreateCdnKey(
-    std::string const& parent,
-    google::cloud::video::stitcher::v1::CdnKey const& cdn_key,
-    std::string const& cdn_key_id, Options opts) {
+VideoStitcherServiceClient::CreateCdnKey(std::string const& parent, google::cloud::video::stitcher::v1::CdnKey const& cdn_key, std::string const& cdn_key_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::video::stitcher::v1::CreateCdnKeyRequest request;
   request.set_parent(parent);
@@ -46,10 +43,7 @@ VideoStitcherServiceClient::CreateCdnKey(
 }
 
 StatusOr<google::longrunning::Operation>
-VideoStitcherServiceClient::CreateCdnKey(
-    NoAwaitTag, std::string const& parent,
-    google::cloud::video::stitcher::v1::CdnKey const& cdn_key,
-    std::string const& cdn_key_id, Options opts) {
+VideoStitcherServiceClient::CreateCdnKey(NoAwaitTag, std::string const& parent, google::cloud::video::stitcher::v1::CdnKey const& cdn_key, std::string const& cdn_key_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::video::stitcher::v1::CreateCdnKeyRequest request;
   request.set_parent(parent);
@@ -59,32 +53,25 @@ VideoStitcherServiceClient::CreateCdnKey(
 }
 
 future<StatusOr<google::cloud::video::stitcher::v1::CdnKey>>
-VideoStitcherServiceClient::CreateCdnKey(
-    google::cloud::video::stitcher::v1::CreateCdnKeyRequest const& request,
-    Options opts) {
+VideoStitcherServiceClient::CreateCdnKey(google::cloud::video::stitcher::v1::CreateCdnKeyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateCdnKey(request);
 }
 
 StatusOr<google::longrunning::Operation>
-VideoStitcherServiceClient::CreateCdnKey(
-    NoAwaitTag,
-    google::cloud::video::stitcher::v1::CreateCdnKeyRequest const& request,
-    Options opts) {
+VideoStitcherServiceClient::CreateCdnKey(NoAwaitTag, google::cloud::video::stitcher::v1::CreateCdnKeyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateCdnKey(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::video::stitcher::v1::CdnKey>>
-VideoStitcherServiceClient::CreateCdnKey(
-    google::longrunning::Operation const& operation, Options opts) {
+VideoStitcherServiceClient::CreateCdnKey(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateCdnKey(operation);
 }
 
 StreamRange<google::cloud::video::stitcher::v1::CdnKey>
-VideoStitcherServiceClient::ListCdnKeys(std::string const& parent,
-                                        Options opts) {
+VideoStitcherServiceClient::ListCdnKeys(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::video::stitcher::v1::ListCdnKeysRequest request;
   request.set_parent(parent);
@@ -92,9 +79,7 @@ VideoStitcherServiceClient::ListCdnKeys(std::string const& parent,
 }
 
 StreamRange<google::cloud::video::stitcher::v1::CdnKey>
-VideoStitcherServiceClient::ListCdnKeys(
-    google::cloud::video::stitcher::v1::ListCdnKeysRequest request,
-    Options opts) {
+VideoStitcherServiceClient::ListCdnKeys(google::cloud::video::stitcher::v1::ListCdnKeysRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListCdnKeys(std::move(request));
 }
@@ -108,16 +93,13 @@ VideoStitcherServiceClient::GetCdnKey(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::video::stitcher::v1::CdnKey>
-VideoStitcherServiceClient::GetCdnKey(
-    google::cloud::video::stitcher::v1::GetCdnKeyRequest const& request,
-    Options opts) {
+VideoStitcherServiceClient::GetCdnKey(google::cloud::video::stitcher::v1::GetCdnKeyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetCdnKey(request);
 }
 
 future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>
-VideoStitcherServiceClient::DeleteCdnKey(std::string const& name,
-                                         Options opts) {
+VideoStitcherServiceClient::DeleteCdnKey(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::video::stitcher::v1::DeleteCdnKeyRequest request;
   request.set_name(name);
@@ -125,8 +107,7 @@ VideoStitcherServiceClient::DeleteCdnKey(std::string const& name,
 }
 
 StatusOr<google::longrunning::Operation>
-VideoStitcherServiceClient::DeleteCdnKey(NoAwaitTag, std::string const& name,
-                                         Options opts) {
+VideoStitcherServiceClient::DeleteCdnKey(NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::video::stitcher::v1::DeleteCdnKeyRequest request;
   request.set_name(name);
@@ -134,33 +115,25 @@ VideoStitcherServiceClient::DeleteCdnKey(NoAwaitTag, std::string const& name,
 }
 
 future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>
-VideoStitcherServiceClient::DeleteCdnKey(
-    google::cloud::video::stitcher::v1::DeleteCdnKeyRequest const& request,
-    Options opts) {
+VideoStitcherServiceClient::DeleteCdnKey(google::cloud::video::stitcher::v1::DeleteCdnKeyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteCdnKey(request);
 }
 
 StatusOr<google::longrunning::Operation>
-VideoStitcherServiceClient::DeleteCdnKey(
-    NoAwaitTag,
-    google::cloud::video::stitcher::v1::DeleteCdnKeyRequest const& request,
-    Options opts) {
+VideoStitcherServiceClient::DeleteCdnKey(NoAwaitTag, google::cloud::video::stitcher::v1::DeleteCdnKeyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteCdnKey(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>
-VideoStitcherServiceClient::DeleteCdnKey(
-    google::longrunning::Operation const& operation, Options opts) {
+VideoStitcherServiceClient::DeleteCdnKey(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteCdnKey(operation);
 }
 
 future<StatusOr<google::cloud::video::stitcher::v1::CdnKey>>
-VideoStitcherServiceClient::UpdateCdnKey(
-    google::cloud::video::stitcher::v1::CdnKey const& cdn_key,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+VideoStitcherServiceClient::UpdateCdnKey(google::cloud::video::stitcher::v1::CdnKey const& cdn_key, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::video::stitcher::v1::UpdateCdnKeyRequest request;
   *request.mutable_cdn_key() = cdn_key;
@@ -169,9 +142,7 @@ VideoStitcherServiceClient::UpdateCdnKey(
 }
 
 StatusOr<google::longrunning::Operation>
-VideoStitcherServiceClient::UpdateCdnKey(
-    NoAwaitTag, google::cloud::video::stitcher::v1::CdnKey const& cdn_key,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+VideoStitcherServiceClient::UpdateCdnKey(NoAwaitTag, google::cloud::video::stitcher::v1::CdnKey const& cdn_key, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::video::stitcher::v1::UpdateCdnKeyRequest request;
   *request.mutable_cdn_key() = cdn_key;
@@ -180,34 +151,25 @@ VideoStitcherServiceClient::UpdateCdnKey(
 }
 
 future<StatusOr<google::cloud::video::stitcher::v1::CdnKey>>
-VideoStitcherServiceClient::UpdateCdnKey(
-    google::cloud::video::stitcher::v1::UpdateCdnKeyRequest const& request,
-    Options opts) {
+VideoStitcherServiceClient::UpdateCdnKey(google::cloud::video::stitcher::v1::UpdateCdnKeyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateCdnKey(request);
 }
 
 StatusOr<google::longrunning::Operation>
-VideoStitcherServiceClient::UpdateCdnKey(
-    NoAwaitTag,
-    google::cloud::video::stitcher::v1::UpdateCdnKeyRequest const& request,
-    Options opts) {
+VideoStitcherServiceClient::UpdateCdnKey(NoAwaitTag, google::cloud::video::stitcher::v1::UpdateCdnKeyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateCdnKey(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::video::stitcher::v1::CdnKey>>
-VideoStitcherServiceClient::UpdateCdnKey(
-    google::longrunning::Operation const& operation, Options opts) {
+VideoStitcherServiceClient::UpdateCdnKey(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateCdnKey(operation);
 }
 
 StatusOr<google::cloud::video::stitcher::v1::VodSession>
-VideoStitcherServiceClient::CreateVodSession(
-    std::string const& parent,
-    google::cloud::video::stitcher::v1::VodSession const& vod_session,
-    Options opts) {
+VideoStitcherServiceClient::CreateVodSession(std::string const& parent, google::cloud::video::stitcher::v1::VodSession const& vod_session, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::video::stitcher::v1::CreateVodSessionRequest request;
   request.set_parent(parent);
@@ -216,16 +178,13 @@ VideoStitcherServiceClient::CreateVodSession(
 }
 
 StatusOr<google::cloud::video::stitcher::v1::VodSession>
-VideoStitcherServiceClient::CreateVodSession(
-    google::cloud::video::stitcher::v1::CreateVodSessionRequest const& request,
-    Options opts) {
+VideoStitcherServiceClient::CreateVodSession(google::cloud::video::stitcher::v1::CreateVodSessionRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateVodSession(request);
 }
 
 StatusOr<google::cloud::video::stitcher::v1::VodSession>
-VideoStitcherServiceClient::GetVodSession(std::string const& name,
-                                          Options opts) {
+VideoStitcherServiceClient::GetVodSession(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::video::stitcher::v1::GetVodSessionRequest request;
   request.set_name(name);
@@ -233,16 +192,13 @@ VideoStitcherServiceClient::GetVodSession(std::string const& name,
 }
 
 StatusOr<google::cloud::video::stitcher::v1::VodSession>
-VideoStitcherServiceClient::GetVodSession(
-    google::cloud::video::stitcher::v1::GetVodSessionRequest const& request,
-    Options opts) {
+VideoStitcherServiceClient::GetVodSession(google::cloud::video::stitcher::v1::GetVodSessionRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetVodSession(request);
 }
 
 StreamRange<google::cloud::video::stitcher::v1::VodStitchDetail>
-VideoStitcherServiceClient::ListVodStitchDetails(std::string const& parent,
-                                                 Options opts) {
+VideoStitcherServiceClient::ListVodStitchDetails(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::video::stitcher::v1::ListVodStitchDetailsRequest request;
   request.set_parent(parent);
@@ -250,16 +206,13 @@ VideoStitcherServiceClient::ListVodStitchDetails(std::string const& parent,
 }
 
 StreamRange<google::cloud::video::stitcher::v1::VodStitchDetail>
-VideoStitcherServiceClient::ListVodStitchDetails(
-    google::cloud::video::stitcher::v1::ListVodStitchDetailsRequest request,
-    Options opts) {
+VideoStitcherServiceClient::ListVodStitchDetails(google::cloud::video::stitcher::v1::ListVodStitchDetailsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListVodStitchDetails(std::move(request));
 }
 
 StatusOr<google::cloud::video::stitcher::v1::VodStitchDetail>
-VideoStitcherServiceClient::GetVodStitchDetail(std::string const& name,
-                                               Options opts) {
+VideoStitcherServiceClient::GetVodStitchDetail(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::video::stitcher::v1::GetVodStitchDetailRequest request;
   request.set_name(name);
@@ -267,17 +220,13 @@ VideoStitcherServiceClient::GetVodStitchDetail(std::string const& name,
 }
 
 StatusOr<google::cloud::video::stitcher::v1::VodStitchDetail>
-VideoStitcherServiceClient::GetVodStitchDetail(
-    google::cloud::video::stitcher::v1::GetVodStitchDetailRequest const&
-        request,
-    Options opts) {
+VideoStitcherServiceClient::GetVodStitchDetail(google::cloud::video::stitcher::v1::GetVodStitchDetailRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetVodStitchDetail(request);
 }
 
 StreamRange<google::cloud::video::stitcher::v1::VodAdTagDetail>
-VideoStitcherServiceClient::ListVodAdTagDetails(std::string const& parent,
-                                                Options opts) {
+VideoStitcherServiceClient::ListVodAdTagDetails(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::video::stitcher::v1::ListVodAdTagDetailsRequest request;
   request.set_parent(parent);
@@ -285,16 +234,13 @@ VideoStitcherServiceClient::ListVodAdTagDetails(std::string const& parent,
 }
 
 StreamRange<google::cloud::video::stitcher::v1::VodAdTagDetail>
-VideoStitcherServiceClient::ListVodAdTagDetails(
-    google::cloud::video::stitcher::v1::ListVodAdTagDetailsRequest request,
-    Options opts) {
+VideoStitcherServiceClient::ListVodAdTagDetails(google::cloud::video::stitcher::v1::ListVodAdTagDetailsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListVodAdTagDetails(std::move(request));
 }
 
 StatusOr<google::cloud::video::stitcher::v1::VodAdTagDetail>
-VideoStitcherServiceClient::GetVodAdTagDetail(std::string const& name,
-                                              Options opts) {
+VideoStitcherServiceClient::GetVodAdTagDetail(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::video::stitcher::v1::GetVodAdTagDetailRequest request;
   request.set_name(name);
@@ -302,16 +248,13 @@ VideoStitcherServiceClient::GetVodAdTagDetail(std::string const& name,
 }
 
 StatusOr<google::cloud::video::stitcher::v1::VodAdTagDetail>
-VideoStitcherServiceClient::GetVodAdTagDetail(
-    google::cloud::video::stitcher::v1::GetVodAdTagDetailRequest const& request,
-    Options opts) {
+VideoStitcherServiceClient::GetVodAdTagDetail(google::cloud::video::stitcher::v1::GetVodAdTagDetailRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetVodAdTagDetail(request);
 }
 
 StreamRange<google::cloud::video::stitcher::v1::LiveAdTagDetail>
-VideoStitcherServiceClient::ListLiveAdTagDetails(std::string const& parent,
-                                                 Options opts) {
+VideoStitcherServiceClient::ListLiveAdTagDetails(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::video::stitcher::v1::ListLiveAdTagDetailsRequest request;
   request.set_parent(parent);
@@ -319,16 +262,13 @@ VideoStitcherServiceClient::ListLiveAdTagDetails(std::string const& parent,
 }
 
 StreamRange<google::cloud::video::stitcher::v1::LiveAdTagDetail>
-VideoStitcherServiceClient::ListLiveAdTagDetails(
-    google::cloud::video::stitcher::v1::ListLiveAdTagDetailsRequest request,
-    Options opts) {
+VideoStitcherServiceClient::ListLiveAdTagDetails(google::cloud::video::stitcher::v1::ListLiveAdTagDetailsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListLiveAdTagDetails(std::move(request));
 }
 
 StatusOr<google::cloud::video::stitcher::v1::LiveAdTagDetail>
-VideoStitcherServiceClient::GetLiveAdTagDetail(std::string const& name,
-                                               Options opts) {
+VideoStitcherServiceClient::GetLiveAdTagDetail(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::video::stitcher::v1::GetLiveAdTagDetailRequest request;
   request.set_name(name);
@@ -336,19 +276,13 @@ VideoStitcherServiceClient::GetLiveAdTagDetail(std::string const& name,
 }
 
 StatusOr<google::cloud::video::stitcher::v1::LiveAdTagDetail>
-VideoStitcherServiceClient::GetLiveAdTagDetail(
-    google::cloud::video::stitcher::v1::GetLiveAdTagDetailRequest const&
-        request,
-    Options opts) {
+VideoStitcherServiceClient::GetLiveAdTagDetail(google::cloud::video::stitcher::v1::GetLiveAdTagDetailRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetLiveAdTagDetail(request);
 }
 
 future<StatusOr<google::cloud::video::stitcher::v1::Slate>>
-VideoStitcherServiceClient::CreateSlate(
-    std::string const& parent,
-    google::cloud::video::stitcher::v1::Slate const& slate,
-    std::string const& slate_id, Options opts) {
+VideoStitcherServiceClient::CreateSlate(std::string const& parent, google::cloud::video::stitcher::v1::Slate const& slate, std::string const& slate_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::video::stitcher::v1::CreateSlateRequest request;
   request.set_parent(parent);
@@ -358,10 +292,7 @@ VideoStitcherServiceClient::CreateSlate(
 }
 
 StatusOr<google::longrunning::Operation>
-VideoStitcherServiceClient::CreateSlate(
-    NoAwaitTag, std::string const& parent,
-    google::cloud::video::stitcher::v1::Slate const& slate,
-    std::string const& slate_id, Options opts) {
+VideoStitcherServiceClient::CreateSlate(NoAwaitTag, std::string const& parent, google::cloud::video::stitcher::v1::Slate const& slate, std::string const& slate_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::video::stitcher::v1::CreateSlateRequest request;
   request.set_parent(parent);
@@ -371,32 +302,25 @@ VideoStitcherServiceClient::CreateSlate(
 }
 
 future<StatusOr<google::cloud::video::stitcher::v1::Slate>>
-VideoStitcherServiceClient::CreateSlate(
-    google::cloud::video::stitcher::v1::CreateSlateRequest const& request,
-    Options opts) {
+VideoStitcherServiceClient::CreateSlate(google::cloud::video::stitcher::v1::CreateSlateRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateSlate(request);
 }
 
 StatusOr<google::longrunning::Operation>
-VideoStitcherServiceClient::CreateSlate(
-    NoAwaitTag,
-    google::cloud::video::stitcher::v1::CreateSlateRequest const& request,
-    Options opts) {
+VideoStitcherServiceClient::CreateSlate(NoAwaitTag, google::cloud::video::stitcher::v1::CreateSlateRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateSlate(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::video::stitcher::v1::Slate>>
-VideoStitcherServiceClient::CreateSlate(
-    google::longrunning::Operation const& operation, Options opts) {
+VideoStitcherServiceClient::CreateSlate(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateSlate(operation);
 }
 
 StreamRange<google::cloud::video::stitcher::v1::Slate>
-VideoStitcherServiceClient::ListSlates(std::string const& parent,
-                                       Options opts) {
+VideoStitcherServiceClient::ListSlates(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::video::stitcher::v1::ListSlatesRequest request;
   request.set_parent(parent);
@@ -404,9 +328,7 @@ VideoStitcherServiceClient::ListSlates(std::string const& parent,
 }
 
 StreamRange<google::cloud::video::stitcher::v1::Slate>
-VideoStitcherServiceClient::ListSlates(
-    google::cloud::video::stitcher::v1::ListSlatesRequest request,
-    Options opts) {
+VideoStitcherServiceClient::ListSlates(google::cloud::video::stitcher::v1::ListSlatesRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListSlates(std::move(request));
 }
@@ -420,17 +342,13 @@ VideoStitcherServiceClient::GetSlate(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::video::stitcher::v1::Slate>
-VideoStitcherServiceClient::GetSlate(
-    google::cloud::video::stitcher::v1::GetSlateRequest const& request,
-    Options opts) {
+VideoStitcherServiceClient::GetSlate(google::cloud::video::stitcher::v1::GetSlateRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetSlate(request);
 }
 
 future<StatusOr<google::cloud::video::stitcher::v1::Slate>>
-VideoStitcherServiceClient::UpdateSlate(
-    google::cloud::video::stitcher::v1::Slate const& slate,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+VideoStitcherServiceClient::UpdateSlate(google::cloud::video::stitcher::v1::Slate const& slate, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::video::stitcher::v1::UpdateSlateRequest request;
   *request.mutable_slate() = slate;
@@ -439,9 +357,7 @@ VideoStitcherServiceClient::UpdateSlate(
 }
 
 StatusOr<google::longrunning::Operation>
-VideoStitcherServiceClient::UpdateSlate(
-    NoAwaitTag, google::cloud::video::stitcher::v1::Slate const& slate,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+VideoStitcherServiceClient::UpdateSlate(NoAwaitTag, google::cloud::video::stitcher::v1::Slate const& slate, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::video::stitcher::v1::UpdateSlateRequest request;
   *request.mutable_slate() = slate;
@@ -450,25 +366,19 @@ VideoStitcherServiceClient::UpdateSlate(
 }
 
 future<StatusOr<google::cloud::video::stitcher::v1::Slate>>
-VideoStitcherServiceClient::UpdateSlate(
-    google::cloud::video::stitcher::v1::UpdateSlateRequest const& request,
-    Options opts) {
+VideoStitcherServiceClient::UpdateSlate(google::cloud::video::stitcher::v1::UpdateSlateRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateSlate(request);
 }
 
 StatusOr<google::longrunning::Operation>
-VideoStitcherServiceClient::UpdateSlate(
-    NoAwaitTag,
-    google::cloud::video::stitcher::v1::UpdateSlateRequest const& request,
-    Options opts) {
+VideoStitcherServiceClient::UpdateSlate(NoAwaitTag, google::cloud::video::stitcher::v1::UpdateSlateRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateSlate(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::video::stitcher::v1::Slate>>
-VideoStitcherServiceClient::UpdateSlate(
-    google::longrunning::Operation const& operation, Options opts) {
+VideoStitcherServiceClient::UpdateSlate(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateSlate(operation);
 }
@@ -482,8 +392,7 @@ VideoStitcherServiceClient::DeleteSlate(std::string const& name, Options opts) {
 }
 
 StatusOr<google::longrunning::Operation>
-VideoStitcherServiceClient::DeleteSlate(NoAwaitTag, std::string const& name,
-                                        Options opts) {
+VideoStitcherServiceClient::DeleteSlate(NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::video::stitcher::v1::DeleteSlateRequest request;
   request.set_name(name);
@@ -491,34 +400,25 @@ VideoStitcherServiceClient::DeleteSlate(NoAwaitTag, std::string const& name,
 }
 
 future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>
-VideoStitcherServiceClient::DeleteSlate(
-    google::cloud::video::stitcher::v1::DeleteSlateRequest const& request,
-    Options opts) {
+VideoStitcherServiceClient::DeleteSlate(google::cloud::video::stitcher::v1::DeleteSlateRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteSlate(request);
 }
 
 StatusOr<google::longrunning::Operation>
-VideoStitcherServiceClient::DeleteSlate(
-    NoAwaitTag,
-    google::cloud::video::stitcher::v1::DeleteSlateRequest const& request,
-    Options opts) {
+VideoStitcherServiceClient::DeleteSlate(NoAwaitTag, google::cloud::video::stitcher::v1::DeleteSlateRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteSlate(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>
-VideoStitcherServiceClient::DeleteSlate(
-    google::longrunning::Operation const& operation, Options opts) {
+VideoStitcherServiceClient::DeleteSlate(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteSlate(operation);
 }
 
 StatusOr<google::cloud::video::stitcher::v1::LiveSession>
-VideoStitcherServiceClient::CreateLiveSession(
-    std::string const& parent,
-    google::cloud::video::stitcher::v1::LiveSession const& live_session,
-    Options opts) {
+VideoStitcherServiceClient::CreateLiveSession(std::string const& parent, google::cloud::video::stitcher::v1::LiveSession const& live_session, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::video::stitcher::v1::CreateLiveSessionRequest request;
   request.set_parent(parent);
@@ -527,16 +427,13 @@ VideoStitcherServiceClient::CreateLiveSession(
 }
 
 StatusOr<google::cloud::video::stitcher::v1::LiveSession>
-VideoStitcherServiceClient::CreateLiveSession(
-    google::cloud::video::stitcher::v1::CreateLiveSessionRequest const& request,
-    Options opts) {
+VideoStitcherServiceClient::CreateLiveSession(google::cloud::video::stitcher::v1::CreateLiveSessionRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateLiveSession(request);
 }
 
 StatusOr<google::cloud::video::stitcher::v1::LiveSession>
-VideoStitcherServiceClient::GetLiveSession(std::string const& name,
-                                           Options opts) {
+VideoStitcherServiceClient::GetLiveSession(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::video::stitcher::v1::GetLiveSessionRequest request;
   request.set_name(name);
@@ -544,18 +441,13 @@ VideoStitcherServiceClient::GetLiveSession(std::string const& name,
 }
 
 StatusOr<google::cloud::video::stitcher::v1::LiveSession>
-VideoStitcherServiceClient::GetLiveSession(
-    google::cloud::video::stitcher::v1::GetLiveSessionRequest const& request,
-    Options opts) {
+VideoStitcherServiceClient::GetLiveSession(google::cloud::video::stitcher::v1::GetLiveSessionRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetLiveSession(request);
 }
 
 future<StatusOr<google::cloud::video::stitcher::v1::LiveConfig>>
-VideoStitcherServiceClient::CreateLiveConfig(
-    std::string const& parent,
-    google::cloud::video::stitcher::v1::LiveConfig const& live_config,
-    std::string const& live_config_id, Options opts) {
+VideoStitcherServiceClient::CreateLiveConfig(std::string const& parent, google::cloud::video::stitcher::v1::LiveConfig const& live_config, std::string const& live_config_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::video::stitcher::v1::CreateLiveConfigRequest request;
   request.set_parent(parent);
@@ -565,10 +457,7 @@ VideoStitcherServiceClient::CreateLiveConfig(
 }
 
 StatusOr<google::longrunning::Operation>
-VideoStitcherServiceClient::CreateLiveConfig(
-    NoAwaitTag, std::string const& parent,
-    google::cloud::video::stitcher::v1::LiveConfig const& live_config,
-    std::string const& live_config_id, Options opts) {
+VideoStitcherServiceClient::CreateLiveConfig(NoAwaitTag, std::string const& parent, google::cloud::video::stitcher::v1::LiveConfig const& live_config, std::string const& live_config_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::video::stitcher::v1::CreateLiveConfigRequest request;
   request.set_parent(parent);
@@ -578,32 +467,25 @@ VideoStitcherServiceClient::CreateLiveConfig(
 }
 
 future<StatusOr<google::cloud::video::stitcher::v1::LiveConfig>>
-VideoStitcherServiceClient::CreateLiveConfig(
-    google::cloud::video::stitcher::v1::CreateLiveConfigRequest const& request,
-    Options opts) {
+VideoStitcherServiceClient::CreateLiveConfig(google::cloud::video::stitcher::v1::CreateLiveConfigRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateLiveConfig(request);
 }
 
 StatusOr<google::longrunning::Operation>
-VideoStitcherServiceClient::CreateLiveConfig(
-    NoAwaitTag,
-    google::cloud::video::stitcher::v1::CreateLiveConfigRequest const& request,
-    Options opts) {
+VideoStitcherServiceClient::CreateLiveConfig(NoAwaitTag, google::cloud::video::stitcher::v1::CreateLiveConfigRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateLiveConfig(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::video::stitcher::v1::LiveConfig>>
-VideoStitcherServiceClient::CreateLiveConfig(
-    google::longrunning::Operation const& operation, Options opts) {
+VideoStitcherServiceClient::CreateLiveConfig(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateLiveConfig(operation);
 }
 
 StreamRange<google::cloud::video::stitcher::v1::LiveConfig>
-VideoStitcherServiceClient::ListLiveConfigs(std::string const& parent,
-                                            Options opts) {
+VideoStitcherServiceClient::ListLiveConfigs(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::video::stitcher::v1::ListLiveConfigsRequest request;
   request.set_parent(parent);
@@ -611,16 +493,13 @@ VideoStitcherServiceClient::ListLiveConfigs(std::string const& parent,
 }
 
 StreamRange<google::cloud::video::stitcher::v1::LiveConfig>
-VideoStitcherServiceClient::ListLiveConfigs(
-    google::cloud::video::stitcher::v1::ListLiveConfigsRequest request,
-    Options opts) {
+VideoStitcherServiceClient::ListLiveConfigs(google::cloud::video::stitcher::v1::ListLiveConfigsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListLiveConfigs(std::move(request));
 }
 
 StatusOr<google::cloud::video::stitcher::v1::LiveConfig>
-VideoStitcherServiceClient::GetLiveConfig(std::string const& name,
-                                          Options opts) {
+VideoStitcherServiceClient::GetLiveConfig(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::video::stitcher::v1::GetLiveConfigRequest request;
   request.set_name(name);
@@ -628,16 +507,13 @@ VideoStitcherServiceClient::GetLiveConfig(std::string const& name,
 }
 
 StatusOr<google::cloud::video::stitcher::v1::LiveConfig>
-VideoStitcherServiceClient::GetLiveConfig(
-    google::cloud::video::stitcher::v1::GetLiveConfigRequest const& request,
-    Options opts) {
+VideoStitcherServiceClient::GetLiveConfig(google::cloud::video::stitcher::v1::GetLiveConfigRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetLiveConfig(request);
 }
 
 future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>
-VideoStitcherServiceClient::DeleteLiveConfig(std::string const& name,
-                                             Options opts) {
+VideoStitcherServiceClient::DeleteLiveConfig(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::video::stitcher::v1::DeleteLiveConfigRequest request;
   request.set_name(name);
@@ -645,9 +521,7 @@ VideoStitcherServiceClient::DeleteLiveConfig(std::string const& name,
 }
 
 StatusOr<google::longrunning::Operation>
-VideoStitcherServiceClient::DeleteLiveConfig(NoAwaitTag,
-                                             std::string const& name,
-                                             Options opts) {
+VideoStitcherServiceClient::DeleteLiveConfig(NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::video::stitcher::v1::DeleteLiveConfigRequest request;
   request.set_name(name);
@@ -655,33 +529,25 @@ VideoStitcherServiceClient::DeleteLiveConfig(NoAwaitTag,
 }
 
 future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>
-VideoStitcherServiceClient::DeleteLiveConfig(
-    google::cloud::video::stitcher::v1::DeleteLiveConfigRequest const& request,
-    Options opts) {
+VideoStitcherServiceClient::DeleteLiveConfig(google::cloud::video::stitcher::v1::DeleteLiveConfigRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteLiveConfig(request);
 }
 
 StatusOr<google::longrunning::Operation>
-VideoStitcherServiceClient::DeleteLiveConfig(
-    NoAwaitTag,
-    google::cloud::video::stitcher::v1::DeleteLiveConfigRequest const& request,
-    Options opts) {
+VideoStitcherServiceClient::DeleteLiveConfig(NoAwaitTag, google::cloud::video::stitcher::v1::DeleteLiveConfigRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteLiveConfig(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>
-VideoStitcherServiceClient::DeleteLiveConfig(
-    google::longrunning::Operation const& operation, Options opts) {
+VideoStitcherServiceClient::DeleteLiveConfig(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteLiveConfig(operation);
 }
 
 future<StatusOr<google::cloud::video::stitcher::v1::LiveConfig>>
-VideoStitcherServiceClient::UpdateLiveConfig(
-    google::cloud::video::stitcher::v1::LiveConfig const& live_config,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+VideoStitcherServiceClient::UpdateLiveConfig(google::cloud::video::stitcher::v1::LiveConfig const& live_config, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::video::stitcher::v1::UpdateLiveConfigRequest request;
   *request.mutable_live_config() = live_config;
@@ -690,10 +556,7 @@ VideoStitcherServiceClient::UpdateLiveConfig(
 }
 
 StatusOr<google::longrunning::Operation>
-VideoStitcherServiceClient::UpdateLiveConfig(
-    NoAwaitTag,
-    google::cloud::video::stitcher::v1::LiveConfig const& live_config,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+VideoStitcherServiceClient::UpdateLiveConfig(NoAwaitTag, google::cloud::video::stitcher::v1::LiveConfig const& live_config, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::video::stitcher::v1::UpdateLiveConfigRequest request;
   *request.mutable_live_config() = live_config;
@@ -702,34 +565,25 @@ VideoStitcherServiceClient::UpdateLiveConfig(
 }
 
 future<StatusOr<google::cloud::video::stitcher::v1::LiveConfig>>
-VideoStitcherServiceClient::UpdateLiveConfig(
-    google::cloud::video::stitcher::v1::UpdateLiveConfigRequest const& request,
-    Options opts) {
+VideoStitcherServiceClient::UpdateLiveConfig(google::cloud::video::stitcher::v1::UpdateLiveConfigRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateLiveConfig(request);
 }
 
 StatusOr<google::longrunning::Operation>
-VideoStitcherServiceClient::UpdateLiveConfig(
-    NoAwaitTag,
-    google::cloud::video::stitcher::v1::UpdateLiveConfigRequest const& request,
-    Options opts) {
+VideoStitcherServiceClient::UpdateLiveConfig(NoAwaitTag, google::cloud::video::stitcher::v1::UpdateLiveConfigRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateLiveConfig(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::video::stitcher::v1::LiveConfig>>
-VideoStitcherServiceClient::UpdateLiveConfig(
-    google::longrunning::Operation const& operation, Options opts) {
+VideoStitcherServiceClient::UpdateLiveConfig(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateLiveConfig(operation);
 }
 
 future<StatusOr<google::cloud::video::stitcher::v1::VodConfig>>
-VideoStitcherServiceClient::CreateVodConfig(
-    std::string const& parent,
-    google::cloud::video::stitcher::v1::VodConfig const& vod_config,
-    std::string const& vod_config_id, Options opts) {
+VideoStitcherServiceClient::CreateVodConfig(std::string const& parent, google::cloud::video::stitcher::v1::VodConfig const& vod_config, std::string const& vod_config_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::video::stitcher::v1::CreateVodConfigRequest request;
   request.set_parent(parent);
@@ -739,10 +593,7 @@ VideoStitcherServiceClient::CreateVodConfig(
 }
 
 StatusOr<google::longrunning::Operation>
-VideoStitcherServiceClient::CreateVodConfig(
-    NoAwaitTag, std::string const& parent,
-    google::cloud::video::stitcher::v1::VodConfig const& vod_config,
-    std::string const& vod_config_id, Options opts) {
+VideoStitcherServiceClient::CreateVodConfig(NoAwaitTag, std::string const& parent, google::cloud::video::stitcher::v1::VodConfig const& vod_config, std::string const& vod_config_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::video::stitcher::v1::CreateVodConfigRequest request;
   request.set_parent(parent);
@@ -752,32 +603,25 @@ VideoStitcherServiceClient::CreateVodConfig(
 }
 
 future<StatusOr<google::cloud::video::stitcher::v1::VodConfig>>
-VideoStitcherServiceClient::CreateVodConfig(
-    google::cloud::video::stitcher::v1::CreateVodConfigRequest const& request,
-    Options opts) {
+VideoStitcherServiceClient::CreateVodConfig(google::cloud::video::stitcher::v1::CreateVodConfigRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateVodConfig(request);
 }
 
 StatusOr<google::longrunning::Operation>
-VideoStitcherServiceClient::CreateVodConfig(
-    NoAwaitTag,
-    google::cloud::video::stitcher::v1::CreateVodConfigRequest const& request,
-    Options opts) {
+VideoStitcherServiceClient::CreateVodConfig(NoAwaitTag, google::cloud::video::stitcher::v1::CreateVodConfigRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateVodConfig(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::video::stitcher::v1::VodConfig>>
-VideoStitcherServiceClient::CreateVodConfig(
-    google::longrunning::Operation const& operation, Options opts) {
+VideoStitcherServiceClient::CreateVodConfig(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateVodConfig(operation);
 }
 
 StreamRange<google::cloud::video::stitcher::v1::VodConfig>
-VideoStitcherServiceClient::ListVodConfigs(std::string const& parent,
-                                           Options opts) {
+VideoStitcherServiceClient::ListVodConfigs(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::video::stitcher::v1::ListVodConfigsRequest request;
   request.set_parent(parent);
@@ -785,16 +629,13 @@ VideoStitcherServiceClient::ListVodConfigs(std::string const& parent,
 }
 
 StreamRange<google::cloud::video::stitcher::v1::VodConfig>
-VideoStitcherServiceClient::ListVodConfigs(
-    google::cloud::video::stitcher::v1::ListVodConfigsRequest request,
-    Options opts) {
+VideoStitcherServiceClient::ListVodConfigs(google::cloud::video::stitcher::v1::ListVodConfigsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListVodConfigs(std::move(request));
 }
 
 StatusOr<google::cloud::video::stitcher::v1::VodConfig>
-VideoStitcherServiceClient::GetVodConfig(std::string const& name,
-                                         Options opts) {
+VideoStitcherServiceClient::GetVodConfig(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::video::stitcher::v1::GetVodConfigRequest request;
   request.set_name(name);
@@ -802,16 +643,13 @@ VideoStitcherServiceClient::GetVodConfig(std::string const& name,
 }
 
 StatusOr<google::cloud::video::stitcher::v1::VodConfig>
-VideoStitcherServiceClient::GetVodConfig(
-    google::cloud::video::stitcher::v1::GetVodConfigRequest const& request,
-    Options opts) {
+VideoStitcherServiceClient::GetVodConfig(google::cloud::video::stitcher::v1::GetVodConfigRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetVodConfig(request);
 }
 
 future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>
-VideoStitcherServiceClient::DeleteVodConfig(std::string const& name,
-                                            Options opts) {
+VideoStitcherServiceClient::DeleteVodConfig(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::video::stitcher::v1::DeleteVodConfigRequest request;
   request.set_name(name);
@@ -819,8 +657,7 @@ VideoStitcherServiceClient::DeleteVodConfig(std::string const& name,
 }
 
 StatusOr<google::longrunning::Operation>
-VideoStitcherServiceClient::DeleteVodConfig(NoAwaitTag, std::string const& name,
-                                            Options opts) {
+VideoStitcherServiceClient::DeleteVodConfig(NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::video::stitcher::v1::DeleteVodConfigRequest request;
   request.set_name(name);
@@ -828,33 +665,25 @@ VideoStitcherServiceClient::DeleteVodConfig(NoAwaitTag, std::string const& name,
 }
 
 future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>
-VideoStitcherServiceClient::DeleteVodConfig(
-    google::cloud::video::stitcher::v1::DeleteVodConfigRequest const& request,
-    Options opts) {
+VideoStitcherServiceClient::DeleteVodConfig(google::cloud::video::stitcher::v1::DeleteVodConfigRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteVodConfig(request);
 }
 
 StatusOr<google::longrunning::Operation>
-VideoStitcherServiceClient::DeleteVodConfig(
-    NoAwaitTag,
-    google::cloud::video::stitcher::v1::DeleteVodConfigRequest const& request,
-    Options opts) {
+VideoStitcherServiceClient::DeleteVodConfig(NoAwaitTag, google::cloud::video::stitcher::v1::DeleteVodConfigRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteVodConfig(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>
-VideoStitcherServiceClient::DeleteVodConfig(
-    google::longrunning::Operation const& operation, Options opts) {
+VideoStitcherServiceClient::DeleteVodConfig(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteVodConfig(operation);
 }
 
 future<StatusOr<google::cloud::video::stitcher::v1::VodConfig>>
-VideoStitcherServiceClient::UpdateVodConfig(
-    google::cloud::video::stitcher::v1::VodConfig const& vod_config,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+VideoStitcherServiceClient::UpdateVodConfig(google::cloud::video::stitcher::v1::VodConfig const& vod_config, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::video::stitcher::v1::UpdateVodConfigRequest request;
   *request.mutable_vod_config() = vod_config;
@@ -863,9 +692,7 @@ VideoStitcherServiceClient::UpdateVodConfig(
 }
 
 StatusOr<google::longrunning::Operation>
-VideoStitcherServiceClient::UpdateVodConfig(
-    NoAwaitTag, google::cloud::video::stitcher::v1::VodConfig const& vod_config,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+VideoStitcherServiceClient::UpdateVodConfig(NoAwaitTag, google::cloud::video::stitcher::v1::VodConfig const& vod_config, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::video::stitcher::v1::UpdateVodConfigRequest request;
   *request.mutable_vod_config() = vod_config;
@@ -874,33 +701,25 @@ VideoStitcherServiceClient::UpdateVodConfig(
 }
 
 future<StatusOr<google::cloud::video::stitcher::v1::VodConfig>>
-VideoStitcherServiceClient::UpdateVodConfig(
-    google::cloud::video::stitcher::v1::UpdateVodConfigRequest const& request,
-    Options opts) {
+VideoStitcherServiceClient::UpdateVodConfig(google::cloud::video::stitcher::v1::UpdateVodConfigRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateVodConfig(request);
 }
 
 StatusOr<google::longrunning::Operation>
-VideoStitcherServiceClient::UpdateVodConfig(
-    NoAwaitTag,
-    google::cloud::video::stitcher::v1::UpdateVodConfigRequest const& request,
-    Options opts) {
+VideoStitcherServiceClient::UpdateVodConfig(NoAwaitTag, google::cloud::video::stitcher::v1::UpdateVodConfigRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateVodConfig(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::video::stitcher::v1::VodConfig>>
-VideoStitcherServiceClient::UpdateVodConfig(
-    google::longrunning::Operation const& operation, Options opts) {
+VideoStitcherServiceClient::UpdateVodConfig(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateVodConfig(operation);
 }
 
 StreamRange<google::longrunning::Operation>
-VideoStitcherServiceClient::ListOperations(std::string const& name,
-                                           std::string const& filter,
-                                           Options opts) {
+VideoStitcherServiceClient::ListOperations(std::string const& name, std::string const& filter, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::ListOperationsRequest request;
   request.set_name(name);
@@ -909,15 +728,13 @@ VideoStitcherServiceClient::ListOperations(std::string const& name,
 }
 
 StreamRange<google::longrunning::Operation>
-VideoStitcherServiceClient::ListOperations(
-    google::longrunning::ListOperationsRequest request, Options opts) {
+VideoStitcherServiceClient::ListOperations(google::longrunning::ListOperationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOperations(std::move(request));
 }
 
 StatusOr<google::longrunning::Operation>
-VideoStitcherServiceClient::GetOperation(std::string const& name,
-                                         Options opts) {
+VideoStitcherServiceClient::GetOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
@@ -925,36 +742,35 @@ VideoStitcherServiceClient::GetOperation(std::string const& name,
 }
 
 StatusOr<google::longrunning::Operation>
-VideoStitcherServiceClient::GetOperation(
-    google::longrunning::GetOperationRequest const& request, Options opts) {
+VideoStitcherServiceClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }
 
-Status VideoStitcherServiceClient::DeleteOperation(std::string const& name,
-                                                   Options opts) {
+Status
+VideoStitcherServiceClient::DeleteOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::DeleteOperationRequest request;
   request.set_name(name);
   return connection_->DeleteOperation(request);
 }
 
-Status VideoStitcherServiceClient::DeleteOperation(
-    google::longrunning::DeleteOperationRequest const& request, Options opts) {
+Status
+VideoStitcherServiceClient::DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteOperation(request);
 }
 
-Status VideoStitcherServiceClient::CancelOperation(std::string const& name,
-                                                   Options opts) {
+Status
+VideoStitcherServiceClient::CancelOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::CancelOperationRequest request;
   request.set_name(name);
   return connection_->CancelOperation(request);
 }
 
-Status VideoStitcherServiceClient::CancelOperation(
-    google::longrunning::CancelOperationRequest const& request, Options opts) {
+Status
+VideoStitcherServiceClient::CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelOperation(request);
 }

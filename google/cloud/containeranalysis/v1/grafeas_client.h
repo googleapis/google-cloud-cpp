@@ -46,9 +46,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// analysis and is generally stored in a separate project, called a `Provider`.
 /// Multiple occurrences can refer to the same note.
 ///
-/// For example, an SSL vulnerability could affect multiple images. In this
-/// case, there would be one note for the vulnerability and an occurrence for
-/// each image with the vulnerability referring to that note.
+/// For example, an SSL vulnerability could affect multiple images. In this case,
+/// there would be one note for the vulnerability and an occurrence for each
+/// image with the vulnerability referring to that note.
 ///
 /// @par Equality
 ///
@@ -75,8 +75,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class GrafeasClient {
  public:
-  explicit GrafeasClient(std::shared_ptr<GrafeasConnection> connection,
-                         Options opts = {});
+  explicit GrafeasClient(std::shared_ptr<GrafeasConnection> connection, Options opts = {});
   ~GrafeasClient();
 
   ///@{
@@ -120,8 +119,8 @@ class GrafeasClient {
   /// [grafeas.v1.Occurrence]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L241}
   ///
   // clang-format on
-  StatusOr<grafeas::v1::Occurrence> GetOccurrence(std::string const& name,
-                                                  Options opts = {});
+  StatusOr<grafeas::v1::Occurrence>
+  GetOccurrence(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -150,8 +149,8 @@ class GrafeasClient {
   /// [grafeas.v1.Occurrence]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L241}
   ///
   // clang-format on
-  StatusOr<grafeas::v1::Occurrence> GetOccurrence(
-      grafeas::v1::GetOccurrenceRequest const& request, Options opts = {});
+  StatusOr<grafeas::v1::Occurrence>
+  GetOccurrence(grafeas::v1::GetOccurrenceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -186,8 +185,8 @@ class GrafeasClient {
   /// [grafeas.v1.Occurrence]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L241}
   ///
   // clang-format on
-  StreamRange<grafeas::v1::Occurrence> ListOccurrences(
-      std::string const& parent, std::string const& filter, Options opts = {});
+  StreamRange<grafeas::v1::Occurrence>
+  ListOccurrences(std::string const& parent, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -225,8 +224,8 @@ class GrafeasClient {
   /// [grafeas.v1.Occurrence]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L241}
   ///
   // clang-format on
-  StreamRange<grafeas::v1::Occurrence> ListOccurrences(
-      grafeas::v1::ListOccurrencesRequest request, Options opts = {});
+  StreamRange<grafeas::v1::Occurrence>
+  ListOccurrences(grafeas::v1::ListOccurrencesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -250,7 +249,8 @@ class GrafeasClient {
   /// [grafeas.v1.DeleteOccurrenceRequest]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L418}
   ///
   // clang-format on
-  Status DeleteOccurrence(std::string const& name, Options opts = {});
+  Status
+  DeleteOccurrence(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -278,8 +278,8 @@ class GrafeasClient {
   /// [grafeas.v1.DeleteOccurrenceRequest]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L418}
   ///
   // clang-format on
-  Status DeleteOccurrence(grafeas::v1::DeleteOccurrenceRequest const& request,
-                          Options opts = {});
+  Status
+  DeleteOccurrence(grafeas::v1::DeleteOccurrenceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -305,9 +305,8 @@ class GrafeasClient {
   /// [grafeas.v1.Occurrence]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L241}
   ///
   // clang-format on
-  StatusOr<grafeas::v1::Occurrence> CreateOccurrence(
-      std::string const& parent, grafeas::v1::Occurrence const& occurrence,
-      Options opts = {});
+  StatusOr<grafeas::v1::Occurrence>
+  CreateOccurrence(std::string const& parent, grafeas::v1::Occurrence const& occurrence, Options opts = {});
 
   // clang-format off
   ///
@@ -336,8 +335,8 @@ class GrafeasClient {
   /// [grafeas.v1.Occurrence]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L241}
   ///
   // clang-format on
-  StatusOr<grafeas::v1::Occurrence> CreateOccurrence(
-      grafeas::v1::CreateOccurrenceRequest const& request, Options opts = {});
+  StatusOr<grafeas::v1::Occurrence>
+  CreateOccurrence(grafeas::v1::CreateOccurrenceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -363,10 +362,8 @@ class GrafeasClient {
   /// [grafeas.v1.BatchCreateOccurrencesResponse]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L598}
   ///
   // clang-format on
-  StatusOr<grafeas::v1::BatchCreateOccurrencesResponse> BatchCreateOccurrences(
-      std::string const& parent,
-      std::vector<grafeas::v1::Occurrence> const& occurrences,
-      Options opts = {});
+  StatusOr<grafeas::v1::BatchCreateOccurrencesResponse>
+  BatchCreateOccurrences(std::string const& parent, std::vector<grafeas::v1::Occurrence> const& occurrences, Options opts = {});
 
   // clang-format off
   ///
@@ -395,9 +392,8 @@ class GrafeasClient {
   /// [grafeas.v1.BatchCreateOccurrencesResponse]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L598}
   ///
   // clang-format on
-  StatusOr<grafeas::v1::BatchCreateOccurrencesResponse> BatchCreateOccurrences(
-      grafeas::v1::BatchCreateOccurrencesRequest const& request,
-      Options opts = {});
+  StatusOr<grafeas::v1::BatchCreateOccurrencesResponse>
+  BatchCreateOccurrences(grafeas::v1::BatchCreateOccurrencesRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -424,9 +420,8 @@ class GrafeasClient {
   /// [grafeas.v1.UpdateOccurrenceRequest]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L440}
   ///
   // clang-format on
-  StatusOr<grafeas::v1::Occurrence> UpdateOccurrence(
-      std::string const& name, grafeas::v1::Occurrence const& occurrence,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<grafeas::v1::Occurrence>
+  UpdateOccurrence(std::string const& name, grafeas::v1::Occurrence const& occurrence, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -455,8 +450,8 @@ class GrafeasClient {
   /// [grafeas.v1.UpdateOccurrenceRequest]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L440}
   ///
   // clang-format on
-  StatusOr<grafeas::v1::Occurrence> UpdateOccurrence(
-      grafeas::v1::UpdateOccurrenceRequest const& request, Options opts = {});
+  StatusOr<grafeas::v1::Occurrence>
+  UpdateOccurrence(grafeas::v1::UpdateOccurrenceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -482,8 +477,8 @@ class GrafeasClient {
   /// [grafeas.v1.Note]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L309}
   ///
   // clang-format on
-  StatusOr<grafeas::v1::Note> GetOccurrenceNote(std::string const& name,
-                                                Options opts = {});
+  StatusOr<grafeas::v1::Note>
+  GetOccurrenceNote(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -513,8 +508,8 @@ class GrafeasClient {
   /// [grafeas.v1.Note]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L309}
   ///
   // clang-format on
-  StatusOr<grafeas::v1::Note> GetOccurrenceNote(
-      grafeas::v1::GetOccurrenceNoteRequest const& request, Options opts = {});
+  StatusOr<grafeas::v1::Note>
+  GetOccurrenceNote(grafeas::v1::GetOccurrenceNoteRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -539,8 +534,8 @@ class GrafeasClient {
   /// [grafeas.v1.Note]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L309}
   ///
   // clang-format on
-  StatusOr<grafeas::v1::Note> GetNote(std::string const& name,
-                                      Options opts = {});
+  StatusOr<grafeas::v1::Note>
+  GetNote(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -569,8 +564,8 @@ class GrafeasClient {
   /// [grafeas.v1.Note]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L309}
   ///
   // clang-format on
-  StatusOr<grafeas::v1::Note> GetNote(
-      grafeas::v1::GetNoteRequest const& request, Options opts = {});
+  StatusOr<grafeas::v1::Note>
+  GetNote(grafeas::v1::GetNoteRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -605,9 +600,8 @@ class GrafeasClient {
   /// [grafeas.v1.Note]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L309}
   ///
   // clang-format on
-  StreamRange<grafeas::v1::Note> ListNotes(std::string const& parent,
-                                           std::string const& filter,
-                                           Options opts = {});
+  StreamRange<grafeas::v1::Note>
+  ListNotes(std::string const& parent, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -645,8 +639,8 @@ class GrafeasClient {
   /// [grafeas.v1.Note]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L309}
   ///
   // clang-format on
-  StreamRange<grafeas::v1::Note> ListNotes(
-      grafeas::v1::ListNotesRequest request, Options opts = {});
+  StreamRange<grafeas::v1::Note>
+  ListNotes(grafeas::v1::ListNotesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -668,7 +662,8 @@ class GrafeasClient {
   /// [grafeas.v1.DeleteNoteRequest]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L504}
   ///
   // clang-format on
-  Status DeleteNote(std::string const& name, Options opts = {});
+  Status
+  DeleteNote(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -694,8 +689,8 @@ class GrafeasClient {
   /// [grafeas.v1.DeleteNoteRequest]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L504}
   ///
   // clang-format on
-  Status DeleteNote(grafeas::v1::DeleteNoteRequest const& request,
-                    Options opts = {});
+  Status
+  DeleteNote(grafeas::v1::DeleteNoteRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -722,10 +717,8 @@ class GrafeasClient {
   /// [grafeas.v1.Note]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L309}
   ///
   // clang-format on
-  StatusOr<grafeas::v1::Note> CreateNote(std::string const& parent,
-                                         std::string const& note_id,
-                                         grafeas::v1::Note const& note,
-                                         Options opts = {});
+  StatusOr<grafeas::v1::Note>
+  CreateNote(std::string const& parent, std::string const& note_id, grafeas::v1::Note const& note, Options opts = {});
 
   // clang-format off
   ///
@@ -754,8 +747,8 @@ class GrafeasClient {
   /// [grafeas.v1.Note]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L309}
   ///
   // clang-format on
-  StatusOr<grafeas::v1::Note> CreateNote(
-      grafeas::v1::CreateNoteRequest const& request, Options opts = {});
+  StatusOr<grafeas::v1::Note>
+  CreateNote(grafeas::v1::CreateNoteRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -781,9 +774,8 @@ class GrafeasClient {
   /// [grafeas.v1.BatchCreateNotesResponse]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L579}
   ///
   // clang-format on
-  StatusOr<grafeas::v1::BatchCreateNotesResponse> BatchCreateNotes(
-      std::string const& parent,
-      std::map<std::string, grafeas::v1::Note> const& notes, Options opts = {});
+  StatusOr<grafeas::v1::BatchCreateNotesResponse>
+  BatchCreateNotes(std::string const& parent, std::map<std::string, grafeas::v1::Note> const& notes, Options opts = {});
 
   // clang-format off
   ///
@@ -812,8 +804,8 @@ class GrafeasClient {
   /// [grafeas.v1.BatchCreateNotesResponse]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L579}
   ///
   // clang-format on
-  StatusOr<grafeas::v1::BatchCreateNotesResponse> BatchCreateNotes(
-      grafeas::v1::BatchCreateNotesRequest const& request, Options opts = {});
+  StatusOr<grafeas::v1::BatchCreateNotesResponse>
+  BatchCreateNotes(grafeas::v1::BatchCreateNotesRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -840,9 +832,8 @@ class GrafeasClient {
   /// [grafeas.v1.UpdateNoteRequest]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L528}
   ///
   // clang-format on
-  StatusOr<grafeas::v1::Note> UpdateNote(
-      std::string const& name, grafeas::v1::Note const& note,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<grafeas::v1::Note>
+  UpdateNote(std::string const& name, grafeas::v1::Note const& note, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -871,8 +862,8 @@ class GrafeasClient {
   /// [grafeas.v1.UpdateNoteRequest]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L528}
   ///
   // clang-format on
-  StatusOr<grafeas::v1::Note> UpdateNote(
-      grafeas::v1::UpdateNoteRequest const& request, Options opts = {});
+  StatusOr<grafeas::v1::Note>
+  UpdateNote(grafeas::v1::UpdateNoteRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -909,8 +900,8 @@ class GrafeasClient {
   /// [grafeas.v1.Occurrence]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L241}
   ///
   // clang-format on
-  StreamRange<grafeas::v1::Occurrence> ListNoteOccurrences(
-      std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<grafeas::v1::Occurrence>
+  ListNoteOccurrences(std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -950,8 +941,8 @@ class GrafeasClient {
   /// [grafeas.v1.Occurrence]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L241}
   ///
   // clang-format on
-  StreamRange<grafeas::v1::Occurrence> ListNoteOccurrences(
-      grafeas::v1::ListNoteOccurrencesRequest request, Options opts = {});
+  StreamRange<grafeas::v1::Occurrence>
+  ListNoteOccurrences(grafeas::v1::ListNoteOccurrencesRequest request, Options opts = {});
 
  private:
   std::shared_ptr<GrafeasConnection> connection_;

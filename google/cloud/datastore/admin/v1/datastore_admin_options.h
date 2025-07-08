@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATASTORE_ADMIN_V1_DATASTORE_ADMIN_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATASTORE_ADMIN_V1_DATASTORE_ADMIN_OPTIONS_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/datastore/admin/v1/datastore_admin_connection.h"
 #include "google/cloud/datastore/admin/v1/datastore_admin_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>

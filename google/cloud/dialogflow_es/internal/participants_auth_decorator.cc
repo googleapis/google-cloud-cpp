@@ -32,45 +32,45 @@ ParticipantsAuth::ParticipantsAuth(
     std::shared_ptr<ParticipantsStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::dialogflow::v2::Participant>
-ParticipantsAuth::CreateParticipant(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::dialogflow::v2::Participant> ParticipantsAuth::CreateParticipant(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dialogflow::v2::CreateParticipantRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateParticipant(context, options, request);
 }
 
-StatusOr<google::cloud::dialogflow::v2::Participant>
-ParticipantsAuth::GetParticipant(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::dialogflow::v2::Participant> ParticipantsAuth::GetParticipant(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dialogflow::v2::GetParticipantRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetParticipant(context, options, request);
 }
 
-StatusOr<google::cloud::dialogflow::v2::ListParticipantsResponse>
-ParticipantsAuth::ListParticipants(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::dialogflow::v2::ListParticipantsResponse> ParticipantsAuth::ListParticipants(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dialogflow::v2::ListParticipantsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListParticipants(context, options, request);
 }
 
-StatusOr<google::cloud::dialogflow::v2::Participant>
-ParticipantsAuth::UpdateParticipant(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::dialogflow::v2::Participant> ParticipantsAuth::UpdateParticipant(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dialogflow::v2::UpdateParticipantRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateParticipant(context, options, request);
 }
 
-StatusOr<google::cloud::dialogflow::v2::AnalyzeContentResponse>
-ParticipantsAuth::AnalyzeContent(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::dialogflow::v2::AnalyzeContentResponse> ParticipantsAuth::AnalyzeContent(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dialogflow::v2::AnalyzeContentRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -85,57 +85,55 @@ ParticipantsAuth::AsyncStreamingAnalyzeContent(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options) {
   using StreamAuth = google::cloud::internal::AsyncStreamingReadWriteRpcAuth<
-      google::cloud::dialogflow::v2::StreamingAnalyzeContentRequest,
-      google::cloud::dialogflow::v2::StreamingAnalyzeContentResponse>;
+    google::cloud::dialogflow::v2::StreamingAnalyzeContentRequest, google::cloud::dialogflow::v2::StreamingAnalyzeContentResponse>;
 
   auto call = [child = child_, cq, options = std::move(options)](
                   std::shared_ptr<grpc::ClientContext> ctx) {
     return child->AsyncStreamingAnalyzeContent(cq, std::move(ctx), options);
   };
   return std::make_unique<StreamAuth>(
-      std::move(context), auth_, StreamAuth::StreamFactory(std::move(call)));
+    std::move(context), auth_, StreamAuth::StreamFactory(std::move(call)));
 }
 
-StatusOr<google::cloud::dialogflow::v2::SuggestArticlesResponse>
-ParticipantsAuth::SuggestArticles(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::dialogflow::v2::SuggestArticlesResponse> ParticipantsAuth::SuggestArticles(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dialogflow::v2::SuggestArticlesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->SuggestArticles(context, options, request);
 }
 
-StatusOr<google::cloud::dialogflow::v2::SuggestFaqAnswersResponse>
-ParticipantsAuth::SuggestFaqAnswers(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::dialogflow::v2::SuggestFaqAnswersResponse> ParticipantsAuth::SuggestFaqAnswers(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dialogflow::v2::SuggestFaqAnswersRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->SuggestFaqAnswers(context, options, request);
 }
 
-StatusOr<google::cloud::dialogflow::v2::SuggestSmartRepliesResponse>
-ParticipantsAuth::SuggestSmartReplies(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::dialogflow::v2::SuggestSmartRepliesResponse> ParticipantsAuth::SuggestSmartReplies(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dialogflow::v2::SuggestSmartRepliesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->SuggestSmartReplies(context, options, request);
 }
 
-StatusOr<google::cloud::dialogflow::v2::SuggestKnowledgeAssistResponse>
-ParticipantsAuth::SuggestKnowledgeAssist(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::dialogflow::v2::SuggestKnowledgeAssistRequest const&
-        request) {
+StatusOr<google::cloud::dialogflow::v2::SuggestKnowledgeAssistResponse> ParticipantsAuth::SuggestKnowledgeAssist(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::dialogflow::v2::SuggestKnowledgeAssistRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->SuggestKnowledgeAssist(context, options, request);
 }
 
-StatusOr<google::cloud::location::ListLocationsResponse>
-ParticipantsAuth::ListLocations(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::location::ListLocationsResponse> ParticipantsAuth::ListLocations(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -143,16 +141,17 @@ ParticipantsAuth::ListLocations(
 }
 
 StatusOr<google::cloud::location::Location> ParticipantsAuth::GetLocation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetLocation(context, options, request);
 }
 
-StatusOr<google::longrunning::ListOperationsResponse>
-ParticipantsAuth::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse> ParticipantsAuth::ListOperations(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -160,7 +159,8 @@ ParticipantsAuth::ListOperations(
 }
 
 StatusOr<google::longrunning::Operation> ParticipantsAuth::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -168,7 +168,8 @@ StatusOr<google::longrunning::Operation> ParticipantsAuth::GetOperation(
 }
 
 Status ParticipantsAuth::CancelOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;

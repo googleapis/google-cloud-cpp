@@ -17,11 +17,11 @@
 // source: google/cloud/resourcemanager/v3/folders.proto
 
 #include "google/cloud/resourcemanager/v3/internal/folders_option_defaults.h"
+#include "google/cloud/internal/populate_common_options.h"
+#include "google/cloud/internal/populate_grpc_options.h"
 #include "google/cloud/resourcemanager/v3/folders_connection.h"
 #include "google/cloud/resourcemanager/v3/folders_options.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
-#include "google/cloud/internal/populate_common_options.h"
-#include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 #include <utility>
 
@@ -36,39 +36,31 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options FoldersDefaultOptions(std::string const& location, Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_FOLDERS_ENDPOINT", "",
-      "GOOGLE_CLOUD_CPP_FOLDERS_AUTHORITY",
+      std::move(options), "GOOGLE_CLOUD_CPP_FOLDERS_ENDPOINT",
+      "", "GOOGLE_CLOUD_CPP_FOLDERS_AUTHORITY",
       // optional location tag for generating docs
-      absl::StrCat(location, location.empty() ? "" : "-",
-                   "cloudresourcemanager.googleapis.com"));
+      absl::StrCat(location, location.empty() ? "" : "-", "cloudresourcemanager.googleapis.com"));
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<resourcemanager_v3::FoldersRetryPolicyOption>()) {
     options.set<resourcemanager_v3::FoldersRetryPolicyOption>(
         resourcemanager_v3::FoldersLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
-            .clone());
+            std::chrono::minutes(30)).clone());
   }
   if (!options.has<resourcemanager_v3::FoldersBackoffPolicyOption>()) {
     options.set<resourcemanager_v3::FoldersBackoffPolicyOption>(
-        ExponentialBackoffPolicy(
-            std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
-            .clone());
+        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
   }
   if (!options.has<resourcemanager_v3::FoldersPollingPolicyOption>()) {
     options.set<resourcemanager_v3::FoldersPollingPolicyOption>(
         GenericPollingPolicy<
             resourcemanager_v3::FoldersRetryPolicyOption::Type,
             resourcemanager_v3::FoldersBackoffPolicyOption::Type>(
-            options.get<resourcemanager_v3::FoldersRetryPolicyOption>()
-                ->clone(),
+            options.get<resourcemanager_v3::FoldersRetryPolicyOption>()->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                     std::chrono::minutes(5), kBackoffScaling)
-                .clone())
-            .clone());
+            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
   }
-  if (!options.has<
-          resourcemanager_v3::FoldersConnectionIdempotencyPolicyOption>()) {
+  if (!options.has<resourcemanager_v3::FoldersConnectionIdempotencyPolicyOption>()) {
     options.set<resourcemanager_v3::FoldersConnectionIdempotencyPolicyOption>(
         resourcemanager_v3::MakeDefaultFoldersConnectionIdempotencyPolicy());
   }

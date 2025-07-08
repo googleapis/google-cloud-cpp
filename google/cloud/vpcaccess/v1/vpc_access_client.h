@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VPCACCESS_V1_VPC_ACCESS_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VPCACCESS_V1_VPC_ACCESS_CLIENT_H
 
-#include "google/cloud/vpcaccess/v1/vpc_access_connection.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
+#include "google/cloud/vpcaccess/v1/vpc_access_connection.h"
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 #include <string>
@@ -65,9 +65,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class VpcAccessServiceClient {
  public:
-  explicit VpcAccessServiceClient(
-      std::shared_ptr<VpcAccessServiceConnection> connection,
-      Options opts = {});
+  explicit VpcAccessServiceClient(std::shared_ptr<VpcAccessServiceConnection> connection, Options opts = {});
   ~VpcAccessServiceClient();
 
   ///@{
@@ -80,12 +78,10 @@ class VpcAccessServiceClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(VpcAccessServiceClient const& a,
-                         VpcAccessServiceClient const& b) {
+  friend bool operator==(VpcAccessServiceClient const& a, VpcAccessServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(VpcAccessServiceClient const& a,
-                         VpcAccessServiceClient const& b) {
+  friend bool operator!=(VpcAccessServiceClient const& a, VpcAccessServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -122,10 +118,8 @@ class VpcAccessServiceClient {
   /// [google.cloud.vpcaccess.v1.CreateConnectorRequest]: @googleapis_reference_link{google/cloud/vpcaccess/v1/vpc_access.proto#L163}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::vpcaccess::v1::Connector>> CreateConnector(
-      std::string const& parent, std::string const& connector_id,
-      google::cloud::vpcaccess::v1::Connector const& connector,
-      Options opts = {});
+  future<StatusOr<google::cloud::vpcaccess::v1::Connector>>
+  CreateConnector(std::string const& parent, std::string const& connector_id, google::cloud::vpcaccess::v1::Connector const& connector, Options opts = {});
 
   // clang-format off
   ///
@@ -138,10 +132,8 @@ class VpcAccessServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateConnector(
-      NoAwaitTag, std::string const& parent, std::string const& connector_id,
-      google::cloud::vpcaccess::v1::Connector const& connector,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateConnector(NoAwaitTag, std::string const& parent, std::string const& connector_id, google::cloud::vpcaccess::v1::Connector const& connector, Options opts = {});
 
   // clang-format off
   ///
@@ -177,9 +169,8 @@ class VpcAccessServiceClient {
   /// [google.cloud.vpcaccess.v1.CreateConnectorRequest]: @googleapis_reference_link{google/cloud/vpcaccess/v1/vpc_access.proto#L163}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::vpcaccess::v1::Connector>> CreateConnector(
-      google::cloud::vpcaccess::v1::CreateConnectorRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::vpcaccess::v1::Connector>>
+  CreateConnector(google::cloud::vpcaccess::v1::CreateConnectorRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -192,10 +183,8 @@ class VpcAccessServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateConnector(
-      NoAwaitTag,
-      google::cloud::vpcaccess::v1::CreateConnectorRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateConnector(NoAwaitTag, google::cloud::vpcaccess::v1::CreateConnectorRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -206,8 +195,8 @@ class VpcAccessServiceClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::vpcaccess::v1::Connector>> CreateConnector(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::vpcaccess::v1::Connector>>
+  CreateConnector(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -232,8 +221,8 @@ class VpcAccessServiceClient {
   /// [google.cloud.vpcaccess.v1.GetConnectorRequest]: @googleapis_reference_link{google/cloud/vpcaccess/v1/vpc_access.proto#L181}
   ///
   // clang-format on
-  StatusOr<google::cloud::vpcaccess::v1::Connector> GetConnector(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::vpcaccess::v1::Connector>
+  GetConnector(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -263,9 +252,8 @@ class VpcAccessServiceClient {
   /// [google.cloud.vpcaccess.v1.GetConnectorRequest]: @googleapis_reference_link{google/cloud/vpcaccess/v1/vpc_access.proto#L181}
   ///
   // clang-format on
-  StatusOr<google::cloud::vpcaccess::v1::Connector> GetConnector(
-      google::cloud::vpcaccess::v1::GetConnectorRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::vpcaccess::v1::Connector>
+  GetConnector(google::cloud::vpcaccess::v1::GetConnectorRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -298,8 +286,8 @@ class VpcAccessServiceClient {
   /// [google.cloud.vpcaccess.v1.ListConnectorsRequest]: @googleapis_reference_link{google/cloud/vpcaccess/v1/vpc_access.proto#L192}
   ///
   // clang-format on
-  StreamRange<google::cloud::vpcaccess::v1::Connector> ListConnectors(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::vpcaccess::v1::Connector>
+  ListConnectors(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -337,9 +325,8 @@ class VpcAccessServiceClient {
   /// [google.cloud.vpcaccess.v1.ListConnectorsRequest]: @googleapis_reference_link{google/cloud/vpcaccess/v1/vpc_access.proto#L192}
   ///
   // clang-format on
-  StreamRange<google::cloud::vpcaccess::v1::Connector> ListConnectors(
-      google::cloud::vpcaccess::v1::ListConnectorsRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::vpcaccess::v1::Connector>
+  ListConnectors(google::cloud::vpcaccess::v1::ListConnectorsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -385,8 +372,8 @@ class VpcAccessServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteConnector(
-      NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteConnector(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -424,9 +411,7 @@ class VpcAccessServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vpcaccess::v1::OperationMetadata>>
-  DeleteConnector(
-      google::cloud::vpcaccess::v1::DeleteConnectorRequest const& request,
-      Options opts = {});
+  DeleteConnector(google::cloud::vpcaccess::v1::DeleteConnectorRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -439,10 +424,8 @@ class VpcAccessServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteConnector(
-      NoAwaitTag,
-      google::cloud::vpcaccess::v1::DeleteConnectorRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteConnector(NoAwaitTag, google::cloud::vpcaccess::v1::DeleteConnectorRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -454,8 +437,7 @@ class VpcAccessServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vpcaccess::v1::OperationMetadata>>
-  DeleteConnector(google::longrunning::Operation const& operation,
-                  Options opts = {});
+  DeleteConnector(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -493,8 +475,8 @@ class VpcAccessServiceClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request, Options opts = {});
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -529,8 +511,8 @@ class VpcAccessServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -569,8 +551,8 @@ class VpcAccessServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -596,8 +578,8 @@ class VpcAccessServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -628,9 +610,8 @@ class VpcAccessServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<VpcAccessServiceConnection> connection_;

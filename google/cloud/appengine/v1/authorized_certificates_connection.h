@@ -27,8 +27,8 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/appengine/v1/appengine.pb.h>
 #include <google/appengine/v1/operation.pb.h>
+#include <google/appengine/v1/appengine.pb.h>
 #include <memory>
 
 namespace google {
@@ -44,8 +44,7 @@ class AuthorizedCertificatesRetryPolicy : public ::google::cloud::RetryPolicy {
 };
 
 /**
- * A retry policy for `AuthorizedCertificatesConnection` based on counting
- * errors.
+ * A retry policy for `AuthorizedCertificatesConnection` based on counting errors.
  *
  * This policy stops retrying if:
  * - An RPC returns a non-transient error.
@@ -54,8 +53,7 @@ class AuthorizedCertificatesRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class AuthorizedCertificatesLimitedErrorCountRetryPolicy
-    : public AuthorizedCertificatesRetryPolicy {
+class AuthorizedCertificatesLimitedErrorCountRetryPolicy : public AuthorizedCertificatesRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -64,18 +62,15 @@ class AuthorizedCertificatesLimitedErrorCountRetryPolicy
    * @note Disable the retry loop by providing an instance of this policy with
    *     @p maximum_failures == 0.
    */
-  explicit AuthorizedCertificatesLimitedErrorCountRetryPolicy(
-      int maximum_failures)
-      : impl_(maximum_failures) {}
+  explicit AuthorizedCertificatesLimitedErrorCountRetryPolicy(int maximum_failures)
+    : impl_(maximum_failures) {}
 
   AuthorizedCertificatesLimitedErrorCountRetryPolicy(
       AuthorizedCertificatesLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : AuthorizedCertificatesLimitedErrorCountRetryPolicy(
-            rhs.maximum_failures()) {}
+    : AuthorizedCertificatesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   AuthorizedCertificatesLimitedErrorCountRetryPolicy(
       AuthorizedCertificatesLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : AuthorizedCertificatesLimitedErrorCountRetryPolicy(
-            rhs.maximum_failures()) {}
+    : AuthorizedCertificatesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -95,9 +90,7 @@ class AuthorizedCertificatesLimitedErrorCountRetryPolicy
   using BaseType = AuthorizedCertificatesRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      appengine_v1_internal::AuthorizedCertificatesRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<appengine_v1_internal::AuthorizedCertificatesRetryTraits> impl_;
 };
 
 /**
@@ -110,8 +103,7 @@ class AuthorizedCertificatesLimitedErrorCountRetryPolicy
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class AuthorizedCertificatesLimitedTimeRetryPolicy
-    : public AuthorizedCertificatesRetryPolicy {
+class AuthorizedCertificatesLimitedTimeRetryPolicy : public AuthorizedCertificatesRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -136,14 +128,12 @@ class AuthorizedCertificatesLimitedTimeRetryPolicy
   template <typename DurationRep, typename DurationPeriod>
   explicit AuthorizedCertificatesLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  AuthorizedCertificatesLimitedTimeRetryPolicy(
-      AuthorizedCertificatesLimitedTimeRetryPolicy&& rhs) noexcept
-      : AuthorizedCertificatesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  AuthorizedCertificatesLimitedTimeRetryPolicy(
-      AuthorizedCertificatesLimitedTimeRetryPolicy const& rhs) noexcept
-      : AuthorizedCertificatesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  AuthorizedCertificatesLimitedTimeRetryPolicy(AuthorizedCertificatesLimitedTimeRetryPolicy&& rhs) noexcept
+    : AuthorizedCertificatesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  AuthorizedCertificatesLimitedTimeRetryPolicy(AuthorizedCertificatesLimitedTimeRetryPolicy const& rhs) noexcept
+    : AuthorizedCertificatesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -165,19 +155,16 @@ class AuthorizedCertificatesLimitedTimeRetryPolicy
   using BaseType = AuthorizedCertificatesRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      appengine_v1_internal::AuthorizedCertificatesRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<appengine_v1_internal::AuthorizedCertificatesRetryTraits> impl_;
 };
 
 /**
- * The `AuthorizedCertificatesConnection` object for
- * `AuthorizedCertificatesClient`.
+ * The `AuthorizedCertificatesConnection` object for `AuthorizedCertificatesClient`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `AuthorizedCertificatesClient`. This allows users to inject custom
- * behavior (e.g., with a Google Mock object) when writing tests that use
- * objects of type `AuthorizedCertificatesClient`.
+ * sets in `AuthorizedCertificatesClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `AuthorizedCertificatesClient`.
  *
  * To create a concrete instance, see `MakeAuthorizedCertificatesConnection()`.
  *
@@ -190,36 +177,30 @@ class AuthorizedCertificatesConnection {
   virtual Options options() { return Options{}; }
 
   virtual StreamRange<google::appengine::v1::AuthorizedCertificate>
-  ListAuthorizedCertificates(
-      google::appengine::v1::ListAuthorizedCertificatesRequest request);
+  ListAuthorizedCertificates(google::appengine::v1::ListAuthorizedCertificatesRequest request);
 
   virtual StatusOr<google::appengine::v1::AuthorizedCertificate>
-  GetAuthorizedCertificate(
-      google::appengine::v1::GetAuthorizedCertificateRequest const& request);
+  GetAuthorizedCertificate(google::appengine::v1::GetAuthorizedCertificateRequest const& request);
 
   virtual StatusOr<google::appengine::v1::AuthorizedCertificate>
-  CreateAuthorizedCertificate(
-      google::appengine::v1::CreateAuthorizedCertificateRequest const& request);
+  CreateAuthorizedCertificate(google::appengine::v1::CreateAuthorizedCertificateRequest const& request);
 
   virtual StatusOr<google::appengine::v1::AuthorizedCertificate>
-  UpdateAuthorizedCertificate(
-      google::appengine::v1::UpdateAuthorizedCertificateRequest const& request);
+  UpdateAuthorizedCertificate(google::appengine::v1::UpdateAuthorizedCertificateRequest const& request);
 
-  virtual Status DeleteAuthorizedCertificate(
-      google::appengine::v1::DeleteAuthorizedCertificateRequest const& request);
+  virtual Status
+  DeleteAuthorizedCertificate(google::appengine::v1::DeleteAuthorizedCertificateRequest const& request);
 };
 
 /**
- * A factory function to construct an object of type
- * `AuthorizedCertificatesConnection`.
+ * A factory function to construct an object of type `AuthorizedCertificatesConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of
- * AuthorizedCertificatesClient.
+ * should be passed as an argument to the constructor of AuthorizedCertificatesClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `AuthorizedCertificatesConnection`. Expected options are any of the
- * types in the following option lists:
+ * returned `AuthorizedCertificatesConnection`. Expected options are any of the types in
+ * the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
@@ -229,11 +210,11 @@ class AuthorizedCertificatesConnection {
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
- * @param options (optional) Configure the `AuthorizedCertificatesConnection`
- * created by this function.
+ * @param options (optional) Configure the `AuthorizedCertificatesConnection` created by
+ * this function.
  */
-std::shared_ptr<AuthorizedCertificatesConnection>
-MakeAuthorizedCertificatesConnection(Options options = {});
+std::shared_ptr<AuthorizedCertificatesConnection> MakeAuthorizedCertificatesConnection(
+    Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace appengine_v1

@@ -34,120 +34,97 @@ AdminServiceTracingConnection::AdminServiceTracingConnection(
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::pubsublite::v1::Topic>
-AdminServiceTracingConnection::CreateTopic(
-    google::cloud::pubsublite::v1::CreateTopicRequest const& request) {
-  auto span =
-      internal::MakeSpan("pubsublite::AdminServiceConnection::CreateTopic");
+AdminServiceTracingConnection::CreateTopic(google::cloud::pubsublite::v1::CreateTopicRequest const& request) {
+  auto span = internal::MakeSpan("pubsublite::AdminServiceConnection::CreateTopic");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateTopic(request));
 }
 
 StatusOr<google::cloud::pubsublite::v1::Topic>
-AdminServiceTracingConnection::GetTopic(
-    google::cloud::pubsublite::v1::GetTopicRequest const& request) {
-  auto span =
-      internal::MakeSpan("pubsublite::AdminServiceConnection::GetTopic");
+AdminServiceTracingConnection::GetTopic(google::cloud::pubsublite::v1::GetTopicRequest const& request) {
+  auto span = internal::MakeSpan("pubsublite::AdminServiceConnection::GetTopic");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetTopic(request));
 }
 
 StatusOr<google::cloud::pubsublite::v1::TopicPartitions>
-AdminServiceTracingConnection::GetTopicPartitions(
-    google::cloud::pubsublite::v1::GetTopicPartitionsRequest const& request) {
-  auto span = internal::MakeSpan(
-      "pubsublite::AdminServiceConnection::GetTopicPartitions");
+AdminServiceTracingConnection::GetTopicPartitions(google::cloud::pubsublite::v1::GetTopicPartitionsRequest const& request) {
+  auto span = internal::MakeSpan("pubsublite::AdminServiceConnection::GetTopicPartitions");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetTopicPartitions(request));
 }
 
 StreamRange<google::cloud::pubsublite::v1::Topic>
-AdminServiceTracingConnection::ListTopics(
-    google::cloud::pubsublite::v1::ListTopicsRequest request) {
-  auto span =
-      internal::MakeSpan("pubsublite::AdminServiceConnection::ListTopics");
+AdminServiceTracingConnection::ListTopics(google::cloud::pubsublite::v1::ListTopicsRequest request) {
+  auto span = internal::MakeSpan("pubsublite::AdminServiceConnection::ListTopics");
   internal::OTelScope scope(span);
   auto sr = child_->ListTopics(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::pubsublite::v1::Topic>(
-      std::move(span), std::move(sr));
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::pubsublite::v1::Topic>
-AdminServiceTracingConnection::UpdateTopic(
-    google::cloud::pubsublite::v1::UpdateTopicRequest const& request) {
-  auto span =
-      internal::MakeSpan("pubsublite::AdminServiceConnection::UpdateTopic");
+AdminServiceTracingConnection::UpdateTopic(google::cloud::pubsublite::v1::UpdateTopicRequest const& request) {
+  auto span = internal::MakeSpan("pubsublite::AdminServiceConnection::UpdateTopic");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateTopic(request));
 }
 
-Status AdminServiceTracingConnection::DeleteTopic(
-    google::cloud::pubsublite::v1::DeleteTopicRequest const& request) {
-  auto span =
-      internal::MakeSpan("pubsublite::AdminServiceConnection::DeleteTopic");
+Status
+AdminServiceTracingConnection::DeleteTopic(google::cloud::pubsublite::v1::DeleteTopicRequest const& request) {
+  auto span = internal::MakeSpan("pubsublite::AdminServiceConnection::DeleteTopic");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteTopic(request));
 }
 
-StreamRange<std::string> AdminServiceTracingConnection::ListTopicSubscriptions(
-    google::cloud::pubsublite::v1::ListTopicSubscriptionsRequest request) {
-  auto span = internal::MakeSpan(
-      "pubsublite::AdminServiceConnection::ListTopicSubscriptions");
+StreamRange<std::string>
+AdminServiceTracingConnection::ListTopicSubscriptions(google::cloud::pubsublite::v1::ListTopicSubscriptionsRequest request) {
+  auto span = internal::MakeSpan("pubsublite::AdminServiceConnection::ListTopicSubscriptions");
   internal::OTelScope scope(span);
   auto sr = child_->ListTopicSubscriptions(std::move(request));
-  return internal::MakeTracedStreamRange<std::string>(std::move(span),
-                                                      std::move(sr));
+  return internal::MakeTracedStreamRange<std::string>(
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::pubsublite::v1::Subscription>
-AdminServiceTracingConnection::CreateSubscription(
-    google::cloud::pubsublite::v1::CreateSubscriptionRequest const& request) {
-  auto span = internal::MakeSpan(
-      "pubsublite::AdminServiceConnection::CreateSubscription");
+AdminServiceTracingConnection::CreateSubscription(google::cloud::pubsublite::v1::CreateSubscriptionRequest const& request) {
+  auto span = internal::MakeSpan("pubsublite::AdminServiceConnection::CreateSubscription");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateSubscription(request));
 }
 
 StatusOr<google::cloud::pubsublite::v1::Subscription>
-AdminServiceTracingConnection::GetSubscription(
-    google::cloud::pubsublite::v1::GetSubscriptionRequest const& request) {
-  auto span =
-      internal::MakeSpan("pubsublite::AdminServiceConnection::GetSubscription");
+AdminServiceTracingConnection::GetSubscription(google::cloud::pubsublite::v1::GetSubscriptionRequest const& request) {
+  auto span = internal::MakeSpan("pubsublite::AdminServiceConnection::GetSubscription");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetSubscription(request));
 }
 
 StreamRange<google::cloud::pubsublite::v1::Subscription>
-AdminServiceTracingConnection::ListSubscriptions(
-    google::cloud::pubsublite::v1::ListSubscriptionsRequest request) {
-  auto span = internal::MakeSpan(
-      "pubsublite::AdminServiceConnection::ListSubscriptions");
+AdminServiceTracingConnection::ListSubscriptions(google::cloud::pubsublite::v1::ListSubscriptionsRequest request) {
+  auto span = internal::MakeSpan("pubsublite::AdminServiceConnection::ListSubscriptions");
   internal::OTelScope scope(span);
   auto sr = child_->ListSubscriptions(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::pubsublite::v1::Subscription>(std::move(span),
-                                                   std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::pubsublite::v1::Subscription>(
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::pubsublite::v1::Subscription>
-AdminServiceTracingConnection::UpdateSubscription(
-    google::cloud::pubsublite::v1::UpdateSubscriptionRequest const& request) {
-  auto span = internal::MakeSpan(
-      "pubsublite::AdminServiceConnection::UpdateSubscription");
+AdminServiceTracingConnection::UpdateSubscription(google::cloud::pubsublite::v1::UpdateSubscriptionRequest const& request) {
+  auto span = internal::MakeSpan("pubsublite::AdminServiceConnection::UpdateSubscription");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateSubscription(request));
 }
 
-Status AdminServiceTracingConnection::DeleteSubscription(
-    google::cloud::pubsublite::v1::DeleteSubscriptionRequest const& request) {
-  auto span = internal::MakeSpan(
-      "pubsublite::AdminServiceConnection::DeleteSubscription");
+Status
+AdminServiceTracingConnection::DeleteSubscription(google::cloud::pubsublite::v1::DeleteSubscriptionRequest const& request) {
+  auto span = internal::MakeSpan("pubsublite::AdminServiceConnection::DeleteSubscription");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteSubscription(request));
 }
 
 future<StatusOr<google::cloud::pubsublite::v1::SeekSubscriptionResponse>>
-AdminServiceTracingConnection::SeekSubscription(
-    google::cloud::pubsublite::v1::SeekSubscriptionRequest const& request) {
+AdminServiceTracingConnection::SeekSubscription(google::cloud::pubsublite::v1::SeekSubscriptionRequest const& request) {
   auto span = internal::MakeSpan(
       "pubsublite::AdminServiceConnection::SeekSubscription");
   internal::OTelScope scope(span);
@@ -156,13 +133,12 @@ AdminServiceTracingConnection::SeekSubscription(
 
 StatusOr<google::longrunning::Operation>
 AdminServiceTracingConnection::SeekSubscription(
-    NoAwaitTag,
-    google::cloud::pubsublite::v1::SeekSubscriptionRequest const& request) {
+    NoAwaitTag, google::cloud::pubsublite::v1::SeekSubscriptionRequest const& request) {
   auto span = internal::MakeSpan(
       "pubsublite::AdminServiceConnection::SeekSubscription");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span,
-                           child_->SeekSubscription(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->SeekSubscription(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::pubsublite::v1::SeekSubscriptionResponse>>
@@ -172,110 +148,91 @@ AdminServiceTracingConnection::SeekSubscription(
       "pubsublite::AdminServiceConnection::SeekSubscription");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->SeekSubscription(operation));
+      child_->SeekSubscription(operation));
 }
 
 StatusOr<google::cloud::pubsublite::v1::Reservation>
-AdminServiceTracingConnection::CreateReservation(
-    google::cloud::pubsublite::v1::CreateReservationRequest const& request) {
-  auto span = internal::MakeSpan(
-      "pubsublite::AdminServiceConnection::CreateReservation");
+AdminServiceTracingConnection::CreateReservation(google::cloud::pubsublite::v1::CreateReservationRequest const& request) {
+  auto span = internal::MakeSpan("pubsublite::AdminServiceConnection::CreateReservation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateReservation(request));
 }
 
 StatusOr<google::cloud::pubsublite::v1::Reservation>
-AdminServiceTracingConnection::GetReservation(
-    google::cloud::pubsublite::v1::GetReservationRequest const& request) {
-  auto span =
-      internal::MakeSpan("pubsublite::AdminServiceConnection::GetReservation");
+AdminServiceTracingConnection::GetReservation(google::cloud::pubsublite::v1::GetReservationRequest const& request) {
+  auto span = internal::MakeSpan("pubsublite::AdminServiceConnection::GetReservation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetReservation(request));
 }
 
 StreamRange<google::cloud::pubsublite::v1::Reservation>
-AdminServiceTracingConnection::ListReservations(
-    google::cloud::pubsublite::v1::ListReservationsRequest request) {
-  auto span = internal::MakeSpan(
-      "pubsublite::AdminServiceConnection::ListReservations");
+AdminServiceTracingConnection::ListReservations(google::cloud::pubsublite::v1::ListReservationsRequest request) {
+  auto span = internal::MakeSpan("pubsublite::AdminServiceConnection::ListReservations");
   internal::OTelScope scope(span);
   auto sr = child_->ListReservations(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::pubsublite::v1::Reservation>(std::move(span),
-                                                  std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::pubsublite::v1::Reservation>(
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::pubsublite::v1::Reservation>
-AdminServiceTracingConnection::UpdateReservation(
-    google::cloud::pubsublite::v1::UpdateReservationRequest const& request) {
-  auto span = internal::MakeSpan(
-      "pubsublite::AdminServiceConnection::UpdateReservation");
+AdminServiceTracingConnection::UpdateReservation(google::cloud::pubsublite::v1::UpdateReservationRequest const& request) {
+  auto span = internal::MakeSpan("pubsublite::AdminServiceConnection::UpdateReservation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateReservation(request));
 }
 
-Status AdminServiceTracingConnection::DeleteReservation(
-    google::cloud::pubsublite::v1::DeleteReservationRequest const& request) {
-  auto span = internal::MakeSpan(
-      "pubsublite::AdminServiceConnection::DeleteReservation");
+Status
+AdminServiceTracingConnection::DeleteReservation(google::cloud::pubsublite::v1::DeleteReservationRequest const& request) {
+  auto span = internal::MakeSpan("pubsublite::AdminServiceConnection::DeleteReservation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteReservation(request));
 }
 
-StreamRange<std::string> AdminServiceTracingConnection::ListReservationTopics(
-    google::cloud::pubsublite::v1::ListReservationTopicsRequest request) {
-  auto span = internal::MakeSpan(
-      "pubsublite::AdminServiceConnection::ListReservationTopics");
+StreamRange<std::string>
+AdminServiceTracingConnection::ListReservationTopics(google::cloud::pubsublite::v1::ListReservationTopicsRequest request) {
+  auto span = internal::MakeSpan("pubsublite::AdminServiceConnection::ListReservationTopics");
   internal::OTelScope scope(span);
   auto sr = child_->ListReservationTopics(std::move(request));
-  return internal::MakeTracedStreamRange<std::string>(std::move(span),
-                                                      std::move(sr));
+  return internal::MakeTracedStreamRange<std::string>(
+        std::move(span), std::move(sr));
 }
 
 StreamRange<google::longrunning::Operation>
-AdminServiceTracingConnection::ListOperations(
-    google::longrunning::ListOperationsRequest request) {
-  auto span =
-      internal::MakeSpan("pubsublite::AdminServiceConnection::ListOperations");
+AdminServiceTracingConnection::ListOperations(google::longrunning::ListOperationsRequest request) {
+  auto span = internal::MakeSpan("pubsublite::AdminServiceConnection::ListOperations");
   internal::OTelScope scope(span);
   auto sr = child_->ListOperations(std::move(request));
   return internal::MakeTracedStreamRange<google::longrunning::Operation>(
-      std::move(span), std::move(sr));
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::longrunning::Operation>
-AdminServiceTracingConnection::GetOperation(
-    google::longrunning::GetOperationRequest const& request) {
-  auto span =
-      internal::MakeSpan("pubsublite::AdminServiceConnection::GetOperation");
+AdminServiceTracingConnection::GetOperation(google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpan("pubsublite::AdminServiceConnection::GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOperation(request));
 }
 
-Status AdminServiceTracingConnection::DeleteOperation(
-    google::longrunning::DeleteOperationRequest const& request) {
-  auto span =
-      internal::MakeSpan("pubsublite::AdminServiceConnection::DeleteOperation");
+Status
+AdminServiceTracingConnection::DeleteOperation(google::longrunning::DeleteOperationRequest const& request) {
+  auto span = internal::MakeSpan("pubsublite::AdminServiceConnection::DeleteOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteOperation(request));
 }
 
-Status AdminServiceTracingConnection::CancelOperation(
-    google::longrunning::CancelOperationRequest const& request) {
-  auto span =
-      internal::MakeSpan("pubsublite::AdminServiceConnection::CancelOperation");
+Status
+AdminServiceTracingConnection::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
+  auto span = internal::MakeSpan("pubsublite::AdminServiceConnection::CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CancelOperation(request));
 }
 
 future<StatusOr<google::cloud::pubsublite::v1::TopicPartitions>>
-AdminServiceTracingConnection::AsyncGetTopicPartitions(
-    google::cloud::pubsublite::v1::GetTopicPartitionsRequest const& request) {
+AdminServiceTracingConnection::AsyncGetTopicPartitions(google::cloud::pubsublite::v1::GetTopicPartitionsRequest const& request) {
   auto span = internal::MakeSpan(
       "pubsublite::AdminServiceConnection::AsyncGetTopicPartitions");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->AsyncGetTopicPartitions(request));
+  return internal::EndSpan(std::move(span), child_->AsyncGetTopicPartitions(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

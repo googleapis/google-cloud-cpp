@@ -26,76 +26,55 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-StoragePoolsConnectionIdempotencyPolicy::
-    ~StoragePoolsConnectionIdempotencyPolicy() = default;
+StoragePoolsConnectionIdempotencyPolicy::~StoragePoolsConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<StoragePoolsConnectionIdempotencyPolicy>
 StoragePoolsConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<StoragePoolsConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency StoragePoolsConnectionIdempotencyPolicy::AggregatedListStoragePools(
-    google::cloud::cpp::compute::storage_pools::v1::
-        AggregatedListStoragePoolsRequest) {  // NOLINT
+Idempotency StoragePoolsConnectionIdempotencyPolicy::AggregatedListStoragePools(google::cloud::cpp::compute::storage_pools::v1::AggregatedListStoragePoolsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency StoragePoolsConnectionIdempotencyPolicy::DeleteStoragePool(
-    google::cloud::cpp::compute::storage_pools::v1::
-        DeleteStoragePoolRequest const&) {
+Idempotency StoragePoolsConnectionIdempotencyPolicy::DeleteStoragePool(google::cloud::cpp::compute::storage_pools::v1::DeleteStoragePoolRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency StoragePoolsConnectionIdempotencyPolicy::GetStoragePool(
-    google::cloud::cpp::compute::storage_pools::v1::
-        GetStoragePoolRequest const&) {
+Idempotency StoragePoolsConnectionIdempotencyPolicy::GetStoragePool(google::cloud::cpp::compute::storage_pools::v1::GetStoragePoolRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency StoragePoolsConnectionIdempotencyPolicy::GetIamPolicy(
-    google::cloud::cpp::compute::storage_pools::v1::
-        GetIamPolicyRequest const&) {
+Idempotency StoragePoolsConnectionIdempotencyPolicy::GetIamPolicy(google::cloud::cpp::compute::storage_pools::v1::GetIamPolicyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency StoragePoolsConnectionIdempotencyPolicy::InsertStoragePool(
-    google::cloud::cpp::compute::storage_pools::v1::
-        InsertStoragePoolRequest const&) {
+Idempotency StoragePoolsConnectionIdempotencyPolicy::InsertStoragePool(google::cloud::cpp::compute::storage_pools::v1::InsertStoragePoolRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency StoragePoolsConnectionIdempotencyPolicy::ListStoragePools(
-    google::cloud::cpp::compute::storage_pools::v1::
-        ListStoragePoolsRequest) {  // NOLINT
+Idempotency StoragePoolsConnectionIdempotencyPolicy::ListStoragePools(google::cloud::cpp::compute::storage_pools::v1::ListStoragePoolsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency StoragePoolsConnectionIdempotencyPolicy::ListDisks(
-    google::cloud::cpp::compute::storage_pools::v1::
-        ListDisksRequest) {  // NOLINT
+Idempotency StoragePoolsConnectionIdempotencyPolicy::ListDisks(google::cloud::cpp::compute::storage_pools::v1::ListDisksRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency StoragePoolsConnectionIdempotencyPolicy::SetIamPolicy(
-    google::cloud::cpp::compute::storage_pools::v1::
-        SetIamPolicyRequest const&) {
+Idempotency StoragePoolsConnectionIdempotencyPolicy::SetIamPolicy(google::cloud::cpp::compute::storage_pools::v1::SetIamPolicyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency StoragePoolsConnectionIdempotencyPolicy::TestIamPermissions(
-    google::cloud::cpp::compute::storage_pools::v1::
-        TestIamPermissionsRequest const&) {
+Idempotency StoragePoolsConnectionIdempotencyPolicy::TestIamPermissions(google::cloud::cpp::compute::storage_pools::v1::TestIamPermissionsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency StoragePoolsConnectionIdempotencyPolicy::UpdateStoragePool(
-    google::cloud::cpp::compute::storage_pools::v1::
-        UpdateStoragePoolRequest const&) {
+Idempotency StoragePoolsConnectionIdempotencyPolicy::UpdateStoragePool(google::cloud::cpp::compute::storage_pools::v1::UpdateStoragePoolRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<StoragePoolsConnectionIdempotencyPolicy>
-MakeDefaultStoragePoolsConnectionIdempotencyPolicy() {
+    MakeDefaultStoragePoolsConnectionIdempotencyPolicy() {
   return std::make_unique<StoragePoolsConnectionIdempotencyPolicy>();
 }
 

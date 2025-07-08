@@ -35,21 +35,19 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options RuleServiceDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_RULE_SERVICE_ENDPOINT", "",
-      "GOOGLE_CLOUD_CPP_RULE_SERVICE_AUTHORITY", "chronicle.googleapis.com");
+      std::move(options), "GOOGLE_CLOUD_CPP_RULE_SERVICE_ENDPOINT",
+      "", "GOOGLE_CLOUD_CPP_RULE_SERVICE_AUTHORITY",
+      "chronicle.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<chronicle_v1::RuleServiceRetryPolicyOption>()) {
     options.set<chronicle_v1::RuleServiceRetryPolicyOption>(
         chronicle_v1::RuleServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
-            .clone());
+            std::chrono::minutes(30)).clone());
   }
   if (!options.has<chronicle_v1::RuleServiceBackoffPolicyOption>()) {
     options.set<chronicle_v1::RuleServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(
-            std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
-            .clone());
+        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
   }
   if (!options.has<chronicle_v1::RuleServicePollingPolicyOption>()) {
     options.set<chronicle_v1::RuleServicePollingPolicyOption>(
@@ -58,12 +56,9 @@ Options RuleServiceDefaultOptions(Options options) {
             chronicle_v1::RuleServiceBackoffPolicyOption::Type>(
             options.get<chronicle_v1::RuleServiceRetryPolicyOption>()->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                     std::chrono::minutes(5), kBackoffScaling)
-                .clone())
-            .clone());
+            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
   }
-  if (!options
-           .has<chronicle_v1::RuleServiceConnectionIdempotencyPolicyOption>()) {
+  if (!options.has<chronicle_v1::RuleServiceConnectionIdempotencyPolicyOption>()) {
     options.set<chronicle_v1::RuleServiceConnectionIdempotencyPolicyOption>(
         chronicle_v1::MakeDefaultRuleServiceConnectionIdempotencyPolicy());
   }

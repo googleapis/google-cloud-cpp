@@ -30,40 +30,39 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-class CaseServiceTracingConnection : public support_v2::CaseServiceConnection {
+class CaseServiceTracingConnection
+    : public support_v2::CaseServiceConnection {
  public:
   ~CaseServiceTracingConnection() override = default;
 
   explicit CaseServiceTracingConnection(
-      std::shared_ptr<support_v2::CaseServiceConnection> child);
+    std::shared_ptr<support_v2::CaseServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::support::v2::Case> GetCase(
-      google::cloud::support::v2::GetCaseRequest const& request) override;
+  StatusOr<google::cloud::support::v2::Case>
+  GetCase(google::cloud::support::v2::GetCaseRequest const& request) override;
 
-  StreamRange<google::cloud::support::v2::Case> ListCases(
-      google::cloud::support::v2::ListCasesRequest request) override;
+  StreamRange<google::cloud::support::v2::Case>
+  ListCases(google::cloud::support::v2::ListCasesRequest request) override;
 
-  StreamRange<google::cloud::support::v2::Case> SearchCases(
-      google::cloud::support::v2::SearchCasesRequest request) override;
+  StreamRange<google::cloud::support::v2::Case>
+  SearchCases(google::cloud::support::v2::SearchCasesRequest request) override;
 
-  StatusOr<google::cloud::support::v2::Case> CreateCase(
-      google::cloud::support::v2::CreateCaseRequest const& request) override;
+  StatusOr<google::cloud::support::v2::Case>
+  CreateCase(google::cloud::support::v2::CreateCaseRequest const& request) override;
 
-  StatusOr<google::cloud::support::v2::Case> UpdateCase(
-      google::cloud::support::v2::UpdateCaseRequest const& request) override;
+  StatusOr<google::cloud::support::v2::Case>
+  UpdateCase(google::cloud::support::v2::UpdateCaseRequest const& request) override;
 
-  StatusOr<google::cloud::support::v2::Case> EscalateCase(
-      google::cloud::support::v2::EscalateCaseRequest const& request) override;
+  StatusOr<google::cloud::support::v2::Case>
+  EscalateCase(google::cloud::support::v2::EscalateCaseRequest const& request) override;
 
-  StatusOr<google::cloud::support::v2::Case> CloseCase(
-      google::cloud::support::v2::CloseCaseRequest const& request) override;
+  StatusOr<google::cloud::support::v2::Case>
+  CloseCase(google::cloud::support::v2::CloseCaseRequest const& request) override;
 
   StreamRange<google::cloud::support::v2::CaseClassification>
-  SearchCaseClassifications(
-      google::cloud::support::v2::SearchCaseClassificationsRequest request)
-      override;
+  SearchCaseClassifications(google::cloud::support::v2::SearchCaseClassificationsRequest request) override;
 
  private:
   std::shared_ptr<support_v2::CaseServiceConnection> child_;

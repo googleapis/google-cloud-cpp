@@ -36,16 +36,15 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<RoutineServiceConnection> MakeRoutineServiceConnectionRest(
     Options options) {
-  internal::CheckExpectedOptions<
-      CommonOptionList, RestOptionList, UnifiedCredentialsOptionList,
-      rest_internal::TargetApiVersionOption, RoutineServicePolicyOptionList>(
-      options, __func__);
+  internal::CheckExpectedOptions<CommonOptionList, RestOptionList,
+      UnifiedCredentialsOptionList, rest_internal::TargetApiVersionOption,
+      RoutineServicePolicyOptionList>(options, __func__);
   options = bigquerycontrol_v2_internal::RoutineServiceDefaultOptions(
       std::move(options));
   auto background = std::make_unique<
       rest_internal::AutomaticallyCreatedRestBackgroundThreads>();
-  auto stub =
-      bigquerycontrol_v2_internal::CreateDefaultRoutineServiceRestStub(options);
+  auto stub = bigquerycontrol_v2_internal::CreateDefaultRoutineServiceRestStub(
+      options);
   return bigquerycontrol_v2_internal::MakeRoutineServiceTracingConnection(
       std::make_shared<
           bigquerycontrol_v2_internal::RoutineServiceRestConnectionImpl>(

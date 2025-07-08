@@ -17,10 +17,10 @@
 // source: google/storagetransfer/v1/transfer.proto
 
 #include "google/cloud/storagetransfer/v1/internal/storage_transfer_option_defaults.h"
-#include "google/cloud/storagetransfer/v1/storage_transfer_connection.h"
-#include "google/cloud/storagetransfer/v1/storage_transfer_options.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
+#include "google/cloud/storagetransfer/v1/storage_transfer_connection.h"
+#include "google/cloud/storagetransfer/v1/storage_transfer_options.h"
 #include <memory>
 #include <utility>
 
@@ -39,44 +39,28 @@ Options StorageTransferServiceDefaultOptions(Options options) {
       "", "GOOGLE_CLOUD_CPP_STORAGE_TRANSFER_SERVICE_AUTHORITY",
       "storagetransfer.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
-  if (!options.has<
-          storagetransfer_v1::StorageTransferServiceRetryPolicyOption>()) {
+  if (!options.has<storagetransfer_v1::StorageTransferServiceRetryPolicyOption>()) {
     options.set<storagetransfer_v1::StorageTransferServiceRetryPolicyOption>(
         storagetransfer_v1::StorageTransferServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
-            .clone());
+            std::chrono::minutes(30)).clone());
   }
-  if (!options.has<
-          storagetransfer_v1::StorageTransferServiceBackoffPolicyOption>()) {
+  if (!options.has<storagetransfer_v1::StorageTransferServiceBackoffPolicyOption>()) {
     options.set<storagetransfer_v1::StorageTransferServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(
-            std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
-            .clone());
+        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
   }
-  if (!options.has<
-          storagetransfer_v1::StorageTransferServicePollingPolicyOption>()) {
+  if (!options.has<storagetransfer_v1::StorageTransferServicePollingPolicyOption>()) {
     options.set<storagetransfer_v1::StorageTransferServicePollingPolicyOption>(
         GenericPollingPolicy<
             storagetransfer_v1::StorageTransferServiceRetryPolicyOption::Type,
-            storagetransfer_v1::StorageTransferServiceBackoffPolicyOption::
-                Type>(
-            options
-                .get<storagetransfer_v1::
-                         StorageTransferServiceRetryPolicyOption>()
-                ->clone(),
+            storagetransfer_v1::StorageTransferServiceBackoffPolicyOption::Type>(
+            options.get<storagetransfer_v1::StorageTransferServiceRetryPolicyOption>()->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                     std::chrono::minutes(5), kBackoffScaling)
-                .clone())
-            .clone());
+            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
   }
-  if (!options.has<
-          storagetransfer_v1::
-              StorageTransferServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<storagetransfer_v1::
-                    StorageTransferServiceConnectionIdempotencyPolicyOption>(
-        storagetransfer_v1::
-            MakeDefaultStorageTransferServiceConnectionIdempotencyPolicy());
+  if (!options.has<storagetransfer_v1::StorageTransferServiceConnectionIdempotencyPolicyOption>()) {
+    options.set<storagetransfer_v1::StorageTransferServiceConnectionIdempotencyPolicyOption>(
+        storagetransfer_v1::MakeDefaultStorageTransferServiceConnectionIdempotencyPolicy());
   }
 
   return options;

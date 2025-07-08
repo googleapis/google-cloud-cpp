@@ -17,16 +17,16 @@
 // source: google/cloud/language/v2/language_service.proto
 
 #include "google/cloud/language/v2/language_connection.h"
-#include "google/cloud/language/v2/internal/language_connection_impl.h"
-#include "google/cloud/language/v2/internal/language_option_defaults.h"
-#include "google/cloud/language/v2/internal/language_stub_factory.h"
-#include "google/cloud/language/v2/internal/language_tracing_connection.h"
-#include "google/cloud/language/v2/language_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/language/v2/internal/language_connection_impl.h"
+#include "google/cloud/language/v2/internal/language_option_defaults.h"
+#include "google/cloud/language/v2/internal/language_stub_factory.h"
+#include "google/cloud/language/v2/internal/language_tracing_connection.h"
+#include "google/cloud/language/v2/language_options.h"
 #include <memory>
 #include <utility>
 
@@ -70,18 +70,17 @@ LanguageServiceConnection::AnnotateText(
 std::shared_ptr<LanguageServiceConnection> MakeLanguageServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 LanguageServicePolicyOptionList>(options,
-                                                                  __func__);
-  options =
-      language_v2_internal::LanguageServiceDefaultOptions(std::move(options));
+      UnifiedCredentialsOptionList,
+      LanguageServicePolicyOptionList>(options, __func__);
+  options = language_v2_internal::LanguageServiceDefaultOptions(
+      std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = language_v2_internal::CreateDefaultLanguageServiceStub(
-      std::move(auth), options);
+    std::move(auth), options);
   return language_v2_internal::MakeLanguageServiceTracingConnection(
       std::make_shared<language_v2_internal::LanguageServiceConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options)));
+      std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

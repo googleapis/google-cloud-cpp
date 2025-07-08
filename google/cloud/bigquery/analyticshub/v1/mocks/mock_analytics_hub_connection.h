@@ -31,10 +31,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * A class to mock `AnalyticsHubServiceConnection`.
  *
  * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `AnalyticsHubServiceClient`. To do
- * so, construct an object of type `AnalyticsHubServiceClient` with an instance
- * of this class. Then use the Google Test framework functions to program the
- * behavior of this mock.
+ * including errors, from an object of type `AnalyticsHubServiceClient`. To do so,
+ * construct an object of type `AnalyticsHubServiceClient` with an instance of this
+ * class. Then use the Google Test framework functions to program the behavior
+ * of this mock.
  *
  * @see [This example][bq-mock] for how to test your application with GoogleTest.
  * While the example showcases types from the BigQuery library, the underlying
@@ -42,104 +42,69 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockAnalyticsHubServiceConnection
-    : public bigquery_analyticshub_v1::AnalyticsHubServiceConnection {
+class MockAnalyticsHubServiceConnection : public bigquery_analyticshub_v1::AnalyticsHubServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(
-      (StreamRange<google::cloud::bigquery::analyticshub::v1::DataExchange>),
-      ListDataExchanges,
-      (google::cloud::bigquery::analyticshub::v1::ListDataExchangesRequest
-           request),
-      (override));
+  MOCK_METHOD((StreamRange<google::cloud::bigquery::analyticshub::v1::DataExchange>),
+  ListDataExchanges,
+  (google::cloud::bigquery::analyticshub::v1::ListDataExchangesRequest request), (override));
 
-  MOCK_METHOD(
-      (StreamRange<google::cloud::bigquery::analyticshub::v1::DataExchange>),
-      ListOrgDataExchanges,
-      (google::cloud::bigquery::analyticshub::v1::ListOrgDataExchangesRequest
-           request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::bigquery::analyticshub::v1::DataExchange>,
-      GetDataExchange,
-      (google::cloud::bigquery::analyticshub::v1::GetDataExchangeRequest const&
-           request),
-      (override));
+  MOCK_METHOD((StreamRange<google::cloud::bigquery::analyticshub::v1::DataExchange>),
+  ListOrgDataExchanges,
+  (google::cloud::bigquery::analyticshub::v1::ListOrgDataExchangesRequest request), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::bigquery::analyticshub::v1::DataExchange>,
-              CreateDataExchange,
-              (google::cloud::bigquery::analyticshub::v1::
-                   CreateDataExchangeRequest const& request),
-              (override));
+  GetDataExchange,
+  (google::cloud::bigquery::analyticshub::v1::GetDataExchangeRequest const& request), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::bigquery::analyticshub::v1::DataExchange>,
-              UpdateDataExchange,
-              (google::cloud::bigquery::analyticshub::v1::
-                   UpdateDataExchangeRequest const& request),
-              (override));
+  CreateDataExchange,
+  (google::cloud::bigquery::analyticshub::v1::CreateDataExchangeRequest const& request), (override));
 
-  MOCK_METHOD(Status, DeleteDataExchange,
-              (google::cloud::bigquery::analyticshub::v1::
-                   DeleteDataExchangeRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::bigquery::analyticshub::v1::DataExchange>,
+  UpdateDataExchange,
+  (google::cloud::bigquery::analyticshub::v1::UpdateDataExchangeRequest const& request), (override));
 
-  MOCK_METHOD(
-      (StreamRange<google::cloud::bigquery::analyticshub::v1::Listing>),
-      ListListings,
-      (google::cloud::bigquery::analyticshub::v1::ListListingsRequest request),
-      (override));
+  MOCK_METHOD(Status,
+  DeleteDataExchange,
+  (google::cloud::bigquery::analyticshub::v1::DeleteDataExchangeRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::bigquery::analyticshub::v1::Listing>, GetListing,
-      (google::cloud::bigquery::analyticshub::v1::GetListingRequest const&
-           request),
-      (override));
+  MOCK_METHOD((StreamRange<google::cloud::bigquery::analyticshub::v1::Listing>),
+  ListListings,
+  (google::cloud::bigquery::analyticshub::v1::ListListingsRequest request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::bigquery::analyticshub::v1::Listing>,
-      CreateListing,
-      (google::cloud::bigquery::analyticshub::v1::CreateListingRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::bigquery::analyticshub::v1::Listing>,
+  GetListing,
+  (google::cloud::bigquery::analyticshub::v1::GetListingRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::bigquery::analyticshub::v1::Listing>,
-      UpdateListing,
-      (google::cloud::bigquery::analyticshub::v1::UpdateListingRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::bigquery::analyticshub::v1::Listing>,
+  CreateListing,
+  (google::cloud::bigquery::analyticshub::v1::CreateListingRequest const& request), (override));
 
-  MOCK_METHOD(
-      Status, DeleteListing,
-      (google::cloud::bigquery::analyticshub::v1::DeleteListingRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::bigquery::analyticshub::v1::Listing>,
+  UpdateListing,
+  (google::cloud::bigquery::analyticshub::v1::UpdateListingRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<
-          google::cloud::bigquery::analyticshub::v1::SubscribeListingResponse>,
-      SubscribeListing,
-      (google::cloud::bigquery::analyticshub::v1::SubscribeListingRequest const&
-           request),
-      (override));
+  MOCK_METHOD(Status,
+  DeleteListing,
+  (google::cloud::bigquery::analyticshub::v1::DeleteListingRequest const& request), (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::bigquery::analyticshub::v1::SubscribeListingResponse>,
+  SubscribeListing,
+  (google::cloud::bigquery::analyticshub::v1::SubscribeListingRequest const& request), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// SubscribeDataExchange(Matcher<google::cloud::bigquery::analyticshub::v1::SubscribeDataExchangeRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, SubscribeDataExchange(Matcher<google::cloud::bigquery::analyticshub::v1::SubscribeDataExchangeRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::bigquery::analyticshub::v1::
-                                  SubscribeDataExchangeResponse>>,
-              SubscribeDataExchange,
-              (google::cloud::bigquery::analyticshub::v1::
-                   SubscribeDataExchangeRequest const& request),
-              (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::bigquery::analyticshub::v1::SubscribeDataExchangeResponse>>,
+  SubscribeDataExchange,
+  (google::cloud::bigquery::analyticshub::v1::SubscribeDataExchangeRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -147,39 +112,33 @@ class MockAnalyticsHubServiceConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, SubscribeDataExchange(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, SubscribeDataExchange,
-              (NoAwaitTag, google::cloud::bigquery::analyticshub::v1::
-                               SubscribeDataExchangeRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  SubscribeDataExchange, (NoAwaitTag,
+    google::cloud::bigquery::analyticshub::v1::SubscribeDataExchangeRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// SubscribeDataExchange(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock, SubscribeDataExchange(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::bigquery::analyticshub::v1::
-                                  SubscribeDataExchangeResponse>>,
-              SubscribeDataExchange,
-              (google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::bigquery::analyticshub::v1::SubscribeDataExchangeResponse>>,
+  SubscribeDataExchange, (
+    google::longrunning::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// RefreshSubscription(Matcher<google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, RefreshSubscription(Matcher<google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::bigquery::analyticshub::v1::
-                                  RefreshSubscriptionResponse>>,
-              RefreshSubscription,
-              (google::cloud::bigquery::analyticshub::v1::
-                   RefreshSubscriptionRequest const& request),
-              (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionResponse>>,
+  RefreshSubscription,
+  (google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -187,68 +146,49 @@ class MockAnalyticsHubServiceConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, RefreshSubscription(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, RefreshSubscription,
-              (NoAwaitTag, google::cloud::bigquery::analyticshub::v1::
-                               RefreshSubscriptionRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  RefreshSubscription, (NoAwaitTag,
+    google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// RefreshSubscription(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock, RefreshSubscription(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::bigquery::analyticshub::v1::
-                                  RefreshSubscriptionResponse>>,
-              RefreshSubscription,
-              (google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionResponse>>,
+  RefreshSubscription, (
+    google::longrunning::Operation const& operation), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::bigquery::analyticshub::v1::Subscription>,
-      GetSubscription,
-      (google::cloud::bigquery::analyticshub::v1::GetSubscriptionRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::bigquery::analyticshub::v1::Subscription>,
+  GetSubscription,
+  (google::cloud::bigquery::analyticshub::v1::GetSubscriptionRequest const& request), (override));
 
-  MOCK_METHOD(
-      (StreamRange<google::cloud::bigquery::analyticshub::v1::Subscription>),
-      ListSubscriptions,
-      (google::cloud::bigquery::analyticshub::v1::ListSubscriptionsRequest
-           request),
-      (override));
+  MOCK_METHOD((StreamRange<google::cloud::bigquery::analyticshub::v1::Subscription>),
+  ListSubscriptions,
+  (google::cloud::bigquery::analyticshub::v1::ListSubscriptionsRequest request), (override));
 
-  MOCK_METHOD(
-      (StreamRange<google::cloud::bigquery::analyticshub::v1::Subscription>),
-      ListSharedResourceSubscriptions,
-      (google::cloud::bigquery::analyticshub::v1::
-           ListSharedResourceSubscriptionsRequest request),
-      (override));
+  MOCK_METHOD((StreamRange<google::cloud::bigquery::analyticshub::v1::Subscription>),
+  ListSharedResourceSubscriptions,
+  (google::cloud::bigquery::analyticshub::v1::ListSharedResourceSubscriptionsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::bigquery::analyticshub::v1::
-                           RevokeSubscriptionResponse>,
-              RevokeSubscription,
-              (google::cloud::bigquery::analyticshub::v1::
-                   RevokeSubscriptionRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::bigquery::analyticshub::v1::RevokeSubscriptionResponse>,
+  RevokeSubscription,
+  (google::cloud::bigquery::analyticshub::v1::RevokeSubscriptionRequest const& request), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteSubscription(Matcher<google::cloud::bigquery::analyticshub::v1::DeleteSubscriptionRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteSubscription(Matcher<google::cloud::bigquery::analyticshub::v1::DeleteSubscriptionRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<
-          google::cloud::bigquery::analyticshub::v1::OperationMetadata>>,
-      DeleteSubscription,
-      (google::cloud::bigquery::analyticshub::v1::
-           DeleteSubscriptionRequest const& request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::bigquery::analyticshub::v1::OperationMetadata>>,
+  DeleteSubscription,
+  (google::cloud::bigquery::analyticshub::v1::DeleteSubscriptionRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -256,37 +196,33 @@ class MockAnalyticsHubServiceConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, DeleteSubscription(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteSubscription,
-              (NoAwaitTag, google::cloud::bigquery::analyticshub::v1::
-                               DeleteSubscriptionRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  DeleteSubscription, (NoAwaitTag,
+    google::cloud::bigquery::analyticshub::v1::DeleteSubscriptionRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteSubscription(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteSubscription(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<
-          google::cloud::bigquery::analyticshub::v1::OperationMetadata>>,
-      DeleteSubscription, (google::longrunning::Operation const& operation),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::bigquery::analyticshub::v1::OperationMetadata>>,
+  DeleteSubscription, (
+    google::longrunning::Operation const& operation), (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, GetIamPolicy,
-              (google::iam::v1::GetIamPolicyRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::iam::v1::Policy>,
+  GetIamPolicy,
+  (google::iam::v1::GetIamPolicyRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, SetIamPolicy,
-              (google::iam::v1::SetIamPolicyRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::iam::v1::Policy>,
+  SetIamPolicy,
+  (google::iam::v1::SetIamPolicyRequest const& request), (override));
 
   MOCK_METHOD(StatusOr<google::iam::v1::TestIamPermissionsResponse>,
-              TestIamPermissions,
-              (google::iam::v1::TestIamPermissionsRequest const& request),
-              (override));
+  TestIamPermissions,
+  (google::iam::v1::TestIamPermissionsRequest const& request), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -28,11 +28,13 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-TasksTracingStub::TasksTracingStub(std::shared_ptr<TasksStub> child)
+TasksTracingStub::TasksTracingStub(
+    std::shared_ptr<TasksStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::cloud::run::v2::Task> TasksTracingStub::GetTask(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::run::v2::GetTaskRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.run.v2.Tasks", "GetTask");
   auto scope = opentelemetry::trace::Scope(span);
@@ -42,7 +44,8 @@ StatusOr<google::cloud::run::v2::Task> TasksTracingStub::GetTask(
 }
 
 StatusOr<google::cloud::run::v2::ListTasksResponse> TasksTracingStub::ListTasks(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::run::v2::ListTasksRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.run.v2.Tasks", "ListTasks");
   auto scope = opentelemetry::trace::Scope(span);
@@ -51,12 +54,11 @@ StatusOr<google::cloud::run::v2::ListTasksResponse> TasksTracingStub::ListTasks(
                            child_->ListTasks(context, options, request));
 }
 
-StatusOr<google::longrunning::ListOperationsResponse>
-TasksTracingStub::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse> TasksTracingStub::ListOperations(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  auto span =
-      internal::MakeSpanGrpc("google.cloud.run.v2.Tasks", "ListOperations");
+  auto span = internal::MakeSpanGrpc("google.cloud.run.v2.Tasks", "ListOperations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -64,10 +66,10 @@ TasksTracingStub::ListOperations(
 }
 
 StatusOr<google::longrunning::Operation> TasksTracingStub::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  auto span =
-      internal::MakeSpanGrpc("google.cloud.run.v2.Tasks", "GetOperation");
+  auto span = internal::MakeSpanGrpc("google.cloud.run.v2.Tasks", "GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -75,10 +77,10 @@ StatusOr<google::longrunning::Operation> TasksTracingStub::GetOperation(
 }
 
 Status TasksTracingStub::DeleteOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
-  auto span =
-      internal::MakeSpanGrpc("google.cloud.run.v2.Tasks", "DeleteOperation");
+  auto span = internal::MakeSpanGrpc("google.cloud.run.v2.Tasks", "DeleteOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -86,10 +88,10 @@ Status TasksTracingStub::DeleteOperation(
 }
 
 StatusOr<google::longrunning::Operation> TasksTracingStub::WaitOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::WaitOperationRequest const& request) {
-  auto span =
-      internal::MakeSpanGrpc("google.cloud.run.v2.Tasks", "WaitOperation");
+  auto span = internal::MakeSpanGrpc("google.cloud.run.v2.Tasks", "WaitOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,

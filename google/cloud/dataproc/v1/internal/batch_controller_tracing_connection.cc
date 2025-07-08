@@ -34,120 +34,103 @@ BatchControllerTracingConnection::BatchControllerTracingConnection(
     : child_(std::move(child)) {}
 
 future<StatusOr<google::cloud::dataproc::v1::Batch>>
-BatchControllerTracingConnection::CreateBatch(
-    google::cloud::dataproc::v1::CreateBatchRequest const& request) {
-  auto span =
-      internal::MakeSpan("dataproc_v1::BatchControllerConnection::CreateBatch");
+BatchControllerTracingConnection::CreateBatch(google::cloud::dataproc::v1::CreateBatchRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dataproc_v1::BatchControllerConnection::CreateBatch");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateBatch(request));
 }
 
 StatusOr<google::longrunning::Operation>
 BatchControllerTracingConnection::CreateBatch(
-    NoAwaitTag,
-    google::cloud::dataproc::v1::CreateBatchRequest const& request) {
-  auto span =
-      internal::MakeSpan("dataproc_v1::BatchControllerConnection::CreateBatch");
+    NoAwaitTag, google::cloud::dataproc::v1::CreateBatchRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dataproc_v1::BatchControllerConnection::CreateBatch");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->CreateBatch(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->CreateBatch(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::dataproc::v1::Batch>>
 BatchControllerTracingConnection::CreateBatch(
     google::longrunning::Operation const& operation) {
-  auto span =
-      internal::MakeSpan("dataproc_v1::BatchControllerConnection::CreateBatch");
+  auto span = internal::MakeSpan(
+      "dataproc_v1::BatchControllerConnection::CreateBatch");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->CreateBatch(operation));
+  return internal::EndSpan(std::move(span),
+      child_->CreateBatch(operation));
 }
 
 StatusOr<google::cloud::dataproc::v1::Batch>
-BatchControllerTracingConnection::GetBatch(
-    google::cloud::dataproc::v1::GetBatchRequest const& request) {
-  auto span =
-      internal::MakeSpan("dataproc_v1::BatchControllerConnection::GetBatch");
+BatchControllerTracingConnection::GetBatch(google::cloud::dataproc::v1::GetBatchRequest const& request) {
+  auto span = internal::MakeSpan("dataproc_v1::BatchControllerConnection::GetBatch");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetBatch(request));
 }
 
 StreamRange<google::cloud::dataproc::v1::Batch>
-BatchControllerTracingConnection::ListBatches(
-    google::cloud::dataproc::v1::ListBatchesRequest request) {
-  auto span =
-      internal::MakeSpan("dataproc_v1::BatchControllerConnection::ListBatches");
+BatchControllerTracingConnection::ListBatches(google::cloud::dataproc::v1::ListBatchesRequest request) {
+  auto span = internal::MakeSpan("dataproc_v1::BatchControllerConnection::ListBatches");
   internal::OTelScope scope(span);
   auto sr = child_->ListBatches(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::dataproc::v1::Batch>(
-      std::move(span), std::move(sr));
+        std::move(span), std::move(sr));
 }
 
-Status BatchControllerTracingConnection::DeleteBatch(
-    google::cloud::dataproc::v1::DeleteBatchRequest const& request) {
-  auto span =
-      internal::MakeSpan("dataproc_v1::BatchControllerConnection::DeleteBatch");
+Status
+BatchControllerTracingConnection::DeleteBatch(google::cloud::dataproc::v1::DeleteBatchRequest const& request) {
+  auto span = internal::MakeSpan("dataproc_v1::BatchControllerConnection::DeleteBatch");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteBatch(request));
 }
 
 StatusOr<google::iam::v1::Policy>
-BatchControllerTracingConnection::SetIamPolicy(
-    google::iam::v1::SetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpan(
-      "dataproc_v1::BatchControllerConnection::SetIamPolicy");
+BatchControllerTracingConnection::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) {
+  auto span = internal::MakeSpan("dataproc_v1::BatchControllerConnection::SetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->SetIamPolicy(request));
 }
 
 StatusOr<google::iam::v1::Policy>
-BatchControllerTracingConnection::GetIamPolicy(
-    google::iam::v1::GetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpan(
-      "dataproc_v1::BatchControllerConnection::GetIamPolicy");
+BatchControllerTracingConnection::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) {
+  auto span = internal::MakeSpan("dataproc_v1::BatchControllerConnection::GetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetIamPolicy(request));
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-BatchControllerTracingConnection::TestIamPermissions(
-    google::iam::v1::TestIamPermissionsRequest const& request) {
-  auto span = internal::MakeSpan(
-      "dataproc_v1::BatchControllerConnection::TestIamPermissions");
+BatchControllerTracingConnection::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) {
+  auto span = internal::MakeSpan("dataproc_v1::BatchControllerConnection::TestIamPermissions");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->TestIamPermissions(request));
 }
 
 StreamRange<google::longrunning::Operation>
-BatchControllerTracingConnection::ListOperations(
-    google::longrunning::ListOperationsRequest request) {
-  auto span = internal::MakeSpan(
-      "dataproc_v1::BatchControllerConnection::ListOperations");
+BatchControllerTracingConnection::ListOperations(google::longrunning::ListOperationsRequest request) {
+  auto span = internal::MakeSpan("dataproc_v1::BatchControllerConnection::ListOperations");
   internal::OTelScope scope(span);
   auto sr = child_->ListOperations(std::move(request));
   return internal::MakeTracedStreamRange<google::longrunning::Operation>(
-      std::move(span), std::move(sr));
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::longrunning::Operation>
-BatchControllerTracingConnection::GetOperation(
-    google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpan(
-      "dataproc_v1::BatchControllerConnection::GetOperation");
+BatchControllerTracingConnection::GetOperation(google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpan("dataproc_v1::BatchControllerConnection::GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOperation(request));
 }
 
-Status BatchControllerTracingConnection::DeleteOperation(
-    google::longrunning::DeleteOperationRequest const& request) {
-  auto span = internal::MakeSpan(
-      "dataproc_v1::BatchControllerConnection::DeleteOperation");
+Status
+BatchControllerTracingConnection::DeleteOperation(google::longrunning::DeleteOperationRequest const& request) {
+  auto span = internal::MakeSpan("dataproc_v1::BatchControllerConnection::DeleteOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteOperation(request));
 }
 
-Status BatchControllerTracingConnection::CancelOperation(
-    google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpan(
-      "dataproc_v1::BatchControllerConnection::CancelOperation");
+Status
+BatchControllerTracingConnection::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
+  auto span = internal::MakeSpan("dataproc_v1::BatchControllerConnection::CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CancelOperation(request));
 }

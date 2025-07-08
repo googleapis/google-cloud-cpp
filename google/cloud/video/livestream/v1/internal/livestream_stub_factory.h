@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VIDEO_LIVESTREAM_V1_INTERNAL_LIVESTREAM_STUB_FACTORY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VIDEO_LIVESTREAM_V1_INTERNAL_LIVESTREAM_STUB_FACTORY_H
 
-#include "google/cloud/video/livestream/v1/internal/livestream_stub.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
+#include "google/cloud/video/livestream/v1/internal/livestream_stub.h"
 #include <memory>
 
 namespace google {

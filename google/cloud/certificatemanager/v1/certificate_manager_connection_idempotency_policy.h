@@ -36,144 +36,116 @@ class CertificateManagerConnectionIdempotencyPolicy {
   virtual ~CertificateManagerConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<CertificateManagerConnectionIdempotencyPolicy> clone()
-      const;
+  virtual std::unique_ptr<CertificateManagerConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency ListCertificates(
-      google::cloud::certificatemanager::v1::ListCertificatesRequest request);
+  virtual google::cloud::Idempotency
+  ListCertificates(google::cloud::certificatemanager::v1::ListCertificatesRequest request);
 
-  virtual google::cloud::Idempotency GetCertificate(
-      google::cloud::certificatemanager::v1::GetCertificateRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  GetCertificate(google::cloud::certificatemanager::v1::GetCertificateRequest const& request);
 
-  virtual google::cloud::Idempotency CreateCertificate(
-      google::cloud::certificatemanager::v1::CreateCertificateRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  CreateCertificate(google::cloud::certificatemanager::v1::CreateCertificateRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateCertificate(
-      google::cloud::certificatemanager::v1::UpdateCertificateRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  UpdateCertificate(google::cloud::certificatemanager::v1::UpdateCertificateRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteCertificate(
-      google::cloud::certificatemanager::v1::DeleteCertificateRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  DeleteCertificate(google::cloud::certificatemanager::v1::DeleteCertificateRequest const& request);
 
-  virtual google::cloud::Idempotency ListCertificateMaps(
-      google::cloud::certificatemanager::v1::ListCertificateMapsRequest
-          request);
+  virtual google::cloud::Idempotency
+  ListCertificateMaps(google::cloud::certificatemanager::v1::ListCertificateMapsRequest request);
 
-  virtual google::cloud::Idempotency GetCertificateMap(
-      google::cloud::certificatemanager::v1::GetCertificateMapRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  GetCertificateMap(google::cloud::certificatemanager::v1::GetCertificateMapRequest const& request);
 
-  virtual google::cloud::Idempotency CreateCertificateMap(
-      google::cloud::certificatemanager::v1::CreateCertificateMapRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  CreateCertificateMap(google::cloud::certificatemanager::v1::CreateCertificateMapRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateCertificateMap(
-      google::cloud::certificatemanager::v1::UpdateCertificateMapRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  UpdateCertificateMap(google::cloud::certificatemanager::v1::UpdateCertificateMapRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteCertificateMap(
-      google::cloud::certificatemanager::v1::DeleteCertificateMapRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  DeleteCertificateMap(google::cloud::certificatemanager::v1::DeleteCertificateMapRequest const& request);
 
-  virtual google::cloud::Idempotency ListCertificateMapEntries(
-      google::cloud::certificatemanager::v1::ListCertificateMapEntriesRequest
-          request);
+  virtual google::cloud::Idempotency
+  ListCertificateMapEntries(google::cloud::certificatemanager::v1::ListCertificateMapEntriesRequest request);
 
-  virtual google::cloud::Idempotency GetCertificateMapEntry(
-      google::cloud::certificatemanager::v1::
-          GetCertificateMapEntryRequest const& request);
+  virtual google::cloud::Idempotency
+  GetCertificateMapEntry(google::cloud::certificatemanager::v1::GetCertificateMapEntryRequest const& request);
 
-  virtual google::cloud::Idempotency CreateCertificateMapEntry(
-      google::cloud::certificatemanager::v1::
-          CreateCertificateMapEntryRequest const& request);
+  virtual google::cloud::Idempotency
+  CreateCertificateMapEntry(google::cloud::certificatemanager::v1::CreateCertificateMapEntryRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateCertificateMapEntry(
-      google::cloud::certificatemanager::v1::
-          UpdateCertificateMapEntryRequest const& request);
+  virtual google::cloud::Idempotency
+  UpdateCertificateMapEntry(google::cloud::certificatemanager::v1::UpdateCertificateMapEntryRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteCertificateMapEntry(
-      google::cloud::certificatemanager::v1::
-          DeleteCertificateMapEntryRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteCertificateMapEntry(google::cloud::certificatemanager::v1::DeleteCertificateMapEntryRequest const& request);
 
-  virtual google::cloud::Idempotency ListDnsAuthorizations(
-      google::cloud::certificatemanager::v1::ListDnsAuthorizationsRequest
-          request);
+  virtual google::cloud::Idempotency
+  ListDnsAuthorizations(google::cloud::certificatemanager::v1::ListDnsAuthorizationsRequest request);
 
-  virtual google::cloud::Idempotency GetDnsAuthorization(
-      google::cloud::certificatemanager::v1::GetDnsAuthorizationRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  GetDnsAuthorization(google::cloud::certificatemanager::v1::GetDnsAuthorizationRequest const& request);
 
-  virtual google::cloud::Idempotency CreateDnsAuthorization(
-      google::cloud::certificatemanager::v1::
-          CreateDnsAuthorizationRequest const& request);
+  virtual google::cloud::Idempotency
+  CreateDnsAuthorization(google::cloud::certificatemanager::v1::CreateDnsAuthorizationRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateDnsAuthorization(
-      google::cloud::certificatemanager::v1::
-          UpdateDnsAuthorizationRequest const& request);
+  virtual google::cloud::Idempotency
+  UpdateDnsAuthorization(google::cloud::certificatemanager::v1::UpdateDnsAuthorizationRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteDnsAuthorization(
-      google::cloud::certificatemanager::v1::
-          DeleteDnsAuthorizationRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteDnsAuthorization(google::cloud::certificatemanager::v1::DeleteDnsAuthorizationRequest const& request);
 
-  virtual google::cloud::Idempotency ListCertificateIssuanceConfigs(
-      google::cloud::certificatemanager::v1::
-          ListCertificateIssuanceConfigsRequest request);
+  virtual google::cloud::Idempotency
+  ListCertificateIssuanceConfigs(google::cloud::certificatemanager::v1::ListCertificateIssuanceConfigsRequest request);
 
-  virtual google::cloud::Idempotency GetCertificateIssuanceConfig(
-      google::cloud::certificatemanager::v1::
-          GetCertificateIssuanceConfigRequest const& request);
+  virtual google::cloud::Idempotency
+  GetCertificateIssuanceConfig(google::cloud::certificatemanager::v1::GetCertificateIssuanceConfigRequest const& request);
 
-  virtual google::cloud::Idempotency CreateCertificateIssuanceConfig(
-      google::cloud::certificatemanager::v1::
-          CreateCertificateIssuanceConfigRequest const& request);
+  virtual google::cloud::Idempotency
+  CreateCertificateIssuanceConfig(google::cloud::certificatemanager::v1::CreateCertificateIssuanceConfigRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteCertificateIssuanceConfig(
-      google::cloud::certificatemanager::v1::
-          DeleteCertificateIssuanceConfigRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteCertificateIssuanceConfig(google::cloud::certificatemanager::v1::DeleteCertificateIssuanceConfigRequest const& request);
 
-  virtual google::cloud::Idempotency ListTrustConfigs(
-      google::cloud::certificatemanager::v1::ListTrustConfigsRequest request);
+  virtual google::cloud::Idempotency
+  ListTrustConfigs(google::cloud::certificatemanager::v1::ListTrustConfigsRequest request);
 
-  virtual google::cloud::Idempotency GetTrustConfig(
-      google::cloud::certificatemanager::v1::GetTrustConfigRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  GetTrustConfig(google::cloud::certificatemanager::v1::GetTrustConfigRequest const& request);
 
-  virtual google::cloud::Idempotency CreateTrustConfig(
-      google::cloud::certificatemanager::v1::CreateTrustConfigRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  CreateTrustConfig(google::cloud::certificatemanager::v1::CreateTrustConfigRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateTrustConfig(
-      google::cloud::certificatemanager::v1::UpdateTrustConfigRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  UpdateTrustConfig(google::cloud::certificatemanager::v1::UpdateTrustConfigRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteTrustConfig(
-      google::cloud::certificatemanager::v1::DeleteTrustConfigRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  DeleteTrustConfig(google::cloud::certificatemanager::v1::DeleteTrustConfigRequest const& request);
 
-  virtual google::cloud::Idempotency ListLocations(
-      google::cloud::location::ListLocationsRequest request);
+  virtual google::cloud::Idempotency
+  ListLocations(google::cloud::location::ListLocationsRequest request);
 
-  virtual google::cloud::Idempotency GetLocation(
-      google::cloud::location::GetLocationRequest const& request);
+  virtual google::cloud::Idempotency
+  GetLocation(google::cloud::location::GetLocationRequest const& request);
 
-  virtual google::cloud::Idempotency ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual google::cloud::Idempotency
+  ListOperations(google::longrunning::ListOperationsRequest request);
 
-  virtual google::cloud::Idempotency GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
 
-  virtual google::cloud::Idempotency CancelOperation(
-      google::longrunning::CancelOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  CancelOperation(google::longrunning::CancelOperationRequest const& request);
 };
 
 std::unique_ptr<CertificateManagerConnectionIdempotencyPolicy>
-MakeDefaultCertificateManagerConnectionIdempotencyPolicy();
+    MakeDefaultCertificateManagerConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace certificatemanager_v1

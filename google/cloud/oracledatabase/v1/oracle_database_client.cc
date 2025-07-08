@@ -28,156 +28,112 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 OracleDatabaseClient::OracleDatabaseClient(
     std::shared_ptr<OracleDatabaseConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 OracleDatabaseClient::~OracleDatabaseClient() = default;
 
 StreamRange<google::cloud::oracledatabase::v1::CloudExadataInfrastructure>
-OracleDatabaseClient::ListCloudExadataInfrastructures(std::string const& parent,
-                                                      Options opts) {
+OracleDatabaseClient::ListCloudExadataInfrastructures(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::oracledatabase::v1::ListCloudExadataInfrastructuresRequest
-      request;
+  google::cloud::oracledatabase::v1::ListCloudExadataInfrastructuresRequest request;
   request.set_parent(parent);
   return connection_->ListCloudExadataInfrastructures(request);
 }
 
 StreamRange<google::cloud::oracledatabase::v1::CloudExadataInfrastructure>
-OracleDatabaseClient::ListCloudExadataInfrastructures(
-    google::cloud::oracledatabase::v1::ListCloudExadataInfrastructuresRequest
-        request,
-    Options opts) {
+OracleDatabaseClient::ListCloudExadataInfrastructures(google::cloud::oracledatabase::v1::ListCloudExadataInfrastructuresRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListCloudExadataInfrastructures(std::move(request));
 }
 
 StatusOr<google::cloud::oracledatabase::v1::CloudExadataInfrastructure>
-OracleDatabaseClient::GetCloudExadataInfrastructure(std::string const& name,
-                                                    Options opts) {
+OracleDatabaseClient::GetCloudExadataInfrastructure(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::oracledatabase::v1::GetCloudExadataInfrastructureRequest
-      request;
+  google::cloud::oracledatabase::v1::GetCloudExadataInfrastructureRequest request;
   request.set_name(name);
   return connection_->GetCloudExadataInfrastructure(request);
 }
 
 StatusOr<google::cloud::oracledatabase::v1::CloudExadataInfrastructure>
-OracleDatabaseClient::GetCloudExadataInfrastructure(
-    google::cloud::oracledatabase::v1::
-        GetCloudExadataInfrastructureRequest const& request,
-    Options opts) {
+OracleDatabaseClient::GetCloudExadataInfrastructure(google::cloud::oracledatabase::v1::GetCloudExadataInfrastructureRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetCloudExadataInfrastructure(request);
 }
 
 future<StatusOr<google::cloud::oracledatabase::v1::CloudExadataInfrastructure>>
-OracleDatabaseClient::CreateCloudExadataInfrastructure(
-    std::string const& parent,
-    google::cloud::oracledatabase::v1::CloudExadataInfrastructure const&
-        cloud_exadata_infrastructure,
-    std::string const& cloud_exadata_infrastructure_id, Options opts) {
+OracleDatabaseClient::CreateCloudExadataInfrastructure(std::string const& parent, google::cloud::oracledatabase::v1::CloudExadataInfrastructure const& cloud_exadata_infrastructure, std::string const& cloud_exadata_infrastructure_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::oracledatabase::v1::CreateCloudExadataInfrastructureRequest
-      request;
+  google::cloud::oracledatabase::v1::CreateCloudExadataInfrastructureRequest request;
   request.set_parent(parent);
-  *request.mutable_cloud_exadata_infrastructure() =
-      cloud_exadata_infrastructure;
+  *request.mutable_cloud_exadata_infrastructure() = cloud_exadata_infrastructure;
   request.set_cloud_exadata_infrastructure_id(cloud_exadata_infrastructure_id);
   return connection_->CreateCloudExadataInfrastructure(request);
 }
 
 StatusOr<google::longrunning::Operation>
-OracleDatabaseClient::CreateCloudExadataInfrastructure(
-    NoAwaitTag, std::string const& parent,
-    google::cloud::oracledatabase::v1::CloudExadataInfrastructure const&
-        cloud_exadata_infrastructure,
-    std::string const& cloud_exadata_infrastructure_id, Options opts) {
+OracleDatabaseClient::CreateCloudExadataInfrastructure(NoAwaitTag, std::string const& parent, google::cloud::oracledatabase::v1::CloudExadataInfrastructure const& cloud_exadata_infrastructure, std::string const& cloud_exadata_infrastructure_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::oracledatabase::v1::CreateCloudExadataInfrastructureRequest
-      request;
+  google::cloud::oracledatabase::v1::CreateCloudExadataInfrastructureRequest request;
   request.set_parent(parent);
-  *request.mutable_cloud_exadata_infrastructure() =
-      cloud_exadata_infrastructure;
+  *request.mutable_cloud_exadata_infrastructure() = cloud_exadata_infrastructure;
   request.set_cloud_exadata_infrastructure_id(cloud_exadata_infrastructure_id);
   return connection_->CreateCloudExadataInfrastructure(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::oracledatabase::v1::CloudExadataInfrastructure>>
-OracleDatabaseClient::CreateCloudExadataInfrastructure(
-    google::cloud::oracledatabase::v1::
-        CreateCloudExadataInfrastructureRequest const& request,
-    Options opts) {
+OracleDatabaseClient::CreateCloudExadataInfrastructure(google::cloud::oracledatabase::v1::CreateCloudExadataInfrastructureRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateCloudExadataInfrastructure(request);
 }
 
 StatusOr<google::longrunning::Operation>
-OracleDatabaseClient::CreateCloudExadataInfrastructure(
-    NoAwaitTag,
-    google::cloud::oracledatabase::v1::
-        CreateCloudExadataInfrastructureRequest const& request,
-    Options opts) {
+OracleDatabaseClient::CreateCloudExadataInfrastructure(NoAwaitTag, google::cloud::oracledatabase::v1::CreateCloudExadataInfrastructureRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateCloudExadataInfrastructure(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::oracledatabase::v1::CloudExadataInfrastructure>>
-OracleDatabaseClient::CreateCloudExadataInfrastructure(
-    google::longrunning::Operation const& operation, Options opts) {
+OracleDatabaseClient::CreateCloudExadataInfrastructure(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateCloudExadataInfrastructure(operation);
 }
 
 future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
-OracleDatabaseClient::DeleteCloudExadataInfrastructure(std::string const& name,
-                                                       Options opts) {
+OracleDatabaseClient::DeleteCloudExadataInfrastructure(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::oracledatabase::v1::DeleteCloudExadataInfrastructureRequest
-      request;
+  google::cloud::oracledatabase::v1::DeleteCloudExadataInfrastructureRequest request;
   request.set_name(name);
   return connection_->DeleteCloudExadataInfrastructure(request);
 }
 
 StatusOr<google::longrunning::Operation>
-OracleDatabaseClient::DeleteCloudExadataInfrastructure(NoAwaitTag,
-                                                       std::string const& name,
-                                                       Options opts) {
+OracleDatabaseClient::DeleteCloudExadataInfrastructure(NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::oracledatabase::v1::DeleteCloudExadataInfrastructureRequest
-      request;
+  google::cloud::oracledatabase::v1::DeleteCloudExadataInfrastructureRequest request;
   request.set_name(name);
   return connection_->DeleteCloudExadataInfrastructure(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
-OracleDatabaseClient::DeleteCloudExadataInfrastructure(
-    google::cloud::oracledatabase::v1::
-        DeleteCloudExadataInfrastructureRequest const& request,
-    Options opts) {
+OracleDatabaseClient::DeleteCloudExadataInfrastructure(google::cloud::oracledatabase::v1::DeleteCloudExadataInfrastructureRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteCloudExadataInfrastructure(request);
 }
 
 StatusOr<google::longrunning::Operation>
-OracleDatabaseClient::DeleteCloudExadataInfrastructure(
-    NoAwaitTag,
-    google::cloud::oracledatabase::v1::
-        DeleteCloudExadataInfrastructureRequest const& request,
-    Options opts) {
+OracleDatabaseClient::DeleteCloudExadataInfrastructure(NoAwaitTag, google::cloud::oracledatabase::v1::DeleteCloudExadataInfrastructureRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteCloudExadataInfrastructure(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
-OracleDatabaseClient::DeleteCloudExadataInfrastructure(
-    google::longrunning::Operation const& operation, Options opts) {
+OracleDatabaseClient::DeleteCloudExadataInfrastructure(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteCloudExadataInfrastructure(operation);
 }
 
 StreamRange<google::cloud::oracledatabase::v1::CloudVmCluster>
-OracleDatabaseClient::ListCloudVmClusters(std::string const& parent,
-                                          Options opts) {
+OracleDatabaseClient::ListCloudVmClusters(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::oracledatabase::v1::ListCloudVmClustersRequest request;
   request.set_parent(parent);
@@ -185,9 +141,7 @@ OracleDatabaseClient::ListCloudVmClusters(std::string const& parent,
 }
 
 StreamRange<google::cloud::oracledatabase::v1::CloudVmCluster>
-OracleDatabaseClient::ListCloudVmClusters(
-    google::cloud::oracledatabase::v1::ListCloudVmClustersRequest request,
-    Options opts) {
+OracleDatabaseClient::ListCloudVmClusters(google::cloud::oracledatabase::v1::ListCloudVmClustersRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListCloudVmClusters(std::move(request));
 }
@@ -201,18 +155,13 @@ OracleDatabaseClient::GetCloudVmCluster(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::oracledatabase::v1::CloudVmCluster>
-OracleDatabaseClient::GetCloudVmCluster(
-    google::cloud::oracledatabase::v1::GetCloudVmClusterRequest const& request,
-    Options opts) {
+OracleDatabaseClient::GetCloudVmCluster(google::cloud::oracledatabase::v1::GetCloudVmClusterRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetCloudVmCluster(request);
 }
 
 future<StatusOr<google::cloud::oracledatabase::v1::CloudVmCluster>>
-OracleDatabaseClient::CreateCloudVmCluster(
-    std::string const& parent,
-    google::cloud::oracledatabase::v1::CloudVmCluster const& cloud_vm_cluster,
-    std::string const& cloud_vm_cluster_id, Options opts) {
+OracleDatabaseClient::CreateCloudVmCluster(std::string const& parent, google::cloud::oracledatabase::v1::CloudVmCluster const& cloud_vm_cluster, std::string const& cloud_vm_cluster_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::oracledatabase::v1::CreateCloudVmClusterRequest request;
   request.set_parent(parent);
@@ -222,10 +171,7 @@ OracleDatabaseClient::CreateCloudVmCluster(
 }
 
 StatusOr<google::longrunning::Operation>
-OracleDatabaseClient::CreateCloudVmCluster(
-    NoAwaitTag, std::string const& parent,
-    google::cloud::oracledatabase::v1::CloudVmCluster const& cloud_vm_cluster,
-    std::string const& cloud_vm_cluster_id, Options opts) {
+OracleDatabaseClient::CreateCloudVmCluster(NoAwaitTag, std::string const& parent, google::cloud::oracledatabase::v1::CloudVmCluster const& cloud_vm_cluster, std::string const& cloud_vm_cluster_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::oracledatabase::v1::CreateCloudVmClusterRequest request;
   request.set_parent(parent);
@@ -235,34 +181,25 @@ OracleDatabaseClient::CreateCloudVmCluster(
 }
 
 future<StatusOr<google::cloud::oracledatabase::v1::CloudVmCluster>>
-OracleDatabaseClient::CreateCloudVmCluster(
-    google::cloud::oracledatabase::v1::CreateCloudVmClusterRequest const&
-        request,
-    Options opts) {
+OracleDatabaseClient::CreateCloudVmCluster(google::cloud::oracledatabase::v1::CreateCloudVmClusterRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateCloudVmCluster(request);
 }
 
 StatusOr<google::longrunning::Operation>
-OracleDatabaseClient::CreateCloudVmCluster(
-    NoAwaitTag,
-    google::cloud::oracledatabase::v1::CreateCloudVmClusterRequest const&
-        request,
-    Options opts) {
+OracleDatabaseClient::CreateCloudVmCluster(NoAwaitTag, google::cloud::oracledatabase::v1::CreateCloudVmClusterRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateCloudVmCluster(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::oracledatabase::v1::CloudVmCluster>>
-OracleDatabaseClient::CreateCloudVmCluster(
-    google::longrunning::Operation const& operation, Options opts) {
+OracleDatabaseClient::CreateCloudVmCluster(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateCloudVmCluster(operation);
 }
 
 future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
-OracleDatabaseClient::DeleteCloudVmCluster(std::string const& name,
-                                           Options opts) {
+OracleDatabaseClient::DeleteCloudVmCluster(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::oracledatabase::v1::DeleteCloudVmClusterRequest request;
   request.set_name(name);
@@ -270,8 +207,7 @@ OracleDatabaseClient::DeleteCloudVmCluster(std::string const& name,
 }
 
 StatusOr<google::longrunning::Operation>
-OracleDatabaseClient::DeleteCloudVmCluster(NoAwaitTag, std::string const& name,
-                                           Options opts) {
+OracleDatabaseClient::DeleteCloudVmCluster(NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::oracledatabase::v1::DeleteCloudVmClusterRequest request;
   request.set_name(name);
@@ -279,34 +215,25 @@ OracleDatabaseClient::DeleteCloudVmCluster(NoAwaitTag, std::string const& name,
 }
 
 future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
-OracleDatabaseClient::DeleteCloudVmCluster(
-    google::cloud::oracledatabase::v1::DeleteCloudVmClusterRequest const&
-        request,
-    Options opts) {
+OracleDatabaseClient::DeleteCloudVmCluster(google::cloud::oracledatabase::v1::DeleteCloudVmClusterRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteCloudVmCluster(request);
 }
 
 StatusOr<google::longrunning::Operation>
-OracleDatabaseClient::DeleteCloudVmCluster(
-    NoAwaitTag,
-    google::cloud::oracledatabase::v1::DeleteCloudVmClusterRequest const&
-        request,
-    Options opts) {
+OracleDatabaseClient::DeleteCloudVmCluster(NoAwaitTag, google::cloud::oracledatabase::v1::DeleteCloudVmClusterRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteCloudVmCluster(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
-OracleDatabaseClient::DeleteCloudVmCluster(
-    google::longrunning::Operation const& operation, Options opts) {
+OracleDatabaseClient::DeleteCloudVmCluster(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteCloudVmCluster(operation);
 }
 
 StreamRange<google::cloud::oracledatabase::v1::Entitlement>
-OracleDatabaseClient::ListEntitlements(std::string const& parent,
-                                       Options opts) {
+OracleDatabaseClient::ListEntitlements(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::oracledatabase::v1::ListEntitlementsRequest request;
   request.set_parent(parent);
@@ -314,9 +241,7 @@ OracleDatabaseClient::ListEntitlements(std::string const& parent,
 }
 
 StreamRange<google::cloud::oracledatabase::v1::Entitlement>
-OracleDatabaseClient::ListEntitlements(
-    google::cloud::oracledatabase::v1::ListEntitlementsRequest request,
-    Options opts) {
+OracleDatabaseClient::ListEntitlements(google::cloud::oracledatabase::v1::ListEntitlementsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListEntitlements(std::move(request));
 }
@@ -330,9 +255,7 @@ OracleDatabaseClient::ListDbServers(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::oracledatabase::v1::DbServer>
-OracleDatabaseClient::ListDbServers(
-    google::cloud::oracledatabase::v1::ListDbServersRequest request,
-    Options opts) {
+OracleDatabaseClient::ListDbServers(google::cloud::oracledatabase::v1::ListDbServersRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListDbServers(std::move(request));
 }
@@ -346,9 +269,7 @@ OracleDatabaseClient::ListDbNodes(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::oracledatabase::v1::DbNode>
-OracleDatabaseClient::ListDbNodes(
-    google::cloud::oracledatabase::v1::ListDbNodesRequest request,
-    Options opts) {
+OracleDatabaseClient::ListDbNodes(google::cloud::oracledatabase::v1::ListDbNodesRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListDbNodes(std::move(request));
 }
@@ -362,16 +283,13 @@ OracleDatabaseClient::ListGiVersions(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::oracledatabase::v1::GiVersion>
-OracleDatabaseClient::ListGiVersions(
-    google::cloud::oracledatabase::v1::ListGiVersionsRequest request,
-    Options opts) {
+OracleDatabaseClient::ListGiVersions(google::cloud::oracledatabase::v1::ListGiVersionsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListGiVersions(std::move(request));
 }
 
 StreamRange<google::cloud::oracledatabase::v1::DbSystemShape>
-OracleDatabaseClient::ListDbSystemShapes(std::string const& parent,
-                                         Options opts) {
+OracleDatabaseClient::ListDbSystemShapes(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::oracledatabase::v1::ListDbSystemShapesRequest request;
   request.set_parent(parent);
@@ -379,16 +297,13 @@ OracleDatabaseClient::ListDbSystemShapes(std::string const& parent,
 }
 
 StreamRange<google::cloud::oracledatabase::v1::DbSystemShape>
-OracleDatabaseClient::ListDbSystemShapes(
-    google::cloud::oracledatabase::v1::ListDbSystemShapesRequest request,
-    Options opts) {
+OracleDatabaseClient::ListDbSystemShapes(google::cloud::oracledatabase::v1::ListDbSystemShapesRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListDbSystemShapes(std::move(request));
 }
 
 StreamRange<google::cloud::oracledatabase::v1::AutonomousDatabase>
-OracleDatabaseClient::ListAutonomousDatabases(std::string const& parent,
-                                              Options opts) {
+OracleDatabaseClient::ListAutonomousDatabases(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::oracledatabase::v1::ListAutonomousDatabasesRequest request;
   request.set_parent(parent);
@@ -396,16 +311,13 @@ OracleDatabaseClient::ListAutonomousDatabases(std::string const& parent,
 }
 
 StreamRange<google::cloud::oracledatabase::v1::AutonomousDatabase>
-OracleDatabaseClient::ListAutonomousDatabases(
-    google::cloud::oracledatabase::v1::ListAutonomousDatabasesRequest request,
-    Options opts) {
+OracleDatabaseClient::ListAutonomousDatabases(google::cloud::oracledatabase::v1::ListAutonomousDatabasesRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListAutonomousDatabases(std::move(request));
 }
 
 StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>
-OracleDatabaseClient::GetAutonomousDatabase(std::string const& name,
-                                            Options opts) {
+OracleDatabaseClient::GetAutonomousDatabase(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::oracledatabase::v1::GetAutonomousDatabaseRequest request;
   request.set_name(name);
@@ -413,20 +325,13 @@ OracleDatabaseClient::GetAutonomousDatabase(std::string const& name,
 }
 
 StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>
-OracleDatabaseClient::GetAutonomousDatabase(
-    google::cloud::oracledatabase::v1::GetAutonomousDatabaseRequest const&
-        request,
-    Options opts) {
+OracleDatabaseClient::GetAutonomousDatabase(google::cloud::oracledatabase::v1::GetAutonomousDatabaseRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetAutonomousDatabase(request);
 }
 
 future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
-OracleDatabaseClient::CreateAutonomousDatabase(
-    std::string const& parent,
-    google::cloud::oracledatabase::v1::AutonomousDatabase const&
-        autonomous_database,
-    std::string const& autonomous_database_id, Options opts) {
+OracleDatabaseClient::CreateAutonomousDatabase(std::string const& parent, google::cloud::oracledatabase::v1::AutonomousDatabase const& autonomous_database, std::string const& autonomous_database_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::oracledatabase::v1::CreateAutonomousDatabaseRequest request;
   request.set_parent(parent);
@@ -436,11 +341,7 @@ OracleDatabaseClient::CreateAutonomousDatabase(
 }
 
 StatusOr<google::longrunning::Operation>
-OracleDatabaseClient::CreateAutonomousDatabase(
-    NoAwaitTag, std::string const& parent,
-    google::cloud::oracledatabase::v1::AutonomousDatabase const&
-        autonomous_database,
-    std::string const& autonomous_database_id, Options opts) {
+OracleDatabaseClient::CreateAutonomousDatabase(NoAwaitTag, std::string const& parent, google::cloud::oracledatabase::v1::AutonomousDatabase const& autonomous_database, std::string const& autonomous_database_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::oracledatabase::v1::CreateAutonomousDatabaseRequest request;
   request.set_parent(parent);
@@ -450,34 +351,25 @@ OracleDatabaseClient::CreateAutonomousDatabase(
 }
 
 future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
-OracleDatabaseClient::CreateAutonomousDatabase(
-    google::cloud::oracledatabase::v1::CreateAutonomousDatabaseRequest const&
-        request,
-    Options opts) {
+OracleDatabaseClient::CreateAutonomousDatabase(google::cloud::oracledatabase::v1::CreateAutonomousDatabaseRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateAutonomousDatabase(request);
 }
 
 StatusOr<google::longrunning::Operation>
-OracleDatabaseClient::CreateAutonomousDatabase(
-    NoAwaitTag,
-    google::cloud::oracledatabase::v1::CreateAutonomousDatabaseRequest const&
-        request,
-    Options opts) {
+OracleDatabaseClient::CreateAutonomousDatabase(NoAwaitTag, google::cloud::oracledatabase::v1::CreateAutonomousDatabaseRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateAutonomousDatabase(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
-OracleDatabaseClient::CreateAutonomousDatabase(
-    google::longrunning::Operation const& operation, Options opts) {
+OracleDatabaseClient::CreateAutonomousDatabase(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateAutonomousDatabase(operation);
 }
 
 future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
-OracleDatabaseClient::DeleteAutonomousDatabase(std::string const& name,
-                                               Options opts) {
+OracleDatabaseClient::DeleteAutonomousDatabase(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::oracledatabase::v1::DeleteAutonomousDatabaseRequest request;
   request.set_name(name);
@@ -485,9 +377,7 @@ OracleDatabaseClient::DeleteAutonomousDatabase(std::string const& name,
 }
 
 StatusOr<google::longrunning::Operation>
-OracleDatabaseClient::DeleteAutonomousDatabase(NoAwaitTag,
-                                               std::string const& name,
-                                               Options opts) {
+OracleDatabaseClient::DeleteAutonomousDatabase(NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::oracledatabase::v1::DeleteAutonomousDatabaseRequest request;
   request.set_name(name);
@@ -495,35 +385,25 @@ OracleDatabaseClient::DeleteAutonomousDatabase(NoAwaitTag,
 }
 
 future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
-OracleDatabaseClient::DeleteAutonomousDatabase(
-    google::cloud::oracledatabase::v1::DeleteAutonomousDatabaseRequest const&
-        request,
-    Options opts) {
+OracleDatabaseClient::DeleteAutonomousDatabase(google::cloud::oracledatabase::v1::DeleteAutonomousDatabaseRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteAutonomousDatabase(request);
 }
 
 StatusOr<google::longrunning::Operation>
-OracleDatabaseClient::DeleteAutonomousDatabase(
-    NoAwaitTag,
-    google::cloud::oracledatabase::v1::DeleteAutonomousDatabaseRequest const&
-        request,
-    Options opts) {
+OracleDatabaseClient::DeleteAutonomousDatabase(NoAwaitTag, google::cloud::oracledatabase::v1::DeleteAutonomousDatabaseRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteAutonomousDatabase(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
-OracleDatabaseClient::DeleteAutonomousDatabase(
-    google::longrunning::Operation const& operation, Options opts) {
+OracleDatabaseClient::DeleteAutonomousDatabase(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteAutonomousDatabase(operation);
 }
 
 future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
-OracleDatabaseClient::RestoreAutonomousDatabase(
-    std::string const& name, google::protobuf::Timestamp const& restore_time,
-    Options opts) {
+OracleDatabaseClient::RestoreAutonomousDatabase(std::string const& name, google::protobuf::Timestamp const& restore_time, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::oracledatabase::v1::RestoreAutonomousDatabaseRequest request;
   request.set_name(name);
@@ -532,9 +412,7 @@ OracleDatabaseClient::RestoreAutonomousDatabase(
 }
 
 StatusOr<google::longrunning::Operation>
-OracleDatabaseClient::RestoreAutonomousDatabase(
-    NoAwaitTag, std::string const& name,
-    google::protobuf::Timestamp const& restore_time, Options opts) {
+OracleDatabaseClient::RestoreAutonomousDatabase(NoAwaitTag, std::string const& name, google::protobuf::Timestamp const& restore_time, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::oracledatabase::v1::RestoreAutonomousDatabaseRequest request;
   request.set_name(name);
@@ -543,40 +421,27 @@ OracleDatabaseClient::RestoreAutonomousDatabase(
 }
 
 future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
-OracleDatabaseClient::RestoreAutonomousDatabase(
-    google::cloud::oracledatabase::v1::RestoreAutonomousDatabaseRequest const&
-        request,
-    Options opts) {
+OracleDatabaseClient::RestoreAutonomousDatabase(google::cloud::oracledatabase::v1::RestoreAutonomousDatabaseRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RestoreAutonomousDatabase(request);
 }
 
 StatusOr<google::longrunning::Operation>
-OracleDatabaseClient::RestoreAutonomousDatabase(
-    NoAwaitTag,
-    google::cloud::oracledatabase::v1::RestoreAutonomousDatabaseRequest const&
-        request,
-    Options opts) {
+OracleDatabaseClient::RestoreAutonomousDatabase(NoAwaitTag, google::cloud::oracledatabase::v1::RestoreAutonomousDatabaseRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RestoreAutonomousDatabase(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
-OracleDatabaseClient::RestoreAutonomousDatabase(
-    google::longrunning::Operation const& operation, Options opts) {
+OracleDatabaseClient::RestoreAutonomousDatabase(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RestoreAutonomousDatabase(operation);
 }
 
-StatusOr<
-    google::cloud::oracledatabase::v1::GenerateAutonomousDatabaseWalletResponse>
-OracleDatabaseClient::GenerateAutonomousDatabaseWallet(
-    std::string const& name,
-    google::cloud::oracledatabase::v1::GenerateType type, bool is_regional,
-    std::string const& password, Options opts) {
+StatusOr<google::cloud::oracledatabase::v1::GenerateAutonomousDatabaseWalletResponse>
+OracleDatabaseClient::GenerateAutonomousDatabaseWallet(std::string const& name, google::cloud::oracledatabase::v1::GenerateType type, bool is_regional, std::string const& password, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::oracledatabase::v1::GenerateAutonomousDatabaseWalletRequest
-      request;
+  google::cloud::oracledatabase::v1::GenerateAutonomousDatabaseWalletRequest request;
   request.set_name(name);
   request.set_type(type);
   request.set_is_regional(is_regional);
@@ -584,19 +449,14 @@ OracleDatabaseClient::GenerateAutonomousDatabaseWallet(
   return connection_->GenerateAutonomousDatabaseWallet(request);
 }
 
-StatusOr<
-    google::cloud::oracledatabase::v1::GenerateAutonomousDatabaseWalletResponse>
-OracleDatabaseClient::GenerateAutonomousDatabaseWallet(
-    google::cloud::oracledatabase::v1::
-        GenerateAutonomousDatabaseWalletRequest const& request,
-    Options opts) {
+StatusOr<google::cloud::oracledatabase::v1::GenerateAutonomousDatabaseWalletResponse>
+OracleDatabaseClient::GenerateAutonomousDatabaseWallet(google::cloud::oracledatabase::v1::GenerateAutonomousDatabaseWalletRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GenerateAutonomousDatabaseWallet(request);
 }
 
 StreamRange<google::cloud::oracledatabase::v1::AutonomousDbVersion>
-OracleDatabaseClient::ListAutonomousDbVersions(std::string const& parent,
-                                               Options opts) {
+OracleDatabaseClient::ListAutonomousDbVersions(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::oracledatabase::v1::ListAutonomousDbVersionsRequest request;
   request.set_parent(parent);
@@ -604,54 +464,41 @@ OracleDatabaseClient::ListAutonomousDbVersions(std::string const& parent,
 }
 
 StreamRange<google::cloud::oracledatabase::v1::AutonomousDbVersion>
-OracleDatabaseClient::ListAutonomousDbVersions(
-    google::cloud::oracledatabase::v1::ListAutonomousDbVersionsRequest request,
-    Options opts) {
+OracleDatabaseClient::ListAutonomousDbVersions(google::cloud::oracledatabase::v1::ListAutonomousDbVersionsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListAutonomousDbVersions(std::move(request));
 }
 
 StreamRange<google::cloud::oracledatabase::v1::AutonomousDatabaseCharacterSet>
-OracleDatabaseClient::ListAutonomousDatabaseCharacterSets(
-    std::string const& parent, Options opts) {
+OracleDatabaseClient::ListAutonomousDatabaseCharacterSets(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::oracledatabase::v1::ListAutonomousDatabaseCharacterSetsRequest
-      request;
+  google::cloud::oracledatabase::v1::ListAutonomousDatabaseCharacterSetsRequest request;
   request.set_parent(parent);
   return connection_->ListAutonomousDatabaseCharacterSets(request);
 }
 
 StreamRange<google::cloud::oracledatabase::v1::AutonomousDatabaseCharacterSet>
-OracleDatabaseClient::ListAutonomousDatabaseCharacterSets(
-    google::cloud::oracledatabase::v1::
-        ListAutonomousDatabaseCharacterSetsRequest request,
-    Options opts) {
+OracleDatabaseClient::ListAutonomousDatabaseCharacterSets(google::cloud::oracledatabase::v1::ListAutonomousDatabaseCharacterSetsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListAutonomousDatabaseCharacterSets(std::move(request));
 }
 
 StreamRange<google::cloud::oracledatabase::v1::AutonomousDatabaseBackup>
-OracleDatabaseClient::ListAutonomousDatabaseBackups(std::string const& parent,
-                                                    Options opts) {
+OracleDatabaseClient::ListAutonomousDatabaseBackups(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::oracledatabase::v1::ListAutonomousDatabaseBackupsRequest
-      request;
+  google::cloud::oracledatabase::v1::ListAutonomousDatabaseBackupsRequest request;
   request.set_parent(parent);
   return connection_->ListAutonomousDatabaseBackups(request);
 }
 
 StreamRange<google::cloud::oracledatabase::v1::AutonomousDatabaseBackup>
-OracleDatabaseClient::ListAutonomousDatabaseBackups(
-    google::cloud::oracledatabase::v1::ListAutonomousDatabaseBackupsRequest
-        request,
-    Options opts) {
+OracleDatabaseClient::ListAutonomousDatabaseBackups(google::cloud::oracledatabase::v1::ListAutonomousDatabaseBackupsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListAutonomousDatabaseBackups(std::move(request));
 }
 
 future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
-OracleDatabaseClient::StopAutonomousDatabase(std::string const& name,
-                                             Options opts) {
+OracleDatabaseClient::StopAutonomousDatabase(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::oracledatabase::v1::StopAutonomousDatabaseRequest request;
   request.set_name(name);
@@ -659,9 +506,7 @@ OracleDatabaseClient::StopAutonomousDatabase(std::string const& name,
 }
 
 StatusOr<google::longrunning::Operation>
-OracleDatabaseClient::StopAutonomousDatabase(NoAwaitTag,
-                                             std::string const& name,
-                                             Options opts) {
+OracleDatabaseClient::StopAutonomousDatabase(NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::oracledatabase::v1::StopAutonomousDatabaseRequest request;
   request.set_name(name);
@@ -669,34 +514,25 @@ OracleDatabaseClient::StopAutonomousDatabase(NoAwaitTag,
 }
 
 future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
-OracleDatabaseClient::StopAutonomousDatabase(
-    google::cloud::oracledatabase::v1::StopAutonomousDatabaseRequest const&
-        request,
-    Options opts) {
+OracleDatabaseClient::StopAutonomousDatabase(google::cloud::oracledatabase::v1::StopAutonomousDatabaseRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->StopAutonomousDatabase(request);
 }
 
 StatusOr<google::longrunning::Operation>
-OracleDatabaseClient::StopAutonomousDatabase(
-    NoAwaitTag,
-    google::cloud::oracledatabase::v1::StopAutonomousDatabaseRequest const&
-        request,
-    Options opts) {
+OracleDatabaseClient::StopAutonomousDatabase(NoAwaitTag, google::cloud::oracledatabase::v1::StopAutonomousDatabaseRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->StopAutonomousDatabase(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
-OracleDatabaseClient::StopAutonomousDatabase(
-    google::longrunning::Operation const& operation, Options opts) {
+OracleDatabaseClient::StopAutonomousDatabase(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->StopAutonomousDatabase(operation);
 }
 
 future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
-OracleDatabaseClient::StartAutonomousDatabase(std::string const& name,
-                                              Options opts) {
+OracleDatabaseClient::StartAutonomousDatabase(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::oracledatabase::v1::StartAutonomousDatabaseRequest request;
   request.set_name(name);
@@ -704,9 +540,7 @@ OracleDatabaseClient::StartAutonomousDatabase(std::string const& name,
 }
 
 StatusOr<google::longrunning::Operation>
-OracleDatabaseClient::StartAutonomousDatabase(NoAwaitTag,
-                                              std::string const& name,
-                                              Options opts) {
+OracleDatabaseClient::StartAutonomousDatabase(NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::oracledatabase::v1::StartAutonomousDatabaseRequest request;
   request.set_name(name);
@@ -714,34 +548,25 @@ OracleDatabaseClient::StartAutonomousDatabase(NoAwaitTag,
 }
 
 future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
-OracleDatabaseClient::StartAutonomousDatabase(
-    google::cloud::oracledatabase::v1::StartAutonomousDatabaseRequest const&
-        request,
-    Options opts) {
+OracleDatabaseClient::StartAutonomousDatabase(google::cloud::oracledatabase::v1::StartAutonomousDatabaseRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->StartAutonomousDatabase(request);
 }
 
 StatusOr<google::longrunning::Operation>
-OracleDatabaseClient::StartAutonomousDatabase(
-    NoAwaitTag,
-    google::cloud::oracledatabase::v1::StartAutonomousDatabaseRequest const&
-        request,
-    Options opts) {
+OracleDatabaseClient::StartAutonomousDatabase(NoAwaitTag, google::cloud::oracledatabase::v1::StartAutonomousDatabaseRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->StartAutonomousDatabase(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
-OracleDatabaseClient::StartAutonomousDatabase(
-    google::longrunning::Operation const& operation, Options opts) {
+OracleDatabaseClient::StartAutonomousDatabase(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->StartAutonomousDatabase(operation);
 }
 
 future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
-OracleDatabaseClient::RestartAutonomousDatabase(std::string const& name,
-                                                Options opts) {
+OracleDatabaseClient::RestartAutonomousDatabase(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::oracledatabase::v1::RestartAutonomousDatabaseRequest request;
   request.set_name(name);
@@ -749,9 +574,7 @@ OracleDatabaseClient::RestartAutonomousDatabase(std::string const& name,
 }
 
 StatusOr<google::longrunning::Operation>
-OracleDatabaseClient::RestartAutonomousDatabase(NoAwaitTag,
-                                                std::string const& name,
-                                                Options opts) {
+OracleDatabaseClient::RestartAutonomousDatabase(NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::oracledatabase::v1::RestartAutonomousDatabaseRequest request;
   request.set_name(name);
@@ -759,47 +582,37 @@ OracleDatabaseClient::RestartAutonomousDatabase(NoAwaitTag,
 }
 
 future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
-OracleDatabaseClient::RestartAutonomousDatabase(
-    google::cloud::oracledatabase::v1::RestartAutonomousDatabaseRequest const&
-        request,
-    Options opts) {
+OracleDatabaseClient::RestartAutonomousDatabase(google::cloud::oracledatabase::v1::RestartAutonomousDatabaseRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RestartAutonomousDatabase(request);
 }
 
 StatusOr<google::longrunning::Operation>
-OracleDatabaseClient::RestartAutonomousDatabase(
-    NoAwaitTag,
-    google::cloud::oracledatabase::v1::RestartAutonomousDatabaseRequest const&
-        request,
-    Options opts) {
+OracleDatabaseClient::RestartAutonomousDatabase(NoAwaitTag, google::cloud::oracledatabase::v1::RestartAutonomousDatabaseRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RestartAutonomousDatabase(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
-OracleDatabaseClient::RestartAutonomousDatabase(
-    google::longrunning::Operation const& operation, Options opts) {
+OracleDatabaseClient::RestartAutonomousDatabase(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RestartAutonomousDatabase(operation);
 }
 
 StreamRange<google::cloud::location::Location>
-OracleDatabaseClient::ListLocations(
-    google::cloud::location::ListLocationsRequest request, Options opts) {
+OracleDatabaseClient::ListLocations(google::cloud::location::ListLocationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListLocations(std::move(request));
 }
 
-StatusOr<google::cloud::location::Location> OracleDatabaseClient::GetLocation(
-    google::cloud::location::GetLocationRequest const& request, Options opts) {
+StatusOr<google::cloud::location::Location>
+OracleDatabaseClient::GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetLocation(request);
 }
 
 StreamRange<google::longrunning::Operation>
-OracleDatabaseClient::ListOperations(std::string const& name,
-                                     std::string const& filter, Options opts) {
+OracleDatabaseClient::ListOperations(std::string const& name, std::string const& filter, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::ListOperationsRequest request;
   request.set_name(name);
@@ -808,50 +621,49 @@ OracleDatabaseClient::ListOperations(std::string const& name,
 }
 
 StreamRange<google::longrunning::Operation>
-OracleDatabaseClient::ListOperations(
-    google::longrunning::ListOperationsRequest request, Options opts) {
+OracleDatabaseClient::ListOperations(google::longrunning::ListOperationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOperations(std::move(request));
 }
 
-StatusOr<google::longrunning::Operation> OracleDatabaseClient::GetOperation(
-    std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation>
+OracleDatabaseClient::GetOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
   return connection_->GetOperation(request);
 }
 
-StatusOr<google::longrunning::Operation> OracleDatabaseClient::GetOperation(
-    google::longrunning::GetOperationRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation>
+OracleDatabaseClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }
 
-Status OracleDatabaseClient::DeleteOperation(std::string const& name,
-                                             Options opts) {
+Status
+OracleDatabaseClient::DeleteOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::DeleteOperationRequest request;
   request.set_name(name);
   return connection_->DeleteOperation(request);
 }
 
-Status OracleDatabaseClient::DeleteOperation(
-    google::longrunning::DeleteOperationRequest const& request, Options opts) {
+Status
+OracleDatabaseClient::DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteOperation(request);
 }
 
-Status OracleDatabaseClient::CancelOperation(std::string const& name,
-                                             Options opts) {
+Status
+OracleDatabaseClient::CancelOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::CancelOperationRequest request;
   request.set_name(name);
   return connection_->CancelOperation(request);
 }
 
-Status OracleDatabaseClient::CancelOperation(
-    google::longrunning::CancelOperationRequest const& request, Options opts) {
+Status
+OracleDatabaseClient::CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelOperation(request);
 }

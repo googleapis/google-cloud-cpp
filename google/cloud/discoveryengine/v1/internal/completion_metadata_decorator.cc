@@ -46,11 +46,10 @@ CompletionServiceMetadata::CompletionServiceMetadata(
 
 StatusOr<google::cloud::discoveryengine::v1::CompleteQueryResponse>
 CompletionServiceMetadata::CompleteQuery(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::discoveryengine::v1::CompleteQueryRequest const& request) {
-  SetMetadata(
-      context, options,
-      absl::StrCat("data_store=", internal::UrlEncode(request.data_store())));
+  SetMetadata(context, options, absl::StrCat("data_store=", internal::UrlEncode(request.data_store())));
   return child_->CompleteQuery(context, options, request);
 }
 
@@ -59,21 +58,18 @@ CompletionServiceMetadata::AsyncImportSuggestionDenyListEntries(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::discoveryengine::v1::
-        ImportSuggestionDenyListEntriesRequest const& request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    google::cloud::discoveryengine::v1::ImportSuggestionDenyListEntriesRequest const& request) {
+  SetMetadata(*context, *options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncImportSuggestionDenyListEntries(
       cq, std::move(context), std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 CompletionServiceMetadata::ImportSuggestionDenyListEntries(
-    grpc::ClientContext& context, Options options,
-    google::cloud::discoveryengine::v1::
-        ImportSuggestionDenyListEntriesRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context,
+    Options options,
+    google::cloud::discoveryengine::v1::ImportSuggestionDenyListEntriesRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ImportSuggestionDenyListEntries(context, options, request);
 }
 
@@ -82,21 +78,18 @@ CompletionServiceMetadata::AsyncPurgeSuggestionDenyListEntries(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::discoveryengine::v1::
-        PurgeSuggestionDenyListEntriesRequest const& request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    google::cloud::discoveryengine::v1::PurgeSuggestionDenyListEntriesRequest const& request) {
+  SetMetadata(*context, *options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncPurgeSuggestionDenyListEntries(
       cq, std::move(context), std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 CompletionServiceMetadata::PurgeSuggestionDenyListEntries(
-    grpc::ClientContext& context, Options options,
-    google::cloud::discoveryengine::v1::
-        PurgeSuggestionDenyListEntriesRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context,
+    Options options,
+    google::cloud::discoveryengine::v1::PurgeSuggestionDenyListEntriesRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->PurgeSuggestionDenyListEntries(context, options, request);
 }
 
@@ -105,21 +98,18 @@ CompletionServiceMetadata::AsyncImportCompletionSuggestions(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::discoveryengine::v1::
-        ImportCompletionSuggestionsRequest const& request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncImportCompletionSuggestions(cq, std::move(context),
-                                                  std::move(options), request);
+    google::cloud::discoveryengine::v1::ImportCompletionSuggestionsRequest const& request) {
+  SetMetadata(*context, *options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncImportCompletionSuggestions(
+      cq, std::move(context), std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 CompletionServiceMetadata::ImportCompletionSuggestions(
-    grpc::ClientContext& context, Options options,
-    google::cloud::discoveryengine::v1::
-        ImportCompletionSuggestionsRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context,
+    Options options,
+    google::cloud::discoveryengine::v1::ImportCompletionSuggestionsRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ImportCompletionSuggestions(context, options, request);
 }
 
@@ -128,47 +118,45 @@ CompletionServiceMetadata::AsyncPurgeCompletionSuggestions(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::discoveryengine::v1::PurgeCompletionSuggestionsRequest const&
-        request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncPurgeCompletionSuggestions(cq, std::move(context),
-                                                 std::move(options), request);
+    google::cloud::discoveryengine::v1::PurgeCompletionSuggestionsRequest const& request) {
+  SetMetadata(*context, *options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncPurgeCompletionSuggestions(
+      cq, std::move(context), std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 CompletionServiceMetadata::PurgeCompletionSuggestions(
-    grpc::ClientContext& context, Options options,
-    google::cloud::discoveryengine::v1::PurgeCompletionSuggestionsRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context,
+    Options options,
+    google::cloud::discoveryengine::v1::PurgeCompletionSuggestionsRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->PurgeCompletionSuggestions(context, options, request);
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
 CompletionServiceMetadata::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ListOperations(context, options, request);
 }
 
 StatusOr<google::longrunning::Operation>
 CompletionServiceMetadata::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetOperation(context, options, request);
 }
 
-Status CompletionServiceMetadata::CancelOperation(
-    grpc::ClientContext& context, Options const& options,
+Status
+CompletionServiceMetadata::CancelOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->CancelOperation(context, options, request);
 }
 
@@ -180,8 +168,8 @@ CompletionServiceMetadata::AsyncGetOperation(
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(cq, std::move(context), std::move(options),
-                                   request);
+  return child_->AsyncGetOperation(
+      cq, std::move(context), std::move(options), request);
 }
 
 future<Status> CompletionServiceMetadata::AsyncCancelOperation(
@@ -191,21 +179,21 @@ future<Status> CompletionServiceMetadata::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(cq, std::move(context),
-                                      std::move(options), request);
+  return child_->AsyncCancelOperation(
+      cq, std::move(context), std::move(options), request);
 }
 
 void CompletionServiceMetadata::SetMetadata(grpc::ClientContext& context,
-                                            Options const& options,
-                                            std::string const& request_params) {
+                                        Options const& options,
+                                        std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
 void CompletionServiceMetadata::SetMetadata(grpc::ClientContext& context,
-                                            Options const& options) {
-  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
-                                       api_client_header_);
+                                        Options const& options) {
+  google::cloud::internal::SetMetadata(
+      context, options, fixed_metadata_, api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

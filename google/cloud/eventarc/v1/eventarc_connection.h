@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_EVENTARC_V1_EVENTARC_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_EVENTARC_V1_EVENTARC_CONNECTION_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/eventarc/v1/eventarc_connection_idempotency_policy.h"
 #include "google/cloud/eventarc/v1/internal/eventarc_retry_traits.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -67,14 +67,14 @@ class EventarcLimitedErrorCountRetryPolicy : public EventarcRetryPolicy {
    *     @p maximum_failures == 0.
    */
   explicit EventarcLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   EventarcLimitedErrorCountRetryPolicy(
       EventarcLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : EventarcLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : EventarcLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   EventarcLimitedErrorCountRetryPolicy(
       EventarcLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : EventarcLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : EventarcLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -94,9 +94,7 @@ class EventarcLimitedErrorCountRetryPolicy : public EventarcRetryPolicy {
   using BaseType = EventarcRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      eventarc_v1_internal::EventarcRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<eventarc_v1_internal::EventarcRetryTraits> impl_;
 };
 
 /**
@@ -135,13 +133,12 @@ class EventarcLimitedTimeRetryPolicy : public EventarcRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit EventarcLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
   EventarcLimitedTimeRetryPolicy(EventarcLimitedTimeRetryPolicy&& rhs) noexcept
-      : EventarcLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  EventarcLimitedTimeRetryPolicy(
-      EventarcLimitedTimeRetryPolicy const& rhs) noexcept
-      : EventarcLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+    : EventarcLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  EventarcLimitedTimeRetryPolicy(EventarcLimitedTimeRetryPolicy const& rhs) noexcept
+    : EventarcLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -155,16 +152,15 @@ class EventarcLimitedTimeRetryPolicy : public EventarcRetryPolicy {
     return impl_.IsPermanentFailure(status);
   }
   std::unique_ptr<EventarcRetryPolicy> clone() const override {
-    return std::make_unique<EventarcLimitedTimeRetryPolicy>(maximum_duration());
+    return std::make_unique<EventarcLimitedTimeRetryPolicy>(
+        maximum_duration());
   }
 
   // This is provided only for backwards compatibility.
   using BaseType = EventarcRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      eventarc_v1_internal::EventarcRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<eventarc_v1_internal::EventarcRetryTraits> impl_;
 };
 
 /**
@@ -185,318 +181,269 @@ class EventarcConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<google::cloud::eventarc::v1::Trigger> GetTrigger(
-      google::cloud::eventarc::v1::GetTriggerRequest const& request);
+  virtual StatusOr<google::cloud::eventarc::v1::Trigger>
+  GetTrigger(google::cloud::eventarc::v1::GetTriggerRequest const& request);
 
-  virtual StreamRange<google::cloud::eventarc::v1::Trigger> ListTriggers(
-      google::cloud::eventarc::v1::ListTriggersRequest request);
+  virtual StreamRange<google::cloud::eventarc::v1::Trigger>
+  ListTriggers(google::cloud::eventarc::v1::ListTriggersRequest request);
 
-  virtual future<StatusOr<google::cloud::eventarc::v1::Trigger>> CreateTrigger(
-      google::cloud::eventarc::v1::CreateTriggerRequest const& request);
+  virtual future<StatusOr<google::cloud::eventarc::v1::Trigger>>
+  CreateTrigger(google::cloud::eventarc::v1::CreateTriggerRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> CreateTrigger(
-      NoAwaitTag,
-      google::cloud::eventarc::v1::CreateTriggerRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  CreateTrigger(NoAwaitTag, google::cloud::eventarc::v1::CreateTriggerRequest const& request);
 
-  virtual future<StatusOr<google::cloud::eventarc::v1::Trigger>> CreateTrigger(
-      google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::eventarc::v1::Trigger>>
+  CreateTrigger( google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<google::cloud::eventarc::v1::Trigger>> UpdateTrigger(
-      google::cloud::eventarc::v1::UpdateTriggerRequest const& request);
+  virtual future<StatusOr<google::cloud::eventarc::v1::Trigger>>
+  UpdateTrigger(google::cloud::eventarc::v1::UpdateTriggerRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> UpdateTrigger(
-      NoAwaitTag,
-      google::cloud::eventarc::v1::UpdateTriggerRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  UpdateTrigger(NoAwaitTag, google::cloud::eventarc::v1::UpdateTriggerRequest const& request);
 
-  virtual future<StatusOr<google::cloud::eventarc::v1::Trigger>> UpdateTrigger(
-      google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::eventarc::v1::Trigger>>
+  UpdateTrigger( google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<google::cloud::eventarc::v1::Trigger>> DeleteTrigger(
-      google::cloud::eventarc::v1::DeleteTriggerRequest const& request);
+  virtual future<StatusOr<google::cloud::eventarc::v1::Trigger>>
+  DeleteTrigger(google::cloud::eventarc::v1::DeleteTriggerRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> DeleteTrigger(
-      NoAwaitTag,
-      google::cloud::eventarc::v1::DeleteTriggerRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  DeleteTrigger(NoAwaitTag, google::cloud::eventarc::v1::DeleteTriggerRequest const& request);
 
-  virtual future<StatusOr<google::cloud::eventarc::v1::Trigger>> DeleteTrigger(
-      google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::eventarc::v1::Trigger>>
+  DeleteTrigger( google::longrunning::Operation const& operation);
 
-  virtual StatusOr<google::cloud::eventarc::v1::Channel> GetChannel(
-      google::cloud::eventarc::v1::GetChannelRequest const& request);
+  virtual StatusOr<google::cloud::eventarc::v1::Channel>
+  GetChannel(google::cloud::eventarc::v1::GetChannelRequest const& request);
 
-  virtual StreamRange<google::cloud::eventarc::v1::Channel> ListChannels(
-      google::cloud::eventarc::v1::ListChannelsRequest request);
+  virtual StreamRange<google::cloud::eventarc::v1::Channel>
+  ListChannels(google::cloud::eventarc::v1::ListChannelsRequest request);
 
-  virtual future<StatusOr<google::cloud::eventarc::v1::Channel>> CreateChannel(
-      google::cloud::eventarc::v1::CreateChannelRequest const& request);
+  virtual future<StatusOr<google::cloud::eventarc::v1::Channel>>
+  CreateChannel(google::cloud::eventarc::v1::CreateChannelRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> CreateChannel(
-      NoAwaitTag,
-      google::cloud::eventarc::v1::CreateChannelRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  CreateChannel(NoAwaitTag, google::cloud::eventarc::v1::CreateChannelRequest const& request);
 
-  virtual future<StatusOr<google::cloud::eventarc::v1::Channel>> CreateChannel(
-      google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::eventarc::v1::Channel>>
+  CreateChannel( google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<google::cloud::eventarc::v1::Channel>> UpdateChannel(
-      google::cloud::eventarc::v1::UpdateChannelRequest const& request);
+  virtual future<StatusOr<google::cloud::eventarc::v1::Channel>>
+  UpdateChannel(google::cloud::eventarc::v1::UpdateChannelRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> UpdateChannel(
-      NoAwaitTag,
-      google::cloud::eventarc::v1::UpdateChannelRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  UpdateChannel(NoAwaitTag, google::cloud::eventarc::v1::UpdateChannelRequest const& request);
 
-  virtual future<StatusOr<google::cloud::eventarc::v1::Channel>> UpdateChannel(
-      google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::eventarc::v1::Channel>>
+  UpdateChannel( google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<google::cloud::eventarc::v1::Channel>> DeleteChannel(
-      google::cloud::eventarc::v1::DeleteChannelRequest const& request);
+  virtual future<StatusOr<google::cloud::eventarc::v1::Channel>>
+  DeleteChannel(google::cloud::eventarc::v1::DeleteChannelRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> DeleteChannel(
-      NoAwaitTag,
-      google::cloud::eventarc::v1::DeleteChannelRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  DeleteChannel(NoAwaitTag, google::cloud::eventarc::v1::DeleteChannelRequest const& request);
 
-  virtual future<StatusOr<google::cloud::eventarc::v1::Channel>> DeleteChannel(
-      google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::eventarc::v1::Channel>>
+  DeleteChannel( google::longrunning::Operation const& operation);
 
-  virtual StatusOr<google::cloud::eventarc::v1::Provider> GetProvider(
-      google::cloud::eventarc::v1::GetProviderRequest const& request);
+  virtual StatusOr<google::cloud::eventarc::v1::Provider>
+  GetProvider(google::cloud::eventarc::v1::GetProviderRequest const& request);
 
-  virtual StreamRange<google::cloud::eventarc::v1::Provider> ListProviders(
-      google::cloud::eventarc::v1::ListProvidersRequest request);
+  virtual StreamRange<google::cloud::eventarc::v1::Provider>
+  ListProviders(google::cloud::eventarc::v1::ListProvidersRequest request);
 
   virtual StatusOr<google::cloud::eventarc::v1::ChannelConnection>
-  GetChannelConnection(
-      google::cloud::eventarc::v1::GetChannelConnectionRequest const& request);
+  GetChannelConnection(google::cloud::eventarc::v1::GetChannelConnectionRequest const& request);
 
   virtual StreamRange<google::cloud::eventarc::v1::ChannelConnection>
-  ListChannelConnections(
-      google::cloud::eventarc::v1::ListChannelConnectionsRequest request);
+  ListChannelConnections(google::cloud::eventarc::v1::ListChannelConnectionsRequest request);
 
   virtual future<StatusOr<google::cloud::eventarc::v1::ChannelConnection>>
-  CreateChannelConnection(
-      google::cloud::eventarc::v1::CreateChannelConnectionRequest const&
-          request);
+  CreateChannelConnection(google::cloud::eventarc::v1::CreateChannelConnectionRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> CreateChannelConnection(
-      NoAwaitTag,
-      google::cloud::eventarc::v1::CreateChannelConnectionRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  CreateChannelConnection(NoAwaitTag, google::cloud::eventarc::v1::CreateChannelConnectionRequest const& request);
 
   virtual future<StatusOr<google::cloud::eventarc::v1::ChannelConnection>>
-  CreateChannelConnection(google::longrunning::Operation const& operation);
+  CreateChannelConnection( google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::eventarc::v1::ChannelConnection>>
-  DeleteChannelConnection(
-      google::cloud::eventarc::v1::DeleteChannelConnectionRequest const&
-          request);
+  DeleteChannelConnection(google::cloud::eventarc::v1::DeleteChannelConnectionRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> DeleteChannelConnection(
-      NoAwaitTag,
-      google::cloud::eventarc::v1::DeleteChannelConnectionRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  DeleteChannelConnection(NoAwaitTag, google::cloud::eventarc::v1::DeleteChannelConnectionRequest const& request);
 
   virtual future<StatusOr<google::cloud::eventarc::v1::ChannelConnection>>
-  DeleteChannelConnection(google::longrunning::Operation const& operation);
+  DeleteChannelConnection( google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::eventarc::v1::GoogleChannelConfig>
-  GetGoogleChannelConfig(
-      google::cloud::eventarc::v1::GetGoogleChannelConfigRequest const&
-          request);
+  GetGoogleChannelConfig(google::cloud::eventarc::v1::GetGoogleChannelConfigRequest const& request);
 
   virtual StatusOr<google::cloud::eventarc::v1::GoogleChannelConfig>
-  UpdateGoogleChannelConfig(
-      google::cloud::eventarc::v1::UpdateGoogleChannelConfigRequest const&
-          request);
+  UpdateGoogleChannelConfig(google::cloud::eventarc::v1::UpdateGoogleChannelConfigRequest const& request);
 
-  virtual StatusOr<google::cloud::eventarc::v1::MessageBus> GetMessageBus(
-      google::cloud::eventarc::v1::GetMessageBusRequest const& request);
+  virtual StatusOr<google::cloud::eventarc::v1::MessageBus>
+  GetMessageBus(google::cloud::eventarc::v1::GetMessageBusRequest const& request);
 
-  virtual StreamRange<google::cloud::eventarc::v1::MessageBus> ListMessageBuses(
-      google::cloud::eventarc::v1::ListMessageBusesRequest request);
+  virtual StreamRange<google::cloud::eventarc::v1::MessageBus>
+  ListMessageBuses(google::cloud::eventarc::v1::ListMessageBusesRequest request);
 
-  virtual StatusOr<
-      google::cloud::eventarc::v1::ListMessageBusEnrollmentsResponse>
-  ListMessageBusEnrollments(
-      google::cloud::eventarc::v1::ListMessageBusEnrollmentsRequest const&
-          request);
+  virtual StatusOr<google::cloud::eventarc::v1::ListMessageBusEnrollmentsResponse>
+  ListMessageBusEnrollments(google::cloud::eventarc::v1::ListMessageBusEnrollmentsRequest const& request);
 
   virtual future<StatusOr<google::cloud::eventarc::v1::MessageBus>>
-  CreateMessageBus(
-      google::cloud::eventarc::v1::CreateMessageBusRequest const& request);
+  CreateMessageBus(google::cloud::eventarc::v1::CreateMessageBusRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> CreateMessageBus(
-      NoAwaitTag,
-      google::cloud::eventarc::v1::CreateMessageBusRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  CreateMessageBus(NoAwaitTag, google::cloud::eventarc::v1::CreateMessageBusRequest const& request);
 
   virtual future<StatusOr<google::cloud::eventarc::v1::MessageBus>>
-  CreateMessageBus(google::longrunning::Operation const& operation);
+  CreateMessageBus( google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::eventarc::v1::MessageBus>>
-  UpdateMessageBus(
-      google::cloud::eventarc::v1::UpdateMessageBusRequest const& request);
+  UpdateMessageBus(google::cloud::eventarc::v1::UpdateMessageBusRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> UpdateMessageBus(
-      NoAwaitTag,
-      google::cloud::eventarc::v1::UpdateMessageBusRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  UpdateMessageBus(NoAwaitTag, google::cloud::eventarc::v1::UpdateMessageBusRequest const& request);
 
   virtual future<StatusOr<google::cloud::eventarc::v1::MessageBus>>
-  UpdateMessageBus(google::longrunning::Operation const& operation);
+  UpdateMessageBus( google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::eventarc::v1::MessageBus>>
-  DeleteMessageBus(
-      google::cloud::eventarc::v1::DeleteMessageBusRequest const& request);
+  DeleteMessageBus(google::cloud::eventarc::v1::DeleteMessageBusRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> DeleteMessageBus(
-      NoAwaitTag,
-      google::cloud::eventarc::v1::DeleteMessageBusRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  DeleteMessageBus(NoAwaitTag, google::cloud::eventarc::v1::DeleteMessageBusRequest const& request);
 
   virtual future<StatusOr<google::cloud::eventarc::v1::MessageBus>>
-  DeleteMessageBus(google::longrunning::Operation const& operation);
+  DeleteMessageBus( google::longrunning::Operation const& operation);
 
-  virtual StatusOr<google::cloud::eventarc::v1::Enrollment> GetEnrollment(
-      google::cloud::eventarc::v1::GetEnrollmentRequest const& request);
+  virtual StatusOr<google::cloud::eventarc::v1::Enrollment>
+  GetEnrollment(google::cloud::eventarc::v1::GetEnrollmentRequest const& request);
 
-  virtual StreamRange<google::cloud::eventarc::v1::Enrollment> ListEnrollments(
-      google::cloud::eventarc::v1::ListEnrollmentsRequest request);
-
-  virtual future<StatusOr<google::cloud::eventarc::v1::Enrollment>>
-  CreateEnrollment(
-      google::cloud::eventarc::v1::CreateEnrollmentRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation> CreateEnrollment(
-      NoAwaitTag,
-      google::cloud::eventarc::v1::CreateEnrollmentRequest const& request);
+  virtual StreamRange<google::cloud::eventarc::v1::Enrollment>
+  ListEnrollments(google::cloud::eventarc::v1::ListEnrollmentsRequest request);
 
   virtual future<StatusOr<google::cloud::eventarc::v1::Enrollment>>
-  CreateEnrollment(google::longrunning::Operation const& operation);
+  CreateEnrollment(google::cloud::eventarc::v1::CreateEnrollmentRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation>
+  CreateEnrollment(NoAwaitTag, google::cloud::eventarc::v1::CreateEnrollmentRequest const& request);
 
   virtual future<StatusOr<google::cloud::eventarc::v1::Enrollment>>
-  UpdateEnrollment(
-      google::cloud::eventarc::v1::UpdateEnrollmentRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation> UpdateEnrollment(
-      NoAwaitTag,
-      google::cloud::eventarc::v1::UpdateEnrollmentRequest const& request);
+  CreateEnrollment( google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::eventarc::v1::Enrollment>>
-  UpdateEnrollment(google::longrunning::Operation const& operation);
+  UpdateEnrollment(google::cloud::eventarc::v1::UpdateEnrollmentRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation>
+  UpdateEnrollment(NoAwaitTag, google::cloud::eventarc::v1::UpdateEnrollmentRequest const& request);
 
   virtual future<StatusOr<google::cloud::eventarc::v1::Enrollment>>
-  DeleteEnrollment(
-      google::cloud::eventarc::v1::DeleteEnrollmentRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation> DeleteEnrollment(
-      NoAwaitTag,
-      google::cloud::eventarc::v1::DeleteEnrollmentRequest const& request);
+  UpdateEnrollment( google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::eventarc::v1::Enrollment>>
-  DeleteEnrollment(google::longrunning::Operation const& operation);
+  DeleteEnrollment(google::cloud::eventarc::v1::DeleteEnrollmentRequest const& request);
 
-  virtual StatusOr<google::cloud::eventarc::v1::Pipeline> GetPipeline(
-      google::cloud::eventarc::v1::GetPipelineRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  DeleteEnrollment(NoAwaitTag, google::cloud::eventarc::v1::DeleteEnrollmentRequest const& request);
 
-  virtual StreamRange<google::cloud::eventarc::v1::Pipeline> ListPipelines(
-      google::cloud::eventarc::v1::ListPipelinesRequest request);
+  virtual future<StatusOr<google::cloud::eventarc::v1::Enrollment>>
+  DeleteEnrollment( google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<google::cloud::eventarc::v1::Pipeline>>
-  CreatePipeline(
-      google::cloud::eventarc::v1::CreatePipelineRequest const& request);
+  virtual StatusOr<google::cloud::eventarc::v1::Pipeline>
+  GetPipeline(google::cloud::eventarc::v1::GetPipelineRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> CreatePipeline(
-      NoAwaitTag,
-      google::cloud::eventarc::v1::CreatePipelineRequest const& request);
+  virtual StreamRange<google::cloud::eventarc::v1::Pipeline>
+  ListPipelines(google::cloud::eventarc::v1::ListPipelinesRequest request);
 
   virtual future<StatusOr<google::cloud::eventarc::v1::Pipeline>>
-  CreatePipeline(google::longrunning::Operation const& operation);
+  CreatePipeline(google::cloud::eventarc::v1::CreatePipelineRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation>
+  CreatePipeline(NoAwaitTag, google::cloud::eventarc::v1::CreatePipelineRequest const& request);
 
   virtual future<StatusOr<google::cloud::eventarc::v1::Pipeline>>
-  UpdatePipeline(
-      google::cloud::eventarc::v1::UpdatePipelineRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation> UpdatePipeline(
-      NoAwaitTag,
-      google::cloud::eventarc::v1::UpdatePipelineRequest const& request);
+  CreatePipeline( google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::eventarc::v1::Pipeline>>
-  UpdatePipeline(google::longrunning::Operation const& operation);
+  UpdatePipeline(google::cloud::eventarc::v1::UpdatePipelineRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation>
+  UpdatePipeline(NoAwaitTag, google::cloud::eventarc::v1::UpdatePipelineRequest const& request);
 
   virtual future<StatusOr<google::cloud::eventarc::v1::Pipeline>>
-  DeletePipeline(
-      google::cloud::eventarc::v1::DeletePipelineRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation> DeletePipeline(
-      NoAwaitTag,
-      google::cloud::eventarc::v1::DeletePipelineRequest const& request);
+  UpdatePipeline( google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::eventarc::v1::Pipeline>>
-  DeletePipeline(google::longrunning::Operation const& operation);
+  DeletePipeline(google::cloud::eventarc::v1::DeletePipelineRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation>
+  DeletePipeline(NoAwaitTag, google::cloud::eventarc::v1::DeletePipelineRequest const& request);
+
+  virtual future<StatusOr<google::cloud::eventarc::v1::Pipeline>>
+  DeletePipeline( google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::eventarc::v1::GoogleApiSource>
-  GetGoogleApiSource(
-      google::cloud::eventarc::v1::GetGoogleApiSourceRequest const& request);
+  GetGoogleApiSource(google::cloud::eventarc::v1::GetGoogleApiSourceRequest const& request);
 
   virtual StreamRange<google::cloud::eventarc::v1::GoogleApiSource>
-  ListGoogleApiSources(
-      google::cloud::eventarc::v1::ListGoogleApiSourcesRequest request);
+  ListGoogleApiSources(google::cloud::eventarc::v1::ListGoogleApiSourcesRequest request);
 
   virtual future<StatusOr<google::cloud::eventarc::v1::GoogleApiSource>>
-  CreateGoogleApiSource(
-      google::cloud::eventarc::v1::CreateGoogleApiSourceRequest const& request);
+  CreateGoogleApiSource(google::cloud::eventarc::v1::CreateGoogleApiSourceRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> CreateGoogleApiSource(
-      NoAwaitTag,
-      google::cloud::eventarc::v1::CreateGoogleApiSourceRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  CreateGoogleApiSource(NoAwaitTag, google::cloud::eventarc::v1::CreateGoogleApiSourceRequest const& request);
 
   virtual future<StatusOr<google::cloud::eventarc::v1::GoogleApiSource>>
-  CreateGoogleApiSource(google::longrunning::Operation const& operation);
+  CreateGoogleApiSource( google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::eventarc::v1::GoogleApiSource>>
-  UpdateGoogleApiSource(
-      google::cloud::eventarc::v1::UpdateGoogleApiSourceRequest const& request);
+  UpdateGoogleApiSource(google::cloud::eventarc::v1::UpdateGoogleApiSourceRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> UpdateGoogleApiSource(
-      NoAwaitTag,
-      google::cloud::eventarc::v1::UpdateGoogleApiSourceRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  UpdateGoogleApiSource(NoAwaitTag, google::cloud::eventarc::v1::UpdateGoogleApiSourceRequest const& request);
 
   virtual future<StatusOr<google::cloud::eventarc::v1::GoogleApiSource>>
-  UpdateGoogleApiSource(google::longrunning::Operation const& operation);
+  UpdateGoogleApiSource( google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::eventarc::v1::GoogleApiSource>>
-  DeleteGoogleApiSource(
-      google::cloud::eventarc::v1::DeleteGoogleApiSourceRequest const& request);
+  DeleteGoogleApiSource(google::cloud::eventarc::v1::DeleteGoogleApiSourceRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> DeleteGoogleApiSource(
-      NoAwaitTag,
-      google::cloud::eventarc::v1::DeleteGoogleApiSourceRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  DeleteGoogleApiSource(NoAwaitTag, google::cloud::eventarc::v1::DeleteGoogleApiSourceRequest const& request);
 
   virtual future<StatusOr<google::cloud::eventarc::v1::GoogleApiSource>>
-  DeleteGoogleApiSource(google::longrunning::Operation const& operation);
+  DeleteGoogleApiSource( google::longrunning::Operation const& operation);
 
-  virtual StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request);
+  virtual StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request);
 
-  virtual StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request);
+  virtual StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
 
   virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
   TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
 
-  virtual StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 
-  virtual Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request);
+  virtual Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
 
-  virtual Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request);
+  virtual Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request);
 };
 
 /**

@@ -26,16 +26,11 @@ namespace cloud {
 namespace iap {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use
-/// iap_v1::MakeDefaultIdentityAwareProxyOAuthServiceConnectionIdempotencyPolicy
-/// directly.
-using ::google::cloud::iap_v1::
-    MakeDefaultIdentityAwareProxyOAuthServiceConnectionIdempotencyPolicy;
+/// @deprecated Use iap_v1::MakeDefaultIdentityAwareProxyOAuthServiceConnectionIdempotencyPolicy directly.
+using ::google::cloud::iap_v1::MakeDefaultIdentityAwareProxyOAuthServiceConnectionIdempotencyPolicy;
 
-/// @deprecated Use
-/// iap_v1::IdentityAwareProxyOAuthServiceConnectionIdempotencyPolicy directly.
-using ::google::cloud::iap_v1::
-    IdentityAwareProxyOAuthServiceConnectionIdempotencyPolicy;
+/// @deprecated Use iap_v1::IdentityAwareProxyOAuthServiceConnectionIdempotencyPolicy directly.
+using ::google::cloud::iap_v1::IdentityAwareProxyOAuthServiceConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace iap

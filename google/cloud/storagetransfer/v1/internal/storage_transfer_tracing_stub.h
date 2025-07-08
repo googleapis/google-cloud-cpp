@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGETRANSFER_V1_INTERNAL_STORAGE_TRANSFER_TRACING_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGETRANSFER_V1_INTERNAL_STORAGE_TRANSFER_TRACING_STUB_H
 
-#include "google/cloud/storagetransfer/v1/internal/storage_transfer_stub.h"
 #include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/options.h"
+#include "google/cloud/storagetransfer/v1/internal/storage_transfer_stub.h"
 #include "google/cloud/version.h"
 #include <memory>
 
@@ -36,96 +36,97 @@ class StorageTransferServiceTracingStub : public StorageTransferServiceStub {
  public:
   ~StorageTransferServiceTracingStub() override = default;
 
-  explicit StorageTransferServiceTracingStub(
-      std::shared_ptr<StorageTransferServiceStub> child);
+  explicit StorageTransferServiceTracingStub(std::shared_ptr<StorageTransferServiceStub> child);
 
-  StatusOr<google::storagetransfer::v1::GoogleServiceAccount>
-  GetGoogleServiceAccount(
-      grpc::ClientContext& context, Options const& options,
-      google::storagetransfer::v1::GetGoogleServiceAccountRequest const&
-          request) override;
+  StatusOr<google::storagetransfer::v1::GoogleServiceAccount> GetGoogleServiceAccount(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::storagetransfer::v1::GetGoogleServiceAccountRequest const& request) override;
 
   StatusOr<google::storagetransfer::v1::TransferJob> CreateTransferJob(
-      grpc::ClientContext& context, Options const& options,
-      google::storagetransfer::v1::CreateTransferJobRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::storagetransfer::v1::CreateTransferJobRequest const& request) override;
 
   StatusOr<google::storagetransfer::v1::TransferJob> UpdateTransferJob(
-      grpc::ClientContext& context, Options const& options,
-      google::storagetransfer::v1::UpdateTransferJobRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::storagetransfer::v1::UpdateTransferJobRequest const& request) override;
 
   StatusOr<google::storagetransfer::v1::TransferJob> GetTransferJob(
-      grpc::ClientContext& context, Options const& options,
-      google::storagetransfer::v1::GetTransferJobRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::storagetransfer::v1::GetTransferJobRequest const& request) override;
 
-  StatusOr<google::storagetransfer::v1::ListTransferJobsResponse>
-  ListTransferJobs(grpc::ClientContext& context, Options const& options,
-                   google::storagetransfer::v1::ListTransferJobsRequest const&
-                       request) override;
+  StatusOr<google::storagetransfer::v1::ListTransferJobsResponse> ListTransferJobs(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::storagetransfer::v1::ListTransferJobsRequest const& request) override;
 
   Status PauseTransferOperation(
-      grpc::ClientContext& context, Options const& options,
-      google::storagetransfer::v1::PauseTransferOperationRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::storagetransfer::v1::PauseTransferOperationRequest const& request) override;
 
   Status ResumeTransferOperation(
-      grpc::ClientContext& context, Options const& options,
-      google::storagetransfer::v1::ResumeTransferOperationRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::storagetransfer::v1::ResumeTransferOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncRunTransferJob(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::storagetransfer::v1::RunTransferJobRequest const& request)
-      override;
+      google::storagetransfer::v1::RunTransferJobRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> RunTransferJob(
-      grpc::ClientContext& context, Options options,
-      google::storagetransfer::v1::RunTransferJobRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::storagetransfer::v1::RunTransferJobRequest const& request) override;
 
   Status DeleteTransferJob(
-      grpc::ClientContext& context, Options const& options,
-      google::storagetransfer::v1::DeleteTransferJobRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::storagetransfer::v1::DeleteTransferJobRequest const& request) override;
 
   StatusOr<google::storagetransfer::v1::AgentPool> CreateAgentPool(
-      grpc::ClientContext& context, Options const& options,
-      google::storagetransfer::v1::CreateAgentPoolRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::storagetransfer::v1::CreateAgentPoolRequest const& request) override;
 
   StatusOr<google::storagetransfer::v1::AgentPool> UpdateAgentPool(
-      grpc::ClientContext& context, Options const& options,
-      google::storagetransfer::v1::UpdateAgentPoolRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::storagetransfer::v1::UpdateAgentPoolRequest const& request) override;
 
   StatusOr<google::storagetransfer::v1::AgentPool> GetAgentPool(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::storagetransfer::v1::GetAgentPoolRequest const& request) override;
 
   StatusOr<google::storagetransfer::v1::ListAgentPoolsResponse> ListAgentPools(
-      grpc::ClientContext& context, Options const& options,
-      google::storagetransfer::v1::ListAgentPoolsRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::storagetransfer::v1::ListAgentPoolsRequest const& request) override;
 
   Status DeleteAgentPool(
-      grpc::ClientContext& context, Options const& options,
-      google::storagetransfer::v1::DeleteAgentPoolRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::storagetransfer::v1::DeleteAgentPoolRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -142,8 +143,7 @@ class StorageTransferServiceTracingStub : public StorageTransferServiceStub {
 
  private:
   std::shared_ptr<StorageTransferServiceStub> child_;
-  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
-      propagator_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -154,8 +154,7 @@ class StorageTransferServiceTracingStub : public StorageTransferServiceStub {
  * The stub is only decorated if the library has been compiled with
  * OpenTelemetry.
  */
-std::shared_ptr<StorageTransferServiceStub>
-MakeStorageTransferServiceTracingStub(
+std::shared_ptr<StorageTransferServiceStub> MakeStorageTransferServiceTracingStub(
     std::shared_ptr<StorageTransferServiceStub> stub);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

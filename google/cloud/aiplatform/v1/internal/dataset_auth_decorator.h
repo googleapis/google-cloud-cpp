@@ -43,39 +43,38 @@ class DatasetServiceAuth : public DatasetServiceStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::CreateDatasetRequest const& request)
-      override;
+      google::cloud::aiplatform::v1::CreateDatasetRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateDataset(
-      grpc::ClientContext& context, Options options,
-      google::cloud::aiplatform::v1::CreateDatasetRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::aiplatform::v1::CreateDatasetRequest const& request) override;
 
   StatusOr<google::cloud::aiplatform::v1::Dataset> GetDataset(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::aiplatform::v1::GetDatasetRequest const& request) override;
 
   StatusOr<google::cloud::aiplatform::v1::Dataset> UpdateDataset(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::aiplatform::v1::UpdateDatasetRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::aiplatform::v1::UpdateDatasetRequest const& request) override;
 
   StatusOr<google::cloud::aiplatform::v1::ListDatasetsResponse> ListDatasets(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::aiplatform::v1::ListDatasetsRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::aiplatform::v1::ListDatasetsRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteDataset(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::DeleteDatasetRequest const& request)
-      override;
+      google::cloud::aiplatform::v1::DeleteDatasetRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteDataset(
-      grpc::ClientContext& context, Options options,
-      google::cloud::aiplatform::v1::DeleteDatasetRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::aiplatform::v1::DeleteDatasetRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncImportData(
       google::cloud::CompletionQueue& cq,
@@ -84,7 +83,8 @@ class DatasetServiceAuth : public DatasetServiceStub {
       google::cloud::aiplatform::v1::ImportDataRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> ImportData(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::cloud::aiplatform::v1::ImportDataRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncExportData(
@@ -94,136 +94,142 @@ class DatasetServiceAuth : public DatasetServiceStub {
       google::cloud::aiplatform::v1::ExportDataRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> ExportData(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::cloud::aiplatform::v1::ExportDataRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateDatasetVersion(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::CreateDatasetVersionRequest const& request)
-      override;
+      google::cloud::aiplatform::v1::CreateDatasetVersionRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateDatasetVersion(
-      grpc::ClientContext& context, Options options,
-      google::cloud::aiplatform::v1::CreateDatasetVersionRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::aiplatform::v1::CreateDatasetVersionRequest const& request) override;
 
   StatusOr<google::cloud::aiplatform::v1::DatasetVersion> UpdateDatasetVersion(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::aiplatform::v1::UpdateDatasetVersionRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::aiplatform::v1::UpdateDatasetVersionRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteDatasetVersion(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::DeleteDatasetVersionRequest const& request)
-      override;
+      google::cloud::aiplatform::v1::DeleteDatasetVersionRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteDatasetVersion(
-      grpc::ClientContext& context, Options options,
-      google::cloud::aiplatform::v1::DeleteDatasetVersionRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::aiplatform::v1::DeleteDatasetVersionRequest const& request) override;
 
   StatusOr<google::cloud::aiplatform::v1::DatasetVersion> GetDatasetVersion(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::aiplatform::v1::GetDatasetVersionRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::aiplatform::v1::GetDatasetVersionRequest const& request) override;
 
-  StatusOr<google::cloud::aiplatform::v1::ListDatasetVersionsResponse>
-  ListDatasetVersions(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::aiplatform::v1::ListDatasetVersionsRequest const& request)
-      override;
+  StatusOr<google::cloud::aiplatform::v1::ListDatasetVersionsResponse> ListDatasetVersions(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::aiplatform::v1::ListDatasetVersionsRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncRestoreDatasetVersion(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::RestoreDatasetVersionRequest const&
-          request) override;
+      google::cloud::aiplatform::v1::RestoreDatasetVersionRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> RestoreDatasetVersion(
-      grpc::ClientContext& context, Options options,
-      google::cloud::aiplatform::v1::RestoreDatasetVersionRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::aiplatform::v1::RestoreDatasetVersionRequest const& request) override;
 
   StatusOr<google::cloud::aiplatform::v1::ListDataItemsResponse> ListDataItems(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::aiplatform::v1::ListDataItemsRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::aiplatform::v1::ListDataItemsRequest const& request) override;
 
-  StatusOr<google::cloud::aiplatform::v1::SearchDataItemsResponse>
-  SearchDataItems(grpc::ClientContext& context, Options const& options,
-                  google::cloud::aiplatform::v1::SearchDataItemsRequest const&
-                      request) override;
+  StatusOr<google::cloud::aiplatform::v1::SearchDataItemsResponse> SearchDataItems(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::aiplatform::v1::SearchDataItemsRequest const& request) override;
 
-  StatusOr<google::cloud::aiplatform::v1::ListSavedQueriesResponse>
-  ListSavedQueries(grpc::ClientContext& context, Options const& options,
-                   google::cloud::aiplatform::v1::ListSavedQueriesRequest const&
-                       request) override;
+  StatusOr<google::cloud::aiplatform::v1::ListSavedQueriesResponse> ListSavedQueries(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::aiplatform::v1::ListSavedQueriesRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteSavedQuery(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::DeleteSavedQueryRequest const& request)
-      override;
+      google::cloud::aiplatform::v1::DeleteSavedQueryRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteSavedQuery(
-      grpc::ClientContext& context, Options options,
-      google::cloud::aiplatform::v1::DeleteSavedQueryRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::aiplatform::v1::DeleteSavedQueryRequest const& request) override;
 
   StatusOr<google::cloud::aiplatform::v1::AnnotationSpec> GetAnnotationSpec(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::aiplatform::v1::GetAnnotationSpecRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::aiplatform::v1::GetAnnotationSpecRequest const& request) override;
 
-  StatusOr<google::cloud::aiplatform::v1::ListAnnotationsResponse>
-  ListAnnotations(grpc::ClientContext& context, Options const& options,
-                  google::cloud::aiplatform::v1::ListAnnotationsRequest const&
-                      request) override;
+  StatusOr<google::cloud::aiplatform::v1::ListAnnotationsResponse> ListAnnotations(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::aiplatform::v1::ListAnnotationsRequest const& request) override;
 
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::location::ListLocationsRequest const& request) override;
 
   StatusOr<google::cloud::location::Location> GetLocation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::location::GetLocationRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status DeleteOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::DeleteOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> WaitOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::WaitOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(

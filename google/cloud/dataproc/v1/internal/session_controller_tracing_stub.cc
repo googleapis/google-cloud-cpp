@@ -34,12 +34,11 @@ SessionControllerTracingStub::SessionControllerTracingStub(
 
 future<StatusOr<google::longrunning::Operation>>
 SessionControllerTracingStub::AsyncCreateSession(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::dataproc::v1::CreateSessionRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.dataproc.v1.SessionController", "CreateSession");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::dataproc::v1::CreateSessionRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dataproc.v1.SessionController", "CreateSession");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCreateSession(cq, context, std::move(options), request);
@@ -48,34 +47,32 @@ SessionControllerTracingStub::AsyncCreateSession(
 
 StatusOr<google::longrunning::Operation>
 SessionControllerTracingStub::CreateSession(
-    grpc::ClientContext& context, Options options,
-    google::cloud::dataproc::v1::CreateSessionRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.dataproc.v1.SessionController", "CreateSession");
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::dataproc::v1::CreateSessionRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dataproc.v1.SessionController", "CreateSession");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateSession(context, options, request));
 }
 
-StatusOr<google::cloud::dataproc::v1::Session>
-SessionControllerTracingStub::GetSession(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::dataproc::v1::Session> SessionControllerTracingStub::GetSession(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dataproc::v1::GetSessionRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.dataproc.v1.SessionController", "GetSession");
+  auto span = internal::MakeSpanGrpc("google.cloud.dataproc.v1.SessionController", "GetSession");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetSession(context, options, request));
 }
 
-StatusOr<google::cloud::dataproc::v1::ListSessionsResponse>
-SessionControllerTracingStub::ListSessions(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::dataproc::v1::ListSessionsResponse> SessionControllerTracingStub::ListSessions(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dataproc::v1::ListSessionsRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.dataproc.v1.SessionController", "ListSessions");
+  auto span = internal::MakeSpanGrpc("google.cloud.dataproc.v1.SessionController", "ListSessions");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -84,25 +81,23 @@ SessionControllerTracingStub::ListSessions(
 
 future<StatusOr<google::longrunning::Operation>>
 SessionControllerTracingStub::AsyncTerminateSession(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::dataproc::v1::TerminateSessionRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.dataproc.v1.SessionController", "TerminateSession");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::dataproc::v1::TerminateSessionRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dataproc.v1.SessionController", "TerminateSession");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f =
-      child_->AsyncTerminateSession(cq, context, std::move(options), request);
+  auto f = child_->AsyncTerminateSession(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 SessionControllerTracingStub::TerminateSession(
-    grpc::ClientContext& context, Options options,
-    google::cloud::dataproc::v1::TerminateSessionRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.dataproc.v1.SessionController", "TerminateSession");
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::dataproc::v1::TerminateSessionRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dataproc.v1.SessionController", "TerminateSession");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -111,12 +106,11 @@ SessionControllerTracingStub::TerminateSession(
 
 future<StatusOr<google::longrunning::Operation>>
 SessionControllerTracingStub::AsyncDeleteSession(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::dataproc::v1::DeleteSessionRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.dataproc.v1.SessionController", "DeleteSession");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::dataproc::v1::DeleteSessionRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dataproc.v1.SessionController", "DeleteSession");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncDeleteSession(cq, context, std::move(options), request);
@@ -125,10 +119,10 @@ SessionControllerTracingStub::AsyncDeleteSession(
 
 StatusOr<google::longrunning::Operation>
 SessionControllerTracingStub::DeleteSession(
-    grpc::ClientContext& context, Options options,
-    google::cloud::dataproc::v1::DeleteSessionRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.dataproc.v1.SessionController", "DeleteSession");
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::dataproc::v1::DeleteSessionRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dataproc.v1.SessionController", "DeleteSession");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -136,10 +130,10 @@ SessionControllerTracingStub::DeleteSession(
 }
 
 StatusOr<google::iam::v1::Policy> SessionControllerTracingStub::SetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.dataproc.v1.SessionController", "SetIamPolicy");
+  auto span = internal::MakeSpanGrpc("google.cloud.dataproc.v1.SessionController", "SetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -147,46 +141,43 @@ StatusOr<google::iam::v1::Policy> SessionControllerTracingStub::SetIamPolicy(
 }
 
 StatusOr<google::iam::v1::Policy> SessionControllerTracingStub::GetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.dataproc.v1.SessionController", "GetIamPolicy");
+  auto span = internal::MakeSpanGrpc("google.cloud.dataproc.v1.SessionController", "GetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetIamPolicy(context, options, request));
 }
 
-StatusOr<google::iam::v1::TestIamPermissionsResponse>
-SessionControllerTracingStub::TestIamPermissions(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::iam::v1::TestIamPermissionsResponse> SessionControllerTracingStub::TestIamPermissions(
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.dataproc.v1.SessionController", "TestIamPermissions");
+  auto span = internal::MakeSpanGrpc("google.cloud.dataproc.v1.SessionController", "TestIamPermissions");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->TestIamPermissions(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->TestIamPermissions(context, options, request));
 }
 
-StatusOr<google::longrunning::ListOperationsResponse>
-SessionControllerTracingStub::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse> SessionControllerTracingStub::ListOperations(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.dataproc.v1.SessionController", "ListOperations");
+  auto span = internal::MakeSpanGrpc("google.cloud.dataproc.v1.SessionController", "ListOperations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListOperations(context, options, request));
 }
 
-StatusOr<google::longrunning::Operation>
-SessionControllerTracingStub::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::Operation> SessionControllerTracingStub::GetOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.dataproc.v1.SessionController", "GetOperation");
+  auto span = internal::MakeSpanGrpc("google.cloud.dataproc.v1.SessionController", "GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -194,10 +185,10 @@ SessionControllerTracingStub::GetOperation(
 }
 
 Status SessionControllerTracingStub::DeleteOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.dataproc.v1.SessionController", "DeleteOperation");
+  auto span = internal::MakeSpanGrpc("google.cloud.dataproc.v1.SessionController", "DeleteOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -205,10 +196,10 @@ Status SessionControllerTracingStub::DeleteOperation(
 }
 
 Status SessionControllerTracingStub::CancelOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.dataproc.v1.SessionController", "CancelOperation");
+  auto span = internal::MakeSpanGrpc("google.cloud.dataproc.v1.SessionController", "CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -225,7 +216,8 @@ SessionControllerTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncGetOperation(cq, context, std::move(options), request);
+  auto f = child_->AsyncGetOperation(
+      cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -238,8 +230,8 @@ future<Status> SessionControllerTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f =
-      child_->AsyncCancelOperation(cq, context, std::move(options), request);
+  auto f = child_->AsyncCancelOperation(
+      cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 

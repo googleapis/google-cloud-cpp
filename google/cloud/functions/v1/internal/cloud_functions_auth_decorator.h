@@ -40,89 +40,91 @@ class CloudFunctionsServiceAuth : public CloudFunctionsServiceStub {
       std::shared_ptr<CloudFunctionsServiceStub> child);
 
   StatusOr<google::cloud::functions::v1::ListFunctionsResponse> ListFunctions(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::functions::v1::ListFunctionsRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::functions::v1::ListFunctionsRequest const& request) override;
 
   StatusOr<google::cloud::functions::v1::CloudFunction> GetFunction(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::functions::v1::GetFunctionRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateFunction(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::functions::v1::CreateFunctionRequest const& request)
-      override;
+      google::cloud::functions::v1::CreateFunctionRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateFunction(
-      grpc::ClientContext& context, Options options,
-      google::cloud::functions::v1::CreateFunctionRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::functions::v1::CreateFunctionRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateFunction(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::functions::v1::UpdateFunctionRequest const& request)
-      override;
+      google::cloud::functions::v1::UpdateFunctionRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateFunction(
-      grpc::ClientContext& context, Options options,
-      google::cloud::functions::v1::UpdateFunctionRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::functions::v1::UpdateFunctionRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteFunction(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::functions::v1::DeleteFunctionRequest const& request)
-      override;
+      google::cloud::functions::v1::DeleteFunctionRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteFunction(
-      grpc::ClientContext& context, Options options,
-      google::cloud::functions::v1::DeleteFunctionRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::functions::v1::DeleteFunctionRequest const& request) override;
 
   StatusOr<google::cloud::functions::v1::CallFunctionResponse> CallFunction(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::functions::v1::CallFunctionRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::functions::v1::CallFunctionRequest const& request) override;
 
-  StatusOr<google::cloud::functions::v1::GenerateUploadUrlResponse>
-  GenerateUploadUrl(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::functions::v1::GenerateUploadUrlRequest const& request)
-      override;
+  StatusOr<google::cloud::functions::v1::GenerateUploadUrlResponse> GenerateUploadUrl(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::functions::v1::GenerateUploadUrlRequest const& request) override;
 
-  StatusOr<google::cloud::functions::v1::GenerateDownloadUrlResponse>
-  GenerateDownloadUrl(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::functions::v1::GenerateDownloadUrlRequest const& request)
-      override;
+  StatusOr<google::cloud::functions::v1::GenerateDownloadUrlResponse> GenerateDownloadUrl(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::functions::v1::GenerateDownloadUrlRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::location::ListLocationsRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(

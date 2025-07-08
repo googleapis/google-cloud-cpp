@@ -19,14 +19,14 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DISCOVERYENGINE_V1_INTERNAL_GROUNDED_GENERATION_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DISCOVERYENGINE_V1_INTERNAL_GROUNDED_GENERATION_CONNECTION_IMPL_H
 
+#include "google/cloud/async_streaming_read_write_rpc.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/discoveryengine/v1/grounded_generation_connection.h"
 #include "google/cloud/discoveryengine/v1/grounded_generation_connection_idempotency_policy.h"
 #include "google/cloud/discoveryengine/v1/grounded_generation_options.h"
 #include "google/cloud/discoveryengine/v1/internal/grounded_generation_retry_traits.h"
 #include "google/cloud/discoveryengine/v1/internal/grounded_generation_stub.h"
-#include "google/cloud/async_streaming_read_write_rpc.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -44,11 +44,9 @@ class GroundedGenerationServiceConnectionImpl
   ~GroundedGenerationServiceConnectionImpl() override = default;
 
   GroundedGenerationServiceConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<
-          discoveryengine_v1_internal::GroundedGenerationServiceStub>
-          stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<discoveryengine_v1_internal::GroundedGenerationServiceStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
@@ -58,28 +56,23 @@ class GroundedGenerationServiceConnectionImpl
   AsyncStreamGenerateGroundedContent() override;
 
   StatusOr<google::cloud::discoveryengine::v1::GenerateGroundedContentResponse>
-  GenerateGroundedContent(
-      google::cloud::discoveryengine::v1::GenerateGroundedContentRequest const&
-          request) override;
+  GenerateGroundedContent(google::cloud::discoveryengine::v1::GenerateGroundedContentRequest const& request) override;
 
   StatusOr<google::cloud::discoveryengine::v1::CheckGroundingResponse>
-  CheckGrounding(
-      google::cloud::discoveryengine::v1::CheckGroundingRequest const& request)
-      override;
+  CheckGrounding(google::cloud::discoveryengine::v1::CheckGroundingRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request) override;
 
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request) override;
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<discoveryengine_v1_internal::GroundedGenerationServiceStub>
-      stub_;
+  std::shared_ptr<discoveryengine_v1_internal::GroundedGenerationServiceStub> stub_;
   Options options_;
 };
 

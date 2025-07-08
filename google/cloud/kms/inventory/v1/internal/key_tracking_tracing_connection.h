@@ -36,19 +36,15 @@ class KeyTrackingServiceTracingConnection
   ~KeyTrackingServiceTracingConnection() override = default;
 
   explicit KeyTrackingServiceTracingConnection(
-      std::shared_ptr<kms_inventory_v1::KeyTrackingServiceConnection> child);
+    std::shared_ptr<kms_inventory_v1::KeyTrackingServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
   StatusOr<google::cloud::kms::inventory::v1::ProtectedResourcesSummary>
-  GetProtectedResourcesSummary(
-      google::cloud::kms::inventory::v1::
-          GetProtectedResourcesSummaryRequest const& request) override;
+  GetProtectedResourcesSummary(google::cloud::kms::inventory::v1::GetProtectedResourcesSummaryRequest const& request) override;
 
   StreamRange<google::cloud::kms::inventory::v1::ProtectedResource>
-  SearchProtectedResources(
-      google::cloud::kms::inventory::v1::SearchProtectedResourcesRequest
-          request) override;
+  SearchProtectedResources(google::cloud::kms::inventory::v1::SearchProtectedResourcesRequest request) override;
 
  private:
   std::shared_ptr<kms_inventory_v1::KeyTrackingServiceConnection> child_;

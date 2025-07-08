@@ -17,13 +17,13 @@
 // source: google/cloud/storageinsights/v1/storageinsights.proto
 
 #include "google/cloud/storageinsights/v1/internal/storage_insights_connection_impl.h"
-#include "google/cloud/storageinsights/v1/internal/storage_insights_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/async_long_running_operation.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
+#include "google/cloud/storageinsights/v1/internal/storage_insights_option_defaults.h"
 #include <memory>
 #include <utility>
 
@@ -33,70 +33,58 @@ namespace storageinsights_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<storageinsights_v1::StorageInsightsRetryPolicy> retry_policy(
-    Options const& options) {
-  return options.get<storageinsights_v1::StorageInsightsRetryPolicyOption>()
-      ->clone();
+std::unique_ptr<storageinsights_v1::StorageInsightsRetryPolicy>
+retry_policy(Options const& options) {
+  return options.get<storageinsights_v1::StorageInsightsRetryPolicyOption>()->clone();
 }
 
-std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-  return options.get<storageinsights_v1::StorageInsightsBackoffPolicyOption>()
-      ->clone();
+std::unique_ptr<BackoffPolicy>
+backoff_policy(Options const& options) {
+  return options.get<storageinsights_v1::StorageInsightsBackoffPolicyOption>()->clone();
 }
 
 std::unique_ptr<storageinsights_v1::StorageInsightsConnectionIdempotencyPolicy>
 idempotency_policy(Options const& options) {
-  return options
-      .get<storageinsights_v1::
-               StorageInsightsConnectionIdempotencyPolicyOption>()
-      ->clone();
+  return options.get<storageinsights_v1::StorageInsightsConnectionIdempotencyPolicyOption>()->clone();
 }
 
 std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-  return options.get<storageinsights_v1::StorageInsightsPollingPolicyOption>()
-      ->clone();
+  return options.get<storageinsights_v1::StorageInsightsPollingPolicyOption>()->clone();
 }
 
-}  // namespace
+} // namespace
 
 StorageInsightsConnectionImpl::StorageInsightsConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<storageinsights_v1_internal::StorageInsightsStub> stub,
     Options options)
-    : background_(std::move(background)),
-      stub_(std::move(stub)),
-      options_(internal::MergeOptions(std::move(options),
-                                      StorageInsightsConnection::options())) {}
+  : background_(std::move(background)), stub_(std::move(stub)),
+    options_(internal::MergeOptions(
+        std::move(options),
+        StorageInsightsConnection::options())) {}
 
 StreamRange<google::cloud::storageinsights::v1::ReportConfig>
-StorageInsightsConnectionImpl::ListReportConfigs(
-    google::cloud::storageinsights::v1::ListReportConfigsRequest request) {
+StorageInsightsConnectionImpl::ListReportConfigs(google::cloud::storageinsights::v1::ListReportConfigsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListReportConfigs(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::storageinsights::v1::ReportConfig>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::storageinsights::v1::ReportConfig>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<storageinsights_v1::StorageInsightsRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<storageinsights_v1::StorageInsightsRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::storageinsights::v1::ListReportConfigsRequest const&
-              r) {
+          Options const& options, google::cloud::storageinsights::v1::ListReportConfigsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::storageinsights::v1::
-                       ListReportConfigsRequest const& request) {
+                   google::cloud::storageinsights::v1::ListReportConfigsRequest const& request) {
               return stub->ListReportConfigs(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::storageinsights::v1::ListReportConfigsResponse r) {
-        std::vector<google::cloud::storageinsights::v1::ReportConfig> result(
-            r.report_configs().size());
+        std::vector<google::cloud::storageinsights::v1::ReportConfig> result(r.report_configs().size());
         auto& messages = *r.mutable_report_configs();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -104,99 +92,79 @@ StorageInsightsConnectionImpl::ListReportConfigs(
 }
 
 StatusOr<google::cloud::storageinsights::v1::ReportConfig>
-StorageInsightsConnectionImpl::GetReportConfig(
-    google::cloud::storageinsights::v1::GetReportConfigRequest const& request) {
+StorageInsightsConnectionImpl::GetReportConfig(google::cloud::storageinsights::v1::GetReportConfigRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetReportConfig(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::storageinsights::v1::GetReportConfigRequest const&
-                 request) {
+             google::cloud::storageinsights::v1::GetReportConfigRequest const& request) {
         return stub_->GetReportConfig(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::storageinsights::v1::ReportConfig>
-StorageInsightsConnectionImpl::CreateReportConfig(
-    google::cloud::storageinsights::v1::CreateReportConfigRequest const&
-        request) {
+StorageInsightsConnectionImpl::CreateReportConfig(google::cloud::storageinsights::v1::CreateReportConfigRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateReportConfig(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::storageinsights::v1::CreateReportConfigRequest const&
-              request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::storageinsights::v1::CreateReportConfigRequest const& request) {
         return stub_->CreateReportConfig(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::storageinsights::v1::ReportConfig>
-StorageInsightsConnectionImpl::UpdateReportConfig(
-    google::cloud::storageinsights::v1::UpdateReportConfigRequest const&
-        request) {
+StorageInsightsConnectionImpl::UpdateReportConfig(google::cloud::storageinsights::v1::UpdateReportConfigRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateReportConfig(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::storageinsights::v1::UpdateReportConfigRequest const&
-              request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::storageinsights::v1::UpdateReportConfigRequest const& request) {
         return stub_->UpdateReportConfig(context, options, request);
       },
       *current, request, __func__);
 }
 
-Status StorageInsightsConnectionImpl::DeleteReportConfig(
-    google::cloud::storageinsights::v1::DeleteReportConfigRequest const&
-        request) {
+Status
+StorageInsightsConnectionImpl::DeleteReportConfig(google::cloud::storageinsights::v1::DeleteReportConfigRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteReportConfig(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::storageinsights::v1::DeleteReportConfigRequest const&
-              request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::storageinsights::v1::DeleteReportConfigRequest const& request) {
         return stub_->DeleteReportConfig(context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::cloud::storageinsights::v1::ReportDetail>
-StorageInsightsConnectionImpl::ListReportDetails(
-    google::cloud::storageinsights::v1::ListReportDetailsRequest request) {
+StorageInsightsConnectionImpl::ListReportDetails(google::cloud::storageinsights::v1::ListReportDetailsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListReportDetails(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::storageinsights::v1::ReportDetail>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::storageinsights::v1::ReportDetail>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<storageinsights_v1::StorageInsightsRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<storageinsights_v1::StorageInsightsRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::storageinsights::v1::ListReportDetailsRequest const&
-              r) {
+          Options const& options, google::cloud::storageinsights::v1::ListReportDetailsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::storageinsights::v1::
-                       ListReportDetailsRequest const& request) {
+                   google::cloud::storageinsights::v1::ListReportDetailsRequest const& request) {
               return stub->ListReportDetails(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::storageinsights::v1::ListReportDetailsResponse r) {
-        std::vector<google::cloud::storageinsights::v1::ReportDetail> result(
-            r.report_details().size());
+        std::vector<google::cloud::storageinsights::v1::ReportDetail> result(r.report_details().size());
         auto& messages = *r.mutable_report_details();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -204,49 +172,40 @@ StorageInsightsConnectionImpl::ListReportDetails(
 }
 
 StatusOr<google::cloud::storageinsights::v1::ReportDetail>
-StorageInsightsConnectionImpl::GetReportDetail(
-    google::cloud::storageinsights::v1::GetReportDetailRequest const& request) {
+StorageInsightsConnectionImpl::GetReportDetail(google::cloud::storageinsights::v1::GetReportDetailRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetReportDetail(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::storageinsights::v1::GetReportDetailRequest const&
-                 request) {
+             google::cloud::storageinsights::v1::GetReportDetailRequest const& request) {
         return stub_->GetReportDetail(context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::cloud::storageinsights::v1::DatasetConfig>
-StorageInsightsConnectionImpl::ListDatasetConfigs(
-    google::cloud::storageinsights::v1::ListDatasetConfigsRequest request) {
+StorageInsightsConnectionImpl::ListDatasetConfigs(google::cloud::storageinsights::v1::ListDatasetConfigsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListDatasetConfigs(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::storageinsights::v1::DatasetConfig>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::storageinsights::v1::DatasetConfig>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<storageinsights_v1::StorageInsightsRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<storageinsights_v1::StorageInsightsRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::storageinsights::v1::ListDatasetConfigsRequest const&
-              r) {
+          Options const& options, google::cloud::storageinsights::v1::ListDatasetConfigsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::storageinsights::v1::
-                       ListDatasetConfigsRequest const& request) {
+                   google::cloud::storageinsights::v1::ListDatasetConfigsRequest const& request) {
               return stub->ListDatasetConfigs(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::storageinsights::v1::ListDatasetConfigsResponse r) {
-        std::vector<google::cloud::storageinsights::v1::DatasetConfig> result(
-            r.dataset_configs().size());
+        std::vector<google::cloud::storageinsights::v1::DatasetConfig> result(r.dataset_configs().size());
         auto& messages = *r.mutable_dataset_configs();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -254,75 +213,62 @@ StorageInsightsConnectionImpl::ListDatasetConfigs(
 }
 
 StatusOr<google::cloud::storageinsights::v1::DatasetConfig>
-StorageInsightsConnectionImpl::GetDatasetConfig(
-    google::cloud::storageinsights::v1::GetDatasetConfigRequest const&
-        request) {
+StorageInsightsConnectionImpl::GetDatasetConfig(google::cloud::storageinsights::v1::GetDatasetConfigRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetDatasetConfig(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::storageinsights::v1::GetDatasetConfigRequest const&
-                 request) {
+             google::cloud::storageinsights::v1::GetDatasetConfigRequest const& request) {
         return stub_->GetDatasetConfig(context, options, request);
       },
       *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::storageinsights::v1::DatasetConfig>>
-StorageInsightsConnectionImpl::CreateDatasetConfig(
-    google::cloud::storageinsights::v1::CreateDatasetConfigRequest const&
-        request) {
+StorageInsightsConnectionImpl::CreateDatasetConfig(google::cloud::storageinsights::v1::CreateDatasetConfigRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->CreateDatasetConfig(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<
-      google::cloud::storageinsights::v1::DatasetConfig>(
-      background_->cq(), current, std::move(request_copy),
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::storageinsights::v1::CreateDatasetConfigRequest const&
-              request) {
-        return stub->AsyncCreateDatasetConfig(cq, std::move(context),
-                                              std::move(options), request);
-      },
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::storageinsights::v1::DatasetConfig>,
-      retry_policy(*current), backoff_policy(*current), idempotent,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::storageinsights::v1::DatasetConfig>(
+    background_->cq(), current, std::move(request_copy),
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::cloud::storageinsights::v1::CreateDatasetConfigRequest const& request) {
+     return stub->AsyncCreateDatasetConfig(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::storageinsights::v1::DatasetConfig>,
+    retry_policy(*current), backoff_policy(*current), idempotent,
+    polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 StorageInsightsConnectionImpl::CreateDatasetConfig(
-    NoAwaitTag,
-    google::cloud::storageinsights::v1::CreateDatasetConfigRequest const&
-        request) {
+      NoAwaitTag, google::cloud::storageinsights::v1::CreateDatasetConfigRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateDatasetConfig(request),
       [this](
           grpc::ClientContext& context, Options const& options,
-          google::cloud::storageinsights::v1::CreateDatasetConfigRequest const&
-              request) {
+          google::cloud::storageinsights::v1::CreateDatasetConfigRequest const& request) {
         return stub_->CreateDatasetConfig(context, options, request);
       },
       *current, request, __func__);
@@ -330,96 +276,78 @@ StorageInsightsConnectionImpl::CreateDatasetConfig(
 
 future<StatusOr<google::cloud::storageinsights::v1::DatasetConfig>>
 StorageInsightsConnectionImpl::CreateDatasetConfig(
-    google::longrunning::Operation const& operation) {
+      google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata()
-           .Is<typename google::cloud::storageinsights::v1::
-                   OperationMetadata>()) {
-    return make_ready_future<
-        StatusOr<google::cloud::storageinsights::v1::DatasetConfig>>(
-        internal::InvalidArgumentError(
-            "operation does not correspond to CreateDatasetConfig",
-            GCP_ERROR_INFO().WithMetadata("operation",
-                                          operation.metadata().DebugString())));
+  if (!operation.metadata().Is<typename google::cloud::storageinsights::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::storageinsights::v1::DatasetConfig>>(
+        internal::InvalidArgumentError("operation does not correspond to CreateDatasetConfig",
+                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<
-      google::cloud::storageinsights::v1::DatasetConfig>(
-      background_->cq(), current, operation,
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::storageinsights::v1::DatasetConfig>,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::storageinsights::v1::DatasetConfig>(
+    background_->cq(), current, operation,
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::storageinsights::v1::DatasetConfig>,
+    polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::storageinsights::v1::DatasetConfig>>
-StorageInsightsConnectionImpl::UpdateDatasetConfig(
-    google::cloud::storageinsights::v1::UpdateDatasetConfigRequest const&
-        request) {
+StorageInsightsConnectionImpl::UpdateDatasetConfig(google::cloud::storageinsights::v1::UpdateDatasetConfigRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->UpdateDatasetConfig(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<
-      google::cloud::storageinsights::v1::DatasetConfig>(
-      background_->cq(), current, std::move(request_copy),
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::storageinsights::v1::UpdateDatasetConfigRequest const&
-              request) {
-        return stub->AsyncUpdateDatasetConfig(cq, std::move(context),
-                                              std::move(options), request);
-      },
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::storageinsights::v1::DatasetConfig>,
-      retry_policy(*current), backoff_policy(*current), idempotent,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::storageinsights::v1::DatasetConfig>(
+    background_->cq(), current, std::move(request_copy),
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::cloud::storageinsights::v1::UpdateDatasetConfigRequest const& request) {
+     return stub->AsyncUpdateDatasetConfig(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::storageinsights::v1::DatasetConfig>,
+    retry_policy(*current), backoff_policy(*current), idempotent,
+    polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 StorageInsightsConnectionImpl::UpdateDatasetConfig(
-    NoAwaitTag,
-    google::cloud::storageinsights::v1::UpdateDatasetConfigRequest const&
-        request) {
+      NoAwaitTag, google::cloud::storageinsights::v1::UpdateDatasetConfigRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateDatasetConfig(request),
       [this](
           grpc::ClientContext& context, Options const& options,
-          google::cloud::storageinsights::v1::UpdateDatasetConfigRequest const&
-              request) {
+          google::cloud::storageinsights::v1::UpdateDatasetConfigRequest const& request) {
         return stub_->UpdateDatasetConfig(context, options, request);
       },
       *current, request, __func__);
@@ -427,96 +355,78 @@ StorageInsightsConnectionImpl::UpdateDatasetConfig(
 
 future<StatusOr<google::cloud::storageinsights::v1::DatasetConfig>>
 StorageInsightsConnectionImpl::UpdateDatasetConfig(
-    google::longrunning::Operation const& operation) {
+      google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata()
-           .Is<typename google::cloud::storageinsights::v1::
-                   OperationMetadata>()) {
-    return make_ready_future<
-        StatusOr<google::cloud::storageinsights::v1::DatasetConfig>>(
-        internal::InvalidArgumentError(
-            "operation does not correspond to UpdateDatasetConfig",
-            GCP_ERROR_INFO().WithMetadata("operation",
-                                          operation.metadata().DebugString())));
+  if (!operation.metadata().Is<typename google::cloud::storageinsights::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::storageinsights::v1::DatasetConfig>>(
+        internal::InvalidArgumentError("operation does not correspond to UpdateDatasetConfig",
+                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<
-      google::cloud::storageinsights::v1::DatasetConfig>(
-      background_->cq(), current, operation,
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::storageinsights::v1::DatasetConfig>,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::storageinsights::v1::DatasetConfig>(
+    background_->cq(), current, operation,
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::storageinsights::v1::DatasetConfig>,
+    polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::storageinsights::v1::OperationMetadata>>
-StorageInsightsConnectionImpl::DeleteDatasetConfig(
-    google::cloud::storageinsights::v1::DeleteDatasetConfigRequest const&
-        request) {
+StorageInsightsConnectionImpl::DeleteDatasetConfig(google::cloud::storageinsights::v1::DeleteDatasetConfigRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->DeleteDatasetConfig(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<
-      google::cloud::storageinsights::v1::OperationMetadata>(
-      background_->cq(), current, std::move(request_copy),
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::storageinsights::v1::DeleteDatasetConfigRequest const&
-              request) {
-        return stub->AsyncDeleteDatasetConfig(cq, std::move(context),
-                                              std::move(options), request);
-      },
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultMetadata<
-          google::cloud::storageinsights::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current), idempotent,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::storageinsights::v1::OperationMetadata>(
+    background_->cq(), current, std::move(request_copy),
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::cloud::storageinsights::v1::DeleteDatasetConfigRequest const& request) {
+     return stub->AsyncDeleteDatasetConfig(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultMetadata<google::cloud::storageinsights::v1::OperationMetadata>,
+    retry_policy(*current), backoff_policy(*current), idempotent,
+    polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 StorageInsightsConnectionImpl::DeleteDatasetConfig(
-    NoAwaitTag,
-    google::cloud::storageinsights::v1::DeleteDatasetConfigRequest const&
-        request) {
+      NoAwaitTag, google::cloud::storageinsights::v1::DeleteDatasetConfigRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteDatasetConfig(request),
       [this](
           grpc::ClientContext& context, Options const& options,
-          google::cloud::storageinsights::v1::DeleteDatasetConfigRequest const&
-              request) {
+          google::cloud::storageinsights::v1::DeleteDatasetConfigRequest const& request) {
         return stub_->DeleteDatasetConfig(context, options, request);
       },
       *current, request, __func__);
@@ -524,93 +434,78 @@ StorageInsightsConnectionImpl::DeleteDatasetConfig(
 
 future<StatusOr<google::cloud::storageinsights::v1::OperationMetadata>>
 StorageInsightsConnectionImpl::DeleteDatasetConfig(
-    google::longrunning::Operation const& operation) {
+      google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata()
-           .Is<typename google::cloud::storageinsights::v1::
-                   OperationMetadata>()) {
-    return make_ready_future<
-        StatusOr<google::cloud::storageinsights::v1::OperationMetadata>>(
-        internal::InvalidArgumentError(
-            "operation does not correspond to DeleteDatasetConfig",
-            GCP_ERROR_INFO().WithMetadata("operation",
-                                          operation.metadata().DebugString())));
+  if (!operation.metadata().Is<typename google::cloud::storageinsights::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::storageinsights::v1::OperationMetadata>>(
+        internal::InvalidArgumentError("operation does not correspond to DeleteDatasetConfig",
+                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<
-      google::cloud::storageinsights::v1::OperationMetadata>(
-      background_->cq(), current, operation,
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultMetadata<
-          google::cloud::storageinsights::v1::OperationMetadata>,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::storageinsights::v1::OperationMetadata>(
+    background_->cq(), current, operation,
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultMetadata<google::cloud::storageinsights::v1::OperationMetadata>,
+    polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::storageinsights::v1::LinkDatasetResponse>>
-StorageInsightsConnectionImpl::LinkDataset(
-    google::cloud::storageinsights::v1::LinkDatasetRequest const& request) {
+StorageInsightsConnectionImpl::LinkDataset(google::cloud::storageinsights::v1::LinkDatasetRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->LinkDataset(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<
-      google::cloud::storageinsights::v1::LinkDatasetResponse>(
-      background_->cq(), current, std::move(request_copy),
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::storageinsights::v1::LinkDatasetRequest const&
-              request) {
-        return stub->AsyncLinkDataset(cq, std::move(context),
-                                      std::move(options), request);
-      },
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::storageinsights::v1::LinkDatasetResponse>,
-      retry_policy(*current), backoff_policy(*current), idempotent,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::storageinsights::v1::LinkDatasetResponse>(
+    background_->cq(), current, std::move(request_copy),
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::cloud::storageinsights::v1::LinkDatasetRequest const& request) {
+     return stub->AsyncLinkDataset(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::storageinsights::v1::LinkDatasetResponse>,
+    retry_policy(*current), backoff_policy(*current), idempotent,
+    polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 StorageInsightsConnectionImpl::LinkDataset(
-    NoAwaitTag,
-    google::cloud::storageinsights::v1::LinkDatasetRequest const& request) {
+      NoAwaitTag, google::cloud::storageinsights::v1::LinkDatasetRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->LinkDataset(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::storageinsights::v1::LinkDatasetRequest const&
-                 request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::storageinsights::v1::LinkDatasetRequest const& request) {
         return stub_->LinkDataset(context, options, request);
       },
       *current, request, __func__);
@@ -618,93 +513,78 @@ StorageInsightsConnectionImpl::LinkDataset(
 
 future<StatusOr<google::cloud::storageinsights::v1::LinkDatasetResponse>>
 StorageInsightsConnectionImpl::LinkDataset(
-    google::longrunning::Operation const& operation) {
+      google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata()
-           .Is<typename google::cloud::storageinsights::v1::
-                   OperationMetadata>()) {
-    return make_ready_future<
-        StatusOr<google::cloud::storageinsights::v1::LinkDatasetResponse>>(
-        internal::InvalidArgumentError(
-            "operation does not correspond to LinkDataset",
-            GCP_ERROR_INFO().WithMetadata("operation",
-                                          operation.metadata().DebugString())));
+  if (!operation.metadata().Is<typename google::cloud::storageinsights::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::storageinsights::v1::LinkDatasetResponse>>(
+        internal::InvalidArgumentError("operation does not correspond to LinkDataset",
+                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<
-      google::cloud::storageinsights::v1::LinkDatasetResponse>(
-      background_->cq(), current, operation,
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::storageinsights::v1::LinkDatasetResponse>,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::storageinsights::v1::LinkDatasetResponse>(
+    background_->cq(), current, operation,
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::storageinsights::v1::LinkDatasetResponse>,
+    polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::storageinsights::v1::OperationMetadata>>
-StorageInsightsConnectionImpl::UnlinkDataset(
-    google::cloud::storageinsights::v1::UnlinkDatasetRequest const& request) {
+StorageInsightsConnectionImpl::UnlinkDataset(google::cloud::storageinsights::v1::UnlinkDatasetRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->UnlinkDataset(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<
-      google::cloud::storageinsights::v1::OperationMetadata>(
-      background_->cq(), current, std::move(request_copy),
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::storageinsights::v1::UnlinkDatasetRequest const&
-              request) {
-        return stub->AsyncUnlinkDataset(cq, std::move(context),
-                                        std::move(options), request);
-      },
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultMetadata<
-          google::cloud::storageinsights::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current), idempotent,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::storageinsights::v1::OperationMetadata>(
+    background_->cq(), current, std::move(request_copy),
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::cloud::storageinsights::v1::UnlinkDatasetRequest const& request) {
+     return stub->AsyncUnlinkDataset(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultMetadata<google::cloud::storageinsights::v1::OperationMetadata>,
+    retry_policy(*current), backoff_policy(*current), idempotent,
+    polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 StorageInsightsConnectionImpl::UnlinkDataset(
-    NoAwaitTag,
-    google::cloud::storageinsights::v1::UnlinkDatasetRequest const& request) {
+      NoAwaitTag, google::cloud::storageinsights::v1::UnlinkDatasetRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UnlinkDataset(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::storageinsights::v1::UnlinkDatasetRequest const&
-                 request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::storageinsights::v1::UnlinkDatasetRequest const& request) {
         return stub_->UnlinkDataset(context, options, request);
       },
       *current, request, __func__);
@@ -712,70 +592,56 @@ StorageInsightsConnectionImpl::UnlinkDataset(
 
 future<StatusOr<google::cloud::storageinsights::v1::OperationMetadata>>
 StorageInsightsConnectionImpl::UnlinkDataset(
-    google::longrunning::Operation const& operation) {
+      google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata()
-           .Is<typename google::cloud::storageinsights::v1::
-                   OperationMetadata>()) {
-    return make_ready_future<
-        StatusOr<google::cloud::storageinsights::v1::OperationMetadata>>(
-        internal::InvalidArgumentError(
-            "operation does not correspond to UnlinkDataset",
-            GCP_ERROR_INFO().WithMetadata("operation",
-                                          operation.metadata().DebugString())));
+  if (!operation.metadata().Is<typename google::cloud::storageinsights::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::storageinsights::v1::OperationMetadata>>(
+        internal::InvalidArgumentError("operation does not correspond to UnlinkDataset",
+                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<
-      google::cloud::storageinsights::v1::OperationMetadata>(
-      background_->cq(), current, operation,
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultMetadata<
-          google::cloud::storageinsights::v1::OperationMetadata>,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::storageinsights::v1::OperationMetadata>(
+    background_->cq(), current, operation,
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultMetadata<google::cloud::storageinsights::v1::OperationMetadata>,
+    polling_policy(*current), __func__);
 }
 
 StreamRange<google::cloud::location::Location>
-StorageInsightsConnectionImpl::ListLocations(
-    google::cloud::location::ListLocationsRequest request) {
+StorageInsightsConnectionImpl::ListLocations(google::cloud::location::ListLocationsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListLocations(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::location::Location>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::location::Location>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<storageinsights_v1::StorageInsightsRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<storageinsights_v1::StorageInsightsRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::location::ListLocationsRequest const& r) {
+          Options const& options, google::cloud::location::ListLocationsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](
-                grpc::ClientContext& context, Options const& options,
-                google::cloud::location::ListLocationsRequest const& request) {
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::cloud::location::ListLocationsRequest const& request) {
               return stub->ListLocations(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::location::ListLocationsResponse r) {
-        std::vector<google::cloud::location::Location> result(
-            r.locations().size());
+        std::vector<google::cloud::location::Location> result(r.locations().size());
         auto& messages = *r.mutable_locations();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -783,8 +649,7 @@ StorageInsightsConnectionImpl::ListLocations(
 }
 
 StatusOr<google::cloud::location::Location>
-StorageInsightsConnectionImpl::GetLocation(
-    google::cloud::location::GetLocationRequest const& request) {
+StorageInsightsConnectionImpl::GetLocation(google::cloud::location::GetLocationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -797,21 +662,17 @@ StorageInsightsConnectionImpl::GetLocation(
 }
 
 StreamRange<google::longrunning::Operation>
-StorageInsightsConnectionImpl::ListOperations(
-    google::longrunning::ListOperationsRequest request) {
+StorageInsightsConnectionImpl::ListOperations(google::longrunning::ListOperationsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListOperations(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::longrunning::Operation>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::longrunning::Operation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<storageinsights_v1::StorageInsightsRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<storageinsights_v1::StorageInsightsRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::longrunning::ListOperationsRequest const& r) {
+          Options const& options, google::longrunning::ListOperationsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
@@ -821,8 +682,7 @@ StorageInsightsConnectionImpl::ListOperations(
             options, r, function_name);
       },
       [](google::longrunning::ListOperationsResponse r) {
-        std::vector<google::longrunning::Operation> result(
-            r.operations().size());
+        std::vector<google::longrunning::Operation> result(r.operations().size());
         auto& messages = *r.mutable_operations();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -830,8 +690,7 @@ StorageInsightsConnectionImpl::ListOperations(
 }
 
 StatusOr<google::longrunning::Operation>
-StorageInsightsConnectionImpl::GetOperation(
-    google::longrunning::GetOperationRequest const& request) {
+StorageInsightsConnectionImpl::GetOperation(google::longrunning::GetOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -843,8 +702,8 @@ StorageInsightsConnectionImpl::GetOperation(
       *current, request, __func__);
 }
 
-Status StorageInsightsConnectionImpl::DeleteOperation(
-    google::longrunning::DeleteOperationRequest const& request) {
+Status
+StorageInsightsConnectionImpl::DeleteOperation(google::longrunning::DeleteOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -856,8 +715,8 @@ Status StorageInsightsConnectionImpl::DeleteOperation(
       *current, request, __func__);
 }
 
-Status StorageInsightsConnectionImpl::CancelOperation(
-    google::longrunning::CancelOperationRequest const& request) {
+Status
+StorageInsightsConnectionImpl::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),

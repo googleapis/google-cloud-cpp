@@ -35,20 +35,19 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options DataformDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_DATAFORM_ENDPOINT", "",
-      "GOOGLE_CLOUD_CPP_DATAFORM_AUTHORITY", "dataform.googleapis.com");
+      std::move(options), "GOOGLE_CLOUD_CPP_DATAFORM_ENDPOINT",
+      "", "GOOGLE_CLOUD_CPP_DATAFORM_AUTHORITY",
+      "dataform.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<dataform_v1::DataformRetryPolicyOption>()) {
     options.set<dataform_v1::DataformRetryPolicyOption>(
-        dataform_v1::DataformLimitedTimeRetryPolicy(std::chrono::minutes(30))
-            .clone());
+        dataform_v1::DataformLimitedTimeRetryPolicy(
+            std::chrono::minutes(30)).clone());
   }
   if (!options.has<dataform_v1::DataformBackoffPolicyOption>()) {
     options.set<dataform_v1::DataformBackoffPolicyOption>(
-        ExponentialBackoffPolicy(
-            std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
-            .clone());
+        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
   }
   if (!options.has<dataform_v1::DataformConnectionIdempotencyPolicyOption>()) {
     options.set<dataform_v1::DataformConnectionIdempotencyPolicyOption>(

@@ -26,123 +26,94 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-ModelServiceConnectionIdempotencyPolicy::
-    ~ModelServiceConnectionIdempotencyPolicy() = default;
+ModelServiceConnectionIdempotencyPolicy::~ModelServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<ModelServiceConnectionIdempotencyPolicy>
 ModelServiceConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<ModelServiceConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency ModelServiceConnectionIdempotencyPolicy::UploadModel(
-    google::cloud::aiplatform::v1::UploadModelRequest const&) {
+Idempotency ModelServiceConnectionIdempotencyPolicy::UploadModel(google::cloud::aiplatform::v1::UploadModelRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ModelServiceConnectionIdempotencyPolicy::GetModel(
-    google::cloud::aiplatform::v1::GetModelRequest const&) {
+Idempotency ModelServiceConnectionIdempotencyPolicy::GetModel(google::cloud::aiplatform::v1::GetModelRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ModelServiceConnectionIdempotencyPolicy::ListModels(
-    google::cloud::aiplatform::v1::ListModelsRequest) {  // NOLINT
+Idempotency ModelServiceConnectionIdempotencyPolicy::ListModels(google::cloud::aiplatform::v1::ListModelsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency ModelServiceConnectionIdempotencyPolicy::ListModelVersions(
-    google::cloud::aiplatform::v1::ListModelVersionsRequest) {  // NOLINT
+Idempotency ModelServiceConnectionIdempotencyPolicy::ListModelVersions(google::cloud::aiplatform::v1::ListModelVersionsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency
-ModelServiceConnectionIdempotencyPolicy::ListModelVersionCheckpoints(
-    google::cloud::aiplatform::v1::
-        ListModelVersionCheckpointsRequest) {  // NOLINT
+Idempotency ModelServiceConnectionIdempotencyPolicy::ListModelVersionCheckpoints(google::cloud::aiplatform::v1::ListModelVersionCheckpointsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency ModelServiceConnectionIdempotencyPolicy::UpdateModel(
-    google::cloud::aiplatform::v1::UpdateModelRequest const&) {
+Idempotency ModelServiceConnectionIdempotencyPolicy::UpdateModel(google::cloud::aiplatform::v1::UpdateModelRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ModelServiceConnectionIdempotencyPolicy::UpdateExplanationDataset(
-    google::cloud::aiplatform::v1::UpdateExplanationDatasetRequest const&) {
+Idempotency ModelServiceConnectionIdempotencyPolicy::UpdateExplanationDataset(google::cloud::aiplatform::v1::UpdateExplanationDatasetRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ModelServiceConnectionIdempotencyPolicy::DeleteModel(
-    google::cloud::aiplatform::v1::DeleteModelRequest const&) {
+Idempotency ModelServiceConnectionIdempotencyPolicy::DeleteModel(google::cloud::aiplatform::v1::DeleteModelRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ModelServiceConnectionIdempotencyPolicy::DeleteModelVersion(
-    google::cloud::aiplatform::v1::DeleteModelVersionRequest const&) {
+Idempotency ModelServiceConnectionIdempotencyPolicy::DeleteModelVersion(google::cloud::aiplatform::v1::DeleteModelVersionRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ModelServiceConnectionIdempotencyPolicy::MergeVersionAliases(
-    google::cloud::aiplatform::v1::MergeVersionAliasesRequest const&) {
+Idempotency ModelServiceConnectionIdempotencyPolicy::MergeVersionAliases(google::cloud::aiplatform::v1::MergeVersionAliasesRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ModelServiceConnectionIdempotencyPolicy::ExportModel(
-    google::cloud::aiplatform::v1::ExportModelRequest const&) {
+Idempotency ModelServiceConnectionIdempotencyPolicy::ExportModel(google::cloud::aiplatform::v1::ExportModelRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ModelServiceConnectionIdempotencyPolicy::CopyModel(
-    google::cloud::aiplatform::v1::CopyModelRequest const&) {
+Idempotency ModelServiceConnectionIdempotencyPolicy::CopyModel(google::cloud::aiplatform::v1::CopyModelRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ModelServiceConnectionIdempotencyPolicy::ImportModelEvaluation(
-    google::cloud::aiplatform::v1::ImportModelEvaluationRequest const&) {
+Idempotency ModelServiceConnectionIdempotencyPolicy::ImportModelEvaluation(google::cloud::aiplatform::v1::ImportModelEvaluationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency
-ModelServiceConnectionIdempotencyPolicy::BatchImportModelEvaluationSlices(
-    google::cloud::aiplatform::v1::
-        BatchImportModelEvaluationSlicesRequest const&) {
+Idempotency ModelServiceConnectionIdempotencyPolicy::BatchImportModelEvaluationSlices(google::cloud::aiplatform::v1::BatchImportModelEvaluationSlicesRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency
-ModelServiceConnectionIdempotencyPolicy::BatchImportEvaluatedAnnotations(
-    google::cloud::aiplatform::v1::
-        BatchImportEvaluatedAnnotationsRequest const&) {
+Idempotency ModelServiceConnectionIdempotencyPolicy::BatchImportEvaluatedAnnotations(google::cloud::aiplatform::v1::BatchImportEvaluatedAnnotationsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ModelServiceConnectionIdempotencyPolicy::GetModelEvaluation(
-    google::cloud::aiplatform::v1::GetModelEvaluationRequest const&) {
+Idempotency ModelServiceConnectionIdempotencyPolicy::GetModelEvaluation(google::cloud::aiplatform::v1::GetModelEvaluationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ModelServiceConnectionIdempotencyPolicy::ListModelEvaluations(
-    google::cloud::aiplatform::v1::ListModelEvaluationsRequest) {  // NOLINT
+Idempotency ModelServiceConnectionIdempotencyPolicy::ListModelEvaluations(google::cloud::aiplatform::v1::ListModelEvaluationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency ModelServiceConnectionIdempotencyPolicy::GetModelEvaluationSlice(
-    google::cloud::aiplatform::v1::GetModelEvaluationSliceRequest const&) {
+Idempotency ModelServiceConnectionIdempotencyPolicy::GetModelEvaluationSlice(google::cloud::aiplatform::v1::GetModelEvaluationSliceRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ModelServiceConnectionIdempotencyPolicy::ListModelEvaluationSlices(
-    google::cloud::aiplatform::v1::
-        ListModelEvaluationSlicesRequest) {  // NOLINT
+Idempotency ModelServiceConnectionIdempotencyPolicy::ListModelEvaluationSlices(google::cloud::aiplatform::v1::ListModelEvaluationSlicesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency ModelServiceConnectionIdempotencyPolicy::ListLocations(
-    google::cloud::location::ListLocationsRequest) {  // NOLINT
+Idempotency ModelServiceConnectionIdempotencyPolicy::ListLocations(google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency ModelServiceConnectionIdempotencyPolicy::GetLocation(
-    google::cloud::location::GetLocationRequest const&) {
+Idempotency ModelServiceConnectionIdempotencyPolicy::GetLocation(google::cloud::location::GetLocationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
@@ -152,43 +123,36 @@ Idempotency ModelServiceConnectionIdempotencyPolicy::SetIamPolicy(
                                          : Idempotency::kIdempotent;
 }
 
-Idempotency ModelServiceConnectionIdempotencyPolicy::GetIamPolicy(
-    google::iam::v1::GetIamPolicyRequest const&) {
+Idempotency ModelServiceConnectionIdempotencyPolicy::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ModelServiceConnectionIdempotencyPolicy::TestIamPermissions(
-    google::iam::v1::TestIamPermissionsRequest const&) {
+Idempotency ModelServiceConnectionIdempotencyPolicy::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ModelServiceConnectionIdempotencyPolicy::ListOperations(
-    google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency ModelServiceConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency ModelServiceConnectionIdempotencyPolicy::GetOperation(
-    google::longrunning::GetOperationRequest const&) {
+Idempotency ModelServiceConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ModelServiceConnectionIdempotencyPolicy::DeleteOperation(
-    google::longrunning::DeleteOperationRequest const&) {
+Idempotency ModelServiceConnectionIdempotencyPolicy::DeleteOperation(google::longrunning::DeleteOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ModelServiceConnectionIdempotencyPolicy::CancelOperation(
-    google::longrunning::CancelOperationRequest const&) {
+Idempotency ModelServiceConnectionIdempotencyPolicy::CancelOperation(google::longrunning::CancelOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ModelServiceConnectionIdempotencyPolicy::WaitOperation(
-    google::longrunning::WaitOperationRequest const&) {
+Idempotency ModelServiceConnectionIdempotencyPolicy::WaitOperation(google::longrunning::WaitOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<ModelServiceConnectionIdempotencyPolicy>
-MakeDefaultModelServiceConnectionIdempotencyPolicy() {
+    MakeDefaultModelServiceConnectionIdempotencyPolicy() {
   return std::make_unique<ModelServiceConnectionIdempotencyPolicy>();
 }
 

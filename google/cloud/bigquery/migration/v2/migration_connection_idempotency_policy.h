@@ -34,40 +34,32 @@ class MigrationServiceConnectionIdempotencyPolicy {
   virtual ~MigrationServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<MigrationServiceConnectionIdempotencyPolicy> clone()
-      const;
+  virtual std::unique_ptr<MigrationServiceConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency CreateMigrationWorkflow(
-      google::cloud::bigquery::migration::v2::
-          CreateMigrationWorkflowRequest const& request);
+  virtual google::cloud::Idempotency
+  CreateMigrationWorkflow(google::cloud::bigquery::migration::v2::CreateMigrationWorkflowRequest const& request);
 
-  virtual google::cloud::Idempotency GetMigrationWorkflow(
-      google::cloud::bigquery::migration::v2::GetMigrationWorkflowRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  GetMigrationWorkflow(google::cloud::bigquery::migration::v2::GetMigrationWorkflowRequest const& request);
 
-  virtual google::cloud::Idempotency ListMigrationWorkflows(
-      google::cloud::bigquery::migration::v2::ListMigrationWorkflowsRequest
-          request);
+  virtual google::cloud::Idempotency
+  ListMigrationWorkflows(google::cloud::bigquery::migration::v2::ListMigrationWorkflowsRequest request);
 
-  virtual google::cloud::Idempotency DeleteMigrationWorkflow(
-      google::cloud::bigquery::migration::v2::
-          DeleteMigrationWorkflowRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteMigrationWorkflow(google::cloud::bigquery::migration::v2::DeleteMigrationWorkflowRequest const& request);
 
-  virtual google::cloud::Idempotency StartMigrationWorkflow(
-      google::cloud::bigquery::migration::v2::
-          StartMigrationWorkflowRequest const& request);
+  virtual google::cloud::Idempotency
+  StartMigrationWorkflow(google::cloud::bigquery::migration::v2::StartMigrationWorkflowRequest const& request);
 
-  virtual google::cloud::Idempotency GetMigrationSubtask(
-      google::cloud::bigquery::migration::v2::GetMigrationSubtaskRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  GetMigrationSubtask(google::cloud::bigquery::migration::v2::GetMigrationSubtaskRequest const& request);
 
-  virtual google::cloud::Idempotency ListMigrationSubtasks(
-      google::cloud::bigquery::migration::v2::ListMigrationSubtasksRequest
-          request);
+  virtual google::cloud::Idempotency
+  ListMigrationSubtasks(google::cloud::bigquery::migration::v2::ListMigrationSubtasksRequest request);
 };
 
 std::unique_ptr<MigrationServiceConnectionIdempotencyPolicy>
-MakeDefaultMigrationServiceConnectionIdempotencyPolicy();
+    MakeDefaultMigrationServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_migration_v2

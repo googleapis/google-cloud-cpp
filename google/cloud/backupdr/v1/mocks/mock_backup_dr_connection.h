@@ -46,32 +46,25 @@ class MockBackupDRConnection : public backupdr_v1::BackupDRConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(
-      (StreamRange<google::cloud::backupdr::v1::ManagementServer>),
-      ListManagementServers,
-      (google::cloud::backupdr::v1::ListManagementServersRequest request),
-      (override));
+  MOCK_METHOD((StreamRange<google::cloud::backupdr::v1::ManagementServer>),
+  ListManagementServers,
+  (google::cloud::backupdr::v1::ListManagementServersRequest request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::backupdr::v1::ManagementServer>,
-      GetManagementServer,
-      (google::cloud::backupdr::v1::GetManagementServerRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::backupdr::v1::ManagementServer>,
+  GetManagementServer,
+  (google::cloud::backupdr::v1::GetManagementServerRequest const& request), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// CreateManagementServer(Matcher<google::cloud::backupdr::v1::CreateManagementServerRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, CreateManagementServer(Matcher<google::cloud::backupdr::v1::CreateManagementServerRequest const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::backupdr::v1::ManagementServer>>,
-              CreateManagementServer,
-              (google::cloud::backupdr::v1::CreateManagementServerRequest const&
-                   request),
-              (override));
+  CreateManagementServer,
+  (google::cloud::backupdr::v1::CreateManagementServerRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -79,38 +72,33 @@ class MockBackupDRConnection : public backupdr_v1::BackupDRConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, CreateManagementServer(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateManagementServer,
-              (NoAwaitTag,
-               google::cloud::backupdr::v1::CreateManagementServerRequest const&
-                   request),
-              (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  CreateManagementServer, (NoAwaitTag,
+    google::cloud::backupdr::v1::CreateManagementServerRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// CreateManagementServer(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock, CreateManagementServer(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::backupdr::v1::ManagementServer>>,
-              CreateManagementServer,
-              (google::longrunning::Operation const& operation), (override));
+  CreateManagementServer, (
+    google::longrunning::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteManagementServer(Matcher<google::cloud::backupdr::v1::DeleteManagementServerRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteManagementServer(Matcher<google::cloud::backupdr::v1::DeleteManagementServerRequest const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::backupdr::v1::OperationMetadata>>,
-              DeleteManagementServer,
-              (google::cloud::backupdr::v1::DeleteManagementServerRequest const&
-                   request),
-              (override));
+  DeleteManagementServer,
+  (google::cloud::backupdr::v1::DeleteManagementServerRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -118,38 +106,33 @@ class MockBackupDRConnection : public backupdr_v1::BackupDRConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, DeleteManagementServer(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteManagementServer,
-              (NoAwaitTag,
-               google::cloud::backupdr::v1::DeleteManagementServerRequest const&
-                   request),
-              (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  DeleteManagementServer, (NoAwaitTag,
+    google::cloud::backupdr::v1::DeleteManagementServerRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteManagementServer(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteManagementServer(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::backupdr::v1::OperationMetadata>>,
-              DeleteManagementServer,
-              (google::longrunning::Operation const& operation), (override));
+  DeleteManagementServer, (
+    google::longrunning::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// CreateBackupVault(Matcher<google::cloud::backupdr::v1::CreateBackupVaultRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, CreateBackupVault(Matcher<google::cloud::backupdr::v1::CreateBackupVaultRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::backupdr::v1::BackupVault>>,
-      CreateBackupVault,
-      (google::cloud::backupdr::v1::CreateBackupVaultRequest const& request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::backupdr::v1::BackupVault>>,
+  CreateBackupVault,
+  (google::cloud::backupdr::v1::CreateBackupVaultRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -157,54 +140,45 @@ class MockBackupDRConnection : public backupdr_v1::BackupDRConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, CreateBackupVault(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, CreateBackupVault,
-      (NoAwaitTag,
-       google::cloud::backupdr::v1::CreateBackupVaultRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  CreateBackupVault, (NoAwaitTag,
+    google::cloud::backupdr::v1::CreateBackupVaultRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// CreateBackupVault(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock, CreateBackupVault(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::backupdr::v1::BackupVault>>,
-              CreateBackupVault,
-              (google::longrunning::Operation const& operation), (override));
+  CreateBackupVault, (
+    google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD((StreamRange<google::cloud::backupdr::v1::BackupVault>),
-              ListBackupVaults,
-              (google::cloud::backupdr::v1::ListBackupVaultsRequest request),
-              (override));
+  ListBackupVaults,
+  (google::cloud::backupdr::v1::ListBackupVaultsRequest request), (override));
 
-  MOCK_METHOD(
-      (StreamRange<google::cloud::backupdr::v1::BackupVault>),
-      FetchUsableBackupVaults,
-      (google::cloud::backupdr::v1::FetchUsableBackupVaultsRequest request),
-      (override));
+  MOCK_METHOD((StreamRange<google::cloud::backupdr::v1::BackupVault>),
+  FetchUsableBackupVaults,
+  (google::cloud::backupdr::v1::FetchUsableBackupVaultsRequest request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::backupdr::v1::BackupVault>, GetBackupVault,
-      (google::cloud::backupdr::v1::GetBackupVaultRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::backupdr::v1::BackupVault>,
+  GetBackupVault,
+  (google::cloud::backupdr::v1::GetBackupVaultRequest const& request), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// UpdateBackupVault(Matcher<google::cloud::backupdr::v1::UpdateBackupVaultRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, UpdateBackupVault(Matcher<google::cloud::backupdr::v1::UpdateBackupVaultRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::backupdr::v1::BackupVault>>,
-      UpdateBackupVault,
-      (google::cloud::backupdr::v1::UpdateBackupVaultRequest const& request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::backupdr::v1::BackupVault>>,
+  UpdateBackupVault,
+  (google::cloud::backupdr::v1::UpdateBackupVaultRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -212,38 +186,33 @@ class MockBackupDRConnection : public backupdr_v1::BackupDRConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, UpdateBackupVault(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, UpdateBackupVault,
-      (NoAwaitTag,
-       google::cloud::backupdr::v1::UpdateBackupVaultRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  UpdateBackupVault, (NoAwaitTag,
+    google::cloud::backupdr::v1::UpdateBackupVaultRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// UpdateBackupVault(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock, UpdateBackupVault(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::backupdr::v1::BackupVault>>,
-              UpdateBackupVault,
-              (google::longrunning::Operation const& operation), (override));
+  UpdateBackupVault, (
+    google::longrunning::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteBackupVault(Matcher<google::cloud::backupdr::v1::DeleteBackupVaultRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteBackupVault(Matcher<google::cloud::backupdr::v1::DeleteBackupVaultRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::backupdr::v1::OperationMetadata>>,
-      DeleteBackupVault,
-      (google::cloud::backupdr::v1::DeleteBackupVaultRequest const& request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::backupdr::v1::OperationMetadata>>,
+  DeleteBackupVault,
+  (google::cloud::backupdr::v1::DeleteBackupVaultRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -251,48 +220,41 @@ class MockBackupDRConnection : public backupdr_v1::BackupDRConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, DeleteBackupVault(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, DeleteBackupVault,
-      (NoAwaitTag,
-       google::cloud::backupdr::v1::DeleteBackupVaultRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  DeleteBackupVault, (NoAwaitTag,
+    google::cloud::backupdr::v1::DeleteBackupVaultRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteBackupVault(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteBackupVault(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::backupdr::v1::OperationMetadata>>,
-              DeleteBackupVault,
-              (google::longrunning::Operation const& operation), (override));
+  DeleteBackupVault, (
+    google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD((StreamRange<google::cloud::backupdr::v1::DataSource>),
-              ListDataSources,
-              (google::cloud::backupdr::v1::ListDataSourcesRequest request),
-              (override));
+  ListDataSources,
+  (google::cloud::backupdr::v1::ListDataSourcesRequest request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::backupdr::v1::DataSource>, GetDataSource,
-      (google::cloud::backupdr::v1::GetDataSourceRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::backupdr::v1::DataSource>,
+  GetDataSource,
+  (google::cloud::backupdr::v1::GetDataSourceRequest const& request), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// UpdateDataSource(Matcher<google::cloud::backupdr::v1::UpdateDataSourceRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, UpdateDataSource(Matcher<google::cloud::backupdr::v1::UpdateDataSourceRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::backupdr::v1::DataSource>>,
-      UpdateDataSource,
-      (google::cloud::backupdr::v1::UpdateDataSourceRequest const& request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::backupdr::v1::DataSource>>,
+  UpdateDataSource,
+  (google::cloud::backupdr::v1::UpdateDataSourceRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -300,45 +262,41 @@ class MockBackupDRConnection : public backupdr_v1::BackupDRConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, UpdateDataSource(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, UpdateDataSource,
-      (NoAwaitTag,
-       google::cloud::backupdr::v1::UpdateDataSourceRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  UpdateDataSource, (NoAwaitTag,
+    google::cloud::backupdr::v1::UpdateDataSourceRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UpdateDataSource(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, UpdateDataSource(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::backupdr::v1::DataSource>>,
-              UpdateDataSource,
-              (google::longrunning::Operation const& operation), (override));
+  UpdateDataSource, (
+    google::longrunning::Operation const& operation), (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::backupdr::v1::Backup>), ListBackups,
-              (google::cloud::backupdr::v1::ListBackupsRequest request),
-              (override));
+  MOCK_METHOD((StreamRange<google::cloud::backupdr::v1::Backup>),
+  ListBackups,
+  (google::cloud::backupdr::v1::ListBackupsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::backupdr::v1::Backup>, GetBackup,
-              (google::cloud::backupdr::v1::GetBackupRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::backupdr::v1::Backup>,
+  GetBackup,
+  (google::cloud::backupdr::v1::GetBackupRequest const& request), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// UpdateBackup(Matcher<google::cloud::backupdr::v1::UpdateBackupRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, UpdateBackup(Matcher<google::cloud::backupdr::v1::UpdateBackupRequest const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::backupdr::v1::Backup>>,
-              UpdateBackup,
-              (google::cloud::backupdr::v1::UpdateBackupRequest const& request),
-              (override));
+  UpdateBackup,
+  (google::cloud::backupdr::v1::UpdateBackupRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -346,36 +304,33 @@ class MockBackupDRConnection : public backupdr_v1::BackupDRConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, UpdateBackup(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, UpdateBackup,
-              (NoAwaitTag,
-               google::cloud::backupdr::v1::UpdateBackupRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  UpdateBackup, (NoAwaitTag,
+    google::cloud::backupdr::v1::UpdateBackupRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UpdateBackup(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, UpdateBackup(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::backupdr::v1::Backup>>,
-              UpdateBackup, (google::longrunning::Operation const& operation),
-              (override));
+  UpdateBackup, (
+    google::longrunning::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteBackup(Matcher<google::cloud::backupdr::v1::DeleteBackupRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteBackup(Matcher<google::cloud::backupdr::v1::DeleteBackupRequest const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::backupdr::v1::Backup>>,
-              DeleteBackup,
-              (google::cloud::backupdr::v1::DeleteBackupRequest const& request),
-              (override));
+  DeleteBackup,
+  (google::cloud::backupdr::v1::DeleteBackupRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -383,37 +338,33 @@ class MockBackupDRConnection : public backupdr_v1::BackupDRConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, DeleteBackup(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteBackup,
-              (NoAwaitTag,
-               google::cloud::backupdr::v1::DeleteBackupRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  DeleteBackup, (NoAwaitTag,
+    google::cloud::backupdr::v1::DeleteBackupRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteBackup(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteBackup(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::backupdr::v1::Backup>>,
-              DeleteBackup, (google::longrunning::Operation const& operation),
-              (override));
+  DeleteBackup, (
+    google::longrunning::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// RestoreBackup(Matcher<google::cloud::backupdr::v1::RestoreBackupRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, RestoreBackup(Matcher<google::cloud::backupdr::v1::RestoreBackupRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::backupdr::v1::RestoreBackupResponse>>,
-      RestoreBackup,
-      (google::cloud::backupdr::v1::RestoreBackupRequest const& request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::backupdr::v1::RestoreBackupResponse>>,
+  RestoreBackup,
+  (google::cloud::backupdr::v1::RestoreBackupRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -421,39 +372,33 @@ class MockBackupDRConnection : public backupdr_v1::BackupDRConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, RestoreBackup(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, RestoreBackup,
-      (NoAwaitTag,
-       google::cloud::backupdr::v1::RestoreBackupRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  RestoreBackup, (NoAwaitTag,
+    google::cloud::backupdr::v1::RestoreBackupRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, RestoreBackup(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, RestoreBackup(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::backupdr::v1::RestoreBackupResponse>>,
-      RestoreBackup, (google::longrunning::Operation const& operation),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::backupdr::v1::RestoreBackupResponse>>,
+  RestoreBackup, (
+    google::longrunning::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// CreateBackupPlan(Matcher<google::cloud::backupdr::v1::CreateBackupPlanRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, CreateBackupPlan(Matcher<google::cloud::backupdr::v1::CreateBackupPlanRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::backupdr::v1::BackupPlan>>,
-      CreateBackupPlan,
-      (google::cloud::backupdr::v1::CreateBackupPlanRequest const& request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::backupdr::v1::BackupPlan>>,
+  CreateBackupPlan,
+  (google::cloud::backupdr::v1::CreateBackupPlanRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -461,48 +406,41 @@ class MockBackupDRConnection : public backupdr_v1::BackupDRConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, CreateBackupPlan(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, CreateBackupPlan,
-      (NoAwaitTag,
-       google::cloud::backupdr::v1::CreateBackupPlanRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  CreateBackupPlan, (NoAwaitTag,
+    google::cloud::backupdr::v1::CreateBackupPlanRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateBackupPlan(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, CreateBackupPlan(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::backupdr::v1::BackupPlan>>,
-              CreateBackupPlan,
-              (google::longrunning::Operation const& operation), (override));
+  CreateBackupPlan, (
+    google::longrunning::Operation const& operation), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::backupdr::v1::BackupPlan>, GetBackupPlan,
-      (google::cloud::backupdr::v1::GetBackupPlanRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::backupdr::v1::BackupPlan>,
+  GetBackupPlan,
+  (google::cloud::backupdr::v1::GetBackupPlanRequest const& request), (override));
 
   MOCK_METHOD((StreamRange<google::cloud::backupdr::v1::BackupPlan>),
-              ListBackupPlans,
-              (google::cloud::backupdr::v1::ListBackupPlansRequest request),
-              (override));
+  ListBackupPlans,
+  (google::cloud::backupdr::v1::ListBackupPlansRequest request), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteBackupPlan(Matcher<google::cloud::backupdr::v1::DeleteBackupPlanRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteBackupPlan(Matcher<google::cloud::backupdr::v1::DeleteBackupPlanRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::backupdr::v1::OperationMetadata>>,
-      DeleteBackupPlan,
-      (google::cloud::backupdr::v1::DeleteBackupPlanRequest const& request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::backupdr::v1::OperationMetadata>>,
+  DeleteBackupPlan,
+  (google::cloud::backupdr::v1::DeleteBackupPlanRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -510,39 +448,33 @@ class MockBackupDRConnection : public backupdr_v1::BackupDRConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, DeleteBackupPlan(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, DeleteBackupPlan,
-      (NoAwaitTag,
-       google::cloud::backupdr::v1::DeleteBackupPlanRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  DeleteBackupPlan, (NoAwaitTag,
+    google::cloud::backupdr::v1::DeleteBackupPlanRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteBackupPlan(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteBackupPlan(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::backupdr::v1::OperationMetadata>>,
-              DeleteBackupPlan,
-              (google::longrunning::Operation const& operation), (override));
+  DeleteBackupPlan, (
+    google::longrunning::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// CreateBackupPlanAssociation(Matcher<google::cloud::backupdr::v1::CreateBackupPlanAssociationRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, CreateBackupPlanAssociation(Matcher<google::cloud::backupdr::v1::CreateBackupPlanAssociationRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::backupdr::v1::BackupPlanAssociation>>,
-      CreateBackupPlanAssociation,
-      (google::cloud::backupdr::v1::CreateBackupPlanAssociationRequest const&
-           request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::backupdr::v1::BackupPlanAssociation>>,
+  CreateBackupPlanAssociation,
+  (google::cloud::backupdr::v1::CreateBackupPlanAssociationRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -550,55 +482,41 @@ class MockBackupDRConnection : public backupdr_v1::BackupDRConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, CreateBackupPlanAssociation(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, CreateBackupPlanAssociation,
-      (NoAwaitTag,
-       google::cloud::backupdr::v1::CreateBackupPlanAssociationRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  CreateBackupPlanAssociation, (NoAwaitTag,
+    google::cloud::backupdr::v1::CreateBackupPlanAssociationRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// CreateBackupPlanAssociation(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, CreateBackupPlanAssociation(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::backupdr::v1::BackupPlanAssociation>>,
-      CreateBackupPlanAssociation,
-      (google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::backupdr::v1::BackupPlanAssociation>>,
+  CreateBackupPlanAssociation, (
+    google::longrunning::Operation const& operation), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::backupdr::v1::BackupPlanAssociation>,
-      GetBackupPlanAssociation,
-      (google::cloud::backupdr::v1::GetBackupPlanAssociationRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::backupdr::v1::BackupPlanAssociation>,
+  GetBackupPlanAssociation,
+  (google::cloud::backupdr::v1::GetBackupPlanAssociationRequest const& request), (override));
 
-  MOCK_METHOD(
-      (StreamRange<google::cloud::backupdr::v1::BackupPlanAssociation>),
-      ListBackupPlanAssociations,
-      (google::cloud::backupdr::v1::ListBackupPlanAssociationsRequest request),
-      (override));
+  MOCK_METHOD((StreamRange<google::cloud::backupdr::v1::BackupPlanAssociation>),
+  ListBackupPlanAssociations,
+  (google::cloud::backupdr::v1::ListBackupPlanAssociationsRequest request), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteBackupPlanAssociation(Matcher<google::cloud::backupdr::v1::DeleteBackupPlanAssociationRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteBackupPlanAssociation(Matcher<google::cloud::backupdr::v1::DeleteBackupPlanAssociationRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::backupdr::v1::OperationMetadata>>,
-      DeleteBackupPlanAssociation,
-      (google::cloud::backupdr::v1::DeleteBackupPlanAssociationRequest const&
-           request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::backupdr::v1::OperationMetadata>>,
+  DeleteBackupPlanAssociation,
+  (google::cloud::backupdr::v1::DeleteBackupPlanAssociationRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -606,40 +524,33 @@ class MockBackupDRConnection : public backupdr_v1::BackupDRConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, DeleteBackupPlanAssociation(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, DeleteBackupPlanAssociation,
-      (NoAwaitTag,
-       google::cloud::backupdr::v1::DeleteBackupPlanAssociationRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  DeleteBackupPlanAssociation, (NoAwaitTag,
+    google::cloud::backupdr::v1::DeleteBackupPlanAssociationRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteBackupPlanAssociation(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteBackupPlanAssociation(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::backupdr::v1::OperationMetadata>>,
-              DeleteBackupPlanAssociation,
-              (google::longrunning::Operation const& operation), (override));
+  DeleteBackupPlanAssociation, (
+    google::longrunning::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// TriggerBackup(Matcher<google::cloud::backupdr::v1::TriggerBackupRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, TriggerBackup(Matcher<google::cloud::backupdr::v1::TriggerBackupRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::backupdr::v1::BackupPlanAssociation>>,
-      TriggerBackup,
-      (google::cloud::backupdr::v1::TriggerBackupRequest const& request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::backupdr::v1::BackupPlanAssociation>>,
+  TriggerBackup,
+  (google::cloud::backupdr::v1::TriggerBackupRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -647,39 +558,33 @@ class MockBackupDRConnection : public backupdr_v1::BackupDRConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, TriggerBackup(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, TriggerBackup,
-      (NoAwaitTag,
-       google::cloud::backupdr::v1::TriggerBackupRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  TriggerBackup, (NoAwaitTag,
+    google::cloud::backupdr::v1::TriggerBackupRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, TriggerBackup(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, TriggerBackup(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::backupdr::v1::BackupPlanAssociation>>,
-      TriggerBackup, (google::longrunning::Operation const& operation),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::backupdr::v1::BackupPlanAssociation>>,
+  TriggerBackup, (
+    google::longrunning::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// InitializeService(Matcher<google::cloud::backupdr::v1::InitializeServiceRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, InitializeService(Matcher<google::cloud::backupdr::v1::InitializeServiceRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::backupdr::v1::InitializeServiceResponse>>,
-      InitializeService,
-      (google::cloud::backupdr::v1::InitializeServiceRequest const& request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::backupdr::v1::InitializeServiceResponse>>,
+  InitializeService,
+  (google::cloud::backupdr::v1::InitializeServiceRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -687,60 +592,57 @@ class MockBackupDRConnection : public backupdr_v1::BackupDRConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, InitializeService(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, InitializeService,
-      (NoAwaitTag,
-       google::cloud::backupdr::v1::InitializeServiceRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  InitializeService, (NoAwaitTag,
+    google::cloud::backupdr::v1::InitializeServiceRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// InitializeService(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock, InitializeService(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::backupdr::v1::InitializeServiceResponse>>,
-      InitializeService, (google::longrunning::Operation const& operation),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::backupdr::v1::InitializeServiceResponse>>,
+  InitializeService, (
+    google::longrunning::Operation const& operation), (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::location::Location>), ListLocations,
-              (google::cloud::location::ListLocationsRequest request),
-              (override));
+  MOCK_METHOD((StreamRange<google::cloud::location::Location>),
+  ListLocations,
+  (google::cloud::location::ListLocationsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::location::Location>, GetLocation,
-              (google::cloud::location::GetLocationRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::location::Location>,
+  GetLocation,
+  (google::cloud::location::GetLocationRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, SetIamPolicy,
-              (google::iam::v1::SetIamPolicyRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::iam::v1::Policy>,
+  SetIamPolicy,
+  (google::iam::v1::SetIamPolicyRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, GetIamPolicy,
-              (google::iam::v1::GetIamPolicyRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::iam::v1::Policy>,
+  GetIamPolicy,
+  (google::iam::v1::GetIamPolicyRequest const& request), (override));
 
   MOCK_METHOD(StatusOr<google::iam::v1::TestIamPermissionsResponse>,
-              TestIamPermissions,
-              (google::iam::v1::TestIamPermissionsRequest const& request),
-              (override));
+  TestIamPermissions,
+  (google::iam::v1::TestIamPermissionsRequest const& request), (override));
 
-  MOCK_METHOD((StreamRange<google::longrunning::Operation>), ListOperations,
-              (google::longrunning::ListOperationsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::longrunning::Operation>),
+  ListOperations,
+  (google::longrunning::ListOperationsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
-              (google::longrunning::GetOperationRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  GetOperation,
+  (google::longrunning::GetOperationRequest const& request), (override));
 
-  MOCK_METHOD(Status, DeleteOperation,
-              (google::longrunning::DeleteOperationRequest const& request),
-              (override));
+  MOCK_METHOD(Status,
+  DeleteOperation,
+  (google::longrunning::DeleteOperationRequest const& request), (override));
 
-  MOCK_METHOD(Status, CancelOperation,
-              (google::longrunning::CancelOperationRequest const& request),
-              (override));
+  MOCK_METHOD(Status,
+  CancelOperation,
+  (google::longrunning::CancelOperationRequest const& request), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -28,35 +28,26 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 NodeTypesClient::NodeTypesClient(
     std::shared_ptr<NodeTypesConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 NodeTypesClient::~NodeTypesClient() = default;
 
-StreamRange<std::pair<std::string,
-                      google::cloud::cpp::compute::v1::NodeTypesScopedList>>
-NodeTypesClient::AggregatedListNodeTypes(std::string const& project,
-                                         Options opts) {
+StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::NodeTypesScopedList>>
+NodeTypesClient::AggregatedListNodeTypes(std::string const& project, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::node_types::v1::AggregatedListNodeTypesRequest
-      request;
+  google::cloud::cpp::compute::node_types::v1::AggregatedListNodeTypesRequest request;
   request.set_project(project);
   return connection_->AggregatedListNodeTypes(request);
 }
 
-StreamRange<std::pair<std::string,
-                      google::cloud::cpp::compute::v1::NodeTypesScopedList>>
-NodeTypesClient::AggregatedListNodeTypes(
-    google::cloud::cpp::compute::node_types::v1::AggregatedListNodeTypesRequest
-        request,
-    Options opts) {
+StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::NodeTypesScopedList>>
+NodeTypesClient::AggregatedListNodeTypes(google::cloud::cpp::compute::node_types::v1::AggregatedListNodeTypesRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->AggregatedListNodeTypes(std::move(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NodeType>
-NodeTypesClient::GetNodeType(std::string const& project,
-                             std::string const& zone,
-                             std::string const& node_type, Options opts) {
+NodeTypesClient::GetNodeType(std::string const& project, std::string const& zone, std::string const& node_type, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::node_types::v1::GetNodeTypeRequest request;
   request.set_project(project);
@@ -66,17 +57,13 @@ NodeTypesClient::GetNodeType(std::string const& project,
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NodeType>
-NodeTypesClient::GetNodeType(
-    google::cloud::cpp::compute::node_types::v1::GetNodeTypeRequest const&
-        request,
-    Options opts) {
+NodeTypesClient::GetNodeType(google::cloud::cpp::compute::node_types::v1::GetNodeTypeRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetNodeType(request);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::NodeType>
-NodeTypesClient::ListNodeTypes(std::string const& project,
-                               std::string const& zone, Options opts) {
+NodeTypesClient::ListNodeTypes(std::string const& project, std::string const& zone, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::node_types::v1::ListNodeTypesRequest request;
   request.set_project(project);
@@ -85,9 +72,7 @@ NodeTypesClient::ListNodeTypes(std::string const& project,
 }
 
 StreamRange<google::cloud::cpp::compute::v1::NodeType>
-NodeTypesClient::ListNodeTypes(
-    google::cloud::cpp::compute::node_types::v1::ListNodeTypesRequest request,
-    Options opts) {
+NodeTypesClient::ListNodeTypes(google::cloud::cpp::compute::node_types::v1::ListNodeTypesRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListNodeTypes(std::move(request));
 }

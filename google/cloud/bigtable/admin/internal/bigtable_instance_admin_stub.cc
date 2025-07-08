@@ -33,13 +33,12 @@ BigtableInstanceAdminStub::~BigtableInstanceAdminStub() = default;
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultBigtableInstanceAdminStub::AsyncCreateInstance(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::bigtable::admin::v2::CreateInstanceRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::bigtable::admin::v2::CreateInstanceRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::bigtable::admin::v2::CreateInstanceRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::bigtable::admin::v2::CreateInstanceRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
              google::bigtable::admin::v2::CreateInstanceRequest const& request,
@@ -51,65 +50,68 @@ DefaultBigtableInstanceAdminStub::AsyncCreateInstance(
 
 StatusOr<google::longrunning::Operation>
 DefaultBigtableInstanceAdminStub::CreateInstance(
-    grpc::ClientContext& context, Options,
-    google::bigtable::admin::v2::CreateInstanceRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->CreateInstance(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::bigtable::admin::v2::CreateInstanceRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->CreateInstance(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::bigtable::admin::v2::Instance>
 DefaultBigtableInstanceAdminStub::GetInstance(
-    grpc::ClientContext& context, Options const&,
-    google::bigtable::admin::v2::GetInstanceRequest const& request) {
-  google::bigtable::admin::v2::Instance response;
-  auto status = grpc_stub_->GetInstance(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::bigtable::admin::v2::GetInstanceRequest const& request) {
+    google::bigtable::admin::v2::Instance response;
+    auto status =
+        grpc_stub_->GetInstance(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::bigtable::admin::v2::ListInstancesResponse>
 DefaultBigtableInstanceAdminStub::ListInstances(
-    grpc::ClientContext& context, Options const&,
-    google::bigtable::admin::v2::ListInstancesRequest const& request) {
-  google::bigtable::admin::v2::ListInstancesResponse response;
-  auto status = grpc_stub_->ListInstances(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::bigtable::admin::v2::ListInstancesRequest const& request) {
+    google::bigtable::admin::v2::ListInstancesResponse response;
+    auto status =
+        grpc_stub_->ListInstances(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::bigtable::admin::v2::Instance>
 DefaultBigtableInstanceAdminStub::UpdateInstance(
-    grpc::ClientContext& context, Options const&,
-    google::bigtable::admin::v2::Instance const& request) {
-  google::bigtable::admin::v2::Instance response;
-  auto status = grpc_stub_->UpdateInstance(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::bigtable::admin::v2::Instance const& request) {
+    google::bigtable::admin::v2::Instance response;
+    auto status =
+        grpc_stub_->UpdateInstance(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultBigtableInstanceAdminStub::AsyncPartialUpdateInstance(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::bigtable::admin::v2::PartialUpdateInstanceRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::bigtable::admin::v2::PartialUpdateInstanceRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::bigtable::admin::v2::PartialUpdateInstanceRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::bigtable::admin::v2::PartialUpdateInstanceRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::bigtable::admin::v2::PartialUpdateInstanceRequest const&
-                 request,
+             google::bigtable::admin::v2::PartialUpdateInstanceRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncPartialUpdateInstance(context, request, cq);
       },
@@ -118,36 +120,39 @@ DefaultBigtableInstanceAdminStub::AsyncPartialUpdateInstance(
 
 StatusOr<google::longrunning::Operation>
 DefaultBigtableInstanceAdminStub::PartialUpdateInstance(
-    grpc::ClientContext& context, Options,
-    google::bigtable::admin::v2::PartialUpdateInstanceRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->PartialUpdateInstance(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::bigtable::admin::v2::PartialUpdateInstanceRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->PartialUpdateInstance(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-Status DefaultBigtableInstanceAdminStub::DeleteInstance(
-    grpc::ClientContext& context, Options const&,
-    google::bigtable::admin::v2::DeleteInstanceRequest const& request) {
-  google::protobuf::Empty response;
-  auto status = grpc_stub_->DeleteInstance(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return google::cloud::Status();
+Status
+DefaultBigtableInstanceAdminStub::DeleteInstance(
+  grpc::ClientContext& context, Options const&,
+  google::bigtable::admin::v2::DeleteInstanceRequest const& request) {
+    google::protobuf::Empty response;
+    auto status =
+        grpc_stub_->DeleteInstance(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return google::cloud::Status();
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultBigtableInstanceAdminStub::AsyncCreateCluster(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::bigtable::admin::v2::CreateClusterRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::bigtable::admin::v2::CreateClusterRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::bigtable::admin::v2::CreateClusterRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::bigtable::admin::v2::CreateClusterRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
              google::bigtable::admin::v2::CreateClusterRequest const& request,
@@ -159,46 +164,50 @@ DefaultBigtableInstanceAdminStub::AsyncCreateCluster(
 
 StatusOr<google::longrunning::Operation>
 DefaultBigtableInstanceAdminStub::CreateCluster(
-    grpc::ClientContext& context, Options,
-    google::bigtable::admin::v2::CreateClusterRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->CreateCluster(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::bigtable::admin::v2::CreateClusterRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->CreateCluster(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::bigtable::admin::v2::Cluster>
 DefaultBigtableInstanceAdminStub::GetCluster(
-    grpc::ClientContext& context, Options const&,
-    google::bigtable::admin::v2::GetClusterRequest const& request) {
-  google::bigtable::admin::v2::Cluster response;
-  auto status = grpc_stub_->GetCluster(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::bigtable::admin::v2::GetClusterRequest const& request) {
+    google::bigtable::admin::v2::Cluster response;
+    auto status =
+        grpc_stub_->GetCluster(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::bigtable::admin::v2::ListClustersResponse>
 DefaultBigtableInstanceAdminStub::ListClusters(
-    grpc::ClientContext& context, Options const&,
-    google::bigtable::admin::v2::ListClustersRequest const& request) {
-  google::bigtable::admin::v2::ListClustersResponse response;
-  auto status = grpc_stub_->ListClusters(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::bigtable::admin::v2::ListClustersRequest const& request) {
+    google::bigtable::admin::v2::ListClustersResponse response;
+    auto status =
+        grpc_stub_->ListClusters(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultBigtableInstanceAdminStub::AsyncUpdateCluster(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::bigtable::admin::v2::Cluster const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::bigtable::admin::v2::Cluster const& request) {
   return internal::MakeUnaryRpcImpl<google::bigtable::admin::v2::Cluster,
                                     google::longrunning::Operation>(
       cq,
@@ -212,29 +221,29 @@ DefaultBigtableInstanceAdminStub::AsyncUpdateCluster(
 
 StatusOr<google::longrunning::Operation>
 DefaultBigtableInstanceAdminStub::UpdateCluster(
-    grpc::ClientContext& context, Options,
-    google::bigtable::admin::v2::Cluster const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->UpdateCluster(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::bigtable::admin::v2::Cluster const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->UpdateCluster(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultBigtableInstanceAdminStub::AsyncPartialUpdateCluster(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::bigtable::admin::v2::PartialUpdateClusterRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::bigtable::admin::v2::PartialUpdateClusterRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::bigtable::admin::v2::PartialUpdateClusterRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::bigtable::admin::v2::PartialUpdateClusterRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::bigtable::admin::v2::PartialUpdateClusterRequest const&
-                 request,
+             google::bigtable::admin::v2::PartialUpdateClusterRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncPartialUpdateCluster(context, request, cq);
       },
@@ -243,77 +252,82 @@ DefaultBigtableInstanceAdminStub::AsyncPartialUpdateCluster(
 
 StatusOr<google::longrunning::Operation>
 DefaultBigtableInstanceAdminStub::PartialUpdateCluster(
-    grpc::ClientContext& context, Options,
-    google::bigtable::admin::v2::PartialUpdateClusterRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->PartialUpdateCluster(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::bigtable::admin::v2::PartialUpdateClusterRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->PartialUpdateCluster(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-Status DefaultBigtableInstanceAdminStub::DeleteCluster(
-    grpc::ClientContext& context, Options const&,
-    google::bigtable::admin::v2::DeleteClusterRequest const& request) {
-  google::protobuf::Empty response;
-  auto status = grpc_stub_->DeleteCluster(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return google::cloud::Status();
+Status
+DefaultBigtableInstanceAdminStub::DeleteCluster(
+  grpc::ClientContext& context, Options const&,
+  google::bigtable::admin::v2::DeleteClusterRequest const& request) {
+    google::protobuf::Empty response;
+    auto status =
+        grpc_stub_->DeleteCluster(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return google::cloud::Status();
 }
 
 StatusOr<google::bigtable::admin::v2::AppProfile>
 DefaultBigtableInstanceAdminStub::CreateAppProfile(
-    grpc::ClientContext& context, Options const&,
-    google::bigtable::admin::v2::CreateAppProfileRequest const& request) {
-  google::bigtable::admin::v2::AppProfile response;
-  auto status = grpc_stub_->CreateAppProfile(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::bigtable::admin::v2::CreateAppProfileRequest const& request) {
+    google::bigtable::admin::v2::AppProfile response;
+    auto status =
+        grpc_stub_->CreateAppProfile(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::bigtable::admin::v2::AppProfile>
 DefaultBigtableInstanceAdminStub::GetAppProfile(
-    grpc::ClientContext& context, Options const&,
-    google::bigtable::admin::v2::GetAppProfileRequest const& request) {
-  google::bigtable::admin::v2::AppProfile response;
-  auto status = grpc_stub_->GetAppProfile(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::bigtable::admin::v2::GetAppProfileRequest const& request) {
+    google::bigtable::admin::v2::AppProfile response;
+    auto status =
+        grpc_stub_->GetAppProfile(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::bigtable::admin::v2::ListAppProfilesResponse>
 DefaultBigtableInstanceAdminStub::ListAppProfiles(
-    grpc::ClientContext& context, Options const&,
-    google::bigtable::admin::v2::ListAppProfilesRequest const& request) {
-  google::bigtable::admin::v2::ListAppProfilesResponse response;
-  auto status = grpc_stub_->ListAppProfiles(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::bigtable::admin::v2::ListAppProfilesRequest const& request) {
+    google::bigtable::admin::v2::ListAppProfilesResponse response;
+    auto status =
+        grpc_stub_->ListAppProfiles(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultBigtableInstanceAdminStub::AsyncUpdateAppProfile(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::bigtable::admin::v2::UpdateAppProfileRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::bigtable::admin::v2::UpdateAppProfileRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::bigtable::admin::v2::UpdateAppProfileRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::bigtable::admin::v2::UpdateAppProfileRequest,
+                                    google::longrunning::Operation>(
       cq,
-      [this](
-          grpc::ClientContext* context,
-          google::bigtable::admin::v2::UpdateAppProfileRequest const& request,
-          grpc::CompletionQueue* cq) {
+      [this](grpc::ClientContext* context,
+             google::bigtable::admin::v2::UpdateAppProfileRequest const& request,
+             grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncUpdateAppProfile(context, request, cq);
       },
       request, std::move(context));
@@ -321,89 +335,95 @@ DefaultBigtableInstanceAdminStub::AsyncUpdateAppProfile(
 
 StatusOr<google::longrunning::Operation>
 DefaultBigtableInstanceAdminStub::UpdateAppProfile(
-    grpc::ClientContext& context, Options,
-    google::bigtable::admin::v2::UpdateAppProfileRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->UpdateAppProfile(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::bigtable::admin::v2::UpdateAppProfileRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->UpdateAppProfile(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-Status DefaultBigtableInstanceAdminStub::DeleteAppProfile(
-    grpc::ClientContext& context, Options const&,
-    google::bigtable::admin::v2::DeleteAppProfileRequest const& request) {
-  google::protobuf::Empty response;
-  auto status = grpc_stub_->DeleteAppProfile(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return google::cloud::Status();
+Status
+DefaultBigtableInstanceAdminStub::DeleteAppProfile(
+  grpc::ClientContext& context, Options const&,
+  google::bigtable::admin::v2::DeleteAppProfileRequest const& request) {
+    google::protobuf::Empty response;
+    auto status =
+        grpc_stub_->DeleteAppProfile(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return google::cloud::Status();
 }
 
 StatusOr<google::iam::v1::Policy>
 DefaultBigtableInstanceAdminStub::GetIamPolicy(
-    grpc::ClientContext& context, Options const&,
-    google::iam::v1::GetIamPolicyRequest const& request) {
-  google::iam::v1::Policy response;
-  auto status = grpc_stub_->GetIamPolicy(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::iam::v1::GetIamPolicyRequest const& request) {
+    google::iam::v1::Policy response;
+    auto status =
+        grpc_stub_->GetIamPolicy(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::iam::v1::Policy>
 DefaultBigtableInstanceAdminStub::SetIamPolicy(
-    grpc::ClientContext& context, Options const&,
-    google::iam::v1::SetIamPolicyRequest const& request) {
-  google::iam::v1::Policy response;
-  auto status = grpc_stub_->SetIamPolicy(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::iam::v1::SetIamPolicyRequest const& request) {
+    google::iam::v1::Policy response;
+    auto status =
+        grpc_stub_->SetIamPolicy(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 DefaultBigtableInstanceAdminStub::TestIamPermissions(
-    grpc::ClientContext& context, Options const&,
-    google::iam::v1::TestIamPermissionsRequest const& request) {
-  google::iam::v1::TestIamPermissionsResponse response;
-  auto status = grpc_stub_->TestIamPermissions(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::iam::v1::TestIamPermissionsRequest const& request) {
+    google::iam::v1::TestIamPermissionsResponse response;
+    auto status =
+        grpc_stub_->TestIamPermissions(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::bigtable::admin::v2::ListHotTabletsResponse>
 DefaultBigtableInstanceAdminStub::ListHotTablets(
-    grpc::ClientContext& context, Options const&,
-    google::bigtable::admin::v2::ListHotTabletsRequest const& request) {
-  google::bigtable::admin::v2::ListHotTabletsResponse response;
-  auto status = grpc_stub_->ListHotTablets(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::bigtable::admin::v2::ListHotTabletsRequest const& request) {
+    google::bigtable::admin::v2::ListHotTabletsResponse response;
+    auto status =
+        grpc_stub_->ListHotTablets(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultBigtableInstanceAdminStub::AsyncCreateLogicalView(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::bigtable::admin::v2::CreateLogicalViewRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::bigtable::admin::v2::CreateLogicalViewRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::bigtable::admin::v2::CreateLogicalViewRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::bigtable::admin::v2::CreateLogicalViewRequest,
+                                    google::longrunning::Operation>(
       cq,
-      [this](
-          grpc::ClientContext* context,
-          google::bigtable::admin::v2::CreateLogicalViewRequest const& request,
-          grpc::CompletionQueue* cq) {
+      [this](grpc::ClientContext* context,
+             google::bigtable::admin::v2::CreateLogicalViewRequest const& request,
+             grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncCreateLogicalView(context, request, cq);
       },
       request, std::move(context));
@@ -411,54 +431,56 @@ DefaultBigtableInstanceAdminStub::AsyncCreateLogicalView(
 
 StatusOr<google::longrunning::Operation>
 DefaultBigtableInstanceAdminStub::CreateLogicalView(
-    grpc::ClientContext& context, Options,
-    google::bigtable::admin::v2::CreateLogicalViewRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->CreateLogicalView(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::bigtable::admin::v2::CreateLogicalViewRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->CreateLogicalView(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::bigtable::admin::v2::LogicalView>
 DefaultBigtableInstanceAdminStub::GetLogicalView(
-    grpc::ClientContext& context, Options const&,
-    google::bigtable::admin::v2::GetLogicalViewRequest const& request) {
-  google::bigtable::admin::v2::LogicalView response;
-  auto status = grpc_stub_->GetLogicalView(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::bigtable::admin::v2::GetLogicalViewRequest const& request) {
+    google::bigtable::admin::v2::LogicalView response;
+    auto status =
+        grpc_stub_->GetLogicalView(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::bigtable::admin::v2::ListLogicalViewsResponse>
 DefaultBigtableInstanceAdminStub::ListLogicalViews(
-    grpc::ClientContext& context, Options const&,
-    google::bigtable::admin::v2::ListLogicalViewsRequest const& request) {
-  google::bigtable::admin::v2::ListLogicalViewsResponse response;
-  auto status = grpc_stub_->ListLogicalViews(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::bigtable::admin::v2::ListLogicalViewsRequest const& request) {
+    google::bigtable::admin::v2::ListLogicalViewsResponse response;
+    auto status =
+        grpc_stub_->ListLogicalViews(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultBigtableInstanceAdminStub::AsyncUpdateLogicalView(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::bigtable::admin::v2::UpdateLogicalViewRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::bigtable::admin::v2::UpdateLogicalViewRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::bigtable::admin::v2::UpdateLogicalViewRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::bigtable::admin::v2::UpdateLogicalViewRequest,
+                                    google::longrunning::Operation>(
       cq,
-      [this](
-          grpc::ClientContext* context,
-          google::bigtable::admin::v2::UpdateLogicalViewRequest const& request,
-          grpc::CompletionQueue* cq) {
+      [this](grpc::ClientContext* context,
+             google::bigtable::admin::v2::UpdateLogicalViewRequest const& request,
+             grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncUpdateLogicalView(context, request, cq);
       },
       request, std::move(context));
@@ -466,40 +488,42 @@ DefaultBigtableInstanceAdminStub::AsyncUpdateLogicalView(
 
 StatusOr<google::longrunning::Operation>
 DefaultBigtableInstanceAdminStub::UpdateLogicalView(
-    grpc::ClientContext& context, Options,
-    google::bigtable::admin::v2::UpdateLogicalViewRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->UpdateLogicalView(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::bigtable::admin::v2::UpdateLogicalViewRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->UpdateLogicalView(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-Status DefaultBigtableInstanceAdminStub::DeleteLogicalView(
-    grpc::ClientContext& context, Options const&,
-    google::bigtable::admin::v2::DeleteLogicalViewRequest const& request) {
-  google::protobuf::Empty response;
-  auto status = grpc_stub_->DeleteLogicalView(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return google::cloud::Status();
+Status
+DefaultBigtableInstanceAdminStub::DeleteLogicalView(
+  grpc::ClientContext& context, Options const&,
+  google::bigtable::admin::v2::DeleteLogicalViewRequest const& request) {
+    google::protobuf::Empty response;
+    auto status =
+        grpc_stub_->DeleteLogicalView(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return google::cloud::Status();
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultBigtableInstanceAdminStub::AsyncCreateMaterializedView(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::bigtable::admin::v2::CreateMaterializedViewRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::bigtable::admin::v2::CreateMaterializedViewRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::bigtable::admin::v2::CreateMaterializedViewRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::bigtable::admin::v2::CreateMaterializedViewRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::bigtable::admin::v2::CreateMaterializedViewRequest const&
-                 request,
+             google::bigtable::admin::v2::CreateMaterializedViewRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncCreateMaterializedView(context, request, cq);
       },
@@ -508,54 +532,55 @@ DefaultBigtableInstanceAdminStub::AsyncCreateMaterializedView(
 
 StatusOr<google::longrunning::Operation>
 DefaultBigtableInstanceAdminStub::CreateMaterializedView(
-    grpc::ClientContext& context, Options,
-    google::bigtable::admin::v2::CreateMaterializedViewRequest const& request) {
-  google::longrunning::Operation response;
-  auto status =
-      grpc_stub_->CreateMaterializedView(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::bigtable::admin::v2::CreateMaterializedViewRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->CreateMaterializedView(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::bigtable::admin::v2::MaterializedView>
 DefaultBigtableInstanceAdminStub::GetMaterializedView(
-    grpc::ClientContext& context, Options const&,
-    google::bigtable::admin::v2::GetMaterializedViewRequest const& request) {
-  google::bigtable::admin::v2::MaterializedView response;
-  auto status = grpc_stub_->GetMaterializedView(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::bigtable::admin::v2::GetMaterializedViewRequest const& request) {
+    google::bigtable::admin::v2::MaterializedView response;
+    auto status =
+        grpc_stub_->GetMaterializedView(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::bigtable::admin::v2::ListMaterializedViewsResponse>
 DefaultBigtableInstanceAdminStub::ListMaterializedViews(
-    grpc::ClientContext& context, Options const&,
-    google::bigtable::admin::v2::ListMaterializedViewsRequest const& request) {
-  google::bigtable::admin::v2::ListMaterializedViewsResponse response;
-  auto status = grpc_stub_->ListMaterializedViews(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::bigtable::admin::v2::ListMaterializedViewsRequest const& request) {
+    google::bigtable::admin::v2::ListMaterializedViewsResponse response;
+    auto status =
+        grpc_stub_->ListMaterializedViews(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultBigtableInstanceAdminStub::AsyncUpdateMaterializedView(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::bigtable::admin::v2::UpdateMaterializedViewRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::bigtable::admin::v2::UpdateMaterializedViewRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::bigtable::admin::v2::UpdateMaterializedViewRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::bigtable::admin::v2::UpdateMaterializedViewRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::bigtable::admin::v2::UpdateMaterializedViewRequest const&
-                 request,
+             google::bigtable::admin::v2::UpdateMaterializedViewRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncUpdateMaterializedView(context, request, cq);
       },
@@ -564,27 +589,29 @@ DefaultBigtableInstanceAdminStub::AsyncUpdateMaterializedView(
 
 StatusOr<google::longrunning::Operation>
 DefaultBigtableInstanceAdminStub::UpdateMaterializedView(
-    grpc::ClientContext& context, Options,
-    google::bigtable::admin::v2::UpdateMaterializedViewRequest const& request) {
-  google::longrunning::Operation response;
-  auto status =
-      grpc_stub_->UpdateMaterializedView(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::bigtable::admin::v2::UpdateMaterializedViewRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->UpdateMaterializedView(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-Status DefaultBigtableInstanceAdminStub::DeleteMaterializedView(
-    grpc::ClientContext& context, Options const&,
-    google::bigtable::admin::v2::DeleteMaterializedViewRequest const& request) {
-  google::protobuf::Empty response;
-  auto status =
-      grpc_stub_->DeleteMaterializedView(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return google::cloud::Status();
+Status
+DefaultBigtableInstanceAdminStub::DeleteMaterializedView(
+  grpc::ClientContext& context, Options const&,
+  google::bigtable::admin::v2::DeleteMaterializedViewRequest const& request) {
+    google::protobuf::Empty response;
+    auto status =
+        grpc_stub_->DeleteMaterializedView(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return google::cloud::Status();
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -613,14 +640,13 @@ future<Status> DefaultBigtableInstanceAdminStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(
-             cq,
-             [this](grpc::ClientContext* context,
-                    google::longrunning::CancelOperationRequest const& request,
-                    grpc::CompletionQueue* cq) {
-               return operations_stub_->AsyncCancelOperation(context, request,
-                                                             cq);
-             },
-             request, std::move(context))
+      cq,
+      [this](grpc::ClientContext* context,
+             google::longrunning::CancelOperationRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return operations_stub_->AsyncCancelOperation(context, request, cq);
+      },
+      request, std::move(context))
       .then([](future<StatusOr<google::protobuf::Empty>> f) {
         return f.get().status();
       });

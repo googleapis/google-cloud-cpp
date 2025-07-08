@@ -42,31 +42,29 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockConfigServiceV2Connection
-    : public logging_v2::ConfigServiceV2Connection {
+class MockConfigServiceV2Connection : public logging_v2::ConfigServiceV2Connection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD((StreamRange<google::logging::v2::LogBucket>), ListBuckets,
-              (google::logging::v2::ListBucketsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::logging::v2::LogBucket>),
+  ListBuckets,
+  (google::logging::v2::ListBucketsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::logging::v2::LogBucket>, GetBucket,
-              (google::logging::v2::GetBucketRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::logging::v2::LogBucket>,
+  GetBucket,
+  (google::logging::v2::GetBucketRequest const& request), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// CreateBucketAsync(Matcher<google::logging::v2::CreateBucketRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, CreateBucketAsync(Matcher<google::logging::v2::CreateBucketRequest const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::logging::v2::LogBucket>>,
-              CreateBucketAsync,
-              (google::logging::v2::CreateBucketRequest const& request),
-              (override));
+  CreateBucketAsync,
+  (google::logging::v2::CreateBucketRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -74,36 +72,33 @@ class MockConfigServiceV2Connection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, CreateBucketAsync(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateBucketAsync,
-              (NoAwaitTag,
-               google::logging::v2::CreateBucketRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  CreateBucketAsync, (NoAwaitTag,
+    google::logging::v2::CreateBucketRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// CreateBucketAsync(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock, CreateBucketAsync(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::logging::v2::LogBucket>>,
-              CreateBucketAsync,
-              (google::longrunning::Operation const& operation), (override));
+  CreateBucketAsync, (
+    google::longrunning::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// UpdateBucketAsync(Matcher<google::logging::v2::UpdateBucketRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, UpdateBucketAsync(Matcher<google::logging::v2::UpdateBucketRequest const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::logging::v2::LogBucket>>,
-              UpdateBucketAsync,
-              (google::logging::v2::UpdateBucketRequest const& request),
-              (override));
+  UpdateBucketAsync,
+  (google::logging::v2::UpdateBucketRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -111,86 +106,89 @@ class MockConfigServiceV2Connection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, UpdateBucketAsync(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, UpdateBucketAsync,
-              (NoAwaitTag,
-               google::logging::v2::UpdateBucketRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  UpdateBucketAsync, (NoAwaitTag,
+    google::logging::v2::UpdateBucketRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// UpdateBucketAsync(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock, UpdateBucketAsync(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::logging::v2::LogBucket>>,
-              UpdateBucketAsync,
-              (google::longrunning::Operation const& operation), (override));
+  UpdateBucketAsync, (
+    google::longrunning::Operation const& operation), (override));
 
-  MOCK_METHOD(StatusOr<google::logging::v2::LogBucket>, CreateBucket,
-              (google::logging::v2::CreateBucketRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::logging::v2::LogBucket>,
+  CreateBucket,
+  (google::logging::v2::CreateBucketRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::logging::v2::LogBucket>, UpdateBucket,
-              (google::logging::v2::UpdateBucketRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::logging::v2::LogBucket>,
+  UpdateBucket,
+  (google::logging::v2::UpdateBucketRequest const& request), (override));
 
-  MOCK_METHOD(Status, DeleteBucket,
-              (google::logging::v2::DeleteBucketRequest const& request),
-              (override));
+  MOCK_METHOD(Status,
+  DeleteBucket,
+  (google::logging::v2::DeleteBucketRequest const& request), (override));
 
-  MOCK_METHOD(Status, UndeleteBucket,
-              (google::logging::v2::UndeleteBucketRequest const& request),
-              (override));
+  MOCK_METHOD(Status,
+  UndeleteBucket,
+  (google::logging::v2::UndeleteBucketRequest const& request), (override));
 
-  MOCK_METHOD((StreamRange<google::logging::v2::LogView>), ListViews,
-              (google::logging::v2::ListViewsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::logging::v2::LogView>),
+  ListViews,
+  (google::logging::v2::ListViewsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::logging::v2::LogView>, GetView,
-              (google::logging::v2::GetViewRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::logging::v2::LogView>,
+  GetView,
+  (google::logging::v2::GetViewRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::logging::v2::LogView>, CreateView,
-              (google::logging::v2::CreateViewRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::logging::v2::LogView>,
+  CreateView,
+  (google::logging::v2::CreateViewRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::logging::v2::LogView>, UpdateView,
-              (google::logging::v2::UpdateViewRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::logging::v2::LogView>,
+  UpdateView,
+  (google::logging::v2::UpdateViewRequest const& request), (override));
 
-  MOCK_METHOD(Status, DeleteView,
-              (google::logging::v2::DeleteViewRequest const& request),
-              (override));
+  MOCK_METHOD(Status,
+  DeleteView,
+  (google::logging::v2::DeleteViewRequest const& request), (override));
 
-  MOCK_METHOD((StreamRange<google::logging::v2::LogSink>), ListSinks,
-              (google::logging::v2::ListSinksRequest request), (override));
+  MOCK_METHOD((StreamRange<google::logging::v2::LogSink>),
+  ListSinks,
+  (google::logging::v2::ListSinksRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::logging::v2::LogSink>, GetSink,
-              (google::logging::v2::GetSinkRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::logging::v2::LogSink>,
+  GetSink,
+  (google::logging::v2::GetSinkRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::logging::v2::LogSink>, CreateSink,
-              (google::logging::v2::CreateSinkRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::logging::v2::LogSink>,
+  CreateSink,
+  (google::logging::v2::CreateSinkRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::logging::v2::LogSink>, UpdateSink,
-              (google::logging::v2::UpdateSinkRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::logging::v2::LogSink>,
+  UpdateSink,
+  (google::logging::v2::UpdateSinkRequest const& request), (override));
 
-  MOCK_METHOD(Status, DeleteSink,
-              (google::logging::v2::DeleteSinkRequest const& request),
-              (override));
+  MOCK_METHOD(Status,
+  DeleteSink,
+  (google::logging::v2::DeleteSinkRequest const& request), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// CreateLink(Matcher<google::logging::v2::CreateLinkRequest const&>(_)))
+  /// EXPECT_CALL(*mock, CreateLink(Matcher<google::logging::v2::CreateLinkRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::logging::v2::Link>>, CreateLink,
-              (google::logging::v2::CreateLinkRequest const& request),
-              (override));
+  MOCK_METHOD(future<StatusOr<google::logging::v2::Link>>,
+  CreateLink,
+  (google::logging::v2::CreateLinkRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -198,33 +196,33 @@ class MockConfigServiceV2Connection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, CreateLink(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateLink,
-              (NoAwaitTag,
-               google::logging::v2::CreateLinkRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  CreateLink, (NoAwaitTag,
+    google::logging::v2::CreateLinkRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateLink(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, CreateLink(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::logging::v2::Link>>, CreateLink,
-              (google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(future<StatusOr<google::logging::v2::Link>>,
+  CreateLink, (
+    google::longrunning::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteLink(Matcher<google::logging::v2::DeleteLinkRequest const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteLink(Matcher<google::logging::v2::DeleteLinkRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::logging::v2::LinkMetadata>>, DeleteLink,
-              (google::logging::v2::DeleteLinkRequest const& request),
-              (override));
+  MOCK_METHOD(future<StatusOr<google::logging::v2::LinkMetadata>>,
+  DeleteLink,
+  (google::logging::v2::DeleteLinkRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -232,76 +230,77 @@ class MockConfigServiceV2Connection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, DeleteLink(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteLink,
-              (NoAwaitTag,
-               google::logging::v2::DeleteLinkRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  DeleteLink, (NoAwaitTag,
+    google::logging::v2::DeleteLinkRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteLink(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteLink(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::logging::v2::LinkMetadata>>, DeleteLink,
-              (google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(future<StatusOr<google::logging::v2::LinkMetadata>>,
+  DeleteLink, (
+    google::longrunning::Operation const& operation), (override));
 
-  MOCK_METHOD((StreamRange<google::logging::v2::Link>), ListLinks,
-              (google::logging::v2::ListLinksRequest request), (override));
+  MOCK_METHOD((StreamRange<google::logging::v2::Link>),
+  ListLinks,
+  (google::logging::v2::ListLinksRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::logging::v2::Link>, GetLink,
-              (google::logging::v2::GetLinkRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::logging::v2::Link>,
+  GetLink,
+  (google::logging::v2::GetLinkRequest const& request), (override));
 
-  MOCK_METHOD((StreamRange<google::logging::v2::LogExclusion>), ListExclusions,
-              (google::logging::v2::ListExclusionsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::logging::v2::LogExclusion>),
+  ListExclusions,
+  (google::logging::v2::ListExclusionsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::logging::v2::LogExclusion>, GetExclusion,
-              (google::logging::v2::GetExclusionRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::logging::v2::LogExclusion>,
+  GetExclusion,
+  (google::logging::v2::GetExclusionRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::logging::v2::LogExclusion>, CreateExclusion,
-              (google::logging::v2::CreateExclusionRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::logging::v2::LogExclusion>,
+  CreateExclusion,
+  (google::logging::v2::CreateExclusionRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::logging::v2::LogExclusion>, UpdateExclusion,
-              (google::logging::v2::UpdateExclusionRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::logging::v2::LogExclusion>,
+  UpdateExclusion,
+  (google::logging::v2::UpdateExclusionRequest const& request), (override));
 
-  MOCK_METHOD(Status, DeleteExclusion,
-              (google::logging::v2::DeleteExclusionRequest const& request),
-              (override));
+  MOCK_METHOD(Status,
+  DeleteExclusion,
+  (google::logging::v2::DeleteExclusionRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::logging::v2::CmekSettings>, GetCmekSettings,
-              (google::logging::v2::GetCmekSettingsRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::logging::v2::CmekSettings>,
+  GetCmekSettings,
+  (google::logging::v2::GetCmekSettingsRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::logging::v2::CmekSettings>, UpdateCmekSettings,
-              (google::logging::v2::UpdateCmekSettingsRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::logging::v2::CmekSettings>,
+  UpdateCmekSettings,
+  (google::logging::v2::UpdateCmekSettingsRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::logging::v2::Settings>, GetSettings,
-              (google::logging::v2::GetSettingsRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::logging::v2::Settings>,
+  GetSettings,
+  (google::logging::v2::GetSettingsRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::logging::v2::Settings>, UpdateSettings,
-              (google::logging::v2::UpdateSettingsRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::logging::v2::Settings>,
+  UpdateSettings,
+  (google::logging::v2::UpdateSettingsRequest const& request), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// CopyLogEntries(Matcher<google::logging::v2::CopyLogEntriesRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, CopyLogEntries(Matcher<google::logging::v2::CopyLogEntriesRequest const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::logging::v2::CopyLogEntriesResponse>>,
-              CopyLogEntries,
-              (google::logging::v2::CopyLogEntriesRequest const& request),
-              (override));
+  CopyLogEntries,
+  (google::logging::v2::CopyLogEntriesRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -309,33 +308,33 @@ class MockConfigServiceV2Connection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, CopyLogEntries(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, CopyLogEntries,
-              (NoAwaitTag,
-               google::logging::v2::CopyLogEntriesRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  CopyLogEntries, (NoAwaitTag,
+    google::logging::v2::CopyLogEntriesRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CopyLogEntries(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, CopyLogEntries(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::logging::v2::CopyLogEntriesResponse>>,
-              CopyLogEntries, (google::longrunning::Operation const& operation),
-              (override));
+  CopyLogEntries, (
+    google::longrunning::Operation const& operation), (override));
 
-  MOCK_METHOD((StreamRange<google::longrunning::Operation>), ListOperations,
-              (google::longrunning::ListOperationsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::longrunning::Operation>),
+  ListOperations,
+  (google::longrunning::ListOperationsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
-              (google::longrunning::GetOperationRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  GetOperation,
+  (google::longrunning::GetOperationRequest const& request), (override));
 
-  MOCK_METHOD(Status, CancelOperation,
-              (google::longrunning::CancelOperationRequest const& request),
-              (override));
+  MOCK_METHOD(Status,
+  CancelOperation,
+  (google::longrunning::CancelOperationRequest const& request), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -17,10 +17,10 @@
 // source: google/cloud/bigquery/v2/project.proto
 
 #include "google/cloud/bigquerycontrol/v2/project_connection.h"
+#include "google/cloud/background_threads.h"
 #include "google/cloud/bigquerycontrol/v2/internal/project_option_defaults.h"
 #include "google/cloud/bigquerycontrol/v2/internal/project_tracing_connection.h"
 #include "google/cloud/bigquerycontrol/v2/project_options.h"
-#include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"

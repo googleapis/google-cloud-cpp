@@ -46,90 +46,82 @@ StorageInsightsMetadata::StorageInsightsMetadata(
 
 StatusOr<google::cloud::storageinsights::v1::ListReportConfigsResponse>
 StorageInsightsMetadata::ListReportConfigs(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::storageinsights::v1::ListReportConfigsRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::storageinsights::v1::ListReportConfigsRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListReportConfigs(context, options, request);
 }
 
 StatusOr<google::cloud::storageinsights::v1::ReportConfig>
 StorageInsightsMetadata::GetReportConfig(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::storageinsights::v1::GetReportConfigRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetReportConfig(context, options, request);
 }
 
 StatusOr<google::cloud::storageinsights::v1::ReportConfig>
 StorageInsightsMetadata::CreateReportConfig(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::storageinsights::v1::CreateReportConfigRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::storageinsights::v1::CreateReportConfigRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateReportConfig(context, options, request);
 }
 
 StatusOr<google::cloud::storageinsights::v1::ReportConfig>
 StorageInsightsMetadata::UpdateReportConfig(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::storageinsights::v1::UpdateReportConfigRequest const&
-        request) {
-  SetMetadata(
-      context, options,
-      absl::StrCat("report_config.name=",
-                   internal::UrlEncode(request.report_config().name())));
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::storageinsights::v1::UpdateReportConfigRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("report_config.name=", internal::UrlEncode(request.report_config().name())));
   return child_->UpdateReportConfig(context, options, request);
 }
 
-Status StorageInsightsMetadata::DeleteReportConfig(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::storageinsights::v1::DeleteReportConfigRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+Status
+StorageInsightsMetadata::DeleteReportConfig(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::storageinsights::v1::DeleteReportConfigRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteReportConfig(context, options, request);
 }
 
 StatusOr<google::cloud::storageinsights::v1::ListReportDetailsResponse>
 StorageInsightsMetadata::ListReportDetails(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::storageinsights::v1::ListReportDetailsRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::storageinsights::v1::ListReportDetailsRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListReportDetails(context, options, request);
 }
 
 StatusOr<google::cloud::storageinsights::v1::ReportDetail>
 StorageInsightsMetadata::GetReportDetail(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::storageinsights::v1::GetReportDetailRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetReportDetail(context, options, request);
 }
 
 StatusOr<google::cloud::storageinsights::v1::ListDatasetConfigsResponse>
 StorageInsightsMetadata::ListDatasetConfigs(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::storageinsights::v1::ListDatasetConfigsRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::storageinsights::v1::ListDatasetConfigsRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListDatasetConfigs(context, options, request);
 }
 
 StatusOr<google::cloud::storageinsights::v1::DatasetConfig>
 StorageInsightsMetadata::GetDatasetConfig(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::storageinsights::v1::GetDatasetConfigRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::storageinsights::v1::GetDatasetConfigRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetDatasetConfig(context, options, request);
 }
 
@@ -138,21 +130,18 @@ StorageInsightsMetadata::AsyncCreateDatasetConfig(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::storageinsights::v1::CreateDatasetConfigRequest const&
-        request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateDatasetConfig(cq, std::move(context),
-                                          std::move(options), request);
+    google::cloud::storageinsights::v1::CreateDatasetConfigRequest const& request) {
+  SetMetadata(*context, *options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateDatasetConfig(
+      cq, std::move(context), std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 StorageInsightsMetadata::CreateDatasetConfig(
-    grpc::ClientContext& context, Options options,
-    google::cloud::storageinsights::v1::CreateDatasetConfigRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context,
+    Options options,
+    google::cloud::storageinsights::v1::CreateDatasetConfigRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateDatasetConfig(context, options, request);
 }
 
@@ -161,25 +150,18 @@ StorageInsightsMetadata::AsyncUpdateDatasetConfig(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::storageinsights::v1::UpdateDatasetConfigRequest const&
-        request) {
-  SetMetadata(
-      *context, *options,
-      absl::StrCat("dataset_config.name=",
-                   internal::UrlEncode(request.dataset_config().name())));
-  return child_->AsyncUpdateDatasetConfig(cq, std::move(context),
-                                          std::move(options), request);
+    google::cloud::storageinsights::v1::UpdateDatasetConfigRequest const& request) {
+  SetMetadata(*context, *options, absl::StrCat("dataset_config.name=", internal::UrlEncode(request.dataset_config().name())));
+  return child_->AsyncUpdateDatasetConfig(
+      cq, std::move(context), std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 StorageInsightsMetadata::UpdateDatasetConfig(
-    grpc::ClientContext& context, Options options,
-    google::cloud::storageinsights::v1::UpdateDatasetConfigRequest const&
-        request) {
-  SetMetadata(
-      context, options,
-      absl::StrCat("dataset_config.name=",
-                   internal::UrlEncode(request.dataset_config().name())));
+    grpc::ClientContext& context,
+    Options options,
+    google::cloud::storageinsights::v1::UpdateDatasetConfigRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("dataset_config.name=", internal::UrlEncode(request.dataset_config().name())));
   return child_->UpdateDatasetConfig(context, options, request);
 }
 
@@ -188,21 +170,18 @@ StorageInsightsMetadata::AsyncDeleteDatasetConfig(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::storageinsights::v1::DeleteDatasetConfigRequest const&
-        request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteDatasetConfig(cq, std::move(context),
-                                          std::move(options), request);
+    google::cloud::storageinsights::v1::DeleteDatasetConfigRequest const& request) {
+  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteDatasetConfig(
+      cq, std::move(context), std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 StorageInsightsMetadata::DeleteDatasetConfig(
-    grpc::ClientContext& context, Options options,
-    google::cloud::storageinsights::v1::DeleteDatasetConfigRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context,
+    Options options,
+    google::cloud::storageinsights::v1::DeleteDatasetConfigRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteDatasetConfig(context, options, request);
 }
 
@@ -212,17 +191,17 @@ StorageInsightsMetadata::AsyncLinkDataset(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::storageinsights::v1::LinkDatasetRequest const& request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncLinkDataset(cq, std::move(context), std::move(options),
-                                  request);
+  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncLinkDataset(
+      cq, std::move(context), std::move(options), request);
 }
 
-StatusOr<google::longrunning::Operation> StorageInsightsMetadata::LinkDataset(
-    grpc::ClientContext& context, Options options,
+StatusOr<google::longrunning::Operation>
+StorageInsightsMetadata::LinkDataset(
+    grpc::ClientContext& context,
+    Options options,
     google::cloud::storageinsights::v1::LinkDatasetRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->LinkDataset(context, options, request);
 }
 
@@ -232,68 +211,71 @@ StorageInsightsMetadata::AsyncUnlinkDataset(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::storageinsights::v1::UnlinkDatasetRequest const& request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncUnlinkDataset(cq, std::move(context), std::move(options),
-                                    request);
+  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncUnlinkDataset(
+      cq, std::move(context), std::move(options), request);
 }
 
-StatusOr<google::longrunning::Operation> StorageInsightsMetadata::UnlinkDataset(
-    grpc::ClientContext& context, Options options,
+StatusOr<google::longrunning::Operation>
+StorageInsightsMetadata::UnlinkDataset(
+    grpc::ClientContext& context,
+    Options options,
     google::cloud::storageinsights::v1::UnlinkDatasetRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->UnlinkDataset(context, options, request);
 }
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 StorageInsightsMetadata::ListLocations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ListLocations(context, options, request);
 }
 
 StatusOr<google::cloud::location::Location>
 StorageInsightsMetadata::GetLocation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetLocation(context, options, request);
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
 StorageInsightsMetadata::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ListOperations(context, options, request);
 }
 
-StatusOr<google::longrunning::Operation> StorageInsightsMetadata::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::Operation>
+StorageInsightsMetadata::GetOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetOperation(context, options, request);
 }
 
-Status StorageInsightsMetadata::DeleteOperation(
-    grpc::ClientContext& context, Options const& options,
+Status
+StorageInsightsMetadata::DeleteOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteOperation(context, options, request);
 }
 
-Status StorageInsightsMetadata::CancelOperation(
-    grpc::ClientContext& context, Options const& options,
+Status
+StorageInsightsMetadata::CancelOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->CancelOperation(context, options, request);
 }
 
@@ -305,8 +287,8 @@ StorageInsightsMetadata::AsyncGetOperation(
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(cq, std::move(context), std::move(options),
-                                   request);
+  return child_->AsyncGetOperation(
+      cq, std::move(context), std::move(options), request);
 }
 
 future<Status> StorageInsightsMetadata::AsyncCancelOperation(
@@ -316,21 +298,21 @@ future<Status> StorageInsightsMetadata::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(cq, std::move(context),
-                                      std::move(options), request);
+  return child_->AsyncCancelOperation(
+      cq, std::move(context), std::move(options), request);
 }
 
 void StorageInsightsMetadata::SetMetadata(grpc::ClientContext& context,
-                                          Options const& options,
-                                          std::string const& request_params) {
+                                        Options const& options,
+                                        std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
 void StorageInsightsMetadata::SetMetadata(grpc::ClientContext& context,
-                                          Options const& options) {
-  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
-                                       api_client_header_);
+                                        Options const& options) {
+  google::cloud::internal::SetMetadata(
+      context, options, fixed_metadata_, api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

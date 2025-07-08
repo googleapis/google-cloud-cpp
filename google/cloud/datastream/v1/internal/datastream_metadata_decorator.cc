@@ -46,20 +46,19 @@ DatastreamMetadata::DatastreamMetadata(
 
 StatusOr<google::cloud::datastream::v1::ListConnectionProfilesResponse>
 DatastreamMetadata::ListConnectionProfiles(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::datastream::v1::ListConnectionProfilesRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::datastream::v1::ListConnectionProfilesRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListConnectionProfiles(context, options, request);
 }
 
 StatusOr<google::cloud::datastream::v1::ConnectionProfile>
 DatastreamMetadata::GetConnectionProfile(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::datastream::v1::GetConnectionProfileRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetConnectionProfile(context, options, request);
 }
 
@@ -68,21 +67,18 @@ DatastreamMetadata::AsyncCreateConnectionProfile(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::datastream::v1::CreateConnectionProfileRequest const&
-        request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateConnectionProfile(cq, std::move(context),
-                                              std::move(options), request);
+    google::cloud::datastream::v1::CreateConnectionProfileRequest const& request) {
+  SetMetadata(*context, *options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateConnectionProfile(
+      cq, std::move(context), std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 DatastreamMetadata::CreateConnectionProfile(
-    grpc::ClientContext& context, Options options,
-    google::cloud::datastream::v1::CreateConnectionProfileRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context,
+    Options options,
+    google::cloud::datastream::v1::CreateConnectionProfileRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateConnectionProfile(context, options, request);
 }
 
@@ -91,25 +87,18 @@ DatastreamMetadata::AsyncUpdateConnectionProfile(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::datastream::v1::UpdateConnectionProfileRequest const&
-        request) {
-  SetMetadata(
-      *context, *options,
-      absl::StrCat("connection_profile.name=",
-                   internal::UrlEncode(request.connection_profile().name())));
-  return child_->AsyncUpdateConnectionProfile(cq, std::move(context),
-                                              std::move(options), request);
+    google::cloud::datastream::v1::UpdateConnectionProfileRequest const& request) {
+  SetMetadata(*context, *options, absl::StrCat("connection_profile.name=", internal::UrlEncode(request.connection_profile().name())));
+  return child_->AsyncUpdateConnectionProfile(
+      cq, std::move(context), std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 DatastreamMetadata::UpdateConnectionProfile(
-    grpc::ClientContext& context, Options options,
-    google::cloud::datastream::v1::UpdateConnectionProfileRequest const&
-        request) {
-  SetMetadata(
-      context, options,
-      absl::StrCat("connection_profile.name=",
-                   internal::UrlEncode(request.connection_profile().name())));
+    grpc::ClientContext& context,
+    Options options,
+    google::cloud::datastream::v1::UpdateConnectionProfileRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("connection_profile.name=", internal::UrlEncode(request.connection_profile().name())));
   return child_->UpdateConnectionProfile(context, options, request);
 }
 
@@ -118,48 +107,45 @@ DatastreamMetadata::AsyncDeleteConnectionProfile(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::datastream::v1::DeleteConnectionProfileRequest const&
-        request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteConnectionProfile(cq, std::move(context),
-                                              std::move(options), request);
+    google::cloud::datastream::v1::DeleteConnectionProfileRequest const& request) {
+  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteConnectionProfile(
+      cq, std::move(context), std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 DatastreamMetadata::DeleteConnectionProfile(
-    grpc::ClientContext& context, Options options,
-    google::cloud::datastream::v1::DeleteConnectionProfileRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context,
+    Options options,
+    google::cloud::datastream::v1::DeleteConnectionProfileRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteConnectionProfile(context, options, request);
 }
 
 StatusOr<google::cloud::datastream::v1::DiscoverConnectionProfileResponse>
 DatastreamMetadata::DiscoverConnectionProfile(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::datastream::v1::DiscoverConnectionProfileRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::datastream::v1::DiscoverConnectionProfileRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->DiscoverConnectionProfile(context, options, request);
 }
 
 StatusOr<google::cloud::datastream::v1::ListStreamsResponse>
 DatastreamMetadata::ListStreams(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::datastream::v1::ListStreamsRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListStreams(context, options, request);
 }
 
-StatusOr<google::cloud::datastream::v1::Stream> DatastreamMetadata::GetStream(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::datastream::v1::Stream>
+DatastreamMetadata::GetStream(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::datastream::v1::GetStreamRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetStream(context, options, request);
 }
 
@@ -169,17 +155,17 @@ DatastreamMetadata::AsyncCreateStream(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::datastream::v1::CreateStreamRequest const& request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateStream(cq, std::move(context), std::move(options),
-                                   request);
+  SetMetadata(*context, *options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateStream(
+      cq, std::move(context), std::move(options), request);
 }
 
-StatusOr<google::longrunning::Operation> DatastreamMetadata::CreateStream(
-    grpc::ClientContext& context, Options options,
+StatusOr<google::longrunning::Operation>
+DatastreamMetadata::CreateStream(
+    grpc::ClientContext& context,
+    Options options,
     google::cloud::datastream::v1::CreateStreamRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateStream(context, options, request);
 }
 
@@ -189,19 +175,17 @@ DatastreamMetadata::AsyncUpdateStream(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::datastream::v1::UpdateStreamRequest const& request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("stream.name=",
-                           internal::UrlEncode(request.stream().name())));
-  return child_->AsyncUpdateStream(cq, std::move(context), std::move(options),
-                                   request);
+  SetMetadata(*context, *options, absl::StrCat("stream.name=", internal::UrlEncode(request.stream().name())));
+  return child_->AsyncUpdateStream(
+      cq, std::move(context), std::move(options), request);
 }
 
-StatusOr<google::longrunning::Operation> DatastreamMetadata::UpdateStream(
-    grpc::ClientContext& context, Options options,
+StatusOr<google::longrunning::Operation>
+DatastreamMetadata::UpdateStream(
+    grpc::ClientContext& context,
+    Options options,
     google::cloud::datastream::v1::UpdateStreamRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("stream.name=",
-                           internal::UrlEncode(request.stream().name())));
+  SetMetadata(context, options, absl::StrCat("stream.name=", internal::UrlEncode(request.stream().name())));
   return child_->UpdateStream(context, options, request);
 }
 
@@ -211,17 +195,17 @@ DatastreamMetadata::AsyncDeleteStream(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::datastream::v1::DeleteStreamRequest const& request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteStream(cq, std::move(context), std::move(options),
-                                   request);
+  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteStream(
+      cq, std::move(context), std::move(options), request);
 }
 
-StatusOr<google::longrunning::Operation> DatastreamMetadata::DeleteStream(
-    grpc::ClientContext& context, Options options,
+StatusOr<google::longrunning::Operation>
+DatastreamMetadata::DeleteStream(
+    grpc::ClientContext& context,
+    Options options,
     google::cloud::datastream::v1::DeleteStreamRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteStream(context, options, request);
 }
 
@@ -231,71 +215,71 @@ DatastreamMetadata::AsyncRunStream(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::datastream::v1::RunStreamRequest const& request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncRunStream(cq, std::move(context), std::move(options),
-                                request);
+  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncRunStream(
+      cq, std::move(context), std::move(options), request);
 }
 
-StatusOr<google::longrunning::Operation> DatastreamMetadata::RunStream(
-    grpc::ClientContext& context, Options options,
+StatusOr<google::longrunning::Operation>
+DatastreamMetadata::RunStream(
+    grpc::ClientContext& context,
+    Options options,
     google::cloud::datastream::v1::RunStreamRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->RunStream(context, options, request);
 }
 
 StatusOr<google::cloud::datastream::v1::StreamObject>
 DatastreamMetadata::GetStreamObject(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::datastream::v1::GetStreamObjectRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetStreamObject(context, options, request);
 }
 
 StatusOr<google::cloud::datastream::v1::StreamObject>
 DatastreamMetadata::LookupStreamObject(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::datastream::v1::LookupStreamObjectRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->LookupStreamObject(context, options, request);
 }
 
 StatusOr<google::cloud::datastream::v1::ListStreamObjectsResponse>
 DatastreamMetadata::ListStreamObjects(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::datastream::v1::ListStreamObjectsRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListStreamObjects(context, options, request);
 }
 
 StatusOr<google::cloud::datastream::v1::StartBackfillJobResponse>
 DatastreamMetadata::StartBackfillJob(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::datastream::v1::StartBackfillJobRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("object=", internal::UrlEncode(request.object())));
+  SetMetadata(context, options, absl::StrCat("object=", internal::UrlEncode(request.object())));
   return child_->StartBackfillJob(context, options, request);
 }
 
 StatusOr<google::cloud::datastream::v1::StopBackfillJobResponse>
 DatastreamMetadata::StopBackfillJob(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::datastream::v1::StopBackfillJobRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("object=", internal::UrlEncode(request.object())));
+  SetMetadata(context, options, absl::StrCat("object=", internal::UrlEncode(request.object())));
   return child_->StopBackfillJob(context, options, request);
 }
 
 StatusOr<google::cloud::datastream::v1::FetchStaticIpsResponse>
 DatastreamMetadata::FetchStaticIps(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::datastream::v1::FetchStaticIpsRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->FetchStaticIps(context, options, request);
 }
 
@@ -304,40 +288,36 @@ DatastreamMetadata::AsyncCreatePrivateConnection(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::datastream::v1::CreatePrivateConnectionRequest const&
-        request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreatePrivateConnection(cq, std::move(context),
-                                              std::move(options), request);
+    google::cloud::datastream::v1::CreatePrivateConnectionRequest const& request) {
+  SetMetadata(*context, *options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreatePrivateConnection(
+      cq, std::move(context), std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 DatastreamMetadata::CreatePrivateConnection(
-    grpc::ClientContext& context, Options options,
-    google::cloud::datastream::v1::CreatePrivateConnectionRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context,
+    Options options,
+    google::cloud::datastream::v1::CreatePrivateConnectionRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreatePrivateConnection(context, options, request);
 }
 
 StatusOr<google::cloud::datastream::v1::PrivateConnection>
 DatastreamMetadata::GetPrivateConnection(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::datastream::v1::GetPrivateConnectionRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetPrivateConnection(context, options, request);
 }
 
 StatusOr<google::cloud::datastream::v1::ListPrivateConnectionsResponse>
 DatastreamMetadata::ListPrivateConnections(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::datastream::v1::ListPrivateConnectionsRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::datastream::v1::ListPrivateConnectionsRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListPrivateConnections(context, options, request);
 }
 
@@ -346,21 +326,18 @@ DatastreamMetadata::AsyncDeletePrivateConnection(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::datastream::v1::DeletePrivateConnectionRequest const&
-        request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeletePrivateConnection(cq, std::move(context),
-                                              std::move(options), request);
+    google::cloud::datastream::v1::DeletePrivateConnectionRequest const& request) {
+  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeletePrivateConnection(
+      cq, std::move(context), std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 DatastreamMetadata::DeletePrivateConnection(
-    grpc::ClientContext& context, Options options,
-    google::cloud::datastream::v1::DeletePrivateConnectionRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context,
+    Options options,
+    google::cloud::datastream::v1::DeletePrivateConnectionRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeletePrivateConnection(context, options, request);
 }
 
@@ -370,34 +347,35 @@ DatastreamMetadata::AsyncCreateRoute(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::datastream::v1::CreateRouteRequest const& request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateRoute(cq, std::move(context), std::move(options),
-                                  request);
+  SetMetadata(*context, *options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateRoute(
+      cq, std::move(context), std::move(options), request);
 }
 
-StatusOr<google::longrunning::Operation> DatastreamMetadata::CreateRoute(
-    grpc::ClientContext& context, Options options,
+StatusOr<google::longrunning::Operation>
+DatastreamMetadata::CreateRoute(
+    grpc::ClientContext& context,
+    Options options,
     google::cloud::datastream::v1::CreateRouteRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateRoute(context, options, request);
 }
 
-StatusOr<google::cloud::datastream::v1::Route> DatastreamMetadata::GetRoute(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::datastream::v1::Route>
+DatastreamMetadata::GetRoute(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::datastream::v1::GetRouteRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetRoute(context, options, request);
 }
 
 StatusOr<google::cloud::datastream::v1::ListRoutesResponse>
 DatastreamMetadata::ListRoutes(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::datastream::v1::ListRoutesRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListRoutes(context, options, request);
 }
 
@@ -407,67 +385,71 @@ DatastreamMetadata::AsyncDeleteRoute(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::datastream::v1::DeleteRouteRequest const& request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteRoute(cq, std::move(context), std::move(options),
-                                  request);
+  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteRoute(
+      cq, std::move(context), std::move(options), request);
 }
 
-StatusOr<google::longrunning::Operation> DatastreamMetadata::DeleteRoute(
-    grpc::ClientContext& context, Options options,
+StatusOr<google::longrunning::Operation>
+DatastreamMetadata::DeleteRoute(
+    grpc::ClientContext& context,
+    Options options,
     google::cloud::datastream::v1::DeleteRouteRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteRoute(context, options, request);
 }
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 DatastreamMetadata::ListLocations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ListLocations(context, options, request);
 }
 
-StatusOr<google::cloud::location::Location> DatastreamMetadata::GetLocation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::location::Location>
+DatastreamMetadata::GetLocation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetLocation(context, options, request);
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
 DatastreamMetadata::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ListOperations(context, options, request);
 }
 
-StatusOr<google::longrunning::Operation> DatastreamMetadata::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::Operation>
+DatastreamMetadata::GetOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetOperation(context, options, request);
 }
 
-Status DatastreamMetadata::DeleteOperation(
-    grpc::ClientContext& context, Options const& options,
+Status
+DatastreamMetadata::DeleteOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteOperation(context, options, request);
 }
 
-Status DatastreamMetadata::CancelOperation(
-    grpc::ClientContext& context, Options const& options,
+Status
+DatastreamMetadata::CancelOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->CancelOperation(context, options, request);
 }
 
@@ -479,8 +461,8 @@ DatastreamMetadata::AsyncGetOperation(
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(cq, std::move(context), std::move(options),
-                                   request);
+  return child_->AsyncGetOperation(
+      cq, std::move(context), std::move(options), request);
 }
 
 future<Status> DatastreamMetadata::AsyncCancelOperation(
@@ -490,21 +472,21 @@ future<Status> DatastreamMetadata::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(cq, std::move(context),
-                                      std::move(options), request);
+  return child_->AsyncCancelOperation(
+      cq, std::move(context), std::move(options), request);
 }
 
 void DatastreamMetadata::SetMetadata(grpc::ClientContext& context,
-                                     Options const& options,
-                                     std::string const& request_params) {
+                                        Options const& options,
+                                        std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
 void DatastreamMetadata::SetMetadata(grpc::ClientContext& context,
-                                     Options const& options) {
-  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
-                                       api_client_header_);
+                                        Options const& options) {
+  google::cloud::internal::SetMetadata(
+      context, options, fixed_metadata_, api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

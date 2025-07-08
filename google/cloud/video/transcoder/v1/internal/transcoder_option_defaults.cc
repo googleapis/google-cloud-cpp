@@ -17,10 +17,10 @@
 // source: google/cloud/video/transcoder/v1/services.proto
 
 #include "google/cloud/video/transcoder/v1/internal/transcoder_option_defaults.h"
-#include "google/cloud/video/transcoder/v1/transcoder_connection.h"
-#include "google/cloud/video/transcoder/v1/transcoder_options.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
+#include "google/cloud/video/transcoder/v1/transcoder_connection.h"
+#include "google/cloud/video/transcoder/v1/transcoder_options.h"
 #include <memory>
 #include <utility>
 
@@ -35,30 +35,23 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options TranscoderServiceDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_TRANSCODER_SERVICE_ENDPOINT", "",
-      "GOOGLE_CLOUD_CPP_TRANSCODER_SERVICE_AUTHORITY",
+      std::move(options), "GOOGLE_CLOUD_CPP_TRANSCODER_SERVICE_ENDPOINT",
+      "", "GOOGLE_CLOUD_CPP_TRANSCODER_SERVICE_AUTHORITY",
       "transcoder.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<video_transcoder_v1::TranscoderServiceRetryPolicyOption>()) {
     options.set<video_transcoder_v1::TranscoderServiceRetryPolicyOption>(
         video_transcoder_v1::TranscoderServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
-            .clone());
+            std::chrono::minutes(30)).clone());
   }
-  if (!options
-           .has<video_transcoder_v1::TranscoderServiceBackoffPolicyOption>()) {
+  if (!options.has<video_transcoder_v1::TranscoderServiceBackoffPolicyOption>()) {
     options.set<video_transcoder_v1::TranscoderServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(
-            std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
-            .clone());
+        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
   }
-  if (!options.has<video_transcoder_v1::
-                       TranscoderServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<video_transcoder_v1::
-                    TranscoderServiceConnectionIdempotencyPolicyOption>(
-        video_transcoder_v1::
-            MakeDefaultTranscoderServiceConnectionIdempotencyPolicy());
+  if (!options.has<video_transcoder_v1::TranscoderServiceConnectionIdempotencyPolicyOption>()) {
+    options.set<video_transcoder_v1::TranscoderServiceConnectionIdempotencyPolicyOption>(
+        video_transcoder_v1::MakeDefaultTranscoderServiceConnectionIdempotencyPolicy());
   }
 
   return options;

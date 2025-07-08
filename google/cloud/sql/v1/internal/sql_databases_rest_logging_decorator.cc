@@ -29,28 +29,33 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 SqlDatabasesServiceRestLogging::SqlDatabasesServiceRestLogging(
     std::shared_ptr<SqlDatabasesServiceRestStub> child,
-    TracingOptions tracing_options, std::set<std::string> components)
-    : child_(std::move(child)),
-      tracing_options_(std::move(tracing_options)),
+    TracingOptions tracing_options,
+    std::set<std::string> components)
+    : child_(std::move(child)), tracing_options_(std::move(tracing_options)),
       components_(std::move(components)) {}
 
 StatusOr<google::cloud::sql::v1::Operation>
 SqlDatabasesServiceRestLogging::Delete(
-    rest_internal::RestContext& rest_context, Options const& options,
+    rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::sql::v1::SqlDatabasesDeleteRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context, Options const& options,
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
              google::cloud::sql::v1::SqlDatabasesDeleteRequest const& request) {
         return child_->Delete(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::cloud::sql::v1::Database> SqlDatabasesServiceRestLogging::Get(
-    rest_internal::RestContext& rest_context, Options const& options,
+StatusOr<google::cloud::sql::v1::Database>
+SqlDatabasesServiceRestLogging::Get(
+    rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::sql::v1::SqlDatabasesGetRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context, Options const& options,
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
              google::cloud::sql::v1::SqlDatabasesGetRequest const& request) {
         return child_->Get(rest_context, options, request);
       },
@@ -59,10 +64,12 @@ StatusOr<google::cloud::sql::v1::Database> SqlDatabasesServiceRestLogging::Get(
 
 StatusOr<google::cloud::sql::v1::Operation>
 SqlDatabasesServiceRestLogging::Insert(
-    rest_internal::RestContext& rest_context, Options const& options,
+    rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::sql::v1::SqlDatabasesInsertRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context, Options const& options,
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
              google::cloud::sql::v1::SqlDatabasesInsertRequest const& request) {
         return child_->Insert(rest_context, options, request);
       },
@@ -71,10 +78,12 @@ SqlDatabasesServiceRestLogging::Insert(
 
 StatusOr<google::cloud::sql::v1::DatabasesListResponse>
 SqlDatabasesServiceRestLogging::List(
-    rest_internal::RestContext& rest_context, Options const& options,
+    rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::sql::v1::SqlDatabasesListRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context, Options const& options,
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
              google::cloud::sql::v1::SqlDatabasesListRequest const& request) {
         return child_->List(rest_context, options, request);
       },
@@ -83,10 +92,12 @@ SqlDatabasesServiceRestLogging::List(
 
 StatusOr<google::cloud::sql::v1::Operation>
 SqlDatabasesServiceRestLogging::Patch(
-    rest_internal::RestContext& rest_context, Options const& options,
+    rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::sql::v1::SqlDatabasesUpdateRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context, Options const& options,
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
              google::cloud::sql::v1::SqlDatabasesUpdateRequest const& request) {
         return child_->Patch(rest_context, options, request);
       },
@@ -95,10 +106,12 @@ SqlDatabasesServiceRestLogging::Patch(
 
 StatusOr<google::cloud::sql::v1::Operation>
 SqlDatabasesServiceRestLogging::Update(
-    rest_internal::RestContext& rest_context, Options const& options,
+    rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::sql::v1::SqlDatabasesUpdateRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context, Options const& options,
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
              google::cloud::sql::v1::SqlDatabasesUpdateRequest const& request) {
         return child_->Update(rest_context, options, request);
       },

@@ -28,42 +28,39 @@ namespace compute_autoscalers_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 AutoscalersRestLogging::AutoscalersRestLogging(
-    std::shared_ptr<AutoscalersRestStub> child, TracingOptions tracing_options,
+    std::shared_ptr<AutoscalersRestStub> child,
+    TracingOptions tracing_options,
     std::set<std::string> components)
-    : child_(std::move(child)),
-      tracing_options_(std::move(tracing_options)),
+    : child_(std::move(child)), tracing_options_(std::move(tracing_options)),
       components_(std::move(components)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::AutoscalerAggregatedList>
 AutoscalersRestLogging::AggregatedListAutoscalers(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::autoscalers::v1::
-        AggregatedListAutoscalersRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::autoscalers::v1::AggregatedListAutoscalersRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::cloud::cpp::compute::autoscalers::v1::
-                 AggregatedListAutoscalersRequest const& request) {
-        return child_->AggregatedListAutoscalers(rest_context, options,
-                                                 request);
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
+             google::cloud::cpp::compute::autoscalers::v1::AggregatedListAutoscalersRequest const& request) {
+        return child_->AggregatedListAutoscalers(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 AutoscalersRestLogging::AsyncDeleteAutoscaler(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::autoscalers::v1::DeleteAutoscalerRequest const&
-        request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::autoscalers::v1::DeleteAutoscalerRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::cpp::compute::autoscalers::v1::
-                 DeleteAutoscalerRequest const& request) {
-        return child_->AsyncDeleteAutoscaler(cq, std::move(rest_context),
-                                             std::move(options), request);
+             google::cloud::cpp::compute::autoscalers::v1::DeleteAutoscalerRequest const& request) {
+        return child_->AsyncDeleteAutoscaler(
+            cq, std::move(rest_context), std::move(options), request);
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
@@ -71,13 +68,13 @@ AutoscalersRestLogging::AsyncDeleteAutoscaler(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 AutoscalersRestLogging::DeleteAutoscaler(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::autoscalers::v1::DeleteAutoscalerRequest const&
-        request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::autoscalers::v1::DeleteAutoscalerRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::cloud::cpp::compute::autoscalers::v1::
-                 DeleteAutoscalerRequest const& request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
+             google::cloud::cpp::compute::autoscalers::v1::DeleteAutoscalerRequest const& request) {
         return child_->DeleteAutoscaler(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -85,13 +82,13 @@ AutoscalersRestLogging::DeleteAutoscaler(
 
 StatusOr<google::cloud::cpp::compute::v1::Autoscaler>
 AutoscalersRestLogging::GetAutoscaler(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::autoscalers::v1::GetAutoscalerRequest const&
-        request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::autoscalers::v1::GetAutoscalerRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::cloud::cpp::compute::autoscalers::v1::
-                 GetAutoscalerRequest const& request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
+             google::cloud::cpp::compute::autoscalers::v1::GetAutoscalerRequest const& request) {
         return child_->GetAutoscaler(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -99,19 +96,17 @@ AutoscalersRestLogging::GetAutoscaler(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 AutoscalersRestLogging::AsyncInsertAutoscaler(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::autoscalers::v1::InsertAutoscalerRequest const&
-        request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::autoscalers::v1::InsertAutoscalerRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::cpp::compute::autoscalers::v1::
-                 InsertAutoscalerRequest const& request) {
-        return child_->AsyncInsertAutoscaler(cq, std::move(rest_context),
-                                             std::move(options), request);
+             google::cloud::cpp::compute::autoscalers::v1::InsertAutoscalerRequest const& request) {
+        return child_->AsyncInsertAutoscaler(
+            cq, std::move(rest_context), std::move(options), request);
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
@@ -119,13 +114,13 @@ AutoscalersRestLogging::AsyncInsertAutoscaler(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 AutoscalersRestLogging::InsertAutoscaler(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::autoscalers::v1::InsertAutoscalerRequest const&
-        request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::autoscalers::v1::InsertAutoscalerRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::cloud::cpp::compute::autoscalers::v1::
-                 InsertAutoscalerRequest const& request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
+             google::cloud::cpp::compute::autoscalers::v1::InsertAutoscalerRequest const& request) {
         return child_->InsertAutoscaler(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -133,13 +128,13 @@ AutoscalersRestLogging::InsertAutoscaler(
 
 StatusOr<google::cloud::cpp::compute::v1::AutoscalerList>
 AutoscalersRestLogging::ListAutoscalers(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::autoscalers::v1::ListAutoscalersRequest const&
-        request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::autoscalers::v1::ListAutoscalersRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::cloud::cpp::compute::autoscalers::v1::
-                 ListAutoscalersRequest const& request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
+             google::cloud::cpp::compute::autoscalers::v1::ListAutoscalersRequest const& request) {
         return child_->ListAutoscalers(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -147,19 +142,17 @@ AutoscalersRestLogging::ListAutoscalers(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 AutoscalersRestLogging::AsyncPatchAutoscaler(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::autoscalers::v1::PatchAutoscalerRequest const&
-        request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::autoscalers::v1::PatchAutoscalerRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::cpp::compute::autoscalers::v1::
-                 PatchAutoscalerRequest const& request) {
-        return child_->AsyncPatchAutoscaler(cq, std::move(rest_context),
-                                            std::move(options), request);
+             google::cloud::cpp::compute::autoscalers::v1::PatchAutoscalerRequest const& request) {
+        return child_->AsyncPatchAutoscaler(
+            cq, std::move(rest_context), std::move(options), request);
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
@@ -167,13 +160,13 @@ AutoscalersRestLogging::AsyncPatchAutoscaler(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 AutoscalersRestLogging::PatchAutoscaler(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::autoscalers::v1::PatchAutoscalerRequest const&
-        request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::autoscalers::v1::PatchAutoscalerRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::cloud::cpp::compute::autoscalers::v1::
-                 PatchAutoscalerRequest const& request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
+             google::cloud::cpp::compute::autoscalers::v1::PatchAutoscalerRequest const& request) {
         return child_->PatchAutoscaler(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -181,19 +174,17 @@ AutoscalersRestLogging::PatchAutoscaler(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 AutoscalersRestLogging::AsyncUpdateAutoscaler(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::autoscalers::v1::UpdateAutoscalerRequest const&
-        request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::autoscalers::v1::UpdateAutoscalerRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::cpp::compute::autoscalers::v1::
-                 UpdateAutoscalerRequest const& request) {
-        return child_->AsyncUpdateAutoscaler(cq, std::move(rest_context),
-                                             std::move(options), request);
+             google::cloud::cpp::compute::autoscalers::v1::UpdateAutoscalerRequest const& request) {
+        return child_->AsyncUpdateAutoscaler(
+            cq, std::move(rest_context), std::move(options), request);
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
@@ -201,13 +192,13 @@ AutoscalersRestLogging::AsyncUpdateAutoscaler(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 AutoscalersRestLogging::UpdateAutoscaler(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::autoscalers::v1::UpdateAutoscalerRequest const&
-        request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::autoscalers::v1::UpdateAutoscalerRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::cloud::cpp::compute::autoscalers::v1::
-                 UpdateAutoscalerRequest const& request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
+             google::cloud::cpp::compute::autoscalers::v1::UpdateAutoscalerRequest const& request) {
         return child_->UpdateAutoscaler(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -218,35 +209,32 @@ AutoscalersRestLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::zone_operations::v1::GetOperationRequest const&
-        request) {
+    google::cloud::cpp::compute::zone_operations::v1::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::cpp::compute::zone_operations::v1::
-                 GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(cq, std::move(rest_context),
-                                         std::move(options), request);
+             google::cloud::cpp::compute::zone_operations::v1::GetOperationRequest const& request) {
+        return child_->AsyncGetOperation(
+            cq, std::move(rest_context), std::move(options), request);
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-future<Status> AutoscalersRestLogging::AsyncCancelOperation(
+future<Status>
+AutoscalersRestLogging::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::zone_operations::v1::
-        DeleteOperationRequest const& request) {
+    google::cloud::cpp::compute::zone_operations::v1::DeleteOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::cpp::compute::zone_operations::v1::
-                 DeleteOperationRequest const& request) {
-        return child_->AsyncCancelOperation(cq, std::move(rest_context),
-                                            std::move(options), request);
+             google::cloud::cpp::compute::zone_operations::v1::DeleteOperationRequest const& request) {
+        return child_->AsyncCancelOperation(
+            cq, std::move(rest_context), std::move(options), request);
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);

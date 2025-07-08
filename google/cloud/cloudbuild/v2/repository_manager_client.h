@@ -64,9 +64,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class RepositoryManagerClient {
  public:
-  explicit RepositoryManagerClient(
-      std::shared_ptr<RepositoryManagerConnection> connection,
-      Options opts = {});
+  explicit RepositoryManagerClient(std::shared_ptr<RepositoryManagerConnection> connection, Options opts = {});
   ~RepositoryManagerClient();
 
   ///@{
@@ -79,12 +77,10 @@ class RepositoryManagerClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(RepositoryManagerClient const& a,
-                         RepositoryManagerClient const& b) {
+  friend bool operator==(RepositoryManagerClient const& a, RepositoryManagerClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(RepositoryManagerClient const& a,
-                         RepositoryManagerClient const& b) {
+  friend bool operator!=(RepositoryManagerClient const& a, RepositoryManagerClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -125,10 +121,7 @@ class RepositoryManagerClient {
   ///
   // clang-format on
   future<StatusOr<google::devtools::cloudbuild::v2::Connection>>
-  CreateConnection(
-      std::string const& parent,
-      google::devtools::cloudbuild::v2::Connection const& connection,
-      std::string const& connection_id, Options opts = {});
+  CreateConnection(std::string const& parent, google::devtools::cloudbuild::v2::Connection const& connection, std::string const& connection_id, Options opts = {});
 
   // clang-format off
   ///
@@ -141,10 +134,8 @@ class RepositoryManagerClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateConnection(
-      NoAwaitTag, std::string const& parent,
-      google::devtools::cloudbuild::v2::Connection const& connection,
-      std::string const& connection_id, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateConnection(NoAwaitTag, std::string const& parent, google::devtools::cloudbuild::v2::Connection const& connection, std::string const& connection_id, Options opts = {});
 
   // clang-format off
   ///
@@ -181,9 +172,7 @@ class RepositoryManagerClient {
   ///
   // clang-format on
   future<StatusOr<google::devtools::cloudbuild::v2::Connection>>
-  CreateConnection(
-      google::devtools::cloudbuild::v2::CreateConnectionRequest const& request,
-      Options opts = {});
+  CreateConnection(google::devtools::cloudbuild::v2::CreateConnectionRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -196,10 +185,8 @@ class RepositoryManagerClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateConnection(
-      NoAwaitTag,
-      google::devtools::cloudbuild::v2::CreateConnectionRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateConnection(NoAwaitTag, google::devtools::cloudbuild::v2::CreateConnectionRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -211,8 +198,7 @@ class RepositoryManagerClient {
   ///
   // clang-format on
   future<StatusOr<google::devtools::cloudbuild::v2::Connection>>
-  CreateConnection(google::longrunning::Operation const& operation,
-                   Options opts = {});
+  CreateConnection(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -237,8 +223,8 @@ class RepositoryManagerClient {
   /// [google.devtools.cloudbuild.v2.GetConnectionRequest]: @googleapis_reference_link{google/devtools/cloudbuild/v2/repositories.proto#L597}
   ///
   // clang-format on
-  StatusOr<google::devtools::cloudbuild::v2::Connection> GetConnection(
-      std::string const& name, Options opts = {});
+  StatusOr<google::devtools::cloudbuild::v2::Connection>
+  GetConnection(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -267,9 +253,8 @@ class RepositoryManagerClient {
   /// [google.devtools.cloudbuild.v2.GetConnectionRequest]: @googleapis_reference_link{google/devtools/cloudbuild/v2/repositories.proto#L597}
   ///
   // clang-format on
-  StatusOr<google::devtools::cloudbuild::v2::Connection> GetConnection(
-      google::devtools::cloudbuild::v2::GetConnectionRequest const& request,
-      Options opts = {});
+  StatusOr<google::devtools::cloudbuild::v2::Connection>
+  GetConnection(google::devtools::cloudbuild::v2::GetConnectionRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -303,8 +288,8 @@ class RepositoryManagerClient {
   /// [google.devtools.cloudbuild.v2.ListConnectionsRequest]: @googleapis_reference_link{google/devtools/cloudbuild/v2/repositories.proto#L609}
   ///
   // clang-format on
-  StreamRange<google::devtools::cloudbuild::v2::Connection> ListConnections(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::devtools::cloudbuild::v2::Connection>
+  ListConnections(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -342,9 +327,8 @@ class RepositoryManagerClient {
   /// [google.devtools.cloudbuild.v2.ListConnectionsRequest]: @googleapis_reference_link{google/devtools/cloudbuild/v2/repositories.proto#L609}
   ///
   // clang-format on
-  StreamRange<google::devtools::cloudbuild::v2::Connection> ListConnections(
-      google::devtools::cloudbuild::v2::ListConnectionsRequest request,
-      Options opts = {});
+  StreamRange<google::devtools::cloudbuild::v2::Connection>
+  ListConnections(google::devtools::cloudbuild::v2::ListConnectionsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -377,9 +361,7 @@ class RepositoryManagerClient {
   ///
   // clang-format on
   future<StatusOr<google::devtools::cloudbuild::v2::Connection>>
-  UpdateConnection(
-      google::devtools::cloudbuild::v2::Connection const& connection,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  UpdateConnection(google::devtools::cloudbuild::v2::Connection const& connection, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -392,10 +374,8 @@ class RepositoryManagerClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateConnection(
-      NoAwaitTag,
-      google::devtools::cloudbuild::v2::Connection const& connection,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateConnection(NoAwaitTag, google::devtools::cloudbuild::v2::Connection const& connection, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -432,9 +412,7 @@ class RepositoryManagerClient {
   ///
   // clang-format on
   future<StatusOr<google::devtools::cloudbuild::v2::Connection>>
-  UpdateConnection(
-      google::devtools::cloudbuild::v2::UpdateConnectionRequest const& request,
-      Options opts = {});
+  UpdateConnection(google::devtools::cloudbuild::v2::UpdateConnectionRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -447,10 +425,8 @@ class RepositoryManagerClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateConnection(
-      NoAwaitTag,
-      google::devtools::cloudbuild::v2::UpdateConnectionRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateConnection(NoAwaitTag, google::devtools::cloudbuild::v2::UpdateConnectionRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -462,8 +438,7 @@ class RepositoryManagerClient {
   ///
   // clang-format on
   future<StatusOr<google::devtools::cloudbuild::v2::Connection>>
-  UpdateConnection(google::longrunning::Operation const& operation,
-                   Options opts = {});
+  UpdateConnection(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -509,8 +484,8 @@ class RepositoryManagerClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteConnection(
-      NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteConnection(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -547,9 +522,7 @@ class RepositoryManagerClient {
   ///
   // clang-format on
   future<StatusOr<google::devtools::cloudbuild::v2::OperationMetadata>>
-  DeleteConnection(
-      google::devtools::cloudbuild::v2::DeleteConnectionRequest const& request,
-      Options opts = {});
+  DeleteConnection(google::devtools::cloudbuild::v2::DeleteConnectionRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -562,10 +535,8 @@ class RepositoryManagerClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteConnection(
-      NoAwaitTag,
-      google::devtools::cloudbuild::v2::DeleteConnectionRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteConnection(NoAwaitTag, google::devtools::cloudbuild::v2::DeleteConnectionRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -577,8 +548,7 @@ class RepositoryManagerClient {
   ///
   // clang-format on
   future<StatusOr<google::devtools::cloudbuild::v2::OperationMetadata>>
-  DeleteConnection(google::longrunning::Operation const& operation,
-                   Options opts = {});
+  DeleteConnection(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -617,10 +587,7 @@ class RepositoryManagerClient {
   ///
   // clang-format on
   future<StatusOr<google::devtools::cloudbuild::v2::Repository>>
-  CreateRepository(
-      std::string const& parent,
-      google::devtools::cloudbuild::v2::Repository const& repository,
-      std::string const& repository_id, Options opts = {});
+  CreateRepository(std::string const& parent, google::devtools::cloudbuild::v2::Repository const& repository, std::string const& repository_id, Options opts = {});
 
   // clang-format off
   ///
@@ -633,10 +600,8 @@ class RepositoryManagerClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateRepository(
-      NoAwaitTag, std::string const& parent,
-      google::devtools::cloudbuild::v2::Repository const& repository,
-      std::string const& repository_id, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateRepository(NoAwaitTag, std::string const& parent, google::devtools::cloudbuild::v2::Repository const& repository, std::string const& repository_id, Options opts = {});
 
   // clang-format off
   ///
@@ -673,9 +638,7 @@ class RepositoryManagerClient {
   ///
   // clang-format on
   future<StatusOr<google::devtools::cloudbuild::v2::Repository>>
-  CreateRepository(
-      google::devtools::cloudbuild::v2::CreateRepositoryRequest const& request,
-      Options opts = {});
+  CreateRepository(google::devtools::cloudbuild::v2::CreateRepositoryRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -688,10 +651,8 @@ class RepositoryManagerClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateRepository(
-      NoAwaitTag,
-      google::devtools::cloudbuild::v2::CreateRepositoryRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateRepository(NoAwaitTag, google::devtools::cloudbuild::v2::CreateRepositoryRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -703,8 +664,7 @@ class RepositoryManagerClient {
   ///
   // clang-format on
   future<StatusOr<google::devtools::cloudbuild::v2::Repository>>
-  CreateRepository(google::longrunning::Operation const& operation,
-                   Options opts = {});
+  CreateRepository(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -739,14 +699,8 @@ class RepositoryManagerClient {
   /// [google.devtools.cloudbuild.v2.BatchCreateRepositoriesResponse]: @googleapis_reference_link{google/devtools/cloudbuild/v2/repositories.proto#L717}
   ///
   // clang-format on
-  future<StatusOr<
-      google::devtools::cloudbuild::v2::BatchCreateRepositoriesResponse>>
-  BatchCreateRepositories(
-      std::string const& parent,
-      std::vector<
-          google::devtools::cloudbuild::v2::CreateRepositoryRequest> const&
-          requests,
-      Options opts = {});
+  future<StatusOr<google::devtools::cloudbuild::v2::BatchCreateRepositoriesResponse>>
+  BatchCreateRepositories(std::string const& parent, std::vector<google::devtools::cloudbuild::v2::CreateRepositoryRequest> const& requests, Options opts = {});
 
   // clang-format off
   ///
@@ -759,12 +713,8 @@ class RepositoryManagerClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> BatchCreateRepositories(
-      NoAwaitTag, std::string const& parent,
-      std::vector<
-          google::devtools::cloudbuild::v2::CreateRepositoryRequest> const&
-          requests,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  BatchCreateRepositories(NoAwaitTag, std::string const& parent, std::vector<google::devtools::cloudbuild::v2::CreateRepositoryRequest> const& requests, Options opts = {});
 
   // clang-format off
   ///
@@ -800,12 +750,8 @@ class RepositoryManagerClient {
   /// [google.devtools.cloudbuild.v2.BatchCreateRepositoriesResponse]: @googleapis_reference_link{google/devtools/cloudbuild/v2/repositories.proto#L717}
   ///
   // clang-format on
-  future<StatusOr<
-      google::devtools::cloudbuild::v2::BatchCreateRepositoriesResponse>>
-  BatchCreateRepositories(
-      google::devtools::cloudbuild::v2::BatchCreateRepositoriesRequest const&
-          request,
-      Options opts = {});
+  future<StatusOr<google::devtools::cloudbuild::v2::BatchCreateRepositoriesResponse>>
+  BatchCreateRepositories(google::devtools::cloudbuild::v2::BatchCreateRepositoriesRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -818,11 +764,8 @@ class RepositoryManagerClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> BatchCreateRepositories(
-      NoAwaitTag,
-      google::devtools::cloudbuild::v2::BatchCreateRepositoriesRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  BatchCreateRepositories(NoAwaitTag, google::devtools::cloudbuild::v2::BatchCreateRepositoriesRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -833,10 +776,8 @@ class RepositoryManagerClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<
-      google::devtools::cloudbuild::v2::BatchCreateRepositoriesResponse>>
-  BatchCreateRepositories(google::longrunning::Operation const& operation,
-                          Options opts = {});
+  future<StatusOr<google::devtools::cloudbuild::v2::BatchCreateRepositoriesResponse>>
+  BatchCreateRepositories(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -861,8 +802,8 @@ class RepositoryManagerClient {
   /// [google.devtools.cloudbuild.v2.Repository]: @googleapis_reference_link{google/devtools/cloudbuild/v2/repositories.proto#L509}
   ///
   // clang-format on
-  StatusOr<google::devtools::cloudbuild::v2::Repository> GetRepository(
-      std::string const& name, Options opts = {});
+  StatusOr<google::devtools::cloudbuild::v2::Repository>
+  GetRepository(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -891,9 +832,8 @@ class RepositoryManagerClient {
   /// [google.devtools.cloudbuild.v2.Repository]: @googleapis_reference_link{google/devtools/cloudbuild/v2/repositories.proto#L509}
   ///
   // clang-format on
-  StatusOr<google::devtools::cloudbuild::v2::Repository> GetRepository(
-      google::devtools::cloudbuild::v2::GetRepositoryRequest const& request,
-      Options opts = {});
+  StatusOr<google::devtools::cloudbuild::v2::Repository>
+  GetRepository(google::devtools::cloudbuild::v2::GetRepositoryRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -927,8 +867,8 @@ class RepositoryManagerClient {
   /// [google.devtools.cloudbuild.v2.Repository]: @googleapis_reference_link{google/devtools/cloudbuild/v2/repositories.proto#L509}
   ///
   // clang-format on
-  StreamRange<google::devtools::cloudbuild::v2::Repository> ListRepositories(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::devtools::cloudbuild::v2::Repository>
+  ListRepositories(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -966,9 +906,8 @@ class RepositoryManagerClient {
   /// [google.devtools.cloudbuild.v2.Repository]: @googleapis_reference_link{google/devtools/cloudbuild/v2/repositories.proto#L509}
   ///
   // clang-format on
-  StreamRange<google::devtools::cloudbuild::v2::Repository> ListRepositories(
-      google::devtools::cloudbuild::v2::ListRepositoriesRequest request,
-      Options opts = {});
+  StreamRange<google::devtools::cloudbuild::v2::Repository>
+  ListRepositories(google::devtools::cloudbuild::v2::ListRepositoriesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1014,8 +953,8 @@ class RepositoryManagerClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteRepository(
-      NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteRepository(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1052,9 +991,7 @@ class RepositoryManagerClient {
   ///
   // clang-format on
   future<StatusOr<google::devtools::cloudbuild::v2::OperationMetadata>>
-  DeleteRepository(
-      google::devtools::cloudbuild::v2::DeleteRepositoryRequest const& request,
-      Options opts = {});
+  DeleteRepository(google::devtools::cloudbuild::v2::DeleteRepositoryRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1067,10 +1004,8 @@ class RepositoryManagerClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteRepository(
-      NoAwaitTag,
-      google::devtools::cloudbuild::v2::DeleteRepositoryRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteRepository(NoAwaitTag, google::devtools::cloudbuild::v2::DeleteRepositoryRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1082,8 +1017,7 @@ class RepositoryManagerClient {
   ///
   // clang-format on
   future<StatusOr<google::devtools::cloudbuild::v2::OperationMetadata>>
-  DeleteRepository(google::longrunning::Operation const& operation,
-                   Options opts = {});
+  DeleteRepository(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1139,10 +1073,7 @@ class RepositoryManagerClient {
   ///
   // clang-format on
   StatusOr<google::devtools::cloudbuild::v2::FetchReadWriteTokenResponse>
-  FetchReadWriteToken(
-      google::devtools::cloudbuild::v2::FetchReadWriteTokenRequest const&
-          request,
-      Options opts = {});
+  FetchReadWriteToken(google::devtools::cloudbuild::v2::FetchReadWriteTokenRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1198,9 +1129,7 @@ class RepositoryManagerClient {
   ///
   // clang-format on
   StatusOr<google::devtools::cloudbuild::v2::FetchReadTokenResponse>
-  FetchReadToken(
-      google::devtools::cloudbuild::v2::FetchReadTokenRequest const& request,
-      Options opts = {});
+  FetchReadToken(google::devtools::cloudbuild::v2::FetchReadTokenRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1240,10 +1169,7 @@ class RepositoryManagerClient {
   ///
   // clang-format on
   StreamRange<google::devtools::cloudbuild::v2::Repository>
-  FetchLinkableRepositories(
-      google::devtools::cloudbuild::v2::FetchLinkableRepositoriesRequest
-          request,
-      Options opts = {});
+  FetchLinkableRepositories(google::devtools::cloudbuild::v2::FetchLinkableRepositoriesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1268,8 +1194,8 @@ class RepositoryManagerClient {
   /// [google.devtools.cloudbuild.v2.FetchGitRefsResponse]: @googleapis_reference_link{google/devtools/cloudbuild/v2/repositories.proto#L876}
   ///
   // clang-format on
-  StatusOr<google::devtools::cloudbuild::v2::FetchGitRefsResponse> FetchGitRefs(
-      std::string const& repository, Options opts = {});
+  StatusOr<google::devtools::cloudbuild::v2::FetchGitRefsResponse>
+  FetchGitRefs(std::string const& repository, Options opts = {});
 
   // clang-format off
   ///
@@ -1298,9 +1224,8 @@ class RepositoryManagerClient {
   /// [google.devtools.cloudbuild.v2.FetchGitRefsResponse]: @googleapis_reference_link{google/devtools/cloudbuild/v2/repositories.proto#L876}
   ///
   // clang-format on
-  StatusOr<google::devtools::cloudbuild::v2::FetchGitRefsResponse> FetchGitRefs(
-      google::devtools::cloudbuild::v2::FetchGitRefsRequest const& request,
-      Options opts = {});
+  StatusOr<google::devtools::cloudbuild::v2::FetchGitRefsResponse>
+  FetchGitRefs(google::devtools::cloudbuild::v2::FetchGitRefsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1332,8 +1257,8 @@ class RepositoryManagerClient {
   /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L100}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1364,8 +1289,8 @@ class RepositoryManagerClient {
   /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1400,9 +1325,8 @@ class RepositoryManagerClient {
   /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L153}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request,
-      Options opts = {});
+  StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1428,8 +1352,8 @@ class RepositoryManagerClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1460,9 +1384,8 @@ class RepositoryManagerClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1496,7 +1419,8 @@ class RepositoryManagerClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(std::string const& name, Options opts = {});
+  Status
+  CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1535,9 +1459,8 @@ class RepositoryManagerClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request,
-      Options opts = {});
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<RepositoryManagerConnection> connection_;

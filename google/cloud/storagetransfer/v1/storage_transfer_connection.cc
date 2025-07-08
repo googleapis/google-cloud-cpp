@@ -17,17 +17,17 @@
 // source: google/storagetransfer/v1/transfer.proto
 
 #include "google/cloud/storagetransfer/v1/storage_transfer_connection.h"
-#include "google/cloud/storagetransfer/v1/internal/storage_transfer_connection_impl.h"
-#include "google/cloud/storagetransfer/v1/internal/storage_transfer_option_defaults.h"
-#include "google/cloud/storagetransfer/v1/internal/storage_transfer_stub_factory.h"
-#include "google/cloud/storagetransfer/v1/internal/storage_transfer_tracing_connection.h"
-#include "google/cloud/storagetransfer/v1/storage_transfer_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/storagetransfer/v1/internal/storage_transfer_connection_impl.h"
+#include "google/cloud/storagetransfer/v1/internal/storage_transfer_option_defaults.h"
+#include "google/cloud/storagetransfer/v1/internal/storage_transfer_stub_factory.h"
+#include "google/cloud/storagetransfer/v1/internal/storage_transfer_tracing_connection.h"
+#include "google/cloud/storagetransfer/v1/storage_transfer_options.h"
 #include <memory>
 #include <utility>
 
@@ -62,20 +62,20 @@ StorageTransferServiceConnection::GetTransferJob(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::storagetransfer::v1::TransferJob>
-StorageTransferServiceConnection::ListTransferJobs(
-    google::storagetransfer::v1::
-        ListTransferJobsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::storagetransfer::v1::TransferJob> StorageTransferServiceConnection::ListTransferJobs(
+    google::storagetransfer::v1::ListTransferJobsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::storagetransfer::v1::TransferJob>>();
 }
 
-Status StorageTransferServiceConnection::PauseTransferOperation(
+Status
+StorageTransferServiceConnection::PauseTransferOperation(
     google::storagetransfer::v1::PauseTransferOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status StorageTransferServiceConnection::ResumeTransferOperation(
+Status
+StorageTransferServiceConnection::ResumeTransferOperation(
     google::storagetransfer::v1::ResumeTransferOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -84,26 +84,28 @@ future<StatusOr<google::storagetransfer::v1::TransferOperation>>
 StorageTransferServiceConnection::RunTransferJob(
     google::storagetransfer::v1::RunTransferJobRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::storagetransfer::v1::TransferOperation>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::storagetransfer::v1::TransferOperation>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 StorageTransferServiceConnection::RunTransferJob(
-    NoAwaitTag, google::storagetransfer::v1::RunTransferJobRequest const&) {
+    NoAwaitTag,
+    google::storagetransfer::v1::RunTransferJobRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::storagetransfer::v1::TransferOperation>>
 StorageTransferServiceConnection::RunTransferJob(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::storagetransfer::v1::TransferOperation>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::storagetransfer::v1::TransferOperation>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-Status StorageTransferServiceConnection::DeleteTransferJob(
+Status
+StorageTransferServiceConnection::DeleteTransferJob(
     google::storagetransfer::v1::DeleteTransferJobRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -126,23 +128,20 @@ StorageTransferServiceConnection::GetAgentPool(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::storagetransfer::v1::AgentPool>
-StorageTransferServiceConnection::ListAgentPools(
-    google::storagetransfer::v1::
-        ListAgentPoolsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::storagetransfer::v1::AgentPool> StorageTransferServiceConnection::ListAgentPools(
+    google::storagetransfer::v1::ListAgentPoolsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::storagetransfer::v1::AgentPool>>();
 }
 
-Status StorageTransferServiceConnection::DeleteAgentPool(
+Status
+StorageTransferServiceConnection::DeleteAgentPool(
     google::storagetransfer::v1::DeleteAgentPoolRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::longrunning::Operation>
-StorageTransferServiceConnection::ListOperations(
-    google::longrunning::
-        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::longrunning::Operation> StorageTransferServiceConnection::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }
@@ -153,29 +152,26 @@ StorageTransferServiceConnection::GetOperation(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status StorageTransferServiceConnection::CancelOperation(
+Status
+StorageTransferServiceConnection::CancelOperation(
     google::longrunning::CancelOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-std::shared_ptr<StorageTransferServiceConnection>
-MakeStorageTransferServiceConnection(Options options) {
+std::shared_ptr<StorageTransferServiceConnection> MakeStorageTransferServiceConnection(
+    Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 StorageTransferServicePolicyOptionList>(
-      options, __func__);
+      UnifiedCredentialsOptionList,
+      StorageTransferServicePolicyOptionList>(options, __func__);
   options = storagetransfer_v1_internal::StorageTransferServiceDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
-  auto stub =
-      storagetransfer_v1_internal::CreateDefaultStorageTransferServiceStub(
-          std::move(auth), options);
-  return storagetransfer_v1_internal::
-      MakeStorageTransferServiceTracingConnection(
-          std::make_shared<storagetransfer_v1_internal::
-                               StorageTransferServiceConnectionImpl>(
-              std::move(background), std::move(stub), std::move(options)));
+  auto stub = storagetransfer_v1_internal::CreateDefaultStorageTransferServiceStub(
+    std::move(auth), options);
+  return storagetransfer_v1_internal::MakeStorageTransferServiceTracingConnection(
+      std::make_shared<storagetransfer_v1_internal::StorageTransferServiceConnectionImpl>(
+      std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

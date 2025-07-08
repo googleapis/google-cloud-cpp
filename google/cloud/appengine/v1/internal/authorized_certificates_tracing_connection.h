@@ -36,33 +36,24 @@ class AuthorizedCertificatesTracingConnection
   ~AuthorizedCertificatesTracingConnection() override = default;
 
   explicit AuthorizedCertificatesTracingConnection(
-      std::shared_ptr<appengine_v1::AuthorizedCertificatesConnection> child);
+    std::shared_ptr<appengine_v1::AuthorizedCertificatesConnection> child);
 
   Options options() override { return child_->options(); }
 
   StreamRange<google::appengine::v1::AuthorizedCertificate>
-  ListAuthorizedCertificates(
-      google::appengine::v1::ListAuthorizedCertificatesRequest request)
-      override;
+  ListAuthorizedCertificates(google::appengine::v1::ListAuthorizedCertificatesRequest request) override;
 
   StatusOr<google::appengine::v1::AuthorizedCertificate>
-  GetAuthorizedCertificate(
-      google::appengine::v1::GetAuthorizedCertificateRequest const& request)
-      override;
+  GetAuthorizedCertificate(google::appengine::v1::GetAuthorizedCertificateRequest const& request) override;
 
   StatusOr<google::appengine::v1::AuthorizedCertificate>
-  CreateAuthorizedCertificate(
-      google::appengine::v1::CreateAuthorizedCertificateRequest const& request)
-      override;
+  CreateAuthorizedCertificate(google::appengine::v1::CreateAuthorizedCertificateRequest const& request) override;
 
   StatusOr<google::appengine::v1::AuthorizedCertificate>
-  UpdateAuthorizedCertificate(
-      google::appengine::v1::UpdateAuthorizedCertificateRequest const& request)
-      override;
+  UpdateAuthorizedCertificate(google::appengine::v1::UpdateAuthorizedCertificateRequest const& request) override;
 
-  Status DeleteAuthorizedCertificate(
-      google::appengine::v1::DeleteAuthorizedCertificateRequest const& request)
-      override;
+  Status
+  DeleteAuthorizedCertificate(google::appengine::v1::DeleteAuthorizedCertificateRequest const& request) override;
 
  private:
   std::shared_ptr<appengine_v1::AuthorizedCertificatesConnection> child_;

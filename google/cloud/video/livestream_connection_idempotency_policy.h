@@ -26,16 +26,11 @@ namespace cloud {
 namespace video {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use
-/// video_livestream_v1::MakeDefaultLivestreamServiceConnectionIdempotencyPolicy
-/// directly.
-using ::google::cloud::video_livestream_v1::
-    MakeDefaultLivestreamServiceConnectionIdempotencyPolicy;
+/// @deprecated Use video_livestream_v1::MakeDefaultLivestreamServiceConnectionIdempotencyPolicy directly.
+using ::google::cloud::video_livestream_v1::MakeDefaultLivestreamServiceConnectionIdempotencyPolicy;
 
-/// @deprecated Use
-/// video_livestream_v1::LivestreamServiceConnectionIdempotencyPolicy directly.
-using ::google::cloud::video_livestream_v1::
-    LivestreamServiceConnectionIdempotencyPolicy;
+/// @deprecated Use video_livestream_v1::LivestreamServiceConnectionIdempotencyPolicy directly.
+using ::google::cloud::video_livestream_v1::LivestreamServiceConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace video

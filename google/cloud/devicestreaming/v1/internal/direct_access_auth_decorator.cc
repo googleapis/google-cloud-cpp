@@ -32,50 +32,46 @@ DirectAccessServiceAuth::DirectAccessServiceAuth(
     std::shared_ptr<DirectAccessServiceStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::devicestreaming::v1::DeviceSession>
-DirectAccessServiceAuth::CreateDeviceSession(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::devicestreaming::v1::CreateDeviceSessionRequest const&
-        request) {
+StatusOr<google::cloud::devicestreaming::v1::DeviceSession> DirectAccessServiceAuth::CreateDeviceSession(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::devicestreaming::v1::CreateDeviceSessionRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateDeviceSession(context, options, request);
 }
 
-StatusOr<google::cloud::devicestreaming::v1::ListDeviceSessionsResponse>
-DirectAccessServiceAuth::ListDeviceSessions(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::devicestreaming::v1::ListDeviceSessionsRequest const&
-        request) {
+StatusOr<google::cloud::devicestreaming::v1::ListDeviceSessionsResponse> DirectAccessServiceAuth::ListDeviceSessions(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::devicestreaming::v1::ListDeviceSessionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListDeviceSessions(context, options, request);
 }
 
-StatusOr<google::cloud::devicestreaming::v1::DeviceSession>
-DirectAccessServiceAuth::GetDeviceSession(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::devicestreaming::v1::GetDeviceSessionRequest const&
-        request) {
+StatusOr<google::cloud::devicestreaming::v1::DeviceSession> DirectAccessServiceAuth::GetDeviceSession(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::devicestreaming::v1::GetDeviceSessionRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetDeviceSession(context, options, request);
 }
 
 Status DirectAccessServiceAuth::CancelDeviceSession(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::devicestreaming::v1::CancelDeviceSessionRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::devicestreaming::v1::CancelDeviceSessionRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CancelDeviceSession(context, options, request);
 }
 
-StatusOr<google::cloud::devicestreaming::v1::DeviceSession>
-DirectAccessServiceAuth::UpdateDeviceSession(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::devicestreaming::v1::UpdateDeviceSessionRequest const&
-        request) {
+StatusOr<google::cloud::devicestreaming::v1::DeviceSession> DirectAccessServiceAuth::UpdateDeviceSession(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::devicestreaming::v1::UpdateDeviceSessionRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateDeviceSession(context, options, request);
@@ -89,15 +85,14 @@ DirectAccessServiceAuth::AsyncAdbConnect(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options) {
   using StreamAuth = google::cloud::internal::AsyncStreamingReadWriteRpcAuth<
-      google::cloud::devicestreaming::v1::AdbMessage,
-      google::cloud::devicestreaming::v1::DeviceMessage>;
+    google::cloud::devicestreaming::v1::AdbMessage, google::cloud::devicestreaming::v1::DeviceMessage>;
 
   auto call = [child = child_, cq, options = std::move(options)](
                   std::shared_ptr<grpc::ClientContext> ctx) {
     return child->AsyncAdbConnect(cq, std::move(ctx), options);
   };
   return std::make_unique<StreamAuth>(
-      std::move(context), auth_, StreamAuth::StreamFactory(std::move(call)));
+    std::move(context), auth_, StreamAuth::StreamFactory(std::move(call)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

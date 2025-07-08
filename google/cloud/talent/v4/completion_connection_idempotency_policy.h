@@ -37,15 +37,15 @@ class CompletionConnectionIdempotencyPolicy {
   /// Create a new copy of this object.
   virtual std::unique_ptr<CompletionConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency CompleteQuery(
-      google::cloud::talent::v4::CompleteQueryRequest const& request);
+  virtual google::cloud::Idempotency
+  CompleteQuery(google::cloud::talent::v4::CompleteQueryRequest const& request);
 
-  virtual google::cloud::Idempotency GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 };
 
 std::unique_ptr<CompletionConnectionIdempotencyPolicy>
-MakeDefaultCompletionConnectionIdempotencyPolicy();
+    MakeDefaultCompletionConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace talent_v4

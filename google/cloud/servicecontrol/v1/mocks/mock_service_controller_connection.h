@@ -32,9 +32,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * Application developers may want to test their code with simulated responses,
  * including errors, from an object of type `ServiceControllerClient`. To do so,
- * construct an object of type `ServiceControllerClient` with an instance of
- * this class. Then use the Google Test framework functions to program the
- * behavior of this mock.
+ * construct an object of type `ServiceControllerClient` with an instance of this
+ * class. Then use the Google Test framework functions to program the behavior
+ * of this mock.
  *
  * @see [This example][bq-mock] for how to test your application with GoogleTest.
  * While the example showcases types from the BigQuery library, the underlying
@@ -42,18 +42,17 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockServiceControllerConnection
-    : public servicecontrol_v1::ServiceControllerConnection {
+class MockServiceControllerConnection : public servicecontrol_v1::ServiceControllerConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::api::servicecontrol::v1::CheckResponse>, Check,
-              (google::api::servicecontrol::v1::CheckRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::api::servicecontrol::v1::CheckResponse>,
+  Check,
+  (google::api::servicecontrol::v1::CheckRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::api::servicecontrol::v1::ReportResponse>, Report,
-              (google::api::servicecontrol::v1::ReportRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::api::servicecontrol::v1::ReportResponse>,
+  Report,
+  (google::api::servicecontrol::v1::ReportRequest const& request), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

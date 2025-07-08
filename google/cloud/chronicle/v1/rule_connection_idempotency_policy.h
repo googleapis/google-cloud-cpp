@@ -37,57 +37,57 @@ class RuleServiceConnectionIdempotencyPolicy {
   /// Create a new copy of this object.
   virtual std::unique_ptr<RuleServiceConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency CreateRule(
-      google::cloud::chronicle::v1::CreateRuleRequest const& request);
+  virtual google::cloud::Idempotency
+  CreateRule(google::cloud::chronicle::v1::CreateRuleRequest const& request);
 
-  virtual google::cloud::Idempotency GetRule(
-      google::cloud::chronicle::v1::GetRuleRequest const& request);
+  virtual google::cloud::Idempotency
+  GetRule(google::cloud::chronicle::v1::GetRuleRequest const& request);
 
-  virtual google::cloud::Idempotency ListRules(
-      google::cloud::chronicle::v1::ListRulesRequest request);
+  virtual google::cloud::Idempotency
+  ListRules(google::cloud::chronicle::v1::ListRulesRequest request);
 
-  virtual google::cloud::Idempotency UpdateRule(
-      google::cloud::chronicle::v1::UpdateRuleRequest const& request);
+  virtual google::cloud::Idempotency
+  UpdateRule(google::cloud::chronicle::v1::UpdateRuleRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteRule(
-      google::cloud::chronicle::v1::DeleteRuleRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteRule(google::cloud::chronicle::v1::DeleteRuleRequest const& request);
 
-  virtual google::cloud::Idempotency ListRuleRevisions(
-      google::cloud::chronicle::v1::ListRuleRevisionsRequest request);
+  virtual google::cloud::Idempotency
+  ListRuleRevisions(google::cloud::chronicle::v1::ListRuleRevisionsRequest request);
 
-  virtual google::cloud::Idempotency CreateRetrohunt(
-      google::cloud::chronicle::v1::CreateRetrohuntRequest const& request);
+  virtual google::cloud::Idempotency
+  CreateRetrohunt(google::cloud::chronicle::v1::CreateRetrohuntRequest const& request);
 
-  virtual google::cloud::Idempotency GetRetrohunt(
-      google::cloud::chronicle::v1::GetRetrohuntRequest const& request);
+  virtual google::cloud::Idempotency
+  GetRetrohunt(google::cloud::chronicle::v1::GetRetrohuntRequest const& request);
 
-  virtual google::cloud::Idempotency ListRetrohunts(
-      google::cloud::chronicle::v1::ListRetrohuntsRequest request);
+  virtual google::cloud::Idempotency
+  ListRetrohunts(google::cloud::chronicle::v1::ListRetrohuntsRequest request);
 
-  virtual google::cloud::Idempotency GetRuleDeployment(
-      google::cloud::chronicle::v1::GetRuleDeploymentRequest const& request);
+  virtual google::cloud::Idempotency
+  GetRuleDeployment(google::cloud::chronicle::v1::GetRuleDeploymentRequest const& request);
 
-  virtual google::cloud::Idempotency ListRuleDeployments(
-      google::cloud::chronicle::v1::ListRuleDeploymentsRequest request);
+  virtual google::cloud::Idempotency
+  ListRuleDeployments(google::cloud::chronicle::v1::ListRuleDeploymentsRequest request);
 
-  virtual google::cloud::Idempotency UpdateRuleDeployment(
-      google::cloud::chronicle::v1::UpdateRuleDeploymentRequest const& request);
+  virtual google::cloud::Idempotency
+  UpdateRuleDeployment(google::cloud::chronicle::v1::UpdateRuleDeploymentRequest const& request);
 
-  virtual google::cloud::Idempotency ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual google::cloud::Idempotency
+  ListOperations(google::longrunning::ListOperationsRequest request);
 
-  virtual google::cloud::Idempotency GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
 
-  virtual google::cloud::Idempotency CancelOperation(
-      google::longrunning::CancelOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  CancelOperation(google::longrunning::CancelOperationRequest const& request);
 };
 
 std::unique_ptr<RuleServiceConnectionIdempotencyPolicy>
-MakeDefaultRuleServiceConnectionIdempotencyPolicy();
+    MakeDefaultRuleServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace chronicle_v1

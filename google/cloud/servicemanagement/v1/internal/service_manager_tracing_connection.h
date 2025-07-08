@@ -36,119 +36,100 @@ class ServiceManagerTracingConnection
   ~ServiceManagerTracingConnection() override = default;
 
   explicit ServiceManagerTracingConnection(
-      std::shared_ptr<servicemanagement_v1::ServiceManagerConnection> child);
+    std::shared_ptr<servicemanagement_v1::ServiceManagerConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StreamRange<google::api::servicemanagement::v1::ManagedService> ListServices(
-      google::api::servicemanagement::v1::ListServicesRequest request) override;
+  StreamRange<google::api::servicemanagement::v1::ManagedService>
+  ListServices(google::api::servicemanagement::v1::ListServicesRequest request) override;
 
-  StatusOr<google::api::servicemanagement::v1::ManagedService> GetService(
-      google::api::servicemanagement::v1::GetServiceRequest const& request)
-      override;
-
-  future<StatusOr<google::api::servicemanagement::v1::ManagedService>>
-  CreateService(google::api::servicemanagement::v1::CreateServiceRequest const&
-                    request) override;
-
-  StatusOr<google::longrunning::Operation> CreateService(
-      NoAwaitTag,
-      google::api::servicemanagement::v1::CreateServiceRequest const& request)
-      override;
+  StatusOr<google::api::servicemanagement::v1::ManagedService>
+  GetService(google::api::servicemanagement::v1::GetServiceRequest const& request) override;
 
   future<StatusOr<google::api::servicemanagement::v1::ManagedService>>
-  CreateService(google::longrunning::Operation const& operation) override;
+  CreateService(google::api::servicemanagement::v1::CreateServiceRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  CreateService(NoAwaitTag,
+      google::api::servicemanagement::v1::CreateServiceRequest const& request) override;
+
+  future<StatusOr<google::api::servicemanagement::v1::ManagedService>>
+  CreateService(
+      google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::api::servicemanagement::v1::OperationMetadata>>
-  DeleteService(google::api::servicemanagement::v1::DeleteServiceRequest const&
-                    request) override;
+  DeleteService(google::api::servicemanagement::v1::DeleteServiceRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> DeleteService(
-      NoAwaitTag,
-      google::api::servicemanagement::v1::DeleteServiceRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  DeleteService(NoAwaitTag,
+      google::api::servicemanagement::v1::DeleteServiceRequest const& request) override;
 
   future<StatusOr<google::api::servicemanagement::v1::OperationMetadata>>
-  DeleteService(google::longrunning::Operation const& operation) override;
+  DeleteService(
+      google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::api::servicemanagement::v1::UndeleteServiceResponse>>
+  UndeleteService(google::api::servicemanagement::v1::UndeleteServiceRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  UndeleteService(NoAwaitTag,
+      google::api::servicemanagement::v1::UndeleteServiceRequest const& request) override;
 
   future<StatusOr<google::api::servicemanagement::v1::UndeleteServiceResponse>>
   UndeleteService(
-      google::api::servicemanagement::v1::UndeleteServiceRequest const& request)
-      override;
+      google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::longrunning::Operation> UndeleteService(
-      NoAwaitTag,
-      google::api::servicemanagement::v1::UndeleteServiceRequest const& request)
-      override;
+  StreamRange<google::api::Service>
+  ListServiceConfigs(google::api::servicemanagement::v1::ListServiceConfigsRequest request) override;
 
-  future<StatusOr<google::api::servicemanagement::v1::UndeleteServiceResponse>>
-  UndeleteService(google::longrunning::Operation const& operation) override;
+  StatusOr<google::api::Service>
+  GetServiceConfig(google::api::servicemanagement::v1::GetServiceConfigRequest const& request) override;
 
-  StreamRange<google::api::Service> ListServiceConfigs(
-      google::api::servicemanagement::v1::ListServiceConfigsRequest request)
-      override;
+  StatusOr<google::api::Service>
+  CreateServiceConfig(google::api::servicemanagement::v1::CreateServiceConfigRequest const& request) override;
 
-  StatusOr<google::api::Service> GetServiceConfig(
-      google::api::servicemanagement::v1::GetServiceConfigRequest const&
-          request) override;
+  future<StatusOr<google::api::servicemanagement::v1::SubmitConfigSourceResponse>>
+  SubmitConfigSource(google::api::servicemanagement::v1::SubmitConfigSourceRequest const& request) override;
 
-  StatusOr<google::api::Service> CreateServiceConfig(
-      google::api::servicemanagement::v1::CreateServiceConfigRequest const&
-          request) override;
+  StatusOr<google::longrunning::Operation>
+  SubmitConfigSource(NoAwaitTag,
+      google::api::servicemanagement::v1::SubmitConfigSourceRequest const& request) override;
 
-  future<
-      StatusOr<google::api::servicemanagement::v1::SubmitConfigSourceResponse>>
+  future<StatusOr<google::api::servicemanagement::v1::SubmitConfigSourceResponse>>
   SubmitConfigSource(
-      google::api::servicemanagement::v1::SubmitConfigSourceRequest const&
-          request) override;
+      google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::longrunning::Operation> SubmitConfigSource(
-      NoAwaitTag,
-      google::api::servicemanagement::v1::SubmitConfigSourceRequest const&
-          request) override;
+  StreamRange<google::api::servicemanagement::v1::Rollout>
+  ListServiceRollouts(google::api::servicemanagement::v1::ListServiceRolloutsRequest request) override;
 
-  future<
-      StatusOr<google::api::servicemanagement::v1::SubmitConfigSourceResponse>>
-  SubmitConfigSource(google::longrunning::Operation const& operation) override;
-
-  StreamRange<google::api::servicemanagement::v1::Rollout> ListServiceRollouts(
-      google::api::servicemanagement::v1::ListServiceRolloutsRequest request)
-      override;
-
-  StatusOr<google::api::servicemanagement::v1::Rollout> GetServiceRollout(
-      google::api::servicemanagement::v1::GetServiceRolloutRequest const&
-          request) override;
+  StatusOr<google::api::servicemanagement::v1::Rollout>
+  GetServiceRollout(google::api::servicemanagement::v1::GetServiceRolloutRequest const& request) override;
 
   future<StatusOr<google::api::servicemanagement::v1::Rollout>>
-  CreateServiceRollout(
-      google::api::servicemanagement::v1::CreateServiceRolloutRequest const&
-          request) override;
+  CreateServiceRollout(google::api::servicemanagement::v1::CreateServiceRolloutRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> CreateServiceRollout(
-      NoAwaitTag,
-      google::api::servicemanagement::v1::CreateServiceRolloutRequest const&
-          request) override;
+  StatusOr<google::longrunning::Operation>
+  CreateServiceRollout(NoAwaitTag,
+      google::api::servicemanagement::v1::CreateServiceRolloutRequest const& request) override;
 
   future<StatusOr<google::api::servicemanagement::v1::Rollout>>
   CreateServiceRollout(
       google::longrunning::Operation const& operation) override;
 
   StatusOr<google::api::servicemanagement::v1::GenerateConfigReportResponse>
-  GenerateConfigReport(
-      google::api::servicemanagement::v1::GenerateConfigReportRequest const&
-          request) override;
+  GenerateConfigReport(google::api::servicemanagement::v1::GenerateConfigReportRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request) override;
+  StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request) override;
 
  private:
   std::shared_ptr<servicemanagement_v1::ServiceManagerConnection> child_;

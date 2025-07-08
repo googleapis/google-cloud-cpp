@@ -64,9 +64,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class RegionAutoscalersClient {
  public:
-  explicit RegionAutoscalersClient(
-      std::shared_ptr<RegionAutoscalersConnection> connection,
-      Options opts = {});
+  explicit RegionAutoscalersClient(std::shared_ptr<RegionAutoscalersConnection> connection, Options opts = {});
   ~RegionAutoscalersClient();
 
   ///@{
@@ -79,12 +77,10 @@ class RegionAutoscalersClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(RegionAutoscalersClient const& a,
-                         RegionAutoscalersClient const& b) {
+  friend bool operator==(RegionAutoscalersClient const& a, RegionAutoscalersClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(RegionAutoscalersClient const& a,
-                         RegionAutoscalersClient const& b) {
+  friend bool operator!=(RegionAutoscalersClient const& a, RegionAutoscalersClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -120,9 +116,8 @@ class RegionAutoscalersClient {
   /// [google.cloud.cpp.compute.region_autoscalers.v1.DeleteAutoscalerRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_autoscalers/v1/region_autoscalers.proto#L114}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteAutoscaler(
-      std::string const& project, std::string const& region,
-      std::string const& autoscaler, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteAutoscaler(std::string const& project, std::string const& region, std::string const& autoscaler, Options opts = {});
 
   // clang-format off
   ///
@@ -135,9 +130,8 @@ class RegionAutoscalersClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteAutoscaler(
-      NoAwaitTag, std::string const& project, std::string const& region,
-      std::string const& autoscaler, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeleteAutoscaler(NoAwaitTag, std::string const& project, std::string const& region, std::string const& autoscaler, Options opts = {});
 
   // clang-format off
   ///
@@ -173,10 +167,8 @@ class RegionAutoscalersClient {
   /// [google.cloud.cpp.compute.region_autoscalers.v1.DeleteAutoscalerRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_autoscalers/v1/region_autoscalers.proto#L114}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteAutoscaler(
-      google::cloud::cpp::compute::region_autoscalers::v1::
-          DeleteAutoscalerRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteAutoscaler(google::cloud::cpp::compute::region_autoscalers::v1::DeleteAutoscalerRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -189,11 +181,8 @@ class RegionAutoscalersClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteAutoscaler(
-      NoAwaitTag,
-      google::cloud::cpp::compute::region_autoscalers::v1::
-          DeleteAutoscalerRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeleteAutoscaler(NoAwaitTag, google::cloud::cpp::compute::region_autoscalers::v1::DeleteAutoscalerRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -204,9 +193,8 @@ class RegionAutoscalersClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteAutoscaler(
-      google::cloud::cpp::compute::v1::Operation const& operation,
-      Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteAutoscaler(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -233,9 +221,8 @@ class RegionAutoscalersClient {
   /// [google.cloud.cpp.compute.v1.Autoscaler]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_008.proto#L34}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Autoscaler> GetAutoscaler(
-      std::string const& project, std::string const& region,
-      std::string const& autoscaler, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Autoscaler>
+  GetAutoscaler(std::string const& project, std::string const& region, std::string const& autoscaler, Options opts = {});
 
   // clang-format off
   ///
@@ -265,10 +252,8 @@ class RegionAutoscalersClient {
   /// [google.cloud.cpp.compute.v1.Autoscaler]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_008.proto#L34}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Autoscaler> GetAutoscaler(
-      google::cloud::cpp::compute::region_autoscalers::v1::
-          GetAutoscalerRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Autoscaler>
+  GetAutoscaler(google::cloud::cpp::compute::region_autoscalers::v1::GetAutoscalerRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -302,10 +287,8 @@ class RegionAutoscalersClient {
   /// [google.cloud.cpp.compute.region_autoscalers.v1.InsertAutoscalerRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_autoscalers/v1/region_autoscalers.proto#L162}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertAutoscaler(
-      std::string const& project, std::string const& region,
-      google::cloud::cpp::compute::v1::Autoscaler const& autoscaler_resource,
-      Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  InsertAutoscaler(std::string const& project, std::string const& region, google::cloud::cpp::compute::v1::Autoscaler const& autoscaler_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -318,10 +301,8 @@ class RegionAutoscalersClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertAutoscaler(
-      NoAwaitTag, std::string const& project, std::string const& region,
-      google::cloud::cpp::compute::v1::Autoscaler const& autoscaler_resource,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  InsertAutoscaler(NoAwaitTag, std::string const& project, std::string const& region, google::cloud::cpp::compute::v1::Autoscaler const& autoscaler_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -358,10 +339,8 @@ class RegionAutoscalersClient {
   /// [google.cloud.cpp.compute.region_autoscalers.v1.InsertAutoscalerRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_autoscalers/v1/region_autoscalers.proto#L162}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertAutoscaler(
-      google::cloud::cpp::compute::region_autoscalers::v1::
-          InsertAutoscalerRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  InsertAutoscaler(google::cloud::cpp::compute::region_autoscalers::v1::InsertAutoscalerRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -374,11 +353,8 @@ class RegionAutoscalersClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertAutoscaler(
-      NoAwaitTag,
-      google::cloud::cpp::compute::region_autoscalers::v1::
-          InsertAutoscalerRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  InsertAutoscaler(NoAwaitTag, google::cloud::cpp::compute::region_autoscalers::v1::InsertAutoscalerRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -389,9 +365,8 @@ class RegionAutoscalersClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertAutoscaler(
-      google::cloud::cpp::compute::v1::Operation const& operation,
-      Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  InsertAutoscaler(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -427,8 +402,7 @@ class RegionAutoscalersClient {
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::Autoscaler>
-  ListRegionAutoscalers(std::string const& project, std::string const& region,
-                        Options opts = {});
+  ListRegionAutoscalers(std::string const& project, std::string const& region, Options opts = {});
 
   // clang-format off
   ///
@@ -468,9 +442,7 @@ class RegionAutoscalersClient {
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::Autoscaler>
-  ListRegionAutoscalers(google::cloud::cpp::compute::region_autoscalers::v1::
-                            ListRegionAutoscalersRequest request,
-                        Options opts = {});
+  ListRegionAutoscalers(google::cloud::cpp::compute::region_autoscalers::v1::ListRegionAutoscalersRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -505,10 +477,8 @@ class RegionAutoscalersClient {
   /// [google.cloud.cpp.compute.region_autoscalers.v1.PatchAutoscalerRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_autoscalers/v1/region_autoscalers.proto#L267}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchAutoscaler(
-      std::string const& project, std::string const& region,
-      google::cloud::cpp::compute::v1::Autoscaler const& autoscaler_resource,
-      Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  PatchAutoscaler(std::string const& project, std::string const& region, google::cloud::cpp::compute::v1::Autoscaler const& autoscaler_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -521,10 +491,8 @@ class RegionAutoscalersClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchAutoscaler(
-      NoAwaitTag, std::string const& project, std::string const& region,
-      google::cloud::cpp::compute::v1::Autoscaler const& autoscaler_resource,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  PatchAutoscaler(NoAwaitTag, std::string const& project, std::string const& region, google::cloud::cpp::compute::v1::Autoscaler const& autoscaler_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -562,10 +530,8 @@ class RegionAutoscalersClient {
   /// [google.cloud.cpp.compute.region_autoscalers.v1.PatchAutoscalerRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_autoscalers/v1/region_autoscalers.proto#L267}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchAutoscaler(
-      google::cloud::cpp::compute::region_autoscalers::v1::
-          PatchAutoscalerRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  PatchAutoscaler(google::cloud::cpp::compute::region_autoscalers::v1::PatchAutoscalerRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -578,11 +544,8 @@ class RegionAutoscalersClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchAutoscaler(
-      NoAwaitTag,
-      google::cloud::cpp::compute::region_autoscalers::v1::
-          PatchAutoscalerRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  PatchAutoscaler(NoAwaitTag, google::cloud::cpp::compute::region_autoscalers::v1::PatchAutoscalerRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -593,9 +556,8 @@ class RegionAutoscalersClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchAutoscaler(
-      google::cloud::cpp::compute::v1::Operation const& operation,
-      Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  PatchAutoscaler(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -629,10 +591,8 @@ class RegionAutoscalersClient {
   /// [google.cloud.cpp.compute.region_autoscalers.v1.UpdateAutoscalerRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_autoscalers/v1/region_autoscalers.proto#L303}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateAutoscaler(
-      std::string const& project, std::string const& region,
-      google::cloud::cpp::compute::v1::Autoscaler const& autoscaler_resource,
-      Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  UpdateAutoscaler(std::string const& project, std::string const& region, google::cloud::cpp::compute::v1::Autoscaler const& autoscaler_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -645,10 +605,8 @@ class RegionAutoscalersClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateAutoscaler(
-      NoAwaitTag, std::string const& project, std::string const& region,
-      google::cloud::cpp::compute::v1::Autoscaler const& autoscaler_resource,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  UpdateAutoscaler(NoAwaitTag, std::string const& project, std::string const& region, google::cloud::cpp::compute::v1::Autoscaler const& autoscaler_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -685,10 +643,8 @@ class RegionAutoscalersClient {
   /// [google.cloud.cpp.compute.region_autoscalers.v1.UpdateAutoscalerRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_autoscalers/v1/region_autoscalers.proto#L303}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateAutoscaler(
-      google::cloud::cpp::compute::region_autoscalers::v1::
-          UpdateAutoscalerRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  UpdateAutoscaler(google::cloud::cpp::compute::region_autoscalers::v1::UpdateAutoscalerRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -701,11 +657,8 @@ class RegionAutoscalersClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateAutoscaler(
-      NoAwaitTag,
-      google::cloud::cpp::compute::region_autoscalers::v1::
-          UpdateAutoscalerRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  UpdateAutoscaler(NoAwaitTag, google::cloud::cpp::compute::region_autoscalers::v1::UpdateAutoscalerRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -716,9 +669,8 @@ class RegionAutoscalersClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateAutoscaler(
-      google::cloud::cpp::compute::v1::Operation const& operation,
-      Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  UpdateAutoscaler(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
 
  private:
   std::shared_ptr<RegionAutoscalersConnection> connection_;

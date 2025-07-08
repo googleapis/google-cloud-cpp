@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGION_SSL_POLICIES_V1_REGION_SSL_POLICIES_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGION_SSL_POLICIES_V1_REGION_SSL_POLICIES_CONNECTION_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/region_ssl_policies/v1/internal/region_ssl_policies_retry_traits.h"
 #include "google/cloud/compute/region_ssl_policies/v1/region_ssl_policies_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -55,8 +55,7 @@ class RegionSslPoliciesRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class RegionSslPoliciesLimitedErrorCountRetryPolicy
-    : public RegionSslPoliciesRetryPolicy {
+class RegionSslPoliciesLimitedErrorCountRetryPolicy : public RegionSslPoliciesRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -66,14 +65,14 @@ class RegionSslPoliciesLimitedErrorCountRetryPolicy
    *     @p maximum_failures == 0.
    */
   explicit RegionSslPoliciesLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   RegionSslPoliciesLimitedErrorCountRetryPolicy(
       RegionSslPoliciesLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : RegionSslPoliciesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : RegionSslPoliciesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   RegionSslPoliciesLimitedErrorCountRetryPolicy(
       RegionSslPoliciesLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : RegionSslPoliciesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : RegionSslPoliciesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -93,9 +92,7 @@ class RegionSslPoliciesLimitedErrorCountRetryPolicy
   using BaseType = RegionSslPoliciesRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      compute_region_ssl_policies_v1_internal::RegionSslPoliciesRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<compute_region_ssl_policies_v1_internal::RegionSslPoliciesRetryTraits> impl_;
 };
 
 /**
@@ -108,8 +105,7 @@ class RegionSslPoliciesLimitedErrorCountRetryPolicy
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class RegionSslPoliciesLimitedTimeRetryPolicy
-    : public RegionSslPoliciesRetryPolicy {
+class RegionSslPoliciesLimitedTimeRetryPolicy : public RegionSslPoliciesRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -134,14 +130,12 @@ class RegionSslPoliciesLimitedTimeRetryPolicy
   template <typename DurationRep, typename DurationPeriod>
   explicit RegionSslPoliciesLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  RegionSslPoliciesLimitedTimeRetryPolicy(
-      RegionSslPoliciesLimitedTimeRetryPolicy&& rhs) noexcept
-      : RegionSslPoliciesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  RegionSslPoliciesLimitedTimeRetryPolicy(
-      RegionSslPoliciesLimitedTimeRetryPolicy const& rhs) noexcept
-      : RegionSslPoliciesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  RegionSslPoliciesLimitedTimeRetryPolicy(RegionSslPoliciesLimitedTimeRetryPolicy&& rhs) noexcept
+    : RegionSslPoliciesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  RegionSslPoliciesLimitedTimeRetryPolicy(RegionSslPoliciesLimitedTimeRetryPolicy const& rhs) noexcept
+    : RegionSslPoliciesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -163,23 +157,20 @@ class RegionSslPoliciesLimitedTimeRetryPolicy
   using BaseType = RegionSslPoliciesRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      compute_region_ssl_policies_v1_internal::RegionSslPoliciesRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<compute_region_ssl_policies_v1_internal::RegionSslPoliciesRetryTraits> impl_;
 };
 
 /**
  * The `RegionSslPoliciesConnection` object for `RegionSslPoliciesClient`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `RegionSslPoliciesClient`. This allows users to inject custom
- * behavior (e.g., with a Google Mock object) when writing tests that use
- * objects of type `RegionSslPoliciesClient`.
+ * sets in `RegionSslPoliciesClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `RegionSslPoliciesClient`.
  *
  * To create a concrete instance, see `MakeRegionSslPoliciesConnection()`.
  *
- * For mocking, see
- * `compute_region_ssl_policies_v1_mocks::MockRegionSslPoliciesConnection`.
+ * For mocking, see `compute_region_ssl_policies_v1_mocks::MockRegionSslPoliciesConnection`.
  */
 class RegionSslPoliciesConnection {
  public:
@@ -188,50 +179,40 @@ class RegionSslPoliciesConnection {
   virtual Options options() { return Options{}; }
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteSslPolicy(google::cloud::cpp::compute::region_ssl_policies::v1::
-                      DeleteSslPolicyRequest const& request);
+  DeleteSslPolicy(google::cloud::cpp::compute::region_ssl_policies::v1::DeleteSslPolicyRequest const& request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteSslPolicy(
-      NoAwaitTag, google::cloud::cpp::compute::region_ssl_policies::v1::
-                      DeleteSslPolicyRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeleteSslPolicy(NoAwaitTag, google::cloud::cpp::compute::region_ssl_policies::v1::DeleteSslPolicyRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteSslPolicy(google::cloud::cpp::compute::v1::Operation const& operation);
+  DeleteSslPolicy( google::cloud::cpp::compute::v1::Operation const& operation);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::SslPolicy> GetSslPolicy(
-      google::cloud::cpp::compute::region_ssl_policies::v1::
-          GetSslPolicyRequest const& request);
-
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertSslPolicy(google::cloud::cpp::compute::region_ssl_policies::v1::
-                      InsertSslPolicyRequest const& request);
-
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> InsertSslPolicy(
-      NoAwaitTag, google::cloud::cpp::compute::region_ssl_policies::v1::
-                      InsertSslPolicyRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::SslPolicy>
+  GetSslPolicy(google::cloud::cpp::compute::region_ssl_policies::v1::GetSslPolicyRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertSslPolicy(google::cloud::cpp::compute::v1::Operation const& operation);
+  InsertSslPolicy(google::cloud::cpp::compute::region_ssl_policies::v1::InsertSslPolicyRequest const& request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  InsertSslPolicy(NoAwaitTag, google::cloud::cpp::compute::region_ssl_policies::v1::InsertSslPolicyRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  InsertSslPolicy( google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::SslPolicy>
-  ListRegionSslPolicies(google::cloud::cpp::compute::region_ssl_policies::v1::
-                            ListRegionSslPoliciesRequest request);
+  ListRegionSslPolicies(google::cloud::cpp::compute::region_ssl_policies::v1::ListRegionSslPoliciesRequest request);
 
-  virtual StatusOr<
-      google::cloud::cpp::compute::v1::SslPoliciesListAvailableFeaturesResponse>
-  ListAvailableFeatures(google::cloud::cpp::compute::region_ssl_policies::v1::
-                            ListAvailableFeaturesRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::SslPoliciesListAvailableFeaturesResponse>
+  ListAvailableFeatures(google::cloud::cpp::compute::region_ssl_policies::v1::ListAvailableFeaturesRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchSslPolicy(google::cloud::cpp::compute::region_ssl_policies::v1::
-                     PatchSslPolicyRequest const& request);
+  PatchSslPolicy(google::cloud::cpp::compute::region_ssl_policies::v1::PatchSslPolicyRequest const& request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> PatchSslPolicy(
-      NoAwaitTag, google::cloud::cpp::compute::region_ssl_policies::v1::
-                      PatchSslPolicyRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  PatchSslPolicy(NoAwaitTag, google::cloud::cpp::compute::region_ssl_policies::v1::PatchSslPolicyRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchSslPolicy(google::cloud::cpp::compute::v1::Operation const& operation);
+  PatchSslPolicy( google::cloud::cpp::compute::v1::Operation const& operation);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

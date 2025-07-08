@@ -17,7 +17,6 @@
 // source: google/spanner/admin/instance/v1/spanner_instance_admin.proto
 
 #include "google/cloud/spanner/admin/internal/instance_admin_rest_connection_impl.h"
-#include "google/cloud/spanner/admin/internal/instance_admin_rest_stub_factory.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/async_rest_long_running_operation.h"
@@ -25,6 +24,7 @@
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/rest_retry_loop.h"
 #include "google/cloud/rest_options.h"
+#include "google/cloud/spanner/admin/internal/instance_admin_rest_stub_factory.h"
 #include <memory>
 #include <utility>
 
@@ -37,40 +37,34 @@ InstanceAdminRestConnectionImpl::InstanceAdminRestConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<spanner_admin_internal::InstanceAdminRestStub> stub,
     Options options)
-    : background_(std::move(background)),
-      stub_(std::move(stub)),
-      options_(internal::MergeOptions(std::move(options),
-                                      InstanceAdminConnection::options())) {}
+  : background_(std::move(background)), stub_(std::move(stub)),
+    options_(internal::MergeOptions(
+        std::move(options),
+        InstanceAdminConnection::options())) {}
 
 StreamRange<google::spanner::admin::instance::v1::InstanceConfig>
-InstanceAdminRestConnectionImpl::ListInstanceConfigs(
-    google::spanner::admin::instance::v1::ListInstanceConfigsRequest request) {
+InstanceAdminRestConnectionImpl::ListInstanceConfigs(google::spanner::admin::instance::v1::ListInstanceConfigsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListInstanceConfigs(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::spanner::admin::instance::v1::InstanceConfig>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::spanner::admin::instance::v1::InstanceConfig>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<spanner_admin::InstanceAdminRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<spanner_admin::InstanceAdminRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::spanner::admin::instance::v1::
-                                      ListInstanceConfigsRequest const& r) {
+          Options const& options, google::spanner::admin::instance::v1::ListInstanceConfigsRequest const& r) {
         return google::cloud::rest_internal::RestRetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](rest_internal::RestContext& rest_context,
                    Options const& options,
-                   google::spanner::admin::instance::v1::
-                       ListInstanceConfigsRequest const& request) {
+                   google::spanner::admin::instance::v1::ListInstanceConfigsRequest const& request) {
               return stub->ListInstanceConfigs(rest_context, options, request);
             },
             options, r, function_name);
       },
       [](google::spanner::admin::instance::v1::ListInstanceConfigsResponse r) {
-        std::vector<google::spanner::admin::instance::v1::InstanceConfig>
-            result(r.instance_configs().size());
+        std::vector<google::spanner::admin::instance::v1::InstanceConfig> result(r.instance_configs().size());
         auto& messages = *r.mutable_instance_configs();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -78,72 +72,58 @@ InstanceAdminRestConnectionImpl::ListInstanceConfigs(
 }
 
 StatusOr<google::spanner::admin::instance::v1::InstanceConfig>
-InstanceAdminRestConnectionImpl::GetInstanceConfig(
-    google::spanner::admin::instance::v1::GetInstanceConfigRequest const&
-        request) {
+InstanceAdminRestConnectionImpl::GetInstanceConfig(google::spanner::admin::instance::v1::GetInstanceConfigRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetInstanceConfig(request),
-      [this](
-          rest_internal::RestContext& rest_context, Options const& options,
-          google::spanner::admin::instance::v1::GetInstanceConfigRequest const&
-              request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options, google::spanner::admin::instance::v1::GetInstanceConfigRequest const& request) {
         return stub_->GetInstanceConfig(rest_context, options, request);
       },
       *current, request, __func__);
 }
 
 future<StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>
-InstanceAdminRestConnectionImpl::CreateInstanceConfig(
-    google::spanner::admin::instance::v1::CreateInstanceConfigRequest const&
-        request) {
+InstanceAdminRestConnectionImpl::CreateInstanceConfig(google::spanner::admin::instance::v1::CreateInstanceConfigRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  return rest_internal::AsyncRestLongRunningOperation<
-      google::spanner::admin::instance::v1::InstanceConfig>(
-      background_->cq(), current, request,
-      [stub = stub_](CompletionQueue& cq,
-                     std::unique_ptr<rest_internal::RestContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::spanner::admin::instance::v1::
-                         CreateInstanceConfigRequest const& request) {
-        return stub->AsyncCreateInstanceConfig(cq, std::move(context),
-                                               std::move(options), request);
-      },
-      [stub = stub_](CompletionQueue& cq,
-                     std::unique_ptr<rest_internal::RestContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          CompletionQueue& cq,
-          std::unique_ptr<rest_internal::RestContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::spanner::admin::instance::v1::InstanceConfig>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateInstanceConfig(request),
-      polling_policy(*current), __func__);
+  return rest_internal::AsyncRestLongRunningOperation<google::spanner::admin::instance::v1::InstanceConfig>(
+    background_->cq(), current, request,
+    [stub = stub_](CompletionQueue& cq,
+                   std::unique_ptr<rest_internal::RestContext> context,
+                   google::cloud::internal::ImmutableOptions options, google::spanner::admin::instance::v1::CreateInstanceConfigRequest const& request) {
+      return stub->AsyncCreateInstanceConfig(
+          cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](CompletionQueue& cq,
+                   std::unique_ptr<rest_internal::RestContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+      return stub->AsyncGetOperation(
+          cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](CompletionQueue& cq,
+                   std::unique_ptr<rest_internal::RestContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+      return stub->AsyncCancelOperation(
+          cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::spanner::admin::instance::v1::InstanceConfig>,
+    retry_policy(*current), backoff_policy(*current),
+    idempotency_policy(*current)->CreateInstanceConfig(request),
+    polling_policy(*current), __func__);
+
 }
 
 StatusOr<google::longrunning::Operation>
-InstanceAdminRestConnectionImpl::CreateInstanceConfig(
-    NoAwaitTag,
-    google::spanner::admin::instance::v1::CreateInstanceConfigRequest const&
-        request) {
+InstanceAdminRestConnectionImpl::CreateInstanceConfig(NoAwaitTag, google::spanner::admin::instance::v1::CreateInstanceConfigRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateInstanceConfig(request),
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::spanner::admin::instance::v1::
-                 CreateInstanceConfigRequest const& request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options, google::spanner::admin::instance::v1::CreateInstanceConfigRequest const& request) {
         return stub_->CreateInstanceConfig(rest_context, options, request);
       },
       *current, request, __func__);
@@ -153,89 +133,72 @@ future<StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>
 InstanceAdminRestConnectionImpl::CreateInstanceConfig(
     google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata()
-           .Is<typename google::spanner::admin::instance::v1::
-                   CreateInstanceConfigMetadata>()) {
-    return make_ready_future<
-        StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>(
-        internal::InvalidArgumentError(
-            "operation does not correspond to CreateInstanceConfig",
-            GCP_ERROR_INFO().WithMetadata("operation",
-                                          operation.metadata().DebugString())));
+  if (!operation.metadata().Is<typename google::spanner::admin::instance::v1::CreateInstanceConfigMetadata>()) {
+    return make_ready_future<StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>(
+        internal::InvalidArgumentError("operation does not correspond to CreateInstanceConfig",
+                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
   }
-  return rest_internal::AsyncRestAwaitLongRunningOperation<
-      google::spanner::admin::instance::v1::InstanceConfig>(
-      background_->cq(), current, operation,
-      [stub = stub_](CompletionQueue& cq,
-                     std::unique_ptr<rest_internal::RestContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          CompletionQueue& cq,
-          std::unique_ptr<rest_internal::RestContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::spanner::admin::instance::v1::InstanceConfig>,
-      polling_policy(*current), __func__);
+  return rest_internal::AsyncRestAwaitLongRunningOperation<google::spanner::admin::instance::v1::InstanceConfig>(
+    background_->cq(), current, operation,
+    [stub = stub_](CompletionQueue& cq,
+                   std::unique_ptr<rest_internal::RestContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+      return stub->AsyncGetOperation(
+          cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](CompletionQueue& cq,
+                   std::unique_ptr<rest_internal::RestContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+      return stub->AsyncCancelOperation(
+          cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::spanner::admin::instance::v1::InstanceConfig>,
+    polling_policy(*current), __func__);
+
 }
 
 future<StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>
-InstanceAdminRestConnectionImpl::UpdateInstanceConfig(
-    google::spanner::admin::instance::v1::UpdateInstanceConfigRequest const&
-        request) {
+InstanceAdminRestConnectionImpl::UpdateInstanceConfig(google::spanner::admin::instance::v1::UpdateInstanceConfigRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  return rest_internal::AsyncRestLongRunningOperation<
-      google::spanner::admin::instance::v1::InstanceConfig>(
-      background_->cq(), current, request,
-      [stub = stub_](CompletionQueue& cq,
-                     std::unique_ptr<rest_internal::RestContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::spanner::admin::instance::v1::
-                         UpdateInstanceConfigRequest const& request) {
-        return stub->AsyncUpdateInstanceConfig(cq, std::move(context),
-                                               std::move(options), request);
-      },
-      [stub = stub_](CompletionQueue& cq,
-                     std::unique_ptr<rest_internal::RestContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          CompletionQueue& cq,
-          std::unique_ptr<rest_internal::RestContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::spanner::admin::instance::v1::InstanceConfig>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateInstanceConfig(request),
-      polling_policy(*current), __func__);
+  return rest_internal::AsyncRestLongRunningOperation<google::spanner::admin::instance::v1::InstanceConfig>(
+    background_->cq(), current, request,
+    [stub = stub_](CompletionQueue& cq,
+                   std::unique_ptr<rest_internal::RestContext> context,
+                   google::cloud::internal::ImmutableOptions options, google::spanner::admin::instance::v1::UpdateInstanceConfigRequest const& request) {
+      return stub->AsyncUpdateInstanceConfig(
+          cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](CompletionQueue& cq,
+                   std::unique_ptr<rest_internal::RestContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+      return stub->AsyncGetOperation(
+          cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](CompletionQueue& cq,
+                   std::unique_ptr<rest_internal::RestContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+      return stub->AsyncCancelOperation(
+          cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::spanner::admin::instance::v1::InstanceConfig>,
+    retry_policy(*current), backoff_policy(*current),
+    idempotency_policy(*current)->UpdateInstanceConfig(request),
+    polling_policy(*current), __func__);
+
 }
 
 StatusOr<google::longrunning::Operation>
-InstanceAdminRestConnectionImpl::UpdateInstanceConfig(
-    NoAwaitTag,
-    google::spanner::admin::instance::v1::UpdateInstanceConfigRequest const&
-        request) {
+InstanceAdminRestConnectionImpl::UpdateInstanceConfig(NoAwaitTag, google::spanner::admin::instance::v1::UpdateInstanceConfigRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateInstanceConfig(request),
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::spanner::admin::instance::v1::
-                 UpdateInstanceConfigRequest const& request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options, google::spanner::admin::instance::v1::UpdateInstanceConfigRequest const& request) {
         return stub_->UpdateInstanceConfig(rest_context, options, request);
       },
       *current, request, __func__);
@@ -245,88 +208,68 @@ future<StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>
 InstanceAdminRestConnectionImpl::UpdateInstanceConfig(
     google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata()
-           .Is<typename google::spanner::admin::instance::v1::
-                   UpdateInstanceConfigMetadata>()) {
-    return make_ready_future<
-        StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>(
-        internal::InvalidArgumentError(
-            "operation does not correspond to UpdateInstanceConfig",
-            GCP_ERROR_INFO().WithMetadata("operation",
-                                          operation.metadata().DebugString())));
+  if (!operation.metadata().Is<typename google::spanner::admin::instance::v1::UpdateInstanceConfigMetadata>()) {
+    return make_ready_future<StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>(
+        internal::InvalidArgumentError("operation does not correspond to UpdateInstanceConfig",
+                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
   }
-  return rest_internal::AsyncRestAwaitLongRunningOperation<
-      google::spanner::admin::instance::v1::InstanceConfig>(
-      background_->cq(), current, operation,
-      [stub = stub_](CompletionQueue& cq,
-                     std::unique_ptr<rest_internal::RestContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          CompletionQueue& cq,
-          std::unique_ptr<rest_internal::RestContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::spanner::admin::instance::v1::InstanceConfig>,
-      polling_policy(*current), __func__);
+  return rest_internal::AsyncRestAwaitLongRunningOperation<google::spanner::admin::instance::v1::InstanceConfig>(
+    background_->cq(), current, operation,
+    [stub = stub_](CompletionQueue& cq,
+                   std::unique_ptr<rest_internal::RestContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+      return stub->AsyncGetOperation(
+          cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](CompletionQueue& cq,
+                   std::unique_ptr<rest_internal::RestContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+      return stub->AsyncCancelOperation(
+          cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::spanner::admin::instance::v1::InstanceConfig>,
+    polling_policy(*current), __func__);
+
 }
 
-Status InstanceAdminRestConnectionImpl::DeleteInstanceConfig(
-    google::spanner::admin::instance::v1::DeleteInstanceConfigRequest const&
-        request) {
+Status
+InstanceAdminRestConnectionImpl::DeleteInstanceConfig(google::spanner::admin::instance::v1::DeleteInstanceConfigRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteInstanceConfig(request),
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::spanner::admin::instance::v1::
-                 DeleteInstanceConfigRequest const& request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options, google::spanner::admin::instance::v1::DeleteInstanceConfigRequest const& request) {
         return stub_->DeleteInstanceConfig(rest_context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::longrunning::Operation>
-InstanceAdminRestConnectionImpl::ListInstanceConfigOperations(
-    google::spanner::admin::instance::v1::ListInstanceConfigOperationsRequest
-        request) {
+InstanceAdminRestConnectionImpl::ListInstanceConfigOperations(google::spanner::admin::instance::v1::ListInstanceConfigOperationsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
-  auto idempotency =
-      idempotency_policy(*current)->ListInstanceConfigOperations(request);
+  auto idempotency = idempotency_policy(*current)->ListInstanceConfigOperations(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::longrunning::Operation>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::longrunning::Operation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<spanner_admin::InstanceAdminRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<spanner_admin::InstanceAdminRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::spanner::admin::instance::v1::
-              ListInstanceConfigOperationsRequest const& r) {
+          Options const& options, google::spanner::admin::instance::v1::ListInstanceConfigOperationsRequest const& r) {
         return google::cloud::rest_internal::RestRetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](rest_internal::RestContext& rest_context,
                    Options const& options,
-                   google::spanner::admin::instance::v1::
-                       ListInstanceConfigOperationsRequest const& request) {
-              return stub->ListInstanceConfigOperations(rest_context, options,
-                                                        request);
+                   google::spanner::admin::instance::v1::ListInstanceConfigOperationsRequest const& request) {
+              return stub->ListInstanceConfigOperations(rest_context, options, request);
             },
             options, r, function_name);
       },
-      [](google::spanner::admin::instance::v1::
-             ListInstanceConfigOperationsResponse r) {
-        std::vector<google::longrunning::Operation> result(
-            r.operations().size());
+      [](google::spanner::admin::instance::v1::ListInstanceConfigOperationsResponse r) {
+        std::vector<google::longrunning::Operation> result(r.operations().size());
         auto& messages = *r.mutable_operations();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -334,34 +277,28 @@ InstanceAdminRestConnectionImpl::ListInstanceConfigOperations(
 }
 
 StreamRange<google::spanner::admin::instance::v1::Instance>
-InstanceAdminRestConnectionImpl::ListInstances(
-    google::spanner::admin::instance::v1::ListInstancesRequest request) {
+InstanceAdminRestConnectionImpl::ListInstances(google::spanner::admin::instance::v1::ListInstancesRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListInstances(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::spanner::admin::instance::v1::Instance>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::spanner::admin::instance::v1::Instance>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<spanner_admin::InstanceAdminRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<spanner_admin::InstanceAdminRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::spanner::admin::instance::v1::ListInstancesRequest const& r) {
+          Options const& options, google::spanner::admin::instance::v1::ListInstancesRequest const& r) {
         return google::cloud::rest_internal::RestRetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](rest_internal::RestContext& rest_context,
                    Options const& options,
-                   google::spanner::admin::instance::v1::
-                       ListInstancesRequest const& request) {
+                   google::spanner::admin::instance::v1::ListInstancesRequest const& request) {
               return stub->ListInstances(rest_context, options, request);
             },
             options, r, function_name);
       },
       [](google::spanner::admin::instance::v1::ListInstancesResponse r) {
-        std::vector<google::spanner::admin::instance::v1::Instance> result(
-            r.instances().size());
+        std::vector<google::spanner::admin::instance::v1::Instance> result(r.instances().size());
         auto& messages = *r.mutable_instances();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -369,38 +306,28 @@ InstanceAdminRestConnectionImpl::ListInstances(
 }
 
 StreamRange<google::spanner::admin::instance::v1::InstancePartition>
-InstanceAdminRestConnectionImpl::ListInstancePartitions(
-    google::spanner::admin::instance::v1::ListInstancePartitionsRequest
-        request) {
+InstanceAdminRestConnectionImpl::ListInstancePartitions(google::spanner::admin::instance::v1::ListInstancePartitionsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
-  auto idempotency =
-      idempotency_policy(*current)->ListInstancePartitions(request);
+  auto idempotency = idempotency_policy(*current)->ListInstancePartitions(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::spanner::admin::instance::v1::InstancePartition>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::spanner::admin::instance::v1::InstancePartition>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<spanner_admin::InstanceAdminRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<spanner_admin::InstanceAdminRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::spanner::admin::instance::v1::
-                                      ListInstancePartitionsRequest const& r) {
+          Options const& options, google::spanner::admin::instance::v1::ListInstancePartitionsRequest const& r) {
         return google::cloud::rest_internal::RestRetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](rest_internal::RestContext& rest_context,
                    Options const& options,
-                   google::spanner::admin::instance::v1::
-                       ListInstancePartitionsRequest const& request) {
-              return stub->ListInstancePartitions(rest_context, options,
-                                                  request);
+                   google::spanner::admin::instance::v1::ListInstancePartitionsRequest const& request) {
+              return stub->ListInstancePartitions(rest_context, options, request);
             },
             options, r, function_name);
       },
-      [](google::spanner::admin::instance::v1::ListInstancePartitionsResponse
-             r) {
-        std::vector<google::spanner::admin::instance::v1::InstancePartition>
-            result(r.instance_partitions().size());
+      [](google::spanner::admin::instance::v1::ListInstancePartitionsResponse r) {
+        std::vector<google::spanner::admin::instance::v1::InstancePartition> result(r.instance_partitions().size());
         auto& messages = *r.mutable_instance_partitions();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -408,71 +335,58 @@ InstanceAdminRestConnectionImpl::ListInstancePartitions(
 }
 
 StatusOr<google::spanner::admin::instance::v1::Instance>
-InstanceAdminRestConnectionImpl::GetInstance(
-    google::spanner::admin::instance::v1::GetInstanceRequest const& request) {
+InstanceAdminRestConnectionImpl::GetInstance(google::spanner::admin::instance::v1::GetInstanceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetInstance(request),
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::spanner::admin::instance::v1::GetInstanceRequest const&
-                 request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options, google::spanner::admin::instance::v1::GetInstanceRequest const& request) {
         return stub_->GetInstance(rest_context, options, request);
       },
       *current, request, __func__);
 }
 
 future<StatusOr<google::spanner::admin::instance::v1::Instance>>
-InstanceAdminRestConnectionImpl::CreateInstance(
-    google::spanner::admin::instance::v1::CreateInstanceRequest const&
-        request) {
+InstanceAdminRestConnectionImpl::CreateInstance(google::spanner::admin::instance::v1::CreateInstanceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  return rest_internal::AsyncRestLongRunningOperation<
-      google::spanner::admin::instance::v1::Instance>(
-      background_->cq(), current, request,
-      [stub = stub_](
-          CompletionQueue& cq,
-          std::unique_ptr<rest_internal::RestContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::spanner::admin::instance::v1::CreateInstanceRequest const&
-              request) {
-        return stub->AsyncCreateInstance(cq, std::move(context),
-                                         std::move(options), request);
-      },
-      [stub = stub_](CompletionQueue& cq,
-                     std::unique_ptr<rest_internal::RestContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          CompletionQueue& cq,
-          std::unique_ptr<rest_internal::RestContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::spanner::admin::instance::v1::Instance>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateInstance(request),
-      polling_policy(*current), __func__);
+  return rest_internal::AsyncRestLongRunningOperation<google::spanner::admin::instance::v1::Instance>(
+    background_->cq(), current, request,
+    [stub = stub_](CompletionQueue& cq,
+                   std::unique_ptr<rest_internal::RestContext> context,
+                   google::cloud::internal::ImmutableOptions options, google::spanner::admin::instance::v1::CreateInstanceRequest const& request) {
+      return stub->AsyncCreateInstance(
+          cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](CompletionQueue& cq,
+                   std::unique_ptr<rest_internal::RestContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+      return stub->AsyncGetOperation(
+          cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](CompletionQueue& cq,
+                   std::unique_ptr<rest_internal::RestContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+      return stub->AsyncCancelOperation(
+          cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::spanner::admin::instance::v1::Instance>,
+    retry_policy(*current), backoff_policy(*current),
+    idempotency_policy(*current)->CreateInstance(request),
+    polling_policy(*current), __func__);
+
 }
 
 StatusOr<google::longrunning::Operation>
-InstanceAdminRestConnectionImpl::CreateInstance(
-    NoAwaitTag,
-    google::spanner::admin::instance::v1::CreateInstanceRequest const&
-        request) {
+InstanceAdminRestConnectionImpl::CreateInstance(NoAwaitTag, google::spanner::admin::instance::v1::CreateInstanceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateInstance(request),
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::spanner::admin::instance::v1::CreateInstanceRequest const&
-                 request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options, google::spanner::admin::instance::v1::CreateInstanceRequest const& request) {
         return stub_->CreateInstance(rest_context, options, request);
       },
       *current, request, __func__);
@@ -482,90 +396,72 @@ future<StatusOr<google::spanner::admin::instance::v1::Instance>>
 InstanceAdminRestConnectionImpl::CreateInstance(
     google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata()
-           .Is<typename google::spanner::admin::instance::v1::
-                   CreateInstanceMetadata>()) {
-    return make_ready_future<
-        StatusOr<google::spanner::admin::instance::v1::Instance>>(
-        internal::InvalidArgumentError(
-            "operation does not correspond to CreateInstance",
-            GCP_ERROR_INFO().WithMetadata("operation",
-                                          operation.metadata().DebugString())));
+  if (!operation.metadata().Is<typename google::spanner::admin::instance::v1::CreateInstanceMetadata>()) {
+    return make_ready_future<StatusOr<google::spanner::admin::instance::v1::Instance>>(
+        internal::InvalidArgumentError("operation does not correspond to CreateInstance",
+                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
   }
-  return rest_internal::AsyncRestAwaitLongRunningOperation<
-      google::spanner::admin::instance::v1::Instance>(
-      background_->cq(), current, operation,
-      [stub = stub_](CompletionQueue& cq,
-                     std::unique_ptr<rest_internal::RestContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          CompletionQueue& cq,
-          std::unique_ptr<rest_internal::RestContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::spanner::admin::instance::v1::Instance>,
-      polling_policy(*current), __func__);
+  return rest_internal::AsyncRestAwaitLongRunningOperation<google::spanner::admin::instance::v1::Instance>(
+    background_->cq(), current, operation,
+    [stub = stub_](CompletionQueue& cq,
+                   std::unique_ptr<rest_internal::RestContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+      return stub->AsyncGetOperation(
+          cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](CompletionQueue& cq,
+                   std::unique_ptr<rest_internal::RestContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+      return stub->AsyncCancelOperation(
+          cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::spanner::admin::instance::v1::Instance>,
+    polling_policy(*current), __func__);
+
 }
 
 future<StatusOr<google::spanner::admin::instance::v1::Instance>>
-InstanceAdminRestConnectionImpl::UpdateInstance(
-    google::spanner::admin::instance::v1::UpdateInstanceRequest const&
-        request) {
+InstanceAdminRestConnectionImpl::UpdateInstance(google::spanner::admin::instance::v1::UpdateInstanceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  return rest_internal::AsyncRestLongRunningOperation<
-      google::spanner::admin::instance::v1::Instance>(
-      background_->cq(), current, request,
-      [stub = stub_](
-          CompletionQueue& cq,
-          std::unique_ptr<rest_internal::RestContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::spanner::admin::instance::v1::UpdateInstanceRequest const&
-              request) {
-        return stub->AsyncUpdateInstance(cq, std::move(context),
-                                         std::move(options), request);
-      },
-      [stub = stub_](CompletionQueue& cq,
-                     std::unique_ptr<rest_internal::RestContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          CompletionQueue& cq,
-          std::unique_ptr<rest_internal::RestContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::spanner::admin::instance::v1::Instance>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateInstance(request),
-      polling_policy(*current), __func__);
+  return rest_internal::AsyncRestLongRunningOperation<google::spanner::admin::instance::v1::Instance>(
+    background_->cq(), current, request,
+    [stub = stub_](CompletionQueue& cq,
+                   std::unique_ptr<rest_internal::RestContext> context,
+                   google::cloud::internal::ImmutableOptions options, google::spanner::admin::instance::v1::UpdateInstanceRequest const& request) {
+      return stub->AsyncUpdateInstance(
+          cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](CompletionQueue& cq,
+                   std::unique_ptr<rest_internal::RestContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+      return stub->AsyncGetOperation(
+          cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](CompletionQueue& cq,
+                   std::unique_ptr<rest_internal::RestContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+      return stub->AsyncCancelOperation(
+          cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::spanner::admin::instance::v1::Instance>,
+    retry_policy(*current), backoff_policy(*current),
+    idempotency_policy(*current)->UpdateInstance(request),
+    polling_policy(*current), __func__);
+
 }
 
 StatusOr<google::longrunning::Operation>
-InstanceAdminRestConnectionImpl::UpdateInstance(
-    NoAwaitTag,
-    google::spanner::admin::instance::v1::UpdateInstanceRequest const&
-        request) {
+InstanceAdminRestConnectionImpl::UpdateInstance(NoAwaitTag, google::spanner::admin::instance::v1::UpdateInstanceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateInstance(request),
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::spanner::admin::instance::v1::UpdateInstanceRequest const&
-                 request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options, google::spanner::admin::instance::v1::UpdateInstanceRequest const& request) {
         return stub_->UpdateInstance(rest_context, options, request);
       },
       *current, request, __func__);
@@ -575,160 +471,137 @@ future<StatusOr<google::spanner::admin::instance::v1::Instance>>
 InstanceAdminRestConnectionImpl::UpdateInstance(
     google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata()
-           .Is<typename google::spanner::admin::instance::v1::
-                   UpdateInstanceMetadata>()) {
-    return make_ready_future<
-        StatusOr<google::spanner::admin::instance::v1::Instance>>(
-        internal::InvalidArgumentError(
-            "operation does not correspond to UpdateInstance",
-            GCP_ERROR_INFO().WithMetadata("operation",
-                                          operation.metadata().DebugString())));
+  if (!operation.metadata().Is<typename google::spanner::admin::instance::v1::UpdateInstanceMetadata>()) {
+    return make_ready_future<StatusOr<google::spanner::admin::instance::v1::Instance>>(
+        internal::InvalidArgumentError("operation does not correspond to UpdateInstance",
+                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
   }
-  return rest_internal::AsyncRestAwaitLongRunningOperation<
-      google::spanner::admin::instance::v1::Instance>(
-      background_->cq(), current, operation,
-      [stub = stub_](CompletionQueue& cq,
-                     std::unique_ptr<rest_internal::RestContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          CompletionQueue& cq,
-          std::unique_ptr<rest_internal::RestContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::spanner::admin::instance::v1::Instance>,
-      polling_policy(*current), __func__);
+  return rest_internal::AsyncRestAwaitLongRunningOperation<google::spanner::admin::instance::v1::Instance>(
+    background_->cq(), current, operation,
+    [stub = stub_](CompletionQueue& cq,
+                   std::unique_ptr<rest_internal::RestContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+      return stub->AsyncGetOperation(
+          cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](CompletionQueue& cq,
+                   std::unique_ptr<rest_internal::RestContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+      return stub->AsyncCancelOperation(
+          cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::spanner::admin::instance::v1::Instance>,
+    polling_policy(*current), __func__);
+
 }
 
-Status InstanceAdminRestConnectionImpl::DeleteInstance(
-    google::spanner::admin::instance::v1::DeleteInstanceRequest const&
-        request) {
+Status
+InstanceAdminRestConnectionImpl::DeleteInstance(google::spanner::admin::instance::v1::DeleteInstanceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteInstance(request),
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::spanner::admin::instance::v1::DeleteInstanceRequest const&
-                 request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options, google::spanner::admin::instance::v1::DeleteInstanceRequest const& request) {
         return stub_->DeleteInstance(rest_context, options, request);
       },
       *current, request, __func__);
 }
 
-StatusOr<google::iam::v1::Policy> InstanceAdminRestConnectionImpl::SetIamPolicy(
-    google::iam::v1::SetIamPolicyRequest const& request) {
+StatusOr<google::iam::v1::Policy>
+InstanceAdminRestConnectionImpl::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->SetIamPolicy(request),
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::iam::v1::SetIamPolicyRequest const& request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options, google::iam::v1::SetIamPolicyRequest const& request) {
         return stub_->SetIamPolicy(rest_context, options, request);
       },
       *current, request, __func__);
 }
 
-StatusOr<google::iam::v1::Policy> InstanceAdminRestConnectionImpl::GetIamPolicy(
-    google::iam::v1::GetIamPolicyRequest const& request) {
+StatusOr<google::iam::v1::Policy>
+InstanceAdminRestConnectionImpl::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetIamPolicy(request),
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::iam::v1::GetIamPolicyRequest const& request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options, google::iam::v1::GetIamPolicyRequest const& request) {
         return stub_->GetIamPolicy(rest_context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-InstanceAdminRestConnectionImpl::TestIamPermissions(
-    google::iam::v1::TestIamPermissionsRequest const& request) {
+InstanceAdminRestConnectionImpl::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->TestIamPermissions(request),
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::iam::v1::TestIamPermissionsRequest const& request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options, google::iam::v1::TestIamPermissionsRequest const& request) {
         return stub_->TestIamPermissions(rest_context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::spanner::admin::instance::v1::InstancePartition>
-InstanceAdminRestConnectionImpl::GetInstancePartition(
-    google::spanner::admin::instance::v1::GetInstancePartitionRequest const&
-        request) {
+InstanceAdminRestConnectionImpl::GetInstancePartition(google::spanner::admin::instance::v1::GetInstancePartitionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetInstancePartition(request),
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::spanner::admin::instance::v1::
-                 GetInstancePartitionRequest const& request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options, google::spanner::admin::instance::v1::GetInstancePartitionRequest const& request) {
         return stub_->GetInstancePartition(rest_context, options, request);
       },
       *current, request, __func__);
 }
 
 future<StatusOr<google::spanner::admin::instance::v1::InstancePartition>>
-InstanceAdminRestConnectionImpl::CreateInstancePartition(
-    google::spanner::admin::instance::v1::CreateInstancePartitionRequest const&
-        request) {
+InstanceAdminRestConnectionImpl::CreateInstancePartition(google::spanner::admin::instance::v1::CreateInstancePartitionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  return rest_internal::AsyncRestLongRunningOperation<
-      google::spanner::admin::instance::v1::InstancePartition>(
-      background_->cq(), current, request,
-      [stub = stub_](CompletionQueue& cq,
-                     std::unique_ptr<rest_internal::RestContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::spanner::admin::instance::v1::
-                         CreateInstancePartitionRequest const& request) {
-        return stub->AsyncCreateInstancePartition(cq, std::move(context),
-                                                  std::move(options), request);
-      },
-      [stub = stub_](CompletionQueue& cq,
-                     std::unique_ptr<rest_internal::RestContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          CompletionQueue& cq,
-          std::unique_ptr<rest_internal::RestContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::spanner::admin::instance::v1::InstancePartition>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateInstancePartition(request),
-      polling_policy(*current), __func__);
+  return rest_internal::AsyncRestLongRunningOperation<google::spanner::admin::instance::v1::InstancePartition>(
+    background_->cq(), current, request,
+    [stub = stub_](CompletionQueue& cq,
+                   std::unique_ptr<rest_internal::RestContext> context,
+                   google::cloud::internal::ImmutableOptions options, google::spanner::admin::instance::v1::CreateInstancePartitionRequest const& request) {
+      return stub->AsyncCreateInstancePartition(
+          cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](CompletionQueue& cq,
+                   std::unique_ptr<rest_internal::RestContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+      return stub->AsyncGetOperation(
+          cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](CompletionQueue& cq,
+                   std::unique_ptr<rest_internal::RestContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+      return stub->AsyncCancelOperation(
+          cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::spanner::admin::instance::v1::InstancePartition>,
+    retry_policy(*current), backoff_policy(*current),
+    idempotency_policy(*current)->CreateInstancePartition(request),
+    polling_policy(*current), __func__);
+
 }
 
 StatusOr<google::longrunning::Operation>
-InstanceAdminRestConnectionImpl::CreateInstancePartition(
-    NoAwaitTag,
-    google::spanner::admin::instance::v1::CreateInstancePartitionRequest const&
-        request) {
+InstanceAdminRestConnectionImpl::CreateInstancePartition(NoAwaitTag, google::spanner::admin::instance::v1::CreateInstancePartitionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateInstancePartition(request),
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::spanner::admin::instance::v1::
-                 CreateInstancePartitionRequest const& request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options, google::spanner::admin::instance::v1::CreateInstancePartitionRequest const& request) {
         return stub_->CreateInstancePartition(rest_context, options, request);
       },
       *current, request, __func__);
@@ -738,104 +611,85 @@ future<StatusOr<google::spanner::admin::instance::v1::InstancePartition>>
 InstanceAdminRestConnectionImpl::CreateInstancePartition(
     google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata()
-           .Is<typename google::spanner::admin::instance::v1::
-                   CreateInstancePartitionMetadata>()) {
-    return make_ready_future<
-        StatusOr<google::spanner::admin::instance::v1::InstancePartition>>(
-        internal::InvalidArgumentError(
-            "operation does not correspond to CreateInstancePartition",
-            GCP_ERROR_INFO().WithMetadata("operation",
-                                          operation.metadata().DebugString())));
+  if (!operation.metadata().Is<typename google::spanner::admin::instance::v1::CreateInstancePartitionMetadata>()) {
+    return make_ready_future<StatusOr<google::spanner::admin::instance::v1::InstancePartition>>(
+        internal::InvalidArgumentError("operation does not correspond to CreateInstancePartition",
+                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
   }
-  return rest_internal::AsyncRestAwaitLongRunningOperation<
-      google::spanner::admin::instance::v1::InstancePartition>(
-      background_->cq(), current, operation,
-      [stub = stub_](CompletionQueue& cq,
-                     std::unique_ptr<rest_internal::RestContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          CompletionQueue& cq,
-          std::unique_ptr<rest_internal::RestContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::spanner::admin::instance::v1::InstancePartition>,
-      polling_policy(*current), __func__);
+  return rest_internal::AsyncRestAwaitLongRunningOperation<google::spanner::admin::instance::v1::InstancePartition>(
+    background_->cq(), current, operation,
+    [stub = stub_](CompletionQueue& cq,
+                   std::unique_ptr<rest_internal::RestContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+      return stub->AsyncGetOperation(
+          cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](CompletionQueue& cq,
+                   std::unique_ptr<rest_internal::RestContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+      return stub->AsyncCancelOperation(
+          cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::spanner::admin::instance::v1::InstancePartition>,
+    polling_policy(*current), __func__);
+
 }
 
-Status InstanceAdminRestConnectionImpl::DeleteInstancePartition(
-    google::spanner::admin::instance::v1::DeleteInstancePartitionRequest const&
-        request) {
+Status
+InstanceAdminRestConnectionImpl::DeleteInstancePartition(google::spanner::admin::instance::v1::DeleteInstancePartitionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteInstancePartition(request),
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::spanner::admin::instance::v1::
-                 DeleteInstancePartitionRequest const& request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options, google::spanner::admin::instance::v1::DeleteInstancePartitionRequest const& request) {
         return stub_->DeleteInstancePartition(rest_context, options, request);
       },
       *current, request, __func__);
 }
 
 future<StatusOr<google::spanner::admin::instance::v1::InstancePartition>>
-InstanceAdminRestConnectionImpl::UpdateInstancePartition(
-    google::spanner::admin::instance::v1::UpdateInstancePartitionRequest const&
-        request) {
+InstanceAdminRestConnectionImpl::UpdateInstancePartition(google::spanner::admin::instance::v1::UpdateInstancePartitionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  return rest_internal::AsyncRestLongRunningOperation<
-      google::spanner::admin::instance::v1::InstancePartition>(
-      background_->cq(), current, request,
-      [stub = stub_](CompletionQueue& cq,
-                     std::unique_ptr<rest_internal::RestContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::spanner::admin::instance::v1::
-                         UpdateInstancePartitionRequest const& request) {
-        return stub->AsyncUpdateInstancePartition(cq, std::move(context),
-                                                  std::move(options), request);
-      },
-      [stub = stub_](CompletionQueue& cq,
-                     std::unique_ptr<rest_internal::RestContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          CompletionQueue& cq,
-          std::unique_ptr<rest_internal::RestContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::spanner::admin::instance::v1::InstancePartition>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateInstancePartition(request),
-      polling_policy(*current), __func__);
+  return rest_internal::AsyncRestLongRunningOperation<google::spanner::admin::instance::v1::InstancePartition>(
+    background_->cq(), current, request,
+    [stub = stub_](CompletionQueue& cq,
+                   std::unique_ptr<rest_internal::RestContext> context,
+                   google::cloud::internal::ImmutableOptions options, google::spanner::admin::instance::v1::UpdateInstancePartitionRequest const& request) {
+      return stub->AsyncUpdateInstancePartition(
+          cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](CompletionQueue& cq,
+                   std::unique_ptr<rest_internal::RestContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+      return stub->AsyncGetOperation(
+          cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](CompletionQueue& cq,
+                   std::unique_ptr<rest_internal::RestContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+      return stub->AsyncCancelOperation(
+          cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::spanner::admin::instance::v1::InstancePartition>,
+    retry_policy(*current), backoff_policy(*current),
+    idempotency_policy(*current)->UpdateInstancePartition(request),
+    polling_policy(*current), __func__);
+
 }
 
 StatusOr<google::longrunning::Operation>
-InstanceAdminRestConnectionImpl::UpdateInstancePartition(
-    NoAwaitTag,
-    google::spanner::admin::instance::v1::UpdateInstancePartitionRequest const&
-        request) {
+InstanceAdminRestConnectionImpl::UpdateInstancePartition(NoAwaitTag, google::spanner::admin::instance::v1::UpdateInstancePartitionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateInstancePartition(request),
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::spanner::admin::instance::v1::
-                 UpdateInstancePartitionRequest const& request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options, google::spanner::admin::instance::v1::UpdateInstancePartitionRequest const& request) {
         return stub_->UpdateInstancePartition(rest_context, options, request);
       },
       *current, request, __func__);
@@ -845,73 +699,55 @@ future<StatusOr<google::spanner::admin::instance::v1::InstancePartition>>
 InstanceAdminRestConnectionImpl::UpdateInstancePartition(
     google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata()
-           .Is<typename google::spanner::admin::instance::v1::
-                   UpdateInstancePartitionMetadata>()) {
-    return make_ready_future<
-        StatusOr<google::spanner::admin::instance::v1::InstancePartition>>(
-        internal::InvalidArgumentError(
-            "operation does not correspond to UpdateInstancePartition",
-            GCP_ERROR_INFO().WithMetadata("operation",
-                                          operation.metadata().DebugString())));
+  if (!operation.metadata().Is<typename google::spanner::admin::instance::v1::UpdateInstancePartitionMetadata>()) {
+    return make_ready_future<StatusOr<google::spanner::admin::instance::v1::InstancePartition>>(
+        internal::InvalidArgumentError("operation does not correspond to UpdateInstancePartition",
+                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
   }
-  return rest_internal::AsyncRestAwaitLongRunningOperation<
-      google::spanner::admin::instance::v1::InstancePartition>(
-      background_->cq(), current, operation,
-      [stub = stub_](CompletionQueue& cq,
-                     std::unique_ptr<rest_internal::RestContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          CompletionQueue& cq,
-          std::unique_ptr<rest_internal::RestContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::spanner::admin::instance::v1::InstancePartition>,
-      polling_policy(*current), __func__);
+  return rest_internal::AsyncRestAwaitLongRunningOperation<google::spanner::admin::instance::v1::InstancePartition>(
+    background_->cq(), current, operation,
+    [stub = stub_](CompletionQueue& cq,
+                   std::unique_ptr<rest_internal::RestContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+      return stub->AsyncGetOperation(
+          cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](CompletionQueue& cq,
+                   std::unique_ptr<rest_internal::RestContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+      return stub->AsyncCancelOperation(
+          cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::spanner::admin::instance::v1::InstancePartition>,
+    polling_policy(*current), __func__);
+
 }
 
 StreamRange<google::longrunning::Operation>
-InstanceAdminRestConnectionImpl::ListInstancePartitionOperations(
-    google::spanner::admin::instance::v1::ListInstancePartitionOperationsRequest
-        request) {
+InstanceAdminRestConnectionImpl::ListInstancePartitionOperations(google::spanner::admin::instance::v1::ListInstancePartitionOperationsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
-  auto idempotency =
-      idempotency_policy(*current)->ListInstancePartitionOperations(request);
+  auto idempotency = idempotency_policy(*current)->ListInstancePartitionOperations(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::longrunning::Operation>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::longrunning::Operation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<spanner_admin::InstanceAdminRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<spanner_admin::InstanceAdminRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::spanner::admin::instance::v1::
-              ListInstancePartitionOperationsRequest const& r) {
+          Options const& options, google::spanner::admin::instance::v1::ListInstancePartitionOperationsRequest const& r) {
         return google::cloud::rest_internal::RestRetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](rest_internal::RestContext& rest_context,
                    Options const& options,
-                   google::spanner::admin::instance::v1::
-                       ListInstancePartitionOperationsRequest const& request) {
-              return stub->ListInstancePartitionOperations(rest_context,
-                                                           options, request);
+                   google::spanner::admin::instance::v1::ListInstancePartitionOperationsRequest const& request) {
+              return stub->ListInstancePartitionOperations(rest_context, options, request);
             },
             options, r, function_name);
       },
-      [](google::spanner::admin::instance::v1::
-             ListInstancePartitionOperationsResponse r) {
-        std::vector<google::longrunning::Operation> result(
-            r.operations().size());
+      [](google::spanner::admin::instance::v1::ListInstancePartitionOperationsResponse r) {
+        std::vector<google::longrunning::Operation> result(r.operations().size());
         auto& messages = *r.mutable_operations();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -919,54 +755,45 @@ InstanceAdminRestConnectionImpl::ListInstancePartitionOperations(
 }
 
 future<StatusOr<google::spanner::admin::instance::v1::MoveInstanceResponse>>
-InstanceAdminRestConnectionImpl::MoveInstance(
-    google::spanner::admin::instance::v1::MoveInstanceRequest const& request) {
+InstanceAdminRestConnectionImpl::MoveInstance(google::spanner::admin::instance::v1::MoveInstanceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  return rest_internal::AsyncRestLongRunningOperation<
-      google::spanner::admin::instance::v1::MoveInstanceResponse>(
-      background_->cq(), current, request,
-      [stub = stub_](
-          CompletionQueue& cq,
-          std::unique_ptr<rest_internal::RestContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::spanner::admin::instance::v1::MoveInstanceRequest const&
-              request) {
-        return stub->AsyncMoveInstance(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](CompletionQueue& cq,
-                     std::unique_ptr<rest_internal::RestContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          CompletionQueue& cq,
-          std::unique_ptr<rest_internal::RestContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::spanner::admin::instance::v1::MoveInstanceResponse>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->MoveInstance(request),
-      polling_policy(*current), __func__);
+  return rest_internal::AsyncRestLongRunningOperation<google::spanner::admin::instance::v1::MoveInstanceResponse>(
+    background_->cq(), current, request,
+    [stub = stub_](CompletionQueue& cq,
+                   std::unique_ptr<rest_internal::RestContext> context,
+                   google::cloud::internal::ImmutableOptions options, google::spanner::admin::instance::v1::MoveInstanceRequest const& request) {
+      return stub->AsyncMoveInstance(
+          cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](CompletionQueue& cq,
+                   std::unique_ptr<rest_internal::RestContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+      return stub->AsyncGetOperation(
+          cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](CompletionQueue& cq,
+                   std::unique_ptr<rest_internal::RestContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+      return stub->AsyncCancelOperation(
+          cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::spanner::admin::instance::v1::MoveInstanceResponse>,
+    retry_policy(*current), backoff_policy(*current),
+    idempotency_policy(*current)->MoveInstance(request),
+    polling_policy(*current), __func__);
+
 }
 
 StatusOr<google::longrunning::Operation>
-InstanceAdminRestConnectionImpl::MoveInstance(
-    NoAwaitTag,
-    google::spanner::admin::instance::v1::MoveInstanceRequest const& request) {
+InstanceAdminRestConnectionImpl::MoveInstance(NoAwaitTag, google::spanner::admin::instance::v1::MoveInstanceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->MoveInstance(request),
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::spanner::admin::instance::v1::MoveInstanceRequest const&
-                 request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options, google::spanner::admin::instance::v1::MoveInstanceRequest const& request) {
         return stub_->MoveInstance(rest_context, options, request);
       },
       *current, request, __func__);
@@ -976,55 +803,44 @@ future<StatusOr<google::spanner::admin::instance::v1::MoveInstanceResponse>>
 InstanceAdminRestConnectionImpl::MoveInstance(
     google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata()
-           .Is<typename google::spanner::admin::instance::v1::
-                   MoveInstanceMetadata>()) {
-    return make_ready_future<
-        StatusOr<google::spanner::admin::instance::v1::MoveInstanceResponse>>(
-        internal::InvalidArgumentError(
-            "operation does not correspond to MoveInstance",
-            GCP_ERROR_INFO().WithMetadata("operation",
-                                          operation.metadata().DebugString())));
+  if (!operation.metadata().Is<typename google::spanner::admin::instance::v1::MoveInstanceMetadata>()) {
+    return make_ready_future<StatusOr<google::spanner::admin::instance::v1::MoveInstanceResponse>>(
+        internal::InvalidArgumentError("operation does not correspond to MoveInstance",
+                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
   }
-  return rest_internal::AsyncRestAwaitLongRunningOperation<
-      google::spanner::admin::instance::v1::MoveInstanceResponse>(
-      background_->cq(), current, operation,
-      [stub = stub_](CompletionQueue& cq,
-                     std::unique_ptr<rest_internal::RestContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          CompletionQueue& cq,
-          std::unique_ptr<rest_internal::RestContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::spanner::admin::instance::v1::MoveInstanceResponse>,
-      polling_policy(*current), __func__);
+  return rest_internal::AsyncRestAwaitLongRunningOperation<google::spanner::admin::instance::v1::MoveInstanceResponse>(
+    background_->cq(), current, operation,
+    [stub = stub_](CompletionQueue& cq,
+                   std::unique_ptr<rest_internal::RestContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+      return stub->AsyncGetOperation(
+          cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](CompletionQueue& cq,
+                   std::unique_ptr<rest_internal::RestContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+      return stub->AsyncCancelOperation(
+          cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::spanner::admin::instance::v1::MoveInstanceResponse>,
+    polling_policy(*current), __func__);
+
 }
 
 StreamRange<google::longrunning::Operation>
-InstanceAdminRestConnectionImpl::ListOperations(
-    google::longrunning::ListOperationsRequest request) {
+InstanceAdminRestConnectionImpl::ListOperations(google::longrunning::ListOperationsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListOperations(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::longrunning::Operation>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::longrunning::Operation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<spanner_admin::InstanceAdminRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<spanner_admin::InstanceAdminRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::longrunning::ListOperationsRequest const& r) {
+          Options const& options, google::longrunning::ListOperationsRequest const& r) {
         return google::cloud::rest_internal::RestRetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](rest_internal::RestContext& rest_context,
@@ -1035,8 +851,7 @@ InstanceAdminRestConnectionImpl::ListOperations(
             options, r, function_name);
       },
       [](google::longrunning::ListOperationsResponse r) {
-        std::vector<google::longrunning::Operation> result(
-            r.operations().size());
+        std::vector<google::longrunning::Operation> result(r.operations().size());
         auto& messages = *r.mutable_operations();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -1044,40 +859,39 @@ InstanceAdminRestConnectionImpl::ListOperations(
 }
 
 StatusOr<google::longrunning::Operation>
-InstanceAdminRestConnectionImpl::GetOperation(
-    google::longrunning::GetOperationRequest const& request) {
+InstanceAdminRestConnectionImpl::GetOperation(google::longrunning::GetOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetOperation(request),
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::longrunning::GetOperationRequest const& request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options, google::longrunning::GetOperationRequest const& request) {
         return stub_->GetOperation(rest_context, options, request);
       },
       *current, request, __func__);
 }
 
-Status InstanceAdminRestConnectionImpl::DeleteOperation(
-    google::longrunning::DeleteOperationRequest const& request) {
+Status
+InstanceAdminRestConnectionImpl::DeleteOperation(google::longrunning::DeleteOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteOperation(request),
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::longrunning::DeleteOperationRequest const& request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options, google::longrunning::DeleteOperationRequest const& request) {
         return stub_->DeleteOperation(rest_context, options, request);
       },
       *current, request, __func__);
 }
 
-Status InstanceAdminRestConnectionImpl::CancelOperation(
-    google::longrunning::CancelOperationRequest const& request) {
+Status
+InstanceAdminRestConnectionImpl::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CancelOperation(request),
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::longrunning::CancelOperationRequest const& request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options, google::longrunning::CancelOperationRequest const& request) {
         return stub_->CancelOperation(rest_context, options, request);
       },
       *current, request, __func__);

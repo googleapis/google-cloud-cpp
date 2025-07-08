@@ -26,36 +26,31 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-InstancesConnectionIdempotencyPolicy::~InstancesConnectionIdempotencyPolicy() =
-    default;
+InstancesConnectionIdempotencyPolicy::~InstancesConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<InstancesConnectionIdempotencyPolicy>
 InstancesConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<InstancesConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency InstancesConnectionIdempotencyPolicy::ListInstances(
-    google::appengine::v1::ListInstancesRequest) {  // NOLINT
+Idempotency InstancesConnectionIdempotencyPolicy::ListInstances(google::appengine::v1::ListInstancesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency InstancesConnectionIdempotencyPolicy::GetInstance(
-    google::appengine::v1::GetInstanceRequest const&) {
+Idempotency InstancesConnectionIdempotencyPolicy::GetInstance(google::appengine::v1::GetInstanceRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency InstancesConnectionIdempotencyPolicy::DeleteInstance(
-    google::appengine::v1::DeleteInstanceRequest const&) {
+Idempotency InstancesConnectionIdempotencyPolicy::DeleteInstance(google::appengine::v1::DeleteInstanceRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency InstancesConnectionIdempotencyPolicy::DebugInstance(
-    google::appengine::v1::DebugInstanceRequest const&) {
+Idempotency InstancesConnectionIdempotencyPolicy::DebugInstance(google::appengine::v1::DebugInstanceRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<InstancesConnectionIdempotencyPolicy>
-MakeDefaultInstancesConnectionIdempotencyPolicy() {
+    MakeDefaultInstancesConnectionIdempotencyPolicy() {
   return std::make_unique<InstancesConnectionIdempotencyPolicy>();
 }
 

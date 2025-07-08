@@ -27,31 +27,20 @@ namespace cloud {
 namespace managedidentities {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use managedidentities_v1::MakeManagedIdentitiesServiceConnection
-/// directly.
-using ::google::cloud::managedidentities_v1::
-    MakeManagedIdentitiesServiceConnection;
+/// @deprecated Use managedidentities_v1::MakeManagedIdentitiesServiceConnection directly.
+using ::google::cloud::managedidentities_v1::MakeManagedIdentitiesServiceConnection;
 
-/// @deprecated Use managedidentities_v1::ManagedIdentitiesServiceConnection
-/// directly.
+/// @deprecated Use managedidentities_v1::ManagedIdentitiesServiceConnection directly.
 using ::google::cloud::managedidentities_v1::ManagedIdentitiesServiceConnection;
 
-/// @deprecated Use
-/// managedidentities_v1::ManagedIdentitiesServiceLimitedErrorCountRetryPolicy
-/// directly.
-using ::google::cloud::managedidentities_v1::
-    ManagedIdentitiesServiceLimitedErrorCountRetryPolicy;
+/// @deprecated Use managedidentities_v1::ManagedIdentitiesServiceLimitedErrorCountRetryPolicy directly.
+using ::google::cloud::managedidentities_v1::ManagedIdentitiesServiceLimitedErrorCountRetryPolicy;
 
-/// @deprecated Use
-/// managedidentities_v1::ManagedIdentitiesServiceLimitedTimeRetryPolicy
-/// directly.
-using ::google::cloud::managedidentities_v1::
-    ManagedIdentitiesServiceLimitedTimeRetryPolicy;
+/// @deprecated Use managedidentities_v1::ManagedIdentitiesServiceLimitedTimeRetryPolicy directly.
+using ::google::cloud::managedidentities_v1::ManagedIdentitiesServiceLimitedTimeRetryPolicy;
 
-/// @deprecated Use managedidentities_v1::ManagedIdentitiesServiceRetryPolicy
-/// directly.
-using ::google::cloud::managedidentities_v1::
-    ManagedIdentitiesServiceRetryPolicy;
+/// @deprecated Use managedidentities_v1::ManagedIdentitiesServiceRetryPolicy directly.
+using ::google::cloud::managedidentities_v1::ManagedIdentitiesServiceRetryPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace managedidentities

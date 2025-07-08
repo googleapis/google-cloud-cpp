@@ -28,15 +28,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 AwsClustersClient::AwsClustersClient(
     std::shared_ptr<AwsClustersConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 AwsClustersClient::~AwsClustersClient() = default;
 
 future<StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>>
-AwsClustersClient::CreateAwsCluster(
-    std::string const& parent,
-    google::cloud::gkemulticloud::v1::AwsCluster const& aws_cluster,
-    std::string const& aws_cluster_id, Options opts) {
+AwsClustersClient::CreateAwsCluster(std::string const& parent, google::cloud::gkemulticloud::v1::AwsCluster const& aws_cluster, std::string const& aws_cluster_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::gkemulticloud::v1::CreateAwsClusterRequest request;
   request.set_parent(parent);
@@ -45,10 +42,8 @@ AwsClustersClient::CreateAwsCluster(
   return connection_->CreateAwsCluster(request);
 }
 
-StatusOr<google::longrunning::Operation> AwsClustersClient::CreateAwsCluster(
-    NoAwaitTag, std::string const& parent,
-    google::cloud::gkemulticloud::v1::AwsCluster const& aws_cluster,
-    std::string const& aws_cluster_id, Options opts) {
+StatusOr<google::longrunning::Operation>
+AwsClustersClient::CreateAwsCluster(NoAwaitTag, std::string const& parent, google::cloud::gkemulticloud::v1::AwsCluster const& aws_cluster, std::string const& aws_cluster_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::gkemulticloud::v1::CreateAwsClusterRequest request;
   request.set_parent(parent);
@@ -58,32 +53,25 @@ StatusOr<google::longrunning::Operation> AwsClustersClient::CreateAwsCluster(
 }
 
 future<StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>>
-AwsClustersClient::CreateAwsCluster(
-    google::cloud::gkemulticloud::v1::CreateAwsClusterRequest const& request,
-    Options opts) {
+AwsClustersClient::CreateAwsCluster(google::cloud::gkemulticloud::v1::CreateAwsClusterRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateAwsCluster(request);
 }
 
-StatusOr<google::longrunning::Operation> AwsClustersClient::CreateAwsCluster(
-    NoAwaitTag,
-    google::cloud::gkemulticloud::v1::CreateAwsClusterRequest const& request,
-    Options opts) {
+StatusOr<google::longrunning::Operation>
+AwsClustersClient::CreateAwsCluster(NoAwaitTag, google::cloud::gkemulticloud::v1::CreateAwsClusterRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateAwsCluster(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>>
-AwsClustersClient::CreateAwsCluster(
-    google::longrunning::Operation const& operation, Options opts) {
+AwsClustersClient::CreateAwsCluster(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateAwsCluster(operation);
 }
 
 future<StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>>
-AwsClustersClient::UpdateAwsCluster(
-    google::cloud::gkemulticloud::v1::AwsCluster const& aws_cluster,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+AwsClustersClient::UpdateAwsCluster(google::cloud::gkemulticloud::v1::AwsCluster const& aws_cluster, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::gkemulticloud::v1::UpdateAwsClusterRequest request;
   *request.mutable_aws_cluster() = aws_cluster;
@@ -91,9 +79,8 @@ AwsClustersClient::UpdateAwsCluster(
   return connection_->UpdateAwsCluster(request);
 }
 
-StatusOr<google::longrunning::Operation> AwsClustersClient::UpdateAwsCluster(
-    NoAwaitTag, google::cloud::gkemulticloud::v1::AwsCluster const& aws_cluster,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+StatusOr<google::longrunning::Operation>
+AwsClustersClient::UpdateAwsCluster(NoAwaitTag, google::cloud::gkemulticloud::v1::AwsCluster const& aws_cluster, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::gkemulticloud::v1::UpdateAwsClusterRequest request;
   *request.mutable_aws_cluster() = aws_cluster;
@@ -102,24 +89,19 @@ StatusOr<google::longrunning::Operation> AwsClustersClient::UpdateAwsCluster(
 }
 
 future<StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>>
-AwsClustersClient::UpdateAwsCluster(
-    google::cloud::gkemulticloud::v1::UpdateAwsClusterRequest const& request,
-    Options opts) {
+AwsClustersClient::UpdateAwsCluster(google::cloud::gkemulticloud::v1::UpdateAwsClusterRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateAwsCluster(request);
 }
 
-StatusOr<google::longrunning::Operation> AwsClustersClient::UpdateAwsCluster(
-    NoAwaitTag,
-    google::cloud::gkemulticloud::v1::UpdateAwsClusterRequest const& request,
-    Options opts) {
+StatusOr<google::longrunning::Operation>
+AwsClustersClient::UpdateAwsCluster(NoAwaitTag, google::cloud::gkemulticloud::v1::UpdateAwsClusterRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateAwsCluster(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>>
-AwsClustersClient::UpdateAwsCluster(
-    google::longrunning::Operation const& operation, Options opts) {
+AwsClustersClient::UpdateAwsCluster(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateAwsCluster(operation);
 }
@@ -133,9 +115,7 @@ AwsClustersClient::GetAwsCluster(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>
-AwsClustersClient::GetAwsCluster(
-    google::cloud::gkemulticloud::v1::GetAwsClusterRequest const& request,
-    Options opts) {
+AwsClustersClient::GetAwsCluster(google::cloud::gkemulticloud::v1::GetAwsClusterRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetAwsCluster(request);
 }
@@ -149,9 +129,7 @@ AwsClustersClient::ListAwsClusters(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::gkemulticloud::v1::AwsCluster>
-AwsClustersClient::ListAwsClusters(
-    google::cloud::gkemulticloud::v1::ListAwsClustersRequest request,
-    Options opts) {
+AwsClustersClient::ListAwsClusters(google::cloud::gkemulticloud::v1::ListAwsClustersRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListAwsClusters(std::move(request));
 }
@@ -164,8 +142,8 @@ AwsClustersClient::DeleteAwsCluster(std::string const& name, Options opts) {
   return connection_->DeleteAwsCluster(request);
 }
 
-StatusOr<google::longrunning::Operation> AwsClustersClient::DeleteAwsCluster(
-    NoAwaitTag, std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation>
+AwsClustersClient::DeleteAwsCluster(NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::gkemulticloud::v1::DeleteAwsClusterRequest request;
   request.set_name(name);
@@ -173,51 +151,37 @@ StatusOr<google::longrunning::Operation> AwsClustersClient::DeleteAwsCluster(
 }
 
 future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
-AwsClustersClient::DeleteAwsCluster(
-    google::cloud::gkemulticloud::v1::DeleteAwsClusterRequest const& request,
-    Options opts) {
+AwsClustersClient::DeleteAwsCluster(google::cloud::gkemulticloud::v1::DeleteAwsClusterRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteAwsCluster(request);
 }
 
-StatusOr<google::longrunning::Operation> AwsClustersClient::DeleteAwsCluster(
-    NoAwaitTag,
-    google::cloud::gkemulticloud::v1::DeleteAwsClusterRequest const& request,
-    Options opts) {
+StatusOr<google::longrunning::Operation>
+AwsClustersClient::DeleteAwsCluster(NoAwaitTag, google::cloud::gkemulticloud::v1::DeleteAwsClusterRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteAwsCluster(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
-AwsClustersClient::DeleteAwsCluster(
-    google::longrunning::Operation const& operation, Options opts) {
+AwsClustersClient::DeleteAwsCluster(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteAwsCluster(operation);
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::GenerateAwsClusterAgentTokenResponse>
-AwsClustersClient::GenerateAwsClusterAgentToken(
-    google::cloud::gkemulticloud::v1::GenerateAwsClusterAgentTokenRequest const&
-        request,
-    Options opts) {
+AwsClustersClient::GenerateAwsClusterAgentToken(google::cloud::gkemulticloud::v1::GenerateAwsClusterAgentTokenRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GenerateAwsClusterAgentToken(request);
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::GenerateAwsAccessTokenResponse>
-AwsClustersClient::GenerateAwsAccessToken(
-    google::cloud::gkemulticloud::v1::GenerateAwsAccessTokenRequest const&
-        request,
-    Options opts) {
+AwsClustersClient::GenerateAwsAccessToken(google::cloud::gkemulticloud::v1::GenerateAwsAccessTokenRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GenerateAwsAccessToken(request);
 }
 
 future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
-AwsClustersClient::CreateAwsNodePool(
-    std::string const& parent,
-    google::cloud::gkemulticloud::v1::AwsNodePool const& aws_node_pool,
-    std::string const& aws_node_pool_id, Options opts) {
+AwsClustersClient::CreateAwsNodePool(std::string const& parent, google::cloud::gkemulticloud::v1::AwsNodePool const& aws_node_pool, std::string const& aws_node_pool_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::gkemulticloud::v1::CreateAwsNodePoolRequest request;
   request.set_parent(parent);
@@ -226,10 +190,8 @@ AwsClustersClient::CreateAwsNodePool(
   return connection_->CreateAwsNodePool(request);
 }
 
-StatusOr<google::longrunning::Operation> AwsClustersClient::CreateAwsNodePool(
-    NoAwaitTag, std::string const& parent,
-    google::cloud::gkemulticloud::v1::AwsNodePool const& aws_node_pool,
-    std::string const& aws_node_pool_id, Options opts) {
+StatusOr<google::longrunning::Operation>
+AwsClustersClient::CreateAwsNodePool(NoAwaitTag, std::string const& parent, google::cloud::gkemulticloud::v1::AwsNodePool const& aws_node_pool, std::string const& aws_node_pool_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::gkemulticloud::v1::CreateAwsNodePoolRequest request;
   request.set_parent(parent);
@@ -239,32 +201,25 @@ StatusOr<google::longrunning::Operation> AwsClustersClient::CreateAwsNodePool(
 }
 
 future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
-AwsClustersClient::CreateAwsNodePool(
-    google::cloud::gkemulticloud::v1::CreateAwsNodePoolRequest const& request,
-    Options opts) {
+AwsClustersClient::CreateAwsNodePool(google::cloud::gkemulticloud::v1::CreateAwsNodePoolRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateAwsNodePool(request);
 }
 
-StatusOr<google::longrunning::Operation> AwsClustersClient::CreateAwsNodePool(
-    NoAwaitTag,
-    google::cloud::gkemulticloud::v1::CreateAwsNodePoolRequest const& request,
-    Options opts) {
+StatusOr<google::longrunning::Operation>
+AwsClustersClient::CreateAwsNodePool(NoAwaitTag, google::cloud::gkemulticloud::v1::CreateAwsNodePoolRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateAwsNodePool(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
-AwsClustersClient::CreateAwsNodePool(
-    google::longrunning::Operation const& operation, Options opts) {
+AwsClustersClient::CreateAwsNodePool(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateAwsNodePool(operation);
 }
 
 future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
-AwsClustersClient::UpdateAwsNodePool(
-    google::cloud::gkemulticloud::v1::AwsNodePool const& aws_node_pool,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+AwsClustersClient::UpdateAwsNodePool(google::cloud::gkemulticloud::v1::AwsNodePool const& aws_node_pool, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::gkemulticloud::v1::UpdateAwsNodePoolRequest request;
   *request.mutable_aws_node_pool() = aws_node_pool;
@@ -272,10 +227,8 @@ AwsClustersClient::UpdateAwsNodePool(
   return connection_->UpdateAwsNodePool(request);
 }
 
-StatusOr<google::longrunning::Operation> AwsClustersClient::UpdateAwsNodePool(
-    NoAwaitTag,
-    google::cloud::gkemulticloud::v1::AwsNodePool const& aws_node_pool,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+StatusOr<google::longrunning::Operation>
+AwsClustersClient::UpdateAwsNodePool(NoAwaitTag, google::cloud::gkemulticloud::v1::AwsNodePool const& aws_node_pool, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::gkemulticloud::v1::UpdateAwsNodePoolRequest request;
   *request.mutable_aws_node_pool() = aws_node_pool;
@@ -284,31 +237,25 @@ StatusOr<google::longrunning::Operation> AwsClustersClient::UpdateAwsNodePool(
 }
 
 future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
-AwsClustersClient::UpdateAwsNodePool(
-    google::cloud::gkemulticloud::v1::UpdateAwsNodePoolRequest const& request,
-    Options opts) {
+AwsClustersClient::UpdateAwsNodePool(google::cloud::gkemulticloud::v1::UpdateAwsNodePoolRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateAwsNodePool(request);
 }
 
-StatusOr<google::longrunning::Operation> AwsClustersClient::UpdateAwsNodePool(
-    NoAwaitTag,
-    google::cloud::gkemulticloud::v1::UpdateAwsNodePoolRequest const& request,
-    Options opts) {
+StatusOr<google::longrunning::Operation>
+AwsClustersClient::UpdateAwsNodePool(NoAwaitTag, google::cloud::gkemulticloud::v1::UpdateAwsNodePoolRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateAwsNodePool(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
-AwsClustersClient::UpdateAwsNodePool(
-    google::longrunning::Operation const& operation, Options opts) {
+AwsClustersClient::UpdateAwsNodePool(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateAwsNodePool(operation);
 }
 
 future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
-AwsClustersClient::RollbackAwsNodePoolUpdate(std::string const& name,
-                                             Options opts) {
+AwsClustersClient::RollbackAwsNodePoolUpdate(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::gkemulticloud::v1::RollbackAwsNodePoolUpdateRequest request;
   request.set_name(name);
@@ -316,9 +263,7 @@ AwsClustersClient::RollbackAwsNodePoolUpdate(std::string const& name,
 }
 
 StatusOr<google::longrunning::Operation>
-AwsClustersClient::RollbackAwsNodePoolUpdate(NoAwaitTag,
-                                             std::string const& name,
-                                             Options opts) {
+AwsClustersClient::RollbackAwsNodePoolUpdate(NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::gkemulticloud::v1::RollbackAwsNodePoolUpdateRequest request;
   request.set_name(name);
@@ -326,27 +271,19 @@ AwsClustersClient::RollbackAwsNodePoolUpdate(NoAwaitTag,
 }
 
 future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
-AwsClustersClient::RollbackAwsNodePoolUpdate(
-    google::cloud::gkemulticloud::v1::RollbackAwsNodePoolUpdateRequest const&
-        request,
-    Options opts) {
+AwsClustersClient::RollbackAwsNodePoolUpdate(google::cloud::gkemulticloud::v1::RollbackAwsNodePoolUpdateRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RollbackAwsNodePoolUpdate(request);
 }
 
 StatusOr<google::longrunning::Operation>
-AwsClustersClient::RollbackAwsNodePoolUpdate(
-    NoAwaitTag,
-    google::cloud::gkemulticloud::v1::RollbackAwsNodePoolUpdateRequest const&
-        request,
-    Options opts) {
+AwsClustersClient::RollbackAwsNodePoolUpdate(NoAwaitTag, google::cloud::gkemulticloud::v1::RollbackAwsNodePoolUpdateRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RollbackAwsNodePoolUpdate(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
-AwsClustersClient::RollbackAwsNodePoolUpdate(
-    google::longrunning::Operation const& operation, Options opts) {
+AwsClustersClient::RollbackAwsNodePoolUpdate(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RollbackAwsNodePoolUpdate(operation);
 }
@@ -360,9 +297,7 @@ AwsClustersClient::GetAwsNodePool(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>
-AwsClustersClient::GetAwsNodePool(
-    google::cloud::gkemulticloud::v1::GetAwsNodePoolRequest const& request,
-    Options opts) {
+AwsClustersClient::GetAwsNodePool(google::cloud::gkemulticloud::v1::GetAwsNodePoolRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetAwsNodePool(request);
 }
@@ -376,9 +311,7 @@ AwsClustersClient::ListAwsNodePools(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::gkemulticloud::v1::AwsNodePool>
-AwsClustersClient::ListAwsNodePools(
-    google::cloud::gkemulticloud::v1::ListAwsNodePoolsRequest request,
-    Options opts) {
+AwsClustersClient::ListAwsNodePools(google::cloud::gkemulticloud::v1::ListAwsNodePoolsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListAwsNodePools(std::move(request));
 }
@@ -391,8 +324,8 @@ AwsClustersClient::DeleteAwsNodePool(std::string const& name, Options opts) {
   return connection_->DeleteAwsNodePool(request);
 }
 
-StatusOr<google::longrunning::Operation> AwsClustersClient::DeleteAwsNodePool(
-    NoAwaitTag, std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation>
+AwsClustersClient::DeleteAwsNodePool(NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::gkemulticloud::v1::DeleteAwsNodePoolRequest request;
   request.set_name(name);
@@ -400,40 +333,31 @@ StatusOr<google::longrunning::Operation> AwsClustersClient::DeleteAwsNodePool(
 }
 
 future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
-AwsClustersClient::DeleteAwsNodePool(
-    google::cloud::gkemulticloud::v1::DeleteAwsNodePoolRequest const& request,
-    Options opts) {
+AwsClustersClient::DeleteAwsNodePool(google::cloud::gkemulticloud::v1::DeleteAwsNodePoolRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteAwsNodePool(request);
 }
 
-StatusOr<google::longrunning::Operation> AwsClustersClient::DeleteAwsNodePool(
-    NoAwaitTag,
-    google::cloud::gkemulticloud::v1::DeleteAwsNodePoolRequest const& request,
-    Options opts) {
+StatusOr<google::longrunning::Operation>
+AwsClustersClient::DeleteAwsNodePool(NoAwaitTag, google::cloud::gkemulticloud::v1::DeleteAwsNodePoolRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteAwsNodePool(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
-AwsClustersClient::DeleteAwsNodePool(
-    google::longrunning::Operation const& operation, Options opts) {
+AwsClustersClient::DeleteAwsNodePool(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteAwsNodePool(operation);
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::AwsOpenIdConfig>
-AwsClustersClient::GetAwsOpenIdConfig(
-    google::cloud::gkemulticloud::v1::GetAwsOpenIdConfigRequest const& request,
-    Options opts) {
+AwsClustersClient::GetAwsOpenIdConfig(google::cloud::gkemulticloud::v1::GetAwsOpenIdConfigRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetAwsOpenIdConfig(request);
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::AwsJsonWebKeys>
-AwsClustersClient::GetAwsJsonWebKeys(
-    google::cloud::gkemulticloud::v1::GetAwsJsonWebKeysRequest const& request,
-    Options opts) {
+AwsClustersClient::GetAwsJsonWebKeys(google::cloud::gkemulticloud::v1::GetAwsJsonWebKeysRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetAwsJsonWebKeys(request);
 }
@@ -447,15 +371,13 @@ AwsClustersClient::GetAwsServerConfig(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::AwsServerConfig>
-AwsClustersClient::GetAwsServerConfig(
-    google::cloud::gkemulticloud::v1::GetAwsServerConfigRequest const& request,
-    Options opts) {
+AwsClustersClient::GetAwsServerConfig(google::cloud::gkemulticloud::v1::GetAwsServerConfigRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetAwsServerConfig(request);
 }
 
-StreamRange<google::longrunning::Operation> AwsClustersClient::ListOperations(
-    std::string const& name, std::string const& filter, Options opts) {
+StreamRange<google::longrunning::Operation>
+AwsClustersClient::ListOperations(std::string const& name, std::string const& filter, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::ListOperationsRequest request;
   request.set_name(name);
@@ -463,50 +385,50 @@ StreamRange<google::longrunning::Operation> AwsClustersClient::ListOperations(
   return connection_->ListOperations(request);
 }
 
-StreamRange<google::longrunning::Operation> AwsClustersClient::ListOperations(
-    google::longrunning::ListOperationsRequest request, Options opts) {
+StreamRange<google::longrunning::Operation>
+AwsClustersClient::ListOperations(google::longrunning::ListOperationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOperations(std::move(request));
 }
 
-StatusOr<google::longrunning::Operation> AwsClustersClient::GetOperation(
-    std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation>
+AwsClustersClient::GetOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
   return connection_->GetOperation(request);
 }
 
-StatusOr<google::longrunning::Operation> AwsClustersClient::GetOperation(
-    google::longrunning::GetOperationRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation>
+AwsClustersClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }
 
-Status AwsClustersClient::DeleteOperation(std::string const& name,
-                                          Options opts) {
+Status
+AwsClustersClient::DeleteOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::DeleteOperationRequest request;
   request.set_name(name);
   return connection_->DeleteOperation(request);
 }
 
-Status AwsClustersClient::DeleteOperation(
-    google::longrunning::DeleteOperationRequest const& request, Options opts) {
+Status
+AwsClustersClient::DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteOperation(request);
 }
 
-Status AwsClustersClient::CancelOperation(std::string const& name,
-                                          Options opts) {
+Status
+AwsClustersClient::CancelOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::CancelOperationRequest request;
   request.set_name(name);
   return connection_->CancelOperation(request);
 }
 
-Status AwsClustersClient::CancelOperation(
-    google::longrunning::CancelOperationRequest const& request, Options opts) {
+Status
+AwsClustersClient::CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelOperation(request);
 }

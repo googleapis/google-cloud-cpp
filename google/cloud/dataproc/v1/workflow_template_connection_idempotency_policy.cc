@@ -26,55 +26,38 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-WorkflowTemplateServiceConnectionIdempotencyPolicy::
-    ~WorkflowTemplateServiceConnectionIdempotencyPolicy() = default;
+WorkflowTemplateServiceConnectionIdempotencyPolicy::~WorkflowTemplateServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<WorkflowTemplateServiceConnectionIdempotencyPolicy>
 WorkflowTemplateServiceConnectionIdempotencyPolicy::clone() const {
-  return std::make_unique<WorkflowTemplateServiceConnectionIdempotencyPolicy>(
-      *this);
+  return std::make_unique<WorkflowTemplateServiceConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency
-WorkflowTemplateServiceConnectionIdempotencyPolicy::CreateWorkflowTemplate(
-    google::cloud::dataproc::v1::CreateWorkflowTemplateRequest const&) {
+Idempotency WorkflowTemplateServiceConnectionIdempotencyPolicy::CreateWorkflowTemplate(google::cloud::dataproc::v1::CreateWorkflowTemplateRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency
-WorkflowTemplateServiceConnectionIdempotencyPolicy::GetWorkflowTemplate(
-    google::cloud::dataproc::v1::GetWorkflowTemplateRequest const&) {
+Idempotency WorkflowTemplateServiceConnectionIdempotencyPolicy::GetWorkflowTemplate(google::cloud::dataproc::v1::GetWorkflowTemplateRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency
-WorkflowTemplateServiceConnectionIdempotencyPolicy::InstantiateWorkflowTemplate(
-    google::cloud::dataproc::v1::InstantiateWorkflowTemplateRequest const&) {
+Idempotency WorkflowTemplateServiceConnectionIdempotencyPolicy::InstantiateWorkflowTemplate(google::cloud::dataproc::v1::InstantiateWorkflowTemplateRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency WorkflowTemplateServiceConnectionIdempotencyPolicy::
-    InstantiateInlineWorkflowTemplate(
-        google::cloud::dataproc::v1::
-            InstantiateInlineWorkflowTemplateRequest const&) {
+Idempotency WorkflowTemplateServiceConnectionIdempotencyPolicy::InstantiateInlineWorkflowTemplate(google::cloud::dataproc::v1::InstantiateInlineWorkflowTemplateRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency
-WorkflowTemplateServiceConnectionIdempotencyPolicy::UpdateWorkflowTemplate(
-    google::cloud::dataproc::v1::UpdateWorkflowTemplateRequest const&) {
+Idempotency WorkflowTemplateServiceConnectionIdempotencyPolicy::UpdateWorkflowTemplate(google::cloud::dataproc::v1::UpdateWorkflowTemplateRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency
-WorkflowTemplateServiceConnectionIdempotencyPolicy::ListWorkflowTemplates(
-    google::cloud::dataproc::v1::ListWorkflowTemplatesRequest) {  // NOLINT
+Idempotency WorkflowTemplateServiceConnectionIdempotencyPolicy::ListWorkflowTemplates(google::cloud::dataproc::v1::ListWorkflowTemplatesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency
-WorkflowTemplateServiceConnectionIdempotencyPolicy::DeleteWorkflowTemplate(
-    google::cloud::dataproc::v1::DeleteWorkflowTemplateRequest const&) {
+Idempotency WorkflowTemplateServiceConnectionIdempotencyPolicy::DeleteWorkflowTemplate(google::cloud::dataproc::v1::DeleteWorkflowTemplateRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
@@ -84,39 +67,32 @@ Idempotency WorkflowTemplateServiceConnectionIdempotencyPolicy::SetIamPolicy(
                                          : Idempotency::kIdempotent;
 }
 
-Idempotency WorkflowTemplateServiceConnectionIdempotencyPolicy::GetIamPolicy(
-    google::iam::v1::GetIamPolicyRequest const&) {
+Idempotency WorkflowTemplateServiceConnectionIdempotencyPolicy::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency
-WorkflowTemplateServiceConnectionIdempotencyPolicy::TestIamPermissions(
-    google::iam::v1::TestIamPermissionsRequest const&) {
+Idempotency WorkflowTemplateServiceConnectionIdempotencyPolicy::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency WorkflowTemplateServiceConnectionIdempotencyPolicy::ListOperations(
-    google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency WorkflowTemplateServiceConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency WorkflowTemplateServiceConnectionIdempotencyPolicy::GetOperation(
-    google::longrunning::GetOperationRequest const&) {
+Idempotency WorkflowTemplateServiceConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency WorkflowTemplateServiceConnectionIdempotencyPolicy::DeleteOperation(
-    google::longrunning::DeleteOperationRequest const&) {
+Idempotency WorkflowTemplateServiceConnectionIdempotencyPolicy::DeleteOperation(google::longrunning::DeleteOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency WorkflowTemplateServiceConnectionIdempotencyPolicy::CancelOperation(
-    google::longrunning::CancelOperationRequest const&) {
+Idempotency WorkflowTemplateServiceConnectionIdempotencyPolicy::CancelOperation(google::longrunning::CancelOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<WorkflowTemplateServiceConnectionIdempotencyPolicy>
-MakeDefaultWorkflowTemplateServiceConnectionIdempotencyPolicy() {
+    MakeDefaultWorkflowTemplateServiceConnectionIdempotencyPolicy() {
   return std::make_unique<WorkflowTemplateServiceConnectionIdempotencyPolicy>();
 }
 

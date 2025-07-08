@@ -34,29 +34,19 @@ KeyTrackingServiceTracingConnection::KeyTrackingServiceTracingConnection(
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::kms::inventory::v1::ProtectedResourcesSummary>
-KeyTrackingServiceTracingConnection::GetProtectedResourcesSummary(
-    google::cloud::kms::inventory::v1::
-        GetProtectedResourcesSummaryRequest const& request) {
-  auto span = internal::MakeSpan(
-      "kms_inventory_v1::KeyTrackingServiceConnection::"
-      "GetProtectedResourcesSummary");
+KeyTrackingServiceTracingConnection::GetProtectedResourcesSummary(google::cloud::kms::inventory::v1::GetProtectedResourcesSummaryRequest const& request) {
+  auto span = internal::MakeSpan("kms_inventory_v1::KeyTrackingServiceConnection::GetProtectedResourcesSummary");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span,
-                           child_->GetProtectedResourcesSummary(request));
+  return internal::EndSpan(*span, child_->GetProtectedResourcesSummary(request));
 }
 
 StreamRange<google::cloud::kms::inventory::v1::ProtectedResource>
-KeyTrackingServiceTracingConnection::SearchProtectedResources(
-    google::cloud::kms::inventory::v1::SearchProtectedResourcesRequest
-        request) {
-  auto span = internal::MakeSpan(
-      "kms_inventory_v1::KeyTrackingServiceConnection::"
-      "SearchProtectedResources");
+KeyTrackingServiceTracingConnection::SearchProtectedResources(google::cloud::kms::inventory::v1::SearchProtectedResourcesRequest request) {
+  auto span = internal::MakeSpan("kms_inventory_v1::KeyTrackingServiceConnection::SearchProtectedResources");
   internal::OTelScope scope(span);
   auto sr = child_->SearchProtectedResources(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::kms::inventory::v1::ProtectedResource>(std::move(span),
-                                                            std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::kms::inventory::v1::ProtectedResource>(
+        std::move(span), std::move(sr));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -66,8 +56,7 @@ MakeKeyTrackingServiceTracingConnection(
     std::shared_ptr<kms_inventory_v1::KeyTrackingServiceConnection> conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
-    conn =
-        std::make_shared<KeyTrackingServiceTracingConnection>(std::move(conn));
+    conn = std::make_shared<KeyTrackingServiceTracingConnection>(std::move(conn));
   }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;

@@ -46,18 +46,19 @@ WorkflowsMetadata::WorkflowsMetadata(
 
 StatusOr<google::cloud::workflows::v1::ListWorkflowsResponse>
 WorkflowsMetadata::ListWorkflows(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::workflows::v1::ListWorkflowsRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListWorkflows(context, options, request);
 }
 
-StatusOr<google::cloud::workflows::v1::Workflow> WorkflowsMetadata::GetWorkflow(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::workflows::v1::Workflow>
+WorkflowsMetadata::GetWorkflow(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::workflows::v1::GetWorkflowRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetWorkflow(context, options, request);
 }
 
@@ -67,17 +68,17 @@ WorkflowsMetadata::AsyncCreateWorkflow(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::workflows::v1::CreateWorkflowRequest const& request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateWorkflow(cq, std::move(context), std::move(options),
-                                     request);
+  SetMetadata(*context, *options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateWorkflow(
+      cq, std::move(context), std::move(options), request);
 }
 
-StatusOr<google::longrunning::Operation> WorkflowsMetadata::CreateWorkflow(
-    grpc::ClientContext& context, Options options,
+StatusOr<google::longrunning::Operation>
+WorkflowsMetadata::CreateWorkflow(
+    grpc::ClientContext& context,
+    Options options,
     google::cloud::workflows::v1::CreateWorkflowRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateWorkflow(context, options, request);
 }
 
@@ -87,17 +88,17 @@ WorkflowsMetadata::AsyncDeleteWorkflow(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::workflows::v1::DeleteWorkflowRequest const& request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteWorkflow(cq, std::move(context), std::move(options),
-                                     request);
+  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteWorkflow(
+      cq, std::move(context), std::move(options), request);
 }
 
-StatusOr<google::longrunning::Operation> WorkflowsMetadata::DeleteWorkflow(
-    grpc::ClientContext& context, Options options,
+StatusOr<google::longrunning::Operation>
+WorkflowsMetadata::DeleteWorkflow(
+    grpc::ClientContext& context,
+    Options options,
     google::cloud::workflows::v1::DeleteWorkflowRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteWorkflow(context, options, request);
 }
 
@@ -107,70 +108,71 @@ WorkflowsMetadata::AsyncUpdateWorkflow(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::workflows::v1::UpdateWorkflowRequest const& request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("workflow.name=",
-                           internal::UrlEncode(request.workflow().name())));
-  return child_->AsyncUpdateWorkflow(cq, std::move(context), std::move(options),
-                                     request);
+  SetMetadata(*context, *options, absl::StrCat("workflow.name=", internal::UrlEncode(request.workflow().name())));
+  return child_->AsyncUpdateWorkflow(
+      cq, std::move(context), std::move(options), request);
 }
 
-StatusOr<google::longrunning::Operation> WorkflowsMetadata::UpdateWorkflow(
-    grpc::ClientContext& context, Options options,
+StatusOr<google::longrunning::Operation>
+WorkflowsMetadata::UpdateWorkflow(
+    grpc::ClientContext& context,
+    Options options,
     google::cloud::workflows::v1::UpdateWorkflowRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("workflow.name=",
-                           internal::UrlEncode(request.workflow().name())));
+  SetMetadata(context, options, absl::StrCat("workflow.name=", internal::UrlEncode(request.workflow().name())));
   return child_->UpdateWorkflow(context, options, request);
 }
 
 StatusOr<google::cloud::workflows::v1::ListWorkflowRevisionsResponse>
 WorkflowsMetadata::ListWorkflowRevisions(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::workflows::v1::ListWorkflowRevisionsRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ListWorkflowRevisions(context, options, request);
 }
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 WorkflowsMetadata::ListLocations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ListLocations(context, options, request);
 }
 
-StatusOr<google::cloud::location::Location> WorkflowsMetadata::GetLocation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::location::Location>
+WorkflowsMetadata::GetLocation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetLocation(context, options, request);
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
 WorkflowsMetadata::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ListOperations(context, options, request);
 }
 
-StatusOr<google::longrunning::Operation> WorkflowsMetadata::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::Operation>
+WorkflowsMetadata::GetOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetOperation(context, options, request);
 }
 
-Status WorkflowsMetadata::DeleteOperation(
-    grpc::ClientContext& context, Options const& options,
+Status
+WorkflowsMetadata::DeleteOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteOperation(context, options, request);
 }
 
@@ -182,8 +184,8 @@ WorkflowsMetadata::AsyncGetOperation(
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(cq, std::move(context), std::move(options),
-                                   request);
+  return child_->AsyncGetOperation(
+      cq, std::move(context), std::move(options), request);
 }
 
 future<Status> WorkflowsMetadata::AsyncCancelOperation(
@@ -193,21 +195,21 @@ future<Status> WorkflowsMetadata::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(cq, std::move(context),
-                                      std::move(options), request);
+  return child_->AsyncCancelOperation(
+      cq, std::move(context), std::move(options), request);
 }
 
 void WorkflowsMetadata::SetMetadata(grpc::ClientContext& context,
-                                    Options const& options,
-                                    std::string const& request_params) {
+                                        Options const& options,
+                                        std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
 void WorkflowsMetadata::SetMetadata(grpc::ClientContext& context,
-                                    Options const& options) {
-  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
-                                       api_client_header_);
+                                        Options const& options) {
+  google::cloud::internal::SetMetadata(
+      context, options, fixed_metadata_, api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

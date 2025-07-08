@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BINARYAUTHORIZATION_V1_SYSTEM_POLICY_V1_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BINARYAUTHORIZATION_V1_SYSTEM_POLICY_V1_OPTIONS_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/binaryauthorization/v1/system_policy_v1_connection.h"
 #include "google/cloud/binaryauthorization/v1/system_policy_v1_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>

@@ -16,13 +16,13 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/resourcemanager/v3/projects.proto
 
-#include "google/cloud/resourcemanager/v3/projects_client.h"
-#include "google/cloud/resourcemanager/v3/projects_connection_idempotency_policy.h"
-#include "google/cloud/resourcemanager/v3/projects_options.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/polling_policy.h"
+#include "google/cloud/resourcemanager/v3/projects_client.h"
+#include "google/cloud/resourcemanager/v3/projects_connection_idempotency_policy.h"
+#include "google/cloud/resourcemanager/v3/projects_options.h"
 #include "google/cloud/testing_util/example_driver.h"
 #include <fstream>
 #include <iostream>
@@ -42,11 +42,9 @@ void SetClientEndpoint(std::vector<std::string> const& argv) {
   //! [set-client-endpoint]
   // This service supports specifying a regional or locational endpoint prefix
   // when creating the ProjectsConnection.
-  // For example, to connect to
-  // "europe-central2-cloudresourcemanager.googleapis.com":
+  // For example, to connect to "europe-central2-cloudresourcemanager.googleapis.com":
   auto client = google::cloud::resourcemanager_v3::ProjectsClient(
-      google::cloud::resourcemanager_v3::MakeProjectsConnection(
-          "europe-central2"));
+      google::cloud::resourcemanager_v3::MakeProjectsConnection("europe-central2"));
 
   // This configuration is common with Private Google Access:
   //     https://cloud.google.com/vpc/docs/private-google-access
@@ -58,13 +56,11 @@ void SetClientEndpoint(std::vector<std::string> const& argv) {
 }
 
 //! [custom-idempotency-policy]
-class CustomIdempotencyPolicy : public google::cloud::resourcemanager_v3::
-                                    ProjectsConnectionIdempotencyPolicy {
+class CustomIdempotencyPolicy
+   : public google::cloud::resourcemanager_v3::ProjectsConnectionIdempotencyPolicy {
  public:
   ~CustomIdempotencyPolicy() override = default;
-  std::unique_ptr<
-      google::cloud::resourcemanager_v3::ProjectsConnectionIdempotencyPolicy>
-  clone() const override {
+  std::unique_ptr<google::cloud::resourcemanager_v3::ProjectsConnectionIdempotencyPolicy> clone() const override {
     return std::make_unique<CustomIdempotencyPolicy>(*this);
   }
   // Override inherited functions to define as needed.
@@ -76,23 +72,17 @@ void SetRetryPolicy(std::vector<std::string> const& argv) {
     throw google::cloud::testing_util::Usage{"set-client-retry-policy"};
   }
   //! [set-retry-policy]
-  auto options =
-      google::cloud::Options{}
-          .set<google::cloud::resourcemanager_v3::
-                   ProjectsConnectionIdempotencyPolicyOption>(
-              CustomIdempotencyPolicy().clone())
-          .set<google::cloud::resourcemanager_v3::ProjectsRetryPolicyOption>(
-              google::cloud::resourcemanager_v3::
-                  ProjectsLimitedErrorCountRetryPolicy(3)
-                      .clone())
-          .set<google::cloud::resourcemanager_v3::ProjectsBackoffPolicyOption>(
-              google::cloud::ExponentialBackoffPolicy(
-                  /*initial_delay=*/std::chrono::milliseconds(200),
-                  /*maximum_delay=*/std::chrono::seconds(45),
-                  /*scaling=*/2.0)
-                  .clone());
-  auto connection =
-      google::cloud::resourcemanager_v3::MakeProjectsConnection(options);
+  auto options = google::cloud::Options{}
+    .set<google::cloud::resourcemanager_v3::ProjectsConnectionIdempotencyPolicyOption>(
+      CustomIdempotencyPolicy().clone())
+    .set<google::cloud::resourcemanager_v3::ProjectsRetryPolicyOption>(
+      google::cloud::resourcemanager_v3::ProjectsLimitedErrorCountRetryPolicy(3).clone())
+    .set<google::cloud::resourcemanager_v3::ProjectsBackoffPolicyOption>(
+      google::cloud::ExponentialBackoffPolicy(
+          /*initial_delay=*/std::chrono::milliseconds(200),
+          /*maximum_delay=*/std::chrono::seconds(45),
+          /*scaling=*/2.0).clone());
+  auto connection = google::cloud::resourcemanager_v3::MakeProjectsConnection(options);
 
   // c1 and c2 share the same retry policies
   auto c1 = google::cloud::resourcemanager_v3::ProjectsClient(connection);
@@ -101,12 +91,8 @@ void SetRetryPolicy(std::vector<std::string> const& argv) {
   // You can override any of the policies in a new client. This new client
   // will share the policies from c1 (or c2) *except* for the retry policy.
   auto c3 = google::cloud::resourcemanager_v3::ProjectsClient(
-      connection,
-      google::cloud::Options{}
-          .set<google::cloud::resourcemanager_v3::ProjectsRetryPolicyOption>(
-              google::cloud::resourcemanager_v3::ProjectsLimitedTimeRetryPolicy(
-                  std::chrono::minutes(5))
-                  .clone()));
+    connection, google::cloud::Options{}.set<google::cloud::resourcemanager_v3::ProjectsRetryPolicyOption>(
+      google::cloud::resourcemanager_v3::ProjectsLimitedTimeRetryPolicy(std::chrono::minutes(5)).clone()));
 
   // You can also override the policies in a single call:
   // c3.SomeRpc(..., google::cloud::Options{}
@@ -127,27 +113,21 @@ void SetPollingPolicy(std::vector<std::string> const& argv) {
   // or error) or 45 minutes, whichever happens first. Initially pause for
   // 10 seconds between polling requests, increasing the pause by a factor
   // of 4 until it becomes 2 minutes.
-  auto options =
-      google::cloud::Options{}
-          .set<google::cloud::resourcemanager_v3::ProjectsPollingPolicyOption>(
-              google::cloud::GenericPollingPolicy<
-                  google::cloud::resourcemanager_v3::ProjectsRetryPolicyOption::
-                      Type,
-                  google::cloud::resourcemanager_v3::
-                      ProjectsBackoffPolicyOption::Type>(
-                  google::cloud::resourcemanager_v3::
-                      ProjectsLimitedTimeRetryPolicy(
-                          /*maximum_duration=*/std::chrono::minutes(45))
-                          .clone(),
-                  google::cloud::ExponentialBackoffPolicy(
-                      /*initial_delay=*/std::chrono::seconds(10),
-                      /*maximum_delay=*/std::chrono::minutes(2),
-                      /*scaling=*/4.0)
-                      .clone())
-                  .clone());
+  auto options = google::cloud::Options{}
+    .set<google::cloud::resourcemanager_v3::ProjectsPollingPolicyOption>(
+        google::cloud::GenericPollingPolicy<
+            google::cloud::resourcemanager_v3::ProjectsRetryPolicyOption::Type,
+            google::cloud::resourcemanager_v3::ProjectsBackoffPolicyOption::Type>(
+            google::cloud::resourcemanager_v3::ProjectsLimitedTimeRetryPolicy(
+                /*maximum_duration=*/std::chrono::minutes(45))
+                .clone(),
+            google::cloud::ExponentialBackoffPolicy(
+                /*initial_delay=*/std::chrono::seconds(10),
+                /*maximum_delay=*/std::chrono::minutes(2),
+                /*scaling=*/4.0).clone())
+            .clone());
 
-  auto connection =
-      google::cloud::resourcemanager_v3::MakeProjectsConnection(options);
+  auto connection = google::cloud::resourcemanager_v3::MakeProjectsConnection(options);
 
   // c1 and c2 share the same polling policies.
   auto c1 = google::cloud::resourcemanager_v3::ProjectsClient(connection);
@@ -168,7 +148,7 @@ void WithServiceAccount(std::vector<std::string> const& argv) {
         google::cloud::Options{}.set<google::cloud::UnifiedCredentialsOption>(
             google::cloud::MakeServiceAccountCredentials(contents));
     return google::cloud::resourcemanager_v3::ProjectsClient(
-        google::cloud::resourcemanager_v3::MakeProjectsConnection(options));
+      google::cloud::resourcemanager_v3::MakeProjectsConnection(options));
   }
   //! [with-service-account]
   (argv.at(0));
@@ -178,8 +158,9 @@ void AutoRun(std::vector<std::string> const& argv) {
   namespace examples = ::google::cloud::testing_util;
   using ::google::cloud::internal::GetEnv;
   if (!argv.empty()) throw examples::Usage{"auto"};
-  examples::CheckEnvironmentVariablesAreSet(
-      {"GOOGLE_CLOUD_CPP_TEST_SERVICE_ACCOUNT_KEYFILE"});
+  examples::CheckEnvironmentVariablesAreSet({
+    "GOOGLE_CLOUD_CPP_TEST_SERVICE_ACCOUNT_KEYFILE"
+  });
   auto const keyfile =
       GetEnv("GOOGLE_CLOUD_CPP_TEST_SERVICE_ACCOUNT_KEYFILE").value();
 

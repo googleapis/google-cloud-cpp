@@ -17,9 +17,9 @@
 // source: google/cloud/discoveryengine/v1/conversational_search_service.proto
 
 #include "google/cloud/discoveryengine/v1/internal/conversational_search_connection_impl.h"
-#include "google/cloud/discoveryengine/v1/internal/conversational_search_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/discoveryengine/v1/internal/conversational_search_option_defaults.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/resumable_streaming_read_rpc.h"
@@ -36,157 +36,121 @@ namespace {
 
 std::unique_ptr<discoveryengine_v1::ConversationalSearchServiceRetryPolicy>
 retry_policy(Options const& options) {
-  return options
-      .get<discoveryengine_v1::ConversationalSearchServiceRetryPolicyOption>()
-      ->clone();
+  return options.get<discoveryengine_v1::ConversationalSearchServiceRetryPolicyOption>()->clone();
 }
 
-std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-  return options
-      .get<discoveryengine_v1::ConversationalSearchServiceBackoffPolicyOption>()
-      ->clone();
+std::unique_ptr<BackoffPolicy>
+backoff_policy(Options const& options) {
+  return options.get<discoveryengine_v1::ConversationalSearchServiceBackoffPolicyOption>()->clone();
 }
 
-std::unique_ptr<
-    discoveryengine_v1::ConversationalSearchServiceConnectionIdempotencyPolicy>
+std::unique_ptr<discoveryengine_v1::ConversationalSearchServiceConnectionIdempotencyPolicy>
 idempotency_policy(Options const& options) {
-  return options
-      .get<discoveryengine_v1::
-               ConversationalSearchServiceConnectionIdempotencyPolicyOption>()
-      ->clone();
+  return options.get<discoveryengine_v1::ConversationalSearchServiceConnectionIdempotencyPolicyOption>()->clone();
 }
 
-}  // namespace
+} // namespace
 
 void ConversationalSearchServiceStreamAnswerQueryStreamingUpdater(
     google::cloud::discoveryengine::v1::AnswerQueryResponse const&,
     google::cloud::discoveryengine::v1::AnswerQueryRequest&) {}
 
-ConversationalSearchServiceConnectionImpl::
-    ConversationalSearchServiceConnectionImpl(
-        std::unique_ptr<google::cloud::BackgroundThreads> background,
-        std::shared_ptr<
-            discoveryengine_v1_internal::ConversationalSearchServiceStub>
-            stub,
-        Options options)
-    : background_(std::move(background)),
-      stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options),
-          ConversationalSearchServiceConnection::options())) {}
+ConversationalSearchServiceConnectionImpl::ConversationalSearchServiceConnectionImpl(
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<discoveryengine_v1_internal::ConversationalSearchServiceStub> stub,
+    Options options)
+  : background_(std::move(background)), stub_(std::move(stub)),
+    options_(internal::MergeOptions(
+        std::move(options),
+        ConversationalSearchServiceConnection::options())) {}
 
 StatusOr<google::cloud::discoveryengine::v1::ConverseConversationResponse>
-ConversationalSearchServiceConnectionImpl::ConverseConversation(
-    google::cloud::discoveryengine::v1::ConverseConversationRequest const&
-        request) {
+ConversationalSearchServiceConnectionImpl::ConverseConversation(google::cloud::discoveryengine::v1::ConverseConversationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->ConverseConversation(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::discoveryengine::v1::ConverseConversationRequest const&
-              request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::discoveryengine::v1::ConverseConversationRequest const& request) {
         return stub_->ConverseConversation(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::discoveryengine::v1::Conversation>
-ConversationalSearchServiceConnectionImpl::CreateConversation(
-    google::cloud::discoveryengine::v1::CreateConversationRequest const&
-        request) {
+ConversationalSearchServiceConnectionImpl::CreateConversation(google::cloud::discoveryengine::v1::CreateConversationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateConversation(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::discoveryengine::v1::CreateConversationRequest const&
-              request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::discoveryengine::v1::CreateConversationRequest const& request) {
         return stub_->CreateConversation(context, options, request);
       },
       *current, request, __func__);
 }
 
-Status ConversationalSearchServiceConnectionImpl::DeleteConversation(
-    google::cloud::discoveryengine::v1::DeleteConversationRequest const&
-        request) {
+Status
+ConversationalSearchServiceConnectionImpl::DeleteConversation(google::cloud::discoveryengine::v1::DeleteConversationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteConversation(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::discoveryengine::v1::DeleteConversationRequest const&
-              request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::discoveryengine::v1::DeleteConversationRequest const& request) {
         return stub_->DeleteConversation(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::discoveryengine::v1::Conversation>
-ConversationalSearchServiceConnectionImpl::UpdateConversation(
-    google::cloud::discoveryengine::v1::UpdateConversationRequest const&
-        request) {
+ConversationalSearchServiceConnectionImpl::UpdateConversation(google::cloud::discoveryengine::v1::UpdateConversationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateConversation(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::discoveryengine::v1::UpdateConversationRequest const&
-              request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::discoveryengine::v1::UpdateConversationRequest const& request) {
         return stub_->UpdateConversation(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::discoveryengine::v1::Conversation>
-ConversationalSearchServiceConnectionImpl::GetConversation(
-    google::cloud::discoveryengine::v1::GetConversationRequest const& request) {
+ConversationalSearchServiceConnectionImpl::GetConversation(google::cloud::discoveryengine::v1::GetConversationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetConversation(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::discoveryengine::v1::GetConversationRequest const&
-                 request) {
+             google::cloud::discoveryengine::v1::GetConversationRequest const& request) {
         return stub_->GetConversation(context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::cloud::discoveryengine::v1::Conversation>
-ConversationalSearchServiceConnectionImpl::ListConversations(
-    google::cloud::discoveryengine::v1::ListConversationsRequest request) {
+ConversationalSearchServiceConnectionImpl::ListConversations(google::cloud::discoveryengine::v1::ListConversationsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListConversations(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::discoveryengine::v1::Conversation>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::discoveryengine::v1::Conversation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<
-           discoveryengine_v1::ConversationalSearchServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<discoveryengine_v1::ConversationalSearchServiceRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::discoveryengine::v1::ListConversationsRequest const&
-              r) {
+          Options const& options, google::cloud::discoveryengine::v1::ListConversationsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::discoveryengine::v1::
-                       ListConversationsRequest const& request) {
+                   google::cloud::discoveryengine::v1::ListConversationsRequest const& request) {
               return stub->ListConversations(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::discoveryengine::v1::ListConversationsResponse r) {
-        std::vector<google::cloud::discoveryengine::v1::Conversation> result(
-            r.conversations().size());
+        std::vector<google::cloud::discoveryengine::v1::Conversation> result(r.conversations().size());
         auto& messages = *r.mutable_conversations();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -194,146 +158,120 @@ ConversationalSearchServiceConnectionImpl::ListConversations(
 }
 
 StatusOr<google::cloud::discoveryengine::v1::AnswerQueryResponse>
-ConversationalSearchServiceConnectionImpl::AnswerQuery(
-    google::cloud::discoveryengine::v1::AnswerQueryRequest const& request) {
+ConversationalSearchServiceConnectionImpl::AnswerQuery(google::cloud::discoveryengine::v1::AnswerQueryRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->AnswerQuery(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::discoveryengine::v1::AnswerQueryRequest const&
-                 request) {
+             google::cloud::discoveryengine::v1::AnswerQueryRequest const& request) {
         return stub_->AnswerQuery(context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::cloud::discoveryengine::v1::AnswerQueryResponse>
-ConversationalSearchServiceConnectionImpl::StreamAnswerQuery(
-    google::cloud::discoveryengine::v1::AnswerQueryRequest const& request) {
+ConversationalSearchServiceConnectionImpl::StreamAnswerQuery(google::cloud::discoveryengine::v1::AnswerQueryRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  auto factory =
-      [stub = stub_,
-       current](google::cloud::discoveryengine::v1::AnswerQueryRequest const&
-                    request) {
-        return stub->StreamAnswerQuery(std::make_shared<grpc::ClientContext>(),
-                                       *current, request);
-      };
-  auto resumable = internal::MakeResumableStreamingReadRpc<
-      google::cloud::discoveryengine::v1::AnswerQueryResponse,
-      google::cloud::discoveryengine::v1::AnswerQueryRequest>(
-      retry_policy(*current), backoff_policy(*current), factory,
-      ConversationalSearchServiceStreamAnswerQueryStreamingUpdater, request);
-  return internal::MakeStreamRange(
-      internal::StreamReader<
-          google::cloud::discoveryengine::v1::AnswerQueryResponse>(
-          [resumable] { return resumable->Read(); }));
+  auto factory = [stub = stub_, current](google::cloud::discoveryengine::v1::AnswerQueryRequest const& request) {
+    return stub->StreamAnswerQuery(
+        std::make_shared<grpc::ClientContext>(), *current, request);
+  };
+  auto resumable =
+      internal::MakeResumableStreamingReadRpc<google::cloud::discoveryengine::v1::AnswerQueryResponse, google::cloud::discoveryengine::v1::AnswerQueryRequest>(
+          retry_policy(*current), backoff_policy(*current), factory,
+          ConversationalSearchServiceStreamAnswerQueryStreamingUpdater, request);
+  return internal::MakeStreamRange(internal::StreamReader<google::cloud::discoveryengine::v1::AnswerQueryResponse>(
+      [resumable] { return resumable->Read(); }));
 }
 
 StatusOr<google::cloud::discoveryengine::v1::Answer>
-ConversationalSearchServiceConnectionImpl::GetAnswer(
-    google::cloud::discoveryengine::v1::GetAnswerRequest const& request) {
+ConversationalSearchServiceConnectionImpl::GetAnswer(google::cloud::discoveryengine::v1::GetAnswerRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetAnswer(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::discoveryengine::v1::GetAnswerRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::discoveryengine::v1::GetAnswerRequest const& request) {
         return stub_->GetAnswer(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::discoveryengine::v1::Session>
-ConversationalSearchServiceConnectionImpl::CreateSession(
-    google::cloud::discoveryengine::v1::CreateSessionRequest const& request) {
+ConversationalSearchServiceConnectionImpl::CreateSession(google::cloud::discoveryengine::v1::CreateSessionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateSession(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::discoveryengine::v1::CreateSessionRequest const&
-                 request) {
+             google::cloud::discoveryengine::v1::CreateSessionRequest const& request) {
         return stub_->CreateSession(context, options, request);
       },
       *current, request, __func__);
 }
 
-Status ConversationalSearchServiceConnectionImpl::DeleteSession(
-    google::cloud::discoveryengine::v1::DeleteSessionRequest const& request) {
+Status
+ConversationalSearchServiceConnectionImpl::DeleteSession(google::cloud::discoveryengine::v1::DeleteSessionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteSession(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::discoveryengine::v1::DeleteSessionRequest const&
-                 request) {
+             google::cloud::discoveryengine::v1::DeleteSessionRequest const& request) {
         return stub_->DeleteSession(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::discoveryengine::v1::Session>
-ConversationalSearchServiceConnectionImpl::UpdateSession(
-    google::cloud::discoveryengine::v1::UpdateSessionRequest const& request) {
+ConversationalSearchServiceConnectionImpl::UpdateSession(google::cloud::discoveryengine::v1::UpdateSessionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateSession(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::discoveryengine::v1::UpdateSessionRequest const&
-                 request) {
+             google::cloud::discoveryengine::v1::UpdateSessionRequest const& request) {
         return stub_->UpdateSession(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::discoveryengine::v1::Session>
-ConversationalSearchServiceConnectionImpl::GetSession(
-    google::cloud::discoveryengine::v1::GetSessionRequest const& request) {
+ConversationalSearchServiceConnectionImpl::GetSession(google::cloud::discoveryengine::v1::GetSessionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetSession(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::discoveryengine::v1::GetSessionRequest const&
-                 request) {
+             google::cloud::discoveryengine::v1::GetSessionRequest const& request) {
         return stub_->GetSession(context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::cloud::discoveryengine::v1::Session>
-ConversationalSearchServiceConnectionImpl::ListSessions(
-    google::cloud::discoveryengine::v1::ListSessionsRequest request) {
+ConversationalSearchServiceConnectionImpl::ListSessions(google::cloud::discoveryengine::v1::ListSessionsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListSessions(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::discoveryengine::v1::Session>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::discoveryengine::v1::Session>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<
-           discoveryengine_v1::ConversationalSearchServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<discoveryengine_v1::ConversationalSearchServiceRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::discoveryengine::v1::ListSessionsRequest const& r) {
+          Options const& options, google::cloud::discoveryengine::v1::ListSessionsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](
-                grpc::ClientContext& context, Options const& options,
-                google::cloud::discoveryengine::v1::ListSessionsRequest const&
-                    request) {
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::cloud::discoveryengine::v1::ListSessionsRequest const& request) {
               return stub->ListSessions(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::discoveryengine::v1::ListSessionsResponse r) {
-        std::vector<google::cloud::discoveryengine::v1::Session> result(
-            r.sessions().size());
+        std::vector<google::cloud::discoveryengine::v1::Session> result(r.sessions().size());
         auto& messages = *r.mutable_sessions();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -341,22 +279,17 @@ ConversationalSearchServiceConnectionImpl::ListSessions(
 }
 
 StreamRange<google::longrunning::Operation>
-ConversationalSearchServiceConnectionImpl::ListOperations(
-    google::longrunning::ListOperationsRequest request) {
+ConversationalSearchServiceConnectionImpl::ListOperations(google::longrunning::ListOperationsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListOperations(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::longrunning::Operation>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::longrunning::Operation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<
-           discoveryengine_v1::ConversationalSearchServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<discoveryengine_v1::ConversationalSearchServiceRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::longrunning::ListOperationsRequest const& r) {
+          Options const& options, google::longrunning::ListOperationsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
@@ -366,8 +299,7 @@ ConversationalSearchServiceConnectionImpl::ListOperations(
             options, r, function_name);
       },
       [](google::longrunning::ListOperationsResponse r) {
-        std::vector<google::longrunning::Operation> result(
-            r.operations().size());
+        std::vector<google::longrunning::Operation> result(r.operations().size());
         auto& messages = *r.mutable_operations();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -375,8 +307,7 @@ ConversationalSearchServiceConnectionImpl::ListOperations(
 }
 
 StatusOr<google::longrunning::Operation>
-ConversationalSearchServiceConnectionImpl::GetOperation(
-    google::longrunning::GetOperationRequest const& request) {
+ConversationalSearchServiceConnectionImpl::GetOperation(google::longrunning::GetOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -388,8 +319,8 @@ ConversationalSearchServiceConnectionImpl::GetOperation(
       *current, request, __func__);
 }
 
-Status ConversationalSearchServiceConnectionImpl::CancelOperation(
-    google::longrunning::CancelOperationRequest const& request) {
+Status
+ConversationalSearchServiceConnectionImpl::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),

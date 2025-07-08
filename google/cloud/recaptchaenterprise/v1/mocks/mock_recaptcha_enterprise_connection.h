@@ -31,10 +31,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * A class to mock `RecaptchaEnterpriseServiceConnection`.
  *
  * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `RecaptchaEnterpriseServiceClient`.
- * To do so, construct an object of type `RecaptchaEnterpriseServiceClient` with
- * an instance of this class. Then use the Google Test framework functions to
- * program the behavior of this mock.
+ * including errors, from an object of type `RecaptchaEnterpriseServiceClient`. To do so,
+ * construct an object of type `RecaptchaEnterpriseServiceClient` with an instance of this
+ * class. Then use the Google Test framework functions to program the behavior
+ * of this mock.
  *
  * @see [This example][bq-mock] for how to test your application with GoogleTest.
  * While the example showcases types from the BigQuery library, the underlying
@@ -42,149 +42,97 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockRecaptchaEnterpriseServiceConnection
-    : public recaptchaenterprise_v1::RecaptchaEnterpriseServiceConnection {
+class MockRecaptchaEnterpriseServiceConnection : public recaptchaenterprise_v1::RecaptchaEnterpriseServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::recaptchaenterprise::v1::Assessment>,
-      CreateAssessment,
-      (google::cloud::recaptchaenterprise::v1::CreateAssessmentRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::recaptchaenterprise::v1::Assessment>,
+  CreateAssessment,
+  (google::cloud::recaptchaenterprise::v1::CreateAssessmentRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<
-          google::cloud::recaptchaenterprise::v1::AnnotateAssessmentResponse>,
-      AnnotateAssessment,
-      (google::cloud::recaptchaenterprise::v1::AnnotateAssessmentRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::recaptchaenterprise::v1::AnnotateAssessmentResponse>,
+  AnnotateAssessment,
+  (google::cloud::recaptchaenterprise::v1::AnnotateAssessmentRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::recaptchaenterprise::v1::Key>, CreateKey,
-      (google::cloud::recaptchaenterprise::v1::CreateKeyRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::recaptchaenterprise::v1::Key>,
+  CreateKey,
+  (google::cloud::recaptchaenterprise::v1::CreateKeyRequest const& request), (override));
 
   MOCK_METHOD((StreamRange<google::cloud::recaptchaenterprise::v1::Key>),
-              ListKeys,
-              (google::cloud::recaptchaenterprise::v1::ListKeysRequest request),
-              (override));
+  ListKeys,
+  (google::cloud::recaptchaenterprise::v1::ListKeysRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::recaptchaenterprise::v1::
-                           RetrieveLegacySecretKeyResponse>,
-              RetrieveLegacySecretKey,
-              (google::cloud::recaptchaenterprise::v1::
-                   RetrieveLegacySecretKeyRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::recaptchaenterprise::v1::RetrieveLegacySecretKeyResponse>,
+  RetrieveLegacySecretKey,
+  (google::cloud::recaptchaenterprise::v1::RetrieveLegacySecretKeyRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::recaptchaenterprise::v1::Key>, GetKey,
-      (google::cloud::recaptchaenterprise::v1::GetKeyRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::recaptchaenterprise::v1::Key>,
+  GetKey,
+  (google::cloud::recaptchaenterprise::v1::GetKeyRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::recaptchaenterprise::v1::Key>, UpdateKey,
-      (google::cloud::recaptchaenterprise::v1::UpdateKeyRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::recaptchaenterprise::v1::Key>,
+  UpdateKey,
+  (google::cloud::recaptchaenterprise::v1::UpdateKeyRequest const& request), (override));
 
-  MOCK_METHOD(
-      Status, DeleteKey,
-      (google::cloud::recaptchaenterprise::v1::DeleteKeyRequest const& request),
-      (override));
+  MOCK_METHOD(Status,
+  DeleteKey,
+  (google::cloud::recaptchaenterprise::v1::DeleteKeyRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::recaptchaenterprise::v1::Key>, MigrateKey,
-              (google::cloud::recaptchaenterprise::v1::MigrateKeyRequest const&
-                   request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::recaptchaenterprise::v1::Key>,
+  MigrateKey,
+  (google::cloud::recaptchaenterprise::v1::MigrateKeyRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::recaptchaenterprise::v1::AddIpOverrideResponse>,
-      AddIpOverride,
-      (google::cloud::recaptchaenterprise::v1::AddIpOverrideRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::recaptchaenterprise::v1::AddIpOverrideResponse>,
+  AddIpOverride,
+  (google::cloud::recaptchaenterprise::v1::AddIpOverrideRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<
-          google::cloud::recaptchaenterprise::v1::RemoveIpOverrideResponse>,
-      RemoveIpOverride,
-      (google::cloud::recaptchaenterprise::v1::RemoveIpOverrideRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::recaptchaenterprise::v1::RemoveIpOverrideResponse>,
+  RemoveIpOverride,
+  (google::cloud::recaptchaenterprise::v1::RemoveIpOverrideRequest const& request), (override));
 
-  MOCK_METHOD(
-      (StreamRange<google::cloud::recaptchaenterprise::v1::IpOverrideData>),
-      ListIpOverrides,
-      (google::cloud::recaptchaenterprise::v1::ListIpOverridesRequest request),
-      (override));
+  MOCK_METHOD((StreamRange<google::cloud::recaptchaenterprise::v1::IpOverrideData>),
+  ListIpOverrides,
+  (google::cloud::recaptchaenterprise::v1::ListIpOverridesRequest request), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::recaptchaenterprise::v1::Metrics>,
-              GetMetrics,
-              (google::cloud::recaptchaenterprise::v1::GetMetricsRequest const&
-                   request),
-              (override));
+  GetMetrics,
+  (google::cloud::recaptchaenterprise::v1::GetMetricsRequest const& request), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::recaptchaenterprise::v1::FirewallPolicy>,
-              CreateFirewallPolicy,
-              (google::cloud::recaptchaenterprise::v1::
-                   CreateFirewallPolicyRequest const& request),
-              (override));
+  CreateFirewallPolicy,
+  (google::cloud::recaptchaenterprise::v1::CreateFirewallPolicyRequest const& request), (override));
 
-  MOCK_METHOD(
-      (StreamRange<google::cloud::recaptchaenterprise::v1::FirewallPolicy>),
-      ListFirewallPolicies,
-      (google::cloud::recaptchaenterprise::v1::ListFirewallPoliciesRequest
-           request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::recaptchaenterprise::v1::FirewallPolicy>,
-      GetFirewallPolicy,
-      (google::cloud::recaptchaenterprise::v1::GetFirewallPolicyRequest const&
-           request),
-      (override));
+  MOCK_METHOD((StreamRange<google::cloud::recaptchaenterprise::v1::FirewallPolicy>),
+  ListFirewallPolicies,
+  (google::cloud::recaptchaenterprise::v1::ListFirewallPoliciesRequest request), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::recaptchaenterprise::v1::FirewallPolicy>,
-              UpdateFirewallPolicy,
-              (google::cloud::recaptchaenterprise::v1::
-                   UpdateFirewallPolicyRequest const& request),
-              (override));
+  GetFirewallPolicy,
+  (google::cloud::recaptchaenterprise::v1::GetFirewallPolicyRequest const& request), (override));
 
-  MOCK_METHOD(Status, DeleteFirewallPolicy,
-              (google::cloud::recaptchaenterprise::v1::
-                   DeleteFirewallPolicyRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::recaptchaenterprise::v1::FirewallPolicy>,
+  UpdateFirewallPolicy,
+  (google::cloud::recaptchaenterprise::v1::UpdateFirewallPolicyRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::recaptchaenterprise::v1::
-                           ReorderFirewallPoliciesResponse>,
-              ReorderFirewallPolicies,
-              (google::cloud::recaptchaenterprise::v1::
-                   ReorderFirewallPoliciesRequest const& request),
-              (override));
+  MOCK_METHOD(Status,
+  DeleteFirewallPolicy,
+  (google::cloud::recaptchaenterprise::v1::DeleteFirewallPolicyRequest const& request), (override));
 
-  MOCK_METHOD(
-      (StreamRange<
-          google::cloud::recaptchaenterprise::v1::RelatedAccountGroup>),
-      ListRelatedAccountGroups,
-      (google::cloud::recaptchaenterprise::v1::ListRelatedAccountGroupsRequest
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::recaptchaenterprise::v1::ReorderFirewallPoliciesResponse>,
+  ReorderFirewallPolicies,
+  (google::cloud::recaptchaenterprise::v1::ReorderFirewallPoliciesRequest const& request), (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::recaptchaenterprise::v1::
-                               RelatedAccountGroupMembership>),
-              ListRelatedAccountGroupMemberships,
-              (google::cloud::recaptchaenterprise::v1::
-                   ListRelatedAccountGroupMembershipsRequest request),
-              (override));
+  MOCK_METHOD((StreamRange<google::cloud::recaptchaenterprise::v1::RelatedAccountGroup>),
+  ListRelatedAccountGroups,
+  (google::cloud::recaptchaenterprise::v1::ListRelatedAccountGroupsRequest request), (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::recaptchaenterprise::v1::
-                               RelatedAccountGroupMembership>),
-              SearchRelatedAccountGroupMemberships,
-              (google::cloud::recaptchaenterprise::v1::
-                   SearchRelatedAccountGroupMembershipsRequest request),
-              (override));
+  MOCK_METHOD((StreamRange<google::cloud::recaptchaenterprise::v1::RelatedAccountGroupMembership>),
+  ListRelatedAccountGroupMemberships,
+  (google::cloud::recaptchaenterprise::v1::ListRelatedAccountGroupMembershipsRequest request), (override));
+
+  MOCK_METHOD((StreamRange<google::cloud::recaptchaenterprise::v1::RelatedAccountGroupMembership>),
+  SearchRelatedAccountGroupMemberships,
+  (google::cloud::recaptchaenterprise::v1::SearchRelatedAccountGroupMembershipsRequest request), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

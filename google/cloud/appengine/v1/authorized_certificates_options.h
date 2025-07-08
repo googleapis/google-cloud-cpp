@@ -55,8 +55,7 @@ struct AuthorizedCertificatesBackoffPolicyOption {
  * @ingroup google-cloud-appengine-options
  */
 struct AuthorizedCertificatesConnectionIdempotencyPolicyOption {
-  using Type =
-      std::shared_ptr<AuthorizedCertificatesConnectionIdempotencyPolicy>;
+  using Type = std::shared_ptr<AuthorizedCertificatesConnectionIdempotencyPolicy>;
 };
 
 /**

@@ -26,39 +26,32 @@ namespace channel_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 CloudChannelReportsServiceClient::CloudChannelReportsServiceClient(
-    std::shared_ptr<CloudChannelReportsServiceConnection> connection,
-    Options opts)
+    std::shared_ptr<CloudChannelReportsServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 CloudChannelReportsServiceClient::~CloudChannelReportsServiceClient() = default;
 
 future<StatusOr<google::cloud::channel::v1::RunReportJobResponse>>
-CloudChannelReportsServiceClient::RunReportJob(
-    google::cloud::channel::v1::RunReportJobRequest const& request,
-    Options opts) {
+CloudChannelReportsServiceClient::RunReportJob(google::cloud::channel::v1::RunReportJobRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RunReportJob(request);
 }
 
 StatusOr<google::longrunning::Operation>
-CloudChannelReportsServiceClient::RunReportJob(
-    NoAwaitTag, google::cloud::channel::v1::RunReportJobRequest const& request,
-    Options opts) {
+CloudChannelReportsServiceClient::RunReportJob(NoAwaitTag, google::cloud::channel::v1::RunReportJobRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RunReportJob(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::channel::v1::RunReportJobResponse>>
-CloudChannelReportsServiceClient::RunReportJob(
-    google::longrunning::Operation const& operation, Options opts) {
+CloudChannelReportsServiceClient::RunReportJob(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RunReportJob(operation);
 }
 
 StreamRange<google::cloud::channel::v1::Row>
-CloudChannelReportsServiceClient::FetchReportResults(
-    std::string const& report_job, Options opts) {
+CloudChannelReportsServiceClient::FetchReportResults(std::string const& report_job, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::channel::v1::FetchReportResultsRequest request;
   request.set_report_job(report_job);
@@ -66,16 +59,13 @@ CloudChannelReportsServiceClient::FetchReportResults(
 }
 
 StreamRange<google::cloud::channel::v1::Row>
-CloudChannelReportsServiceClient::FetchReportResults(
-    google::cloud::channel::v1::FetchReportResultsRequest request,
-    Options opts) {
+CloudChannelReportsServiceClient::FetchReportResults(google::cloud::channel::v1::FetchReportResultsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->FetchReportResults(std::move(request));
 }
 
 StreamRange<google::cloud::channel::v1::Report>
-CloudChannelReportsServiceClient::ListReports(std::string const& parent,
-                                              Options opts) {
+CloudChannelReportsServiceClient::ListReports(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::channel::v1::ListReportsRequest request;
   request.set_parent(parent);
@@ -83,16 +73,13 @@ CloudChannelReportsServiceClient::ListReports(std::string const& parent,
 }
 
 StreamRange<google::cloud::channel::v1::Report>
-CloudChannelReportsServiceClient::ListReports(
-    google::cloud::channel::v1::ListReportsRequest request, Options opts) {
+CloudChannelReportsServiceClient::ListReports(google::cloud::channel::v1::ListReportsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListReports(std::move(request));
 }
 
 StreamRange<google::longrunning::Operation>
-CloudChannelReportsServiceClient::ListOperations(std::string const& name,
-                                                 std::string const& filter,
-                                                 Options opts) {
+CloudChannelReportsServiceClient::ListOperations(std::string const& name, std::string const& filter, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::ListOperationsRequest request;
   request.set_name(name);
@@ -101,15 +88,13 @@ CloudChannelReportsServiceClient::ListOperations(std::string const& name,
 }
 
 StreamRange<google::longrunning::Operation>
-CloudChannelReportsServiceClient::ListOperations(
-    google::longrunning::ListOperationsRequest request, Options opts) {
+CloudChannelReportsServiceClient::ListOperations(google::longrunning::ListOperationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOperations(std::move(request));
 }
 
 StatusOr<google::longrunning::Operation>
-CloudChannelReportsServiceClient::GetOperation(std::string const& name,
-                                               Options opts) {
+CloudChannelReportsServiceClient::GetOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
@@ -117,36 +102,35 @@ CloudChannelReportsServiceClient::GetOperation(std::string const& name,
 }
 
 StatusOr<google::longrunning::Operation>
-CloudChannelReportsServiceClient::GetOperation(
-    google::longrunning::GetOperationRequest const& request, Options opts) {
+CloudChannelReportsServiceClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }
 
-Status CloudChannelReportsServiceClient::DeleteOperation(
-    std::string const& name, Options opts) {
+Status
+CloudChannelReportsServiceClient::DeleteOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::DeleteOperationRequest request;
   request.set_name(name);
   return connection_->DeleteOperation(request);
 }
 
-Status CloudChannelReportsServiceClient::DeleteOperation(
-    google::longrunning::DeleteOperationRequest const& request, Options opts) {
+Status
+CloudChannelReportsServiceClient::DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteOperation(request);
 }
 
-Status CloudChannelReportsServiceClient::CancelOperation(
-    std::string const& name, Options opts) {
+Status
+CloudChannelReportsServiceClient::CancelOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::CancelOperationRequest request;
   request.set_name(name);
   return connection_->CancelOperation(request);
 }
 
-Status CloudChannelReportsServiceClient::CancelOperation(
-    google::longrunning::CancelOperationRequest const& request, Options opts) {
+Status
+CloudChannelReportsServiceClient::CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelOperation(request);
 }

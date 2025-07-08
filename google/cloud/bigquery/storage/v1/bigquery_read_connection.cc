@@ -17,12 +17,12 @@
 // source: google/cloud/bigquery/storage/v1/storage.proto
 
 #include "google/cloud/bigquery/storage/v1/bigquery_read_connection.h"
+#include "google/cloud/background_threads.h"
 #include "google/cloud/bigquery/storage/v1/bigquery_read_options.h"
 #include "google/cloud/bigquery/storage/v1/internal/bigquery_read_connection_impl.h"
 #include "google/cloud/bigquery/storage/v1/internal/bigquery_read_option_defaults.h"
 #include "google/cloud/bigquery/storage/v1/internal/bigquery_read_stub_factory.h"
 #include "google/cloud/bigquery/storage/v1/internal/bigquery_read_tracing_connection.h"
-#include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
@@ -43,15 +43,14 @@ BigQueryReadConnection::CreateReadSession(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::bigquery::storage::v1::ReadRowsResponse>
-BigQueryReadConnection::ReadRows(
+StreamRange<google::cloud::bigquery::storage::v1::ReadRowsResponse> BigQueryReadConnection::ReadRows(
     google::cloud::bigquery::storage::v1::ReadRowsRequest const&) {
   return google::cloud::internal::MakeStreamRange<
       google::cloud::bigquery::storage::v1::ReadRowsResponse>(
-      []() -> absl::variant<
-               Status, google::cloud::bigquery::storage::v1::ReadRowsResponse> {
-        return Status(StatusCode::kUnimplemented, "not implemented");
-      });
+      []() -> absl::variant<Status,
+      google::cloud::bigquery::storage::v1::ReadRowsResponse>{
+        return Status(StatusCode::kUnimplemented, "not implemented");}
+      );
 }
 
 StatusOr<google::cloud::bigquery::storage::v1::SplitReadStreamResponse>
@@ -63,19 +62,17 @@ BigQueryReadConnection::SplitReadStream(
 std::shared_ptr<BigQueryReadConnection> MakeBigQueryReadConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 BigQueryReadPolicyOptionList>(options,
-                                                               __func__);
+      UnifiedCredentialsOptionList,
+      BigQueryReadPolicyOptionList>(options, __func__);
   options = bigquery_storage_v1_internal::BigQueryReadDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = bigquery_storage_v1_internal::CreateDefaultBigQueryReadStub(
-      std::move(auth), options);
+    std::move(auth), options);
   return bigquery_storage_v1_internal::MakeBigQueryReadTracingConnection(
-      std::make_shared<
-          bigquery_storage_v1_internal::BigQueryReadConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options)));
+      std::make_shared<bigquery_storage_v1_internal::BigQueryReadConnectionImpl>(
+      std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
@@ -91,8 +88,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 void BigQueryReadReadRowsStreamingUpdater(
     google::cloud::bigquery::storage::v1::ReadRowsResponse const& response,
     google::cloud::bigquery::storage::v1::ReadRowsRequest& request) {
-  return bigquery_storage_v1_internal::BigQueryReadReadRowsStreamingUpdater(
-      response, request);
+  return bigquery_storage_v1_internal::BigQueryReadReadRowsStreamingUpdater(response,
+                                                                 request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

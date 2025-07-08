@@ -28,15 +28,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 BigQueryWriteClient::BigQueryWriteClient(
     std::shared_ptr<BigQueryWriteConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 BigQueryWriteClient::~BigQueryWriteClient() = default;
 
 StatusOr<google::cloud::bigquery::storage::v1::WriteStream>
-BigQueryWriteClient::CreateWriteStream(
-    std::string const& parent,
-    google::cloud::bigquery::storage::v1::WriteStream const& write_stream,
-    Options opts) {
+BigQueryWriteClient::CreateWriteStream(std::string const& parent, google::cloud::bigquery::storage::v1::WriteStream const& write_stream, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::bigquery::storage::v1::CreateWriteStreamRequest request;
   request.set_parent(parent);
@@ -45,10 +42,7 @@ BigQueryWriteClient::CreateWriteStream(
 }
 
 StatusOr<google::cloud::bigquery::storage::v1::WriteStream>
-BigQueryWriteClient::CreateWriteStream(
-    google::cloud::bigquery::storage::v1::CreateWriteStreamRequest const&
-        request,
-    Options opts) {
+BigQueryWriteClient::CreateWriteStream(google::cloud::bigquery::storage::v1::CreateWriteStreamRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateWriteStream(request);
 }
@@ -57,7 +51,8 @@ std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::cloud::bigquery::storage::v1::AppendRowsRequest,
     google::cloud::bigquery::storage::v1::AppendRowsResponse>>
 BigQueryWriteClient::AsyncAppendRows(Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(opts), options_));
   return connection_->AsyncAppendRows();
 }
 
@@ -70,16 +65,13 @@ BigQueryWriteClient::GetWriteStream(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::bigquery::storage::v1::WriteStream>
-BigQueryWriteClient::GetWriteStream(
-    google::cloud::bigquery::storage::v1::GetWriteStreamRequest const& request,
-    Options opts) {
+BigQueryWriteClient::GetWriteStream(google::cloud::bigquery::storage::v1::GetWriteStreamRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetWriteStream(request);
 }
 
 StatusOr<google::cloud::bigquery::storage::v1::FinalizeWriteStreamResponse>
-BigQueryWriteClient::FinalizeWriteStream(std::string const& name,
-                                         Options opts) {
+BigQueryWriteClient::FinalizeWriteStream(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::bigquery::storage::v1::FinalizeWriteStreamRequest request;
   request.set_name(name);
@@ -87,17 +79,13 @@ BigQueryWriteClient::FinalizeWriteStream(std::string const& name,
 }
 
 StatusOr<google::cloud::bigquery::storage::v1::FinalizeWriteStreamResponse>
-BigQueryWriteClient::FinalizeWriteStream(
-    google::cloud::bigquery::storage::v1::FinalizeWriteStreamRequest const&
-        request,
-    Options opts) {
+BigQueryWriteClient::FinalizeWriteStream(google::cloud::bigquery::storage::v1::FinalizeWriteStreamRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->FinalizeWriteStream(request);
 }
 
 StatusOr<google::cloud::bigquery::storage::v1::BatchCommitWriteStreamsResponse>
-BigQueryWriteClient::BatchCommitWriteStreams(std::string const& parent,
-                                             Options opts) {
+BigQueryWriteClient::BatchCommitWriteStreams(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::bigquery::storage::v1::BatchCommitWriteStreamsRequest request;
   request.set_parent(parent);
@@ -105,10 +93,7 @@ BigQueryWriteClient::BatchCommitWriteStreams(std::string const& parent,
 }
 
 StatusOr<google::cloud::bigquery::storage::v1::BatchCommitWriteStreamsResponse>
-BigQueryWriteClient::BatchCommitWriteStreams(
-    google::cloud::bigquery::storage::v1::BatchCommitWriteStreamsRequest const&
-        request,
-    Options opts) {
+BigQueryWriteClient::BatchCommitWriteStreams(google::cloud::bigquery::storage::v1::BatchCommitWriteStreamsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->BatchCommitWriteStreams(request);
 }
@@ -122,9 +107,7 @@ BigQueryWriteClient::FlushRows(std::string const& write_stream, Options opts) {
 }
 
 StatusOr<google::cloud::bigquery::storage::v1::FlushRowsResponse>
-BigQueryWriteClient::FlushRows(
-    google::cloud::bigquery::storage::v1::FlushRowsRequest const& request,
-    Options opts) {
+BigQueryWriteClient::FlushRows(google::cloud::bigquery::storage::v1::FlushRowsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->FlushRows(request);
 }

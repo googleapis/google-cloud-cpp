@@ -30,49 +30,63 @@ namespace cloud {
 namespace pubsub_admin_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-TopicAdminLogging::TopicAdminLogging(std::shared_ptr<TopicAdminStub> child,
-                                     TracingOptions tracing_options,
-                                     std::set<std::string> const&)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
+TopicAdminLogging::TopicAdminLogging(
+    std::shared_ptr<TopicAdminStub> child,
+    TracingOptions tracing_options,
+    std::set<std::string> const&)
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)) {}
 
-StatusOr<google::pubsub::v1::Topic> TopicAdminLogging::CreateTopic(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::pubsub::v1::Topic>
+TopicAdminLogging::CreateTopic(
+    grpc::ClientContext& context,
+    Options const& options,
     google::pubsub::v1::Topic const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::pubsub::v1::Topic const& request) {
         return child_->CreateTopic(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::pubsub::v1::Topic> TopicAdminLogging::UpdateTopic(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::pubsub::v1::Topic>
+TopicAdminLogging::UpdateTopic(
+    grpc::ClientContext& context,
+    Options const& options,
     google::pubsub::v1::UpdateTopicRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::pubsub::v1::UpdateTopicRequest const& request) {
         return child_->UpdateTopic(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::pubsub::v1::Topic> TopicAdminLogging::GetTopic(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::pubsub::v1::Topic>
+TopicAdminLogging::GetTopic(
+    grpc::ClientContext& context,
+    Options const& options,
     google::pubsub::v1::GetTopicRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::pubsub::v1::GetTopicRequest const& request) {
         return child_->GetTopic(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::pubsub::v1::ListTopicsResponse> TopicAdminLogging::ListTopics(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::pubsub::v1::ListTopicsResponse>
+TopicAdminLogging::ListTopics(
+    grpc::ClientContext& context,
+    Options const& options,
     google::pubsub::v1::ListTopicsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::pubsub::v1::ListTopicsRequest const& request) {
         return child_->ListTopics(context, options, request);
       },
@@ -81,10 +95,12 @@ StatusOr<google::pubsub::v1::ListTopicsResponse> TopicAdminLogging::ListTopics(
 
 StatusOr<google::pubsub::v1::ListTopicSubscriptionsResponse>
 TopicAdminLogging::ListTopicSubscriptions(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::pubsub::v1::ListTopicSubscriptionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::pubsub::v1::ListTopicSubscriptionsRequest const& request) {
         return child_->ListTopicSubscriptions(context, options, request);
       },
@@ -93,21 +109,26 @@ TopicAdminLogging::ListTopicSubscriptions(
 
 StatusOr<google::pubsub::v1::ListTopicSnapshotsResponse>
 TopicAdminLogging::ListTopicSnapshots(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::pubsub::v1::ListTopicSnapshotsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::pubsub::v1::ListTopicSnapshotsRequest const& request) {
         return child_->ListTopicSnapshots(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status TopicAdminLogging::DeleteTopic(
-    grpc::ClientContext& context, Options const& options,
+Status
+TopicAdminLogging::DeleteTopic(
+    grpc::ClientContext& context,
+    Options const& options,
     google::pubsub::v1::DeleteTopicRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::pubsub::v1::DeleteTopicRequest const& request) {
         return child_->DeleteTopic(context, options, request);
       },
@@ -116,32 +137,40 @@ Status TopicAdminLogging::DeleteTopic(
 
 StatusOr<google::pubsub::v1::DetachSubscriptionResponse>
 TopicAdminLogging::DetachSubscription(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::pubsub::v1::DetachSubscriptionRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::pubsub::v1::DetachSubscriptionRequest const& request) {
         return child_->DetachSubscription(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::iam::v1::Policy> TopicAdminLogging::SetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::iam::v1::Policy>
+TopicAdminLogging::SetIamPolicy(
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::iam::v1::SetIamPolicyRequest const& request) {
         return child_->SetIamPolicy(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::iam::v1::Policy> TopicAdminLogging::GetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::iam::v1::Policy>
+TopicAdminLogging::GetIamPolicy(
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::iam::v1::GetIamPolicyRequest const& request) {
         return child_->GetIamPolicy(context, options, request);
       },
@@ -150,10 +179,12 @@ StatusOr<google::iam::v1::Policy> TopicAdminLogging::GetIamPolicy(
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 TopicAdminLogging::TestIamPermissions(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::iam::v1::TestIamPermissionsRequest const& request) {
         return child_->TestIamPermissions(context, options, request);
       },

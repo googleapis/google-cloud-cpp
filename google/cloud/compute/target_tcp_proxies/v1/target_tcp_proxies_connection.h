@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_TARGET_TCP_PROXIES_V1_TARGET_TCP_PROXIES_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_TARGET_TCP_PROXIES_V1_TARGET_TCP_PROXIES_CONNECTION_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/target_tcp_proxies/v1/internal/target_tcp_proxies_retry_traits.h"
 #include "google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -55,8 +55,7 @@ class TargetTcpProxiesRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class TargetTcpProxiesLimitedErrorCountRetryPolicy
-    : public TargetTcpProxiesRetryPolicy {
+class TargetTcpProxiesLimitedErrorCountRetryPolicy : public TargetTcpProxiesRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -66,14 +65,14 @@ class TargetTcpProxiesLimitedErrorCountRetryPolicy
    *     @p maximum_failures == 0.
    */
   explicit TargetTcpProxiesLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   TargetTcpProxiesLimitedErrorCountRetryPolicy(
       TargetTcpProxiesLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : TargetTcpProxiesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : TargetTcpProxiesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   TargetTcpProxiesLimitedErrorCountRetryPolicy(
       TargetTcpProxiesLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : TargetTcpProxiesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : TargetTcpProxiesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -93,9 +92,7 @@ class TargetTcpProxiesLimitedErrorCountRetryPolicy
   using BaseType = TargetTcpProxiesRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      compute_target_tcp_proxies_v1_internal::TargetTcpProxiesRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<compute_target_tcp_proxies_v1_internal::TargetTcpProxiesRetryTraits> impl_;
 };
 
 /**
@@ -108,8 +105,7 @@ class TargetTcpProxiesLimitedErrorCountRetryPolicy
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class TargetTcpProxiesLimitedTimeRetryPolicy
-    : public TargetTcpProxiesRetryPolicy {
+class TargetTcpProxiesLimitedTimeRetryPolicy : public TargetTcpProxiesRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -134,14 +130,12 @@ class TargetTcpProxiesLimitedTimeRetryPolicy
   template <typename DurationRep, typename DurationPeriod>
   explicit TargetTcpProxiesLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  TargetTcpProxiesLimitedTimeRetryPolicy(
-      TargetTcpProxiesLimitedTimeRetryPolicy&& rhs) noexcept
-      : TargetTcpProxiesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  TargetTcpProxiesLimitedTimeRetryPolicy(
-      TargetTcpProxiesLimitedTimeRetryPolicy const& rhs) noexcept
-      : TargetTcpProxiesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  TargetTcpProxiesLimitedTimeRetryPolicy(TargetTcpProxiesLimitedTimeRetryPolicy&& rhs) noexcept
+    : TargetTcpProxiesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  TargetTcpProxiesLimitedTimeRetryPolicy(TargetTcpProxiesLimitedTimeRetryPolicy const& rhs) noexcept
+    : TargetTcpProxiesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -163,9 +157,7 @@ class TargetTcpProxiesLimitedTimeRetryPolicy
   using BaseType = TargetTcpProxiesRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      compute_target_tcp_proxies_v1_internal::TargetTcpProxiesRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<compute_target_tcp_proxies_v1_internal::TargetTcpProxiesRetryTraits> impl_;
 };
 
 /**
@@ -178,8 +170,7 @@ class TargetTcpProxiesLimitedTimeRetryPolicy
  *
  * To create a concrete instance, see `MakeTargetTcpProxiesConnection()`.
  *
- * For mocking, see
- * `compute_target_tcp_proxies_v1_mocks::MockTargetTcpProxiesConnection`.
+ * For mocking, see `compute_target_tcp_proxies_v1_mocks::MockTargetTcpProxiesConnection`.
  */
 class TargetTcpProxiesConnection {
  public:
@@ -187,69 +178,50 @@ class TargetTcpProxiesConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StreamRange<std::pair<
-      std::string, google::cloud::cpp::compute::v1::TargetTcpProxiesScopedList>>
-  AggregatedListTargetTcpProxies(
-      google::cloud::cpp::compute::target_tcp_proxies::v1::
-          AggregatedListTargetTcpProxiesRequest request);
+  virtual StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::TargetTcpProxiesScopedList>>
+  AggregatedListTargetTcpProxies(google::cloud::cpp::compute::target_tcp_proxies::v1::AggregatedListTargetTcpProxiesRequest request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteTargetTcpProxy(google::cloud::cpp::compute::target_tcp_proxies::v1::
-                           DeleteTargetTcpProxyRequest const& request);
+  DeleteTargetTcpProxy(google::cloud::cpp::compute::target_tcp_proxies::v1::DeleteTargetTcpProxyRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteTargetTcpProxy(NoAwaitTag,
-                       google::cloud::cpp::compute::target_tcp_proxies::v1::
-                           DeleteTargetTcpProxyRequest const& request);
+  DeleteTargetTcpProxy(NoAwaitTag, google::cloud::cpp::compute::target_tcp_proxies::v1::DeleteTargetTcpProxyRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteTargetTcpProxy(
-      google::cloud::cpp::compute::v1::Operation const& operation);
+  DeleteTargetTcpProxy( google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::TargetTcpProxy>
-  GetTargetTcpProxy(google::cloud::cpp::compute::target_tcp_proxies::v1::
-                        GetTargetTcpProxyRequest const& request);
+  GetTargetTcpProxy(google::cloud::cpp::compute::target_tcp_proxies::v1::GetTargetTcpProxyRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertTargetTcpProxy(google::cloud::cpp::compute::target_tcp_proxies::v1::
-                           InsertTargetTcpProxyRequest const& request);
+  InsertTargetTcpProxy(google::cloud::cpp::compute::target_tcp_proxies::v1::InsertTargetTcpProxyRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertTargetTcpProxy(NoAwaitTag,
-                       google::cloud::cpp::compute::target_tcp_proxies::v1::
-                           InsertTargetTcpProxyRequest const& request);
+  InsertTargetTcpProxy(NoAwaitTag, google::cloud::cpp::compute::target_tcp_proxies::v1::InsertTargetTcpProxyRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertTargetTcpProxy(
-      google::cloud::cpp::compute::v1::Operation const& operation);
+  InsertTargetTcpProxy( google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::TargetTcpProxy>
-  ListTargetTcpProxies(google::cloud::cpp::compute::target_tcp_proxies::v1::
-                           ListTargetTcpProxiesRequest request);
+  ListTargetTcpProxies(google::cloud::cpp::compute::target_tcp_proxies::v1::ListTargetTcpProxiesRequest request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetBackendService(google::cloud::cpp::compute::target_tcp_proxies::v1::
-                        SetBackendServiceRequest const& request);
+  SetBackendService(google::cloud::cpp::compute::target_tcp_proxies::v1::SetBackendServiceRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetBackendService(NoAwaitTag,
-                    google::cloud::cpp::compute::target_tcp_proxies::v1::
-                        SetBackendServiceRequest const& request);
+  SetBackendService(NoAwaitTag, google::cloud::cpp::compute::target_tcp_proxies::v1::SetBackendServiceRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetBackendService(
-      google::cloud::cpp::compute::v1::Operation const& operation);
+  SetBackendService( google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetProxyHeader(google::cloud::cpp::compute::target_tcp_proxies::v1::
-                     SetProxyHeaderRequest const& request);
+  SetProxyHeader(google::cloud::cpp::compute::target_tcp_proxies::v1::SetProxyHeaderRequest const& request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> SetProxyHeader(
-      NoAwaitTag, google::cloud::cpp::compute::target_tcp_proxies::v1::
-                      SetProxyHeaderRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  SetProxyHeader(NoAwaitTag, google::cloud::cpp::compute::target_tcp_proxies::v1::SetProxyHeaderRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetProxyHeader(google::cloud::cpp::compute::v1::Operation const& operation);
+  SetProxyHeader( google::cloud::cpp::compute::v1::Operation const& operation);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

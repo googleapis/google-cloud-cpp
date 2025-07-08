@@ -74,7 +74,8 @@ struct JobServicePollingPolicyOption {
  * @ingroup google-cloud-aiplatform-options
  */
 using JobServicePolicyOptionList =
-    OptionList<JobServiceRetryPolicyOption, JobServiceBackoffPolicyOption,
+    OptionList<JobServiceRetryPolicyOption,
+               JobServiceBackoffPolicyOption,
                JobServicePollingPolicyOption,
                JobServiceConnectionIdempotencyPolicyOption>;
 

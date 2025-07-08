@@ -26,84 +26,66 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-RepositoryManagerConnectionIdempotencyPolicy::
-    ~RepositoryManagerConnectionIdempotencyPolicy() = default;
+RepositoryManagerConnectionIdempotencyPolicy::~RepositoryManagerConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<RepositoryManagerConnectionIdempotencyPolicy>
 RepositoryManagerConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<RepositoryManagerConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency RepositoryManagerConnectionIdempotencyPolicy::CreateConnection(
-    google::devtools::cloudbuild::v2::CreateConnectionRequest const&) {
+Idempotency RepositoryManagerConnectionIdempotencyPolicy::CreateConnection(google::devtools::cloudbuild::v2::CreateConnectionRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency RepositoryManagerConnectionIdempotencyPolicy::GetConnection(
-    google::devtools::cloudbuild::v2::GetConnectionRequest const&) {
+Idempotency RepositoryManagerConnectionIdempotencyPolicy::GetConnection(google::devtools::cloudbuild::v2::GetConnectionRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency RepositoryManagerConnectionIdempotencyPolicy::ListConnections(
-    google::devtools::cloudbuild::v2::ListConnectionsRequest) {  // NOLINT
+Idempotency RepositoryManagerConnectionIdempotencyPolicy::ListConnections(google::devtools::cloudbuild::v2::ListConnectionsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency RepositoryManagerConnectionIdempotencyPolicy::UpdateConnection(
-    google::devtools::cloudbuild::v2::UpdateConnectionRequest const&) {
+Idempotency RepositoryManagerConnectionIdempotencyPolicy::UpdateConnection(google::devtools::cloudbuild::v2::UpdateConnectionRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency RepositoryManagerConnectionIdempotencyPolicy::DeleteConnection(
-    google::devtools::cloudbuild::v2::DeleteConnectionRequest const&) {
+Idempotency RepositoryManagerConnectionIdempotencyPolicy::DeleteConnection(google::devtools::cloudbuild::v2::DeleteConnectionRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency RepositoryManagerConnectionIdempotencyPolicy::CreateRepository(
-    google::devtools::cloudbuild::v2::CreateRepositoryRequest const&) {
+Idempotency RepositoryManagerConnectionIdempotencyPolicy::CreateRepository(google::devtools::cloudbuild::v2::CreateRepositoryRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency
-RepositoryManagerConnectionIdempotencyPolicy::BatchCreateRepositories(
-    google::devtools::cloudbuild::v2::BatchCreateRepositoriesRequest const&) {
+Idempotency RepositoryManagerConnectionIdempotencyPolicy::BatchCreateRepositories(google::devtools::cloudbuild::v2::BatchCreateRepositoriesRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency RepositoryManagerConnectionIdempotencyPolicy::GetRepository(
-    google::devtools::cloudbuild::v2::GetRepositoryRequest const&) {
+Idempotency RepositoryManagerConnectionIdempotencyPolicy::GetRepository(google::devtools::cloudbuild::v2::GetRepositoryRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency RepositoryManagerConnectionIdempotencyPolicy::ListRepositories(
-    google::devtools::cloudbuild::v2::ListRepositoriesRequest) {  // NOLINT
+Idempotency RepositoryManagerConnectionIdempotencyPolicy::ListRepositories(google::devtools::cloudbuild::v2::ListRepositoriesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency RepositoryManagerConnectionIdempotencyPolicy::DeleteRepository(
-    google::devtools::cloudbuild::v2::DeleteRepositoryRequest const&) {
+Idempotency RepositoryManagerConnectionIdempotencyPolicy::DeleteRepository(google::devtools::cloudbuild::v2::DeleteRepositoryRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency RepositoryManagerConnectionIdempotencyPolicy::FetchReadWriteToken(
-    google::devtools::cloudbuild::v2::FetchReadWriteTokenRequest const&) {
+Idempotency RepositoryManagerConnectionIdempotencyPolicy::FetchReadWriteToken(google::devtools::cloudbuild::v2::FetchReadWriteTokenRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency RepositoryManagerConnectionIdempotencyPolicy::FetchReadToken(
-    google::devtools::cloudbuild::v2::FetchReadTokenRequest const&) {
+Idempotency RepositoryManagerConnectionIdempotencyPolicy::FetchReadToken(google::devtools::cloudbuild::v2::FetchReadTokenRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency
-RepositoryManagerConnectionIdempotencyPolicy::FetchLinkableRepositories(
-    google::devtools::cloudbuild::v2::
-        FetchLinkableRepositoriesRequest) {  // NOLINT
+Idempotency RepositoryManagerConnectionIdempotencyPolicy::FetchLinkableRepositories(google::devtools::cloudbuild::v2::FetchLinkableRepositoriesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency RepositoryManagerConnectionIdempotencyPolicy::FetchGitRefs(
-    google::devtools::cloudbuild::v2::FetchGitRefsRequest const&) {
+Idempotency RepositoryManagerConnectionIdempotencyPolicy::FetchGitRefs(google::devtools::cloudbuild::v2::FetchGitRefsRequest const&) {
   return Idempotency::kIdempotent;
 }
 
@@ -113,28 +95,24 @@ Idempotency RepositoryManagerConnectionIdempotencyPolicy::SetIamPolicy(
                                          : Idempotency::kIdempotent;
 }
 
-Idempotency RepositoryManagerConnectionIdempotencyPolicy::GetIamPolicy(
-    google::iam::v1::GetIamPolicyRequest const&) {
+Idempotency RepositoryManagerConnectionIdempotencyPolicy::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency RepositoryManagerConnectionIdempotencyPolicy::TestIamPermissions(
-    google::iam::v1::TestIamPermissionsRequest const&) {
+Idempotency RepositoryManagerConnectionIdempotencyPolicy::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency RepositoryManagerConnectionIdempotencyPolicy::GetOperation(
-    google::longrunning::GetOperationRequest const&) {
+Idempotency RepositoryManagerConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency RepositoryManagerConnectionIdempotencyPolicy::CancelOperation(
-    google::longrunning::CancelOperationRequest const&) {
+Idempotency RepositoryManagerConnectionIdempotencyPolicy::CancelOperation(google::longrunning::CancelOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<RepositoryManagerConnectionIdempotencyPolicy>
-MakeDefaultRepositoryManagerConnectionIdempotencyPolicy() {
+    MakeDefaultRepositoryManagerConnectionIdempotencyPolicy() {
   return std::make_unique<RepositoryManagerConnectionIdempotencyPolicy>();
 }
 

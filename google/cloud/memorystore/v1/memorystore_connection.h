@@ -19,11 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MEMORYSTORE_V1_MEMORYSTORE_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MEMORYSTORE_V1_MEMORYSTORE_CONNECTION_H
 
-#include "google/cloud/memorystore/v1/internal/memorystore_retry_traits.h"
-#include "google/cloud/memorystore/v1/memorystore_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/memorystore/v1/internal/memorystore_retry_traits.h"
+#include "google/cloud/memorystore/v1/memorystore_connection_idempotency_policy.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -66,14 +66,14 @@ class MemorystoreLimitedErrorCountRetryPolicy : public MemorystoreRetryPolicy {
    *     @p maximum_failures == 0.
    */
   explicit MemorystoreLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   MemorystoreLimitedErrorCountRetryPolicy(
       MemorystoreLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : MemorystoreLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : MemorystoreLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   MemorystoreLimitedErrorCountRetryPolicy(
       MemorystoreLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : MemorystoreLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : MemorystoreLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -93,9 +93,7 @@ class MemorystoreLimitedErrorCountRetryPolicy : public MemorystoreRetryPolicy {
   using BaseType = MemorystoreRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      memorystore_v1_internal::MemorystoreRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<memorystore_v1_internal::MemorystoreRetryTraits> impl_;
 };
 
 /**
@@ -133,14 +131,12 @@ class MemorystoreLimitedTimeRetryPolicy : public MemorystoreRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit MemorystoreLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  MemorystoreLimitedTimeRetryPolicy(
-      MemorystoreLimitedTimeRetryPolicy&& rhs) noexcept
-      : MemorystoreLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  MemorystoreLimitedTimeRetryPolicy(
-      MemorystoreLimitedTimeRetryPolicy const& rhs) noexcept
-      : MemorystoreLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  MemorystoreLimitedTimeRetryPolicy(MemorystoreLimitedTimeRetryPolicy&& rhs) noexcept
+    : MemorystoreLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  MemorystoreLimitedTimeRetryPolicy(MemorystoreLimitedTimeRetryPolicy const& rhs) noexcept
+    : MemorystoreLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -162,9 +158,7 @@ class MemorystoreLimitedTimeRetryPolicy : public MemorystoreRetryPolicy {
   using BaseType = MemorystoreRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      memorystore_v1_internal::MemorystoreRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<memorystore_v1_internal::MemorystoreRetryTraits> impl_;
 };
 
 /**
@@ -185,127 +179,107 @@ class MemorystoreConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StreamRange<google::cloud::memorystore::v1::Instance> ListInstances(
-      google::cloud::memorystore::v1::ListInstancesRequest request);
+  virtual StreamRange<google::cloud::memorystore::v1::Instance>
+  ListInstances(google::cloud::memorystore::v1::ListInstancesRequest request);
 
-  virtual StatusOr<google::cloud::memorystore::v1::Instance> GetInstance(
-      google::cloud::memorystore::v1::GetInstanceRequest const& request);
-
-  virtual future<StatusOr<google::cloud::memorystore::v1::Instance>>
-  CreateInstance(
-      google::cloud::memorystore::v1::CreateInstanceRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation> CreateInstance(
-      NoAwaitTag,
-      google::cloud::memorystore::v1::CreateInstanceRequest const& request);
+  virtual StatusOr<google::cloud::memorystore::v1::Instance>
+  GetInstance(google::cloud::memorystore::v1::GetInstanceRequest const& request);
 
   virtual future<StatusOr<google::cloud::memorystore::v1::Instance>>
-  CreateInstance(google::longrunning::Operation const& operation);
+  CreateInstance(google::cloud::memorystore::v1::CreateInstanceRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation>
+  CreateInstance(NoAwaitTag, google::cloud::memorystore::v1::CreateInstanceRequest const& request);
 
   virtual future<StatusOr<google::cloud::memorystore::v1::Instance>>
-  UpdateInstance(
-      google::cloud::memorystore::v1::UpdateInstanceRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation> UpdateInstance(
-      NoAwaitTag,
-      google::cloud::memorystore::v1::UpdateInstanceRequest const& request);
+  CreateInstance( google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::memorystore::v1::Instance>>
-  UpdateInstance(google::longrunning::Operation const& operation);
+  UpdateInstance(google::cloud::memorystore::v1::UpdateInstanceRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation>
+  UpdateInstance(NoAwaitTag, google::cloud::memorystore::v1::UpdateInstanceRequest const& request);
+
+  virtual future<StatusOr<google::cloud::memorystore::v1::Instance>>
+  UpdateInstance( google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::memorystore::v1::OperationMetadata>>
-  DeleteInstance(
-      google::cloud::memorystore::v1::DeleteInstanceRequest const& request);
+  DeleteInstance(google::cloud::memorystore::v1::DeleteInstanceRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> DeleteInstance(
-      NoAwaitTag,
-      google::cloud::memorystore::v1::DeleteInstanceRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  DeleteInstance(NoAwaitTag, google::cloud::memorystore::v1::DeleteInstanceRequest const& request);
 
   virtual future<StatusOr<google::cloud::memorystore::v1::OperationMetadata>>
-  DeleteInstance(google::longrunning::Operation const& operation);
+  DeleteInstance( google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::memorystore::v1::CertificateAuthority>
-  GetCertificateAuthority(
-      google::cloud::memorystore::v1::GetCertificateAuthorityRequest const&
-          request);
+  GetCertificateAuthority(google::cloud::memorystore::v1::GetCertificateAuthorityRequest const& request);
 
   virtual future<StatusOr<google::cloud::memorystore::v1::Instance>>
-  RescheduleMaintenance(
-      google::cloud::memorystore::v1::RescheduleMaintenanceRequest const&
-          request);
+  RescheduleMaintenance(google::cloud::memorystore::v1::RescheduleMaintenanceRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> RescheduleMaintenance(
-      NoAwaitTag,
-      google::cloud::memorystore::v1::RescheduleMaintenanceRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  RescheduleMaintenance(NoAwaitTag, google::cloud::memorystore::v1::RescheduleMaintenanceRequest const& request);
 
   virtual future<StatusOr<google::cloud::memorystore::v1::Instance>>
-  RescheduleMaintenance(google::longrunning::Operation const& operation);
+  RescheduleMaintenance( google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::memorystore::v1::BackupCollection>
-  ListBackupCollections(
-      google::cloud::memorystore::v1::ListBackupCollectionsRequest request);
+  ListBackupCollections(google::cloud::memorystore::v1::ListBackupCollectionsRequest request);
 
   virtual StatusOr<google::cloud::memorystore::v1::BackupCollection>
-  GetBackupCollection(
-      google::cloud::memorystore::v1::GetBackupCollectionRequest const&
-          request);
+  GetBackupCollection(google::cloud::memorystore::v1::GetBackupCollectionRequest const& request);
 
-  virtual StreamRange<google::cloud::memorystore::v1::Backup> ListBackups(
-      google::cloud::memorystore::v1::ListBackupsRequest request);
+  virtual StreamRange<google::cloud::memorystore::v1::Backup>
+  ListBackups(google::cloud::memorystore::v1::ListBackupsRequest request);
 
-  virtual StatusOr<google::cloud::memorystore::v1::Backup> GetBackup(
-      google::cloud::memorystore::v1::GetBackupRequest const& request);
+  virtual StatusOr<google::cloud::memorystore::v1::Backup>
+  GetBackup(google::cloud::memorystore::v1::GetBackupRequest const& request);
 
   virtual future<StatusOr<google::cloud::memorystore::v1::OperationMetadata>>
-  DeleteBackup(
-      google::cloud::memorystore::v1::DeleteBackupRequest const& request);
+  DeleteBackup(google::cloud::memorystore::v1::DeleteBackupRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> DeleteBackup(
-      NoAwaitTag,
-      google::cloud::memorystore::v1::DeleteBackupRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  DeleteBackup(NoAwaitTag, google::cloud::memorystore::v1::DeleteBackupRequest const& request);
 
   virtual future<StatusOr<google::cloud::memorystore::v1::OperationMetadata>>
-  DeleteBackup(google::longrunning::Operation const& operation);
+  DeleteBackup( google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<google::cloud::memorystore::v1::Backup>> ExportBackup(
-      google::cloud::memorystore::v1::ExportBackupRequest const& request);
+  virtual future<StatusOr<google::cloud::memorystore::v1::Backup>>
+  ExportBackup(google::cloud::memorystore::v1::ExportBackupRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> ExportBackup(
-      NoAwaitTag,
-      google::cloud::memorystore::v1::ExportBackupRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  ExportBackup(NoAwaitTag, google::cloud::memorystore::v1::ExportBackupRequest const& request);
 
-  virtual future<StatusOr<google::cloud::memorystore::v1::Backup>> ExportBackup(
-      google::longrunning::Operation const& operation);
-
-  virtual future<StatusOr<google::cloud::memorystore::v1::Instance>>
-  BackupInstance(
-      google::cloud::memorystore::v1::BackupInstanceRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation> BackupInstance(
-      NoAwaitTag,
-      google::cloud::memorystore::v1::BackupInstanceRequest const& request);
+  virtual future<StatusOr<google::cloud::memorystore::v1::Backup>>
+  ExportBackup( google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::memorystore::v1::Instance>>
-  BackupInstance(google::longrunning::Operation const& operation);
+  BackupInstance(google::cloud::memorystore::v1::BackupInstanceRequest const& request);
 
-  virtual StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request);
+  virtual StatusOr<google::longrunning::Operation>
+  BackupInstance(NoAwaitTag, google::cloud::memorystore::v1::BackupInstanceRequest const& request);
 
-  virtual StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request);
+  virtual future<StatusOr<google::cloud::memorystore::v1::Instance>>
+  BackupInstance( google::longrunning::Operation const& operation);
 
-  virtual StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request);
 
-  virtual Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request);
+  virtual StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request);
 
-  virtual Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request);
+
+  virtual Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
+
+  virtual Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request);
 };
 
 /**

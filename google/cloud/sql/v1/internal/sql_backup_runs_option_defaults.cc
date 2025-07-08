@@ -17,10 +17,10 @@
 // source: google/cloud/sql/v1/cloud_sql_backup_runs.proto
 
 #include "google/cloud/sql/v1/internal/sql_backup_runs_option_defaults.h"
-#include "google/cloud/sql/v1/sql_backup_runs_connection.h"
-#include "google/cloud/sql/v1/sql_backup_runs_options.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
+#include "google/cloud/sql/v1/sql_backup_runs_connection.h"
+#include "google/cloud/sql/v1/sql_backup_runs_options.h"
 #include <memory>
 #include <utility>
 
@@ -42,18 +42,14 @@ Options SqlBackupRunsServiceDefaultOptions(Options options) {
   if (!options.has<sql_v1::SqlBackupRunsServiceRetryPolicyOption>()) {
     options.set<sql_v1::SqlBackupRunsServiceRetryPolicyOption>(
         sql_v1::SqlBackupRunsServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
-            .clone());
+            std::chrono::minutes(30)).clone());
   }
   if (!options.has<sql_v1::SqlBackupRunsServiceBackoffPolicyOption>()) {
     options.set<sql_v1::SqlBackupRunsServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(
-            std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
-            .clone());
+        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
   }
-  if (!options.has<
-          sql_v1::SqlBackupRunsServiceConnectionIdempotencyPolicyOption>()) {
+  if (!options.has<sql_v1::SqlBackupRunsServiceConnectionIdempotencyPolicyOption>()) {
     options.set<sql_v1::SqlBackupRunsServiceConnectionIdempotencyPolicyOption>(
         sql_v1::MakeDefaultSqlBackupRunsServiceConnectionIdempotencyPolicy());
   }

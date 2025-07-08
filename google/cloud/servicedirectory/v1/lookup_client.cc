@@ -28,27 +28,24 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 LookupServiceClient::LookupServiceClient(
     std::shared_ptr<LookupServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 LookupServiceClient::~LookupServiceClient() = default;
 
 StatusOr<google::cloud::servicedirectory::v1::ResolveServiceResponse>
-LookupServiceClient::ResolveService(
-    google::cloud::servicedirectory::v1::ResolveServiceRequest const& request,
-    Options opts) {
+LookupServiceClient::ResolveService(google::cloud::servicedirectory::v1::ResolveServiceRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ResolveService(request);
 }
 
 StreamRange<google::cloud::location::Location>
-LookupServiceClient::ListLocations(
-    google::cloud::location::ListLocationsRequest request, Options opts) {
+LookupServiceClient::ListLocations(google::cloud::location::ListLocationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListLocations(std::move(request));
 }
 
-StatusOr<google::cloud::location::Location> LookupServiceClient::GetLocation(
-    google::cloud::location::GetLocationRequest const& request, Options opts) {
+StatusOr<google::cloud::location::Location>
+LookupServiceClient::GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetLocation(request);
 }

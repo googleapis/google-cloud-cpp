@@ -41,8 +41,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// priority over Test Execution. When allocated, the session will be exposed
 /// through a stream for integration.
 ///
-/// DirectAccessService is currently available as a preview to select
-/// developers. You can register today on behalf of you and your team at
+/// DirectAccessService is currently available as a preview to select developers.
+/// You can register today on behalf of you and your team at
 /// https://developer.android.com/studio/preview/android-device-streaming
 ///
 /// @par Equality
@@ -70,28 +70,23 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class DirectAccessServiceClient {
  public:
-  explicit DirectAccessServiceClient(
-      std::shared_ptr<DirectAccessServiceConnection> connection,
-      Options opts = {});
+  explicit DirectAccessServiceClient(std::shared_ptr<DirectAccessServiceConnection> connection, Options opts = {});
   ~DirectAccessServiceClient();
 
   ///@{
   /// @name Copy and move support
   DirectAccessServiceClient(DirectAccessServiceClient const&) = default;
-  DirectAccessServiceClient& operator=(DirectAccessServiceClient const&) =
-      default;
+  DirectAccessServiceClient& operator=(DirectAccessServiceClient const&) = default;
   DirectAccessServiceClient(DirectAccessServiceClient&&) = default;
   DirectAccessServiceClient& operator=(DirectAccessServiceClient&&) = default;
   ///@}
 
   ///@{
   /// @name Equality
-  friend bool operator==(DirectAccessServiceClient const& a,
-                         DirectAccessServiceClient const& b) {
+  friend bool operator==(DirectAccessServiceClient const& a, DirectAccessServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(DirectAccessServiceClient const& a,
-                         DirectAccessServiceClient const& b) {
+  friend bool operator!=(DirectAccessServiceClient const& a, DirectAccessServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -126,10 +121,7 @@ class DirectAccessServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::devicestreaming::v1::DeviceSession>
-  CreateDeviceSession(
-      std::string const& parent,
-      google::cloud::devicestreaming::v1::DeviceSession const& device_session,
-      std::string const& device_session_id, Options opts = {});
+  CreateDeviceSession(std::string const& parent, google::cloud::devicestreaming::v1::DeviceSession const& device_session, std::string const& device_session_id, Options opts = {});
 
   // clang-format off
   ///
@@ -159,10 +151,7 @@ class DirectAccessServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::devicestreaming::v1::DeviceSession>
-  CreateDeviceSession(
-      google::cloud::devicestreaming::v1::CreateDeviceSessionRequest const&
-          request,
-      Options opts = {});
+  CreateDeviceSession(google::cloud::devicestreaming::v1::CreateDeviceSessionRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -235,9 +224,7 @@ class DirectAccessServiceClient {
   ///
   // clang-format on
   StreamRange<google::cloud::devicestreaming::v1::DeviceSession>
-  ListDeviceSessions(
-      google::cloud::devicestreaming::v1::ListDeviceSessionsRequest request,
-      Options opts = {});
+  ListDeviceSessions(google::cloud::devicestreaming::v1::ListDeviceSessionsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -264,8 +251,8 @@ class DirectAccessServiceClient {
   /// [google.cloud.devicestreaming.v1.GetDeviceSessionRequest]: @googleapis_reference_link{google/cloud/devicestreaming/v1/service.proto#L165}
   ///
   // clang-format on
-  StatusOr<google::cloud::devicestreaming::v1::DeviceSession> GetDeviceSession(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::devicestreaming::v1::DeviceSession>
+  GetDeviceSession(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -296,10 +283,8 @@ class DirectAccessServiceClient {
   /// [google.cloud.devicestreaming.v1.GetDeviceSessionRequest]: @googleapis_reference_link{google/cloud/devicestreaming/v1/service.proto#L165}
   ///
   // clang-format on
-  StatusOr<google::cloud::devicestreaming::v1::DeviceSession> GetDeviceSession(
-      google::cloud::devicestreaming::v1::GetDeviceSessionRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::cloud::devicestreaming::v1::DeviceSession>
+  GetDeviceSession(google::cloud::devicestreaming::v1::GetDeviceSessionRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -329,10 +314,8 @@ class DirectAccessServiceClient {
   /// [google.cloud.devicestreaming.v1.CancelDeviceSessionRequest]: @googleapis_reference_link{google/cloud/devicestreaming/v1/service.proto#L177}
   ///
   // clang-format on
-  Status CancelDeviceSession(
-      google::cloud::devicestreaming::v1::CancelDeviceSessionRequest const&
-          request,
-      Options opts = {});
+  Status
+  CancelDeviceSession(google::cloud::devicestreaming::v1::CancelDeviceSessionRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -361,9 +344,7 @@ class DirectAccessServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::devicestreaming::v1::DeviceSession>
-  UpdateDeviceSession(
-      google::cloud::devicestreaming::v1::DeviceSession const& device_session,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  UpdateDeviceSession(google::cloud::devicestreaming::v1::DeviceSession const& device_session, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -394,10 +375,7 @@ class DirectAccessServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::devicestreaming::v1::DeviceSession>
-  UpdateDeviceSession(
-      google::cloud::devicestreaming::v1::UpdateDeviceSessionRequest const&
-          request,
-      Options opts = {});
+  UpdateDeviceSession(google::cloud::devicestreaming::v1::UpdateDeviceSessionRequest const& request, Options opts = {});
 
   // clang-format off
   ///

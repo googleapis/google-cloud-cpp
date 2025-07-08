@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAPROC_V1_INTERNAL_BATCH_CONTROLLER_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAPROC_V1_INTERNAL_BATCH_CONTROLLER_CONNECTION_IMPL_H
 
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/dataproc/v1/batch_controller_connection.h"
 #include "google/cloud/dataproc/v1/batch_controller_connection_idempotency_policy.h"
 #include "google/cloud/dataproc/v1/batch_controller_options.h"
 #include "google/cloud/dataproc/v1/internal/batch_controller_retry_traits.h"
 #include "google/cloud/dataproc/v1/internal/batch_controller_stub.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -46,51 +46,52 @@ class BatchControllerConnectionImpl
   ~BatchControllerConnectionImpl() override = default;
 
   BatchControllerConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<dataproc_v1_internal::BatchControllerStub> stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<dataproc_v1_internal::BatchControllerStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
-  future<StatusOr<google::cloud::dataproc::v1::Batch>> CreateBatch(
+  future<StatusOr<google::cloud::dataproc::v1::Batch>>
+  CreateBatch(google::cloud::dataproc::v1::CreateBatchRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  CreateBatch(NoAwaitTag,
       google::cloud::dataproc::v1::CreateBatchRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> CreateBatch(
-      NoAwaitTag,
-      google::cloud::dataproc::v1::CreateBatchRequest const& request) override;
-
-  future<StatusOr<google::cloud::dataproc::v1::Batch>> CreateBatch(
+  future<StatusOr<google::cloud::dataproc::v1::Batch>>
+  CreateBatch(
       google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::cloud::dataproc::v1::Batch> GetBatch(
-      google::cloud::dataproc::v1::GetBatchRequest const& request) override;
+  StatusOr<google::cloud::dataproc::v1::Batch>
+  GetBatch(google::cloud::dataproc::v1::GetBatchRequest const& request) override;
 
-  StreamRange<google::cloud::dataproc::v1::Batch> ListBatches(
-      google::cloud::dataproc::v1::ListBatchesRequest request) override;
+  StreamRange<google::cloud::dataproc::v1::Batch>
+  ListBatches(google::cloud::dataproc::v1::ListBatchesRequest request) override;
 
-  Status DeleteBatch(
-      google::cloud::dataproc::v1::DeleteBatchRequest const& request) override;
+  Status
+  DeleteBatch(google::cloud::dataproc::v1::DeleteBatchRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request) override;
+  StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request) override;
 
-  Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request) override;
+  Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request) override;
 
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request) override;
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

@@ -26,65 +26,51 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-ServingConfigServiceConnectionIdempotencyPolicy::
-    ~ServingConfigServiceConnectionIdempotencyPolicy() = default;
+ServingConfigServiceConnectionIdempotencyPolicy::~ServingConfigServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<ServingConfigServiceConnectionIdempotencyPolicy>
 ServingConfigServiceConnectionIdempotencyPolicy::clone() const {
-  return std::make_unique<ServingConfigServiceConnectionIdempotencyPolicy>(
-      *this);
+  return std::make_unique<ServingConfigServiceConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency
-ServingConfigServiceConnectionIdempotencyPolicy::CreateServingConfig(
-    google::cloud::retail::v2::CreateServingConfigRequest const&) {
+Idempotency ServingConfigServiceConnectionIdempotencyPolicy::CreateServingConfig(google::cloud::retail::v2::CreateServingConfigRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency
-ServingConfigServiceConnectionIdempotencyPolicy::DeleteServingConfig(
-    google::cloud::retail::v2::DeleteServingConfigRequest const&) {
+Idempotency ServingConfigServiceConnectionIdempotencyPolicy::DeleteServingConfig(google::cloud::retail::v2::DeleteServingConfigRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency
-ServingConfigServiceConnectionIdempotencyPolicy::UpdateServingConfig(
-    google::cloud::retail::v2::UpdateServingConfigRequest const&) {
+Idempotency ServingConfigServiceConnectionIdempotencyPolicy::UpdateServingConfig(google::cloud::retail::v2::UpdateServingConfigRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ServingConfigServiceConnectionIdempotencyPolicy::GetServingConfig(
-    google::cloud::retail::v2::GetServingConfigRequest const&) {
+Idempotency ServingConfigServiceConnectionIdempotencyPolicy::GetServingConfig(google::cloud::retail::v2::GetServingConfigRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ServingConfigServiceConnectionIdempotencyPolicy::ListServingConfigs(
-    google::cloud::retail::v2::ListServingConfigsRequest) {  // NOLINT
+Idempotency ServingConfigServiceConnectionIdempotencyPolicy::ListServingConfigs(google::cloud::retail::v2::ListServingConfigsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency ServingConfigServiceConnectionIdempotencyPolicy::AddControl(
-    google::cloud::retail::v2::AddControlRequest const&) {
+Idempotency ServingConfigServiceConnectionIdempotencyPolicy::AddControl(google::cloud::retail::v2::AddControlRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ServingConfigServiceConnectionIdempotencyPolicy::RemoveControl(
-    google::cloud::retail::v2::RemoveControlRequest const&) {
+Idempotency ServingConfigServiceConnectionIdempotencyPolicy::RemoveControl(google::cloud::retail::v2::RemoveControlRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ServingConfigServiceConnectionIdempotencyPolicy::ListOperations(
-    google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency ServingConfigServiceConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency ServingConfigServiceConnectionIdempotencyPolicy::GetOperation(
-    google::longrunning::GetOperationRequest const&) {
+Idempotency ServingConfigServiceConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<ServingConfigServiceConnectionIdempotencyPolicy>
-MakeDefaultServingConfigServiceConnectionIdempotencyPolicy() {
+    MakeDefaultServingConfigServiceConnectionIdempotencyPolicy() {
   return std::make_unique<ServingConfigServiceConnectionIdempotencyPolicy>();
 }
 

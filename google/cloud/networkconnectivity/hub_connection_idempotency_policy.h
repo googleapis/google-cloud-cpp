@@ -26,16 +26,11 @@ namespace cloud {
 namespace networkconnectivity {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use
-/// networkconnectivity_v1::MakeDefaultHubServiceConnectionIdempotencyPolicy
-/// directly.
-using ::google::cloud::networkconnectivity_v1::
-    MakeDefaultHubServiceConnectionIdempotencyPolicy;
+/// @deprecated Use networkconnectivity_v1::MakeDefaultHubServiceConnectionIdempotencyPolicy directly.
+using ::google::cloud::networkconnectivity_v1::MakeDefaultHubServiceConnectionIdempotencyPolicy;
 
-/// @deprecated Use
-/// networkconnectivity_v1::HubServiceConnectionIdempotencyPolicy directly.
-using ::google::cloud::networkconnectivity_v1::
-    HubServiceConnectionIdempotencyPolicy;
+/// @deprecated Use networkconnectivity_v1::HubServiceConnectionIdempotencyPolicy directly.
+using ::google::cloud::networkconnectivity_v1::HubServiceConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace networkconnectivity

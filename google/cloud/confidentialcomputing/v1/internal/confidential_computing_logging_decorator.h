@@ -35,26 +35,27 @@ class ConfidentialComputingLogging : public ConfidentialComputingStub {
  public:
   ~ConfidentialComputingLogging() override = default;
   ConfidentialComputingLogging(std::shared_ptr<ConfidentialComputingStub> child,
-                               TracingOptions tracing_options,
-                               std::set<std::string> const& components);
+                       TracingOptions tracing_options,
+                       std::set<std::string> const& components);
 
   StatusOr<google::cloud::confidentialcomputing::v1::Challenge> CreateChallenge(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::confidentialcomputing::v1::CreateChallengeRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::confidentialcomputing::v1::CreateChallengeRequest const& request) override;
 
-  StatusOr<google::cloud::confidentialcomputing::v1::VerifyAttestationResponse>
-  VerifyAttestation(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::confidentialcomputing::v1::VerifyAttestationRequest const&
-          request) override;
+  StatusOr<google::cloud::confidentialcomputing::v1::VerifyAttestationResponse> VerifyAttestation(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::confidentialcomputing::v1::VerifyAttestationRequest const& request) override;
 
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::location::ListLocationsRequest const& request) override;
 
   StatusOr<google::cloud::location::Location> GetLocation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::location::GetLocationRequest const& request) override;
 
  private:

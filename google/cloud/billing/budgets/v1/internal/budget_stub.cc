@@ -32,61 +32,67 @@ BudgetServiceStub::~BudgetServiceStub() = default;
 
 StatusOr<google::cloud::billing::budgets::v1::Budget>
 DefaultBudgetServiceStub::CreateBudget(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::billing::budgets::v1::CreateBudgetRequest const& request) {
-  google::cloud::billing::budgets::v1::Budget response;
-  auto status = grpc_stub_->CreateBudget(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::billing::budgets::v1::CreateBudgetRequest const& request) {
+    google::cloud::billing::budgets::v1::Budget response;
+    auto status =
+        grpc_stub_->CreateBudget(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::billing::budgets::v1::Budget>
 DefaultBudgetServiceStub::UpdateBudget(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::billing::budgets::v1::UpdateBudgetRequest const& request) {
-  google::cloud::billing::budgets::v1::Budget response;
-  auto status = grpc_stub_->UpdateBudget(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::billing::budgets::v1::UpdateBudgetRequest const& request) {
+    google::cloud::billing::budgets::v1::Budget response;
+    auto status =
+        grpc_stub_->UpdateBudget(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::billing::budgets::v1::Budget>
 DefaultBudgetServiceStub::GetBudget(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::billing::budgets::v1::GetBudgetRequest const& request) {
-  google::cloud::billing::budgets::v1::Budget response;
-  auto status = grpc_stub_->GetBudget(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::billing::budgets::v1::GetBudgetRequest const& request) {
+    google::cloud::billing::budgets::v1::Budget response;
+    auto status =
+        grpc_stub_->GetBudget(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::billing::budgets::v1::ListBudgetsResponse>
 DefaultBudgetServiceStub::ListBudgets(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::billing::budgets::v1::ListBudgetsRequest const& request) {
-  google::cloud::billing::budgets::v1::ListBudgetsResponse response;
-  auto status = grpc_stub_->ListBudgets(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::billing::budgets::v1::ListBudgetsRequest const& request) {
+    google::cloud::billing::budgets::v1::ListBudgetsResponse response;
+    auto status =
+        grpc_stub_->ListBudgets(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-Status DefaultBudgetServiceStub::DeleteBudget(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::billing::budgets::v1::DeleteBudgetRequest const& request) {
-  google::protobuf::Empty response;
-  auto status = grpc_stub_->DeleteBudget(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return google::cloud::Status();
+Status
+DefaultBudgetServiceStub::DeleteBudget(
+  grpc::ClientContext& context, Options const&,
+  google::cloud::billing::budgets::v1::DeleteBudgetRequest const& request) {
+    google::protobuf::Empty response;
+    auto status =
+        grpc_stub_->DeleteBudget(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return google::cloud::Status();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

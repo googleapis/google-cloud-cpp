@@ -26,66 +26,55 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-ModelServiceConnectionIdempotencyPolicy::
-    ~ModelServiceConnectionIdempotencyPolicy() = default;
+ModelServiceConnectionIdempotencyPolicy::~ModelServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<ModelServiceConnectionIdempotencyPolicy>
 ModelServiceConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<ModelServiceConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency ModelServiceConnectionIdempotencyPolicy::CreateModel(
-    google::cloud::retail::v2::CreateModelRequest const&) {
+Idempotency ModelServiceConnectionIdempotencyPolicy::CreateModel(google::cloud::retail::v2::CreateModelRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ModelServiceConnectionIdempotencyPolicy::GetModel(
-    google::cloud::retail::v2::GetModelRequest const&) {
+Idempotency ModelServiceConnectionIdempotencyPolicy::GetModel(google::cloud::retail::v2::GetModelRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ModelServiceConnectionIdempotencyPolicy::PauseModel(
-    google::cloud::retail::v2::PauseModelRequest const&) {
+Idempotency ModelServiceConnectionIdempotencyPolicy::PauseModel(google::cloud::retail::v2::PauseModelRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ModelServiceConnectionIdempotencyPolicy::ResumeModel(
-    google::cloud::retail::v2::ResumeModelRequest const&) {
+Idempotency ModelServiceConnectionIdempotencyPolicy::ResumeModel(google::cloud::retail::v2::ResumeModelRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ModelServiceConnectionIdempotencyPolicy::DeleteModel(
-    google::cloud::retail::v2::DeleteModelRequest const&) {
+Idempotency ModelServiceConnectionIdempotencyPolicy::DeleteModel(google::cloud::retail::v2::DeleteModelRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ModelServiceConnectionIdempotencyPolicy::ListModels(
-    google::cloud::retail::v2::ListModelsRequest) {  // NOLINT
+Idempotency ModelServiceConnectionIdempotencyPolicy::ListModels(google::cloud::retail::v2::ListModelsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency ModelServiceConnectionIdempotencyPolicy::UpdateModel(
-    google::cloud::retail::v2::UpdateModelRequest const&) {
+Idempotency ModelServiceConnectionIdempotencyPolicy::UpdateModel(google::cloud::retail::v2::UpdateModelRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ModelServiceConnectionIdempotencyPolicy::TuneModel(
-    google::cloud::retail::v2::TuneModelRequest const&) {
+Idempotency ModelServiceConnectionIdempotencyPolicy::TuneModel(google::cloud::retail::v2::TuneModelRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ModelServiceConnectionIdempotencyPolicy::ListOperations(
-    google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency ModelServiceConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency ModelServiceConnectionIdempotencyPolicy::GetOperation(
-    google::longrunning::GetOperationRequest const&) {
+Idempotency ModelServiceConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<ModelServiceConnectionIdempotencyPolicy>
-MakeDefaultModelServiceConnectionIdempotencyPolicy() {
+    MakeDefaultModelServiceConnectionIdempotencyPolicy() {
   return std::make_unique<ModelServiceConnectionIdempotencyPolicy>();
 }
 

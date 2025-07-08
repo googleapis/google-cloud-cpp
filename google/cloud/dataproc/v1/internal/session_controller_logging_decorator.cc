@@ -32,22 +32,24 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 SessionControllerLogging::SessionControllerLogging(
     std::shared_ptr<SessionControllerStub> child,
-    TracingOptions tracing_options, std::set<std::string> const&)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
+    TracingOptions tracing_options,
+    std::set<std::string> const&)
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)) {}
 
 future<StatusOr<google::longrunning::Operation>>
 SessionControllerLogging::AsyncCreateSession(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::dataproc::v1::CreateSessionRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::dataproc::v1::CreateSessionRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::cloud::dataproc::v1::CreateSessionRequest const& request) {
-        return child_->AsyncCreateSession(cq, std::move(context),
-                                          std::move(options), request);
+        return child_->AsyncCreateSession(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -55,10 +57,12 @@ SessionControllerLogging::AsyncCreateSession(
 
 StatusOr<google::longrunning::Operation>
 SessionControllerLogging::CreateSession(
-    grpc::ClientContext& context, Options options,
-    google::cloud::dataproc::v1::CreateSessionRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::dataproc::v1::CreateSessionRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::dataproc::v1::CreateSessionRequest const& request) {
         return child_->CreateSession(context, options, request);
       },
@@ -67,10 +71,12 @@ SessionControllerLogging::CreateSession(
 
 StatusOr<google::cloud::dataproc::v1::Session>
 SessionControllerLogging::GetSession(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dataproc::v1::GetSessionRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::dataproc::v1::GetSessionRequest const& request) {
         return child_->GetSession(context, options, request);
       },
@@ -79,10 +85,12 @@ SessionControllerLogging::GetSession(
 
 StatusOr<google::cloud::dataproc::v1::ListSessionsResponse>
 SessionControllerLogging::ListSessions(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dataproc::v1::ListSessionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::dataproc::v1::ListSessionsRequest const& request) {
         return child_->ListSessions(context, options, request);
       },
@@ -91,18 +99,17 @@ SessionControllerLogging::ListSessions(
 
 future<StatusOr<google::longrunning::Operation>>
 SessionControllerLogging::AsyncTerminateSession(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::dataproc::v1::TerminateSessionRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::dataproc::v1::TerminateSessionRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::dataproc::v1::TerminateSessionRequest const& request) {
-        return child_->AsyncTerminateSession(cq, std::move(context),
-                                             std::move(options), request);
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::dataproc::v1::TerminateSessionRequest const& request) {
+        return child_->AsyncTerminateSession(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -110,12 +117,13 @@ SessionControllerLogging::AsyncTerminateSession(
 
 StatusOr<google::longrunning::Operation>
 SessionControllerLogging::TerminateSession(
-    grpc::ClientContext& context, Options options,
-    google::cloud::dataproc::v1::TerminateSessionRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::dataproc::v1::TerminateSessionRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::dataproc::v1::TerminateSessionRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::dataproc::v1::TerminateSessionRequest const& request) {
         return child_->TerminateSession(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -123,17 +131,17 @@ SessionControllerLogging::TerminateSession(
 
 future<StatusOr<google::longrunning::Operation>>
 SessionControllerLogging::AsyncDeleteSession(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::dataproc::v1::DeleteSessionRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::dataproc::v1::DeleteSessionRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::cloud::dataproc::v1::DeleteSessionRequest const& request) {
-        return child_->AsyncDeleteSession(cq, std::move(context),
-                                          std::move(options), request);
+        return child_->AsyncDeleteSession(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -141,32 +149,40 @@ SessionControllerLogging::AsyncDeleteSession(
 
 StatusOr<google::longrunning::Operation>
 SessionControllerLogging::DeleteSession(
-    grpc::ClientContext& context, Options options,
-    google::cloud::dataproc::v1::DeleteSessionRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::dataproc::v1::DeleteSessionRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::dataproc::v1::DeleteSessionRequest const& request) {
         return child_->DeleteSession(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::iam::v1::Policy> SessionControllerLogging::SetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::iam::v1::Policy>
+SessionControllerLogging::SetIamPolicy(
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::iam::v1::SetIamPolicyRequest const& request) {
         return child_->SetIamPolicy(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::iam::v1::Policy> SessionControllerLogging::GetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::iam::v1::Policy>
+SessionControllerLogging::GetIamPolicy(
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::iam::v1::GetIamPolicyRequest const& request) {
         return child_->GetIamPolicy(context, options, request);
       },
@@ -175,10 +191,12 @@ StatusOr<google::iam::v1::Policy> SessionControllerLogging::GetIamPolicy(
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 SessionControllerLogging::TestIamPermissions(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::iam::v1::TestIamPermissionsRequest const& request) {
         return child_->TestIamPermissions(context, options, request);
       },
@@ -187,43 +205,54 @@ SessionControllerLogging::TestIamPermissions(
 
 StatusOr<google::longrunning::ListOperationsResponse>
 SessionControllerLogging::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::ListOperationsRequest const& request) {
         return child_->ListOperations(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> SessionControllerLogging::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::Operation>
+SessionControllerLogging::GetOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::GetOperationRequest const& request) {
         return child_->GetOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status SessionControllerLogging::DeleteOperation(
-    grpc::ClientContext& context, Options const& options,
+Status
+SessionControllerLogging::DeleteOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::DeleteOperationRequest const& request) {
         return child_->DeleteOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status SessionControllerLogging::CancelOperation(
-    grpc::ClientContext& context, Options const& options,
+Status
+SessionControllerLogging::CancelOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::CancelOperationRequest const& request) {
         return child_->CancelOperation(context, options, request);
       },
@@ -241,8 +270,8 @@ SessionControllerLogging::AsyncGetOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(cq, std::move(context),
-                                         std::move(options), request);
+        return child_->AsyncGetOperation(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -258,8 +287,8 @@ future<Status> SessionControllerLogging::AsyncCancelOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::CancelOperationRequest const& request) {
-        return child_->AsyncCancelOperation(cq, std::move(context),
-                                            std::move(options), request);
+        return child_->AsyncCancelOperation(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);

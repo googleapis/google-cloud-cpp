@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_SQL_USERS_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_SQL_USERS_CLIENT_H
 
-#include "google/cloud/sql/v1/sql_users_rest_connection.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
+#include "google/cloud/sql/v1/sql_users_rest_connection.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -61,8 +61,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class SqlUsersServiceClient {
  public:
-  explicit SqlUsersServiceClient(
-      std::shared_ptr<SqlUsersServiceConnection> connection, Options opts = {});
+  explicit SqlUsersServiceClient(std::shared_ptr<SqlUsersServiceConnection> connection, Options opts = {});
   ~SqlUsersServiceClient();
 
   ///@{
@@ -75,12 +74,10 @@ class SqlUsersServiceClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(SqlUsersServiceClient const& a,
-                         SqlUsersServiceClient const& b) {
+  friend bool operator==(SqlUsersServiceClient const& a, SqlUsersServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(SqlUsersServiceClient const& a,
-                         SqlUsersServiceClient const& b) {
+  friend bool operator!=(SqlUsersServiceClient const& a, SqlUsersServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -112,9 +109,8 @@ class SqlUsersServiceClient {
   /// [google.cloud.sql.v1.SqlUsersDeleteRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_users.proto#L76}
   ///
   // clang-format on
-  StatusOr<google::cloud::sql::v1::Operation> Delete(
-      google::cloud::sql::v1::SqlUsersDeleteRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::sql::v1::Operation>
+  Delete(google::cloud::sql::v1::SqlUsersDeleteRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -143,9 +139,8 @@ class SqlUsersServiceClient {
   /// [google.cloud.sql.v1.User]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_users.proto#L168}
   ///
   // clang-format on
-  StatusOr<google::cloud::sql::v1::User> Get(
-      google::cloud::sql::v1::SqlUsersGetRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::sql::v1::User>
+  Get(google::cloud::sql::v1::SqlUsersGetRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -174,9 +169,8 @@ class SqlUsersServiceClient {
   /// [google.cloud.sql.v1.SqlUsersInsertRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_users.proto#L105}
   ///
   // clang-format on
-  StatusOr<google::cloud::sql::v1::Operation> Insert(
-      google::cloud::sql::v1::SqlUsersInsertRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::sql::v1::Operation>
+  Insert(google::cloud::sql::v1::SqlUsersInsertRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -205,9 +199,8 @@ class SqlUsersServiceClient {
   /// [google.cloud.sql.v1.UsersListResponse]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_users.proto#L262}
   ///
   // clang-format on
-  StatusOr<google::cloud::sql::v1::UsersListResponse> List(
-      google::cloud::sql::v1::SqlUsersListRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::sql::v1::UsersListResponse>
+  List(google::cloud::sql::v1::SqlUsersListRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -236,9 +229,8 @@ class SqlUsersServiceClient {
   /// [google.cloud.sql.v1.SqlUsersUpdateRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_users.proto#L123}
   ///
   // clang-format on
-  StatusOr<google::cloud::sql::v1::Operation> Update(
-      google::cloud::sql::v1::SqlUsersUpdateRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::sql::v1::Operation>
+  Update(google::cloud::sql::v1::SqlUsersUpdateRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<SqlUsersServiceConnection> connection_;

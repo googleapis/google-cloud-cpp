@@ -34,27 +34,26 @@ class SqlUsersServiceConnectionIdempotencyPolicy {
   virtual ~SqlUsersServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<SqlUsersServiceConnectionIdempotencyPolicy> clone()
-      const;
+  virtual std::unique_ptr<SqlUsersServiceConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency Delete(
-      google::cloud::sql::v1::SqlUsersDeleteRequest const& request);
+  virtual google::cloud::Idempotency
+  Delete(google::cloud::sql::v1::SqlUsersDeleteRequest const& request);
 
-  virtual google::cloud::Idempotency Get(
-      google::cloud::sql::v1::SqlUsersGetRequest const& request);
+  virtual google::cloud::Idempotency
+  Get(google::cloud::sql::v1::SqlUsersGetRequest const& request);
 
-  virtual google::cloud::Idempotency Insert(
-      google::cloud::sql::v1::SqlUsersInsertRequest const& request);
+  virtual google::cloud::Idempotency
+  Insert(google::cloud::sql::v1::SqlUsersInsertRequest const& request);
 
-  virtual google::cloud::Idempotency List(
-      google::cloud::sql::v1::SqlUsersListRequest const& request);
+  virtual google::cloud::Idempotency
+  List(google::cloud::sql::v1::SqlUsersListRequest const& request);
 
-  virtual google::cloud::Idempotency Update(
-      google::cloud::sql::v1::SqlUsersUpdateRequest const& request);
+  virtual google::cloud::Idempotency
+  Update(google::cloud::sql::v1::SqlUsersUpdateRequest const& request);
 };
 
 std::unique_ptr<SqlUsersServiceConnectionIdempotencyPolicy>
-MakeDefaultSqlUsersServiceConnectionIdempotencyPolicy();
+    MakeDefaultSqlUsersServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace sql_v1

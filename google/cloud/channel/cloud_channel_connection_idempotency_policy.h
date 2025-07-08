@@ -26,16 +26,11 @@ namespace cloud {
 namespace channel {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use
-/// channel_v1::MakeDefaultCloudChannelServiceConnectionIdempotencyPolicy
-/// directly.
-using ::google::cloud::channel_v1::
-    MakeDefaultCloudChannelServiceConnectionIdempotencyPolicy;
+/// @deprecated Use channel_v1::MakeDefaultCloudChannelServiceConnectionIdempotencyPolicy directly.
+using ::google::cloud::channel_v1::MakeDefaultCloudChannelServiceConnectionIdempotencyPolicy;
 
-/// @deprecated Use channel_v1::CloudChannelServiceConnectionIdempotencyPolicy
-/// directly.
-using ::google::cloud::channel_v1::
-    CloudChannelServiceConnectionIdempotencyPolicy;
+/// @deprecated Use channel_v1::CloudChannelServiceConnectionIdempotencyPolicy directly.
+using ::google::cloud::channel_v1::CloudChannelServiceConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace channel

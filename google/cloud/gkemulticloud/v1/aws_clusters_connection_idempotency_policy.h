@@ -37,78 +37,69 @@ class AwsClustersConnectionIdempotencyPolicy {
   /// Create a new copy of this object.
   virtual std::unique_ptr<AwsClustersConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency CreateAwsCluster(
-      google::cloud::gkemulticloud::v1::CreateAwsClusterRequest const& request);
+  virtual google::cloud::Idempotency
+  CreateAwsCluster(google::cloud::gkemulticloud::v1::CreateAwsClusterRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateAwsCluster(
-      google::cloud::gkemulticloud::v1::UpdateAwsClusterRequest const& request);
+  virtual google::cloud::Idempotency
+  UpdateAwsCluster(google::cloud::gkemulticloud::v1::UpdateAwsClusterRequest const& request);
 
-  virtual google::cloud::Idempotency GetAwsCluster(
-      google::cloud::gkemulticloud::v1::GetAwsClusterRequest const& request);
+  virtual google::cloud::Idempotency
+  GetAwsCluster(google::cloud::gkemulticloud::v1::GetAwsClusterRequest const& request);
 
-  virtual google::cloud::Idempotency ListAwsClusters(
-      google::cloud::gkemulticloud::v1::ListAwsClustersRequest request);
+  virtual google::cloud::Idempotency
+  ListAwsClusters(google::cloud::gkemulticloud::v1::ListAwsClustersRequest request);
 
-  virtual google::cloud::Idempotency DeleteAwsCluster(
-      google::cloud::gkemulticloud::v1::DeleteAwsClusterRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteAwsCluster(google::cloud::gkemulticloud::v1::DeleteAwsClusterRequest const& request);
 
-  virtual google::cloud::Idempotency GenerateAwsClusterAgentToken(
-      google::cloud::gkemulticloud::v1::
-          GenerateAwsClusterAgentTokenRequest const& request);
+  virtual google::cloud::Idempotency
+  GenerateAwsClusterAgentToken(google::cloud::gkemulticloud::v1::GenerateAwsClusterAgentTokenRequest const& request);
 
-  virtual google::cloud::Idempotency GenerateAwsAccessToken(
-      google::cloud::gkemulticloud::v1::GenerateAwsAccessTokenRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  GenerateAwsAccessToken(google::cloud::gkemulticloud::v1::GenerateAwsAccessTokenRequest const& request);
 
-  virtual google::cloud::Idempotency CreateAwsNodePool(
-      google::cloud::gkemulticloud::v1::CreateAwsNodePoolRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  CreateAwsNodePool(google::cloud::gkemulticloud::v1::CreateAwsNodePoolRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateAwsNodePool(
-      google::cloud::gkemulticloud::v1::UpdateAwsNodePoolRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  UpdateAwsNodePool(google::cloud::gkemulticloud::v1::UpdateAwsNodePoolRequest const& request);
 
-  virtual google::cloud::Idempotency RollbackAwsNodePoolUpdate(
-      google::cloud::gkemulticloud::v1::RollbackAwsNodePoolUpdateRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  RollbackAwsNodePoolUpdate(google::cloud::gkemulticloud::v1::RollbackAwsNodePoolUpdateRequest const& request);
 
-  virtual google::cloud::Idempotency GetAwsNodePool(
-      google::cloud::gkemulticloud::v1::GetAwsNodePoolRequest const& request);
+  virtual google::cloud::Idempotency
+  GetAwsNodePool(google::cloud::gkemulticloud::v1::GetAwsNodePoolRequest const& request);
 
-  virtual google::cloud::Idempotency ListAwsNodePools(
-      google::cloud::gkemulticloud::v1::ListAwsNodePoolsRequest request);
+  virtual google::cloud::Idempotency
+  ListAwsNodePools(google::cloud::gkemulticloud::v1::ListAwsNodePoolsRequest request);
 
-  virtual google::cloud::Idempotency DeleteAwsNodePool(
-      google::cloud::gkemulticloud::v1::DeleteAwsNodePoolRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  DeleteAwsNodePool(google::cloud::gkemulticloud::v1::DeleteAwsNodePoolRequest const& request);
 
-  virtual google::cloud::Idempotency GetAwsOpenIdConfig(
-      google::cloud::gkemulticloud::v1::GetAwsOpenIdConfigRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  GetAwsOpenIdConfig(google::cloud::gkemulticloud::v1::GetAwsOpenIdConfigRequest const& request);
 
-  virtual google::cloud::Idempotency GetAwsJsonWebKeys(
-      google::cloud::gkemulticloud::v1::GetAwsJsonWebKeysRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  GetAwsJsonWebKeys(google::cloud::gkemulticloud::v1::GetAwsJsonWebKeysRequest const& request);
 
-  virtual google::cloud::Idempotency GetAwsServerConfig(
-      google::cloud::gkemulticloud::v1::GetAwsServerConfigRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  GetAwsServerConfig(google::cloud::gkemulticloud::v1::GetAwsServerConfigRequest const& request);
 
-  virtual google::cloud::Idempotency ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual google::cloud::Idempotency
+  ListOperations(google::longrunning::ListOperationsRequest request);
 
-  virtual google::cloud::Idempotency GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
 
-  virtual google::cloud::Idempotency CancelOperation(
-      google::longrunning::CancelOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  CancelOperation(google::longrunning::CancelOperationRequest const& request);
 };
 
 std::unique_ptr<AwsClustersConnectionIdempotencyPolicy>
-MakeDefaultAwsClustersConnectionIdempotencyPolicy();
+    MakeDefaultAwsClustersConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace gkemulticloud_v1

@@ -35,54 +35,47 @@ ModelServiceRestConnectionImpl::ModelServiceRestConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<bigquerycontrol_v2_internal::ModelServiceRestStub> stub,
     Options options)
-    : background_(std::move(background)),
-      stub_(std::move(stub)),
-      options_(internal::MergeOptions(std::move(options),
-                                      ModelServiceConnection::options())) {}
+  : background_(std::move(background)), stub_(std::move(stub)),
+    options_(internal::MergeOptions(
+        std::move(options),
+        ModelServiceConnection::options())) {}
 
 StatusOr<google::cloud::bigquery::v2::Model>
-ModelServiceRestConnectionImpl::GetModel(
-    google::cloud::bigquery::v2::GetModelRequest const& request) {
+ModelServiceRestConnectionImpl::GetModel(google::cloud::bigquery::v2::GetModelRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetModel(request),
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::cloud::bigquery::v2::GetModelRequest const& request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options, google::cloud::bigquery::v2::GetModelRequest const& request) {
         return stub_->GetModel(rest_context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::cloud::bigquery::v2::Model>
-ModelServiceRestConnectionImpl::ListModels(
-    google::cloud::bigquery::v2::ListModelsRequest request) {
+ModelServiceRestConnectionImpl::ListModels(google::cloud::bigquery::v2::ListModelsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListModels(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::bigquery::v2::Model>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::bigquery::v2::Model>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<bigquerycontrol_v2::ModelServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<bigquerycontrol_v2::ModelServiceRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::bigquery::v2::ListModelsRequest const& r) {
+          Options const& options, google::cloud::bigquery::v2::ListModelsRequest const& r) {
         return google::cloud::rest_internal::RestRetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](
-                rest_internal::RestContext& rest_context,
-                Options const& options,
-                google::cloud::bigquery::v2::ListModelsRequest const& request) {
+            [stub](rest_internal::RestContext& rest_context,
+                   Options const& options,
+                   google::cloud::bigquery::v2::ListModelsRequest const& request) {
               return stub->ListModels(rest_context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::bigquery::v2::ListModelsResponse r) {
-        std::vector<google::cloud::bigquery::v2::Model> result(
-            r.models().size());
+        std::vector<google::cloud::bigquery::v2::Model> result(r.models().size());
         auto& messages = *r.mutable_models();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -90,27 +83,26 @@ ModelServiceRestConnectionImpl::ListModels(
 }
 
 StatusOr<google::cloud::bigquery::v2::Model>
-ModelServiceRestConnectionImpl::PatchModel(
-    google::cloud::bigquery::v2::PatchModelRequest const& request) {
+ModelServiceRestConnectionImpl::PatchModel(google::cloud::bigquery::v2::PatchModelRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->PatchModel(request),
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::cloud::bigquery::v2::PatchModelRequest const& request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options, google::cloud::bigquery::v2::PatchModelRequest const& request) {
         return stub_->PatchModel(rest_context, options, request);
       },
       *current, request, __func__);
 }
 
-Status ModelServiceRestConnectionImpl::DeleteModel(
-    google::cloud::bigquery::v2::DeleteModelRequest const& request) {
+Status
+ModelServiceRestConnectionImpl::DeleteModel(google::cloud::bigquery::v2::DeleteModelRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteModel(request),
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::cloud::bigquery::v2::DeleteModelRequest const& request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options, google::cloud::bigquery::v2::DeleteModelRequest const& request) {
         return stub_->DeleteModel(rest_context, options, request);
       },
       *current, request, __func__);

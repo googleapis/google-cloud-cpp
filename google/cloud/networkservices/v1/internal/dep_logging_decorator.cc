@@ -30,20 +30,22 @@ namespace cloud {
 namespace networkservices_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-DepServiceLogging::DepServiceLogging(std::shared_ptr<DepServiceStub> child,
-                                     TracingOptions tracing_options,
-                                     std::set<std::string> const&)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
+DepServiceLogging::DepServiceLogging(
+    std::shared_ptr<DepServiceStub> child,
+    TracingOptions tracing_options,
+    std::set<std::string> const&)
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::cloud::networkservices::v1::ListLbTrafficExtensionsResponse>
 DepServiceLogging::ListLbTrafficExtensions(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::networkservices::v1::ListLbTrafficExtensionsRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::networkservices::v1::ListLbTrafficExtensionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::networkservices::v1::
-                 ListLbTrafficExtensionsRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::networkservices::v1::ListLbTrafficExtensionsRequest const& request) {
         return child_->ListLbTrafficExtensions(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -51,13 +53,13 @@ DepServiceLogging::ListLbTrafficExtensions(
 
 StatusOr<google::cloud::networkservices::v1::LbTrafficExtension>
 DepServiceLogging::GetLbTrafficExtension(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::networkservices::v1::GetLbTrafficExtensionRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::networkservices::v1::GetLbTrafficExtensionRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::networkservices::v1::
-                 GetLbTrafficExtensionRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::networkservices::v1::GetLbTrafficExtensionRequest const& request) {
         return child_->GetLbTrafficExtension(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -65,17 +67,15 @@ DepServiceLogging::GetLbTrafficExtension(
 
 future<StatusOr<google::longrunning::Operation>>
 DepServiceLogging::AsyncCreateLbTrafficExtension(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::networkservices::v1::CreateLbTrafficExtensionRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::networkservices::v1::CreateLbTrafficExtensionRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::networkservices::v1::
-                 CreateLbTrafficExtensionRequest const& request) {
+             google::cloud::networkservices::v1::CreateLbTrafficExtensionRequest const& request) {
         return child_->AsyncCreateLbTrafficExtension(
             cq, std::move(context), std::move(options), request);
       },
@@ -85,13 +85,13 @@ DepServiceLogging::AsyncCreateLbTrafficExtension(
 
 StatusOr<google::longrunning::Operation>
 DepServiceLogging::CreateLbTrafficExtension(
-    grpc::ClientContext& context, Options options,
-    google::cloud::networkservices::v1::CreateLbTrafficExtensionRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::networkservices::v1::CreateLbTrafficExtensionRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::networkservices::v1::
-                 CreateLbTrafficExtensionRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::networkservices::v1::CreateLbTrafficExtensionRequest const& request) {
         return child_->CreateLbTrafficExtension(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -99,17 +99,15 @@ DepServiceLogging::CreateLbTrafficExtension(
 
 future<StatusOr<google::longrunning::Operation>>
 DepServiceLogging::AsyncUpdateLbTrafficExtension(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::networkservices::v1::UpdateLbTrafficExtensionRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::networkservices::v1::UpdateLbTrafficExtensionRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::networkservices::v1::
-                 UpdateLbTrafficExtensionRequest const& request) {
+             google::cloud::networkservices::v1::UpdateLbTrafficExtensionRequest const& request) {
         return child_->AsyncUpdateLbTrafficExtension(
             cq, std::move(context), std::move(options), request);
       },
@@ -119,13 +117,13 @@ DepServiceLogging::AsyncUpdateLbTrafficExtension(
 
 StatusOr<google::longrunning::Operation>
 DepServiceLogging::UpdateLbTrafficExtension(
-    grpc::ClientContext& context, Options options,
-    google::cloud::networkservices::v1::UpdateLbTrafficExtensionRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::networkservices::v1::UpdateLbTrafficExtensionRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::networkservices::v1::
-                 UpdateLbTrafficExtensionRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::networkservices::v1::UpdateLbTrafficExtensionRequest const& request) {
         return child_->UpdateLbTrafficExtension(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -133,17 +131,15 @@ DepServiceLogging::UpdateLbTrafficExtension(
 
 future<StatusOr<google::longrunning::Operation>>
 DepServiceLogging::AsyncDeleteLbTrafficExtension(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::networkservices::v1::DeleteLbTrafficExtensionRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::networkservices::v1::DeleteLbTrafficExtensionRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::networkservices::v1::
-                 DeleteLbTrafficExtensionRequest const& request) {
+             google::cloud::networkservices::v1::DeleteLbTrafficExtensionRequest const& request) {
         return child_->AsyncDeleteLbTrafficExtension(
             cq, std::move(context), std::move(options), request);
       },
@@ -153,13 +149,13 @@ DepServiceLogging::AsyncDeleteLbTrafficExtension(
 
 StatusOr<google::longrunning::Operation>
 DepServiceLogging::DeleteLbTrafficExtension(
-    grpc::ClientContext& context, Options options,
-    google::cloud::networkservices::v1::DeleteLbTrafficExtensionRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::networkservices::v1::DeleteLbTrafficExtensionRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::networkservices::v1::
-                 DeleteLbTrafficExtensionRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::networkservices::v1::DeleteLbTrafficExtensionRequest const& request) {
         return child_->DeleteLbTrafficExtension(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -167,13 +163,13 @@ DepServiceLogging::DeleteLbTrafficExtension(
 
 StatusOr<google::cloud::networkservices::v1::ListLbRouteExtensionsResponse>
 DepServiceLogging::ListLbRouteExtensions(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::networkservices::v1::ListLbRouteExtensionsRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::networkservices::v1::ListLbRouteExtensionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::networkservices::v1::
-                 ListLbRouteExtensionsRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::networkservices::v1::ListLbRouteExtensionsRequest const& request) {
         return child_->ListLbRouteExtensions(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -181,14 +177,13 @@ DepServiceLogging::ListLbRouteExtensions(
 
 StatusOr<google::cloud::networkservices::v1::LbRouteExtension>
 DepServiceLogging::GetLbRouteExtension(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::networkservices::v1::GetLbRouteExtensionRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::networkservices::v1::GetLbRouteExtensionRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::networkservices::v1::GetLbRouteExtensionRequest const&
-              request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::networkservices::v1::GetLbRouteExtensionRequest const& request) {
         return child_->GetLbRouteExtension(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -196,19 +191,17 @@ DepServiceLogging::GetLbRouteExtension(
 
 future<StatusOr<google::longrunning::Operation>>
 DepServiceLogging::AsyncCreateLbRouteExtension(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::networkservices::v1::CreateLbRouteExtensionRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::networkservices::v1::CreateLbRouteExtensionRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::networkservices::v1::
-                 CreateLbRouteExtensionRequest const& request) {
-        return child_->AsyncCreateLbRouteExtension(cq, std::move(context),
-                                                   std::move(options), request);
+             google::cloud::networkservices::v1::CreateLbRouteExtensionRequest const& request) {
+        return child_->AsyncCreateLbRouteExtension(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -216,13 +209,13 @@ DepServiceLogging::AsyncCreateLbRouteExtension(
 
 StatusOr<google::longrunning::Operation>
 DepServiceLogging::CreateLbRouteExtension(
-    grpc::ClientContext& context, Options options,
-    google::cloud::networkservices::v1::CreateLbRouteExtensionRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::networkservices::v1::CreateLbRouteExtensionRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::networkservices::v1::
-                 CreateLbRouteExtensionRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::networkservices::v1::CreateLbRouteExtensionRequest const& request) {
         return child_->CreateLbRouteExtension(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -230,19 +223,17 @@ DepServiceLogging::CreateLbRouteExtension(
 
 future<StatusOr<google::longrunning::Operation>>
 DepServiceLogging::AsyncUpdateLbRouteExtension(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::networkservices::v1::UpdateLbRouteExtensionRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::networkservices::v1::UpdateLbRouteExtensionRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::networkservices::v1::
-                 UpdateLbRouteExtensionRequest const& request) {
-        return child_->AsyncUpdateLbRouteExtension(cq, std::move(context),
-                                                   std::move(options), request);
+             google::cloud::networkservices::v1::UpdateLbRouteExtensionRequest const& request) {
+        return child_->AsyncUpdateLbRouteExtension(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -250,13 +241,13 @@ DepServiceLogging::AsyncUpdateLbRouteExtension(
 
 StatusOr<google::longrunning::Operation>
 DepServiceLogging::UpdateLbRouteExtension(
-    grpc::ClientContext& context, Options options,
-    google::cloud::networkservices::v1::UpdateLbRouteExtensionRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::networkservices::v1::UpdateLbRouteExtensionRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::networkservices::v1::
-                 UpdateLbRouteExtensionRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::networkservices::v1::UpdateLbRouteExtensionRequest const& request) {
         return child_->UpdateLbRouteExtension(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -264,19 +255,17 @@ DepServiceLogging::UpdateLbRouteExtension(
 
 future<StatusOr<google::longrunning::Operation>>
 DepServiceLogging::AsyncDeleteLbRouteExtension(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::networkservices::v1::DeleteLbRouteExtensionRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::networkservices::v1::DeleteLbRouteExtensionRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::networkservices::v1::
-                 DeleteLbRouteExtensionRequest const& request) {
-        return child_->AsyncDeleteLbRouteExtension(cq, std::move(context),
-                                                   std::move(options), request);
+             google::cloud::networkservices::v1::DeleteLbRouteExtensionRequest const& request) {
+        return child_->AsyncDeleteLbRouteExtension(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -284,57 +273,192 @@ DepServiceLogging::AsyncDeleteLbRouteExtension(
 
 StatusOr<google::longrunning::Operation>
 DepServiceLogging::DeleteLbRouteExtension(
-    grpc::ClientContext& context, Options options,
-    google::cloud::networkservices::v1::DeleteLbRouteExtensionRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::networkservices::v1::DeleteLbRouteExtensionRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::networkservices::v1::
-                 DeleteLbRouteExtensionRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::networkservices::v1::DeleteLbRouteExtensionRequest const& request) {
         return child_->DeleteLbRouteExtension(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::networkservices::v1::ListAuthzExtensionsResponse>
+DepServiceLogging::ListAuthzExtensions(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::networkservices::v1::ListAuthzExtensionsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::networkservices::v1::ListAuthzExtensionsRequest const& request) {
+        return child_->ListAuthzExtensions(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::networkservices::v1::AuthzExtension>
+DepServiceLogging::GetAuthzExtension(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::networkservices::v1::GetAuthzExtensionRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::networkservices::v1::GetAuthzExtensionRequest const& request) {
+        return child_->GetAuthzExtension(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DepServiceLogging::AsyncCreateAuthzExtension(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::networkservices::v1::CreateAuthzExtensionRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::networkservices::v1::CreateAuthzExtensionRequest const& request) {
+        return child_->AsyncCreateAuthzExtension(
+            cq, std::move(context), std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+DepServiceLogging::CreateAuthzExtension(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::networkservices::v1::CreateAuthzExtensionRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::networkservices::v1::CreateAuthzExtensionRequest const& request) {
+        return child_->CreateAuthzExtension(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DepServiceLogging::AsyncUpdateAuthzExtension(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::networkservices::v1::UpdateAuthzExtensionRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::networkservices::v1::UpdateAuthzExtensionRequest const& request) {
+        return child_->AsyncUpdateAuthzExtension(
+            cq, std::move(context), std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+DepServiceLogging::UpdateAuthzExtension(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::networkservices::v1::UpdateAuthzExtensionRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::networkservices::v1::UpdateAuthzExtensionRequest const& request) {
+        return child_->UpdateAuthzExtension(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DepServiceLogging::AsyncDeleteAuthzExtension(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::networkservices::v1::DeleteAuthzExtensionRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::networkservices::v1::DeleteAuthzExtensionRequest const& request) {
+        return child_->AsyncDeleteAuthzExtension(
+            cq, std::move(context), std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+DepServiceLogging::DeleteAuthzExtension(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::networkservices::v1::DeleteAuthzExtensionRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::networkservices::v1::DeleteAuthzExtensionRequest const& request) {
+        return child_->DeleteAuthzExtension(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 DepServiceLogging::ListLocations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::location::ListLocationsRequest const& request) {
         return child_->ListLocations(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::cloud::location::Location> DepServiceLogging::GetLocation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::location::Location>
+DepServiceLogging::GetLocation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::location::GetLocationRequest const& request) {
         return child_->GetLocation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::iam::v1::Policy> DepServiceLogging::SetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::iam::v1::Policy>
+DepServiceLogging::SetIamPolicy(
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::iam::v1::SetIamPolicyRequest const& request) {
         return child_->SetIamPolicy(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::iam::v1::Policy> DepServiceLogging::GetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::iam::v1::Policy>
+DepServiceLogging::GetIamPolicy(
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::iam::v1::GetIamPolicyRequest const& request) {
         return child_->GetIamPolicy(context, options, request);
       },
@@ -343,10 +467,12 @@ StatusOr<google::iam::v1::Policy> DepServiceLogging::GetIamPolicy(
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 DepServiceLogging::TestIamPermissions(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::iam::v1::TestIamPermissionsRequest const& request) {
         return child_->TestIamPermissions(context, options, request);
       },
@@ -355,43 +481,54 @@ DepServiceLogging::TestIamPermissions(
 
 StatusOr<google::longrunning::ListOperationsResponse>
 DepServiceLogging::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::ListOperationsRequest const& request) {
         return child_->ListOperations(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> DepServiceLogging::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::Operation>
+DepServiceLogging::GetOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::GetOperationRequest const& request) {
         return child_->GetOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status DepServiceLogging::DeleteOperation(
-    grpc::ClientContext& context, Options const& options,
+Status
+DepServiceLogging::DeleteOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::DeleteOperationRequest const& request) {
         return child_->DeleteOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status DepServiceLogging::CancelOperation(
-    grpc::ClientContext& context, Options const& options,
+Status
+DepServiceLogging::CancelOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::CancelOperationRequest const& request) {
         return child_->CancelOperation(context, options, request);
       },
@@ -409,8 +546,8 @@ DepServiceLogging::AsyncGetOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(cq, std::move(context),
-                                         std::move(options), request);
+        return child_->AsyncGetOperation(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -426,8 +563,8 @@ future<Status> DepServiceLogging::AsyncCancelOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::CancelOperationRequest const& request) {
-        return child_->AsyncCancelOperation(cq, std::move(context),
-                                            std::move(options), request);
+        return child_->AsyncCancelOperation(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);

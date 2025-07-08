@@ -34,166 +34,153 @@ FeaturestoreServiceTracingStub::FeaturestoreServiceTracingStub(
 
 future<StatusOr<google::longrunning::Operation>>
 FeaturestoreServiceTracingStub::AsyncCreateFeaturestore(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::aiplatform::v1::CreateFeaturestoreRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.aiplatform.v1.FeaturestoreService", "CreateFeaturestore");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::CreateFeaturestoreRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.FeaturestoreService", "CreateFeaturestore");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f =
-      child_->AsyncCreateFeaturestore(cq, context, std::move(options), request);
+  auto f = child_->AsyncCreateFeaturestore(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 FeaturestoreServiceTracingStub::CreateFeaturestore(
-    grpc::ClientContext& context, Options options,
-    google::cloud::aiplatform::v1::CreateFeaturestoreRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.aiplatform.v1.FeaturestoreService", "CreateFeaturestore");
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::aiplatform::v1::CreateFeaturestoreRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.FeaturestoreService", "CreateFeaturestore");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->CreateFeaturestore(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->CreateFeaturestore(context, options, request));
 }
 
-StatusOr<google::cloud::aiplatform::v1::Featurestore>
-FeaturestoreServiceTracingStub::GetFeaturestore(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::aiplatform::v1::Featurestore> FeaturestoreServiceTracingStub::GetFeaturestore(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::GetFeaturestoreRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.aiplatform.v1.FeaturestoreService", "GetFeaturestore");
+  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.FeaturestoreService", "GetFeaturestore");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetFeaturestore(context, options, request));
 }
 
-StatusOr<google::cloud::aiplatform::v1::ListFeaturestoresResponse>
-FeaturestoreServiceTracingStub::ListFeaturestores(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::aiplatform::v1::ListFeaturestoresResponse> FeaturestoreServiceTracingStub::ListFeaturestores(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::ListFeaturestoresRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.aiplatform.v1.FeaturestoreService", "ListFeaturestores");
+  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.FeaturestoreService", "ListFeaturestores");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->ListFeaturestores(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->ListFeaturestores(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 FeaturestoreServiceTracingStub::AsyncUpdateFeaturestore(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::aiplatform::v1::UpdateFeaturestoreRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.aiplatform.v1.FeaturestoreService", "UpdateFeaturestore");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::UpdateFeaturestoreRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.FeaturestoreService", "UpdateFeaturestore");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f =
-      child_->AsyncUpdateFeaturestore(cq, context, std::move(options), request);
+  auto f = child_->AsyncUpdateFeaturestore(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 FeaturestoreServiceTracingStub::UpdateFeaturestore(
-    grpc::ClientContext& context, Options options,
-    google::cloud::aiplatform::v1::UpdateFeaturestoreRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.aiplatform.v1.FeaturestoreService", "UpdateFeaturestore");
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::aiplatform::v1::UpdateFeaturestoreRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.FeaturestoreService", "UpdateFeaturestore");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->UpdateFeaturestore(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->UpdateFeaturestore(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 FeaturestoreServiceTracingStub::AsyncDeleteFeaturestore(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::aiplatform::v1::DeleteFeaturestoreRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.aiplatform.v1.FeaturestoreService", "DeleteFeaturestore");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::DeleteFeaturestoreRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.FeaturestoreService", "DeleteFeaturestore");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f =
-      child_->AsyncDeleteFeaturestore(cq, context, std::move(options), request);
+  auto f = child_->AsyncDeleteFeaturestore(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 FeaturestoreServiceTracingStub::DeleteFeaturestore(
-    grpc::ClientContext& context, Options options,
-    google::cloud::aiplatform::v1::DeleteFeaturestoreRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.aiplatform.v1.FeaturestoreService", "DeleteFeaturestore");
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::aiplatform::v1::DeleteFeaturestoreRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.FeaturestoreService", "DeleteFeaturestore");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->DeleteFeaturestore(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->DeleteFeaturestore(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 FeaturestoreServiceTracingStub::AsyncCreateEntityType(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::aiplatform::v1::CreateEntityTypeRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.aiplatform.v1.FeaturestoreService", "CreateEntityType");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::CreateEntityTypeRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.FeaturestoreService", "CreateEntityType");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f =
-      child_->AsyncCreateEntityType(cq, context, std::move(options), request);
+  auto f = child_->AsyncCreateEntityType(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 FeaturestoreServiceTracingStub::CreateEntityType(
-    grpc::ClientContext& context, Options options,
-    google::cloud::aiplatform::v1::CreateEntityTypeRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.aiplatform.v1.FeaturestoreService", "CreateEntityType");
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::aiplatform::v1::CreateEntityTypeRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.FeaturestoreService", "CreateEntityType");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateEntityType(context, options, request));
 }
 
-StatusOr<google::cloud::aiplatform::v1::EntityType>
-FeaturestoreServiceTracingStub::GetEntityType(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::aiplatform::v1::EntityType> FeaturestoreServiceTracingStub::GetEntityType(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::GetEntityTypeRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.aiplatform.v1.FeaturestoreService", "GetEntityType");
+  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.FeaturestoreService", "GetEntityType");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetEntityType(context, options, request));
 }
 
-StatusOr<google::cloud::aiplatform::v1::ListEntityTypesResponse>
-FeaturestoreServiceTracingStub::ListEntityTypes(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::aiplatform::v1::ListEntityTypesResponse> FeaturestoreServiceTracingStub::ListEntityTypes(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::ListEntityTypesRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.aiplatform.v1.FeaturestoreService", "ListEntityTypes");
+  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.FeaturestoreService", "ListEntityTypes");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListEntityTypes(context, options, request));
 }
 
-StatusOr<google::cloud::aiplatform::v1::EntityType>
-FeaturestoreServiceTracingStub::UpdateEntityType(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::aiplatform::v1::EntityType> FeaturestoreServiceTracingStub::UpdateEntityType(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::UpdateEntityTypeRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.aiplatform.v1.FeaturestoreService", "UpdateEntityType");
+  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.FeaturestoreService", "UpdateEntityType");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -202,25 +189,23 @@ FeaturestoreServiceTracingStub::UpdateEntityType(
 
 future<StatusOr<google::longrunning::Operation>>
 FeaturestoreServiceTracingStub::AsyncDeleteEntityType(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::aiplatform::v1::DeleteEntityTypeRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.aiplatform.v1.FeaturestoreService", "DeleteEntityType");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::DeleteEntityTypeRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.FeaturestoreService", "DeleteEntityType");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f =
-      child_->AsyncDeleteEntityType(cq, context, std::move(options), request);
+  auto f = child_->AsyncDeleteEntityType(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 FeaturestoreServiceTracingStub::DeleteEntityType(
-    grpc::ClientContext& context, Options options,
-    google::cloud::aiplatform::v1::DeleteEntityTypeRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.aiplatform.v1.FeaturestoreService", "DeleteEntityType");
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::aiplatform::v1::DeleteEntityTypeRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.FeaturestoreService", "DeleteEntityType");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -229,12 +214,11 @@ FeaturestoreServiceTracingStub::DeleteEntityType(
 
 future<StatusOr<google::longrunning::Operation>>
 FeaturestoreServiceTracingStub::AsyncCreateFeature(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::aiplatform::v1::CreateFeatureRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.aiplatform.v1.FeaturestoreService", "CreateFeature");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::CreateFeatureRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.FeaturestoreService", "CreateFeature");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCreateFeature(cq, context, std::move(options), request);
@@ -243,10 +227,10 @@ FeaturestoreServiceTracingStub::AsyncCreateFeature(
 
 StatusOr<google::longrunning::Operation>
 FeaturestoreServiceTracingStub::CreateFeature(
-    grpc::ClientContext& context, Options options,
-    google::cloud::aiplatform::v1::CreateFeatureRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.aiplatform.v1.FeaturestoreService", "CreateFeature");
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::aiplatform::v1::CreateFeatureRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.FeaturestoreService", "CreateFeature");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -255,61 +239,56 @@ FeaturestoreServiceTracingStub::CreateFeature(
 
 future<StatusOr<google::longrunning::Operation>>
 FeaturestoreServiceTracingStub::AsyncBatchCreateFeatures(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::aiplatform::v1::BatchCreateFeaturesRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.aiplatform.v1.FeaturestoreService", "BatchCreateFeatures");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::BatchCreateFeaturesRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.FeaturestoreService", "BatchCreateFeatures");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncBatchCreateFeatures(cq, context, std::move(options),
-                                            request);
+  auto f = child_->AsyncBatchCreateFeatures(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 FeaturestoreServiceTracingStub::BatchCreateFeatures(
-    grpc::ClientContext& context, Options options,
-    google::cloud::aiplatform::v1::BatchCreateFeaturesRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.aiplatform.v1.FeaturestoreService", "BatchCreateFeatures");
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::aiplatform::v1::BatchCreateFeaturesRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.FeaturestoreService", "BatchCreateFeatures");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->BatchCreateFeatures(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->BatchCreateFeatures(context, options, request));
 }
 
-StatusOr<google::cloud::aiplatform::v1::Feature>
-FeaturestoreServiceTracingStub::GetFeature(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::aiplatform::v1::Feature> FeaturestoreServiceTracingStub::GetFeature(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::GetFeatureRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.aiplatform.v1.FeaturestoreService", "GetFeature");
+  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.FeaturestoreService", "GetFeature");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetFeature(context, options, request));
 }
 
-StatusOr<google::cloud::aiplatform::v1::ListFeaturesResponse>
-FeaturestoreServiceTracingStub::ListFeatures(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::aiplatform::v1::ListFeaturesResponse> FeaturestoreServiceTracingStub::ListFeatures(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::ListFeaturesRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.aiplatform.v1.FeaturestoreService", "ListFeatures");
+  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.FeaturestoreService", "ListFeatures");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListFeatures(context, options, request));
 }
 
-StatusOr<google::cloud::aiplatform::v1::Feature>
-FeaturestoreServiceTracingStub::UpdateFeature(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::aiplatform::v1::Feature> FeaturestoreServiceTracingStub::UpdateFeature(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::UpdateFeatureRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.aiplatform.v1.FeaturestoreService", "UpdateFeature");
+  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.FeaturestoreService", "UpdateFeature");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -318,12 +297,11 @@ FeaturestoreServiceTracingStub::UpdateFeature(
 
 future<StatusOr<google::longrunning::Operation>>
 FeaturestoreServiceTracingStub::AsyncDeleteFeature(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::aiplatform::v1::DeleteFeatureRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.aiplatform.v1.FeaturestoreService", "DeleteFeature");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::DeleteFeatureRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.FeaturestoreService", "DeleteFeature");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncDeleteFeature(cq, context, std::move(options), request);
@@ -332,10 +310,10 @@ FeaturestoreServiceTracingStub::AsyncDeleteFeature(
 
 StatusOr<google::longrunning::Operation>
 FeaturestoreServiceTracingStub::DeleteFeature(
-    grpc::ClientContext& context, Options options,
-    google::cloud::aiplatform::v1::DeleteFeatureRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.aiplatform.v1.FeaturestoreService", "DeleteFeature");
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::aiplatform::v1::DeleteFeatureRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.FeaturestoreService", "DeleteFeature");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -344,147 +322,131 @@ FeaturestoreServiceTracingStub::DeleteFeature(
 
 future<StatusOr<google::longrunning::Operation>>
 FeaturestoreServiceTracingStub::AsyncImportFeatureValues(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::aiplatform::v1::ImportFeatureValuesRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.aiplatform.v1.FeaturestoreService", "ImportFeatureValues");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::ImportFeatureValuesRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.FeaturestoreService", "ImportFeatureValues");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncImportFeatureValues(cq, context, std::move(options),
-                                            request);
+  auto f = child_->AsyncImportFeatureValues(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 FeaturestoreServiceTracingStub::ImportFeatureValues(
-    grpc::ClientContext& context, Options options,
-    google::cloud::aiplatform::v1::ImportFeatureValuesRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.aiplatform.v1.FeaturestoreService", "ImportFeatureValues");
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::aiplatform::v1::ImportFeatureValuesRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.FeaturestoreService", "ImportFeatureValues");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->ImportFeatureValues(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->ImportFeatureValues(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 FeaturestoreServiceTracingStub::AsyncBatchReadFeatureValues(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::aiplatform::v1::BatchReadFeatureValuesRequest const&
-        request) {
-  auto span =
-      internal::MakeSpanGrpc("google.cloud.aiplatform.v1.FeaturestoreService",
-                             "BatchReadFeatureValues");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::BatchReadFeatureValuesRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.FeaturestoreService", "BatchReadFeatureValues");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncBatchReadFeatureValues(cq, context, std::move(options),
-                                               request);
+  auto f = child_->AsyncBatchReadFeatureValues(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 FeaturestoreServiceTracingStub::BatchReadFeatureValues(
-    grpc::ClientContext& context, Options options,
-    google::cloud::aiplatform::v1::BatchReadFeatureValuesRequest const&
-        request) {
-  auto span =
-      internal::MakeSpanGrpc("google.cloud.aiplatform.v1.FeaturestoreService",
-                             "BatchReadFeatureValues");
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::aiplatform::v1::BatchReadFeatureValuesRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.FeaturestoreService", "BatchReadFeatureValues");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span,
-      child_->BatchReadFeatureValues(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->BatchReadFeatureValues(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 FeaturestoreServiceTracingStub::AsyncExportFeatureValues(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::aiplatform::v1::ExportFeatureValuesRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.aiplatform.v1.FeaturestoreService", "ExportFeatureValues");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::ExportFeatureValuesRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.FeaturestoreService", "ExportFeatureValues");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncExportFeatureValues(cq, context, std::move(options),
-                                            request);
+  auto f = child_->AsyncExportFeatureValues(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 FeaturestoreServiceTracingStub::ExportFeatureValues(
-    grpc::ClientContext& context, Options options,
-    google::cloud::aiplatform::v1::ExportFeatureValuesRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.aiplatform.v1.FeaturestoreService", "ExportFeatureValues");
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::aiplatform::v1::ExportFeatureValuesRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.FeaturestoreService", "ExportFeatureValues");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->ExportFeatureValues(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->ExportFeatureValues(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 FeaturestoreServiceTracingStub::AsyncDeleteFeatureValues(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::aiplatform::v1::DeleteFeatureValuesRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.aiplatform.v1.FeaturestoreService", "DeleteFeatureValues");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::DeleteFeatureValuesRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.FeaturestoreService", "DeleteFeatureValues");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncDeleteFeatureValues(cq, context, std::move(options),
-                                            request);
+  auto f = child_->AsyncDeleteFeatureValues(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 FeaturestoreServiceTracingStub::DeleteFeatureValues(
-    grpc::ClientContext& context, Options options,
-    google::cloud::aiplatform::v1::DeleteFeatureValuesRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.aiplatform.v1.FeaturestoreService", "DeleteFeatureValues");
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::aiplatform::v1::DeleteFeatureValuesRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.FeaturestoreService", "DeleteFeatureValues");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->DeleteFeatureValues(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->DeleteFeatureValues(context, options, request));
 }
 
-StatusOr<google::cloud::aiplatform::v1::SearchFeaturesResponse>
-FeaturestoreServiceTracingStub::SearchFeatures(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::aiplatform::v1::SearchFeaturesResponse> FeaturestoreServiceTracingStub::SearchFeatures(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::SearchFeaturesRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.aiplatform.v1.FeaturestoreService", "SearchFeatures");
+  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.FeaturestoreService", "SearchFeatures");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->SearchFeatures(context, options, request));
 }
 
-StatusOr<google::cloud::location::ListLocationsResponse>
-FeaturestoreServiceTracingStub::ListLocations(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::location::ListLocationsResponse> FeaturestoreServiceTracingStub::ListLocations(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.aiplatform.v1.FeaturestoreService", "ListLocations");
+  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.FeaturestoreService", "ListLocations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListLocations(context, options, request));
 }
 
-StatusOr<google::cloud::location::Location>
-FeaturestoreServiceTracingStub::GetLocation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::location::Location> FeaturestoreServiceTracingStub::GetLocation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.aiplatform.v1.FeaturestoreService", "GetLocation");
+  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.FeaturestoreService", "GetLocation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -492,10 +454,10 @@ FeaturestoreServiceTracingStub::GetLocation(
 }
 
 StatusOr<google::iam::v1::Policy> FeaturestoreServiceTracingStub::SetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.aiplatform.v1.FeaturestoreService", "SetIamPolicy");
+  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.FeaturestoreService", "SetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -503,46 +465,43 @@ StatusOr<google::iam::v1::Policy> FeaturestoreServiceTracingStub::SetIamPolicy(
 }
 
 StatusOr<google::iam::v1::Policy> FeaturestoreServiceTracingStub::GetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.aiplatform.v1.FeaturestoreService", "GetIamPolicy");
+  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.FeaturestoreService", "GetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetIamPolicy(context, options, request));
 }
 
-StatusOr<google::iam::v1::TestIamPermissionsResponse>
-FeaturestoreServiceTracingStub::TestIamPermissions(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::iam::v1::TestIamPermissionsResponse> FeaturestoreServiceTracingStub::TestIamPermissions(
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.aiplatform.v1.FeaturestoreService", "TestIamPermissions");
+  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.FeaturestoreService", "TestIamPermissions");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->TestIamPermissions(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->TestIamPermissions(context, options, request));
 }
 
-StatusOr<google::longrunning::ListOperationsResponse>
-FeaturestoreServiceTracingStub::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse> FeaturestoreServiceTracingStub::ListOperations(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.aiplatform.v1.FeaturestoreService", "ListOperations");
+  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.FeaturestoreService", "ListOperations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListOperations(context, options, request));
 }
 
-StatusOr<google::longrunning::Operation>
-FeaturestoreServiceTracingStub::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::Operation> FeaturestoreServiceTracingStub::GetOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.aiplatform.v1.FeaturestoreService", "GetOperation");
+  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.FeaturestoreService", "GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -550,10 +509,10 @@ FeaturestoreServiceTracingStub::GetOperation(
 }
 
 Status FeaturestoreServiceTracingStub::DeleteOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.aiplatform.v1.FeaturestoreService", "DeleteOperation");
+  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.FeaturestoreService", "DeleteOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -561,22 +520,21 @@ Status FeaturestoreServiceTracingStub::DeleteOperation(
 }
 
 Status FeaturestoreServiceTracingStub::CancelOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.aiplatform.v1.FeaturestoreService", "CancelOperation");
+  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.FeaturestoreService", "CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CancelOperation(context, options, request));
 }
 
-StatusOr<google::longrunning::Operation>
-FeaturestoreServiceTracingStub::WaitOperation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::Operation> FeaturestoreServiceTracingStub::WaitOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::WaitOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.aiplatform.v1.FeaturestoreService", "WaitOperation");
+  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.FeaturestoreService", "WaitOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -593,7 +551,8 @@ FeaturestoreServiceTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncGetOperation(cq, context, std::move(options), request);
+  auto f = child_->AsyncGetOperation(
+      cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -606,8 +565,8 @@ future<Status> FeaturestoreServiceTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f =
-      child_->AsyncCancelOperation(cq, context, std::move(options), request);
+  auto f = child_->AsyncCancelOperation(
+      cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 

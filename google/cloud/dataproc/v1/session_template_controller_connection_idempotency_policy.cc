@@ -26,42 +26,30 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-SessionTemplateControllerConnectionIdempotencyPolicy::
-    ~SessionTemplateControllerConnectionIdempotencyPolicy() = default;
+SessionTemplateControllerConnectionIdempotencyPolicy::~SessionTemplateControllerConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<SessionTemplateControllerConnectionIdempotencyPolicy>
 SessionTemplateControllerConnectionIdempotencyPolicy::clone() const {
-  return std::make_unique<SessionTemplateControllerConnectionIdempotencyPolicy>(
-      *this);
+  return std::make_unique<SessionTemplateControllerConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency
-SessionTemplateControllerConnectionIdempotencyPolicy::CreateSessionTemplate(
-    google::cloud::dataproc::v1::CreateSessionTemplateRequest const&) {
+Idempotency SessionTemplateControllerConnectionIdempotencyPolicy::CreateSessionTemplate(google::cloud::dataproc::v1::CreateSessionTemplateRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency
-SessionTemplateControllerConnectionIdempotencyPolicy::UpdateSessionTemplate(
-    google::cloud::dataproc::v1::UpdateSessionTemplateRequest const&) {
+Idempotency SessionTemplateControllerConnectionIdempotencyPolicy::UpdateSessionTemplate(google::cloud::dataproc::v1::UpdateSessionTemplateRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency
-SessionTemplateControllerConnectionIdempotencyPolicy::GetSessionTemplate(
-    google::cloud::dataproc::v1::GetSessionTemplateRequest const&) {
+Idempotency SessionTemplateControllerConnectionIdempotencyPolicy::GetSessionTemplate(google::cloud::dataproc::v1::GetSessionTemplateRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency
-SessionTemplateControllerConnectionIdempotencyPolicy::ListSessionTemplates(
-    google::cloud::dataproc::v1::ListSessionTemplatesRequest) {  // NOLINT
+Idempotency SessionTemplateControllerConnectionIdempotencyPolicy::ListSessionTemplates(google::cloud::dataproc::v1::ListSessionTemplatesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency
-SessionTemplateControllerConnectionIdempotencyPolicy::DeleteSessionTemplate(
-    google::cloud::dataproc::v1::DeleteSessionTemplateRequest const&) {
+Idempotency SessionTemplateControllerConnectionIdempotencyPolicy::DeleteSessionTemplate(google::cloud::dataproc::v1::DeleteSessionTemplateRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
@@ -71,44 +59,33 @@ Idempotency SessionTemplateControllerConnectionIdempotencyPolicy::SetIamPolicy(
                                          : Idempotency::kIdempotent;
 }
 
-Idempotency SessionTemplateControllerConnectionIdempotencyPolicy::GetIamPolicy(
-    google::iam::v1::GetIamPolicyRequest const&) {
+Idempotency SessionTemplateControllerConnectionIdempotencyPolicy::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency
-SessionTemplateControllerConnectionIdempotencyPolicy::TestIamPermissions(
-    google::iam::v1::TestIamPermissionsRequest const&) {
+Idempotency SessionTemplateControllerConnectionIdempotencyPolicy::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency
-SessionTemplateControllerConnectionIdempotencyPolicy::ListOperations(
-    google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency SessionTemplateControllerConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency SessionTemplateControllerConnectionIdempotencyPolicy::GetOperation(
-    google::longrunning::GetOperationRequest const&) {
+Idempotency SessionTemplateControllerConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency
-SessionTemplateControllerConnectionIdempotencyPolicy::DeleteOperation(
-    google::longrunning::DeleteOperationRequest const&) {
+Idempotency SessionTemplateControllerConnectionIdempotencyPolicy::DeleteOperation(google::longrunning::DeleteOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency
-SessionTemplateControllerConnectionIdempotencyPolicy::CancelOperation(
-    google::longrunning::CancelOperationRequest const&) {
+Idempotency SessionTemplateControllerConnectionIdempotencyPolicy::CancelOperation(google::longrunning::CancelOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<SessionTemplateControllerConnectionIdempotencyPolicy>
-MakeDefaultSessionTemplateControllerConnectionIdempotencyPolicy() {
-  return std::make_unique<
-      SessionTemplateControllerConnectionIdempotencyPolicy>();
+    MakeDefaultSessionTemplateControllerConnectionIdempotencyPolicy() {
+  return std::make_unique<SessionTemplateControllerConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

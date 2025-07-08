@@ -37,42 +37,42 @@ class TopicAdminConnectionIdempotencyPolicy {
   /// Create a new copy of this object.
   virtual std::unique_ptr<TopicAdminConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency CreateTopic(
-      google::pubsub::v1::Topic const& request);
+  virtual google::cloud::Idempotency
+  CreateTopic(google::pubsub::v1::Topic const& request);
 
-  virtual google::cloud::Idempotency UpdateTopic(
-      google::pubsub::v1::UpdateTopicRequest const& request);
+  virtual google::cloud::Idempotency
+  UpdateTopic(google::pubsub::v1::UpdateTopicRequest const& request);
 
-  virtual google::cloud::Idempotency GetTopic(
-      google::pubsub::v1::GetTopicRequest const& request);
+  virtual google::cloud::Idempotency
+  GetTopic(google::pubsub::v1::GetTopicRequest const& request);
 
-  virtual google::cloud::Idempotency ListTopics(
-      google::pubsub::v1::ListTopicsRequest request);
+  virtual google::cloud::Idempotency
+  ListTopics(google::pubsub::v1::ListTopicsRequest request);
 
-  virtual google::cloud::Idempotency ListTopicSubscriptions(
-      google::pubsub::v1::ListTopicSubscriptionsRequest request);
+  virtual google::cloud::Idempotency
+  ListTopicSubscriptions(google::pubsub::v1::ListTopicSubscriptionsRequest request);
 
-  virtual google::cloud::Idempotency ListTopicSnapshots(
-      google::pubsub::v1::ListTopicSnapshotsRequest request);
+  virtual google::cloud::Idempotency
+  ListTopicSnapshots(google::pubsub::v1::ListTopicSnapshotsRequest request);
 
-  virtual google::cloud::Idempotency DeleteTopic(
-      google::pubsub::v1::DeleteTopicRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteTopic(google::pubsub::v1::DeleteTopicRequest const& request);
 
-  virtual google::cloud::Idempotency DetachSubscription(
-      google::pubsub::v1::DetachSubscriptionRequest const& request);
+  virtual google::cloud::Idempotency
+  DetachSubscription(google::pubsub::v1::DetachSubscriptionRequest const& request);
 
-  virtual google::cloud::Idempotency SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request);
+  virtual google::cloud::Idempotency
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
 };
 
 std::unique_ptr<TopicAdminConnectionIdempotencyPolicy>
-MakeDefaultTopicAdminConnectionIdempotencyPolicy();
+    MakeDefaultTopicAdminConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub_admin

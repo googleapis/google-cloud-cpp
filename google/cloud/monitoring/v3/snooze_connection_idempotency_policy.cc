@@ -26,36 +26,31 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-SnoozeServiceConnectionIdempotencyPolicy::
-    ~SnoozeServiceConnectionIdempotencyPolicy() = default;
+SnoozeServiceConnectionIdempotencyPolicy::~SnoozeServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<SnoozeServiceConnectionIdempotencyPolicy>
 SnoozeServiceConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<SnoozeServiceConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency SnoozeServiceConnectionIdempotencyPolicy::CreateSnooze(
-    google::monitoring::v3::CreateSnoozeRequest const&) {
+Idempotency SnoozeServiceConnectionIdempotencyPolicy::CreateSnooze(google::monitoring::v3::CreateSnoozeRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SnoozeServiceConnectionIdempotencyPolicy::ListSnoozes(
-    google::monitoring::v3::ListSnoozesRequest) {  // NOLINT
+Idempotency SnoozeServiceConnectionIdempotencyPolicy::ListSnoozes(google::monitoring::v3::ListSnoozesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency SnoozeServiceConnectionIdempotencyPolicy::GetSnooze(
-    google::monitoring::v3::GetSnoozeRequest const&) {
+Idempotency SnoozeServiceConnectionIdempotencyPolicy::GetSnooze(google::monitoring::v3::GetSnoozeRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency SnoozeServiceConnectionIdempotencyPolicy::UpdateSnooze(
-    google::monitoring::v3::UpdateSnoozeRequest const&) {
+Idempotency SnoozeServiceConnectionIdempotencyPolicy::UpdateSnooze(google::monitoring::v3::UpdateSnoozeRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<SnoozeServiceConnectionIdempotencyPolicy>
-MakeDefaultSnoozeServiceConnectionIdempotencyPolicy() {
+    MakeDefaultSnoozeServiceConnectionIdempotencyPolicy() {
   return std::make_unique<SnoozeServiceConnectionIdempotencyPolicy>();
 }
 

@@ -17,9 +17,9 @@
 // source: google/cloud/edgecontainer/v1/service.proto
 
 #include "google/cloud/edgecontainer/v1/internal/edge_container_connection_impl.h"
-#include "google/cloud/edgecontainer/v1/internal/edge_container_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/edgecontainer/v1/internal/edge_container_option_defaults.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/async_long_running_operation.h"
 #include "google/cloud/internal/pagination_range.h"
@@ -33,68 +33,58 @@ namespace edgecontainer_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<edgecontainer_v1::EdgeContainerRetryPolicy> retry_policy(
-    Options const& options) {
-  return options.get<edgecontainer_v1::EdgeContainerRetryPolicyOption>()
-      ->clone();
+std::unique_ptr<edgecontainer_v1::EdgeContainerRetryPolicy>
+retry_policy(Options const& options) {
+  return options.get<edgecontainer_v1::EdgeContainerRetryPolicyOption>()->clone();
 }
 
-std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-  return options.get<edgecontainer_v1::EdgeContainerBackoffPolicyOption>()
-      ->clone();
+std::unique_ptr<BackoffPolicy>
+backoff_policy(Options const& options) {
+  return options.get<edgecontainer_v1::EdgeContainerBackoffPolicyOption>()->clone();
 }
 
 std::unique_ptr<edgecontainer_v1::EdgeContainerConnectionIdempotencyPolicy>
 idempotency_policy(Options const& options) {
-  return options
-      .get<edgecontainer_v1::EdgeContainerConnectionIdempotencyPolicyOption>()
-      ->clone();
+  return options.get<edgecontainer_v1::EdgeContainerConnectionIdempotencyPolicyOption>()->clone();
 }
 
 std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-  return options.get<edgecontainer_v1::EdgeContainerPollingPolicyOption>()
-      ->clone();
+  return options.get<edgecontainer_v1::EdgeContainerPollingPolicyOption>()->clone();
 }
 
-}  // namespace
+} // namespace
 
 EdgeContainerConnectionImpl::EdgeContainerConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<edgecontainer_v1_internal::EdgeContainerStub> stub,
     Options options)
-    : background_(std::move(background)),
-      stub_(std::move(stub)),
-      options_(internal::MergeOptions(std::move(options),
-                                      EdgeContainerConnection::options())) {}
+  : background_(std::move(background)), stub_(std::move(stub)),
+    options_(internal::MergeOptions(
+        std::move(options),
+        EdgeContainerConnection::options())) {}
 
 StreamRange<google::cloud::edgecontainer::v1::Cluster>
-EdgeContainerConnectionImpl::ListClusters(
-    google::cloud::edgecontainer::v1::ListClustersRequest request) {
+EdgeContainerConnectionImpl::ListClusters(google::cloud::edgecontainer::v1::ListClustersRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListClusters(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::edgecontainer::v1::Cluster>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::edgecontainer::v1::Cluster>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<edgecontainer_v1::EdgeContainerRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<edgecontainer_v1::EdgeContainerRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::edgecontainer::v1::ListClustersRequest const& r) {
+          Options const& options, google::cloud::edgecontainer::v1::ListClustersRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::edgecontainer::v1::ListClustersRequest const&
-                       request) {
+                   google::cloud::edgecontainer::v1::ListClustersRequest const& request) {
               return stub->ListClusters(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::edgecontainer::v1::ListClustersResponse r) {
-        std::vector<google::cloud::edgecontainer::v1::Cluster> result(
-            r.clusters().size());
+        std::vector<google::cloud::edgecontainer::v1::Cluster> result(r.clusters().size());
         auto& messages = *r.mutable_clusters();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -102,71 +92,62 @@ EdgeContainerConnectionImpl::ListClusters(
 }
 
 StatusOr<google::cloud::edgecontainer::v1::Cluster>
-EdgeContainerConnectionImpl::GetCluster(
-    google::cloud::edgecontainer::v1::GetClusterRequest const& request) {
+EdgeContainerConnectionImpl::GetCluster(google::cloud::edgecontainer::v1::GetClusterRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetCluster(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::edgecontainer::v1::GetClusterRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::edgecontainer::v1::GetClusterRequest const& request) {
         return stub_->GetCluster(context, options, request);
       },
       *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::edgecontainer::v1::Cluster>>
-EdgeContainerConnectionImpl::CreateCluster(
-    google::cloud::edgecontainer::v1::CreateClusterRequest const& request) {
+EdgeContainerConnectionImpl::CreateCluster(google::cloud::edgecontainer::v1::CreateClusterRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->CreateCluster(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<
-      google::cloud::edgecontainer::v1::Cluster>(
-      background_->cq(), current, std::move(request_copy),
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::edgecontainer::v1::CreateClusterRequest const&
-              request) {
-        return stub->AsyncCreateCluster(cq, std::move(context),
-                                        std::move(options), request);
-      },
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::edgecontainer::v1::Cluster>,
-      retry_policy(*current), backoff_policy(*current), idempotent,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::edgecontainer::v1::Cluster>(
+    background_->cq(), current, std::move(request_copy),
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::cloud::edgecontainer::v1::CreateClusterRequest const& request) {
+     return stub->AsyncCreateCluster(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::edgecontainer::v1::Cluster>,
+    retry_policy(*current), backoff_policy(*current), idempotent,
+    polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 EdgeContainerConnectionImpl::CreateCluster(
-    NoAwaitTag,
-    google::cloud::edgecontainer::v1::CreateClusterRequest const& request) {
+      NoAwaitTag, google::cloud::edgecontainer::v1::CreateClusterRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateCluster(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::edgecontainer::v1::CreateClusterRequest const&
-                 request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::edgecontainer::v1::CreateClusterRequest const& request) {
         return stub_->CreateCluster(context, options, request);
       },
       *current, request, __func__);
@@ -174,93 +155,78 @@ EdgeContainerConnectionImpl::CreateCluster(
 
 future<StatusOr<google::cloud::edgecontainer::v1::Cluster>>
 EdgeContainerConnectionImpl::CreateCluster(
-    google::longrunning::Operation const& operation) {
+      google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata()
-           .Is<typename google::cloud::edgecontainer::v1::
-                   OperationMetadata>()) {
-    return make_ready_future<
-        StatusOr<google::cloud::edgecontainer::v1::Cluster>>(
-        internal::InvalidArgumentError(
-            "operation does not correspond to CreateCluster",
-            GCP_ERROR_INFO().WithMetadata("operation",
-                                          operation.metadata().DebugString())));
+  if (!operation.metadata().Is<typename google::cloud::edgecontainer::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::edgecontainer::v1::Cluster>>(
+        internal::InvalidArgumentError("operation does not correspond to CreateCluster",
+                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<
-      google::cloud::edgecontainer::v1::Cluster>(
-      background_->cq(), current, operation,
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::edgecontainer::v1::Cluster>,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::edgecontainer::v1::Cluster>(
+    background_->cq(), current, operation,
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::edgecontainer::v1::Cluster>,
+    polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::edgecontainer::v1::Cluster>>
-EdgeContainerConnectionImpl::UpdateCluster(
-    google::cloud::edgecontainer::v1::UpdateClusterRequest const& request) {
+EdgeContainerConnectionImpl::UpdateCluster(google::cloud::edgecontainer::v1::UpdateClusterRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->UpdateCluster(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<
-      google::cloud::edgecontainer::v1::Cluster>(
-      background_->cq(), current, std::move(request_copy),
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::edgecontainer::v1::UpdateClusterRequest const&
-              request) {
-        return stub->AsyncUpdateCluster(cq, std::move(context),
-                                        std::move(options), request);
-      },
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::edgecontainer::v1::Cluster>,
-      retry_policy(*current), backoff_policy(*current), idempotent,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::edgecontainer::v1::Cluster>(
+    background_->cq(), current, std::move(request_copy),
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::cloud::edgecontainer::v1::UpdateClusterRequest const& request) {
+     return stub->AsyncUpdateCluster(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::edgecontainer::v1::Cluster>,
+    retry_policy(*current), backoff_policy(*current), idempotent,
+    polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 EdgeContainerConnectionImpl::UpdateCluster(
-    NoAwaitTag,
-    google::cloud::edgecontainer::v1::UpdateClusterRequest const& request) {
+      NoAwaitTag, google::cloud::edgecontainer::v1::UpdateClusterRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateCluster(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::edgecontainer::v1::UpdateClusterRequest const&
-                 request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::edgecontainer::v1::UpdateClusterRequest const& request) {
         return stub_->UpdateCluster(context, options, request);
       },
       *current, request, __func__);
@@ -268,93 +234,78 @@ EdgeContainerConnectionImpl::UpdateCluster(
 
 future<StatusOr<google::cloud::edgecontainer::v1::Cluster>>
 EdgeContainerConnectionImpl::UpdateCluster(
-    google::longrunning::Operation const& operation) {
+      google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata()
-           .Is<typename google::cloud::edgecontainer::v1::
-                   OperationMetadata>()) {
-    return make_ready_future<
-        StatusOr<google::cloud::edgecontainer::v1::Cluster>>(
-        internal::InvalidArgumentError(
-            "operation does not correspond to UpdateCluster",
-            GCP_ERROR_INFO().WithMetadata("operation",
-                                          operation.metadata().DebugString())));
+  if (!operation.metadata().Is<typename google::cloud::edgecontainer::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::edgecontainer::v1::Cluster>>(
+        internal::InvalidArgumentError("operation does not correspond to UpdateCluster",
+                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<
-      google::cloud::edgecontainer::v1::Cluster>(
-      background_->cq(), current, operation,
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::edgecontainer::v1::Cluster>,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::edgecontainer::v1::Cluster>(
+    background_->cq(), current, operation,
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::edgecontainer::v1::Cluster>,
+    polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::edgecontainer::v1::Cluster>>
-EdgeContainerConnectionImpl::UpgradeCluster(
-    google::cloud::edgecontainer::v1::UpgradeClusterRequest const& request) {
+EdgeContainerConnectionImpl::UpgradeCluster(google::cloud::edgecontainer::v1::UpgradeClusterRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->UpgradeCluster(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<
-      google::cloud::edgecontainer::v1::Cluster>(
-      background_->cq(), current, std::move(request_copy),
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::edgecontainer::v1::UpgradeClusterRequest const&
-              request) {
-        return stub->AsyncUpgradeCluster(cq, std::move(context),
-                                         std::move(options), request);
-      },
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::edgecontainer::v1::Cluster>,
-      retry_policy(*current), backoff_policy(*current), idempotent,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::edgecontainer::v1::Cluster>(
+    background_->cq(), current, std::move(request_copy),
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::cloud::edgecontainer::v1::UpgradeClusterRequest const& request) {
+     return stub->AsyncUpgradeCluster(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::edgecontainer::v1::Cluster>,
+    retry_policy(*current), backoff_policy(*current), idempotent,
+    polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 EdgeContainerConnectionImpl::UpgradeCluster(
-    NoAwaitTag,
-    google::cloud::edgecontainer::v1::UpgradeClusterRequest const& request) {
+      NoAwaitTag, google::cloud::edgecontainer::v1::UpgradeClusterRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpgradeCluster(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::edgecontainer::v1::UpgradeClusterRequest const&
-                 request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::edgecontainer::v1::UpgradeClusterRequest const& request) {
         return stub_->UpgradeCluster(context, options, request);
       },
       *current, request, __func__);
@@ -362,93 +313,78 @@ EdgeContainerConnectionImpl::UpgradeCluster(
 
 future<StatusOr<google::cloud::edgecontainer::v1::Cluster>>
 EdgeContainerConnectionImpl::UpgradeCluster(
-    google::longrunning::Operation const& operation) {
+      google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata()
-           .Is<typename google::cloud::edgecontainer::v1::
-                   OperationMetadata>()) {
-    return make_ready_future<
-        StatusOr<google::cloud::edgecontainer::v1::Cluster>>(
-        internal::InvalidArgumentError(
-            "operation does not correspond to UpgradeCluster",
-            GCP_ERROR_INFO().WithMetadata("operation",
-                                          operation.metadata().DebugString())));
+  if (!operation.metadata().Is<typename google::cloud::edgecontainer::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::edgecontainer::v1::Cluster>>(
+        internal::InvalidArgumentError("operation does not correspond to UpgradeCluster",
+                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<
-      google::cloud::edgecontainer::v1::Cluster>(
-      background_->cq(), current, operation,
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::edgecontainer::v1::Cluster>,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::edgecontainer::v1::Cluster>(
+    background_->cq(), current, operation,
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::edgecontainer::v1::Cluster>,
+    polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::edgecontainer::v1::OperationMetadata>>
-EdgeContainerConnectionImpl::DeleteCluster(
-    google::cloud::edgecontainer::v1::DeleteClusterRequest const& request) {
+EdgeContainerConnectionImpl::DeleteCluster(google::cloud::edgecontainer::v1::DeleteClusterRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->DeleteCluster(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<
-      google::cloud::edgecontainer::v1::OperationMetadata>(
-      background_->cq(), current, std::move(request_copy),
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::edgecontainer::v1::DeleteClusterRequest const&
-              request) {
-        return stub->AsyncDeleteCluster(cq, std::move(context),
-                                        std::move(options), request);
-      },
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultMetadata<
-          google::cloud::edgecontainer::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current), idempotent,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::edgecontainer::v1::OperationMetadata>(
+    background_->cq(), current, std::move(request_copy),
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::cloud::edgecontainer::v1::DeleteClusterRequest const& request) {
+     return stub->AsyncDeleteCluster(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultMetadata<google::cloud::edgecontainer::v1::OperationMetadata>,
+    retry_policy(*current), backoff_policy(*current), idempotent,
+    polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 EdgeContainerConnectionImpl::DeleteCluster(
-    NoAwaitTag,
-    google::cloud::edgecontainer::v1::DeleteClusterRequest const& request) {
+      NoAwaitTag, google::cloud::edgecontainer::v1::DeleteClusterRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteCluster(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::edgecontainer::v1::DeleteClusterRequest const&
-                 request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::edgecontainer::v1::DeleteClusterRequest const& request) {
         return stub_->DeleteCluster(context, options, request);
       },
       *current, request, __func__);
@@ -456,102 +392,82 @@ EdgeContainerConnectionImpl::DeleteCluster(
 
 future<StatusOr<google::cloud::edgecontainer::v1::OperationMetadata>>
 EdgeContainerConnectionImpl::DeleteCluster(
-    google::longrunning::Operation const& operation) {
+      google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata()
-           .Is<typename google::cloud::edgecontainer::v1::
-                   OperationMetadata>()) {
-    return make_ready_future<
-        StatusOr<google::cloud::edgecontainer::v1::OperationMetadata>>(
-        internal::InvalidArgumentError(
-            "operation does not correspond to DeleteCluster",
-            GCP_ERROR_INFO().WithMetadata("operation",
-                                          operation.metadata().DebugString())));
+  if (!operation.metadata().Is<typename google::cloud::edgecontainer::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::edgecontainer::v1::OperationMetadata>>(
+        internal::InvalidArgumentError("operation does not correspond to DeleteCluster",
+                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<
-      google::cloud::edgecontainer::v1::OperationMetadata>(
-      background_->cq(), current, operation,
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultMetadata<
-          google::cloud::edgecontainer::v1::OperationMetadata>,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::edgecontainer::v1::OperationMetadata>(
+    background_->cq(), current, operation,
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultMetadata<google::cloud::edgecontainer::v1::OperationMetadata>,
+    polling_policy(*current), __func__);
 }
 
 StatusOr<google::cloud::edgecontainer::v1::GenerateAccessTokenResponse>
-EdgeContainerConnectionImpl::GenerateAccessToken(
-    google::cloud::edgecontainer::v1::GenerateAccessTokenRequest const&
-        request) {
+EdgeContainerConnectionImpl::GenerateAccessToken(google::cloud::edgecontainer::v1::GenerateAccessTokenRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GenerateAccessToken(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::edgecontainer::v1::GenerateAccessTokenRequest const&
-                 request) {
+             google::cloud::edgecontainer::v1::GenerateAccessTokenRequest const& request) {
         return stub_->GenerateAccessToken(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::edgecontainer::v1::GenerateOfflineCredentialResponse>
-EdgeContainerConnectionImpl::GenerateOfflineCredential(
-    google::cloud::edgecontainer::v1::GenerateOfflineCredentialRequest const&
-        request) {
+EdgeContainerConnectionImpl::GenerateOfflineCredential(google::cloud::edgecontainer::v1::GenerateOfflineCredentialRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GenerateOfflineCredential(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::edgecontainer::v1::
-                 GenerateOfflineCredentialRequest const& request) {
+             google::cloud::edgecontainer::v1::GenerateOfflineCredentialRequest const& request) {
         return stub_->GenerateOfflineCredential(context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::cloud::edgecontainer::v1::NodePool>
-EdgeContainerConnectionImpl::ListNodePools(
-    google::cloud::edgecontainer::v1::ListNodePoolsRequest request) {
+EdgeContainerConnectionImpl::ListNodePools(google::cloud::edgecontainer::v1::ListNodePoolsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListNodePools(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::edgecontainer::v1::NodePool>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::edgecontainer::v1::NodePool>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<edgecontainer_v1::EdgeContainerRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<edgecontainer_v1::EdgeContainerRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::edgecontainer::v1::ListNodePoolsRequest const& r) {
+          Options const& options, google::cloud::edgecontainer::v1::ListNodePoolsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::edgecontainer::v1::ListNodePoolsRequest const&
-                       request) {
+                   google::cloud::edgecontainer::v1::ListNodePoolsRequest const& request) {
               return stub->ListNodePools(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::edgecontainer::v1::ListNodePoolsResponse r) {
-        std::vector<google::cloud::edgecontainer::v1::NodePool> result(
-            r.node_pools().size());
+        std::vector<google::cloud::edgecontainer::v1::NodePool> result(r.node_pools().size());
         auto& messages = *r.mutable_node_pools();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -559,71 +475,62 @@ EdgeContainerConnectionImpl::ListNodePools(
 }
 
 StatusOr<google::cloud::edgecontainer::v1::NodePool>
-EdgeContainerConnectionImpl::GetNodePool(
-    google::cloud::edgecontainer::v1::GetNodePoolRequest const& request) {
+EdgeContainerConnectionImpl::GetNodePool(google::cloud::edgecontainer::v1::GetNodePoolRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetNodePool(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::edgecontainer::v1::GetNodePoolRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::edgecontainer::v1::GetNodePoolRequest const& request) {
         return stub_->GetNodePool(context, options, request);
       },
       *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::edgecontainer::v1::NodePool>>
-EdgeContainerConnectionImpl::CreateNodePool(
-    google::cloud::edgecontainer::v1::CreateNodePoolRequest const& request) {
+EdgeContainerConnectionImpl::CreateNodePool(google::cloud::edgecontainer::v1::CreateNodePoolRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->CreateNodePool(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<
-      google::cloud::edgecontainer::v1::NodePool>(
-      background_->cq(), current, std::move(request_copy),
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::edgecontainer::v1::CreateNodePoolRequest const&
-              request) {
-        return stub->AsyncCreateNodePool(cq, std::move(context),
-                                         std::move(options), request);
-      },
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::edgecontainer::v1::NodePool>,
-      retry_policy(*current), backoff_policy(*current), idempotent,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::edgecontainer::v1::NodePool>(
+    background_->cq(), current, std::move(request_copy),
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::cloud::edgecontainer::v1::CreateNodePoolRequest const& request) {
+     return stub->AsyncCreateNodePool(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::edgecontainer::v1::NodePool>,
+    retry_policy(*current), backoff_policy(*current), idempotent,
+    polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 EdgeContainerConnectionImpl::CreateNodePool(
-    NoAwaitTag,
-    google::cloud::edgecontainer::v1::CreateNodePoolRequest const& request) {
+      NoAwaitTag, google::cloud::edgecontainer::v1::CreateNodePoolRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateNodePool(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::edgecontainer::v1::CreateNodePoolRequest const&
-                 request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::edgecontainer::v1::CreateNodePoolRequest const& request) {
         return stub_->CreateNodePool(context, options, request);
       },
       *current, request, __func__);
@@ -631,93 +538,78 @@ EdgeContainerConnectionImpl::CreateNodePool(
 
 future<StatusOr<google::cloud::edgecontainer::v1::NodePool>>
 EdgeContainerConnectionImpl::CreateNodePool(
-    google::longrunning::Operation const& operation) {
+      google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata()
-           .Is<typename google::cloud::edgecontainer::v1::
-                   OperationMetadata>()) {
-    return make_ready_future<
-        StatusOr<google::cloud::edgecontainer::v1::NodePool>>(
-        internal::InvalidArgumentError(
-            "operation does not correspond to CreateNodePool",
-            GCP_ERROR_INFO().WithMetadata("operation",
-                                          operation.metadata().DebugString())));
+  if (!operation.metadata().Is<typename google::cloud::edgecontainer::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::edgecontainer::v1::NodePool>>(
+        internal::InvalidArgumentError("operation does not correspond to CreateNodePool",
+                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<
-      google::cloud::edgecontainer::v1::NodePool>(
-      background_->cq(), current, operation,
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::edgecontainer::v1::NodePool>,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::edgecontainer::v1::NodePool>(
+    background_->cq(), current, operation,
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::edgecontainer::v1::NodePool>,
+    polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::edgecontainer::v1::NodePool>>
-EdgeContainerConnectionImpl::UpdateNodePool(
-    google::cloud::edgecontainer::v1::UpdateNodePoolRequest const& request) {
+EdgeContainerConnectionImpl::UpdateNodePool(google::cloud::edgecontainer::v1::UpdateNodePoolRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->UpdateNodePool(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<
-      google::cloud::edgecontainer::v1::NodePool>(
-      background_->cq(), current, std::move(request_copy),
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::edgecontainer::v1::UpdateNodePoolRequest const&
-              request) {
-        return stub->AsyncUpdateNodePool(cq, std::move(context),
-                                         std::move(options), request);
-      },
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::edgecontainer::v1::NodePool>,
-      retry_policy(*current), backoff_policy(*current), idempotent,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::edgecontainer::v1::NodePool>(
+    background_->cq(), current, std::move(request_copy),
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::cloud::edgecontainer::v1::UpdateNodePoolRequest const& request) {
+     return stub->AsyncUpdateNodePool(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::edgecontainer::v1::NodePool>,
+    retry_policy(*current), backoff_policy(*current), idempotent,
+    polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 EdgeContainerConnectionImpl::UpdateNodePool(
-    NoAwaitTag,
-    google::cloud::edgecontainer::v1::UpdateNodePoolRequest const& request) {
+      NoAwaitTag, google::cloud::edgecontainer::v1::UpdateNodePoolRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateNodePool(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::edgecontainer::v1::UpdateNodePoolRequest const&
-                 request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::edgecontainer::v1::UpdateNodePoolRequest const& request) {
         return stub_->UpdateNodePool(context, options, request);
       },
       *current, request, __func__);
@@ -725,93 +617,78 @@ EdgeContainerConnectionImpl::UpdateNodePool(
 
 future<StatusOr<google::cloud::edgecontainer::v1::NodePool>>
 EdgeContainerConnectionImpl::UpdateNodePool(
-    google::longrunning::Operation const& operation) {
+      google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata()
-           .Is<typename google::cloud::edgecontainer::v1::
-                   OperationMetadata>()) {
-    return make_ready_future<
-        StatusOr<google::cloud::edgecontainer::v1::NodePool>>(
-        internal::InvalidArgumentError(
-            "operation does not correspond to UpdateNodePool",
-            GCP_ERROR_INFO().WithMetadata("operation",
-                                          operation.metadata().DebugString())));
+  if (!operation.metadata().Is<typename google::cloud::edgecontainer::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::edgecontainer::v1::NodePool>>(
+        internal::InvalidArgumentError("operation does not correspond to UpdateNodePool",
+                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<
-      google::cloud::edgecontainer::v1::NodePool>(
-      background_->cq(), current, operation,
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::edgecontainer::v1::NodePool>,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::edgecontainer::v1::NodePool>(
+    background_->cq(), current, operation,
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::edgecontainer::v1::NodePool>,
+    polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::edgecontainer::v1::OperationMetadata>>
-EdgeContainerConnectionImpl::DeleteNodePool(
-    google::cloud::edgecontainer::v1::DeleteNodePoolRequest const& request) {
+EdgeContainerConnectionImpl::DeleteNodePool(google::cloud::edgecontainer::v1::DeleteNodePoolRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->DeleteNodePool(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<
-      google::cloud::edgecontainer::v1::OperationMetadata>(
-      background_->cq(), current, std::move(request_copy),
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::edgecontainer::v1::DeleteNodePoolRequest const&
-              request) {
-        return stub->AsyncDeleteNodePool(cq, std::move(context),
-                                         std::move(options), request);
-      },
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultMetadata<
-          google::cloud::edgecontainer::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current), idempotent,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::edgecontainer::v1::OperationMetadata>(
+    background_->cq(), current, std::move(request_copy),
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::cloud::edgecontainer::v1::DeleteNodePoolRequest const& request) {
+     return stub->AsyncDeleteNodePool(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultMetadata<google::cloud::edgecontainer::v1::OperationMetadata>,
+    retry_policy(*current), backoff_policy(*current), idempotent,
+    polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 EdgeContainerConnectionImpl::DeleteNodePool(
-    NoAwaitTag,
-    google::cloud::edgecontainer::v1::DeleteNodePoolRequest const& request) {
+      NoAwaitTag, google::cloud::edgecontainer::v1::DeleteNodePoolRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteNodePool(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::edgecontainer::v1::DeleteNodePoolRequest const&
-                 request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::edgecontainer::v1::DeleteNodePoolRequest const& request) {
         return stub_->DeleteNodePool(context, options, request);
       },
       *current, request, __func__);
@@ -819,70 +696,56 @@ EdgeContainerConnectionImpl::DeleteNodePool(
 
 future<StatusOr<google::cloud::edgecontainer::v1::OperationMetadata>>
 EdgeContainerConnectionImpl::DeleteNodePool(
-    google::longrunning::Operation const& operation) {
+      google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata()
-           .Is<typename google::cloud::edgecontainer::v1::
-                   OperationMetadata>()) {
-    return make_ready_future<
-        StatusOr<google::cloud::edgecontainer::v1::OperationMetadata>>(
-        internal::InvalidArgumentError(
-            "operation does not correspond to DeleteNodePool",
-            GCP_ERROR_INFO().WithMetadata("operation",
-                                          operation.metadata().DebugString())));
+  if (!operation.metadata().Is<typename google::cloud::edgecontainer::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::edgecontainer::v1::OperationMetadata>>(
+        internal::InvalidArgumentError("operation does not correspond to DeleteNodePool",
+                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<
-      google::cloud::edgecontainer::v1::OperationMetadata>(
-      background_->cq(), current, operation,
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultMetadata<
-          google::cloud::edgecontainer::v1::OperationMetadata>,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::edgecontainer::v1::OperationMetadata>(
+    background_->cq(), current, operation,
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultMetadata<google::cloud::edgecontainer::v1::OperationMetadata>,
+    polling_policy(*current), __func__);
 }
 
 StreamRange<google::cloud::edgecontainer::v1::Machine>
-EdgeContainerConnectionImpl::ListMachines(
-    google::cloud::edgecontainer::v1::ListMachinesRequest request) {
+EdgeContainerConnectionImpl::ListMachines(google::cloud::edgecontainer::v1::ListMachinesRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListMachines(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::edgecontainer::v1::Machine>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::edgecontainer::v1::Machine>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<edgecontainer_v1::EdgeContainerRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<edgecontainer_v1::EdgeContainerRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::edgecontainer::v1::ListMachinesRequest const& r) {
+          Options const& options, google::cloud::edgecontainer::v1::ListMachinesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::edgecontainer::v1::ListMachinesRequest const&
-                       request) {
+                   google::cloud::edgecontainer::v1::ListMachinesRequest const& request) {
               return stub->ListMachines(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::edgecontainer::v1::ListMachinesResponse r) {
-        std::vector<google::cloud::edgecontainer::v1::Machine> result(
-            r.machines().size());
+        std::vector<google::cloud::edgecontainer::v1::Machine> result(r.machines().size());
         auto& messages = *r.mutable_machines();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -890,49 +753,40 @@ EdgeContainerConnectionImpl::ListMachines(
 }
 
 StatusOr<google::cloud::edgecontainer::v1::Machine>
-EdgeContainerConnectionImpl::GetMachine(
-    google::cloud::edgecontainer::v1::GetMachineRequest const& request) {
+EdgeContainerConnectionImpl::GetMachine(google::cloud::edgecontainer::v1::GetMachineRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetMachine(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::edgecontainer::v1::GetMachineRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::edgecontainer::v1::GetMachineRequest const& request) {
         return stub_->GetMachine(context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::cloud::edgecontainer::v1::VpnConnection>
-EdgeContainerConnectionImpl::ListVpnConnections(
-    google::cloud::edgecontainer::v1::ListVpnConnectionsRequest request) {
+EdgeContainerConnectionImpl::ListVpnConnections(google::cloud::edgecontainer::v1::ListVpnConnectionsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListVpnConnections(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::edgecontainer::v1::VpnConnection>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::edgecontainer::v1::VpnConnection>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<edgecontainer_v1::EdgeContainerRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<edgecontainer_v1::EdgeContainerRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::edgecontainer::v1::ListVpnConnectionsRequest const&
-              r) {
+          Options const& options, google::cloud::edgecontainer::v1::ListVpnConnectionsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::edgecontainer::v1::
-                       ListVpnConnectionsRequest const& request) {
+                   google::cloud::edgecontainer::v1::ListVpnConnectionsRequest const& request) {
               return stub->ListVpnConnections(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::edgecontainer::v1::ListVpnConnectionsResponse r) {
-        std::vector<google::cloud::edgecontainer::v1::VpnConnection> result(
-            r.vpn_connections().size());
+        std::vector<google::cloud::edgecontainer::v1::VpnConnection> result(r.vpn_connections().size());
         auto& messages = *r.mutable_vpn_connections();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -940,73 +794,62 @@ EdgeContainerConnectionImpl::ListVpnConnections(
 }
 
 StatusOr<google::cloud::edgecontainer::v1::VpnConnection>
-EdgeContainerConnectionImpl::GetVpnConnection(
-    google::cloud::edgecontainer::v1::GetVpnConnectionRequest const& request) {
+EdgeContainerConnectionImpl::GetVpnConnection(google::cloud::edgecontainer::v1::GetVpnConnectionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetVpnConnection(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::edgecontainer::v1::GetVpnConnectionRequest const&
-                 request) {
+             google::cloud::edgecontainer::v1::GetVpnConnectionRequest const& request) {
         return stub_->GetVpnConnection(context, options, request);
       },
       *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::edgecontainer::v1::VpnConnection>>
-EdgeContainerConnectionImpl::CreateVpnConnection(
-    google::cloud::edgecontainer::v1::CreateVpnConnectionRequest const&
-        request) {
+EdgeContainerConnectionImpl::CreateVpnConnection(google::cloud::edgecontainer::v1::CreateVpnConnectionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->CreateVpnConnection(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<
-      google::cloud::edgecontainer::v1::VpnConnection>(
-      background_->cq(), current, std::move(request_copy),
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::edgecontainer::v1::CreateVpnConnectionRequest const&
-              request) {
-        return stub->AsyncCreateVpnConnection(cq, std::move(context),
-                                              std::move(options), request);
-      },
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::edgecontainer::v1::VpnConnection>,
-      retry_policy(*current), backoff_policy(*current), idempotent,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::edgecontainer::v1::VpnConnection>(
+    background_->cq(), current, std::move(request_copy),
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::cloud::edgecontainer::v1::CreateVpnConnectionRequest const& request) {
+     return stub->AsyncCreateVpnConnection(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::edgecontainer::v1::VpnConnection>,
+    retry_policy(*current), backoff_policy(*current), idempotent,
+    polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 EdgeContainerConnectionImpl::CreateVpnConnection(
-    NoAwaitTag,
-    google::cloud::edgecontainer::v1::CreateVpnConnectionRequest const&
-        request) {
+      NoAwaitTag, google::cloud::edgecontainer::v1::CreateVpnConnectionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateVpnConnection(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::edgecontainer::v1::CreateVpnConnectionRequest const&
-                 request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::edgecontainer::v1::CreateVpnConnectionRequest const& request) {
         return stub_->CreateVpnConnection(context, options, request);
       },
       *current, request, __func__);
@@ -1014,95 +857,78 @@ EdgeContainerConnectionImpl::CreateVpnConnection(
 
 future<StatusOr<google::cloud::edgecontainer::v1::VpnConnection>>
 EdgeContainerConnectionImpl::CreateVpnConnection(
-    google::longrunning::Operation const& operation) {
+      google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata()
-           .Is<typename google::cloud::edgecontainer::v1::
-                   OperationMetadata>()) {
-    return make_ready_future<
-        StatusOr<google::cloud::edgecontainer::v1::VpnConnection>>(
-        internal::InvalidArgumentError(
-            "operation does not correspond to CreateVpnConnection",
-            GCP_ERROR_INFO().WithMetadata("operation",
-                                          operation.metadata().DebugString())));
+  if (!operation.metadata().Is<typename google::cloud::edgecontainer::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::edgecontainer::v1::VpnConnection>>(
+        internal::InvalidArgumentError("operation does not correspond to CreateVpnConnection",
+                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<
-      google::cloud::edgecontainer::v1::VpnConnection>(
-      background_->cq(), current, operation,
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::edgecontainer::v1::VpnConnection>,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::edgecontainer::v1::VpnConnection>(
+    background_->cq(), current, operation,
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::edgecontainer::v1::VpnConnection>,
+    polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::edgecontainer::v1::OperationMetadata>>
-EdgeContainerConnectionImpl::DeleteVpnConnection(
-    google::cloud::edgecontainer::v1::DeleteVpnConnectionRequest const&
-        request) {
+EdgeContainerConnectionImpl::DeleteVpnConnection(google::cloud::edgecontainer::v1::DeleteVpnConnectionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->DeleteVpnConnection(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<
-      google::cloud::edgecontainer::v1::OperationMetadata>(
-      background_->cq(), current, std::move(request_copy),
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::edgecontainer::v1::DeleteVpnConnectionRequest const&
-              request) {
-        return stub->AsyncDeleteVpnConnection(cq, std::move(context),
-                                              std::move(options), request);
-      },
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultMetadata<
-          google::cloud::edgecontainer::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current), idempotent,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::edgecontainer::v1::OperationMetadata>(
+    background_->cq(), current, std::move(request_copy),
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::cloud::edgecontainer::v1::DeleteVpnConnectionRequest const& request) {
+     return stub->AsyncDeleteVpnConnection(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultMetadata<google::cloud::edgecontainer::v1::OperationMetadata>,
+    retry_policy(*current), backoff_policy(*current), idempotent,
+    polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 EdgeContainerConnectionImpl::DeleteVpnConnection(
-    NoAwaitTag,
-    google::cloud::edgecontainer::v1::DeleteVpnConnectionRequest const&
-        request) {
+      NoAwaitTag, google::cloud::edgecontainer::v1::DeleteVpnConnectionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteVpnConnection(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::edgecontainer::v1::DeleteVpnConnectionRequest const&
-                 request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::edgecontainer::v1::DeleteVpnConnectionRequest const& request) {
         return stub_->DeleteVpnConnection(context, options, request);
       },
       *current, request, __func__);
@@ -1110,85 +936,69 @@ EdgeContainerConnectionImpl::DeleteVpnConnection(
 
 future<StatusOr<google::cloud::edgecontainer::v1::OperationMetadata>>
 EdgeContainerConnectionImpl::DeleteVpnConnection(
-    google::longrunning::Operation const& operation) {
+      google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata()
-           .Is<typename google::cloud::edgecontainer::v1::
-                   OperationMetadata>()) {
-    return make_ready_future<
-        StatusOr<google::cloud::edgecontainer::v1::OperationMetadata>>(
-        internal::InvalidArgumentError(
-            "operation does not correspond to DeleteVpnConnection",
-            GCP_ERROR_INFO().WithMetadata("operation",
-                                          operation.metadata().DebugString())));
+  if (!operation.metadata().Is<typename google::cloud::edgecontainer::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::edgecontainer::v1::OperationMetadata>>(
+        internal::InvalidArgumentError("operation does not correspond to DeleteVpnConnection",
+                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<
-      google::cloud::edgecontainer::v1::OperationMetadata>(
-      background_->cq(), current, operation,
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultMetadata<
-          google::cloud::edgecontainer::v1::OperationMetadata>,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::edgecontainer::v1::OperationMetadata>(
+    background_->cq(), current, operation,
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultMetadata<google::cloud::edgecontainer::v1::OperationMetadata>,
+    polling_policy(*current), __func__);
 }
 
 StatusOr<google::cloud::edgecontainer::v1::ServerConfig>
-EdgeContainerConnectionImpl::GetServerConfig(
-    google::cloud::edgecontainer::v1::GetServerConfigRequest const& request) {
+EdgeContainerConnectionImpl::GetServerConfig(google::cloud::edgecontainer::v1::GetServerConfigRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetServerConfig(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::edgecontainer::v1::GetServerConfigRequest const&
-                 request) {
+             google::cloud::edgecontainer::v1::GetServerConfigRequest const& request) {
         return stub_->GetServerConfig(context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::cloud::location::Location>
-EdgeContainerConnectionImpl::ListLocations(
-    google::cloud::location::ListLocationsRequest request) {
+EdgeContainerConnectionImpl::ListLocations(google::cloud::location::ListLocationsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListLocations(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::location::Location>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::location::Location>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<edgecontainer_v1::EdgeContainerRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<edgecontainer_v1::EdgeContainerRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::location::ListLocationsRequest const& r) {
+          Options const& options, google::cloud::location::ListLocationsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](
-                grpc::ClientContext& context, Options const& options,
-                google::cloud::location::ListLocationsRequest const& request) {
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::cloud::location::ListLocationsRequest const& request) {
               return stub->ListLocations(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::location::ListLocationsResponse r) {
-        std::vector<google::cloud::location::Location> result(
-            r.locations().size());
+        std::vector<google::cloud::location::Location> result(r.locations().size());
         auto& messages = *r.mutable_locations();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -1196,8 +1006,7 @@ EdgeContainerConnectionImpl::ListLocations(
 }
 
 StatusOr<google::cloud::location::Location>
-EdgeContainerConnectionImpl::GetLocation(
-    google::cloud::location::GetLocationRequest const& request) {
+EdgeContainerConnectionImpl::GetLocation(google::cloud::location::GetLocationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -1210,21 +1019,17 @@ EdgeContainerConnectionImpl::GetLocation(
 }
 
 StreamRange<google::longrunning::Operation>
-EdgeContainerConnectionImpl::ListOperations(
-    google::longrunning::ListOperationsRequest request) {
+EdgeContainerConnectionImpl::ListOperations(google::longrunning::ListOperationsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListOperations(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::longrunning::Operation>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::longrunning::Operation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<edgecontainer_v1::EdgeContainerRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<edgecontainer_v1::EdgeContainerRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::longrunning::ListOperationsRequest const& r) {
+          Options const& options, google::longrunning::ListOperationsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
@@ -1234,8 +1039,7 @@ EdgeContainerConnectionImpl::ListOperations(
             options, r, function_name);
       },
       [](google::longrunning::ListOperationsResponse r) {
-        std::vector<google::longrunning::Operation> result(
-            r.operations().size());
+        std::vector<google::longrunning::Operation> result(r.operations().size());
         auto& messages = *r.mutable_operations();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -1243,8 +1047,7 @@ EdgeContainerConnectionImpl::ListOperations(
 }
 
 StatusOr<google::longrunning::Operation>
-EdgeContainerConnectionImpl::GetOperation(
-    google::longrunning::GetOperationRequest const& request) {
+EdgeContainerConnectionImpl::GetOperation(google::longrunning::GetOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -1256,8 +1059,8 @@ EdgeContainerConnectionImpl::GetOperation(
       *current, request, __func__);
 }
 
-Status EdgeContainerConnectionImpl::DeleteOperation(
-    google::longrunning::DeleteOperationRequest const& request) {
+Status
+EdgeContainerConnectionImpl::DeleteOperation(google::longrunning::DeleteOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -1269,8 +1072,8 @@ Status EdgeContainerConnectionImpl::DeleteOperation(
       *current, request, __func__);
 }
 
-Status EdgeContainerConnectionImpl::CancelOperation(
-    google::longrunning::CancelOperationRequest const& request) {
+Status
+EdgeContainerConnectionImpl::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),

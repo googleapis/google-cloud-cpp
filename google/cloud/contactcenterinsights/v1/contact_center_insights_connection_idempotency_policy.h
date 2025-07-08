@@ -35,312 +35,242 @@ class ContactCenterInsightsConnectionIdempotencyPolicy {
   virtual ~ContactCenterInsightsConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<ContactCenterInsightsConnectionIdempotencyPolicy>
-  clone() const;
+  virtual std::unique_ptr<ContactCenterInsightsConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency CreateConversation(
-      google::cloud::contactcenterinsights::v1::CreateConversationRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  CreateConversation(google::cloud::contactcenterinsights::v1::CreateConversationRequest const& request);
 
-  virtual google::cloud::Idempotency UploadConversation(
-      google::cloud::contactcenterinsights::v1::UploadConversationRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  UploadConversation(google::cloud::contactcenterinsights::v1::UploadConversationRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateConversation(
-      google::cloud::contactcenterinsights::v1::UpdateConversationRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  UpdateConversation(google::cloud::contactcenterinsights::v1::UpdateConversationRequest const& request);
 
-  virtual google::cloud::Idempotency GetConversation(
-      google::cloud::contactcenterinsights::v1::GetConversationRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  GetConversation(google::cloud::contactcenterinsights::v1::GetConversationRequest const& request);
 
-  virtual google::cloud::Idempotency ListConversations(
-      google::cloud::contactcenterinsights::v1::ListConversationsRequest
-          request);
+  virtual google::cloud::Idempotency
+  ListConversations(google::cloud::contactcenterinsights::v1::ListConversationsRequest request);
 
-  virtual google::cloud::Idempotency DeleteConversation(
-      google::cloud::contactcenterinsights::v1::DeleteConversationRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  DeleteConversation(google::cloud::contactcenterinsights::v1::DeleteConversationRequest const& request);
 
-  virtual google::cloud::Idempotency CreateAnalysis(
-      google::cloud::contactcenterinsights::v1::CreateAnalysisRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  CreateAnalysis(google::cloud::contactcenterinsights::v1::CreateAnalysisRequest const& request);
 
-  virtual google::cloud::Idempotency GetAnalysis(
-      google::cloud::contactcenterinsights::v1::GetAnalysisRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  GetAnalysis(google::cloud::contactcenterinsights::v1::GetAnalysisRequest const& request);
 
-  virtual google::cloud::Idempotency ListAnalyses(
-      google::cloud::contactcenterinsights::v1::ListAnalysesRequest request);
+  virtual google::cloud::Idempotency
+  ListAnalyses(google::cloud::contactcenterinsights::v1::ListAnalysesRequest request);
 
-  virtual google::cloud::Idempotency DeleteAnalysis(
-      google::cloud::contactcenterinsights::v1::DeleteAnalysisRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  DeleteAnalysis(google::cloud::contactcenterinsights::v1::DeleteAnalysisRequest const& request);
 
-  virtual google::cloud::Idempotency BulkAnalyzeConversations(
-      google::cloud::contactcenterinsights::v1::
-          BulkAnalyzeConversationsRequest const& request);
+  virtual google::cloud::Idempotency
+  BulkAnalyzeConversations(google::cloud::contactcenterinsights::v1::BulkAnalyzeConversationsRequest const& request);
 
-  virtual google::cloud::Idempotency BulkDeleteConversations(
-      google::cloud::contactcenterinsights::v1::
-          BulkDeleteConversationsRequest const& request);
+  virtual google::cloud::Idempotency
+  BulkDeleteConversations(google::cloud::contactcenterinsights::v1::BulkDeleteConversationsRequest const& request);
 
-  virtual google::cloud::Idempotency IngestConversations(
-      google::cloud::contactcenterinsights::v1::
-          IngestConversationsRequest const& request);
+  virtual google::cloud::Idempotency
+  IngestConversations(google::cloud::contactcenterinsights::v1::IngestConversationsRequest const& request);
 
-  virtual google::cloud::Idempotency ExportInsightsData(
-      google::cloud::contactcenterinsights::v1::ExportInsightsDataRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  ExportInsightsData(google::cloud::contactcenterinsights::v1::ExportInsightsDataRequest const& request);
 
-  virtual google::cloud::Idempotency CreateIssueModel(
-      google::cloud::contactcenterinsights::v1::CreateIssueModelRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  CreateIssueModel(google::cloud::contactcenterinsights::v1::CreateIssueModelRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateIssueModel(
-      google::cloud::contactcenterinsights::v1::UpdateIssueModelRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  UpdateIssueModel(google::cloud::contactcenterinsights::v1::UpdateIssueModelRequest const& request);
 
-  virtual google::cloud::Idempotency GetIssueModel(
-      google::cloud::contactcenterinsights::v1::GetIssueModelRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  GetIssueModel(google::cloud::contactcenterinsights::v1::GetIssueModelRequest const& request);
 
-  virtual google::cloud::Idempotency ListIssueModels(
-      google::cloud::contactcenterinsights::v1::ListIssueModelsRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  ListIssueModels(google::cloud::contactcenterinsights::v1::ListIssueModelsRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteIssueModel(
-      google::cloud::contactcenterinsights::v1::DeleteIssueModelRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  DeleteIssueModel(google::cloud::contactcenterinsights::v1::DeleteIssueModelRequest const& request);
 
-  virtual google::cloud::Idempotency DeployIssueModel(
-      google::cloud::contactcenterinsights::v1::DeployIssueModelRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  DeployIssueModel(google::cloud::contactcenterinsights::v1::DeployIssueModelRequest const& request);
 
-  virtual google::cloud::Idempotency UndeployIssueModel(
-      google::cloud::contactcenterinsights::v1::UndeployIssueModelRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  UndeployIssueModel(google::cloud::contactcenterinsights::v1::UndeployIssueModelRequest const& request);
 
-  virtual google::cloud::Idempotency ExportIssueModel(
-      google::cloud::contactcenterinsights::v1::ExportIssueModelRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  ExportIssueModel(google::cloud::contactcenterinsights::v1::ExportIssueModelRequest const& request);
 
-  virtual google::cloud::Idempotency ImportIssueModel(
-      google::cloud::contactcenterinsights::v1::ImportIssueModelRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  ImportIssueModel(google::cloud::contactcenterinsights::v1::ImportIssueModelRequest const& request);
 
-  virtual google::cloud::Idempotency GetIssue(
-      google::cloud::contactcenterinsights::v1::GetIssueRequest const& request);
+  virtual google::cloud::Idempotency
+  GetIssue(google::cloud::contactcenterinsights::v1::GetIssueRequest const& request);
 
-  virtual google::cloud::Idempotency ListIssues(
-      google::cloud::contactcenterinsights::v1::ListIssuesRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  ListIssues(google::cloud::contactcenterinsights::v1::ListIssuesRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateIssue(
-      google::cloud::contactcenterinsights::v1::UpdateIssueRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  UpdateIssue(google::cloud::contactcenterinsights::v1::UpdateIssueRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteIssue(
-      google::cloud::contactcenterinsights::v1::DeleteIssueRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  DeleteIssue(google::cloud::contactcenterinsights::v1::DeleteIssueRequest const& request);
 
-  virtual google::cloud::Idempotency CalculateIssueModelStats(
-      google::cloud::contactcenterinsights::v1::
-          CalculateIssueModelStatsRequest const& request);
+  virtual google::cloud::Idempotency
+  CalculateIssueModelStats(google::cloud::contactcenterinsights::v1::CalculateIssueModelStatsRequest const& request);
 
-  virtual google::cloud::Idempotency CreatePhraseMatcher(
-      google::cloud::contactcenterinsights::v1::
-          CreatePhraseMatcherRequest const& request);
+  virtual google::cloud::Idempotency
+  CreatePhraseMatcher(google::cloud::contactcenterinsights::v1::CreatePhraseMatcherRequest const& request);
 
-  virtual google::cloud::Idempotency GetPhraseMatcher(
-      google::cloud::contactcenterinsights::v1::GetPhraseMatcherRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  GetPhraseMatcher(google::cloud::contactcenterinsights::v1::GetPhraseMatcherRequest const& request);
 
-  virtual google::cloud::Idempotency ListPhraseMatchers(
-      google::cloud::contactcenterinsights::v1::ListPhraseMatchersRequest
-          request);
+  virtual google::cloud::Idempotency
+  ListPhraseMatchers(google::cloud::contactcenterinsights::v1::ListPhraseMatchersRequest request);
 
-  virtual google::cloud::Idempotency DeletePhraseMatcher(
-      google::cloud::contactcenterinsights::v1::
-          DeletePhraseMatcherRequest const& request);
+  virtual google::cloud::Idempotency
+  DeletePhraseMatcher(google::cloud::contactcenterinsights::v1::DeletePhraseMatcherRequest const& request);
 
-  virtual google::cloud::Idempotency UpdatePhraseMatcher(
-      google::cloud::contactcenterinsights::v1::
-          UpdatePhraseMatcherRequest const& request);
+  virtual google::cloud::Idempotency
+  UpdatePhraseMatcher(google::cloud::contactcenterinsights::v1::UpdatePhraseMatcherRequest const& request);
 
-  virtual google::cloud::Idempotency CalculateStats(
-      google::cloud::contactcenterinsights::v1::CalculateStatsRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  CalculateStats(google::cloud::contactcenterinsights::v1::CalculateStatsRequest const& request);
 
-  virtual google::cloud::Idempotency GetSettings(
-      google::cloud::contactcenterinsights::v1::GetSettingsRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  GetSettings(google::cloud::contactcenterinsights::v1::GetSettingsRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateSettings(
-      google::cloud::contactcenterinsights::v1::UpdateSettingsRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  UpdateSettings(google::cloud::contactcenterinsights::v1::UpdateSettingsRequest const& request);
 
-  virtual google::cloud::Idempotency CreateAnalysisRule(
-      google::cloud::contactcenterinsights::v1::CreateAnalysisRuleRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  CreateAnalysisRule(google::cloud::contactcenterinsights::v1::CreateAnalysisRuleRequest const& request);
 
-  virtual google::cloud::Idempotency GetAnalysisRule(
-      google::cloud::contactcenterinsights::v1::GetAnalysisRuleRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  GetAnalysisRule(google::cloud::contactcenterinsights::v1::GetAnalysisRuleRequest const& request);
 
-  virtual google::cloud::Idempotency ListAnalysisRules(
-      google::cloud::contactcenterinsights::v1::ListAnalysisRulesRequest
-          request);
+  virtual google::cloud::Idempotency
+  ListAnalysisRules(google::cloud::contactcenterinsights::v1::ListAnalysisRulesRequest request);
 
-  virtual google::cloud::Idempotency UpdateAnalysisRule(
-      google::cloud::contactcenterinsights::v1::UpdateAnalysisRuleRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  UpdateAnalysisRule(google::cloud::contactcenterinsights::v1::UpdateAnalysisRuleRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteAnalysisRule(
-      google::cloud::contactcenterinsights::v1::DeleteAnalysisRuleRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  DeleteAnalysisRule(google::cloud::contactcenterinsights::v1::DeleteAnalysisRuleRequest const& request);
 
-  virtual google::cloud::Idempotency GetEncryptionSpec(
-      google::cloud::contactcenterinsights::v1::GetEncryptionSpecRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  GetEncryptionSpec(google::cloud::contactcenterinsights::v1::GetEncryptionSpecRequest const& request);
 
-  virtual google::cloud::Idempotency InitializeEncryptionSpec(
-      google::cloud::contactcenterinsights::v1::
-          InitializeEncryptionSpecRequest const& request);
+  virtual google::cloud::Idempotency
+  InitializeEncryptionSpec(google::cloud::contactcenterinsights::v1::InitializeEncryptionSpecRequest const& request);
 
-  virtual google::cloud::Idempotency CreateView(
-      google::cloud::contactcenterinsights::v1::CreateViewRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  CreateView(google::cloud::contactcenterinsights::v1::CreateViewRequest const& request);
 
-  virtual google::cloud::Idempotency GetView(
-      google::cloud::contactcenterinsights::v1::GetViewRequest const& request);
+  virtual google::cloud::Idempotency
+  GetView(google::cloud::contactcenterinsights::v1::GetViewRequest const& request);
 
-  virtual google::cloud::Idempotency ListViews(
-      google::cloud::contactcenterinsights::v1::ListViewsRequest request);
+  virtual google::cloud::Idempotency
+  ListViews(google::cloud::contactcenterinsights::v1::ListViewsRequest request);
 
-  virtual google::cloud::Idempotency UpdateView(
-      google::cloud::contactcenterinsights::v1::UpdateViewRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  UpdateView(google::cloud::contactcenterinsights::v1::UpdateViewRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteView(
-      google::cloud::contactcenterinsights::v1::DeleteViewRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  DeleteView(google::cloud::contactcenterinsights::v1::DeleteViewRequest const& request);
 
-  virtual google::cloud::Idempotency QueryMetrics(
-      google::cloud::contactcenterinsights::v1::QueryMetricsRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  QueryMetrics(google::cloud::contactcenterinsights::v1::QueryMetricsRequest const& request);
 
-  virtual google::cloud::Idempotency CreateQaQuestion(
-      google::cloud::contactcenterinsights::v1::CreateQaQuestionRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  CreateQaQuestion(google::cloud::contactcenterinsights::v1::CreateQaQuestionRequest const& request);
 
-  virtual google::cloud::Idempotency GetQaQuestion(
-      google::cloud::contactcenterinsights::v1::GetQaQuestionRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  GetQaQuestion(google::cloud::contactcenterinsights::v1::GetQaQuestionRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateQaQuestion(
-      google::cloud::contactcenterinsights::v1::UpdateQaQuestionRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  UpdateQaQuestion(google::cloud::contactcenterinsights::v1::UpdateQaQuestionRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteQaQuestion(
-      google::cloud::contactcenterinsights::v1::DeleteQaQuestionRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  DeleteQaQuestion(google::cloud::contactcenterinsights::v1::DeleteQaQuestionRequest const& request);
 
-  virtual google::cloud::Idempotency ListQaQuestions(
-      google::cloud::contactcenterinsights::v1::ListQaQuestionsRequest request);
+  virtual google::cloud::Idempotency
+  ListQaQuestions(google::cloud::contactcenterinsights::v1::ListQaQuestionsRequest request);
 
-  virtual google::cloud::Idempotency CreateQaScorecard(
-      google::cloud::contactcenterinsights::v1::CreateQaScorecardRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  CreateQaScorecard(google::cloud::contactcenterinsights::v1::CreateQaScorecardRequest const& request);
 
-  virtual google::cloud::Idempotency GetQaScorecard(
-      google::cloud::contactcenterinsights::v1::GetQaScorecardRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  GetQaScorecard(google::cloud::contactcenterinsights::v1::GetQaScorecardRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateQaScorecard(
-      google::cloud::contactcenterinsights::v1::UpdateQaScorecardRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  UpdateQaScorecard(google::cloud::contactcenterinsights::v1::UpdateQaScorecardRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteQaScorecard(
-      google::cloud::contactcenterinsights::v1::DeleteQaScorecardRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  DeleteQaScorecard(google::cloud::contactcenterinsights::v1::DeleteQaScorecardRequest const& request);
 
-  virtual google::cloud::Idempotency ListQaScorecards(
-      google::cloud::contactcenterinsights::v1::ListQaScorecardsRequest
-          request);
+  virtual google::cloud::Idempotency
+  ListQaScorecards(google::cloud::contactcenterinsights::v1::ListQaScorecardsRequest request);
 
-  virtual google::cloud::Idempotency CreateQaScorecardRevision(
-      google::cloud::contactcenterinsights::v1::
-          CreateQaScorecardRevisionRequest const& request);
+  virtual google::cloud::Idempotency
+  CreateQaScorecardRevision(google::cloud::contactcenterinsights::v1::CreateQaScorecardRevisionRequest const& request);
 
-  virtual google::cloud::Idempotency GetQaScorecardRevision(
-      google::cloud::contactcenterinsights::v1::
-          GetQaScorecardRevisionRequest const& request);
+  virtual google::cloud::Idempotency
+  GetQaScorecardRevision(google::cloud::contactcenterinsights::v1::GetQaScorecardRevisionRequest const& request);
 
-  virtual google::cloud::Idempotency TuneQaScorecardRevision(
-      google::cloud::contactcenterinsights::v1::
-          TuneQaScorecardRevisionRequest const& request);
+  virtual google::cloud::Idempotency
+  TuneQaScorecardRevision(google::cloud::contactcenterinsights::v1::TuneQaScorecardRevisionRequest const& request);
 
-  virtual google::cloud::Idempotency DeployQaScorecardRevision(
-      google::cloud::contactcenterinsights::v1::
-          DeployQaScorecardRevisionRequest const& request);
+  virtual google::cloud::Idempotency
+  DeployQaScorecardRevision(google::cloud::contactcenterinsights::v1::DeployQaScorecardRevisionRequest const& request);
 
-  virtual google::cloud::Idempotency UndeployQaScorecardRevision(
-      google::cloud::contactcenterinsights::v1::
-          UndeployQaScorecardRevisionRequest const& request);
+  virtual google::cloud::Idempotency
+  UndeployQaScorecardRevision(google::cloud::contactcenterinsights::v1::UndeployQaScorecardRevisionRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteQaScorecardRevision(
-      google::cloud::contactcenterinsights::v1::
-          DeleteQaScorecardRevisionRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteQaScorecardRevision(google::cloud::contactcenterinsights::v1::DeleteQaScorecardRevisionRequest const& request);
 
-  virtual google::cloud::Idempotency ListQaScorecardRevisions(
-      google::cloud::contactcenterinsights::v1::ListQaScorecardRevisionsRequest
-          request);
+  virtual google::cloud::Idempotency
+  ListQaScorecardRevisions(google::cloud::contactcenterinsights::v1::ListQaScorecardRevisionsRequest request);
 
-  virtual google::cloud::Idempotency CreateFeedbackLabel(
-      google::cloud::contactcenterinsights::v1::
-          CreateFeedbackLabelRequest const& request);
+  virtual google::cloud::Idempotency
+  CreateFeedbackLabel(google::cloud::contactcenterinsights::v1::CreateFeedbackLabelRequest const& request);
 
-  virtual google::cloud::Idempotency ListFeedbackLabels(
-      google::cloud::contactcenterinsights::v1::ListFeedbackLabelsRequest
-          request);
+  virtual google::cloud::Idempotency
+  ListFeedbackLabels(google::cloud::contactcenterinsights::v1::ListFeedbackLabelsRequest request);
 
-  virtual google::cloud::Idempotency GetFeedbackLabel(
-      google::cloud::contactcenterinsights::v1::GetFeedbackLabelRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  GetFeedbackLabel(google::cloud::contactcenterinsights::v1::GetFeedbackLabelRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateFeedbackLabel(
-      google::cloud::contactcenterinsights::v1::
-          UpdateFeedbackLabelRequest const& request);
+  virtual google::cloud::Idempotency
+  UpdateFeedbackLabel(google::cloud::contactcenterinsights::v1::UpdateFeedbackLabelRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteFeedbackLabel(
-      google::cloud::contactcenterinsights::v1::
-          DeleteFeedbackLabelRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteFeedbackLabel(google::cloud::contactcenterinsights::v1::DeleteFeedbackLabelRequest const& request);
 
-  virtual google::cloud::Idempotency ListAllFeedbackLabels(
-      google::cloud::contactcenterinsights::v1::ListAllFeedbackLabelsRequest
-          request);
+  virtual google::cloud::Idempotency
+  ListAllFeedbackLabels(google::cloud::contactcenterinsights::v1::ListAllFeedbackLabelsRequest request);
 
-  virtual google::cloud::Idempotency BulkUploadFeedbackLabels(
-      google::cloud::contactcenterinsights::v1::
-          BulkUploadFeedbackLabelsRequest const& request);
+  virtual google::cloud::Idempotency
+  BulkUploadFeedbackLabels(google::cloud::contactcenterinsights::v1::BulkUploadFeedbackLabelsRequest const& request);
 
-  virtual google::cloud::Idempotency BulkDownloadFeedbackLabels(
-      google::cloud::contactcenterinsights::v1::
-          BulkDownloadFeedbackLabelsRequest const& request);
+  virtual google::cloud::Idempotency
+  BulkDownloadFeedbackLabels(google::cloud::contactcenterinsights::v1::BulkDownloadFeedbackLabelsRequest const& request);
 
-  virtual google::cloud::Idempotency ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual google::cloud::Idempotency
+  ListOperations(google::longrunning::ListOperationsRequest request);
 
-  virtual google::cloud::Idempotency GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 
-  virtual google::cloud::Idempotency CancelOperation(
-      google::longrunning::CancelOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  CancelOperation(google::longrunning::CancelOperationRequest const& request);
 };
 
 std::unique_ptr<ContactCenterInsightsConnectionIdempotencyPolicy>
-MakeDefaultContactCenterInsightsConnectionIdempotencyPolicy();
+    MakeDefaultContactCenterInsightsConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace contactcenterinsights_v1

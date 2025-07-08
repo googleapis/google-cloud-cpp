@@ -19,9 +19,9 @@
 #include "google/cloud/dataproc/v1/internal/job_controller_option_defaults.h"
 #include "google/cloud/dataproc/v1/job_controller_connection.h"
 #include "google/cloud/dataproc/v1/job_controller_options.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include <memory>
 #include <utility>
 
@@ -34,26 +34,21 @@ namespace {
 auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
-Options JobControllerDefaultOptions(std::string const& location,
-                                    Options options) {
+Options JobControllerDefaultOptions(std::string const& location, Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_JOB_CONTROLLER_ENDPOINT", "",
-      "GOOGLE_CLOUD_CPP_JOB_CONTROLLER_AUTHORITY",
-      absl::StrCat(location, location.empty() ? "" : "-",
-                   "dataproc.googleapis.com"));
+      std::move(options), "GOOGLE_CLOUD_CPP_JOB_CONTROLLER_ENDPOINT",
+      "", "GOOGLE_CLOUD_CPP_JOB_CONTROLLER_AUTHORITY",
+      absl::StrCat(location, location.empty() ? "" : "-", "dataproc.googleapis.com"));
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<dataproc_v1::JobControllerRetryPolicyOption>()) {
     options.set<dataproc_v1::JobControllerRetryPolicyOption>(
         dataproc_v1::JobControllerLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
-            .clone());
+            std::chrono::minutes(30)).clone());
   }
   if (!options.has<dataproc_v1::JobControllerBackoffPolicyOption>()) {
     options.set<dataproc_v1::JobControllerBackoffPolicyOption>(
-        ExponentialBackoffPolicy(
-            std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
-            .clone());
+        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
   }
   if (!options.has<dataproc_v1::JobControllerPollingPolicyOption>()) {
     options.set<dataproc_v1::JobControllerPollingPolicyOption>(
@@ -62,12 +57,9 @@ Options JobControllerDefaultOptions(std::string const& location,
             dataproc_v1::JobControllerBackoffPolicyOption::Type>(
             options.get<dataproc_v1::JobControllerRetryPolicyOption>()->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                     std::chrono::minutes(5), kBackoffScaling)
-                .clone())
-            .clone());
+            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
   }
-  if (!options.has<
-          dataproc_v1::JobControllerConnectionIdempotencyPolicyOption>()) {
+  if (!options.has<dataproc_v1::JobControllerConnectionIdempotencyPolicyOption>()) {
     options.set<dataproc_v1::JobControllerConnectionIdempotencyPolicyOption>(
         dataproc_v1::MakeDefaultJobControllerConnectionIdempotencyPolicy());
   }

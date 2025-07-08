@@ -31,10 +31,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// @deprecated Use language_v1::LanguageServiceBackoffPolicyOption directly.
 using ::google::cloud::language_v1::LanguageServiceBackoffPolicyOption;
 
-/// @deprecated Use
-/// language_v1::LanguageServiceConnectionIdempotencyPolicyOption directly.
-using ::google::cloud::language_v1::
-    LanguageServiceConnectionIdempotencyPolicyOption;
+/// @deprecated Use language_v1::LanguageServiceConnectionIdempotencyPolicyOption directly.
+using ::google::cloud::language_v1::LanguageServiceConnectionIdempotencyPolicyOption;
 
 /// @deprecated Use language_v1::LanguageServicePolicyOptionList directly.
 using ::google::cloud::language_v1::LanguageServicePolicyOptionList;

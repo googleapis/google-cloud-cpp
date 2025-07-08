@@ -26,37 +26,31 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-RecommendationServiceConnectionIdempotencyPolicy::
-    ~RecommendationServiceConnectionIdempotencyPolicy() = default;
+RecommendationServiceConnectionIdempotencyPolicy::~RecommendationServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<RecommendationServiceConnectionIdempotencyPolicy>
 RecommendationServiceConnectionIdempotencyPolicy::clone() const {
-  return std::make_unique<RecommendationServiceConnectionIdempotencyPolicy>(
-      *this);
+  return std::make_unique<RecommendationServiceConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency RecommendationServiceConnectionIdempotencyPolicy::Recommend(
-    google::cloud::discoveryengine::v1::RecommendRequest const&) {
+Idempotency RecommendationServiceConnectionIdempotencyPolicy::Recommend(google::cloud::discoveryengine::v1::RecommendRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency RecommendationServiceConnectionIdempotencyPolicy::ListOperations(
-    google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency RecommendationServiceConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency RecommendationServiceConnectionIdempotencyPolicy::GetOperation(
-    google::longrunning::GetOperationRequest const&) {
+Idempotency RecommendationServiceConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency RecommendationServiceConnectionIdempotencyPolicy::CancelOperation(
-    google::longrunning::CancelOperationRequest const&) {
+Idempotency RecommendationServiceConnectionIdempotencyPolicy::CancelOperation(google::longrunning::CancelOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<RecommendationServiceConnectionIdempotencyPolicy>
-MakeDefaultRecommendationServiceConnectionIdempotencyPolicy() {
+    MakeDefaultRecommendationServiceConnectionIdempotencyPolicy() {
   return std::make_unique<RecommendationServiceConnectionIdempotencyPolicy>();
 }
 

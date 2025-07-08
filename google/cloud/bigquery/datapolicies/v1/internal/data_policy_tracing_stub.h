@@ -36,59 +36,56 @@ class DataPolicyServiceTracingStub : public DataPolicyServiceStub {
  public:
   ~DataPolicyServiceTracingStub() override = default;
 
-  explicit DataPolicyServiceTracingStub(
-      std::shared_ptr<DataPolicyServiceStub> child);
+  explicit DataPolicyServiceTracingStub(std::shared_ptr<DataPolicyServiceStub> child);
 
-  StatusOr<google::cloud::bigquery::datapolicies::v1::DataPolicy>
-  CreateDataPolicy(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::bigquery::datapolicies::v1::CreateDataPolicyRequest const&
-          request) override;
+  StatusOr<google::cloud::bigquery::datapolicies::v1::DataPolicy> CreateDataPolicy(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::bigquery::datapolicies::v1::CreateDataPolicyRequest const& request) override;
 
-  StatusOr<google::cloud::bigquery::datapolicies::v1::DataPolicy>
-  UpdateDataPolicy(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::bigquery::datapolicies::v1::UpdateDataPolicyRequest const&
-          request) override;
+  StatusOr<google::cloud::bigquery::datapolicies::v1::DataPolicy> UpdateDataPolicy(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::bigquery::datapolicies::v1::UpdateDataPolicyRequest const& request) override;
 
-  StatusOr<google::cloud::bigquery::datapolicies::v1::DataPolicy>
-  RenameDataPolicy(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::bigquery::datapolicies::v1::RenameDataPolicyRequest const&
-          request) override;
+  StatusOr<google::cloud::bigquery::datapolicies::v1::DataPolicy> RenameDataPolicy(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::bigquery::datapolicies::v1::RenameDataPolicyRequest const& request) override;
 
   Status DeleteDataPolicy(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::bigquery::datapolicies::v1::DeleteDataPolicyRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::bigquery::datapolicies::v1::DeleteDataPolicyRequest const& request) override;
 
   StatusOr<google::cloud::bigquery::datapolicies::v1::DataPolicy> GetDataPolicy(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::bigquery::datapolicies::v1::GetDataPolicyRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::bigquery::datapolicies::v1::GetDataPolicyRequest const& request) override;
 
-  StatusOr<google::cloud::bigquery::datapolicies::v1::ListDataPoliciesResponse>
-  ListDataPolicies(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::bigquery::datapolicies::v1::ListDataPoliciesRequest const&
-          request) override;
+  StatusOr<google::cloud::bigquery::datapolicies::v1::ListDataPoliciesResponse> ListDataPolicies(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::bigquery::datapolicies::v1::ListDataPoliciesRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
  private:
   std::shared_ptr<DataPolicyServiceStub> child_;
-  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
-      propagator_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

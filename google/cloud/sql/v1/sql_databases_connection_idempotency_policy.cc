@@ -26,47 +26,39 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-SqlDatabasesServiceConnectionIdempotencyPolicy::
-    ~SqlDatabasesServiceConnectionIdempotencyPolicy() = default;
+SqlDatabasesServiceConnectionIdempotencyPolicy::~SqlDatabasesServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<SqlDatabasesServiceConnectionIdempotencyPolicy>
 SqlDatabasesServiceConnectionIdempotencyPolicy::clone() const {
-  return std::make_unique<SqlDatabasesServiceConnectionIdempotencyPolicy>(
-      *this);
+  return std::make_unique<SqlDatabasesServiceConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency SqlDatabasesServiceConnectionIdempotencyPolicy::Delete(
-    google::cloud::sql::v1::SqlDatabasesDeleteRequest const&) {
+Idempotency SqlDatabasesServiceConnectionIdempotencyPolicy::Delete(google::cloud::sql::v1::SqlDatabasesDeleteRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SqlDatabasesServiceConnectionIdempotencyPolicy::Get(
-    google::cloud::sql::v1::SqlDatabasesGetRequest const&) {
+Idempotency SqlDatabasesServiceConnectionIdempotencyPolicy::Get(google::cloud::sql::v1::SqlDatabasesGetRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency SqlDatabasesServiceConnectionIdempotencyPolicy::Insert(
-    google::cloud::sql::v1::SqlDatabasesInsertRequest const&) {
+Idempotency SqlDatabasesServiceConnectionIdempotencyPolicy::Insert(google::cloud::sql::v1::SqlDatabasesInsertRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SqlDatabasesServiceConnectionIdempotencyPolicy::List(
-    google::cloud::sql::v1::SqlDatabasesListRequest const&) {
+Idempotency SqlDatabasesServiceConnectionIdempotencyPolicy::List(google::cloud::sql::v1::SqlDatabasesListRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency SqlDatabasesServiceConnectionIdempotencyPolicy::Patch(
-    google::cloud::sql::v1::SqlDatabasesUpdateRequest const&) {
+Idempotency SqlDatabasesServiceConnectionIdempotencyPolicy::Patch(google::cloud::sql::v1::SqlDatabasesUpdateRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SqlDatabasesServiceConnectionIdempotencyPolicy::Update(
-    google::cloud::sql::v1::SqlDatabasesUpdateRequest const&) {
+Idempotency SqlDatabasesServiceConnectionIdempotencyPolicy::Update(google::cloud::sql::v1::SqlDatabasesUpdateRequest const&) {
   return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<SqlDatabasesServiceConnectionIdempotencyPolicy>
-MakeDefaultSqlDatabasesServiceConnectionIdempotencyPolicy() {
+    MakeDefaultSqlDatabasesServiceConnectionIdempotencyPolicy() {
   return std::make_unique<SqlDatabasesServiceConnectionIdempotencyPolicy>();
 }
 

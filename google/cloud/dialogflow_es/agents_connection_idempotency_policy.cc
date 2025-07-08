@@ -26,86 +26,71 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-AgentsConnectionIdempotencyPolicy::~AgentsConnectionIdempotencyPolicy() =
-    default;
+AgentsConnectionIdempotencyPolicy::~AgentsConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<AgentsConnectionIdempotencyPolicy>
 AgentsConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<AgentsConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency AgentsConnectionIdempotencyPolicy::GetAgent(
-    google::cloud::dialogflow::v2::GetAgentRequest const&) {
+Idempotency AgentsConnectionIdempotencyPolicy::GetAgent(google::cloud::dialogflow::v2::GetAgentRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency AgentsConnectionIdempotencyPolicy::SetAgent(
-    google::cloud::dialogflow::v2::SetAgentRequest const&) {
+Idempotency AgentsConnectionIdempotencyPolicy::SetAgent(google::cloud::dialogflow::v2::SetAgentRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency AgentsConnectionIdempotencyPolicy::DeleteAgent(
-    google::cloud::dialogflow::v2::DeleteAgentRequest const&) {
+Idempotency AgentsConnectionIdempotencyPolicy::DeleteAgent(google::cloud::dialogflow::v2::DeleteAgentRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency AgentsConnectionIdempotencyPolicy::SearchAgents(
-    google::cloud::dialogflow::v2::SearchAgentsRequest) {  // NOLINT
+Idempotency AgentsConnectionIdempotencyPolicy::SearchAgents(google::cloud::dialogflow::v2::SearchAgentsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency AgentsConnectionIdempotencyPolicy::TrainAgent(
-    google::cloud::dialogflow::v2::TrainAgentRequest const&) {
+Idempotency AgentsConnectionIdempotencyPolicy::TrainAgent(google::cloud::dialogflow::v2::TrainAgentRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency AgentsConnectionIdempotencyPolicy::ExportAgent(
-    google::cloud::dialogflow::v2::ExportAgentRequest const&) {
+Idempotency AgentsConnectionIdempotencyPolicy::ExportAgent(google::cloud::dialogflow::v2::ExportAgentRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency AgentsConnectionIdempotencyPolicy::ImportAgent(
-    google::cloud::dialogflow::v2::ImportAgentRequest const&) {
+Idempotency AgentsConnectionIdempotencyPolicy::ImportAgent(google::cloud::dialogflow::v2::ImportAgentRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency AgentsConnectionIdempotencyPolicy::RestoreAgent(
-    google::cloud::dialogflow::v2::RestoreAgentRequest const&) {
+Idempotency AgentsConnectionIdempotencyPolicy::RestoreAgent(google::cloud::dialogflow::v2::RestoreAgentRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency AgentsConnectionIdempotencyPolicy::GetValidationResult(
-    google::cloud::dialogflow::v2::GetValidationResultRequest const&) {
+Idempotency AgentsConnectionIdempotencyPolicy::GetValidationResult(google::cloud::dialogflow::v2::GetValidationResultRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency AgentsConnectionIdempotencyPolicy::ListLocations(
-    google::cloud::location::ListLocationsRequest) {  // NOLINT
+Idempotency AgentsConnectionIdempotencyPolicy::ListLocations(google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency AgentsConnectionIdempotencyPolicy::GetLocation(
-    google::cloud::location::GetLocationRequest const&) {
+Idempotency AgentsConnectionIdempotencyPolicy::GetLocation(google::cloud::location::GetLocationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency AgentsConnectionIdempotencyPolicy::ListOperations(
-    google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency AgentsConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency AgentsConnectionIdempotencyPolicy::GetOperation(
-    google::longrunning::GetOperationRequest const&) {
+Idempotency AgentsConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency AgentsConnectionIdempotencyPolicy::CancelOperation(
-    google::longrunning::CancelOperationRequest const&) {
+Idempotency AgentsConnectionIdempotencyPolicy::CancelOperation(google::longrunning::CancelOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<AgentsConnectionIdempotencyPolicy>
-MakeDefaultAgentsConnectionIdempotencyPolicy() {
+    MakeDefaultAgentsConnectionIdempotencyPolicy() {
   return std::make_unique<AgentsConnectionIdempotencyPolicy>();
 }
 

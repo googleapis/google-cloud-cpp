@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_HEALTH_CHECKS_V1_HEALTH_CHECKS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_HEALTH_CHECKS_V1_HEALTH_CHECKS_CONNECTION_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/health_checks/v1/health_checks_connection_idempotency_policy.h"
 #include "google/cloud/compute/health_checks/v1/internal/health_checks_retry_traits.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -55,8 +55,7 @@ class HealthChecksRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class HealthChecksLimitedErrorCountRetryPolicy
-    : public HealthChecksRetryPolicy {
+class HealthChecksLimitedErrorCountRetryPolicy : public HealthChecksRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -66,14 +65,14 @@ class HealthChecksLimitedErrorCountRetryPolicy
    *     @p maximum_failures == 0.
    */
   explicit HealthChecksLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   HealthChecksLimitedErrorCountRetryPolicy(
       HealthChecksLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : HealthChecksLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : HealthChecksLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   HealthChecksLimitedErrorCountRetryPolicy(
       HealthChecksLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : HealthChecksLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : HealthChecksLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -93,9 +92,7 @@ class HealthChecksLimitedErrorCountRetryPolicy
   using BaseType = HealthChecksRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      compute_health_checks_v1_internal::HealthChecksRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<compute_health_checks_v1_internal::HealthChecksRetryTraits> impl_;
 };
 
 /**
@@ -133,14 +130,12 @@ class HealthChecksLimitedTimeRetryPolicy : public HealthChecksRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit HealthChecksLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  HealthChecksLimitedTimeRetryPolicy(
-      HealthChecksLimitedTimeRetryPolicy&& rhs) noexcept
-      : HealthChecksLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  HealthChecksLimitedTimeRetryPolicy(
-      HealthChecksLimitedTimeRetryPolicy const& rhs) noexcept
-      : HealthChecksLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  HealthChecksLimitedTimeRetryPolicy(HealthChecksLimitedTimeRetryPolicy&& rhs) noexcept
+    : HealthChecksLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  HealthChecksLimitedTimeRetryPolicy(HealthChecksLimitedTimeRetryPolicy const& rhs) noexcept
+    : HealthChecksLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -162,9 +157,7 @@ class HealthChecksLimitedTimeRetryPolicy : public HealthChecksRetryPolicy {
   using BaseType = HealthChecksRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      compute_health_checks_v1_internal::HealthChecksRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<compute_health_checks_v1_internal::HealthChecksRetryTraits> impl_;
 };
 
 /**
@@ -177,8 +170,7 @@ class HealthChecksLimitedTimeRetryPolicy : public HealthChecksRetryPolicy {
  *
  * To create a concrete instance, see `MakeHealthChecksConnection()`.
  *
- * For mocking, see
- * `compute_health_checks_v1_mocks::MockHealthChecksConnection`.
+ * For mocking, see `compute_health_checks_v1_mocks::MockHealthChecksConnection`.
  */
 class HealthChecksConnection {
  public:
@@ -186,66 +178,50 @@ class HealthChecksConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StreamRange<std::pair<
-      std::string, google::cloud::cpp::compute::v1::HealthChecksScopedList>>
-  AggregatedListHealthChecks(google::cloud::cpp::compute::health_checks::v1::
-                                 AggregatedListHealthChecksRequest request);
+  virtual StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::HealthChecksScopedList>>
+  AggregatedListHealthChecks(google::cloud::cpp::compute::health_checks::v1::AggregatedListHealthChecksRequest request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteHealthCheck(google::cloud::cpp::compute::health_checks::v1::
-                        DeleteHealthCheckRequest const& request);
+  DeleteHealthCheck(google::cloud::cpp::compute::health_checks::v1::DeleteHealthCheckRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteHealthCheck(NoAwaitTag, google::cloud::cpp::compute::health_checks::v1::
-                                    DeleteHealthCheckRequest const& request);
+  DeleteHealthCheck(NoAwaitTag, google::cloud::cpp::compute::health_checks::v1::DeleteHealthCheckRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteHealthCheck(
-      google::cloud::cpp::compute::v1::Operation const& operation);
+  DeleteHealthCheck( google::cloud::cpp::compute::v1::Operation const& operation);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::HealthCheck> GetHealthCheck(
-      google::cloud::cpp::compute::health_checks::v1::
-          GetHealthCheckRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::HealthCheck>
+  GetHealthCheck(google::cloud::cpp::compute::health_checks::v1::GetHealthCheckRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertHealthCheck(google::cloud::cpp::compute::health_checks::v1::
-                        InsertHealthCheckRequest const& request);
+  InsertHealthCheck(google::cloud::cpp::compute::health_checks::v1::InsertHealthCheckRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertHealthCheck(NoAwaitTag, google::cloud::cpp::compute::health_checks::v1::
-                                    InsertHealthCheckRequest const& request);
+  InsertHealthCheck(NoAwaitTag, google::cloud::cpp::compute::health_checks::v1::InsertHealthCheckRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertHealthCheck(
-      google::cloud::cpp::compute::v1::Operation const& operation);
+  InsertHealthCheck( google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::HealthCheck>
-  ListHealthChecks(
-      google::cloud::cpp::compute::health_checks::v1::ListHealthChecksRequest
-          request);
+  ListHealthChecks(google::cloud::cpp::compute::health_checks::v1::ListHealthChecksRequest request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchHealthCheck(google::cloud::cpp::compute::health_checks::v1::
-                       PatchHealthCheckRequest const& request);
-
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> PatchHealthCheck(
-      NoAwaitTag, google::cloud::cpp::compute::health_checks::v1::
-                      PatchHealthCheckRequest const& request);
-
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchHealthCheck(google::cloud::cpp::compute::v1::Operation const& operation);
-
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateHealthCheck(google::cloud::cpp::compute::health_checks::v1::
-                        UpdateHealthCheckRequest const& request);
+  PatchHealthCheck(google::cloud::cpp::compute::health_checks::v1::PatchHealthCheckRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  UpdateHealthCheck(NoAwaitTag, google::cloud::cpp::compute::health_checks::v1::
-                                    UpdateHealthCheckRequest const& request);
+  PatchHealthCheck(NoAwaitTag, google::cloud::cpp::compute::health_checks::v1::PatchHealthCheckRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateHealthCheck(
-      google::cloud::cpp::compute::v1::Operation const& operation);
+  PatchHealthCheck( google::cloud::cpp::compute::v1::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  UpdateHealthCheck(google::cloud::cpp::compute::health_checks::v1::UpdateHealthCheckRequest const& request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  UpdateHealthCheck(NoAwaitTag, google::cloud::cpp::compute::health_checks::v1::UpdateHealthCheckRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  UpdateHealthCheck( google::cloud::cpp::compute::v1::Operation const& operation);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

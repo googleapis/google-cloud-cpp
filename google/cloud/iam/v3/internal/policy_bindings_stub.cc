@@ -33,10 +33,10 @@ PolicyBindingsStub::~PolicyBindingsStub() = default;
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultPolicyBindingsStub::AsyncCreatePolicyBinding(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::iam::v3::CreatePolicyBindingRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::iam::v3::CreatePolicyBindingRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::iam::v3::CreatePolicyBindingRequest,
                                     google::longrunning::Operation>(
       cq,
@@ -50,34 +50,37 @@ DefaultPolicyBindingsStub::AsyncCreatePolicyBinding(
 
 StatusOr<google::longrunning::Operation>
 DefaultPolicyBindingsStub::CreatePolicyBinding(
-    grpc::ClientContext& context, Options,
-    google::iam::v3::CreatePolicyBindingRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->CreatePolicyBinding(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::iam::v3::CreatePolicyBindingRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->CreatePolicyBinding(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::iam::v3::PolicyBinding>
 DefaultPolicyBindingsStub::GetPolicyBinding(
-    grpc::ClientContext& context, Options const&,
-    google::iam::v3::GetPolicyBindingRequest const& request) {
-  google::iam::v3::PolicyBinding response;
-  auto status = grpc_stub_->GetPolicyBinding(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::iam::v3::GetPolicyBindingRequest const& request) {
+    google::iam::v3::PolicyBinding response;
+    auto status =
+        grpc_stub_->GetPolicyBinding(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultPolicyBindingsStub::AsyncUpdatePolicyBinding(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::iam::v3::UpdatePolicyBindingRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::iam::v3::UpdatePolicyBindingRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::iam::v3::UpdatePolicyBindingRequest,
                                     google::longrunning::Operation>(
       cq,
@@ -91,22 +94,24 @@ DefaultPolicyBindingsStub::AsyncUpdatePolicyBinding(
 
 StatusOr<google::longrunning::Operation>
 DefaultPolicyBindingsStub::UpdatePolicyBinding(
-    grpc::ClientContext& context, Options,
-    google::iam::v3::UpdatePolicyBindingRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->UpdatePolicyBinding(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::iam::v3::UpdatePolicyBindingRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->UpdatePolicyBinding(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultPolicyBindingsStub::AsyncDeletePolicyBinding(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::iam::v3::DeletePolicyBindingRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::iam::v3::DeletePolicyBindingRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::iam::v3::DeletePolicyBindingRequest,
                                     google::longrunning::Operation>(
       cq,
@@ -120,51 +125,55 @@ DefaultPolicyBindingsStub::AsyncDeletePolicyBinding(
 
 StatusOr<google::longrunning::Operation>
 DefaultPolicyBindingsStub::DeletePolicyBinding(
-    grpc::ClientContext& context, Options,
-    google::iam::v3::DeletePolicyBindingRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->DeletePolicyBinding(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::iam::v3::DeletePolicyBindingRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->DeletePolicyBinding(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::iam::v3::ListPolicyBindingsResponse>
 DefaultPolicyBindingsStub::ListPolicyBindings(
-    grpc::ClientContext& context, Options const&,
-    google::iam::v3::ListPolicyBindingsRequest const& request) {
-  google::iam::v3::ListPolicyBindingsResponse response;
-  auto status = grpc_stub_->ListPolicyBindings(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::iam::v3::ListPolicyBindingsRequest const& request) {
+    google::iam::v3::ListPolicyBindingsResponse response;
+    auto status =
+        grpc_stub_->ListPolicyBindings(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::iam::v3::SearchTargetPolicyBindingsResponse>
 DefaultPolicyBindingsStub::SearchTargetPolicyBindings(
-    grpc::ClientContext& context, Options const&,
-    google::iam::v3::SearchTargetPolicyBindingsRequest const& request) {
-  google::iam::v3::SearchTargetPolicyBindingsResponse response;
-  auto status =
-      grpc_stub_->SearchTargetPolicyBindings(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::iam::v3::SearchTargetPolicyBindingsRequest const& request) {
+    google::iam::v3::SearchTargetPolicyBindingsResponse response;
+    auto status =
+        grpc_stub_->SearchTargetPolicyBindings(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::longrunning::Operation>
 DefaultPolicyBindingsStub::GetOperation(
-    grpc::ClientContext& context, Options const&,
-    google::longrunning::GetOperationRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = operations_stub_->GetOperation(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::longrunning::GetOperationRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        operations_stub_->GetOperation(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -193,14 +202,13 @@ future<Status> DefaultPolicyBindingsStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(
-             cq,
-             [this](grpc::ClientContext* context,
-                    google::longrunning::CancelOperationRequest const& request,
-                    grpc::CompletionQueue* cq) {
-               return operations_stub_->AsyncCancelOperation(context, request,
-                                                             cq);
-             },
-             request, std::move(context))
+      cq,
+      [this](grpc::ClientContext* context,
+             google::longrunning::CancelOperationRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return operations_stub_->AsyncCancelOperation(context, request, cq);
+      },
+      request, std::move(context))
       .then([](future<StatusOr<google::protobuf::Empty>> f) {
         return f.get().status();
       });

@@ -31,19 +31,21 @@ namespace telcoautomation_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 TelcoAutomationLogging::TelcoAutomationLogging(
-    std::shared_ptr<TelcoAutomationStub> child, TracingOptions tracing_options,
+    std::shared_ptr<TelcoAutomationStub> child,
+    TracingOptions tracing_options,
     std::set<std::string> const&)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::cloud::telcoautomation::v1::ListOrchestrationClustersResponse>
 TelcoAutomationLogging::ListOrchestrationClusters(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::telcoautomation::v1::ListOrchestrationClustersRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::telcoautomation::v1::ListOrchestrationClustersRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::telcoautomation::v1::
-                 ListOrchestrationClustersRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::telcoautomation::v1::ListOrchestrationClustersRequest const& request) {
         return child_->ListOrchestrationClusters(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -51,13 +53,13 @@ TelcoAutomationLogging::ListOrchestrationClusters(
 
 StatusOr<google::cloud::telcoautomation::v1::OrchestrationCluster>
 TelcoAutomationLogging::GetOrchestrationCluster(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::telcoautomation::v1::GetOrchestrationClusterRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::telcoautomation::v1::GetOrchestrationClusterRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::telcoautomation::v1::
-                 GetOrchestrationClusterRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::telcoautomation::v1::GetOrchestrationClusterRequest const& request) {
         return child_->GetOrchestrationCluster(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -65,17 +67,15 @@ TelcoAutomationLogging::GetOrchestrationCluster(
 
 future<StatusOr<google::longrunning::Operation>>
 TelcoAutomationLogging::AsyncCreateOrchestrationCluster(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::telcoautomation::v1::CreateOrchestrationClusterRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::telcoautomation::v1::CreateOrchestrationClusterRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::telcoautomation::v1::
-                 CreateOrchestrationClusterRequest const& request) {
+             google::cloud::telcoautomation::v1::CreateOrchestrationClusterRequest const& request) {
         return child_->AsyncCreateOrchestrationCluster(
             cq, std::move(context), std::move(options), request);
       },
@@ -85,13 +85,13 @@ TelcoAutomationLogging::AsyncCreateOrchestrationCluster(
 
 StatusOr<google::longrunning::Operation>
 TelcoAutomationLogging::CreateOrchestrationCluster(
-    grpc::ClientContext& context, Options options,
-    google::cloud::telcoautomation::v1::CreateOrchestrationClusterRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::telcoautomation::v1::CreateOrchestrationClusterRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::telcoautomation::v1::
-                 CreateOrchestrationClusterRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::telcoautomation::v1::CreateOrchestrationClusterRequest const& request) {
         return child_->CreateOrchestrationCluster(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -99,17 +99,15 @@ TelcoAutomationLogging::CreateOrchestrationCluster(
 
 future<StatusOr<google::longrunning::Operation>>
 TelcoAutomationLogging::AsyncDeleteOrchestrationCluster(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::telcoautomation::v1::DeleteOrchestrationClusterRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::telcoautomation::v1::DeleteOrchestrationClusterRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::telcoautomation::v1::
-                 DeleteOrchestrationClusterRequest const& request) {
+             google::cloud::telcoautomation::v1::DeleteOrchestrationClusterRequest const& request) {
         return child_->AsyncDeleteOrchestrationCluster(
             cq, std::move(context), std::move(options), request);
       },
@@ -119,13 +117,13 @@ TelcoAutomationLogging::AsyncDeleteOrchestrationCluster(
 
 StatusOr<google::longrunning::Operation>
 TelcoAutomationLogging::DeleteOrchestrationCluster(
-    grpc::ClientContext& context, Options options,
-    google::cloud::telcoautomation::v1::DeleteOrchestrationClusterRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::telcoautomation::v1::DeleteOrchestrationClusterRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::telcoautomation::v1::
-                 DeleteOrchestrationClusterRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::telcoautomation::v1::DeleteOrchestrationClusterRequest const& request) {
         return child_->DeleteOrchestrationCluster(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -133,12 +131,13 @@ TelcoAutomationLogging::DeleteOrchestrationCluster(
 
 StatusOr<google::cloud::telcoautomation::v1::ListEdgeSlmsResponse>
 TelcoAutomationLogging::ListEdgeSlms(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::telcoautomation::v1::ListEdgeSlmsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::telcoautomation::v1::ListEdgeSlmsRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::telcoautomation::v1::ListEdgeSlmsRequest const& request) {
         return child_->ListEdgeSlms(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -146,12 +145,13 @@ TelcoAutomationLogging::ListEdgeSlms(
 
 StatusOr<google::cloud::telcoautomation::v1::EdgeSlm>
 TelcoAutomationLogging::GetEdgeSlm(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::telcoautomation::v1::GetEdgeSlmRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::telcoautomation::v1::GetEdgeSlmRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::telcoautomation::v1::GetEdgeSlmRequest const& request) {
         return child_->GetEdgeSlm(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -159,30 +159,31 @@ TelcoAutomationLogging::GetEdgeSlm(
 
 future<StatusOr<google::longrunning::Operation>>
 TelcoAutomationLogging::AsyncCreateEdgeSlm(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::telcoautomation::v1::CreateEdgeSlmRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::telcoautomation::v1::CreateEdgeSlmRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::telcoautomation::v1::CreateEdgeSlmRequest const&
-                 request) {
-        return child_->AsyncCreateEdgeSlm(cq, std::move(context),
-                                          std::move(options), request);
+             google::cloud::telcoautomation::v1::CreateEdgeSlmRequest const& request) {
+        return child_->AsyncCreateEdgeSlm(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> TelcoAutomationLogging::CreateEdgeSlm(
-    grpc::ClientContext& context, Options options,
-    google::cloud::telcoautomation::v1::CreateEdgeSlmRequest const& request) {
+StatusOr<google::longrunning::Operation>
+TelcoAutomationLogging::CreateEdgeSlm(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::telcoautomation::v1::CreateEdgeSlmRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::telcoautomation::v1::CreateEdgeSlmRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::telcoautomation::v1::CreateEdgeSlmRequest const& request) {
         return child_->CreateEdgeSlm(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -190,30 +191,31 @@ StatusOr<google::longrunning::Operation> TelcoAutomationLogging::CreateEdgeSlm(
 
 future<StatusOr<google::longrunning::Operation>>
 TelcoAutomationLogging::AsyncDeleteEdgeSlm(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::telcoautomation::v1::DeleteEdgeSlmRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::telcoautomation::v1::DeleteEdgeSlmRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::telcoautomation::v1::DeleteEdgeSlmRequest const&
-                 request) {
-        return child_->AsyncDeleteEdgeSlm(cq, std::move(context),
-                                          std::move(options), request);
+             google::cloud::telcoautomation::v1::DeleteEdgeSlmRequest const& request) {
+        return child_->AsyncDeleteEdgeSlm(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> TelcoAutomationLogging::DeleteEdgeSlm(
-    grpc::ClientContext& context, Options options,
-    google::cloud::telcoautomation::v1::DeleteEdgeSlmRequest const& request) {
+StatusOr<google::longrunning::Operation>
+TelcoAutomationLogging::DeleteEdgeSlm(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::telcoautomation::v1::DeleteEdgeSlmRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::telcoautomation::v1::DeleteEdgeSlmRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::telcoautomation::v1::DeleteEdgeSlmRequest const& request) {
         return child_->DeleteEdgeSlm(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -221,12 +223,13 @@ StatusOr<google::longrunning::Operation> TelcoAutomationLogging::DeleteEdgeSlm(
 
 StatusOr<google::cloud::telcoautomation::v1::Blueprint>
 TelcoAutomationLogging::CreateBlueprint(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::telcoautomation::v1::CreateBlueprintRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::telcoautomation::v1::CreateBlueprintRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::telcoautomation::v1::CreateBlueprintRequest const& request) {
         return child_->CreateBlueprint(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -234,12 +237,13 @@ TelcoAutomationLogging::CreateBlueprint(
 
 StatusOr<google::cloud::telcoautomation::v1::Blueprint>
 TelcoAutomationLogging::UpdateBlueprint(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::telcoautomation::v1::UpdateBlueprintRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::telcoautomation::v1::UpdateBlueprintRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::telcoautomation::v1::UpdateBlueprintRequest const& request) {
         return child_->UpdateBlueprint(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -247,24 +251,27 @@ TelcoAutomationLogging::UpdateBlueprint(
 
 StatusOr<google::cloud::telcoautomation::v1::Blueprint>
 TelcoAutomationLogging::GetBlueprint(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::telcoautomation::v1::GetBlueprintRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::telcoautomation::v1::GetBlueprintRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::telcoautomation::v1::GetBlueprintRequest const& request) {
         return child_->GetBlueprint(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status TelcoAutomationLogging::DeleteBlueprint(
-    grpc::ClientContext& context, Options const& options,
+Status
+TelcoAutomationLogging::DeleteBlueprint(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::telcoautomation::v1::DeleteBlueprintRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::telcoautomation::v1::DeleteBlueprintRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::telcoautomation::v1::DeleteBlueprintRequest const& request) {
         return child_->DeleteBlueprint(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -272,12 +279,13 @@ Status TelcoAutomationLogging::DeleteBlueprint(
 
 StatusOr<google::cloud::telcoautomation::v1::ListBlueprintsResponse>
 TelcoAutomationLogging::ListBlueprints(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::telcoautomation::v1::ListBlueprintsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::telcoautomation::v1::ListBlueprintsRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::telcoautomation::v1::ListBlueprintsRequest const& request) {
         return child_->ListBlueprints(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -285,13 +293,13 @@ TelcoAutomationLogging::ListBlueprints(
 
 StatusOr<google::cloud::telcoautomation::v1::Blueprint>
 TelcoAutomationLogging::ApproveBlueprint(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::telcoautomation::v1::ApproveBlueprintRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::telcoautomation::v1::ApproveBlueprintRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::telcoautomation::v1::ApproveBlueprintRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::telcoautomation::v1::ApproveBlueprintRequest const& request) {
         return child_->ApproveBlueprint(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -299,13 +307,13 @@ TelcoAutomationLogging::ApproveBlueprint(
 
 StatusOr<google::cloud::telcoautomation::v1::Blueprint>
 TelcoAutomationLogging::ProposeBlueprint(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::telcoautomation::v1::ProposeBlueprintRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::telcoautomation::v1::ProposeBlueprintRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::telcoautomation::v1::ProposeBlueprintRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::telcoautomation::v1::ProposeBlueprintRequest const& request) {
         return child_->ProposeBlueprint(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -313,12 +321,13 @@ TelcoAutomationLogging::ProposeBlueprint(
 
 StatusOr<google::cloud::telcoautomation::v1::Blueprint>
 TelcoAutomationLogging::RejectBlueprint(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::telcoautomation::v1::RejectBlueprintRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::telcoautomation::v1::RejectBlueprintRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::telcoautomation::v1::RejectBlueprintRequest const& request) {
         return child_->RejectBlueprint(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -326,13 +335,13 @@ TelcoAutomationLogging::RejectBlueprint(
 
 StatusOr<google::cloud::telcoautomation::v1::ListBlueprintRevisionsResponse>
 TelcoAutomationLogging::ListBlueprintRevisions(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::telcoautomation::v1::ListBlueprintRevisionsRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::telcoautomation::v1::ListBlueprintRevisionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::telcoautomation::v1::
-                 ListBlueprintRevisionsRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::telcoautomation::v1::ListBlueprintRevisionsRequest const& request) {
         return child_->ListBlueprintRevisions(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -340,13 +349,13 @@ TelcoAutomationLogging::ListBlueprintRevisions(
 
 StatusOr<google::cloud::telcoautomation::v1::SearchBlueprintRevisionsResponse>
 TelcoAutomationLogging::SearchBlueprintRevisions(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::telcoautomation::v1::SearchBlueprintRevisionsRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::telcoautomation::v1::SearchBlueprintRevisionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::telcoautomation::v1::
-                 SearchBlueprintRevisionsRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::telcoautomation::v1::SearchBlueprintRevisionsRequest const& request) {
         return child_->SearchBlueprintRevisions(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -354,13 +363,13 @@ TelcoAutomationLogging::SearchBlueprintRevisions(
 
 StatusOr<google::cloud::telcoautomation::v1::SearchDeploymentRevisionsResponse>
 TelcoAutomationLogging::SearchDeploymentRevisions(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::telcoautomation::v1::SearchDeploymentRevisionsRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::telcoautomation::v1::SearchDeploymentRevisionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::telcoautomation::v1::
-                 SearchDeploymentRevisionsRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::telcoautomation::v1::SearchDeploymentRevisionsRequest const& request) {
         return child_->SearchDeploymentRevisions(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -368,13 +377,13 @@ TelcoAutomationLogging::SearchDeploymentRevisions(
 
 StatusOr<google::cloud::telcoautomation::v1::DiscardBlueprintChangesResponse>
 TelcoAutomationLogging::DiscardBlueprintChanges(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::telcoautomation::v1::DiscardBlueprintChangesRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::telcoautomation::v1::DiscardBlueprintChangesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::telcoautomation::v1::
-                 DiscardBlueprintChangesRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::telcoautomation::v1::DiscardBlueprintChangesRequest const& request) {
         return child_->DiscardBlueprintChanges(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -382,14 +391,13 @@ TelcoAutomationLogging::DiscardBlueprintChanges(
 
 StatusOr<google::cloud::telcoautomation::v1::ListPublicBlueprintsResponse>
 TelcoAutomationLogging::ListPublicBlueprints(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::telcoautomation::v1::ListPublicBlueprintsRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::telcoautomation::v1::ListPublicBlueprintsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::telcoautomation::v1::ListPublicBlueprintsRequest const&
-              request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::telcoautomation::v1::ListPublicBlueprintsRequest const& request) {
         return child_->ListPublicBlueprints(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -397,14 +405,13 @@ TelcoAutomationLogging::ListPublicBlueprints(
 
 StatusOr<google::cloud::telcoautomation::v1::PublicBlueprint>
 TelcoAutomationLogging::GetPublicBlueprint(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::telcoautomation::v1::GetPublicBlueprintRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::telcoautomation::v1::GetPublicBlueprintRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::telcoautomation::v1::GetPublicBlueprintRequest const&
-              request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::telcoautomation::v1::GetPublicBlueprintRequest const& request) {
         return child_->GetPublicBlueprint(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -412,13 +419,13 @@ TelcoAutomationLogging::GetPublicBlueprint(
 
 StatusOr<google::cloud::telcoautomation::v1::Deployment>
 TelcoAutomationLogging::CreateDeployment(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::telcoautomation::v1::CreateDeploymentRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::telcoautomation::v1::CreateDeploymentRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::telcoautomation::v1::CreateDeploymentRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::telcoautomation::v1::CreateDeploymentRequest const& request) {
         return child_->CreateDeployment(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -426,13 +433,13 @@ TelcoAutomationLogging::CreateDeployment(
 
 StatusOr<google::cloud::telcoautomation::v1::Deployment>
 TelcoAutomationLogging::UpdateDeployment(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::telcoautomation::v1::UpdateDeploymentRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::telcoautomation::v1::UpdateDeploymentRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::telcoautomation::v1::UpdateDeploymentRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::telcoautomation::v1::UpdateDeploymentRequest const& request) {
         return child_->UpdateDeployment(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -440,25 +447,27 @@ TelcoAutomationLogging::UpdateDeployment(
 
 StatusOr<google::cloud::telcoautomation::v1::Deployment>
 TelcoAutomationLogging::GetDeployment(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::telcoautomation::v1::GetDeploymentRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::telcoautomation::v1::GetDeploymentRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::telcoautomation::v1::GetDeploymentRequest const& request) {
         return child_->GetDeployment(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status TelcoAutomationLogging::RemoveDeployment(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::telcoautomation::v1::RemoveDeploymentRequest const&
-        request) {
+Status
+TelcoAutomationLogging::RemoveDeployment(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::telcoautomation::v1::RemoveDeploymentRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::telcoautomation::v1::RemoveDeploymentRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::telcoautomation::v1::RemoveDeploymentRequest const& request) {
         return child_->RemoveDeployment(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -466,12 +475,13 @@ Status TelcoAutomationLogging::RemoveDeployment(
 
 StatusOr<google::cloud::telcoautomation::v1::ListDeploymentsResponse>
 TelcoAutomationLogging::ListDeployments(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::telcoautomation::v1::ListDeploymentsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::telcoautomation::v1::ListDeploymentsRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::telcoautomation::v1::ListDeploymentsRequest const& request) {
         return child_->ListDeployments(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -479,13 +489,13 @@ TelcoAutomationLogging::ListDeployments(
 
 StatusOr<google::cloud::telcoautomation::v1::ListDeploymentRevisionsResponse>
 TelcoAutomationLogging::ListDeploymentRevisions(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::telcoautomation::v1::ListDeploymentRevisionsRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::telcoautomation::v1::ListDeploymentRevisionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::telcoautomation::v1::
-                 ListDeploymentRevisionsRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::telcoautomation::v1::ListDeploymentRevisionsRequest const& request) {
         return child_->ListDeploymentRevisions(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -493,13 +503,13 @@ TelcoAutomationLogging::ListDeploymentRevisions(
 
 StatusOr<google::cloud::telcoautomation::v1::DiscardDeploymentChangesResponse>
 TelcoAutomationLogging::DiscardDeploymentChanges(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::telcoautomation::v1::DiscardDeploymentChangesRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::telcoautomation::v1::DiscardDeploymentChangesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::telcoautomation::v1::
-                 DiscardDeploymentChangesRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::telcoautomation::v1::DiscardDeploymentChangesRequest const& request) {
         return child_->DiscardDeploymentChanges(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -507,12 +517,13 @@ TelcoAutomationLogging::DiscardDeploymentChanges(
 
 StatusOr<google::cloud::telcoautomation::v1::Deployment>
 TelcoAutomationLogging::ApplyDeployment(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::telcoautomation::v1::ApplyDeploymentRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::telcoautomation::v1::ApplyDeploymentRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::telcoautomation::v1::ApplyDeploymentRequest const& request) {
         return child_->ApplyDeployment(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -520,13 +531,13 @@ TelcoAutomationLogging::ApplyDeployment(
 
 StatusOr<google::cloud::telcoautomation::v1::ComputeDeploymentStatusResponse>
 TelcoAutomationLogging::ComputeDeploymentStatus(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::telcoautomation::v1::ComputeDeploymentStatusRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::telcoautomation::v1::ComputeDeploymentStatusRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::telcoautomation::v1::
-                 ComputeDeploymentStatusRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::telcoautomation::v1::ComputeDeploymentStatusRequest const& request) {
         return child_->ComputeDeploymentStatus(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -534,14 +545,13 @@ TelcoAutomationLogging::ComputeDeploymentStatus(
 
 StatusOr<google::cloud::telcoautomation::v1::Deployment>
 TelcoAutomationLogging::RollbackDeployment(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::telcoautomation::v1::RollbackDeploymentRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::telcoautomation::v1::RollbackDeploymentRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::telcoautomation::v1::RollbackDeploymentRequest const&
-              request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::telcoautomation::v1::RollbackDeploymentRequest const& request) {
         return child_->RollbackDeployment(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -549,13 +559,13 @@ TelcoAutomationLogging::RollbackDeployment(
 
 StatusOr<google::cloud::telcoautomation::v1::HydratedDeployment>
 TelcoAutomationLogging::GetHydratedDeployment(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::telcoautomation::v1::GetHydratedDeploymentRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::telcoautomation::v1::GetHydratedDeploymentRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::telcoautomation::v1::
-                 GetHydratedDeploymentRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::telcoautomation::v1::GetHydratedDeploymentRequest const& request) {
         return child_->GetHydratedDeployment(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -563,13 +573,13 @@ TelcoAutomationLogging::GetHydratedDeployment(
 
 StatusOr<google::cloud::telcoautomation::v1::ListHydratedDeploymentsResponse>
 TelcoAutomationLogging::ListHydratedDeployments(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::telcoautomation::v1::ListHydratedDeploymentsRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::telcoautomation::v1::ListHydratedDeploymentsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::telcoautomation::v1::
-                 ListHydratedDeploymentsRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::telcoautomation::v1::ListHydratedDeploymentsRequest const& request) {
         return child_->ListHydratedDeployments(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -577,13 +587,13 @@ TelcoAutomationLogging::ListHydratedDeployments(
 
 StatusOr<google::cloud::telcoautomation::v1::HydratedDeployment>
 TelcoAutomationLogging::UpdateHydratedDeployment(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::telcoautomation::v1::UpdateHydratedDeploymentRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::telcoautomation::v1::UpdateHydratedDeploymentRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::telcoautomation::v1::
-                 UpdateHydratedDeploymentRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::telcoautomation::v1::UpdateHydratedDeploymentRequest const& request) {
         return child_->UpdateHydratedDeployment(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -591,13 +601,13 @@ TelcoAutomationLogging::UpdateHydratedDeployment(
 
 StatusOr<google::cloud::telcoautomation::v1::HydratedDeployment>
 TelcoAutomationLogging::ApplyHydratedDeployment(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::telcoautomation::v1::ApplyHydratedDeploymentRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::telcoautomation::v1::ApplyHydratedDeploymentRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::telcoautomation::v1::
-                 ApplyHydratedDeploymentRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::telcoautomation::v1::ApplyHydratedDeploymentRequest const& request) {
         return child_->ApplyHydratedDeployment(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -605,21 +615,26 @@ TelcoAutomationLogging::ApplyHydratedDeployment(
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 TelcoAutomationLogging::ListLocations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::location::ListLocationsRequest const& request) {
         return child_->ListLocations(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::cloud::location::Location> TelcoAutomationLogging::GetLocation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::location::Location>
+TelcoAutomationLogging::GetLocation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::location::GetLocationRequest const& request) {
         return child_->GetLocation(context, options, request);
       },
@@ -628,43 +643,54 @@ StatusOr<google::cloud::location::Location> TelcoAutomationLogging::GetLocation(
 
 StatusOr<google::longrunning::ListOperationsResponse>
 TelcoAutomationLogging::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::ListOperationsRequest const& request) {
         return child_->ListOperations(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> TelcoAutomationLogging::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::Operation>
+TelcoAutomationLogging::GetOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::GetOperationRequest const& request) {
         return child_->GetOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status TelcoAutomationLogging::DeleteOperation(
-    grpc::ClientContext& context, Options const& options,
+Status
+TelcoAutomationLogging::DeleteOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::DeleteOperationRequest const& request) {
         return child_->DeleteOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status TelcoAutomationLogging::CancelOperation(
-    grpc::ClientContext& context, Options const& options,
+Status
+TelcoAutomationLogging::CancelOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::CancelOperationRequest const& request) {
         return child_->CancelOperation(context, options, request);
       },
@@ -682,8 +708,8 @@ TelcoAutomationLogging::AsyncGetOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(cq, std::move(context),
-                                         std::move(options), request);
+        return child_->AsyncGetOperation(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -699,8 +725,8 @@ future<Status> TelcoAutomationLogging::AsyncCancelOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::CancelOperationRequest const& request) {
-        return child_->AsyncCancelOperation(cq, std::move(context),
-                                            std::move(options), request);
+        return child_->AsyncCancelOperation(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);

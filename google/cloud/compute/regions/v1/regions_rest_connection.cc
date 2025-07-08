@@ -17,12 +17,12 @@
 // source: google/cloud/compute/regions/v1/regions.proto
 
 #include "google/cloud/compute/regions/v1/regions_rest_connection.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/compute/regions/v1/internal/regions_option_defaults.h"
 #include "google/cloud/compute/regions/v1/internal/regions_rest_connection_impl.h"
 #include "google/cloud/compute/regions/v1/internal/regions_rest_stub_factory.h"
 #include "google/cloud/compute/regions/v1/internal/regions_tracing_connection.h"
 #include "google/cloud/compute/regions/v1/regions_options.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/rest_background_threads_impl.h"
 #include "google/cloud/internal/rest_options.h"
@@ -34,19 +34,20 @@ namespace cloud {
 namespace compute_regions_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<RegionsConnection> MakeRegionsConnectionRest(Options options) {
-  internal::CheckExpectedOptions<
-      CommonOptionList, RestOptionList, UnifiedCredentialsOptionList,
-      rest_internal::TargetApiVersionOption, RegionsPolicyOptionList>(options,
-                                                                      __func__);
-  options =
-      compute_regions_v1_internal::RegionsDefaultOptions(std::move(options));
+std::shared_ptr<RegionsConnection> MakeRegionsConnectionRest(
+    Options options) {
+  internal::CheckExpectedOptions<CommonOptionList, RestOptionList,
+      UnifiedCredentialsOptionList, rest_internal::TargetApiVersionOption,
+      RegionsPolicyOptionList>(options, __func__);
+  options = compute_regions_v1_internal::RegionsDefaultOptions(
+      std::move(options));
   auto background = std::make_unique<
       rest_internal::AutomaticallyCreatedRestBackgroundThreads>();
-  auto stub =
-      compute_regions_v1_internal::CreateDefaultRegionsRestStub(options);
+  auto stub = compute_regions_v1_internal::CreateDefaultRegionsRestStub(
+      options);
   return compute_regions_v1_internal::MakeRegionsTracingConnection(
-      std::make_shared<compute_regions_v1_internal::RegionsRestConnectionImpl>(
+      std::make_shared<
+          compute_regions_v1_internal::RegionsRestConnectionImpl>(
           std::move(background), std::move(stub), std::move(options)));
 }
 

@@ -30,92 +30,84 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-class FlowsTracingConnection : public dialogflow_cx::FlowsConnection {
+class FlowsTracingConnection
+    : public dialogflow_cx::FlowsConnection {
  public:
   ~FlowsTracingConnection() override = default;
 
   explicit FlowsTracingConnection(
-      std::shared_ptr<dialogflow_cx::FlowsConnection> child);
+    std::shared_ptr<dialogflow_cx::FlowsConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::dialogflow::cx::v3::Flow> CreateFlow(
-      google::cloud::dialogflow::cx::v3::CreateFlowRequest const& request)
-      override;
+  StatusOr<google::cloud::dialogflow::cx::v3::Flow>
+  CreateFlow(google::cloud::dialogflow::cx::v3::CreateFlowRequest const& request) override;
 
-  Status DeleteFlow(google::cloud::dialogflow::cx::v3::DeleteFlowRequest const&
-                        request) override;
+  Status
+  DeleteFlow(google::cloud::dialogflow::cx::v3::DeleteFlowRequest const& request) override;
 
-  StreamRange<google::cloud::dialogflow::cx::v3::Flow> ListFlows(
-      google::cloud::dialogflow::cx::v3::ListFlowsRequest request) override;
+  StreamRange<google::cloud::dialogflow::cx::v3::Flow>
+  ListFlows(google::cloud::dialogflow::cx::v3::ListFlowsRequest request) override;
 
-  StatusOr<google::cloud::dialogflow::cx::v3::Flow> GetFlow(
-      google::cloud::dialogflow::cx::v3::GetFlowRequest const& request)
-      override;
+  StatusOr<google::cloud::dialogflow::cx::v3::Flow>
+  GetFlow(google::cloud::dialogflow::cx::v3::GetFlowRequest const& request) override;
 
-  StatusOr<google::cloud::dialogflow::cx::v3::Flow> UpdateFlow(
-      google::cloud::dialogflow::cx::v3::UpdateFlowRequest const& request)
-      override;
+  StatusOr<google::cloud::dialogflow::cx::v3::Flow>
+  UpdateFlow(google::cloud::dialogflow::cx::v3::UpdateFlowRequest const& request) override;
 
-  future<StatusOr<google::protobuf::Struct>> TrainFlow(
-      google::cloud::dialogflow::cx::v3::TrainFlowRequest const& request)
-      override;
+  future<StatusOr<google::protobuf::Struct>>
+  TrainFlow(google::cloud::dialogflow::cx::v3::TrainFlowRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> TrainFlow(
-      NoAwaitTag,
-      google::cloud::dialogflow::cx::v3::TrainFlowRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  TrainFlow(NoAwaitTag,
+      google::cloud::dialogflow::cx::v3::TrainFlowRequest const& request) override;
 
-  future<StatusOr<google::protobuf::Struct>> TrainFlow(
+  future<StatusOr<google::protobuf::Struct>>
+  TrainFlow(
       google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::dialogflow::cx::v3::FlowValidationResult>
-  ValidateFlow(google::cloud::dialogflow::cx::v3::ValidateFlowRequest const&
-                   request) override;
+  ValidateFlow(google::cloud::dialogflow::cx::v3::ValidateFlowRequest const& request) override;
 
   StatusOr<google::cloud::dialogflow::cx::v3::FlowValidationResult>
-  GetFlowValidationResult(
-      google::cloud::dialogflow::cx::v3::GetFlowValidationResultRequest const&
-          request) override;
+  GetFlowValidationResult(google::cloud::dialogflow::cx::v3::GetFlowValidationResultRequest const& request) override;
 
   future<StatusOr<google::cloud::dialogflow::cx::v3::ImportFlowResponse>>
-  ImportFlow(google::cloud::dialogflow::cx::v3::ImportFlowRequest const&
-                 request) override;
+  ImportFlow(google::cloud::dialogflow::cx::v3::ImportFlowRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> ImportFlow(
-      NoAwaitTag,
-      google::cloud::dialogflow::cx::v3::ImportFlowRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  ImportFlow(NoAwaitTag,
+      google::cloud::dialogflow::cx::v3::ImportFlowRequest const& request) override;
 
   future<StatusOr<google::cloud::dialogflow::cx::v3::ImportFlowResponse>>
-  ImportFlow(google::longrunning::Operation const& operation) override;
+  ImportFlow(
+      google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::dialogflow::cx::v3::ExportFlowResponse>>
-  ExportFlow(google::cloud::dialogflow::cx::v3::ExportFlowRequest const&
-                 request) override;
+  ExportFlow(google::cloud::dialogflow::cx::v3::ExportFlowRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> ExportFlow(
-      NoAwaitTag,
-      google::cloud::dialogflow::cx::v3::ExportFlowRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  ExportFlow(NoAwaitTag,
+      google::cloud::dialogflow::cx::v3::ExportFlowRequest const& request) override;
 
   future<StatusOr<google::cloud::dialogflow::cx::v3::ExportFlowResponse>>
-  ExportFlow(google::longrunning::Operation const& operation) override;
+  ExportFlow(
+      google::longrunning::Operation const& operation) override;
 
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request) override;
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request) override;
 
-  StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request) override;
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request) override;
 
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request) override;
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::shared_ptr<dialogflow_cx::FlowsConnection> child_;
@@ -129,7 +121,8 @@ class FlowsTracingConnection : public dialogflow_cx::FlowsConnection {
  * The connection is only decorated if tracing is enabled (as determined by the
  * connection's options).
  */
-std::shared_ptr<dialogflow_cx::FlowsConnection> MakeFlowsTracingConnection(
+std::shared_ptr<dialogflow_cx::FlowsConnection>
+MakeFlowsTracingConnection(
     std::shared_ptr<dialogflow_cx::FlowsConnection> conn);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

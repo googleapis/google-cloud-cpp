@@ -17,8 +17,8 @@
 // source: google/cloud/chronicle/v1/data_access_control.proto
 
 #include "google/cloud/chronicle/v1/internal/data_access_control_connection_impl.h"
-#include "google/cloud/chronicle/v1/internal/data_access_control_option_defaults.h"
 #include "google/cloud/background_threads.h"
+#include "google/cloud/chronicle/v1/internal/data_access_control_option_defaults.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
@@ -32,99 +32,80 @@ namespace chronicle_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<chronicle_v1::DataAccessControlServiceRetryPolicy> retry_policy(
-    Options const& options) {
-  return options.get<chronicle_v1::DataAccessControlServiceRetryPolicyOption>()
-      ->clone();
+std::unique_ptr<chronicle_v1::DataAccessControlServiceRetryPolicy>
+retry_policy(Options const& options) {
+  return options.get<chronicle_v1::DataAccessControlServiceRetryPolicyOption>()->clone();
 }
 
-std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-  return options
-      .get<chronicle_v1::DataAccessControlServiceBackoffPolicyOption>()
-      ->clone();
+std::unique_ptr<BackoffPolicy>
+backoff_policy(Options const& options) {
+  return options.get<chronicle_v1::DataAccessControlServiceBackoffPolicyOption>()->clone();
 }
 
-std::unique_ptr<
-    chronicle_v1::DataAccessControlServiceConnectionIdempotencyPolicy>
+std::unique_ptr<chronicle_v1::DataAccessControlServiceConnectionIdempotencyPolicy>
 idempotency_policy(Options const& options) {
-  return options
-      .get<chronicle_v1::
-               DataAccessControlServiceConnectionIdempotencyPolicyOption>()
-      ->clone();
+  return options.get<chronicle_v1::DataAccessControlServiceConnectionIdempotencyPolicyOption>()->clone();
 }
 
-}  // namespace
+} // namespace
 
 DataAccessControlServiceConnectionImpl::DataAccessControlServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<chronicle_v1_internal::DataAccessControlServiceStub> stub,
     Options options)
-    : background_(std::move(background)),
-      stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options), DataAccessControlServiceConnection::options())) {}
+  : background_(std::move(background)), stub_(std::move(stub)),
+    options_(internal::MergeOptions(
+        std::move(options),
+        DataAccessControlServiceConnection::options())) {}
 
 StatusOr<google::cloud::chronicle::v1::DataAccessLabel>
-DataAccessControlServiceConnectionImpl::CreateDataAccessLabel(
-    google::cloud::chronicle::v1::CreateDataAccessLabelRequest const& request) {
+DataAccessControlServiceConnectionImpl::CreateDataAccessLabel(google::cloud::chronicle::v1::CreateDataAccessLabelRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateDataAccessLabel(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::chronicle::v1::CreateDataAccessLabelRequest const&
-                 request) {
+             google::cloud::chronicle::v1::CreateDataAccessLabelRequest const& request) {
         return stub_->CreateDataAccessLabel(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::chronicle::v1::DataAccessLabel>
-DataAccessControlServiceConnectionImpl::GetDataAccessLabel(
-    google::cloud::chronicle::v1::GetDataAccessLabelRequest const& request) {
+DataAccessControlServiceConnectionImpl::GetDataAccessLabel(google::cloud::chronicle::v1::GetDataAccessLabelRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetDataAccessLabel(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::chronicle::v1::GetDataAccessLabelRequest const&
-                 request) {
+             google::cloud::chronicle::v1::GetDataAccessLabelRequest const& request) {
         return stub_->GetDataAccessLabel(context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::cloud::chronicle::v1::DataAccessLabel>
-DataAccessControlServiceConnectionImpl::ListDataAccessLabels(
-    google::cloud::chronicle::v1::ListDataAccessLabelsRequest request) {
+DataAccessControlServiceConnectionImpl::ListDataAccessLabels(google::cloud::chronicle::v1::ListDataAccessLabelsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
-  auto idempotency =
-      idempotency_policy(*current)->ListDataAccessLabels(request);
+  auto idempotency = idempotency_policy(*current)->ListDataAccessLabels(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::chronicle::v1::DataAccessLabel>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::chronicle::v1::DataAccessLabel>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry =
-           std::shared_ptr<chronicle_v1::DataAccessControlServiceRetryPolicy>(
-               retry_policy(*current)),
+       retry = std::shared_ptr<chronicle_v1::DataAccessControlServiceRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::chronicle::v1::ListDataAccessLabelsRequest const& r) {
+          Options const& options, google::cloud::chronicle::v1::ListDataAccessLabelsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](
-                grpc::ClientContext& context, Options const& options,
-                google::cloud::chronicle::v1::ListDataAccessLabelsRequest const&
-                    request) {
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::cloud::chronicle::v1::ListDataAccessLabelsRequest const& request) {
               return stub->ListDataAccessLabels(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::chronicle::v1::ListDataAccessLabelsResponse r) {
-        std::vector<google::cloud::chronicle::v1::DataAccessLabel> result(
-            r.data_access_labels().size());
+        std::vector<google::cloud::chronicle::v1::DataAccessLabel> result(r.data_access_labels().size());
         auto& messages = *r.mutable_data_access_labels();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -132,95 +113,79 @@ DataAccessControlServiceConnectionImpl::ListDataAccessLabels(
 }
 
 StatusOr<google::cloud::chronicle::v1::DataAccessLabel>
-DataAccessControlServiceConnectionImpl::UpdateDataAccessLabel(
-    google::cloud::chronicle::v1::UpdateDataAccessLabelRequest const& request) {
+DataAccessControlServiceConnectionImpl::UpdateDataAccessLabel(google::cloud::chronicle::v1::UpdateDataAccessLabelRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateDataAccessLabel(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::chronicle::v1::UpdateDataAccessLabelRequest const&
-                 request) {
+             google::cloud::chronicle::v1::UpdateDataAccessLabelRequest const& request) {
         return stub_->UpdateDataAccessLabel(context, options, request);
       },
       *current, request, __func__);
 }
 
-Status DataAccessControlServiceConnectionImpl::DeleteDataAccessLabel(
-    google::cloud::chronicle::v1::DeleteDataAccessLabelRequest const& request) {
+Status
+DataAccessControlServiceConnectionImpl::DeleteDataAccessLabel(google::cloud::chronicle::v1::DeleteDataAccessLabelRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteDataAccessLabel(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::chronicle::v1::DeleteDataAccessLabelRequest const&
-                 request) {
+             google::cloud::chronicle::v1::DeleteDataAccessLabelRequest const& request) {
         return stub_->DeleteDataAccessLabel(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::chronicle::v1::DataAccessScope>
-DataAccessControlServiceConnectionImpl::CreateDataAccessScope(
-    google::cloud::chronicle::v1::CreateDataAccessScopeRequest const& request) {
+DataAccessControlServiceConnectionImpl::CreateDataAccessScope(google::cloud::chronicle::v1::CreateDataAccessScopeRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateDataAccessScope(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::chronicle::v1::CreateDataAccessScopeRequest const&
-                 request) {
+             google::cloud::chronicle::v1::CreateDataAccessScopeRequest const& request) {
         return stub_->CreateDataAccessScope(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::chronicle::v1::DataAccessScope>
-DataAccessControlServiceConnectionImpl::GetDataAccessScope(
-    google::cloud::chronicle::v1::GetDataAccessScopeRequest const& request) {
+DataAccessControlServiceConnectionImpl::GetDataAccessScope(google::cloud::chronicle::v1::GetDataAccessScopeRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetDataAccessScope(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::chronicle::v1::GetDataAccessScopeRequest const&
-                 request) {
+             google::cloud::chronicle::v1::GetDataAccessScopeRequest const& request) {
         return stub_->GetDataAccessScope(context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::cloud::chronicle::v1::DataAccessScope>
-DataAccessControlServiceConnectionImpl::ListDataAccessScopes(
-    google::cloud::chronicle::v1::ListDataAccessScopesRequest request) {
+DataAccessControlServiceConnectionImpl::ListDataAccessScopes(google::cloud::chronicle::v1::ListDataAccessScopesRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
-  auto idempotency =
-      idempotency_policy(*current)->ListDataAccessScopes(request);
+  auto idempotency = idempotency_policy(*current)->ListDataAccessScopes(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::chronicle::v1::DataAccessScope>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::chronicle::v1::DataAccessScope>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry =
-           std::shared_ptr<chronicle_v1::DataAccessControlServiceRetryPolicy>(
-               retry_policy(*current)),
+       retry = std::shared_ptr<chronicle_v1::DataAccessControlServiceRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::chronicle::v1::ListDataAccessScopesRequest const& r) {
+          Options const& options, google::cloud::chronicle::v1::ListDataAccessScopesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](
-                grpc::ClientContext& context, Options const& options,
-                google::cloud::chronicle::v1::ListDataAccessScopesRequest const&
-                    request) {
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::cloud::chronicle::v1::ListDataAccessScopesRequest const& request) {
               return stub->ListDataAccessScopes(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::chronicle::v1::ListDataAccessScopesResponse r) {
-        std::vector<google::cloud::chronicle::v1::DataAccessScope> result(
-            r.data_access_scopes().size());
+        std::vector<google::cloud::chronicle::v1::DataAccessScope> result(r.data_access_scopes().size());
         auto& messages = *r.mutable_data_access_scopes();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -228,51 +193,43 @@ DataAccessControlServiceConnectionImpl::ListDataAccessScopes(
 }
 
 StatusOr<google::cloud::chronicle::v1::DataAccessScope>
-DataAccessControlServiceConnectionImpl::UpdateDataAccessScope(
-    google::cloud::chronicle::v1::UpdateDataAccessScopeRequest const& request) {
+DataAccessControlServiceConnectionImpl::UpdateDataAccessScope(google::cloud::chronicle::v1::UpdateDataAccessScopeRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateDataAccessScope(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::chronicle::v1::UpdateDataAccessScopeRequest const&
-                 request) {
+             google::cloud::chronicle::v1::UpdateDataAccessScopeRequest const& request) {
         return stub_->UpdateDataAccessScope(context, options, request);
       },
       *current, request, __func__);
 }
 
-Status DataAccessControlServiceConnectionImpl::DeleteDataAccessScope(
-    google::cloud::chronicle::v1::DeleteDataAccessScopeRequest const& request) {
+Status
+DataAccessControlServiceConnectionImpl::DeleteDataAccessScope(google::cloud::chronicle::v1::DeleteDataAccessScopeRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteDataAccessScope(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::chronicle::v1::DeleteDataAccessScopeRequest const&
-                 request) {
+             google::cloud::chronicle::v1::DeleteDataAccessScopeRequest const& request) {
         return stub_->DeleteDataAccessScope(context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::longrunning::Operation>
-DataAccessControlServiceConnectionImpl::ListOperations(
-    google::longrunning::ListOperationsRequest request) {
+DataAccessControlServiceConnectionImpl::ListOperations(google::longrunning::ListOperationsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListOperations(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::longrunning::Operation>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::longrunning::Operation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry =
-           std::shared_ptr<chronicle_v1::DataAccessControlServiceRetryPolicy>(
-               retry_policy(*current)),
+       retry = std::shared_ptr<chronicle_v1::DataAccessControlServiceRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::longrunning::ListOperationsRequest const& r) {
+          Options const& options, google::longrunning::ListOperationsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
@@ -282,8 +239,7 @@ DataAccessControlServiceConnectionImpl::ListOperations(
             options, r, function_name);
       },
       [](google::longrunning::ListOperationsResponse r) {
-        std::vector<google::longrunning::Operation> result(
-            r.operations().size());
+        std::vector<google::longrunning::Operation> result(r.operations().size());
         auto& messages = *r.mutable_operations();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -291,8 +247,7 @@ DataAccessControlServiceConnectionImpl::ListOperations(
 }
 
 StatusOr<google::longrunning::Operation>
-DataAccessControlServiceConnectionImpl::GetOperation(
-    google::longrunning::GetOperationRequest const& request) {
+DataAccessControlServiceConnectionImpl::GetOperation(google::longrunning::GetOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -304,8 +259,8 @@ DataAccessControlServiceConnectionImpl::GetOperation(
       *current, request, __func__);
 }
 
-Status DataAccessControlServiceConnectionImpl::DeleteOperation(
-    google::longrunning::DeleteOperationRequest const& request) {
+Status
+DataAccessControlServiceConnectionImpl::DeleteOperation(google::longrunning::DeleteOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -317,8 +272,8 @@ Status DataAccessControlServiceConnectionImpl::DeleteOperation(
       *current, request, __func__);
 }
 
-Status DataAccessControlServiceConnectionImpl::CancelOperation(
-    google::longrunning::CancelOperationRequest const& request) {
+Status
+DataAccessControlServiceConnectionImpl::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),

@@ -19,11 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SUPPORT_V2_COMMENT_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SUPPORT_V2_COMMENT_CLIENT_H
 
-#include "google/cloud/support/v2/comment_connection.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
+#include "google/cloud/support/v2/comment_connection.h"
 #include "google/cloud/version.h"
 #include <memory>
 #include <string>
@@ -61,8 +61,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class CommentServiceClient {
  public:
-  explicit CommentServiceClient(
-      std::shared_ptr<CommentServiceConnection> connection, Options opts = {});
+  explicit CommentServiceClient(std::shared_ptr<CommentServiceConnection> connection, Options opts = {});
   ~CommentServiceClient();
 
   ///@{
@@ -75,12 +74,10 @@ class CommentServiceClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(CommentServiceClient const& a,
-                         CommentServiceClient const& b) {
+  friend bool operator==(CommentServiceClient const& a, CommentServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(CommentServiceClient const& a,
-                         CommentServiceClient const& b) {
+  friend bool operator!=(CommentServiceClient const& a, CommentServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -116,8 +113,8 @@ class CommentServiceClient {
   /// [google.cloud.support.v2.ListCommentsRequest]: @googleapis_reference_link{google/cloud/support/v2/comment_service.proto#L67}
   ///
   // clang-format on
-  StreamRange<google::cloud::support::v2::Comment> ListComments(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::support::v2::Comment>
+  ListComments(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -155,9 +152,8 @@ class CommentServiceClient {
   /// [google.cloud.support.v2.ListCommentsRequest]: @googleapis_reference_link{google/cloud/support/v2/comment_service.proto#L67}
   ///
   // clang-format on
-  StreamRange<google::cloud::support::v2::Comment> ListComments(
-      google::cloud::support::v2::ListCommentsRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::support::v2::Comment>
+  ListComments(google::cloud::support::v2::ListCommentsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -184,9 +180,8 @@ class CommentServiceClient {
   /// [google.cloud.support.v2.CreateCommentRequest]: @googleapis_reference_link{google/cloud/support/v2/comment_service.proto#L96}
   ///
   // clang-format on
-  StatusOr<google::cloud::support::v2::Comment> CreateComment(
-      std::string const& parent,
-      google::cloud::support::v2::Comment const& comment, Options opts = {});
+  StatusOr<google::cloud::support::v2::Comment>
+  CreateComment(std::string const& parent, google::cloud::support::v2::Comment const& comment, Options opts = {});
 
   // clang-format off
   ///
@@ -217,9 +212,8 @@ class CommentServiceClient {
   /// [google.cloud.support.v2.CreateCommentRequest]: @googleapis_reference_link{google/cloud/support/v2/comment_service.proto#L96}
   ///
   // clang-format on
-  StatusOr<google::cloud::support::v2::Comment> CreateComment(
-      google::cloud::support::v2::CreateCommentRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::support::v2::Comment>
+  CreateComment(google::cloud::support::v2::CreateCommentRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<CommentServiceConnection> connection_;

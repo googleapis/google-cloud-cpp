@@ -34,54 +34,44 @@ class CloudControlsPartnerCoreConnectionIdempotencyPolicy {
   virtual ~CloudControlsPartnerCoreConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<CloudControlsPartnerCoreConnectionIdempotencyPolicy>
-  clone() const;
+  virtual std::unique_ptr<CloudControlsPartnerCoreConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency GetWorkload(
-      google::cloud::cloudcontrolspartner::v1::GetWorkloadRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  GetWorkload(google::cloud::cloudcontrolspartner::v1::GetWorkloadRequest const& request);
 
-  virtual google::cloud::Idempotency ListWorkloads(
-      google::cloud::cloudcontrolspartner::v1::ListWorkloadsRequest request);
+  virtual google::cloud::Idempotency
+  ListWorkloads(google::cloud::cloudcontrolspartner::v1::ListWorkloadsRequest request);
 
-  virtual google::cloud::Idempotency GetCustomer(
-      google::cloud::cloudcontrolspartner::v1::GetCustomerRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  GetCustomer(google::cloud::cloudcontrolspartner::v1::GetCustomerRequest const& request);
 
-  virtual google::cloud::Idempotency ListCustomers(
-      google::cloud::cloudcontrolspartner::v1::ListCustomersRequest request);
+  virtual google::cloud::Idempotency
+  ListCustomers(google::cloud::cloudcontrolspartner::v1::ListCustomersRequest request);
 
-  virtual google::cloud::Idempotency GetEkmConnections(
-      google::cloud::cloudcontrolspartner::v1::GetEkmConnectionsRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  GetEkmConnections(google::cloud::cloudcontrolspartner::v1::GetEkmConnectionsRequest const& request);
 
-  virtual google::cloud::Idempotency GetPartnerPermissions(
-      google::cloud::cloudcontrolspartner::v1::
-          GetPartnerPermissionsRequest const& request);
+  virtual google::cloud::Idempotency
+  GetPartnerPermissions(google::cloud::cloudcontrolspartner::v1::GetPartnerPermissionsRequest const& request);
 
-  virtual google::cloud::Idempotency ListAccessApprovalRequests(
-      google::cloud::cloudcontrolspartner::v1::ListAccessApprovalRequestsRequest
-          request);
+  virtual google::cloud::Idempotency
+  ListAccessApprovalRequests(google::cloud::cloudcontrolspartner::v1::ListAccessApprovalRequestsRequest request);
 
-  virtual google::cloud::Idempotency GetPartner(
-      google::cloud::cloudcontrolspartner::v1::GetPartnerRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  GetPartner(google::cloud::cloudcontrolspartner::v1::GetPartnerRequest const& request);
 
-  virtual google::cloud::Idempotency CreateCustomer(
-      google::cloud::cloudcontrolspartner::v1::CreateCustomerRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  CreateCustomer(google::cloud::cloudcontrolspartner::v1::CreateCustomerRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateCustomer(
-      google::cloud::cloudcontrolspartner::v1::UpdateCustomerRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  UpdateCustomer(google::cloud::cloudcontrolspartner::v1::UpdateCustomerRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteCustomer(
-      google::cloud::cloudcontrolspartner::v1::DeleteCustomerRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  DeleteCustomer(google::cloud::cloudcontrolspartner::v1::DeleteCustomerRequest const& request);
 };
 
 std::unique_ptr<CloudControlsPartnerCoreConnectionIdempotencyPolicy>
-MakeDefaultCloudControlsPartnerCoreConnectionIdempotencyPolicy();
+    MakeDefaultCloudControlsPartnerCoreConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloudcontrolspartner_v1

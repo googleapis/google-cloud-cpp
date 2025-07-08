@@ -42,22 +42,17 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockNetworkProfilesConnection
-    : public compute_network_profiles_v1::NetworkProfilesConnection {
+class MockNetworkProfilesConnection : public compute_network_profiles_v1::NetworkProfilesConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::NetworkProfile>,
-              GetNetworkProfile,
-              (google::cloud::cpp::compute::network_profiles::v1::
-                   GetNetworkProfileRequest const& request),
-              (override));
+  GetNetworkProfile,
+  (google::cloud::cpp::compute::network_profiles::v1::GetNetworkProfileRequest const& request), (override));
 
   MOCK_METHOD((StreamRange<google::cloud::cpp::compute::v1::NetworkProfile>),
-              ListNetworkProfiles,
-              (google::cloud::cpp::compute::network_profiles::v1::
-                   ListNetworkProfilesRequest request),
-              (override));
+  ListNetworkProfiles,
+  (google::cloud::cpp::compute::network_profiles::v1::ListNetworkProfilesRequest request), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

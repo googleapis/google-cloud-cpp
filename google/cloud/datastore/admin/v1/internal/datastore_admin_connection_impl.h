@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATASTORE_ADMIN_V1_INTERNAL_DATASTORE_ADMIN_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATASTORE_ADMIN_V1_INTERNAL_DATASTORE_ADMIN_CONNECTION_IMPL_H
 
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/datastore/admin/v1/datastore_admin_connection.h"
 #include "google/cloud/datastore/admin/v1/datastore_admin_connection_idempotency_policy.h"
 #include "google/cloud/datastore/admin/v1/datastore_admin_options.h"
 #include "google/cloud/datastore/admin/v1/internal/datastore_admin_retry_traits.h"
 #include "google/cloud/datastore/admin/v1/internal/datastore_admin_stub.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -46,73 +46,73 @@ class DatastoreAdminConnectionImpl
   ~DatastoreAdminConnectionImpl() override = default;
 
   DatastoreAdminConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<datastore_admin_v1_internal::DatastoreAdminStub> stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<datastore_admin_v1_internal::DatastoreAdminStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
   future<StatusOr<google::datastore::admin::v1::ExportEntitiesResponse>>
-  ExportEntities(google::datastore::admin::v1::ExportEntitiesRequest const&
-                     request) override;
+  ExportEntities(google::datastore::admin::v1::ExportEntitiesRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> ExportEntities(
-      NoAwaitTag,
-      google::datastore::admin::v1::ExportEntitiesRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  ExportEntities(NoAwaitTag,
+      google::datastore::admin::v1::ExportEntitiesRequest const& request) override;
 
   future<StatusOr<google::datastore::admin::v1::ExportEntitiesResponse>>
-  ExportEntities(google::longrunning::Operation const& operation) override;
-
-  future<StatusOr<google::datastore::admin::v1::ImportEntitiesMetadata>>
-  ImportEntities(google::datastore::admin::v1::ImportEntitiesRequest const&
-                     request) override;
-
-  StatusOr<google::longrunning::Operation> ImportEntities(
-      NoAwaitTag,
-      google::datastore::admin::v1::ImportEntitiesRequest const& request)
-      override;
-
-  future<StatusOr<google::datastore::admin::v1::ImportEntitiesMetadata>>
-  ImportEntities(google::longrunning::Operation const& operation) override;
-
-  future<StatusOr<google::datastore::admin::v1::Index>> CreateIndex(
-      google::datastore::admin::v1::CreateIndexRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation> CreateIndex(
-      NoAwaitTag,
-      google::datastore::admin::v1::CreateIndexRequest const& request) override;
-
-  future<StatusOr<google::datastore::admin::v1::Index>> CreateIndex(
+  ExportEntities(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::datastore::admin::v1::Index>> DeleteIndex(
-      google::datastore::admin::v1::DeleteIndexRequest const& request) override;
+  future<StatusOr<google::datastore::admin::v1::ImportEntitiesMetadata>>
+  ImportEntities(google::datastore::admin::v1::ImportEntitiesRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> DeleteIndex(
-      NoAwaitTag,
-      google::datastore::admin::v1::DeleteIndexRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  ImportEntities(NoAwaitTag,
+      google::datastore::admin::v1::ImportEntitiesRequest const& request) override;
 
-  future<StatusOr<google::datastore::admin::v1::Index>> DeleteIndex(
+  future<StatusOr<google::datastore::admin::v1::ImportEntitiesMetadata>>
+  ImportEntities(
       google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::datastore::admin::v1::Index> GetIndex(
-      google::datastore::admin::v1::GetIndexRequest const& request) override;
+  future<StatusOr<google::datastore::admin::v1::Index>>
+  CreateIndex(google::datastore::admin::v1::CreateIndexRequest const& request) override;
 
-  StreamRange<google::datastore::admin::v1::Index> ListIndexes(
-      google::datastore::admin::v1::ListIndexesRequest request) override;
+  StatusOr<google::longrunning::Operation>
+  CreateIndex(NoAwaitTag,
+      google::datastore::admin::v1::CreateIndexRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request) override;
+  future<StatusOr<google::datastore::admin::v1::Index>>
+  CreateIndex(
+      google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request) override;
+  future<StatusOr<google::datastore::admin::v1::Index>>
+  DeleteIndex(google::datastore::admin::v1::DeleteIndexRequest const& request) override;
 
-  Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  DeleteIndex(NoAwaitTag,
+      google::datastore::admin::v1::DeleteIndexRequest const& request) override;
 
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request) override;
+  future<StatusOr<google::datastore::admin::v1::Index>>
+  DeleteIndex(
+      google::longrunning::Operation const& operation) override;
+
+  StatusOr<google::datastore::admin::v1::Index>
+  GetIndex(google::datastore::admin::v1::GetIndexRequest const& request) override;
+
+  StreamRange<google::datastore::admin::v1::Index>
+  ListIndexes(google::datastore::admin::v1::ListIndexesRequest request) override;
+
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request) override;
+
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request) override;
+
+  Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request) override;
+
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

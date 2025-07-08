@@ -29,8 +29,8 @@ namespace cloud {
 namespace compute_instance_templates_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<InstanceTemplatesRestStub>
-CreateDefaultInstanceTemplatesRestStub(Options const& options);
+std::shared_ptr<InstanceTemplatesRestStub> CreateDefaultInstanceTemplatesRestStub(
+    Options const& options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_instance_templates_v1_internal

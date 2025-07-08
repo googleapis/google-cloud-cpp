@@ -35,31 +35,23 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options ContainerAnalysisDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_CONTAINER_ANALYSIS_ENDPOINT", "",
-      "GOOGLE_CLOUD_CPP_CONTAINER_ANALYSIS_AUTHORITY",
+      std::move(options), "GOOGLE_CLOUD_CPP_CONTAINER_ANALYSIS_ENDPOINT",
+      "", "GOOGLE_CLOUD_CPP_CONTAINER_ANALYSIS_AUTHORITY",
       "containeranalysis.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
-  if (!options
-           .has<containeranalysis_v1::ContainerAnalysisRetryPolicyOption>()) {
+  if (!options.has<containeranalysis_v1::ContainerAnalysisRetryPolicyOption>()) {
     options.set<containeranalysis_v1::ContainerAnalysisRetryPolicyOption>(
         containeranalysis_v1::ContainerAnalysisLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
-            .clone());
+            std::chrono::minutes(30)).clone());
   }
-  if (!options
-           .has<containeranalysis_v1::ContainerAnalysisBackoffPolicyOption>()) {
+  if (!options.has<containeranalysis_v1::ContainerAnalysisBackoffPolicyOption>()) {
     options.set<containeranalysis_v1::ContainerAnalysisBackoffPolicyOption>(
-        ExponentialBackoffPolicy(
-            std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
-            .clone());
+        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
   }
-  if (!options.has<containeranalysis_v1::
-                       ContainerAnalysisConnectionIdempotencyPolicyOption>()) {
-    options.set<containeranalysis_v1::
-                    ContainerAnalysisConnectionIdempotencyPolicyOption>(
-        containeranalysis_v1::
-            MakeDefaultContainerAnalysisConnectionIdempotencyPolicy());
+  if (!options.has<containeranalysis_v1::ContainerAnalysisConnectionIdempotencyPolicyOption>()) {
+    options.set<containeranalysis_v1::ContainerAnalysisConnectionIdempotencyPolicyOption>(
+        containeranalysis_v1::MakeDefaultContainerAnalysisConnectionIdempotencyPolicy());
   }
 
   return options;

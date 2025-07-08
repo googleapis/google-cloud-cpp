@@ -19,14 +19,14 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PRIVATECA_V1_CERTIFICATE_AUTHORITY_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PRIVATECA_V1_CERTIFICATE_AUTHORITY_CONNECTION_H
 
-#include "google/cloud/privateca/v1/certificate_authority_connection_idempotency_policy.h"
-#include "google/cloud/privateca/v1/internal/certificate_authority_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
+#include "google/cloud/privateca/v1/certificate_authority_connection_idempotency_policy.h"
+#include "google/cloud/privateca/v1/internal/certificate_authority_retry_traits.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
@@ -40,17 +40,14 @@ namespace privateca_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `CertificateAuthorityServiceConnection`.
-class CertificateAuthorityServiceRetryPolicy
-    : public ::google::cloud::RetryPolicy {
+class CertificateAuthorityServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  public:
   /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<CertificateAuthorityServiceRetryPolicy> clone()
-      const = 0;
+  virtual std::unique_ptr<CertificateAuthorityServiceRetryPolicy> clone() const = 0;
 };
 
 /**
- * A retry policy for `CertificateAuthorityServiceConnection` based on counting
- * errors.
+ * A retry policy for `CertificateAuthorityServiceConnection` based on counting errors.
  *
  * This policy stops retrying if:
  * - An RPC returns a non-transient error.
@@ -60,8 +57,7 @@ class CertificateAuthorityServiceRetryPolicy
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  * - [`kUnknown`](@ref google::cloud::StatusCode)
  */
-class CertificateAuthorityServiceLimitedErrorCountRetryPolicy
-    : public CertificateAuthorityServiceRetryPolicy {
+class CertificateAuthorityServiceLimitedErrorCountRetryPolicy : public CertificateAuthorityServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -70,19 +66,15 @@ class CertificateAuthorityServiceLimitedErrorCountRetryPolicy
    * @note Disable the retry loop by providing an instance of this policy with
    *     @p maximum_failures == 0.
    */
-  explicit CertificateAuthorityServiceLimitedErrorCountRetryPolicy(
-      int maximum_failures)
-      : impl_(maximum_failures) {}
+  explicit CertificateAuthorityServiceLimitedErrorCountRetryPolicy(int maximum_failures)
+    : impl_(maximum_failures) {}
 
   CertificateAuthorityServiceLimitedErrorCountRetryPolicy(
       CertificateAuthorityServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : CertificateAuthorityServiceLimitedErrorCountRetryPolicy(
-            rhs.maximum_failures()) {}
+    : CertificateAuthorityServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   CertificateAuthorityServiceLimitedErrorCountRetryPolicy(
-      CertificateAuthorityServiceLimitedErrorCountRetryPolicy const&
-          rhs) noexcept
-      : CertificateAuthorityServiceLimitedErrorCountRetryPolicy(
-            rhs.maximum_failures()) {}
+      CertificateAuthorityServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
+    : CertificateAuthorityServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -93,10 +85,8 @@ class CertificateAuthorityServiceLimitedErrorCountRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<CertificateAuthorityServiceRetryPolicy> clone()
-      const override {
-    return std::make_unique<
-        CertificateAuthorityServiceLimitedErrorCountRetryPolicy>(
+  std::unique_ptr<CertificateAuthorityServiceRetryPolicy> clone() const override {
+    return std::make_unique<CertificateAuthorityServiceLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
 
@@ -104,14 +94,11 @@ class CertificateAuthorityServiceLimitedErrorCountRetryPolicy
   using BaseType = CertificateAuthorityServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      privateca_v1_internal::CertificateAuthorityServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<privateca_v1_internal::CertificateAuthorityServiceRetryTraits> impl_;
 };
 
 /**
- * A retry policy for `CertificateAuthorityServiceConnection` based on elapsed
- * time.
+ * A retry policy for `CertificateAuthorityServiceConnection` based on elapsed time.
  *
  * This policy stops retrying if:
  * - An RPC returns a non-transient error.
@@ -121,8 +108,7 @@ class CertificateAuthorityServiceLimitedErrorCountRetryPolicy
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  * - [`kUnknown`](@ref google::cloud::StatusCode)
  */
-class CertificateAuthorityServiceLimitedTimeRetryPolicy
-    : public CertificateAuthorityServiceRetryPolicy {
+class CertificateAuthorityServiceLimitedTimeRetryPolicy : public CertificateAuthorityServiceRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -147,16 +133,12 @@ class CertificateAuthorityServiceLimitedTimeRetryPolicy
   template <typename DurationRep, typename DurationPeriod>
   explicit CertificateAuthorityServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  CertificateAuthorityServiceLimitedTimeRetryPolicy(
-      CertificateAuthorityServiceLimitedTimeRetryPolicy&& rhs) noexcept
-      : CertificateAuthorityServiceLimitedTimeRetryPolicy(
-            rhs.maximum_duration()) {}
-  CertificateAuthorityServiceLimitedTimeRetryPolicy(
-      CertificateAuthorityServiceLimitedTimeRetryPolicy const& rhs) noexcept
-      : CertificateAuthorityServiceLimitedTimeRetryPolicy(
-            rhs.maximum_duration()) {}
+  CertificateAuthorityServiceLimitedTimeRetryPolicy(CertificateAuthorityServiceLimitedTimeRetryPolicy&& rhs) noexcept
+    : CertificateAuthorityServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  CertificateAuthorityServiceLimitedTimeRetryPolicy(CertificateAuthorityServiceLimitedTimeRetryPolicy const& rhs) noexcept
+    : CertificateAuthorityServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -169,8 +151,7 @@ class CertificateAuthorityServiceLimitedTimeRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<CertificateAuthorityServiceRetryPolicy> clone()
-      const override {
+  std::unique_ptr<CertificateAuthorityServiceRetryPolicy> clone() const override {
     return std::make_unique<CertificateAuthorityServiceLimitedTimeRetryPolicy>(
         maximum_duration());
   }
@@ -179,25 +160,20 @@ class CertificateAuthorityServiceLimitedTimeRetryPolicy
   using BaseType = CertificateAuthorityServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      privateca_v1_internal::CertificateAuthorityServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<privateca_v1_internal::CertificateAuthorityServiceRetryTraits> impl_;
 };
 
 /**
- * The `CertificateAuthorityServiceConnection` object for
- * `CertificateAuthorityServiceClient`.
+ * The `CertificateAuthorityServiceConnection` object for `CertificateAuthorityServiceClient`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `CertificateAuthorityServiceClient`. This allows users to inject
- * custom behavior (e.g., with a Google Mock object) when writing tests that use
- * objects of type `CertificateAuthorityServiceClient`.
+ * sets in `CertificateAuthorityServiceClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `CertificateAuthorityServiceClient`.
  *
- * To create a concrete instance, see
- * `MakeCertificateAuthorityServiceConnection()`.
+ * To create a concrete instance, see `MakeCertificateAuthorityServiceConnection()`.
  *
- * For mocking, see
- * `privateca_v1_mocks::MockCertificateAuthorityServiceConnection`.
+ * For mocking, see `privateca_v1_mocks::MockCertificateAuthorityServiceConnection`.
  */
 class CertificateAuthorityServiceConnection {
  public:
@@ -206,315 +182,213 @@ class CertificateAuthorityServiceConnection {
   virtual Options options() { return Options{}; }
 
   virtual StatusOr<google::cloud::security::privateca::v1::Certificate>
-  CreateCertificate(
-      google::cloud::security::privateca::v1::CreateCertificateRequest const&
-          request);
+  CreateCertificate(google::cloud::security::privateca::v1::CreateCertificateRequest const& request);
 
   virtual StatusOr<google::cloud::security::privateca::v1::Certificate>
-  GetCertificate(
-      google::cloud::security::privateca::v1::GetCertificateRequest const&
-          request);
+  GetCertificate(google::cloud::security::privateca::v1::GetCertificateRequest const& request);
 
   virtual StreamRange<google::cloud::security::privateca::v1::Certificate>
-  ListCertificates(
-      google::cloud::security::privateca::v1::ListCertificatesRequest request);
+  ListCertificates(google::cloud::security::privateca::v1::ListCertificatesRequest request);
 
   virtual StatusOr<google::cloud::security::privateca::v1::Certificate>
-  RevokeCertificate(
-      google::cloud::security::privateca::v1::RevokeCertificateRequest const&
-          request);
+  RevokeCertificate(google::cloud::security::privateca::v1::RevokeCertificateRequest const& request);
 
   virtual StatusOr<google::cloud::security::privateca::v1::Certificate>
-  UpdateCertificate(
-      google::cloud::security::privateca::v1::UpdateCertificateRequest const&
-          request);
+  UpdateCertificate(google::cloud::security::privateca::v1::UpdateCertificateRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
-  ActivateCertificateAuthority(
-      google::cloud::security::privateca::v1::
-          ActivateCertificateAuthorityRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation> ActivateCertificateAuthority(
-      NoAwaitTag, google::cloud::security::privateca::v1::
-                      ActivateCertificateAuthorityRequest const& request);
-
-  virtual future<
-      StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
-  ActivateCertificateAuthority(google::longrunning::Operation const& operation);
-
-  virtual future<
-      StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
-  CreateCertificateAuthority(
-      google::cloud::security::privateca::v1::
-          CreateCertificateAuthorityRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation> CreateCertificateAuthority(
-      NoAwaitTag, google::cloud::security::privateca::v1::
-                      CreateCertificateAuthorityRequest const& request);
-
-  virtual future<
-      StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
-  CreateCertificateAuthority(google::longrunning::Operation const& operation);
-
-  virtual future<
-      StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
-  DisableCertificateAuthority(
-      google::cloud::security::privateca::v1::
-          DisableCertificateAuthorityRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation> DisableCertificateAuthority(
-      NoAwaitTag, google::cloud::security::privateca::v1::
-                      DisableCertificateAuthorityRequest const& request);
-
-  virtual future<
-      StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
-  DisableCertificateAuthority(google::longrunning::Operation const& operation);
-
-  virtual future<
-      StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
-  EnableCertificateAuthority(
-      google::cloud::security::privateca::v1::
-          EnableCertificateAuthorityRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation> EnableCertificateAuthority(
-      NoAwaitTag, google::cloud::security::privateca::v1::
-                      EnableCertificateAuthorityRequest const& request);
-
-  virtual future<
-      StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
-  EnableCertificateAuthority(google::longrunning::Operation const& operation);
-
-  virtual StatusOr<google::cloud::security::privateca::v1::
-                       FetchCertificateAuthorityCsrResponse>
-  FetchCertificateAuthorityCsr(
-      google::cloud::security::privateca::v1::
-          FetchCertificateAuthorityCsrRequest const& request);
-
-  virtual StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>
-  GetCertificateAuthority(google::cloud::security::privateca::v1::
-                              GetCertificateAuthorityRequest const& request);
-
-  virtual StreamRange<
-      google::cloud::security::privateca::v1::CertificateAuthority>
-  ListCertificateAuthorities(
-      google::cloud::security::privateca::v1::ListCertificateAuthoritiesRequest
-          request);
-
-  virtual future<
-      StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
-  UndeleteCertificateAuthority(
-      google::cloud::security::privateca::v1::
-          UndeleteCertificateAuthorityRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation> UndeleteCertificateAuthority(
-      NoAwaitTag, google::cloud::security::privateca::v1::
-                      UndeleteCertificateAuthorityRequest const& request);
-
-  virtual future<
-      StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
-  UndeleteCertificateAuthority(google::longrunning::Operation const& operation);
-
-  virtual future<
-      StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
-  DeleteCertificateAuthority(
-      google::cloud::security::privateca::v1::
-          DeleteCertificateAuthorityRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation> DeleteCertificateAuthority(
-      NoAwaitTag, google::cloud::security::privateca::v1::
-                      DeleteCertificateAuthorityRequest const& request);
-
-  virtual future<
-      StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
-  DeleteCertificateAuthority(google::longrunning::Operation const& operation);
-
-  virtual future<
-      StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
-  UpdateCertificateAuthority(
-      google::cloud::security::privateca::v1::
-          UpdateCertificateAuthorityRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation> UpdateCertificateAuthority(
-      NoAwaitTag, google::cloud::security::privateca::v1::
-                      UpdateCertificateAuthorityRequest const& request);
-
-  virtual future<
-      StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
-  UpdateCertificateAuthority(google::longrunning::Operation const& operation);
-
-  virtual future<StatusOr<google::cloud::security::privateca::v1::CaPool>>
-  CreateCaPool(
-      google::cloud::security::privateca::v1::CreateCaPoolRequest const&
-          request);
-
-  virtual StatusOr<google::longrunning::Operation> CreateCaPool(
-      NoAwaitTag,
-      google::cloud::security::privateca::v1::CreateCaPoolRequest const&
-          request);
-
-  virtual future<StatusOr<google::cloud::security::privateca::v1::CaPool>>
-  CreateCaPool(google::longrunning::Operation const& operation);
-
-  virtual future<StatusOr<google::cloud::security::privateca::v1::CaPool>>
-  UpdateCaPool(
-      google::cloud::security::privateca::v1::UpdateCaPoolRequest const&
-          request);
-
-  virtual StatusOr<google::longrunning::Operation> UpdateCaPool(
-      NoAwaitTag,
-      google::cloud::security::privateca::v1::UpdateCaPoolRequest const&
-          request);
-
-  virtual future<StatusOr<google::cloud::security::privateca::v1::CaPool>>
-  UpdateCaPool(google::longrunning::Operation const& operation);
-
-  virtual StatusOr<google::cloud::security::privateca::v1::CaPool> GetCaPool(
-      google::cloud::security::privateca::v1::GetCaPoolRequest const& request);
-
-  virtual StreamRange<google::cloud::security::privateca::v1::CaPool>
-  ListCaPools(
-      google::cloud::security::privateca::v1::ListCaPoolsRequest request);
-
-  virtual future<
-      StatusOr<google::cloud::security::privateca::v1::OperationMetadata>>
-  DeleteCaPool(
-      google::cloud::security::privateca::v1::DeleteCaPoolRequest const&
-          request);
-
-  virtual StatusOr<google::longrunning::Operation> DeleteCaPool(
-      NoAwaitTag,
-      google::cloud::security::privateca::v1::DeleteCaPoolRequest const&
-          request);
-
-  virtual future<
-      StatusOr<google::cloud::security::privateca::v1::OperationMetadata>>
-  DeleteCaPool(google::longrunning::Operation const& operation);
-
-  virtual StatusOr<google::cloud::security::privateca::v1::FetchCaCertsResponse>
-  FetchCaCerts(
-      google::cloud::security::privateca::v1::FetchCaCertsRequest const&
-          request);
-
-  virtual StatusOr<
-      google::cloud::security::privateca::v1::CertificateRevocationList>
-  GetCertificateRevocationList(
-      google::cloud::security::privateca::v1::
-          GetCertificateRevocationListRequest const& request);
-
-  virtual StreamRange<
-      google::cloud::security::privateca::v1::CertificateRevocationList>
-  ListCertificateRevocationLists(
-      google::cloud::security::privateca::v1::
-          ListCertificateRevocationListsRequest request);
-
-  virtual future<StatusOr<
-      google::cloud::security::privateca::v1::CertificateRevocationList>>
-  UpdateCertificateRevocationList(
-      google::cloud::security::privateca::v1::
-          UpdateCertificateRevocationListRequest const& request);
+  virtual future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
+  ActivateCertificateAuthority(google::cloud::security::privateca::v1::ActivateCertificateAuthorityRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation>
-  UpdateCertificateRevocationList(
-      NoAwaitTag, google::cloud::security::privateca::v1::
-                      UpdateCertificateRevocationListRequest const& request);
+  ActivateCertificateAuthority(NoAwaitTag, google::cloud::security::privateca::v1::ActivateCertificateAuthorityRequest const& request);
 
-  virtual future<StatusOr<
-      google::cloud::security::privateca::v1::CertificateRevocationList>>
-  UpdateCertificateRevocationList(
-      google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
+  ActivateCertificateAuthority( google::longrunning::Operation const& operation);
 
-  virtual future<
-      StatusOr<google::cloud::security::privateca::v1::CertificateTemplate>>
-  CreateCertificateTemplate(
-      google::cloud::security::privateca::v1::
-          CreateCertificateTemplateRequest const& request);
+  virtual future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
+  CreateCertificateAuthority(google::cloud::security::privateca::v1::CreateCertificateAuthorityRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> CreateCertificateTemplate(
-      NoAwaitTag, google::cloud::security::privateca::v1::
-                      CreateCertificateTemplateRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  CreateCertificateAuthority(NoAwaitTag, google::cloud::security::privateca::v1::CreateCertificateAuthorityRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::security::privateca::v1::CertificateTemplate>>
-  CreateCertificateTemplate(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
+  CreateCertificateAuthority( google::longrunning::Operation const& operation);
 
-  virtual future<
-      StatusOr<google::cloud::security::privateca::v1::OperationMetadata>>
-  DeleteCertificateTemplate(
-      google::cloud::security::privateca::v1::
-          DeleteCertificateTemplateRequest const& request);
+  virtual future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
+  DisableCertificateAuthority(google::cloud::security::privateca::v1::DisableCertificateAuthorityRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> DeleteCertificateTemplate(
-      NoAwaitTag, google::cloud::security::privateca::v1::
-                      DeleteCertificateTemplateRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  DisableCertificateAuthority(NoAwaitTag, google::cloud::security::privateca::v1::DisableCertificateAuthorityRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::security::privateca::v1::OperationMetadata>>
-  DeleteCertificateTemplate(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
+  DisableCertificateAuthority( google::longrunning::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
+  EnableCertificateAuthority(google::cloud::security::privateca::v1::EnableCertificateAuthorityRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation>
+  EnableCertificateAuthority(NoAwaitTag, google::cloud::security::privateca::v1::EnableCertificateAuthorityRequest const& request);
+
+  virtual future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
+  EnableCertificateAuthority( google::longrunning::Operation const& operation);
+
+  virtual StatusOr<google::cloud::security::privateca::v1::FetchCertificateAuthorityCsrResponse>
+  FetchCertificateAuthorityCsr(google::cloud::security::privateca::v1::FetchCertificateAuthorityCsrRequest const& request);
+
+  virtual StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>
+  GetCertificateAuthority(google::cloud::security::privateca::v1::GetCertificateAuthorityRequest const& request);
+
+  virtual StreamRange<google::cloud::security::privateca::v1::CertificateAuthority>
+  ListCertificateAuthorities(google::cloud::security::privateca::v1::ListCertificateAuthoritiesRequest request);
+
+  virtual future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
+  UndeleteCertificateAuthority(google::cloud::security::privateca::v1::UndeleteCertificateAuthorityRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation>
+  UndeleteCertificateAuthority(NoAwaitTag, google::cloud::security::privateca::v1::UndeleteCertificateAuthorityRequest const& request);
+
+  virtual future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
+  UndeleteCertificateAuthority( google::longrunning::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
+  DeleteCertificateAuthority(google::cloud::security::privateca::v1::DeleteCertificateAuthorityRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation>
+  DeleteCertificateAuthority(NoAwaitTag, google::cloud::security::privateca::v1::DeleteCertificateAuthorityRequest const& request);
+
+  virtual future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
+  DeleteCertificateAuthority( google::longrunning::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
+  UpdateCertificateAuthority(google::cloud::security::privateca::v1::UpdateCertificateAuthorityRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation>
+  UpdateCertificateAuthority(NoAwaitTag, google::cloud::security::privateca::v1::UpdateCertificateAuthorityRequest const& request);
+
+  virtual future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
+  UpdateCertificateAuthority( google::longrunning::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::security::privateca::v1::CaPool>>
+  CreateCaPool(google::cloud::security::privateca::v1::CreateCaPoolRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation>
+  CreateCaPool(NoAwaitTag, google::cloud::security::privateca::v1::CreateCaPoolRequest const& request);
+
+  virtual future<StatusOr<google::cloud::security::privateca::v1::CaPool>>
+  CreateCaPool( google::longrunning::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::security::privateca::v1::CaPool>>
+  UpdateCaPool(google::cloud::security::privateca::v1::UpdateCaPoolRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation>
+  UpdateCaPool(NoAwaitTag, google::cloud::security::privateca::v1::UpdateCaPoolRequest const& request);
+
+  virtual future<StatusOr<google::cloud::security::privateca::v1::CaPool>>
+  UpdateCaPool( google::longrunning::Operation const& operation);
+
+  virtual StatusOr<google::cloud::security::privateca::v1::CaPool>
+  GetCaPool(google::cloud::security::privateca::v1::GetCaPoolRequest const& request);
+
+  virtual StreamRange<google::cloud::security::privateca::v1::CaPool>
+  ListCaPools(google::cloud::security::privateca::v1::ListCaPoolsRequest request);
+
+  virtual future<StatusOr<google::cloud::security::privateca::v1::OperationMetadata>>
+  DeleteCaPool(google::cloud::security::privateca::v1::DeleteCaPoolRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation>
+  DeleteCaPool(NoAwaitTag, google::cloud::security::privateca::v1::DeleteCaPoolRequest const& request);
+
+  virtual future<StatusOr<google::cloud::security::privateca::v1::OperationMetadata>>
+  DeleteCaPool( google::longrunning::Operation const& operation);
+
+  virtual StatusOr<google::cloud::security::privateca::v1::FetchCaCertsResponse>
+  FetchCaCerts(google::cloud::security::privateca::v1::FetchCaCertsRequest const& request);
+
+  virtual StatusOr<google::cloud::security::privateca::v1::CertificateRevocationList>
+  GetCertificateRevocationList(google::cloud::security::privateca::v1::GetCertificateRevocationListRequest const& request);
+
+  virtual StreamRange<google::cloud::security::privateca::v1::CertificateRevocationList>
+  ListCertificateRevocationLists(google::cloud::security::privateca::v1::ListCertificateRevocationListsRequest request);
+
+  virtual future<StatusOr<google::cloud::security::privateca::v1::CertificateRevocationList>>
+  UpdateCertificateRevocationList(google::cloud::security::privateca::v1::UpdateCertificateRevocationListRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation>
+  UpdateCertificateRevocationList(NoAwaitTag, google::cloud::security::privateca::v1::UpdateCertificateRevocationListRequest const& request);
+
+  virtual future<StatusOr<google::cloud::security::privateca::v1::CertificateRevocationList>>
+  UpdateCertificateRevocationList( google::longrunning::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::security::privateca::v1::CertificateTemplate>>
+  CreateCertificateTemplate(google::cloud::security::privateca::v1::CreateCertificateTemplateRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation>
+  CreateCertificateTemplate(NoAwaitTag, google::cloud::security::privateca::v1::CreateCertificateTemplateRequest const& request);
+
+  virtual future<StatusOr<google::cloud::security::privateca::v1::CertificateTemplate>>
+  CreateCertificateTemplate( google::longrunning::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::security::privateca::v1::OperationMetadata>>
+  DeleteCertificateTemplate(google::cloud::security::privateca::v1::DeleteCertificateTemplateRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation>
+  DeleteCertificateTemplate(NoAwaitTag, google::cloud::security::privateca::v1::DeleteCertificateTemplateRequest const& request);
+
+  virtual future<StatusOr<google::cloud::security::privateca::v1::OperationMetadata>>
+  DeleteCertificateTemplate( google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::security::privateca::v1::CertificateTemplate>
-  GetCertificateTemplate(google::cloud::security::privateca::v1::
-                             GetCertificateTemplateRequest const& request);
+  GetCertificateTemplate(google::cloud::security::privateca::v1::GetCertificateTemplateRequest const& request);
 
-  virtual StreamRange<
-      google::cloud::security::privateca::v1::CertificateTemplate>
-  ListCertificateTemplates(
-      google::cloud::security::privateca::v1::ListCertificateTemplatesRequest
-          request);
+  virtual StreamRange<google::cloud::security::privateca::v1::CertificateTemplate>
+  ListCertificateTemplates(google::cloud::security::privateca::v1::ListCertificateTemplatesRequest request);
 
-  virtual future<
-      StatusOr<google::cloud::security::privateca::v1::CertificateTemplate>>
-  UpdateCertificateTemplate(
-      google::cloud::security::privateca::v1::
-          UpdateCertificateTemplateRequest const& request);
+  virtual future<StatusOr<google::cloud::security::privateca::v1::CertificateTemplate>>
+  UpdateCertificateTemplate(google::cloud::security::privateca::v1::UpdateCertificateTemplateRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> UpdateCertificateTemplate(
-      NoAwaitTag, google::cloud::security::privateca::v1::
-                      UpdateCertificateTemplateRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  UpdateCertificateTemplate(NoAwaitTag, google::cloud::security::privateca::v1::UpdateCertificateTemplateRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::security::privateca::v1::CertificateTemplate>>
-  UpdateCertificateTemplate(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::security::privateca::v1::CertificateTemplate>>
+  UpdateCertificateTemplate( google::longrunning::Operation const& operation);
 
-  virtual StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request);
+  virtual StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request);
 
-  virtual StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request);
+  virtual StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
 
   virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
   TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
 
-  virtual StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 
-  virtual Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request);
+  virtual Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
 
-  virtual Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request);
+  virtual Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request);
 };
 
 /**
- * A factory function to construct an object of type
- * `CertificateAuthorityServiceConnection`.
+ * A factory function to construct an object of type `CertificateAuthorityServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of
- * CertificateAuthorityServiceClient.
+ * should be passed as an argument to the constructor of CertificateAuthorityServiceClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `CertificateAuthorityServiceConnection`. Expected options are any of
- * the types in the following option lists:
+ * returned `CertificateAuthorityServiceConnection`. Expected options are any of the types in
+ * the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
@@ -524,11 +398,11 @@ class CertificateAuthorityServiceConnection {
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
- * @param options (optional) Configure the
- * `CertificateAuthorityServiceConnection` created by this function.
+ * @param options (optional) Configure the `CertificateAuthorityServiceConnection` created by
+ * this function.
  */
-std::shared_ptr<CertificateAuthorityServiceConnection>
-MakeCertificateAuthorityServiceConnection(Options options = {});
+std::shared_ptr<CertificateAuthorityServiceConnection> MakeCertificateAuthorityServiceConnection(
+    Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace privateca_v1

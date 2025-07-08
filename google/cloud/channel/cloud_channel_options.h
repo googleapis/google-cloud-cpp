@@ -34,10 +34,8 @@ using ::google::cloud::channel_v1::CloudChannelServicePollingPolicyOption;
 /// @deprecated Use channel_v1::CloudChannelServiceBackoffPolicyOption directly.
 using ::google::cloud::channel_v1::CloudChannelServiceBackoffPolicyOption;
 
-/// @deprecated Use
-/// channel_v1::CloudChannelServiceConnectionIdempotencyPolicyOption directly.
-using ::google::cloud::channel_v1::
-    CloudChannelServiceConnectionIdempotencyPolicyOption;
+/// @deprecated Use channel_v1::CloudChannelServiceConnectionIdempotencyPolicyOption directly.
+using ::google::cloud::channel_v1::CloudChannelServiceConnectionIdempotencyPolicyOption;
 
 /// @deprecated Use channel_v1::CloudChannelServicePolicyOptionList directly.
 using ::google::cloud::channel_v1::CloudChannelServicePolicyOptionList;

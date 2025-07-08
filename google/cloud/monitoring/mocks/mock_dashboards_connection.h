@@ -30,10 +30,8 @@ namespace cloud {
 namespace monitoring_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use
-/// monitoring_dashboard_v1_mocks::MockDashboardsServiceConnection directly.
-using ::google::cloud::monitoring_dashboard_v1_mocks::
-    MockDashboardsServiceConnection;
+/// @deprecated Use monitoring_dashboard_v1_mocks::MockDashboardsServiceConnection directly.
+using ::google::cloud::monitoring_dashboard_v1_mocks::MockDashboardsServiceConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace monitoring_mocks

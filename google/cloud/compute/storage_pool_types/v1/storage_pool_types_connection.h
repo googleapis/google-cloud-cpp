@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_STORAGE_POOL_TYPES_V1_STORAGE_POOL_TYPES_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_STORAGE_POOL_TYPES_V1_STORAGE_POOL_TYPES_CONNECTION_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/storage_pool_types/v1/internal/storage_pool_types_retry_traits.h"
 #include "google/cloud/compute/storage_pool_types/v1/storage_pool_types_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -52,8 +52,7 @@ class StoragePoolTypesRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class StoragePoolTypesLimitedErrorCountRetryPolicy
-    : public StoragePoolTypesRetryPolicy {
+class StoragePoolTypesLimitedErrorCountRetryPolicy : public StoragePoolTypesRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -63,14 +62,14 @@ class StoragePoolTypesLimitedErrorCountRetryPolicy
    *     @p maximum_failures == 0.
    */
   explicit StoragePoolTypesLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   StoragePoolTypesLimitedErrorCountRetryPolicy(
       StoragePoolTypesLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : StoragePoolTypesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : StoragePoolTypesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   StoragePoolTypesLimitedErrorCountRetryPolicy(
       StoragePoolTypesLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : StoragePoolTypesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : StoragePoolTypesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -90,9 +89,7 @@ class StoragePoolTypesLimitedErrorCountRetryPolicy
   using BaseType = StoragePoolTypesRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      compute_storage_pool_types_v1_internal::StoragePoolTypesRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<compute_storage_pool_types_v1_internal::StoragePoolTypesRetryTraits> impl_;
 };
 
 /**
@@ -105,8 +102,7 @@ class StoragePoolTypesLimitedErrorCountRetryPolicy
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class StoragePoolTypesLimitedTimeRetryPolicy
-    : public StoragePoolTypesRetryPolicy {
+class StoragePoolTypesLimitedTimeRetryPolicy : public StoragePoolTypesRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -131,14 +127,12 @@ class StoragePoolTypesLimitedTimeRetryPolicy
   template <typename DurationRep, typename DurationPeriod>
   explicit StoragePoolTypesLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  StoragePoolTypesLimitedTimeRetryPolicy(
-      StoragePoolTypesLimitedTimeRetryPolicy&& rhs) noexcept
-      : StoragePoolTypesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  StoragePoolTypesLimitedTimeRetryPolicy(
-      StoragePoolTypesLimitedTimeRetryPolicy const& rhs) noexcept
-      : StoragePoolTypesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  StoragePoolTypesLimitedTimeRetryPolicy(StoragePoolTypesLimitedTimeRetryPolicy&& rhs) noexcept
+    : StoragePoolTypesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  StoragePoolTypesLimitedTimeRetryPolicy(StoragePoolTypesLimitedTimeRetryPolicy const& rhs) noexcept
+    : StoragePoolTypesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -160,9 +154,7 @@ class StoragePoolTypesLimitedTimeRetryPolicy
   using BaseType = StoragePoolTypesRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      compute_storage_pool_types_v1_internal::StoragePoolTypesRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<compute_storage_pool_types_v1_internal::StoragePoolTypesRetryTraits> impl_;
 };
 
 /**
@@ -175,8 +167,7 @@ class StoragePoolTypesLimitedTimeRetryPolicy
  *
  * To create a concrete instance, see `MakeStoragePoolTypesConnection()`.
  *
- * For mocking, see
- * `compute_storage_pool_types_v1_mocks::MockStoragePoolTypesConnection`.
+ * For mocking, see `compute_storage_pool_types_v1_mocks::MockStoragePoolTypesConnection`.
  */
 class StoragePoolTypesConnection {
  public:
@@ -184,19 +175,14 @@ class StoragePoolTypesConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StreamRange<std::pair<
-      std::string, google::cloud::cpp::compute::v1::StoragePoolTypesScopedList>>
-  AggregatedListStoragePoolTypes(
-      google::cloud::cpp::compute::storage_pool_types::v1::
-          AggregatedListStoragePoolTypesRequest request);
+  virtual StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::StoragePoolTypesScopedList>>
+  AggregatedListStoragePoolTypes(google::cloud::cpp::compute::storage_pool_types::v1::AggregatedListStoragePoolTypesRequest request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::StoragePoolType>
-  GetStoragePoolType(google::cloud::cpp::compute::storage_pool_types::v1::
-                         GetStoragePoolTypeRequest const& request);
+  GetStoragePoolType(google::cloud::cpp::compute::storage_pool_types::v1::GetStoragePoolTypeRequest const& request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::StoragePoolType>
-  ListStoragePoolTypes(google::cloud::cpp::compute::storage_pool_types::v1::
-                           ListStoragePoolTypesRequest request);
+  ListStoragePoolTypes(google::cloud::cpp::compute::storage_pool_types::v1::ListStoragePoolTypesRequest request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

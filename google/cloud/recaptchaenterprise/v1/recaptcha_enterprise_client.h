@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RECAPTCHAENTERPRISE_V1_RECAPTCHA_ENTERPRISE_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RECAPTCHAENTERPRISE_V1_RECAPTCHA_ENTERPRISE_CLIENT_H
 
-#include "google/cloud/recaptchaenterprise/v1/recaptcha_enterprise_connection.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
+#include "google/cloud/recaptchaenterprise/v1/recaptcha_enterprise_connection.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <map>
@@ -62,31 +62,23 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class RecaptchaEnterpriseServiceClient {
  public:
-  explicit RecaptchaEnterpriseServiceClient(
-      std::shared_ptr<RecaptchaEnterpriseServiceConnection> connection,
-      Options opts = {});
+  explicit RecaptchaEnterpriseServiceClient(std::shared_ptr<RecaptchaEnterpriseServiceConnection> connection, Options opts = {});
   ~RecaptchaEnterpriseServiceClient();
 
   ///@{
   /// @name Copy and move support
-  RecaptchaEnterpriseServiceClient(RecaptchaEnterpriseServiceClient const&) =
-      default;
-  RecaptchaEnterpriseServiceClient& operator=(
-      RecaptchaEnterpriseServiceClient const&) = default;
-  RecaptchaEnterpriseServiceClient(RecaptchaEnterpriseServiceClient&&) =
-      default;
-  RecaptchaEnterpriseServiceClient& operator=(
-      RecaptchaEnterpriseServiceClient&&) = default;
+  RecaptchaEnterpriseServiceClient(RecaptchaEnterpriseServiceClient const&) = default;
+  RecaptchaEnterpriseServiceClient& operator=(RecaptchaEnterpriseServiceClient const&) = default;
+  RecaptchaEnterpriseServiceClient(RecaptchaEnterpriseServiceClient&&) = default;
+  RecaptchaEnterpriseServiceClient& operator=(RecaptchaEnterpriseServiceClient&&) = default;
   ///@}
 
   ///@{
   /// @name Equality
-  friend bool operator==(RecaptchaEnterpriseServiceClient const& a,
-                         RecaptchaEnterpriseServiceClient const& b) {
+  friend bool operator==(RecaptchaEnterpriseServiceClient const& a, RecaptchaEnterpriseServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(RecaptchaEnterpriseServiceClient const& a,
-                         RecaptchaEnterpriseServiceClient const& b) {
+  friend bool operator!=(RecaptchaEnterpriseServiceClient const& a, RecaptchaEnterpriseServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -115,10 +107,8 @@ class RecaptchaEnterpriseServiceClient {
   /// [google.cloud.recaptchaenterprise.v1.CreateAssessmentRequest]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L264}
   ///
   // clang-format on
-  StatusOr<google::cloud::recaptchaenterprise::v1::Assessment> CreateAssessment(
-      std::string const& parent,
-      google::cloud::recaptchaenterprise::v1::Assessment const& assessment,
-      Options opts = {});
+  StatusOr<google::cloud::recaptchaenterprise::v1::Assessment>
+  CreateAssessment(std::string const& parent, google::cloud::recaptchaenterprise::v1::Assessment const& assessment, Options opts = {});
 
   // clang-format off
   ///
@@ -147,10 +137,8 @@ class RecaptchaEnterpriseServiceClient {
   /// [google.cloud.recaptchaenterprise.v1.CreateAssessmentRequest]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L264}
   ///
   // clang-format on
-  StatusOr<google::cloud::recaptchaenterprise::v1::Assessment> CreateAssessment(
-      google::cloud::recaptchaenterprise::v1::CreateAssessmentRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::cloud::recaptchaenterprise::v1::Assessment>
+  CreateAssessment(google::cloud::recaptchaenterprise::v1::CreateAssessmentRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -180,10 +168,7 @@ class RecaptchaEnterpriseServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::recaptchaenterprise::v1::AnnotateAssessmentResponse>
-  AnnotateAssessment(std::string const& name,
-                     google::cloud::recaptchaenterprise::v1::
-                         AnnotateAssessmentRequest::Annotation annotation,
-                     Options opts = {});
+  AnnotateAssessment(std::string const& name, google::cloud::recaptchaenterprise::v1::AnnotateAssessmentRequest::Annotation annotation, Options opts = {});
 
   // clang-format off
   ///
@@ -214,10 +199,7 @@ class RecaptchaEnterpriseServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::recaptchaenterprise::v1::AnnotateAssessmentResponse>
-  AnnotateAssessment(
-      google::cloud::recaptchaenterprise::v1::AnnotateAssessmentRequest const&
-          request,
-      Options opts = {});
+  AnnotateAssessment(google::cloud::recaptchaenterprise::v1::AnnotateAssessmentRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -243,10 +225,8 @@ class RecaptchaEnterpriseServiceClient {
   /// [google.cloud.recaptchaenterprise.v1.Key]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1516}
   ///
   // clang-format on
-  StatusOr<google::cloud::recaptchaenterprise::v1::Key> CreateKey(
-      std::string const& parent,
-      google::cloud::recaptchaenterprise::v1::Key const& key,
-      Options opts = {});
+  StatusOr<google::cloud::recaptchaenterprise::v1::Key>
+  CreateKey(std::string const& parent, google::cloud::recaptchaenterprise::v1::Key const& key, Options opts = {});
 
   // clang-format off
   ///
@@ -275,9 +255,8 @@ class RecaptchaEnterpriseServiceClient {
   /// [google.cloud.recaptchaenterprise.v1.Key]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1516}
   ///
   // clang-format on
-  StatusOr<google::cloud::recaptchaenterprise::v1::Key> CreateKey(
-      google::cloud::recaptchaenterprise::v1::CreateKeyRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::recaptchaenterprise::v1::Key>
+  CreateKey(google::cloud::recaptchaenterprise::v1::CreateKeyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -311,8 +290,8 @@ class RecaptchaEnterpriseServiceClient {
   /// [google.cloud.recaptchaenterprise.v1.ListKeysRequest]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1260}
   ///
   // clang-format on
-  StreamRange<google::cloud::recaptchaenterprise::v1::Key> ListKeys(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::recaptchaenterprise::v1::Key>
+  ListKeys(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -350,9 +329,8 @@ class RecaptchaEnterpriseServiceClient {
   /// [google.cloud.recaptchaenterprise.v1.ListKeysRequest]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1260}
   ///
   // clang-format on
-  StreamRange<google::cloud::recaptchaenterprise::v1::Key> ListKeys(
-      google::cloud::recaptchaenterprise::v1::ListKeysRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::recaptchaenterprise::v1::Key>
+  ListKeys(google::cloud::recaptchaenterprise::v1::ListKeysRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -379,8 +357,7 @@ class RecaptchaEnterpriseServiceClient {
   /// [google.cloud.recaptchaenterprise.v1.RetrieveLegacySecretKeyResponse]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1506}
   ///
   // clang-format on
-  StatusOr<
-      google::cloud::recaptchaenterprise::v1::RetrieveLegacySecretKeyResponse>
+  StatusOr<google::cloud::recaptchaenterprise::v1::RetrieveLegacySecretKeyResponse>
   RetrieveLegacySecretKey(std::string const& key, Options opts = {});
 
   // clang-format off
@@ -412,11 +389,8 @@ class RecaptchaEnterpriseServiceClient {
   /// [google.cloud.recaptchaenterprise.v1.RetrieveLegacySecretKeyResponse]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1506}
   ///
   // clang-format on
-  StatusOr<
-      google::cloud::recaptchaenterprise::v1::RetrieveLegacySecretKeyResponse>
-  RetrieveLegacySecretKey(google::cloud::recaptchaenterprise::v1::
-                              RetrieveLegacySecretKeyRequest const& request,
-                          Options opts = {});
+  StatusOr<google::cloud::recaptchaenterprise::v1::RetrieveLegacySecretKeyResponse>
+  RetrieveLegacySecretKey(google::cloud::recaptchaenterprise::v1::RetrieveLegacySecretKeyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -441,8 +415,8 @@ class RecaptchaEnterpriseServiceClient {
   /// [google.cloud.recaptchaenterprise.v1.Key]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1516}
   ///
   // clang-format on
-  StatusOr<google::cloud::recaptchaenterprise::v1::Key> GetKey(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::recaptchaenterprise::v1::Key>
+  GetKey(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -471,9 +445,8 @@ class RecaptchaEnterpriseServiceClient {
   /// [google.cloud.recaptchaenterprise.v1.Key]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1516}
   ///
   // clang-format on
-  StatusOr<google::cloud::recaptchaenterprise::v1::Key> GetKey(
-      google::cloud::recaptchaenterprise::v1::GetKeyRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::recaptchaenterprise::v1::Key>
+  GetKey(google::cloud::recaptchaenterprise::v1::GetKeyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -499,9 +472,8 @@ class RecaptchaEnterpriseServiceClient {
   /// [google.cloud.recaptchaenterprise.v1.UpdateKeyRequest]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1314}
   ///
   // clang-format on
-  StatusOr<google::cloud::recaptchaenterprise::v1::Key> UpdateKey(
-      google::cloud::recaptchaenterprise::v1::Key const& key,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::cloud::recaptchaenterprise::v1::Key>
+  UpdateKey(google::cloud::recaptchaenterprise::v1::Key const& key, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -530,9 +502,8 @@ class RecaptchaEnterpriseServiceClient {
   /// [google.cloud.recaptchaenterprise.v1.UpdateKeyRequest]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1314}
   ///
   // clang-format on
-  StatusOr<google::cloud::recaptchaenterprise::v1::Key> UpdateKey(
-      google::cloud::recaptchaenterprise::v1::UpdateKeyRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::recaptchaenterprise::v1::Key>
+  UpdateKey(google::cloud::recaptchaenterprise::v1::UpdateKeyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -554,7 +525,8 @@ class RecaptchaEnterpriseServiceClient {
   /// [google.cloud.recaptchaenterprise.v1.DeleteKeyRequest]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1325}
   ///
   // clang-format on
-  Status DeleteKey(std::string const& name, Options opts = {});
+  Status
+  DeleteKey(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -580,9 +552,8 @@ class RecaptchaEnterpriseServiceClient {
   /// [google.cloud.recaptchaenterprise.v1.DeleteKeyRequest]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1325}
   ///
   // clang-format on
-  Status DeleteKey(
-      google::cloud::recaptchaenterprise::v1::DeleteKeyRequest const& request,
-      Options opts = {});
+  Status
+  DeleteKey(google::cloud::recaptchaenterprise::v1::DeleteKeyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -616,9 +587,8 @@ class RecaptchaEnterpriseServiceClient {
   /// [google.cloud.recaptchaenterprise.v1.MigrateKeyRequest]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1441}
   ///
   // clang-format on
-  StatusOr<google::cloud::recaptchaenterprise::v1::Key> MigrateKey(
-      google::cloud::recaptchaenterprise::v1::MigrateKeyRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::recaptchaenterprise::v1::Key>
+  MigrateKey(google::cloud::recaptchaenterprise::v1::MigrateKeyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -648,10 +618,7 @@ class RecaptchaEnterpriseServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::recaptchaenterprise::v1::AddIpOverrideResponse>
-  AddIpOverride(std::string const& name,
-                google::cloud::recaptchaenterprise::v1::IpOverrideData const&
-                    ip_override_data,
-                Options opts = {});
+  AddIpOverride(std::string const& name, google::cloud::recaptchaenterprise::v1::IpOverrideData const& ip_override_data, Options opts = {});
 
   // clang-format off
   ///
@@ -684,10 +651,7 @@ class RecaptchaEnterpriseServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::recaptchaenterprise::v1::AddIpOverrideResponse>
-  AddIpOverride(
-      google::cloud::recaptchaenterprise::v1::AddIpOverrideRequest const&
-          request,
-      Options opts = {});
+  AddIpOverride(google::cloud::recaptchaenterprise::v1::AddIpOverrideRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -718,10 +682,7 @@ class RecaptchaEnterpriseServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::recaptchaenterprise::v1::RemoveIpOverrideResponse>
-  RemoveIpOverride(std::string const& name,
-                   google::cloud::recaptchaenterprise::v1::IpOverrideData const&
-                       ip_override_data,
-                   Options opts = {});
+  RemoveIpOverride(std::string const& name, google::cloud::recaptchaenterprise::v1::IpOverrideData const& ip_override_data, Options opts = {});
 
   // clang-format off
   ///
@@ -755,10 +716,7 @@ class RecaptchaEnterpriseServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::recaptchaenterprise::v1::RemoveIpOverrideResponse>
-  RemoveIpOverride(
-      google::cloud::recaptchaenterprise::v1::RemoveIpOverrideRequest const&
-          request,
-      Options opts = {});
+  RemoveIpOverride(google::cloud::recaptchaenterprise::v1::RemoveIpOverrideRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -832,9 +790,7 @@ class RecaptchaEnterpriseServiceClient {
   ///
   // clang-format on
   StreamRange<google::cloud::recaptchaenterprise::v1::IpOverrideData>
-  ListIpOverrides(
-      google::cloud::recaptchaenterprise::v1::ListIpOverridesRequest request,
-      Options opts = {});
+  ListIpOverrides(google::cloud::recaptchaenterprise::v1::ListIpOverridesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -860,8 +816,8 @@ class RecaptchaEnterpriseServiceClient {
   /// [google.cloud.recaptchaenterprise.v1.Metrics]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1475}
   ///
   // clang-format on
-  StatusOr<google::cloud::recaptchaenterprise::v1::Metrics> GetMetrics(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::recaptchaenterprise::v1::Metrics>
+  GetMetrics(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -891,9 +847,8 @@ class RecaptchaEnterpriseServiceClient {
   /// [google.cloud.recaptchaenterprise.v1.Metrics]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1475}
   ///
   // clang-format on
-  StatusOr<google::cloud::recaptchaenterprise::v1::Metrics> GetMetrics(
-      google::cloud::recaptchaenterprise::v1::GetMetricsRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::recaptchaenterprise::v1::Metrics>
+  GetMetrics(google::cloud::recaptchaenterprise::v1::GetMetricsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -922,11 +877,7 @@ class RecaptchaEnterpriseServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::recaptchaenterprise::v1::FirewallPolicy>
-  CreateFirewallPolicy(
-      std::string const& parent,
-      google::cloud::recaptchaenterprise::v1::FirewallPolicy const&
-          firewall_policy,
-      Options opts = {});
+  CreateFirewallPolicy(std::string const& parent, google::cloud::recaptchaenterprise::v1::FirewallPolicy const& firewall_policy, Options opts = {});
 
   // clang-format off
   ///
@@ -958,10 +909,7 @@ class RecaptchaEnterpriseServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::recaptchaenterprise::v1::FirewallPolicy>
-  CreateFirewallPolicy(
-      google::cloud::recaptchaenterprise::v1::CreateFirewallPolicyRequest const&
-          request,
-      Options opts = {});
+  CreateFirewallPolicy(google::cloud::recaptchaenterprise::v1::CreateFirewallPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1035,10 +983,7 @@ class RecaptchaEnterpriseServiceClient {
   ///
   // clang-format on
   StreamRange<google::cloud::recaptchaenterprise::v1::FirewallPolicy>
-  ListFirewallPolicies(
-      google::cloud::recaptchaenterprise::v1::ListFirewallPoliciesRequest
-          request,
-      Options opts = {});
+  ListFirewallPolicies(google::cloud::recaptchaenterprise::v1::ListFirewallPoliciesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1094,10 +1039,7 @@ class RecaptchaEnterpriseServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::recaptchaenterprise::v1::FirewallPolicy>
-  GetFirewallPolicy(
-      google::cloud::recaptchaenterprise::v1::GetFirewallPolicyRequest const&
-          request,
-      Options opts = {});
+  GetFirewallPolicy(google::cloud::recaptchaenterprise::v1::GetFirewallPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1124,10 +1066,7 @@ class RecaptchaEnterpriseServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::recaptchaenterprise::v1::FirewallPolicy>
-  UpdateFirewallPolicy(
-      google::cloud::recaptchaenterprise::v1::FirewallPolicy const&
-          firewall_policy,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  UpdateFirewallPolicy(google::cloud::recaptchaenterprise::v1::FirewallPolicy const& firewall_policy, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -1157,10 +1096,7 @@ class RecaptchaEnterpriseServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::recaptchaenterprise::v1::FirewallPolicy>
-  UpdateFirewallPolicy(
-      google::cloud::recaptchaenterprise::v1::UpdateFirewallPolicyRequest const&
-          request,
-      Options opts = {});
+  UpdateFirewallPolicy(google::cloud::recaptchaenterprise::v1::UpdateFirewallPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1182,7 +1118,8 @@ class RecaptchaEnterpriseServiceClient {
   /// [google.cloud.recaptchaenterprise.v1.DeleteFirewallPolicyRequest]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1405}
   ///
   // clang-format on
-  Status DeleteFirewallPolicy(std::string const& name, Options opts = {});
+  Status
+  DeleteFirewallPolicy(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1208,10 +1145,8 @@ class RecaptchaEnterpriseServiceClient {
   /// [google.cloud.recaptchaenterprise.v1.DeleteFirewallPolicyRequest]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1405}
   ///
   // clang-format on
-  Status DeleteFirewallPolicy(
-      google::cloud::recaptchaenterprise::v1::DeleteFirewallPolicyRequest const&
-          request,
-      Options opts = {});
+  Status
+  DeleteFirewallPolicy(google::cloud::recaptchaenterprise::v1::DeleteFirewallPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1238,11 +1173,8 @@ class RecaptchaEnterpriseServiceClient {
   /// [google.cloud.recaptchaenterprise.v1.ReorderFirewallPoliciesResponse]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1438}
   ///
   // clang-format on
-  StatusOr<
-      google::cloud::recaptchaenterprise::v1::ReorderFirewallPoliciesResponse>
-  ReorderFirewallPolicies(std::string const& parent,
-                          std::vector<std::string> const& names,
-                          Options opts = {});
+  StatusOr<google::cloud::recaptchaenterprise::v1::ReorderFirewallPoliciesResponse>
+  ReorderFirewallPolicies(std::string const& parent, std::vector<std::string> const& names, Options opts = {});
 
   // clang-format off
   ///
@@ -1271,11 +1203,8 @@ class RecaptchaEnterpriseServiceClient {
   /// [google.cloud.recaptchaenterprise.v1.ReorderFirewallPoliciesResponse]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1438}
   ///
   // clang-format on
-  StatusOr<
-      google::cloud::recaptchaenterprise::v1::ReorderFirewallPoliciesResponse>
-  ReorderFirewallPolicies(google::cloud::recaptchaenterprise::v1::
-                              ReorderFirewallPoliciesRequest const& request,
-                          Options opts = {});
+  StatusOr<google::cloud::recaptchaenterprise::v1::ReorderFirewallPoliciesResponse>
+  ReorderFirewallPolicies(google::cloud::recaptchaenterprise::v1::ReorderFirewallPoliciesRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1349,10 +1278,7 @@ class RecaptchaEnterpriseServiceClient {
   ///
   // clang-format on
   StreamRange<google::cloud::recaptchaenterprise::v1::RelatedAccountGroup>
-  ListRelatedAccountGroups(
-      google::cloud::recaptchaenterprise::v1::ListRelatedAccountGroupsRequest
-          request,
-      Options opts = {});
+  ListRelatedAccountGroups(google::cloud::recaptchaenterprise::v1::ListRelatedAccountGroupsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1386,10 +1312,8 @@ class RecaptchaEnterpriseServiceClient {
   /// [google.cloud.recaptchaenterprise.v1.RelatedAccountGroupMembership]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L2061}
   ///
   // clang-format on
-  StreamRange<
-      google::cloud::recaptchaenterprise::v1::RelatedAccountGroupMembership>
-  ListRelatedAccountGroupMemberships(std::string const& parent,
-                                     Options opts = {});
+  StreamRange<google::cloud::recaptchaenterprise::v1::RelatedAccountGroupMembership>
+  ListRelatedAccountGroupMemberships(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -1427,12 +1351,8 @@ class RecaptchaEnterpriseServiceClient {
   /// [google.cloud.recaptchaenterprise.v1.RelatedAccountGroupMembership]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L2061}
   ///
   // clang-format on
-  StreamRange<
-      google::cloud::recaptchaenterprise::v1::RelatedAccountGroupMembership>
-  ListRelatedAccountGroupMemberships(
-      google::cloud::recaptchaenterprise::v1::
-          ListRelatedAccountGroupMembershipsRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::recaptchaenterprise::v1::RelatedAccountGroupMembership>
+  ListRelatedAccountGroupMemberships(google::cloud::recaptchaenterprise::v1::ListRelatedAccountGroupMembershipsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1472,11 +1392,8 @@ class RecaptchaEnterpriseServiceClient {
   /// [google.cloud.recaptchaenterprise.v1.SearchRelatedAccountGroupMembershipsRequest]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1942}
   ///
   // clang-format on
-  StreamRange<
-      google::cloud::recaptchaenterprise::v1::RelatedAccountGroupMembership>
-  SearchRelatedAccountGroupMemberships(std::string const& project,
-                                       std::string const& hashed_account_id,
-                                       Options opts = {});
+  StreamRange<google::cloud::recaptchaenterprise::v1::RelatedAccountGroupMembership>
+  SearchRelatedAccountGroupMemberships(std::string const& project, std::string const& hashed_account_id, Options opts = {});
 
   // clang-format off
   ///
@@ -1514,12 +1431,8 @@ class RecaptchaEnterpriseServiceClient {
   /// [google.cloud.recaptchaenterprise.v1.SearchRelatedAccountGroupMembershipsRequest]: @googleapis_reference_link{google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto#L1942}
   ///
   // clang-format on
-  StreamRange<
-      google::cloud::recaptchaenterprise::v1::RelatedAccountGroupMembership>
-  SearchRelatedAccountGroupMemberships(
-      google::cloud::recaptchaenterprise::v1::
-          SearchRelatedAccountGroupMembershipsRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::recaptchaenterprise::v1::RelatedAccountGroupMembership>
+  SearchRelatedAccountGroupMemberships(google::cloud::recaptchaenterprise::v1::SearchRelatedAccountGroupMembershipsRequest request, Options opts = {});
 
  private:
   std::shared_ptr<RecaptchaEnterpriseServiceConnection> connection_;

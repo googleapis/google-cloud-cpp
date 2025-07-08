@@ -35,44 +35,35 @@ class KeyTrackingServiceStub {
  public:
   virtual ~KeyTrackingServiceStub() = 0;
 
-  virtual StatusOr<google::cloud::kms::inventory::v1::ProtectedResourcesSummary>
-  GetProtectedResourcesSummary(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::kms::inventory::v1::
-          GetProtectedResourcesSummaryRequest const& request) = 0;
+  virtual StatusOr<google::cloud::kms::inventory::v1::ProtectedResourcesSummary> GetProtectedResourcesSummary(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::kms::inventory::v1::GetProtectedResourcesSummaryRequest const& request) = 0;
 
-  virtual StatusOr<
-      google::cloud::kms::inventory::v1::SearchProtectedResourcesResponse>
-  SearchProtectedResources(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::kms::inventory::v1::SearchProtectedResourcesRequest const&
-          request) = 0;
+  virtual StatusOr<google::cloud::kms::inventory::v1::SearchProtectedResourcesResponse> SearchProtectedResources(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::kms::inventory::v1::SearchProtectedResourcesRequest const& request) = 0;
 };
 
 class DefaultKeyTrackingServiceStub : public KeyTrackingServiceStub {
  public:
   explicit DefaultKeyTrackingServiceStub(
-      std::unique_ptr<
-          google::cloud::kms::inventory::v1::KeyTrackingService::StubInterface>
-          grpc_stub)
+      std::unique_ptr<google::cloud::kms::inventory::v1::KeyTrackingService::StubInterface> grpc_stub)
       : grpc_stub_(std::move(grpc_stub)) {}
 
-  StatusOr<google::cloud::kms::inventory::v1::ProtectedResourcesSummary>
-  GetProtectedResourcesSummary(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::kms::inventory::v1::
-          GetProtectedResourcesSummaryRequest const& request) override;
+  StatusOr<google::cloud::kms::inventory::v1::ProtectedResourcesSummary> GetProtectedResourcesSummary(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::kms::inventory::v1::GetProtectedResourcesSummaryRequest const& request) override;
 
-  StatusOr<google::cloud::kms::inventory::v1::SearchProtectedResourcesResponse>
-  SearchProtectedResources(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::kms::inventory::v1::SearchProtectedResourcesRequest const&
-          request) override;
+  StatusOr<google::cloud::kms::inventory::v1::SearchProtectedResourcesResponse> SearchProtectedResources(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::kms::inventory::v1::SearchProtectedResourcesRequest const& request) override;
 
  private:
-  std::unique_ptr<
-      google::cloud::kms::inventory::v1::KeyTrackingService::StubInterface>
-      grpc_stub_;
+  std::unique_ptr<google::cloud::kms::inventory::v1::KeyTrackingService::StubInterface> grpc_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

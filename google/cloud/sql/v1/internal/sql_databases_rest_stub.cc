@@ -30,102 +30,81 @@ namespace cloud {
 namespace sql_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-DefaultSqlDatabasesServiceRestStub::DefaultSqlDatabasesServiceRestStub(
-    Options options)
+DefaultSqlDatabasesServiceRestStub::DefaultSqlDatabasesServiceRestStub(Options options)
     : service_(rest_internal::MakePooledRestClient(
           options.get<EndpointOption>(), options)),
       options_(std::move(options)) {}
 
 DefaultSqlDatabasesServiceRestStub::DefaultSqlDatabasesServiceRestStub(
-    std::shared_ptr<rest_internal::RestClient> service, Options options)
-    : service_(std::move(service)), options_(std::move(options)) {}
+    std::shared_ptr<rest_internal::RestClient> service,
+    Options options)
+    : service_(std::move(service)),
+      options_(std::move(options)) {}
 
 StatusOr<google::cloud::sql::v1::Operation>
 DefaultSqlDatabasesServiceRestStub::Delete(
-    google::cloud::rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::sql::v1::SqlDatabasesDeleteRequest const& request) {
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::sql::v1::SqlDatabasesDeleteRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Delete<google::cloud::sql::v1::Operation>(
       *service_, rest_context, request, true,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "instances", "/",
-                   request.instance(), "/", "databases", "/",
-                   request.database()),
-      std::move(query_params));
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/", "projects", "/", request.project(), "/", "instances", "/", request.instance(), "/", "databases", "/", request.database()), std::move(query_params));
 }
 
 StatusOr<google::cloud::sql::v1::Database>
 DefaultSqlDatabasesServiceRestStub::Get(
-    google::cloud::rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::sql::v1::SqlDatabasesGetRequest const& request) {
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::sql::v1::SqlDatabasesGetRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Get<google::cloud::sql::v1::Database>(
       *service_, rest_context, request, true,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "instances", "/",
-                   request.instance(), "/", "databases", "/",
-                   request.database()),
-      std::move(query_params));
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/", "projects", "/", request.project(), "/", "instances", "/", request.instance(), "/", "databases", "/", request.database()), std::move(query_params));
 }
 
 StatusOr<google::cloud::sql::v1::Operation>
 DefaultSqlDatabasesServiceRestStub::Insert(
-    google::cloud::rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::sql::v1::SqlDatabasesInsertRequest const& request) {
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::sql::v1::SqlDatabasesInsertRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Post<google::cloud::sql::v1::Operation>(
       *service_, rest_context, request.body(), true,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "instances", "/",
-                   request.instance(), "/", "databases"),
-      std::move(query_params));
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/", "projects", "/", request.project(), "/", "instances", "/", request.instance(), "/", "databases"), std::move(query_params));
 }
 
 StatusOr<google::cloud::sql::v1::DatabasesListResponse>
 DefaultSqlDatabasesServiceRestStub::List(
-    google::cloud::rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::sql::v1::SqlDatabasesListRequest const& request) {
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::sql::v1::SqlDatabasesListRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Get<google::cloud::sql::v1::DatabasesListResponse>(
       *service_, rest_context, request, true,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "instances", "/",
-                   request.instance(), "/", "databases"),
-      std::move(query_params));
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/", "projects", "/", request.project(), "/", "instances", "/", request.instance(), "/", "databases"), std::move(query_params));
 }
 
 StatusOr<google::cloud::sql::v1::Operation>
 DefaultSqlDatabasesServiceRestStub::Patch(
-    google::cloud::rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::sql::v1::SqlDatabasesUpdateRequest const& request) {
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::sql::v1::SqlDatabasesUpdateRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Patch<google::cloud::sql::v1::Operation>(
       *service_, rest_context, request.body(), true,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "instances", "/",
-                   request.instance(), "/", "databases", "/",
-                   request.database()),
-      std::move(query_params));
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/", "projects", "/", request.project(), "/", "instances", "/", request.instance(), "/", "databases", "/", request.database()), std::move(query_params));
 }
 
 StatusOr<google::cloud::sql::v1::Operation>
 DefaultSqlDatabasesServiceRestStub::Update(
-    google::cloud::rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::sql::v1::SqlDatabasesUpdateRequest const& request) {
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::sql::v1::SqlDatabasesUpdateRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Put<google::cloud::sql::v1::Operation>(
       *service_, rest_context, request.body(), true,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "instances", "/",
-                   request.instance(), "/", "databases", "/",
-                   request.database()),
-      std::move(query_params));
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/", "projects", "/", request.project(), "/", "instances", "/", request.instance(), "/", "databases", "/", request.database()), std::move(query_params));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -27,32 +27,20 @@ namespace cloud {
 namespace osconfig {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use
-/// osconfig_agentendpoint_v1::MakeAgentEndpointServiceConnection directly.
-using ::google::cloud::osconfig_agentendpoint_v1::
-    MakeAgentEndpointServiceConnection;
+/// @deprecated Use osconfig_agentendpoint_v1::MakeAgentEndpointServiceConnection directly.
+using ::google::cloud::osconfig_agentendpoint_v1::MakeAgentEndpointServiceConnection;
 
-/// @deprecated Use osconfig_agentendpoint_v1::AgentEndpointServiceConnection
-/// directly.
-using ::google::cloud::osconfig_agentendpoint_v1::
-    AgentEndpointServiceConnection;
+/// @deprecated Use osconfig_agentendpoint_v1::AgentEndpointServiceConnection directly.
+using ::google::cloud::osconfig_agentendpoint_v1::AgentEndpointServiceConnection;
 
-/// @deprecated Use
-/// osconfig_agentendpoint_v1::AgentEndpointServiceLimitedErrorCountRetryPolicy
-/// directly.
-using ::google::cloud::osconfig_agentendpoint_v1::
-    AgentEndpointServiceLimitedErrorCountRetryPolicy;
+/// @deprecated Use osconfig_agentendpoint_v1::AgentEndpointServiceLimitedErrorCountRetryPolicy directly.
+using ::google::cloud::osconfig_agentendpoint_v1::AgentEndpointServiceLimitedErrorCountRetryPolicy;
 
-/// @deprecated Use
-/// osconfig_agentendpoint_v1::AgentEndpointServiceLimitedTimeRetryPolicy
-/// directly.
-using ::google::cloud::osconfig_agentendpoint_v1::
-    AgentEndpointServiceLimitedTimeRetryPolicy;
+/// @deprecated Use osconfig_agentendpoint_v1::AgentEndpointServiceLimitedTimeRetryPolicy directly.
+using ::google::cloud::osconfig_agentendpoint_v1::AgentEndpointServiceLimitedTimeRetryPolicy;
 
-/// @deprecated Use osconfig_agentendpoint_v1::AgentEndpointServiceRetryPolicy
-/// directly.
-using ::google::cloud::osconfig_agentendpoint_v1::
-    AgentEndpointServiceRetryPolicy;
+/// @deprecated Use osconfig_agentendpoint_v1::AgentEndpointServiceRetryPolicy directly.
+using ::google::cloud::osconfig_agentendpoint_v1::AgentEndpointServiceRetryPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace osconfig

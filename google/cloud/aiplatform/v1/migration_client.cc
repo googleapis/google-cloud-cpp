@@ -28,13 +28,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 MigrationServiceClient::MigrationServiceClient(
     std::shared_ptr<MigrationServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 MigrationServiceClient::~MigrationServiceClient() = default;
 
 StreamRange<google::cloud::aiplatform::v1::MigratableResource>
-MigrationServiceClient::SearchMigratableResources(std::string const& parent,
-                                                  Options opts) {
+MigrationServiceClient::SearchMigratableResources(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::SearchMigratableResourcesRequest request;
   request.set_parent(parent);
@@ -42,101 +41,79 @@ MigrationServiceClient::SearchMigratableResources(std::string const& parent,
 }
 
 StreamRange<google::cloud::aiplatform::v1::MigratableResource>
-MigrationServiceClient::SearchMigratableResources(
-    google::cloud::aiplatform::v1::SearchMigratableResourcesRequest request,
-    Options opts) {
+MigrationServiceClient::SearchMigratableResources(google::cloud::aiplatform::v1::SearchMigratableResourcesRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SearchMigratableResources(std::move(request));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::BatchMigrateResourcesResponse>>
-MigrationServiceClient::BatchMigrateResources(
-    std::string const& parent,
-    std::vector<google::cloud::aiplatform::v1::MigrateResourceRequest> const&
-        migrate_resource_requests,
-    Options opts) {
+MigrationServiceClient::BatchMigrateResources(std::string const& parent, std::vector<google::cloud::aiplatform::v1::MigrateResourceRequest> const& migrate_resource_requests, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::BatchMigrateResourcesRequest request;
   request.set_parent(parent);
-  *request.mutable_migrate_resource_requests() = {
-      migrate_resource_requests.begin(), migrate_resource_requests.end()};
+  *request.mutable_migrate_resource_requests() = {migrate_resource_requests.begin(), migrate_resource_requests.end()};
   return connection_->BatchMigrateResources(request);
 }
 
 StatusOr<google::longrunning::Operation>
-MigrationServiceClient::BatchMigrateResources(
-    NoAwaitTag, std::string const& parent,
-    std::vector<google::cloud::aiplatform::v1::MigrateResourceRequest> const&
-        migrate_resource_requests,
-    Options opts) {
+MigrationServiceClient::BatchMigrateResources(NoAwaitTag, std::string const& parent, std::vector<google::cloud::aiplatform::v1::MigrateResourceRequest> const& migrate_resource_requests, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::BatchMigrateResourcesRequest request;
   request.set_parent(parent);
-  *request.mutable_migrate_resource_requests() = {
-      migrate_resource_requests.begin(), migrate_resource_requests.end()};
+  *request.mutable_migrate_resource_requests() = {migrate_resource_requests.begin(), migrate_resource_requests.end()};
   return connection_->BatchMigrateResources(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::BatchMigrateResourcesResponse>>
-MigrationServiceClient::BatchMigrateResources(
-    google::cloud::aiplatform::v1::BatchMigrateResourcesRequest const& request,
-    Options opts) {
+MigrationServiceClient::BatchMigrateResources(google::cloud::aiplatform::v1::BatchMigrateResourcesRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->BatchMigrateResources(request);
 }
 
 StatusOr<google::longrunning::Operation>
-MigrationServiceClient::BatchMigrateResources(
-    NoAwaitTag,
-    google::cloud::aiplatform::v1::BatchMigrateResourcesRequest const& request,
-    Options opts) {
+MigrationServiceClient::BatchMigrateResources(NoAwaitTag, google::cloud::aiplatform::v1::BatchMigrateResourcesRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->BatchMigrateResources(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::BatchMigrateResourcesResponse>>
-MigrationServiceClient::BatchMigrateResources(
-    google::longrunning::Operation const& operation, Options opts) {
+MigrationServiceClient::BatchMigrateResources(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->BatchMigrateResources(operation);
 }
 
 StreamRange<google::cloud::location::Location>
-MigrationServiceClient::ListLocations(
-    google::cloud::location::ListLocationsRequest request, Options opts) {
+MigrationServiceClient::ListLocations(google::cloud::location::ListLocationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListLocations(std::move(request));
 }
 
-StatusOr<google::cloud::location::Location> MigrationServiceClient::GetLocation(
-    google::cloud::location::GetLocationRequest const& request, Options opts) {
+StatusOr<google::cloud::location::Location>
+MigrationServiceClient::GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetLocation(request);
 }
 
-StatusOr<google::iam::v1::Policy> MigrationServiceClient::SetIamPolicy(
-    google::iam::v1::SetIamPolicyRequest const& request, Options opts) {
+StatusOr<google::iam::v1::Policy>
+MigrationServiceClient::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetIamPolicy(request);
 }
 
-StatusOr<google::iam::v1::Policy> MigrationServiceClient::GetIamPolicy(
-    google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
+StatusOr<google::iam::v1::Policy>
+MigrationServiceClient::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetIamPolicy(request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-MigrationServiceClient::TestIamPermissions(
-    google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
+MigrationServiceClient::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->TestIamPermissions(request);
 }
 
 StreamRange<google::longrunning::Operation>
-MigrationServiceClient::ListOperations(std::string const& name,
-                                       std::string const& filter,
-                                       Options opts) {
+MigrationServiceClient::ListOperations(std::string const& name, std::string const& filter, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::ListOperationsRequest request;
   request.set_name(name);
@@ -145,56 +122,55 @@ MigrationServiceClient::ListOperations(std::string const& name,
 }
 
 StreamRange<google::longrunning::Operation>
-MigrationServiceClient::ListOperations(
-    google::longrunning::ListOperationsRequest request, Options opts) {
+MigrationServiceClient::ListOperations(google::longrunning::ListOperationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOperations(std::move(request));
 }
 
-StatusOr<google::longrunning::Operation> MigrationServiceClient::GetOperation(
-    std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation>
+MigrationServiceClient::GetOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
   return connection_->GetOperation(request);
 }
 
-StatusOr<google::longrunning::Operation> MigrationServiceClient::GetOperation(
-    google::longrunning::GetOperationRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation>
+MigrationServiceClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }
 
-Status MigrationServiceClient::DeleteOperation(std::string const& name,
-                                               Options opts) {
+Status
+MigrationServiceClient::DeleteOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::DeleteOperationRequest request;
   request.set_name(name);
   return connection_->DeleteOperation(request);
 }
 
-Status MigrationServiceClient::DeleteOperation(
-    google::longrunning::DeleteOperationRequest const& request, Options opts) {
+Status
+MigrationServiceClient::DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteOperation(request);
 }
 
-Status MigrationServiceClient::CancelOperation(std::string const& name,
-                                               Options opts) {
+Status
+MigrationServiceClient::CancelOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::CancelOperationRequest request;
   request.set_name(name);
   return connection_->CancelOperation(request);
 }
 
-Status MigrationServiceClient::CancelOperation(
-    google::longrunning::CancelOperationRequest const& request, Options opts) {
+Status
+MigrationServiceClient::CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelOperation(request);
 }
 
-StatusOr<google::longrunning::Operation> MigrationServiceClient::WaitOperation(
-    google::longrunning::WaitOperationRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation>
+MigrationServiceClient::WaitOperation(google::longrunning::WaitOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->WaitOperation(request);
 }

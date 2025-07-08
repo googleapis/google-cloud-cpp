@@ -62,13 +62,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// and move-construction is a relatively efficient operation, consider using
 /// such a copy when using this class from multiple threads.
 ///
-/// [google.cloud.discoveryengine.v1.Document]:
-/// @googleapis_reference_link{google/cloud/discoveryengine/v1/document.proto#L37}
+/// [google.cloud.discoveryengine.v1.Document]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document.proto#L37}
 ///
 class DocumentServiceClient {
  public:
-  explicit DocumentServiceClient(
-      std::shared_ptr<DocumentServiceConnection> connection, Options opts = {});
+  explicit DocumentServiceClient(std::shared_ptr<DocumentServiceConnection> connection, Options opts = {});
   ~DocumentServiceClient();
 
   ///@{
@@ -81,12 +79,10 @@ class DocumentServiceClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(DocumentServiceClient const& a,
-                         DocumentServiceClient const& b) {
+  friend bool operator==(DocumentServiceClient const& a, DocumentServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(DocumentServiceClient const& a,
-                         DocumentServiceClient const& b) {
+  friend bool operator!=(DocumentServiceClient const& a, DocumentServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -122,8 +118,8 @@ class DocumentServiceClient {
   /// [google.cloud.discoveryengine.v1.GetDocumentRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document_service.proto#L179}
   ///
   // clang-format on
-  StatusOr<google::cloud::discoveryengine::v1::Document> GetDocument(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::discoveryengine::v1::Document>
+  GetDocument(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -152,9 +148,8 @@ class DocumentServiceClient {
   /// [google.cloud.discoveryengine.v1.GetDocumentRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document_service.proto#L179}
   ///
   // clang-format on
-  StatusOr<google::cloud::discoveryengine::v1::Document> GetDocument(
-      google::cloud::discoveryengine::v1::GetDocumentRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::discoveryengine::v1::Document>
+  GetDocument(google::cloud::discoveryengine::v1::GetDocumentRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -195,8 +190,8 @@ class DocumentServiceClient {
   /// [google.cloud.discoveryengine.v1.ListDocumentsRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document_service.proto#L201}
   ///
   // clang-format on
-  StreamRange<google::cloud::discoveryengine::v1::Document> ListDocuments(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::discoveryengine::v1::Document>
+  ListDocuments(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -234,9 +229,8 @@ class DocumentServiceClient {
   /// [google.cloud.discoveryengine.v1.ListDocumentsRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document_service.proto#L201}
   ///
   // clang-format on
-  StreamRange<google::cloud::discoveryengine::v1::Document> ListDocuments(
-      google::cloud::discoveryengine::v1::ListDocumentsRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::discoveryengine::v1::Document>
+  ListDocuments(google::cloud::discoveryengine::v1::ListDocumentsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -282,10 +276,8 @@ class DocumentServiceClient {
   /// [google.cloud.discoveryengine.v1.Document.name]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document.proto#L200}
   ///
   // clang-format on
-  StatusOr<google::cloud::discoveryengine::v1::Document> CreateDocument(
-      std::string const& parent,
-      google::cloud::discoveryengine::v1::Document const& document,
-      std::string const& document_id, Options opts = {});
+  StatusOr<google::cloud::discoveryengine::v1::Document>
+  CreateDocument(std::string const& parent, google::cloud::discoveryengine::v1::Document const& document, std::string const& document_id, Options opts = {});
 
   // clang-format off
   ///
@@ -314,9 +306,8 @@ class DocumentServiceClient {
   /// [google.cloud.discoveryengine.v1.Document]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document.proto#L37}
   ///
   // clang-format on
-  StatusOr<google::cloud::discoveryengine::v1::Document> CreateDocument(
-      google::cloud::discoveryengine::v1::CreateDocumentRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::discoveryengine::v1::Document>
+  CreateDocument(google::cloud::discoveryengine::v1::CreateDocumentRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -352,9 +343,8 @@ class DocumentServiceClient {
   /// [google.cloud.discoveryengine.v1.UpdateDocumentRequest.allow_missing]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document_service.proto#L308}
   ///
   // clang-format on
-  StatusOr<google::cloud::discoveryengine::v1::Document> UpdateDocument(
-      google::cloud::discoveryengine::v1::Document const& document,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::cloud::discoveryengine::v1::Document>
+  UpdateDocument(google::cloud::discoveryengine::v1::Document const& document, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -383,9 +373,8 @@ class DocumentServiceClient {
   /// [google.cloud.discoveryengine.v1.UpdateDocumentRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document_service.proto#L292}
   ///
   // clang-format on
-  StatusOr<google::cloud::discoveryengine::v1::Document> UpdateDocument(
-      google::cloud::discoveryengine::v1::UpdateDocumentRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::discoveryengine::v1::Document>
+  UpdateDocument(google::cloud::discoveryengine::v1::UpdateDocumentRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -416,7 +405,8 @@ class DocumentServiceClient {
   /// [google.cloud.discoveryengine.v1.Document]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document.proto#L37}
   ///
   // clang-format on
-  Status DeleteDocument(std::string const& name, Options opts = {});
+  Status
+  DeleteDocument(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -443,9 +433,8 @@ class DocumentServiceClient {
   /// [google.cloud.discoveryengine.v1.Document]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document.proto#L37}
   ///
   // clang-format on
-  Status DeleteDocument(
-      google::cloud::discoveryengine::v1::DeleteDocumentRequest const& request,
-      Options opts = {});
+  Status
+  DeleteDocument(google::cloud::discoveryengine::v1::DeleteDocumentRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -489,9 +478,7 @@ class DocumentServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::discoveryengine::v1::ImportDocumentsResponse>>
-  ImportDocuments(
-      google::cloud::discoveryengine::v1::ImportDocumentsRequest const& request,
-      Options opts = {});
+  ImportDocuments(google::cloud::discoveryengine::v1::ImportDocumentsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -504,10 +491,8 @@ class DocumentServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> ImportDocuments(
-      NoAwaitTag,
-      google::cloud::discoveryengine::v1::ImportDocumentsRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  ImportDocuments(NoAwaitTag, google::cloud::discoveryengine::v1::ImportDocumentsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -519,8 +504,7 @@ class DocumentServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::discoveryengine::v1::ImportDocumentsResponse>>
-  ImportDocuments(google::longrunning::Operation const& operation,
-                  Options opts = {});
+  ImportDocuments(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -576,9 +560,7 @@ class DocumentServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::discoveryengine::v1::PurgeDocumentsResponse>>
-  PurgeDocuments(
-      google::cloud::discoveryengine::v1::PurgeDocumentsRequest const& request,
-      Options opts = {});
+  PurgeDocuments(google::cloud::discoveryengine::v1::PurgeDocumentsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -591,10 +573,8 @@ class DocumentServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> PurgeDocuments(
-      NoAwaitTag,
-      google::cloud::discoveryengine::v1::PurgeDocumentsRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  PurgeDocuments(NoAwaitTag, google::cloud::discoveryengine::v1::PurgeDocumentsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -606,8 +586,7 @@ class DocumentServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::discoveryengine::v1::PurgeDocumentsResponse>>
-  PurgeDocuments(google::longrunning::Operation const& operation,
-                 Options opts = {});
+  PurgeDocuments(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -635,8 +614,7 @@ class DocumentServiceClient {
   /// [google.cloud.discoveryengine.v1.Document]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document.proto#L37}
   ///
   // clang-format on
-  StatusOr<
-      google::cloud::discoveryengine::v1::BatchGetDocumentsMetadataResponse>
+  StatusOr<google::cloud::discoveryengine::v1::BatchGetDocumentsMetadataResponse>
   BatchGetDocumentsMetadata(std::string const& parent, Options opts = {});
 
   // clang-format off
@@ -669,11 +647,8 @@ class DocumentServiceClient {
   /// [google.cloud.discoveryengine.v1.Document]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document.proto#L37}
   ///
   // clang-format on
-  StatusOr<
-      google::cloud::discoveryengine::v1::BatchGetDocumentsMetadataResponse>
-  BatchGetDocumentsMetadata(google::cloud::discoveryengine::v1::
-                                BatchGetDocumentsMetadataRequest const& request,
-                            Options opts = {});
+  StatusOr<google::cloud::discoveryengine::v1::BatchGetDocumentsMetadataResponse>
+  BatchGetDocumentsMetadata(google::cloud::discoveryengine::v1::BatchGetDocumentsMetadataRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -708,8 +683,8 @@ class DocumentServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -748,8 +723,8 @@ class DocumentServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -775,8 +750,8 @@ class DocumentServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -807,9 +782,8 @@ class DocumentServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -843,7 +817,8 @@ class DocumentServiceClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(std::string const& name, Options opts = {});
+  Status
+  CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -882,9 +857,8 @@ class DocumentServiceClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request,
-      Options opts = {});
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<DocumentServiceConnection> connection_;

@@ -34,10 +34,8 @@ using ::google::cloud::retail_v2::UserEventServicePollingPolicyOption;
 /// @deprecated Use retail_v2::UserEventServiceBackoffPolicyOption directly.
 using ::google::cloud::retail_v2::UserEventServiceBackoffPolicyOption;
 
-/// @deprecated Use retail_v2::UserEventServiceConnectionIdempotencyPolicyOption
-/// directly.
-using ::google::cloud::retail_v2::
-    UserEventServiceConnectionIdempotencyPolicyOption;
+/// @deprecated Use retail_v2::UserEventServiceConnectionIdempotencyPolicyOption directly.
+using ::google::cloud::retail_v2::UserEventServiceConnectionIdempotencyPolicyOption;
 
 /// @deprecated Use retail_v2::UserEventServicePolicyOptionList directly.
 using ::google::cloud::retail_v2::UserEventServicePolicyOptionList;

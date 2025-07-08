@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_BIGLAKE_V1_METASTORE_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_BIGLAKE_V1_METASTORE_CONNECTION_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/bigquery/biglake/v1/internal/metastore_retry_traits.h"
 #include "google/cloud/bigquery/biglake/v1/metastore_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -52,8 +52,7 @@ class MetastoreServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class MetastoreServiceLimitedErrorCountRetryPolicy
-    : public MetastoreServiceRetryPolicy {
+class MetastoreServiceLimitedErrorCountRetryPolicy : public MetastoreServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -63,14 +62,14 @@ class MetastoreServiceLimitedErrorCountRetryPolicy
    *     @p maximum_failures == 0.
    */
   explicit MetastoreServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   MetastoreServiceLimitedErrorCountRetryPolicy(
       MetastoreServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : MetastoreServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : MetastoreServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   MetastoreServiceLimitedErrorCountRetryPolicy(
       MetastoreServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : MetastoreServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : MetastoreServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -90,9 +89,7 @@ class MetastoreServiceLimitedErrorCountRetryPolicy
   using BaseType = MetastoreServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      bigquery_biglake_v1_internal::MetastoreServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<bigquery_biglake_v1_internal::MetastoreServiceRetryTraits> impl_;
 };
 
 /**
@@ -105,8 +102,7 @@ class MetastoreServiceLimitedErrorCountRetryPolicy
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class MetastoreServiceLimitedTimeRetryPolicy
-    : public MetastoreServiceRetryPolicy {
+class MetastoreServiceLimitedTimeRetryPolicy : public MetastoreServiceRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -131,14 +127,12 @@ class MetastoreServiceLimitedTimeRetryPolicy
   template <typename DurationRep, typename DurationPeriod>
   explicit MetastoreServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  MetastoreServiceLimitedTimeRetryPolicy(
-      MetastoreServiceLimitedTimeRetryPolicy&& rhs) noexcept
-      : MetastoreServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  MetastoreServiceLimitedTimeRetryPolicy(
-      MetastoreServiceLimitedTimeRetryPolicy const& rhs) noexcept
-      : MetastoreServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  MetastoreServiceLimitedTimeRetryPolicy(MetastoreServiceLimitedTimeRetryPolicy&& rhs) noexcept
+    : MetastoreServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  MetastoreServiceLimitedTimeRetryPolicy(MetastoreServiceLimitedTimeRetryPolicy const& rhs) noexcept
+    : MetastoreServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -160,9 +154,7 @@ class MetastoreServiceLimitedTimeRetryPolicy
   using BaseType = MetastoreServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      bigquery_biglake_v1_internal::MetastoreServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<bigquery_biglake_v1_internal::MetastoreServiceRetryTraits> impl_;
 };
 
 /**
@@ -183,72 +175,61 @@ class MetastoreServiceConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<google::cloud::bigquery::biglake::v1::Catalog> CreateCatalog(
-      google::cloud::bigquery::biglake::v1::CreateCatalogRequest const&
-          request);
+  virtual StatusOr<google::cloud::bigquery::biglake::v1::Catalog>
+  CreateCatalog(google::cloud::bigquery::biglake::v1::CreateCatalogRequest const& request);
 
-  virtual StatusOr<google::cloud::bigquery::biglake::v1::Catalog> DeleteCatalog(
-      google::cloud::bigquery::biglake::v1::DeleteCatalogRequest const&
-          request);
+  virtual StatusOr<google::cloud::bigquery::biglake::v1::Catalog>
+  DeleteCatalog(google::cloud::bigquery::biglake::v1::DeleteCatalogRequest const& request);
 
-  virtual StatusOr<google::cloud::bigquery::biglake::v1::Catalog> GetCatalog(
-      google::cloud::bigquery::biglake::v1::GetCatalogRequest const& request);
+  virtual StatusOr<google::cloud::bigquery::biglake::v1::Catalog>
+  GetCatalog(google::cloud::bigquery::biglake::v1::GetCatalogRequest const& request);
 
   virtual StreamRange<google::cloud::bigquery::biglake::v1::Catalog>
-  ListCatalogs(
-      google::cloud::bigquery::biglake::v1::ListCatalogsRequest request);
+  ListCatalogs(google::cloud::bigquery::biglake::v1::ListCatalogsRequest request);
 
   virtual StatusOr<google::cloud::bigquery::biglake::v1::Database>
-  CreateDatabase(
-      google::cloud::bigquery::biglake::v1::CreateDatabaseRequest const&
-          request);
+  CreateDatabase(google::cloud::bigquery::biglake::v1::CreateDatabaseRequest const& request);
 
   virtual StatusOr<google::cloud::bigquery::biglake::v1::Database>
-  DeleteDatabase(
-      google::cloud::bigquery::biglake::v1::DeleteDatabaseRequest const&
-          request);
+  DeleteDatabase(google::cloud::bigquery::biglake::v1::DeleteDatabaseRequest const& request);
 
   virtual StatusOr<google::cloud::bigquery::biglake::v1::Database>
-  UpdateDatabase(
-      google::cloud::bigquery::biglake::v1::UpdateDatabaseRequest const&
-          request);
+  UpdateDatabase(google::cloud::bigquery::biglake::v1::UpdateDatabaseRequest const& request);
 
-  virtual StatusOr<google::cloud::bigquery::biglake::v1::Database> GetDatabase(
-      google::cloud::bigquery::biglake::v1::GetDatabaseRequest const& request);
+  virtual StatusOr<google::cloud::bigquery::biglake::v1::Database>
+  GetDatabase(google::cloud::bigquery::biglake::v1::GetDatabaseRequest const& request);
 
   virtual StreamRange<google::cloud::bigquery::biglake::v1::Database>
-  ListDatabases(
-      google::cloud::bigquery::biglake::v1::ListDatabasesRequest request);
+  ListDatabases(google::cloud::bigquery::biglake::v1::ListDatabasesRequest request);
 
-  virtual StatusOr<google::cloud::bigquery::biglake::v1::Table> CreateTable(
-      google::cloud::bigquery::biglake::v1::CreateTableRequest const& request);
+  virtual StatusOr<google::cloud::bigquery::biglake::v1::Table>
+  CreateTable(google::cloud::bigquery::biglake::v1::CreateTableRequest const& request);
 
-  virtual StatusOr<google::cloud::bigquery::biglake::v1::Table> DeleteTable(
-      google::cloud::bigquery::biglake::v1::DeleteTableRequest const& request);
+  virtual StatusOr<google::cloud::bigquery::biglake::v1::Table>
+  DeleteTable(google::cloud::bigquery::biglake::v1::DeleteTableRequest const& request);
 
-  virtual StatusOr<google::cloud::bigquery::biglake::v1::Table> UpdateTable(
-      google::cloud::bigquery::biglake::v1::UpdateTableRequest const& request);
+  virtual StatusOr<google::cloud::bigquery::biglake::v1::Table>
+  UpdateTable(google::cloud::bigquery::biglake::v1::UpdateTableRequest const& request);
 
-  virtual StatusOr<google::cloud::bigquery::biglake::v1::Table> RenameTable(
-      google::cloud::bigquery::biglake::v1::RenameTableRequest const& request);
+  virtual StatusOr<google::cloud::bigquery::biglake::v1::Table>
+  RenameTable(google::cloud::bigquery::biglake::v1::RenameTableRequest const& request);
 
-  virtual StatusOr<google::cloud::bigquery::biglake::v1::Table> GetTable(
-      google::cloud::bigquery::biglake::v1::GetTableRequest const& request);
+  virtual StatusOr<google::cloud::bigquery::biglake::v1::Table>
+  GetTable(google::cloud::bigquery::biglake::v1::GetTableRequest const& request);
 
-  virtual StreamRange<google::cloud::bigquery::biglake::v1::Table> ListTables(
-      google::cloud::bigquery::biglake::v1::ListTablesRequest request);
+  virtual StreamRange<google::cloud::bigquery::biglake::v1::Table>
+  ListTables(google::cloud::bigquery::biglake::v1::ListTablesRequest request);
 };
 
 /**
- * A factory function to construct an object of type
- * `MetastoreServiceConnection`.
+ * A factory function to construct an object of type `MetastoreServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
  * should be passed as an argument to the constructor of MetastoreServiceClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `MetastoreServiceConnection`. Expected options are any of the types
- * in the following option lists:
+ * returned `MetastoreServiceConnection`. Expected options are any of the types in
+ * the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
@@ -258,8 +239,8 @@ class MetastoreServiceConnection {
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
- * @param options (optional) Configure the `MetastoreServiceConnection` created
- * by this function.
+ * @param options (optional) Configure the `MetastoreServiceConnection` created by
+ * this function.
  */
 std::shared_ptr<MetastoreServiceConnection> MakeMetastoreServiceConnection(
     Options options = {});

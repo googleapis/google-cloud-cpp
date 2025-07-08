@@ -35,36 +35,30 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options UrlMapsDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_URL_MAPS_ENDPOINT", "",
-      "GOOGLE_CLOUD_CPP_URL_MAPS_AUTHORITY", "compute.googleapis.com");
+      std::move(options), "GOOGLE_CLOUD_CPP_URL_MAPS_ENDPOINT",
+      "", "GOOGLE_CLOUD_CPP_URL_MAPS_AUTHORITY",
+      "compute.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<compute_url_maps_v1::UrlMapsRetryPolicyOption>()) {
     options.set<compute_url_maps_v1::UrlMapsRetryPolicyOption>(
         compute_url_maps_v1::UrlMapsLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
-            .clone());
+            std::chrono::minutes(30)).clone());
   }
   if (!options.has<compute_url_maps_v1::UrlMapsBackoffPolicyOption>()) {
     options.set<compute_url_maps_v1::UrlMapsBackoffPolicyOption>(
-        ExponentialBackoffPolicy(
-            std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
-            .clone());
+        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
   }
   if (!options.has<compute_url_maps_v1::UrlMapsPollingPolicyOption>()) {
     options.set<compute_url_maps_v1::UrlMapsPollingPolicyOption>(
         GenericPollingPolicy<
             compute_url_maps_v1::UrlMapsRetryPolicyOption::Type,
             compute_url_maps_v1::UrlMapsBackoffPolicyOption::Type>(
-            options.get<compute_url_maps_v1::UrlMapsRetryPolicyOption>()
-                ->clone(),
+            options.get<compute_url_maps_v1::UrlMapsRetryPolicyOption>()->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                     std::chrono::minutes(5), kBackoffScaling)
-                .clone())
-            .clone());
+            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
   }
-  if (!options.has<
-          compute_url_maps_v1::UrlMapsConnectionIdempotencyPolicyOption>()) {
+  if (!options.has<compute_url_maps_v1::UrlMapsConnectionIdempotencyPolicyOption>()) {
     options.set<compute_url_maps_v1::UrlMapsConnectionIdempotencyPolicyOption>(
         compute_url_maps_v1::MakeDefaultUrlMapsConnectionIdempotencyPolicy());
   }

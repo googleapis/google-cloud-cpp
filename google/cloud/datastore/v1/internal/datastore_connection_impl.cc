@@ -17,9 +17,9 @@
 // source: google/datastore/v1/datastore.proto
 
 #include "google/cloud/datastore/v1/internal/datastore_connection_impl.h"
-#include "google/cloud/datastore/v1/internal/datastore_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/datastore/v1/internal/datastore_option_defaults.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
@@ -32,34 +32,34 @@ namespace datastore_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<datastore_v1::DatastoreRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<datastore_v1::DatastoreRetryPolicy>
+retry_policy(Options const& options) {
   return options.get<datastore_v1::DatastoreRetryPolicyOption>()->clone();
 }
 
-std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+std::unique_ptr<BackoffPolicy>
+backoff_policy(Options const& options) {
   return options.get<datastore_v1::DatastoreBackoffPolicyOption>()->clone();
 }
 
 std::unique_ptr<datastore_v1::DatastoreConnectionIdempotencyPolicy>
 idempotency_policy(Options const& options) {
-  return options
-      .get<datastore_v1::DatastoreConnectionIdempotencyPolicyOption>()
-      ->clone();
+  return options.get<datastore_v1::DatastoreConnectionIdempotencyPolicyOption>()->clone();
 }
 
-}  // namespace
+} // namespace
 
 DatastoreConnectionImpl::DatastoreConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<datastore_v1_internal::DatastoreStub> stub, Options options)
-    : background_(std::move(background)),
-      stub_(std::move(stub)),
-      options_(internal::MergeOptions(std::move(options),
-                                      DatastoreConnection::options())) {}
+    std::shared_ptr<datastore_v1_internal::DatastoreStub> stub,
+    Options options)
+  : background_(std::move(background)), stub_(std::move(stub)),
+    options_(internal::MergeOptions(
+        std::move(options),
+        DatastoreConnection::options())) {}
 
-StatusOr<google::datastore::v1::LookupResponse> DatastoreConnectionImpl::Lookup(
-    google::datastore::v1::LookupRequest const& request) {
+StatusOr<google::datastore::v1::LookupResponse>
+DatastoreConnectionImpl::Lookup(google::datastore::v1::LookupRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -72,8 +72,7 @@ StatusOr<google::datastore::v1::LookupResponse> DatastoreConnectionImpl::Lookup(
 }
 
 StatusOr<google::datastore::v1::RunQueryResponse>
-DatastoreConnectionImpl::RunQuery(
-    google::datastore::v1::RunQueryRequest const& request) {
+DatastoreConnectionImpl::RunQuery(google::datastore::v1::RunQueryRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -86,8 +85,7 @@ DatastoreConnectionImpl::RunQuery(
 }
 
 StatusOr<google::datastore::v1::RunAggregationQueryResponse>
-DatastoreConnectionImpl::RunAggregationQuery(
-    google::datastore::v1::RunAggregationQueryRequest const& request) {
+DatastoreConnectionImpl::RunAggregationQuery(google::datastore::v1::RunAggregationQueryRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -100,8 +98,7 @@ DatastoreConnectionImpl::RunAggregationQuery(
 }
 
 StatusOr<google::datastore::v1::BeginTransactionResponse>
-DatastoreConnectionImpl::BeginTransaction(
-    google::datastore::v1::BeginTransactionRequest const& request) {
+DatastoreConnectionImpl::BeginTransaction(google::datastore::v1::BeginTransactionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -113,8 +110,8 @@ DatastoreConnectionImpl::BeginTransaction(
       *current, request, __func__);
 }
 
-StatusOr<google::datastore::v1::CommitResponse> DatastoreConnectionImpl::Commit(
-    google::datastore::v1::CommitRequest const& request) {
+StatusOr<google::datastore::v1::CommitResponse>
+DatastoreConnectionImpl::Commit(google::datastore::v1::CommitRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -127,8 +124,7 @@ StatusOr<google::datastore::v1::CommitResponse> DatastoreConnectionImpl::Commit(
 }
 
 StatusOr<google::datastore::v1::RollbackResponse>
-DatastoreConnectionImpl::Rollback(
-    google::datastore::v1::RollbackRequest const& request) {
+DatastoreConnectionImpl::Rollback(google::datastore::v1::RollbackRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -141,8 +137,7 @@ DatastoreConnectionImpl::Rollback(
 }
 
 StatusOr<google::datastore::v1::AllocateIdsResponse>
-DatastoreConnectionImpl::AllocateIds(
-    google::datastore::v1::AllocateIdsRequest const& request) {
+DatastoreConnectionImpl::AllocateIds(google::datastore::v1::AllocateIdsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -155,8 +150,7 @@ DatastoreConnectionImpl::AllocateIds(
 }
 
 StatusOr<google::datastore::v1::ReserveIdsResponse>
-DatastoreConnectionImpl::ReserveIds(
-    google::datastore::v1::ReserveIdsRequest const& request) {
+DatastoreConnectionImpl::ReserveIds(google::datastore::v1::ReserveIdsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -169,21 +163,17 @@ DatastoreConnectionImpl::ReserveIds(
 }
 
 StreamRange<google::longrunning::Operation>
-DatastoreConnectionImpl::ListOperations(
-    google::longrunning::ListOperationsRequest request) {
+DatastoreConnectionImpl::ListOperations(google::longrunning::ListOperationsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListOperations(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::longrunning::Operation>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::longrunning::Operation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<datastore_v1::DatastoreRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<datastore_v1::DatastoreRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::longrunning::ListOperationsRequest const& r) {
+          Options const& options, google::longrunning::ListOperationsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
@@ -193,16 +183,15 @@ DatastoreConnectionImpl::ListOperations(
             options, r, function_name);
       },
       [](google::longrunning::ListOperationsResponse r) {
-        std::vector<google::longrunning::Operation> result(
-            r.operations().size());
+        std::vector<google::longrunning::Operation> result(r.operations().size());
         auto& messages = *r.mutable_operations();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
       });
 }
 
-StatusOr<google::longrunning::Operation> DatastoreConnectionImpl::GetOperation(
-    google::longrunning::GetOperationRequest const& request) {
+StatusOr<google::longrunning::Operation>
+DatastoreConnectionImpl::GetOperation(google::longrunning::GetOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -214,8 +203,8 @@ StatusOr<google::longrunning::Operation> DatastoreConnectionImpl::GetOperation(
       *current, request, __func__);
 }
 
-Status DatastoreConnectionImpl::DeleteOperation(
-    google::longrunning::DeleteOperationRequest const& request) {
+Status
+DatastoreConnectionImpl::DeleteOperation(google::longrunning::DeleteOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -227,8 +216,8 @@ Status DatastoreConnectionImpl::DeleteOperation(
       *current, request, __func__);
 }
 
-Status DatastoreConnectionImpl::CancelOperation(
-    google::longrunning::CancelOperationRequest const& request) {
+Status
+DatastoreConnectionImpl::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),

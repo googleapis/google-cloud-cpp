@@ -35,47 +35,32 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options CloudChannelReportsServiceDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options),
-      "GOOGLE_CLOUD_CPP_CLOUD_CHANNEL_REPORTS_SERVICE_ENDPOINT", "",
-      "GOOGLE_CLOUD_CPP_CLOUD_CHANNEL_REPORTS_SERVICE_AUTHORITY",
+      std::move(options), "GOOGLE_CLOUD_CPP_CLOUD_CHANNEL_REPORTS_SERVICE_ENDPOINT",
+      "", "GOOGLE_CLOUD_CPP_CLOUD_CHANNEL_REPORTS_SERVICE_AUTHORITY",
       "cloudchannel.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<channel_v1::CloudChannelReportsServiceRetryPolicyOption>()) {
     options.set<channel_v1::CloudChannelReportsServiceRetryPolicyOption>(
         channel_v1::CloudChannelReportsServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
-            .clone());
+            std::chrono::minutes(30)).clone());
   }
-  if (!options
-           .has<channel_v1::CloudChannelReportsServiceBackoffPolicyOption>()) {
+  if (!options.has<channel_v1::CloudChannelReportsServiceBackoffPolicyOption>()) {
     options.set<channel_v1::CloudChannelReportsServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(
-            std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
-            .clone());
+        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
   }
-  if (!options
-           .has<channel_v1::CloudChannelReportsServicePollingPolicyOption>()) {
+  if (!options.has<channel_v1::CloudChannelReportsServicePollingPolicyOption>()) {
     options.set<channel_v1::CloudChannelReportsServicePollingPolicyOption>(
         GenericPollingPolicy<
             channel_v1::CloudChannelReportsServiceRetryPolicyOption::Type,
             channel_v1::CloudChannelReportsServiceBackoffPolicyOption::Type>(
-            options
-                .get<channel_v1::CloudChannelReportsServiceRetryPolicyOption>()
-                ->clone(),
+            options.get<channel_v1::CloudChannelReportsServiceRetryPolicyOption>()->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                     std::chrono::minutes(5), kBackoffScaling)
-                .clone())
-            .clone());
+            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
   }
-  if (!options.has<
-          channel_v1::
-              CloudChannelReportsServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<
-        channel_v1::
-            CloudChannelReportsServiceConnectionIdempotencyPolicyOption>(
-        channel_v1::
-            MakeDefaultCloudChannelReportsServiceConnectionIdempotencyPolicy());
+  if (!options.has<channel_v1::CloudChannelReportsServiceConnectionIdempotencyPolicyOption>()) {
+    options.set<channel_v1::CloudChannelReportsServiceConnectionIdempotencyPolicyOption>(
+        channel_v1::MakeDefaultCloudChannelReportsServiceConnectionIdempotencyPolicy());
   }
 
   return options;

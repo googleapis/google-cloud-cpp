@@ -34,95 +34,77 @@ VersionsTracingConnection::VersionsTracingConnection(
     : child_(std::move(child)) {}
 
 StreamRange<google::cloud::dialogflow::v2::Version>
-VersionsTracingConnection::ListVersions(
-    google::cloud::dialogflow::v2::ListVersionsRequest request) {
-  auto span =
-      internal::MakeSpan("dialogflow_es::VersionsConnection::ListVersions");
+VersionsTracingConnection::ListVersions(google::cloud::dialogflow::v2::ListVersionsRequest request) {
+  auto span = internal::MakeSpan("dialogflow_es::VersionsConnection::ListVersions");
   internal::OTelScope scope(span);
   auto sr = child_->ListVersions(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::dialogflow::v2::Version>(std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::dialogflow::v2::Version>(
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::dialogflow::v2::Version>
-VersionsTracingConnection::GetVersion(
-    google::cloud::dialogflow::v2::GetVersionRequest const& request) {
-  auto span =
-      internal::MakeSpan("dialogflow_es::VersionsConnection::GetVersion");
+VersionsTracingConnection::GetVersion(google::cloud::dialogflow::v2::GetVersionRequest const& request) {
+  auto span = internal::MakeSpan("dialogflow_es::VersionsConnection::GetVersion");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetVersion(request));
 }
 
 StatusOr<google::cloud::dialogflow::v2::Version>
-VersionsTracingConnection::CreateVersion(
-    google::cloud::dialogflow::v2::CreateVersionRequest const& request) {
-  auto span =
-      internal::MakeSpan("dialogflow_es::VersionsConnection::CreateVersion");
+VersionsTracingConnection::CreateVersion(google::cloud::dialogflow::v2::CreateVersionRequest const& request) {
+  auto span = internal::MakeSpan("dialogflow_es::VersionsConnection::CreateVersion");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateVersion(request));
 }
 
 StatusOr<google::cloud::dialogflow::v2::Version>
-VersionsTracingConnection::UpdateVersion(
-    google::cloud::dialogflow::v2::UpdateVersionRequest const& request) {
-  auto span =
-      internal::MakeSpan("dialogflow_es::VersionsConnection::UpdateVersion");
+VersionsTracingConnection::UpdateVersion(google::cloud::dialogflow::v2::UpdateVersionRequest const& request) {
+  auto span = internal::MakeSpan("dialogflow_es::VersionsConnection::UpdateVersion");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateVersion(request));
 }
 
-Status VersionsTracingConnection::DeleteVersion(
-    google::cloud::dialogflow::v2::DeleteVersionRequest const& request) {
-  auto span =
-      internal::MakeSpan("dialogflow_es::VersionsConnection::DeleteVersion");
+Status
+VersionsTracingConnection::DeleteVersion(google::cloud::dialogflow::v2::DeleteVersionRequest const& request) {
+  auto span = internal::MakeSpan("dialogflow_es::VersionsConnection::DeleteVersion");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteVersion(request));
 }
 
 StreamRange<google::cloud::location::Location>
-VersionsTracingConnection::ListLocations(
-    google::cloud::location::ListLocationsRequest request) {
-  auto span =
-      internal::MakeSpan("dialogflow_es::VersionsConnection::ListLocations");
+VersionsTracingConnection::ListLocations(google::cloud::location::ListLocationsRequest request) {
+  auto span = internal::MakeSpan("dialogflow_es::VersionsConnection::ListLocations");
   internal::OTelScope scope(span);
   auto sr = child_->ListLocations(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::location::Location>(
-      std::move(span), std::move(sr));
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::location::Location>
-VersionsTracingConnection::GetLocation(
-    google::cloud::location::GetLocationRequest const& request) {
-  auto span =
-      internal::MakeSpan("dialogflow_es::VersionsConnection::GetLocation");
+VersionsTracingConnection::GetLocation(google::cloud::location::GetLocationRequest const& request) {
+  auto span = internal::MakeSpan("dialogflow_es::VersionsConnection::GetLocation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetLocation(request));
 }
 
 StreamRange<google::longrunning::Operation>
-VersionsTracingConnection::ListOperations(
-    google::longrunning::ListOperationsRequest request) {
-  auto span =
-      internal::MakeSpan("dialogflow_es::VersionsConnection::ListOperations");
+VersionsTracingConnection::ListOperations(google::longrunning::ListOperationsRequest request) {
+  auto span = internal::MakeSpan("dialogflow_es::VersionsConnection::ListOperations");
   internal::OTelScope scope(span);
   auto sr = child_->ListOperations(std::move(request));
   return internal::MakeTracedStreamRange<google::longrunning::Operation>(
-      std::move(span), std::move(sr));
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::longrunning::Operation>
-VersionsTracingConnection::GetOperation(
-    google::longrunning::GetOperationRequest const& request) {
-  auto span =
-      internal::MakeSpan("dialogflow_es::VersionsConnection::GetOperation");
+VersionsTracingConnection::GetOperation(google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpan("dialogflow_es::VersionsConnection::GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOperation(request));
 }
 
-Status VersionsTracingConnection::CancelOperation(
-    google::longrunning::CancelOperationRequest const& request) {
-  auto span =
-      internal::MakeSpan("dialogflow_es::VersionsConnection::CancelOperation");
+Status
+VersionsTracingConnection::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
+  auto span = internal::MakeSpan("dialogflow_es::VersionsConnection::CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CancelOperation(request));
 }

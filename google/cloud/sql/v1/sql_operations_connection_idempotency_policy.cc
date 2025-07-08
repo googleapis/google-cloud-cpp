@@ -26,32 +26,27 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-SqlOperationsServiceConnectionIdempotencyPolicy::
-    ~SqlOperationsServiceConnectionIdempotencyPolicy() = default;
+SqlOperationsServiceConnectionIdempotencyPolicy::~SqlOperationsServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<SqlOperationsServiceConnectionIdempotencyPolicy>
 SqlOperationsServiceConnectionIdempotencyPolicy::clone() const {
-  return std::make_unique<SqlOperationsServiceConnectionIdempotencyPolicy>(
-      *this);
+  return std::make_unique<SqlOperationsServiceConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency SqlOperationsServiceConnectionIdempotencyPolicy::Get(
-    google::cloud::sql::v1::SqlOperationsGetRequest const&) {
+Idempotency SqlOperationsServiceConnectionIdempotencyPolicy::Get(google::cloud::sql::v1::SqlOperationsGetRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency SqlOperationsServiceConnectionIdempotencyPolicy::List(
-    google::cloud::sql::v1::SqlOperationsListRequest) {  // NOLINT
+Idempotency SqlOperationsServiceConnectionIdempotencyPolicy::List(google::cloud::sql::v1::SqlOperationsListRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency SqlOperationsServiceConnectionIdempotencyPolicy::Cancel(
-    google::cloud::sql::v1::SqlOperationsCancelRequest const&) {
+Idempotency SqlOperationsServiceConnectionIdempotencyPolicy::Cancel(google::cloud::sql::v1::SqlOperationsCancelRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<SqlOperationsServiceConnectionIdempotencyPolicy>
-MakeDefaultSqlOperationsServiceConnectionIdempotencyPolicy() {
+    MakeDefaultSqlOperationsServiceConnectionIdempotencyPolicy() {
   return std::make_unique<SqlOperationsServiceConnectionIdempotencyPolicy>();
 }
 

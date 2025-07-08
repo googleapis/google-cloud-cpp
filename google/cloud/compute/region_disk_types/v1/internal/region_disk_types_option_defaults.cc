@@ -35,31 +35,23 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options RegionDiskTypesDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_REGION_DISK_TYPES_ENDPOINT", "",
-      "GOOGLE_CLOUD_CPP_REGION_DISK_TYPES_AUTHORITY", "compute.googleapis.com");
+      std::move(options), "GOOGLE_CLOUD_CPP_REGION_DISK_TYPES_ENDPOINT",
+      "", "GOOGLE_CLOUD_CPP_REGION_DISK_TYPES_AUTHORITY",
+      "compute.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
-  if (!options.has<
-          compute_region_disk_types_v1::RegionDiskTypesRetryPolicyOption>()) {
+  if (!options.has<compute_region_disk_types_v1::RegionDiskTypesRetryPolicyOption>()) {
     options.set<compute_region_disk_types_v1::RegionDiskTypesRetryPolicyOption>(
         compute_region_disk_types_v1::RegionDiskTypesLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
-            .clone());
+            std::chrono::minutes(30)).clone());
   }
-  if (!options.has<
-          compute_region_disk_types_v1::RegionDiskTypesBackoffPolicyOption>()) {
-    options
-        .set<compute_region_disk_types_v1::RegionDiskTypesBackoffPolicyOption>(
-            ExponentialBackoffPolicy(
-                std::chrono::seconds(0), std::chrono::seconds(1),
-                std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
-                .clone());
+  if (!options.has<compute_region_disk_types_v1::RegionDiskTypesBackoffPolicyOption>()) {
+    options.set<compute_region_disk_types_v1::RegionDiskTypesBackoffPolicyOption>(
+        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
   }
-  if (!options.has<compute_region_disk_types_v1::
-                       RegionDiskTypesConnectionIdempotencyPolicyOption>()) {
-    options.set<compute_region_disk_types_v1::
-                    RegionDiskTypesConnectionIdempotencyPolicyOption>(
-        compute_region_disk_types_v1::
-            MakeDefaultRegionDiskTypesConnectionIdempotencyPolicy());
+  if (!options.has<compute_region_disk_types_v1::RegionDiskTypesConnectionIdempotencyPolicyOption>()) {
+    options.set<compute_region_disk_types_v1::RegionDiskTypesConnectionIdempotencyPolicyOption>(
+        compute_region_disk_types_v1::MakeDefaultRegionDiskTypesConnectionIdempotencyPolicy());
   }
 
   return options;

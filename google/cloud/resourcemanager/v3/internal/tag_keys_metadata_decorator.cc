@@ -46,25 +46,27 @@ TagKeysMetadata::TagKeysMetadata(
 
 StatusOr<google::cloud::resourcemanager::v3::ListTagKeysResponse>
 TagKeysMetadata::ListTagKeys(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::resourcemanager::v3::ListTagKeysRequest const& request) {
   SetMetadata(context, options);
   return child_->ListTagKeys(context, options, request);
 }
 
-StatusOr<google::cloud::resourcemanager::v3::TagKey> TagKeysMetadata::GetTagKey(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::resourcemanager::v3::TagKey>
+TagKeysMetadata::GetTagKey(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::resourcemanager::v3::GetTagKeyRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetTagKey(context, options, request);
 }
 
 StatusOr<google::cloud::resourcemanager::v3::TagKey>
 TagKeysMetadata::GetNamespacedTagKey(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::resourcemanager::v3::GetNamespacedTagKeyRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::resourcemanager::v3::GetNamespacedTagKeyRequest const& request) {
   SetMetadata(context, options);
   return child_->GetNamespacedTagKey(context, options, request);
 }
@@ -76,12 +78,14 @@ TagKeysMetadata::AsyncCreateTagKey(
     google::cloud::internal::ImmutableOptions options,
     google::cloud::resourcemanager::v3::CreateTagKeyRequest const& request) {
   SetMetadata(*context, *options);
-  return child_->AsyncCreateTagKey(cq, std::move(context), std::move(options),
-                                   request);
+  return child_->AsyncCreateTagKey(
+      cq, std::move(context), std::move(options), request);
 }
 
-StatusOr<google::longrunning::Operation> TagKeysMetadata::CreateTagKey(
-    grpc::ClientContext& context, Options options,
+StatusOr<google::longrunning::Operation>
+TagKeysMetadata::CreateTagKey(
+    grpc::ClientContext& context,
+    Options options,
     google::cloud::resourcemanager::v3::CreateTagKeyRequest const& request) {
   SetMetadata(context, options);
   return child_->CreateTagKey(context, options, request);
@@ -93,19 +97,17 @@ TagKeysMetadata::AsyncUpdateTagKey(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::resourcemanager::v3::UpdateTagKeyRequest const& request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("tag_key.name=",
-                           internal::UrlEncode(request.tag_key().name())));
-  return child_->AsyncUpdateTagKey(cq, std::move(context), std::move(options),
-                                   request);
+  SetMetadata(*context, *options, absl::StrCat("tag_key.name=", internal::UrlEncode(request.tag_key().name())));
+  return child_->AsyncUpdateTagKey(
+      cq, std::move(context), std::move(options), request);
 }
 
-StatusOr<google::longrunning::Operation> TagKeysMetadata::UpdateTagKey(
-    grpc::ClientContext& context, Options options,
+StatusOr<google::longrunning::Operation>
+TagKeysMetadata::UpdateTagKey(
+    grpc::ClientContext& context,
+    Options options,
     google::cloud::resourcemanager::v3::UpdateTagKeyRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("tag_key.name=",
-                           internal::UrlEncode(request.tag_key().name())));
+  SetMetadata(context, options, absl::StrCat("tag_key.name=", internal::UrlEncode(request.tag_key().name())));
   return child_->UpdateTagKey(context, options, request);
 }
 
@@ -115,53 +117,53 @@ TagKeysMetadata::AsyncDeleteTagKey(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::resourcemanager::v3::DeleteTagKeyRequest const& request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteTagKey(cq, std::move(context), std::move(options),
-                                   request);
+  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteTagKey(
+      cq, std::move(context), std::move(options), request);
 }
 
-StatusOr<google::longrunning::Operation> TagKeysMetadata::DeleteTagKey(
-    grpc::ClientContext& context, Options options,
+StatusOr<google::longrunning::Operation>
+TagKeysMetadata::DeleteTagKey(
+    grpc::ClientContext& context,
+    Options options,
     google::cloud::resourcemanager::v3::DeleteTagKeyRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteTagKey(context, options, request);
 }
 
-StatusOr<google::iam::v1::Policy> TagKeysMetadata::GetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::iam::v1::Policy>
+TagKeysMetadata::GetIamPolicy(
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
-  SetMetadata(
-      context, options,
-      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
+  SetMetadata(context, options, absl::StrCat("resource=", internal::UrlEncode(request.resource())));
   return child_->GetIamPolicy(context, options, request);
 }
 
-StatusOr<google::iam::v1::Policy> TagKeysMetadata::SetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::iam::v1::Policy>
+TagKeysMetadata::SetIamPolicy(
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
-  SetMetadata(
-      context, options,
-      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
+  SetMetadata(context, options, absl::StrCat("resource=", internal::UrlEncode(request.resource())));
   return child_->SetIamPolicy(context, options, request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 TagKeysMetadata::TestIamPermissions(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  SetMetadata(
-      context, options,
-      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
+  SetMetadata(context, options, absl::StrCat("resource=", internal::UrlEncode(request.resource())));
   return child_->TestIamPermissions(context, options, request);
 }
 
-StatusOr<google::longrunning::Operation> TagKeysMetadata::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::Operation>
+TagKeysMetadata::GetOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetOperation(context, options, request);
 }
 
@@ -173,8 +175,8 @@ TagKeysMetadata::AsyncGetOperation(
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(cq, std::move(context), std::move(options),
-                                   request);
+  return child_->AsyncGetOperation(
+      cq, std::move(context), std::move(options), request);
 }
 
 future<Status> TagKeysMetadata::AsyncCancelOperation(
@@ -184,21 +186,21 @@ future<Status> TagKeysMetadata::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(cq, std::move(context),
-                                      std::move(options), request);
+  return child_->AsyncCancelOperation(
+      cq, std::move(context), std::move(options), request);
 }
 
 void TagKeysMetadata::SetMetadata(grpc::ClientContext& context,
-                                  Options const& options,
-                                  std::string const& request_params) {
+                                        Options const& options,
+                                        std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
 void TagKeysMetadata::SetMetadata(grpc::ClientContext& context,
-                                  Options const& options) {
-  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
-                                       api_client_header_);
+                                        Options const& options) {
+  google::cloud::internal::SetMetadata(
+      context, options, fixed_metadata_, api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

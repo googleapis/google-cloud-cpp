@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MEMORYSTORE_V1_MEMORYSTORE_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MEMORYSTORE_V1_MEMORYSTORE_CLIENT_H
 
-#include "google/cloud/memorystore/v1/memorystore_connection.h"
 #include "google/cloud/future.h"
+#include "google/cloud/memorystore/v1/memorystore_connection.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -64,8 +64,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class MemorystoreClient {
  public:
-  explicit MemorystoreClient(std::shared_ptr<MemorystoreConnection> connection,
-                             Options opts = {});
+  explicit MemorystoreClient(std::shared_ptr<MemorystoreConnection> connection, Options opts = {});
   ~MemorystoreClient();
 
   ///@{
@@ -78,12 +77,10 @@ class MemorystoreClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(MemorystoreClient const& a,
-                         MemorystoreClient const& b) {
+  friend bool operator==(MemorystoreClient const& a, MemorystoreClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(MemorystoreClient const& a,
-                         MemorystoreClient const& b) {
+  friend bool operator!=(MemorystoreClient const& a, MemorystoreClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -120,8 +117,8 @@ class MemorystoreClient {
   /// [google.cloud.memorystore.v1.ListInstancesRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1206}
   ///
   // clang-format on
-  StreamRange<google::cloud::memorystore::v1::Instance> ListInstances(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::memorystore::v1::Instance>
+  ListInstances(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -159,9 +156,8 @@ class MemorystoreClient {
   /// [google.cloud.memorystore.v1.ListInstancesRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1206}
   ///
   // clang-format on
-  StreamRange<google::cloud::memorystore::v1::Instance> ListInstances(
-      google::cloud::memorystore::v1::ListInstancesRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::memorystore::v1::Instance>
+  ListInstances(google::cloud::memorystore::v1::ListInstancesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -186,8 +182,8 @@ class MemorystoreClient {
   /// [google.cloud.memorystore.v1.Instance]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L258}
   ///
   // clang-format on
-  StatusOr<google::cloud::memorystore::v1::Instance> GetInstance(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::memorystore::v1::Instance>
+  GetInstance(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -216,9 +212,8 @@ class MemorystoreClient {
   /// [google.cloud.memorystore.v1.Instance]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L258}
   ///
   // clang-format on
-  StatusOr<google::cloud::memorystore::v1::Instance> GetInstance(
-      google::cloud::memorystore::v1::GetInstanceRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::memorystore::v1::Instance>
+  GetInstance(google::cloud::memorystore::v1::GetInstanceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -261,10 +256,8 @@ class MemorystoreClient {
   /// [google.cloud.memorystore.v1.Instance]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L258}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::memorystore::v1::Instance>> CreateInstance(
-      std::string const& parent,
-      google::cloud::memorystore::v1::Instance const& instance,
-      std::string const& instance_id, Options opts = {});
+  future<StatusOr<google::cloud::memorystore::v1::Instance>>
+  CreateInstance(std::string const& parent, google::cloud::memorystore::v1::Instance const& instance, std::string const& instance_id, Options opts = {});
 
   // clang-format off
   ///
@@ -277,10 +270,8 @@ class MemorystoreClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateInstance(
-      NoAwaitTag, std::string const& parent,
-      google::cloud::memorystore::v1::Instance const& instance,
-      std::string const& instance_id, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateInstance(NoAwaitTag, std::string const& parent, google::cloud::memorystore::v1::Instance const& instance, std::string const& instance_id, Options opts = {});
 
   // clang-format off
   ///
@@ -316,9 +307,8 @@ class MemorystoreClient {
   /// [google.cloud.memorystore.v1.Instance]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L258}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::memorystore::v1::Instance>> CreateInstance(
-      google::cloud::memorystore::v1::CreateInstanceRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::memorystore::v1::Instance>>
+  CreateInstance(google::cloud::memorystore::v1::CreateInstanceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -331,10 +321,8 @@ class MemorystoreClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateInstance(
-      NoAwaitTag,
-      google::cloud::memorystore::v1::CreateInstanceRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateInstance(NoAwaitTag, google::cloud::memorystore::v1::CreateInstanceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -345,8 +333,8 @@ class MemorystoreClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::memorystore::v1::Instance>> CreateInstance(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::memorystore::v1::Instance>>
+  CreateInstance(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -379,9 +367,8 @@ class MemorystoreClient {
   /// [google.cloud.memorystore.v1.UpdateInstanceRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1304}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::memorystore::v1::Instance>> UpdateInstance(
-      google::cloud::memorystore::v1::Instance const& instance,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  future<StatusOr<google::cloud::memorystore::v1::Instance>>
+  UpdateInstance(google::cloud::memorystore::v1::Instance const& instance, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -394,9 +381,8 @@ class MemorystoreClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateInstance(
-      NoAwaitTag, google::cloud::memorystore::v1::Instance const& instance,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateInstance(NoAwaitTag, google::cloud::memorystore::v1::Instance const& instance, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -432,9 +418,8 @@ class MemorystoreClient {
   /// [google.cloud.memorystore.v1.UpdateInstanceRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1304}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::memorystore::v1::Instance>> UpdateInstance(
-      google::cloud::memorystore::v1::UpdateInstanceRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::memorystore::v1::Instance>>
+  UpdateInstance(google::cloud::memorystore::v1::UpdateInstanceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -447,10 +432,8 @@ class MemorystoreClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateInstance(
-      NoAwaitTag,
-      google::cloud::memorystore::v1::UpdateInstanceRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateInstance(NoAwaitTag, google::cloud::memorystore::v1::UpdateInstanceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -461,8 +444,8 @@ class MemorystoreClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::memorystore::v1::Instance>> UpdateInstance(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::memorystore::v1::Instance>>
+  UpdateInstance(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -508,8 +491,8 @@ class MemorystoreClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteInstance(
-      NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteInstance(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -546,9 +529,7 @@ class MemorystoreClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::memorystore::v1::OperationMetadata>>
-  DeleteInstance(
-      google::cloud::memorystore::v1::DeleteInstanceRequest const& request,
-      Options opts = {});
+  DeleteInstance(google::cloud::memorystore::v1::DeleteInstanceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -561,10 +542,8 @@ class MemorystoreClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteInstance(
-      NoAwaitTag,
-      google::cloud::memorystore::v1::DeleteInstanceRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteInstance(NoAwaitTag, google::cloud::memorystore::v1::DeleteInstanceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -576,8 +555,7 @@ class MemorystoreClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::memorystore::v1::OperationMetadata>>
-  DeleteInstance(google::longrunning::Operation const& operation,
-                 Options opts = {});
+  DeleteInstance(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -634,10 +612,7 @@ class MemorystoreClient {
   ///
   // clang-format on
   StatusOr<google::cloud::memorystore::v1::CertificateAuthority>
-  GetCertificateAuthority(
-      google::cloud::memorystore::v1::GetCertificateAuthorityRequest const&
-          request,
-      Options opts = {});
+  GetCertificateAuthority(google::cloud::memorystore::v1::GetCertificateAuthorityRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -674,11 +649,7 @@ class MemorystoreClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::memorystore::v1::Instance>>
-  RescheduleMaintenance(
-      std::string const& name,
-      google::cloud::memorystore::v1::RescheduleMaintenanceRequest::
-          RescheduleType reschedule_type,
-      google::protobuf::Timestamp const& schedule_time, Options opts = {});
+  RescheduleMaintenance(std::string const& name, google::cloud::memorystore::v1::RescheduleMaintenanceRequest::RescheduleType reschedule_type, google::protobuf::Timestamp const& schedule_time, Options opts = {});
 
   // clang-format off
   ///
@@ -691,11 +662,8 @@ class MemorystoreClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> RescheduleMaintenance(
-      NoAwaitTag, std::string const& name,
-      google::cloud::memorystore::v1::RescheduleMaintenanceRequest::
-          RescheduleType reschedule_type,
-      google::protobuf::Timestamp const& schedule_time, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  RescheduleMaintenance(NoAwaitTag, std::string const& name, google::cloud::memorystore::v1::RescheduleMaintenanceRequest::RescheduleType reschedule_type, google::protobuf::Timestamp const& schedule_time, Options opts = {});
 
   // clang-format off
   ///
@@ -732,10 +700,7 @@ class MemorystoreClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::memorystore::v1::Instance>>
-  RescheduleMaintenance(
-      google::cloud::memorystore::v1::RescheduleMaintenanceRequest const&
-          request,
-      Options opts = {});
+  RescheduleMaintenance(google::cloud::memorystore::v1::RescheduleMaintenanceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -748,11 +713,8 @@ class MemorystoreClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> RescheduleMaintenance(
-      NoAwaitTag,
-      google::cloud::memorystore::v1::RescheduleMaintenanceRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  RescheduleMaintenance(NoAwaitTag, google::cloud::memorystore::v1::RescheduleMaintenanceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -764,8 +726,7 @@ class MemorystoreClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::memorystore::v1::Instance>>
-  RescheduleMaintenance(google::longrunning::Operation const& operation,
-                        Options opts = {});
+  RescheduleMaintenance(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -849,9 +810,7 @@ class MemorystoreClient {
   ///
   // clang-format on
   StreamRange<google::cloud::memorystore::v1::BackupCollection>
-  ListBackupCollections(
-      google::cloud::memorystore::v1::ListBackupCollectionsRequest request,
-      Options opts = {});
+  ListBackupCollections(google::cloud::memorystore::v1::ListBackupCollectionsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -908,9 +867,7 @@ class MemorystoreClient {
   ///
   // clang-format on
   StatusOr<google::cloud::memorystore::v1::BackupCollection>
-  GetBackupCollection(
-      google::cloud::memorystore::v1::GetBackupCollectionRequest const& request,
-      Options opts = {});
+  GetBackupCollection(google::cloud::memorystore::v1::GetBackupCollectionRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -944,8 +901,8 @@ class MemorystoreClient {
   /// [google.cloud.memorystore.v1.ListBackupsRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1425}
   ///
   // clang-format on
-  StreamRange<google::cloud::memorystore::v1::Backup> ListBackups(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::memorystore::v1::Backup>
+  ListBackups(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -983,9 +940,8 @@ class MemorystoreClient {
   /// [google.cloud.memorystore.v1.ListBackupsRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1425}
   ///
   // clang-format on
-  StreamRange<google::cloud::memorystore::v1::Backup> ListBackups(
-      google::cloud::memorystore::v1::ListBackupsRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::memorystore::v1::Backup>
+  ListBackups(google::cloud::memorystore::v1::ListBackupsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1010,8 +966,8 @@ class MemorystoreClient {
   /// [google.cloud.memorystore.v1.GetBackupRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1463}
   ///
   // clang-format on
-  StatusOr<google::cloud::memorystore::v1::Backup> GetBackup(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::memorystore::v1::Backup>
+  GetBackup(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1040,9 +996,8 @@ class MemorystoreClient {
   /// [google.cloud.memorystore.v1.GetBackupRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1463}
   ///
   // clang-format on
-  StatusOr<google::cloud::memorystore::v1::Backup> GetBackup(
-      google::cloud::memorystore::v1::GetBackupRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::memorystore::v1::Backup>
+  GetBackup(google::cloud::memorystore::v1::GetBackupRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1088,9 +1043,8 @@ class MemorystoreClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteBackup(NoAwaitTag,
-                                                        std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteBackup(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1127,9 +1081,7 @@ class MemorystoreClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::memorystore::v1::OperationMetadata>>
-  DeleteBackup(
-      google::cloud::memorystore::v1::DeleteBackupRequest const& request,
-      Options opts = {});
+  DeleteBackup(google::cloud::memorystore::v1::DeleteBackupRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1142,10 +1094,8 @@ class MemorystoreClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteBackup(
-      NoAwaitTag,
-      google::cloud::memorystore::v1::DeleteBackupRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteBackup(NoAwaitTag, google::cloud::memorystore::v1::DeleteBackupRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1157,8 +1107,7 @@ class MemorystoreClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::memorystore::v1::OperationMetadata>>
-  DeleteBackup(google::longrunning::Operation const& operation,
-               Options opts = {});
+  DeleteBackup(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1194,9 +1143,8 @@ class MemorystoreClient {
   /// [google.cloud.memorystore.v1.ExportBackupRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1493}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::memorystore::v1::Backup>> ExportBackup(
-      google::cloud::memorystore::v1::ExportBackupRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::memorystore::v1::Backup>>
+  ExportBackup(google::cloud::memorystore::v1::ExportBackupRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1209,10 +1157,8 @@ class MemorystoreClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> ExportBackup(
-      NoAwaitTag,
-      google::cloud::memorystore::v1::ExportBackupRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  ExportBackup(NoAwaitTag, google::cloud::memorystore::v1::ExportBackupRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1223,8 +1169,8 @@ class MemorystoreClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::memorystore::v1::Backup>> ExportBackup(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::memorystore::v1::Backup>>
+  ExportBackup(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1268,8 +1214,8 @@ class MemorystoreClient {
   /// [google.cloud.memorystore.v1.Instance]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L258}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::memorystore::v1::Instance>> BackupInstance(
-      std::string const& name, Options opts = {});
+  future<StatusOr<google::cloud::memorystore::v1::Instance>>
+  BackupInstance(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1282,8 +1228,8 @@ class MemorystoreClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> BackupInstance(
-      NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  BackupInstance(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1330,9 +1276,8 @@ class MemorystoreClient {
   /// [google.cloud.memorystore.v1.Instance]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L258}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::memorystore::v1::Instance>> BackupInstance(
-      google::cloud::memorystore::v1::BackupInstanceRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::memorystore::v1::Instance>>
+  BackupInstance(google::cloud::memorystore::v1::BackupInstanceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1345,10 +1290,8 @@ class MemorystoreClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> BackupInstance(
-      NoAwaitTag,
-      google::cloud::memorystore::v1::BackupInstanceRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  BackupInstance(NoAwaitTag, google::cloud::memorystore::v1::BackupInstanceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1359,8 +1302,8 @@ class MemorystoreClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::memorystore::v1::Instance>> BackupInstance(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::memorystore::v1::Instance>>
+  BackupInstance(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1398,8 +1341,8 @@ class MemorystoreClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request, Options opts = {});
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1428,9 +1371,8 @@ class MemorystoreClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1465,8 +1407,8 @@ class MemorystoreClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -1505,8 +1447,8 @@ class MemorystoreClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1532,8 +1474,8 @@ class MemorystoreClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1564,9 +1506,8 @@ class MemorystoreClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1590,7 +1531,8 @@ class MemorystoreClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status DeleteOperation(std::string const& name, Options opts = {});
+  Status
+  DeleteOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1619,9 +1561,8 @@ class MemorystoreClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request,
-      Options opts = {});
+  Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1655,7 +1596,8 @@ class MemorystoreClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(std::string const& name, Options opts = {});
+  Status
+  CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1694,9 +1636,8 @@ class MemorystoreClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request,
-      Options opts = {});
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<MemorystoreConnection> connection_;

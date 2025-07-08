@@ -30,27 +30,25 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-class SpeechTracingConnection : public speech_v1::SpeechConnection {
+class SpeechTracingConnection
+    : public speech_v1::SpeechConnection {
  public:
   ~SpeechTracingConnection() override = default;
 
   explicit SpeechTracingConnection(
-      std::shared_ptr<speech_v1::SpeechConnection> child);
+    std::shared_ptr<speech_v1::SpeechConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::speech::v1::RecognizeResponse> Recognize(
-      google::cloud::speech::v1::RecognizeRequest const& request) override;
+  StatusOr<google::cloud::speech::v1::RecognizeResponse>
+  Recognize(google::cloud::speech::v1::RecognizeRequest const& request) override;
 
   future<StatusOr<google::cloud::speech::v1::LongRunningRecognizeResponse>>
-  LongRunningRecognize(
-      google::cloud::speech::v1::LongRunningRecognizeRequest const& request)
-      override;
+  LongRunningRecognize(google::cloud::speech::v1::LongRunningRecognizeRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> LongRunningRecognize(
-      NoAwaitTag,
-      google::cloud::speech::v1::LongRunningRecognizeRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  LongRunningRecognize(NoAwaitTag,
+      google::cloud::speech::v1::LongRunningRecognizeRequest const& request) override;
 
   future<StatusOr<google::cloud::speech::v1::LongRunningRecognizeResponse>>
   LongRunningRecognize(
@@ -61,11 +59,11 @@ class SpeechTracingConnection : public speech_v1::SpeechConnection {
       google::cloud::speech::v1::StreamingRecognizeResponse>>
   AsyncStreamingRecognize() override;
 
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request) override;
 
  private:
   std::shared_ptr<speech_v1::SpeechConnection> child_;
@@ -79,7 +77,8 @@ class SpeechTracingConnection : public speech_v1::SpeechConnection {
  * The connection is only decorated if tracing is enabled (as determined by the
  * connection's options).
  */
-std::shared_ptr<speech_v1::SpeechConnection> MakeSpeechTracingConnection(
+std::shared_ptr<speech_v1::SpeechConnection>
+MakeSpeechTracingConnection(
     std::shared_ptr<speech_v1::SpeechConnection> conn);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

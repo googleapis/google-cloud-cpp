@@ -74,7 +74,8 @@ struct VizierServicePollingPolicyOption {
  * @ingroup google-cloud-aiplatform-options
  */
 using VizierServicePolicyOptionList =
-    OptionList<VizierServiceRetryPolicyOption, VizierServiceBackoffPolicyOption,
+    OptionList<VizierServiceRetryPolicyOption,
+               VizierServiceBackoffPolicyOption,
                VizierServicePollingPolicyOption,
                VizierServiceConnectionIdempotencyPolicyOption>;
 

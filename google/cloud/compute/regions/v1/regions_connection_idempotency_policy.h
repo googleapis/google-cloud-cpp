@@ -36,16 +36,15 @@ class RegionsConnectionIdempotencyPolicy {
   /// Create a new copy of this object.
   virtual std::unique_ptr<RegionsConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency GetRegion(
-      google::cloud::cpp::compute::regions::v1::GetRegionRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  GetRegion(google::cloud::cpp::compute::regions::v1::GetRegionRequest const& request);
 
-  virtual google::cloud::Idempotency ListRegions(
-      google::cloud::cpp::compute::regions::v1::ListRegionsRequest request);
+  virtual google::cloud::Idempotency
+  ListRegions(google::cloud::cpp::compute::regions::v1::ListRegionsRequest request);
 };
 
 std::unique_ptr<RegionsConnectionIdempotencyPolicy>
-MakeDefaultRegionsConnectionIdempotencyPolicy();
+    MakeDefaultRegionsConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_regions_v1

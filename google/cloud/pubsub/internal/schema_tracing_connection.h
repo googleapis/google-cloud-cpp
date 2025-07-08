@@ -30,53 +30,54 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-class SchemaServiceTracingConnection : public pubsub::SchemaServiceConnection {
+class SchemaServiceTracingConnection
+    : public pubsub::SchemaServiceConnection {
  public:
   ~SchemaServiceTracingConnection() override = default;
 
   explicit SchemaServiceTracingConnection(
-      std::shared_ptr<pubsub::SchemaServiceConnection> child);
+    std::shared_ptr<pubsub::SchemaServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::pubsub::v1::Schema> CreateSchema(
-      google::pubsub::v1::CreateSchemaRequest const& request) override;
+  StatusOr<google::pubsub::v1::Schema>
+  CreateSchema(google::pubsub::v1::CreateSchemaRequest const& request) override;
 
-  StatusOr<google::pubsub::v1::Schema> GetSchema(
-      google::pubsub::v1::GetSchemaRequest const& request) override;
+  StatusOr<google::pubsub::v1::Schema>
+  GetSchema(google::pubsub::v1::GetSchemaRequest const& request) override;
 
-  StreamRange<google::pubsub::v1::Schema> ListSchemas(
-      google::pubsub::v1::ListSchemasRequest request) override;
+  StreamRange<google::pubsub::v1::Schema>
+  ListSchemas(google::pubsub::v1::ListSchemasRequest request) override;
 
-  StreamRange<google::pubsub::v1::Schema> ListSchemaRevisions(
-      google::pubsub::v1::ListSchemaRevisionsRequest request) override;
+  StreamRange<google::pubsub::v1::Schema>
+  ListSchemaRevisions(google::pubsub::v1::ListSchemaRevisionsRequest request) override;
 
-  StatusOr<google::pubsub::v1::Schema> CommitSchema(
-      google::pubsub::v1::CommitSchemaRequest const& request) override;
+  StatusOr<google::pubsub::v1::Schema>
+  CommitSchema(google::pubsub::v1::CommitSchemaRequest const& request) override;
 
-  StatusOr<google::pubsub::v1::Schema> RollbackSchema(
-      google::pubsub::v1::RollbackSchemaRequest const& request) override;
+  StatusOr<google::pubsub::v1::Schema>
+  RollbackSchema(google::pubsub::v1::RollbackSchemaRequest const& request) override;
 
-  StatusOr<google::pubsub::v1::Schema> DeleteSchemaRevision(
-      google::pubsub::v1::DeleteSchemaRevisionRequest const& request) override;
+  StatusOr<google::pubsub::v1::Schema>
+  DeleteSchemaRevision(google::pubsub::v1::DeleteSchemaRevisionRequest const& request) override;
 
-  Status DeleteSchema(
-      google::pubsub::v1::DeleteSchemaRequest const& request) override;
+  Status
+  DeleteSchema(google::pubsub::v1::DeleteSchemaRequest const& request) override;
 
-  StatusOr<google::pubsub::v1::ValidateSchemaResponse> ValidateSchema(
-      google::pubsub::v1::ValidateSchemaRequest const& request) override;
+  StatusOr<google::pubsub::v1::ValidateSchemaResponse>
+  ValidateSchema(google::pubsub::v1::ValidateSchemaRequest const& request) override;
 
-  StatusOr<google::pubsub::v1::ValidateMessageResponse> ValidateMessage(
-      google::pubsub::v1::ValidateMessageRequest const& request) override;
+  StatusOr<google::pubsub::v1::ValidateMessageResponse>
+  ValidateMessage(google::pubsub::v1::ValidateMessageRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request) override;
+  StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) override;
 
  private:
   std::shared_ptr<pubsub::SchemaServiceConnection> child_;

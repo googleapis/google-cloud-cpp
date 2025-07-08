@@ -39,29 +39,30 @@ class CloudShellServiceStub {
   virtual ~CloudShellServiceStub() = 0;
 
   virtual StatusOr<google::cloud::shell::v1::Environment> GetEnvironment(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::shell::v1::GetEnvironmentRequest const& request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>>
-  AsyncStartEnvironment(
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncStartEnvironment(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
       google::cloud::shell::v1::StartEnvironmentRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> StartEnvironment(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::cloud::shell::v1::StartEnvironmentRequest const& request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>>
-  AsyncAuthorizeEnvironment(
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncAuthorizeEnvironment(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
       google::cloud::shell::v1::AuthorizeEnvironmentRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> AuthorizeEnvironment(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::cloud::shell::v1::AuthorizeEnvironmentRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncAddPublicKey(
@@ -71,7 +72,8 @@ class CloudShellServiceStub {
       google::cloud::shell::v1::AddPublicKeyRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> AddPublicKey(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::cloud::shell::v1::AddPublicKeyRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncRemovePublicKey(
@@ -81,13 +83,14 @@ class CloudShellServiceStub {
       google::cloud::shell::v1::RemovePublicKeyRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> RemovePublicKey(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::cloud::shell::v1::RemovePublicKeyRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
+    google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
@@ -100,41 +103,37 @@ class CloudShellServiceStub {
 class DefaultCloudShellServiceStub : public CloudShellServiceStub {
  public:
   DefaultCloudShellServiceStub(
-      std::unique_ptr<
-          google::cloud::shell::v1::CloudShellService::StubInterface>
-          grpc_stub,
-      std::unique_ptr<google::longrunning::Operations::StubInterface>
-          operations_stub)
+      std::unique_ptr<google::cloud::shell::v1::CloudShellService::StubInterface> grpc_stub,
+      std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub)
       : grpc_stub_(std::move(grpc_stub)),
         operations_stub_(std::move(operations_stub)) {}
 
   StatusOr<google::cloud::shell::v1::Environment> GetEnvironment(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::shell::v1::GetEnvironmentRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncStartEnvironment(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::shell::v1::StartEnvironmentRequest const& request)
-      override;
+      google::cloud::shell::v1::StartEnvironmentRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> StartEnvironment(
-      grpc::ClientContext& context, Options options,
-      google::cloud::shell::v1::StartEnvironmentRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::shell::v1::StartEnvironmentRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncAuthorizeEnvironment(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::shell::v1::AuthorizeEnvironmentRequest const& request)
-      override;
+      google::cloud::shell::v1::AuthorizeEnvironmentRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> AuthorizeEnvironment(
-      grpc::ClientContext& context, Options options,
-      google::cloud::shell::v1::AuthorizeEnvironmentRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::shell::v1::AuthorizeEnvironmentRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncAddPublicKey(
       google::cloud::CompletionQueue& cq,
@@ -143,7 +142,8 @@ class DefaultCloudShellServiceStub : public CloudShellServiceStub {
       google::cloud::shell::v1::AddPublicKeyRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> AddPublicKey(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::cloud::shell::v1::AddPublicKeyRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncRemovePublicKey(
@@ -153,7 +153,8 @@ class DefaultCloudShellServiceStub : public CloudShellServiceStub {
       google::cloud::shell::v1::RemovePublicKeyRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> RemovePublicKey(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::cloud::shell::v1::RemovePublicKeyRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -169,10 +170,8 @@ class DefaultCloudShellServiceStub : public CloudShellServiceStub {
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  std::unique_ptr<google::cloud::shell::v1::CloudShellService::StubInterface>
-      grpc_stub_;
-  std::unique_ptr<google::longrunning::Operations::StubInterface>
-      operations_stub_;
+  std::unique_ptr<google::cloud::shell::v1::CloudShellService::StubInterface> grpc_stub_;
+  std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_LICENSE_CODES_V1_LICENSE_CODES_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_LICENSE_CODES_V1_LICENSE_CODES_OPTIONS_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/license_codes/v1/license_codes_connection.h"
 #include "google/cloud/compute/license_codes/v1/license_codes_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -64,7 +64,8 @@ struct LicenseCodesConnectionIdempotencyPolicyOption {
  * @ingroup google-cloud-compute-options
  */
 using LicenseCodesPolicyOptionList =
-    OptionList<LicenseCodesRetryPolicyOption, LicenseCodesBackoffPolicyOption,
+    OptionList<LicenseCodesRetryPolicyOption,
+               LicenseCodesBackoffPolicyOption,
                LicenseCodesConnectionIdempotencyPolicyOption>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

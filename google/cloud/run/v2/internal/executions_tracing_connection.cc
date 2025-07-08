@@ -34,29 +34,25 @@ ExecutionsTracingConnection::ExecutionsTracingConnection(
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::run::v2::Execution>
-ExecutionsTracingConnection::GetExecution(
-    google::cloud::run::v2::GetExecutionRequest const& request) {
+ExecutionsTracingConnection::GetExecution(google::cloud::run::v2::GetExecutionRequest const& request) {
   auto span = internal::MakeSpan("run_v2::ExecutionsConnection::GetExecution");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetExecution(request));
 }
 
 StreamRange<google::cloud::run::v2::Execution>
-ExecutionsTracingConnection::ListExecutions(
-    google::cloud::run::v2::ListExecutionsRequest request) {
-  auto span =
-      internal::MakeSpan("run_v2::ExecutionsConnection::ListExecutions");
+ExecutionsTracingConnection::ListExecutions(google::cloud::run::v2::ListExecutionsRequest request) {
+  auto span = internal::MakeSpan("run_v2::ExecutionsConnection::ListExecutions");
   internal::OTelScope scope(span);
   auto sr = child_->ListExecutions(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::run::v2::Execution>(
-      std::move(span), std::move(sr));
+        std::move(span), std::move(sr));
 }
 
 future<StatusOr<google::cloud::run::v2::Execution>>
-ExecutionsTracingConnection::DeleteExecution(
-    google::cloud::run::v2::DeleteExecutionRequest const& request) {
-  auto span =
-      internal::MakeSpan("run_v2::ExecutionsConnection::DeleteExecution");
+ExecutionsTracingConnection::DeleteExecution(google::cloud::run::v2::DeleteExecutionRequest const& request) {
+  auto span = internal::MakeSpan(
+      "run_v2::ExecutionsConnection::DeleteExecution");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteExecution(request));
 }
@@ -64,27 +60,27 @@ ExecutionsTracingConnection::DeleteExecution(
 StatusOr<google::longrunning::Operation>
 ExecutionsTracingConnection::DeleteExecution(
     NoAwaitTag, google::cloud::run::v2::DeleteExecutionRequest const& request) {
-  auto span =
-      internal::MakeSpan("run_v2::ExecutionsConnection::DeleteExecution");
+  auto span = internal::MakeSpan(
+      "run_v2::ExecutionsConnection::DeleteExecution");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span,
-                           child_->DeleteExecution(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->DeleteExecution(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::run::v2::Execution>>
 ExecutionsTracingConnection::DeleteExecution(
     google::longrunning::Operation const& operation) {
-  auto span =
-      internal::MakeSpan("run_v2::ExecutionsConnection::DeleteExecution");
+  auto span = internal::MakeSpan(
+      "run_v2::ExecutionsConnection::DeleteExecution");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->DeleteExecution(operation));
+  return internal::EndSpan(std::move(span),
+      child_->DeleteExecution(operation));
 }
 
 future<StatusOr<google::cloud::run::v2::Execution>>
-ExecutionsTracingConnection::CancelExecution(
-    google::cloud::run::v2::CancelExecutionRequest const& request) {
-  auto span =
-      internal::MakeSpan("run_v2::ExecutionsConnection::CancelExecution");
+ExecutionsTracingConnection::CancelExecution(google::cloud::run::v2::CancelExecutionRequest const& request) {
+  auto span = internal::MakeSpan(
+      "run_v2::ExecutionsConnection::CancelExecution");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CancelExecution(request));
 }
@@ -92,52 +88,48 @@ ExecutionsTracingConnection::CancelExecution(
 StatusOr<google::longrunning::Operation>
 ExecutionsTracingConnection::CancelExecution(
     NoAwaitTag, google::cloud::run::v2::CancelExecutionRequest const& request) {
-  auto span =
-      internal::MakeSpan("run_v2::ExecutionsConnection::CancelExecution");
+  auto span = internal::MakeSpan(
+      "run_v2::ExecutionsConnection::CancelExecution");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span,
-                           child_->CancelExecution(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->CancelExecution(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::run::v2::Execution>>
 ExecutionsTracingConnection::CancelExecution(
     google::longrunning::Operation const& operation) {
-  auto span =
-      internal::MakeSpan("run_v2::ExecutionsConnection::CancelExecution");
+  auto span = internal::MakeSpan(
+      "run_v2::ExecutionsConnection::CancelExecution");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->CancelExecution(operation));
+  return internal::EndSpan(std::move(span),
+      child_->CancelExecution(operation));
 }
 
 StreamRange<google::longrunning::Operation>
-ExecutionsTracingConnection::ListOperations(
-    google::longrunning::ListOperationsRequest request) {
-  auto span =
-      internal::MakeSpan("run_v2::ExecutionsConnection::ListOperations");
+ExecutionsTracingConnection::ListOperations(google::longrunning::ListOperationsRequest request) {
+  auto span = internal::MakeSpan("run_v2::ExecutionsConnection::ListOperations");
   internal::OTelScope scope(span);
   auto sr = child_->ListOperations(std::move(request));
   return internal::MakeTracedStreamRange<google::longrunning::Operation>(
-      std::move(span), std::move(sr));
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::longrunning::Operation>
-ExecutionsTracingConnection::GetOperation(
-    google::longrunning::GetOperationRequest const& request) {
+ExecutionsTracingConnection::GetOperation(google::longrunning::GetOperationRequest const& request) {
   auto span = internal::MakeSpan("run_v2::ExecutionsConnection::GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOperation(request));
 }
 
-Status ExecutionsTracingConnection::DeleteOperation(
-    google::longrunning::DeleteOperationRequest const& request) {
-  auto span =
-      internal::MakeSpan("run_v2::ExecutionsConnection::DeleteOperation");
+Status
+ExecutionsTracingConnection::DeleteOperation(google::longrunning::DeleteOperationRequest const& request) {
+  auto span = internal::MakeSpan("run_v2::ExecutionsConnection::DeleteOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteOperation(request));
 }
 
 StatusOr<google::longrunning::Operation>
-ExecutionsTracingConnection::WaitOperation(
-    google::longrunning::WaitOperationRequest const& request) {
+ExecutionsTracingConnection::WaitOperation(google::longrunning::WaitOperationRequest const& request) {
   auto span = internal::MakeSpan("run_v2::ExecutionsConnection::WaitOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->WaitOperation(request));
@@ -145,7 +137,8 @@ ExecutionsTracingConnection::WaitOperation(
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-std::shared_ptr<run_v2::ExecutionsConnection> MakeExecutionsTracingConnection(
+std::shared_ptr<run_v2::ExecutionsConnection>
+MakeExecutionsTracingConnection(
     std::shared_ptr<run_v2::ExecutionsConnection> conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {

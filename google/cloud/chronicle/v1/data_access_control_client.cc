@@ -26,18 +26,14 @@ namespace chronicle_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 DataAccessControlServiceClient::DataAccessControlServiceClient(
-    std::shared_ptr<DataAccessControlServiceConnection> connection,
-    Options opts)
+    std::shared_ptr<DataAccessControlServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 DataAccessControlServiceClient::~DataAccessControlServiceClient() = default;
 
 StatusOr<google::cloud::chronicle::v1::DataAccessLabel>
-DataAccessControlServiceClient::CreateDataAccessLabel(
-    std::string const& parent,
-    google::cloud::chronicle::v1::DataAccessLabel const& data_access_label,
-    std::string const& data_access_label_id, Options opts) {
+DataAccessControlServiceClient::CreateDataAccessLabel(std::string const& parent, google::cloud::chronicle::v1::DataAccessLabel const& data_access_label, std::string const& data_access_label_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::chronicle::v1::CreateDataAccessLabelRequest request;
   request.set_parent(parent);
@@ -47,16 +43,13 @@ DataAccessControlServiceClient::CreateDataAccessLabel(
 }
 
 StatusOr<google::cloud::chronicle::v1::DataAccessLabel>
-DataAccessControlServiceClient::CreateDataAccessLabel(
-    google::cloud::chronicle::v1::CreateDataAccessLabelRequest const& request,
-    Options opts) {
+DataAccessControlServiceClient::CreateDataAccessLabel(google::cloud::chronicle::v1::CreateDataAccessLabelRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateDataAccessLabel(request);
 }
 
 StatusOr<google::cloud::chronicle::v1::DataAccessLabel>
-DataAccessControlServiceClient::GetDataAccessLabel(std::string const& name,
-                                                   Options opts) {
+DataAccessControlServiceClient::GetDataAccessLabel(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::chronicle::v1::GetDataAccessLabelRequest request;
   request.set_name(name);
@@ -64,16 +57,13 @@ DataAccessControlServiceClient::GetDataAccessLabel(std::string const& name,
 }
 
 StatusOr<google::cloud::chronicle::v1::DataAccessLabel>
-DataAccessControlServiceClient::GetDataAccessLabel(
-    google::cloud::chronicle::v1::GetDataAccessLabelRequest const& request,
-    Options opts) {
+DataAccessControlServiceClient::GetDataAccessLabel(google::cloud::chronicle::v1::GetDataAccessLabelRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetDataAccessLabel(request);
 }
 
 StreamRange<google::cloud::chronicle::v1::DataAccessLabel>
-DataAccessControlServiceClient::ListDataAccessLabels(std::string const& parent,
-                                                     Options opts) {
+DataAccessControlServiceClient::ListDataAccessLabels(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::chronicle::v1::ListDataAccessLabelsRequest request;
   request.set_parent(parent);
@@ -81,17 +71,13 @@ DataAccessControlServiceClient::ListDataAccessLabels(std::string const& parent,
 }
 
 StreamRange<google::cloud::chronicle::v1::DataAccessLabel>
-DataAccessControlServiceClient::ListDataAccessLabels(
-    google::cloud::chronicle::v1::ListDataAccessLabelsRequest request,
-    Options opts) {
+DataAccessControlServiceClient::ListDataAccessLabels(google::cloud::chronicle::v1::ListDataAccessLabelsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListDataAccessLabels(std::move(request));
 }
 
 StatusOr<google::cloud::chronicle::v1::DataAccessLabel>
-DataAccessControlServiceClient::UpdateDataAccessLabel(
-    google::cloud::chronicle::v1::DataAccessLabel const& data_access_label,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+DataAccessControlServiceClient::UpdateDataAccessLabel(google::cloud::chronicle::v1::DataAccessLabel const& data_access_label, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::chronicle::v1::UpdateDataAccessLabelRequest request;
   *request.mutable_data_access_label() = data_access_label;
@@ -100,33 +86,27 @@ DataAccessControlServiceClient::UpdateDataAccessLabel(
 }
 
 StatusOr<google::cloud::chronicle::v1::DataAccessLabel>
-DataAccessControlServiceClient::UpdateDataAccessLabel(
-    google::cloud::chronicle::v1::UpdateDataAccessLabelRequest const& request,
-    Options opts) {
+DataAccessControlServiceClient::UpdateDataAccessLabel(google::cloud::chronicle::v1::UpdateDataAccessLabelRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateDataAccessLabel(request);
 }
 
-Status DataAccessControlServiceClient::DeleteDataAccessLabel(
-    std::string const& name, Options opts) {
+Status
+DataAccessControlServiceClient::DeleteDataAccessLabel(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::chronicle::v1::DeleteDataAccessLabelRequest request;
   request.set_name(name);
   return connection_->DeleteDataAccessLabel(request);
 }
 
-Status DataAccessControlServiceClient::DeleteDataAccessLabel(
-    google::cloud::chronicle::v1::DeleteDataAccessLabelRequest const& request,
-    Options opts) {
+Status
+DataAccessControlServiceClient::DeleteDataAccessLabel(google::cloud::chronicle::v1::DeleteDataAccessLabelRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteDataAccessLabel(request);
 }
 
 StatusOr<google::cloud::chronicle::v1::DataAccessScope>
-DataAccessControlServiceClient::CreateDataAccessScope(
-    std::string const& parent,
-    google::cloud::chronicle::v1::DataAccessScope const& data_access_scope,
-    std::string const& data_access_scope_id, Options opts) {
+DataAccessControlServiceClient::CreateDataAccessScope(std::string const& parent, google::cloud::chronicle::v1::DataAccessScope const& data_access_scope, std::string const& data_access_scope_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::chronicle::v1::CreateDataAccessScopeRequest request;
   request.set_parent(parent);
@@ -136,16 +116,13 @@ DataAccessControlServiceClient::CreateDataAccessScope(
 }
 
 StatusOr<google::cloud::chronicle::v1::DataAccessScope>
-DataAccessControlServiceClient::CreateDataAccessScope(
-    google::cloud::chronicle::v1::CreateDataAccessScopeRequest const& request,
-    Options opts) {
+DataAccessControlServiceClient::CreateDataAccessScope(google::cloud::chronicle::v1::CreateDataAccessScopeRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateDataAccessScope(request);
 }
 
 StatusOr<google::cloud::chronicle::v1::DataAccessScope>
-DataAccessControlServiceClient::GetDataAccessScope(std::string const& name,
-                                                   Options opts) {
+DataAccessControlServiceClient::GetDataAccessScope(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::chronicle::v1::GetDataAccessScopeRequest request;
   request.set_name(name);
@@ -153,16 +130,13 @@ DataAccessControlServiceClient::GetDataAccessScope(std::string const& name,
 }
 
 StatusOr<google::cloud::chronicle::v1::DataAccessScope>
-DataAccessControlServiceClient::GetDataAccessScope(
-    google::cloud::chronicle::v1::GetDataAccessScopeRequest const& request,
-    Options opts) {
+DataAccessControlServiceClient::GetDataAccessScope(google::cloud::chronicle::v1::GetDataAccessScopeRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetDataAccessScope(request);
 }
 
 StreamRange<google::cloud::chronicle::v1::DataAccessScope>
-DataAccessControlServiceClient::ListDataAccessScopes(std::string const& parent,
-                                                     Options opts) {
+DataAccessControlServiceClient::ListDataAccessScopes(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::chronicle::v1::ListDataAccessScopesRequest request;
   request.set_parent(parent);
@@ -170,17 +144,13 @@ DataAccessControlServiceClient::ListDataAccessScopes(std::string const& parent,
 }
 
 StreamRange<google::cloud::chronicle::v1::DataAccessScope>
-DataAccessControlServiceClient::ListDataAccessScopes(
-    google::cloud::chronicle::v1::ListDataAccessScopesRequest request,
-    Options opts) {
+DataAccessControlServiceClient::ListDataAccessScopes(google::cloud::chronicle::v1::ListDataAccessScopesRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListDataAccessScopes(std::move(request));
 }
 
 StatusOr<google::cloud::chronicle::v1::DataAccessScope>
-DataAccessControlServiceClient::UpdateDataAccessScope(
-    google::cloud::chronicle::v1::DataAccessScope const& data_access_scope,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+DataAccessControlServiceClient::UpdateDataAccessScope(google::cloud::chronicle::v1::DataAccessScope const& data_access_scope, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::chronicle::v1::UpdateDataAccessScopeRequest request;
   *request.mutable_data_access_scope() = data_access_scope;
@@ -189,32 +159,27 @@ DataAccessControlServiceClient::UpdateDataAccessScope(
 }
 
 StatusOr<google::cloud::chronicle::v1::DataAccessScope>
-DataAccessControlServiceClient::UpdateDataAccessScope(
-    google::cloud::chronicle::v1::UpdateDataAccessScopeRequest const& request,
-    Options opts) {
+DataAccessControlServiceClient::UpdateDataAccessScope(google::cloud::chronicle::v1::UpdateDataAccessScopeRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateDataAccessScope(request);
 }
 
-Status DataAccessControlServiceClient::DeleteDataAccessScope(
-    std::string const& name, Options opts) {
+Status
+DataAccessControlServiceClient::DeleteDataAccessScope(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::chronicle::v1::DeleteDataAccessScopeRequest request;
   request.set_name(name);
   return connection_->DeleteDataAccessScope(request);
 }
 
-Status DataAccessControlServiceClient::DeleteDataAccessScope(
-    google::cloud::chronicle::v1::DeleteDataAccessScopeRequest const& request,
-    Options opts) {
+Status
+DataAccessControlServiceClient::DeleteDataAccessScope(google::cloud::chronicle::v1::DeleteDataAccessScopeRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteDataAccessScope(request);
 }
 
 StreamRange<google::longrunning::Operation>
-DataAccessControlServiceClient::ListOperations(std::string const& name,
-                                               std::string const& filter,
-                                               Options opts) {
+DataAccessControlServiceClient::ListOperations(std::string const& name, std::string const& filter, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::ListOperationsRequest request;
   request.set_name(name);
@@ -223,15 +188,13 @@ DataAccessControlServiceClient::ListOperations(std::string const& name,
 }
 
 StreamRange<google::longrunning::Operation>
-DataAccessControlServiceClient::ListOperations(
-    google::longrunning::ListOperationsRequest request, Options opts) {
+DataAccessControlServiceClient::ListOperations(google::longrunning::ListOperationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOperations(std::move(request));
 }
 
 StatusOr<google::longrunning::Operation>
-DataAccessControlServiceClient::GetOperation(std::string const& name,
-                                             Options opts) {
+DataAccessControlServiceClient::GetOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
@@ -239,36 +202,35 @@ DataAccessControlServiceClient::GetOperation(std::string const& name,
 }
 
 StatusOr<google::longrunning::Operation>
-DataAccessControlServiceClient::GetOperation(
-    google::longrunning::GetOperationRequest const& request, Options opts) {
+DataAccessControlServiceClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }
 
-Status DataAccessControlServiceClient::DeleteOperation(std::string const& name,
-                                                       Options opts) {
+Status
+DataAccessControlServiceClient::DeleteOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::DeleteOperationRequest request;
   request.set_name(name);
   return connection_->DeleteOperation(request);
 }
 
-Status DataAccessControlServiceClient::DeleteOperation(
-    google::longrunning::DeleteOperationRequest const& request, Options opts) {
+Status
+DataAccessControlServiceClient::DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteOperation(request);
 }
 
-Status DataAccessControlServiceClient::CancelOperation(std::string const& name,
-                                                       Options opts) {
+Status
+DataAccessControlServiceClient::CancelOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::CancelOperationRequest request;
   request.set_name(name);
   return connection_->CancelOperation(request);
 }
 
-Status DataAccessControlServiceClient::CancelOperation(
-    google::longrunning::CancelOperationRequest const& request, Options opts) {
+Status
+DataAccessControlServiceClient::CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelOperation(request);
 }

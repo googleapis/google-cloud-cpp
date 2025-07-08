@@ -34,45 +34,44 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class EssentialContactsServiceLogging : public EssentialContactsServiceStub {
  public:
   ~EssentialContactsServiceLogging() override = default;
-  EssentialContactsServiceLogging(
-      std::shared_ptr<EssentialContactsServiceStub> child,
-      TracingOptions tracing_options, std::set<std::string> const& components);
+  EssentialContactsServiceLogging(std::shared_ptr<EssentialContactsServiceStub> child,
+                       TracingOptions tracing_options,
+                       std::set<std::string> const& components);
 
   StatusOr<google::cloud::essentialcontacts::v1::Contact> CreateContact(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::essentialcontacts::v1::CreateContactRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::essentialcontacts::v1::CreateContactRequest const& request) override;
 
   StatusOr<google::cloud::essentialcontacts::v1::Contact> UpdateContact(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::essentialcontacts::v1::UpdateContactRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::essentialcontacts::v1::UpdateContactRequest const& request) override;
 
-  StatusOr<google::cloud::essentialcontacts::v1::ListContactsResponse>
-  ListContacts(grpc::ClientContext& context, Options const& options,
-               google::cloud::essentialcontacts::v1::ListContactsRequest const&
-                   request) override;
+  StatusOr<google::cloud::essentialcontacts::v1::ListContactsResponse> ListContacts(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::essentialcontacts::v1::ListContactsRequest const& request) override;
 
   StatusOr<google::cloud::essentialcontacts::v1::Contact> GetContact(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::essentialcontacts::v1::GetContactRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::essentialcontacts::v1::GetContactRequest const& request) override;
 
   Status DeleteContact(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::essentialcontacts::v1::DeleteContactRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::essentialcontacts::v1::DeleteContactRequest const& request) override;
 
-  StatusOr<google::cloud::essentialcontacts::v1::ComputeContactsResponse>
-  ComputeContacts(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::essentialcontacts::v1::ComputeContactsRequest const&
-          request) override;
+  StatusOr<google::cloud::essentialcontacts::v1::ComputeContactsResponse> ComputeContacts(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::essentialcontacts::v1::ComputeContactsRequest const& request) override;
 
   Status SendTestMessage(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::essentialcontacts::v1::SendTestMessageRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::essentialcontacts::v1::SendTestMessageRequest const& request) override;
 
  private:
   std::shared_ptr<EssentialContactsServiceStub> child_;

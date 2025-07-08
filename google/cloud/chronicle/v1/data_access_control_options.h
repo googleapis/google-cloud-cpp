@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CHRONICLE_V1_DATA_ACCESS_CONTROL_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CHRONICLE_V1_DATA_ACCESS_CONTROL_OPTIONS_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/chronicle/v1/data_access_control_connection.h"
 #include "google/cloud/chronicle/v1/data_access_control_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -55,8 +55,7 @@ struct DataAccessControlServiceBackoffPolicyOption {
  * @ingroup google-cloud-chronicle-options
  */
 struct DataAccessControlServiceConnectionIdempotencyPolicyOption {
-  using Type =
-      std::shared_ptr<DataAccessControlServiceConnectionIdempotencyPolicy>;
+  using Type = std::shared_ptr<DataAccessControlServiceConnectionIdempotencyPolicy>;
 };
 
 /**

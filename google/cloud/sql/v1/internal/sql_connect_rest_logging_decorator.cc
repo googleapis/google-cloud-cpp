@@ -29,17 +29,19 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 SqlConnectServiceRestLogging::SqlConnectServiceRestLogging(
     std::shared_ptr<SqlConnectServiceRestStub> child,
-    TracingOptions tracing_options, std::set<std::string> components)
-    : child_(std::move(child)),
-      tracing_options_(std::move(tracing_options)),
+    TracingOptions tracing_options,
+    std::set<std::string> components)
+    : child_(std::move(child)), tracing_options_(std::move(tracing_options)),
       components_(std::move(components)) {}
 
 StatusOr<google::cloud::sql::v1::ConnectSettings>
 SqlConnectServiceRestLogging::GetConnectSettings(
-    rest_internal::RestContext& rest_context, Options const& options,
+    rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::sql::v1::GetConnectSettingsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context, Options const& options,
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
              google::cloud::sql::v1::GetConnectSettingsRequest const& request) {
         return child_->GetConnectSettings(rest_context, options, request);
       },
@@ -48,12 +50,13 @@ SqlConnectServiceRestLogging::GetConnectSettings(
 
 StatusOr<google::cloud::sql::v1::GenerateEphemeralCertResponse>
 SqlConnectServiceRestLogging::GenerateEphemeralCert(
-    rest_internal::RestContext& rest_context, Options const& options,
+    rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::sql::v1::GenerateEphemeralCertRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          rest_internal::RestContext& rest_context, Options const& options,
-          google::cloud::sql::v1::GenerateEphemeralCertRequest const& request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
+             google::cloud::sql::v1::GenerateEphemeralCertRequest const& request) {
         return child_->GenerateEphemeralCert(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);

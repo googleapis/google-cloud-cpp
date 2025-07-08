@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAP_V1_IDENTITY_AWARE_PROXY_O_AUTH_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAP_V1_IDENTITY_AWARE_PROXY_O_AUTH_CLIENT_H
 
-#include "google/cloud/iap/v1/identity_aware_proxy_o_auth_connection.h"
 #include "google/cloud/future.h"
+#include "google/cloud/iap/v1/identity_aware_proxy_o_auth_connection.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -63,31 +63,23 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class IdentityAwareProxyOAuthServiceClient {
  public:
-  explicit IdentityAwareProxyOAuthServiceClient(
-      std::shared_ptr<IdentityAwareProxyOAuthServiceConnection> connection,
-      Options opts = {});
+  explicit IdentityAwareProxyOAuthServiceClient(std::shared_ptr<IdentityAwareProxyOAuthServiceConnection> connection, Options opts = {});
   ~IdentityAwareProxyOAuthServiceClient();
 
   ///@{
   /// @name Copy and move support
-  IdentityAwareProxyOAuthServiceClient(
-      IdentityAwareProxyOAuthServiceClient const&) = default;
-  IdentityAwareProxyOAuthServiceClient& operator=(
-      IdentityAwareProxyOAuthServiceClient const&) = default;
-  IdentityAwareProxyOAuthServiceClient(IdentityAwareProxyOAuthServiceClient&&) =
-      default;
-  IdentityAwareProxyOAuthServiceClient& operator=(
-      IdentityAwareProxyOAuthServiceClient&&) = default;
+  IdentityAwareProxyOAuthServiceClient(IdentityAwareProxyOAuthServiceClient const&) = default;
+  IdentityAwareProxyOAuthServiceClient& operator=(IdentityAwareProxyOAuthServiceClient const&) = default;
+  IdentityAwareProxyOAuthServiceClient(IdentityAwareProxyOAuthServiceClient&&) = default;
+  IdentityAwareProxyOAuthServiceClient& operator=(IdentityAwareProxyOAuthServiceClient&&) = default;
   ///@}
 
   ///@{
   /// @name Equality
-  friend bool operator==(IdentityAwareProxyOAuthServiceClient const& a,
-                         IdentityAwareProxyOAuthServiceClient const& b) {
+  friend bool operator==(IdentityAwareProxyOAuthServiceClient const& a, IdentityAwareProxyOAuthServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(IdentityAwareProxyOAuthServiceClient const& a,
-                         IdentityAwareProxyOAuthServiceClient const& b) {
+  friend bool operator!=(IdentityAwareProxyOAuthServiceClient const& a, IdentityAwareProxyOAuthServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -119,9 +111,8 @@ class IdentityAwareProxyOAuthServiceClient {
   /// [google.cloud.iap.v1.ListBrandsResponse]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L705}
   ///
   // clang-format on
-  StatusOr<google::cloud::iap::v1::ListBrandsResponse> ListBrands(
-      google::cloud::iap::v1::ListBrandsRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::iap::v1::ListBrandsResponse>
+  ListBrands(google::cloud::iap::v1::ListBrandsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -157,9 +148,8 @@ class IdentityAwareProxyOAuthServiceClient {
   /// [google.cloud.iap.v1.CreateBrandRequest]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L711}
   ///
   // clang-format on
-  StatusOr<google::cloud::iap::v1::Brand> CreateBrand(
-      google::cloud::iap::v1::CreateBrandRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::iap::v1::Brand>
+  CreateBrand(google::cloud::iap::v1::CreateBrandRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -188,9 +178,8 @@ class IdentityAwareProxyOAuthServiceClient {
   /// [google.cloud.iap.v1.GetBrandRequest]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L721}
   ///
   // clang-format on
-  StatusOr<google::cloud::iap::v1::Brand> GetBrand(
-      google::cloud::iap::v1::GetBrandRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::iap::v1::Brand>
+  GetBrand(google::cloud::iap::v1::GetBrandRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -222,10 +211,7 @@ class IdentityAwareProxyOAuthServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::iap::v1::IdentityAwareProxyClient>
-  CreateIdentityAwareProxyClient(
-      google::cloud::iap::v1::CreateIdentityAwareProxyClientRequest const&
-          request,
-      Options opts = {});
+  CreateIdentityAwareProxyClient(google::cloud::iap::v1::CreateIdentityAwareProxyClientRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -264,9 +250,7 @@ class IdentityAwareProxyOAuthServiceClient {
   ///
   // clang-format on
   StreamRange<google::cloud::iap::v1::IdentityAwareProxyClient>
-  ListIdentityAwareProxyClients(
-      google::cloud::iap::v1::ListIdentityAwareProxyClientsRequest request,
-      Options opts = {});
+  ListIdentityAwareProxyClients(google::cloud::iap::v1::ListIdentityAwareProxyClientsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -297,9 +281,7 @@ class IdentityAwareProxyOAuthServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::iap::v1::IdentityAwareProxyClient>
-  GetIdentityAwareProxyClient(
-      google::cloud::iap::v1::GetIdentityAwareProxyClientRequest const& request,
-      Options opts = {});
+  GetIdentityAwareProxyClient(google::cloud::iap::v1::GetIdentityAwareProxyClientRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -330,10 +312,7 @@ class IdentityAwareProxyOAuthServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::iap::v1::IdentityAwareProxyClient>
-  ResetIdentityAwareProxyClientSecret(
-      google::cloud::iap::v1::ResetIdentityAwareProxyClientSecretRequest const&
-          request,
-      Options opts = {});
+  ResetIdentityAwareProxyClientSecret(google::cloud::iap::v1::ResetIdentityAwareProxyClientSecretRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -361,10 +340,8 @@ class IdentityAwareProxyOAuthServiceClient {
   /// [google.cloud.iap.v1.DeleteIdentityAwareProxyClientRequest]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L788}
   ///
   // clang-format on
-  Status DeleteIdentityAwareProxyClient(
-      google::cloud::iap::v1::DeleteIdentityAwareProxyClientRequest const&
-          request,
-      Options opts = {});
+  Status
+  DeleteIdentityAwareProxyClient(google::cloud::iap::v1::DeleteIdentityAwareProxyClientRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<IdentityAwareProxyOAuthServiceConnection> connection_;

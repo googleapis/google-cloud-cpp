@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_ES_INTERNAL_AGENTS_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_ES_INTERNAL_AGENTS_CONNECTION_IMPL_H
 
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/dialogflow_es/agents_connection.h"
 #include "google/cloud/dialogflow_es/agents_connection_idempotency_policy.h"
 #include "google/cloud/dialogflow_es/agents_options.h"
 #include "google/cloud/dialogflow_es/internal/agents_retry_traits.h"
 #include "google/cloud/dialogflow_es/internal/agents_stub.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -40,93 +40,91 @@ namespace cloud {
 namespace dialogflow_es_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class AgentsConnectionImpl : public dialogflow_es::AgentsConnection {
+class AgentsConnectionImpl
+    : public dialogflow_es::AgentsConnection {
  public:
   ~AgentsConnectionImpl() override = default;
 
   AgentsConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<dialogflow_es_internal::AgentsStub> stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<dialogflow_es_internal::AgentsStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
-  StatusOr<google::cloud::dialogflow::v2::Agent> GetAgent(
-      google::cloud::dialogflow::v2::GetAgentRequest const& request) override;
+  StatusOr<google::cloud::dialogflow::v2::Agent>
+  GetAgent(google::cloud::dialogflow::v2::GetAgentRequest const& request) override;
 
-  StatusOr<google::cloud::dialogflow::v2::Agent> SetAgent(
-      google::cloud::dialogflow::v2::SetAgentRequest const& request) override;
+  StatusOr<google::cloud::dialogflow::v2::Agent>
+  SetAgent(google::cloud::dialogflow::v2::SetAgentRequest const& request) override;
 
-  Status DeleteAgent(google::cloud::dialogflow::v2::DeleteAgentRequest const&
-                         request) override;
+  Status
+  DeleteAgent(google::cloud::dialogflow::v2::DeleteAgentRequest const& request) override;
 
-  StreamRange<google::cloud::dialogflow::v2::Agent> SearchAgents(
-      google::cloud::dialogflow::v2::SearchAgentsRequest request) override;
+  StreamRange<google::cloud::dialogflow::v2::Agent>
+  SearchAgents(google::cloud::dialogflow::v2::SearchAgentsRequest request) override;
 
-  future<StatusOr<google::protobuf::Struct>> TrainAgent(
+  future<StatusOr<google::protobuf::Struct>>
+  TrainAgent(google::cloud::dialogflow::v2::TrainAgentRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  TrainAgent(NoAwaitTag,
       google::cloud::dialogflow::v2::TrainAgentRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> TrainAgent(
-      NoAwaitTag,
-      google::cloud::dialogflow::v2::TrainAgentRequest const& request) override;
-
-  future<StatusOr<google::protobuf::Struct>> TrainAgent(
+  future<StatusOr<google::protobuf::Struct>>
+  TrainAgent(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::dialogflow::v2::ExportAgentResponse>>
-  ExportAgent(google::cloud::dialogflow::v2::ExportAgentRequest const& request)
-      override;
+  ExportAgent(google::cloud::dialogflow::v2::ExportAgentRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> ExportAgent(
-      NoAwaitTag,
-      google::cloud::dialogflow::v2::ExportAgentRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  ExportAgent(NoAwaitTag,
+      google::cloud::dialogflow::v2::ExportAgentRequest const& request) override;
 
   future<StatusOr<google::cloud::dialogflow::v2::ExportAgentResponse>>
-  ExportAgent(google::longrunning::Operation const& operation) override;
-
-  future<StatusOr<google::protobuf::Struct>> ImportAgent(
-      google::cloud::dialogflow::v2::ImportAgentRequest const& request)
-      override;
-
-  StatusOr<google::longrunning::Operation> ImportAgent(
-      NoAwaitTag,
-      google::cloud::dialogflow::v2::ImportAgentRequest const& request)
-      override;
-
-  future<StatusOr<google::protobuf::Struct>> ImportAgent(
+  ExportAgent(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::protobuf::Struct>> RestoreAgent(
-      google::cloud::dialogflow::v2::RestoreAgentRequest const& request)
-      override;
+  future<StatusOr<google::protobuf::Struct>>
+  ImportAgent(google::cloud::dialogflow::v2::ImportAgentRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> RestoreAgent(
-      NoAwaitTag,
-      google::cloud::dialogflow::v2::RestoreAgentRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  ImportAgent(NoAwaitTag,
+      google::cloud::dialogflow::v2::ImportAgentRequest const& request) override;
 
-  future<StatusOr<google::protobuf::Struct>> RestoreAgent(
+  future<StatusOr<google::protobuf::Struct>>
+  ImportAgent(
       google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::cloud::dialogflow::v2::ValidationResult> GetValidationResult(
-      google::cloud::dialogflow::v2::GetValidationResultRequest const& request)
-      override;
+  future<StatusOr<google::protobuf::Struct>>
+  RestoreAgent(google::cloud::dialogflow::v2::RestoreAgentRequest const& request) override;
 
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request) override;
+  StatusOr<google::longrunning::Operation>
+  RestoreAgent(NoAwaitTag,
+      google::cloud::dialogflow::v2::RestoreAgentRequest const& request) override;
 
-  StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request) override;
+  future<StatusOr<google::protobuf::Struct>>
+  RestoreAgent(
+      google::longrunning::Operation const& operation) override;
 
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request) override;
+  StatusOr<google::cloud::dialogflow::v2::ValidationResult>
+  GetValidationResult(google::cloud::dialogflow::v2::GetValidationResultRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request) override;
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request) override;
 
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request) override;
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request) override;
+
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request) override;
+
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request) override;
+
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

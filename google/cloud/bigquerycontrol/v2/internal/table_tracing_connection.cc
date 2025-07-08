@@ -34,59 +34,47 @@ TableServiceTracingConnection::TableServiceTracingConnection(
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::bigquery::v2::Table>
-TableServiceTracingConnection::GetTable(
-    google::cloud::bigquery::v2::GetTableRequest const& request) {
-  auto span = internal::MakeSpan(
-      "bigquerycontrol_v2::TableServiceConnection::GetTable");
+TableServiceTracingConnection::GetTable(google::cloud::bigquery::v2::GetTableRequest const& request) {
+  auto span = internal::MakeSpan("bigquerycontrol_v2::TableServiceConnection::GetTable");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetTable(request));
 }
 
 StatusOr<google::cloud::bigquery::v2::Table>
-TableServiceTracingConnection::InsertTable(
-    google::cloud::bigquery::v2::InsertTableRequest const& request) {
-  auto span = internal::MakeSpan(
-      "bigquerycontrol_v2::TableServiceConnection::InsertTable");
+TableServiceTracingConnection::InsertTable(google::cloud::bigquery::v2::InsertTableRequest const& request) {
+  auto span = internal::MakeSpan("bigquerycontrol_v2::TableServiceConnection::InsertTable");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->InsertTable(request));
 }
 
 StatusOr<google::cloud::bigquery::v2::Table>
-TableServiceTracingConnection::PatchTable(
-    google::cloud::bigquery::v2::UpdateOrPatchTableRequest const& request) {
-  auto span = internal::MakeSpan(
-      "bigquerycontrol_v2::TableServiceConnection::PatchTable");
+TableServiceTracingConnection::PatchTable(google::cloud::bigquery::v2::UpdateOrPatchTableRequest const& request) {
+  auto span = internal::MakeSpan("bigquerycontrol_v2::TableServiceConnection::PatchTable");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->PatchTable(request));
 }
 
 StatusOr<google::cloud::bigquery::v2::Table>
-TableServiceTracingConnection::UpdateTable(
-    google::cloud::bigquery::v2::UpdateOrPatchTableRequest const& request) {
-  auto span = internal::MakeSpan(
-      "bigquerycontrol_v2::TableServiceConnection::UpdateTable");
+TableServiceTracingConnection::UpdateTable(google::cloud::bigquery::v2::UpdateOrPatchTableRequest const& request) {
+  auto span = internal::MakeSpan("bigquerycontrol_v2::TableServiceConnection::UpdateTable");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateTable(request));
 }
 
-Status TableServiceTracingConnection::DeleteTable(
-    google::cloud::bigquery::v2::DeleteTableRequest const& request) {
-  auto span = internal::MakeSpan(
-      "bigquerycontrol_v2::TableServiceConnection::DeleteTable");
+Status
+TableServiceTracingConnection::DeleteTable(google::cloud::bigquery::v2::DeleteTableRequest const& request) {
+  auto span = internal::MakeSpan("bigquerycontrol_v2::TableServiceConnection::DeleteTable");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteTable(request));
 }
 
 StreamRange<google::cloud::bigquery::v2::ListFormatTable>
-TableServiceTracingConnection::ListTables(
-    google::cloud::bigquery::v2::ListTablesRequest request) {
-  auto span = internal::MakeSpan(
-      "bigquerycontrol_v2::TableServiceConnection::ListTables");
+TableServiceTracingConnection::ListTables(google::cloud::bigquery::v2::ListTablesRequest request) {
+  auto span = internal::MakeSpan("bigquerycontrol_v2::TableServiceConnection::ListTables");
   internal::OTelScope scope(span);
   auto sr = child_->ListTables(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::bigquery::v2::ListFormatTable>(std::move(span),
-                                                    std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::bigquery::v2::ListFormatTable>(
+        std::move(span), std::move(sr));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

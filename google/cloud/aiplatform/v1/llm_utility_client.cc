@@ -28,14 +28,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 LlmUtilityServiceClient::LlmUtilityServiceClient(
     std::shared_ptr<LlmUtilityServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 LlmUtilityServiceClient::~LlmUtilityServiceClient() = default;
 
 StatusOr<google::cloud::aiplatform::v1::CountTokensResponse>
-LlmUtilityServiceClient::CountTokens(
-    std::string const& endpoint,
-    std::vector<google::protobuf::Value> const& instances, Options opts) {
+LlmUtilityServiceClient::CountTokens(std::string const& endpoint, std::vector<google::protobuf::Value> const& instances, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::CountTokensRequest request;
   request.set_endpoint(endpoint);
@@ -44,17 +42,13 @@ LlmUtilityServiceClient::CountTokens(
 }
 
 StatusOr<google::cloud::aiplatform::v1::CountTokensResponse>
-LlmUtilityServiceClient::CountTokens(
-    google::cloud::aiplatform::v1::CountTokensRequest const& request,
-    Options opts) {
+LlmUtilityServiceClient::CountTokens(google::cloud::aiplatform::v1::CountTokensRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CountTokens(request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ComputeTokensResponse>
-LlmUtilityServiceClient::ComputeTokens(
-    std::string const& endpoint,
-    std::vector<google::protobuf::Value> const& instances, Options opts) {
+LlmUtilityServiceClient::ComputeTokens(std::string const& endpoint, std::vector<google::protobuf::Value> const& instances, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::ComputeTokensRequest request;
   request.set_endpoint(endpoint);
@@ -63,50 +57,43 @@ LlmUtilityServiceClient::ComputeTokens(
 }
 
 StatusOr<google::cloud::aiplatform::v1::ComputeTokensResponse>
-LlmUtilityServiceClient::ComputeTokens(
-    google::cloud::aiplatform::v1::ComputeTokensRequest const& request,
-    Options opts) {
+LlmUtilityServiceClient::ComputeTokens(google::cloud::aiplatform::v1::ComputeTokensRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ComputeTokens(request);
 }
 
 StreamRange<google::cloud::location::Location>
-LlmUtilityServiceClient::ListLocations(
-    google::cloud::location::ListLocationsRequest request, Options opts) {
+LlmUtilityServiceClient::ListLocations(google::cloud::location::ListLocationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListLocations(std::move(request));
 }
 
 StatusOr<google::cloud::location::Location>
-LlmUtilityServiceClient::GetLocation(
-    google::cloud::location::GetLocationRequest const& request, Options opts) {
+LlmUtilityServiceClient::GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetLocation(request);
 }
 
-StatusOr<google::iam::v1::Policy> LlmUtilityServiceClient::SetIamPolicy(
-    google::iam::v1::SetIamPolicyRequest const& request, Options opts) {
+StatusOr<google::iam::v1::Policy>
+LlmUtilityServiceClient::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetIamPolicy(request);
 }
 
-StatusOr<google::iam::v1::Policy> LlmUtilityServiceClient::GetIamPolicy(
-    google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
+StatusOr<google::iam::v1::Policy>
+LlmUtilityServiceClient::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetIamPolicy(request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-LlmUtilityServiceClient::TestIamPermissions(
-    google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
+LlmUtilityServiceClient::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->TestIamPermissions(request);
 }
 
 StreamRange<google::longrunning::Operation>
-LlmUtilityServiceClient::ListOperations(std::string const& name,
-                                        std::string const& filter,
-                                        Options opts) {
+LlmUtilityServiceClient::ListOperations(std::string const& name, std::string const& filter, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::ListOperationsRequest request;
   request.set_name(name);
@@ -115,56 +102,55 @@ LlmUtilityServiceClient::ListOperations(std::string const& name,
 }
 
 StreamRange<google::longrunning::Operation>
-LlmUtilityServiceClient::ListOperations(
-    google::longrunning::ListOperationsRequest request, Options opts) {
+LlmUtilityServiceClient::ListOperations(google::longrunning::ListOperationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOperations(std::move(request));
 }
 
-StatusOr<google::longrunning::Operation> LlmUtilityServiceClient::GetOperation(
-    std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation>
+LlmUtilityServiceClient::GetOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
   return connection_->GetOperation(request);
 }
 
-StatusOr<google::longrunning::Operation> LlmUtilityServiceClient::GetOperation(
-    google::longrunning::GetOperationRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation>
+LlmUtilityServiceClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }
 
-Status LlmUtilityServiceClient::DeleteOperation(std::string const& name,
-                                                Options opts) {
+Status
+LlmUtilityServiceClient::DeleteOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::DeleteOperationRequest request;
   request.set_name(name);
   return connection_->DeleteOperation(request);
 }
 
-Status LlmUtilityServiceClient::DeleteOperation(
-    google::longrunning::DeleteOperationRequest const& request, Options opts) {
+Status
+LlmUtilityServiceClient::DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteOperation(request);
 }
 
-Status LlmUtilityServiceClient::CancelOperation(std::string const& name,
-                                                Options opts) {
+Status
+LlmUtilityServiceClient::CancelOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::CancelOperationRequest request;
   request.set_name(name);
   return connection_->CancelOperation(request);
 }
 
-Status LlmUtilityServiceClient::CancelOperation(
-    google::longrunning::CancelOperationRequest const& request, Options opts) {
+Status
+LlmUtilityServiceClient::CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelOperation(request);
 }
 
-StatusOr<google::longrunning::Operation> LlmUtilityServiceClient::WaitOperation(
-    google::longrunning::WaitOperationRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation>
+LlmUtilityServiceClient::WaitOperation(google::longrunning::WaitOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->WaitOperation(request);
 }

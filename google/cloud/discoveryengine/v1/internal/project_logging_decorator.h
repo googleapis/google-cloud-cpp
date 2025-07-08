@@ -36,31 +36,33 @@ class ProjectServiceLogging : public ProjectServiceStub {
  public:
   ~ProjectServiceLogging() override = default;
   ProjectServiceLogging(std::shared_ptr<ProjectServiceStub> child,
-                        TracingOptions tracing_options,
-                        std::set<std::string> const& components);
+                       TracingOptions tracing_options,
+                       std::set<std::string> const& components);
 
   future<StatusOr<google::longrunning::Operation>> AsyncProvisionProject(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::discoveryengine::v1::ProvisionProjectRequest const&
-          request) override;
+      google::cloud::discoveryengine::v1::ProvisionProjectRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> ProvisionProject(
-      grpc::ClientContext& context, Options options,
-      google::cloud::discoveryengine::v1::ProvisionProjectRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::discoveryengine::v1::ProvisionProjectRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(

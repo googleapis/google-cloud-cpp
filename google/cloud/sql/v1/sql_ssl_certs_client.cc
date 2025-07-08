@@ -28,36 +28,30 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 SqlSslCertsServiceClient::SqlSslCertsServiceClient(
     std::shared_ptr<SqlSslCertsServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 SqlSslCertsServiceClient::~SqlSslCertsServiceClient() = default;
 
-StatusOr<google::cloud::sql::v1::Operation> SqlSslCertsServiceClient::Delete(
-    google::cloud::sql::v1::SqlSslCertsDeleteRequest const& request,
-    Options opts) {
+StatusOr<google::cloud::sql::v1::Operation>
+SqlSslCertsServiceClient::Delete(google::cloud::sql::v1::SqlSslCertsDeleteRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->Delete(request);
 }
 
-StatusOr<google::cloud::sql::v1::SslCert> SqlSslCertsServiceClient::Get(
-    google::cloud::sql::v1::SqlSslCertsGetRequest const& request,
-    Options opts) {
+StatusOr<google::cloud::sql::v1::SslCert>
+SqlSslCertsServiceClient::Get(google::cloud::sql::v1::SqlSslCertsGetRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->Get(request);
 }
 
 StatusOr<google::cloud::sql::v1::SslCertsInsertResponse>
-SqlSslCertsServiceClient::Insert(
-    google::cloud::sql::v1::SqlSslCertsInsertRequest const& request,
-    Options opts) {
+SqlSslCertsServiceClient::Insert(google::cloud::sql::v1::SqlSslCertsInsertRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->Insert(request);
 }
 
 StatusOr<google::cloud::sql::v1::SslCertsListResponse>
-SqlSslCertsServiceClient::List(
-    google::cloud::sql::v1::SqlSslCertsListRequest const& request,
-    Options opts) {
+SqlSslCertsServiceClient::List(google::cloud::sql::v1::SqlSslCertsListRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->List(request);
 }

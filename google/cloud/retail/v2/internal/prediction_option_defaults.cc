@@ -17,10 +17,10 @@
 // source: google/cloud/retail/v2/prediction_service.proto
 
 #include "google/cloud/retail/v2/internal/prediction_option_defaults.h"
-#include "google/cloud/retail/v2/prediction_connection.h"
-#include "google/cloud/retail/v2/prediction_options.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
+#include "google/cloud/retail/v2/prediction_connection.h"
+#include "google/cloud/retail/v2/prediction_options.h"
 #include <memory>
 #include <utility>
 
@@ -42,18 +42,14 @@ Options PredictionServiceDefaultOptions(Options options) {
   if (!options.has<retail_v2::PredictionServiceRetryPolicyOption>()) {
     options.set<retail_v2::PredictionServiceRetryPolicyOption>(
         retail_v2::PredictionServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
-            .clone());
+            std::chrono::minutes(30)).clone());
   }
   if (!options.has<retail_v2::PredictionServiceBackoffPolicyOption>()) {
     options.set<retail_v2::PredictionServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(
-            std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
-            .clone());
+        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
   }
-  if (!options.has<
-          retail_v2::PredictionServiceConnectionIdempotencyPolicyOption>()) {
+  if (!options.has<retail_v2::PredictionServiceConnectionIdempotencyPolicyOption>()) {
     options.set<retail_v2::PredictionServiceConnectionIdempotencyPolicyOption>(
         retail_v2::MakeDefaultPredictionServiceConnectionIdempotencyPolicy());
   }

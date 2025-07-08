@@ -38,34 +38,38 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ApiKeysConnection::~ApiKeysConnection() = default;
 
-future<StatusOr<google::api::apikeys::v2::Key>> ApiKeysConnection::CreateKey(
+future<StatusOr<google::api::apikeys::v2::Key>>
+ApiKeysConnection::CreateKey(
     google::api::apikeys::v2::CreateKeyRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::api::apikeys::v2::Key>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::api::apikeys::v2::Key>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation> ApiKeysConnection::CreateKey(
-    NoAwaitTag, google::api::apikeys::v2::CreateKeyRequest const&) {
+StatusOr<google::longrunning::Operation>
+ApiKeysConnection::CreateKey(
+    NoAwaitTag,
+    google::api::apikeys::v2::CreateKeyRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<StatusOr<google::api::apikeys::v2::Key>> ApiKeysConnection::CreateKey(
+future<StatusOr<google::api::apikeys::v2::Key>>
+ApiKeysConnection::CreateKey(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::api::apikeys::v2::Key>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::api::apikeys::v2::Key>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StreamRange<google::api::apikeys::v2::Key> ApiKeysConnection::ListKeys(
-    google::api::apikeys::v2::
-        ListKeysRequest) {  // NOLINT(performance-unnecessary-value-param)
+    google::api::apikeys::v2::ListKeysRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::api::apikeys::v2::Key>>();
 }
 
-StatusOr<google::api::apikeys::v2::Key> ApiKeysConnection::GetKey(
+StatusOr<google::api::apikeys::v2::Key>
+ApiKeysConnection::GetKey(
     google::api::apikeys::v2::GetKeyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -76,64 +80,76 @@ ApiKeysConnection::GetKeyString(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-future<StatusOr<google::api::apikeys::v2::Key>> ApiKeysConnection::UpdateKey(
+future<StatusOr<google::api::apikeys::v2::Key>>
+ApiKeysConnection::UpdateKey(
     google::api::apikeys::v2::UpdateKeyRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::api::apikeys::v2::Key>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::api::apikeys::v2::Key>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation> ApiKeysConnection::UpdateKey(
-    NoAwaitTag, google::api::apikeys::v2::UpdateKeyRequest const&) {
+StatusOr<google::longrunning::Operation>
+ApiKeysConnection::UpdateKey(
+    NoAwaitTag,
+    google::api::apikeys::v2::UpdateKeyRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<StatusOr<google::api::apikeys::v2::Key>> ApiKeysConnection::UpdateKey(
+future<StatusOr<google::api::apikeys::v2::Key>>
+ApiKeysConnection::UpdateKey(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::api::apikeys::v2::Key>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::api::apikeys::v2::Key>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<StatusOr<google::api::apikeys::v2::Key>> ApiKeysConnection::DeleteKey(
+future<StatusOr<google::api::apikeys::v2::Key>>
+ApiKeysConnection::DeleteKey(
     google::api::apikeys::v2::DeleteKeyRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::api::apikeys::v2::Key>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::api::apikeys::v2::Key>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation> ApiKeysConnection::DeleteKey(
-    NoAwaitTag, google::api::apikeys::v2::DeleteKeyRequest const&) {
+StatusOr<google::longrunning::Operation>
+ApiKeysConnection::DeleteKey(
+    NoAwaitTag,
+    google::api::apikeys::v2::DeleteKeyRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<StatusOr<google::api::apikeys::v2::Key>> ApiKeysConnection::DeleteKey(
+future<StatusOr<google::api::apikeys::v2::Key>>
+ApiKeysConnection::DeleteKey(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::api::apikeys::v2::Key>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::api::apikeys::v2::Key>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<StatusOr<google::api::apikeys::v2::Key>> ApiKeysConnection::UndeleteKey(
+future<StatusOr<google::api::apikeys::v2::Key>>
+ApiKeysConnection::UndeleteKey(
     google::api::apikeys::v2::UndeleteKeyRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::api::apikeys::v2::Key>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::api::apikeys::v2::Key>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation> ApiKeysConnection::UndeleteKey(
-    NoAwaitTag, google::api::apikeys::v2::UndeleteKeyRequest const&) {
+StatusOr<google::longrunning::Operation>
+ApiKeysConnection::UndeleteKey(
+    NoAwaitTag,
+    google::api::apikeys::v2::UndeleteKeyRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<StatusOr<google::api::apikeys::v2::Key>> ApiKeysConnection::UndeleteKey(
+future<StatusOr<google::api::apikeys::v2::Key>>
+ApiKeysConnection::UndeleteKey(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::api::apikeys::v2::Key>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::api::apikeys::v2::Key>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::api::apikeys::v2::LookupKeyResponse>
@@ -142,23 +158,26 @@ ApiKeysConnection::LookupKey(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::longrunning::Operation> ApiKeysConnection::GetOperation(
+StatusOr<google::longrunning::Operation>
+ApiKeysConnection::GetOperation(
     google::longrunning::GetOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-std::shared_ptr<ApiKeysConnection> MakeApiKeysConnection(Options options) {
+std::shared_ptr<ApiKeysConnection> MakeApiKeysConnection(
+    Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 ApiKeysPolicyOptionList>(options, __func__);
-  options = apikeys_v2_internal::ApiKeysDefaultOptions(std::move(options));
+      UnifiedCredentialsOptionList,
+      ApiKeysPolicyOptionList>(options, __func__);
+  options = apikeys_v2_internal::ApiKeysDefaultOptions(
+      std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
-  auto stub =
-      apikeys_v2_internal::CreateDefaultApiKeysStub(std::move(auth), options);
+  auto stub = apikeys_v2_internal::CreateDefaultApiKeysStub(
+    std::move(auth), options);
   return apikeys_v2_internal::MakeApiKeysTracingConnection(
       std::make_shared<apikeys_v2_internal::ApiKeysConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options)));
+      std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

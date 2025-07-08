@@ -39,8 +39,7 @@ std::unique_ptr<AsyncStreamingReadWriteRpc<
 SubscriberServiceTracingStub::AsyncSubscribe(
     CompletionQueue const& cq, std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.pubsublite.v1.SubscriberService", "Subscribe");
+  auto span = internal::MakeSpanGrpc("google.cloud.pubsublite.v1.SubscriberService", "Subscribe");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
   auto stream = child_->AsyncSubscribe(cq, context, std::move(options));
@@ -50,24 +49,22 @@ SubscriberServiceTracingStub::AsyncSubscribe(
       std::move(context), std::move(stream), std::move(span));
 }
 
-StatusOr<google::longrunning::ListOperationsResponse>
-SubscriberServiceTracingStub::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse> SubscriberServiceTracingStub::ListOperations(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.pubsublite.v1.SubscriberService", "ListOperations");
+  auto span = internal::MakeSpanGrpc("google.cloud.pubsublite.v1.SubscriberService", "ListOperations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListOperations(context, options, request));
 }
 
-StatusOr<google::longrunning::Operation>
-SubscriberServiceTracingStub::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::Operation> SubscriberServiceTracingStub::GetOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.pubsublite.v1.SubscriberService", "GetOperation");
+  auto span = internal::MakeSpanGrpc("google.cloud.pubsublite.v1.SubscriberService", "GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -75,10 +72,10 @@ SubscriberServiceTracingStub::GetOperation(
 }
 
 Status SubscriberServiceTracingStub::DeleteOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.pubsublite.v1.SubscriberService", "DeleteOperation");
+  auto span = internal::MakeSpanGrpc("google.cloud.pubsublite.v1.SubscriberService", "DeleteOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -86,10 +83,10 @@ Status SubscriberServiceTracingStub::DeleteOperation(
 }
 
 Status SubscriberServiceTracingStub::CancelOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.pubsublite.v1.SubscriberService", "CancelOperation");
+  auto span = internal::MakeSpanGrpc("google.cloud.pubsublite.v1.SubscriberService", "CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,

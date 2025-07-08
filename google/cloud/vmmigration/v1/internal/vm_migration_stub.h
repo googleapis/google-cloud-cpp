@@ -25,8 +25,8 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/location/locations.grpc.pb.h>
-#include <google/cloud/vmmigration/v1/vmmigration.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
+#include <google/cloud/vmmigration/v1/vmmigration.grpc.pb.h>
 #include <memory>
 #include <utility>
 
@@ -39,13 +39,14 @@ class VmMigrationStub {
  public:
   virtual ~VmMigrationStub() = 0;
 
-  virtual StatusOr<google::cloud::vmmigration::v1::ListSourcesResponse>
-  ListSources(
-      grpc::ClientContext& context, Options const& options,
+  virtual StatusOr<google::cloud::vmmigration::v1::ListSourcesResponse> ListSources(
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::vmmigration::v1::ListSourcesRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::vmmigration::v1::Source> GetSource(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::vmmigration::v1::GetSourceRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateSource(
@@ -55,7 +56,8 @@ class VmMigrationStub {
       google::cloud::vmmigration::v1::CreateSourceRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> CreateSource(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::cloud::vmmigration::v1::CreateSourceRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncUpdateSource(
@@ -65,7 +67,8 @@ class VmMigrationStub {
       google::cloud::vmmigration::v1::UpdateSourceRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> UpdateSource(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::cloud::vmmigration::v1::UpdateSourceRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteSource(
@@ -75,153 +78,132 @@ class VmMigrationStub {
       google::cloud::vmmigration::v1::DeleteSourceRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> DeleteSource(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::cloud::vmmigration::v1::DeleteSourceRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::vmmigration::v1::FetchInventoryResponse>
-  FetchInventory(
-      grpc::ClientContext& context, Options const& options,
+  virtual StatusOr<google::cloud::vmmigration::v1::FetchInventoryResponse> FetchInventory(
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::vmmigration::v1::FetchInventoryRequest const& request) = 0;
 
-  virtual StatusOr<
-      google::cloud::vmmigration::v1::ListUtilizationReportsResponse>
-  ListUtilizationReports(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::vmmigration::v1::ListUtilizationReportsRequest const&
-          request) = 0;
+  virtual StatusOr<google::cloud::vmmigration::v1::ListUtilizationReportsResponse> ListUtilizationReports(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::vmmigration::v1::ListUtilizationReportsRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::vmmigration::v1::UtilizationReport>
-  GetUtilizationReport(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::vmmigration::v1::GetUtilizationReportRequest const&
-          request) = 0;
+  virtual StatusOr<google::cloud::vmmigration::v1::UtilizationReport> GetUtilizationReport(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::vmmigration::v1::GetUtilizationReportRequest const& request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>>
-  AsyncCreateUtilizationReport(
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateUtilizationReport(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::vmmigration::v1::CreateUtilizationReportRequest const&
-          request) = 0;
+      google::cloud::vmmigration::v1::CreateUtilizationReportRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> CreateUtilizationReport(
-      grpc::ClientContext& context, Options options,
-      google::cloud::vmmigration::v1::CreateUtilizationReportRequest const&
-          request) = 0;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::vmmigration::v1::CreateUtilizationReportRequest const& request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>>
-  AsyncDeleteUtilizationReport(
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteUtilizationReport(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::vmmigration::v1::DeleteUtilizationReportRequest const&
-          request) = 0;
+      google::cloud::vmmigration::v1::DeleteUtilizationReportRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> DeleteUtilizationReport(
-      grpc::ClientContext& context, Options options,
-      google::cloud::vmmigration::v1::DeleteUtilizationReportRequest const&
-          request) = 0;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::vmmigration::v1::DeleteUtilizationReportRequest const& request) = 0;
 
-  virtual StatusOr<
-      google::cloud::vmmigration::v1::ListDatacenterConnectorsResponse>
-  ListDatacenterConnectors(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::vmmigration::v1::ListDatacenterConnectorsRequest const&
-          request) = 0;
+  virtual StatusOr<google::cloud::vmmigration::v1::ListDatacenterConnectorsResponse> ListDatacenterConnectors(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::vmmigration::v1::ListDatacenterConnectorsRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::vmmigration::v1::DatacenterConnector>
-  GetDatacenterConnector(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::vmmigration::v1::GetDatacenterConnectorRequest const&
-          request) = 0;
+  virtual StatusOr<google::cloud::vmmigration::v1::DatacenterConnector> GetDatacenterConnector(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::vmmigration::v1::GetDatacenterConnectorRequest const& request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>>
-  AsyncCreateDatacenterConnector(
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateDatacenterConnector(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::vmmigration::v1::CreateDatacenterConnectorRequest const&
-          request) = 0;
+      google::cloud::vmmigration::v1::CreateDatacenterConnectorRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> CreateDatacenterConnector(
-      grpc::ClientContext& context, Options options,
-      google::cloud::vmmigration::v1::CreateDatacenterConnectorRequest const&
-          request) = 0;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::vmmigration::v1::CreateDatacenterConnectorRequest const& request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>>
-  AsyncDeleteDatacenterConnector(
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteDatacenterConnector(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::vmmigration::v1::DeleteDatacenterConnectorRequest const&
-          request) = 0;
+      google::cloud::vmmigration::v1::DeleteDatacenterConnectorRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> DeleteDatacenterConnector(
-      grpc::ClientContext& context, Options options,
-      google::cloud::vmmigration::v1::DeleteDatacenterConnectorRequest const&
-          request) = 0;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::vmmigration::v1::DeleteDatacenterConnectorRequest const& request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>>
-  AsyncUpgradeAppliance(
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncUpgradeAppliance(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::vmmigration::v1::UpgradeApplianceRequest const&
-          request) = 0;
+      google::cloud::vmmigration::v1::UpgradeApplianceRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> UpgradeAppliance(
-      grpc::ClientContext& context, Options options,
-      google::cloud::vmmigration::v1::UpgradeApplianceRequest const&
-          request) = 0;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::vmmigration::v1::UpgradeApplianceRequest const& request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>>
-  AsyncCreateMigratingVm(
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateMigratingVm(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::vmmigration::v1::CreateMigratingVmRequest const&
-          request) = 0;
+      google::cloud::vmmigration::v1::CreateMigratingVmRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> CreateMigratingVm(
-      grpc::ClientContext& context, Options options,
-      google::cloud::vmmigration::v1::CreateMigratingVmRequest const&
-          request) = 0;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::vmmigration::v1::CreateMigratingVmRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::vmmigration::v1::ListMigratingVmsResponse>
-  ListMigratingVms(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::vmmigration::v1::ListMigratingVmsRequest const&
-          request) = 0;
+  virtual StatusOr<google::cloud::vmmigration::v1::ListMigratingVmsResponse> ListMigratingVms(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::vmmigration::v1::ListMigratingVmsRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::vmmigration::v1::MigratingVm> GetMigratingVm(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::vmmigration::v1::GetMigratingVmRequest const& request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>>
-  AsyncUpdateMigratingVm(
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncUpdateMigratingVm(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::vmmigration::v1::UpdateMigratingVmRequest const&
-          request) = 0;
+      google::cloud::vmmigration::v1::UpdateMigratingVmRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> UpdateMigratingVm(
-      grpc::ClientContext& context, Options options,
-      google::cloud::vmmigration::v1::UpdateMigratingVmRequest const&
-          request) = 0;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::vmmigration::v1::UpdateMigratingVmRequest const& request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>>
-  AsyncDeleteMigratingVm(
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteMigratingVm(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::vmmigration::v1::DeleteMigratingVmRequest const&
-          request) = 0;
+      google::cloud::vmmigration::v1::DeleteMigratingVmRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> DeleteMigratingVm(
-      grpc::ClientContext& context, Options options,
-      google::cloud::vmmigration::v1::DeleteMigratingVmRequest const&
-          request) = 0;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::vmmigration::v1::DeleteMigratingVmRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncStartMigration(
       google::cloud::CompletionQueue& cq,
@@ -230,20 +212,20 @@ class VmMigrationStub {
       google::cloud::vmmigration::v1::StartMigrationRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> StartMigration(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::cloud::vmmigration::v1::StartMigrationRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncResumeMigration(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::vmmigration::v1::ResumeMigrationRequest const&
-          request) = 0;
+      google::cloud::vmmigration::v1::ResumeMigrationRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> ResumeMigration(
-      grpc::ClientContext& context, Options options,
-      google::cloud::vmmigration::v1::ResumeMigrationRequest const&
-          request) = 0;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::vmmigration::v1::ResumeMigrationRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncPauseMigration(
       google::cloud::CompletionQueue& cq,
@@ -252,21 +234,20 @@ class VmMigrationStub {
       google::cloud::vmmigration::v1::PauseMigrationRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> PauseMigration(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::cloud::vmmigration::v1::PauseMigrationRequest const& request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>>
-  AsyncFinalizeMigration(
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncFinalizeMigration(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::vmmigration::v1::FinalizeMigrationRequest const&
-          request) = 0;
+      google::cloud::vmmigration::v1::FinalizeMigrationRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> FinalizeMigration(
-      grpc::ClientContext& context, Options options,
-      google::cloud::vmmigration::v1::FinalizeMigrationRequest const&
-          request) = 0;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::vmmigration::v1::FinalizeMigrationRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateCloneJob(
       google::cloud::CompletionQueue& cq,
@@ -275,7 +256,8 @@ class VmMigrationStub {
       google::cloud::vmmigration::v1::CreateCloneJobRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> CreateCloneJob(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::cloud::vmmigration::v1::CreateCloneJobRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncCancelCloneJob(
@@ -285,60 +267,60 @@ class VmMigrationStub {
       google::cloud::vmmigration::v1::CancelCloneJobRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> CancelCloneJob(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::cloud::vmmigration::v1::CancelCloneJobRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::vmmigration::v1::ListCloneJobsResponse>
-  ListCloneJobs(
-      grpc::ClientContext& context, Options const& options,
+  virtual StatusOr<google::cloud::vmmigration::v1::ListCloneJobsResponse> ListCloneJobs(
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::vmmigration::v1::ListCloneJobsRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::vmmigration::v1::CloneJob> GetCloneJob(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::vmmigration::v1::GetCloneJobRequest const& request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>>
-  AsyncCreateCutoverJob(
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateCutoverJob(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::vmmigration::v1::CreateCutoverJobRequest const&
-          request) = 0;
+      google::cloud::vmmigration::v1::CreateCutoverJobRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> CreateCutoverJob(
-      grpc::ClientContext& context, Options options,
-      google::cloud::vmmigration::v1::CreateCutoverJobRequest const&
-          request) = 0;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::vmmigration::v1::CreateCutoverJobRequest const& request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>>
-  AsyncCancelCutoverJob(
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncCancelCutoverJob(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::vmmigration::v1::CancelCutoverJobRequest const&
-          request) = 0;
+      google::cloud::vmmigration::v1::CancelCutoverJobRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> CancelCutoverJob(
-      grpc::ClientContext& context, Options options,
-      google::cloud::vmmigration::v1::CancelCutoverJobRequest const&
-          request) = 0;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::vmmigration::v1::CancelCutoverJobRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::vmmigration::v1::ListCutoverJobsResponse>
-  ListCutoverJobs(grpc::ClientContext& context, Options const& options,
-                  google::cloud::vmmigration::v1::ListCutoverJobsRequest const&
-                      request) = 0;
+  virtual StatusOr<google::cloud::vmmigration::v1::ListCutoverJobsResponse> ListCutoverJobs(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::vmmigration::v1::ListCutoverJobsRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::vmmigration::v1::CutoverJob> GetCutoverJob(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::vmmigration::v1::GetCutoverJobRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::vmmigration::v1::ListGroupsResponse>
-  ListGroups(
-      grpc::ClientContext& context, Options const& options,
+  virtual StatusOr<google::cloud::vmmigration::v1::ListGroupsResponse> ListGroups(
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::vmmigration::v1::ListGroupsRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::vmmigration::v1::Group> GetGroup(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::vmmigration::v1::GetGroupRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateGroup(
@@ -348,7 +330,8 @@ class VmMigrationStub {
       google::cloud::vmmigration::v1::CreateGroupRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> CreateGroup(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::cloud::vmmigration::v1::CreateGroupRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncUpdateGroup(
@@ -358,7 +341,8 @@ class VmMigrationStub {
       google::cloud::vmmigration::v1::UpdateGroupRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> UpdateGroup(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::cloud::vmmigration::v1::UpdateGroupRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteGroup(
@@ -368,128 +352,119 @@ class VmMigrationStub {
       google::cloud::vmmigration::v1::DeleteGroupRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> DeleteGroup(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::cloud::vmmigration::v1::DeleteGroupRequest const& request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>>
-  AsyncAddGroupMigration(
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncAddGroupMigration(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::vmmigration::v1::AddGroupMigrationRequest const&
-          request) = 0;
+      google::cloud::vmmigration::v1::AddGroupMigrationRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> AddGroupMigration(
-      grpc::ClientContext& context, Options options,
-      google::cloud::vmmigration::v1::AddGroupMigrationRequest const&
-          request) = 0;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::vmmigration::v1::AddGroupMigrationRequest const& request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>>
-  AsyncRemoveGroupMigration(
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncRemoveGroupMigration(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::vmmigration::v1::RemoveGroupMigrationRequest const&
-          request) = 0;
+      google::cloud::vmmigration::v1::RemoveGroupMigrationRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> RemoveGroupMigration(
-      grpc::ClientContext& context, Options options,
-      google::cloud::vmmigration::v1::RemoveGroupMigrationRequest const&
-          request) = 0;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::vmmigration::v1::RemoveGroupMigrationRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::vmmigration::v1::ListTargetProjectsResponse>
-  ListTargetProjects(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::vmmigration::v1::ListTargetProjectsRequest const&
-          request) = 0;
+  virtual StatusOr<google::cloud::vmmigration::v1::ListTargetProjectsResponse> ListTargetProjects(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::vmmigration::v1::ListTargetProjectsRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::vmmigration::v1::TargetProject>
-  GetTargetProject(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::vmmigration::v1::GetTargetProjectRequest const&
-          request) = 0;
+  virtual StatusOr<google::cloud::vmmigration::v1::TargetProject> GetTargetProject(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::vmmigration::v1::GetTargetProjectRequest const& request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>>
-  AsyncCreateTargetProject(
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateTargetProject(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::vmmigration::v1::CreateTargetProjectRequest const&
-          request) = 0;
+      google::cloud::vmmigration::v1::CreateTargetProjectRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> CreateTargetProject(
-      grpc::ClientContext& context, Options options,
-      google::cloud::vmmigration::v1::CreateTargetProjectRequest const&
-          request) = 0;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::vmmigration::v1::CreateTargetProjectRequest const& request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>>
-  AsyncUpdateTargetProject(
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncUpdateTargetProject(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::vmmigration::v1::UpdateTargetProjectRequest const&
-          request) = 0;
+      google::cloud::vmmigration::v1::UpdateTargetProjectRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> UpdateTargetProject(
-      grpc::ClientContext& context, Options options,
-      google::cloud::vmmigration::v1::UpdateTargetProjectRequest const&
-          request) = 0;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::vmmigration::v1::UpdateTargetProjectRequest const& request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>>
-  AsyncDeleteTargetProject(
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteTargetProject(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::vmmigration::v1::DeleteTargetProjectRequest const&
-          request) = 0;
+      google::cloud::vmmigration::v1::DeleteTargetProjectRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> DeleteTargetProject(
-      grpc::ClientContext& context, Options options,
-      google::cloud::vmmigration::v1::DeleteTargetProjectRequest const&
-          request) = 0;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::vmmigration::v1::DeleteTargetProjectRequest const& request) = 0;
 
-  virtual StatusOr<
-      google::cloud::vmmigration::v1::ListReplicationCyclesResponse>
-  ListReplicationCycles(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::vmmigration::v1::ListReplicationCyclesRequest const&
-          request) = 0;
+  virtual StatusOr<google::cloud::vmmigration::v1::ListReplicationCyclesResponse> ListReplicationCycles(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::vmmigration::v1::ListReplicationCyclesRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::vmmigration::v1::ReplicationCycle>
-  GetReplicationCycle(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::vmmigration::v1::GetReplicationCycleRequest const&
-          request) = 0;
+  virtual StatusOr<google::cloud::vmmigration::v1::ReplicationCycle> GetReplicationCycle(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::vmmigration::v1::GetReplicationCycleRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::location::ListLocationsResponse>
-  ListLocations(
-      grpc::ClientContext& context, Options const& options,
+  virtual StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::location::ListLocationsRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::location::Location> GetLocation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::location::GetLocationRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::ListOperationsRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual Status DeleteOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::DeleteOperationRequest const& request) = 0;
 
   virtual Status CancelOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::CancelOperationRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
+    google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
@@ -502,466 +477,433 @@ class VmMigrationStub {
 class DefaultVmMigrationStub : public VmMigrationStub {
  public:
   DefaultVmMigrationStub(
-      std::unique_ptr<
-          google::cloud::vmmigration::v1::VmMigration::StubInterface>
-          grpc_stub,
-      std::unique_ptr<google::cloud::location::Locations::StubInterface>
-          locations_stub,
-      std::unique_ptr<google::longrunning::Operations::StubInterface>
-          operations_stub)
+      std::unique_ptr<google::cloud::vmmigration::v1::VmMigration::StubInterface> grpc_stub,
+      std::unique_ptr<google::cloud::location::Locations::StubInterface> locations_stub,
+      std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub)
       : grpc_stub_(std::move(grpc_stub)),
         locations_stub_(std::move(locations_stub)),
         operations_stub_(std::move(operations_stub)) {}
 
   StatusOr<google::cloud::vmmigration::v1::ListSourcesResponse> ListSources(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::vmmigration::v1::ListSourcesRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::vmmigration::v1::ListSourcesRequest const& request) override;
 
   StatusOr<google::cloud::vmmigration::v1::Source> GetSource(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::vmmigration::v1::GetSourceRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateSource(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::vmmigration::v1::CreateSourceRequest const& request)
-      override;
+      google::cloud::vmmigration::v1::CreateSourceRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateSource(
-      grpc::ClientContext& context, Options options,
-      google::cloud::vmmigration::v1::CreateSourceRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::vmmigration::v1::CreateSourceRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateSource(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::vmmigration::v1::UpdateSourceRequest const& request)
-      override;
+      google::cloud::vmmigration::v1::UpdateSourceRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateSource(
-      grpc::ClientContext& context, Options options,
-      google::cloud::vmmigration::v1::UpdateSourceRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::vmmigration::v1::UpdateSourceRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteSource(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::vmmigration::v1::DeleteSourceRequest const& request)
-      override;
+      google::cloud::vmmigration::v1::DeleteSourceRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteSource(
-      grpc::ClientContext& context, Options options,
-      google::cloud::vmmigration::v1::DeleteSourceRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::vmmigration::v1::DeleteSourceRequest const& request) override;
 
-  StatusOr<google::cloud::vmmigration::v1::FetchInventoryResponse>
-  FetchInventory(grpc::ClientContext& context, Options const& options,
-                 google::cloud::vmmigration::v1::FetchInventoryRequest const&
-                     request) override;
+  StatusOr<google::cloud::vmmigration::v1::FetchInventoryResponse> FetchInventory(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::vmmigration::v1::FetchInventoryRequest const& request) override;
 
-  StatusOr<google::cloud::vmmigration::v1::ListUtilizationReportsResponse>
-  ListUtilizationReports(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::vmmigration::v1::ListUtilizationReportsRequest const&
-          request) override;
+  StatusOr<google::cloud::vmmigration::v1::ListUtilizationReportsResponse> ListUtilizationReports(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::vmmigration::v1::ListUtilizationReportsRequest const& request) override;
 
-  StatusOr<google::cloud::vmmigration::v1::UtilizationReport>
-  GetUtilizationReport(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::vmmigration::v1::GetUtilizationReportRequest const&
-          request) override;
+  StatusOr<google::cloud::vmmigration::v1::UtilizationReport> GetUtilizationReport(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::vmmigration::v1::GetUtilizationReportRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateUtilizationReport(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::vmmigration::v1::CreateUtilizationReportRequest const&
-          request) override;
+      google::cloud::vmmigration::v1::CreateUtilizationReportRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateUtilizationReport(
-      grpc::ClientContext& context, Options options,
-      google::cloud::vmmigration::v1::CreateUtilizationReportRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::vmmigration::v1::CreateUtilizationReportRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteUtilizationReport(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::vmmigration::v1::DeleteUtilizationReportRequest const&
-          request) override;
+      google::cloud::vmmigration::v1::DeleteUtilizationReportRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteUtilizationReport(
-      grpc::ClientContext& context, Options options,
-      google::cloud::vmmigration::v1::DeleteUtilizationReportRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::vmmigration::v1::DeleteUtilizationReportRequest const& request) override;
 
-  StatusOr<google::cloud::vmmigration::v1::ListDatacenterConnectorsResponse>
-  ListDatacenterConnectors(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::vmmigration::v1::ListDatacenterConnectorsRequest const&
-          request) override;
+  StatusOr<google::cloud::vmmigration::v1::ListDatacenterConnectorsResponse> ListDatacenterConnectors(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::vmmigration::v1::ListDatacenterConnectorsRequest const& request) override;
 
-  StatusOr<google::cloud::vmmigration::v1::DatacenterConnector>
-  GetDatacenterConnector(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::vmmigration::v1::GetDatacenterConnectorRequest const&
-          request) override;
+  StatusOr<google::cloud::vmmigration::v1::DatacenterConnector> GetDatacenterConnector(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::vmmigration::v1::GetDatacenterConnectorRequest const& request) override;
 
-  future<StatusOr<google::longrunning::Operation>>
-  AsyncCreateDatacenterConnector(
+  future<StatusOr<google::longrunning::Operation>> AsyncCreateDatacenterConnector(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::vmmigration::v1::CreateDatacenterConnectorRequest const&
-          request) override;
+      google::cloud::vmmigration::v1::CreateDatacenterConnectorRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateDatacenterConnector(
-      grpc::ClientContext& context, Options options,
-      google::cloud::vmmigration::v1::CreateDatacenterConnectorRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::vmmigration::v1::CreateDatacenterConnectorRequest const& request) override;
 
-  future<StatusOr<google::longrunning::Operation>>
-  AsyncDeleteDatacenterConnector(
+  future<StatusOr<google::longrunning::Operation>> AsyncDeleteDatacenterConnector(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::vmmigration::v1::DeleteDatacenterConnectorRequest const&
-          request) override;
+      google::cloud::vmmigration::v1::DeleteDatacenterConnectorRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteDatacenterConnector(
-      grpc::ClientContext& context, Options options,
-      google::cloud::vmmigration::v1::DeleteDatacenterConnectorRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::vmmigration::v1::DeleteDatacenterConnectorRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpgradeAppliance(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::vmmigration::v1::UpgradeApplianceRequest const& request)
-      override;
+      google::cloud::vmmigration::v1::UpgradeApplianceRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpgradeAppliance(
-      grpc::ClientContext& context, Options options,
-      google::cloud::vmmigration::v1::UpgradeApplianceRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::vmmigration::v1::UpgradeApplianceRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateMigratingVm(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::vmmigration::v1::CreateMigratingVmRequest const& request)
-      override;
+      google::cloud::vmmigration::v1::CreateMigratingVmRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateMigratingVm(
-      grpc::ClientContext& context, Options options,
-      google::cloud::vmmigration::v1::CreateMigratingVmRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::vmmigration::v1::CreateMigratingVmRequest const& request) override;
 
-  StatusOr<google::cloud::vmmigration::v1::ListMigratingVmsResponse>
-  ListMigratingVms(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::vmmigration::v1::ListMigratingVmsRequest const& request)
-      override;
+  StatusOr<google::cloud::vmmigration::v1::ListMigratingVmsResponse> ListMigratingVms(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::vmmigration::v1::ListMigratingVmsRequest const& request) override;
 
   StatusOr<google::cloud::vmmigration::v1::MigratingVm> GetMigratingVm(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::vmmigration::v1::GetMigratingVmRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::vmmigration::v1::GetMigratingVmRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateMigratingVm(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::vmmigration::v1::UpdateMigratingVmRequest const& request)
-      override;
+      google::cloud::vmmigration::v1::UpdateMigratingVmRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateMigratingVm(
-      grpc::ClientContext& context, Options options,
-      google::cloud::vmmigration::v1::UpdateMigratingVmRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::vmmigration::v1::UpdateMigratingVmRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteMigratingVm(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::vmmigration::v1::DeleteMigratingVmRequest const& request)
-      override;
+      google::cloud::vmmigration::v1::DeleteMigratingVmRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteMigratingVm(
-      grpc::ClientContext& context, Options options,
-      google::cloud::vmmigration::v1::DeleteMigratingVmRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::vmmigration::v1::DeleteMigratingVmRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncStartMigration(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::vmmigration::v1::StartMigrationRequest const& request)
-      override;
+      google::cloud::vmmigration::v1::StartMigrationRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> StartMigration(
-      grpc::ClientContext& context, Options options,
-      google::cloud::vmmigration::v1::StartMigrationRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::vmmigration::v1::StartMigrationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncResumeMigration(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::vmmigration::v1::ResumeMigrationRequest const& request)
-      override;
+      google::cloud::vmmigration::v1::ResumeMigrationRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> ResumeMigration(
-      grpc::ClientContext& context, Options options,
-      google::cloud::vmmigration::v1::ResumeMigrationRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::vmmigration::v1::ResumeMigrationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncPauseMigration(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::vmmigration::v1::PauseMigrationRequest const& request)
-      override;
+      google::cloud::vmmigration::v1::PauseMigrationRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> PauseMigration(
-      grpc::ClientContext& context, Options options,
-      google::cloud::vmmigration::v1::PauseMigrationRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::vmmigration::v1::PauseMigrationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncFinalizeMigration(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::vmmigration::v1::FinalizeMigrationRequest const& request)
-      override;
+      google::cloud::vmmigration::v1::FinalizeMigrationRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> FinalizeMigration(
-      grpc::ClientContext& context, Options options,
-      google::cloud::vmmigration::v1::FinalizeMigrationRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::vmmigration::v1::FinalizeMigrationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateCloneJob(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::vmmigration::v1::CreateCloneJobRequest const& request)
-      override;
+      google::cloud::vmmigration::v1::CreateCloneJobRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateCloneJob(
-      grpc::ClientContext& context, Options options,
-      google::cloud::vmmigration::v1::CreateCloneJobRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::vmmigration::v1::CreateCloneJobRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCancelCloneJob(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::vmmigration::v1::CancelCloneJobRequest const& request)
-      override;
+      google::cloud::vmmigration::v1::CancelCloneJobRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CancelCloneJob(
-      grpc::ClientContext& context, Options options,
-      google::cloud::vmmigration::v1::CancelCloneJobRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::vmmigration::v1::CancelCloneJobRequest const& request) override;
 
   StatusOr<google::cloud::vmmigration::v1::ListCloneJobsResponse> ListCloneJobs(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::vmmigration::v1::ListCloneJobsRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::vmmigration::v1::ListCloneJobsRequest const& request) override;
 
   StatusOr<google::cloud::vmmigration::v1::CloneJob> GetCloneJob(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::vmmigration::v1::GetCloneJobRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::vmmigration::v1::GetCloneJobRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateCutoverJob(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::vmmigration::v1::CreateCutoverJobRequest const& request)
-      override;
+      google::cloud::vmmigration::v1::CreateCutoverJobRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateCutoverJob(
-      grpc::ClientContext& context, Options options,
-      google::cloud::vmmigration::v1::CreateCutoverJobRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::vmmigration::v1::CreateCutoverJobRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCancelCutoverJob(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::vmmigration::v1::CancelCutoverJobRequest const& request)
-      override;
+      google::cloud::vmmigration::v1::CancelCutoverJobRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CancelCutoverJob(
-      grpc::ClientContext& context, Options options,
-      google::cloud::vmmigration::v1::CancelCutoverJobRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::vmmigration::v1::CancelCutoverJobRequest const& request) override;
 
-  StatusOr<google::cloud::vmmigration::v1::ListCutoverJobsResponse>
-  ListCutoverJobs(grpc::ClientContext& context, Options const& options,
-                  google::cloud::vmmigration::v1::ListCutoverJobsRequest const&
-                      request) override;
+  StatusOr<google::cloud::vmmigration::v1::ListCutoverJobsResponse> ListCutoverJobs(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::vmmigration::v1::ListCutoverJobsRequest const& request) override;
 
   StatusOr<google::cloud::vmmigration::v1::CutoverJob> GetCutoverJob(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::vmmigration::v1::GetCutoverJobRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::vmmigration::v1::GetCutoverJobRequest const& request) override;
 
   StatusOr<google::cloud::vmmigration::v1::ListGroupsResponse> ListGroups(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::vmmigration::v1::ListGroupsRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::vmmigration::v1::ListGroupsRequest const& request) override;
 
   StatusOr<google::cloud::vmmigration::v1::Group> GetGroup(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::vmmigration::v1::GetGroupRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateGroup(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::vmmigration::v1::CreateGroupRequest const& request)
-      override;
+      google::cloud::vmmigration::v1::CreateGroupRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateGroup(
-      grpc::ClientContext& context, Options options,
-      google::cloud::vmmigration::v1::CreateGroupRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::vmmigration::v1::CreateGroupRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateGroup(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::vmmigration::v1::UpdateGroupRequest const& request)
-      override;
+      google::cloud::vmmigration::v1::UpdateGroupRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateGroup(
-      grpc::ClientContext& context, Options options,
-      google::cloud::vmmigration::v1::UpdateGroupRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::vmmigration::v1::UpdateGroupRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteGroup(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::vmmigration::v1::DeleteGroupRequest const& request)
-      override;
+      google::cloud::vmmigration::v1::DeleteGroupRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteGroup(
-      grpc::ClientContext& context, Options options,
-      google::cloud::vmmigration::v1::DeleteGroupRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::vmmigration::v1::DeleteGroupRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncAddGroupMigration(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::vmmigration::v1::AddGroupMigrationRequest const& request)
-      override;
+      google::cloud::vmmigration::v1::AddGroupMigrationRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> AddGroupMigration(
-      grpc::ClientContext& context, Options options,
-      google::cloud::vmmigration::v1::AddGroupMigrationRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::vmmigration::v1::AddGroupMigrationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncRemoveGroupMigration(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::vmmigration::v1::RemoveGroupMigrationRequest const&
-          request) override;
+      google::cloud::vmmigration::v1::RemoveGroupMigrationRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> RemoveGroupMigration(
-      grpc::ClientContext& context, Options options,
-      google::cloud::vmmigration::v1::RemoveGroupMigrationRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::vmmigration::v1::RemoveGroupMigrationRequest const& request) override;
 
-  StatusOr<google::cloud::vmmigration::v1::ListTargetProjectsResponse>
-  ListTargetProjects(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::vmmigration::v1::ListTargetProjectsRequest const& request)
-      override;
+  StatusOr<google::cloud::vmmigration::v1::ListTargetProjectsResponse> ListTargetProjects(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::vmmigration::v1::ListTargetProjectsRequest const& request) override;
 
   StatusOr<google::cloud::vmmigration::v1::TargetProject> GetTargetProject(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::vmmigration::v1::GetTargetProjectRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::vmmigration::v1::GetTargetProjectRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateTargetProject(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::vmmigration::v1::CreateTargetProjectRequest const& request)
-      override;
+      google::cloud::vmmigration::v1::CreateTargetProjectRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateTargetProject(
-      grpc::ClientContext& context, Options options,
-      google::cloud::vmmigration::v1::CreateTargetProjectRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::vmmigration::v1::CreateTargetProjectRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateTargetProject(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::vmmigration::v1::UpdateTargetProjectRequest const& request)
-      override;
+      google::cloud::vmmigration::v1::UpdateTargetProjectRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateTargetProject(
-      grpc::ClientContext& context, Options options,
-      google::cloud::vmmigration::v1::UpdateTargetProjectRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::vmmigration::v1::UpdateTargetProjectRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteTargetProject(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::vmmigration::v1::DeleteTargetProjectRequest const& request)
-      override;
+      google::cloud::vmmigration::v1::DeleteTargetProjectRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteTargetProject(
-      grpc::ClientContext& context, Options options,
-      google::cloud::vmmigration::v1::DeleteTargetProjectRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::vmmigration::v1::DeleteTargetProjectRequest const& request) override;
 
-  StatusOr<google::cloud::vmmigration::v1::ListReplicationCyclesResponse>
-  ListReplicationCycles(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::vmmigration::v1::ListReplicationCyclesRequest const&
-          request) override;
+  StatusOr<google::cloud::vmmigration::v1::ListReplicationCyclesResponse> ListReplicationCycles(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::vmmigration::v1::ListReplicationCyclesRequest const& request) override;
 
-  StatusOr<google::cloud::vmmigration::v1::ReplicationCycle>
-  GetReplicationCycle(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::vmmigration::v1::GetReplicationCycleRequest const& request)
-      override;
+  StatusOr<google::cloud::vmmigration::v1::ReplicationCycle> GetReplicationCycle(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::vmmigration::v1::GetReplicationCycleRequest const& request) override;
 
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::location::ListLocationsRequest const& request) override;
 
   StatusOr<google::cloud::location::Location> GetLocation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::location::GetLocationRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status DeleteOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::DeleteOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -977,12 +919,9 @@ class DefaultVmMigrationStub : public VmMigrationStub {
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  std::unique_ptr<google::cloud::vmmigration::v1::VmMigration::StubInterface>
-      grpc_stub_;
-  std::unique_ptr<google::cloud::location::Locations::StubInterface>
-      locations_stub_;
-  std::unique_ptr<google::longrunning::Operations::StubInterface>
-      operations_stub_;
+  std::unique_ptr<google::cloud::vmmigration::v1::VmMigration::StubInterface> grpc_stub_;
+  std::unique_ptr<google::cloud::location::Locations::StubInterface> locations_stub_;
+  std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -62,9 +62,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class LlmUtilityServiceClient {
  public:
-  explicit LlmUtilityServiceClient(
-      std::shared_ptr<LlmUtilityServiceConnection> connection,
-      Options opts = {});
+  explicit LlmUtilityServiceClient(std::shared_ptr<LlmUtilityServiceConnection> connection, Options opts = {});
   ~LlmUtilityServiceClient();
 
   ///@{
@@ -77,12 +75,10 @@ class LlmUtilityServiceClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(LlmUtilityServiceClient const& a,
-                         LlmUtilityServiceClient const& b) {
+  friend bool operator==(LlmUtilityServiceClient const& a, LlmUtilityServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(LlmUtilityServiceClient const& a,
-                         LlmUtilityServiceClient const& b) {
+  friend bool operator!=(LlmUtilityServiceClient const& a, LlmUtilityServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -113,9 +109,8 @@ class LlmUtilityServiceClient {
   /// [google.cloud.aiplatform.v1.CountTokensResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/prediction_service.proto#L665}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::CountTokensResponse> CountTokens(
-      std::string const& endpoint,
-      std::vector<google::protobuf::Value> const& instances, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::CountTokensResponse>
+  CountTokens(std::string const& endpoint, std::vector<google::protobuf::Value> const& instances, Options opts = {});
 
   // clang-format off
   ///
@@ -144,9 +139,8 @@ class LlmUtilityServiceClient {
   /// [google.cloud.aiplatform.v1.CountTokensResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/prediction_service.proto#L665}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::CountTokensResponse> CountTokens(
-      google::cloud::aiplatform::v1::CountTokensRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::CountTokensResponse>
+  CountTokens(google::cloud::aiplatform::v1::CountTokensRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -174,9 +168,8 @@ class LlmUtilityServiceClient {
   /// [google.cloud.aiplatform.v1.ComputeTokensResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/llm_utility_service.proto#L123}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::ComputeTokensResponse> ComputeTokens(
-      std::string const& endpoint,
-      std::vector<google::protobuf::Value> const& instances, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::ComputeTokensResponse>
+  ComputeTokens(std::string const& endpoint, std::vector<google::protobuf::Value> const& instances, Options opts = {});
 
   // clang-format off
   ///
@@ -205,9 +198,8 @@ class LlmUtilityServiceClient {
   /// [google.cloud.aiplatform.v1.ComputeTokensResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/llm_utility_service.proto#L123}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::ComputeTokensResponse> ComputeTokens(
-      google::cloud::aiplatform::v1::ComputeTokensRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::ComputeTokensResponse>
+  ComputeTokens(google::cloud::aiplatform::v1::ComputeTokensRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -245,8 +237,8 @@ class LlmUtilityServiceClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request, Options opts = {});
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -275,9 +267,8 @@ class LlmUtilityServiceClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -309,8 +300,8 @@ class LlmUtilityServiceClient {
   /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L100}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -341,8 +332,8 @@ class LlmUtilityServiceClient {
   /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -377,9 +368,8 @@ class LlmUtilityServiceClient {
   /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L153}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request,
-      Options opts = {});
+  StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -414,8 +404,8 @@ class LlmUtilityServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -454,8 +444,8 @@ class LlmUtilityServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -481,8 +471,8 @@ class LlmUtilityServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -513,9 +503,8 @@ class LlmUtilityServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -539,7 +528,8 @@ class LlmUtilityServiceClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status DeleteOperation(std::string const& name, Options opts = {});
+  Status
+  DeleteOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -568,9 +558,8 @@ class LlmUtilityServiceClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request,
-      Options opts = {});
+  Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -604,7 +593,8 @@ class LlmUtilityServiceClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(std::string const& name, Options opts = {});
+  Status
+  CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -643,9 +633,8 @@ class LlmUtilityServiceClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request,
-      Options opts = {});
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -682,9 +671,8 @@ class LlmUtilityServiceClient {
   /// [google.longrunning.WaitOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L207}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> WaitOperation(
-      google::longrunning::WaitOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  WaitOperation(google::longrunning::WaitOperationRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<LlmUtilityServiceConnection> connection_;

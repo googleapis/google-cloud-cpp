@@ -28,44 +28,37 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-PublisherTracingStub::PublisherTracingStub(std::shared_ptr<PublisherStub> child)
+PublisherTracingStub::PublisherTracingStub(
+    std::shared_ptr<PublisherStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
-StatusOr<google::cloud::eventarc::publishing::v1::
-             PublishChannelConnectionEventsResponse>
-PublisherTracingStub::PublishChannelConnectionEvents(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::eventarc::publishing::v1::
-        PublishChannelConnectionEventsRequest const& request) {
-  auto span =
-      internal::MakeSpanGrpc("google.cloud.eventarc.publishing.v1.Publisher",
-                             "PublishChannelConnectionEvents");
+StatusOr<google::cloud::eventarc::publishing::v1::PublishChannelConnectionEventsResponse> PublisherTracingStub::PublishChannelConnectionEvents(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::eventarc::publishing::v1::PublishChannelConnectionEventsRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.eventarc.publishing.v1.Publisher", "PublishChannelConnectionEvents");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span,
-      child_->PublishChannelConnectionEvents(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->PublishChannelConnectionEvents(context, options, request));
 }
 
-StatusOr<google::cloud::eventarc::publishing::v1::PublishEventsResponse>
-PublisherTracingStub::PublishEvents(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::eventarc::publishing::v1::PublishEventsRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.eventarc.publishing.v1.Publisher", "PublishEvents");
+StatusOr<google::cloud::eventarc::publishing::v1::PublishEventsResponse> PublisherTracingStub::PublishEvents(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::eventarc::publishing::v1::PublishEventsRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.eventarc.publishing.v1.Publisher", "PublishEvents");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->PublishEvents(context, options, request));
 }
 
-StatusOr<google::cloud::eventarc::publishing::v1::PublishResponse>
-PublisherTracingStub::Publish(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::eventarc::publishing::v1::PublishResponse> PublisherTracingStub::Publish(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::eventarc::publishing::v1::PublishRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.eventarc.publishing.v1.Publisher", "Publish");
+  auto span = internal::MakeSpanGrpc("google.cloud.eventarc.publishing.v1.Publisher", "Publish");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,

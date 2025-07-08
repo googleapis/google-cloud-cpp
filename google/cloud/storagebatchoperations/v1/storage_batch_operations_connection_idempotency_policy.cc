@@ -26,72 +26,59 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-StorageBatchOperationsConnectionIdempotencyPolicy::
-    ~StorageBatchOperationsConnectionIdempotencyPolicy() = default;
+StorageBatchOperationsConnectionIdempotencyPolicy::~StorageBatchOperationsConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<StorageBatchOperationsConnectionIdempotencyPolicy>
 StorageBatchOperationsConnectionIdempotencyPolicy::clone() const {
-  return std::make_unique<StorageBatchOperationsConnectionIdempotencyPolicy>(
-      *this);
+  return std::make_unique<StorageBatchOperationsConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency StorageBatchOperationsConnectionIdempotencyPolicy::ListJobs(
-    google::cloud::storagebatchoperations::v1::ListJobsRequest) {  // NOLINT
+Idempotency StorageBatchOperationsConnectionIdempotencyPolicy::ListJobs(google::cloud::storagebatchoperations::v1::ListJobsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency StorageBatchOperationsConnectionIdempotencyPolicy::GetJob(
-    google::cloud::storagebatchoperations::v1::GetJobRequest const&) {
+Idempotency StorageBatchOperationsConnectionIdempotencyPolicy::GetJob(google::cloud::storagebatchoperations::v1::GetJobRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency StorageBatchOperationsConnectionIdempotencyPolicy::CreateJob(
-    google::cloud::storagebatchoperations::v1::CreateJobRequest const&) {
+Idempotency StorageBatchOperationsConnectionIdempotencyPolicy::CreateJob(google::cloud::storagebatchoperations::v1::CreateJobRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency StorageBatchOperationsConnectionIdempotencyPolicy::DeleteJob(
-    google::cloud::storagebatchoperations::v1::DeleteJobRequest const&) {
+Idempotency StorageBatchOperationsConnectionIdempotencyPolicy::DeleteJob(google::cloud::storagebatchoperations::v1::DeleteJobRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency StorageBatchOperationsConnectionIdempotencyPolicy::CancelJob(
-    google::cloud::storagebatchoperations::v1::CancelJobRequest const&) {
+Idempotency StorageBatchOperationsConnectionIdempotencyPolicy::CancelJob(google::cloud::storagebatchoperations::v1::CancelJobRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency StorageBatchOperationsConnectionIdempotencyPolicy::ListLocations(
-    google::cloud::location::ListLocationsRequest) {  // NOLINT
+Idempotency StorageBatchOperationsConnectionIdempotencyPolicy::ListLocations(google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency StorageBatchOperationsConnectionIdempotencyPolicy::GetLocation(
-    google::cloud::location::GetLocationRequest const&) {
+Idempotency StorageBatchOperationsConnectionIdempotencyPolicy::GetLocation(google::cloud::location::GetLocationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency StorageBatchOperationsConnectionIdempotencyPolicy::ListOperations(
-    google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency StorageBatchOperationsConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency StorageBatchOperationsConnectionIdempotencyPolicy::GetOperation(
-    google::longrunning::GetOperationRequest const&) {
+Idempotency StorageBatchOperationsConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency StorageBatchOperationsConnectionIdempotencyPolicy::DeleteOperation(
-    google::longrunning::DeleteOperationRequest const&) {
+Idempotency StorageBatchOperationsConnectionIdempotencyPolicy::DeleteOperation(google::longrunning::DeleteOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency StorageBatchOperationsConnectionIdempotencyPolicy::CancelOperation(
-    google::longrunning::CancelOperationRequest const&) {
+Idempotency StorageBatchOperationsConnectionIdempotencyPolicy::CancelOperation(google::longrunning::CancelOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<StorageBatchOperationsConnectionIdempotencyPolicy>
-MakeDefaultStorageBatchOperationsConnectionIdempotencyPolicy() {
+    MakeDefaultStorageBatchOperationsConnectionIdempotencyPolicy() {
   return std::make_unique<StorageBatchOperationsConnectionIdempotencyPolicy>();
 }
 

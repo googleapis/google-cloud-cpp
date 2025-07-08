@@ -17,16 +17,16 @@
 // source: google/cloud/talent/v4/event_service.proto
 
 #include "google/cloud/talent/v4/event_connection.h"
-#include "google/cloud/talent/v4/event_options.h"
-#include "google/cloud/talent/v4/internal/event_connection_impl.h"
-#include "google/cloud/talent/v4/internal/event_option_defaults.h"
-#include "google/cloud/talent/v4/internal/event_stub_factory.h"
-#include "google/cloud/talent/v4/internal/event_tracing_connection.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/talent/v4/event_options.h"
+#include "google/cloud/talent/v4/internal/event_connection_impl.h"
+#include "google/cloud/talent/v4/internal/event_option_defaults.h"
+#include "google/cloud/talent/v4/internal/event_stub_factory.h"
+#include "google/cloud/talent/v4/internal/event_tracing_connection.h"
 #include <memory>
 #include <utility>
 
@@ -43,7 +43,8 @@ EventServiceConnection::CreateClientEvent(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::longrunning::Operation> EventServiceConnection::GetOperation(
+StatusOr<google::longrunning::Operation>
+EventServiceConnection::GetOperation(
     google::longrunning::GetOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -51,17 +52,17 @@ StatusOr<google::longrunning::Operation> EventServiceConnection::GetOperation(
 std::shared_ptr<EventServiceConnection> MakeEventServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 EventServicePolicyOptionList>(options,
-                                                               __func__);
-  options = talent_v4_internal::EventServiceDefaultOptions(std::move(options));
+      UnifiedCredentialsOptionList,
+      EventServicePolicyOptionList>(options, __func__);
+  options = talent_v4_internal::EventServiceDefaultOptions(
+      std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
-  auto stub = talent_v4_internal::CreateDefaultEventServiceStub(std::move(auth),
-                                                                options);
+  auto stub = talent_v4_internal::CreateDefaultEventServiceStub(
+    std::move(auth), options);
   return talent_v4_internal::MakeEventServiceTracingConnection(
       std::make_shared<talent_v4_internal::EventServiceConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options)));
+      std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

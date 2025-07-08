@@ -24,8 +24,8 @@
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/cloud/retail/v2/completion_service.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
+#include <google/cloud/retail/v2/completion_service.grpc.pb.h>
 #include <memory>
 #include <utility>
 
@@ -38,36 +38,36 @@ class CompletionServiceStub {
  public:
   virtual ~CompletionServiceStub() = 0;
 
-  virtual StatusOr<google::cloud::retail::v2::CompleteQueryResponse>
-  CompleteQuery(
-      grpc::ClientContext& context, Options const& options,
+  virtual StatusOr<google::cloud::retail::v2::CompleteQueryResponse> CompleteQuery(
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::retail::v2::CompleteQueryRequest const& request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>>
-  AsyncImportCompletionData(
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncImportCompletionData(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::retail::v2::ImportCompletionDataRequest const&
-          request) = 0;
+      google::cloud::retail::v2::ImportCompletionDataRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> ImportCompletionData(
-      grpc::ClientContext& context, Options options,
-      google::cloud::retail::v2::ImportCompletionDataRequest const&
-          request) = 0;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::retail::v2::ImportCompletionDataRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::ListOperationsRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
+    google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
@@ -80,36 +80,35 @@ class CompletionServiceStub {
 class DefaultCompletionServiceStub : public CompletionServiceStub {
  public:
   DefaultCompletionServiceStub(
-      std::unique_ptr<
-          google::cloud::retail::v2::CompletionService::StubInterface>
-          grpc_stub,
-      std::unique_ptr<google::longrunning::Operations::StubInterface>
-          operations_stub)
+      std::unique_ptr<google::cloud::retail::v2::CompletionService::StubInterface> grpc_stub,
+      std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub)
       : grpc_stub_(std::move(grpc_stub)),
         operations_stub_(std::move(operations_stub)) {}
 
   StatusOr<google::cloud::retail::v2::CompleteQueryResponse> CompleteQuery(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::retail::v2::CompleteQueryRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncImportCompletionData(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::retail::v2::ImportCompletionDataRequest const& request)
-      override;
+      google::cloud::retail::v2::ImportCompletionDataRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> ImportCompletionData(
-      grpc::ClientContext& context, Options options,
-      google::cloud::retail::v2::ImportCompletionDataRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::retail::v2::ImportCompletionDataRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -125,10 +124,8 @@ class DefaultCompletionServiceStub : public CompletionServiceStub {
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  std::unique_ptr<google::cloud::retail::v2::CompletionService::StubInterface>
-      grpc_stub_;
-  std::unique_ptr<google::longrunning::Operations::StubInterface>
-      operations_stub_;
+  std::unique_ptr<google::cloud::retail::v2::CompletionService::StubInterface> grpc_stub_;
+  std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -64,31 +64,23 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class PolicyTagManagerSerializationClient {
  public:
-  explicit PolicyTagManagerSerializationClient(
-      std::shared_ptr<PolicyTagManagerSerializationConnection> connection,
-      Options opts = {});
+  explicit PolicyTagManagerSerializationClient(std::shared_ptr<PolicyTagManagerSerializationConnection> connection, Options opts = {});
   ~PolicyTagManagerSerializationClient();
 
   ///@{
   /// @name Copy and move support
-  PolicyTagManagerSerializationClient(
-      PolicyTagManagerSerializationClient const&) = default;
-  PolicyTagManagerSerializationClient& operator=(
-      PolicyTagManagerSerializationClient const&) = default;
-  PolicyTagManagerSerializationClient(PolicyTagManagerSerializationClient&&) =
-      default;
-  PolicyTagManagerSerializationClient& operator=(
-      PolicyTagManagerSerializationClient&&) = default;
+  PolicyTagManagerSerializationClient(PolicyTagManagerSerializationClient const&) = default;
+  PolicyTagManagerSerializationClient& operator=(PolicyTagManagerSerializationClient const&) = default;
+  PolicyTagManagerSerializationClient(PolicyTagManagerSerializationClient&&) = default;
+  PolicyTagManagerSerializationClient& operator=(PolicyTagManagerSerializationClient&&) = default;
   ///@}
 
   ///@{
   /// @name Equality
-  friend bool operator==(PolicyTagManagerSerializationClient const& a,
-                         PolicyTagManagerSerializationClient const& b) {
+  friend bool operator==(PolicyTagManagerSerializationClient const& a, PolicyTagManagerSerializationClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(PolicyTagManagerSerializationClient const& a,
-                         PolicyTagManagerSerializationClient const& b) {
+  friend bool operator!=(PolicyTagManagerSerializationClient const& a, PolicyTagManagerSerializationClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -132,9 +124,8 @@ class PolicyTagManagerSerializationClient {
   /// [google.cloud.datacatalog.v1.Taxonomy]: @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L210}
   ///
   // clang-format on
-  StatusOr<google::cloud::datacatalog::v1::Taxonomy> ReplaceTaxonomy(
-      google::cloud::datacatalog::v1::ReplaceTaxonomyRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::datacatalog::v1::Taxonomy>
+  ReplaceTaxonomy(google::cloud::datacatalog::v1::ReplaceTaxonomyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -171,9 +162,7 @@ class PolicyTagManagerSerializationClient {
   ///
   // clang-format on
   StatusOr<google::cloud::datacatalog::v1::ImportTaxonomiesResponse>
-  ImportTaxonomies(
-      google::cloud::datacatalog::v1::ImportTaxonomiesRequest const& request,
-      Options opts = {});
+  ImportTaxonomies(google::cloud::datacatalog::v1::ImportTaxonomiesRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -208,9 +197,7 @@ class PolicyTagManagerSerializationClient {
   ///
   // clang-format on
   StatusOr<google::cloud::datacatalog::v1::ExportTaxonomiesResponse>
-  ExportTaxonomies(
-      google::cloud::datacatalog::v1::ExportTaxonomiesRequest const& request,
-      Options opts = {});
+  ExportTaxonomies(google::cloud::datacatalog::v1::ExportTaxonomiesRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -245,8 +232,8 @@ class PolicyTagManagerSerializationClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -285,8 +272,8 @@ class PolicyTagManagerSerializationClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -312,8 +299,8 @@ class PolicyTagManagerSerializationClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -344,9 +331,8 @@ class PolicyTagManagerSerializationClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -370,7 +356,8 @@ class PolicyTagManagerSerializationClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status DeleteOperation(std::string const& name, Options opts = {});
+  Status
+  DeleteOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -399,9 +386,8 @@ class PolicyTagManagerSerializationClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request,
-      Options opts = {});
+  Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -435,7 +421,8 @@ class PolicyTagManagerSerializationClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(std::string const& name, Options opts = {});
+  Status
+  CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -474,9 +461,8 @@ class PolicyTagManagerSerializationClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request,
-      Options opts = {});
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<PolicyTagManagerSerializationConnection> connection_;

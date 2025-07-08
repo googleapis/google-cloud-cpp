@@ -17,14 +17,14 @@
 // source: google/cloud/discoveryengine/v1/schema_service.proto
 
 #include "google/cloud/discoveryengine/v1/schema_connection.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/discoveryengine/v1/internal/schema_connection_impl.h"
 #include "google/cloud/discoveryengine/v1/internal/schema_option_defaults.h"
 #include "google/cloud/discoveryengine/v1/internal/schema_stub_factory.h"
 #include "google/cloud/discoveryengine/v1/internal/schema_tracing_connection.h"
 #include "google/cloud/discoveryengine/v1/schema_options.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
-#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
@@ -44,10 +44,8 @@ SchemaServiceConnection::GetSchema(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::discoveryengine::v1::Schema>
-SchemaServiceConnection::ListSchemas(
-    google::cloud::discoveryengine::v1::
-        ListSchemasRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::discoveryengine::v1::Schema> SchemaServiceConnection::ListSchemas(
+    google::cloud::discoveryengine::v1::ListSchemasRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::discoveryengine::v1::Schema>>();
 }
@@ -56,82 +54,88 @@ future<StatusOr<google::cloud::discoveryengine::v1::Schema>>
 SchemaServiceConnection::CreateSchema(
     google::cloud::discoveryengine::v1::CreateSchemaRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::discoveryengine::v1::Schema>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::discoveryengine::v1::Schema>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation> SchemaServiceConnection::CreateSchema(
+StatusOr<google::longrunning::Operation>
+SchemaServiceConnection::CreateSchema(
     NoAwaitTag,
     google::cloud::discoveryengine::v1::CreateSchemaRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::discoveryengine::v1::Schema>>
-SchemaServiceConnection::CreateSchema(google::longrunning::Operation const&) {
+SchemaServiceConnection::CreateSchema(
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::discoveryengine::v1::Schema>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::discoveryengine::v1::Schema>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::discoveryengine::v1::Schema>>
 SchemaServiceConnection::UpdateSchema(
     google::cloud::discoveryengine::v1::UpdateSchemaRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::discoveryengine::v1::Schema>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::discoveryengine::v1::Schema>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation> SchemaServiceConnection::UpdateSchema(
+StatusOr<google::longrunning::Operation>
+SchemaServiceConnection::UpdateSchema(
     NoAwaitTag,
     google::cloud::discoveryengine::v1::UpdateSchemaRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::discoveryengine::v1::Schema>>
-SchemaServiceConnection::UpdateSchema(google::longrunning::Operation const&) {
+SchemaServiceConnection::UpdateSchema(
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::discoveryengine::v1::Schema>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::discoveryengine::v1::Schema>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::discoveryengine::v1::DeleteSchemaMetadata>>
 SchemaServiceConnection::DeleteSchema(
     google::cloud::discoveryengine::v1::DeleteSchemaRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::discoveryengine::v1::DeleteSchemaMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::discoveryengine::v1::DeleteSchemaMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation> SchemaServiceConnection::DeleteSchema(
+StatusOr<google::longrunning::Operation>
+SchemaServiceConnection::DeleteSchema(
     NoAwaitTag,
     google::cloud::discoveryengine::v1::DeleteSchemaRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::discoveryengine::v1::DeleteSchemaMetadata>>
-SchemaServiceConnection::DeleteSchema(google::longrunning::Operation const&) {
+SchemaServiceConnection::DeleteSchema(
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::discoveryengine::v1::DeleteSchemaMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::discoveryengine::v1::DeleteSchemaMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StreamRange<google::longrunning::Operation>
-SchemaServiceConnection::ListOperations(
-    google::longrunning::
-        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::longrunning::Operation> SchemaServiceConnection::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }
 
-StatusOr<google::longrunning::Operation> SchemaServiceConnection::GetOperation(
+StatusOr<google::longrunning::Operation>
+SchemaServiceConnection::GetOperation(
     google::longrunning::GetOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status SchemaServiceConnection::CancelOperation(
+Status
+SchemaServiceConnection::CancelOperation(
     google::longrunning::CancelOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -139,19 +143,17 @@ Status SchemaServiceConnection::CancelOperation(
 std::shared_ptr<SchemaServiceConnection> MakeSchemaServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 SchemaServicePolicyOptionList>(options,
-                                                                __func__);
+      UnifiedCredentialsOptionList,
+      SchemaServicePolicyOptionList>(options, __func__);
   options = discoveryengine_v1_internal::SchemaServiceDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = discoveryengine_v1_internal::CreateDefaultSchemaServiceStub(
-      std::move(auth), options);
+    std::move(auth), options);
   return discoveryengine_v1_internal::MakeSchemaServiceTracingConnection(
-      std::make_shared<
-          discoveryengine_v1_internal::SchemaServiceConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options)));
+      std::make_shared<discoveryengine_v1_internal::SchemaServiceConnectionImpl>(
+      std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

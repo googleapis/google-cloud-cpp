@@ -19,11 +19,6 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_WORKSTATIONS_V1_INTERNAL_WORKSTATIONS_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_WORKSTATIONS_V1_INTERNAL_WORKSTATIONS_CONNECTION_IMPL_H
 
-#include "google/cloud/workstations/v1/internal/workstations_retry_traits.h"
-#include "google/cloud/workstations/v1/internal/workstations_stub.h"
-#include "google/cloud/workstations/v1/workstations_connection.h"
-#include "google/cloud/workstations/v1/workstations_connection_idempotency_policy.h"
-#include "google/cloud/workstations/v1/workstations_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
@@ -32,6 +27,11 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
+#include "google/cloud/workstations/v1/internal/workstations_retry_traits.h"
+#include "google/cloud/workstations/v1/internal/workstations_stub.h"
+#include "google/cloud/workstations/v1/workstations_connection.h"
+#include "google/cloud/workstations/v1/workstations_connection_idempotency_policy.h"
+#include "google/cloud/workstations/v1/workstations_options.h"
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 
@@ -46,223 +46,180 @@ class WorkstationsConnectionImpl
   ~WorkstationsConnectionImpl() override = default;
 
   WorkstationsConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<workstations_v1_internal::WorkstationsStub> stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<workstations_v1_internal::WorkstationsStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
   StatusOr<google::cloud::workstations::v1::WorkstationCluster>
-  GetWorkstationCluster(
-      google::cloud::workstations::v1::GetWorkstationClusterRequest const&
-          request) override;
+  GetWorkstationCluster(google::cloud::workstations::v1::GetWorkstationClusterRequest const& request) override;
 
   StreamRange<google::cloud::workstations::v1::WorkstationCluster>
-  ListWorkstationClusters(
-      google::cloud::workstations::v1::ListWorkstationClustersRequest request)
-      override;
+  ListWorkstationClusters(google::cloud::workstations::v1::ListWorkstationClustersRequest request) override;
 
   future<StatusOr<google::cloud::workstations::v1::WorkstationCluster>>
-  CreateWorkstationCluster(
-      google::cloud::workstations::v1::CreateWorkstationClusterRequest const&
-          request) override;
+  CreateWorkstationCluster(google::cloud::workstations::v1::CreateWorkstationClusterRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> CreateWorkstationCluster(
-      NoAwaitTag,
-      google::cloud::workstations::v1::CreateWorkstationClusterRequest const&
-          request) override;
+  StatusOr<google::longrunning::Operation>
+  CreateWorkstationCluster(NoAwaitTag,
+      google::cloud::workstations::v1::CreateWorkstationClusterRequest const& request) override;
 
   future<StatusOr<google::cloud::workstations::v1::WorkstationCluster>>
   CreateWorkstationCluster(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::workstations::v1::WorkstationCluster>>
-  UpdateWorkstationCluster(
-      google::cloud::workstations::v1::UpdateWorkstationClusterRequest const&
-          request) override;
+  UpdateWorkstationCluster(google::cloud::workstations::v1::UpdateWorkstationClusterRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> UpdateWorkstationCluster(
-      NoAwaitTag,
-      google::cloud::workstations::v1::UpdateWorkstationClusterRequest const&
-          request) override;
+  StatusOr<google::longrunning::Operation>
+  UpdateWorkstationCluster(NoAwaitTag,
+      google::cloud::workstations::v1::UpdateWorkstationClusterRequest const& request) override;
 
   future<StatusOr<google::cloud::workstations::v1::WorkstationCluster>>
   UpdateWorkstationCluster(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::workstations::v1::WorkstationCluster>>
-  DeleteWorkstationCluster(
-      google::cloud::workstations::v1::DeleteWorkstationClusterRequest const&
-          request) override;
+  DeleteWorkstationCluster(google::cloud::workstations::v1::DeleteWorkstationClusterRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> DeleteWorkstationCluster(
-      NoAwaitTag,
-      google::cloud::workstations::v1::DeleteWorkstationClusterRequest const&
-          request) override;
+  StatusOr<google::longrunning::Operation>
+  DeleteWorkstationCluster(NoAwaitTag,
+      google::cloud::workstations::v1::DeleteWorkstationClusterRequest const& request) override;
 
   future<StatusOr<google::cloud::workstations::v1::WorkstationCluster>>
   DeleteWorkstationCluster(
       google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::workstations::v1::WorkstationConfig>
-  GetWorkstationConfig(
-      google::cloud::workstations::v1::GetWorkstationConfigRequest const&
-          request) override;
+  GetWorkstationConfig(google::cloud::workstations::v1::GetWorkstationConfigRequest const& request) override;
 
   StreamRange<google::cloud::workstations::v1::WorkstationConfig>
-  ListWorkstationConfigs(
-      google::cloud::workstations::v1::ListWorkstationConfigsRequest request)
-      override;
+  ListWorkstationConfigs(google::cloud::workstations::v1::ListWorkstationConfigsRequest request) override;
 
   StreamRange<google::cloud::workstations::v1::WorkstationConfig>
-  ListUsableWorkstationConfigs(
-      google::cloud::workstations::v1::ListUsableWorkstationConfigsRequest
-          request) override;
+  ListUsableWorkstationConfigs(google::cloud::workstations::v1::ListUsableWorkstationConfigsRequest request) override;
 
   future<StatusOr<google::cloud::workstations::v1::WorkstationConfig>>
-  CreateWorkstationConfig(
-      google::cloud::workstations::v1::CreateWorkstationConfigRequest const&
-          request) override;
+  CreateWorkstationConfig(google::cloud::workstations::v1::CreateWorkstationConfigRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> CreateWorkstationConfig(
-      NoAwaitTag,
-      google::cloud::workstations::v1::CreateWorkstationConfigRequest const&
-          request) override;
+  StatusOr<google::longrunning::Operation>
+  CreateWorkstationConfig(NoAwaitTag,
+      google::cloud::workstations::v1::CreateWorkstationConfigRequest const& request) override;
 
   future<StatusOr<google::cloud::workstations::v1::WorkstationConfig>>
   CreateWorkstationConfig(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::workstations::v1::WorkstationConfig>>
-  UpdateWorkstationConfig(
-      google::cloud::workstations::v1::UpdateWorkstationConfigRequest const&
-          request) override;
+  UpdateWorkstationConfig(google::cloud::workstations::v1::UpdateWorkstationConfigRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> UpdateWorkstationConfig(
-      NoAwaitTag,
-      google::cloud::workstations::v1::UpdateWorkstationConfigRequest const&
-          request) override;
+  StatusOr<google::longrunning::Operation>
+  UpdateWorkstationConfig(NoAwaitTag,
+      google::cloud::workstations::v1::UpdateWorkstationConfigRequest const& request) override;
 
   future<StatusOr<google::cloud::workstations::v1::WorkstationConfig>>
   UpdateWorkstationConfig(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::workstations::v1::WorkstationConfig>>
-  DeleteWorkstationConfig(
-      google::cloud::workstations::v1::DeleteWorkstationConfigRequest const&
-          request) override;
+  DeleteWorkstationConfig(google::cloud::workstations::v1::DeleteWorkstationConfigRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> DeleteWorkstationConfig(
-      NoAwaitTag,
-      google::cloud::workstations::v1::DeleteWorkstationConfigRequest const&
-          request) override;
+  StatusOr<google::longrunning::Operation>
+  DeleteWorkstationConfig(NoAwaitTag,
+      google::cloud::workstations::v1::DeleteWorkstationConfigRequest const& request) override;
 
   future<StatusOr<google::cloud::workstations::v1::WorkstationConfig>>
   DeleteWorkstationConfig(
       google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::cloud::workstations::v1::Workstation> GetWorkstation(
-      google::cloud::workstations::v1::GetWorkstationRequest const& request)
-      override;
-
-  StreamRange<google::cloud::workstations::v1::Workstation> ListWorkstations(
-      google::cloud::workstations::v1::ListWorkstationsRequest request)
-      override;
+  StatusOr<google::cloud::workstations::v1::Workstation>
+  GetWorkstation(google::cloud::workstations::v1::GetWorkstationRequest const& request) override;
 
   StreamRange<google::cloud::workstations::v1::Workstation>
-  ListUsableWorkstations(
-      google::cloud::workstations::v1::ListUsableWorkstationsRequest request)
-      override;
+  ListWorkstations(google::cloud::workstations::v1::ListWorkstationsRequest request) override;
+
+  StreamRange<google::cloud::workstations::v1::Workstation>
+  ListUsableWorkstations(google::cloud::workstations::v1::ListUsableWorkstationsRequest request) override;
+
+  future<StatusOr<google::cloud::workstations::v1::Workstation>>
+  CreateWorkstation(google::cloud::workstations::v1::CreateWorkstationRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  CreateWorkstation(NoAwaitTag,
+      google::cloud::workstations::v1::CreateWorkstationRequest const& request) override;
 
   future<StatusOr<google::cloud::workstations::v1::Workstation>>
   CreateWorkstation(
-      google::cloud::workstations::v1::CreateWorkstationRequest const& request)
-      override;
-
-  StatusOr<google::longrunning::Operation> CreateWorkstation(
-      NoAwaitTag,
-      google::cloud::workstations::v1::CreateWorkstationRequest const& request)
-      override;
+      google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::workstations::v1::Workstation>>
-  CreateWorkstation(google::longrunning::Operation const& operation) override;
+  UpdateWorkstation(google::cloud::workstations::v1::UpdateWorkstationRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  UpdateWorkstation(NoAwaitTag,
+      google::cloud::workstations::v1::UpdateWorkstationRequest const& request) override;
 
   future<StatusOr<google::cloud::workstations::v1::Workstation>>
   UpdateWorkstation(
-      google::cloud::workstations::v1::UpdateWorkstationRequest const& request)
-      override;
-
-  StatusOr<google::longrunning::Operation> UpdateWorkstation(
-      NoAwaitTag,
-      google::cloud::workstations::v1::UpdateWorkstationRequest const& request)
-      override;
+      google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::workstations::v1::Workstation>>
-  UpdateWorkstation(google::longrunning::Operation const& operation) override;
+  DeleteWorkstation(google::cloud::workstations::v1::DeleteWorkstationRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  DeleteWorkstation(NoAwaitTag,
+      google::cloud::workstations::v1::DeleteWorkstationRequest const& request) override;
 
   future<StatusOr<google::cloud::workstations::v1::Workstation>>
   DeleteWorkstation(
-      google::cloud::workstations::v1::DeleteWorkstationRequest const& request)
-      override;
-
-  StatusOr<google::longrunning::Operation> DeleteWorkstation(
-      NoAwaitTag,
-      google::cloud::workstations::v1::DeleteWorkstationRequest const& request)
-      override;
+      google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::workstations::v1::Workstation>>
-  DeleteWorkstation(google::longrunning::Operation const& operation) override;
+  StartWorkstation(google::cloud::workstations::v1::StartWorkstationRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  StartWorkstation(NoAwaitTag,
+      google::cloud::workstations::v1::StartWorkstationRequest const& request) override;
 
   future<StatusOr<google::cloud::workstations::v1::Workstation>>
   StartWorkstation(
-      google::cloud::workstations::v1::StartWorkstationRequest const& request)
-      override;
-
-  StatusOr<google::longrunning::Operation> StartWorkstation(
-      NoAwaitTag,
-      google::cloud::workstations::v1::StartWorkstationRequest const& request)
-      override;
+      google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::workstations::v1::Workstation>>
-  StartWorkstation(google::longrunning::Operation const& operation) override;
+  StopWorkstation(google::cloud::workstations::v1::StopWorkstationRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  StopWorkstation(NoAwaitTag,
+      google::cloud::workstations::v1::StopWorkstationRequest const& request) override;
 
   future<StatusOr<google::cloud::workstations::v1::Workstation>>
-  StopWorkstation(google::cloud::workstations::v1::StopWorkstationRequest const&
-                      request) override;
-
-  StatusOr<google::longrunning::Operation> StopWorkstation(
-      NoAwaitTag,
-      google::cloud::workstations::v1::StopWorkstationRequest const& request)
-      override;
-
-  future<StatusOr<google::cloud::workstations::v1::Workstation>>
-  StopWorkstation(google::longrunning::Operation const& operation) override;
+  StopWorkstation(
+      google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::workstations::v1::GenerateAccessTokenResponse>
-  GenerateAccessToken(
-      google::cloud::workstations::v1::GenerateAccessTokenRequest const&
-          request) override;
+  GenerateAccessToken(google::cloud::workstations::v1::GenerateAccessTokenRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request) override;
+  StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request) override;
 
-  Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request) override;
+  Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request) override;
 
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request) override;
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

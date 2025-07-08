@@ -31,67 +31,63 @@ DataPolicyServiceAuth::DataPolicyServiceAuth(
     std::shared_ptr<DataPolicyServiceStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::bigquery::datapolicies::v1::DataPolicy>
-DataPolicyServiceAuth::CreateDataPolicy(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::datapolicies::v1::CreateDataPolicyRequest const&
-        request) {
+StatusOr<google::cloud::bigquery::datapolicies::v1::DataPolicy> DataPolicyServiceAuth::CreateDataPolicy(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::datapolicies::v1::CreateDataPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateDataPolicy(context, options, request);
 }
 
-StatusOr<google::cloud::bigquery::datapolicies::v1::DataPolicy>
-DataPolicyServiceAuth::UpdateDataPolicy(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::datapolicies::v1::UpdateDataPolicyRequest const&
-        request) {
+StatusOr<google::cloud::bigquery::datapolicies::v1::DataPolicy> DataPolicyServiceAuth::UpdateDataPolicy(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::datapolicies::v1::UpdateDataPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateDataPolicy(context, options, request);
 }
 
-StatusOr<google::cloud::bigquery::datapolicies::v1::DataPolicy>
-DataPolicyServiceAuth::RenameDataPolicy(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::datapolicies::v1::RenameDataPolicyRequest const&
-        request) {
+StatusOr<google::cloud::bigquery::datapolicies::v1::DataPolicy> DataPolicyServiceAuth::RenameDataPolicy(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::datapolicies::v1::RenameDataPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->RenameDataPolicy(context, options, request);
 }
 
 Status DataPolicyServiceAuth::DeleteDataPolicy(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::datapolicies::v1::DeleteDataPolicyRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::datapolicies::v1::DeleteDataPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteDataPolicy(context, options, request);
 }
 
-StatusOr<google::cloud::bigquery::datapolicies::v1::DataPolicy>
-DataPolicyServiceAuth::GetDataPolicy(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::datapolicies::v1::GetDataPolicyRequest const&
-        request) {
+StatusOr<google::cloud::bigquery::datapolicies::v1::DataPolicy> DataPolicyServiceAuth::GetDataPolicy(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::datapolicies::v1::GetDataPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetDataPolicy(context, options, request);
 }
 
-StatusOr<google::cloud::bigquery::datapolicies::v1::ListDataPoliciesResponse>
-DataPolicyServiceAuth::ListDataPolicies(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::datapolicies::v1::ListDataPoliciesRequest const&
-        request) {
+StatusOr<google::cloud::bigquery::datapolicies::v1::ListDataPoliciesResponse> DataPolicyServiceAuth::ListDataPolicies(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::datapolicies::v1::ListDataPoliciesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListDataPolicies(context, options, request);
 }
 
 StatusOr<google::iam::v1::Policy> DataPolicyServiceAuth::GetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -99,16 +95,17 @@ StatusOr<google::iam::v1::Policy> DataPolicyServiceAuth::GetIamPolicy(
 }
 
 StatusOr<google::iam::v1::Policy> DataPolicyServiceAuth::SetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->SetIamPolicy(context, options, request);
 }
 
-StatusOr<google::iam::v1::TestIamPermissionsResponse>
-DataPolicyServiceAuth::TestIamPermissions(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::iam::v1::TestIamPermissionsResponse> DataPolicyServiceAuth::TestIamPermissions(
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;

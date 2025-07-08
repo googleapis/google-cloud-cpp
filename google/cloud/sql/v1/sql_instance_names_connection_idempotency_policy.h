@@ -34,12 +34,11 @@ class SqlInstanceNamesServiceConnectionIdempotencyPolicy {
   virtual ~SqlInstanceNamesServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<SqlInstanceNamesServiceConnectionIdempotencyPolicy>
-  clone() const;
+  virtual std::unique_ptr<SqlInstanceNamesServiceConnectionIdempotencyPolicy> clone() const;
 };
 
 std::unique_ptr<SqlInstanceNamesServiceConnectionIdempotencyPolicy>
-MakeDefaultSqlInstanceNamesServiceConnectionIdempotencyPolicy();
+    MakeDefaultSqlInstanceNamesServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace sql_v1

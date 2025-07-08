@@ -34,19 +34,15 @@ TextToSpeechTracingConnection::TextToSpeechTracingConnection(
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::texttospeech::v1::ListVoicesResponse>
-TextToSpeechTracingConnection::ListVoices(
-    google::cloud::texttospeech::v1::ListVoicesRequest const& request) {
-  auto span =
-      internal::MakeSpan("texttospeech_v1::TextToSpeechConnection::ListVoices");
+TextToSpeechTracingConnection::ListVoices(google::cloud::texttospeech::v1::ListVoicesRequest const& request) {
+  auto span = internal::MakeSpan("texttospeech_v1::TextToSpeechConnection::ListVoices");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->ListVoices(request));
 }
 
 StatusOr<google::cloud::texttospeech::v1::SynthesizeSpeechResponse>
-TextToSpeechTracingConnection::SynthesizeSpeech(
-    google::cloud::texttospeech::v1::SynthesizeSpeechRequest const& request) {
-  auto span = internal::MakeSpan(
-      "texttospeech_v1::TextToSpeechConnection::SynthesizeSpeech");
+TextToSpeechTracingConnection::SynthesizeSpeech(google::cloud::texttospeech::v1::SynthesizeSpeechRequest const& request) {
+  auto span = internal::MakeSpan("texttospeech_v1::TextToSpeechConnection::SynthesizeSpeech");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->SynthesizeSpeech(request));
 }
@@ -59,21 +55,17 @@ TextToSpeechTracingConnection::AsyncStreamingSynthesize() {
 }
 
 StreamRange<google::longrunning::Operation>
-TextToSpeechTracingConnection::ListOperations(
-    google::longrunning::ListOperationsRequest request) {
-  auto span = internal::MakeSpan(
-      "texttospeech_v1::TextToSpeechConnection::ListOperations");
+TextToSpeechTracingConnection::ListOperations(google::longrunning::ListOperationsRequest request) {
+  auto span = internal::MakeSpan("texttospeech_v1::TextToSpeechConnection::ListOperations");
   internal::OTelScope scope(span);
   auto sr = child_->ListOperations(std::move(request));
   return internal::MakeTracedStreamRange<google::longrunning::Operation>(
-      std::move(span), std::move(sr));
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::longrunning::Operation>
-TextToSpeechTracingConnection::GetOperation(
-    google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpan(
-      "texttospeech_v1::TextToSpeechConnection::GetOperation");
+TextToSpeechTracingConnection::GetOperation(google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpan("texttospeech_v1::TextToSpeechConnection::GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOperation(request));
 }

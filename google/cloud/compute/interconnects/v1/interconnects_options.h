@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_INTERCONNECTS_V1_INTERCONNECTS_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_INTERCONNECTS_V1_INTERCONNECTS_OPTIONS_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/interconnects/v1/interconnects_connection.h"
 #include "google/cloud/compute/interconnects/v1/interconnects_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -74,7 +74,8 @@ struct InterconnectsPollingPolicyOption {
  * @ingroup google-cloud-compute-options
  */
 using InterconnectsPolicyOptionList =
-    OptionList<InterconnectsRetryPolicyOption, InterconnectsBackoffPolicyOption,
+    OptionList<InterconnectsRetryPolicyOption,
+               InterconnectsBackoffPolicyOption,
                InterconnectsPollingPolicyOption,
                InterconnectsConnectionIdempotencyPolicyOption>;
 

@@ -35,29 +35,23 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options IAMCredentialsDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_IAM_CREDENTIALS_ENDPOINT", "",
-      "GOOGLE_CLOUD_CPP_IAM_CREDENTIALS_AUTHORITY",
+      std::move(options), "GOOGLE_CLOUD_CPP_IAM_CREDENTIALS_ENDPOINT",
+      "", "GOOGLE_CLOUD_CPP_IAM_CREDENTIALS_AUTHORITY",
       "iamcredentials.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<iam_credentials_v1::IAMCredentialsRetryPolicyOption>()) {
     options.set<iam_credentials_v1::IAMCredentialsRetryPolicyOption>(
         iam_credentials_v1::IAMCredentialsLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
-            .clone());
+            std::chrono::minutes(30)).clone());
   }
   if (!options.has<iam_credentials_v1::IAMCredentialsBackoffPolicyOption>()) {
     options.set<iam_credentials_v1::IAMCredentialsBackoffPolicyOption>(
-        ExponentialBackoffPolicy(
-            std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
-            .clone());
+        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
   }
-  if (!options.has<iam_credentials_v1::
-                       IAMCredentialsConnectionIdempotencyPolicyOption>()) {
-    options.set<
-        iam_credentials_v1::IAMCredentialsConnectionIdempotencyPolicyOption>(
-        iam_credentials_v1::
-            MakeDefaultIAMCredentialsConnectionIdempotencyPolicy());
+  if (!options.has<iam_credentials_v1::IAMCredentialsConnectionIdempotencyPolicyOption>()) {
+    options.set<iam_credentials_v1::IAMCredentialsConnectionIdempotencyPolicyOption>(
+        iam_credentials_v1::MakeDefaultIAMCredentialsConnectionIdempotencyPolicy());
   }
 
   return options;

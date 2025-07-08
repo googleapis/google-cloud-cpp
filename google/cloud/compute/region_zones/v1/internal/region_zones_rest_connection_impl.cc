@@ -17,8 +17,8 @@
 // source: google/cloud/compute/region_zones/v1/region_zones.proto
 
 #include "google/cloud/compute/region_zones/v1/internal/region_zones_rest_connection_impl.h"
-#include "google/cloud/compute/region_zones/v1/internal/region_zones_rest_stub_factory.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/compute/region_zones/v1/internal/region_zones_rest_stub_factory.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/rest_retry_loop.h"
@@ -35,41 +35,34 @@ RegionZonesRestConnectionImpl::RegionZonesRestConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<compute_region_zones_v1_internal::RegionZonesRestStub> stub,
     Options options)
-    : background_(std::move(background)),
-      stub_(std::move(stub)),
-      options_(internal::MergeOptions(std::move(options),
-                                      RegionZonesConnection::options())) {}
+  : background_(std::move(background)), stub_(std::move(stub)),
+    options_(internal::MergeOptions(
+        std::move(options),
+        RegionZonesConnection::options())) {}
 
 StreamRange<google::cloud::cpp::compute::v1::Zone>
-RegionZonesRestConnectionImpl::ListRegionZones(
-    google::cloud::cpp::compute::region_zones::v1::ListRegionZonesRequest
-        request) {
+RegionZonesRestConnectionImpl::ListRegionZones(google::cloud::cpp::compute::region_zones::v1::ListRegionZonesRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListRegionZones(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::cpp::compute::v1::Zone>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::cpp::compute::v1::Zone>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<compute_region_zones_v1::RegionZonesRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<compute_region_zones_v1::RegionZonesRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::cpp::compute::region_zones::
-                                      v1::ListRegionZonesRequest const& r) {
+          Options const& options, google::cloud::cpp::compute::region_zones::v1::ListRegionZonesRequest const& r) {
         return google::cloud::rest_internal::RestRetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](rest_internal::RestContext& rest_context,
                    Options const& options,
-                   google::cloud::cpp::compute::region_zones::v1::
-                       ListRegionZonesRequest const& request) {
+                   google::cloud::cpp::compute::region_zones::v1::ListRegionZonesRequest const& request) {
               return stub->ListRegionZones(rest_context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::cpp::compute::v1::ZoneList r) {
-        std::vector<google::cloud::cpp::compute::v1::Zone> result(
-            r.items().size());
+        std::vector<google::cloud::cpp::compute::v1::Zone> result(r.items().size());
         auto& messages = *r.mutable_items();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;

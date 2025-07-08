@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_ZONES_V1_ZONES_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_ZONES_V1_ZONES_OPTIONS_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/zones/v1/zones_connection.h"
 #include "google/cloud/compute/zones/v1/zones_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -64,7 +64,8 @@ struct ZonesConnectionIdempotencyPolicyOption {
  * @ingroup google-cloud-compute-options
  */
 using ZonesPolicyOptionList =
-    OptionList<ZonesRetryPolicyOption, ZonesBackoffPolicyOption,
+    OptionList<ZonesRetryPolicyOption,
+               ZonesBackoffPolicyOption,
                ZonesConnectionIdempotencyPolicyOption>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

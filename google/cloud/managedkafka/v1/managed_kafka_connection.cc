@@ -17,17 +17,17 @@
 // source: google/cloud/managedkafka/v1/managed_kafka.proto
 
 #include "google/cloud/managedkafka/v1/managed_kafka_connection.h"
-#include "google/cloud/managedkafka/v1/internal/managed_kafka_connection_impl.h"
-#include "google/cloud/managedkafka/v1/internal/managed_kafka_option_defaults.h"
-#include "google/cloud/managedkafka/v1/internal/managed_kafka_stub_factory.h"
-#include "google/cloud/managedkafka/v1/internal/managed_kafka_tracing_connection.h"
-#include "google/cloud/managedkafka/v1/managed_kafka_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/managedkafka/v1/internal/managed_kafka_connection_impl.h"
+#include "google/cloud/managedkafka/v1/internal/managed_kafka_option_defaults.h"
+#include "google/cloud/managedkafka/v1/internal/managed_kafka_stub_factory.h"
+#include "google/cloud/managedkafka/v1/internal/managed_kafka_tracing_connection.h"
+#include "google/cloud/managedkafka/v1/managed_kafka_options.h"
 #include <memory>
 #include <utility>
 
@@ -38,10 +38,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ManagedKafkaConnection::~ManagedKafkaConnection() = default;
 
-StreamRange<google::cloud::managedkafka::v1::Cluster>
-ManagedKafkaConnection::ListClusters(
-    google::cloud::managedkafka::v1::
-        ListClustersRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::managedkafka::v1::Cluster> ManagedKafkaConnection::ListClusters(
+    google::cloud::managedkafka::v1::ListClustersRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::managedkafka::v1::Cluster>>();
 }
@@ -56,69 +54,76 @@ future<StatusOr<google::cloud::managedkafka::v1::Cluster>>
 ManagedKafkaConnection::CreateCluster(
     google::cloud::managedkafka::v1::CreateClusterRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::managedkafka::v1::Cluster>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::managedkafka::v1::Cluster>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation> ManagedKafkaConnection::CreateCluster(
-    NoAwaitTag, google::cloud::managedkafka::v1::CreateClusterRequest const&) {
+StatusOr<google::longrunning::Operation>
+ManagedKafkaConnection::CreateCluster(
+    NoAwaitTag,
+    google::cloud::managedkafka::v1::CreateClusterRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::managedkafka::v1::Cluster>>
-ManagedKafkaConnection::CreateCluster(google::longrunning::Operation const&) {
+ManagedKafkaConnection::CreateCluster(
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::managedkafka::v1::Cluster>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::managedkafka::v1::Cluster>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::managedkafka::v1::Cluster>>
 ManagedKafkaConnection::UpdateCluster(
     google::cloud::managedkafka::v1::UpdateClusterRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::managedkafka::v1::Cluster>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::managedkafka::v1::Cluster>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation> ManagedKafkaConnection::UpdateCluster(
-    NoAwaitTag, google::cloud::managedkafka::v1::UpdateClusterRequest const&) {
+StatusOr<google::longrunning::Operation>
+ManagedKafkaConnection::UpdateCluster(
+    NoAwaitTag,
+    google::cloud::managedkafka::v1::UpdateClusterRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::managedkafka::v1::Cluster>>
-ManagedKafkaConnection::UpdateCluster(google::longrunning::Operation const&) {
+ManagedKafkaConnection::UpdateCluster(
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::managedkafka::v1::Cluster>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::managedkafka::v1::Cluster>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::managedkafka::v1::OperationMetadata>>
 ManagedKafkaConnection::DeleteCluster(
     google::cloud::managedkafka::v1::DeleteClusterRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::managedkafka::v1::OperationMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::managedkafka::v1::OperationMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation> ManagedKafkaConnection::DeleteCluster(
-    NoAwaitTag, google::cloud::managedkafka::v1::DeleteClusterRequest const&) {
+StatusOr<google::longrunning::Operation>
+ManagedKafkaConnection::DeleteCluster(
+    NoAwaitTag,
+    google::cloud::managedkafka::v1::DeleteClusterRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::managedkafka::v1::OperationMetadata>>
-ManagedKafkaConnection::DeleteCluster(google::longrunning::Operation const&) {
+ManagedKafkaConnection::DeleteCluster(
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::managedkafka::v1::OperationMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::managedkafka::v1::OperationMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StreamRange<google::cloud::managedkafka::v1::Topic>
-ManagedKafkaConnection::ListTopics(
-    google::cloud::managedkafka::v1::
-        ListTopicsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::managedkafka::v1::Topic> ManagedKafkaConnection::ListTopics(
+    google::cloud::managedkafka::v1::ListTopicsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::managedkafka::v1::Topic>>();
 }
@@ -141,15 +146,14 @@ ManagedKafkaConnection::UpdateTopic(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status ManagedKafkaConnection::DeleteTopic(
+Status
+ManagedKafkaConnection::DeleteTopic(
     google::cloud::managedkafka::v1::DeleteTopicRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::managedkafka::v1::ConsumerGroup>
-ManagedKafkaConnection::ListConsumerGroups(
-    google::cloud::managedkafka::v1::
-        ListConsumerGroupsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::managedkafka::v1::ConsumerGroup> ManagedKafkaConnection::ListConsumerGroups(
+    google::cloud::managedkafka::v1::ListConsumerGroupsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::managedkafka::v1::ConsumerGroup>>();
 }
@@ -166,20 +170,20 @@ ManagedKafkaConnection::UpdateConsumerGroup(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status ManagedKafkaConnection::DeleteConsumerGroup(
+Status
+ManagedKafkaConnection::DeleteConsumerGroup(
     google::cloud::managedkafka::v1::DeleteConsumerGroupRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::managedkafka::v1::Acl>
-ManagedKafkaConnection::ListAcls(
-    google::cloud::managedkafka::v1::
-        ListAclsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::managedkafka::v1::Acl> ManagedKafkaConnection::ListAcls(
+    google::cloud::managedkafka::v1::ListAclsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::managedkafka::v1::Acl>>();
 }
 
-StatusOr<google::cloud::managedkafka::v1::Acl> ManagedKafkaConnection::GetAcl(
+StatusOr<google::cloud::managedkafka::v1::Acl>
+ManagedKafkaConnection::GetAcl(
     google::cloud::managedkafka::v1::GetAclRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -196,7 +200,8 @@ ManagedKafkaConnection::UpdateAcl(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status ManagedKafkaConnection::DeleteAcl(
+Status
+ManagedKafkaConnection::DeleteAcl(
     google::cloud::managedkafka::v1::DeleteAclRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -213,38 +218,38 @@ ManagedKafkaConnection::RemoveAclEntry(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::location::Location>
-ManagedKafkaConnection::ListLocations(
-    google::cloud::location::
-        ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::location::Location> ManagedKafkaConnection::ListLocations(
+    google::cloud::location::ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::location::Location>>();
 }
 
-StatusOr<google::cloud::location::Location> ManagedKafkaConnection::GetLocation(
+StatusOr<google::cloud::location::Location>
+ManagedKafkaConnection::GetLocation(
     google::cloud::location::GetLocationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::longrunning::Operation>
-ManagedKafkaConnection::ListOperations(
-    google::longrunning::
-        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::longrunning::Operation> ManagedKafkaConnection::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }
 
-StatusOr<google::longrunning::Operation> ManagedKafkaConnection::GetOperation(
+StatusOr<google::longrunning::Operation>
+ManagedKafkaConnection::GetOperation(
     google::longrunning::GetOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status ManagedKafkaConnection::DeleteOperation(
+Status
+ManagedKafkaConnection::DeleteOperation(
     google::longrunning::DeleteOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status ManagedKafkaConnection::CancelOperation(
+Status
+ManagedKafkaConnection::CancelOperation(
     google::longrunning::CancelOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -252,18 +257,17 @@ Status ManagedKafkaConnection::CancelOperation(
 std::shared_ptr<ManagedKafkaConnection> MakeManagedKafkaConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 ManagedKafkaPolicyOptionList>(options,
-                                                               __func__);
-  options =
-      managedkafka_v1_internal::ManagedKafkaDefaultOptions(std::move(options));
+      UnifiedCredentialsOptionList,
+      ManagedKafkaPolicyOptionList>(options, __func__);
+  options = managedkafka_v1_internal::ManagedKafkaDefaultOptions(
+      std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = managedkafka_v1_internal::CreateDefaultManagedKafkaStub(
-      std::move(auth), options);
+    std::move(auth), options);
   return managedkafka_v1_internal::MakeManagedKafkaTracingConnection(
       std::make_shared<managedkafka_v1_internal::ManagedKafkaConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options)));
+      std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

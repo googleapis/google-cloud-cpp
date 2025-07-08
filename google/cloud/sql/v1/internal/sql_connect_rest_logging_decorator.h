@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_INTERNAL_SQL_CONNECT_REST_LOGGING_DECORATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_INTERNAL_SQL_CONNECT_REST_LOGGING_DECORATOR_H
 
-#include "google/cloud/sql/v1/internal/sql_connect_rest_stub.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/rest_context.h"
+#include "google/cloud/sql/v1/internal/sql_connect_rest_stub.h"
 #include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
 #include <google/cloud/sql/v1/cloud_sql_connect.pb.h>
@@ -38,21 +38,16 @@ class SqlConnectServiceRestLogging : public SqlConnectServiceRestStub {
  public:
   ~SqlConnectServiceRestLogging() override = default;
   SqlConnectServiceRestLogging(std::shared_ptr<SqlConnectServiceRestStub> child,
-                               TracingOptions tracing_options,
-                               std::set<std::string> components);
+                       TracingOptions tracing_options,
+                       std::set<std::string> components);
 
   StatusOr<google::cloud::sql::v1::ConnectSettings> GetConnectSettings(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::sql::v1::GetConnectSettingsRequest const& request)
-      override;
+      Options const& options, google::cloud::sql::v1::GetConnectSettingsRequest const& request) override;
 
-  StatusOr<google::cloud::sql::v1::GenerateEphemeralCertResponse>
-  GenerateEphemeralCert(
+  StatusOr<google::cloud::sql::v1::GenerateEphemeralCertResponse> GenerateEphemeralCert(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::sql::v1::GenerateEphemeralCertRequest const& request)
-      override;
+      Options const& options, google::cloud::sql::v1::GenerateEphemeralCertRequest const& request) override;
 
  private:
   std::shared_ptr<SqlConnectServiceRestStub> child_;

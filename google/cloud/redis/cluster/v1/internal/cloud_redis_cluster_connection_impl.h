@@ -19,16 +19,16 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_REDIS_CLUSTER_V1_INTERNAL_CLOUD_REDIS_CLUSTER_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_REDIS_CLUSTER_V1_INTERNAL_CLOUD_REDIS_CLUSTER_CONNECTION_IMPL_H
 
-#include "google/cloud/redis/cluster/v1/cloud_redis_cluster_connection.h"
-#include "google/cloud/redis/cluster/v1/cloud_redis_cluster_connection_idempotency_policy.h"
-#include "google/cloud/redis/cluster/v1/cloud_redis_cluster_options.h"
-#include "google/cloud/redis/cluster/v1/internal/cloud_redis_cluster_retry_traits.h"
-#include "google/cloud/redis/cluster/v1/internal/cloud_redis_cluster_stub.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
+#include "google/cloud/redis/cluster/v1/cloud_redis_cluster_connection.h"
+#include "google/cloud/redis/cluster/v1/cloud_redis_cluster_connection_idempotency_policy.h"
+#include "google/cloud/redis/cluster/v1/cloud_redis_cluster_options.h"
+#include "google/cloud/redis/cluster/v1/internal/cloud_redis_cluster_retry_traits.h"
+#include "google/cloud/redis/cluster/v1/internal/cloud_redis_cluster_stub.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
@@ -46,144 +46,127 @@ class CloudRedisClusterConnectionImpl
   ~CloudRedisClusterConnectionImpl() override = default;
 
   CloudRedisClusterConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<redis_cluster_v1_internal::CloudRedisClusterStub> stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<redis_cluster_v1_internal::CloudRedisClusterStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
-  StreamRange<google::cloud::redis::cluster::v1::Cluster> ListClusters(
-      google::cloud::redis::cluster::v1::ListClustersRequest request) override;
+  StreamRange<google::cloud::redis::cluster::v1::Cluster>
+  ListClusters(google::cloud::redis::cluster::v1::ListClustersRequest request) override;
 
-  StatusOr<google::cloud::redis::cluster::v1::Cluster> GetCluster(
-      google::cloud::redis::cluster::v1::GetClusterRequest const& request)
-      override;
+  StatusOr<google::cloud::redis::cluster::v1::Cluster>
+  GetCluster(google::cloud::redis::cluster::v1::GetClusterRequest const& request) override;
 
-  future<StatusOr<google::cloud::redis::cluster::v1::Cluster>> UpdateCluster(
-      google::cloud::redis::cluster::v1::UpdateClusterRequest const& request)
-      override;
+  future<StatusOr<google::cloud::redis::cluster::v1::Cluster>>
+  UpdateCluster(google::cloud::redis::cluster::v1::UpdateClusterRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> UpdateCluster(
-      NoAwaitTag,
-      google::cloud::redis::cluster::v1::UpdateClusterRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  UpdateCluster(NoAwaitTag,
+      google::cloud::redis::cluster::v1::UpdateClusterRequest const& request) override;
 
-  future<StatusOr<google::cloud::redis::cluster::v1::Cluster>> UpdateCluster(
+  future<StatusOr<google::cloud::redis::cluster::v1::Cluster>>
+  UpdateCluster(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::protobuf::Any>> DeleteCluster(
-      google::cloud::redis::cluster::v1::DeleteClusterRequest const& request)
-      override;
+  future<StatusOr<google::protobuf::Any>>
+  DeleteCluster(google::cloud::redis::cluster::v1::DeleteClusterRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> DeleteCluster(
-      NoAwaitTag,
-      google::cloud::redis::cluster::v1::DeleteClusterRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  DeleteCluster(NoAwaitTag,
+      google::cloud::redis::cluster::v1::DeleteClusterRequest const& request) override;
 
-  future<StatusOr<google::protobuf::Any>> DeleteCluster(
+  future<StatusOr<google::protobuf::Any>>
+  DeleteCluster(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::redis::cluster::v1::Cluster>> CreateCluster(
-      google::cloud::redis::cluster::v1::CreateClusterRequest const& request)
-      override;
+  future<StatusOr<google::cloud::redis::cluster::v1::Cluster>>
+  CreateCluster(google::cloud::redis::cluster::v1::CreateClusterRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> CreateCluster(
-      NoAwaitTag,
-      google::cloud::redis::cluster::v1::CreateClusterRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  CreateCluster(NoAwaitTag,
+      google::cloud::redis::cluster::v1::CreateClusterRequest const& request) override;
 
-  future<StatusOr<google::cloud::redis::cluster::v1::Cluster>> CreateCluster(
+  future<StatusOr<google::cloud::redis::cluster::v1::Cluster>>
+  CreateCluster(
       google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::redis::cluster::v1::CertificateAuthority>
-  GetClusterCertificateAuthority(
-      google::cloud::redis::cluster::v1::
-          GetClusterCertificateAuthorityRequest const& request) override;
+  GetClusterCertificateAuthority(google::cloud::redis::cluster::v1::GetClusterCertificateAuthorityRequest const& request) override;
 
   future<StatusOr<google::cloud::redis::cluster::v1::Cluster>>
-  RescheduleClusterMaintenance(
-      google::cloud::redis::cluster::v1::
-          RescheduleClusterMaintenanceRequest const& request) override;
+  RescheduleClusterMaintenance(google::cloud::redis::cluster::v1::RescheduleClusterMaintenanceRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> RescheduleClusterMaintenance(
-      NoAwaitTag,
-      google::cloud::redis::cluster::v1::
-          RescheduleClusterMaintenanceRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  RescheduleClusterMaintenance(NoAwaitTag,
+      google::cloud::redis::cluster::v1::RescheduleClusterMaintenanceRequest const& request) override;
 
   future<StatusOr<google::cloud::redis::cluster::v1::Cluster>>
   RescheduleClusterMaintenance(
       google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::redis::cluster::v1::BackupCollection>
-  ListBackupCollections(
-      google::cloud::redis::cluster::v1::ListBackupCollectionsRequest request)
-      override;
+  ListBackupCollections(google::cloud::redis::cluster::v1::ListBackupCollectionsRequest request) override;
 
   StatusOr<google::cloud::redis::cluster::v1::BackupCollection>
-  GetBackupCollection(
-      google::cloud::redis::cluster::v1::GetBackupCollectionRequest const&
-          request) override;
+  GetBackupCollection(google::cloud::redis::cluster::v1::GetBackupCollectionRequest const& request) override;
 
-  StreamRange<google::cloud::redis::cluster::v1::Backup> ListBackups(
-      google::cloud::redis::cluster::v1::ListBackupsRequest request) override;
+  StreamRange<google::cloud::redis::cluster::v1::Backup>
+  ListBackups(google::cloud::redis::cluster::v1::ListBackupsRequest request) override;
 
-  StatusOr<google::cloud::redis::cluster::v1::Backup> GetBackup(
-      google::cloud::redis::cluster::v1::GetBackupRequest const& request)
-      override;
+  StatusOr<google::cloud::redis::cluster::v1::Backup>
+  GetBackup(google::cloud::redis::cluster::v1::GetBackupRequest const& request) override;
 
-  future<StatusOr<google::protobuf::Any>> DeleteBackup(
-      google::cloud::redis::cluster::v1::DeleteBackupRequest const& request)
-      override;
+  future<StatusOr<google::protobuf::Any>>
+  DeleteBackup(google::cloud::redis::cluster::v1::DeleteBackupRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> DeleteBackup(
-      NoAwaitTag,
-      google::cloud::redis::cluster::v1::DeleteBackupRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  DeleteBackup(NoAwaitTag,
+      google::cloud::redis::cluster::v1::DeleteBackupRequest const& request) override;
 
-  future<StatusOr<google::protobuf::Any>> DeleteBackup(
+  future<StatusOr<google::protobuf::Any>>
+  DeleteBackup(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::redis::cluster::v1::Backup>> ExportBackup(
-      google::cloud::redis::cluster::v1::ExportBackupRequest const& request)
-      override;
+  future<StatusOr<google::cloud::redis::cluster::v1::Backup>>
+  ExportBackup(google::cloud::redis::cluster::v1::ExportBackupRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> ExportBackup(
-      NoAwaitTag,
-      google::cloud::redis::cluster::v1::ExportBackupRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  ExportBackup(NoAwaitTag,
+      google::cloud::redis::cluster::v1::ExportBackupRequest const& request) override;
 
-  future<StatusOr<google::cloud::redis::cluster::v1::Backup>> ExportBackup(
+  future<StatusOr<google::cloud::redis::cluster::v1::Backup>>
+  ExportBackup(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::redis::cluster::v1::Cluster>> BackupCluster(
-      google::cloud::redis::cluster::v1::BackupClusterRequest const& request)
-      override;
+  future<StatusOr<google::cloud::redis::cluster::v1::Cluster>>
+  BackupCluster(google::cloud::redis::cluster::v1::BackupClusterRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> BackupCluster(
-      NoAwaitTag,
-      google::cloud::redis::cluster::v1::BackupClusterRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  BackupCluster(NoAwaitTag,
+      google::cloud::redis::cluster::v1::BackupClusterRequest const& request) override;
 
-  future<StatusOr<google::cloud::redis::cluster::v1::Cluster>> BackupCluster(
+  future<StatusOr<google::cloud::redis::cluster::v1::Cluster>>
+  BackupCluster(
       google::longrunning::Operation const& operation) override;
 
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request) override;
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request) override;
 
-  StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request) override;
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request) override;
 
-  Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request) override;
+  Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request) override;
 
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request) override;
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

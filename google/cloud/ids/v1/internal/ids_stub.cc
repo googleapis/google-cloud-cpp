@@ -33,36 +33,38 @@ IDSStub::~IDSStub() = default;
 
 StatusOr<google::cloud::ids::v1::ListEndpointsResponse>
 DefaultIDSStub::ListEndpoints(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::ids::v1::ListEndpointsRequest const& request) {
-  google::cloud::ids::v1::ListEndpointsResponse response;
-  auto status = grpc_stub_->ListEndpoints(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::ids::v1::ListEndpointsRequest const& request) {
+    google::cloud::ids::v1::ListEndpointsResponse response;
+    auto status =
+        grpc_stub_->ListEndpoints(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-StatusOr<google::cloud::ids::v1::Endpoint> DefaultIDSStub::GetEndpoint(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::ids::v1::GetEndpointRequest const& request) {
-  google::cloud::ids::v1::Endpoint response;
-  auto status = grpc_stub_->GetEndpoint(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::cloud::ids::v1::Endpoint>
+DefaultIDSStub::GetEndpoint(
+  grpc::ClientContext& context, Options const&,
+  google::cloud::ids::v1::GetEndpointRequest const& request) {
+    google::cloud::ids::v1::Endpoint response;
+    auto status =
+        grpc_stub_->GetEndpoint(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultIDSStub::AsyncCreateEndpoint(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::ids::v1::CreateEndpointRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::ids::v1::CreateEndpointRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::ids::v1::CreateEndpointRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::ids::v1::CreateEndpointRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
              google::cloud::ids::v1::CreateEndpointRequest const& request,
@@ -72,26 +74,28 @@ DefaultIDSStub::AsyncCreateEndpoint(
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation> DefaultIDSStub::CreateEndpoint(
-    grpc::ClientContext& context, Options,
-    google::cloud::ids::v1::CreateEndpointRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->CreateEndpoint(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::longrunning::Operation>
+DefaultIDSStub::CreateEndpoint(
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::ids::v1::CreateEndpointRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->CreateEndpoint(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultIDSStub::AsyncDeleteEndpoint(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::ids::v1::DeleteEndpointRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::ids::v1::DeleteEndpointRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::ids::v1::DeleteEndpointRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::ids::v1::DeleteEndpointRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
              google::cloud::ids::v1::DeleteEndpointRequest const& request,
@@ -101,15 +105,18 @@ DefaultIDSStub::AsyncDeleteEndpoint(
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation> DefaultIDSStub::DeleteEndpoint(
-    grpc::ClientContext& context, Options,
-    google::cloud::ids::v1::DeleteEndpointRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->DeleteEndpoint(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::longrunning::Operation>
+DefaultIDSStub::DeleteEndpoint(
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::ids::v1::DeleteEndpointRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->DeleteEndpoint(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -138,14 +145,13 @@ future<Status> DefaultIDSStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(
-             cq,
-             [this](grpc::ClientContext* context,
-                    google::longrunning::CancelOperationRequest const& request,
-                    grpc::CompletionQueue* cq) {
-               return operations_stub_->AsyncCancelOperation(context, request,
-                                                             cq);
-             },
-             request, std::move(context))
+      cq,
+      [this](grpc::ClientContext* context,
+             google::longrunning::CancelOperationRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return operations_stub_->AsyncCancelOperation(context, request, cq);
+      },
+      request, std::move(context))
       .then([](future<StatusOr<google::protobuf::Empty>> f) {
         return f.get().status();
       });

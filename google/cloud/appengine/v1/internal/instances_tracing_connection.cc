@@ -34,30 +34,25 @@ InstancesTracingConnection::InstancesTracingConnection(
     : child_(std::move(child)) {}
 
 StreamRange<google::appengine::v1::Instance>
-InstancesTracingConnection::ListInstances(
-    google::appengine::v1::ListInstancesRequest request) {
-  auto span =
-      internal::MakeSpan("appengine_v1::InstancesConnection::ListInstances");
+InstancesTracingConnection::ListInstances(google::appengine::v1::ListInstancesRequest request) {
+  auto span = internal::MakeSpan("appengine_v1::InstancesConnection::ListInstances");
   internal::OTelScope scope(span);
   auto sr = child_->ListInstances(std::move(request));
   return internal::MakeTracedStreamRange<google::appengine::v1::Instance>(
-      std::move(span), std::move(sr));
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::appengine::v1::Instance>
-InstancesTracingConnection::GetInstance(
-    google::appengine::v1::GetInstanceRequest const& request) {
-  auto span =
-      internal::MakeSpan("appengine_v1::InstancesConnection::GetInstance");
+InstancesTracingConnection::GetInstance(google::appengine::v1::GetInstanceRequest const& request) {
+  auto span = internal::MakeSpan("appengine_v1::InstancesConnection::GetInstance");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetInstance(request));
 }
 
 future<StatusOr<google::appengine::v1::OperationMetadataV1>>
-InstancesTracingConnection::DeleteInstance(
-    google::appengine::v1::DeleteInstanceRequest const& request) {
-  auto span =
-      internal::MakeSpan("appengine_v1::InstancesConnection::DeleteInstance");
+InstancesTracingConnection::DeleteInstance(google::appengine::v1::DeleteInstanceRequest const& request) {
+  auto span = internal::MakeSpan(
+      "appengine_v1::InstancesConnection::DeleteInstance");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteInstance(request));
 }
@@ -65,27 +60,27 @@ InstancesTracingConnection::DeleteInstance(
 StatusOr<google::longrunning::Operation>
 InstancesTracingConnection::DeleteInstance(
     NoAwaitTag, google::appengine::v1::DeleteInstanceRequest const& request) {
-  auto span =
-      internal::MakeSpan("appengine_v1::InstancesConnection::DeleteInstance");
+  auto span = internal::MakeSpan(
+      "appengine_v1::InstancesConnection::DeleteInstance");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span,
-                           child_->DeleteInstance(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->DeleteInstance(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::appengine::v1::OperationMetadataV1>>
 InstancesTracingConnection::DeleteInstance(
     google::longrunning::Operation const& operation) {
-  auto span =
-      internal::MakeSpan("appengine_v1::InstancesConnection::DeleteInstance");
+  auto span = internal::MakeSpan(
+      "appengine_v1::InstancesConnection::DeleteInstance");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->DeleteInstance(operation));
+  return internal::EndSpan(std::move(span),
+      child_->DeleteInstance(operation));
 }
 
 future<StatusOr<google::appengine::v1::Instance>>
-InstancesTracingConnection::DebugInstance(
-    google::appengine::v1::DebugInstanceRequest const& request) {
-  auto span =
-      internal::MakeSpan("appengine_v1::InstancesConnection::DebugInstance");
+InstancesTracingConnection::DebugInstance(google::appengine::v1::DebugInstanceRequest const& request) {
+  auto span = internal::MakeSpan(
+      "appengine_v1::InstancesConnection::DebugInstance");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DebugInstance(request));
 }
@@ -93,19 +88,21 @@ InstancesTracingConnection::DebugInstance(
 StatusOr<google::longrunning::Operation>
 InstancesTracingConnection::DebugInstance(
     NoAwaitTag, google::appengine::v1::DebugInstanceRequest const& request) {
-  auto span =
-      internal::MakeSpan("appengine_v1::InstancesConnection::DebugInstance");
+  auto span = internal::MakeSpan(
+      "appengine_v1::InstancesConnection::DebugInstance");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->DebugInstance(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->DebugInstance(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::appengine::v1::Instance>>
 InstancesTracingConnection::DebugInstance(
     google::longrunning::Operation const& operation) {
-  auto span =
-      internal::MakeSpan("appengine_v1::InstancesConnection::DebugInstance");
+  auto span = internal::MakeSpan(
+      "appengine_v1::InstancesConnection::DebugInstance");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->DebugInstance(operation));
+  return internal::EndSpan(std::move(span),
+      child_->DebugInstance(operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

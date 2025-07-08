@@ -34,14 +34,12 @@ AuthorizedDomainsTracingConnection::AuthorizedDomainsTracingConnection(
     : child_(std::move(child)) {}
 
 StreamRange<google::appengine::v1::AuthorizedDomain>
-AuthorizedDomainsTracingConnection::ListAuthorizedDomains(
-    google::appengine::v1::ListAuthorizedDomainsRequest request) {
-  auto span = internal::MakeSpan(
-      "appengine_v1::AuthorizedDomainsConnection::ListAuthorizedDomains");
+AuthorizedDomainsTracingConnection::ListAuthorizedDomains(google::appengine::v1::ListAuthorizedDomainsRequest request) {
+  auto span = internal::MakeSpan("appengine_v1::AuthorizedDomainsConnection::ListAuthorizedDomains");
   internal::OTelScope scope(span);
   auto sr = child_->ListAuthorizedDomains(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::appengine::v1::AuthorizedDomain>(std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<google::appengine::v1::AuthorizedDomain>(
+        std::move(span), std::move(sr));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -51,8 +49,7 @@ MakeAuthorizedDomainsTracingConnection(
     std::shared_ptr<appengine_v1::AuthorizedDomainsConnection> conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
-    conn =
-        std::make_shared<AuthorizedDomainsTracingConnection>(std::move(conn));
+    conn = std::make_shared<AuthorizedDomainsTracingConnection>(std::move(conn));
   }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;

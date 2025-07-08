@@ -17,12 +17,12 @@
 // source: google/cloud/compute/instant_snapshots/v1/instant_snapshots.proto
 
 #include "google/cloud/compute/instant_snapshots/v1/instant_snapshots_rest_connection.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/compute/instant_snapshots/v1/instant_snapshots_options.h"
 #include "google/cloud/compute/instant_snapshots/v1/internal/instant_snapshots_option_defaults.h"
 #include "google/cloud/compute/instant_snapshots/v1/internal/instant_snapshots_rest_connection_impl.h"
 #include "google/cloud/compute/instant_snapshots/v1/internal/instant_snapshots_rest_stub_factory.h"
 #include "google/cloud/compute/instant_snapshots/v1/internal/instant_snapshots_tracing_connection.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/rest_background_threads_impl.h"
 #include "google/cloud/internal/rest_options.h"
@@ -36,22 +36,19 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<InstantSnapshotsConnection> MakeInstantSnapshotsConnectionRest(
     Options options) {
-  internal::CheckExpectedOptions<
-      CommonOptionList, RestOptionList, UnifiedCredentialsOptionList,
-      rest_internal::TargetApiVersionOption, InstantSnapshotsPolicyOptionList>(
-      options, __func__);
-  options =
-      compute_instant_snapshots_v1_internal::InstantSnapshotsDefaultOptions(
-          std::move(options));
+  internal::CheckExpectedOptions<CommonOptionList, RestOptionList,
+      UnifiedCredentialsOptionList, rest_internal::TargetApiVersionOption,
+      InstantSnapshotsPolicyOptionList>(options, __func__);
+  options = compute_instant_snapshots_v1_internal::InstantSnapshotsDefaultOptions(
+      std::move(options));
   auto background = std::make_unique<
       rest_internal::AutomaticallyCreatedRestBackgroundThreads>();
-  auto stub = compute_instant_snapshots_v1_internal::
-      CreateDefaultInstantSnapshotsRestStub(options);
-  return compute_instant_snapshots_v1_internal::
-      MakeInstantSnapshotsTracingConnection(
-          std::make_shared<compute_instant_snapshots_v1_internal::
-                               InstantSnapshotsRestConnectionImpl>(
-              std::move(background), std::move(stub), std::move(options)));
+  auto stub = compute_instant_snapshots_v1_internal::CreateDefaultInstantSnapshotsRestStub(
+      options);
+  return compute_instant_snapshots_v1_internal::MakeInstantSnapshotsTracingConnection(
+      std::make_shared<
+          compute_instant_snapshots_v1_internal::InstantSnapshotsRestConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

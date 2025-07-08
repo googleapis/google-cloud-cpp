@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_WORKFLOWS_EXECUTIONS_V1_INTERNAL_EXECUTIONS_TRACING_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_WORKFLOWS_EXECUTIONS_V1_INTERNAL_EXECUTIONS_TRACING_CONNECTION_H
 
-#include "google/cloud/workflows/executions/v1/executions_connection.h"
 #include "google/cloud/version.h"
+#include "google/cloud/workflows/executions/v1/executions_connection.h"
 #include <memory>
 
 namespace google {
@@ -36,25 +36,21 @@ class ExecutionsTracingConnection
   ~ExecutionsTracingConnection() override = default;
 
   explicit ExecutionsTracingConnection(
-      std::shared_ptr<workflows_executions_v1::ExecutionsConnection> child);
+    std::shared_ptr<workflows_executions_v1::ExecutionsConnection> child);
 
   Options options() override { return child_->options(); }
 
   StreamRange<google::cloud::workflows::executions::v1::Execution>
-  ListExecutions(google::cloud::workflows::executions::v1::ListExecutionsRequest
-                     request) override;
+  ListExecutions(google::cloud::workflows::executions::v1::ListExecutionsRequest request) override;
 
-  StatusOr<google::cloud::workflows::executions::v1::Execution> CreateExecution(
-      google::cloud::workflows::executions::v1::CreateExecutionRequest const&
-          request) override;
+  StatusOr<google::cloud::workflows::executions::v1::Execution>
+  CreateExecution(google::cloud::workflows::executions::v1::CreateExecutionRequest const& request) override;
 
-  StatusOr<google::cloud::workflows::executions::v1::Execution> GetExecution(
-      google::cloud::workflows::executions::v1::GetExecutionRequest const&
-          request) override;
+  StatusOr<google::cloud::workflows::executions::v1::Execution>
+  GetExecution(google::cloud::workflows::executions::v1::GetExecutionRequest const& request) override;
 
-  StatusOr<google::cloud::workflows::executions::v1::Execution> CancelExecution(
-      google::cloud::workflows::executions::v1::CancelExecutionRequest const&
-          request) override;
+  StatusOr<google::cloud::workflows::executions::v1::Execution>
+  CancelExecution(google::cloud::workflows::executions::v1::CancelExecutionRequest const& request) override;
 
  private:
   std::shared_ptr<workflows_executions_v1::ExecutionsConnection> child_;

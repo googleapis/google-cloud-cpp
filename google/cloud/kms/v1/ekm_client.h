@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_KMS_V1_EKM_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_KMS_V1_EKM_CLIENT_H
 
-#include "google/cloud/kms/v1/ekm_connection.h"
 #include "google/cloud/future.h"
+#include "google/cloud/kms/v1/ekm_connection.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -64,13 +64,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// and move-construction is a relatively efficient operation, consider using
 /// such a copy when using this class from multiple threads.
 ///
-/// [google.cloud.kms.v1.EkmConnection]:
-/// @googleapis_reference_link{google/cloud/kms/v1/ekm_service.proto#L298}
+/// [google.cloud.kms.v1.EkmConnection]: @googleapis_reference_link{google/cloud/kms/v1/ekm_service.proto#L298}
 ///
 class EkmServiceClient {
  public:
-  explicit EkmServiceClient(std::shared_ptr<EkmServiceConnection> connection,
-                            Options opts = {});
+  explicit EkmServiceClient(std::shared_ptr<EkmServiceConnection> connection, Options opts = {});
   ~EkmServiceClient();
 
   ///@{
@@ -124,8 +122,8 @@ class EkmServiceClient {
   /// [google.cloud.kms.v1.ListEkmConnectionsRequest]: @googleapis_reference_link{google/cloud/kms/v1/ekm_service.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::cloud::kms::v1::EkmConnection> ListEkmConnections(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::kms::v1::EkmConnection>
+  ListEkmConnections(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -163,9 +161,8 @@ class EkmServiceClient {
   /// [google.cloud.kms.v1.ListEkmConnectionsRequest]: @googleapis_reference_link{google/cloud/kms/v1/ekm_service.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::cloud::kms::v1::EkmConnection> ListEkmConnections(
-      google::cloud::kms::v1::ListEkmConnectionsRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::kms::v1::EkmConnection>
+  ListEkmConnections(google::cloud::kms::v1::ListEkmConnectionsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -192,8 +189,8 @@ class EkmServiceClient {
   /// [google.cloud.kms.v1.GetEkmConnectionRequest]: @googleapis_reference_link{google/cloud/kms/v1/ekm_service.proto#L180}
   ///
   // clang-format on
-  StatusOr<google::cloud::kms::v1::EkmConnection> GetEkmConnection(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::kms::v1::EkmConnection>
+  GetEkmConnection(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -223,9 +220,8 @@ class EkmServiceClient {
   /// [google.cloud.kms.v1.GetEkmConnectionRequest]: @googleapis_reference_link{google/cloud/kms/v1/ekm_service.proto#L180}
   ///
   // clang-format on
-  StatusOr<google::cloud::kms::v1::EkmConnection> GetEkmConnection(
-      google::cloud::kms::v1::GetEkmConnectionRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::kms::v1::EkmConnection>
+  GetEkmConnection(google::cloud::kms::v1::GetEkmConnectionRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -256,10 +252,8 @@ class EkmServiceClient {
   /// [google.cloud.kms.v1.EkmConnection]: @googleapis_reference_link{google/cloud/kms/v1/ekm_service.proto#L298}
   ///
   // clang-format on
-  StatusOr<google::cloud::kms::v1::EkmConnection> CreateEkmConnection(
-      std::string const& parent, std::string const& ekm_connection_id,
-      google::cloud::kms::v1::EkmConnection const& ekm_connection,
-      Options opts = {});
+  StatusOr<google::cloud::kms::v1::EkmConnection>
+  CreateEkmConnection(std::string const& parent, std::string const& ekm_connection_id, google::cloud::kms::v1::EkmConnection const& ekm_connection, Options opts = {});
 
   // clang-format off
   ///
@@ -289,9 +283,8 @@ class EkmServiceClient {
   /// [google.cloud.kms.v1.EkmConnection]: @googleapis_reference_link{google/cloud/kms/v1/ekm_service.proto#L298}
   ///
   // clang-format on
-  StatusOr<google::cloud::kms::v1::EkmConnection> CreateEkmConnection(
-      google::cloud::kms::v1::CreateEkmConnectionRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::kms::v1::EkmConnection>
+  CreateEkmConnection(google::cloud::kms::v1::CreateEkmConnectionRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -317,9 +310,8 @@ class EkmServiceClient {
   /// [google.cloud.kms.v1.UpdateEkmConnectionRequest]: @googleapis_reference_link{google/cloud/kms/v1/ekm_service.proto#L215}
   ///
   // clang-format on
-  StatusOr<google::cloud::kms::v1::EkmConnection> UpdateEkmConnection(
-      google::cloud::kms::v1::EkmConnection const& ekm_connection,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::cloud::kms::v1::EkmConnection>
+  UpdateEkmConnection(google::cloud::kms::v1::EkmConnection const& ekm_connection, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -348,9 +340,8 @@ class EkmServiceClient {
   /// [google.cloud.kms.v1.UpdateEkmConnectionRequest]: @googleapis_reference_link{google/cloud/kms/v1/ekm_service.proto#L215}
   ///
   // clang-format on
-  StatusOr<google::cloud::kms::v1::EkmConnection> UpdateEkmConnection(
-      google::cloud::kms::v1::UpdateEkmConnectionRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::kms::v1::EkmConnection>
+  UpdateEkmConnection(google::cloud::kms::v1::UpdateEkmConnectionRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -377,8 +368,8 @@ class EkmServiceClient {
   /// [google.cloud.kms.v1.GetEkmConfigRequest]: @googleapis_reference_link{google/cloud/kms/v1/ekm_service.proto#L227}
   ///
   // clang-format on
-  StatusOr<google::cloud::kms::v1::EkmConfig> GetEkmConfig(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::kms::v1::EkmConfig>
+  GetEkmConfig(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -408,9 +399,8 @@ class EkmServiceClient {
   /// [google.cloud.kms.v1.GetEkmConfigRequest]: @googleapis_reference_link{google/cloud/kms/v1/ekm_service.proto#L227}
   ///
   // clang-format on
-  StatusOr<google::cloud::kms::v1::EkmConfig> GetEkmConfig(
-      google::cloud::kms::v1::GetEkmConfigRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::kms::v1::EkmConfig>
+  GetEkmConfig(google::cloud::kms::v1::GetEkmConfigRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -436,9 +426,8 @@ class EkmServiceClient {
   /// [google.cloud.kms.v1.UpdateEkmConfigRequest]: @googleapis_reference_link{google/cloud/kms/v1/ekm_service.proto#L240}
   ///
   // clang-format on
-  StatusOr<google::cloud::kms::v1::EkmConfig> UpdateEkmConfig(
-      google::cloud::kms::v1::EkmConfig const& ekm_config,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::cloud::kms::v1::EkmConfig>
+  UpdateEkmConfig(google::cloud::kms::v1::EkmConfig const& ekm_config, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -468,9 +457,8 @@ class EkmServiceClient {
   /// [google.cloud.kms.v1.UpdateEkmConfigRequest]: @googleapis_reference_link{google/cloud/kms/v1/ekm_service.proto#L240}
   ///
   // clang-format on
-  StatusOr<google::cloud::kms::v1::EkmConfig> UpdateEkmConfig(
-      google::cloud::kms::v1::UpdateEkmConfigRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::kms::v1::EkmConfig>
+  UpdateEkmConfig(google::cloud::kms::v1::UpdateEkmConfigRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -537,9 +525,7 @@ class EkmServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::kms::v1::VerifyConnectivityResponse>
-  VerifyConnectivity(
-      google::cloud::kms::v1::VerifyConnectivityRequest const& request,
-      Options opts = {});
+  VerifyConnectivity(google::cloud::kms::v1::VerifyConnectivityRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -577,8 +563,8 @@ class EkmServiceClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request, Options opts = {});
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -607,9 +593,8 @@ class EkmServiceClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -641,8 +626,8 @@ class EkmServiceClient {
   /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L100}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -673,8 +658,8 @@ class EkmServiceClient {
   /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -709,9 +694,8 @@ class EkmServiceClient {
   /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L153}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request,
-      Options opts = {});
+  StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -737,8 +721,8 @@ class EkmServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -769,9 +753,8 @@ class EkmServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<EkmServiceConnection> connection_;

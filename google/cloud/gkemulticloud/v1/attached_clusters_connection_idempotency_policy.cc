@@ -26,86 +26,67 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-AttachedClustersConnectionIdempotencyPolicy::
-    ~AttachedClustersConnectionIdempotencyPolicy() = default;
+AttachedClustersConnectionIdempotencyPolicy::~AttachedClustersConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<AttachedClustersConnectionIdempotencyPolicy>
 AttachedClustersConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<AttachedClustersConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency AttachedClustersConnectionIdempotencyPolicy::CreateAttachedCluster(
-    google::cloud::gkemulticloud::v1::CreateAttachedClusterRequest const&) {
+Idempotency AttachedClustersConnectionIdempotencyPolicy::CreateAttachedCluster(google::cloud::gkemulticloud::v1::CreateAttachedClusterRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency AttachedClustersConnectionIdempotencyPolicy::UpdateAttachedCluster(
-    google::cloud::gkemulticloud::v1::UpdateAttachedClusterRequest const&) {
+Idempotency AttachedClustersConnectionIdempotencyPolicy::UpdateAttachedCluster(google::cloud::gkemulticloud::v1::UpdateAttachedClusterRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency AttachedClustersConnectionIdempotencyPolicy::ImportAttachedCluster(
-    google::cloud::gkemulticloud::v1::ImportAttachedClusterRequest const&) {
+Idempotency AttachedClustersConnectionIdempotencyPolicy::ImportAttachedCluster(google::cloud::gkemulticloud::v1::ImportAttachedClusterRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency AttachedClustersConnectionIdempotencyPolicy::GetAttachedCluster(
-    google::cloud::gkemulticloud::v1::GetAttachedClusterRequest const&) {
+Idempotency AttachedClustersConnectionIdempotencyPolicy::GetAttachedCluster(google::cloud::gkemulticloud::v1::GetAttachedClusterRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency AttachedClustersConnectionIdempotencyPolicy::ListAttachedClusters(
-    google::cloud::gkemulticloud::v1::ListAttachedClustersRequest) {  // NOLINT
+Idempotency AttachedClustersConnectionIdempotencyPolicy::ListAttachedClusters(google::cloud::gkemulticloud::v1::ListAttachedClustersRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency AttachedClustersConnectionIdempotencyPolicy::DeleteAttachedCluster(
-    google::cloud::gkemulticloud::v1::DeleteAttachedClusterRequest const&) {
+Idempotency AttachedClustersConnectionIdempotencyPolicy::DeleteAttachedCluster(google::cloud::gkemulticloud::v1::DeleteAttachedClusterRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency
-AttachedClustersConnectionIdempotencyPolicy::GetAttachedServerConfig(
-    google::cloud::gkemulticloud::v1::GetAttachedServerConfigRequest const&) {
+Idempotency AttachedClustersConnectionIdempotencyPolicy::GetAttachedServerConfig(google::cloud::gkemulticloud::v1::GetAttachedServerConfigRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency AttachedClustersConnectionIdempotencyPolicy::
-    GenerateAttachedClusterInstallManifest(
-        google::cloud::gkemulticloud::v1::
-            GenerateAttachedClusterInstallManifestRequest const&) {
+Idempotency AttachedClustersConnectionIdempotencyPolicy::GenerateAttachedClusterInstallManifest(google::cloud::gkemulticloud::v1::GenerateAttachedClusterInstallManifestRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency
-AttachedClustersConnectionIdempotencyPolicy::GenerateAttachedClusterAgentToken(
-    google::cloud::gkemulticloud::v1::
-        GenerateAttachedClusterAgentTokenRequest const&) {
+Idempotency AttachedClustersConnectionIdempotencyPolicy::GenerateAttachedClusterAgentToken(google::cloud::gkemulticloud::v1::GenerateAttachedClusterAgentTokenRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency AttachedClustersConnectionIdempotencyPolicy::ListOperations(
-    google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency AttachedClustersConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency AttachedClustersConnectionIdempotencyPolicy::GetOperation(
-    google::longrunning::GetOperationRequest const&) {
+Idempotency AttachedClustersConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency AttachedClustersConnectionIdempotencyPolicy::DeleteOperation(
-    google::longrunning::DeleteOperationRequest const&) {
+Idempotency AttachedClustersConnectionIdempotencyPolicy::DeleteOperation(google::longrunning::DeleteOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency AttachedClustersConnectionIdempotencyPolicy::CancelOperation(
-    google::longrunning::CancelOperationRequest const&) {
+Idempotency AttachedClustersConnectionIdempotencyPolicy::CancelOperation(google::longrunning::CancelOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<AttachedClustersConnectionIdempotencyPolicy>
-MakeDefaultAttachedClustersConnectionIdempotencyPolicy() {
+    MakeDefaultAttachedClustersConnectionIdempotencyPolicy() {
   return std::make_unique<AttachedClustersConnectionIdempotencyPolicy>();
 }
 

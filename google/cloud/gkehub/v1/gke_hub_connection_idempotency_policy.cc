@@ -26,71 +26,59 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-GkeHubConnectionIdempotencyPolicy::~GkeHubConnectionIdempotencyPolicy() =
-    default;
+GkeHubConnectionIdempotencyPolicy::~GkeHubConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<GkeHubConnectionIdempotencyPolicy>
 GkeHubConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<GkeHubConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency GkeHubConnectionIdempotencyPolicy::ListMemberships(
-    google::cloud::gkehub::v1::ListMembershipsRequest) {  // NOLINT
+Idempotency GkeHubConnectionIdempotencyPolicy::ListMemberships(google::cloud::gkehub::v1::ListMembershipsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency GkeHubConnectionIdempotencyPolicy::ListFeatures(
-    google::cloud::gkehub::v1::ListFeaturesRequest) {  // NOLINT
+Idempotency GkeHubConnectionIdempotencyPolicy::ListFeatures(google::cloud::gkehub::v1::ListFeaturesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency GkeHubConnectionIdempotencyPolicy::GetMembership(
-    google::cloud::gkehub::v1::GetMembershipRequest const&) {
+Idempotency GkeHubConnectionIdempotencyPolicy::GetMembership(google::cloud::gkehub::v1::GetMembershipRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency GkeHubConnectionIdempotencyPolicy::GetFeature(
-    google::cloud::gkehub::v1::GetFeatureRequest const&) {
+Idempotency GkeHubConnectionIdempotencyPolicy::GetFeature(google::cloud::gkehub::v1::GetFeatureRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency GkeHubConnectionIdempotencyPolicy::CreateMembership(
-    google::cloud::gkehub::v1::CreateMembershipRequest const&) {
+Idempotency GkeHubConnectionIdempotencyPolicy::CreateMembership(google::cloud::gkehub::v1::CreateMembershipRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency GkeHubConnectionIdempotencyPolicy::CreateFeature(
-    google::cloud::gkehub::v1::CreateFeatureRequest const&) {
+Idempotency GkeHubConnectionIdempotencyPolicy::CreateFeature(google::cloud::gkehub::v1::CreateFeatureRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency GkeHubConnectionIdempotencyPolicy::DeleteMembership(
-    google::cloud::gkehub::v1::DeleteMembershipRequest const&) {
+Idempotency GkeHubConnectionIdempotencyPolicy::DeleteMembership(google::cloud::gkehub::v1::DeleteMembershipRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency GkeHubConnectionIdempotencyPolicy::DeleteFeature(
-    google::cloud::gkehub::v1::DeleteFeatureRequest const&) {
+Idempotency GkeHubConnectionIdempotencyPolicy::DeleteFeature(google::cloud::gkehub::v1::DeleteFeatureRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency GkeHubConnectionIdempotencyPolicy::UpdateMembership(
-    google::cloud::gkehub::v1::UpdateMembershipRequest const&) {
+Idempotency GkeHubConnectionIdempotencyPolicy::UpdateMembership(google::cloud::gkehub::v1::UpdateMembershipRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency GkeHubConnectionIdempotencyPolicy::UpdateFeature(
-    google::cloud::gkehub::v1::UpdateFeatureRequest const&) {
+Idempotency GkeHubConnectionIdempotencyPolicy::UpdateFeature(google::cloud::gkehub::v1::UpdateFeatureRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency GkeHubConnectionIdempotencyPolicy::GenerateConnectManifest(
-    google::cloud::gkehub::v1::GenerateConnectManifestRequest const&) {
+Idempotency GkeHubConnectionIdempotencyPolicy::GenerateConnectManifest(google::cloud::gkehub::v1::GenerateConnectManifestRequest const&) {
   return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<GkeHubConnectionIdempotencyPolicy>
-MakeDefaultGkeHubConnectionIdempotencyPolicy() {
+    MakeDefaultGkeHubConnectionIdempotencyPolicy() {
   return std::make_unique<GkeHubConnectionIdempotencyPolicy>();
 }
 

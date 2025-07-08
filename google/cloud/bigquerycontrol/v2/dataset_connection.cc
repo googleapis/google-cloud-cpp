@@ -17,10 +17,10 @@
 // source: google/cloud/bigquery/v2/dataset.proto
 
 #include "google/cloud/bigquerycontrol/v2/dataset_connection.h"
+#include "google/cloud/background_threads.h"
 #include "google/cloud/bigquerycontrol/v2/dataset_options.h"
 #include "google/cloud/bigquerycontrol/v2/internal/dataset_option_defaults.h"
 #include "google/cloud/bigquerycontrol/v2/internal/dataset_tracing_connection.h"
-#include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
@@ -60,15 +60,14 @@ DatasetServiceConnection::UpdateDataset(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status DatasetServiceConnection::DeleteDataset(
+Status
+DatasetServiceConnection::DeleteDataset(
     google::cloud::bigquery::v2::DeleteDatasetRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::bigquery::v2::ListFormatDataset>
-DatasetServiceConnection::ListDatasets(
-    google::cloud::bigquery::v2::
-        ListDatasetsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::bigquery::v2::ListFormatDataset> DatasetServiceConnection::ListDatasets(
+    google::cloud::bigquery::v2::ListDatasetsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::bigquery::v2::ListFormatDataset>>();
 }

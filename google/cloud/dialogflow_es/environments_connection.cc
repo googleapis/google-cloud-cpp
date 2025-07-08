@@ -17,14 +17,14 @@
 // source: google/cloud/dialogflow/v2/environment.proto
 
 #include "google/cloud/dialogflow_es/environments_connection.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/dialogflow_es/environments_options.h"
 #include "google/cloud/dialogflow_es/internal/environments_connection_impl.h"
 #include "google/cloud/dialogflow_es/internal/environments_option_defaults.h"
 #include "google/cloud/dialogflow_es/internal/environments_stub_factory.h"
 #include "google/cloud/dialogflow_es/internal/environments_tracing_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
-#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
@@ -38,10 +38,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 EnvironmentsConnection::~EnvironmentsConnection() = default;
 
-StreamRange<google::cloud::dialogflow::v2::Environment>
-EnvironmentsConnection::ListEnvironments(
-    google::cloud::dialogflow::v2::
-        ListEnvironmentsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::dialogflow::v2::Environment> EnvironmentsConnection::ListEnvironments(
+    google::cloud::dialogflow::v2::ListEnvironmentsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::dialogflow::v2::Environment>>();
 }
@@ -64,46 +62,44 @@ EnvironmentsConnection::UpdateEnvironment(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status EnvironmentsConnection::DeleteEnvironment(
+Status
+EnvironmentsConnection::DeleteEnvironment(
     google::cloud::dialogflow::v2::DeleteEnvironmentRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::dialogflow::v2::EnvironmentHistory::Entry>
-EnvironmentsConnection::GetEnvironmentHistory(
-    google::cloud::dialogflow::v2::
-        GetEnvironmentHistoryRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::dialogflow::v2::EnvironmentHistory::Entry> EnvironmentsConnection::GetEnvironmentHistory(
+    google::cloud::dialogflow::v2::GetEnvironmentHistoryRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::dialogflow::v2::EnvironmentHistory::Entry>>();
 }
 
-StreamRange<google::cloud::location::Location>
-EnvironmentsConnection::ListLocations(
-    google::cloud::location::
-        ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::location::Location> EnvironmentsConnection::ListLocations(
+    google::cloud::location::ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::location::Location>>();
 }
 
-StatusOr<google::cloud::location::Location> EnvironmentsConnection::GetLocation(
+StatusOr<google::cloud::location::Location>
+EnvironmentsConnection::GetLocation(
     google::cloud::location::GetLocationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::longrunning::Operation>
-EnvironmentsConnection::ListOperations(
-    google::longrunning::
-        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::longrunning::Operation> EnvironmentsConnection::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }
 
-StatusOr<google::longrunning::Operation> EnvironmentsConnection::GetOperation(
+StatusOr<google::longrunning::Operation>
+EnvironmentsConnection::GetOperation(
     google::longrunning::GetOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status EnvironmentsConnection::CancelOperation(
+Status
+EnvironmentsConnection::CancelOperation(
     google::longrunning::CancelOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -111,18 +107,17 @@ Status EnvironmentsConnection::CancelOperation(
 std::shared_ptr<EnvironmentsConnection> MakeEnvironmentsConnection(
     std::string const& location, Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 EnvironmentsPolicyOptionList>(options,
-                                                               __func__);
+      UnifiedCredentialsOptionList,
+      EnvironmentsPolicyOptionList>(options, __func__);
   options = dialogflow_es_internal::EnvironmentsDefaultOptions(
       location, std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = dialogflow_es_internal::CreateDefaultEnvironmentsStub(
-      std::move(auth), options);
+    std::move(auth), options);
   return dialogflow_es_internal::MakeEnvironmentsTracingConnection(
       std::make_shared<dialogflow_es_internal::EnvironmentsConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options)));
+      std::move(background), std::move(stub), std::move(options)));
 }
 
 std::shared_ptr<EnvironmentsConnection> MakeEnvironmentsConnection(

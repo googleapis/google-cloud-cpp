@@ -66,38 +66,28 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// and move-construction is a relatively efficient operation, consider using
 /// such a copy when using this class from multiple threads.
 ///
-/// [google.cloud.binaryauthorization.v1.Attestor]:
-/// @googleapis_reference_link{google/cloud/binaryauthorization/v1/resources.proto#L168}
-/// [google.cloud.binaryauthorization.v1.Policy]:
-/// @googleapis_reference_link{google/cloud/binaryauthorization/v1/resources.proto#L32}
+/// [google.cloud.binaryauthorization.v1.Attestor]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/resources.proto#L168}
+/// [google.cloud.binaryauthorization.v1.Policy]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/resources.proto#L32}
 ///
 class BinauthzManagementServiceV1Client {
  public:
-  explicit BinauthzManagementServiceV1Client(
-      std::shared_ptr<BinauthzManagementServiceV1Connection> connection,
-      Options opts = {});
+  explicit BinauthzManagementServiceV1Client(std::shared_ptr<BinauthzManagementServiceV1Connection> connection, Options opts = {});
   ~BinauthzManagementServiceV1Client();
 
   ///@{
   /// @name Copy and move support
-  BinauthzManagementServiceV1Client(BinauthzManagementServiceV1Client const&) =
-      default;
-  BinauthzManagementServiceV1Client& operator=(
-      BinauthzManagementServiceV1Client const&) = default;
-  BinauthzManagementServiceV1Client(BinauthzManagementServiceV1Client&&) =
-      default;
-  BinauthzManagementServiceV1Client& operator=(
-      BinauthzManagementServiceV1Client&&) = default;
+  BinauthzManagementServiceV1Client(BinauthzManagementServiceV1Client const&) = default;
+  BinauthzManagementServiceV1Client& operator=(BinauthzManagementServiceV1Client const&) = default;
+  BinauthzManagementServiceV1Client(BinauthzManagementServiceV1Client&&) = default;
+  BinauthzManagementServiceV1Client& operator=(BinauthzManagementServiceV1Client&&) = default;
   ///@}
 
   ///@{
   /// @name Equality
-  friend bool operator==(BinauthzManagementServiceV1Client const& a,
-                         BinauthzManagementServiceV1Client const& b) {
+  friend bool operator==(BinauthzManagementServiceV1Client const& a, BinauthzManagementServiceV1Client const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(BinauthzManagementServiceV1Client const& a,
-                         BinauthzManagementServiceV1Client const& b) {
+  friend bool operator!=(BinauthzManagementServiceV1Client const& a, BinauthzManagementServiceV1Client const& b) {
     return !(a == b);
   }
   ///@}
@@ -132,8 +122,8 @@ class BinauthzManagementServiceV1Client {
   /// [google.cloud.binaryauthorization.v1.Policy]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/resources.proto#L32}
   ///
   // clang-format on
-  StatusOr<google::cloud::binaryauthorization::v1::Policy> GetPolicy(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::binaryauthorization::v1::Policy>
+  GetPolicy(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -169,9 +159,8 @@ class BinauthzManagementServiceV1Client {
   /// [google.cloud.binaryauthorization.v1.Policy]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/resources.proto#L32}
   ///
   // clang-format on
-  StatusOr<google::cloud::binaryauthorization::v1::Policy> GetPolicy(
-      google::cloud::binaryauthorization::v1::GetPolicyRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::binaryauthorization::v1::Policy>
+  GetPolicy(google::cloud::binaryauthorization::v1::GetPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -202,9 +191,8 @@ class BinauthzManagementServiceV1Client {
   /// [google.cloud.binaryauthorization.v1.UpdatePolicyRequest]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/service.proto#L167}
   ///
   // clang-format on
-  StatusOr<google::cloud::binaryauthorization::v1::Policy> UpdatePolicy(
-      google::cloud::binaryauthorization::v1::Policy const& policy,
-      Options opts = {});
+  StatusOr<google::cloud::binaryauthorization::v1::Policy>
+  UpdatePolicy(google::cloud::binaryauthorization::v1::Policy const& policy, Options opts = {});
 
   // clang-format off
   ///
@@ -237,10 +225,8 @@ class BinauthzManagementServiceV1Client {
   /// [google.cloud.binaryauthorization.v1.UpdatePolicyRequest]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/service.proto#L167}
   ///
   // clang-format on
-  StatusOr<google::cloud::binaryauthorization::v1::Policy> UpdatePolicy(
-      google::cloud::binaryauthorization::v1::UpdatePolicyRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::cloud::binaryauthorization::v1::Policy>
+  UpdatePolicy(google::cloud::binaryauthorization::v1::UpdatePolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -272,10 +258,8 @@ class BinauthzManagementServiceV1Client {
   /// [google.cloud.binaryauthorization.v1.CreateAttestorRequest]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/service.proto#L175}
   ///
   // clang-format on
-  StatusOr<google::cloud::binaryauthorization::v1::Attestor> CreateAttestor(
-      std::string const& parent, std::string const& attestor_id,
-      google::cloud::binaryauthorization::v1::Attestor const& attestor,
-      Options opts = {});
+  StatusOr<google::cloud::binaryauthorization::v1::Attestor>
+  CreateAttestor(std::string const& parent, std::string const& attestor_id, google::cloud::binaryauthorization::v1::Attestor const& attestor, Options opts = {});
 
   // clang-format off
   ///
@@ -307,10 +291,8 @@ class BinauthzManagementServiceV1Client {
   /// [google.cloud.binaryauthorization.v1.CreateAttestorRequest]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/service.proto#L175}
   ///
   // clang-format on
-  StatusOr<google::cloud::binaryauthorization::v1::Attestor> CreateAttestor(
-      google::cloud::binaryauthorization::v1::CreateAttestorRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::cloud::binaryauthorization::v1::Attestor>
+  CreateAttestor(google::cloud::binaryauthorization::v1::CreateAttestorRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -336,8 +318,8 @@ class BinauthzManagementServiceV1Client {
   /// [google.cloud.binaryauthorization.v1.GetAttestorRequest]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/service.proto#L194}
   ///
   // clang-format on
-  StatusOr<google::cloud::binaryauthorization::v1::Attestor> GetAttestor(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::binaryauthorization::v1::Attestor>
+  GetAttestor(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -367,9 +349,8 @@ class BinauthzManagementServiceV1Client {
   /// [google.cloud.binaryauthorization.v1.GetAttestorRequest]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/service.proto#L194}
   ///
   // clang-format on
-  StatusOr<google::cloud::binaryauthorization::v1::Attestor> GetAttestor(
-      google::cloud::binaryauthorization::v1::GetAttestorRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::binaryauthorization::v1::Attestor>
+  GetAttestor(google::cloud::binaryauthorization::v1::GetAttestorRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -397,9 +378,8 @@ class BinauthzManagementServiceV1Client {
   /// [google.cloud.binaryauthorization.v1.UpdateAttestorRequest]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/service.proto#L206}
   ///
   // clang-format on
-  StatusOr<google::cloud::binaryauthorization::v1::Attestor> UpdateAttestor(
-      google::cloud::binaryauthorization::v1::Attestor const& attestor,
-      Options opts = {});
+  StatusOr<google::cloud::binaryauthorization::v1::Attestor>
+  UpdateAttestor(google::cloud::binaryauthorization::v1::Attestor const& attestor, Options opts = {});
 
   // clang-format off
   ///
@@ -429,10 +409,8 @@ class BinauthzManagementServiceV1Client {
   /// [google.cloud.binaryauthorization.v1.UpdateAttestorRequest]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/service.proto#L206}
   ///
   // clang-format on
-  StatusOr<google::cloud::binaryauthorization::v1::Attestor> UpdateAttestor(
-      google::cloud::binaryauthorization::v1::UpdateAttestorRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::cloud::binaryauthorization::v1::Attestor>
+  UpdateAttestor(google::cloud::binaryauthorization::v1::UpdateAttestorRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -467,8 +445,8 @@ class BinauthzManagementServiceV1Client {
   /// [google.cloud.binaryauthorization.v1.ListAttestorsRequest]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/service.proto#L214}
   ///
   // clang-format on
-  StreamRange<google::cloud::binaryauthorization::v1::Attestor> ListAttestors(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::binaryauthorization::v1::Attestor>
+  ListAttestors(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -507,9 +485,8 @@ class BinauthzManagementServiceV1Client {
   /// [google.cloud.binaryauthorization.v1.ListAttestorsRequest]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/service.proto#L214}
   ///
   // clang-format on
-  StreamRange<google::cloud::binaryauthorization::v1::Attestor> ListAttestors(
-      google::cloud::binaryauthorization::v1::ListAttestorsRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::binaryauthorization::v1::Attestor>
+  ListAttestors(google::cloud::binaryauthorization::v1::ListAttestorsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -533,7 +510,8 @@ class BinauthzManagementServiceV1Client {
   /// [google.cloud.binaryauthorization.v1.DeleteAttestorRequest]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/service.proto#L246}
   ///
   // clang-format on
-  Status DeleteAttestor(std::string const& name, Options opts = {});
+  Status
+  DeleteAttestor(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -561,10 +539,8 @@ class BinauthzManagementServiceV1Client {
   /// [google.cloud.binaryauthorization.v1.DeleteAttestorRequest]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/service.proto#L246}
   ///
   // clang-format on
-  Status DeleteAttestor(
-      google::cloud::binaryauthorization::v1::DeleteAttestorRequest const&
-          request,
-      Options opts = {});
+  Status
+  DeleteAttestor(google::cloud::binaryauthorization::v1::DeleteAttestorRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<BinauthzManagementServiceV1Connection> connection_;

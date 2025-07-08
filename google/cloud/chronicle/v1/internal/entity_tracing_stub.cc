@@ -32,48 +32,44 @@ EntityServiceTracingStub::EntityServiceTracingStub(
     std::shared_ptr<EntityServiceStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
-StatusOr<google::cloud::chronicle::v1::Watchlist>
-EntityServiceTracingStub::GetWatchlist(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::chronicle::v1::Watchlist> EntityServiceTracingStub::GetWatchlist(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::chronicle::v1::GetWatchlistRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.chronicle.v1.EntityService",
-                                     "GetWatchlist");
+  auto span = internal::MakeSpanGrpc("google.cloud.chronicle.v1.EntityService", "GetWatchlist");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetWatchlist(context, options, request));
 }
 
-StatusOr<google::cloud::chronicle::v1::ListWatchlistsResponse>
-EntityServiceTracingStub::ListWatchlists(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::chronicle::v1::ListWatchlistsResponse> EntityServiceTracingStub::ListWatchlists(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::chronicle::v1::ListWatchlistsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.chronicle.v1.EntityService",
-                                     "ListWatchlists");
+  auto span = internal::MakeSpanGrpc("google.cloud.chronicle.v1.EntityService", "ListWatchlists");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListWatchlists(context, options, request));
 }
 
-StatusOr<google::cloud::chronicle::v1::Watchlist>
-EntityServiceTracingStub::CreateWatchlist(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::chronicle::v1::Watchlist> EntityServiceTracingStub::CreateWatchlist(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::chronicle::v1::CreateWatchlistRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.chronicle.v1.EntityService",
-                                     "CreateWatchlist");
+  auto span = internal::MakeSpanGrpc("google.cloud.chronicle.v1.EntityService", "CreateWatchlist");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateWatchlist(context, options, request));
 }
 
-StatusOr<google::cloud::chronicle::v1::Watchlist>
-EntityServiceTracingStub::UpdateWatchlist(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::chronicle::v1::Watchlist> EntityServiceTracingStub::UpdateWatchlist(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::chronicle::v1::UpdateWatchlistRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.chronicle.v1.EntityService",
-                                     "UpdateWatchlist");
+  auto span = internal::MakeSpanGrpc("google.cloud.chronicle.v1.EntityService", "UpdateWatchlist");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -81,22 +77,21 @@ EntityServiceTracingStub::UpdateWatchlist(
 }
 
 Status EntityServiceTracingStub::DeleteWatchlist(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::chronicle::v1::DeleteWatchlistRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.chronicle.v1.EntityService",
-                                     "DeleteWatchlist");
+  auto span = internal::MakeSpanGrpc("google.cloud.chronicle.v1.EntityService", "DeleteWatchlist");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeleteWatchlist(context, options, request));
 }
 
-StatusOr<google::longrunning::ListOperationsResponse>
-EntityServiceTracingStub::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse> EntityServiceTracingStub::ListOperations(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.chronicle.v1.EntityService",
-                                     "ListOperations");
+  auto span = internal::MakeSpanGrpc("google.cloud.chronicle.v1.EntityService", "ListOperations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -104,10 +99,10 @@ EntityServiceTracingStub::ListOperations(
 }
 
 StatusOr<google::longrunning::Operation> EntityServiceTracingStub::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.chronicle.v1.EntityService",
-                                     "GetOperation");
+  auto span = internal::MakeSpanGrpc("google.cloud.chronicle.v1.EntityService", "GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -115,10 +110,10 @@ StatusOr<google::longrunning::Operation> EntityServiceTracingStub::GetOperation(
 }
 
 Status EntityServiceTracingStub::DeleteOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.chronicle.v1.EntityService",
-                                     "DeleteOperation");
+  auto span = internal::MakeSpanGrpc("google.cloud.chronicle.v1.EntityService", "DeleteOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -126,10 +121,10 @@ Status EntityServiceTracingStub::DeleteOperation(
 }
 
 Status EntityServiceTracingStub::CancelOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.chronicle.v1.EntityService",
-                                     "CancelOperation");
+  auto span = internal::MakeSpanGrpc("google.cloud.chronicle.v1.EntityService", "CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,

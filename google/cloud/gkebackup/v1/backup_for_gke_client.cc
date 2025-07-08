@@ -28,15 +28,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 BackupForGKEClient::BackupForGKEClient(
     std::shared_ptr<BackupForGKEConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 BackupForGKEClient::~BackupForGKEClient() = default;
 
 future<StatusOr<google::cloud::gkebackup::v1::BackupPlan>>
-BackupForGKEClient::CreateBackupPlan(
-    std::string const& parent,
-    google::cloud::gkebackup::v1::BackupPlan const& backup_plan,
-    std::string const& backup_plan_id, Options opts) {
+BackupForGKEClient::CreateBackupPlan(std::string const& parent, google::cloud::gkebackup::v1::BackupPlan const& backup_plan, std::string const& backup_plan_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::gkebackup::v1::CreateBackupPlanRequest request;
   request.set_parent(parent);
@@ -45,10 +42,8 @@ BackupForGKEClient::CreateBackupPlan(
   return connection_->CreateBackupPlan(request);
 }
 
-StatusOr<google::longrunning::Operation> BackupForGKEClient::CreateBackupPlan(
-    NoAwaitTag, std::string const& parent,
-    google::cloud::gkebackup::v1::BackupPlan const& backup_plan,
-    std::string const& backup_plan_id, Options opts) {
+StatusOr<google::longrunning::Operation>
+BackupForGKEClient::CreateBackupPlan(NoAwaitTag, std::string const& parent, google::cloud::gkebackup::v1::BackupPlan const& backup_plan, std::string const& backup_plan_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::gkebackup::v1::CreateBackupPlanRequest request;
   request.set_parent(parent);
@@ -58,24 +53,19 @@ StatusOr<google::longrunning::Operation> BackupForGKEClient::CreateBackupPlan(
 }
 
 future<StatusOr<google::cloud::gkebackup::v1::BackupPlan>>
-BackupForGKEClient::CreateBackupPlan(
-    google::cloud::gkebackup::v1::CreateBackupPlanRequest const& request,
-    Options opts) {
+BackupForGKEClient::CreateBackupPlan(google::cloud::gkebackup::v1::CreateBackupPlanRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateBackupPlan(request);
 }
 
-StatusOr<google::longrunning::Operation> BackupForGKEClient::CreateBackupPlan(
-    NoAwaitTag,
-    google::cloud::gkebackup::v1::CreateBackupPlanRequest const& request,
-    Options opts) {
+StatusOr<google::longrunning::Operation>
+BackupForGKEClient::CreateBackupPlan(NoAwaitTag, google::cloud::gkebackup::v1::CreateBackupPlanRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateBackupPlan(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::gkebackup::v1::BackupPlan>>
-BackupForGKEClient::CreateBackupPlan(
-    google::longrunning::Operation const& operation, Options opts) {
+BackupForGKEClient::CreateBackupPlan(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateBackupPlan(operation);
 }
@@ -89,9 +79,7 @@ BackupForGKEClient::ListBackupPlans(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::gkebackup::v1::BackupPlan>
-BackupForGKEClient::ListBackupPlans(
-    google::cloud::gkebackup::v1::ListBackupPlansRequest request,
-    Options opts) {
+BackupForGKEClient::ListBackupPlans(google::cloud::gkebackup::v1::ListBackupPlansRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListBackupPlans(std::move(request));
 }
@@ -105,17 +93,13 @@ BackupForGKEClient::GetBackupPlan(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::gkebackup::v1::BackupPlan>
-BackupForGKEClient::GetBackupPlan(
-    google::cloud::gkebackup::v1::GetBackupPlanRequest const& request,
-    Options opts) {
+BackupForGKEClient::GetBackupPlan(google::cloud::gkebackup::v1::GetBackupPlanRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetBackupPlan(request);
 }
 
 future<StatusOr<google::cloud::gkebackup::v1::BackupPlan>>
-BackupForGKEClient::UpdateBackupPlan(
-    google::cloud::gkebackup::v1::BackupPlan const& backup_plan,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+BackupForGKEClient::UpdateBackupPlan(google::cloud::gkebackup::v1::BackupPlan const& backup_plan, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::gkebackup::v1::UpdateBackupPlanRequest request;
   *request.mutable_backup_plan() = backup_plan;
@@ -123,9 +107,8 @@ BackupForGKEClient::UpdateBackupPlan(
   return connection_->UpdateBackupPlan(request);
 }
 
-StatusOr<google::longrunning::Operation> BackupForGKEClient::UpdateBackupPlan(
-    NoAwaitTag, google::cloud::gkebackup::v1::BackupPlan const& backup_plan,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+StatusOr<google::longrunning::Operation>
+BackupForGKEClient::UpdateBackupPlan(NoAwaitTag, google::cloud::gkebackup::v1::BackupPlan const& backup_plan, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::gkebackup::v1::UpdateBackupPlanRequest request;
   *request.mutable_backup_plan() = backup_plan;
@@ -134,24 +117,19 @@ StatusOr<google::longrunning::Operation> BackupForGKEClient::UpdateBackupPlan(
 }
 
 future<StatusOr<google::cloud::gkebackup::v1::BackupPlan>>
-BackupForGKEClient::UpdateBackupPlan(
-    google::cloud::gkebackup::v1::UpdateBackupPlanRequest const& request,
-    Options opts) {
+BackupForGKEClient::UpdateBackupPlan(google::cloud::gkebackup::v1::UpdateBackupPlanRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateBackupPlan(request);
 }
 
-StatusOr<google::longrunning::Operation> BackupForGKEClient::UpdateBackupPlan(
-    NoAwaitTag,
-    google::cloud::gkebackup::v1::UpdateBackupPlanRequest const& request,
-    Options opts) {
+StatusOr<google::longrunning::Operation>
+BackupForGKEClient::UpdateBackupPlan(NoAwaitTag, google::cloud::gkebackup::v1::UpdateBackupPlanRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateBackupPlan(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::gkebackup::v1::BackupPlan>>
-BackupForGKEClient::UpdateBackupPlan(
-    google::longrunning::Operation const& operation, Options opts) {
+BackupForGKEClient::UpdateBackupPlan(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateBackupPlan(operation);
 }
@@ -164,8 +142,8 @@ BackupForGKEClient::DeleteBackupPlan(std::string const& name, Options opts) {
   return connection_->DeleteBackupPlan(request);
 }
 
-StatusOr<google::longrunning::Operation> BackupForGKEClient::DeleteBackupPlan(
-    NoAwaitTag, std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation>
+BackupForGKEClient::DeleteBackupPlan(NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::gkebackup::v1::DeleteBackupPlanRequest request;
   request.set_name(name);
@@ -173,33 +151,25 @@ StatusOr<google::longrunning::Operation> BackupForGKEClient::DeleteBackupPlan(
 }
 
 future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>
-BackupForGKEClient::DeleteBackupPlan(
-    google::cloud::gkebackup::v1::DeleteBackupPlanRequest const& request,
-    Options opts) {
+BackupForGKEClient::DeleteBackupPlan(google::cloud::gkebackup::v1::DeleteBackupPlanRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteBackupPlan(request);
 }
 
-StatusOr<google::longrunning::Operation> BackupForGKEClient::DeleteBackupPlan(
-    NoAwaitTag,
-    google::cloud::gkebackup::v1::DeleteBackupPlanRequest const& request,
-    Options opts) {
+StatusOr<google::longrunning::Operation>
+BackupForGKEClient::DeleteBackupPlan(NoAwaitTag, google::cloud::gkebackup::v1::DeleteBackupPlanRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteBackupPlan(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>
-BackupForGKEClient::DeleteBackupPlan(
-    google::longrunning::Operation const& operation, Options opts) {
+BackupForGKEClient::DeleteBackupPlan(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteBackupPlan(operation);
 }
 
 future<StatusOr<google::cloud::gkebackup::v1::BackupChannel>>
-BackupForGKEClient::CreateBackupChannel(
-    std::string const& parent,
-    google::cloud::gkebackup::v1::BackupChannel const& backup_channel,
-    std::string const& backup_channel_id, Options opts) {
+BackupForGKEClient::CreateBackupChannel(std::string const& parent, google::cloud::gkebackup::v1::BackupChannel const& backup_channel, std::string const& backup_channel_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::gkebackup::v1::CreateBackupChannelRequest request;
   request.set_parent(parent);
@@ -209,10 +179,7 @@ BackupForGKEClient::CreateBackupChannel(
 }
 
 StatusOr<google::longrunning::Operation>
-BackupForGKEClient::CreateBackupChannel(
-    NoAwaitTag, std::string const& parent,
-    google::cloud::gkebackup::v1::BackupChannel const& backup_channel,
-    std::string const& backup_channel_id, Options opts) {
+BackupForGKEClient::CreateBackupChannel(NoAwaitTag, std::string const& parent, google::cloud::gkebackup::v1::BackupChannel const& backup_channel, std::string const& backup_channel_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::gkebackup::v1::CreateBackupChannelRequest request;
   request.set_parent(parent);
@@ -222,32 +189,25 @@ BackupForGKEClient::CreateBackupChannel(
 }
 
 future<StatusOr<google::cloud::gkebackup::v1::BackupChannel>>
-BackupForGKEClient::CreateBackupChannel(
-    google::cloud::gkebackup::v1::CreateBackupChannelRequest const& request,
-    Options opts) {
+BackupForGKEClient::CreateBackupChannel(google::cloud::gkebackup::v1::CreateBackupChannelRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateBackupChannel(request);
 }
 
 StatusOr<google::longrunning::Operation>
-BackupForGKEClient::CreateBackupChannel(
-    NoAwaitTag,
-    google::cloud::gkebackup::v1::CreateBackupChannelRequest const& request,
-    Options opts) {
+BackupForGKEClient::CreateBackupChannel(NoAwaitTag, google::cloud::gkebackup::v1::CreateBackupChannelRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateBackupChannel(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::gkebackup::v1::BackupChannel>>
-BackupForGKEClient::CreateBackupChannel(
-    google::longrunning::Operation const& operation, Options opts) {
+BackupForGKEClient::CreateBackupChannel(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateBackupChannel(operation);
 }
 
 StreamRange<google::cloud::gkebackup::v1::BackupChannel>
-BackupForGKEClient::ListBackupChannels(std::string const& parent,
-                                       Options opts) {
+BackupForGKEClient::ListBackupChannels(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::gkebackup::v1::ListBackupChannelsRequest request;
   request.set_parent(parent);
@@ -255,9 +215,7 @@ BackupForGKEClient::ListBackupChannels(std::string const& parent,
 }
 
 StreamRange<google::cloud::gkebackup::v1::BackupChannel>
-BackupForGKEClient::ListBackupChannels(
-    google::cloud::gkebackup::v1::ListBackupChannelsRequest request,
-    Options opts) {
+BackupForGKEClient::ListBackupChannels(google::cloud::gkebackup::v1::ListBackupChannelsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListBackupChannels(std::move(request));
 }
@@ -271,17 +229,13 @@ BackupForGKEClient::GetBackupChannel(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::gkebackup::v1::BackupChannel>
-BackupForGKEClient::GetBackupChannel(
-    google::cloud::gkebackup::v1::GetBackupChannelRequest const& request,
-    Options opts) {
+BackupForGKEClient::GetBackupChannel(google::cloud::gkebackup::v1::GetBackupChannelRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetBackupChannel(request);
 }
 
 future<StatusOr<google::cloud::gkebackup::v1::BackupChannel>>
-BackupForGKEClient::UpdateBackupChannel(
-    google::cloud::gkebackup::v1::BackupChannel const& backup_channel,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+BackupForGKEClient::UpdateBackupChannel(google::cloud::gkebackup::v1::BackupChannel const& backup_channel, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::gkebackup::v1::UpdateBackupChannelRequest request;
   *request.mutable_backup_channel() = backup_channel;
@@ -290,10 +244,7 @@ BackupForGKEClient::UpdateBackupChannel(
 }
 
 StatusOr<google::longrunning::Operation>
-BackupForGKEClient::UpdateBackupChannel(
-    NoAwaitTag,
-    google::cloud::gkebackup::v1::BackupChannel const& backup_channel,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+BackupForGKEClient::UpdateBackupChannel(NoAwaitTag, google::cloud::gkebackup::v1::BackupChannel const& backup_channel, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::gkebackup::v1::UpdateBackupChannelRequest request;
   *request.mutable_backup_channel() = backup_channel;
@@ -302,25 +253,19 @@ BackupForGKEClient::UpdateBackupChannel(
 }
 
 future<StatusOr<google::cloud::gkebackup::v1::BackupChannel>>
-BackupForGKEClient::UpdateBackupChannel(
-    google::cloud::gkebackup::v1::UpdateBackupChannelRequest const& request,
-    Options opts) {
+BackupForGKEClient::UpdateBackupChannel(google::cloud::gkebackup::v1::UpdateBackupChannelRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateBackupChannel(request);
 }
 
 StatusOr<google::longrunning::Operation>
-BackupForGKEClient::UpdateBackupChannel(
-    NoAwaitTag,
-    google::cloud::gkebackup::v1::UpdateBackupChannelRequest const& request,
-    Options opts) {
+BackupForGKEClient::UpdateBackupChannel(NoAwaitTag, google::cloud::gkebackup::v1::UpdateBackupChannelRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateBackupChannel(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::gkebackup::v1::BackupChannel>>
-BackupForGKEClient::UpdateBackupChannel(
-    google::longrunning::Operation const& operation, Options opts) {
+BackupForGKEClient::UpdateBackupChannel(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateBackupChannel(operation);
 }
@@ -334,8 +279,7 @@ BackupForGKEClient::DeleteBackupChannel(std::string const& name, Options opts) {
 }
 
 StatusOr<google::longrunning::Operation>
-BackupForGKEClient::DeleteBackupChannel(NoAwaitTag, std::string const& name,
-                                        Options opts) {
+BackupForGKEClient::DeleteBackupChannel(NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::gkebackup::v1::DeleteBackupChannelRequest request;
   request.set_name(name);
@@ -343,32 +287,25 @@ BackupForGKEClient::DeleteBackupChannel(NoAwaitTag, std::string const& name,
 }
 
 future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>
-BackupForGKEClient::DeleteBackupChannel(
-    google::cloud::gkebackup::v1::DeleteBackupChannelRequest const& request,
-    Options opts) {
+BackupForGKEClient::DeleteBackupChannel(google::cloud::gkebackup::v1::DeleteBackupChannelRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteBackupChannel(request);
 }
 
 StatusOr<google::longrunning::Operation>
-BackupForGKEClient::DeleteBackupChannel(
-    NoAwaitTag,
-    google::cloud::gkebackup::v1::DeleteBackupChannelRequest const& request,
-    Options opts) {
+BackupForGKEClient::DeleteBackupChannel(NoAwaitTag, google::cloud::gkebackup::v1::DeleteBackupChannelRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteBackupChannel(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>
-BackupForGKEClient::DeleteBackupChannel(
-    google::longrunning::Operation const& operation, Options opts) {
+BackupForGKEClient::DeleteBackupChannel(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteBackupChannel(operation);
 }
 
 StreamRange<google::cloud::gkebackup::v1::BackupPlanBinding>
-BackupForGKEClient::ListBackupPlanBindings(std::string const& parent,
-                                           Options opts) {
+BackupForGKEClient::ListBackupPlanBindings(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::gkebackup::v1::ListBackupPlanBindingsRequest request;
   request.set_parent(parent);
@@ -376,16 +313,13 @@ BackupForGKEClient::ListBackupPlanBindings(std::string const& parent,
 }
 
 StreamRange<google::cloud::gkebackup::v1::BackupPlanBinding>
-BackupForGKEClient::ListBackupPlanBindings(
-    google::cloud::gkebackup::v1::ListBackupPlanBindingsRequest request,
-    Options opts) {
+BackupForGKEClient::ListBackupPlanBindings(google::cloud::gkebackup::v1::ListBackupPlanBindingsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListBackupPlanBindings(std::move(request));
 }
 
 StatusOr<google::cloud::gkebackup::v1::BackupPlanBinding>
-BackupForGKEClient::GetBackupPlanBinding(std::string const& name,
-                                         Options opts) {
+BackupForGKEClient::GetBackupPlanBinding(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::gkebackup::v1::GetBackupPlanBindingRequest request;
   request.set_name(name);
@@ -393,18 +327,13 @@ BackupForGKEClient::GetBackupPlanBinding(std::string const& name,
 }
 
 StatusOr<google::cloud::gkebackup::v1::BackupPlanBinding>
-BackupForGKEClient::GetBackupPlanBinding(
-    google::cloud::gkebackup::v1::GetBackupPlanBindingRequest const& request,
-    Options opts) {
+BackupForGKEClient::GetBackupPlanBinding(google::cloud::gkebackup::v1::GetBackupPlanBindingRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetBackupPlanBinding(request);
 }
 
 future<StatusOr<google::cloud::gkebackup::v1::Backup>>
-BackupForGKEClient::CreateBackup(
-    std::string const& parent,
-    google::cloud::gkebackup::v1::Backup const& backup,
-    std::string const& backup_id, Options opts) {
+BackupForGKEClient::CreateBackup(std::string const& parent, google::cloud::gkebackup::v1::Backup const& backup, std::string const& backup_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::gkebackup::v1::CreateBackupRequest request;
   request.set_parent(parent);
@@ -413,10 +342,8 @@ BackupForGKEClient::CreateBackup(
   return connection_->CreateBackup(request);
 }
 
-StatusOr<google::longrunning::Operation> BackupForGKEClient::CreateBackup(
-    NoAwaitTag, std::string const& parent,
-    google::cloud::gkebackup::v1::Backup const& backup,
-    std::string const& backup_id, Options opts) {
+StatusOr<google::longrunning::Operation>
+BackupForGKEClient::CreateBackup(NoAwaitTag, std::string const& parent, google::cloud::gkebackup::v1::Backup const& backup, std::string const& backup_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::gkebackup::v1::CreateBackupRequest request;
   request.set_parent(parent);
@@ -426,24 +353,19 @@ StatusOr<google::longrunning::Operation> BackupForGKEClient::CreateBackup(
 }
 
 future<StatusOr<google::cloud::gkebackup::v1::Backup>>
-BackupForGKEClient::CreateBackup(
-    google::cloud::gkebackup::v1::CreateBackupRequest const& request,
-    Options opts) {
+BackupForGKEClient::CreateBackup(google::cloud::gkebackup::v1::CreateBackupRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateBackup(request);
 }
 
-StatusOr<google::longrunning::Operation> BackupForGKEClient::CreateBackup(
-    NoAwaitTag,
-    google::cloud::gkebackup::v1::CreateBackupRequest const& request,
-    Options opts) {
+StatusOr<google::longrunning::Operation>
+BackupForGKEClient::CreateBackup(NoAwaitTag, google::cloud::gkebackup::v1::CreateBackupRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateBackup(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::gkebackup::v1::Backup>>
-BackupForGKEClient::CreateBackup(
-    google::longrunning::Operation const& operation, Options opts) {
+BackupForGKEClient::CreateBackup(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateBackup(operation);
 }
@@ -457,31 +379,27 @@ BackupForGKEClient::ListBackups(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::gkebackup::v1::Backup>
-BackupForGKEClient::ListBackups(
-    google::cloud::gkebackup::v1::ListBackupsRequest request, Options opts) {
+BackupForGKEClient::ListBackups(google::cloud::gkebackup::v1::ListBackupsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListBackups(std::move(request));
 }
 
-StatusOr<google::cloud::gkebackup::v1::Backup> BackupForGKEClient::GetBackup(
-    std::string const& name, Options opts) {
+StatusOr<google::cloud::gkebackup::v1::Backup>
+BackupForGKEClient::GetBackup(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::gkebackup::v1::GetBackupRequest request;
   request.set_name(name);
   return connection_->GetBackup(request);
 }
 
-StatusOr<google::cloud::gkebackup::v1::Backup> BackupForGKEClient::GetBackup(
-    google::cloud::gkebackup::v1::GetBackupRequest const& request,
-    Options opts) {
+StatusOr<google::cloud::gkebackup::v1::Backup>
+BackupForGKEClient::GetBackup(google::cloud::gkebackup::v1::GetBackupRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetBackup(request);
 }
 
 future<StatusOr<google::cloud::gkebackup::v1::Backup>>
-BackupForGKEClient::UpdateBackup(
-    google::cloud::gkebackup::v1::Backup const& backup,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+BackupForGKEClient::UpdateBackup(google::cloud::gkebackup::v1::Backup const& backup, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::gkebackup::v1::UpdateBackupRequest request;
   *request.mutable_backup() = backup;
@@ -489,9 +407,8 @@ BackupForGKEClient::UpdateBackup(
   return connection_->UpdateBackup(request);
 }
 
-StatusOr<google::longrunning::Operation> BackupForGKEClient::UpdateBackup(
-    NoAwaitTag, google::cloud::gkebackup::v1::Backup const& backup,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+StatusOr<google::longrunning::Operation>
+BackupForGKEClient::UpdateBackup(NoAwaitTag, google::cloud::gkebackup::v1::Backup const& backup, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::gkebackup::v1::UpdateBackupRequest request;
   *request.mutable_backup() = backup;
@@ -500,24 +417,19 @@ StatusOr<google::longrunning::Operation> BackupForGKEClient::UpdateBackup(
 }
 
 future<StatusOr<google::cloud::gkebackup::v1::Backup>>
-BackupForGKEClient::UpdateBackup(
-    google::cloud::gkebackup::v1::UpdateBackupRequest const& request,
-    Options opts) {
+BackupForGKEClient::UpdateBackup(google::cloud::gkebackup::v1::UpdateBackupRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateBackup(request);
 }
 
-StatusOr<google::longrunning::Operation> BackupForGKEClient::UpdateBackup(
-    NoAwaitTag,
-    google::cloud::gkebackup::v1::UpdateBackupRequest const& request,
-    Options opts) {
+StatusOr<google::longrunning::Operation>
+BackupForGKEClient::UpdateBackup(NoAwaitTag, google::cloud::gkebackup::v1::UpdateBackupRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateBackup(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::gkebackup::v1::Backup>>
-BackupForGKEClient::UpdateBackup(
-    google::longrunning::Operation const& operation, Options opts) {
+BackupForGKEClient::UpdateBackup(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateBackup(operation);
 }
@@ -530,8 +442,8 @@ BackupForGKEClient::DeleteBackup(std::string const& name, Options opts) {
   return connection_->DeleteBackup(request);
 }
 
-StatusOr<google::longrunning::Operation> BackupForGKEClient::DeleteBackup(
-    NoAwaitTag, std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation>
+BackupForGKEClient::DeleteBackup(NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::gkebackup::v1::DeleteBackupRequest request;
   request.set_name(name);
@@ -539,24 +451,19 @@ StatusOr<google::longrunning::Operation> BackupForGKEClient::DeleteBackup(
 }
 
 future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>
-BackupForGKEClient::DeleteBackup(
-    google::cloud::gkebackup::v1::DeleteBackupRequest const& request,
-    Options opts) {
+BackupForGKEClient::DeleteBackup(google::cloud::gkebackup::v1::DeleteBackupRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteBackup(request);
 }
 
-StatusOr<google::longrunning::Operation> BackupForGKEClient::DeleteBackup(
-    NoAwaitTag,
-    google::cloud::gkebackup::v1::DeleteBackupRequest const& request,
-    Options opts) {
+StatusOr<google::longrunning::Operation>
+BackupForGKEClient::DeleteBackup(NoAwaitTag, google::cloud::gkebackup::v1::DeleteBackupRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteBackup(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>
-BackupForGKEClient::DeleteBackup(
-    google::longrunning::Operation const& operation, Options opts) {
+BackupForGKEClient::DeleteBackup(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteBackup(operation);
 }
@@ -570,9 +477,7 @@ BackupForGKEClient::ListVolumeBackups(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::gkebackup::v1::VolumeBackup>
-BackupForGKEClient::ListVolumeBackups(
-    google::cloud::gkebackup::v1::ListVolumeBackupsRequest request,
-    Options opts) {
+BackupForGKEClient::ListVolumeBackups(google::cloud::gkebackup::v1::ListVolumeBackupsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListVolumeBackups(std::move(request));
 }
@@ -586,18 +491,13 @@ BackupForGKEClient::GetVolumeBackup(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::gkebackup::v1::VolumeBackup>
-BackupForGKEClient::GetVolumeBackup(
-    google::cloud::gkebackup::v1::GetVolumeBackupRequest const& request,
-    Options opts) {
+BackupForGKEClient::GetVolumeBackup(google::cloud::gkebackup::v1::GetVolumeBackupRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetVolumeBackup(request);
 }
 
 future<StatusOr<google::cloud::gkebackup::v1::RestorePlan>>
-BackupForGKEClient::CreateRestorePlan(
-    std::string const& parent,
-    google::cloud::gkebackup::v1::RestorePlan const& restore_plan,
-    std::string const& restore_plan_id, Options opts) {
+BackupForGKEClient::CreateRestorePlan(std::string const& parent, google::cloud::gkebackup::v1::RestorePlan const& restore_plan, std::string const& restore_plan_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::gkebackup::v1::CreateRestorePlanRequest request;
   request.set_parent(parent);
@@ -606,10 +506,8 @@ BackupForGKEClient::CreateRestorePlan(
   return connection_->CreateRestorePlan(request);
 }
 
-StatusOr<google::longrunning::Operation> BackupForGKEClient::CreateRestorePlan(
-    NoAwaitTag, std::string const& parent,
-    google::cloud::gkebackup::v1::RestorePlan const& restore_plan,
-    std::string const& restore_plan_id, Options opts) {
+StatusOr<google::longrunning::Operation>
+BackupForGKEClient::CreateRestorePlan(NoAwaitTag, std::string const& parent, google::cloud::gkebackup::v1::RestorePlan const& restore_plan, std::string const& restore_plan_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::gkebackup::v1::CreateRestorePlanRequest request;
   request.set_parent(parent);
@@ -619,24 +517,19 @@ StatusOr<google::longrunning::Operation> BackupForGKEClient::CreateRestorePlan(
 }
 
 future<StatusOr<google::cloud::gkebackup::v1::RestorePlan>>
-BackupForGKEClient::CreateRestorePlan(
-    google::cloud::gkebackup::v1::CreateRestorePlanRequest const& request,
-    Options opts) {
+BackupForGKEClient::CreateRestorePlan(google::cloud::gkebackup::v1::CreateRestorePlanRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateRestorePlan(request);
 }
 
-StatusOr<google::longrunning::Operation> BackupForGKEClient::CreateRestorePlan(
-    NoAwaitTag,
-    google::cloud::gkebackup::v1::CreateRestorePlanRequest const& request,
-    Options opts) {
+StatusOr<google::longrunning::Operation>
+BackupForGKEClient::CreateRestorePlan(NoAwaitTag, google::cloud::gkebackup::v1::CreateRestorePlanRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateRestorePlan(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::gkebackup::v1::RestorePlan>>
-BackupForGKEClient::CreateRestorePlan(
-    google::longrunning::Operation const& operation, Options opts) {
+BackupForGKEClient::CreateRestorePlan(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateRestorePlan(operation);
 }
@@ -650,9 +543,7 @@ BackupForGKEClient::ListRestorePlans(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::gkebackup::v1::RestorePlan>
-BackupForGKEClient::ListRestorePlans(
-    google::cloud::gkebackup::v1::ListRestorePlansRequest request,
-    Options opts) {
+BackupForGKEClient::ListRestorePlans(google::cloud::gkebackup::v1::ListRestorePlansRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListRestorePlans(std::move(request));
 }
@@ -666,17 +557,13 @@ BackupForGKEClient::GetRestorePlan(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::gkebackup::v1::RestorePlan>
-BackupForGKEClient::GetRestorePlan(
-    google::cloud::gkebackup::v1::GetRestorePlanRequest const& request,
-    Options opts) {
+BackupForGKEClient::GetRestorePlan(google::cloud::gkebackup::v1::GetRestorePlanRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetRestorePlan(request);
 }
 
 future<StatusOr<google::cloud::gkebackup::v1::RestorePlan>>
-BackupForGKEClient::UpdateRestorePlan(
-    google::cloud::gkebackup::v1::RestorePlan const& restore_plan,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+BackupForGKEClient::UpdateRestorePlan(google::cloud::gkebackup::v1::RestorePlan const& restore_plan, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::gkebackup::v1::UpdateRestorePlanRequest request;
   *request.mutable_restore_plan() = restore_plan;
@@ -684,9 +571,8 @@ BackupForGKEClient::UpdateRestorePlan(
   return connection_->UpdateRestorePlan(request);
 }
 
-StatusOr<google::longrunning::Operation> BackupForGKEClient::UpdateRestorePlan(
-    NoAwaitTag, google::cloud::gkebackup::v1::RestorePlan const& restore_plan,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+StatusOr<google::longrunning::Operation>
+BackupForGKEClient::UpdateRestorePlan(NoAwaitTag, google::cloud::gkebackup::v1::RestorePlan const& restore_plan, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::gkebackup::v1::UpdateRestorePlanRequest request;
   *request.mutable_restore_plan() = restore_plan;
@@ -695,24 +581,19 @@ StatusOr<google::longrunning::Operation> BackupForGKEClient::UpdateRestorePlan(
 }
 
 future<StatusOr<google::cloud::gkebackup::v1::RestorePlan>>
-BackupForGKEClient::UpdateRestorePlan(
-    google::cloud::gkebackup::v1::UpdateRestorePlanRequest const& request,
-    Options opts) {
+BackupForGKEClient::UpdateRestorePlan(google::cloud::gkebackup::v1::UpdateRestorePlanRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateRestorePlan(request);
 }
 
-StatusOr<google::longrunning::Operation> BackupForGKEClient::UpdateRestorePlan(
-    NoAwaitTag,
-    google::cloud::gkebackup::v1::UpdateRestorePlanRequest const& request,
-    Options opts) {
+StatusOr<google::longrunning::Operation>
+BackupForGKEClient::UpdateRestorePlan(NoAwaitTag, google::cloud::gkebackup::v1::UpdateRestorePlanRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateRestorePlan(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::gkebackup::v1::RestorePlan>>
-BackupForGKEClient::UpdateRestorePlan(
-    google::longrunning::Operation const& operation, Options opts) {
+BackupForGKEClient::UpdateRestorePlan(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateRestorePlan(operation);
 }
@@ -725,8 +606,8 @@ BackupForGKEClient::DeleteRestorePlan(std::string const& name, Options opts) {
   return connection_->DeleteRestorePlan(request);
 }
 
-StatusOr<google::longrunning::Operation> BackupForGKEClient::DeleteRestorePlan(
-    NoAwaitTag, std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation>
+BackupForGKEClient::DeleteRestorePlan(NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::gkebackup::v1::DeleteRestorePlanRequest request;
   request.set_name(name);
@@ -734,33 +615,25 @@ StatusOr<google::longrunning::Operation> BackupForGKEClient::DeleteRestorePlan(
 }
 
 future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>
-BackupForGKEClient::DeleteRestorePlan(
-    google::cloud::gkebackup::v1::DeleteRestorePlanRequest const& request,
-    Options opts) {
+BackupForGKEClient::DeleteRestorePlan(google::cloud::gkebackup::v1::DeleteRestorePlanRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteRestorePlan(request);
 }
 
-StatusOr<google::longrunning::Operation> BackupForGKEClient::DeleteRestorePlan(
-    NoAwaitTag,
-    google::cloud::gkebackup::v1::DeleteRestorePlanRequest const& request,
-    Options opts) {
+StatusOr<google::longrunning::Operation>
+BackupForGKEClient::DeleteRestorePlan(NoAwaitTag, google::cloud::gkebackup::v1::DeleteRestorePlanRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteRestorePlan(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>
-BackupForGKEClient::DeleteRestorePlan(
-    google::longrunning::Operation const& operation, Options opts) {
+BackupForGKEClient::DeleteRestorePlan(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteRestorePlan(operation);
 }
 
 future<StatusOr<google::cloud::gkebackup::v1::RestoreChannel>>
-BackupForGKEClient::CreateRestoreChannel(
-    std::string const& parent,
-    google::cloud::gkebackup::v1::RestoreChannel const& restore_channel,
-    std::string const& restore_channel_id, Options opts) {
+BackupForGKEClient::CreateRestoreChannel(std::string const& parent, google::cloud::gkebackup::v1::RestoreChannel const& restore_channel, std::string const& restore_channel_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::gkebackup::v1::CreateRestoreChannelRequest request;
   request.set_parent(parent);
@@ -770,10 +643,7 @@ BackupForGKEClient::CreateRestoreChannel(
 }
 
 StatusOr<google::longrunning::Operation>
-BackupForGKEClient::CreateRestoreChannel(
-    NoAwaitTag, std::string const& parent,
-    google::cloud::gkebackup::v1::RestoreChannel const& restore_channel,
-    std::string const& restore_channel_id, Options opts) {
+BackupForGKEClient::CreateRestoreChannel(NoAwaitTag, std::string const& parent, google::cloud::gkebackup::v1::RestoreChannel const& restore_channel, std::string const& restore_channel_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::gkebackup::v1::CreateRestoreChannelRequest request;
   request.set_parent(parent);
@@ -783,32 +653,25 @@ BackupForGKEClient::CreateRestoreChannel(
 }
 
 future<StatusOr<google::cloud::gkebackup::v1::RestoreChannel>>
-BackupForGKEClient::CreateRestoreChannel(
-    google::cloud::gkebackup::v1::CreateRestoreChannelRequest const& request,
-    Options opts) {
+BackupForGKEClient::CreateRestoreChannel(google::cloud::gkebackup::v1::CreateRestoreChannelRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateRestoreChannel(request);
 }
 
 StatusOr<google::longrunning::Operation>
-BackupForGKEClient::CreateRestoreChannel(
-    NoAwaitTag,
-    google::cloud::gkebackup::v1::CreateRestoreChannelRequest const& request,
-    Options opts) {
+BackupForGKEClient::CreateRestoreChannel(NoAwaitTag, google::cloud::gkebackup::v1::CreateRestoreChannelRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateRestoreChannel(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::gkebackup::v1::RestoreChannel>>
-BackupForGKEClient::CreateRestoreChannel(
-    google::longrunning::Operation const& operation, Options opts) {
+BackupForGKEClient::CreateRestoreChannel(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateRestoreChannel(operation);
 }
 
 StreamRange<google::cloud::gkebackup::v1::RestoreChannel>
-BackupForGKEClient::ListRestoreChannels(std::string const& parent,
-                                        Options opts) {
+BackupForGKEClient::ListRestoreChannels(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::gkebackup::v1::ListRestoreChannelsRequest request;
   request.set_parent(parent);
@@ -816,9 +679,7 @@ BackupForGKEClient::ListRestoreChannels(std::string const& parent,
 }
 
 StreamRange<google::cloud::gkebackup::v1::RestoreChannel>
-BackupForGKEClient::ListRestoreChannels(
-    google::cloud::gkebackup::v1::ListRestoreChannelsRequest request,
-    Options opts) {
+BackupForGKEClient::ListRestoreChannels(google::cloud::gkebackup::v1::ListRestoreChannelsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListRestoreChannels(std::move(request));
 }
@@ -832,17 +693,13 @@ BackupForGKEClient::GetRestoreChannel(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::gkebackup::v1::RestoreChannel>
-BackupForGKEClient::GetRestoreChannel(
-    google::cloud::gkebackup::v1::GetRestoreChannelRequest const& request,
-    Options opts) {
+BackupForGKEClient::GetRestoreChannel(google::cloud::gkebackup::v1::GetRestoreChannelRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetRestoreChannel(request);
 }
 
 future<StatusOr<google::cloud::gkebackup::v1::RestoreChannel>>
-BackupForGKEClient::UpdateRestoreChannel(
-    google::cloud::gkebackup::v1::RestoreChannel const& restore_channel,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+BackupForGKEClient::UpdateRestoreChannel(google::cloud::gkebackup::v1::RestoreChannel const& restore_channel, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::gkebackup::v1::UpdateRestoreChannelRequest request;
   *request.mutable_restore_channel() = restore_channel;
@@ -851,10 +708,7 @@ BackupForGKEClient::UpdateRestoreChannel(
 }
 
 StatusOr<google::longrunning::Operation>
-BackupForGKEClient::UpdateRestoreChannel(
-    NoAwaitTag,
-    google::cloud::gkebackup::v1::RestoreChannel const& restore_channel,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+BackupForGKEClient::UpdateRestoreChannel(NoAwaitTag, google::cloud::gkebackup::v1::RestoreChannel const& restore_channel, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::gkebackup::v1::UpdateRestoreChannelRequest request;
   *request.mutable_restore_channel() = restore_channel;
@@ -863,32 +717,25 @@ BackupForGKEClient::UpdateRestoreChannel(
 }
 
 future<StatusOr<google::cloud::gkebackup::v1::RestoreChannel>>
-BackupForGKEClient::UpdateRestoreChannel(
-    google::cloud::gkebackup::v1::UpdateRestoreChannelRequest const& request,
-    Options opts) {
+BackupForGKEClient::UpdateRestoreChannel(google::cloud::gkebackup::v1::UpdateRestoreChannelRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateRestoreChannel(request);
 }
 
 StatusOr<google::longrunning::Operation>
-BackupForGKEClient::UpdateRestoreChannel(
-    NoAwaitTag,
-    google::cloud::gkebackup::v1::UpdateRestoreChannelRequest const& request,
-    Options opts) {
+BackupForGKEClient::UpdateRestoreChannel(NoAwaitTag, google::cloud::gkebackup::v1::UpdateRestoreChannelRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateRestoreChannel(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::gkebackup::v1::RestoreChannel>>
-BackupForGKEClient::UpdateRestoreChannel(
-    google::longrunning::Operation const& operation, Options opts) {
+BackupForGKEClient::UpdateRestoreChannel(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateRestoreChannel(operation);
 }
 
 future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>
-BackupForGKEClient::DeleteRestoreChannel(std::string const& name,
-                                         Options opts) {
+BackupForGKEClient::DeleteRestoreChannel(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::gkebackup::v1::DeleteRestoreChannelRequest request;
   request.set_name(name);
@@ -896,8 +743,7 @@ BackupForGKEClient::DeleteRestoreChannel(std::string const& name,
 }
 
 StatusOr<google::longrunning::Operation>
-BackupForGKEClient::DeleteRestoreChannel(NoAwaitTag, std::string const& name,
-                                         Options opts) {
+BackupForGKEClient::DeleteRestoreChannel(NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::gkebackup::v1::DeleteRestoreChannelRequest request;
   request.set_name(name);
@@ -905,32 +751,25 @@ BackupForGKEClient::DeleteRestoreChannel(NoAwaitTag, std::string const& name,
 }
 
 future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>
-BackupForGKEClient::DeleteRestoreChannel(
-    google::cloud::gkebackup::v1::DeleteRestoreChannelRequest const& request,
-    Options opts) {
+BackupForGKEClient::DeleteRestoreChannel(google::cloud::gkebackup::v1::DeleteRestoreChannelRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteRestoreChannel(request);
 }
 
 StatusOr<google::longrunning::Operation>
-BackupForGKEClient::DeleteRestoreChannel(
-    NoAwaitTag,
-    google::cloud::gkebackup::v1::DeleteRestoreChannelRequest const& request,
-    Options opts) {
+BackupForGKEClient::DeleteRestoreChannel(NoAwaitTag, google::cloud::gkebackup::v1::DeleteRestoreChannelRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteRestoreChannel(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>
-BackupForGKEClient::DeleteRestoreChannel(
-    google::longrunning::Operation const& operation, Options opts) {
+BackupForGKEClient::DeleteRestoreChannel(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteRestoreChannel(operation);
 }
 
 StreamRange<google::cloud::gkebackup::v1::RestorePlanBinding>
-BackupForGKEClient::ListRestorePlanBindings(std::string const& parent,
-                                            Options opts) {
+BackupForGKEClient::ListRestorePlanBindings(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::gkebackup::v1::ListRestorePlanBindingsRequest request;
   request.set_parent(parent);
@@ -938,16 +777,13 @@ BackupForGKEClient::ListRestorePlanBindings(std::string const& parent,
 }
 
 StreamRange<google::cloud::gkebackup::v1::RestorePlanBinding>
-BackupForGKEClient::ListRestorePlanBindings(
-    google::cloud::gkebackup::v1::ListRestorePlanBindingsRequest request,
-    Options opts) {
+BackupForGKEClient::ListRestorePlanBindings(google::cloud::gkebackup::v1::ListRestorePlanBindingsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListRestorePlanBindings(std::move(request));
 }
 
 StatusOr<google::cloud::gkebackup::v1::RestorePlanBinding>
-BackupForGKEClient::GetRestorePlanBinding(std::string const& name,
-                                          Options opts) {
+BackupForGKEClient::GetRestorePlanBinding(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::gkebackup::v1::GetRestorePlanBindingRequest request;
   request.set_name(name);
@@ -955,18 +791,13 @@ BackupForGKEClient::GetRestorePlanBinding(std::string const& name,
 }
 
 StatusOr<google::cloud::gkebackup::v1::RestorePlanBinding>
-BackupForGKEClient::GetRestorePlanBinding(
-    google::cloud::gkebackup::v1::GetRestorePlanBindingRequest const& request,
-    Options opts) {
+BackupForGKEClient::GetRestorePlanBinding(google::cloud::gkebackup::v1::GetRestorePlanBindingRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetRestorePlanBinding(request);
 }
 
 future<StatusOr<google::cloud::gkebackup::v1::Restore>>
-BackupForGKEClient::CreateRestore(
-    std::string const& parent,
-    google::cloud::gkebackup::v1::Restore const& restore,
-    std::string const& restore_id, Options opts) {
+BackupForGKEClient::CreateRestore(std::string const& parent, google::cloud::gkebackup::v1::Restore const& restore, std::string const& restore_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::gkebackup::v1::CreateRestoreRequest request;
   request.set_parent(parent);
@@ -975,10 +806,8 @@ BackupForGKEClient::CreateRestore(
   return connection_->CreateRestore(request);
 }
 
-StatusOr<google::longrunning::Operation> BackupForGKEClient::CreateRestore(
-    NoAwaitTag, std::string const& parent,
-    google::cloud::gkebackup::v1::Restore const& restore,
-    std::string const& restore_id, Options opts) {
+StatusOr<google::longrunning::Operation>
+BackupForGKEClient::CreateRestore(NoAwaitTag, std::string const& parent, google::cloud::gkebackup::v1::Restore const& restore, std::string const& restore_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::gkebackup::v1::CreateRestoreRequest request;
   request.set_parent(parent);
@@ -988,24 +817,19 @@ StatusOr<google::longrunning::Operation> BackupForGKEClient::CreateRestore(
 }
 
 future<StatusOr<google::cloud::gkebackup::v1::Restore>>
-BackupForGKEClient::CreateRestore(
-    google::cloud::gkebackup::v1::CreateRestoreRequest const& request,
-    Options opts) {
+BackupForGKEClient::CreateRestore(google::cloud::gkebackup::v1::CreateRestoreRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateRestore(request);
 }
 
-StatusOr<google::longrunning::Operation> BackupForGKEClient::CreateRestore(
-    NoAwaitTag,
-    google::cloud::gkebackup::v1::CreateRestoreRequest const& request,
-    Options opts) {
+StatusOr<google::longrunning::Operation>
+BackupForGKEClient::CreateRestore(NoAwaitTag, google::cloud::gkebackup::v1::CreateRestoreRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateRestore(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::gkebackup::v1::Restore>>
-BackupForGKEClient::CreateRestore(
-    google::longrunning::Operation const& operation, Options opts) {
+BackupForGKEClient::CreateRestore(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateRestore(operation);
 }
@@ -1019,31 +843,27 @@ BackupForGKEClient::ListRestores(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::gkebackup::v1::Restore>
-BackupForGKEClient::ListRestores(
-    google::cloud::gkebackup::v1::ListRestoresRequest request, Options opts) {
+BackupForGKEClient::ListRestores(google::cloud::gkebackup::v1::ListRestoresRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListRestores(std::move(request));
 }
 
-StatusOr<google::cloud::gkebackup::v1::Restore> BackupForGKEClient::GetRestore(
-    std::string const& name, Options opts) {
+StatusOr<google::cloud::gkebackup::v1::Restore>
+BackupForGKEClient::GetRestore(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::gkebackup::v1::GetRestoreRequest request;
   request.set_name(name);
   return connection_->GetRestore(request);
 }
 
-StatusOr<google::cloud::gkebackup::v1::Restore> BackupForGKEClient::GetRestore(
-    google::cloud::gkebackup::v1::GetRestoreRequest const& request,
-    Options opts) {
+StatusOr<google::cloud::gkebackup::v1::Restore>
+BackupForGKEClient::GetRestore(google::cloud::gkebackup::v1::GetRestoreRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetRestore(request);
 }
 
 future<StatusOr<google::cloud::gkebackup::v1::Restore>>
-BackupForGKEClient::UpdateRestore(
-    google::cloud::gkebackup::v1::Restore const& restore,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+BackupForGKEClient::UpdateRestore(google::cloud::gkebackup::v1::Restore const& restore, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::gkebackup::v1::UpdateRestoreRequest request;
   *request.mutable_restore() = restore;
@@ -1051,9 +871,8 @@ BackupForGKEClient::UpdateRestore(
   return connection_->UpdateRestore(request);
 }
 
-StatusOr<google::longrunning::Operation> BackupForGKEClient::UpdateRestore(
-    NoAwaitTag, google::cloud::gkebackup::v1::Restore const& restore,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+StatusOr<google::longrunning::Operation>
+BackupForGKEClient::UpdateRestore(NoAwaitTag, google::cloud::gkebackup::v1::Restore const& restore, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::gkebackup::v1::UpdateRestoreRequest request;
   *request.mutable_restore() = restore;
@@ -1062,24 +881,19 @@ StatusOr<google::longrunning::Operation> BackupForGKEClient::UpdateRestore(
 }
 
 future<StatusOr<google::cloud::gkebackup::v1::Restore>>
-BackupForGKEClient::UpdateRestore(
-    google::cloud::gkebackup::v1::UpdateRestoreRequest const& request,
-    Options opts) {
+BackupForGKEClient::UpdateRestore(google::cloud::gkebackup::v1::UpdateRestoreRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateRestore(request);
 }
 
-StatusOr<google::longrunning::Operation> BackupForGKEClient::UpdateRestore(
-    NoAwaitTag,
-    google::cloud::gkebackup::v1::UpdateRestoreRequest const& request,
-    Options opts) {
+StatusOr<google::longrunning::Operation>
+BackupForGKEClient::UpdateRestore(NoAwaitTag, google::cloud::gkebackup::v1::UpdateRestoreRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateRestore(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::gkebackup::v1::Restore>>
-BackupForGKEClient::UpdateRestore(
-    google::longrunning::Operation const& operation, Options opts) {
+BackupForGKEClient::UpdateRestore(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateRestore(operation);
 }
@@ -1092,8 +906,8 @@ BackupForGKEClient::DeleteRestore(std::string const& name, Options opts) {
   return connection_->DeleteRestore(request);
 }
 
-StatusOr<google::longrunning::Operation> BackupForGKEClient::DeleteRestore(
-    NoAwaitTag, std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation>
+BackupForGKEClient::DeleteRestore(NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::gkebackup::v1::DeleteRestoreRequest request;
   request.set_name(name);
@@ -1101,31 +915,25 @@ StatusOr<google::longrunning::Operation> BackupForGKEClient::DeleteRestore(
 }
 
 future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>
-BackupForGKEClient::DeleteRestore(
-    google::cloud::gkebackup::v1::DeleteRestoreRequest const& request,
-    Options opts) {
+BackupForGKEClient::DeleteRestore(google::cloud::gkebackup::v1::DeleteRestoreRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteRestore(request);
 }
 
-StatusOr<google::longrunning::Operation> BackupForGKEClient::DeleteRestore(
-    NoAwaitTag,
-    google::cloud::gkebackup::v1::DeleteRestoreRequest const& request,
-    Options opts) {
+StatusOr<google::longrunning::Operation>
+BackupForGKEClient::DeleteRestore(NoAwaitTag, google::cloud::gkebackup::v1::DeleteRestoreRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteRestore(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>
-BackupForGKEClient::DeleteRestore(
-    google::longrunning::Operation const& operation, Options opts) {
+BackupForGKEClient::DeleteRestore(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteRestore(operation);
 }
 
 StreamRange<google::cloud::gkebackup::v1::VolumeRestore>
-BackupForGKEClient::ListVolumeRestores(std::string const& parent,
-                                       Options opts) {
+BackupForGKEClient::ListVolumeRestores(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::gkebackup::v1::ListVolumeRestoresRequest request;
   request.set_parent(parent);
@@ -1133,9 +941,7 @@ BackupForGKEClient::ListVolumeRestores(std::string const& parent,
 }
 
 StreamRange<google::cloud::gkebackup::v1::VolumeRestore>
-BackupForGKEClient::ListVolumeRestores(
-    google::cloud::gkebackup::v1::ListVolumeRestoresRequest request,
-    Options opts) {
+BackupForGKEClient::ListVolumeRestores(google::cloud::gkebackup::v1::ListVolumeRestoresRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListVolumeRestores(std::move(request));
 }
@@ -1149,16 +955,13 @@ BackupForGKEClient::GetVolumeRestore(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::gkebackup::v1::VolumeRestore>
-BackupForGKEClient::GetVolumeRestore(
-    google::cloud::gkebackup::v1::GetVolumeRestoreRequest const& request,
-    Options opts) {
+BackupForGKEClient::GetVolumeRestore(google::cloud::gkebackup::v1::GetVolumeRestoreRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetVolumeRestore(request);
 }
 
 StatusOr<google::cloud::gkebackup::v1::GetBackupIndexDownloadUrlResponse>
-BackupForGKEClient::GetBackupIndexDownloadUrl(std::string const& backup,
-                                              Options opts) {
+BackupForGKEClient::GetBackupIndexDownloadUrl(std::string const& backup, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::gkebackup::v1::GetBackupIndexDownloadUrlRequest request;
   request.set_backup(backup);
@@ -1166,48 +969,43 @@ BackupForGKEClient::GetBackupIndexDownloadUrl(std::string const& backup,
 }
 
 StatusOr<google::cloud::gkebackup::v1::GetBackupIndexDownloadUrlResponse>
-BackupForGKEClient::GetBackupIndexDownloadUrl(
-    google::cloud::gkebackup::v1::GetBackupIndexDownloadUrlRequest const&
-        request,
-    Options opts) {
+BackupForGKEClient::GetBackupIndexDownloadUrl(google::cloud::gkebackup::v1::GetBackupIndexDownloadUrlRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetBackupIndexDownloadUrl(request);
 }
 
 StreamRange<google::cloud::location::Location>
-BackupForGKEClient::ListLocations(
-    google::cloud::location::ListLocationsRequest request, Options opts) {
+BackupForGKEClient::ListLocations(google::cloud::location::ListLocationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListLocations(std::move(request));
 }
 
-StatusOr<google::cloud::location::Location> BackupForGKEClient::GetLocation(
-    google::cloud::location::GetLocationRequest const& request, Options opts) {
+StatusOr<google::cloud::location::Location>
+BackupForGKEClient::GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetLocation(request);
 }
 
-StatusOr<google::iam::v1::Policy> BackupForGKEClient::SetIamPolicy(
-    google::iam::v1::SetIamPolicyRequest const& request, Options opts) {
+StatusOr<google::iam::v1::Policy>
+BackupForGKEClient::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetIamPolicy(request);
 }
 
-StatusOr<google::iam::v1::Policy> BackupForGKEClient::GetIamPolicy(
-    google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
+StatusOr<google::iam::v1::Policy>
+BackupForGKEClient::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetIamPolicy(request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-BackupForGKEClient::TestIamPermissions(
-    google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
+BackupForGKEClient::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->TestIamPermissions(request);
 }
 
-StreamRange<google::longrunning::Operation> BackupForGKEClient::ListOperations(
-    std::string const& name, std::string const& filter, Options opts) {
+StreamRange<google::longrunning::Operation>
+BackupForGKEClient::ListOperations(std::string const& name, std::string const& filter, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::ListOperationsRequest request;
   request.set_name(name);
@@ -1215,50 +1013,50 @@ StreamRange<google::longrunning::Operation> BackupForGKEClient::ListOperations(
   return connection_->ListOperations(request);
 }
 
-StreamRange<google::longrunning::Operation> BackupForGKEClient::ListOperations(
-    google::longrunning::ListOperationsRequest request, Options opts) {
+StreamRange<google::longrunning::Operation>
+BackupForGKEClient::ListOperations(google::longrunning::ListOperationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOperations(std::move(request));
 }
 
-StatusOr<google::longrunning::Operation> BackupForGKEClient::GetOperation(
-    std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation>
+BackupForGKEClient::GetOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
   return connection_->GetOperation(request);
 }
 
-StatusOr<google::longrunning::Operation> BackupForGKEClient::GetOperation(
-    google::longrunning::GetOperationRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation>
+BackupForGKEClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }
 
-Status BackupForGKEClient::DeleteOperation(std::string const& name,
-                                           Options opts) {
+Status
+BackupForGKEClient::DeleteOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::DeleteOperationRequest request;
   request.set_name(name);
   return connection_->DeleteOperation(request);
 }
 
-Status BackupForGKEClient::DeleteOperation(
-    google::longrunning::DeleteOperationRequest const& request, Options opts) {
+Status
+BackupForGKEClient::DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteOperation(request);
 }
 
-Status BackupForGKEClient::CancelOperation(std::string const& name,
-                                           Options opts) {
+Status
+BackupForGKEClient::CancelOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::CancelOperationRequest request;
   request.set_name(name);
   return connection_->CancelOperation(request);
 }
 
-Status BackupForGKEClient::CancelOperation(
-    google::longrunning::CancelOperationRequest const& request, Options opts) {
+Status
+BackupForGKEClient::CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelOperation(request);
 }

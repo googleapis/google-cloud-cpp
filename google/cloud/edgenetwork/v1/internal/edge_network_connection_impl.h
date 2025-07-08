@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_EDGENETWORK_V1_INTERNAL_EDGE_NETWORK_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_EDGENETWORK_V1_INTERNAL_EDGE_NETWORK_CONNECTION_IMPL_H
 
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/edgenetwork/v1/edge_network_connection.h"
 #include "google/cloud/edgenetwork/v1/edge_network_connection_idempotency_policy.h"
 #include "google/cloud/edgenetwork/v1/edge_network_options.h"
 #include "google/cloud/edgenetwork/v1/internal/edge_network_retry_traits.h"
 #include "google/cloud/edgenetwork/v1/internal/edge_network_stub.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -40,218 +40,193 @@ namespace cloud {
 namespace edgenetwork_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class EdgeNetworkConnectionImpl : public edgenetwork_v1::EdgeNetworkConnection {
+class EdgeNetworkConnectionImpl
+    : public edgenetwork_v1::EdgeNetworkConnection {
  public:
   ~EdgeNetworkConnectionImpl() override = default;
 
   EdgeNetworkConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<edgenetwork_v1_internal::EdgeNetworkStub> stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<edgenetwork_v1_internal::EdgeNetworkStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
   StatusOr<google::cloud::edgenetwork::v1::InitializeZoneResponse>
-  InitializeZone(google::cloud::edgenetwork::v1::InitializeZoneRequest const&
-                     request) override;
+  InitializeZone(google::cloud::edgenetwork::v1::InitializeZoneRequest const& request) override;
 
-  StreamRange<google::cloud::edgenetwork::v1::Zone> ListZones(
-      google::cloud::edgenetwork::v1::ListZonesRequest request) override;
+  StreamRange<google::cloud::edgenetwork::v1::Zone>
+  ListZones(google::cloud::edgenetwork::v1::ListZonesRequest request) override;
 
-  StatusOr<google::cloud::edgenetwork::v1::Zone> GetZone(
-      google::cloud::edgenetwork::v1::GetZoneRequest const& request) override;
+  StatusOr<google::cloud::edgenetwork::v1::Zone>
+  GetZone(google::cloud::edgenetwork::v1::GetZoneRequest const& request) override;
 
-  StreamRange<google::cloud::edgenetwork::v1::Network> ListNetworks(
-      google::cloud::edgenetwork::v1::ListNetworksRequest request) override;
+  StreamRange<google::cloud::edgenetwork::v1::Network>
+  ListNetworks(google::cloud::edgenetwork::v1::ListNetworksRequest request) override;
 
-  StatusOr<google::cloud::edgenetwork::v1::Network> GetNetwork(
-      google::cloud::edgenetwork::v1::GetNetworkRequest const& request)
-      override;
+  StatusOr<google::cloud::edgenetwork::v1::Network>
+  GetNetwork(google::cloud::edgenetwork::v1::GetNetworkRequest const& request) override;
 
   StatusOr<google::cloud::edgenetwork::v1::DiagnoseNetworkResponse>
-  DiagnoseNetwork(google::cloud::edgenetwork::v1::DiagnoseNetworkRequest const&
-                      request) override;
+  DiagnoseNetwork(google::cloud::edgenetwork::v1::DiagnoseNetworkRequest const& request) override;
 
-  future<StatusOr<google::cloud::edgenetwork::v1::Network>> CreateNetwork(
-      google::cloud::edgenetwork::v1::CreateNetworkRequest const& request)
-      override;
+  future<StatusOr<google::cloud::edgenetwork::v1::Network>>
+  CreateNetwork(google::cloud::edgenetwork::v1::CreateNetworkRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> CreateNetwork(
-      NoAwaitTag,
-      google::cloud::edgenetwork::v1::CreateNetworkRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  CreateNetwork(NoAwaitTag,
+      google::cloud::edgenetwork::v1::CreateNetworkRequest const& request) override;
 
-  future<StatusOr<google::cloud::edgenetwork::v1::Network>> CreateNetwork(
+  future<StatusOr<google::cloud::edgenetwork::v1::Network>>
+  CreateNetwork(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>
-  DeleteNetwork(google::cloud::edgenetwork::v1::DeleteNetworkRequest const&
-                    request) override;
+  DeleteNetwork(google::cloud::edgenetwork::v1::DeleteNetworkRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> DeleteNetwork(
-      NoAwaitTag,
-      google::cloud::edgenetwork::v1::DeleteNetworkRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  DeleteNetwork(NoAwaitTag,
+      google::cloud::edgenetwork::v1::DeleteNetworkRequest const& request) override;
 
   future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>
-  DeleteNetwork(google::longrunning::Operation const& operation) override;
-
-  StreamRange<google::cloud::edgenetwork::v1::Subnet> ListSubnets(
-      google::cloud::edgenetwork::v1::ListSubnetsRequest request) override;
-
-  StatusOr<google::cloud::edgenetwork::v1::Subnet> GetSubnet(
-      google::cloud::edgenetwork::v1::GetSubnetRequest const& request) override;
-
-  future<StatusOr<google::cloud::edgenetwork::v1::Subnet>> CreateSubnet(
-      google::cloud::edgenetwork::v1::CreateSubnetRequest const& request)
-      override;
-
-  StatusOr<google::longrunning::Operation> CreateSubnet(
-      NoAwaitTag,
-      google::cloud::edgenetwork::v1::CreateSubnetRequest const& request)
-      override;
-
-  future<StatusOr<google::cloud::edgenetwork::v1::Subnet>> CreateSubnet(
+  DeleteNetwork(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::edgenetwork::v1::Subnet>> UpdateSubnet(
-      google::cloud::edgenetwork::v1::UpdateSubnetRequest const& request)
-      override;
+  StreamRange<google::cloud::edgenetwork::v1::Subnet>
+  ListSubnets(google::cloud::edgenetwork::v1::ListSubnetsRequest request) override;
 
-  StatusOr<google::longrunning::Operation> UpdateSubnet(
-      NoAwaitTag,
-      google::cloud::edgenetwork::v1::UpdateSubnetRequest const& request)
-      override;
+  StatusOr<google::cloud::edgenetwork::v1::Subnet>
+  GetSubnet(google::cloud::edgenetwork::v1::GetSubnetRequest const& request) override;
 
-  future<StatusOr<google::cloud::edgenetwork::v1::Subnet>> UpdateSubnet(
+  future<StatusOr<google::cloud::edgenetwork::v1::Subnet>>
+  CreateSubnet(google::cloud::edgenetwork::v1::CreateSubnetRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  CreateSubnet(NoAwaitTag,
+      google::cloud::edgenetwork::v1::CreateSubnetRequest const& request) override;
+
+  future<StatusOr<google::cloud::edgenetwork::v1::Subnet>>
+  CreateSubnet(
+      google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::edgenetwork::v1::Subnet>>
+  UpdateSubnet(google::cloud::edgenetwork::v1::UpdateSubnetRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  UpdateSubnet(NoAwaitTag,
+      google::cloud::edgenetwork::v1::UpdateSubnetRequest const& request) override;
+
+  future<StatusOr<google::cloud::edgenetwork::v1::Subnet>>
+  UpdateSubnet(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>
-  DeleteSubnet(google::cloud::edgenetwork::v1::DeleteSubnetRequest const&
-                   request) override;
+  DeleteSubnet(google::cloud::edgenetwork::v1::DeleteSubnetRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> DeleteSubnet(
-      NoAwaitTag,
-      google::cloud::edgenetwork::v1::DeleteSubnetRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  DeleteSubnet(NoAwaitTag,
+      google::cloud::edgenetwork::v1::DeleteSubnetRequest const& request) override;
 
   future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>
-  DeleteSubnet(google::longrunning::Operation const& operation) override;
+  DeleteSubnet(
+      google::longrunning::Operation const& operation) override;
 
-  StreamRange<google::cloud::edgenetwork::v1::Interconnect> ListInterconnects(
-      google::cloud::edgenetwork::v1::ListInterconnectsRequest request)
-      override;
+  StreamRange<google::cloud::edgenetwork::v1::Interconnect>
+  ListInterconnects(google::cloud::edgenetwork::v1::ListInterconnectsRequest request) override;
 
-  StatusOr<google::cloud::edgenetwork::v1::Interconnect> GetInterconnect(
-      google::cloud::edgenetwork::v1::GetInterconnectRequest const& request)
-      override;
+  StatusOr<google::cloud::edgenetwork::v1::Interconnect>
+  GetInterconnect(google::cloud::edgenetwork::v1::GetInterconnectRequest const& request) override;
 
   StatusOr<google::cloud::edgenetwork::v1::DiagnoseInterconnectResponse>
-  DiagnoseInterconnect(
-      google::cloud::edgenetwork::v1::DiagnoseInterconnectRequest const&
-          request) override;
+  DiagnoseInterconnect(google::cloud::edgenetwork::v1::DiagnoseInterconnectRequest const& request) override;
 
   StreamRange<google::cloud::edgenetwork::v1::InterconnectAttachment>
-  ListInterconnectAttachments(
-      google::cloud::edgenetwork::v1::ListInterconnectAttachmentsRequest
-          request) override;
+  ListInterconnectAttachments(google::cloud::edgenetwork::v1::ListInterconnectAttachmentsRequest request) override;
 
   StatusOr<google::cloud::edgenetwork::v1::InterconnectAttachment>
-  GetInterconnectAttachment(
-      google::cloud::edgenetwork::v1::GetInterconnectAttachmentRequest const&
-          request) override;
+  GetInterconnectAttachment(google::cloud::edgenetwork::v1::GetInterconnectAttachmentRequest const& request) override;
 
   future<StatusOr<google::cloud::edgenetwork::v1::InterconnectAttachment>>
-  CreateInterconnectAttachment(
-      google::cloud::edgenetwork::v1::CreateInterconnectAttachmentRequest const&
-          request) override;
+  CreateInterconnectAttachment(google::cloud::edgenetwork::v1::CreateInterconnectAttachmentRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> CreateInterconnectAttachment(
-      NoAwaitTag,
-      google::cloud::edgenetwork::v1::CreateInterconnectAttachmentRequest const&
-          request) override;
+  StatusOr<google::longrunning::Operation>
+  CreateInterconnectAttachment(NoAwaitTag,
+      google::cloud::edgenetwork::v1::CreateInterconnectAttachmentRequest const& request) override;
 
   future<StatusOr<google::cloud::edgenetwork::v1::InterconnectAttachment>>
   CreateInterconnectAttachment(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>
-  DeleteInterconnectAttachment(
-      google::cloud::edgenetwork::v1::DeleteInterconnectAttachmentRequest const&
-          request) override;
+  DeleteInterconnectAttachment(google::cloud::edgenetwork::v1::DeleteInterconnectAttachmentRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> DeleteInterconnectAttachment(
-      NoAwaitTag,
-      google::cloud::edgenetwork::v1::DeleteInterconnectAttachmentRequest const&
-          request) override;
+  StatusOr<google::longrunning::Operation>
+  DeleteInterconnectAttachment(NoAwaitTag,
+      google::cloud::edgenetwork::v1::DeleteInterconnectAttachmentRequest const& request) override;
 
   future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>
   DeleteInterconnectAttachment(
       google::longrunning::Operation const& operation) override;
 
-  StreamRange<google::cloud::edgenetwork::v1::Router> ListRouters(
-      google::cloud::edgenetwork::v1::ListRoutersRequest request) override;
+  StreamRange<google::cloud::edgenetwork::v1::Router>
+  ListRouters(google::cloud::edgenetwork::v1::ListRoutersRequest request) override;
 
-  StatusOr<google::cloud::edgenetwork::v1::Router> GetRouter(
-      google::cloud::edgenetwork::v1::GetRouterRequest const& request) override;
+  StatusOr<google::cloud::edgenetwork::v1::Router>
+  GetRouter(google::cloud::edgenetwork::v1::GetRouterRequest const& request) override;
 
   StatusOr<google::cloud::edgenetwork::v1::DiagnoseRouterResponse>
-  DiagnoseRouter(google::cloud::edgenetwork::v1::DiagnoseRouterRequest const&
-                     request) override;
+  DiagnoseRouter(google::cloud::edgenetwork::v1::DiagnoseRouterRequest const& request) override;
 
-  future<StatusOr<google::cloud::edgenetwork::v1::Router>> CreateRouter(
-      google::cloud::edgenetwork::v1::CreateRouterRequest const& request)
-      override;
+  future<StatusOr<google::cloud::edgenetwork::v1::Router>>
+  CreateRouter(google::cloud::edgenetwork::v1::CreateRouterRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> CreateRouter(
-      NoAwaitTag,
-      google::cloud::edgenetwork::v1::CreateRouterRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  CreateRouter(NoAwaitTag,
+      google::cloud::edgenetwork::v1::CreateRouterRequest const& request) override;
 
-  future<StatusOr<google::cloud::edgenetwork::v1::Router>> CreateRouter(
+  future<StatusOr<google::cloud::edgenetwork::v1::Router>>
+  CreateRouter(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::edgenetwork::v1::Router>> UpdateRouter(
-      google::cloud::edgenetwork::v1::UpdateRouterRequest const& request)
-      override;
+  future<StatusOr<google::cloud::edgenetwork::v1::Router>>
+  UpdateRouter(google::cloud::edgenetwork::v1::UpdateRouterRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> UpdateRouter(
-      NoAwaitTag,
-      google::cloud::edgenetwork::v1::UpdateRouterRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  UpdateRouter(NoAwaitTag,
+      google::cloud::edgenetwork::v1::UpdateRouterRequest const& request) override;
 
-  future<StatusOr<google::cloud::edgenetwork::v1::Router>> UpdateRouter(
+  future<StatusOr<google::cloud::edgenetwork::v1::Router>>
+  UpdateRouter(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>
-  DeleteRouter(google::cloud::edgenetwork::v1::DeleteRouterRequest const&
-                   request) override;
+  DeleteRouter(google::cloud::edgenetwork::v1::DeleteRouterRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> DeleteRouter(
-      NoAwaitTag,
-      google::cloud::edgenetwork::v1::DeleteRouterRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  DeleteRouter(NoAwaitTag,
+      google::cloud::edgenetwork::v1::DeleteRouterRequest const& request) override;
 
   future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>
-  DeleteRouter(google::longrunning::Operation const& operation) override;
+  DeleteRouter(
+      google::longrunning::Operation const& operation) override;
 
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request) override;
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request) override;
 
-  StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request) override;
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request) override;
 
-  Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request) override;
+  Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request) override;
 
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request) override;
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

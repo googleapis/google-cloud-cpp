@@ -26,81 +26,66 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-PipelineServiceConnectionIdempotencyPolicy::
-    ~PipelineServiceConnectionIdempotencyPolicy() = default;
+PipelineServiceConnectionIdempotencyPolicy::~PipelineServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<PipelineServiceConnectionIdempotencyPolicy>
 PipelineServiceConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<PipelineServiceConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency PipelineServiceConnectionIdempotencyPolicy::CreateTrainingPipeline(
-    google::cloud::aiplatform::v1::CreateTrainingPipelineRequest const&) {
+Idempotency PipelineServiceConnectionIdempotencyPolicy::CreateTrainingPipeline(google::cloud::aiplatform::v1::CreateTrainingPipelineRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency PipelineServiceConnectionIdempotencyPolicy::GetTrainingPipeline(
-    google::cloud::aiplatform::v1::GetTrainingPipelineRequest const&) {
+Idempotency PipelineServiceConnectionIdempotencyPolicy::GetTrainingPipeline(google::cloud::aiplatform::v1::GetTrainingPipelineRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency PipelineServiceConnectionIdempotencyPolicy::ListTrainingPipelines(
-    google::cloud::aiplatform::v1::ListTrainingPipelinesRequest) {  // NOLINT
+Idempotency PipelineServiceConnectionIdempotencyPolicy::ListTrainingPipelines(google::cloud::aiplatform::v1::ListTrainingPipelinesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency PipelineServiceConnectionIdempotencyPolicy::DeleteTrainingPipeline(
-    google::cloud::aiplatform::v1::DeleteTrainingPipelineRequest const&) {
+Idempotency PipelineServiceConnectionIdempotencyPolicy::DeleteTrainingPipeline(google::cloud::aiplatform::v1::DeleteTrainingPipelineRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency PipelineServiceConnectionIdempotencyPolicy::CancelTrainingPipeline(
-    google::cloud::aiplatform::v1::CancelTrainingPipelineRequest const&) {
+Idempotency PipelineServiceConnectionIdempotencyPolicy::CancelTrainingPipeline(google::cloud::aiplatform::v1::CancelTrainingPipelineRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency PipelineServiceConnectionIdempotencyPolicy::CreatePipelineJob(
-    google::cloud::aiplatform::v1::CreatePipelineJobRequest const&) {
+Idempotency PipelineServiceConnectionIdempotencyPolicy::CreatePipelineJob(google::cloud::aiplatform::v1::CreatePipelineJobRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency PipelineServiceConnectionIdempotencyPolicy::GetPipelineJob(
-    google::cloud::aiplatform::v1::GetPipelineJobRequest const&) {
+Idempotency PipelineServiceConnectionIdempotencyPolicy::GetPipelineJob(google::cloud::aiplatform::v1::GetPipelineJobRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency PipelineServiceConnectionIdempotencyPolicy::ListPipelineJobs(
-    google::cloud::aiplatform::v1::ListPipelineJobsRequest) {  // NOLINT
+Idempotency PipelineServiceConnectionIdempotencyPolicy::ListPipelineJobs(google::cloud::aiplatform::v1::ListPipelineJobsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency PipelineServiceConnectionIdempotencyPolicy::DeletePipelineJob(
-    google::cloud::aiplatform::v1::DeletePipelineJobRequest const&) {
+Idempotency PipelineServiceConnectionIdempotencyPolicy::DeletePipelineJob(google::cloud::aiplatform::v1::DeletePipelineJobRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency PipelineServiceConnectionIdempotencyPolicy::BatchDeletePipelineJobs(
-    google::cloud::aiplatform::v1::BatchDeletePipelineJobsRequest const&) {
+Idempotency PipelineServiceConnectionIdempotencyPolicy::BatchDeletePipelineJobs(google::cloud::aiplatform::v1::BatchDeletePipelineJobsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency PipelineServiceConnectionIdempotencyPolicy::CancelPipelineJob(
-    google::cloud::aiplatform::v1::CancelPipelineJobRequest const&) {
+Idempotency PipelineServiceConnectionIdempotencyPolicy::CancelPipelineJob(google::cloud::aiplatform::v1::CancelPipelineJobRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency PipelineServiceConnectionIdempotencyPolicy::BatchCancelPipelineJobs(
-    google::cloud::aiplatform::v1::BatchCancelPipelineJobsRequest const&) {
+Idempotency PipelineServiceConnectionIdempotencyPolicy::BatchCancelPipelineJobs(google::cloud::aiplatform::v1::BatchCancelPipelineJobsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency PipelineServiceConnectionIdempotencyPolicy::ListLocations(
-    google::cloud::location::ListLocationsRequest) {  // NOLINT
+Idempotency PipelineServiceConnectionIdempotencyPolicy::ListLocations(google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency PipelineServiceConnectionIdempotencyPolicy::GetLocation(
-    google::cloud::location::GetLocationRequest const&) {
+Idempotency PipelineServiceConnectionIdempotencyPolicy::GetLocation(google::cloud::location::GetLocationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
@@ -110,43 +95,36 @@ Idempotency PipelineServiceConnectionIdempotencyPolicy::SetIamPolicy(
                                          : Idempotency::kIdempotent;
 }
 
-Idempotency PipelineServiceConnectionIdempotencyPolicy::GetIamPolicy(
-    google::iam::v1::GetIamPolicyRequest const&) {
+Idempotency PipelineServiceConnectionIdempotencyPolicy::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency PipelineServiceConnectionIdempotencyPolicy::TestIamPermissions(
-    google::iam::v1::TestIamPermissionsRequest const&) {
+Idempotency PipelineServiceConnectionIdempotencyPolicy::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency PipelineServiceConnectionIdempotencyPolicy::ListOperations(
-    google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency PipelineServiceConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency PipelineServiceConnectionIdempotencyPolicy::GetOperation(
-    google::longrunning::GetOperationRequest const&) {
+Idempotency PipelineServiceConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency PipelineServiceConnectionIdempotencyPolicy::DeleteOperation(
-    google::longrunning::DeleteOperationRequest const&) {
+Idempotency PipelineServiceConnectionIdempotencyPolicy::DeleteOperation(google::longrunning::DeleteOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency PipelineServiceConnectionIdempotencyPolicy::CancelOperation(
-    google::longrunning::CancelOperationRequest const&) {
+Idempotency PipelineServiceConnectionIdempotencyPolicy::CancelOperation(google::longrunning::CancelOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency PipelineServiceConnectionIdempotencyPolicy::WaitOperation(
-    google::longrunning::WaitOperationRequest const&) {
+Idempotency PipelineServiceConnectionIdempotencyPolicy::WaitOperation(google::longrunning::WaitOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<PipelineServiceConnectionIdempotencyPolicy>
-MakeDefaultPipelineServiceConnectionIdempotencyPolicy() {
+    MakeDefaultPipelineServiceConnectionIdempotencyPolicy() {
   return std::make_unique<PipelineServiceConnectionIdempotencyPolicy>();
 }
 

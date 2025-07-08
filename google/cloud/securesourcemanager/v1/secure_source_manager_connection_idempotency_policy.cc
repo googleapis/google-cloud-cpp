@@ -26,58 +26,46 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-SecureSourceManagerConnectionIdempotencyPolicy::
-    ~SecureSourceManagerConnectionIdempotencyPolicy() = default;
+SecureSourceManagerConnectionIdempotencyPolicy::~SecureSourceManagerConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<SecureSourceManagerConnectionIdempotencyPolicy>
 SecureSourceManagerConnectionIdempotencyPolicy::clone() const {
-  return std::make_unique<SecureSourceManagerConnectionIdempotencyPolicy>(
-      *this);
+  return std::make_unique<SecureSourceManagerConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency SecureSourceManagerConnectionIdempotencyPolicy::ListInstances(
-    google::cloud::securesourcemanager::v1::ListInstancesRequest) {  // NOLINT
+Idempotency SecureSourceManagerConnectionIdempotencyPolicy::ListInstances(google::cloud::securesourcemanager::v1::ListInstancesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency SecureSourceManagerConnectionIdempotencyPolicy::GetInstance(
-    google::cloud::securesourcemanager::v1::GetInstanceRequest const&) {
+Idempotency SecureSourceManagerConnectionIdempotencyPolicy::GetInstance(google::cloud::securesourcemanager::v1::GetInstanceRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency SecureSourceManagerConnectionIdempotencyPolicy::CreateInstance(
-    google::cloud::securesourcemanager::v1::CreateInstanceRequest const&) {
+Idempotency SecureSourceManagerConnectionIdempotencyPolicy::CreateInstance(google::cloud::securesourcemanager::v1::CreateInstanceRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SecureSourceManagerConnectionIdempotencyPolicy::DeleteInstance(
-    google::cloud::securesourcemanager::v1::DeleteInstanceRequest const&) {
+Idempotency SecureSourceManagerConnectionIdempotencyPolicy::DeleteInstance(google::cloud::securesourcemanager::v1::DeleteInstanceRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SecureSourceManagerConnectionIdempotencyPolicy::ListRepositories(
-    google::cloud::securesourcemanager::v1::
-        ListRepositoriesRequest) {  // NOLINT
+Idempotency SecureSourceManagerConnectionIdempotencyPolicy::ListRepositories(google::cloud::securesourcemanager::v1::ListRepositoriesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency SecureSourceManagerConnectionIdempotencyPolicy::GetRepository(
-    google::cloud::securesourcemanager::v1::GetRepositoryRequest const&) {
+Idempotency SecureSourceManagerConnectionIdempotencyPolicy::GetRepository(google::cloud::securesourcemanager::v1::GetRepositoryRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency SecureSourceManagerConnectionIdempotencyPolicy::CreateRepository(
-    google::cloud::securesourcemanager::v1::CreateRepositoryRequest const&) {
+Idempotency SecureSourceManagerConnectionIdempotencyPolicy::CreateRepository(google::cloud::securesourcemanager::v1::CreateRepositoryRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SecureSourceManagerConnectionIdempotencyPolicy::DeleteRepository(
-    google::cloud::securesourcemanager::v1::DeleteRepositoryRequest const&) {
+Idempotency SecureSourceManagerConnectionIdempotencyPolicy::DeleteRepository(google::cloud::securesourcemanager::v1::DeleteRepositoryRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SecureSourceManagerConnectionIdempotencyPolicy::GetIamPolicyRepo(
-    google::iam::v1::GetIamPolicyRequest const&) {
+Idempotency SecureSourceManagerConnectionIdempotencyPolicy::GetIamPolicyRepo(google::iam::v1::GetIamPolicyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
@@ -87,44 +75,35 @@ Idempotency SecureSourceManagerConnectionIdempotencyPolicy::SetIamPolicyRepo(
                                          : Idempotency::kIdempotent;
 }
 
-Idempotency
-SecureSourceManagerConnectionIdempotencyPolicy::TestIamPermissionsRepo(
-    google::iam::v1::TestIamPermissionsRequest const&) {
+Idempotency SecureSourceManagerConnectionIdempotencyPolicy::TestIamPermissionsRepo(google::iam::v1::TestIamPermissionsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SecureSourceManagerConnectionIdempotencyPolicy::CreateBranchRule(
-    google::cloud::securesourcemanager::v1::CreateBranchRuleRequest const&) {
+Idempotency SecureSourceManagerConnectionIdempotencyPolicy::CreateBranchRule(google::cloud::securesourcemanager::v1::CreateBranchRuleRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SecureSourceManagerConnectionIdempotencyPolicy::ListBranchRules(
-    google::cloud::securesourcemanager::v1::ListBranchRulesRequest) {  // NOLINT
+Idempotency SecureSourceManagerConnectionIdempotencyPolicy::ListBranchRules(google::cloud::securesourcemanager::v1::ListBranchRulesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency SecureSourceManagerConnectionIdempotencyPolicy::GetBranchRule(
-    google::cloud::securesourcemanager::v1::GetBranchRuleRequest const&) {
+Idempotency SecureSourceManagerConnectionIdempotencyPolicy::GetBranchRule(google::cloud::securesourcemanager::v1::GetBranchRuleRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency SecureSourceManagerConnectionIdempotencyPolicy::UpdateBranchRule(
-    google::cloud::securesourcemanager::v1::UpdateBranchRuleRequest const&) {
+Idempotency SecureSourceManagerConnectionIdempotencyPolicy::UpdateBranchRule(google::cloud::securesourcemanager::v1::UpdateBranchRuleRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SecureSourceManagerConnectionIdempotencyPolicy::DeleteBranchRule(
-    google::cloud::securesourcemanager::v1::DeleteBranchRuleRequest const&) {
+Idempotency SecureSourceManagerConnectionIdempotencyPolicy::DeleteBranchRule(google::cloud::securesourcemanager::v1::DeleteBranchRuleRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SecureSourceManagerConnectionIdempotencyPolicy::ListLocations(
-    google::cloud::location::ListLocationsRequest) {  // NOLINT
+Idempotency SecureSourceManagerConnectionIdempotencyPolicy::ListLocations(google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency SecureSourceManagerConnectionIdempotencyPolicy::GetLocation(
-    google::cloud::location::GetLocationRequest const&) {
+Idempotency SecureSourceManagerConnectionIdempotencyPolicy::GetLocation(google::cloud::location::GetLocationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
@@ -134,38 +113,32 @@ Idempotency SecureSourceManagerConnectionIdempotencyPolicy::SetIamPolicy(
                                          : Idempotency::kIdempotent;
 }
 
-Idempotency SecureSourceManagerConnectionIdempotencyPolicy::GetIamPolicy(
-    google::iam::v1::GetIamPolicyRequest const&) {
+Idempotency SecureSourceManagerConnectionIdempotencyPolicy::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency SecureSourceManagerConnectionIdempotencyPolicy::TestIamPermissions(
-    google::iam::v1::TestIamPermissionsRequest const&) {
+Idempotency SecureSourceManagerConnectionIdempotencyPolicy::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency SecureSourceManagerConnectionIdempotencyPolicy::ListOperations(
-    google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency SecureSourceManagerConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency SecureSourceManagerConnectionIdempotencyPolicy::GetOperation(
-    google::longrunning::GetOperationRequest const&) {
+Idempotency SecureSourceManagerConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency SecureSourceManagerConnectionIdempotencyPolicy::DeleteOperation(
-    google::longrunning::DeleteOperationRequest const&) {
+Idempotency SecureSourceManagerConnectionIdempotencyPolicy::DeleteOperation(google::longrunning::DeleteOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SecureSourceManagerConnectionIdempotencyPolicy::CancelOperation(
-    google::longrunning::CancelOperationRequest const&) {
+Idempotency SecureSourceManagerConnectionIdempotencyPolicy::CancelOperation(google::longrunning::CancelOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<SecureSourceManagerConnectionIdempotencyPolicy>
-MakeDefaultSecureSourceManagerConnectionIdempotencyPolicy() {
+    MakeDefaultSecureSourceManagerConnectionIdempotencyPolicy() {
   return std::make_unique<SecureSourceManagerConnectionIdempotencyPolicy>();
 }
 

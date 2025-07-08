@@ -32,22 +32,24 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ClusterControllerLogging::ClusterControllerLogging(
     std::shared_ptr<ClusterControllerStub> child,
-    TracingOptions tracing_options, std::set<std::string> const&)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
+    TracingOptions tracing_options,
+    std::set<std::string> const&)
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)) {}
 
 future<StatusOr<google::longrunning::Operation>>
 ClusterControllerLogging::AsyncCreateCluster(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::dataproc::v1::CreateClusterRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::dataproc::v1::CreateClusterRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::cloud::dataproc::v1::CreateClusterRequest const& request) {
-        return child_->AsyncCreateCluster(cq, std::move(context),
-                                          std::move(options), request);
+        return child_->AsyncCreateCluster(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -55,10 +57,12 @@ ClusterControllerLogging::AsyncCreateCluster(
 
 StatusOr<google::longrunning::Operation>
 ClusterControllerLogging::CreateCluster(
-    grpc::ClientContext& context, Options options,
-    google::cloud::dataproc::v1::CreateClusterRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::dataproc::v1::CreateClusterRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::dataproc::v1::CreateClusterRequest const& request) {
         return child_->CreateCluster(context, options, request);
       },
@@ -67,17 +71,17 @@ ClusterControllerLogging::CreateCluster(
 
 future<StatusOr<google::longrunning::Operation>>
 ClusterControllerLogging::AsyncUpdateCluster(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::dataproc::v1::UpdateClusterRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::dataproc::v1::UpdateClusterRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::cloud::dataproc::v1::UpdateClusterRequest const& request) {
-        return child_->AsyncUpdateCluster(cq, std::move(context),
-                                          std::move(options), request);
+        return child_->AsyncUpdateCluster(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -85,10 +89,12 @@ ClusterControllerLogging::AsyncUpdateCluster(
 
 StatusOr<google::longrunning::Operation>
 ClusterControllerLogging::UpdateCluster(
-    grpc::ClientContext& context, Options options,
-    google::cloud::dataproc::v1::UpdateClusterRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::dataproc::v1::UpdateClusterRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::dataproc::v1::UpdateClusterRequest const& request) {
         return child_->UpdateCluster(context, options, request);
       },
@@ -97,27 +103,30 @@ ClusterControllerLogging::UpdateCluster(
 
 future<StatusOr<google::longrunning::Operation>>
 ClusterControllerLogging::AsyncStopCluster(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::dataproc::v1::StopClusterRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::dataproc::v1::StopClusterRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::cloud::dataproc::v1::StopClusterRequest const& request) {
-        return child_->AsyncStopCluster(cq, std::move(context),
-                                        std::move(options), request);
+        return child_->AsyncStopCluster(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> ClusterControllerLogging::StopCluster(
-    grpc::ClientContext& context, Options options,
-    google::cloud::dataproc::v1::StopClusterRequest const& request) {
+StatusOr<google::longrunning::Operation>
+ClusterControllerLogging::StopCluster(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::dataproc::v1::StopClusterRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::dataproc::v1::StopClusterRequest const& request) {
         return child_->StopCluster(context, options, request);
       },
@@ -126,27 +135,30 @@ StatusOr<google::longrunning::Operation> ClusterControllerLogging::StopCluster(
 
 future<StatusOr<google::longrunning::Operation>>
 ClusterControllerLogging::AsyncStartCluster(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::dataproc::v1::StartClusterRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::dataproc::v1::StartClusterRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::cloud::dataproc::v1::StartClusterRequest const& request) {
-        return child_->AsyncStartCluster(cq, std::move(context),
-                                         std::move(options), request);
+        return child_->AsyncStartCluster(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> ClusterControllerLogging::StartCluster(
-    grpc::ClientContext& context, Options options,
-    google::cloud::dataproc::v1::StartClusterRequest const& request) {
+StatusOr<google::longrunning::Operation>
+ClusterControllerLogging::StartCluster(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::dataproc::v1::StartClusterRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::dataproc::v1::StartClusterRequest const& request) {
         return child_->StartCluster(context, options, request);
       },
@@ -155,17 +167,17 @@ StatusOr<google::longrunning::Operation> ClusterControllerLogging::StartCluster(
 
 future<StatusOr<google::longrunning::Operation>>
 ClusterControllerLogging::AsyncDeleteCluster(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::dataproc::v1::DeleteClusterRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::dataproc::v1::DeleteClusterRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::cloud::dataproc::v1::DeleteClusterRequest const& request) {
-        return child_->AsyncDeleteCluster(cq, std::move(context),
-                                          std::move(options), request);
+        return child_->AsyncDeleteCluster(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -173,10 +185,12 @@ ClusterControllerLogging::AsyncDeleteCluster(
 
 StatusOr<google::longrunning::Operation>
 ClusterControllerLogging::DeleteCluster(
-    grpc::ClientContext& context, Options options,
-    google::cloud::dataproc::v1::DeleteClusterRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::dataproc::v1::DeleteClusterRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::dataproc::v1::DeleteClusterRequest const& request) {
         return child_->DeleteCluster(context, options, request);
       },
@@ -185,10 +199,12 @@ ClusterControllerLogging::DeleteCluster(
 
 StatusOr<google::cloud::dataproc::v1::Cluster>
 ClusterControllerLogging::GetCluster(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dataproc::v1::GetClusterRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::dataproc::v1::GetClusterRequest const& request) {
         return child_->GetCluster(context, options, request);
       },
@@ -197,10 +213,12 @@ ClusterControllerLogging::GetCluster(
 
 StatusOr<google::cloud::dataproc::v1::ListClustersResponse>
 ClusterControllerLogging::ListClusters(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dataproc::v1::ListClustersRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::dataproc::v1::ListClustersRequest const& request) {
         return child_->ListClusters(context, options, request);
       },
@@ -209,18 +227,17 @@ ClusterControllerLogging::ListClusters(
 
 future<StatusOr<google::longrunning::Operation>>
 ClusterControllerLogging::AsyncDiagnoseCluster(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::dataproc::v1::DiagnoseClusterRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::dataproc::v1::DiagnoseClusterRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::dataproc::v1::DiagnoseClusterRequest const& request) {
-        return child_->AsyncDiagnoseCluster(cq, std::move(context),
-                                            std::move(options), request);
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::dataproc::v1::DiagnoseClusterRequest const& request) {
+        return child_->AsyncDiagnoseCluster(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -228,33 +245,40 @@ ClusterControllerLogging::AsyncDiagnoseCluster(
 
 StatusOr<google::longrunning::Operation>
 ClusterControllerLogging::DiagnoseCluster(
-    grpc::ClientContext& context, Options options,
-    google::cloud::dataproc::v1::DiagnoseClusterRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::dataproc::v1::DiagnoseClusterRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::dataproc::v1::DiagnoseClusterRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::dataproc::v1::DiagnoseClusterRequest const& request) {
         return child_->DiagnoseCluster(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::iam::v1::Policy> ClusterControllerLogging::SetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::iam::v1::Policy>
+ClusterControllerLogging::SetIamPolicy(
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::iam::v1::SetIamPolicyRequest const& request) {
         return child_->SetIamPolicy(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::iam::v1::Policy> ClusterControllerLogging::GetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::iam::v1::Policy>
+ClusterControllerLogging::GetIamPolicy(
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::iam::v1::GetIamPolicyRequest const& request) {
         return child_->GetIamPolicy(context, options, request);
       },
@@ -263,10 +287,12 @@ StatusOr<google::iam::v1::Policy> ClusterControllerLogging::GetIamPolicy(
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 ClusterControllerLogging::TestIamPermissions(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::iam::v1::TestIamPermissionsRequest const& request) {
         return child_->TestIamPermissions(context, options, request);
       },
@@ -275,43 +301,54 @@ ClusterControllerLogging::TestIamPermissions(
 
 StatusOr<google::longrunning::ListOperationsResponse>
 ClusterControllerLogging::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::ListOperationsRequest const& request) {
         return child_->ListOperations(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> ClusterControllerLogging::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::Operation>
+ClusterControllerLogging::GetOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::GetOperationRequest const& request) {
         return child_->GetOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status ClusterControllerLogging::DeleteOperation(
-    grpc::ClientContext& context, Options const& options,
+Status
+ClusterControllerLogging::DeleteOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::DeleteOperationRequest const& request) {
         return child_->DeleteOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status ClusterControllerLogging::CancelOperation(
-    grpc::ClientContext& context, Options const& options,
+Status
+ClusterControllerLogging::CancelOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::CancelOperationRequest const& request) {
         return child_->CancelOperation(context, options, request);
       },
@@ -329,8 +366,8 @@ ClusterControllerLogging::AsyncGetOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(cq, std::move(context),
-                                         std::move(options), request);
+        return child_->AsyncGetOperation(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -346,8 +383,8 @@ future<Status> ClusterControllerLogging::AsyncCancelOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::CancelOperationRequest const& request) {
-        return child_->AsyncCancelOperation(cq, std::move(context),
-                                            std::move(options), request);
+        return child_->AsyncCancelOperation(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);

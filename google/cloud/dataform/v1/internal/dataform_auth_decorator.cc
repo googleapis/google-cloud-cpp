@@ -31,9 +31,9 @@ DataformAuth::DataformAuth(
     std::shared_ptr<DataformStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::dataform::v1::ListRepositoriesResponse>
-DataformAuth::ListRepositories(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::dataform::v1::ListRepositoriesResponse> DataformAuth::ListRepositories(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dataform::v1::ListRepositoriesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -41,25 +41,26 @@ DataformAuth::ListRepositories(
 }
 
 StatusOr<google::cloud::dataform::v1::Repository> DataformAuth::GetRepository(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dataform::v1::GetRepositoryRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetRepository(context, options, request);
 }
 
-StatusOr<google::cloud::dataform::v1::Repository>
-DataformAuth::CreateRepository(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::dataform::v1::Repository> DataformAuth::CreateRepository(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dataform::v1::CreateRepositoryRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateRepository(context, options, request);
 }
 
-StatusOr<google::cloud::dataform::v1::Repository>
-DataformAuth::UpdateRepository(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::dataform::v1::Repository> DataformAuth::UpdateRepository(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dataform::v1::UpdateRepositoryRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -67,74 +68,71 @@ DataformAuth::UpdateRepository(
 }
 
 Status DataformAuth::DeleteRepository(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dataform::v1::DeleteRepositoryRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteRepository(context, options, request);
 }
 
-StatusOr<google::cloud::dataform::v1::CommitRepositoryChangesResponse>
-DataformAuth::CommitRepositoryChanges(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::dataform::v1::CommitRepositoryChangesRequest const&
-        request) {
+StatusOr<google::cloud::dataform::v1::CommitRepositoryChangesResponse> DataformAuth::CommitRepositoryChanges(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::dataform::v1::CommitRepositoryChangesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CommitRepositoryChanges(context, options, request);
 }
 
-StatusOr<google::cloud::dataform::v1::ReadRepositoryFileResponse>
-DataformAuth::ReadRepositoryFile(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::dataform::v1::ReadRepositoryFileResponse> DataformAuth::ReadRepositoryFile(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dataform::v1::ReadRepositoryFileRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ReadRepositoryFile(context, options, request);
 }
 
-StatusOr<google::cloud::dataform::v1::QueryRepositoryDirectoryContentsResponse>
-DataformAuth::QueryRepositoryDirectoryContents(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::dataform::v1::QueryRepositoryDirectoryContentsRequest const&
-        request) {
+StatusOr<google::cloud::dataform::v1::QueryRepositoryDirectoryContentsResponse> DataformAuth::QueryRepositoryDirectoryContents(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::dataform::v1::QueryRepositoryDirectoryContentsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->QueryRepositoryDirectoryContents(context, options, request);
 }
 
-StatusOr<google::cloud::dataform::v1::FetchRepositoryHistoryResponse>
-DataformAuth::FetchRepositoryHistory(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::dataform::v1::FetchRepositoryHistoryResponse> DataformAuth::FetchRepositoryHistory(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dataform::v1::FetchRepositoryHistoryRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->FetchRepositoryHistory(context, options, request);
 }
 
-StatusOr<
-    google::cloud::dataform::v1::ComputeRepositoryAccessTokenStatusResponse>
-DataformAuth::ComputeRepositoryAccessTokenStatus(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::dataform::v1::
-        ComputeRepositoryAccessTokenStatusRequest const& request) {
+StatusOr<google::cloud::dataform::v1::ComputeRepositoryAccessTokenStatusResponse> DataformAuth::ComputeRepositoryAccessTokenStatus(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::dataform::v1::ComputeRepositoryAccessTokenStatusRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ComputeRepositoryAccessTokenStatus(context, options, request);
 }
 
-StatusOr<google::cloud::dataform::v1::FetchRemoteBranchesResponse>
-DataformAuth::FetchRemoteBranches(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::dataform::v1::FetchRemoteBranchesResponse> DataformAuth::FetchRemoteBranches(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dataform::v1::FetchRemoteBranchesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->FetchRemoteBranches(context, options, request);
 }
 
-StatusOr<google::cloud::dataform::v1::ListWorkspacesResponse>
-DataformAuth::ListWorkspaces(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::dataform::v1::ListWorkspacesResponse> DataformAuth::ListWorkspaces(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dataform::v1::ListWorkspacesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -142,7 +140,8 @@ DataformAuth::ListWorkspaces(
 }
 
 StatusOr<google::cloud::dataform::v1::Workspace> DataformAuth::GetWorkspace(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dataform::v1::GetWorkspaceRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -150,7 +149,8 @@ StatusOr<google::cloud::dataform::v1::Workspace> DataformAuth::GetWorkspace(
 }
 
 StatusOr<google::cloud::dataform::v1::Workspace> DataformAuth::CreateWorkspace(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dataform::v1::CreateWorkspaceRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -158,124 +158,125 @@ StatusOr<google::cloud::dataform::v1::Workspace> DataformAuth::CreateWorkspace(
 }
 
 Status DataformAuth::DeleteWorkspace(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dataform::v1::DeleteWorkspaceRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteWorkspace(context, options, request);
 }
 
-StatusOr<google::cloud::dataform::v1::InstallNpmPackagesResponse>
-DataformAuth::InstallNpmPackages(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::dataform::v1::InstallNpmPackagesResponse> DataformAuth::InstallNpmPackages(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dataform::v1::InstallNpmPackagesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->InstallNpmPackages(context, options, request);
 }
 
-StatusOr<google::cloud::dataform::v1::PullGitCommitsResponse>
-DataformAuth::PullGitCommits(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::dataform::v1::PullGitCommitsResponse> DataformAuth::PullGitCommits(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dataform::v1::PullGitCommitsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->PullGitCommits(context, options, request);
 }
 
-StatusOr<google::cloud::dataform::v1::PushGitCommitsResponse>
-DataformAuth::PushGitCommits(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::dataform::v1::PushGitCommitsResponse> DataformAuth::PushGitCommits(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dataform::v1::PushGitCommitsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->PushGitCommits(context, options, request);
 }
 
-StatusOr<google::cloud::dataform::v1::FetchFileGitStatusesResponse>
-DataformAuth::FetchFileGitStatuses(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::dataform::v1::FetchFileGitStatusesResponse> DataformAuth::FetchFileGitStatuses(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dataform::v1::FetchFileGitStatusesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->FetchFileGitStatuses(context, options, request);
 }
 
-StatusOr<google::cloud::dataform::v1::FetchGitAheadBehindResponse>
-DataformAuth::FetchGitAheadBehind(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::dataform::v1::FetchGitAheadBehindResponse> DataformAuth::FetchGitAheadBehind(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dataform::v1::FetchGitAheadBehindRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->FetchGitAheadBehind(context, options, request);
 }
 
-StatusOr<google::cloud::dataform::v1::CommitWorkspaceChangesResponse>
-DataformAuth::CommitWorkspaceChanges(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::dataform::v1::CommitWorkspaceChangesResponse> DataformAuth::CommitWorkspaceChanges(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dataform::v1::CommitWorkspaceChangesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CommitWorkspaceChanges(context, options, request);
 }
 
-StatusOr<google::cloud::dataform::v1::ResetWorkspaceChangesResponse>
-DataformAuth::ResetWorkspaceChanges(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::dataform::v1::ResetWorkspaceChangesResponse> DataformAuth::ResetWorkspaceChanges(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dataform::v1::ResetWorkspaceChangesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ResetWorkspaceChanges(context, options, request);
 }
 
-StatusOr<google::cloud::dataform::v1::FetchFileDiffResponse>
-DataformAuth::FetchFileDiff(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::dataform::v1::FetchFileDiffResponse> DataformAuth::FetchFileDiff(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dataform::v1::FetchFileDiffRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->FetchFileDiff(context, options, request);
 }
 
-StatusOr<google::cloud::dataform::v1::QueryDirectoryContentsResponse>
-DataformAuth::QueryDirectoryContents(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::dataform::v1::QueryDirectoryContentsResponse> DataformAuth::QueryDirectoryContents(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dataform::v1::QueryDirectoryContentsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->QueryDirectoryContents(context, options, request);
 }
 
-StatusOr<google::cloud::dataform::v1::SearchFilesResponse>
-DataformAuth::SearchFiles(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::dataform::v1::SearchFilesResponse> DataformAuth::SearchFiles(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dataform::v1::SearchFilesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->SearchFiles(context, options, request);
 }
 
-StatusOr<google::cloud::dataform::v1::MakeDirectoryResponse>
-DataformAuth::MakeDirectory(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::dataform::v1::MakeDirectoryResponse> DataformAuth::MakeDirectory(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dataform::v1::MakeDirectoryRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->MakeDirectory(context, options, request);
 }
 
-StatusOr<google::cloud::dataform::v1::RemoveDirectoryResponse>
-DataformAuth::RemoveDirectory(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::dataform::v1::RemoveDirectoryResponse> DataformAuth::RemoveDirectory(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dataform::v1::RemoveDirectoryRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->RemoveDirectory(context, options, request);
 }
 
-StatusOr<google::cloud::dataform::v1::MoveDirectoryResponse>
-DataformAuth::MoveDirectory(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::dataform::v1::MoveDirectoryResponse> DataformAuth::MoveDirectory(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dataform::v1::MoveDirectoryRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -283,16 +284,17 @@ DataformAuth::MoveDirectory(
 }
 
 StatusOr<google::cloud::dataform::v1::ReadFileResponse> DataformAuth::ReadFile(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dataform::v1::ReadFileRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ReadFile(context, options, request);
 }
 
-StatusOr<google::cloud::dataform::v1::RemoveFileResponse>
-DataformAuth::RemoveFile(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::dataform::v1::RemoveFileResponse> DataformAuth::RemoveFile(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dataform::v1::RemoveFileRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -300,52 +302,53 @@ DataformAuth::RemoveFile(
 }
 
 StatusOr<google::cloud::dataform::v1::MoveFileResponse> DataformAuth::MoveFile(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dataform::v1::MoveFileRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->MoveFile(context, options, request);
 }
 
-StatusOr<google::cloud::dataform::v1::WriteFileResponse>
-DataformAuth::WriteFile(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::dataform::v1::WriteFileResponse> DataformAuth::WriteFile(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dataform::v1::WriteFileRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->WriteFile(context, options, request);
 }
 
-StatusOr<google::cloud::dataform::v1::ListReleaseConfigsResponse>
-DataformAuth::ListReleaseConfigs(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::dataform::v1::ListReleaseConfigsResponse> DataformAuth::ListReleaseConfigs(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dataform::v1::ListReleaseConfigsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListReleaseConfigs(context, options, request);
 }
 
-StatusOr<google::cloud::dataform::v1::ReleaseConfig>
-DataformAuth::GetReleaseConfig(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::dataform::v1::ReleaseConfig> DataformAuth::GetReleaseConfig(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dataform::v1::GetReleaseConfigRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetReleaseConfig(context, options, request);
 }
 
-StatusOr<google::cloud::dataform::v1::ReleaseConfig>
-DataformAuth::CreateReleaseConfig(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::dataform::v1::ReleaseConfig> DataformAuth::CreateReleaseConfig(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dataform::v1::CreateReleaseConfigRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateReleaseConfig(context, options, request);
 }
 
-StatusOr<google::cloud::dataform::v1::ReleaseConfig>
-DataformAuth::UpdateReleaseConfig(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::dataform::v1::ReleaseConfig> DataformAuth::UpdateReleaseConfig(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dataform::v1::UpdateReleaseConfigRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -353,81 +356,80 @@ DataformAuth::UpdateReleaseConfig(
 }
 
 Status DataformAuth::DeleteReleaseConfig(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dataform::v1::DeleteReleaseConfigRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteReleaseConfig(context, options, request);
 }
 
-StatusOr<google::cloud::dataform::v1::ListCompilationResultsResponse>
-DataformAuth::ListCompilationResults(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::dataform::v1::ListCompilationResultsResponse> DataformAuth::ListCompilationResults(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dataform::v1::ListCompilationResultsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListCompilationResults(context, options, request);
 }
 
-StatusOr<google::cloud::dataform::v1::CompilationResult>
-DataformAuth::GetCompilationResult(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::dataform::v1::CompilationResult> DataformAuth::GetCompilationResult(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dataform::v1::GetCompilationResultRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetCompilationResult(context, options, request);
 }
 
-StatusOr<google::cloud::dataform::v1::CompilationResult>
-DataformAuth::CreateCompilationResult(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::dataform::v1::CreateCompilationResultRequest const&
-        request) {
+StatusOr<google::cloud::dataform::v1::CompilationResult> DataformAuth::CreateCompilationResult(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::dataform::v1::CreateCompilationResultRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateCompilationResult(context, options, request);
 }
 
-StatusOr<google::cloud::dataform::v1::QueryCompilationResultActionsResponse>
-DataformAuth::QueryCompilationResultActions(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::dataform::v1::QueryCompilationResultActionsRequest const&
-        request) {
+StatusOr<google::cloud::dataform::v1::QueryCompilationResultActionsResponse> DataformAuth::QueryCompilationResultActions(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::dataform::v1::QueryCompilationResultActionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->QueryCompilationResultActions(context, options, request);
 }
 
-StatusOr<google::cloud::dataform::v1::ListWorkflowConfigsResponse>
-DataformAuth::ListWorkflowConfigs(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::dataform::v1::ListWorkflowConfigsResponse> DataformAuth::ListWorkflowConfigs(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dataform::v1::ListWorkflowConfigsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListWorkflowConfigs(context, options, request);
 }
 
-StatusOr<google::cloud::dataform::v1::WorkflowConfig>
-DataformAuth::GetWorkflowConfig(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::dataform::v1::WorkflowConfig> DataformAuth::GetWorkflowConfig(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dataform::v1::GetWorkflowConfigRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetWorkflowConfig(context, options, request);
 }
 
-StatusOr<google::cloud::dataform::v1::WorkflowConfig>
-DataformAuth::CreateWorkflowConfig(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::dataform::v1::WorkflowConfig> DataformAuth::CreateWorkflowConfig(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dataform::v1::CreateWorkflowConfigRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateWorkflowConfig(context, options, request);
 }
 
-StatusOr<google::cloud::dataform::v1::WorkflowConfig>
-DataformAuth::UpdateWorkflowConfig(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::dataform::v1::WorkflowConfig> DataformAuth::UpdateWorkflowConfig(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dataform::v1::UpdateWorkflowConfigRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -435,73 +437,71 @@ DataformAuth::UpdateWorkflowConfig(
 }
 
 Status DataformAuth::DeleteWorkflowConfig(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dataform::v1::DeleteWorkflowConfigRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteWorkflowConfig(context, options, request);
 }
 
-StatusOr<google::cloud::dataform::v1::ListWorkflowInvocationsResponse>
-DataformAuth::ListWorkflowInvocations(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::dataform::v1::ListWorkflowInvocationsRequest const&
-        request) {
+StatusOr<google::cloud::dataform::v1::ListWorkflowInvocationsResponse> DataformAuth::ListWorkflowInvocations(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::dataform::v1::ListWorkflowInvocationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListWorkflowInvocations(context, options, request);
 }
 
-StatusOr<google::cloud::dataform::v1::WorkflowInvocation>
-DataformAuth::GetWorkflowInvocation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::dataform::v1::WorkflowInvocation> DataformAuth::GetWorkflowInvocation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dataform::v1::GetWorkflowInvocationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetWorkflowInvocation(context, options, request);
 }
 
-StatusOr<google::cloud::dataform::v1::WorkflowInvocation>
-DataformAuth::CreateWorkflowInvocation(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::dataform::v1::CreateWorkflowInvocationRequest const&
-        request) {
+StatusOr<google::cloud::dataform::v1::WorkflowInvocation> DataformAuth::CreateWorkflowInvocation(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::dataform::v1::CreateWorkflowInvocationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateWorkflowInvocation(context, options, request);
 }
 
 Status DataformAuth::DeleteWorkflowInvocation(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::dataform::v1::DeleteWorkflowInvocationRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::dataform::v1::DeleteWorkflowInvocationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteWorkflowInvocation(context, options, request);
 }
 
-StatusOr<google::cloud::dataform::v1::CancelWorkflowInvocationResponse>
-DataformAuth::CancelWorkflowInvocation(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::dataform::v1::CancelWorkflowInvocationRequest const&
-        request) {
+StatusOr<google::cloud::dataform::v1::CancelWorkflowInvocationResponse> DataformAuth::CancelWorkflowInvocation(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::dataform::v1::CancelWorkflowInvocationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CancelWorkflowInvocation(context, options, request);
 }
 
-StatusOr<google::cloud::dataform::v1::QueryWorkflowInvocationActionsResponse>
-DataformAuth::QueryWorkflowInvocationActions(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::dataform::v1::QueryWorkflowInvocationActionsRequest const&
-        request) {
+StatusOr<google::cloud::dataform::v1::QueryWorkflowInvocationActionsResponse> DataformAuth::QueryWorkflowInvocationActions(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::dataform::v1::QueryWorkflowInvocationActionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->QueryWorkflowInvocationActions(context, options, request);
 }
 
 StatusOr<google::cloud::dataform::v1::Config> DataformAuth::GetConfig(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dataform::v1::GetConfigRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -509,16 +509,17 @@ StatusOr<google::cloud::dataform::v1::Config> DataformAuth::GetConfig(
 }
 
 StatusOr<google::cloud::dataform::v1::Config> DataformAuth::UpdateConfig(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dataform::v1::UpdateConfigRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateConfig(context, options, request);
 }
 
-StatusOr<google::cloud::location::ListLocationsResponse>
-DataformAuth::ListLocations(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::location::ListLocationsResponse> DataformAuth::ListLocations(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -526,7 +527,8 @@ DataformAuth::ListLocations(
 }
 
 StatusOr<google::cloud::location::Location> DataformAuth::GetLocation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -534,7 +536,8 @@ StatusOr<google::cloud::location::Location> DataformAuth::GetLocation(
 }
 
 StatusOr<google::iam::v1::Policy> DataformAuth::SetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -542,16 +545,17 @@ StatusOr<google::iam::v1::Policy> DataformAuth::SetIamPolicy(
 }
 
 StatusOr<google::iam::v1::Policy> DataformAuth::GetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetIamPolicy(context, options, request);
 }
 
-StatusOr<google::iam::v1::TestIamPermissionsResponse>
-DataformAuth::TestIamPermissions(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::iam::v1::TestIamPermissionsResponse> DataformAuth::TestIamPermissions(
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;

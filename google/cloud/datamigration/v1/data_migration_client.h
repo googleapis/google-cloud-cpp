@@ -64,28 +64,23 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class DataMigrationServiceClient {
  public:
-  explicit DataMigrationServiceClient(
-      std::shared_ptr<DataMigrationServiceConnection> connection,
-      Options opts = {});
+  explicit DataMigrationServiceClient(std::shared_ptr<DataMigrationServiceConnection> connection, Options opts = {});
   ~DataMigrationServiceClient();
 
   ///@{
   /// @name Copy and move support
   DataMigrationServiceClient(DataMigrationServiceClient const&) = default;
-  DataMigrationServiceClient& operator=(DataMigrationServiceClient const&) =
-      default;
+  DataMigrationServiceClient& operator=(DataMigrationServiceClient const&) = default;
   DataMigrationServiceClient(DataMigrationServiceClient&&) = default;
   DataMigrationServiceClient& operator=(DataMigrationServiceClient&&) = default;
   ///@}
 
   ///@{
   /// @name Equality
-  friend bool operator==(DataMigrationServiceClient const& a,
-                         DataMigrationServiceClient const& b) {
+  friend bool operator==(DataMigrationServiceClient const& a, DataMigrationServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(DataMigrationServiceClient const& a,
-                         DataMigrationServiceClient const& b) {
+  friend bool operator!=(DataMigrationServiceClient const& a, DataMigrationServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -121,8 +116,8 @@ class DataMigrationServiceClient {
   /// [google.cloud.clouddms.v1.MigrationJob]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms_resources.proto#L648}
   ///
   // clang-format on
-  StreamRange<google::cloud::clouddms::v1::MigrationJob> ListMigrationJobs(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::clouddms::v1::MigrationJob>
+  ListMigrationJobs(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -160,9 +155,8 @@ class DataMigrationServiceClient {
   /// [google.cloud.clouddms.v1.MigrationJob]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms_resources.proto#L648}
   ///
   // clang-format on
-  StreamRange<google::cloud::clouddms::v1::MigrationJob> ListMigrationJobs(
-      google::cloud::clouddms::v1::ListMigrationJobsRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::clouddms::v1::MigrationJob>
+  ListMigrationJobs(google::cloud::clouddms::v1::ListMigrationJobsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -186,8 +180,8 @@ class DataMigrationServiceClient {
   /// [google.cloud.clouddms.v1.MigrationJob]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms_resources.proto#L648}
   ///
   // clang-format on
-  StatusOr<google::cloud::clouddms::v1::MigrationJob> GetMigrationJob(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::clouddms::v1::MigrationJob>
+  GetMigrationJob(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -216,9 +210,8 @@ class DataMigrationServiceClient {
   /// [google.cloud.clouddms.v1.MigrationJob]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms_resources.proto#L648}
   ///
   // clang-format on
-  StatusOr<google::cloud::clouddms::v1::MigrationJob> GetMigrationJob(
-      google::cloud::clouddms::v1::GetMigrationJobRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::clouddms::v1::MigrationJob>
+  GetMigrationJob(google::cloud::clouddms::v1::GetMigrationJobRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -254,10 +247,7 @@ class DataMigrationServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
-  CreateMigrationJob(
-      std::string const& parent,
-      google::cloud::clouddms::v1::MigrationJob const& migration_job,
-      std::string const& migration_job_id, Options opts = {});
+  CreateMigrationJob(std::string const& parent, google::cloud::clouddms::v1::MigrationJob const& migration_job, std::string const& migration_job_id, Options opts = {});
 
   // clang-format off
   ///
@@ -270,10 +260,8 @@ class DataMigrationServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateMigrationJob(
-      NoAwaitTag, std::string const& parent,
-      google::cloud::clouddms::v1::MigrationJob const& migration_job,
-      std::string const& migration_job_id, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateMigrationJob(NoAwaitTag, std::string const& parent, google::cloud::clouddms::v1::MigrationJob const& migration_job, std::string const& migration_job_id, Options opts = {});
 
   // clang-format off
   ///
@@ -310,9 +298,7 @@ class DataMigrationServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
-  CreateMigrationJob(
-      google::cloud::clouddms::v1::CreateMigrationJobRequest const& request,
-      Options opts = {});
+  CreateMigrationJob(google::cloud::clouddms::v1::CreateMigrationJobRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -325,10 +311,8 @@ class DataMigrationServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateMigrationJob(
-      NoAwaitTag,
-      google::cloud::clouddms::v1::CreateMigrationJobRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateMigrationJob(NoAwaitTag, google::cloud::clouddms::v1::CreateMigrationJobRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -340,8 +324,7 @@ class DataMigrationServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
-  CreateMigrationJob(google::longrunning::Operation const& operation,
-                     Options opts = {});
+  CreateMigrationJob(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -375,9 +358,7 @@ class DataMigrationServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
-  UpdateMigrationJob(
-      google::cloud::clouddms::v1::MigrationJob const& migration_job,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  UpdateMigrationJob(google::cloud::clouddms::v1::MigrationJob const& migration_job, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -390,10 +371,8 @@ class DataMigrationServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateMigrationJob(
-      NoAwaitTag,
-      google::cloud::clouddms::v1::MigrationJob const& migration_job,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateMigrationJob(NoAwaitTag, google::cloud::clouddms::v1::MigrationJob const& migration_job, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -430,9 +409,7 @@ class DataMigrationServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
-  UpdateMigrationJob(
-      google::cloud::clouddms::v1::UpdateMigrationJobRequest const& request,
-      Options opts = {});
+  UpdateMigrationJob(google::cloud::clouddms::v1::UpdateMigrationJobRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -445,10 +422,8 @@ class DataMigrationServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateMigrationJob(
-      NoAwaitTag,
-      google::cloud::clouddms::v1::UpdateMigrationJobRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateMigrationJob(NoAwaitTag, google::cloud::clouddms::v1::UpdateMigrationJobRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -460,8 +435,7 @@ class DataMigrationServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
-  UpdateMigrationJob(google::longrunning::Operation const& operation,
-                     Options opts = {});
+  UpdateMigrationJob(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -506,8 +480,8 @@ class DataMigrationServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteMigrationJob(
-      NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteMigrationJob(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -544,9 +518,7 @@ class DataMigrationServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>
-  DeleteMigrationJob(
-      google::cloud::clouddms::v1::DeleteMigrationJobRequest const& request,
-      Options opts = {});
+  DeleteMigrationJob(google::cloud::clouddms::v1::DeleteMigrationJobRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -559,10 +531,8 @@ class DataMigrationServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteMigrationJob(
-      NoAwaitTag,
-      google::cloud::clouddms::v1::DeleteMigrationJobRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteMigrationJob(NoAwaitTag, google::cloud::clouddms::v1::DeleteMigrationJobRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -574,8 +544,7 @@ class DataMigrationServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>
-  DeleteMigrationJob(google::longrunning::Operation const& operation,
-                     Options opts = {});
+  DeleteMigrationJob(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -611,9 +580,8 @@ class DataMigrationServiceClient {
   /// [google.cloud.clouddms.v1.StartMigrationJobRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L674}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::clouddms::v1::MigrationJob>> StartMigrationJob(
-      google::cloud::clouddms::v1::StartMigrationJobRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
+  StartMigrationJob(google::cloud::clouddms::v1::StartMigrationJobRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -626,10 +594,8 @@ class DataMigrationServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> StartMigrationJob(
-      NoAwaitTag,
-      google::cloud::clouddms::v1::StartMigrationJobRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  StartMigrationJob(NoAwaitTag, google::cloud::clouddms::v1::StartMigrationJobRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -640,8 +606,8 @@ class DataMigrationServiceClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::clouddms::v1::MigrationJob>> StartMigrationJob(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
+  StartMigrationJob(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -677,9 +643,8 @@ class DataMigrationServiceClient {
   /// [google.cloud.clouddms.v1.StopMigrationJobRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L686}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::clouddms::v1::MigrationJob>> StopMigrationJob(
-      google::cloud::clouddms::v1::StopMigrationJobRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
+  StopMigrationJob(google::cloud::clouddms::v1::StopMigrationJobRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -692,10 +657,8 @@ class DataMigrationServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> StopMigrationJob(
-      NoAwaitTag,
-      google::cloud::clouddms::v1::StopMigrationJobRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  StopMigrationJob(NoAwaitTag, google::cloud::clouddms::v1::StopMigrationJobRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -706,8 +669,8 @@ class DataMigrationServiceClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::clouddms::v1::MigrationJob>> StopMigrationJob(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
+  StopMigrationJob(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -745,9 +708,7 @@ class DataMigrationServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
-  ResumeMigrationJob(
-      google::cloud::clouddms::v1::ResumeMigrationJobRequest const& request,
-      Options opts = {});
+  ResumeMigrationJob(google::cloud::clouddms::v1::ResumeMigrationJobRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -760,10 +721,8 @@ class DataMigrationServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> ResumeMigrationJob(
-      NoAwaitTag,
-      google::cloud::clouddms::v1::ResumeMigrationJobRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  ResumeMigrationJob(NoAwaitTag, google::cloud::clouddms::v1::ResumeMigrationJobRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -775,8 +734,7 @@ class DataMigrationServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
-  ResumeMigrationJob(google::longrunning::Operation const& operation,
-                     Options opts = {});
+  ResumeMigrationJob(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -814,9 +772,7 @@ class DataMigrationServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
-  PromoteMigrationJob(
-      google::cloud::clouddms::v1::PromoteMigrationJobRequest const& request,
-      Options opts = {});
+  PromoteMigrationJob(google::cloud::clouddms::v1::PromoteMigrationJobRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -829,10 +785,8 @@ class DataMigrationServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> PromoteMigrationJob(
-      NoAwaitTag,
-      google::cloud::clouddms::v1::PromoteMigrationJobRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  PromoteMigrationJob(NoAwaitTag, google::cloud::clouddms::v1::PromoteMigrationJobRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -844,8 +798,7 @@ class DataMigrationServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
-  PromoteMigrationJob(google::longrunning::Operation const& operation,
-                      Options opts = {});
+  PromoteMigrationJob(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -883,9 +836,7 @@ class DataMigrationServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
-  VerifyMigrationJob(
-      google::cloud::clouddms::v1::VerifyMigrationJobRequest const& request,
-      Options opts = {});
+  VerifyMigrationJob(google::cloud::clouddms::v1::VerifyMigrationJobRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -898,10 +849,8 @@ class DataMigrationServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> VerifyMigrationJob(
-      NoAwaitTag,
-      google::cloud::clouddms::v1::VerifyMigrationJobRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  VerifyMigrationJob(NoAwaitTag, google::cloud::clouddms::v1::VerifyMigrationJobRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -913,8 +862,7 @@ class DataMigrationServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
-  VerifyMigrationJob(google::longrunning::Operation const& operation,
-                     Options opts = {});
+  VerifyMigrationJob(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -953,9 +901,7 @@ class DataMigrationServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
-  RestartMigrationJob(
-      google::cloud::clouddms::v1::RestartMigrationJobRequest const& request,
-      Options opts = {});
+  RestartMigrationJob(google::cloud::clouddms::v1::RestartMigrationJobRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -968,10 +914,8 @@ class DataMigrationServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> RestartMigrationJob(
-      NoAwaitTag,
-      google::cloud::clouddms::v1::RestartMigrationJobRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  RestartMigrationJob(NoAwaitTag, google::cloud::clouddms::v1::RestartMigrationJobRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -983,8 +927,7 @@ class DataMigrationServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
-  RestartMigrationJob(google::longrunning::Operation const& operation,
-                      Options opts = {});
+  RestartMigrationJob(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1014,9 +957,8 @@ class DataMigrationServiceClient {
   /// [google.cloud.clouddms.v1.SshScript]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L780}
   ///
   // clang-format on
-  StatusOr<google::cloud::clouddms::v1::SshScript> GenerateSshScript(
-      google::cloud::clouddms::v1::GenerateSshScriptRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::clouddms::v1::SshScript>
+  GenerateSshScript(google::cloud::clouddms::v1::GenerateSshScriptRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1046,9 +988,8 @@ class DataMigrationServiceClient {
   /// [google.cloud.clouddms.v1.TcpProxyScript]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L812}
   ///
   // clang-format on
-  StatusOr<google::cloud::clouddms::v1::TcpProxyScript> GenerateTcpProxyScript(
-      google::cloud::clouddms::v1::GenerateTcpProxyScriptRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::clouddms::v1::TcpProxyScript>
+  GenerateTcpProxyScript(google::cloud::clouddms::v1::GenerateTcpProxyScriptRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1123,9 +1064,7 @@ class DataMigrationServiceClient {
   ///
   // clang-format on
   StreamRange<google::cloud::clouddms::v1::ConnectionProfile>
-  ListConnectionProfiles(
-      google::cloud::clouddms::v1::ListConnectionProfilesRequest request,
-      Options opts = {});
+  ListConnectionProfiles(google::cloud::clouddms::v1::ListConnectionProfilesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1149,8 +1088,8 @@ class DataMigrationServiceClient {
   /// [google.cloud.clouddms.v1.GetConnectionProfileRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L869}
   ///
   // clang-format on
-  StatusOr<google::cloud::clouddms::v1::ConnectionProfile> GetConnectionProfile(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::clouddms::v1::ConnectionProfile>
+  GetConnectionProfile(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1179,9 +1118,8 @@ class DataMigrationServiceClient {
   /// [google.cloud.clouddms.v1.GetConnectionProfileRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L869}
   ///
   // clang-format on
-  StatusOr<google::cloud::clouddms::v1::ConnectionProfile> GetConnectionProfile(
-      google::cloud::clouddms::v1::GetConnectionProfileRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::clouddms::v1::ConnectionProfile>
+  GetConnectionProfile(google::cloud::clouddms::v1::GetConnectionProfileRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1215,10 +1153,7 @@ class DataMigrationServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::ConnectionProfile>>
-  CreateConnectionProfile(
-      std::string const& parent,
-      google::cloud::clouddms::v1::ConnectionProfile const& connection_profile,
-      std::string const& connection_profile_id, Options opts = {});
+  CreateConnectionProfile(std::string const& parent, google::cloud::clouddms::v1::ConnectionProfile const& connection_profile, std::string const& connection_profile_id, Options opts = {});
 
   // clang-format off
   ///
@@ -1231,10 +1166,8 @@ class DataMigrationServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateConnectionProfile(
-      NoAwaitTag, std::string const& parent,
-      google::cloud::clouddms::v1::ConnectionProfile const& connection_profile,
-      std::string const& connection_profile_id, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateConnectionProfile(NoAwaitTag, std::string const& parent, google::cloud::clouddms::v1::ConnectionProfile const& connection_profile, std::string const& connection_profile_id, Options opts = {});
 
   // clang-format off
   ///
@@ -1271,10 +1204,7 @@ class DataMigrationServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::ConnectionProfile>>
-  CreateConnectionProfile(
-      google::cloud::clouddms::v1::CreateConnectionProfileRequest const&
-          request,
-      Options opts = {});
+  CreateConnectionProfile(google::cloud::clouddms::v1::CreateConnectionProfileRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1287,11 +1217,8 @@ class DataMigrationServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateConnectionProfile(
-      NoAwaitTag,
-      google::cloud::clouddms::v1::CreateConnectionProfileRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateConnectionProfile(NoAwaitTag, google::cloud::clouddms::v1::CreateConnectionProfileRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1303,8 +1230,7 @@ class DataMigrationServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::ConnectionProfile>>
-  CreateConnectionProfile(google::longrunning::Operation const& operation,
-                          Options opts = {});
+  CreateConnectionProfile(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1338,9 +1264,7 @@ class DataMigrationServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::ConnectionProfile>>
-  UpdateConnectionProfile(
-      google::cloud::clouddms::v1::ConnectionProfile const& connection_profile,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  UpdateConnectionProfile(google::cloud::clouddms::v1::ConnectionProfile const& connection_profile, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -1353,10 +1277,8 @@ class DataMigrationServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateConnectionProfile(
-      NoAwaitTag,
-      google::cloud::clouddms::v1::ConnectionProfile const& connection_profile,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateConnectionProfile(NoAwaitTag, google::cloud::clouddms::v1::ConnectionProfile const& connection_profile, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -1393,10 +1315,7 @@ class DataMigrationServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::ConnectionProfile>>
-  UpdateConnectionProfile(
-      google::cloud::clouddms::v1::UpdateConnectionProfileRequest const&
-          request,
-      Options opts = {});
+  UpdateConnectionProfile(google::cloud::clouddms::v1::UpdateConnectionProfileRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1409,11 +1328,8 @@ class DataMigrationServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateConnectionProfile(
-      NoAwaitTag,
-      google::cloud::clouddms::v1::UpdateConnectionProfileRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateConnectionProfile(NoAwaitTag, google::cloud::clouddms::v1::UpdateConnectionProfileRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1425,8 +1341,7 @@ class DataMigrationServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::ConnectionProfile>>
-  UpdateConnectionProfile(google::longrunning::Operation const& operation,
-                          Options opts = {});
+  UpdateConnectionProfile(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1473,8 +1388,8 @@ class DataMigrationServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteConnectionProfile(
-      NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteConnectionProfile(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1513,10 +1428,7 @@ class DataMigrationServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>
-  DeleteConnectionProfile(
-      google::cloud::clouddms::v1::DeleteConnectionProfileRequest const&
-          request,
-      Options opts = {});
+  DeleteConnectionProfile(google::cloud::clouddms::v1::DeleteConnectionProfileRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1529,11 +1441,8 @@ class DataMigrationServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteConnectionProfile(
-      NoAwaitTag,
-      google::cloud::clouddms::v1::DeleteConnectionProfileRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteConnectionProfile(NoAwaitTag, google::cloud::clouddms::v1::DeleteConnectionProfileRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1545,8 +1454,7 @@ class DataMigrationServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>
-  DeleteConnectionProfile(google::longrunning::Operation const& operation,
-                          Options opts = {});
+  DeleteConnectionProfile(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1580,10 +1488,7 @@ class DataMigrationServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::PrivateConnection>>
-  CreatePrivateConnection(
-      std::string const& parent,
-      google::cloud::clouddms::v1::PrivateConnection const& private_connection,
-      std::string const& private_connection_id, Options opts = {});
+  CreatePrivateConnection(std::string const& parent, google::cloud::clouddms::v1::PrivateConnection const& private_connection, std::string const& private_connection_id, Options opts = {});
 
   // clang-format off
   ///
@@ -1596,10 +1501,8 @@ class DataMigrationServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreatePrivateConnection(
-      NoAwaitTag, std::string const& parent,
-      google::cloud::clouddms::v1::PrivateConnection const& private_connection,
-      std::string const& private_connection_id, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreatePrivateConnection(NoAwaitTag, std::string const& parent, google::cloud::clouddms::v1::PrivateConnection const& private_connection, std::string const& private_connection_id, Options opts = {});
 
   // clang-format off
   ///
@@ -1636,10 +1539,7 @@ class DataMigrationServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::PrivateConnection>>
-  CreatePrivateConnection(
-      google::cloud::clouddms::v1::CreatePrivateConnectionRequest const&
-          request,
-      Options opts = {});
+  CreatePrivateConnection(google::cloud::clouddms::v1::CreatePrivateConnectionRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1652,11 +1552,8 @@ class DataMigrationServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreatePrivateConnection(
-      NoAwaitTag,
-      google::cloud::clouddms::v1::CreatePrivateConnectionRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreatePrivateConnection(NoAwaitTag, google::cloud::clouddms::v1::CreatePrivateConnectionRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1668,8 +1565,7 @@ class DataMigrationServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::PrivateConnection>>
-  CreatePrivateConnection(google::longrunning::Operation const& operation,
-                          Options opts = {});
+  CreatePrivateConnection(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1693,8 +1589,8 @@ class DataMigrationServiceClient {
   /// [google.cloud.clouddms.v1.PrivateConnection]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms_resources.proto#L1124}
   ///
   // clang-format on
-  StatusOr<google::cloud::clouddms::v1::PrivateConnection> GetPrivateConnection(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::clouddms::v1::PrivateConnection>
+  GetPrivateConnection(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1723,9 +1619,8 @@ class DataMigrationServiceClient {
   /// [google.cloud.clouddms.v1.PrivateConnection]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms_resources.proto#L1124}
   ///
   // clang-format on
-  StatusOr<google::cloud::clouddms::v1::PrivateConnection> GetPrivateConnection(
-      google::cloud::clouddms::v1::GetPrivateConnectionRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::clouddms::v1::PrivateConnection>
+  GetPrivateConnection(google::cloud::clouddms::v1::GetPrivateConnectionRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1798,9 +1693,7 @@ class DataMigrationServiceClient {
   ///
   // clang-format on
   StreamRange<google::cloud::clouddms::v1::PrivateConnection>
-  ListPrivateConnections(
-      google::cloud::clouddms::v1::ListPrivateConnectionsRequest request,
-      Options opts = {});
+  ListPrivateConnections(google::cloud::clouddms::v1::ListPrivateConnectionsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1845,8 +1738,8 @@ class DataMigrationServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeletePrivateConnection(
-      NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeletePrivateConnection(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1883,10 +1776,7 @@ class DataMigrationServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>
-  DeletePrivateConnection(
-      google::cloud::clouddms::v1::DeletePrivateConnectionRequest const&
-          request,
-      Options opts = {});
+  DeletePrivateConnection(google::cloud::clouddms::v1::DeletePrivateConnectionRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1899,11 +1789,8 @@ class DataMigrationServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeletePrivateConnection(
-      NoAwaitTag,
-      google::cloud::clouddms::v1::DeletePrivateConnectionRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeletePrivateConnection(NoAwaitTag, google::cloud::clouddms::v1::DeletePrivateConnectionRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1915,8 +1802,7 @@ class DataMigrationServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>
-  DeletePrivateConnection(google::longrunning::Operation const& operation,
-                          Options opts = {});
+  DeletePrivateConnection(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1971,9 +1857,7 @@ class DataMigrationServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>
-  GetConversionWorkspace(
-      google::cloud::clouddms::v1::GetConversionWorkspaceRequest const& request,
-      Options opts = {});
+  GetConversionWorkspace(google::cloud::clouddms::v1::GetConversionWorkspaceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2046,9 +1930,7 @@ class DataMigrationServiceClient {
   ///
   // clang-format on
   StreamRange<google::cloud::clouddms::v1::ConversionWorkspace>
-  ListConversionWorkspaces(
-      google::cloud::clouddms::v1::ListConversionWorkspacesRequest request,
-      Options opts = {});
+  ListConversionWorkspaces(google::cloud::clouddms::v1::ListConversionWorkspacesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -2082,11 +1964,7 @@ class DataMigrationServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
-  CreateConversionWorkspace(
-      std::string const& parent,
-      google::cloud::clouddms::v1::ConversionWorkspace const&
-          conversion_workspace,
-      std::string const& conversion_workspace_id, Options opts = {});
+  CreateConversionWorkspace(std::string const& parent, google::cloud::clouddms::v1::ConversionWorkspace const& conversion_workspace, std::string const& conversion_workspace_id, Options opts = {});
 
   // clang-format off
   ///
@@ -2099,11 +1977,8 @@ class DataMigrationServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateConversionWorkspace(
-      NoAwaitTag, std::string const& parent,
-      google::cloud::clouddms::v1::ConversionWorkspace const&
-          conversion_workspace,
-      std::string const& conversion_workspace_id, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateConversionWorkspace(NoAwaitTag, std::string const& parent, google::cloud::clouddms::v1::ConversionWorkspace const& conversion_workspace, std::string const& conversion_workspace_id, Options opts = {});
 
   // clang-format off
   ///
@@ -2140,10 +2015,7 @@ class DataMigrationServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
-  CreateConversionWorkspace(
-      google::cloud::clouddms::v1::CreateConversionWorkspaceRequest const&
-          request,
-      Options opts = {});
+  CreateConversionWorkspace(google::cloud::clouddms::v1::CreateConversionWorkspaceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2156,11 +2028,8 @@ class DataMigrationServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateConversionWorkspace(
-      NoAwaitTag,
-      google::cloud::clouddms::v1::CreateConversionWorkspaceRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateConversionWorkspace(NoAwaitTag, google::cloud::clouddms::v1::CreateConversionWorkspaceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2172,8 +2041,7 @@ class DataMigrationServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
-  CreateConversionWorkspace(google::longrunning::Operation const& operation,
-                            Options opts = {});
+  CreateConversionWorkspace(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -2207,10 +2075,7 @@ class DataMigrationServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
-  UpdateConversionWorkspace(
-      google::cloud::clouddms::v1::ConversionWorkspace const&
-          conversion_workspace,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  UpdateConversionWorkspace(google::cloud::clouddms::v1::ConversionWorkspace const& conversion_workspace, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -2223,11 +2088,8 @@ class DataMigrationServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateConversionWorkspace(
-      NoAwaitTag,
-      google::cloud::clouddms::v1::ConversionWorkspace const&
-          conversion_workspace,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateConversionWorkspace(NoAwaitTag, google::cloud::clouddms::v1::ConversionWorkspace const& conversion_workspace, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -2264,10 +2126,7 @@ class DataMigrationServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
-  UpdateConversionWorkspace(
-      google::cloud::clouddms::v1::UpdateConversionWorkspaceRequest const&
-          request,
-      Options opts = {});
+  UpdateConversionWorkspace(google::cloud::clouddms::v1::UpdateConversionWorkspaceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2280,11 +2139,8 @@ class DataMigrationServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateConversionWorkspace(
-      NoAwaitTag,
-      google::cloud::clouddms::v1::UpdateConversionWorkspaceRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateConversionWorkspace(NoAwaitTag, google::cloud::clouddms::v1::UpdateConversionWorkspaceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2296,8 +2152,7 @@ class DataMigrationServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
-  UpdateConversionWorkspace(google::longrunning::Operation const& operation,
-                            Options opts = {});
+  UpdateConversionWorkspace(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -2342,8 +2197,8 @@ class DataMigrationServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteConversionWorkspace(
-      NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteConversionWorkspace(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2380,10 +2235,7 @@ class DataMigrationServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>
-  DeleteConversionWorkspace(
-      google::cloud::clouddms::v1::DeleteConversionWorkspaceRequest const&
-          request,
-      Options opts = {});
+  DeleteConversionWorkspace(google::cloud::clouddms::v1::DeleteConversionWorkspaceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2396,11 +2248,8 @@ class DataMigrationServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteConversionWorkspace(
-      NoAwaitTag,
-      google::cloud::clouddms::v1::DeleteConversionWorkspaceRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteConversionWorkspace(NoAwaitTag, google::cloud::clouddms::v1::DeleteConversionWorkspaceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2412,8 +2261,7 @@ class DataMigrationServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>
-  DeleteConversionWorkspace(google::longrunning::Operation const& operation,
-                            Options opts = {});
+  DeleteConversionWorkspace(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -2441,10 +2289,8 @@ class DataMigrationServiceClient {
   /// [google.cloud.clouddms.v1.MappingRule]: @googleapis_reference_link{google/cloud/clouddms/v1/conversionworkspace_resources.proto#L215}
   ///
   // clang-format on
-  StatusOr<google::cloud::clouddms::v1::MappingRule> CreateMappingRule(
-      std::string const& parent,
-      google::cloud::clouddms::v1::MappingRule const& mapping_rule,
-      std::string const& mapping_rule_id, Options opts = {});
+  StatusOr<google::cloud::clouddms::v1::MappingRule>
+  CreateMappingRule(std::string const& parent, google::cloud::clouddms::v1::MappingRule const& mapping_rule, std::string const& mapping_rule_id, Options opts = {});
 
   // clang-format off
   ///
@@ -2473,9 +2319,8 @@ class DataMigrationServiceClient {
   /// [google.cloud.clouddms.v1.MappingRule]: @googleapis_reference_link{google/cloud/clouddms/v1/conversionworkspace_resources.proto#L215}
   ///
   // clang-format on
-  StatusOr<google::cloud::clouddms::v1::MappingRule> CreateMappingRule(
-      google::cloud::clouddms::v1::CreateMappingRuleRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::clouddms::v1::MappingRule>
+  CreateMappingRule(google::cloud::clouddms::v1::CreateMappingRuleRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2496,7 +2341,8 @@ class DataMigrationServiceClient {
   /// [google.cloud.clouddms.v1.DeleteMappingRuleRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L1590}
   ///
   // clang-format on
-  Status DeleteMappingRule(std::string const& name, Options opts = {});
+  Status
+  DeleteMappingRule(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2522,9 +2368,8 @@ class DataMigrationServiceClient {
   /// [google.cloud.clouddms.v1.DeleteMappingRuleRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L1590}
   ///
   // clang-format on
-  Status DeleteMappingRule(
-      google::cloud::clouddms::v1::DeleteMappingRuleRequest const& request,
-      Options opts = {});
+  Status
+  DeleteMappingRule(google::cloud::clouddms::v1::DeleteMappingRuleRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2559,8 +2404,8 @@ class DataMigrationServiceClient {
   /// [google.cloud.clouddms.v1.MappingRule]: @googleapis_reference_link{google/cloud/clouddms/v1/conversionworkspace_resources.proto#L215}
   ///
   // clang-format on
-  StreamRange<google::cloud::clouddms::v1::MappingRule> ListMappingRules(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::clouddms::v1::MappingRule>
+  ListMappingRules(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -2598,9 +2443,8 @@ class DataMigrationServiceClient {
   /// [google.cloud.clouddms.v1.MappingRule]: @googleapis_reference_link{google/cloud/clouddms/v1/conversionworkspace_resources.proto#L215}
   ///
   // clang-format on
-  StreamRange<google::cloud::clouddms::v1::MappingRule> ListMappingRules(
-      google::cloud::clouddms::v1::ListMappingRulesRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::clouddms::v1::MappingRule>
+  ListMappingRules(google::cloud::clouddms::v1::ListMappingRulesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -2630,8 +2474,8 @@ class DataMigrationServiceClient {
   /// [google.cloud.clouddms.v1.MappingRule]: @googleapis_reference_link{google/cloud/clouddms/v1/conversionworkspace_resources.proto#L215}
   ///
   // clang-format on
-  StatusOr<google::cloud::clouddms::v1::MappingRule> GetMappingRule(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::clouddms::v1::MappingRule>
+  GetMappingRule(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2660,9 +2504,8 @@ class DataMigrationServiceClient {
   /// [google.cloud.clouddms.v1.MappingRule]: @googleapis_reference_link{google/cloud/clouddms/v1/conversionworkspace_resources.proto#L215}
   ///
   // clang-format on
-  StatusOr<google::cloud::clouddms::v1::MappingRule> GetMappingRule(
-      google::cloud::clouddms::v1::GetMappingRuleRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::clouddms::v1::MappingRule>
+  GetMappingRule(google::cloud::clouddms::v1::GetMappingRuleRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2700,10 +2543,7 @@ class DataMigrationServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
-  SeedConversionWorkspace(
-      google::cloud::clouddms::v1::SeedConversionWorkspaceRequest const&
-          request,
-      Options opts = {});
+  SeedConversionWorkspace(google::cloud::clouddms::v1::SeedConversionWorkspaceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2716,11 +2556,8 @@ class DataMigrationServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> SeedConversionWorkspace(
-      NoAwaitTag,
-      google::cloud::clouddms::v1::SeedConversionWorkspaceRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  SeedConversionWorkspace(NoAwaitTag, google::cloud::clouddms::v1::SeedConversionWorkspaceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2732,8 +2569,7 @@ class DataMigrationServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
-  SeedConversionWorkspace(google::longrunning::Operation const& operation,
-                          Options opts = {});
+  SeedConversionWorkspace(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -2771,9 +2607,7 @@ class DataMigrationServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
-  ImportMappingRules(
-      google::cloud::clouddms::v1::ImportMappingRulesRequest const& request,
-      Options opts = {});
+  ImportMappingRules(google::cloud::clouddms::v1::ImportMappingRulesRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2786,10 +2620,8 @@ class DataMigrationServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> ImportMappingRules(
-      NoAwaitTag,
-      google::cloud::clouddms::v1::ImportMappingRulesRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  ImportMappingRules(NoAwaitTag, google::cloud::clouddms::v1::ImportMappingRulesRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2801,8 +2633,7 @@ class DataMigrationServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
-  ImportMappingRules(google::longrunning::Operation const& operation,
-                     Options opts = {});
+  ImportMappingRules(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -2839,10 +2670,7 @@ class DataMigrationServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
-  ConvertConversionWorkspace(
-      google::cloud::clouddms::v1::ConvertConversionWorkspaceRequest const&
-          request,
-      Options opts = {});
+  ConvertConversionWorkspace(google::cloud::clouddms::v1::ConvertConversionWorkspaceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2855,11 +2683,8 @@ class DataMigrationServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> ConvertConversionWorkspace(
-      NoAwaitTag,
-      google::cloud::clouddms::v1::ConvertConversionWorkspaceRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  ConvertConversionWorkspace(NoAwaitTag, google::cloud::clouddms::v1::ConvertConversionWorkspaceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2871,8 +2696,7 @@ class DataMigrationServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
-  ConvertConversionWorkspace(google::longrunning::Operation const& operation,
-                             Options opts = {});
+  ConvertConversionWorkspace(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -2909,10 +2733,7 @@ class DataMigrationServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
-  CommitConversionWorkspace(
-      google::cloud::clouddms::v1::CommitConversionWorkspaceRequest const&
-          request,
-      Options opts = {});
+  CommitConversionWorkspace(google::cloud::clouddms::v1::CommitConversionWorkspaceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2925,11 +2746,8 @@ class DataMigrationServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CommitConversionWorkspace(
-      NoAwaitTag,
-      google::cloud::clouddms::v1::CommitConversionWorkspaceRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CommitConversionWorkspace(NoAwaitTag, google::cloud::clouddms::v1::CommitConversionWorkspaceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2941,8 +2759,7 @@ class DataMigrationServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
-  CommitConversionWorkspace(google::longrunning::Operation const& operation,
-                            Options opts = {});
+  CommitConversionWorkspace(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -2979,10 +2796,7 @@ class DataMigrationServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
-  RollbackConversionWorkspace(
-      google::cloud::clouddms::v1::RollbackConversionWorkspaceRequest const&
-          request,
-      Options opts = {});
+  RollbackConversionWorkspace(google::cloud::clouddms::v1::RollbackConversionWorkspaceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2995,11 +2809,8 @@ class DataMigrationServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> RollbackConversionWorkspace(
-      NoAwaitTag,
-      google::cloud::clouddms::v1::RollbackConversionWorkspaceRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  RollbackConversionWorkspace(NoAwaitTag, google::cloud::clouddms::v1::RollbackConversionWorkspaceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -3011,8 +2822,7 @@ class DataMigrationServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
-  RollbackConversionWorkspace(google::longrunning::Operation const& operation,
-                              Options opts = {});
+  RollbackConversionWorkspace(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -3049,10 +2859,7 @@ class DataMigrationServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
-  ApplyConversionWorkspace(
-      google::cloud::clouddms::v1::ApplyConversionWorkspaceRequest const&
-          request,
-      Options opts = {});
+  ApplyConversionWorkspace(google::cloud::clouddms::v1::ApplyConversionWorkspaceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -3065,11 +2872,8 @@ class DataMigrationServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> ApplyConversionWorkspace(
-      NoAwaitTag,
-      google::cloud::clouddms::v1::ApplyConversionWorkspaceRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  ApplyConversionWorkspace(NoAwaitTag, google::cloud::clouddms::v1::ApplyConversionWorkspaceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -3081,8 +2885,7 @@ class DataMigrationServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
-  ApplyConversionWorkspace(google::longrunning::Operation const& operation,
-                           Options opts = {});
+  ApplyConversionWorkspace(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -3126,9 +2929,7 @@ class DataMigrationServiceClient {
   ///
   // clang-format on
   StreamRange<google::cloud::clouddms::v1::DatabaseEntity>
-  DescribeDatabaseEntities(
-      google::cloud::clouddms::v1::DescribeDatabaseEntitiesRequest request,
-      Options opts = {});
+  DescribeDatabaseEntities(google::cloud::clouddms::v1::DescribeDatabaseEntitiesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -3163,9 +2964,7 @@ class DataMigrationServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::clouddms::v1::SearchBackgroundJobsResponse>
-  SearchBackgroundJobs(
-      google::cloud::clouddms::v1::SearchBackgroundJobsRequest const& request,
-      Options opts = {});
+  SearchBackgroundJobs(google::cloud::clouddms::v1::SearchBackgroundJobsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -3195,12 +2994,8 @@ class DataMigrationServiceClient {
   /// [google.cloud.clouddms.v1.DescribeConversionWorkspaceRevisionsResponse]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L1556}
   ///
   // clang-format on
-  StatusOr<
-      google::cloud::clouddms::v1::DescribeConversionWorkspaceRevisionsResponse>
-  DescribeConversionWorkspaceRevisions(
-      google::cloud::clouddms::v1::
-          DescribeConversionWorkspaceRevisionsRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::clouddms::v1::DescribeConversionWorkspaceRevisionsResponse>
+  DescribeConversionWorkspaceRevisions(google::cloud::clouddms::v1::DescribeConversionWorkspaceRevisionsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -3232,8 +3027,8 @@ class DataMigrationServiceClient {
   /// [google.cloud.clouddms.v1.FetchStaticIpsRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L1610}
   ///
   // clang-format on
-  StreamRange<std::string> FetchStaticIps(std::string const& name,
-                                          Options opts = {});
+  StreamRange<std::string>
+  FetchStaticIps(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -3269,9 +3064,8 @@ class DataMigrationServiceClient {
   /// [google.cloud.clouddms.v1.FetchStaticIpsRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L1610}
   ///
   // clang-format on
-  StreamRange<std::string> FetchStaticIps(
-      google::cloud::clouddms::v1::FetchStaticIpsRequest request,
-      Options opts = {});
+  StreamRange<std::string>
+  FetchStaticIps(google::cloud::clouddms::v1::FetchStaticIpsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -3309,8 +3103,8 @@ class DataMigrationServiceClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request, Options opts = {});
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -3339,9 +3133,8 @@ class DataMigrationServiceClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -3373,8 +3166,8 @@ class DataMigrationServiceClient {
   /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L100}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -3405,8 +3198,8 @@ class DataMigrationServiceClient {
   /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -3441,9 +3234,8 @@ class DataMigrationServiceClient {
   /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L153}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request,
-      Options opts = {});
+  StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -3478,8 +3270,8 @@ class DataMigrationServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -3518,8 +3310,8 @@ class DataMigrationServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -3545,8 +3337,8 @@ class DataMigrationServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -3577,9 +3369,8 @@ class DataMigrationServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -3603,7 +3394,8 @@ class DataMigrationServiceClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status DeleteOperation(std::string const& name, Options opts = {});
+  Status
+  DeleteOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -3632,9 +3424,8 @@ class DataMigrationServiceClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request,
-      Options opts = {});
+  Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -3668,7 +3459,8 @@ class DataMigrationServiceClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(std::string const& name, Options opts = {});
+  Status
+  CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -3707,9 +3499,8 @@ class DataMigrationServiceClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request,
-      Options opts = {});
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<DataMigrationServiceConnection> connection_;

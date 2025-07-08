@@ -19,16 +19,16 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PRIVILEGEDACCESSMANAGER_V1_INTERNAL_PRIVILEGED_ACCESS_MANAGER_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PRIVILEGEDACCESSMANAGER_V1_INTERNAL_PRIVILEGED_ACCESS_MANAGER_CONNECTION_IMPL_H
 
-#include "google/cloud/privilegedaccessmanager/v1/internal/privileged_access_manager_retry_traits.h"
-#include "google/cloud/privilegedaccessmanager/v1/internal/privileged_access_manager_stub.h"
-#include "google/cloud/privilegedaccessmanager/v1/privileged_access_manager_connection.h"
-#include "google/cloud/privilegedaccessmanager/v1/privileged_access_manager_connection_idempotency_policy.h"
-#include "google/cloud/privilegedaccessmanager/v1/privileged_access_manager_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
+#include "google/cloud/privilegedaccessmanager/v1/internal/privileged_access_manager_retry_traits.h"
+#include "google/cloud/privilegedaccessmanager/v1/internal/privileged_access_manager_stub.h"
+#include "google/cloud/privilegedaccessmanager/v1/privileged_access_manager_connection.h"
+#include "google/cloud/privilegedaccessmanager/v1/privileged_access_manager_connection_idempotency_policy.h"
+#include "google/cloud/privilegedaccessmanager/v1/privileged_access_manager_options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
@@ -46,125 +46,104 @@ class PrivilegedAccessManagerConnectionImpl
   ~PrivilegedAccessManagerConnectionImpl() override = default;
 
   PrivilegedAccessManagerConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<
-          privilegedaccessmanager_v1_internal::PrivilegedAccessManagerStub>
-          stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<privilegedaccessmanager_v1_internal::PrivilegedAccessManagerStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
-  StatusOr<
-      google::cloud::privilegedaccessmanager::v1::CheckOnboardingStatusResponse>
-  CheckOnboardingStatus(
-      google::cloud::privilegedaccessmanager::v1::
-          CheckOnboardingStatusRequest const& request) override;
+  StatusOr<google::cloud::privilegedaccessmanager::v1::CheckOnboardingStatusResponse>
+  CheckOnboardingStatus(google::cloud::privilegedaccessmanager::v1::CheckOnboardingStatusRequest const& request) override;
 
   StreamRange<google::cloud::privilegedaccessmanager::v1::Entitlement>
-  ListEntitlements(
-      google::cloud::privilegedaccessmanager::v1::ListEntitlementsRequest
-          request) override;
+  ListEntitlements(google::cloud::privilegedaccessmanager::v1::ListEntitlementsRequest request) override;
 
   StreamRange<google::cloud::privilegedaccessmanager::v1::Entitlement>
-  SearchEntitlements(
-      google::cloud::privilegedaccessmanager::v1::SearchEntitlementsRequest
-          request) override;
+  SearchEntitlements(google::cloud::privilegedaccessmanager::v1::SearchEntitlementsRequest request) override;
 
   StatusOr<google::cloud::privilegedaccessmanager::v1::Entitlement>
-  GetEntitlement(
-      google::cloud::privilegedaccessmanager::v1::GetEntitlementRequest const&
-          request) override;
+  GetEntitlement(google::cloud::privilegedaccessmanager::v1::GetEntitlementRequest const& request) override;
 
   future<StatusOr<google::cloud::privilegedaccessmanager::v1::Entitlement>>
-  CreateEntitlement(google::cloud::privilegedaccessmanager::v1::
-                        CreateEntitlementRequest const& request) override;
+  CreateEntitlement(google::cloud::privilegedaccessmanager::v1::CreateEntitlementRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> CreateEntitlement(
-      NoAwaitTag, google::cloud::privilegedaccessmanager::v1::
-                      CreateEntitlementRequest const& request) override;
-
-  future<StatusOr<google::cloud::privilegedaccessmanager::v1::Entitlement>>
-  CreateEntitlement(google::longrunning::Operation const& operation) override;
+  StatusOr<google::longrunning::Operation>
+  CreateEntitlement(NoAwaitTag,
+      google::cloud::privilegedaccessmanager::v1::CreateEntitlementRequest const& request) override;
 
   future<StatusOr<google::cloud::privilegedaccessmanager::v1::Entitlement>>
-  DeleteEntitlement(google::cloud::privilegedaccessmanager::v1::
-                        DeleteEntitlementRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation> DeleteEntitlement(
-      NoAwaitTag, google::cloud::privilegedaccessmanager::v1::
-                      DeleteEntitlementRequest const& request) override;
+  CreateEntitlement(
+      google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::privilegedaccessmanager::v1::Entitlement>>
-  DeleteEntitlement(google::longrunning::Operation const& operation) override;
+  DeleteEntitlement(google::cloud::privilegedaccessmanager::v1::DeleteEntitlementRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  DeleteEntitlement(NoAwaitTag,
+      google::cloud::privilegedaccessmanager::v1::DeleteEntitlementRequest const& request) override;
 
   future<StatusOr<google::cloud::privilegedaccessmanager::v1::Entitlement>>
-  UpdateEntitlement(google::cloud::privilegedaccessmanager::v1::
-                        UpdateEntitlementRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation> UpdateEntitlement(
-      NoAwaitTag, google::cloud::privilegedaccessmanager::v1::
-                      UpdateEntitlementRequest const& request) override;
+  DeleteEntitlement(
+      google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::privilegedaccessmanager::v1::Entitlement>>
-  UpdateEntitlement(google::longrunning::Operation const& operation) override;
+  UpdateEntitlement(google::cloud::privilegedaccessmanager::v1::UpdateEntitlementRequest const& request) override;
 
-  StreamRange<google::cloud::privilegedaccessmanager::v1::Grant> ListGrants(
-      google::cloud::privilegedaccessmanager::v1::ListGrantsRequest request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  UpdateEntitlement(NoAwaitTag,
+      google::cloud::privilegedaccessmanager::v1::UpdateEntitlementRequest const& request) override;
 
-  StreamRange<google::cloud::privilegedaccessmanager::v1::Grant> SearchGrants(
-      google::cloud::privilegedaccessmanager::v1::SearchGrantsRequest request)
-      override;
+  future<StatusOr<google::cloud::privilegedaccessmanager::v1::Entitlement>>
+  UpdateEntitlement(
+      google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::cloud::privilegedaccessmanager::v1::Grant> GetGrant(
-      google::cloud::privilegedaccessmanager::v1::GetGrantRequest const&
-          request) override;
+  StreamRange<google::cloud::privilegedaccessmanager::v1::Grant>
+  ListGrants(google::cloud::privilegedaccessmanager::v1::ListGrantsRequest request) override;
 
-  StatusOr<google::cloud::privilegedaccessmanager::v1::Grant> CreateGrant(
-      google::cloud::privilegedaccessmanager::v1::CreateGrantRequest const&
-          request) override;
+  StreamRange<google::cloud::privilegedaccessmanager::v1::Grant>
+  SearchGrants(google::cloud::privilegedaccessmanager::v1::SearchGrantsRequest request) override;
 
-  StatusOr<google::cloud::privilegedaccessmanager::v1::Grant> ApproveGrant(
-      google::cloud::privilegedaccessmanager::v1::ApproveGrantRequest const&
-          request) override;
+  StatusOr<google::cloud::privilegedaccessmanager::v1::Grant>
+  GetGrant(google::cloud::privilegedaccessmanager::v1::GetGrantRequest const& request) override;
 
-  StatusOr<google::cloud::privilegedaccessmanager::v1::Grant> DenyGrant(
-      google::cloud::privilegedaccessmanager::v1::DenyGrantRequest const&
-          request) override;
+  StatusOr<google::cloud::privilegedaccessmanager::v1::Grant>
+  CreateGrant(google::cloud::privilegedaccessmanager::v1::CreateGrantRequest const& request) override;
+
+  StatusOr<google::cloud::privilegedaccessmanager::v1::Grant>
+  ApproveGrant(google::cloud::privilegedaccessmanager::v1::ApproveGrantRequest const& request) override;
+
+  StatusOr<google::cloud::privilegedaccessmanager::v1::Grant>
+  DenyGrant(google::cloud::privilegedaccessmanager::v1::DenyGrantRequest const& request) override;
+
+  future<StatusOr<google::cloud::privilegedaccessmanager::v1::Grant>>
+  RevokeGrant(google::cloud::privilegedaccessmanager::v1::RevokeGrantRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  RevokeGrant(NoAwaitTag,
+      google::cloud::privilegedaccessmanager::v1::RevokeGrantRequest const& request) override;
 
   future<StatusOr<google::cloud::privilegedaccessmanager::v1::Grant>>
   RevokeGrant(
-      google::cloud::privilegedaccessmanager::v1::RevokeGrantRequest const&
-          request) override;
+      google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::longrunning::Operation> RevokeGrant(
-      NoAwaitTag,
-      google::cloud::privilegedaccessmanager::v1::RevokeGrantRequest const&
-          request) override;
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request) override;
 
-  future<StatusOr<google::cloud::privilegedaccessmanager::v1::Grant>>
-  RevokeGrant(google::longrunning::Operation const& operation) override;
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request) override;
 
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request) override;
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request) override;
-
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request) override;
-
-  Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request) override;
+  Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<
-      privilegedaccessmanager_v1_internal::PrivilegedAccessManagerStub>
-      stub_;
+  std::shared_ptr<privilegedaccessmanager_v1_internal::PrivilegedAccessManagerStub> stub_;
   Options options_;
 };
 

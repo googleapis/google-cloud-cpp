@@ -28,39 +28,28 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ReservationsClient::ReservationsClient(
     std::shared_ptr<ReservationsConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 ReservationsClient::~ReservationsClient() = default;
 
-StreamRange<std::pair<std::string,
-                      google::cloud::cpp::compute::v1::ReservationsScopedList>>
-ReservationsClient::AggregatedListReservations(std::string const& project,
-                                               Options opts) {
+StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::ReservationsScopedList>>
+ReservationsClient::AggregatedListReservations(std::string const& project, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::reservations::v1::
-      AggregatedListReservationsRequest request;
+  google::cloud::cpp::compute::reservations::v1::AggregatedListReservationsRequest request;
   request.set_project(project);
   return connection_->AggregatedListReservations(request);
 }
 
-StreamRange<std::pair<std::string,
-                      google::cloud::cpp::compute::v1::ReservationsScopedList>>
-ReservationsClient::AggregatedListReservations(
-    google::cloud::cpp::compute::reservations::v1::
-        AggregatedListReservationsRequest request,
-    Options opts) {
+StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::ReservationsScopedList>>
+ReservationsClient::AggregatedListReservations(google::cloud::cpp::compute::reservations::v1::AggregatedListReservationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->AggregatedListReservations(std::move(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-ReservationsClient::DeleteReservation(std::string const& project,
-                                      std::string const& zone,
-                                      std::string const& reservation,
-                                      Options opts) {
+ReservationsClient::DeleteReservation(std::string const& project, std::string const& zone, std::string const& reservation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::reservations::v1::DeleteReservationRequest
-      request;
+  google::cloud::cpp::compute::reservations::v1::DeleteReservationRequest request;
   request.set_project(project);
   request.set_zone(zone);
   request.set_reservation(reservation);
@@ -68,13 +57,9 @@ ReservationsClient::DeleteReservation(std::string const& project,
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-ReservationsClient::DeleteReservation(NoAwaitTag, std::string const& project,
-                                      std::string const& zone,
-                                      std::string const& reservation,
-                                      Options opts) {
+ReservationsClient::DeleteReservation(NoAwaitTag, std::string const& project, std::string const& zone, std::string const& reservation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::reservations::v1::DeleteReservationRequest
-      request;
+  google::cloud::cpp::compute::reservations::v1::DeleteReservationRequest request;
   request.set_project(project);
   request.set_zone(zone);
   request.set_reservation(reservation);
@@ -82,36 +67,25 @@ ReservationsClient::DeleteReservation(NoAwaitTag, std::string const& project,
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-ReservationsClient::DeleteReservation(
-    google::cloud::cpp::compute::reservations::v1::
-        DeleteReservationRequest const& request,
-    Options opts) {
+ReservationsClient::DeleteReservation(google::cloud::cpp::compute::reservations::v1::DeleteReservationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteReservation(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-ReservationsClient::DeleteReservation(
-    NoAwaitTag,
-    google::cloud::cpp::compute::reservations::v1::
-        DeleteReservationRequest const& request,
-    Options opts) {
+ReservationsClient::DeleteReservation(NoAwaitTag, google::cloud::cpp::compute::reservations::v1::DeleteReservationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteReservation(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-ReservationsClient::DeleteReservation(
-    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+ReservationsClient::DeleteReservation(google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteReservation(operation);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Reservation>
-ReservationsClient::GetReservation(std::string const& project,
-                                   std::string const& zone,
-                                   std::string const& reservation,
-                                   Options opts) {
+ReservationsClient::GetReservation(std::string const& project, std::string const& zone, std::string const& reservation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::reservations::v1::GetReservationRequest request;
   request.set_project(project);
@@ -121,18 +95,13 @@ ReservationsClient::GetReservation(std::string const& project,
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Reservation>
-ReservationsClient::GetReservation(
-    google::cloud::cpp::compute::reservations::v1::GetReservationRequest const&
-        request,
-    Options opts) {
+ReservationsClient::GetReservation(google::cloud::cpp::compute::reservations::v1::GetReservationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetReservation(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
-ReservationsClient::GetIamPolicy(std::string const& project,
-                                 std::string const& zone,
-                                 std::string const& resource, Options opts) {
+ReservationsClient::GetIamPolicy(std::string const& project, std::string const& zone, std::string const& resource, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::reservations::v1::GetIamPolicyRequest request;
   request.set_project(project);
@@ -142,22 +111,15 @@ ReservationsClient::GetIamPolicy(std::string const& project,
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
-ReservationsClient::GetIamPolicy(
-    google::cloud::cpp::compute::reservations::v1::GetIamPolicyRequest const&
-        request,
-    Options opts) {
+ReservationsClient::GetIamPolicy(google::cloud::cpp::compute::reservations::v1::GetIamPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetIamPolicy(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-ReservationsClient::InsertReservation(
-    std::string const& project, std::string const& zone,
-    google::cloud::cpp::compute::v1::Reservation const& reservation_resource,
-    Options opts) {
+ReservationsClient::InsertReservation(std::string const& project, std::string const& zone, google::cloud::cpp::compute::v1::Reservation const& reservation_resource, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::reservations::v1::InsertReservationRequest
-      request;
+  google::cloud::cpp::compute::reservations::v1::InsertReservationRequest request;
   request.set_project(project);
   request.set_zone(zone);
   *request.mutable_reservation_resource() = reservation_resource;
@@ -165,13 +127,9 @@ ReservationsClient::InsertReservation(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-ReservationsClient::InsertReservation(
-    NoAwaitTag, std::string const& project, std::string const& zone,
-    google::cloud::cpp::compute::v1::Reservation const& reservation_resource,
-    Options opts) {
+ReservationsClient::InsertReservation(NoAwaitTag, std::string const& project, std::string const& zone, google::cloud::cpp::compute::v1::Reservation const& reservation_resource, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::reservations::v1::InsertReservationRequest
-      request;
+  google::cloud::cpp::compute::reservations::v1::InsertReservationRequest request;
   request.set_project(project);
   request.set_zone(zone);
   *request.mutable_reservation_resource() = reservation_resource;
@@ -179,233 +137,156 @@ ReservationsClient::InsertReservation(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-ReservationsClient::InsertReservation(
-    google::cloud::cpp::compute::reservations::v1::
-        InsertReservationRequest const& request,
-    Options opts) {
+ReservationsClient::InsertReservation(google::cloud::cpp::compute::reservations::v1::InsertReservationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->InsertReservation(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-ReservationsClient::InsertReservation(
-    NoAwaitTag,
-    google::cloud::cpp::compute::reservations::v1::
-        InsertReservationRequest const& request,
-    Options opts) {
+ReservationsClient::InsertReservation(NoAwaitTag, google::cloud::cpp::compute::reservations::v1::InsertReservationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->InsertReservation(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-ReservationsClient::InsertReservation(
-    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+ReservationsClient::InsertReservation(google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->InsertReservation(operation);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::Reservation>
-ReservationsClient::ListReservations(std::string const& project,
-                                     std::string const& zone, Options opts) {
+ReservationsClient::ListReservations(std::string const& project, std::string const& zone, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::reservations::v1::ListReservationsRequest
-      request;
+  google::cloud::cpp::compute::reservations::v1::ListReservationsRequest request;
   request.set_project(project);
   request.set_zone(zone);
   return connection_->ListReservations(request);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::Reservation>
-ReservationsClient::ListReservations(
-    google::cloud::cpp::compute::reservations::v1::ListReservationsRequest
-        request,
-    Options opts) {
+ReservationsClient::ListReservations(google::cloud::cpp::compute::reservations::v1::ListReservationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListReservations(std::move(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-ReservationsClient::PerformMaintenance(
-    std::string const& project, std::string const& zone,
-    std::string const& reservation,
-    google::cloud::cpp::compute::v1::
-        ReservationsPerformMaintenanceRequest const&
-            reservations_perform_maintenance_request_resource,
-    Options opts) {
+ReservationsClient::PerformMaintenance(std::string const& project, std::string const& zone, std::string const& reservation, google::cloud::cpp::compute::v1::ReservationsPerformMaintenanceRequest const& reservations_perform_maintenance_request_resource, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::reservations::v1::PerformMaintenanceRequest
-      request;
+  google::cloud::cpp::compute::reservations::v1::PerformMaintenanceRequest request;
   request.set_project(project);
   request.set_zone(zone);
   request.set_reservation(reservation);
-  *request.mutable_reservations_perform_maintenance_request_resource() =
-      reservations_perform_maintenance_request_resource;
+  *request.mutable_reservations_perform_maintenance_request_resource() = reservations_perform_maintenance_request_resource;
   return connection_->PerformMaintenance(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-ReservationsClient::PerformMaintenance(
-    NoAwaitTag, std::string const& project, std::string const& zone,
-    std::string const& reservation,
-    google::cloud::cpp::compute::v1::
-        ReservationsPerformMaintenanceRequest const&
-            reservations_perform_maintenance_request_resource,
-    Options opts) {
+ReservationsClient::PerformMaintenance(NoAwaitTag, std::string const& project, std::string const& zone, std::string const& reservation, google::cloud::cpp::compute::v1::ReservationsPerformMaintenanceRequest const& reservations_perform_maintenance_request_resource, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::reservations::v1::PerformMaintenanceRequest
-      request;
+  google::cloud::cpp::compute::reservations::v1::PerformMaintenanceRequest request;
   request.set_project(project);
   request.set_zone(zone);
   request.set_reservation(reservation);
-  *request.mutable_reservations_perform_maintenance_request_resource() =
-      reservations_perform_maintenance_request_resource;
+  *request.mutable_reservations_perform_maintenance_request_resource() = reservations_perform_maintenance_request_resource;
   return connection_->PerformMaintenance(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-ReservationsClient::PerformMaintenance(
-    google::cloud::cpp::compute::reservations::v1::
-        PerformMaintenanceRequest const& request,
-    Options opts) {
+ReservationsClient::PerformMaintenance(google::cloud::cpp::compute::reservations::v1::PerformMaintenanceRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PerformMaintenance(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-ReservationsClient::PerformMaintenance(
-    NoAwaitTag,
-    google::cloud::cpp::compute::reservations::v1::
-        PerformMaintenanceRequest const& request,
-    Options opts) {
+ReservationsClient::PerformMaintenance(NoAwaitTag, google::cloud::cpp::compute::reservations::v1::PerformMaintenanceRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PerformMaintenance(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-ReservationsClient::PerformMaintenance(
-    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+ReservationsClient::PerformMaintenance(google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PerformMaintenance(operation);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-ReservationsClient::Resize(
-    std::string const& project, std::string const& zone,
-    std::string const& reservation,
-    google::cloud::cpp::compute::v1::ReservationsResizeRequest const&
-        reservations_resize_request_resource,
-    Options opts) {
+ReservationsClient::Resize(std::string const& project, std::string const& zone, std::string const& reservation, google::cloud::cpp::compute::v1::ReservationsResizeRequest const& reservations_resize_request_resource, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::reservations::v1::ResizeRequest request;
   request.set_project(project);
   request.set_zone(zone);
   request.set_reservation(reservation);
-  *request.mutable_reservations_resize_request_resource() =
-      reservations_resize_request_resource;
+  *request.mutable_reservations_resize_request_resource() = reservations_resize_request_resource;
   return connection_->Resize(request);
 }
 
-StatusOr<google::cloud::cpp::compute::v1::Operation> ReservationsClient::Resize(
-    NoAwaitTag, std::string const& project, std::string const& zone,
-    std::string const& reservation,
-    google::cloud::cpp::compute::v1::ReservationsResizeRequest const&
-        reservations_resize_request_resource,
-    Options opts) {
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+ReservationsClient::Resize(NoAwaitTag, std::string const& project, std::string const& zone, std::string const& reservation, google::cloud::cpp::compute::v1::ReservationsResizeRequest const& reservations_resize_request_resource, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::reservations::v1::ResizeRequest request;
   request.set_project(project);
   request.set_zone(zone);
   request.set_reservation(reservation);
-  *request.mutable_reservations_resize_request_resource() =
-      reservations_resize_request_resource;
+  *request.mutable_reservations_resize_request_resource() = reservations_resize_request_resource;
   return connection_->Resize(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-ReservationsClient::Resize(
-    google::cloud::cpp::compute::reservations::v1::ResizeRequest const& request,
-    Options opts) {
+ReservationsClient::Resize(google::cloud::cpp::compute::reservations::v1::ResizeRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->Resize(request);
 }
 
-StatusOr<google::cloud::cpp::compute::v1::Operation> ReservationsClient::Resize(
-    NoAwaitTag,
-    google::cloud::cpp::compute::reservations::v1::ResizeRequest const& request,
-    Options opts) {
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+ReservationsClient::Resize(NoAwaitTag, google::cloud::cpp::compute::reservations::v1::ResizeRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->Resize(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-ReservationsClient::Resize(
-    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+ReservationsClient::Resize(google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->Resize(operation);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
-ReservationsClient::SetIamPolicy(
-    std::string const& project, std::string const& zone,
-    std::string const& resource,
-    google::cloud::cpp::compute::v1::ZoneSetPolicyRequest const&
-        zone_set_policy_request_resource,
-    Options opts) {
+ReservationsClient::SetIamPolicy(std::string const& project, std::string const& zone, std::string const& resource, google::cloud::cpp::compute::v1::ZoneSetPolicyRequest const& zone_set_policy_request_resource, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::reservations::v1::SetIamPolicyRequest request;
   request.set_project(project);
   request.set_zone(zone);
   request.set_resource(resource);
-  *request.mutable_zone_set_policy_request_resource() =
-      zone_set_policy_request_resource;
+  *request.mutable_zone_set_policy_request_resource() = zone_set_policy_request_resource;
   return connection_->SetIamPolicy(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
-ReservationsClient::SetIamPolicy(
-    google::cloud::cpp::compute::reservations::v1::SetIamPolicyRequest const&
-        request,
-    Options opts) {
+ReservationsClient::SetIamPolicy(google::cloud::cpp::compute::reservations::v1::SetIamPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetIamPolicy(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-ReservationsClient::TestIamPermissions(
-    std::string const& project, std::string const& zone,
-    std::string const& resource,
-    google::cloud::cpp::compute::v1::TestPermissionsRequest const&
-        test_permissions_request_resource,
-    Options opts) {
+ReservationsClient::TestIamPermissions(std::string const& project, std::string const& zone, std::string const& resource, google::cloud::cpp::compute::v1::TestPermissionsRequest const& test_permissions_request_resource, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::reservations::v1::TestIamPermissionsRequest
-      request;
+  google::cloud::cpp::compute::reservations::v1::TestIamPermissionsRequest request;
   request.set_project(project);
   request.set_zone(zone);
   request.set_resource(resource);
-  *request.mutable_test_permissions_request_resource() =
-      test_permissions_request_resource;
+  *request.mutable_test_permissions_request_resource() = test_permissions_request_resource;
   return connection_->TestIamPermissions(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-ReservationsClient::TestIamPermissions(
-    google::cloud::cpp::compute::reservations::v1::
-        TestIamPermissionsRequest const& request,
-    Options opts) {
+ReservationsClient::TestIamPermissions(google::cloud::cpp::compute::reservations::v1::TestIamPermissionsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->TestIamPermissions(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-ReservationsClient::UpdateReservation(
-    std::string const& project, std::string const& zone,
-    std::string const& reservation, std::string const& update_mask,
-    google::cloud::cpp::compute::v1::Reservation const& reservation_resource,
-    Options opts) {
+ReservationsClient::UpdateReservation(std::string const& project, std::string const& zone, std::string const& reservation, std::string const& update_mask, google::cloud::cpp::compute::v1::Reservation const& reservation_resource, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::reservations::v1::UpdateReservationRequest
-      request;
+  google::cloud::cpp::compute::reservations::v1::UpdateReservationRequest request;
   request.set_project(project);
   request.set_zone(zone);
   request.set_reservation(reservation);
@@ -415,14 +296,9 @@ ReservationsClient::UpdateReservation(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-ReservationsClient::UpdateReservation(
-    NoAwaitTag, std::string const& project, std::string const& zone,
-    std::string const& reservation, std::string const& update_mask,
-    google::cloud::cpp::compute::v1::Reservation const& reservation_resource,
-    Options opts) {
+ReservationsClient::UpdateReservation(NoAwaitTag, std::string const& project, std::string const& zone, std::string const& reservation, std::string const& update_mask, google::cloud::cpp::compute::v1::Reservation const& reservation_resource, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::reservations::v1::UpdateReservationRequest
-      request;
+  google::cloud::cpp::compute::reservations::v1::UpdateReservationRequest request;
   request.set_project(project);
   request.set_zone(zone);
   request.set_reservation(reservation);
@@ -432,27 +308,19 @@ ReservationsClient::UpdateReservation(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-ReservationsClient::UpdateReservation(
-    google::cloud::cpp::compute::reservations::v1::
-        UpdateReservationRequest const& request,
-    Options opts) {
+ReservationsClient::UpdateReservation(google::cloud::cpp::compute::reservations::v1::UpdateReservationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateReservation(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-ReservationsClient::UpdateReservation(
-    NoAwaitTag,
-    google::cloud::cpp::compute::reservations::v1::
-        UpdateReservationRequest const& request,
-    Options opts) {
+ReservationsClient::UpdateReservation(NoAwaitTag, google::cloud::cpp::compute::reservations::v1::UpdateReservationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateReservation(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-ReservationsClient::UpdateReservation(
-    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+ReservationsClient::UpdateReservation(google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateReservation(operation);
 }

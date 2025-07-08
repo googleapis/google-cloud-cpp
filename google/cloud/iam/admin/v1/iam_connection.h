@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAM_ADMIN_V1_IAM_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAM_ADMIN_V1_IAM_CONNECTION_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/iam/admin/v1/iam_connection_idempotency_policy.h"
 #include "google/cloud/iam/admin/v1/internal/iam_retry_traits.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -62,14 +62,14 @@ class IAMLimitedErrorCountRetryPolicy : public IAMRetryPolicy {
    *     @p maximum_failures == 0.
    */
   explicit IAMLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   IAMLimitedErrorCountRetryPolicy(
       IAMLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : IAMLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : IAMLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   IAMLimitedErrorCountRetryPolicy(
       IAMLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : IAMLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : IAMLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -89,9 +89,7 @@ class IAMLimitedErrorCountRetryPolicy : public IAMRetryPolicy {
   using BaseType = IAMRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      iam_admin_v1_internal::IAMRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<iam_admin_v1_internal::IAMRetryTraits> impl_;
 };
 
 /**
@@ -129,12 +127,12 @@ class IAMLimitedTimeRetryPolicy : public IAMRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit IAMLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
   IAMLimitedTimeRetryPolicy(IAMLimitedTimeRetryPolicy&& rhs) noexcept
-      : IAMLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+    : IAMLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
   IAMLimitedTimeRetryPolicy(IAMLimitedTimeRetryPolicy const& rhs) noexcept
-      : IAMLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+    : IAMLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -148,16 +146,15 @@ class IAMLimitedTimeRetryPolicy : public IAMRetryPolicy {
     return impl_.IsPermanentFailure(status);
   }
   std::unique_ptr<IAMRetryPolicy> clone() const override {
-    return std::make_unique<IAMLimitedTimeRetryPolicy>(maximum_duration());
+    return std::make_unique<IAMLimitedTimeRetryPolicy>(
+        maximum_duration());
   }
 
   // This is provided only for backwards compatibility.
   using BaseType = IAMRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      iam_admin_v1_internal::IAMRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<iam_admin_v1_internal::IAMRetryTraits> impl_;
 };
 
 /**
@@ -179,96 +176,88 @@ class IAMConnection {
   virtual Options options() { return Options{}; }
 
   virtual StreamRange<google::iam::admin::v1::ServiceAccount>
-  ListServiceAccounts(
-      google::iam::admin::v1::ListServiceAccountsRequest request);
+  ListServiceAccounts(google::iam::admin::v1::ListServiceAccountsRequest request);
 
-  virtual StatusOr<google::iam::admin::v1::ServiceAccount> GetServiceAccount(
-      google::iam::admin::v1::GetServiceAccountRequest const& request);
+  virtual StatusOr<google::iam::admin::v1::ServiceAccount>
+  GetServiceAccount(google::iam::admin::v1::GetServiceAccountRequest const& request);
 
-  virtual StatusOr<google::iam::admin::v1::ServiceAccount> CreateServiceAccount(
-      google::iam::admin::v1::CreateServiceAccountRequest const& request);
+  virtual StatusOr<google::iam::admin::v1::ServiceAccount>
+  CreateServiceAccount(google::iam::admin::v1::CreateServiceAccountRequest const& request);
 
-  virtual StatusOr<google::iam::admin::v1::ServiceAccount> PatchServiceAccount(
-      google::iam::admin::v1::PatchServiceAccountRequest const& request);
+  virtual StatusOr<google::iam::admin::v1::ServiceAccount>
+  PatchServiceAccount(google::iam::admin::v1::PatchServiceAccountRequest const& request);
 
-  virtual Status DeleteServiceAccount(
-      google::iam::admin::v1::DeleteServiceAccountRequest const& request);
+  virtual Status
+  DeleteServiceAccount(google::iam::admin::v1::DeleteServiceAccountRequest const& request);
 
   virtual StatusOr<google::iam::admin::v1::UndeleteServiceAccountResponse>
-  UndeleteServiceAccount(
-      google::iam::admin::v1::UndeleteServiceAccountRequest const& request);
+  UndeleteServiceAccount(google::iam::admin::v1::UndeleteServiceAccountRequest const& request);
 
-  virtual Status EnableServiceAccount(
-      google::iam::admin::v1::EnableServiceAccountRequest const& request);
+  virtual Status
+  EnableServiceAccount(google::iam::admin::v1::EnableServiceAccountRequest const& request);
 
-  virtual Status DisableServiceAccount(
-      google::iam::admin::v1::DisableServiceAccountRequest const& request);
+  virtual Status
+  DisableServiceAccount(google::iam::admin::v1::DisableServiceAccountRequest const& request);
 
   virtual StatusOr<google::iam::admin::v1::ListServiceAccountKeysResponse>
-  ListServiceAccountKeys(
-      google::iam::admin::v1::ListServiceAccountKeysRequest const& request);
+  ListServiceAccountKeys(google::iam::admin::v1::ListServiceAccountKeysRequest const& request);
 
   virtual StatusOr<google::iam::admin::v1::ServiceAccountKey>
-  GetServiceAccountKey(
-      google::iam::admin::v1::GetServiceAccountKeyRequest const& request);
+  GetServiceAccountKey(google::iam::admin::v1::GetServiceAccountKeyRequest const& request);
 
   virtual StatusOr<google::iam::admin::v1::ServiceAccountKey>
-  CreateServiceAccountKey(
-      google::iam::admin::v1::CreateServiceAccountKeyRequest const& request);
+  CreateServiceAccountKey(google::iam::admin::v1::CreateServiceAccountKeyRequest const& request);
 
   virtual StatusOr<google::iam::admin::v1::ServiceAccountKey>
-  UploadServiceAccountKey(
-      google::iam::admin::v1::UploadServiceAccountKeyRequest const& request);
+  UploadServiceAccountKey(google::iam::admin::v1::UploadServiceAccountKeyRequest const& request);
 
-  virtual Status DeleteServiceAccountKey(
-      google::iam::admin::v1::DeleteServiceAccountKeyRequest const& request);
+  virtual Status
+  DeleteServiceAccountKey(google::iam::admin::v1::DeleteServiceAccountKeyRequest const& request);
 
-  virtual Status DisableServiceAccountKey(
-      google::iam::admin::v1::DisableServiceAccountKeyRequest const& request);
+  virtual Status
+  DisableServiceAccountKey(google::iam::admin::v1::DisableServiceAccountKeyRequest const& request);
 
-  virtual Status EnableServiceAccountKey(
-      google::iam::admin::v1::EnableServiceAccountKeyRequest const& request);
+  virtual Status
+  EnableServiceAccountKey(google::iam::admin::v1::EnableServiceAccountKeyRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
 
   virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
   TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
 
-  virtual StreamRange<google::iam::admin::v1::Role> QueryGrantableRoles(
-      google::iam::admin::v1::QueryGrantableRolesRequest request);
+  virtual StreamRange<google::iam::admin::v1::Role>
+  QueryGrantableRoles(google::iam::admin::v1::QueryGrantableRolesRequest request);
 
-  virtual StreamRange<google::iam::admin::v1::Role> ListRoles(
-      google::iam::admin::v1::ListRolesRequest request);
+  virtual StreamRange<google::iam::admin::v1::Role>
+  ListRoles(google::iam::admin::v1::ListRolesRequest request);
 
-  virtual StatusOr<google::iam::admin::v1::Role> GetRole(
-      google::iam::admin::v1::GetRoleRequest const& request);
+  virtual StatusOr<google::iam::admin::v1::Role>
+  GetRole(google::iam::admin::v1::GetRoleRequest const& request);
 
-  virtual StatusOr<google::iam::admin::v1::Role> CreateRole(
-      google::iam::admin::v1::CreateRoleRequest const& request);
+  virtual StatusOr<google::iam::admin::v1::Role>
+  CreateRole(google::iam::admin::v1::CreateRoleRequest const& request);
 
-  virtual StatusOr<google::iam::admin::v1::Role> UpdateRole(
-      google::iam::admin::v1::UpdateRoleRequest const& request);
+  virtual StatusOr<google::iam::admin::v1::Role>
+  UpdateRole(google::iam::admin::v1::UpdateRoleRequest const& request);
 
-  virtual StatusOr<google::iam::admin::v1::Role> DeleteRole(
-      google::iam::admin::v1::DeleteRoleRequest const& request);
+  virtual StatusOr<google::iam::admin::v1::Role>
+  DeleteRole(google::iam::admin::v1::DeleteRoleRequest const& request);
 
-  virtual StatusOr<google::iam::admin::v1::Role> UndeleteRole(
-      google::iam::admin::v1::UndeleteRoleRequest const& request);
+  virtual StatusOr<google::iam::admin::v1::Role>
+  UndeleteRole(google::iam::admin::v1::UndeleteRoleRequest const& request);
 
   virtual StreamRange<google::iam::admin::v1::Permission>
-  QueryTestablePermissions(
-      google::iam::admin::v1::QueryTestablePermissionsRequest request);
+  QueryTestablePermissions(google::iam::admin::v1::QueryTestablePermissionsRequest request);
 
   virtual StatusOr<google::iam::admin::v1::QueryAuditableServicesResponse>
-  QueryAuditableServices(
-      google::iam::admin::v1::QueryAuditableServicesRequest const& request);
+  QueryAuditableServices(google::iam::admin::v1::QueryAuditableServicesRequest const& request);
 
-  virtual StatusOr<google::iam::admin::v1::LintPolicyResponse> LintPolicy(
-      google::iam::admin::v1::LintPolicyRequest const& request);
+  virtual StatusOr<google::iam::admin::v1::LintPolicyResponse>
+  LintPolicy(google::iam::admin::v1::LintPolicyRequest const& request);
 };
 
 /**
@@ -292,10 +281,11 @@ class IAMConnection {
  * @param options (optional) Configure the `IAMConnection` created by
  * this function.
  */
-std::shared_ptr<IAMConnection> MakeIAMConnection(Options options = {});
+std::shared_ptr<IAMConnection> MakeIAMConnection(
+    Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS;  // NOLINT(misc-unused-alias-decls)
+namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS; // NOLINT(misc-unused-alias-decls)
 }  // namespace iam_admin_v1
 }  // namespace cloud
 }  // namespace google

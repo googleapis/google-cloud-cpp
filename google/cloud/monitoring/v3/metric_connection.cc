@@ -17,17 +17,17 @@
 // source: google/monitoring/v3/metric_service.proto
 
 #include "google/cloud/monitoring/v3/metric_connection.h"
-#include "google/cloud/monitoring/v3/internal/metric_connection_impl.h"
-#include "google/cloud/monitoring/v3/internal/metric_option_defaults.h"
-#include "google/cloud/monitoring/v3/internal/metric_stub_factory.h"
-#include "google/cloud/monitoring/v3/internal/metric_tracing_connection.h"
-#include "google/cloud/monitoring/v3/metric_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/monitoring/v3/internal/metric_connection_impl.h"
+#include "google/cloud/monitoring/v3/internal/metric_option_defaults.h"
+#include "google/cloud/monitoring/v3/internal/metric_stub_factory.h"
+#include "google/cloud/monitoring/v3/internal/metric_tracing_connection.h"
+#include "google/cloud/monitoring/v3/metric_options.h"
 #include <memory>
 #include <utility>
 
@@ -38,10 +38,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 MetricServiceConnection::~MetricServiceConnection() = default;
 
-StreamRange<google::api::MonitoredResourceDescriptor>
-MetricServiceConnection::ListMonitoredResourceDescriptors(
-    google::monitoring::v3::
-        ListMonitoredResourceDescriptorsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::api::MonitoredResourceDescriptor> MetricServiceConnection::ListMonitoredResourceDescriptors(
+    google::monitoring::v3::ListMonitoredResourceDescriptorsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::api::MonitoredResourceDescriptor>>();
 }
@@ -52,10 +50,8 @@ MetricServiceConnection::GetMonitoredResourceDescriptor(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::api::MetricDescriptor>
-MetricServiceConnection::ListMetricDescriptors(
-    google::monitoring::v3::
-        ListMetricDescriptorsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::api::MetricDescriptor> MetricServiceConnection::ListMetricDescriptors(
+    google::monitoring::v3::ListMetricDescriptorsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::api::MetricDescriptor>>();
 }
@@ -72,30 +68,32 @@ MetricServiceConnection::CreateMetricDescriptor(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status MetricServiceConnection::DeleteMetricDescriptor(
+Status
+MetricServiceConnection::DeleteMetricDescriptor(
     google::monitoring::v3::DeleteMetricDescriptorRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::monitoring::v3::TimeSeries>
-MetricServiceConnection::ListTimeSeries(
-    google::monitoring::v3::
-        ListTimeSeriesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::monitoring::v3::TimeSeries> MetricServiceConnection::ListTimeSeries(
+    google::monitoring::v3::ListTimeSeriesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::monitoring::v3::TimeSeries>>();
 }
 
-Status MetricServiceConnection::CreateTimeSeries(
+Status
+MetricServiceConnection::CreateTimeSeries(
     google::monitoring::v3::CreateTimeSeriesRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status MetricServiceConnection::CreateServiceTimeSeries(
+Status
+MetricServiceConnection::CreateServiceTimeSeries(
     google::monitoring::v3::CreateTimeSeriesRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-future<Status> MetricServiceConnection::AsyncCreateTimeSeries(
+future<Status>
+MetricServiceConnection::AsyncCreateTimeSeries(
     google::monitoring::v3::CreateTimeSeriesRequest const&) {
   return google::cloud::make_ready_future(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -104,18 +102,17 @@ future<Status> MetricServiceConnection::AsyncCreateTimeSeries(
 std::shared_ptr<MetricServiceConnection> MakeMetricServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 MetricServicePolicyOptionList>(options,
-                                                                __func__);
-  options =
-      monitoring_v3_internal::MetricServiceDefaultOptions(std::move(options));
+      UnifiedCredentialsOptionList,
+      MetricServicePolicyOptionList>(options, __func__);
+  options = monitoring_v3_internal::MetricServiceDefaultOptions(
+      std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = monitoring_v3_internal::CreateDefaultMetricServiceStub(
-      std::move(auth), options);
+    std::move(auth), options);
   return monitoring_v3_internal::MakeMetricServiceTracingConnection(
       std::make_shared<monitoring_v3_internal::MetricServiceConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options)));
+      std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

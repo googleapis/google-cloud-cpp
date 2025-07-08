@@ -34,167 +34,135 @@ MetadataServiceTracingConnection::MetadataServiceTracingConnection(
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::dataplex::v1::Entity>
-MetadataServiceTracingConnection::CreateEntity(
-    google::cloud::dataplex::v1::CreateEntityRequest const& request) {
-  auto span = internal::MakeSpan(
-      "dataplex_v1::MetadataServiceConnection::CreateEntity");
+MetadataServiceTracingConnection::CreateEntity(google::cloud::dataplex::v1::CreateEntityRequest const& request) {
+  auto span = internal::MakeSpan("dataplex_v1::MetadataServiceConnection::CreateEntity");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateEntity(request));
 }
 
 StatusOr<google::cloud::dataplex::v1::Entity>
-MetadataServiceTracingConnection::UpdateEntity(
-    google::cloud::dataplex::v1::UpdateEntityRequest const& request) {
-  auto span = internal::MakeSpan(
-      "dataplex_v1::MetadataServiceConnection::UpdateEntity");
+MetadataServiceTracingConnection::UpdateEntity(google::cloud::dataplex::v1::UpdateEntityRequest const& request) {
+  auto span = internal::MakeSpan("dataplex_v1::MetadataServiceConnection::UpdateEntity");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateEntity(request));
 }
 
-Status MetadataServiceTracingConnection::DeleteEntity(
-    google::cloud::dataplex::v1::DeleteEntityRequest const& request) {
-  auto span = internal::MakeSpan(
-      "dataplex_v1::MetadataServiceConnection::DeleteEntity");
+Status
+MetadataServiceTracingConnection::DeleteEntity(google::cloud::dataplex::v1::DeleteEntityRequest const& request) {
+  auto span = internal::MakeSpan("dataplex_v1::MetadataServiceConnection::DeleteEntity");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteEntity(request));
 }
 
 StatusOr<google::cloud::dataplex::v1::Entity>
-MetadataServiceTracingConnection::GetEntity(
-    google::cloud::dataplex::v1::GetEntityRequest const& request) {
-  auto span =
-      internal::MakeSpan("dataplex_v1::MetadataServiceConnection::GetEntity");
+MetadataServiceTracingConnection::GetEntity(google::cloud::dataplex::v1::GetEntityRequest const& request) {
+  auto span = internal::MakeSpan("dataplex_v1::MetadataServiceConnection::GetEntity");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetEntity(request));
 }
 
 StreamRange<google::cloud::dataplex::v1::Entity>
-MetadataServiceTracingConnection::ListEntities(
-    google::cloud::dataplex::v1::ListEntitiesRequest request) {
-  auto span = internal::MakeSpan(
-      "dataplex_v1::MetadataServiceConnection::ListEntities");
+MetadataServiceTracingConnection::ListEntities(google::cloud::dataplex::v1::ListEntitiesRequest request) {
+  auto span = internal::MakeSpan("dataplex_v1::MetadataServiceConnection::ListEntities");
   internal::OTelScope scope(span);
   auto sr = child_->ListEntities(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::dataplex::v1::Entity>(
-      std::move(span), std::move(sr));
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::dataplex::v1::Partition>
-MetadataServiceTracingConnection::CreatePartition(
-    google::cloud::dataplex::v1::CreatePartitionRequest const& request) {
-  auto span = internal::MakeSpan(
-      "dataplex_v1::MetadataServiceConnection::CreatePartition");
+MetadataServiceTracingConnection::CreatePartition(google::cloud::dataplex::v1::CreatePartitionRequest const& request) {
+  auto span = internal::MakeSpan("dataplex_v1::MetadataServiceConnection::CreatePartition");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreatePartition(request));
 }
 
-Status MetadataServiceTracingConnection::DeletePartition(
-    google::cloud::dataplex::v1::DeletePartitionRequest const& request) {
-  auto span = internal::MakeSpan(
-      "dataplex_v1::MetadataServiceConnection::DeletePartition");
+Status
+MetadataServiceTracingConnection::DeletePartition(google::cloud::dataplex::v1::DeletePartitionRequest const& request) {
+  auto span = internal::MakeSpan("dataplex_v1::MetadataServiceConnection::DeletePartition");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeletePartition(request));
 }
 
 StatusOr<google::cloud::dataplex::v1::Partition>
-MetadataServiceTracingConnection::GetPartition(
-    google::cloud::dataplex::v1::GetPartitionRequest const& request) {
-  auto span = internal::MakeSpan(
-      "dataplex_v1::MetadataServiceConnection::GetPartition");
+MetadataServiceTracingConnection::GetPartition(google::cloud::dataplex::v1::GetPartitionRequest const& request) {
+  auto span = internal::MakeSpan("dataplex_v1::MetadataServiceConnection::GetPartition");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetPartition(request));
 }
 
 StreamRange<google::cloud::dataplex::v1::Partition>
-MetadataServiceTracingConnection::ListPartitions(
-    google::cloud::dataplex::v1::ListPartitionsRequest request) {
-  auto span = internal::MakeSpan(
-      "dataplex_v1::MetadataServiceConnection::ListPartitions");
+MetadataServiceTracingConnection::ListPartitions(google::cloud::dataplex::v1::ListPartitionsRequest request) {
+  auto span = internal::MakeSpan("dataplex_v1::MetadataServiceConnection::ListPartitions");
   internal::OTelScope scope(span);
   auto sr = child_->ListPartitions(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::dataplex::v1::Partition>(std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::dataplex::v1::Partition>(
+        std::move(span), std::move(sr));
 }
 
 StreamRange<google::cloud::location::Location>
-MetadataServiceTracingConnection::ListLocations(
-    google::cloud::location::ListLocationsRequest request) {
-  auto span = internal::MakeSpan(
-      "dataplex_v1::MetadataServiceConnection::ListLocations");
+MetadataServiceTracingConnection::ListLocations(google::cloud::location::ListLocationsRequest request) {
+  auto span = internal::MakeSpan("dataplex_v1::MetadataServiceConnection::ListLocations");
   internal::OTelScope scope(span);
   auto sr = child_->ListLocations(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::location::Location>(
-      std::move(span), std::move(sr));
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::location::Location>
-MetadataServiceTracingConnection::GetLocation(
-    google::cloud::location::GetLocationRequest const& request) {
-  auto span =
-      internal::MakeSpan("dataplex_v1::MetadataServiceConnection::GetLocation");
+MetadataServiceTracingConnection::GetLocation(google::cloud::location::GetLocationRequest const& request) {
+  auto span = internal::MakeSpan("dataplex_v1::MetadataServiceConnection::GetLocation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetLocation(request));
 }
 
 StatusOr<google::iam::v1::Policy>
-MetadataServiceTracingConnection::SetIamPolicy(
-    google::iam::v1::SetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpan(
-      "dataplex_v1::MetadataServiceConnection::SetIamPolicy");
+MetadataServiceTracingConnection::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) {
+  auto span = internal::MakeSpan("dataplex_v1::MetadataServiceConnection::SetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->SetIamPolicy(request));
 }
 
 StatusOr<google::iam::v1::Policy>
-MetadataServiceTracingConnection::GetIamPolicy(
-    google::iam::v1::GetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpan(
-      "dataplex_v1::MetadataServiceConnection::GetIamPolicy");
+MetadataServiceTracingConnection::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) {
+  auto span = internal::MakeSpan("dataplex_v1::MetadataServiceConnection::GetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetIamPolicy(request));
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-MetadataServiceTracingConnection::TestIamPermissions(
-    google::iam::v1::TestIamPermissionsRequest const& request) {
-  auto span = internal::MakeSpan(
-      "dataplex_v1::MetadataServiceConnection::TestIamPermissions");
+MetadataServiceTracingConnection::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) {
+  auto span = internal::MakeSpan("dataplex_v1::MetadataServiceConnection::TestIamPermissions");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->TestIamPermissions(request));
 }
 
 StreamRange<google::longrunning::Operation>
-MetadataServiceTracingConnection::ListOperations(
-    google::longrunning::ListOperationsRequest request) {
-  auto span = internal::MakeSpan(
-      "dataplex_v1::MetadataServiceConnection::ListOperations");
+MetadataServiceTracingConnection::ListOperations(google::longrunning::ListOperationsRequest request) {
+  auto span = internal::MakeSpan("dataplex_v1::MetadataServiceConnection::ListOperations");
   internal::OTelScope scope(span);
   auto sr = child_->ListOperations(std::move(request));
   return internal::MakeTracedStreamRange<google::longrunning::Operation>(
-      std::move(span), std::move(sr));
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::longrunning::Operation>
-MetadataServiceTracingConnection::GetOperation(
-    google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpan(
-      "dataplex_v1::MetadataServiceConnection::GetOperation");
+MetadataServiceTracingConnection::GetOperation(google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpan("dataplex_v1::MetadataServiceConnection::GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOperation(request));
 }
 
-Status MetadataServiceTracingConnection::DeleteOperation(
-    google::longrunning::DeleteOperationRequest const& request) {
-  auto span = internal::MakeSpan(
-      "dataplex_v1::MetadataServiceConnection::DeleteOperation");
+Status
+MetadataServiceTracingConnection::DeleteOperation(google::longrunning::DeleteOperationRequest const& request) {
+  auto span = internal::MakeSpan("dataplex_v1::MetadataServiceConnection::DeleteOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteOperation(request));
 }
 
-Status MetadataServiceTracingConnection::CancelOperation(
-    google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpan(
-      "dataplex_v1::MetadataServiceConnection::CancelOperation");
+Status
+MetadataServiceTracingConnection::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
+  auto span = internal::MakeSpan("dataplex_v1::MetadataServiceConnection::CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CancelOperation(request));
 }

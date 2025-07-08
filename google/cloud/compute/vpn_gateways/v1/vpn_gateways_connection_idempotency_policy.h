@@ -36,41 +36,33 @@ class VpnGatewaysConnectionIdempotencyPolicy {
   /// Create a new copy of this object.
   virtual std::unique_ptr<VpnGatewaysConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency AggregatedListVpnGateways(
-      google::cloud::cpp::compute::vpn_gateways::v1::
-          AggregatedListVpnGatewaysRequest request);
+  virtual google::cloud::Idempotency
+  AggregatedListVpnGateways(google::cloud::cpp::compute::vpn_gateways::v1::AggregatedListVpnGatewaysRequest request);
 
-  virtual google::cloud::Idempotency DeleteVpnGateway(
-      google::cloud::cpp::compute::vpn_gateways::v1::
-          DeleteVpnGatewayRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteVpnGateway(google::cloud::cpp::compute::vpn_gateways::v1::DeleteVpnGatewayRequest const& request);
 
-  virtual google::cloud::Idempotency GetVpnGateway(
-      google::cloud::cpp::compute::vpn_gateways::v1::GetVpnGatewayRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  GetVpnGateway(google::cloud::cpp::compute::vpn_gateways::v1::GetVpnGatewayRequest const& request);
 
-  virtual google::cloud::Idempotency GetStatus(
-      google::cloud::cpp::compute::vpn_gateways::v1::GetStatusRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  GetStatus(google::cloud::cpp::compute::vpn_gateways::v1::GetStatusRequest const& request);
 
-  virtual google::cloud::Idempotency InsertVpnGateway(
-      google::cloud::cpp::compute::vpn_gateways::v1::
-          InsertVpnGatewayRequest const& request);
+  virtual google::cloud::Idempotency
+  InsertVpnGateway(google::cloud::cpp::compute::vpn_gateways::v1::InsertVpnGatewayRequest const& request);
 
-  virtual google::cloud::Idempotency ListVpnGateways(
-      google::cloud::cpp::compute::vpn_gateways::v1::ListVpnGatewaysRequest
-          request);
+  virtual google::cloud::Idempotency
+  ListVpnGateways(google::cloud::cpp::compute::vpn_gateways::v1::ListVpnGatewaysRequest request);
 
-  virtual google::cloud::Idempotency SetLabels(
-      google::cloud::cpp::compute::vpn_gateways::v1::SetLabelsRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  SetLabels(google::cloud::cpp::compute::vpn_gateways::v1::SetLabelsRequest const& request);
 
-  virtual google::cloud::Idempotency TestIamPermissions(
-      google::cloud::cpp::compute::vpn_gateways::v1::
-          TestIamPermissionsRequest const& request);
+  virtual google::cloud::Idempotency
+  TestIamPermissions(google::cloud::cpp::compute::vpn_gateways::v1::TestIamPermissionsRequest const& request);
 };
 
 std::unique_ptr<VpnGatewaysConnectionIdempotencyPolicy>
-MakeDefaultVpnGatewaysConnectionIdempotencyPolicy();
+    MakeDefaultVpnGatewaysConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_vpn_gateways_v1

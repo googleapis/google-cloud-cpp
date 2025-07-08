@@ -29,53 +29,51 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-SpeechTracingStub::SpeechTracingStub(std::shared_ptr<SpeechStub> child)
+SpeechTracingStub::SpeechTracingStub(
+    std::shared_ptr<SpeechStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 future<StatusOr<google::longrunning::Operation>>
 SpeechTracingStub::AsyncCreateRecognizer(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::speech::v2::CreateRecognizerRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.speech.v2.Speech",
-                                     "CreateRecognizer");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::speech::v2::CreateRecognizerRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.speech.v2.Speech", "CreateRecognizer");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f =
-      child_->AsyncCreateRecognizer(cq, context, std::move(options), request);
+  auto f = child_->AsyncCreateRecognizer(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
-StatusOr<google::longrunning::Operation> SpeechTracingStub::CreateRecognizer(
-    grpc::ClientContext& context, Options options,
-    google::cloud::speech::v2::CreateRecognizerRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.speech.v2.Speech",
-                                     "CreateRecognizer");
+StatusOr<google::longrunning::Operation>
+SpeechTracingStub::CreateRecognizer(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::speech::v2::CreateRecognizerRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.speech.v2.Speech", "CreateRecognizer");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateRecognizer(context, options, request));
 }
 
-StatusOr<google::cloud::speech::v2::ListRecognizersResponse>
-SpeechTracingStub::ListRecognizers(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::speech::v2::ListRecognizersResponse> SpeechTracingStub::ListRecognizers(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::speech::v2::ListRecognizersRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.speech.v2.Speech",
-                                     "ListRecognizers");
+  auto span = internal::MakeSpanGrpc("google.cloud.speech.v2.Speech", "ListRecognizers");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListRecognizers(context, options, request));
 }
 
-StatusOr<google::cloud::speech::v2::Recognizer>
-SpeechTracingStub::GetRecognizer(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::speech::v2::Recognizer> SpeechTracingStub::GetRecognizer(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::speech::v2::GetRecognizerRequest const& request) {
-  auto span =
-      internal::MakeSpanGrpc("google.cloud.speech.v2.Speech", "GetRecognizer");
+  auto span = internal::MakeSpanGrpc("google.cloud.speech.v2.Speech", "GetRecognizer");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -84,24 +82,23 @@ SpeechTracingStub::GetRecognizer(
 
 future<StatusOr<google::longrunning::Operation>>
 SpeechTracingStub::AsyncUpdateRecognizer(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::speech::v2::UpdateRecognizerRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.speech.v2.Speech",
-                                     "UpdateRecognizer");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::speech::v2::UpdateRecognizerRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.speech.v2.Speech", "UpdateRecognizer");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f =
-      child_->AsyncUpdateRecognizer(cq, context, std::move(options), request);
+  auto f = child_->AsyncUpdateRecognizer(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
-StatusOr<google::longrunning::Operation> SpeechTracingStub::UpdateRecognizer(
-    grpc::ClientContext& context, Options options,
-    google::cloud::speech::v2::UpdateRecognizerRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.speech.v2.Speech",
-                                     "UpdateRecognizer");
+StatusOr<google::longrunning::Operation>
+SpeechTracingStub::UpdateRecognizer(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::speech::v2::UpdateRecognizerRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.speech.v2.Speech", "UpdateRecognizer");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -110,24 +107,23 @@ StatusOr<google::longrunning::Operation> SpeechTracingStub::UpdateRecognizer(
 
 future<StatusOr<google::longrunning::Operation>>
 SpeechTracingStub::AsyncDeleteRecognizer(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::speech::v2::DeleteRecognizerRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.speech.v2.Speech",
-                                     "DeleteRecognizer");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::speech::v2::DeleteRecognizerRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.speech.v2.Speech", "DeleteRecognizer");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f =
-      child_->AsyncDeleteRecognizer(cq, context, std::move(options), request);
+  auto f = child_->AsyncDeleteRecognizer(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
-StatusOr<google::longrunning::Operation> SpeechTracingStub::DeleteRecognizer(
-    grpc::ClientContext& context, Options options,
-    google::cloud::speech::v2::DeleteRecognizerRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.speech.v2.Speech",
-                                     "DeleteRecognizer");
+StatusOr<google::longrunning::Operation>
+SpeechTracingStub::DeleteRecognizer(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::speech::v2::DeleteRecognizerRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.speech.v2.Speech", "DeleteRecognizer");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -136,36 +132,34 @@ StatusOr<google::longrunning::Operation> SpeechTracingStub::DeleteRecognizer(
 
 future<StatusOr<google::longrunning::Operation>>
 SpeechTracingStub::AsyncUndeleteRecognizer(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::speech::v2::UndeleteRecognizerRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.speech.v2.Speech",
-                                     "UndeleteRecognizer");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::speech::v2::UndeleteRecognizerRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.speech.v2.Speech", "UndeleteRecognizer");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f =
-      child_->AsyncUndeleteRecognizer(cq, context, std::move(options), request);
+  auto f = child_->AsyncUndeleteRecognizer(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
-StatusOr<google::longrunning::Operation> SpeechTracingStub::UndeleteRecognizer(
-    grpc::ClientContext& context, Options options,
-    google::cloud::speech::v2::UndeleteRecognizerRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.speech.v2.Speech",
-                                     "UndeleteRecognizer");
+StatusOr<google::longrunning::Operation>
+SpeechTracingStub::UndeleteRecognizer(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::speech::v2::UndeleteRecognizerRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.speech.v2.Speech", "UndeleteRecognizer");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->UndeleteRecognizer(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->UndeleteRecognizer(context, options, request));
 }
 
-StatusOr<google::cloud::speech::v2::RecognizeResponse>
-SpeechTracingStub::Recognize(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::speech::v2::RecognizeResponse> SpeechTracingStub::Recognize(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::speech::v2::RecognizeRequest const& request) {
-  auto span =
-      internal::MakeSpanGrpc("google.cloud.speech.v2.Speech", "Recognize");
+  auto span = internal::MakeSpanGrpc("google.cloud.speech.v2.Speech", "Recognize");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -178,12 +172,10 @@ std::unique_ptr<AsyncStreamingReadWriteRpc<
 SpeechTracingStub::AsyncStreamingRecognize(
     CompletionQueue const& cq, std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options) {
-  auto span = internal::MakeSpanGrpc("google.cloud.speech.v2.Speech",
-                                     "StreamingRecognize");
+  auto span = internal::MakeSpanGrpc("google.cloud.speech.v2.Speech", "StreamingRecognize");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto stream =
-      child_->AsyncStreamingRecognize(cq, context, std::move(options));
+  auto stream = child_->AsyncStreamingRecognize(cq, context, std::move(options));
   return std::make_unique<internal::AsyncStreamingReadWriteRpcTracing<
       google::cloud::speech::v2::StreamingRecognizeRequest,
       google::cloud::speech::v2::StreamingRecognizeResponse>>(
@@ -192,24 +184,23 @@ SpeechTracingStub::AsyncStreamingRecognize(
 
 future<StatusOr<google::longrunning::Operation>>
 SpeechTracingStub::AsyncBatchRecognize(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::speech::v2::BatchRecognizeRequest const& request) {
-  auto span =
-      internal::MakeSpanGrpc("google.cloud.speech.v2.Speech", "BatchRecognize");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::speech::v2::BatchRecognizeRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.speech.v2.Speech", "BatchRecognize");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f =
-      child_->AsyncBatchRecognize(cq, context, std::move(options), request);
+  auto f = child_->AsyncBatchRecognize(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
-StatusOr<google::longrunning::Operation> SpeechTracingStub::BatchRecognize(
-    grpc::ClientContext& context, Options options,
-    google::cloud::speech::v2::BatchRecognizeRequest const& request) {
-  auto span =
-      internal::MakeSpanGrpc("google.cloud.speech.v2.Speech", "BatchRecognize");
+StatusOr<google::longrunning::Operation>
+SpeechTracingStub::BatchRecognize(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::speech::v2::BatchRecognizeRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.speech.v2.Speech", "BatchRecognize");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -217,10 +208,10 @@ StatusOr<google::longrunning::Operation> SpeechTracingStub::BatchRecognize(
 }
 
 StatusOr<google::cloud::speech::v2::Config> SpeechTracingStub::GetConfig(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::speech::v2::GetConfigRequest const& request) {
-  auto span =
-      internal::MakeSpanGrpc("google.cloud.speech.v2.Speech", "GetConfig");
+  auto span = internal::MakeSpanGrpc("google.cloud.speech.v2.Speech", "GetConfig");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -228,10 +219,10 @@ StatusOr<google::cloud::speech::v2::Config> SpeechTracingStub::GetConfig(
 }
 
 StatusOr<google::cloud::speech::v2::Config> SpeechTracingStub::UpdateConfig(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::speech::v2::UpdateConfigRequest const& request) {
-  auto span =
-      internal::MakeSpanGrpc("google.cloud.speech.v2.Speech", "UpdateConfig");
+  auto span = internal::MakeSpanGrpc("google.cloud.speech.v2.Speech", "UpdateConfig");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -240,48 +231,45 @@ StatusOr<google::cloud::speech::v2::Config> SpeechTracingStub::UpdateConfig(
 
 future<StatusOr<google::longrunning::Operation>>
 SpeechTracingStub::AsyncCreateCustomClass(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::speech::v2::CreateCustomClassRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.speech.v2.Speech",
-                                     "CreateCustomClass");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::speech::v2::CreateCustomClassRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.speech.v2.Speech", "CreateCustomClass");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f =
-      child_->AsyncCreateCustomClass(cq, context, std::move(options), request);
+  auto f = child_->AsyncCreateCustomClass(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
-StatusOr<google::longrunning::Operation> SpeechTracingStub::CreateCustomClass(
-    grpc::ClientContext& context, Options options,
-    google::cloud::speech::v2::CreateCustomClassRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.speech.v2.Speech",
-                                     "CreateCustomClass");
+StatusOr<google::longrunning::Operation>
+SpeechTracingStub::CreateCustomClass(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::speech::v2::CreateCustomClassRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.speech.v2.Speech", "CreateCustomClass");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->CreateCustomClass(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->CreateCustomClass(context, options, request));
 }
 
-StatusOr<google::cloud::speech::v2::ListCustomClassesResponse>
-SpeechTracingStub::ListCustomClasses(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::speech::v2::ListCustomClassesResponse> SpeechTracingStub::ListCustomClasses(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::speech::v2::ListCustomClassesRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.speech.v2.Speech",
-                                     "ListCustomClasses");
+  auto span = internal::MakeSpanGrpc("google.cloud.speech.v2.Speech", "ListCustomClasses");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->ListCustomClasses(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->ListCustomClasses(context, options, request));
 }
 
-StatusOr<google::cloud::speech::v2::CustomClass>
-SpeechTracingStub::GetCustomClass(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::speech::v2::CustomClass> SpeechTracingStub::GetCustomClass(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::speech::v2::GetCustomClassRequest const& request) {
-  auto span =
-      internal::MakeSpanGrpc("google.cloud.speech.v2.Speech", "GetCustomClass");
+  auto span = internal::MakeSpanGrpc("google.cloud.speech.v2.Speech", "GetCustomClass");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -290,114 +278,109 @@ SpeechTracingStub::GetCustomClass(
 
 future<StatusOr<google::longrunning::Operation>>
 SpeechTracingStub::AsyncUpdateCustomClass(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::speech::v2::UpdateCustomClassRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.speech.v2.Speech",
-                                     "UpdateCustomClass");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::speech::v2::UpdateCustomClassRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.speech.v2.Speech", "UpdateCustomClass");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f =
-      child_->AsyncUpdateCustomClass(cq, context, std::move(options), request);
+  auto f = child_->AsyncUpdateCustomClass(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
-StatusOr<google::longrunning::Operation> SpeechTracingStub::UpdateCustomClass(
-    grpc::ClientContext& context, Options options,
-    google::cloud::speech::v2::UpdateCustomClassRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.speech.v2.Speech",
-                                     "UpdateCustomClass");
+StatusOr<google::longrunning::Operation>
+SpeechTracingStub::UpdateCustomClass(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::speech::v2::UpdateCustomClassRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.speech.v2.Speech", "UpdateCustomClass");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->UpdateCustomClass(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->UpdateCustomClass(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 SpeechTracingStub::AsyncDeleteCustomClass(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::speech::v2::DeleteCustomClassRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.speech.v2.Speech",
-                                     "DeleteCustomClass");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::speech::v2::DeleteCustomClassRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.speech.v2.Speech", "DeleteCustomClass");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f =
-      child_->AsyncDeleteCustomClass(cq, context, std::move(options), request);
+  auto f = child_->AsyncDeleteCustomClass(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
-StatusOr<google::longrunning::Operation> SpeechTracingStub::DeleteCustomClass(
-    grpc::ClientContext& context, Options options,
-    google::cloud::speech::v2::DeleteCustomClassRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.speech.v2.Speech",
-                                     "DeleteCustomClass");
+StatusOr<google::longrunning::Operation>
+SpeechTracingStub::DeleteCustomClass(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::speech::v2::DeleteCustomClassRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.speech.v2.Speech", "DeleteCustomClass");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->DeleteCustomClass(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->DeleteCustomClass(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 SpeechTracingStub::AsyncUndeleteCustomClass(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::speech::v2::UndeleteCustomClassRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.speech.v2.Speech",
-                                     "UndeleteCustomClass");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::speech::v2::UndeleteCustomClassRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.speech.v2.Speech", "UndeleteCustomClass");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncUndeleteCustomClass(cq, context, std::move(options),
-                                            request);
+  auto f = child_->AsyncUndeleteCustomClass(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
-StatusOr<google::longrunning::Operation> SpeechTracingStub::UndeleteCustomClass(
-    grpc::ClientContext& context, Options options,
-    google::cloud::speech::v2::UndeleteCustomClassRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.speech.v2.Speech",
-                                     "UndeleteCustomClass");
+StatusOr<google::longrunning::Operation>
+SpeechTracingStub::UndeleteCustomClass(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::speech::v2::UndeleteCustomClassRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.speech.v2.Speech", "UndeleteCustomClass");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->UndeleteCustomClass(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->UndeleteCustomClass(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 SpeechTracingStub::AsyncCreatePhraseSet(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::speech::v2::CreatePhraseSetRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.speech.v2.Speech",
-                                     "CreatePhraseSet");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::speech::v2::CreatePhraseSetRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.speech.v2.Speech", "CreatePhraseSet");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f =
-      child_->AsyncCreatePhraseSet(cq, context, std::move(options), request);
+  auto f = child_->AsyncCreatePhraseSet(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
-StatusOr<google::longrunning::Operation> SpeechTracingStub::CreatePhraseSet(
-    grpc::ClientContext& context, Options options,
-    google::cloud::speech::v2::CreatePhraseSetRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.speech.v2.Speech",
-                                     "CreatePhraseSet");
+StatusOr<google::longrunning::Operation>
+SpeechTracingStub::CreatePhraseSet(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::speech::v2::CreatePhraseSetRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.speech.v2.Speech", "CreatePhraseSet");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreatePhraseSet(context, options, request));
 }
 
-StatusOr<google::cloud::speech::v2::ListPhraseSetsResponse>
-SpeechTracingStub::ListPhraseSets(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::speech::v2::ListPhraseSetsResponse> SpeechTracingStub::ListPhraseSets(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::speech::v2::ListPhraseSetsRequest const& request) {
-  auto span =
-      internal::MakeSpanGrpc("google.cloud.speech.v2.Speech", "ListPhraseSets");
+  auto span = internal::MakeSpanGrpc("google.cloud.speech.v2.Speech", "ListPhraseSets");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -405,10 +388,10 @@ SpeechTracingStub::ListPhraseSets(
 }
 
 StatusOr<google::cloud::speech::v2::PhraseSet> SpeechTracingStub::GetPhraseSet(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::speech::v2::GetPhraseSetRequest const& request) {
-  auto span =
-      internal::MakeSpanGrpc("google.cloud.speech.v2.Speech", "GetPhraseSet");
+  auto span = internal::MakeSpanGrpc("google.cloud.speech.v2.Speech", "GetPhraseSet");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -417,24 +400,23 @@ StatusOr<google::cloud::speech::v2::PhraseSet> SpeechTracingStub::GetPhraseSet(
 
 future<StatusOr<google::longrunning::Operation>>
 SpeechTracingStub::AsyncUpdatePhraseSet(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::speech::v2::UpdatePhraseSetRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.speech.v2.Speech",
-                                     "UpdatePhraseSet");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::speech::v2::UpdatePhraseSetRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.speech.v2.Speech", "UpdatePhraseSet");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f =
-      child_->AsyncUpdatePhraseSet(cq, context, std::move(options), request);
+  auto f = child_->AsyncUpdatePhraseSet(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
-StatusOr<google::longrunning::Operation> SpeechTracingStub::UpdatePhraseSet(
-    grpc::ClientContext& context, Options options,
-    google::cloud::speech::v2::UpdatePhraseSetRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.speech.v2.Speech",
-                                     "UpdatePhraseSet");
+StatusOr<google::longrunning::Operation>
+SpeechTracingStub::UpdatePhraseSet(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::speech::v2::UpdatePhraseSetRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.speech.v2.Speech", "UpdatePhraseSet");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -443,24 +425,23 @@ StatusOr<google::longrunning::Operation> SpeechTracingStub::UpdatePhraseSet(
 
 future<StatusOr<google::longrunning::Operation>>
 SpeechTracingStub::AsyncDeletePhraseSet(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::speech::v2::DeletePhraseSetRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.speech.v2.Speech",
-                                     "DeletePhraseSet");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::speech::v2::DeletePhraseSetRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.speech.v2.Speech", "DeletePhraseSet");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f =
-      child_->AsyncDeletePhraseSet(cq, context, std::move(options), request);
+  auto f = child_->AsyncDeletePhraseSet(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
-StatusOr<google::longrunning::Operation> SpeechTracingStub::DeletePhraseSet(
-    grpc::ClientContext& context, Options options,
-    google::cloud::speech::v2::DeletePhraseSetRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.speech.v2.Speech",
-                                     "DeletePhraseSet");
+StatusOr<google::longrunning::Operation>
+SpeechTracingStub::DeletePhraseSet(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::speech::v2::DeletePhraseSetRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.speech.v2.Speech", "DeletePhraseSet");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -469,36 +450,34 @@ StatusOr<google::longrunning::Operation> SpeechTracingStub::DeletePhraseSet(
 
 future<StatusOr<google::longrunning::Operation>>
 SpeechTracingStub::AsyncUndeletePhraseSet(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::speech::v2::UndeletePhraseSetRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.speech.v2.Speech",
-                                     "UndeletePhraseSet");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::speech::v2::UndeletePhraseSetRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.speech.v2.Speech", "UndeletePhraseSet");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f =
-      child_->AsyncUndeletePhraseSet(cq, context, std::move(options), request);
+  auto f = child_->AsyncUndeletePhraseSet(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
-StatusOr<google::longrunning::Operation> SpeechTracingStub::UndeletePhraseSet(
-    grpc::ClientContext& context, Options options,
-    google::cloud::speech::v2::UndeletePhraseSetRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.speech.v2.Speech",
-                                     "UndeletePhraseSet");
+StatusOr<google::longrunning::Operation>
+SpeechTracingStub::UndeletePhraseSet(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::speech::v2::UndeletePhraseSetRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.speech.v2.Speech", "UndeletePhraseSet");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->UndeletePhraseSet(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->UndeletePhraseSet(context, options, request));
 }
 
-StatusOr<google::cloud::location::ListLocationsResponse>
-SpeechTracingStub::ListLocations(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::location::ListLocationsResponse> SpeechTracingStub::ListLocations(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
-  auto span =
-      internal::MakeSpanGrpc("google.cloud.speech.v2.Speech", "ListLocations");
+  auto span = internal::MakeSpanGrpc("google.cloud.speech.v2.Speech", "ListLocations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -506,22 +485,21 @@ SpeechTracingStub::ListLocations(
 }
 
 StatusOr<google::cloud::location::Location> SpeechTracingStub::GetLocation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
-  auto span =
-      internal::MakeSpanGrpc("google.cloud.speech.v2.Speech", "GetLocation");
+  auto span = internal::MakeSpanGrpc("google.cloud.speech.v2.Speech", "GetLocation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetLocation(context, options, request));
 }
 
-StatusOr<google::longrunning::ListOperationsResponse>
-SpeechTracingStub::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse> SpeechTracingStub::ListOperations(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  auto span =
-      internal::MakeSpanGrpc("google.cloud.speech.v2.Speech", "ListOperations");
+  auto span = internal::MakeSpanGrpc("google.cloud.speech.v2.Speech", "ListOperations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -529,10 +507,10 @@ SpeechTracingStub::ListOperations(
 }
 
 StatusOr<google::longrunning::Operation> SpeechTracingStub::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  auto span =
-      internal::MakeSpanGrpc("google.cloud.speech.v2.Speech", "GetOperation");
+  auto span = internal::MakeSpanGrpc("google.cloud.speech.v2.Speech", "GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -540,10 +518,10 @@ StatusOr<google::longrunning::Operation> SpeechTracingStub::GetOperation(
 }
 
 Status SpeechTracingStub::DeleteOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.speech.v2.Speech",
-                                     "DeleteOperation");
+  auto span = internal::MakeSpanGrpc("google.cloud.speech.v2.Speech", "DeleteOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -551,10 +529,10 @@ Status SpeechTracingStub::DeleteOperation(
 }
 
 Status SpeechTracingStub::CancelOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.speech.v2.Speech",
-                                     "CancelOperation");
+  auto span = internal::MakeSpanGrpc("google.cloud.speech.v2.Speech", "CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -571,7 +549,8 @@ SpeechTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncGetOperation(cq, context, std::move(options), request);
+  auto f = child_->AsyncGetOperation(
+      cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -584,8 +563,8 @@ future<Status> SpeechTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f =
-      child_->AsyncCancelOperation(cq, context, std::move(options), request);
+  auto f = child_->AsyncCancelOperation(
+      cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 

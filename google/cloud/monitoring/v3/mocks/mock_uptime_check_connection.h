@@ -31,10 +31,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * A class to mock `UptimeCheckServiceConnection`.
  *
  * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `UptimeCheckServiceClient`. To do
- * so, construct an object of type `UptimeCheckServiceClient` with an instance
- * of this class. Then use the Google Test framework functions to program the
- * behavior of this mock.
+ * including errors, from an object of type `UptimeCheckServiceClient`. To do so,
+ * construct an object of type `UptimeCheckServiceClient` with an instance of this
+ * class. Then use the Google Test framework functions to program the behavior
+ * of this mock.
  *
  * @see [This example][bq-mock] for how to test your application with GoogleTest.
  * While the example showcases types from the BigQuery library, the underlying
@@ -42,42 +42,33 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockUptimeCheckServiceConnection
-    : public monitoring_v3::UptimeCheckServiceConnection {
+class MockUptimeCheckServiceConnection : public monitoring_v3::UptimeCheckServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD((StreamRange<google::monitoring::v3::UptimeCheckConfig>),
-              ListUptimeCheckConfigs,
-              (google::monitoring::v3::ListUptimeCheckConfigsRequest request),
-              (override));
+  ListUptimeCheckConfigs,
+  (google::monitoring::v3::ListUptimeCheckConfigsRequest request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::monitoring::v3::UptimeCheckConfig>, GetUptimeCheckConfig,
-      (google::monitoring::v3::GetUptimeCheckConfigRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::monitoring::v3::UptimeCheckConfig>,
+  GetUptimeCheckConfig,
+  (google::monitoring::v3::GetUptimeCheckConfigRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::monitoring::v3::UptimeCheckConfig>,
-      CreateUptimeCheckConfig,
-      (google::monitoring::v3::CreateUptimeCheckConfigRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::monitoring::v3::UptimeCheckConfig>,
+  CreateUptimeCheckConfig,
+  (google::monitoring::v3::CreateUptimeCheckConfigRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::monitoring::v3::UptimeCheckConfig>,
-      UpdateUptimeCheckConfig,
-      (google::monitoring::v3::UpdateUptimeCheckConfigRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::monitoring::v3::UptimeCheckConfig>,
+  UpdateUptimeCheckConfig,
+  (google::monitoring::v3::UpdateUptimeCheckConfigRequest const& request), (override));
 
-  MOCK_METHOD(
-      Status, DeleteUptimeCheckConfig,
-      (google::monitoring::v3::DeleteUptimeCheckConfigRequest const& request),
-      (override));
+  MOCK_METHOD(Status,
+  DeleteUptimeCheckConfig,
+  (google::monitoring::v3::DeleteUptimeCheckConfigRequest const& request), (override));
 
   MOCK_METHOD((StreamRange<google::monitoring::v3::UptimeCheckIp>),
-              ListUptimeCheckIps,
-              (google::monitoring::v3::ListUptimeCheckIpsRequest request),
-              (override));
+  ListUptimeCheckIps,
+  (google::monitoring::v3::ListUptimeCheckIpsRequest request), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

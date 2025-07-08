@@ -64,28 +64,23 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class GenAiTuningServiceClient {
  public:
-  explicit GenAiTuningServiceClient(
-      std::shared_ptr<GenAiTuningServiceConnection> connection,
-      Options opts = {});
+  explicit GenAiTuningServiceClient(std::shared_ptr<GenAiTuningServiceConnection> connection, Options opts = {});
   ~GenAiTuningServiceClient();
 
   ///@{
   /// @name Copy and move support
   GenAiTuningServiceClient(GenAiTuningServiceClient const&) = default;
-  GenAiTuningServiceClient& operator=(GenAiTuningServiceClient const&) =
-      default;
+  GenAiTuningServiceClient& operator=(GenAiTuningServiceClient const&) = default;
   GenAiTuningServiceClient(GenAiTuningServiceClient&&) = default;
   GenAiTuningServiceClient& operator=(GenAiTuningServiceClient&&) = default;
   ///@}
 
   ///@{
   /// @name Equality
-  friend bool operator==(GenAiTuningServiceClient const& a,
-                         GenAiTuningServiceClient const& b) {
+  friend bool operator==(GenAiTuningServiceClient const& a, GenAiTuningServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(GenAiTuningServiceClient const& a,
-                         GenAiTuningServiceClient const& b) {
+  friend bool operator!=(GenAiTuningServiceClient const& a, GenAiTuningServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -115,10 +110,8 @@ class GenAiTuningServiceClient {
   /// [google.cloud.aiplatform.v1.TuningJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/tuning_job.proto#L36}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::TuningJob> CreateTuningJob(
-      std::string const& parent,
-      google::cloud::aiplatform::v1::TuningJob const& tuning_job,
-      Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::TuningJob>
+  CreateTuningJob(std::string const& parent, google::cloud::aiplatform::v1::TuningJob const& tuning_job, Options opts = {});
 
   // clang-format off
   ///
@@ -148,9 +141,8 @@ class GenAiTuningServiceClient {
   /// [google.cloud.aiplatform.v1.TuningJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/tuning_job.proto#L36}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::TuningJob> CreateTuningJob(
-      google::cloud::aiplatform::v1::CreateTuningJobRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::TuningJob>
+  CreateTuningJob(google::cloud::aiplatform::v1::CreateTuningJobRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -175,8 +167,8 @@ class GenAiTuningServiceClient {
   /// [google.cloud.aiplatform.v1.TuningJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/tuning_job.proto#L36}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::TuningJob> GetTuningJob(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::TuningJob>
+  GetTuningJob(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -205,9 +197,8 @@ class GenAiTuningServiceClient {
   /// [google.cloud.aiplatform.v1.TuningJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/tuning_job.proto#L36}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::TuningJob> GetTuningJob(
-      google::cloud::aiplatform::v1::GetTuningJobRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::TuningJob>
+  GetTuningJob(google::cloud::aiplatform::v1::GetTuningJobRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -241,8 +232,8 @@ class GenAiTuningServiceClient {
   /// [google.cloud.aiplatform.v1.TuningJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/tuning_job.proto#L36}
   ///
   // clang-format on
-  StreamRange<google::cloud::aiplatform::v1::TuningJob> ListTuningJobs(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::aiplatform::v1::TuningJob>
+  ListTuningJobs(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -280,9 +271,8 @@ class GenAiTuningServiceClient {
   /// [google.cloud.aiplatform.v1.TuningJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/tuning_job.proto#L36}
   ///
   // clang-format on
-  StreamRange<google::cloud::aiplatform::v1::TuningJob> ListTuningJobs(
-      google::cloud::aiplatform::v1::ListTuningJobsRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::aiplatform::v1::TuningJob>
+  ListTuningJobs(google::cloud::aiplatform::v1::ListTuningJobsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -319,7 +309,8 @@ class GenAiTuningServiceClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelTuningJob(std::string const& name, Options opts = {});
+  Status
+  CancelTuningJob(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -360,9 +351,8 @@ class GenAiTuningServiceClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelTuningJob(
-      google::cloud::aiplatform::v1::CancelTuningJobRequest const& request,
-      Options opts = {});
+  Status
+  CancelTuningJob(google::cloud::aiplatform::v1::CancelTuningJobRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -395,10 +385,8 @@ class GenAiTuningServiceClient {
   /// [google.cloud.aiplatform.v1.TuningJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/tuning_job.proto#L36}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::aiplatform::v1::TuningJob>> RebaseTunedModel(
-      std::string const& parent,
-      google::cloud::aiplatform::v1::TunedModelRef const& tuned_model_ref,
-      Options opts = {});
+  future<StatusOr<google::cloud::aiplatform::v1::TuningJob>>
+  RebaseTunedModel(std::string const& parent, google::cloud::aiplatform::v1::TunedModelRef const& tuned_model_ref, Options opts = {});
 
   // clang-format off
   ///
@@ -411,10 +399,8 @@ class GenAiTuningServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> RebaseTunedModel(
-      NoAwaitTag, std::string const& parent,
-      google::cloud::aiplatform::v1::TunedModelRef const& tuned_model_ref,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  RebaseTunedModel(NoAwaitTag, std::string const& parent, google::cloud::aiplatform::v1::TunedModelRef const& tuned_model_ref, Options opts = {});
 
   // clang-format off
   ///
@@ -450,9 +436,8 @@ class GenAiTuningServiceClient {
   /// [google.cloud.aiplatform.v1.TuningJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/tuning_job.proto#L36}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::aiplatform::v1::TuningJob>> RebaseTunedModel(
-      google::cloud::aiplatform::v1::RebaseTunedModelRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::aiplatform::v1::TuningJob>>
+  RebaseTunedModel(google::cloud::aiplatform::v1::RebaseTunedModelRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -465,10 +450,8 @@ class GenAiTuningServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> RebaseTunedModel(
-      NoAwaitTag,
-      google::cloud::aiplatform::v1::RebaseTunedModelRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  RebaseTunedModel(NoAwaitTag, google::cloud::aiplatform::v1::RebaseTunedModelRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -479,8 +462,8 @@ class GenAiTuningServiceClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::aiplatform::v1::TuningJob>> RebaseTunedModel(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::aiplatform::v1::TuningJob>>
+  RebaseTunedModel(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -518,8 +501,8 @@ class GenAiTuningServiceClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request, Options opts = {});
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -548,9 +531,8 @@ class GenAiTuningServiceClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -582,8 +564,8 @@ class GenAiTuningServiceClient {
   /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L100}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -614,8 +596,8 @@ class GenAiTuningServiceClient {
   /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -650,9 +632,8 @@ class GenAiTuningServiceClient {
   /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L153}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request,
-      Options opts = {});
+  StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -687,8 +668,8 @@ class GenAiTuningServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -727,8 +708,8 @@ class GenAiTuningServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -754,8 +735,8 @@ class GenAiTuningServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -786,9 +767,8 @@ class GenAiTuningServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -812,7 +792,8 @@ class GenAiTuningServiceClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status DeleteOperation(std::string const& name, Options opts = {});
+  Status
+  DeleteOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -841,9 +822,8 @@ class GenAiTuningServiceClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request,
-      Options opts = {});
+  Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -877,7 +857,8 @@ class GenAiTuningServiceClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(std::string const& name, Options opts = {});
+  Status
+  CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -916,9 +897,8 @@ class GenAiTuningServiceClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request,
-      Options opts = {});
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -955,9 +935,8 @@ class GenAiTuningServiceClient {
   /// [google.longrunning.WaitOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L207}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> WaitOperation(
-      google::longrunning::WaitOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  WaitOperation(google::longrunning::WaitOperationRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<GenAiTuningServiceConnection> connection_;

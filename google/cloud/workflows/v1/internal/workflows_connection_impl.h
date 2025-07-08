@@ -19,11 +19,6 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_WORKFLOWS_V1_INTERNAL_WORKFLOWS_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_WORKFLOWS_V1_INTERNAL_WORKFLOWS_CONNECTION_IMPL_H
 
-#include "google/cloud/workflows/v1/internal/workflows_retry_traits.h"
-#include "google/cloud/workflows/v1/internal/workflows_stub.h"
-#include "google/cloud/workflows/v1/workflows_connection.h"
-#include "google/cloud/workflows/v1/workflows_connection_idempotency_policy.h"
-#include "google/cloud/workflows/v1/workflows_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
@@ -32,6 +27,11 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
+#include "google/cloud/workflows/v1/internal/workflows_retry_traits.h"
+#include "google/cloud/workflows/v1/internal/workflows_stub.h"
+#include "google/cloud/workflows/v1/workflows_connection.h"
+#include "google/cloud/workflows/v1/workflows_connection_idempotency_policy.h"
+#include "google/cloud/workflows/v1/workflows_options.h"
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 
@@ -40,77 +40,74 @@ namespace cloud {
 namespace workflows_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class WorkflowsConnectionImpl : public workflows_v1::WorkflowsConnection {
+class WorkflowsConnectionImpl
+    : public workflows_v1::WorkflowsConnection {
  public:
   ~WorkflowsConnectionImpl() override = default;
 
   WorkflowsConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<workflows_v1_internal::WorkflowsStub> stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<workflows_v1_internal::WorkflowsStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
-  StreamRange<google::cloud::workflows::v1::Workflow> ListWorkflows(
-      google::cloud::workflows::v1::ListWorkflowsRequest request) override;
+  StreamRange<google::cloud::workflows::v1::Workflow>
+  ListWorkflows(google::cloud::workflows::v1::ListWorkflowsRequest request) override;
 
-  StatusOr<google::cloud::workflows::v1::Workflow> GetWorkflow(
-      google::cloud::workflows::v1::GetWorkflowRequest const& request) override;
+  StatusOr<google::cloud::workflows::v1::Workflow>
+  GetWorkflow(google::cloud::workflows::v1::GetWorkflowRequest const& request) override;
 
-  future<StatusOr<google::cloud::workflows::v1::Workflow>> CreateWorkflow(
-      google::cloud::workflows::v1::CreateWorkflowRequest const& request)
-      override;
+  future<StatusOr<google::cloud::workflows::v1::Workflow>>
+  CreateWorkflow(google::cloud::workflows::v1::CreateWorkflowRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> CreateWorkflow(
-      NoAwaitTag,
-      google::cloud::workflows::v1::CreateWorkflowRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  CreateWorkflow(NoAwaitTag,
+      google::cloud::workflows::v1::CreateWorkflowRequest const& request) override;
 
-  future<StatusOr<google::cloud::workflows::v1::Workflow>> CreateWorkflow(
+  future<StatusOr<google::cloud::workflows::v1::Workflow>>
+  CreateWorkflow(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::workflows::v1::OperationMetadata>>
-  DeleteWorkflow(google::cloud::workflows::v1::DeleteWorkflowRequest const&
-                     request) override;
+  DeleteWorkflow(google::cloud::workflows::v1::DeleteWorkflowRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> DeleteWorkflow(
-      NoAwaitTag,
-      google::cloud::workflows::v1::DeleteWorkflowRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  DeleteWorkflow(NoAwaitTag,
+      google::cloud::workflows::v1::DeleteWorkflowRequest const& request) override;
 
   future<StatusOr<google::cloud::workflows::v1::OperationMetadata>>
-  DeleteWorkflow(google::longrunning::Operation const& operation) override;
-
-  future<StatusOr<google::cloud::workflows::v1::Workflow>> UpdateWorkflow(
-      google::cloud::workflows::v1::UpdateWorkflowRequest const& request)
-      override;
-
-  StatusOr<google::longrunning::Operation> UpdateWorkflow(
-      NoAwaitTag,
-      google::cloud::workflows::v1::UpdateWorkflowRequest const& request)
-      override;
-
-  future<StatusOr<google::cloud::workflows::v1::Workflow>> UpdateWorkflow(
+  DeleteWorkflow(
       google::longrunning::Operation const& operation) override;
 
-  StreamRange<google::cloud::workflows::v1::Workflow> ListWorkflowRevisions(
-      google::cloud::workflows::v1::ListWorkflowRevisionsRequest request)
-      override;
+  future<StatusOr<google::cloud::workflows::v1::Workflow>>
+  UpdateWorkflow(google::cloud::workflows::v1::UpdateWorkflowRequest const& request) override;
 
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request) override;
+  StatusOr<google::longrunning::Operation>
+  UpdateWorkflow(NoAwaitTag,
+      google::cloud::workflows::v1::UpdateWorkflowRequest const& request) override;
 
-  StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request) override;
+  future<StatusOr<google::cloud::workflows::v1::Workflow>>
+  UpdateWorkflow(
+      google::longrunning::Operation const& operation) override;
 
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::cloud::workflows::v1::Workflow>
+  ListWorkflowRevisions(google::cloud::workflows::v1::ListWorkflowRevisionsRequest request) override;
 
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request) override;
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request) override;
 
-  Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request) override;
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request) override;
+
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request) override;
+
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request) override;
+
+  Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

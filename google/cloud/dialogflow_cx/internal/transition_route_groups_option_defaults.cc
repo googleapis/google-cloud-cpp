@@ -19,9 +19,9 @@
 #include "google/cloud/dialogflow_cx/internal/transition_route_groups_option_defaults.h"
 #include "google/cloud/dialogflow_cx/transition_route_groups_connection.h"
 #include "google/cloud/dialogflow_cx/transition_route_groups_options.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include <memory>
 #include <utility>
 
@@ -34,34 +34,25 @@ namespace {
 auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
-Options TransitionRouteGroupsDefaultOptions(std::string const& location,
-                                            Options options) {
+Options TransitionRouteGroupsDefaultOptions(std::string const& location, Options options) {
   options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_TRANSITION_ROUTE_GROUPS_ENDPOINT",
       "", "GOOGLE_CLOUD_CPP_TRANSITION_ROUTE_GROUPS_AUTHORITY",
-      absl::StrCat(location, location.empty() ? "" : "-",
-                   "dialogflow.googleapis.com"));
+      absl::StrCat(location, location.empty() ? "" : "-", "dialogflow.googleapis.com"));
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<dialogflow_cx::TransitionRouteGroupsRetryPolicyOption>()) {
     options.set<dialogflow_cx::TransitionRouteGroupsRetryPolicyOption>(
         dialogflow_cx::TransitionRouteGroupsLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
-            .clone());
+            std::chrono::minutes(30)).clone());
   }
   if (!options.has<dialogflow_cx::TransitionRouteGroupsBackoffPolicyOption>()) {
     options.set<dialogflow_cx::TransitionRouteGroupsBackoffPolicyOption>(
-        ExponentialBackoffPolicy(
-            std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
-            .clone());
+        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
   }
-  if (!options
-           .has<dialogflow_cx::
-                    TransitionRouteGroupsConnectionIdempotencyPolicyOption>()) {
-    options.set<
-        dialogflow_cx::TransitionRouteGroupsConnectionIdempotencyPolicyOption>(
-        dialogflow_cx::
-            MakeDefaultTransitionRouteGroupsConnectionIdempotencyPolicy());
+  if (!options.has<dialogflow_cx::TransitionRouteGroupsConnectionIdempotencyPolicyOption>()) {
+    options.set<dialogflow_cx::TransitionRouteGroupsConnectionIdempotencyPolicyOption>(
+        dialogflow_cx::MakeDefaultTransitionRouteGroupsConnectionIdempotencyPolicy());
   }
 
   return options;

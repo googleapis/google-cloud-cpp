@@ -17,17 +17,17 @@
 // source: google/api/servicemanagement/v1/servicemanager.proto
 
 #include "google/cloud/servicemanagement/v1/service_manager_connection.h"
-#include "google/cloud/servicemanagement/v1/internal/service_manager_connection_impl.h"
-#include "google/cloud/servicemanagement/v1/internal/service_manager_option_defaults.h"
-#include "google/cloud/servicemanagement/v1/internal/service_manager_stub_factory.h"
-#include "google/cloud/servicemanagement/v1/internal/service_manager_tracing_connection.h"
-#include "google/cloud/servicemanagement/v1/service_manager_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/servicemanagement/v1/internal/service_manager_connection_impl.h"
+#include "google/cloud/servicemanagement/v1/internal/service_manager_option_defaults.h"
+#include "google/cloud/servicemanagement/v1/internal/service_manager_stub_factory.h"
+#include "google/cloud/servicemanagement/v1/internal/service_manager_tracing_connection.h"
+#include "google/cloud/servicemanagement/v1/service_manager_options.h"
 #include <memory>
 #include <utility>
 
@@ -38,10 +38,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ServiceManagerConnection::~ServiceManagerConnection() = default;
 
-StreamRange<google::api::servicemanagement::v1::ManagedService>
-ServiceManagerConnection::ListServices(
-    google::api::servicemanagement::v1::
-        ListServicesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::api::servicemanagement::v1::ManagedService> ServiceManagerConnection::ListServices(
+    google::api::servicemanagement::v1::ListServicesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::api::servicemanagement::v1::ManagedService>>();
 }
@@ -56,8 +54,8 @@ future<StatusOr<google::api::servicemanagement::v1::ManagedService>>
 ServiceManagerConnection::CreateService(
     google::api::servicemanagement::v1::CreateServiceRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::api::servicemanagement::v1::ManagedService>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::api::servicemanagement::v1::ManagedService>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -65,22 +63,23 @@ ServiceManagerConnection::CreateService(
     NoAwaitTag,
     google::api::servicemanagement::v1::CreateServiceRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::api::servicemanagement::v1::ManagedService>>
-ServiceManagerConnection::CreateService(google::longrunning::Operation const&) {
+ServiceManagerConnection::CreateService(
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::api::servicemanagement::v1::ManagedService>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::api::servicemanagement::v1::ManagedService>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::api::servicemanagement::v1::OperationMetadata>>
 ServiceManagerConnection::DeleteService(
     google::api::servicemanagement::v1::DeleteServiceRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::api::servicemanagement::v1::OperationMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::api::servicemanagement::v1::OperationMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -88,22 +87,23 @@ ServiceManagerConnection::DeleteService(
     NoAwaitTag,
     google::api::servicemanagement::v1::DeleteServiceRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::api::servicemanagement::v1::OperationMetadata>>
-ServiceManagerConnection::DeleteService(google::longrunning::Operation const&) {
+ServiceManagerConnection::DeleteService(
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::api::servicemanagement::v1::OperationMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::api::servicemanagement::v1::OperationMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::api::servicemanagement::v1::UndeleteServiceResponse>>
 ServiceManagerConnection::UndeleteService(
     google::api::servicemanagement::v1::UndeleteServiceRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::api::servicemanagement::v1::UndeleteServiceResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::api::servicemanagement::v1::UndeleteServiceResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -111,30 +111,31 @@ ServiceManagerConnection::UndeleteService(
     NoAwaitTag,
     google::api::servicemanagement::v1::UndeleteServiceRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::api::servicemanagement::v1::UndeleteServiceResponse>>
 ServiceManagerConnection::UndeleteService(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::api::servicemanagement::v1::UndeleteServiceResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::api::servicemanagement::v1::UndeleteServiceResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StreamRange<google::api::Service> ServiceManagerConnection::ListServiceConfigs(
-    google::api::servicemanagement::v1::
-        ListServiceConfigsRequest) {  // NOLINT(performance-unnecessary-value-param)
+    google::api::servicemanagement::v1::ListServiceConfigsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::api::Service>>();
 }
 
-StatusOr<google::api::Service> ServiceManagerConnection::GetServiceConfig(
+StatusOr<google::api::Service>
+ServiceManagerConnection::GetServiceConfig(
     google::api::servicemanagement::v1::GetServiceConfigRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::api::Service> ServiceManagerConnection::CreateServiceConfig(
+StatusOr<google::api::Service>
+ServiceManagerConnection::CreateServiceConfig(
     google::api::servicemanagement::v1::CreateServiceConfigRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -143,8 +144,8 @@ future<StatusOr<google::api::servicemanagement::v1::SubmitConfigSourceResponse>>
 ServiceManagerConnection::SubmitConfigSource(
     google::api::servicemanagement::v1::SubmitConfigSourceRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::api::servicemanagement::v1::SubmitConfigSourceResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::api::servicemanagement::v1::SubmitConfigSourceResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -152,21 +153,19 @@ ServiceManagerConnection::SubmitConfigSource(
     NoAwaitTag,
     google::api::servicemanagement::v1::SubmitConfigSourceRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::api::servicemanagement::v1::SubmitConfigSourceResponse>>
 ServiceManagerConnection::SubmitConfigSource(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::api::servicemanagement::v1::SubmitConfigSourceResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::api::servicemanagement::v1::SubmitConfigSourceResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StreamRange<google::api::servicemanagement::v1::Rollout>
-ServiceManagerConnection::ListServiceRollouts(
-    google::api::servicemanagement::v1::
-        ListServiceRolloutsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::api::servicemanagement::v1::Rollout> ServiceManagerConnection::ListServiceRollouts(
+    google::api::servicemanagement::v1::ListServiceRolloutsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::api::servicemanagement::v1::Rollout>>();
 }
@@ -181,8 +180,8 @@ future<StatusOr<google::api::servicemanagement::v1::Rollout>>
 ServiceManagerConnection::CreateServiceRollout(
     google::api::servicemanagement::v1::CreateServiceRolloutRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::api::servicemanagement::v1::Rollout>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::api::servicemanagement::v1::Rollout>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -190,15 +189,15 @@ ServiceManagerConnection::CreateServiceRollout(
     NoAwaitTag,
     google::api::servicemanagement::v1::CreateServiceRolloutRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::api::servicemanagement::v1::Rollout>>
 ServiceManagerConnection::CreateServiceRollout(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::api::servicemanagement::v1::Rollout>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::api::servicemanagement::v1::Rollout>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::api::servicemanagement::v1::GenerateConfigReportResponse>
@@ -207,12 +206,14 @@ ServiceManagerConnection::GenerateConfigReport(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::iam::v1::Policy> ServiceManagerConnection::SetIamPolicy(
+StatusOr<google::iam::v1::Policy>
+ServiceManagerConnection::SetIamPolicy(
     google::iam::v1::SetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::iam::v1::Policy> ServiceManagerConnection::GetIamPolicy(
+StatusOr<google::iam::v1::Policy>
+ServiceManagerConnection::GetIamPolicy(
     google::iam::v1::GetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -223,10 +224,8 @@ ServiceManagerConnection::TestIamPermissions(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::longrunning::Operation>
-ServiceManagerConnection::ListOperations(
-    google::longrunning::
-        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::longrunning::Operation> ServiceManagerConnection::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }
@@ -234,19 +233,17 @@ ServiceManagerConnection::ListOperations(
 std::shared_ptr<ServiceManagerConnection> MakeServiceManagerConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 ServiceManagerPolicyOptionList>(options,
-                                                                 __func__);
+      UnifiedCredentialsOptionList,
+      ServiceManagerPolicyOptionList>(options, __func__);
   options = servicemanagement_v1_internal::ServiceManagerDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = servicemanagement_v1_internal::CreateDefaultServiceManagerStub(
-      std::move(auth), options);
+    std::move(auth), options);
   return servicemanagement_v1_internal::MakeServiceManagerTracingConnection(
-      std::make_shared<
-          servicemanagement_v1_internal::ServiceManagerConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options)));
+      std::make_shared<servicemanagement_v1_internal::ServiceManagerConnectionImpl>(
+      std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

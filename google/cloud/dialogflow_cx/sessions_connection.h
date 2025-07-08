@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_SESSIONS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_SESSIONS_CONNECTION_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/dialogflow_cx/internal/sessions_retry_traits.h"
 #include "google/cloud/dialogflow_cx/sessions_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/async_read_write_stream_impl.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
@@ -64,14 +64,14 @@ class SessionsLimitedErrorCountRetryPolicy : public SessionsRetryPolicy {
    *     @p maximum_failures == 0.
    */
   explicit SessionsLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   SessionsLimitedErrorCountRetryPolicy(
       SessionsLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : SessionsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : SessionsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   SessionsLimitedErrorCountRetryPolicy(
       SessionsLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : SessionsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : SessionsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -91,9 +91,7 @@ class SessionsLimitedErrorCountRetryPolicy : public SessionsRetryPolicy {
   using BaseType = SessionsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      dialogflow_cx_internal::SessionsRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<dialogflow_cx_internal::SessionsRetryTraits> impl_;
 };
 
 /**
@@ -131,13 +129,12 @@ class SessionsLimitedTimeRetryPolicy : public SessionsRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit SessionsLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
   SessionsLimitedTimeRetryPolicy(SessionsLimitedTimeRetryPolicy&& rhs) noexcept
-      : SessionsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  SessionsLimitedTimeRetryPolicy(
-      SessionsLimitedTimeRetryPolicy const& rhs) noexcept
-      : SessionsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+    : SessionsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  SessionsLimitedTimeRetryPolicy(SessionsLimitedTimeRetryPolicy const& rhs) noexcept
+    : SessionsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -151,16 +148,15 @@ class SessionsLimitedTimeRetryPolicy : public SessionsRetryPolicy {
     return impl_.IsPermanentFailure(status);
   }
   std::unique_ptr<SessionsRetryPolicy> clone() const override {
-    return std::make_unique<SessionsLimitedTimeRetryPolicy>(maximum_duration());
+    return std::make_unique<SessionsLimitedTimeRetryPolicy>(
+        maximum_duration());
   }
 
   // This is provided only for backwards compatibility.
   using BaseType = SessionsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      dialogflow_cx_internal::SessionsRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<dialogflow_cx_internal::SessionsRetryTraits> impl_;
 };
 
 /**
@@ -182,12 +178,10 @@ class SessionsConnection {
   virtual Options options() { return Options{}; }
 
   virtual StatusOr<google::cloud::dialogflow::cx::v3::DetectIntentResponse>
-  DetectIntent(
-      google::cloud::dialogflow::cx::v3::DetectIntentRequest const& request);
+  DetectIntent(google::cloud::dialogflow::cx::v3::DetectIntentRequest const& request);
 
   virtual StreamRange<google::cloud::dialogflow::cx::v3::DetectIntentResponse>
-  ServerStreamingDetectIntent(
-      google::cloud::dialogflow::cx::v3::DetectIntentRequest const& request);
+  ServerStreamingDetectIntent(google::cloud::dialogflow::cx::v3::DetectIntentRequest const& request);
 
   virtual std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::dialogflow::cx::v3::StreamingDetectIntentRequest,
@@ -195,32 +189,28 @@ class SessionsConnection {
   AsyncStreamingDetectIntent();
 
   virtual StatusOr<google::cloud::dialogflow::cx::v3::MatchIntentResponse>
-  MatchIntent(
-      google::cloud::dialogflow::cx::v3::MatchIntentRequest const& request);
+  MatchIntent(google::cloud::dialogflow::cx::v3::MatchIntentRequest const& request);
 
   virtual StatusOr<google::cloud::dialogflow::cx::v3::FulfillIntentResponse>
-  FulfillIntent(
-      google::cloud::dialogflow::cx::v3::FulfillIntentRequest const& request);
+  FulfillIntent(google::cloud::dialogflow::cx::v3::FulfillIntentRequest const& request);
 
   virtual StatusOr<google::cloud::dialogflow::cx::v3::AnswerFeedback>
-  SubmitAnswerFeedback(
-      google::cloud::dialogflow::cx::v3::SubmitAnswerFeedbackRequest const&
-          request);
+  SubmitAnswerFeedback(google::cloud::dialogflow::cx::v3::SubmitAnswerFeedbackRequest const& request);
 
-  virtual StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request);
+  virtual StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request);
 
-  virtual StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request);
+  virtual StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request);
 
-  virtual StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 
-  virtual Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request);
+  virtual Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request);
 };
 
 /**

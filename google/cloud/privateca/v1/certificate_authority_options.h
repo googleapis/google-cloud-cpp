@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PRIVATECA_V1_CERTIFICATE_AUTHORITY_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PRIVATECA_V1_CERTIFICATE_AUTHORITY_OPTIONS_H
 
-#include "google/cloud/privateca/v1/certificate_authority_connection.h"
-#include "google/cloud/privateca/v1/certificate_authority_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
+#include "google/cloud/privateca/v1/certificate_authority_connection.h"
+#include "google/cloud/privateca/v1/certificate_authority_connection_idempotency_policy.h"
 #include "google/cloud/version.h"
 #include <memory>
 
@@ -55,8 +55,7 @@ struct CertificateAuthorityServiceBackoffPolicyOption {
  * @ingroup google-cloud-privateca-options
  */
 struct CertificateAuthorityServiceConnectionIdempotencyPolicyOption {
-  using Type =
-      std::shared_ptr<CertificateAuthorityServiceConnectionIdempotencyPolicy>;
+  using Type = std::shared_ptr<CertificateAuthorityServiceConnectionIdempotencyPolicy>;
 };
 
 /**

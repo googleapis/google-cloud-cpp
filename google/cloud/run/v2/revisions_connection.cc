@@ -17,17 +17,17 @@
 // source: google/cloud/run/v2/revision.proto
 
 #include "google/cloud/run/v2/revisions_connection.h"
-#include "google/cloud/run/v2/internal/revisions_connection_impl.h"
-#include "google/cloud/run/v2/internal/revisions_option_defaults.h"
-#include "google/cloud/run/v2/internal/revisions_stub_factory.h"
-#include "google/cloud/run/v2/internal/revisions_tracing_connection.h"
-#include "google/cloud/run/v2/revisions_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/run/v2/internal/revisions_connection_impl.h"
+#include "google/cloud/run/v2/internal/revisions_option_defaults.h"
+#include "google/cloud/run/v2/internal/revisions_stub_factory.h"
+#include "google/cloud/run/v2/internal/revisions_tracing_connection.h"
+#include "google/cloud/run/v2/revisions_options.h"
 #include <memory>
 #include <utility>
 
@@ -38,15 +38,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 RevisionsConnection::~RevisionsConnection() = default;
 
-StatusOr<google::cloud::run::v2::Revision> RevisionsConnection::GetRevision(
+StatusOr<google::cloud::run::v2::Revision>
+RevisionsConnection::GetRevision(
     google::cloud::run::v2::GetRevisionRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::run::v2::Revision>
-RevisionsConnection::ListRevisions(
-    google::cloud::run::v2::
-        ListRevisionsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::run::v2::Revision> RevisionsConnection::ListRevisions(
+    google::cloud::run::v2::ListRevisionsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::run::v2::Revision>>();
 }
@@ -55,57 +54,64 @@ future<StatusOr<google::cloud::run::v2::Revision>>
 RevisionsConnection::DeleteRevision(
     google::cloud::run::v2::DeleteRevisionRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::run::v2::Revision>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::run::v2::Revision>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation> RevisionsConnection::DeleteRevision(
-    NoAwaitTag, google::cloud::run::v2::DeleteRevisionRequest const&) {
+StatusOr<google::longrunning::Operation>
+RevisionsConnection::DeleteRevision(
+    NoAwaitTag,
+    google::cloud::run::v2::DeleteRevisionRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::run::v2::Revision>>
-RevisionsConnection::DeleteRevision(google::longrunning::Operation const&) {
+RevisionsConnection::DeleteRevision(
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::run::v2::Revision>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::run::v2::Revision>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StreamRange<google::longrunning::Operation> RevisionsConnection::ListOperations(
-    google::longrunning::
-        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+    google::longrunning::ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }
 
-StatusOr<google::longrunning::Operation> RevisionsConnection::GetOperation(
+StatusOr<google::longrunning::Operation>
+RevisionsConnection::GetOperation(
     google::longrunning::GetOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status RevisionsConnection::DeleteOperation(
+Status
+RevisionsConnection::DeleteOperation(
     google::longrunning::DeleteOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::longrunning::Operation> RevisionsConnection::WaitOperation(
+StatusOr<google::longrunning::Operation>
+RevisionsConnection::WaitOperation(
     google::longrunning::WaitOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-std::shared_ptr<RevisionsConnection> MakeRevisionsConnection(Options options) {
+std::shared_ptr<RevisionsConnection> MakeRevisionsConnection(
+    Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 RevisionsPolicyOptionList>(options, __func__);
-  options = run_v2_internal::RevisionsDefaultOptions(std::move(options));
+      UnifiedCredentialsOptionList,
+      RevisionsPolicyOptionList>(options, __func__);
+  options = run_v2_internal::RevisionsDefaultOptions(
+      std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
-  auto stub =
-      run_v2_internal::CreateDefaultRevisionsStub(std::move(auth), options);
+  auto stub = run_v2_internal::CreateDefaultRevisionsStub(
+    std::move(auth), options);
   return run_v2_internal::MakeRevisionsTracingConnection(
       std::make_shared<run_v2_internal::RevisionsConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options)));
+      std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

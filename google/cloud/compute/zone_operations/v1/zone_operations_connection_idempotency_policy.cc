@@ -26,39 +26,31 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-ZoneOperationsConnectionIdempotencyPolicy::
-    ~ZoneOperationsConnectionIdempotencyPolicy() = default;
+ZoneOperationsConnectionIdempotencyPolicy::~ZoneOperationsConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<ZoneOperationsConnectionIdempotencyPolicy>
 ZoneOperationsConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<ZoneOperationsConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency ZoneOperationsConnectionIdempotencyPolicy::DeleteOperation(
-    google::cloud::cpp::compute::zone_operations::v1::
-        DeleteOperationRequest const&) {
+Idempotency ZoneOperationsConnectionIdempotencyPolicy::DeleteOperation(google::cloud::cpp::compute::zone_operations::v1::DeleteOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ZoneOperationsConnectionIdempotencyPolicy::GetOperation(
-    google::cloud::cpp::compute::zone_operations::v1::
-        GetOperationRequest const&) {
+Idempotency ZoneOperationsConnectionIdempotencyPolicy::GetOperation(google::cloud::cpp::compute::zone_operations::v1::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ZoneOperationsConnectionIdempotencyPolicy::ListZoneOperations(
-    google::cloud::cpp::compute::zone_operations::v1::
-        ListZoneOperationsRequest) {  // NOLINT
+Idempotency ZoneOperationsConnectionIdempotencyPolicy::ListZoneOperations(google::cloud::cpp::compute::zone_operations::v1::ListZoneOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency ZoneOperationsConnectionIdempotencyPolicy::Wait(
-    google::cloud::cpp::compute::zone_operations::v1::WaitRequest const&) {
+Idempotency ZoneOperationsConnectionIdempotencyPolicy::Wait(google::cloud::cpp::compute::zone_operations::v1::WaitRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<ZoneOperationsConnectionIdempotencyPolicy>
-MakeDefaultZoneOperationsConnectionIdempotencyPolicy() {
+    MakeDefaultZoneOperationsConnectionIdempotencyPolicy() {
   return std::make_unique<ZoneOperationsConnectionIdempotencyPolicy>();
 }
 

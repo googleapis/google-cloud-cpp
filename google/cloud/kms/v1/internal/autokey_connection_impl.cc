@@ -17,13 +17,13 @@
 // source: google/cloud/kms/v1/autokey.proto
 
 #include "google/cloud/kms/v1/internal/autokey_connection_impl.h"
-#include "google/cloud/kms/v1/internal/autokey_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/async_long_running_operation.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
+#include "google/cloud/kms/v1/internal/autokey_option_defaults.h"
 #include <memory>
 #include <utility>
 
@@ -33,82 +33,80 @@ namespace kms_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<kms_v1::AutokeyRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<kms_v1::AutokeyRetryPolicy>
+retry_policy(Options const& options) {
   return options.get<kms_v1::AutokeyRetryPolicyOption>()->clone();
 }
 
-std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+std::unique_ptr<BackoffPolicy>
+backoff_policy(Options const& options) {
   return options.get<kms_v1::AutokeyBackoffPolicyOption>()->clone();
 }
 
-std::unique_ptr<kms_v1::AutokeyConnectionIdempotencyPolicy> idempotency_policy(
-    Options const& options) {
-  return options.get<kms_v1::AutokeyConnectionIdempotencyPolicyOption>()
-      ->clone();
+std::unique_ptr<kms_v1::AutokeyConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options.get<kms_v1::AutokeyConnectionIdempotencyPolicyOption>()->clone();
 }
 
 std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
   return options.get<kms_v1::AutokeyPollingPolicyOption>()->clone();
 }
 
-}  // namespace
+} // namespace
 
 AutokeyConnectionImpl::AutokeyConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<kms_v1_internal::AutokeyStub> stub, Options options)
-    : background_(std::move(background)),
-      stub_(std::move(stub)),
-      options_(internal::MergeOptions(std::move(options),
-                                      AutokeyConnection::options())) {}
+    std::shared_ptr<kms_v1_internal::AutokeyStub> stub,
+    Options options)
+  : background_(std::move(background)), stub_(std::move(stub)),
+    options_(internal::MergeOptions(
+        std::move(options),
+        AutokeyConnection::options())) {}
 
 future<StatusOr<google::cloud::kms::v1::KeyHandle>>
-AutokeyConnectionImpl::CreateKeyHandle(
-    google::cloud::kms::v1::CreateKeyHandleRequest const& request) {
+AutokeyConnectionImpl::CreateKeyHandle(google::cloud::kms::v1::CreateKeyHandleRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->CreateKeyHandle(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<
-      google::cloud::kms::v1::KeyHandle>(
-      background_->cq(), current, std::move(request_copy),
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::kms::v1::CreateKeyHandleRequest const& request) {
-        return stub->AsyncCreateKeyHandle(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::kms::v1::KeyHandle>,
-      retry_policy(*current), backoff_policy(*current), idempotent,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::kms::v1::KeyHandle>(
+    background_->cq(), current, std::move(request_copy),
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::cloud::kms::v1::CreateKeyHandleRequest const& request) {
+     return stub->AsyncCreateKeyHandle(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::kms::v1::KeyHandle>,
+    retry_policy(*current), backoff_policy(*current), idempotent,
+    polling_policy(*current), __func__);
 }
 
-StatusOr<google::longrunning::Operation> AutokeyConnectionImpl::CreateKeyHandle(
-    NoAwaitTag, google::cloud::kms::v1::CreateKeyHandleRequest const& request) {
+StatusOr<google::longrunning::Operation>
+AutokeyConnectionImpl::CreateKeyHandle(
+      NoAwaitTag, google::cloud::kms::v1::CreateKeyHandleRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateKeyHandle(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::kms::v1::CreateKeyHandleRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::kms::v1::CreateKeyHandleRequest const& request) {
         return stub_->CreateKeyHandle(context, options, request);
       },
       *current, request, __func__);
@@ -116,42 +114,36 @@ StatusOr<google::longrunning::Operation> AutokeyConnectionImpl::CreateKeyHandle(
 
 future<StatusOr<google::cloud::kms::v1::KeyHandle>>
 AutokeyConnectionImpl::CreateKeyHandle(
-    google::longrunning::Operation const& operation) {
+      google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata()
-           .Is<typename google::cloud::kms::v1::CreateKeyHandleMetadata>()) {
+  if (!operation.metadata().Is<typename google::cloud::kms::v1::CreateKeyHandleMetadata>()) {
     return make_ready_future<StatusOr<google::cloud::kms::v1::KeyHandle>>(
-        internal::InvalidArgumentError(
-            "operation does not correspond to CreateKeyHandle",
-            GCP_ERROR_INFO().WithMetadata("operation",
-                                          operation.metadata().DebugString())));
+        internal::InvalidArgumentError("operation does not correspond to CreateKeyHandle",
+                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<
-      google::cloud::kms::v1::KeyHandle>(
-      background_->cq(), current, operation,
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::kms::v1::KeyHandle>,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::kms::v1::KeyHandle>(
+    background_->cq(), current, operation,
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::kms::v1::KeyHandle>,
+    polling_policy(*current), __func__);
 }
 
-StatusOr<google::cloud::kms::v1::KeyHandle> AutokeyConnectionImpl::GetKeyHandle(
-    google::cloud::kms::v1::GetKeyHandleRequest const& request) {
+StatusOr<google::cloud::kms::v1::KeyHandle>
+AutokeyConnectionImpl::GetKeyHandle(google::cloud::kms::v1::GetKeyHandleRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -164,33 +156,27 @@ StatusOr<google::cloud::kms::v1::KeyHandle> AutokeyConnectionImpl::GetKeyHandle(
 }
 
 StreamRange<google::cloud::kms::v1::KeyHandle>
-AutokeyConnectionImpl::ListKeyHandles(
-    google::cloud::kms::v1::ListKeyHandlesRequest request) {
+AutokeyConnectionImpl::ListKeyHandles(google::cloud::kms::v1::ListKeyHandlesRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListKeyHandles(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::kms::v1::KeyHandle>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::kms::v1::KeyHandle>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry =
-           std::shared_ptr<kms_v1::AutokeyRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<kms_v1::AutokeyRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::kms::v1::ListKeyHandlesRequest const& r) {
+          Options const& options, google::cloud::kms::v1::ListKeyHandlesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](
-                grpc::ClientContext& context, Options const& options,
-                google::cloud::kms::v1::ListKeyHandlesRequest const& request) {
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::cloud::kms::v1::ListKeyHandlesRequest const& request) {
               return stub->ListKeyHandles(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::kms::v1::ListKeyHandlesResponse r) {
-        std::vector<google::cloud::kms::v1::KeyHandle> result(
-            r.key_handles().size());
+        std::vector<google::cloud::kms::v1::KeyHandle> result(r.key_handles().size());
         auto& messages = *r.mutable_key_handles();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -198,41 +184,35 @@ AutokeyConnectionImpl::ListKeyHandles(
 }
 
 StreamRange<google::cloud::location::Location>
-AutokeyConnectionImpl::ListLocations(
-    google::cloud::location::ListLocationsRequest request) {
+AutokeyConnectionImpl::ListLocations(google::cloud::location::ListLocationsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListLocations(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::location::Location>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::location::Location>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry =
-           std::shared_ptr<kms_v1::AutokeyRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<kms_v1::AutokeyRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::location::ListLocationsRequest const& r) {
+          Options const& options, google::cloud::location::ListLocationsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](
-                grpc::ClientContext& context, Options const& options,
-                google::cloud::location::ListLocationsRequest const& request) {
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::cloud::location::ListLocationsRequest const& request) {
               return stub->ListLocations(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::location::ListLocationsResponse r) {
-        std::vector<google::cloud::location::Location> result(
-            r.locations().size());
+        std::vector<google::cloud::location::Location> result(r.locations().size());
         auto& messages = *r.mutable_locations();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
       });
 }
 
-StatusOr<google::cloud::location::Location> AutokeyConnectionImpl::GetLocation(
-    google::cloud::location::GetLocationRequest const& request) {
+StatusOr<google::cloud::location::Location>
+AutokeyConnectionImpl::GetLocation(google::cloud::location::GetLocationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -244,8 +224,8 @@ StatusOr<google::cloud::location::Location> AutokeyConnectionImpl::GetLocation(
       *current, request, __func__);
 }
 
-StatusOr<google::iam::v1::Policy> AutokeyConnectionImpl::SetIamPolicy(
-    google::iam::v1::SetIamPolicyRequest const& request) {
+StatusOr<google::iam::v1::Policy>
+AutokeyConnectionImpl::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -257,8 +237,8 @@ StatusOr<google::iam::v1::Policy> AutokeyConnectionImpl::SetIamPolicy(
       *current, request, __func__);
 }
 
-StatusOr<google::iam::v1::Policy> AutokeyConnectionImpl::GetIamPolicy(
-    google::iam::v1::GetIamPolicyRequest const& request) {
+StatusOr<google::iam::v1::Policy>
+AutokeyConnectionImpl::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -271,8 +251,7 @@ StatusOr<google::iam::v1::Policy> AutokeyConnectionImpl::GetIamPolicy(
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-AutokeyConnectionImpl::TestIamPermissions(
-    google::iam::v1::TestIamPermissionsRequest const& request) {
+AutokeyConnectionImpl::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -284,8 +263,8 @@ AutokeyConnectionImpl::TestIamPermissions(
       *current, request, __func__);
 }
 
-StatusOr<google::longrunning::Operation> AutokeyConnectionImpl::GetOperation(
-    google::longrunning::GetOperationRequest const& request) {
+StatusOr<google::longrunning::Operation>
+AutokeyConnectionImpl::GetOperation(google::longrunning::GetOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),

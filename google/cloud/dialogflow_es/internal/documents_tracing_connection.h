@@ -30,108 +30,102 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-class DocumentsTracingConnection : public dialogflow_es::DocumentsConnection {
+class DocumentsTracingConnection
+    : public dialogflow_es::DocumentsConnection {
  public:
   ~DocumentsTracingConnection() override = default;
 
   explicit DocumentsTracingConnection(
-      std::shared_ptr<dialogflow_es::DocumentsConnection> child);
+    std::shared_ptr<dialogflow_es::DocumentsConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StreamRange<google::cloud::dialogflow::v2::Document> ListDocuments(
-      google::cloud::dialogflow::v2::ListDocumentsRequest request) override;
+  StreamRange<google::cloud::dialogflow::v2::Document>
+  ListDocuments(google::cloud::dialogflow::v2::ListDocumentsRequest request) override;
 
-  StatusOr<google::cloud::dialogflow::v2::Document> GetDocument(
-      google::cloud::dialogflow::v2::GetDocumentRequest const& request)
-      override;
+  StatusOr<google::cloud::dialogflow::v2::Document>
+  GetDocument(google::cloud::dialogflow::v2::GetDocumentRequest const& request) override;
 
-  future<StatusOr<google::cloud::dialogflow::v2::Document>> CreateDocument(
-      google::cloud::dialogflow::v2::CreateDocumentRequest const& request)
-      override;
+  future<StatusOr<google::cloud::dialogflow::v2::Document>>
+  CreateDocument(google::cloud::dialogflow::v2::CreateDocumentRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> CreateDocument(
-      NoAwaitTag,
-      google::cloud::dialogflow::v2::CreateDocumentRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  CreateDocument(NoAwaitTag,
+      google::cloud::dialogflow::v2::CreateDocumentRequest const& request) override;
 
-  future<StatusOr<google::cloud::dialogflow::v2::Document>> CreateDocument(
+  future<StatusOr<google::cloud::dialogflow::v2::Document>>
+  CreateDocument(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::dialogflow::v2::ImportDocumentsResponse>>
-  ImportDocuments(google::cloud::dialogflow::v2::ImportDocumentsRequest const&
-                      request) override;
+  ImportDocuments(google::cloud::dialogflow::v2::ImportDocumentsRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> ImportDocuments(
-      NoAwaitTag,
-      google::cloud::dialogflow::v2::ImportDocumentsRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  ImportDocuments(NoAwaitTag,
+      google::cloud::dialogflow::v2::ImportDocumentsRequest const& request) override;
 
   future<StatusOr<google::cloud::dialogflow::v2::ImportDocumentsResponse>>
-  ImportDocuments(google::longrunning::Operation const& operation) override;
+  ImportDocuments(
+      google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::dialogflow::v2::KnowledgeOperationMetadata>>
-  DeleteDocument(google::cloud::dialogflow::v2::DeleteDocumentRequest const&
-                     request) override;
+  DeleteDocument(google::cloud::dialogflow::v2::DeleteDocumentRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> DeleteDocument(
-      NoAwaitTag,
-      google::cloud::dialogflow::v2::DeleteDocumentRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  DeleteDocument(NoAwaitTag,
+      google::cloud::dialogflow::v2::DeleteDocumentRequest const& request) override;
 
   future<StatusOr<google::cloud::dialogflow::v2::KnowledgeOperationMetadata>>
-  DeleteDocument(google::longrunning::Operation const& operation) override;
-
-  future<StatusOr<google::cloud::dialogflow::v2::Document>> UpdateDocument(
-      google::cloud::dialogflow::v2::UpdateDocumentRequest const& request)
-      override;
-
-  StatusOr<google::longrunning::Operation> UpdateDocument(
-      NoAwaitTag,
-      google::cloud::dialogflow::v2::UpdateDocumentRequest const& request)
-      override;
-
-  future<StatusOr<google::cloud::dialogflow::v2::Document>> UpdateDocument(
+  DeleteDocument(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::dialogflow::v2::Document>> ReloadDocument(
-      google::cloud::dialogflow::v2::ReloadDocumentRequest const& request)
-      override;
+  future<StatusOr<google::cloud::dialogflow::v2::Document>>
+  UpdateDocument(google::cloud::dialogflow::v2::UpdateDocumentRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> ReloadDocument(
-      NoAwaitTag,
-      google::cloud::dialogflow::v2::ReloadDocumentRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  UpdateDocument(NoAwaitTag,
+      google::cloud::dialogflow::v2::UpdateDocumentRequest const& request) override;
 
-  future<StatusOr<google::cloud::dialogflow::v2::Document>> ReloadDocument(
+  future<StatusOr<google::cloud::dialogflow::v2::Document>>
+  UpdateDocument(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::dialogflow::v2::Document>> ExportDocument(
-      google::cloud::dialogflow::v2::ExportDocumentRequest const& request)
-      override;
+  future<StatusOr<google::cloud::dialogflow::v2::Document>>
+  ReloadDocument(google::cloud::dialogflow::v2::ReloadDocumentRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> ExportDocument(
-      NoAwaitTag,
-      google::cloud::dialogflow::v2::ExportDocumentRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  ReloadDocument(NoAwaitTag,
+      google::cloud::dialogflow::v2::ReloadDocumentRequest const& request) override;
 
-  future<StatusOr<google::cloud::dialogflow::v2::Document>> ExportDocument(
+  future<StatusOr<google::cloud::dialogflow::v2::Document>>
+  ReloadDocument(
       google::longrunning::Operation const& operation) override;
 
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request) override;
+  future<StatusOr<google::cloud::dialogflow::v2::Document>>
+  ExportDocument(google::cloud::dialogflow::v2::ExportDocumentRequest const& request) override;
 
-  StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  ExportDocument(NoAwaitTag,
+      google::cloud::dialogflow::v2::ExportDocumentRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request) override;
+  future<StatusOr<google::cloud::dialogflow::v2::Document>>
+  ExportDocument(
+      google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request) override;
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request) override;
 
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request) override;
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request) override;
+
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request) override;
+
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request) override;
+
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::shared_ptr<dialogflow_es::DocumentsConnection> child_;

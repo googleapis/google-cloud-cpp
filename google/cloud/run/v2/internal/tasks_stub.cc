@@ -30,71 +30,82 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 TasksStub::~TasksStub() = default;
 
-StatusOr<google::cloud::run::v2::Task> DefaultTasksStub::GetTask(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::run::v2::GetTaskRequest const& request) {
-  google::cloud::run::v2::Task response;
-  auto status = grpc_stub_->GetTask(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::cloud::run::v2::Task>
+DefaultTasksStub::GetTask(
+  grpc::ClientContext& context, Options const&,
+  google::cloud::run::v2::GetTaskRequest const& request) {
+    google::cloud::run::v2::Task response;
+    auto status =
+        grpc_stub_->GetTask(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-StatusOr<google::cloud::run::v2::ListTasksResponse> DefaultTasksStub::ListTasks(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::run::v2::ListTasksRequest const& request) {
-  google::cloud::run::v2::ListTasksResponse response;
-  auto status = grpc_stub_->ListTasks(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::cloud::run::v2::ListTasksResponse>
+DefaultTasksStub::ListTasks(
+  grpc::ClientContext& context, Options const&,
+  google::cloud::run::v2::ListTasksRequest const& request) {
+    google::cloud::run::v2::ListTasksResponse response;
+    auto status =
+        grpc_stub_->ListTasks(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
 DefaultTasksStub::ListOperations(
-    grpc::ClientContext& context, Options const&,
-    google::longrunning::ListOperationsRequest const& request) {
-  google::longrunning::ListOperationsResponse response;
-  auto status = operations_stub_->ListOperations(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::longrunning::ListOperationsRequest const& request) {
+    google::longrunning::ListOperationsResponse response;
+    auto status =
+        operations_stub_->ListOperations(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-StatusOr<google::longrunning::Operation> DefaultTasksStub::GetOperation(
-    grpc::ClientContext& context, Options const&,
-    google::longrunning::GetOperationRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = operations_stub_->GetOperation(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::longrunning::Operation>
+DefaultTasksStub::GetOperation(
+  grpc::ClientContext& context, Options const&,
+  google::longrunning::GetOperationRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        operations_stub_->GetOperation(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-Status DefaultTasksStub::DeleteOperation(
-    grpc::ClientContext& context, Options const&,
-    google::longrunning::DeleteOperationRequest const& request) {
-  google::protobuf::Empty response;
-  auto status = operations_stub_->DeleteOperation(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return google::cloud::Status();
+Status
+DefaultTasksStub::DeleteOperation(
+  grpc::ClientContext& context, Options const&,
+  google::longrunning::DeleteOperationRequest const& request) {
+    google::protobuf::Empty response;
+    auto status =
+        operations_stub_->DeleteOperation(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return google::cloud::Status();
 }
 
-StatusOr<google::longrunning::Operation> DefaultTasksStub::WaitOperation(
-    grpc::ClientContext& context, Options const&,
-    google::longrunning::WaitOperationRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = operations_stub_->WaitOperation(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::longrunning::Operation>
+DefaultTasksStub::WaitOperation(
+  grpc::ClientContext& context, Options const&,
+  google::longrunning::WaitOperationRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        operations_stub_->WaitOperation(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

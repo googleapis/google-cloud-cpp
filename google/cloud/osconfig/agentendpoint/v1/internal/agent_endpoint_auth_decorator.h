@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_OSCONFIG_AGENTENDPOINT_V1_INTERNAL_AGENT_ENDPOINT_AUTH_DECORATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_OSCONFIG_AGENTENDPOINT_V1_INTERNAL_AGENT_ENDPOINT_AUTH_DECORATOR_H
 
-#include "google/cloud/osconfig/agentendpoint/v1/internal/agent_endpoint_stub.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/osconfig/agentendpoint/v1/internal/agent_endpoint_stub.h"
 #include "google/cloud/version.h"
 #include <memory>
 #include <set>
@@ -38,43 +38,36 @@ class AgentEndpointServiceAuth : public AgentEndpointServiceStub {
       std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth,
       std::shared_ptr<AgentEndpointServiceStub> child);
 
-  std::unique_ptr<google::cloud::internal::StreamingReadRpc<
-      google::cloud::osconfig::agentendpoint::v1::
-          ReceiveTaskNotificationResponse>>
+  std::unique_ptr<google::cloud::internal::StreamingReadRpc<google::cloud::osconfig::agentendpoint::v1::ReceiveTaskNotificationResponse>>
   ReceiveTaskNotification(
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
-      google::cloud::osconfig::agentendpoint::v1::
-          ReceiveTaskNotificationRequest const& request) override;
+      std::shared_ptr<grpc::ClientContext> context,
+      Options const& options,
+      google::cloud::osconfig::agentendpoint::v1::ReceiveTaskNotificationRequest const& request) override;
 
-  StatusOr<google::cloud::osconfig::agentendpoint::v1::StartNextTaskResponse>
-  StartNextTask(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::osconfig::agentendpoint::v1::StartNextTaskRequest const&
-          request) override;
+  StatusOr<google::cloud::osconfig::agentendpoint::v1::StartNextTaskResponse> StartNextTask(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::osconfig::agentendpoint::v1::StartNextTaskRequest const& request) override;
 
-  StatusOr<
-      google::cloud::osconfig::agentendpoint::v1::ReportTaskProgressResponse>
-  ReportTaskProgress(grpc::ClientContext& context, Options const& options,
-                     google::cloud::osconfig::agentendpoint::v1::
-                         ReportTaskProgressRequest const& request) override;
+  StatusOr<google::cloud::osconfig::agentendpoint::v1::ReportTaskProgressResponse> ReportTaskProgress(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::osconfig::agentendpoint::v1::ReportTaskProgressRequest const& request) override;
 
-  StatusOr<
-      google::cloud::osconfig::agentendpoint::v1::ReportTaskCompleteResponse>
-  ReportTaskComplete(grpc::ClientContext& context, Options const& options,
-                     google::cloud::osconfig::agentendpoint::v1::
-                         ReportTaskCompleteRequest const& request) override;
+  StatusOr<google::cloud::osconfig::agentendpoint::v1::ReportTaskCompleteResponse> ReportTaskComplete(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::osconfig::agentendpoint::v1::ReportTaskCompleteRequest const& request) override;
 
-  StatusOr<google::cloud::osconfig::agentendpoint::v1::RegisterAgentResponse>
-  RegisterAgent(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::osconfig::agentendpoint::v1::RegisterAgentRequest const&
-          request) override;
+  StatusOr<google::cloud::osconfig::agentendpoint::v1::RegisterAgentResponse> RegisterAgent(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::osconfig::agentendpoint::v1::RegisterAgentRequest const& request) override;
 
-  StatusOr<google::cloud::osconfig::agentendpoint::v1::ReportInventoryResponse>
-  ReportInventory(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::osconfig::agentendpoint::v1::ReportInventoryRequest const&
-          request) override;
+  StatusOr<google::cloud::osconfig::agentendpoint::v1::ReportInventoryResponse> ReportInventory(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::osconfig::agentendpoint::v1::ReportInventoryRequest const& request) override;
 
  private:
   std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth_;

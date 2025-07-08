@@ -28,14 +28,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 IndexServiceClient::IndexServiceClient(
     std::shared_ptr<IndexServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 IndexServiceClient::~IndexServiceClient() = default;
 
 future<StatusOr<google::cloud::aiplatform::v1::Index>>
-IndexServiceClient::CreateIndex(
-    std::string const& parent,
-    google::cloud::aiplatform::v1::Index const& index, Options opts) {
+IndexServiceClient::CreateIndex(std::string const& parent, google::cloud::aiplatform::v1::Index const& index, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::CreateIndexRequest request;
   request.set_parent(parent);
@@ -43,9 +41,8 @@ IndexServiceClient::CreateIndex(
   return connection_->CreateIndex(request);
 }
 
-StatusOr<google::longrunning::Operation> IndexServiceClient::CreateIndex(
-    NoAwaitTag, std::string const& parent,
-    google::cloud::aiplatform::v1::Index const& index, Options opts) {
+StatusOr<google::longrunning::Operation>
+IndexServiceClient::CreateIndex(NoAwaitTag, std::string const& parent, google::cloud::aiplatform::v1::Index const& index, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::CreateIndexRequest request;
   request.set_parent(parent);
@@ -54,39 +51,33 @@ StatusOr<google::longrunning::Operation> IndexServiceClient::CreateIndex(
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::Index>>
-IndexServiceClient::CreateIndex(
-    google::cloud::aiplatform::v1::CreateIndexRequest const& request,
-    Options opts) {
+IndexServiceClient::CreateIndex(google::cloud::aiplatform::v1::CreateIndexRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateIndex(request);
 }
 
-StatusOr<google::longrunning::Operation> IndexServiceClient::CreateIndex(
-    NoAwaitTag,
-    google::cloud::aiplatform::v1::CreateIndexRequest const& request,
-    Options opts) {
+StatusOr<google::longrunning::Operation>
+IndexServiceClient::CreateIndex(NoAwaitTag, google::cloud::aiplatform::v1::CreateIndexRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateIndex(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::Index>>
-IndexServiceClient::CreateIndex(google::longrunning::Operation const& operation,
-                                Options opts) {
+IndexServiceClient::CreateIndex(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateIndex(operation);
 }
 
-StatusOr<google::cloud::aiplatform::v1::Index> IndexServiceClient::GetIndex(
-    std::string const& name, Options opts) {
+StatusOr<google::cloud::aiplatform::v1::Index>
+IndexServiceClient::GetIndex(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::GetIndexRequest request;
   request.set_name(name);
   return connection_->GetIndex(request);
 }
 
-StatusOr<google::cloud::aiplatform::v1::Index> IndexServiceClient::GetIndex(
-    google::cloud::aiplatform::v1::GetIndexRequest const& request,
-    Options opts) {
+StatusOr<google::cloud::aiplatform::v1::Index>
+IndexServiceClient::GetIndex(google::cloud::aiplatform::v1::GetIndexRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetIndex(request);
 }
@@ -100,16 +91,13 @@ IndexServiceClient::ListIndexes(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::aiplatform::v1::Index>
-IndexServiceClient::ListIndexes(
-    google::cloud::aiplatform::v1::ListIndexesRequest request, Options opts) {
+IndexServiceClient::ListIndexes(google::cloud::aiplatform::v1::ListIndexesRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListIndexes(std::move(request));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::Index>>
-IndexServiceClient::UpdateIndex(
-    google::cloud::aiplatform::v1::Index const& index,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+IndexServiceClient::UpdateIndex(google::cloud::aiplatform::v1::Index const& index, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::UpdateIndexRequest request;
   *request.mutable_index() = index;
@@ -117,9 +105,8 @@ IndexServiceClient::UpdateIndex(
   return connection_->UpdateIndex(request);
 }
 
-StatusOr<google::longrunning::Operation> IndexServiceClient::UpdateIndex(
-    NoAwaitTag, google::cloud::aiplatform::v1::Index const& index,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+StatusOr<google::longrunning::Operation>
+IndexServiceClient::UpdateIndex(NoAwaitTag, google::cloud::aiplatform::v1::Index const& index, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::UpdateIndexRequest request;
   *request.mutable_index() = index;
@@ -128,24 +115,19 @@ StatusOr<google::longrunning::Operation> IndexServiceClient::UpdateIndex(
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::Index>>
-IndexServiceClient::UpdateIndex(
-    google::cloud::aiplatform::v1::UpdateIndexRequest const& request,
-    Options opts) {
+IndexServiceClient::UpdateIndex(google::cloud::aiplatform::v1::UpdateIndexRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateIndex(request);
 }
 
-StatusOr<google::longrunning::Operation> IndexServiceClient::UpdateIndex(
-    NoAwaitTag,
-    google::cloud::aiplatform::v1::UpdateIndexRequest const& request,
-    Options opts) {
+StatusOr<google::longrunning::Operation>
+IndexServiceClient::UpdateIndex(NoAwaitTag, google::cloud::aiplatform::v1::UpdateIndexRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateIndex(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::Index>>
-IndexServiceClient::UpdateIndex(google::longrunning::Operation const& operation,
-                                Options opts) {
+IndexServiceClient::UpdateIndex(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateIndex(operation);
 }
@@ -158,8 +140,8 @@ IndexServiceClient::DeleteIndex(std::string const& name, Options opts) {
   return connection_->DeleteIndex(request);
 }
 
-StatusOr<google::longrunning::Operation> IndexServiceClient::DeleteIndex(
-    NoAwaitTag, std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation>
+IndexServiceClient::DeleteIndex(NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::DeleteIndexRequest request;
   request.set_name(name);
@@ -167,78 +149,67 @@ StatusOr<google::longrunning::Operation> IndexServiceClient::DeleteIndex(
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-IndexServiceClient::DeleteIndex(
-    google::cloud::aiplatform::v1::DeleteIndexRequest const& request,
-    Options opts) {
+IndexServiceClient::DeleteIndex(google::cloud::aiplatform::v1::DeleteIndexRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteIndex(request);
 }
 
-StatusOr<google::longrunning::Operation> IndexServiceClient::DeleteIndex(
-    NoAwaitTag,
-    google::cloud::aiplatform::v1::DeleteIndexRequest const& request,
-    Options opts) {
+StatusOr<google::longrunning::Operation>
+IndexServiceClient::DeleteIndex(NoAwaitTag, google::cloud::aiplatform::v1::DeleteIndexRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteIndex(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-IndexServiceClient::DeleteIndex(google::longrunning::Operation const& operation,
-                                Options opts) {
+IndexServiceClient::DeleteIndex(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteIndex(operation);
 }
 
 StatusOr<google::cloud::aiplatform::v1::UpsertDatapointsResponse>
-IndexServiceClient::UpsertDatapoints(
-    google::cloud::aiplatform::v1::UpsertDatapointsRequest const& request,
-    Options opts) {
+IndexServiceClient::UpsertDatapoints(google::cloud::aiplatform::v1::UpsertDatapointsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpsertDatapoints(request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::RemoveDatapointsResponse>
-IndexServiceClient::RemoveDatapoints(
-    google::cloud::aiplatform::v1::RemoveDatapointsRequest const& request,
-    Options opts) {
+IndexServiceClient::RemoveDatapoints(google::cloud::aiplatform::v1::RemoveDatapointsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RemoveDatapoints(request);
 }
 
 StreamRange<google::cloud::location::Location>
-IndexServiceClient::ListLocations(
-    google::cloud::location::ListLocationsRequest request, Options opts) {
+IndexServiceClient::ListLocations(google::cloud::location::ListLocationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListLocations(std::move(request));
 }
 
-StatusOr<google::cloud::location::Location> IndexServiceClient::GetLocation(
-    google::cloud::location::GetLocationRequest const& request, Options opts) {
+StatusOr<google::cloud::location::Location>
+IndexServiceClient::GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetLocation(request);
 }
 
-StatusOr<google::iam::v1::Policy> IndexServiceClient::SetIamPolicy(
-    google::iam::v1::SetIamPolicyRequest const& request, Options opts) {
+StatusOr<google::iam::v1::Policy>
+IndexServiceClient::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetIamPolicy(request);
 }
 
-StatusOr<google::iam::v1::Policy> IndexServiceClient::GetIamPolicy(
-    google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
+StatusOr<google::iam::v1::Policy>
+IndexServiceClient::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetIamPolicy(request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-IndexServiceClient::TestIamPermissions(
-    google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
+IndexServiceClient::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->TestIamPermissions(request);
 }
 
-StreamRange<google::longrunning::Operation> IndexServiceClient::ListOperations(
-    std::string const& name, std::string const& filter, Options opts) {
+StreamRange<google::longrunning::Operation>
+IndexServiceClient::ListOperations(std::string const& name, std::string const& filter, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::ListOperationsRequest request;
   request.set_name(name);
@@ -246,56 +217,56 @@ StreamRange<google::longrunning::Operation> IndexServiceClient::ListOperations(
   return connection_->ListOperations(request);
 }
 
-StreamRange<google::longrunning::Operation> IndexServiceClient::ListOperations(
-    google::longrunning::ListOperationsRequest request, Options opts) {
+StreamRange<google::longrunning::Operation>
+IndexServiceClient::ListOperations(google::longrunning::ListOperationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOperations(std::move(request));
 }
 
-StatusOr<google::longrunning::Operation> IndexServiceClient::GetOperation(
-    std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation>
+IndexServiceClient::GetOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
   return connection_->GetOperation(request);
 }
 
-StatusOr<google::longrunning::Operation> IndexServiceClient::GetOperation(
-    google::longrunning::GetOperationRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation>
+IndexServiceClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }
 
-Status IndexServiceClient::DeleteOperation(std::string const& name,
-                                           Options opts) {
+Status
+IndexServiceClient::DeleteOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::DeleteOperationRequest request;
   request.set_name(name);
   return connection_->DeleteOperation(request);
 }
 
-Status IndexServiceClient::DeleteOperation(
-    google::longrunning::DeleteOperationRequest const& request, Options opts) {
+Status
+IndexServiceClient::DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteOperation(request);
 }
 
-Status IndexServiceClient::CancelOperation(std::string const& name,
-                                           Options opts) {
+Status
+IndexServiceClient::CancelOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::CancelOperationRequest request;
   request.set_name(name);
   return connection_->CancelOperation(request);
 }
 
-Status IndexServiceClient::CancelOperation(
-    google::longrunning::CancelOperationRequest const& request, Options opts) {
+Status
+IndexServiceClient::CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelOperation(request);
 }
 
-StatusOr<google::longrunning::Operation> IndexServiceClient::WaitOperation(
-    google::longrunning::WaitOperationRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation>
+IndexServiceClient::WaitOperation(google::longrunning::WaitOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->WaitOperation(request);
 }

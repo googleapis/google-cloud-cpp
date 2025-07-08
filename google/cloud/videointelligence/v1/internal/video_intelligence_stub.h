@@ -42,18 +42,17 @@ class VideoIntelligenceServiceStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::videointelligence::v1::AnnotateVideoRequest const&
-          request) = 0;
+      google::cloud::videointelligence::v1::AnnotateVideoRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> AnnotateVideo(
-      grpc::ClientContext& context, Options options,
-      google::cloud::videointelligence::v1::AnnotateVideoRequest const&
-          request) = 0;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::videointelligence::v1::AnnotateVideoRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
+    google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
@@ -63,15 +62,11 @@ class VideoIntelligenceServiceStub {
       google::longrunning::CancelOperationRequest const& request) = 0;
 };
 
-class DefaultVideoIntelligenceServiceStub
-    : public VideoIntelligenceServiceStub {
+class DefaultVideoIntelligenceServiceStub : public VideoIntelligenceServiceStub {
  public:
   DefaultVideoIntelligenceServiceStub(
-      std::unique_ptr<google::cloud::videointelligence::v1::
-                          VideoIntelligenceService::StubInterface>
-          grpc_stub,
-      std::unique_ptr<google::longrunning::Operations::StubInterface>
-          operations_stub)
+      std::unique_ptr<google::cloud::videointelligence::v1::VideoIntelligenceService::StubInterface> grpc_stub,
+      std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub)
       : grpc_stub_(std::move(grpc_stub)),
         operations_stub_(std::move(operations_stub)) {}
 
@@ -79,13 +74,12 @@ class DefaultVideoIntelligenceServiceStub
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::videointelligence::v1::AnnotateVideoRequest const& request)
-      override;
+      google::cloud::videointelligence::v1::AnnotateVideoRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> AnnotateVideo(
-      grpc::ClientContext& context, Options options,
-      google::cloud::videointelligence::v1::AnnotateVideoRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::videointelligence::v1::AnnotateVideoRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
@@ -100,11 +94,8 @@ class DefaultVideoIntelligenceServiceStub
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  std::unique_ptr<google::cloud::videointelligence::v1::
-                      VideoIntelligenceService::StubInterface>
-      grpc_stub_;
-  std::unique_ptr<google::longrunning::Operations::StubInterface>
-      operations_stub_;
+  std::unique_ptr<google::cloud::videointelligence::v1::VideoIntelligenceService::StubInterface> grpc_stub_;
+  std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

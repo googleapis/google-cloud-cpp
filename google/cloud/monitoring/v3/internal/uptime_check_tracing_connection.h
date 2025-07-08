@@ -36,31 +36,27 @@ class UptimeCheckServiceTracingConnection
   ~UptimeCheckServiceTracingConnection() override = default;
 
   explicit UptimeCheckServiceTracingConnection(
-      std::shared_ptr<monitoring_v3::UptimeCheckServiceConnection> child);
+    std::shared_ptr<monitoring_v3::UptimeCheckServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StreamRange<google::monitoring::v3::UptimeCheckConfig> ListUptimeCheckConfigs(
-      google::monitoring::v3::ListUptimeCheckConfigsRequest request) override;
+  StreamRange<google::monitoring::v3::UptimeCheckConfig>
+  ListUptimeCheckConfigs(google::monitoring::v3::ListUptimeCheckConfigsRequest request) override;
 
-  StatusOr<google::monitoring::v3::UptimeCheckConfig> GetUptimeCheckConfig(
-      google::monitoring::v3::GetUptimeCheckConfigRequest const& request)
-      override;
+  StatusOr<google::monitoring::v3::UptimeCheckConfig>
+  GetUptimeCheckConfig(google::monitoring::v3::GetUptimeCheckConfigRequest const& request) override;
 
-  StatusOr<google::monitoring::v3::UptimeCheckConfig> CreateUptimeCheckConfig(
-      google::monitoring::v3::CreateUptimeCheckConfigRequest const& request)
-      override;
+  StatusOr<google::monitoring::v3::UptimeCheckConfig>
+  CreateUptimeCheckConfig(google::monitoring::v3::CreateUptimeCheckConfigRequest const& request) override;
 
-  StatusOr<google::monitoring::v3::UptimeCheckConfig> UpdateUptimeCheckConfig(
-      google::monitoring::v3::UpdateUptimeCheckConfigRequest const& request)
-      override;
+  StatusOr<google::monitoring::v3::UptimeCheckConfig>
+  UpdateUptimeCheckConfig(google::monitoring::v3::UpdateUptimeCheckConfigRequest const& request) override;
 
-  Status DeleteUptimeCheckConfig(
-      google::monitoring::v3::DeleteUptimeCheckConfigRequest const& request)
-      override;
+  Status
+  DeleteUptimeCheckConfig(google::monitoring::v3::DeleteUptimeCheckConfigRequest const& request) override;
 
-  StreamRange<google::monitoring::v3::UptimeCheckIp> ListUptimeCheckIps(
-      google::monitoring::v3::ListUptimeCheckIpsRequest request) override;
+  StreamRange<google::monitoring::v3::UptimeCheckIp>
+  ListUptimeCheckIps(google::monitoring::v3::ListUptimeCheckIpsRequest request) override;
 
  private:
   std::shared_ptr<monitoring_v3::UptimeCheckServiceConnection> child_;

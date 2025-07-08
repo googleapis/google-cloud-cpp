@@ -24,8 +24,8 @@
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/iam/v3/principal_access_boundary_policies_service.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
+#include <google/iam/v3/principal_access_boundary_policies_service.grpc.pb.h>
 #include <memory>
 #include <utility>
 
@@ -38,75 +38,63 @@ class PrincipalAccessBoundaryPoliciesStub {
  public:
   virtual ~PrincipalAccessBoundaryPoliciesStub() = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>>
-  AsyncCreatePrincipalAccessBoundaryPolicy(
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncCreatePrincipalAccessBoundaryPolicy(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::iam::v3::CreatePrincipalAccessBoundaryPolicyRequest const&
-          request) = 0;
+      google::iam::v3::CreatePrincipalAccessBoundaryPolicyRequest const& request) = 0;
 
-  virtual StatusOr<google::longrunning::Operation>
-  CreatePrincipalAccessBoundaryPolicy(
-      grpc::ClientContext& context, Options options,
-      google::iam::v3::CreatePrincipalAccessBoundaryPolicyRequest const&
-          request) = 0;
+  virtual StatusOr<google::longrunning::Operation> CreatePrincipalAccessBoundaryPolicy(
+      grpc::ClientContext& context,
+      Options options,
+      google::iam::v3::CreatePrincipalAccessBoundaryPolicyRequest const& request) = 0;
 
-  virtual StatusOr<google::iam::v3::PrincipalAccessBoundaryPolicy>
-  GetPrincipalAccessBoundaryPolicy(
-      grpc::ClientContext& context, Options const& options,
-      google::iam::v3::GetPrincipalAccessBoundaryPolicyRequest const&
-          request) = 0;
+  virtual StatusOr<google::iam::v3::PrincipalAccessBoundaryPolicy> GetPrincipalAccessBoundaryPolicy(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::iam::v3::GetPrincipalAccessBoundaryPolicyRequest const& request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>>
-  AsyncUpdatePrincipalAccessBoundaryPolicy(
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncUpdatePrincipalAccessBoundaryPolicy(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::iam::v3::UpdatePrincipalAccessBoundaryPolicyRequest const&
-          request) = 0;
+      google::iam::v3::UpdatePrincipalAccessBoundaryPolicyRequest const& request) = 0;
 
-  virtual StatusOr<google::longrunning::Operation>
-  UpdatePrincipalAccessBoundaryPolicy(
-      grpc::ClientContext& context, Options options,
-      google::iam::v3::UpdatePrincipalAccessBoundaryPolicyRequest const&
-          request) = 0;
+  virtual StatusOr<google::longrunning::Operation> UpdatePrincipalAccessBoundaryPolicy(
+      grpc::ClientContext& context,
+      Options options,
+      google::iam::v3::UpdatePrincipalAccessBoundaryPolicyRequest const& request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>>
-  AsyncDeletePrincipalAccessBoundaryPolicy(
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncDeletePrincipalAccessBoundaryPolicy(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::iam::v3::DeletePrincipalAccessBoundaryPolicyRequest const&
-          request) = 0;
+      google::iam::v3::DeletePrincipalAccessBoundaryPolicyRequest const& request) = 0;
 
-  virtual StatusOr<google::longrunning::Operation>
-  DeletePrincipalAccessBoundaryPolicy(
-      grpc::ClientContext& context, Options options,
-      google::iam::v3::DeletePrincipalAccessBoundaryPolicyRequest const&
-          request) = 0;
+  virtual StatusOr<google::longrunning::Operation> DeletePrincipalAccessBoundaryPolicy(
+      grpc::ClientContext& context,
+      Options options,
+      google::iam::v3::DeletePrincipalAccessBoundaryPolicyRequest const& request) = 0;
 
-  virtual StatusOr<google::iam::v3::ListPrincipalAccessBoundaryPoliciesResponse>
-  ListPrincipalAccessBoundaryPolicies(
-      grpc::ClientContext& context, Options const& options,
-      google::iam::v3::ListPrincipalAccessBoundaryPoliciesRequest const&
-          request) = 0;
+  virtual StatusOr<google::iam::v3::ListPrincipalAccessBoundaryPoliciesResponse> ListPrincipalAccessBoundaryPolicies(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::iam::v3::ListPrincipalAccessBoundaryPoliciesRequest const& request) = 0;
 
-  virtual StatusOr<
-      google::iam::v3::SearchPrincipalAccessBoundaryPolicyBindingsResponse>
-  SearchPrincipalAccessBoundaryPolicyBindings(
-      grpc::ClientContext& context, Options const& options,
-      google::iam::v3::SearchPrincipalAccessBoundaryPolicyBindingsRequest const&
-          request) = 0;
+  virtual StatusOr<google::iam::v3::SearchPrincipalAccessBoundaryPolicyBindingsResponse> SearchPrincipalAccessBoundaryPolicyBindings(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::iam::v3::SearchPrincipalAccessBoundaryPolicyBindingsRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
+    google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
@@ -116,77 +104,65 @@ class PrincipalAccessBoundaryPoliciesStub {
       google::longrunning::CancelOperationRequest const& request) = 0;
 };
 
-class DefaultPrincipalAccessBoundaryPoliciesStub
-    : public PrincipalAccessBoundaryPoliciesStub {
+class DefaultPrincipalAccessBoundaryPoliciesStub : public PrincipalAccessBoundaryPoliciesStub {
  public:
   DefaultPrincipalAccessBoundaryPoliciesStub(
-      std::unique_ptr<
-          google::iam::v3::PrincipalAccessBoundaryPolicies::StubInterface>
-          grpc_stub,
-      std::unique_ptr<google::longrunning::Operations::StubInterface>
-          operations_stub)
+      std::unique_ptr<google::iam::v3::PrincipalAccessBoundaryPolicies::StubInterface> grpc_stub,
+      std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub)
       : grpc_stub_(std::move(grpc_stub)),
         operations_stub_(std::move(operations_stub)) {}
 
-  future<StatusOr<google::longrunning::Operation>>
-  AsyncCreatePrincipalAccessBoundaryPolicy(
+  future<StatusOr<google::longrunning::Operation>> AsyncCreatePrincipalAccessBoundaryPolicy(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::iam::v3::CreatePrincipalAccessBoundaryPolicyRequest const&
-          request) override;
+      google::iam::v3::CreatePrincipalAccessBoundaryPolicyRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreatePrincipalAccessBoundaryPolicy(
-      grpc::ClientContext& context, Options options,
-      google::iam::v3::CreatePrincipalAccessBoundaryPolicyRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::iam::v3::CreatePrincipalAccessBoundaryPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v3::PrincipalAccessBoundaryPolicy>
-  GetPrincipalAccessBoundaryPolicy(
-      grpc::ClientContext& context, Options const& options,
-      google::iam::v3::GetPrincipalAccessBoundaryPolicyRequest const& request)
-      override;
+  StatusOr<google::iam::v3::PrincipalAccessBoundaryPolicy> GetPrincipalAccessBoundaryPolicy(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::iam::v3::GetPrincipalAccessBoundaryPolicyRequest const& request) override;
 
-  future<StatusOr<google::longrunning::Operation>>
-  AsyncUpdatePrincipalAccessBoundaryPolicy(
+  future<StatusOr<google::longrunning::Operation>> AsyncUpdatePrincipalAccessBoundaryPolicy(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::iam::v3::UpdatePrincipalAccessBoundaryPolicyRequest const&
-          request) override;
+      google::iam::v3::UpdatePrincipalAccessBoundaryPolicyRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdatePrincipalAccessBoundaryPolicy(
-      grpc::ClientContext& context, Options options,
-      google::iam::v3::UpdatePrincipalAccessBoundaryPolicyRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::iam::v3::UpdatePrincipalAccessBoundaryPolicyRequest const& request) override;
 
-  future<StatusOr<google::longrunning::Operation>>
-  AsyncDeletePrincipalAccessBoundaryPolicy(
+  future<StatusOr<google::longrunning::Operation>> AsyncDeletePrincipalAccessBoundaryPolicy(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::iam::v3::DeletePrincipalAccessBoundaryPolicyRequest const&
-          request) override;
+      google::iam::v3::DeletePrincipalAccessBoundaryPolicyRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeletePrincipalAccessBoundaryPolicy(
-      grpc::ClientContext& context, Options options,
-      google::iam::v3::DeletePrincipalAccessBoundaryPolicyRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::iam::v3::DeletePrincipalAccessBoundaryPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v3::ListPrincipalAccessBoundaryPoliciesResponse>
-  ListPrincipalAccessBoundaryPolicies(
-      grpc::ClientContext& context, Options const& options,
-      google::iam::v3::ListPrincipalAccessBoundaryPoliciesRequest const&
-          request) override;
+  StatusOr<google::iam::v3::ListPrincipalAccessBoundaryPoliciesResponse> ListPrincipalAccessBoundaryPolicies(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::iam::v3::ListPrincipalAccessBoundaryPoliciesRequest const& request) override;
 
-  StatusOr<google::iam::v3::SearchPrincipalAccessBoundaryPolicyBindingsResponse>
-  SearchPrincipalAccessBoundaryPolicyBindings(
-      grpc::ClientContext& context, Options const& options,
-      google::iam::v3::SearchPrincipalAccessBoundaryPolicyBindingsRequest const&
-          request) override;
+  StatusOr<google::iam::v3::SearchPrincipalAccessBoundaryPolicyBindingsResponse> SearchPrincipalAccessBoundaryPolicyBindings(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::iam::v3::SearchPrincipalAccessBoundaryPolicyBindingsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -202,11 +178,8 @@ class DefaultPrincipalAccessBoundaryPoliciesStub
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  std::unique_ptr<
-      google::iam::v3::PrincipalAccessBoundaryPolicies::StubInterface>
-      grpc_stub_;
-  std::unique_ptr<google::longrunning::Operations::StubInterface>
-      operations_stub_;
+  std::unique_ptr<google::iam::v3::PrincipalAccessBoundaryPolicies::StubInterface> grpc_stub_;
+  std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

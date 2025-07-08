@@ -26,13 +26,10 @@ namespace cloud {
 namespace datastream {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use
-/// datastream_v1::MakeDefaultDatastreamConnectionIdempotencyPolicy directly.
-using ::google::cloud::datastream_v1::
-    MakeDefaultDatastreamConnectionIdempotencyPolicy;
+/// @deprecated Use datastream_v1::MakeDefaultDatastreamConnectionIdempotencyPolicy directly.
+using ::google::cloud::datastream_v1::MakeDefaultDatastreamConnectionIdempotencyPolicy;
 
-/// @deprecated Use datastream_v1::DatastreamConnectionIdempotencyPolicy
-/// directly.
+/// @deprecated Use datastream_v1::DatastreamConnectionIdempotencyPolicy directly.
 using ::google::cloud::datastream_v1::DatastreamConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

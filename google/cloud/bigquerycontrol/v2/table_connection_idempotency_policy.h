@@ -34,30 +34,29 @@ class TableServiceConnectionIdempotencyPolicy {
   virtual ~TableServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<TableServiceConnectionIdempotencyPolicy> clone()
-      const;
+  virtual std::unique_ptr<TableServiceConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency GetTable(
-      google::cloud::bigquery::v2::GetTableRequest const& request);
+  virtual google::cloud::Idempotency
+  GetTable(google::cloud::bigquery::v2::GetTableRequest const& request);
 
-  virtual google::cloud::Idempotency InsertTable(
-      google::cloud::bigquery::v2::InsertTableRequest const& request);
+  virtual google::cloud::Idempotency
+  InsertTable(google::cloud::bigquery::v2::InsertTableRequest const& request);
 
-  virtual google::cloud::Idempotency PatchTable(
-      google::cloud::bigquery::v2::UpdateOrPatchTableRequest const& request);
+  virtual google::cloud::Idempotency
+  PatchTable(google::cloud::bigquery::v2::UpdateOrPatchTableRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateTable(
-      google::cloud::bigquery::v2::UpdateOrPatchTableRequest const& request);
+  virtual google::cloud::Idempotency
+  UpdateTable(google::cloud::bigquery::v2::UpdateOrPatchTableRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteTable(
-      google::cloud::bigquery::v2::DeleteTableRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteTable(google::cloud::bigquery::v2::DeleteTableRequest const& request);
 
-  virtual google::cloud::Idempotency ListTables(
-      google::cloud::bigquery::v2::ListTablesRequest request);
+  virtual google::cloud::Idempotency
+  ListTables(google::cloud::bigquery::v2::ListTablesRequest request);
 };
 
 std::unique_ptr<TableServiceConnectionIdempotencyPolicy>
-MakeDefaultTableServiceConnectionIdempotencyPolicy();
+    MakeDefaultTableServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquerycontrol_v2

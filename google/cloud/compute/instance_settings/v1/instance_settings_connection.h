@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_INSTANCE_SETTINGS_V1_INSTANCE_SETTINGS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_INSTANCE_SETTINGS_V1_INSTANCE_SETTINGS_CONNECTION_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/instance_settings/v1/instance_settings_connection_idempotency_policy.h"
 #include "google/cloud/compute/instance_settings/v1/internal/instance_settings_retry_traits.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -54,8 +54,7 @@ class InstanceSettingsRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class InstanceSettingsLimitedErrorCountRetryPolicy
-    : public InstanceSettingsRetryPolicy {
+class InstanceSettingsLimitedErrorCountRetryPolicy : public InstanceSettingsRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -65,14 +64,14 @@ class InstanceSettingsLimitedErrorCountRetryPolicy
    *     @p maximum_failures == 0.
    */
   explicit InstanceSettingsLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   InstanceSettingsLimitedErrorCountRetryPolicy(
       InstanceSettingsLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : InstanceSettingsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : InstanceSettingsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   InstanceSettingsLimitedErrorCountRetryPolicy(
       InstanceSettingsLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : InstanceSettingsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : InstanceSettingsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -92,9 +91,7 @@ class InstanceSettingsLimitedErrorCountRetryPolicy
   using BaseType = InstanceSettingsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      compute_instance_settings_v1_internal::InstanceSettingsRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<compute_instance_settings_v1_internal::InstanceSettingsRetryTraits> impl_;
 };
 
 /**
@@ -107,8 +104,7 @@ class InstanceSettingsLimitedErrorCountRetryPolicy
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class InstanceSettingsLimitedTimeRetryPolicy
-    : public InstanceSettingsRetryPolicy {
+class InstanceSettingsLimitedTimeRetryPolicy : public InstanceSettingsRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -133,14 +129,12 @@ class InstanceSettingsLimitedTimeRetryPolicy
   template <typename DurationRep, typename DurationPeriod>
   explicit InstanceSettingsLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  InstanceSettingsLimitedTimeRetryPolicy(
-      InstanceSettingsLimitedTimeRetryPolicy&& rhs) noexcept
-      : InstanceSettingsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  InstanceSettingsLimitedTimeRetryPolicy(
-      InstanceSettingsLimitedTimeRetryPolicy const& rhs) noexcept
-      : InstanceSettingsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  InstanceSettingsLimitedTimeRetryPolicy(InstanceSettingsLimitedTimeRetryPolicy&& rhs) noexcept
+    : InstanceSettingsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  InstanceSettingsLimitedTimeRetryPolicy(InstanceSettingsLimitedTimeRetryPolicy const& rhs) noexcept
+    : InstanceSettingsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -162,9 +156,7 @@ class InstanceSettingsLimitedTimeRetryPolicy
   using BaseType = InstanceSettingsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      compute_instance_settings_v1_internal::InstanceSettingsRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<compute_instance_settings_v1_internal::InstanceSettingsRetryTraits> impl_;
 };
 
 /**
@@ -177,8 +169,7 @@ class InstanceSettingsLimitedTimeRetryPolicy
  *
  * To create a concrete instance, see `MakeInstanceSettingsConnection()`.
  *
- * For mocking, see
- * `compute_instance_settings_v1_mocks::MockInstanceSettingsConnection`.
+ * For mocking, see `compute_instance_settings_v1_mocks::MockInstanceSettingsConnection`.
  */
 class InstanceSettingsConnection {
  public:
@@ -187,21 +178,16 @@ class InstanceSettingsConnection {
   virtual Options options() { return Options{}; }
 
   virtual StatusOr<google::cloud::cpp::compute::v1::InstanceSettings>
-  GetInstanceSettings(google::cloud::cpp::compute::instance_settings::v1::
-                          GetInstanceSettingsRequest const& request);
+  GetInstanceSettings(google::cloud::cpp::compute::instance_settings::v1::GetInstanceSettingsRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchInstanceSettings(google::cloud::cpp::compute::instance_settings::v1::
-                            PatchInstanceSettingsRequest const& request);
+  PatchInstanceSettings(google::cloud::cpp::compute::instance_settings::v1::PatchInstanceSettingsRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  PatchInstanceSettings(NoAwaitTag,
-                        google::cloud::cpp::compute::instance_settings::v1::
-                            PatchInstanceSettingsRequest const& request);
+  PatchInstanceSettings(NoAwaitTag, google::cloud::cpp::compute::instance_settings::v1::PatchInstanceSettingsRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchInstanceSettings(
-      google::cloud::cpp::compute::v1::Operation const& operation);
+  PatchInstanceSettings( google::cloud::cpp::compute::v1::Operation const& operation);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

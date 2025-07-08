@@ -28,8 +28,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 WorkflowsClient::WorkflowsClient(
     std::shared_ptr<WorkflowsConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 WorkflowsClient::~WorkflowsClient() = default;
 
 StreamRange<google::cloud::workflows::v1::Workflow>
@@ -41,32 +41,27 @@ WorkflowsClient::ListWorkflows(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::workflows::v1::Workflow>
-WorkflowsClient::ListWorkflows(
-    google::cloud::workflows::v1::ListWorkflowsRequest request, Options opts) {
+WorkflowsClient::ListWorkflows(google::cloud::workflows::v1::ListWorkflowsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListWorkflows(std::move(request));
 }
 
-StatusOr<google::cloud::workflows::v1::Workflow> WorkflowsClient::GetWorkflow(
-    std::string const& name, Options opts) {
+StatusOr<google::cloud::workflows::v1::Workflow>
+WorkflowsClient::GetWorkflow(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::workflows::v1::GetWorkflowRequest request;
   request.set_name(name);
   return connection_->GetWorkflow(request);
 }
 
-StatusOr<google::cloud::workflows::v1::Workflow> WorkflowsClient::GetWorkflow(
-    google::cloud::workflows::v1::GetWorkflowRequest const& request,
-    Options opts) {
+StatusOr<google::cloud::workflows::v1::Workflow>
+WorkflowsClient::GetWorkflow(google::cloud::workflows::v1::GetWorkflowRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetWorkflow(request);
 }
 
 future<StatusOr<google::cloud::workflows::v1::Workflow>>
-WorkflowsClient::CreateWorkflow(
-    std::string const& parent,
-    google::cloud::workflows::v1::Workflow const& workflow,
-    std::string const& workflow_id, Options opts) {
+WorkflowsClient::CreateWorkflow(std::string const& parent, google::cloud::workflows::v1::Workflow const& workflow, std::string const& workflow_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::workflows::v1::CreateWorkflowRequest request;
   request.set_parent(parent);
@@ -75,10 +70,8 @@ WorkflowsClient::CreateWorkflow(
   return connection_->CreateWorkflow(request);
 }
 
-StatusOr<google::longrunning::Operation> WorkflowsClient::CreateWorkflow(
-    NoAwaitTag, std::string const& parent,
-    google::cloud::workflows::v1::Workflow const& workflow,
-    std::string const& workflow_id, Options opts) {
+StatusOr<google::longrunning::Operation>
+WorkflowsClient::CreateWorkflow(NoAwaitTag, std::string const& parent, google::cloud::workflows::v1::Workflow const& workflow, std::string const& workflow_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::workflows::v1::CreateWorkflowRequest request;
   request.set_parent(parent);
@@ -88,24 +81,19 @@ StatusOr<google::longrunning::Operation> WorkflowsClient::CreateWorkflow(
 }
 
 future<StatusOr<google::cloud::workflows::v1::Workflow>>
-WorkflowsClient::CreateWorkflow(
-    google::cloud::workflows::v1::CreateWorkflowRequest const& request,
-    Options opts) {
+WorkflowsClient::CreateWorkflow(google::cloud::workflows::v1::CreateWorkflowRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateWorkflow(request);
 }
 
-StatusOr<google::longrunning::Operation> WorkflowsClient::CreateWorkflow(
-    NoAwaitTag,
-    google::cloud::workflows::v1::CreateWorkflowRequest const& request,
-    Options opts) {
+StatusOr<google::longrunning::Operation>
+WorkflowsClient::CreateWorkflow(NoAwaitTag, google::cloud::workflows::v1::CreateWorkflowRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateWorkflow(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::workflows::v1::Workflow>>
-WorkflowsClient::CreateWorkflow(google::longrunning::Operation const& operation,
-                                Options opts) {
+WorkflowsClient::CreateWorkflow(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateWorkflow(operation);
 }
@@ -118,8 +106,8 @@ WorkflowsClient::DeleteWorkflow(std::string const& name, Options opts) {
   return connection_->DeleteWorkflow(request);
 }
 
-StatusOr<google::longrunning::Operation> WorkflowsClient::DeleteWorkflow(
-    NoAwaitTag, std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation>
+WorkflowsClient::DeleteWorkflow(NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::workflows::v1::DeleteWorkflowRequest request;
   request.set_name(name);
@@ -127,32 +115,25 @@ StatusOr<google::longrunning::Operation> WorkflowsClient::DeleteWorkflow(
 }
 
 future<StatusOr<google::cloud::workflows::v1::OperationMetadata>>
-WorkflowsClient::DeleteWorkflow(
-    google::cloud::workflows::v1::DeleteWorkflowRequest const& request,
-    Options opts) {
+WorkflowsClient::DeleteWorkflow(google::cloud::workflows::v1::DeleteWorkflowRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteWorkflow(request);
 }
 
-StatusOr<google::longrunning::Operation> WorkflowsClient::DeleteWorkflow(
-    NoAwaitTag,
-    google::cloud::workflows::v1::DeleteWorkflowRequest const& request,
-    Options opts) {
+StatusOr<google::longrunning::Operation>
+WorkflowsClient::DeleteWorkflow(NoAwaitTag, google::cloud::workflows::v1::DeleteWorkflowRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteWorkflow(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::workflows::v1::OperationMetadata>>
-WorkflowsClient::DeleteWorkflow(google::longrunning::Operation const& operation,
-                                Options opts) {
+WorkflowsClient::DeleteWorkflow(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteWorkflow(operation);
 }
 
 future<StatusOr<google::cloud::workflows::v1::Workflow>>
-WorkflowsClient::UpdateWorkflow(
-    google::cloud::workflows::v1::Workflow const& workflow,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+WorkflowsClient::UpdateWorkflow(google::cloud::workflows::v1::Workflow const& workflow, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::workflows::v1::UpdateWorkflowRequest request;
   *request.mutable_workflow() = workflow;
@@ -160,9 +141,8 @@ WorkflowsClient::UpdateWorkflow(
   return connection_->UpdateWorkflow(request);
 }
 
-StatusOr<google::longrunning::Operation> WorkflowsClient::UpdateWorkflow(
-    NoAwaitTag, google::cloud::workflows::v1::Workflow const& workflow,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+StatusOr<google::longrunning::Operation>
+WorkflowsClient::UpdateWorkflow(NoAwaitTag, google::cloud::workflows::v1::Workflow const& workflow, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::workflows::v1::UpdateWorkflowRequest request;
   *request.mutable_workflow() = workflow;
@@ -171,50 +151,43 @@ StatusOr<google::longrunning::Operation> WorkflowsClient::UpdateWorkflow(
 }
 
 future<StatusOr<google::cloud::workflows::v1::Workflow>>
-WorkflowsClient::UpdateWorkflow(
-    google::cloud::workflows::v1::UpdateWorkflowRequest const& request,
-    Options opts) {
+WorkflowsClient::UpdateWorkflow(google::cloud::workflows::v1::UpdateWorkflowRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateWorkflow(request);
 }
 
-StatusOr<google::longrunning::Operation> WorkflowsClient::UpdateWorkflow(
-    NoAwaitTag,
-    google::cloud::workflows::v1::UpdateWorkflowRequest const& request,
-    Options opts) {
+StatusOr<google::longrunning::Operation>
+WorkflowsClient::UpdateWorkflow(NoAwaitTag, google::cloud::workflows::v1::UpdateWorkflowRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateWorkflow(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::workflows::v1::Workflow>>
-WorkflowsClient::UpdateWorkflow(google::longrunning::Operation const& operation,
-                                Options opts) {
+WorkflowsClient::UpdateWorkflow(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateWorkflow(operation);
 }
 
 StreamRange<google::cloud::workflows::v1::Workflow>
-WorkflowsClient::ListWorkflowRevisions(
-    google::cloud::workflows::v1::ListWorkflowRevisionsRequest request,
-    Options opts) {
+WorkflowsClient::ListWorkflowRevisions(google::cloud::workflows::v1::ListWorkflowRevisionsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListWorkflowRevisions(std::move(request));
 }
 
-StreamRange<google::cloud::location::Location> WorkflowsClient::ListLocations(
-    google::cloud::location::ListLocationsRequest request, Options opts) {
+StreamRange<google::cloud::location::Location>
+WorkflowsClient::ListLocations(google::cloud::location::ListLocationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListLocations(std::move(request));
 }
 
-StatusOr<google::cloud::location::Location> WorkflowsClient::GetLocation(
-    google::cloud::location::GetLocationRequest const& request, Options opts) {
+StatusOr<google::cloud::location::Location>
+WorkflowsClient::GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetLocation(request);
 }
 
-StreamRange<google::longrunning::Operation> WorkflowsClient::ListOperations(
-    std::string const& name, std::string const& filter, Options opts) {
+StreamRange<google::longrunning::Operation>
+WorkflowsClient::ListOperations(std::string const& name, std::string const& filter, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::ListOperationsRequest request;
   request.set_name(name);
@@ -222,35 +195,36 @@ StreamRange<google::longrunning::Operation> WorkflowsClient::ListOperations(
   return connection_->ListOperations(request);
 }
 
-StreamRange<google::longrunning::Operation> WorkflowsClient::ListOperations(
-    google::longrunning::ListOperationsRequest request, Options opts) {
+StreamRange<google::longrunning::Operation>
+WorkflowsClient::ListOperations(google::longrunning::ListOperationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOperations(std::move(request));
 }
 
-StatusOr<google::longrunning::Operation> WorkflowsClient::GetOperation(
-    std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation>
+WorkflowsClient::GetOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
   return connection_->GetOperation(request);
 }
 
-StatusOr<google::longrunning::Operation> WorkflowsClient::GetOperation(
-    google::longrunning::GetOperationRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation>
+WorkflowsClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }
 
-Status WorkflowsClient::DeleteOperation(std::string const& name, Options opts) {
+Status
+WorkflowsClient::DeleteOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::DeleteOperationRequest request;
   request.set_name(name);
   return connection_->DeleteOperation(request);
 }
 
-Status WorkflowsClient::DeleteOperation(
-    google::longrunning::DeleteOperationRequest const& request, Options opts) {
+Status
+WorkflowsClient::DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteOperation(request);
 }

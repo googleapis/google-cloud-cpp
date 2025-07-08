@@ -17,14 +17,14 @@
 // source: google/cloud/dataplex/v1/content.proto
 
 #include "google/cloud/dataplex/v1/content_connection.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/dataplex/v1/content_options.h"
 #include "google/cloud/dataplex/v1/internal/content_connection_impl.h"
 #include "google/cloud/dataplex/v1/internal/content_option_defaults.h"
 #include "google/cloud/dataplex/v1/internal/content_stub_factory.h"
 #include "google/cloud/dataplex/v1/internal/content_tracing_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
-#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
@@ -50,7 +50,8 @@ ContentServiceConnection::UpdateContent(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status ContentServiceConnection::DeleteContent(
+Status
+ContentServiceConnection::DeleteContent(
     google::cloud::dataplex::v1::DeleteContentRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -61,12 +62,14 @@ ContentServiceConnection::GetContent(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::iam::v1::Policy> ContentServiceConnection::GetIamPolicy(
+StatusOr<google::iam::v1::Policy>
+ContentServiceConnection::GetIamPolicy(
     google::iam::v1::GetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::iam::v1::Policy> ContentServiceConnection::SetIamPolicy(
+StatusOr<google::iam::v1::Policy>
+ContentServiceConnection::SetIamPolicy(
     google::iam::v1::SetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -77,18 +80,14 @@ ContentServiceConnection::TestIamPermissions(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::dataplex::v1::Content>
-ContentServiceConnection::ListContent(
-    google::cloud::dataplex::v1::
-        ListContentRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::dataplex::v1::Content> ContentServiceConnection::ListContent(
+    google::cloud::dataplex::v1::ListContentRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::dataplex::v1::Content>>();
 }
 
-StreamRange<google::cloud::location::Location>
-ContentServiceConnection::ListLocations(
-    google::cloud::location::
-        ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::location::Location> ContentServiceConnection::ListLocations(
+    google::cloud::location::ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::location::Location>>();
 }
@@ -99,25 +98,26 @@ ContentServiceConnection::GetLocation(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::longrunning::Operation>
-ContentServiceConnection::ListOperations(
-    google::longrunning::
-        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::longrunning::Operation> ContentServiceConnection::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }
 
-StatusOr<google::longrunning::Operation> ContentServiceConnection::GetOperation(
+StatusOr<google::longrunning::Operation>
+ContentServiceConnection::GetOperation(
     google::longrunning::GetOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status ContentServiceConnection::DeleteOperation(
+Status
+ContentServiceConnection::DeleteOperation(
     google::longrunning::DeleteOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status ContentServiceConnection::CancelOperation(
+Status
+ContentServiceConnection::CancelOperation(
     google::longrunning::CancelOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -125,18 +125,17 @@ Status ContentServiceConnection::CancelOperation(
 std::shared_ptr<ContentServiceConnection> MakeContentServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 ContentServicePolicyOptionList>(options,
-                                                                 __func__);
-  options =
-      dataplex_v1_internal::ContentServiceDefaultOptions(std::move(options));
+      UnifiedCredentialsOptionList,
+      ContentServicePolicyOptionList>(options, __func__);
+  options = dataplex_v1_internal::ContentServiceDefaultOptions(
+      std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = dataplex_v1_internal::CreateDefaultContentServiceStub(
-      std::move(auth), options);
+    std::move(auth), options);
   return dataplex_v1_internal::MakeContentServiceTracingConnection(
       std::make_shared<dataplex_v1_internal::ContentServiceConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options)));
+      std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_V3_SNOOZE_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_V3_SNOOZE_CLIENT_H
 
-#include "google/cloud/monitoring/v3/snooze_connection.h"
 #include "google/cloud/future.h"
+#include "google/cloud/monitoring/v3/snooze_connection.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -63,8 +63,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class SnoozeServiceClient {
  public:
-  explicit SnoozeServiceClient(
-      std::shared_ptr<SnoozeServiceConnection> connection, Options opts = {});
+  explicit SnoozeServiceClient(std::shared_ptr<SnoozeServiceConnection> connection, Options opts = {});
   ~SnoozeServiceClient();
 
   ///@{
@@ -77,12 +76,10 @@ class SnoozeServiceClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(SnoozeServiceClient const& a,
-                         SnoozeServiceClient const& b) {
+  friend bool operator==(SnoozeServiceClient const& a, SnoozeServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(SnoozeServiceClient const& a,
-                         SnoozeServiceClient const& b) {
+  friend bool operator!=(SnoozeServiceClient const& a, SnoozeServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -117,9 +114,8 @@ class SnoozeServiceClient {
   /// [google.monitoring.v3.Snooze]: @googleapis_reference_link{google/monitoring/v3/snooze.proto#L35}
   ///
   // clang-format on
-  StatusOr<google::monitoring::v3::Snooze> CreateSnooze(
-      std::string const& parent, google::monitoring::v3::Snooze const& snooze,
-      Options opts = {});
+  StatusOr<google::monitoring::v3::Snooze>
+  CreateSnooze(std::string const& parent, google::monitoring::v3::Snooze const& snooze, Options opts = {});
 
   // clang-format off
   ///
@@ -150,9 +146,8 @@ class SnoozeServiceClient {
   /// [google.monitoring.v3.Snooze]: @googleapis_reference_link{google/monitoring/v3/snooze.proto#L35}
   ///
   // clang-format on
-  StatusOr<google::monitoring::v3::Snooze> CreateSnooze(
-      google::monitoring::v3::CreateSnoozeRequest const& request,
-      Options opts = {});
+  StatusOr<google::monitoring::v3::Snooze>
+  CreateSnooze(google::monitoring::v3::CreateSnoozeRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -190,8 +185,8 @@ class SnoozeServiceClient {
   /// [google.monitoring.v3.Snooze]: @googleapis_reference_link{google/monitoring/v3/snooze.proto#L35}
   ///
   // clang-format on
-  StreamRange<google::monitoring::v3::Snooze> ListSnoozes(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::monitoring::v3::Snooze>
+  ListSnoozes(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -230,8 +225,8 @@ class SnoozeServiceClient {
   /// [google.monitoring.v3.Snooze]: @googleapis_reference_link{google/monitoring/v3/snooze.proto#L35}
   ///
   // clang-format on
-  StreamRange<google::monitoring::v3::Snooze> ListSnoozes(
-      google::monitoring::v3::ListSnoozesRequest request, Options opts = {});
+  StreamRange<google::monitoring::v3::Snooze>
+  ListSnoozes(google::monitoring::v3::ListSnoozesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -257,8 +252,8 @@ class SnoozeServiceClient {
   /// [google.monitoring.v3.Snooze]: @googleapis_reference_link{google/monitoring/v3/snooze.proto#L35}
   ///
   // clang-format on
-  StatusOr<google::monitoring::v3::Snooze> GetSnooze(std::string const& name,
-                                                     Options opts = {});
+  StatusOr<google::monitoring::v3::Snooze>
+  GetSnooze(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -287,9 +282,8 @@ class SnoozeServiceClient {
   /// [google.monitoring.v3.Snooze]: @googleapis_reference_link{google/monitoring/v3/snooze.proto#L35}
   ///
   // clang-format on
-  StatusOr<google::monitoring::v3::Snooze> GetSnooze(
-      google::monitoring::v3::GetSnoozeRequest const& request,
-      Options opts = {});
+  StatusOr<google::monitoring::v3::Snooze>
+  GetSnooze(google::monitoring::v3::GetSnoozeRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -317,9 +311,8 @@ class SnoozeServiceClient {
   /// [google.monitoring.v3.UpdateSnoozeRequest]: @googleapis_reference_link{google/monitoring/v3/snooze_service.proto#L180}
   ///
   // clang-format on
-  StatusOr<google::monitoring::v3::Snooze> UpdateSnooze(
-      google::monitoring::v3::Snooze const& snooze,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::monitoring::v3::Snooze>
+  UpdateSnooze(google::monitoring::v3::Snooze const& snooze, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -349,9 +342,8 @@ class SnoozeServiceClient {
   /// [google.monitoring.v3.UpdateSnoozeRequest]: @googleapis_reference_link{google/monitoring/v3/snooze_service.proto#L180}
   ///
   // clang-format on
-  StatusOr<google::monitoring::v3::Snooze> UpdateSnooze(
-      google::monitoring::v3::UpdateSnoozeRequest const& request,
-      Options opts = {});
+  StatusOr<google::monitoring::v3::Snooze>
+  UpdateSnooze(google::monitoring::v3::UpdateSnoozeRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<SnoozeServiceConnection> connection_;

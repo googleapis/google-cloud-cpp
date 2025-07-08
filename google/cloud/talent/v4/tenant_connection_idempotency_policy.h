@@ -35,30 +35,29 @@ class TenantServiceConnectionIdempotencyPolicy {
   virtual ~TenantServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<TenantServiceConnectionIdempotencyPolicy> clone()
-      const;
+  virtual std::unique_ptr<TenantServiceConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency CreateTenant(
-      google::cloud::talent::v4::CreateTenantRequest const& request);
+  virtual google::cloud::Idempotency
+  CreateTenant(google::cloud::talent::v4::CreateTenantRequest const& request);
 
-  virtual google::cloud::Idempotency GetTenant(
-      google::cloud::talent::v4::GetTenantRequest const& request);
+  virtual google::cloud::Idempotency
+  GetTenant(google::cloud::talent::v4::GetTenantRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateTenant(
-      google::cloud::talent::v4::UpdateTenantRequest const& request);
+  virtual google::cloud::Idempotency
+  UpdateTenant(google::cloud::talent::v4::UpdateTenantRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteTenant(
-      google::cloud::talent::v4::DeleteTenantRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteTenant(google::cloud::talent::v4::DeleteTenantRequest const& request);
 
-  virtual google::cloud::Idempotency ListTenants(
-      google::cloud::talent::v4::ListTenantsRequest request);
+  virtual google::cloud::Idempotency
+  ListTenants(google::cloud::talent::v4::ListTenantsRequest request);
 
-  virtual google::cloud::Idempotency GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 };
 
 std::unique_ptr<TenantServiceConnectionIdempotencyPolicy>
-MakeDefaultTenantServiceConnectionIdempotencyPolicy();
+    MakeDefaultTenantServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace talent_v4

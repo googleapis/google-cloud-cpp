@@ -17,17 +17,17 @@
 // source: google/cloud/scheduler/v1/cloudscheduler.proto
 
 #include "google/cloud/scheduler/v1/internal/cloud_scheduler_stub_factory.h"
-#include "google/cloud/scheduler/v1/internal/cloud_scheduler_auth_decorator.h"
-#include "google/cloud/scheduler/v1/internal/cloud_scheduler_logging_decorator.h"
-#include "google/cloud/scheduler/v1/internal/cloud_scheduler_metadata_decorator.h"
-#include "google/cloud/scheduler/v1/internal/cloud_scheduler_stub.h"
-#include "google/cloud/scheduler/v1/internal/cloud_scheduler_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
+#include "google/cloud/scheduler/v1/internal/cloud_scheduler_auth_decorator.h"
+#include "google/cloud/scheduler/v1/internal/cloud_scheduler_logging_decorator.h"
+#include "google/cloud/scheduler/v1/internal/cloud_scheduler_metadata_decorator.h"
+#include "google/cloud/scheduler/v1/internal/cloud_scheduler_stub.h"
+#include "google/cloud/scheduler/v1/internal/cloud_scheduler_tracing_stub.h"
 #include <google/cloud/location/locations.grpc.pb.h>
 #include <google/cloud/scheduler/v1/cloudscheduler.grpc.pb.h>
 #include <memory>
@@ -38,29 +38,29 @@ namespace cloud {
 namespace scheduler_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<CloudSchedulerStub> CreateDefaultCloudSchedulerStub(
+std::shared_ptr<CloudSchedulerStub>
+CreateDefaultCloudSchedulerStub(
     std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
     Options const& options) {
-  auto channel = auth->CreateChannel(options.get<EndpointOption>(),
-                                     internal::MakeChannelArguments(options));
-  auto service_grpc_stub =
-      google::cloud::scheduler::v1::CloudScheduler::NewStub(channel);
-  auto service_locations_stub =
-      google::cloud::location::Locations::NewStub(channel);
+  auto channel = auth->CreateChannel(
+    options.get<EndpointOption>(), internal::MakeChannelArguments(options));
+  auto service_grpc_stub = google::cloud::scheduler::v1::CloudScheduler::NewStub(channel);
+  auto service_locations_stub = google::cloud::location::Locations::NewStub(channel);
   std::shared_ptr<CloudSchedulerStub> stub =
-      std::make_shared<DefaultCloudSchedulerStub>(
-          std::move(service_grpc_stub), std::move(service_locations_stub));
+    std::make_shared<DefaultCloudSchedulerStub>(std::move(service_grpc_stub), std::move(service_locations_stub));
 
   if (auth->RequiresConfigureContext()) {
-    stub =
-        std::make_shared<CloudSchedulerAuth>(std::move(auth), std::move(stub));
+    stub = std::make_shared<CloudSchedulerAuth>(
+        std::move(auth), std::move(stub));
   }
   stub = std::make_shared<CloudSchedulerMetadata>(
       std::move(stub), std::multimap<std::string, std::string>{});
-  if (internal::Contains(options.get<LoggingComponentsOption>(), "rpc")) {
+  if (internal::Contains(
+      options.get<LoggingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<CloudSchedulerLogging>(
-        std::move(stub), options.get<GrpcTracingOptionsOption>(),
+        std::move(stub),
+        options.get<GrpcTracingOptionsOption>(),
         options.get<LoggingComponentsOption>());
   }
   if (internal::TracingEnabled(options)) {

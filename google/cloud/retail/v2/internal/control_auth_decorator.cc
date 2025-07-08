@@ -32,7 +32,8 @@ ControlServiceAuth::ControlServiceAuth(
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
 StatusOr<google::cloud::retail::v2::Control> ControlServiceAuth::CreateControl(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::retail::v2::CreateControlRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -40,7 +41,8 @@ StatusOr<google::cloud::retail::v2::Control> ControlServiceAuth::CreateControl(
 }
 
 Status ControlServiceAuth::DeleteControl(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::retail::v2::DeleteControlRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -48,7 +50,8 @@ Status ControlServiceAuth::DeleteControl(
 }
 
 StatusOr<google::cloud::retail::v2::Control> ControlServiceAuth::UpdateControl(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::retail::v2::UpdateControlRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -56,25 +59,26 @@ StatusOr<google::cloud::retail::v2::Control> ControlServiceAuth::UpdateControl(
 }
 
 StatusOr<google::cloud::retail::v2::Control> ControlServiceAuth::GetControl(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::retail::v2::GetControlRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetControl(context, options, request);
 }
 
-StatusOr<google::cloud::retail::v2::ListControlsResponse>
-ControlServiceAuth::ListControls(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::retail::v2::ListControlsResponse> ControlServiceAuth::ListControls(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::retail::v2::ListControlsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListControls(context, options, request);
 }
 
-StatusOr<google::longrunning::ListOperationsResponse>
-ControlServiceAuth::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse> ControlServiceAuth::ListOperations(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -82,7 +86,8 @@ ControlServiceAuth::ListOperations(
 }
 
 StatusOr<google::longrunning::Operation> ControlServiceAuth::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;

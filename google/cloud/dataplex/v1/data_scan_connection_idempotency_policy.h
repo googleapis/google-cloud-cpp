@@ -37,67 +37,65 @@ class DataScanServiceConnectionIdempotencyPolicy {
   virtual ~DataScanServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<DataScanServiceConnectionIdempotencyPolicy> clone()
-      const;
+  virtual std::unique_ptr<DataScanServiceConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency CreateDataScan(
-      google::cloud::dataplex::v1::CreateDataScanRequest const& request);
+  virtual google::cloud::Idempotency
+  CreateDataScan(google::cloud::dataplex::v1::CreateDataScanRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateDataScan(
-      google::cloud::dataplex::v1::UpdateDataScanRequest const& request);
+  virtual google::cloud::Idempotency
+  UpdateDataScan(google::cloud::dataplex::v1::UpdateDataScanRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteDataScan(
-      google::cloud::dataplex::v1::DeleteDataScanRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteDataScan(google::cloud::dataplex::v1::DeleteDataScanRequest const& request);
 
-  virtual google::cloud::Idempotency GetDataScan(
-      google::cloud::dataplex::v1::GetDataScanRequest const& request);
+  virtual google::cloud::Idempotency
+  GetDataScan(google::cloud::dataplex::v1::GetDataScanRequest const& request);
 
-  virtual google::cloud::Idempotency ListDataScans(
-      google::cloud::dataplex::v1::ListDataScansRequest request);
+  virtual google::cloud::Idempotency
+  ListDataScans(google::cloud::dataplex::v1::ListDataScansRequest request);
 
-  virtual google::cloud::Idempotency RunDataScan(
-      google::cloud::dataplex::v1::RunDataScanRequest const& request);
+  virtual google::cloud::Idempotency
+  RunDataScan(google::cloud::dataplex::v1::RunDataScanRequest const& request);
 
-  virtual google::cloud::Idempotency GetDataScanJob(
-      google::cloud::dataplex::v1::GetDataScanJobRequest const& request);
+  virtual google::cloud::Idempotency
+  GetDataScanJob(google::cloud::dataplex::v1::GetDataScanJobRequest const& request);
 
-  virtual google::cloud::Idempotency ListDataScanJobs(
-      google::cloud::dataplex::v1::ListDataScanJobsRequest request);
+  virtual google::cloud::Idempotency
+  ListDataScanJobs(google::cloud::dataplex::v1::ListDataScanJobsRequest request);
 
-  virtual google::cloud::Idempotency GenerateDataQualityRules(
-      google::cloud::dataplex::v1::GenerateDataQualityRulesRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  GenerateDataQualityRules(google::cloud::dataplex::v1::GenerateDataQualityRulesRequest const& request);
 
-  virtual google::cloud::Idempotency ListLocations(
-      google::cloud::location::ListLocationsRequest request);
+  virtual google::cloud::Idempotency
+  ListLocations(google::cloud::location::ListLocationsRequest request);
 
-  virtual google::cloud::Idempotency GetLocation(
-      google::cloud::location::GetLocationRequest const& request);
+  virtual google::cloud::Idempotency
+  GetLocation(google::cloud::location::GetLocationRequest const& request);
 
-  virtual google::cloud::Idempotency SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request);
+  virtual google::cloud::Idempotency
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
 
-  virtual google::cloud::Idempotency ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual google::cloud::Idempotency
+  ListOperations(google::longrunning::ListOperationsRequest request);
 
-  virtual google::cloud::Idempotency GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
 
-  virtual google::cloud::Idempotency CancelOperation(
-      google::longrunning::CancelOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  CancelOperation(google::longrunning::CancelOperationRequest const& request);
 };
 
 std::unique_ptr<DataScanServiceConnectionIdempotencyPolicy>
-MakeDefaultDataScanServiceConnectionIdempotencyPolicy();
+    MakeDefaultDataScanServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataplex_v1

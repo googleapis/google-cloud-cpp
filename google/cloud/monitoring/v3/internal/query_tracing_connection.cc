@@ -34,14 +34,12 @@ QueryServiceTracingConnection::QueryServiceTracingConnection(
     : child_(std::move(child)) {}
 
 StreamRange<google::monitoring::v3::TimeSeriesData>
-QueryServiceTracingConnection::QueryTimeSeries(
-    google::monitoring::v3::QueryTimeSeriesRequest request) {
-  auto span = internal::MakeSpan(
-      "monitoring_v3::QueryServiceConnection::QueryTimeSeries");
+QueryServiceTracingConnection::QueryTimeSeries(google::monitoring::v3::QueryTimeSeriesRequest request) {
+  auto span = internal::MakeSpan("monitoring_v3::QueryServiceConnection::QueryTimeSeries");
   internal::OTelScope scope(span);
   auto sr = child_->QueryTimeSeries(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::monitoring::v3::TimeSeriesData>(std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<google::monitoring::v3::TimeSeriesData>(
+        std::move(span), std::move(sr));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

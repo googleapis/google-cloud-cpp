@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VMWAREENGINE_V1_VMWARE_ENGINE_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VMWAREENGINE_V1_VMWARE_ENGINE_CLIENT_H
 
-#include "google/cloud/vmwareengine/v1/vmware_engine_connection.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
+#include "google/cloud/vmwareengine/v1/vmware_engine_connection.h"
 #include <google/longrunning/operations.grpc.pb.h>
 #include <map>
 #include <memory>
@@ -64,8 +64,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class VmwareEngineClient {
  public:
-  explicit VmwareEngineClient(
-      std::shared_ptr<VmwareEngineConnection> connection, Options opts = {});
+  explicit VmwareEngineClient(std::shared_ptr<VmwareEngineConnection> connection, Options opts = {});
   ~VmwareEngineClient();
 
   ///@{
@@ -78,12 +77,10 @@ class VmwareEngineClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(VmwareEngineClient const& a,
-                         VmwareEngineClient const& b) {
+  friend bool operator==(VmwareEngineClient const& a, VmwareEngineClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(VmwareEngineClient const& a,
-                         VmwareEngineClient const& b) {
+  friend bool operator!=(VmwareEngineClient const& a, VmwareEngineClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -123,8 +120,8 @@ class VmwareEngineClient {
   /// [google.cloud.vmwareengine.v1.PrivateCloud]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L119}
   ///
   // clang-format on
-  StreamRange<google::cloud::vmwareengine::v1::PrivateCloud> ListPrivateClouds(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::vmwareengine::v1::PrivateCloud>
+  ListPrivateClouds(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -162,9 +159,8 @@ class VmwareEngineClient {
   /// [google.cloud.vmwareengine.v1.PrivateCloud]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L119}
   ///
   // clang-format on
-  StreamRange<google::cloud::vmwareengine::v1::PrivateCloud> ListPrivateClouds(
-      google::cloud::vmwareengine::v1::ListPrivateCloudsRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::vmwareengine::v1::PrivateCloud>
+  ListPrivateClouds(google::cloud::vmwareengine::v1::ListPrivateCloudsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -192,8 +188,8 @@ class VmwareEngineClient {
   /// [google.cloud.vmwareengine.v1.PrivateCloud]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L119}
   ///
   // clang-format on
-  StatusOr<google::cloud::vmwareengine::v1::PrivateCloud> GetPrivateCloud(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>
+  GetPrivateCloud(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -222,9 +218,8 @@ class VmwareEngineClient {
   /// [google.cloud.vmwareengine.v1.PrivateCloud]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L119}
   ///
   // clang-format on
-  StatusOr<google::cloud::vmwareengine::v1::PrivateCloud> GetPrivateCloud(
-      google::cloud::vmwareengine::v1::GetPrivateCloudRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>
+  GetPrivateCloud(google::cloud::vmwareengine::v1::GetPrivateCloudRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -278,10 +273,7 @@ class VmwareEngineClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
-  CreatePrivateCloud(
-      std::string const& parent,
-      google::cloud::vmwareengine::v1::PrivateCloud const& private_cloud,
-      std::string const& private_cloud_id, Options opts = {});
+  CreatePrivateCloud(std::string const& parent, google::cloud::vmwareengine::v1::PrivateCloud const& private_cloud, std::string const& private_cloud_id, Options opts = {});
 
   // clang-format off
   ///
@@ -294,10 +286,8 @@ class VmwareEngineClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreatePrivateCloud(
-      NoAwaitTag, std::string const& parent,
-      google::cloud::vmwareengine::v1::PrivateCloud const& private_cloud,
-      std::string const& private_cloud_id, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreatePrivateCloud(NoAwaitTag, std::string const& parent, google::cloud::vmwareengine::v1::PrivateCloud const& private_cloud, std::string const& private_cloud_id, Options opts = {});
 
   // clang-format off
   ///
@@ -340,9 +330,7 @@ class VmwareEngineClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
-  CreatePrivateCloud(
-      google::cloud::vmwareengine::v1::CreatePrivateCloudRequest const& request,
-      Options opts = {});
+  CreatePrivateCloud(google::cloud::vmwareengine::v1::CreatePrivateCloudRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -355,10 +343,8 @@ class VmwareEngineClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreatePrivateCloud(
-      NoAwaitTag,
-      google::cloud::vmwareengine::v1::CreatePrivateCloudRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreatePrivateCloud(NoAwaitTag, google::cloud::vmwareengine::v1::CreatePrivateCloudRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -370,8 +356,7 @@ class VmwareEngineClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
-  CreatePrivateCloud(google::longrunning::Operation const& operation,
-                     Options opts = {});
+  CreatePrivateCloud(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -415,9 +400,7 @@ class VmwareEngineClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
-  UpdatePrivateCloud(
-      google::cloud::vmwareengine::v1::PrivateCloud const& private_cloud,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  UpdatePrivateCloud(google::cloud::vmwareengine::v1::PrivateCloud const& private_cloud, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -430,10 +413,8 @@ class VmwareEngineClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdatePrivateCloud(
-      NoAwaitTag,
-      google::cloud::vmwareengine::v1::PrivateCloud const& private_cloud,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdatePrivateCloud(NoAwaitTag, google::cloud::vmwareengine::v1::PrivateCloud const& private_cloud, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -477,9 +458,7 @@ class VmwareEngineClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
-  UpdatePrivateCloud(
-      google::cloud::vmwareengine::v1::UpdatePrivateCloudRequest const& request,
-      Options opts = {});
+  UpdatePrivateCloud(google::cloud::vmwareengine::v1::UpdatePrivateCloudRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -492,10 +471,8 @@ class VmwareEngineClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdatePrivateCloud(
-      NoAwaitTag,
-      google::cloud::vmwareengine::v1::UpdatePrivateCloudRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdatePrivateCloud(NoAwaitTag, google::cloud::vmwareengine::v1::UpdatePrivateCloudRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -507,8 +484,7 @@ class VmwareEngineClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
-  UpdatePrivateCloud(google::longrunning::Operation const& operation,
-                     Options opts = {});
+  UpdatePrivateCloud(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -571,8 +547,8 @@ class VmwareEngineClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeletePrivateCloud(
-      NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeletePrivateCloud(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -623,9 +599,7 @@ class VmwareEngineClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
-  DeletePrivateCloud(
-      google::cloud::vmwareengine::v1::DeletePrivateCloudRequest const& request,
-      Options opts = {});
+  DeletePrivateCloud(google::cloud::vmwareengine::v1::DeletePrivateCloudRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -638,10 +612,8 @@ class VmwareEngineClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeletePrivateCloud(
-      NoAwaitTag,
-      google::cloud::vmwareengine::v1::DeletePrivateCloudRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeletePrivateCloud(NoAwaitTag, google::cloud::vmwareengine::v1::DeletePrivateCloudRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -653,8 +625,7 @@ class VmwareEngineClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
-  DeletePrivateCloud(google::longrunning::Operation const& operation,
-                     Options opts = {});
+  DeletePrivateCloud(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -706,8 +677,8 @@ class VmwareEngineClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UndeletePrivateCloud(
-      NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UndeletePrivateCloud(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -747,10 +718,7 @@ class VmwareEngineClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
-  UndeletePrivateCloud(
-      google::cloud::vmwareengine::v1::UndeletePrivateCloudRequest const&
-          request,
-      Options opts = {});
+  UndeletePrivateCloud(google::cloud::vmwareengine::v1::UndeletePrivateCloudRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -763,11 +731,8 @@ class VmwareEngineClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UndeletePrivateCloud(
-      NoAwaitTag,
-      google::cloud::vmwareengine::v1::UndeletePrivateCloudRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UndeletePrivateCloud(NoAwaitTag, google::cloud::vmwareengine::v1::UndeletePrivateCloudRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -779,8 +744,7 @@ class VmwareEngineClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
-  UndeletePrivateCloud(google::longrunning::Operation const& operation,
-                       Options opts = {});
+  UndeletePrivateCloud(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -817,8 +781,8 @@ class VmwareEngineClient {
   /// [google.cloud.vmwareengine.v1.ListClustersRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1232}
   ///
   // clang-format on
-  StreamRange<google::cloud::vmwareengine::v1::Cluster> ListClusters(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::vmwareengine::v1::Cluster>
+  ListClusters(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -856,9 +820,8 @@ class VmwareEngineClient {
   /// [google.cloud.vmwareengine.v1.ListClustersRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1232}
   ///
   // clang-format on
-  StreamRange<google::cloud::vmwareengine::v1::Cluster> ListClusters(
-      google::cloud::vmwareengine::v1::ListClustersRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::vmwareengine::v1::Cluster>
+  ListClusters(google::cloud::vmwareengine::v1::ListClustersRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -886,8 +849,8 @@ class VmwareEngineClient {
   /// [google.cloud.vmwareengine.v1.GetClusterRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1299}
   ///
   // clang-format on
-  StatusOr<google::cloud::vmwareengine::v1::Cluster> GetCluster(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::vmwareengine::v1::Cluster>
+  GetCluster(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -916,9 +879,8 @@ class VmwareEngineClient {
   /// [google.cloud.vmwareengine.v1.GetClusterRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1299}
   ///
   // clang-format on
-  StatusOr<google::cloud::vmwareengine::v1::Cluster> GetCluster(
-      google::cloud::vmwareengine::v1::GetClusterRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::vmwareengine::v1::Cluster>
+  GetCluster(google::cloud::vmwareengine::v1::GetClusterRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -968,10 +930,8 @@ class VmwareEngineClient {
   /// [google.cloud.vmwareengine.v1.CreateClusterRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1315}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::vmwareengine::v1::Cluster>> CreateCluster(
-      std::string const& parent,
-      google::cloud::vmwareengine::v1::Cluster const& cluster,
-      std::string const& cluster_id, Options opts = {});
+  future<StatusOr<google::cloud::vmwareengine::v1::Cluster>>
+  CreateCluster(std::string const& parent, google::cloud::vmwareengine::v1::Cluster const& cluster, std::string const& cluster_id, Options opts = {});
 
   // clang-format off
   ///
@@ -984,10 +944,8 @@ class VmwareEngineClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateCluster(
-      NoAwaitTag, std::string const& parent,
-      google::cloud::vmwareengine::v1::Cluster const& cluster,
-      std::string const& cluster_id, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateCluster(NoAwaitTag, std::string const& parent, google::cloud::vmwareengine::v1::Cluster const& cluster, std::string const& cluster_id, Options opts = {});
 
   // clang-format off
   ///
@@ -1026,9 +984,8 @@ class VmwareEngineClient {
   /// [google.cloud.vmwareengine.v1.CreateClusterRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1315}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::vmwareengine::v1::Cluster>> CreateCluster(
-      google::cloud::vmwareengine::v1::CreateClusterRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::vmwareengine::v1::Cluster>>
+  CreateCluster(google::cloud::vmwareengine::v1::CreateClusterRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1041,10 +998,8 @@ class VmwareEngineClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateCluster(
-      NoAwaitTag,
-      google::cloud::vmwareengine::v1::CreateClusterRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateCluster(NoAwaitTag, google::cloud::vmwareengine::v1::CreateClusterRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1055,8 +1010,8 @@ class VmwareEngineClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::vmwareengine::v1::Cluster>> CreateCluster(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::vmwareengine::v1::Cluster>>
+  CreateCluster(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1098,9 +1053,8 @@ class VmwareEngineClient {
   /// [google.cloud.vmwareengine.v1.UpdateClusterRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1355}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::vmwareengine::v1::Cluster>> UpdateCluster(
-      google::cloud::vmwareengine::v1::Cluster const& cluster,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  future<StatusOr<google::cloud::vmwareengine::v1::Cluster>>
+  UpdateCluster(google::cloud::vmwareengine::v1::Cluster const& cluster, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -1113,9 +1067,8 @@ class VmwareEngineClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateCluster(
-      NoAwaitTag, google::cloud::vmwareengine::v1::Cluster const& cluster,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateCluster(NoAwaitTag, google::cloud::vmwareengine::v1::Cluster const& cluster, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -1157,9 +1110,8 @@ class VmwareEngineClient {
   /// [google.cloud.vmwareengine.v1.UpdateClusterRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1355}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::vmwareengine::v1::Cluster>> UpdateCluster(
-      google::cloud::vmwareengine::v1::UpdateClusterRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::vmwareengine::v1::Cluster>>
+  UpdateCluster(google::cloud::vmwareengine::v1::UpdateClusterRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1172,10 +1124,8 @@ class VmwareEngineClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateCluster(
-      NoAwaitTag,
-      google::cloud::vmwareengine::v1::UpdateClusterRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateCluster(NoAwaitTag, google::cloud::vmwareengine::v1::UpdateClusterRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1186,8 +1136,8 @@ class VmwareEngineClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::vmwareengine::v1::Cluster>> UpdateCluster(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::vmwareengine::v1::Cluster>>
+  UpdateCluster(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1239,8 +1189,8 @@ class VmwareEngineClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteCluster(
-      NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteCluster(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1280,9 +1230,7 @@ class VmwareEngineClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
-  DeleteCluster(
-      google::cloud::vmwareengine::v1::DeleteClusterRequest const& request,
-      Options opts = {});
+  DeleteCluster(google::cloud::vmwareengine::v1::DeleteClusterRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1295,10 +1243,8 @@ class VmwareEngineClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteCluster(
-      NoAwaitTag,
-      google::cloud::vmwareengine::v1::DeleteClusterRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteCluster(NoAwaitTag, google::cloud::vmwareengine::v1::DeleteClusterRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1310,8 +1256,7 @@ class VmwareEngineClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
-  DeleteCluster(google::longrunning::Operation const& operation,
-                Options opts = {});
+  DeleteCluster(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1348,8 +1293,8 @@ class VmwareEngineClient {
   /// [google.cloud.vmwareengine.v1.Node]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L323}
   ///
   // clang-format on
-  StreamRange<google::cloud::vmwareengine::v1::Node> ListNodes(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::vmwareengine::v1::Node>
+  ListNodes(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -1387,9 +1332,8 @@ class VmwareEngineClient {
   /// [google.cloud.vmwareengine.v1.Node]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L323}
   ///
   // clang-format on
-  StreamRange<google::cloud::vmwareengine::v1::Node> ListNodes(
-      google::cloud::vmwareengine::v1::ListNodesRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::vmwareengine::v1::Node>
+  ListNodes(google::cloud::vmwareengine::v1::ListNodesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1415,8 +1359,8 @@ class VmwareEngineClient {
   /// [google.cloud.vmwareengine.v1.Node]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L323}
   ///
   // clang-format on
-  StatusOr<google::cloud::vmwareengine::v1::Node> GetNode(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::vmwareengine::v1::Node>
+  GetNode(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1445,9 +1389,8 @@ class VmwareEngineClient {
   /// [google.cloud.vmwareengine.v1.Node]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L323}
   ///
   // clang-format on
-  StatusOr<google::cloud::vmwareengine::v1::Node> GetNode(
-      google::cloud::vmwareengine::v1::GetNodeRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::vmwareengine::v1::Node>
+  GetNode(google::cloud::vmwareengine::v1::GetNodeRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1527,9 +1470,7 @@ class VmwareEngineClient {
   ///
   // clang-format on
   StreamRange<google::cloud::vmwareengine::v1::ExternalAddress>
-  ListExternalAddresses(
-      google::cloud::vmwareengine::v1::ListExternalAddressesRequest request,
-      Options opts = {});
+  ListExternalAddresses(google::cloud::vmwareengine::v1::ListExternalAddressesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1568,8 +1509,7 @@ class VmwareEngineClient {
   ///
   // clang-format on
   StreamRange<google::cloud::vmwareengine::v1::ExternalAddress>
-  FetchNetworkPolicyExternalAddresses(std::string const& network_policy,
-                                      Options opts = {});
+  FetchNetworkPolicyExternalAddresses(std::string const& network_policy, Options opts = {});
 
   // clang-format off
   ///
@@ -1609,10 +1549,7 @@ class VmwareEngineClient {
   ///
   // clang-format on
   StreamRange<google::cloud::vmwareengine::v1::ExternalAddress>
-  FetchNetworkPolicyExternalAddresses(
-      google::cloud::vmwareengine::v1::
-          FetchNetworkPolicyExternalAddressesRequest request,
-      Options opts = {});
+  FetchNetworkPolicyExternalAddresses(google::cloud::vmwareengine::v1::FetchNetworkPolicyExternalAddressesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1640,8 +1577,8 @@ class VmwareEngineClient {
   /// [google.cloud.vmwareengine.v1.GetExternalAddressRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1575}
   ///
   // clang-format on
-  StatusOr<google::cloud::vmwareengine::v1::ExternalAddress> GetExternalAddress(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::vmwareengine::v1::ExternalAddress>
+  GetExternalAddress(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1670,9 +1607,8 @@ class VmwareEngineClient {
   /// [google.cloud.vmwareengine.v1.GetExternalAddressRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1575}
   ///
   // clang-format on
-  StatusOr<google::cloud::vmwareengine::v1::ExternalAddress> GetExternalAddress(
-      google::cloud::vmwareengine::v1::GetExternalAddressRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::vmwareengine::v1::ExternalAddress>
+  GetExternalAddress(google::cloud::vmwareengine::v1::GetExternalAddressRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1723,10 +1659,7 @@ class VmwareEngineClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::ExternalAddress>>
-  CreateExternalAddress(
-      std::string const& parent,
-      google::cloud::vmwareengine::v1::ExternalAddress const& external_address,
-      std::string const& external_address_id, Options opts = {});
+  CreateExternalAddress(std::string const& parent, google::cloud::vmwareengine::v1::ExternalAddress const& external_address, std::string const& external_address_id, Options opts = {});
 
   // clang-format off
   ///
@@ -1739,10 +1672,8 @@ class VmwareEngineClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateExternalAddress(
-      NoAwaitTag, std::string const& parent,
-      google::cloud::vmwareengine::v1::ExternalAddress const& external_address,
-      std::string const& external_address_id, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateExternalAddress(NoAwaitTag, std::string const& parent, google::cloud::vmwareengine::v1::ExternalAddress const& external_address, std::string const& external_address_id, Options opts = {});
 
   // clang-format off
   ///
@@ -1781,10 +1712,7 @@ class VmwareEngineClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::ExternalAddress>>
-  CreateExternalAddress(
-      google::cloud::vmwareengine::v1::CreateExternalAddressRequest const&
-          request,
-      Options opts = {});
+  CreateExternalAddress(google::cloud::vmwareengine::v1::CreateExternalAddressRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1797,11 +1725,8 @@ class VmwareEngineClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateExternalAddress(
-      NoAwaitTag,
-      google::cloud::vmwareengine::v1::CreateExternalAddressRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateExternalAddress(NoAwaitTag, google::cloud::vmwareengine::v1::CreateExternalAddressRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1813,8 +1738,7 @@ class VmwareEngineClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::ExternalAddress>>
-  CreateExternalAddress(google::longrunning::Operation const& operation,
-                        Options opts = {});
+  CreateExternalAddress(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1857,9 +1781,7 @@ class VmwareEngineClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::ExternalAddress>>
-  UpdateExternalAddress(
-      google::cloud::vmwareengine::v1::ExternalAddress const& external_address,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  UpdateExternalAddress(google::cloud::vmwareengine::v1::ExternalAddress const& external_address, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -1872,10 +1794,8 @@ class VmwareEngineClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateExternalAddress(
-      NoAwaitTag,
-      google::cloud::vmwareengine::v1::ExternalAddress const& external_address,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateExternalAddress(NoAwaitTag, google::cloud::vmwareengine::v1::ExternalAddress const& external_address, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -1918,10 +1838,7 @@ class VmwareEngineClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::ExternalAddress>>
-  UpdateExternalAddress(
-      google::cloud::vmwareengine::v1::UpdateExternalAddressRequest const&
-          request,
-      Options opts = {});
+  UpdateExternalAddress(google::cloud::vmwareengine::v1::UpdateExternalAddressRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1934,11 +1851,8 @@ class VmwareEngineClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateExternalAddress(
-      NoAwaitTag,
-      google::cloud::vmwareengine::v1::UpdateExternalAddressRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateExternalAddress(NoAwaitTag, google::cloud::vmwareengine::v1::UpdateExternalAddressRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1950,8 +1864,7 @@ class VmwareEngineClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::ExternalAddress>>
-  UpdateExternalAddress(google::longrunning::Operation const& operation,
-                        Options opts = {});
+  UpdateExternalAddress(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -2002,8 +1915,8 @@ class VmwareEngineClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteExternalAddress(
-      NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteExternalAddress(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2042,10 +1955,7 @@ class VmwareEngineClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
-  DeleteExternalAddress(
-      google::cloud::vmwareengine::v1::DeleteExternalAddressRequest const&
-          request,
-      Options opts = {});
+  DeleteExternalAddress(google::cloud::vmwareengine::v1::DeleteExternalAddressRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2058,11 +1968,8 @@ class VmwareEngineClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteExternalAddress(
-      NoAwaitTag,
-      google::cloud::vmwareengine::v1::DeleteExternalAddressRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteExternalAddress(NoAwaitTag, google::cloud::vmwareengine::v1::DeleteExternalAddressRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2074,8 +1981,7 @@ class VmwareEngineClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
-  DeleteExternalAddress(google::longrunning::Operation const& operation,
-                        Options opts = {});
+  DeleteExternalAddress(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -2113,8 +2019,8 @@ class VmwareEngineClient {
   /// [google.cloud.vmwareengine.v1.Subnet]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L435}
   ///
   // clang-format on
-  StreamRange<google::cloud::vmwareengine::v1::Subnet> ListSubnets(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::vmwareengine::v1::Subnet>
+  ListSubnets(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -2152,9 +2058,8 @@ class VmwareEngineClient {
   /// [google.cloud.vmwareengine.v1.Subnet]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L435}
   ///
   // clang-format on
-  StreamRange<google::cloud::vmwareengine::v1::Subnet> ListSubnets(
-      google::cloud::vmwareengine::v1::ListSubnetsRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::vmwareengine::v1::Subnet>
+  ListSubnets(google::cloud::vmwareengine::v1::ListSubnetsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -2182,8 +2087,8 @@ class VmwareEngineClient {
   /// [google.cloud.vmwareengine.v1.Subnet]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L435}
   ///
   // clang-format on
-  StatusOr<google::cloud::vmwareengine::v1::Subnet> GetSubnet(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::vmwareengine::v1::Subnet>
+  GetSubnet(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2212,9 +2117,8 @@ class VmwareEngineClient {
   /// [google.cloud.vmwareengine.v1.Subnet]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L435}
   ///
   // clang-format on
-  StatusOr<google::cloud::vmwareengine::v1::Subnet> GetSubnet(
-      google::cloud::vmwareengine::v1::GetSubnetRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::vmwareengine::v1::Subnet>
+  GetSubnet(google::cloud::vmwareengine::v1::GetSubnetRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2255,9 +2159,8 @@ class VmwareEngineClient {
   /// [google.cloud.vmwareengine.v1.UpdateSubnetRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1764}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::vmwareengine::v1::Subnet>> UpdateSubnet(
-      google::cloud::vmwareengine::v1::Subnet const& subnet,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  future<StatusOr<google::cloud::vmwareengine::v1::Subnet>>
+  UpdateSubnet(google::cloud::vmwareengine::v1::Subnet const& subnet, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -2270,9 +2173,8 @@ class VmwareEngineClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateSubnet(
-      NoAwaitTag, google::cloud::vmwareengine::v1::Subnet const& subnet,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateSubnet(NoAwaitTag, google::cloud::vmwareengine::v1::Subnet const& subnet, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -2313,9 +2215,8 @@ class VmwareEngineClient {
   /// [google.cloud.vmwareengine.v1.UpdateSubnetRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1764}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::vmwareengine::v1::Subnet>> UpdateSubnet(
-      google::cloud::vmwareengine::v1::UpdateSubnetRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::vmwareengine::v1::Subnet>>
+  UpdateSubnet(google::cloud::vmwareengine::v1::UpdateSubnetRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2328,10 +2229,8 @@ class VmwareEngineClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateSubnet(
-      NoAwaitTag,
-      google::cloud::vmwareengine::v1::UpdateSubnetRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateSubnet(NoAwaitTag, google::cloud::vmwareengine::v1::UpdateSubnetRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2342,8 +2241,8 @@ class VmwareEngineClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::vmwareengine::v1::Subnet>> UpdateSubnet(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::vmwareengine::v1::Subnet>>
+  UpdateSubnet(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -2420,9 +2319,7 @@ class VmwareEngineClient {
   ///
   // clang-format on
   StreamRange<google::cloud::vmwareengine::v1::ExternalAccessRule>
-  ListExternalAccessRules(
-      google::cloud::vmwareengine::v1::ListExternalAccessRulesRequest request,
-      Options opts = {});
+  ListExternalAccessRules(google::cloud::vmwareengine::v1::ListExternalAccessRulesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -2481,10 +2378,7 @@ class VmwareEngineClient {
   ///
   // clang-format on
   StatusOr<google::cloud::vmwareengine::v1::ExternalAccessRule>
-  GetExternalAccessRule(
-      google::cloud::vmwareengine::v1::GetExternalAccessRuleRequest const&
-          request,
-      Options opts = {});
+  GetExternalAccessRule(google::cloud::vmwareengine::v1::GetExternalAccessRuleRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2533,11 +2427,7 @@ class VmwareEngineClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::ExternalAccessRule>>
-  CreateExternalAccessRule(
-      std::string const& parent,
-      google::cloud::vmwareengine::v1::ExternalAccessRule const&
-          external_access_rule,
-      std::string const& external_access_rule_id, Options opts = {});
+  CreateExternalAccessRule(std::string const& parent, google::cloud::vmwareengine::v1::ExternalAccessRule const& external_access_rule, std::string const& external_access_rule_id, Options opts = {});
 
   // clang-format off
   ///
@@ -2550,11 +2440,8 @@ class VmwareEngineClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateExternalAccessRule(
-      NoAwaitTag, std::string const& parent,
-      google::cloud::vmwareengine::v1::ExternalAccessRule const&
-          external_access_rule,
-      std::string const& external_access_rule_id, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateExternalAccessRule(NoAwaitTag, std::string const& parent, google::cloud::vmwareengine::v1::ExternalAccessRule const& external_access_rule, std::string const& external_access_rule_id, Options opts = {});
 
   // clang-format off
   ///
@@ -2591,10 +2478,7 @@ class VmwareEngineClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::ExternalAccessRule>>
-  CreateExternalAccessRule(
-      google::cloud::vmwareengine::v1::CreateExternalAccessRuleRequest const&
-          request,
-      Options opts = {});
+  CreateExternalAccessRule(google::cloud::vmwareengine::v1::CreateExternalAccessRuleRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2607,11 +2491,8 @@ class VmwareEngineClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateExternalAccessRule(
-      NoAwaitTag,
-      google::cloud::vmwareengine::v1::CreateExternalAccessRuleRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateExternalAccessRule(NoAwaitTag, google::cloud::vmwareengine::v1::CreateExternalAccessRuleRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2623,8 +2504,7 @@ class VmwareEngineClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::ExternalAccessRule>>
-  CreateExternalAccessRule(google::longrunning::Operation const& operation,
-                           Options opts = {});
+  CreateExternalAccessRule(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -2662,10 +2542,7 @@ class VmwareEngineClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::ExternalAccessRule>>
-  UpdateExternalAccessRule(
-      google::cloud::vmwareengine::v1::ExternalAccessRule const&
-          external_access_rule,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  UpdateExternalAccessRule(google::cloud::vmwareengine::v1::ExternalAccessRule const& external_access_rule, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -2678,11 +2555,8 @@ class VmwareEngineClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateExternalAccessRule(
-      NoAwaitTag,
-      google::cloud::vmwareengine::v1::ExternalAccessRule const&
-          external_access_rule,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateExternalAccessRule(NoAwaitTag, google::cloud::vmwareengine::v1::ExternalAccessRule const& external_access_rule, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -2720,10 +2594,7 @@ class VmwareEngineClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::ExternalAccessRule>>
-  UpdateExternalAccessRule(
-      google::cloud::vmwareengine::v1::UpdateExternalAccessRuleRequest const&
-          request,
-      Options opts = {});
+  UpdateExternalAccessRule(google::cloud::vmwareengine::v1::UpdateExternalAccessRuleRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2736,11 +2607,8 @@ class VmwareEngineClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateExternalAccessRule(
-      NoAwaitTag,
-      google::cloud::vmwareengine::v1::UpdateExternalAccessRuleRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateExternalAccessRule(NoAwaitTag, google::cloud::vmwareengine::v1::UpdateExternalAccessRuleRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2752,8 +2620,7 @@ class VmwareEngineClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::ExternalAccessRule>>
-  UpdateExternalAccessRule(google::longrunning::Operation const& operation,
-                           Options opts = {});
+  UpdateExternalAccessRule(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -2802,8 +2669,8 @@ class VmwareEngineClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteExternalAccessRule(
-      NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteExternalAccessRule(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2840,10 +2707,7 @@ class VmwareEngineClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
-  DeleteExternalAccessRule(
-      google::cloud::vmwareengine::v1::DeleteExternalAccessRuleRequest const&
-          request,
-      Options opts = {});
+  DeleteExternalAccessRule(google::cloud::vmwareengine::v1::DeleteExternalAccessRuleRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2856,11 +2720,8 @@ class VmwareEngineClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteExternalAccessRule(
-      NoAwaitTag,
-      google::cloud::vmwareengine::v1::DeleteExternalAccessRuleRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteExternalAccessRule(NoAwaitTag, google::cloud::vmwareengine::v1::DeleteExternalAccessRuleRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2872,8 +2733,7 @@ class VmwareEngineClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
-  DeleteExternalAccessRule(google::longrunning::Operation const& operation,
-                           Options opts = {});
+  DeleteExternalAccessRule(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -2953,9 +2813,7 @@ class VmwareEngineClient {
   ///
   // clang-format on
   StreamRange<google::cloud::vmwareengine::v1::LoggingServer>
-  ListLoggingServers(
-      google::cloud::vmwareengine::v1::ListLoggingServersRequest request,
-      Options opts = {});
+  ListLoggingServers(google::cloud::vmwareengine::v1::ListLoggingServersRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -2983,8 +2841,8 @@ class VmwareEngineClient {
   /// [google.cloud.vmwareengine.v1.LoggingServer]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L625}
   ///
   // clang-format on
-  StatusOr<google::cloud::vmwareengine::v1::LoggingServer> GetLoggingServer(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::vmwareengine::v1::LoggingServer>
+  GetLoggingServer(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -3013,9 +2871,8 @@ class VmwareEngineClient {
   /// [google.cloud.vmwareengine.v1.LoggingServer]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L625}
   ///
   // clang-format on
-  StatusOr<google::cloud::vmwareengine::v1::LoggingServer> GetLoggingServer(
-      google::cloud::vmwareengine::v1::GetLoggingServerRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::vmwareengine::v1::LoggingServer>
+  GetLoggingServer(google::cloud::vmwareengine::v1::GetLoggingServerRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -3064,10 +2921,7 @@ class VmwareEngineClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::LoggingServer>>
-  CreateLoggingServer(
-      std::string const& parent,
-      google::cloud::vmwareengine::v1::LoggingServer const& logging_server,
-      std::string const& logging_server_id, Options opts = {});
+  CreateLoggingServer(std::string const& parent, google::cloud::vmwareengine::v1::LoggingServer const& logging_server, std::string const& logging_server_id, Options opts = {});
 
   // clang-format off
   ///
@@ -3080,10 +2934,8 @@ class VmwareEngineClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateLoggingServer(
-      NoAwaitTag, std::string const& parent,
-      google::cloud::vmwareengine::v1::LoggingServer const& logging_server,
-      std::string const& logging_server_id, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateLoggingServer(NoAwaitTag, std::string const& parent, google::cloud::vmwareengine::v1::LoggingServer const& logging_server, std::string const& logging_server_id, Options opts = {});
 
   // clang-format off
   ///
@@ -3120,10 +2972,7 @@ class VmwareEngineClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::LoggingServer>>
-  CreateLoggingServer(
-      google::cloud::vmwareengine::v1::CreateLoggingServerRequest const&
-          request,
-      Options opts = {});
+  CreateLoggingServer(google::cloud::vmwareengine::v1::CreateLoggingServerRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -3136,11 +2985,8 @@ class VmwareEngineClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateLoggingServer(
-      NoAwaitTag,
-      google::cloud::vmwareengine::v1::CreateLoggingServerRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateLoggingServer(NoAwaitTag, google::cloud::vmwareengine::v1::CreateLoggingServerRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -3152,8 +2998,7 @@ class VmwareEngineClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::LoggingServer>>
-  CreateLoggingServer(google::longrunning::Operation const& operation,
-                      Options opts = {});
+  CreateLoggingServer(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -3191,9 +3036,7 @@ class VmwareEngineClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::LoggingServer>>
-  UpdateLoggingServer(
-      google::cloud::vmwareengine::v1::LoggingServer const& logging_server,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  UpdateLoggingServer(google::cloud::vmwareengine::v1::LoggingServer const& logging_server, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -3206,10 +3049,8 @@ class VmwareEngineClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateLoggingServer(
-      NoAwaitTag,
-      google::cloud::vmwareengine::v1::LoggingServer const& logging_server,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateLoggingServer(NoAwaitTag, google::cloud::vmwareengine::v1::LoggingServer const& logging_server, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -3247,10 +3088,7 @@ class VmwareEngineClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::LoggingServer>>
-  UpdateLoggingServer(
-      google::cloud::vmwareengine::v1::UpdateLoggingServerRequest const&
-          request,
-      Options opts = {});
+  UpdateLoggingServer(google::cloud::vmwareengine::v1::UpdateLoggingServerRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -3263,11 +3101,8 @@ class VmwareEngineClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateLoggingServer(
-      NoAwaitTag,
-      google::cloud::vmwareengine::v1::UpdateLoggingServerRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateLoggingServer(NoAwaitTag, google::cloud::vmwareengine::v1::UpdateLoggingServerRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -3279,8 +3114,7 @@ class VmwareEngineClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::LoggingServer>>
-  UpdateLoggingServer(google::longrunning::Operation const& operation,
-                      Options opts = {});
+  UpdateLoggingServer(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -3329,8 +3163,8 @@ class VmwareEngineClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteLoggingServer(
-      NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteLoggingServer(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -3367,10 +3201,7 @@ class VmwareEngineClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
-  DeleteLoggingServer(
-      google::cloud::vmwareengine::v1::DeleteLoggingServerRequest const&
-          request,
-      Options opts = {});
+  DeleteLoggingServer(google::cloud::vmwareengine::v1::DeleteLoggingServerRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -3383,11 +3214,8 @@ class VmwareEngineClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteLoggingServer(
-      NoAwaitTag,
-      google::cloud::vmwareengine::v1::DeleteLoggingServerRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteLoggingServer(NoAwaitTag, google::cloud::vmwareengine::v1::DeleteLoggingServerRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -3399,8 +3227,7 @@ class VmwareEngineClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
-  DeleteLoggingServer(google::longrunning::Operation const& operation,
-                      Options opts = {});
+  DeleteLoggingServer(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -3437,8 +3264,8 @@ class VmwareEngineClient {
   /// [google.cloud.vmwareengine.v1.NodeType]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L699}
   ///
   // clang-format on
-  StreamRange<google::cloud::vmwareengine::v1::NodeType> ListNodeTypes(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::vmwareengine::v1::NodeType>
+  ListNodeTypes(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -3476,9 +3303,8 @@ class VmwareEngineClient {
   /// [google.cloud.vmwareengine.v1.NodeType]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L699}
   ///
   // clang-format on
-  StreamRange<google::cloud::vmwareengine::v1::NodeType> ListNodeTypes(
-      google::cloud::vmwareengine::v1::ListNodeTypesRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::vmwareengine::v1::NodeType>
+  ListNodeTypes(google::cloud::vmwareengine::v1::ListNodeTypesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -3506,8 +3332,8 @@ class VmwareEngineClient {
   /// [google.cloud.vmwareengine.v1.NodeType]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L699}
   ///
   // clang-format on
-  StatusOr<google::cloud::vmwareengine::v1::NodeType> GetNodeType(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::vmwareengine::v1::NodeType>
+  GetNodeType(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -3536,9 +3362,8 @@ class VmwareEngineClient {
   /// [google.cloud.vmwareengine.v1.NodeType]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L699}
   ///
   // clang-format on
-  StatusOr<google::cloud::vmwareengine::v1::NodeType> GetNodeType(
-      google::cloud::vmwareengine::v1::GetNodeTypeRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::vmwareengine::v1::NodeType>
+  GetNodeType(google::cloud::vmwareengine::v1::GetNodeTypeRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -3567,8 +3392,8 @@ class VmwareEngineClient {
   /// [google.cloud.vmwareengine.v1.ShowNsxCredentialsRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2314}
   ///
   // clang-format on
-  StatusOr<google::cloud::vmwareengine::v1::Credentials> ShowNsxCredentials(
-      std::string const& private_cloud, Options opts = {});
+  StatusOr<google::cloud::vmwareengine::v1::Credentials>
+  ShowNsxCredentials(std::string const& private_cloud, Options opts = {});
 
   // clang-format off
   ///
@@ -3597,9 +3422,8 @@ class VmwareEngineClient {
   /// [google.cloud.vmwareengine.v1.ShowNsxCredentialsRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2314}
   ///
   // clang-format on
-  StatusOr<google::cloud::vmwareengine::v1::Credentials> ShowNsxCredentials(
-      google::cloud::vmwareengine::v1::ShowNsxCredentialsRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::vmwareengine::v1::Credentials>
+  ShowNsxCredentials(google::cloud::vmwareengine::v1::ShowNsxCredentialsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -3628,8 +3452,8 @@ class VmwareEngineClient {
   /// [google.cloud.vmwareengine.v1.ShowVcenterCredentialsRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2331}
   ///
   // clang-format on
-  StatusOr<google::cloud::vmwareengine::v1::Credentials> ShowVcenterCredentials(
-      std::string const& private_cloud, Options opts = {});
+  StatusOr<google::cloud::vmwareengine::v1::Credentials>
+  ShowVcenterCredentials(std::string const& private_cloud, Options opts = {});
 
   // clang-format off
   ///
@@ -3658,10 +3482,8 @@ class VmwareEngineClient {
   /// [google.cloud.vmwareengine.v1.ShowVcenterCredentialsRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2331}
   ///
   // clang-format on
-  StatusOr<google::cloud::vmwareengine::v1::Credentials> ShowVcenterCredentials(
-      google::cloud::vmwareengine::v1::ShowVcenterCredentialsRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::cloud::vmwareengine::v1::Credentials>
+  ShowVcenterCredentials(google::cloud::vmwareengine::v1::ShowVcenterCredentialsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -3711,8 +3533,8 @@ class VmwareEngineClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> ResetNsxCredentials(
-      NoAwaitTag, std::string const& private_cloud, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  ResetNsxCredentials(NoAwaitTag, std::string const& private_cloud, Options opts = {});
 
   // clang-format off
   ///
@@ -3749,10 +3571,7 @@ class VmwareEngineClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
-  ResetNsxCredentials(
-      google::cloud::vmwareengine::v1::ResetNsxCredentialsRequest const&
-          request,
-      Options opts = {});
+  ResetNsxCredentials(google::cloud::vmwareengine::v1::ResetNsxCredentialsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -3765,11 +3584,8 @@ class VmwareEngineClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> ResetNsxCredentials(
-      NoAwaitTag,
-      google::cloud::vmwareengine::v1::ResetNsxCredentialsRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  ResetNsxCredentials(NoAwaitTag, google::cloud::vmwareengine::v1::ResetNsxCredentialsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -3781,8 +3597,7 @@ class VmwareEngineClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
-  ResetNsxCredentials(google::longrunning::Operation const& operation,
-                      Options opts = {});
+  ResetNsxCredentials(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -3832,8 +3647,8 @@ class VmwareEngineClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> ResetVcenterCredentials(
-      NoAwaitTag, std::string const& private_cloud, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  ResetVcenterCredentials(NoAwaitTag, std::string const& private_cloud, Options opts = {});
 
   // clang-format off
   ///
@@ -3870,10 +3685,7 @@ class VmwareEngineClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
-  ResetVcenterCredentials(
-      google::cloud::vmwareengine::v1::ResetVcenterCredentialsRequest const&
-          request,
-      Options opts = {});
+  ResetVcenterCredentials(google::cloud::vmwareengine::v1::ResetVcenterCredentialsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -3886,11 +3698,8 @@ class VmwareEngineClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> ResetVcenterCredentials(
-      NoAwaitTag,
-      google::cloud::vmwareengine::v1::ResetVcenterCredentialsRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  ResetVcenterCredentials(NoAwaitTag, google::cloud::vmwareengine::v1::ResetVcenterCredentialsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -3902,8 +3711,7 @@ class VmwareEngineClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
-  ResetVcenterCredentials(google::longrunning::Operation const& operation,
-                          Options opts = {});
+  ResetVcenterCredentials(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -3931,8 +3739,8 @@ class VmwareEngineClient {
   /// [google.cloud.vmwareengine.v1.GetDnsForwardingRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2548}
   ///
   // clang-format on
-  StatusOr<google::cloud::vmwareengine::v1::DnsForwarding> GetDnsForwarding(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::vmwareengine::v1::DnsForwarding>
+  GetDnsForwarding(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -3961,9 +3769,8 @@ class VmwareEngineClient {
   /// [google.cloud.vmwareengine.v1.GetDnsForwardingRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2548}
   ///
   // clang-format on
-  StatusOr<google::cloud::vmwareengine::v1::DnsForwarding> GetDnsForwarding(
-      google::cloud::vmwareengine::v1::GetDnsForwardingRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::vmwareengine::v1::DnsForwarding>
+  GetDnsForwarding(google::cloud::vmwareengine::v1::GetDnsForwardingRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -4001,9 +3808,7 @@ class VmwareEngineClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::DnsForwarding>>
-  UpdateDnsForwarding(
-      google::cloud::vmwareengine::v1::DnsForwarding const& dns_forwarding,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  UpdateDnsForwarding(google::cloud::vmwareengine::v1::DnsForwarding const& dns_forwarding, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -4016,10 +3821,8 @@ class VmwareEngineClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateDnsForwarding(
-      NoAwaitTag,
-      google::cloud::vmwareengine::v1::DnsForwarding const& dns_forwarding,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateDnsForwarding(NoAwaitTag, google::cloud::vmwareengine::v1::DnsForwarding const& dns_forwarding, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -4057,10 +3860,7 @@ class VmwareEngineClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::DnsForwarding>>
-  UpdateDnsForwarding(
-      google::cloud::vmwareengine::v1::UpdateDnsForwardingRequest const&
-          request,
-      Options opts = {});
+  UpdateDnsForwarding(google::cloud::vmwareengine::v1::UpdateDnsForwardingRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -4073,11 +3873,8 @@ class VmwareEngineClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateDnsForwarding(
-      NoAwaitTag,
-      google::cloud::vmwareengine::v1::UpdateDnsForwardingRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateDnsForwarding(NoAwaitTag, google::cloud::vmwareengine::v1::UpdateDnsForwardingRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -4089,8 +3886,7 @@ class VmwareEngineClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::DnsForwarding>>
-  UpdateDnsForwarding(google::longrunning::Operation const& operation,
-                      Options opts = {});
+  UpdateDnsForwarding(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -4121,8 +3917,8 @@ class VmwareEngineClient {
   /// [google.cloud.vmwareengine.v1.NetworkPeering]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1034}
   ///
   // clang-format on
-  StatusOr<google::cloud::vmwareengine::v1::NetworkPeering> GetNetworkPeering(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::vmwareengine::v1::NetworkPeering>
+  GetNetworkPeering(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -4154,9 +3950,8 @@ class VmwareEngineClient {
   /// [google.cloud.vmwareengine.v1.NetworkPeering]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1034}
   ///
   // clang-format on
-  StatusOr<google::cloud::vmwareengine::v1::NetworkPeering> GetNetworkPeering(
-      google::cloud::vmwareengine::v1::GetNetworkPeeringRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::vmwareengine::v1::NetworkPeering>
+  GetNetworkPeering(google::cloud::vmwareengine::v1::GetNetworkPeeringRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -4234,9 +4029,7 @@ class VmwareEngineClient {
   ///
   // clang-format on
   StreamRange<google::cloud::vmwareengine::v1::NetworkPeering>
-  ListNetworkPeerings(
-      google::cloud::vmwareengine::v1::ListNetworkPeeringsRequest request,
-      Options opts = {});
+  ListNetworkPeerings(google::cloud::vmwareengine::v1::ListNetworkPeeringsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -4286,10 +4079,7 @@ class VmwareEngineClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::NetworkPeering>>
-  CreateNetworkPeering(
-      std::string const& parent,
-      google::cloud::vmwareengine::v1::NetworkPeering const& network_peering,
-      std::string const& network_peering_id, Options opts = {});
+  CreateNetworkPeering(std::string const& parent, google::cloud::vmwareengine::v1::NetworkPeering const& network_peering, std::string const& network_peering_id, Options opts = {});
 
   // clang-format off
   ///
@@ -4302,10 +4092,8 @@ class VmwareEngineClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateNetworkPeering(
-      NoAwaitTag, std::string const& parent,
-      google::cloud::vmwareengine::v1::NetworkPeering const& network_peering,
-      std::string const& network_peering_id, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateNetworkPeering(NoAwaitTag, std::string const& parent, google::cloud::vmwareengine::v1::NetworkPeering const& network_peering, std::string const& network_peering_id, Options opts = {});
 
   // clang-format off
   ///
@@ -4344,10 +4132,7 @@ class VmwareEngineClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::NetworkPeering>>
-  CreateNetworkPeering(
-      google::cloud::vmwareengine::v1::CreateNetworkPeeringRequest const&
-          request,
-      Options opts = {});
+  CreateNetworkPeering(google::cloud::vmwareengine::v1::CreateNetworkPeeringRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -4360,11 +4145,8 @@ class VmwareEngineClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateNetworkPeering(
-      NoAwaitTag,
-      google::cloud::vmwareengine::v1::CreateNetworkPeeringRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateNetworkPeering(NoAwaitTag, google::cloud::vmwareengine::v1::CreateNetworkPeeringRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -4376,8 +4158,7 @@ class VmwareEngineClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::NetworkPeering>>
-  CreateNetworkPeering(google::longrunning::Operation const& operation,
-                       Options opts = {});
+  CreateNetworkPeering(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -4429,8 +4210,8 @@ class VmwareEngineClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteNetworkPeering(
-      NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteNetworkPeering(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -4470,10 +4251,7 @@ class VmwareEngineClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
-  DeleteNetworkPeering(
-      google::cloud::vmwareengine::v1::DeleteNetworkPeeringRequest const&
-          request,
-      Options opts = {});
+  DeleteNetworkPeering(google::cloud::vmwareengine::v1::DeleteNetworkPeeringRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -4486,11 +4264,8 @@ class VmwareEngineClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteNetworkPeering(
-      NoAwaitTag,
-      google::cloud::vmwareengine::v1::DeleteNetworkPeeringRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteNetworkPeering(NoAwaitTag, google::cloud::vmwareengine::v1::DeleteNetworkPeeringRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -4502,8 +4277,7 @@ class VmwareEngineClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
-  DeleteNetworkPeering(google::longrunning::Operation const& operation,
-                       Options opts = {});
+  DeleteNetworkPeering(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -4542,9 +4316,7 @@ class VmwareEngineClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::NetworkPeering>>
-  UpdateNetworkPeering(
-      google::cloud::vmwareengine::v1::NetworkPeering const& network_peering,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  UpdateNetworkPeering(google::cloud::vmwareengine::v1::NetworkPeering const& network_peering, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -4557,10 +4329,8 @@ class VmwareEngineClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateNetworkPeering(
-      NoAwaitTag,
-      google::cloud::vmwareengine::v1::NetworkPeering const& network_peering,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateNetworkPeering(NoAwaitTag, google::cloud::vmwareengine::v1::NetworkPeering const& network_peering, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -4599,10 +4369,7 @@ class VmwareEngineClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::NetworkPeering>>
-  UpdateNetworkPeering(
-      google::cloud::vmwareengine::v1::UpdateNetworkPeeringRequest const&
-          request,
-      Options opts = {});
+  UpdateNetworkPeering(google::cloud::vmwareengine::v1::UpdateNetworkPeeringRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -4615,11 +4382,8 @@ class VmwareEngineClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateNetworkPeering(
-      NoAwaitTag,
-      google::cloud::vmwareengine::v1::UpdateNetworkPeeringRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateNetworkPeering(NoAwaitTag, google::cloud::vmwareengine::v1::UpdateNetworkPeeringRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -4631,8 +4395,7 @@ class VmwareEngineClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::NetworkPeering>>
-  UpdateNetworkPeering(google::longrunning::Operation const& operation,
-                       Options opts = {});
+  UpdateNetworkPeering(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -4669,8 +4432,8 @@ class VmwareEngineClient {
   /// [google.cloud.vmwareengine.v1.PeeringRoute]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1185}
   ///
   // clang-format on
-  StreamRange<google::cloud::vmwareengine::v1::PeeringRoute> ListPeeringRoutes(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::vmwareengine::v1::PeeringRoute>
+  ListPeeringRoutes(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -4709,9 +4472,8 @@ class VmwareEngineClient {
   /// [google.cloud.vmwareengine.v1.PeeringRoute]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1185}
   ///
   // clang-format on
-  StreamRange<google::cloud::vmwareengine::v1::PeeringRoute> ListPeeringRoutes(
-      google::cloud::vmwareengine::v1::ListPeeringRoutesRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::vmwareengine::v1::PeeringRoute>
+  ListPeeringRoutes(google::cloud::vmwareengine::v1::ListPeeringRoutesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -4760,11 +4522,7 @@ class VmwareEngineClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::HcxActivationKey>>
-  CreateHcxActivationKey(
-      std::string const& parent,
-      google::cloud::vmwareengine::v1::HcxActivationKey const&
-          hcx_activation_key,
-      std::string const& hcx_activation_key_id, Options opts = {});
+  CreateHcxActivationKey(std::string const& parent, google::cloud::vmwareengine::v1::HcxActivationKey const& hcx_activation_key, std::string const& hcx_activation_key_id, Options opts = {});
 
   // clang-format off
   ///
@@ -4777,11 +4535,8 @@ class VmwareEngineClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateHcxActivationKey(
-      NoAwaitTag, std::string const& parent,
-      google::cloud::vmwareengine::v1::HcxActivationKey const&
-          hcx_activation_key,
-      std::string const& hcx_activation_key_id, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateHcxActivationKey(NoAwaitTag, std::string const& parent, google::cloud::vmwareengine::v1::HcxActivationKey const& hcx_activation_key, std::string const& hcx_activation_key_id, Options opts = {});
 
   // clang-format off
   ///
@@ -4818,10 +4573,7 @@ class VmwareEngineClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::HcxActivationKey>>
-  CreateHcxActivationKey(
-      google::cloud::vmwareengine::v1::CreateHcxActivationKeyRequest const&
-          request,
-      Options opts = {});
+  CreateHcxActivationKey(google::cloud::vmwareengine::v1::CreateHcxActivationKeyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -4834,11 +4586,8 @@ class VmwareEngineClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateHcxActivationKey(
-      NoAwaitTag,
-      google::cloud::vmwareengine::v1::CreateHcxActivationKeyRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateHcxActivationKey(NoAwaitTag, google::cloud::vmwareengine::v1::CreateHcxActivationKeyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -4850,8 +4599,7 @@ class VmwareEngineClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::HcxActivationKey>>
-  CreateHcxActivationKey(google::longrunning::Operation const& operation,
-                         Options opts = {});
+  CreateHcxActivationKey(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -4929,9 +4677,7 @@ class VmwareEngineClient {
   ///
   // clang-format on
   StreamRange<google::cloud::vmwareengine::v1::HcxActivationKey>
-  ListHcxActivationKeys(
-      google::cloud::vmwareengine::v1::ListHcxActivationKeysRequest request,
-      Options opts = {});
+  ListHcxActivationKeys(google::cloud::vmwareengine::v1::ListHcxActivationKeysRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -4990,10 +4736,7 @@ class VmwareEngineClient {
   ///
   // clang-format on
   StatusOr<google::cloud::vmwareengine::v1::HcxActivationKey>
-  GetHcxActivationKey(
-      google::cloud::vmwareengine::v1::GetHcxActivationKeyRequest const&
-          request,
-      Options opts = {});
+  GetHcxActivationKey(google::cloud::vmwareengine::v1::GetHcxActivationKeyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -5021,8 +4764,8 @@ class VmwareEngineClient {
   /// [google.cloud.vmwareengine.v1.NetworkPolicy]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1249}
   ///
   // clang-format on
-  StatusOr<google::cloud::vmwareengine::v1::NetworkPolicy> GetNetworkPolicy(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::vmwareengine::v1::NetworkPolicy>
+  GetNetworkPolicy(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -5051,9 +4794,8 @@ class VmwareEngineClient {
   /// [google.cloud.vmwareengine.v1.NetworkPolicy]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1249}
   ///
   // clang-format on
-  StatusOr<google::cloud::vmwareengine::v1::NetworkPolicy> GetNetworkPolicy(
-      google::cloud::vmwareengine::v1::GetNetworkPolicyRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::vmwareengine::v1::NetworkPolicy>
+  GetNetworkPolicy(google::cloud::vmwareengine::v1::GetNetworkPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -5129,9 +4871,7 @@ class VmwareEngineClient {
   ///
   // clang-format on
   StreamRange<google::cloud::vmwareengine::v1::NetworkPolicy>
-  ListNetworkPolicies(
-      google::cloud::vmwareengine::v1::ListNetworkPoliciesRequest request,
-      Options opts = {});
+  ListNetworkPolicies(google::cloud::vmwareengine::v1::ListNetworkPoliciesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -5183,10 +4923,7 @@ class VmwareEngineClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::NetworkPolicy>>
-  CreateNetworkPolicy(
-      std::string const& parent,
-      google::cloud::vmwareengine::v1::NetworkPolicy const& network_policy,
-      std::string const& network_policy_id, Options opts = {});
+  CreateNetworkPolicy(std::string const& parent, google::cloud::vmwareengine::v1::NetworkPolicy const& network_policy, std::string const& network_policy_id, Options opts = {});
 
   // clang-format off
   ///
@@ -5199,10 +4936,8 @@ class VmwareEngineClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateNetworkPolicy(
-      NoAwaitTag, std::string const& parent,
-      google::cloud::vmwareengine::v1::NetworkPolicy const& network_policy,
-      std::string const& network_policy_id, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateNetworkPolicy(NoAwaitTag, std::string const& parent, google::cloud::vmwareengine::v1::NetworkPolicy const& network_policy, std::string const& network_policy_id, Options opts = {});
 
   // clang-format off
   ///
@@ -5241,10 +4976,7 @@ class VmwareEngineClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::NetworkPolicy>>
-  CreateNetworkPolicy(
-      google::cloud::vmwareengine::v1::CreateNetworkPolicyRequest const&
-          request,
-      Options opts = {});
+  CreateNetworkPolicy(google::cloud::vmwareengine::v1::CreateNetworkPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -5257,11 +4989,8 @@ class VmwareEngineClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateNetworkPolicy(
-      NoAwaitTag,
-      google::cloud::vmwareengine::v1::CreateNetworkPolicyRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateNetworkPolicy(NoAwaitTag, google::cloud::vmwareengine::v1::CreateNetworkPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -5273,8 +5002,7 @@ class VmwareEngineClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::NetworkPolicy>>
-  CreateNetworkPolicy(google::longrunning::Operation const& operation,
-                      Options opts = {});
+  CreateNetworkPolicy(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -5322,9 +5050,7 @@ class VmwareEngineClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::NetworkPolicy>>
-  UpdateNetworkPolicy(
-      google::cloud::vmwareengine::v1::NetworkPolicy const& network_policy,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  UpdateNetworkPolicy(google::cloud::vmwareengine::v1::NetworkPolicy const& network_policy, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -5337,10 +5063,8 @@ class VmwareEngineClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateNetworkPolicy(
-      NoAwaitTag,
-      google::cloud::vmwareengine::v1::NetworkPolicy const& network_policy,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateNetworkPolicy(NoAwaitTag, google::cloud::vmwareengine::v1::NetworkPolicy const& network_policy, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -5388,10 +5112,7 @@ class VmwareEngineClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::NetworkPolicy>>
-  UpdateNetworkPolicy(
-      google::cloud::vmwareengine::v1::UpdateNetworkPolicyRequest const&
-          request,
-      Options opts = {});
+  UpdateNetworkPolicy(google::cloud::vmwareengine::v1::UpdateNetworkPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -5404,11 +5125,8 @@ class VmwareEngineClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateNetworkPolicy(
-      NoAwaitTag,
-      google::cloud::vmwareengine::v1::UpdateNetworkPolicyRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateNetworkPolicy(NoAwaitTag, google::cloud::vmwareengine::v1::UpdateNetworkPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -5420,8 +5138,7 @@ class VmwareEngineClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::NetworkPolicy>>
-  UpdateNetworkPolicy(google::longrunning::Operation const& operation,
-                      Options opts = {});
+  UpdateNetworkPolicy(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -5472,8 +5189,8 @@ class VmwareEngineClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteNetworkPolicy(
-      NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteNetworkPolicy(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -5512,10 +5229,7 @@ class VmwareEngineClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
-  DeleteNetworkPolicy(
-      google::cloud::vmwareengine::v1::DeleteNetworkPolicyRequest const&
-          request,
-      Options opts = {});
+  DeleteNetworkPolicy(google::cloud::vmwareengine::v1::DeleteNetworkPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -5528,11 +5242,8 @@ class VmwareEngineClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteNetworkPolicy(
-      NoAwaitTag,
-      google::cloud::vmwareengine::v1::DeleteNetworkPolicyRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteNetworkPolicy(NoAwaitTag, google::cloud::vmwareengine::v1::DeleteNetworkPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -5544,8 +5255,7 @@ class VmwareEngineClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
-  DeleteNetworkPolicy(google::longrunning::Operation const& operation,
-                      Options opts = {});
+  DeleteNetworkPolicy(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -5623,10 +5333,7 @@ class VmwareEngineClient {
   ///
   // clang-format on
   StreamRange<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>
-  ListManagementDnsZoneBindings(
-      google::cloud::vmwareengine::v1::ListManagementDnsZoneBindingsRequest
-          request,
-      Options opts = {});
+  ListManagementDnsZoneBindings(google::cloud::vmwareengine::v1::ListManagementDnsZoneBindingsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -5685,10 +5392,7 @@ class VmwareEngineClient {
   ///
   // clang-format on
   StatusOr<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>
-  GetManagementDnsZoneBinding(
-      google::cloud::vmwareengine::v1::GetManagementDnsZoneBindingRequest const&
-          request,
-      Options opts = {});
+  GetManagementDnsZoneBinding(google::cloud::vmwareengine::v1::GetManagementDnsZoneBindingRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -5744,11 +5448,7 @@ class VmwareEngineClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>>
-  CreateManagementDnsZoneBinding(
-      std::string const& parent,
-      google::cloud::vmwareengine::v1::ManagementDnsZoneBinding const&
-          management_dns_zone_binding,
-      std::string const& management_dns_zone_binding_id, Options opts = {});
+  CreateManagementDnsZoneBinding(std::string const& parent, google::cloud::vmwareengine::v1::ManagementDnsZoneBinding const& management_dns_zone_binding, std::string const& management_dns_zone_binding_id, Options opts = {});
 
   // clang-format off
   ///
@@ -5761,11 +5461,8 @@ class VmwareEngineClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateManagementDnsZoneBinding(
-      NoAwaitTag, std::string const& parent,
-      google::cloud::vmwareengine::v1::ManagementDnsZoneBinding const&
-          management_dns_zone_binding,
-      std::string const& management_dns_zone_binding_id, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateManagementDnsZoneBinding(NoAwaitTag, std::string const& parent, google::cloud::vmwareengine::v1::ManagementDnsZoneBinding const& management_dns_zone_binding, std::string const& management_dns_zone_binding_id, Options opts = {});
 
   // clang-format off
   ///
@@ -5808,10 +5505,7 @@ class VmwareEngineClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>>
-  CreateManagementDnsZoneBinding(
-      google::cloud::vmwareengine::v1::
-          CreateManagementDnsZoneBindingRequest const& request,
-      Options opts = {});
+  CreateManagementDnsZoneBinding(google::cloud::vmwareengine::v1::CreateManagementDnsZoneBindingRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -5824,11 +5518,8 @@ class VmwareEngineClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateManagementDnsZoneBinding(
-      NoAwaitTag,
-      google::cloud::vmwareengine::v1::
-          CreateManagementDnsZoneBindingRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateManagementDnsZoneBinding(NoAwaitTag, google::cloud::vmwareengine::v1::CreateManagementDnsZoneBindingRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -5840,8 +5531,7 @@ class VmwareEngineClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>>
-  CreateManagementDnsZoneBinding(
-      google::longrunning::Operation const& operation, Options opts = {});
+  CreateManagementDnsZoneBinding(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -5879,10 +5569,7 @@ class VmwareEngineClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>>
-  UpdateManagementDnsZoneBinding(
-      google::cloud::vmwareengine::v1::ManagementDnsZoneBinding const&
-          management_dns_zone_binding,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  UpdateManagementDnsZoneBinding(google::cloud::vmwareengine::v1::ManagementDnsZoneBinding const& management_dns_zone_binding, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -5895,11 +5582,8 @@ class VmwareEngineClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateManagementDnsZoneBinding(
-      NoAwaitTag,
-      google::cloud::vmwareengine::v1::ManagementDnsZoneBinding const&
-          management_dns_zone_binding,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateManagementDnsZoneBinding(NoAwaitTag, google::cloud::vmwareengine::v1::ManagementDnsZoneBinding const& management_dns_zone_binding, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -5937,10 +5621,7 @@ class VmwareEngineClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>>
-  UpdateManagementDnsZoneBinding(
-      google::cloud::vmwareengine::v1::
-          UpdateManagementDnsZoneBindingRequest const& request,
-      Options opts = {});
+  UpdateManagementDnsZoneBinding(google::cloud::vmwareengine::v1::UpdateManagementDnsZoneBindingRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -5953,11 +5634,8 @@ class VmwareEngineClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateManagementDnsZoneBinding(
-      NoAwaitTag,
-      google::cloud::vmwareengine::v1::
-          UpdateManagementDnsZoneBindingRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateManagementDnsZoneBinding(NoAwaitTag, google::cloud::vmwareengine::v1::UpdateManagementDnsZoneBindingRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -5969,8 +5647,7 @@ class VmwareEngineClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>>
-  UpdateManagementDnsZoneBinding(
-      google::longrunning::Operation const& operation, Options opts = {});
+  UpdateManagementDnsZoneBinding(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -6021,8 +5698,8 @@ class VmwareEngineClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteManagementDnsZoneBinding(
-      NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteManagementDnsZoneBinding(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -6061,10 +5738,7 @@ class VmwareEngineClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
-  DeleteManagementDnsZoneBinding(
-      google::cloud::vmwareengine::v1::
-          DeleteManagementDnsZoneBindingRequest const& request,
-      Options opts = {});
+  DeleteManagementDnsZoneBinding(google::cloud::vmwareengine::v1::DeleteManagementDnsZoneBindingRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -6077,11 +5751,8 @@ class VmwareEngineClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteManagementDnsZoneBinding(
-      NoAwaitTag,
-      google::cloud::vmwareengine::v1::
-          DeleteManagementDnsZoneBindingRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteManagementDnsZoneBinding(NoAwaitTag, google::cloud::vmwareengine::v1::DeleteManagementDnsZoneBindingRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -6093,8 +5764,7 @@ class VmwareEngineClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
-  DeleteManagementDnsZoneBinding(
-      google::longrunning::Operation const& operation, Options opts = {});
+  DeleteManagementDnsZoneBinding(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -6144,8 +5814,8 @@ class VmwareEngineClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> RepairManagementDnsZoneBinding(
-      NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  RepairManagementDnsZoneBinding(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -6183,10 +5853,7 @@ class VmwareEngineClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>>
-  RepairManagementDnsZoneBinding(
-      google::cloud::vmwareengine::v1::
-          RepairManagementDnsZoneBindingRequest const& request,
-      Options opts = {});
+  RepairManagementDnsZoneBinding(google::cloud::vmwareengine::v1::RepairManagementDnsZoneBindingRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -6199,11 +5866,8 @@ class VmwareEngineClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> RepairManagementDnsZoneBinding(
-      NoAwaitTag,
-      google::cloud::vmwareengine::v1::
-          RepairManagementDnsZoneBindingRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  RepairManagementDnsZoneBinding(NoAwaitTag, google::cloud::vmwareengine::v1::RepairManagementDnsZoneBindingRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -6215,8 +5879,7 @@ class VmwareEngineClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>>
-  RepairManagementDnsZoneBinding(
-      google::longrunning::Operation const& operation, Options opts = {});
+  RepairManagementDnsZoneBinding(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -6269,11 +5932,7 @@ class VmwareEngineClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::VmwareEngineNetwork>>
-  CreateVmwareEngineNetwork(
-      std::string const& parent,
-      google::cloud::vmwareengine::v1::VmwareEngineNetwork const&
-          vmware_engine_network,
-      std::string const& vmware_engine_network_id, Options opts = {});
+  CreateVmwareEngineNetwork(std::string const& parent, google::cloud::vmwareengine::v1::VmwareEngineNetwork const& vmware_engine_network, std::string const& vmware_engine_network_id, Options opts = {});
 
   // clang-format off
   ///
@@ -6286,11 +5945,8 @@ class VmwareEngineClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateVmwareEngineNetwork(
-      NoAwaitTag, std::string const& parent,
-      google::cloud::vmwareengine::v1::VmwareEngineNetwork const&
-          vmware_engine_network,
-      std::string const& vmware_engine_network_id, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateVmwareEngineNetwork(NoAwaitTag, std::string const& parent, google::cloud::vmwareengine::v1::VmwareEngineNetwork const& vmware_engine_network, std::string const& vmware_engine_network_id, Options opts = {});
 
   // clang-format off
   ///
@@ -6327,10 +5983,7 @@ class VmwareEngineClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::VmwareEngineNetwork>>
-  CreateVmwareEngineNetwork(
-      google::cloud::vmwareengine::v1::CreateVmwareEngineNetworkRequest const&
-          request,
-      Options opts = {});
+  CreateVmwareEngineNetwork(google::cloud::vmwareengine::v1::CreateVmwareEngineNetworkRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -6343,11 +5996,8 @@ class VmwareEngineClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateVmwareEngineNetwork(
-      NoAwaitTag,
-      google::cloud::vmwareengine::v1::CreateVmwareEngineNetworkRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateVmwareEngineNetwork(NoAwaitTag, google::cloud::vmwareengine::v1::CreateVmwareEngineNetworkRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -6359,8 +6009,7 @@ class VmwareEngineClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::VmwareEngineNetwork>>
-  CreateVmwareEngineNetwork(google::longrunning::Operation const& operation,
-                            Options opts = {});
+  CreateVmwareEngineNetwork(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -6400,10 +6049,7 @@ class VmwareEngineClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::VmwareEngineNetwork>>
-  UpdateVmwareEngineNetwork(
-      google::cloud::vmwareengine::v1::VmwareEngineNetwork const&
-          vmware_engine_network,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  UpdateVmwareEngineNetwork(google::cloud::vmwareengine::v1::VmwareEngineNetwork const& vmware_engine_network, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -6416,11 +6062,8 @@ class VmwareEngineClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateVmwareEngineNetwork(
-      NoAwaitTag,
-      google::cloud::vmwareengine::v1::VmwareEngineNetwork const&
-          vmware_engine_network,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateVmwareEngineNetwork(NoAwaitTag, google::cloud::vmwareengine::v1::VmwareEngineNetwork const& vmware_engine_network, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -6459,10 +6102,7 @@ class VmwareEngineClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::VmwareEngineNetwork>>
-  UpdateVmwareEngineNetwork(
-      google::cloud::vmwareengine::v1::UpdateVmwareEngineNetworkRequest const&
-          request,
-      Options opts = {});
+  UpdateVmwareEngineNetwork(google::cloud::vmwareengine::v1::UpdateVmwareEngineNetworkRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -6475,11 +6115,8 @@ class VmwareEngineClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateVmwareEngineNetwork(
-      NoAwaitTag,
-      google::cloud::vmwareengine::v1::UpdateVmwareEngineNetworkRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateVmwareEngineNetwork(NoAwaitTag, google::cloud::vmwareengine::v1::UpdateVmwareEngineNetworkRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -6491,8 +6128,7 @@ class VmwareEngineClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::VmwareEngineNetwork>>
-  UpdateVmwareEngineNetwork(google::longrunning::Operation const& operation,
-                            Options opts = {});
+  UpdateVmwareEngineNetwork(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -6544,8 +6180,8 @@ class VmwareEngineClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteVmwareEngineNetwork(
-      NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteVmwareEngineNetwork(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -6585,10 +6221,7 @@ class VmwareEngineClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
-  DeleteVmwareEngineNetwork(
-      google::cloud::vmwareengine::v1::DeleteVmwareEngineNetworkRequest const&
-          request,
-      Options opts = {});
+  DeleteVmwareEngineNetwork(google::cloud::vmwareengine::v1::DeleteVmwareEngineNetworkRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -6601,11 +6234,8 @@ class VmwareEngineClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteVmwareEngineNetwork(
-      NoAwaitTag,
-      google::cloud::vmwareengine::v1::DeleteVmwareEngineNetworkRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteVmwareEngineNetwork(NoAwaitTag, google::cloud::vmwareengine::v1::DeleteVmwareEngineNetworkRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -6617,8 +6247,7 @@ class VmwareEngineClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
-  DeleteVmwareEngineNetwork(google::longrunning::Operation const& operation,
-                            Options opts = {});
+  DeleteVmwareEngineNetwork(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -6683,10 +6312,7 @@ class VmwareEngineClient {
   ///
   // clang-format on
   StatusOr<google::cloud::vmwareengine::v1::VmwareEngineNetwork>
-  GetVmwareEngineNetwork(
-      google::cloud::vmwareengine::v1::GetVmwareEngineNetworkRequest const&
-          request,
-      Options opts = {});
+  GetVmwareEngineNetwork(google::cloud::vmwareengine::v1::GetVmwareEngineNetworkRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -6762,9 +6388,7 @@ class VmwareEngineClient {
   ///
   // clang-format on
   StreamRange<google::cloud::vmwareengine::v1::VmwareEngineNetwork>
-  ListVmwareEngineNetworks(
-      google::cloud::vmwareengine::v1::ListVmwareEngineNetworksRequest request,
-      Options opts = {});
+  ListVmwareEngineNetworks(google::cloud::vmwareengine::v1::ListVmwareEngineNetworksRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -6813,11 +6437,7 @@ class VmwareEngineClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::PrivateConnection>>
-  CreatePrivateConnection(
-      std::string const& parent,
-      google::cloud::vmwareengine::v1::PrivateConnection const&
-          private_connection,
-      std::string const& private_connection_id, Options opts = {});
+  CreatePrivateConnection(std::string const& parent, google::cloud::vmwareengine::v1::PrivateConnection const& private_connection, std::string const& private_connection_id, Options opts = {});
 
   // clang-format off
   ///
@@ -6830,11 +6450,8 @@ class VmwareEngineClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreatePrivateConnection(
-      NoAwaitTag, std::string const& parent,
-      google::cloud::vmwareengine::v1::PrivateConnection const&
-          private_connection,
-      std::string const& private_connection_id, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreatePrivateConnection(NoAwaitTag, std::string const& parent, google::cloud::vmwareengine::v1::PrivateConnection const& private_connection, std::string const& private_connection_id, Options opts = {});
 
   // clang-format off
   ///
@@ -6872,10 +6489,7 @@ class VmwareEngineClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::PrivateConnection>>
-  CreatePrivateConnection(
-      google::cloud::vmwareengine::v1::CreatePrivateConnectionRequest const&
-          request,
-      Options opts = {});
+  CreatePrivateConnection(google::cloud::vmwareengine::v1::CreatePrivateConnectionRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -6888,11 +6502,8 @@ class VmwareEngineClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreatePrivateConnection(
-      NoAwaitTag,
-      google::cloud::vmwareengine::v1::CreatePrivateConnectionRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreatePrivateConnection(NoAwaitTag, google::cloud::vmwareengine::v1::CreatePrivateConnectionRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -6904,8 +6515,7 @@ class VmwareEngineClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::PrivateConnection>>
-  CreatePrivateConnection(google::longrunning::Operation const& operation,
-                          Options opts = {});
+  CreatePrivateConnection(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -6968,10 +6578,7 @@ class VmwareEngineClient {
   ///
   // clang-format on
   StatusOr<google::cloud::vmwareengine::v1::PrivateConnection>
-  GetPrivateConnection(
-      google::cloud::vmwareengine::v1::GetPrivateConnectionRequest const&
-          request,
-      Options opts = {});
+  GetPrivateConnection(google::cloud::vmwareengine::v1::GetPrivateConnectionRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -7047,9 +6654,7 @@ class VmwareEngineClient {
   ///
   // clang-format on
   StreamRange<google::cloud::vmwareengine::v1::PrivateConnection>
-  ListPrivateConnections(
-      google::cloud::vmwareengine::v1::ListPrivateConnectionsRequest request,
-      Options opts = {});
+  ListPrivateConnections(google::cloud::vmwareengine::v1::ListPrivateConnectionsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -7088,10 +6693,7 @@ class VmwareEngineClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::PrivateConnection>>
-  UpdatePrivateConnection(
-      google::cloud::vmwareengine::v1::PrivateConnection const&
-          private_connection,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  UpdatePrivateConnection(google::cloud::vmwareengine::v1::PrivateConnection const& private_connection, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -7104,11 +6706,8 @@ class VmwareEngineClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdatePrivateConnection(
-      NoAwaitTag,
-      google::cloud::vmwareengine::v1::PrivateConnection const&
-          private_connection,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdatePrivateConnection(NoAwaitTag, google::cloud::vmwareengine::v1::PrivateConnection const& private_connection, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -7147,10 +6746,7 @@ class VmwareEngineClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::PrivateConnection>>
-  UpdatePrivateConnection(
-      google::cloud::vmwareengine::v1::UpdatePrivateConnectionRequest const&
-          request,
-      Options opts = {});
+  UpdatePrivateConnection(google::cloud::vmwareengine::v1::UpdatePrivateConnectionRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -7163,11 +6759,8 @@ class VmwareEngineClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdatePrivateConnection(
-      NoAwaitTag,
-      google::cloud::vmwareengine::v1::UpdatePrivateConnectionRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdatePrivateConnection(NoAwaitTag, google::cloud::vmwareengine::v1::UpdatePrivateConnectionRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -7179,8 +6772,7 @@ class VmwareEngineClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::PrivateConnection>>
-  UpdatePrivateConnection(google::longrunning::Operation const& operation,
-                          Options opts = {});
+  UpdatePrivateConnection(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -7231,8 +6823,8 @@ class VmwareEngineClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeletePrivateConnection(
-      NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeletePrivateConnection(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -7271,10 +6863,7 @@ class VmwareEngineClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
-  DeletePrivateConnection(
-      google::cloud::vmwareengine::v1::DeletePrivateConnectionRequest const&
-          request,
-      Options opts = {});
+  DeletePrivateConnection(google::cloud::vmwareengine::v1::DeletePrivateConnectionRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -7287,11 +6876,8 @@ class VmwareEngineClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeletePrivateConnection(
-      NoAwaitTag,
-      google::cloud::vmwareengine::v1::DeletePrivateConnectionRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeletePrivateConnection(NoAwaitTag, google::cloud::vmwareengine::v1::DeletePrivateConnectionRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -7303,8 +6889,7 @@ class VmwareEngineClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
-  DeletePrivateConnection(google::longrunning::Operation const& operation,
-                          Options opts = {});
+  DeletePrivateConnection(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -7341,8 +6926,7 @@ class VmwareEngineClient {
   ///
   // clang-format on
   StreamRange<google::cloud::vmwareengine::v1::PeeringRoute>
-  ListPrivateConnectionPeeringRoutes(std::string const& parent,
-                                     Options opts = {});
+  ListPrivateConnectionPeeringRoutes(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -7381,10 +6965,7 @@ class VmwareEngineClient {
   ///
   // clang-format on
   StreamRange<google::cloud::vmwareengine::v1::PeeringRoute>
-  ListPrivateConnectionPeeringRoutes(
-      google::cloud::vmwareengine::v1::ListPrivateConnectionPeeringRoutesRequest
-          request,
-      Options opts = {});
+  ListPrivateConnectionPeeringRoutes(google::cloud::vmwareengine::v1::ListPrivateConnectionPeeringRoutesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -7427,10 +7008,7 @@ class VmwareEngineClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::DnsBindPermission>>
-  GrantDnsBindPermission(
-      std::string const& name,
-      google::cloud::vmwareengine::v1::Principal const& principal,
-      Options opts = {});
+  GrantDnsBindPermission(std::string const& name, google::cloud::vmwareengine::v1::Principal const& principal, Options opts = {});
 
   // clang-format off
   ///
@@ -7443,10 +7021,8 @@ class VmwareEngineClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GrantDnsBindPermission(
-      NoAwaitTag, std::string const& name,
-      google::cloud::vmwareengine::v1::Principal const& principal,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GrantDnsBindPermission(NoAwaitTag, std::string const& name, google::cloud::vmwareengine::v1::Principal const& principal, Options opts = {});
 
   // clang-format off
   ///
@@ -7486,10 +7062,7 @@ class VmwareEngineClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::DnsBindPermission>>
-  GrantDnsBindPermission(
-      google::cloud::vmwareengine::v1::GrantDnsBindPermissionRequest const&
-          request,
-      Options opts = {});
+  GrantDnsBindPermission(google::cloud::vmwareengine::v1::GrantDnsBindPermissionRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -7502,11 +7075,8 @@ class VmwareEngineClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GrantDnsBindPermission(
-      NoAwaitTag,
-      google::cloud::vmwareengine::v1::GrantDnsBindPermissionRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GrantDnsBindPermission(NoAwaitTag, google::cloud::vmwareengine::v1::GrantDnsBindPermissionRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -7518,8 +7088,7 @@ class VmwareEngineClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::DnsBindPermission>>
-  GrantDnsBindPermission(google::longrunning::Operation const& operation,
-                         Options opts = {});
+  GrantDnsBindPermission(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -7583,10 +7152,7 @@ class VmwareEngineClient {
   ///
   // clang-format on
   StatusOr<google::cloud::vmwareengine::v1::DnsBindPermission>
-  GetDnsBindPermission(
-      google::cloud::vmwareengine::v1::GetDnsBindPermissionRequest const&
-          request,
-      Options opts = {});
+  GetDnsBindPermission(google::cloud::vmwareengine::v1::GetDnsBindPermissionRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -7628,10 +7194,7 @@ class VmwareEngineClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::DnsBindPermission>>
-  RevokeDnsBindPermission(
-      std::string const& name,
-      google::cloud::vmwareengine::v1::Principal const& principal,
-      Options opts = {});
+  RevokeDnsBindPermission(std::string const& name, google::cloud::vmwareengine::v1::Principal const& principal, Options opts = {});
 
   // clang-format off
   ///
@@ -7644,10 +7207,8 @@ class VmwareEngineClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> RevokeDnsBindPermission(
-      NoAwaitTag, std::string const& name,
-      google::cloud::vmwareengine::v1::Principal const& principal,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  RevokeDnsBindPermission(NoAwaitTag, std::string const& name, google::cloud::vmwareengine::v1::Principal const& principal, Options opts = {});
 
   // clang-format off
   ///
@@ -7686,10 +7247,7 @@ class VmwareEngineClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::DnsBindPermission>>
-  RevokeDnsBindPermission(
-      google::cloud::vmwareengine::v1::RevokeDnsBindPermissionRequest const&
-          request,
-      Options opts = {});
+  RevokeDnsBindPermission(google::cloud::vmwareengine::v1::RevokeDnsBindPermissionRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -7702,11 +7260,8 @@ class VmwareEngineClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> RevokeDnsBindPermission(
-      NoAwaitTag,
-      google::cloud::vmwareengine::v1::RevokeDnsBindPermissionRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  RevokeDnsBindPermission(NoAwaitTag, google::cloud::vmwareengine::v1::RevokeDnsBindPermissionRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -7718,8 +7273,7 @@ class VmwareEngineClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::DnsBindPermission>>
-  RevokeDnsBindPermission(google::longrunning::Operation const& operation,
-                          Options opts = {});
+  RevokeDnsBindPermission(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -7757,8 +7311,8 @@ class VmwareEngineClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request, Options opts = {});
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -7787,9 +7341,8 @@ class VmwareEngineClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -7821,8 +7374,8 @@ class VmwareEngineClient {
   /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L100}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -7853,8 +7406,8 @@ class VmwareEngineClient {
   /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -7889,9 +7442,8 @@ class VmwareEngineClient {
   /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L153}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request,
-      Options opts = {});
+  StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -7926,8 +7478,8 @@ class VmwareEngineClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -7966,8 +7518,8 @@ class VmwareEngineClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -7993,8 +7545,8 @@ class VmwareEngineClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -8025,9 +7577,8 @@ class VmwareEngineClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -8051,7 +7602,8 @@ class VmwareEngineClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status DeleteOperation(std::string const& name, Options opts = {});
+  Status
+  DeleteOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -8080,9 +7632,8 @@ class VmwareEngineClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request,
-      Options opts = {});
+  Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<VmwareEngineConnection> connection_;

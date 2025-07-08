@@ -38,28 +38,23 @@ class SqlUsersServiceRestStub {
 
   virtual StatusOr<google::cloud::sql::v1::Operation> Delete(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::sql::v1::SqlUsersDeleteRequest const& request) = 0;
+      Options const& options, google::cloud::sql::v1::SqlUsersDeleteRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::sql::v1::User> Get(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::sql::v1::SqlUsersGetRequest const& request) = 0;
+      Options const& options, google::cloud::sql::v1::SqlUsersGetRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::sql::v1::Operation> Insert(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::sql::v1::SqlUsersInsertRequest const& request) = 0;
+      Options const& options, google::cloud::sql::v1::SqlUsersInsertRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::sql::v1::UsersListResponse> List(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::sql::v1::SqlUsersListRequest const& request) = 0;
+      Options const& options, google::cloud::sql::v1::SqlUsersListRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::sql::v1::Operation> Update(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::sql::v1::SqlUsersUpdateRequest const& request) = 0;
+      Options const& options, google::cloud::sql::v1::SqlUsersUpdateRequest const& request) = 0;
 };
 
 class DefaultSqlUsersServiceRestStub : public SqlUsersServiceRestStub {
@@ -68,32 +63,28 @@ class DefaultSqlUsersServiceRestStub : public SqlUsersServiceRestStub {
 
   explicit DefaultSqlUsersServiceRestStub(Options options);
   DefaultSqlUsersServiceRestStub(
-      std::shared_ptr<rest_internal::RestClient> service, Options options);
+      std::shared_ptr<rest_internal::RestClient> service,
+      Options options);
 
   StatusOr<google::cloud::sql::v1::Operation> Delete(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::sql::v1::SqlUsersDeleteRequest const& request) override;
+      Options const& options, google::cloud::sql::v1::SqlUsersDeleteRequest const& request) override;
 
   StatusOr<google::cloud::sql::v1::User> Get(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::sql::v1::SqlUsersGetRequest const& request) override;
+      Options const& options, google::cloud::sql::v1::SqlUsersGetRequest const& request) override;
 
   StatusOr<google::cloud::sql::v1::Operation> Insert(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::sql::v1::SqlUsersInsertRequest const& request) override;
+      Options const& options, google::cloud::sql::v1::SqlUsersInsertRequest const& request) override;
 
   StatusOr<google::cloud::sql::v1::UsersListResponse> List(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::sql::v1::SqlUsersListRequest const& request) override;
+      Options const& options, google::cloud::sql::v1::SqlUsersListRequest const& request) override;
 
   StatusOr<google::cloud::sql::v1::Operation> Update(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::sql::v1::SqlUsersUpdateRequest const& request) override;
+      Options const& options, google::cloud::sql::v1::SqlUsersUpdateRequest const& request) override;
 
  private:
   std::shared_ptr<rest_internal::RestClient> service_;

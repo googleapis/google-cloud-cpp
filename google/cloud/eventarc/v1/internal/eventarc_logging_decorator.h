@@ -36,377 +36,367 @@ class EventarcLogging : public EventarcStub {
  public:
   ~EventarcLogging() override = default;
   EventarcLogging(std::shared_ptr<EventarcStub> child,
-                  TracingOptions tracing_options,
-                  std::set<std::string> const& components);
+                       TracingOptions tracing_options,
+                       std::set<std::string> const& components);
 
   StatusOr<google::cloud::eventarc::v1::Trigger> GetTrigger(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::eventarc::v1::GetTriggerRequest const& request) override;
 
   StatusOr<google::cloud::eventarc::v1::ListTriggersResponse> ListTriggers(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::eventarc::v1::ListTriggersRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateTrigger(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::eventarc::v1::CreateTriggerRequest const& request)
-      override;
+      google::cloud::eventarc::v1::CreateTriggerRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateTrigger(
-      grpc::ClientContext& context, Options options,
-      google::cloud::eventarc::v1::CreateTriggerRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::eventarc::v1::CreateTriggerRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateTrigger(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::eventarc::v1::UpdateTriggerRequest const& request)
-      override;
+      google::cloud::eventarc::v1::UpdateTriggerRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateTrigger(
-      grpc::ClientContext& context, Options options,
-      google::cloud::eventarc::v1::UpdateTriggerRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::eventarc::v1::UpdateTriggerRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteTrigger(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::eventarc::v1::DeleteTriggerRequest const& request)
-      override;
+      google::cloud::eventarc::v1::DeleteTriggerRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteTrigger(
-      grpc::ClientContext& context, Options options,
-      google::cloud::eventarc::v1::DeleteTriggerRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::eventarc::v1::DeleteTriggerRequest const& request) override;
 
   StatusOr<google::cloud::eventarc::v1::Channel> GetChannel(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::eventarc::v1::GetChannelRequest const& request) override;
 
   StatusOr<google::cloud::eventarc::v1::ListChannelsResponse> ListChannels(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::eventarc::v1::ListChannelsRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateChannel(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::eventarc::v1::CreateChannelRequest const& request)
-      override;
+      google::cloud::eventarc::v1::CreateChannelRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateChannel(
-      grpc::ClientContext& context, Options options,
-      google::cloud::eventarc::v1::CreateChannelRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::eventarc::v1::CreateChannelRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateChannel(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::eventarc::v1::UpdateChannelRequest const& request)
-      override;
+      google::cloud::eventarc::v1::UpdateChannelRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateChannel(
-      grpc::ClientContext& context, Options options,
-      google::cloud::eventarc::v1::UpdateChannelRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::eventarc::v1::UpdateChannelRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteChannel(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::eventarc::v1::DeleteChannelRequest const& request)
-      override;
+      google::cloud::eventarc::v1::DeleteChannelRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteChannel(
-      grpc::ClientContext& context, Options options,
-      google::cloud::eventarc::v1::DeleteChannelRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::eventarc::v1::DeleteChannelRequest const& request) override;
 
   StatusOr<google::cloud::eventarc::v1::Provider> GetProvider(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::eventarc::v1::GetProviderRequest const& request) override;
 
   StatusOr<google::cloud::eventarc::v1::ListProvidersResponse> ListProviders(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::eventarc::v1::ListProvidersRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::eventarc::v1::ListProvidersRequest const& request) override;
 
   StatusOr<google::cloud::eventarc::v1::ChannelConnection> GetChannelConnection(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::eventarc::v1::GetChannelConnectionRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::eventarc::v1::GetChannelConnectionRequest const& request) override;
 
-  StatusOr<google::cloud::eventarc::v1::ListChannelConnectionsResponse>
-  ListChannelConnections(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::eventarc::v1::ListChannelConnectionsRequest const& request)
-      override;
+  StatusOr<google::cloud::eventarc::v1::ListChannelConnectionsResponse> ListChannelConnections(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::eventarc::v1::ListChannelConnectionsRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateChannelConnection(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::eventarc::v1::CreateChannelConnectionRequest const&
-          request) override;
+      google::cloud::eventarc::v1::CreateChannelConnectionRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateChannelConnection(
-      grpc::ClientContext& context, Options options,
-      google::cloud::eventarc::v1::CreateChannelConnectionRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::eventarc::v1::CreateChannelConnectionRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteChannelConnection(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::eventarc::v1::DeleteChannelConnectionRequest const&
-          request) override;
+      google::cloud::eventarc::v1::DeleteChannelConnectionRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteChannelConnection(
-      grpc::ClientContext& context, Options options,
-      google::cloud::eventarc::v1::DeleteChannelConnectionRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::eventarc::v1::DeleteChannelConnectionRequest const& request) override;
 
-  StatusOr<google::cloud::eventarc::v1::GoogleChannelConfig>
-  GetGoogleChannelConfig(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::eventarc::v1::GetGoogleChannelConfigRequest const& request)
-      override;
+  StatusOr<google::cloud::eventarc::v1::GoogleChannelConfig> GetGoogleChannelConfig(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::eventarc::v1::GetGoogleChannelConfigRequest const& request) override;
 
-  StatusOr<google::cloud::eventarc::v1::GoogleChannelConfig>
-  UpdateGoogleChannelConfig(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::eventarc::v1::UpdateGoogleChannelConfigRequest const&
-          request) override;
+  StatusOr<google::cloud::eventarc::v1::GoogleChannelConfig> UpdateGoogleChannelConfig(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::eventarc::v1::UpdateGoogleChannelConfigRequest const& request) override;
 
   StatusOr<google::cloud::eventarc::v1::MessageBus> GetMessageBus(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::eventarc::v1::GetMessageBusRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::eventarc::v1::GetMessageBusRequest const& request) override;
 
-  StatusOr<google::cloud::eventarc::v1::ListMessageBusesResponse>
-  ListMessageBuses(grpc::ClientContext& context, Options const& options,
-                   google::cloud::eventarc::v1::ListMessageBusesRequest const&
-                       request) override;
+  StatusOr<google::cloud::eventarc::v1::ListMessageBusesResponse> ListMessageBuses(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::eventarc::v1::ListMessageBusesRequest const& request) override;
 
-  StatusOr<google::cloud::eventarc::v1::ListMessageBusEnrollmentsResponse>
-  ListMessageBusEnrollments(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::eventarc::v1::ListMessageBusEnrollmentsRequest const&
-          request) override;
+  StatusOr<google::cloud::eventarc::v1::ListMessageBusEnrollmentsResponse> ListMessageBusEnrollments(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::eventarc::v1::ListMessageBusEnrollmentsRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateMessageBus(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::eventarc::v1::CreateMessageBusRequest const& request)
-      override;
+      google::cloud::eventarc::v1::CreateMessageBusRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateMessageBus(
-      grpc::ClientContext& context, Options options,
-      google::cloud::eventarc::v1::CreateMessageBusRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::eventarc::v1::CreateMessageBusRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateMessageBus(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::eventarc::v1::UpdateMessageBusRequest const& request)
-      override;
+      google::cloud::eventarc::v1::UpdateMessageBusRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateMessageBus(
-      grpc::ClientContext& context, Options options,
-      google::cloud::eventarc::v1::UpdateMessageBusRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::eventarc::v1::UpdateMessageBusRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteMessageBus(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::eventarc::v1::DeleteMessageBusRequest const& request)
-      override;
+      google::cloud::eventarc::v1::DeleteMessageBusRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteMessageBus(
-      grpc::ClientContext& context, Options options,
-      google::cloud::eventarc::v1::DeleteMessageBusRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::eventarc::v1::DeleteMessageBusRequest const& request) override;
 
   StatusOr<google::cloud::eventarc::v1::Enrollment> GetEnrollment(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::eventarc::v1::GetEnrollmentRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::eventarc::v1::GetEnrollmentRequest const& request) override;
 
-  StatusOr<google::cloud::eventarc::v1::ListEnrollmentsResponse>
-  ListEnrollments(grpc::ClientContext& context, Options const& options,
-                  google::cloud::eventarc::v1::ListEnrollmentsRequest const&
-                      request) override;
+  StatusOr<google::cloud::eventarc::v1::ListEnrollmentsResponse> ListEnrollments(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::eventarc::v1::ListEnrollmentsRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateEnrollment(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::eventarc::v1::CreateEnrollmentRequest const& request)
-      override;
+      google::cloud::eventarc::v1::CreateEnrollmentRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateEnrollment(
-      grpc::ClientContext& context, Options options,
-      google::cloud::eventarc::v1::CreateEnrollmentRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::eventarc::v1::CreateEnrollmentRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateEnrollment(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::eventarc::v1::UpdateEnrollmentRequest const& request)
-      override;
+      google::cloud::eventarc::v1::UpdateEnrollmentRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateEnrollment(
-      grpc::ClientContext& context, Options options,
-      google::cloud::eventarc::v1::UpdateEnrollmentRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::eventarc::v1::UpdateEnrollmentRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteEnrollment(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::eventarc::v1::DeleteEnrollmentRequest const& request)
-      override;
+      google::cloud::eventarc::v1::DeleteEnrollmentRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteEnrollment(
-      grpc::ClientContext& context, Options options,
-      google::cloud::eventarc::v1::DeleteEnrollmentRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::eventarc::v1::DeleteEnrollmentRequest const& request) override;
 
   StatusOr<google::cloud::eventarc::v1::Pipeline> GetPipeline(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::eventarc::v1::GetPipelineRequest const& request) override;
 
   StatusOr<google::cloud::eventarc::v1::ListPipelinesResponse> ListPipelines(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::eventarc::v1::ListPipelinesRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::eventarc::v1::ListPipelinesRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreatePipeline(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::eventarc::v1::CreatePipelineRequest const& request)
-      override;
+      google::cloud::eventarc::v1::CreatePipelineRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreatePipeline(
-      grpc::ClientContext& context, Options options,
-      google::cloud::eventarc::v1::CreatePipelineRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::eventarc::v1::CreatePipelineRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdatePipeline(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::eventarc::v1::UpdatePipelineRequest const& request)
-      override;
+      google::cloud::eventarc::v1::UpdatePipelineRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdatePipeline(
-      grpc::ClientContext& context, Options options,
-      google::cloud::eventarc::v1::UpdatePipelineRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::eventarc::v1::UpdatePipelineRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeletePipeline(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::eventarc::v1::DeletePipelineRequest const& request)
-      override;
+      google::cloud::eventarc::v1::DeletePipelineRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeletePipeline(
-      grpc::ClientContext& context, Options options,
-      google::cloud::eventarc::v1::DeletePipelineRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::eventarc::v1::DeletePipelineRequest const& request) override;
 
   StatusOr<google::cloud::eventarc::v1::GoogleApiSource> GetGoogleApiSource(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::eventarc::v1::GetGoogleApiSourceRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::eventarc::v1::GetGoogleApiSourceRequest const& request) override;
 
-  StatusOr<google::cloud::eventarc::v1::ListGoogleApiSourcesResponse>
-  ListGoogleApiSources(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::eventarc::v1::ListGoogleApiSourcesRequest const& request)
-      override;
+  StatusOr<google::cloud::eventarc::v1::ListGoogleApiSourcesResponse> ListGoogleApiSources(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::eventarc::v1::ListGoogleApiSourcesRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateGoogleApiSource(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::eventarc::v1::CreateGoogleApiSourceRequest const& request)
-      override;
+      google::cloud::eventarc::v1::CreateGoogleApiSourceRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateGoogleApiSource(
-      grpc::ClientContext& context, Options options,
-      google::cloud::eventarc::v1::CreateGoogleApiSourceRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::eventarc::v1::CreateGoogleApiSourceRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateGoogleApiSource(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::eventarc::v1::UpdateGoogleApiSourceRequest const& request)
-      override;
+      google::cloud::eventarc::v1::UpdateGoogleApiSourceRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateGoogleApiSource(
-      grpc::ClientContext& context, Options options,
-      google::cloud::eventarc::v1::UpdateGoogleApiSourceRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::eventarc::v1::UpdateGoogleApiSourceRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteGoogleApiSource(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::eventarc::v1::DeleteGoogleApiSourceRequest const& request)
-      override;
+      google::cloud::eventarc::v1::DeleteGoogleApiSourceRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteGoogleApiSource(
-      grpc::ClientContext& context, Options options,
-      google::cloud::eventarc::v1::DeleteGoogleApiSourceRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::eventarc::v1::DeleteGoogleApiSourceRequest const& request) override;
 
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::location::ListLocationsRequest const& request) override;
 
   StatusOr<google::cloud::location::Location> GetLocation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::location::GetLocationRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status DeleteOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::DeleteOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(

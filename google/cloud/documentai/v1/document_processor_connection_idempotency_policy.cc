@@ -26,173 +26,124 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-DocumentProcessorServiceConnectionIdempotencyPolicy::
-    ~DocumentProcessorServiceConnectionIdempotencyPolicy() = default;
+DocumentProcessorServiceConnectionIdempotencyPolicy::~DocumentProcessorServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<DocumentProcessorServiceConnectionIdempotencyPolicy>
 DocumentProcessorServiceConnectionIdempotencyPolicy::clone() const {
-  return std::make_unique<DocumentProcessorServiceConnectionIdempotencyPolicy>(
-      *this);
+  return std::make_unique<DocumentProcessorServiceConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency
-DocumentProcessorServiceConnectionIdempotencyPolicy::ProcessDocument(
-    google::cloud::documentai::v1::ProcessRequest const&) {
+Idempotency DocumentProcessorServiceConnectionIdempotencyPolicy::ProcessDocument(google::cloud::documentai::v1::ProcessRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency
-DocumentProcessorServiceConnectionIdempotencyPolicy::BatchProcessDocuments(
-    google::cloud::documentai::v1::BatchProcessRequest const&) {
+Idempotency DocumentProcessorServiceConnectionIdempotencyPolicy::BatchProcessDocuments(google::cloud::documentai::v1::BatchProcessRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency
-DocumentProcessorServiceConnectionIdempotencyPolicy::FetchProcessorTypes(
-    google::cloud::documentai::v1::FetchProcessorTypesRequest const&) {
+Idempotency DocumentProcessorServiceConnectionIdempotencyPolicy::FetchProcessorTypes(google::cloud::documentai::v1::FetchProcessorTypesRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency
-DocumentProcessorServiceConnectionIdempotencyPolicy::ListProcessorTypes(
-    google::cloud::documentai::v1::ListProcessorTypesRequest) {  // NOLINT
+Idempotency DocumentProcessorServiceConnectionIdempotencyPolicy::ListProcessorTypes(google::cloud::documentai::v1::ListProcessorTypesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency
-DocumentProcessorServiceConnectionIdempotencyPolicy::GetProcessorType(
-    google::cloud::documentai::v1::GetProcessorTypeRequest const&) {
+Idempotency DocumentProcessorServiceConnectionIdempotencyPolicy::GetProcessorType(google::cloud::documentai::v1::GetProcessorTypeRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DocumentProcessorServiceConnectionIdempotencyPolicy::ListProcessors(
-    google::cloud::documentai::v1::ListProcessorsRequest) {  // NOLINT
+Idempotency DocumentProcessorServiceConnectionIdempotencyPolicy::ListProcessors(google::cloud::documentai::v1::ListProcessorsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency DocumentProcessorServiceConnectionIdempotencyPolicy::GetProcessor(
-    google::cloud::documentai::v1::GetProcessorRequest const&) {
+Idempotency DocumentProcessorServiceConnectionIdempotencyPolicy::GetProcessor(google::cloud::documentai::v1::GetProcessorRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency
-DocumentProcessorServiceConnectionIdempotencyPolicy::TrainProcessorVersion(
-    google::cloud::documentai::v1::TrainProcessorVersionRequest const&) {
+Idempotency DocumentProcessorServiceConnectionIdempotencyPolicy::TrainProcessorVersion(google::cloud::documentai::v1::TrainProcessorVersionRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency
-DocumentProcessorServiceConnectionIdempotencyPolicy::GetProcessorVersion(
-    google::cloud::documentai::v1::GetProcessorVersionRequest const&) {
+Idempotency DocumentProcessorServiceConnectionIdempotencyPolicy::GetProcessorVersion(google::cloud::documentai::v1::GetProcessorVersionRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency
-DocumentProcessorServiceConnectionIdempotencyPolicy::ListProcessorVersions(
-    google::cloud::documentai::v1::ListProcessorVersionsRequest) {  // NOLINT
+Idempotency DocumentProcessorServiceConnectionIdempotencyPolicy::ListProcessorVersions(google::cloud::documentai::v1::ListProcessorVersionsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency
-DocumentProcessorServiceConnectionIdempotencyPolicy::DeleteProcessorVersion(
-    google::cloud::documentai::v1::DeleteProcessorVersionRequest const&) {
+Idempotency DocumentProcessorServiceConnectionIdempotencyPolicy::DeleteProcessorVersion(google::cloud::documentai::v1::DeleteProcessorVersionRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency
-DocumentProcessorServiceConnectionIdempotencyPolicy::DeployProcessorVersion(
-    google::cloud::documentai::v1::DeployProcessorVersionRequest const&) {
+Idempotency DocumentProcessorServiceConnectionIdempotencyPolicy::DeployProcessorVersion(google::cloud::documentai::v1::DeployProcessorVersionRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency
-DocumentProcessorServiceConnectionIdempotencyPolicy::UndeployProcessorVersion(
-    google::cloud::documentai::v1::UndeployProcessorVersionRequest const&) {
+Idempotency DocumentProcessorServiceConnectionIdempotencyPolicy::UndeployProcessorVersion(google::cloud::documentai::v1::UndeployProcessorVersionRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency
-DocumentProcessorServiceConnectionIdempotencyPolicy::CreateProcessor(
-    google::cloud::documentai::v1::CreateProcessorRequest const&) {
+Idempotency DocumentProcessorServiceConnectionIdempotencyPolicy::CreateProcessor(google::cloud::documentai::v1::CreateProcessorRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency
-DocumentProcessorServiceConnectionIdempotencyPolicy::DeleteProcessor(
-    google::cloud::documentai::v1::DeleteProcessorRequest const&) {
+Idempotency DocumentProcessorServiceConnectionIdempotencyPolicy::DeleteProcessor(google::cloud::documentai::v1::DeleteProcessorRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency
-DocumentProcessorServiceConnectionIdempotencyPolicy::EnableProcessor(
-    google::cloud::documentai::v1::EnableProcessorRequest const&) {
+Idempotency DocumentProcessorServiceConnectionIdempotencyPolicy::EnableProcessor(google::cloud::documentai::v1::EnableProcessorRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency
-DocumentProcessorServiceConnectionIdempotencyPolicy::DisableProcessor(
-    google::cloud::documentai::v1::DisableProcessorRequest const&) {
+Idempotency DocumentProcessorServiceConnectionIdempotencyPolicy::DisableProcessor(google::cloud::documentai::v1::DisableProcessorRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency
-DocumentProcessorServiceConnectionIdempotencyPolicy::SetDefaultProcessorVersion(
-    google::cloud::documentai::v1::SetDefaultProcessorVersionRequest const&) {
+Idempotency DocumentProcessorServiceConnectionIdempotencyPolicy::SetDefaultProcessorVersion(google::cloud::documentai::v1::SetDefaultProcessorVersionRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DocumentProcessorServiceConnectionIdempotencyPolicy::ReviewDocument(
-    google::cloud::documentai::v1::ReviewDocumentRequest const&) {
+Idempotency DocumentProcessorServiceConnectionIdempotencyPolicy::ReviewDocument(google::cloud::documentai::v1::ReviewDocumentRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency
-DocumentProcessorServiceConnectionIdempotencyPolicy::EvaluateProcessorVersion(
-    google::cloud::documentai::v1::EvaluateProcessorVersionRequest const&) {
+Idempotency DocumentProcessorServiceConnectionIdempotencyPolicy::EvaluateProcessorVersion(google::cloud::documentai::v1::EvaluateProcessorVersionRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DocumentProcessorServiceConnectionIdempotencyPolicy::GetEvaluation(
-    google::cloud::documentai::v1::GetEvaluationRequest const&) {
+Idempotency DocumentProcessorServiceConnectionIdempotencyPolicy::GetEvaluation(google::cloud::documentai::v1::GetEvaluationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency
-DocumentProcessorServiceConnectionIdempotencyPolicy::ListEvaluations(
-    google::cloud::documentai::v1::ListEvaluationsRequest) {  // NOLINT
+Idempotency DocumentProcessorServiceConnectionIdempotencyPolicy::ListEvaluations(google::cloud::documentai::v1::ListEvaluationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency DocumentProcessorServiceConnectionIdempotencyPolicy::ListLocations(
-    google::cloud::location::ListLocationsRequest) {  // NOLINT
+Idempotency DocumentProcessorServiceConnectionIdempotencyPolicy::ListLocations(google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency DocumentProcessorServiceConnectionIdempotencyPolicy::GetLocation(
-    google::cloud::location::GetLocationRequest const&) {
+Idempotency DocumentProcessorServiceConnectionIdempotencyPolicy::GetLocation(google::cloud::location::GetLocationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DocumentProcessorServiceConnectionIdempotencyPolicy::ListOperations(
-    google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency DocumentProcessorServiceConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency DocumentProcessorServiceConnectionIdempotencyPolicy::GetOperation(
-    google::longrunning::GetOperationRequest const&) {
+Idempotency DocumentProcessorServiceConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency
-DocumentProcessorServiceConnectionIdempotencyPolicy::CancelOperation(
-    google::longrunning::CancelOperationRequest const&) {
+Idempotency DocumentProcessorServiceConnectionIdempotencyPolicy::CancelOperation(google::longrunning::CancelOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<DocumentProcessorServiceConnectionIdempotencyPolicy>
-MakeDefaultDocumentProcessorServiceConnectionIdempotencyPolicy() {
-  return std::make_unique<
-      DocumentProcessorServiceConnectionIdempotencyPolicy>();
+    MakeDefaultDocumentProcessorServiceConnectionIdempotencyPolicy() {
+  return std::make_unique<DocumentProcessorServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

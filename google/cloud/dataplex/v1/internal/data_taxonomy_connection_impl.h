@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAPLEX_V1_INTERNAL_DATA_TAXONOMY_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAPLEX_V1_INTERNAL_DATA_TAXONOMY_CONNECTION_IMPL_H
 
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/dataplex/v1/data_taxonomy_connection.h"
 #include "google/cloud/dataplex/v1/data_taxonomy_connection_idempotency_policy.h"
 #include "google/cloud/dataplex/v1/data_taxonomy_options.h"
 #include "google/cloud/dataplex/v1/internal/data_taxonomy_retry_traits.h"
 #include "google/cloud/dataplex/v1/internal/data_taxonomy_stub.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -46,182 +46,155 @@ class DataTaxonomyServiceConnectionImpl
   ~DataTaxonomyServiceConnectionImpl() override = default;
 
   DataTaxonomyServiceConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<dataplex_v1_internal::DataTaxonomyServiceStub> stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<dataplex_v1_internal::DataTaxonomyServiceStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
   future<StatusOr<google::cloud::dataplex::v1::DataTaxonomy>>
-  CreateDataTaxonomy(
-      google::cloud::dataplex::v1::CreateDataTaxonomyRequest const& request)
-      override;
+  CreateDataTaxonomy(google::cloud::dataplex::v1::CreateDataTaxonomyRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> CreateDataTaxonomy(
-      NoAwaitTag,
-      google::cloud::dataplex::v1::CreateDataTaxonomyRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  CreateDataTaxonomy(NoAwaitTag,
+      google::cloud::dataplex::v1::CreateDataTaxonomyRequest const& request) override;
 
   future<StatusOr<google::cloud::dataplex::v1::DataTaxonomy>>
-  CreateDataTaxonomy(google::longrunning::Operation const& operation) override;
+  CreateDataTaxonomy(
+      google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::dataplex::v1::DataTaxonomy>>
+  UpdateDataTaxonomy(google::cloud::dataplex::v1::UpdateDataTaxonomyRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  UpdateDataTaxonomy(NoAwaitTag,
+      google::cloud::dataplex::v1::UpdateDataTaxonomyRequest const& request) override;
 
   future<StatusOr<google::cloud::dataplex::v1::DataTaxonomy>>
   UpdateDataTaxonomy(
-      google::cloud::dataplex::v1::UpdateDataTaxonomyRequest const& request)
-      override;
+      google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::longrunning::Operation> UpdateDataTaxonomy(
-      NoAwaitTag,
-      google::cloud::dataplex::v1::UpdateDataTaxonomyRequest const& request)
-      override;
+  future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
+  DeleteDataTaxonomy(google::cloud::dataplex::v1::DeleteDataTaxonomyRequest const& request) override;
 
-  future<StatusOr<google::cloud::dataplex::v1::DataTaxonomy>>
-  UpdateDataTaxonomy(google::longrunning::Operation const& operation) override;
+  StatusOr<google::longrunning::Operation>
+  DeleteDataTaxonomy(NoAwaitTag,
+      google::cloud::dataplex::v1::DeleteDataTaxonomyRequest const& request) override;
 
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
   DeleteDataTaxonomy(
-      google::cloud::dataplex::v1::DeleteDataTaxonomyRequest const& request)
-      override;
+      google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::longrunning::Operation> DeleteDataTaxonomy(
-      NoAwaitTag,
-      google::cloud::dataplex::v1::DeleteDataTaxonomyRequest const& request)
-      override;
+  StreamRange<google::cloud::dataplex::v1::DataTaxonomy>
+  ListDataTaxonomies(google::cloud::dataplex::v1::ListDataTaxonomiesRequest request) override;
 
-  future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
-  DeleteDataTaxonomy(google::longrunning::Operation const& operation) override;
-
-  StreamRange<google::cloud::dataplex::v1::DataTaxonomy> ListDataTaxonomies(
-      google::cloud::dataplex::v1::ListDataTaxonomiesRequest request) override;
-
-  StatusOr<google::cloud::dataplex::v1::DataTaxonomy> GetDataTaxonomy(
-      google::cloud::dataplex::v1::GetDataTaxonomyRequest const& request)
-      override;
+  StatusOr<google::cloud::dataplex::v1::DataTaxonomy>
+  GetDataTaxonomy(google::cloud::dataplex::v1::GetDataTaxonomyRequest const& request) override;
 
   future<StatusOr<google::cloud::dataplex::v1::DataAttributeBinding>>
-  CreateDataAttributeBinding(
-      google::cloud::dataplex::v1::CreateDataAttributeBindingRequest const&
-          request) override;
+  CreateDataAttributeBinding(google::cloud::dataplex::v1::CreateDataAttributeBindingRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> CreateDataAttributeBinding(
-      NoAwaitTag,
-      google::cloud::dataplex::v1::CreateDataAttributeBindingRequest const&
-          request) override;
+  StatusOr<google::longrunning::Operation>
+  CreateDataAttributeBinding(NoAwaitTag,
+      google::cloud::dataplex::v1::CreateDataAttributeBindingRequest const& request) override;
 
   future<StatusOr<google::cloud::dataplex::v1::DataAttributeBinding>>
   CreateDataAttributeBinding(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::dataplex::v1::DataAttributeBinding>>
-  UpdateDataAttributeBinding(
-      google::cloud::dataplex::v1::UpdateDataAttributeBindingRequest const&
-          request) override;
+  UpdateDataAttributeBinding(google::cloud::dataplex::v1::UpdateDataAttributeBindingRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> UpdateDataAttributeBinding(
-      NoAwaitTag,
-      google::cloud::dataplex::v1::UpdateDataAttributeBindingRequest const&
-          request) override;
+  StatusOr<google::longrunning::Operation>
+  UpdateDataAttributeBinding(NoAwaitTag,
+      google::cloud::dataplex::v1::UpdateDataAttributeBindingRequest const& request) override;
 
   future<StatusOr<google::cloud::dataplex::v1::DataAttributeBinding>>
   UpdateDataAttributeBinding(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
-  DeleteDataAttributeBinding(
-      google::cloud::dataplex::v1::DeleteDataAttributeBindingRequest const&
-          request) override;
+  DeleteDataAttributeBinding(google::cloud::dataplex::v1::DeleteDataAttributeBindingRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> DeleteDataAttributeBinding(
-      NoAwaitTag,
-      google::cloud::dataplex::v1::DeleteDataAttributeBindingRequest const&
-          request) override;
+  StatusOr<google::longrunning::Operation>
+  DeleteDataAttributeBinding(NoAwaitTag,
+      google::cloud::dataplex::v1::DeleteDataAttributeBindingRequest const& request) override;
 
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
   DeleteDataAttributeBinding(
       google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::dataplex::v1::DataAttributeBinding>
-  ListDataAttributeBindings(
-      google::cloud::dataplex::v1::ListDataAttributeBindingsRequest request)
-      override;
+  ListDataAttributeBindings(google::cloud::dataplex::v1::ListDataAttributeBindingsRequest request) override;
 
   StatusOr<google::cloud::dataplex::v1::DataAttributeBinding>
-  GetDataAttributeBinding(
-      google::cloud::dataplex::v1::GetDataAttributeBindingRequest const&
-          request) override;
+  GetDataAttributeBinding(google::cloud::dataplex::v1::GetDataAttributeBindingRequest const& request) override;
+
+  future<StatusOr<google::cloud::dataplex::v1::DataAttribute>>
+  CreateDataAttribute(google::cloud::dataplex::v1::CreateDataAttributeRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  CreateDataAttribute(NoAwaitTag,
+      google::cloud::dataplex::v1::CreateDataAttributeRequest const& request) override;
 
   future<StatusOr<google::cloud::dataplex::v1::DataAttribute>>
   CreateDataAttribute(
-      google::cloud::dataplex::v1::CreateDataAttributeRequest const& request)
-      override;
-
-  StatusOr<google::longrunning::Operation> CreateDataAttribute(
-      NoAwaitTag,
-      google::cloud::dataplex::v1::CreateDataAttributeRequest const& request)
-      override;
+      google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::dataplex::v1::DataAttribute>>
-  CreateDataAttribute(google::longrunning::Operation const& operation) override;
+  UpdateDataAttribute(google::cloud::dataplex::v1::UpdateDataAttributeRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  UpdateDataAttribute(NoAwaitTag,
+      google::cloud::dataplex::v1::UpdateDataAttributeRequest const& request) override;
 
   future<StatusOr<google::cloud::dataplex::v1::DataAttribute>>
   UpdateDataAttribute(
-      google::cloud::dataplex::v1::UpdateDataAttributeRequest const& request)
-      override;
+      google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::longrunning::Operation> UpdateDataAttribute(
-      NoAwaitTag,
-      google::cloud::dataplex::v1::UpdateDataAttributeRequest const& request)
-      override;
+  future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
+  DeleteDataAttribute(google::cloud::dataplex::v1::DeleteDataAttributeRequest const& request) override;
 
-  future<StatusOr<google::cloud::dataplex::v1::DataAttribute>>
-  UpdateDataAttribute(google::longrunning::Operation const& operation) override;
+  StatusOr<google::longrunning::Operation>
+  DeleteDataAttribute(NoAwaitTag,
+      google::cloud::dataplex::v1::DeleteDataAttributeRequest const& request) override;
 
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
   DeleteDataAttribute(
-      google::cloud::dataplex::v1::DeleteDataAttributeRequest const& request)
-      override;
+      google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::longrunning::Operation> DeleteDataAttribute(
-      NoAwaitTag,
-      google::cloud::dataplex::v1::DeleteDataAttributeRequest const& request)
-      override;
+  StreamRange<google::cloud::dataplex::v1::DataAttribute>
+  ListDataAttributes(google::cloud::dataplex::v1::ListDataAttributesRequest request) override;
 
-  future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
-  DeleteDataAttribute(google::longrunning::Operation const& operation) override;
+  StatusOr<google::cloud::dataplex::v1::DataAttribute>
+  GetDataAttribute(google::cloud::dataplex::v1::GetDataAttributeRequest const& request) override;
 
-  StreamRange<google::cloud::dataplex::v1::DataAttribute> ListDataAttributes(
-      google::cloud::dataplex::v1::ListDataAttributesRequest request) override;
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request) override;
 
-  StatusOr<google::cloud::dataplex::v1::DataAttribute> GetDataAttribute(
-      google::cloud::dataplex::v1::GetDataAttributeRequest const& request)
-      override;
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request) override;
 
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request) override;
+  StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) override;
 
-  StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request) override;
+  StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request) override;
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request) override;
+  Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request) override;
-
-  Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request) override;
-
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request) override;
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

@@ -26,106 +26,87 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-CloudBuildConnectionIdempotencyPolicy::
-    ~CloudBuildConnectionIdempotencyPolicy() = default;
+CloudBuildConnectionIdempotencyPolicy::~CloudBuildConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<CloudBuildConnectionIdempotencyPolicy>
 CloudBuildConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<CloudBuildConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency CloudBuildConnectionIdempotencyPolicy::CreateBuild(
-    google::devtools::cloudbuild::v1::CreateBuildRequest const&) {
+Idempotency CloudBuildConnectionIdempotencyPolicy::CreateBuild(google::devtools::cloudbuild::v1::CreateBuildRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CloudBuildConnectionIdempotencyPolicy::GetBuild(
-    google::devtools::cloudbuild::v1::GetBuildRequest const&) {
+Idempotency CloudBuildConnectionIdempotencyPolicy::GetBuild(google::devtools::cloudbuild::v1::GetBuildRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency CloudBuildConnectionIdempotencyPolicy::ListBuilds(
-    google::devtools::cloudbuild::v1::ListBuildsRequest) {  // NOLINT
+Idempotency CloudBuildConnectionIdempotencyPolicy::ListBuilds(google::devtools::cloudbuild::v1::ListBuildsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency CloudBuildConnectionIdempotencyPolicy::CancelBuild(
-    google::devtools::cloudbuild::v1::CancelBuildRequest const&) {
+Idempotency CloudBuildConnectionIdempotencyPolicy::CancelBuild(google::devtools::cloudbuild::v1::CancelBuildRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CloudBuildConnectionIdempotencyPolicy::RetryBuild(
-    google::devtools::cloudbuild::v1::RetryBuildRequest const&) {
+Idempotency CloudBuildConnectionIdempotencyPolicy::RetryBuild(google::devtools::cloudbuild::v1::RetryBuildRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CloudBuildConnectionIdempotencyPolicy::ApproveBuild(
-    google::devtools::cloudbuild::v1::ApproveBuildRequest const&) {
+Idempotency CloudBuildConnectionIdempotencyPolicy::ApproveBuild(google::devtools::cloudbuild::v1::ApproveBuildRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CloudBuildConnectionIdempotencyPolicy::CreateBuildTrigger(
-    google::devtools::cloudbuild::v1::CreateBuildTriggerRequest const&) {
+Idempotency CloudBuildConnectionIdempotencyPolicy::CreateBuildTrigger(google::devtools::cloudbuild::v1::CreateBuildTriggerRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CloudBuildConnectionIdempotencyPolicy::GetBuildTrigger(
-    google::devtools::cloudbuild::v1::GetBuildTriggerRequest const&) {
+Idempotency CloudBuildConnectionIdempotencyPolicy::GetBuildTrigger(google::devtools::cloudbuild::v1::GetBuildTriggerRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency CloudBuildConnectionIdempotencyPolicy::ListBuildTriggers(
-    google::devtools::cloudbuild::v1::ListBuildTriggersRequest) {  // NOLINT
+Idempotency CloudBuildConnectionIdempotencyPolicy::ListBuildTriggers(google::devtools::cloudbuild::v1::ListBuildTriggersRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency CloudBuildConnectionIdempotencyPolicy::DeleteBuildTrigger(
-    google::devtools::cloudbuild::v1::DeleteBuildTriggerRequest const&) {
+Idempotency CloudBuildConnectionIdempotencyPolicy::DeleteBuildTrigger(google::devtools::cloudbuild::v1::DeleteBuildTriggerRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CloudBuildConnectionIdempotencyPolicy::UpdateBuildTrigger(
-    google::devtools::cloudbuild::v1::UpdateBuildTriggerRequest const&) {
+Idempotency CloudBuildConnectionIdempotencyPolicy::UpdateBuildTrigger(google::devtools::cloudbuild::v1::UpdateBuildTriggerRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CloudBuildConnectionIdempotencyPolicy::RunBuildTrigger(
-    google::devtools::cloudbuild::v1::RunBuildTriggerRequest const&) {
+Idempotency CloudBuildConnectionIdempotencyPolicy::RunBuildTrigger(google::devtools::cloudbuild::v1::RunBuildTriggerRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CloudBuildConnectionIdempotencyPolicy::ReceiveTriggerWebhook(
-    google::devtools::cloudbuild::v1::ReceiveTriggerWebhookRequest const&) {
+Idempotency CloudBuildConnectionIdempotencyPolicy::ReceiveTriggerWebhook(google::devtools::cloudbuild::v1::ReceiveTriggerWebhookRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CloudBuildConnectionIdempotencyPolicy::CreateWorkerPool(
-    google::devtools::cloudbuild::v1::CreateWorkerPoolRequest const&) {
+Idempotency CloudBuildConnectionIdempotencyPolicy::CreateWorkerPool(google::devtools::cloudbuild::v1::CreateWorkerPoolRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CloudBuildConnectionIdempotencyPolicy::GetWorkerPool(
-    google::devtools::cloudbuild::v1::GetWorkerPoolRequest const&) {
+Idempotency CloudBuildConnectionIdempotencyPolicy::GetWorkerPool(google::devtools::cloudbuild::v1::GetWorkerPoolRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency CloudBuildConnectionIdempotencyPolicy::DeleteWorkerPool(
-    google::devtools::cloudbuild::v1::DeleteWorkerPoolRequest const&) {
+Idempotency CloudBuildConnectionIdempotencyPolicy::DeleteWorkerPool(google::devtools::cloudbuild::v1::DeleteWorkerPoolRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CloudBuildConnectionIdempotencyPolicy::UpdateWorkerPool(
-    google::devtools::cloudbuild::v1::UpdateWorkerPoolRequest const&) {
+Idempotency CloudBuildConnectionIdempotencyPolicy::UpdateWorkerPool(google::devtools::cloudbuild::v1::UpdateWorkerPoolRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CloudBuildConnectionIdempotencyPolicy::ListWorkerPools(
-    google::devtools::cloudbuild::v1::ListWorkerPoolsRequest) {  // NOLINT
+Idempotency CloudBuildConnectionIdempotencyPolicy::ListWorkerPools(google::devtools::cloudbuild::v1::ListWorkerPoolsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<CloudBuildConnectionIdempotencyPolicy>
-MakeDefaultCloudBuildConnectionIdempotencyPolicy() {
+    MakeDefaultCloudBuildConnectionIdempotencyPolicy() {
   return std::make_unique<CloudBuildConnectionIdempotencyPolicy>();
 }
 

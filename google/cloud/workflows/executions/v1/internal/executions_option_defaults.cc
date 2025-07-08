@@ -17,10 +17,10 @@
 // source: google/cloud/workflows/executions/v1/executions.proto
 
 #include "google/cloud/workflows/executions/v1/internal/executions_option_defaults.h"
-#include "google/cloud/workflows/executions/v1/executions_connection.h"
-#include "google/cloud/workflows/executions/v1/executions_options.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
+#include "google/cloud/workflows/executions/v1/executions_connection.h"
+#include "google/cloud/workflows/executions/v1/executions_options.h"
 #include <memory>
 #include <utility>
 
@@ -35,29 +35,23 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options ExecutionsDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_EXECUTIONS_ENDPOINT", "",
-      "GOOGLE_CLOUD_CPP_EXECUTIONS_AUTHORITY",
+      std::move(options), "GOOGLE_CLOUD_CPP_EXECUTIONS_ENDPOINT",
+      "", "GOOGLE_CLOUD_CPP_EXECUTIONS_AUTHORITY",
       "workflowexecutions.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<workflows_executions_v1::ExecutionsRetryPolicyOption>()) {
     options.set<workflows_executions_v1::ExecutionsRetryPolicyOption>(
         workflows_executions_v1::ExecutionsLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
-            .clone());
+            std::chrono::minutes(30)).clone());
   }
   if (!options.has<workflows_executions_v1::ExecutionsBackoffPolicyOption>()) {
     options.set<workflows_executions_v1::ExecutionsBackoffPolicyOption>(
-        ExponentialBackoffPolicy(
-            std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
-            .clone());
+        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
   }
-  if (!options.has<workflows_executions_v1::
-                       ExecutionsConnectionIdempotencyPolicyOption>()) {
-    options.set<
-        workflows_executions_v1::ExecutionsConnectionIdempotencyPolicyOption>(
-        workflows_executions_v1::
-            MakeDefaultExecutionsConnectionIdempotencyPolicy());
+  if (!options.has<workflows_executions_v1::ExecutionsConnectionIdempotencyPolicyOption>()) {
+    options.set<workflows_executions_v1::ExecutionsConnectionIdempotencyPolicyOption>(
+        workflows_executions_v1::MakeDefaultExecutionsConnectionIdempotencyPolicy());
   }
 
   return options;

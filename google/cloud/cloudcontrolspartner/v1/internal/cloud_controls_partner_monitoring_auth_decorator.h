@@ -31,24 +31,22 @@ namespace cloud {
 namespace cloudcontrolspartner_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class CloudControlsPartnerMonitoringAuth
-    : public CloudControlsPartnerMonitoringStub {
+class CloudControlsPartnerMonitoringAuth : public CloudControlsPartnerMonitoringStub {
  public:
   ~CloudControlsPartnerMonitoringAuth() override = default;
   CloudControlsPartnerMonitoringAuth(
       std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth,
       std::shared_ptr<CloudControlsPartnerMonitoringStub> child);
 
-  StatusOr<google::cloud::cloudcontrolspartner::v1::ListViolationsResponse>
-  ListViolations(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::cloudcontrolspartner::v1::ListViolationsRequest const&
-          request) override;
+  StatusOr<google::cloud::cloudcontrolspartner::v1::ListViolationsResponse> ListViolations(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::cloudcontrolspartner::v1::ListViolationsRequest const& request) override;
 
   StatusOr<google::cloud::cloudcontrolspartner::v1::Violation> GetViolation(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::cloudcontrolspartner::v1::GetViolationRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::cloudcontrolspartner::v1::GetViolationRequest const& request) override;
 
  private:
   std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth_;

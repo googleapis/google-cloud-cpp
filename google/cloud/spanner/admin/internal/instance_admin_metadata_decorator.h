@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_ADMIN_INTERNAL_INSTANCE_ADMIN_METADATA_DECORATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_ADMIN_INTERNAL_INSTANCE_ADMIN_METADATA_DECORATOR_H
 
-#include "google/cloud/spanner/admin/internal/instance_admin_stub.h"
 #include "google/cloud/options.h"
+#include "google/cloud/spanner/admin/internal/instance_admin_stub.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
 #include <map>
@@ -35,184 +35,176 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class InstanceAdminMetadata : public InstanceAdminStub {
  public:
   ~InstanceAdminMetadata() override = default;
-  InstanceAdminMetadata(std::shared_ptr<InstanceAdminStub> child,
-                        std::multimap<std::string, std::string> fixed_metadata,
-                        std::string api_client_header = "");
+  InstanceAdminMetadata(
+      std::shared_ptr<InstanceAdminStub> child,
+      std::multimap<std::string, std::string> fixed_metadata,
+      std::string api_client_header = "");
 
-  StatusOr<google::spanner::admin::instance::v1::ListInstanceConfigsResponse>
-  ListInstanceConfigs(
-      grpc::ClientContext& context, Options const& options,
-      google::spanner::admin::instance::v1::ListInstanceConfigsRequest const&
-          request) override;
+  StatusOr<google::spanner::admin::instance::v1::ListInstanceConfigsResponse> ListInstanceConfigs(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::spanner::admin::instance::v1::ListInstanceConfigsRequest const& request) override;
 
-  StatusOr<google::spanner::admin::instance::v1::InstanceConfig>
-  GetInstanceConfig(
-      grpc::ClientContext& context, Options const& options,
-      google::spanner::admin::instance::v1::GetInstanceConfigRequest const&
-          request) override;
+  StatusOr<google::spanner::admin::instance::v1::InstanceConfig> GetInstanceConfig(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::spanner::admin::instance::v1::GetInstanceConfigRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateInstanceConfig(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::spanner::admin::instance::v1::CreateInstanceConfigRequest const&
-          request) override;
+      google::spanner::admin::instance::v1::CreateInstanceConfigRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateInstanceConfig(
-      grpc::ClientContext& context, Options options,
-      google::spanner::admin::instance::v1::CreateInstanceConfigRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::spanner::admin::instance::v1::CreateInstanceConfigRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateInstanceConfig(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::spanner::admin::instance::v1::UpdateInstanceConfigRequest const&
-          request) override;
+      google::spanner::admin::instance::v1::UpdateInstanceConfigRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateInstanceConfig(
-      grpc::ClientContext& context, Options options,
-      google::spanner::admin::instance::v1::UpdateInstanceConfigRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::spanner::admin::instance::v1::UpdateInstanceConfigRequest const& request) override;
 
   Status DeleteInstanceConfig(
-      grpc::ClientContext& context, Options const& options,
-      google::spanner::admin::instance::v1::DeleteInstanceConfigRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::spanner::admin::instance::v1::DeleteInstanceConfigRequest const& request) override;
 
-  StatusOr<google::spanner::admin::instance::v1::
-               ListInstanceConfigOperationsResponse>
-  ListInstanceConfigOperations(
-      grpc::ClientContext& context, Options const& options,
-      google::spanner::admin::instance::v1::
-          ListInstanceConfigOperationsRequest const& request) override;
+  StatusOr<google::spanner::admin::instance::v1::ListInstanceConfigOperationsResponse> ListInstanceConfigOperations(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::spanner::admin::instance::v1::ListInstanceConfigOperationsRequest const& request) override;
 
-  StatusOr<google::spanner::admin::instance::v1::ListInstancesResponse>
-  ListInstances(
-      grpc::ClientContext& context, Options const& options,
-      google::spanner::admin::instance::v1::ListInstancesRequest const& request)
-      override;
+  StatusOr<google::spanner::admin::instance::v1::ListInstancesResponse> ListInstances(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::spanner::admin::instance::v1::ListInstancesRequest const& request) override;
 
-  StatusOr<google::spanner::admin::instance::v1::ListInstancePartitionsResponse>
-  ListInstancePartitions(
-      grpc::ClientContext& context, Options const& options,
-      google::spanner::admin::instance::v1::ListInstancePartitionsRequest const&
-          request) override;
+  StatusOr<google::spanner::admin::instance::v1::ListInstancePartitionsResponse> ListInstancePartitions(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::spanner::admin::instance::v1::ListInstancePartitionsRequest const& request) override;
 
   StatusOr<google::spanner::admin::instance::v1::Instance> GetInstance(
-      grpc::ClientContext& context, Options const& options,
-      google::spanner::admin::instance::v1::GetInstanceRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::spanner::admin::instance::v1::GetInstanceRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateInstance(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::spanner::admin::instance::v1::CreateInstanceRequest const&
-          request) override;
+      google::spanner::admin::instance::v1::CreateInstanceRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateInstance(
-      grpc::ClientContext& context, Options options,
-      google::spanner::admin::instance::v1::CreateInstanceRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::spanner::admin::instance::v1::CreateInstanceRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateInstance(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::spanner::admin::instance::v1::UpdateInstanceRequest const&
-          request) override;
+      google::spanner::admin::instance::v1::UpdateInstanceRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateInstance(
-      grpc::ClientContext& context, Options options,
-      google::spanner::admin::instance::v1::UpdateInstanceRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::spanner::admin::instance::v1::UpdateInstanceRequest const& request) override;
 
   Status DeleteInstance(
-      grpc::ClientContext& context, Options const& options,
-      google::spanner::admin::instance::v1::DeleteInstanceRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::spanner::admin::instance::v1::DeleteInstanceRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
-  StatusOr<google::spanner::admin::instance::v1::InstancePartition>
-  GetInstancePartition(
-      grpc::ClientContext& context, Options const& options,
-      google::spanner::admin::instance::v1::GetInstancePartitionRequest const&
-          request) override;
+  StatusOr<google::spanner::admin::instance::v1::InstancePartition> GetInstancePartition(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::spanner::admin::instance::v1::GetInstancePartitionRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateInstancePartition(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::spanner::admin::instance::v1::
-          CreateInstancePartitionRequest const& request) override;
+      google::spanner::admin::instance::v1::CreateInstancePartitionRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateInstancePartition(
-      grpc::ClientContext& context, Options options,
-      google::spanner::admin::instance::v1::
-          CreateInstancePartitionRequest const& request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::spanner::admin::instance::v1::CreateInstancePartitionRequest const& request) override;
 
   Status DeleteInstancePartition(
-      grpc::ClientContext& context, Options const& options,
-      google::spanner::admin::instance::v1::
-          DeleteInstancePartitionRequest const& request) override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::spanner::admin::instance::v1::DeleteInstancePartitionRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateInstancePartition(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::spanner::admin::instance::v1::
-          UpdateInstancePartitionRequest const& request) override;
+      google::spanner::admin::instance::v1::UpdateInstancePartitionRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateInstancePartition(
-      grpc::ClientContext& context, Options options,
-      google::spanner::admin::instance::v1::
-          UpdateInstancePartitionRequest const& request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::spanner::admin::instance::v1::UpdateInstancePartitionRequest const& request) override;
 
-  StatusOr<google::spanner::admin::instance::v1::
-               ListInstancePartitionOperationsResponse>
-  ListInstancePartitionOperations(
-      grpc::ClientContext& context, Options const& options,
-      google::spanner::admin::instance::v1::
-          ListInstancePartitionOperationsRequest const& request) override;
+  StatusOr<google::spanner::admin::instance::v1::ListInstancePartitionOperationsResponse> ListInstancePartitionOperations(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::spanner::admin::instance::v1::ListInstancePartitionOperationsRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncMoveInstance(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::spanner::admin::instance::v1::MoveInstanceRequest const& request)
-      override;
+      google::spanner::admin::instance::v1::MoveInstanceRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> MoveInstance(
-      grpc::ClientContext& context, Options options,
-      google::spanner::admin::instance::v1::MoveInstanceRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::spanner::admin::instance::v1::MoveInstanceRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status DeleteOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::DeleteOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -228,7 +220,8 @@ class InstanceAdminMetadata : public InstanceAdminStub {
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context, Options const& options,
+  void SetMetadata(grpc::ClientContext& context,
+                   Options const& options,
                    std::string const& request_params);
   void SetMetadata(grpc::ClientContext& context, Options const& options);
 
@@ -238,7 +231,7 @@ class InstanceAdminMetadata : public InstanceAdminStub {
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS;  // NOLINT(misc-unused-alias-decls)
+namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS; // NOLINT(misc-unused-alias-decls)
 }  // namespace spanner_admin_internal
 }  // namespace cloud
 }  // namespace google

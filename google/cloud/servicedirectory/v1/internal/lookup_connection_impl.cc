@@ -17,12 +17,12 @@
 // source: google/cloud/servicedirectory/v1/lookup_service.proto
 
 #include "google/cloud/servicedirectory/v1/internal/lookup_connection_impl.h"
-#include "google/cloud/servicedirectory/v1/internal/lookup_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
+#include "google/cloud/servicedirectory/v1/internal/lookup_option_defaults.h"
 #include <memory>
 #include <utility>
 
@@ -32,79 +32,67 @@ namespace servicedirectory_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<servicedirectory_v1::LookupServiceRetryPolicy> retry_policy(
-    Options const& options) {
-  return options.get<servicedirectory_v1::LookupServiceRetryPolicyOption>()
-      ->clone();
+std::unique_ptr<servicedirectory_v1::LookupServiceRetryPolicy>
+retry_policy(Options const& options) {
+  return options.get<servicedirectory_v1::LookupServiceRetryPolicyOption>()->clone();
 }
 
-std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-  return options.get<servicedirectory_v1::LookupServiceBackoffPolicyOption>()
-      ->clone();
+std::unique_ptr<BackoffPolicy>
+backoff_policy(Options const& options) {
+  return options.get<servicedirectory_v1::LookupServiceBackoffPolicyOption>()->clone();
 }
 
 std::unique_ptr<servicedirectory_v1::LookupServiceConnectionIdempotencyPolicy>
 idempotency_policy(Options const& options) {
-  return options
-      .get<
-          servicedirectory_v1::LookupServiceConnectionIdempotencyPolicyOption>()
-      ->clone();
+  return options.get<servicedirectory_v1::LookupServiceConnectionIdempotencyPolicyOption>()->clone();
 }
 
-}  // namespace
+} // namespace
 
 LookupServiceConnectionImpl::LookupServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<servicedirectory_v1_internal::LookupServiceStub> stub,
     Options options)
-    : background_(std::move(background)),
-      stub_(std::move(stub)),
-      options_(internal::MergeOptions(std::move(options),
-                                      LookupServiceConnection::options())) {}
+  : background_(std::move(background)), stub_(std::move(stub)),
+    options_(internal::MergeOptions(
+        std::move(options),
+        LookupServiceConnection::options())) {}
 
 StatusOr<google::cloud::servicedirectory::v1::ResolveServiceResponse>
-LookupServiceConnectionImpl::ResolveService(
-    google::cloud::servicedirectory::v1::ResolveServiceRequest const& request) {
+LookupServiceConnectionImpl::ResolveService(google::cloud::servicedirectory::v1::ResolveServiceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->ResolveService(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::servicedirectory::v1::ResolveServiceRequest const&
-                 request) {
+             google::cloud::servicedirectory::v1::ResolveServiceRequest const& request) {
         return stub_->ResolveService(context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::cloud::location::Location>
-LookupServiceConnectionImpl::ListLocations(
-    google::cloud::location::ListLocationsRequest request) {
+LookupServiceConnectionImpl::ListLocations(google::cloud::location::ListLocationsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListLocations(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::location::Location>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::location::Location>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<servicedirectory_v1::LookupServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<servicedirectory_v1::LookupServiceRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::location::ListLocationsRequest const& r) {
+          Options const& options, google::cloud::location::ListLocationsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](
-                grpc::ClientContext& context, Options const& options,
-                google::cloud::location::ListLocationsRequest const& request) {
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::cloud::location::ListLocationsRequest const& request) {
               return stub->ListLocations(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::location::ListLocationsResponse r) {
-        std::vector<google::cloud::location::Location> result(
-            r.locations().size());
+        std::vector<google::cloud::location::Location> result(r.locations().size());
         auto& messages = *r.mutable_locations();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -112,8 +100,7 @@ LookupServiceConnectionImpl::ListLocations(
 }
 
 StatusOr<google::cloud::location::Location>
-LookupServiceConnectionImpl::GetLocation(
-    google::cloud::location::GetLocationRequest const& request) {
+LookupServiceConnectionImpl::GetLocation(google::cloud::location::GetLocationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),

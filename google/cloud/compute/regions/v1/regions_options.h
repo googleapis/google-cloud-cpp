@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGIONS_V1_REGIONS_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGIONS_V1_REGIONS_OPTIONS_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/regions/v1/regions_connection.h"
 #include "google/cloud/compute/regions/v1/regions_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -64,7 +64,8 @@ struct RegionsConnectionIdempotencyPolicyOption {
  * @ingroup google-cloud-compute-options
  */
 using RegionsPolicyOptionList =
-    OptionList<RegionsRetryPolicyOption, RegionsBackoffPolicyOption,
+    OptionList<RegionsRetryPolicyOption,
+               RegionsBackoffPolicyOption,
                RegionsConnectionIdempotencyPolicyOption>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

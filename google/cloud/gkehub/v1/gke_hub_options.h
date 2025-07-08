@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GKEHUB_V1_GKE_HUB_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GKEHUB_V1_GKE_HUB_OPTIONS_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/gkehub/v1/gke_hub_connection.h"
 #include "google/cloud/gkehub/v1/gke_hub_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -74,7 +74,8 @@ struct GkeHubPollingPolicyOption {
  * @ingroup google-cloud-gkehub-options
  */
 using GkeHubPolicyOptionList =
-    OptionList<GkeHubRetryPolicyOption, GkeHubBackoffPolicyOption,
+    OptionList<GkeHubRetryPolicyOption,
+               GkeHubBackoffPolicyOption,
                GkeHubPollingPolicyOption,
                GkeHubConnectionIdempotencyPolicyOption>;
 

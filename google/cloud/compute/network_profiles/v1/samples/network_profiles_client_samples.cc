@@ -16,10 +16,10 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/compute/network_profiles/v1/network_profiles.proto
 
+#include "google/cloud/common_options.h"
 #include "google/cloud/compute/network_profiles/v1/network_profiles_client.h"
 #include "google/cloud/compute/network_profiles/v1/network_profiles_connection_idempotency_policy.h"
 #include "google/cloud/compute/network_profiles/v1/network_profiles_options.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/testing_util/example_driver.h"
@@ -42,22 +42,17 @@ void SetClientEndpoint(std::vector<std::string> const& argv) {
   //     https://cloud.google.com/vpc/docs/private-google-access
   auto options = google::cloud::Options{}.set<google::cloud::EndpointOption>(
       "private.googleapis.com");
-  auto vpc_client =
-      google::cloud::compute_network_profiles_v1::NetworkProfilesClient(
-          google::cloud::compute_network_profiles_v1::
-              MakeNetworkProfilesConnectionRest(options));
+  auto vpc_client = google::cloud::compute_network_profiles_v1::NetworkProfilesClient(
+      google::cloud::compute_network_profiles_v1::MakeNetworkProfilesConnectionRest(options));
   //! [set-client-endpoint]
 }
 
 //! [custom-idempotency-policy]
 class CustomIdempotencyPolicy
-    : public google::cloud::compute_network_profiles_v1::
-          NetworkProfilesConnectionIdempotencyPolicy {
+   : public google::cloud::compute_network_profiles_v1::NetworkProfilesConnectionIdempotencyPolicy {
  public:
   ~CustomIdempotencyPolicy() override = default;
-  std::unique_ptr<google::cloud::compute_network_profiles_v1::
-                      NetworkProfilesConnectionIdempotencyPolicy>
-  clone() const override {
+  std::unique_ptr<google::cloud::compute_network_profiles_v1::NetworkProfilesConnectionIdempotencyPolicy> clone() const override {
     return std::make_unique<CustomIdempotencyPolicy>(*this);
   }
   // Override inherited functions to define as needed.
@@ -70,40 +65,26 @@ void SetRetryPolicy(std::vector<std::string> const& argv) {
   }
   //! [set-retry-policy]
   auto options = google::cloud::Options{}
-                     .set<google::cloud::compute_network_profiles_v1::
-                              NetworkProfilesConnectionIdempotencyPolicyOption>(
-                         CustomIdempotencyPolicy().clone())
-                     .set<google::cloud::compute_network_profiles_v1::
-                              NetworkProfilesRetryPolicyOption>(
-                         google::cloud::compute_network_profiles_v1::
-                             NetworkProfilesLimitedErrorCountRetryPolicy(3)
-                                 .clone())
-                     .set<google::cloud::compute_network_profiles_v1::
-                              NetworkProfilesBackoffPolicyOption>(
-                         google::cloud::ExponentialBackoffPolicy(
-                             /*initial_delay=*/std::chrono::milliseconds(200),
-                             /*maximum_delay=*/std::chrono::seconds(45),
-                             /*scaling=*/2.0)
-                             .clone());
-  auto connection = google::cloud::compute_network_profiles_v1::
-      MakeNetworkProfilesConnectionRest(options);
+    .set<google::cloud::compute_network_profiles_v1::NetworkProfilesConnectionIdempotencyPolicyOption>(
+      CustomIdempotencyPolicy().clone())
+    .set<google::cloud::compute_network_profiles_v1::NetworkProfilesRetryPolicyOption>(
+      google::cloud::compute_network_profiles_v1::NetworkProfilesLimitedErrorCountRetryPolicy(3).clone())
+    .set<google::cloud::compute_network_profiles_v1::NetworkProfilesBackoffPolicyOption>(
+      google::cloud::ExponentialBackoffPolicy(
+          /*initial_delay=*/std::chrono::milliseconds(200),
+          /*maximum_delay=*/std::chrono::seconds(45),
+          /*scaling=*/2.0).clone());
+  auto connection = google::cloud::compute_network_profiles_v1::MakeNetworkProfilesConnectionRest(options);
 
   // c1 and c2 share the same retry policies
-  auto c1 = google::cloud::compute_network_profiles_v1::NetworkProfilesClient(
-      connection);
-  auto c2 = google::cloud::compute_network_profiles_v1::NetworkProfilesClient(
-      connection);
+  auto c1 = google::cloud::compute_network_profiles_v1::NetworkProfilesClient(connection);
+  auto c2 = google::cloud::compute_network_profiles_v1::NetworkProfilesClient(connection);
 
   // You can override any of the policies in a new client. This new client
   // will share the policies from c1 (or c2) *except* for the retry policy.
   auto c3 = google::cloud::compute_network_profiles_v1::NetworkProfilesClient(
-      connection,
-      google::cloud::Options{}
-          .set<google::cloud::compute_network_profiles_v1::
-                   NetworkProfilesRetryPolicyOption>(
-              google::cloud::compute_network_profiles_v1::
-                  NetworkProfilesLimitedTimeRetryPolicy(std::chrono::minutes(5))
-                      .clone()));
+    connection, google::cloud::Options{}.set<google::cloud::compute_network_profiles_v1::NetworkProfilesRetryPolicyOption>(
+      google::cloud::compute_network_profiles_v1::NetworkProfilesLimitedTimeRetryPolicy(std::chrono::minutes(5)).clone()));
 
   // You can also override the policies in a single call:
   // c3.SomeRpc(..., google::cloud::Options{}
@@ -125,8 +106,7 @@ void WithServiceAccount(std::vector<std::string> const& argv) {
         google::cloud::Options{}.set<google::cloud::UnifiedCredentialsOption>(
             google::cloud::MakeServiceAccountCredentials(contents));
     return google::cloud::compute_network_profiles_v1::NetworkProfilesClient(
-        google::cloud::compute_network_profiles_v1::
-            MakeNetworkProfilesConnectionRest(options));
+      google::cloud::compute_network_profiles_v1::MakeNetworkProfilesConnectionRest(options));
   }
   //! [with-service-account]
   (argv.at(0));
@@ -136,8 +116,9 @@ void AutoRun(std::vector<std::string> const& argv) {
   namespace examples = ::google::cloud::testing_util;
   using ::google::cloud::internal::GetEnv;
   if (!argv.empty()) throw examples::Usage{"auto"};
-  examples::CheckEnvironmentVariablesAreSet(
-      {"GOOGLE_CLOUD_CPP_TEST_SERVICE_ACCOUNT_KEYFILE"});
+  examples::CheckEnvironmentVariablesAreSet({
+    "GOOGLE_CLOUD_CPP_TEST_SERVICE_ACCOUNT_KEYFILE"
+  });
   auto const keyfile =
       GetEnv("GOOGLE_CLOUD_CPP_TEST_SERVICE_ACCOUNT_KEYFILE").value();
 

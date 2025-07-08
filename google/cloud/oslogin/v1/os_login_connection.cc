@@ -17,16 +17,16 @@
 // source: google/cloud/oslogin/v1/oslogin.proto
 
 #include "google/cloud/oslogin/v1/os_login_connection.h"
-#include "google/cloud/oslogin/v1/internal/os_login_connection_impl.h"
-#include "google/cloud/oslogin/v1/internal/os_login_option_defaults.h"
-#include "google/cloud/oslogin/v1/internal/os_login_stub_factory.h"
-#include "google/cloud/oslogin/v1/internal/os_login_tracing_connection.h"
-#include "google/cloud/oslogin/v1/os_login_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/oslogin/v1/internal/os_login_connection_impl.h"
+#include "google/cloud/oslogin/v1/internal/os_login_option_defaults.h"
+#include "google/cloud/oslogin/v1/internal/os_login_stub_factory.h"
+#include "google/cloud/oslogin/v1/internal/os_login_tracing_connection.h"
+#include "google/cloud/oslogin/v1/os_login_options.h"
 #include <memory>
 #include <utility>
 
@@ -43,12 +43,14 @@ OsLoginServiceConnection::CreateSshPublicKey(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status OsLoginServiceConnection::DeletePosixAccount(
+Status
+OsLoginServiceConnection::DeletePosixAccount(
     google::cloud::oslogin::v1::DeletePosixAccountRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status OsLoginServiceConnection::DeleteSshPublicKey(
+Status
+OsLoginServiceConnection::DeleteSshPublicKey(
     google::cloud::oslogin::v1::DeleteSshPublicKeyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -80,18 +82,17 @@ OsLoginServiceConnection::UpdateSshPublicKey(
 std::shared_ptr<OsLoginServiceConnection> MakeOsLoginServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 OsLoginServicePolicyOptionList>(options,
-                                                                 __func__);
-  options =
-      oslogin_v1_internal::OsLoginServiceDefaultOptions(std::move(options));
+      UnifiedCredentialsOptionList,
+      OsLoginServicePolicyOptionList>(options, __func__);
+  options = oslogin_v1_internal::OsLoginServiceDefaultOptions(
+      std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = oslogin_v1_internal::CreateDefaultOsLoginServiceStub(
-      std::move(auth), options);
+    std::move(auth), options);
   return oslogin_v1_internal::MakeOsLoginServiceTracingConnection(
       std::make_shared<oslogin_v1_internal::OsLoginServiceConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options)));
+      std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

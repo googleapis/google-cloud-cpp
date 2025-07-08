@@ -30,22 +30,21 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-class ZonesTracingConnection : public compute_zones_v1::ZonesConnection {
+class ZonesTracingConnection
+    : public compute_zones_v1::ZonesConnection {
  public:
   ~ZonesTracingConnection() override = default;
 
   explicit ZonesTracingConnection(
-      std::shared_ptr<compute_zones_v1::ZonesConnection> child);
+    std::shared_ptr<compute_zones_v1::ZonesConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::cpp::compute::v1::Zone> GetZone(
-      google::cloud::cpp::compute::zones::v1::GetZoneRequest const& request)
-      override;
+  StatusOr<google::cloud::cpp::compute::v1::Zone>
+  GetZone(google::cloud::cpp::compute::zones::v1::GetZoneRequest const& request) override;
 
-  StreamRange<google::cloud::cpp::compute::v1::Zone> ListZones(
-      google::cloud::cpp::compute::zones::v1::ListZonesRequest request)
-      override;
+  StreamRange<google::cloud::cpp::compute::v1::Zone>
+  ListZones(google::cloud::cpp::compute::zones::v1::ListZonesRequest request) override;
 
  private:
   std::shared_ptr<compute_zones_v1::ZonesConnection> child_;
@@ -59,7 +58,8 @@ class ZonesTracingConnection : public compute_zones_v1::ZonesConnection {
  * The connection is only decorated if tracing is enabled (as determined by the
  * connection's options).
  */
-std::shared_ptr<compute_zones_v1::ZonesConnection> MakeZonesTracingConnection(
+std::shared_ptr<compute_zones_v1::ZonesConnection>
+MakeZonesTracingConnection(
     std::shared_ptr<compute_zones_v1::ZonesConnection> conn);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

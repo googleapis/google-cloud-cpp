@@ -35,24 +35,23 @@ class RecommendationServiceConnectionIdempotencyPolicy {
   virtual ~RecommendationServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<RecommendationServiceConnectionIdempotencyPolicy>
-  clone() const;
+  virtual std::unique_ptr<RecommendationServiceConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency Recommend(
-      google::cloud::discoveryengine::v1::RecommendRequest const& request);
+  virtual google::cloud::Idempotency
+  Recommend(google::cloud::discoveryengine::v1::RecommendRequest const& request);
 
-  virtual google::cloud::Idempotency ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual google::cloud::Idempotency
+  ListOperations(google::longrunning::ListOperationsRequest request);
 
-  virtual google::cloud::Idempotency GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 
-  virtual google::cloud::Idempotency CancelOperation(
-      google::longrunning::CancelOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  CancelOperation(google::longrunning::CancelOperationRequest const& request);
 };
 
 std::unique_ptr<RecommendationServiceConnectionIdempotencyPolicy>
-MakeDefaultRecommendationServiceConnectionIdempotencyPolicy();
+    MakeDefaultRecommendationServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace discoveryengine_v1

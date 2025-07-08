@@ -39,48 +39,43 @@ std::unique_ptr<AsyncStreamingReadWriteRpc<
 CursorServiceTracingStub::AsyncStreamingCommitCursor(
     CompletionQueue const& cq, std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options) {
-  auto span = internal::MakeSpanGrpc("google.cloud.pubsublite.v1.CursorService",
-                                     "StreamingCommitCursor");
+  auto span = internal::MakeSpanGrpc("google.cloud.pubsublite.v1.CursorService", "StreamingCommitCursor");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto stream =
-      child_->AsyncStreamingCommitCursor(cq, context, std::move(options));
+  auto stream = child_->AsyncStreamingCommitCursor(cq, context, std::move(options));
   return std::make_unique<internal::AsyncStreamingReadWriteRpcTracing<
       google::cloud::pubsublite::v1::StreamingCommitCursorRequest,
       google::cloud::pubsublite::v1::StreamingCommitCursorResponse>>(
       std::move(context), std::move(stream), std::move(span));
 }
 
-StatusOr<google::cloud::pubsublite::v1::CommitCursorResponse>
-CursorServiceTracingStub::CommitCursor(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::pubsublite::v1::CommitCursorResponse> CursorServiceTracingStub::CommitCursor(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::pubsublite::v1::CommitCursorRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.pubsublite.v1.CursorService",
-                                     "CommitCursor");
+  auto span = internal::MakeSpanGrpc("google.cloud.pubsublite.v1.CursorService", "CommitCursor");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CommitCursor(context, options, request));
 }
 
-StatusOr<google::cloud::pubsublite::v1::ListPartitionCursorsResponse>
-CursorServiceTracingStub::ListPartitionCursors(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::pubsublite::v1::ListPartitionCursorsResponse> CursorServiceTracingStub::ListPartitionCursors(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::pubsublite::v1::ListPartitionCursorsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.pubsublite.v1.CursorService",
-                                     "ListPartitionCursors");
+  auto span = internal::MakeSpanGrpc("google.cloud.pubsublite.v1.CursorService", "ListPartitionCursors");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->ListPartitionCursors(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->ListPartitionCursors(context, options, request));
 }
 
-StatusOr<google::longrunning::ListOperationsResponse>
-CursorServiceTracingStub::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse> CursorServiceTracingStub::ListOperations(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.pubsublite.v1.CursorService",
-                                     "ListOperations");
+  auto span = internal::MakeSpanGrpc("google.cloud.pubsublite.v1.CursorService", "ListOperations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -88,10 +83,10 @@ CursorServiceTracingStub::ListOperations(
 }
 
 StatusOr<google::longrunning::Operation> CursorServiceTracingStub::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.pubsublite.v1.CursorService",
-                                     "GetOperation");
+  auto span = internal::MakeSpanGrpc("google.cloud.pubsublite.v1.CursorService", "GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -99,10 +94,10 @@ StatusOr<google::longrunning::Operation> CursorServiceTracingStub::GetOperation(
 }
 
 Status CursorServiceTracingStub::DeleteOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.pubsublite.v1.CursorService",
-                                     "DeleteOperation");
+  auto span = internal::MakeSpanGrpc("google.cloud.pubsublite.v1.CursorService", "DeleteOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -110,10 +105,10 @@ Status CursorServiceTracingStub::DeleteOperation(
 }
 
 Status CursorServiceTracingStub::CancelOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.pubsublite.v1.CursorService",
-                                     "CancelOperation");
+  auto span = internal::MakeSpanGrpc("google.cloud.pubsublite.v1.CursorService", "CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,

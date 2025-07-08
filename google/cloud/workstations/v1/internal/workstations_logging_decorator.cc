@@ -31,20 +31,21 @@ namespace workstations_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 WorkstationsLogging::WorkstationsLogging(
-    std::shared_ptr<WorkstationsStub> child, TracingOptions tracing_options,
+    std::shared_ptr<WorkstationsStub> child,
+    TracingOptions tracing_options,
     std::set<std::string> const&)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::cloud::workstations::v1::WorkstationCluster>
 WorkstationsLogging::GetWorkstationCluster(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::workstations::v1::GetWorkstationClusterRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::workstations::v1::GetWorkstationClusterRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::workstations::v1::GetWorkstationClusterRequest const&
-              request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::workstations::v1::GetWorkstationClusterRequest const& request) {
         return child_->GetWorkstationCluster(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -52,14 +53,13 @@ WorkstationsLogging::GetWorkstationCluster(
 
 StatusOr<google::cloud::workstations::v1::ListWorkstationClustersResponse>
 WorkstationsLogging::ListWorkstationClusters(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::workstations::v1::ListWorkstationClustersRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::workstations::v1::ListWorkstationClustersRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::workstations::v1::ListWorkstationClustersRequest const&
-              request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::workstations::v1::ListWorkstationClustersRequest const& request) {
         return child_->ListWorkstationClusters(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -67,17 +67,15 @@ WorkstationsLogging::ListWorkstationClusters(
 
 future<StatusOr<google::longrunning::Operation>>
 WorkstationsLogging::AsyncCreateWorkstationCluster(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::workstations::v1::CreateWorkstationClusterRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::workstations::v1::CreateWorkstationClusterRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::workstations::v1::
-                 CreateWorkstationClusterRequest const& request) {
+             google::cloud::workstations::v1::CreateWorkstationClusterRequest const& request) {
         return child_->AsyncCreateWorkstationCluster(
             cq, std::move(context), std::move(options), request);
       },
@@ -87,13 +85,13 @@ WorkstationsLogging::AsyncCreateWorkstationCluster(
 
 StatusOr<google::longrunning::Operation>
 WorkstationsLogging::CreateWorkstationCluster(
-    grpc::ClientContext& context, Options options,
-    google::cloud::workstations::v1::CreateWorkstationClusterRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::workstations::v1::CreateWorkstationClusterRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::workstations::v1::
-                 CreateWorkstationClusterRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::workstations::v1::CreateWorkstationClusterRequest const& request) {
         return child_->CreateWorkstationCluster(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -101,17 +99,15 @@ WorkstationsLogging::CreateWorkstationCluster(
 
 future<StatusOr<google::longrunning::Operation>>
 WorkstationsLogging::AsyncUpdateWorkstationCluster(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::workstations::v1::UpdateWorkstationClusterRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::workstations::v1::UpdateWorkstationClusterRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::workstations::v1::
-                 UpdateWorkstationClusterRequest const& request) {
+             google::cloud::workstations::v1::UpdateWorkstationClusterRequest const& request) {
         return child_->AsyncUpdateWorkstationCluster(
             cq, std::move(context), std::move(options), request);
       },
@@ -121,13 +117,13 @@ WorkstationsLogging::AsyncUpdateWorkstationCluster(
 
 StatusOr<google::longrunning::Operation>
 WorkstationsLogging::UpdateWorkstationCluster(
-    grpc::ClientContext& context, Options options,
-    google::cloud::workstations::v1::UpdateWorkstationClusterRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::workstations::v1::UpdateWorkstationClusterRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::workstations::v1::
-                 UpdateWorkstationClusterRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::workstations::v1::UpdateWorkstationClusterRequest const& request) {
         return child_->UpdateWorkstationCluster(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -135,17 +131,15 @@ WorkstationsLogging::UpdateWorkstationCluster(
 
 future<StatusOr<google::longrunning::Operation>>
 WorkstationsLogging::AsyncDeleteWorkstationCluster(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::workstations::v1::DeleteWorkstationClusterRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::workstations::v1::DeleteWorkstationClusterRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::workstations::v1::
-                 DeleteWorkstationClusterRequest const& request) {
+             google::cloud::workstations::v1::DeleteWorkstationClusterRequest const& request) {
         return child_->AsyncDeleteWorkstationCluster(
             cq, std::move(context), std::move(options), request);
       },
@@ -155,13 +149,13 @@ WorkstationsLogging::AsyncDeleteWorkstationCluster(
 
 StatusOr<google::longrunning::Operation>
 WorkstationsLogging::DeleteWorkstationCluster(
-    grpc::ClientContext& context, Options options,
-    google::cloud::workstations::v1::DeleteWorkstationClusterRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::workstations::v1::DeleteWorkstationClusterRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::workstations::v1::
-                 DeleteWorkstationClusterRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::workstations::v1::DeleteWorkstationClusterRequest const& request) {
         return child_->DeleteWorkstationCluster(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -169,13 +163,13 @@ WorkstationsLogging::DeleteWorkstationCluster(
 
 StatusOr<google::cloud::workstations::v1::WorkstationConfig>
 WorkstationsLogging::GetWorkstationConfig(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::workstations::v1::GetWorkstationConfigRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::workstations::v1::GetWorkstationConfigRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::workstations::v1::GetWorkstationConfigRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::workstations::v1::GetWorkstationConfigRequest const& request) {
         return child_->GetWorkstationConfig(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -183,14 +177,13 @@ WorkstationsLogging::GetWorkstationConfig(
 
 StatusOr<google::cloud::workstations::v1::ListWorkstationConfigsResponse>
 WorkstationsLogging::ListWorkstationConfigs(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::workstations::v1::ListWorkstationConfigsRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::workstations::v1::ListWorkstationConfigsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::workstations::v1::ListWorkstationConfigsRequest const&
-              request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::workstations::v1::ListWorkstationConfigsRequest const& request) {
         return child_->ListWorkstationConfigs(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -198,13 +191,13 @@ WorkstationsLogging::ListWorkstationConfigs(
 
 StatusOr<google::cloud::workstations::v1::ListUsableWorkstationConfigsResponse>
 WorkstationsLogging::ListUsableWorkstationConfigs(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::workstations::v1::ListUsableWorkstationConfigsRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::workstations::v1::ListUsableWorkstationConfigsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::workstations::v1::
-                 ListUsableWorkstationConfigsRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::workstations::v1::ListUsableWorkstationConfigsRequest const& request) {
         return child_->ListUsableWorkstationConfigs(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -212,18 +205,15 @@ WorkstationsLogging::ListUsableWorkstationConfigs(
 
 future<StatusOr<google::longrunning::Operation>>
 WorkstationsLogging::AsyncCreateWorkstationConfig(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::workstations::v1::CreateWorkstationConfigRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::workstations::v1::CreateWorkstationConfigRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::workstations::v1::CreateWorkstationConfigRequest const&
-              request) {
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::workstations::v1::CreateWorkstationConfigRequest const& request) {
         return child_->AsyncCreateWorkstationConfig(
             cq, std::move(context), std::move(options), request);
       },
@@ -233,14 +223,13 @@ WorkstationsLogging::AsyncCreateWorkstationConfig(
 
 StatusOr<google::longrunning::Operation>
 WorkstationsLogging::CreateWorkstationConfig(
-    grpc::ClientContext& context, Options options,
-    google::cloud::workstations::v1::CreateWorkstationConfigRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::workstations::v1::CreateWorkstationConfigRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::workstations::v1::CreateWorkstationConfigRequest const&
-              request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::workstations::v1::CreateWorkstationConfigRequest const& request) {
         return child_->CreateWorkstationConfig(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -248,18 +237,15 @@ WorkstationsLogging::CreateWorkstationConfig(
 
 future<StatusOr<google::longrunning::Operation>>
 WorkstationsLogging::AsyncUpdateWorkstationConfig(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::workstations::v1::UpdateWorkstationConfigRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::workstations::v1::UpdateWorkstationConfigRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::workstations::v1::UpdateWorkstationConfigRequest const&
-              request) {
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::workstations::v1::UpdateWorkstationConfigRequest const& request) {
         return child_->AsyncUpdateWorkstationConfig(
             cq, std::move(context), std::move(options), request);
       },
@@ -269,14 +255,13 @@ WorkstationsLogging::AsyncUpdateWorkstationConfig(
 
 StatusOr<google::longrunning::Operation>
 WorkstationsLogging::UpdateWorkstationConfig(
-    grpc::ClientContext& context, Options options,
-    google::cloud::workstations::v1::UpdateWorkstationConfigRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::workstations::v1::UpdateWorkstationConfigRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::workstations::v1::UpdateWorkstationConfigRequest const&
-              request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::workstations::v1::UpdateWorkstationConfigRequest const& request) {
         return child_->UpdateWorkstationConfig(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -284,18 +269,15 @@ WorkstationsLogging::UpdateWorkstationConfig(
 
 future<StatusOr<google::longrunning::Operation>>
 WorkstationsLogging::AsyncDeleteWorkstationConfig(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::workstations::v1::DeleteWorkstationConfigRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::workstations::v1::DeleteWorkstationConfigRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::workstations::v1::DeleteWorkstationConfigRequest const&
-              request) {
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::workstations::v1::DeleteWorkstationConfigRequest const& request) {
         return child_->AsyncDeleteWorkstationConfig(
             cq, std::move(context), std::move(options), request);
       },
@@ -305,14 +287,13 @@ WorkstationsLogging::AsyncDeleteWorkstationConfig(
 
 StatusOr<google::longrunning::Operation>
 WorkstationsLogging::DeleteWorkstationConfig(
-    grpc::ClientContext& context, Options options,
-    google::cloud::workstations::v1::DeleteWorkstationConfigRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::workstations::v1::DeleteWorkstationConfigRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::workstations::v1::DeleteWorkstationConfigRequest const&
-              request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::workstations::v1::DeleteWorkstationConfigRequest const& request) {
         return child_->DeleteWorkstationConfig(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -320,12 +301,13 @@ WorkstationsLogging::DeleteWorkstationConfig(
 
 StatusOr<google::cloud::workstations::v1::Workstation>
 WorkstationsLogging::GetWorkstation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::workstations::v1::GetWorkstationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::workstations::v1::GetWorkstationRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::workstations::v1::GetWorkstationRequest const& request) {
         return child_->GetWorkstation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -333,12 +315,13 @@ WorkstationsLogging::GetWorkstation(
 
 StatusOr<google::cloud::workstations::v1::ListWorkstationsResponse>
 WorkstationsLogging::ListWorkstations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::workstations::v1::ListWorkstationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::workstations::v1::ListWorkstationsRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::workstations::v1::ListWorkstationsRequest const& request) {
         return child_->ListWorkstations(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -346,14 +329,13 @@ WorkstationsLogging::ListWorkstations(
 
 StatusOr<google::cloud::workstations::v1::ListUsableWorkstationsResponse>
 WorkstationsLogging::ListUsableWorkstations(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::workstations::v1::ListUsableWorkstationsRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::workstations::v1::ListUsableWorkstationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::workstations::v1::ListUsableWorkstationsRequest const&
-              request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::workstations::v1::ListUsableWorkstationsRequest const& request) {
         return child_->ListUsableWorkstations(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -361,30 +343,31 @@ WorkstationsLogging::ListUsableWorkstations(
 
 future<StatusOr<google::longrunning::Operation>>
 WorkstationsLogging::AsyncCreateWorkstation(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::workstations::v1::CreateWorkstationRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::workstations::v1::CreateWorkstationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::workstations::v1::CreateWorkstationRequest const&
-                 request) {
-        return child_->AsyncCreateWorkstation(cq, std::move(context),
-                                              std::move(options), request);
+             google::cloud::workstations::v1::CreateWorkstationRequest const& request) {
+        return child_->AsyncCreateWorkstation(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> WorkstationsLogging::CreateWorkstation(
-    grpc::ClientContext& context, Options options,
-    google::cloud::workstations::v1::CreateWorkstationRequest const& request) {
+StatusOr<google::longrunning::Operation>
+WorkstationsLogging::CreateWorkstation(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::workstations::v1::CreateWorkstationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::workstations::v1::CreateWorkstationRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::workstations::v1::CreateWorkstationRequest const& request) {
         return child_->CreateWorkstation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -392,30 +375,31 @@ StatusOr<google::longrunning::Operation> WorkstationsLogging::CreateWorkstation(
 
 future<StatusOr<google::longrunning::Operation>>
 WorkstationsLogging::AsyncUpdateWorkstation(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::workstations::v1::UpdateWorkstationRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::workstations::v1::UpdateWorkstationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::workstations::v1::UpdateWorkstationRequest const&
-                 request) {
-        return child_->AsyncUpdateWorkstation(cq, std::move(context),
-                                              std::move(options), request);
+             google::cloud::workstations::v1::UpdateWorkstationRequest const& request) {
+        return child_->AsyncUpdateWorkstation(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> WorkstationsLogging::UpdateWorkstation(
-    grpc::ClientContext& context, Options options,
-    google::cloud::workstations::v1::UpdateWorkstationRequest const& request) {
+StatusOr<google::longrunning::Operation>
+WorkstationsLogging::UpdateWorkstation(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::workstations::v1::UpdateWorkstationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::workstations::v1::UpdateWorkstationRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::workstations::v1::UpdateWorkstationRequest const& request) {
         return child_->UpdateWorkstation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -423,30 +407,31 @@ StatusOr<google::longrunning::Operation> WorkstationsLogging::UpdateWorkstation(
 
 future<StatusOr<google::longrunning::Operation>>
 WorkstationsLogging::AsyncDeleteWorkstation(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::workstations::v1::DeleteWorkstationRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::workstations::v1::DeleteWorkstationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::workstations::v1::DeleteWorkstationRequest const&
-                 request) {
-        return child_->AsyncDeleteWorkstation(cq, std::move(context),
-                                              std::move(options), request);
+             google::cloud::workstations::v1::DeleteWorkstationRequest const& request) {
+        return child_->AsyncDeleteWorkstation(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> WorkstationsLogging::DeleteWorkstation(
-    grpc::ClientContext& context, Options options,
-    google::cloud::workstations::v1::DeleteWorkstationRequest const& request) {
+StatusOr<google::longrunning::Operation>
+WorkstationsLogging::DeleteWorkstation(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::workstations::v1::DeleteWorkstationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::workstations::v1::DeleteWorkstationRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::workstations::v1::DeleteWorkstationRequest const& request) {
         return child_->DeleteWorkstation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -454,30 +439,31 @@ StatusOr<google::longrunning::Operation> WorkstationsLogging::DeleteWorkstation(
 
 future<StatusOr<google::longrunning::Operation>>
 WorkstationsLogging::AsyncStartWorkstation(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::workstations::v1::StartWorkstationRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::workstations::v1::StartWorkstationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::workstations::v1::StartWorkstationRequest const&
-                 request) {
-        return child_->AsyncStartWorkstation(cq, std::move(context),
-                                             std::move(options), request);
+             google::cloud::workstations::v1::StartWorkstationRequest const& request) {
+        return child_->AsyncStartWorkstation(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> WorkstationsLogging::StartWorkstation(
-    grpc::ClientContext& context, Options options,
-    google::cloud::workstations::v1::StartWorkstationRequest const& request) {
+StatusOr<google::longrunning::Operation>
+WorkstationsLogging::StartWorkstation(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::workstations::v1::StartWorkstationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::workstations::v1::StartWorkstationRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::workstations::v1::StartWorkstationRequest const& request) {
         return child_->StartWorkstation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -485,30 +471,31 @@ StatusOr<google::longrunning::Operation> WorkstationsLogging::StartWorkstation(
 
 future<StatusOr<google::longrunning::Operation>>
 WorkstationsLogging::AsyncStopWorkstation(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::workstations::v1::StopWorkstationRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::workstations::v1::StopWorkstationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::workstations::v1::StopWorkstationRequest const&
-                 request) {
-        return child_->AsyncStopWorkstation(cq, std::move(context),
-                                            std::move(options), request);
+             google::cloud::workstations::v1::StopWorkstationRequest const& request) {
+        return child_->AsyncStopWorkstation(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> WorkstationsLogging::StopWorkstation(
-    grpc::ClientContext& context, Options options,
-    google::cloud::workstations::v1::StopWorkstationRequest const& request) {
+StatusOr<google::longrunning::Operation>
+WorkstationsLogging::StopWorkstation(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::workstations::v1::StopWorkstationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::workstations::v1::StopWorkstationRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::workstations::v1::StopWorkstationRequest const& request) {
         return child_->StopWorkstation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -516,34 +503,40 @@ StatusOr<google::longrunning::Operation> WorkstationsLogging::StopWorkstation(
 
 StatusOr<google::cloud::workstations::v1::GenerateAccessTokenResponse>
 WorkstationsLogging::GenerateAccessToken(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::workstations::v1::GenerateAccessTokenRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::workstations::v1::GenerateAccessTokenRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::workstations::v1::GenerateAccessTokenRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::workstations::v1::GenerateAccessTokenRequest const& request) {
         return child_->GenerateAccessToken(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::iam::v1::Policy> WorkstationsLogging::SetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::iam::v1::Policy>
+WorkstationsLogging::SetIamPolicy(
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::iam::v1::SetIamPolicyRequest const& request) {
         return child_->SetIamPolicy(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::iam::v1::Policy> WorkstationsLogging::GetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::iam::v1::Policy>
+WorkstationsLogging::GetIamPolicy(
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::iam::v1::GetIamPolicyRequest const& request) {
         return child_->GetIamPolicy(context, options, request);
       },
@@ -552,10 +545,12 @@ StatusOr<google::iam::v1::Policy> WorkstationsLogging::GetIamPolicy(
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 WorkstationsLogging::TestIamPermissions(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::iam::v1::TestIamPermissionsRequest const& request) {
         return child_->TestIamPermissions(context, options, request);
       },
@@ -564,43 +559,54 @@ WorkstationsLogging::TestIamPermissions(
 
 StatusOr<google::longrunning::ListOperationsResponse>
 WorkstationsLogging::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::ListOperationsRequest const& request) {
         return child_->ListOperations(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> WorkstationsLogging::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::Operation>
+WorkstationsLogging::GetOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::GetOperationRequest const& request) {
         return child_->GetOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status WorkstationsLogging::DeleteOperation(
-    grpc::ClientContext& context, Options const& options,
+Status
+WorkstationsLogging::DeleteOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::DeleteOperationRequest const& request) {
         return child_->DeleteOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status WorkstationsLogging::CancelOperation(
-    grpc::ClientContext& context, Options const& options,
+Status
+WorkstationsLogging::CancelOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::CancelOperationRequest const& request) {
         return child_->CancelOperation(context, options, request);
       },
@@ -618,8 +624,8 @@ WorkstationsLogging::AsyncGetOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(cq, std::move(context),
-                                         std::move(options), request);
+        return child_->AsyncGetOperation(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -635,8 +641,8 @@ future<Status> WorkstationsLogging::AsyncCancelOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::CancelOperationRequest const& request) {
-        return child_->AsyncCancelOperation(cq, std::move(context),
-                                            std::move(options), request);
+        return child_->AsyncCancelOperation(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);

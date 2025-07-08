@@ -32,52 +32,44 @@ RegistrationServiceTracingStub::RegistrationServiceTracingStub(
     std::shared_ptr<RegistrationServiceStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
-StatusOr<google::cloud::servicedirectory::v1::Namespace>
-RegistrationServiceTracingStub::CreateNamespace(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::servicedirectory::v1::CreateNamespaceRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.servicedirectory.v1.RegistrationService",
-      "CreateNamespace");
+StatusOr<google::cloud::servicedirectory::v1::Namespace> RegistrationServiceTracingStub::CreateNamespace(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::servicedirectory::v1::CreateNamespaceRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.servicedirectory.v1.RegistrationService", "CreateNamespace");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateNamespace(context, options, request));
 }
 
-StatusOr<google::cloud::servicedirectory::v1::ListNamespacesResponse>
-RegistrationServiceTracingStub::ListNamespaces(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::servicedirectory::v1::ListNamespacesResponse> RegistrationServiceTracingStub::ListNamespaces(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::servicedirectory::v1::ListNamespacesRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.servicedirectory.v1.RegistrationService", "ListNamespaces");
+  auto span = internal::MakeSpanGrpc("google.cloud.servicedirectory.v1.RegistrationService", "ListNamespaces");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListNamespaces(context, options, request));
 }
 
-StatusOr<google::cloud::servicedirectory::v1::Namespace>
-RegistrationServiceTracingStub::GetNamespace(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::servicedirectory::v1::Namespace> RegistrationServiceTracingStub::GetNamespace(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::servicedirectory::v1::GetNamespaceRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.servicedirectory.v1.RegistrationService", "GetNamespace");
+  auto span = internal::MakeSpanGrpc("google.cloud.servicedirectory.v1.RegistrationService", "GetNamespace");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetNamespace(context, options, request));
 }
 
-StatusOr<google::cloud::servicedirectory::v1::Namespace>
-RegistrationServiceTracingStub::UpdateNamespace(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::servicedirectory::v1::UpdateNamespaceRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.servicedirectory.v1.RegistrationService",
-      "UpdateNamespace");
+StatusOr<google::cloud::servicedirectory::v1::Namespace> RegistrationServiceTracingStub::UpdateNamespace(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::servicedirectory::v1::UpdateNamespaceRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.servicedirectory.v1.RegistrationService", "UpdateNamespace");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -85,60 +77,54 @@ RegistrationServiceTracingStub::UpdateNamespace(
 }
 
 Status RegistrationServiceTracingStub::DeleteNamespace(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::servicedirectory::v1::DeleteNamespaceRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.servicedirectory.v1.RegistrationService",
-      "DeleteNamespace");
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::servicedirectory::v1::DeleteNamespaceRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.servicedirectory.v1.RegistrationService", "DeleteNamespace");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeleteNamespace(context, options, request));
 }
 
-StatusOr<google::cloud::servicedirectory::v1::Service>
-RegistrationServiceTracingStub::CreateService(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::servicedirectory::v1::Service> RegistrationServiceTracingStub::CreateService(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::servicedirectory::v1::CreateServiceRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.servicedirectory.v1.RegistrationService", "CreateService");
+  auto span = internal::MakeSpanGrpc("google.cloud.servicedirectory.v1.RegistrationService", "CreateService");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateService(context, options, request));
 }
 
-StatusOr<google::cloud::servicedirectory::v1::ListServicesResponse>
-RegistrationServiceTracingStub::ListServices(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::servicedirectory::v1::ListServicesResponse> RegistrationServiceTracingStub::ListServices(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::servicedirectory::v1::ListServicesRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.servicedirectory.v1.RegistrationService", "ListServices");
+  auto span = internal::MakeSpanGrpc("google.cloud.servicedirectory.v1.RegistrationService", "ListServices");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListServices(context, options, request));
 }
 
-StatusOr<google::cloud::servicedirectory::v1::Service>
-RegistrationServiceTracingStub::GetService(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::servicedirectory::v1::Service> RegistrationServiceTracingStub::GetService(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::servicedirectory::v1::GetServiceRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.servicedirectory.v1.RegistrationService", "GetService");
+  auto span = internal::MakeSpanGrpc("google.cloud.servicedirectory.v1.RegistrationService", "GetService");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetService(context, options, request));
 }
 
-StatusOr<google::cloud::servicedirectory::v1::Service>
-RegistrationServiceTracingStub::UpdateService(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::servicedirectory::v1::Service> RegistrationServiceTracingStub::UpdateService(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::servicedirectory::v1::UpdateServiceRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.servicedirectory.v1.RegistrationService", "UpdateService");
+  auto span = internal::MakeSpanGrpc("google.cloud.servicedirectory.v1.RegistrationService", "UpdateService");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -146,58 +132,54 @@ RegistrationServiceTracingStub::UpdateService(
 }
 
 Status RegistrationServiceTracingStub::DeleteService(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::servicedirectory::v1::DeleteServiceRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.servicedirectory.v1.RegistrationService", "DeleteService");
+  auto span = internal::MakeSpanGrpc("google.cloud.servicedirectory.v1.RegistrationService", "DeleteService");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeleteService(context, options, request));
 }
 
-StatusOr<google::cloud::servicedirectory::v1::Endpoint>
-RegistrationServiceTracingStub::CreateEndpoint(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::servicedirectory::v1::Endpoint> RegistrationServiceTracingStub::CreateEndpoint(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::servicedirectory::v1::CreateEndpointRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.servicedirectory.v1.RegistrationService", "CreateEndpoint");
+  auto span = internal::MakeSpanGrpc("google.cloud.servicedirectory.v1.RegistrationService", "CreateEndpoint");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateEndpoint(context, options, request));
 }
 
-StatusOr<google::cloud::servicedirectory::v1::ListEndpointsResponse>
-RegistrationServiceTracingStub::ListEndpoints(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::servicedirectory::v1::ListEndpointsResponse> RegistrationServiceTracingStub::ListEndpoints(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::servicedirectory::v1::ListEndpointsRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.servicedirectory.v1.RegistrationService", "ListEndpoints");
+  auto span = internal::MakeSpanGrpc("google.cloud.servicedirectory.v1.RegistrationService", "ListEndpoints");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListEndpoints(context, options, request));
 }
 
-StatusOr<google::cloud::servicedirectory::v1::Endpoint>
-RegistrationServiceTracingStub::GetEndpoint(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::servicedirectory::v1::Endpoint> RegistrationServiceTracingStub::GetEndpoint(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::servicedirectory::v1::GetEndpointRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.servicedirectory.v1.RegistrationService", "GetEndpoint");
+  auto span = internal::MakeSpanGrpc("google.cloud.servicedirectory.v1.RegistrationService", "GetEndpoint");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetEndpoint(context, options, request));
 }
 
-StatusOr<google::cloud::servicedirectory::v1::Endpoint>
-RegistrationServiceTracingStub::UpdateEndpoint(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::servicedirectory::v1::Endpoint> RegistrationServiceTracingStub::UpdateEndpoint(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::servicedirectory::v1::UpdateEndpointRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.servicedirectory.v1.RegistrationService", "UpdateEndpoint");
+  auto span = internal::MakeSpanGrpc("google.cloud.servicedirectory.v1.RegistrationService", "UpdateEndpoint");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -205,10 +187,10 @@ RegistrationServiceTracingStub::UpdateEndpoint(
 }
 
 Status RegistrationServiceTracingStub::DeleteEndpoint(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::servicedirectory::v1::DeleteEndpointRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.servicedirectory.v1.RegistrationService", "DeleteEndpoint");
+  auto span = internal::MakeSpanGrpc("google.cloud.servicedirectory.v1.RegistrationService", "DeleteEndpoint");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -216,10 +198,10 @@ Status RegistrationServiceTracingStub::DeleteEndpoint(
 }
 
 StatusOr<google::iam::v1::Policy> RegistrationServiceTracingStub::GetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.servicedirectory.v1.RegistrationService", "GetIamPolicy");
+  auto span = internal::MakeSpanGrpc("google.cloud.servicedirectory.v1.RegistrationService", "GetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -227,47 +209,43 @@ StatusOr<google::iam::v1::Policy> RegistrationServiceTracingStub::GetIamPolicy(
 }
 
 StatusOr<google::iam::v1::Policy> RegistrationServiceTracingStub::SetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.servicedirectory.v1.RegistrationService", "SetIamPolicy");
+  auto span = internal::MakeSpanGrpc("google.cloud.servicedirectory.v1.RegistrationService", "SetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->SetIamPolicy(context, options, request));
 }
 
-StatusOr<google::iam::v1::TestIamPermissionsResponse>
-RegistrationServiceTracingStub::TestIamPermissions(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::iam::v1::TestIamPermissionsResponse> RegistrationServiceTracingStub::TestIamPermissions(
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.servicedirectory.v1.RegistrationService",
-      "TestIamPermissions");
+  auto span = internal::MakeSpanGrpc("google.cloud.servicedirectory.v1.RegistrationService", "TestIamPermissions");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->TestIamPermissions(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->TestIamPermissions(context, options, request));
 }
 
-StatusOr<google::cloud::location::ListLocationsResponse>
-RegistrationServiceTracingStub::ListLocations(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::location::ListLocationsResponse> RegistrationServiceTracingStub::ListLocations(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.servicedirectory.v1.RegistrationService", "ListLocations");
+  auto span = internal::MakeSpanGrpc("google.cloud.servicedirectory.v1.RegistrationService", "ListLocations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListLocations(context, options, request));
 }
 
-StatusOr<google::cloud::location::Location>
-RegistrationServiceTracingStub::GetLocation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::location::Location> RegistrationServiceTracingStub::GetLocation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.servicedirectory.v1.RegistrationService", "GetLocation");
+  auto span = internal::MakeSpanGrpc("google.cloud.servicedirectory.v1.RegistrationService", "GetLocation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,

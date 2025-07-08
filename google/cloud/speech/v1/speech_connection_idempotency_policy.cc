@@ -26,36 +26,31 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-SpeechConnectionIdempotencyPolicy::~SpeechConnectionIdempotencyPolicy() =
-    default;
+SpeechConnectionIdempotencyPolicy::~SpeechConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<SpeechConnectionIdempotencyPolicy>
 SpeechConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<SpeechConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency SpeechConnectionIdempotencyPolicy::Recognize(
-    google::cloud::speech::v1::RecognizeRequest const&) {
+Idempotency SpeechConnectionIdempotencyPolicy::Recognize(google::cloud::speech::v1::RecognizeRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SpeechConnectionIdempotencyPolicy::LongRunningRecognize(
-    google::cloud::speech::v1::LongRunningRecognizeRequest const&) {
+Idempotency SpeechConnectionIdempotencyPolicy::LongRunningRecognize(google::cloud::speech::v1::LongRunningRecognizeRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SpeechConnectionIdempotencyPolicy::ListOperations(
-    google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency SpeechConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency SpeechConnectionIdempotencyPolicy::GetOperation(
-    google::longrunning::GetOperationRequest const&) {
+Idempotency SpeechConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<SpeechConnectionIdempotencyPolicy>
-MakeDefaultSpeechConnectionIdempotencyPolicy() {
+    MakeDefaultSpeechConnectionIdempotencyPolicy() {
   return std::make_unique<SpeechConnectionIdempotencyPolicy>();
 }
 

@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_TEST_CASES_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_TEST_CASES_CONNECTION_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/dialogflow_cx/internal/test_cases_retry_traits.h"
 #include "google/cloud/dialogflow_cx/test_cases_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -67,14 +67,14 @@ class TestCasesLimitedErrorCountRetryPolicy : public TestCasesRetryPolicy {
    *     @p maximum_failures == 0.
    */
   explicit TestCasesLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   TestCasesLimitedErrorCountRetryPolicy(
       TestCasesLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : TestCasesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : TestCasesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   TestCasesLimitedErrorCountRetryPolicy(
       TestCasesLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : TestCasesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : TestCasesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -94,9 +94,7 @@ class TestCasesLimitedErrorCountRetryPolicy : public TestCasesRetryPolicy {
   using BaseType = TestCasesRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      dialogflow_cx_internal::TestCasesRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<dialogflow_cx_internal::TestCasesRetryTraits> impl_;
 };
 
 /**
@@ -134,14 +132,12 @@ class TestCasesLimitedTimeRetryPolicy : public TestCasesRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit TestCasesLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  TestCasesLimitedTimeRetryPolicy(
-      TestCasesLimitedTimeRetryPolicy&& rhs) noexcept
-      : TestCasesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  TestCasesLimitedTimeRetryPolicy(
-      TestCasesLimitedTimeRetryPolicy const& rhs) noexcept
-      : TestCasesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  TestCasesLimitedTimeRetryPolicy(TestCasesLimitedTimeRetryPolicy&& rhs) noexcept
+    : TestCasesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  TestCasesLimitedTimeRetryPolicy(TestCasesLimitedTimeRetryPolicy const& rhs) noexcept
+    : TestCasesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -163,9 +159,7 @@ class TestCasesLimitedTimeRetryPolicy : public TestCasesRetryPolicy {
   using BaseType = TestCasesRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      dialogflow_cx_internal::TestCasesRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<dialogflow_cx_internal::TestCasesRetryTraits> impl_;
 };
 
 /**
@@ -187,104 +181,79 @@ class TestCasesConnection {
   virtual Options options() { return Options{}; }
 
   virtual StreamRange<google::cloud::dialogflow::cx::v3::TestCase>
-  ListTestCases(
-      google::cloud::dialogflow::cx::v3::ListTestCasesRequest request);
+  ListTestCases(google::cloud::dialogflow::cx::v3::ListTestCasesRequest request);
 
-  virtual Status BatchDeleteTestCases(
-      google::cloud::dialogflow::cx::v3::BatchDeleteTestCasesRequest const&
-          request);
+  virtual Status
+  BatchDeleteTestCases(google::cloud::dialogflow::cx::v3::BatchDeleteTestCasesRequest const& request);
 
-  virtual StatusOr<google::cloud::dialogflow::cx::v3::TestCase> GetTestCase(
-      google::cloud::dialogflow::cx::v3::GetTestCaseRequest const& request);
+  virtual StatusOr<google::cloud::dialogflow::cx::v3::TestCase>
+  GetTestCase(google::cloud::dialogflow::cx::v3::GetTestCaseRequest const& request);
 
-  virtual StatusOr<google::cloud::dialogflow::cx::v3::TestCase> CreateTestCase(
-      google::cloud::dialogflow::cx::v3::CreateTestCaseRequest const& request);
+  virtual StatusOr<google::cloud::dialogflow::cx::v3::TestCase>
+  CreateTestCase(google::cloud::dialogflow::cx::v3::CreateTestCaseRequest const& request);
 
-  virtual StatusOr<google::cloud::dialogflow::cx::v3::TestCase> UpdateTestCase(
-      google::cloud::dialogflow::cx::v3::UpdateTestCaseRequest const& request);
+  virtual StatusOr<google::cloud::dialogflow::cx::v3::TestCase>
+  UpdateTestCase(google::cloud::dialogflow::cx::v3::UpdateTestCaseRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::dialogflow::cx::v3::RunTestCaseResponse>>
-  RunTestCase(
-      google::cloud::dialogflow::cx::v3::RunTestCaseRequest const& request);
+  virtual future<StatusOr<google::cloud::dialogflow::cx::v3::RunTestCaseResponse>>
+  RunTestCase(google::cloud::dialogflow::cx::v3::RunTestCaseRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> RunTestCase(
-      NoAwaitTag,
-      google::cloud::dialogflow::cx::v3::RunTestCaseRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  RunTestCase(NoAwaitTag, google::cloud::dialogflow::cx::v3::RunTestCaseRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::dialogflow::cx::v3::RunTestCaseResponse>>
-  RunTestCase(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::dialogflow::cx::v3::RunTestCaseResponse>>
+  RunTestCase( google::longrunning::Operation const& operation);
 
-  virtual future<
-      StatusOr<google::cloud::dialogflow::cx::v3::BatchRunTestCasesResponse>>
-  BatchRunTestCases(
-      google::cloud::dialogflow::cx::v3::BatchRunTestCasesRequest const&
-          request);
+  virtual future<StatusOr<google::cloud::dialogflow::cx::v3::BatchRunTestCasesResponse>>
+  BatchRunTestCases(google::cloud::dialogflow::cx::v3::BatchRunTestCasesRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> BatchRunTestCases(
-      NoAwaitTag,
-      google::cloud::dialogflow::cx::v3::BatchRunTestCasesRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  BatchRunTestCases(NoAwaitTag, google::cloud::dialogflow::cx::v3::BatchRunTestCasesRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::dialogflow::cx::v3::BatchRunTestCasesResponse>>
-  BatchRunTestCases(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::dialogflow::cx::v3::BatchRunTestCasesResponse>>
+  BatchRunTestCases( google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::dialogflow::cx::v3::CalculateCoverageResponse>
-  CalculateCoverage(
-      google::cloud::dialogflow::cx::v3::CalculateCoverageRequest const&
-          request);
+  CalculateCoverage(google::cloud::dialogflow::cx::v3::CalculateCoverageRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::dialogflow::cx::v3::ImportTestCasesResponse>>
-  ImportTestCases(
-      google::cloud::dialogflow::cx::v3::ImportTestCasesRequest const& request);
+  virtual future<StatusOr<google::cloud::dialogflow::cx::v3::ImportTestCasesResponse>>
+  ImportTestCases(google::cloud::dialogflow::cx::v3::ImportTestCasesRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> ImportTestCases(
-      NoAwaitTag,
-      google::cloud::dialogflow::cx::v3::ImportTestCasesRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  ImportTestCases(NoAwaitTag, google::cloud::dialogflow::cx::v3::ImportTestCasesRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::dialogflow::cx::v3::ImportTestCasesResponse>>
-  ImportTestCases(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::dialogflow::cx::v3::ImportTestCasesResponse>>
+  ImportTestCases( google::longrunning::Operation const& operation);
 
-  virtual future<
-      StatusOr<google::cloud::dialogflow::cx::v3::ExportTestCasesResponse>>
-  ExportTestCases(
-      google::cloud::dialogflow::cx::v3::ExportTestCasesRequest const& request);
+  virtual future<StatusOr<google::cloud::dialogflow::cx::v3::ExportTestCasesResponse>>
+  ExportTestCases(google::cloud::dialogflow::cx::v3::ExportTestCasesRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> ExportTestCases(
-      NoAwaitTag,
-      google::cloud::dialogflow::cx::v3::ExportTestCasesRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  ExportTestCases(NoAwaitTag, google::cloud::dialogflow::cx::v3::ExportTestCasesRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::dialogflow::cx::v3::ExportTestCasesResponse>>
-  ExportTestCases(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::dialogflow::cx::v3::ExportTestCasesResponse>>
+  ExportTestCases( google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::dialogflow::cx::v3::TestCaseResult>
-  ListTestCaseResults(
-      google::cloud::dialogflow::cx::v3::ListTestCaseResultsRequest request);
+  ListTestCaseResults(google::cloud::dialogflow::cx::v3::ListTestCaseResultsRequest request);
 
   virtual StatusOr<google::cloud::dialogflow::cx::v3::TestCaseResult>
-  GetTestCaseResult(
-      google::cloud::dialogflow::cx::v3::GetTestCaseResultRequest const&
-          request);
+  GetTestCaseResult(google::cloud::dialogflow::cx::v3::GetTestCaseResultRequest const& request);
 
-  virtual StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request);
+  virtual StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request);
 
-  virtual StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request);
+  virtual StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request);
 
-  virtual StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 
-  virtual Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request);
+  virtual Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request);
 };
 
 /**

@@ -29,109 +29,82 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-SecuritySettingsServiceTracingConnection::
-    SecuritySettingsServiceTracingConnection(
-        std::shared_ptr<dialogflow_cx::SecuritySettingsServiceConnection> child)
+SecuritySettingsServiceTracingConnection::SecuritySettingsServiceTracingConnection(
+    std::shared_ptr<dialogflow_cx::SecuritySettingsServiceConnection> child)
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::dialogflow::cx::v3::SecuritySettings>
-SecuritySettingsServiceTracingConnection::CreateSecuritySettings(
-    google::cloud::dialogflow::cx::v3::CreateSecuritySettingsRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "dialogflow_cx::SecuritySettingsServiceConnection::"
-      "CreateSecuritySettings");
+SecuritySettingsServiceTracingConnection::CreateSecuritySettings(google::cloud::dialogflow::cx::v3::CreateSecuritySettingsRequest const& request) {
+  auto span = internal::MakeSpan("dialogflow_cx::SecuritySettingsServiceConnection::CreateSecuritySettings");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateSecuritySettings(request));
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::SecuritySettings>
-SecuritySettingsServiceTracingConnection::GetSecuritySettings(
-    google::cloud::dialogflow::cx::v3::GetSecuritySettingsRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "dialogflow_cx::SecuritySettingsServiceConnection::GetSecuritySettings");
+SecuritySettingsServiceTracingConnection::GetSecuritySettings(google::cloud::dialogflow::cx::v3::GetSecuritySettingsRequest const& request) {
+  auto span = internal::MakeSpan("dialogflow_cx::SecuritySettingsServiceConnection::GetSecuritySettings");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetSecuritySettings(request));
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::SecuritySettings>
-SecuritySettingsServiceTracingConnection::UpdateSecuritySettings(
-    google::cloud::dialogflow::cx::v3::UpdateSecuritySettingsRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "dialogflow_cx::SecuritySettingsServiceConnection::"
-      "UpdateSecuritySettings");
+SecuritySettingsServiceTracingConnection::UpdateSecuritySettings(google::cloud::dialogflow::cx::v3::UpdateSecuritySettingsRequest const& request) {
+  auto span = internal::MakeSpan("dialogflow_cx::SecuritySettingsServiceConnection::UpdateSecuritySettings");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateSecuritySettings(request));
 }
 
 StreamRange<google::cloud::dialogflow::cx::v3::SecuritySettings>
-SecuritySettingsServiceTracingConnection::ListSecuritySettings(
-    google::cloud::dialogflow::cx::v3::ListSecuritySettingsRequest request) {
-  auto span = internal::MakeSpan(
-      "dialogflow_cx::SecuritySettingsServiceConnection::ListSecuritySettings");
+SecuritySettingsServiceTracingConnection::ListSecuritySettings(google::cloud::dialogflow::cx::v3::ListSecuritySettingsRequest request) {
+  auto span = internal::MakeSpan("dialogflow_cx::SecuritySettingsServiceConnection::ListSecuritySettings");
   internal::OTelScope scope(span);
   auto sr = child_->ListSecuritySettings(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::dialogflow::cx::v3::SecuritySettings>(std::move(span),
-                                                           std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::dialogflow::cx::v3::SecuritySettings>(
+        std::move(span), std::move(sr));
 }
 
-Status SecuritySettingsServiceTracingConnection::DeleteSecuritySettings(
-    google::cloud::dialogflow::cx::v3::DeleteSecuritySettingsRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "dialogflow_cx::SecuritySettingsServiceConnection::"
-      "DeleteSecuritySettings");
+Status
+SecuritySettingsServiceTracingConnection::DeleteSecuritySettings(google::cloud::dialogflow::cx::v3::DeleteSecuritySettingsRequest const& request) {
+  auto span = internal::MakeSpan("dialogflow_cx::SecuritySettingsServiceConnection::DeleteSecuritySettings");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteSecuritySettings(request));
 }
 
 StreamRange<google::cloud::location::Location>
-SecuritySettingsServiceTracingConnection::ListLocations(
-    google::cloud::location::ListLocationsRequest request) {
-  auto span = internal::MakeSpan(
-      "dialogflow_cx::SecuritySettingsServiceConnection::ListLocations");
+SecuritySettingsServiceTracingConnection::ListLocations(google::cloud::location::ListLocationsRequest request) {
+  auto span = internal::MakeSpan("dialogflow_cx::SecuritySettingsServiceConnection::ListLocations");
   internal::OTelScope scope(span);
   auto sr = child_->ListLocations(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::location::Location>(
-      std::move(span), std::move(sr));
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::location::Location>
-SecuritySettingsServiceTracingConnection::GetLocation(
-    google::cloud::location::GetLocationRequest const& request) {
-  auto span = internal::MakeSpan(
-      "dialogflow_cx::SecuritySettingsServiceConnection::GetLocation");
+SecuritySettingsServiceTracingConnection::GetLocation(google::cloud::location::GetLocationRequest const& request) {
+  auto span = internal::MakeSpan("dialogflow_cx::SecuritySettingsServiceConnection::GetLocation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetLocation(request));
 }
 
 StreamRange<google::longrunning::Operation>
-SecuritySettingsServiceTracingConnection::ListOperations(
-    google::longrunning::ListOperationsRequest request) {
-  auto span = internal::MakeSpan(
-      "dialogflow_cx::SecuritySettingsServiceConnection::ListOperations");
+SecuritySettingsServiceTracingConnection::ListOperations(google::longrunning::ListOperationsRequest request) {
+  auto span = internal::MakeSpan("dialogflow_cx::SecuritySettingsServiceConnection::ListOperations");
   internal::OTelScope scope(span);
   auto sr = child_->ListOperations(std::move(request));
   return internal::MakeTracedStreamRange<google::longrunning::Operation>(
-      std::move(span), std::move(sr));
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::longrunning::Operation>
-SecuritySettingsServiceTracingConnection::GetOperation(
-    google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpan(
-      "dialogflow_cx::SecuritySettingsServiceConnection::GetOperation");
+SecuritySettingsServiceTracingConnection::GetOperation(google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpan("dialogflow_cx::SecuritySettingsServiceConnection::GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOperation(request));
 }
 
-Status SecuritySettingsServiceTracingConnection::CancelOperation(
-    google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpan(
-      "dialogflow_cx::SecuritySettingsServiceConnection::CancelOperation");
+Status
+SecuritySettingsServiceTracingConnection::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
+  auto span = internal::MakeSpan("dialogflow_cx::SecuritySettingsServiceConnection::CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CancelOperation(request));
 }
@@ -143,8 +116,7 @@ MakeSecuritySettingsServiceTracingConnection(
     std::shared_ptr<dialogflow_cx::SecuritySettingsServiceConnection> conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
-    conn = std::make_shared<SecuritySettingsServiceTracingConnection>(
-        std::move(conn));
+    conn = std::make_shared<SecuritySettingsServiceTracingConnection>(std::move(conn));
   }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;

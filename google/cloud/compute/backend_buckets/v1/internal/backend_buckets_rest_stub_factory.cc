@@ -17,16 +17,16 @@
 // source: google/cloud/compute/backend_buckets/v1/backend_buckets.proto
 
 #include "google/cloud/compute/backend_buckets/v1/internal/backend_buckets_rest_stub_factory.h"
+#include "absl/strings/match.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/compute/backend_buckets/v1/internal/backend_buckets_rest_logging_decorator.h"
 #include "google/cloud/compute/backend_buckets/v1/internal/backend_buckets_rest_metadata_decorator.h"
 #include "google/cloud/compute/backend_buckets/v1/internal/backend_buckets_rest_stub.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/populate_rest_options.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include "google/cloud/rest_options.h"
-#include "absl/strings/match.h"
 #include <memory>
 #include <utility>
 
@@ -35,16 +35,18 @@ namespace cloud {
 namespace compute_backend_buckets_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<BackendBucketsRestStub> CreateDefaultBackendBucketsRestStub(
-    Options const& options) {
+std::shared_ptr<BackendBucketsRestStub>
+CreateDefaultBackendBucketsRestStub(Options const& options) {
   auto opts = internal::PopulateRestOptions(options);
   std::shared_ptr<BackendBucketsRestStub> stub =
       std::make_shared<DefaultBackendBucketsRestStub>(std::move(opts));
   stub = std::make_shared<BackendBucketsRestMetadata>(std::move(stub));
-  if (internal::Contains(options.get<LoggingComponentsOption>(), "rpc")) {
+  if (internal::Contains(
+      options.get<LoggingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for REST rpc calls";
     stub = std::make_shared<BackendBucketsRestLogging>(
-        std::move(stub), options.get<RestTracingOptionsOption>(),
+        std::move(stub),
+        options.get<RestTracingOptionsOption>(),
         options.get<LoggingComponentsOption>());
   }
   return stub;

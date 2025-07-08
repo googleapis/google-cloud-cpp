@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_EXPERIMENTS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_EXPERIMENTS_CONNECTION_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/dialogflow_cx/experiments_connection_idempotency_policy.h"
 #include "google/cloud/dialogflow_cx/internal/experiments_retry_traits.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -63,14 +63,14 @@ class ExperimentsLimitedErrorCountRetryPolicy : public ExperimentsRetryPolicy {
    *     @p maximum_failures == 0.
    */
   explicit ExperimentsLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   ExperimentsLimitedErrorCountRetryPolicy(
       ExperimentsLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : ExperimentsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : ExperimentsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   ExperimentsLimitedErrorCountRetryPolicy(
       ExperimentsLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : ExperimentsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : ExperimentsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -90,9 +90,7 @@ class ExperimentsLimitedErrorCountRetryPolicy : public ExperimentsRetryPolicy {
   using BaseType = ExperimentsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      dialogflow_cx_internal::ExperimentsRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<dialogflow_cx_internal::ExperimentsRetryTraits> impl_;
 };
 
 /**
@@ -130,14 +128,12 @@ class ExperimentsLimitedTimeRetryPolicy : public ExperimentsRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit ExperimentsLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  ExperimentsLimitedTimeRetryPolicy(
-      ExperimentsLimitedTimeRetryPolicy&& rhs) noexcept
-      : ExperimentsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  ExperimentsLimitedTimeRetryPolicy(
-      ExperimentsLimitedTimeRetryPolicy const& rhs) noexcept
-      : ExperimentsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  ExperimentsLimitedTimeRetryPolicy(ExperimentsLimitedTimeRetryPolicy&& rhs) noexcept
+    : ExperimentsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  ExperimentsLimitedTimeRetryPolicy(ExperimentsLimitedTimeRetryPolicy const& rhs) noexcept
+    : ExperimentsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -159,9 +155,7 @@ class ExperimentsLimitedTimeRetryPolicy : public ExperimentsRetryPolicy {
   using BaseType = ExperimentsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      dialogflow_cx_internal::ExperimentsRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<dialogflow_cx_internal::ExperimentsRetryTraits> impl_;
 };
 
 /**
@@ -183,48 +177,40 @@ class ExperimentsConnection {
   virtual Options options() { return Options{}; }
 
   virtual StreamRange<google::cloud::dialogflow::cx::v3::Experiment>
-  ListExperiments(
-      google::cloud::dialogflow::cx::v3::ListExperimentsRequest request);
-
-  virtual StatusOr<google::cloud::dialogflow::cx::v3::Experiment> GetExperiment(
-      google::cloud::dialogflow::cx::v3::GetExperimentRequest const& request);
+  ListExperiments(google::cloud::dialogflow::cx::v3::ListExperimentsRequest request);
 
   virtual StatusOr<google::cloud::dialogflow::cx::v3::Experiment>
-  CreateExperiment(
-      google::cloud::dialogflow::cx::v3::CreateExperimentRequest const&
-          request);
+  GetExperiment(google::cloud::dialogflow::cx::v3::GetExperimentRequest const& request);
 
   virtual StatusOr<google::cloud::dialogflow::cx::v3::Experiment>
-  UpdateExperiment(
-      google::cloud::dialogflow::cx::v3::UpdateExperimentRequest const&
-          request);
-
-  virtual Status DeleteExperiment(
-      google::cloud::dialogflow::cx::v3::DeleteExperimentRequest const&
-          request);
+  CreateExperiment(google::cloud::dialogflow::cx::v3::CreateExperimentRequest const& request);
 
   virtual StatusOr<google::cloud::dialogflow::cx::v3::Experiment>
-  StartExperiment(
-      google::cloud::dialogflow::cx::v3::StartExperimentRequest const& request);
+  UpdateExperiment(google::cloud::dialogflow::cx::v3::UpdateExperimentRequest const& request);
+
+  virtual Status
+  DeleteExperiment(google::cloud::dialogflow::cx::v3::DeleteExperimentRequest const& request);
 
   virtual StatusOr<google::cloud::dialogflow::cx::v3::Experiment>
-  StopExperiment(
-      google::cloud::dialogflow::cx::v3::StopExperimentRequest const& request);
+  StartExperiment(google::cloud::dialogflow::cx::v3::StartExperimentRequest const& request);
 
-  virtual StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request);
+  virtual StatusOr<google::cloud::dialogflow::cx::v3::Experiment>
+  StopExperiment(google::cloud::dialogflow::cx::v3::StopExperimentRequest const& request);
 
-  virtual StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request);
+  virtual StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request);
 
-  virtual StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request);
 
-  virtual Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request);
+
+  virtual Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request);
 };
 
 /**

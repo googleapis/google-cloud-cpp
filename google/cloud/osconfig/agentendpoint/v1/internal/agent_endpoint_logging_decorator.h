@@ -35,46 +35,39 @@ class AgentEndpointServiceLogging : public AgentEndpointServiceStub {
  public:
   ~AgentEndpointServiceLogging() override = default;
   AgentEndpointServiceLogging(std::shared_ptr<AgentEndpointServiceStub> child,
-                              TracingOptions tracing_options,
-                              std::set<std::string> const& components);
+                       TracingOptions tracing_options,
+                       std::set<std::string> const& components);
 
-  std::unique_ptr<google::cloud::internal::StreamingReadRpc<
-      google::cloud::osconfig::agentendpoint::v1::
-          ReceiveTaskNotificationResponse>>
+  std::unique_ptr<google::cloud::internal::StreamingReadRpc<google::cloud::osconfig::agentendpoint::v1::ReceiveTaskNotificationResponse>>
   ReceiveTaskNotification(
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
-      google::cloud::osconfig::agentendpoint::v1::
-          ReceiveTaskNotificationRequest const& request) override;
+      std::shared_ptr<grpc::ClientContext> context,
+      Options const& options,
+      google::cloud::osconfig::agentendpoint::v1::ReceiveTaskNotificationRequest const& request) override;
 
-  StatusOr<google::cloud::osconfig::agentendpoint::v1::StartNextTaskResponse>
-  StartNextTask(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::osconfig::agentendpoint::v1::StartNextTaskRequest const&
-          request) override;
+  StatusOr<google::cloud::osconfig::agentendpoint::v1::StartNextTaskResponse> StartNextTask(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::osconfig::agentendpoint::v1::StartNextTaskRequest const& request) override;
 
-  StatusOr<
-      google::cloud::osconfig::agentendpoint::v1::ReportTaskProgressResponse>
-  ReportTaskProgress(grpc::ClientContext& context, Options const& options,
-                     google::cloud::osconfig::agentendpoint::v1::
-                         ReportTaskProgressRequest const& request) override;
+  StatusOr<google::cloud::osconfig::agentendpoint::v1::ReportTaskProgressResponse> ReportTaskProgress(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::osconfig::agentendpoint::v1::ReportTaskProgressRequest const& request) override;
 
-  StatusOr<
-      google::cloud::osconfig::agentendpoint::v1::ReportTaskCompleteResponse>
-  ReportTaskComplete(grpc::ClientContext& context, Options const& options,
-                     google::cloud::osconfig::agentendpoint::v1::
-                         ReportTaskCompleteRequest const& request) override;
+  StatusOr<google::cloud::osconfig::agentendpoint::v1::ReportTaskCompleteResponse> ReportTaskComplete(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::osconfig::agentendpoint::v1::ReportTaskCompleteRequest const& request) override;
 
-  StatusOr<google::cloud::osconfig::agentendpoint::v1::RegisterAgentResponse>
-  RegisterAgent(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::osconfig::agentendpoint::v1::RegisterAgentRequest const&
-          request) override;
+  StatusOr<google::cloud::osconfig::agentendpoint::v1::RegisterAgentResponse> RegisterAgent(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::osconfig::agentendpoint::v1::RegisterAgentRequest const& request) override;
 
-  StatusOr<google::cloud::osconfig::agentendpoint::v1::ReportInventoryResponse>
-  ReportInventory(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::osconfig::agentendpoint::v1::ReportInventoryRequest const&
-          request) override;
+  StatusOr<google::cloud::osconfig::agentendpoint::v1::ReportInventoryResponse> ReportInventory(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::osconfig::agentendpoint::v1::ReportInventoryRequest const& request) override;
 
  private:
   std::shared_ptr<AgentEndpointServiceStub> child_;

@@ -38,158 +38,158 @@ class ConnectorsTracingStub : public ConnectorsStub {
 
   explicit ConnectorsTracingStub(std::shared_ptr<ConnectorsStub> child);
 
-  StatusOr<google::cloud::connectors::v1::ListConnectionsResponse>
-  ListConnections(grpc::ClientContext& context, Options const& options,
-                  google::cloud::connectors::v1::ListConnectionsRequest const&
-                      request) override;
+  StatusOr<google::cloud::connectors::v1::ListConnectionsResponse> ListConnections(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::connectors::v1::ListConnectionsRequest const& request) override;
 
   StatusOr<google::cloud::connectors::v1::Connection> GetConnection(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::connectors::v1::GetConnectionRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::connectors::v1::GetConnectionRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateConnection(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::connectors::v1::CreateConnectionRequest const& request)
-      override;
+      google::cloud::connectors::v1::CreateConnectionRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateConnection(
-      grpc::ClientContext& context, Options options,
-      google::cloud::connectors::v1::CreateConnectionRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::connectors::v1::CreateConnectionRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateConnection(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::connectors::v1::UpdateConnectionRequest const& request)
-      override;
+      google::cloud::connectors::v1::UpdateConnectionRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateConnection(
-      grpc::ClientContext& context, Options options,
-      google::cloud::connectors::v1::UpdateConnectionRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::connectors::v1::UpdateConnectionRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteConnection(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::connectors::v1::DeleteConnectionRequest const& request)
-      override;
+      google::cloud::connectors::v1::DeleteConnectionRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteConnection(
-      grpc::ClientContext& context, Options options,
-      google::cloud::connectors::v1::DeleteConnectionRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::connectors::v1::DeleteConnectionRequest const& request) override;
 
   StatusOr<google::cloud::connectors::v1::ListProvidersResponse> ListProviders(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::connectors::v1::ListProvidersRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::connectors::v1::ListProvidersRequest const& request) override;
 
   StatusOr<google::cloud::connectors::v1::Provider> GetProvider(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::connectors::v1::GetProviderRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::connectors::v1::GetProviderRequest const& request) override;
 
-  StatusOr<google::cloud::connectors::v1::ListConnectorsResponse>
-  ListConnectors(grpc::ClientContext& context, Options const& options,
-                 google::cloud::connectors::v1::ListConnectorsRequest const&
-                     request) override;
+  StatusOr<google::cloud::connectors::v1::ListConnectorsResponse> ListConnectors(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::connectors::v1::ListConnectorsRequest const& request) override;
 
   StatusOr<google::cloud::connectors::v1::Connector> GetConnector(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::connectors::v1::GetConnectorRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::connectors::v1::GetConnectorRequest const& request) override;
 
-  StatusOr<google::cloud::connectors::v1::ListConnectorVersionsResponse>
-  ListConnectorVersions(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::connectors::v1::ListConnectorVersionsRequest const&
-          request) override;
+  StatusOr<google::cloud::connectors::v1::ListConnectorVersionsResponse> ListConnectorVersions(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::connectors::v1::ListConnectorVersionsRequest const& request) override;
 
   StatusOr<google::cloud::connectors::v1::ConnectorVersion> GetConnectorVersion(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::connectors::v1::GetConnectorVersionRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::connectors::v1::GetConnectorVersionRequest const& request) override;
 
-  StatusOr<google::cloud::connectors::v1::ConnectionSchemaMetadata>
-  GetConnectionSchemaMetadata(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::connectors::v1::GetConnectionSchemaMetadataRequest const&
-          request) override;
+  StatusOr<google::cloud::connectors::v1::ConnectionSchemaMetadata> GetConnectionSchemaMetadata(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::connectors::v1::GetConnectionSchemaMetadataRequest const& request) override;
 
-  future<StatusOr<google::longrunning::Operation>>
-  AsyncRefreshConnectionSchemaMetadata(
+  future<StatusOr<google::longrunning::Operation>> AsyncRefreshConnectionSchemaMetadata(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::connectors::v1::
-          RefreshConnectionSchemaMetadataRequest const& request) override;
+      google::cloud::connectors::v1::RefreshConnectionSchemaMetadataRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> RefreshConnectionSchemaMetadata(
-      grpc::ClientContext& context, Options options,
-      google::cloud::connectors::v1::
-          RefreshConnectionSchemaMetadataRequest const& request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::connectors::v1::RefreshConnectionSchemaMetadataRequest const& request) override;
 
-  StatusOr<google::cloud::connectors::v1::ListRuntimeEntitySchemasResponse>
-  ListRuntimeEntitySchemas(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::connectors::v1::ListRuntimeEntitySchemasRequest const&
-          request) override;
+  StatusOr<google::cloud::connectors::v1::ListRuntimeEntitySchemasResponse> ListRuntimeEntitySchemas(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::connectors::v1::ListRuntimeEntitySchemasRequest const& request) override;
 
-  StatusOr<google::cloud::connectors::v1::ListRuntimeActionSchemasResponse>
-  ListRuntimeActionSchemas(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::connectors::v1::ListRuntimeActionSchemasRequest const&
-          request) override;
+  StatusOr<google::cloud::connectors::v1::ListRuntimeActionSchemasResponse> ListRuntimeActionSchemas(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::connectors::v1::ListRuntimeActionSchemasRequest const& request) override;
 
   StatusOr<google::cloud::connectors::v1::RuntimeConfig> GetRuntimeConfig(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::connectors::v1::GetRuntimeConfigRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::connectors::v1::GetRuntimeConfigRequest const& request) override;
 
   StatusOr<google::cloud::connectors::v1::Settings> GetGlobalSettings(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::connectors::v1::GetGlobalSettingsRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::connectors::v1::GetGlobalSettingsRequest const& request) override;
 
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::location::ListLocationsRequest const& request) override;
 
   StatusOr<google::cloud::location::Location> GetLocation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::location::GetLocationRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status DeleteOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::DeleteOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -206,8 +206,7 @@ class ConnectorsTracingStub : public ConnectorsStub {
 
  private:
   std::shared_ptr<ConnectorsStub> child_;
-  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
-      propagator_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

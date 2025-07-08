@@ -26,10 +26,8 @@ namespace cloud {
 namespace orgpolicy {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use
-/// orgpolicy_v2::MakeDefaultOrgPolicyConnectionIdempotencyPolicy directly.
-using ::google::cloud::orgpolicy_v2::
-    MakeDefaultOrgPolicyConnectionIdempotencyPolicy;
+/// @deprecated Use orgpolicy_v2::MakeDefaultOrgPolicyConnectionIdempotencyPolicy directly.
+using ::google::cloud::orgpolicy_v2::MakeDefaultOrgPolicyConnectionIdempotencyPolicy;
 
 /// @deprecated Use orgpolicy_v2::OrgPolicyConnectionIdempotencyPolicy directly.
 using ::google::cloud::orgpolicy_v2::OrgPolicyConnectionIdempotencyPolicy;

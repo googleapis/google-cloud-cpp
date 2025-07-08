@@ -28,77 +28,60 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 UserEventServiceClient::UserEventServiceClient(
     std::shared_ptr<UserEventServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 UserEventServiceClient::~UserEventServiceClient() = default;
 
 StatusOr<google::cloud::discoveryengine::v1::UserEvent>
-UserEventServiceClient::WriteUserEvent(
-    google::cloud::discoveryengine::v1::WriteUserEventRequest const& request,
-    Options opts) {
+UserEventServiceClient::WriteUserEvent(google::cloud::discoveryengine::v1::WriteUserEventRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->WriteUserEvent(request);
 }
 
-StatusOr<google::api::HttpBody> UserEventServiceClient::CollectUserEvent(
-    google::cloud::discoveryengine::v1::CollectUserEventRequest const& request,
-    Options opts) {
+StatusOr<google::api::HttpBody>
+UserEventServiceClient::CollectUserEvent(google::cloud::discoveryengine::v1::CollectUserEventRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CollectUserEvent(request);
 }
 
 future<StatusOr<google::cloud::discoveryengine::v1::PurgeUserEventsResponse>>
-UserEventServiceClient::PurgeUserEvents(
-    google::cloud::discoveryengine::v1::PurgeUserEventsRequest const& request,
-    Options opts) {
+UserEventServiceClient::PurgeUserEvents(google::cloud::discoveryengine::v1::PurgeUserEventsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PurgeUserEvents(request);
 }
 
 StatusOr<google::longrunning::Operation>
-UserEventServiceClient::PurgeUserEvents(
-    NoAwaitTag,
-    google::cloud::discoveryengine::v1::PurgeUserEventsRequest const& request,
-    Options opts) {
+UserEventServiceClient::PurgeUserEvents(NoAwaitTag, google::cloud::discoveryengine::v1::PurgeUserEventsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PurgeUserEvents(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::discoveryengine::v1::PurgeUserEventsResponse>>
-UserEventServiceClient::PurgeUserEvents(
-    google::longrunning::Operation const& operation, Options opts) {
+UserEventServiceClient::PurgeUserEvents(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PurgeUserEvents(operation);
 }
 
 future<StatusOr<google::cloud::discoveryengine::v1::ImportUserEventsResponse>>
-UserEventServiceClient::ImportUserEvents(
-    google::cloud::discoveryengine::v1::ImportUserEventsRequest const& request,
-    Options opts) {
+UserEventServiceClient::ImportUserEvents(google::cloud::discoveryengine::v1::ImportUserEventsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ImportUserEvents(request);
 }
 
 StatusOr<google::longrunning::Operation>
-UserEventServiceClient::ImportUserEvents(
-    NoAwaitTag,
-    google::cloud::discoveryengine::v1::ImportUserEventsRequest const& request,
-    Options opts) {
+UserEventServiceClient::ImportUserEvents(NoAwaitTag, google::cloud::discoveryengine::v1::ImportUserEventsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ImportUserEvents(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::discoveryengine::v1::ImportUserEventsResponse>>
-UserEventServiceClient::ImportUserEvents(
-    google::longrunning::Operation const& operation, Options opts) {
+UserEventServiceClient::ImportUserEvents(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ImportUserEvents(operation);
 }
 
 StreamRange<google::longrunning::Operation>
-UserEventServiceClient::ListOperations(std::string const& name,
-                                       std::string const& filter,
-                                       Options opts) {
+UserEventServiceClient::ListOperations(std::string const& name, std::string const& filter, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::ListOperationsRequest request;
   request.set_name(name);
@@ -107,36 +90,35 @@ UserEventServiceClient::ListOperations(std::string const& name,
 }
 
 StreamRange<google::longrunning::Operation>
-UserEventServiceClient::ListOperations(
-    google::longrunning::ListOperationsRequest request, Options opts) {
+UserEventServiceClient::ListOperations(google::longrunning::ListOperationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOperations(std::move(request));
 }
 
-StatusOr<google::longrunning::Operation> UserEventServiceClient::GetOperation(
-    std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation>
+UserEventServiceClient::GetOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
   return connection_->GetOperation(request);
 }
 
-StatusOr<google::longrunning::Operation> UserEventServiceClient::GetOperation(
-    google::longrunning::GetOperationRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation>
+UserEventServiceClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }
 
-Status UserEventServiceClient::CancelOperation(std::string const& name,
-                                               Options opts) {
+Status
+UserEventServiceClient::CancelOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::CancelOperationRequest request;
   request.set_name(name);
   return connection_->CancelOperation(request);
 }
 
-Status UserEventServiceClient::CancelOperation(
-    google::longrunning::CancelOperationRequest const& request, Options opts) {
+Status
+UserEventServiceClient::CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelOperation(request);
 }

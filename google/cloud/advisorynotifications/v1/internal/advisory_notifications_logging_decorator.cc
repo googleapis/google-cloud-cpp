@@ -32,18 +32,20 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 AdvisoryNotificationsServiceLogging::AdvisoryNotificationsServiceLogging(
     std::shared_ptr<AdvisoryNotificationsServiceStub> child,
-    TracingOptions tracing_options, std::set<std::string> const&)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
+    TracingOptions tracing_options,
+    std::set<std::string> const&)
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::cloud::advisorynotifications::v1::ListNotificationsResponse>
 AdvisoryNotificationsServiceLogging::ListNotifications(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::advisorynotifications::v1::ListNotificationsRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::advisorynotifications::v1::ListNotificationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::advisorynotifications::v1::
-                 ListNotificationsRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::advisorynotifications::v1::ListNotificationsRequest const& request) {
         return child_->ListNotifications(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -51,13 +53,13 @@ AdvisoryNotificationsServiceLogging::ListNotifications(
 
 StatusOr<google::cloud::advisorynotifications::v1::Notification>
 AdvisoryNotificationsServiceLogging::GetNotification(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::advisorynotifications::v1::GetNotificationRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::advisorynotifications::v1::GetNotificationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::advisorynotifications::v1::
-                 GetNotificationRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::advisorynotifications::v1::GetNotificationRequest const& request) {
         return child_->GetNotification(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -65,13 +67,13 @@ AdvisoryNotificationsServiceLogging::GetNotification(
 
 StatusOr<google::cloud::advisorynotifications::v1::Settings>
 AdvisoryNotificationsServiceLogging::GetSettings(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::advisorynotifications::v1::GetSettingsRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::advisorynotifications::v1::GetSettingsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::advisorynotifications::v1::GetSettingsRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::advisorynotifications::v1::GetSettingsRequest const& request) {
         return child_->GetSettings(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -79,14 +81,13 @@ AdvisoryNotificationsServiceLogging::GetSettings(
 
 StatusOr<google::cloud::advisorynotifications::v1::Settings>
 AdvisoryNotificationsServiceLogging::UpdateSettings(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::advisorynotifications::v1::UpdateSettingsRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::advisorynotifications::v1::UpdateSettingsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::advisorynotifications::v1::UpdateSettingsRequest const&
-              request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::advisorynotifications::v1::UpdateSettingsRequest const& request) {
         return child_->UpdateSettings(context, options, request);
       },
       context, options, request, __func__, tracing_options_);

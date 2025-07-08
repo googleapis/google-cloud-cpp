@@ -34,16 +34,14 @@ class RegionInstancesConnectionIdempotencyPolicy {
   virtual ~RegionInstancesConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<RegionInstancesConnectionIdempotencyPolicy> clone()
-      const;
+  virtual std::unique_ptr<RegionInstancesConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency BulkInsert(
-      google::cloud::cpp::compute::region_instances::v1::
-          BulkInsertRequest const& request);
+  virtual google::cloud::Idempotency
+  BulkInsert(google::cloud::cpp::compute::region_instances::v1::BulkInsertRequest const& request);
 };
 
 std::unique_ptr<RegionInstancesConnectionIdempotencyPolicy>
-MakeDefaultRegionInstancesConnectionIdempotencyPolicy();
+    MakeDefaultRegionInstancesConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_region_instances_v1

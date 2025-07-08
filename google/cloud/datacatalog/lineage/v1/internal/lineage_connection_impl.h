@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATACATALOG_LINEAGE_V1_INTERNAL_LINEAGE_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATACATALOG_LINEAGE_V1_INTERNAL_LINEAGE_CONNECTION_IMPL_H
 
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/datacatalog/lineage/v1/internal/lineage_retry_traits.h"
 #include "google/cloud/datacatalog/lineage/v1/internal/lineage_stub.h"
 #include "google/cloud/datacatalog/lineage/v1/lineage_connection.h"
 #include "google/cloud/datacatalog/lineage/v1/lineage_connection_idempotency_policy.h"
 #include "google/cloud/datacatalog/lineage/v1/lineage_options.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -40,119 +40,96 @@ namespace cloud {
 namespace datacatalog_lineage_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class LineageConnectionImpl : public datacatalog_lineage_v1::LineageConnection {
+class LineageConnectionImpl
+    : public datacatalog_lineage_v1::LineageConnection {
  public:
   ~LineageConnectionImpl() override = default;
 
   LineageConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<datacatalog_lineage_v1_internal::LineageStub> stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<datacatalog_lineage_v1_internal::LineageStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
-  StatusOr<google::cloud::datacatalog::lineage::v1::
-               ProcessOpenLineageRunEventResponse>
-  ProcessOpenLineageRunEvent(
-      google::cloud::datacatalog::lineage::v1::
-          ProcessOpenLineageRunEventRequest const& request) override;
+  StatusOr<google::cloud::datacatalog::lineage::v1::ProcessOpenLineageRunEventResponse>
+  ProcessOpenLineageRunEvent(google::cloud::datacatalog::lineage::v1::ProcessOpenLineageRunEventRequest const& request) override;
 
-  StatusOr<google::cloud::datacatalog::lineage::v1::Process> CreateProcess(
-      google::cloud::datacatalog::lineage::v1::CreateProcessRequest const&
-          request) override;
+  StatusOr<google::cloud::datacatalog::lineage::v1::Process>
+  CreateProcess(google::cloud::datacatalog::lineage::v1::CreateProcessRequest const& request) override;
 
-  StatusOr<google::cloud::datacatalog::lineage::v1::Process> UpdateProcess(
-      google::cloud::datacatalog::lineage::v1::UpdateProcessRequest const&
-          request) override;
+  StatusOr<google::cloud::datacatalog::lineage::v1::Process>
+  UpdateProcess(google::cloud::datacatalog::lineage::v1::UpdateProcessRequest const& request) override;
 
-  StatusOr<google::cloud::datacatalog::lineage::v1::Process> GetProcess(
-      google::cloud::datacatalog::lineage::v1::GetProcessRequest const& request)
-      override;
+  StatusOr<google::cloud::datacatalog::lineage::v1::Process>
+  GetProcess(google::cloud::datacatalog::lineage::v1::GetProcessRequest const& request) override;
 
-  StreamRange<google::cloud::datacatalog::lineage::v1::Process> ListProcesses(
-      google::cloud::datacatalog::lineage::v1::ListProcessesRequest request)
-      override;
+  StreamRange<google::cloud::datacatalog::lineage::v1::Process>
+  ListProcesses(google::cloud::datacatalog::lineage::v1::ListProcessesRequest request) override;
+
+  future<StatusOr<google::cloud::datacatalog::lineage::v1::OperationMetadata>>
+  DeleteProcess(google::cloud::datacatalog::lineage::v1::DeleteProcessRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  DeleteProcess(NoAwaitTag,
+      google::cloud::datacatalog::lineage::v1::DeleteProcessRequest const& request) override;
 
   future<StatusOr<google::cloud::datacatalog::lineage::v1::OperationMetadata>>
   DeleteProcess(
-      google::cloud::datacatalog::lineage::v1::DeleteProcessRequest const&
-          request) override;
+      google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::longrunning::Operation> DeleteProcess(
-      NoAwaitTag,
-      google::cloud::datacatalog::lineage::v1::DeleteProcessRequest const&
-          request) override;
+  StatusOr<google::cloud::datacatalog::lineage::v1::Run>
+  CreateRun(google::cloud::datacatalog::lineage::v1::CreateRunRequest const& request) override;
 
-  future<StatusOr<google::cloud::datacatalog::lineage::v1::OperationMetadata>>
-  DeleteProcess(google::longrunning::Operation const& operation) override;
+  StatusOr<google::cloud::datacatalog::lineage::v1::Run>
+  UpdateRun(google::cloud::datacatalog::lineage::v1::UpdateRunRequest const& request) override;
 
-  StatusOr<google::cloud::datacatalog::lineage::v1::Run> CreateRun(
-      google::cloud::datacatalog::lineage::v1::CreateRunRequest const& request)
-      override;
+  StatusOr<google::cloud::datacatalog::lineage::v1::Run>
+  GetRun(google::cloud::datacatalog::lineage::v1::GetRunRequest const& request) override;
 
-  StatusOr<google::cloud::datacatalog::lineage::v1::Run> UpdateRun(
-      google::cloud::datacatalog::lineage::v1::UpdateRunRequest const& request)
-      override;
-
-  StatusOr<google::cloud::datacatalog::lineage::v1::Run> GetRun(
-      google::cloud::datacatalog::lineage::v1::GetRunRequest const& request)
-      override;
-
-  StreamRange<google::cloud::datacatalog::lineage::v1::Run> ListRuns(
-      google::cloud::datacatalog::lineage::v1::ListRunsRequest request)
-      override;
+  StreamRange<google::cloud::datacatalog::lineage::v1::Run>
+  ListRuns(google::cloud::datacatalog::lineage::v1::ListRunsRequest request) override;
 
   future<StatusOr<google::cloud::datacatalog::lineage::v1::OperationMetadata>>
-  DeleteRun(google::cloud::datacatalog::lineage::v1::DeleteRunRequest const&
-                request) override;
+  DeleteRun(google::cloud::datacatalog::lineage::v1::DeleteRunRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> DeleteRun(
-      NoAwaitTag,
-      google::cloud::datacatalog::lineage::v1::DeleteRunRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  DeleteRun(NoAwaitTag,
+      google::cloud::datacatalog::lineage::v1::DeleteRunRequest const& request) override;
 
   future<StatusOr<google::cloud::datacatalog::lineage::v1::OperationMetadata>>
-  DeleteRun(google::longrunning::Operation const& operation) override;
+  DeleteRun(
+      google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::datacatalog::lineage::v1::LineageEvent>
-  CreateLineageEvent(
-      google::cloud::datacatalog::lineage::v1::CreateLineageEventRequest const&
-          request) override;
+  CreateLineageEvent(google::cloud::datacatalog::lineage::v1::CreateLineageEventRequest const& request) override;
 
   StatusOr<google::cloud::datacatalog::lineage::v1::LineageEvent>
-  GetLineageEvent(
-      google::cloud::datacatalog::lineage::v1::GetLineageEventRequest const&
-          request) override;
+  GetLineageEvent(google::cloud::datacatalog::lineage::v1::GetLineageEventRequest const& request) override;
 
   StreamRange<google::cloud::datacatalog::lineage::v1::LineageEvent>
-  ListLineageEvents(
-      google::cloud::datacatalog::lineage::v1::ListLineageEventsRequest request)
-      override;
+  ListLineageEvents(google::cloud::datacatalog::lineage::v1::ListLineageEventsRequest request) override;
 
-  Status DeleteLineageEvent(
-      google::cloud::datacatalog::lineage::v1::DeleteLineageEventRequest const&
-          request) override;
+  Status
+  DeleteLineageEvent(google::cloud::datacatalog::lineage::v1::DeleteLineageEventRequest const& request) override;
 
-  StreamRange<google::cloud::datacatalog::lineage::v1::Link> SearchLinks(
-      google::cloud::datacatalog::lineage::v1::SearchLinksRequest request)
-      override;
+  StreamRange<google::cloud::datacatalog::lineage::v1::Link>
+  SearchLinks(google::cloud::datacatalog::lineage::v1::SearchLinksRequest request) override;
 
   StreamRange<google::cloud::datacatalog::lineage::v1::ProcessLinks>
-  BatchSearchLinkProcesses(
-      google::cloud::datacatalog::lineage::v1::BatchSearchLinkProcessesRequest
-          request) override;
+  BatchSearchLinkProcesses(google::cloud::datacatalog::lineage::v1::BatchSearchLinkProcessesRequest request) override;
 
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request) override;
 
-  Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request) override;
+  Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request) override;
 
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request) override;
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

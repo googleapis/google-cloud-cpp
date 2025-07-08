@@ -46,54 +46,51 @@ ConfidentialComputingMetadata::ConfidentialComputingMetadata(
 
 StatusOr<google::cloud::confidentialcomputing::v1::Challenge>
 ConfidentialComputingMetadata::CreateChallenge(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::confidentialcomputing::v1::CreateChallengeRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::confidentialcomputing::v1::CreateChallengeRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateChallenge(context, options, request);
 }
 
 StatusOr<google::cloud::confidentialcomputing::v1::VerifyAttestationResponse>
 ConfidentialComputingMetadata::VerifyAttestation(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::confidentialcomputing::v1::VerifyAttestationRequest const&
-        request) {
-  SetMetadata(
-      context, options,
-      absl::StrCat("challenge=", internal::UrlEncode(request.challenge())));
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::confidentialcomputing::v1::VerifyAttestationRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("challenge=", internal::UrlEncode(request.challenge())));
   return child_->VerifyAttestation(context, options, request);
 }
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 ConfidentialComputingMetadata::ListLocations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ListLocations(context, options, request);
 }
 
 StatusOr<google::cloud::location::Location>
 ConfidentialComputingMetadata::GetLocation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetLocation(context, options, request);
 }
 
-void ConfidentialComputingMetadata::SetMetadata(
-    grpc::ClientContext& context, Options const& options,
-    std::string const& request_params) {
+void ConfidentialComputingMetadata::SetMetadata(grpc::ClientContext& context,
+                                        Options const& options,
+                                        std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
 void ConfidentialComputingMetadata::SetMetadata(grpc::ClientContext& context,
-                                                Options const& options) {
-  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
-                                       api_client_header_);
+                                        Options const& options) {
+  google::cloud::internal::SetMetadata(
+      context, options, fixed_metadata_, api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

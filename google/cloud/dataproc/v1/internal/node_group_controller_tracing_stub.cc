@@ -34,25 +34,23 @@ NodeGroupControllerTracingStub::NodeGroupControllerTracingStub(
 
 future<StatusOr<google::longrunning::Operation>>
 NodeGroupControllerTracingStub::AsyncCreateNodeGroup(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::dataproc::v1::CreateNodeGroupRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.dataproc.v1.NodeGroupController", "CreateNodeGroup");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::dataproc::v1::CreateNodeGroupRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dataproc.v1.NodeGroupController", "CreateNodeGroup");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f =
-      child_->AsyncCreateNodeGroup(cq, context, std::move(options), request);
+  auto f = child_->AsyncCreateNodeGroup(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 NodeGroupControllerTracingStub::CreateNodeGroup(
-    grpc::ClientContext& context, Options options,
-    google::cloud::dataproc::v1::CreateNodeGroupRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.dataproc.v1.NodeGroupController", "CreateNodeGroup");
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::dataproc::v1::CreateNodeGroupRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dataproc.v1.NodeGroupController", "CreateNodeGroup");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -61,37 +59,34 @@ NodeGroupControllerTracingStub::CreateNodeGroup(
 
 future<StatusOr<google::longrunning::Operation>>
 NodeGroupControllerTracingStub::AsyncResizeNodeGroup(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::dataproc::v1::ResizeNodeGroupRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.dataproc.v1.NodeGroupController", "ResizeNodeGroup");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::dataproc::v1::ResizeNodeGroupRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dataproc.v1.NodeGroupController", "ResizeNodeGroup");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f =
-      child_->AsyncResizeNodeGroup(cq, context, std::move(options), request);
+  auto f = child_->AsyncResizeNodeGroup(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 NodeGroupControllerTracingStub::ResizeNodeGroup(
-    grpc::ClientContext& context, Options options,
-    google::cloud::dataproc::v1::ResizeNodeGroupRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.dataproc.v1.NodeGroupController", "ResizeNodeGroup");
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::dataproc::v1::ResizeNodeGroupRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dataproc.v1.NodeGroupController", "ResizeNodeGroup");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ResizeNodeGroup(context, options, request));
 }
 
-StatusOr<google::cloud::dataproc::v1::NodeGroup>
-NodeGroupControllerTracingStub::GetNodeGroup(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::dataproc::v1::NodeGroup> NodeGroupControllerTracingStub::GetNodeGroup(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dataproc::v1::GetNodeGroupRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.dataproc.v1.NodeGroupController", "GetNodeGroup");
+  auto span = internal::MakeSpanGrpc("google.cloud.dataproc.v1.NodeGroupController", "GetNodeGroup");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -99,10 +94,10 @@ NodeGroupControllerTracingStub::GetNodeGroup(
 }
 
 StatusOr<google::iam::v1::Policy> NodeGroupControllerTracingStub::SetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.dataproc.v1.NodeGroupController", "SetIamPolicy");
+  auto span = internal::MakeSpanGrpc("google.cloud.dataproc.v1.NodeGroupController", "SetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -110,46 +105,43 @@ StatusOr<google::iam::v1::Policy> NodeGroupControllerTracingStub::SetIamPolicy(
 }
 
 StatusOr<google::iam::v1::Policy> NodeGroupControllerTracingStub::GetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.dataproc.v1.NodeGroupController", "GetIamPolicy");
+  auto span = internal::MakeSpanGrpc("google.cloud.dataproc.v1.NodeGroupController", "GetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetIamPolicy(context, options, request));
 }
 
-StatusOr<google::iam::v1::TestIamPermissionsResponse>
-NodeGroupControllerTracingStub::TestIamPermissions(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::iam::v1::TestIamPermissionsResponse> NodeGroupControllerTracingStub::TestIamPermissions(
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.dataproc.v1.NodeGroupController", "TestIamPermissions");
+  auto span = internal::MakeSpanGrpc("google.cloud.dataproc.v1.NodeGroupController", "TestIamPermissions");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->TestIamPermissions(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->TestIamPermissions(context, options, request));
 }
 
-StatusOr<google::longrunning::ListOperationsResponse>
-NodeGroupControllerTracingStub::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse> NodeGroupControllerTracingStub::ListOperations(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.dataproc.v1.NodeGroupController", "ListOperations");
+  auto span = internal::MakeSpanGrpc("google.cloud.dataproc.v1.NodeGroupController", "ListOperations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListOperations(context, options, request));
 }
 
-StatusOr<google::longrunning::Operation>
-NodeGroupControllerTracingStub::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::Operation> NodeGroupControllerTracingStub::GetOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.dataproc.v1.NodeGroupController", "GetOperation");
+  auto span = internal::MakeSpanGrpc("google.cloud.dataproc.v1.NodeGroupController", "GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -157,10 +149,10 @@ NodeGroupControllerTracingStub::GetOperation(
 }
 
 Status NodeGroupControllerTracingStub::DeleteOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.dataproc.v1.NodeGroupController", "DeleteOperation");
+  auto span = internal::MakeSpanGrpc("google.cloud.dataproc.v1.NodeGroupController", "DeleteOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -168,10 +160,10 @@ Status NodeGroupControllerTracingStub::DeleteOperation(
 }
 
 Status NodeGroupControllerTracingStub::CancelOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.dataproc.v1.NodeGroupController", "CancelOperation");
+  auto span = internal::MakeSpanGrpc("google.cloud.dataproc.v1.NodeGroupController", "CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -188,7 +180,8 @@ NodeGroupControllerTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncGetOperation(cq, context, std::move(options), request);
+  auto f = child_->AsyncGetOperation(
+      cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -201,8 +194,8 @@ future<Status> NodeGroupControllerTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f =
-      child_->AsyncCancelOperation(cq, context, std::move(options), request);
+  auto f = child_->AsyncCancelOperation(
+      cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 

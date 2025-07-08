@@ -36,22 +36,18 @@ class RegionDiskTypesTracingConnection
   ~RegionDiskTypesTracingConnection() override = default;
 
   explicit RegionDiskTypesTracingConnection(
-      std::shared_ptr<compute_region_disk_types_v1::RegionDiskTypesConnection>
-          child);
+    std::shared_ptr<compute_region_disk_types_v1::RegionDiskTypesConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::cpp::compute::v1::DiskType> GetDiskType(
-      google::cloud::cpp::compute::region_disk_types::v1::
-          GetDiskTypeRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::DiskType>
+  GetDiskType(google::cloud::cpp::compute::region_disk_types::v1::GetDiskTypeRequest const& request) override;
 
-  StreamRange<google::cloud::cpp::compute::v1::DiskType> ListRegionDiskTypes(
-      google::cloud::cpp::compute::region_disk_types::v1::
-          ListRegionDiskTypesRequest request) override;
+  StreamRange<google::cloud::cpp::compute::v1::DiskType>
+  ListRegionDiskTypes(google::cloud::cpp::compute::region_disk_types::v1::ListRegionDiskTypesRequest request) override;
 
  private:
-  std::shared_ptr<compute_region_disk_types_v1::RegionDiskTypesConnection>
-      child_;
+  std::shared_ptr<compute_region_disk_types_v1::RegionDiskTypesConnection> child_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -64,8 +60,7 @@ class RegionDiskTypesTracingConnection
  */
 std::shared_ptr<compute_region_disk_types_v1::RegionDiskTypesConnection>
 MakeRegionDiskTypesTracingConnection(
-    std::shared_ptr<compute_region_disk_types_v1::RegionDiskTypesConnection>
-        conn);
+    std::shared_ptr<compute_region_disk_types_v1::RegionDiskTypesConnection> conn);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_region_disk_types_v1_internal

@@ -19,15 +19,15 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCEMANAGER_V3_TAG_VALUES_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCEMANAGER_V3_TAG_VALUES_CLIENT_H
 
-#include "google/cloud/resourcemanager/v3/tag_values_connection.h"
 #include "google/cloud/future.h"
-#include "google/cloud/iam_updater.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
+#include "google/cloud/resourcemanager/v3/tag_values_connection.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
+#include "google/cloud/iam_updater.h"
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 #include <string>
@@ -65,8 +65,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class TagValuesClient {
  public:
-  explicit TagValuesClient(std::shared_ptr<TagValuesConnection> connection,
-                           Options opts = {});
+  explicit TagValuesClient(std::shared_ptr<TagValuesConnection> connection, Options opts = {});
   ~TagValuesClient();
 
   ///@{
@@ -118,8 +117,8 @@ class TagValuesClient {
   /// [google.cloud.resourcemanager.v3.TagValue]: @googleapis_reference_link{google/cloud/resourcemanager/v3/tag_values.proto#L162}
   ///
   // clang-format on
-  StreamRange<google::cloud::resourcemanager::v3::TagValue> ListTagValues(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::resourcemanager::v3::TagValue>
+  ListTagValues(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -157,9 +156,8 @@ class TagValuesClient {
   /// [google.cloud.resourcemanager.v3.TagValue]: @googleapis_reference_link{google/cloud/resourcemanager/v3/tag_values.proto#L162}
   ///
   // clang-format on
-  StreamRange<google::cloud::resourcemanager::v3::TagValue> ListTagValues(
-      google::cloud::resourcemanager::v3::ListTagValuesRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::resourcemanager::v3::TagValue>
+  ListTagValues(google::cloud::resourcemanager::v3::ListTagValuesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -185,8 +183,8 @@ class TagValuesClient {
   /// [google.cloud.resourcemanager.v3.TagValue]: @googleapis_reference_link{google/cloud/resourcemanager/v3/tag_values.proto#L162}
   ///
   // clang-format on
-  StatusOr<google::cloud::resourcemanager::v3::TagValue> GetTagValue(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::resourcemanager::v3::TagValue>
+  GetTagValue(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -216,9 +214,8 @@ class TagValuesClient {
   /// [google.cloud.resourcemanager.v3.TagValue]: @googleapis_reference_link{google/cloud/resourcemanager/v3/tag_values.proto#L162}
   ///
   // clang-format on
-  StatusOr<google::cloud::resourcemanager::v3::TagValue> GetTagValue(
-      google::cloud::resourcemanager::v3::GetTagValueRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::resourcemanager::v3::TagValue>
+  GetTagValue(google::cloud::resourcemanager::v3::GetTagValueRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -252,8 +249,8 @@ class TagValuesClient {
   /// [google.cloud.resourcemanager.v3.TagValue]: @googleapis_reference_link{google/cloud/resourcemanager/v3/tag_values.proto#L162}
   ///
   // clang-format on
-  StatusOr<google::cloud::resourcemanager::v3::TagValue> GetNamespacedTagValue(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::resourcemanager::v3::TagValue>
+  GetNamespacedTagValue(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -284,10 +281,8 @@ class TagValuesClient {
   /// [google.cloud.resourcemanager.v3.TagValue]: @googleapis_reference_link{google/cloud/resourcemanager/v3/tag_values.proto#L162}
   ///
   // clang-format on
-  StatusOr<google::cloud::resourcemanager::v3::TagValue> GetNamespacedTagValue(
-      google::cloud::resourcemanager::v3::GetNamespacedTagValueRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::cloud::resourcemanager::v3::TagValue>
+  GetNamespacedTagValue(google::cloud::resourcemanager::v3::GetNamespacedTagValueRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -322,9 +317,8 @@ class TagValuesClient {
   /// [google.cloud.resourcemanager.v3.TagValue]: @googleapis_reference_link{google/cloud/resourcemanager/v3/tag_values.proto#L162}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::resourcemanager::v3::TagValue>> CreateTagValue(
-      google::cloud::resourcemanager::v3::TagValue const& tag_value,
-      Options opts = {});
+  future<StatusOr<google::cloud::resourcemanager::v3::TagValue>>
+  CreateTagValue(google::cloud::resourcemanager::v3::TagValue const& tag_value, Options opts = {});
 
   // clang-format off
   ///
@@ -337,9 +331,8 @@ class TagValuesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateTagValue(
-      NoAwaitTag, google::cloud::resourcemanager::v3::TagValue const& tag_value,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateTagValue(NoAwaitTag, google::cloud::resourcemanager::v3::TagValue const& tag_value, Options opts = {});
 
   // clang-format off
   ///
@@ -378,9 +371,8 @@ class TagValuesClient {
   /// [google.cloud.resourcemanager.v3.TagValue]: @googleapis_reference_link{google/cloud/resourcemanager/v3/tag_values.proto#L162}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::resourcemanager::v3::TagValue>> CreateTagValue(
-      google::cloud::resourcemanager::v3::CreateTagValueRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::resourcemanager::v3::TagValue>>
+  CreateTagValue(google::cloud::resourcemanager::v3::CreateTagValueRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -393,10 +385,8 @@ class TagValuesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateTagValue(
-      NoAwaitTag,
-      google::cloud::resourcemanager::v3::CreateTagValueRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateTagValue(NoAwaitTag, google::cloud::resourcemanager::v3::CreateTagValueRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -407,8 +397,8 @@ class TagValuesClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::resourcemanager::v3::TagValue>> CreateTagValue(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::resourcemanager::v3::TagValue>>
+  CreateTagValue(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -443,9 +433,8 @@ class TagValuesClient {
   /// [google.cloud.resourcemanager.v3.UpdateTagValueRequest]: @googleapis_reference_link{google/cloud/resourcemanager/v3/tag_values.proto#L291}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::resourcemanager::v3::TagValue>> UpdateTagValue(
-      google::cloud::resourcemanager::v3::TagValue const& tag_value,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  future<StatusOr<google::cloud::resourcemanager::v3::TagValue>>
+  UpdateTagValue(google::cloud::resourcemanager::v3::TagValue const& tag_value, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -458,9 +447,8 @@ class TagValuesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateTagValue(
-      NoAwaitTag, google::cloud::resourcemanager::v3::TagValue const& tag_value,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateTagValue(NoAwaitTag, google::cloud::resourcemanager::v3::TagValue const& tag_value, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -496,9 +484,8 @@ class TagValuesClient {
   /// [google.cloud.resourcemanager.v3.UpdateTagValueRequest]: @googleapis_reference_link{google/cloud/resourcemanager/v3/tag_values.proto#L291}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::resourcemanager::v3::TagValue>> UpdateTagValue(
-      google::cloud::resourcemanager::v3::UpdateTagValueRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::resourcemanager::v3::TagValue>>
+  UpdateTagValue(google::cloud::resourcemanager::v3::UpdateTagValueRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -511,10 +498,8 @@ class TagValuesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateTagValue(
-      NoAwaitTag,
-      google::cloud::resourcemanager::v3::UpdateTagValueRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateTagValue(NoAwaitTag, google::cloud::resourcemanager::v3::UpdateTagValueRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -525,8 +510,8 @@ class TagValuesClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::resourcemanager::v3::TagValue>> UpdateTagValue(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::resourcemanager::v3::TagValue>>
+  UpdateTagValue(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -559,8 +544,8 @@ class TagValuesClient {
   /// [google.cloud.resourcemanager.v3.TagValue]: @googleapis_reference_link{google/cloud/resourcemanager/v3/tag_values.proto#L162}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::resourcemanager::v3::TagValue>> DeleteTagValue(
-      std::string const& name, Options opts = {});
+  future<StatusOr<google::cloud::resourcemanager::v3::TagValue>>
+  DeleteTagValue(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -573,8 +558,8 @@ class TagValuesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteTagValue(
-      NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteTagValue(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -611,9 +596,8 @@ class TagValuesClient {
   /// [google.cloud.resourcemanager.v3.TagValue]: @googleapis_reference_link{google/cloud/resourcemanager/v3/tag_values.proto#L162}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::resourcemanager::v3::TagValue>> DeleteTagValue(
-      google::cloud::resourcemanager::v3::DeleteTagValueRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::resourcemanager::v3::TagValue>>
+  DeleteTagValue(google::cloud::resourcemanager::v3::DeleteTagValueRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -626,10 +610,8 @@ class TagValuesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteTagValue(
-      NoAwaitTag,
-      google::cloud::resourcemanager::v3::DeleteTagValueRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteTagValue(NoAwaitTag, google::cloud::resourcemanager::v3::DeleteTagValueRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -640,8 +622,8 @@ class TagValuesClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::resourcemanager::v3::TagValue>> DeleteTagValue(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::resourcemanager::v3::TagValue>>
+  DeleteTagValue(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -671,8 +653,8 @@ class TagValuesClient {
   /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy> GetIamPolicy(std::string const& resource,
-                                                 Options opts = {});
+  StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(std::string const& resource, Options opts = {});
 
   // clang-format off
   ///
@@ -706,8 +688,8 @@ class TagValuesClient {
   /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -740,9 +722,8 @@ class TagValuesClient {
   /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L100}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      std::string const& resource, google::iam::v1::Policy const& policy,
-      Options opts = {});
+  StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(std::string const& resource, google::iam::v1::Policy const& policy, Options opts = {});
 
   /**
    * Updates the IAM policy for @p resource using an optimistic concurrency
@@ -764,9 +745,8 @@ class TagValuesClient {
    *    backoff policies.
    * @return google::iam::v1::Policy
    */
-  StatusOr<google::iam::v1::Policy> SetIamPolicy(std::string const& resource,
-                                                 IamUpdater const& updater,
-                                                 Options opts = {});
+  StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(std::string const& resource, IamUpdater const& updater, Options opts = {});
 
   // clang-format off
   ///
@@ -799,8 +779,8 @@ class TagValuesClient {
   /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L100}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -833,9 +813,8 @@ class TagValuesClient {
   /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L153}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      std::string const& resource, std::vector<std::string> const& permissions,
-      Options opts = {});
+  StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(std::string const& resource, std::vector<std::string> const& permissions, Options opts = {});
 
   // clang-format off
   ///
@@ -868,9 +847,8 @@ class TagValuesClient {
   /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L153}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request,
-      Options opts = {});
+  StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -896,8 +874,8 @@ class TagValuesClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -928,9 +906,8 @@ class TagValuesClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<TagValuesConnection> connection_;

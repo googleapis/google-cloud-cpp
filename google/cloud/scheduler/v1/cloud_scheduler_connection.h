@@ -19,11 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SCHEDULER_V1_CLOUD_SCHEDULER_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SCHEDULER_V1_CLOUD_SCHEDULER_CONNECTION_H
 
-#include "google/cloud/scheduler/v1/cloud_scheduler_connection_idempotency_policy.h"
-#include "google/cloud/scheduler/v1/internal/cloud_scheduler_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
+#include "google/cloud/scheduler/v1/cloud_scheduler_connection_idempotency_policy.h"
+#include "google/cloud/scheduler/v1/internal/cloud_scheduler_retry_traits.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
@@ -52,8 +52,7 @@ class CloudSchedulerRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class CloudSchedulerLimitedErrorCountRetryPolicy
-    : public CloudSchedulerRetryPolicy {
+class CloudSchedulerLimitedErrorCountRetryPolicy : public CloudSchedulerRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -63,14 +62,14 @@ class CloudSchedulerLimitedErrorCountRetryPolicy
    *     @p maximum_failures == 0.
    */
   explicit CloudSchedulerLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   CloudSchedulerLimitedErrorCountRetryPolicy(
       CloudSchedulerLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : CloudSchedulerLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : CloudSchedulerLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   CloudSchedulerLimitedErrorCountRetryPolicy(
       CloudSchedulerLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : CloudSchedulerLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : CloudSchedulerLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -90,9 +89,7 @@ class CloudSchedulerLimitedErrorCountRetryPolicy
   using BaseType = CloudSchedulerRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      scheduler_v1_internal::CloudSchedulerRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<scheduler_v1_internal::CloudSchedulerRetryTraits> impl_;
 };
 
 /**
@@ -130,14 +127,12 @@ class CloudSchedulerLimitedTimeRetryPolicy : public CloudSchedulerRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit CloudSchedulerLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  CloudSchedulerLimitedTimeRetryPolicy(
-      CloudSchedulerLimitedTimeRetryPolicy&& rhs) noexcept
-      : CloudSchedulerLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  CloudSchedulerLimitedTimeRetryPolicy(
-      CloudSchedulerLimitedTimeRetryPolicy const& rhs) noexcept
-      : CloudSchedulerLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  CloudSchedulerLimitedTimeRetryPolicy(CloudSchedulerLimitedTimeRetryPolicy&& rhs) noexcept
+    : CloudSchedulerLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  CloudSchedulerLimitedTimeRetryPolicy(CloudSchedulerLimitedTimeRetryPolicy const& rhs) noexcept
+    : CloudSchedulerLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -159,9 +154,7 @@ class CloudSchedulerLimitedTimeRetryPolicy : public CloudSchedulerRetryPolicy {
   using BaseType = CloudSchedulerRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      scheduler_v1_internal::CloudSchedulerRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<scheduler_v1_internal::CloudSchedulerRetryTraits> impl_;
 };
 
 /**
@@ -182,35 +175,35 @@ class CloudSchedulerConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StreamRange<google::cloud::scheduler::v1::Job> ListJobs(
-      google::cloud::scheduler::v1::ListJobsRequest request);
+  virtual StreamRange<google::cloud::scheduler::v1::Job>
+  ListJobs(google::cloud::scheduler::v1::ListJobsRequest request);
 
-  virtual StatusOr<google::cloud::scheduler::v1::Job> GetJob(
-      google::cloud::scheduler::v1::GetJobRequest const& request);
+  virtual StatusOr<google::cloud::scheduler::v1::Job>
+  GetJob(google::cloud::scheduler::v1::GetJobRequest const& request);
 
-  virtual StatusOr<google::cloud::scheduler::v1::Job> CreateJob(
-      google::cloud::scheduler::v1::CreateJobRequest const& request);
+  virtual StatusOr<google::cloud::scheduler::v1::Job>
+  CreateJob(google::cloud::scheduler::v1::CreateJobRequest const& request);
 
-  virtual StatusOr<google::cloud::scheduler::v1::Job> UpdateJob(
-      google::cloud::scheduler::v1::UpdateJobRequest const& request);
+  virtual StatusOr<google::cloud::scheduler::v1::Job>
+  UpdateJob(google::cloud::scheduler::v1::UpdateJobRequest const& request);
 
-  virtual Status DeleteJob(
-      google::cloud::scheduler::v1::DeleteJobRequest const& request);
+  virtual Status
+  DeleteJob(google::cloud::scheduler::v1::DeleteJobRequest const& request);
 
-  virtual StatusOr<google::cloud::scheduler::v1::Job> PauseJob(
-      google::cloud::scheduler::v1::PauseJobRequest const& request);
+  virtual StatusOr<google::cloud::scheduler::v1::Job>
+  PauseJob(google::cloud::scheduler::v1::PauseJobRequest const& request);
 
-  virtual StatusOr<google::cloud::scheduler::v1::Job> ResumeJob(
-      google::cloud::scheduler::v1::ResumeJobRequest const& request);
+  virtual StatusOr<google::cloud::scheduler::v1::Job>
+  ResumeJob(google::cloud::scheduler::v1::ResumeJobRequest const& request);
 
-  virtual StatusOr<google::cloud::scheduler::v1::Job> RunJob(
-      google::cloud::scheduler::v1::RunJobRequest const& request);
+  virtual StatusOr<google::cloud::scheduler::v1::Job>
+  RunJob(google::cloud::scheduler::v1::RunJobRequest const& request);
 
-  virtual StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request);
+  virtual StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request);
 
-  virtual StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request);
+  virtual StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request);
 };
 
 /**

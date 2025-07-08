@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_ADMIN_TOPIC_ADMIN_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_ADMIN_TOPIC_ADMIN_CLIENT_H
 
-#include "google/cloud/pubsub/admin/topic_admin_connection.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
+#include "google/cloud/pubsub/admin/topic_admin_connection.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <map>
@@ -62,8 +62,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class TopicAdminClient {
  public:
-  explicit TopicAdminClient(std::shared_ptr<TopicAdminConnection> connection,
-                            Options opts = {});
+  explicit TopicAdminClient(std::shared_ptr<TopicAdminConnection> connection, Options opts = {});
   ~TopicAdminClient();
 
   ///@{
@@ -108,11 +107,11 @@ class TopicAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.pubsub.v1.Topic]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L778}
+  /// [google.pubsub.v1.Topic]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L807}
   ///
   // clang-format on
-  StatusOr<google::pubsub::v1::Topic> CreateTopic(std::string const& name,
-                                                  Options opts = {});
+  StatusOr<google::pubsub::v1::Topic>
+  CreateTopic(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -138,11 +137,11 @@ class TopicAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.pubsub.v1.Topic]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L778}
+  /// [google.pubsub.v1.Topic]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L807}
   ///
   // clang-format on
-  StatusOr<google::pubsub::v1::Topic> CreateTopic(
-      google::pubsub::v1::Topic const& request, Options opts = {});
+  StatusOr<google::pubsub::v1::Topic>
+  CreateTopic(google::pubsub::v1::Topic const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -168,13 +167,12 @@ class TopicAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.pubsub.v1.Topic]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L778}
-  /// [google.pubsub.v1.UpdateTopicRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L908}
+  /// [google.pubsub.v1.Topic]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L807}
+  /// [google.pubsub.v1.UpdateTopicRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L937}
   ///
   // clang-format on
-  StatusOr<google::pubsub::v1::Topic> UpdateTopic(
-      google::pubsub::v1::Topic const& topic,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::pubsub::v1::Topic>
+  UpdateTopic(google::pubsub::v1::Topic const& topic, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -200,12 +198,12 @@ class TopicAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.pubsub.v1.Topic]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L778}
-  /// [google.pubsub.v1.UpdateTopicRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L908}
+  /// [google.pubsub.v1.Topic]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L807}
+  /// [google.pubsub.v1.UpdateTopicRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L937}
   ///
   // clang-format on
-  StatusOr<google::pubsub::v1::Topic> UpdateTopic(
-      google::pubsub::v1::UpdateTopicRequest const& request, Options opts = {});
+  StatusOr<google::pubsub::v1::Topic>
+  UpdateTopic(google::pubsub::v1::UpdateTopicRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -226,12 +224,12 @@ class TopicAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.pubsub.v1.GetTopicRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L898}
-  /// [google.pubsub.v1.Topic]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L778}
+  /// [google.pubsub.v1.GetTopicRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L927}
+  /// [google.pubsub.v1.Topic]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L807}
   ///
   // clang-format on
-  StatusOr<google::pubsub::v1::Topic> GetTopic(std::string const& topic,
-                                               Options opts = {});
+  StatusOr<google::pubsub::v1::Topic>
+  GetTopic(std::string const& topic, Options opts = {});
 
   // clang-format off
   ///
@@ -256,12 +254,12 @@ class TopicAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.pubsub.v1.GetTopicRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L898}
-  /// [google.pubsub.v1.Topic]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L778}
+  /// [google.pubsub.v1.GetTopicRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L927}
+  /// [google.pubsub.v1.Topic]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L807}
   ///
   // clang-format on
-  StatusOr<google::pubsub::v1::Topic> GetTopic(
-      google::pubsub::v1::GetTopicRequest const& request, Options opts = {});
+  StatusOr<google::pubsub::v1::Topic>
+  GetTopic(google::pubsub::v1::GetTopicRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -291,12 +289,12 @@ class TopicAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.pubsub.v1.ListTopicsRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L943}
-  /// [google.pubsub.v1.Topic]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L778}
+  /// [google.pubsub.v1.ListTopicsRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L972}
+  /// [google.pubsub.v1.Topic]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L807}
   ///
   // clang-format on
-  StreamRange<google::pubsub::v1::Topic> ListTopics(std::string const& project,
-                                                    Options opts = {});
+  StreamRange<google::pubsub::v1::Topic>
+  ListTopics(std::string const& project, Options opts = {});
 
   // clang-format off
   ///
@@ -330,12 +328,12 @@ class TopicAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.pubsub.v1.ListTopicsRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L943}
-  /// [google.pubsub.v1.Topic]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L778}
+  /// [google.pubsub.v1.ListTopicsRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L972}
+  /// [google.pubsub.v1.Topic]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L807}
   ///
   // clang-format on
-  StreamRange<google::pubsub::v1::Topic> ListTopics(
-      google::pubsub::v1::ListTopicsRequest request, Options opts = {});
+  StreamRange<google::pubsub::v1::Topic>
+  ListTopics(google::pubsub::v1::ListTopicsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -363,11 +361,11 @@ class TopicAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.pubsub.v1.ListTopicSubscriptionsRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L973}
+  /// [google.pubsub.v1.ListTopicSubscriptionsRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L1002}
   ///
   // clang-format on
-  StreamRange<std::string> ListTopicSubscriptions(std::string const& topic,
-                                                  Options opts = {});
+  StreamRange<std::string>
+  ListTopicSubscriptions(std::string const& topic, Options opts = {});
 
   // clang-format off
   ///
@@ -399,12 +397,11 @@ class TopicAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.pubsub.v1.ListTopicSubscriptionsRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L973}
+  /// [google.pubsub.v1.ListTopicSubscriptionsRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L1002}
   ///
   // clang-format on
-  StreamRange<std::string> ListTopicSubscriptions(
-      google::pubsub::v1::ListTopicSubscriptionsRequest request,
-      Options opts = {});
+  StreamRange<std::string>
+  ListTopicSubscriptions(google::pubsub::v1::ListTopicSubscriptionsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -436,11 +433,11 @@ class TopicAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.pubsub.v1.ListTopicSnapshotsRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L1008}
+  /// [google.pubsub.v1.ListTopicSnapshotsRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L1037}
   ///
   // clang-format on
-  StreamRange<std::string> ListTopicSnapshots(std::string const& topic,
-                                              Options opts = {});
+  StreamRange<std::string>
+  ListTopicSnapshots(std::string const& topic, Options opts = {});
 
   // clang-format off
   ///
@@ -476,11 +473,11 @@ class TopicAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.pubsub.v1.ListTopicSnapshotsRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L1008}
+  /// [google.pubsub.v1.ListTopicSnapshotsRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L1037}
   ///
   // clang-format on
-  StreamRange<std::string> ListTopicSnapshots(
-      google::pubsub::v1::ListTopicSnapshotsRequest request, Options opts = {});
+  StreamRange<std::string>
+  ListTopicSnapshots(google::pubsub::v1::ListTopicSnapshotsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -503,10 +500,11 @@ class TopicAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.pubsub.v1.DeleteTopicRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L1037}
+  /// [google.pubsub.v1.DeleteTopicRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L1066}
   ///
   // clang-format on
-  Status DeleteTopic(std::string const& topic, Options opts = {});
+  Status
+  DeleteTopic(std::string const& topic, Options opts = {});
 
   // clang-format off
   ///
@@ -533,11 +531,11 @@ class TopicAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.pubsub.v1.DeleteTopicRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L1037}
+  /// [google.pubsub.v1.DeleteTopicRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L1066}
   ///
   // clang-format on
-  Status DeleteTopic(google::pubsub::v1::DeleteTopicRequest const& request,
-                     Options opts = {});
+  Status
+  DeleteTopic(google::pubsub::v1::DeleteTopicRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -565,13 +563,12 @@ class TopicAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.pubsub.v1.DetachSubscriptionRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L1047}
-  /// [google.pubsub.v1.DetachSubscriptionResponse]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L1060}
+  /// [google.pubsub.v1.DetachSubscriptionRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L1076}
+  /// [google.pubsub.v1.DetachSubscriptionResponse]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L1089}
   ///
   // clang-format on
-  StatusOr<google::pubsub::v1::DetachSubscriptionResponse> DetachSubscription(
-      google::pubsub::v1::DetachSubscriptionRequest const& request,
-      Options opts = {});
+  StatusOr<google::pubsub::v1::DetachSubscriptionResponse>
+  DetachSubscription(google::pubsub::v1::DetachSubscriptionRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -603,8 +600,8 @@ class TopicAdminClient {
   /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L100}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -635,8 +632,8 @@ class TopicAdminClient {
   /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -671,9 +668,8 @@ class TopicAdminClient {
   /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L153}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request,
-      Options opts = {});
+  StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<TopicAdminConnection> connection_;

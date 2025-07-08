@@ -33,22 +33,21 @@ ExecutionsTracingStub::ExecutionsTracingStub(
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::cloud::run::v2::Execution> ExecutionsTracingStub::GetExecution(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::run::v2::GetExecutionRequest const& request) {
-  auto span =
-      internal::MakeSpanGrpc("google.cloud.run.v2.Executions", "GetExecution");
+  auto span = internal::MakeSpanGrpc("google.cloud.run.v2.Executions", "GetExecution");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetExecution(context, options, request));
 }
 
-StatusOr<google::cloud::run::v2::ListExecutionsResponse>
-ExecutionsTracingStub::ListExecutions(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::run::v2::ListExecutionsResponse> ExecutionsTracingStub::ListExecutions(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::run::v2::ListExecutionsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.run.v2.Executions",
-                                     "ListExecutions");
+  auto span = internal::MakeSpanGrpc("google.cloud.run.v2.Executions", "ListExecutions");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -57,24 +56,23 @@ ExecutionsTracingStub::ListExecutions(
 
 future<StatusOr<google::longrunning::Operation>>
 ExecutionsTracingStub::AsyncDeleteExecution(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::run::v2::DeleteExecutionRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.run.v2.Executions",
-                                     "DeleteExecution");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::run::v2::DeleteExecutionRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.run.v2.Executions", "DeleteExecution");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f =
-      child_->AsyncDeleteExecution(cq, context, std::move(options), request);
+  auto f = child_->AsyncDeleteExecution(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
-StatusOr<google::longrunning::Operation> ExecutionsTracingStub::DeleteExecution(
-    grpc::ClientContext& context, Options options,
-    google::cloud::run::v2::DeleteExecutionRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.run.v2.Executions",
-                                     "DeleteExecution");
+StatusOr<google::longrunning::Operation>
+ExecutionsTracingStub::DeleteExecution(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::run::v2::DeleteExecutionRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.run.v2.Executions", "DeleteExecution");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -83,36 +81,34 @@ StatusOr<google::longrunning::Operation> ExecutionsTracingStub::DeleteExecution(
 
 future<StatusOr<google::longrunning::Operation>>
 ExecutionsTracingStub::AsyncCancelExecution(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::run::v2::CancelExecutionRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.run.v2.Executions",
-                                     "CancelExecution");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::run::v2::CancelExecutionRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.run.v2.Executions", "CancelExecution");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f =
-      child_->AsyncCancelExecution(cq, context, std::move(options), request);
+  auto f = child_->AsyncCancelExecution(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
-StatusOr<google::longrunning::Operation> ExecutionsTracingStub::CancelExecution(
-    grpc::ClientContext& context, Options options,
-    google::cloud::run::v2::CancelExecutionRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.run.v2.Executions",
-                                     "CancelExecution");
+StatusOr<google::longrunning::Operation>
+ExecutionsTracingStub::CancelExecution(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::run::v2::CancelExecutionRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.run.v2.Executions", "CancelExecution");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CancelExecution(context, options, request));
 }
 
-StatusOr<google::longrunning::ListOperationsResponse>
-ExecutionsTracingStub::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse> ExecutionsTracingStub::ListOperations(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.run.v2.Executions",
-                                     "ListOperations");
+  auto span = internal::MakeSpanGrpc("google.cloud.run.v2.Executions", "ListOperations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -120,10 +116,10 @@ ExecutionsTracingStub::ListOperations(
 }
 
 StatusOr<google::longrunning::Operation> ExecutionsTracingStub::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  auto span =
-      internal::MakeSpanGrpc("google.cloud.run.v2.Executions", "GetOperation");
+  auto span = internal::MakeSpanGrpc("google.cloud.run.v2.Executions", "GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -131,10 +127,10 @@ StatusOr<google::longrunning::Operation> ExecutionsTracingStub::GetOperation(
 }
 
 Status ExecutionsTracingStub::DeleteOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.run.v2.Executions",
-                                     "DeleteOperation");
+  auto span = internal::MakeSpanGrpc("google.cloud.run.v2.Executions", "DeleteOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -142,10 +138,10 @@ Status ExecutionsTracingStub::DeleteOperation(
 }
 
 StatusOr<google::longrunning::Operation> ExecutionsTracingStub::WaitOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::WaitOperationRequest const& request) {
-  auto span =
-      internal::MakeSpanGrpc("google.cloud.run.v2.Executions", "WaitOperation");
+  auto span = internal::MakeSpanGrpc("google.cloud.run.v2.Executions", "WaitOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -162,7 +158,8 @@ ExecutionsTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncGetOperation(cq, context, std::move(options), request);
+  auto f = child_->AsyncGetOperation(
+      cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -175,8 +172,8 @@ future<Status> ExecutionsTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f =
-      child_->AsyncCancelOperation(cq, context, std::move(options), request);
+  auto f = child_->AsyncCancelOperation(
+      cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 

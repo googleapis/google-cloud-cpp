@@ -34,10 +34,8 @@ using ::google::cloud::automl_v1::PredictionServicePollingPolicyOption;
 /// @deprecated Use automl_v1::PredictionServiceBackoffPolicyOption directly.
 using ::google::cloud::automl_v1::PredictionServiceBackoffPolicyOption;
 
-/// @deprecated Use
-/// automl_v1::PredictionServiceConnectionIdempotencyPolicyOption directly.
-using ::google::cloud::automl_v1::
-    PredictionServiceConnectionIdempotencyPolicyOption;
+/// @deprecated Use automl_v1::PredictionServiceConnectionIdempotencyPolicyOption directly.
+using ::google::cloud::automl_v1::PredictionServiceConnectionIdempotencyPolicyOption;
 
 /// @deprecated Use automl_v1::PredictionServicePolicyOptionList directly.
 using ::google::cloud::automl_v1::PredictionServicePolicyOptionList;

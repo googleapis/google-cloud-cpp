@@ -30,175 +30,167 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-class ConfigTracingConnection : public config_v1::ConfigConnection {
+class ConfigTracingConnection
+    : public config_v1::ConfigConnection {
  public:
   ~ConfigTracingConnection() override = default;
 
   explicit ConfigTracingConnection(
-      std::shared_ptr<config_v1::ConfigConnection> child);
+    std::shared_ptr<config_v1::ConfigConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StreamRange<google::cloud::config::v1::Deployment> ListDeployments(
-      google::cloud::config::v1::ListDeploymentsRequest request) override;
+  StreamRange<google::cloud::config::v1::Deployment>
+  ListDeployments(google::cloud::config::v1::ListDeploymentsRequest request) override;
 
-  StatusOr<google::cloud::config::v1::Deployment> GetDeployment(
-      google::cloud::config::v1::GetDeploymentRequest const& request) override;
+  StatusOr<google::cloud::config::v1::Deployment>
+  GetDeployment(google::cloud::config::v1::GetDeploymentRequest const& request) override;
 
-  future<StatusOr<google::cloud::config::v1::Deployment>> CreateDeployment(
-      google::cloud::config::v1::CreateDeploymentRequest const& request)
-      override;
+  future<StatusOr<google::cloud::config::v1::Deployment>>
+  CreateDeployment(google::cloud::config::v1::CreateDeploymentRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> CreateDeployment(
-      NoAwaitTag,
-      google::cloud::config::v1::CreateDeploymentRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  CreateDeployment(NoAwaitTag,
+      google::cloud::config::v1::CreateDeploymentRequest const& request) override;
 
-  future<StatusOr<google::cloud::config::v1::Deployment>> CreateDeployment(
+  future<StatusOr<google::cloud::config::v1::Deployment>>
+  CreateDeployment(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::config::v1::Deployment>> UpdateDeployment(
-      google::cloud::config::v1::UpdateDeploymentRequest const& request)
-      override;
+  future<StatusOr<google::cloud::config::v1::Deployment>>
+  UpdateDeployment(google::cloud::config::v1::UpdateDeploymentRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> UpdateDeployment(
-      NoAwaitTag,
-      google::cloud::config::v1::UpdateDeploymentRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  UpdateDeployment(NoAwaitTag,
+      google::cloud::config::v1::UpdateDeploymentRequest const& request) override;
 
-  future<StatusOr<google::cloud::config::v1::Deployment>> UpdateDeployment(
+  future<StatusOr<google::cloud::config::v1::Deployment>>
+  UpdateDeployment(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::config::v1::Deployment>> DeleteDeployment(
-      google::cloud::config::v1::DeleteDeploymentRequest const& request)
-      override;
+  future<StatusOr<google::cloud::config::v1::Deployment>>
+  DeleteDeployment(google::cloud::config::v1::DeleteDeploymentRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> DeleteDeployment(
-      NoAwaitTag,
-      google::cloud::config::v1::DeleteDeploymentRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  DeleteDeployment(NoAwaitTag,
+      google::cloud::config::v1::DeleteDeploymentRequest const& request) override;
 
-  future<StatusOr<google::cloud::config::v1::Deployment>> DeleteDeployment(
+  future<StatusOr<google::cloud::config::v1::Deployment>>
+  DeleteDeployment(
       google::longrunning::Operation const& operation) override;
 
-  StreamRange<google::cloud::config::v1::Revision> ListRevisions(
-      google::cloud::config::v1::ListRevisionsRequest request) override;
+  StreamRange<google::cloud::config::v1::Revision>
+  ListRevisions(google::cloud::config::v1::ListRevisionsRequest request) override;
 
-  StatusOr<google::cloud::config::v1::Revision> GetRevision(
-      google::cloud::config::v1::GetRevisionRequest const& request) override;
+  StatusOr<google::cloud::config::v1::Revision>
+  GetRevision(google::cloud::config::v1::GetRevisionRequest const& request) override;
 
-  StatusOr<google::cloud::config::v1::Resource> GetResource(
-      google::cloud::config::v1::GetResourceRequest const& request) override;
+  StatusOr<google::cloud::config::v1::Resource>
+  GetResource(google::cloud::config::v1::GetResourceRequest const& request) override;
 
-  StreamRange<google::cloud::config::v1::Resource> ListResources(
-      google::cloud::config::v1::ListResourcesRequest request) override;
+  StreamRange<google::cloud::config::v1::Resource>
+  ListResources(google::cloud::config::v1::ListResourcesRequest request) override;
 
-  StatusOr<google::cloud::config::v1::Statefile> ExportDeploymentStatefile(
-      google::cloud::config::v1::ExportDeploymentStatefileRequest const&
-          request) override;
+  StatusOr<google::cloud::config::v1::Statefile>
+  ExportDeploymentStatefile(google::cloud::config::v1::ExportDeploymentStatefileRequest const& request) override;
 
-  StatusOr<google::cloud::config::v1::Statefile> ExportRevisionStatefile(
-      google::cloud::config::v1::ExportRevisionStatefileRequest const& request)
-      override;
+  StatusOr<google::cloud::config::v1::Statefile>
+  ExportRevisionStatefile(google::cloud::config::v1::ExportRevisionStatefileRequest const& request) override;
 
-  StatusOr<google::cloud::config::v1::Statefile> ImportStatefile(
-      google::cloud::config::v1::ImportStatefileRequest const& request)
-      override;
+  StatusOr<google::cloud::config::v1::Statefile>
+  ImportStatefile(google::cloud::config::v1::ImportStatefileRequest const& request) override;
 
-  Status DeleteStatefile(
-      google::cloud::config::v1::DeleteStatefileRequest const& request)
-      override;
+  Status
+  DeleteStatefile(google::cloud::config::v1::DeleteStatefileRequest const& request) override;
 
-  future<StatusOr<google::cloud::config::v1::Deployment>> LockDeployment(
+  future<StatusOr<google::cloud::config::v1::Deployment>>
+  LockDeployment(google::cloud::config::v1::LockDeploymentRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  LockDeployment(NoAwaitTag,
       google::cloud::config::v1::LockDeploymentRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> LockDeployment(
-      NoAwaitTag,
-      google::cloud::config::v1::LockDeploymentRequest const& request) override;
-
-  future<StatusOr<google::cloud::config::v1::Deployment>> LockDeployment(
+  future<StatusOr<google::cloud::config::v1::Deployment>>
+  LockDeployment(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::config::v1::Deployment>> UnlockDeployment(
-      google::cloud::config::v1::UnlockDeploymentRequest const& request)
-      override;
+  future<StatusOr<google::cloud::config::v1::Deployment>>
+  UnlockDeployment(google::cloud::config::v1::UnlockDeploymentRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> UnlockDeployment(
-      NoAwaitTag,
-      google::cloud::config::v1::UnlockDeploymentRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  UnlockDeployment(NoAwaitTag,
+      google::cloud::config::v1::UnlockDeploymentRequest const& request) override;
 
-  future<StatusOr<google::cloud::config::v1::Deployment>> UnlockDeployment(
+  future<StatusOr<google::cloud::config::v1::Deployment>>
+  UnlockDeployment(
       google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::cloud::config::v1::LockInfo> ExportLockInfo(
-      google::cloud::config::v1::ExportLockInfoRequest const& request) override;
+  StatusOr<google::cloud::config::v1::LockInfo>
+  ExportLockInfo(google::cloud::config::v1::ExportLockInfoRequest const& request) override;
 
-  future<StatusOr<google::cloud::config::v1::Preview>> CreatePreview(
+  future<StatusOr<google::cloud::config::v1::Preview>>
+  CreatePreview(google::cloud::config::v1::CreatePreviewRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  CreatePreview(NoAwaitTag,
       google::cloud::config::v1::CreatePreviewRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> CreatePreview(
-      NoAwaitTag,
-      google::cloud::config::v1::CreatePreviewRequest const& request) override;
-
-  future<StatusOr<google::cloud::config::v1::Preview>> CreatePreview(
+  future<StatusOr<google::cloud::config::v1::Preview>>
+  CreatePreview(
       google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::cloud::config::v1::Preview> GetPreview(
-      google::cloud::config::v1::GetPreviewRequest const& request) override;
+  StatusOr<google::cloud::config::v1::Preview>
+  GetPreview(google::cloud::config::v1::GetPreviewRequest const& request) override;
 
-  StreamRange<google::cloud::config::v1::Preview> ListPreviews(
-      google::cloud::config::v1::ListPreviewsRequest request) override;
+  StreamRange<google::cloud::config::v1::Preview>
+  ListPreviews(google::cloud::config::v1::ListPreviewsRequest request) override;
 
-  future<StatusOr<google::cloud::config::v1::Preview>> DeletePreview(
+  future<StatusOr<google::cloud::config::v1::Preview>>
+  DeletePreview(google::cloud::config::v1::DeletePreviewRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  DeletePreview(NoAwaitTag,
       google::cloud::config::v1::DeletePreviewRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> DeletePreview(
-      NoAwaitTag,
-      google::cloud::config::v1::DeletePreviewRequest const& request) override;
-
-  future<StatusOr<google::cloud::config::v1::Preview>> DeletePreview(
+  future<StatusOr<google::cloud::config::v1::Preview>>
+  DeletePreview(
       google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::config::v1::ExportPreviewResultResponse>
-  ExportPreviewResult(
-      google::cloud::config::v1::ExportPreviewResultRequest const& request)
-      override;
+  ExportPreviewResult(google::cloud::config::v1::ExportPreviewResultRequest const& request) override;
 
   StreamRange<google::cloud::config::v1::TerraformVersion>
-  ListTerraformVersions(
-      google::cloud::config::v1::ListTerraformVersionsRequest request) override;
+  ListTerraformVersions(google::cloud::config::v1::ListTerraformVersionsRequest request) override;
 
-  StatusOr<google::cloud::config::v1::TerraformVersion> GetTerraformVersion(
-      google::cloud::config::v1::GetTerraformVersionRequest const& request)
-      override;
+  StatusOr<google::cloud::config::v1::TerraformVersion>
+  GetTerraformVersion(google::cloud::config::v1::GetTerraformVersionRequest const& request) override;
 
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request) override;
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request) override;
 
-  StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request) override;
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request) override;
+  StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request) override;
 
-  Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request) override;
+  Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request) override;
 
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request) override;
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::shared_ptr<config_v1::ConfigConnection> child_;
@@ -212,7 +204,8 @@ class ConfigTracingConnection : public config_v1::ConfigConnection {
  * The connection is only decorated if tracing is enabled (as determined by the
  * connection's options).
  */
-std::shared_ptr<config_v1::ConfigConnection> MakeConfigTracingConnection(
+std::shared_ptr<config_v1::ConfigConnection>
+MakeConfigTracingConnection(
     std::shared_ptr<config_v1::ConfigConnection> conn);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

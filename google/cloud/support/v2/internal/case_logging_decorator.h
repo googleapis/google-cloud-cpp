@@ -35,42 +35,48 @@ class CaseServiceLogging : public CaseServiceStub {
  public:
   ~CaseServiceLogging() override = default;
   CaseServiceLogging(std::shared_ptr<CaseServiceStub> child,
-                     TracingOptions tracing_options,
-                     std::set<std::string> const& components);
+                       TracingOptions tracing_options,
+                       std::set<std::string> const& components);
 
   StatusOr<google::cloud::support::v2::Case> GetCase(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::support::v2::GetCaseRequest const& request) override;
 
   StatusOr<google::cloud::support::v2::ListCasesResponse> ListCases(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::support::v2::ListCasesRequest const& request) override;
 
   StatusOr<google::cloud::support::v2::SearchCasesResponse> SearchCases(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::support::v2::SearchCasesRequest const& request) override;
 
   StatusOr<google::cloud::support::v2::Case> CreateCase(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::support::v2::CreateCaseRequest const& request) override;
 
   StatusOr<google::cloud::support::v2::Case> UpdateCase(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::support::v2::UpdateCaseRequest const& request) override;
 
   StatusOr<google::cloud::support::v2::Case> EscalateCase(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::support::v2::EscalateCaseRequest const& request) override;
 
   StatusOr<google::cloud::support::v2::Case> CloseCase(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::support::v2::CloseCaseRequest const& request) override;
 
-  StatusOr<google::cloud::support::v2::SearchCaseClassificationsResponse>
-  SearchCaseClassifications(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::support::v2::SearchCaseClassificationsRequest const&
-          request) override;
+  StatusOr<google::cloud::support::v2::SearchCaseClassificationsResponse> SearchCaseClassifications(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::support::v2::SearchCaseClassificationsRequest const& request) override;
 
  private:
   std::shared_ptr<CaseServiceStub> child_;

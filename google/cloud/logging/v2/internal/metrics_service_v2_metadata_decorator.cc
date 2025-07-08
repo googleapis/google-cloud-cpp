@@ -46,86 +46,87 @@ MetricsServiceV2Metadata::MetricsServiceV2Metadata(
 
 StatusOr<google::logging::v2::ListLogMetricsResponse>
 MetricsServiceV2Metadata::ListLogMetrics(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::logging::v2::ListLogMetricsRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListLogMetrics(context, options, request);
 }
 
-StatusOr<google::logging::v2::LogMetric> MetricsServiceV2Metadata::GetLogMetric(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::logging::v2::LogMetric>
+MetricsServiceV2Metadata::GetLogMetric(
+    grpc::ClientContext& context,
+    Options const& options,
     google::logging::v2::GetLogMetricRequest const& request) {
-  SetMetadata(
-      context, options,
-      absl::StrCat("metric_name=", internal::UrlEncode(request.metric_name())));
+  SetMetadata(context, options, absl::StrCat("metric_name=", internal::UrlEncode(request.metric_name())));
   return child_->GetLogMetric(context, options, request);
 }
 
 StatusOr<google::logging::v2::LogMetric>
 MetricsServiceV2Metadata::CreateLogMetric(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::logging::v2::CreateLogMetricRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateLogMetric(context, options, request);
 }
 
 StatusOr<google::logging::v2::LogMetric>
 MetricsServiceV2Metadata::UpdateLogMetric(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::logging::v2::UpdateLogMetricRequest const& request) {
-  SetMetadata(
-      context, options,
-      absl::StrCat("metric_name=", internal::UrlEncode(request.metric_name())));
+  SetMetadata(context, options, absl::StrCat("metric_name=", internal::UrlEncode(request.metric_name())));
   return child_->UpdateLogMetric(context, options, request);
 }
 
-Status MetricsServiceV2Metadata::DeleteLogMetric(
-    grpc::ClientContext& context, Options const& options,
+Status
+MetricsServiceV2Metadata::DeleteLogMetric(
+    grpc::ClientContext& context,
+    Options const& options,
     google::logging::v2::DeleteLogMetricRequest const& request) {
-  SetMetadata(
-      context, options,
-      absl::StrCat("metric_name=", internal::UrlEncode(request.metric_name())));
+  SetMetadata(context, options, absl::StrCat("metric_name=", internal::UrlEncode(request.metric_name())));
   return child_->DeleteLogMetric(context, options, request);
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
 MetricsServiceV2Metadata::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ListOperations(context, options, request);
 }
 
-StatusOr<google::longrunning::Operation> MetricsServiceV2Metadata::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::Operation>
+MetricsServiceV2Metadata::GetOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetOperation(context, options, request);
 }
 
-Status MetricsServiceV2Metadata::CancelOperation(
-    grpc::ClientContext& context, Options const& options,
+Status
+MetricsServiceV2Metadata::CancelOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->CancelOperation(context, options, request);
 }
 
 void MetricsServiceV2Metadata::SetMetadata(grpc::ClientContext& context,
-                                           Options const& options,
-                                           std::string const& request_params) {
+                                        Options const& options,
+                                        std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
 void MetricsServiceV2Metadata::SetMetadata(grpc::ClientContext& context,
-                                           Options const& options) {
-  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
-                                       api_client_header_);
+                                        Options const& options) {
+  google::cloud::internal::SetMetadata(
+      context, options, fixed_metadata_, api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

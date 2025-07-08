@@ -35,42 +35,32 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options PipelineServiceDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_PIPELINE_SERVICE_ENDPOINT", "",
-      "GOOGLE_CLOUD_CPP_PIPELINE_SERVICE_AUTHORITY",
+      std::move(options), "GOOGLE_CLOUD_CPP_PIPELINE_SERVICE_ENDPOINT",
+      "", "GOOGLE_CLOUD_CPP_PIPELINE_SERVICE_AUTHORITY",
       "contentwarehouse.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<contentwarehouse_v1::PipelineServiceRetryPolicyOption>()) {
     options.set<contentwarehouse_v1::PipelineServiceRetryPolicyOption>(
         contentwarehouse_v1::PipelineServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
-            .clone());
+            std::chrono::minutes(30)).clone());
   }
   if (!options.has<contentwarehouse_v1::PipelineServiceBackoffPolicyOption>()) {
     options.set<contentwarehouse_v1::PipelineServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(
-            std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
-            .clone());
+        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
   }
   if (!options.has<contentwarehouse_v1::PipelineServicePollingPolicyOption>()) {
     options.set<contentwarehouse_v1::PipelineServicePollingPolicyOption>(
         GenericPollingPolicy<
             contentwarehouse_v1::PipelineServiceRetryPolicyOption::Type,
             contentwarehouse_v1::PipelineServiceBackoffPolicyOption::Type>(
-            options
-                .get<contentwarehouse_v1::PipelineServiceRetryPolicyOption>()
-                ->clone(),
+            options.get<contentwarehouse_v1::PipelineServiceRetryPolicyOption>()->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                     std::chrono::minutes(5), kBackoffScaling)
-                .clone())
-            .clone());
+            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
   }
-  if (!options.has<contentwarehouse_v1::
-                       PipelineServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<
-        contentwarehouse_v1::PipelineServiceConnectionIdempotencyPolicyOption>(
-        contentwarehouse_v1::
-            MakeDefaultPipelineServiceConnectionIdempotencyPolicy());
+  if (!options.has<contentwarehouse_v1::PipelineServiceConnectionIdempotencyPolicyOption>()) {
+    options.set<contentwarehouse_v1::PipelineServiceConnectionIdempotencyPolicyOption>(
+        contentwarehouse_v1::MakeDefaultPipelineServiceConnectionIdempotencyPolicy());
   }
 
   return options;

@@ -35,22 +35,23 @@ class TraceServiceLogging : public TraceServiceStub {
  public:
   ~TraceServiceLogging() override = default;
   TraceServiceLogging(std::shared_ptr<TraceServiceStub> child,
-                      TracingOptions tracing_options,
-                      std::set<std::string> const& components);
+                       TracingOptions tracing_options,
+                       std::set<std::string> const& components);
 
   StatusOr<google::devtools::cloudtrace::v1::ListTracesResponse> ListTraces(
-      grpc::ClientContext& context, Options const& options,
-      google::devtools::cloudtrace::v1::ListTracesRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::devtools::cloudtrace::v1::ListTracesRequest const& request) override;
 
   StatusOr<google::devtools::cloudtrace::v1::Trace> GetTrace(
-      grpc::ClientContext& context, Options const& options,
-      google::devtools::cloudtrace::v1::GetTraceRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::devtools::cloudtrace::v1::GetTraceRequest const& request) override;
 
-  Status PatchTraces(grpc::ClientContext& context, Options const& options,
-                     google::devtools::cloudtrace::v1::PatchTracesRequest const&
-                         request) override;
+  Status PatchTraces(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::devtools::cloudtrace::v1::PatchTracesRequest const& request) override;
 
  private:
   std::shared_ptr<TraceServiceStub> child_;

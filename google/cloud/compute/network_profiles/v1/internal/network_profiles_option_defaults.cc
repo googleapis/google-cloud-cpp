@@ -35,31 +35,23 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options NetworkProfilesDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_NETWORK_PROFILES_ENDPOINT", "",
-      "GOOGLE_CLOUD_CPP_NETWORK_PROFILES_AUTHORITY", "compute.googleapis.com");
+      std::move(options), "GOOGLE_CLOUD_CPP_NETWORK_PROFILES_ENDPOINT",
+      "", "GOOGLE_CLOUD_CPP_NETWORK_PROFILES_AUTHORITY",
+      "compute.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
-  if (!options.has<
-          compute_network_profiles_v1::NetworkProfilesRetryPolicyOption>()) {
+  if (!options.has<compute_network_profiles_v1::NetworkProfilesRetryPolicyOption>()) {
     options.set<compute_network_profiles_v1::NetworkProfilesRetryPolicyOption>(
         compute_network_profiles_v1::NetworkProfilesLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
-            .clone());
+            std::chrono::minutes(30)).clone());
   }
-  if (!options.has<
-          compute_network_profiles_v1::NetworkProfilesBackoffPolicyOption>()) {
-    options
-        .set<compute_network_profiles_v1::NetworkProfilesBackoffPolicyOption>(
-            ExponentialBackoffPolicy(
-                std::chrono::seconds(0), std::chrono::seconds(1),
-                std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
-                .clone());
+  if (!options.has<compute_network_profiles_v1::NetworkProfilesBackoffPolicyOption>()) {
+    options.set<compute_network_profiles_v1::NetworkProfilesBackoffPolicyOption>(
+        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
   }
-  if (!options.has<compute_network_profiles_v1::
-                       NetworkProfilesConnectionIdempotencyPolicyOption>()) {
-    options.set<compute_network_profiles_v1::
-                    NetworkProfilesConnectionIdempotencyPolicyOption>(
-        compute_network_profiles_v1::
-            MakeDefaultNetworkProfilesConnectionIdempotencyPolicy());
+  if (!options.has<compute_network_profiles_v1::NetworkProfilesConnectionIdempotencyPolicyOption>()) {
+    options.set<compute_network_profiles_v1::NetworkProfilesConnectionIdempotencyPolicyOption>(
+        compute_network_profiles_v1::MakeDefaultNetworkProfilesConnectionIdempotencyPolicy());
   }
 
   return options;

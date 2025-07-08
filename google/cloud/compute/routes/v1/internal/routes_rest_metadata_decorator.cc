@@ -17,11 +17,11 @@
 // source: google/cloud/compute/routes/v1/routes.proto
 
 #include "google/cloud/compute/routes/v1/internal/routes_rest_metadata_decorator.h"
+#include "absl/strings/str_format.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/internal/rest_set_metadata.h"
 #include "google/cloud/status_or.h"
-#include "absl/strings/str_format.h"
 #include <memory>
 #include <utility>
 
@@ -30,8 +30,9 @@ namespace cloud {
 namespace compute_routes_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-RoutesRestMetadata::RoutesRestMetadata(std::shared_ptr<RoutesRestStub> child,
-                                       std::string api_client_header)
+RoutesRestMetadata::RoutesRestMetadata(
+    std::shared_ptr<RoutesRestStub> child,
+    std::string api_client_header)
     : child_(std::move(child)),
       api_client_header_(
           api_client_header.empty()
@@ -40,57 +41,54 @@ RoutesRestMetadata::RoutesRestMetadata(std::shared_ptr<RoutesRestStub> child,
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RoutesRestMetadata::AsyncDeleteRoute(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::routes::v1::DeleteRouteRequest const&
-        request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::routes::v1::DeleteRouteRequest const& request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncDeleteRoute(cq, std::move(rest_context),
-                                  std::move(options), request);
+  return child_->AsyncDeleteRoute(
+      cq, std::move(rest_context), std::move(options), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RoutesRestMetadata::DeleteRoute(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::routes::v1::DeleteRouteRequest const&
-        request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::routes::v1::DeleteRouteRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->DeleteRoute(rest_context, options, request);
 }
 
-StatusOr<google::cloud::cpp::compute::v1::Route> RoutesRestMetadata::GetRoute(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::routes::v1::GetRouteRequest const& request) {
+StatusOr<google::cloud::cpp::compute::v1::Route>
+RoutesRestMetadata::GetRoute(
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::routes::v1::GetRouteRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->GetRoute(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RoutesRestMetadata::AsyncInsertRoute(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::routes::v1::InsertRouteRequest const&
-        request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::routes::v1::InsertRouteRequest const& request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncInsertRoute(cq, std::move(rest_context),
-                                  std::move(options), request);
+  return child_->AsyncInsertRoute(
+      cq, std::move(rest_context), std::move(options), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RoutesRestMetadata::InsertRoute(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::routes::v1::InsertRouteRequest const&
-        request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::routes::v1::InsertRouteRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->InsertRoute(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::RouteList>
 RoutesRestMetadata::ListRoutes(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::routes::v1::ListRoutesRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::routes::v1::ListRoutesRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->ListRoutes(rest_context, options, request);
 }
@@ -100,29 +98,28 @@ RoutesRestMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::global_operations::v1::
-        GetOperationRequest const& request) {
+    google::cloud::cpp::compute::global_operations::v1::GetOperationRequest const& request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncGetOperation(cq, std::move(rest_context),
-                                   std::move(options), request);
+  return child_->AsyncGetOperation(
+      cq, std::move(rest_context), std::move(options), request);
 }
 
-future<Status> RoutesRestMetadata::AsyncCancelOperation(
+future<Status>
+RoutesRestMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::global_operations::v1::
-        DeleteOperationRequest const& request) {
+    google::cloud::cpp::compute::global_operations::v1::DeleteOperationRequest const& request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncCancelOperation(cq, std::move(rest_context),
-                                      std::move(options), request);
+  return child_->AsyncCancelOperation(
+      cq, std::move(rest_context), std::move(options), request);
 }
 
-void RoutesRestMetadata::SetMetadata(rest_internal::RestContext& rest_context,
-                                     Options const& options,
-                                     std::vector<std::string> const& params) {
-  google::cloud::rest_internal::SetMetadata(rest_context, options, params,
-                                            api_client_header_);
+void RoutesRestMetadata::SetMetadata(
+      rest_internal::RestContext& rest_context,
+      Options const& options, std::vector<std::string> const& params) {
+  google::cloud::rest_internal::SetMetadata(
+      rest_context, options, params, api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

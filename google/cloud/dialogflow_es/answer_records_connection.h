@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_ES_ANSWER_RECORDS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_ES_ANSWER_RECORDS_CONNECTION_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/dialogflow_es/answer_records_connection_idempotency_policy.h"
 #include "google/cloud/dialogflow_es/internal/answer_records_retry_traits.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -53,8 +53,7 @@ class AnswerRecordsRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class AnswerRecordsLimitedErrorCountRetryPolicy
-    : public AnswerRecordsRetryPolicy {
+class AnswerRecordsLimitedErrorCountRetryPolicy : public AnswerRecordsRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -64,14 +63,14 @@ class AnswerRecordsLimitedErrorCountRetryPolicy
    *     @p maximum_failures == 0.
    */
   explicit AnswerRecordsLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   AnswerRecordsLimitedErrorCountRetryPolicy(
       AnswerRecordsLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : AnswerRecordsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : AnswerRecordsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   AnswerRecordsLimitedErrorCountRetryPolicy(
       AnswerRecordsLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : AnswerRecordsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : AnswerRecordsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -91,9 +90,7 @@ class AnswerRecordsLimitedErrorCountRetryPolicy
   using BaseType = AnswerRecordsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      dialogflow_es_internal::AnswerRecordsRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<dialogflow_es_internal::AnswerRecordsRetryTraits> impl_;
 };
 
 /**
@@ -131,14 +128,12 @@ class AnswerRecordsLimitedTimeRetryPolicy : public AnswerRecordsRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit AnswerRecordsLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  AnswerRecordsLimitedTimeRetryPolicy(
-      AnswerRecordsLimitedTimeRetryPolicy&& rhs) noexcept
-      : AnswerRecordsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  AnswerRecordsLimitedTimeRetryPolicy(
-      AnswerRecordsLimitedTimeRetryPolicy const& rhs) noexcept
-      : AnswerRecordsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  AnswerRecordsLimitedTimeRetryPolicy(AnswerRecordsLimitedTimeRetryPolicy&& rhs) noexcept
+    : AnswerRecordsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  AnswerRecordsLimitedTimeRetryPolicy(AnswerRecordsLimitedTimeRetryPolicy const& rhs) noexcept
+    : AnswerRecordsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -160,9 +155,7 @@ class AnswerRecordsLimitedTimeRetryPolicy : public AnswerRecordsRetryPolicy {
   using BaseType = AnswerRecordsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      dialogflow_es_internal::AnswerRecordsRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<dialogflow_es_internal::AnswerRecordsRetryTraits> impl_;
 };
 
 /**
@@ -184,27 +177,25 @@ class AnswerRecordsConnection {
   virtual Options options() { return Options{}; }
 
   virtual StreamRange<google::cloud::dialogflow::v2::AnswerRecord>
-  ListAnswerRecords(
-      google::cloud::dialogflow::v2::ListAnswerRecordsRequest request);
+  ListAnswerRecords(google::cloud::dialogflow::v2::ListAnswerRecordsRequest request);
 
   virtual StatusOr<google::cloud::dialogflow::v2::AnswerRecord>
-  UpdateAnswerRecord(
-      google::cloud::dialogflow::v2::UpdateAnswerRecordRequest const& request);
+  UpdateAnswerRecord(google::cloud::dialogflow::v2::UpdateAnswerRecordRequest const& request);
 
-  virtual StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request);
+  virtual StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request);
 
-  virtual StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request);
+  virtual StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request);
 
-  virtual StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 
-  virtual Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request);
+  virtual Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request);
 };
 
 /**

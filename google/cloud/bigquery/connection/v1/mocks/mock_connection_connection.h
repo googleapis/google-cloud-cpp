@@ -32,9 +32,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * Application developers may want to test their code with simulated responses,
  * including errors, from an object of type `ConnectionServiceClient`. To do so,
- * construct an object of type `ConnectionServiceClient` with an instance of
- * this class. Then use the Google Test framework functions to program the
- * behavior of this mock.
+ * construct an object of type `ConnectionServiceClient` with an instance of this
+ * class. Then use the Google Test framework functions to program the behavior
+ * of this mock.
  *
  * @see [This example][bq-mock] for how to test your application with GoogleTest.
  * While the example showcases types from the BigQuery library, the underlying
@@ -42,56 +42,41 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockConnectionServiceConnection
-    : public bigquery_connection_v1::ConnectionServiceConnection {
+class MockConnectionServiceConnection : public bigquery_connection_v1::ConnectionServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::bigquery::connection::v1::Connection>,
-      CreateConnection,
-      (google::cloud::bigquery::connection::v1::CreateConnectionRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::bigquery::connection::v1::Connection>,
+  CreateConnection,
+  (google::cloud::bigquery::connection::v1::CreateConnectionRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::bigquery::connection::v1::Connection>,
-      GetConnection,
-      (google::cloud::bigquery::connection::v1::GetConnectionRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::bigquery::connection::v1::Connection>,
+  GetConnection,
+  (google::cloud::bigquery::connection::v1::GetConnectionRequest const& request), (override));
 
-  MOCK_METHOD(
-      (StreamRange<google::cloud::bigquery::connection::v1::Connection>),
-      ListConnections,
-      (google::cloud::bigquery::connection::v1::ListConnectionsRequest request),
-      (override));
+  MOCK_METHOD((StreamRange<google::cloud::bigquery::connection::v1::Connection>),
+  ListConnections,
+  (google::cloud::bigquery::connection::v1::ListConnectionsRequest request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::bigquery::connection::v1::Connection>,
-      UpdateConnection,
-      (google::cloud::bigquery::connection::v1::UpdateConnectionRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::bigquery::connection::v1::Connection>,
+  UpdateConnection,
+  (google::cloud::bigquery::connection::v1::UpdateConnectionRequest const& request), (override));
 
-  MOCK_METHOD(
-      Status, DeleteConnection,
-      (google::cloud::bigquery::connection::v1::DeleteConnectionRequest const&
-           request),
-      (override));
+  MOCK_METHOD(Status,
+  DeleteConnection,
+  (google::cloud::bigquery::connection::v1::DeleteConnectionRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, GetIamPolicy,
-              (google::iam::v1::GetIamPolicyRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::iam::v1::Policy>,
+  GetIamPolicy,
+  (google::iam::v1::GetIamPolicyRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, SetIamPolicy,
-              (google::iam::v1::SetIamPolicyRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::iam::v1::Policy>,
+  SetIamPolicy,
+  (google::iam::v1::SetIamPolicyRequest const& request), (override));
 
   MOCK_METHOD(StatusOr<google::iam::v1::TestIamPermissionsResponse>,
-              TestIamPermissions,
-              (google::iam::v1::TestIamPermissionsRequest const& request),
-              (override));
+  TestIamPermissions,
+  (google::iam::v1::TestIamPermissionsRequest const& request), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

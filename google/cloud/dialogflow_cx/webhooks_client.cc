@@ -25,11 +25,11 @@ namespace cloud {
 namespace dialogflow_cx {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-WebhooksClient::WebhooksClient(std::shared_ptr<WebhooksConnection> connection,
-                               Options opts)
+WebhooksClient::WebhooksClient(
+    std::shared_ptr<WebhooksConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 WebhooksClient::~WebhooksClient() = default;
 
 StreamRange<google::cloud::dialogflow::cx::v3::Webhook>
@@ -41,32 +41,27 @@ WebhooksClient::ListWebhooks(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::dialogflow::cx::v3::Webhook>
-WebhooksClient::ListWebhooks(
-    google::cloud::dialogflow::cx::v3::ListWebhooksRequest request,
-    Options opts) {
+WebhooksClient::ListWebhooks(google::cloud::dialogflow::cx::v3::ListWebhooksRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListWebhooks(std::move(request));
 }
 
-StatusOr<google::cloud::dialogflow::cx::v3::Webhook> WebhooksClient::GetWebhook(
-    std::string const& name, Options opts) {
+StatusOr<google::cloud::dialogflow::cx::v3::Webhook>
+WebhooksClient::GetWebhook(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dialogflow::cx::v3::GetWebhookRequest request;
   request.set_name(name);
   return connection_->GetWebhook(request);
 }
 
-StatusOr<google::cloud::dialogflow::cx::v3::Webhook> WebhooksClient::GetWebhook(
-    google::cloud::dialogflow::cx::v3::GetWebhookRequest const& request,
-    Options opts) {
+StatusOr<google::cloud::dialogflow::cx::v3::Webhook>
+WebhooksClient::GetWebhook(google::cloud::dialogflow::cx::v3::GetWebhookRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetWebhook(request);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Webhook>
-WebhooksClient::CreateWebhook(
-    std::string const& parent,
-    google::cloud::dialogflow::cx::v3::Webhook const& webhook, Options opts) {
+WebhooksClient::CreateWebhook(std::string const& parent, google::cloud::dialogflow::cx::v3::Webhook const& webhook, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dialogflow::cx::v3::CreateWebhookRequest request;
   request.set_parent(parent);
@@ -75,17 +70,13 @@ WebhooksClient::CreateWebhook(
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Webhook>
-WebhooksClient::CreateWebhook(
-    google::cloud::dialogflow::cx::v3::CreateWebhookRequest const& request,
-    Options opts) {
+WebhooksClient::CreateWebhook(google::cloud::dialogflow::cx::v3::CreateWebhookRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateWebhook(request);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Webhook>
-WebhooksClient::UpdateWebhook(
-    google::cloud::dialogflow::cx::v3::Webhook const& webhook,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+WebhooksClient::UpdateWebhook(google::cloud::dialogflow::cx::v3::Webhook const& webhook, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dialogflow::cx::v3::UpdateWebhookRequest request;
   *request.mutable_webhook() = webhook;
@@ -94,41 +85,39 @@ WebhooksClient::UpdateWebhook(
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Webhook>
-WebhooksClient::UpdateWebhook(
-    google::cloud::dialogflow::cx::v3::UpdateWebhookRequest const& request,
-    Options opts) {
+WebhooksClient::UpdateWebhook(google::cloud::dialogflow::cx::v3::UpdateWebhookRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateWebhook(request);
 }
 
-Status WebhooksClient::DeleteWebhook(std::string const& name, Options opts) {
+Status
+WebhooksClient::DeleteWebhook(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dialogflow::cx::v3::DeleteWebhookRequest request;
   request.set_name(name);
   return connection_->DeleteWebhook(request);
 }
 
-Status WebhooksClient::DeleteWebhook(
-    google::cloud::dialogflow::cx::v3::DeleteWebhookRequest const& request,
-    Options opts) {
+Status
+WebhooksClient::DeleteWebhook(google::cloud::dialogflow::cx::v3::DeleteWebhookRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteWebhook(request);
 }
 
-StreamRange<google::cloud::location::Location> WebhooksClient::ListLocations(
-    google::cloud::location::ListLocationsRequest request, Options opts) {
+StreamRange<google::cloud::location::Location>
+WebhooksClient::ListLocations(google::cloud::location::ListLocationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListLocations(std::move(request));
 }
 
-StatusOr<google::cloud::location::Location> WebhooksClient::GetLocation(
-    google::cloud::location::GetLocationRequest const& request, Options opts) {
+StatusOr<google::cloud::location::Location>
+WebhooksClient::GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetLocation(request);
 }
 
-StreamRange<google::longrunning::Operation> WebhooksClient::ListOperations(
-    std::string const& name, std::string const& filter, Options opts) {
+StreamRange<google::longrunning::Operation>
+WebhooksClient::ListOperations(std::string const& name, std::string const& filter, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::ListOperationsRequest request;
   request.set_name(name);
@@ -136,35 +125,36 @@ StreamRange<google::longrunning::Operation> WebhooksClient::ListOperations(
   return connection_->ListOperations(request);
 }
 
-StreamRange<google::longrunning::Operation> WebhooksClient::ListOperations(
-    google::longrunning::ListOperationsRequest request, Options opts) {
+StreamRange<google::longrunning::Operation>
+WebhooksClient::ListOperations(google::longrunning::ListOperationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOperations(std::move(request));
 }
 
-StatusOr<google::longrunning::Operation> WebhooksClient::GetOperation(
-    std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation>
+WebhooksClient::GetOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
   return connection_->GetOperation(request);
 }
 
-StatusOr<google::longrunning::Operation> WebhooksClient::GetOperation(
-    google::longrunning::GetOperationRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation>
+WebhooksClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }
 
-Status WebhooksClient::CancelOperation(std::string const& name, Options opts) {
+Status
+WebhooksClient::CancelOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::CancelOperationRequest request;
   request.set_name(name);
   return connection_->CancelOperation(request);
 }
 
-Status WebhooksClient::CancelOperation(
-    google::longrunning::CancelOperationRequest const& request, Options opts) {
+Status
+WebhooksClient::CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelOperation(request);
 }

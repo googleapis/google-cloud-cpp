@@ -62,29 +62,23 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class SecuritySettingsServiceClient {
  public:
-  explicit SecuritySettingsServiceClient(
-      std::shared_ptr<SecuritySettingsServiceConnection> connection,
-      Options opts = {});
+  explicit SecuritySettingsServiceClient(std::shared_ptr<SecuritySettingsServiceConnection> connection, Options opts = {});
   ~SecuritySettingsServiceClient();
 
   ///@{
   /// @name Copy and move support
   SecuritySettingsServiceClient(SecuritySettingsServiceClient const&) = default;
-  SecuritySettingsServiceClient& operator=(
-      SecuritySettingsServiceClient const&) = default;
+  SecuritySettingsServiceClient& operator=(SecuritySettingsServiceClient const&) = default;
   SecuritySettingsServiceClient(SecuritySettingsServiceClient&&) = default;
-  SecuritySettingsServiceClient& operator=(SecuritySettingsServiceClient&&) =
-      default;
+  SecuritySettingsServiceClient& operator=(SecuritySettingsServiceClient&&) = default;
   ///@}
 
   ///@{
   /// @name Equality
-  friend bool operator==(SecuritySettingsServiceClient const& a,
-                         SecuritySettingsServiceClient const& b) {
+  friend bool operator==(SecuritySettingsServiceClient const& a, SecuritySettingsServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(SecuritySettingsServiceClient const& a,
-                         SecuritySettingsServiceClient const& b) {
+  friend bool operator!=(SecuritySettingsServiceClient const& a, SecuritySettingsServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -115,11 +109,7 @@ class SecuritySettingsServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::SecuritySettings>
-  CreateSecuritySettings(
-      std::string const& parent,
-      google::cloud::dialogflow::cx::v3::SecuritySettings const&
-          security_settings,
-      Options opts = {});
+  CreateSecuritySettings(std::string const& parent, google::cloud::dialogflow::cx::v3::SecuritySettings const& security_settings, Options opts = {});
 
   // clang-format off
   ///
@@ -149,10 +139,7 @@ class SecuritySettingsServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::SecuritySettings>
-  CreateSecuritySettings(
-      google::cloud::dialogflow::cx::v3::CreateSecuritySettingsRequest const&
-          request,
-      Options opts = {});
+  CreateSecuritySettings(google::cloud::dialogflow::cx::v3::CreateSecuritySettingsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -213,10 +200,7 @@ class SecuritySettingsServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::SecuritySettings>
-  GetSecuritySettings(
-      google::cloud::dialogflow::cx::v3::GetSecuritySettingsRequest const&
-          request,
-      Options opts = {});
+  GetSecuritySettings(google::cloud::dialogflow::cx::v3::GetSecuritySettingsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -245,10 +229,7 @@ class SecuritySettingsServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::SecuritySettings>
-  UpdateSecuritySettings(
-      google::cloud::dialogflow::cx::v3::SecuritySettings const&
-          security_settings,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  UpdateSecuritySettings(google::cloud::dialogflow::cx::v3::SecuritySettings const& security_settings, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -279,10 +260,7 @@ class SecuritySettingsServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::SecuritySettings>
-  UpdateSecuritySettings(
-      google::cloud::dialogflow::cx::v3::UpdateSecuritySettingsRequest const&
-          request,
-      Options opts = {});
+  UpdateSecuritySettings(google::cloud::dialogflow::cx::v3::UpdateSecuritySettingsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -356,9 +334,7 @@ class SecuritySettingsServiceClient {
   ///
   // clang-format on
   StreamRange<google::cloud::dialogflow::cx::v3::SecuritySettings>
-  ListSecuritySettings(
-      google::cloud::dialogflow::cx::v3::ListSecuritySettingsRequest request,
-      Options opts = {});
+  ListSecuritySettings(google::cloud::dialogflow::cx::v3::ListSecuritySettingsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -384,7 +360,8 @@ class SecuritySettingsServiceClient {
   /// [google.cloud.dialogflow.cx.v3.SecuritySettings]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L194}
   ///
   // clang-format on
-  Status DeleteSecuritySettings(std::string const& name, Options opts = {});
+  Status
+  DeleteSecuritySettings(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -412,10 +389,8 @@ class SecuritySettingsServiceClient {
   /// [google.cloud.dialogflow.cx.v3.SecuritySettings]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L194}
   ///
   // clang-format on
-  Status DeleteSecuritySettings(
-      google::cloud::dialogflow::cx::v3::DeleteSecuritySettingsRequest const&
-          request,
-      Options opts = {});
+  Status
+  DeleteSecuritySettings(google::cloud::dialogflow::cx::v3::DeleteSecuritySettingsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -453,8 +428,8 @@ class SecuritySettingsServiceClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request, Options opts = {});
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -483,9 +458,8 @@ class SecuritySettingsServiceClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -520,8 +494,8 @@ class SecuritySettingsServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -560,8 +534,8 @@ class SecuritySettingsServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -587,8 +561,8 @@ class SecuritySettingsServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -619,9 +593,8 @@ class SecuritySettingsServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -655,7 +628,8 @@ class SecuritySettingsServiceClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(std::string const& name, Options opts = {});
+  Status
+  CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -694,9 +668,8 @@ class SecuritySettingsServiceClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request,
-      Options opts = {});
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<SecuritySettingsServiceConnection> connection_;

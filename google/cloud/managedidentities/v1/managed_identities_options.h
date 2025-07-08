@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MANAGEDIDENTITIES_V1_MANAGED_IDENTITIES_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MANAGEDIDENTITIES_V1_MANAGED_IDENTITIES_OPTIONS_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/managedidentities/v1/managed_identities_connection.h"
 #include "google/cloud/managedidentities/v1/managed_identities_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -55,8 +55,7 @@ struct ManagedIdentitiesServiceBackoffPolicyOption {
  * @ingroup google-cloud-managedidentities-options
  */
 struct ManagedIdentitiesServiceConnectionIdempotencyPolicyOption {
-  using Type =
-      std::shared_ptr<ManagedIdentitiesServiceConnectionIdempotencyPolicy>;
+  using Type = std::shared_ptr<ManagedIdentitiesServiceConnectionIdempotencyPolicy>;
 };
 
 /**

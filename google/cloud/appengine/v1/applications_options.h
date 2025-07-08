@@ -74,7 +74,8 @@ struct ApplicationsPollingPolicyOption {
  * @ingroup google-cloud-appengine-options
  */
 using ApplicationsPolicyOptionList =
-    OptionList<ApplicationsRetryPolicyOption, ApplicationsBackoffPolicyOption,
+    OptionList<ApplicationsRetryPolicyOption,
+               ApplicationsBackoffPolicyOption,
                ApplicationsPollingPolicyOption,
                ApplicationsConnectionIdempotencyPolicyOption>;
 

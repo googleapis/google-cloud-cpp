@@ -26,91 +26,75 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-ApiGatewayServiceConnectionIdempotencyPolicy::
-    ~ApiGatewayServiceConnectionIdempotencyPolicy() = default;
+ApiGatewayServiceConnectionIdempotencyPolicy::~ApiGatewayServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<ApiGatewayServiceConnectionIdempotencyPolicy>
 ApiGatewayServiceConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<ApiGatewayServiceConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency ApiGatewayServiceConnectionIdempotencyPolicy::ListGateways(
-    google::cloud::apigateway::v1::ListGatewaysRequest) {  // NOLINT
+Idempotency ApiGatewayServiceConnectionIdempotencyPolicy::ListGateways(google::cloud::apigateway::v1::ListGatewaysRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency ApiGatewayServiceConnectionIdempotencyPolicy::GetGateway(
-    google::cloud::apigateway::v1::GetGatewayRequest const&) {
+Idempotency ApiGatewayServiceConnectionIdempotencyPolicy::GetGateway(google::cloud::apigateway::v1::GetGatewayRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ApiGatewayServiceConnectionIdempotencyPolicy::CreateGateway(
-    google::cloud::apigateway::v1::CreateGatewayRequest const&) {
+Idempotency ApiGatewayServiceConnectionIdempotencyPolicy::CreateGateway(google::cloud::apigateway::v1::CreateGatewayRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ApiGatewayServiceConnectionIdempotencyPolicy::UpdateGateway(
-    google::cloud::apigateway::v1::UpdateGatewayRequest const&) {
+Idempotency ApiGatewayServiceConnectionIdempotencyPolicy::UpdateGateway(google::cloud::apigateway::v1::UpdateGatewayRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ApiGatewayServiceConnectionIdempotencyPolicy::DeleteGateway(
-    google::cloud::apigateway::v1::DeleteGatewayRequest const&) {
+Idempotency ApiGatewayServiceConnectionIdempotencyPolicy::DeleteGateway(google::cloud::apigateway::v1::DeleteGatewayRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ApiGatewayServiceConnectionIdempotencyPolicy::ListApis(
-    google::cloud::apigateway::v1::ListApisRequest) {  // NOLINT
+Idempotency ApiGatewayServiceConnectionIdempotencyPolicy::ListApis(google::cloud::apigateway::v1::ListApisRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency ApiGatewayServiceConnectionIdempotencyPolicy::GetApi(
-    google::cloud::apigateway::v1::GetApiRequest const&) {
+Idempotency ApiGatewayServiceConnectionIdempotencyPolicy::GetApi(google::cloud::apigateway::v1::GetApiRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ApiGatewayServiceConnectionIdempotencyPolicy::CreateApi(
-    google::cloud::apigateway::v1::CreateApiRequest const&) {
+Idempotency ApiGatewayServiceConnectionIdempotencyPolicy::CreateApi(google::cloud::apigateway::v1::CreateApiRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ApiGatewayServiceConnectionIdempotencyPolicy::UpdateApi(
-    google::cloud::apigateway::v1::UpdateApiRequest const&) {
+Idempotency ApiGatewayServiceConnectionIdempotencyPolicy::UpdateApi(google::cloud::apigateway::v1::UpdateApiRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ApiGatewayServiceConnectionIdempotencyPolicy::DeleteApi(
-    google::cloud::apigateway::v1::DeleteApiRequest const&) {
+Idempotency ApiGatewayServiceConnectionIdempotencyPolicy::DeleteApi(google::cloud::apigateway::v1::DeleteApiRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ApiGatewayServiceConnectionIdempotencyPolicy::ListApiConfigs(
-    google::cloud::apigateway::v1::ListApiConfigsRequest) {  // NOLINT
+Idempotency ApiGatewayServiceConnectionIdempotencyPolicy::ListApiConfigs(google::cloud::apigateway::v1::ListApiConfigsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency ApiGatewayServiceConnectionIdempotencyPolicy::GetApiConfig(
-    google::cloud::apigateway::v1::GetApiConfigRequest const&) {
+Idempotency ApiGatewayServiceConnectionIdempotencyPolicy::GetApiConfig(google::cloud::apigateway::v1::GetApiConfigRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ApiGatewayServiceConnectionIdempotencyPolicy::CreateApiConfig(
-    google::cloud::apigateway::v1::CreateApiConfigRequest const&) {
+Idempotency ApiGatewayServiceConnectionIdempotencyPolicy::CreateApiConfig(google::cloud::apigateway::v1::CreateApiConfigRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ApiGatewayServiceConnectionIdempotencyPolicy::UpdateApiConfig(
-    google::cloud::apigateway::v1::UpdateApiConfigRequest const&) {
+Idempotency ApiGatewayServiceConnectionIdempotencyPolicy::UpdateApiConfig(google::cloud::apigateway::v1::UpdateApiConfigRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ApiGatewayServiceConnectionIdempotencyPolicy::DeleteApiConfig(
-    google::cloud::apigateway::v1::DeleteApiConfigRequest const&) {
+Idempotency ApiGatewayServiceConnectionIdempotencyPolicy::DeleteApiConfig(google::cloud::apigateway::v1::DeleteApiConfigRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<ApiGatewayServiceConnectionIdempotencyPolicy>
-MakeDefaultApiGatewayServiceConnectionIdempotencyPolicy() {
+    MakeDefaultApiGatewayServiceConnectionIdempotencyPolicy() {
   return std::make_unique<ApiGatewayServiceConnectionIdempotencyPolicy>();
 }
 

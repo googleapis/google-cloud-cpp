@@ -30,21 +30,21 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-class EventServiceTracingConnection : public talent_v4::EventServiceConnection {
+class EventServiceTracingConnection
+    : public talent_v4::EventServiceConnection {
  public:
   ~EventServiceTracingConnection() override = default;
 
   explicit EventServiceTracingConnection(
-      std::shared_ptr<talent_v4::EventServiceConnection> child);
+    std::shared_ptr<talent_v4::EventServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::talent::v4::ClientEvent> CreateClientEvent(
-      google::cloud::talent::v4::CreateClientEventRequest const& request)
-      override;
+  StatusOr<google::cloud::talent::v4::ClientEvent>
+  CreateClientEvent(google::cloud::talent::v4::CreateClientEventRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request) override;
 
  private:
   std::shared_ptr<talent_v4::EventServiceConnection> child_;

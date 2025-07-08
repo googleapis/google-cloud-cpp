@@ -26,13 +26,10 @@ namespace cloud {
 namespace resourcemanager {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use
-/// resourcemanager_v3::MakeDefaultProjectsConnectionIdempotencyPolicy directly.
-using ::google::cloud::resourcemanager_v3::
-    MakeDefaultProjectsConnectionIdempotencyPolicy;
+/// @deprecated Use resourcemanager_v3::MakeDefaultProjectsConnectionIdempotencyPolicy directly.
+using ::google::cloud::resourcemanager_v3::MakeDefaultProjectsConnectionIdempotencyPolicy;
 
-/// @deprecated Use resourcemanager_v3::ProjectsConnectionIdempotencyPolicy
-/// directly.
+/// @deprecated Use resourcemanager_v3::ProjectsConnectionIdempotencyPolicy directly.
 using ::google::cloud::resourcemanager_v3::ProjectsConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

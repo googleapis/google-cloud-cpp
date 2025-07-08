@@ -33,13 +33,10 @@ using ::google::cloud::serviceusage_v1::MakeServiceUsageConnection;
 /// @deprecated Use serviceusage_v1::ServiceUsageConnection directly.
 using ::google::cloud::serviceusage_v1::ServiceUsageConnection;
 
-/// @deprecated Use serviceusage_v1::ServiceUsageLimitedErrorCountRetryPolicy
-/// directly.
-using ::google::cloud::serviceusage_v1::
-    ServiceUsageLimitedErrorCountRetryPolicy;
+/// @deprecated Use serviceusage_v1::ServiceUsageLimitedErrorCountRetryPolicy directly.
+using ::google::cloud::serviceusage_v1::ServiceUsageLimitedErrorCountRetryPolicy;
 
-/// @deprecated Use serviceusage_v1::ServiceUsageLimitedTimeRetryPolicy
-/// directly.
+/// @deprecated Use serviceusage_v1::ServiceUsageLimitedTimeRetryPolicy directly.
 using ::google::cloud::serviceusage_v1::ServiceUsageLimitedTimeRetryPolicy;
 
 /// @deprecated Use serviceusage_v1::ServiceUsageRetryPolicy directly.

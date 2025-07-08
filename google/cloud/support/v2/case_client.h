@@ -19,11 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SUPPORT_V2_CASE_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SUPPORT_V2_CASE_CLIENT_H
 
-#include "google/cloud/support/v2/case_connection.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
+#include "google/cloud/support/v2/case_connection.h"
 #include "google/cloud/version.h"
 #include <memory>
 #include <string>
@@ -61,8 +61,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class CaseServiceClient {
  public:
-  explicit CaseServiceClient(std::shared_ptr<CaseServiceConnection> connection,
-                             Options opts = {});
+  explicit CaseServiceClient(std::shared_ptr<CaseServiceConnection> connection, Options opts = {});
   ~CaseServiceClient();
 
   ///@{
@@ -75,12 +74,10 @@ class CaseServiceClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(CaseServiceClient const& a,
-                         CaseServiceClient const& b) {
+  friend bool operator==(CaseServiceClient const& a, CaseServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(CaseServiceClient const& a,
-                         CaseServiceClient const& b) {
+  friend bool operator!=(CaseServiceClient const& a, CaseServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -107,8 +104,8 @@ class CaseServiceClient {
   /// [google.cloud.support.v2.GetCaseRequest]: @googleapis_reference_link{google/cloud/support/v2/case_service.proto#L150}
   ///
   // clang-format on
-  StatusOr<google::cloud::support::v2::Case> GetCase(std::string const& name,
-                                                     Options opts = {});
+  StatusOr<google::cloud::support::v2::Case>
+  GetCase(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -137,9 +134,8 @@ class CaseServiceClient {
   /// [google.cloud.support.v2.GetCaseRequest]: @googleapis_reference_link{google/cloud/support/v2/case_service.proto#L150}
   ///
   // clang-format on
-  StatusOr<google::cloud::support::v2::Case> GetCase(
-      google::cloud::support::v2::GetCaseRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::support::v2::Case>
+  GetCase(google::cloud::support::v2::GetCaseRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -176,8 +172,8 @@ class CaseServiceClient {
   /// [google.cloud.support.v2.ListCasesRequest]: @googleapis_reference_link{google/cloud/support/v2/case_service.proto#L175}
   ///
   // clang-format on
-  StreamRange<google::cloud::support::v2::Case> ListCases(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::support::v2::Case>
+  ListCases(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -219,8 +215,8 @@ class CaseServiceClient {
   /// [google.cloud.support.v2.ListCasesRequest]: @googleapis_reference_link{google/cloud/support/v2/case_service.proto#L175}
   ///
   // clang-format on
-  StreamRange<google::cloud::support::v2::Case> ListCases(
-      google::cloud::support::v2::ListCasesRequest request, Options opts = {});
+  StreamRange<google::cloud::support::v2::Case>
+  ListCases(google::cloud::support::v2::ListCasesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -258,9 +254,8 @@ class CaseServiceClient {
   /// [google.cloud.support.v2.SearchCasesRequest]: @googleapis_reference_link{google/cloud/support/v2/case_service.proto#L226}
   ///
   // clang-format on
-  StreamRange<google::cloud::support::v2::Case> SearchCases(
-      google::cloud::support::v2::SearchCasesRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::support::v2::Case>
+  SearchCases(google::cloud::support::v2::SearchCasesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -289,9 +284,8 @@ class CaseServiceClient {
   /// [google.cloud.support.v2.CreateCaseRequest]: @googleapis_reference_link{google/cloud/support/v2/case_service.proto#L161}
   ///
   // clang-format on
-  StatusOr<google::cloud::support::v2::Case> CreateCase(
-      std::string const& parent, google::cloud::support::v2::Case const& case_,
-      Options opts = {});
+  StatusOr<google::cloud::support::v2::Case>
+  CreateCase(std::string const& parent, google::cloud::support::v2::Case const& case_, Options opts = {});
 
   // clang-format off
   ///
@@ -324,9 +318,8 @@ class CaseServiceClient {
   /// [google.cloud.support.v2.CreateCaseRequest]: @googleapis_reference_link{google/cloud/support/v2/case_service.proto#L161}
   ///
   // clang-format on
-  StatusOr<google::cloud::support::v2::Case> CreateCase(
-      google::cloud::support::v2::CreateCaseRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::support::v2::Case>
+  CreateCase(google::cloud::support::v2::CreateCaseRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -358,9 +351,8 @@ class CaseServiceClient {
   /// [google.cloud.support.v2.UpdateCaseRequest]: @googleapis_reference_link{google/cloud/support/v2/case_service.proto#L300}
   ///
   // clang-format on
-  StatusOr<google::cloud::support::v2::Case> UpdateCase(
-      google::cloud::support::v2::Case const& case_,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::cloud::support::v2::Case>
+  UpdateCase(google::cloud::support::v2::Case const& case_, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -389,9 +381,8 @@ class CaseServiceClient {
   /// [google.cloud.support.v2.UpdateCaseRequest]: @googleapis_reference_link{google/cloud/support/v2/case_service.proto#L300}
   ///
   // clang-format on
-  StatusOr<google::cloud::support::v2::Case> UpdateCase(
-      google::cloud::support::v2::UpdateCaseRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::support::v2::Case>
+  UpdateCase(google::cloud::support::v2::UpdateCaseRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -426,9 +417,8 @@ class CaseServiceClient {
   /// [google.cloud.support.v2.EscalateCaseRequest]: @googleapis_reference_link{google/cloud/support/v2/case_service.proto#L286}
   ///
   // clang-format on
-  StatusOr<google::cloud::support::v2::Case> EscalateCase(
-      google::cloud::support::v2::EscalateCaseRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::support::v2::Case>
+  EscalateCase(google::cloud::support::v2::EscalateCaseRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -457,9 +447,8 @@ class CaseServiceClient {
   /// [google.cloud.support.v2.CloseCaseRequest]: @googleapis_reference_link{google/cloud/support/v2/case_service.proto#L316}
   ///
   // clang-format on
-  StatusOr<google::cloud::support::v2::Case> CloseCase(
-      google::cloud::support::v2::CloseCaseRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::support::v2::Case>
+  CloseCase(google::cloud::support::v2::CloseCaseRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -507,9 +496,7 @@ class CaseServiceClient {
   ///
   // clang-format on
   StreamRange<google::cloud::support::v2::CaseClassification>
-  SearchCaseClassifications(
-      google::cloud::support::v2::SearchCaseClassificationsRequest request,
-      Options opts = {});
+  SearchCaseClassifications(google::cloud::support::v2::SearchCaseClassificationsRequest request, Options opts = {});
 
  private:
   std::shared_ptr<CaseServiceConnection> connection_;

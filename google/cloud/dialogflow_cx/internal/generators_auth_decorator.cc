@@ -31,36 +31,36 @@ GeneratorsAuth::GeneratorsAuth(
     std::shared_ptr<GeneratorsStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::dialogflow::cx::v3::ListGeneratorsResponse>
-GeneratorsAuth::ListGenerators(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::dialogflow::cx::v3::ListGeneratorsResponse> GeneratorsAuth::ListGenerators(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dialogflow::cx::v3::ListGeneratorsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListGenerators(context, options, request);
 }
 
-StatusOr<google::cloud::dialogflow::cx::v3::Generator>
-GeneratorsAuth::GetGenerator(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::dialogflow::cx::v3::Generator> GeneratorsAuth::GetGenerator(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dialogflow::cx::v3::GetGeneratorRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetGenerator(context, options, request);
 }
 
-StatusOr<google::cloud::dialogflow::cx::v3::Generator>
-GeneratorsAuth::CreateGenerator(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::dialogflow::cx::v3::Generator> GeneratorsAuth::CreateGenerator(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dialogflow::cx::v3::CreateGeneratorRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateGenerator(context, options, request);
 }
 
-StatusOr<google::cloud::dialogflow::cx::v3::Generator>
-GeneratorsAuth::UpdateGenerator(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::dialogflow::cx::v3::Generator> GeneratorsAuth::UpdateGenerator(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dialogflow::cx::v3::UpdateGeneratorRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -68,16 +68,17 @@ GeneratorsAuth::UpdateGenerator(
 }
 
 Status GeneratorsAuth::DeleteGenerator(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dialogflow::cx::v3::DeleteGeneratorRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteGenerator(context, options, request);
 }
 
-StatusOr<google::cloud::location::ListLocationsResponse>
-GeneratorsAuth::ListLocations(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::location::ListLocationsResponse> GeneratorsAuth::ListLocations(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -85,16 +86,17 @@ GeneratorsAuth::ListLocations(
 }
 
 StatusOr<google::cloud::location::Location> GeneratorsAuth::GetLocation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetLocation(context, options, request);
 }
 
-StatusOr<google::longrunning::ListOperationsResponse>
-GeneratorsAuth::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse> GeneratorsAuth::ListOperations(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -102,7 +104,8 @@ GeneratorsAuth::ListOperations(
 }
 
 StatusOr<google::longrunning::Operation> GeneratorsAuth::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -110,7 +113,8 @@ StatusOr<google::longrunning::Operation> GeneratorsAuth::GetOperation(
 }
 
 Status GeneratorsAuth::CancelOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;

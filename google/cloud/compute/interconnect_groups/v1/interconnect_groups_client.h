@@ -64,28 +64,23 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class InterconnectGroupsClient {
  public:
-  explicit InterconnectGroupsClient(
-      std::shared_ptr<InterconnectGroupsConnection> connection,
-      Options opts = {});
+  explicit InterconnectGroupsClient(std::shared_ptr<InterconnectGroupsConnection> connection, Options opts = {});
   ~InterconnectGroupsClient();
 
   ///@{
   /// @name Copy and move support
   InterconnectGroupsClient(InterconnectGroupsClient const&) = default;
-  InterconnectGroupsClient& operator=(InterconnectGroupsClient const&) =
-      default;
+  InterconnectGroupsClient& operator=(InterconnectGroupsClient const&) = default;
   InterconnectGroupsClient(InterconnectGroupsClient&&) = default;
   InterconnectGroupsClient& operator=(InterconnectGroupsClient&&) = default;
   ///@}
 
   ///@{
   /// @name Equality
-  friend bool operator==(InterconnectGroupsClient const& a,
-                         InterconnectGroupsClient const& b) {
+  friend bool operator==(InterconnectGroupsClient const& a, InterconnectGroupsClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(InterconnectGroupsClient const& a,
-                         InterconnectGroupsClient const& b) {
+  friend bool operator!=(InterconnectGroupsClient const& a, InterconnectGroupsClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -122,12 +117,8 @@ class InterconnectGroupsClient {
   /// [google.cloud.cpp.compute.interconnect_groups.v1.CreateMembersRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_groups/v1/interconnect_groups.proto#L166}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> CreateMembers(
-      std::string const& project, std::string const& interconnect_group,
-      google::cloud::cpp::compute::v1::
-          InterconnectGroupsCreateMembersRequest const&
-              interconnect_groups_create_members_request_resource,
-      Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  CreateMembers(std::string const& project, std::string const& interconnect_group, google::cloud::cpp::compute::v1::InterconnectGroupsCreateMembersRequest const& interconnect_groups_create_members_request_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -140,13 +131,8 @@ class InterconnectGroupsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> CreateMembers(
-      NoAwaitTag, std::string const& project,
-      std::string const& interconnect_group,
-      google::cloud::cpp::compute::v1::
-          InterconnectGroupsCreateMembersRequest const&
-              interconnect_groups_create_members_request_resource,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  CreateMembers(NoAwaitTag, std::string const& project, std::string const& interconnect_group, google::cloud::cpp::compute::v1::InterconnectGroupsCreateMembersRequest const& interconnect_groups_create_members_request_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -183,10 +169,8 @@ class InterconnectGroupsClient {
   /// [google.cloud.cpp.compute.interconnect_groups.v1.CreateMembersRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_groups/v1/interconnect_groups.proto#L166}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> CreateMembers(
-      google::cloud::cpp::compute::interconnect_groups::v1::
-          CreateMembersRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  CreateMembers(google::cloud::cpp::compute::interconnect_groups::v1::CreateMembersRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -199,11 +183,8 @@ class InterconnectGroupsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> CreateMembers(
-      NoAwaitTag,
-      google::cloud::cpp::compute::interconnect_groups::v1::
-          CreateMembersRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  CreateMembers(NoAwaitTag, google::cloud::cpp::compute::interconnect_groups::v1::CreateMembersRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -214,9 +195,8 @@ class InterconnectGroupsClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> CreateMembers(
-      google::cloud::cpp::compute::v1::Operation const& operation,
-      Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  CreateMembers(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -249,9 +229,7 @@ class InterconnectGroupsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteInterconnectGroup(std::string const& project,
-                          std::string const& interconnect_group,
-                          Options opts = {});
+  DeleteInterconnectGroup(std::string const& project, std::string const& interconnect_group, Options opts = {});
 
   // clang-format off
   ///
@@ -264,9 +242,8 @@ class InterconnectGroupsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteInterconnectGroup(
-      NoAwaitTag, std::string const& project,
-      std::string const& interconnect_group, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeleteInterconnectGroup(NoAwaitTag, std::string const& project, std::string const& interconnect_group, Options opts = {});
 
   // clang-format off
   ///
@@ -303,9 +280,7 @@ class InterconnectGroupsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteInterconnectGroup(google::cloud::cpp::compute::interconnect_groups::v1::
-                              DeleteInterconnectGroupRequest const& request,
-                          Options opts = {});
+  DeleteInterconnectGroup(google::cloud::cpp::compute::interconnect_groups::v1::DeleteInterconnectGroupRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -318,11 +293,8 @@ class InterconnectGroupsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteInterconnectGroup(
-      NoAwaitTag,
-      google::cloud::cpp::compute::interconnect_groups::v1::
-          DeleteInterconnectGroupRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeleteInterconnectGroup(NoAwaitTag, google::cloud::cpp::compute::interconnect_groups::v1::DeleteInterconnectGroupRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -334,9 +306,7 @@ class InterconnectGroupsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteInterconnectGroup(
-      google::cloud::cpp::compute::v1::Operation const& operation,
-      Options opts = {});
+  DeleteInterconnectGroup(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -363,9 +333,7 @@ class InterconnectGroupsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::InterconnectGroup>
-  GetInterconnectGroup(std::string const& project,
-                       std::string const& interconnect_group,
-                       Options opts = {});
+  GetInterconnectGroup(std::string const& project, std::string const& interconnect_group, Options opts = {});
 
   // clang-format off
   ///
@@ -396,9 +364,7 @@ class InterconnectGroupsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::InterconnectGroup>
-  GetInterconnectGroup(google::cloud::cpp::compute::interconnect_groups::v1::
-                           GetInterconnectGroupRequest const& request,
-                       Options opts = {});
+  GetInterconnectGroup(google::cloud::cpp::compute::interconnect_groups::v1::GetInterconnectGroupRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -425,9 +391,8 @@ class InterconnectGroupsClient {
   /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_007.proto#L178}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
-      std::string const& project, std::string const& resource,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Policy>
+  GetIamPolicy(std::string const& project, std::string const& resource, Options opts = {});
 
   // clang-format off
   ///
@@ -458,10 +423,8 @@ class InterconnectGroupsClient {
   /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_007.proto#L178}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
-      google::cloud::cpp::compute::interconnect_groups::v1::
-          GetIamPolicyRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Policy>
+  GetIamPolicy(google::cloud::cpp::compute::interconnect_groups::v1::GetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -487,11 +450,8 @@ class InterconnectGroupsClient {
   /// [google.cloud.cpp.compute.v1.InterconnectGroupsGetOperationalStatusResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_073.proto#L298}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::
-               InterconnectGroupsGetOperationalStatusResponse>
-  GetOperationalStatus(std::string const& project,
-                       std::string const& interconnect_group,
-                       Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::InterconnectGroupsGetOperationalStatusResponse>
+  GetOperationalStatus(std::string const& project, std::string const& interconnect_group, Options opts = {});
 
   // clang-format off
   ///
@@ -521,11 +481,8 @@ class InterconnectGroupsClient {
   /// [google.cloud.cpp.compute.v1.InterconnectGroupsGetOperationalStatusResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_073.proto#L298}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::
-               InterconnectGroupsGetOperationalStatusResponse>
-  GetOperationalStatus(google::cloud::cpp::compute::interconnect_groups::v1::
-                           GetOperationalStatusRequest const& request,
-                       Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::InterconnectGroupsGetOperationalStatusResponse>
+  GetOperationalStatus(google::cloud::cpp::compute::interconnect_groups::v1::GetOperationalStatusRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -559,11 +516,7 @@ class InterconnectGroupsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertInterconnectGroup(
-      std::string const& project,
-      google::cloud::cpp::compute::v1::InterconnectGroup const&
-          interconnect_group_resource,
-      Options opts = {});
+  InsertInterconnectGroup(std::string const& project, google::cloud::cpp::compute::v1::InterconnectGroup const& interconnect_group_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -576,11 +529,8 @@ class InterconnectGroupsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertInterconnectGroup(
-      NoAwaitTag, std::string const& project,
-      google::cloud::cpp::compute::v1::InterconnectGroup const&
-          interconnect_group_resource,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  InsertInterconnectGroup(NoAwaitTag, std::string const& project, google::cloud::cpp::compute::v1::InterconnectGroup const& interconnect_group_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -618,9 +568,7 @@ class InterconnectGroupsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertInterconnectGroup(google::cloud::cpp::compute::interconnect_groups::v1::
-                              InsertInterconnectGroupRequest const& request,
-                          Options opts = {});
+  InsertInterconnectGroup(google::cloud::cpp::compute::interconnect_groups::v1::InsertInterconnectGroupRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -633,11 +581,8 @@ class InterconnectGroupsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertInterconnectGroup(
-      NoAwaitTag,
-      google::cloud::cpp::compute::interconnect_groups::v1::
-          InsertInterconnectGroupRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  InsertInterconnectGroup(NoAwaitTag, google::cloud::cpp::compute::interconnect_groups::v1::InsertInterconnectGroupRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -649,9 +594,7 @@ class InterconnectGroupsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertInterconnectGroup(
-      google::cloud::cpp::compute::v1::Operation const& operation,
-      Options opts = {});
+  InsertInterconnectGroup(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -726,9 +669,7 @@ class InterconnectGroupsClient {
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::InterconnectGroup>
-  ListInterconnectGroups(google::cloud::cpp::compute::interconnect_groups::v1::
-                             ListInterconnectGroupsRequest request,
-                         Options opts = {});
+  ListInterconnectGroups(google::cloud::cpp::compute::interconnect_groups::v1::ListInterconnectGroupsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -765,12 +706,7 @@ class InterconnectGroupsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchInterconnectGroup(
-      std::string const& project, std::string const& interconnect_group,
-      std::string const& update_mask,
-      google::cloud::cpp::compute::v1::InterconnectGroup const&
-          interconnect_group_resource,
-      Options opts = {});
+  PatchInterconnectGroup(std::string const& project, std::string const& interconnect_group, std::string const& update_mask, google::cloud::cpp::compute::v1::InterconnectGroup const& interconnect_group_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -783,12 +719,8 @@ class InterconnectGroupsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchInterconnectGroup(
-      NoAwaitTag, std::string const& project,
-      std::string const& interconnect_group, std::string const& update_mask,
-      google::cloud::cpp::compute::v1::InterconnectGroup const&
-          interconnect_group_resource,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  PatchInterconnectGroup(NoAwaitTag, std::string const& project, std::string const& interconnect_group, std::string const& update_mask, google::cloud::cpp::compute::v1::InterconnectGroup const& interconnect_group_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -827,9 +759,7 @@ class InterconnectGroupsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchInterconnectGroup(google::cloud::cpp::compute::interconnect_groups::v1::
-                             PatchInterconnectGroupRequest const& request,
-                         Options opts = {});
+  PatchInterconnectGroup(google::cloud::cpp::compute::interconnect_groups::v1::PatchInterconnectGroupRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -842,11 +772,8 @@ class InterconnectGroupsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchInterconnectGroup(
-      NoAwaitTag,
-      google::cloud::cpp::compute::interconnect_groups::v1::
-          PatchInterconnectGroupRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  PatchInterconnectGroup(NoAwaitTag, google::cloud::cpp::compute::interconnect_groups::v1::PatchInterconnectGroupRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -858,9 +785,7 @@ class InterconnectGroupsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchInterconnectGroup(
-      google::cloud::cpp::compute::v1::Operation const& operation,
-      Options opts = {});
+  PatchInterconnectGroup(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -888,11 +813,8 @@ class InterconnectGroupsClient {
   /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_007.proto#L178}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
-      std::string const& project, std::string const& resource,
-      google::cloud::cpp::compute::v1::GlobalSetPolicyRequest const&
-          global_set_policy_request_resource,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Policy>
+  SetIamPolicy(std::string const& project, std::string const& resource, google::cloud::cpp::compute::v1::GlobalSetPolicyRequest const& global_set_policy_request_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -923,10 +845,8 @@ class InterconnectGroupsClient {
   /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_007.proto#L178}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
-      google::cloud::cpp::compute::interconnect_groups::v1::
-          SetIamPolicyRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Policy>
+  SetIamPolicy(google::cloud::cpp::compute::interconnect_groups::v1::SetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -954,11 +874,7 @@ class InterconnectGroupsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(
-      std::string const& project, std::string const& resource,
-      google::cloud::cpp::compute::v1::TestPermissionsRequest const&
-          test_permissions_request_resource,
-      Options opts = {});
+  TestIamPermissions(std::string const& project, std::string const& resource, google::cloud::cpp::compute::v1::TestPermissionsRequest const& test_permissions_request_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -989,9 +905,7 @@ class InterconnectGroupsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(google::cloud::cpp::compute::interconnect_groups::v1::
-                         TestIamPermissionsRequest const& request,
-                     Options opts = {});
+  TestIamPermissions(google::cloud::cpp::compute::interconnect_groups::v1::TestIamPermissionsRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<InterconnectGroupsConnection> connection_;

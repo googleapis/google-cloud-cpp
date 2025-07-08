@@ -33,47 +33,41 @@ MetricsScopesStub::~MetricsScopesStub() = default;
 
 StatusOr<google::monitoring::metricsscope::v1::MetricsScope>
 DefaultMetricsScopesStub::GetMetricsScope(
-    grpc::ClientContext& context, Options const&,
-    google::monitoring::metricsscope::v1::GetMetricsScopeRequest const&
-        request) {
-  google::monitoring::metricsscope::v1::MetricsScope response;
-  auto status = grpc_stub_->GetMetricsScope(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::monitoring::metricsscope::v1::GetMetricsScopeRequest const& request) {
+    google::monitoring::metricsscope::v1::MetricsScope response;
+    auto status =
+        grpc_stub_->GetMetricsScope(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-StatusOr<google::monitoring::metricsscope::v1::
-             ListMetricsScopesByMonitoredProjectResponse>
+StatusOr<google::monitoring::metricsscope::v1::ListMetricsScopesByMonitoredProjectResponse>
 DefaultMetricsScopesStub::ListMetricsScopesByMonitoredProject(
-    grpc::ClientContext& context, Options const&,
-    google::monitoring::metricsscope::v1::
-        ListMetricsScopesByMonitoredProjectRequest const& request) {
-  google::monitoring::metricsscope::v1::
-      ListMetricsScopesByMonitoredProjectResponse response;
-  auto status = grpc_stub_->ListMetricsScopesByMonitoredProject(
-      &context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::monitoring::metricsscope::v1::ListMetricsScopesByMonitoredProjectRequest const& request) {
+    google::monitoring::metricsscope::v1::ListMetricsScopesByMonitoredProjectResponse response;
+    auto status =
+        grpc_stub_->ListMetricsScopesByMonitoredProject(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultMetricsScopesStub::AsyncCreateMonitoredProject(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::monitoring::metricsscope::v1::CreateMonitoredProjectRequest const&
-        request) {
-  return internal::MakeUnaryRpcImpl<
-      google::monitoring::metricsscope::v1::CreateMonitoredProjectRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::monitoring::metricsscope::v1::CreateMonitoredProjectRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::monitoring::metricsscope::v1::CreateMonitoredProjectRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::monitoring::metricsscope::v1::
-                 CreateMonitoredProjectRequest const& request,
+             google::monitoring::metricsscope::v1::CreateMonitoredProjectRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncCreateMonitoredProject(context, request, cq);
       },
@@ -82,32 +76,29 @@ DefaultMetricsScopesStub::AsyncCreateMonitoredProject(
 
 StatusOr<google::longrunning::Operation>
 DefaultMetricsScopesStub::CreateMonitoredProject(
-    grpc::ClientContext& context, Options,
-    google::monitoring::metricsscope::v1::CreateMonitoredProjectRequest const&
-        request) {
-  google::longrunning::Operation response;
-  auto status =
-      grpc_stub_->CreateMonitoredProject(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::monitoring::metricsscope::v1::CreateMonitoredProjectRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->CreateMonitoredProject(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultMetricsScopesStub::AsyncDeleteMonitoredProject(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::monitoring::metricsscope::v1::DeleteMonitoredProjectRequest const&
-        request) {
-  return internal::MakeUnaryRpcImpl<
-      google::monitoring::metricsscope::v1::DeleteMonitoredProjectRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::monitoring::metricsscope::v1::DeleteMonitoredProjectRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::monitoring::metricsscope::v1::DeleteMonitoredProjectRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::monitoring::metricsscope::v1::
-                 DeleteMonitoredProjectRequest const& request,
+             google::monitoring::metricsscope::v1::DeleteMonitoredProjectRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncDeleteMonitoredProject(context, request, cq);
       },
@@ -116,16 +107,16 @@ DefaultMetricsScopesStub::AsyncDeleteMonitoredProject(
 
 StatusOr<google::longrunning::Operation>
 DefaultMetricsScopesStub::DeleteMonitoredProject(
-    grpc::ClientContext& context, Options,
-    google::monitoring::metricsscope::v1::DeleteMonitoredProjectRequest const&
-        request) {
-  google::longrunning::Operation response;
-  auto status =
-      grpc_stub_->DeleteMonitoredProject(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::monitoring::metricsscope::v1::DeleteMonitoredProjectRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->DeleteMonitoredProject(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -154,14 +145,13 @@ future<Status> DefaultMetricsScopesStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(
-             cq,
-             [this](grpc::ClientContext* context,
-                    google::longrunning::CancelOperationRequest const& request,
-                    grpc::CompletionQueue* cq) {
-               return operations_stub_->AsyncCancelOperation(context, request,
-                                                             cq);
-             },
-             request, std::move(context))
+      cq,
+      [this](grpc::ClientContext* context,
+             google::longrunning::CancelOperationRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return operations_stub_->AsyncCancelOperation(context, request, cq);
+      },
+      request, std::move(context))
       .then([](future<StatusOr<google::protobuf::Empty>> f) {
         return f.get().status();
       });

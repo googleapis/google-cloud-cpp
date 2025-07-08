@@ -32,36 +32,33 @@ TranscoderServiceTracingStub::TranscoderServiceTracingStub(
     std::shared_ptr<TranscoderServiceStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
-StatusOr<google::cloud::video::transcoder::v1::Job>
-TranscoderServiceTracingStub::CreateJob(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::video::transcoder::v1::Job> TranscoderServiceTracingStub::CreateJob(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::video::transcoder::v1::CreateJobRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.video.transcoder.v1.TranscoderService", "CreateJob");
+  auto span = internal::MakeSpanGrpc("google.cloud.video.transcoder.v1.TranscoderService", "CreateJob");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateJob(context, options, request));
 }
 
-StatusOr<google::cloud::video::transcoder::v1::ListJobsResponse>
-TranscoderServiceTracingStub::ListJobs(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::video::transcoder::v1::ListJobsResponse> TranscoderServiceTracingStub::ListJobs(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::video::transcoder::v1::ListJobsRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.video.transcoder.v1.TranscoderService", "ListJobs");
+  auto span = internal::MakeSpanGrpc("google.cloud.video.transcoder.v1.TranscoderService", "ListJobs");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListJobs(context, options, request));
 }
 
-StatusOr<google::cloud::video::transcoder::v1::Job>
-TranscoderServiceTracingStub::GetJob(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::video::transcoder::v1::Job> TranscoderServiceTracingStub::GetJob(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::video::transcoder::v1::GetJobRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.video.transcoder.v1.TranscoderService", "GetJob");
+  auto span = internal::MakeSpanGrpc("google.cloud.video.transcoder.v1.TranscoderService", "GetJob");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -69,50 +66,43 @@ TranscoderServiceTracingStub::GetJob(
 }
 
 Status TranscoderServiceTracingStub::DeleteJob(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::video::transcoder::v1::DeleteJobRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.video.transcoder.v1.TranscoderService", "DeleteJob");
+  auto span = internal::MakeSpanGrpc("google.cloud.video.transcoder.v1.TranscoderService", "DeleteJob");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeleteJob(context, options, request));
 }
 
-StatusOr<google::cloud::video::transcoder::v1::JobTemplate>
-TranscoderServiceTracingStub::CreateJobTemplate(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::video::transcoder::v1::CreateJobTemplateRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.video.transcoder.v1.TranscoderService",
-      "CreateJobTemplate");
+StatusOr<google::cloud::video::transcoder::v1::JobTemplate> TranscoderServiceTracingStub::CreateJobTemplate(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::video::transcoder::v1::CreateJobTemplateRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.video.transcoder.v1.TranscoderService", "CreateJobTemplate");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->CreateJobTemplate(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->CreateJobTemplate(context, options, request));
 }
 
-StatusOr<google::cloud::video::transcoder::v1::ListJobTemplatesResponse>
-TranscoderServiceTracingStub::ListJobTemplates(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::video::transcoder::v1::ListJobTemplatesRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.video.transcoder.v1.TranscoderService", "ListJobTemplates");
+StatusOr<google::cloud::video::transcoder::v1::ListJobTemplatesResponse> TranscoderServiceTracingStub::ListJobTemplates(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::video::transcoder::v1::ListJobTemplatesRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.video.transcoder.v1.TranscoderService", "ListJobTemplates");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListJobTemplates(context, options, request));
 }
 
-StatusOr<google::cloud::video::transcoder::v1::JobTemplate>
-TranscoderServiceTracingStub::GetJobTemplate(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::video::transcoder::v1::GetJobTemplateRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.video.transcoder.v1.TranscoderService", "GetJobTemplate");
+StatusOr<google::cloud::video::transcoder::v1::JobTemplate> TranscoderServiceTracingStub::GetJobTemplate(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::video::transcoder::v1::GetJobTemplateRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.video.transcoder.v1.TranscoderService", "GetJobTemplate");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -120,16 +110,14 @@ TranscoderServiceTracingStub::GetJobTemplate(
 }
 
 Status TranscoderServiceTracingStub::DeleteJobTemplate(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::video::transcoder::v1::DeleteJobTemplateRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.video.transcoder.v1.TranscoderService",
-      "DeleteJobTemplate");
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::video::transcoder::v1::DeleteJobTemplateRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.video.transcoder.v1.TranscoderService", "DeleteJobTemplate");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->DeleteJobTemplate(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->DeleteJobTemplate(context, options, request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

@@ -26,41 +26,35 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-SqlUsersServiceConnectionIdempotencyPolicy::
-    ~SqlUsersServiceConnectionIdempotencyPolicy() = default;
+SqlUsersServiceConnectionIdempotencyPolicy::~SqlUsersServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<SqlUsersServiceConnectionIdempotencyPolicy>
 SqlUsersServiceConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<SqlUsersServiceConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency SqlUsersServiceConnectionIdempotencyPolicy::Delete(
-    google::cloud::sql::v1::SqlUsersDeleteRequest const&) {
+Idempotency SqlUsersServiceConnectionIdempotencyPolicy::Delete(google::cloud::sql::v1::SqlUsersDeleteRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SqlUsersServiceConnectionIdempotencyPolicy::Get(
-    google::cloud::sql::v1::SqlUsersGetRequest const&) {
+Idempotency SqlUsersServiceConnectionIdempotencyPolicy::Get(google::cloud::sql::v1::SqlUsersGetRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency SqlUsersServiceConnectionIdempotencyPolicy::Insert(
-    google::cloud::sql::v1::SqlUsersInsertRequest const&) {
+Idempotency SqlUsersServiceConnectionIdempotencyPolicy::Insert(google::cloud::sql::v1::SqlUsersInsertRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SqlUsersServiceConnectionIdempotencyPolicy::List(
-    google::cloud::sql::v1::SqlUsersListRequest const&) {
+Idempotency SqlUsersServiceConnectionIdempotencyPolicy::List(google::cloud::sql::v1::SqlUsersListRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency SqlUsersServiceConnectionIdempotencyPolicy::Update(
-    google::cloud::sql::v1::SqlUsersUpdateRequest const&) {
+Idempotency SqlUsersServiceConnectionIdempotencyPolicy::Update(google::cloud::sql::v1::SqlUsersUpdateRequest const&) {
   return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<SqlUsersServiceConnectionIdempotencyPolicy>
-MakeDefaultSqlUsersServiceConnectionIdempotencyPolicy() {
+    MakeDefaultSqlUsersServiceConnectionIdempotencyPolicy() {
   return std::make_unique<SqlUsersServiceConnectionIdempotencyPolicy>();
 }
 

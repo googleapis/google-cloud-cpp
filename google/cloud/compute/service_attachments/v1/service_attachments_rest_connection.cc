@@ -17,12 +17,12 @@
 // source: google/cloud/compute/service_attachments/v1/service_attachments.proto
 
 #include "google/cloud/compute/service_attachments/v1/service_attachments_rest_connection.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/compute/service_attachments/v1/internal/service_attachments_option_defaults.h"
 #include "google/cloud/compute/service_attachments/v1/internal/service_attachments_rest_connection_impl.h"
 #include "google/cloud/compute/service_attachments/v1/internal/service_attachments_rest_stub_factory.h"
 #include "google/cloud/compute/service_attachments/v1/internal/service_attachments_tracing_connection.h"
 #include "google/cloud/compute/service_attachments/v1/service_attachments_options.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/rest_background_threads_impl.h"
 #include "google/cloud/internal/rest_options.h"
@@ -34,25 +34,21 @@ namespace cloud {
 namespace compute_service_attachments_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<ServiceAttachmentsConnection>
-MakeServiceAttachmentsConnectionRest(Options options) {
+std::shared_ptr<ServiceAttachmentsConnection> MakeServiceAttachmentsConnectionRest(
+    Options options) {
   internal::CheckExpectedOptions<CommonOptionList, RestOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 rest_internal::TargetApiVersionOption,
-                                 ServiceAttachmentsPolicyOptionList>(options,
-                                                                     __func__);
-  options =
-      compute_service_attachments_v1_internal::ServiceAttachmentsDefaultOptions(
-          std::move(options));
+      UnifiedCredentialsOptionList, rest_internal::TargetApiVersionOption,
+      ServiceAttachmentsPolicyOptionList>(options, __func__);
+  options = compute_service_attachments_v1_internal::ServiceAttachmentsDefaultOptions(
+      std::move(options));
   auto background = std::make_unique<
       rest_internal::AutomaticallyCreatedRestBackgroundThreads>();
-  auto stub = compute_service_attachments_v1_internal::
-      CreateDefaultServiceAttachmentsRestStub(options);
-  return compute_service_attachments_v1_internal::
-      MakeServiceAttachmentsTracingConnection(
-          std::make_shared<compute_service_attachments_v1_internal::
-                               ServiceAttachmentsRestConnectionImpl>(
-              std::move(background), std::move(stub), std::move(options)));
+  auto stub = compute_service_attachments_v1_internal::CreateDefaultServiceAttachmentsRestStub(
+      options);
+  return compute_service_attachments_v1_internal::MakeServiceAttachmentsTracingConnection(
+      std::make_shared<
+          compute_service_attachments_v1_internal::ServiceAttachmentsRestConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -57,8 +57,7 @@ class MigrationServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class MigrationServiceLimitedErrorCountRetryPolicy
-    : public MigrationServiceRetryPolicy {
+class MigrationServiceLimitedErrorCountRetryPolicy : public MigrationServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -68,14 +67,14 @@ class MigrationServiceLimitedErrorCountRetryPolicy
    *     @p maximum_failures == 0.
    */
   explicit MigrationServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   MigrationServiceLimitedErrorCountRetryPolicy(
       MigrationServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : MigrationServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : MigrationServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   MigrationServiceLimitedErrorCountRetryPolicy(
       MigrationServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : MigrationServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : MigrationServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -95,9 +94,7 @@ class MigrationServiceLimitedErrorCountRetryPolicy
   using BaseType = MigrationServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      aiplatform_v1_internal::MigrationServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<aiplatform_v1_internal::MigrationServiceRetryTraits> impl_;
 };
 
 /**
@@ -110,8 +107,7 @@ class MigrationServiceLimitedErrorCountRetryPolicy
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class MigrationServiceLimitedTimeRetryPolicy
-    : public MigrationServiceRetryPolicy {
+class MigrationServiceLimitedTimeRetryPolicy : public MigrationServiceRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -136,14 +132,12 @@ class MigrationServiceLimitedTimeRetryPolicy
   template <typename DurationRep, typename DurationPeriod>
   explicit MigrationServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  MigrationServiceLimitedTimeRetryPolicy(
-      MigrationServiceLimitedTimeRetryPolicy&& rhs) noexcept
-      : MigrationServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  MigrationServiceLimitedTimeRetryPolicy(
-      MigrationServiceLimitedTimeRetryPolicy const& rhs) noexcept
-      : MigrationServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  MigrationServiceLimitedTimeRetryPolicy(MigrationServiceLimitedTimeRetryPolicy&& rhs) noexcept
+    : MigrationServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  MigrationServiceLimitedTimeRetryPolicy(MigrationServiceLimitedTimeRetryPolicy const& rhs) noexcept
+    : MigrationServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -165,9 +159,7 @@ class MigrationServiceLimitedTimeRetryPolicy
   using BaseType = MigrationServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      aiplatform_v1_internal::MigrationServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<aiplatform_v1_internal::MigrationServiceRetryTraits> impl_;
 };
 
 /**
@@ -189,65 +181,57 @@ class MigrationServiceConnection {
   virtual Options options() { return Options{}; }
 
   virtual StreamRange<google::cloud::aiplatform::v1::MigratableResource>
-  SearchMigratableResources(
-      google::cloud::aiplatform::v1::SearchMigratableResourcesRequest request);
+  SearchMigratableResources(google::cloud::aiplatform::v1::SearchMigratableResourcesRequest request);
 
-  virtual future<
-      StatusOr<google::cloud::aiplatform::v1::BatchMigrateResourcesResponse>>
-  BatchMigrateResources(
-      google::cloud::aiplatform::v1::BatchMigrateResourcesRequest const&
-          request);
+  virtual future<StatusOr<google::cloud::aiplatform::v1::BatchMigrateResourcesResponse>>
+  BatchMigrateResources(google::cloud::aiplatform::v1::BatchMigrateResourcesRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> BatchMigrateResources(
-      NoAwaitTag,
-      google::cloud::aiplatform::v1::BatchMigrateResourcesRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  BatchMigrateResources(NoAwaitTag, google::cloud::aiplatform::v1::BatchMigrateResourcesRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::aiplatform::v1::BatchMigrateResourcesResponse>>
-  BatchMigrateResources(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::aiplatform::v1::BatchMigrateResourcesResponse>>
+  BatchMigrateResources( google::longrunning::Operation const& operation);
 
-  virtual StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request);
+  virtual StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request);
 
-  virtual StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request);
+  virtual StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
 
   virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
   TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
 
-  virtual StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 
-  virtual Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request);
+  virtual Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
 
-  virtual Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request);
+  virtual Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> WaitOperation(
-      google::longrunning::WaitOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  WaitOperation(google::longrunning::WaitOperationRequest const& request);
 };
 
 /**
- * A factory function to construct an object of type
- * `MigrationServiceConnection`.
+ * A factory function to construct an object of type `MigrationServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
  * should be passed as an argument to the constructor of MigrationServiceClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `MigrationServiceConnection`. Expected options are any of the types
- * in the following option lists:
+ * returned `MigrationServiceConnection`. Expected options are any of the types in
+ * the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
@@ -258,8 +242,8 @@ class MigrationServiceConnection {
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
  * @param location Sets the prefix for the default `EndpointOption` value.
- * @param options (optional) Configure the `MigrationServiceConnection` created
- * by this function.
+ * @param options (optional) Configure the `MigrationServiceConnection` created by
+ * this function.
  */
 std::shared_ptr<MigrationServiceConnection> MakeMigrationServiceConnection(
     std::string const& location, Options options = {});

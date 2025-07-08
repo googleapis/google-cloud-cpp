@@ -34,28 +34,34 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class RankServiceMetadata : public RankServiceStub {
  public:
   ~RankServiceMetadata() override = default;
-  RankServiceMetadata(std::shared_ptr<RankServiceStub> child,
-                      std::multimap<std::string, std::string> fixed_metadata,
-                      std::string api_client_header = "");
+  RankServiceMetadata(
+      std::shared_ptr<RankServiceStub> child,
+      std::multimap<std::string, std::string> fixed_metadata,
+      std::string api_client_header = "");
 
   StatusOr<google::cloud::discoveryengine::v1::RankResponse> Rank(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::discoveryengine::v1::RankRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context, Options const& options,
+  void SetMetadata(grpc::ClientContext& context,
+                   Options const& options,
                    std::string const& request_params);
   void SetMetadata(grpc::ClientContext& context, Options const& options);
 

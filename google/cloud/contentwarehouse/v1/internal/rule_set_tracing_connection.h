@@ -36,32 +36,27 @@ class RuleSetServiceTracingConnection
   ~RuleSetServiceTracingConnection() override = default;
 
   explicit RuleSetServiceTracingConnection(
-      std::shared_ptr<contentwarehouse_v1::RuleSetServiceConnection> child);
+    std::shared_ptr<contentwarehouse_v1::RuleSetServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::contentwarehouse::v1::RuleSet> CreateRuleSet(
-      google::cloud::contentwarehouse::v1::CreateRuleSetRequest const& request)
-      override;
+  StatusOr<google::cloud::contentwarehouse::v1::RuleSet>
+  CreateRuleSet(google::cloud::contentwarehouse::v1::CreateRuleSetRequest const& request) override;
 
-  StatusOr<google::cloud::contentwarehouse::v1::RuleSet> GetRuleSet(
-      google::cloud::contentwarehouse::v1::GetRuleSetRequest const& request)
-      override;
+  StatusOr<google::cloud::contentwarehouse::v1::RuleSet>
+  GetRuleSet(google::cloud::contentwarehouse::v1::GetRuleSetRequest const& request) override;
 
-  StatusOr<google::cloud::contentwarehouse::v1::RuleSet> UpdateRuleSet(
-      google::cloud::contentwarehouse::v1::UpdateRuleSetRequest const& request)
-      override;
+  StatusOr<google::cloud::contentwarehouse::v1::RuleSet>
+  UpdateRuleSet(google::cloud::contentwarehouse::v1::UpdateRuleSetRequest const& request) override;
 
-  Status DeleteRuleSet(
-      google::cloud::contentwarehouse::v1::DeleteRuleSetRequest const& request)
-      override;
+  Status
+  DeleteRuleSet(google::cloud::contentwarehouse::v1::DeleteRuleSetRequest const& request) override;
 
-  StreamRange<google::cloud::contentwarehouse::v1::RuleSet> ListRuleSets(
-      google::cloud::contentwarehouse::v1::ListRuleSetsRequest request)
-      override;
+  StreamRange<google::cloud::contentwarehouse::v1::RuleSet>
+  ListRuleSets(google::cloud::contentwarehouse::v1::ListRuleSetsRequest request) override;
 
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request) override;
 
  private:
   std::shared_ptr<contentwarehouse_v1::RuleSetServiceConnection> child_;

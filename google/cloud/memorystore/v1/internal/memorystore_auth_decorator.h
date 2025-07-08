@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MEMORYSTORE_V1_INTERNAL_MEMORYSTORE_AUTH_DECORATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MEMORYSTORE_V1_INTERNAL_MEMORYSTORE_AUTH_DECORATOR_H
 
-#include "google/cloud/memorystore/v1/internal/memorystore_stub.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/memorystore/v1/internal/memorystore_stub.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
@@ -40,148 +40,145 @@ class MemorystoreAuth : public MemorystoreStub {
       std::shared_ptr<MemorystoreStub> child);
 
   StatusOr<google::cloud::memorystore::v1::ListInstancesResponse> ListInstances(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::memorystore::v1::ListInstancesRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::memorystore::v1::ListInstancesRequest const& request) override;
 
   StatusOr<google::cloud::memorystore::v1::Instance> GetInstance(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::memorystore::v1::GetInstanceRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::memorystore::v1::GetInstanceRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateInstance(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::memorystore::v1::CreateInstanceRequest const& request)
-      override;
+      google::cloud::memorystore::v1::CreateInstanceRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateInstance(
-      grpc::ClientContext& context, Options options,
-      google::cloud::memorystore::v1::CreateInstanceRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::memorystore::v1::CreateInstanceRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateInstance(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::memorystore::v1::UpdateInstanceRequest const& request)
-      override;
+      google::cloud::memorystore::v1::UpdateInstanceRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateInstance(
-      grpc::ClientContext& context, Options options,
-      google::cloud::memorystore::v1::UpdateInstanceRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::memorystore::v1::UpdateInstanceRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteInstance(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::memorystore::v1::DeleteInstanceRequest const& request)
-      override;
+      google::cloud::memorystore::v1::DeleteInstanceRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteInstance(
-      grpc::ClientContext& context, Options options,
-      google::cloud::memorystore::v1::DeleteInstanceRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::memorystore::v1::DeleteInstanceRequest const& request) override;
 
-  StatusOr<google::cloud::memorystore::v1::CertificateAuthority>
-  GetCertificateAuthority(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::memorystore::v1::GetCertificateAuthorityRequest const&
-          request) override;
+  StatusOr<google::cloud::memorystore::v1::CertificateAuthority> GetCertificateAuthority(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::memorystore::v1::GetCertificateAuthorityRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncRescheduleMaintenance(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::memorystore::v1::RescheduleMaintenanceRequest const&
-          request) override;
+      google::cloud::memorystore::v1::RescheduleMaintenanceRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> RescheduleMaintenance(
-      grpc::ClientContext& context, Options options,
-      google::cloud::memorystore::v1::RescheduleMaintenanceRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::memorystore::v1::RescheduleMaintenanceRequest const& request) override;
 
-  StatusOr<google::cloud::memorystore::v1::ListBackupCollectionsResponse>
-  ListBackupCollections(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::memorystore::v1::ListBackupCollectionsRequest const&
-          request) override;
+  StatusOr<google::cloud::memorystore::v1::ListBackupCollectionsResponse> ListBackupCollections(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::memorystore::v1::ListBackupCollectionsRequest const& request) override;
 
-  StatusOr<google::cloud::memorystore::v1::BackupCollection>
-  GetBackupCollection(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::memorystore::v1::GetBackupCollectionRequest const& request)
-      override;
+  StatusOr<google::cloud::memorystore::v1::BackupCollection> GetBackupCollection(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::memorystore::v1::GetBackupCollectionRequest const& request) override;
 
   StatusOr<google::cloud::memorystore::v1::ListBackupsResponse> ListBackups(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::memorystore::v1::ListBackupsRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::memorystore::v1::ListBackupsRequest const& request) override;
 
   StatusOr<google::cloud::memorystore::v1::Backup> GetBackup(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::memorystore::v1::GetBackupRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteBackup(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::memorystore::v1::DeleteBackupRequest const& request)
-      override;
+      google::cloud::memorystore::v1::DeleteBackupRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteBackup(
-      grpc::ClientContext& context, Options options,
-      google::cloud::memorystore::v1::DeleteBackupRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::memorystore::v1::DeleteBackupRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncExportBackup(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::memorystore::v1::ExportBackupRequest const& request)
-      override;
+      google::cloud::memorystore::v1::ExportBackupRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> ExportBackup(
-      grpc::ClientContext& context, Options options,
-      google::cloud::memorystore::v1::ExportBackupRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::memorystore::v1::ExportBackupRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncBackupInstance(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::memorystore::v1::BackupInstanceRequest const& request)
-      override;
+      google::cloud::memorystore::v1::BackupInstanceRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> BackupInstance(
-      grpc::ClientContext& context, Options options,
-      google::cloud::memorystore::v1::BackupInstanceRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::memorystore::v1::BackupInstanceRequest const& request) override;
 
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::location::ListLocationsRequest const& request) override;
 
   StatusOr<google::cloud::location::Location> GetLocation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::location::GetLocationRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status DeleteOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::DeleteOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(

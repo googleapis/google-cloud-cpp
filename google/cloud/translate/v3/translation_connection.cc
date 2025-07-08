@@ -17,17 +17,17 @@
 // source: google/cloud/translate/v3/translation_service.proto
 
 #include "google/cloud/translate/v3/translation_connection.h"
-#include "google/cloud/translate/v3/internal/translation_connection_impl.h"
-#include "google/cloud/translate/v3/internal/translation_option_defaults.h"
-#include "google/cloud/translate/v3/internal/translation_stub_factory.h"
-#include "google/cloud/translate/v3/internal/translation_tracing_connection.h"
-#include "google/cloud/translate/v3/translation_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/translate/v3/internal/translation_connection_impl.h"
+#include "google/cloud/translate/v3/internal/translation_option_defaults.h"
+#include "google/cloud/translate/v3/internal/translation_stub_factory.h"
+#include "google/cloud/translate/v3/internal/translation_tracing_connection.h"
+#include "google/cloud/translate/v3/translation_options.h"
 #include <memory>
 #include <utility>
 
@@ -72,8 +72,8 @@ future<StatusOr<google::cloud::translation::v3::BatchTranslateResponse>>
 TranslationServiceConnection::BatchTranslateText(
     google::cloud::translation::v3::BatchTranslateTextRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::translation::v3::BatchTranslateResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::translation::v3::BatchTranslateResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -81,23 +81,23 @@ TranslationServiceConnection::BatchTranslateText(
     NoAwaitTag,
     google::cloud::translation::v3::BatchTranslateTextRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::translation::v3::BatchTranslateResponse>>
 TranslationServiceConnection::BatchTranslateText(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::translation::v3::BatchTranslateResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::translation::v3::BatchTranslateResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::translation::v3::BatchTranslateDocumentResponse>>
 TranslationServiceConnection::BatchTranslateDocument(
     google::cloud::translation::v3::BatchTranslateDocumentRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::translation::v3::BatchTranslateDocumentResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::translation::v3::BatchTranslateDocumentResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -105,67 +105,67 @@ TranslationServiceConnection::BatchTranslateDocument(
     NoAwaitTag,
     google::cloud::translation::v3::BatchTranslateDocumentRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::translation::v3::BatchTranslateDocumentResponse>>
 TranslationServiceConnection::BatchTranslateDocument(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::translation::v3::BatchTranslateDocumentResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::translation::v3::BatchTranslateDocumentResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::translation::v3::Glossary>>
 TranslationServiceConnection::CreateGlossary(
     google::cloud::translation::v3::CreateGlossaryRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::translation::v3::Glossary>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::translation::v3::Glossary>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 TranslationServiceConnection::CreateGlossary(
-    NoAwaitTag, google::cloud::translation::v3::CreateGlossaryRequest const&) {
+    NoAwaitTag,
+    google::cloud::translation::v3::CreateGlossaryRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::translation::v3::Glossary>>
 TranslationServiceConnection::CreateGlossary(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::translation::v3::Glossary>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::translation::v3::Glossary>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::translation::v3::Glossary>>
 TranslationServiceConnection::UpdateGlossary(
     google::cloud::translation::v3::UpdateGlossaryRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::translation::v3::Glossary>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::translation::v3::Glossary>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 TranslationServiceConnection::UpdateGlossary(
-    NoAwaitTag, google::cloud::translation::v3::UpdateGlossaryRequest const&) {
+    NoAwaitTag,
+    google::cloud::translation::v3::UpdateGlossaryRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::translation::v3::Glossary>>
 TranslationServiceConnection::UpdateGlossary(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::translation::v3::Glossary>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::translation::v3::Glossary>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StreamRange<google::cloud::translation::v3::Glossary>
-TranslationServiceConnection::ListGlossaries(
-    google::cloud::translation::v3::
-        ListGlossariesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::translation::v3::Glossary> TranslationServiceConnection::ListGlossaries(
+    google::cloud::translation::v3::ListGlossariesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::translation::v3::Glossary>>();
 }
@@ -180,23 +180,24 @@ future<StatusOr<google::cloud::translation::v3::DeleteGlossaryResponse>>
 TranslationServiceConnection::DeleteGlossary(
     google::cloud::translation::v3::DeleteGlossaryRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::translation::v3::DeleteGlossaryResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::translation::v3::DeleteGlossaryResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 TranslationServiceConnection::DeleteGlossary(
-    NoAwaitTag, google::cloud::translation::v3::DeleteGlossaryRequest const&) {
+    NoAwaitTag,
+    google::cloud::translation::v3::DeleteGlossaryRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::translation::v3::DeleteGlossaryResponse>>
 TranslationServiceConnection::DeleteGlossary(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::translation::v3::DeleteGlossaryResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::translation::v3::DeleteGlossaryResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::translation::v3::GlossaryEntry>
@@ -205,10 +206,8 @@ TranslationServiceConnection::GetGlossaryEntry(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::translation::v3::GlossaryEntry>
-TranslationServiceConnection::ListGlossaryEntries(
-    google::cloud::translation::v3::
-        ListGlossaryEntriesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::translation::v3::GlossaryEntry> TranslationServiceConnection::ListGlossaryEntries(
+    google::cloud::translation::v3::ListGlossaryEntriesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::translation::v3::GlossaryEntry>>();
 }
@@ -225,7 +224,8 @@ TranslationServiceConnection::UpdateGlossaryEntry(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status TranslationServiceConnection::DeleteGlossaryEntry(
+Status
+TranslationServiceConnection::DeleteGlossaryEntry(
     google::cloud::translation::v3::DeleteGlossaryEntryRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -234,23 +234,24 @@ future<StatusOr<google::cloud::translation::v3::Dataset>>
 TranslationServiceConnection::CreateDataset(
     google::cloud::translation::v3::CreateDatasetRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::translation::v3::Dataset>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::translation::v3::Dataset>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 TranslationServiceConnection::CreateDataset(
-    NoAwaitTag, google::cloud::translation::v3::CreateDatasetRequest const&) {
+    NoAwaitTag,
+    google::cloud::translation::v3::CreateDatasetRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::translation::v3::Dataset>>
 TranslationServiceConnection::CreateDataset(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::translation::v3::Dataset>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::translation::v3::Dataset>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::translation::v3::Dataset>
@@ -259,10 +260,8 @@ TranslationServiceConnection::GetDataset(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::translation::v3::Dataset>
-TranslationServiceConnection::ListDatasets(
-    google::cloud::translation::v3::
-        ListDatasetsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::translation::v3::Dataset> TranslationServiceConnection::ListDatasets(
+    google::cloud::translation::v3::ListDatasetsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::translation::v3::Dataset>>();
 }
@@ -271,23 +270,24 @@ future<StatusOr<google::cloud::translation::v3::DeleteDatasetMetadata>>
 TranslationServiceConnection::DeleteDataset(
     google::cloud::translation::v3::DeleteDatasetRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::translation::v3::DeleteDatasetMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::translation::v3::DeleteDatasetMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 TranslationServiceConnection::DeleteDataset(
-    NoAwaitTag, google::cloud::translation::v3::DeleteDatasetRequest const&) {
+    NoAwaitTag,
+    google::cloud::translation::v3::DeleteDatasetRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::translation::v3::DeleteDatasetMetadata>>
 TranslationServiceConnection::DeleteDataset(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::translation::v3::DeleteDatasetMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::translation::v3::DeleteDatasetMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::translation::v3::AdaptiveMtDataset>
@@ -296,7 +296,8 @@ TranslationServiceConnection::CreateAdaptiveMtDataset(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status TranslationServiceConnection::DeleteAdaptiveMtDataset(
+Status
+TranslationServiceConnection::DeleteAdaptiveMtDataset(
     google::cloud::translation::v3::DeleteAdaptiveMtDatasetRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -307,10 +308,8 @@ TranslationServiceConnection::GetAdaptiveMtDataset(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::translation::v3::AdaptiveMtDataset>
-TranslationServiceConnection::ListAdaptiveMtDatasets(
-    google::cloud::translation::v3::
-        ListAdaptiveMtDatasetsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::translation::v3::AdaptiveMtDataset> TranslationServiceConnection::ListAdaptiveMtDatasets(
+    google::cloud::translation::v3::ListAdaptiveMtDatasetsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::translation::v3::AdaptiveMtDataset>>();
 }
@@ -327,7 +326,8 @@ TranslationServiceConnection::GetAdaptiveMtFile(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status TranslationServiceConnection::DeleteAdaptiveMtFile(
+Status
+TranslationServiceConnection::DeleteAdaptiveMtFile(
     google::cloud::translation::v3::DeleteAdaptiveMtFileRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -338,18 +338,14 @@ TranslationServiceConnection::ImportAdaptiveMtFile(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::translation::v3::AdaptiveMtFile>
-TranslationServiceConnection::ListAdaptiveMtFiles(
-    google::cloud::translation::v3::
-        ListAdaptiveMtFilesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::translation::v3::AdaptiveMtFile> TranslationServiceConnection::ListAdaptiveMtFiles(
+    google::cloud::translation::v3::ListAdaptiveMtFilesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::translation::v3::AdaptiveMtFile>>();
 }
 
-StreamRange<google::cloud::translation::v3::AdaptiveMtSentence>
-TranslationServiceConnection::ListAdaptiveMtSentences(
-    google::cloud::translation::v3::
-        ListAdaptiveMtSentencesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::translation::v3::AdaptiveMtSentence> TranslationServiceConnection::ListAdaptiveMtSentences(
+    google::cloud::translation::v3::ListAdaptiveMtSentencesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::translation::v3::AdaptiveMtSentence>>();
 }
@@ -358,52 +354,52 @@ future<StatusOr<google::cloud::translation::v3::ImportDataMetadata>>
 TranslationServiceConnection::ImportData(
     google::cloud::translation::v3::ImportDataRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::translation::v3::ImportDataMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::translation::v3::ImportDataMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 TranslationServiceConnection::ImportData(
-    NoAwaitTag, google::cloud::translation::v3::ImportDataRequest const&) {
+    NoAwaitTag,
+    google::cloud::translation::v3::ImportDataRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::translation::v3::ImportDataMetadata>>
 TranslationServiceConnection::ImportData(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::translation::v3::ImportDataMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::translation::v3::ImportDataMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::translation::v3::ExportDataMetadata>>
 TranslationServiceConnection::ExportData(
     google::cloud::translation::v3::ExportDataRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::translation::v3::ExportDataMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::translation::v3::ExportDataMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 TranslationServiceConnection::ExportData(
-    NoAwaitTag, google::cloud::translation::v3::ExportDataRequest const&) {
+    NoAwaitTag,
+    google::cloud::translation::v3::ExportDataRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::translation::v3::ExportDataMetadata>>
 TranslationServiceConnection::ExportData(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::translation::v3::ExportDataMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::translation::v3::ExportDataMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StreamRange<google::cloud::translation::v3::Example>
-TranslationServiceConnection::ListExamples(
-    google::cloud::translation::v3::
-        ListExamplesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::translation::v3::Example> TranslationServiceConnection::ListExamples(
+    google::cloud::translation::v3::ListExamplesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::translation::v3::Example>>();
 }
@@ -412,29 +408,28 @@ future<StatusOr<google::cloud::translation::v3::Model>>
 TranslationServiceConnection::CreateModel(
     google::cloud::translation::v3::CreateModelRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::translation::v3::Model>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::translation::v3::Model>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 TranslationServiceConnection::CreateModel(
-    NoAwaitTag, google::cloud::translation::v3::CreateModelRequest const&) {
+    NoAwaitTag,
+    google::cloud::translation::v3::CreateModelRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::translation::v3::Model>>
 TranslationServiceConnection::CreateModel(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::translation::v3::Model>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::translation::v3::Model>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StreamRange<google::cloud::translation::v3::Model>
-TranslationServiceConnection::ListModels(
-    google::cloud::translation::v3::
-        ListModelsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::translation::v3::Model> TranslationServiceConnection::ListModels(
+    google::cloud::translation::v3::ListModelsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::translation::v3::Model>>();
 }
@@ -449,29 +444,28 @@ future<StatusOr<google::cloud::translation::v3::DeleteModelMetadata>>
 TranslationServiceConnection::DeleteModel(
     google::cloud::translation::v3::DeleteModelRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::translation::v3::DeleteModelMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::translation::v3::DeleteModelMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 TranslationServiceConnection::DeleteModel(
-    NoAwaitTag, google::cloud::translation::v3::DeleteModelRequest const&) {
+    NoAwaitTag,
+    google::cloud::translation::v3::DeleteModelRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::translation::v3::DeleteModelMetadata>>
 TranslationServiceConnection::DeleteModel(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::translation::v3::DeleteModelMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::translation::v3::DeleteModelMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StreamRange<google::cloud::location::Location>
-TranslationServiceConnection::ListLocations(
-    google::cloud::location::
-        ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::location::Location> TranslationServiceConnection::ListLocations(
+    google::cloud::location::ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::location::Location>>();
 }
@@ -482,10 +476,8 @@ TranslationServiceConnection::GetLocation(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::longrunning::Operation>
-TranslationServiceConnection::ListOperations(
-    google::longrunning::
-        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::longrunning::Operation> TranslationServiceConnection::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }
@@ -496,12 +488,14 @@ TranslationServiceConnection::GetOperation(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status TranslationServiceConnection::DeleteOperation(
+Status
+TranslationServiceConnection::DeleteOperation(
     google::longrunning::DeleteOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status TranslationServiceConnection::CancelOperation(
+Status
+TranslationServiceConnection::CancelOperation(
     google::longrunning::CancelOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -515,18 +509,17 @@ TranslationServiceConnection::WaitOperation(
 std::shared_ptr<TranslationServiceConnection> MakeTranslationServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 TranslationServicePolicyOptionList>(options,
-                                                                     __func__);
+      UnifiedCredentialsOptionList,
+      TranslationServicePolicyOptionList>(options, __func__);
   options = translate_v3_internal::TranslationServiceDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = translate_v3_internal::CreateDefaultTranslationServiceStub(
-      std::move(auth), options);
+    std::move(auth), options);
   return translate_v3_internal::MakeTranslationServiceTracingConnection(
       std::make_shared<translate_v3_internal::TranslationServiceConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options)));
+      std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

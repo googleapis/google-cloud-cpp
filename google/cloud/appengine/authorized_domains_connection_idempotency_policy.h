@@ -26,16 +26,11 @@ namespace cloud {
 namespace appengine {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use
-/// appengine_v1::MakeDefaultAuthorizedDomainsConnectionIdempotencyPolicy
-/// directly.
-using ::google::cloud::appengine_v1::
-    MakeDefaultAuthorizedDomainsConnectionIdempotencyPolicy;
+/// @deprecated Use appengine_v1::MakeDefaultAuthorizedDomainsConnectionIdempotencyPolicy directly.
+using ::google::cloud::appengine_v1::MakeDefaultAuthorizedDomainsConnectionIdempotencyPolicy;
 
-/// @deprecated Use appengine_v1::AuthorizedDomainsConnectionIdempotencyPolicy
-/// directly.
-using ::google::cloud::appengine_v1::
-    AuthorizedDomainsConnectionIdempotencyPolicy;
+/// @deprecated Use appengine_v1::AuthorizedDomainsConnectionIdempotencyPolicy directly.
+using ::google::cloud::appengine_v1::AuthorizedDomainsConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace appengine

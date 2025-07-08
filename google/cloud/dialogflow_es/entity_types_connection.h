@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_ES_ENTITY_TYPES_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_ES_ENTITY_TYPES_CONNECTION_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/dialogflow_es/entity_types_connection_idempotency_policy.h"
 #include "google/cloud/dialogflow_es/internal/entity_types_retry_traits.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -30,9 +30,9 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
+#include <google/protobuf/struct.pb.h>
 #include <google/cloud/dialogflow/v2/entity_type.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
-#include <google/protobuf/struct.pb.h>
 #include <memory>
 #include <string>
 
@@ -68,14 +68,14 @@ class EntityTypesLimitedErrorCountRetryPolicy : public EntityTypesRetryPolicy {
    *     @p maximum_failures == 0.
    */
   explicit EntityTypesLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   EntityTypesLimitedErrorCountRetryPolicy(
       EntityTypesLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : EntityTypesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : EntityTypesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   EntityTypesLimitedErrorCountRetryPolicy(
       EntityTypesLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : EntityTypesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : EntityTypesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -95,9 +95,7 @@ class EntityTypesLimitedErrorCountRetryPolicy : public EntityTypesRetryPolicy {
   using BaseType = EntityTypesRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      dialogflow_es_internal::EntityTypesRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<dialogflow_es_internal::EntityTypesRetryTraits> impl_;
 };
 
 /**
@@ -135,14 +133,12 @@ class EntityTypesLimitedTimeRetryPolicy : public EntityTypesRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit EntityTypesLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  EntityTypesLimitedTimeRetryPolicy(
-      EntityTypesLimitedTimeRetryPolicy&& rhs) noexcept
-      : EntityTypesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  EntityTypesLimitedTimeRetryPolicy(
-      EntityTypesLimitedTimeRetryPolicy const& rhs) noexcept
-      : EntityTypesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  EntityTypesLimitedTimeRetryPolicy(EntityTypesLimitedTimeRetryPolicy&& rhs) noexcept
+    : EntityTypesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  EntityTypesLimitedTimeRetryPolicy(EntityTypesLimitedTimeRetryPolicy const& rhs) noexcept
+    : EntityTypesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -164,9 +160,7 @@ class EntityTypesLimitedTimeRetryPolicy : public EntityTypesRetryPolicy {
   using BaseType = EntityTypesRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      dialogflow_es_internal::EntityTypesRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<dialogflow_es_internal::EntityTypesRetryTraits> impl_;
 };
 
 /**
@@ -188,92 +182,79 @@ class EntityTypesConnection {
   virtual Options options() { return Options{}; }
 
   virtual StreamRange<google::cloud::dialogflow::v2::EntityType>
-  ListEntityTypes(
-      google::cloud::dialogflow::v2::ListEntityTypesRequest request);
+  ListEntityTypes(google::cloud::dialogflow::v2::ListEntityTypesRequest request);
 
-  virtual StatusOr<google::cloud::dialogflow::v2::EntityType> GetEntityType(
-      google::cloud::dialogflow::v2::GetEntityTypeRequest const& request);
+  virtual StatusOr<google::cloud::dialogflow::v2::EntityType>
+  GetEntityType(google::cloud::dialogflow::v2::GetEntityTypeRequest const& request);
 
-  virtual StatusOr<google::cloud::dialogflow::v2::EntityType> CreateEntityType(
-      google::cloud::dialogflow::v2::CreateEntityTypeRequest const& request);
+  virtual StatusOr<google::cloud::dialogflow::v2::EntityType>
+  CreateEntityType(google::cloud::dialogflow::v2::CreateEntityTypeRequest const& request);
 
-  virtual StatusOr<google::cloud::dialogflow::v2::EntityType> UpdateEntityType(
-      google::cloud::dialogflow::v2::UpdateEntityTypeRequest const& request);
+  virtual StatusOr<google::cloud::dialogflow::v2::EntityType>
+  UpdateEntityType(google::cloud::dialogflow::v2::UpdateEntityTypeRequest const& request);
 
-  virtual Status DeleteEntityType(
-      google::cloud::dialogflow::v2::DeleteEntityTypeRequest const& request);
+  virtual Status
+  DeleteEntityType(google::cloud::dialogflow::v2::DeleteEntityTypeRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::dialogflow::v2::BatchUpdateEntityTypesResponse>>
-  BatchUpdateEntityTypes(
-      google::cloud::dialogflow::v2::BatchUpdateEntityTypesRequest const&
-          request);
+  virtual future<StatusOr<google::cloud::dialogflow::v2::BatchUpdateEntityTypesResponse>>
+  BatchUpdateEntityTypes(google::cloud::dialogflow::v2::BatchUpdateEntityTypesRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> BatchUpdateEntityTypes(
-      NoAwaitTag,
-      google::cloud::dialogflow::v2::BatchUpdateEntityTypesRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  BatchUpdateEntityTypes(NoAwaitTag, google::cloud::dialogflow::v2::BatchUpdateEntityTypesRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::dialogflow::v2::BatchUpdateEntityTypesResponse>>
-  BatchUpdateEntityTypes(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::dialogflow::v2::BatchUpdateEntityTypesResponse>>
+  BatchUpdateEntityTypes( google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<google::protobuf::Struct>> BatchDeleteEntityTypes(
-      google::cloud::dialogflow::v2::BatchDeleteEntityTypesRequest const&
-          request);
+  virtual future<StatusOr<google::protobuf::Struct>>
+  BatchDeleteEntityTypes(google::cloud::dialogflow::v2::BatchDeleteEntityTypesRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> BatchDeleteEntityTypes(
-      NoAwaitTag,
-      google::cloud::dialogflow::v2::BatchDeleteEntityTypesRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  BatchDeleteEntityTypes(NoAwaitTag, google::cloud::dialogflow::v2::BatchDeleteEntityTypesRequest const& request);
 
-  virtual future<StatusOr<google::protobuf::Struct>> BatchDeleteEntityTypes(
-      google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::protobuf::Struct>>
+  BatchDeleteEntityTypes( google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<google::protobuf::Struct>> BatchCreateEntities(
-      google::cloud::dialogflow::v2::BatchCreateEntitiesRequest const& request);
+  virtual future<StatusOr<google::protobuf::Struct>>
+  BatchCreateEntities(google::cloud::dialogflow::v2::BatchCreateEntitiesRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> BatchCreateEntities(
-      NoAwaitTag,
-      google::cloud::dialogflow::v2::BatchCreateEntitiesRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  BatchCreateEntities(NoAwaitTag, google::cloud::dialogflow::v2::BatchCreateEntitiesRequest const& request);
 
-  virtual future<StatusOr<google::protobuf::Struct>> BatchCreateEntities(
-      google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::protobuf::Struct>>
+  BatchCreateEntities( google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<google::protobuf::Struct>> BatchUpdateEntities(
-      google::cloud::dialogflow::v2::BatchUpdateEntitiesRequest const& request);
+  virtual future<StatusOr<google::protobuf::Struct>>
+  BatchUpdateEntities(google::cloud::dialogflow::v2::BatchUpdateEntitiesRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> BatchUpdateEntities(
-      NoAwaitTag,
-      google::cloud::dialogflow::v2::BatchUpdateEntitiesRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  BatchUpdateEntities(NoAwaitTag, google::cloud::dialogflow::v2::BatchUpdateEntitiesRequest const& request);
 
-  virtual future<StatusOr<google::protobuf::Struct>> BatchUpdateEntities(
-      google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::protobuf::Struct>>
+  BatchUpdateEntities( google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<google::protobuf::Struct>> BatchDeleteEntities(
-      google::cloud::dialogflow::v2::BatchDeleteEntitiesRequest const& request);
+  virtual future<StatusOr<google::protobuf::Struct>>
+  BatchDeleteEntities(google::cloud::dialogflow::v2::BatchDeleteEntitiesRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> BatchDeleteEntities(
-      NoAwaitTag,
-      google::cloud::dialogflow::v2::BatchDeleteEntitiesRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  BatchDeleteEntities(NoAwaitTag, google::cloud::dialogflow::v2::BatchDeleteEntitiesRequest const& request);
 
-  virtual future<StatusOr<google::protobuf::Struct>> BatchDeleteEntities(
-      google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::protobuf::Struct>>
+  BatchDeleteEntities( google::longrunning::Operation const& operation);
 
-  virtual StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request);
+  virtual StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request);
 
-  virtual StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request);
+  virtual StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request);
 
-  virtual StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 
-  virtual Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request);
+  virtual Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request);
 };
 
 /**

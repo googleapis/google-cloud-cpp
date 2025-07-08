@@ -32,12 +32,11 @@ ApplicationsTracingStub::ApplicationsTracingStub(
     std::shared_ptr<ApplicationsStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
-StatusOr<google::appengine::v1::Application>
-ApplicationsTracingStub::GetApplication(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::appengine::v1::Application> ApplicationsTracingStub::GetApplication(
+    grpc::ClientContext& context,
+    Options const& options,
     google::appengine::v1::GetApplicationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.appengine.v1.Applications",
-                                     "GetApplication");
+  auto span = internal::MakeSpanGrpc("google.appengine.v1.Applications", "GetApplication");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -46,83 +45,77 @@ ApplicationsTracingStub::GetApplication(
 
 future<StatusOr<google::longrunning::Operation>>
 ApplicationsTracingStub::AsyncCreateApplication(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::appengine::v1::CreateApplicationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.appengine.v1.Applications",
-                                     "CreateApplication");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::appengine::v1::CreateApplicationRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.appengine.v1.Applications", "CreateApplication");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f =
-      child_->AsyncCreateApplication(cq, context, std::move(options), request);
+  auto f = child_->AsyncCreateApplication(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 ApplicationsTracingStub::CreateApplication(
-    grpc::ClientContext& context, Options options,
-    google::appengine::v1::CreateApplicationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.appengine.v1.Applications",
-                                     "CreateApplication");
+      grpc::ClientContext& context,
+      Options options,
+      google::appengine::v1::CreateApplicationRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.appengine.v1.Applications", "CreateApplication");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->CreateApplication(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->CreateApplication(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ApplicationsTracingStub::AsyncUpdateApplication(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::appengine::v1::UpdateApplicationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.appengine.v1.Applications",
-                                     "UpdateApplication");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::appengine::v1::UpdateApplicationRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.appengine.v1.Applications", "UpdateApplication");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f =
-      child_->AsyncUpdateApplication(cq, context, std::move(options), request);
+  auto f = child_->AsyncUpdateApplication(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 ApplicationsTracingStub::UpdateApplication(
-    grpc::ClientContext& context, Options options,
-    google::appengine::v1::UpdateApplicationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.appengine.v1.Applications",
-                                     "UpdateApplication");
+      grpc::ClientContext& context,
+      Options options,
+      google::appengine::v1::UpdateApplicationRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.appengine.v1.Applications", "UpdateApplication");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->UpdateApplication(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->UpdateApplication(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ApplicationsTracingStub::AsyncRepairApplication(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::appengine::v1::RepairApplicationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.appengine.v1.Applications",
-                                     "RepairApplication");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::appengine::v1::RepairApplicationRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.appengine.v1.Applications", "RepairApplication");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f =
-      child_->AsyncRepairApplication(cq, context, std::move(options), request);
+  auto f = child_->AsyncRepairApplication(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 ApplicationsTracingStub::RepairApplication(
-    grpc::ClientContext& context, Options options,
-    google::appengine::v1::RepairApplicationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.appengine.v1.Applications",
-                                     "RepairApplication");
+      grpc::ClientContext& context,
+      Options options,
+      google::appengine::v1::RepairApplicationRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.appengine.v1.Applications", "RepairApplication");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->RepairApplication(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->RepairApplication(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -135,7 +128,8 @@ ApplicationsTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncGetOperation(cq, context, std::move(options), request);
+  auto f = child_->AsyncGetOperation(
+      cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -148,8 +142,8 @@ future<Status> ApplicationsTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f =
-      child_->AsyncCancelOperation(cq, context, std::move(options), request);
+  auto f = child_->AsyncCancelOperation(
+      cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 

@@ -19,8 +19,6 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VMMIGRATION_V1_VM_MIGRATION_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VMMIGRATION_V1_VM_MIGRATION_CONNECTION_H
 
-#include "google/cloud/vmmigration/v1/internal/vm_migration_retry_traits.h"
-#include "google/cloud/vmmigration/v1/vm_migration_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
@@ -30,6 +28,8 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
+#include "google/cloud/vmmigration/v1/internal/vm_migration_retry_traits.h"
+#include "google/cloud/vmmigration/v1/vm_migration_connection_idempotency_policy.h"
 #include <google/cloud/vmmigration/v1/vmmigration.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
@@ -66,14 +66,14 @@ class VmMigrationLimitedErrorCountRetryPolicy : public VmMigrationRetryPolicy {
    *     @p maximum_failures == 0.
    */
   explicit VmMigrationLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   VmMigrationLimitedErrorCountRetryPolicy(
       VmMigrationLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : VmMigrationLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : VmMigrationLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   VmMigrationLimitedErrorCountRetryPolicy(
       VmMigrationLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : VmMigrationLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : VmMigrationLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -93,9 +93,7 @@ class VmMigrationLimitedErrorCountRetryPolicy : public VmMigrationRetryPolicy {
   using BaseType = VmMigrationRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      vmmigration_v1_internal::VmMigrationRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<vmmigration_v1_internal::VmMigrationRetryTraits> impl_;
 };
 
 /**
@@ -133,14 +131,12 @@ class VmMigrationLimitedTimeRetryPolicy : public VmMigrationRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit VmMigrationLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  VmMigrationLimitedTimeRetryPolicy(
-      VmMigrationLimitedTimeRetryPolicy&& rhs) noexcept
-      : VmMigrationLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  VmMigrationLimitedTimeRetryPolicy(
-      VmMigrationLimitedTimeRetryPolicy const& rhs) noexcept
-      : VmMigrationLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  VmMigrationLimitedTimeRetryPolicy(VmMigrationLimitedTimeRetryPolicy&& rhs) noexcept
+    : VmMigrationLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  VmMigrationLimitedTimeRetryPolicy(VmMigrationLimitedTimeRetryPolicy const& rhs) noexcept
+    : VmMigrationLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -162,9 +158,7 @@ class VmMigrationLimitedTimeRetryPolicy : public VmMigrationRetryPolicy {
   using BaseType = VmMigrationRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      vmmigration_v1_internal::VmMigrationRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<vmmigration_v1_internal::VmMigrationRetryTraits> impl_;
 };
 
 /**
@@ -185,421 +179,323 @@ class VmMigrationConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StreamRange<google::cloud::vmmigration::v1::Source> ListSources(
-      google::cloud::vmmigration::v1::ListSourcesRequest request);
+  virtual StreamRange<google::cloud::vmmigration::v1::Source>
+  ListSources(google::cloud::vmmigration::v1::ListSourcesRequest request);
 
-  virtual StatusOr<google::cloud::vmmigration::v1::Source> GetSource(
-      google::cloud::vmmigration::v1::GetSourceRequest const& request);
+  virtual StatusOr<google::cloud::vmmigration::v1::Source>
+  GetSource(google::cloud::vmmigration::v1::GetSourceRequest const& request);
 
-  virtual future<StatusOr<google::cloud::vmmigration::v1::Source>> CreateSource(
-      google::cloud::vmmigration::v1::CreateSourceRequest const& request);
+  virtual future<StatusOr<google::cloud::vmmigration::v1::Source>>
+  CreateSource(google::cloud::vmmigration::v1::CreateSourceRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> CreateSource(
-      NoAwaitTag,
-      google::cloud::vmmigration::v1::CreateSourceRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  CreateSource(NoAwaitTag, google::cloud::vmmigration::v1::CreateSourceRequest const& request);
 
-  virtual future<StatusOr<google::cloud::vmmigration::v1::Source>> CreateSource(
-      google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::vmmigration::v1::Source>>
+  CreateSource( google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<google::cloud::vmmigration::v1::Source>> UpdateSource(
-      google::cloud::vmmigration::v1::UpdateSourceRequest const& request);
+  virtual future<StatusOr<google::cloud::vmmigration::v1::Source>>
+  UpdateSource(google::cloud::vmmigration::v1::UpdateSourceRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> UpdateSource(
-      NoAwaitTag,
-      google::cloud::vmmigration::v1::UpdateSourceRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  UpdateSource(NoAwaitTag, google::cloud::vmmigration::v1::UpdateSourceRequest const& request);
 
-  virtual future<StatusOr<google::cloud::vmmigration::v1::Source>> UpdateSource(
-      google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::vmmigration::v1::Source>>
+  UpdateSource( google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
-  DeleteSource(
-      google::cloud::vmmigration::v1::DeleteSourceRequest const& request);
+  DeleteSource(google::cloud::vmmigration::v1::DeleteSourceRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> DeleteSource(
-      NoAwaitTag,
-      google::cloud::vmmigration::v1::DeleteSourceRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  DeleteSource(NoAwaitTag, google::cloud::vmmigration::v1::DeleteSourceRequest const& request);
 
   virtual future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
-  DeleteSource(google::longrunning::Operation const& operation);
+  DeleteSource( google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::vmmigration::v1::FetchInventoryResponse>
-  FetchInventory(
-      google::cloud::vmmigration::v1::FetchInventoryRequest const& request);
+  FetchInventory(google::cloud::vmmigration::v1::FetchInventoryRequest const& request);
 
   virtual StreamRange<google::cloud::vmmigration::v1::UtilizationReport>
-  ListUtilizationReports(
-      google::cloud::vmmigration::v1::ListUtilizationReportsRequest request);
+  ListUtilizationReports(google::cloud::vmmigration::v1::ListUtilizationReportsRequest request);
 
   virtual StatusOr<google::cloud::vmmigration::v1::UtilizationReport>
-  GetUtilizationReport(
-      google::cloud::vmmigration::v1::GetUtilizationReportRequest const&
-          request);
+  GetUtilizationReport(google::cloud::vmmigration::v1::GetUtilizationReportRequest const& request);
 
   virtual future<StatusOr<google::cloud::vmmigration::v1::UtilizationReport>>
-  CreateUtilizationReport(
-      google::cloud::vmmigration::v1::CreateUtilizationReportRequest const&
-          request);
+  CreateUtilizationReport(google::cloud::vmmigration::v1::CreateUtilizationReportRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> CreateUtilizationReport(
-      NoAwaitTag,
-      google::cloud::vmmigration::v1::CreateUtilizationReportRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  CreateUtilizationReport(NoAwaitTag, google::cloud::vmmigration::v1::CreateUtilizationReportRequest const& request);
 
   virtual future<StatusOr<google::cloud::vmmigration::v1::UtilizationReport>>
-  CreateUtilizationReport(google::longrunning::Operation const& operation);
+  CreateUtilizationReport( google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
-  DeleteUtilizationReport(
-      google::cloud::vmmigration::v1::DeleteUtilizationReportRequest const&
-          request);
+  DeleteUtilizationReport(google::cloud::vmmigration::v1::DeleteUtilizationReportRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> DeleteUtilizationReport(
-      NoAwaitTag,
-      google::cloud::vmmigration::v1::DeleteUtilizationReportRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  DeleteUtilizationReport(NoAwaitTag, google::cloud::vmmigration::v1::DeleteUtilizationReportRequest const& request);
 
   virtual future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
-  DeleteUtilizationReport(google::longrunning::Operation const& operation);
+  DeleteUtilizationReport( google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::vmmigration::v1::DatacenterConnector>
-  ListDatacenterConnectors(
-      google::cloud::vmmigration::v1::ListDatacenterConnectorsRequest request);
+  ListDatacenterConnectors(google::cloud::vmmigration::v1::ListDatacenterConnectorsRequest request);
 
   virtual StatusOr<google::cloud::vmmigration::v1::DatacenterConnector>
-  GetDatacenterConnector(
-      google::cloud::vmmigration::v1::GetDatacenterConnectorRequest const&
-          request);
+  GetDatacenterConnector(google::cloud::vmmigration::v1::GetDatacenterConnectorRequest const& request);
 
   virtual future<StatusOr<google::cloud::vmmigration::v1::DatacenterConnector>>
-  CreateDatacenterConnector(
-      google::cloud::vmmigration::v1::CreateDatacenterConnectorRequest const&
-          request);
+  CreateDatacenterConnector(google::cloud::vmmigration::v1::CreateDatacenterConnectorRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> CreateDatacenterConnector(
-      NoAwaitTag,
-      google::cloud::vmmigration::v1::CreateDatacenterConnectorRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  CreateDatacenterConnector(NoAwaitTag, google::cloud::vmmigration::v1::CreateDatacenterConnectorRequest const& request);
 
   virtual future<StatusOr<google::cloud::vmmigration::v1::DatacenterConnector>>
-  CreateDatacenterConnector(google::longrunning::Operation const& operation);
+  CreateDatacenterConnector( google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
-  DeleteDatacenterConnector(
-      google::cloud::vmmigration::v1::DeleteDatacenterConnectorRequest const&
-          request);
+  DeleteDatacenterConnector(google::cloud::vmmigration::v1::DeleteDatacenterConnectorRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> DeleteDatacenterConnector(
-      NoAwaitTag,
-      google::cloud::vmmigration::v1::DeleteDatacenterConnectorRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  DeleteDatacenterConnector(NoAwaitTag, google::cloud::vmmigration::v1::DeleteDatacenterConnectorRequest const& request);
 
   virtual future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
-  DeleteDatacenterConnector(google::longrunning::Operation const& operation);
+  DeleteDatacenterConnector( google::longrunning::Operation const& operation);
 
-  virtual future<
-      StatusOr<google::cloud::vmmigration::v1::UpgradeApplianceResponse>>
-  UpgradeAppliance(
-      google::cloud::vmmigration::v1::UpgradeApplianceRequest const& request);
+  virtual future<StatusOr<google::cloud::vmmigration::v1::UpgradeApplianceResponse>>
+  UpgradeAppliance(google::cloud::vmmigration::v1::UpgradeApplianceRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> UpgradeAppliance(
-      NoAwaitTag,
-      google::cloud::vmmigration::v1::UpgradeApplianceRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  UpgradeAppliance(NoAwaitTag, google::cloud::vmmigration::v1::UpgradeApplianceRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::vmmigration::v1::UpgradeApplianceResponse>>
-  UpgradeAppliance(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::vmmigration::v1::UpgradeApplianceResponse>>
+  UpgradeAppliance( google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::vmmigration::v1::MigratingVm>>
-  CreateMigratingVm(
-      google::cloud::vmmigration::v1::CreateMigratingVmRequest const& request);
+  CreateMigratingVm(google::cloud::vmmigration::v1::CreateMigratingVmRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> CreateMigratingVm(
-      NoAwaitTag,
-      google::cloud::vmmigration::v1::CreateMigratingVmRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  CreateMigratingVm(NoAwaitTag, google::cloud::vmmigration::v1::CreateMigratingVmRequest const& request);
 
   virtual future<StatusOr<google::cloud::vmmigration::v1::MigratingVm>>
-  CreateMigratingVm(google::longrunning::Operation const& operation);
+  CreateMigratingVm( google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::vmmigration::v1::MigratingVm>
-  ListMigratingVms(
-      google::cloud::vmmigration::v1::ListMigratingVmsRequest request);
+  ListMigratingVms(google::cloud::vmmigration::v1::ListMigratingVmsRequest request);
 
-  virtual StatusOr<google::cloud::vmmigration::v1::MigratingVm> GetMigratingVm(
-      google::cloud::vmmigration::v1::GetMigratingVmRequest const& request);
-
-  virtual future<StatusOr<google::cloud::vmmigration::v1::MigratingVm>>
-  UpdateMigratingVm(
-      google::cloud::vmmigration::v1::UpdateMigratingVmRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation> UpdateMigratingVm(
-      NoAwaitTag,
-      google::cloud::vmmigration::v1::UpdateMigratingVmRequest const& request);
+  virtual StatusOr<google::cloud::vmmigration::v1::MigratingVm>
+  GetMigratingVm(google::cloud::vmmigration::v1::GetMigratingVmRequest const& request);
 
   virtual future<StatusOr<google::cloud::vmmigration::v1::MigratingVm>>
-  UpdateMigratingVm(google::longrunning::Operation const& operation);
+  UpdateMigratingVm(google::cloud::vmmigration::v1::UpdateMigratingVmRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation>
+  UpdateMigratingVm(NoAwaitTag, google::cloud::vmmigration::v1::UpdateMigratingVmRequest const& request);
+
+  virtual future<StatusOr<google::cloud::vmmigration::v1::MigratingVm>>
+  UpdateMigratingVm( google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
-  DeleteMigratingVm(
-      google::cloud::vmmigration::v1::DeleteMigratingVmRequest const& request);
+  DeleteMigratingVm(google::cloud::vmmigration::v1::DeleteMigratingVmRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> DeleteMigratingVm(
-      NoAwaitTag,
-      google::cloud::vmmigration::v1::DeleteMigratingVmRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  DeleteMigratingVm(NoAwaitTag, google::cloud::vmmigration::v1::DeleteMigratingVmRequest const& request);
 
   virtual future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
-  DeleteMigratingVm(google::longrunning::Operation const& operation);
+  DeleteMigratingVm( google::longrunning::Operation const& operation);
 
-  virtual future<
-      StatusOr<google::cloud::vmmigration::v1::StartMigrationResponse>>
-  StartMigration(
-      google::cloud::vmmigration::v1::StartMigrationRequest const& request);
+  virtual future<StatusOr<google::cloud::vmmigration::v1::StartMigrationResponse>>
+  StartMigration(google::cloud::vmmigration::v1::StartMigrationRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> StartMigration(
-      NoAwaitTag,
-      google::cloud::vmmigration::v1::StartMigrationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  StartMigration(NoAwaitTag, google::cloud::vmmigration::v1::StartMigrationRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::vmmigration::v1::StartMigrationResponse>>
-  StartMigration(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::vmmigration::v1::StartMigrationResponse>>
+  StartMigration( google::longrunning::Operation const& operation);
 
-  virtual future<
-      StatusOr<google::cloud::vmmigration::v1::ResumeMigrationResponse>>
-  ResumeMigration(
-      google::cloud::vmmigration::v1::ResumeMigrationRequest const& request);
+  virtual future<StatusOr<google::cloud::vmmigration::v1::ResumeMigrationResponse>>
+  ResumeMigration(google::cloud::vmmigration::v1::ResumeMigrationRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> ResumeMigration(
-      NoAwaitTag,
-      google::cloud::vmmigration::v1::ResumeMigrationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  ResumeMigration(NoAwaitTag, google::cloud::vmmigration::v1::ResumeMigrationRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::vmmigration::v1::ResumeMigrationResponse>>
-  ResumeMigration(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::vmmigration::v1::ResumeMigrationResponse>>
+  ResumeMigration( google::longrunning::Operation const& operation);
 
-  virtual future<
-      StatusOr<google::cloud::vmmigration::v1::PauseMigrationResponse>>
-  PauseMigration(
-      google::cloud::vmmigration::v1::PauseMigrationRequest const& request);
+  virtual future<StatusOr<google::cloud::vmmigration::v1::PauseMigrationResponse>>
+  PauseMigration(google::cloud::vmmigration::v1::PauseMigrationRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> PauseMigration(
-      NoAwaitTag,
-      google::cloud::vmmigration::v1::PauseMigrationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  PauseMigration(NoAwaitTag, google::cloud::vmmigration::v1::PauseMigrationRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::vmmigration::v1::PauseMigrationResponse>>
-  PauseMigration(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::vmmigration::v1::PauseMigrationResponse>>
+  PauseMigration( google::longrunning::Operation const& operation);
 
-  virtual future<
-      StatusOr<google::cloud::vmmigration::v1::FinalizeMigrationResponse>>
-  FinalizeMigration(
-      google::cloud::vmmigration::v1::FinalizeMigrationRequest const& request);
+  virtual future<StatusOr<google::cloud::vmmigration::v1::FinalizeMigrationResponse>>
+  FinalizeMigration(google::cloud::vmmigration::v1::FinalizeMigrationRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> FinalizeMigration(
-      NoAwaitTag,
-      google::cloud::vmmigration::v1::FinalizeMigrationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  FinalizeMigration(NoAwaitTag, google::cloud::vmmigration::v1::FinalizeMigrationRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::vmmigration::v1::FinalizeMigrationResponse>>
-  FinalizeMigration(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::vmmigration::v1::FinalizeMigrationResponse>>
+  FinalizeMigration( google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::vmmigration::v1::CloneJob>>
-  CreateCloneJob(
-      google::cloud::vmmigration::v1::CreateCloneJobRequest const& request);
+  CreateCloneJob(google::cloud::vmmigration::v1::CreateCloneJobRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> CreateCloneJob(
-      NoAwaitTag,
-      google::cloud::vmmigration::v1::CreateCloneJobRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  CreateCloneJob(NoAwaitTag, google::cloud::vmmigration::v1::CreateCloneJobRequest const& request);
 
   virtual future<StatusOr<google::cloud::vmmigration::v1::CloneJob>>
-  CreateCloneJob(google::longrunning::Operation const& operation);
+  CreateCloneJob( google::longrunning::Operation const& operation);
 
-  virtual future<
-      StatusOr<google::cloud::vmmigration::v1::CancelCloneJobResponse>>
-  CancelCloneJob(
-      google::cloud::vmmigration::v1::CancelCloneJobRequest const& request);
+  virtual future<StatusOr<google::cloud::vmmigration::v1::CancelCloneJobResponse>>
+  CancelCloneJob(google::cloud::vmmigration::v1::CancelCloneJobRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> CancelCloneJob(
-      NoAwaitTag,
-      google::cloud::vmmigration::v1::CancelCloneJobRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  CancelCloneJob(NoAwaitTag, google::cloud::vmmigration::v1::CancelCloneJobRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::vmmigration::v1::CancelCloneJobResponse>>
-  CancelCloneJob(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::vmmigration::v1::CancelCloneJobResponse>>
+  CancelCloneJob( google::longrunning::Operation const& operation);
 
-  virtual StreamRange<google::cloud::vmmigration::v1::CloneJob> ListCloneJobs(
-      google::cloud::vmmigration::v1::ListCloneJobsRequest request);
+  virtual StreamRange<google::cloud::vmmigration::v1::CloneJob>
+  ListCloneJobs(google::cloud::vmmigration::v1::ListCloneJobsRequest request);
 
-  virtual StatusOr<google::cloud::vmmigration::v1::CloneJob> GetCloneJob(
-      google::cloud::vmmigration::v1::GetCloneJobRequest const& request);
+  virtual StatusOr<google::cloud::vmmigration::v1::CloneJob>
+  GetCloneJob(google::cloud::vmmigration::v1::GetCloneJobRequest const& request);
 
   virtual future<StatusOr<google::cloud::vmmigration::v1::CutoverJob>>
-  CreateCutoverJob(
-      google::cloud::vmmigration::v1::CreateCutoverJobRequest const& request);
+  CreateCutoverJob(google::cloud::vmmigration::v1::CreateCutoverJobRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> CreateCutoverJob(
-      NoAwaitTag,
-      google::cloud::vmmigration::v1::CreateCutoverJobRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  CreateCutoverJob(NoAwaitTag, google::cloud::vmmigration::v1::CreateCutoverJobRequest const& request);
 
   virtual future<StatusOr<google::cloud::vmmigration::v1::CutoverJob>>
-  CreateCutoverJob(google::longrunning::Operation const& operation);
+  CreateCutoverJob( google::longrunning::Operation const& operation);
 
-  virtual future<
-      StatusOr<google::cloud::vmmigration::v1::CancelCutoverJobResponse>>
-  CancelCutoverJob(
-      google::cloud::vmmigration::v1::CancelCutoverJobRequest const& request);
+  virtual future<StatusOr<google::cloud::vmmigration::v1::CancelCutoverJobResponse>>
+  CancelCutoverJob(google::cloud::vmmigration::v1::CancelCutoverJobRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> CancelCutoverJob(
-      NoAwaitTag,
-      google::cloud::vmmigration::v1::CancelCutoverJobRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  CancelCutoverJob(NoAwaitTag, google::cloud::vmmigration::v1::CancelCutoverJobRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::vmmigration::v1::CancelCutoverJobResponse>>
-  CancelCutoverJob(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::vmmigration::v1::CancelCutoverJobResponse>>
+  CancelCutoverJob( google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::vmmigration::v1::CutoverJob>
-  ListCutoverJobs(
-      google::cloud::vmmigration::v1::ListCutoverJobsRequest request);
+  ListCutoverJobs(google::cloud::vmmigration::v1::ListCutoverJobsRequest request);
 
-  virtual StatusOr<google::cloud::vmmigration::v1::CutoverJob> GetCutoverJob(
-      google::cloud::vmmigration::v1::GetCutoverJobRequest const& request);
+  virtual StatusOr<google::cloud::vmmigration::v1::CutoverJob>
+  GetCutoverJob(google::cloud::vmmigration::v1::GetCutoverJobRequest const& request);
 
-  virtual StreamRange<google::cloud::vmmigration::v1::Group> ListGroups(
-      google::cloud::vmmigration::v1::ListGroupsRequest request);
+  virtual StreamRange<google::cloud::vmmigration::v1::Group>
+  ListGroups(google::cloud::vmmigration::v1::ListGroupsRequest request);
 
-  virtual StatusOr<google::cloud::vmmigration::v1::Group> GetGroup(
-      google::cloud::vmmigration::v1::GetGroupRequest const& request);
+  virtual StatusOr<google::cloud::vmmigration::v1::Group>
+  GetGroup(google::cloud::vmmigration::v1::GetGroupRequest const& request);
 
-  virtual future<StatusOr<google::cloud::vmmigration::v1::Group>> CreateGroup(
-      google::cloud::vmmigration::v1::CreateGroupRequest const& request);
+  virtual future<StatusOr<google::cloud::vmmigration::v1::Group>>
+  CreateGroup(google::cloud::vmmigration::v1::CreateGroupRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> CreateGroup(
-      NoAwaitTag,
-      google::cloud::vmmigration::v1::CreateGroupRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  CreateGroup(NoAwaitTag, google::cloud::vmmigration::v1::CreateGroupRequest const& request);
 
-  virtual future<StatusOr<google::cloud::vmmigration::v1::Group>> CreateGroup(
-      google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::vmmigration::v1::Group>>
+  CreateGroup( google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<google::cloud::vmmigration::v1::Group>> UpdateGroup(
-      google::cloud::vmmigration::v1::UpdateGroupRequest const& request);
+  virtual future<StatusOr<google::cloud::vmmigration::v1::Group>>
+  UpdateGroup(google::cloud::vmmigration::v1::UpdateGroupRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> UpdateGroup(
-      NoAwaitTag,
-      google::cloud::vmmigration::v1::UpdateGroupRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  UpdateGroup(NoAwaitTag, google::cloud::vmmigration::v1::UpdateGroupRequest const& request);
 
-  virtual future<StatusOr<google::cloud::vmmigration::v1::Group>> UpdateGroup(
-      google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::vmmigration::v1::Group>>
+  UpdateGroup( google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
-  DeleteGroup(
-      google::cloud::vmmigration::v1::DeleteGroupRequest const& request);
+  DeleteGroup(google::cloud::vmmigration::v1::DeleteGroupRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> DeleteGroup(
-      NoAwaitTag,
-      google::cloud::vmmigration::v1::DeleteGroupRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  DeleteGroup(NoAwaitTag, google::cloud::vmmigration::v1::DeleteGroupRequest const& request);
 
   virtual future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
-  DeleteGroup(google::longrunning::Operation const& operation);
+  DeleteGroup( google::longrunning::Operation const& operation);
 
-  virtual future<
-      StatusOr<google::cloud::vmmigration::v1::AddGroupMigrationResponse>>
-  AddGroupMigration(
-      google::cloud::vmmigration::v1::AddGroupMigrationRequest const& request);
+  virtual future<StatusOr<google::cloud::vmmigration::v1::AddGroupMigrationResponse>>
+  AddGroupMigration(google::cloud::vmmigration::v1::AddGroupMigrationRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> AddGroupMigration(
-      NoAwaitTag,
-      google::cloud::vmmigration::v1::AddGroupMigrationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  AddGroupMigration(NoAwaitTag, google::cloud::vmmigration::v1::AddGroupMigrationRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::vmmigration::v1::AddGroupMigrationResponse>>
-  AddGroupMigration(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::vmmigration::v1::AddGroupMigrationResponse>>
+  AddGroupMigration( google::longrunning::Operation const& operation);
 
-  virtual future<
-      StatusOr<google::cloud::vmmigration::v1::RemoveGroupMigrationResponse>>
-  RemoveGroupMigration(
-      google::cloud::vmmigration::v1::RemoveGroupMigrationRequest const&
-          request);
+  virtual future<StatusOr<google::cloud::vmmigration::v1::RemoveGroupMigrationResponse>>
+  RemoveGroupMigration(google::cloud::vmmigration::v1::RemoveGroupMigrationRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> RemoveGroupMigration(
-      NoAwaitTag,
-      google::cloud::vmmigration::v1::RemoveGroupMigrationRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  RemoveGroupMigration(NoAwaitTag, google::cloud::vmmigration::v1::RemoveGroupMigrationRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::vmmigration::v1::RemoveGroupMigrationResponse>>
-  RemoveGroupMigration(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::vmmigration::v1::RemoveGroupMigrationResponse>>
+  RemoveGroupMigration( google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::vmmigration::v1::TargetProject>
-  ListTargetProjects(
-      google::cloud::vmmigration::v1::ListTargetProjectsRequest request);
+  ListTargetProjects(google::cloud::vmmigration::v1::ListTargetProjectsRequest request);
 
   virtual StatusOr<google::cloud::vmmigration::v1::TargetProject>
-  GetTargetProject(
-      google::cloud::vmmigration::v1::GetTargetProjectRequest const& request);
+  GetTargetProject(google::cloud::vmmigration::v1::GetTargetProjectRequest const& request);
 
   virtual future<StatusOr<google::cloud::vmmigration::v1::TargetProject>>
-  CreateTargetProject(
-      google::cloud::vmmigration::v1::CreateTargetProjectRequest const&
-          request);
+  CreateTargetProject(google::cloud::vmmigration::v1::CreateTargetProjectRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> CreateTargetProject(
-      NoAwaitTag,
-      google::cloud::vmmigration::v1::CreateTargetProjectRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  CreateTargetProject(NoAwaitTag, google::cloud::vmmigration::v1::CreateTargetProjectRequest const& request);
 
   virtual future<StatusOr<google::cloud::vmmigration::v1::TargetProject>>
-  CreateTargetProject(google::longrunning::Operation const& operation);
+  CreateTargetProject( google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::vmmigration::v1::TargetProject>>
-  UpdateTargetProject(
-      google::cloud::vmmigration::v1::UpdateTargetProjectRequest const&
-          request);
+  UpdateTargetProject(google::cloud::vmmigration::v1::UpdateTargetProjectRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> UpdateTargetProject(
-      NoAwaitTag,
-      google::cloud::vmmigration::v1::UpdateTargetProjectRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  UpdateTargetProject(NoAwaitTag, google::cloud::vmmigration::v1::UpdateTargetProjectRequest const& request);
 
   virtual future<StatusOr<google::cloud::vmmigration::v1::TargetProject>>
-  UpdateTargetProject(google::longrunning::Operation const& operation);
+  UpdateTargetProject( google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
-  DeleteTargetProject(
-      google::cloud::vmmigration::v1::DeleteTargetProjectRequest const&
-          request);
+  DeleteTargetProject(google::cloud::vmmigration::v1::DeleteTargetProjectRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> DeleteTargetProject(
-      NoAwaitTag,
-      google::cloud::vmmigration::v1::DeleteTargetProjectRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  DeleteTargetProject(NoAwaitTag, google::cloud::vmmigration::v1::DeleteTargetProjectRequest const& request);
 
   virtual future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
-  DeleteTargetProject(google::longrunning::Operation const& operation);
+  DeleteTargetProject( google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::vmmigration::v1::ReplicationCycle>
-  ListReplicationCycles(
-      google::cloud::vmmigration::v1::ListReplicationCyclesRequest request);
+  ListReplicationCycles(google::cloud::vmmigration::v1::ListReplicationCyclesRequest request);
 
   virtual StatusOr<google::cloud::vmmigration::v1::ReplicationCycle>
-  GetReplicationCycle(
-      google::cloud::vmmigration::v1::GetReplicationCycleRequest const&
-          request);
+  GetReplicationCycle(google::cloud::vmmigration::v1::GetReplicationCycleRequest const& request);
 
-  virtual StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request);
+  virtual StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request);
 
-  virtual StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request);
+  virtual StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request);
 
-  virtual StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 
-  virtual Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request);
+  virtual Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
 
-  virtual Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request);
+  virtual Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request);
 };
 
 /**

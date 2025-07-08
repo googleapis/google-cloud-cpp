@@ -26,13 +26,10 @@ namespace cloud {
 namespace cloudbuild {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use
-/// cloudbuild_v1::MakeDefaultCloudBuildConnectionIdempotencyPolicy directly.
-using ::google::cloud::cloudbuild_v1::
-    MakeDefaultCloudBuildConnectionIdempotencyPolicy;
+/// @deprecated Use cloudbuild_v1::MakeDefaultCloudBuildConnectionIdempotencyPolicy directly.
+using ::google::cloud::cloudbuild_v1::MakeDefaultCloudBuildConnectionIdempotencyPolicy;
 
-/// @deprecated Use cloudbuild_v1::CloudBuildConnectionIdempotencyPolicy
-/// directly.
+/// @deprecated Use cloudbuild_v1::CloudBuildConnectionIdempotencyPolicy directly.
 using ::google::cloud::cloudbuild_v1::CloudBuildConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -36,21 +36,21 @@ class InstancesConnectionIdempotencyPolicy {
   /// Create a new copy of this object.
   virtual std::unique_ptr<InstancesConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency ListInstances(
-      google::appengine::v1::ListInstancesRequest request);
+  virtual google::cloud::Idempotency
+  ListInstances(google::appengine::v1::ListInstancesRequest request);
 
-  virtual google::cloud::Idempotency GetInstance(
-      google::appengine::v1::GetInstanceRequest const& request);
+  virtual google::cloud::Idempotency
+  GetInstance(google::appengine::v1::GetInstanceRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteInstance(
-      google::appengine::v1::DeleteInstanceRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteInstance(google::appengine::v1::DeleteInstanceRequest const& request);
 
-  virtual google::cloud::Idempotency DebugInstance(
-      google::appengine::v1::DebugInstanceRequest const& request);
+  virtual google::cloud::Idempotency
+  DebugInstance(google::appengine::v1::DebugInstanceRequest const& request);
 };
 
 std::unique_ptr<InstancesConnectionIdempotencyPolicy>
-MakeDefaultInstancesConnectionIdempotencyPolicy();
+    MakeDefaultInstancesConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace appengine_v1

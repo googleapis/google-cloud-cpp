@@ -36,8 +36,8 @@ class ModelServiceLogging : public ModelServiceStub {
  public:
   ~ModelServiceLogging() override = default;
   ModelServiceLogging(std::shared_ptr<ModelServiceStub> child,
-                      TracingOptions tracing_options,
-                      std::set<std::string> const& components);
+                       TracingOptions tracing_options,
+                       std::set<std::string> const& components);
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateModel(
       google::cloud::CompletionQueue& cq,
@@ -46,31 +46,38 @@ class ModelServiceLogging : public ModelServiceStub {
       google::cloud::retail::v2::CreateModelRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateModel(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::cloud::retail::v2::CreateModelRequest const& request) override;
 
   StatusOr<google::cloud::retail::v2::Model> GetModel(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::retail::v2::GetModelRequest const& request) override;
 
   StatusOr<google::cloud::retail::v2::Model> PauseModel(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::retail::v2::PauseModelRequest const& request) override;
 
   StatusOr<google::cloud::retail::v2::Model> ResumeModel(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::retail::v2::ResumeModelRequest const& request) override;
 
   Status DeleteModel(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::retail::v2::DeleteModelRequest const& request) override;
 
   StatusOr<google::cloud::retail::v2::ListModelsResponse> ListModels(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::retail::v2::ListModelsRequest const& request) override;
 
   StatusOr<google::cloud::retail::v2::Model> UpdateModel(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::retail::v2::UpdateModelRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncTuneModel(
@@ -80,15 +87,18 @@ class ModelServiceLogging : public ModelServiceStub {
       google::cloud::retail::v2::TuneModelRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> TuneModel(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::cloud::retail::v2::TuneModelRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(

@@ -62,28 +62,23 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class DocumentLinkServiceClient {
  public:
-  explicit DocumentLinkServiceClient(
-      std::shared_ptr<DocumentLinkServiceConnection> connection,
-      Options opts = {});
+  explicit DocumentLinkServiceClient(std::shared_ptr<DocumentLinkServiceConnection> connection, Options opts = {});
   ~DocumentLinkServiceClient();
 
   ///@{
   /// @name Copy and move support
   DocumentLinkServiceClient(DocumentLinkServiceClient const&) = default;
-  DocumentLinkServiceClient& operator=(DocumentLinkServiceClient const&) =
-      default;
+  DocumentLinkServiceClient& operator=(DocumentLinkServiceClient const&) = default;
   DocumentLinkServiceClient(DocumentLinkServiceClient&&) = default;
   DocumentLinkServiceClient& operator=(DocumentLinkServiceClient&&) = default;
   ///@}
 
   ///@{
   /// @name Equality
-  friend bool operator==(DocumentLinkServiceClient const& a,
-                         DocumentLinkServiceClient const& b) {
+  friend bool operator==(DocumentLinkServiceClient const& a, DocumentLinkServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(DocumentLinkServiceClient const& a,
-                         DocumentLinkServiceClient const& b) {
+  friend bool operator!=(DocumentLinkServiceClient const& a, DocumentLinkServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -143,10 +138,7 @@ class DocumentLinkServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::contentwarehouse::v1::ListLinkedTargetsResponse>
-  ListLinkedTargets(
-      google::cloud::contentwarehouse::v1::ListLinkedTargetsRequest const&
-          request,
-      Options opts = {});
+  ListLinkedTargets(google::cloud::contentwarehouse::v1::ListLinkedTargetsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -221,9 +213,7 @@ class DocumentLinkServiceClient {
   ///
   // clang-format on
   StreamRange<google::cloud::contentwarehouse::v1::DocumentLink>
-  ListLinkedSources(
-      google::cloud::contentwarehouse::v1::ListLinkedSourcesRequest request,
-      Options opts = {});
+  ListLinkedSources(google::cloud::contentwarehouse::v1::ListLinkedSourcesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -253,10 +243,7 @@ class DocumentLinkServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::contentwarehouse::v1::DocumentLink>
-  CreateDocumentLink(
-      std::string const& parent,
-      google::cloud::contentwarehouse::v1::DocumentLink const& document_link,
-      Options opts = {});
+  CreateDocumentLink(std::string const& parent, google::cloud::contentwarehouse::v1::DocumentLink const& document_link, Options opts = {});
 
   // clang-format off
   ///
@@ -286,10 +273,7 @@ class DocumentLinkServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::contentwarehouse::v1::DocumentLink>
-  CreateDocumentLink(
-      google::cloud::contentwarehouse::v1::CreateDocumentLinkRequest const&
-          request,
-      Options opts = {});
+  CreateDocumentLink(google::cloud::contentwarehouse::v1::CreateDocumentLinkRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -312,7 +296,8 @@ class DocumentLinkServiceClient {
   /// [google.cloud.contentwarehouse.v1.DeleteDocumentLinkRequest]: @googleapis_reference_link{google/cloud/contentwarehouse/v1/document_link_service.proto#L223}
   ///
   // clang-format on
-  Status DeleteDocumentLink(std::string const& name, Options opts = {});
+  Status
+  DeleteDocumentLink(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -338,10 +323,8 @@ class DocumentLinkServiceClient {
   /// [google.cloud.contentwarehouse.v1.DeleteDocumentLinkRequest]: @googleapis_reference_link{google/cloud/contentwarehouse/v1/document_link_service.proto#L223}
   ///
   // clang-format on
-  Status DeleteDocumentLink(
-      google::cloud::contentwarehouse::v1::DeleteDocumentLinkRequest const&
-          request,
-      Options opts = {});
+  Status
+  DeleteDocumentLink(google::cloud::contentwarehouse::v1::DeleteDocumentLinkRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -367,8 +350,8 @@ class DocumentLinkServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -399,9 +382,8 @@ class DocumentLinkServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<DocumentLinkServiceConnection> connection_;

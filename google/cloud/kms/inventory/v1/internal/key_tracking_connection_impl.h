@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_KMS_INVENTORY_V1_INTERNAL_KEY_TRACKING_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_KMS_INVENTORY_V1_INTERNAL_KEY_TRACKING_CONNECTION_IMPL_H
 
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/kms/inventory/v1/internal/key_tracking_retry_traits.h"
 #include "google/cloud/kms/inventory/v1/internal/key_tracking_stub.h"
 #include "google/cloud/kms/inventory/v1/key_tracking_connection.h"
 #include "google/cloud/kms/inventory/v1/key_tracking_connection_idempotency_policy.h"
 #include "google/cloud/kms/inventory/v1/key_tracking_options.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -43,21 +43,17 @@ class KeyTrackingServiceConnectionImpl
   ~KeyTrackingServiceConnectionImpl() override = default;
 
   KeyTrackingServiceConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<kms_inventory_v1_internal::KeyTrackingServiceStub> stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<kms_inventory_v1_internal::KeyTrackingServiceStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
   StatusOr<google::cloud::kms::inventory::v1::ProtectedResourcesSummary>
-  GetProtectedResourcesSummary(
-      google::cloud::kms::inventory::v1::
-          GetProtectedResourcesSummaryRequest const& request) override;
+  GetProtectedResourcesSummary(google::cloud::kms::inventory::v1::GetProtectedResourcesSummaryRequest const& request) override;
 
   StreamRange<google::cloud::kms::inventory::v1::ProtectedResource>
-  SearchProtectedResources(
-      google::cloud::kms::inventory::v1::SearchProtectedResourcesRequest
-          request) override;
+  SearchProtectedResources(google::cloud::kms::inventory::v1::SearchProtectedResourcesRequest request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

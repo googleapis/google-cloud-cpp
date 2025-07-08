@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_V3_ALERT_POLICY_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_V3_ALERT_POLICY_CLIENT_H
 
-#include "google/cloud/monitoring/v3/alert_policy_connection.h"
 #include "google/cloud/future.h"
+#include "google/cloud/monitoring/v3/alert_policy_connection.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -70,28 +70,23 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class AlertPolicyServiceClient {
  public:
-  explicit AlertPolicyServiceClient(
-      std::shared_ptr<AlertPolicyServiceConnection> connection,
-      Options opts = {});
+  explicit AlertPolicyServiceClient(std::shared_ptr<AlertPolicyServiceConnection> connection, Options opts = {});
   ~AlertPolicyServiceClient();
 
   ///@{
   /// @name Copy and move support
   AlertPolicyServiceClient(AlertPolicyServiceClient const&) = default;
-  AlertPolicyServiceClient& operator=(AlertPolicyServiceClient const&) =
-      default;
+  AlertPolicyServiceClient& operator=(AlertPolicyServiceClient const&) = default;
   AlertPolicyServiceClient(AlertPolicyServiceClient&&) = default;
   AlertPolicyServiceClient& operator=(AlertPolicyServiceClient&&) = default;
   ///@}
 
   ///@{
   /// @name Equality
-  friend bool operator==(AlertPolicyServiceClient const& a,
-                         AlertPolicyServiceClient const& b) {
+  friend bool operator==(AlertPolicyServiceClient const& a, AlertPolicyServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(AlertPolicyServiceClient const& a,
-                         AlertPolicyServiceClient const& b) {
+  friend bool operator!=(AlertPolicyServiceClient const& a, AlertPolicyServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -138,8 +133,8 @@ class AlertPolicyServiceClient {
   /// [google.monitoring.v3.ListAlertPoliciesRequest]: @googleapis_reference_link{google/monitoring/v3/alert_service.proto#L153}
   ///
   // clang-format on
-  StreamRange<google::monitoring::v3::AlertPolicy> ListAlertPolicies(
-      std::string const& name, Options opts = {});
+  StreamRange<google::monitoring::v3::AlertPolicy>
+  ListAlertPolicies(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -177,9 +172,8 @@ class AlertPolicyServiceClient {
   /// [google.monitoring.v3.ListAlertPoliciesRequest]: @googleapis_reference_link{google/monitoring/v3/alert_service.proto#L153}
   ///
   // clang-format on
-  StreamRange<google::monitoring::v3::AlertPolicy> ListAlertPolicies(
-      google::monitoring::v3::ListAlertPoliciesRequest request,
-      Options opts = {});
+  StreamRange<google::monitoring::v3::AlertPolicy>
+  ListAlertPolicies(google::monitoring::v3::ListAlertPoliciesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -205,8 +199,8 @@ class AlertPolicyServiceClient {
   /// [google.monitoring.v3.GetAlertPolicyRequest]: @googleapis_reference_link{google/monitoring/v3/alert_service.proto#L140}
   ///
   // clang-format on
-  StatusOr<google::monitoring::v3::AlertPolicy> GetAlertPolicy(
-      std::string const& name, Options opts = {});
+  StatusOr<google::monitoring::v3::AlertPolicy>
+  GetAlertPolicy(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -235,9 +229,8 @@ class AlertPolicyServiceClient {
   /// [google.monitoring.v3.GetAlertPolicyRequest]: @googleapis_reference_link{google/monitoring/v3/alert_service.proto#L140}
   ///
   // clang-format on
-  StatusOr<google::monitoring::v3::AlertPolicy> GetAlertPolicy(
-      google::monitoring::v3::GetAlertPolicyRequest const& request,
-      Options opts = {});
+  StatusOr<google::monitoring::v3::AlertPolicy>
+  GetAlertPolicy(google::monitoring::v3::GetAlertPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -280,10 +273,8 @@ class AlertPolicyServiceClient {
   /// [google.monitoring.v3.CreateAlertPolicyRequest]: @googleapis_reference_link{google/monitoring/v3/alert_service.proto#L112}
   ///
   // clang-format on
-  StatusOr<google::monitoring::v3::AlertPolicy> CreateAlertPolicy(
-      std::string const& name,
-      google::monitoring::v3::AlertPolicy const& alert_policy,
-      Options opts = {});
+  StatusOr<google::monitoring::v3::AlertPolicy>
+  CreateAlertPolicy(std::string const& name, google::monitoring::v3::AlertPolicy const& alert_policy, Options opts = {});
 
   // clang-format off
   ///
@@ -316,9 +307,8 @@ class AlertPolicyServiceClient {
   /// [google.monitoring.v3.CreateAlertPolicyRequest]: @googleapis_reference_link{google/monitoring/v3/alert_service.proto#L112}
   ///
   // clang-format on
-  StatusOr<google::monitoring::v3::AlertPolicy> CreateAlertPolicy(
-      google::monitoring::v3::CreateAlertPolicyRequest const& request,
-      Options opts = {});
+  StatusOr<google::monitoring::v3::AlertPolicy>
+  CreateAlertPolicy(google::monitoring::v3::CreateAlertPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -348,7 +338,8 @@ class AlertPolicyServiceClient {
   /// [google.monitoring.v3.DeleteAlertPolicyRequest]: @googleapis_reference_link{google/monitoring/v3/alert_service.proto#L246}
   ///
   // clang-format on
-  Status DeleteAlertPolicy(std::string const& name, Options opts = {});
+  Status
+  DeleteAlertPolicy(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -378,9 +369,8 @@ class AlertPolicyServiceClient {
   /// [google.monitoring.v3.DeleteAlertPolicyRequest]: @googleapis_reference_link{google/monitoring/v3/alert_service.proto#L246}
   ///
   // clang-format on
-  Status DeleteAlertPolicy(
-      google::monitoring::v3::DeleteAlertPolicyRequest const& request,
-      Options opts = {});
+  Status
+  DeleteAlertPolicy(google::monitoring::v3::DeleteAlertPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -435,10 +425,8 @@ class AlertPolicyServiceClient {
   /// [google.monitoring.v3.UpdateAlertPolicyRequest]: @googleapis_reference_link{google/monitoring/v3/alert_service.proto#L213}
   ///
   // clang-format on
-  StatusOr<google::monitoring::v3::AlertPolicy> UpdateAlertPolicy(
-      google::protobuf::FieldMask const& update_mask,
-      google::monitoring::v3::AlertPolicy const& alert_policy,
-      Options opts = {});
+  StatusOr<google::monitoring::v3::AlertPolicy>
+  UpdateAlertPolicy(google::protobuf::FieldMask const& update_mask, google::monitoring::v3::AlertPolicy const& alert_policy, Options opts = {});
 
   // clang-format off
   ///
@@ -474,9 +462,8 @@ class AlertPolicyServiceClient {
   /// [google.monitoring.v3.UpdateAlertPolicyRequest]: @googleapis_reference_link{google/monitoring/v3/alert_service.proto#L213}
   ///
   // clang-format on
-  StatusOr<google::monitoring::v3::AlertPolicy> UpdateAlertPolicy(
-      google::monitoring::v3::UpdateAlertPolicyRequest const& request,
-      Options opts = {});
+  StatusOr<google::monitoring::v3::AlertPolicy>
+  UpdateAlertPolicy(google::monitoring::v3::UpdateAlertPolicyRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<AlertPolicyServiceConnection> connection_;

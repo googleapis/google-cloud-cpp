@@ -32,12 +32,11 @@ TenantServiceTracingStub::TenantServiceTracingStub(
     std::shared_ptr<TenantServiceStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
-StatusOr<google::cloud::talent::v4::Tenant>
-TenantServiceTracingStub::CreateTenant(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::talent::v4::Tenant> TenantServiceTracingStub::CreateTenant(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::talent::v4::CreateTenantRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.talent.v4.TenantService",
-                                     "CreateTenant");
+  auto span = internal::MakeSpanGrpc("google.cloud.talent.v4.TenantService", "CreateTenant");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -45,22 +44,21 @@ TenantServiceTracingStub::CreateTenant(
 }
 
 StatusOr<google::cloud::talent::v4::Tenant> TenantServiceTracingStub::GetTenant(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::talent::v4::GetTenantRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.talent.v4.TenantService",
-                                     "GetTenant");
+  auto span = internal::MakeSpanGrpc("google.cloud.talent.v4.TenantService", "GetTenant");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetTenant(context, options, request));
 }
 
-StatusOr<google::cloud::talent::v4::Tenant>
-TenantServiceTracingStub::UpdateTenant(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::talent::v4::Tenant> TenantServiceTracingStub::UpdateTenant(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::talent::v4::UpdateTenantRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.talent.v4.TenantService",
-                                     "UpdateTenant");
+  auto span = internal::MakeSpanGrpc("google.cloud.talent.v4.TenantService", "UpdateTenant");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -68,22 +66,21 @@ TenantServiceTracingStub::UpdateTenant(
 }
 
 Status TenantServiceTracingStub::DeleteTenant(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::talent::v4::DeleteTenantRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.talent.v4.TenantService",
-                                     "DeleteTenant");
+  auto span = internal::MakeSpanGrpc("google.cloud.talent.v4.TenantService", "DeleteTenant");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeleteTenant(context, options, request));
 }
 
-StatusOr<google::cloud::talent::v4::ListTenantsResponse>
-TenantServiceTracingStub::ListTenants(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::talent::v4::ListTenantsResponse> TenantServiceTracingStub::ListTenants(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::talent::v4::ListTenantsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.talent.v4.TenantService",
-                                     "ListTenants");
+  auto span = internal::MakeSpanGrpc("google.cloud.talent.v4.TenantService", "ListTenants");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -91,10 +88,10 @@ TenantServiceTracingStub::ListTenants(
 }
 
 StatusOr<google::longrunning::Operation> TenantServiceTracingStub::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.talent.v4.TenantService",
-                                     "GetOperation");
+  auto span = internal::MakeSpanGrpc("google.cloud.talent.v4.TenantService", "GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,

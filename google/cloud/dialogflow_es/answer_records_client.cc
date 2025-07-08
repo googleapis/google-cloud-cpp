@@ -28,13 +28,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 AnswerRecordsClient::AnswerRecordsClient(
     std::shared_ptr<AnswerRecordsConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 AnswerRecordsClient::~AnswerRecordsClient() = default;
 
 StreamRange<google::cloud::dialogflow::v2::AnswerRecord>
-AnswerRecordsClient::ListAnswerRecords(std::string const& parent,
-                                       Options opts) {
+AnswerRecordsClient::ListAnswerRecords(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dialogflow::v2::ListAnswerRecordsRequest request;
   request.set_parent(parent);
@@ -42,17 +41,13 @@ AnswerRecordsClient::ListAnswerRecords(std::string const& parent,
 }
 
 StreamRange<google::cloud::dialogflow::v2::AnswerRecord>
-AnswerRecordsClient::ListAnswerRecords(
-    google::cloud::dialogflow::v2::ListAnswerRecordsRequest request,
-    Options opts) {
+AnswerRecordsClient::ListAnswerRecords(google::cloud::dialogflow::v2::ListAnswerRecordsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListAnswerRecords(std::move(request));
 }
 
 StatusOr<google::cloud::dialogflow::v2::AnswerRecord>
-AnswerRecordsClient::UpdateAnswerRecord(
-    google::cloud::dialogflow::v2::AnswerRecord const& answer_record,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+AnswerRecordsClient::UpdateAnswerRecord(google::cloud::dialogflow::v2::AnswerRecord const& answer_record, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dialogflow::v2::UpdateAnswerRecordRequest request;
   *request.mutable_answer_record() = answer_record;
@@ -61,28 +56,25 @@ AnswerRecordsClient::UpdateAnswerRecord(
 }
 
 StatusOr<google::cloud::dialogflow::v2::AnswerRecord>
-AnswerRecordsClient::UpdateAnswerRecord(
-    google::cloud::dialogflow::v2::UpdateAnswerRecordRequest const& request,
-    Options opts) {
+AnswerRecordsClient::UpdateAnswerRecord(google::cloud::dialogflow::v2::UpdateAnswerRecordRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateAnswerRecord(request);
 }
 
 StreamRange<google::cloud::location::Location>
-AnswerRecordsClient::ListLocations(
-    google::cloud::location::ListLocationsRequest request, Options opts) {
+AnswerRecordsClient::ListLocations(google::cloud::location::ListLocationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListLocations(std::move(request));
 }
 
-StatusOr<google::cloud::location::Location> AnswerRecordsClient::GetLocation(
-    google::cloud::location::GetLocationRequest const& request, Options opts) {
+StatusOr<google::cloud::location::Location>
+AnswerRecordsClient::GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetLocation(request);
 }
 
-StreamRange<google::longrunning::Operation> AnswerRecordsClient::ListOperations(
-    std::string const& name, std::string const& filter, Options opts) {
+StreamRange<google::longrunning::Operation>
+AnswerRecordsClient::ListOperations(std::string const& name, std::string const& filter, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::ListOperationsRequest request;
   request.set_name(name);
@@ -90,36 +82,36 @@ StreamRange<google::longrunning::Operation> AnswerRecordsClient::ListOperations(
   return connection_->ListOperations(request);
 }
 
-StreamRange<google::longrunning::Operation> AnswerRecordsClient::ListOperations(
-    google::longrunning::ListOperationsRequest request, Options opts) {
+StreamRange<google::longrunning::Operation>
+AnswerRecordsClient::ListOperations(google::longrunning::ListOperationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOperations(std::move(request));
 }
 
-StatusOr<google::longrunning::Operation> AnswerRecordsClient::GetOperation(
-    std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation>
+AnswerRecordsClient::GetOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
   return connection_->GetOperation(request);
 }
 
-StatusOr<google::longrunning::Operation> AnswerRecordsClient::GetOperation(
-    google::longrunning::GetOperationRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation>
+AnswerRecordsClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }
 
-Status AnswerRecordsClient::CancelOperation(std::string const& name,
-                                            Options opts) {
+Status
+AnswerRecordsClient::CancelOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::CancelOperationRequest request;
   request.set_name(name);
   return connection_->CancelOperation(request);
 }
 
-Status AnswerRecordsClient::CancelOperation(
-    google::longrunning::CancelOperationRequest const& request, Options opts) {
+Status
+AnswerRecordsClient::CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelOperation(request);
 }

@@ -27,22 +27,17 @@ namespace cloud {
 namespace binaryauthorization {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use binaryauthorization_v1::MakeSystemPolicyV1Connection
-/// directly.
+/// @deprecated Use binaryauthorization_v1::MakeSystemPolicyV1Connection directly.
 using ::google::cloud::binaryauthorization_v1::MakeSystemPolicyV1Connection;
 
 /// @deprecated Use binaryauthorization_v1::SystemPolicyV1Connection directly.
 using ::google::cloud::binaryauthorization_v1::SystemPolicyV1Connection;
 
-/// @deprecated Use
-/// binaryauthorization_v1::SystemPolicyV1LimitedErrorCountRetryPolicy directly.
-using ::google::cloud::binaryauthorization_v1::
-    SystemPolicyV1LimitedErrorCountRetryPolicy;
+/// @deprecated Use binaryauthorization_v1::SystemPolicyV1LimitedErrorCountRetryPolicy directly.
+using ::google::cloud::binaryauthorization_v1::SystemPolicyV1LimitedErrorCountRetryPolicy;
 
-/// @deprecated Use binaryauthorization_v1::SystemPolicyV1LimitedTimeRetryPolicy
-/// directly.
-using ::google::cloud::binaryauthorization_v1::
-    SystemPolicyV1LimitedTimeRetryPolicy;
+/// @deprecated Use binaryauthorization_v1::SystemPolicyV1LimitedTimeRetryPolicy directly.
+using ::google::cloud::binaryauthorization_v1::SystemPolicyV1LimitedTimeRetryPolicy;
 
 /// @deprecated Use binaryauthorization_v1::SystemPolicyV1RetryPolicy directly.
 using ::google::cloud::binaryauthorization_v1::SystemPolicyV1RetryPolicy;

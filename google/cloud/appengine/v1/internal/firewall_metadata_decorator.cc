@@ -46,67 +46,69 @@ FirewallMetadata::FirewallMetadata(
 
 StatusOr<google::appengine::v1::ListIngressRulesResponse>
 FirewallMetadata::ListIngressRules(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::appengine::v1::ListIngressRulesRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListIngressRules(context, options, request);
 }
 
 StatusOr<google::appengine::v1::BatchUpdateIngressRulesResponse>
 FirewallMetadata::BatchUpdateIngressRules(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::appengine::v1::BatchUpdateIngressRulesRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->BatchUpdateIngressRules(context, options, request);
 }
 
 StatusOr<google::appengine::v1::FirewallRule>
 FirewallMetadata::CreateIngressRule(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::appengine::v1::CreateIngressRuleRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateIngressRule(context, options, request);
 }
 
-StatusOr<google::appengine::v1::FirewallRule> FirewallMetadata::GetIngressRule(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::appengine::v1::FirewallRule>
+FirewallMetadata::GetIngressRule(
+    grpc::ClientContext& context,
+    Options const& options,
     google::appengine::v1::GetIngressRuleRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetIngressRule(context, options, request);
 }
 
 StatusOr<google::appengine::v1::FirewallRule>
 FirewallMetadata::UpdateIngressRule(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::appengine::v1::UpdateIngressRuleRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->UpdateIngressRule(context, options, request);
 }
 
-Status FirewallMetadata::DeleteIngressRule(
-    grpc::ClientContext& context, Options const& options,
+Status
+FirewallMetadata::DeleteIngressRule(
+    grpc::ClientContext& context,
+    Options const& options,
     google::appengine::v1::DeleteIngressRuleRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteIngressRule(context, options, request);
 }
 
 void FirewallMetadata::SetMetadata(grpc::ClientContext& context,
-                                   Options const& options,
-                                   std::string const& request_params) {
+                                        Options const& options,
+                                        std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
 void FirewallMetadata::SetMetadata(grpc::ClientContext& context,
-                                   Options const& options) {
-  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
-                                       api_client_header_);
+                                        Options const& options) {
+  google::cloud::internal::SetMetadata(
+      context, options, fixed_metadata_, api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

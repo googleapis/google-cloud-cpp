@@ -46,79 +46,65 @@ class MockAdminServiceConnection : public pubsublite::AdminServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::pubsublite::v1::Topic>, CreateTopic,
-      (google::cloud::pubsublite::v1::CreateTopicRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::pubsublite::v1::Topic>,
+  CreateTopic,
+  (google::cloud::pubsublite::v1::CreateTopicRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::pubsublite::v1::Topic>, GetTopic,
-              (google::cloud::pubsublite::v1::GetTopicRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::pubsublite::v1::Topic>,
+  GetTopic,
+  (google::cloud::pubsublite::v1::GetTopicRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::pubsublite::v1::TopicPartitions>,
-      GetTopicPartitions,
-      (google::cloud::pubsublite::v1::GetTopicPartitionsRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::pubsublite::v1::TopicPartitions>,
+  GetTopicPartitions,
+  (google::cloud::pubsublite::v1::GetTopicPartitionsRequest const& request), (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::pubsublite::v1::Topic>), ListTopics,
-              (google::cloud::pubsublite::v1::ListTopicsRequest request),
-              (override));
+  MOCK_METHOD((StreamRange<google::cloud::pubsublite::v1::Topic>),
+  ListTopics,
+  (google::cloud::pubsublite::v1::ListTopicsRequest request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::pubsublite::v1::Topic>, UpdateTopic,
-      (google::cloud::pubsublite::v1::UpdateTopicRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::pubsublite::v1::Topic>,
+  UpdateTopic,
+  (google::cloud::pubsublite::v1::UpdateTopicRequest const& request), (override));
 
-  MOCK_METHOD(
-      Status, DeleteTopic,
-      (google::cloud::pubsublite::v1::DeleteTopicRequest const& request),
-      (override));
+  MOCK_METHOD(Status,
+  DeleteTopic,
+  (google::cloud::pubsublite::v1::DeleteTopicRequest const& request), (override));
 
-  MOCK_METHOD(
-      (StreamRange<std::string>), ListTopicSubscriptions,
-      (google::cloud::pubsublite::v1::ListTopicSubscriptionsRequest request),
-      (override));
+  MOCK_METHOD((StreamRange<std::string>),
+  ListTopicSubscriptions,
+  (google::cloud::pubsublite::v1::ListTopicSubscriptionsRequest request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::pubsublite::v1::Subscription>, CreateSubscription,
-      (google::cloud::pubsublite::v1::CreateSubscriptionRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::pubsublite::v1::Subscription>,
+  CreateSubscription,
+  (google::cloud::pubsublite::v1::CreateSubscriptionRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::pubsublite::v1::Subscription>, GetSubscription,
-      (google::cloud::pubsublite::v1::GetSubscriptionRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::pubsublite::v1::Subscription>,
+  GetSubscription,
+  (google::cloud::pubsublite::v1::GetSubscriptionRequest const& request), (override));
 
   MOCK_METHOD((StreamRange<google::cloud::pubsublite::v1::Subscription>),
-              ListSubscriptions,
-              (google::cloud::pubsublite::v1::ListSubscriptionsRequest request),
-              (override));
+  ListSubscriptions,
+  (google::cloud::pubsublite::v1::ListSubscriptionsRequest request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::pubsublite::v1::Subscription>, UpdateSubscription,
-      (google::cloud::pubsublite::v1::UpdateSubscriptionRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::pubsublite::v1::Subscription>,
+  UpdateSubscription,
+  (google::cloud::pubsublite::v1::UpdateSubscriptionRequest const& request), (override));
 
-  MOCK_METHOD(
-      Status, DeleteSubscription,
-      (google::cloud::pubsublite::v1::DeleteSubscriptionRequest const& request),
-      (override));
+  MOCK_METHOD(Status,
+  DeleteSubscription,
+  (google::cloud::pubsublite::v1::DeleteSubscriptionRequest const& request), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// SeekSubscription(Matcher<google::cloud::pubsublite::v1::SeekSubscriptionRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, SeekSubscription(Matcher<google::cloud::pubsublite::v1::SeekSubscriptionRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::pubsublite::v1::SeekSubscriptionResponse>>,
-      SeekSubscription,
-      (google::cloud::pubsublite::v1::SeekSubscriptionRequest const& request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::pubsublite::v1::SeekSubscriptionResponse>>,
+  SeekSubscription,
+  (google::cloud::pubsublite::v1::SeekSubscriptionRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -126,75 +112,65 @@ class MockAdminServiceConnection : public pubsublite::AdminServiceConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, SeekSubscription(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, SeekSubscription,
-      (NoAwaitTag,
-       google::cloud::pubsublite::v1::SeekSubscriptionRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  SeekSubscription, (NoAwaitTag,
+    google::cloud::pubsublite::v1::SeekSubscriptionRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, SeekSubscription(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, SeekSubscription(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::pubsublite::v1::SeekSubscriptionResponse>>,
-      SeekSubscription, (google::longrunning::Operation const& operation),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::pubsublite::v1::SeekSubscriptionResponse>>,
+  SeekSubscription, (
+    google::longrunning::Operation const& operation), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::pubsublite::v1::Reservation>, CreateReservation,
-      (google::cloud::pubsublite::v1::CreateReservationRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::pubsublite::v1::Reservation>,
+  CreateReservation,
+  (google::cloud::pubsublite::v1::CreateReservationRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::pubsublite::v1::Reservation>, GetReservation,
-      (google::cloud::pubsublite::v1::GetReservationRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::pubsublite::v1::Reservation>,
+  GetReservation,
+  (google::cloud::pubsublite::v1::GetReservationRequest const& request), (override));
 
   MOCK_METHOD((StreamRange<google::cloud::pubsublite::v1::Reservation>),
-              ListReservations,
-              (google::cloud::pubsublite::v1::ListReservationsRequest request),
-              (override));
+  ListReservations,
+  (google::cloud::pubsublite::v1::ListReservationsRequest request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::pubsublite::v1::Reservation>, UpdateReservation,
-      (google::cloud::pubsublite::v1::UpdateReservationRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::pubsublite::v1::Reservation>,
+  UpdateReservation,
+  (google::cloud::pubsublite::v1::UpdateReservationRequest const& request), (override));
 
-  MOCK_METHOD(
-      Status, DeleteReservation,
-      (google::cloud::pubsublite::v1::DeleteReservationRequest const& request),
-      (override));
+  MOCK_METHOD(Status,
+  DeleteReservation,
+  (google::cloud::pubsublite::v1::DeleteReservationRequest const& request), (override));
 
-  MOCK_METHOD(
-      (StreamRange<std::string>), ListReservationTopics,
-      (google::cloud::pubsublite::v1::ListReservationTopicsRequest request),
-      (override));
+  MOCK_METHOD((StreamRange<std::string>),
+  ListReservationTopics,
+  (google::cloud::pubsublite::v1::ListReservationTopicsRequest request), (override));
 
-  MOCK_METHOD((StreamRange<google::longrunning::Operation>), ListOperations,
-              (google::longrunning::ListOperationsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::longrunning::Operation>),
+  ListOperations,
+  (google::longrunning::ListOperationsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
-              (google::longrunning::GetOperationRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  GetOperation,
+  (google::longrunning::GetOperationRequest const& request), (override));
 
-  MOCK_METHOD(Status, DeleteOperation,
-              (google::longrunning::DeleteOperationRequest const& request),
-              (override));
+  MOCK_METHOD(Status,
+  DeleteOperation,
+  (google::longrunning::DeleteOperationRequest const& request), (override));
 
-  MOCK_METHOD(Status, CancelOperation,
-              (google::longrunning::CancelOperationRequest const& request),
-              (override));
+  MOCK_METHOD(Status,
+  CancelOperation,
+  (google::longrunning::CancelOperationRequest const& request), (override));
 
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::pubsublite::v1::TopicPartitions>>,
-      AsyncGetTopicPartitions,
-      (google::cloud::pubsublite::v1::GetTopicPartitionsRequest const& request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::pubsublite::v1::TopicPartitions>>,
+  AsyncGetTopicPartitions,
+  (google::cloud::pubsublite::v1::GetTopicPartitionsRequest const& request), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

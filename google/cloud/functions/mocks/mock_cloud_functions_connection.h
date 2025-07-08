@@ -30,8 +30,7 @@ namespace cloud {
 namespace functions_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use functions_v1_mocks::MockCloudFunctionsServiceConnection
-/// directly.
+/// @deprecated Use functions_v1_mocks::MockCloudFunctionsServiceConnection directly.
 using ::google::cloud::functions_v1_mocks::MockCloudFunctionsServiceConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

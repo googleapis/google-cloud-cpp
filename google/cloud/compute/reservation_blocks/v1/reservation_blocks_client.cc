@@ -28,18 +28,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ReservationBlocksClient::ReservationBlocksClient(
     std::shared_ptr<ReservationBlocksConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 ReservationBlocksClient::~ReservationBlocksClient() = default;
 
 StatusOr<google::cloud::cpp::compute::v1::ReservationBlocksGetResponse>
-ReservationBlocksClient::GetReservationBlocksGetResponse(
-    std::string const& project, std::string const& zone,
-    std::string const& reservation, std::string const& reservation_block,
-    Options opts) {
+ReservationBlocksClient::GetReservationBlocksGetResponse(std::string const& project, std::string const& zone, std::string const& reservation, std::string const& reservation_block, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::reservation_blocks::v1::
-      GetReservationBlocksGetResponseRequest request;
+  google::cloud::cpp::compute::reservation_blocks::v1::GetReservationBlocksGetResponseRequest request;
   request.set_project(project);
   request.set_zone(zone);
   request.set_reservation(reservation);
@@ -48,22 +44,15 @@ ReservationBlocksClient::GetReservationBlocksGetResponse(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::ReservationBlocksGetResponse>
-ReservationBlocksClient::GetReservationBlocksGetResponse(
-    google::cloud::cpp::compute::reservation_blocks::v1::
-        GetReservationBlocksGetResponseRequest const& request,
-    Options opts) {
+ReservationBlocksClient::GetReservationBlocksGetResponse(google::cloud::cpp::compute::reservation_blocks::v1::GetReservationBlocksGetResponseRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetReservationBlocksGetResponse(request);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::ReservationBlock>
-ReservationBlocksClient::ListReservationBlocks(std::string const& project,
-                                               std::string const& zone,
-                                               std::string const& reservation,
-                                               Options opts) {
+ReservationBlocksClient::ListReservationBlocks(std::string const& project, std::string const& zone, std::string const& reservation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::reservation_blocks::v1::
-      ListReservationBlocksRequest request;
+  google::cloud::cpp::compute::reservation_blocks::v1::ListReservationBlocksRequest request;
   request.set_project(project);
   request.set_zone(zone);
   request.set_reservation(reservation);
@@ -71,76 +60,49 @@ ReservationBlocksClient::ListReservationBlocks(std::string const& project,
 }
 
 StreamRange<google::cloud::cpp::compute::v1::ReservationBlock>
-ReservationBlocksClient::ListReservationBlocks(
-    google::cloud::cpp::compute::reservation_blocks::v1::
-        ListReservationBlocksRequest request,
-    Options opts) {
+ReservationBlocksClient::ListReservationBlocks(google::cloud::cpp::compute::reservation_blocks::v1::ListReservationBlocksRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListReservationBlocks(std::move(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-ReservationBlocksClient::PerformMaintenance(
-    std::string const& project, std::string const& zone,
-    std::string const& reservation, std::string const& reservation_block,
-    google::cloud::cpp::compute::v1::
-        ReservationsBlocksPerformMaintenanceRequest const&
-            reservations_blocks_perform_maintenance_request_resource,
-    Options opts) {
+ReservationBlocksClient::PerformMaintenance(std::string const& project, std::string const& zone, std::string const& reservation, std::string const& reservation_block, google::cloud::cpp::compute::v1::ReservationsBlocksPerformMaintenanceRequest const& reservations_blocks_perform_maintenance_request_resource, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::reservation_blocks::v1::PerformMaintenanceRequest
-      request;
+  google::cloud::cpp::compute::reservation_blocks::v1::PerformMaintenanceRequest request;
   request.set_project(project);
   request.set_zone(zone);
   request.set_reservation(reservation);
   request.set_reservation_block(reservation_block);
-  *request.mutable_reservations_blocks_perform_maintenance_request_resource() =
-      reservations_blocks_perform_maintenance_request_resource;
+  *request.mutable_reservations_blocks_perform_maintenance_request_resource() = reservations_blocks_perform_maintenance_request_resource;
   return connection_->PerformMaintenance(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-ReservationBlocksClient::PerformMaintenance(
-    NoAwaitTag, std::string const& project, std::string const& zone,
-    std::string const& reservation, std::string const& reservation_block,
-    google::cloud::cpp::compute::v1::
-        ReservationsBlocksPerformMaintenanceRequest const&
-            reservations_blocks_perform_maintenance_request_resource,
-    Options opts) {
+ReservationBlocksClient::PerformMaintenance(NoAwaitTag, std::string const& project, std::string const& zone, std::string const& reservation, std::string const& reservation_block, google::cloud::cpp::compute::v1::ReservationsBlocksPerformMaintenanceRequest const& reservations_blocks_perform_maintenance_request_resource, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::reservation_blocks::v1::PerformMaintenanceRequest
-      request;
+  google::cloud::cpp::compute::reservation_blocks::v1::PerformMaintenanceRequest request;
   request.set_project(project);
   request.set_zone(zone);
   request.set_reservation(reservation);
   request.set_reservation_block(reservation_block);
-  *request.mutable_reservations_blocks_perform_maintenance_request_resource() =
-      reservations_blocks_perform_maintenance_request_resource;
+  *request.mutable_reservations_blocks_perform_maintenance_request_resource() = reservations_blocks_perform_maintenance_request_resource;
   return connection_->PerformMaintenance(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-ReservationBlocksClient::PerformMaintenance(
-    google::cloud::cpp::compute::reservation_blocks::v1::
-        PerformMaintenanceRequest const& request,
-    Options opts) {
+ReservationBlocksClient::PerformMaintenance(google::cloud::cpp::compute::reservation_blocks::v1::PerformMaintenanceRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PerformMaintenance(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-ReservationBlocksClient::PerformMaintenance(
-    NoAwaitTag,
-    google::cloud::cpp::compute::reservation_blocks::v1::
-        PerformMaintenanceRequest const& request,
-    Options opts) {
+ReservationBlocksClient::PerformMaintenance(NoAwaitTag, google::cloud::cpp::compute::reservation_blocks::v1::PerformMaintenanceRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PerformMaintenance(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-ReservationBlocksClient::PerformMaintenance(
-    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+ReservationBlocksClient::PerformMaintenance(google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PerformMaintenance(operation);
 }

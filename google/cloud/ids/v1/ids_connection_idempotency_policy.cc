@@ -33,28 +33,24 @@ IDSConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<IDSConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency IDSConnectionIdempotencyPolicy::ListEndpoints(
-    google::cloud::ids::v1::ListEndpointsRequest) {  // NOLINT
+Idempotency IDSConnectionIdempotencyPolicy::ListEndpoints(google::cloud::ids::v1::ListEndpointsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency IDSConnectionIdempotencyPolicy::GetEndpoint(
-    google::cloud::ids::v1::GetEndpointRequest const&) {
+Idempotency IDSConnectionIdempotencyPolicy::GetEndpoint(google::cloud::ids::v1::GetEndpointRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency IDSConnectionIdempotencyPolicy::CreateEndpoint(
-    google::cloud::ids::v1::CreateEndpointRequest const&) {
+Idempotency IDSConnectionIdempotencyPolicy::CreateEndpoint(google::cloud::ids::v1::CreateEndpointRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency IDSConnectionIdempotencyPolicy::DeleteEndpoint(
-    google::cloud::ids::v1::DeleteEndpointRequest const&) {
+Idempotency IDSConnectionIdempotencyPolicy::DeleteEndpoint(google::cloud::ids::v1::DeleteEndpointRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<IDSConnectionIdempotencyPolicy>
-MakeDefaultIDSConnectionIdempotencyPolicy() {
+    MakeDefaultIDSConnectionIdempotencyPolicy() {
   return std::make_unique<IDSConnectionIdempotencyPolicy>();
 }
 

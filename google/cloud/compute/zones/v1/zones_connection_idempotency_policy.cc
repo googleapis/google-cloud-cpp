@@ -33,18 +33,16 @@ ZonesConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<ZonesConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency ZonesConnectionIdempotencyPolicy::GetZone(
-    google::cloud::cpp::compute::zones::v1::GetZoneRequest const&) {
+Idempotency ZonesConnectionIdempotencyPolicy::GetZone(google::cloud::cpp::compute::zones::v1::GetZoneRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ZonesConnectionIdempotencyPolicy::ListZones(
-    google::cloud::cpp::compute::zones::v1::ListZonesRequest) {  // NOLINT
+Idempotency ZonesConnectionIdempotencyPolicy::ListZones(google::cloud::cpp::compute::zones::v1::ListZonesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<ZonesConnectionIdempotencyPolicy>
-MakeDefaultZonesConnectionIdempotencyPolicy() {
+    MakeDefaultZonesConnectionIdempotencyPolicy() {
   return std::make_unique<ZonesConnectionIdempotencyPolicy>();
 }
 

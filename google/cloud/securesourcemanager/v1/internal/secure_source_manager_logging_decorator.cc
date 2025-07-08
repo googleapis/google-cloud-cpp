@@ -32,18 +32,20 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 SecureSourceManagerLogging::SecureSourceManagerLogging(
     std::shared_ptr<SecureSourceManagerStub> child,
-    TracingOptions tracing_options, std::set<std::string> const&)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
+    TracingOptions tracing_options,
+    std::set<std::string> const&)
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::cloud::securesourcemanager::v1::ListInstancesResponse>
 SecureSourceManagerLogging::ListInstances(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::securesourcemanager::v1::ListInstancesRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::securesourcemanager::v1::ListInstancesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::securesourcemanager::v1::ListInstancesRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::securesourcemanager::v1::ListInstancesRequest const& request) {
         return child_->ListInstances(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -51,12 +53,13 @@ SecureSourceManagerLogging::ListInstances(
 
 StatusOr<google::cloud::securesourcemanager::v1::Instance>
 SecureSourceManagerLogging::GetInstance(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::securesourcemanager::v1::GetInstanceRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::securesourcemanager::v1::GetInstanceRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::securesourcemanager::v1::GetInstanceRequest const& request) {
         return child_->GetInstance(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -64,20 +67,17 @@ SecureSourceManagerLogging::GetInstance(
 
 future<StatusOr<google::longrunning::Operation>>
 SecureSourceManagerLogging::AsyncCreateInstance(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::securesourcemanager::v1::CreateInstanceRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::securesourcemanager::v1::CreateInstanceRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::securesourcemanager::v1::CreateInstanceRequest const&
-              request) {
-        return child_->AsyncCreateInstance(cq, std::move(context),
-                                           std::move(options), request);
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::securesourcemanager::v1::CreateInstanceRequest const& request) {
+        return child_->AsyncCreateInstance(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -85,14 +85,13 @@ SecureSourceManagerLogging::AsyncCreateInstance(
 
 StatusOr<google::longrunning::Operation>
 SecureSourceManagerLogging::CreateInstance(
-    grpc::ClientContext& context, Options options,
-    google::cloud::securesourcemanager::v1::CreateInstanceRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::securesourcemanager::v1::CreateInstanceRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::securesourcemanager::v1::CreateInstanceRequest const&
-              request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::securesourcemanager::v1::CreateInstanceRequest const& request) {
         return child_->CreateInstance(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -100,20 +99,17 @@ SecureSourceManagerLogging::CreateInstance(
 
 future<StatusOr<google::longrunning::Operation>>
 SecureSourceManagerLogging::AsyncDeleteInstance(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::securesourcemanager::v1::DeleteInstanceRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::securesourcemanager::v1::DeleteInstanceRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::securesourcemanager::v1::DeleteInstanceRequest const&
-              request) {
-        return child_->AsyncDeleteInstance(cq, std::move(context),
-                                           std::move(options), request);
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::securesourcemanager::v1::DeleteInstanceRequest const& request) {
+        return child_->AsyncDeleteInstance(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -121,14 +117,13 @@ SecureSourceManagerLogging::AsyncDeleteInstance(
 
 StatusOr<google::longrunning::Operation>
 SecureSourceManagerLogging::DeleteInstance(
-    grpc::ClientContext& context, Options options,
-    google::cloud::securesourcemanager::v1::DeleteInstanceRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::securesourcemanager::v1::DeleteInstanceRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::securesourcemanager::v1::DeleteInstanceRequest const&
-              request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::securesourcemanager::v1::DeleteInstanceRequest const& request) {
         return child_->DeleteInstance(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -136,14 +131,13 @@ SecureSourceManagerLogging::DeleteInstance(
 
 StatusOr<google::cloud::securesourcemanager::v1::ListRepositoriesResponse>
 SecureSourceManagerLogging::ListRepositories(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::securesourcemanager::v1::ListRepositoriesRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::securesourcemanager::v1::ListRepositoriesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::securesourcemanager::v1::ListRepositoriesRequest const&
-              request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::securesourcemanager::v1::ListRepositoriesRequest const& request) {
         return child_->ListRepositories(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -151,13 +145,13 @@ SecureSourceManagerLogging::ListRepositories(
 
 StatusOr<google::cloud::securesourcemanager::v1::Repository>
 SecureSourceManagerLogging::GetRepository(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::securesourcemanager::v1::GetRepositoryRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::securesourcemanager::v1::GetRepositoryRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::securesourcemanager::v1::GetRepositoryRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::securesourcemanager::v1::GetRepositoryRequest const& request) {
         return child_->GetRepository(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -165,20 +159,17 @@ SecureSourceManagerLogging::GetRepository(
 
 future<StatusOr<google::longrunning::Operation>>
 SecureSourceManagerLogging::AsyncCreateRepository(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::securesourcemanager::v1::CreateRepositoryRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::securesourcemanager::v1::CreateRepositoryRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::securesourcemanager::v1::CreateRepositoryRequest const&
-              request) {
-        return child_->AsyncCreateRepository(cq, std::move(context),
-                                             std::move(options), request);
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::securesourcemanager::v1::CreateRepositoryRequest const& request) {
+        return child_->AsyncCreateRepository(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -186,14 +177,13 @@ SecureSourceManagerLogging::AsyncCreateRepository(
 
 StatusOr<google::longrunning::Operation>
 SecureSourceManagerLogging::CreateRepository(
-    grpc::ClientContext& context, Options options,
-    google::cloud::securesourcemanager::v1::CreateRepositoryRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::securesourcemanager::v1::CreateRepositoryRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::securesourcemanager::v1::CreateRepositoryRequest const&
-              request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::securesourcemanager::v1::CreateRepositoryRequest const& request) {
         return child_->CreateRepository(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -201,20 +191,17 @@ SecureSourceManagerLogging::CreateRepository(
 
 future<StatusOr<google::longrunning::Operation>>
 SecureSourceManagerLogging::AsyncDeleteRepository(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::securesourcemanager::v1::DeleteRepositoryRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::securesourcemanager::v1::DeleteRepositoryRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::securesourcemanager::v1::DeleteRepositoryRequest const&
-              request) {
-        return child_->AsyncDeleteRepository(cq, std::move(context),
-                                             std::move(options), request);
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::securesourcemanager::v1::DeleteRepositoryRequest const& request) {
+        return child_->AsyncDeleteRepository(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -222,35 +209,40 @@ SecureSourceManagerLogging::AsyncDeleteRepository(
 
 StatusOr<google::longrunning::Operation>
 SecureSourceManagerLogging::DeleteRepository(
-    grpc::ClientContext& context, Options options,
-    google::cloud::securesourcemanager::v1::DeleteRepositoryRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::securesourcemanager::v1::DeleteRepositoryRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::securesourcemanager::v1::DeleteRepositoryRequest const&
-              request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::securesourcemanager::v1::DeleteRepositoryRequest const& request) {
         return child_->DeleteRepository(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::iam::v1::Policy> SecureSourceManagerLogging::GetIamPolicyRepo(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::iam::v1::Policy>
+SecureSourceManagerLogging::GetIamPolicyRepo(
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::iam::v1::GetIamPolicyRequest const& request) {
         return child_->GetIamPolicyRepo(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::iam::v1::Policy> SecureSourceManagerLogging::SetIamPolicyRepo(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::iam::v1::Policy>
+SecureSourceManagerLogging::SetIamPolicyRepo(
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::iam::v1::SetIamPolicyRequest const& request) {
         return child_->SetIamPolicyRepo(context, options, request);
       },
@@ -259,10 +251,12 @@ StatusOr<google::iam::v1::Policy> SecureSourceManagerLogging::SetIamPolicyRepo(
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 SecureSourceManagerLogging::TestIamPermissionsRepo(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::iam::v1::TestIamPermissionsRequest const& request) {
         return child_->TestIamPermissionsRepo(context, options, request);
       },
@@ -271,20 +265,17 @@ SecureSourceManagerLogging::TestIamPermissionsRepo(
 
 future<StatusOr<google::longrunning::Operation>>
 SecureSourceManagerLogging::AsyncCreateBranchRule(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::securesourcemanager::v1::CreateBranchRuleRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::securesourcemanager::v1::CreateBranchRuleRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::securesourcemanager::v1::CreateBranchRuleRequest const&
-              request) {
-        return child_->AsyncCreateBranchRule(cq, std::move(context),
-                                             std::move(options), request);
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::securesourcemanager::v1::CreateBranchRuleRequest const& request) {
+        return child_->AsyncCreateBranchRule(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -292,14 +283,13 @@ SecureSourceManagerLogging::AsyncCreateBranchRule(
 
 StatusOr<google::longrunning::Operation>
 SecureSourceManagerLogging::CreateBranchRule(
-    grpc::ClientContext& context, Options options,
-    google::cloud::securesourcemanager::v1::CreateBranchRuleRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::securesourcemanager::v1::CreateBranchRuleRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::securesourcemanager::v1::CreateBranchRuleRequest const&
-              request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::securesourcemanager::v1::CreateBranchRuleRequest const& request) {
         return child_->CreateBranchRule(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -307,14 +297,13 @@ SecureSourceManagerLogging::CreateBranchRule(
 
 StatusOr<google::cloud::securesourcemanager::v1::ListBranchRulesResponse>
 SecureSourceManagerLogging::ListBranchRules(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::securesourcemanager::v1::ListBranchRulesRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::securesourcemanager::v1::ListBranchRulesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::securesourcemanager::v1::ListBranchRulesRequest const&
-              request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::securesourcemanager::v1::ListBranchRulesRequest const& request) {
         return child_->ListBranchRules(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -322,13 +311,13 @@ SecureSourceManagerLogging::ListBranchRules(
 
 StatusOr<google::cloud::securesourcemanager::v1::BranchRule>
 SecureSourceManagerLogging::GetBranchRule(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::securesourcemanager::v1::GetBranchRuleRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::securesourcemanager::v1::GetBranchRuleRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::securesourcemanager::v1::GetBranchRuleRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::securesourcemanager::v1::GetBranchRuleRequest const& request) {
         return child_->GetBranchRule(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -336,20 +325,17 @@ SecureSourceManagerLogging::GetBranchRule(
 
 future<StatusOr<google::longrunning::Operation>>
 SecureSourceManagerLogging::AsyncUpdateBranchRule(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::securesourcemanager::v1::UpdateBranchRuleRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::securesourcemanager::v1::UpdateBranchRuleRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::securesourcemanager::v1::UpdateBranchRuleRequest const&
-              request) {
-        return child_->AsyncUpdateBranchRule(cq, std::move(context),
-                                             std::move(options), request);
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::securesourcemanager::v1::UpdateBranchRuleRequest const& request) {
+        return child_->AsyncUpdateBranchRule(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -357,14 +343,13 @@ SecureSourceManagerLogging::AsyncUpdateBranchRule(
 
 StatusOr<google::longrunning::Operation>
 SecureSourceManagerLogging::UpdateBranchRule(
-    grpc::ClientContext& context, Options options,
-    google::cloud::securesourcemanager::v1::UpdateBranchRuleRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::securesourcemanager::v1::UpdateBranchRuleRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::securesourcemanager::v1::UpdateBranchRuleRequest const&
-              request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::securesourcemanager::v1::UpdateBranchRuleRequest const& request) {
         return child_->UpdateBranchRule(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -372,20 +357,17 @@ SecureSourceManagerLogging::UpdateBranchRule(
 
 future<StatusOr<google::longrunning::Operation>>
 SecureSourceManagerLogging::AsyncDeleteBranchRule(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::securesourcemanager::v1::DeleteBranchRuleRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::securesourcemanager::v1::DeleteBranchRuleRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::securesourcemanager::v1::DeleteBranchRuleRequest const&
-              request) {
-        return child_->AsyncDeleteBranchRule(cq, std::move(context),
-                                             std::move(options), request);
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::securesourcemanager::v1::DeleteBranchRuleRequest const& request) {
+        return child_->AsyncDeleteBranchRule(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -393,14 +375,13 @@ SecureSourceManagerLogging::AsyncDeleteBranchRule(
 
 StatusOr<google::longrunning::Operation>
 SecureSourceManagerLogging::DeleteBranchRule(
-    grpc::ClientContext& context, Options options,
-    google::cloud::securesourcemanager::v1::DeleteBranchRuleRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::securesourcemanager::v1::DeleteBranchRuleRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::securesourcemanager::v1::DeleteBranchRuleRequest const&
-              request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::securesourcemanager::v1::DeleteBranchRuleRequest const& request) {
         return child_->DeleteBranchRule(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -408,10 +389,12 @@ SecureSourceManagerLogging::DeleteBranchRule(
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 SecureSourceManagerLogging::ListLocations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::location::ListLocationsRequest const& request) {
         return child_->ListLocations(context, options, request);
       },
@@ -420,32 +403,40 @@ SecureSourceManagerLogging::ListLocations(
 
 StatusOr<google::cloud::location::Location>
 SecureSourceManagerLogging::GetLocation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::location::GetLocationRequest const& request) {
         return child_->GetLocation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::iam::v1::Policy> SecureSourceManagerLogging::SetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::iam::v1::Policy>
+SecureSourceManagerLogging::SetIamPolicy(
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::iam::v1::SetIamPolicyRequest const& request) {
         return child_->SetIamPolicy(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::iam::v1::Policy> SecureSourceManagerLogging::GetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::iam::v1::Policy>
+SecureSourceManagerLogging::GetIamPolicy(
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::iam::v1::GetIamPolicyRequest const& request) {
         return child_->GetIamPolicy(context, options, request);
       },
@@ -454,10 +445,12 @@ StatusOr<google::iam::v1::Policy> SecureSourceManagerLogging::GetIamPolicy(
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 SecureSourceManagerLogging::TestIamPermissions(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::iam::v1::TestIamPermissionsRequest const& request) {
         return child_->TestIamPermissions(context, options, request);
       },
@@ -466,10 +459,12 @@ SecureSourceManagerLogging::TestIamPermissions(
 
 StatusOr<google::longrunning::ListOperationsResponse>
 SecureSourceManagerLogging::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::ListOperationsRequest const& request) {
         return child_->ListOperations(context, options, request);
       },
@@ -478,32 +473,40 @@ SecureSourceManagerLogging::ListOperations(
 
 StatusOr<google::longrunning::Operation>
 SecureSourceManagerLogging::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::GetOperationRequest const& request) {
         return child_->GetOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status SecureSourceManagerLogging::DeleteOperation(
-    grpc::ClientContext& context, Options const& options,
+Status
+SecureSourceManagerLogging::DeleteOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::DeleteOperationRequest const& request) {
         return child_->DeleteOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status SecureSourceManagerLogging::CancelOperation(
-    grpc::ClientContext& context, Options const& options,
+Status
+SecureSourceManagerLogging::CancelOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::CancelOperationRequest const& request) {
         return child_->CancelOperation(context, options, request);
       },
@@ -521,8 +524,8 @@ SecureSourceManagerLogging::AsyncGetOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(cq, std::move(context),
-                                         std::move(options), request);
+        return child_->AsyncGetOperation(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -538,8 +541,8 @@ future<Status> SecureSourceManagerLogging::AsyncCancelOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::CancelOperationRequest const& request) {
-        return child_->AsyncCancelOperation(cq, std::move(context),
-                                            std::move(options), request);
+        return child_->AsyncCancelOperation(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);

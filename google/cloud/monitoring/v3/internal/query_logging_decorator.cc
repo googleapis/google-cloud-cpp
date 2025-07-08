@@ -31,16 +31,20 @@ namespace monitoring_v3_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 QueryServiceLogging::QueryServiceLogging(
-    std::shared_ptr<QueryServiceStub> child, TracingOptions tracing_options,
+    std::shared_ptr<QueryServiceStub> child,
+    TracingOptions tracing_options,
     std::set<std::string> const&)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::monitoring::v3::QueryTimeSeriesResponse>
 QueryServiceLogging::QueryTimeSeries(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::monitoring::v3::QueryTimeSeriesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::monitoring::v3::QueryTimeSeriesRequest const& request) {
         return child_->QueryTimeSeries(context, options, request);
       },

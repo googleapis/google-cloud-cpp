@@ -17,10 +17,10 @@
 // source: google/cloud/language/v2/language_service.proto
 
 #include "google/cloud/language/v2/internal/language_option_defaults.h"
-#include "google/cloud/language/v2/language_connection.h"
-#include "google/cloud/language/v2/language_options.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
+#include "google/cloud/language/v2/language_connection.h"
+#include "google/cloud/language/v2/language_options.h"
 #include <memory>
 #include <utility>
 
@@ -35,24 +35,21 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options LanguageServiceDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_LANGUAGE_SERVICE_ENDPOINT", "",
-      "GOOGLE_CLOUD_CPP_LANGUAGE_SERVICE_AUTHORITY", "language.googleapis.com");
+      std::move(options), "GOOGLE_CLOUD_CPP_LANGUAGE_SERVICE_ENDPOINT",
+      "", "GOOGLE_CLOUD_CPP_LANGUAGE_SERVICE_AUTHORITY",
+      "language.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<language_v2::LanguageServiceRetryPolicyOption>()) {
     options.set<language_v2::LanguageServiceRetryPolicyOption>(
         language_v2::LanguageServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
-            .clone());
+            std::chrono::minutes(30)).clone());
   }
   if (!options.has<language_v2::LanguageServiceBackoffPolicyOption>()) {
     options.set<language_v2::LanguageServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(
-            std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
-            .clone());
+        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
   }
-  if (!options.has<
-          language_v2::LanguageServiceConnectionIdempotencyPolicyOption>()) {
+  if (!options.has<language_v2::LanguageServiceConnectionIdempotencyPolicyOption>()) {
     options.set<language_v2::LanguageServiceConnectionIdempotencyPolicyOption>(
         language_v2::MakeDefaultLanguageServiceConnectionIdempotencyPolicy());
   }

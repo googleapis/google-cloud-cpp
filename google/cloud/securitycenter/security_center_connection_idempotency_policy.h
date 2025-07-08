@@ -26,16 +26,11 @@ namespace cloud {
 namespace securitycenter {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use
-/// securitycenter_v1::MakeDefaultSecurityCenterConnectionIdempotencyPolicy
-/// directly.
-using ::google::cloud::securitycenter_v1::
-    MakeDefaultSecurityCenterConnectionIdempotencyPolicy;
+/// @deprecated Use securitycenter_v1::MakeDefaultSecurityCenterConnectionIdempotencyPolicy directly.
+using ::google::cloud::securitycenter_v1::MakeDefaultSecurityCenterConnectionIdempotencyPolicy;
 
-/// @deprecated Use securitycenter_v1::SecurityCenterConnectionIdempotencyPolicy
-/// directly.
-using ::google::cloud::securitycenter_v1::
-    SecurityCenterConnectionIdempotencyPolicy;
+/// @deprecated Use securitycenter_v1::SecurityCenterConnectionIdempotencyPolicy directly.
+using ::google::cloud::securitycenter_v1::SecurityCenterConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace securitycenter

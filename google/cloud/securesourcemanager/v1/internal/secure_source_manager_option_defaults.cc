@@ -17,10 +17,10 @@
 // source: google/cloud/securesourcemanager/v1/secure_source_manager.proto
 
 #include "google/cloud/securesourcemanager/v1/internal/secure_source_manager_option_defaults.h"
-#include "google/cloud/securesourcemanager/v1/secure_source_manager_connection.h"
-#include "google/cloud/securesourcemanager/v1/secure_source_manager_options.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
+#include "google/cloud/securesourcemanager/v1/secure_source_manager_connection.h"
+#include "google/cloud/securesourcemanager/v1/secure_source_manager_options.h"
 #include <memory>
 #include <utility>
 
@@ -35,48 +35,32 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options SecureSourceManagerDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_SECURE_SOURCE_MANAGER_ENDPOINT", "",
-      "GOOGLE_CLOUD_CPP_SECURE_SOURCE_MANAGER_AUTHORITY",
+      std::move(options), "GOOGLE_CLOUD_CPP_SECURE_SOURCE_MANAGER_ENDPOINT",
+      "", "GOOGLE_CLOUD_CPP_SECURE_SOURCE_MANAGER_AUTHORITY",
       "securesourcemanager.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
-  if (!options.has<
-          securesourcemanager_v1::SecureSourceManagerRetryPolicyOption>()) {
+  if (!options.has<securesourcemanager_v1::SecureSourceManagerRetryPolicyOption>()) {
     options.set<securesourcemanager_v1::SecureSourceManagerRetryPolicyOption>(
         securesourcemanager_v1::SecureSourceManagerLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
-            .clone());
+            std::chrono::minutes(30)).clone());
   }
-  if (!options.has<
-          securesourcemanager_v1::SecureSourceManagerBackoffPolicyOption>()) {
+  if (!options.has<securesourcemanager_v1::SecureSourceManagerBackoffPolicyOption>()) {
     options.set<securesourcemanager_v1::SecureSourceManagerBackoffPolicyOption>(
-        ExponentialBackoffPolicy(
-            std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
-            .clone());
+        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
   }
-  if (!options.has<
-          securesourcemanager_v1::SecureSourceManagerPollingPolicyOption>()) {
+  if (!options.has<securesourcemanager_v1::SecureSourceManagerPollingPolicyOption>()) {
     options.set<securesourcemanager_v1::SecureSourceManagerPollingPolicyOption>(
         GenericPollingPolicy<
             securesourcemanager_v1::SecureSourceManagerRetryPolicyOption::Type,
-            securesourcemanager_v1::SecureSourceManagerBackoffPolicyOption::
-                Type>(
-            options
-                .get<securesourcemanager_v1::
-                         SecureSourceManagerRetryPolicyOption>()
-                ->clone(),
+            securesourcemanager_v1::SecureSourceManagerBackoffPolicyOption::Type>(
+            options.get<securesourcemanager_v1::SecureSourceManagerRetryPolicyOption>()->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                     std::chrono::minutes(5), kBackoffScaling)
-                .clone())
-            .clone());
+            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
   }
-  if (!options
-           .has<securesourcemanager_v1::
-                    SecureSourceManagerConnectionIdempotencyPolicyOption>()) {
-    options.set<securesourcemanager_v1::
-                    SecureSourceManagerConnectionIdempotencyPolicyOption>(
-        securesourcemanager_v1::
-            MakeDefaultSecureSourceManagerConnectionIdempotencyPolicy());
+  if (!options.has<securesourcemanager_v1::SecureSourceManagerConnectionIdempotencyPolicyOption>()) {
+    options.set<securesourcemanager_v1::SecureSourceManagerConnectionIdempotencyPolicyOption>(
+        securesourcemanager_v1::MakeDefaultSecureSourceManagerConnectionIdempotencyPolicy());
   }
 
   return options;

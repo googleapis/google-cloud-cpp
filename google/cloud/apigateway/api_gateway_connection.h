@@ -33,13 +33,10 @@ using ::google::cloud::apigateway_v1::MakeApiGatewayServiceConnection;
 /// @deprecated Use apigateway_v1::ApiGatewayServiceConnection directly.
 using ::google::cloud::apigateway_v1::ApiGatewayServiceConnection;
 
-/// @deprecated Use apigateway_v1::ApiGatewayServiceLimitedErrorCountRetryPolicy
-/// directly.
-using ::google::cloud::apigateway_v1::
-    ApiGatewayServiceLimitedErrorCountRetryPolicy;
+/// @deprecated Use apigateway_v1::ApiGatewayServiceLimitedErrorCountRetryPolicy directly.
+using ::google::cloud::apigateway_v1::ApiGatewayServiceLimitedErrorCountRetryPolicy;
 
-/// @deprecated Use apigateway_v1::ApiGatewayServiceLimitedTimeRetryPolicy
-/// directly.
+/// @deprecated Use apigateway_v1::ApiGatewayServiceLimitedTimeRetryPolicy directly.
 using ::google::cloud::apigateway_v1::ApiGatewayServiceLimitedTimeRetryPolicy;
 
 /// @deprecated Use apigateway_v1::ApiGatewayServiceRetryPolicy directly.

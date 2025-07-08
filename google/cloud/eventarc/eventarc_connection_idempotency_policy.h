@@ -26,10 +26,8 @@ namespace cloud {
 namespace eventarc {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use eventarc_v1::MakeDefaultEventarcConnectionIdempotencyPolicy
-/// directly.
-using ::google::cloud::eventarc_v1::
-    MakeDefaultEventarcConnectionIdempotencyPolicy;
+/// @deprecated Use eventarc_v1::MakeDefaultEventarcConnectionIdempotencyPolicy directly.
+using ::google::cloud::eventarc_v1::MakeDefaultEventarcConnectionIdempotencyPolicy;
 
 /// @deprecated Use eventarc_v1::EventarcConnectionIdempotencyPolicy directly.
 using ::google::cloud::eventarc_v1::EventarcConnectionIdempotencyPolicy;

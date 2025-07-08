@@ -35,35 +35,23 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options PolicyTagManagerSerializationDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options),
-      "GOOGLE_CLOUD_CPP_POLICY_TAG_MANAGER_SERIALIZATION_ENDPOINT", "",
-      "GOOGLE_CLOUD_CPP_POLICY_TAG_MANAGER_SERIALIZATION_AUTHORITY",
+      std::move(options), "GOOGLE_CLOUD_CPP_POLICY_TAG_MANAGER_SERIALIZATION_ENDPOINT",
+      "", "GOOGLE_CLOUD_CPP_POLICY_TAG_MANAGER_SERIALIZATION_AUTHORITY",
       "datacatalog.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
-  if (!options.has<
-          datacatalog_v1::PolicyTagManagerSerializationRetryPolicyOption>()) {
+  if (!options.has<datacatalog_v1::PolicyTagManagerSerializationRetryPolicyOption>()) {
     options.set<datacatalog_v1::PolicyTagManagerSerializationRetryPolicyOption>(
         datacatalog_v1::PolicyTagManagerSerializationLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
-            .clone());
+            std::chrono::minutes(30)).clone());
   }
-  if (!options.has<
-          datacatalog_v1::PolicyTagManagerSerializationBackoffPolicyOption>()) {
-    options
-        .set<datacatalog_v1::PolicyTagManagerSerializationBackoffPolicyOption>(
-            ExponentialBackoffPolicy(
-                std::chrono::seconds(0), std::chrono::seconds(1),
-                std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
-                .clone());
+  if (!options.has<datacatalog_v1::PolicyTagManagerSerializationBackoffPolicyOption>()) {
+    options.set<datacatalog_v1::PolicyTagManagerSerializationBackoffPolicyOption>(
+        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
   }
-  if (!options.has<
-          datacatalog_v1::
-              PolicyTagManagerSerializationConnectionIdempotencyPolicyOption>()) {
-    options.set<
-        datacatalog_v1::
-            PolicyTagManagerSerializationConnectionIdempotencyPolicyOption>(
-        datacatalog_v1::
-            MakeDefaultPolicyTagManagerSerializationConnectionIdempotencyPolicy());
+  if (!options.has<datacatalog_v1::PolicyTagManagerSerializationConnectionIdempotencyPolicyOption>()) {
+    options.set<datacatalog_v1::PolicyTagManagerSerializationConnectionIdempotencyPolicyOption>(
+        datacatalog_v1::MakeDefaultPolicyTagManagerSerializationConnectionIdempotencyPolicy());
   }
 
   return options;

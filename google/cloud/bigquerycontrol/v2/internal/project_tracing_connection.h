@@ -36,13 +36,12 @@ class ProjectServiceTracingConnection
   ~ProjectServiceTracingConnection() override = default;
 
   explicit ProjectServiceTracingConnection(
-      std::shared_ptr<bigquerycontrol_v2::ProjectServiceConnection> child);
+    std::shared_ptr<bigquerycontrol_v2::ProjectServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
   StatusOr<google::cloud::bigquery::v2::GetServiceAccountResponse>
-  GetServiceAccount(google::cloud::bigquery::v2::GetServiceAccountRequest const&
-                        request) override;
+  GetServiceAccount(google::cloud::bigquery::v2::GetServiceAccountRequest const& request) override;
 
  private:
   std::shared_ptr<bigquerycontrol_v2::ProjectServiceConnection> child_;

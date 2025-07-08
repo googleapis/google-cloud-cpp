@@ -28,18 +28,14 @@ namespace cloud {
 namespace apigateway {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use apigateway_v1::ApiGatewayServicePollingPolicyOption
-/// directly.
+/// @deprecated Use apigateway_v1::ApiGatewayServicePollingPolicyOption directly.
 using ::google::cloud::apigateway_v1::ApiGatewayServicePollingPolicyOption;
 
-/// @deprecated Use apigateway_v1::ApiGatewayServiceBackoffPolicyOption
-/// directly.
+/// @deprecated Use apigateway_v1::ApiGatewayServiceBackoffPolicyOption directly.
 using ::google::cloud::apigateway_v1::ApiGatewayServiceBackoffPolicyOption;
 
-/// @deprecated Use
-/// apigateway_v1::ApiGatewayServiceConnectionIdempotencyPolicyOption directly.
-using ::google::cloud::apigateway_v1::
-    ApiGatewayServiceConnectionIdempotencyPolicyOption;
+/// @deprecated Use apigateway_v1::ApiGatewayServiceConnectionIdempotencyPolicyOption directly.
+using ::google::cloud::apigateway_v1::ApiGatewayServiceConnectionIdempotencyPolicyOption;
 
 /// @deprecated Use apigateway_v1::ApiGatewayServicePolicyOptionList directly.
 using ::google::cloud::apigateway_v1::ApiGatewayServicePolicyOptionList;

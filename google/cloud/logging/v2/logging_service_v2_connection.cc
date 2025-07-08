@@ -17,17 +17,17 @@
 // source: google/logging/v2/logging.proto
 
 #include "google/cloud/logging/v2/logging_service_v2_connection.h"
-#include "google/cloud/logging/v2/internal/logging_service_v2_connection_impl.h"
-#include "google/cloud/logging/v2/internal/logging_service_v2_option_defaults.h"
-#include "google/cloud/logging/v2/internal/logging_service_v2_stub_factory.h"
-#include "google/cloud/logging/v2/internal/logging_service_v2_tracing_connection.h"
-#include "google/cloud/logging/v2/logging_service_v2_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/logging/v2/internal/logging_service_v2_connection_impl.h"
+#include "google/cloud/logging/v2/internal/logging_service_v2_option_defaults.h"
+#include "google/cloud/logging/v2/internal/logging_service_v2_stub_factory.h"
+#include "google/cloud/logging/v2/internal/logging_service_v2_tracing_connection.h"
+#include "google/cloud/logging/v2/logging_service_v2_options.h"
 #include <memory>
 #include <utility>
 
@@ -38,7 +38,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 LoggingServiceV2Connection::~LoggingServiceV2Connection() = default;
 
-Status LoggingServiceV2Connection::DeleteLog(
+Status
+LoggingServiceV2Connection::DeleteLog(
     google::logging::v2::DeleteLogRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -49,25 +50,20 @@ LoggingServiceV2Connection::WriteLogEntries(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::logging::v2::LogEntry>
-LoggingServiceV2Connection::ListLogEntries(
-    google::logging::v2::
-        ListLogEntriesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::logging::v2::LogEntry> LoggingServiceV2Connection::ListLogEntries(
+    google::logging::v2::ListLogEntriesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::logging::v2::LogEntry>>();
 }
 
-StreamRange<google::api::MonitoredResourceDescriptor>
-LoggingServiceV2Connection::ListMonitoredResourceDescriptors(
-    google::logging::v2::
-        ListMonitoredResourceDescriptorsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::api::MonitoredResourceDescriptor> LoggingServiceV2Connection::ListMonitoredResourceDescriptors(
+    google::logging::v2::ListMonitoredResourceDescriptorsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::api::MonitoredResourceDescriptor>>();
 }
 
 StreamRange<std::string> LoggingServiceV2Connection::ListLogs(
-    google::logging::v2::
-        ListLogsRequest) {  // NOLINT(performance-unnecessary-value-param)
+    google::logging::v2::ListLogsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<std::string>>();
 }
@@ -83,10 +79,8 @@ LoggingServiceV2Connection::AsyncTailLogEntries() {
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StreamRange<google::longrunning::Operation>
-LoggingServiceV2Connection::ListOperations(
-    google::longrunning::
-        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::longrunning::Operation> LoggingServiceV2Connection::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }
@@ -97,7 +91,8 @@ LoggingServiceV2Connection::GetOperation(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status LoggingServiceV2Connection::CancelOperation(
+Status
+LoggingServiceV2Connection::CancelOperation(
     google::longrunning::CancelOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -106,25 +101,24 @@ future<StatusOr<google::logging::v2::WriteLogEntriesResponse>>
 LoggingServiceV2Connection::AsyncWriteLogEntries(
     google::logging::v2::WriteLogEntriesRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::logging::v2::WriteLogEntriesResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::logging::v2::WriteLogEntriesResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 std::shared_ptr<LoggingServiceV2Connection> MakeLoggingServiceV2Connection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 LoggingServiceV2PolicyOptionList>(options,
-                                                                   __func__);
-  options =
-      logging_v2_internal::LoggingServiceV2DefaultOptions(std::move(options));
+      UnifiedCredentialsOptionList,
+      LoggingServiceV2PolicyOptionList>(options, __func__);
+  options = logging_v2_internal::LoggingServiceV2DefaultOptions(
+      std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = logging_v2_internal::CreateDefaultLoggingServiceV2Stub(
-      std::move(auth), options);
+    std::move(auth), options);
   return logging_v2_internal::MakeLoggingServiceV2TracingConnection(
       std::make_shared<logging_v2_internal::LoggingServiceV2ConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options)));
+      std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

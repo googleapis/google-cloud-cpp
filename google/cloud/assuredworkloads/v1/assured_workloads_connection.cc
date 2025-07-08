@@ -36,15 +36,14 @@ namespace cloud {
 namespace assuredworkloads_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-AssuredWorkloadsServiceConnection::~AssuredWorkloadsServiceConnection() =
-    default;
+AssuredWorkloadsServiceConnection::~AssuredWorkloadsServiceConnection() = default;
 
 future<StatusOr<google::cloud::assuredworkloads::v1::Workload>>
 AssuredWorkloadsServiceConnection::CreateWorkload(
     google::cloud::assuredworkloads::v1::CreateWorkloadRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::assuredworkloads::v1::Workload>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::assuredworkloads::v1::Workload>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -52,15 +51,15 @@ AssuredWorkloadsServiceConnection::CreateWorkload(
     NoAwaitTag,
     google::cloud::assuredworkloads::v1::CreateWorkloadRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::assuredworkloads::v1::Workload>>
 AssuredWorkloadsServiceConnection::CreateWorkload(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::assuredworkloads::v1::Workload>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::assuredworkloads::v1::Workload>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::assuredworkloads::v1::Workload>
@@ -71,12 +70,12 @@ AssuredWorkloadsServiceConnection::UpdateWorkload(
 
 StatusOr<google::cloud::assuredworkloads::v1::RestrictAllowedResourcesResponse>
 AssuredWorkloadsServiceConnection::RestrictAllowedResources(
-    google::cloud::assuredworkloads::v1::
-        RestrictAllowedResourcesRequest const&) {
+    google::cloud::assuredworkloads::v1::RestrictAllowedResourcesRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status AssuredWorkloadsServiceConnection::DeleteWorkload(
+Status
+AssuredWorkloadsServiceConnection::DeleteWorkload(
     google::cloud::assuredworkloads::v1::DeleteWorkloadRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -87,18 +86,14 @@ AssuredWorkloadsServiceConnection::GetWorkload(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::assuredworkloads::v1::Workload>
-AssuredWorkloadsServiceConnection::ListWorkloads(
-    google::cloud::assuredworkloads::v1::
-        ListWorkloadsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::assuredworkloads::v1::Workload> AssuredWorkloadsServiceConnection::ListWorkloads(
+    google::cloud::assuredworkloads::v1::ListWorkloadsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::assuredworkloads::v1::Workload>>();
 }
 
-StreamRange<google::cloud::assuredworkloads::v1::Violation>
-AssuredWorkloadsServiceConnection::ListViolations(
-    google::cloud::assuredworkloads::v1::
-        ListViolationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::assuredworkloads::v1::Violation> AssuredWorkloadsServiceConnection::ListViolations(
+    google::cloud::assuredworkloads::v1::ListViolationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::assuredworkloads::v1::Violation>>();
 }
@@ -115,10 +110,8 @@ AssuredWorkloadsServiceConnection::AcknowledgeViolation(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::longrunning::Operation>
-AssuredWorkloadsServiceConnection::ListOperations(
-    google::longrunning::
-        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::longrunning::Operation> AssuredWorkloadsServiceConnection::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }
@@ -129,24 +122,20 @@ AssuredWorkloadsServiceConnection::GetOperation(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-std::shared_ptr<AssuredWorkloadsServiceConnection>
-MakeAssuredWorkloadsServiceConnection(Options options) {
+std::shared_ptr<AssuredWorkloadsServiceConnection> MakeAssuredWorkloadsServiceConnection(
+    Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 AssuredWorkloadsServicePolicyOptionList>(
-      options, __func__);
+      UnifiedCredentialsOptionList,
+      AssuredWorkloadsServicePolicyOptionList>(options, __func__);
   options = assuredworkloads_v1_internal::AssuredWorkloadsServiceDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
-  auto stub =
-      assuredworkloads_v1_internal::CreateDefaultAssuredWorkloadsServiceStub(
-          std::move(auth), options);
-  return assuredworkloads_v1_internal::
-      MakeAssuredWorkloadsServiceTracingConnection(
-          std::make_shared<assuredworkloads_v1_internal::
-                               AssuredWorkloadsServiceConnectionImpl>(
-              std::move(background), std::move(stub), std::move(options)));
+  auto stub = assuredworkloads_v1_internal::CreateDefaultAssuredWorkloadsServiceStub(
+    std::move(auth), options);
+  return assuredworkloads_v1_internal::MakeAssuredWorkloadsServiceTracingConnection(
+      std::make_shared<assuredworkloads_v1_internal::AssuredWorkloadsServiceConnectionImpl>(
+      std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

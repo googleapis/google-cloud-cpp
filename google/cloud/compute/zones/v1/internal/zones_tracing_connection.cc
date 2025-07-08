@@ -33,27 +33,26 @@ ZonesTracingConnection::ZonesTracingConnection(
     std::shared_ptr<compute_zones_v1::ZonesConnection> child)
     : child_(std::move(child)) {}
 
-StatusOr<google::cloud::cpp::compute::v1::Zone> ZonesTracingConnection::GetZone(
-    google::cloud::cpp::compute::zones::v1::GetZoneRequest const& request) {
+StatusOr<google::cloud::cpp::compute::v1::Zone>
+ZonesTracingConnection::GetZone(google::cloud::cpp::compute::zones::v1::GetZoneRequest const& request) {
   auto span = internal::MakeSpan("compute_zones_v1::ZonesConnection::GetZone");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetZone(request));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::Zone>
-ZonesTracingConnection::ListZones(
-    google::cloud::cpp::compute::zones::v1::ListZonesRequest request) {
-  auto span =
-      internal::MakeSpan("compute_zones_v1::ZonesConnection::ListZones");
+ZonesTracingConnection::ListZones(google::cloud::cpp::compute::zones::v1::ListZonesRequest request) {
+  auto span = internal::MakeSpan("compute_zones_v1::ZonesConnection::ListZones");
   internal::OTelScope scope(span);
   auto sr = child_->ListZones(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::cpp::compute::v1::Zone>(
-      std::move(span), std::move(sr));
+        std::move(span), std::move(sr));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-std::shared_ptr<compute_zones_v1::ZonesConnection> MakeZonesTracingConnection(
+std::shared_ptr<compute_zones_v1::ZonesConnection>
+MakeZonesTracingConnection(
     std::shared_ptr<compute_zones_v1::ZonesConnection> conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {

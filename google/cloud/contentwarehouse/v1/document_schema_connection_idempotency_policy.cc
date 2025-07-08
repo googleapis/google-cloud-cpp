@@ -26,52 +26,39 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-DocumentSchemaServiceConnectionIdempotencyPolicy::
-    ~DocumentSchemaServiceConnectionIdempotencyPolicy() = default;
+DocumentSchemaServiceConnectionIdempotencyPolicy::~DocumentSchemaServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<DocumentSchemaServiceConnectionIdempotencyPolicy>
 DocumentSchemaServiceConnectionIdempotencyPolicy::clone() const {
-  return std::make_unique<DocumentSchemaServiceConnectionIdempotencyPolicy>(
-      *this);
+  return std::make_unique<DocumentSchemaServiceConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency
-DocumentSchemaServiceConnectionIdempotencyPolicy::CreateDocumentSchema(
-    google::cloud::contentwarehouse::v1::CreateDocumentSchemaRequest const&) {
+Idempotency DocumentSchemaServiceConnectionIdempotencyPolicy::CreateDocumentSchema(google::cloud::contentwarehouse::v1::CreateDocumentSchemaRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency
-DocumentSchemaServiceConnectionIdempotencyPolicy::UpdateDocumentSchema(
-    google::cloud::contentwarehouse::v1::UpdateDocumentSchemaRequest const&) {
+Idempotency DocumentSchemaServiceConnectionIdempotencyPolicy::UpdateDocumentSchema(google::cloud::contentwarehouse::v1::UpdateDocumentSchemaRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DocumentSchemaServiceConnectionIdempotencyPolicy::GetDocumentSchema(
-    google::cloud::contentwarehouse::v1::GetDocumentSchemaRequest const&) {
+Idempotency DocumentSchemaServiceConnectionIdempotencyPolicy::GetDocumentSchema(google::cloud::contentwarehouse::v1::GetDocumentSchemaRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency
-DocumentSchemaServiceConnectionIdempotencyPolicy::DeleteDocumentSchema(
-    google::cloud::contentwarehouse::v1::DeleteDocumentSchemaRequest const&) {
+Idempotency DocumentSchemaServiceConnectionIdempotencyPolicy::DeleteDocumentSchema(google::cloud::contentwarehouse::v1::DeleteDocumentSchemaRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency
-DocumentSchemaServiceConnectionIdempotencyPolicy::ListDocumentSchemas(
-    google::cloud::contentwarehouse::v1::
-        ListDocumentSchemasRequest) {  // NOLINT
+Idempotency DocumentSchemaServiceConnectionIdempotencyPolicy::ListDocumentSchemas(google::cloud::contentwarehouse::v1::ListDocumentSchemasRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency DocumentSchemaServiceConnectionIdempotencyPolicy::GetOperation(
-    google::longrunning::GetOperationRequest const&) {
+Idempotency DocumentSchemaServiceConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<DocumentSchemaServiceConnectionIdempotencyPolicy>
-MakeDefaultDocumentSchemaServiceConnectionIdempotencyPolicy() {
+    MakeDefaultDocumentSchemaServiceConnectionIdempotencyPolicy() {
   return std::make_unique<DocumentSchemaServiceConnectionIdempotencyPolicy>();
 }
 

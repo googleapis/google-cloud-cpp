@@ -42,8 +42,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockVpcAccessServiceConnection
-    : public vpcaccess_v1::VpcAccessServiceConnection {
+class MockVpcAccessServiceConnection : public vpcaccess_v1::VpcAccessServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
@@ -52,15 +51,12 @@ class MockVpcAccessServiceConnection
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// CreateConnector(Matcher<google::cloud::vpcaccess::v1::CreateConnectorRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, CreateConnector(Matcher<google::cloud::vpcaccess::v1::CreateConnectorRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::vpcaccess::v1::Connector>>,
-      CreateConnector,
-      (google::cloud::vpcaccess::v1::CreateConnectorRequest const& request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::vpcaccess::v1::Connector>>,
+  CreateConnector,
+  (google::cloud::vpcaccess::v1::CreateConnectorRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -68,48 +64,41 @@ class MockVpcAccessServiceConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, CreateConnector(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, CreateConnector,
-      (NoAwaitTag,
-       google::cloud::vpcaccess::v1::CreateConnectorRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  CreateConnector, (NoAwaitTag,
+    google::cloud::vpcaccess::v1::CreateConnectorRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateConnector(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, CreateConnector(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::vpcaccess::v1::Connector>>,
-              CreateConnector,
-              (google::longrunning::Operation const& operation), (override));
+  CreateConnector, (
+    google::longrunning::Operation const& operation), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::vpcaccess::v1::Connector>, GetConnector,
-      (google::cloud::vpcaccess::v1::GetConnectorRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::vpcaccess::v1::Connector>,
+  GetConnector,
+  (google::cloud::vpcaccess::v1::GetConnectorRequest const& request), (override));
 
   MOCK_METHOD((StreamRange<google::cloud::vpcaccess::v1::Connector>),
-              ListConnectors,
-              (google::cloud::vpcaccess::v1::ListConnectorsRequest request),
-              (override));
+  ListConnectors,
+  (google::cloud::vpcaccess::v1::ListConnectorsRequest request), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteConnector(Matcher<google::cloud::vpcaccess::v1::DeleteConnectorRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteConnector(Matcher<google::cloud::vpcaccess::v1::DeleteConnectorRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::vpcaccess::v1::OperationMetadata>>,
-      DeleteConnector,
-      (google::cloud::vpcaccess::v1::DeleteConnectorRequest const& request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::vpcaccess::v1::OperationMetadata>>,
+  DeleteConnector,
+  (google::cloud::vpcaccess::v1::DeleteConnectorRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -117,34 +106,33 @@ class MockVpcAccessServiceConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, DeleteConnector(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, DeleteConnector,
-      (NoAwaitTag,
-       google::cloud::vpcaccess::v1::DeleteConnectorRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  DeleteConnector, (NoAwaitTag,
+    google::cloud::vpcaccess::v1::DeleteConnectorRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteConnector(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteConnector(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::vpcaccess::v1::OperationMetadata>>,
-              DeleteConnector,
-              (google::longrunning::Operation const& operation), (override));
+  DeleteConnector, (
+    google::longrunning::Operation const& operation), (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::location::Location>), ListLocations,
-              (google::cloud::location::ListLocationsRequest request),
-              (override));
+  MOCK_METHOD((StreamRange<google::cloud::location::Location>),
+  ListLocations,
+  (google::cloud::location::ListLocationsRequest request), (override));
 
-  MOCK_METHOD((StreamRange<google::longrunning::Operation>), ListOperations,
-              (google::longrunning::ListOperationsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::longrunning::Operation>),
+  ListOperations,
+  (google::longrunning::ListOperationsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
-              (google::longrunning::GetOperationRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  GetOperation,
+  (google::longrunning::GetOperationRequest const& request), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

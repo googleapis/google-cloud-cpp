@@ -35,36 +35,35 @@ class EngineServiceConnectionIdempotencyPolicy {
   virtual ~EngineServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<EngineServiceConnectionIdempotencyPolicy> clone()
-      const;
+  virtual std::unique_ptr<EngineServiceConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency CreateEngine(
-      google::cloud::discoveryengine::v1::CreateEngineRequest const& request);
+  virtual google::cloud::Idempotency
+  CreateEngine(google::cloud::discoveryengine::v1::CreateEngineRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteEngine(
-      google::cloud::discoveryengine::v1::DeleteEngineRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteEngine(google::cloud::discoveryengine::v1::DeleteEngineRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateEngine(
-      google::cloud::discoveryengine::v1::UpdateEngineRequest const& request);
+  virtual google::cloud::Idempotency
+  UpdateEngine(google::cloud::discoveryengine::v1::UpdateEngineRequest const& request);
 
-  virtual google::cloud::Idempotency GetEngine(
-      google::cloud::discoveryengine::v1::GetEngineRequest const& request);
+  virtual google::cloud::Idempotency
+  GetEngine(google::cloud::discoveryengine::v1::GetEngineRequest const& request);
 
-  virtual google::cloud::Idempotency ListEngines(
-      google::cloud::discoveryengine::v1::ListEnginesRequest request);
+  virtual google::cloud::Idempotency
+  ListEngines(google::cloud::discoveryengine::v1::ListEnginesRequest request);
 
-  virtual google::cloud::Idempotency ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual google::cloud::Idempotency
+  ListOperations(google::longrunning::ListOperationsRequest request);
 
-  virtual google::cloud::Idempotency GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 
-  virtual google::cloud::Idempotency CancelOperation(
-      google::longrunning::CancelOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  CancelOperation(google::longrunning::CancelOperationRequest const& request);
 };
 
 std::unique_ptr<EngineServiceConnectionIdempotencyPolicy>
-MakeDefaultEngineServiceConnectionIdempotencyPolicy();
+    MakeDefaultEngineServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace discoveryengine_v1

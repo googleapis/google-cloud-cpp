@@ -28,14 +28,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ProjectServiceClient::ProjectServiceClient(
     std::shared_ptr<ProjectServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 ProjectServiceClient::~ProjectServiceClient() = default;
 
 StatusOr<google::cloud::bigquery::v2::GetServiceAccountResponse>
-ProjectServiceClient::GetServiceAccount(
-    google::cloud::bigquery::v2::GetServiceAccountRequest const& request,
-    Options opts) {
+ProjectServiceClient::GetServiceAccount(google::cloud::bigquery::v2::GetServiceAccountRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetServiceAccount(request);
 }

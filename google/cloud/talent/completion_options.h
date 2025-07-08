@@ -31,8 +31,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// @deprecated Use talent_v4::CompletionBackoffPolicyOption directly.
 using ::google::cloud::talent_v4::CompletionBackoffPolicyOption;
 
-/// @deprecated Use talent_v4::CompletionConnectionIdempotencyPolicyOption
-/// directly.
+/// @deprecated Use talent_v4::CompletionConnectionIdempotencyPolicyOption directly.
 using ::google::cloud::talent_v4::CompletionConnectionIdempotencyPolicyOption;
 
 /// @deprecated Use talent_v4::CompletionPolicyOptionList directly.

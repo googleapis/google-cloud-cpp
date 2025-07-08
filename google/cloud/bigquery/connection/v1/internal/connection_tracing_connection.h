@@ -36,42 +36,33 @@ class ConnectionServiceTracingConnection
   ~ConnectionServiceTracingConnection() override = default;
 
   explicit ConnectionServiceTracingConnection(
-      std::shared_ptr<bigquery_connection_v1::ConnectionServiceConnection>
-          child);
+    std::shared_ptr<bigquery_connection_v1::ConnectionServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
   StatusOr<google::cloud::bigquery::connection::v1::Connection>
-  CreateConnection(
-      google::cloud::bigquery::connection::v1::CreateConnectionRequest const&
-          request) override;
-
-  StatusOr<google::cloud::bigquery::connection::v1::Connection> GetConnection(
-      google::cloud::bigquery::connection::v1::GetConnectionRequest const&
-          request) override;
-
-  StreamRange<google::cloud::bigquery::connection::v1::Connection>
-  ListConnections(
-      google::cloud::bigquery::connection::v1::ListConnectionsRequest request)
-      override;
+  CreateConnection(google::cloud::bigquery::connection::v1::CreateConnectionRequest const& request) override;
 
   StatusOr<google::cloud::bigquery::connection::v1::Connection>
-  UpdateConnection(
-      google::cloud::bigquery::connection::v1::UpdateConnectionRequest const&
-          request) override;
+  GetConnection(google::cloud::bigquery::connection::v1::GetConnectionRequest const& request) override;
 
-  Status DeleteConnection(
-      google::cloud::bigquery::connection::v1::DeleteConnectionRequest const&
-          request) override;
+  StreamRange<google::cloud::bigquery::connection::v1::Connection>
+  ListConnections(google::cloud::bigquery::connection::v1::ListConnectionsRequest request) override;
 
-  StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request) override;
+  StatusOr<google::cloud::bigquery::connection::v1::Connection>
+  UpdateConnection(google::cloud::bigquery::connection::v1::UpdateConnectionRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request) override;
+  Status
+  DeleteConnection(google::cloud::bigquery::connection::v1::DeleteConnectionRequest const& request) override;
 
-  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request) override;
+  StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) override;
+
+  StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) override;
+
+  StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) override;
 
  private:
   std::shared_ptr<bigquery_connection_v1::ConnectionServiceConnection> child_;

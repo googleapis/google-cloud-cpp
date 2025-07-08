@@ -42,8 +42,8 @@ future<StatusOr<google::cloud::aiplatform::v1::Tensorboard>>
 TensorboardServiceConnection::CreateTensorboard(
     google::cloud::aiplatform::v1::CreateTensorboardRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::aiplatform::v1::Tensorboard>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::aiplatform::v1::Tensorboard>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -51,15 +51,15 @@ TensorboardServiceConnection::CreateTensorboard(
     NoAwaitTag,
     google::cloud::aiplatform::v1::CreateTensorboardRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::Tensorboard>>
 TensorboardServiceConnection::CreateTensorboard(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::aiplatform::v1::Tensorboard>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::aiplatform::v1::Tensorboard>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::aiplatform::v1::Tensorboard>
@@ -72,8 +72,8 @@ future<StatusOr<google::cloud::aiplatform::v1::Tensorboard>>
 TensorboardServiceConnection::UpdateTensorboard(
     google::cloud::aiplatform::v1::UpdateTensorboardRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::aiplatform::v1::Tensorboard>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::aiplatform::v1::Tensorboard>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -81,21 +81,19 @@ TensorboardServiceConnection::UpdateTensorboard(
     NoAwaitTag,
     google::cloud::aiplatform::v1::UpdateTensorboardRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::Tensorboard>>
 TensorboardServiceConnection::UpdateTensorboard(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::aiplatform::v1::Tensorboard>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::aiplatform::v1::Tensorboard>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StreamRange<google::cloud::aiplatform::v1::Tensorboard>
-TensorboardServiceConnection::ListTensorboards(
-    google::cloud::aiplatform::v1::
-        ListTensorboardsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::aiplatform::v1::Tensorboard> TensorboardServiceConnection::ListTensorboards(
+    google::cloud::aiplatform::v1::ListTensorboardsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::aiplatform::v1::Tensorboard>>();
 }
@@ -104,8 +102,8 @@ future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 TensorboardServiceConnection::DeleteTensorboard(
     google::cloud::aiplatform::v1::DeleteTensorboardRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -113,15 +111,15 @@ TensorboardServiceConnection::DeleteTensorboard(
     NoAwaitTag,
     google::cloud::aiplatform::v1::DeleteTensorboardRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 TensorboardServiceConnection::DeleteTensorboard(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::aiplatform::v1::ReadTensorboardUsageResponse>
@@ -154,10 +152,8 @@ TensorboardServiceConnection::UpdateTensorboardExperiment(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::aiplatform::v1::TensorboardExperiment>
-TensorboardServiceConnection::ListTensorboardExperiments(
-    google::cloud::aiplatform::v1::
-        ListTensorboardExperimentsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::aiplatform::v1::TensorboardExperiment> TensorboardServiceConnection::ListTensorboardExperiments(
+    google::cloud::aiplatform::v1::ListTensorboardExperimentsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::aiplatform::v1::TensorboardExperiment>>();
 }
@@ -166,8 +162,8 @@ future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 TensorboardServiceConnection::DeleteTensorboardExperiment(
     google::cloud::aiplatform::v1::DeleteTensorboardExperimentRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -175,15 +171,15 @@ TensorboardServiceConnection::DeleteTensorboardExperiment(
     NoAwaitTag,
     google::cloud::aiplatform::v1::DeleteTensorboardExperimentRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 TensorboardServiceConnection::DeleteTensorboardExperiment(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::aiplatform::v1::TensorboardRun>
@@ -210,10 +206,8 @@ TensorboardServiceConnection::UpdateTensorboardRun(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::aiplatform::v1::TensorboardRun>
-TensorboardServiceConnection::ListTensorboardRuns(
-    google::cloud::aiplatform::v1::
-        ListTensorboardRunsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::aiplatform::v1::TensorboardRun> TensorboardServiceConnection::ListTensorboardRuns(
+    google::cloud::aiplatform::v1::ListTensorboardRunsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::aiplatform::v1::TensorboardRun>>();
 }
@@ -222,8 +216,8 @@ future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 TensorboardServiceConnection::DeleteTensorboardRun(
     google::cloud::aiplatform::v1::DeleteTensorboardRunRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -231,22 +225,20 @@ TensorboardServiceConnection::DeleteTensorboardRun(
     NoAwaitTag,
     google::cloud::aiplatform::v1::DeleteTensorboardRunRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 TensorboardServiceConnection::DeleteTensorboardRun(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<
-    google::cloud::aiplatform::v1::BatchCreateTensorboardTimeSeriesResponse>
+StatusOr<google::cloud::aiplatform::v1::BatchCreateTensorboardTimeSeriesResponse>
 TensorboardServiceConnection::BatchCreateTensorboardTimeSeries(
-    google::cloud::aiplatform::v1::
-        BatchCreateTensorboardTimeSeriesRequest const&) {
+    google::cloud::aiplatform::v1::BatchCreateTensorboardTimeSeriesRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
@@ -268,10 +260,8 @@ TensorboardServiceConnection::UpdateTensorboardTimeSeries(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::aiplatform::v1::TensorboardTimeSeries>
-TensorboardServiceConnection::ListTensorboardTimeSeries(
-    google::cloud::aiplatform::v1::
-        ListTensorboardTimeSeriesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::aiplatform::v1::TensorboardTimeSeries> TensorboardServiceConnection::ListTensorboardTimeSeries(
+    google::cloud::aiplatform::v1::ListTensorboardTimeSeriesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::aiplatform::v1::TensorboardTimeSeries>>();
 }
@@ -280,8 +270,8 @@ future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 TensorboardServiceConnection::DeleteTensorboardTimeSeries(
     google::cloud::aiplatform::v1::DeleteTensorboardTimeSeriesRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -289,48 +279,42 @@ TensorboardServiceConnection::DeleteTensorboardTimeSeries(
     NoAwaitTag,
     google::cloud::aiplatform::v1::DeleteTensorboardTimeSeriesRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 TensorboardServiceConnection::DeleteTensorboardTimeSeries(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<
-    google::cloud::aiplatform::v1::BatchReadTensorboardTimeSeriesDataResponse>
+StatusOr<google::cloud::aiplatform::v1::BatchReadTensorboardTimeSeriesDataResponse>
 TensorboardServiceConnection::BatchReadTensorboardTimeSeriesData(
-    google::cloud::aiplatform::v1::
-        BatchReadTensorboardTimeSeriesDataRequest const&) {
+    google::cloud::aiplatform::v1::BatchReadTensorboardTimeSeriesDataRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::aiplatform::v1::ReadTensorboardTimeSeriesDataResponse>
 TensorboardServiceConnection::ReadTensorboardTimeSeriesData(
-    google::cloud::aiplatform::v1::
-        ReadTensorboardTimeSeriesDataRequest const&) {
+    google::cloud::aiplatform::v1::ReadTensorboardTimeSeriesDataRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::aiplatform::v1::ReadTensorboardBlobDataResponse>
-TensorboardServiceConnection::ReadTensorboardBlobData(
+StreamRange<google::cloud::aiplatform::v1::ReadTensorboardBlobDataResponse> TensorboardServiceConnection::ReadTensorboardBlobData(
     google::cloud::aiplatform::v1::ReadTensorboardBlobDataRequest const&) {
   return google::cloud::internal::MakeStreamRange<
       google::cloud::aiplatform::v1::ReadTensorboardBlobDataResponse>(
-      []() -> absl::variant<
-               Status,
-               google::cloud::aiplatform::v1::ReadTensorboardBlobDataResponse> {
-        return Status(StatusCode::kUnimplemented, "not implemented");
-      });
+      []() -> absl::variant<Status,
+      google::cloud::aiplatform::v1::ReadTensorboardBlobDataResponse>{
+        return Status(StatusCode::kUnimplemented, "not implemented");}
+      );
 }
 
 StatusOr<google::cloud::aiplatform::v1::WriteTensorboardExperimentDataResponse>
 TensorboardServiceConnection::WriteTensorboardExperimentData(
-    google::cloud::aiplatform::v1::
-        WriteTensorboardExperimentDataRequest const&) {
+    google::cloud::aiplatform::v1::WriteTensorboardExperimentDataRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
@@ -340,18 +324,14 @@ TensorboardServiceConnection::WriteTensorboardRunData(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::aiplatform::v1::TimeSeriesDataPoint>
-TensorboardServiceConnection::ExportTensorboardTimeSeriesData(
-    google::cloud::aiplatform::v1::
-        ExportTensorboardTimeSeriesDataRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::aiplatform::v1::TimeSeriesDataPoint> TensorboardServiceConnection::ExportTensorboardTimeSeriesData(
+    google::cloud::aiplatform::v1::ExportTensorboardTimeSeriesDataRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::aiplatform::v1::TimeSeriesDataPoint>>();
 }
 
-StreamRange<google::cloud::location::Location>
-TensorboardServiceConnection::ListLocations(
-    google::cloud::location::
-        ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::location::Location> TensorboardServiceConnection::ListLocations(
+    google::cloud::location::ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::location::Location>>();
 }
@@ -362,12 +342,14 @@ TensorboardServiceConnection::GetLocation(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::iam::v1::Policy> TensorboardServiceConnection::SetIamPolicy(
+StatusOr<google::iam::v1::Policy>
+TensorboardServiceConnection::SetIamPolicy(
     google::iam::v1::SetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::iam::v1::Policy> TensorboardServiceConnection::GetIamPolicy(
+StatusOr<google::iam::v1::Policy>
+TensorboardServiceConnection::GetIamPolicy(
     google::iam::v1::GetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -378,10 +360,8 @@ TensorboardServiceConnection::TestIamPermissions(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::longrunning::Operation>
-TensorboardServiceConnection::ListOperations(
-    google::longrunning::
-        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::longrunning::Operation> TensorboardServiceConnection::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }
@@ -392,12 +372,14 @@ TensorboardServiceConnection::GetOperation(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status TensorboardServiceConnection::DeleteOperation(
+Status
+TensorboardServiceConnection::DeleteOperation(
     google::longrunning::DeleteOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status TensorboardServiceConnection::CancelOperation(
+Status
+TensorboardServiceConnection::CancelOperation(
     google::longrunning::CancelOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -411,19 +393,17 @@ TensorboardServiceConnection::WaitOperation(
 std::shared_ptr<TensorboardServiceConnection> MakeTensorboardServiceConnection(
     std::string const& location, Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 TensorboardServicePolicyOptionList>(options,
-                                                                     __func__);
+      UnifiedCredentialsOptionList,
+      TensorboardServicePolicyOptionList>(options, __func__);
   options = aiplatform_v1_internal::TensorboardServiceDefaultOptions(
       location, std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = aiplatform_v1_internal::CreateDefaultTensorboardServiceStub(
-      std::move(auth), options);
+    std::move(auth), options);
   return aiplatform_v1_internal::MakeTensorboardServiceTracingConnection(
-      std::make_shared<
-          aiplatform_v1_internal::TensorboardServiceConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options)));
+      std::make_shared<aiplatform_v1_internal::TensorboardServiceConnectionImpl>(
+      std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

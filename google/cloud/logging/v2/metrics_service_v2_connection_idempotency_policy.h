@@ -35,36 +35,35 @@ class MetricsServiceV2ConnectionIdempotencyPolicy {
   virtual ~MetricsServiceV2ConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<MetricsServiceV2ConnectionIdempotencyPolicy> clone()
-      const;
+  virtual std::unique_ptr<MetricsServiceV2ConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency ListLogMetrics(
-      google::logging::v2::ListLogMetricsRequest request);
+  virtual google::cloud::Idempotency
+  ListLogMetrics(google::logging::v2::ListLogMetricsRequest request);
 
-  virtual google::cloud::Idempotency GetLogMetric(
-      google::logging::v2::GetLogMetricRequest const& request);
+  virtual google::cloud::Idempotency
+  GetLogMetric(google::logging::v2::GetLogMetricRequest const& request);
 
-  virtual google::cloud::Idempotency CreateLogMetric(
-      google::logging::v2::CreateLogMetricRequest const& request);
+  virtual google::cloud::Idempotency
+  CreateLogMetric(google::logging::v2::CreateLogMetricRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateLogMetric(
-      google::logging::v2::UpdateLogMetricRequest const& request);
+  virtual google::cloud::Idempotency
+  UpdateLogMetric(google::logging::v2::UpdateLogMetricRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteLogMetric(
-      google::logging::v2::DeleteLogMetricRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteLogMetric(google::logging::v2::DeleteLogMetricRequest const& request);
 
-  virtual google::cloud::Idempotency ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual google::cloud::Idempotency
+  ListOperations(google::longrunning::ListOperationsRequest request);
 
-  virtual google::cloud::Idempotency GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 
-  virtual google::cloud::Idempotency CancelOperation(
-      google::longrunning::CancelOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  CancelOperation(google::longrunning::CancelOperationRequest const& request);
 };
 
 std::unique_ptr<MetricsServiceV2ConnectionIdempotencyPolicy>
-MakeDefaultMetricsServiceV2ConnectionIdempotencyPolicy();
+    MakeDefaultMetricsServiceV2ConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace logging_v2

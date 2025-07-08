@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_DATAPOLICIES_V1_INTERNAL_DATA_POLICY_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_DATAPOLICIES_V1_INTERNAL_DATA_POLICY_CONNECTION_IMPL_H
 
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/bigquery/datapolicies/v1/data_policy_connection.h"
 #include "google/cloud/bigquery/datapolicies/v1/data_policy_connection_idempotency_policy.h"
 #include "google/cloud/bigquery/datapolicies/v1/data_policy_options.h"
 #include "google/cloud/bigquery/datapolicies/v1/internal/data_policy_retry_traits.h"
 #include "google/cloud/bigquery/datapolicies/v1/internal/data_policy_stub.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -43,54 +43,42 @@ class DataPolicyServiceConnectionImpl
   ~DataPolicyServiceConnectionImpl() override = default;
 
   DataPolicyServiceConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<bigquery_datapolicies_v1_internal::DataPolicyServiceStub>
-          stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<bigquery_datapolicies_v1_internal::DataPolicyServiceStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
   StatusOr<google::cloud::bigquery::datapolicies::v1::DataPolicy>
-  CreateDataPolicy(
-      google::cloud::bigquery::datapolicies::v1::CreateDataPolicyRequest const&
-          request) override;
+  CreateDataPolicy(google::cloud::bigquery::datapolicies::v1::CreateDataPolicyRequest const& request) override;
 
   StatusOr<google::cloud::bigquery::datapolicies::v1::DataPolicy>
-  UpdateDataPolicy(
-      google::cloud::bigquery::datapolicies::v1::UpdateDataPolicyRequest const&
-          request) override;
+  UpdateDataPolicy(google::cloud::bigquery::datapolicies::v1::UpdateDataPolicyRequest const& request) override;
 
   StatusOr<google::cloud::bigquery::datapolicies::v1::DataPolicy>
-  RenameDataPolicy(
-      google::cloud::bigquery::datapolicies::v1::RenameDataPolicyRequest const&
-          request) override;
+  RenameDataPolicy(google::cloud::bigquery::datapolicies::v1::RenameDataPolicyRequest const& request) override;
 
-  Status DeleteDataPolicy(
-      google::cloud::bigquery::datapolicies::v1::DeleteDataPolicyRequest const&
-          request) override;
+  Status
+  DeleteDataPolicy(google::cloud::bigquery::datapolicies::v1::DeleteDataPolicyRequest const& request) override;
 
-  StatusOr<google::cloud::bigquery::datapolicies::v1::DataPolicy> GetDataPolicy(
-      google::cloud::bigquery::datapolicies::v1::GetDataPolicyRequest const&
-          request) override;
+  StatusOr<google::cloud::bigquery::datapolicies::v1::DataPolicy>
+  GetDataPolicy(google::cloud::bigquery::datapolicies::v1::GetDataPolicyRequest const& request) override;
 
   StreamRange<google::cloud::bigquery::datapolicies::v1::DataPolicy>
-  ListDataPolicies(
-      google::cloud::bigquery::datapolicies::v1::ListDataPoliciesRequest
-          request) override;
+  ListDataPolicies(google::cloud::bigquery::datapolicies::v1::ListDataPoliciesRequest request) override;
 
-  StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request) override;
+  StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<bigquery_datapolicies_v1_internal::DataPolicyServiceStub>
-      stub_;
+  std::shared_ptr<bigquery_datapolicies_v1_internal::DataPolicyServiceStub> stub_;
   Options options_;
 };
 

@@ -19,14 +19,14 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_WEBSECURITYSCANNER_V1_WEB_SECURITY_SCANNER_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_WEBSECURITYSCANNER_V1_WEB_SECURITY_SCANNER_CONNECTION_H
 
-#include "google/cloud/websecurityscanner/v1/internal/web_security_scanner_retry_traits.h"
-#include "google/cloud/websecurityscanner/v1/web_security_scanner_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
+#include "google/cloud/websecurityscanner/v1/internal/web_security_scanner_retry_traits.h"
+#include "google/cloud/websecurityscanner/v1/web_security_scanner_connection_idempotency_policy.h"
 #include <google/cloud/websecurityscanner/v1/web_security_scanner.pb.h>
 #include <memory>
 
@@ -52,8 +52,7 @@ class WebSecurityScannerRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class WebSecurityScannerLimitedErrorCountRetryPolicy
-    : public WebSecurityScannerRetryPolicy {
+class WebSecurityScannerLimitedErrorCountRetryPolicy : public WebSecurityScannerRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -63,16 +62,14 @@ class WebSecurityScannerLimitedErrorCountRetryPolicy
    *     @p maximum_failures == 0.
    */
   explicit WebSecurityScannerLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   WebSecurityScannerLimitedErrorCountRetryPolicy(
       WebSecurityScannerLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : WebSecurityScannerLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {
-  }
+    : WebSecurityScannerLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   WebSecurityScannerLimitedErrorCountRetryPolicy(
       WebSecurityScannerLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : WebSecurityScannerLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {
-  }
+    : WebSecurityScannerLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -92,9 +89,7 @@ class WebSecurityScannerLimitedErrorCountRetryPolicy
   using BaseType = WebSecurityScannerRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      websecurityscanner_v1_internal::WebSecurityScannerRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<websecurityscanner_v1_internal::WebSecurityScannerRetryTraits> impl_;
 };
 
 /**
@@ -107,8 +102,7 @@ class WebSecurityScannerLimitedErrorCountRetryPolicy
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class WebSecurityScannerLimitedTimeRetryPolicy
-    : public WebSecurityScannerRetryPolicy {
+class WebSecurityScannerLimitedTimeRetryPolicy : public WebSecurityScannerRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -133,14 +127,12 @@ class WebSecurityScannerLimitedTimeRetryPolicy
   template <typename DurationRep, typename DurationPeriod>
   explicit WebSecurityScannerLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  WebSecurityScannerLimitedTimeRetryPolicy(
-      WebSecurityScannerLimitedTimeRetryPolicy&& rhs) noexcept
-      : WebSecurityScannerLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  WebSecurityScannerLimitedTimeRetryPolicy(
-      WebSecurityScannerLimitedTimeRetryPolicy const& rhs) noexcept
-      : WebSecurityScannerLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  WebSecurityScannerLimitedTimeRetryPolicy(WebSecurityScannerLimitedTimeRetryPolicy&& rhs) noexcept
+    : WebSecurityScannerLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  WebSecurityScannerLimitedTimeRetryPolicy(WebSecurityScannerLimitedTimeRetryPolicy const& rhs) noexcept
+    : WebSecurityScannerLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -162,23 +154,20 @@ class WebSecurityScannerLimitedTimeRetryPolicy
   using BaseType = WebSecurityScannerRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      websecurityscanner_v1_internal::WebSecurityScannerRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<websecurityscanner_v1_internal::WebSecurityScannerRetryTraits> impl_;
 };
 
 /**
  * The `WebSecurityScannerConnection` object for `WebSecurityScannerClient`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `WebSecurityScannerClient`. This allows users to inject custom
- * behavior (e.g., with a Google Mock object) when writing tests that use
- * objects of type `WebSecurityScannerClient`.
+ * sets in `WebSecurityScannerClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `WebSecurityScannerClient`.
  *
  * To create a concrete instance, see `MakeWebSecurityScannerConnection()`.
  *
- * For mocking, see
- * `websecurityscanner_v1_mocks::MockWebSecurityScannerConnection`.
+ * For mocking, see `websecurityscanner_v1_mocks::MockWebSecurityScannerConnection`.
  */
 class WebSecurityScannerConnection {
  public:
@@ -187,71 +176,54 @@ class WebSecurityScannerConnection {
   virtual Options options() { return Options{}; }
 
   virtual StatusOr<google::cloud::websecurityscanner::v1::ScanConfig>
-  CreateScanConfig(
-      google::cloud::websecurityscanner::v1::CreateScanConfigRequest const&
-          request);
+  CreateScanConfig(google::cloud::websecurityscanner::v1::CreateScanConfigRequest const& request);
 
-  virtual Status DeleteScanConfig(
-      google::cloud::websecurityscanner::v1::DeleteScanConfigRequest const&
-          request);
+  virtual Status
+  DeleteScanConfig(google::cloud::websecurityscanner::v1::DeleteScanConfigRequest const& request);
 
   virtual StatusOr<google::cloud::websecurityscanner::v1::ScanConfig>
-  GetScanConfig(
-      google::cloud::websecurityscanner::v1::GetScanConfigRequest const&
-          request);
+  GetScanConfig(google::cloud::websecurityscanner::v1::GetScanConfigRequest const& request);
 
   virtual StreamRange<google::cloud::websecurityscanner::v1::ScanConfig>
-  ListScanConfigs(
-      google::cloud::websecurityscanner::v1::ListScanConfigsRequest request);
+  ListScanConfigs(google::cloud::websecurityscanner::v1::ListScanConfigsRequest request);
 
   virtual StatusOr<google::cloud::websecurityscanner::v1::ScanConfig>
-  UpdateScanConfig(
-      google::cloud::websecurityscanner::v1::UpdateScanConfigRequest const&
-          request);
+  UpdateScanConfig(google::cloud::websecurityscanner::v1::UpdateScanConfigRequest const& request);
 
-  virtual StatusOr<google::cloud::websecurityscanner::v1::ScanRun> StartScanRun(
-      google::cloud::websecurityscanner::v1::StartScanRunRequest const&
-          request);
+  virtual StatusOr<google::cloud::websecurityscanner::v1::ScanRun>
+  StartScanRun(google::cloud::websecurityscanner::v1::StartScanRunRequest const& request);
 
-  virtual StatusOr<google::cloud::websecurityscanner::v1::ScanRun> GetScanRun(
-      google::cloud::websecurityscanner::v1::GetScanRunRequest const& request);
+  virtual StatusOr<google::cloud::websecurityscanner::v1::ScanRun>
+  GetScanRun(google::cloud::websecurityscanner::v1::GetScanRunRequest const& request);
 
   virtual StreamRange<google::cloud::websecurityscanner::v1::ScanRun>
-  ListScanRuns(
-      google::cloud::websecurityscanner::v1::ListScanRunsRequest request);
+  ListScanRuns(google::cloud::websecurityscanner::v1::ListScanRunsRequest request);
 
-  virtual StatusOr<google::cloud::websecurityscanner::v1::ScanRun> StopScanRun(
-      google::cloud::websecurityscanner::v1::StopScanRunRequest const& request);
+  virtual StatusOr<google::cloud::websecurityscanner::v1::ScanRun>
+  StopScanRun(google::cloud::websecurityscanner::v1::StopScanRunRequest const& request);
 
   virtual StreamRange<google::cloud::websecurityscanner::v1::CrawledUrl>
-  ListCrawledUrls(
-      google::cloud::websecurityscanner::v1::ListCrawledUrlsRequest request);
+  ListCrawledUrls(google::cloud::websecurityscanner::v1::ListCrawledUrlsRequest request);
 
-  virtual StatusOr<google::cloud::websecurityscanner::v1::Finding> GetFinding(
-      google::cloud::websecurityscanner::v1::GetFindingRequest const& request);
+  virtual StatusOr<google::cloud::websecurityscanner::v1::Finding>
+  GetFinding(google::cloud::websecurityscanner::v1::GetFindingRequest const& request);
 
   virtual StreamRange<google::cloud::websecurityscanner::v1::Finding>
-  ListFindings(
-      google::cloud::websecurityscanner::v1::ListFindingsRequest request);
+  ListFindings(google::cloud::websecurityscanner::v1::ListFindingsRequest request);
 
-  virtual StatusOr<
-      google::cloud::websecurityscanner::v1::ListFindingTypeStatsResponse>
-  ListFindingTypeStats(
-      google::cloud::websecurityscanner::v1::ListFindingTypeStatsRequest const&
-          request);
+  virtual StatusOr<google::cloud::websecurityscanner::v1::ListFindingTypeStatsResponse>
+  ListFindingTypeStats(google::cloud::websecurityscanner::v1::ListFindingTypeStatsRequest const& request);
 };
 
 /**
- * A factory function to construct an object of type
- * `WebSecurityScannerConnection`.
+ * A factory function to construct an object of type `WebSecurityScannerConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of
- * WebSecurityScannerClient.
+ * should be passed as an argument to the constructor of WebSecurityScannerClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `WebSecurityScannerConnection`. Expected options are any of the
- * types in the following option lists:
+ * returned `WebSecurityScannerConnection`. Expected options are any of the types in
+ * the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
@@ -261,8 +233,8 @@ class WebSecurityScannerConnection {
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
- * @param options (optional) Configure the `WebSecurityScannerConnection`
- * created by this function.
+ * @param options (optional) Configure the `WebSecurityScannerConnection` created by
+ * this function.
  */
 std::shared_ptr<WebSecurityScannerConnection> MakeWebSecurityScannerConnection(
     Options options = {});

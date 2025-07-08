@@ -28,13 +28,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 DataMigrationServiceClient::DataMigrationServiceClient(
     std::shared_ptr<DataMigrationServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 DataMigrationServiceClient::~DataMigrationServiceClient() = default;
 
 StreamRange<google::cloud::clouddms::v1::MigrationJob>
-DataMigrationServiceClient::ListMigrationJobs(std::string const& parent,
-                                              Options opts) {
+DataMigrationServiceClient::ListMigrationJobs(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::clouddms::v1::ListMigrationJobsRequest request;
   request.set_parent(parent);
@@ -42,16 +41,13 @@ DataMigrationServiceClient::ListMigrationJobs(std::string const& parent,
 }
 
 StreamRange<google::cloud::clouddms::v1::MigrationJob>
-DataMigrationServiceClient::ListMigrationJobs(
-    google::cloud::clouddms::v1::ListMigrationJobsRequest request,
-    Options opts) {
+DataMigrationServiceClient::ListMigrationJobs(google::cloud::clouddms::v1::ListMigrationJobsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListMigrationJobs(std::move(request));
 }
 
 StatusOr<google::cloud::clouddms::v1::MigrationJob>
-DataMigrationServiceClient::GetMigrationJob(std::string const& name,
-                                            Options opts) {
+DataMigrationServiceClient::GetMigrationJob(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::clouddms::v1::GetMigrationJobRequest request;
   request.set_name(name);
@@ -59,18 +55,13 @@ DataMigrationServiceClient::GetMigrationJob(std::string const& name,
 }
 
 StatusOr<google::cloud::clouddms::v1::MigrationJob>
-DataMigrationServiceClient::GetMigrationJob(
-    google::cloud::clouddms::v1::GetMigrationJobRequest const& request,
-    Options opts) {
+DataMigrationServiceClient::GetMigrationJob(google::cloud::clouddms::v1::GetMigrationJobRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetMigrationJob(request);
 }
 
 future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
-DataMigrationServiceClient::CreateMigrationJob(
-    std::string const& parent,
-    google::cloud::clouddms::v1::MigrationJob const& migration_job,
-    std::string const& migration_job_id, Options opts) {
+DataMigrationServiceClient::CreateMigrationJob(std::string const& parent, google::cloud::clouddms::v1::MigrationJob const& migration_job, std::string const& migration_job_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::clouddms::v1::CreateMigrationJobRequest request;
   request.set_parent(parent);
@@ -80,10 +71,7 @@ DataMigrationServiceClient::CreateMigrationJob(
 }
 
 StatusOr<google::longrunning::Operation>
-DataMigrationServiceClient::CreateMigrationJob(
-    NoAwaitTag, std::string const& parent,
-    google::cloud::clouddms::v1::MigrationJob const& migration_job,
-    std::string const& migration_job_id, Options opts) {
+DataMigrationServiceClient::CreateMigrationJob(NoAwaitTag, std::string const& parent, google::cloud::clouddms::v1::MigrationJob const& migration_job, std::string const& migration_job_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::clouddms::v1::CreateMigrationJobRequest request;
   request.set_parent(parent);
@@ -93,33 +81,25 @@ DataMigrationServiceClient::CreateMigrationJob(
 }
 
 future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
-DataMigrationServiceClient::CreateMigrationJob(
-    google::cloud::clouddms::v1::CreateMigrationJobRequest const& request,
-    Options opts) {
+DataMigrationServiceClient::CreateMigrationJob(google::cloud::clouddms::v1::CreateMigrationJobRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateMigrationJob(request);
 }
 
 StatusOr<google::longrunning::Operation>
-DataMigrationServiceClient::CreateMigrationJob(
-    NoAwaitTag,
-    google::cloud::clouddms::v1::CreateMigrationJobRequest const& request,
-    Options opts) {
+DataMigrationServiceClient::CreateMigrationJob(NoAwaitTag, google::cloud::clouddms::v1::CreateMigrationJobRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateMigrationJob(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
-DataMigrationServiceClient::CreateMigrationJob(
-    google::longrunning::Operation const& operation, Options opts) {
+DataMigrationServiceClient::CreateMigrationJob(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateMigrationJob(operation);
 }
 
 future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
-DataMigrationServiceClient::UpdateMigrationJob(
-    google::cloud::clouddms::v1::MigrationJob const& migration_job,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+DataMigrationServiceClient::UpdateMigrationJob(google::cloud::clouddms::v1::MigrationJob const& migration_job, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::clouddms::v1::UpdateMigrationJobRequest request;
   *request.mutable_migration_job() = migration_job;
@@ -128,9 +108,7 @@ DataMigrationServiceClient::UpdateMigrationJob(
 }
 
 StatusOr<google::longrunning::Operation>
-DataMigrationServiceClient::UpdateMigrationJob(
-    NoAwaitTag, google::cloud::clouddms::v1::MigrationJob const& migration_job,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+DataMigrationServiceClient::UpdateMigrationJob(NoAwaitTag, google::cloud::clouddms::v1::MigrationJob const& migration_job, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::clouddms::v1::UpdateMigrationJobRequest request;
   *request.mutable_migration_job() = migration_job;
@@ -139,32 +117,25 @@ DataMigrationServiceClient::UpdateMigrationJob(
 }
 
 future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
-DataMigrationServiceClient::UpdateMigrationJob(
-    google::cloud::clouddms::v1::UpdateMigrationJobRequest const& request,
-    Options opts) {
+DataMigrationServiceClient::UpdateMigrationJob(google::cloud::clouddms::v1::UpdateMigrationJobRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateMigrationJob(request);
 }
 
 StatusOr<google::longrunning::Operation>
-DataMigrationServiceClient::UpdateMigrationJob(
-    NoAwaitTag,
-    google::cloud::clouddms::v1::UpdateMigrationJobRequest const& request,
-    Options opts) {
+DataMigrationServiceClient::UpdateMigrationJob(NoAwaitTag, google::cloud::clouddms::v1::UpdateMigrationJobRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateMigrationJob(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
-DataMigrationServiceClient::UpdateMigrationJob(
-    google::longrunning::Operation const& operation, Options opts) {
+DataMigrationServiceClient::UpdateMigrationJob(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateMigrationJob(operation);
 }
 
 future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>
-DataMigrationServiceClient::DeleteMigrationJob(std::string const& name,
-                                               Options opts) {
+DataMigrationServiceClient::DeleteMigrationJob(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::clouddms::v1::DeleteMigrationJobRequest request;
   request.set_name(name);
@@ -172,9 +143,7 @@ DataMigrationServiceClient::DeleteMigrationJob(std::string const& name,
 }
 
 StatusOr<google::longrunning::Operation>
-DataMigrationServiceClient::DeleteMigrationJob(NoAwaitTag,
-                                               std::string const& name,
-                                               Options opts) {
+DataMigrationServiceClient::DeleteMigrationJob(NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::clouddms::v1::DeleteMigrationJobRequest request;
   request.set_name(name);
@@ -182,192 +151,145 @@ DataMigrationServiceClient::DeleteMigrationJob(NoAwaitTag,
 }
 
 future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>
-DataMigrationServiceClient::DeleteMigrationJob(
-    google::cloud::clouddms::v1::DeleteMigrationJobRequest const& request,
-    Options opts) {
+DataMigrationServiceClient::DeleteMigrationJob(google::cloud::clouddms::v1::DeleteMigrationJobRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteMigrationJob(request);
 }
 
 StatusOr<google::longrunning::Operation>
-DataMigrationServiceClient::DeleteMigrationJob(
-    NoAwaitTag,
-    google::cloud::clouddms::v1::DeleteMigrationJobRequest const& request,
-    Options opts) {
+DataMigrationServiceClient::DeleteMigrationJob(NoAwaitTag, google::cloud::clouddms::v1::DeleteMigrationJobRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteMigrationJob(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>
-DataMigrationServiceClient::DeleteMigrationJob(
-    google::longrunning::Operation const& operation, Options opts) {
+DataMigrationServiceClient::DeleteMigrationJob(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteMigrationJob(operation);
 }
 
 future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
-DataMigrationServiceClient::StartMigrationJob(
-    google::cloud::clouddms::v1::StartMigrationJobRequest const& request,
-    Options opts) {
+DataMigrationServiceClient::StartMigrationJob(google::cloud::clouddms::v1::StartMigrationJobRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->StartMigrationJob(request);
 }
 
 StatusOr<google::longrunning::Operation>
-DataMigrationServiceClient::StartMigrationJob(
-    NoAwaitTag,
-    google::cloud::clouddms::v1::StartMigrationJobRequest const& request,
-    Options opts) {
+DataMigrationServiceClient::StartMigrationJob(NoAwaitTag, google::cloud::clouddms::v1::StartMigrationJobRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->StartMigrationJob(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
-DataMigrationServiceClient::StartMigrationJob(
-    google::longrunning::Operation const& operation, Options opts) {
+DataMigrationServiceClient::StartMigrationJob(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->StartMigrationJob(operation);
 }
 
 future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
-DataMigrationServiceClient::StopMigrationJob(
-    google::cloud::clouddms::v1::StopMigrationJobRequest const& request,
-    Options opts) {
+DataMigrationServiceClient::StopMigrationJob(google::cloud::clouddms::v1::StopMigrationJobRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->StopMigrationJob(request);
 }
 
 StatusOr<google::longrunning::Operation>
-DataMigrationServiceClient::StopMigrationJob(
-    NoAwaitTag,
-    google::cloud::clouddms::v1::StopMigrationJobRequest const& request,
-    Options opts) {
+DataMigrationServiceClient::StopMigrationJob(NoAwaitTag, google::cloud::clouddms::v1::StopMigrationJobRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->StopMigrationJob(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
-DataMigrationServiceClient::StopMigrationJob(
-    google::longrunning::Operation const& operation, Options opts) {
+DataMigrationServiceClient::StopMigrationJob(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->StopMigrationJob(operation);
 }
 
 future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
-DataMigrationServiceClient::ResumeMigrationJob(
-    google::cloud::clouddms::v1::ResumeMigrationJobRequest const& request,
-    Options opts) {
+DataMigrationServiceClient::ResumeMigrationJob(google::cloud::clouddms::v1::ResumeMigrationJobRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ResumeMigrationJob(request);
 }
 
 StatusOr<google::longrunning::Operation>
-DataMigrationServiceClient::ResumeMigrationJob(
-    NoAwaitTag,
-    google::cloud::clouddms::v1::ResumeMigrationJobRequest const& request,
-    Options opts) {
+DataMigrationServiceClient::ResumeMigrationJob(NoAwaitTag, google::cloud::clouddms::v1::ResumeMigrationJobRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ResumeMigrationJob(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
-DataMigrationServiceClient::ResumeMigrationJob(
-    google::longrunning::Operation const& operation, Options opts) {
+DataMigrationServiceClient::ResumeMigrationJob(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ResumeMigrationJob(operation);
 }
 
 future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
-DataMigrationServiceClient::PromoteMigrationJob(
-    google::cloud::clouddms::v1::PromoteMigrationJobRequest const& request,
-    Options opts) {
+DataMigrationServiceClient::PromoteMigrationJob(google::cloud::clouddms::v1::PromoteMigrationJobRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PromoteMigrationJob(request);
 }
 
 StatusOr<google::longrunning::Operation>
-DataMigrationServiceClient::PromoteMigrationJob(
-    NoAwaitTag,
-    google::cloud::clouddms::v1::PromoteMigrationJobRequest const& request,
-    Options opts) {
+DataMigrationServiceClient::PromoteMigrationJob(NoAwaitTag, google::cloud::clouddms::v1::PromoteMigrationJobRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PromoteMigrationJob(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
-DataMigrationServiceClient::PromoteMigrationJob(
-    google::longrunning::Operation const& operation, Options opts) {
+DataMigrationServiceClient::PromoteMigrationJob(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PromoteMigrationJob(operation);
 }
 
 future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
-DataMigrationServiceClient::VerifyMigrationJob(
-    google::cloud::clouddms::v1::VerifyMigrationJobRequest const& request,
-    Options opts) {
+DataMigrationServiceClient::VerifyMigrationJob(google::cloud::clouddms::v1::VerifyMigrationJobRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->VerifyMigrationJob(request);
 }
 
 StatusOr<google::longrunning::Operation>
-DataMigrationServiceClient::VerifyMigrationJob(
-    NoAwaitTag,
-    google::cloud::clouddms::v1::VerifyMigrationJobRequest const& request,
-    Options opts) {
+DataMigrationServiceClient::VerifyMigrationJob(NoAwaitTag, google::cloud::clouddms::v1::VerifyMigrationJobRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->VerifyMigrationJob(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
-DataMigrationServiceClient::VerifyMigrationJob(
-    google::longrunning::Operation const& operation, Options opts) {
+DataMigrationServiceClient::VerifyMigrationJob(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->VerifyMigrationJob(operation);
 }
 
 future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
-DataMigrationServiceClient::RestartMigrationJob(
-    google::cloud::clouddms::v1::RestartMigrationJobRequest const& request,
-    Options opts) {
+DataMigrationServiceClient::RestartMigrationJob(google::cloud::clouddms::v1::RestartMigrationJobRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RestartMigrationJob(request);
 }
 
 StatusOr<google::longrunning::Operation>
-DataMigrationServiceClient::RestartMigrationJob(
-    NoAwaitTag,
-    google::cloud::clouddms::v1::RestartMigrationJobRequest const& request,
-    Options opts) {
+DataMigrationServiceClient::RestartMigrationJob(NoAwaitTag, google::cloud::clouddms::v1::RestartMigrationJobRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RestartMigrationJob(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
-DataMigrationServiceClient::RestartMigrationJob(
-    google::longrunning::Operation const& operation, Options opts) {
+DataMigrationServiceClient::RestartMigrationJob(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RestartMigrationJob(operation);
 }
 
 StatusOr<google::cloud::clouddms::v1::SshScript>
-DataMigrationServiceClient::GenerateSshScript(
-    google::cloud::clouddms::v1::GenerateSshScriptRequest const& request,
-    Options opts) {
+DataMigrationServiceClient::GenerateSshScript(google::cloud::clouddms::v1::GenerateSshScriptRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GenerateSshScript(request);
 }
 
 StatusOr<google::cloud::clouddms::v1::TcpProxyScript>
-DataMigrationServiceClient::GenerateTcpProxyScript(
-    google::cloud::clouddms::v1::GenerateTcpProxyScriptRequest const& request,
-    Options opts) {
+DataMigrationServiceClient::GenerateTcpProxyScript(google::cloud::clouddms::v1::GenerateTcpProxyScriptRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GenerateTcpProxyScript(request);
 }
 
 StreamRange<google::cloud::clouddms::v1::ConnectionProfile>
-DataMigrationServiceClient::ListConnectionProfiles(std::string const& parent,
-                                                   Options opts) {
+DataMigrationServiceClient::ListConnectionProfiles(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::clouddms::v1::ListConnectionProfilesRequest request;
   request.set_parent(parent);
@@ -375,16 +297,13 @@ DataMigrationServiceClient::ListConnectionProfiles(std::string const& parent,
 }
 
 StreamRange<google::cloud::clouddms::v1::ConnectionProfile>
-DataMigrationServiceClient::ListConnectionProfiles(
-    google::cloud::clouddms::v1::ListConnectionProfilesRequest request,
-    Options opts) {
+DataMigrationServiceClient::ListConnectionProfiles(google::cloud::clouddms::v1::ListConnectionProfilesRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListConnectionProfiles(std::move(request));
 }
 
 StatusOr<google::cloud::clouddms::v1::ConnectionProfile>
-DataMigrationServiceClient::GetConnectionProfile(std::string const& name,
-                                                 Options opts) {
+DataMigrationServiceClient::GetConnectionProfile(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::clouddms::v1::GetConnectionProfileRequest request;
   request.set_name(name);
@@ -392,18 +311,13 @@ DataMigrationServiceClient::GetConnectionProfile(std::string const& name,
 }
 
 StatusOr<google::cloud::clouddms::v1::ConnectionProfile>
-DataMigrationServiceClient::GetConnectionProfile(
-    google::cloud::clouddms::v1::GetConnectionProfileRequest const& request,
-    Options opts) {
+DataMigrationServiceClient::GetConnectionProfile(google::cloud::clouddms::v1::GetConnectionProfileRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetConnectionProfile(request);
 }
 
 future<StatusOr<google::cloud::clouddms::v1::ConnectionProfile>>
-DataMigrationServiceClient::CreateConnectionProfile(
-    std::string const& parent,
-    google::cloud::clouddms::v1::ConnectionProfile const& connection_profile,
-    std::string const& connection_profile_id, Options opts) {
+DataMigrationServiceClient::CreateConnectionProfile(std::string const& parent, google::cloud::clouddms::v1::ConnectionProfile const& connection_profile, std::string const& connection_profile_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::clouddms::v1::CreateConnectionProfileRequest request;
   request.set_parent(parent);
@@ -413,10 +327,7 @@ DataMigrationServiceClient::CreateConnectionProfile(
 }
 
 StatusOr<google::longrunning::Operation>
-DataMigrationServiceClient::CreateConnectionProfile(
-    NoAwaitTag, std::string const& parent,
-    google::cloud::clouddms::v1::ConnectionProfile const& connection_profile,
-    std::string const& connection_profile_id, Options opts) {
+DataMigrationServiceClient::CreateConnectionProfile(NoAwaitTag, std::string const& parent, google::cloud::clouddms::v1::ConnectionProfile const& connection_profile, std::string const& connection_profile_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::clouddms::v1::CreateConnectionProfileRequest request;
   request.set_parent(parent);
@@ -426,33 +337,25 @@ DataMigrationServiceClient::CreateConnectionProfile(
 }
 
 future<StatusOr<google::cloud::clouddms::v1::ConnectionProfile>>
-DataMigrationServiceClient::CreateConnectionProfile(
-    google::cloud::clouddms::v1::CreateConnectionProfileRequest const& request,
-    Options opts) {
+DataMigrationServiceClient::CreateConnectionProfile(google::cloud::clouddms::v1::CreateConnectionProfileRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateConnectionProfile(request);
 }
 
 StatusOr<google::longrunning::Operation>
-DataMigrationServiceClient::CreateConnectionProfile(
-    NoAwaitTag,
-    google::cloud::clouddms::v1::CreateConnectionProfileRequest const& request,
-    Options opts) {
+DataMigrationServiceClient::CreateConnectionProfile(NoAwaitTag, google::cloud::clouddms::v1::CreateConnectionProfileRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateConnectionProfile(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::clouddms::v1::ConnectionProfile>>
-DataMigrationServiceClient::CreateConnectionProfile(
-    google::longrunning::Operation const& operation, Options opts) {
+DataMigrationServiceClient::CreateConnectionProfile(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateConnectionProfile(operation);
 }
 
 future<StatusOr<google::cloud::clouddms::v1::ConnectionProfile>>
-DataMigrationServiceClient::UpdateConnectionProfile(
-    google::cloud::clouddms::v1::ConnectionProfile const& connection_profile,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+DataMigrationServiceClient::UpdateConnectionProfile(google::cloud::clouddms::v1::ConnectionProfile const& connection_profile, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::clouddms::v1::UpdateConnectionProfileRequest request;
   *request.mutable_connection_profile() = connection_profile;
@@ -461,10 +364,7 @@ DataMigrationServiceClient::UpdateConnectionProfile(
 }
 
 StatusOr<google::longrunning::Operation>
-DataMigrationServiceClient::UpdateConnectionProfile(
-    NoAwaitTag,
-    google::cloud::clouddms::v1::ConnectionProfile const& connection_profile,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+DataMigrationServiceClient::UpdateConnectionProfile(NoAwaitTag, google::cloud::clouddms::v1::ConnectionProfile const& connection_profile, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::clouddms::v1::UpdateConnectionProfileRequest request;
   *request.mutable_connection_profile() = connection_profile;
@@ -473,32 +373,25 @@ DataMigrationServiceClient::UpdateConnectionProfile(
 }
 
 future<StatusOr<google::cloud::clouddms::v1::ConnectionProfile>>
-DataMigrationServiceClient::UpdateConnectionProfile(
-    google::cloud::clouddms::v1::UpdateConnectionProfileRequest const& request,
-    Options opts) {
+DataMigrationServiceClient::UpdateConnectionProfile(google::cloud::clouddms::v1::UpdateConnectionProfileRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateConnectionProfile(request);
 }
 
 StatusOr<google::longrunning::Operation>
-DataMigrationServiceClient::UpdateConnectionProfile(
-    NoAwaitTag,
-    google::cloud::clouddms::v1::UpdateConnectionProfileRequest const& request,
-    Options opts) {
+DataMigrationServiceClient::UpdateConnectionProfile(NoAwaitTag, google::cloud::clouddms::v1::UpdateConnectionProfileRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateConnectionProfile(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::clouddms::v1::ConnectionProfile>>
-DataMigrationServiceClient::UpdateConnectionProfile(
-    google::longrunning::Operation const& operation, Options opts) {
+DataMigrationServiceClient::UpdateConnectionProfile(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateConnectionProfile(operation);
 }
 
 future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>
-DataMigrationServiceClient::DeleteConnectionProfile(std::string const& name,
-                                                    Options opts) {
+DataMigrationServiceClient::DeleteConnectionProfile(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::clouddms::v1::DeleteConnectionProfileRequest request;
   request.set_name(name);
@@ -506,9 +399,7 @@ DataMigrationServiceClient::DeleteConnectionProfile(std::string const& name,
 }
 
 StatusOr<google::longrunning::Operation>
-DataMigrationServiceClient::DeleteConnectionProfile(NoAwaitTag,
-                                                    std::string const& name,
-                                                    Options opts) {
+DataMigrationServiceClient::DeleteConnectionProfile(NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::clouddms::v1::DeleteConnectionProfileRequest request;
   request.set_name(name);
@@ -516,34 +407,25 @@ DataMigrationServiceClient::DeleteConnectionProfile(NoAwaitTag,
 }
 
 future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>
-DataMigrationServiceClient::DeleteConnectionProfile(
-    google::cloud::clouddms::v1::DeleteConnectionProfileRequest const& request,
-    Options opts) {
+DataMigrationServiceClient::DeleteConnectionProfile(google::cloud::clouddms::v1::DeleteConnectionProfileRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteConnectionProfile(request);
 }
 
 StatusOr<google::longrunning::Operation>
-DataMigrationServiceClient::DeleteConnectionProfile(
-    NoAwaitTag,
-    google::cloud::clouddms::v1::DeleteConnectionProfileRequest const& request,
-    Options opts) {
+DataMigrationServiceClient::DeleteConnectionProfile(NoAwaitTag, google::cloud::clouddms::v1::DeleteConnectionProfileRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteConnectionProfile(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>
-DataMigrationServiceClient::DeleteConnectionProfile(
-    google::longrunning::Operation const& operation, Options opts) {
+DataMigrationServiceClient::DeleteConnectionProfile(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteConnectionProfile(operation);
 }
 
 future<StatusOr<google::cloud::clouddms::v1::PrivateConnection>>
-DataMigrationServiceClient::CreatePrivateConnection(
-    std::string const& parent,
-    google::cloud::clouddms::v1::PrivateConnection const& private_connection,
-    std::string const& private_connection_id, Options opts) {
+DataMigrationServiceClient::CreatePrivateConnection(std::string const& parent, google::cloud::clouddms::v1::PrivateConnection const& private_connection, std::string const& private_connection_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::clouddms::v1::CreatePrivateConnectionRequest request;
   request.set_parent(parent);
@@ -553,10 +435,7 @@ DataMigrationServiceClient::CreatePrivateConnection(
 }
 
 StatusOr<google::longrunning::Operation>
-DataMigrationServiceClient::CreatePrivateConnection(
-    NoAwaitTag, std::string const& parent,
-    google::cloud::clouddms::v1::PrivateConnection const& private_connection,
-    std::string const& private_connection_id, Options opts) {
+DataMigrationServiceClient::CreatePrivateConnection(NoAwaitTag, std::string const& parent, google::cloud::clouddms::v1::PrivateConnection const& private_connection, std::string const& private_connection_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::clouddms::v1::CreatePrivateConnectionRequest request;
   request.set_parent(parent);
@@ -566,32 +445,25 @@ DataMigrationServiceClient::CreatePrivateConnection(
 }
 
 future<StatusOr<google::cloud::clouddms::v1::PrivateConnection>>
-DataMigrationServiceClient::CreatePrivateConnection(
-    google::cloud::clouddms::v1::CreatePrivateConnectionRequest const& request,
-    Options opts) {
+DataMigrationServiceClient::CreatePrivateConnection(google::cloud::clouddms::v1::CreatePrivateConnectionRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreatePrivateConnection(request);
 }
 
 StatusOr<google::longrunning::Operation>
-DataMigrationServiceClient::CreatePrivateConnection(
-    NoAwaitTag,
-    google::cloud::clouddms::v1::CreatePrivateConnectionRequest const& request,
-    Options opts) {
+DataMigrationServiceClient::CreatePrivateConnection(NoAwaitTag, google::cloud::clouddms::v1::CreatePrivateConnectionRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreatePrivateConnection(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::clouddms::v1::PrivateConnection>>
-DataMigrationServiceClient::CreatePrivateConnection(
-    google::longrunning::Operation const& operation, Options opts) {
+DataMigrationServiceClient::CreatePrivateConnection(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreatePrivateConnection(operation);
 }
 
 StatusOr<google::cloud::clouddms::v1::PrivateConnection>
-DataMigrationServiceClient::GetPrivateConnection(std::string const& name,
-                                                 Options opts) {
+DataMigrationServiceClient::GetPrivateConnection(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::clouddms::v1::GetPrivateConnectionRequest request;
   request.set_name(name);
@@ -599,16 +471,13 @@ DataMigrationServiceClient::GetPrivateConnection(std::string const& name,
 }
 
 StatusOr<google::cloud::clouddms::v1::PrivateConnection>
-DataMigrationServiceClient::GetPrivateConnection(
-    google::cloud::clouddms::v1::GetPrivateConnectionRequest const& request,
-    Options opts) {
+DataMigrationServiceClient::GetPrivateConnection(google::cloud::clouddms::v1::GetPrivateConnectionRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetPrivateConnection(request);
 }
 
 StreamRange<google::cloud::clouddms::v1::PrivateConnection>
-DataMigrationServiceClient::ListPrivateConnections(std::string const& parent,
-                                                   Options opts) {
+DataMigrationServiceClient::ListPrivateConnections(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::clouddms::v1::ListPrivateConnectionsRequest request;
   request.set_parent(parent);
@@ -616,16 +485,13 @@ DataMigrationServiceClient::ListPrivateConnections(std::string const& parent,
 }
 
 StreamRange<google::cloud::clouddms::v1::PrivateConnection>
-DataMigrationServiceClient::ListPrivateConnections(
-    google::cloud::clouddms::v1::ListPrivateConnectionsRequest request,
-    Options opts) {
+DataMigrationServiceClient::ListPrivateConnections(google::cloud::clouddms::v1::ListPrivateConnectionsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListPrivateConnections(std::move(request));
 }
 
 future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>
-DataMigrationServiceClient::DeletePrivateConnection(std::string const& name,
-                                                    Options opts) {
+DataMigrationServiceClient::DeletePrivateConnection(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::clouddms::v1::DeletePrivateConnectionRequest request;
   request.set_name(name);
@@ -633,9 +499,7 @@ DataMigrationServiceClient::DeletePrivateConnection(std::string const& name,
 }
 
 StatusOr<google::longrunning::Operation>
-DataMigrationServiceClient::DeletePrivateConnection(NoAwaitTag,
-                                                    std::string const& name,
-                                                    Options opts) {
+DataMigrationServiceClient::DeletePrivateConnection(NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::clouddms::v1::DeletePrivateConnectionRequest request;
   request.set_name(name);
@@ -643,32 +507,25 @@ DataMigrationServiceClient::DeletePrivateConnection(NoAwaitTag,
 }
 
 future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>
-DataMigrationServiceClient::DeletePrivateConnection(
-    google::cloud::clouddms::v1::DeletePrivateConnectionRequest const& request,
-    Options opts) {
+DataMigrationServiceClient::DeletePrivateConnection(google::cloud::clouddms::v1::DeletePrivateConnectionRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeletePrivateConnection(request);
 }
 
 StatusOr<google::longrunning::Operation>
-DataMigrationServiceClient::DeletePrivateConnection(
-    NoAwaitTag,
-    google::cloud::clouddms::v1::DeletePrivateConnectionRequest const& request,
-    Options opts) {
+DataMigrationServiceClient::DeletePrivateConnection(NoAwaitTag, google::cloud::clouddms::v1::DeletePrivateConnectionRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeletePrivateConnection(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>
-DataMigrationServiceClient::DeletePrivateConnection(
-    google::longrunning::Operation const& operation, Options opts) {
+DataMigrationServiceClient::DeletePrivateConnection(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeletePrivateConnection(operation);
 }
 
 StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>
-DataMigrationServiceClient::GetConversionWorkspace(std::string const& name,
-                                                   Options opts) {
+DataMigrationServiceClient::GetConversionWorkspace(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::clouddms::v1::GetConversionWorkspaceRequest request;
   request.set_name(name);
@@ -676,16 +533,13 @@ DataMigrationServiceClient::GetConversionWorkspace(std::string const& name,
 }
 
 StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>
-DataMigrationServiceClient::GetConversionWorkspace(
-    google::cloud::clouddms::v1::GetConversionWorkspaceRequest const& request,
-    Options opts) {
+DataMigrationServiceClient::GetConversionWorkspace(google::cloud::clouddms::v1::GetConversionWorkspaceRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetConversionWorkspace(request);
 }
 
 StreamRange<google::cloud::clouddms::v1::ConversionWorkspace>
-DataMigrationServiceClient::ListConversionWorkspaces(std::string const& parent,
-                                                     Options opts) {
+DataMigrationServiceClient::ListConversionWorkspaces(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::clouddms::v1::ListConversionWorkspacesRequest request;
   request.set_parent(parent);
@@ -693,19 +547,13 @@ DataMigrationServiceClient::ListConversionWorkspaces(std::string const& parent,
 }
 
 StreamRange<google::cloud::clouddms::v1::ConversionWorkspace>
-DataMigrationServiceClient::ListConversionWorkspaces(
-    google::cloud::clouddms::v1::ListConversionWorkspacesRequest request,
-    Options opts) {
+DataMigrationServiceClient::ListConversionWorkspaces(google::cloud::clouddms::v1::ListConversionWorkspacesRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListConversionWorkspaces(std::move(request));
 }
 
 future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
-DataMigrationServiceClient::CreateConversionWorkspace(
-    std::string const& parent,
-    google::cloud::clouddms::v1::ConversionWorkspace const&
-        conversion_workspace,
-    std::string const& conversion_workspace_id, Options opts) {
+DataMigrationServiceClient::CreateConversionWorkspace(std::string const& parent, google::cloud::clouddms::v1::ConversionWorkspace const& conversion_workspace, std::string const& conversion_workspace_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::clouddms::v1::CreateConversionWorkspaceRequest request;
   request.set_parent(parent);
@@ -715,11 +563,7 @@ DataMigrationServiceClient::CreateConversionWorkspace(
 }
 
 StatusOr<google::longrunning::Operation>
-DataMigrationServiceClient::CreateConversionWorkspace(
-    NoAwaitTag, std::string const& parent,
-    google::cloud::clouddms::v1::ConversionWorkspace const&
-        conversion_workspace,
-    std::string const& conversion_workspace_id, Options opts) {
+DataMigrationServiceClient::CreateConversionWorkspace(NoAwaitTag, std::string const& parent, google::cloud::clouddms::v1::ConversionWorkspace const& conversion_workspace, std::string const& conversion_workspace_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::clouddms::v1::CreateConversionWorkspaceRequest request;
   request.set_parent(parent);
@@ -729,36 +573,25 @@ DataMigrationServiceClient::CreateConversionWorkspace(
 }
 
 future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
-DataMigrationServiceClient::CreateConversionWorkspace(
-    google::cloud::clouddms::v1::CreateConversionWorkspaceRequest const&
-        request,
-    Options opts) {
+DataMigrationServiceClient::CreateConversionWorkspace(google::cloud::clouddms::v1::CreateConversionWorkspaceRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateConversionWorkspace(request);
 }
 
 StatusOr<google::longrunning::Operation>
-DataMigrationServiceClient::CreateConversionWorkspace(
-    NoAwaitTag,
-    google::cloud::clouddms::v1::CreateConversionWorkspaceRequest const&
-        request,
-    Options opts) {
+DataMigrationServiceClient::CreateConversionWorkspace(NoAwaitTag, google::cloud::clouddms::v1::CreateConversionWorkspaceRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateConversionWorkspace(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
-DataMigrationServiceClient::CreateConversionWorkspace(
-    google::longrunning::Operation const& operation, Options opts) {
+DataMigrationServiceClient::CreateConversionWorkspace(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateConversionWorkspace(operation);
 }
 
 future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
-DataMigrationServiceClient::UpdateConversionWorkspace(
-    google::cloud::clouddms::v1::ConversionWorkspace const&
-        conversion_workspace,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+DataMigrationServiceClient::UpdateConversionWorkspace(google::cloud::clouddms::v1::ConversionWorkspace const& conversion_workspace, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::clouddms::v1::UpdateConversionWorkspaceRequest request;
   *request.mutable_conversion_workspace() = conversion_workspace;
@@ -767,11 +600,7 @@ DataMigrationServiceClient::UpdateConversionWorkspace(
 }
 
 StatusOr<google::longrunning::Operation>
-DataMigrationServiceClient::UpdateConversionWorkspace(
-    NoAwaitTag,
-    google::cloud::clouddms::v1::ConversionWorkspace const&
-        conversion_workspace,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+DataMigrationServiceClient::UpdateConversionWorkspace(NoAwaitTag, google::cloud::clouddms::v1::ConversionWorkspace const& conversion_workspace, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::clouddms::v1::UpdateConversionWorkspaceRequest request;
   *request.mutable_conversion_workspace() = conversion_workspace;
@@ -780,34 +609,25 @@ DataMigrationServiceClient::UpdateConversionWorkspace(
 }
 
 future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
-DataMigrationServiceClient::UpdateConversionWorkspace(
-    google::cloud::clouddms::v1::UpdateConversionWorkspaceRequest const&
-        request,
-    Options opts) {
+DataMigrationServiceClient::UpdateConversionWorkspace(google::cloud::clouddms::v1::UpdateConversionWorkspaceRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateConversionWorkspace(request);
 }
 
 StatusOr<google::longrunning::Operation>
-DataMigrationServiceClient::UpdateConversionWorkspace(
-    NoAwaitTag,
-    google::cloud::clouddms::v1::UpdateConversionWorkspaceRequest const&
-        request,
-    Options opts) {
+DataMigrationServiceClient::UpdateConversionWorkspace(NoAwaitTag, google::cloud::clouddms::v1::UpdateConversionWorkspaceRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateConversionWorkspace(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
-DataMigrationServiceClient::UpdateConversionWorkspace(
-    google::longrunning::Operation const& operation, Options opts) {
+DataMigrationServiceClient::UpdateConversionWorkspace(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateConversionWorkspace(operation);
 }
 
 future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>
-DataMigrationServiceClient::DeleteConversionWorkspace(std::string const& name,
-                                                      Options opts) {
+DataMigrationServiceClient::DeleteConversionWorkspace(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::clouddms::v1::DeleteConversionWorkspaceRequest request;
   request.set_name(name);
@@ -815,9 +635,7 @@ DataMigrationServiceClient::DeleteConversionWorkspace(std::string const& name,
 }
 
 StatusOr<google::longrunning::Operation>
-DataMigrationServiceClient::DeleteConversionWorkspace(NoAwaitTag,
-                                                      std::string const& name,
-                                                      Options opts) {
+DataMigrationServiceClient::DeleteConversionWorkspace(NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::clouddms::v1::DeleteConversionWorkspaceRequest request;
   request.set_name(name);
@@ -825,36 +643,25 @@ DataMigrationServiceClient::DeleteConversionWorkspace(NoAwaitTag,
 }
 
 future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>
-DataMigrationServiceClient::DeleteConversionWorkspace(
-    google::cloud::clouddms::v1::DeleteConversionWorkspaceRequest const&
-        request,
-    Options opts) {
+DataMigrationServiceClient::DeleteConversionWorkspace(google::cloud::clouddms::v1::DeleteConversionWorkspaceRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteConversionWorkspace(request);
 }
 
 StatusOr<google::longrunning::Operation>
-DataMigrationServiceClient::DeleteConversionWorkspace(
-    NoAwaitTag,
-    google::cloud::clouddms::v1::DeleteConversionWorkspaceRequest const&
-        request,
-    Options opts) {
+DataMigrationServiceClient::DeleteConversionWorkspace(NoAwaitTag, google::cloud::clouddms::v1::DeleteConversionWorkspaceRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteConversionWorkspace(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>
-DataMigrationServiceClient::DeleteConversionWorkspace(
-    google::longrunning::Operation const& operation, Options opts) {
+DataMigrationServiceClient::DeleteConversionWorkspace(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteConversionWorkspace(operation);
 }
 
 StatusOr<google::cloud::clouddms::v1::MappingRule>
-DataMigrationServiceClient::CreateMappingRule(
-    std::string const& parent,
-    google::cloud::clouddms::v1::MappingRule const& mapping_rule,
-    std::string const& mapping_rule_id, Options opts) {
+DataMigrationServiceClient::CreateMappingRule(std::string const& parent, google::cloud::clouddms::v1::MappingRule const& mapping_rule, std::string const& mapping_rule_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::clouddms::v1::CreateMappingRuleRequest request;
   request.set_parent(parent);
@@ -864,31 +671,27 @@ DataMigrationServiceClient::CreateMappingRule(
 }
 
 StatusOr<google::cloud::clouddms::v1::MappingRule>
-DataMigrationServiceClient::CreateMappingRule(
-    google::cloud::clouddms::v1::CreateMappingRuleRequest const& request,
-    Options opts) {
+DataMigrationServiceClient::CreateMappingRule(google::cloud::clouddms::v1::CreateMappingRuleRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateMappingRule(request);
 }
 
-Status DataMigrationServiceClient::DeleteMappingRule(std::string const& name,
-                                                     Options opts) {
+Status
+DataMigrationServiceClient::DeleteMappingRule(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::clouddms::v1::DeleteMappingRuleRequest request;
   request.set_name(name);
   return connection_->DeleteMappingRule(request);
 }
 
-Status DataMigrationServiceClient::DeleteMappingRule(
-    google::cloud::clouddms::v1::DeleteMappingRuleRequest const& request,
-    Options opts) {
+Status
+DataMigrationServiceClient::DeleteMappingRule(google::cloud::clouddms::v1::DeleteMappingRuleRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteMappingRule(request);
 }
 
 StreamRange<google::cloud::clouddms::v1::MappingRule>
-DataMigrationServiceClient::ListMappingRules(std::string const& parent,
-                                             Options opts) {
+DataMigrationServiceClient::ListMappingRules(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::clouddms::v1::ListMappingRulesRequest request;
   request.set_parent(parent);
@@ -896,16 +699,13 @@ DataMigrationServiceClient::ListMappingRules(std::string const& parent,
 }
 
 StreamRange<google::cloud::clouddms::v1::MappingRule>
-DataMigrationServiceClient::ListMappingRules(
-    google::cloud::clouddms::v1::ListMappingRulesRequest request,
-    Options opts) {
+DataMigrationServiceClient::ListMappingRules(google::cloud::clouddms::v1::ListMappingRulesRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListMappingRules(std::move(request));
 }
 
 StatusOr<google::cloud::clouddms::v1::MappingRule>
-DataMigrationServiceClient::GetMappingRule(std::string const& name,
-                                           Options opts) {
+DataMigrationServiceClient::GetMappingRule(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::clouddms::v1::GetMappingRuleRequest request;
   request.set_name(name);
@@ -913,240 +713,183 @@ DataMigrationServiceClient::GetMappingRule(std::string const& name,
 }
 
 StatusOr<google::cloud::clouddms::v1::MappingRule>
-DataMigrationServiceClient::GetMappingRule(
-    google::cloud::clouddms::v1::GetMappingRuleRequest const& request,
-    Options opts) {
+DataMigrationServiceClient::GetMappingRule(google::cloud::clouddms::v1::GetMappingRuleRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetMappingRule(request);
 }
 
 future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
-DataMigrationServiceClient::SeedConversionWorkspace(
-    google::cloud::clouddms::v1::SeedConversionWorkspaceRequest const& request,
-    Options opts) {
+DataMigrationServiceClient::SeedConversionWorkspace(google::cloud::clouddms::v1::SeedConversionWorkspaceRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SeedConversionWorkspace(request);
 }
 
 StatusOr<google::longrunning::Operation>
-DataMigrationServiceClient::SeedConversionWorkspace(
-    NoAwaitTag,
-    google::cloud::clouddms::v1::SeedConversionWorkspaceRequest const& request,
-    Options opts) {
+DataMigrationServiceClient::SeedConversionWorkspace(NoAwaitTag, google::cloud::clouddms::v1::SeedConversionWorkspaceRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SeedConversionWorkspace(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
-DataMigrationServiceClient::SeedConversionWorkspace(
-    google::longrunning::Operation const& operation, Options opts) {
+DataMigrationServiceClient::SeedConversionWorkspace(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SeedConversionWorkspace(operation);
 }
 
 future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
-DataMigrationServiceClient::ImportMappingRules(
-    google::cloud::clouddms::v1::ImportMappingRulesRequest const& request,
-    Options opts) {
+DataMigrationServiceClient::ImportMappingRules(google::cloud::clouddms::v1::ImportMappingRulesRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ImportMappingRules(request);
 }
 
 StatusOr<google::longrunning::Operation>
-DataMigrationServiceClient::ImportMappingRules(
-    NoAwaitTag,
-    google::cloud::clouddms::v1::ImportMappingRulesRequest const& request,
-    Options opts) {
+DataMigrationServiceClient::ImportMappingRules(NoAwaitTag, google::cloud::clouddms::v1::ImportMappingRulesRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ImportMappingRules(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
-DataMigrationServiceClient::ImportMappingRules(
-    google::longrunning::Operation const& operation, Options opts) {
+DataMigrationServiceClient::ImportMappingRules(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ImportMappingRules(operation);
 }
 
 future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
-DataMigrationServiceClient::ConvertConversionWorkspace(
-    google::cloud::clouddms::v1::ConvertConversionWorkspaceRequest const&
-        request,
-    Options opts) {
+DataMigrationServiceClient::ConvertConversionWorkspace(google::cloud::clouddms::v1::ConvertConversionWorkspaceRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ConvertConversionWorkspace(request);
 }
 
 StatusOr<google::longrunning::Operation>
-DataMigrationServiceClient::ConvertConversionWorkspace(
-    NoAwaitTag,
-    google::cloud::clouddms::v1::ConvertConversionWorkspaceRequest const&
-        request,
-    Options opts) {
+DataMigrationServiceClient::ConvertConversionWorkspace(NoAwaitTag, google::cloud::clouddms::v1::ConvertConversionWorkspaceRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ConvertConversionWorkspace(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
-DataMigrationServiceClient::ConvertConversionWorkspace(
-    google::longrunning::Operation const& operation, Options opts) {
+DataMigrationServiceClient::ConvertConversionWorkspace(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ConvertConversionWorkspace(operation);
 }
 
 future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
-DataMigrationServiceClient::CommitConversionWorkspace(
-    google::cloud::clouddms::v1::CommitConversionWorkspaceRequest const&
-        request,
-    Options opts) {
+DataMigrationServiceClient::CommitConversionWorkspace(google::cloud::clouddms::v1::CommitConversionWorkspaceRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CommitConversionWorkspace(request);
 }
 
 StatusOr<google::longrunning::Operation>
-DataMigrationServiceClient::CommitConversionWorkspace(
-    NoAwaitTag,
-    google::cloud::clouddms::v1::CommitConversionWorkspaceRequest const&
-        request,
-    Options opts) {
+DataMigrationServiceClient::CommitConversionWorkspace(NoAwaitTag, google::cloud::clouddms::v1::CommitConversionWorkspaceRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CommitConversionWorkspace(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
-DataMigrationServiceClient::CommitConversionWorkspace(
-    google::longrunning::Operation const& operation, Options opts) {
+DataMigrationServiceClient::CommitConversionWorkspace(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CommitConversionWorkspace(operation);
 }
 
 future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
-DataMigrationServiceClient::RollbackConversionWorkspace(
-    google::cloud::clouddms::v1::RollbackConversionWorkspaceRequest const&
-        request,
-    Options opts) {
+DataMigrationServiceClient::RollbackConversionWorkspace(google::cloud::clouddms::v1::RollbackConversionWorkspaceRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RollbackConversionWorkspace(request);
 }
 
 StatusOr<google::longrunning::Operation>
-DataMigrationServiceClient::RollbackConversionWorkspace(
-    NoAwaitTag,
-    google::cloud::clouddms::v1::RollbackConversionWorkspaceRequest const&
-        request,
-    Options opts) {
+DataMigrationServiceClient::RollbackConversionWorkspace(NoAwaitTag, google::cloud::clouddms::v1::RollbackConversionWorkspaceRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RollbackConversionWorkspace(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
-DataMigrationServiceClient::RollbackConversionWorkspace(
-    google::longrunning::Operation const& operation, Options opts) {
+DataMigrationServiceClient::RollbackConversionWorkspace(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RollbackConversionWorkspace(operation);
 }
 
 future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
-DataMigrationServiceClient::ApplyConversionWorkspace(
-    google::cloud::clouddms::v1::ApplyConversionWorkspaceRequest const& request,
-    Options opts) {
+DataMigrationServiceClient::ApplyConversionWorkspace(google::cloud::clouddms::v1::ApplyConversionWorkspaceRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ApplyConversionWorkspace(request);
 }
 
 StatusOr<google::longrunning::Operation>
-DataMigrationServiceClient::ApplyConversionWorkspace(
-    NoAwaitTag,
-    google::cloud::clouddms::v1::ApplyConversionWorkspaceRequest const& request,
-    Options opts) {
+DataMigrationServiceClient::ApplyConversionWorkspace(NoAwaitTag, google::cloud::clouddms::v1::ApplyConversionWorkspaceRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ApplyConversionWorkspace(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
-DataMigrationServiceClient::ApplyConversionWorkspace(
-    google::longrunning::Operation const& operation, Options opts) {
+DataMigrationServiceClient::ApplyConversionWorkspace(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ApplyConversionWorkspace(operation);
 }
 
 StreamRange<google::cloud::clouddms::v1::DatabaseEntity>
-DataMigrationServiceClient::DescribeDatabaseEntities(
-    google::cloud::clouddms::v1::DescribeDatabaseEntitiesRequest request,
-    Options opts) {
+DataMigrationServiceClient::DescribeDatabaseEntities(google::cloud::clouddms::v1::DescribeDatabaseEntitiesRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DescribeDatabaseEntities(std::move(request));
 }
 
 StatusOr<google::cloud::clouddms::v1::SearchBackgroundJobsResponse>
-DataMigrationServiceClient::SearchBackgroundJobs(
-    google::cloud::clouddms::v1::SearchBackgroundJobsRequest const& request,
-    Options opts) {
+DataMigrationServiceClient::SearchBackgroundJobs(google::cloud::clouddms::v1::SearchBackgroundJobsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SearchBackgroundJobs(request);
 }
 
-StatusOr<
-    google::cloud::clouddms::v1::DescribeConversionWorkspaceRevisionsResponse>
-DataMigrationServiceClient::DescribeConversionWorkspaceRevisions(
-    google::cloud::clouddms::v1::
-        DescribeConversionWorkspaceRevisionsRequest const& request,
-    Options opts) {
+StatusOr<google::cloud::clouddms::v1::DescribeConversionWorkspaceRevisionsResponse>
+DataMigrationServiceClient::DescribeConversionWorkspaceRevisions(google::cloud::clouddms::v1::DescribeConversionWorkspaceRevisionsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DescribeConversionWorkspaceRevisions(request);
 }
 
-StreamRange<std::string> DataMigrationServiceClient::FetchStaticIps(
-    std::string const& name, Options opts) {
+StreamRange<std::string>
+DataMigrationServiceClient::FetchStaticIps(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::clouddms::v1::FetchStaticIpsRequest request;
   request.set_name(name);
   return connection_->FetchStaticIps(request);
 }
 
-StreamRange<std::string> DataMigrationServiceClient::FetchStaticIps(
-    google::cloud::clouddms::v1::FetchStaticIpsRequest request, Options opts) {
+StreamRange<std::string>
+DataMigrationServiceClient::FetchStaticIps(google::cloud::clouddms::v1::FetchStaticIpsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->FetchStaticIps(std::move(request));
 }
 
 StreamRange<google::cloud::location::Location>
-DataMigrationServiceClient::ListLocations(
-    google::cloud::location::ListLocationsRequest request, Options opts) {
+DataMigrationServiceClient::ListLocations(google::cloud::location::ListLocationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListLocations(std::move(request));
 }
 
 StatusOr<google::cloud::location::Location>
-DataMigrationServiceClient::GetLocation(
-    google::cloud::location::GetLocationRequest const& request, Options opts) {
+DataMigrationServiceClient::GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetLocation(request);
 }
 
-StatusOr<google::iam::v1::Policy> DataMigrationServiceClient::SetIamPolicy(
-    google::iam::v1::SetIamPolicyRequest const& request, Options opts) {
+StatusOr<google::iam::v1::Policy>
+DataMigrationServiceClient::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetIamPolicy(request);
 }
 
-StatusOr<google::iam::v1::Policy> DataMigrationServiceClient::GetIamPolicy(
-    google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
+StatusOr<google::iam::v1::Policy>
+DataMigrationServiceClient::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetIamPolicy(request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-DataMigrationServiceClient::TestIamPermissions(
-    google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
+DataMigrationServiceClient::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->TestIamPermissions(request);
 }
 
 StreamRange<google::longrunning::Operation>
-DataMigrationServiceClient::ListOperations(std::string const& name,
-                                           std::string const& filter,
-                                           Options opts) {
+DataMigrationServiceClient::ListOperations(std::string const& name, std::string const& filter, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::ListOperationsRequest request;
   request.set_name(name);
@@ -1155,15 +898,13 @@ DataMigrationServiceClient::ListOperations(std::string const& name,
 }
 
 StreamRange<google::longrunning::Operation>
-DataMigrationServiceClient::ListOperations(
-    google::longrunning::ListOperationsRequest request, Options opts) {
+DataMigrationServiceClient::ListOperations(google::longrunning::ListOperationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOperations(std::move(request));
 }
 
 StatusOr<google::longrunning::Operation>
-DataMigrationServiceClient::GetOperation(std::string const& name,
-                                         Options opts) {
+DataMigrationServiceClient::GetOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
@@ -1171,36 +912,35 @@ DataMigrationServiceClient::GetOperation(std::string const& name,
 }
 
 StatusOr<google::longrunning::Operation>
-DataMigrationServiceClient::GetOperation(
-    google::longrunning::GetOperationRequest const& request, Options opts) {
+DataMigrationServiceClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }
 
-Status DataMigrationServiceClient::DeleteOperation(std::string const& name,
-                                                   Options opts) {
+Status
+DataMigrationServiceClient::DeleteOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::DeleteOperationRequest request;
   request.set_name(name);
   return connection_->DeleteOperation(request);
 }
 
-Status DataMigrationServiceClient::DeleteOperation(
-    google::longrunning::DeleteOperationRequest const& request, Options opts) {
+Status
+DataMigrationServiceClient::DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteOperation(request);
 }
 
-Status DataMigrationServiceClient::CancelOperation(std::string const& name,
-                                                   Options opts) {
+Status
+DataMigrationServiceClient::CancelOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::CancelOperationRequest request;
   request.set_name(name);
   return connection_->CancelOperation(request);
 }
 
-Status DataMigrationServiceClient::CancelOperation(
-    google::longrunning::CancelOperationRequest const& request, Options opts) {
+Status
+DataMigrationServiceClient::CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelOperation(request);
 }

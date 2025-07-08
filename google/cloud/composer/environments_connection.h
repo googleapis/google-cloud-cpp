@@ -33,8 +33,7 @@ using ::google::cloud::composer_v1::MakeEnvironmentsConnection;
 /// @deprecated Use composer_v1::EnvironmentsConnection directly.
 using ::google::cloud::composer_v1::EnvironmentsConnection;
 
-/// @deprecated Use composer_v1::EnvironmentsLimitedErrorCountRetryPolicy
-/// directly.
+/// @deprecated Use composer_v1::EnvironmentsLimitedErrorCountRetryPolicy directly.
 using ::google::cloud::composer_v1::EnvironmentsLimitedErrorCountRetryPolicy;
 
 /// @deprecated Use composer_v1::EnvironmentsLimitedTimeRetryPolicy directly.

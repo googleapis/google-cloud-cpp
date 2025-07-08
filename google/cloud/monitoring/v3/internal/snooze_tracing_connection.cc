@@ -34,39 +34,31 @@ SnoozeServiceTracingConnection::SnoozeServiceTracingConnection(
     : child_(std::move(child)) {}
 
 StatusOr<google::monitoring::v3::Snooze>
-SnoozeServiceTracingConnection::CreateSnooze(
-    google::monitoring::v3::CreateSnoozeRequest const& request) {
-  auto span = internal::MakeSpan(
-      "monitoring_v3::SnoozeServiceConnection::CreateSnooze");
+SnoozeServiceTracingConnection::CreateSnooze(google::monitoring::v3::CreateSnoozeRequest const& request) {
+  auto span = internal::MakeSpan("monitoring_v3::SnoozeServiceConnection::CreateSnooze");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateSnooze(request));
 }
 
 StreamRange<google::monitoring::v3::Snooze>
-SnoozeServiceTracingConnection::ListSnoozes(
-    google::monitoring::v3::ListSnoozesRequest request) {
-  auto span =
-      internal::MakeSpan("monitoring_v3::SnoozeServiceConnection::ListSnoozes");
+SnoozeServiceTracingConnection::ListSnoozes(google::monitoring::v3::ListSnoozesRequest request) {
+  auto span = internal::MakeSpan("monitoring_v3::SnoozeServiceConnection::ListSnoozes");
   internal::OTelScope scope(span);
   auto sr = child_->ListSnoozes(std::move(request));
   return internal::MakeTracedStreamRange<google::monitoring::v3::Snooze>(
-      std::move(span), std::move(sr));
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::monitoring::v3::Snooze>
-SnoozeServiceTracingConnection::GetSnooze(
-    google::monitoring::v3::GetSnoozeRequest const& request) {
-  auto span =
-      internal::MakeSpan("monitoring_v3::SnoozeServiceConnection::GetSnooze");
+SnoozeServiceTracingConnection::GetSnooze(google::monitoring::v3::GetSnoozeRequest const& request) {
+  auto span = internal::MakeSpan("monitoring_v3::SnoozeServiceConnection::GetSnooze");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetSnooze(request));
 }
 
 StatusOr<google::monitoring::v3::Snooze>
-SnoozeServiceTracingConnection::UpdateSnooze(
-    google::monitoring::v3::UpdateSnoozeRequest const& request) {
-  auto span = internal::MakeSpan(
-      "monitoring_v3::SnoozeServiceConnection::UpdateSnooze");
+SnoozeServiceTracingConnection::UpdateSnooze(google::monitoring::v3::UpdateSnoozeRequest const& request) {
+  auto span = internal::MakeSpan("monitoring_v3::SnoozeServiceConnection::UpdateSnooze");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateSnooze(request));
 }

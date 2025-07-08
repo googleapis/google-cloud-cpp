@@ -26,244 +26,183 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-TelcoAutomationConnectionIdempotencyPolicy::
-    ~TelcoAutomationConnectionIdempotencyPolicy() = default;
+TelcoAutomationConnectionIdempotencyPolicy::~TelcoAutomationConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<TelcoAutomationConnectionIdempotencyPolicy>
 TelcoAutomationConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<TelcoAutomationConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency
-TelcoAutomationConnectionIdempotencyPolicy::ListOrchestrationClusters(
-    google::cloud::telcoautomation::v1::
-        ListOrchestrationClustersRequest) {  // NOLINT
+Idempotency TelcoAutomationConnectionIdempotencyPolicy::ListOrchestrationClusters(google::cloud::telcoautomation::v1::ListOrchestrationClustersRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency TelcoAutomationConnectionIdempotencyPolicy::GetOrchestrationCluster(
-    google::cloud::telcoautomation::v1::GetOrchestrationClusterRequest const&) {
+Idempotency TelcoAutomationConnectionIdempotencyPolicy::GetOrchestrationCluster(google::cloud::telcoautomation::v1::GetOrchestrationClusterRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency
-TelcoAutomationConnectionIdempotencyPolicy::CreateOrchestrationCluster(
-    google::cloud::telcoautomation::v1::
-        CreateOrchestrationClusterRequest const&) {
+Idempotency TelcoAutomationConnectionIdempotencyPolicy::CreateOrchestrationCluster(google::cloud::telcoautomation::v1::CreateOrchestrationClusterRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency
-TelcoAutomationConnectionIdempotencyPolicy::DeleteOrchestrationCluster(
-    google::cloud::telcoautomation::v1::
-        DeleteOrchestrationClusterRequest const&) {
+Idempotency TelcoAutomationConnectionIdempotencyPolicy::DeleteOrchestrationCluster(google::cloud::telcoautomation::v1::DeleteOrchestrationClusterRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TelcoAutomationConnectionIdempotencyPolicy::ListEdgeSlms(
-    google::cloud::telcoautomation::v1::ListEdgeSlmsRequest) {  // NOLINT
+Idempotency TelcoAutomationConnectionIdempotencyPolicy::ListEdgeSlms(google::cloud::telcoautomation::v1::ListEdgeSlmsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency TelcoAutomationConnectionIdempotencyPolicy::GetEdgeSlm(
-    google::cloud::telcoautomation::v1::GetEdgeSlmRequest const&) {
+Idempotency TelcoAutomationConnectionIdempotencyPolicy::GetEdgeSlm(google::cloud::telcoautomation::v1::GetEdgeSlmRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency TelcoAutomationConnectionIdempotencyPolicy::CreateEdgeSlm(
-    google::cloud::telcoautomation::v1::CreateEdgeSlmRequest const&) {
+Idempotency TelcoAutomationConnectionIdempotencyPolicy::CreateEdgeSlm(google::cloud::telcoautomation::v1::CreateEdgeSlmRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TelcoAutomationConnectionIdempotencyPolicy::DeleteEdgeSlm(
-    google::cloud::telcoautomation::v1::DeleteEdgeSlmRequest const&) {
+Idempotency TelcoAutomationConnectionIdempotencyPolicy::DeleteEdgeSlm(google::cloud::telcoautomation::v1::DeleteEdgeSlmRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TelcoAutomationConnectionIdempotencyPolicy::CreateBlueprint(
-    google::cloud::telcoautomation::v1::CreateBlueprintRequest const&) {
+Idempotency TelcoAutomationConnectionIdempotencyPolicy::CreateBlueprint(google::cloud::telcoautomation::v1::CreateBlueprintRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TelcoAutomationConnectionIdempotencyPolicy::UpdateBlueprint(
-    google::cloud::telcoautomation::v1::UpdateBlueprintRequest const&) {
+Idempotency TelcoAutomationConnectionIdempotencyPolicy::UpdateBlueprint(google::cloud::telcoautomation::v1::UpdateBlueprintRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TelcoAutomationConnectionIdempotencyPolicy::GetBlueprint(
-    google::cloud::telcoautomation::v1::GetBlueprintRequest const&) {
+Idempotency TelcoAutomationConnectionIdempotencyPolicy::GetBlueprint(google::cloud::telcoautomation::v1::GetBlueprintRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency TelcoAutomationConnectionIdempotencyPolicy::DeleteBlueprint(
-    google::cloud::telcoautomation::v1::DeleteBlueprintRequest const&) {
+Idempotency TelcoAutomationConnectionIdempotencyPolicy::DeleteBlueprint(google::cloud::telcoautomation::v1::DeleteBlueprintRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TelcoAutomationConnectionIdempotencyPolicy::ListBlueprints(
-    google::cloud::telcoautomation::v1::ListBlueprintsRequest) {  // NOLINT
+Idempotency TelcoAutomationConnectionIdempotencyPolicy::ListBlueprints(google::cloud::telcoautomation::v1::ListBlueprintsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency TelcoAutomationConnectionIdempotencyPolicy::ApproveBlueprint(
-    google::cloud::telcoautomation::v1::ApproveBlueprintRequest const&) {
+Idempotency TelcoAutomationConnectionIdempotencyPolicy::ApproveBlueprint(google::cloud::telcoautomation::v1::ApproveBlueprintRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TelcoAutomationConnectionIdempotencyPolicy::ProposeBlueprint(
-    google::cloud::telcoautomation::v1::ProposeBlueprintRequest const&) {
+Idempotency TelcoAutomationConnectionIdempotencyPolicy::ProposeBlueprint(google::cloud::telcoautomation::v1::ProposeBlueprintRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TelcoAutomationConnectionIdempotencyPolicy::RejectBlueprint(
-    google::cloud::telcoautomation::v1::RejectBlueprintRequest const&) {
+Idempotency TelcoAutomationConnectionIdempotencyPolicy::RejectBlueprint(google::cloud::telcoautomation::v1::RejectBlueprintRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TelcoAutomationConnectionIdempotencyPolicy::ListBlueprintRevisions(
-    google::cloud::telcoautomation::v1::
-        ListBlueprintRevisionsRequest) {  // NOLINT
+Idempotency TelcoAutomationConnectionIdempotencyPolicy::ListBlueprintRevisions(google::cloud::telcoautomation::v1::ListBlueprintRevisionsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency
-TelcoAutomationConnectionIdempotencyPolicy::SearchBlueprintRevisions(
-    google::cloud::telcoautomation::v1::
-        SearchBlueprintRevisionsRequest) {  // NOLINT
+Idempotency TelcoAutomationConnectionIdempotencyPolicy::SearchBlueprintRevisions(google::cloud::telcoautomation::v1::SearchBlueprintRevisionsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency
-TelcoAutomationConnectionIdempotencyPolicy::SearchDeploymentRevisions(
-    google::cloud::telcoautomation::v1::
-        SearchDeploymentRevisionsRequest) {  // NOLINT
+Idempotency TelcoAutomationConnectionIdempotencyPolicy::SearchDeploymentRevisions(google::cloud::telcoautomation::v1::SearchDeploymentRevisionsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency TelcoAutomationConnectionIdempotencyPolicy::DiscardBlueprintChanges(
-    google::cloud::telcoautomation::v1::DiscardBlueprintChangesRequest const&) {
+Idempotency TelcoAutomationConnectionIdempotencyPolicy::DiscardBlueprintChanges(google::cloud::telcoautomation::v1::DiscardBlueprintChangesRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TelcoAutomationConnectionIdempotencyPolicy::ListPublicBlueprints(
-    google::cloud::telcoautomation::v1::
-        ListPublicBlueprintsRequest) {  // NOLINT
+Idempotency TelcoAutomationConnectionIdempotencyPolicy::ListPublicBlueprints(google::cloud::telcoautomation::v1::ListPublicBlueprintsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency TelcoAutomationConnectionIdempotencyPolicy::GetPublicBlueprint(
-    google::cloud::telcoautomation::v1::GetPublicBlueprintRequest const&) {
+Idempotency TelcoAutomationConnectionIdempotencyPolicy::GetPublicBlueprint(google::cloud::telcoautomation::v1::GetPublicBlueprintRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency TelcoAutomationConnectionIdempotencyPolicy::CreateDeployment(
-    google::cloud::telcoautomation::v1::CreateDeploymentRequest const&) {
+Idempotency TelcoAutomationConnectionIdempotencyPolicy::CreateDeployment(google::cloud::telcoautomation::v1::CreateDeploymentRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TelcoAutomationConnectionIdempotencyPolicy::UpdateDeployment(
-    google::cloud::telcoautomation::v1::UpdateDeploymentRequest const&) {
+Idempotency TelcoAutomationConnectionIdempotencyPolicy::UpdateDeployment(google::cloud::telcoautomation::v1::UpdateDeploymentRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TelcoAutomationConnectionIdempotencyPolicy::GetDeployment(
-    google::cloud::telcoautomation::v1::GetDeploymentRequest const&) {
+Idempotency TelcoAutomationConnectionIdempotencyPolicy::GetDeployment(google::cloud::telcoautomation::v1::GetDeploymentRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency TelcoAutomationConnectionIdempotencyPolicy::RemoveDeployment(
-    google::cloud::telcoautomation::v1::RemoveDeploymentRequest const&) {
+Idempotency TelcoAutomationConnectionIdempotencyPolicy::RemoveDeployment(google::cloud::telcoautomation::v1::RemoveDeploymentRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TelcoAutomationConnectionIdempotencyPolicy::ListDeployments(
-    google::cloud::telcoautomation::v1::ListDeploymentsRequest) {  // NOLINT
+Idempotency TelcoAutomationConnectionIdempotencyPolicy::ListDeployments(google::cloud::telcoautomation::v1::ListDeploymentsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency TelcoAutomationConnectionIdempotencyPolicy::ListDeploymentRevisions(
-    google::cloud::telcoautomation::v1::
-        ListDeploymentRevisionsRequest) {  // NOLINT
+Idempotency TelcoAutomationConnectionIdempotencyPolicy::ListDeploymentRevisions(google::cloud::telcoautomation::v1::ListDeploymentRevisionsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency
-TelcoAutomationConnectionIdempotencyPolicy::DiscardDeploymentChanges(
-    google::cloud::telcoautomation::v1::
-        DiscardDeploymentChangesRequest const&) {
+Idempotency TelcoAutomationConnectionIdempotencyPolicy::DiscardDeploymentChanges(google::cloud::telcoautomation::v1::DiscardDeploymentChangesRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TelcoAutomationConnectionIdempotencyPolicy::ApplyDeployment(
-    google::cloud::telcoautomation::v1::ApplyDeploymentRequest const&) {
+Idempotency TelcoAutomationConnectionIdempotencyPolicy::ApplyDeployment(google::cloud::telcoautomation::v1::ApplyDeploymentRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TelcoAutomationConnectionIdempotencyPolicy::ComputeDeploymentStatus(
-    google::cloud::telcoautomation::v1::ComputeDeploymentStatusRequest const&) {
+Idempotency TelcoAutomationConnectionIdempotencyPolicy::ComputeDeploymentStatus(google::cloud::telcoautomation::v1::ComputeDeploymentStatusRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency TelcoAutomationConnectionIdempotencyPolicy::RollbackDeployment(
-    google::cloud::telcoautomation::v1::RollbackDeploymentRequest const&) {
+Idempotency TelcoAutomationConnectionIdempotencyPolicy::RollbackDeployment(google::cloud::telcoautomation::v1::RollbackDeploymentRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TelcoAutomationConnectionIdempotencyPolicy::GetHydratedDeployment(
-    google::cloud::telcoautomation::v1::GetHydratedDeploymentRequest const&) {
+Idempotency TelcoAutomationConnectionIdempotencyPolicy::GetHydratedDeployment(google::cloud::telcoautomation::v1::GetHydratedDeploymentRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency TelcoAutomationConnectionIdempotencyPolicy::ListHydratedDeployments(
-    google::cloud::telcoautomation::v1::
-        ListHydratedDeploymentsRequest) {  // NOLINT
+Idempotency TelcoAutomationConnectionIdempotencyPolicy::ListHydratedDeployments(google::cloud::telcoautomation::v1::ListHydratedDeploymentsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency
-TelcoAutomationConnectionIdempotencyPolicy::UpdateHydratedDeployment(
-    google::cloud::telcoautomation::v1::
-        UpdateHydratedDeploymentRequest const&) {
+Idempotency TelcoAutomationConnectionIdempotencyPolicy::UpdateHydratedDeployment(google::cloud::telcoautomation::v1::UpdateHydratedDeploymentRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TelcoAutomationConnectionIdempotencyPolicy::ApplyHydratedDeployment(
-    google::cloud::telcoautomation::v1::ApplyHydratedDeploymentRequest const&) {
+Idempotency TelcoAutomationConnectionIdempotencyPolicy::ApplyHydratedDeployment(google::cloud::telcoautomation::v1::ApplyHydratedDeploymentRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TelcoAutomationConnectionIdempotencyPolicy::ListLocations(
-    google::cloud::location::ListLocationsRequest) {  // NOLINT
+Idempotency TelcoAutomationConnectionIdempotencyPolicy::ListLocations(google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency TelcoAutomationConnectionIdempotencyPolicy::GetLocation(
-    google::cloud::location::GetLocationRequest const&) {
+Idempotency TelcoAutomationConnectionIdempotencyPolicy::GetLocation(google::cloud::location::GetLocationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency TelcoAutomationConnectionIdempotencyPolicy::ListOperations(
-    google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency TelcoAutomationConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency TelcoAutomationConnectionIdempotencyPolicy::GetOperation(
-    google::longrunning::GetOperationRequest const&) {
+Idempotency TelcoAutomationConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency TelcoAutomationConnectionIdempotencyPolicy::DeleteOperation(
-    google::longrunning::DeleteOperationRequest const&) {
+Idempotency TelcoAutomationConnectionIdempotencyPolicy::DeleteOperation(google::longrunning::DeleteOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TelcoAutomationConnectionIdempotencyPolicy::CancelOperation(
-    google::longrunning::CancelOperationRequest const&) {
+Idempotency TelcoAutomationConnectionIdempotencyPolicy::CancelOperation(google::longrunning::CancelOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<TelcoAutomationConnectionIdempotencyPolicy>
-MakeDefaultTelcoAutomationConnectionIdempotencyPolicy() {
+    MakeDefaultTelcoAutomationConnectionIdempotencyPolicy() {
   return std::make_unique<TelcoAutomationConnectionIdempotencyPolicy>();
 }
 

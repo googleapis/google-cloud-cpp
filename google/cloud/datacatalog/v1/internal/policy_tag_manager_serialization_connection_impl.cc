@@ -17,9 +17,9 @@
 // source: google/cloud/datacatalog/v1/policytagmanagerserialization.proto
 
 #include "google/cloud/datacatalog/v1/internal/policy_tag_manager_serialization_connection_impl.h"
-#include "google/cloud/datacatalog/v1/internal/policy_tag_manager_serialization_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/datacatalog/v1/internal/policy_tag_manager_serialization_option_defaults.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
@@ -34,103 +34,81 @@ namespace {
 
 std::unique_ptr<datacatalog_v1::PolicyTagManagerSerializationRetryPolicy>
 retry_policy(Options const& options) {
-  return options
-      .get<datacatalog_v1::PolicyTagManagerSerializationRetryPolicyOption>()
-      ->clone();
+  return options.get<datacatalog_v1::PolicyTagManagerSerializationRetryPolicyOption>()->clone();
 }
 
-std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-  return options
-      .get<datacatalog_v1::PolicyTagManagerSerializationBackoffPolicyOption>()
-      ->clone();
+std::unique_ptr<BackoffPolicy>
+backoff_policy(Options const& options) {
+  return options.get<datacatalog_v1::PolicyTagManagerSerializationBackoffPolicyOption>()->clone();
 }
 
-std::unique_ptr<
-    datacatalog_v1::PolicyTagManagerSerializationConnectionIdempotencyPolicy>
+std::unique_ptr<datacatalog_v1::PolicyTagManagerSerializationConnectionIdempotencyPolicy>
 idempotency_policy(Options const& options) {
-  return options
-      .get<datacatalog_v1::
-               PolicyTagManagerSerializationConnectionIdempotencyPolicyOption>()
-      ->clone();
+  return options.get<datacatalog_v1::PolicyTagManagerSerializationConnectionIdempotencyPolicyOption>()->clone();
 }
 
-}  // namespace
+} // namespace
 
-PolicyTagManagerSerializationConnectionImpl::
-    PolicyTagManagerSerializationConnectionImpl(
-        std::unique_ptr<google::cloud::BackgroundThreads> background,
-        std::shared_ptr<
-            datacatalog_v1_internal::PolicyTagManagerSerializationStub>
-            stub,
-        Options options)
-    : background_(std::move(background)),
-      stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options),
-          PolicyTagManagerSerializationConnection::options())) {}
+PolicyTagManagerSerializationConnectionImpl::PolicyTagManagerSerializationConnectionImpl(
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<datacatalog_v1_internal::PolicyTagManagerSerializationStub> stub,
+    Options options)
+  : background_(std::move(background)), stub_(std::move(stub)),
+    options_(internal::MergeOptions(
+        std::move(options),
+        PolicyTagManagerSerializationConnection::options())) {}
 
 StatusOr<google::cloud::datacatalog::v1::Taxonomy>
-PolicyTagManagerSerializationConnectionImpl::ReplaceTaxonomy(
-    google::cloud::datacatalog::v1::ReplaceTaxonomyRequest const& request) {
+PolicyTagManagerSerializationConnectionImpl::ReplaceTaxonomy(google::cloud::datacatalog::v1::ReplaceTaxonomyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->ReplaceTaxonomy(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::datacatalog::v1::ReplaceTaxonomyRequest const&
-                 request) {
+             google::cloud::datacatalog::v1::ReplaceTaxonomyRequest const& request) {
         return stub_->ReplaceTaxonomy(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::datacatalog::v1::ImportTaxonomiesResponse>
-PolicyTagManagerSerializationConnectionImpl::ImportTaxonomies(
-    google::cloud::datacatalog::v1::ImportTaxonomiesRequest const& request) {
+PolicyTagManagerSerializationConnectionImpl::ImportTaxonomies(google::cloud::datacatalog::v1::ImportTaxonomiesRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->ImportTaxonomies(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::datacatalog::v1::ImportTaxonomiesRequest const&
-                 request) {
+             google::cloud::datacatalog::v1::ImportTaxonomiesRequest const& request) {
         return stub_->ImportTaxonomies(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::datacatalog::v1::ExportTaxonomiesResponse>
-PolicyTagManagerSerializationConnectionImpl::ExportTaxonomies(
-    google::cloud::datacatalog::v1::ExportTaxonomiesRequest const& request) {
+PolicyTagManagerSerializationConnectionImpl::ExportTaxonomies(google::cloud::datacatalog::v1::ExportTaxonomiesRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->ExportTaxonomies(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::datacatalog::v1::ExportTaxonomiesRequest const&
-                 request) {
+             google::cloud::datacatalog::v1::ExportTaxonomiesRequest const& request) {
         return stub_->ExportTaxonomies(context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::longrunning::Operation>
-PolicyTagManagerSerializationConnectionImpl::ListOperations(
-    google::longrunning::ListOperationsRequest request) {
+PolicyTagManagerSerializationConnectionImpl::ListOperations(google::longrunning::ListOperationsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListOperations(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::longrunning::Operation>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::longrunning::Operation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<
-           datacatalog_v1::PolicyTagManagerSerializationRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<datacatalog_v1::PolicyTagManagerSerializationRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::longrunning::ListOperationsRequest const& r) {
+          Options const& options, google::longrunning::ListOperationsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
@@ -140,8 +118,7 @@ PolicyTagManagerSerializationConnectionImpl::ListOperations(
             options, r, function_name);
       },
       [](google::longrunning::ListOperationsResponse r) {
-        std::vector<google::longrunning::Operation> result(
-            r.operations().size());
+        std::vector<google::longrunning::Operation> result(r.operations().size());
         auto& messages = *r.mutable_operations();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -149,8 +126,7 @@ PolicyTagManagerSerializationConnectionImpl::ListOperations(
 }
 
 StatusOr<google::longrunning::Operation>
-PolicyTagManagerSerializationConnectionImpl::GetOperation(
-    google::longrunning::GetOperationRequest const& request) {
+PolicyTagManagerSerializationConnectionImpl::GetOperation(google::longrunning::GetOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -162,8 +138,8 @@ PolicyTagManagerSerializationConnectionImpl::GetOperation(
       *current, request, __func__);
 }
 
-Status PolicyTagManagerSerializationConnectionImpl::DeleteOperation(
-    google::longrunning::DeleteOperationRequest const& request) {
+Status
+PolicyTagManagerSerializationConnectionImpl::DeleteOperation(google::longrunning::DeleteOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -175,8 +151,8 @@ Status PolicyTagManagerSerializationConnectionImpl::DeleteOperation(
       *current, request, __func__);
 }
 
-Status PolicyTagManagerSerializationConnectionImpl::CancelOperation(
-    google::longrunning::CancelOperationRequest const& request) {
+Status
+PolicyTagManagerSerializationConnectionImpl::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),

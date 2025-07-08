@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_WORKFLOWS_V1_WORKFLOWS_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_WORKFLOWS_V1_WORKFLOWS_CLIENT_H
 
-#include "google/cloud/workflows/v1/workflows_connection.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
+#include "google/cloud/workflows/v1/workflows_connection.h"
 #include <google/longrunning/operations.grpc.pb.h>
 #include <map>
 #include <memory>
@@ -66,8 +66,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class WorkflowsClient {
  public:
-  explicit WorkflowsClient(std::shared_ptr<WorkflowsConnection> connection,
-                           Options opts = {});
+  explicit WorkflowsClient(std::shared_ptr<WorkflowsConnection> connection, Options opts = {});
   ~WorkflowsClient();
 
   ///@{
@@ -121,8 +120,8 @@ class WorkflowsClient {
   /// [google.cloud.workflows.v1.Workflow]: @googleapis_reference_link{google/cloud/workflows/v1/workflows.proto#L125}
   ///
   // clang-format on
-  StreamRange<google::cloud::workflows::v1::Workflow> ListWorkflows(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::workflows::v1::Workflow>
+  ListWorkflows(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -161,9 +160,8 @@ class WorkflowsClient {
   /// [google.cloud.workflows.v1.Workflow]: @googleapis_reference_link{google/cloud/workflows/v1/workflows.proto#L125}
   ///
   // clang-format on
-  StreamRange<google::cloud::workflows::v1::Workflow> ListWorkflows(
-      google::cloud::workflows::v1::ListWorkflowsRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::workflows::v1::Workflow>
+  ListWorkflows(google::cloud::workflows::v1::ListWorkflowsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -188,8 +186,8 @@ class WorkflowsClient {
   /// [google.cloud.workflows.v1.Workflow]: @googleapis_reference_link{google/cloud/workflows/v1/workflows.proto#L125}
   ///
   // clang-format on
-  StatusOr<google::cloud::workflows::v1::Workflow> GetWorkflow(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::workflows::v1::Workflow>
+  GetWorkflow(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -218,9 +216,8 @@ class WorkflowsClient {
   /// [google.cloud.workflows.v1.Workflow]: @googleapis_reference_link{google/cloud/workflows/v1/workflows.proto#L125}
   ///
   // clang-format on
-  StatusOr<google::cloud::workflows::v1::Workflow> GetWorkflow(
-      google::cloud::workflows::v1::GetWorkflowRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::workflows::v1::Workflow>
+  GetWorkflow(google::cloud::workflows::v1::GetWorkflowRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -263,10 +260,8 @@ class WorkflowsClient {
   /// [google.cloud.workflows.v1.Workflow]: @googleapis_reference_link{google/cloud/workflows/v1/workflows.proto#L125}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::workflows::v1::Workflow>> CreateWorkflow(
-      std::string const& parent,
-      google::cloud::workflows::v1::Workflow const& workflow,
-      std::string const& workflow_id, Options opts = {});
+  future<StatusOr<google::cloud::workflows::v1::Workflow>>
+  CreateWorkflow(std::string const& parent, google::cloud::workflows::v1::Workflow const& workflow, std::string const& workflow_id, Options opts = {});
 
   // clang-format off
   ///
@@ -279,10 +274,8 @@ class WorkflowsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateWorkflow(
-      NoAwaitTag, std::string const& parent,
-      google::cloud::workflows::v1::Workflow const& workflow,
-      std::string const& workflow_id, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateWorkflow(NoAwaitTag, std::string const& parent, google::cloud::workflows::v1::Workflow const& workflow, std::string const& workflow_id, Options opts = {});
 
   // clang-format off
   ///
@@ -320,9 +313,8 @@ class WorkflowsClient {
   /// [google.cloud.workflows.v1.Workflow]: @googleapis_reference_link{google/cloud/workflows/v1/workflows.proto#L125}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::workflows::v1::Workflow>> CreateWorkflow(
-      google::cloud::workflows::v1::CreateWorkflowRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::workflows::v1::Workflow>>
+  CreateWorkflow(google::cloud::workflows::v1::CreateWorkflowRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -335,10 +327,8 @@ class WorkflowsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateWorkflow(
-      NoAwaitTag,
-      google::cloud::workflows::v1::CreateWorkflowRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateWorkflow(NoAwaitTag, google::cloud::workflows::v1::CreateWorkflowRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -349,8 +339,8 @@ class WorkflowsClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::workflows::v1::Workflow>> CreateWorkflow(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::workflows::v1::Workflow>>
+  CreateWorkflow(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -398,8 +388,8 @@ class WorkflowsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteWorkflow(
-      NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteWorkflow(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -438,9 +428,7 @@ class WorkflowsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::workflows::v1::OperationMetadata>>
-  DeleteWorkflow(
-      google::cloud::workflows::v1::DeleteWorkflowRequest const& request,
-      Options opts = {});
+  DeleteWorkflow(google::cloud::workflows::v1::DeleteWorkflowRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -453,10 +441,8 @@ class WorkflowsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteWorkflow(
-      NoAwaitTag,
-      google::cloud::workflows::v1::DeleteWorkflowRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteWorkflow(NoAwaitTag, google::cloud::workflows::v1::DeleteWorkflowRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -468,8 +454,7 @@ class WorkflowsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::workflows::v1::OperationMetadata>>
-  DeleteWorkflow(google::longrunning::Operation const& operation,
-                 Options opts = {});
+  DeleteWorkflow(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -506,9 +491,8 @@ class WorkflowsClient {
   /// [google.cloud.workflows.v1.Workflow]: @googleapis_reference_link{google/cloud/workflows/v1/workflows.proto#L125}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::workflows::v1::Workflow>> UpdateWorkflow(
-      google::cloud::workflows::v1::Workflow const& workflow,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  future<StatusOr<google::cloud::workflows::v1::Workflow>>
+  UpdateWorkflow(google::cloud::workflows::v1::Workflow const& workflow, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -521,9 +505,8 @@ class WorkflowsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateWorkflow(
-      NoAwaitTag, google::cloud::workflows::v1::Workflow const& workflow,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateWorkflow(NoAwaitTag, google::cloud::workflows::v1::Workflow const& workflow, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -563,9 +546,8 @@ class WorkflowsClient {
   /// [google.cloud.workflows.v1.Workflow]: @googleapis_reference_link{google/cloud/workflows/v1/workflows.proto#L125}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::workflows::v1::Workflow>> UpdateWorkflow(
-      google::cloud::workflows::v1::UpdateWorkflowRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::workflows::v1::Workflow>>
+  UpdateWorkflow(google::cloud::workflows::v1::UpdateWorkflowRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -578,10 +560,8 @@ class WorkflowsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateWorkflow(
-      NoAwaitTag,
-      google::cloud::workflows::v1::UpdateWorkflowRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateWorkflow(NoAwaitTag, google::cloud::workflows::v1::UpdateWorkflowRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -592,8 +572,8 @@ class WorkflowsClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::workflows::v1::Workflow>> UpdateWorkflow(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::workflows::v1::Workflow>>
+  UpdateWorkflow(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -631,9 +611,8 @@ class WorkflowsClient {
   /// [google.cloud.workflows.v1.Workflow]: @googleapis_reference_link{google/cloud/workflows/v1/workflows.proto#L125}
   ///
   // clang-format on
-  StreamRange<google::cloud::workflows::v1::Workflow> ListWorkflowRevisions(
-      google::cloud::workflows::v1::ListWorkflowRevisionsRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::workflows::v1::Workflow>
+  ListWorkflowRevisions(google::cloud::workflows::v1::ListWorkflowRevisionsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -671,8 +650,8 @@ class WorkflowsClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request, Options opts = {});
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -701,9 +680,8 @@ class WorkflowsClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -738,8 +716,8 @@ class WorkflowsClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -778,8 +756,8 @@ class WorkflowsClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -805,8 +783,8 @@ class WorkflowsClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -837,9 +815,8 @@ class WorkflowsClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -863,7 +840,8 @@ class WorkflowsClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status DeleteOperation(std::string const& name, Options opts = {});
+  Status
+  DeleteOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -892,9 +870,8 @@ class WorkflowsClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request,
-      Options opts = {});
+  Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<WorkflowsConnection> connection_;

@@ -42,34 +42,25 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockAddressesConnection
-    : public compute_addresses_v1::AddressesConnection {
+class MockAddressesConnection : public compute_addresses_v1::AddressesConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(
-      (StreamRange<std::pair<
-           std::string, google::cloud::cpp::compute::v1::AddressesScopedList>>),
-      AggregatedListAddresses,
-      (google::cloud::cpp::compute::addresses::v1::
-           AggregatedListAddressesRequest request),
-      (override));
+  MOCK_METHOD((StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::AddressesScopedList>>),
+  AggregatedListAddresses,
+  (google::cloud::cpp::compute::addresses::v1::AggregatedListAddressesRequest request), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteAddress(Matcher<google::cloud::cpp::compute::addresses::v1::DeleteAddressRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteAddress(Matcher<google::cloud::cpp::compute::addresses::v1::DeleteAddressRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-      DeleteAddress,
-      (google::cloud::cpp::compute::addresses::v1::DeleteAddressRequest const&
-           request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  DeleteAddress,
+  (google::cloud::cpp::compute::addresses::v1::DeleteAddressRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -77,48 +68,37 @@ class MockAddressesConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, DeleteAddress(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::Operation>, DeleteAddress,
-      (NoAwaitTag,
-       google::cloud::cpp::compute::addresses::v1::DeleteAddressRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+  DeleteAddress, (NoAwaitTag,
+    google::cloud::cpp::compute::addresses::v1::DeleteAddressRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteAddress(Matcher<google::cloud::cpp::compute::v1::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteAddress(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              DeleteAddress,
-              (google::cloud::cpp::compute::v1::Operation const& operation),
-              (override));
+  DeleteAddress, (
+    google::cloud::cpp::compute::v1::Operation const& operation), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::Address>, GetAddress,
-      (google::cloud::cpp::compute::addresses::v1::GetAddressRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Address>,
+  GetAddress,
+  (google::cloud::cpp::compute::addresses::v1::GetAddressRequest const& request), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// InsertAddress(Matcher<google::cloud::cpp::compute::addresses::v1::InsertAddressRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, InsertAddress(Matcher<google::cloud::cpp::compute::addresses::v1::InsertAddressRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-      InsertAddress,
-      (google::cloud::cpp::compute::addresses::v1::InsertAddressRequest const&
-           request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  InsertAddress,
+  (google::cloud::cpp::compute::addresses::v1::InsertAddressRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -126,46 +106,37 @@ class MockAddressesConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, InsertAddress(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::Operation>, InsertAddress,
-      (NoAwaitTag,
-       google::cloud::cpp::compute::addresses::v1::InsertAddressRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+  InsertAddress, (NoAwaitTag,
+    google::cloud::cpp::compute::addresses::v1::InsertAddressRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// InsertAddress(Matcher<google::cloud::cpp::compute::v1::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, InsertAddress(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              InsertAddress,
-              (google::cloud::cpp::compute::v1::Operation const& operation),
-              (override));
+  InsertAddress, (
+    google::cloud::cpp::compute::v1::Operation const& operation), (override));
 
   MOCK_METHOD((StreamRange<google::cloud::cpp::compute::v1::Address>),
-              ListAddresses,
-              (google::cloud::cpp::compute::addresses::v1::ListAddressesRequest
-                   request),
-              (override));
+  ListAddresses,
+  (google::cloud::cpp::compute::addresses::v1::ListAddressesRequest request), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// Move(Matcher<google::cloud::cpp::compute::addresses::v1::MoveRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, Move(Matcher<google::cloud::cpp::compute::addresses::v1::MoveRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::cpp::compute::v1::Operation>>, Move,
-      (google::cloud::cpp::compute::addresses::v1::MoveRequest const& request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  Move,
+  (google::cloud::cpp::compute::addresses::v1::MoveRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -173,39 +144,33 @@ class MockAddressesConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, Move(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::Operation>, Move,
-      (NoAwaitTag,
-       google::cloud::cpp::compute::addresses::v1::MoveRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+  Move, (NoAwaitTag,
+    google::cloud::cpp::compute::addresses::v1::MoveRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, Move(Matcher<google::cloud::cpp::compute::v1::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, Move(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              Move,
-              (google::cloud::cpp::compute::v1::Operation const& operation),
-              (override));
+  Move, (
+    google::cloud::cpp::compute::v1::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// SetLabels(Matcher<google::cloud::cpp::compute::addresses::v1::SetLabelsRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, SetLabels(Matcher<google::cloud::cpp::compute::addresses::v1::SetLabelsRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::cpp::compute::v1::Operation>>, SetLabels,
-      (google::cloud::cpp::compute::addresses::v1::SetLabelsRequest const&
-           request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  SetLabels,
+  (google::cloud::cpp::compute::addresses::v1::SetLabelsRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -213,25 +178,21 @@ class MockAddressesConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, SetLabels(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::Operation>, SetLabels,
-      (NoAwaitTag,
-       google::cloud::cpp::compute::addresses::v1::SetLabelsRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+  SetLabels, (NoAwaitTag,
+    google::cloud::cpp::compute::addresses::v1::SetLabelsRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// SetLabels(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
+  /// EXPECT_CALL(*mock, SetLabels(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              SetLabels,
-              (google::cloud::cpp::compute::v1::Operation const& operation),
-              (override));
+  SetLabels, (
+    google::cloud::cpp::compute::v1::Operation const& operation), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

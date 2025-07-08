@@ -24,8 +24,8 @@
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/identity/accesscontextmanager/v1/access_context_manager.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
+#include <google/identity/accesscontextmanager/v1/access_context_manager.grpc.pb.h>
 #include <memory>
 #include <utility>
 
@@ -38,266 +38,235 @@ class AccessContextManagerStub {
  public:
   virtual ~AccessContextManagerStub() = 0;
 
-  virtual StatusOr<
-      google::identity::accesscontextmanager::v1::ListAccessPoliciesResponse>
-  ListAccessPolicies(grpc::ClientContext& context, Options const& options,
-                     google::identity::accesscontextmanager::v1::
-                         ListAccessPoliciesRequest const& request) = 0;
+  virtual StatusOr<google::identity::accesscontextmanager::v1::ListAccessPoliciesResponse> ListAccessPolicies(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::identity::accesscontextmanager::v1::ListAccessPoliciesRequest const& request) = 0;
 
-  virtual StatusOr<google::identity::accesscontextmanager::v1::AccessPolicy>
-  GetAccessPolicy(
-      grpc::ClientContext& context, Options const& options,
-      google::identity::accesscontextmanager::v1::GetAccessPolicyRequest const&
-          request) = 0;
+  virtual StatusOr<google::identity::accesscontextmanager::v1::AccessPolicy> GetAccessPolicy(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::identity::accesscontextmanager::v1::GetAccessPolicyRequest const& request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>>
-  AsyncCreateAccessPolicy(
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateAccessPolicy(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::identity::accesscontextmanager::v1::AccessPolicy const&
-          request) = 0;
+      google::identity::accesscontextmanager::v1::AccessPolicy const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> CreateAccessPolicy(
-      grpc::ClientContext& context, Options options,
-      google::identity::accesscontextmanager::v1::AccessPolicy const&
-          request) = 0;
+      grpc::ClientContext& context,
+      Options options,
+      google::identity::accesscontextmanager::v1::AccessPolicy const& request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>>
-  AsyncUpdateAccessPolicy(google::cloud::CompletionQueue& cq,
-                          std::shared_ptr<grpc::ClientContext> context,
-                          google::cloud::internal::ImmutableOptions options,
-                          google::identity::accesscontextmanager::v1::
-                              UpdateAccessPolicyRequest const& request) = 0;
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncUpdateAccessPolicy(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::identity::accesscontextmanager::v1::UpdateAccessPolicyRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> UpdateAccessPolicy(
-      grpc::ClientContext& context, Options options,
-      google::identity::accesscontextmanager::v1::
-          UpdateAccessPolicyRequest const& request) = 0;
+      grpc::ClientContext& context,
+      Options options,
+      google::identity::accesscontextmanager::v1::UpdateAccessPolicyRequest const& request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>>
-  AsyncDeleteAccessPolicy(google::cloud::CompletionQueue& cq,
-                          std::shared_ptr<grpc::ClientContext> context,
-                          google::cloud::internal::ImmutableOptions options,
-                          google::identity::accesscontextmanager::v1::
-                              DeleteAccessPolicyRequest const& request) = 0;
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteAccessPolicy(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::identity::accesscontextmanager::v1::DeleteAccessPolicyRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> DeleteAccessPolicy(
-      grpc::ClientContext& context, Options options,
-      google::identity::accesscontextmanager::v1::
-          DeleteAccessPolicyRequest const& request) = 0;
+      grpc::ClientContext& context,
+      Options options,
+      google::identity::accesscontextmanager::v1::DeleteAccessPolicyRequest const& request) = 0;
 
-  virtual StatusOr<
-      google::identity::accesscontextmanager::v1::ListAccessLevelsResponse>
-  ListAccessLevels(
-      grpc::ClientContext& context, Options const& options,
-      google::identity::accesscontextmanager::v1::ListAccessLevelsRequest const&
-          request) = 0;
+  virtual StatusOr<google::identity::accesscontextmanager::v1::ListAccessLevelsResponse> ListAccessLevels(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::identity::accesscontextmanager::v1::ListAccessLevelsRequest const& request) = 0;
 
-  virtual StatusOr<google::identity::accesscontextmanager::v1::AccessLevel>
-  GetAccessLevel(
-      grpc::ClientContext& context, Options const& options,
-      google::identity::accesscontextmanager::v1::GetAccessLevelRequest const&
-          request) = 0;
+  virtual StatusOr<google::identity::accesscontextmanager::v1::AccessLevel> GetAccessLevel(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::identity::accesscontextmanager::v1::GetAccessLevelRequest const& request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>>
-  AsyncCreateAccessLevel(google::cloud::CompletionQueue& cq,
-                         std::shared_ptr<grpc::ClientContext> context,
-                         google::cloud::internal::ImmutableOptions options,
-                         google::identity::accesscontextmanager::v1::
-                             CreateAccessLevelRequest const& request) = 0;
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateAccessLevel(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::identity::accesscontextmanager::v1::CreateAccessLevelRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> CreateAccessLevel(
-      grpc::ClientContext& context, Options options,
-      google::identity::accesscontextmanager::v1::
-          CreateAccessLevelRequest const& request) = 0;
+      grpc::ClientContext& context,
+      Options options,
+      google::identity::accesscontextmanager::v1::CreateAccessLevelRequest const& request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>>
-  AsyncUpdateAccessLevel(google::cloud::CompletionQueue& cq,
-                         std::shared_ptr<grpc::ClientContext> context,
-                         google::cloud::internal::ImmutableOptions options,
-                         google::identity::accesscontextmanager::v1::
-                             UpdateAccessLevelRequest const& request) = 0;
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncUpdateAccessLevel(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::identity::accesscontextmanager::v1::UpdateAccessLevelRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> UpdateAccessLevel(
-      grpc::ClientContext& context, Options options,
-      google::identity::accesscontextmanager::v1::
-          UpdateAccessLevelRequest const& request) = 0;
+      grpc::ClientContext& context,
+      Options options,
+      google::identity::accesscontextmanager::v1::UpdateAccessLevelRequest const& request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>>
-  AsyncDeleteAccessLevel(google::cloud::CompletionQueue& cq,
-                         std::shared_ptr<grpc::ClientContext> context,
-                         google::cloud::internal::ImmutableOptions options,
-                         google::identity::accesscontextmanager::v1::
-                             DeleteAccessLevelRequest const& request) = 0;
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteAccessLevel(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::identity::accesscontextmanager::v1::DeleteAccessLevelRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> DeleteAccessLevel(
-      grpc::ClientContext& context, Options options,
-      google::identity::accesscontextmanager::v1::
-          DeleteAccessLevelRequest const& request) = 0;
+      grpc::ClientContext& context,
+      Options options,
+      google::identity::accesscontextmanager::v1::DeleteAccessLevelRequest const& request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>>
-  AsyncReplaceAccessLevels(google::cloud::CompletionQueue& cq,
-                           std::shared_ptr<grpc::ClientContext> context,
-                           google::cloud::internal::ImmutableOptions options,
-                           google::identity::accesscontextmanager::v1::
-                               ReplaceAccessLevelsRequest const& request) = 0;
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncReplaceAccessLevels(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::identity::accesscontextmanager::v1::ReplaceAccessLevelsRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> ReplaceAccessLevels(
-      grpc::ClientContext& context, Options options,
-      google::identity::accesscontextmanager::v1::
-          ReplaceAccessLevelsRequest const& request) = 0;
+      grpc::ClientContext& context,
+      Options options,
+      google::identity::accesscontextmanager::v1::ReplaceAccessLevelsRequest const& request) = 0;
 
-  virtual StatusOr<
-      google::identity::accesscontextmanager::v1::ListServicePerimetersResponse>
-  ListServicePerimeters(grpc::ClientContext& context, Options const& options,
-                        google::identity::accesscontextmanager::v1::
-                            ListServicePerimetersRequest const& request) = 0;
+  virtual StatusOr<google::identity::accesscontextmanager::v1::ListServicePerimetersResponse> ListServicePerimeters(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::identity::accesscontextmanager::v1::ListServicePerimetersRequest const& request) = 0;
 
-  virtual StatusOr<google::identity::accesscontextmanager::v1::ServicePerimeter>
-  GetServicePerimeter(grpc::ClientContext& context, Options const& options,
-                      google::identity::accesscontextmanager::v1::
-                          GetServicePerimeterRequest const& request) = 0;
+  virtual StatusOr<google::identity::accesscontextmanager::v1::ServicePerimeter> GetServicePerimeter(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::identity::accesscontextmanager::v1::GetServicePerimeterRequest const& request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>>
-  AsyncCreateServicePerimeter(
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateServicePerimeter(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::identity::accesscontextmanager::v1::
-          CreateServicePerimeterRequest const& request) = 0;
+      google::identity::accesscontextmanager::v1::CreateServicePerimeterRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> CreateServicePerimeter(
-      grpc::ClientContext& context, Options options,
-      google::identity::accesscontextmanager::v1::
-          CreateServicePerimeterRequest const& request) = 0;
+      grpc::ClientContext& context,
+      Options options,
+      google::identity::accesscontextmanager::v1::CreateServicePerimeterRequest const& request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>>
-  AsyncUpdateServicePerimeter(
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncUpdateServicePerimeter(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::identity::accesscontextmanager::v1::
-          UpdateServicePerimeterRequest const& request) = 0;
+      google::identity::accesscontextmanager::v1::UpdateServicePerimeterRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> UpdateServicePerimeter(
-      grpc::ClientContext& context, Options options,
-      google::identity::accesscontextmanager::v1::
-          UpdateServicePerimeterRequest const& request) = 0;
+      grpc::ClientContext& context,
+      Options options,
+      google::identity::accesscontextmanager::v1::UpdateServicePerimeterRequest const& request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>>
-  AsyncDeleteServicePerimeter(
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteServicePerimeter(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::identity::accesscontextmanager::v1::
-          DeleteServicePerimeterRequest const& request) = 0;
+      google::identity::accesscontextmanager::v1::DeleteServicePerimeterRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> DeleteServicePerimeter(
-      grpc::ClientContext& context, Options options,
-      google::identity::accesscontextmanager::v1::
-          DeleteServicePerimeterRequest const& request) = 0;
+      grpc::ClientContext& context,
+      Options options,
+      google::identity::accesscontextmanager::v1::DeleteServicePerimeterRequest const& request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>>
-  AsyncReplaceServicePerimeters(
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncReplaceServicePerimeters(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::identity::accesscontextmanager::v1::
-          ReplaceServicePerimetersRequest const& request) = 0;
+      google::identity::accesscontextmanager::v1::ReplaceServicePerimetersRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> ReplaceServicePerimeters(
-      grpc::ClientContext& context, Options options,
-      google::identity::accesscontextmanager::v1::
-          ReplaceServicePerimetersRequest const& request) = 0;
+      grpc::ClientContext& context,
+      Options options,
+      google::identity::accesscontextmanager::v1::ReplaceServicePerimetersRequest const& request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>>
-  AsyncCommitServicePerimeters(
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncCommitServicePerimeters(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::identity::accesscontextmanager::v1::
-          CommitServicePerimetersRequest const& request) = 0;
+      google::identity::accesscontextmanager::v1::CommitServicePerimetersRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> CommitServicePerimeters(
-      grpc::ClientContext& context, Options options,
-      google::identity::accesscontextmanager::v1::
-          CommitServicePerimetersRequest const& request) = 0;
+      grpc::ClientContext& context,
+      Options options,
+      google::identity::accesscontextmanager::v1::CommitServicePerimetersRequest const& request) = 0;
 
-  virtual StatusOr<google::identity::accesscontextmanager::v1::
-                       ListGcpUserAccessBindingsResponse>
-  ListGcpUserAccessBindings(
-      grpc::ClientContext& context, Options const& options,
-      google::identity::accesscontextmanager::v1::
-          ListGcpUserAccessBindingsRequest const& request) = 0;
+  virtual StatusOr<google::identity::accesscontextmanager::v1::ListGcpUserAccessBindingsResponse> ListGcpUserAccessBindings(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::identity::accesscontextmanager::v1::ListGcpUserAccessBindingsRequest const& request) = 0;
 
-  virtual StatusOr<
-      google::identity::accesscontextmanager::v1::GcpUserAccessBinding>
-  GetGcpUserAccessBinding(
-      grpc::ClientContext& context, Options const& options,
-      google::identity::accesscontextmanager::v1::
-          GetGcpUserAccessBindingRequest const& request) = 0;
+  virtual StatusOr<google::identity::accesscontextmanager::v1::GcpUserAccessBinding> GetGcpUserAccessBinding(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::identity::accesscontextmanager::v1::GetGcpUserAccessBindingRequest const& request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>>
-  AsyncCreateGcpUserAccessBinding(
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateGcpUserAccessBinding(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::identity::accesscontextmanager::v1::
-          CreateGcpUserAccessBindingRequest const& request) = 0;
+      google::identity::accesscontextmanager::v1::CreateGcpUserAccessBindingRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> CreateGcpUserAccessBinding(
-      grpc::ClientContext& context, Options options,
-      google::identity::accesscontextmanager::v1::
-          CreateGcpUserAccessBindingRequest const& request) = 0;
+      grpc::ClientContext& context,
+      Options options,
+      google::identity::accesscontextmanager::v1::CreateGcpUserAccessBindingRequest const& request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>>
-  AsyncUpdateGcpUserAccessBinding(
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncUpdateGcpUserAccessBinding(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::identity::accesscontextmanager::v1::
-          UpdateGcpUserAccessBindingRequest const& request) = 0;
+      google::identity::accesscontextmanager::v1::UpdateGcpUserAccessBindingRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> UpdateGcpUserAccessBinding(
-      grpc::ClientContext& context, Options options,
-      google::identity::accesscontextmanager::v1::
-          UpdateGcpUserAccessBindingRequest const& request) = 0;
+      grpc::ClientContext& context,
+      Options options,
+      google::identity::accesscontextmanager::v1::UpdateGcpUserAccessBindingRequest const& request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>>
-  AsyncDeleteGcpUserAccessBinding(
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteGcpUserAccessBinding(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::identity::accesscontextmanager::v1::
-          DeleteGcpUserAccessBindingRequest const& request) = 0;
+      google::identity::accesscontextmanager::v1::DeleteGcpUserAccessBindingRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> DeleteGcpUserAccessBinding(
-      grpc::ClientContext& context, Options options,
-      google::identity::accesscontextmanager::v1::
-          DeleteGcpUserAccessBindingRequest const& request) = 0;
+      grpc::ClientContext& context,
+      Options options,
+      google::identity::accesscontextmanager::v1::DeleteGcpUserAccessBindingRequest const& request) = 0;
 
   virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) = 0;
 
   virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) = 0;
 
-  virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
-  TestIamPermissions(
-      grpc::ClientContext& context, Options const& options,
+  virtual StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
+    google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
@@ -310,261 +279,234 @@ class AccessContextManagerStub {
 class DefaultAccessContextManagerStub : public AccessContextManagerStub {
  public:
   DefaultAccessContextManagerStub(
-      std::unique_ptr<google::identity::accesscontextmanager::v1::
-                          AccessContextManager::StubInterface>
-          grpc_stub,
-      std::unique_ptr<google::longrunning::Operations::StubInterface>
-          operations_stub)
+      std::unique_ptr<google::identity::accesscontextmanager::v1::AccessContextManager::StubInterface> grpc_stub,
+      std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub)
       : grpc_stub_(std::move(grpc_stub)),
         operations_stub_(std::move(operations_stub)) {}
 
-  StatusOr<
-      google::identity::accesscontextmanager::v1::ListAccessPoliciesResponse>
-  ListAccessPolicies(grpc::ClientContext& context, Options const& options,
-                     google::identity::accesscontextmanager::v1::
-                         ListAccessPoliciesRequest const& request) override;
+  StatusOr<google::identity::accesscontextmanager::v1::ListAccessPoliciesResponse> ListAccessPolicies(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::identity::accesscontextmanager::v1::ListAccessPoliciesRequest const& request) override;
 
-  StatusOr<google::identity::accesscontextmanager::v1::AccessPolicy>
-  GetAccessPolicy(
-      grpc::ClientContext& context, Options const& options,
-      google::identity::accesscontextmanager::v1::GetAccessPolicyRequest const&
-          request) override;
+  StatusOr<google::identity::accesscontextmanager::v1::AccessPolicy> GetAccessPolicy(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::identity::accesscontextmanager::v1::GetAccessPolicyRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateAccessPolicy(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::identity::accesscontextmanager::v1::AccessPolicy const& request)
-      override;
+      google::identity::accesscontextmanager::v1::AccessPolicy const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateAccessPolicy(
-      grpc::ClientContext& context, Options options,
-      google::identity::accesscontextmanager::v1::AccessPolicy const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::identity::accesscontextmanager::v1::AccessPolicy const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateAccessPolicy(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::identity::accesscontextmanager::v1::
-          UpdateAccessPolicyRequest const& request) override;
+      google::identity::accesscontextmanager::v1::UpdateAccessPolicyRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateAccessPolicy(
-      grpc::ClientContext& context, Options options,
-      google::identity::accesscontextmanager::v1::
-          UpdateAccessPolicyRequest const& request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::identity::accesscontextmanager::v1::UpdateAccessPolicyRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteAccessPolicy(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::identity::accesscontextmanager::v1::
-          DeleteAccessPolicyRequest const& request) override;
+      google::identity::accesscontextmanager::v1::DeleteAccessPolicyRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteAccessPolicy(
-      grpc::ClientContext& context, Options options,
-      google::identity::accesscontextmanager::v1::
-          DeleteAccessPolicyRequest const& request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::identity::accesscontextmanager::v1::DeleteAccessPolicyRequest const& request) override;
 
-  StatusOr<google::identity::accesscontextmanager::v1::ListAccessLevelsResponse>
-  ListAccessLevels(
-      grpc::ClientContext& context, Options const& options,
-      google::identity::accesscontextmanager::v1::ListAccessLevelsRequest const&
-          request) override;
+  StatusOr<google::identity::accesscontextmanager::v1::ListAccessLevelsResponse> ListAccessLevels(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::identity::accesscontextmanager::v1::ListAccessLevelsRequest const& request) override;
 
-  StatusOr<google::identity::accesscontextmanager::v1::AccessLevel>
-  GetAccessLevel(
-      grpc::ClientContext& context, Options const& options,
-      google::identity::accesscontextmanager::v1::GetAccessLevelRequest const&
-          request) override;
+  StatusOr<google::identity::accesscontextmanager::v1::AccessLevel> GetAccessLevel(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::identity::accesscontextmanager::v1::GetAccessLevelRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateAccessLevel(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::identity::accesscontextmanager::v1::
-          CreateAccessLevelRequest const& request) override;
+      google::identity::accesscontextmanager::v1::CreateAccessLevelRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateAccessLevel(
-      grpc::ClientContext& context, Options options,
-      google::identity::accesscontextmanager::v1::
-          CreateAccessLevelRequest const& request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::identity::accesscontextmanager::v1::CreateAccessLevelRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateAccessLevel(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::identity::accesscontextmanager::v1::
-          UpdateAccessLevelRequest const& request) override;
+      google::identity::accesscontextmanager::v1::UpdateAccessLevelRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateAccessLevel(
-      grpc::ClientContext& context, Options options,
-      google::identity::accesscontextmanager::v1::
-          UpdateAccessLevelRequest const& request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::identity::accesscontextmanager::v1::UpdateAccessLevelRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteAccessLevel(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::identity::accesscontextmanager::v1::
-          DeleteAccessLevelRequest const& request) override;
+      google::identity::accesscontextmanager::v1::DeleteAccessLevelRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteAccessLevel(
-      grpc::ClientContext& context, Options options,
-      google::identity::accesscontextmanager::v1::
-          DeleteAccessLevelRequest const& request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::identity::accesscontextmanager::v1::DeleteAccessLevelRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncReplaceAccessLevels(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::identity::accesscontextmanager::v1::
-          ReplaceAccessLevelsRequest const& request) override;
+      google::identity::accesscontextmanager::v1::ReplaceAccessLevelsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> ReplaceAccessLevels(
-      grpc::ClientContext& context, Options options,
-      google::identity::accesscontextmanager::v1::
-          ReplaceAccessLevelsRequest const& request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::identity::accesscontextmanager::v1::ReplaceAccessLevelsRequest const& request) override;
 
-  StatusOr<
-      google::identity::accesscontextmanager::v1::ListServicePerimetersResponse>
-  ListServicePerimeters(
-      grpc::ClientContext& context, Options const& options,
-      google::identity::accesscontextmanager::v1::
-          ListServicePerimetersRequest const& request) override;
+  StatusOr<google::identity::accesscontextmanager::v1::ListServicePerimetersResponse> ListServicePerimeters(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::identity::accesscontextmanager::v1::ListServicePerimetersRequest const& request) override;
 
-  StatusOr<google::identity::accesscontextmanager::v1::ServicePerimeter>
-  GetServicePerimeter(grpc::ClientContext& context, Options const& options,
-                      google::identity::accesscontextmanager::v1::
-                          GetServicePerimeterRequest const& request) override;
+  StatusOr<google::identity::accesscontextmanager::v1::ServicePerimeter> GetServicePerimeter(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::identity::accesscontextmanager::v1::GetServicePerimeterRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateServicePerimeter(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::identity::accesscontextmanager::v1::
-          CreateServicePerimeterRequest const& request) override;
+      google::identity::accesscontextmanager::v1::CreateServicePerimeterRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateServicePerimeter(
-      grpc::ClientContext& context, Options options,
-      google::identity::accesscontextmanager::v1::
-          CreateServicePerimeterRequest const& request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::identity::accesscontextmanager::v1::CreateServicePerimeterRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateServicePerimeter(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::identity::accesscontextmanager::v1::
-          UpdateServicePerimeterRequest const& request) override;
+      google::identity::accesscontextmanager::v1::UpdateServicePerimeterRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateServicePerimeter(
-      grpc::ClientContext& context, Options options,
-      google::identity::accesscontextmanager::v1::
-          UpdateServicePerimeterRequest const& request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::identity::accesscontextmanager::v1::UpdateServicePerimeterRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteServicePerimeter(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::identity::accesscontextmanager::v1::
-          DeleteServicePerimeterRequest const& request) override;
+      google::identity::accesscontextmanager::v1::DeleteServicePerimeterRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteServicePerimeter(
-      grpc::ClientContext& context, Options options,
-      google::identity::accesscontextmanager::v1::
-          DeleteServicePerimeterRequest const& request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::identity::accesscontextmanager::v1::DeleteServicePerimeterRequest const& request) override;
 
-  future<StatusOr<google::longrunning::Operation>>
-  AsyncReplaceServicePerimeters(
+  future<StatusOr<google::longrunning::Operation>> AsyncReplaceServicePerimeters(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::identity::accesscontextmanager::v1::
-          ReplaceServicePerimetersRequest const& request) override;
+      google::identity::accesscontextmanager::v1::ReplaceServicePerimetersRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> ReplaceServicePerimeters(
-      grpc::ClientContext& context, Options options,
-      google::identity::accesscontextmanager::v1::
-          ReplaceServicePerimetersRequest const& request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::identity::accesscontextmanager::v1::ReplaceServicePerimetersRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCommitServicePerimeters(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::identity::accesscontextmanager::v1::
-          CommitServicePerimetersRequest const& request) override;
+      google::identity::accesscontextmanager::v1::CommitServicePerimetersRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CommitServicePerimeters(
-      grpc::ClientContext& context, Options options,
-      google::identity::accesscontextmanager::v1::
-          CommitServicePerimetersRequest const& request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::identity::accesscontextmanager::v1::CommitServicePerimetersRequest const& request) override;
 
-  StatusOr<google::identity::accesscontextmanager::v1::
-               ListGcpUserAccessBindingsResponse>
-  ListGcpUserAccessBindings(
-      grpc::ClientContext& context, Options const& options,
-      google::identity::accesscontextmanager::v1::
-          ListGcpUserAccessBindingsRequest const& request) override;
+  StatusOr<google::identity::accesscontextmanager::v1::ListGcpUserAccessBindingsResponse> ListGcpUserAccessBindings(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::identity::accesscontextmanager::v1::ListGcpUserAccessBindingsRequest const& request) override;
 
-  StatusOr<google::identity::accesscontextmanager::v1::GcpUserAccessBinding>
-  GetGcpUserAccessBinding(
-      grpc::ClientContext& context, Options const& options,
-      google::identity::accesscontextmanager::v1::
-          GetGcpUserAccessBindingRequest const& request) override;
+  StatusOr<google::identity::accesscontextmanager::v1::GcpUserAccessBinding> GetGcpUserAccessBinding(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::identity::accesscontextmanager::v1::GetGcpUserAccessBindingRequest const& request) override;
 
-  future<StatusOr<google::longrunning::Operation>>
-  AsyncCreateGcpUserAccessBinding(
+  future<StatusOr<google::longrunning::Operation>> AsyncCreateGcpUserAccessBinding(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::identity::accesscontextmanager::v1::
-          CreateGcpUserAccessBindingRequest const& request) override;
+      google::identity::accesscontextmanager::v1::CreateGcpUserAccessBindingRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateGcpUserAccessBinding(
-      grpc::ClientContext& context, Options options,
-      google::identity::accesscontextmanager::v1::
-          CreateGcpUserAccessBindingRequest const& request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::identity::accesscontextmanager::v1::CreateGcpUserAccessBindingRequest const& request) override;
 
-  future<StatusOr<google::longrunning::Operation>>
-  AsyncUpdateGcpUserAccessBinding(
+  future<StatusOr<google::longrunning::Operation>> AsyncUpdateGcpUserAccessBinding(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::identity::accesscontextmanager::v1::
-          UpdateGcpUserAccessBindingRequest const& request) override;
+      google::identity::accesscontextmanager::v1::UpdateGcpUserAccessBindingRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateGcpUserAccessBinding(
-      grpc::ClientContext& context, Options options,
-      google::identity::accesscontextmanager::v1::
-          UpdateGcpUserAccessBindingRequest const& request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::identity::accesscontextmanager::v1::UpdateGcpUserAccessBindingRequest const& request) override;
 
-  future<StatusOr<google::longrunning::Operation>>
-  AsyncDeleteGcpUserAccessBinding(
+  future<StatusOr<google::longrunning::Operation>> AsyncDeleteGcpUserAccessBinding(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::identity::accesscontextmanager::v1::
-          DeleteGcpUserAccessBindingRequest const& request) override;
+      google::identity::accesscontextmanager::v1::DeleteGcpUserAccessBindingRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteGcpUserAccessBinding(
-      grpc::ClientContext& context, Options options,
-      google::identity::accesscontextmanager::v1::
-          DeleteGcpUserAccessBindingRequest const& request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::identity::accesscontextmanager::v1::DeleteGcpUserAccessBindingRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -580,11 +522,8 @@ class DefaultAccessContextManagerStub : public AccessContextManagerStub {
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  std::unique_ptr<google::identity::accesscontextmanager::v1::
-                      AccessContextManager::StubInterface>
-      grpc_stub_;
-  std::unique_ptr<google::longrunning::Operations::StubInterface>
-      operations_stub_;
+  std::unique_ptr<google::identity::accesscontextmanager::v1::AccessContextManager::StubInterface> grpc_stub_;
+  std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

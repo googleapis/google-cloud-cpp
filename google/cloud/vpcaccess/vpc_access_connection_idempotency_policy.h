@@ -26,16 +26,11 @@ namespace cloud {
 namespace vpcaccess {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use
-/// vpcaccess_v1::MakeDefaultVpcAccessServiceConnectionIdempotencyPolicy
-/// directly.
-using ::google::cloud::vpcaccess_v1::
-    MakeDefaultVpcAccessServiceConnectionIdempotencyPolicy;
+/// @deprecated Use vpcaccess_v1::MakeDefaultVpcAccessServiceConnectionIdempotencyPolicy directly.
+using ::google::cloud::vpcaccess_v1::MakeDefaultVpcAccessServiceConnectionIdempotencyPolicy;
 
-/// @deprecated Use vpcaccess_v1::VpcAccessServiceConnectionIdempotencyPolicy
-/// directly.
-using ::google::cloud::vpcaccess_v1::
-    VpcAccessServiceConnectionIdempotencyPolicy;
+/// @deprecated Use vpcaccess_v1::VpcAccessServiceConnectionIdempotencyPolicy directly.
+using ::google::cloud::vpcaccess_v1::VpcAccessServiceConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace vpcaccess

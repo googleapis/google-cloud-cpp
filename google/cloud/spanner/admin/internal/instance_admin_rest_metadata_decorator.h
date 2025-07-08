@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_ADMIN_INTERNAL_INSTANCE_ADMIN_REST_METADATA_DECORATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_ADMIN_INTERNAL_INSTANCE_ADMIN_REST_METADATA_DECORATOR_H
 
-#include "google/cloud/spanner/admin/internal/instance_admin_rest_stub.h"
 #include "google/cloud/future.h"
 #include "google/cloud/rest_options.h"
+#include "google/cloud/spanner/admin/internal/instance_admin_rest_stub.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.pb.h>
 #include <google/spanner/admin/instance/v1/spanner_instance_admin.pb.h>
@@ -40,216 +40,149 @@ class InstanceAdminRestMetadata : public InstanceAdminRestStub {
       std::shared_ptr<InstanceAdminRestStub> child,
       std::string api_client_header = "");
 
-  StatusOr<google::spanner::admin::instance::v1::ListInstanceConfigsResponse>
-  ListInstanceConfigs(
+  StatusOr<google::spanner::admin::instance::v1::ListInstanceConfigsResponse> ListInstanceConfigs(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::spanner::admin::instance::v1::ListInstanceConfigsRequest const&
-          request) override;
+      Options const& options, google::spanner::admin::instance::v1::ListInstanceConfigsRequest const& request) override;
 
-  StatusOr<google::spanner::admin::instance::v1::InstanceConfig>
-  GetInstanceConfig(
+  StatusOr<google::spanner::admin::instance::v1::InstanceConfig> GetInstanceConfig(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::spanner::admin::instance::v1::GetInstanceConfigRequest const&
-          request) override;
+      Options const& options, google::spanner::admin::instance::v1::GetInstanceConfigRequest const& request) override;
 
-  google::cloud::future<StatusOr<google::longrunning::Operation>>
-  AsyncCreateInstanceConfig(
+  google::cloud::future<StatusOr<google::longrunning::Operation>> AsyncCreateInstanceConfig(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::spanner::admin::instance::v1::CreateInstanceConfigRequest const&
-          request) override;
+      google::spanner::admin::instance::v1::CreateInstanceConfigRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateInstanceConfig(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::spanner::admin::instance::v1::CreateInstanceConfigRequest const&
-          request) override;
+      Options const& options, google::spanner::admin::instance::v1::CreateInstanceConfigRequest const& request) override;
 
-  google::cloud::future<StatusOr<google::longrunning::Operation>>
-  AsyncUpdateInstanceConfig(
+  google::cloud::future<StatusOr<google::longrunning::Operation>> AsyncUpdateInstanceConfig(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::spanner::admin::instance::v1::UpdateInstanceConfigRequest const&
-          request) override;
+      google::spanner::admin::instance::v1::UpdateInstanceConfigRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateInstanceConfig(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::spanner::admin::instance::v1::UpdateInstanceConfigRequest const&
-          request) override;
+      Options const& options, google::spanner::admin::instance::v1::UpdateInstanceConfigRequest const& request) override;
 
   Status DeleteInstanceConfig(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::spanner::admin::instance::v1::DeleteInstanceConfigRequest const&
-          request) override;
+      Options const& options, google::spanner::admin::instance::v1::DeleteInstanceConfigRequest const& request) override;
 
-  StatusOr<google::spanner::admin::instance::v1::
-               ListInstanceConfigOperationsResponse>
-  ListInstanceConfigOperations(
+  StatusOr<google::spanner::admin::instance::v1::ListInstanceConfigOperationsResponse> ListInstanceConfigOperations(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::spanner::admin::instance::v1::
-          ListInstanceConfigOperationsRequest const& request) override;
+      Options const& options, google::spanner::admin::instance::v1::ListInstanceConfigOperationsRequest const& request) override;
 
-  StatusOr<google::spanner::admin::instance::v1::ListInstancesResponse>
-  ListInstances(
+  StatusOr<google::spanner::admin::instance::v1::ListInstancesResponse> ListInstances(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::spanner::admin::instance::v1::ListInstancesRequest const& request)
-      override;
+      Options const& options, google::spanner::admin::instance::v1::ListInstancesRequest const& request) override;
 
-  StatusOr<google::spanner::admin::instance::v1::ListInstancePartitionsResponse>
-  ListInstancePartitions(
+  StatusOr<google::spanner::admin::instance::v1::ListInstancePartitionsResponse> ListInstancePartitions(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::spanner::admin::instance::v1::ListInstancePartitionsRequest const&
-          request) override;
+      Options const& options, google::spanner::admin::instance::v1::ListInstancePartitionsRequest const& request) override;
 
   StatusOr<google::spanner::admin::instance::v1::Instance> GetInstance(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::spanner::admin::instance::v1::GetInstanceRequest const& request)
-      override;
+      Options const& options, google::spanner::admin::instance::v1::GetInstanceRequest const& request) override;
 
-  google::cloud::future<StatusOr<google::longrunning::Operation>>
-  AsyncCreateInstance(
+  google::cloud::future<StatusOr<google::longrunning::Operation>> AsyncCreateInstance(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::spanner::admin::instance::v1::CreateInstanceRequest const&
-          request) override;
+      google::spanner::admin::instance::v1::CreateInstanceRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateInstance(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::spanner::admin::instance::v1::CreateInstanceRequest const&
-          request) override;
+      Options const& options, google::spanner::admin::instance::v1::CreateInstanceRequest const& request) override;
 
-  google::cloud::future<StatusOr<google::longrunning::Operation>>
-  AsyncUpdateInstance(
+  google::cloud::future<StatusOr<google::longrunning::Operation>> AsyncUpdateInstance(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::spanner::admin::instance::v1::UpdateInstanceRequest const&
-          request) override;
+      google::spanner::admin::instance::v1::UpdateInstanceRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateInstance(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::spanner::admin::instance::v1::UpdateInstanceRequest const&
-          request) override;
+      Options const& options, google::spanner::admin::instance::v1::UpdateInstanceRequest const& request) override;
 
   Status DeleteInstance(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::spanner::admin::instance::v1::DeleteInstanceRequest const&
-          request) override;
+      Options const& options, google::spanner::admin::instance::v1::DeleteInstanceRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::iam::v1::SetIamPolicyRequest const& request) override;
+      Options const& options, google::iam::v1::SetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::iam::v1::GetIamPolicyRequest const& request) override;
+      Options const& options, google::iam::v1::GetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::iam::v1::TestIamPermissionsRequest const& request) override;
+      Options const& options, google::iam::v1::TestIamPermissionsRequest const& request) override;
 
-  StatusOr<google::spanner::admin::instance::v1::InstancePartition>
-  GetInstancePartition(
+  StatusOr<google::spanner::admin::instance::v1::InstancePartition> GetInstancePartition(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::spanner::admin::instance::v1::GetInstancePartitionRequest const&
-          request) override;
+      Options const& options, google::spanner::admin::instance::v1::GetInstancePartitionRequest const& request) override;
 
-  google::cloud::future<StatusOr<google::longrunning::Operation>>
-  AsyncCreateInstancePartition(
+  google::cloud::future<StatusOr<google::longrunning::Operation>> AsyncCreateInstancePartition(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::spanner::admin::instance::v1::
-          CreateInstancePartitionRequest const& request) override;
+      google::spanner::admin::instance::v1::CreateInstancePartitionRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateInstancePartition(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::spanner::admin::instance::v1::
-          CreateInstancePartitionRequest const& request) override;
+      Options const& options, google::spanner::admin::instance::v1::CreateInstancePartitionRequest const& request) override;
 
   Status DeleteInstancePartition(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::spanner::admin::instance::v1::
-          DeleteInstancePartitionRequest const& request) override;
+      Options const& options, google::spanner::admin::instance::v1::DeleteInstancePartitionRequest const& request) override;
 
-  google::cloud::future<StatusOr<google::longrunning::Operation>>
-  AsyncUpdateInstancePartition(
+  google::cloud::future<StatusOr<google::longrunning::Operation>> AsyncUpdateInstancePartition(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::spanner::admin::instance::v1::
-          UpdateInstancePartitionRequest const& request) override;
+      google::spanner::admin::instance::v1::UpdateInstancePartitionRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateInstancePartition(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::spanner::admin::instance::v1::
-          UpdateInstancePartitionRequest const& request) override;
+      Options const& options, google::spanner::admin::instance::v1::UpdateInstancePartitionRequest const& request) override;
 
-  StatusOr<google::spanner::admin::instance::v1::
-               ListInstancePartitionOperationsResponse>
-  ListInstancePartitionOperations(
+  StatusOr<google::spanner::admin::instance::v1::ListInstancePartitionOperationsResponse> ListInstancePartitionOperations(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::spanner::admin::instance::v1::
-          ListInstancePartitionOperationsRequest const& request) override;
+      Options const& options, google::spanner::admin::instance::v1::ListInstancePartitionOperationsRequest const& request) override;
 
-  google::cloud::future<StatusOr<google::longrunning::Operation>>
-  AsyncMoveInstance(
+  google::cloud::future<StatusOr<google::longrunning::Operation>> AsyncMoveInstance(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::spanner::admin::instance::v1::MoveInstanceRequest const& request)
-      override;
+      google::spanner::admin::instance::v1::MoveInstanceRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> MoveInstance(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::spanner::admin::instance::v1::MoveInstanceRequest const& request)
-      override;
+      Options const& options, google::spanner::admin::instance::v1::MoveInstanceRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::longrunning::ListOperationsRequest const& request) override;
+      Options const& options, google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::longrunning::GetOperationRequest const& request) override;
+      Options const& options, google::longrunning::GetOperationRequest const& request) override;
 
   Status DeleteOperation(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::longrunning::DeleteOperationRequest const& request) override;
+      Options const& options, google::longrunning::DeleteOperationRequest const& request) override;
 
   Status CancelOperation(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::longrunning::CancelOperationRequest const& request) override;
+      Options const& options, google::longrunning::CancelOperationRequest const& request) override;
 
-  google::cloud::future<StatusOr<google::longrunning::Operation>>
-  AsyncGetOperation(
+  google::cloud::future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,

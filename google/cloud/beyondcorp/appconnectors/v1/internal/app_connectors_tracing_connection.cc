@@ -30,263 +30,200 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 AppConnectorsServiceTracingConnection::AppConnectorsServiceTracingConnection(
-    std::shared_ptr<beyondcorp_appconnectors_v1::AppConnectorsServiceConnection>
-        child)
+    std::shared_ptr<beyondcorp_appconnectors_v1::AppConnectorsServiceConnection> child)
     : child_(std::move(child)) {}
 
 StreamRange<google::cloud::beyondcorp::appconnectors::v1::AppConnector>
-AppConnectorsServiceTracingConnection::ListAppConnectors(
-    google::cloud::beyondcorp::appconnectors::v1::ListAppConnectorsRequest
-        request) {
-  auto span = internal::MakeSpan(
-      "beyondcorp_appconnectors_v1::AppConnectorsServiceConnection::"
-      "ListAppConnectors");
+AppConnectorsServiceTracingConnection::ListAppConnectors(google::cloud::beyondcorp::appconnectors::v1::ListAppConnectorsRequest request) {
+  auto span = internal::MakeSpan("beyondcorp_appconnectors_v1::AppConnectorsServiceConnection::ListAppConnectors");
   internal::OTelScope scope(span);
   auto sr = child_->ListAppConnectors(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::beyondcorp::appconnectors::v1::AppConnector>(
-      std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::beyondcorp::appconnectors::v1::AppConnector>(
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>
-AppConnectorsServiceTracingConnection::GetAppConnector(
-    google::cloud::beyondcorp::appconnectors::v1::GetAppConnectorRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "beyondcorp_appconnectors_v1::AppConnectorsServiceConnection::"
-      "GetAppConnector");
+AppConnectorsServiceTracingConnection::GetAppConnector(google::cloud::beyondcorp::appconnectors::v1::GetAppConnectorRequest const& request) {
+  auto span = internal::MakeSpan("beyondcorp_appconnectors_v1::AppConnectorsServiceConnection::GetAppConnector");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetAppConnector(request));
 }
 
 future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
-AppConnectorsServiceTracingConnection::CreateAppConnector(
-    google::cloud::beyondcorp::appconnectors::v1::
-        CreateAppConnectorRequest const& request) {
+AppConnectorsServiceTracingConnection::CreateAppConnector(google::cloud::beyondcorp::appconnectors::v1::CreateAppConnectorRequest const& request) {
   auto span = internal::MakeSpan(
-      "beyondcorp_appconnectors_v1::AppConnectorsServiceConnection::"
-      "CreateAppConnector");
+      "beyondcorp_appconnectors_v1::AppConnectorsServiceConnection::CreateAppConnector");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->CreateAppConnector(request));
+  return internal::EndSpan(std::move(span), child_->CreateAppConnector(request));
 }
 
 StatusOr<google::longrunning::Operation>
 AppConnectorsServiceTracingConnection::CreateAppConnector(
-    NoAwaitTag, google::cloud::beyondcorp::appconnectors::v1::
-                    CreateAppConnectorRequest const& request) {
+    NoAwaitTag, google::cloud::beyondcorp::appconnectors::v1::CreateAppConnectorRequest const& request) {
   auto span = internal::MakeSpan(
-      "beyondcorp_appconnectors_v1::AppConnectorsServiceConnection::"
-      "CreateAppConnector");
+      "beyondcorp_appconnectors_v1::AppConnectorsServiceConnection::CreateAppConnector");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span,
-                           child_->CreateAppConnector(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->CreateAppConnector(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
 AppConnectorsServiceTracingConnection::CreateAppConnector(
     google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
-      "beyondcorp_appconnectors_v1::AppConnectorsServiceConnection::"
-      "CreateAppConnector");
+      "beyondcorp_appconnectors_v1::AppConnectorsServiceConnection::CreateAppConnector");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->CreateAppConnector(operation));
+      child_->CreateAppConnector(operation));
 }
 
 future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
-AppConnectorsServiceTracingConnection::UpdateAppConnector(
-    google::cloud::beyondcorp::appconnectors::v1::
-        UpdateAppConnectorRequest const& request) {
+AppConnectorsServiceTracingConnection::UpdateAppConnector(google::cloud::beyondcorp::appconnectors::v1::UpdateAppConnectorRequest const& request) {
   auto span = internal::MakeSpan(
-      "beyondcorp_appconnectors_v1::AppConnectorsServiceConnection::"
-      "UpdateAppConnector");
+      "beyondcorp_appconnectors_v1::AppConnectorsServiceConnection::UpdateAppConnector");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->UpdateAppConnector(request));
+  return internal::EndSpan(std::move(span), child_->UpdateAppConnector(request));
 }
 
 StatusOr<google::longrunning::Operation>
 AppConnectorsServiceTracingConnection::UpdateAppConnector(
-    NoAwaitTag, google::cloud::beyondcorp::appconnectors::v1::
-                    UpdateAppConnectorRequest const& request) {
+    NoAwaitTag, google::cloud::beyondcorp::appconnectors::v1::UpdateAppConnectorRequest const& request) {
   auto span = internal::MakeSpan(
-      "beyondcorp_appconnectors_v1::AppConnectorsServiceConnection::"
-      "UpdateAppConnector");
+      "beyondcorp_appconnectors_v1::AppConnectorsServiceConnection::UpdateAppConnector");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span,
-                           child_->UpdateAppConnector(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->UpdateAppConnector(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
 AppConnectorsServiceTracingConnection::UpdateAppConnector(
     google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
-      "beyondcorp_appconnectors_v1::AppConnectorsServiceConnection::"
-      "UpdateAppConnector");
+      "beyondcorp_appconnectors_v1::AppConnectorsServiceConnection::UpdateAppConnector");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->UpdateAppConnector(operation));
+      child_->UpdateAppConnector(operation));
 }
 
-future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::
-                    AppConnectorOperationMetadata>>
-AppConnectorsServiceTracingConnection::DeleteAppConnector(
-    google::cloud::beyondcorp::appconnectors::v1::
-        DeleteAppConnectorRequest const& request) {
+future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnectorOperationMetadata>>
+AppConnectorsServiceTracingConnection::DeleteAppConnector(google::cloud::beyondcorp::appconnectors::v1::DeleteAppConnectorRequest const& request) {
   auto span = internal::MakeSpan(
-      "beyondcorp_appconnectors_v1::AppConnectorsServiceConnection::"
-      "DeleteAppConnector");
+      "beyondcorp_appconnectors_v1::AppConnectorsServiceConnection::DeleteAppConnector");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->DeleteAppConnector(request));
+  return internal::EndSpan(std::move(span), child_->DeleteAppConnector(request));
 }
 
 StatusOr<google::longrunning::Operation>
 AppConnectorsServiceTracingConnection::DeleteAppConnector(
-    NoAwaitTag, google::cloud::beyondcorp::appconnectors::v1::
-                    DeleteAppConnectorRequest const& request) {
+    NoAwaitTag, google::cloud::beyondcorp::appconnectors::v1::DeleteAppConnectorRequest const& request) {
   auto span = internal::MakeSpan(
-      "beyondcorp_appconnectors_v1::AppConnectorsServiceConnection::"
-      "DeleteAppConnector");
+      "beyondcorp_appconnectors_v1::AppConnectorsServiceConnection::DeleteAppConnector");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span,
-                           child_->DeleteAppConnector(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->DeleteAppConnector(
+      NoAwaitTag{}, request));
 }
 
-future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::
-                    AppConnectorOperationMetadata>>
+future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnectorOperationMetadata>>
 AppConnectorsServiceTracingConnection::DeleteAppConnector(
     google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
-      "beyondcorp_appconnectors_v1::AppConnectorsServiceConnection::"
-      "DeleteAppConnector");
+      "beyondcorp_appconnectors_v1::AppConnectorsServiceConnection::DeleteAppConnector");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->DeleteAppConnector(operation));
+      child_->DeleteAppConnector(operation));
 }
 
 future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
-AppConnectorsServiceTracingConnection::ReportStatus(
-    google::cloud::beyondcorp::appconnectors::v1::ReportStatusRequest const&
-        request) {
+AppConnectorsServiceTracingConnection::ReportStatus(google::cloud::beyondcorp::appconnectors::v1::ReportStatusRequest const& request) {
   auto span = internal::MakeSpan(
-      "beyondcorp_appconnectors_v1::AppConnectorsServiceConnection::"
-      "ReportStatus");
+      "beyondcorp_appconnectors_v1::AppConnectorsServiceConnection::ReportStatus");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->ReportStatus(request));
 }
 
 StatusOr<google::longrunning::Operation>
 AppConnectorsServiceTracingConnection::ReportStatus(
-    NoAwaitTag,
-    google::cloud::beyondcorp::appconnectors::v1::ReportStatusRequest const&
-        request) {
+    NoAwaitTag, google::cloud::beyondcorp::appconnectors::v1::ReportStatusRequest const& request) {
   auto span = internal::MakeSpan(
-      "beyondcorp_appconnectors_v1::AppConnectorsServiceConnection::"
-      "ReportStatus");
+      "beyondcorp_appconnectors_v1::AppConnectorsServiceConnection::ReportStatus");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->ReportStatus(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->ReportStatus(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
 AppConnectorsServiceTracingConnection::ReportStatus(
     google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
-      "beyondcorp_appconnectors_v1::AppConnectorsServiceConnection::"
-      "ReportStatus");
+      "beyondcorp_appconnectors_v1::AppConnectorsServiceConnection::ReportStatus");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->ReportStatus(operation));
+  return internal::EndSpan(std::move(span),
+      child_->ReportStatus(operation));
 }
 
 StreamRange<google::cloud::location::Location>
-AppConnectorsServiceTracingConnection::ListLocations(
-    google::cloud::location::ListLocationsRequest request) {
-  auto span = internal::MakeSpan(
-      "beyondcorp_appconnectors_v1::AppConnectorsServiceConnection::"
-      "ListLocations");
+AppConnectorsServiceTracingConnection::ListLocations(google::cloud::location::ListLocationsRequest request) {
+  auto span = internal::MakeSpan("beyondcorp_appconnectors_v1::AppConnectorsServiceConnection::ListLocations");
   internal::OTelScope scope(span);
   auto sr = child_->ListLocations(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::location::Location>(
-      std::move(span), std::move(sr));
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::location::Location>
-AppConnectorsServiceTracingConnection::GetLocation(
-    google::cloud::location::GetLocationRequest const& request) {
-  auto span = internal::MakeSpan(
-      "beyondcorp_appconnectors_v1::AppConnectorsServiceConnection::"
-      "GetLocation");
+AppConnectorsServiceTracingConnection::GetLocation(google::cloud::location::GetLocationRequest const& request) {
+  auto span = internal::MakeSpan("beyondcorp_appconnectors_v1::AppConnectorsServiceConnection::GetLocation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetLocation(request));
 }
 
 StatusOr<google::iam::v1::Policy>
-AppConnectorsServiceTracingConnection::SetIamPolicy(
-    google::iam::v1::SetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpan(
-      "beyondcorp_appconnectors_v1::AppConnectorsServiceConnection::"
-      "SetIamPolicy");
+AppConnectorsServiceTracingConnection::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) {
+  auto span = internal::MakeSpan("beyondcorp_appconnectors_v1::AppConnectorsServiceConnection::SetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->SetIamPolicy(request));
 }
 
 StatusOr<google::iam::v1::Policy>
-AppConnectorsServiceTracingConnection::GetIamPolicy(
-    google::iam::v1::GetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpan(
-      "beyondcorp_appconnectors_v1::AppConnectorsServiceConnection::"
-      "GetIamPolicy");
+AppConnectorsServiceTracingConnection::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) {
+  auto span = internal::MakeSpan("beyondcorp_appconnectors_v1::AppConnectorsServiceConnection::GetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetIamPolicy(request));
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-AppConnectorsServiceTracingConnection::TestIamPermissions(
-    google::iam::v1::TestIamPermissionsRequest const& request) {
-  auto span = internal::MakeSpan(
-      "beyondcorp_appconnectors_v1::AppConnectorsServiceConnection::"
-      "TestIamPermissions");
+AppConnectorsServiceTracingConnection::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) {
+  auto span = internal::MakeSpan("beyondcorp_appconnectors_v1::AppConnectorsServiceConnection::TestIamPermissions");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->TestIamPermissions(request));
 }
 
 StreamRange<google::longrunning::Operation>
-AppConnectorsServiceTracingConnection::ListOperations(
-    google::longrunning::ListOperationsRequest request) {
-  auto span = internal::MakeSpan(
-      "beyondcorp_appconnectors_v1::AppConnectorsServiceConnection::"
-      "ListOperations");
+AppConnectorsServiceTracingConnection::ListOperations(google::longrunning::ListOperationsRequest request) {
+  auto span = internal::MakeSpan("beyondcorp_appconnectors_v1::AppConnectorsServiceConnection::ListOperations");
   internal::OTelScope scope(span);
   auto sr = child_->ListOperations(std::move(request));
   return internal::MakeTracedStreamRange<google::longrunning::Operation>(
-      std::move(span), std::move(sr));
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::longrunning::Operation>
-AppConnectorsServiceTracingConnection::GetOperation(
-    google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpan(
-      "beyondcorp_appconnectors_v1::AppConnectorsServiceConnection::"
-      "GetOperation");
+AppConnectorsServiceTracingConnection::GetOperation(google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpan("beyondcorp_appconnectors_v1::AppConnectorsServiceConnection::GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOperation(request));
 }
 
-Status AppConnectorsServiceTracingConnection::DeleteOperation(
-    google::longrunning::DeleteOperationRequest const& request) {
-  auto span = internal::MakeSpan(
-      "beyondcorp_appconnectors_v1::AppConnectorsServiceConnection::"
-      "DeleteOperation");
+Status
+AppConnectorsServiceTracingConnection::DeleteOperation(google::longrunning::DeleteOperationRequest const& request) {
+  auto span = internal::MakeSpan("beyondcorp_appconnectors_v1::AppConnectorsServiceConnection::DeleteOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteOperation(request));
 }
 
-Status AppConnectorsServiceTracingConnection::CancelOperation(
-    google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpan(
-      "beyondcorp_appconnectors_v1::AppConnectorsServiceConnection::"
-      "CancelOperation");
+Status
+AppConnectorsServiceTracingConnection::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
+  auto span = internal::MakeSpan("beyondcorp_appconnectors_v1::AppConnectorsServiceConnection::CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CancelOperation(request));
 }
@@ -295,12 +232,10 @@ Status AppConnectorsServiceTracingConnection::CancelOperation(
 
 std::shared_ptr<beyondcorp_appconnectors_v1::AppConnectorsServiceConnection>
 MakeAppConnectorsServiceTracingConnection(
-    std::shared_ptr<beyondcorp_appconnectors_v1::AppConnectorsServiceConnection>
-        conn) {
+    std::shared_ptr<beyondcorp_appconnectors_v1::AppConnectorsServiceConnection> conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
-    conn = std::make_shared<AppConnectorsServiceTracingConnection>(
-        std::move(conn));
+    conn = std::make_shared<AppConnectorsServiceTracingConnection>(std::move(conn));
   }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;

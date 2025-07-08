@@ -30,11 +30,8 @@ namespace cloud {
 namespace osconfig_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use
-/// osconfig_agentendpoint_v1_mocks::MockAgentEndpointServiceConnection
-/// directly.
-using ::google::cloud::osconfig_agentendpoint_v1_mocks::
-    MockAgentEndpointServiceConnection;
+/// @deprecated Use osconfig_agentendpoint_v1_mocks::MockAgentEndpointServiceConnection directly.
+using ::google::cloud::osconfig_agentendpoint_v1_mocks::MockAgentEndpointServiceConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace osconfig_mocks

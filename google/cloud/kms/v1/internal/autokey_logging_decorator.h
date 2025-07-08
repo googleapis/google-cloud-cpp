@@ -36,8 +36,8 @@ class AutokeyLogging : public AutokeyStub {
  public:
   ~AutokeyLogging() override = default;
   AutokeyLogging(std::shared_ptr<AutokeyStub> child,
-                 TracingOptions tracing_options,
-                 std::set<std::string> const& components);
+                       TracingOptions tracing_options,
+                       std::set<std::string> const& components);
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateKeyHandle(
       google::cloud::CompletionQueue& cq,
@@ -46,39 +46,48 @@ class AutokeyLogging : public AutokeyStub {
       google::cloud::kms::v1::CreateKeyHandleRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateKeyHandle(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::cloud::kms::v1::CreateKeyHandleRequest const& request) override;
 
   StatusOr<google::cloud::kms::v1::KeyHandle> GetKeyHandle(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::kms::v1::GetKeyHandleRequest const& request) override;
 
   StatusOr<google::cloud::kms::v1::ListKeyHandlesResponse> ListKeyHandles(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::kms::v1::ListKeyHandlesRequest const& request) override;
 
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::location::ListLocationsRequest const& request) override;
 
   StatusOr<google::cloud::location::Location> GetLocation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::location::GetLocationRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(

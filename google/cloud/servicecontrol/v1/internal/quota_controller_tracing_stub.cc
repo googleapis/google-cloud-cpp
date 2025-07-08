@@ -32,12 +32,11 @@ QuotaControllerTracingStub::QuotaControllerTracingStub(
     std::shared_ptr<QuotaControllerStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
-StatusOr<google::api::servicecontrol::v1::AllocateQuotaResponse>
-QuotaControllerTracingStub::AllocateQuota(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::api::servicecontrol::v1::AllocateQuotaResponse> QuotaControllerTracingStub::AllocateQuota(
+    grpc::ClientContext& context,
+    Options const& options,
     google::api::servicecontrol::v1::AllocateQuotaRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.api.servicecontrol.v1.QuotaController", "AllocateQuota");
+  auto span = internal::MakeSpanGrpc("google.api.servicecontrol.v1.QuotaController", "AllocateQuota");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,

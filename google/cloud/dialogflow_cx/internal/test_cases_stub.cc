@@ -33,108 +33,111 @@ TestCasesStub::~TestCasesStub() = default;
 
 StatusOr<google::cloud::dialogflow::cx::v3::ListTestCasesResponse>
 DefaultTestCasesStub::ListTestCases(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::dialogflow::cx::v3::ListTestCasesRequest const& request) {
-  google::cloud::dialogflow::cx::v3::ListTestCasesResponse response;
-  auto status = grpc_stub_->ListTestCases(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::dialogflow::cx::v3::ListTestCasesRequest const& request) {
+    google::cloud::dialogflow::cx::v3::ListTestCasesResponse response;
+    auto status =
+        grpc_stub_->ListTestCases(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-Status DefaultTestCasesStub::BatchDeleteTestCases(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::dialogflow::cx::v3::BatchDeleteTestCasesRequest const&
-        request) {
-  google::protobuf::Empty response;
-  auto status = grpc_stub_->BatchDeleteTestCases(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return google::cloud::Status();
+Status
+DefaultTestCasesStub::BatchDeleteTestCases(
+  grpc::ClientContext& context, Options const&,
+  google::cloud::dialogflow::cx::v3::BatchDeleteTestCasesRequest const& request) {
+    google::protobuf::Empty response;
+    auto status =
+        grpc_stub_->BatchDeleteTestCases(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return google::cloud::Status();
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::TestCase>
 DefaultTestCasesStub::GetTestCase(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::dialogflow::cx::v3::GetTestCaseRequest const& request) {
-  google::cloud::dialogflow::cx::v3::TestCase response;
-  auto status = grpc_stub_->GetTestCase(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::dialogflow::cx::v3::GetTestCaseRequest const& request) {
+    google::cloud::dialogflow::cx::v3::TestCase response;
+    auto status =
+        grpc_stub_->GetTestCase(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::TestCase>
 DefaultTestCasesStub::CreateTestCase(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::dialogflow::cx::v3::CreateTestCaseRequest const& request) {
-  google::cloud::dialogflow::cx::v3::TestCase response;
-  auto status = grpc_stub_->CreateTestCase(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::dialogflow::cx::v3::CreateTestCaseRequest const& request) {
+    google::cloud::dialogflow::cx::v3::TestCase response;
+    auto status =
+        grpc_stub_->CreateTestCase(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::TestCase>
 DefaultTestCasesStub::UpdateTestCase(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::dialogflow::cx::v3::UpdateTestCaseRequest const& request) {
-  google::cloud::dialogflow::cx::v3::TestCase response;
-  auto status = grpc_stub_->UpdateTestCase(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::dialogflow::cx::v3::UpdateTestCaseRequest const& request) {
+    google::cloud::dialogflow::cx::v3::TestCase response;
+    auto status =
+        grpc_stub_->UpdateTestCase(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultTestCasesStub::AsyncRunTestCase(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::dialogflow::cx::v3::RunTestCaseRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::dialogflow::cx::v3::RunTestCaseRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::dialogflow::cx::v3::RunTestCaseRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::dialogflow::cx::v3::RunTestCaseRequest,
+                                    google::longrunning::Operation>(
       cq,
-      [this](
-          grpc::ClientContext* context,
-          google::cloud::dialogflow::cx::v3::RunTestCaseRequest const& request,
-          grpc::CompletionQueue* cq) {
+      [this](grpc::ClientContext* context,
+             google::cloud::dialogflow::cx::v3::RunTestCaseRequest const& request,
+             grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncRunTestCase(context, request, cq);
       },
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation> DefaultTestCasesStub::RunTestCase(
-    grpc::ClientContext& context, Options,
-    google::cloud::dialogflow::cx::v3::RunTestCaseRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->RunTestCase(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::longrunning::Operation>
+DefaultTestCasesStub::RunTestCase(
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::dialogflow::cx::v3::RunTestCaseRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->RunTestCase(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultTestCasesStub::AsyncBatchRunTestCases(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::dialogflow::cx::v3::BatchRunTestCasesRequest const&
-        request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::dialogflow::cx::v3::BatchRunTestCasesRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::dialogflow::cx::v3::BatchRunTestCasesRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::dialogflow::cx::v3::BatchRunTestCasesRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::dialogflow::cx::v3::BatchRunTestCasesRequest const&
-                 request,
+             google::cloud::dialogflow::cx::v3::BatchRunTestCasesRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncBatchRunTestCases(context, request, cq);
       },
@@ -143,171 +146,182 @@ DefaultTestCasesStub::AsyncBatchRunTestCases(
 
 StatusOr<google::longrunning::Operation>
 DefaultTestCasesStub::BatchRunTestCases(
-    grpc::ClientContext& context, Options,
-    google::cloud::dialogflow::cx::v3::BatchRunTestCasesRequest const&
-        request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->BatchRunTestCases(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::dialogflow::cx::v3::BatchRunTestCasesRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->BatchRunTestCases(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::CalculateCoverageResponse>
 DefaultTestCasesStub::CalculateCoverage(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::dialogflow::cx::v3::CalculateCoverageRequest const&
-        request) {
-  google::cloud::dialogflow::cx::v3::CalculateCoverageResponse response;
-  auto status = grpc_stub_->CalculateCoverage(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::dialogflow::cx::v3::CalculateCoverageRequest const& request) {
+    google::cloud::dialogflow::cx::v3::CalculateCoverageResponse response;
+    auto status =
+        grpc_stub_->CalculateCoverage(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultTestCasesStub::AsyncImportTestCases(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::dialogflow::cx::v3::ImportTestCasesRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::dialogflow::cx::v3::ImportTestCasesRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::dialogflow::cx::v3::ImportTestCasesRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::dialogflow::cx::v3::ImportTestCasesRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::dialogflow::cx::v3::ImportTestCasesRequest const&
-                 request,
+             google::cloud::dialogflow::cx::v3::ImportTestCasesRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncImportTestCases(context, request, cq);
       },
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation> DefaultTestCasesStub::ImportTestCases(
-    grpc::ClientContext& context, Options,
-    google::cloud::dialogflow::cx::v3::ImportTestCasesRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->ImportTestCases(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::longrunning::Operation>
+DefaultTestCasesStub::ImportTestCases(
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::dialogflow::cx::v3::ImportTestCasesRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->ImportTestCases(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultTestCasesStub::AsyncExportTestCases(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::dialogflow::cx::v3::ExportTestCasesRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::dialogflow::cx::v3::ExportTestCasesRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::dialogflow::cx::v3::ExportTestCasesRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::dialogflow::cx::v3::ExportTestCasesRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::dialogflow::cx::v3::ExportTestCasesRequest const&
-                 request,
+             google::cloud::dialogflow::cx::v3::ExportTestCasesRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncExportTestCases(context, request, cq);
       },
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation> DefaultTestCasesStub::ExportTestCases(
-    grpc::ClientContext& context, Options,
-    google::cloud::dialogflow::cx::v3::ExportTestCasesRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->ExportTestCases(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::longrunning::Operation>
+DefaultTestCasesStub::ExportTestCases(
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::dialogflow::cx::v3::ExportTestCasesRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->ExportTestCases(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::ListTestCaseResultsResponse>
 DefaultTestCasesStub::ListTestCaseResults(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::dialogflow::cx::v3::ListTestCaseResultsRequest const&
-        request) {
-  google::cloud::dialogflow::cx::v3::ListTestCaseResultsResponse response;
-  auto status = grpc_stub_->ListTestCaseResults(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::dialogflow::cx::v3::ListTestCaseResultsRequest const& request) {
+    google::cloud::dialogflow::cx::v3::ListTestCaseResultsResponse response;
+    auto status =
+        grpc_stub_->ListTestCaseResults(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::TestCaseResult>
 DefaultTestCasesStub::GetTestCaseResult(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::dialogflow::cx::v3::GetTestCaseResultRequest const&
-        request) {
-  google::cloud::dialogflow::cx::v3::TestCaseResult response;
-  auto status = grpc_stub_->GetTestCaseResult(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::dialogflow::cx::v3::GetTestCaseResultRequest const& request) {
+    google::cloud::dialogflow::cx::v3::TestCaseResult response;
+    auto status =
+        grpc_stub_->GetTestCaseResult(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 DefaultTestCasesStub::ListLocations(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::location::ListLocationsRequest const& request) {
-  google::cloud::location::ListLocationsResponse response;
-  auto status = locations_stub_->ListLocations(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::location::ListLocationsRequest const& request) {
+    google::cloud::location::ListLocationsResponse response;
+    auto status =
+        locations_stub_->ListLocations(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-StatusOr<google::cloud::location::Location> DefaultTestCasesStub::GetLocation(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::location::GetLocationRequest const& request) {
-  google::cloud::location::Location response;
-  auto status = locations_stub_->GetLocation(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::cloud::location::Location>
+DefaultTestCasesStub::GetLocation(
+  grpc::ClientContext& context, Options const&,
+  google::cloud::location::GetLocationRequest const& request) {
+    google::cloud::location::Location response;
+    auto status =
+        locations_stub_->GetLocation(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
 DefaultTestCasesStub::ListOperations(
-    grpc::ClientContext& context, Options const&,
-    google::longrunning::ListOperationsRequest const& request) {
-  google::longrunning::ListOperationsResponse response;
-  auto status = operations_stub_->ListOperations(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::longrunning::ListOperationsRequest const& request) {
+    google::longrunning::ListOperationsResponse response;
+    auto status =
+        operations_stub_->ListOperations(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-StatusOr<google::longrunning::Operation> DefaultTestCasesStub::GetOperation(
-    grpc::ClientContext& context, Options const&,
-    google::longrunning::GetOperationRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = operations_stub_->GetOperation(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::longrunning::Operation>
+DefaultTestCasesStub::GetOperation(
+  grpc::ClientContext& context, Options const&,
+  google::longrunning::GetOperationRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        operations_stub_->GetOperation(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-Status DefaultTestCasesStub::CancelOperation(
-    grpc::ClientContext& context, Options const&,
-    google::longrunning::CancelOperationRequest const& request) {
-  google::protobuf::Empty response;
-  auto status = operations_stub_->CancelOperation(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return google::cloud::Status();
+Status
+DefaultTestCasesStub::CancelOperation(
+  grpc::ClientContext& context, Options const&,
+  google::longrunning::CancelOperationRequest const& request) {
+    google::protobuf::Empty response;
+    auto status =
+        operations_stub_->CancelOperation(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return google::cloud::Status();
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -336,14 +350,13 @@ future<Status> DefaultTestCasesStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(
-             cq,
-             [this](grpc::ClientContext* context,
-                    google::longrunning::CancelOperationRequest const& request,
-                    grpc::CompletionQueue* cq) {
-               return operations_stub_->AsyncCancelOperation(context, request,
-                                                             cq);
-             },
-             request, std::move(context))
+      cq,
+      [this](grpc::ClientContext* context,
+             google::longrunning::CancelOperationRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return operations_stub_->AsyncCancelOperation(context, request, cq);
+      },
+      request, std::move(context))
       .then([](future<StatusOr<google::protobuf::Empty>> f) {
         return f.get().status();
       });

@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SUPPORT_V2_CASE_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SUPPORT_V2_CASE_CONNECTION_H
 
-#include "google/cloud/support/v2/case_connection_idempotency_policy.h"
-#include "google/cloud/support/v2/internal/case_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
+#include "google/cloud/support/v2/case_connection_idempotency_policy.h"
+#include "google/cloud/support/v2/internal/case_retry_traits.h"
 #include "google/cloud/version.h"
 #include <google/cloud/support/v2/case_service.pb.h>
 #include <memory>
@@ -62,14 +62,14 @@ class CaseServiceLimitedErrorCountRetryPolicy : public CaseServiceRetryPolicy {
    *     @p maximum_failures == 0.
    */
   explicit CaseServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   CaseServiceLimitedErrorCountRetryPolicy(
       CaseServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : CaseServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : CaseServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   CaseServiceLimitedErrorCountRetryPolicy(
       CaseServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : CaseServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : CaseServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -89,9 +89,7 @@ class CaseServiceLimitedErrorCountRetryPolicy : public CaseServiceRetryPolicy {
   using BaseType = CaseServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      support_v2_internal::CaseServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<support_v2_internal::CaseServiceRetryTraits> impl_;
 };
 
 /**
@@ -129,14 +127,12 @@ class CaseServiceLimitedTimeRetryPolicy : public CaseServiceRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit CaseServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  CaseServiceLimitedTimeRetryPolicy(
-      CaseServiceLimitedTimeRetryPolicy&& rhs) noexcept
-      : CaseServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  CaseServiceLimitedTimeRetryPolicy(
-      CaseServiceLimitedTimeRetryPolicy const& rhs) noexcept
-      : CaseServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  CaseServiceLimitedTimeRetryPolicy(CaseServiceLimitedTimeRetryPolicy&& rhs) noexcept
+    : CaseServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  CaseServiceLimitedTimeRetryPolicy(CaseServiceLimitedTimeRetryPolicy const& rhs) noexcept
+    : CaseServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -158,9 +154,7 @@ class CaseServiceLimitedTimeRetryPolicy : public CaseServiceRetryPolicy {
   using BaseType = CaseServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      support_v2_internal::CaseServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<support_v2_internal::CaseServiceRetryTraits> impl_;
 };
 
 /**
@@ -181,30 +175,29 @@ class CaseServiceConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<google::cloud::support::v2::Case> GetCase(
-      google::cloud::support::v2::GetCaseRequest const& request);
+  virtual StatusOr<google::cloud::support::v2::Case>
+  GetCase(google::cloud::support::v2::GetCaseRequest const& request);
 
-  virtual StreamRange<google::cloud::support::v2::Case> ListCases(
-      google::cloud::support::v2::ListCasesRequest request);
+  virtual StreamRange<google::cloud::support::v2::Case>
+  ListCases(google::cloud::support::v2::ListCasesRequest request);
 
-  virtual StreamRange<google::cloud::support::v2::Case> SearchCases(
-      google::cloud::support::v2::SearchCasesRequest request);
+  virtual StreamRange<google::cloud::support::v2::Case>
+  SearchCases(google::cloud::support::v2::SearchCasesRequest request);
 
-  virtual StatusOr<google::cloud::support::v2::Case> CreateCase(
-      google::cloud::support::v2::CreateCaseRequest const& request);
+  virtual StatusOr<google::cloud::support::v2::Case>
+  CreateCase(google::cloud::support::v2::CreateCaseRequest const& request);
 
-  virtual StatusOr<google::cloud::support::v2::Case> UpdateCase(
-      google::cloud::support::v2::UpdateCaseRequest const& request);
+  virtual StatusOr<google::cloud::support::v2::Case>
+  UpdateCase(google::cloud::support::v2::UpdateCaseRequest const& request);
 
-  virtual StatusOr<google::cloud::support::v2::Case> EscalateCase(
-      google::cloud::support::v2::EscalateCaseRequest const& request);
+  virtual StatusOr<google::cloud::support::v2::Case>
+  EscalateCase(google::cloud::support::v2::EscalateCaseRequest const& request);
 
-  virtual StatusOr<google::cloud::support::v2::Case> CloseCase(
-      google::cloud::support::v2::CloseCaseRequest const& request);
+  virtual StatusOr<google::cloud::support::v2::Case>
+  CloseCase(google::cloud::support::v2::CloseCaseRequest const& request);
 
   virtual StreamRange<google::cloud::support::v2::CaseClassification>
-  SearchCaseClassifications(
-      google::cloud::support::v2::SearchCaseClassificationsRequest request);
+  SearchCaseClassifications(google::cloud::support::v2::SearchCaseClassificationsRequest request);
 };
 
 /**

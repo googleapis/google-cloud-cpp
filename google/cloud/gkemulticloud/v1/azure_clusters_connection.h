@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GKEMULTICLOUD_V1_AZURE_CLUSTERS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GKEMULTICLOUD_V1_AZURE_CLUSTERS_CONNECTION_H
 
-#include "google/cloud/gkemulticloud/v1/azure_clusters_connection_idempotency_policy.h"
-#include "google/cloud/gkemulticloud/v1/internal/azure_clusters_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
+#include "google/cloud/gkemulticloud/v1/azure_clusters_connection_idempotency_policy.h"
+#include "google/cloud/gkemulticloud/v1/internal/azure_clusters_retry_traits.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -57,8 +57,7 @@ class AzureClustersRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class AzureClustersLimitedErrorCountRetryPolicy
-    : public AzureClustersRetryPolicy {
+class AzureClustersLimitedErrorCountRetryPolicy : public AzureClustersRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -68,14 +67,14 @@ class AzureClustersLimitedErrorCountRetryPolicy
    *     @p maximum_failures == 0.
    */
   explicit AzureClustersLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   AzureClustersLimitedErrorCountRetryPolicy(
       AzureClustersLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : AzureClustersLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : AzureClustersLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   AzureClustersLimitedErrorCountRetryPolicy(
       AzureClustersLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : AzureClustersLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : AzureClustersLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -95,9 +94,7 @@ class AzureClustersLimitedErrorCountRetryPolicy
   using BaseType = AzureClustersRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      gkemulticloud_v1_internal::AzureClustersRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<gkemulticloud_v1_internal::AzureClustersRetryTraits> impl_;
 };
 
 /**
@@ -135,14 +132,12 @@ class AzureClustersLimitedTimeRetryPolicy : public AzureClustersRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit AzureClustersLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  AzureClustersLimitedTimeRetryPolicy(
-      AzureClustersLimitedTimeRetryPolicy&& rhs) noexcept
-      : AzureClustersLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  AzureClustersLimitedTimeRetryPolicy(
-      AzureClustersLimitedTimeRetryPolicy const& rhs) noexcept
-      : AzureClustersLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  AzureClustersLimitedTimeRetryPolicy(AzureClustersLimitedTimeRetryPolicy&& rhs) noexcept
+    : AzureClustersLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  AzureClustersLimitedTimeRetryPolicy(AzureClustersLimitedTimeRetryPolicy const& rhs) noexcept
+    : AzureClustersLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -164,9 +159,7 @@ class AzureClustersLimitedTimeRetryPolicy : public AzureClustersRetryPolicy {
   using BaseType = AzureClustersRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      gkemulticloud_v1_internal::AzureClustersRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<gkemulticloud_v1_internal::AzureClustersRetryTraits> impl_;
 };
 
 /**
@@ -188,171 +181,121 @@ class AzureClustersConnection {
   virtual Options options() { return Options{}; }
 
   virtual future<StatusOr<google::cloud::gkemulticloud::v1::AzureClient>>
-  CreateAzureClient(
-      google::cloud::gkemulticloud::v1::CreateAzureClientRequest const&
-          request);
+  CreateAzureClient(google::cloud::gkemulticloud::v1::CreateAzureClientRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> CreateAzureClient(
-      NoAwaitTag,
-      google::cloud::gkemulticloud::v1::CreateAzureClientRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  CreateAzureClient(NoAwaitTag, google::cloud::gkemulticloud::v1::CreateAzureClientRequest const& request);
 
   virtual future<StatusOr<google::cloud::gkemulticloud::v1::AzureClient>>
-  CreateAzureClient(google::longrunning::Operation const& operation);
+  CreateAzureClient( google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::gkemulticloud::v1::AzureClient>
-  GetAzureClient(
-      google::cloud::gkemulticloud::v1::GetAzureClientRequest const& request);
+  GetAzureClient(google::cloud::gkemulticloud::v1::GetAzureClientRequest const& request);
 
   virtual StreamRange<google::cloud::gkemulticloud::v1::AzureClient>
-  ListAzureClients(
-      google::cloud::gkemulticloud::v1::ListAzureClientsRequest request);
+  ListAzureClients(google::cloud::gkemulticloud::v1::ListAzureClientsRequest request);
 
   virtual future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
-  DeleteAzureClient(
-      google::cloud::gkemulticloud::v1::DeleteAzureClientRequest const&
-          request);
+  DeleteAzureClient(google::cloud::gkemulticloud::v1::DeleteAzureClientRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> DeleteAzureClient(
-      NoAwaitTag,
-      google::cloud::gkemulticloud::v1::DeleteAzureClientRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  DeleteAzureClient(NoAwaitTag, google::cloud::gkemulticloud::v1::DeleteAzureClientRequest const& request);
 
   virtual future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
-  DeleteAzureClient(google::longrunning::Operation const& operation);
+  DeleteAzureClient( google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::gkemulticloud::v1::AzureCluster>>
-  CreateAzureCluster(
-      google::cloud::gkemulticloud::v1::CreateAzureClusterRequest const&
-          request);
+  CreateAzureCluster(google::cloud::gkemulticloud::v1::CreateAzureClusterRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> CreateAzureCluster(
-      NoAwaitTag,
-      google::cloud::gkemulticloud::v1::CreateAzureClusterRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  CreateAzureCluster(NoAwaitTag, google::cloud::gkemulticloud::v1::CreateAzureClusterRequest const& request);
 
   virtual future<StatusOr<google::cloud::gkemulticloud::v1::AzureCluster>>
-  CreateAzureCluster(google::longrunning::Operation const& operation);
+  CreateAzureCluster( google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::gkemulticloud::v1::AzureCluster>>
-  UpdateAzureCluster(
-      google::cloud::gkemulticloud::v1::UpdateAzureClusterRequest const&
-          request);
+  UpdateAzureCluster(google::cloud::gkemulticloud::v1::UpdateAzureClusterRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> UpdateAzureCluster(
-      NoAwaitTag,
-      google::cloud::gkemulticloud::v1::UpdateAzureClusterRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  UpdateAzureCluster(NoAwaitTag, google::cloud::gkemulticloud::v1::UpdateAzureClusterRequest const& request);
 
   virtual future<StatusOr<google::cloud::gkemulticloud::v1::AzureCluster>>
-  UpdateAzureCluster(google::longrunning::Operation const& operation);
+  UpdateAzureCluster( google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::gkemulticloud::v1::AzureCluster>
-  GetAzureCluster(
-      google::cloud::gkemulticloud::v1::GetAzureClusterRequest const& request);
+  GetAzureCluster(google::cloud::gkemulticloud::v1::GetAzureClusterRequest const& request);
 
   virtual StreamRange<google::cloud::gkemulticloud::v1::AzureCluster>
-  ListAzureClusters(
-      google::cloud::gkemulticloud::v1::ListAzureClustersRequest request);
+  ListAzureClusters(google::cloud::gkemulticloud::v1::ListAzureClustersRequest request);
 
   virtual future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
-  DeleteAzureCluster(
-      google::cloud::gkemulticloud::v1::DeleteAzureClusterRequest const&
-          request);
+  DeleteAzureCluster(google::cloud::gkemulticloud::v1::DeleteAzureClusterRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> DeleteAzureCluster(
-      NoAwaitTag,
-      google::cloud::gkemulticloud::v1::DeleteAzureClusterRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  DeleteAzureCluster(NoAwaitTag, google::cloud::gkemulticloud::v1::DeleteAzureClusterRequest const& request);
 
   virtual future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
-  DeleteAzureCluster(google::longrunning::Operation const& operation);
+  DeleteAzureCluster( google::longrunning::Operation const& operation);
 
-  virtual StatusOr<
-      google::cloud::gkemulticloud::v1::GenerateAzureClusterAgentTokenResponse>
-  GenerateAzureClusterAgentToken(
-      google::cloud::gkemulticloud::v1::
-          GenerateAzureClusterAgentTokenRequest const& request);
+  virtual StatusOr<google::cloud::gkemulticloud::v1::GenerateAzureClusterAgentTokenResponse>
+  GenerateAzureClusterAgentToken(google::cloud::gkemulticloud::v1::GenerateAzureClusterAgentTokenRequest const& request);
 
-  virtual StatusOr<
-      google::cloud::gkemulticloud::v1::GenerateAzureAccessTokenResponse>
-  GenerateAzureAccessToken(
-      google::cloud::gkemulticloud::v1::GenerateAzureAccessTokenRequest const&
-          request);
+  virtual StatusOr<google::cloud::gkemulticloud::v1::GenerateAzureAccessTokenResponse>
+  GenerateAzureAccessToken(google::cloud::gkemulticloud::v1::GenerateAzureAccessTokenRequest const& request);
 
   virtual future<StatusOr<google::cloud::gkemulticloud::v1::AzureNodePool>>
-  CreateAzureNodePool(
-      google::cloud::gkemulticloud::v1::CreateAzureNodePoolRequest const&
-          request);
+  CreateAzureNodePool(google::cloud::gkemulticloud::v1::CreateAzureNodePoolRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> CreateAzureNodePool(
-      NoAwaitTag,
-      google::cloud::gkemulticloud::v1::CreateAzureNodePoolRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  CreateAzureNodePool(NoAwaitTag, google::cloud::gkemulticloud::v1::CreateAzureNodePoolRequest const& request);
 
   virtual future<StatusOr<google::cloud::gkemulticloud::v1::AzureNodePool>>
-  CreateAzureNodePool(google::longrunning::Operation const& operation);
+  CreateAzureNodePool( google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::gkemulticloud::v1::AzureNodePool>>
-  UpdateAzureNodePool(
-      google::cloud::gkemulticloud::v1::UpdateAzureNodePoolRequest const&
-          request);
+  UpdateAzureNodePool(google::cloud::gkemulticloud::v1::UpdateAzureNodePoolRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> UpdateAzureNodePool(
-      NoAwaitTag,
-      google::cloud::gkemulticloud::v1::UpdateAzureNodePoolRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  UpdateAzureNodePool(NoAwaitTag, google::cloud::gkemulticloud::v1::UpdateAzureNodePoolRequest const& request);
 
   virtual future<StatusOr<google::cloud::gkemulticloud::v1::AzureNodePool>>
-  UpdateAzureNodePool(google::longrunning::Operation const& operation);
+  UpdateAzureNodePool( google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::gkemulticloud::v1::AzureNodePool>
-  GetAzureNodePool(
-      google::cloud::gkemulticloud::v1::GetAzureNodePoolRequest const& request);
+  GetAzureNodePool(google::cloud::gkemulticloud::v1::GetAzureNodePoolRequest const& request);
 
   virtual StreamRange<google::cloud::gkemulticloud::v1::AzureNodePool>
-  ListAzureNodePools(
-      google::cloud::gkemulticloud::v1::ListAzureNodePoolsRequest request);
+  ListAzureNodePools(google::cloud::gkemulticloud::v1::ListAzureNodePoolsRequest request);
 
   virtual future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
-  DeleteAzureNodePool(
-      google::cloud::gkemulticloud::v1::DeleteAzureNodePoolRequest const&
-          request);
+  DeleteAzureNodePool(google::cloud::gkemulticloud::v1::DeleteAzureNodePoolRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> DeleteAzureNodePool(
-      NoAwaitTag,
-      google::cloud::gkemulticloud::v1::DeleteAzureNodePoolRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  DeleteAzureNodePool(NoAwaitTag, google::cloud::gkemulticloud::v1::DeleteAzureNodePoolRequest const& request);
 
   virtual future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
-  DeleteAzureNodePool(google::longrunning::Operation const& operation);
+  DeleteAzureNodePool( google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::gkemulticloud::v1::AzureOpenIdConfig>
-  GetAzureOpenIdConfig(
-      google::cloud::gkemulticloud::v1::GetAzureOpenIdConfigRequest const&
-          request);
+  GetAzureOpenIdConfig(google::cloud::gkemulticloud::v1::GetAzureOpenIdConfigRequest const& request);
 
   virtual StatusOr<google::cloud::gkemulticloud::v1::AzureJsonWebKeys>
-  GetAzureJsonWebKeys(
-      google::cloud::gkemulticloud::v1::GetAzureJsonWebKeysRequest const&
-          request);
+  GetAzureJsonWebKeys(google::cloud::gkemulticloud::v1::GetAzureJsonWebKeysRequest const& request);
 
   virtual StatusOr<google::cloud::gkemulticloud::v1::AzureServerConfig>
-  GetAzureServerConfig(
-      google::cloud::gkemulticloud::v1::GetAzureServerConfigRequest const&
-          request);
+  GetAzureServerConfig(google::cloud::gkemulticloud::v1::GetAzureServerConfigRequest const& request);
 
-  virtual StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 
-  virtual Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request);
+  virtual Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
 
-  virtual Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request);
+  virtual Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request);
 };
 
 /**

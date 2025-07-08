@@ -21,12 +21,12 @@
 
 #include "google/cloud/billing/v1/cloud_billing_connection.h"
 #include "google/cloud/future.h"
-#include "google/cloud/iam_updater.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
+#include "google/cloud/iam_updater.h"
 #include <memory>
 #include <string>
 
@@ -64,8 +64,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class CloudBillingClient {
  public:
-  explicit CloudBillingClient(
-      std::shared_ptr<CloudBillingConnection> connection, Options opts = {});
+  explicit CloudBillingClient(std::shared_ptr<CloudBillingConnection> connection, Options opts = {});
   ~CloudBillingClient();
 
   ///@{
@@ -78,12 +77,10 @@ class CloudBillingClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(CloudBillingClient const& a,
-                         CloudBillingClient const& b) {
+  friend bool operator==(CloudBillingClient const& a, CloudBillingClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(CloudBillingClient const& a,
-                         CloudBillingClient const& b) {
+  friend bool operator!=(CloudBillingClient const& a, CloudBillingClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -113,8 +110,8 @@ class CloudBillingClient {
   /// [google.cloud.billing.v1.GetBillingAccountRequest]: @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L333}
   ///
   // clang-format on
-  StatusOr<google::cloud::billing::v1::BillingAccount> GetBillingAccount(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::billing::v1::BillingAccount>
+  GetBillingAccount(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -145,9 +142,8 @@ class CloudBillingClient {
   /// [google.cloud.billing.v1.GetBillingAccountRequest]: @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L333}
   ///
   // clang-format on
-  StatusOr<google::cloud::billing::v1::BillingAccount> GetBillingAccount(
-      google::cloud::billing::v1::GetBillingAccountRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::billing::v1::BillingAccount>
+  GetBillingAccount(google::cloud::billing::v1::GetBillingAccountRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -181,8 +177,8 @@ class CloudBillingClient {
   /// [google.cloud.billing.v1.ListBillingAccountsRequest]: @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L345}
   ///
   // clang-format on
-  StreamRange<google::cloud::billing::v1::BillingAccount> ListBillingAccounts(
-      Options opts = {});
+  StreamRange<google::cloud::billing::v1::BillingAccount>
+  ListBillingAccounts(Options opts = {});
 
   // clang-format off
   ///
@@ -222,8 +218,8 @@ class CloudBillingClient {
   /// [google.cloud.billing.v1.ListBillingAccountsRequest]: @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L345}
   ///
   // clang-format on
-  StreamRange<google::cloud::billing::v1::BillingAccount> ListBillingAccounts(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::billing::v1::BillingAccount>
+  ListBillingAccounts(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -263,9 +259,8 @@ class CloudBillingClient {
   /// [google.cloud.billing.v1.ListBillingAccountsRequest]: @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L345}
   ///
   // clang-format on
-  StreamRange<google::cloud::billing::v1::BillingAccount> ListBillingAccounts(
-      google::cloud::billing::v1::ListBillingAccountsRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::billing::v1::BillingAccount>
+  ListBillingAccounts(google::cloud::billing::v1::ListBillingAccountsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -296,10 +291,8 @@ class CloudBillingClient {
   /// [google.cloud.billing.v1.UpdateBillingAccountRequest]: @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L400}
   ///
   // clang-format on
-  StatusOr<google::cloud::billing::v1::BillingAccount> UpdateBillingAccount(
-      std::string const& name,
-      google::cloud::billing::v1::BillingAccount const& account,
-      Options opts = {});
+  StatusOr<google::cloud::billing::v1::BillingAccount>
+  UpdateBillingAccount(std::string const& name, google::cloud::billing::v1::BillingAccount const& account, Options opts = {});
 
   // clang-format off
   ///
@@ -333,9 +326,8 @@ class CloudBillingClient {
   /// [google.cloud.billing.v1.UpdateBillingAccountRequest]: @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L400}
   ///
   // clang-format on
-  StatusOr<google::cloud::billing::v1::BillingAccount> UpdateBillingAccount(
-      google::cloud::billing::v1::UpdateBillingAccountRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::billing::v1::BillingAccount>
+  UpdateBillingAccount(google::cloud::billing::v1::UpdateBillingAccountRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -376,9 +368,8 @@ class CloudBillingClient {
   /// [google.cloud.billing.v1.CreateBillingAccountRequest]: @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L385}
   ///
   // clang-format on
-  StatusOr<google::cloud::billing::v1::BillingAccount> CreateBillingAccount(
-      google::cloud::billing::v1::BillingAccount const& billing_account,
-      Options opts = {});
+  StatusOr<google::cloud::billing::v1::BillingAccount>
+  CreateBillingAccount(google::cloud::billing::v1::BillingAccount const& billing_account, Options opts = {});
 
   // clang-format off
   ///
@@ -423,9 +414,8 @@ class CloudBillingClient {
   /// [google.cloud.billing.v1.CreateBillingAccountRequest]: @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L385}
   ///
   // clang-format on
-  StatusOr<google::cloud::billing::v1::BillingAccount> CreateBillingAccount(
-      google::cloud::billing::v1::BillingAccount const& billing_account,
-      std::string const& parent, Options opts = {});
+  StatusOr<google::cloud::billing::v1::BillingAccount>
+  CreateBillingAccount(google::cloud::billing::v1::BillingAccount const& billing_account, std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -468,9 +458,8 @@ class CloudBillingClient {
   /// [google.cloud.billing.v1.CreateBillingAccountRequest]: @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L385}
   ///
   // clang-format on
-  StatusOr<google::cloud::billing::v1::BillingAccount> CreateBillingAccount(
-      google::cloud::billing::v1::CreateBillingAccountRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::billing::v1::BillingAccount>
+  CreateBillingAccount(google::cloud::billing::v1::CreateBillingAccountRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -551,9 +540,7 @@ class CloudBillingClient {
   ///
   // clang-format on
   StreamRange<google::cloud::billing::v1::ProjectBillingInfo>
-  ListProjectBillingInfo(
-      google::cloud::billing::v1::ListProjectBillingInfoRequest request,
-      Options opts = {});
+  ListProjectBillingInfo(google::cloud::billing::v1::ListProjectBillingInfoRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -617,9 +604,7 @@ class CloudBillingClient {
   ///
   // clang-format on
   StatusOr<google::cloud::billing::v1::ProjectBillingInfo>
-  GetProjectBillingInfo(
-      google::cloud::billing::v1::GetProjectBillingInfoRequest const& request,
-      Options opts = {});
+  GetProjectBillingInfo(google::cloud::billing::v1::GetProjectBillingInfoRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -680,10 +665,7 @@ class CloudBillingClient {
   ///
   // clang-format on
   StatusOr<google::cloud::billing::v1::ProjectBillingInfo>
-  UpdateProjectBillingInfo(std::string const& name,
-                           google::cloud::billing::v1::ProjectBillingInfo const&
-                               project_billing_info,
-                           Options opts = {});
+  UpdateProjectBillingInfo(std::string const& name, google::cloud::billing::v1::ProjectBillingInfo const& project_billing_info, Options opts = {});
 
   // clang-format off
   ///
@@ -744,10 +726,7 @@ class CloudBillingClient {
   ///
   // clang-format on
   StatusOr<google::cloud::billing::v1::ProjectBillingInfo>
-  UpdateProjectBillingInfo(
-      google::cloud::billing::v1::UpdateProjectBillingInfoRequest const&
-          request,
-      Options opts = {});
+  UpdateProjectBillingInfo(google::cloud::billing::v1::UpdateProjectBillingInfoRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -775,8 +754,8 @@ class CloudBillingClient {
   /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy> GetIamPolicy(std::string const& resource,
-                                                 Options opts = {});
+  StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(std::string const& resource, Options opts = {});
 
   // clang-format off
   ///
@@ -808,8 +787,8 @@ class CloudBillingClient {
   /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -842,9 +821,8 @@ class CloudBillingClient {
   /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L100}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      std::string const& resource, google::iam::v1::Policy const& policy,
-      Options opts = {});
+  StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(std::string const& resource, google::iam::v1::Policy const& policy, Options opts = {});
 
   /**
    * Updates the IAM policy for @p resource using an optimistic concurrency
@@ -866,9 +844,8 @@ class CloudBillingClient {
    *    backoff policies.
    * @return google::iam::v1::Policy
    */
-  StatusOr<google::iam::v1::Policy> SetIamPolicy(std::string const& resource,
-                                                 IamUpdater const& updater,
-                                                 Options opts = {});
+  StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(std::string const& resource, IamUpdater const& updater, Options opts = {});
 
   // clang-format off
   ///
@@ -901,8 +878,8 @@ class CloudBillingClient {
   /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L100}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -933,9 +910,8 @@ class CloudBillingClient {
   /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L153}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      std::string const& resource, std::vector<std::string> const& permissions,
-      Options opts = {});
+  StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(std::string const& resource, std::vector<std::string> const& permissions, Options opts = {});
 
   // clang-format off
   ///
@@ -966,9 +942,8 @@ class CloudBillingClient {
   /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L153}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request,
-      Options opts = {});
+  StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -997,9 +972,8 @@ class CloudBillingClient {
   /// [google.cloud.billing.v1.MoveBillingAccountRequest]: @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L478}
   ///
   // clang-format on
-  StatusOr<google::cloud::billing::v1::BillingAccount> MoveBillingAccount(
-      google::cloud::billing::v1::MoveBillingAccountRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::billing::v1::BillingAccount>
+  MoveBillingAccount(google::cloud::billing::v1::MoveBillingAccountRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<CloudBillingConnection> connection_;

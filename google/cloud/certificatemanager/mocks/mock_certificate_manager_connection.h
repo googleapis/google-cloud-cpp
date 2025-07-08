@@ -30,10 +30,8 @@ namespace cloud {
 namespace certificatemanager_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use
-/// certificatemanager_v1_mocks::MockCertificateManagerConnection directly.
-using ::google::cloud::certificatemanager_v1_mocks::
-    MockCertificateManagerConnection;
+/// @deprecated Use certificatemanager_v1_mocks::MockCertificateManagerConnection directly.
+using ::google::cloud::certificatemanager_v1_mocks::MockCertificateManagerConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace certificatemanager_mocks

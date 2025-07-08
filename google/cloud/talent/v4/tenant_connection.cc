@@ -17,17 +17,17 @@
 // source: google/cloud/talent/v4/tenant_service.proto
 
 #include "google/cloud/talent/v4/tenant_connection.h"
-#include "google/cloud/talent/v4/internal/tenant_connection_impl.h"
-#include "google/cloud/talent/v4/internal/tenant_option_defaults.h"
-#include "google/cloud/talent/v4/internal/tenant_stub_factory.h"
-#include "google/cloud/talent/v4/internal/tenant_tracing_connection.h"
-#include "google/cloud/talent/v4/tenant_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/talent/v4/internal/tenant_connection_impl.h"
+#include "google/cloud/talent/v4/internal/tenant_option_defaults.h"
+#include "google/cloud/talent/v4/internal/tenant_stub_factory.h"
+#include "google/cloud/talent/v4/internal/tenant_tracing_connection.h"
+#include "google/cloud/talent/v4/tenant_options.h"
 #include <memory>
 #include <utility>
 
@@ -44,7 +44,8 @@ TenantServiceConnection::CreateTenant(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::cloud::talent::v4::Tenant> TenantServiceConnection::GetTenant(
+StatusOr<google::cloud::talent::v4::Tenant>
+TenantServiceConnection::GetTenant(
     google::cloud::talent::v4::GetTenantRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -55,20 +56,20 @@ TenantServiceConnection::UpdateTenant(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status TenantServiceConnection::DeleteTenant(
+Status
+TenantServiceConnection::DeleteTenant(
     google::cloud::talent::v4::DeleteTenantRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::talent::v4::Tenant>
-TenantServiceConnection::ListTenants(
-    google::cloud::talent::v4::
-        ListTenantsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::talent::v4::Tenant> TenantServiceConnection::ListTenants(
+    google::cloud::talent::v4::ListTenantsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::talent::v4::Tenant>>();
 }
 
-StatusOr<google::longrunning::Operation> TenantServiceConnection::GetOperation(
+StatusOr<google::longrunning::Operation>
+TenantServiceConnection::GetOperation(
     google::longrunning::GetOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -76,17 +77,17 @@ StatusOr<google::longrunning::Operation> TenantServiceConnection::GetOperation(
 std::shared_ptr<TenantServiceConnection> MakeTenantServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 TenantServicePolicyOptionList>(options,
-                                                                __func__);
-  options = talent_v4_internal::TenantServiceDefaultOptions(std::move(options));
+      UnifiedCredentialsOptionList,
+      TenantServicePolicyOptionList>(options, __func__);
+  options = talent_v4_internal::TenantServiceDefaultOptions(
+      std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = talent_v4_internal::CreateDefaultTenantServiceStub(
-      std::move(auth), options);
+    std::move(auth), options);
   return talent_v4_internal::MakeTenantServiceTracingConnection(
       std::make_shared<talent_v4_internal::TenantServiceConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options)));
+      std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

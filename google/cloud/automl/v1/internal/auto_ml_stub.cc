@@ -33,13 +33,12 @@ AutoMlStub::~AutoMlStub() = default;
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultAutoMlStub::AsyncCreateDataset(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::automl::v1::CreateDatasetRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::automl::v1::CreateDatasetRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::automl::v1::CreateDatasetRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::automl::v1::CreateDatasetRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
              google::cloud::automl::v1::CreateDatasetRequest const& request,
@@ -49,60 +48,67 @@ DefaultAutoMlStub::AsyncCreateDataset(
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation> DefaultAutoMlStub::CreateDataset(
-    grpc::ClientContext& context, Options,
-    google::cloud::automl::v1::CreateDatasetRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->CreateDataset(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::longrunning::Operation>
+DefaultAutoMlStub::CreateDataset(
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::automl::v1::CreateDatasetRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->CreateDataset(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-StatusOr<google::cloud::automl::v1::Dataset> DefaultAutoMlStub::GetDataset(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::automl::v1::GetDatasetRequest const& request) {
-  google::cloud::automl::v1::Dataset response;
-  auto status = grpc_stub_->GetDataset(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::cloud::automl::v1::Dataset>
+DefaultAutoMlStub::GetDataset(
+  grpc::ClientContext& context, Options const&,
+  google::cloud::automl::v1::GetDatasetRequest const& request) {
+    google::cloud::automl::v1::Dataset response;
+    auto status =
+        grpc_stub_->GetDataset(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::automl::v1::ListDatasetsResponse>
 DefaultAutoMlStub::ListDatasets(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::automl::v1::ListDatasetsRequest const& request) {
-  google::cloud::automl::v1::ListDatasetsResponse response;
-  auto status = grpc_stub_->ListDatasets(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::automl::v1::ListDatasetsRequest const& request) {
+    google::cloud::automl::v1::ListDatasetsResponse response;
+    auto status =
+        grpc_stub_->ListDatasets(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-StatusOr<google::cloud::automl::v1::Dataset> DefaultAutoMlStub::UpdateDataset(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::automl::v1::UpdateDatasetRequest const& request) {
-  google::cloud::automl::v1::Dataset response;
-  auto status = grpc_stub_->UpdateDataset(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::cloud::automl::v1::Dataset>
+DefaultAutoMlStub::UpdateDataset(
+  grpc::ClientContext& context, Options const&,
+  google::cloud::automl::v1::UpdateDatasetRequest const& request) {
+    google::cloud::automl::v1::Dataset response;
+    auto status =
+        grpc_stub_->UpdateDataset(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultAutoMlStub::AsyncDeleteDataset(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::automl::v1::DeleteDatasetRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::automl::v1::DeleteDatasetRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::automl::v1::DeleteDatasetRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::automl::v1::DeleteDatasetRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
              google::cloud::automl::v1::DeleteDatasetRequest const& request,
@@ -112,26 +118,28 @@ DefaultAutoMlStub::AsyncDeleteDataset(
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation> DefaultAutoMlStub::DeleteDataset(
-    grpc::ClientContext& context, Options,
-    google::cloud::automl::v1::DeleteDatasetRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->DeleteDataset(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::longrunning::Operation>
+DefaultAutoMlStub::DeleteDataset(
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::automl::v1::DeleteDatasetRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->DeleteDataset(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultAutoMlStub::AsyncImportData(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::automl::v1::ImportDataRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::automl::v1::ImportDataRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::automl::v1::ImportDataRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::automl::v1::ImportDataRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
              google::cloud::automl::v1::ImportDataRequest const& request,
@@ -141,26 +149,28 @@ DefaultAutoMlStub::AsyncImportData(
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation> DefaultAutoMlStub::ImportData(
-    grpc::ClientContext& context, Options,
-    google::cloud::automl::v1::ImportDataRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->ImportData(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::longrunning::Operation>
+DefaultAutoMlStub::ImportData(
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::automl::v1::ImportDataRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->ImportData(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultAutoMlStub::AsyncExportData(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::automl::v1::ExportDataRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::automl::v1::ExportDataRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::automl::v1::ExportDataRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::automl::v1::ExportDataRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
              google::cloud::automl::v1::ExportDataRequest const& request,
@@ -170,38 +180,41 @@ DefaultAutoMlStub::AsyncExportData(
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation> DefaultAutoMlStub::ExportData(
-    grpc::ClientContext& context, Options,
-    google::cloud::automl::v1::ExportDataRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->ExportData(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::longrunning::Operation>
+DefaultAutoMlStub::ExportData(
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::automl::v1::ExportDataRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->ExportData(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::automl::v1::AnnotationSpec>
 DefaultAutoMlStub::GetAnnotationSpec(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::automl::v1::GetAnnotationSpecRequest const& request) {
-  google::cloud::automl::v1::AnnotationSpec response;
-  auto status = grpc_stub_->GetAnnotationSpec(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::automl::v1::GetAnnotationSpecRequest const& request) {
+    google::cloud::automl::v1::AnnotationSpec response;
+    auto status =
+        grpc_stub_->GetAnnotationSpec(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultAutoMlStub::AsyncCreateModel(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::automl::v1::CreateModelRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::automl::v1::CreateModelRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::automl::v1::CreateModelRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::automl::v1::CreateModelRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
              google::cloud::automl::v1::CreateModelRequest const& request,
@@ -211,49 +224,54 @@ DefaultAutoMlStub::AsyncCreateModel(
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation> DefaultAutoMlStub::CreateModel(
-    grpc::ClientContext& context, Options,
-    google::cloud::automl::v1::CreateModelRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->CreateModel(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::longrunning::Operation>
+DefaultAutoMlStub::CreateModel(
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::automl::v1::CreateModelRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->CreateModel(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-StatusOr<google::cloud::automl::v1::Model> DefaultAutoMlStub::GetModel(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::automl::v1::GetModelRequest const& request) {
-  google::cloud::automl::v1::Model response;
-  auto status = grpc_stub_->GetModel(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::cloud::automl::v1::Model>
+DefaultAutoMlStub::GetModel(
+  grpc::ClientContext& context, Options const&,
+  google::cloud::automl::v1::GetModelRequest const& request) {
+    google::cloud::automl::v1::Model response;
+    auto status =
+        grpc_stub_->GetModel(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::automl::v1::ListModelsResponse>
 DefaultAutoMlStub::ListModels(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::automl::v1::ListModelsRequest const& request) {
-  google::cloud::automl::v1::ListModelsResponse response;
-  auto status = grpc_stub_->ListModels(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::automl::v1::ListModelsRequest const& request) {
+    google::cloud::automl::v1::ListModelsResponse response;
+    auto status =
+        grpc_stub_->ListModels(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultAutoMlStub::AsyncDeleteModel(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::automl::v1::DeleteModelRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::automl::v1::DeleteModelRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::automl::v1::DeleteModelRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::automl::v1::DeleteModelRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
              google::cloud::automl::v1::DeleteModelRequest const& request,
@@ -263,37 +281,41 @@ DefaultAutoMlStub::AsyncDeleteModel(
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation> DefaultAutoMlStub::DeleteModel(
-    grpc::ClientContext& context, Options,
-    google::cloud::automl::v1::DeleteModelRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->DeleteModel(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::longrunning::Operation>
+DefaultAutoMlStub::DeleteModel(
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::automl::v1::DeleteModelRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->DeleteModel(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-StatusOr<google::cloud::automl::v1::Model> DefaultAutoMlStub::UpdateModel(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::automl::v1::UpdateModelRequest const& request) {
-  google::cloud::automl::v1::Model response;
-  auto status = grpc_stub_->UpdateModel(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::cloud::automl::v1::Model>
+DefaultAutoMlStub::UpdateModel(
+  grpc::ClientContext& context, Options const&,
+  google::cloud::automl::v1::UpdateModelRequest const& request) {
+    google::cloud::automl::v1::Model response;
+    auto status =
+        grpc_stub_->UpdateModel(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultAutoMlStub::AsyncDeployModel(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::automl::v1::DeployModelRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::automl::v1::DeployModelRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::automl::v1::DeployModelRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::automl::v1::DeployModelRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
              google::cloud::automl::v1::DeployModelRequest const& request,
@@ -303,26 +325,28 @@ DefaultAutoMlStub::AsyncDeployModel(
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation> DefaultAutoMlStub::DeployModel(
-    grpc::ClientContext& context, Options,
-    google::cloud::automl::v1::DeployModelRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->DeployModel(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::longrunning::Operation>
+DefaultAutoMlStub::DeployModel(
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::automl::v1::DeployModelRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->DeployModel(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultAutoMlStub::AsyncUndeployModel(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::automl::v1::UndeployModelRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::automl::v1::UndeployModelRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::automl::v1::UndeployModelRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::automl::v1::UndeployModelRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
              google::cloud::automl::v1::UndeployModelRequest const& request,
@@ -332,26 +356,28 @@ DefaultAutoMlStub::AsyncUndeployModel(
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation> DefaultAutoMlStub::UndeployModel(
-    grpc::ClientContext& context, Options,
-    google::cloud::automl::v1::UndeployModelRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->UndeployModel(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::longrunning::Operation>
+DefaultAutoMlStub::UndeployModel(
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::automl::v1::UndeployModelRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->UndeployModel(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultAutoMlStub::AsyncExportModel(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::automl::v1::ExportModelRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::automl::v1::ExportModelRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::automl::v1::ExportModelRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::automl::v1::ExportModelRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
              google::cloud::automl::v1::ExportModelRequest const& request,
@@ -361,39 +387,44 @@ DefaultAutoMlStub::AsyncExportModel(
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation> DefaultAutoMlStub::ExportModel(
-    grpc::ClientContext& context, Options,
-    google::cloud::automl::v1::ExportModelRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->ExportModel(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::longrunning::Operation>
+DefaultAutoMlStub::ExportModel(
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::automl::v1::ExportModelRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->ExportModel(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::automl::v1::ModelEvaluation>
 DefaultAutoMlStub::GetModelEvaluation(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::automl::v1::GetModelEvaluationRequest const& request) {
-  google::cloud::automl::v1::ModelEvaluation response;
-  auto status = grpc_stub_->GetModelEvaluation(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::automl::v1::GetModelEvaluationRequest const& request) {
+    google::cloud::automl::v1::ModelEvaluation response;
+    auto status =
+        grpc_stub_->GetModelEvaluation(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::automl::v1::ListModelEvaluationsResponse>
 DefaultAutoMlStub::ListModelEvaluations(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::automl::v1::ListModelEvaluationsRequest const& request) {
-  google::cloud::automl::v1::ListModelEvaluationsResponse response;
-  auto status = grpc_stub_->ListModelEvaluations(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::automl::v1::ListModelEvaluationsRequest const& request) {
+    google::cloud::automl::v1::ListModelEvaluationsResponse response;
+    auto status =
+        grpc_stub_->ListModelEvaluations(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -422,14 +453,13 @@ future<Status> DefaultAutoMlStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(
-             cq,
-             [this](grpc::ClientContext* context,
-                    google::longrunning::CancelOperationRequest const& request,
-                    grpc::CompletionQueue* cq) {
-               return operations_stub_->AsyncCancelOperation(context, request,
-                                                             cq);
-             },
-             request, std::move(context))
+      cq,
+      [this](grpc::ClientContext* context,
+             google::longrunning::CancelOperationRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return operations_stub_->AsyncCancelOperation(context, request, cq);
+      },
+      request, std::move(context))
       .then([](future<StatusOr<google::protobuf::Empty>> f) {
         return f.get().status();
       });

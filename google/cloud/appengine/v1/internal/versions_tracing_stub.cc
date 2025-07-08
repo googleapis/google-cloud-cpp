@@ -28,15 +28,15 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-VersionsTracingStub::VersionsTracingStub(std::shared_ptr<VersionsStub> child)
+VersionsTracingStub::VersionsTracingStub(
+    std::shared_ptr<VersionsStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
-StatusOr<google::appengine::v1::ListVersionsResponse>
-VersionsTracingStub::ListVersions(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::appengine::v1::ListVersionsResponse> VersionsTracingStub::ListVersions(
+    grpc::ClientContext& context,
+    Options const& options,
     google::appengine::v1::ListVersionsRequest const& request) {
-  auto span =
-      internal::MakeSpanGrpc("google.appengine.v1.Versions", "ListVersions");
+  auto span = internal::MakeSpanGrpc("google.appengine.v1.Versions", "ListVersions");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -44,10 +44,10 @@ VersionsTracingStub::ListVersions(
 }
 
 StatusOr<google::appengine::v1::Version> VersionsTracingStub::GetVersion(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::appengine::v1::GetVersionRequest const& request) {
-  auto span =
-      internal::MakeSpanGrpc("google.appengine.v1.Versions", "GetVersion");
+  auto span = internal::MakeSpanGrpc("google.appengine.v1.Versions", "GetVersion");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -56,23 +56,23 @@ StatusOr<google::appengine::v1::Version> VersionsTracingStub::GetVersion(
 
 future<StatusOr<google::longrunning::Operation>>
 VersionsTracingStub::AsyncCreateVersion(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::appengine::v1::CreateVersionRequest const& request) {
-  auto span =
-      internal::MakeSpanGrpc("google.appengine.v1.Versions", "CreateVersion");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::appengine::v1::CreateVersionRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.appengine.v1.Versions", "CreateVersion");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCreateVersion(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
-StatusOr<google::longrunning::Operation> VersionsTracingStub::CreateVersion(
-    grpc::ClientContext& context, Options options,
-    google::appengine::v1::CreateVersionRequest const& request) {
-  auto span =
-      internal::MakeSpanGrpc("google.appengine.v1.Versions", "CreateVersion");
+StatusOr<google::longrunning::Operation>
+VersionsTracingStub::CreateVersion(
+      grpc::ClientContext& context,
+      Options options,
+      google::appengine::v1::CreateVersionRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.appengine.v1.Versions", "CreateVersion");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -81,23 +81,23 @@ StatusOr<google::longrunning::Operation> VersionsTracingStub::CreateVersion(
 
 future<StatusOr<google::longrunning::Operation>>
 VersionsTracingStub::AsyncUpdateVersion(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::appengine::v1::UpdateVersionRequest const& request) {
-  auto span =
-      internal::MakeSpanGrpc("google.appengine.v1.Versions", "UpdateVersion");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::appengine::v1::UpdateVersionRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.appengine.v1.Versions", "UpdateVersion");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncUpdateVersion(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
-StatusOr<google::longrunning::Operation> VersionsTracingStub::UpdateVersion(
-    grpc::ClientContext& context, Options options,
-    google::appengine::v1::UpdateVersionRequest const& request) {
-  auto span =
-      internal::MakeSpanGrpc("google.appengine.v1.Versions", "UpdateVersion");
+StatusOr<google::longrunning::Operation>
+VersionsTracingStub::UpdateVersion(
+      grpc::ClientContext& context,
+      Options options,
+      google::appengine::v1::UpdateVersionRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.appengine.v1.Versions", "UpdateVersion");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -106,23 +106,23 @@ StatusOr<google::longrunning::Operation> VersionsTracingStub::UpdateVersion(
 
 future<StatusOr<google::longrunning::Operation>>
 VersionsTracingStub::AsyncDeleteVersion(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::appengine::v1::DeleteVersionRequest const& request) {
-  auto span =
-      internal::MakeSpanGrpc("google.appengine.v1.Versions", "DeleteVersion");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::appengine::v1::DeleteVersionRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.appengine.v1.Versions", "DeleteVersion");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncDeleteVersion(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
-StatusOr<google::longrunning::Operation> VersionsTracingStub::DeleteVersion(
-    grpc::ClientContext& context, Options options,
-    google::appengine::v1::DeleteVersionRequest const& request) {
-  auto span =
-      internal::MakeSpanGrpc("google.appengine.v1.Versions", "DeleteVersion");
+StatusOr<google::longrunning::Operation>
+VersionsTracingStub::DeleteVersion(
+      grpc::ClientContext& context,
+      Options options,
+      google::appengine::v1::DeleteVersionRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.appengine.v1.Versions", "DeleteVersion");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -139,7 +139,8 @@ VersionsTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncGetOperation(cq, context, std::move(options), request);
+  auto f = child_->AsyncGetOperation(
+      cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -152,8 +153,8 @@ future<Status> VersionsTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f =
-      child_->AsyncCancelOperation(cq, context, std::move(options), request);
+  auto f = child_->AsyncCancelOperation(
+      cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 

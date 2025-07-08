@@ -32,42 +32,33 @@ DataPolicyServiceTracingStub::DataPolicyServiceTracingStub(
     std::shared_ptr<DataPolicyServiceStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
-StatusOr<google::cloud::bigquery::datapolicies::v1::DataPolicy>
-DataPolicyServiceTracingStub::CreateDataPolicy(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::datapolicies::v1::CreateDataPolicyRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.bigquery.datapolicies.v1.DataPolicyService",
-      "CreateDataPolicy");
+StatusOr<google::cloud::bigquery::datapolicies::v1::DataPolicy> DataPolicyServiceTracingStub::CreateDataPolicy(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::datapolicies::v1::CreateDataPolicyRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.bigquery.datapolicies.v1.DataPolicyService", "CreateDataPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateDataPolicy(context, options, request));
 }
 
-StatusOr<google::cloud::bigquery::datapolicies::v1::DataPolicy>
-DataPolicyServiceTracingStub::UpdateDataPolicy(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::datapolicies::v1::UpdateDataPolicyRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.bigquery.datapolicies.v1.DataPolicyService",
-      "UpdateDataPolicy");
+StatusOr<google::cloud::bigquery::datapolicies::v1::DataPolicy> DataPolicyServiceTracingStub::UpdateDataPolicy(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::datapolicies::v1::UpdateDataPolicyRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.bigquery.datapolicies.v1.DataPolicyService", "UpdateDataPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->UpdateDataPolicy(context, options, request));
 }
 
-StatusOr<google::cloud::bigquery::datapolicies::v1::DataPolicy>
-DataPolicyServiceTracingStub::RenameDataPolicy(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::datapolicies::v1::RenameDataPolicyRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.bigquery.datapolicies.v1.DataPolicyService",
-      "RenameDataPolicy");
+StatusOr<google::cloud::bigquery::datapolicies::v1::DataPolicy> DataPolicyServiceTracingStub::RenameDataPolicy(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::datapolicies::v1::RenameDataPolicyRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.bigquery.datapolicies.v1.DataPolicyService", "RenameDataPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -75,40 +66,32 @@ DataPolicyServiceTracingStub::RenameDataPolicy(
 }
 
 Status DataPolicyServiceTracingStub::DeleteDataPolicy(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::datapolicies::v1::DeleteDataPolicyRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.bigquery.datapolicies.v1.DataPolicyService",
-      "DeleteDataPolicy");
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::datapolicies::v1::DeleteDataPolicyRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.bigquery.datapolicies.v1.DataPolicyService", "DeleteDataPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeleteDataPolicy(context, options, request));
 }
 
-StatusOr<google::cloud::bigquery::datapolicies::v1::DataPolicy>
-DataPolicyServiceTracingStub::GetDataPolicy(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::datapolicies::v1::GetDataPolicyRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.bigquery.datapolicies.v1.DataPolicyService",
-      "GetDataPolicy");
+StatusOr<google::cloud::bigquery::datapolicies::v1::DataPolicy> DataPolicyServiceTracingStub::GetDataPolicy(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::datapolicies::v1::GetDataPolicyRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.bigquery.datapolicies.v1.DataPolicyService", "GetDataPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetDataPolicy(context, options, request));
 }
 
-StatusOr<google::cloud::bigquery::datapolicies::v1::ListDataPoliciesResponse>
-DataPolicyServiceTracingStub::ListDataPolicies(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::datapolicies::v1::ListDataPoliciesRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.bigquery.datapolicies.v1.DataPolicyService",
-      "ListDataPolicies");
+StatusOr<google::cloud::bigquery::datapolicies::v1::ListDataPoliciesResponse> DataPolicyServiceTracingStub::ListDataPolicies(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::datapolicies::v1::ListDataPoliciesRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.bigquery.datapolicies.v1.DataPolicyService", "ListDataPolicies");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -116,11 +99,10 @@ DataPolicyServiceTracingStub::ListDataPolicies(
 }
 
 StatusOr<google::iam::v1::Policy> DataPolicyServiceTracingStub::GetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.bigquery.datapolicies.v1.DataPolicyService",
-      "GetIamPolicy");
+  auto span = internal::MakeSpanGrpc("google.cloud.bigquery.datapolicies.v1.DataPolicyService", "GetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -128,28 +110,25 @@ StatusOr<google::iam::v1::Policy> DataPolicyServiceTracingStub::GetIamPolicy(
 }
 
 StatusOr<google::iam::v1::Policy> DataPolicyServiceTracingStub::SetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.bigquery.datapolicies.v1.DataPolicyService",
-      "SetIamPolicy");
+  auto span = internal::MakeSpanGrpc("google.cloud.bigquery.datapolicies.v1.DataPolicyService", "SetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->SetIamPolicy(context, options, request));
 }
 
-StatusOr<google::iam::v1::TestIamPermissionsResponse>
-DataPolicyServiceTracingStub::TestIamPermissions(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::iam::v1::TestIamPermissionsResponse> DataPolicyServiceTracingStub::TestIamPermissions(
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.bigquery.datapolicies.v1.DataPolicyService",
-      "TestIamPermissions");
+  auto span = internal::MakeSpanGrpc("google.cloud.bigquery.datapolicies.v1.DataPolicyService", "TestIamPermissions");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->TestIamPermissions(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->TestIamPermissions(context, options, request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

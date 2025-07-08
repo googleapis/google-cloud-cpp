@@ -60,13 +60,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// and move-construction is a relatively efficient operation, consider using
 /// such a copy when using this class from multiple threads.
 ///
-/// [google.cloud.dialogflow.cx.v3.Generator]:
-/// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/generator.proto#L88}
+/// [google.cloud.dialogflow.cx.v3.Generator]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/generator.proto#L88}
 ///
 class GeneratorsClient {
  public:
-  explicit GeneratorsClient(std::shared_ptr<GeneratorsConnection> connection,
-                            Options opts = {});
+  explicit GeneratorsClient(std::shared_ptr<GeneratorsConnection> connection, Options opts = {});
   ~GeneratorsClient();
 
   ///@{
@@ -119,8 +117,8 @@ class GeneratorsClient {
   /// [google.cloud.dialogflow.cx.v3.ListGeneratorsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/generator.proto#L163}
   ///
   // clang-format on
-  StreamRange<google::cloud::dialogflow::cx::v3::Generator> ListGenerators(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::dialogflow::cx::v3::Generator>
+  ListGenerators(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -158,9 +156,8 @@ class GeneratorsClient {
   /// [google.cloud.dialogflow.cx.v3.ListGeneratorsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/generator.proto#L163}
   ///
   // clang-format on
-  StreamRange<google::cloud::dialogflow::cx::v3::Generator> ListGenerators(
-      google::cloud::dialogflow::cx::v3::ListGeneratorsRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::dialogflow::cx::v3::Generator>
+  ListGenerators(google::cloud::dialogflow::cx::v3::ListGeneratorsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -186,8 +183,8 @@ class GeneratorsClient {
   /// [google.cloud.dialogflow.cx.v3.GetGeneratorRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/generator.proto#L198}
   ///
   // clang-format on
-  StatusOr<google::cloud::dialogflow::cx::v3::Generator> GetGenerator(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::dialogflow::cx::v3::Generator>
+  GetGenerator(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -216,9 +213,8 @@ class GeneratorsClient {
   /// [google.cloud.dialogflow.cx.v3.GetGeneratorRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/generator.proto#L198}
   ///
   // clang-format on
-  StatusOr<google::cloud::dialogflow::cx::v3::Generator> GetGenerator(
-      google::cloud::dialogflow::cx::v3::GetGeneratorRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::dialogflow::cx::v3::Generator>
+  GetGenerator(google::cloud::dialogflow::cx::v3::GetGeneratorRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -244,10 +240,8 @@ class GeneratorsClient {
   /// [google.cloud.dialogflow.cx.v3.Generator]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/generator.proto#L88}
   ///
   // clang-format on
-  StatusOr<google::cloud::dialogflow::cx::v3::Generator> CreateGenerator(
-      std::string const& parent,
-      google::cloud::dialogflow::cx::v3::Generator const& generator,
-      Options opts = {});
+  StatusOr<google::cloud::dialogflow::cx::v3::Generator>
+  CreateGenerator(std::string const& parent, google::cloud::dialogflow::cx::v3::Generator const& generator, Options opts = {});
 
   // clang-format off
   ///
@@ -276,9 +270,8 @@ class GeneratorsClient {
   /// [google.cloud.dialogflow.cx.v3.Generator]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/generator.proto#L88}
   ///
   // clang-format on
-  StatusOr<google::cloud::dialogflow::cx::v3::Generator> CreateGenerator(
-      google::cloud::dialogflow::cx::v3::CreateGeneratorRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::dialogflow::cx::v3::Generator>
+  CreateGenerator(google::cloud::dialogflow::cx::v3::CreateGeneratorRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -304,9 +297,8 @@ class GeneratorsClient {
   /// [google.cloud.dialogflow.cx.v3.UpdateGeneratorRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/generator.proto#L236}
   ///
   // clang-format on
-  StatusOr<google::cloud::dialogflow::cx::v3::Generator> UpdateGenerator(
-      google::cloud::dialogflow::cx::v3::Generator const& generator,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::cloud::dialogflow::cx::v3::Generator>
+  UpdateGenerator(google::cloud::dialogflow::cx::v3::Generator const& generator, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -335,9 +327,8 @@ class GeneratorsClient {
   /// [google.cloud.dialogflow.cx.v3.UpdateGeneratorRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/generator.proto#L236}
   ///
   // clang-format on
-  StatusOr<google::cloud::dialogflow::cx::v3::Generator> UpdateGenerator(
-      google::cloud::dialogflow::cx::v3::UpdateGeneratorRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::dialogflow::cx::v3::Generator>
+  UpdateGenerator(google::cloud::dialogflow::cx::v3::UpdateGeneratorRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -360,7 +351,8 @@ class GeneratorsClient {
   /// [google.cloud.dialogflow.cx.v3.DeleteGeneratorRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/generator.proto#L250}
   ///
   // clang-format on
-  Status DeleteGenerator(std::string const& name, Options opts = {});
+  Status
+  DeleteGenerator(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -386,9 +378,8 @@ class GeneratorsClient {
   /// [google.cloud.dialogflow.cx.v3.DeleteGeneratorRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/generator.proto#L250}
   ///
   // clang-format on
-  Status DeleteGenerator(
-      google::cloud::dialogflow::cx::v3::DeleteGeneratorRequest const& request,
-      Options opts = {});
+  Status
+  DeleteGenerator(google::cloud::dialogflow::cx::v3::DeleteGeneratorRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -426,8 +417,8 @@ class GeneratorsClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request, Options opts = {});
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -456,9 +447,8 @@ class GeneratorsClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -493,8 +483,8 @@ class GeneratorsClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -533,8 +523,8 @@ class GeneratorsClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -560,8 +550,8 @@ class GeneratorsClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -592,9 +582,8 @@ class GeneratorsClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -628,7 +617,8 @@ class GeneratorsClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(std::string const& name, Options opts = {});
+  Status
+  CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -667,9 +657,8 @@ class GeneratorsClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request,
-      Options opts = {});
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<GeneratorsConnection> connection_;

@@ -63,9 +63,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class InstanceSettingsClient {
  public:
-  explicit InstanceSettingsClient(
-      std::shared_ptr<InstanceSettingsConnection> connection,
-      Options opts = {});
+  explicit InstanceSettingsClient(std::shared_ptr<InstanceSettingsConnection> connection, Options opts = {});
   ~InstanceSettingsClient();
 
   ///@{
@@ -78,12 +76,10 @@ class InstanceSettingsClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(InstanceSettingsClient const& a,
-                         InstanceSettingsClient const& b) {
+  friend bool operator==(InstanceSettingsClient const& a, InstanceSettingsClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(InstanceSettingsClient const& a,
-                         InstanceSettingsClient const& b) {
+  friend bool operator!=(InstanceSettingsClient const& a, InstanceSettingsClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -113,8 +109,7 @@ class InstanceSettingsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::InstanceSettings>
-  GetInstanceSettings(std::string const& project, std::string const& zone,
-                      Options opts = {});
+  GetInstanceSettings(std::string const& project, std::string const& zone, Options opts = {});
 
   // clang-format off
   ///
@@ -145,9 +140,7 @@ class InstanceSettingsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::InstanceSettings>
-  GetInstanceSettings(google::cloud::cpp::compute::instance_settings::v1::
-                          GetInstanceSettingsRequest const& request,
-                      Options opts = {});
+  GetInstanceSettings(google::cloud::cpp::compute::instance_settings::v1::GetInstanceSettingsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -182,11 +175,7 @@ class InstanceSettingsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchInstanceSettings(std::string const& project, std::string const& zone,
-                        std::string const& update_mask,
-                        google::cloud::cpp::compute::v1::InstanceSettings const&
-                            instance_settings_resource,
-                        Options opts = {});
+  PatchInstanceSettings(std::string const& project, std::string const& zone, std::string const& update_mask, google::cloud::cpp::compute::v1::InstanceSettings const& instance_settings_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -199,12 +188,8 @@ class InstanceSettingsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchInstanceSettings(
-      NoAwaitTag, std::string const& project, std::string const& zone,
-      std::string const& update_mask,
-      google::cloud::cpp::compute::v1::InstanceSettings const&
-          instance_settings_resource,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  PatchInstanceSettings(NoAwaitTag, std::string const& project, std::string const& zone, std::string const& update_mask, google::cloud::cpp::compute::v1::InstanceSettings const& instance_settings_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -241,9 +226,7 @@ class InstanceSettingsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchInstanceSettings(google::cloud::cpp::compute::instance_settings::v1::
-                            PatchInstanceSettingsRequest const& request,
-                        Options opts = {});
+  PatchInstanceSettings(google::cloud::cpp::compute::instance_settings::v1::PatchInstanceSettingsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -256,11 +239,8 @@ class InstanceSettingsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchInstanceSettings(
-      NoAwaitTag,
-      google::cloud::cpp::compute::instance_settings::v1::
-          PatchInstanceSettingsRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  PatchInstanceSettings(NoAwaitTag, google::cloud::cpp::compute::instance_settings::v1::PatchInstanceSettingsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -272,9 +252,7 @@ class InstanceSettingsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchInstanceSettings(
-      google::cloud::cpp::compute::v1::Operation const& operation,
-      Options opts = {});
+  PatchInstanceSettings(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
 
  private:
   std::shared_ptr<InstanceSettingsConnection> connection_;

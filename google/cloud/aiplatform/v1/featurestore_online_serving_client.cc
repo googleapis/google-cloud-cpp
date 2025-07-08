@@ -26,17 +26,14 @@ namespace aiplatform_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 FeaturestoreOnlineServingServiceClient::FeaturestoreOnlineServingServiceClient(
-    std::shared_ptr<FeaturestoreOnlineServingServiceConnection> connection,
-    Options opts)
+    std::shared_ptr<FeaturestoreOnlineServingServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
-FeaturestoreOnlineServingServiceClient::
-    ~FeaturestoreOnlineServingServiceClient() = default;
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
+FeaturestoreOnlineServingServiceClient::~FeaturestoreOnlineServingServiceClient() = default;
 
 StatusOr<google::cloud::aiplatform::v1::ReadFeatureValuesResponse>
-FeaturestoreOnlineServingServiceClient::ReadFeatureValues(
-    std::string const& entity_type, Options opts) {
+FeaturestoreOnlineServingServiceClient::ReadFeatureValues(std::string const& entity_type, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::ReadFeatureValuesRequest request;
   request.set_entity_type(entity_type);
@@ -44,16 +41,13 @@ FeaturestoreOnlineServingServiceClient::ReadFeatureValues(
 }
 
 StatusOr<google::cloud::aiplatform::v1::ReadFeatureValuesResponse>
-FeaturestoreOnlineServingServiceClient::ReadFeatureValues(
-    google::cloud::aiplatform::v1::ReadFeatureValuesRequest const& request,
-    Options opts) {
+FeaturestoreOnlineServingServiceClient::ReadFeatureValues(google::cloud::aiplatform::v1::ReadFeatureValuesRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ReadFeatureValues(request);
 }
 
 StreamRange<google::cloud::aiplatform::v1::ReadFeatureValuesResponse>
-FeaturestoreOnlineServingServiceClient::StreamingReadFeatureValues(
-    std::string const& entity_type, Options opts) {
+FeaturestoreOnlineServingServiceClient::StreamingReadFeatureValues(std::string const& entity_type, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::StreamingReadFeatureValuesRequest request;
   request.set_entity_type(entity_type);
@@ -61,20 +55,13 @@ FeaturestoreOnlineServingServiceClient::StreamingReadFeatureValues(
 }
 
 StreamRange<google::cloud::aiplatform::v1::ReadFeatureValuesResponse>
-FeaturestoreOnlineServingServiceClient::StreamingReadFeatureValues(
-    google::cloud::aiplatform::v1::StreamingReadFeatureValuesRequest const&
-        request,
-    Options opts) {
+FeaturestoreOnlineServingServiceClient::StreamingReadFeatureValues(google::cloud::aiplatform::v1::StreamingReadFeatureValuesRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->StreamingReadFeatureValues(request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::WriteFeatureValuesResponse>
-FeaturestoreOnlineServingServiceClient::WriteFeatureValues(
-    std::string const& entity_type,
-    std::vector<google::cloud::aiplatform::v1::WriteFeatureValuesPayload> const&
-        payloads,
-    Options opts) {
+FeaturestoreOnlineServingServiceClient::WriteFeatureValues(std::string const& entity_type, std::vector<google::cloud::aiplatform::v1::WriteFeatureValuesPayload> const& payloads, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::WriteFeatureValuesRequest request;
   request.set_entity_type(entity_type);
@@ -83,51 +70,43 @@ FeaturestoreOnlineServingServiceClient::WriteFeatureValues(
 }
 
 StatusOr<google::cloud::aiplatform::v1::WriteFeatureValuesResponse>
-FeaturestoreOnlineServingServiceClient::WriteFeatureValues(
-    google::cloud::aiplatform::v1::WriteFeatureValuesRequest const& request,
-    Options opts) {
+FeaturestoreOnlineServingServiceClient::WriteFeatureValues(google::cloud::aiplatform::v1::WriteFeatureValuesRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->WriteFeatureValues(request);
 }
 
 StreamRange<google::cloud::location::Location>
-FeaturestoreOnlineServingServiceClient::ListLocations(
-    google::cloud::location::ListLocationsRequest request, Options opts) {
+FeaturestoreOnlineServingServiceClient::ListLocations(google::cloud::location::ListLocationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListLocations(std::move(request));
 }
 
 StatusOr<google::cloud::location::Location>
-FeaturestoreOnlineServingServiceClient::GetLocation(
-    google::cloud::location::GetLocationRequest const& request, Options opts) {
+FeaturestoreOnlineServingServiceClient::GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetLocation(request);
 }
 
 StatusOr<google::iam::v1::Policy>
-FeaturestoreOnlineServingServiceClient::SetIamPolicy(
-    google::iam::v1::SetIamPolicyRequest const& request, Options opts) {
+FeaturestoreOnlineServingServiceClient::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetIamPolicy(request);
 }
 
 StatusOr<google::iam::v1::Policy>
-FeaturestoreOnlineServingServiceClient::GetIamPolicy(
-    google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
+FeaturestoreOnlineServingServiceClient::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetIamPolicy(request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-FeaturestoreOnlineServingServiceClient::TestIamPermissions(
-    google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
+FeaturestoreOnlineServingServiceClient::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->TestIamPermissions(request);
 }
 
 StreamRange<google::longrunning::Operation>
-FeaturestoreOnlineServingServiceClient::ListOperations(
-    std::string const& name, std::string const& filter, Options opts) {
+FeaturestoreOnlineServingServiceClient::ListOperations(std::string const& name, std::string const& filter, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::ListOperationsRequest request;
   request.set_name(name);
@@ -136,15 +115,13 @@ FeaturestoreOnlineServingServiceClient::ListOperations(
 }
 
 StreamRange<google::longrunning::Operation>
-FeaturestoreOnlineServingServiceClient::ListOperations(
-    google::longrunning::ListOperationsRequest request, Options opts) {
+FeaturestoreOnlineServingServiceClient::ListOperations(google::longrunning::ListOperationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOperations(std::move(request));
 }
 
 StatusOr<google::longrunning::Operation>
-FeaturestoreOnlineServingServiceClient::GetOperation(std::string const& name,
-                                                     Options opts) {
+FeaturestoreOnlineServingServiceClient::GetOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
@@ -152,43 +129,41 @@ FeaturestoreOnlineServingServiceClient::GetOperation(std::string const& name,
 }
 
 StatusOr<google::longrunning::Operation>
-FeaturestoreOnlineServingServiceClient::GetOperation(
-    google::longrunning::GetOperationRequest const& request, Options opts) {
+FeaturestoreOnlineServingServiceClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }
 
-Status FeaturestoreOnlineServingServiceClient::DeleteOperation(
-    std::string const& name, Options opts) {
+Status
+FeaturestoreOnlineServingServiceClient::DeleteOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::DeleteOperationRequest request;
   request.set_name(name);
   return connection_->DeleteOperation(request);
 }
 
-Status FeaturestoreOnlineServingServiceClient::DeleteOperation(
-    google::longrunning::DeleteOperationRequest const& request, Options opts) {
+Status
+FeaturestoreOnlineServingServiceClient::DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteOperation(request);
 }
 
-Status FeaturestoreOnlineServingServiceClient::CancelOperation(
-    std::string const& name, Options opts) {
+Status
+FeaturestoreOnlineServingServiceClient::CancelOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::CancelOperationRequest request;
   request.set_name(name);
   return connection_->CancelOperation(request);
 }
 
-Status FeaturestoreOnlineServingServiceClient::CancelOperation(
-    google::longrunning::CancelOperationRequest const& request, Options opts) {
+Status
+FeaturestoreOnlineServingServiceClient::CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelOperation(request);
 }
 
 StatusOr<google::longrunning::Operation>
-FeaturestoreOnlineServingServiceClient::WaitOperation(
-    google::longrunning::WaitOperationRequest const& request, Options opts) {
+FeaturestoreOnlineServingServiceClient::WaitOperation(google::longrunning::WaitOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->WaitOperation(request);
 }

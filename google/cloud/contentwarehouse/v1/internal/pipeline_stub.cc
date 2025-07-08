@@ -33,17 +33,15 @@ PipelineServiceStub::~PipelineServiceStub() = default;
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultPipelineServiceStub::AsyncRunPipeline(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::contentwarehouse::v1::RunPipelineRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::contentwarehouse::v1::RunPipelineRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::contentwarehouse::v1::RunPipelineRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::contentwarehouse::v1::RunPipelineRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::contentwarehouse::v1::RunPipelineRequest const&
-                 request,
+             google::cloud::contentwarehouse::v1::RunPipelineRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncRunPipeline(context, request, cq);
       },
@@ -52,26 +50,29 @@ DefaultPipelineServiceStub::AsyncRunPipeline(
 
 StatusOr<google::longrunning::Operation>
 DefaultPipelineServiceStub::RunPipeline(
-    grpc::ClientContext& context, Options,
-    google::cloud::contentwarehouse::v1::RunPipelineRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->RunPipeline(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::contentwarehouse::v1::RunPipelineRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->RunPipeline(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::longrunning::Operation>
 DefaultPipelineServiceStub::GetOperation(
-    grpc::ClientContext& context, Options const&,
-    google::longrunning::GetOperationRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = operations_stub_->GetOperation(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::longrunning::GetOperationRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        operations_stub_->GetOperation(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -100,14 +101,13 @@ future<Status> DefaultPipelineServiceStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(
-             cq,
-             [this](grpc::ClientContext* context,
-                    google::longrunning::CancelOperationRequest const& request,
-                    grpc::CompletionQueue* cq) {
-               return operations_stub_->AsyncCancelOperation(context, request,
-                                                             cq);
-             },
-             request, std::move(context))
+      cq,
+      [this](grpc::ClientContext* context,
+             google::longrunning::CancelOperationRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return operations_stub_->AsyncCancelOperation(context, request, cq);
+      },
+      request, std::move(context))
       .then([](future<StatusOr<google::protobuf::Empty>> f) {
         return f.get().status();
       });

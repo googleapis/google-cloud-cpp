@@ -35,24 +35,21 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options ImageVersionsDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_IMAGE_VERSIONS_ENDPOINT", "",
-      "GOOGLE_CLOUD_CPP_IMAGE_VERSIONS_AUTHORITY", "composer.googleapis.com");
+      std::move(options), "GOOGLE_CLOUD_CPP_IMAGE_VERSIONS_ENDPOINT",
+      "", "GOOGLE_CLOUD_CPP_IMAGE_VERSIONS_AUTHORITY",
+      "composer.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<composer_v1::ImageVersionsRetryPolicyOption>()) {
     options.set<composer_v1::ImageVersionsRetryPolicyOption>(
         composer_v1::ImageVersionsLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
-            .clone());
+            std::chrono::minutes(30)).clone());
   }
   if (!options.has<composer_v1::ImageVersionsBackoffPolicyOption>()) {
     options.set<composer_v1::ImageVersionsBackoffPolicyOption>(
-        ExponentialBackoffPolicy(
-            std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
-            .clone());
+        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
   }
-  if (!options.has<
-          composer_v1::ImageVersionsConnectionIdempotencyPolicyOption>()) {
+  if (!options.has<composer_v1::ImageVersionsConnectionIdempotencyPolicyOption>()) {
     options.set<composer_v1::ImageVersionsConnectionIdempotencyPolicyOption>(
         composer_v1::MakeDefaultImageVersionsConnectionIdempotencyPolicy());
   }

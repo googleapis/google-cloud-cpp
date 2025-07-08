@@ -19,12 +19,12 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LOGGING_V2_LOGGING_SERVICE_V2_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LOGGING_V2_LOGGING_SERVICE_V2_CONNECTION_H
 
-#include "google/cloud/logging/v2/internal/logging_service_v2_retry_traits.h"
-#include "google/cloud/logging/v2/logging_service_v2_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/async_read_write_stream_impl.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/logging/v2/internal/logging_service_v2_retry_traits.h"
+#include "google/cloud/logging/v2/logging_service_v2_connection_idempotency_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -55,8 +55,7 @@ class LoggingServiceV2RetryPolicy : public ::google::cloud::RetryPolicy {
  * - [`kInternal`](@ref google::cloud::StatusCode)
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class LoggingServiceV2LimitedErrorCountRetryPolicy
-    : public LoggingServiceV2RetryPolicy {
+class LoggingServiceV2LimitedErrorCountRetryPolicy : public LoggingServiceV2RetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -66,14 +65,14 @@ class LoggingServiceV2LimitedErrorCountRetryPolicy
    *     @p maximum_failures == 0.
    */
   explicit LoggingServiceV2LimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   LoggingServiceV2LimitedErrorCountRetryPolicy(
       LoggingServiceV2LimitedErrorCountRetryPolicy&& rhs) noexcept
-      : LoggingServiceV2LimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : LoggingServiceV2LimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   LoggingServiceV2LimitedErrorCountRetryPolicy(
       LoggingServiceV2LimitedErrorCountRetryPolicy const& rhs) noexcept
-      : LoggingServiceV2LimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : LoggingServiceV2LimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -93,9 +92,7 @@ class LoggingServiceV2LimitedErrorCountRetryPolicy
   using BaseType = LoggingServiceV2RetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      logging_v2_internal::LoggingServiceV2RetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<logging_v2_internal::LoggingServiceV2RetryTraits> impl_;
 };
 
 /**
@@ -109,8 +106,7 @@ class LoggingServiceV2LimitedErrorCountRetryPolicy
  * - [`kInternal`](@ref google::cloud::StatusCode)
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class LoggingServiceV2LimitedTimeRetryPolicy
-    : public LoggingServiceV2RetryPolicy {
+class LoggingServiceV2LimitedTimeRetryPolicy : public LoggingServiceV2RetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -135,14 +131,12 @@ class LoggingServiceV2LimitedTimeRetryPolicy
   template <typename DurationRep, typename DurationPeriod>
   explicit LoggingServiceV2LimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  LoggingServiceV2LimitedTimeRetryPolicy(
-      LoggingServiceV2LimitedTimeRetryPolicy&& rhs) noexcept
-      : LoggingServiceV2LimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  LoggingServiceV2LimitedTimeRetryPolicy(
-      LoggingServiceV2LimitedTimeRetryPolicy const& rhs) noexcept
-      : LoggingServiceV2LimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  LoggingServiceV2LimitedTimeRetryPolicy(LoggingServiceV2LimitedTimeRetryPolicy&& rhs) noexcept
+    : LoggingServiceV2LimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  LoggingServiceV2LimitedTimeRetryPolicy(LoggingServiceV2LimitedTimeRetryPolicy const& rhs) noexcept
+    : LoggingServiceV2LimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -164,9 +158,7 @@ class LoggingServiceV2LimitedTimeRetryPolicy
   using BaseType = LoggingServiceV2RetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      logging_v2_internal::LoggingServiceV2RetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<logging_v2_internal::LoggingServiceV2RetryTraits> impl_;
 };
 
 /**
@@ -187,51 +179,48 @@ class LoggingServiceV2Connection {
 
   virtual Options options() { return Options{}; }
 
-  virtual Status DeleteLog(
-      google::logging::v2::DeleteLogRequest const& request);
+  virtual Status
+  DeleteLog(google::logging::v2::DeleteLogRequest const& request);
 
   virtual StatusOr<google::logging::v2::WriteLogEntriesResponse>
   WriteLogEntries(google::logging::v2::WriteLogEntriesRequest const& request);
 
-  virtual StreamRange<google::logging::v2::LogEntry> ListLogEntries(
-      google::logging::v2::ListLogEntriesRequest request);
+  virtual StreamRange<google::logging::v2::LogEntry>
+  ListLogEntries(google::logging::v2::ListLogEntriesRequest request);
 
   virtual StreamRange<google::api::MonitoredResourceDescriptor>
-  ListMonitoredResourceDescriptors(
-      google::logging::v2::ListMonitoredResourceDescriptorsRequest request);
+  ListMonitoredResourceDescriptors(google::logging::v2::ListMonitoredResourceDescriptorsRequest request);
 
-  virtual StreamRange<std::string> ListLogs(
-      google::logging::v2::ListLogsRequest request);
+  virtual StreamRange<std::string>
+  ListLogs(google::logging::v2::ListLogsRequest request);
 
   virtual std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::logging::v2::TailLogEntriesRequest,
       google::logging::v2::TailLogEntriesResponse>>
   AsyncTailLogEntries();
 
-  virtual StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 
-  virtual Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request);
+  virtual Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request);
 
   virtual future<StatusOr<google::logging::v2::WriteLogEntriesResponse>>
-  AsyncWriteLogEntries(
-      google::logging::v2::WriteLogEntriesRequest const& request);
+  AsyncWriteLogEntries(google::logging::v2::WriteLogEntriesRequest const& request);
 };
 
 /**
- * A factory function to construct an object of type
- * `LoggingServiceV2Connection`.
+ * A factory function to construct an object of type `LoggingServiceV2Connection`.
  *
  * The returned connection object should not be used directly; instead it
  * should be passed as an argument to the constructor of LoggingServiceV2Client.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `LoggingServiceV2Connection`. Expected options are any of the types
- * in the following option lists:
+ * returned `LoggingServiceV2Connection`. Expected options are any of the types in
+ * the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
@@ -241,8 +230,8 @@ class LoggingServiceV2Connection {
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
- * @param options (optional) Configure the `LoggingServiceV2Connection` created
- * by this function.
+ * @param options (optional) Configure the `LoggingServiceV2Connection` created by
+ * this function.
  */
 std::shared_ptr<LoggingServiceV2Connection> MakeLoggingServiceV2Connection(
     Options options = {});

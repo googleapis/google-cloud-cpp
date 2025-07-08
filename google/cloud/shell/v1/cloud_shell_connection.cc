@@ -17,16 +17,16 @@
 // source: google/cloud/shell/v1/cloudshell.proto
 
 #include "google/cloud/shell/v1/cloud_shell_connection.h"
-#include "google/cloud/shell/v1/cloud_shell_options.h"
-#include "google/cloud/shell/v1/internal/cloud_shell_connection_impl.h"
-#include "google/cloud/shell/v1/internal/cloud_shell_option_defaults.h"
-#include "google/cloud/shell/v1/internal/cloud_shell_stub_factory.h"
-#include "google/cloud/shell/v1/internal/cloud_shell_tracing_connection.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/shell/v1/cloud_shell_options.h"
+#include "google/cloud/shell/v1/internal/cloud_shell_connection_impl.h"
+#include "google/cloud/shell/v1/internal/cloud_shell_option_defaults.h"
+#include "google/cloud/shell/v1/internal/cloud_shell_stub_factory.h"
+#include "google/cloud/shell/v1/internal/cloud_shell_tracing_connection.h"
 #include <memory>
 #include <utility>
 
@@ -47,109 +47,112 @@ future<StatusOr<google::cloud::shell::v1::StartEnvironmentResponse>>
 CloudShellServiceConnection::StartEnvironment(
     google::cloud::shell::v1::StartEnvironmentRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::shell::v1::StartEnvironmentResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::shell::v1::StartEnvironmentResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 CloudShellServiceConnection::StartEnvironment(
-    NoAwaitTag, google::cloud::shell::v1::StartEnvironmentRequest const&) {
+    NoAwaitTag,
+    google::cloud::shell::v1::StartEnvironmentRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::shell::v1::StartEnvironmentResponse>>
 CloudShellServiceConnection::StartEnvironment(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::shell::v1::StartEnvironmentResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::shell::v1::StartEnvironmentResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::shell::v1::AuthorizeEnvironmentResponse>>
 CloudShellServiceConnection::AuthorizeEnvironment(
     google::cloud::shell::v1::AuthorizeEnvironmentRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::shell::v1::AuthorizeEnvironmentResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::shell::v1::AuthorizeEnvironmentResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 CloudShellServiceConnection::AuthorizeEnvironment(
-    NoAwaitTag, google::cloud::shell::v1::AuthorizeEnvironmentRequest const&) {
+    NoAwaitTag,
+    google::cloud::shell::v1::AuthorizeEnvironmentRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::shell::v1::AuthorizeEnvironmentResponse>>
 CloudShellServiceConnection::AuthorizeEnvironment(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::shell::v1::AuthorizeEnvironmentResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::shell::v1::AuthorizeEnvironmentResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::shell::v1::AddPublicKeyResponse>>
 CloudShellServiceConnection::AddPublicKey(
     google::cloud::shell::v1::AddPublicKeyRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::shell::v1::AddPublicKeyResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::shell::v1::AddPublicKeyResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 CloudShellServiceConnection::AddPublicKey(
-    NoAwaitTag, google::cloud::shell::v1::AddPublicKeyRequest const&) {
+    NoAwaitTag,
+    google::cloud::shell::v1::AddPublicKeyRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::shell::v1::AddPublicKeyResponse>>
 CloudShellServiceConnection::AddPublicKey(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::shell::v1::AddPublicKeyResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::shell::v1::AddPublicKeyResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::shell::v1::RemovePublicKeyResponse>>
 CloudShellServiceConnection::RemovePublicKey(
     google::cloud::shell::v1::RemovePublicKeyRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::shell::v1::RemovePublicKeyResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::shell::v1::RemovePublicKeyResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 CloudShellServiceConnection::RemovePublicKey(
-    NoAwaitTag, google::cloud::shell::v1::RemovePublicKeyRequest const&) {
+    NoAwaitTag,
+    google::cloud::shell::v1::RemovePublicKeyRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::shell::v1::RemovePublicKeyResponse>>
 CloudShellServiceConnection::RemovePublicKey(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::shell::v1::RemovePublicKeyResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::shell::v1::RemovePublicKeyResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 std::shared_ptr<CloudShellServiceConnection> MakeCloudShellServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 CloudShellServicePolicyOptionList>(options,
-                                                                    __func__);
-  options =
-      shell_v1_internal::CloudShellServiceDefaultOptions(std::move(options));
+      UnifiedCredentialsOptionList,
+      CloudShellServicePolicyOptionList>(options, __func__);
+  options = shell_v1_internal::CloudShellServiceDefaultOptions(
+      std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = shell_v1_internal::CreateDefaultCloudShellServiceStub(
-      std::move(auth), options);
+    std::move(auth), options);
   return shell_v1_internal::MakeCloudShellServiceTracingConnection(
       std::make_shared<shell_v1_internal::CloudShellServiceConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options)));
+      std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

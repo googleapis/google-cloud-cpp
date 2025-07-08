@@ -25,18 +25,15 @@ namespace cloud {
 namespace kms_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-AutokeyClient::AutokeyClient(std::shared_ptr<AutokeyConnection> connection,
-                             Options opts)
+AutokeyClient::AutokeyClient(
+    std::shared_ptr<AutokeyConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 AutokeyClient::~AutokeyClient() = default;
 
 future<StatusOr<google::cloud::kms::v1::KeyHandle>>
-AutokeyClient::CreateKeyHandle(
-    std::string const& parent,
-    google::cloud::kms::v1::KeyHandle const& key_handle,
-    std::string const& key_handle_id, Options opts) {
+AutokeyClient::CreateKeyHandle(std::string const& parent, google::cloud::kms::v1::KeyHandle const& key_handle, std::string const& key_handle_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::kms::v1::CreateKeyHandleRequest request;
   request.set_parent(parent);
@@ -45,10 +42,8 @@ AutokeyClient::CreateKeyHandle(
   return connection_->CreateKeyHandle(request);
 }
 
-StatusOr<google::longrunning::Operation> AutokeyClient::CreateKeyHandle(
-    NoAwaitTag, std::string const& parent,
-    google::cloud::kms::v1::KeyHandle const& key_handle,
-    std::string const& key_handle_id, Options opts) {
+StatusOr<google::longrunning::Operation>
+AutokeyClient::CreateKeyHandle(NoAwaitTag, std::string const& parent, google::cloud::kms::v1::KeyHandle const& key_handle, std::string const& key_handle_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::kms::v1::CreateKeyHandleRequest request;
   request.set_parent(parent);
@@ -58,96 +53,91 @@ StatusOr<google::longrunning::Operation> AutokeyClient::CreateKeyHandle(
 }
 
 future<StatusOr<google::cloud::kms::v1::KeyHandle>>
-AutokeyClient::CreateKeyHandle(
-    google::cloud::kms::v1::CreateKeyHandleRequest const& request,
-    Options opts) {
+AutokeyClient::CreateKeyHandle(google::cloud::kms::v1::CreateKeyHandleRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateKeyHandle(request);
 }
 
-StatusOr<google::longrunning::Operation> AutokeyClient::CreateKeyHandle(
-    NoAwaitTag, google::cloud::kms::v1::CreateKeyHandleRequest const& request,
-    Options opts) {
+StatusOr<google::longrunning::Operation>
+AutokeyClient::CreateKeyHandle(NoAwaitTag, google::cloud::kms::v1::CreateKeyHandleRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateKeyHandle(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::kms::v1::KeyHandle>>
-AutokeyClient::CreateKeyHandle(google::longrunning::Operation const& operation,
-                               Options opts) {
+AutokeyClient::CreateKeyHandle(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateKeyHandle(operation);
 }
 
-StatusOr<google::cloud::kms::v1::KeyHandle> AutokeyClient::GetKeyHandle(
-    std::string const& name, Options opts) {
+StatusOr<google::cloud::kms::v1::KeyHandle>
+AutokeyClient::GetKeyHandle(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::kms::v1::GetKeyHandleRequest request;
   request.set_name(name);
   return connection_->GetKeyHandle(request);
 }
 
-StatusOr<google::cloud::kms::v1::KeyHandle> AutokeyClient::GetKeyHandle(
-    google::cloud::kms::v1::GetKeyHandleRequest const& request, Options opts) {
+StatusOr<google::cloud::kms::v1::KeyHandle>
+AutokeyClient::GetKeyHandle(google::cloud::kms::v1::GetKeyHandleRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetKeyHandle(request);
 }
 
-StreamRange<google::cloud::kms::v1::KeyHandle> AutokeyClient::ListKeyHandles(
-    std::string const& parent, Options opts) {
+StreamRange<google::cloud::kms::v1::KeyHandle>
+AutokeyClient::ListKeyHandles(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::kms::v1::ListKeyHandlesRequest request;
   request.set_parent(parent);
   return connection_->ListKeyHandles(request);
 }
 
-StreamRange<google::cloud::kms::v1::KeyHandle> AutokeyClient::ListKeyHandles(
-    google::cloud::kms::v1::ListKeyHandlesRequest request, Options opts) {
+StreamRange<google::cloud::kms::v1::KeyHandle>
+AutokeyClient::ListKeyHandles(google::cloud::kms::v1::ListKeyHandlesRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListKeyHandles(std::move(request));
 }
 
-StreamRange<google::cloud::location::Location> AutokeyClient::ListLocations(
-    google::cloud::location::ListLocationsRequest request, Options opts) {
+StreamRange<google::cloud::location::Location>
+AutokeyClient::ListLocations(google::cloud::location::ListLocationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListLocations(std::move(request));
 }
 
-StatusOr<google::cloud::location::Location> AutokeyClient::GetLocation(
-    google::cloud::location::GetLocationRequest const& request, Options opts) {
+StatusOr<google::cloud::location::Location>
+AutokeyClient::GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetLocation(request);
 }
 
-StatusOr<google::iam::v1::Policy> AutokeyClient::SetIamPolicy(
-    google::iam::v1::SetIamPolicyRequest const& request, Options opts) {
+StatusOr<google::iam::v1::Policy>
+AutokeyClient::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetIamPolicy(request);
 }
 
-StatusOr<google::iam::v1::Policy> AutokeyClient::GetIamPolicy(
-    google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
+StatusOr<google::iam::v1::Policy>
+AutokeyClient::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetIamPolicy(request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-AutokeyClient::TestIamPermissions(
-    google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
+AutokeyClient::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->TestIamPermissions(request);
 }
 
-StatusOr<google::longrunning::Operation> AutokeyClient::GetOperation(
-    std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation>
+AutokeyClient::GetOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
   return connection_->GetOperation(request);
 }
 
-StatusOr<google::longrunning::Operation> AutokeyClient::GetOperation(
-    google::longrunning::GetOperationRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation>
+AutokeyClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }

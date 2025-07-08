@@ -36,31 +36,30 @@ class JobServiceTracingConnection
   ~JobServiceTracingConnection() override = default;
 
   explicit JobServiceTracingConnection(
-      std::shared_ptr<bigquerycontrol_v2::JobServiceConnection> child);
+    std::shared_ptr<bigquerycontrol_v2::JobServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::bigquery::v2::JobCancelResponse> CancelJob(
-      google::cloud::bigquery::v2::CancelJobRequest const& request) override;
+  StatusOr<google::cloud::bigquery::v2::JobCancelResponse>
+  CancelJob(google::cloud::bigquery::v2::CancelJobRequest const& request) override;
 
-  StatusOr<google::cloud::bigquery::v2::Job> GetJob(
-      google::cloud::bigquery::v2::GetJobRequest const& request) override;
+  StatusOr<google::cloud::bigquery::v2::Job>
+  GetJob(google::cloud::bigquery::v2::GetJobRequest const& request) override;
 
-  StatusOr<google::cloud::bigquery::v2::Job> InsertJob(
-      google::cloud::bigquery::v2::InsertJobRequest const& request) override;
+  StatusOr<google::cloud::bigquery::v2::Job>
+  InsertJob(google::cloud::bigquery::v2::InsertJobRequest const& request) override;
 
-  Status DeleteJob(
-      google::cloud::bigquery::v2::DeleteJobRequest const& request) override;
+  Status
+  DeleteJob(google::cloud::bigquery::v2::DeleteJobRequest const& request) override;
 
-  StreamRange<google::cloud::bigquery::v2::ListFormatJob> ListJobs(
-      google::cloud::bigquery::v2::ListJobsRequest request) override;
+  StreamRange<google::cloud::bigquery::v2::ListFormatJob>
+  ListJobs(google::cloud::bigquery::v2::ListJobsRequest request) override;
 
   StatusOr<google::cloud::bigquery::v2::GetQueryResultsResponse>
-  GetQueryResults(google::cloud::bigquery::v2::GetQueryResultsRequest const&
-                      request) override;
+  GetQueryResults(google::cloud::bigquery::v2::GetQueryResultsRequest const& request) override;
 
-  StatusOr<google::cloud::bigquery::v2::QueryResponse> Query(
-      google::cloud::bigquery::v2::PostQueryRequest const& request) override;
+  StatusOr<google::cloud::bigquery::v2::QueryResponse>
+  Query(google::cloud::bigquery::v2::PostQueryRequest const& request) override;
 
  private:
   std::shared_ptr<bigquerycontrol_v2::JobServiceConnection> child_;

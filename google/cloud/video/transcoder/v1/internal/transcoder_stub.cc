@@ -32,100 +32,106 @@ TranscoderServiceStub::~TranscoderServiceStub() = default;
 
 StatusOr<google::cloud::video::transcoder::v1::Job>
 DefaultTranscoderServiceStub::CreateJob(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::video::transcoder::v1::CreateJobRequest const& request) {
-  google::cloud::video::transcoder::v1::Job response;
-  auto status = grpc_stub_->CreateJob(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::video::transcoder::v1::CreateJobRequest const& request) {
+    google::cloud::video::transcoder::v1::Job response;
+    auto status =
+        grpc_stub_->CreateJob(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::video::transcoder::v1::ListJobsResponse>
 DefaultTranscoderServiceStub::ListJobs(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::video::transcoder::v1::ListJobsRequest const& request) {
-  google::cloud::video::transcoder::v1::ListJobsResponse response;
-  auto status = grpc_stub_->ListJobs(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::video::transcoder::v1::ListJobsRequest const& request) {
+    google::cloud::video::transcoder::v1::ListJobsResponse response;
+    auto status =
+        grpc_stub_->ListJobs(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::video::transcoder::v1::Job>
 DefaultTranscoderServiceStub::GetJob(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::video::transcoder::v1::GetJobRequest const& request) {
-  google::cloud::video::transcoder::v1::Job response;
-  auto status = grpc_stub_->GetJob(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::video::transcoder::v1::GetJobRequest const& request) {
+    google::cloud::video::transcoder::v1::Job response;
+    auto status =
+        grpc_stub_->GetJob(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-Status DefaultTranscoderServiceStub::DeleteJob(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::video::transcoder::v1::DeleteJobRequest const& request) {
-  google::protobuf::Empty response;
-  auto status = grpc_stub_->DeleteJob(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return google::cloud::Status();
+Status
+DefaultTranscoderServiceStub::DeleteJob(
+  grpc::ClientContext& context, Options const&,
+  google::cloud::video::transcoder::v1::DeleteJobRequest const& request) {
+    google::protobuf::Empty response;
+    auto status =
+        grpc_stub_->DeleteJob(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return google::cloud::Status();
 }
 
 StatusOr<google::cloud::video::transcoder::v1::JobTemplate>
 DefaultTranscoderServiceStub::CreateJobTemplate(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::video::transcoder::v1::CreateJobTemplateRequest const&
-        request) {
-  google::cloud::video::transcoder::v1::JobTemplate response;
-  auto status = grpc_stub_->CreateJobTemplate(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::video::transcoder::v1::CreateJobTemplateRequest const& request) {
+    google::cloud::video::transcoder::v1::JobTemplate response;
+    auto status =
+        grpc_stub_->CreateJobTemplate(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::video::transcoder::v1::ListJobTemplatesResponse>
 DefaultTranscoderServiceStub::ListJobTemplates(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::video::transcoder::v1::ListJobTemplatesRequest const&
-        request) {
-  google::cloud::video::transcoder::v1::ListJobTemplatesResponse response;
-  auto status = grpc_stub_->ListJobTemplates(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::video::transcoder::v1::ListJobTemplatesRequest const& request) {
+    google::cloud::video::transcoder::v1::ListJobTemplatesResponse response;
+    auto status =
+        grpc_stub_->ListJobTemplates(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::video::transcoder::v1::JobTemplate>
 DefaultTranscoderServiceStub::GetJobTemplate(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::video::transcoder::v1::GetJobTemplateRequest const&
-        request) {
-  google::cloud::video::transcoder::v1::JobTemplate response;
-  auto status = grpc_stub_->GetJobTemplate(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::video::transcoder::v1::GetJobTemplateRequest const& request) {
+    google::cloud::video::transcoder::v1::JobTemplate response;
+    auto status =
+        grpc_stub_->GetJobTemplate(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-Status DefaultTranscoderServiceStub::DeleteJobTemplate(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::video::transcoder::v1::DeleteJobTemplateRequest const&
-        request) {
-  google::protobuf::Empty response;
-  auto status = grpc_stub_->DeleteJobTemplate(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return google::cloud::Status();
+Status
+DefaultTranscoderServiceStub::DeleteJobTemplate(
+  grpc::ClientContext& context, Options const&,
+  google::cloud::video::transcoder::v1::DeleteJobTemplateRequest const& request) {
+    google::protobuf::Empty response;
+    auto status =
+        grpc_stub_->DeleteJobTemplate(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return google::cloud::Status();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

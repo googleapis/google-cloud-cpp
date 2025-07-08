@@ -74,7 +74,8 @@ struct ApiKeysPollingPolicyOption {
  * @ingroup google-cloud-apikeys-options
  */
 using ApiKeysPolicyOptionList =
-    OptionList<ApiKeysRetryPolicyOption, ApiKeysBackoffPolicyOption,
+    OptionList<ApiKeysRetryPolicyOption,
+               ApiKeysBackoffPolicyOption,
                ApiKeysPollingPolicyOption,
                ApiKeysConnectionIdempotencyPolicyOption>;
 

@@ -19,11 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_WORKFLOWS_V1_WORKFLOWS_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_WORKFLOWS_V1_WORKFLOWS_OPTIONS_H
 
-#include "google/cloud/workflows/v1/workflows_connection.h"
-#include "google/cloud/workflows/v1/workflows_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
+#include "google/cloud/workflows/v1/workflows_connection.h"
+#include "google/cloud/workflows/v1/workflows_connection_idempotency_policy.h"
 #include <memory>
 
 namespace google {
@@ -74,7 +74,8 @@ struct WorkflowsPollingPolicyOption {
  * @ingroup google-cloud-workflows-options
  */
 using WorkflowsPolicyOptionList =
-    OptionList<WorkflowsRetryPolicyOption, WorkflowsBackoffPolicyOption,
+    OptionList<WorkflowsRetryPolicyOption,
+               WorkflowsBackoffPolicyOption,
                WorkflowsPollingPolicyOption,
                WorkflowsConnectionIdempotencyPolicyOption>;
 

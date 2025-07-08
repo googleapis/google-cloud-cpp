@@ -42,89 +42,61 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockParameterManagerConnection
-    : public parametermanager_v1::ParameterManagerConnection {
+class MockParameterManagerConnection : public parametermanager_v1::ParameterManagerConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(
-      (StreamRange<google::cloud::parametermanager::v1::Parameter>),
-      ListParameters,
-      (google::cloud::parametermanager::v1::ListParametersRequest request),
-      (override));
+  MOCK_METHOD((StreamRange<google::cloud::parametermanager::v1::Parameter>),
+  ListParameters,
+  (google::cloud::parametermanager::v1::ListParametersRequest request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::parametermanager::v1::Parameter>, GetParameter,
-      (google::cloud::parametermanager::v1::GetParameterRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::parametermanager::v1::Parameter>,
+  GetParameter,
+  (google::cloud::parametermanager::v1::GetParameterRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::parametermanager::v1::Parameter>, CreateParameter,
-      (google::cloud::parametermanager::v1::CreateParameterRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::parametermanager::v1::Parameter>,
+  CreateParameter,
+  (google::cloud::parametermanager::v1::CreateParameterRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::parametermanager::v1::Parameter>, UpdateParameter,
-      (google::cloud::parametermanager::v1::UpdateParameterRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::parametermanager::v1::Parameter>,
+  UpdateParameter,
+  (google::cloud::parametermanager::v1::UpdateParameterRequest const& request), (override));
 
-  MOCK_METHOD(
-      Status, DeleteParameter,
-      (google::cloud::parametermanager::v1::DeleteParameterRequest const&
-           request),
-      (override));
+  MOCK_METHOD(Status,
+  DeleteParameter,
+  (google::cloud::parametermanager::v1::DeleteParameterRequest const& request), (override));
 
-  MOCK_METHOD(
-      (StreamRange<google::cloud::parametermanager::v1::ParameterVersion>),
-      ListParameterVersions,
-      (google::cloud::parametermanager::v1::ListParameterVersionsRequest
-           request),
-      (override));
+  MOCK_METHOD((StreamRange<google::cloud::parametermanager::v1::ParameterVersion>),
+  ListParameterVersions,
+  (google::cloud::parametermanager::v1::ListParameterVersionsRequest request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::parametermanager::v1::ParameterVersion>,
-      GetParameterVersion,
-      (google::cloud::parametermanager::v1::GetParameterVersionRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::parametermanager::v1::ParameterVersion>,
+  GetParameterVersion,
+  (google::cloud::parametermanager::v1::GetParameterVersionRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<
-          google::cloud::parametermanager::v1::RenderParameterVersionResponse>,
-      RenderParameterVersion,
-      (google::cloud::parametermanager::v1::RenderParameterVersionRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::parametermanager::v1::RenderParameterVersionResponse>,
+  RenderParameterVersion,
+  (google::cloud::parametermanager::v1::RenderParameterVersionRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::parametermanager::v1::ParameterVersion>,
-      CreateParameterVersion,
-      (google::cloud::parametermanager::v1::CreateParameterVersionRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::parametermanager::v1::ParameterVersion>,
+  CreateParameterVersion,
+  (google::cloud::parametermanager::v1::CreateParameterVersionRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::parametermanager::v1::ParameterVersion>,
-      UpdateParameterVersion,
-      (google::cloud::parametermanager::v1::UpdateParameterVersionRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::parametermanager::v1::ParameterVersion>,
+  UpdateParameterVersion,
+  (google::cloud::parametermanager::v1::UpdateParameterVersionRequest const& request), (override));
 
-  MOCK_METHOD(
-      Status, DeleteParameterVersion,
-      (google::cloud::parametermanager::v1::DeleteParameterVersionRequest const&
-           request),
-      (override));
+  MOCK_METHOD(Status,
+  DeleteParameterVersion,
+  (google::cloud::parametermanager::v1::DeleteParameterVersionRequest const& request), (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::location::Location>), ListLocations,
-              (google::cloud::location::ListLocationsRequest request),
-              (override));
+  MOCK_METHOD((StreamRange<google::cloud::location::Location>),
+  ListLocations,
+  (google::cloud::location::ListLocationsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::location::Location>, GetLocation,
-              (google::cloud::location::GetLocationRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::location::Location>,
+  GetLocation,
+  (google::cloud::location::GetLocationRequest const& request), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

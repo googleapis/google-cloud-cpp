@@ -17,14 +17,14 @@
 // source: google/cloud/discoveryengine/v1/user_event_service.proto
 
 #include "google/cloud/discoveryengine/v1/user_event_connection.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/discoveryengine/v1/internal/user_event_connection_impl.h"
 #include "google/cloud/discoveryengine/v1/internal/user_event_option_defaults.h"
 #include "google/cloud/discoveryengine/v1/internal/user_event_stub_factory.h"
 #include "google/cloud/discoveryengine/v1/internal/user_event_tracing_connection.h"
 #include "google/cloud/discoveryengine/v1/user_event_options.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
-#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
@@ -44,7 +44,8 @@ UserEventServiceConnection::WriteUserEvent(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::api::HttpBody> UserEventServiceConnection::CollectUserEvent(
+StatusOr<google::api::HttpBody>
+UserEventServiceConnection::CollectUserEvent(
     google::cloud::discoveryengine::v1::CollectUserEventRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -53,8 +54,8 @@ future<StatusOr<google::cloud::discoveryengine::v1::PurgeUserEventsResponse>>
 UserEventServiceConnection::PurgeUserEvents(
     google::cloud::discoveryengine::v1::PurgeUserEventsRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::discoveryengine::v1::PurgeUserEventsResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::discoveryengine::v1::PurgeUserEventsResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -62,23 +63,23 @@ UserEventServiceConnection::PurgeUserEvents(
     NoAwaitTag,
     google::cloud::discoveryengine::v1::PurgeUserEventsRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::discoveryengine::v1::PurgeUserEventsResponse>>
 UserEventServiceConnection::PurgeUserEvents(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::discoveryengine::v1::PurgeUserEventsResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::discoveryengine::v1::PurgeUserEventsResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::discoveryengine::v1::ImportUserEventsResponse>>
 UserEventServiceConnection::ImportUserEvents(
     google::cloud::discoveryengine::v1::ImportUserEventsRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::discoveryengine::v1::ImportUserEventsResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::discoveryengine::v1::ImportUserEventsResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -86,21 +87,19 @@ UserEventServiceConnection::ImportUserEvents(
     NoAwaitTag,
     google::cloud::discoveryengine::v1::ImportUserEventsRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::discoveryengine::v1::ImportUserEventsResponse>>
 UserEventServiceConnection::ImportUserEvents(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::discoveryengine::v1::ImportUserEventsResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::discoveryengine::v1::ImportUserEventsResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StreamRange<google::longrunning::Operation>
-UserEventServiceConnection::ListOperations(
-    google::longrunning::
-        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::longrunning::Operation> UserEventServiceConnection::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }
@@ -111,7 +110,8 @@ UserEventServiceConnection::GetOperation(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status UserEventServiceConnection::CancelOperation(
+Status
+UserEventServiceConnection::CancelOperation(
     google::longrunning::CancelOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -119,19 +119,17 @@ Status UserEventServiceConnection::CancelOperation(
 std::shared_ptr<UserEventServiceConnection> MakeUserEventServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 UserEventServicePolicyOptionList>(options,
-                                                                   __func__);
+      UnifiedCredentialsOptionList,
+      UserEventServicePolicyOptionList>(options, __func__);
   options = discoveryengine_v1_internal::UserEventServiceDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = discoveryengine_v1_internal::CreateDefaultUserEventServiceStub(
-      std::move(auth), options);
+    std::move(auth), options);
   return discoveryengine_v1_internal::MakeUserEventServiceTracingConnection(
-      std::make_shared<
-          discoveryengine_v1_internal::UserEventServiceConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options)));
+      std::make_shared<discoveryengine_v1_internal::UserEventServiceConnectionImpl>(
+      std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -17,11 +17,11 @@
 // source: google/cloud/compute/region_commitments/v1/region_commitments.proto
 
 #include "google/cloud/compute/region_commitments/v1/region_commitments_connection.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/compute/region_commitments/v1/internal/region_commitments_option_defaults.h"
 #include "google/cloud/compute/region_commitments/v1/internal/region_commitments_tracing_connection.h"
 #include "google/cloud/compute/region_commitments/v1/region_commitments_options.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
@@ -36,79 +36,70 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 RegionCommitmentsConnection::~RegionCommitmentsConnection() = default;
 
-StreamRange<std::pair<std::string,
-                      google::cloud::cpp::compute::v1::CommitmentsScopedList>>
-RegionCommitmentsConnection::AggregatedListRegionCommitments(
-    google::cloud::cpp::compute::region_commitments::v1::
-        AggregatedListRegionCommitmentsRequest) {  // NOLINT(performance-unnecessary-value-param)
-  return google::cloud::internal::MakeUnimplementedPaginationRange<StreamRange<
-      std::pair<std::string,
-                google::cloud::cpp::compute::v1::CommitmentsScopedList>>>();
+StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::CommitmentsScopedList>> RegionCommitmentsConnection::AggregatedListRegionCommitments(
+    google::cloud::cpp::compute::region_commitments::v1::AggregatedListRegionCommitmentsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::CommitmentsScopedList>>>();
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Commitment>
 RegionCommitmentsConnection::GetCommitment(
-    google::cloud::cpp::compute::region_commitments::v1::
-        GetCommitmentRequest const&) {
+    google::cloud::cpp::compute::region_commitments::v1::GetCommitmentRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionCommitmentsConnection::InsertCommitment(
-    google::cloud::cpp::compute::region_commitments::v1::
-        InsertCommitmentRequest const&) {
+    google::cloud::cpp::compute::region_commitments::v1::InsertCommitmentRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionCommitmentsConnection::InsertCommitment(
-    NoAwaitTag, google::cloud::cpp::compute::region_commitments::v1::
-                    InsertCommitmentRequest const&) {
+    NoAwaitTag,
+    google::cloud::cpp::compute::region_commitments::v1::InsertCommitmentRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionCommitmentsConnection::InsertCommitment(
     google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StreamRange<google::cloud::cpp::compute::v1::Commitment>
-RegionCommitmentsConnection::ListRegionCommitments(
-    google::cloud::cpp::compute::region_commitments::v1::
-        ListRegionCommitmentsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::cpp::compute::v1::Commitment> RegionCommitmentsConnection::ListRegionCommitments(
+    google::cloud::cpp::compute::region_commitments::v1::ListRegionCommitmentsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::cpp::compute::v1::Commitment>>();
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionCommitmentsConnection::UpdateCommitment(
-    google::cloud::cpp::compute::region_commitments::v1::
-        UpdateCommitmentRequest const&) {
+    google::cloud::cpp::compute::region_commitments::v1::UpdateCommitmentRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionCommitmentsConnection::UpdateCommitment(
-    NoAwaitTag, google::cloud::cpp::compute::region_commitments::v1::
-                    UpdateCommitmentRequest const&) {
+    NoAwaitTag,
+    google::cloud::cpp::compute::region_commitments::v1::UpdateCommitmentRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionCommitmentsConnection::UpdateCommitment(
     google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

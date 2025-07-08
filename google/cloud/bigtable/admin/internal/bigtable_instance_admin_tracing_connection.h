@@ -36,204 +36,182 @@ class BigtableInstanceAdminTracingConnection
   ~BigtableInstanceAdminTracingConnection() override = default;
 
   explicit BigtableInstanceAdminTracingConnection(
-      std::shared_ptr<bigtable_admin::BigtableInstanceAdminConnection> child);
+    std::shared_ptr<bigtable_admin::BigtableInstanceAdminConnection> child);
 
   Options options() override { return child_->options(); }
 
-  future<StatusOr<google::bigtable::admin::v2::Instance>> CreateInstance(
-      google::bigtable::admin::v2::CreateInstanceRequest const& request)
-      override;
+  future<StatusOr<google::bigtable::admin::v2::Instance>>
+  CreateInstance(google::bigtable::admin::v2::CreateInstanceRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> CreateInstance(
-      NoAwaitTag,
-      google::bigtable::admin::v2::CreateInstanceRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  CreateInstance(NoAwaitTag,
+      google::bigtable::admin::v2::CreateInstanceRequest const& request) override;
 
-  future<StatusOr<google::bigtable::admin::v2::Instance>> CreateInstance(
+  future<StatusOr<google::bigtable::admin::v2::Instance>>
+  CreateInstance(
       google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::bigtable::admin::v2::Instance> GetInstance(
-      google::bigtable::admin::v2::GetInstanceRequest const& request) override;
+  StatusOr<google::bigtable::admin::v2::Instance>
+  GetInstance(google::bigtable::admin::v2::GetInstanceRequest const& request) override;
 
-  StatusOr<google::bigtable::admin::v2::ListInstancesResponse> ListInstances(
-      google::bigtable::admin::v2::ListInstancesRequest const& request)
-      override;
+  StatusOr<google::bigtable::admin::v2::ListInstancesResponse>
+  ListInstances(google::bigtable::admin::v2::ListInstancesRequest const& request) override;
 
-  StatusOr<google::bigtable::admin::v2::Instance> UpdateInstance(
-      google::bigtable::admin::v2::Instance const& request) override;
+  StatusOr<google::bigtable::admin::v2::Instance>
+  UpdateInstance(google::bigtable::admin::v2::Instance const& request) override;
 
-  future<StatusOr<google::bigtable::admin::v2::Instance>> PartialUpdateInstance(
-      google::bigtable::admin::v2::PartialUpdateInstanceRequest const& request)
-      override;
+  future<StatusOr<google::bigtable::admin::v2::Instance>>
+  PartialUpdateInstance(google::bigtable::admin::v2::PartialUpdateInstanceRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> PartialUpdateInstance(
-      NoAwaitTag,
-      google::bigtable::admin::v2::PartialUpdateInstanceRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  PartialUpdateInstance(NoAwaitTag,
+      google::bigtable::admin::v2::PartialUpdateInstanceRequest const& request) override;
 
-  future<StatusOr<google::bigtable::admin::v2::Instance>> PartialUpdateInstance(
+  future<StatusOr<google::bigtable::admin::v2::Instance>>
+  PartialUpdateInstance(
       google::longrunning::Operation const& operation) override;
 
-  Status DeleteInstance(
-      google::bigtable::admin::v2::DeleteInstanceRequest const& request)
-      override;
+  Status
+  DeleteInstance(google::bigtable::admin::v2::DeleteInstanceRequest const& request) override;
 
-  future<StatusOr<google::bigtable::admin::v2::Cluster>> CreateCluster(
-      google::bigtable::admin::v2::CreateClusterRequest const& request)
-      override;
+  future<StatusOr<google::bigtable::admin::v2::Cluster>>
+  CreateCluster(google::bigtable::admin::v2::CreateClusterRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> CreateCluster(
-      NoAwaitTag,
-      google::bigtable::admin::v2::CreateClusterRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  CreateCluster(NoAwaitTag,
+      google::bigtable::admin::v2::CreateClusterRequest const& request) override;
 
-  future<StatusOr<google::bigtable::admin::v2::Cluster>> CreateCluster(
+  future<StatusOr<google::bigtable::admin::v2::Cluster>>
+  CreateCluster(
       google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::bigtable::admin::v2::Cluster> GetCluster(
-      google::bigtable::admin::v2::GetClusterRequest const& request) override;
+  StatusOr<google::bigtable::admin::v2::Cluster>
+  GetCluster(google::bigtable::admin::v2::GetClusterRequest const& request) override;
 
-  StatusOr<google::bigtable::admin::v2::ListClustersResponse> ListClusters(
-      google::bigtable::admin::v2::ListClustersRequest const& request) override;
+  StatusOr<google::bigtable::admin::v2::ListClustersResponse>
+  ListClusters(google::bigtable::admin::v2::ListClustersRequest const& request) override;
 
-  future<StatusOr<google::bigtable::admin::v2::Cluster>> UpdateCluster(
+  future<StatusOr<google::bigtable::admin::v2::Cluster>>
+  UpdateCluster(google::bigtable::admin::v2::Cluster const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  UpdateCluster(NoAwaitTag,
       google::bigtable::admin::v2::Cluster const& request) override;
 
-  StatusOr<google::longrunning::Operation> UpdateCluster(
-      NoAwaitTag, google::bigtable::admin::v2::Cluster const& request) override;
-
-  future<StatusOr<google::bigtable::admin::v2::Cluster>> UpdateCluster(
+  future<StatusOr<google::bigtable::admin::v2::Cluster>>
+  UpdateCluster(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::bigtable::admin::v2::Cluster>> PartialUpdateCluster(
-      google::bigtable::admin::v2::PartialUpdateClusterRequest const& request)
-      override;
+  future<StatusOr<google::bigtable::admin::v2::Cluster>>
+  PartialUpdateCluster(google::bigtable::admin::v2::PartialUpdateClusterRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> PartialUpdateCluster(
-      NoAwaitTag,
-      google::bigtable::admin::v2::PartialUpdateClusterRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  PartialUpdateCluster(NoAwaitTag,
+      google::bigtable::admin::v2::PartialUpdateClusterRequest const& request) override;
 
-  future<StatusOr<google::bigtable::admin::v2::Cluster>> PartialUpdateCluster(
+  future<StatusOr<google::bigtable::admin::v2::Cluster>>
+  PartialUpdateCluster(
       google::longrunning::Operation const& operation) override;
 
-  Status DeleteCluster(google::bigtable::admin::v2::DeleteClusterRequest const&
-                           request) override;
+  Status
+  DeleteCluster(google::bigtable::admin::v2::DeleteClusterRequest const& request) override;
 
-  StatusOr<google::bigtable::admin::v2::AppProfile> CreateAppProfile(
-      google::bigtable::admin::v2::CreateAppProfileRequest const& request)
-      override;
+  StatusOr<google::bigtable::admin::v2::AppProfile>
+  CreateAppProfile(google::bigtable::admin::v2::CreateAppProfileRequest const& request) override;
 
-  StatusOr<google::bigtable::admin::v2::AppProfile> GetAppProfile(
-      google::bigtable::admin::v2::GetAppProfileRequest const& request)
-      override;
+  StatusOr<google::bigtable::admin::v2::AppProfile>
+  GetAppProfile(google::bigtable::admin::v2::GetAppProfileRequest const& request) override;
 
-  StreamRange<google::bigtable::admin::v2::AppProfile> ListAppProfiles(
-      google::bigtable::admin::v2::ListAppProfilesRequest request) override;
+  StreamRange<google::bigtable::admin::v2::AppProfile>
+  ListAppProfiles(google::bigtable::admin::v2::ListAppProfilesRequest request) override;
 
-  future<StatusOr<google::bigtable::admin::v2::AppProfile>> UpdateAppProfile(
-      google::bigtable::admin::v2::UpdateAppProfileRequest const& request)
-      override;
+  future<StatusOr<google::bigtable::admin::v2::AppProfile>>
+  UpdateAppProfile(google::bigtable::admin::v2::UpdateAppProfileRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> UpdateAppProfile(
-      NoAwaitTag,
-      google::bigtable::admin::v2::UpdateAppProfileRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  UpdateAppProfile(NoAwaitTag,
+      google::bigtable::admin::v2::UpdateAppProfileRequest const& request) override;
 
-  future<StatusOr<google::bigtable::admin::v2::AppProfile>> UpdateAppProfile(
+  future<StatusOr<google::bigtable::admin::v2::AppProfile>>
+  UpdateAppProfile(
       google::longrunning::Operation const& operation) override;
 
-  Status DeleteAppProfile(
-      google::bigtable::admin::v2::DeleteAppProfileRequest const& request)
-      override;
+  Status
+  DeleteAppProfile(google::bigtable::admin::v2::DeleteAppProfileRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request) override;
+  StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) override;
 
-  StreamRange<google::bigtable::admin::v2::HotTablet> ListHotTablets(
-      google::bigtable::admin::v2::ListHotTabletsRequest request) override;
+  StreamRange<google::bigtable::admin::v2::HotTablet>
+  ListHotTablets(google::bigtable::admin::v2::ListHotTabletsRequest request) override;
 
-  future<StatusOr<google::bigtable::admin::v2::LogicalView>> CreateLogicalView(
-      google::bigtable::admin::v2::CreateLogicalViewRequest const& request)
-      override;
+  future<StatusOr<google::bigtable::admin::v2::LogicalView>>
+  CreateLogicalView(google::bigtable::admin::v2::CreateLogicalViewRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> CreateLogicalView(
-      NoAwaitTag,
-      google::bigtable::admin::v2::CreateLogicalViewRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  CreateLogicalView(NoAwaitTag,
+      google::bigtable::admin::v2::CreateLogicalViewRequest const& request) override;
 
-  future<StatusOr<google::bigtable::admin::v2::LogicalView>> CreateLogicalView(
+  future<StatusOr<google::bigtable::admin::v2::LogicalView>>
+  CreateLogicalView(
       google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::bigtable::admin::v2::LogicalView> GetLogicalView(
-      google::bigtable::admin::v2::GetLogicalViewRequest const& request)
-      override;
+  StatusOr<google::bigtable::admin::v2::LogicalView>
+  GetLogicalView(google::bigtable::admin::v2::GetLogicalViewRequest const& request) override;
 
-  StreamRange<google::bigtable::admin::v2::LogicalView> ListLogicalViews(
-      google::bigtable::admin::v2::ListLogicalViewsRequest request) override;
+  StreamRange<google::bigtable::admin::v2::LogicalView>
+  ListLogicalViews(google::bigtable::admin::v2::ListLogicalViewsRequest request) override;
 
-  future<StatusOr<google::bigtable::admin::v2::LogicalView>> UpdateLogicalView(
-      google::bigtable::admin::v2::UpdateLogicalViewRequest const& request)
-      override;
+  future<StatusOr<google::bigtable::admin::v2::LogicalView>>
+  UpdateLogicalView(google::bigtable::admin::v2::UpdateLogicalViewRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> UpdateLogicalView(
-      NoAwaitTag,
-      google::bigtable::admin::v2::UpdateLogicalViewRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  UpdateLogicalView(NoAwaitTag,
+      google::bigtable::admin::v2::UpdateLogicalViewRequest const& request) override;
 
-  future<StatusOr<google::bigtable::admin::v2::LogicalView>> UpdateLogicalView(
+  future<StatusOr<google::bigtable::admin::v2::LogicalView>>
+  UpdateLogicalView(
       google::longrunning::Operation const& operation) override;
 
-  Status DeleteLogicalView(
-      google::bigtable::admin::v2::DeleteLogicalViewRequest const& request)
-      override;
+  Status
+  DeleteLogicalView(google::bigtable::admin::v2::DeleteLogicalViewRequest const& request) override;
 
   future<StatusOr<google::bigtable::admin::v2::MaterializedView>>
-  CreateMaterializedView(
-      google::bigtable::admin::v2::CreateMaterializedViewRequest const& request)
-      override;
+  CreateMaterializedView(google::bigtable::admin::v2::CreateMaterializedViewRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> CreateMaterializedView(
-      NoAwaitTag,
-      google::bigtable::admin::v2::CreateMaterializedViewRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  CreateMaterializedView(NoAwaitTag,
+      google::bigtable::admin::v2::CreateMaterializedViewRequest const& request) override;
 
   future<StatusOr<google::bigtable::admin::v2::MaterializedView>>
   CreateMaterializedView(
       google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::bigtable::admin::v2::MaterializedView> GetMaterializedView(
-      google::bigtable::admin::v2::GetMaterializedViewRequest const& request)
-      override;
+  StatusOr<google::bigtable::admin::v2::MaterializedView>
+  GetMaterializedView(google::bigtable::admin::v2::GetMaterializedViewRequest const& request) override;
 
   StreamRange<google::bigtable::admin::v2::MaterializedView>
-  ListMaterializedViews(
-      google::bigtable::admin::v2::ListMaterializedViewsRequest request)
-      override;
+  ListMaterializedViews(google::bigtable::admin::v2::ListMaterializedViewsRequest request) override;
 
   future<StatusOr<google::bigtable::admin::v2::MaterializedView>>
-  UpdateMaterializedView(
-      google::bigtable::admin::v2::UpdateMaterializedViewRequest const& request)
-      override;
+  UpdateMaterializedView(google::bigtable::admin::v2::UpdateMaterializedViewRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> UpdateMaterializedView(
-      NoAwaitTag,
-      google::bigtable::admin::v2::UpdateMaterializedViewRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  UpdateMaterializedView(NoAwaitTag,
+      google::bigtable::admin::v2::UpdateMaterializedViewRequest const& request) override;
 
   future<StatusOr<google::bigtable::admin::v2::MaterializedView>>
   UpdateMaterializedView(
       google::longrunning::Operation const& operation) override;
 
-  Status DeleteMaterializedView(
-      google::bigtable::admin::v2::DeleteMaterializedViewRequest const& request)
-      override;
+  Status
+  DeleteMaterializedView(google::bigtable::admin::v2::DeleteMaterializedViewRequest const& request) override;
 
  private:
   std::shared_ptr<bigtable_admin::BigtableInstanceAdminConnection> child_;

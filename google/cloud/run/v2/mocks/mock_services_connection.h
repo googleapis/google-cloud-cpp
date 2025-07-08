@@ -51,13 +51,12 @@ class MockServicesConnection : public run_v2::ServicesConnection {
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// CreateService(Matcher<google::cloud::run::v2::CreateServiceRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, CreateService(Matcher<google::cloud::run::v2::CreateServiceRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::run::v2::Service>>, CreateService,
-              (google::cloud::run::v2::CreateServiceRequest const& request),
-              (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::run::v2::Service>>,
+  CreateService,
+  (google::cloud::run::v2::CreateServiceRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -65,42 +64,41 @@ class MockServicesConnection : public run_v2::ServicesConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, CreateService(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateService,
-              (NoAwaitTag,
-               google::cloud::run::v2::CreateServiceRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  CreateService, (NoAwaitTag,
+    google::cloud::run::v2::CreateServiceRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateService(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, CreateService(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::run::v2::Service>>, CreateService,
-              (google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::run::v2::Service>>,
+  CreateService, (
+    google::longrunning::Operation const& operation), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::run::v2::Service>, GetService,
-              (google::cloud::run::v2::GetServiceRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::run::v2::Service>,
+  GetService,
+  (google::cloud::run::v2::GetServiceRequest const& request), (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::run::v2::Service>), ListServices,
-              (google::cloud::run::v2::ListServicesRequest request),
-              (override));
+  MOCK_METHOD((StreamRange<google::cloud::run::v2::Service>),
+  ListServices,
+  (google::cloud::run::v2::ListServicesRequest request), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// UpdateService(Matcher<google::cloud::run::v2::UpdateServiceRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, UpdateService(Matcher<google::cloud::run::v2::UpdateServiceRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::run::v2::Service>>, UpdateService,
-              (google::cloud::run::v2::UpdateServiceRequest const& request),
-              (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::run::v2::Service>>,
+  UpdateService,
+  (google::cloud::run::v2::UpdateServiceRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -108,34 +106,33 @@ class MockServicesConnection : public run_v2::ServicesConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, UpdateService(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, UpdateService,
-              (NoAwaitTag,
-               google::cloud::run::v2::UpdateServiceRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  UpdateService, (NoAwaitTag,
+    google::cloud::run::v2::UpdateServiceRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UpdateService(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, UpdateService(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::run::v2::Service>>, UpdateService,
-              (google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::run::v2::Service>>,
+  UpdateService, (
+    google::longrunning::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteService(Matcher<google::cloud::run::v2::DeleteServiceRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteService(Matcher<google::cloud::run::v2::DeleteServiceRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::run::v2::Service>>, DeleteService,
-              (google::cloud::run::v2::DeleteServiceRequest const& request),
-              (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::run::v2::Service>>,
+  DeleteService,
+  (google::cloud::run::v2::DeleteServiceRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -143,49 +140,49 @@ class MockServicesConnection : public run_v2::ServicesConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, DeleteService(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteService,
-              (NoAwaitTag,
-               google::cloud::run::v2::DeleteServiceRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  DeleteService, (NoAwaitTag,
+    google::cloud::run::v2::DeleteServiceRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteService(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteService(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::run::v2::Service>>, DeleteService,
-              (google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::run::v2::Service>>,
+  DeleteService, (
+    google::longrunning::Operation const& operation), (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, GetIamPolicy,
-              (google::iam::v1::GetIamPolicyRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::iam::v1::Policy>,
+  GetIamPolicy,
+  (google::iam::v1::GetIamPolicyRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, SetIamPolicy,
-              (google::iam::v1::SetIamPolicyRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::iam::v1::Policy>,
+  SetIamPolicy,
+  (google::iam::v1::SetIamPolicyRequest const& request), (override));
 
   MOCK_METHOD(StatusOr<google::iam::v1::TestIamPermissionsResponse>,
-              TestIamPermissions,
-              (google::iam::v1::TestIamPermissionsRequest const& request),
-              (override));
+  TestIamPermissions,
+  (google::iam::v1::TestIamPermissionsRequest const& request), (override));
 
-  MOCK_METHOD((StreamRange<google::longrunning::Operation>), ListOperations,
-              (google::longrunning::ListOperationsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::longrunning::Operation>),
+  ListOperations,
+  (google::longrunning::ListOperationsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
-              (google::longrunning::GetOperationRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  GetOperation,
+  (google::longrunning::GetOperationRequest const& request), (override));
 
-  MOCK_METHOD(Status, DeleteOperation,
-              (google::longrunning::DeleteOperationRequest const& request),
-              (override));
+  MOCK_METHOD(Status,
+  DeleteOperation,
+  (google::longrunning::DeleteOperationRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, WaitOperation,
-              (google::longrunning::WaitOperationRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  WaitOperation,
+  (google::longrunning::WaitOperationRequest const& request), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

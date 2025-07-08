@@ -36,94 +36,66 @@ class DataTransferServiceTracingConnection
   ~DataTransferServiceTracingConnection() override = default;
 
   explicit DataTransferServiceTracingConnection(
-      std::shared_ptr<bigquery_datatransfer_v1::DataTransferServiceConnection>
-          child);
+    std::shared_ptr<bigquery_datatransfer_v1::DataTransferServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::bigquery::datatransfer::v1::DataSource> GetDataSource(
-      google::cloud::bigquery::datatransfer::v1::GetDataSourceRequest const&
-          request) override;
+  StatusOr<google::cloud::bigquery::datatransfer::v1::DataSource>
+  GetDataSource(google::cloud::bigquery::datatransfer::v1::GetDataSourceRequest const& request) override;
 
   StreamRange<google::cloud::bigquery::datatransfer::v1::DataSource>
-  ListDataSources(
-      google::cloud::bigquery::datatransfer::v1::ListDataSourcesRequest request)
-      override;
+  ListDataSources(google::cloud::bigquery::datatransfer::v1::ListDataSourcesRequest request) override;
 
   StatusOr<google::cloud::bigquery::datatransfer::v1::TransferConfig>
-  CreateTransferConfig(google::cloud::bigquery::datatransfer::v1::
-                           CreateTransferConfigRequest const& request) override;
+  CreateTransferConfig(google::cloud::bigquery::datatransfer::v1::CreateTransferConfigRequest const& request) override;
 
   StatusOr<google::cloud::bigquery::datatransfer::v1::TransferConfig>
-  UpdateTransferConfig(google::cloud::bigquery::datatransfer::v1::
-                           UpdateTransferConfigRequest const& request) override;
+  UpdateTransferConfig(google::cloud::bigquery::datatransfer::v1::UpdateTransferConfigRequest const& request) override;
 
-  Status DeleteTransferConfig(
-      google::cloud::bigquery::datatransfer::v1::
-          DeleteTransferConfigRequest const& request) override;
+  Status
+  DeleteTransferConfig(google::cloud::bigquery::datatransfer::v1::DeleteTransferConfigRequest const& request) override;
 
   StatusOr<google::cloud::bigquery::datatransfer::v1::TransferConfig>
-  GetTransferConfig(
-      google::cloud::bigquery::datatransfer::v1::GetTransferConfigRequest const&
-          request) override;
+  GetTransferConfig(google::cloud::bigquery::datatransfer::v1::GetTransferConfigRequest const& request) override;
 
   StreamRange<google::cloud::bigquery::datatransfer::v1::TransferConfig>
-  ListTransferConfigs(
-      google::cloud::bigquery::datatransfer::v1::ListTransferConfigsRequest
-          request) override;
+  ListTransferConfigs(google::cloud::bigquery::datatransfer::v1::ListTransferConfigsRequest request) override;
 
-  StatusOr<
-      google::cloud::bigquery::datatransfer::v1::ScheduleTransferRunsResponse>
-  ScheduleTransferRuns(google::cloud::bigquery::datatransfer::v1::
-                           ScheduleTransferRunsRequest const& request) override;
+  StatusOr<google::cloud::bigquery::datatransfer::v1::ScheduleTransferRunsResponse>
+  ScheduleTransferRuns(google::cloud::bigquery::datatransfer::v1::ScheduleTransferRunsRequest const& request) override;
 
-  StatusOr<google::cloud::bigquery::datatransfer::v1::
-               StartManualTransferRunsResponse>
-  StartManualTransferRuns(
-      google::cloud::bigquery::datatransfer::v1::
-          StartManualTransferRunsRequest const& request) override;
+  StatusOr<google::cloud::bigquery::datatransfer::v1::StartManualTransferRunsResponse>
+  StartManualTransferRuns(google::cloud::bigquery::datatransfer::v1::StartManualTransferRunsRequest const& request) override;
 
   StatusOr<google::cloud::bigquery::datatransfer::v1::TransferRun>
-  GetTransferRun(
-      google::cloud::bigquery::datatransfer::v1::GetTransferRunRequest const&
-          request) override;
+  GetTransferRun(google::cloud::bigquery::datatransfer::v1::GetTransferRunRequest const& request) override;
 
-  Status DeleteTransferRun(
-      google::cloud::bigquery::datatransfer::v1::DeleteTransferRunRequest const&
-          request) override;
+  Status
+  DeleteTransferRun(google::cloud::bigquery::datatransfer::v1::DeleteTransferRunRequest const& request) override;
 
   StreamRange<google::cloud::bigquery::datatransfer::v1::TransferRun>
-  ListTransferRuns(
-      google::cloud::bigquery::datatransfer::v1::ListTransferRunsRequest
-          request) override;
+  ListTransferRuns(google::cloud::bigquery::datatransfer::v1::ListTransferRunsRequest request) override;
 
   StreamRange<google::cloud::bigquery::datatransfer::v1::TransferMessage>
-  ListTransferLogs(
-      google::cloud::bigquery::datatransfer::v1::ListTransferLogsRequest
-          request) override;
+  ListTransferLogs(google::cloud::bigquery::datatransfer::v1::ListTransferLogsRequest request) override;
 
   StatusOr<google::cloud::bigquery::datatransfer::v1::CheckValidCredsResponse>
-  CheckValidCreds(
-      google::cloud::bigquery::datatransfer::v1::CheckValidCredsRequest const&
-          request) override;
+  CheckValidCreds(google::cloud::bigquery::datatransfer::v1::CheckValidCredsRequest const& request) override;
 
-  Status EnrollDataSources(
-      google::cloud::bigquery::datatransfer::v1::EnrollDataSourcesRequest const&
-          request) override;
+  Status
+  EnrollDataSources(google::cloud::bigquery::datatransfer::v1::EnrollDataSourcesRequest const& request) override;
 
-  Status UnenrollDataSources(
-      google::cloud::bigquery::datatransfer::v1::
-          UnenrollDataSourcesRequest const& request) override;
+  Status
+  UnenrollDataSources(google::cloud::bigquery::datatransfer::v1::UnenrollDataSourcesRequest const& request) override;
 
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request) override;
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request) override;
 
-  StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request) override;
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request) override;
 
  private:
-  std::shared_ptr<bigquery_datatransfer_v1::DataTransferServiceConnection>
-      child_;
+  std::shared_ptr<bigquery_datatransfer_v1::DataTransferServiceConnection> child_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -136,8 +108,7 @@ class DataTransferServiceTracingConnection
  */
 std::shared_ptr<bigquery_datatransfer_v1::DataTransferServiceConnection>
 MakeDataTransferServiceTracingConnection(
-    std::shared_ptr<bigquery_datatransfer_v1::DataTransferServiceConnection>
-        conn);
+    std::shared_ptr<bigquery_datatransfer_v1::DataTransferServiceConnection> conn);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_datatransfer_v1_internal

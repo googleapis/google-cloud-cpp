@@ -17,9 +17,9 @@
 // source: google/cloud/contentwarehouse/v1/pipeline_service.proto
 
 #include "google/cloud/contentwarehouse/v1/internal/pipeline_connection_impl.h"
-#include "google/cloud/contentwarehouse/v1/internal/pipeline_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/contentwarehouse/v1/internal/pipeline_option_defaults.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/async_long_running_operation.h"
 #include "google/cloud/internal/retry_loop.h"
@@ -32,92 +32,80 @@ namespace contentwarehouse_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<contentwarehouse_v1::PipelineServiceRetryPolicy> retry_policy(
-    Options const& options) {
-  return options.get<contentwarehouse_v1::PipelineServiceRetryPolicyOption>()
-      ->clone();
+std::unique_ptr<contentwarehouse_v1::PipelineServiceRetryPolicy>
+retry_policy(Options const& options) {
+  return options.get<contentwarehouse_v1::PipelineServiceRetryPolicyOption>()->clone();
 }
 
-std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-  return options.get<contentwarehouse_v1::PipelineServiceBackoffPolicyOption>()
-      ->clone();
+std::unique_ptr<BackoffPolicy>
+backoff_policy(Options const& options) {
+  return options.get<contentwarehouse_v1::PipelineServiceBackoffPolicyOption>()->clone();
 }
 
 std::unique_ptr<contentwarehouse_v1::PipelineServiceConnectionIdempotencyPolicy>
 idempotency_policy(Options const& options) {
-  return options
-      .get<contentwarehouse_v1::
-               PipelineServiceConnectionIdempotencyPolicyOption>()
-      ->clone();
+  return options.get<contentwarehouse_v1::PipelineServiceConnectionIdempotencyPolicyOption>()->clone();
 }
 
 std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-  return options.get<contentwarehouse_v1::PipelineServicePollingPolicyOption>()
-      ->clone();
+  return options.get<contentwarehouse_v1::PipelineServicePollingPolicyOption>()->clone();
 }
 
-}  // namespace
+} // namespace
 
 PipelineServiceConnectionImpl::PipelineServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<contentwarehouse_v1_internal::PipelineServiceStub> stub,
     Options options)
-    : background_(std::move(background)),
-      stub_(std::move(stub)),
-      options_(internal::MergeOptions(std::move(options),
-                                      PipelineServiceConnection::options())) {}
+  : background_(std::move(background)), stub_(std::move(stub)),
+    options_(internal::MergeOptions(
+        std::move(options),
+        PipelineServiceConnection::options())) {}
 
 future<StatusOr<google::cloud::contentwarehouse::v1::RunPipelineResponse>>
-PipelineServiceConnectionImpl::RunPipeline(
-    google::cloud::contentwarehouse::v1::RunPipelineRequest const& request) {
+PipelineServiceConnectionImpl::RunPipeline(google::cloud::contentwarehouse::v1::RunPipelineRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->RunPipeline(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<
-      google::cloud::contentwarehouse::v1::RunPipelineResponse>(
-      background_->cq(), current, std::move(request_copy),
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::contentwarehouse::v1::RunPipelineRequest const&
-              request) {
-        return stub->AsyncRunPipeline(cq, std::move(context),
-                                      std::move(options), request);
-      },
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::contentwarehouse::v1::RunPipelineResponse>,
-      retry_policy(*current), backoff_policy(*current), idempotent,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::contentwarehouse::v1::RunPipelineResponse>(
+    background_->cq(), current, std::move(request_copy),
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::cloud::contentwarehouse::v1::RunPipelineRequest const& request) {
+     return stub->AsyncRunPipeline(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::contentwarehouse::v1::RunPipelineResponse>,
+    retry_policy(*current), backoff_policy(*current), idempotent,
+    polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 PipelineServiceConnectionImpl::RunPipeline(
-    NoAwaitTag,
-    google::cloud::contentwarehouse::v1::RunPipelineRequest const& request) {
+      NoAwaitTag, google::cloud::contentwarehouse::v1::RunPipelineRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->RunPipeline(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::contentwarehouse::v1::RunPipelineRequest const&
-                 request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::contentwarehouse::v1::RunPipelineRequest const& request) {
         return stub_->RunPipeline(context, options, request);
       },
       *current, request, __func__);
@@ -125,45 +113,36 @@ PipelineServiceConnectionImpl::RunPipeline(
 
 future<StatusOr<google::cloud::contentwarehouse::v1::RunPipelineResponse>>
 PipelineServiceConnectionImpl::RunPipeline(
-    google::longrunning::Operation const& operation) {
+      google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata()
-           .Is<typename google::cloud::contentwarehouse::v1::
-                   RunPipelineMetadata>()) {
-    return make_ready_future<
-        StatusOr<google::cloud::contentwarehouse::v1::RunPipelineResponse>>(
-        internal::InvalidArgumentError(
-            "operation does not correspond to RunPipeline",
-            GCP_ERROR_INFO().WithMetadata("operation",
-                                          operation.metadata().DebugString())));
+  if (!operation.metadata().Is<typename google::cloud::contentwarehouse::v1::RunPipelineMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::contentwarehouse::v1::RunPipelineResponse>>(
+        internal::InvalidArgumentError("operation does not correspond to RunPipeline",
+                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<
-      google::cloud::contentwarehouse::v1::RunPipelineResponse>(
-      background_->cq(), current, operation,
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::contentwarehouse::v1::RunPipelineResponse>,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::contentwarehouse::v1::RunPipelineResponse>(
+    background_->cq(), current, operation,
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::contentwarehouse::v1::RunPipelineResponse>,
+    polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
-PipelineServiceConnectionImpl::GetOperation(
-    google::longrunning::GetOperationRequest const& request) {
+PipelineServiceConnectionImpl::GetOperation(google::longrunning::GetOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),

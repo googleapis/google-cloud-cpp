@@ -46,13 +46,13 @@ class MockCloudCatalogConnection : public billing_v1::CloudCatalogConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::billing::v1::Service>), ListServices,
-              (google::cloud::billing::v1::ListServicesRequest request),
-              (override));
+  MOCK_METHOD((StreamRange<google::cloud::billing::v1::Service>),
+  ListServices,
+  (google::cloud::billing::v1::ListServicesRequest request), (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::billing::v1::Sku>), ListSkus,
-              (google::cloud::billing::v1::ListSkusRequest request),
-              (override));
+  MOCK_METHOD((StreamRange<google::cloud::billing::v1::Sku>),
+  ListSkus,
+  (google::cloud::billing::v1::ListSkusRequest request), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

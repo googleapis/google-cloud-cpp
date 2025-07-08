@@ -35,26 +35,23 @@ class PublisherLogging : public PublisherStub {
  public:
   ~PublisherLogging() override = default;
   PublisherLogging(std::shared_ptr<PublisherStub> child,
-                   TracingOptions tracing_options,
-                   std::set<std::string> const& components);
+                       TracingOptions tracing_options,
+                       std::set<std::string> const& components);
 
-  StatusOr<google::cloud::eventarc::publishing::v1::
-               PublishChannelConnectionEventsResponse>
-  PublishChannelConnectionEvents(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::eventarc::publishing::v1::
-          PublishChannelConnectionEventsRequest const& request) override;
+  StatusOr<google::cloud::eventarc::publishing::v1::PublishChannelConnectionEventsResponse> PublishChannelConnectionEvents(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::eventarc::publishing::v1::PublishChannelConnectionEventsRequest const& request) override;
 
-  StatusOr<google::cloud::eventarc::publishing::v1::PublishEventsResponse>
-  PublishEvents(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::eventarc::publishing::v1::PublishEventsRequest const&
-          request) override;
+  StatusOr<google::cloud::eventarc::publishing::v1::PublishEventsResponse> PublishEvents(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::eventarc::publishing::v1::PublishEventsRequest const& request) override;
 
   StatusOr<google::cloud::eventarc::publishing::v1::PublishResponse> Publish(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::eventarc::publishing::v1::PublishRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::eventarc::publishing::v1::PublishRequest const& request) override;
 
  private:
   std::shared_ptr<PublisherStub> child_;

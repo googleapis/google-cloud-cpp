@@ -25,25 +25,21 @@ namespace cloud {
 namespace dialogflow_cx {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-SessionsClient::SessionsClient(std::shared_ptr<SessionsConnection> connection,
-                               Options opts)
+SessionsClient::SessionsClient(
+    std::shared_ptr<SessionsConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 SessionsClient::~SessionsClient() = default;
 
 StatusOr<google::cloud::dialogflow::cx::v3::DetectIntentResponse>
-SessionsClient::DetectIntent(
-    google::cloud::dialogflow::cx::v3::DetectIntentRequest const& request,
-    Options opts) {
+SessionsClient::DetectIntent(google::cloud::dialogflow::cx::v3::DetectIntentRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DetectIntent(request);
 }
 
 StreamRange<google::cloud::dialogflow::cx::v3::DetectIntentResponse>
-SessionsClient::ServerStreamingDetectIntent(
-    google::cloud::dialogflow::cx::v3::DetectIntentRequest const& request,
-    Options opts) {
+SessionsClient::ServerStreamingDetectIntent(google::cloud::dialogflow::cx::v3::DetectIntentRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ServerStreamingDetectIntent(request);
 }
@@ -52,49 +48,43 @@ std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::cloud::dialogflow::cx::v3::StreamingDetectIntentRequest,
     google::cloud::dialogflow::cx::v3::StreamingDetectIntentResponse>>
 SessionsClient::AsyncStreamingDetectIntent(Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(opts), options_));
   return connection_->AsyncStreamingDetectIntent();
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::MatchIntentResponse>
-SessionsClient::MatchIntent(
-    google::cloud::dialogflow::cx::v3::MatchIntentRequest const& request,
-    Options opts) {
+SessionsClient::MatchIntent(google::cloud::dialogflow::cx::v3::MatchIntentRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->MatchIntent(request);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::FulfillIntentResponse>
-SessionsClient::FulfillIntent(
-    google::cloud::dialogflow::cx::v3::FulfillIntentRequest const& request,
-    Options opts) {
+SessionsClient::FulfillIntent(google::cloud::dialogflow::cx::v3::FulfillIntentRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->FulfillIntent(request);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::AnswerFeedback>
-SessionsClient::SubmitAnswerFeedback(
-    google::cloud::dialogflow::cx::v3::SubmitAnswerFeedbackRequest const&
-        request,
-    Options opts) {
+SessionsClient::SubmitAnswerFeedback(google::cloud::dialogflow::cx::v3::SubmitAnswerFeedbackRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SubmitAnswerFeedback(request);
 }
 
-StreamRange<google::cloud::location::Location> SessionsClient::ListLocations(
-    google::cloud::location::ListLocationsRequest request, Options opts) {
+StreamRange<google::cloud::location::Location>
+SessionsClient::ListLocations(google::cloud::location::ListLocationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListLocations(std::move(request));
 }
 
-StatusOr<google::cloud::location::Location> SessionsClient::GetLocation(
-    google::cloud::location::GetLocationRequest const& request, Options opts) {
+StatusOr<google::cloud::location::Location>
+SessionsClient::GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetLocation(request);
 }
 
-StreamRange<google::longrunning::Operation> SessionsClient::ListOperations(
-    std::string const& name, std::string const& filter, Options opts) {
+StreamRange<google::longrunning::Operation>
+SessionsClient::ListOperations(std::string const& name, std::string const& filter, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::ListOperationsRequest request;
   request.set_name(name);
@@ -102,35 +92,36 @@ StreamRange<google::longrunning::Operation> SessionsClient::ListOperations(
   return connection_->ListOperations(request);
 }
 
-StreamRange<google::longrunning::Operation> SessionsClient::ListOperations(
-    google::longrunning::ListOperationsRequest request, Options opts) {
+StreamRange<google::longrunning::Operation>
+SessionsClient::ListOperations(google::longrunning::ListOperationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOperations(std::move(request));
 }
 
-StatusOr<google::longrunning::Operation> SessionsClient::GetOperation(
-    std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation>
+SessionsClient::GetOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
   return connection_->GetOperation(request);
 }
 
-StatusOr<google::longrunning::Operation> SessionsClient::GetOperation(
-    google::longrunning::GetOperationRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation>
+SessionsClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }
 
-Status SessionsClient::CancelOperation(std::string const& name, Options opts) {
+Status
+SessionsClient::CancelOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::CancelOperationRequest request;
   request.set_name(name);
   return connection_->CancelOperation(request);
 }
 
-Status SessionsClient::CancelOperation(
-    google::longrunning::CancelOperationRequest const& request, Options opts) {
+Status
+SessionsClient::CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelOperation(request);
 }

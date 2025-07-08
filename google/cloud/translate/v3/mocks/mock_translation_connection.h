@@ -31,10 +31,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * A class to mock `TranslationServiceConnection`.
  *
  * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `TranslationServiceClient`. To do
- * so, construct an object of type `TranslationServiceClient` with an instance
- * of this class. Then use the Google Test framework functions to program the
- * behavior of this mock.
+ * including errors, from an object of type `TranslationServiceClient`. To do so,
+ * construct an object of type `TranslationServiceClient` with an instance of this
+ * class. Then use the Google Test framework functions to program the behavior
+ * of this mock.
  *
  * @see [This example][bq-mock] for how to test your application with GoogleTest.
  * While the example showcases types from the BigQuery library, the underlying
@@ -42,57 +42,41 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockTranslationServiceConnection
-    : public translate_v3::TranslationServiceConnection {
+class MockTranslationServiceConnection : public translate_v3::TranslationServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::translation::v3::TranslateTextResponse>,
-      TranslateText,
-      (google::cloud::translation::v3::TranslateTextRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::translation::v3::TranslateTextResponse>,
+  TranslateText,
+  (google::cloud::translation::v3::TranslateTextRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::translation::v3::RomanizeTextResponse>,
-      RomanizeText,
-      (google::cloud::translation::v3::RomanizeTextRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::translation::v3::RomanizeTextResponse>,
+  RomanizeText,
+  (google::cloud::translation::v3::RomanizeTextRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::translation::v3::DetectLanguageResponse>,
-      DetectLanguage,
-      (google::cloud::translation::v3::DetectLanguageRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::translation::v3::DetectLanguageResponse>,
+  DetectLanguage,
+  (google::cloud::translation::v3::DetectLanguageRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::translation::v3::SupportedLanguages>,
-      GetSupportedLanguages,
-      (google::cloud::translation::v3::GetSupportedLanguagesRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::translation::v3::SupportedLanguages>,
+  GetSupportedLanguages,
+  (google::cloud::translation::v3::GetSupportedLanguagesRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::translation::v3::TranslateDocumentResponse>,
-      TranslateDocument,
-      (google::cloud::translation::v3::TranslateDocumentRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::translation::v3::TranslateDocumentResponse>,
+  TranslateDocument,
+  (google::cloud::translation::v3::TranslateDocumentRequest const& request), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// BatchTranslateText(Matcher<google::cloud::translation::v3::BatchTranslateTextRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, BatchTranslateText(Matcher<google::cloud::translation::v3::BatchTranslateTextRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::translation::v3::BatchTranslateResponse>>,
-      BatchTranslateText,
-      (google::cloud::translation::v3::BatchTranslateTextRequest const&
-           request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::translation::v3::BatchTranslateResponse>>,
+  BatchTranslateText,
+  (google::cloud::translation::v3::BatchTranslateTextRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -100,41 +84,33 @@ class MockTranslationServiceConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, BatchTranslateText(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, BatchTranslateText,
-              (NoAwaitTag,
-               google::cloud::translation::v3::BatchTranslateTextRequest const&
-                   request),
-              (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  BatchTranslateText, (NoAwaitTag,
+    google::cloud::translation::v3::BatchTranslateTextRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// BatchTranslateText(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock, BatchTranslateText(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::translation::v3::BatchTranslateResponse>>,
-      BatchTranslateText, (google::longrunning::Operation const& operation),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::translation::v3::BatchTranslateResponse>>,
+  BatchTranslateText, (
+    google::longrunning::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// BatchTranslateDocument(Matcher<google::cloud::translation::v3::BatchTranslateDocumentRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, BatchTranslateDocument(Matcher<google::cloud::translation::v3::BatchTranslateDocumentRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<
-          google::cloud::translation::v3::BatchTranslateDocumentResponse>>,
-      BatchTranslateDocument,
-      (google::cloud::translation::v3::BatchTranslateDocumentRequest const&
-           request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::translation::v3::BatchTranslateDocumentResponse>>,
+  BatchTranslateDocument,
+  (google::cloud::translation::v3::BatchTranslateDocumentRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -142,41 +118,33 @@ class MockTranslationServiceConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, BatchTranslateDocument(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, BatchTranslateDocument,
-      (NoAwaitTag,
-       google::cloud::translation::v3::BatchTranslateDocumentRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  BatchTranslateDocument, (NoAwaitTag,
+    google::cloud::translation::v3::BatchTranslateDocumentRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// BatchTranslateDocument(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock, BatchTranslateDocument(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<
-          google::cloud::translation::v3::BatchTranslateDocumentResponse>>,
-      BatchTranslateDocument, (google::longrunning::Operation const& operation),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::translation::v3::BatchTranslateDocumentResponse>>,
+  BatchTranslateDocument, (
+    google::longrunning::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// CreateGlossary(Matcher<google::cloud::translation::v3::CreateGlossaryRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, CreateGlossary(Matcher<google::cloud::translation::v3::CreateGlossaryRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::translation::v3::Glossary>>,
-      CreateGlossary,
-      (google::cloud::translation::v3::CreateGlossaryRequest const& request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::translation::v3::Glossary>>,
+  CreateGlossary,
+  (google::cloud::translation::v3::CreateGlossaryRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -184,38 +152,33 @@ class MockTranslationServiceConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, CreateGlossary(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, CreateGlossary,
-      (NoAwaitTag,
-       google::cloud::translation::v3::CreateGlossaryRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  CreateGlossary, (NoAwaitTag,
+    google::cloud::translation::v3::CreateGlossaryRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateGlossary(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, CreateGlossary(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::translation::v3::Glossary>>,
-              CreateGlossary, (google::longrunning::Operation const& operation),
-              (override));
+  CreateGlossary, (
+    google::longrunning::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// UpdateGlossary(Matcher<google::cloud::translation::v3::UpdateGlossaryRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, UpdateGlossary(Matcher<google::cloud::translation::v3::UpdateGlossaryRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::translation::v3::Glossary>>,
-      UpdateGlossary,
-      (google::cloud::translation::v3::UpdateGlossaryRequest const& request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::translation::v3::Glossary>>,
+  UpdateGlossary,
+  (google::cloud::translation::v3::UpdateGlossaryRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -223,48 +186,41 @@ class MockTranslationServiceConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, UpdateGlossary(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, UpdateGlossary,
-      (NoAwaitTag,
-       google::cloud::translation::v3::UpdateGlossaryRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  UpdateGlossary, (NoAwaitTag,
+    google::cloud::translation::v3::UpdateGlossaryRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UpdateGlossary(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, UpdateGlossary(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::translation::v3::Glossary>>,
-              UpdateGlossary, (google::longrunning::Operation const& operation),
-              (override));
+  UpdateGlossary, (
+    google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD((StreamRange<google::cloud::translation::v3::Glossary>),
-              ListGlossaries,
-              (google::cloud::translation::v3::ListGlossariesRequest request),
-              (override));
+  ListGlossaries,
+  (google::cloud::translation::v3::ListGlossariesRequest request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::translation::v3::Glossary>, GetGlossary,
-      (google::cloud::translation::v3::GetGlossaryRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::translation::v3::Glossary>,
+  GetGlossary,
+  (google::cloud::translation::v3::GetGlossaryRequest const& request), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteGlossary(Matcher<google::cloud::translation::v3::DeleteGlossaryRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteGlossary(Matcher<google::cloud::translation::v3::DeleteGlossaryRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::translation::v3::DeleteGlossaryResponse>>,
-      DeleteGlossary,
-      (google::cloud::translation::v3::DeleteGlossaryRequest const& request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::translation::v3::DeleteGlossaryResponse>>,
+  DeleteGlossary,
+  (google::cloud::translation::v3::DeleteGlossaryRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -272,66 +228,53 @@ class MockTranslationServiceConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, DeleteGlossary(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, DeleteGlossary,
-      (NoAwaitTag,
-       google::cloud::translation::v3::DeleteGlossaryRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  DeleteGlossary, (NoAwaitTag,
+    google::cloud::translation::v3::DeleteGlossaryRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteGlossary(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteGlossary(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::translation::v3::DeleteGlossaryResponse>>,
-      DeleteGlossary, (google::longrunning::Operation const& operation),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::translation::v3::GlossaryEntry>, GetGlossaryEntry,
-      (google::cloud::translation::v3::GetGlossaryEntryRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      (StreamRange<google::cloud::translation::v3::GlossaryEntry>),
-      ListGlossaryEntries,
-      (google::cloud::translation::v3::ListGlossaryEntriesRequest request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::translation::v3::DeleteGlossaryResponse>>,
+  DeleteGlossary, (
+    google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::translation::v3::GlossaryEntry>,
-              CreateGlossaryEntry,
-              (google::cloud::translation::v3::CreateGlossaryEntryRequest const&
-                   request),
-              (override));
+  GetGlossaryEntry,
+  (google::cloud::translation::v3::GetGlossaryEntryRequest const& request), (override));
+
+  MOCK_METHOD((StreamRange<google::cloud::translation::v3::GlossaryEntry>),
+  ListGlossaryEntries,
+  (google::cloud::translation::v3::ListGlossaryEntriesRequest request), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::translation::v3::GlossaryEntry>,
-              UpdateGlossaryEntry,
-              (google::cloud::translation::v3::UpdateGlossaryEntryRequest const&
-                   request),
-              (override));
+  CreateGlossaryEntry,
+  (google::cloud::translation::v3::CreateGlossaryEntryRequest const& request), (override));
 
-  MOCK_METHOD(Status, DeleteGlossaryEntry,
-              (google::cloud::translation::v3::DeleteGlossaryEntryRequest const&
-                   request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::translation::v3::GlossaryEntry>,
+  UpdateGlossaryEntry,
+  (google::cloud::translation::v3::UpdateGlossaryEntryRequest const& request), (override));
+
+  MOCK_METHOD(Status,
+  DeleteGlossaryEntry,
+  (google::cloud::translation::v3::DeleteGlossaryEntryRequest const& request), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// CreateDataset(Matcher<google::cloud::translation::v3::CreateDatasetRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, CreateDataset(Matcher<google::cloud::translation::v3::CreateDatasetRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::translation::v3::Dataset>>, CreateDataset,
-      (google::cloud::translation::v3::CreateDatasetRequest const& request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::translation::v3::Dataset>>,
+  CreateDataset,
+  (google::cloud::translation::v3::CreateDatasetRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -339,48 +282,41 @@ class MockTranslationServiceConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, CreateDataset(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, CreateDataset,
-      (NoAwaitTag,
-       google::cloud::translation::v3::CreateDatasetRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  CreateDataset, (NoAwaitTag,
+    google::cloud::translation::v3::CreateDatasetRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateDataset(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, CreateDataset(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::translation::v3::Dataset>>,
-              CreateDataset, (google::longrunning::Operation const& operation),
-              (override));
+  CreateDataset, (
+    google::longrunning::Operation const& operation), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::translation::v3::Dataset>, GetDataset,
-      (google::cloud::translation::v3::GetDatasetRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::translation::v3::Dataset>,
+  GetDataset,
+  (google::cloud::translation::v3::GetDatasetRequest const& request), (override));
 
   MOCK_METHOD((StreamRange<google::cloud::translation::v3::Dataset>),
-              ListDatasets,
-              (google::cloud::translation::v3::ListDatasetsRequest request),
-              (override));
+  ListDatasets,
+  (google::cloud::translation::v3::ListDatasetsRequest request), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteDataset(Matcher<google::cloud::translation::v3::DeleteDatasetRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteDataset(Matcher<google::cloud::translation::v3::DeleteDatasetRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::translation::v3::DeleteDatasetMetadata>>,
-      DeleteDataset,
-      (google::cloud::translation::v3::DeleteDatasetRequest const& request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::translation::v3::DeleteDatasetMetadata>>,
+  DeleteDataset,
+  (google::cloud::translation::v3::DeleteDatasetRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -388,103 +324,73 @@ class MockTranslationServiceConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, DeleteDataset(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, DeleteDataset,
-      (NoAwaitTag,
-       google::cloud::translation::v3::DeleteDatasetRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  DeleteDataset, (NoAwaitTag,
+    google::cloud::translation::v3::DeleteDatasetRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteDataset(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteDataset(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::translation::v3::DeleteDatasetMetadata>>,
-      DeleteDataset, (google::longrunning::Operation const& operation),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::translation::v3::DeleteDatasetMetadata>>,
+  DeleteDataset, (
+    google::longrunning::Operation const& operation), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::translation::v3::AdaptiveMtDataset>,
-      CreateAdaptiveMtDataset,
-      (google::cloud::translation::v3::CreateAdaptiveMtDatasetRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::translation::v3::AdaptiveMtDataset>,
+  CreateAdaptiveMtDataset,
+  (google::cloud::translation::v3::CreateAdaptiveMtDatasetRequest const& request), (override));
 
-  MOCK_METHOD(
-      Status, DeleteAdaptiveMtDataset,
-      (google::cloud::translation::v3::DeleteAdaptiveMtDatasetRequest const&
-           request),
-      (override));
+  MOCK_METHOD(Status,
+  DeleteAdaptiveMtDataset,
+  (google::cloud::translation::v3::DeleteAdaptiveMtDatasetRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::translation::v3::AdaptiveMtDataset>,
-      GetAdaptiveMtDataset,
-      (google::cloud::translation::v3::GetAdaptiveMtDatasetRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::translation::v3::AdaptiveMtDataset>,
+  GetAdaptiveMtDataset,
+  (google::cloud::translation::v3::GetAdaptiveMtDatasetRequest const& request), (override));
 
-  MOCK_METHOD(
-      (StreamRange<google::cloud::translation::v3::AdaptiveMtDataset>),
-      ListAdaptiveMtDatasets,
-      (google::cloud::translation::v3::ListAdaptiveMtDatasetsRequest request),
-      (override));
+  MOCK_METHOD((StreamRange<google::cloud::translation::v3::AdaptiveMtDataset>),
+  ListAdaptiveMtDatasets,
+  (google::cloud::translation::v3::ListAdaptiveMtDatasetsRequest request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::translation::v3::AdaptiveMtTranslateResponse>,
-      AdaptiveMtTranslate,
-      (google::cloud::translation::v3::AdaptiveMtTranslateRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::translation::v3::AdaptiveMtTranslateResponse>,
+  AdaptiveMtTranslate,
+  (google::cloud::translation::v3::AdaptiveMtTranslateRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::translation::v3::AdaptiveMtFile>,
-      GetAdaptiveMtFile,
-      (google::cloud::translation::v3::GetAdaptiveMtFileRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::translation::v3::AdaptiveMtFile>,
+  GetAdaptiveMtFile,
+  (google::cloud::translation::v3::GetAdaptiveMtFileRequest const& request), (override));
 
-  MOCK_METHOD(
-      Status, DeleteAdaptiveMtFile,
-      (google::cloud::translation::v3::DeleteAdaptiveMtFileRequest const&
-           request),
-      (override));
+  MOCK_METHOD(Status,
+  DeleteAdaptiveMtFile,
+  (google::cloud::translation::v3::DeleteAdaptiveMtFileRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::translation::v3::ImportAdaptiveMtFileResponse>,
-      ImportAdaptiveMtFile,
-      (google::cloud::translation::v3::ImportAdaptiveMtFileRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::translation::v3::ImportAdaptiveMtFileResponse>,
+  ImportAdaptiveMtFile,
+  (google::cloud::translation::v3::ImportAdaptiveMtFileRequest const& request), (override));
 
-  MOCK_METHOD(
-      (StreamRange<google::cloud::translation::v3::AdaptiveMtFile>),
-      ListAdaptiveMtFiles,
-      (google::cloud::translation::v3::ListAdaptiveMtFilesRequest request),
-      (override));
+  MOCK_METHOD((StreamRange<google::cloud::translation::v3::AdaptiveMtFile>),
+  ListAdaptiveMtFiles,
+  (google::cloud::translation::v3::ListAdaptiveMtFilesRequest request), (override));
 
-  MOCK_METHOD(
-      (StreamRange<google::cloud::translation::v3::AdaptiveMtSentence>),
-      ListAdaptiveMtSentences,
-      (google::cloud::translation::v3::ListAdaptiveMtSentencesRequest request),
-      (override));
+  MOCK_METHOD((StreamRange<google::cloud::translation::v3::AdaptiveMtSentence>),
+  ListAdaptiveMtSentences,
+  (google::cloud::translation::v3::ListAdaptiveMtSentencesRequest request), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// ImportData(Matcher<google::cloud::translation::v3::ImportDataRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, ImportData(Matcher<google::cloud::translation::v3::ImportDataRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::translation::v3::ImportDataMetadata>>,
-      ImportData,
-      (google::cloud::translation::v3::ImportDataRequest const& request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::translation::v3::ImportDataMetadata>>,
+  ImportData,
+  (google::cloud::translation::v3::ImportDataRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -492,39 +398,33 @@ class MockTranslationServiceConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, ImportData(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, ImportData,
-      (NoAwaitTag,
-       google::cloud::translation::v3::ImportDataRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  ImportData, (NoAwaitTag,
+    google::cloud::translation::v3::ImportDataRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, ImportData(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, ImportData(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::translation::v3::ImportDataMetadata>>,
-      ImportData, (google::longrunning::Operation const& operation),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::translation::v3::ImportDataMetadata>>,
+  ImportData, (
+    google::longrunning::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// ExportData(Matcher<google::cloud::translation::v3::ExportDataRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, ExportData(Matcher<google::cloud::translation::v3::ExportDataRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::translation::v3::ExportDataMetadata>>,
-      ExportData,
-      (google::cloud::translation::v3::ExportDataRequest const& request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::translation::v3::ExportDataMetadata>>,
+  ExportData,
+  (google::cloud::translation::v3::ExportDataRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -532,43 +432,37 @@ class MockTranslationServiceConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, ExportData(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, ExportData,
-      (NoAwaitTag,
-       google::cloud::translation::v3::ExportDataRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  ExportData, (NoAwaitTag,
+    google::cloud::translation::v3::ExportDataRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, ExportData(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, ExportData(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::translation::v3::ExportDataMetadata>>,
-      ExportData, (google::longrunning::Operation const& operation),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::translation::v3::ExportDataMetadata>>,
+  ExportData, (
+    google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD((StreamRange<google::cloud::translation::v3::Example>),
-              ListExamples,
-              (google::cloud::translation::v3::ListExamplesRequest request),
-              (override));
+  ListExamples,
+  (google::cloud::translation::v3::ListExamplesRequest request), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// CreateModel(Matcher<google::cloud::translation::v3::CreateModelRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, CreateModel(Matcher<google::cloud::translation::v3::CreateModelRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::translation::v3::Model>>, CreateModel,
-      (google::cloud::translation::v3::CreateModelRequest const& request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::translation::v3::Model>>,
+  CreateModel,
+  (google::cloud::translation::v3::CreateModelRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -576,46 +470,41 @@ class MockTranslationServiceConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, CreateModel(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, CreateModel,
-      (NoAwaitTag,
-       google::cloud::translation::v3::CreateModelRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  CreateModel, (NoAwaitTag,
+    google::cloud::translation::v3::CreateModelRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateModel(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, CreateModel(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::translation::v3::Model>>,
-              CreateModel, (google::longrunning::Operation const& operation),
-              (override));
+  CreateModel, (
+    google::longrunning::Operation const& operation), (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::translation::v3::Model>), ListModels,
-              (google::cloud::translation::v3::ListModelsRequest request),
-              (override));
+  MOCK_METHOD((StreamRange<google::cloud::translation::v3::Model>),
+  ListModels,
+  (google::cloud::translation::v3::ListModelsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::translation::v3::Model>, GetModel,
-              (google::cloud::translation::v3::GetModelRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::translation::v3::Model>,
+  GetModel,
+  (google::cloud::translation::v3::GetModelRequest const& request), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteModel(Matcher<google::cloud::translation::v3::DeleteModelRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteModel(Matcher<google::cloud::translation::v3::DeleteModelRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::translation::v3::DeleteModelMetadata>>,
-      DeleteModel,
-      (google::cloud::translation::v3::DeleteModelRequest const& request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::translation::v3::DeleteModelMetadata>>,
+  DeleteModel,
+  (google::cloud::translation::v3::DeleteModelRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -623,51 +512,49 @@ class MockTranslationServiceConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, DeleteModel(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, DeleteModel,
-      (NoAwaitTag,
-       google::cloud::translation::v3::DeleteModelRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  DeleteModel, (NoAwaitTag,
+    google::cloud::translation::v3::DeleteModelRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteModel(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteModel(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::translation::v3::DeleteModelMetadata>>,
-      DeleteModel, (google::longrunning::Operation const& operation),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::translation::v3::DeleteModelMetadata>>,
+  DeleteModel, (
+    google::longrunning::Operation const& operation), (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::location::Location>), ListLocations,
-              (google::cloud::location::ListLocationsRequest request),
-              (override));
+  MOCK_METHOD((StreamRange<google::cloud::location::Location>),
+  ListLocations,
+  (google::cloud::location::ListLocationsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::location::Location>, GetLocation,
-              (google::cloud::location::GetLocationRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::location::Location>,
+  GetLocation,
+  (google::cloud::location::GetLocationRequest const& request), (override));
 
-  MOCK_METHOD((StreamRange<google::longrunning::Operation>), ListOperations,
-              (google::longrunning::ListOperationsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::longrunning::Operation>),
+  ListOperations,
+  (google::longrunning::ListOperationsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
-              (google::longrunning::GetOperationRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  GetOperation,
+  (google::longrunning::GetOperationRequest const& request), (override));
 
-  MOCK_METHOD(Status, DeleteOperation,
-              (google::longrunning::DeleteOperationRequest const& request),
-              (override));
+  MOCK_METHOD(Status,
+  DeleteOperation,
+  (google::longrunning::DeleteOperationRequest const& request), (override));
 
-  MOCK_METHOD(Status, CancelOperation,
-              (google::longrunning::CancelOperationRequest const& request),
-              (override));
+  MOCK_METHOD(Status,
+  CancelOperation,
+  (google::longrunning::CancelOperationRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, WaitOperation,
-              (google::longrunning::WaitOperationRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  WaitOperation,
+  (google::longrunning::WaitOperationRequest const& request), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

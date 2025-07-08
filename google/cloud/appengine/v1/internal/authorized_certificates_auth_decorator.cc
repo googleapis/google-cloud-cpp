@@ -31,36 +31,36 @@ AuthorizedCertificatesAuth::AuthorizedCertificatesAuth(
     std::shared_ptr<AuthorizedCertificatesStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::appengine::v1::ListAuthorizedCertificatesResponse>
-AuthorizedCertificatesAuth::ListAuthorizedCertificates(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::appengine::v1::ListAuthorizedCertificatesResponse> AuthorizedCertificatesAuth::ListAuthorizedCertificates(
+    grpc::ClientContext& context,
+    Options const& options,
     google::appengine::v1::ListAuthorizedCertificatesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListAuthorizedCertificates(context, options, request);
 }
 
-StatusOr<google::appengine::v1::AuthorizedCertificate>
-AuthorizedCertificatesAuth::GetAuthorizedCertificate(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::appengine::v1::AuthorizedCertificate> AuthorizedCertificatesAuth::GetAuthorizedCertificate(
+    grpc::ClientContext& context,
+    Options const& options,
     google::appengine::v1::GetAuthorizedCertificateRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetAuthorizedCertificate(context, options, request);
 }
 
-StatusOr<google::appengine::v1::AuthorizedCertificate>
-AuthorizedCertificatesAuth::CreateAuthorizedCertificate(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::appengine::v1::AuthorizedCertificate> AuthorizedCertificatesAuth::CreateAuthorizedCertificate(
+    grpc::ClientContext& context,
+    Options const& options,
     google::appengine::v1::CreateAuthorizedCertificateRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateAuthorizedCertificate(context, options, request);
 }
 
-StatusOr<google::appengine::v1::AuthorizedCertificate>
-AuthorizedCertificatesAuth::UpdateAuthorizedCertificate(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::appengine::v1::AuthorizedCertificate> AuthorizedCertificatesAuth::UpdateAuthorizedCertificate(
+    grpc::ClientContext& context,
+    Options const& options,
     google::appengine::v1::UpdateAuthorizedCertificateRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -68,7 +68,8 @@ AuthorizedCertificatesAuth::UpdateAuthorizedCertificate(
 }
 
 Status AuthorizedCertificatesAuth::DeleteAuthorizedCertificate(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::appengine::v1::DeleteAuthorizedCertificateRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;

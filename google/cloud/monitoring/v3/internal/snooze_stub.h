@@ -36,48 +36,54 @@ class SnoozeServiceStub {
   virtual ~SnoozeServiceStub() = 0;
 
   virtual StatusOr<google::monitoring::v3::Snooze> CreateSnooze(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::monitoring::v3::CreateSnoozeRequest const& request) = 0;
 
   virtual StatusOr<google::monitoring::v3::ListSnoozesResponse> ListSnoozes(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::monitoring::v3::ListSnoozesRequest const& request) = 0;
 
   virtual StatusOr<google::monitoring::v3::Snooze> GetSnooze(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::monitoring::v3::GetSnoozeRequest const& request) = 0;
 
   virtual StatusOr<google::monitoring::v3::Snooze> UpdateSnooze(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::monitoring::v3::UpdateSnoozeRequest const& request) = 0;
 };
 
 class DefaultSnoozeServiceStub : public SnoozeServiceStub {
  public:
   explicit DefaultSnoozeServiceStub(
-      std::unique_ptr<google::monitoring::v3::SnoozeService::StubInterface>
-          grpc_stub)
+      std::unique_ptr<google::monitoring::v3::SnoozeService::StubInterface> grpc_stub)
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::monitoring::v3::Snooze> CreateSnooze(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::monitoring::v3::CreateSnoozeRequest const& request) override;
 
   StatusOr<google::monitoring::v3::ListSnoozesResponse> ListSnoozes(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::monitoring::v3::ListSnoozesRequest const& request) override;
 
   StatusOr<google::monitoring::v3::Snooze> GetSnooze(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::monitoring::v3::GetSnoozeRequest const& request) override;
 
   StatusOr<google::monitoring::v3::Snooze> UpdateSnooze(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::monitoring::v3::UpdateSnoozeRequest const& request) override;
 
  private:
-  std::unique_ptr<google::monitoring::v3::SnoozeService::StubInterface>
-      grpc_stub_;
+  std::unique_ptr<google::monitoring::v3::SnoozeService::StubInterface> grpc_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

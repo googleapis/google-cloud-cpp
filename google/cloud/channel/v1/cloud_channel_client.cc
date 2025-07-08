@@ -28,13 +28,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 CloudChannelServiceClient::CloudChannelServiceClient(
     std::shared_ptr<CloudChannelServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 CloudChannelServiceClient::~CloudChannelServiceClient() = default;
 
 StreamRange<google::cloud::channel::v1::Customer>
-CloudChannelServiceClient::ListCustomers(
-    google::cloud::channel::v1::ListCustomersRequest request, Options opts) {
+CloudChannelServiceClient::ListCustomers(google::cloud::channel::v1::ListCustomersRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListCustomers(std::move(request));
 }
@@ -48,391 +47,297 @@ CloudChannelServiceClient::GetCustomer(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::channel::v1::Customer>
-CloudChannelServiceClient::GetCustomer(
-    google::cloud::channel::v1::GetCustomerRequest const& request,
-    Options opts) {
+CloudChannelServiceClient::GetCustomer(google::cloud::channel::v1::GetCustomerRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetCustomer(request);
 }
 
 StatusOr<google::cloud::channel::v1::CheckCloudIdentityAccountsExistResponse>
-CloudChannelServiceClient::CheckCloudIdentityAccountsExist(
-    google::cloud::channel::v1::CheckCloudIdentityAccountsExistRequest const&
-        request,
-    Options opts) {
+CloudChannelServiceClient::CheckCloudIdentityAccountsExist(google::cloud::channel::v1::CheckCloudIdentityAccountsExistRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CheckCloudIdentityAccountsExist(request);
 }
 
 StatusOr<google::cloud::channel::v1::Customer>
-CloudChannelServiceClient::CreateCustomer(
-    google::cloud::channel::v1::CreateCustomerRequest const& request,
-    Options opts) {
+CloudChannelServiceClient::CreateCustomer(google::cloud::channel::v1::CreateCustomerRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateCustomer(request);
 }
 
 StatusOr<google::cloud::channel::v1::Customer>
-CloudChannelServiceClient::UpdateCustomer(
-    google::cloud::channel::v1::UpdateCustomerRequest const& request,
-    Options opts) {
+CloudChannelServiceClient::UpdateCustomer(google::cloud::channel::v1::UpdateCustomerRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateCustomer(request);
 }
 
-Status CloudChannelServiceClient::DeleteCustomer(std::string const& name,
-                                                 Options opts) {
+Status
+CloudChannelServiceClient::DeleteCustomer(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::channel::v1::DeleteCustomerRequest request;
   request.set_name(name);
   return connection_->DeleteCustomer(request);
 }
 
-Status CloudChannelServiceClient::DeleteCustomer(
-    google::cloud::channel::v1::DeleteCustomerRequest const& request,
-    Options opts) {
+Status
+CloudChannelServiceClient::DeleteCustomer(google::cloud::channel::v1::DeleteCustomerRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteCustomer(request);
 }
 
 StatusOr<google::cloud::channel::v1::Customer>
-CloudChannelServiceClient::ImportCustomer(
-    google::cloud::channel::v1::ImportCustomerRequest const& request,
-    Options opts) {
+CloudChannelServiceClient::ImportCustomer(google::cloud::channel::v1::ImportCustomerRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ImportCustomer(request);
 }
 
 future<StatusOr<google::cloud::channel::v1::Customer>>
-CloudChannelServiceClient::ProvisionCloudIdentity(
-    google::cloud::channel::v1::ProvisionCloudIdentityRequest const& request,
-    Options opts) {
+CloudChannelServiceClient::ProvisionCloudIdentity(google::cloud::channel::v1::ProvisionCloudIdentityRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ProvisionCloudIdentity(request);
 }
 
 StatusOr<google::longrunning::Operation>
-CloudChannelServiceClient::ProvisionCloudIdentity(
-    NoAwaitTag,
-    google::cloud::channel::v1::ProvisionCloudIdentityRequest const& request,
-    Options opts) {
+CloudChannelServiceClient::ProvisionCloudIdentity(NoAwaitTag, google::cloud::channel::v1::ProvisionCloudIdentityRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ProvisionCloudIdentity(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::channel::v1::Customer>>
-CloudChannelServiceClient::ProvisionCloudIdentity(
-    google::longrunning::Operation const& operation, Options opts) {
+CloudChannelServiceClient::ProvisionCloudIdentity(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ProvisionCloudIdentity(operation);
 }
 
 StreamRange<google::cloud::channel::v1::Entitlement>
-CloudChannelServiceClient::ListEntitlements(
-    google::cloud::channel::v1::ListEntitlementsRequest request, Options opts) {
+CloudChannelServiceClient::ListEntitlements(google::cloud::channel::v1::ListEntitlementsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListEntitlements(std::move(request));
 }
 
 StreamRange<google::cloud::channel::v1::TransferableSku>
-CloudChannelServiceClient::ListTransferableSkus(
-    google::cloud::channel::v1::ListTransferableSkusRequest request,
-    Options opts) {
+CloudChannelServiceClient::ListTransferableSkus(google::cloud::channel::v1::ListTransferableSkusRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListTransferableSkus(std::move(request));
 }
 
 StreamRange<google::cloud::channel::v1::TransferableOffer>
-CloudChannelServiceClient::ListTransferableOffers(
-    google::cloud::channel::v1::ListTransferableOffersRequest request,
-    Options opts) {
+CloudChannelServiceClient::ListTransferableOffers(google::cloud::channel::v1::ListTransferableOffersRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListTransferableOffers(std::move(request));
 }
 
 StatusOr<google::cloud::channel::v1::Entitlement>
-CloudChannelServiceClient::GetEntitlement(
-    google::cloud::channel::v1::GetEntitlementRequest const& request,
-    Options opts) {
+CloudChannelServiceClient::GetEntitlement(google::cloud::channel::v1::GetEntitlementRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetEntitlement(request);
 }
 
 future<StatusOr<google::cloud::channel::v1::Entitlement>>
-CloudChannelServiceClient::CreateEntitlement(
-    google::cloud::channel::v1::CreateEntitlementRequest const& request,
-    Options opts) {
+CloudChannelServiceClient::CreateEntitlement(google::cloud::channel::v1::CreateEntitlementRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateEntitlement(request);
 }
 
 StatusOr<google::longrunning::Operation>
-CloudChannelServiceClient::CreateEntitlement(
-    NoAwaitTag,
-    google::cloud::channel::v1::CreateEntitlementRequest const& request,
-    Options opts) {
+CloudChannelServiceClient::CreateEntitlement(NoAwaitTag, google::cloud::channel::v1::CreateEntitlementRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateEntitlement(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::channel::v1::Entitlement>>
-CloudChannelServiceClient::CreateEntitlement(
-    google::longrunning::Operation const& operation, Options opts) {
+CloudChannelServiceClient::CreateEntitlement(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateEntitlement(operation);
 }
 
 future<StatusOr<google::cloud::channel::v1::Entitlement>>
-CloudChannelServiceClient::ChangeParameters(
-    google::cloud::channel::v1::ChangeParametersRequest const& request,
-    Options opts) {
+CloudChannelServiceClient::ChangeParameters(google::cloud::channel::v1::ChangeParametersRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ChangeParameters(request);
 }
 
 StatusOr<google::longrunning::Operation>
-CloudChannelServiceClient::ChangeParameters(
-    NoAwaitTag,
-    google::cloud::channel::v1::ChangeParametersRequest const& request,
-    Options opts) {
+CloudChannelServiceClient::ChangeParameters(NoAwaitTag, google::cloud::channel::v1::ChangeParametersRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ChangeParameters(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::channel::v1::Entitlement>>
-CloudChannelServiceClient::ChangeParameters(
-    google::longrunning::Operation const& operation, Options opts) {
+CloudChannelServiceClient::ChangeParameters(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ChangeParameters(operation);
 }
 
 future<StatusOr<google::cloud::channel::v1::Entitlement>>
-CloudChannelServiceClient::ChangeRenewalSettings(
-    google::cloud::channel::v1::ChangeRenewalSettingsRequest const& request,
-    Options opts) {
+CloudChannelServiceClient::ChangeRenewalSettings(google::cloud::channel::v1::ChangeRenewalSettingsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ChangeRenewalSettings(request);
 }
 
 StatusOr<google::longrunning::Operation>
-CloudChannelServiceClient::ChangeRenewalSettings(
-    NoAwaitTag,
-    google::cloud::channel::v1::ChangeRenewalSettingsRequest const& request,
-    Options opts) {
+CloudChannelServiceClient::ChangeRenewalSettings(NoAwaitTag, google::cloud::channel::v1::ChangeRenewalSettingsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ChangeRenewalSettings(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::channel::v1::Entitlement>>
-CloudChannelServiceClient::ChangeRenewalSettings(
-    google::longrunning::Operation const& operation, Options opts) {
+CloudChannelServiceClient::ChangeRenewalSettings(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ChangeRenewalSettings(operation);
 }
 
 future<StatusOr<google::cloud::channel::v1::Entitlement>>
-CloudChannelServiceClient::ChangeOffer(
-    google::cloud::channel::v1::ChangeOfferRequest const& request,
-    Options opts) {
+CloudChannelServiceClient::ChangeOffer(google::cloud::channel::v1::ChangeOfferRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ChangeOffer(request);
 }
 
-StatusOr<google::longrunning::Operation> CloudChannelServiceClient::ChangeOffer(
-    NoAwaitTag, google::cloud::channel::v1::ChangeOfferRequest const& request,
-    Options opts) {
+StatusOr<google::longrunning::Operation>
+CloudChannelServiceClient::ChangeOffer(NoAwaitTag, google::cloud::channel::v1::ChangeOfferRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ChangeOffer(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::channel::v1::Entitlement>>
-CloudChannelServiceClient::ChangeOffer(
-    google::longrunning::Operation const& operation, Options opts) {
+CloudChannelServiceClient::ChangeOffer(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ChangeOffer(operation);
 }
 
 future<StatusOr<google::cloud::channel::v1::Entitlement>>
-CloudChannelServiceClient::StartPaidService(
-    google::cloud::channel::v1::StartPaidServiceRequest const& request,
-    Options opts) {
+CloudChannelServiceClient::StartPaidService(google::cloud::channel::v1::StartPaidServiceRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->StartPaidService(request);
 }
 
 StatusOr<google::longrunning::Operation>
-CloudChannelServiceClient::StartPaidService(
-    NoAwaitTag,
-    google::cloud::channel::v1::StartPaidServiceRequest const& request,
-    Options opts) {
+CloudChannelServiceClient::StartPaidService(NoAwaitTag, google::cloud::channel::v1::StartPaidServiceRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->StartPaidService(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::channel::v1::Entitlement>>
-CloudChannelServiceClient::StartPaidService(
-    google::longrunning::Operation const& operation, Options opts) {
+CloudChannelServiceClient::StartPaidService(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->StartPaidService(operation);
 }
 
 future<StatusOr<google::cloud::channel::v1::Entitlement>>
-CloudChannelServiceClient::SuspendEntitlement(
-    google::cloud::channel::v1::SuspendEntitlementRequest const& request,
-    Options opts) {
+CloudChannelServiceClient::SuspendEntitlement(google::cloud::channel::v1::SuspendEntitlementRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SuspendEntitlement(request);
 }
 
 StatusOr<google::longrunning::Operation>
-CloudChannelServiceClient::SuspendEntitlement(
-    NoAwaitTag,
-    google::cloud::channel::v1::SuspendEntitlementRequest const& request,
-    Options opts) {
+CloudChannelServiceClient::SuspendEntitlement(NoAwaitTag, google::cloud::channel::v1::SuspendEntitlementRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SuspendEntitlement(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::channel::v1::Entitlement>>
-CloudChannelServiceClient::SuspendEntitlement(
-    google::longrunning::Operation const& operation, Options opts) {
+CloudChannelServiceClient::SuspendEntitlement(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SuspendEntitlement(operation);
 }
 
 future<StatusOr<google::cloud::channel::v1::OperationMetadata>>
-CloudChannelServiceClient::CancelEntitlement(
-    google::cloud::channel::v1::CancelEntitlementRequest const& request,
-    Options opts) {
+CloudChannelServiceClient::CancelEntitlement(google::cloud::channel::v1::CancelEntitlementRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelEntitlement(request);
 }
 
 StatusOr<google::longrunning::Operation>
-CloudChannelServiceClient::CancelEntitlement(
-    NoAwaitTag,
-    google::cloud::channel::v1::CancelEntitlementRequest const& request,
-    Options opts) {
+CloudChannelServiceClient::CancelEntitlement(NoAwaitTag, google::cloud::channel::v1::CancelEntitlementRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelEntitlement(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::channel::v1::OperationMetadata>>
-CloudChannelServiceClient::CancelEntitlement(
-    google::longrunning::Operation const& operation, Options opts) {
+CloudChannelServiceClient::CancelEntitlement(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelEntitlement(operation);
 }
 
 future<StatusOr<google::cloud::channel::v1::Entitlement>>
-CloudChannelServiceClient::ActivateEntitlement(
-    google::cloud::channel::v1::ActivateEntitlementRequest const& request,
-    Options opts) {
+CloudChannelServiceClient::ActivateEntitlement(google::cloud::channel::v1::ActivateEntitlementRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ActivateEntitlement(request);
 }
 
 StatusOr<google::longrunning::Operation>
-CloudChannelServiceClient::ActivateEntitlement(
-    NoAwaitTag,
-    google::cloud::channel::v1::ActivateEntitlementRequest const& request,
-    Options opts) {
+CloudChannelServiceClient::ActivateEntitlement(NoAwaitTag, google::cloud::channel::v1::ActivateEntitlementRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ActivateEntitlement(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::channel::v1::Entitlement>>
-CloudChannelServiceClient::ActivateEntitlement(
-    google::longrunning::Operation const& operation, Options opts) {
+CloudChannelServiceClient::ActivateEntitlement(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ActivateEntitlement(operation);
 }
 
 future<StatusOr<google::cloud::channel::v1::TransferEntitlementsResponse>>
-CloudChannelServiceClient::TransferEntitlements(
-    google::cloud::channel::v1::TransferEntitlementsRequest const& request,
-    Options opts) {
+CloudChannelServiceClient::TransferEntitlements(google::cloud::channel::v1::TransferEntitlementsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->TransferEntitlements(request);
 }
 
 StatusOr<google::longrunning::Operation>
-CloudChannelServiceClient::TransferEntitlements(
-    NoAwaitTag,
-    google::cloud::channel::v1::TransferEntitlementsRequest const& request,
-    Options opts) {
+CloudChannelServiceClient::TransferEntitlements(NoAwaitTag, google::cloud::channel::v1::TransferEntitlementsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->TransferEntitlements(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::channel::v1::TransferEntitlementsResponse>>
-CloudChannelServiceClient::TransferEntitlements(
-    google::longrunning::Operation const& operation, Options opts) {
+CloudChannelServiceClient::TransferEntitlements(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->TransferEntitlements(operation);
 }
 
 future<StatusOr<google::cloud::channel::v1::OperationMetadata>>
-CloudChannelServiceClient::TransferEntitlementsToGoogle(
-    google::cloud::channel::v1::TransferEntitlementsToGoogleRequest const&
-        request,
-    Options opts) {
+CloudChannelServiceClient::TransferEntitlementsToGoogle(google::cloud::channel::v1::TransferEntitlementsToGoogleRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->TransferEntitlementsToGoogle(request);
 }
 
 StatusOr<google::longrunning::Operation>
-CloudChannelServiceClient::TransferEntitlementsToGoogle(
-    NoAwaitTag,
-    google::cloud::channel::v1::TransferEntitlementsToGoogleRequest const&
-        request,
-    Options opts) {
+CloudChannelServiceClient::TransferEntitlementsToGoogle(NoAwaitTag, google::cloud::channel::v1::TransferEntitlementsToGoogleRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->TransferEntitlementsToGoogle(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::channel::v1::OperationMetadata>>
-CloudChannelServiceClient::TransferEntitlementsToGoogle(
-    google::longrunning::Operation const& operation, Options opts) {
+CloudChannelServiceClient::TransferEntitlementsToGoogle(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->TransferEntitlementsToGoogle(operation);
 }
 
 StreamRange<google::cloud::channel::v1::ChannelPartnerLink>
-CloudChannelServiceClient::ListChannelPartnerLinks(
-    google::cloud::channel::v1::ListChannelPartnerLinksRequest request,
-    Options opts) {
+CloudChannelServiceClient::ListChannelPartnerLinks(google::cloud::channel::v1::ListChannelPartnerLinksRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListChannelPartnerLinks(std::move(request));
 }
 
 StatusOr<google::cloud::channel::v1::ChannelPartnerLink>
-CloudChannelServiceClient::GetChannelPartnerLink(
-    google::cloud::channel::v1::GetChannelPartnerLinkRequest const& request,
-    Options opts) {
+CloudChannelServiceClient::GetChannelPartnerLink(google::cloud::channel::v1::GetChannelPartnerLinkRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetChannelPartnerLink(request);
 }
 
 StatusOr<google::cloud::channel::v1::ChannelPartnerLink>
-CloudChannelServiceClient::CreateChannelPartnerLink(
-    google::cloud::channel::v1::CreateChannelPartnerLinkRequest const& request,
-    Options opts) {
+CloudChannelServiceClient::CreateChannelPartnerLink(google::cloud::channel::v1::CreateChannelPartnerLinkRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateChannelPartnerLink(request);
 }
 
 StatusOr<google::cloud::channel::v1::ChannelPartnerLink>
-CloudChannelServiceClient::UpdateChannelPartnerLink(
-    google::cloud::channel::v1::UpdateChannelPartnerLinkRequest const& request,
-    Options opts) {
+CloudChannelServiceClient::UpdateChannelPartnerLink(google::cloud::channel::v1::UpdateChannelPartnerLinkRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateChannelPartnerLink(request);
 }
 
 StatusOr<google::cloud::channel::v1::CustomerRepricingConfig>
-CloudChannelServiceClient::GetCustomerRepricingConfig(std::string const& name,
-                                                      Options opts) {
+CloudChannelServiceClient::GetCustomerRepricingConfig(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::channel::v1::GetCustomerRepricingConfigRequest request;
   request.set_name(name);
@@ -440,17 +345,13 @@ CloudChannelServiceClient::GetCustomerRepricingConfig(std::string const& name,
 }
 
 StatusOr<google::cloud::channel::v1::CustomerRepricingConfig>
-CloudChannelServiceClient::GetCustomerRepricingConfig(
-    google::cloud::channel::v1::GetCustomerRepricingConfigRequest const&
-        request,
-    Options opts) {
+CloudChannelServiceClient::GetCustomerRepricingConfig(google::cloud::channel::v1::GetCustomerRepricingConfigRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetCustomerRepricingConfig(request);
 }
 
 StreamRange<google::cloud::channel::v1::CustomerRepricingConfig>
-CloudChannelServiceClient::ListCustomerRepricingConfigs(
-    std::string const& parent, Options opts) {
+CloudChannelServiceClient::ListCustomerRepricingConfigs(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::channel::v1::ListCustomerRepricingConfigsRequest request;
   request.set_parent(parent);
@@ -458,19 +359,13 @@ CloudChannelServiceClient::ListCustomerRepricingConfigs(
 }
 
 StreamRange<google::cloud::channel::v1::CustomerRepricingConfig>
-CloudChannelServiceClient::ListCustomerRepricingConfigs(
-    google::cloud::channel::v1::ListCustomerRepricingConfigsRequest request,
-    Options opts) {
+CloudChannelServiceClient::ListCustomerRepricingConfigs(google::cloud::channel::v1::ListCustomerRepricingConfigsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListCustomerRepricingConfigs(std::move(request));
 }
 
 StatusOr<google::cloud::channel::v1::CustomerRepricingConfig>
-CloudChannelServiceClient::CreateCustomerRepricingConfig(
-    std::string const& parent,
-    google::cloud::channel::v1::CustomerRepricingConfig const&
-        customer_repricing_config,
-    Options opts) {
+CloudChannelServiceClient::CreateCustomerRepricingConfig(std::string const& parent, google::cloud::channel::v1::CustomerRepricingConfig const& customer_repricing_config, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::channel::v1::CreateCustomerRepricingConfigRequest request;
   request.set_parent(parent);
@@ -479,19 +374,13 @@ CloudChannelServiceClient::CreateCustomerRepricingConfig(
 }
 
 StatusOr<google::cloud::channel::v1::CustomerRepricingConfig>
-CloudChannelServiceClient::CreateCustomerRepricingConfig(
-    google::cloud::channel::v1::CreateCustomerRepricingConfigRequest const&
-        request,
-    Options opts) {
+CloudChannelServiceClient::CreateCustomerRepricingConfig(google::cloud::channel::v1::CreateCustomerRepricingConfigRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateCustomerRepricingConfig(request);
 }
 
 StatusOr<google::cloud::channel::v1::CustomerRepricingConfig>
-CloudChannelServiceClient::UpdateCustomerRepricingConfig(
-    google::cloud::channel::v1::CustomerRepricingConfig const&
-        customer_repricing_config,
-    Options opts) {
+CloudChannelServiceClient::UpdateCustomerRepricingConfig(google::cloud::channel::v1::CustomerRepricingConfig const& customer_repricing_config, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::channel::v1::UpdateCustomerRepricingConfigRequest request;
   *request.mutable_customer_repricing_config() = customer_repricing_config;
@@ -499,33 +388,27 @@ CloudChannelServiceClient::UpdateCustomerRepricingConfig(
 }
 
 StatusOr<google::cloud::channel::v1::CustomerRepricingConfig>
-CloudChannelServiceClient::UpdateCustomerRepricingConfig(
-    google::cloud::channel::v1::UpdateCustomerRepricingConfigRequest const&
-        request,
-    Options opts) {
+CloudChannelServiceClient::UpdateCustomerRepricingConfig(google::cloud::channel::v1::UpdateCustomerRepricingConfigRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateCustomerRepricingConfig(request);
 }
 
-Status CloudChannelServiceClient::DeleteCustomerRepricingConfig(
-    std::string const& name, Options opts) {
+Status
+CloudChannelServiceClient::DeleteCustomerRepricingConfig(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::channel::v1::DeleteCustomerRepricingConfigRequest request;
   request.set_name(name);
   return connection_->DeleteCustomerRepricingConfig(request);
 }
 
-Status CloudChannelServiceClient::DeleteCustomerRepricingConfig(
-    google::cloud::channel::v1::DeleteCustomerRepricingConfigRequest const&
-        request,
-    Options opts) {
+Status
+CloudChannelServiceClient::DeleteCustomerRepricingConfig(google::cloud::channel::v1::DeleteCustomerRepricingConfigRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteCustomerRepricingConfig(request);
 }
 
 StatusOr<google::cloud::channel::v1::ChannelPartnerRepricingConfig>
-CloudChannelServiceClient::GetChannelPartnerRepricingConfig(
-    std::string const& name, Options opts) {
+CloudChannelServiceClient::GetChannelPartnerRepricingConfig(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::channel::v1::GetChannelPartnerRepricingConfigRequest request;
   request.set_name(name);
@@ -533,17 +416,13 @@ CloudChannelServiceClient::GetChannelPartnerRepricingConfig(
 }
 
 StatusOr<google::cloud::channel::v1::ChannelPartnerRepricingConfig>
-CloudChannelServiceClient::GetChannelPartnerRepricingConfig(
-    google::cloud::channel::v1::GetChannelPartnerRepricingConfigRequest const&
-        request,
-    Options opts) {
+CloudChannelServiceClient::GetChannelPartnerRepricingConfig(google::cloud::channel::v1::GetChannelPartnerRepricingConfigRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetChannelPartnerRepricingConfig(request);
 }
 
 StreamRange<google::cloud::channel::v1::ChannelPartnerRepricingConfig>
-CloudChannelServiceClient::ListChannelPartnerRepricingConfigs(
-    std::string const& parent, Options opts) {
+CloudChannelServiceClient::ListChannelPartnerRepricingConfigs(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::channel::v1::ListChannelPartnerRepricingConfigsRequest request;
   request.set_parent(parent);
@@ -551,80 +430,56 @@ CloudChannelServiceClient::ListChannelPartnerRepricingConfigs(
 }
 
 StreamRange<google::cloud::channel::v1::ChannelPartnerRepricingConfig>
-CloudChannelServiceClient::ListChannelPartnerRepricingConfigs(
-    google::cloud::channel::v1::ListChannelPartnerRepricingConfigsRequest
-        request,
-    Options opts) {
+CloudChannelServiceClient::ListChannelPartnerRepricingConfigs(google::cloud::channel::v1::ListChannelPartnerRepricingConfigsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListChannelPartnerRepricingConfigs(std::move(request));
 }
 
 StatusOr<google::cloud::channel::v1::ChannelPartnerRepricingConfig>
-CloudChannelServiceClient::CreateChannelPartnerRepricingConfig(
-    std::string const& parent,
-    google::cloud::channel::v1::ChannelPartnerRepricingConfig const&
-        channel_partner_repricing_config,
-    Options opts) {
+CloudChannelServiceClient::CreateChannelPartnerRepricingConfig(std::string const& parent, google::cloud::channel::v1::ChannelPartnerRepricingConfig const& channel_partner_repricing_config, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::channel::v1::CreateChannelPartnerRepricingConfigRequest
-      request;
+  google::cloud::channel::v1::CreateChannelPartnerRepricingConfigRequest request;
   request.set_parent(parent);
-  *request.mutable_channel_partner_repricing_config() =
-      channel_partner_repricing_config;
+  *request.mutable_channel_partner_repricing_config() = channel_partner_repricing_config;
   return connection_->CreateChannelPartnerRepricingConfig(request);
 }
 
 StatusOr<google::cloud::channel::v1::ChannelPartnerRepricingConfig>
-CloudChannelServiceClient::CreateChannelPartnerRepricingConfig(
-    google::cloud::channel::v1::
-        CreateChannelPartnerRepricingConfigRequest const& request,
-    Options opts) {
+CloudChannelServiceClient::CreateChannelPartnerRepricingConfig(google::cloud::channel::v1::CreateChannelPartnerRepricingConfigRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateChannelPartnerRepricingConfig(request);
 }
 
 StatusOr<google::cloud::channel::v1::ChannelPartnerRepricingConfig>
-CloudChannelServiceClient::UpdateChannelPartnerRepricingConfig(
-    google::cloud::channel::v1::ChannelPartnerRepricingConfig const&
-        channel_partner_repricing_config,
-    Options opts) {
+CloudChannelServiceClient::UpdateChannelPartnerRepricingConfig(google::cloud::channel::v1::ChannelPartnerRepricingConfig const& channel_partner_repricing_config, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::channel::v1::UpdateChannelPartnerRepricingConfigRequest
-      request;
-  *request.mutable_channel_partner_repricing_config() =
-      channel_partner_repricing_config;
+  google::cloud::channel::v1::UpdateChannelPartnerRepricingConfigRequest request;
+  *request.mutable_channel_partner_repricing_config() = channel_partner_repricing_config;
   return connection_->UpdateChannelPartnerRepricingConfig(request);
 }
 
 StatusOr<google::cloud::channel::v1::ChannelPartnerRepricingConfig>
-CloudChannelServiceClient::UpdateChannelPartnerRepricingConfig(
-    google::cloud::channel::v1::
-        UpdateChannelPartnerRepricingConfigRequest const& request,
-    Options opts) {
+CloudChannelServiceClient::UpdateChannelPartnerRepricingConfig(google::cloud::channel::v1::UpdateChannelPartnerRepricingConfigRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateChannelPartnerRepricingConfig(request);
 }
 
-Status CloudChannelServiceClient::DeleteChannelPartnerRepricingConfig(
-    std::string const& name, Options opts) {
+Status
+CloudChannelServiceClient::DeleteChannelPartnerRepricingConfig(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::channel::v1::DeleteChannelPartnerRepricingConfigRequest
-      request;
+  google::cloud::channel::v1::DeleteChannelPartnerRepricingConfigRequest request;
   request.set_name(name);
   return connection_->DeleteChannelPartnerRepricingConfig(request);
 }
 
-Status CloudChannelServiceClient::DeleteChannelPartnerRepricingConfig(
-    google::cloud::channel::v1::
-        DeleteChannelPartnerRepricingConfigRequest const& request,
-    Options opts) {
+Status
+CloudChannelServiceClient::DeleteChannelPartnerRepricingConfig(google::cloud::channel::v1::DeleteChannelPartnerRepricingConfigRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteChannelPartnerRepricingConfig(request);
 }
 
 StreamRange<google::cloud::channel::v1::SkuGroup>
-CloudChannelServiceClient::ListSkuGroups(std::string const& parent,
-                                         Options opts) {
+CloudChannelServiceClient::ListSkuGroups(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::channel::v1::ListSkuGroupsRequest request;
   request.set_parent(parent);
@@ -632,15 +487,13 @@ CloudChannelServiceClient::ListSkuGroups(std::string const& parent,
 }
 
 StreamRange<google::cloud::channel::v1::SkuGroup>
-CloudChannelServiceClient::ListSkuGroups(
-    google::cloud::channel::v1::ListSkuGroupsRequest request, Options opts) {
+CloudChannelServiceClient::ListSkuGroups(google::cloud::channel::v1::ListSkuGroupsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListSkuGroups(std::move(request));
 }
 
 StreamRange<google::cloud::channel::v1::BillableSku>
-CloudChannelServiceClient::ListSkuGroupBillableSkus(std::string const& parent,
-                                                    Options opts) {
+CloudChannelServiceClient::ListSkuGroupBillableSkus(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::channel::v1::ListSkuGroupBillableSkusRequest request;
   request.set_parent(parent);
@@ -648,92 +501,73 @@ CloudChannelServiceClient::ListSkuGroupBillableSkus(std::string const& parent,
 }
 
 StreamRange<google::cloud::channel::v1::BillableSku>
-CloudChannelServiceClient::ListSkuGroupBillableSkus(
-    google::cloud::channel::v1::ListSkuGroupBillableSkusRequest request,
-    Options opts) {
+CloudChannelServiceClient::ListSkuGroupBillableSkus(google::cloud::channel::v1::ListSkuGroupBillableSkusRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListSkuGroupBillableSkus(std::move(request));
 }
 
 StatusOr<google::cloud::channel::v1::Offer>
-CloudChannelServiceClient::LookupOffer(
-    google::cloud::channel::v1::LookupOfferRequest const& request,
-    Options opts) {
+CloudChannelServiceClient::LookupOffer(google::cloud::channel::v1::LookupOfferRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->LookupOffer(request);
 }
 
 StreamRange<google::cloud::channel::v1::Product>
-CloudChannelServiceClient::ListProducts(
-    google::cloud::channel::v1::ListProductsRequest request, Options opts) {
+CloudChannelServiceClient::ListProducts(google::cloud::channel::v1::ListProductsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListProducts(std::move(request));
 }
 
 StreamRange<google::cloud::channel::v1::Sku>
-CloudChannelServiceClient::ListSkus(
-    google::cloud::channel::v1::ListSkusRequest request, Options opts) {
+CloudChannelServiceClient::ListSkus(google::cloud::channel::v1::ListSkusRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListSkus(std::move(request));
 }
 
 StreamRange<google::cloud::channel::v1::Offer>
-CloudChannelServiceClient::ListOffers(
-    google::cloud::channel::v1::ListOffersRequest request, Options opts) {
+CloudChannelServiceClient::ListOffers(google::cloud::channel::v1::ListOffersRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOffers(std::move(request));
 }
 
 StreamRange<google::cloud::channel::v1::PurchasableSku>
-CloudChannelServiceClient::ListPurchasableSkus(
-    google::cloud::channel::v1::ListPurchasableSkusRequest request,
-    Options opts) {
+CloudChannelServiceClient::ListPurchasableSkus(google::cloud::channel::v1::ListPurchasableSkusRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListPurchasableSkus(std::move(request));
 }
 
 StreamRange<google::cloud::channel::v1::PurchasableOffer>
-CloudChannelServiceClient::ListPurchasableOffers(
-    google::cloud::channel::v1::ListPurchasableOffersRequest request,
-    Options opts) {
+CloudChannelServiceClient::ListPurchasableOffers(google::cloud::channel::v1::ListPurchasableOffersRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListPurchasableOffers(std::move(request));
 }
 
 StatusOr<google::cloud::channel::v1::QueryEligibleBillingAccountsResponse>
-CloudChannelServiceClient::QueryEligibleBillingAccounts(
-    google::cloud::channel::v1::QueryEligibleBillingAccountsRequest const&
-        request,
-    Options opts) {
+CloudChannelServiceClient::QueryEligibleBillingAccounts(google::cloud::channel::v1::QueryEligibleBillingAccountsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->QueryEligibleBillingAccounts(request);
 }
 
 StatusOr<google::cloud::channel::v1::RegisterSubscriberResponse>
-CloudChannelServiceClient::RegisterSubscriber(
-    google::cloud::channel::v1::RegisterSubscriberRequest const& request,
-    Options opts) {
+CloudChannelServiceClient::RegisterSubscriber(google::cloud::channel::v1::RegisterSubscriberRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RegisterSubscriber(request);
 }
 
 StatusOr<google::cloud::channel::v1::UnregisterSubscriberResponse>
-CloudChannelServiceClient::UnregisterSubscriber(
-    google::cloud::channel::v1::UnregisterSubscriberRequest const& request,
-    Options opts) {
+CloudChannelServiceClient::UnregisterSubscriber(google::cloud::channel::v1::UnregisterSubscriberRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UnregisterSubscriber(request);
 }
 
-StreamRange<std::string> CloudChannelServiceClient::ListSubscribers(
-    google::cloud::channel::v1::ListSubscribersRequest request, Options opts) {
+StreamRange<std::string>
+CloudChannelServiceClient::ListSubscribers(google::cloud::channel::v1::ListSubscribersRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListSubscribers(std::move(request));
 }
 
 StreamRange<google::cloud::channel::v1::EntitlementChange>
-CloudChannelServiceClient::ListEntitlementChanges(std::string const& parent,
-                                                  Options opts) {
+CloudChannelServiceClient::ListEntitlementChanges(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::channel::v1::ListEntitlementChangesRequest request;
   request.set_parent(parent);
@@ -741,17 +575,13 @@ CloudChannelServiceClient::ListEntitlementChanges(std::string const& parent,
 }
 
 StreamRange<google::cloud::channel::v1::EntitlementChange>
-CloudChannelServiceClient::ListEntitlementChanges(
-    google::cloud::channel::v1::ListEntitlementChangesRequest request,
-    Options opts) {
+CloudChannelServiceClient::ListEntitlementChanges(google::cloud::channel::v1::ListEntitlementChangesRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListEntitlementChanges(std::move(request));
 }
 
 StreamRange<google::longrunning::Operation>
-CloudChannelServiceClient::ListOperations(std::string const& name,
-                                          std::string const& filter,
-                                          Options opts) {
+CloudChannelServiceClient::ListOperations(std::string const& name, std::string const& filter, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::ListOperationsRequest request;
   request.set_name(name);
@@ -760,8 +590,7 @@ CloudChannelServiceClient::ListOperations(std::string const& name,
 }
 
 StreamRange<google::longrunning::Operation>
-CloudChannelServiceClient::ListOperations(
-    google::longrunning::ListOperationsRequest request, Options opts) {
+CloudChannelServiceClient::ListOperations(google::longrunning::ListOperationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOperations(std::move(request));
 }
@@ -775,36 +604,35 @@ CloudChannelServiceClient::GetOperation(std::string const& name, Options opts) {
 }
 
 StatusOr<google::longrunning::Operation>
-CloudChannelServiceClient::GetOperation(
-    google::longrunning::GetOperationRequest const& request, Options opts) {
+CloudChannelServiceClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }
 
-Status CloudChannelServiceClient::DeleteOperation(std::string const& name,
-                                                  Options opts) {
+Status
+CloudChannelServiceClient::DeleteOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::DeleteOperationRequest request;
   request.set_name(name);
   return connection_->DeleteOperation(request);
 }
 
-Status CloudChannelServiceClient::DeleteOperation(
-    google::longrunning::DeleteOperationRequest const& request, Options opts) {
+Status
+CloudChannelServiceClient::DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteOperation(request);
 }
 
-Status CloudChannelServiceClient::CancelOperation(std::string const& name,
-                                                  Options opts) {
+Status
+CloudChannelServiceClient::CancelOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::CancelOperationRequest request;
   request.set_name(name);
   return connection_->CancelOperation(request);
 }
 
-Status CloudChannelServiceClient::CancelOperation(
-    google::longrunning::CancelOperationRequest const& request, Options opts) {
+Status
+CloudChannelServiceClient::CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelOperation(request);
 }

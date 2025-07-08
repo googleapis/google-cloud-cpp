@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_URL_MAPS_V1_URL_MAPS_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_URL_MAPS_V1_URL_MAPS_OPTIONS_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/url_maps/v1/url_maps_connection.h"
 #include "google/cloud/compute/url_maps/v1/url_maps_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -74,7 +74,8 @@ struct UrlMapsPollingPolicyOption {
  * @ingroup google-cloud-compute-options
  */
 using UrlMapsPolicyOptionList =
-    OptionList<UrlMapsRetryPolicyOption, UrlMapsBackoffPolicyOption,
+    OptionList<UrlMapsRetryPolicyOption,
+               UrlMapsBackoffPolicyOption,
                UrlMapsPollingPolicyOption,
                UrlMapsConnectionIdempotencyPolicyOption>;
 

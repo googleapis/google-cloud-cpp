@@ -26,61 +26,44 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-TimeseriesInsightsControllerConnectionIdempotencyPolicy::
-    ~TimeseriesInsightsControllerConnectionIdempotencyPolicy() = default;
+TimeseriesInsightsControllerConnectionIdempotencyPolicy::~TimeseriesInsightsControllerConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<TimeseriesInsightsControllerConnectionIdempotencyPolicy>
 TimeseriesInsightsControllerConnectionIdempotencyPolicy::clone() const {
-  return std::make_unique<
-      TimeseriesInsightsControllerConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<TimeseriesInsightsControllerConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency
-TimeseriesInsightsControllerConnectionIdempotencyPolicy::ListDataSets(
-    google::cloud::timeseriesinsights::v1::ListDataSetsRequest) {  // NOLINT
+Idempotency TimeseriesInsightsControllerConnectionIdempotencyPolicy::ListDataSets(google::cloud::timeseriesinsights::v1::ListDataSetsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency
-TimeseriesInsightsControllerConnectionIdempotencyPolicy::CreateDataSet(
-    google::cloud::timeseriesinsights::v1::CreateDataSetRequest const&) {
+Idempotency TimeseriesInsightsControllerConnectionIdempotencyPolicy::CreateDataSet(google::cloud::timeseriesinsights::v1::CreateDataSetRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency
-TimeseriesInsightsControllerConnectionIdempotencyPolicy::DeleteDataSet(
-    google::cloud::timeseriesinsights::v1::DeleteDataSetRequest const&) {
+Idempotency TimeseriesInsightsControllerConnectionIdempotencyPolicy::DeleteDataSet(google::cloud::timeseriesinsights::v1::DeleteDataSetRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency
-TimeseriesInsightsControllerConnectionIdempotencyPolicy::AppendEvents(
-    google::cloud::timeseriesinsights::v1::AppendEventsRequest const&) {
+Idempotency TimeseriesInsightsControllerConnectionIdempotencyPolicy::AppendEvents(google::cloud::timeseriesinsights::v1::AppendEventsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency
-TimeseriesInsightsControllerConnectionIdempotencyPolicy::QueryDataSet(
-    google::cloud::timeseriesinsights::v1::QueryDataSetRequest const&) {
+Idempotency TimeseriesInsightsControllerConnectionIdempotencyPolicy::QueryDataSet(google::cloud::timeseriesinsights::v1::QueryDataSetRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency
-TimeseriesInsightsControllerConnectionIdempotencyPolicy::EvaluateSlice(
-    google::cloud::timeseriesinsights::v1::EvaluateSliceRequest const&) {
+Idempotency TimeseriesInsightsControllerConnectionIdempotencyPolicy::EvaluateSlice(google::cloud::timeseriesinsights::v1::EvaluateSliceRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency
-TimeseriesInsightsControllerConnectionIdempotencyPolicy::EvaluateTimeseries(
-    google::cloud::timeseriesinsights::v1::EvaluateTimeseriesRequest const&) {
+Idempotency TimeseriesInsightsControllerConnectionIdempotencyPolicy::EvaluateTimeseries(google::cloud::timeseriesinsights::v1::EvaluateTimeseriesRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<TimeseriesInsightsControllerConnectionIdempotencyPolicy>
-MakeDefaultTimeseriesInsightsControllerConnectionIdempotencyPolicy() {
-  return std::make_unique<
-      TimeseriesInsightsControllerConnectionIdempotencyPolicy>();
+    MakeDefaultTimeseriesInsightsControllerConnectionIdempotencyPolicy() {
+  return std::make_unique<TimeseriesInsightsControllerConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

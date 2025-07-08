@@ -19,11 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_NETWORKMANAGEMENT_V1_REACHABILITY_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_NETWORKMANAGEMENT_V1_REACHABILITY_CONNECTION_H
 
-#include "google/cloud/networkmanagement/v1/internal/reachability_retry_traits.h"
-#include "google/cloud/networkmanagement/v1/reachability_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/networkmanagement/v1/internal/reachability_retry_traits.h"
+#include "google/cloud/networkmanagement/v1/reachability_connection_idempotency_policy.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -56,8 +56,7 @@ class ReachabilityServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class ReachabilityServiceLimitedErrorCountRetryPolicy
-    : public ReachabilityServiceRetryPolicy {
+class ReachabilityServiceLimitedErrorCountRetryPolicy : public ReachabilityServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -67,16 +66,14 @@ class ReachabilityServiceLimitedErrorCountRetryPolicy
    *     @p maximum_failures == 0.
    */
   explicit ReachabilityServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   ReachabilityServiceLimitedErrorCountRetryPolicy(
       ReachabilityServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : ReachabilityServiceLimitedErrorCountRetryPolicy(
-            rhs.maximum_failures()) {}
+    : ReachabilityServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   ReachabilityServiceLimitedErrorCountRetryPolicy(
       ReachabilityServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : ReachabilityServiceLimitedErrorCountRetryPolicy(
-            rhs.maximum_failures()) {}
+    : ReachabilityServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -96,9 +93,7 @@ class ReachabilityServiceLimitedErrorCountRetryPolicy
   using BaseType = ReachabilityServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      networkmanagement_v1_internal::ReachabilityServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<networkmanagement_v1_internal::ReachabilityServiceRetryTraits> impl_;
 };
 
 /**
@@ -111,8 +106,7 @@ class ReachabilityServiceLimitedErrorCountRetryPolicy
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class ReachabilityServiceLimitedTimeRetryPolicy
-    : public ReachabilityServiceRetryPolicy {
+class ReachabilityServiceLimitedTimeRetryPolicy : public ReachabilityServiceRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -137,14 +131,12 @@ class ReachabilityServiceLimitedTimeRetryPolicy
   template <typename DurationRep, typename DurationPeriod>
   explicit ReachabilityServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  ReachabilityServiceLimitedTimeRetryPolicy(
-      ReachabilityServiceLimitedTimeRetryPolicy&& rhs) noexcept
-      : ReachabilityServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  ReachabilityServiceLimitedTimeRetryPolicy(
-      ReachabilityServiceLimitedTimeRetryPolicy const& rhs) noexcept
-      : ReachabilityServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  ReachabilityServiceLimitedTimeRetryPolicy(ReachabilityServiceLimitedTimeRetryPolicy&& rhs) noexcept
+    : ReachabilityServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  ReachabilityServiceLimitedTimeRetryPolicy(ReachabilityServiceLimitedTimeRetryPolicy const& rhs) noexcept
+    : ReachabilityServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -166,23 +158,20 @@ class ReachabilityServiceLimitedTimeRetryPolicy
   using BaseType = ReachabilityServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      networkmanagement_v1_internal::ReachabilityServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<networkmanagement_v1_internal::ReachabilityServiceRetryTraits> impl_;
 };
 
 /**
  * The `ReachabilityServiceConnection` object for `ReachabilityServiceClient`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `ReachabilityServiceClient`. This allows users to inject custom
- * behavior (e.g., with a Google Mock object) when writing tests that use
- * objects of type `ReachabilityServiceClient`.
+ * sets in `ReachabilityServiceClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `ReachabilityServiceClient`.
  *
  * To create a concrete instance, see `MakeReachabilityServiceConnection()`.
  *
- * For mocking, see
- * `networkmanagement_v1_mocks::MockReachabilityServiceConnection`.
+ * For mocking, see `networkmanagement_v1_mocks::MockReachabilityServiceConnection`.
  */
 class ReachabilityServiceConnection {
  public:
@@ -191,114 +180,84 @@ class ReachabilityServiceConnection {
   virtual Options options() { return Options{}; }
 
   virtual StreamRange<google::cloud::networkmanagement::v1::ConnectivityTest>
-  ListConnectivityTests(
-      google::cloud::networkmanagement::v1::ListConnectivityTestsRequest
-          request);
+  ListConnectivityTests(google::cloud::networkmanagement::v1::ListConnectivityTestsRequest request);
 
   virtual StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>
-  GetConnectivityTest(
-      google::cloud::networkmanagement::v1::GetConnectivityTestRequest const&
-          request);
+  GetConnectivityTest(google::cloud::networkmanagement::v1::GetConnectivityTestRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>
-  CreateConnectivityTest(
-      google::cloud::networkmanagement::v1::CreateConnectivityTestRequest const&
-          request);
+  virtual future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>
+  CreateConnectivityTest(google::cloud::networkmanagement::v1::CreateConnectivityTestRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> CreateConnectivityTest(
-      NoAwaitTag,
-      google::cloud::networkmanagement::v1::CreateConnectivityTestRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  CreateConnectivityTest(NoAwaitTag, google::cloud::networkmanagement::v1::CreateConnectivityTestRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>
-  CreateConnectivityTest(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>
+  CreateConnectivityTest( google::longrunning::Operation const& operation);
 
-  virtual future<
-      StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>
-  UpdateConnectivityTest(
-      google::cloud::networkmanagement::v1::UpdateConnectivityTestRequest const&
-          request);
+  virtual future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>
+  UpdateConnectivityTest(google::cloud::networkmanagement::v1::UpdateConnectivityTestRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> UpdateConnectivityTest(
-      NoAwaitTag,
-      google::cloud::networkmanagement::v1::UpdateConnectivityTestRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  UpdateConnectivityTest(NoAwaitTag, google::cloud::networkmanagement::v1::UpdateConnectivityTestRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>
-  UpdateConnectivityTest(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>
+  UpdateConnectivityTest( google::longrunning::Operation const& operation);
 
-  virtual future<
-      StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>
-  RerunConnectivityTest(
-      google::cloud::networkmanagement::v1::RerunConnectivityTestRequest const&
-          request);
+  virtual future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>
+  RerunConnectivityTest(google::cloud::networkmanagement::v1::RerunConnectivityTestRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> RerunConnectivityTest(
-      NoAwaitTag,
-      google::cloud::networkmanagement::v1::RerunConnectivityTestRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  RerunConnectivityTest(NoAwaitTag, google::cloud::networkmanagement::v1::RerunConnectivityTestRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>
-  RerunConnectivityTest(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>
+  RerunConnectivityTest( google::longrunning::Operation const& operation);
 
-  virtual future<
-      StatusOr<google::cloud::networkmanagement::v1::OperationMetadata>>
-  DeleteConnectivityTest(
-      google::cloud::networkmanagement::v1::DeleteConnectivityTestRequest const&
-          request);
+  virtual future<StatusOr<google::cloud::networkmanagement::v1::OperationMetadata>>
+  DeleteConnectivityTest(google::cloud::networkmanagement::v1::DeleteConnectivityTestRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> DeleteConnectivityTest(
-      NoAwaitTag,
-      google::cloud::networkmanagement::v1::DeleteConnectivityTestRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  DeleteConnectivityTest(NoAwaitTag, google::cloud::networkmanagement::v1::DeleteConnectivityTestRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::networkmanagement::v1::OperationMetadata>>
-  DeleteConnectivityTest(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::networkmanagement::v1::OperationMetadata>>
+  DeleteConnectivityTest( google::longrunning::Operation const& operation);
 
-  virtual StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request);
+  virtual StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request);
 
-  virtual StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request);
+  virtual StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
 
   virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
   TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
 
-  virtual StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 
-  virtual Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request);
+  virtual Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
 
-  virtual Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request);
+  virtual Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request);
 };
 
 /**
- * A factory function to construct an object of type
- * `ReachabilityServiceConnection`.
+ * A factory function to construct an object of type `ReachabilityServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of
- * ReachabilityServiceClient.
+ * should be passed as an argument to the constructor of ReachabilityServiceClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `ReachabilityServiceConnection`. Expected options are any of the
- * types in the following option lists:
+ * returned `ReachabilityServiceConnection`. Expected options are any of the types in
+ * the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
@@ -308,11 +267,11 @@ class ReachabilityServiceConnection {
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
- * @param options (optional) Configure the `ReachabilityServiceConnection`
- * created by this function.
+ * @param options (optional) Configure the `ReachabilityServiceConnection` created by
+ * this function.
  */
-std::shared_ptr<ReachabilityServiceConnection>
-MakeReachabilityServiceConnection(Options options = {});
+std::shared_ptr<ReachabilityServiceConnection> MakeReachabilityServiceConnection(
+    Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace networkmanagement_v1

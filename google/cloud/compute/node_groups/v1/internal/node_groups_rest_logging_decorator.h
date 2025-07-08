@@ -39,176 +39,128 @@ class NodeGroupsRestLogging : public NodeGroupsRestStub {
  public:
   ~NodeGroupsRestLogging() override = default;
   NodeGroupsRestLogging(std::shared_ptr<NodeGroupsRestStub> child,
-                        TracingOptions tracing_options,
-                        std::set<std::string> components);
+                       TracingOptions tracing_options,
+                       std::set<std::string> components);
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncAddNodes(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::node_groups::v1::AddNodesRequest const&
-          request) override;
+      google::cloud::cpp::compute::node_groups::v1::AddNodesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> AddNodes(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::node_groups::v1::AddNodesRequest const&
-          request) override;
+      Options const& options, google::cloud::cpp::compute::node_groups::v1::AddNodesRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::NodeGroupAggregatedList>
-  AggregatedListNodeGroups(
+  StatusOr<google::cloud::cpp::compute::v1::NodeGroupAggregatedList> AggregatedListNodeGroups(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::node_groups::v1::
-          AggregatedListNodeGroupsRequest const& request) override;
+      Options const& options, google::cloud::cpp::compute::node_groups::v1::AggregatedListNodeGroupsRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncDeleteNodeGroup(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncDeleteNodeGroup(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::node_groups::v1::
-          DeleteNodeGroupRequest const& request) override;
+      google::cloud::cpp::compute::node_groups::v1::DeleteNodeGroupRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteNodeGroup(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::node_groups::v1::
-          DeleteNodeGroupRequest const& request) override;
+      Options const& options, google::cloud::cpp::compute::node_groups::v1::DeleteNodeGroupRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncDeleteNodes(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::node_groups::v1::DeleteNodesRequest const&
-          request) override;
+      google::cloud::cpp::compute::node_groups::v1::DeleteNodesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteNodes(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::node_groups::v1::DeleteNodesRequest const&
-          request) override;
+      Options const& options, google::cloud::cpp::compute::node_groups::v1::DeleteNodesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::NodeGroup> GetNodeGroup(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::node_groups::v1::GetNodeGroupRequest const&
-          request) override;
+      Options const& options, google::cloud::cpp::compute::node_groups::v1::GetNodeGroupRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::node_groups::v1::GetIamPolicyRequest const&
-          request) override;
+      Options const& options, google::cloud::cpp::compute::node_groups::v1::GetIamPolicyRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncInsertNodeGroup(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncInsertNodeGroup(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::node_groups::v1::
-          InsertNodeGroupRequest const& request) override;
+      google::cloud::cpp::compute::node_groups::v1::InsertNodeGroupRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertNodeGroup(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::node_groups::v1::
-          InsertNodeGroupRequest const& request) override;
+      Options const& options, google::cloud::cpp::compute::node_groups::v1::InsertNodeGroupRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::NodeGroupList> ListNodeGroups(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::node_groups::v1::ListNodeGroupsRequest const&
-          request) override;
+      Options const& options, google::cloud::cpp::compute::node_groups::v1::ListNodeGroupsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::NodeGroupsListNodes> ListNodes(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::node_groups::v1::ListNodesRequest const&
-          request) override;
+      Options const& options, google::cloud::cpp::compute::node_groups::v1::ListNodesRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncPatchNodeGroup(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncPatchNodeGroup(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::node_groups::v1::PatchNodeGroupRequest const&
-          request) override;
+      google::cloud::cpp::compute::node_groups::v1::PatchNodeGroupRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchNodeGroup(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::node_groups::v1::PatchNodeGroupRequest const&
-          request) override;
+      Options const& options, google::cloud::cpp::compute::node_groups::v1::PatchNodeGroupRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncPerformMaintenance(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncPerformMaintenance(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::node_groups::v1::
-          PerformMaintenanceRequest const& request) override;
+      google::cloud::cpp::compute::node_groups::v1::PerformMaintenanceRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> PerformMaintenance(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::node_groups::v1::
-          PerformMaintenanceRequest const& request) override;
+      Options const& options, google::cloud::cpp::compute::node_groups::v1::PerformMaintenanceRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::node_groups::v1::SetIamPolicyRequest const&
-          request) override;
+      Options const& options, google::cloud::cpp::compute::node_groups::v1::SetIamPolicyRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncSetNodeTemplate(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncSetNodeTemplate(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::node_groups::v1::
-          SetNodeTemplateRequest const& request) override;
+      google::cloud::cpp::compute::node_groups::v1::SetNodeTemplateRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetNodeTemplate(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::node_groups::v1::
-          SetNodeTemplateRequest const& request) override;
+      Options const& options, google::cloud::cpp::compute::node_groups::v1::SetNodeTemplateRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncSimulateMaintenanceEvent(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncSimulateMaintenanceEvent(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::node_groups::v1::
-          SimulateMaintenanceEventRequest const& request) override;
+      google::cloud::cpp::compute::node_groups::v1::SimulateMaintenanceEventRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> SimulateMaintenanceEvent(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::node_groups::v1::
-          SimulateMaintenanceEventRequest const& request) override;
+      Options const& options, google::cloud::cpp::compute::node_groups::v1::SimulateMaintenanceEventRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(google::cloud::rest_internal::RestContext& rest_context,
-                     Options const& options,
-                     google::cloud::cpp::compute::node_groups::v1::
-                         TestIamPermissionsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse> TestIamPermissions(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options, google::cloud::cpp::compute::node_groups::v1::TestIamPermissionsRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncGetOperation(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::zone_operations::v1::
-          GetOperationRequest const& request) override;
+      google::cloud::cpp::compute::zone_operations::v1::GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::zone_operations::v1::
-          DeleteOperationRequest const& request) override;
+      google::cloud::cpp::compute::zone_operations::v1::DeleteOperationRequest const& request) override;
 
  private:
   std::shared_ptr<NodeGroupsRestStub> child_;

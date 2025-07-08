@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_V3_QUERY_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_V3_QUERY_CONNECTION_H
 
-#include "google/cloud/monitoring/v3/internal/query_retry_traits.h"
-#include "google/cloud/monitoring/v3/query_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/monitoring/v3/internal/query_retry_traits.h"
+#include "google/cloud/monitoring/v3/query_connection_idempotency_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -52,8 +52,7 @@ class QueryServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class QueryServiceLimitedErrorCountRetryPolicy
-    : public QueryServiceRetryPolicy {
+class QueryServiceLimitedErrorCountRetryPolicy : public QueryServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -63,14 +62,14 @@ class QueryServiceLimitedErrorCountRetryPolicy
    *     @p maximum_failures == 0.
    */
   explicit QueryServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   QueryServiceLimitedErrorCountRetryPolicy(
       QueryServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : QueryServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : QueryServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   QueryServiceLimitedErrorCountRetryPolicy(
       QueryServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : QueryServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : QueryServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -90,9 +89,7 @@ class QueryServiceLimitedErrorCountRetryPolicy
   using BaseType = QueryServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      monitoring_v3_internal::QueryServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<monitoring_v3_internal::QueryServiceRetryTraits> impl_;
 };
 
 /**
@@ -130,14 +127,12 @@ class QueryServiceLimitedTimeRetryPolicy : public QueryServiceRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit QueryServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  QueryServiceLimitedTimeRetryPolicy(
-      QueryServiceLimitedTimeRetryPolicy&& rhs) noexcept
-      : QueryServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  QueryServiceLimitedTimeRetryPolicy(
-      QueryServiceLimitedTimeRetryPolicy const& rhs) noexcept
-      : QueryServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  QueryServiceLimitedTimeRetryPolicy(QueryServiceLimitedTimeRetryPolicy&& rhs) noexcept
+    : QueryServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  QueryServiceLimitedTimeRetryPolicy(QueryServiceLimitedTimeRetryPolicy const& rhs) noexcept
+    : QueryServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -159,9 +154,7 @@ class QueryServiceLimitedTimeRetryPolicy : public QueryServiceRetryPolicy {
   using BaseType = QueryServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      monitoring_v3_internal::QueryServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<monitoring_v3_internal::QueryServiceRetryTraits> impl_;
 };
 
 /**
@@ -182,8 +175,8 @@ class QueryServiceConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StreamRange<google::monitoring::v3::TimeSeriesData> QueryTimeSeries(
-      google::monitoring::v3::QueryTimeSeriesRequest request);
+  virtual StreamRange<google::monitoring::v3::TimeSeriesData>
+  QueryTimeSeries(google::monitoring::v3::QueryTimeSeriesRequest request);
 };
 
 /**

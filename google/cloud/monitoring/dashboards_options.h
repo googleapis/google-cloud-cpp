@@ -28,26 +28,17 @@ namespace cloud {
 namespace monitoring {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use
-/// monitoring_dashboard_v1::DashboardsServiceBackoffPolicyOption directly.
-using ::google::cloud::monitoring_dashboard_v1::
-    DashboardsServiceBackoffPolicyOption;
+/// @deprecated Use monitoring_dashboard_v1::DashboardsServiceBackoffPolicyOption directly.
+using ::google::cloud::monitoring_dashboard_v1::DashboardsServiceBackoffPolicyOption;
 
-/// @deprecated Use
-/// monitoring_dashboard_v1::DashboardsServiceConnectionIdempotencyPolicyOption
-/// directly.
-using ::google::cloud::monitoring_dashboard_v1::
-    DashboardsServiceConnectionIdempotencyPolicyOption;
+/// @deprecated Use monitoring_dashboard_v1::DashboardsServiceConnectionIdempotencyPolicyOption directly.
+using ::google::cloud::monitoring_dashboard_v1::DashboardsServiceConnectionIdempotencyPolicyOption;
 
-/// @deprecated Use monitoring_dashboard_v1::DashboardsServicePolicyOptionList
-/// directly.
-using ::google::cloud::monitoring_dashboard_v1::
-    DashboardsServicePolicyOptionList;
+/// @deprecated Use monitoring_dashboard_v1::DashboardsServicePolicyOptionList directly.
+using ::google::cloud::monitoring_dashboard_v1::DashboardsServicePolicyOptionList;
 
-/// @deprecated Use monitoring_dashboard_v1::DashboardsServiceRetryPolicyOption
-/// directly.
-using ::google::cloud::monitoring_dashboard_v1::
-    DashboardsServiceRetryPolicyOption;
+/// @deprecated Use monitoring_dashboard_v1::DashboardsServiceRetryPolicyOption directly.
+using ::google::cloud::monitoring_dashboard_v1::DashboardsServiceRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace monitoring

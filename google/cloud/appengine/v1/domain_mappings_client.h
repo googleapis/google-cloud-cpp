@@ -63,8 +63,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class DomainMappingsClient {
  public:
-  explicit DomainMappingsClient(
-      std::shared_ptr<DomainMappingsConnection> connection, Options opts = {});
+  explicit DomainMappingsClient(std::shared_ptr<DomainMappingsConnection> connection, Options opts = {});
   ~DomainMappingsClient();
 
   ///@{
@@ -77,12 +76,10 @@ class DomainMappingsClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(DomainMappingsClient const& a,
-                         DomainMappingsClient const& b) {
+  friend bool operator==(DomainMappingsClient const& a, DomainMappingsClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(DomainMappingsClient const& a,
-                         DomainMappingsClient const& b) {
+  friend bool operator!=(DomainMappingsClient const& a, DomainMappingsClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -123,9 +120,8 @@ class DomainMappingsClient {
   /// [google.appengine.v1.ListDomainMappingsRequest]: @googleapis_reference_link{google/appengine/v1/appengine.proto#L932}
   ///
   // clang-format on
-  StreamRange<google::appengine::v1::DomainMapping> ListDomainMappings(
-      google::appengine::v1::ListDomainMappingsRequest request,
-      Options opts = {});
+  StreamRange<google::appengine::v1::DomainMapping>
+  ListDomainMappings(google::appengine::v1::ListDomainMappingsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -154,9 +150,8 @@ class DomainMappingsClient {
   /// [google.appengine.v1.GetDomainMappingRequest]: @googleapis_reference_link{google/appengine/v1/appengine.proto#L953}
   ///
   // clang-format on
-  StatusOr<google::appengine::v1::DomainMapping> GetDomainMapping(
-      google::appengine::v1::GetDomainMappingRequest const& request,
-      Options opts = {});
+  StatusOr<google::appengine::v1::DomainMapping>
+  GetDomainMapping(google::appengine::v1::GetDomainMappingRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -194,9 +189,8 @@ class DomainMappingsClient {
   /// [google.appengine.v1.DomainMapping]: @googleapis_reference_link{google/appengine/v1/domain_mapping.proto#L28}
   ///
   // clang-format on
-  future<StatusOr<google::appengine::v1::DomainMapping>> CreateDomainMapping(
-      google::appengine::v1::CreateDomainMappingRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::appengine::v1::DomainMapping>>
+  CreateDomainMapping(google::appengine::v1::CreateDomainMappingRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -209,10 +203,8 @@ class DomainMappingsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateDomainMapping(
-      NoAwaitTag,
-      google::appengine::v1::CreateDomainMappingRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateDomainMapping(NoAwaitTag, google::appengine::v1::CreateDomainMappingRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -223,8 +215,8 @@ class DomainMappingsClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::appengine::v1::DomainMapping>> CreateDomainMapping(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::appengine::v1::DomainMapping>>
+  CreateDomainMapping(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -263,9 +255,8 @@ class DomainMappingsClient {
   /// [google.appengine.v1.UpdateDomainMappingRequest]: @googleapis_reference_link{google/appengine/v1/appengine.proto#L990}
   ///
   // clang-format on
-  future<StatusOr<google::appengine::v1::DomainMapping>> UpdateDomainMapping(
-      google::appengine::v1::UpdateDomainMappingRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::appengine::v1::DomainMapping>>
+  UpdateDomainMapping(google::appengine::v1::UpdateDomainMappingRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -278,10 +269,8 @@ class DomainMappingsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateDomainMapping(
-      NoAwaitTag,
-      google::appengine::v1::UpdateDomainMappingRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateDomainMapping(NoAwaitTag, google::appengine::v1::UpdateDomainMappingRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -292,8 +281,8 @@ class DomainMappingsClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::appengine::v1::DomainMapping>> UpdateDomainMapping(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::appengine::v1::DomainMapping>>
+  UpdateDomainMapping(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -332,9 +321,7 @@ class DomainMappingsClient {
   ///
   // clang-format on
   future<StatusOr<google::appengine::v1::OperationMetadataV1>>
-  DeleteDomainMapping(
-      google::appengine::v1::DeleteDomainMappingRequest const& request,
-      Options opts = {});
+  DeleteDomainMapping(google::appengine::v1::DeleteDomainMappingRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -347,10 +334,8 @@ class DomainMappingsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteDomainMapping(
-      NoAwaitTag,
-      google::appengine::v1::DeleteDomainMappingRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteDomainMapping(NoAwaitTag, google::appengine::v1::DeleteDomainMappingRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -362,8 +347,7 @@ class DomainMappingsClient {
   ///
   // clang-format on
   future<StatusOr<google::appengine::v1::OperationMetadataV1>>
-  DeleteDomainMapping(google::longrunning::Operation const& operation,
-                      Options opts = {});
+  DeleteDomainMapping(google::longrunning::Operation const& operation, Options opts = {});
 
  private:
   std::shared_ptr<DomainMappingsConnection> connection_;

@@ -44,34 +44,35 @@ TraceServiceMetadata::TraceServiceMetadata(
               ? google::cloud::internal::GeneratedLibClientHeader()
               : std::move(api_client_header)) {}
 
-Status TraceServiceMetadata::BatchWriteSpans(
-    grpc::ClientContext& context, Options const& options,
+Status
+TraceServiceMetadata::BatchWriteSpans(
+    grpc::ClientContext& context,
+    Options const& options,
     google::devtools::cloudtrace::v2::BatchWriteSpansRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->BatchWriteSpans(context, options, request);
 }
 
 StatusOr<google::devtools::cloudtrace::v2::Span>
 TraceServiceMetadata::CreateSpan(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::devtools::cloudtrace::v2::Span const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->CreateSpan(context, options, request);
 }
 
 void TraceServiceMetadata::SetMetadata(grpc::ClientContext& context,
-                                       Options const& options,
-                                       std::string const& request_params) {
+                                        Options const& options,
+                                        std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
 void TraceServiceMetadata::SetMetadata(grpc::ClientContext& context,
-                                       Options const& options) {
-  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
-                                       api_client_header_);
+                                        Options const& options) {
+  google::cloud::internal::SetMetadata(
+      context, options, fixed_metadata_, api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

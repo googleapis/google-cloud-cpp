@@ -29,26 +29,24 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 RegionSslPoliciesRestLogging::RegionSslPoliciesRestLogging(
     std::shared_ptr<RegionSslPoliciesRestStub> child,
-    TracingOptions tracing_options, std::set<std::string> components)
-    : child_(std::move(child)),
-      tracing_options_(std::move(tracing_options)),
+    TracingOptions tracing_options,
+    std::set<std::string> components)
+    : child_(std::move(child)), tracing_options_(std::move(tracing_options)),
       components_(std::move(components)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionSslPoliciesRestLogging::AsyncDeleteSslPolicy(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::region_ssl_policies::v1::
-        DeleteSslPolicyRequest const& request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::region_ssl_policies::v1::DeleteSslPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::cpp::compute::region_ssl_policies::v1::
-                 DeleteSslPolicyRequest const& request) {
-        return child_->AsyncDeleteSslPolicy(cq, std::move(rest_context),
-                                            std::move(options), request);
+             google::cloud::cpp::compute::region_ssl_policies::v1::DeleteSslPolicyRequest const& request) {
+        return child_->AsyncDeleteSslPolicy(
+            cq, std::move(rest_context), std::move(options), request);
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
@@ -56,13 +54,13 @@ RegionSslPoliciesRestLogging::AsyncDeleteSslPolicy(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionSslPoliciesRestLogging::DeleteSslPolicy(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::region_ssl_policies::v1::
-        DeleteSslPolicyRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::region_ssl_policies::v1::DeleteSslPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::cloud::cpp::compute::region_ssl_policies::v1::
-                 DeleteSslPolicyRequest const& request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
+             google::cloud::cpp::compute::region_ssl_policies::v1::DeleteSslPolicyRequest const& request) {
         return child_->DeleteSslPolicy(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -70,13 +68,13 @@ RegionSslPoliciesRestLogging::DeleteSslPolicy(
 
 StatusOr<google::cloud::cpp::compute::v1::SslPolicy>
 RegionSslPoliciesRestLogging::GetSslPolicy(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::region_ssl_policies::v1::
-        GetSslPolicyRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::region_ssl_policies::v1::GetSslPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::cloud::cpp::compute::region_ssl_policies::v1::
-                 GetSslPolicyRequest const& request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
+             google::cloud::cpp::compute::region_ssl_policies::v1::GetSslPolicyRequest const& request) {
         return child_->GetSslPolicy(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -84,19 +82,17 @@ RegionSslPoliciesRestLogging::GetSslPolicy(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionSslPoliciesRestLogging::AsyncInsertSslPolicy(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::region_ssl_policies::v1::
-        InsertSslPolicyRequest const& request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::region_ssl_policies::v1::InsertSslPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::cpp::compute::region_ssl_policies::v1::
-                 InsertSslPolicyRequest const& request) {
-        return child_->AsyncInsertSslPolicy(cq, std::move(rest_context),
-                                            std::move(options), request);
+             google::cloud::cpp::compute::region_ssl_policies::v1::InsertSslPolicyRequest const& request) {
+        return child_->AsyncInsertSslPolicy(
+            cq, std::move(rest_context), std::move(options), request);
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
@@ -104,13 +100,13 @@ RegionSslPoliciesRestLogging::AsyncInsertSslPolicy(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionSslPoliciesRestLogging::InsertSslPolicy(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::region_ssl_policies::v1::
-        InsertSslPolicyRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::region_ssl_policies::v1::InsertSslPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::cloud::cpp::compute::region_ssl_policies::v1::
-                 InsertSslPolicyRequest const& request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
+             google::cloud::cpp::compute::region_ssl_policies::v1::InsertSslPolicyRequest const& request) {
         return child_->InsertSslPolicy(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -118,28 +114,27 @@ RegionSslPoliciesRestLogging::InsertSslPolicy(
 
 StatusOr<google::cloud::cpp::compute::v1::SslPoliciesList>
 RegionSslPoliciesRestLogging::ListRegionSslPolicies(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::region_ssl_policies::v1::
-        ListRegionSslPoliciesRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::region_ssl_policies::v1::ListRegionSslPoliciesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::cloud::cpp::compute::region_ssl_policies::v1::
-                 ListRegionSslPoliciesRequest const& request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
+             google::cloud::cpp::compute::region_ssl_policies::v1::ListRegionSslPoliciesRequest const& request) {
         return child_->ListRegionSslPolicies(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<
-    google::cloud::cpp::compute::v1::SslPoliciesListAvailableFeaturesResponse>
+StatusOr<google::cloud::cpp::compute::v1::SslPoliciesListAvailableFeaturesResponse>
 RegionSslPoliciesRestLogging::ListAvailableFeatures(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::region_ssl_policies::v1::
-        ListAvailableFeaturesRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::region_ssl_policies::v1::ListAvailableFeaturesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::cloud::cpp::compute::region_ssl_policies::v1::
-                 ListAvailableFeaturesRequest const& request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
+             google::cloud::cpp::compute::region_ssl_policies::v1::ListAvailableFeaturesRequest const& request) {
         return child_->ListAvailableFeatures(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -147,19 +142,17 @@ RegionSslPoliciesRestLogging::ListAvailableFeatures(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionSslPoliciesRestLogging::AsyncPatchSslPolicy(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::region_ssl_policies::v1::
-        PatchSslPolicyRequest const& request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::region_ssl_policies::v1::PatchSslPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::cpp::compute::region_ssl_policies::v1::
-                 PatchSslPolicyRequest const& request) {
-        return child_->AsyncPatchSslPolicy(cq, std::move(rest_context),
-                                           std::move(options), request);
+             google::cloud::cpp::compute::region_ssl_policies::v1::PatchSslPolicyRequest const& request) {
+        return child_->AsyncPatchSslPolicy(
+            cq, std::move(rest_context), std::move(options), request);
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
@@ -167,13 +160,13 @@ RegionSslPoliciesRestLogging::AsyncPatchSslPolicy(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionSslPoliciesRestLogging::PatchSslPolicy(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::region_ssl_policies::v1::
-        PatchSslPolicyRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::region_ssl_policies::v1::PatchSslPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::cloud::cpp::compute::region_ssl_policies::v1::
-                 PatchSslPolicyRequest const& request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
+             google::cloud::cpp::compute::region_ssl_policies::v1::PatchSslPolicyRequest const& request) {
         return child_->PatchSslPolicy(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -184,35 +177,32 @@ RegionSslPoliciesRestLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::region_operations::v1::
-        GetOperationRequest const& request) {
+    google::cloud::cpp::compute::region_operations::v1::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::cpp::compute::region_operations::v1::
-                 GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(cq, std::move(rest_context),
-                                         std::move(options), request);
+             google::cloud::cpp::compute::region_operations::v1::GetOperationRequest const& request) {
+        return child_->AsyncGetOperation(
+            cq, std::move(rest_context), std::move(options), request);
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-future<Status> RegionSslPoliciesRestLogging::AsyncCancelOperation(
+future<Status>
+RegionSslPoliciesRestLogging::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::region_operations::v1::
-        DeleteOperationRequest const& request) {
+    google::cloud::cpp::compute::region_operations::v1::DeleteOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::cpp::compute::region_operations::v1::
-                 DeleteOperationRequest const& request) {
-        return child_->AsyncCancelOperation(cq, std::move(rest_context),
-                                            std::move(options), request);
+             google::cloud::cpp::compute::region_operations::v1::DeleteOperationRequest const& request) {
+        return child_->AsyncCancelOperation(
+            cq, std::move(rest_context), std::move(options), request);
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);

@@ -37,82 +37,72 @@ class LineageConnectionIdempotencyPolicy {
   /// Create a new copy of this object.
   virtual std::unique_ptr<LineageConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency ProcessOpenLineageRunEvent(
-      google::cloud::datacatalog::lineage::v1::
-          ProcessOpenLineageRunEventRequest const& request);
+  virtual google::cloud::Idempotency
+  ProcessOpenLineageRunEvent(google::cloud::datacatalog::lineage::v1::ProcessOpenLineageRunEventRequest const& request);
 
-  virtual google::cloud::Idempotency CreateProcess(
-      google::cloud::datacatalog::lineage::v1::CreateProcessRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  CreateProcess(google::cloud::datacatalog::lineage::v1::CreateProcessRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateProcess(
-      google::cloud::datacatalog::lineage::v1::UpdateProcessRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  UpdateProcess(google::cloud::datacatalog::lineage::v1::UpdateProcessRequest const& request);
 
-  virtual google::cloud::Idempotency GetProcess(
-      google::cloud::datacatalog::lineage::v1::GetProcessRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  GetProcess(google::cloud::datacatalog::lineage::v1::GetProcessRequest const& request);
 
-  virtual google::cloud::Idempotency ListProcesses(
-      google::cloud::datacatalog::lineage::v1::ListProcessesRequest request);
+  virtual google::cloud::Idempotency
+  ListProcesses(google::cloud::datacatalog::lineage::v1::ListProcessesRequest request);
 
-  virtual google::cloud::Idempotency DeleteProcess(
-      google::cloud::datacatalog::lineage::v1::DeleteProcessRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  DeleteProcess(google::cloud::datacatalog::lineage::v1::DeleteProcessRequest const& request);
 
-  virtual google::cloud::Idempotency CreateRun(
-      google::cloud::datacatalog::lineage::v1::CreateRunRequest const& request);
+  virtual google::cloud::Idempotency
+  CreateRun(google::cloud::datacatalog::lineage::v1::CreateRunRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateRun(
-      google::cloud::datacatalog::lineage::v1::UpdateRunRequest const& request);
+  virtual google::cloud::Idempotency
+  UpdateRun(google::cloud::datacatalog::lineage::v1::UpdateRunRequest const& request);
 
-  virtual google::cloud::Idempotency GetRun(
-      google::cloud::datacatalog::lineage::v1::GetRunRequest const& request);
+  virtual google::cloud::Idempotency
+  GetRun(google::cloud::datacatalog::lineage::v1::GetRunRequest const& request);
 
-  virtual google::cloud::Idempotency ListRuns(
-      google::cloud::datacatalog::lineage::v1::ListRunsRequest request);
+  virtual google::cloud::Idempotency
+  ListRuns(google::cloud::datacatalog::lineage::v1::ListRunsRequest request);
 
-  virtual google::cloud::Idempotency DeleteRun(
-      google::cloud::datacatalog::lineage::v1::DeleteRunRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteRun(google::cloud::datacatalog::lineage::v1::DeleteRunRequest const& request);
 
-  virtual google::cloud::Idempotency CreateLineageEvent(
-      google::cloud::datacatalog::lineage::v1::CreateLineageEventRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  CreateLineageEvent(google::cloud::datacatalog::lineage::v1::CreateLineageEventRequest const& request);
 
-  virtual google::cloud::Idempotency GetLineageEvent(
-      google::cloud::datacatalog::lineage::v1::GetLineageEventRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  GetLineageEvent(google::cloud::datacatalog::lineage::v1::GetLineageEventRequest const& request);
 
-  virtual google::cloud::Idempotency ListLineageEvents(
-      google::cloud::datacatalog::lineage::v1::ListLineageEventsRequest
-          request);
+  virtual google::cloud::Idempotency
+  ListLineageEvents(google::cloud::datacatalog::lineage::v1::ListLineageEventsRequest request);
 
-  virtual google::cloud::Idempotency DeleteLineageEvent(
-      google::cloud::datacatalog::lineage::v1::DeleteLineageEventRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  DeleteLineageEvent(google::cloud::datacatalog::lineage::v1::DeleteLineageEventRequest const& request);
 
-  virtual google::cloud::Idempotency SearchLinks(
-      google::cloud::datacatalog::lineage::v1::SearchLinksRequest request);
+  virtual google::cloud::Idempotency
+  SearchLinks(google::cloud::datacatalog::lineage::v1::SearchLinksRequest request);
 
-  virtual google::cloud::Idempotency BatchSearchLinkProcesses(
-      google::cloud::datacatalog::lineage::v1::BatchSearchLinkProcessesRequest
-          request);
+  virtual google::cloud::Idempotency
+  BatchSearchLinkProcesses(google::cloud::datacatalog::lineage::v1::BatchSearchLinkProcessesRequest request);
 
-  virtual google::cloud::Idempotency ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual google::cloud::Idempotency
+  ListOperations(google::longrunning::ListOperationsRequest request);
 
-  virtual google::cloud::Idempotency GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
 
-  virtual google::cloud::Idempotency CancelOperation(
-      google::longrunning::CancelOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  CancelOperation(google::longrunning::CancelOperationRequest const& request);
 };
 
 std::unique_ptr<LineageConnectionIdempotencyPolicy>
-MakeDefaultLineageConnectionIdempotencyPolicy();
+    MakeDefaultLineageConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace datacatalog_lineage_v1

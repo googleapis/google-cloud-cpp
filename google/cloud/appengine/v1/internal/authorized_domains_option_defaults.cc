@@ -35,29 +35,23 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options AuthorizedDomainsDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_AUTHORIZED_DOMAINS_ENDPOINT", "",
-      "GOOGLE_CLOUD_CPP_AUTHORIZED_DOMAINS_AUTHORITY",
+      std::move(options), "GOOGLE_CLOUD_CPP_AUTHORIZED_DOMAINS_ENDPOINT",
+      "", "GOOGLE_CLOUD_CPP_AUTHORIZED_DOMAINS_AUTHORITY",
       "appengine.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<appengine_v1::AuthorizedDomainsRetryPolicyOption>()) {
     options.set<appengine_v1::AuthorizedDomainsRetryPolicyOption>(
         appengine_v1::AuthorizedDomainsLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
-            .clone());
+            std::chrono::minutes(30)).clone());
   }
   if (!options.has<appengine_v1::AuthorizedDomainsBackoffPolicyOption>()) {
     options.set<appengine_v1::AuthorizedDomainsBackoffPolicyOption>(
-        ExponentialBackoffPolicy(
-            std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
-            .clone());
+        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
   }
-  if (!options.has<
-          appengine_v1::AuthorizedDomainsConnectionIdempotencyPolicyOption>()) {
-    options
-        .set<appengine_v1::AuthorizedDomainsConnectionIdempotencyPolicyOption>(
-            appengine_v1::
-                MakeDefaultAuthorizedDomainsConnectionIdempotencyPolicy());
+  if (!options.has<appengine_v1::AuthorizedDomainsConnectionIdempotencyPolicyOption>()) {
+    options.set<appengine_v1::AuthorizedDomainsConnectionIdempotencyPolicyOption>(
+        appengine_v1::MakeDefaultAuthorizedDomainsConnectionIdempotencyPolicy());
   }
 
   return options;

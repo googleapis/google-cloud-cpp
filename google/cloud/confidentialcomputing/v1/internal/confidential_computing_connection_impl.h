@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONFIDENTIALCOMPUTING_V1_INTERNAL_CONFIDENTIAL_COMPUTING_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONFIDENTIALCOMPUTING_V1_INTERNAL_CONFIDENTIAL_COMPUTING_CONNECTION_IMPL_H
 
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/confidentialcomputing/v1/confidential_computing_connection.h"
 #include "google/cloud/confidentialcomputing/v1/confidential_computing_connection_idempotency_policy.h"
 #include "google/cloud/confidentialcomputing/v1/confidential_computing_options.h"
 #include "google/cloud/confidentialcomputing/v1/internal/confidential_computing_retry_traits.h"
 #include "google/cloud/confidentialcomputing/v1/internal/confidential_computing_stub.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -43,33 +43,27 @@ class ConfidentialComputingConnectionImpl
   ~ConfidentialComputingConnectionImpl() override = default;
 
   ConfidentialComputingConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<
-          confidentialcomputing_v1_internal::ConfidentialComputingStub>
-          stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<confidentialcomputing_v1_internal::ConfidentialComputingStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
-  StatusOr<google::cloud::confidentialcomputing::v1::Challenge> CreateChallenge(
-      google::cloud::confidentialcomputing::v1::CreateChallengeRequest const&
-          request) override;
+  StatusOr<google::cloud::confidentialcomputing::v1::Challenge>
+  CreateChallenge(google::cloud::confidentialcomputing::v1::CreateChallengeRequest const& request) override;
 
   StatusOr<google::cloud::confidentialcomputing::v1::VerifyAttestationResponse>
-  VerifyAttestation(
-      google::cloud::confidentialcomputing::v1::VerifyAttestationRequest const&
-          request) override;
+  VerifyAttestation(google::cloud::confidentialcomputing::v1::VerifyAttestationRequest const& request) override;
 
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request) override;
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request) override;
 
-  StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request) override;
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<confidentialcomputing_v1_internal::ConfidentialComputingStub>
-      stub_;
+  std::shared_ptr<confidentialcomputing_v1_internal::ConfidentialComputingStub> stub_;
   Options options_;
 };
 

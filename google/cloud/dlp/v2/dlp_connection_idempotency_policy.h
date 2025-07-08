@@ -36,175 +36,174 @@ class DlpServiceConnectionIdempotencyPolicy {
   /// Create a new copy of this object.
   virtual std::unique_ptr<DlpServiceConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency InspectContent(
-      google::privacy::dlp::v2::InspectContentRequest const& request);
+  virtual google::cloud::Idempotency
+  InspectContent(google::privacy::dlp::v2::InspectContentRequest const& request);
 
-  virtual google::cloud::Idempotency RedactImage(
-      google::privacy::dlp::v2::RedactImageRequest const& request);
+  virtual google::cloud::Idempotency
+  RedactImage(google::privacy::dlp::v2::RedactImageRequest const& request);
 
-  virtual google::cloud::Idempotency DeidentifyContent(
-      google::privacy::dlp::v2::DeidentifyContentRequest const& request);
+  virtual google::cloud::Idempotency
+  DeidentifyContent(google::privacy::dlp::v2::DeidentifyContentRequest const& request);
 
-  virtual google::cloud::Idempotency ReidentifyContent(
-      google::privacy::dlp::v2::ReidentifyContentRequest const& request);
+  virtual google::cloud::Idempotency
+  ReidentifyContent(google::privacy::dlp::v2::ReidentifyContentRequest const& request);
 
-  virtual google::cloud::Idempotency ListInfoTypes(
-      google::privacy::dlp::v2::ListInfoTypesRequest const& request);
+  virtual google::cloud::Idempotency
+  ListInfoTypes(google::privacy::dlp::v2::ListInfoTypesRequest const& request);
 
-  virtual google::cloud::Idempotency CreateInspectTemplate(
-      google::privacy::dlp::v2::CreateInspectTemplateRequest const& request);
+  virtual google::cloud::Idempotency
+  CreateInspectTemplate(google::privacy::dlp::v2::CreateInspectTemplateRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateInspectTemplate(
-      google::privacy::dlp::v2::UpdateInspectTemplateRequest const& request);
+  virtual google::cloud::Idempotency
+  UpdateInspectTemplate(google::privacy::dlp::v2::UpdateInspectTemplateRequest const& request);
 
-  virtual google::cloud::Idempotency GetInspectTemplate(
-      google::privacy::dlp::v2::GetInspectTemplateRequest const& request);
+  virtual google::cloud::Idempotency
+  GetInspectTemplate(google::privacy::dlp::v2::GetInspectTemplateRequest const& request);
 
-  virtual google::cloud::Idempotency ListInspectTemplates(
-      google::privacy::dlp::v2::ListInspectTemplatesRequest request);
+  virtual google::cloud::Idempotency
+  ListInspectTemplates(google::privacy::dlp::v2::ListInspectTemplatesRequest request);
 
-  virtual google::cloud::Idempotency DeleteInspectTemplate(
-      google::privacy::dlp::v2::DeleteInspectTemplateRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteInspectTemplate(google::privacy::dlp::v2::DeleteInspectTemplateRequest const& request);
 
-  virtual google::cloud::Idempotency CreateDeidentifyTemplate(
-      google::privacy::dlp::v2::CreateDeidentifyTemplateRequest const& request);
+  virtual google::cloud::Idempotency
+  CreateDeidentifyTemplate(google::privacy::dlp::v2::CreateDeidentifyTemplateRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateDeidentifyTemplate(
-      google::privacy::dlp::v2::UpdateDeidentifyTemplateRequest const& request);
+  virtual google::cloud::Idempotency
+  UpdateDeidentifyTemplate(google::privacy::dlp::v2::UpdateDeidentifyTemplateRequest const& request);
 
-  virtual google::cloud::Idempotency GetDeidentifyTemplate(
-      google::privacy::dlp::v2::GetDeidentifyTemplateRequest const& request);
+  virtual google::cloud::Idempotency
+  GetDeidentifyTemplate(google::privacy::dlp::v2::GetDeidentifyTemplateRequest const& request);
 
-  virtual google::cloud::Idempotency ListDeidentifyTemplates(
-      google::privacy::dlp::v2::ListDeidentifyTemplatesRequest request);
+  virtual google::cloud::Idempotency
+  ListDeidentifyTemplates(google::privacy::dlp::v2::ListDeidentifyTemplatesRequest request);
 
-  virtual google::cloud::Idempotency DeleteDeidentifyTemplate(
-      google::privacy::dlp::v2::DeleteDeidentifyTemplateRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteDeidentifyTemplate(google::privacy::dlp::v2::DeleteDeidentifyTemplateRequest const& request);
 
-  virtual google::cloud::Idempotency CreateJobTrigger(
-      google::privacy::dlp::v2::CreateJobTriggerRequest const& request);
+  virtual google::cloud::Idempotency
+  CreateJobTrigger(google::privacy::dlp::v2::CreateJobTriggerRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateJobTrigger(
-      google::privacy::dlp::v2::UpdateJobTriggerRequest const& request);
+  virtual google::cloud::Idempotency
+  UpdateJobTrigger(google::privacy::dlp::v2::UpdateJobTriggerRequest const& request);
 
-  virtual google::cloud::Idempotency HybridInspectJobTrigger(
-      google::privacy::dlp::v2::HybridInspectJobTriggerRequest const& request);
+  virtual google::cloud::Idempotency
+  HybridInspectJobTrigger(google::privacy::dlp::v2::HybridInspectJobTriggerRequest const& request);
 
-  virtual google::cloud::Idempotency GetJobTrigger(
-      google::privacy::dlp::v2::GetJobTriggerRequest const& request);
+  virtual google::cloud::Idempotency
+  GetJobTrigger(google::privacy::dlp::v2::GetJobTriggerRequest const& request);
 
-  virtual google::cloud::Idempotency ListJobTriggers(
-      google::privacy::dlp::v2::ListJobTriggersRequest request);
+  virtual google::cloud::Idempotency
+  ListJobTriggers(google::privacy::dlp::v2::ListJobTriggersRequest request);
 
-  virtual google::cloud::Idempotency DeleteJobTrigger(
-      google::privacy::dlp::v2::DeleteJobTriggerRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteJobTrigger(google::privacy::dlp::v2::DeleteJobTriggerRequest const& request);
 
-  virtual google::cloud::Idempotency ActivateJobTrigger(
-      google::privacy::dlp::v2::ActivateJobTriggerRequest const& request);
+  virtual google::cloud::Idempotency
+  ActivateJobTrigger(google::privacy::dlp::v2::ActivateJobTriggerRequest const& request);
 
-  virtual google::cloud::Idempotency CreateDiscoveryConfig(
-      google::privacy::dlp::v2::CreateDiscoveryConfigRequest const& request);
+  virtual google::cloud::Idempotency
+  CreateDiscoveryConfig(google::privacy::dlp::v2::CreateDiscoveryConfigRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateDiscoveryConfig(
-      google::privacy::dlp::v2::UpdateDiscoveryConfigRequest const& request);
+  virtual google::cloud::Idempotency
+  UpdateDiscoveryConfig(google::privacy::dlp::v2::UpdateDiscoveryConfigRequest const& request);
 
-  virtual google::cloud::Idempotency GetDiscoveryConfig(
-      google::privacy::dlp::v2::GetDiscoveryConfigRequest const& request);
+  virtual google::cloud::Idempotency
+  GetDiscoveryConfig(google::privacy::dlp::v2::GetDiscoveryConfigRequest const& request);
 
-  virtual google::cloud::Idempotency ListDiscoveryConfigs(
-      google::privacy::dlp::v2::ListDiscoveryConfigsRequest request);
+  virtual google::cloud::Idempotency
+  ListDiscoveryConfigs(google::privacy::dlp::v2::ListDiscoveryConfigsRequest request);
 
-  virtual google::cloud::Idempotency DeleteDiscoveryConfig(
-      google::privacy::dlp::v2::DeleteDiscoveryConfigRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteDiscoveryConfig(google::privacy::dlp::v2::DeleteDiscoveryConfigRequest const& request);
 
-  virtual google::cloud::Idempotency CreateDlpJob(
-      google::privacy::dlp::v2::CreateDlpJobRequest const& request);
+  virtual google::cloud::Idempotency
+  CreateDlpJob(google::privacy::dlp::v2::CreateDlpJobRequest const& request);
 
-  virtual google::cloud::Idempotency ListDlpJobs(
-      google::privacy::dlp::v2::ListDlpJobsRequest request);
+  virtual google::cloud::Idempotency
+  ListDlpJobs(google::privacy::dlp::v2::ListDlpJobsRequest request);
 
-  virtual google::cloud::Idempotency GetDlpJob(
-      google::privacy::dlp::v2::GetDlpJobRequest const& request);
+  virtual google::cloud::Idempotency
+  GetDlpJob(google::privacy::dlp::v2::GetDlpJobRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteDlpJob(
-      google::privacy::dlp::v2::DeleteDlpJobRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteDlpJob(google::privacy::dlp::v2::DeleteDlpJobRequest const& request);
 
-  virtual google::cloud::Idempotency CancelDlpJob(
-      google::privacy::dlp::v2::CancelDlpJobRequest const& request);
+  virtual google::cloud::Idempotency
+  CancelDlpJob(google::privacy::dlp::v2::CancelDlpJobRequest const& request);
 
-  virtual google::cloud::Idempotency CreateStoredInfoType(
-      google::privacy::dlp::v2::CreateStoredInfoTypeRequest const& request);
+  virtual google::cloud::Idempotency
+  CreateStoredInfoType(google::privacy::dlp::v2::CreateStoredInfoTypeRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateStoredInfoType(
-      google::privacy::dlp::v2::UpdateStoredInfoTypeRequest const& request);
+  virtual google::cloud::Idempotency
+  UpdateStoredInfoType(google::privacy::dlp::v2::UpdateStoredInfoTypeRequest const& request);
 
-  virtual google::cloud::Idempotency GetStoredInfoType(
-      google::privacy::dlp::v2::GetStoredInfoTypeRequest const& request);
+  virtual google::cloud::Idempotency
+  GetStoredInfoType(google::privacy::dlp::v2::GetStoredInfoTypeRequest const& request);
 
-  virtual google::cloud::Idempotency ListStoredInfoTypes(
-      google::privacy::dlp::v2::ListStoredInfoTypesRequest request);
+  virtual google::cloud::Idempotency
+  ListStoredInfoTypes(google::privacy::dlp::v2::ListStoredInfoTypesRequest request);
 
-  virtual google::cloud::Idempotency DeleteStoredInfoType(
-      google::privacy::dlp::v2::DeleteStoredInfoTypeRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteStoredInfoType(google::privacy::dlp::v2::DeleteStoredInfoTypeRequest const& request);
 
-  virtual google::cloud::Idempotency ListProjectDataProfiles(
-      google::privacy::dlp::v2::ListProjectDataProfilesRequest request);
+  virtual google::cloud::Idempotency
+  ListProjectDataProfiles(google::privacy::dlp::v2::ListProjectDataProfilesRequest request);
 
-  virtual google::cloud::Idempotency ListTableDataProfiles(
-      google::privacy::dlp::v2::ListTableDataProfilesRequest request);
+  virtual google::cloud::Idempotency
+  ListTableDataProfiles(google::privacy::dlp::v2::ListTableDataProfilesRequest request);
 
-  virtual google::cloud::Idempotency ListColumnDataProfiles(
-      google::privacy::dlp::v2::ListColumnDataProfilesRequest request);
+  virtual google::cloud::Idempotency
+  ListColumnDataProfiles(google::privacy::dlp::v2::ListColumnDataProfilesRequest request);
 
-  virtual google::cloud::Idempotency GetProjectDataProfile(
-      google::privacy::dlp::v2::GetProjectDataProfileRequest const& request);
+  virtual google::cloud::Idempotency
+  GetProjectDataProfile(google::privacy::dlp::v2::GetProjectDataProfileRequest const& request);
 
-  virtual google::cloud::Idempotency ListFileStoreDataProfiles(
-      google::privacy::dlp::v2::ListFileStoreDataProfilesRequest request);
+  virtual google::cloud::Idempotency
+  ListFileStoreDataProfiles(google::privacy::dlp::v2::ListFileStoreDataProfilesRequest request);
 
-  virtual google::cloud::Idempotency GetFileStoreDataProfile(
-      google::privacy::dlp::v2::GetFileStoreDataProfileRequest const& request);
+  virtual google::cloud::Idempotency
+  GetFileStoreDataProfile(google::privacy::dlp::v2::GetFileStoreDataProfileRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteFileStoreDataProfile(
-      google::privacy::dlp::v2::DeleteFileStoreDataProfileRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  DeleteFileStoreDataProfile(google::privacy::dlp::v2::DeleteFileStoreDataProfileRequest const& request);
 
-  virtual google::cloud::Idempotency GetTableDataProfile(
-      google::privacy::dlp::v2::GetTableDataProfileRequest const& request);
+  virtual google::cloud::Idempotency
+  GetTableDataProfile(google::privacy::dlp::v2::GetTableDataProfileRequest const& request);
 
-  virtual google::cloud::Idempotency GetColumnDataProfile(
-      google::privacy::dlp::v2::GetColumnDataProfileRequest const& request);
+  virtual google::cloud::Idempotency
+  GetColumnDataProfile(google::privacy::dlp::v2::GetColumnDataProfileRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteTableDataProfile(
-      google::privacy::dlp::v2::DeleteTableDataProfileRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteTableDataProfile(google::privacy::dlp::v2::DeleteTableDataProfileRequest const& request);
 
-  virtual google::cloud::Idempotency HybridInspectDlpJob(
-      google::privacy::dlp::v2::HybridInspectDlpJobRequest const& request);
+  virtual google::cloud::Idempotency
+  HybridInspectDlpJob(google::privacy::dlp::v2::HybridInspectDlpJobRequest const& request);
 
-  virtual google::cloud::Idempotency FinishDlpJob(
-      google::privacy::dlp::v2::FinishDlpJobRequest const& request);
+  virtual google::cloud::Idempotency
+  FinishDlpJob(google::privacy::dlp::v2::FinishDlpJobRequest const& request);
 
-  virtual google::cloud::Idempotency CreateConnection(
-      google::privacy::dlp::v2::CreateConnectionRequest const& request);
+  virtual google::cloud::Idempotency
+  CreateConnection(google::privacy::dlp::v2::CreateConnectionRequest const& request);
 
-  virtual google::cloud::Idempotency GetConnection(
-      google::privacy::dlp::v2::GetConnectionRequest const& request);
+  virtual google::cloud::Idempotency
+  GetConnection(google::privacy::dlp::v2::GetConnectionRequest const& request);
 
-  virtual google::cloud::Idempotency ListConnections(
-      google::privacy::dlp::v2::ListConnectionsRequest request);
+  virtual google::cloud::Idempotency
+  ListConnections(google::privacy::dlp::v2::ListConnectionsRequest request);
 
-  virtual google::cloud::Idempotency SearchConnections(
-      google::privacy::dlp::v2::SearchConnectionsRequest request);
+  virtual google::cloud::Idempotency
+  SearchConnections(google::privacy::dlp::v2::SearchConnectionsRequest request);
 
-  virtual google::cloud::Idempotency DeleteConnection(
-      google::privacy::dlp::v2::DeleteConnectionRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteConnection(google::privacy::dlp::v2::DeleteConnectionRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateConnection(
-      google::privacy::dlp::v2::UpdateConnectionRequest const& request);
+  virtual google::cloud::Idempotency
+  UpdateConnection(google::privacy::dlp::v2::UpdateConnectionRequest const& request);
 };
 
 std::unique_ptr<DlpServiceConnectionIdempotencyPolicy>
-MakeDefaultDlpServiceConnectionIdempotencyPolicy();
+    MakeDefaultDlpServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dlp_v2

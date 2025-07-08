@@ -36,18 +36,18 @@ class IAMPolicyConnectionIdempotencyPolicy {
   /// Create a new copy of this object.
   virtual std::unique_ptr<IAMPolicyConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request);
+  virtual google::cloud::Idempotency
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
 };
 
 std::unique_ptr<IAMPolicyConnectionIdempotencyPolicy>
-MakeDefaultIAMPolicyConnectionIdempotencyPolicy();
+    MakeDefaultIAMPolicyConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace iam_v1

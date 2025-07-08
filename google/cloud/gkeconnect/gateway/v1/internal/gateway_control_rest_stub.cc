@@ -36,31 +36,25 @@ DefaultGatewayControlRestStub::DefaultGatewayControlRestStub(Options options)
       options_(std::move(options)) {}
 
 DefaultGatewayControlRestStub::DefaultGatewayControlRestStub(
-    std::shared_ptr<rest_internal::RestClient> service, Options options)
-    : service_(std::move(service)), options_(std::move(options)) {}
+    std::shared_ptr<rest_internal::RestClient> service,
+    Options options)
+    : service_(std::move(service)),
+      options_(std::move(options)) {}
 
 StatusOr<google::cloud::gkeconnect::gateway::v1::GenerateCredentialsResponse>
 DefaultGatewayControlRestStub::GenerateCredentials(
-    google::cloud::rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::gkeconnect::gateway::v1::GenerateCredentialsRequest const&
-        request) {
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::gkeconnect::gateway::v1::GenerateCredentialsRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params.push_back(
-      {"force_use_agent", (request.force_use_agent() ? "1" : "0")});
+  query_params.push_back({"force_use_agent", (request.force_use_agent() ? "1" : "0")});
   query_params.push_back({"version", request.version()});
-  query_params.push_back(
-      {"kubernetes_namespace", request.kubernetes_namespace()});
-  query_params.push_back(
-      {"operating_system", std::to_string(request.operating_system())});
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
-  return rest_internal::Get<
-      google::cloud::gkeconnect::gateway::v1::GenerateCredentialsResponse>(
+  query_params.push_back({"kubernetes_namespace", request.kubernetes_namespace()});
+  query_params.push_back({"operating_system", std::to_string(request.operating_system())});
+  query_params = rest_internal::TrimEmptyQueryParameters(std::move(query_params));
+  return rest_internal::Get<google::cloud::gkeconnect::gateway::v1::GenerateCredentialsResponse>(
       *service_, rest_context, request, false,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   request.name(), ":generateCredentials"),
-      std::move(query_params));
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/", request.name(), ":generateCredentials"), std::move(query_params));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

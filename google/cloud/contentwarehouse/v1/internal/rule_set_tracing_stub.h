@@ -39,38 +39,38 @@ class RuleSetServiceTracingStub : public RuleSetServiceStub {
   explicit RuleSetServiceTracingStub(std::shared_ptr<RuleSetServiceStub> child);
 
   StatusOr<google::cloud::contentwarehouse::v1::RuleSet> CreateRuleSet(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::contentwarehouse::v1::CreateRuleSetRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::contentwarehouse::v1::CreateRuleSetRequest const& request) override;
 
   StatusOr<google::cloud::contentwarehouse::v1::RuleSet> GetRuleSet(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::contentwarehouse::v1::GetRuleSetRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::contentwarehouse::v1::GetRuleSetRequest const& request) override;
 
   StatusOr<google::cloud::contentwarehouse::v1::RuleSet> UpdateRuleSet(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::contentwarehouse::v1::UpdateRuleSetRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::contentwarehouse::v1::UpdateRuleSetRequest const& request) override;
 
   Status DeleteRuleSet(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::contentwarehouse::v1::DeleteRuleSetRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::contentwarehouse::v1::DeleteRuleSetRequest const& request) override;
 
-  StatusOr<google::cloud::contentwarehouse::v1::ListRuleSetsResponse>
-  ListRuleSets(grpc::ClientContext& context, Options const& options,
-               google::cloud::contentwarehouse::v1::ListRuleSetsRequest const&
-                   request) override;
+  StatusOr<google::cloud::contentwarehouse::v1::ListRuleSetsResponse> ListRuleSets(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::contentwarehouse::v1::ListRuleSetsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
  private:
   std::shared_ptr<RuleSetServiceStub> child_;
-  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
-      propagator_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

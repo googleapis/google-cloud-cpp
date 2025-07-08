@@ -46,166 +46,168 @@ PolicyTagManagerMetadata::PolicyTagManagerMetadata(
 
 StatusOr<google::cloud::datacatalog::v1::Taxonomy>
 PolicyTagManagerMetadata::CreateTaxonomy(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::datacatalog::v1::CreateTaxonomyRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateTaxonomy(context, options, request);
 }
 
-Status PolicyTagManagerMetadata::DeleteTaxonomy(
-    grpc::ClientContext& context, Options const& options,
+Status
+PolicyTagManagerMetadata::DeleteTaxonomy(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::datacatalog::v1::DeleteTaxonomyRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteTaxonomy(context, options, request);
 }
 
 StatusOr<google::cloud::datacatalog::v1::Taxonomy>
 PolicyTagManagerMetadata::UpdateTaxonomy(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::datacatalog::v1::UpdateTaxonomyRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("taxonomy.name=",
-                           internal::UrlEncode(request.taxonomy().name())));
+  SetMetadata(context, options, absl::StrCat("taxonomy.name=", internal::UrlEncode(request.taxonomy().name())));
   return child_->UpdateTaxonomy(context, options, request);
 }
 
 StatusOr<google::cloud::datacatalog::v1::ListTaxonomiesResponse>
 PolicyTagManagerMetadata::ListTaxonomies(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::datacatalog::v1::ListTaxonomiesRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListTaxonomies(context, options, request);
 }
 
 StatusOr<google::cloud::datacatalog::v1::Taxonomy>
 PolicyTagManagerMetadata::GetTaxonomy(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::datacatalog::v1::GetTaxonomyRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetTaxonomy(context, options, request);
 }
 
 StatusOr<google::cloud::datacatalog::v1::PolicyTag>
 PolicyTagManagerMetadata::CreatePolicyTag(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::datacatalog::v1::CreatePolicyTagRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreatePolicyTag(context, options, request);
 }
 
-Status PolicyTagManagerMetadata::DeletePolicyTag(
-    grpc::ClientContext& context, Options const& options,
+Status
+PolicyTagManagerMetadata::DeletePolicyTag(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::datacatalog::v1::DeletePolicyTagRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeletePolicyTag(context, options, request);
 }
 
 StatusOr<google::cloud::datacatalog::v1::PolicyTag>
 PolicyTagManagerMetadata::UpdatePolicyTag(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::datacatalog::v1::UpdatePolicyTagRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("policy_tag.name=",
-                           internal::UrlEncode(request.policy_tag().name())));
+  SetMetadata(context, options, absl::StrCat("policy_tag.name=", internal::UrlEncode(request.policy_tag().name())));
   return child_->UpdatePolicyTag(context, options, request);
 }
 
 StatusOr<google::cloud::datacatalog::v1::ListPolicyTagsResponse>
 PolicyTagManagerMetadata::ListPolicyTags(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::datacatalog::v1::ListPolicyTagsRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListPolicyTags(context, options, request);
 }
 
 StatusOr<google::cloud::datacatalog::v1::PolicyTag>
 PolicyTagManagerMetadata::GetPolicyTag(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::datacatalog::v1::GetPolicyTagRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetPolicyTag(context, options, request);
 }
 
-StatusOr<google::iam::v1::Policy> PolicyTagManagerMetadata::GetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::iam::v1::Policy>
+PolicyTagManagerMetadata::GetIamPolicy(
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
-  SetMetadata(
-      context, options,
-      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
+  SetMetadata(context, options, absl::StrCat("resource=", internal::UrlEncode(request.resource())));
   return child_->GetIamPolicy(context, options, request);
 }
 
-StatusOr<google::iam::v1::Policy> PolicyTagManagerMetadata::SetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::iam::v1::Policy>
+PolicyTagManagerMetadata::SetIamPolicy(
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
-  SetMetadata(
-      context, options,
-      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
+  SetMetadata(context, options, absl::StrCat("resource=", internal::UrlEncode(request.resource())));
   return child_->SetIamPolicy(context, options, request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 PolicyTagManagerMetadata::TestIamPermissions(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  SetMetadata(
-      context, options,
-      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
+  SetMetadata(context, options, absl::StrCat("resource=", internal::UrlEncode(request.resource())));
   return child_->TestIamPermissions(context, options, request);
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
 PolicyTagManagerMetadata::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ListOperations(context, options, request);
 }
 
-StatusOr<google::longrunning::Operation> PolicyTagManagerMetadata::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::Operation>
+PolicyTagManagerMetadata::GetOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetOperation(context, options, request);
 }
 
-Status PolicyTagManagerMetadata::DeleteOperation(
-    grpc::ClientContext& context, Options const& options,
+Status
+PolicyTagManagerMetadata::DeleteOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteOperation(context, options, request);
 }
 
-Status PolicyTagManagerMetadata::CancelOperation(
-    grpc::ClientContext& context, Options const& options,
+Status
+PolicyTagManagerMetadata::CancelOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->CancelOperation(context, options, request);
 }
 
 void PolicyTagManagerMetadata::SetMetadata(grpc::ClientContext& context,
-                                           Options const& options,
-                                           std::string const& request_params) {
+                                        Options const& options,
+                                        std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
 void PolicyTagManagerMetadata::SetMetadata(grpc::ClientContext& context,
-                                           Options const& options) {
-  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
-                                       api_client_header_);
+                                        Options const& options) {
+  google::cloud::internal::SetMetadata(
+      context, options, fixed_metadata_, api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

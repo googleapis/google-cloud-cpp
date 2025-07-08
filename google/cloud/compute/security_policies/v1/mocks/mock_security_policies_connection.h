@@ -42,8 +42,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockSecurityPoliciesConnection
-    : public compute_security_policies_v1::SecurityPoliciesConnection {
+class MockSecurityPoliciesConnection : public compute_security_policies_v1::SecurityPoliciesConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
@@ -52,15 +51,12 @@ class MockSecurityPoliciesConnection
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// AddRule(Matcher<google::cloud::cpp::compute::security_policies::v1::AddRuleRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, AddRule(Matcher<google::cloud::cpp::compute::security_policies::v1::AddRuleRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::cpp::compute::v1::Operation>>, AddRule,
-      (google::cloud::cpp::compute::security_policies::v1::AddRuleRequest const&
-           request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  AddRule,
+  (google::cloud::cpp::compute::security_policies::v1::AddRuleRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -68,48 +64,37 @@ class MockSecurityPoliciesConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, AddRule(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::Operation>, AddRule,
-      (NoAwaitTag,
-       google::cloud::cpp::compute::security_policies::v1::AddRuleRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+  AddRule, (NoAwaitTag,
+    google::cloud::cpp::compute::security_policies::v1::AddRuleRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// AddRule(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
+  /// EXPECT_CALL(*mock, AddRule(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              AddRule,
-              (google::cloud::cpp::compute::v1::Operation const& operation),
-              (override));
+  AddRule, (
+    google::cloud::cpp::compute::v1::Operation const& operation), (override));
 
-  MOCK_METHOD(
-      (StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::
-                                              SecurityPoliciesScopedList>>),
-      AggregatedListSecurityPolicies,
-      (google::cloud::cpp::compute::security_policies::v1::
-           AggregatedListSecurityPoliciesRequest request),
-      (override));
+  MOCK_METHOD((StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::SecurityPoliciesScopedList>>),
+  AggregatedListSecurityPolicies,
+  (google::cloud::cpp::compute::security_policies::v1::AggregatedListSecurityPoliciesRequest request), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteSecurityPolicy(Matcher<google::cloud::cpp::compute::security_policies::v1::DeleteSecurityPolicyRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteSecurityPolicy(Matcher<google::cloud::cpp::compute::security_policies::v1::DeleteSecurityPolicyRequest const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              DeleteSecurityPolicy,
-              (google::cloud::cpp::compute::security_policies::v1::
-                   DeleteSecurityPolicyRequest const& request),
-              (override));
+  DeleteSecurityPolicy,
+  (google::cloud::cpp::compute::security_policies::v1::DeleteSecurityPolicyRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -118,51 +103,40 @@ class MockSecurityPoliciesConnection
   /// EXPECT_CALL(*mock, DeleteSecurityPolicy(_, _))
   /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-              DeleteSecurityPolicy,
-              (NoAwaitTag, google::cloud::cpp::compute::security_policies::v1::
-                               DeleteSecurityPolicyRequest const& request),
-              (override));
+  DeleteSecurityPolicy, (NoAwaitTag,
+    google::cloud::cpp::compute::security_policies::v1::DeleteSecurityPolicyRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteSecurityPolicy(Matcher<google::cloud::cpp::compute::v1::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteSecurityPolicy(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              DeleteSecurityPolicy,
-              (google::cloud::cpp::compute::v1::Operation const& operation),
-              (override));
+  DeleteSecurityPolicy, (
+    google::cloud::cpp::compute::v1::Operation const& operation), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::SecurityPolicy>,
-              GetSecurityPolicy,
-              (google::cloud::cpp::compute::security_policies::v1::
-                   GetSecurityPolicyRequest const& request),
-              (override));
+  GetSecurityPolicy,
+  (google::cloud::cpp::compute::security_policies::v1::GetSecurityPolicyRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::SecurityPolicyRule>, GetRule,
-      (google::cloud::cpp::compute::security_policies::v1::GetRuleRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::SecurityPolicyRule>,
+  GetRule,
+  (google::cloud::cpp::compute::security_policies::v1::GetRuleRequest const& request), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// InsertSecurityPolicy(Matcher<google::cloud::cpp::compute::security_policies::v1::InsertSecurityPolicyRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, InsertSecurityPolicy(Matcher<google::cloud::cpp::compute::security_policies::v1::InsertSecurityPolicyRequest const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              InsertSecurityPolicy,
-              (google::cloud::cpp::compute::security_policies::v1::
-                   InsertSecurityPolicyRequest const& request),
-              (override));
+  InsertSecurityPolicy,
+  (google::cloud::cpp::compute::security_policies::v1::InsertSecurityPolicyRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -171,53 +145,40 @@ class MockSecurityPoliciesConnection
   /// EXPECT_CALL(*mock, InsertSecurityPolicy(_, _))
   /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-              InsertSecurityPolicy,
-              (NoAwaitTag, google::cloud::cpp::compute::security_policies::v1::
-                               InsertSecurityPolicyRequest const& request),
-              (override));
+  InsertSecurityPolicy, (NoAwaitTag,
+    google::cloud::cpp::compute::security_policies::v1::InsertSecurityPolicyRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// InsertSecurityPolicy(Matcher<google::cloud::cpp::compute::v1::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, InsertSecurityPolicy(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              InsertSecurityPolicy,
-              (google::cloud::cpp::compute::v1::Operation const& operation),
-              (override));
+  InsertSecurityPolicy, (
+    google::cloud::cpp::compute::v1::Operation const& operation), (override));
 
   MOCK_METHOD((StreamRange<google::cloud::cpp::compute::v1::SecurityPolicy>),
-              ListSecurityPolicies,
-              (google::cloud::cpp::compute::security_policies::v1::
-                   ListSecurityPoliciesRequest request),
-              (override));
+  ListSecurityPolicies,
+  (google::cloud::cpp::compute::security_policies::v1::ListSecurityPoliciesRequest request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::
-                   SecurityPoliciesListPreconfiguredExpressionSetsResponse>,
-      ListPreconfiguredExpressionSets,
-      (google::cloud::cpp::compute::security_policies::v1::
-           ListPreconfiguredExpressionSetsRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::SecurityPoliciesListPreconfiguredExpressionSetsResponse>,
+  ListPreconfiguredExpressionSets,
+  (google::cloud::cpp::compute::security_policies::v1::ListPreconfiguredExpressionSetsRequest const& request), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// PatchSecurityPolicy(Matcher<google::cloud::cpp::compute::security_policies::v1::PatchSecurityPolicyRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, PatchSecurityPolicy(Matcher<google::cloud::cpp::compute::security_policies::v1::PatchSecurityPolicyRequest const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              PatchSecurityPolicy,
-              (google::cloud::cpp::compute::security_policies::v1::
-                   PatchSecurityPolicyRequest const& request),
-              (override));
+  PatchSecurityPolicy,
+  (google::cloud::cpp::compute::security_policies::v1::PatchSecurityPolicyRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -226,39 +187,32 @@ class MockSecurityPoliciesConnection
   /// EXPECT_CALL(*mock, PatchSecurityPolicy(_, _))
   /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-              PatchSecurityPolicy,
-              (NoAwaitTag, google::cloud::cpp::compute::security_policies::v1::
-                               PatchSecurityPolicyRequest const& request),
-              (override));
+  PatchSecurityPolicy, (NoAwaitTag,
+    google::cloud::cpp::compute::security_policies::v1::PatchSecurityPolicyRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// PatchSecurityPolicy(Matcher<google::cloud::cpp::compute::v1::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, PatchSecurityPolicy(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              PatchSecurityPolicy,
-              (google::cloud::cpp::compute::v1::Operation const& operation),
-              (override));
+  PatchSecurityPolicy, (
+    google::cloud::cpp::compute::v1::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// PatchRule(Matcher<google::cloud::cpp::compute::security_policies::v1::PatchRuleRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, PatchRule(Matcher<google::cloud::cpp::compute::security_policies::v1::PatchRuleRequest const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              PatchRule,
-              (google::cloud::cpp::compute::security_policies::v1::
-                   PatchRuleRequest const& request),
-              (override));
+  PatchRule,
+  (google::cloud::cpp::compute::security_policies::v1::PatchRuleRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -266,38 +220,33 @@ class MockSecurityPoliciesConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, PatchRule(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>, PatchRule,
-              (NoAwaitTag, google::cloud::cpp::compute::security_policies::v1::
-                               PatchRuleRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+  PatchRule, (NoAwaitTag,
+    google::cloud::cpp::compute::security_policies::v1::PatchRuleRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// PatchRule(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
+  /// EXPECT_CALL(*mock, PatchRule(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              PatchRule,
-              (google::cloud::cpp::compute::v1::Operation const& operation),
-              (override));
+  PatchRule, (
+    google::cloud::cpp::compute::v1::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// RemoveRule(Matcher<google::cloud::cpp::compute::security_policies::v1::RemoveRuleRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, RemoveRule(Matcher<google::cloud::cpp::compute::security_policies::v1::RemoveRuleRequest const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              RemoveRule,
-              (google::cloud::cpp::compute::security_policies::v1::
-                   RemoveRuleRequest const& request),
-              (override));
+  RemoveRule,
+  (google::cloud::cpp::compute::security_policies::v1::RemoveRuleRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -305,38 +254,33 @@ class MockSecurityPoliciesConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, RemoveRule(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>, RemoveRule,
-              (NoAwaitTag, google::cloud::cpp::compute::security_policies::v1::
-                               RemoveRuleRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+  RemoveRule, (NoAwaitTag,
+    google::cloud::cpp::compute::security_policies::v1::RemoveRuleRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// RemoveRule(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
+  /// EXPECT_CALL(*mock, RemoveRule(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              RemoveRule,
-              (google::cloud::cpp::compute::v1::Operation const& operation),
-              (override));
+  RemoveRule, (
+    google::cloud::cpp::compute::v1::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// SetLabels(Matcher<google::cloud::cpp::compute::security_policies::v1::SetLabelsRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, SetLabels(Matcher<google::cloud::cpp::compute::security_policies::v1::SetLabelsRequest const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              SetLabels,
-              (google::cloud::cpp::compute::security_policies::v1::
-                   SetLabelsRequest const& request),
-              (override));
+  SetLabels,
+  (google::cloud::cpp::compute::security_policies::v1::SetLabelsRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -344,23 +288,21 @@ class MockSecurityPoliciesConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, SetLabels(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>, SetLabels,
-              (NoAwaitTag, google::cloud::cpp::compute::security_policies::v1::
-                               SetLabelsRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+  SetLabels, (NoAwaitTag,
+    google::cloud::cpp::compute::security_policies::v1::SetLabelsRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// SetLabels(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
+  /// EXPECT_CALL(*mock, SetLabels(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              SetLabels,
-              (google::cloud::cpp::compute::v1::Operation const& operation),
-              (override));
+  SetLabels, (
+    google::cloud::cpp::compute::v1::Operation const& operation), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

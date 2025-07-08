@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPEECH_V1_INTERNAL_SPEECH_AUTH_DECORATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPEECH_V1_INTERNAL_SPEECH_AUTH_DECORATOR_H
 
-#include "google/cloud/speech/v1/internal/speech_stub.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/speech/v1/internal/speech_stub.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
@@ -40,20 +40,20 @@ class SpeechAuth : public SpeechStub {
       std::shared_ptr<SpeechStub> child);
 
   StatusOr<google::cloud::speech::v1::RecognizeResponse> Recognize(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::speech::v1::RecognizeRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncLongRunningRecognize(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::speech::v1::LongRunningRecognizeRequest const& request)
-      override;
+      google::cloud::speech::v1::LongRunningRecognizeRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> LongRunningRecognize(
-      grpc::ClientContext& context, Options options,
-      google::cloud::speech::v1::LongRunningRecognizeRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::speech::v1::LongRunningRecognizeRequest const& request) override;
 
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::speech::v1::StreamingRecognizeRequest,
@@ -64,11 +64,13 @@ class SpeechAuth : public SpeechStub {
       google::cloud::internal::ImmutableOptions options) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(

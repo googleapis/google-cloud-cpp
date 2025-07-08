@@ -32,9 +32,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * Application developers may want to test their code with simulated responses,
  * including errors, from an object of type `SynonymSetServiceClient`. To do so,
- * construct an object of type `SynonymSetServiceClient` with an instance of
- * this class. Then use the Google Test framework functions to program the
- * behavior of this mock.
+ * construct an object of type `SynonymSetServiceClient` with an instance of this
+ * class. Then use the Google Test framework functions to program the behavior
+ * of this mock.
  *
  * @see [This example][bq-mock] for how to test your application with GoogleTest.
  * While the example showcases types from the BigQuery library, the underlying
@@ -42,46 +42,33 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockSynonymSetServiceConnection
-    : public contentwarehouse_v1::SynonymSetServiceConnection {
+class MockSynonymSetServiceConnection : public contentwarehouse_v1::SynonymSetServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::contentwarehouse::v1::SynonymSet>,
-      CreateSynonymSet,
-      (google::cloud::contentwarehouse::v1::CreateSynonymSetRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::contentwarehouse::v1::SynonymSet>,
+  CreateSynonymSet,
+  (google::cloud::contentwarehouse::v1::CreateSynonymSetRequest const& request), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::contentwarehouse::v1::SynonymSet>,
-              GetSynonymSet,
-              (google::cloud::contentwarehouse::v1::GetSynonymSetRequest const&
-                   request),
-              (override));
+  GetSynonymSet,
+  (google::cloud::contentwarehouse::v1::GetSynonymSetRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::contentwarehouse::v1::SynonymSet>,
-      UpdateSynonymSet,
-      (google::cloud::contentwarehouse::v1::UpdateSynonymSetRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::contentwarehouse::v1::SynonymSet>,
+  UpdateSynonymSet,
+  (google::cloud::contentwarehouse::v1::UpdateSynonymSetRequest const& request), (override));
 
-  MOCK_METHOD(
-      Status, DeleteSynonymSet,
-      (google::cloud::contentwarehouse::v1::DeleteSynonymSetRequest const&
-           request),
-      (override));
+  MOCK_METHOD(Status,
+  DeleteSynonymSet,
+  (google::cloud::contentwarehouse::v1::DeleteSynonymSetRequest const& request), (override));
 
-  MOCK_METHOD(
-      (StreamRange<google::cloud::contentwarehouse::v1::SynonymSet>),
-      ListSynonymSets,
-      (google::cloud::contentwarehouse::v1::ListSynonymSetsRequest request),
-      (override));
+  MOCK_METHOD((StreamRange<google::cloud::contentwarehouse::v1::SynonymSet>),
+  ListSynonymSets,
+  (google::cloud::contentwarehouse::v1::ListSynonymSetsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
-              (google::longrunning::GetOperationRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  GetOperation,
+  (google::longrunning::GetOperationRequest const& request), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

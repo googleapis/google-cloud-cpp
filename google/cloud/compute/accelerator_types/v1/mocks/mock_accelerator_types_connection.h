@@ -42,30 +42,21 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockAcceleratorTypesConnection
-    : public compute_accelerator_types_v1::AcceleratorTypesConnection {
+class MockAcceleratorTypesConnection : public compute_accelerator_types_v1::AcceleratorTypesConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(
-      (StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::
-                                              AcceleratorTypesScopedList>>),
-      AggregatedListAcceleratorTypes,
-      (google::cloud::cpp::compute::accelerator_types::v1::
-           AggregatedListAcceleratorTypesRequest request),
-      (override));
+  MOCK_METHOD((StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::AcceleratorTypesScopedList>>),
+  AggregatedListAcceleratorTypes,
+  (google::cloud::cpp::compute::accelerator_types::v1::AggregatedListAcceleratorTypesRequest request), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::AcceleratorType>,
-              GetAcceleratorType,
-              (google::cloud::cpp::compute::accelerator_types::v1::
-                   GetAcceleratorTypeRequest const& request),
-              (override));
+  GetAcceleratorType,
+  (google::cloud::cpp::compute::accelerator_types::v1::GetAcceleratorTypeRequest const& request), (override));
 
   MOCK_METHOD((StreamRange<google::cloud::cpp::compute::v1::AcceleratorType>),
-              ListAcceleratorTypes,
-              (google::cloud::cpp::compute::accelerator_types::v1::
-                   ListAcceleratorTypesRequest request),
-              (override));
+  ListAcceleratorTypes,
+  (google::cloud::cpp::compute::accelerator_types::v1::ListAcceleratorTypesRequest request), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

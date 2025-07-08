@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_OSCONFIG_AGENTENDPOINT_V1_INTERNAL_AGENT_ENDPOINT_STUB_FACTORY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_OSCONFIG_AGENTENDPOINT_V1_INTERNAL_AGENT_ENDPOINT_STUB_FACTORY_H
 
-#include "google/cloud/osconfig/agentendpoint/v1/internal/agent_endpoint_stub.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/options.h"
+#include "google/cloud/osconfig/agentendpoint/v1/internal/agent_endpoint_stub.h"
 #include "google/cloud/version.h"
 #include <memory>
 

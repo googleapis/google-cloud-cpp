@@ -40,41 +40,44 @@ namespace cloud {
 namespace appengine_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class ServicesConnectionImpl : public appengine_v1::ServicesConnection {
+class ServicesConnectionImpl
+    : public appengine_v1::ServicesConnection {
  public:
   ~ServicesConnectionImpl() override = default;
 
   ServicesConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<appengine_v1_internal::ServicesStub> stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<appengine_v1_internal::ServicesStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
-  StreamRange<google::appengine::v1::Service> ListServices(
-      google::appengine::v1::ListServicesRequest request) override;
+  StreamRange<google::appengine::v1::Service>
+  ListServices(google::appengine::v1::ListServicesRequest request) override;
 
-  StatusOr<google::appengine::v1::Service> GetService(
-      google::appengine::v1::GetServiceRequest const& request) override;
+  StatusOr<google::appengine::v1::Service>
+  GetService(google::appengine::v1::GetServiceRequest const& request) override;
 
-  future<StatusOr<google::appengine::v1::Service>> UpdateService(
+  future<StatusOr<google::appengine::v1::Service>>
+  UpdateService(google::appengine::v1::UpdateServiceRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  UpdateService(NoAwaitTag,
       google::appengine::v1::UpdateServiceRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> UpdateService(
-      NoAwaitTag,
-      google::appengine::v1::UpdateServiceRequest const& request) override;
-
-  future<StatusOr<google::appengine::v1::Service>> UpdateService(
+  future<StatusOr<google::appengine::v1::Service>>
+  UpdateService(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::appengine::v1::OperationMetadataV1>> DeleteService(
+  future<StatusOr<google::appengine::v1::OperationMetadataV1>>
+  DeleteService(google::appengine::v1::DeleteServiceRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  DeleteService(NoAwaitTag,
       google::appengine::v1::DeleteServiceRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> DeleteService(
-      NoAwaitTag,
-      google::appengine::v1::DeleteServiceRequest const& request) override;
-
-  future<StatusOr<google::appengine::v1::OperationMetadataV1>> DeleteService(
+  future<StatusOr<google::appengine::v1::OperationMetadataV1>>
+  DeleteService(
       google::longrunning::Operation const& operation) override;
 
  private:

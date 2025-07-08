@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAM_CREDENTIALS_V1_IAM_CREDENTIALS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAM_CREDENTIALS_V1_IAM_CREDENTIALS_CONNECTION_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/iam/credentials/v1/iam_credentials_connection_idempotency_policy.h"
 #include "google/cloud/iam/credentials/v1/internal/iam_credentials_retry_traits.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -51,8 +51,7 @@ class IAMCredentialsRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class IAMCredentialsLimitedErrorCountRetryPolicy
-    : public IAMCredentialsRetryPolicy {
+class IAMCredentialsLimitedErrorCountRetryPolicy : public IAMCredentialsRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -62,14 +61,14 @@ class IAMCredentialsLimitedErrorCountRetryPolicy
    *     @p maximum_failures == 0.
    */
   explicit IAMCredentialsLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   IAMCredentialsLimitedErrorCountRetryPolicy(
       IAMCredentialsLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : IAMCredentialsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : IAMCredentialsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   IAMCredentialsLimitedErrorCountRetryPolicy(
       IAMCredentialsLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : IAMCredentialsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : IAMCredentialsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -89,9 +88,7 @@ class IAMCredentialsLimitedErrorCountRetryPolicy
   using BaseType = IAMCredentialsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      iam_credentials_v1_internal::IAMCredentialsRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<iam_credentials_v1_internal::IAMCredentialsRetryTraits> impl_;
 };
 
 /**
@@ -129,14 +126,12 @@ class IAMCredentialsLimitedTimeRetryPolicy : public IAMCredentialsRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit IAMCredentialsLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  IAMCredentialsLimitedTimeRetryPolicy(
-      IAMCredentialsLimitedTimeRetryPolicy&& rhs) noexcept
-      : IAMCredentialsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  IAMCredentialsLimitedTimeRetryPolicy(
-      IAMCredentialsLimitedTimeRetryPolicy const& rhs) noexcept
-      : IAMCredentialsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  IAMCredentialsLimitedTimeRetryPolicy(IAMCredentialsLimitedTimeRetryPolicy&& rhs) noexcept
+    : IAMCredentialsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  IAMCredentialsLimitedTimeRetryPolicy(IAMCredentialsLimitedTimeRetryPolicy const& rhs) noexcept
+    : IAMCredentialsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -158,9 +153,7 @@ class IAMCredentialsLimitedTimeRetryPolicy : public IAMCredentialsRetryPolicy {
   using BaseType = IAMCredentialsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      iam_credentials_v1_internal::IAMCredentialsRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<iam_credentials_v1_internal::IAMCredentialsRetryTraits> impl_;
 };
 
 /**
@@ -182,18 +175,16 @@ class IAMCredentialsConnection {
   virtual Options options() { return Options{}; }
 
   virtual StatusOr<google::iam::credentials::v1::GenerateAccessTokenResponse>
-  GenerateAccessToken(
-      google::iam::credentials::v1::GenerateAccessTokenRequest const& request);
+  GenerateAccessToken(google::iam::credentials::v1::GenerateAccessTokenRequest const& request);
 
   virtual StatusOr<google::iam::credentials::v1::GenerateIdTokenResponse>
-  GenerateIdToken(
-      google::iam::credentials::v1::GenerateIdTokenRequest const& request);
+  GenerateIdToken(google::iam::credentials::v1::GenerateIdTokenRequest const& request);
 
-  virtual StatusOr<google::iam::credentials::v1::SignBlobResponse> SignBlob(
-      google::iam::credentials::v1::SignBlobRequest const& request);
+  virtual StatusOr<google::iam::credentials::v1::SignBlobResponse>
+  SignBlob(google::iam::credentials::v1::SignBlobRequest const& request);
 
-  virtual StatusOr<google::iam::credentials::v1::SignJwtResponse> SignJwt(
-      google::iam::credentials::v1::SignJwtRequest const& request);
+  virtual StatusOr<google::iam::credentials::v1::SignJwtResponse>
+  SignJwt(google::iam::credentials::v1::SignJwtRequest const& request);
 };
 
 /**
@@ -221,7 +212,7 @@ std::shared_ptr<IAMCredentialsConnection> MakeIAMCredentialsConnection(
     Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS;  // NOLINT(misc-unused-alias-decls)
+namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS; // NOLINT(misc-unused-alias-decls)
 }  // namespace iam_credentials_v1
 }  // namespace cloud
 }  // namespace google

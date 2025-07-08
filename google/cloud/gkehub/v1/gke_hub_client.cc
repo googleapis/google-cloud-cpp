@@ -25,11 +25,11 @@ namespace cloud {
 namespace gkehub_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-GkeHubClient::GkeHubClient(std::shared_ptr<GkeHubConnection> connection,
-                           Options opts)
+GkeHubClient::GkeHubClient(
+    std::shared_ptr<GkeHubConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 GkeHubClient::~GkeHubClient() = default;
 
 StreamRange<google::cloud::gkehub::v1::Membership>
@@ -41,60 +41,55 @@ GkeHubClient::ListMemberships(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::gkehub::v1::Membership>
-GkeHubClient::ListMemberships(
-    google::cloud::gkehub::v1::ListMembershipsRequest request, Options opts) {
+GkeHubClient::ListMemberships(google::cloud::gkehub::v1::ListMembershipsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListMemberships(std::move(request));
 }
 
-StreamRange<google::cloud::gkehub::v1::Feature> GkeHubClient::ListFeatures(
-    std::string const& parent, Options opts) {
+StreamRange<google::cloud::gkehub::v1::Feature>
+GkeHubClient::ListFeatures(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::gkehub::v1::ListFeaturesRequest request;
   request.set_parent(parent);
   return connection_->ListFeatures(request);
 }
 
-StreamRange<google::cloud::gkehub::v1::Feature> GkeHubClient::ListFeatures(
-    google::cloud::gkehub::v1::ListFeaturesRequest request, Options opts) {
+StreamRange<google::cloud::gkehub::v1::Feature>
+GkeHubClient::ListFeatures(google::cloud::gkehub::v1::ListFeaturesRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListFeatures(std::move(request));
 }
 
-StatusOr<google::cloud::gkehub::v1::Membership> GkeHubClient::GetMembership(
-    std::string const& name, Options opts) {
+StatusOr<google::cloud::gkehub::v1::Membership>
+GkeHubClient::GetMembership(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::gkehub::v1::GetMembershipRequest request;
   request.set_name(name);
   return connection_->GetMembership(request);
 }
 
-StatusOr<google::cloud::gkehub::v1::Membership> GkeHubClient::GetMembership(
-    google::cloud::gkehub::v1::GetMembershipRequest const& request,
-    Options opts) {
+StatusOr<google::cloud::gkehub::v1::Membership>
+GkeHubClient::GetMembership(google::cloud::gkehub::v1::GetMembershipRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetMembership(request);
 }
 
-StatusOr<google::cloud::gkehub::v1::Feature> GkeHubClient::GetFeature(
-    std::string const& name, Options opts) {
+StatusOr<google::cloud::gkehub::v1::Feature>
+GkeHubClient::GetFeature(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::gkehub::v1::GetFeatureRequest request;
   request.set_name(name);
   return connection_->GetFeature(request);
 }
 
-StatusOr<google::cloud::gkehub::v1::Feature> GkeHubClient::GetFeature(
-    google::cloud::gkehub::v1::GetFeatureRequest const& request, Options opts) {
+StatusOr<google::cloud::gkehub::v1::Feature>
+GkeHubClient::GetFeature(google::cloud::gkehub::v1::GetFeatureRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetFeature(request);
 }
 
 future<StatusOr<google::cloud::gkehub::v1::Membership>>
-GkeHubClient::CreateMembership(
-    std::string const& parent,
-    google::cloud::gkehub::v1::Membership const& resource,
-    std::string const& membership_id, Options opts) {
+GkeHubClient::CreateMembership(std::string const& parent, google::cloud::gkehub::v1::Membership const& resource, std::string const& membership_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::gkehub::v1::CreateMembershipRequest request;
   request.set_parent(parent);
@@ -103,10 +98,8 @@ GkeHubClient::CreateMembership(
   return connection_->CreateMembership(request);
 }
 
-StatusOr<google::longrunning::Operation> GkeHubClient::CreateMembership(
-    NoAwaitTag, std::string const& parent,
-    google::cloud::gkehub::v1::Membership const& resource,
-    std::string const& membership_id, Options opts) {
+StatusOr<google::longrunning::Operation>
+GkeHubClient::CreateMembership(NoAwaitTag, std::string const& parent, google::cloud::gkehub::v1::Membership const& resource, std::string const& membership_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::gkehub::v1::CreateMembershipRequest request;
   request.set_parent(parent);
@@ -116,32 +109,25 @@ StatusOr<google::longrunning::Operation> GkeHubClient::CreateMembership(
 }
 
 future<StatusOr<google::cloud::gkehub::v1::Membership>>
-GkeHubClient::CreateMembership(
-    google::cloud::gkehub::v1::CreateMembershipRequest const& request,
-    Options opts) {
+GkeHubClient::CreateMembership(google::cloud::gkehub::v1::CreateMembershipRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateMembership(request);
 }
 
-StatusOr<google::longrunning::Operation> GkeHubClient::CreateMembership(
-    NoAwaitTag,
-    google::cloud::gkehub::v1::CreateMembershipRequest const& request,
-    Options opts) {
+StatusOr<google::longrunning::Operation>
+GkeHubClient::CreateMembership(NoAwaitTag, google::cloud::gkehub::v1::CreateMembershipRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateMembership(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::gkehub::v1::Membership>>
-GkeHubClient::CreateMembership(google::longrunning::Operation const& operation,
-                               Options opts) {
+GkeHubClient::CreateMembership(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateMembership(operation);
 }
 
 future<StatusOr<google::cloud::gkehub::v1::Feature>>
-GkeHubClient::CreateFeature(std::string const& parent,
-                            google::cloud::gkehub::v1::Feature const& resource,
-                            std::string const& feature_id, Options opts) {
+GkeHubClient::CreateFeature(std::string const& parent, google::cloud::gkehub::v1::Feature const& resource, std::string const& feature_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::gkehub::v1::CreateFeatureRequest request;
   request.set_parent(parent);
@@ -150,10 +136,8 @@ GkeHubClient::CreateFeature(std::string const& parent,
   return connection_->CreateFeature(request);
 }
 
-StatusOr<google::longrunning::Operation> GkeHubClient::CreateFeature(
-    NoAwaitTag, std::string const& parent,
-    google::cloud::gkehub::v1::Feature const& resource,
-    std::string const& feature_id, Options opts) {
+StatusOr<google::longrunning::Operation>
+GkeHubClient::CreateFeature(NoAwaitTag, std::string const& parent, google::cloud::gkehub::v1::Feature const& resource, std::string const& feature_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::gkehub::v1::CreateFeatureRequest request;
   request.set_parent(parent);
@@ -163,23 +147,19 @@ StatusOr<google::longrunning::Operation> GkeHubClient::CreateFeature(
 }
 
 future<StatusOr<google::cloud::gkehub::v1::Feature>>
-GkeHubClient::CreateFeature(
-    google::cloud::gkehub::v1::CreateFeatureRequest const& request,
-    Options opts) {
+GkeHubClient::CreateFeature(google::cloud::gkehub::v1::CreateFeatureRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateFeature(request);
 }
 
-StatusOr<google::longrunning::Operation> GkeHubClient::CreateFeature(
-    NoAwaitTag, google::cloud::gkehub::v1::CreateFeatureRequest const& request,
-    Options opts) {
+StatusOr<google::longrunning::Operation>
+GkeHubClient::CreateFeature(NoAwaitTag, google::cloud::gkehub::v1::CreateFeatureRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateFeature(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::gkehub::v1::Feature>>
-GkeHubClient::CreateFeature(google::longrunning::Operation const& operation,
-                            Options opts) {
+GkeHubClient::CreateFeature(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateFeature(operation);
 }
@@ -192,8 +172,8 @@ GkeHubClient::DeleteMembership(std::string const& name, Options opts) {
   return connection_->DeleteMembership(request);
 }
 
-StatusOr<google::longrunning::Operation> GkeHubClient::DeleteMembership(
-    NoAwaitTag, std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation>
+GkeHubClient::DeleteMembership(NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::gkehub::v1::DeleteMembershipRequest request;
   request.set_name(name);
@@ -201,24 +181,19 @@ StatusOr<google::longrunning::Operation> GkeHubClient::DeleteMembership(
 }
 
 future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>
-GkeHubClient::DeleteMembership(
-    google::cloud::gkehub::v1::DeleteMembershipRequest const& request,
-    Options opts) {
+GkeHubClient::DeleteMembership(google::cloud::gkehub::v1::DeleteMembershipRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteMembership(request);
 }
 
-StatusOr<google::longrunning::Operation> GkeHubClient::DeleteMembership(
-    NoAwaitTag,
-    google::cloud::gkehub::v1::DeleteMembershipRequest const& request,
-    Options opts) {
+StatusOr<google::longrunning::Operation>
+GkeHubClient::DeleteMembership(NoAwaitTag, google::cloud::gkehub::v1::DeleteMembershipRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteMembership(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>
-GkeHubClient::DeleteMembership(google::longrunning::Operation const& operation,
-                               Options opts) {
+GkeHubClient::DeleteMembership(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteMembership(operation);
 }
@@ -231,8 +206,8 @@ GkeHubClient::DeleteFeature(std::string const& name, Options opts) {
   return connection_->DeleteFeature(request);
 }
 
-StatusOr<google::longrunning::Operation> GkeHubClient::DeleteFeature(
-    NoAwaitTag, std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation>
+GkeHubClient::DeleteFeature(NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::gkehub::v1::DeleteFeatureRequest request;
   request.set_name(name);
@@ -240,32 +215,25 @@ StatusOr<google::longrunning::Operation> GkeHubClient::DeleteFeature(
 }
 
 future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>
-GkeHubClient::DeleteFeature(
-    google::cloud::gkehub::v1::DeleteFeatureRequest const& request,
-    Options opts) {
+GkeHubClient::DeleteFeature(google::cloud::gkehub::v1::DeleteFeatureRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteFeature(request);
 }
 
-StatusOr<google::longrunning::Operation> GkeHubClient::DeleteFeature(
-    NoAwaitTag, google::cloud::gkehub::v1::DeleteFeatureRequest const& request,
-    Options opts) {
+StatusOr<google::longrunning::Operation>
+GkeHubClient::DeleteFeature(NoAwaitTag, google::cloud::gkehub::v1::DeleteFeatureRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteFeature(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>
-GkeHubClient::DeleteFeature(google::longrunning::Operation const& operation,
-                            Options opts) {
+GkeHubClient::DeleteFeature(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteFeature(operation);
 }
 
 future<StatusOr<google::cloud::gkehub::v1::Membership>>
-GkeHubClient::UpdateMembership(
-    std::string const& name,
-    google::cloud::gkehub::v1::Membership const& resource,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+GkeHubClient::UpdateMembership(std::string const& name, google::cloud::gkehub::v1::Membership const& resource, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::gkehub::v1::UpdateMembershipRequest request;
   request.set_name(name);
@@ -274,10 +242,8 @@ GkeHubClient::UpdateMembership(
   return connection_->UpdateMembership(request);
 }
 
-StatusOr<google::longrunning::Operation> GkeHubClient::UpdateMembership(
-    NoAwaitTag, std::string const& name,
-    google::cloud::gkehub::v1::Membership const& resource,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+StatusOr<google::longrunning::Operation>
+GkeHubClient::UpdateMembership(NoAwaitTag, std::string const& name, google::cloud::gkehub::v1::Membership const& resource, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::gkehub::v1::UpdateMembershipRequest request;
   request.set_name(name);
@@ -287,33 +253,25 @@ StatusOr<google::longrunning::Operation> GkeHubClient::UpdateMembership(
 }
 
 future<StatusOr<google::cloud::gkehub::v1::Membership>>
-GkeHubClient::UpdateMembership(
-    google::cloud::gkehub::v1::UpdateMembershipRequest const& request,
-    Options opts) {
+GkeHubClient::UpdateMembership(google::cloud::gkehub::v1::UpdateMembershipRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateMembership(request);
 }
 
-StatusOr<google::longrunning::Operation> GkeHubClient::UpdateMembership(
-    NoAwaitTag,
-    google::cloud::gkehub::v1::UpdateMembershipRequest const& request,
-    Options opts) {
+StatusOr<google::longrunning::Operation>
+GkeHubClient::UpdateMembership(NoAwaitTag, google::cloud::gkehub::v1::UpdateMembershipRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateMembership(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::gkehub::v1::Membership>>
-GkeHubClient::UpdateMembership(google::longrunning::Operation const& operation,
-                               Options opts) {
+GkeHubClient::UpdateMembership(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateMembership(operation);
 }
 
 future<StatusOr<google::cloud::gkehub::v1::Feature>>
-GkeHubClient::UpdateFeature(std::string const& name,
-                            google::cloud::gkehub::v1::Feature const& resource,
-                            google::protobuf::FieldMask const& update_mask,
-                            Options opts) {
+GkeHubClient::UpdateFeature(std::string const& name, google::cloud::gkehub::v1::Feature const& resource, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::gkehub::v1::UpdateFeatureRequest request;
   request.set_name(name);
@@ -322,10 +280,8 @@ GkeHubClient::UpdateFeature(std::string const& name,
   return connection_->UpdateFeature(request);
 }
 
-StatusOr<google::longrunning::Operation> GkeHubClient::UpdateFeature(
-    NoAwaitTag, std::string const& name,
-    google::cloud::gkehub::v1::Feature const& resource,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+StatusOr<google::longrunning::Operation>
+GkeHubClient::UpdateFeature(NoAwaitTag, std::string const& name, google::cloud::gkehub::v1::Feature const& resource, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::gkehub::v1::UpdateFeatureRequest request;
   request.set_name(name);
@@ -335,31 +291,25 @@ StatusOr<google::longrunning::Operation> GkeHubClient::UpdateFeature(
 }
 
 future<StatusOr<google::cloud::gkehub::v1::Feature>>
-GkeHubClient::UpdateFeature(
-    google::cloud::gkehub::v1::UpdateFeatureRequest const& request,
-    Options opts) {
+GkeHubClient::UpdateFeature(google::cloud::gkehub::v1::UpdateFeatureRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateFeature(request);
 }
 
-StatusOr<google::longrunning::Operation> GkeHubClient::UpdateFeature(
-    NoAwaitTag, google::cloud::gkehub::v1::UpdateFeatureRequest const& request,
-    Options opts) {
+StatusOr<google::longrunning::Operation>
+GkeHubClient::UpdateFeature(NoAwaitTag, google::cloud::gkehub::v1::UpdateFeatureRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateFeature(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::gkehub::v1::Feature>>
-GkeHubClient::UpdateFeature(google::longrunning::Operation const& operation,
-                            Options opts) {
+GkeHubClient::UpdateFeature(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateFeature(operation);
 }
 
 StatusOr<google::cloud::gkehub::v1::GenerateConnectManifestResponse>
-GkeHubClient::GenerateConnectManifest(
-    google::cloud::gkehub::v1::GenerateConnectManifestRequest const& request,
-    Options opts) {
+GkeHubClient::GenerateConnectManifest(google::cloud::gkehub::v1::GenerateConnectManifestRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GenerateConnectManifest(request);
 }

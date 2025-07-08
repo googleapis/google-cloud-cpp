@@ -37,95 +37,69 @@ class AutoscalersRestStub {
  public:
   virtual ~AutoscalersRestStub() = default;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::AutoscalerAggregatedList>
-  AggregatedListAutoscalers(
+  virtual StatusOr<google::cloud::cpp::compute::v1::AutoscalerAggregatedList> AggregatedListAutoscalers(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::autoscalers::v1::
-          AggregatedListAutoscalersRequest const& request) = 0;
+      Options const& options, google::cloud::cpp::compute::autoscalers::v1::AggregatedListAutoscalersRequest const& request) = 0;
 
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncDeleteAutoscaler(
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncDeleteAutoscaler(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::autoscalers::v1::
-          DeleteAutoscalerRequest const& request) = 0;
+      google::cloud::cpp::compute::autoscalers::v1::DeleteAutoscalerRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteAutoscaler(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::autoscalers::v1::
-          DeleteAutoscalerRequest const& request) = 0;
+      Options const& options, google::cloud::cpp::compute::autoscalers::v1::DeleteAutoscalerRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Autoscaler> GetAutoscaler(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::autoscalers::v1::GetAutoscalerRequest const&
-          request) = 0;
+      Options const& options, google::cloud::cpp::compute::autoscalers::v1::GetAutoscalerRequest const& request) = 0;
 
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncInsertAutoscaler(
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncInsertAutoscaler(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::autoscalers::v1::
-          InsertAutoscalerRequest const& request) = 0;
+      google::cloud::cpp::compute::autoscalers::v1::InsertAutoscalerRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> InsertAutoscaler(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::autoscalers::v1::
-          InsertAutoscalerRequest const& request) = 0;
+      Options const& options, google::cloud::cpp::compute::autoscalers::v1::InsertAutoscalerRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::AutoscalerList>
-  ListAutoscalers(google::cloud::rest_internal::RestContext& rest_context,
-                  Options const& options,
-                  google::cloud::cpp::compute::autoscalers::v1::
-                      ListAutoscalersRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::AutoscalerList> ListAutoscalers(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options, google::cloud::cpp::compute::autoscalers::v1::ListAutoscalersRequest const& request) = 0;
 
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncPatchAutoscaler(
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncPatchAutoscaler(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::autoscalers::v1::
-          PatchAutoscalerRequest const& request) = 0;
+      google::cloud::cpp::compute::autoscalers::v1::PatchAutoscalerRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> PatchAutoscaler(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::autoscalers::v1::
-          PatchAutoscalerRequest const& request) = 0;
+      Options const& options, google::cloud::cpp::compute::autoscalers::v1::PatchAutoscalerRequest const& request) = 0;
 
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncUpdateAutoscaler(
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncUpdateAutoscaler(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::autoscalers::v1::
-          UpdateAutoscalerRequest const& request) = 0;
+      google::cloud::cpp::compute::autoscalers::v1::UpdateAutoscalerRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateAutoscaler(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::autoscalers::v1::
-          UpdateAutoscalerRequest const& request) = 0;
+      Options const& options, google::cloud::cpp::compute::autoscalers::v1::UpdateAutoscalerRequest const& request) = 0;
 
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncGetOperation(
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::zone_operations::v1::
-          GetOperationRequest const& request) = 0;
+      google::cloud::cpp::compute::zone_operations::v1::GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::zone_operations::v1::
-          DeleteOperationRequest const& request) = 0;
+      google::cloud::cpp::compute::zone_operations::v1::DeleteOperationRequest const& request) = 0;
 };
 
 class DefaultAutoscalersRestStub : public AutoscalersRestStub {
@@ -135,97 +109,72 @@ class DefaultAutoscalersRestStub : public AutoscalersRestStub {
   explicit DefaultAutoscalersRestStub(Options options);
   DefaultAutoscalersRestStub(
       std::shared_ptr<rest_internal::RestClient> service,
-      std::shared_ptr<rest_internal::RestClient> operations, Options options);
+      std::shared_ptr<rest_internal::RestClient> operations,
+      Options options);
 
-  StatusOr<google::cloud::cpp::compute::v1::AutoscalerAggregatedList>
-  AggregatedListAutoscalers(
+  StatusOr<google::cloud::cpp::compute::v1::AutoscalerAggregatedList> AggregatedListAutoscalers(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::autoscalers::v1::
-          AggregatedListAutoscalersRequest const& request) override;
+      Options const& options, google::cloud::cpp::compute::autoscalers::v1::AggregatedListAutoscalersRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncDeleteAutoscaler(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncDeleteAutoscaler(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::autoscalers::v1::
-          DeleteAutoscalerRequest const& request) override;
+      google::cloud::cpp::compute::autoscalers::v1::DeleteAutoscalerRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteAutoscaler(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::autoscalers::v1::
-          DeleteAutoscalerRequest const& request) override;
+      Options const& options, google::cloud::cpp::compute::autoscalers::v1::DeleteAutoscalerRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Autoscaler> GetAutoscaler(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::autoscalers::v1::GetAutoscalerRequest const&
-          request) override;
+      Options const& options, google::cloud::cpp::compute::autoscalers::v1::GetAutoscalerRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncInsertAutoscaler(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncInsertAutoscaler(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::autoscalers::v1::
-          InsertAutoscalerRequest const& request) override;
+      google::cloud::cpp::compute::autoscalers::v1::InsertAutoscalerRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertAutoscaler(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::autoscalers::v1::
-          InsertAutoscalerRequest const& request) override;
+      Options const& options, google::cloud::cpp::compute::autoscalers::v1::InsertAutoscalerRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::AutoscalerList> ListAutoscalers(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::autoscalers::v1::
-          ListAutoscalersRequest const& request) override;
+      Options const& options, google::cloud::cpp::compute::autoscalers::v1::ListAutoscalersRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncPatchAutoscaler(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncPatchAutoscaler(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::autoscalers::v1::
-          PatchAutoscalerRequest const& request) override;
+      google::cloud::cpp::compute::autoscalers::v1::PatchAutoscalerRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchAutoscaler(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::autoscalers::v1::
-          PatchAutoscalerRequest const& request) override;
+      Options const& options, google::cloud::cpp::compute::autoscalers::v1::PatchAutoscalerRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncUpdateAutoscaler(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncUpdateAutoscaler(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::autoscalers::v1::
-          UpdateAutoscalerRequest const& request) override;
+      google::cloud::cpp::compute::autoscalers::v1::UpdateAutoscalerRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateAutoscaler(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::autoscalers::v1::
-          UpdateAutoscalerRequest const& request) override;
+      Options const& options, google::cloud::cpp::compute::autoscalers::v1::UpdateAutoscalerRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncGetOperation(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::zone_operations::v1::
-          GetOperationRequest const& request) override;
+      google::cloud::cpp::compute::zone_operations::v1::GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::zone_operations::v1::
-          DeleteOperationRequest const& request) override;
+      google::cloud::cpp::compute::zone_operations::v1::DeleteOperationRequest const& request) override;
 
  private:
   std::shared_ptr<rest_internal::RestClient> service_;

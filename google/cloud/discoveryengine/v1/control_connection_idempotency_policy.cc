@@ -26,56 +26,47 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-ControlServiceConnectionIdempotencyPolicy::
-    ~ControlServiceConnectionIdempotencyPolicy() = default;
+ControlServiceConnectionIdempotencyPolicy::~ControlServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<ControlServiceConnectionIdempotencyPolicy>
 ControlServiceConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<ControlServiceConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency ControlServiceConnectionIdempotencyPolicy::CreateControl(
-    google::cloud::discoveryengine::v1::CreateControlRequest const&) {
+Idempotency ControlServiceConnectionIdempotencyPolicy::CreateControl(google::cloud::discoveryengine::v1::CreateControlRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ControlServiceConnectionIdempotencyPolicy::DeleteControl(
-    google::cloud::discoveryengine::v1::DeleteControlRequest const&) {
+Idempotency ControlServiceConnectionIdempotencyPolicy::DeleteControl(google::cloud::discoveryengine::v1::DeleteControlRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ControlServiceConnectionIdempotencyPolicy::UpdateControl(
-    google::cloud::discoveryengine::v1::UpdateControlRequest const&) {
+Idempotency ControlServiceConnectionIdempotencyPolicy::UpdateControl(google::cloud::discoveryengine::v1::UpdateControlRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ControlServiceConnectionIdempotencyPolicy::GetControl(
-    google::cloud::discoveryengine::v1::GetControlRequest const&) {
+Idempotency ControlServiceConnectionIdempotencyPolicy::GetControl(google::cloud::discoveryengine::v1::GetControlRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ControlServiceConnectionIdempotencyPolicy::ListControls(
-    google::cloud::discoveryengine::v1::ListControlsRequest) {  // NOLINT
+Idempotency ControlServiceConnectionIdempotencyPolicy::ListControls(google::cloud::discoveryengine::v1::ListControlsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency ControlServiceConnectionIdempotencyPolicy::ListOperations(
-    google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency ControlServiceConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency ControlServiceConnectionIdempotencyPolicy::GetOperation(
-    google::longrunning::GetOperationRequest const&) {
+Idempotency ControlServiceConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ControlServiceConnectionIdempotencyPolicy::CancelOperation(
-    google::longrunning::CancelOperationRequest const&) {
+Idempotency ControlServiceConnectionIdempotencyPolicy::CancelOperation(google::longrunning::CancelOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<ControlServiceConnectionIdempotencyPolicy>
-MakeDefaultControlServiceConnectionIdempotencyPolicy() {
+    MakeDefaultControlServiceConnectionIdempotencyPolicy() {
   return std::make_unique<ControlServiceConnectionIdempotencyPolicy>();
 }
 

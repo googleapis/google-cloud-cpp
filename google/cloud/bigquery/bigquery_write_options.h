@@ -28,21 +28,16 @@ namespace cloud {
 namespace bigquery {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use bigquery_storage_v1::BigQueryWriteBackoffPolicyOption
-/// directly.
+/// @deprecated Use bigquery_storage_v1::BigQueryWriteBackoffPolicyOption directly.
 using ::google::cloud::bigquery_storage_v1::BigQueryWriteBackoffPolicyOption;
 
-/// @deprecated Use
-/// bigquery_storage_v1::BigQueryWriteConnectionIdempotencyPolicyOption
-/// directly.
-using ::google::cloud::bigquery_storage_v1::
-    BigQueryWriteConnectionIdempotencyPolicyOption;
+/// @deprecated Use bigquery_storage_v1::BigQueryWriteConnectionIdempotencyPolicyOption directly.
+using ::google::cloud::bigquery_storage_v1::BigQueryWriteConnectionIdempotencyPolicyOption;
 
 /// @deprecated Use bigquery_storage_v1::BigQueryWritePolicyOptionList directly.
 using ::google::cloud::bigquery_storage_v1::BigQueryWritePolicyOptionList;
 
-/// @deprecated Use bigquery_storage_v1::BigQueryWriteRetryPolicyOption
-/// directly.
+/// @deprecated Use bigquery_storage_v1::BigQueryWriteRetryPolicyOption directly.
 using ::google::cloud::bigquery_storage_v1::BigQueryWriteRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -33,13 +33,10 @@ using ::google::cloud::dataproc_v1::MakeClusterControllerConnection;
 /// @deprecated Use dataproc_v1::ClusterControllerConnection directly.
 using ::google::cloud::dataproc_v1::ClusterControllerConnection;
 
-/// @deprecated Use dataproc_v1::ClusterControllerLimitedErrorCountRetryPolicy
-/// directly.
-using ::google::cloud::dataproc_v1::
-    ClusterControllerLimitedErrorCountRetryPolicy;
+/// @deprecated Use dataproc_v1::ClusterControllerLimitedErrorCountRetryPolicy directly.
+using ::google::cloud::dataproc_v1::ClusterControllerLimitedErrorCountRetryPolicy;
 
-/// @deprecated Use dataproc_v1::ClusterControllerLimitedTimeRetryPolicy
-/// directly.
+/// @deprecated Use dataproc_v1::ClusterControllerLimitedTimeRetryPolicy directly.
 using ::google::cloud::dataproc_v1::ClusterControllerLimitedTimeRetryPolicy;
 
 /// @deprecated Use dataproc_v1::ClusterControllerRetryPolicy directly.

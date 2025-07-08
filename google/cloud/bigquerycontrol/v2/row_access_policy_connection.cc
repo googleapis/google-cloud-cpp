@@ -17,10 +17,10 @@
 // source: google/cloud/bigquery/v2/row_access_policy.proto
 
 #include "google/cloud/bigquerycontrol/v2/row_access_policy_connection.h"
+#include "google/cloud/background_threads.h"
 #include "google/cloud/bigquerycontrol/v2/internal/row_access_policy_option_defaults.h"
 #include "google/cloud/bigquerycontrol/v2/internal/row_access_policy_tracing_connection.h"
 #include "google/cloud/bigquerycontrol/v2/row_access_policy_options.h"
-#include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
@@ -36,10 +36,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 RowAccessPolicyServiceConnection::~RowAccessPolicyServiceConnection() = default;
 
-StreamRange<google::cloud::bigquery::v2::RowAccessPolicy>
-RowAccessPolicyServiceConnection::ListRowAccessPolicies(
-    google::cloud::bigquery::v2::
-        ListRowAccessPoliciesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::bigquery::v2::RowAccessPolicy> RowAccessPolicyServiceConnection::ListRowAccessPolicies(
+    google::cloud::bigquery::v2::ListRowAccessPoliciesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::bigquery::v2::RowAccessPolicy>>();
 }
@@ -62,12 +60,14 @@ RowAccessPolicyServiceConnection::UpdateRowAccessPolicy(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status RowAccessPolicyServiceConnection::DeleteRowAccessPolicy(
+Status
+RowAccessPolicyServiceConnection::DeleteRowAccessPolicy(
     google::cloud::bigquery::v2::DeleteRowAccessPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status RowAccessPolicyServiceConnection::BatchDeleteRowAccessPolicies(
+Status
+RowAccessPolicyServiceConnection::BatchDeleteRowAccessPolicies(
     google::cloud::bigquery::v2::BatchDeleteRowAccessPoliciesRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }

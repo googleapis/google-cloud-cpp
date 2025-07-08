@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_MIGRATION_V2_INTERNAL_MIGRATION_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_MIGRATION_V2_INTERNAL_MIGRATION_CONNECTION_IMPL_H
 
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/bigquery/migration/v2/internal/migration_retry_traits.h"
 #include "google/cloud/bigquery/migration/v2/internal/migration_stub.h"
 #include "google/cloud/bigquery/migration/v2/migration_connection.h"
 #include "google/cloud/bigquery/migration/v2/migration_connection_idempotency_policy.h"
 #include "google/cloud/bigquery/migration/v2/migration_options.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -43,45 +43,32 @@ class MigrationServiceConnectionImpl
   ~MigrationServiceConnectionImpl() override = default;
 
   MigrationServiceConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<bigquery_migration_v2_internal::MigrationServiceStub>
-          stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<bigquery_migration_v2_internal::MigrationServiceStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
   StatusOr<google::cloud::bigquery::migration::v2::MigrationWorkflow>
-  CreateMigrationWorkflow(
-      google::cloud::bigquery::migration::v2::
-          CreateMigrationWorkflowRequest const& request) override;
+  CreateMigrationWorkflow(google::cloud::bigquery::migration::v2::CreateMigrationWorkflowRequest const& request) override;
 
   StatusOr<google::cloud::bigquery::migration::v2::MigrationWorkflow>
-  GetMigrationWorkflow(
-      google::cloud::bigquery::migration::v2::GetMigrationWorkflowRequest const&
-          request) override;
+  GetMigrationWorkflow(google::cloud::bigquery::migration::v2::GetMigrationWorkflowRequest const& request) override;
 
   StreamRange<google::cloud::bigquery::migration::v2::MigrationWorkflow>
-  ListMigrationWorkflows(
-      google::cloud::bigquery::migration::v2::ListMigrationWorkflowsRequest
-          request) override;
+  ListMigrationWorkflows(google::cloud::bigquery::migration::v2::ListMigrationWorkflowsRequest request) override;
 
-  Status DeleteMigrationWorkflow(
-      google::cloud::bigquery::migration::v2::
-          DeleteMigrationWorkflowRequest const& request) override;
+  Status
+  DeleteMigrationWorkflow(google::cloud::bigquery::migration::v2::DeleteMigrationWorkflowRequest const& request) override;
 
-  Status StartMigrationWorkflow(
-      google::cloud::bigquery::migration::v2::
-          StartMigrationWorkflowRequest const& request) override;
+  Status
+  StartMigrationWorkflow(google::cloud::bigquery::migration::v2::StartMigrationWorkflowRequest const& request) override;
 
   StatusOr<google::cloud::bigquery::migration::v2::MigrationSubtask>
-  GetMigrationSubtask(
-      google::cloud::bigquery::migration::v2::GetMigrationSubtaskRequest const&
-          request) override;
+  GetMigrationSubtask(google::cloud::bigquery::migration::v2::GetMigrationSubtaskRequest const& request) override;
 
   StreamRange<google::cloud::bigquery::migration::v2::MigrationSubtask>
-  ListMigrationSubtasks(
-      google::cloud::bigquery::migration::v2::ListMigrationSubtasksRequest
-          request) override;
+  ListMigrationSubtasks(google::cloud::bigquery::migration::v2::ListMigrationSubtasksRequest request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

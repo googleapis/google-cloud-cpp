@@ -33,22 +33,21 @@ SnoozeServiceTracingStub::SnoozeServiceTracingStub(
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::monitoring::v3::Snooze> SnoozeServiceTracingStub::CreateSnooze(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::monitoring::v3::CreateSnoozeRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.monitoring.v3.SnoozeService",
-                                     "CreateSnooze");
+  auto span = internal::MakeSpanGrpc("google.monitoring.v3.SnoozeService", "CreateSnooze");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateSnooze(context, options, request));
 }
 
-StatusOr<google::monitoring::v3::ListSnoozesResponse>
-SnoozeServiceTracingStub::ListSnoozes(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::monitoring::v3::ListSnoozesResponse> SnoozeServiceTracingStub::ListSnoozes(
+    grpc::ClientContext& context,
+    Options const& options,
     google::monitoring::v3::ListSnoozesRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.monitoring.v3.SnoozeService",
-                                     "ListSnoozes");
+  auto span = internal::MakeSpanGrpc("google.monitoring.v3.SnoozeService", "ListSnoozes");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -56,10 +55,10 @@ SnoozeServiceTracingStub::ListSnoozes(
 }
 
 StatusOr<google::monitoring::v3::Snooze> SnoozeServiceTracingStub::GetSnooze(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::monitoring::v3::GetSnoozeRequest const& request) {
-  auto span =
-      internal::MakeSpanGrpc("google.monitoring.v3.SnoozeService", "GetSnooze");
+  auto span = internal::MakeSpanGrpc("google.monitoring.v3.SnoozeService", "GetSnooze");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -67,10 +66,10 @@ StatusOr<google::monitoring::v3::Snooze> SnoozeServiceTracingStub::GetSnooze(
 }
 
 StatusOr<google::monitoring::v3::Snooze> SnoozeServiceTracingStub::UpdateSnooze(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::monitoring::v3::UpdateSnoozeRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.monitoring.v3.SnoozeService",
-                                     "UpdateSnooze");
+  auto span = internal::MakeSpanGrpc("google.monitoring.v3.SnoozeService", "UpdateSnooze");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,

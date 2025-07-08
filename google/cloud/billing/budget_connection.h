@@ -33,13 +33,10 @@ using ::google::cloud::billing_budgets_v1::MakeBudgetServiceConnection;
 /// @deprecated Use billing_budgets_v1::BudgetServiceConnection directly.
 using ::google::cloud::billing_budgets_v1::BudgetServiceConnection;
 
-/// @deprecated Use
-/// billing_budgets_v1::BudgetServiceLimitedErrorCountRetryPolicy directly.
-using ::google::cloud::billing_budgets_v1::
-    BudgetServiceLimitedErrorCountRetryPolicy;
+/// @deprecated Use billing_budgets_v1::BudgetServiceLimitedErrorCountRetryPolicy directly.
+using ::google::cloud::billing_budgets_v1::BudgetServiceLimitedErrorCountRetryPolicy;
 
-/// @deprecated Use billing_budgets_v1::BudgetServiceLimitedTimeRetryPolicy
-/// directly.
+/// @deprecated Use billing_budgets_v1::BudgetServiceLimitedTimeRetryPolicy directly.
 using ::google::cloud::billing_budgets_v1::BudgetServiceLimitedTimeRetryPolicy;
 
 /// @deprecated Use billing_budgets_v1::BudgetServiceRetryPolicy directly.

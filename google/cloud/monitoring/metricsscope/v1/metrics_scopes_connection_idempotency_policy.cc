@@ -26,40 +26,31 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-MetricsScopesConnectionIdempotencyPolicy::
-    ~MetricsScopesConnectionIdempotencyPolicy() = default;
+MetricsScopesConnectionIdempotencyPolicy::~MetricsScopesConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<MetricsScopesConnectionIdempotencyPolicy>
 MetricsScopesConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<MetricsScopesConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency MetricsScopesConnectionIdempotencyPolicy::GetMetricsScope(
-    google::monitoring::metricsscope::v1::GetMetricsScopeRequest const&) {
+Idempotency MetricsScopesConnectionIdempotencyPolicy::GetMetricsScope(google::monitoring::metricsscope::v1::GetMetricsScopeRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency
-MetricsScopesConnectionIdempotencyPolicy::ListMetricsScopesByMonitoredProject(
-    google::monitoring::metricsscope::v1::
-        ListMetricsScopesByMonitoredProjectRequest const&) {
+Idempotency MetricsScopesConnectionIdempotencyPolicy::ListMetricsScopesByMonitoredProject(google::monitoring::metricsscope::v1::ListMetricsScopesByMonitoredProjectRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency MetricsScopesConnectionIdempotencyPolicy::CreateMonitoredProject(
-    google::monitoring::metricsscope::v1::
-        CreateMonitoredProjectRequest const&) {
+Idempotency MetricsScopesConnectionIdempotencyPolicy::CreateMonitoredProject(google::monitoring::metricsscope::v1::CreateMonitoredProjectRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency MetricsScopesConnectionIdempotencyPolicy::DeleteMonitoredProject(
-    google::monitoring::metricsscope::v1::
-        DeleteMonitoredProjectRequest const&) {
+Idempotency MetricsScopesConnectionIdempotencyPolicy::DeleteMonitoredProject(google::monitoring::metricsscope::v1::DeleteMonitoredProjectRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<MetricsScopesConnectionIdempotencyPolicy>
-MakeDefaultMetricsScopesConnectionIdempotencyPolicy() {
+    MakeDefaultMetricsScopesConnectionIdempotencyPolicy() {
   return std::make_unique<MetricsScopesConnectionIdempotencyPolicy>();
 }
 

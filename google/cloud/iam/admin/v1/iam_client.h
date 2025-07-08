@@ -19,14 +19,14 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAM_ADMIN_V1_IAM_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAM_ADMIN_V1_IAM_CLIENT_H
 
-#include "google/cloud/iam/admin/v1/iam_connection.h"
 #include "google/cloud/future.h"
-#include "google/cloud/iam_updater.h"
+#include "google/cloud/iam/admin/v1/iam_connection.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
+#include "google/cloud/iam_updater.h"
 #include <memory>
 #include <string>
 
@@ -62,9 +62,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// with this behavior, your application can retry the request with truncated
 /// exponential backoff.
 ///
-/// In contrast, writing data to the IAM API is sequentially consistent. In
-/// other words, write operations are always processed in the order in which
-/// they were received.
+/// In contrast, writing data to the IAM API is sequentially consistent. In other
+/// words, write operations are always processed in the order in which they were
+/// received.
 ///
 /// @par Equality
 ///
@@ -91,8 +91,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class IAMClient {
  public:
-  explicit IAMClient(std::shared_ptr<IAMConnection> connection,
-                     Options opts = {});
+  explicit IAMClient(std::shared_ptr<IAMConnection> connection, Options opts = {});
   ~IAMClient();
 
   ///@{
@@ -145,8 +144,8 @@ class IAMClient {
   /// [google.iam.admin.v1.ServiceAccount]: @googleapis_reference_link{google/iam/admin/v1/iam.proto#L493}
   ///
   // clang-format on
-  StreamRange<google::iam::admin::v1::ServiceAccount> ListServiceAccounts(
-      std::string const& name, Options opts = {});
+  StreamRange<google::iam::admin::v1::ServiceAccount>
+  ListServiceAccounts(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -184,9 +183,8 @@ class IAMClient {
   /// [google.iam.admin.v1.ServiceAccount]: @googleapis_reference_link{google/iam/admin/v1/iam.proto#L493}
   ///
   // clang-format on
-  StreamRange<google::iam::admin::v1::ServiceAccount> ListServiceAccounts(
-      google::iam::admin::v1::ListServiceAccountsRequest request,
-      Options opts = {});
+  StreamRange<google::iam::admin::v1::ServiceAccount>
+  ListServiceAccounts(google::iam::admin::v1::ListServiceAccountsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -214,8 +212,8 @@ class IAMClient {
   /// [google.iam.admin.v1.ServiceAccount]: @googleapis_reference_link{google/iam/admin/v1/iam.proto#L493}
   ///
   // clang-format on
-  StatusOr<google::iam::admin::v1::ServiceAccount> GetServiceAccount(
-      std::string const& name, Options opts = {});
+  StatusOr<google::iam::admin::v1::ServiceAccount>
+  GetServiceAccount(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -244,9 +242,8 @@ class IAMClient {
   /// [google.iam.admin.v1.ServiceAccount]: @googleapis_reference_link{google/iam/admin/v1/iam.proto#L493}
   ///
   // clang-format on
-  StatusOr<google::iam::admin::v1::ServiceAccount> GetServiceAccount(
-      google::iam::admin::v1::GetServiceAccountRequest const& request,
-      Options opts = {});
+  StatusOr<google::iam::admin::v1::ServiceAccount>
+  GetServiceAccount(google::iam::admin::v1::GetServiceAccountRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -278,10 +275,8 @@ class IAMClient {
   /// [google.iam.admin.v1.ServiceAccount]: @googleapis_reference_link{google/iam/admin/v1/iam.proto#L493}
   ///
   // clang-format on
-  StatusOr<google::iam::admin::v1::ServiceAccount> CreateServiceAccount(
-      std::string const& name, std::string const& account_id,
-      google::iam::admin::v1::ServiceAccount const& service_account,
-      Options opts = {});
+  StatusOr<google::iam::admin::v1::ServiceAccount>
+  CreateServiceAccount(std::string const& name, std::string const& account_id, google::iam::admin::v1::ServiceAccount const& service_account, Options opts = {});
 
   // clang-format off
   ///
@@ -310,9 +305,8 @@ class IAMClient {
   /// [google.iam.admin.v1.ServiceAccount]: @googleapis_reference_link{google/iam/admin/v1/iam.proto#L493}
   ///
   // clang-format on
-  StatusOr<google::iam::admin::v1::ServiceAccount> CreateServiceAccount(
-      google::iam::admin::v1::CreateServiceAccountRequest const& request,
-      Options opts = {});
+  StatusOr<google::iam::admin::v1::ServiceAccount>
+  CreateServiceAccount(google::iam::admin::v1::CreateServiceAccountRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -341,9 +335,8 @@ class IAMClient {
   /// [google.iam.admin.v1.ServiceAccount]: @googleapis_reference_link{google/iam/admin/v1/iam.proto#L493}
   ///
   // clang-format on
-  StatusOr<google::iam::admin::v1::ServiceAccount> PatchServiceAccount(
-      google::iam::admin::v1::PatchServiceAccountRequest const& request,
-      Options opts = {});
+  StatusOr<google::iam::admin::v1::ServiceAccount>
+  PatchServiceAccount(google::iam::admin::v1::PatchServiceAccountRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -384,7 +377,8 @@ class IAMClient {
   /// [google.iam.admin.v1.ServiceAccount]: @googleapis_reference_link{google/iam/admin/v1/iam.proto#L493}
   ///
   // clang-format on
-  Status DeleteServiceAccount(std::string const& name, Options opts = {});
+  Status
+  DeleteServiceAccount(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -426,9 +420,8 @@ class IAMClient {
   /// [google.iam.admin.v1.ServiceAccount]: @googleapis_reference_link{google/iam/admin/v1/iam.proto#L493}
   ///
   // clang-format on
-  Status DeleteServiceAccount(
-      google::iam::admin::v1::DeleteServiceAccountRequest const& request,
-      Options opts = {});
+  Status
+  DeleteServiceAccount(google::iam::admin::v1::DeleteServiceAccountRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -466,9 +459,7 @@ class IAMClient {
   ///
   // clang-format on
   StatusOr<google::iam::admin::v1::UndeleteServiceAccountResponse>
-  UndeleteServiceAccount(
-      google::iam::admin::v1::UndeleteServiceAccountRequest const& request,
-      Options opts = {});
+  UndeleteServiceAccount(google::iam::admin::v1::UndeleteServiceAccountRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -503,9 +494,8 @@ class IAMClient {
   /// [google.iam.admin.v1.ServiceAccount]: @googleapis_reference_link{google/iam/admin/v1/iam.proto#L493}
   ///
   // clang-format on
-  Status EnableServiceAccount(
-      google::iam::admin::v1::EnableServiceAccountRequest const& request,
-      Options opts = {});
+  Status
+  EnableServiceAccount(google::iam::admin::v1::EnableServiceAccountRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -549,9 +539,8 @@ class IAMClient {
   /// [google.iam.admin.v1.ServiceAccount]: @googleapis_reference_link{google/iam/admin/v1/iam.proto#L493}
   ///
   // clang-format on
-  Status DisableServiceAccount(
-      google::iam::admin::v1::DisableServiceAccountRequest const& request,
-      Options opts = {});
+  Status
+  DisableServiceAccount(google::iam::admin::v1::DisableServiceAccountRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -585,12 +574,7 @@ class IAMClient {
   ///
   // clang-format on
   StatusOr<google::iam::admin::v1::ListServiceAccountKeysResponse>
-  ListServiceAccountKeys(
-      std::string const& name,
-      std::vector<
-          google::iam::admin::v1::ListServiceAccountKeysRequest::KeyType> const&
-          key_types,
-      Options opts = {});
+  ListServiceAccountKeys(std::string const& name, std::vector<google::iam::admin::v1::ListServiceAccountKeysRequest::KeyType> const& key_types, Options opts = {});
 
   // clang-format off
   ///
@@ -621,9 +605,7 @@ class IAMClient {
   ///
   // clang-format on
   StatusOr<google::iam::admin::v1::ListServiceAccountKeysResponse>
-  ListServiceAccountKeys(
-      google::iam::admin::v1::ListServiceAccountKeysRequest const& request,
-      Options opts = {});
+  ListServiceAccountKeys(google::iam::admin::v1::ListServiceAccountKeysRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -654,10 +636,8 @@ class IAMClient {
   /// [google.iam.admin.v1.ServiceAccountKey]: @googleapis_reference_link{google/iam/admin/v1/iam.proto#L822}
   ///
   // clang-format on
-  StatusOr<google::iam::admin::v1::ServiceAccountKey> GetServiceAccountKey(
-      std::string const& name,
-      google::iam::admin::v1::ServiceAccountPublicKeyType public_key_type,
-      Options opts = {});
+  StatusOr<google::iam::admin::v1::ServiceAccountKey>
+  GetServiceAccountKey(std::string const& name, google::iam::admin::v1::ServiceAccountPublicKeyType public_key_type, Options opts = {});
 
   // clang-format off
   ///
@@ -686,9 +666,8 @@ class IAMClient {
   /// [google.iam.admin.v1.ServiceAccountKey]: @googleapis_reference_link{google/iam/admin/v1/iam.proto#L822}
   ///
   // clang-format on
-  StatusOr<google::iam::admin::v1::ServiceAccountKey> GetServiceAccountKey(
-      google::iam::admin::v1::GetServiceAccountKeyRequest const& request,
-      Options opts = {});
+  StatusOr<google::iam::admin::v1::ServiceAccountKey>
+  GetServiceAccountKey(google::iam::admin::v1::GetServiceAccountKeyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -722,11 +701,8 @@ class IAMClient {
   /// [google.iam.admin.v1.ServiceAccountKey]: @googleapis_reference_link{google/iam/admin/v1/iam.proto#L822}
   ///
   // clang-format on
-  StatusOr<google::iam::admin::v1::ServiceAccountKey> CreateServiceAccountKey(
-      std::string const& name,
-      google::iam::admin::v1::ServiceAccountPrivateKeyType private_key_type,
-      google::iam::admin::v1::ServiceAccountKeyAlgorithm key_algorithm,
-      Options opts = {});
+  StatusOr<google::iam::admin::v1::ServiceAccountKey>
+  CreateServiceAccountKey(std::string const& name, google::iam::admin::v1::ServiceAccountPrivateKeyType private_key_type, google::iam::admin::v1::ServiceAccountKeyAlgorithm key_algorithm, Options opts = {});
 
   // clang-format off
   ///
@@ -755,9 +731,8 @@ class IAMClient {
   /// [google.iam.admin.v1.ServiceAccountKey]: @googleapis_reference_link{google/iam/admin/v1/iam.proto#L822}
   ///
   // clang-format on
-  StatusOr<google::iam::admin::v1::ServiceAccountKey> CreateServiceAccountKey(
-      google::iam::admin::v1::CreateServiceAccountKeyRequest const& request,
-      Options opts = {});
+  StatusOr<google::iam::admin::v1::ServiceAccountKey>
+  CreateServiceAccountKey(google::iam::admin::v1::CreateServiceAccountKeyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -791,9 +766,8 @@ class IAMClient {
   /// [google.iam.admin.v1.UploadServiceAccountKeyRequest]: @googleapis_reference_link{google/iam/admin/v1/iam.proto#L900}
   ///
   // clang-format on
-  StatusOr<google::iam::admin::v1::ServiceAccountKey> UploadServiceAccountKey(
-      google::iam::admin::v1::UploadServiceAccountKeyRequest const& request,
-      Options opts = {});
+  StatusOr<google::iam::admin::v1::ServiceAccountKey>
+  UploadServiceAccountKey(google::iam::admin::v1::UploadServiceAccountKeyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -821,7 +795,8 @@ class IAMClient {
   /// [google.iam.admin.v1.ServiceAccountKey]: @googleapis_reference_link{google/iam/admin/v1/iam.proto#L822}
   ///
   // clang-format on
-  Status DeleteServiceAccountKey(std::string const& name, Options opts = {});
+  Status
+  DeleteServiceAccountKey(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -850,9 +825,8 @@ class IAMClient {
   /// [google.iam.admin.v1.ServiceAccountKey]: @googleapis_reference_link{google/iam/admin/v1/iam.proto#L822}
   ///
   // clang-format on
-  Status DeleteServiceAccountKey(
-      google::iam::admin::v1::DeleteServiceAccountKeyRequest const& request,
-      Options opts = {});
+  Status
+  DeleteServiceAccountKey(google::iam::admin::v1::DeleteServiceAccountKeyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -881,7 +855,8 @@ class IAMClient {
   /// [google.iam.admin.v1.ServiceAccountKey]: @googleapis_reference_link{google/iam/admin/v1/iam.proto#L822}
   ///
   // clang-format on
-  Status DisableServiceAccountKey(std::string const& name, Options opts = {});
+  Status
+  DisableServiceAccountKey(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -910,9 +885,8 @@ class IAMClient {
   /// [google.iam.admin.v1.ServiceAccountKey]: @googleapis_reference_link{google/iam/admin/v1/iam.proto#L822}
   ///
   // clang-format on
-  Status DisableServiceAccountKey(
-      google::iam::admin::v1::DisableServiceAccountKeyRequest const& request,
-      Options opts = {});
+  Status
+  DisableServiceAccountKey(google::iam::admin::v1::DisableServiceAccountKeyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -939,7 +913,8 @@ class IAMClient {
   /// [google.iam.admin.v1.ServiceAccountKey]: @googleapis_reference_link{google/iam/admin/v1/iam.proto#L822}
   ///
   // clang-format on
-  Status EnableServiceAccountKey(std::string const& name, Options opts = {});
+  Status
+  EnableServiceAccountKey(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -966,9 +941,8 @@ class IAMClient {
   /// [google.iam.admin.v1.ServiceAccountKey]: @googleapis_reference_link{google/iam/admin/v1/iam.proto#L822}
   ///
   // clang-format on
-  Status EnableServiceAccountKey(
-      google::iam::admin::v1::EnableServiceAccountKeyRequest const& request,
-      Options opts = {});
+  Status
+  EnableServiceAccountKey(google::iam::admin::v1::EnableServiceAccountKeyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1003,8 +977,8 @@ class IAMClient {
   /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy> GetIamPolicy(std::string const& resource,
-                                                 Options opts = {});
+  StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(std::string const& resource, Options opts = {});
 
   // clang-format off
   ///
@@ -1043,8 +1017,8 @@ class IAMClient {
   /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1092,9 +1066,8 @@ class IAMClient {
   /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L100}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      std::string const& resource, google::iam::v1::Policy const& policy,
-      Options opts = {});
+  StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(std::string const& resource, google::iam::v1::Policy const& policy, Options opts = {});
 
   /**
    * Updates the IAM policy for @p resource using an optimistic concurrency
@@ -1116,9 +1089,8 @@ class IAMClient {
    *    backoff policies.
    * @return google::iam::v1::Policy
    */
-  StatusOr<google::iam::v1::Policy> SetIamPolicy(std::string const& resource,
-                                                 IamUpdater const& updater,
-                                                 Options opts = {});
+  StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(std::string const& resource, IamUpdater const& updater, Options opts = {});
 
   // clang-format off
   ///
@@ -1166,8 +1138,8 @@ class IAMClient {
   /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L100}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1198,9 +1170,8 @@ class IAMClient {
   /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L153}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      std::string const& resource, std::vector<std::string> const& permissions,
-      Options opts = {});
+  StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(std::string const& resource, std::vector<std::string> const& permissions, Options opts = {});
 
   // clang-format off
   ///
@@ -1231,9 +1202,8 @@ class IAMClient {
   /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L153}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request,
-      Options opts = {});
+  StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1272,8 +1242,8 @@ class IAMClient {
   /// [google.iam.admin.v1.Role]: @googleapis_reference_link{google/iam/admin/v1/iam.proto#L1070}
   ///
   // clang-format on
-  StreamRange<google::iam::admin::v1::Role> QueryGrantableRoles(
-      std::string const& full_resource_name, Options opts = {});
+  StreamRange<google::iam::admin::v1::Role>
+  QueryGrantableRoles(std::string const& full_resource_name, Options opts = {});
 
   // clang-format off
   ///
@@ -1313,9 +1283,8 @@ class IAMClient {
   /// [google.iam.admin.v1.Role]: @googleapis_reference_link{google/iam/admin/v1/iam.proto#L1070}
   ///
   // clang-format on
-  StreamRange<google::iam::admin::v1::Role> QueryGrantableRoles(
-      google::iam::admin::v1::QueryGrantableRolesRequest request,
-      Options opts = {});
+  StreamRange<google::iam::admin::v1::Role>
+  QueryGrantableRoles(google::iam::admin::v1::QueryGrantableRolesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1354,8 +1323,8 @@ class IAMClient {
   /// [google.iam.admin.v1.Role]: @googleapis_reference_link{google/iam/admin/v1/iam.proto#L1070}
   ///
   // clang-format on
-  StreamRange<google::iam::admin::v1::Role> ListRoles(
-      google::iam::admin::v1::ListRolesRequest request, Options opts = {});
+  StreamRange<google::iam::admin::v1::Role>
+  ListRoles(google::iam::admin::v1::ListRolesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1384,8 +1353,8 @@ class IAMClient {
   /// [google.iam.admin.v1.Role]: @googleapis_reference_link{google/iam/admin/v1/iam.proto#L1070}
   ///
   // clang-format on
-  StatusOr<google::iam::admin::v1::Role> GetRole(
-      google::iam::admin::v1::GetRoleRequest const& request, Options opts = {});
+  StatusOr<google::iam::admin::v1::Role>
+  GetRole(google::iam::admin::v1::GetRoleRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1414,9 +1383,8 @@ class IAMClient {
   /// [google.iam.admin.v1.Role]: @googleapis_reference_link{google/iam/admin/v1/iam.proto#L1070}
   ///
   // clang-format on
-  StatusOr<google::iam::admin::v1::Role> CreateRole(
-      google::iam::admin::v1::CreateRoleRequest const& request,
-      Options opts = {});
+  StatusOr<google::iam::admin::v1::Role>
+  CreateRole(google::iam::admin::v1::CreateRoleRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1445,9 +1413,8 @@ class IAMClient {
   /// [google.iam.admin.v1.UpdateRoleRequest]: @googleapis_reference_link{google/iam/admin/v1/iam.proto#L1311}
   ///
   // clang-format on
-  StatusOr<google::iam::admin::v1::Role> UpdateRole(
-      google::iam::admin::v1::UpdateRoleRequest const& request,
-      Options opts = {});
+  StatusOr<google::iam::admin::v1::Role>
+  UpdateRole(google::iam::admin::v1::UpdateRoleRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1494,9 +1461,8 @@ class IAMClient {
   /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
   ///
   // clang-format on
-  StatusOr<google::iam::admin::v1::Role> DeleteRole(
-      google::iam::admin::v1::DeleteRoleRequest const& request,
-      Options opts = {});
+  StatusOr<google::iam::admin::v1::Role>
+  DeleteRole(google::iam::admin::v1::DeleteRoleRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1525,9 +1491,8 @@ class IAMClient {
   /// [google.iam.admin.v1.UndeleteRoleRequest]: @googleapis_reference_link{google/iam/admin/v1/iam.proto#L1380}
   ///
   // clang-format on
-  StatusOr<google::iam::admin::v1::Role> UndeleteRole(
-      google::iam::admin::v1::UndeleteRoleRequest const& request,
-      Options opts = {});
+  StatusOr<google::iam::admin::v1::Role>
+  UndeleteRole(google::iam::admin::v1::UndeleteRoleRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1567,9 +1532,8 @@ class IAMClient {
   /// [google.iam.admin.v1.QueryTestablePermissionsRequest]: @googleapis_reference_link{google/iam/admin/v1/iam.proto#L1468}
   ///
   // clang-format on
-  StreamRange<google::iam::admin::v1::Permission> QueryTestablePermissions(
-      google::iam::admin::v1::QueryTestablePermissionsRequest request,
-      Options opts = {});
+  StreamRange<google::iam::admin::v1::Permission>
+  QueryTestablePermissions(google::iam::admin::v1::QueryTestablePermissionsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1603,9 +1567,7 @@ class IAMClient {
   ///
   // clang-format on
   StatusOr<google::iam::admin::v1::QueryAuditableServicesResponse>
-  QueryAuditableServices(
-      google::iam::admin::v1::QueryAuditableServicesRequest const& request,
-      Options opts = {});
+  QueryAuditableServices(google::iam::admin::v1::QueryAuditableServicesRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1640,9 +1602,8 @@ class IAMClient {
   /// [google.iam.v1.Binding.condition]: @googleapis_reference_link{google/iam/v1/policy.proto#L224}
   ///
   // clang-format on
-  StatusOr<google::iam::admin::v1::LintPolicyResponse> LintPolicy(
-      google::iam::admin::v1::LintPolicyRequest const& request,
-      Options opts = {});
+  StatusOr<google::iam::admin::v1::LintPolicyResponse>
+  LintPolicy(google::iam::admin::v1::LintPolicyRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<IAMConnection> connection_;
@@ -1650,7 +1611,7 @@ class IAMClient {
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS;  // NOLINT(misc-unused-alias-decls)
+namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS; // NOLINT(misc-unused-alias-decls)
 }  // namespace iam_admin_v1
 }  // namespace cloud
 }  // namespace google

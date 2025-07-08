@@ -40,101 +40,73 @@ class InterconnectsRestMetadata : public InterconnectsRestStub {
       std::shared_ptr<InterconnectsRestStub> child,
       std::string api_client_header = "");
 
-  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncDeleteInterconnect(
+  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncDeleteInterconnect(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::interconnects::v1::
-          DeleteInterconnectRequest const& request) override;
+      google::cloud::cpp::compute::interconnects::v1::DeleteInterconnectRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteInterconnect(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::interconnects::v1::
-          DeleteInterconnectRequest const& request) override;
+      Options const& options, google::cloud::cpp::compute::interconnects::v1::DeleteInterconnectRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Interconnect> GetInterconnect(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::interconnects::v1::
-          GetInterconnectRequest const& request) override;
+      Options const& options, google::cloud::cpp::compute::interconnects::v1::GetInterconnectRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::InterconnectsGetDiagnosticsResponse>
-  GetDiagnostics(google::cloud::rest_internal::RestContext& rest_context,
-                 Options const& options,
-                 google::cloud::cpp::compute::interconnects::v1::
-                     GetDiagnosticsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::InterconnectsGetDiagnosticsResponse> GetDiagnostics(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options, google::cloud::cpp::compute::interconnects::v1::GetDiagnosticsRequest const& request) override;
 
-  StatusOr<
-      google::cloud::cpp::compute::v1::InterconnectsGetMacsecConfigResponse>
-  GetMacsecConfig(google::cloud::rest_internal::RestContext& rest_context,
-                  Options const& options,
-                  google::cloud::cpp::compute::interconnects::v1::
-                      GetMacsecConfigRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::InterconnectsGetMacsecConfigResponse> GetMacsecConfig(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options, google::cloud::cpp::compute::interconnects::v1::GetMacsecConfigRequest const& request) override;
 
-  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncInsertInterconnect(
+  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncInsertInterconnect(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::interconnects::v1::
-          InsertInterconnectRequest const& request) override;
+      google::cloud::cpp::compute::interconnects::v1::InsertInterconnectRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertInterconnect(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::interconnects::v1::
-          InsertInterconnectRequest const& request) override;
+      Options const& options, google::cloud::cpp::compute::interconnects::v1::InsertInterconnectRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::InterconnectList> ListInterconnects(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::interconnects::v1::
-          ListInterconnectsRequest const& request) override;
+      Options const& options, google::cloud::cpp::compute::interconnects::v1::ListInterconnectsRequest const& request) override;
 
-  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncPatchInterconnect(
+  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncPatchInterconnect(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::interconnects::v1::
-          PatchInterconnectRequest const& request) override;
+      google::cloud::cpp::compute::interconnects::v1::PatchInterconnectRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchInterconnect(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::interconnects::v1::
-          PatchInterconnectRequest const& request) override;
+      Options const& options, google::cloud::cpp::compute::interconnects::v1::PatchInterconnectRequest const& request) override;
 
-  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncSetLabels(
+  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncSetLabels(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::interconnects::v1::SetLabelsRequest const&
-          request) override;
+      google::cloud::cpp::compute::interconnects::v1::SetLabelsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::interconnects::v1::SetLabelsRequest const&
-          request) override;
+      Options const& options, google::cloud::cpp::compute::interconnects::v1::SetLabelsRequest const& request) override;
 
-  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncGetOperation(
+  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::global_operations::v1::
-          GetOperationRequest const& request) override;
+      google::cloud::cpp::compute::global_operations::v1::GetOperationRequest const& request) override;
 
   google::cloud::future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::global_operations::v1::
-          DeleteOperationRequest const& request) override;
+      google::cloud::cpp::compute::global_operations::v1::DeleteOperationRequest const& request) override;
 
  private:
   void SetMetadata(rest_internal::RestContext& rest_context,

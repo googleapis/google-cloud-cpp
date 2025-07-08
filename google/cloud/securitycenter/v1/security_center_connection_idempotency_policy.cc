@@ -26,186 +26,138 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-SecurityCenterConnectionIdempotencyPolicy::
-    ~SecurityCenterConnectionIdempotencyPolicy() = default;
+SecurityCenterConnectionIdempotencyPolicy::~SecurityCenterConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<SecurityCenterConnectionIdempotencyPolicy>
 SecurityCenterConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<SecurityCenterConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency SecurityCenterConnectionIdempotencyPolicy::BulkMuteFindings(
-    google::cloud::securitycenter::v1::BulkMuteFindingsRequest const&) {
+Idempotency SecurityCenterConnectionIdempotencyPolicy::BulkMuteFindings(google::cloud::securitycenter::v1::BulkMuteFindingsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SecurityCenterConnectionIdempotencyPolicy::
-    CreateSecurityHealthAnalyticsCustomModule(
-        google::cloud::securitycenter::v1::
-            CreateSecurityHealthAnalyticsCustomModuleRequest const&) {
+Idempotency SecurityCenterConnectionIdempotencyPolicy::CreateSecurityHealthAnalyticsCustomModule(google::cloud::securitycenter::v1::CreateSecurityHealthAnalyticsCustomModuleRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SecurityCenterConnectionIdempotencyPolicy::CreateSource(
-    google::cloud::securitycenter::v1::CreateSourceRequest const&) {
+Idempotency SecurityCenterConnectionIdempotencyPolicy::CreateSource(google::cloud::securitycenter::v1::CreateSourceRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SecurityCenterConnectionIdempotencyPolicy::CreateFinding(
-    google::cloud::securitycenter::v1::CreateFindingRequest const&) {
+Idempotency SecurityCenterConnectionIdempotencyPolicy::CreateFinding(google::cloud::securitycenter::v1::CreateFindingRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SecurityCenterConnectionIdempotencyPolicy::CreateMuteConfig(
-    google::cloud::securitycenter::v1::CreateMuteConfigRequest const&) {
+Idempotency SecurityCenterConnectionIdempotencyPolicy::CreateMuteConfig(google::cloud::securitycenter::v1::CreateMuteConfigRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SecurityCenterConnectionIdempotencyPolicy::CreateNotificationConfig(
-    google::cloud::securitycenter::v1::CreateNotificationConfigRequest const&) {
+Idempotency SecurityCenterConnectionIdempotencyPolicy::CreateNotificationConfig(google::cloud::securitycenter::v1::CreateNotificationConfigRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SecurityCenterConnectionIdempotencyPolicy::DeleteMuteConfig(
-    google::cloud::securitycenter::v1::DeleteMuteConfigRequest const&) {
+Idempotency SecurityCenterConnectionIdempotencyPolicy::DeleteMuteConfig(google::cloud::securitycenter::v1::DeleteMuteConfigRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SecurityCenterConnectionIdempotencyPolicy::DeleteNotificationConfig(
-    google::cloud::securitycenter::v1::DeleteNotificationConfigRequest const&) {
+Idempotency SecurityCenterConnectionIdempotencyPolicy::DeleteNotificationConfig(google::cloud::securitycenter::v1::DeleteNotificationConfigRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SecurityCenterConnectionIdempotencyPolicy::
-    DeleteSecurityHealthAnalyticsCustomModule(
-        google::cloud::securitycenter::v1::
-            DeleteSecurityHealthAnalyticsCustomModuleRequest const&) {
+Idempotency SecurityCenterConnectionIdempotencyPolicy::DeleteSecurityHealthAnalyticsCustomModule(google::cloud::securitycenter::v1::DeleteSecurityHealthAnalyticsCustomModuleRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SecurityCenterConnectionIdempotencyPolicy::GetSimulation(
-    google::cloud::securitycenter::v1::GetSimulationRequest const&) {
+Idempotency SecurityCenterConnectionIdempotencyPolicy::GetSimulation(google::cloud::securitycenter::v1::GetSimulationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency SecurityCenterConnectionIdempotencyPolicy::GetValuedResource(
-    google::cloud::securitycenter::v1::GetValuedResourceRequest const&) {
+Idempotency SecurityCenterConnectionIdempotencyPolicy::GetValuedResource(google::cloud::securitycenter::v1::GetValuedResourceRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency SecurityCenterConnectionIdempotencyPolicy::GetBigQueryExport(
-    google::cloud::securitycenter::v1::GetBigQueryExportRequest const&) {
+Idempotency SecurityCenterConnectionIdempotencyPolicy::GetBigQueryExport(google::cloud::securitycenter::v1::GetBigQueryExportRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency SecurityCenterConnectionIdempotencyPolicy::GetIamPolicy(
-    google::iam::v1::GetIamPolicyRequest const&) {
+Idempotency SecurityCenterConnectionIdempotencyPolicy::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency SecurityCenterConnectionIdempotencyPolicy::GetMuteConfig(
-    google::cloud::securitycenter::v1::GetMuteConfigRequest const&) {
+Idempotency SecurityCenterConnectionIdempotencyPolicy::GetMuteConfig(google::cloud::securitycenter::v1::GetMuteConfigRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency SecurityCenterConnectionIdempotencyPolicy::GetNotificationConfig(
-    google::cloud::securitycenter::v1::GetNotificationConfigRequest const&) {
+Idempotency SecurityCenterConnectionIdempotencyPolicy::GetNotificationConfig(google::cloud::securitycenter::v1::GetNotificationConfigRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency SecurityCenterConnectionIdempotencyPolicy::GetOrganizationSettings(
-    google::cloud::securitycenter::v1::GetOrganizationSettingsRequest const&) {
+Idempotency SecurityCenterConnectionIdempotencyPolicy::GetOrganizationSettings(google::cloud::securitycenter::v1::GetOrganizationSettingsRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency SecurityCenterConnectionIdempotencyPolicy::
-    GetEffectiveSecurityHealthAnalyticsCustomModule(
-        google::cloud::securitycenter::v1::
-            GetEffectiveSecurityHealthAnalyticsCustomModuleRequest const&) {
+Idempotency SecurityCenterConnectionIdempotencyPolicy::GetEffectiveSecurityHealthAnalyticsCustomModule(google::cloud::securitycenter::v1::GetEffectiveSecurityHealthAnalyticsCustomModuleRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency SecurityCenterConnectionIdempotencyPolicy::
-    GetSecurityHealthAnalyticsCustomModule(
-        google::cloud::securitycenter::v1::
-            GetSecurityHealthAnalyticsCustomModuleRequest const&) {
+Idempotency SecurityCenterConnectionIdempotencyPolicy::GetSecurityHealthAnalyticsCustomModule(google::cloud::securitycenter::v1::GetSecurityHealthAnalyticsCustomModuleRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency SecurityCenterConnectionIdempotencyPolicy::GetSource(
-    google::cloud::securitycenter::v1::GetSourceRequest const&) {
+Idempotency SecurityCenterConnectionIdempotencyPolicy::GetSource(google::cloud::securitycenter::v1::GetSourceRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency SecurityCenterConnectionIdempotencyPolicy::GroupAssets(
-    google::cloud::securitycenter::v1::GroupAssetsRequest) {  // NOLINT
+Idempotency SecurityCenterConnectionIdempotencyPolicy::GroupAssets(google::cloud::securitycenter::v1::GroupAssetsRequest) {  // NOLINT
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SecurityCenterConnectionIdempotencyPolicy::GroupFindings(
-    google::cloud::securitycenter::v1::GroupFindingsRequest) {  // NOLINT
+Idempotency SecurityCenterConnectionIdempotencyPolicy::GroupFindings(google::cloud::securitycenter::v1::GroupFindingsRequest) {  // NOLINT
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SecurityCenterConnectionIdempotencyPolicy::ListAssets(
-    google::cloud::securitycenter::v1::ListAssetsRequest) {  // NOLINT
+Idempotency SecurityCenterConnectionIdempotencyPolicy::ListAssets(google::cloud::securitycenter::v1::ListAssetsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency SecurityCenterConnectionIdempotencyPolicy::
-    ListDescendantSecurityHealthAnalyticsCustomModules(
-        google::cloud::securitycenter::v1::
-            ListDescendantSecurityHealthAnalyticsCustomModulesRequest) {  // NOLINT
+Idempotency SecurityCenterConnectionIdempotencyPolicy::ListDescendantSecurityHealthAnalyticsCustomModules(google::cloud::securitycenter::v1::ListDescendantSecurityHealthAnalyticsCustomModulesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency SecurityCenterConnectionIdempotencyPolicy::ListFindings(
-    google::cloud::securitycenter::v1::ListFindingsRequest) {  // NOLINT
+Idempotency SecurityCenterConnectionIdempotencyPolicy::ListFindings(google::cloud::securitycenter::v1::ListFindingsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency SecurityCenterConnectionIdempotencyPolicy::ListMuteConfigs(
-    google::cloud::securitycenter::v1::ListMuteConfigsRequest) {  // NOLINT
+Idempotency SecurityCenterConnectionIdempotencyPolicy::ListMuteConfigs(google::cloud::securitycenter::v1::ListMuteConfigsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency SecurityCenterConnectionIdempotencyPolicy::ListNotificationConfigs(
-    google::cloud::securitycenter::v1::
-        ListNotificationConfigsRequest) {  // NOLINT
+Idempotency SecurityCenterConnectionIdempotencyPolicy::ListNotificationConfigs(google::cloud::securitycenter::v1::ListNotificationConfigsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency SecurityCenterConnectionIdempotencyPolicy::
-    ListEffectiveSecurityHealthAnalyticsCustomModules(
-        google::cloud::securitycenter::v1::
-            ListEffectiveSecurityHealthAnalyticsCustomModulesRequest) {  // NOLINT
+Idempotency SecurityCenterConnectionIdempotencyPolicy::ListEffectiveSecurityHealthAnalyticsCustomModules(google::cloud::securitycenter::v1::ListEffectiveSecurityHealthAnalyticsCustomModulesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency SecurityCenterConnectionIdempotencyPolicy::
-    ListSecurityHealthAnalyticsCustomModules(
-        google::cloud::securitycenter::v1::
-            ListSecurityHealthAnalyticsCustomModulesRequest) {  // NOLINT
+Idempotency SecurityCenterConnectionIdempotencyPolicy::ListSecurityHealthAnalyticsCustomModules(google::cloud::securitycenter::v1::ListSecurityHealthAnalyticsCustomModulesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency SecurityCenterConnectionIdempotencyPolicy::ListSources(
-    google::cloud::securitycenter::v1::ListSourcesRequest) {  // NOLINT
+Idempotency SecurityCenterConnectionIdempotencyPolicy::ListSources(google::cloud::securitycenter::v1::ListSourcesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency SecurityCenterConnectionIdempotencyPolicy::RunAssetDiscovery(
-    google::cloud::securitycenter::v1::RunAssetDiscoveryRequest const&) {
+Idempotency SecurityCenterConnectionIdempotencyPolicy::RunAssetDiscovery(google::cloud::securitycenter::v1::RunAssetDiscoveryRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SecurityCenterConnectionIdempotencyPolicy::SetFindingState(
-    google::cloud::securitycenter::v1::SetFindingStateRequest const&) {
+Idempotency SecurityCenterConnectionIdempotencyPolicy::SetFindingState(google::cloud::securitycenter::v1::SetFindingStateRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SecurityCenterConnectionIdempotencyPolicy::SetMute(
-    google::cloud::securitycenter::v1::SetMuteRequest const&) {
+Idempotency SecurityCenterConnectionIdempotencyPolicy::SetMute(google::cloud::securitycenter::v1::SetMuteRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
@@ -215,209 +167,144 @@ Idempotency SecurityCenterConnectionIdempotencyPolicy::SetIamPolicy(
                                          : Idempotency::kIdempotent;
 }
 
-Idempotency SecurityCenterConnectionIdempotencyPolicy::TestIamPermissions(
-    google::iam::v1::TestIamPermissionsRequest const&) {
+Idempotency SecurityCenterConnectionIdempotencyPolicy::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency SecurityCenterConnectionIdempotencyPolicy::
-    SimulateSecurityHealthAnalyticsCustomModule(
-        google::cloud::securitycenter::v1::
-            SimulateSecurityHealthAnalyticsCustomModuleRequest const&) {
+Idempotency SecurityCenterConnectionIdempotencyPolicy::SimulateSecurityHealthAnalyticsCustomModule(google::cloud::securitycenter::v1::SimulateSecurityHealthAnalyticsCustomModuleRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SecurityCenterConnectionIdempotencyPolicy::UpdateExternalSystem(
-    google::cloud::securitycenter::v1::UpdateExternalSystemRequest const&) {
+Idempotency SecurityCenterConnectionIdempotencyPolicy::UpdateExternalSystem(google::cloud::securitycenter::v1::UpdateExternalSystemRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SecurityCenterConnectionIdempotencyPolicy::UpdateFinding(
-    google::cloud::securitycenter::v1::UpdateFindingRequest const&) {
+Idempotency SecurityCenterConnectionIdempotencyPolicy::UpdateFinding(google::cloud::securitycenter::v1::UpdateFindingRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SecurityCenterConnectionIdempotencyPolicy::UpdateMuteConfig(
-    google::cloud::securitycenter::v1::UpdateMuteConfigRequest const&) {
+Idempotency SecurityCenterConnectionIdempotencyPolicy::UpdateMuteConfig(google::cloud::securitycenter::v1::UpdateMuteConfigRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SecurityCenterConnectionIdempotencyPolicy::UpdateNotificationConfig(
-    google::cloud::securitycenter::v1::UpdateNotificationConfigRequest const&) {
+Idempotency SecurityCenterConnectionIdempotencyPolicy::UpdateNotificationConfig(google::cloud::securitycenter::v1::UpdateNotificationConfigRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency
-SecurityCenterConnectionIdempotencyPolicy::UpdateOrganizationSettings(
-    google::cloud::securitycenter::v1::
-        UpdateOrganizationSettingsRequest const&) {
+Idempotency SecurityCenterConnectionIdempotencyPolicy::UpdateOrganizationSettings(google::cloud::securitycenter::v1::UpdateOrganizationSettingsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SecurityCenterConnectionIdempotencyPolicy::
-    UpdateSecurityHealthAnalyticsCustomModule(
-        google::cloud::securitycenter::v1::
-            UpdateSecurityHealthAnalyticsCustomModuleRequest const&) {
+Idempotency SecurityCenterConnectionIdempotencyPolicy::UpdateSecurityHealthAnalyticsCustomModule(google::cloud::securitycenter::v1::UpdateSecurityHealthAnalyticsCustomModuleRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SecurityCenterConnectionIdempotencyPolicy::UpdateSource(
-    google::cloud::securitycenter::v1::UpdateSourceRequest const&) {
+Idempotency SecurityCenterConnectionIdempotencyPolicy::UpdateSource(google::cloud::securitycenter::v1::UpdateSourceRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SecurityCenterConnectionIdempotencyPolicy::UpdateSecurityMarks(
-    google::cloud::securitycenter::v1::UpdateSecurityMarksRequest const&) {
+Idempotency SecurityCenterConnectionIdempotencyPolicy::UpdateSecurityMarks(google::cloud::securitycenter::v1::UpdateSecurityMarksRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SecurityCenterConnectionIdempotencyPolicy::CreateBigQueryExport(
-    google::cloud::securitycenter::v1::CreateBigQueryExportRequest const&) {
+Idempotency SecurityCenterConnectionIdempotencyPolicy::CreateBigQueryExport(google::cloud::securitycenter::v1::CreateBigQueryExportRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SecurityCenterConnectionIdempotencyPolicy::DeleteBigQueryExport(
-    google::cloud::securitycenter::v1::DeleteBigQueryExportRequest const&) {
+Idempotency SecurityCenterConnectionIdempotencyPolicy::DeleteBigQueryExport(google::cloud::securitycenter::v1::DeleteBigQueryExportRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SecurityCenterConnectionIdempotencyPolicy::UpdateBigQueryExport(
-    google::cloud::securitycenter::v1::UpdateBigQueryExportRequest const&) {
+Idempotency SecurityCenterConnectionIdempotencyPolicy::UpdateBigQueryExport(google::cloud::securitycenter::v1::UpdateBigQueryExportRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SecurityCenterConnectionIdempotencyPolicy::ListBigQueryExports(
-    google::cloud::securitycenter::v1::ListBigQueryExportsRequest) {  // NOLINT
+Idempotency SecurityCenterConnectionIdempotencyPolicy::ListBigQueryExports(google::cloud::securitycenter::v1::ListBigQueryExportsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency SecurityCenterConnectionIdempotencyPolicy::
-    CreateEventThreatDetectionCustomModule(
-        google::cloud::securitycenter::v1::
-            CreateEventThreatDetectionCustomModuleRequest const&) {
+Idempotency SecurityCenterConnectionIdempotencyPolicy::CreateEventThreatDetectionCustomModule(google::cloud::securitycenter::v1::CreateEventThreatDetectionCustomModuleRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SecurityCenterConnectionIdempotencyPolicy::
-    DeleteEventThreatDetectionCustomModule(
-        google::cloud::securitycenter::v1::
-            DeleteEventThreatDetectionCustomModuleRequest const&) {
+Idempotency SecurityCenterConnectionIdempotencyPolicy::DeleteEventThreatDetectionCustomModule(google::cloud::securitycenter::v1::DeleteEventThreatDetectionCustomModuleRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency
-SecurityCenterConnectionIdempotencyPolicy::GetEventThreatDetectionCustomModule(
-    google::cloud::securitycenter::v1::
-        GetEventThreatDetectionCustomModuleRequest const&) {
+Idempotency SecurityCenterConnectionIdempotencyPolicy::GetEventThreatDetectionCustomModule(google::cloud::securitycenter::v1::GetEventThreatDetectionCustomModuleRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency SecurityCenterConnectionIdempotencyPolicy::
-    ListDescendantEventThreatDetectionCustomModules(
-        google::cloud::securitycenter::v1::
-            ListDescendantEventThreatDetectionCustomModulesRequest) {  // NOLINT
+Idempotency SecurityCenterConnectionIdempotencyPolicy::ListDescendantEventThreatDetectionCustomModules(google::cloud::securitycenter::v1::ListDescendantEventThreatDetectionCustomModulesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency SecurityCenterConnectionIdempotencyPolicy::
-    ListEventThreatDetectionCustomModules(
-        google::cloud::securitycenter::v1::
-            ListEventThreatDetectionCustomModulesRequest) {  // NOLINT
+Idempotency SecurityCenterConnectionIdempotencyPolicy::ListEventThreatDetectionCustomModules(google::cloud::securitycenter::v1::ListEventThreatDetectionCustomModulesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency SecurityCenterConnectionIdempotencyPolicy::
-    UpdateEventThreatDetectionCustomModule(
-        google::cloud::securitycenter::v1::
-            UpdateEventThreatDetectionCustomModuleRequest const&) {
+Idempotency SecurityCenterConnectionIdempotencyPolicy::UpdateEventThreatDetectionCustomModule(google::cloud::securitycenter::v1::UpdateEventThreatDetectionCustomModuleRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SecurityCenterConnectionIdempotencyPolicy::
-    ValidateEventThreatDetectionCustomModule(
-        google::cloud::securitycenter::v1::
-            ValidateEventThreatDetectionCustomModuleRequest const&) {
+Idempotency SecurityCenterConnectionIdempotencyPolicy::ValidateEventThreatDetectionCustomModule(google::cloud::securitycenter::v1::ValidateEventThreatDetectionCustomModuleRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SecurityCenterConnectionIdempotencyPolicy::
-    GetEffectiveEventThreatDetectionCustomModule(
-        google::cloud::securitycenter::v1::
-            GetEffectiveEventThreatDetectionCustomModuleRequest const&) {
+Idempotency SecurityCenterConnectionIdempotencyPolicy::GetEffectiveEventThreatDetectionCustomModule(google::cloud::securitycenter::v1::GetEffectiveEventThreatDetectionCustomModuleRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency SecurityCenterConnectionIdempotencyPolicy::
-    ListEffectiveEventThreatDetectionCustomModules(
-        google::cloud::securitycenter::v1::
-            ListEffectiveEventThreatDetectionCustomModulesRequest) {  // NOLINT
+Idempotency SecurityCenterConnectionIdempotencyPolicy::ListEffectiveEventThreatDetectionCustomModules(google::cloud::securitycenter::v1::ListEffectiveEventThreatDetectionCustomModulesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency
-SecurityCenterConnectionIdempotencyPolicy::BatchCreateResourceValueConfigs(
-    google::cloud::securitycenter::v1::
-        BatchCreateResourceValueConfigsRequest const&) {
+Idempotency SecurityCenterConnectionIdempotencyPolicy::BatchCreateResourceValueConfigs(google::cloud::securitycenter::v1::BatchCreateResourceValueConfigsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency
-SecurityCenterConnectionIdempotencyPolicy::DeleteResourceValueConfig(
-    google::cloud::securitycenter::v1::
-        DeleteResourceValueConfigRequest const&) {
+Idempotency SecurityCenterConnectionIdempotencyPolicy::DeleteResourceValueConfig(google::cloud::securitycenter::v1::DeleteResourceValueConfigRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SecurityCenterConnectionIdempotencyPolicy::GetResourceValueConfig(
-    google::cloud::securitycenter::v1::GetResourceValueConfigRequest const&) {
+Idempotency SecurityCenterConnectionIdempotencyPolicy::GetResourceValueConfig(google::cloud::securitycenter::v1::GetResourceValueConfigRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency SecurityCenterConnectionIdempotencyPolicy::ListResourceValueConfigs(
-    google::cloud::securitycenter::v1::
-        ListResourceValueConfigsRequest) {  // NOLINT
+Idempotency SecurityCenterConnectionIdempotencyPolicy::ListResourceValueConfigs(google::cloud::securitycenter::v1::ListResourceValueConfigsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency
-SecurityCenterConnectionIdempotencyPolicy::UpdateResourceValueConfig(
-    google::cloud::securitycenter::v1::
-        UpdateResourceValueConfigRequest const&) {
+Idempotency SecurityCenterConnectionIdempotencyPolicy::UpdateResourceValueConfig(google::cloud::securitycenter::v1::UpdateResourceValueConfigRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SecurityCenterConnectionIdempotencyPolicy::ListValuedResources(
-    google::cloud::securitycenter::v1::ListValuedResourcesRequest) {  // NOLINT
+Idempotency SecurityCenterConnectionIdempotencyPolicy::ListValuedResources(google::cloud::securitycenter::v1::ListValuedResourcesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency SecurityCenterConnectionIdempotencyPolicy::ListAttackPaths(
-    google::cloud::securitycenter::v1::ListAttackPathsRequest) {  // NOLINT
+Idempotency SecurityCenterConnectionIdempotencyPolicy::ListAttackPaths(google::cloud::securitycenter::v1::ListAttackPathsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency SecurityCenterConnectionIdempotencyPolicy::ListOperations(
-    google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency SecurityCenterConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency SecurityCenterConnectionIdempotencyPolicy::GetOperation(
-    google::longrunning::GetOperationRequest const&) {
+Idempotency SecurityCenterConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency SecurityCenterConnectionIdempotencyPolicy::DeleteOperation(
-    google::longrunning::DeleteOperationRequest const&) {
+Idempotency SecurityCenterConnectionIdempotencyPolicy::DeleteOperation(google::longrunning::DeleteOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SecurityCenterConnectionIdempotencyPolicy::CancelOperation(
-    google::longrunning::CancelOperationRequest const&) {
+Idempotency SecurityCenterConnectionIdempotencyPolicy::CancelOperation(google::longrunning::CancelOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<SecurityCenterConnectionIdempotencyPolicy>
-MakeDefaultSecurityCenterConnectionIdempotencyPolicy() {
+    MakeDefaultSecurityCenterConnectionIdempotencyPolicy() {
   return std::make_unique<SecurityCenterConnectionIdempotencyPolicy>();
 }
 

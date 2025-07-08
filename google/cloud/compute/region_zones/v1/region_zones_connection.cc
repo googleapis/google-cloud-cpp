@@ -17,11 +17,11 @@
 // source: google/cloud/compute/region_zones/v1/region_zones.proto
 
 #include "google/cloud/compute/region_zones/v1/region_zones_connection.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/compute/region_zones/v1/internal/region_zones_option_defaults.h"
 #include "google/cloud/compute/region_zones/v1/internal/region_zones_tracing_connection.h"
 #include "google/cloud/compute/region_zones/v1/region_zones_options.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
@@ -36,10 +36,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 RegionZonesConnection::~RegionZonesConnection() = default;
 
-StreamRange<google::cloud::cpp::compute::v1::Zone>
-RegionZonesConnection::ListRegionZones(
-    google::cloud::cpp::compute::region_zones::v1::
-        ListRegionZonesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::cpp::compute::v1::Zone> RegionZonesConnection::ListRegionZones(
+    google::cloud::cpp::compute::region_zones::v1::ListRegionZonesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::cpp::compute::v1::Zone>>();
 }

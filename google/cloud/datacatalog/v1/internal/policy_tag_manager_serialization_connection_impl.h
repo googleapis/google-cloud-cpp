@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATACATALOG_V1_INTERNAL_POLICY_TAG_MANAGER_SERIALIZATION_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATACATALOG_V1_INTERNAL_POLICY_TAG_MANAGER_SERIALIZATION_CONNECTION_IMPL_H
 
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/datacatalog/v1/internal/policy_tag_manager_serialization_retry_traits.h"
 #include "google/cloud/datacatalog/v1/internal/policy_tag_manager_serialization_stub.h"
 #include "google/cloud/datacatalog/v1/policy_tag_manager_serialization_connection.h"
 #include "google/cloud/datacatalog/v1/policy_tag_manager_serialization_connection_idempotency_policy.h"
 #include "google/cloud/datacatalog/v1/policy_tag_manager_serialization_options.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -43,44 +43,36 @@ class PolicyTagManagerSerializationConnectionImpl
   ~PolicyTagManagerSerializationConnectionImpl() override = default;
 
   PolicyTagManagerSerializationConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<
-          datacatalog_v1_internal::PolicyTagManagerSerializationStub>
-          stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<datacatalog_v1_internal::PolicyTagManagerSerializationStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
-  StatusOr<google::cloud::datacatalog::v1::Taxonomy> ReplaceTaxonomy(
-      google::cloud::datacatalog::v1::ReplaceTaxonomyRequest const& request)
-      override;
+  StatusOr<google::cloud::datacatalog::v1::Taxonomy>
+  ReplaceTaxonomy(google::cloud::datacatalog::v1::ReplaceTaxonomyRequest const& request) override;
 
   StatusOr<google::cloud::datacatalog::v1::ImportTaxonomiesResponse>
-  ImportTaxonomies(
-      google::cloud::datacatalog::v1::ImportTaxonomiesRequest const& request)
-      override;
+  ImportTaxonomies(google::cloud::datacatalog::v1::ImportTaxonomiesRequest const& request) override;
 
   StatusOr<google::cloud::datacatalog::v1::ExportTaxonomiesResponse>
-  ExportTaxonomies(
-      google::cloud::datacatalog::v1::ExportTaxonomiesRequest const& request)
-      override;
+  ExportTaxonomies(google::cloud::datacatalog::v1::ExportTaxonomiesRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request) override;
 
-  Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request) override;
+  Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request) override;
 
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request) override;
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<datacatalog_v1_internal::PolicyTagManagerSerializationStub>
-      stub_;
+  std::shared_ptr<datacatalog_v1_internal::PolicyTagManagerSerializationStub> stub_;
   Options options_;
 };
 

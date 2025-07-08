@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PARALLELSTORE_V1_PARALLELSTORE_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PARALLELSTORE_V1_PARALLELSTORE_CLIENT_H
 
-#include "google/cloud/parallelstore/v1/parallelstore_connection.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
+#include "google/cloud/parallelstore/v1/parallelstore_connection.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
@@ -44,10 +44,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 /// The `parallelstore.googleapis.com` service implements the parallelstore API
 /// and defines the following resource model for managing instances:
-/// * The service works with a collection of cloud projects, named:
-/// `/projects/*`
-/// * Each project has a collection of available locations, named:
-/// `/locations/*`
+/// * The service works with a collection of cloud projects, named: `/projects/*`
+/// * Each project has a collection of available locations, named: `/locations/*`
 /// * Each location has a collection of instances named `/instances/*`.
 /// * Parallelstore instances are resources of the form:
 ///   `/projects/{project_id}/locations/{location_id}/instances/{instance_id}`
@@ -80,8 +78,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class ParallelstoreClient {
  public:
-  explicit ParallelstoreClient(
-      std::shared_ptr<ParallelstoreConnection> connection, Options opts = {});
+  explicit ParallelstoreClient(std::shared_ptr<ParallelstoreConnection> connection, Options opts = {});
   ~ParallelstoreClient();
 
   ///@{
@@ -94,12 +91,10 @@ class ParallelstoreClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(ParallelstoreClient const& a,
-                         ParallelstoreClient const& b) {
+  friend bool operator==(ParallelstoreClient const& a, ParallelstoreClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(ParallelstoreClient const& a,
-                         ParallelstoreClient const& b) {
+  friend bool operator!=(ParallelstoreClient const& a, ParallelstoreClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -139,8 +134,8 @@ class ParallelstoreClient {
   /// [google.cloud.parallelstore.v1.ListInstancesRequest]: @googleapis_reference_link{google/cloud/parallelstore/v1/parallelstore.proto#L347}
   ///
   // clang-format on
-  StreamRange<google::cloud::parallelstore::v1::Instance> ListInstances(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::parallelstore::v1::Instance>
+  ListInstances(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -178,9 +173,8 @@ class ParallelstoreClient {
   /// [google.cloud.parallelstore.v1.ListInstancesRequest]: @googleapis_reference_link{google/cloud/parallelstore/v1/parallelstore.proto#L347}
   ///
   // clang-format on
-  StreamRange<google::cloud::parallelstore::v1::Instance> ListInstances(
-      google::cloud::parallelstore::v1::ListInstancesRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::parallelstore::v1::Instance>
+  ListInstances(google::cloud::parallelstore::v1::ListInstancesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -205,8 +199,8 @@ class ParallelstoreClient {
   /// [google.cloud.parallelstore.v1.Instance]: @googleapis_reference_link{google/cloud/parallelstore/v1/parallelstore.proto#L208}
   ///
   // clang-format on
-  StatusOr<google::cloud::parallelstore::v1::Instance> GetInstance(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::parallelstore::v1::Instance>
+  GetInstance(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -235,9 +229,8 @@ class ParallelstoreClient {
   /// [google.cloud.parallelstore.v1.Instance]: @googleapis_reference_link{google/cloud/parallelstore/v1/parallelstore.proto#L208}
   ///
   // clang-format on
-  StatusOr<google::cloud::parallelstore::v1::Instance> GetInstance(
-      google::cloud::parallelstore::v1::GetInstanceRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::parallelstore::v1::Instance>
+  GetInstance(google::cloud::parallelstore::v1::GetInstanceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -278,10 +271,8 @@ class ParallelstoreClient {
   /// [google.cloud.parallelstore.v1.Instance]: @googleapis_reference_link{google/cloud/parallelstore/v1/parallelstore.proto#L208}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::parallelstore::v1::Instance>> CreateInstance(
-      std::string const& parent,
-      google::cloud::parallelstore::v1::Instance const& instance,
-      std::string const& instance_id, Options opts = {});
+  future<StatusOr<google::cloud::parallelstore::v1::Instance>>
+  CreateInstance(std::string const& parent, google::cloud::parallelstore::v1::Instance const& instance, std::string const& instance_id, Options opts = {});
 
   // clang-format off
   ///
@@ -294,10 +285,8 @@ class ParallelstoreClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateInstance(
-      NoAwaitTag, std::string const& parent,
-      google::cloud::parallelstore::v1::Instance const& instance,
-      std::string const& instance_id, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateInstance(NoAwaitTag, std::string const& parent, google::cloud::parallelstore::v1::Instance const& instance, std::string const& instance_id, Options opts = {});
 
   // clang-format off
   ///
@@ -333,9 +322,8 @@ class ParallelstoreClient {
   /// [google.cloud.parallelstore.v1.Instance]: @googleapis_reference_link{google/cloud/parallelstore/v1/parallelstore.proto#L208}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::parallelstore::v1::Instance>> CreateInstance(
-      google::cloud::parallelstore::v1::CreateInstanceRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::parallelstore::v1::Instance>>
+  CreateInstance(google::cloud::parallelstore::v1::CreateInstanceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -348,10 +336,8 @@ class ParallelstoreClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateInstance(
-      NoAwaitTag,
-      google::cloud::parallelstore::v1::CreateInstanceRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateInstance(NoAwaitTag, google::cloud::parallelstore::v1::CreateInstanceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -362,8 +348,8 @@ class ParallelstoreClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::parallelstore::v1::Instance>> CreateInstance(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::parallelstore::v1::Instance>>
+  CreateInstance(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -398,9 +384,8 @@ class ParallelstoreClient {
   /// [google.cloud.parallelstore.v1.UpdateInstanceRequest]: @googleapis_reference_link{google/cloud/parallelstore/v1/parallelstore.proto#L440}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::parallelstore::v1::Instance>> UpdateInstance(
-      google::cloud::parallelstore::v1::Instance const& instance,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  future<StatusOr<google::cloud::parallelstore::v1::Instance>>
+  UpdateInstance(google::cloud::parallelstore::v1::Instance const& instance, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -413,9 +398,8 @@ class ParallelstoreClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateInstance(
-      NoAwaitTag, google::cloud::parallelstore::v1::Instance const& instance,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateInstance(NoAwaitTag, google::cloud::parallelstore::v1::Instance const& instance, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -451,9 +435,8 @@ class ParallelstoreClient {
   /// [google.cloud.parallelstore.v1.UpdateInstanceRequest]: @googleapis_reference_link{google/cloud/parallelstore/v1/parallelstore.proto#L440}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::parallelstore::v1::Instance>> UpdateInstance(
-      google::cloud::parallelstore::v1::UpdateInstanceRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::parallelstore::v1::Instance>>
+  UpdateInstance(google::cloud::parallelstore::v1::UpdateInstanceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -466,10 +449,8 @@ class ParallelstoreClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateInstance(
-      NoAwaitTag,
-      google::cloud::parallelstore::v1::UpdateInstanceRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateInstance(NoAwaitTag, google::cloud::parallelstore::v1::UpdateInstanceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -480,8 +461,8 @@ class ParallelstoreClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::parallelstore::v1::Instance>> UpdateInstance(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::parallelstore::v1::Instance>>
+  UpdateInstance(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -526,8 +507,8 @@ class ParallelstoreClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteInstance(
-      NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteInstance(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -564,9 +545,7 @@ class ParallelstoreClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::parallelstore::v1::OperationMetadata>>
-  DeleteInstance(
-      google::cloud::parallelstore::v1::DeleteInstanceRequest const& request,
-      Options opts = {});
+  DeleteInstance(google::cloud::parallelstore::v1::DeleteInstanceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -579,10 +558,8 @@ class ParallelstoreClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteInstance(
-      NoAwaitTag,
-      google::cloud::parallelstore::v1::DeleteInstanceRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteInstance(NoAwaitTag, google::cloud::parallelstore::v1::DeleteInstanceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -594,8 +571,7 @@ class ParallelstoreClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::parallelstore::v1::OperationMetadata>>
-  DeleteInstance(google::longrunning::Operation const& operation,
-                 Options opts = {});
+  DeleteInstance(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -632,8 +608,7 @@ class ParallelstoreClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::parallelstore::v1::ImportDataResponse>>
-  ImportData(google::cloud::parallelstore::v1::ImportDataRequest const& request,
-             Options opts = {});
+  ImportData(google::cloud::parallelstore::v1::ImportDataRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -646,10 +621,8 @@ class ParallelstoreClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> ImportData(
-      NoAwaitTag,
-      google::cloud::parallelstore::v1::ImportDataRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  ImportData(NoAwaitTag, google::cloud::parallelstore::v1::ImportDataRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -661,8 +634,7 @@ class ParallelstoreClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::parallelstore::v1::ImportDataResponse>>
-  ImportData(google::longrunning::Operation const& operation,
-             Options opts = {});
+  ImportData(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -699,8 +671,7 @@ class ParallelstoreClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::parallelstore::v1::ExportDataResponse>>
-  ExportData(google::cloud::parallelstore::v1::ExportDataRequest const& request,
-             Options opts = {});
+  ExportData(google::cloud::parallelstore::v1::ExportDataRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -713,10 +684,8 @@ class ParallelstoreClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> ExportData(
-      NoAwaitTag,
-      google::cloud::parallelstore::v1::ExportDataRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  ExportData(NoAwaitTag, google::cloud::parallelstore::v1::ExportDataRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -728,8 +697,7 @@ class ParallelstoreClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::parallelstore::v1::ExportDataResponse>>
-  ExportData(google::longrunning::Operation const& operation,
-             Options opts = {});
+  ExportData(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -767,8 +735,8 @@ class ParallelstoreClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request, Options opts = {});
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -797,9 +765,8 @@ class ParallelstoreClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -834,8 +801,8 @@ class ParallelstoreClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -874,8 +841,8 @@ class ParallelstoreClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -901,8 +868,8 @@ class ParallelstoreClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -933,9 +900,8 @@ class ParallelstoreClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -959,7 +925,8 @@ class ParallelstoreClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status DeleteOperation(std::string const& name, Options opts = {});
+  Status
+  DeleteOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -988,9 +955,8 @@ class ParallelstoreClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request,
-      Options opts = {});
+  Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1024,7 +990,8 @@ class ParallelstoreClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(std::string const& name, Options opts = {});
+  Status
+  CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1063,9 +1030,8 @@ class ParallelstoreClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request,
-      Options opts = {});
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<ParallelstoreConnection> connection_;

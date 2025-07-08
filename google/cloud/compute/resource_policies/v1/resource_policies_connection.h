@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_RESOURCE_POLICIES_V1_RESOURCE_POLICIES_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_RESOURCE_POLICIES_V1_RESOURCE_POLICIES_CONNECTION_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/resource_policies/v1/internal/resource_policies_retry_traits.h"
 #include "google/cloud/compute/resource_policies/v1/resource_policies_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -55,8 +55,7 @@ class ResourcePoliciesRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class ResourcePoliciesLimitedErrorCountRetryPolicy
-    : public ResourcePoliciesRetryPolicy {
+class ResourcePoliciesLimitedErrorCountRetryPolicy : public ResourcePoliciesRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -66,14 +65,14 @@ class ResourcePoliciesLimitedErrorCountRetryPolicy
    *     @p maximum_failures == 0.
    */
   explicit ResourcePoliciesLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   ResourcePoliciesLimitedErrorCountRetryPolicy(
       ResourcePoliciesLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : ResourcePoliciesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : ResourcePoliciesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   ResourcePoliciesLimitedErrorCountRetryPolicy(
       ResourcePoliciesLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : ResourcePoliciesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : ResourcePoliciesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -93,9 +92,7 @@ class ResourcePoliciesLimitedErrorCountRetryPolicy
   using BaseType = ResourcePoliciesRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      compute_resource_policies_v1_internal::ResourcePoliciesRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<compute_resource_policies_v1_internal::ResourcePoliciesRetryTraits> impl_;
 };
 
 /**
@@ -108,8 +105,7 @@ class ResourcePoliciesLimitedErrorCountRetryPolicy
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class ResourcePoliciesLimitedTimeRetryPolicy
-    : public ResourcePoliciesRetryPolicy {
+class ResourcePoliciesLimitedTimeRetryPolicy : public ResourcePoliciesRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -134,14 +130,12 @@ class ResourcePoliciesLimitedTimeRetryPolicy
   template <typename DurationRep, typename DurationPeriod>
   explicit ResourcePoliciesLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  ResourcePoliciesLimitedTimeRetryPolicy(
-      ResourcePoliciesLimitedTimeRetryPolicy&& rhs) noexcept
-      : ResourcePoliciesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  ResourcePoliciesLimitedTimeRetryPolicy(
-      ResourcePoliciesLimitedTimeRetryPolicy const& rhs) noexcept
-      : ResourcePoliciesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  ResourcePoliciesLimitedTimeRetryPolicy(ResourcePoliciesLimitedTimeRetryPolicy&& rhs) noexcept
+    : ResourcePoliciesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  ResourcePoliciesLimitedTimeRetryPolicy(ResourcePoliciesLimitedTimeRetryPolicy const& rhs) noexcept
+    : ResourcePoliciesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -163,9 +157,7 @@ class ResourcePoliciesLimitedTimeRetryPolicy
   using BaseType = ResourcePoliciesRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      compute_resource_policies_v1_internal::ResourcePoliciesRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<compute_resource_policies_v1_internal::ResourcePoliciesRetryTraits> impl_;
 };
 
 /**
@@ -178,8 +170,7 @@ class ResourcePoliciesLimitedTimeRetryPolicy
  *
  * To create a concrete instance, see `MakeResourcePoliciesConnection()`.
  *
- * For mocking, see
- * `compute_resource_policies_v1_mocks::MockResourcePoliciesConnection`.
+ * For mocking, see `compute_resource_policies_v1_mocks::MockResourcePoliciesConnection`.
  */
 class ResourcePoliciesConnection {
  public:
@@ -187,70 +178,50 @@ class ResourcePoliciesConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StreamRange<std::pair<
-      std::string, google::cloud::cpp::compute::v1::ResourcePoliciesScopedList>>
-  AggregatedListResourcePolicies(
-      google::cloud::cpp::compute::resource_policies::v1::
-          AggregatedListResourcePoliciesRequest request);
+  virtual StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::ResourcePoliciesScopedList>>
+  AggregatedListResourcePolicies(google::cloud::cpp::compute::resource_policies::v1::AggregatedListResourcePoliciesRequest request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteResourcePolicy(google::cloud::cpp::compute::resource_policies::v1::
-                           DeleteResourcePolicyRequest const& request);
+  DeleteResourcePolicy(google::cloud::cpp::compute::resource_policies::v1::DeleteResourcePolicyRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteResourcePolicy(NoAwaitTag,
-                       google::cloud::cpp::compute::resource_policies::v1::
-                           DeleteResourcePolicyRequest const& request);
+  DeleteResourcePolicy(NoAwaitTag, google::cloud::cpp::compute::resource_policies::v1::DeleteResourcePolicyRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteResourcePolicy(
-      google::cloud::cpp::compute::v1::Operation const& operation);
+  DeleteResourcePolicy( google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::ResourcePolicy>
-  GetResourcePolicy(google::cloud::cpp::compute::resource_policies::v1::
-                        GetResourcePolicyRequest const& request);
+  GetResourcePolicy(google::cloud::cpp::compute::resource_policies::v1::GetResourcePolicyRequest const& request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
-      google::cloud::cpp::compute::resource_policies::v1::
-          GetIamPolicyRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Policy>
+  GetIamPolicy(google::cloud::cpp::compute::resource_policies::v1::GetIamPolicyRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertResourcePolicy(google::cloud::cpp::compute::resource_policies::v1::
-                           InsertResourcePolicyRequest const& request);
+  InsertResourcePolicy(google::cloud::cpp::compute::resource_policies::v1::InsertResourcePolicyRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertResourcePolicy(NoAwaitTag,
-                       google::cloud::cpp::compute::resource_policies::v1::
-                           InsertResourcePolicyRequest const& request);
+  InsertResourcePolicy(NoAwaitTag, google::cloud::cpp::compute::resource_policies::v1::InsertResourcePolicyRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertResourcePolicy(
-      google::cloud::cpp::compute::v1::Operation const& operation);
+  InsertResourcePolicy( google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::ResourcePolicy>
-  ListResourcePolicies(google::cloud::cpp::compute::resource_policies::v1::
-                           ListResourcePoliciesRequest request);
+  ListResourcePolicies(google::cloud::cpp::compute::resource_policies::v1::ListResourcePoliciesRequest request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchResourcePolicy(google::cloud::cpp::compute::resource_policies::v1::
-                          PatchResourcePolicyRequest const& request);
+  PatchResourcePolicy(google::cloud::cpp::compute::resource_policies::v1::PatchResourcePolicyRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  PatchResourcePolicy(NoAwaitTag,
-                      google::cloud::cpp::compute::resource_policies::v1::
-                          PatchResourcePolicyRequest const& request);
+  PatchResourcePolicy(NoAwaitTag, google::cloud::cpp::compute::resource_policies::v1::PatchResourcePolicyRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchResourcePolicy(
-      google::cloud::cpp::compute::v1::Operation const& operation);
+  PatchResourcePolicy( google::cloud::cpp::compute::v1::Operation const& operation);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
-      google::cloud::cpp::compute::resource_policies::v1::
-          SetIamPolicyRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Policy>
+  SetIamPolicy(google::cloud::cpp::compute::resource_policies::v1::SetIamPolicyRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(google::cloud::cpp::compute::resource_policies::v1::
-                         TestIamPermissionsRequest const& request);
+  TestIamPermissions(google::cloud::cpp::compute::resource_policies::v1::TestIamPermissionsRequest const& request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

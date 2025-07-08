@@ -33,11 +33,8 @@ EnvironmentsTracingConnection::EnvironmentsTracingConnection(
     std::shared_ptr<composer_v1::EnvironmentsConnection> child)
     : child_(std::move(child)) {}
 
-future<
-    StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>>
-EnvironmentsTracingConnection::CreateEnvironment(
-    google::cloud::orchestration::airflow::service::v1::
-        CreateEnvironmentRequest const& request) {
+future<StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>>
+EnvironmentsTracingConnection::CreateEnvironment(google::cloud::orchestration::airflow::service::v1::CreateEnvironmentRequest const& request) {
   auto span = internal::MakeSpan(
       "composer_v1::EnvironmentsConnection::CreateEnvironment");
   internal::OTelScope scope(span);
@@ -46,54 +43,42 @@ EnvironmentsTracingConnection::CreateEnvironment(
 
 StatusOr<google::longrunning::Operation>
 EnvironmentsTracingConnection::CreateEnvironment(
-    NoAwaitTag, google::cloud::orchestration::airflow::service::v1::
-                    CreateEnvironmentRequest const& request) {
+    NoAwaitTag, google::cloud::orchestration::airflow::service::v1::CreateEnvironmentRequest const& request) {
   auto span = internal::MakeSpan(
       "composer_v1::EnvironmentsConnection::CreateEnvironment");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span,
-                           child_->CreateEnvironment(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->CreateEnvironment(
+      NoAwaitTag{}, request));
 }
 
-future<
-    StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>>
+future<StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>>
 EnvironmentsTracingConnection::CreateEnvironment(
     google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "composer_v1::EnvironmentsConnection::CreateEnvironment");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->CreateEnvironment(operation));
+      child_->CreateEnvironment(operation));
 }
 
 StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>
-EnvironmentsTracingConnection::GetEnvironment(
-    google::cloud::orchestration::airflow::service::v1::
-        GetEnvironmentRequest const& request) {
-  auto span =
-      internal::MakeSpan("composer_v1::EnvironmentsConnection::GetEnvironment");
+EnvironmentsTracingConnection::GetEnvironment(google::cloud::orchestration::airflow::service::v1::GetEnvironmentRequest const& request) {
+  auto span = internal::MakeSpan("composer_v1::EnvironmentsConnection::GetEnvironment");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetEnvironment(request));
 }
 
 StreamRange<google::cloud::orchestration::airflow::service::v1::Environment>
-EnvironmentsTracingConnection::ListEnvironments(
-    google::cloud::orchestration::airflow::service::v1::ListEnvironmentsRequest
-        request) {
-  auto span = internal::MakeSpan(
-      "composer_v1::EnvironmentsConnection::ListEnvironments");
+EnvironmentsTracingConnection::ListEnvironments(google::cloud::orchestration::airflow::service::v1::ListEnvironmentsRequest request) {
+  auto span = internal::MakeSpan("composer_v1::EnvironmentsConnection::ListEnvironments");
   internal::OTelScope scope(span);
   auto sr = child_->ListEnvironments(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::orchestration::airflow::service::v1::Environment>(
-      std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::orchestration::airflow::service::v1::Environment>(
+        std::move(span), std::move(sr));
 }
 
-future<
-    StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>>
-EnvironmentsTracingConnection::UpdateEnvironment(
-    google::cloud::orchestration::airflow::service::v1::
-        UpdateEnvironmentRequest const& request) {
+future<StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>>
+EnvironmentsTracingConnection::UpdateEnvironment(google::cloud::orchestration::airflow::service::v1::UpdateEnvironmentRequest const& request) {
   auto span = internal::MakeSpan(
       "composer_v1::EnvironmentsConnection::UpdateEnvironment");
   internal::OTelScope scope(span);
@@ -102,31 +87,26 @@ EnvironmentsTracingConnection::UpdateEnvironment(
 
 StatusOr<google::longrunning::Operation>
 EnvironmentsTracingConnection::UpdateEnvironment(
-    NoAwaitTag, google::cloud::orchestration::airflow::service::v1::
-                    UpdateEnvironmentRequest const& request) {
+    NoAwaitTag, google::cloud::orchestration::airflow::service::v1::UpdateEnvironmentRequest const& request) {
   auto span = internal::MakeSpan(
       "composer_v1::EnvironmentsConnection::UpdateEnvironment");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span,
-                           child_->UpdateEnvironment(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->UpdateEnvironment(
+      NoAwaitTag{}, request));
 }
 
-future<
-    StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>>
+future<StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>>
 EnvironmentsTracingConnection::UpdateEnvironment(
     google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "composer_v1::EnvironmentsConnection::UpdateEnvironment");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->UpdateEnvironment(operation));
+      child_->UpdateEnvironment(operation));
 }
 
-future<StatusOr<
-    google::cloud::orchestration::airflow::service::v1::OperationMetadata>>
-EnvironmentsTracingConnection::DeleteEnvironment(
-    google::cloud::orchestration::airflow::service::v1::
-        DeleteEnvironmentRequest const& request) {
+future<StatusOr<google::cloud::orchestration::airflow::service::v1::OperationMetadata>>
+EnvironmentsTracingConnection::DeleteEnvironment(google::cloud::orchestration::airflow::service::v1::DeleteEnvironmentRequest const& request) {
   auto span = internal::MakeSpan(
       "composer_v1::EnvironmentsConnection::DeleteEnvironment");
   internal::OTelScope scope(span);
@@ -135,287 +115,214 @@ EnvironmentsTracingConnection::DeleteEnvironment(
 
 StatusOr<google::longrunning::Operation>
 EnvironmentsTracingConnection::DeleteEnvironment(
-    NoAwaitTag, google::cloud::orchestration::airflow::service::v1::
-                    DeleteEnvironmentRequest const& request) {
+    NoAwaitTag, google::cloud::orchestration::airflow::service::v1::DeleteEnvironmentRequest const& request) {
   auto span = internal::MakeSpan(
       "composer_v1::EnvironmentsConnection::DeleteEnvironment");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span,
-                           child_->DeleteEnvironment(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->DeleteEnvironment(
+      NoAwaitTag{}, request));
 }
 
-future<StatusOr<
-    google::cloud::orchestration::airflow::service::v1::OperationMetadata>>
+future<StatusOr<google::cloud::orchestration::airflow::service::v1::OperationMetadata>>
 EnvironmentsTracingConnection::DeleteEnvironment(
     google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "composer_v1::EnvironmentsConnection::DeleteEnvironment");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->DeleteEnvironment(operation));
+      child_->DeleteEnvironment(operation));
 }
 
-StatusOr<google::cloud::orchestration::airflow::service::v1::
-             ExecuteAirflowCommandResponse>
-EnvironmentsTracingConnection::ExecuteAirflowCommand(
-    google::cloud::orchestration::airflow::service::v1::
-        ExecuteAirflowCommandRequest const& request) {
-  auto span = internal::MakeSpan(
-      "composer_v1::EnvironmentsConnection::ExecuteAirflowCommand");
+StatusOr<google::cloud::orchestration::airflow::service::v1::ExecuteAirflowCommandResponse>
+EnvironmentsTracingConnection::ExecuteAirflowCommand(google::cloud::orchestration::airflow::service::v1::ExecuteAirflowCommandRequest const& request) {
+  auto span = internal::MakeSpan("composer_v1::EnvironmentsConnection::ExecuteAirflowCommand");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->ExecuteAirflowCommand(request));
 }
 
-StatusOr<google::cloud::orchestration::airflow::service::v1::
-             StopAirflowCommandResponse>
-EnvironmentsTracingConnection::StopAirflowCommand(
-    google::cloud::orchestration::airflow::service::v1::
-        StopAirflowCommandRequest const& request) {
-  auto span = internal::MakeSpan(
-      "composer_v1::EnvironmentsConnection::StopAirflowCommand");
+StatusOr<google::cloud::orchestration::airflow::service::v1::StopAirflowCommandResponse>
+EnvironmentsTracingConnection::StopAirflowCommand(google::cloud::orchestration::airflow::service::v1::StopAirflowCommandRequest const& request) {
+  auto span = internal::MakeSpan("composer_v1::EnvironmentsConnection::StopAirflowCommand");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->StopAirflowCommand(request));
 }
 
-StatusOr<google::cloud::orchestration::airflow::service::v1::
-             PollAirflowCommandResponse>
-EnvironmentsTracingConnection::PollAirflowCommand(
-    google::cloud::orchestration::airflow::service::v1::
-        PollAirflowCommandRequest const& request) {
-  auto span = internal::MakeSpan(
-      "composer_v1::EnvironmentsConnection::PollAirflowCommand");
+StatusOr<google::cloud::orchestration::airflow::service::v1::PollAirflowCommandResponse>
+EnvironmentsTracingConnection::PollAirflowCommand(google::cloud::orchestration::airflow::service::v1::PollAirflowCommandRequest const& request) {
+  auto span = internal::MakeSpan("composer_v1::EnvironmentsConnection::PollAirflowCommand");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->PollAirflowCommand(request));
 }
 
-StreamRange<google::cloud::orchestration::airflow::service::v1::
-                ListWorkloadsResponse::ComposerWorkload>
-EnvironmentsTracingConnection::ListWorkloads(
-    google::cloud::orchestration::airflow::service::v1::ListWorkloadsRequest
-        request) {
-  auto span =
-      internal::MakeSpan("composer_v1::EnvironmentsConnection::ListWorkloads");
+StreamRange<google::cloud::orchestration::airflow::service::v1::ListWorkloadsResponse::ComposerWorkload>
+EnvironmentsTracingConnection::ListWorkloads(google::cloud::orchestration::airflow::service::v1::ListWorkloadsRequest request) {
+  auto span = internal::MakeSpan("composer_v1::EnvironmentsConnection::ListWorkloads");
   internal::OTelScope scope(span);
   auto sr = child_->ListWorkloads(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::orchestration::airflow::service::v1::
-          ListWorkloadsResponse::ComposerWorkload>(std::move(span),
-                                                   std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::orchestration::airflow::service::v1::ListWorkloadsResponse::ComposerWorkload>(
+        std::move(span), std::move(sr));
 }
 
-future<StatusOr<
-    google::cloud::orchestration::airflow::service::v1::CheckUpgradeResponse>>
-EnvironmentsTracingConnection::CheckUpgrade(
-    google::cloud::orchestration::airflow::service::v1::
-        CheckUpgradeRequest const& request) {
-  auto span =
-      internal::MakeSpan("composer_v1::EnvironmentsConnection::CheckUpgrade");
+future<StatusOr<google::cloud::orchestration::airflow::service::v1::CheckUpgradeResponse>>
+EnvironmentsTracingConnection::CheckUpgrade(google::cloud::orchestration::airflow::service::v1::CheckUpgradeRequest const& request) {
+  auto span = internal::MakeSpan(
+      "composer_v1::EnvironmentsConnection::CheckUpgrade");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CheckUpgrade(request));
 }
 
 StatusOr<google::longrunning::Operation>
 EnvironmentsTracingConnection::CheckUpgrade(
-    NoAwaitTag, google::cloud::orchestration::airflow::service::v1::
-                    CheckUpgradeRequest const& request) {
-  auto span =
-      internal::MakeSpan("composer_v1::EnvironmentsConnection::CheckUpgrade");
+    NoAwaitTag, google::cloud::orchestration::airflow::service::v1::CheckUpgradeRequest const& request) {
+  auto span = internal::MakeSpan(
+      "composer_v1::EnvironmentsConnection::CheckUpgrade");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->CheckUpgrade(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->CheckUpgrade(
+      NoAwaitTag{}, request));
 }
 
-future<StatusOr<
-    google::cloud::orchestration::airflow::service::v1::CheckUpgradeResponse>>
+future<StatusOr<google::cloud::orchestration::airflow::service::v1::CheckUpgradeResponse>>
 EnvironmentsTracingConnection::CheckUpgrade(
     google::longrunning::Operation const& operation) {
-  auto span =
-      internal::MakeSpan("composer_v1::EnvironmentsConnection::CheckUpgrade");
+  auto span = internal::MakeSpan(
+      "composer_v1::EnvironmentsConnection::CheckUpgrade");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->CheckUpgrade(operation));
+  return internal::EndSpan(std::move(span),
+      child_->CheckUpgrade(operation));
 }
 
-StatusOr<
-    google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
-EnvironmentsTracingConnection::CreateUserWorkloadsSecret(
-    google::cloud::orchestration::airflow::service::v1::
-        CreateUserWorkloadsSecretRequest const& request) {
-  auto span = internal::MakeSpan(
-      "composer_v1::EnvironmentsConnection::CreateUserWorkloadsSecret");
+StatusOr<google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
+EnvironmentsTracingConnection::CreateUserWorkloadsSecret(google::cloud::orchestration::airflow::service::v1::CreateUserWorkloadsSecretRequest const& request) {
+  auto span = internal::MakeSpan("composer_v1::EnvironmentsConnection::CreateUserWorkloadsSecret");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateUserWorkloadsSecret(request));
 }
 
-StatusOr<
-    google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
-EnvironmentsTracingConnection::GetUserWorkloadsSecret(
-    google::cloud::orchestration::airflow::service::v1::
-        GetUserWorkloadsSecretRequest const& request) {
-  auto span = internal::MakeSpan(
-      "composer_v1::EnvironmentsConnection::GetUserWorkloadsSecret");
+StatusOr<google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
+EnvironmentsTracingConnection::GetUserWorkloadsSecret(google::cloud::orchestration::airflow::service::v1::GetUserWorkloadsSecretRequest const& request) {
+  auto span = internal::MakeSpan("composer_v1::EnvironmentsConnection::GetUserWorkloadsSecret");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetUserWorkloadsSecret(request));
 }
 
-StreamRange<
-    google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
-EnvironmentsTracingConnection::ListUserWorkloadsSecrets(
-    google::cloud::orchestration::airflow::service::v1::
-        ListUserWorkloadsSecretsRequest request) {
-  auto span = internal::MakeSpan(
-      "composer_v1::EnvironmentsConnection::ListUserWorkloadsSecrets");
+StreamRange<google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
+EnvironmentsTracingConnection::ListUserWorkloadsSecrets(google::cloud::orchestration::airflow::service::v1::ListUserWorkloadsSecretsRequest request) {
+  auto span = internal::MakeSpan("composer_v1::EnvironmentsConnection::ListUserWorkloadsSecrets");
   internal::OTelScope scope(span);
   auto sr = child_->ListUserWorkloadsSecrets(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>(
-      std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>(
+        std::move(span), std::move(sr));
 }
 
-StatusOr<
-    google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
-EnvironmentsTracingConnection::UpdateUserWorkloadsSecret(
-    google::cloud::orchestration::airflow::service::v1::
-        UpdateUserWorkloadsSecretRequest const& request) {
-  auto span = internal::MakeSpan(
-      "composer_v1::EnvironmentsConnection::UpdateUserWorkloadsSecret");
+StatusOr<google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
+EnvironmentsTracingConnection::UpdateUserWorkloadsSecret(google::cloud::orchestration::airflow::service::v1::UpdateUserWorkloadsSecretRequest const& request) {
+  auto span = internal::MakeSpan("composer_v1::EnvironmentsConnection::UpdateUserWorkloadsSecret");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateUserWorkloadsSecret(request));
 }
 
-Status EnvironmentsTracingConnection::DeleteUserWorkloadsSecret(
-    google::cloud::orchestration::airflow::service::v1::
-        DeleteUserWorkloadsSecretRequest const& request) {
-  auto span = internal::MakeSpan(
-      "composer_v1::EnvironmentsConnection::DeleteUserWorkloadsSecret");
+Status
+EnvironmentsTracingConnection::DeleteUserWorkloadsSecret(google::cloud::orchestration::airflow::service::v1::DeleteUserWorkloadsSecretRequest const& request) {
+  auto span = internal::MakeSpan("composer_v1::EnvironmentsConnection::DeleteUserWorkloadsSecret");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteUserWorkloadsSecret(request));
 }
 
-StatusOr<
-    google::cloud::orchestration::airflow::service::v1::UserWorkloadsConfigMap>
-EnvironmentsTracingConnection::CreateUserWorkloadsConfigMap(
-    google::cloud::orchestration::airflow::service::v1::
-        CreateUserWorkloadsConfigMapRequest const& request) {
-  auto span = internal::MakeSpan(
-      "composer_v1::EnvironmentsConnection::CreateUserWorkloadsConfigMap");
+StatusOr<google::cloud::orchestration::airflow::service::v1::UserWorkloadsConfigMap>
+EnvironmentsTracingConnection::CreateUserWorkloadsConfigMap(google::cloud::orchestration::airflow::service::v1::CreateUserWorkloadsConfigMapRequest const& request) {
+  auto span = internal::MakeSpan("composer_v1::EnvironmentsConnection::CreateUserWorkloadsConfigMap");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span,
-                           child_->CreateUserWorkloadsConfigMap(request));
+  return internal::EndSpan(*span, child_->CreateUserWorkloadsConfigMap(request));
 }
 
-StatusOr<
-    google::cloud::orchestration::airflow::service::v1::UserWorkloadsConfigMap>
-EnvironmentsTracingConnection::GetUserWorkloadsConfigMap(
-    google::cloud::orchestration::airflow::service::v1::
-        GetUserWorkloadsConfigMapRequest const& request) {
-  auto span = internal::MakeSpan(
-      "composer_v1::EnvironmentsConnection::GetUserWorkloadsConfigMap");
+StatusOr<google::cloud::orchestration::airflow::service::v1::UserWorkloadsConfigMap>
+EnvironmentsTracingConnection::GetUserWorkloadsConfigMap(google::cloud::orchestration::airflow::service::v1::GetUserWorkloadsConfigMapRequest const& request) {
+  auto span = internal::MakeSpan("composer_v1::EnvironmentsConnection::GetUserWorkloadsConfigMap");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetUserWorkloadsConfigMap(request));
 }
 
-StreamRange<
-    google::cloud::orchestration::airflow::service::v1::UserWorkloadsConfigMap>
-EnvironmentsTracingConnection::ListUserWorkloadsConfigMaps(
-    google::cloud::orchestration::airflow::service::v1::
-        ListUserWorkloadsConfigMapsRequest request) {
-  auto span = internal::MakeSpan(
-      "composer_v1::EnvironmentsConnection::ListUserWorkloadsConfigMaps");
+StreamRange<google::cloud::orchestration::airflow::service::v1::UserWorkloadsConfigMap>
+EnvironmentsTracingConnection::ListUserWorkloadsConfigMaps(google::cloud::orchestration::airflow::service::v1::ListUserWorkloadsConfigMapsRequest request) {
+  auto span = internal::MakeSpan("composer_v1::EnvironmentsConnection::ListUserWorkloadsConfigMaps");
   internal::OTelScope scope(span);
   auto sr = child_->ListUserWorkloadsConfigMaps(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::orchestration::airflow::service::v1::
-          UserWorkloadsConfigMap>(std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::orchestration::airflow::service::v1::UserWorkloadsConfigMap>(
+        std::move(span), std::move(sr));
 }
 
-StatusOr<
-    google::cloud::orchestration::airflow::service::v1::UserWorkloadsConfigMap>
-EnvironmentsTracingConnection::UpdateUserWorkloadsConfigMap(
-    google::cloud::orchestration::airflow::service::v1::
-        UpdateUserWorkloadsConfigMapRequest const& request) {
-  auto span = internal::MakeSpan(
-      "composer_v1::EnvironmentsConnection::UpdateUserWorkloadsConfigMap");
+StatusOr<google::cloud::orchestration::airflow::service::v1::UserWorkloadsConfigMap>
+EnvironmentsTracingConnection::UpdateUserWorkloadsConfigMap(google::cloud::orchestration::airflow::service::v1::UpdateUserWorkloadsConfigMapRequest const& request) {
+  auto span = internal::MakeSpan("composer_v1::EnvironmentsConnection::UpdateUserWorkloadsConfigMap");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span,
-                           child_->UpdateUserWorkloadsConfigMap(request));
+  return internal::EndSpan(*span, child_->UpdateUserWorkloadsConfigMap(request));
 }
 
-Status EnvironmentsTracingConnection::DeleteUserWorkloadsConfigMap(
-    google::cloud::orchestration::airflow::service::v1::
-        DeleteUserWorkloadsConfigMapRequest const& request) {
-  auto span = internal::MakeSpan(
-      "composer_v1::EnvironmentsConnection::DeleteUserWorkloadsConfigMap");
+Status
+EnvironmentsTracingConnection::DeleteUserWorkloadsConfigMap(google::cloud::orchestration::airflow::service::v1::DeleteUserWorkloadsConfigMapRequest const& request) {
+  auto span = internal::MakeSpan("composer_v1::EnvironmentsConnection::DeleteUserWorkloadsConfigMap");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span,
-                           child_->DeleteUserWorkloadsConfigMap(request));
+  return internal::EndSpan(*span, child_->DeleteUserWorkloadsConfigMap(request));
 }
 
-future<StatusOr<
-    google::cloud::orchestration::airflow::service::v1::SaveSnapshotResponse>>
-EnvironmentsTracingConnection::SaveSnapshot(
-    google::cloud::orchestration::airflow::service::v1::
-        SaveSnapshotRequest const& request) {
-  auto span =
-      internal::MakeSpan("composer_v1::EnvironmentsConnection::SaveSnapshot");
+future<StatusOr<google::cloud::orchestration::airflow::service::v1::SaveSnapshotResponse>>
+EnvironmentsTracingConnection::SaveSnapshot(google::cloud::orchestration::airflow::service::v1::SaveSnapshotRequest const& request) {
+  auto span = internal::MakeSpan(
+      "composer_v1::EnvironmentsConnection::SaveSnapshot");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->SaveSnapshot(request));
 }
 
 StatusOr<google::longrunning::Operation>
 EnvironmentsTracingConnection::SaveSnapshot(
-    NoAwaitTag, google::cloud::orchestration::airflow::service::v1::
-                    SaveSnapshotRequest const& request) {
-  auto span =
-      internal::MakeSpan("composer_v1::EnvironmentsConnection::SaveSnapshot");
+    NoAwaitTag, google::cloud::orchestration::airflow::service::v1::SaveSnapshotRequest const& request) {
+  auto span = internal::MakeSpan(
+      "composer_v1::EnvironmentsConnection::SaveSnapshot");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->SaveSnapshot(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->SaveSnapshot(
+      NoAwaitTag{}, request));
 }
 
-future<StatusOr<
-    google::cloud::orchestration::airflow::service::v1::SaveSnapshotResponse>>
+future<StatusOr<google::cloud::orchestration::airflow::service::v1::SaveSnapshotResponse>>
 EnvironmentsTracingConnection::SaveSnapshot(
     google::longrunning::Operation const& operation) {
-  auto span =
-      internal::MakeSpan("composer_v1::EnvironmentsConnection::SaveSnapshot");
+  auto span = internal::MakeSpan(
+      "composer_v1::EnvironmentsConnection::SaveSnapshot");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->SaveSnapshot(operation));
+  return internal::EndSpan(std::move(span),
+      child_->SaveSnapshot(operation));
 }
 
-future<StatusOr<
-    google::cloud::orchestration::airflow::service::v1::LoadSnapshotResponse>>
-EnvironmentsTracingConnection::LoadSnapshot(
-    google::cloud::orchestration::airflow::service::v1::
-        LoadSnapshotRequest const& request) {
-  auto span =
-      internal::MakeSpan("composer_v1::EnvironmentsConnection::LoadSnapshot");
+future<StatusOr<google::cloud::orchestration::airflow::service::v1::LoadSnapshotResponse>>
+EnvironmentsTracingConnection::LoadSnapshot(google::cloud::orchestration::airflow::service::v1::LoadSnapshotRequest const& request) {
+  auto span = internal::MakeSpan(
+      "composer_v1::EnvironmentsConnection::LoadSnapshot");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->LoadSnapshot(request));
 }
 
 StatusOr<google::longrunning::Operation>
 EnvironmentsTracingConnection::LoadSnapshot(
-    NoAwaitTag, google::cloud::orchestration::airflow::service::v1::
-                    LoadSnapshotRequest const& request) {
-  auto span =
-      internal::MakeSpan("composer_v1::EnvironmentsConnection::LoadSnapshot");
+    NoAwaitTag, google::cloud::orchestration::airflow::service::v1::LoadSnapshotRequest const& request) {
+  auto span = internal::MakeSpan(
+      "composer_v1::EnvironmentsConnection::LoadSnapshot");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->LoadSnapshot(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->LoadSnapshot(
+      NoAwaitTag{}, request));
 }
 
-future<StatusOr<
-    google::cloud::orchestration::airflow::service::v1::LoadSnapshotResponse>>
+future<StatusOr<google::cloud::orchestration::airflow::service::v1::LoadSnapshotResponse>>
 EnvironmentsTracingConnection::LoadSnapshot(
     google::longrunning::Operation const& operation) {
-  auto span =
-      internal::MakeSpan("composer_v1::EnvironmentsConnection::LoadSnapshot");
+  auto span = internal::MakeSpan(
+      "composer_v1::EnvironmentsConnection::LoadSnapshot");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->LoadSnapshot(operation));
+  return internal::EndSpan(std::move(span),
+      child_->LoadSnapshot(operation));
 }
 
-future<StatusOr<google::cloud::orchestration::airflow::service::v1::
-                    DatabaseFailoverResponse>>
-EnvironmentsTracingConnection::DatabaseFailover(
-    google::cloud::orchestration::airflow::service::v1::
-        DatabaseFailoverRequest const& request) {
+future<StatusOr<google::cloud::orchestration::airflow::service::v1::DatabaseFailoverResponse>>
+EnvironmentsTracingConnection::DatabaseFailover(google::cloud::orchestration::airflow::service::v1::DatabaseFailoverRequest const& request) {
   auto span = internal::MakeSpan(
       "composer_v1::EnvironmentsConnection::DatabaseFailover");
   internal::OTelScope scope(span);
@@ -424,61 +331,50 @@ EnvironmentsTracingConnection::DatabaseFailover(
 
 StatusOr<google::longrunning::Operation>
 EnvironmentsTracingConnection::DatabaseFailover(
-    NoAwaitTag, google::cloud::orchestration::airflow::service::v1::
-                    DatabaseFailoverRequest const& request) {
+    NoAwaitTag, google::cloud::orchestration::airflow::service::v1::DatabaseFailoverRequest const& request) {
   auto span = internal::MakeSpan(
       "composer_v1::EnvironmentsConnection::DatabaseFailover");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span,
-                           child_->DatabaseFailover(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->DatabaseFailover(
+      NoAwaitTag{}, request));
 }
 
-future<StatusOr<google::cloud::orchestration::airflow::service::v1::
-                    DatabaseFailoverResponse>>
+future<StatusOr<google::cloud::orchestration::airflow::service::v1::DatabaseFailoverResponse>>
 EnvironmentsTracingConnection::DatabaseFailover(
     google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "composer_v1::EnvironmentsConnection::DatabaseFailover");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->DatabaseFailover(operation));
+      child_->DatabaseFailover(operation));
 }
 
-StatusOr<google::cloud::orchestration::airflow::service::v1::
-             FetchDatabasePropertiesResponse>
-EnvironmentsTracingConnection::FetchDatabaseProperties(
-    google::cloud::orchestration::airflow::service::v1::
-        FetchDatabasePropertiesRequest const& request) {
-  auto span = internal::MakeSpan(
-      "composer_v1::EnvironmentsConnection::FetchDatabaseProperties");
+StatusOr<google::cloud::orchestration::airflow::service::v1::FetchDatabasePropertiesResponse>
+EnvironmentsTracingConnection::FetchDatabaseProperties(google::cloud::orchestration::airflow::service::v1::FetchDatabasePropertiesRequest const& request) {
+  auto span = internal::MakeSpan("composer_v1::EnvironmentsConnection::FetchDatabaseProperties");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->FetchDatabaseProperties(request));
 }
 
 StreamRange<google::longrunning::Operation>
-EnvironmentsTracingConnection::ListOperations(
-    google::longrunning::ListOperationsRequest request) {
-  auto span =
-      internal::MakeSpan("composer_v1::EnvironmentsConnection::ListOperations");
+EnvironmentsTracingConnection::ListOperations(google::longrunning::ListOperationsRequest request) {
+  auto span = internal::MakeSpan("composer_v1::EnvironmentsConnection::ListOperations");
   internal::OTelScope scope(span);
   auto sr = child_->ListOperations(std::move(request));
   return internal::MakeTracedStreamRange<google::longrunning::Operation>(
-      std::move(span), std::move(sr));
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::longrunning::Operation>
-EnvironmentsTracingConnection::GetOperation(
-    google::longrunning::GetOperationRequest const& request) {
-  auto span =
-      internal::MakeSpan("composer_v1::EnvironmentsConnection::GetOperation");
+EnvironmentsTracingConnection::GetOperation(google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpan("composer_v1::EnvironmentsConnection::GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOperation(request));
 }
 
-Status EnvironmentsTracingConnection::DeleteOperation(
-    google::longrunning::DeleteOperationRequest const& request) {
-  auto span = internal::MakeSpan(
-      "composer_v1::EnvironmentsConnection::DeleteOperation");
+Status
+EnvironmentsTracingConnection::DeleteOperation(google::longrunning::DeleteOperationRequest const& request) {
+  auto span = internal::MakeSpan("composer_v1::EnvironmentsConnection::DeleteOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteOperation(request));
 }

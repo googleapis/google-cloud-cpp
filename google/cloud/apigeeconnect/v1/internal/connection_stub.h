@@ -35,31 +35,25 @@ class ConnectionServiceStub {
  public:
   virtual ~ConnectionServiceStub() = 0;
 
-  virtual StatusOr<google::cloud::apigeeconnect::v1::ListConnectionsResponse>
-  ListConnections(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::apigeeconnect::v1::ListConnectionsRequest const&
-          request) = 0;
+  virtual StatusOr<google::cloud::apigeeconnect::v1::ListConnectionsResponse> ListConnections(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::apigeeconnect::v1::ListConnectionsRequest const& request) = 0;
 };
 
 class DefaultConnectionServiceStub : public ConnectionServiceStub {
  public:
   explicit DefaultConnectionServiceStub(
-      std::unique_ptr<
-          google::cloud::apigeeconnect::v1::ConnectionService::StubInterface>
-          grpc_stub)
+      std::unique_ptr<google::cloud::apigeeconnect::v1::ConnectionService::StubInterface> grpc_stub)
       : grpc_stub_(std::move(grpc_stub)) {}
 
-  StatusOr<google::cloud::apigeeconnect::v1::ListConnectionsResponse>
-  ListConnections(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::apigeeconnect::v1::ListConnectionsRequest const& request)
-      override;
+  StatusOr<google::cloud::apigeeconnect::v1::ListConnectionsResponse> ListConnections(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::apigeeconnect::v1::ListConnectionsRequest const& request) override;
 
  private:
-  std::unique_ptr<
-      google::cloud::apigeeconnect::v1::ConnectionService::StubInterface>
-      grpc_stub_;
+  std::unique_ptr<google::cloud::apigeeconnect::v1::ConnectionService::StubInterface> grpc_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

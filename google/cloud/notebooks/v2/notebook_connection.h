@@ -19,12 +19,12 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_NOTEBOOKS_V2_NOTEBOOK_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_NOTEBOOKS_V2_NOTEBOOK_CONNECTION_H
 
-#include "google/cloud/notebooks/v2/internal/notebook_retry_traits.h"
-#include "google/cloud/notebooks/v2/notebook_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
+#include "google/cloud/notebooks/v2/internal/notebook_retry_traits.h"
+#include "google/cloud/notebooks/v2/notebook_connection_idempotency_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -56,8 +56,7 @@ class NotebookServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class NotebookServiceLimitedErrorCountRetryPolicy
-    : public NotebookServiceRetryPolicy {
+class NotebookServiceLimitedErrorCountRetryPolicy : public NotebookServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -67,14 +66,14 @@ class NotebookServiceLimitedErrorCountRetryPolicy
    *     @p maximum_failures == 0.
    */
   explicit NotebookServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   NotebookServiceLimitedErrorCountRetryPolicy(
       NotebookServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : NotebookServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : NotebookServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   NotebookServiceLimitedErrorCountRetryPolicy(
       NotebookServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : NotebookServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : NotebookServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -94,9 +93,7 @@ class NotebookServiceLimitedErrorCountRetryPolicy
   using BaseType = NotebookServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      notebooks_v2_internal::NotebookServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<notebooks_v2_internal::NotebookServiceRetryTraits> impl_;
 };
 
 /**
@@ -109,8 +106,7 @@ class NotebookServiceLimitedErrorCountRetryPolicy
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class NotebookServiceLimitedTimeRetryPolicy
-    : public NotebookServiceRetryPolicy {
+class NotebookServiceLimitedTimeRetryPolicy : public NotebookServiceRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -135,14 +131,12 @@ class NotebookServiceLimitedTimeRetryPolicy
   template <typename DurationRep, typename DurationPeriod>
   explicit NotebookServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  NotebookServiceLimitedTimeRetryPolicy(
-      NotebookServiceLimitedTimeRetryPolicy&& rhs) noexcept
-      : NotebookServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  NotebookServiceLimitedTimeRetryPolicy(
-      NotebookServiceLimitedTimeRetryPolicy const& rhs) noexcept
-      : NotebookServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  NotebookServiceLimitedTimeRetryPolicy(NotebookServiceLimitedTimeRetryPolicy&& rhs) noexcept
+    : NotebookServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  NotebookServiceLimitedTimeRetryPolicy(NotebookServiceLimitedTimeRetryPolicy const& rhs) noexcept
+    : NotebookServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -164,9 +158,7 @@ class NotebookServiceLimitedTimeRetryPolicy
   using BaseType = NotebookServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      notebooks_v2_internal::NotebookServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<notebooks_v2_internal::NotebookServiceRetryTraits> impl_;
 };
 
 /**
@@ -187,154 +179,133 @@ class NotebookServiceConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StreamRange<google::cloud::notebooks::v2::Instance> ListInstances(
-      google::cloud::notebooks::v2::ListInstancesRequest request);
+  virtual StreamRange<google::cloud::notebooks::v2::Instance>
+  ListInstances(google::cloud::notebooks::v2::ListInstancesRequest request);
 
-  virtual StatusOr<google::cloud::notebooks::v2::Instance> GetInstance(
-      google::cloud::notebooks::v2::GetInstanceRequest const& request);
-
-  virtual future<StatusOr<google::cloud::notebooks::v2::Instance>>
-  CreateInstance(
-      google::cloud::notebooks::v2::CreateInstanceRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation> CreateInstance(
-      NoAwaitTag,
-      google::cloud::notebooks::v2::CreateInstanceRequest const& request);
+  virtual StatusOr<google::cloud::notebooks::v2::Instance>
+  GetInstance(google::cloud::notebooks::v2::GetInstanceRequest const& request);
 
   virtual future<StatusOr<google::cloud::notebooks::v2::Instance>>
-  CreateInstance(google::longrunning::Operation const& operation);
+  CreateInstance(google::cloud::notebooks::v2::CreateInstanceRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation>
+  CreateInstance(NoAwaitTag, google::cloud::notebooks::v2::CreateInstanceRequest const& request);
 
   virtual future<StatusOr<google::cloud::notebooks::v2::Instance>>
-  UpdateInstance(
-      google::cloud::notebooks::v2::UpdateInstanceRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation> UpdateInstance(
-      NoAwaitTag,
-      google::cloud::notebooks::v2::UpdateInstanceRequest const& request);
+  CreateInstance( google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::notebooks::v2::Instance>>
-  UpdateInstance(google::longrunning::Operation const& operation);
+  UpdateInstance(google::cloud::notebooks::v2::UpdateInstanceRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation>
+  UpdateInstance(NoAwaitTag, google::cloud::notebooks::v2::UpdateInstanceRequest const& request);
+
+  virtual future<StatusOr<google::cloud::notebooks::v2::Instance>>
+  UpdateInstance( google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::notebooks::v2::OperationMetadata>>
-  DeleteInstance(
-      google::cloud::notebooks::v2::DeleteInstanceRequest const& request);
+  DeleteInstance(google::cloud::notebooks::v2::DeleteInstanceRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> DeleteInstance(
-      NoAwaitTag,
-      google::cloud::notebooks::v2::DeleteInstanceRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  DeleteInstance(NoAwaitTag, google::cloud::notebooks::v2::DeleteInstanceRequest const& request);
 
   virtual future<StatusOr<google::cloud::notebooks::v2::OperationMetadata>>
-  DeleteInstance(google::longrunning::Operation const& operation);
+  DeleteInstance( google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::notebooks::v2::Instance>>
-  StartInstance(
-      google::cloud::notebooks::v2::StartInstanceRequest const& request);
+  StartInstance(google::cloud::notebooks::v2::StartInstanceRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> StartInstance(
-      NoAwaitTag,
-      google::cloud::notebooks::v2::StartInstanceRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  StartInstance(NoAwaitTag, google::cloud::notebooks::v2::StartInstanceRequest const& request);
 
   virtual future<StatusOr<google::cloud::notebooks::v2::Instance>>
-  StartInstance(google::longrunning::Operation const& operation);
-
-  virtual future<StatusOr<google::cloud::notebooks::v2::Instance>> StopInstance(
-      google::cloud::notebooks::v2::StopInstanceRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation> StopInstance(
-      NoAwaitTag,
-      google::cloud::notebooks::v2::StopInstanceRequest const& request);
-
-  virtual future<StatusOr<google::cloud::notebooks::v2::Instance>> StopInstance(
-      google::longrunning::Operation const& operation);
+  StartInstance( google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::notebooks::v2::Instance>>
-  ResetInstance(
-      google::cloud::notebooks::v2::ResetInstanceRequest const& request);
+  StopInstance(google::cloud::notebooks::v2::StopInstanceRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> ResetInstance(
-      NoAwaitTag,
-      google::cloud::notebooks::v2::ResetInstanceRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  StopInstance(NoAwaitTag, google::cloud::notebooks::v2::StopInstanceRequest const& request);
 
   virtual future<StatusOr<google::cloud::notebooks::v2::Instance>>
-  ResetInstance(google::longrunning::Operation const& operation);
-
-  virtual StatusOr<
-      google::cloud::notebooks::v2::CheckInstanceUpgradabilityResponse>
-  CheckInstanceUpgradability(
-      google::cloud::notebooks::v2::CheckInstanceUpgradabilityRequest const&
-          request);
+  StopInstance( google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::notebooks::v2::Instance>>
-  UpgradeInstance(
-      google::cloud::notebooks::v2::UpgradeInstanceRequest const& request);
+  ResetInstance(google::cloud::notebooks::v2::ResetInstanceRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> UpgradeInstance(
-      NoAwaitTag,
-      google::cloud::notebooks::v2::UpgradeInstanceRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  ResetInstance(NoAwaitTag, google::cloud::notebooks::v2::ResetInstanceRequest const& request);
 
   virtual future<StatusOr<google::cloud::notebooks::v2::Instance>>
-  UpgradeInstance(google::longrunning::Operation const& operation);
+  ResetInstance( google::longrunning::Operation const& operation);
+
+  virtual StatusOr<google::cloud::notebooks::v2::CheckInstanceUpgradabilityResponse>
+  CheckInstanceUpgradability(google::cloud::notebooks::v2::CheckInstanceUpgradabilityRequest const& request);
 
   virtual future<StatusOr<google::cloud::notebooks::v2::Instance>>
-  RollbackInstance(
-      google::cloud::notebooks::v2::RollbackInstanceRequest const& request);
+  UpgradeInstance(google::cloud::notebooks::v2::UpgradeInstanceRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> RollbackInstance(
-      NoAwaitTag,
-      google::cloud::notebooks::v2::RollbackInstanceRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  UpgradeInstance(NoAwaitTag, google::cloud::notebooks::v2::UpgradeInstanceRequest const& request);
 
   virtual future<StatusOr<google::cloud::notebooks::v2::Instance>>
-  RollbackInstance(google::longrunning::Operation const& operation);
+  UpgradeInstance( google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::notebooks::v2::Instance>>
-  DiagnoseInstance(
-      google::cloud::notebooks::v2::DiagnoseInstanceRequest const& request);
+  RollbackInstance(google::cloud::notebooks::v2::RollbackInstanceRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> DiagnoseInstance(
-      NoAwaitTag,
-      google::cloud::notebooks::v2::DiagnoseInstanceRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  RollbackInstance(NoAwaitTag, google::cloud::notebooks::v2::RollbackInstanceRequest const& request);
 
   virtual future<StatusOr<google::cloud::notebooks::v2::Instance>>
-  DiagnoseInstance(google::longrunning::Operation const& operation);
+  RollbackInstance( google::longrunning::Operation const& operation);
 
-  virtual StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request);
+  virtual future<StatusOr<google::cloud::notebooks::v2::Instance>>
+  DiagnoseInstance(google::cloud::notebooks::v2::DiagnoseInstanceRequest const& request);
 
-  virtual StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  DiagnoseInstance(NoAwaitTag, google::cloud::notebooks::v2::DiagnoseInstanceRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request);
+  virtual future<StatusOr<google::cloud::notebooks::v2::Instance>>
+  DiagnoseInstance( google::longrunning::Operation const& operation);
 
-  virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request);
+  virtual StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request);
+
+  virtual StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request);
+
+  virtual StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
+
+  virtual StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
 
   virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
   TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
 
-  virtual StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 
-  virtual Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request);
+  virtual Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
 
-  virtual Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request);
+  virtual Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request);
 };
 
 /**
- * A factory function to construct an object of type
- * `NotebookServiceConnection`.
+ * A factory function to construct an object of type `NotebookServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
  * should be passed as an argument to the constructor of NotebookServiceClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `NotebookServiceConnection`. Expected options are any of the types
- * in the following option lists:
+ * returned `NotebookServiceConnection`. Expected options are any of the types in
+ * the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
@@ -344,8 +315,8 @@ class NotebookServiceConnection {
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
- * @param options (optional) Configure the `NotebookServiceConnection` created
- * by this function.
+ * @param options (optional) Configure the `NotebookServiceConnection` created by
+ * this function.
  */
 std::shared_ptr<NotebookServiceConnection> MakeNotebookServiceConnection(
     Options options = {});

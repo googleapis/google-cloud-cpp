@@ -19,11 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_SQL_SSL_CERTS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_SQL_SSL_CERTS_CONNECTION_H
 
-#include "google/cloud/sql/v1/internal/sql_ssl_certs_retry_traits.h"
-#include "google/cloud/sql/v1/sql_ssl_certs_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
+#include "google/cloud/sql/v1/internal/sql_ssl_certs_retry_traits.h"
+#include "google/cloud/sql/v1/sql_ssl_certs_connection_idempotency_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/sql/v1/cloud_sql_ssl_certs.pb.h>
@@ -51,8 +51,7 @@ class SqlSslCertsServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class SqlSslCertsServiceLimitedErrorCountRetryPolicy
-    : public SqlSslCertsServiceRetryPolicy {
+class SqlSslCertsServiceLimitedErrorCountRetryPolicy : public SqlSslCertsServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -62,16 +61,14 @@ class SqlSslCertsServiceLimitedErrorCountRetryPolicy
    *     @p maximum_failures == 0.
    */
   explicit SqlSslCertsServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   SqlSslCertsServiceLimitedErrorCountRetryPolicy(
       SqlSslCertsServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : SqlSslCertsServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {
-  }
+    : SqlSslCertsServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   SqlSslCertsServiceLimitedErrorCountRetryPolicy(
       SqlSslCertsServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : SqlSslCertsServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {
-  }
+    : SqlSslCertsServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -91,9 +88,7 @@ class SqlSslCertsServiceLimitedErrorCountRetryPolicy
   using BaseType = SqlSslCertsServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      sql_v1_internal::SqlSslCertsServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<sql_v1_internal::SqlSslCertsServiceRetryTraits> impl_;
 };
 
 /**
@@ -106,8 +101,7 @@ class SqlSslCertsServiceLimitedErrorCountRetryPolicy
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class SqlSslCertsServiceLimitedTimeRetryPolicy
-    : public SqlSslCertsServiceRetryPolicy {
+class SqlSslCertsServiceLimitedTimeRetryPolicy : public SqlSslCertsServiceRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -132,14 +126,12 @@ class SqlSslCertsServiceLimitedTimeRetryPolicy
   template <typename DurationRep, typename DurationPeriod>
   explicit SqlSslCertsServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  SqlSslCertsServiceLimitedTimeRetryPolicy(
-      SqlSslCertsServiceLimitedTimeRetryPolicy&& rhs) noexcept
-      : SqlSslCertsServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  SqlSslCertsServiceLimitedTimeRetryPolicy(
-      SqlSslCertsServiceLimitedTimeRetryPolicy const& rhs) noexcept
-      : SqlSslCertsServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  SqlSslCertsServiceLimitedTimeRetryPolicy(SqlSslCertsServiceLimitedTimeRetryPolicy&& rhs) noexcept
+    : SqlSslCertsServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  SqlSslCertsServiceLimitedTimeRetryPolicy(SqlSslCertsServiceLimitedTimeRetryPolicy const& rhs) noexcept
+    : SqlSslCertsServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -161,18 +153,16 @@ class SqlSslCertsServiceLimitedTimeRetryPolicy
   using BaseType = SqlSslCertsServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      sql_v1_internal::SqlSslCertsServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<sql_v1_internal::SqlSslCertsServiceRetryTraits> impl_;
 };
 
 /**
  * The `SqlSslCertsServiceConnection` object for `SqlSslCertsServiceClient`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `SqlSslCertsServiceClient`. This allows users to inject custom
- * behavior (e.g., with a Google Mock object) when writing tests that use
- * objects of type `SqlSslCertsServiceClient`.
+ * sets in `SqlSslCertsServiceClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `SqlSslCertsServiceClient`.
  *
  * To create a concrete instance, see `MakeSqlSslCertsServiceConnection()`.
  *
@@ -184,17 +174,17 @@ class SqlSslCertsServiceConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<google::cloud::sql::v1::Operation> Delete(
-      google::cloud::sql::v1::SqlSslCertsDeleteRequest const& request);
+  virtual StatusOr<google::cloud::sql::v1::Operation>
+  Delete(google::cloud::sql::v1::SqlSslCertsDeleteRequest const& request);
 
-  virtual StatusOr<google::cloud::sql::v1::SslCert> Get(
-      google::cloud::sql::v1::SqlSslCertsGetRequest const& request);
+  virtual StatusOr<google::cloud::sql::v1::SslCert>
+  Get(google::cloud::sql::v1::SqlSslCertsGetRequest const& request);
 
-  virtual StatusOr<google::cloud::sql::v1::SslCertsInsertResponse> Insert(
-      google::cloud::sql::v1::SqlSslCertsInsertRequest const& request);
+  virtual StatusOr<google::cloud::sql::v1::SslCertsInsertResponse>
+  Insert(google::cloud::sql::v1::SqlSslCertsInsertRequest const& request);
 
-  virtual StatusOr<google::cloud::sql::v1::SslCertsListResponse> List(
-      google::cloud::sql::v1::SqlSslCertsListRequest const& request);
+  virtual StatusOr<google::cloud::sql::v1::SslCertsListResponse>
+  List(google::cloud::sql::v1::SqlSslCertsListRequest const& request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

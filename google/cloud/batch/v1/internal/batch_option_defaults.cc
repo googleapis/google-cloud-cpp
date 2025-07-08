@@ -35,30 +35,28 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options BatchServiceDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_BATCH_SERVICE_ENDPOINT", "",
-      "GOOGLE_CLOUD_CPP_BATCH_SERVICE_AUTHORITY", "batch.googleapis.com");
+      std::move(options), "GOOGLE_CLOUD_CPP_BATCH_SERVICE_ENDPOINT",
+      "", "GOOGLE_CLOUD_CPP_BATCH_SERVICE_AUTHORITY",
+      "batch.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<batch_v1::BatchServiceRetryPolicyOption>()) {
     options.set<batch_v1::BatchServiceRetryPolicyOption>(
-        batch_v1::BatchServiceLimitedTimeRetryPolicy(std::chrono::minutes(30))
-            .clone());
+        batch_v1::BatchServiceLimitedTimeRetryPolicy(
+            std::chrono::minutes(30)).clone());
   }
   if (!options.has<batch_v1::BatchServiceBackoffPolicyOption>()) {
     options.set<batch_v1::BatchServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(
-            std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
-            .clone());
+        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
   }
   if (!options.has<batch_v1::BatchServicePollingPolicyOption>()) {
     options.set<batch_v1::BatchServicePollingPolicyOption>(
-        GenericPollingPolicy<batch_v1::BatchServiceRetryPolicyOption::Type,
-                             batch_v1::BatchServiceBackoffPolicyOption::Type>(
+        GenericPollingPolicy<
+            batch_v1::BatchServiceRetryPolicyOption::Type,
+            batch_v1::BatchServiceBackoffPolicyOption::Type>(
             options.get<batch_v1::BatchServiceRetryPolicyOption>()->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                     std::chrono::minutes(5), kBackoffScaling)
-                .clone())
-            .clone());
+            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
   }
   if (!options.has<batch_v1::BatchServiceConnectionIdempotencyPolicyOption>()) {
     options.set<batch_v1::BatchServiceConnectionIdempotencyPolicyOption>(

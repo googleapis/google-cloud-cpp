@@ -31,10 +31,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// @deprecated Use texttospeech_v1::TextToSpeechBackoffPolicyOption directly.
 using ::google::cloud::texttospeech_v1::TextToSpeechBackoffPolicyOption;
 
-/// @deprecated Use
-/// texttospeech_v1::TextToSpeechConnectionIdempotencyPolicyOption directly.
-using ::google::cloud::texttospeech_v1::
-    TextToSpeechConnectionIdempotencyPolicyOption;
+/// @deprecated Use texttospeech_v1::TextToSpeechConnectionIdempotencyPolicyOption directly.
+using ::google::cloud::texttospeech_v1::TextToSpeechConnectionIdempotencyPolicyOption;
 
 /// @deprecated Use texttospeech_v1::TextToSpeechPolicyOptionList directly.
 using ::google::cloud::texttospeech_v1::TextToSpeechPolicyOptionList;

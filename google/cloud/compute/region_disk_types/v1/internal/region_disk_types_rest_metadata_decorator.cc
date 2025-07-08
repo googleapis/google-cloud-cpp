@@ -17,11 +17,11 @@
 // source: google/cloud/compute/region_disk_types/v1/region_disk_types.proto
 
 #include "google/cloud/compute/region_disk_types/v1/internal/region_disk_types_rest_metadata_decorator.h"
+#include "absl/strings/str_format.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/internal/rest_set_metadata.h"
 #include "google/cloud/status_or.h"
-#include "absl/strings/str_format.h"
 #include <memory>
 #include <utility>
 
@@ -41,27 +41,25 @@ RegionDiskTypesRestMetadata::RegionDiskTypesRestMetadata(
 
 StatusOr<google::cloud::cpp::compute::v1::DiskType>
 RegionDiskTypesRestMetadata::GetDiskType(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::region_disk_types::v1::
-        GetDiskTypeRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::region_disk_types::v1::GetDiskTypeRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->GetDiskType(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::RegionDiskTypeList>
 RegionDiskTypesRestMetadata::ListRegionDiskTypes(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::region_disk_types::v1::
-        ListRegionDiskTypesRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::region_disk_types::v1::ListRegionDiskTypesRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->ListRegionDiskTypes(rest_context, options, request);
 }
 
 void RegionDiskTypesRestMetadata::SetMetadata(
-    rest_internal::RestContext& rest_context, Options const& options,
-    std::vector<std::string> const& params) {
-  google::cloud::rest_internal::SetMetadata(rest_context, options, params,
-                                            api_client_header_);
+      rest_internal::RestContext& rest_context,
+      Options const& options, std::vector<std::string> const& params) {
+  google::cloud::rest_internal::SetMetadata(
+      rest_context, options, params, api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

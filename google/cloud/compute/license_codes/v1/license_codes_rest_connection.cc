@@ -17,12 +17,12 @@
 // source: google/cloud/compute/license_codes/v1/license_codes.proto
 
 #include "google/cloud/compute/license_codes/v1/license_codes_rest_connection.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/compute/license_codes/v1/internal/license_codes_option_defaults.h"
 #include "google/cloud/compute/license_codes/v1/internal/license_codes_rest_connection_impl.h"
 #include "google/cloud/compute/license_codes/v1/internal/license_codes_rest_stub_factory.h"
 #include "google/cloud/compute/license_codes/v1/internal/license_codes_tracing_connection.h"
 #include "google/cloud/compute/license_codes/v1/license_codes_options.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/rest_background_threads_impl.h"
 #include "google/cloud/internal/rest_options.h"
@@ -36,17 +36,15 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<LicenseCodesConnection> MakeLicenseCodesConnectionRest(
     Options options) {
-  internal::CheckExpectedOptions<
-      CommonOptionList, RestOptionList, UnifiedCredentialsOptionList,
-      rest_internal::TargetApiVersionOption, LicenseCodesPolicyOptionList>(
-      options, __func__);
+  internal::CheckExpectedOptions<CommonOptionList, RestOptionList,
+      UnifiedCredentialsOptionList, rest_internal::TargetApiVersionOption,
+      LicenseCodesPolicyOptionList>(options, __func__);
   options = compute_license_codes_v1_internal::LicenseCodesDefaultOptions(
       std::move(options));
   auto background = std::make_unique<
       rest_internal::AutomaticallyCreatedRestBackgroundThreads>();
-  auto stub =
-      compute_license_codes_v1_internal::CreateDefaultLicenseCodesRestStub(
-          options);
+  auto stub = compute_license_codes_v1_internal::CreateDefaultLicenseCodesRestStub(
+      options);
   return compute_license_codes_v1_internal::MakeLicenseCodesTracingConnection(
       std::make_shared<
           compute_license_codes_v1_internal::LicenseCodesRestConnectionImpl>(

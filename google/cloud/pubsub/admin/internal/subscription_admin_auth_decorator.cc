@@ -31,36 +31,36 @@ SubscriptionAdminAuth::SubscriptionAdminAuth(
     std::shared_ptr<SubscriptionAdminStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::pubsub::v1::Subscription>
-SubscriptionAdminAuth::CreateSubscription(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::pubsub::v1::Subscription> SubscriptionAdminAuth::CreateSubscription(
+    grpc::ClientContext& context,
+    Options const& options,
     google::pubsub::v1::Subscription const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateSubscription(context, options, request);
 }
 
-StatusOr<google::pubsub::v1::Subscription>
-SubscriptionAdminAuth::GetSubscription(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::pubsub::v1::Subscription> SubscriptionAdminAuth::GetSubscription(
+    grpc::ClientContext& context,
+    Options const& options,
     google::pubsub::v1::GetSubscriptionRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetSubscription(context, options, request);
 }
 
-StatusOr<google::pubsub::v1::Subscription>
-SubscriptionAdminAuth::UpdateSubscription(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::pubsub::v1::Subscription> SubscriptionAdminAuth::UpdateSubscription(
+    grpc::ClientContext& context,
+    Options const& options,
     google::pubsub::v1::UpdateSubscriptionRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateSubscription(context, options, request);
 }
 
-StatusOr<google::pubsub::v1::ListSubscriptionsResponse>
-SubscriptionAdminAuth::ListSubscriptions(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::pubsub::v1::ListSubscriptionsResponse> SubscriptionAdminAuth::ListSubscriptions(
+    grpc::ClientContext& context,
+    Options const& options,
     google::pubsub::v1::ListSubscriptionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -68,7 +68,8 @@ SubscriptionAdminAuth::ListSubscriptions(
 }
 
 Status SubscriptionAdminAuth::DeleteSubscription(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::pubsub::v1::DeleteSubscriptionRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -76,7 +77,8 @@ Status SubscriptionAdminAuth::DeleteSubscription(
 }
 
 Status SubscriptionAdminAuth::ModifyPushConfig(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::pubsub::v1::ModifyPushConfigRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -84,16 +86,17 @@ Status SubscriptionAdminAuth::ModifyPushConfig(
 }
 
 StatusOr<google::pubsub::v1::Snapshot> SubscriptionAdminAuth::GetSnapshot(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::pubsub::v1::GetSnapshotRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetSnapshot(context, options, request);
 }
 
-StatusOr<google::pubsub::v1::ListSnapshotsResponse>
-SubscriptionAdminAuth::ListSnapshots(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::pubsub::v1::ListSnapshotsResponse> SubscriptionAdminAuth::ListSnapshots(
+    grpc::ClientContext& context,
+    Options const& options,
     google::pubsub::v1::ListSnapshotsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -101,7 +104,8 @@ SubscriptionAdminAuth::ListSnapshots(
 }
 
 StatusOr<google::pubsub::v1::Snapshot> SubscriptionAdminAuth::CreateSnapshot(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::pubsub::v1::CreateSnapshotRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -109,7 +113,8 @@ StatusOr<google::pubsub::v1::Snapshot> SubscriptionAdminAuth::CreateSnapshot(
 }
 
 StatusOr<google::pubsub::v1::Snapshot> SubscriptionAdminAuth::UpdateSnapshot(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::pubsub::v1::UpdateSnapshotRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -117,7 +122,8 @@ StatusOr<google::pubsub::v1::Snapshot> SubscriptionAdminAuth::UpdateSnapshot(
 }
 
 Status SubscriptionAdminAuth::DeleteSnapshot(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::pubsub::v1::DeleteSnapshotRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -125,7 +131,8 @@ Status SubscriptionAdminAuth::DeleteSnapshot(
 }
 
 StatusOr<google::pubsub::v1::SeekResponse> SubscriptionAdminAuth::Seek(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::pubsub::v1::SeekRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -133,7 +140,8 @@ StatusOr<google::pubsub::v1::SeekResponse> SubscriptionAdminAuth::Seek(
 }
 
 StatusOr<google::iam::v1::Policy> SubscriptionAdminAuth::SetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -141,16 +149,17 @@ StatusOr<google::iam::v1::Policy> SubscriptionAdminAuth::SetIamPolicy(
 }
 
 StatusOr<google::iam::v1::Policy> SubscriptionAdminAuth::GetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetIamPolicy(context, options, request);
 }
 
-StatusOr<google::iam::v1::TestIamPermissionsResponse>
-SubscriptionAdminAuth::TestIamPermissions(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::iam::v1::TestIamPermissionsResponse> SubscriptionAdminAuth::TestIamPermissions(
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;

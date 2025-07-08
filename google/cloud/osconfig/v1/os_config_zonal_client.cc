@@ -28,15 +28,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 OsConfigZonalServiceClient::OsConfigZonalServiceClient(
     std::shared_ptr<OsConfigZonalServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 OsConfigZonalServiceClient::~OsConfigZonalServiceClient() = default;
 
 future<StatusOr<google::cloud::osconfig::v1::OSPolicyAssignment>>
-OsConfigZonalServiceClient::CreateOSPolicyAssignment(
-    std::string const& parent,
-    google::cloud::osconfig::v1::OSPolicyAssignment const& os_policy_assignment,
-    std::string const& os_policy_assignment_id, Options opts) {
+OsConfigZonalServiceClient::CreateOSPolicyAssignment(std::string const& parent, google::cloud::osconfig::v1::OSPolicyAssignment const& os_policy_assignment, std::string const& os_policy_assignment_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::osconfig::v1::CreateOSPolicyAssignmentRequest request;
   request.set_parent(parent);
@@ -46,10 +43,7 @@ OsConfigZonalServiceClient::CreateOSPolicyAssignment(
 }
 
 StatusOr<google::longrunning::Operation>
-OsConfigZonalServiceClient::CreateOSPolicyAssignment(
-    NoAwaitTag, std::string const& parent,
-    google::cloud::osconfig::v1::OSPolicyAssignment const& os_policy_assignment,
-    std::string const& os_policy_assignment_id, Options opts) {
+OsConfigZonalServiceClient::CreateOSPolicyAssignment(NoAwaitTag, std::string const& parent, google::cloud::osconfig::v1::OSPolicyAssignment const& os_policy_assignment, std::string const& os_policy_assignment_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::osconfig::v1::CreateOSPolicyAssignmentRequest request;
   request.set_parent(parent);
@@ -59,33 +53,25 @@ OsConfigZonalServiceClient::CreateOSPolicyAssignment(
 }
 
 future<StatusOr<google::cloud::osconfig::v1::OSPolicyAssignment>>
-OsConfigZonalServiceClient::CreateOSPolicyAssignment(
-    google::cloud::osconfig::v1::CreateOSPolicyAssignmentRequest const& request,
-    Options opts) {
+OsConfigZonalServiceClient::CreateOSPolicyAssignment(google::cloud::osconfig::v1::CreateOSPolicyAssignmentRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateOSPolicyAssignment(request);
 }
 
 StatusOr<google::longrunning::Operation>
-OsConfigZonalServiceClient::CreateOSPolicyAssignment(
-    NoAwaitTag,
-    google::cloud::osconfig::v1::CreateOSPolicyAssignmentRequest const& request,
-    Options opts) {
+OsConfigZonalServiceClient::CreateOSPolicyAssignment(NoAwaitTag, google::cloud::osconfig::v1::CreateOSPolicyAssignmentRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateOSPolicyAssignment(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::osconfig::v1::OSPolicyAssignment>>
-OsConfigZonalServiceClient::CreateOSPolicyAssignment(
-    google::longrunning::Operation const& operation, Options opts) {
+OsConfigZonalServiceClient::CreateOSPolicyAssignment(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateOSPolicyAssignment(operation);
 }
 
 future<StatusOr<google::cloud::osconfig::v1::OSPolicyAssignment>>
-OsConfigZonalServiceClient::UpdateOSPolicyAssignment(
-    google::cloud::osconfig::v1::OSPolicyAssignment const& os_policy_assignment,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+OsConfigZonalServiceClient::UpdateOSPolicyAssignment(google::cloud::osconfig::v1::OSPolicyAssignment const& os_policy_assignment, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::osconfig::v1::UpdateOSPolicyAssignmentRequest request;
   *request.mutable_os_policy_assignment() = os_policy_assignment;
@@ -94,10 +80,7 @@ OsConfigZonalServiceClient::UpdateOSPolicyAssignment(
 }
 
 StatusOr<google::longrunning::Operation>
-OsConfigZonalServiceClient::UpdateOSPolicyAssignment(
-    NoAwaitTag,
-    google::cloud::osconfig::v1::OSPolicyAssignment const& os_policy_assignment,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+OsConfigZonalServiceClient::UpdateOSPolicyAssignment(NoAwaitTag, google::cloud::osconfig::v1::OSPolicyAssignment const& os_policy_assignment, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::osconfig::v1::UpdateOSPolicyAssignmentRequest request;
   *request.mutable_os_policy_assignment() = os_policy_assignment;
@@ -106,32 +89,25 @@ OsConfigZonalServiceClient::UpdateOSPolicyAssignment(
 }
 
 future<StatusOr<google::cloud::osconfig::v1::OSPolicyAssignment>>
-OsConfigZonalServiceClient::UpdateOSPolicyAssignment(
-    google::cloud::osconfig::v1::UpdateOSPolicyAssignmentRequest const& request,
-    Options opts) {
+OsConfigZonalServiceClient::UpdateOSPolicyAssignment(google::cloud::osconfig::v1::UpdateOSPolicyAssignmentRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateOSPolicyAssignment(request);
 }
 
 StatusOr<google::longrunning::Operation>
-OsConfigZonalServiceClient::UpdateOSPolicyAssignment(
-    NoAwaitTag,
-    google::cloud::osconfig::v1::UpdateOSPolicyAssignmentRequest const& request,
-    Options opts) {
+OsConfigZonalServiceClient::UpdateOSPolicyAssignment(NoAwaitTag, google::cloud::osconfig::v1::UpdateOSPolicyAssignmentRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateOSPolicyAssignment(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::osconfig::v1::OSPolicyAssignment>>
-OsConfigZonalServiceClient::UpdateOSPolicyAssignment(
-    google::longrunning::Operation const& operation, Options opts) {
+OsConfigZonalServiceClient::UpdateOSPolicyAssignment(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateOSPolicyAssignment(operation);
 }
 
 StatusOr<google::cloud::osconfig::v1::OSPolicyAssignment>
-OsConfigZonalServiceClient::GetOSPolicyAssignment(std::string const& name,
-                                                  Options opts) {
+OsConfigZonalServiceClient::GetOSPolicyAssignment(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::osconfig::v1::GetOSPolicyAssignmentRequest request;
   request.set_name(name);
@@ -139,16 +115,13 @@ OsConfigZonalServiceClient::GetOSPolicyAssignment(std::string const& name,
 }
 
 StatusOr<google::cloud::osconfig::v1::OSPolicyAssignment>
-OsConfigZonalServiceClient::GetOSPolicyAssignment(
-    google::cloud::osconfig::v1::GetOSPolicyAssignmentRequest const& request,
-    Options opts) {
+OsConfigZonalServiceClient::GetOSPolicyAssignment(google::cloud::osconfig::v1::GetOSPolicyAssignmentRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOSPolicyAssignment(request);
 }
 
 StreamRange<google::cloud::osconfig::v1::OSPolicyAssignment>
-OsConfigZonalServiceClient::ListOSPolicyAssignments(std::string const& parent,
-                                                    Options opts) {
+OsConfigZonalServiceClient::ListOSPolicyAssignments(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::osconfig::v1::ListOSPolicyAssignmentsRequest request;
   request.set_parent(parent);
@@ -156,16 +129,13 @@ OsConfigZonalServiceClient::ListOSPolicyAssignments(std::string const& parent,
 }
 
 StreamRange<google::cloud::osconfig::v1::OSPolicyAssignment>
-OsConfigZonalServiceClient::ListOSPolicyAssignments(
-    google::cloud::osconfig::v1::ListOSPolicyAssignmentsRequest request,
-    Options opts) {
+OsConfigZonalServiceClient::ListOSPolicyAssignments(google::cloud::osconfig::v1::ListOSPolicyAssignmentsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOSPolicyAssignments(std::move(request));
 }
 
 StreamRange<google::cloud::osconfig::v1::OSPolicyAssignment>
-OsConfigZonalServiceClient::ListOSPolicyAssignmentRevisions(
-    std::string const& name, Options opts) {
+OsConfigZonalServiceClient::ListOSPolicyAssignmentRevisions(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::osconfig::v1::ListOSPolicyAssignmentRevisionsRequest request;
   request.set_name(name);
@@ -173,17 +143,13 @@ OsConfigZonalServiceClient::ListOSPolicyAssignmentRevisions(
 }
 
 StreamRange<google::cloud::osconfig::v1::OSPolicyAssignment>
-OsConfigZonalServiceClient::ListOSPolicyAssignmentRevisions(
-    google::cloud::osconfig::v1::ListOSPolicyAssignmentRevisionsRequest request,
-    Options opts) {
+OsConfigZonalServiceClient::ListOSPolicyAssignmentRevisions(google::cloud::osconfig::v1::ListOSPolicyAssignmentRevisionsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOSPolicyAssignmentRevisions(std::move(request));
 }
 
-future<
-    StatusOr<google::cloud::osconfig::v1::OSPolicyAssignmentOperationMetadata>>
-OsConfigZonalServiceClient::DeleteOSPolicyAssignment(std::string const& name,
-                                                     Options opts) {
+future<StatusOr<google::cloud::osconfig::v1::OSPolicyAssignmentOperationMetadata>>
+OsConfigZonalServiceClient::DeleteOSPolicyAssignment(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::osconfig::v1::DeleteOSPolicyAssignmentRequest request;
   request.set_name(name);
@@ -191,44 +157,33 @@ OsConfigZonalServiceClient::DeleteOSPolicyAssignment(std::string const& name,
 }
 
 StatusOr<google::longrunning::Operation>
-OsConfigZonalServiceClient::DeleteOSPolicyAssignment(NoAwaitTag,
-                                                     std::string const& name,
-                                                     Options opts) {
+OsConfigZonalServiceClient::DeleteOSPolicyAssignment(NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::osconfig::v1::DeleteOSPolicyAssignmentRequest request;
   request.set_name(name);
   return connection_->DeleteOSPolicyAssignment(NoAwaitTag{}, request);
 }
 
-future<
-    StatusOr<google::cloud::osconfig::v1::OSPolicyAssignmentOperationMetadata>>
-OsConfigZonalServiceClient::DeleteOSPolicyAssignment(
-    google::cloud::osconfig::v1::DeleteOSPolicyAssignmentRequest const& request,
-    Options opts) {
+future<StatusOr<google::cloud::osconfig::v1::OSPolicyAssignmentOperationMetadata>>
+OsConfigZonalServiceClient::DeleteOSPolicyAssignment(google::cloud::osconfig::v1::DeleteOSPolicyAssignmentRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteOSPolicyAssignment(request);
 }
 
 StatusOr<google::longrunning::Operation>
-OsConfigZonalServiceClient::DeleteOSPolicyAssignment(
-    NoAwaitTag,
-    google::cloud::osconfig::v1::DeleteOSPolicyAssignmentRequest const& request,
-    Options opts) {
+OsConfigZonalServiceClient::DeleteOSPolicyAssignment(NoAwaitTag, google::cloud::osconfig::v1::DeleteOSPolicyAssignmentRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteOSPolicyAssignment(NoAwaitTag{}, request);
 }
 
-future<
-    StatusOr<google::cloud::osconfig::v1::OSPolicyAssignmentOperationMetadata>>
-OsConfigZonalServiceClient::DeleteOSPolicyAssignment(
-    google::longrunning::Operation const& operation, Options opts) {
+future<StatusOr<google::cloud::osconfig::v1::OSPolicyAssignmentOperationMetadata>>
+OsConfigZonalServiceClient::DeleteOSPolicyAssignment(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteOSPolicyAssignment(operation);
 }
 
 StatusOr<google::cloud::osconfig::v1::OSPolicyAssignmentReport>
-OsConfigZonalServiceClient::GetOSPolicyAssignmentReport(std::string const& name,
-                                                        Options opts) {
+OsConfigZonalServiceClient::GetOSPolicyAssignmentReport(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::osconfig::v1::GetOSPolicyAssignmentReportRequest request;
   request.set_name(name);
@@ -236,17 +191,13 @@ OsConfigZonalServiceClient::GetOSPolicyAssignmentReport(std::string const& name,
 }
 
 StatusOr<google::cloud::osconfig::v1::OSPolicyAssignmentReport>
-OsConfigZonalServiceClient::GetOSPolicyAssignmentReport(
-    google::cloud::osconfig::v1::GetOSPolicyAssignmentReportRequest const&
-        request,
-    Options opts) {
+OsConfigZonalServiceClient::GetOSPolicyAssignmentReport(google::cloud::osconfig::v1::GetOSPolicyAssignmentReportRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOSPolicyAssignmentReport(request);
 }
 
 StreamRange<google::cloud::osconfig::v1::OSPolicyAssignmentReport>
-OsConfigZonalServiceClient::ListOSPolicyAssignmentReports(
-    std::string const& parent, Options opts) {
+OsConfigZonalServiceClient::ListOSPolicyAssignmentReports(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::osconfig::v1::ListOSPolicyAssignmentReportsRequest request;
   request.set_parent(parent);
@@ -254,16 +205,13 @@ OsConfigZonalServiceClient::ListOSPolicyAssignmentReports(
 }
 
 StreamRange<google::cloud::osconfig::v1::OSPolicyAssignmentReport>
-OsConfigZonalServiceClient::ListOSPolicyAssignmentReports(
-    google::cloud::osconfig::v1::ListOSPolicyAssignmentReportsRequest request,
-    Options opts) {
+OsConfigZonalServiceClient::ListOSPolicyAssignmentReports(google::cloud::osconfig::v1::ListOSPolicyAssignmentReportsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOSPolicyAssignmentReports(std::move(request));
 }
 
 StatusOr<google::cloud::osconfig::v1::Inventory>
-OsConfigZonalServiceClient::GetInventory(std::string const& name,
-                                         Options opts) {
+OsConfigZonalServiceClient::GetInventory(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::osconfig::v1::GetInventoryRequest request;
   request.set_name(name);
@@ -271,16 +219,13 @@ OsConfigZonalServiceClient::GetInventory(std::string const& name,
 }
 
 StatusOr<google::cloud::osconfig::v1::Inventory>
-OsConfigZonalServiceClient::GetInventory(
-    google::cloud::osconfig::v1::GetInventoryRequest const& request,
-    Options opts) {
+OsConfigZonalServiceClient::GetInventory(google::cloud::osconfig::v1::GetInventoryRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetInventory(request);
 }
 
 StreamRange<google::cloud::osconfig::v1::Inventory>
-OsConfigZonalServiceClient::ListInventories(std::string const& parent,
-                                            Options opts) {
+OsConfigZonalServiceClient::ListInventories(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::osconfig::v1::ListInventoriesRequest request;
   request.set_parent(parent);
@@ -288,15 +233,13 @@ OsConfigZonalServiceClient::ListInventories(std::string const& parent,
 }
 
 StreamRange<google::cloud::osconfig::v1::Inventory>
-OsConfigZonalServiceClient::ListInventories(
-    google::cloud::osconfig::v1::ListInventoriesRequest request, Options opts) {
+OsConfigZonalServiceClient::ListInventories(google::cloud::osconfig::v1::ListInventoriesRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListInventories(std::move(request));
 }
 
 StatusOr<google::cloud::osconfig::v1::VulnerabilityReport>
-OsConfigZonalServiceClient::GetVulnerabilityReport(std::string const& name,
-                                                   Options opts) {
+OsConfigZonalServiceClient::GetVulnerabilityReport(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::osconfig::v1::GetVulnerabilityReportRequest request;
   request.set_name(name);
@@ -304,16 +247,13 @@ OsConfigZonalServiceClient::GetVulnerabilityReport(std::string const& name,
 }
 
 StatusOr<google::cloud::osconfig::v1::VulnerabilityReport>
-OsConfigZonalServiceClient::GetVulnerabilityReport(
-    google::cloud::osconfig::v1::GetVulnerabilityReportRequest const& request,
-    Options opts) {
+OsConfigZonalServiceClient::GetVulnerabilityReport(google::cloud::osconfig::v1::GetVulnerabilityReportRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetVulnerabilityReport(request);
 }
 
 StreamRange<google::cloud::osconfig::v1::VulnerabilityReport>
-OsConfigZonalServiceClient::ListVulnerabilityReports(std::string const& parent,
-                                                     Options opts) {
+OsConfigZonalServiceClient::ListVulnerabilityReports(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::osconfig::v1::ListVulnerabilityReportsRequest request;
   request.set_parent(parent);
@@ -321,9 +261,7 @@ OsConfigZonalServiceClient::ListVulnerabilityReports(std::string const& parent,
 }
 
 StreamRange<google::cloud::osconfig::v1::VulnerabilityReport>
-OsConfigZonalServiceClient::ListVulnerabilityReports(
-    google::cloud::osconfig::v1::ListVulnerabilityReportsRequest request,
-    Options opts) {
+OsConfigZonalServiceClient::ListVulnerabilityReports(google::cloud::osconfig::v1::ListVulnerabilityReportsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListVulnerabilityReports(std::move(request));
 }

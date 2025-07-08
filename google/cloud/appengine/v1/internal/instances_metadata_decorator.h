@@ -35,16 +35,19 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class InstancesMetadata : public InstancesStub {
  public:
   ~InstancesMetadata() override = default;
-  InstancesMetadata(std::shared_ptr<InstancesStub> child,
-                    std::multimap<std::string, std::string> fixed_metadata,
-                    std::string api_client_header = "");
+  InstancesMetadata(
+      std::shared_ptr<InstancesStub> child,
+      std::multimap<std::string, std::string> fixed_metadata,
+      std::string api_client_header = "");
 
   StatusOr<google::appengine::v1::ListInstancesResponse> ListInstances(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::appengine::v1::ListInstancesRequest const& request) override;
 
   StatusOr<google::appengine::v1::Instance> GetInstance(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::appengine::v1::GetInstanceRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteInstance(
@@ -54,7 +57,8 @@ class InstancesMetadata : public InstancesStub {
       google::appengine::v1::DeleteInstanceRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteInstance(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::appengine::v1::DeleteInstanceRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDebugInstance(
@@ -64,7 +68,8 @@ class InstancesMetadata : public InstancesStub {
       google::appengine::v1::DebugInstanceRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DebugInstance(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::appengine::v1::DebugInstanceRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -80,7 +85,8 @@ class InstancesMetadata : public InstancesStub {
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context, Options const& options,
+  void SetMetadata(grpc::ClientContext& context,
+                   Options const& options,
                    std::string const& request_params);
   void SetMetadata(grpc::ClientContext& context, Options const& options);
 

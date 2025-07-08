@@ -17,12 +17,12 @@
 // source: google/container/v1/cluster_service.proto
 
 #include "google/cloud/container/v1/internal/cluster_manager_stub_factory.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/container/v1/internal/cluster_manager_auth_decorator.h"
 #include "google/cloud/container/v1/internal/cluster_manager_logging_decorator.h"
 #include "google/cloud/container/v1/internal/cluster_manager_metadata_decorator.h"
 #include "google/cloud/container/v1/internal/cluster_manager_stub.h"
 #include "google/cloud/container/v1/internal/cluster_manager_tracing_stub.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/opentelemetry.h"
@@ -37,26 +37,28 @@ namespace cloud {
 namespace container_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<ClusterManagerStub> CreateDefaultClusterManagerStub(
+std::shared_ptr<ClusterManagerStub>
+CreateDefaultClusterManagerStub(
     std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
     Options const& options) {
-  auto channel = auth->CreateChannel(options.get<EndpointOption>(),
-                                     internal::MakeChannelArguments(options));
-  auto service_grpc_stub =
-      google::container::v1::ClusterManager::NewStub(channel);
+  auto channel = auth->CreateChannel(
+    options.get<EndpointOption>(), internal::MakeChannelArguments(options));
+  auto service_grpc_stub = google::container::v1::ClusterManager::NewStub(channel);
   std::shared_ptr<ClusterManagerStub> stub =
-      std::make_shared<DefaultClusterManagerStub>(std::move(service_grpc_stub));
+    std::make_shared<DefaultClusterManagerStub>(std::move(service_grpc_stub));
 
   if (auth->RequiresConfigureContext()) {
-    stub =
-        std::make_shared<ClusterManagerAuth>(std::move(auth), std::move(stub));
+    stub = std::make_shared<ClusterManagerAuth>(
+        std::move(auth), std::move(stub));
   }
   stub = std::make_shared<ClusterManagerMetadata>(
       std::move(stub), std::multimap<std::string, std::string>{});
-  if (internal::Contains(options.get<LoggingComponentsOption>(), "rpc")) {
+  if (internal::Contains(
+      options.get<LoggingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<ClusterManagerLogging>(
-        std::move(stub), options.get<GrpcTracingOptionsOption>(),
+        std::move(stub),
+        options.get<GrpcTracingOptionsOption>(),
         options.get<LoggingComponentsOption>());
   }
   if (internal::TracingEnabled(options)) {

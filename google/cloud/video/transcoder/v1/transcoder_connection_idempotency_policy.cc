@@ -26,56 +26,47 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-TranscoderServiceConnectionIdempotencyPolicy::
-    ~TranscoderServiceConnectionIdempotencyPolicy() = default;
+TranscoderServiceConnectionIdempotencyPolicy::~TranscoderServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<TranscoderServiceConnectionIdempotencyPolicy>
 TranscoderServiceConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<TranscoderServiceConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency TranscoderServiceConnectionIdempotencyPolicy::CreateJob(
-    google::cloud::video::transcoder::v1::CreateJobRequest const&) {
+Idempotency TranscoderServiceConnectionIdempotencyPolicy::CreateJob(google::cloud::video::transcoder::v1::CreateJobRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TranscoderServiceConnectionIdempotencyPolicy::ListJobs(
-    google::cloud::video::transcoder::v1::ListJobsRequest) {  // NOLINT
+Idempotency TranscoderServiceConnectionIdempotencyPolicy::ListJobs(google::cloud::video::transcoder::v1::ListJobsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency TranscoderServiceConnectionIdempotencyPolicy::GetJob(
-    google::cloud::video::transcoder::v1::GetJobRequest const&) {
+Idempotency TranscoderServiceConnectionIdempotencyPolicy::GetJob(google::cloud::video::transcoder::v1::GetJobRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency TranscoderServiceConnectionIdempotencyPolicy::DeleteJob(
-    google::cloud::video::transcoder::v1::DeleteJobRequest const&) {
+Idempotency TranscoderServiceConnectionIdempotencyPolicy::DeleteJob(google::cloud::video::transcoder::v1::DeleteJobRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TranscoderServiceConnectionIdempotencyPolicy::CreateJobTemplate(
-    google::cloud::video::transcoder::v1::CreateJobTemplateRequest const&) {
+Idempotency TranscoderServiceConnectionIdempotencyPolicy::CreateJobTemplate(google::cloud::video::transcoder::v1::CreateJobTemplateRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TranscoderServiceConnectionIdempotencyPolicy::ListJobTemplates(
-    google::cloud::video::transcoder::v1::ListJobTemplatesRequest) {  // NOLINT
+Idempotency TranscoderServiceConnectionIdempotencyPolicy::ListJobTemplates(google::cloud::video::transcoder::v1::ListJobTemplatesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency TranscoderServiceConnectionIdempotencyPolicy::GetJobTemplate(
-    google::cloud::video::transcoder::v1::GetJobTemplateRequest const&) {
+Idempotency TranscoderServiceConnectionIdempotencyPolicy::GetJobTemplate(google::cloud::video::transcoder::v1::GetJobTemplateRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency TranscoderServiceConnectionIdempotencyPolicy::DeleteJobTemplate(
-    google::cloud::video::transcoder::v1::DeleteJobTemplateRequest const&) {
+Idempotency TranscoderServiceConnectionIdempotencyPolicy::DeleteJobTemplate(google::cloud::video::transcoder::v1::DeleteJobTemplateRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<TranscoderServiceConnectionIdempotencyPolicy>
-MakeDefaultTranscoderServiceConnectionIdempotencyPolicy() {
+    MakeDefaultTranscoderServiceConnectionIdempotencyPolicy() {
   return std::make_unique<TranscoderServiceConnectionIdempotencyPolicy>();
 }
 

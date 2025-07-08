@@ -40,105 +40,104 @@ class DocumentsAuth : public DocumentsStub {
       std::shared_ptr<DocumentsStub> child);
 
   StatusOr<google::cloud::dialogflow::v2::ListDocumentsResponse> ListDocuments(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::dialogflow::v2::ListDocumentsRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::dialogflow::v2::ListDocumentsRequest const& request) override;
 
   StatusOr<google::cloud::dialogflow::v2::Document> GetDocument(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::dialogflow::v2::GetDocumentRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::dialogflow::v2::GetDocumentRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateDocument(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::dialogflow::v2::CreateDocumentRequest const& request)
-      override;
+      google::cloud::dialogflow::v2::CreateDocumentRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateDocument(
-      grpc::ClientContext& context, Options options,
-      google::cloud::dialogflow::v2::CreateDocumentRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::dialogflow::v2::CreateDocumentRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncImportDocuments(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::dialogflow::v2::ImportDocumentsRequest const& request)
-      override;
+      google::cloud::dialogflow::v2::ImportDocumentsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> ImportDocuments(
-      grpc::ClientContext& context, Options options,
-      google::cloud::dialogflow::v2::ImportDocumentsRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::dialogflow::v2::ImportDocumentsRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteDocument(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::dialogflow::v2::DeleteDocumentRequest const& request)
-      override;
+      google::cloud::dialogflow::v2::DeleteDocumentRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteDocument(
-      grpc::ClientContext& context, Options options,
-      google::cloud::dialogflow::v2::DeleteDocumentRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::dialogflow::v2::DeleteDocumentRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateDocument(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::dialogflow::v2::UpdateDocumentRequest const& request)
-      override;
+      google::cloud::dialogflow::v2::UpdateDocumentRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateDocument(
-      grpc::ClientContext& context, Options options,
-      google::cloud::dialogflow::v2::UpdateDocumentRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::dialogflow::v2::UpdateDocumentRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncReloadDocument(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::dialogflow::v2::ReloadDocumentRequest const& request)
-      override;
+      google::cloud::dialogflow::v2::ReloadDocumentRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> ReloadDocument(
-      grpc::ClientContext& context, Options options,
-      google::cloud::dialogflow::v2::ReloadDocumentRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::dialogflow::v2::ReloadDocumentRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncExportDocument(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::dialogflow::v2::ExportDocumentRequest const& request)
-      override;
+      google::cloud::dialogflow::v2::ExportDocumentRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> ExportDocument(
-      grpc::ClientContext& context, Options options,
-      google::cloud::dialogflow::v2::ExportDocumentRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::dialogflow::v2::ExportDocumentRequest const& request) override;
 
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::location::ListLocationsRequest const& request) override;
 
   StatusOr<google::cloud::location::Location> GetLocation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::location::GetLocationRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(

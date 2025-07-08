@@ -17,12 +17,12 @@
 // source: google/cloud/bigquery/storage/v1/storage.proto
 
 #include "google/cloud/bigquery/storage/v1/bigquery_write_connection.h"
+#include "google/cloud/background_threads.h"
 #include "google/cloud/bigquery/storage/v1/bigquery_write_options.h"
 #include "google/cloud/bigquery/storage/v1/internal/bigquery_write_connection_impl.h"
 #include "google/cloud/bigquery/storage/v1/internal/bigquery_write_option_defaults.h"
 #include "google/cloud/bigquery/storage/v1/internal/bigquery_write_stub_factory.h"
 #include "google/cloud/bigquery/storage/v1/internal/bigquery_write_tracing_connection.h"
-#include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
@@ -68,8 +68,7 @@ BigQueryWriteConnection::FinalizeWriteStream(
 
 StatusOr<google::cloud::bigquery::storage::v1::BatchCommitWriteStreamsResponse>
 BigQueryWriteConnection::BatchCommitWriteStreams(
-    google::cloud::bigquery::storage::v1::
-        BatchCommitWriteStreamsRequest const&) {
+    google::cloud::bigquery::storage::v1::BatchCommitWriteStreamsRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
@@ -82,19 +81,17 @@ BigQueryWriteConnection::FlushRows(
 std::shared_ptr<BigQueryWriteConnection> MakeBigQueryWriteConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 BigQueryWritePolicyOptionList>(options,
-                                                                __func__);
+      UnifiedCredentialsOptionList,
+      BigQueryWritePolicyOptionList>(options, __func__);
   options = bigquery_storage_v1_internal::BigQueryWriteDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = bigquery_storage_v1_internal::CreateDefaultBigQueryWriteStub(
-      std::move(auth), options);
+    std::move(auth), options);
   return bigquery_storage_v1_internal::MakeBigQueryWriteTracingConnection(
-      std::make_shared<
-          bigquery_storage_v1_internal::BigQueryWriteConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options)));
+      std::make_shared<bigquery_storage_v1_internal::BigQueryWriteConnectionImpl>(
+      std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

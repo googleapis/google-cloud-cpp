@@ -32,17 +32,20 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 CompletionServiceLogging::CompletionServiceLogging(
     std::shared_ptr<CompletionServiceStub> child,
-    TracingOptions tracing_options, std::set<std::string> const&)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
+    TracingOptions tracing_options,
+    std::set<std::string> const&)
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::cloud::discoveryengine::v1::CompleteQueryResponse>
 CompletionServiceLogging::CompleteQuery(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::discoveryengine::v1::CompleteQueryRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::discoveryengine::v1::CompleteQueryRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::discoveryengine::v1::CompleteQueryRequest const& request) {
         return child_->CompleteQuery(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -50,17 +53,15 @@ CompletionServiceLogging::CompleteQuery(
 
 future<StatusOr<google::longrunning::Operation>>
 CompletionServiceLogging::AsyncImportSuggestionDenyListEntries(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::discoveryengine::v1::
-        ImportSuggestionDenyListEntriesRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::discoveryengine::v1::ImportSuggestionDenyListEntriesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::discoveryengine::v1::
-                 ImportSuggestionDenyListEntriesRequest const& request) {
+             google::cloud::discoveryengine::v1::ImportSuggestionDenyListEntriesRequest const& request) {
         return child_->AsyncImportSuggestionDenyListEntries(
             cq, std::move(context), std::move(options), request);
       },
@@ -70,32 +71,29 @@ CompletionServiceLogging::AsyncImportSuggestionDenyListEntries(
 
 StatusOr<google::longrunning::Operation>
 CompletionServiceLogging::ImportSuggestionDenyListEntries(
-    grpc::ClientContext& context, Options options,
-    google::cloud::discoveryengine::v1::
-        ImportSuggestionDenyListEntriesRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::discoveryengine::v1::ImportSuggestionDenyListEntriesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::discoveryengine::v1::
-                 ImportSuggestionDenyListEntriesRequest const& request) {
-        return child_->ImportSuggestionDenyListEntries(context, options,
-                                                       request);
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::discoveryengine::v1::ImportSuggestionDenyListEntriesRequest const& request) {
+        return child_->ImportSuggestionDenyListEntries(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 CompletionServiceLogging::AsyncPurgeSuggestionDenyListEntries(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::discoveryengine::v1::
-        PurgeSuggestionDenyListEntriesRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::discoveryengine::v1::PurgeSuggestionDenyListEntriesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::discoveryengine::v1::
-                 PurgeSuggestionDenyListEntriesRequest const& request) {
+             google::cloud::discoveryengine::v1::PurgeSuggestionDenyListEntriesRequest const& request) {
         return child_->AsyncPurgeSuggestionDenyListEntries(
             cq, std::move(context), std::move(options), request);
       },
@@ -105,32 +103,29 @@ CompletionServiceLogging::AsyncPurgeSuggestionDenyListEntries(
 
 StatusOr<google::longrunning::Operation>
 CompletionServiceLogging::PurgeSuggestionDenyListEntries(
-    grpc::ClientContext& context, Options options,
-    google::cloud::discoveryengine::v1::
-        PurgeSuggestionDenyListEntriesRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::discoveryengine::v1::PurgeSuggestionDenyListEntriesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::discoveryengine::v1::
-                 PurgeSuggestionDenyListEntriesRequest const& request) {
-        return child_->PurgeSuggestionDenyListEntries(context, options,
-                                                      request);
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::discoveryengine::v1::PurgeSuggestionDenyListEntriesRequest const& request) {
+        return child_->PurgeSuggestionDenyListEntries(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 CompletionServiceLogging::AsyncImportCompletionSuggestions(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::discoveryengine::v1::
-        ImportCompletionSuggestionsRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::discoveryengine::v1::ImportCompletionSuggestionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::discoveryengine::v1::
-                 ImportCompletionSuggestionsRequest const& request) {
+             google::cloud::discoveryengine::v1::ImportCompletionSuggestionsRequest const& request) {
         return child_->AsyncImportCompletionSuggestions(
             cq, std::move(context), std::move(options), request);
       },
@@ -140,13 +135,13 @@ CompletionServiceLogging::AsyncImportCompletionSuggestions(
 
 StatusOr<google::longrunning::Operation>
 CompletionServiceLogging::ImportCompletionSuggestions(
-    grpc::ClientContext& context, Options options,
-    google::cloud::discoveryengine::v1::
-        ImportCompletionSuggestionsRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::discoveryengine::v1::ImportCompletionSuggestionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::discoveryengine::v1::
-                 ImportCompletionSuggestionsRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::discoveryengine::v1::ImportCompletionSuggestionsRequest const& request) {
         return child_->ImportCompletionSuggestions(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -154,17 +149,15 @@ CompletionServiceLogging::ImportCompletionSuggestions(
 
 future<StatusOr<google::longrunning::Operation>>
 CompletionServiceLogging::AsyncPurgeCompletionSuggestions(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::discoveryengine::v1::PurgeCompletionSuggestionsRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::discoveryengine::v1::PurgeCompletionSuggestionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::discoveryengine::v1::
-                 PurgeCompletionSuggestionsRequest const& request) {
+             google::cloud::discoveryengine::v1::PurgeCompletionSuggestionsRequest const& request) {
         return child_->AsyncPurgeCompletionSuggestions(
             cq, std::move(context), std::move(options), request);
       },
@@ -174,13 +167,13 @@ CompletionServiceLogging::AsyncPurgeCompletionSuggestions(
 
 StatusOr<google::longrunning::Operation>
 CompletionServiceLogging::PurgeCompletionSuggestions(
-    grpc::ClientContext& context, Options options,
-    google::cloud::discoveryengine::v1::PurgeCompletionSuggestionsRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::discoveryengine::v1::PurgeCompletionSuggestionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::discoveryengine::v1::
-                 PurgeCompletionSuggestionsRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::discoveryengine::v1::PurgeCompletionSuggestionsRequest const& request) {
         return child_->PurgeCompletionSuggestions(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -188,32 +181,40 @@ CompletionServiceLogging::PurgeCompletionSuggestions(
 
 StatusOr<google::longrunning::ListOperationsResponse>
 CompletionServiceLogging::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::ListOperationsRequest const& request) {
         return child_->ListOperations(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> CompletionServiceLogging::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::Operation>
+CompletionServiceLogging::GetOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::GetOperationRequest const& request) {
         return child_->GetOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status CompletionServiceLogging::CancelOperation(
-    grpc::ClientContext& context, Options const& options,
+Status
+CompletionServiceLogging::CancelOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::CancelOperationRequest const& request) {
         return child_->CancelOperation(context, options, request);
       },
@@ -231,8 +232,8 @@ CompletionServiceLogging::AsyncGetOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(cq, std::move(context),
-                                         std::move(options), request);
+        return child_->AsyncGetOperation(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -248,8 +249,8 @@ future<Status> CompletionServiceLogging::AsyncCancelOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::CancelOperationRequest const& request) {
-        return child_->AsyncCancelOperation(cq, std::move(context),
-                                            std::move(options), request);
+        return child_->AsyncCancelOperation(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);

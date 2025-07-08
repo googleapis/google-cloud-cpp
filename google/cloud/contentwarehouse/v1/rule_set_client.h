@@ -61,8 +61,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class RuleSetServiceClient {
  public:
-  explicit RuleSetServiceClient(
-      std::shared_ptr<RuleSetServiceConnection> connection, Options opts = {});
+  explicit RuleSetServiceClient(std::shared_ptr<RuleSetServiceConnection> connection, Options opts = {});
   ~RuleSetServiceClient();
 
   ///@{
@@ -75,12 +74,10 @@ class RuleSetServiceClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(RuleSetServiceClient const& a,
-                         RuleSetServiceClient const& b) {
+  friend bool operator==(RuleSetServiceClient const& a, RuleSetServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(RuleSetServiceClient const& a,
-                         RuleSetServiceClient const& b) {
+  friend bool operator!=(RuleSetServiceClient const& a, RuleSetServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -109,10 +106,8 @@ class RuleSetServiceClient {
   /// [google.cloud.contentwarehouse.v1.RuleSet]: @googleapis_reference_link{google/cloud/contentwarehouse/v1/rule_engine.proto#L32}
   ///
   // clang-format on
-  StatusOr<google::cloud::contentwarehouse::v1::RuleSet> CreateRuleSet(
-      std::string const& parent,
-      google::cloud::contentwarehouse::v1::RuleSet const& rule_set,
-      Options opts = {});
+  StatusOr<google::cloud::contentwarehouse::v1::RuleSet>
+  CreateRuleSet(std::string const& parent, google::cloud::contentwarehouse::v1::RuleSet const& rule_set, Options opts = {});
 
   // clang-format off
   ///
@@ -141,9 +136,8 @@ class RuleSetServiceClient {
   /// [google.cloud.contentwarehouse.v1.RuleSet]: @googleapis_reference_link{google/cloud/contentwarehouse/v1/rule_engine.proto#L32}
   ///
   // clang-format on
-  StatusOr<google::cloud::contentwarehouse::v1::RuleSet> CreateRuleSet(
-      google::cloud::contentwarehouse::v1::CreateRuleSetRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::contentwarehouse::v1::RuleSet>
+  CreateRuleSet(google::cloud::contentwarehouse::v1::CreateRuleSetRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -169,8 +163,8 @@ class RuleSetServiceClient {
   /// [google.cloud.contentwarehouse.v1.RuleSet]: @googleapis_reference_link{google/cloud/contentwarehouse/v1/rule_engine.proto#L32}
   ///
   // clang-format on
-  StatusOr<google::cloud::contentwarehouse::v1::RuleSet> GetRuleSet(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::contentwarehouse::v1::RuleSet>
+  GetRuleSet(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -199,9 +193,8 @@ class RuleSetServiceClient {
   /// [google.cloud.contentwarehouse.v1.RuleSet]: @googleapis_reference_link{google/cloud/contentwarehouse/v1/rule_engine.proto#L32}
   ///
   // clang-format on
-  StatusOr<google::cloud::contentwarehouse::v1::RuleSet> GetRuleSet(
-      google::cloud::contentwarehouse::v1::GetRuleSetRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::contentwarehouse::v1::RuleSet>
+  GetRuleSet(google::cloud::contentwarehouse::v1::GetRuleSetRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -229,10 +222,8 @@ class RuleSetServiceClient {
   /// [google.cloud.contentwarehouse.v1.UpdateRuleSetRequest]: @googleapis_reference_link{google/cloud/contentwarehouse/v1/ruleset_service_request.proto#L60}
   ///
   // clang-format on
-  StatusOr<google::cloud::contentwarehouse::v1::RuleSet> UpdateRuleSet(
-      std::string const& name,
-      google::cloud::contentwarehouse::v1::RuleSet const& rule_set,
-      Options opts = {});
+  StatusOr<google::cloud::contentwarehouse::v1::RuleSet>
+  UpdateRuleSet(std::string const& name, google::cloud::contentwarehouse::v1::RuleSet const& rule_set, Options opts = {});
 
   // clang-format off
   ///
@@ -262,9 +253,8 @@ class RuleSetServiceClient {
   /// [google.cloud.contentwarehouse.v1.UpdateRuleSetRequest]: @googleapis_reference_link{google/cloud/contentwarehouse/v1/ruleset_service_request.proto#L60}
   ///
   // clang-format on
-  StatusOr<google::cloud::contentwarehouse::v1::RuleSet> UpdateRuleSet(
-      google::cloud::contentwarehouse::v1::UpdateRuleSetRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::contentwarehouse::v1::RuleSet>
+  UpdateRuleSet(google::cloud::contentwarehouse::v1::UpdateRuleSetRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -287,7 +277,8 @@ class RuleSetServiceClient {
   /// [google.cloud.contentwarehouse.v1.DeleteRuleSetRequest]: @googleapis_reference_link{google/cloud/contentwarehouse/v1/ruleset_service_request.proto#L76}
   ///
   // clang-format on
-  Status DeleteRuleSet(std::string const& name, Options opts = {});
+  Status
+  DeleteRuleSet(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -313,9 +304,8 @@ class RuleSetServiceClient {
   /// [google.cloud.contentwarehouse.v1.DeleteRuleSetRequest]: @googleapis_reference_link{google/cloud/contentwarehouse/v1/ruleset_service_request.proto#L76}
   ///
   // clang-format on
-  Status DeleteRuleSet(
-      google::cloud::contentwarehouse::v1::DeleteRuleSetRequest const& request,
-      Options opts = {});
+  Status
+  DeleteRuleSet(google::cloud::contentwarehouse::v1::DeleteRuleSetRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -349,8 +339,8 @@ class RuleSetServiceClient {
   /// [google.cloud.contentwarehouse.v1.RuleSet]: @googleapis_reference_link{google/cloud/contentwarehouse/v1/rule_engine.proto#L32}
   ///
   // clang-format on
-  StreamRange<google::cloud::contentwarehouse::v1::RuleSet> ListRuleSets(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::contentwarehouse::v1::RuleSet>
+  ListRuleSets(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -388,9 +378,8 @@ class RuleSetServiceClient {
   /// [google.cloud.contentwarehouse.v1.RuleSet]: @googleapis_reference_link{google/cloud/contentwarehouse/v1/rule_engine.proto#L32}
   ///
   // clang-format on
-  StreamRange<google::cloud::contentwarehouse::v1::RuleSet> ListRuleSets(
-      google::cloud::contentwarehouse::v1::ListRuleSetsRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::contentwarehouse::v1::RuleSet>
+  ListRuleSets(google::cloud::contentwarehouse::v1::ListRuleSetsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -416,8 +405,8 @@ class RuleSetServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -448,9 +437,8 @@ class RuleSetServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<RuleSetServiceConnection> connection_;

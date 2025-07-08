@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTENTWAREHOUSE_V1_SYNONYM_SET_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTENTWAREHOUSE_V1_SYNONYM_SET_CONNECTION_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/contentwarehouse/v1/internal/synonym_set_retry_traits.h"
 #include "google/cloud/contentwarehouse/v1/synonym_set_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -52,8 +52,7 @@ class SynonymSetServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class SynonymSetServiceLimitedErrorCountRetryPolicy
-    : public SynonymSetServiceRetryPolicy {
+class SynonymSetServiceLimitedErrorCountRetryPolicy : public SynonymSetServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -63,14 +62,14 @@ class SynonymSetServiceLimitedErrorCountRetryPolicy
    *     @p maximum_failures == 0.
    */
   explicit SynonymSetServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   SynonymSetServiceLimitedErrorCountRetryPolicy(
       SynonymSetServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : SynonymSetServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : SynonymSetServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   SynonymSetServiceLimitedErrorCountRetryPolicy(
       SynonymSetServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : SynonymSetServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : SynonymSetServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -90,9 +89,7 @@ class SynonymSetServiceLimitedErrorCountRetryPolicy
   using BaseType = SynonymSetServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      contentwarehouse_v1_internal::SynonymSetServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<contentwarehouse_v1_internal::SynonymSetServiceRetryTraits> impl_;
 };
 
 /**
@@ -105,8 +102,7 @@ class SynonymSetServiceLimitedErrorCountRetryPolicy
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class SynonymSetServiceLimitedTimeRetryPolicy
-    : public SynonymSetServiceRetryPolicy {
+class SynonymSetServiceLimitedTimeRetryPolicy : public SynonymSetServiceRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -131,14 +127,12 @@ class SynonymSetServiceLimitedTimeRetryPolicy
   template <typename DurationRep, typename DurationPeriod>
   explicit SynonymSetServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  SynonymSetServiceLimitedTimeRetryPolicy(
-      SynonymSetServiceLimitedTimeRetryPolicy&& rhs) noexcept
-      : SynonymSetServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  SynonymSetServiceLimitedTimeRetryPolicy(
-      SynonymSetServiceLimitedTimeRetryPolicy const& rhs) noexcept
-      : SynonymSetServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  SynonymSetServiceLimitedTimeRetryPolicy(SynonymSetServiceLimitedTimeRetryPolicy&& rhs) noexcept
+    : SynonymSetServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  SynonymSetServiceLimitedTimeRetryPolicy(SynonymSetServiceLimitedTimeRetryPolicy const& rhs) noexcept
+    : SynonymSetServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -160,23 +154,20 @@ class SynonymSetServiceLimitedTimeRetryPolicy
   using BaseType = SynonymSetServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      contentwarehouse_v1_internal::SynonymSetServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<contentwarehouse_v1_internal::SynonymSetServiceRetryTraits> impl_;
 };
 
 /**
  * The `SynonymSetServiceConnection` object for `SynonymSetServiceClient`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `SynonymSetServiceClient`. This allows users to inject custom
- * behavior (e.g., with a Google Mock object) when writing tests that use
- * objects of type `SynonymSetServiceClient`.
+ * sets in `SynonymSetServiceClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `SynonymSetServiceClient`.
  *
  * To create a concrete instance, see `MakeSynonymSetServiceConnection()`.
  *
- * For mocking, see
- * `contentwarehouse_v1_mocks::MockSynonymSetServiceConnection`.
+ * For mocking, see `contentwarehouse_v1_mocks::MockSynonymSetServiceConnection`.
  */
 class SynonymSetServiceConnection {
  public:
@@ -185,42 +176,33 @@ class SynonymSetServiceConnection {
   virtual Options options() { return Options{}; }
 
   virtual StatusOr<google::cloud::contentwarehouse::v1::SynonymSet>
-  CreateSynonymSet(
-      google::cloud::contentwarehouse::v1::CreateSynonymSetRequest const&
-          request);
+  CreateSynonymSet(google::cloud::contentwarehouse::v1::CreateSynonymSetRequest const& request);
 
   virtual StatusOr<google::cloud::contentwarehouse::v1::SynonymSet>
-  GetSynonymSet(
-      google::cloud::contentwarehouse::v1::GetSynonymSetRequest const& request);
+  GetSynonymSet(google::cloud::contentwarehouse::v1::GetSynonymSetRequest const& request);
 
   virtual StatusOr<google::cloud::contentwarehouse::v1::SynonymSet>
-  UpdateSynonymSet(
-      google::cloud::contentwarehouse::v1::UpdateSynonymSetRequest const&
-          request);
+  UpdateSynonymSet(google::cloud::contentwarehouse::v1::UpdateSynonymSetRequest const& request);
 
-  virtual Status DeleteSynonymSet(
-      google::cloud::contentwarehouse::v1::DeleteSynonymSetRequest const&
-          request);
+  virtual Status
+  DeleteSynonymSet(google::cloud::contentwarehouse::v1::DeleteSynonymSetRequest const& request);
 
   virtual StreamRange<google::cloud::contentwarehouse::v1::SynonymSet>
-  ListSynonymSets(
-      google::cloud::contentwarehouse::v1::ListSynonymSetsRequest request);
+  ListSynonymSets(google::cloud::contentwarehouse::v1::ListSynonymSetsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 };
 
 /**
- * A factory function to construct an object of type
- * `SynonymSetServiceConnection`.
+ * A factory function to construct an object of type `SynonymSetServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of
- * SynonymSetServiceClient.
+ * should be passed as an argument to the constructor of SynonymSetServiceClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `SynonymSetServiceConnection`. Expected options are any of the types
- * in the following option lists:
+ * returned `SynonymSetServiceConnection`. Expected options are any of the types in
+ * the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
@@ -230,8 +212,8 @@ class SynonymSetServiceConnection {
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
- * @param options (optional) Configure the `SynonymSetServiceConnection` created
- * by this function.
+ * @param options (optional) Configure the `SynonymSetServiceConnection` created by
+ * this function.
  */
 std::shared_ptr<SynonymSetServiceConnection> MakeSynonymSetServiceConnection(
     Options options = {});

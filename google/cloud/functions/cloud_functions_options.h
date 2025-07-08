@@ -28,26 +28,19 @@ namespace cloud {
 namespace functions {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use functions_v1::CloudFunctionsServicePollingPolicyOption
-/// directly.
+/// @deprecated Use functions_v1::CloudFunctionsServicePollingPolicyOption directly.
 using ::google::cloud::functions_v1::CloudFunctionsServicePollingPolicyOption;
 
-/// @deprecated Use functions_v1::CloudFunctionsServiceBackoffPolicyOption
-/// directly.
+/// @deprecated Use functions_v1::CloudFunctionsServiceBackoffPolicyOption directly.
 using ::google::cloud::functions_v1::CloudFunctionsServiceBackoffPolicyOption;
 
-/// @deprecated Use
-/// functions_v1::CloudFunctionsServiceConnectionIdempotencyPolicyOption
-/// directly.
-using ::google::cloud::functions_v1::
-    CloudFunctionsServiceConnectionIdempotencyPolicyOption;
+/// @deprecated Use functions_v1::CloudFunctionsServiceConnectionIdempotencyPolicyOption directly.
+using ::google::cloud::functions_v1::CloudFunctionsServiceConnectionIdempotencyPolicyOption;
 
-/// @deprecated Use functions_v1::CloudFunctionsServicePolicyOptionList
-/// directly.
+/// @deprecated Use functions_v1::CloudFunctionsServicePolicyOptionList directly.
 using ::google::cloud::functions_v1::CloudFunctionsServicePolicyOptionList;
 
-/// @deprecated Use functions_v1::CloudFunctionsServiceRetryPolicyOption
-/// directly.
+/// @deprecated Use functions_v1::CloudFunctionsServiceRetryPolicyOption directly.
 using ::google::cloud::functions_v1::CloudFunctionsServiceRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

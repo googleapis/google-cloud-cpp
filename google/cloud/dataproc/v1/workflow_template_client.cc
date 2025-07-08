@@ -28,15 +28,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 WorkflowTemplateServiceClient::WorkflowTemplateServiceClient(
     std::shared_ptr<WorkflowTemplateServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 WorkflowTemplateServiceClient::~WorkflowTemplateServiceClient() = default;
 
 StatusOr<google::cloud::dataproc::v1::WorkflowTemplate>
-WorkflowTemplateServiceClient::CreateWorkflowTemplate(
-    std::string const& parent,
-    google::cloud::dataproc::v1::WorkflowTemplate const& template_,
-    Options opts) {
+WorkflowTemplateServiceClient::CreateWorkflowTemplate(std::string const& parent, google::cloud::dataproc::v1::WorkflowTemplate const& template_, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataproc::v1::CreateWorkflowTemplateRequest request;
   request.set_parent(parent);
@@ -45,16 +42,13 @@ WorkflowTemplateServiceClient::CreateWorkflowTemplate(
 }
 
 StatusOr<google::cloud::dataproc::v1::WorkflowTemplate>
-WorkflowTemplateServiceClient::CreateWorkflowTemplate(
-    google::cloud::dataproc::v1::CreateWorkflowTemplateRequest const& request,
-    Options opts) {
+WorkflowTemplateServiceClient::CreateWorkflowTemplate(google::cloud::dataproc::v1::CreateWorkflowTemplateRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateWorkflowTemplate(request);
 }
 
 StatusOr<google::cloud::dataproc::v1::WorkflowTemplate>
-WorkflowTemplateServiceClient::GetWorkflowTemplate(std::string const& name,
-                                                   Options opts) {
+WorkflowTemplateServiceClient::GetWorkflowTemplate(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataproc::v1::GetWorkflowTemplateRequest request;
   request.set_name(name);
@@ -62,16 +56,13 @@ WorkflowTemplateServiceClient::GetWorkflowTemplate(std::string const& name,
 }
 
 StatusOr<google::cloud::dataproc::v1::WorkflowTemplate>
-WorkflowTemplateServiceClient::GetWorkflowTemplate(
-    google::cloud::dataproc::v1::GetWorkflowTemplateRequest const& request,
-    Options opts) {
+WorkflowTemplateServiceClient::GetWorkflowTemplate(google::cloud::dataproc::v1::GetWorkflowTemplateRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetWorkflowTemplate(request);
 }
 
 future<StatusOr<google::cloud::dataproc::v1::WorkflowMetadata>>
-WorkflowTemplateServiceClient::InstantiateWorkflowTemplate(
-    std::string const& name, Options opts) {
+WorkflowTemplateServiceClient::InstantiateWorkflowTemplate(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataproc::v1::InstantiateWorkflowTemplateRequest request;
   request.set_name(name);
@@ -79,8 +70,7 @@ WorkflowTemplateServiceClient::InstantiateWorkflowTemplate(
 }
 
 StatusOr<google::longrunning::Operation>
-WorkflowTemplateServiceClient::InstantiateWorkflowTemplate(
-    NoAwaitTag, std::string const& name, Options opts) {
+WorkflowTemplateServiceClient::InstantiateWorkflowTemplate(NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataproc::v1::InstantiateWorkflowTemplateRequest request;
   request.set_name(name);
@@ -88,9 +78,7 @@ WorkflowTemplateServiceClient::InstantiateWorkflowTemplate(
 }
 
 future<StatusOr<google::cloud::dataproc::v1::WorkflowMetadata>>
-WorkflowTemplateServiceClient::InstantiateWorkflowTemplate(
-    std::string const& name,
-    std::map<std::string, std::string> const& parameters, Options opts) {
+WorkflowTemplateServiceClient::InstantiateWorkflowTemplate(std::string const& name, std::map<std::string, std::string> const& parameters, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataproc::v1::InstantiateWorkflowTemplateRequest request;
   request.set_name(name);
@@ -99,9 +87,7 @@ WorkflowTemplateServiceClient::InstantiateWorkflowTemplate(
 }
 
 StatusOr<google::longrunning::Operation>
-WorkflowTemplateServiceClient::InstantiateWorkflowTemplate(
-    NoAwaitTag, std::string const& name,
-    std::map<std::string, std::string> const& parameters, Options opts) {
+WorkflowTemplateServiceClient::InstantiateWorkflowTemplate(NoAwaitTag, std::string const& name, std::map<std::string, std::string> const& parameters, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataproc::v1::InstantiateWorkflowTemplateRequest request;
   request.set_name(name);
@@ -110,36 +96,25 @@ WorkflowTemplateServiceClient::InstantiateWorkflowTemplate(
 }
 
 future<StatusOr<google::cloud::dataproc::v1::WorkflowMetadata>>
-WorkflowTemplateServiceClient::InstantiateWorkflowTemplate(
-    google::cloud::dataproc::v1::InstantiateWorkflowTemplateRequest const&
-        request,
-    Options opts) {
+WorkflowTemplateServiceClient::InstantiateWorkflowTemplate(google::cloud::dataproc::v1::InstantiateWorkflowTemplateRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->InstantiateWorkflowTemplate(request);
 }
 
 StatusOr<google::longrunning::Operation>
-WorkflowTemplateServiceClient::InstantiateWorkflowTemplate(
-    NoAwaitTag,
-    google::cloud::dataproc::v1::InstantiateWorkflowTemplateRequest const&
-        request,
-    Options opts) {
+WorkflowTemplateServiceClient::InstantiateWorkflowTemplate(NoAwaitTag, google::cloud::dataproc::v1::InstantiateWorkflowTemplateRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->InstantiateWorkflowTemplate(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::dataproc::v1::WorkflowMetadata>>
-WorkflowTemplateServiceClient::InstantiateWorkflowTemplate(
-    google::longrunning::Operation const& operation, Options opts) {
+WorkflowTemplateServiceClient::InstantiateWorkflowTemplate(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->InstantiateWorkflowTemplate(operation);
 }
 
 future<StatusOr<google::cloud::dataproc::v1::WorkflowMetadata>>
-WorkflowTemplateServiceClient::InstantiateInlineWorkflowTemplate(
-    std::string const& parent,
-    google::cloud::dataproc::v1::WorkflowTemplate const& template_,
-    Options opts) {
+WorkflowTemplateServiceClient::InstantiateInlineWorkflowTemplate(std::string const& parent, google::cloud::dataproc::v1::WorkflowTemplate const& template_, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataproc::v1::InstantiateInlineWorkflowTemplateRequest request;
   request.set_parent(parent);
@@ -148,10 +123,7 @@ WorkflowTemplateServiceClient::InstantiateInlineWorkflowTemplate(
 }
 
 StatusOr<google::longrunning::Operation>
-WorkflowTemplateServiceClient::InstantiateInlineWorkflowTemplate(
-    NoAwaitTag, std::string const& parent,
-    google::cloud::dataproc::v1::WorkflowTemplate const& template_,
-    Options opts) {
+WorkflowTemplateServiceClient::InstantiateInlineWorkflowTemplate(NoAwaitTag, std::string const& parent, google::cloud::dataproc::v1::WorkflowTemplate const& template_, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataproc::v1::InstantiateInlineWorkflowTemplateRequest request;
   request.set_parent(parent);
@@ -160,35 +132,25 @@ WorkflowTemplateServiceClient::InstantiateInlineWorkflowTemplate(
 }
 
 future<StatusOr<google::cloud::dataproc::v1::WorkflowMetadata>>
-WorkflowTemplateServiceClient::InstantiateInlineWorkflowTemplate(
-    google::cloud::dataproc::v1::InstantiateInlineWorkflowTemplateRequest const&
-        request,
-    Options opts) {
+WorkflowTemplateServiceClient::InstantiateInlineWorkflowTemplate(google::cloud::dataproc::v1::InstantiateInlineWorkflowTemplateRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->InstantiateInlineWorkflowTemplate(request);
 }
 
 StatusOr<google::longrunning::Operation>
-WorkflowTemplateServiceClient::InstantiateInlineWorkflowTemplate(
-    NoAwaitTag,
-    google::cloud::dataproc::v1::InstantiateInlineWorkflowTemplateRequest const&
-        request,
-    Options opts) {
+WorkflowTemplateServiceClient::InstantiateInlineWorkflowTemplate(NoAwaitTag, google::cloud::dataproc::v1::InstantiateInlineWorkflowTemplateRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->InstantiateInlineWorkflowTemplate(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::dataproc::v1::WorkflowMetadata>>
-WorkflowTemplateServiceClient::InstantiateInlineWorkflowTemplate(
-    google::longrunning::Operation const& operation, Options opts) {
+WorkflowTemplateServiceClient::InstantiateInlineWorkflowTemplate(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->InstantiateInlineWorkflowTemplate(operation);
 }
 
 StatusOr<google::cloud::dataproc::v1::WorkflowTemplate>
-WorkflowTemplateServiceClient::UpdateWorkflowTemplate(
-    google::cloud::dataproc::v1::WorkflowTemplate const& template_,
-    Options opts) {
+WorkflowTemplateServiceClient::UpdateWorkflowTemplate(google::cloud::dataproc::v1::WorkflowTemplate const& template_, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataproc::v1::UpdateWorkflowTemplateRequest request;
   *request.mutable_template_() = template_;
@@ -196,16 +158,13 @@ WorkflowTemplateServiceClient::UpdateWorkflowTemplate(
 }
 
 StatusOr<google::cloud::dataproc::v1::WorkflowTemplate>
-WorkflowTemplateServiceClient::UpdateWorkflowTemplate(
-    google::cloud::dataproc::v1::UpdateWorkflowTemplateRequest const& request,
-    Options opts) {
+WorkflowTemplateServiceClient::UpdateWorkflowTemplate(google::cloud::dataproc::v1::UpdateWorkflowTemplateRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateWorkflowTemplate(request);
 }
 
 StreamRange<google::cloud::dataproc::v1::WorkflowTemplate>
-WorkflowTemplateServiceClient::ListWorkflowTemplates(std::string const& parent,
-                                                     Options opts) {
+WorkflowTemplateServiceClient::ListWorkflowTemplates(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataproc::v1::ListWorkflowTemplatesRequest request;
   request.set_parent(parent);
@@ -213,51 +172,45 @@ WorkflowTemplateServiceClient::ListWorkflowTemplates(std::string const& parent,
 }
 
 StreamRange<google::cloud::dataproc::v1::WorkflowTemplate>
-WorkflowTemplateServiceClient::ListWorkflowTemplates(
-    google::cloud::dataproc::v1::ListWorkflowTemplatesRequest request,
-    Options opts) {
+WorkflowTemplateServiceClient::ListWorkflowTemplates(google::cloud::dataproc::v1::ListWorkflowTemplatesRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListWorkflowTemplates(std::move(request));
 }
 
-Status WorkflowTemplateServiceClient::DeleteWorkflowTemplate(
-    std::string const& name, Options opts) {
+Status
+WorkflowTemplateServiceClient::DeleteWorkflowTemplate(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataproc::v1::DeleteWorkflowTemplateRequest request;
   request.set_name(name);
   return connection_->DeleteWorkflowTemplate(request);
 }
 
-Status WorkflowTemplateServiceClient::DeleteWorkflowTemplate(
-    google::cloud::dataproc::v1::DeleteWorkflowTemplateRequest const& request,
-    Options opts) {
+Status
+WorkflowTemplateServiceClient::DeleteWorkflowTemplate(google::cloud::dataproc::v1::DeleteWorkflowTemplateRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteWorkflowTemplate(request);
 }
 
-StatusOr<google::iam::v1::Policy> WorkflowTemplateServiceClient::SetIamPolicy(
-    google::iam::v1::SetIamPolicyRequest const& request, Options opts) {
+StatusOr<google::iam::v1::Policy>
+WorkflowTemplateServiceClient::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetIamPolicy(request);
 }
 
-StatusOr<google::iam::v1::Policy> WorkflowTemplateServiceClient::GetIamPolicy(
-    google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
+StatusOr<google::iam::v1::Policy>
+WorkflowTemplateServiceClient::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetIamPolicy(request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-WorkflowTemplateServiceClient::TestIamPermissions(
-    google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
+WorkflowTemplateServiceClient::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->TestIamPermissions(request);
 }
 
 StreamRange<google::longrunning::Operation>
-WorkflowTemplateServiceClient::ListOperations(std::string const& name,
-                                              std::string const& filter,
-                                              Options opts) {
+WorkflowTemplateServiceClient::ListOperations(std::string const& name, std::string const& filter, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::ListOperationsRequest request;
   request.set_name(name);
@@ -266,15 +219,13 @@ WorkflowTemplateServiceClient::ListOperations(std::string const& name,
 }
 
 StreamRange<google::longrunning::Operation>
-WorkflowTemplateServiceClient::ListOperations(
-    google::longrunning::ListOperationsRequest request, Options opts) {
+WorkflowTemplateServiceClient::ListOperations(google::longrunning::ListOperationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOperations(std::move(request));
 }
 
 StatusOr<google::longrunning::Operation>
-WorkflowTemplateServiceClient::GetOperation(std::string const& name,
-                                            Options opts) {
+WorkflowTemplateServiceClient::GetOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
@@ -282,36 +233,35 @@ WorkflowTemplateServiceClient::GetOperation(std::string const& name,
 }
 
 StatusOr<google::longrunning::Operation>
-WorkflowTemplateServiceClient::GetOperation(
-    google::longrunning::GetOperationRequest const& request, Options opts) {
+WorkflowTemplateServiceClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }
 
-Status WorkflowTemplateServiceClient::DeleteOperation(std::string const& name,
-                                                      Options opts) {
+Status
+WorkflowTemplateServiceClient::DeleteOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::DeleteOperationRequest request;
   request.set_name(name);
   return connection_->DeleteOperation(request);
 }
 
-Status WorkflowTemplateServiceClient::DeleteOperation(
-    google::longrunning::DeleteOperationRequest const& request, Options opts) {
+Status
+WorkflowTemplateServiceClient::DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteOperation(request);
 }
 
-Status WorkflowTemplateServiceClient::CancelOperation(std::string const& name,
-                                                      Options opts) {
+Status
+WorkflowTemplateServiceClient::CancelOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::CancelOperationRequest request;
   request.set_name(name);
   return connection_->CancelOperation(request);
 }
 
-Status WorkflowTemplateServiceClient::CancelOperation(
-    google::longrunning::CancelOperationRequest const& request, Options opts) {
+Status
+WorkflowTemplateServiceClient::CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelOperation(request);
 }

@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DISCOVERYENGINE_V1_GROUNDED_GENERATION_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DISCOVERYENGINE_V1_GROUNDED_GENERATION_CONNECTION_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/discoveryengine/v1/grounded_generation_connection_idempotency_policy.h"
 #include "google/cloud/discoveryengine/v1/internal/grounded_generation_retry_traits.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/async_read_write_stream_impl.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
@@ -37,17 +37,14 @@ namespace discoveryengine_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `GroundedGenerationServiceConnection`.
-class GroundedGenerationServiceRetryPolicy
-    : public ::google::cloud::RetryPolicy {
+class GroundedGenerationServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  public:
   /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<GroundedGenerationServiceRetryPolicy> clone()
-      const = 0;
+  virtual std::unique_ptr<GroundedGenerationServiceRetryPolicy> clone() const = 0;
 };
 
 /**
- * A retry policy for `GroundedGenerationServiceConnection` based on counting
- * errors.
+ * A retry policy for `GroundedGenerationServiceConnection` based on counting errors.
  *
  * This policy stops retrying if:
  * - An RPC returns a non-transient error.
@@ -56,8 +53,7 @@ class GroundedGenerationServiceRetryPolicy
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class GroundedGenerationServiceLimitedErrorCountRetryPolicy
-    : public GroundedGenerationServiceRetryPolicy {
+class GroundedGenerationServiceLimitedErrorCountRetryPolicy : public GroundedGenerationServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -66,18 +62,15 @@ class GroundedGenerationServiceLimitedErrorCountRetryPolicy
    * @note Disable the retry loop by providing an instance of this policy with
    *     @p maximum_failures == 0.
    */
-  explicit GroundedGenerationServiceLimitedErrorCountRetryPolicy(
-      int maximum_failures)
-      : impl_(maximum_failures) {}
+  explicit GroundedGenerationServiceLimitedErrorCountRetryPolicy(int maximum_failures)
+    : impl_(maximum_failures) {}
 
   GroundedGenerationServiceLimitedErrorCountRetryPolicy(
       GroundedGenerationServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : GroundedGenerationServiceLimitedErrorCountRetryPolicy(
-            rhs.maximum_failures()) {}
+    : GroundedGenerationServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   GroundedGenerationServiceLimitedErrorCountRetryPolicy(
       GroundedGenerationServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : GroundedGenerationServiceLimitedErrorCountRetryPolicy(
-            rhs.maximum_failures()) {}
+    : GroundedGenerationServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -89,8 +82,7 @@ class GroundedGenerationServiceLimitedErrorCountRetryPolicy
     return impl_.IsPermanentFailure(status);
   }
   std::unique_ptr<GroundedGenerationServiceRetryPolicy> clone() const override {
-    return std::make_unique<
-        GroundedGenerationServiceLimitedErrorCountRetryPolicy>(
+    return std::make_unique<GroundedGenerationServiceLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
 
@@ -98,14 +90,11 @@ class GroundedGenerationServiceLimitedErrorCountRetryPolicy
   using BaseType = GroundedGenerationServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      discoveryengine_v1_internal::GroundedGenerationServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<discoveryengine_v1_internal::GroundedGenerationServiceRetryTraits> impl_;
 };
 
 /**
- * A retry policy for `GroundedGenerationServiceConnection` based on elapsed
- * time.
+ * A retry policy for `GroundedGenerationServiceConnection` based on elapsed time.
  *
  * This policy stops retrying if:
  * - An RPC returns a non-transient error.
@@ -114,8 +103,7 @@ class GroundedGenerationServiceLimitedErrorCountRetryPolicy
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class GroundedGenerationServiceLimitedTimeRetryPolicy
-    : public GroundedGenerationServiceRetryPolicy {
+class GroundedGenerationServiceLimitedTimeRetryPolicy : public GroundedGenerationServiceRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -140,16 +128,12 @@ class GroundedGenerationServiceLimitedTimeRetryPolicy
   template <typename DurationRep, typename DurationPeriod>
   explicit GroundedGenerationServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  GroundedGenerationServiceLimitedTimeRetryPolicy(
-      GroundedGenerationServiceLimitedTimeRetryPolicy&& rhs) noexcept
-      : GroundedGenerationServiceLimitedTimeRetryPolicy(
-            rhs.maximum_duration()) {}
-  GroundedGenerationServiceLimitedTimeRetryPolicy(
-      GroundedGenerationServiceLimitedTimeRetryPolicy const& rhs) noexcept
-      : GroundedGenerationServiceLimitedTimeRetryPolicy(
-            rhs.maximum_duration()) {}
+  GroundedGenerationServiceLimitedTimeRetryPolicy(GroundedGenerationServiceLimitedTimeRetryPolicy&& rhs) noexcept
+    : GroundedGenerationServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  GroundedGenerationServiceLimitedTimeRetryPolicy(GroundedGenerationServiceLimitedTimeRetryPolicy const& rhs) noexcept
+    : GroundedGenerationServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -171,25 +155,20 @@ class GroundedGenerationServiceLimitedTimeRetryPolicy
   using BaseType = GroundedGenerationServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      discoveryengine_v1_internal::GroundedGenerationServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<discoveryengine_v1_internal::GroundedGenerationServiceRetryTraits> impl_;
 };
 
 /**
- * The `GroundedGenerationServiceConnection` object for
- * `GroundedGenerationServiceClient`.
+ * The `GroundedGenerationServiceConnection` object for `GroundedGenerationServiceClient`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `GroundedGenerationServiceClient`. This allows users to inject custom
- * behavior (e.g., with a Google Mock object) when writing tests that use
- * objects of type `GroundedGenerationServiceClient`.
+ * sets in `GroundedGenerationServiceClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `GroundedGenerationServiceClient`.
  *
- * To create a concrete instance, see
- * `MakeGroundedGenerationServiceConnection()`.
+ * To create a concrete instance, see `MakeGroundedGenerationServiceConnection()`.
  *
- * For mocking, see
- * `discoveryengine_v1_mocks::MockGroundedGenerationServiceConnection`.
+ * For mocking, see `discoveryengine_v1_mocks::MockGroundedGenerationServiceConnection`.
  */
 class GroundedGenerationServiceConnection {
  public:
@@ -202,52 +181,45 @@ class GroundedGenerationServiceConnection {
       google::cloud::discoveryengine::v1::GenerateGroundedContentResponse>>
   AsyncStreamGenerateGroundedContent();
 
-  virtual StatusOr<
-      google::cloud::discoveryengine::v1::GenerateGroundedContentResponse>
-  GenerateGroundedContent(
-      google::cloud::discoveryengine::v1::GenerateGroundedContentRequest const&
-          request);
+  virtual StatusOr<google::cloud::discoveryengine::v1::GenerateGroundedContentResponse>
+  GenerateGroundedContent(google::cloud::discoveryengine::v1::GenerateGroundedContentRequest const& request);
 
   virtual StatusOr<google::cloud::discoveryengine::v1::CheckGroundingResponse>
-  CheckGrounding(
-      google::cloud::discoveryengine::v1::CheckGroundingRequest const& request);
+  CheckGrounding(google::cloud::discoveryengine::v1::CheckGroundingRequest const& request);
 
-  virtual StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 
-  virtual Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request);
+  virtual Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request);
 };
 
 /**
- * A factory function to construct an object of type
- * `GroundedGenerationServiceConnection`.
+ * A factory function to construct an object of type `GroundedGenerationServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of
- * GroundedGenerationServiceClient.
+ * should be passed as an argument to the constructor of GroundedGenerationServiceClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `GroundedGenerationServiceConnection`. Expected options are any of
- * the types in the following option lists:
+ * returned `GroundedGenerationServiceConnection`. Expected options are any of the types in
+ * the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * -
- * `google::cloud::discoveryengine_v1::GroundedGenerationServicePolicyOptionList`
+ * - `google::cloud::discoveryengine_v1::GroundedGenerationServicePolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
- * @param options (optional) Configure the `GroundedGenerationServiceConnection`
- * created by this function.
+ * @param options (optional) Configure the `GroundedGenerationServiceConnection` created by
+ * this function.
  */
-std::shared_ptr<GroundedGenerationServiceConnection>
-MakeGroundedGenerationServiceConnection(Options options = {});
+std::shared_ptr<GroundedGenerationServiceConnection> MakeGroundedGenerationServiceConnection(
+    Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace discoveryengine_v1

@@ -31,18 +31,18 @@ ParallelstoreAuth::ParallelstoreAuth(
     std::shared_ptr<ParallelstoreStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::parallelstore::v1::ListInstancesResponse>
-ParallelstoreAuth::ListInstances(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::parallelstore::v1::ListInstancesResponse> ParallelstoreAuth::ListInstances(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::parallelstore::v1::ListInstancesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListInstances(context, options, request);
 }
 
-StatusOr<google::cloud::parallelstore::v1::Instance>
-ParallelstoreAuth::GetInstance(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::parallelstore::v1::Instance> ParallelstoreAuth::GetInstance(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::parallelstore::v1::GetInstanceRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -51,27 +51,28 @@ ParallelstoreAuth::GetInstance(
 
 future<StatusOr<google::longrunning::Operation>>
 ParallelstoreAuth::AsyncCreateInstance(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::parallelstore::v1::CreateInstanceRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::parallelstore::v1::CreateInstanceRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreateInstance(cq, *std::move(context),
-                                          std::move(options), request);
+        return child->AsyncCreateInstance(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation> ParallelstoreAuth::CreateInstance(
-    grpc::ClientContext& context, Options options,
-    google::cloud::parallelstore::v1::CreateInstanceRequest const& request) {
+StatusOr<google::longrunning::Operation>
+ParallelstoreAuth::CreateInstance(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::parallelstore::v1::CreateInstanceRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateInstance(context, options, request);
@@ -79,27 +80,28 @@ StatusOr<google::longrunning::Operation> ParallelstoreAuth::CreateInstance(
 
 future<StatusOr<google::longrunning::Operation>>
 ParallelstoreAuth::AsyncUpdateInstance(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::parallelstore::v1::UpdateInstanceRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::parallelstore::v1::UpdateInstanceRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncUpdateInstance(cq, *std::move(context),
-                                          std::move(options), request);
+        return child->AsyncUpdateInstance(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation> ParallelstoreAuth::UpdateInstance(
-    grpc::ClientContext& context, Options options,
-    google::cloud::parallelstore::v1::UpdateInstanceRequest const& request) {
+StatusOr<google::longrunning::Operation>
+ParallelstoreAuth::UpdateInstance(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::parallelstore::v1::UpdateInstanceRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateInstance(context, options, request);
@@ -107,27 +109,28 @@ StatusOr<google::longrunning::Operation> ParallelstoreAuth::UpdateInstance(
 
 future<StatusOr<google::longrunning::Operation>>
 ParallelstoreAuth::AsyncDeleteInstance(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::parallelstore::v1::DeleteInstanceRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::parallelstore::v1::DeleteInstanceRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDeleteInstance(cq, *std::move(context),
-                                          std::move(options), request);
+        return child->AsyncDeleteInstance(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation> ParallelstoreAuth::DeleteInstance(
-    grpc::ClientContext& context, Options options,
-    google::cloud::parallelstore::v1::DeleteInstanceRequest const& request) {
+StatusOr<google::longrunning::Operation>
+ParallelstoreAuth::DeleteInstance(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::parallelstore::v1::DeleteInstanceRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteInstance(context, options, request);
@@ -135,27 +138,28 @@ StatusOr<google::longrunning::Operation> ParallelstoreAuth::DeleteInstance(
 
 future<StatusOr<google::longrunning::Operation>>
 ParallelstoreAuth::AsyncImportData(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::parallelstore::v1::ImportDataRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::parallelstore::v1::ImportDataRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncImportData(cq, *std::move(context),
-                                      std::move(options), request);
+        return child->AsyncImportData(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation> ParallelstoreAuth::ImportData(
-    grpc::ClientContext& context, Options options,
-    google::cloud::parallelstore::v1::ImportDataRequest const& request) {
+StatusOr<google::longrunning::Operation>
+ParallelstoreAuth::ImportData(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::parallelstore::v1::ImportDataRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ImportData(context, options, request);
@@ -163,35 +167,36 @@ StatusOr<google::longrunning::Operation> ParallelstoreAuth::ImportData(
 
 future<StatusOr<google::longrunning::Operation>>
 ParallelstoreAuth::AsyncExportData(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::parallelstore::v1::ExportDataRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::parallelstore::v1::ExportDataRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncExportData(cq, *std::move(context),
-                                      std::move(options), request);
+        return child->AsyncExportData(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation> ParallelstoreAuth::ExportData(
-    grpc::ClientContext& context, Options options,
-    google::cloud::parallelstore::v1::ExportDataRequest const& request) {
+StatusOr<google::longrunning::Operation>
+ParallelstoreAuth::ExportData(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::parallelstore::v1::ExportDataRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ExportData(context, options, request);
 }
 
-StatusOr<google::cloud::location::ListLocationsResponse>
-ParallelstoreAuth::ListLocations(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::location::ListLocationsResponse> ParallelstoreAuth::ListLocations(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -199,16 +204,17 @@ ParallelstoreAuth::ListLocations(
 }
 
 StatusOr<google::cloud::location::Location> ParallelstoreAuth::GetLocation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetLocation(context, options, request);
 }
 
-StatusOr<google::longrunning::ListOperationsResponse>
-ParallelstoreAuth::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse> ParallelstoreAuth::ListOperations(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -216,7 +222,8 @@ ParallelstoreAuth::ListOperations(
 }
 
 StatusOr<google::longrunning::Operation> ParallelstoreAuth::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -224,7 +231,8 @@ StatusOr<google::longrunning::Operation> ParallelstoreAuth::GetOperation(
 }
 
 Status ParallelstoreAuth::DeleteOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -232,7 +240,8 @@ Status ParallelstoreAuth::DeleteOperation(
 }
 
 Status ParallelstoreAuth::CancelOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -246,16 +255,15 @@ ParallelstoreAuth::AsyncGetOperation(
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncGetOperation(cq, *std::move(context),
-                                        std::move(options), request);
+        return child->AsyncGetOperation(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
@@ -264,14 +272,13 @@ future<Status> ParallelstoreAuth::AsyncCancelOperation(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) return make_ready_future(std::move(context).status());
-        return child->AsyncCancelOperation(cq, *std::move(context),
-                                           std::move(options), request);
+        return child->AsyncCancelOperation(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 

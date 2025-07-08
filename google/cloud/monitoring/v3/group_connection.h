@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_V3_GROUP_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_V3_GROUP_CONNECTION_H
 
-#include "google/cloud/monitoring/v3/group_connection_idempotency_policy.h"
-#include "google/cloud/monitoring/v3/internal/group_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/monitoring/v3/group_connection_idempotency_policy.h"
+#include "google/cloud/monitoring/v3/internal/group_retry_traits.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -52,8 +52,7 @@ class GroupServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class GroupServiceLimitedErrorCountRetryPolicy
-    : public GroupServiceRetryPolicy {
+class GroupServiceLimitedErrorCountRetryPolicy : public GroupServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -63,14 +62,14 @@ class GroupServiceLimitedErrorCountRetryPolicy
    *     @p maximum_failures == 0.
    */
   explicit GroupServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   GroupServiceLimitedErrorCountRetryPolicy(
       GroupServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : GroupServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : GroupServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   GroupServiceLimitedErrorCountRetryPolicy(
       GroupServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : GroupServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : GroupServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -90,9 +89,7 @@ class GroupServiceLimitedErrorCountRetryPolicy
   using BaseType = GroupServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      monitoring_v3_internal::GroupServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<monitoring_v3_internal::GroupServiceRetryTraits> impl_;
 };
 
 /**
@@ -130,14 +127,12 @@ class GroupServiceLimitedTimeRetryPolicy : public GroupServiceRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit GroupServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  GroupServiceLimitedTimeRetryPolicy(
-      GroupServiceLimitedTimeRetryPolicy&& rhs) noexcept
-      : GroupServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  GroupServiceLimitedTimeRetryPolicy(
-      GroupServiceLimitedTimeRetryPolicy const& rhs) noexcept
-      : GroupServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  GroupServiceLimitedTimeRetryPolicy(GroupServiceLimitedTimeRetryPolicy&& rhs) noexcept
+    : GroupServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  GroupServiceLimitedTimeRetryPolicy(GroupServiceLimitedTimeRetryPolicy const& rhs) noexcept
+    : GroupServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -159,9 +154,7 @@ class GroupServiceLimitedTimeRetryPolicy : public GroupServiceRetryPolicy {
   using BaseType = GroupServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      monitoring_v3_internal::GroupServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<monitoring_v3_internal::GroupServiceRetryTraits> impl_;
 };
 
 /**
@@ -182,23 +175,23 @@ class GroupServiceConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StreamRange<google::monitoring::v3::Group> ListGroups(
-      google::monitoring::v3::ListGroupsRequest request);
+  virtual StreamRange<google::monitoring::v3::Group>
+  ListGroups(google::monitoring::v3::ListGroupsRequest request);
 
-  virtual StatusOr<google::monitoring::v3::Group> GetGroup(
-      google::monitoring::v3::GetGroupRequest const& request);
+  virtual StatusOr<google::monitoring::v3::Group>
+  GetGroup(google::monitoring::v3::GetGroupRequest const& request);
 
-  virtual StatusOr<google::monitoring::v3::Group> CreateGroup(
-      google::monitoring::v3::CreateGroupRequest const& request);
+  virtual StatusOr<google::monitoring::v3::Group>
+  CreateGroup(google::monitoring::v3::CreateGroupRequest const& request);
 
-  virtual StatusOr<google::monitoring::v3::Group> UpdateGroup(
-      google::monitoring::v3::UpdateGroupRequest const& request);
+  virtual StatusOr<google::monitoring::v3::Group>
+  UpdateGroup(google::monitoring::v3::UpdateGroupRequest const& request);
 
-  virtual Status DeleteGroup(
-      google::monitoring::v3::DeleteGroupRequest const& request);
+  virtual Status
+  DeleteGroup(google::monitoring::v3::DeleteGroupRequest const& request);
 
-  virtual StreamRange<google::api::MonitoredResource> ListGroupMembers(
-      google::monitoring::v3::ListGroupMembersRequest request);
+  virtual StreamRange<google::api::MonitoredResource>
+  ListGroupMembers(google::monitoring::v3::ListGroupMembersRequest request);
 };
 
 /**

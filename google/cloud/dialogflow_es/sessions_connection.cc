@@ -17,14 +17,14 @@
 // source: google/cloud/dialogflow/v2/session.proto
 
 #include "google/cloud/dialogflow_es/sessions_connection.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/dialogflow_es/internal/sessions_connection_impl.h"
 #include "google/cloud/dialogflow_es/internal/sessions_option_defaults.h"
 #include "google/cloud/dialogflow_es/internal/sessions_stub_factory.h"
 #include "google/cloud/dialogflow_es/internal/sessions_tracing_connection.h"
 #include "google/cloud/dialogflow_es/sessions_options.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
-#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
@@ -55,32 +55,32 @@ SessionsConnection::AsyncStreamingDetectIntent() {
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StreamRange<google::cloud::location::Location>
-SessionsConnection::ListLocations(
-    google::cloud::location::
-        ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::location::Location> SessionsConnection::ListLocations(
+    google::cloud::location::ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::location::Location>>();
 }
 
-StatusOr<google::cloud::location::Location> SessionsConnection::GetLocation(
+StatusOr<google::cloud::location::Location>
+SessionsConnection::GetLocation(
     google::cloud::location::GetLocationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StreamRange<google::longrunning::Operation> SessionsConnection::ListOperations(
-    google::longrunning::
-        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+    google::longrunning::ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }
 
-StatusOr<google::longrunning::Operation> SessionsConnection::GetOperation(
+StatusOr<google::longrunning::Operation>
+SessionsConnection::GetOperation(
     google::longrunning::GetOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status SessionsConnection::CancelOperation(
+Status
+SessionsConnection::CancelOperation(
     google::longrunning::CancelOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -88,20 +88,21 @@ Status SessionsConnection::CancelOperation(
 std::shared_ptr<SessionsConnection> MakeSessionsConnection(
     std::string const& location, Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 SessionsPolicyOptionList>(options, __func__);
-  options = dialogflow_es_internal::SessionsDefaultOptions(location,
-                                                           std::move(options));
+      UnifiedCredentialsOptionList,
+      SessionsPolicyOptionList>(options, __func__);
+  options = dialogflow_es_internal::SessionsDefaultOptions(
+      location, std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
-  auto stub = dialogflow_es_internal::CreateDefaultSessionsStub(std::move(auth),
-                                                                options);
+  auto stub = dialogflow_es_internal::CreateDefaultSessionsStub(
+    std::move(auth), options);
   return dialogflow_es_internal::MakeSessionsTracingConnection(
       std::make_shared<dialogflow_es_internal::SessionsConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options)));
+      std::move(background), std::move(stub), std::move(options)));
 }
 
-std::shared_ptr<SessionsConnection> MakeSessionsConnection(Options options) {
+std::shared_ptr<SessionsConnection> MakeSessionsConnection(
+    Options options) {
   return MakeSessionsConnection(std::string{}, std::move(options));
 }
 

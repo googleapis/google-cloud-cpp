@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LOGGING_V2_LOGGING_SERVICE_V2_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LOGGING_V2_LOGGING_SERVICE_V2_CLIENT_H
 
-#include "google/cloud/logging/v2/logging_service_v2_connection.h"
 #include "google/cloud/future.h"
+#include "google/cloud/logging/v2/logging_service_v2_connection.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -62,9 +62,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class LoggingServiceV2Client {
  public:
-  explicit LoggingServiceV2Client(
-      std::shared_ptr<LoggingServiceV2Connection> connection,
-      Options opts = {});
+  explicit LoggingServiceV2Client(std::shared_ptr<LoggingServiceV2Connection> connection, Options opts = {});
   ~LoggingServiceV2Client();
 
   ///@{
@@ -77,12 +75,10 @@ class LoggingServiceV2Client {
 
   ///@{
   /// @name Equality
-  friend bool operator==(LoggingServiceV2Client const& a,
-                         LoggingServiceV2Client const& b) {
+  friend bool operator==(LoggingServiceV2Client const& a, LoggingServiceV2Client const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(LoggingServiceV2Client const& a,
-                         LoggingServiceV2Client const& b) {
+  friend bool operator!=(LoggingServiceV2Client const& a, LoggingServiceV2Client const& b) {
     return !(a == b);
   }
   ///@}
@@ -122,7 +118,8 @@ class LoggingServiceV2Client {
   /// [google.logging.v2.LogEntry]: @googleapis_reference_link{google/logging/v2/log_entry.proto#L38}
   ///
   // clang-format on
-  Status DeleteLog(std::string const& log_name, Options opts = {});
+  Status
+  DeleteLog(std::string const& log_name, Options opts = {});
 
   // clang-format off
   ///
@@ -151,8 +148,8 @@ class LoggingServiceV2Client {
   /// [google.logging.v2.DeleteLogRequest]: @googleapis_reference_link{google/logging/v2/logging.proto#L136}
   ///
   // clang-format on
-  Status DeleteLog(google::logging::v2::DeleteLogRequest const& request,
-                   Options opts = {});
+  Status
+  DeleteLog(google::logging::v2::DeleteLogRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -218,12 +215,8 @@ class LoggingServiceV2Client {
   /// [google.logging.v2.WriteLogEntriesResponse]: @googleapis_reference_link{google/logging/v2/logging.proto#L239}
   ///
   // clang-format on
-  StatusOr<google::logging::v2::WriteLogEntriesResponse> WriteLogEntries(
-      std::string const& log_name,
-      google::api::MonitoredResource const& resource,
-      std::map<std::string, std::string> const& labels,
-      std::vector<google::logging::v2::LogEntry> const& entries,
-      Options opts = {});
+  StatusOr<google::logging::v2::WriteLogEntriesResponse>
+  WriteLogEntries(std::string const& log_name, google::api::MonitoredResource const& resource, std::map<std::string, std::string> const& labels, std::vector<google::logging::v2::LogEntry> const& entries, Options opts = {});
 
   // clang-format off
   ///
@@ -258,9 +251,8 @@ class LoggingServiceV2Client {
   /// [google.logging.v2.WriteLogEntriesResponse]: @googleapis_reference_link{google/logging/v2/logging.proto#L239}
   ///
   // clang-format on
-  StatusOr<google::logging::v2::WriteLogEntriesResponse> WriteLogEntries(
-      google::logging::v2::WriteLogEntriesRequest const& request,
-      Options opts = {});
+  StatusOr<google::logging::v2::WriteLogEntriesResponse>
+  WriteLogEntries(google::logging::v2::WriteLogEntriesRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -323,9 +315,8 @@ class LoggingServiceV2Client {
   /// [google.logging.v2.LogEntry]: @googleapis_reference_link{google/logging/v2/log_entry.proto#L38}
   ///
   // clang-format on
-  StreamRange<google::logging::v2::LogEntry> ListLogEntries(
-      std::vector<std::string> const& resource_names, std::string const& filter,
-      std::string const& order_by, Options opts = {});
+  StreamRange<google::logging::v2::LogEntry>
+  ListLogEntries(std::vector<std::string> const& resource_names, std::string const& filter, std::string const& order_by, Options opts = {});
 
   // clang-format off
   ///
@@ -366,8 +357,8 @@ class LoggingServiceV2Client {
   /// [google.logging.v2.LogEntry]: @googleapis_reference_link{google/logging/v2/log_entry.proto#L38}
   ///
   // clang-format on
-  StreamRange<google::logging::v2::LogEntry> ListLogEntries(
-      google::logging::v2::ListLogEntriesRequest request, Options opts = {});
+  StreamRange<google::logging::v2::LogEntry>
+  ListLogEntries(google::logging::v2::ListLogEntriesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -406,9 +397,7 @@ class LoggingServiceV2Client {
   ///
   // clang-format on
   StreamRange<google::api::MonitoredResourceDescriptor>
-  ListMonitoredResourceDescriptors(
-      google::logging::v2::ListMonitoredResourceDescriptorsRequest request,
-      Options opts = {});
+  ListMonitoredResourceDescriptors(google::logging::v2::ListMonitoredResourceDescriptorsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -444,8 +433,8 @@ class LoggingServiceV2Client {
   /// [google.logging.v2.ListLogsRequest]: @googleapis_reference_link{google/logging/v2/logging.proto#L352}
   ///
   // clang-format on
-  StreamRange<std::string> ListLogs(std::string const& parent,
-                                    Options opts = {});
+  StreamRange<std::string>
+  ListLogs(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -481,8 +470,8 @@ class LoggingServiceV2Client {
   /// [google.logging.v2.ListLogsRequest]: @googleapis_reference_link{google/logging/v2/logging.proto#L352}
   ///
   // clang-format on
-  StreamRange<std::string> ListLogs(
-      google::logging::v2::ListLogsRequest request, Options opts = {});
+  StreamRange<std::string>
+  ListLogs(google::logging::v2::ListLogsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -548,8 +537,8 @@ class LoggingServiceV2Client {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -588,8 +577,8 @@ class LoggingServiceV2Client {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -615,8 +604,8 @@ class LoggingServiceV2Client {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -647,9 +636,8 @@ class LoggingServiceV2Client {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -683,7 +671,8 @@ class LoggingServiceV2Client {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(std::string const& name, Options opts = {});
+  Status
+  CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -722,9 +711,8 @@ class LoggingServiceV2Client {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request,
-      Options opts = {});
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -791,12 +779,7 @@ class LoggingServiceV2Client {
   ///
   // clang-format on
   future<StatusOr<google::logging::v2::WriteLogEntriesResponse>>
-  AsyncWriteLogEntries(
-      std::string const& log_name,
-      google::api::MonitoredResource const& resource,
-      std::map<std::string, std::string> const& labels,
-      std::vector<google::logging::v2::LogEntry> const& entries,
-      Options opts = {});
+  AsyncWriteLogEntries(std::string const& log_name, google::api::MonitoredResource const& resource, std::map<std::string, std::string> const& labels, std::vector<google::logging::v2::LogEntry> const& entries, Options opts = {});
 
   // clang-format off
   ///
@@ -832,9 +815,7 @@ class LoggingServiceV2Client {
   ///
   // clang-format on
   future<StatusOr<google::logging::v2::WriteLogEntriesResponse>>
-  AsyncWriteLogEntries(
-      google::logging::v2::WriteLogEntriesRequest const& request,
-      Options opts = {});
+  AsyncWriteLogEntries(google::logging::v2::WriteLogEntriesRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<LoggingServiceV2Connection> connection_;

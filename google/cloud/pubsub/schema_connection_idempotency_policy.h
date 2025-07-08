@@ -35,51 +35,50 @@ class SchemaServiceConnectionIdempotencyPolicy {
   virtual ~SchemaServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<SchemaServiceConnectionIdempotencyPolicy> clone()
-      const;
+  virtual std::unique_ptr<SchemaServiceConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency CreateSchema(
-      google::pubsub::v1::CreateSchemaRequest const& request);
+  virtual google::cloud::Idempotency
+  CreateSchema(google::pubsub::v1::CreateSchemaRequest const& request);
 
-  virtual google::cloud::Idempotency GetSchema(
-      google::pubsub::v1::GetSchemaRequest const& request);
+  virtual google::cloud::Idempotency
+  GetSchema(google::pubsub::v1::GetSchemaRequest const& request);
 
-  virtual google::cloud::Idempotency ListSchemas(
-      google::pubsub::v1::ListSchemasRequest request);
+  virtual google::cloud::Idempotency
+  ListSchemas(google::pubsub::v1::ListSchemasRequest request);
 
-  virtual google::cloud::Idempotency ListSchemaRevisions(
-      google::pubsub::v1::ListSchemaRevisionsRequest request);
+  virtual google::cloud::Idempotency
+  ListSchemaRevisions(google::pubsub::v1::ListSchemaRevisionsRequest request);
 
-  virtual google::cloud::Idempotency CommitSchema(
-      google::pubsub::v1::CommitSchemaRequest const& request);
+  virtual google::cloud::Idempotency
+  CommitSchema(google::pubsub::v1::CommitSchemaRequest const& request);
 
-  virtual google::cloud::Idempotency RollbackSchema(
-      google::pubsub::v1::RollbackSchemaRequest const& request);
+  virtual google::cloud::Idempotency
+  RollbackSchema(google::pubsub::v1::RollbackSchemaRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteSchemaRevision(
-      google::pubsub::v1::DeleteSchemaRevisionRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteSchemaRevision(google::pubsub::v1::DeleteSchemaRevisionRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteSchema(
-      google::pubsub::v1::DeleteSchemaRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteSchema(google::pubsub::v1::DeleteSchemaRequest const& request);
 
-  virtual google::cloud::Idempotency ValidateSchema(
-      google::pubsub::v1::ValidateSchemaRequest const& request);
+  virtual google::cloud::Idempotency
+  ValidateSchema(google::pubsub::v1::ValidateSchemaRequest const& request);
 
-  virtual google::cloud::Idempotency ValidateMessage(
-      google::pubsub::v1::ValidateMessageRequest const& request);
+  virtual google::cloud::Idempotency
+  ValidateMessage(google::pubsub::v1::ValidateMessageRequest const& request);
 
-  virtual google::cloud::Idempotency SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request);
+  virtual google::cloud::Idempotency
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
 };
 
 std::unique_ptr<SchemaServiceConnectionIdempotencyPolicy>
-MakeDefaultSchemaServiceConnectionIdempotencyPolicy();
+    MakeDefaultSchemaServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub

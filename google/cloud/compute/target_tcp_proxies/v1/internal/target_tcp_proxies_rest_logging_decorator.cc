@@ -29,41 +29,38 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 TargetTcpProxiesRestLogging::TargetTcpProxiesRestLogging(
     std::shared_ptr<TargetTcpProxiesRestStub> child,
-    TracingOptions tracing_options, std::set<std::string> components)
-    : child_(std::move(child)),
-      tracing_options_(std::move(tracing_options)),
+    TracingOptions tracing_options,
+    std::set<std::string> components)
+    : child_(std::move(child)), tracing_options_(std::move(tracing_options)),
       components_(std::move(components)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::TargetTcpProxyAggregatedList>
 TargetTcpProxiesRestLogging::AggregatedListTargetTcpProxies(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::target_tcp_proxies::v1::
-        AggregatedListTargetTcpProxiesRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::target_tcp_proxies::v1::AggregatedListTargetTcpProxiesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::cloud::cpp::compute::target_tcp_proxies::v1::
-                 AggregatedListTargetTcpProxiesRequest const& request) {
-        return child_->AggregatedListTargetTcpProxies(rest_context, options,
-                                                      request);
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
+             google::cloud::cpp::compute::target_tcp_proxies::v1::AggregatedListTargetTcpProxiesRequest const& request) {
+        return child_->AggregatedListTargetTcpProxies(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetTcpProxiesRestLogging::AsyncDeleteTargetTcpProxy(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::target_tcp_proxies::v1::
-        DeleteTargetTcpProxyRequest const& request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::target_tcp_proxies::v1::DeleteTargetTcpProxyRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::cpp::compute::target_tcp_proxies::v1::
-                 DeleteTargetTcpProxyRequest const& request) {
-        return child_->AsyncDeleteTargetTcpProxy(cq, std::move(rest_context),
-                                                 std::move(options), request);
+             google::cloud::cpp::compute::target_tcp_proxies::v1::DeleteTargetTcpProxyRequest const& request) {
+        return child_->AsyncDeleteTargetTcpProxy(
+            cq, std::move(rest_context), std::move(options), request);
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
@@ -71,13 +68,13 @@ TargetTcpProxiesRestLogging::AsyncDeleteTargetTcpProxy(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetTcpProxiesRestLogging::DeleteTargetTcpProxy(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::target_tcp_proxies::v1::
-        DeleteTargetTcpProxyRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::target_tcp_proxies::v1::DeleteTargetTcpProxyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::cloud::cpp::compute::target_tcp_proxies::v1::
-                 DeleteTargetTcpProxyRequest const& request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
+             google::cloud::cpp::compute::target_tcp_proxies::v1::DeleteTargetTcpProxyRequest const& request) {
         return child_->DeleteTargetTcpProxy(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -85,13 +82,13 @@ TargetTcpProxiesRestLogging::DeleteTargetTcpProxy(
 
 StatusOr<google::cloud::cpp::compute::v1::TargetTcpProxy>
 TargetTcpProxiesRestLogging::GetTargetTcpProxy(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::target_tcp_proxies::v1::
-        GetTargetTcpProxyRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::target_tcp_proxies::v1::GetTargetTcpProxyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::cloud::cpp::compute::target_tcp_proxies::v1::
-                 GetTargetTcpProxyRequest const& request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
+             google::cloud::cpp::compute::target_tcp_proxies::v1::GetTargetTcpProxyRequest const& request) {
         return child_->GetTargetTcpProxy(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -99,19 +96,17 @@ TargetTcpProxiesRestLogging::GetTargetTcpProxy(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetTcpProxiesRestLogging::AsyncInsertTargetTcpProxy(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::target_tcp_proxies::v1::
-        InsertTargetTcpProxyRequest const& request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::target_tcp_proxies::v1::InsertTargetTcpProxyRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::cpp::compute::target_tcp_proxies::v1::
-                 InsertTargetTcpProxyRequest const& request) {
-        return child_->AsyncInsertTargetTcpProxy(cq, std::move(rest_context),
-                                                 std::move(options), request);
+             google::cloud::cpp::compute::target_tcp_proxies::v1::InsertTargetTcpProxyRequest const& request) {
+        return child_->AsyncInsertTargetTcpProxy(
+            cq, std::move(rest_context), std::move(options), request);
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
@@ -119,13 +114,13 @@ TargetTcpProxiesRestLogging::AsyncInsertTargetTcpProxy(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetTcpProxiesRestLogging::InsertTargetTcpProxy(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::target_tcp_proxies::v1::
-        InsertTargetTcpProxyRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::target_tcp_proxies::v1::InsertTargetTcpProxyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::cloud::cpp::compute::target_tcp_proxies::v1::
-                 InsertTargetTcpProxyRequest const& request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
+             google::cloud::cpp::compute::target_tcp_proxies::v1::InsertTargetTcpProxyRequest const& request) {
         return child_->InsertTargetTcpProxy(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -133,13 +128,13 @@ TargetTcpProxiesRestLogging::InsertTargetTcpProxy(
 
 StatusOr<google::cloud::cpp::compute::v1::TargetTcpProxyList>
 TargetTcpProxiesRestLogging::ListTargetTcpProxies(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::target_tcp_proxies::v1::
-        ListTargetTcpProxiesRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::target_tcp_proxies::v1::ListTargetTcpProxiesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::cloud::cpp::compute::target_tcp_proxies::v1::
-                 ListTargetTcpProxiesRequest const& request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
+             google::cloud::cpp::compute::target_tcp_proxies::v1::ListTargetTcpProxiesRequest const& request) {
         return child_->ListTargetTcpProxies(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -147,19 +142,17 @@ TargetTcpProxiesRestLogging::ListTargetTcpProxies(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetTcpProxiesRestLogging::AsyncSetBackendService(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::target_tcp_proxies::v1::
-        SetBackendServiceRequest const& request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::target_tcp_proxies::v1::SetBackendServiceRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::cpp::compute::target_tcp_proxies::v1::
-                 SetBackendServiceRequest const& request) {
-        return child_->AsyncSetBackendService(cq, std::move(rest_context),
-                                              std::move(options), request);
+             google::cloud::cpp::compute::target_tcp_proxies::v1::SetBackendServiceRequest const& request) {
+        return child_->AsyncSetBackendService(
+            cq, std::move(rest_context), std::move(options), request);
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
@@ -167,13 +160,13 @@ TargetTcpProxiesRestLogging::AsyncSetBackendService(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetTcpProxiesRestLogging::SetBackendService(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::target_tcp_proxies::v1::
-        SetBackendServiceRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::target_tcp_proxies::v1::SetBackendServiceRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::cloud::cpp::compute::target_tcp_proxies::v1::
-                 SetBackendServiceRequest const& request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
+             google::cloud::cpp::compute::target_tcp_proxies::v1::SetBackendServiceRequest const& request) {
         return child_->SetBackendService(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -181,19 +174,17 @@ TargetTcpProxiesRestLogging::SetBackendService(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetTcpProxiesRestLogging::AsyncSetProxyHeader(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::target_tcp_proxies::v1::
-        SetProxyHeaderRequest const& request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::target_tcp_proxies::v1::SetProxyHeaderRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::cpp::compute::target_tcp_proxies::v1::
-                 SetProxyHeaderRequest const& request) {
-        return child_->AsyncSetProxyHeader(cq, std::move(rest_context),
-                                           std::move(options), request);
+             google::cloud::cpp::compute::target_tcp_proxies::v1::SetProxyHeaderRequest const& request) {
+        return child_->AsyncSetProxyHeader(
+            cq, std::move(rest_context), std::move(options), request);
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
@@ -201,13 +192,13 @@ TargetTcpProxiesRestLogging::AsyncSetProxyHeader(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetTcpProxiesRestLogging::SetProxyHeader(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::target_tcp_proxies::v1::
-        SetProxyHeaderRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::target_tcp_proxies::v1::SetProxyHeaderRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::cloud::cpp::compute::target_tcp_proxies::v1::
-                 SetProxyHeaderRequest const& request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
+             google::cloud::cpp::compute::target_tcp_proxies::v1::SetProxyHeaderRequest const& request) {
         return child_->SetProxyHeader(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -218,35 +209,32 @@ TargetTcpProxiesRestLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::global_operations::v1::
-        GetOperationRequest const& request) {
+    google::cloud::cpp::compute::global_operations::v1::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::cpp::compute::global_operations::v1::
-                 GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(cq, std::move(rest_context),
-                                         std::move(options), request);
+             google::cloud::cpp::compute::global_operations::v1::GetOperationRequest const& request) {
+        return child_->AsyncGetOperation(
+            cq, std::move(rest_context), std::move(options), request);
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-future<Status> TargetTcpProxiesRestLogging::AsyncCancelOperation(
+future<Status>
+TargetTcpProxiesRestLogging::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::global_operations::v1::
-        DeleteOperationRequest const& request) {
+    google::cloud::cpp::compute::global_operations::v1::DeleteOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::cpp::compute::global_operations::v1::
-                 DeleteOperationRequest const& request) {
-        return child_->AsyncCancelOperation(cq, std::move(rest_context),
-                                            std::move(options), request);
+             google::cloud::cpp::compute::global_operations::v1::DeleteOperationRequest const& request) {
+        return child_->AsyncCancelOperation(
+            cq, std::move(rest_context), std::move(options), request);
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);

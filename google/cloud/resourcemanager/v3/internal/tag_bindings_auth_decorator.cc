@@ -31,9 +31,9 @@ TagBindingsAuth::TagBindingsAuth(
     std::shared_ptr<TagBindingsStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::resourcemanager::v3::ListTagBindingsResponse>
-TagBindingsAuth::ListTagBindings(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::resourcemanager::v3::ListTagBindingsResponse> TagBindingsAuth::ListTagBindings(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::resourcemanager::v3::ListTagBindingsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -42,29 +42,28 @@ TagBindingsAuth::ListTagBindings(
 
 future<StatusOr<google::longrunning::Operation>>
 TagBindingsAuth::AsyncCreateTagBinding(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::resourcemanager::v3::CreateTagBindingRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::resourcemanager::v3::CreateTagBindingRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreateTagBinding(cq, *std::move(context),
-                                            std::move(options), request);
+        return child->AsyncCreateTagBinding(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation> TagBindingsAuth::CreateTagBinding(
-    grpc::ClientContext& context, Options options,
-    google::cloud::resourcemanager::v3::CreateTagBindingRequest const&
-        request) {
+StatusOr<google::longrunning::Operation>
+TagBindingsAuth::CreateTagBinding(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::resourcemanager::v3::CreateTagBindingRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateTagBinding(context, options, request);
@@ -72,46 +71,45 @@ StatusOr<google::longrunning::Operation> TagBindingsAuth::CreateTagBinding(
 
 future<StatusOr<google::longrunning::Operation>>
 TagBindingsAuth::AsyncDeleteTagBinding(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::resourcemanager::v3::DeleteTagBindingRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::resourcemanager::v3::DeleteTagBindingRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDeleteTagBinding(cq, *std::move(context),
-                                            std::move(options), request);
+        return child->AsyncDeleteTagBinding(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation> TagBindingsAuth::DeleteTagBinding(
-    grpc::ClientContext& context, Options options,
-    google::cloud::resourcemanager::v3::DeleteTagBindingRequest const&
-        request) {
+StatusOr<google::longrunning::Operation>
+TagBindingsAuth::DeleteTagBinding(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::resourcemanager::v3::DeleteTagBindingRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteTagBinding(context, options, request);
 }
 
-StatusOr<google::cloud::resourcemanager::v3::ListEffectiveTagsResponse>
-TagBindingsAuth::ListEffectiveTags(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::resourcemanager::v3::ListEffectiveTagsRequest const&
-        request) {
+StatusOr<google::cloud::resourcemanager::v3::ListEffectiveTagsResponse> TagBindingsAuth::ListEffectiveTags(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::resourcemanager::v3::ListEffectiveTagsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListEffectiveTags(context, options, request);
 }
 
 StatusOr<google::longrunning::Operation> TagBindingsAuth::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -125,16 +123,15 @@ TagBindingsAuth::AsyncGetOperation(
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncGetOperation(cq, *std::move(context),
-                                        std::move(options), request);
+        return child->AsyncGetOperation(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
@@ -143,14 +140,13 @@ future<Status> TagBindingsAuth::AsyncCancelOperation(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) return make_ready_future(std::move(context).status());
-        return child->AsyncCancelOperation(cq, *std::move(context),
-                                           std::move(options), request);
+        return child->AsyncCancelOperation(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 

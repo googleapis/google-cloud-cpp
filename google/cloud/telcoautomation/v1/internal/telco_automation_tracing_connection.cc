@@ -34,125 +34,95 @@ TelcoAutomationTracingConnection::TelcoAutomationTracingConnection(
     : child_(std::move(child)) {}
 
 StreamRange<google::cloud::telcoautomation::v1::OrchestrationCluster>
-TelcoAutomationTracingConnection::ListOrchestrationClusters(
-    google::cloud::telcoautomation::v1::ListOrchestrationClustersRequest
-        request) {
-  auto span = internal::MakeSpan(
-      "telcoautomation_v1::TelcoAutomationConnection::"
-      "ListOrchestrationClusters");
+TelcoAutomationTracingConnection::ListOrchestrationClusters(google::cloud::telcoautomation::v1::ListOrchestrationClustersRequest request) {
+  auto span = internal::MakeSpan("telcoautomation_v1::TelcoAutomationConnection::ListOrchestrationClusters");
   internal::OTelScope scope(span);
   auto sr = child_->ListOrchestrationClusters(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::telcoautomation::v1::OrchestrationCluster>(std::move(span),
-                                                                std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::telcoautomation::v1::OrchestrationCluster>(
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::telcoautomation::v1::OrchestrationCluster>
-TelcoAutomationTracingConnection::GetOrchestrationCluster(
-    google::cloud::telcoautomation::v1::GetOrchestrationClusterRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "telcoautomation_v1::TelcoAutomationConnection::GetOrchestrationCluster");
+TelcoAutomationTracingConnection::GetOrchestrationCluster(google::cloud::telcoautomation::v1::GetOrchestrationClusterRequest const& request) {
+  auto span = internal::MakeSpan("telcoautomation_v1::TelcoAutomationConnection::GetOrchestrationCluster");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOrchestrationCluster(request));
 }
 
 future<StatusOr<google::cloud::telcoautomation::v1::OrchestrationCluster>>
-TelcoAutomationTracingConnection::CreateOrchestrationCluster(
-    google::cloud::telcoautomation::v1::CreateOrchestrationClusterRequest const&
-        request) {
+TelcoAutomationTracingConnection::CreateOrchestrationCluster(google::cloud::telcoautomation::v1::CreateOrchestrationClusterRequest const& request) {
   auto span = internal::MakeSpan(
-      "telcoautomation_v1::TelcoAutomationConnection::"
-      "CreateOrchestrationCluster");
+      "telcoautomation_v1::TelcoAutomationConnection::CreateOrchestrationCluster");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->CreateOrchestrationCluster(request));
+  return internal::EndSpan(std::move(span), child_->CreateOrchestrationCluster(request));
 }
 
 StatusOr<google::longrunning::Operation>
 TelcoAutomationTracingConnection::CreateOrchestrationCluster(
-    NoAwaitTag,
-    google::cloud::telcoautomation::v1::CreateOrchestrationClusterRequest const&
-        request) {
+    NoAwaitTag, google::cloud::telcoautomation::v1::CreateOrchestrationClusterRequest const& request) {
   auto span = internal::MakeSpan(
-      "telcoautomation_v1::TelcoAutomationConnection::"
-      "CreateOrchestrationCluster");
+      "telcoautomation_v1::TelcoAutomationConnection::CreateOrchestrationCluster");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->CreateOrchestrationCluster(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->CreateOrchestrationCluster(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::telcoautomation::v1::OrchestrationCluster>>
 TelcoAutomationTracingConnection::CreateOrchestrationCluster(
     google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
-      "telcoautomation_v1::TelcoAutomationConnection::"
-      "CreateOrchestrationCluster");
+      "telcoautomation_v1::TelcoAutomationConnection::CreateOrchestrationCluster");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->CreateOrchestrationCluster(operation));
+      child_->CreateOrchestrationCluster(operation));
 }
 
 future<StatusOr<google::cloud::telcoautomation::v1::OperationMetadata>>
-TelcoAutomationTracingConnection::DeleteOrchestrationCluster(
-    google::cloud::telcoautomation::v1::DeleteOrchestrationClusterRequest const&
-        request) {
+TelcoAutomationTracingConnection::DeleteOrchestrationCluster(google::cloud::telcoautomation::v1::DeleteOrchestrationClusterRequest const& request) {
   auto span = internal::MakeSpan(
-      "telcoautomation_v1::TelcoAutomationConnection::"
-      "DeleteOrchestrationCluster");
+      "telcoautomation_v1::TelcoAutomationConnection::DeleteOrchestrationCluster");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->DeleteOrchestrationCluster(request));
+  return internal::EndSpan(std::move(span), child_->DeleteOrchestrationCluster(request));
 }
 
 StatusOr<google::longrunning::Operation>
 TelcoAutomationTracingConnection::DeleteOrchestrationCluster(
-    NoAwaitTag,
-    google::cloud::telcoautomation::v1::DeleteOrchestrationClusterRequest const&
-        request) {
+    NoAwaitTag, google::cloud::telcoautomation::v1::DeleteOrchestrationClusterRequest const& request) {
   auto span = internal::MakeSpan(
-      "telcoautomation_v1::TelcoAutomationConnection::"
-      "DeleteOrchestrationCluster");
+      "telcoautomation_v1::TelcoAutomationConnection::DeleteOrchestrationCluster");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->DeleteOrchestrationCluster(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->DeleteOrchestrationCluster(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::telcoautomation::v1::OperationMetadata>>
 TelcoAutomationTracingConnection::DeleteOrchestrationCluster(
     google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
-      "telcoautomation_v1::TelcoAutomationConnection::"
-      "DeleteOrchestrationCluster");
+      "telcoautomation_v1::TelcoAutomationConnection::DeleteOrchestrationCluster");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->DeleteOrchestrationCluster(operation));
+      child_->DeleteOrchestrationCluster(operation));
 }
 
 StreamRange<google::cloud::telcoautomation::v1::EdgeSlm>
-TelcoAutomationTracingConnection::ListEdgeSlms(
-    google::cloud::telcoautomation::v1::ListEdgeSlmsRequest request) {
-  auto span = internal::MakeSpan(
-      "telcoautomation_v1::TelcoAutomationConnection::ListEdgeSlms");
+TelcoAutomationTracingConnection::ListEdgeSlms(google::cloud::telcoautomation::v1::ListEdgeSlmsRequest request) {
+  auto span = internal::MakeSpan("telcoautomation_v1::TelcoAutomationConnection::ListEdgeSlms");
   internal::OTelScope scope(span);
   auto sr = child_->ListEdgeSlms(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::telcoautomation::v1::EdgeSlm>(std::move(span),
-                                                   std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::telcoautomation::v1::EdgeSlm>(
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::telcoautomation::v1::EdgeSlm>
-TelcoAutomationTracingConnection::GetEdgeSlm(
-    google::cloud::telcoautomation::v1::GetEdgeSlmRequest const& request) {
-  auto span = internal::MakeSpan(
-      "telcoautomation_v1::TelcoAutomationConnection::GetEdgeSlm");
+TelcoAutomationTracingConnection::GetEdgeSlm(google::cloud::telcoautomation::v1::GetEdgeSlmRequest const& request) {
+  auto span = internal::MakeSpan("telcoautomation_v1::TelcoAutomationConnection::GetEdgeSlm");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetEdgeSlm(request));
 }
 
 future<StatusOr<google::cloud::telcoautomation::v1::EdgeSlm>>
-TelcoAutomationTracingConnection::CreateEdgeSlm(
-    google::cloud::telcoautomation::v1::CreateEdgeSlmRequest const& request) {
+TelcoAutomationTracingConnection::CreateEdgeSlm(google::cloud::telcoautomation::v1::CreateEdgeSlmRequest const& request) {
   auto span = internal::MakeSpan(
       "telcoautomation_v1::TelcoAutomationConnection::CreateEdgeSlm");
   internal::OTelScope scope(span);
@@ -161,12 +131,12 @@ TelcoAutomationTracingConnection::CreateEdgeSlm(
 
 StatusOr<google::longrunning::Operation>
 TelcoAutomationTracingConnection::CreateEdgeSlm(
-    NoAwaitTag,
-    google::cloud::telcoautomation::v1::CreateEdgeSlmRequest const& request) {
+    NoAwaitTag, google::cloud::telcoautomation::v1::CreateEdgeSlmRequest const& request) {
   auto span = internal::MakeSpan(
       "telcoautomation_v1::TelcoAutomationConnection::CreateEdgeSlm");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->CreateEdgeSlm(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->CreateEdgeSlm(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::telcoautomation::v1::EdgeSlm>>
@@ -175,12 +145,12 @@ TelcoAutomationTracingConnection::CreateEdgeSlm(
   auto span = internal::MakeSpan(
       "telcoautomation_v1::TelcoAutomationConnection::CreateEdgeSlm");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->CreateEdgeSlm(operation));
+  return internal::EndSpan(std::move(span),
+      child_->CreateEdgeSlm(operation));
 }
 
 future<StatusOr<google::cloud::telcoautomation::v1::OperationMetadata>>
-TelcoAutomationTracingConnection::DeleteEdgeSlm(
-    google::cloud::telcoautomation::v1::DeleteEdgeSlmRequest const& request) {
+TelcoAutomationTracingConnection::DeleteEdgeSlm(google::cloud::telcoautomation::v1::DeleteEdgeSlmRequest const& request) {
   auto span = internal::MakeSpan(
       "telcoautomation_v1::TelcoAutomationConnection::DeleteEdgeSlm");
   internal::OTelScope scope(span);
@@ -189,12 +159,12 @@ TelcoAutomationTracingConnection::DeleteEdgeSlm(
 
 StatusOr<google::longrunning::Operation>
 TelcoAutomationTracingConnection::DeleteEdgeSlm(
-    NoAwaitTag,
-    google::cloud::telcoautomation::v1::DeleteEdgeSlmRequest const& request) {
+    NoAwaitTag, google::cloud::telcoautomation::v1::DeleteEdgeSlmRequest const& request) {
   auto span = internal::MakeSpan(
       "telcoautomation_v1::TelcoAutomationConnection::DeleteEdgeSlm");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->DeleteEdgeSlm(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->DeleteEdgeSlm(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::telcoautomation::v1::OperationMetadata>>
@@ -203,356 +173,264 @@ TelcoAutomationTracingConnection::DeleteEdgeSlm(
   auto span = internal::MakeSpan(
       "telcoautomation_v1::TelcoAutomationConnection::DeleteEdgeSlm");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->DeleteEdgeSlm(operation));
+  return internal::EndSpan(std::move(span),
+      child_->DeleteEdgeSlm(operation));
 }
 
 StatusOr<google::cloud::telcoautomation::v1::Blueprint>
-TelcoAutomationTracingConnection::CreateBlueprint(
-    google::cloud::telcoautomation::v1::CreateBlueprintRequest const& request) {
-  auto span = internal::MakeSpan(
-      "telcoautomation_v1::TelcoAutomationConnection::CreateBlueprint");
+TelcoAutomationTracingConnection::CreateBlueprint(google::cloud::telcoautomation::v1::CreateBlueprintRequest const& request) {
+  auto span = internal::MakeSpan("telcoautomation_v1::TelcoAutomationConnection::CreateBlueprint");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateBlueprint(request));
 }
 
 StatusOr<google::cloud::telcoautomation::v1::Blueprint>
-TelcoAutomationTracingConnection::UpdateBlueprint(
-    google::cloud::telcoautomation::v1::UpdateBlueprintRequest const& request) {
-  auto span = internal::MakeSpan(
-      "telcoautomation_v1::TelcoAutomationConnection::UpdateBlueprint");
+TelcoAutomationTracingConnection::UpdateBlueprint(google::cloud::telcoautomation::v1::UpdateBlueprintRequest const& request) {
+  auto span = internal::MakeSpan("telcoautomation_v1::TelcoAutomationConnection::UpdateBlueprint");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateBlueprint(request));
 }
 
 StatusOr<google::cloud::telcoautomation::v1::Blueprint>
-TelcoAutomationTracingConnection::GetBlueprint(
-    google::cloud::telcoautomation::v1::GetBlueprintRequest const& request) {
-  auto span = internal::MakeSpan(
-      "telcoautomation_v1::TelcoAutomationConnection::GetBlueprint");
+TelcoAutomationTracingConnection::GetBlueprint(google::cloud::telcoautomation::v1::GetBlueprintRequest const& request) {
+  auto span = internal::MakeSpan("telcoautomation_v1::TelcoAutomationConnection::GetBlueprint");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetBlueprint(request));
 }
 
-Status TelcoAutomationTracingConnection::DeleteBlueprint(
-    google::cloud::telcoautomation::v1::DeleteBlueprintRequest const& request) {
-  auto span = internal::MakeSpan(
-      "telcoautomation_v1::TelcoAutomationConnection::DeleteBlueprint");
+Status
+TelcoAutomationTracingConnection::DeleteBlueprint(google::cloud::telcoautomation::v1::DeleteBlueprintRequest const& request) {
+  auto span = internal::MakeSpan("telcoautomation_v1::TelcoAutomationConnection::DeleteBlueprint");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteBlueprint(request));
 }
 
 StreamRange<google::cloud::telcoautomation::v1::Blueprint>
-TelcoAutomationTracingConnection::ListBlueprints(
-    google::cloud::telcoautomation::v1::ListBlueprintsRequest request) {
-  auto span = internal::MakeSpan(
-      "telcoautomation_v1::TelcoAutomationConnection::ListBlueprints");
+TelcoAutomationTracingConnection::ListBlueprints(google::cloud::telcoautomation::v1::ListBlueprintsRequest request) {
+  auto span = internal::MakeSpan("telcoautomation_v1::TelcoAutomationConnection::ListBlueprints");
   internal::OTelScope scope(span);
   auto sr = child_->ListBlueprints(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::telcoautomation::v1::Blueprint>(std::move(span),
-                                                     std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::telcoautomation::v1::Blueprint>(
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::telcoautomation::v1::Blueprint>
-TelcoAutomationTracingConnection::ApproveBlueprint(
-    google::cloud::telcoautomation::v1::ApproveBlueprintRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "telcoautomation_v1::TelcoAutomationConnection::ApproveBlueprint");
+TelcoAutomationTracingConnection::ApproveBlueprint(google::cloud::telcoautomation::v1::ApproveBlueprintRequest const& request) {
+  auto span = internal::MakeSpan("telcoautomation_v1::TelcoAutomationConnection::ApproveBlueprint");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->ApproveBlueprint(request));
 }
 
 StatusOr<google::cloud::telcoautomation::v1::Blueprint>
-TelcoAutomationTracingConnection::ProposeBlueprint(
-    google::cloud::telcoautomation::v1::ProposeBlueprintRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "telcoautomation_v1::TelcoAutomationConnection::ProposeBlueprint");
+TelcoAutomationTracingConnection::ProposeBlueprint(google::cloud::telcoautomation::v1::ProposeBlueprintRequest const& request) {
+  auto span = internal::MakeSpan("telcoautomation_v1::TelcoAutomationConnection::ProposeBlueprint");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->ProposeBlueprint(request));
 }
 
 StatusOr<google::cloud::telcoautomation::v1::Blueprint>
-TelcoAutomationTracingConnection::RejectBlueprint(
-    google::cloud::telcoautomation::v1::RejectBlueprintRequest const& request) {
-  auto span = internal::MakeSpan(
-      "telcoautomation_v1::TelcoAutomationConnection::RejectBlueprint");
+TelcoAutomationTracingConnection::RejectBlueprint(google::cloud::telcoautomation::v1::RejectBlueprintRequest const& request) {
+  auto span = internal::MakeSpan("telcoautomation_v1::TelcoAutomationConnection::RejectBlueprint");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->RejectBlueprint(request));
 }
 
 StreamRange<google::cloud::telcoautomation::v1::Blueprint>
-TelcoAutomationTracingConnection::ListBlueprintRevisions(
-    google::cloud::telcoautomation::v1::ListBlueprintRevisionsRequest request) {
-  auto span = internal::MakeSpan(
-      "telcoautomation_v1::TelcoAutomationConnection::ListBlueprintRevisions");
+TelcoAutomationTracingConnection::ListBlueprintRevisions(google::cloud::telcoautomation::v1::ListBlueprintRevisionsRequest request) {
+  auto span = internal::MakeSpan("telcoautomation_v1::TelcoAutomationConnection::ListBlueprintRevisions");
   internal::OTelScope scope(span);
   auto sr = child_->ListBlueprintRevisions(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::telcoautomation::v1::Blueprint>(std::move(span),
-                                                     std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::telcoautomation::v1::Blueprint>(
+        std::move(span), std::move(sr));
 }
 
 StreamRange<google::cloud::telcoautomation::v1::Blueprint>
-TelcoAutomationTracingConnection::SearchBlueprintRevisions(
-    google::cloud::telcoautomation::v1::SearchBlueprintRevisionsRequest
-        request) {
-  auto span = internal::MakeSpan(
-      "telcoautomation_v1::TelcoAutomationConnection::"
-      "SearchBlueprintRevisions");
+TelcoAutomationTracingConnection::SearchBlueprintRevisions(google::cloud::telcoautomation::v1::SearchBlueprintRevisionsRequest request) {
+  auto span = internal::MakeSpan("telcoautomation_v1::TelcoAutomationConnection::SearchBlueprintRevisions");
   internal::OTelScope scope(span);
   auto sr = child_->SearchBlueprintRevisions(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::telcoautomation::v1::Blueprint>(std::move(span),
-                                                     std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::telcoautomation::v1::Blueprint>(
+        std::move(span), std::move(sr));
 }
 
 StreamRange<google::cloud::telcoautomation::v1::Deployment>
-TelcoAutomationTracingConnection::SearchDeploymentRevisions(
-    google::cloud::telcoautomation::v1::SearchDeploymentRevisionsRequest
-        request) {
-  auto span = internal::MakeSpan(
-      "telcoautomation_v1::TelcoAutomationConnection::"
-      "SearchDeploymentRevisions");
+TelcoAutomationTracingConnection::SearchDeploymentRevisions(google::cloud::telcoautomation::v1::SearchDeploymentRevisionsRequest request) {
+  auto span = internal::MakeSpan("telcoautomation_v1::TelcoAutomationConnection::SearchDeploymentRevisions");
   internal::OTelScope scope(span);
   auto sr = child_->SearchDeploymentRevisions(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::telcoautomation::v1::Deployment>(std::move(span),
-                                                      std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::telcoautomation::v1::Deployment>(
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::telcoautomation::v1::DiscardBlueprintChangesResponse>
-TelcoAutomationTracingConnection::DiscardBlueprintChanges(
-    google::cloud::telcoautomation::v1::DiscardBlueprintChangesRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "telcoautomation_v1::TelcoAutomationConnection::DiscardBlueprintChanges");
+TelcoAutomationTracingConnection::DiscardBlueprintChanges(google::cloud::telcoautomation::v1::DiscardBlueprintChangesRequest const& request) {
+  auto span = internal::MakeSpan("telcoautomation_v1::TelcoAutomationConnection::DiscardBlueprintChanges");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DiscardBlueprintChanges(request));
 }
 
 StreamRange<google::cloud::telcoautomation::v1::PublicBlueprint>
-TelcoAutomationTracingConnection::ListPublicBlueprints(
-    google::cloud::telcoautomation::v1::ListPublicBlueprintsRequest request) {
-  auto span = internal::MakeSpan(
-      "telcoautomation_v1::TelcoAutomationConnection::ListPublicBlueprints");
+TelcoAutomationTracingConnection::ListPublicBlueprints(google::cloud::telcoautomation::v1::ListPublicBlueprintsRequest request) {
+  auto span = internal::MakeSpan("telcoautomation_v1::TelcoAutomationConnection::ListPublicBlueprints");
   internal::OTelScope scope(span);
   auto sr = child_->ListPublicBlueprints(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::telcoautomation::v1::PublicBlueprint>(std::move(span),
-                                                           std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::telcoautomation::v1::PublicBlueprint>(
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::telcoautomation::v1::PublicBlueprint>
-TelcoAutomationTracingConnection::GetPublicBlueprint(
-    google::cloud::telcoautomation::v1::GetPublicBlueprintRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "telcoautomation_v1::TelcoAutomationConnection::GetPublicBlueprint");
+TelcoAutomationTracingConnection::GetPublicBlueprint(google::cloud::telcoautomation::v1::GetPublicBlueprintRequest const& request) {
+  auto span = internal::MakeSpan("telcoautomation_v1::TelcoAutomationConnection::GetPublicBlueprint");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetPublicBlueprint(request));
 }
 
 StatusOr<google::cloud::telcoautomation::v1::Deployment>
-TelcoAutomationTracingConnection::CreateDeployment(
-    google::cloud::telcoautomation::v1::CreateDeploymentRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "telcoautomation_v1::TelcoAutomationConnection::CreateDeployment");
+TelcoAutomationTracingConnection::CreateDeployment(google::cloud::telcoautomation::v1::CreateDeploymentRequest const& request) {
+  auto span = internal::MakeSpan("telcoautomation_v1::TelcoAutomationConnection::CreateDeployment");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateDeployment(request));
 }
 
 StatusOr<google::cloud::telcoautomation::v1::Deployment>
-TelcoAutomationTracingConnection::UpdateDeployment(
-    google::cloud::telcoautomation::v1::UpdateDeploymentRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "telcoautomation_v1::TelcoAutomationConnection::UpdateDeployment");
+TelcoAutomationTracingConnection::UpdateDeployment(google::cloud::telcoautomation::v1::UpdateDeploymentRequest const& request) {
+  auto span = internal::MakeSpan("telcoautomation_v1::TelcoAutomationConnection::UpdateDeployment");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateDeployment(request));
 }
 
 StatusOr<google::cloud::telcoautomation::v1::Deployment>
-TelcoAutomationTracingConnection::GetDeployment(
-    google::cloud::telcoautomation::v1::GetDeploymentRequest const& request) {
-  auto span = internal::MakeSpan(
-      "telcoautomation_v1::TelcoAutomationConnection::GetDeployment");
+TelcoAutomationTracingConnection::GetDeployment(google::cloud::telcoautomation::v1::GetDeploymentRequest const& request) {
+  auto span = internal::MakeSpan("telcoautomation_v1::TelcoAutomationConnection::GetDeployment");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetDeployment(request));
 }
 
-Status TelcoAutomationTracingConnection::RemoveDeployment(
-    google::cloud::telcoautomation::v1::RemoveDeploymentRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "telcoautomation_v1::TelcoAutomationConnection::RemoveDeployment");
+Status
+TelcoAutomationTracingConnection::RemoveDeployment(google::cloud::telcoautomation::v1::RemoveDeploymentRequest const& request) {
+  auto span = internal::MakeSpan("telcoautomation_v1::TelcoAutomationConnection::RemoveDeployment");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->RemoveDeployment(request));
 }
 
 StreamRange<google::cloud::telcoautomation::v1::Deployment>
-TelcoAutomationTracingConnection::ListDeployments(
-    google::cloud::telcoautomation::v1::ListDeploymentsRequest request) {
-  auto span = internal::MakeSpan(
-      "telcoautomation_v1::TelcoAutomationConnection::ListDeployments");
+TelcoAutomationTracingConnection::ListDeployments(google::cloud::telcoautomation::v1::ListDeploymentsRequest request) {
+  auto span = internal::MakeSpan("telcoautomation_v1::TelcoAutomationConnection::ListDeployments");
   internal::OTelScope scope(span);
   auto sr = child_->ListDeployments(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::telcoautomation::v1::Deployment>(std::move(span),
-                                                      std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::telcoautomation::v1::Deployment>(
+        std::move(span), std::move(sr));
 }
 
 StreamRange<google::cloud::telcoautomation::v1::Deployment>
-TelcoAutomationTracingConnection::ListDeploymentRevisions(
-    google::cloud::telcoautomation::v1::ListDeploymentRevisionsRequest
-        request) {
-  auto span = internal::MakeSpan(
-      "telcoautomation_v1::TelcoAutomationConnection::ListDeploymentRevisions");
+TelcoAutomationTracingConnection::ListDeploymentRevisions(google::cloud::telcoautomation::v1::ListDeploymentRevisionsRequest request) {
+  auto span = internal::MakeSpan("telcoautomation_v1::TelcoAutomationConnection::ListDeploymentRevisions");
   internal::OTelScope scope(span);
   auto sr = child_->ListDeploymentRevisions(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::telcoautomation::v1::Deployment>(std::move(span),
-                                                      std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::telcoautomation::v1::Deployment>(
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::telcoautomation::v1::DiscardDeploymentChangesResponse>
-TelcoAutomationTracingConnection::DiscardDeploymentChanges(
-    google::cloud::telcoautomation::v1::DiscardDeploymentChangesRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "telcoautomation_v1::TelcoAutomationConnection::"
-      "DiscardDeploymentChanges");
+TelcoAutomationTracingConnection::DiscardDeploymentChanges(google::cloud::telcoautomation::v1::DiscardDeploymentChangesRequest const& request) {
+  auto span = internal::MakeSpan("telcoautomation_v1::TelcoAutomationConnection::DiscardDeploymentChanges");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DiscardDeploymentChanges(request));
 }
 
 StatusOr<google::cloud::telcoautomation::v1::Deployment>
-TelcoAutomationTracingConnection::ApplyDeployment(
-    google::cloud::telcoautomation::v1::ApplyDeploymentRequest const& request) {
-  auto span = internal::MakeSpan(
-      "telcoautomation_v1::TelcoAutomationConnection::ApplyDeployment");
+TelcoAutomationTracingConnection::ApplyDeployment(google::cloud::telcoautomation::v1::ApplyDeploymentRequest const& request) {
+  auto span = internal::MakeSpan("telcoautomation_v1::TelcoAutomationConnection::ApplyDeployment");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->ApplyDeployment(request));
 }
 
 StatusOr<google::cloud::telcoautomation::v1::ComputeDeploymentStatusResponse>
-TelcoAutomationTracingConnection::ComputeDeploymentStatus(
-    google::cloud::telcoautomation::v1::ComputeDeploymentStatusRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "telcoautomation_v1::TelcoAutomationConnection::ComputeDeploymentStatus");
+TelcoAutomationTracingConnection::ComputeDeploymentStatus(google::cloud::telcoautomation::v1::ComputeDeploymentStatusRequest const& request) {
+  auto span = internal::MakeSpan("telcoautomation_v1::TelcoAutomationConnection::ComputeDeploymentStatus");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->ComputeDeploymentStatus(request));
 }
 
 StatusOr<google::cloud::telcoautomation::v1::Deployment>
-TelcoAutomationTracingConnection::RollbackDeployment(
-    google::cloud::telcoautomation::v1::RollbackDeploymentRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "telcoautomation_v1::TelcoAutomationConnection::RollbackDeployment");
+TelcoAutomationTracingConnection::RollbackDeployment(google::cloud::telcoautomation::v1::RollbackDeploymentRequest const& request) {
+  auto span = internal::MakeSpan("telcoautomation_v1::TelcoAutomationConnection::RollbackDeployment");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->RollbackDeployment(request));
 }
 
 StatusOr<google::cloud::telcoautomation::v1::HydratedDeployment>
-TelcoAutomationTracingConnection::GetHydratedDeployment(
-    google::cloud::telcoautomation::v1::GetHydratedDeploymentRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "telcoautomation_v1::TelcoAutomationConnection::GetHydratedDeployment");
+TelcoAutomationTracingConnection::GetHydratedDeployment(google::cloud::telcoautomation::v1::GetHydratedDeploymentRequest const& request) {
+  auto span = internal::MakeSpan("telcoautomation_v1::TelcoAutomationConnection::GetHydratedDeployment");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetHydratedDeployment(request));
 }
 
 StreamRange<google::cloud::telcoautomation::v1::HydratedDeployment>
-TelcoAutomationTracingConnection::ListHydratedDeployments(
-    google::cloud::telcoautomation::v1::ListHydratedDeploymentsRequest
-        request) {
-  auto span = internal::MakeSpan(
-      "telcoautomation_v1::TelcoAutomationConnection::ListHydratedDeployments");
+TelcoAutomationTracingConnection::ListHydratedDeployments(google::cloud::telcoautomation::v1::ListHydratedDeploymentsRequest request) {
+  auto span = internal::MakeSpan("telcoautomation_v1::TelcoAutomationConnection::ListHydratedDeployments");
   internal::OTelScope scope(span);
   auto sr = child_->ListHydratedDeployments(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::telcoautomation::v1::HydratedDeployment>(std::move(span),
-                                                              std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::telcoautomation::v1::HydratedDeployment>(
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::telcoautomation::v1::HydratedDeployment>
-TelcoAutomationTracingConnection::UpdateHydratedDeployment(
-    google::cloud::telcoautomation::v1::UpdateHydratedDeploymentRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "telcoautomation_v1::TelcoAutomationConnection::"
-      "UpdateHydratedDeployment");
+TelcoAutomationTracingConnection::UpdateHydratedDeployment(google::cloud::telcoautomation::v1::UpdateHydratedDeploymentRequest const& request) {
+  auto span = internal::MakeSpan("telcoautomation_v1::TelcoAutomationConnection::UpdateHydratedDeployment");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateHydratedDeployment(request));
 }
 
 StatusOr<google::cloud::telcoautomation::v1::HydratedDeployment>
-TelcoAutomationTracingConnection::ApplyHydratedDeployment(
-    google::cloud::telcoautomation::v1::ApplyHydratedDeploymentRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "telcoautomation_v1::TelcoAutomationConnection::ApplyHydratedDeployment");
+TelcoAutomationTracingConnection::ApplyHydratedDeployment(google::cloud::telcoautomation::v1::ApplyHydratedDeploymentRequest const& request) {
+  auto span = internal::MakeSpan("telcoautomation_v1::TelcoAutomationConnection::ApplyHydratedDeployment");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->ApplyHydratedDeployment(request));
 }
 
 StreamRange<google::cloud::location::Location>
-TelcoAutomationTracingConnection::ListLocations(
-    google::cloud::location::ListLocationsRequest request) {
-  auto span = internal::MakeSpan(
-      "telcoautomation_v1::TelcoAutomationConnection::ListLocations");
+TelcoAutomationTracingConnection::ListLocations(google::cloud::location::ListLocationsRequest request) {
+  auto span = internal::MakeSpan("telcoautomation_v1::TelcoAutomationConnection::ListLocations");
   internal::OTelScope scope(span);
   auto sr = child_->ListLocations(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::location::Location>(
-      std::move(span), std::move(sr));
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::location::Location>
-TelcoAutomationTracingConnection::GetLocation(
-    google::cloud::location::GetLocationRequest const& request) {
-  auto span = internal::MakeSpan(
-      "telcoautomation_v1::TelcoAutomationConnection::GetLocation");
+TelcoAutomationTracingConnection::GetLocation(google::cloud::location::GetLocationRequest const& request) {
+  auto span = internal::MakeSpan("telcoautomation_v1::TelcoAutomationConnection::GetLocation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetLocation(request));
 }
 
 StreamRange<google::longrunning::Operation>
-TelcoAutomationTracingConnection::ListOperations(
-    google::longrunning::ListOperationsRequest request) {
-  auto span = internal::MakeSpan(
-      "telcoautomation_v1::TelcoAutomationConnection::ListOperations");
+TelcoAutomationTracingConnection::ListOperations(google::longrunning::ListOperationsRequest request) {
+  auto span = internal::MakeSpan("telcoautomation_v1::TelcoAutomationConnection::ListOperations");
   internal::OTelScope scope(span);
   auto sr = child_->ListOperations(std::move(request));
   return internal::MakeTracedStreamRange<google::longrunning::Operation>(
-      std::move(span), std::move(sr));
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::longrunning::Operation>
-TelcoAutomationTracingConnection::GetOperation(
-    google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpan(
-      "telcoautomation_v1::TelcoAutomationConnection::GetOperation");
+TelcoAutomationTracingConnection::GetOperation(google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpan("telcoautomation_v1::TelcoAutomationConnection::GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOperation(request));
 }
 
-Status TelcoAutomationTracingConnection::DeleteOperation(
-    google::longrunning::DeleteOperationRequest const& request) {
-  auto span = internal::MakeSpan(
-      "telcoautomation_v1::TelcoAutomationConnection::DeleteOperation");
+Status
+TelcoAutomationTracingConnection::DeleteOperation(google::longrunning::DeleteOperationRequest const& request) {
+  auto span = internal::MakeSpan("telcoautomation_v1::TelcoAutomationConnection::DeleteOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteOperation(request));
 }
 
-Status TelcoAutomationTracingConnection::CancelOperation(
-    google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpan(
-      "telcoautomation_v1::TelcoAutomationConnection::CancelOperation");
+Status
+TelcoAutomationTracingConnection::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
+  auto span = internal::MakeSpan("telcoautomation_v1::TelcoAutomationConnection::CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CancelOperation(request));
 }

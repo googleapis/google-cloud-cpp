@@ -19,11 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_NETWORKSERVICES_V1_DEP_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_NETWORKSERVICES_V1_DEP_CONNECTION_H
 
-#include "google/cloud/networkservices/v1/dep_connection_idempotency_policy.h"
-#include "google/cloud/networkservices/v1/internal/dep_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/networkservices/v1/dep_connection_idempotency_policy.h"
+#include "google/cloud/networkservices/v1/internal/dep_retry_traits.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -66,14 +66,14 @@ class DepServiceLimitedErrorCountRetryPolicy : public DepServiceRetryPolicy {
    *     @p maximum_failures == 0.
    */
   explicit DepServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   DepServiceLimitedErrorCountRetryPolicy(
       DepServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : DepServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : DepServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   DepServiceLimitedErrorCountRetryPolicy(
       DepServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : DepServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : DepServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -93,9 +93,7 @@ class DepServiceLimitedErrorCountRetryPolicy : public DepServiceRetryPolicy {
   using BaseType = DepServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      networkservices_v1_internal::DepServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<networkservices_v1_internal::DepServiceRetryTraits> impl_;
 };
 
 /**
@@ -133,14 +131,12 @@ class DepServiceLimitedTimeRetryPolicy : public DepServiceRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit DepServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  DepServiceLimitedTimeRetryPolicy(
-      DepServiceLimitedTimeRetryPolicy&& rhs) noexcept
-      : DepServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  DepServiceLimitedTimeRetryPolicy(
-      DepServiceLimitedTimeRetryPolicy const& rhs) noexcept
-      : DepServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  DepServiceLimitedTimeRetryPolicy(DepServiceLimitedTimeRetryPolicy&& rhs) noexcept
+    : DepServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  DepServiceLimitedTimeRetryPolicy(DepServiceLimitedTimeRetryPolicy const& rhs) noexcept
+    : DepServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -162,9 +158,7 @@ class DepServiceLimitedTimeRetryPolicy : public DepServiceRetryPolicy {
   using BaseType = DepServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      networkservices_v1_internal::DepServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<networkservices_v1_internal::DepServiceRetryTraits> impl_;
 };
 
 /**
@@ -186,136 +180,130 @@ class DepServiceConnection {
   virtual Options options() { return Options{}; }
 
   virtual StreamRange<google::cloud::networkservices::v1::LbTrafficExtension>
-  ListLbTrafficExtensions(
-      google::cloud::networkservices::v1::ListLbTrafficExtensionsRequest
-          request);
+  ListLbTrafficExtensions(google::cloud::networkservices::v1::ListLbTrafficExtensionsRequest request);
 
   virtual StatusOr<google::cloud::networkservices::v1::LbTrafficExtension>
-  GetLbTrafficExtension(
-      google::cloud::networkservices::v1::GetLbTrafficExtensionRequest const&
-          request);
+  GetLbTrafficExtension(google::cloud::networkservices::v1::GetLbTrafficExtensionRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::networkservices::v1::LbTrafficExtension>>
-  CreateLbTrafficExtension(
-      google::cloud::networkservices::v1::CreateLbTrafficExtensionRequest const&
-          request);
+  virtual future<StatusOr<google::cloud::networkservices::v1::LbTrafficExtension>>
+  CreateLbTrafficExtension(google::cloud::networkservices::v1::CreateLbTrafficExtensionRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> CreateLbTrafficExtension(
-      NoAwaitTag,
-      google::cloud::networkservices::v1::CreateLbTrafficExtensionRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  CreateLbTrafficExtension(NoAwaitTag, google::cloud::networkservices::v1::CreateLbTrafficExtensionRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::networkservices::v1::LbTrafficExtension>>
-  CreateLbTrafficExtension(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::networkservices::v1::LbTrafficExtension>>
+  CreateLbTrafficExtension( google::longrunning::Operation const& operation);
 
-  virtual future<
-      StatusOr<google::cloud::networkservices::v1::LbTrafficExtension>>
-  UpdateLbTrafficExtension(
-      google::cloud::networkservices::v1::UpdateLbTrafficExtensionRequest const&
-          request);
+  virtual future<StatusOr<google::cloud::networkservices::v1::LbTrafficExtension>>
+  UpdateLbTrafficExtension(google::cloud::networkservices::v1::UpdateLbTrafficExtensionRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> UpdateLbTrafficExtension(
-      NoAwaitTag,
-      google::cloud::networkservices::v1::UpdateLbTrafficExtensionRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  UpdateLbTrafficExtension(NoAwaitTag, google::cloud::networkservices::v1::UpdateLbTrafficExtensionRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::networkservices::v1::LbTrafficExtension>>
-  UpdateLbTrafficExtension(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::networkservices::v1::LbTrafficExtension>>
+  UpdateLbTrafficExtension( google::longrunning::Operation const& operation);
 
-  virtual future<
-      StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
-  DeleteLbTrafficExtension(
-      google::cloud::networkservices::v1::DeleteLbTrafficExtensionRequest const&
-          request);
+  virtual future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
+  DeleteLbTrafficExtension(google::cloud::networkservices::v1::DeleteLbTrafficExtensionRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> DeleteLbTrafficExtension(
-      NoAwaitTag,
-      google::cloud::networkservices::v1::DeleteLbTrafficExtensionRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  DeleteLbTrafficExtension(NoAwaitTag, google::cloud::networkservices::v1::DeleteLbTrafficExtensionRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
-  DeleteLbTrafficExtension(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
+  DeleteLbTrafficExtension( google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::networkservices::v1::LbRouteExtension>
-  ListLbRouteExtensions(
-      google::cloud::networkservices::v1::ListLbRouteExtensionsRequest request);
+  ListLbRouteExtensions(google::cloud::networkservices::v1::ListLbRouteExtensionsRequest request);
 
   virtual StatusOr<google::cloud::networkservices::v1::LbRouteExtension>
-  GetLbRouteExtension(
-      google::cloud::networkservices::v1::GetLbRouteExtensionRequest const&
-          request);
+  GetLbRouteExtension(google::cloud::networkservices::v1::GetLbRouteExtensionRequest const& request);
 
   virtual future<StatusOr<google::cloud::networkservices::v1::LbRouteExtension>>
-  CreateLbRouteExtension(
-      google::cloud::networkservices::v1::CreateLbRouteExtensionRequest const&
-          request);
+  CreateLbRouteExtension(google::cloud::networkservices::v1::CreateLbRouteExtensionRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> CreateLbRouteExtension(
-      NoAwaitTag,
-      google::cloud::networkservices::v1::CreateLbRouteExtensionRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  CreateLbRouteExtension(NoAwaitTag, google::cloud::networkservices::v1::CreateLbRouteExtensionRequest const& request);
 
   virtual future<StatusOr<google::cloud::networkservices::v1::LbRouteExtension>>
-  CreateLbRouteExtension(google::longrunning::Operation const& operation);
+  CreateLbRouteExtension( google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::networkservices::v1::LbRouteExtension>>
-  UpdateLbRouteExtension(
-      google::cloud::networkservices::v1::UpdateLbRouteExtensionRequest const&
-          request);
+  UpdateLbRouteExtension(google::cloud::networkservices::v1::UpdateLbRouteExtensionRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> UpdateLbRouteExtension(
-      NoAwaitTag,
-      google::cloud::networkservices::v1::UpdateLbRouteExtensionRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  UpdateLbRouteExtension(NoAwaitTag, google::cloud::networkservices::v1::UpdateLbRouteExtensionRequest const& request);
 
   virtual future<StatusOr<google::cloud::networkservices::v1::LbRouteExtension>>
-  UpdateLbRouteExtension(google::longrunning::Operation const& operation);
+  UpdateLbRouteExtension( google::longrunning::Operation const& operation);
 
-  virtual future<
-      StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
-  DeleteLbRouteExtension(
-      google::cloud::networkservices::v1::DeleteLbRouteExtensionRequest const&
-          request);
+  virtual future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
+  DeleteLbRouteExtension(google::cloud::networkservices::v1::DeleteLbRouteExtensionRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> DeleteLbRouteExtension(
-      NoAwaitTag,
-      google::cloud::networkservices::v1::DeleteLbRouteExtensionRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  DeleteLbRouteExtension(NoAwaitTag, google::cloud::networkservices::v1::DeleteLbRouteExtensionRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
-  DeleteLbRouteExtension(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
+  DeleteLbRouteExtension( google::longrunning::Operation const& operation);
 
-  virtual StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request);
+  virtual StreamRange<google::cloud::networkservices::v1::AuthzExtension>
+  ListAuthzExtensions(google::cloud::networkservices::v1::ListAuthzExtensionsRequest request);
 
-  virtual StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request);
+  virtual StatusOr<google::cloud::networkservices::v1::AuthzExtension>
+  GetAuthzExtension(google::cloud::networkservices::v1::GetAuthzExtensionRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request);
+  virtual future<StatusOr<google::cloud::networkservices::v1::AuthzExtension>>
+  CreateAuthzExtension(google::cloud::networkservices::v1::CreateAuthzExtensionRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  CreateAuthzExtension(NoAwaitTag, google::cloud::networkservices::v1::CreateAuthzExtensionRequest const& request);
+
+  virtual future<StatusOr<google::cloud::networkservices::v1::AuthzExtension>>
+  CreateAuthzExtension( google::longrunning::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::networkservices::v1::AuthzExtension>>
+  UpdateAuthzExtension(google::cloud::networkservices::v1::UpdateAuthzExtensionRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation>
+  UpdateAuthzExtension(NoAwaitTag, google::cloud::networkservices::v1::UpdateAuthzExtensionRequest const& request);
+
+  virtual future<StatusOr<google::cloud::networkservices::v1::AuthzExtension>>
+  UpdateAuthzExtension( google::longrunning::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
+  DeleteAuthzExtension(google::cloud::networkservices::v1::DeleteAuthzExtensionRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation>
+  DeleteAuthzExtension(NoAwaitTag, google::cloud::networkservices::v1::DeleteAuthzExtensionRequest const& request);
+
+  virtual future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
+  DeleteAuthzExtension( google::longrunning::Operation const& operation);
+
+  virtual StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request);
+
+  virtual StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request);
+
+  virtual StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
+
+  virtual StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
 
   virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
   TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
 
-  virtual StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 
-  virtual Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request);
+  virtual Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
 
-  virtual Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request);
+  virtual Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request);
 };
 
 /**

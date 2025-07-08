@@ -28,8 +28,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 TraceServiceClient::TraceServiceClient(
     std::shared_ptr<TraceServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 TraceServiceClient::~TraceServiceClient() = default;
 
 StreamRange<google::devtools::cloudtrace::v1::Trace>
@@ -41,14 +41,13 @@ TraceServiceClient::ListTraces(std::string const& project_id, Options opts) {
 }
 
 StreamRange<google::devtools::cloudtrace::v1::Trace>
-TraceServiceClient::ListTraces(
-    google::devtools::cloudtrace::v1::ListTracesRequest request, Options opts) {
+TraceServiceClient::ListTraces(google::devtools::cloudtrace::v1::ListTracesRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListTraces(std::move(request));
 }
 
-StatusOr<google::devtools::cloudtrace::v1::Trace> TraceServiceClient::GetTrace(
-    std::string const& project_id, std::string const& trace_id, Options opts) {
+StatusOr<google::devtools::cloudtrace::v1::Trace>
+TraceServiceClient::GetTrace(std::string const& project_id, std::string const& trace_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::devtools::cloudtrace::v1::GetTraceRequest request;
   request.set_project_id(project_id);
@@ -56,16 +55,14 @@ StatusOr<google::devtools::cloudtrace::v1::Trace> TraceServiceClient::GetTrace(
   return connection_->GetTrace(request);
 }
 
-StatusOr<google::devtools::cloudtrace::v1::Trace> TraceServiceClient::GetTrace(
-    google::devtools::cloudtrace::v1::GetTraceRequest const& request,
-    Options opts) {
+StatusOr<google::devtools::cloudtrace::v1::Trace>
+TraceServiceClient::GetTrace(google::devtools::cloudtrace::v1::GetTraceRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetTrace(request);
 }
 
-Status TraceServiceClient::PatchTraces(
-    std::string const& project_id,
-    google::devtools::cloudtrace::v1::Traces const& traces, Options opts) {
+Status
+TraceServiceClient::PatchTraces(std::string const& project_id, google::devtools::cloudtrace::v1::Traces const& traces, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::devtools::cloudtrace::v1::PatchTracesRequest request;
   request.set_project_id(project_id);
@@ -73,9 +70,8 @@ Status TraceServiceClient::PatchTraces(
   return connection_->PatchTraces(request);
 }
 
-Status TraceServiceClient::PatchTraces(
-    google::devtools::cloudtrace::v1::PatchTracesRequest const& request,
-    Options opts) {
+Status
+TraceServiceClient::PatchTraces(google::devtools::cloudtrace::v1::PatchTracesRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PatchTraces(request);
 }

@@ -17,13 +17,13 @@
 // source: google/cloud/speech/v2/cloud_speech.proto
 
 #include "google/cloud/speech/v2/internal/speech_connection_impl.h"
-#include "google/cloud/speech/v2/internal/speech_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/async_long_running_operation.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
+#include "google/cloud/speech/v2/internal/speech_option_defaults.h"
 #include <memory>
 #include <utility>
 
@@ -33,77 +33,73 @@ namespace speech_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<speech_v2::SpeechRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<speech_v2::SpeechRetryPolicy>
+retry_policy(Options const& options) {
   return options.get<speech_v2::SpeechRetryPolicyOption>()->clone();
 }
 
-std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+std::unique_ptr<BackoffPolicy>
+backoff_policy(Options const& options) {
   return options.get<speech_v2::SpeechBackoffPolicyOption>()->clone();
 }
 
 std::unique_ptr<speech_v2::SpeechConnectionIdempotencyPolicy>
 idempotency_policy(Options const& options) {
-  return options.get<speech_v2::SpeechConnectionIdempotencyPolicyOption>()
-      ->clone();
+  return options.get<speech_v2::SpeechConnectionIdempotencyPolicyOption>()->clone();
 }
 
 std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
   return options.get<speech_v2::SpeechPollingPolicyOption>()->clone();
 }
 
-}  // namespace
+} // namespace
 
 SpeechConnectionImpl::SpeechConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<speech_v2_internal::SpeechStub> stub, Options options)
-    : background_(std::move(background)),
-      stub_(std::move(stub)),
-      options_(internal::MergeOptions(std::move(options),
-                                      SpeechConnection::options())) {}
+    std::shared_ptr<speech_v2_internal::SpeechStub> stub,
+    Options options)
+  : background_(std::move(background)), stub_(std::move(stub)),
+    options_(internal::MergeOptions(
+        std::move(options),
+        SpeechConnection::options())) {}
 
 future<StatusOr<google::cloud::speech::v2::Recognizer>>
-SpeechConnectionImpl::CreateRecognizer(
-    google::cloud::speech::v2::CreateRecognizerRequest const& request) {
+SpeechConnectionImpl::CreateRecognizer(google::cloud::speech::v2::CreateRecognizerRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->CreateRecognizer(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<
-      google::cloud::speech::v2::Recognizer>(
-      background_->cq(), current, std::move(request_copy),
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::speech::v2::CreateRecognizerRequest const& request) {
-        return stub->AsyncCreateRecognizer(cq, std::move(context),
-                                           std::move(options), request);
-      },
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::speech::v2::Recognizer>,
-      retry_policy(*current), backoff_policy(*current), idempotent,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::speech::v2::Recognizer>(
+    background_->cq(), current, std::move(request_copy),
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::cloud::speech::v2::CreateRecognizerRequest const& request) {
+     return stub->AsyncCreateRecognizer(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::speech::v2::Recognizer>,
+    retry_policy(*current), backoff_policy(*current), idempotent,
+    polling_policy(*current), __func__);
 }
 
-StatusOr<google::longrunning::Operation> SpeechConnectionImpl::CreateRecognizer(
-    NoAwaitTag,
-    google::cloud::speech::v2::CreateRecognizerRequest const& request) {
+StatusOr<google::longrunning::Operation>
+SpeechConnectionImpl::CreateRecognizer(
+      NoAwaitTag, google::cloud::speech::v2::CreateRecognizerRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -118,68 +114,56 @@ StatusOr<google::longrunning::Operation> SpeechConnectionImpl::CreateRecognizer(
 
 future<StatusOr<google::cloud::speech::v2::Recognizer>>
 SpeechConnectionImpl::CreateRecognizer(
-    google::longrunning::Operation const& operation) {
+      google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata()
-           .Is<typename google::cloud::speech::v2::OperationMetadata>()) {
+  if (!operation.metadata().Is<typename google::cloud::speech::v2::OperationMetadata>()) {
     return make_ready_future<StatusOr<google::cloud::speech::v2::Recognizer>>(
-        internal::InvalidArgumentError(
-            "operation does not correspond to CreateRecognizer",
-            GCP_ERROR_INFO().WithMetadata("operation",
-                                          operation.metadata().DebugString())));
+        internal::InvalidArgumentError("operation does not correspond to CreateRecognizer",
+                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<
-      google::cloud::speech::v2::Recognizer>(
-      background_->cq(), current, operation,
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::speech::v2::Recognizer>,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::speech::v2::Recognizer>(
+    background_->cq(), current, operation,
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::speech::v2::Recognizer>,
+    polling_policy(*current), __func__);
 }
 
 StreamRange<google::cloud::speech::v2::Recognizer>
-SpeechConnectionImpl::ListRecognizers(
-    google::cloud::speech::v2::ListRecognizersRequest request) {
+SpeechConnectionImpl::ListRecognizers(google::cloud::speech::v2::ListRecognizersRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListRecognizers(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::speech::v2::Recognizer>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::speech::v2::Recognizer>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<speech_v2::SpeechRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<speech_v2::SpeechRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::speech::v2::ListRecognizersRequest const& r) {
+          Options const& options, google::cloud::speech::v2::ListRecognizersRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::speech::v2::ListRecognizersRequest const&
-                       request) {
+                   google::cloud::speech::v2::ListRecognizersRequest const& request) {
               return stub->ListRecognizers(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::speech::v2::ListRecognizersResponse r) {
-        std::vector<google::cloud::speech::v2::Recognizer> result(
-            r.recognizers().size());
+        std::vector<google::cloud::speech::v2::Recognizer> result(r.recognizers().size());
         auto& messages = *r.mutable_recognizers();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -187,8 +171,7 @@ SpeechConnectionImpl::ListRecognizers(
 }
 
 StatusOr<google::cloud::speech::v2::Recognizer>
-SpeechConnectionImpl::GetRecognizer(
-    google::cloud::speech::v2::GetRecognizerRequest const& request) {
+SpeechConnectionImpl::GetRecognizer(google::cloud::speech::v2::GetRecognizerRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -201,47 +184,42 @@ SpeechConnectionImpl::GetRecognizer(
 }
 
 future<StatusOr<google::cloud::speech::v2::Recognizer>>
-SpeechConnectionImpl::UpdateRecognizer(
-    google::cloud::speech::v2::UpdateRecognizerRequest const& request) {
+SpeechConnectionImpl::UpdateRecognizer(google::cloud::speech::v2::UpdateRecognizerRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->UpdateRecognizer(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<
-      google::cloud::speech::v2::Recognizer>(
-      background_->cq(), current, std::move(request_copy),
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::speech::v2::UpdateRecognizerRequest const& request) {
-        return stub->AsyncUpdateRecognizer(cq, std::move(context),
-                                           std::move(options), request);
-      },
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::speech::v2::Recognizer>,
-      retry_policy(*current), backoff_policy(*current), idempotent,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::speech::v2::Recognizer>(
+    background_->cq(), current, std::move(request_copy),
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::cloud::speech::v2::UpdateRecognizerRequest const& request) {
+     return stub->AsyncUpdateRecognizer(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::speech::v2::Recognizer>,
+    retry_policy(*current), backoff_policy(*current), idempotent,
+    polling_policy(*current), __func__);
 }
 
-StatusOr<google::longrunning::Operation> SpeechConnectionImpl::UpdateRecognizer(
-    NoAwaitTag,
-    google::cloud::speech::v2::UpdateRecognizerRequest const& request) {
+StatusOr<google::longrunning::Operation>
+SpeechConnectionImpl::UpdateRecognizer(
+      NoAwaitTag, google::cloud::speech::v2::UpdateRecognizerRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -256,82 +234,71 @@ StatusOr<google::longrunning::Operation> SpeechConnectionImpl::UpdateRecognizer(
 
 future<StatusOr<google::cloud::speech::v2::Recognizer>>
 SpeechConnectionImpl::UpdateRecognizer(
-    google::longrunning::Operation const& operation) {
+      google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata()
-           .Is<typename google::cloud::speech::v2::OperationMetadata>()) {
+  if (!operation.metadata().Is<typename google::cloud::speech::v2::OperationMetadata>()) {
     return make_ready_future<StatusOr<google::cloud::speech::v2::Recognizer>>(
-        internal::InvalidArgumentError(
-            "operation does not correspond to UpdateRecognizer",
-            GCP_ERROR_INFO().WithMetadata("operation",
-                                          operation.metadata().DebugString())));
+        internal::InvalidArgumentError("operation does not correspond to UpdateRecognizer",
+                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<
-      google::cloud::speech::v2::Recognizer>(
-      background_->cq(), current, operation,
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::speech::v2::Recognizer>,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::speech::v2::Recognizer>(
+    background_->cq(), current, operation,
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::speech::v2::Recognizer>,
+    polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::speech::v2::Recognizer>>
-SpeechConnectionImpl::DeleteRecognizer(
-    google::cloud::speech::v2::DeleteRecognizerRequest const& request) {
+SpeechConnectionImpl::DeleteRecognizer(google::cloud::speech::v2::DeleteRecognizerRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->DeleteRecognizer(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<
-      google::cloud::speech::v2::Recognizer>(
-      background_->cq(), current, std::move(request_copy),
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::speech::v2::DeleteRecognizerRequest const& request) {
-        return stub->AsyncDeleteRecognizer(cq, std::move(context),
-                                           std::move(options), request);
-      },
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::speech::v2::Recognizer>,
-      retry_policy(*current), backoff_policy(*current), idempotent,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::speech::v2::Recognizer>(
+    background_->cq(), current, std::move(request_copy),
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::cloud::speech::v2::DeleteRecognizerRequest const& request) {
+     return stub->AsyncDeleteRecognizer(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::speech::v2::Recognizer>,
+    retry_policy(*current), backoff_policy(*current), idempotent,
+    polling_policy(*current), __func__);
 }
 
-StatusOr<google::longrunning::Operation> SpeechConnectionImpl::DeleteRecognizer(
-    NoAwaitTag,
-    google::cloud::speech::v2::DeleteRecognizerRequest const& request) {
+StatusOr<google::longrunning::Operation>
+SpeechConnectionImpl::DeleteRecognizer(
+      NoAwaitTag, google::cloud::speech::v2::DeleteRecognizerRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -346,83 +313,71 @@ StatusOr<google::longrunning::Operation> SpeechConnectionImpl::DeleteRecognizer(
 
 future<StatusOr<google::cloud::speech::v2::Recognizer>>
 SpeechConnectionImpl::DeleteRecognizer(
-    google::longrunning::Operation const& operation) {
+      google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata()
-           .Is<typename google::cloud::speech::v2::OperationMetadata>()) {
+  if (!operation.metadata().Is<typename google::cloud::speech::v2::OperationMetadata>()) {
     return make_ready_future<StatusOr<google::cloud::speech::v2::Recognizer>>(
-        internal::InvalidArgumentError(
-            "operation does not correspond to DeleteRecognizer",
-            GCP_ERROR_INFO().WithMetadata("operation",
-                                          operation.metadata().DebugString())));
+        internal::InvalidArgumentError("operation does not correspond to DeleteRecognizer",
+                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<
-      google::cloud::speech::v2::Recognizer>(
-      background_->cq(), current, operation,
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::speech::v2::Recognizer>,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::speech::v2::Recognizer>(
+    background_->cq(), current, operation,
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::speech::v2::Recognizer>,
+    polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::speech::v2::Recognizer>>
-SpeechConnectionImpl::UndeleteRecognizer(
-    google::cloud::speech::v2::UndeleteRecognizerRequest const& request) {
+SpeechConnectionImpl::UndeleteRecognizer(google::cloud::speech::v2::UndeleteRecognizerRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->UndeleteRecognizer(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<
-      google::cloud::speech::v2::Recognizer>(
-      background_->cq(), current, std::move(request_copy),
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::speech::v2::UndeleteRecognizerRequest const& request) {
-        return stub->AsyncUndeleteRecognizer(cq, std::move(context),
-                                             std::move(options), request);
-      },
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::speech::v2::Recognizer>,
-      retry_policy(*current), backoff_policy(*current), idempotent,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::speech::v2::Recognizer>(
+    background_->cq(), current, std::move(request_copy),
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::cloud::speech::v2::UndeleteRecognizerRequest const& request) {
+     return stub->AsyncUndeleteRecognizer(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::speech::v2::Recognizer>,
+    retry_policy(*current), backoff_policy(*current), idempotent,
+    polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 SpeechConnectionImpl::UndeleteRecognizer(
-    NoAwaitTag,
-    google::cloud::speech::v2::UndeleteRecognizerRequest const& request) {
+      NoAwaitTag, google::cloud::speech::v2::UndeleteRecognizerRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -437,43 +392,36 @@ SpeechConnectionImpl::UndeleteRecognizer(
 
 future<StatusOr<google::cloud::speech::v2::Recognizer>>
 SpeechConnectionImpl::UndeleteRecognizer(
-    google::longrunning::Operation const& operation) {
+      google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata()
-           .Is<typename google::cloud::speech::v2::OperationMetadata>()) {
+  if (!operation.metadata().Is<typename google::cloud::speech::v2::OperationMetadata>()) {
     return make_ready_future<StatusOr<google::cloud::speech::v2::Recognizer>>(
-        internal::InvalidArgumentError(
-            "operation does not correspond to UndeleteRecognizer",
-            GCP_ERROR_INFO().WithMetadata("operation",
-                                          operation.metadata().DebugString())));
+        internal::InvalidArgumentError("operation does not correspond to UndeleteRecognizer",
+                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<
-      google::cloud::speech::v2::Recognizer>(
-      background_->cq(), current, operation,
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::speech::v2::Recognizer>,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::speech::v2::Recognizer>(
+    background_->cq(), current, operation,
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::speech::v2::Recognizer>,
+    polling_policy(*current), __func__);
 }
 
 StatusOr<google::cloud::speech::v2::RecognizeResponse>
-SpeechConnectionImpl::Recognize(
-    google::cloud::speech::v2::RecognizeRequest const& request) {
+SpeechConnectionImpl::Recognize(google::cloud::speech::v2::RecognizeRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -490,58 +438,54 @@ std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::cloud::speech::v2::StreamingRecognizeResponse>>
 SpeechConnectionImpl::AsyncStreamingRecognize() {
   return stub_->AsyncStreamingRecognize(background_->cq(),
-                                        std::make_shared<grpc::ClientContext>(),
-                                        internal::SaveCurrentOptions());
+                                std::make_shared<grpc::ClientContext>(),
+                                internal::SaveCurrentOptions());
 }
 
 future<StatusOr<google::cloud::speech::v2::BatchRecognizeResponse>>
-SpeechConnectionImpl::BatchRecognize(
-    google::cloud::speech::v2::BatchRecognizeRequest const& request) {
+SpeechConnectionImpl::BatchRecognize(google::cloud::speech::v2::BatchRecognizeRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->BatchRecognize(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<
-      google::cloud::speech::v2::BatchRecognizeResponse>(
-      background_->cq(), current, std::move(request_copy),
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::speech::v2::BatchRecognizeRequest const& request) {
-        return stub->AsyncBatchRecognize(cq, std::move(context),
-                                         std::move(options), request);
-      },
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::speech::v2::BatchRecognizeResponse>,
-      retry_policy(*current), backoff_policy(*current), idempotent,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::speech::v2::BatchRecognizeResponse>(
+    background_->cq(), current, std::move(request_copy),
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::cloud::speech::v2::BatchRecognizeRequest const& request) {
+     return stub->AsyncBatchRecognize(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::speech::v2::BatchRecognizeResponse>,
+    retry_policy(*current), backoff_policy(*current), idempotent,
+    polling_policy(*current), __func__);
 }
 
-StatusOr<google::longrunning::Operation> SpeechConnectionImpl::BatchRecognize(
-    NoAwaitTag,
-    google::cloud::speech::v2::BatchRecognizeRequest const& request) {
+StatusOr<google::longrunning::Operation>
+SpeechConnectionImpl::BatchRecognize(
+      NoAwaitTag, google::cloud::speech::v2::BatchRecognizeRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->BatchRecognize(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::speech::v2::BatchRecognizeRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::speech::v2::BatchRecognizeRequest const& request) {
         return stub_->BatchRecognize(context, options, request);
       },
       *current, request, __func__);
@@ -549,43 +493,36 @@ StatusOr<google::longrunning::Operation> SpeechConnectionImpl::BatchRecognize(
 
 future<StatusOr<google::cloud::speech::v2::BatchRecognizeResponse>>
 SpeechConnectionImpl::BatchRecognize(
-    google::longrunning::Operation const& operation) {
+      google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata()
-           .Is<typename google::cloud::speech::v2::OperationMetadata>()) {
-    return make_ready_future<
-        StatusOr<google::cloud::speech::v2::BatchRecognizeResponse>>(
-        internal::InvalidArgumentError(
-            "operation does not correspond to BatchRecognize",
-            GCP_ERROR_INFO().WithMetadata("operation",
-                                          operation.metadata().DebugString())));
+  if (!operation.metadata().Is<typename google::cloud::speech::v2::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::speech::v2::BatchRecognizeResponse>>(
+        internal::InvalidArgumentError("operation does not correspond to BatchRecognize",
+                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<
-      google::cloud::speech::v2::BatchRecognizeResponse>(
-      background_->cq(), current, operation,
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::speech::v2::BatchRecognizeResponse>,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::speech::v2::BatchRecognizeResponse>(
+    background_->cq(), current, operation,
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::speech::v2::BatchRecognizeResponse>,
+    polling_policy(*current), __func__);
 }
 
-StatusOr<google::cloud::speech::v2::Config> SpeechConnectionImpl::GetConfig(
-    google::cloud::speech::v2::GetConfigRequest const& request) {
+StatusOr<google::cloud::speech::v2::Config>
+SpeechConnectionImpl::GetConfig(google::cloud::speech::v2::GetConfigRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -597,8 +534,8 @@ StatusOr<google::cloud::speech::v2::Config> SpeechConnectionImpl::GetConfig(
       *current, request, __func__);
 }
 
-StatusOr<google::cloud::speech::v2::Config> SpeechConnectionImpl::UpdateConfig(
-    google::cloud::speech::v2::UpdateConfigRequest const& request) {
+StatusOr<google::cloud::speech::v2::Config>
+SpeechConnectionImpl::UpdateConfig(google::cloud::speech::v2::UpdateConfigRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -611,48 +548,42 @@ StatusOr<google::cloud::speech::v2::Config> SpeechConnectionImpl::UpdateConfig(
 }
 
 future<StatusOr<google::cloud::speech::v2::CustomClass>>
-SpeechConnectionImpl::CreateCustomClass(
-    google::cloud::speech::v2::CreateCustomClassRequest const& request) {
+SpeechConnectionImpl::CreateCustomClass(google::cloud::speech::v2::CreateCustomClassRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->CreateCustomClass(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<
-      google::cloud::speech::v2::CustomClass>(
-      background_->cq(), current, std::move(request_copy),
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::speech::v2::CreateCustomClassRequest const& request) {
-        return stub->AsyncCreateCustomClass(cq, std::move(context),
-                                            std::move(options), request);
-      },
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::speech::v2::CustomClass>,
-      retry_policy(*current), backoff_policy(*current), idempotent,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::speech::v2::CustomClass>(
+    background_->cq(), current, std::move(request_copy),
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::cloud::speech::v2::CreateCustomClassRequest const& request) {
+     return stub->AsyncCreateCustomClass(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::speech::v2::CustomClass>,
+    retry_policy(*current), backoff_policy(*current), idempotent,
+    polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 SpeechConnectionImpl::CreateCustomClass(
-    NoAwaitTag,
-    google::cloud::speech::v2::CreateCustomClassRequest const& request) {
+      NoAwaitTag, google::cloud::speech::v2::CreateCustomClassRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -667,68 +598,56 @@ SpeechConnectionImpl::CreateCustomClass(
 
 future<StatusOr<google::cloud::speech::v2::CustomClass>>
 SpeechConnectionImpl::CreateCustomClass(
-    google::longrunning::Operation const& operation) {
+      google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata()
-           .Is<typename google::cloud::speech::v2::OperationMetadata>()) {
+  if (!operation.metadata().Is<typename google::cloud::speech::v2::OperationMetadata>()) {
     return make_ready_future<StatusOr<google::cloud::speech::v2::CustomClass>>(
-        internal::InvalidArgumentError(
-            "operation does not correspond to CreateCustomClass",
-            GCP_ERROR_INFO().WithMetadata("operation",
-                                          operation.metadata().DebugString())));
+        internal::InvalidArgumentError("operation does not correspond to CreateCustomClass",
+                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<
-      google::cloud::speech::v2::CustomClass>(
-      background_->cq(), current, operation,
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::speech::v2::CustomClass>,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::speech::v2::CustomClass>(
+    background_->cq(), current, operation,
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::speech::v2::CustomClass>,
+    polling_policy(*current), __func__);
 }
 
 StreamRange<google::cloud::speech::v2::CustomClass>
-SpeechConnectionImpl::ListCustomClasses(
-    google::cloud::speech::v2::ListCustomClassesRequest request) {
+SpeechConnectionImpl::ListCustomClasses(google::cloud::speech::v2::ListCustomClassesRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListCustomClasses(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::speech::v2::CustomClass>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::speech::v2::CustomClass>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<speech_v2::SpeechRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<speech_v2::SpeechRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::speech::v2::ListCustomClassesRequest const& r) {
+          Options const& options, google::cloud::speech::v2::ListCustomClassesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::speech::v2::ListCustomClassesRequest const&
-                       request) {
+                   google::cloud::speech::v2::ListCustomClassesRequest const& request) {
               return stub->ListCustomClasses(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::speech::v2::ListCustomClassesResponse r) {
-        std::vector<google::cloud::speech::v2::CustomClass> result(
-            r.custom_classes().size());
+        std::vector<google::cloud::speech::v2::CustomClass> result(r.custom_classes().size());
         auto& messages = *r.mutable_custom_classes();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -736,8 +655,7 @@ SpeechConnectionImpl::ListCustomClasses(
 }
 
 StatusOr<google::cloud::speech::v2::CustomClass>
-SpeechConnectionImpl::GetCustomClass(
-    google::cloud::speech::v2::GetCustomClassRequest const& request) {
+SpeechConnectionImpl::GetCustomClass(google::cloud::speech::v2::GetCustomClassRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -750,48 +668,42 @@ SpeechConnectionImpl::GetCustomClass(
 }
 
 future<StatusOr<google::cloud::speech::v2::CustomClass>>
-SpeechConnectionImpl::UpdateCustomClass(
-    google::cloud::speech::v2::UpdateCustomClassRequest const& request) {
+SpeechConnectionImpl::UpdateCustomClass(google::cloud::speech::v2::UpdateCustomClassRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->UpdateCustomClass(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<
-      google::cloud::speech::v2::CustomClass>(
-      background_->cq(), current, std::move(request_copy),
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::speech::v2::UpdateCustomClassRequest const& request) {
-        return stub->AsyncUpdateCustomClass(cq, std::move(context),
-                                            std::move(options), request);
-      },
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::speech::v2::CustomClass>,
-      retry_policy(*current), backoff_policy(*current), idempotent,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::speech::v2::CustomClass>(
+    background_->cq(), current, std::move(request_copy),
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::cloud::speech::v2::UpdateCustomClassRequest const& request) {
+     return stub->AsyncUpdateCustomClass(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::speech::v2::CustomClass>,
+    retry_policy(*current), backoff_policy(*current), idempotent,
+    polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 SpeechConnectionImpl::UpdateCustomClass(
-    NoAwaitTag,
-    google::cloud::speech::v2::UpdateCustomClassRequest const& request) {
+      NoAwaitTag, google::cloud::speech::v2::UpdateCustomClassRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -806,83 +718,71 @@ SpeechConnectionImpl::UpdateCustomClass(
 
 future<StatusOr<google::cloud::speech::v2::CustomClass>>
 SpeechConnectionImpl::UpdateCustomClass(
-    google::longrunning::Operation const& operation) {
+      google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata()
-           .Is<typename google::cloud::speech::v2::OperationMetadata>()) {
+  if (!operation.metadata().Is<typename google::cloud::speech::v2::OperationMetadata>()) {
     return make_ready_future<StatusOr<google::cloud::speech::v2::CustomClass>>(
-        internal::InvalidArgumentError(
-            "operation does not correspond to UpdateCustomClass",
-            GCP_ERROR_INFO().WithMetadata("operation",
-                                          operation.metadata().DebugString())));
+        internal::InvalidArgumentError("operation does not correspond to UpdateCustomClass",
+                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<
-      google::cloud::speech::v2::CustomClass>(
-      background_->cq(), current, operation,
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::speech::v2::CustomClass>,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::speech::v2::CustomClass>(
+    background_->cq(), current, operation,
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::speech::v2::CustomClass>,
+    polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::speech::v2::CustomClass>>
-SpeechConnectionImpl::DeleteCustomClass(
-    google::cloud::speech::v2::DeleteCustomClassRequest const& request) {
+SpeechConnectionImpl::DeleteCustomClass(google::cloud::speech::v2::DeleteCustomClassRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->DeleteCustomClass(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<
-      google::cloud::speech::v2::CustomClass>(
-      background_->cq(), current, std::move(request_copy),
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::speech::v2::DeleteCustomClassRequest const& request) {
-        return stub->AsyncDeleteCustomClass(cq, std::move(context),
-                                            std::move(options), request);
-      },
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::speech::v2::CustomClass>,
-      retry_policy(*current), backoff_policy(*current), idempotent,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::speech::v2::CustomClass>(
+    background_->cq(), current, std::move(request_copy),
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::cloud::speech::v2::DeleteCustomClassRequest const& request) {
+     return stub->AsyncDeleteCustomClass(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::speech::v2::CustomClass>,
+    retry_policy(*current), backoff_policy(*current), idempotent,
+    polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 SpeechConnectionImpl::DeleteCustomClass(
-    NoAwaitTag,
-    google::cloud::speech::v2::DeleteCustomClassRequest const& request) {
+      NoAwaitTag, google::cloud::speech::v2::DeleteCustomClassRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -897,91 +797,78 @@ SpeechConnectionImpl::DeleteCustomClass(
 
 future<StatusOr<google::cloud::speech::v2::CustomClass>>
 SpeechConnectionImpl::DeleteCustomClass(
-    google::longrunning::Operation const& operation) {
+      google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata()
-           .Is<typename google::cloud::speech::v2::OperationMetadata>()) {
+  if (!operation.metadata().Is<typename google::cloud::speech::v2::OperationMetadata>()) {
     return make_ready_future<StatusOr<google::cloud::speech::v2::CustomClass>>(
-        internal::InvalidArgumentError(
-            "operation does not correspond to DeleteCustomClass",
-            GCP_ERROR_INFO().WithMetadata("operation",
-                                          operation.metadata().DebugString())));
+        internal::InvalidArgumentError("operation does not correspond to DeleteCustomClass",
+                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<
-      google::cloud::speech::v2::CustomClass>(
-      background_->cq(), current, operation,
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::speech::v2::CustomClass>,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::speech::v2::CustomClass>(
+    background_->cq(), current, operation,
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::speech::v2::CustomClass>,
+    polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::speech::v2::CustomClass>>
-SpeechConnectionImpl::UndeleteCustomClass(
-    google::cloud::speech::v2::UndeleteCustomClassRequest const& request) {
+SpeechConnectionImpl::UndeleteCustomClass(google::cloud::speech::v2::UndeleteCustomClassRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->UndeleteCustomClass(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<
-      google::cloud::speech::v2::CustomClass>(
-      background_->cq(), current, std::move(request_copy),
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::speech::v2::UndeleteCustomClassRequest const&
-              request) {
-        return stub->AsyncUndeleteCustomClass(cq, std::move(context),
-                                              std::move(options), request);
-      },
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::speech::v2::CustomClass>,
-      retry_policy(*current), backoff_policy(*current), idempotent,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::speech::v2::CustomClass>(
+    background_->cq(), current, std::move(request_copy),
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::cloud::speech::v2::UndeleteCustomClassRequest const& request) {
+     return stub->AsyncUndeleteCustomClass(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::speech::v2::CustomClass>,
+    retry_policy(*current), backoff_policy(*current), idempotent,
+    polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 SpeechConnectionImpl::UndeleteCustomClass(
-    NoAwaitTag,
-    google::cloud::speech::v2::UndeleteCustomClassRequest const& request) {
+      NoAwaitTag, google::cloud::speech::v2::UndeleteCustomClassRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UndeleteCustomClass(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::speech::v2::UndeleteCustomClassRequest const&
-                 request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::speech::v2::UndeleteCustomClassRequest const& request) {
         return stub_->UndeleteCustomClass(context, options, request);
       },
       *current, request, __func__);
@@ -989,88 +876,78 @@ SpeechConnectionImpl::UndeleteCustomClass(
 
 future<StatusOr<google::cloud::speech::v2::CustomClass>>
 SpeechConnectionImpl::UndeleteCustomClass(
-    google::longrunning::Operation const& operation) {
+      google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata()
-           .Is<typename google::cloud::speech::v2::OperationMetadata>()) {
+  if (!operation.metadata().Is<typename google::cloud::speech::v2::OperationMetadata>()) {
     return make_ready_future<StatusOr<google::cloud::speech::v2::CustomClass>>(
-        internal::InvalidArgumentError(
-            "operation does not correspond to UndeleteCustomClass",
-            GCP_ERROR_INFO().WithMetadata("operation",
-                                          operation.metadata().DebugString())));
+        internal::InvalidArgumentError("operation does not correspond to UndeleteCustomClass",
+                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<
-      google::cloud::speech::v2::CustomClass>(
-      background_->cq(), current, operation,
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::speech::v2::CustomClass>,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::speech::v2::CustomClass>(
+    background_->cq(), current, operation,
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::speech::v2::CustomClass>,
+    polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::speech::v2::PhraseSet>>
-SpeechConnectionImpl::CreatePhraseSet(
-    google::cloud::speech::v2::CreatePhraseSetRequest const& request) {
+SpeechConnectionImpl::CreatePhraseSet(google::cloud::speech::v2::CreatePhraseSetRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->CreatePhraseSet(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<
-      google::cloud::speech::v2::PhraseSet>(
-      background_->cq(), current, std::move(request_copy),
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::speech::v2::CreatePhraseSetRequest const& request) {
-        return stub->AsyncCreatePhraseSet(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::speech::v2::PhraseSet>,
-      retry_policy(*current), backoff_policy(*current), idempotent,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::speech::v2::PhraseSet>(
+    background_->cq(), current, std::move(request_copy),
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::cloud::speech::v2::CreatePhraseSetRequest const& request) {
+     return stub->AsyncCreatePhraseSet(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::speech::v2::PhraseSet>,
+    retry_policy(*current), backoff_policy(*current), idempotent,
+    polling_policy(*current), __func__);
 }
 
-StatusOr<google::longrunning::Operation> SpeechConnectionImpl::CreatePhraseSet(
-    NoAwaitTag,
-    google::cloud::speech::v2::CreatePhraseSetRequest const& request) {
+StatusOr<google::longrunning::Operation>
+SpeechConnectionImpl::CreatePhraseSet(
+      NoAwaitTag, google::cloud::speech::v2::CreatePhraseSetRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreatePhraseSet(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::speech::v2::CreatePhraseSetRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::speech::v2::CreatePhraseSetRequest const& request) {
         return stub_->CreatePhraseSet(context, options, request);
       },
       *current, request, __func__);
@@ -1078,68 +955,56 @@ StatusOr<google::longrunning::Operation> SpeechConnectionImpl::CreatePhraseSet(
 
 future<StatusOr<google::cloud::speech::v2::PhraseSet>>
 SpeechConnectionImpl::CreatePhraseSet(
-    google::longrunning::Operation const& operation) {
+      google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata()
-           .Is<typename google::cloud::speech::v2::OperationMetadata>()) {
+  if (!operation.metadata().Is<typename google::cloud::speech::v2::OperationMetadata>()) {
     return make_ready_future<StatusOr<google::cloud::speech::v2::PhraseSet>>(
-        internal::InvalidArgumentError(
-            "operation does not correspond to CreatePhraseSet",
-            GCP_ERROR_INFO().WithMetadata("operation",
-                                          operation.metadata().DebugString())));
+        internal::InvalidArgumentError("operation does not correspond to CreatePhraseSet",
+                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<
-      google::cloud::speech::v2::PhraseSet>(
-      background_->cq(), current, operation,
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::speech::v2::PhraseSet>,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::speech::v2::PhraseSet>(
+    background_->cq(), current, operation,
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::speech::v2::PhraseSet>,
+    polling_policy(*current), __func__);
 }
 
 StreamRange<google::cloud::speech::v2::PhraseSet>
-SpeechConnectionImpl::ListPhraseSets(
-    google::cloud::speech::v2::ListPhraseSetsRequest request) {
+SpeechConnectionImpl::ListPhraseSets(google::cloud::speech::v2::ListPhraseSetsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListPhraseSets(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::speech::v2::PhraseSet>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::speech::v2::PhraseSet>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<speech_v2::SpeechRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<speech_v2::SpeechRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::speech::v2::ListPhraseSetsRequest const& r) {
+          Options const& options, google::cloud::speech::v2::ListPhraseSetsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::speech::v2::ListPhraseSetsRequest const&
-                       request) {
+                   google::cloud::speech::v2::ListPhraseSetsRequest const& request) {
               return stub->ListPhraseSets(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::speech::v2::ListPhraseSetsResponse r) {
-        std::vector<google::cloud::speech::v2::PhraseSet> result(
-            r.phrase_sets().size());
+        std::vector<google::cloud::speech::v2::PhraseSet> result(r.phrase_sets().size());
         auto& messages = *r.mutable_phrase_sets();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -1147,8 +1012,7 @@ SpeechConnectionImpl::ListPhraseSets(
 }
 
 StatusOr<google::cloud::speech::v2::PhraseSet>
-SpeechConnectionImpl::GetPhraseSet(
-    google::cloud::speech::v2::GetPhraseSetRequest const& request) {
+SpeechConnectionImpl::GetPhraseSet(google::cloud::speech::v2::GetPhraseSetRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -1161,53 +1025,49 @@ SpeechConnectionImpl::GetPhraseSet(
 }
 
 future<StatusOr<google::cloud::speech::v2::PhraseSet>>
-SpeechConnectionImpl::UpdatePhraseSet(
-    google::cloud::speech::v2::UpdatePhraseSetRequest const& request) {
+SpeechConnectionImpl::UpdatePhraseSet(google::cloud::speech::v2::UpdatePhraseSetRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->UpdatePhraseSet(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<
-      google::cloud::speech::v2::PhraseSet>(
-      background_->cq(), current, std::move(request_copy),
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::speech::v2::UpdatePhraseSetRequest const& request) {
-        return stub->AsyncUpdatePhraseSet(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::speech::v2::PhraseSet>,
-      retry_policy(*current), backoff_policy(*current), idempotent,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::speech::v2::PhraseSet>(
+    background_->cq(), current, std::move(request_copy),
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::cloud::speech::v2::UpdatePhraseSetRequest const& request) {
+     return stub->AsyncUpdatePhraseSet(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::speech::v2::PhraseSet>,
+    retry_policy(*current), backoff_policy(*current), idempotent,
+    polling_policy(*current), __func__);
 }
 
-StatusOr<google::longrunning::Operation> SpeechConnectionImpl::UpdatePhraseSet(
-    NoAwaitTag,
-    google::cloud::speech::v2::UpdatePhraseSetRequest const& request) {
+StatusOr<google::longrunning::Operation>
+SpeechConnectionImpl::UpdatePhraseSet(
+      NoAwaitTag, google::cloud::speech::v2::UpdatePhraseSetRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdatePhraseSet(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::speech::v2::UpdatePhraseSetRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::speech::v2::UpdatePhraseSetRequest const& request) {
         return stub_->UpdatePhraseSet(context, options, request);
       },
       *current, request, __func__);
@@ -1215,88 +1075,78 @@ StatusOr<google::longrunning::Operation> SpeechConnectionImpl::UpdatePhraseSet(
 
 future<StatusOr<google::cloud::speech::v2::PhraseSet>>
 SpeechConnectionImpl::UpdatePhraseSet(
-    google::longrunning::Operation const& operation) {
+      google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata()
-           .Is<typename google::cloud::speech::v2::OperationMetadata>()) {
+  if (!operation.metadata().Is<typename google::cloud::speech::v2::OperationMetadata>()) {
     return make_ready_future<StatusOr<google::cloud::speech::v2::PhraseSet>>(
-        internal::InvalidArgumentError(
-            "operation does not correspond to UpdatePhraseSet",
-            GCP_ERROR_INFO().WithMetadata("operation",
-                                          operation.metadata().DebugString())));
+        internal::InvalidArgumentError("operation does not correspond to UpdatePhraseSet",
+                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<
-      google::cloud::speech::v2::PhraseSet>(
-      background_->cq(), current, operation,
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::speech::v2::PhraseSet>,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::speech::v2::PhraseSet>(
+    background_->cq(), current, operation,
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::speech::v2::PhraseSet>,
+    polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::speech::v2::PhraseSet>>
-SpeechConnectionImpl::DeletePhraseSet(
-    google::cloud::speech::v2::DeletePhraseSetRequest const& request) {
+SpeechConnectionImpl::DeletePhraseSet(google::cloud::speech::v2::DeletePhraseSetRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->DeletePhraseSet(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<
-      google::cloud::speech::v2::PhraseSet>(
-      background_->cq(), current, std::move(request_copy),
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::speech::v2::DeletePhraseSetRequest const& request) {
-        return stub->AsyncDeletePhraseSet(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::speech::v2::PhraseSet>,
-      retry_policy(*current), backoff_policy(*current), idempotent,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::speech::v2::PhraseSet>(
+    background_->cq(), current, std::move(request_copy),
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::cloud::speech::v2::DeletePhraseSetRequest const& request) {
+     return stub->AsyncDeletePhraseSet(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::speech::v2::PhraseSet>,
+    retry_policy(*current), backoff_policy(*current), idempotent,
+    polling_policy(*current), __func__);
 }
 
-StatusOr<google::longrunning::Operation> SpeechConnectionImpl::DeletePhraseSet(
-    NoAwaitTag,
-    google::cloud::speech::v2::DeletePhraseSetRequest const& request) {
+StatusOr<google::longrunning::Operation>
+SpeechConnectionImpl::DeletePhraseSet(
+      NoAwaitTag, google::cloud::speech::v2::DeletePhraseSetRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeletePhraseSet(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::speech::v2::DeletePhraseSetRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::speech::v2::DeletePhraseSetRequest const& request) {
         return stub_->DeletePhraseSet(context, options, request);
       },
       *current, request, __func__);
@@ -1304,83 +1154,71 @@ StatusOr<google::longrunning::Operation> SpeechConnectionImpl::DeletePhraseSet(
 
 future<StatusOr<google::cloud::speech::v2::PhraseSet>>
 SpeechConnectionImpl::DeletePhraseSet(
-    google::longrunning::Operation const& operation) {
+      google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata()
-           .Is<typename google::cloud::speech::v2::OperationMetadata>()) {
+  if (!operation.metadata().Is<typename google::cloud::speech::v2::OperationMetadata>()) {
     return make_ready_future<StatusOr<google::cloud::speech::v2::PhraseSet>>(
-        internal::InvalidArgumentError(
-            "operation does not correspond to DeletePhraseSet",
-            GCP_ERROR_INFO().WithMetadata("operation",
-                                          operation.metadata().DebugString())));
+        internal::InvalidArgumentError("operation does not correspond to DeletePhraseSet",
+                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<
-      google::cloud::speech::v2::PhraseSet>(
-      background_->cq(), current, operation,
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::speech::v2::PhraseSet>,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::speech::v2::PhraseSet>(
+    background_->cq(), current, operation,
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::speech::v2::PhraseSet>,
+    polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::speech::v2::PhraseSet>>
-SpeechConnectionImpl::UndeletePhraseSet(
-    google::cloud::speech::v2::UndeletePhraseSetRequest const& request) {
+SpeechConnectionImpl::UndeletePhraseSet(google::cloud::speech::v2::UndeletePhraseSetRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->UndeletePhraseSet(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<
-      google::cloud::speech::v2::PhraseSet>(
-      background_->cq(), current, std::move(request_copy),
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::speech::v2::UndeletePhraseSetRequest const& request) {
-        return stub->AsyncUndeletePhraseSet(cq, std::move(context),
-                                            std::move(options), request);
-      },
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::speech::v2::PhraseSet>,
-      retry_policy(*current), backoff_policy(*current), idempotent,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::speech::v2::PhraseSet>(
+    background_->cq(), current, std::move(request_copy),
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::cloud::speech::v2::UndeletePhraseSetRequest const& request) {
+     return stub->AsyncUndeletePhraseSet(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::speech::v2::PhraseSet>,
+    retry_policy(*current), backoff_policy(*current), idempotent,
+    polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 SpeechConnectionImpl::UndeletePhraseSet(
-    NoAwaitTag,
-    google::cloud::speech::v2::UndeletePhraseSetRequest const& request) {
+      NoAwaitTag, google::cloud::speech::v2::UndeletePhraseSetRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -1395,76 +1233,64 @@ SpeechConnectionImpl::UndeletePhraseSet(
 
 future<StatusOr<google::cloud::speech::v2::PhraseSet>>
 SpeechConnectionImpl::UndeletePhraseSet(
-    google::longrunning::Operation const& operation) {
+      google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata()
-           .Is<typename google::cloud::speech::v2::OperationMetadata>()) {
+  if (!operation.metadata().Is<typename google::cloud::speech::v2::OperationMetadata>()) {
     return make_ready_future<StatusOr<google::cloud::speech::v2::PhraseSet>>(
-        internal::InvalidArgumentError(
-            "operation does not correspond to UndeletePhraseSet",
-            GCP_ERROR_INFO().WithMetadata("operation",
-                                          operation.metadata().DebugString())));
+        internal::InvalidArgumentError("operation does not correspond to UndeletePhraseSet",
+                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<
-      google::cloud::speech::v2::PhraseSet>(
-      background_->cq(), current, operation,
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::speech::v2::PhraseSet>,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::speech::v2::PhraseSet>(
+    background_->cq(), current, operation,
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::speech::v2::PhraseSet>,
+    polling_policy(*current), __func__);
 }
 
 StreamRange<google::cloud::location::Location>
-SpeechConnectionImpl::ListLocations(
-    google::cloud::location::ListLocationsRequest request) {
+SpeechConnectionImpl::ListLocations(google::cloud::location::ListLocationsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListLocations(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::location::Location>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::location::Location>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<speech_v2::SpeechRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<speech_v2::SpeechRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::location::ListLocationsRequest const& r) {
+          Options const& options, google::cloud::location::ListLocationsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](
-                grpc::ClientContext& context, Options const& options,
-                google::cloud::location::ListLocationsRequest const& request) {
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::cloud::location::ListLocationsRequest const& request) {
               return stub->ListLocations(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::location::ListLocationsResponse r) {
-        std::vector<google::cloud::location::Location> result(
-            r.locations().size());
+        std::vector<google::cloud::location::Location> result(r.locations().size());
         auto& messages = *r.mutable_locations();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
       });
 }
 
-StatusOr<google::cloud::location::Location> SpeechConnectionImpl::GetLocation(
-    google::cloud::location::GetLocationRequest const& request) {
+StatusOr<google::cloud::location::Location>
+SpeechConnectionImpl::GetLocation(google::cloud::location::GetLocationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -1477,21 +1303,17 @@ StatusOr<google::cloud::location::Location> SpeechConnectionImpl::GetLocation(
 }
 
 StreamRange<google::longrunning::Operation>
-SpeechConnectionImpl::ListOperations(
-    google::longrunning::ListOperationsRequest request) {
+SpeechConnectionImpl::ListOperations(google::longrunning::ListOperationsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListOperations(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::longrunning::Operation>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::longrunning::Operation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<speech_v2::SpeechRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<speech_v2::SpeechRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::longrunning::ListOperationsRequest const& r) {
+          Options const& options, google::longrunning::ListOperationsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
@@ -1501,16 +1323,15 @@ SpeechConnectionImpl::ListOperations(
             options, r, function_name);
       },
       [](google::longrunning::ListOperationsResponse r) {
-        std::vector<google::longrunning::Operation> result(
-            r.operations().size());
+        std::vector<google::longrunning::Operation> result(r.operations().size());
         auto& messages = *r.mutable_operations();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
       });
 }
 
-StatusOr<google::longrunning::Operation> SpeechConnectionImpl::GetOperation(
-    google::longrunning::GetOperationRequest const& request) {
+StatusOr<google::longrunning::Operation>
+SpeechConnectionImpl::GetOperation(google::longrunning::GetOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -1522,8 +1343,8 @@ StatusOr<google::longrunning::Operation> SpeechConnectionImpl::GetOperation(
       *current, request, __func__);
 }
 
-Status SpeechConnectionImpl::DeleteOperation(
-    google::longrunning::DeleteOperationRequest const& request) {
+Status
+SpeechConnectionImpl::DeleteOperation(google::longrunning::DeleteOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -1535,8 +1356,8 @@ Status SpeechConnectionImpl::DeleteOperation(
       *current, request, __func__);
 }
 
-Status SpeechConnectionImpl::CancelOperation(
-    google::longrunning::CancelOperationRequest const& request) {
+Status
+SpeechConnectionImpl::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),

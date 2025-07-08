@@ -17,14 +17,14 @@
 // source: google/cloud/dialogflow/v2/encryption_spec.proto
 
 #include "google/cloud/dialogflow_es/encryption_spec_connection.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/dialogflow_es/encryption_spec_options.h"
 #include "google/cloud/dialogflow_es/internal/encryption_spec_connection_impl.h"
 #include "google/cloud/dialogflow_es/internal/encryption_spec_option_defaults.h"
 #include "google/cloud/dialogflow_es/internal/encryption_spec_stub_factory.h"
 #include "google/cloud/dialogflow_es/internal/encryption_spec_tracing_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
-#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
@@ -44,13 +44,12 @@ EncryptionSpecServiceConnection::GetEncryptionSpec(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-future<
-    StatusOr<google::cloud::dialogflow::v2::InitializeEncryptionSpecResponse>>
+future<StatusOr<google::cloud::dialogflow::v2::InitializeEncryptionSpecResponse>>
 EncryptionSpecServiceConnection::InitializeEncryptionSpec(
     google::cloud::dialogflow::v2::InitializeEncryptionSpecRequest const&) {
-  return google::cloud::make_ready_future<StatusOr<
-      google::cloud::dialogflow::v2::InitializeEncryptionSpecResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+  return google::cloud::make_ready_future<
+    StatusOr<google::cloud::dialogflow::v2::InitializeEncryptionSpecResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -58,22 +57,19 @@ EncryptionSpecServiceConnection::InitializeEncryptionSpec(
     NoAwaitTag,
     google::cloud::dialogflow::v2::InitializeEncryptionSpecRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<
-    StatusOr<google::cloud::dialogflow::v2::InitializeEncryptionSpecResponse>>
+future<StatusOr<google::cloud::dialogflow::v2::InitializeEncryptionSpecResponse>>
 EncryptionSpecServiceConnection::InitializeEncryptionSpec(
     google::longrunning::Operation const&) {
-  return google::cloud::make_ready_future<StatusOr<
-      google::cloud::dialogflow::v2::InitializeEncryptionSpecResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+  return google::cloud::make_ready_future<
+    StatusOr<google::cloud::dialogflow::v2::InitializeEncryptionSpecResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StreamRange<google::cloud::location::Location>
-EncryptionSpecServiceConnection::ListLocations(
-    google::cloud::location::
-        ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::location::Location> EncryptionSpecServiceConnection::ListLocations(
+    google::cloud::location::ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::location::Location>>();
 }
@@ -84,10 +80,8 @@ EncryptionSpecServiceConnection::GetLocation(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::longrunning::Operation>
-EncryptionSpecServiceConnection::ListOperations(
-    google::longrunning::
-        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::longrunning::Operation> EncryptionSpecServiceConnection::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }
@@ -98,32 +92,30 @@ EncryptionSpecServiceConnection::GetOperation(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status EncryptionSpecServiceConnection::CancelOperation(
+Status
+EncryptionSpecServiceConnection::CancelOperation(
     google::longrunning::CancelOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-std::shared_ptr<EncryptionSpecServiceConnection>
-MakeEncryptionSpecServiceConnection(std::string const& location,
-                                    Options options) {
+std::shared_ptr<EncryptionSpecServiceConnection> MakeEncryptionSpecServiceConnection(
+    std::string const& location, Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 EncryptionSpecServicePolicyOptionList>(
-      options, __func__);
+      UnifiedCredentialsOptionList,
+      EncryptionSpecServicePolicyOptionList>(options, __func__);
   options = dialogflow_es_internal::EncryptionSpecServiceDefaultOptions(
       location, std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = dialogflow_es_internal::CreateDefaultEncryptionSpecServiceStub(
-      std::move(auth), options);
+    std::move(auth), options);
   return dialogflow_es_internal::MakeEncryptionSpecServiceTracingConnection(
-      std::make_shared<
-          dialogflow_es_internal::EncryptionSpecServiceConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options)));
+      std::make_shared<dialogflow_es_internal::EncryptionSpecServiceConnectionImpl>(
+      std::move(background), std::move(stub), std::move(options)));
 }
 
-std::shared_ptr<EncryptionSpecServiceConnection>
-MakeEncryptionSpecServiceConnection(Options options) {
+std::shared_ptr<EncryptionSpecServiceConnection> MakeEncryptionSpecServiceConnection(
+    Options options) {
   return MakeEncryptionSpecServiceConnection(std::string{}, std::move(options));
 }
 

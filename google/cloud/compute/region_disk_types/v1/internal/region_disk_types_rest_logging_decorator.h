@@ -38,20 +38,16 @@ class RegionDiskTypesRestLogging : public RegionDiskTypesRestStub {
  public:
   ~RegionDiskTypesRestLogging() override = default;
   RegionDiskTypesRestLogging(std::shared_ptr<RegionDiskTypesRestStub> child,
-                             TracingOptions tracing_options,
-                             std::set<std::string> components);
+                       TracingOptions tracing_options,
+                       std::set<std::string> components);
 
   StatusOr<google::cloud::cpp::compute::v1::DiskType> GetDiskType(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::region_disk_types::v1::
-          GetDiskTypeRequest const& request) override;
+      Options const& options, google::cloud::cpp::compute::region_disk_types::v1::GetDiskTypeRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::RegionDiskTypeList>
-  ListRegionDiskTypes(google::cloud::rest_internal::RestContext& rest_context,
-                      Options const& options,
-                      google::cloud::cpp::compute::region_disk_types::v1::
-                          ListRegionDiskTypesRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::RegionDiskTypeList> ListRegionDiskTypes(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options, google::cloud::cpp::compute::region_disk_types::v1::ListRegionDiskTypesRequest const& request) override;
 
  private:
   std::shared_ptr<RegionDiskTypesRestStub> child_;

@@ -31,9 +31,9 @@ TagKeysAuth::TagKeysAuth(
     std::shared_ptr<TagKeysStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::resourcemanager::v3::ListTagKeysResponse>
-TagKeysAuth::ListTagKeys(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::resourcemanager::v3::ListTagKeysResponse> TagKeysAuth::ListTagKeys(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::resourcemanager::v3::ListTagKeysRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -41,106 +41,113 @@ TagKeysAuth::ListTagKeys(
 }
 
 StatusOr<google::cloud::resourcemanager::v3::TagKey> TagKeysAuth::GetTagKey(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::resourcemanager::v3::GetTagKeyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetTagKey(context, options, request);
 }
 
-StatusOr<google::cloud::resourcemanager::v3::TagKey>
-TagKeysAuth::GetNamespacedTagKey(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::resourcemanager::v3::GetNamespacedTagKeyRequest const&
-        request) {
+StatusOr<google::cloud::resourcemanager::v3::TagKey> TagKeysAuth::GetNamespacedTagKey(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::resourcemanager::v3::GetNamespacedTagKeyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetNamespacedTagKey(context, options, request);
 }
 
-future<StatusOr<google::longrunning::Operation>> TagKeysAuth::AsyncCreateTagKey(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::resourcemanager::v3::CreateTagKeyRequest const& request) {
+future<StatusOr<google::longrunning::Operation>>
+TagKeysAuth::AsyncCreateTagKey(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::resourcemanager::v3::CreateTagKeyRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreateTagKey(cq, *std::move(context),
-                                        std::move(options), request);
+        return child->AsyncCreateTagKey(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation> TagKeysAuth::CreateTagKey(
-    grpc::ClientContext& context, Options options,
-    google::cloud::resourcemanager::v3::CreateTagKeyRequest const& request) {
+StatusOr<google::longrunning::Operation>
+TagKeysAuth::CreateTagKey(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::resourcemanager::v3::CreateTagKeyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateTagKey(context, options, request);
 }
 
-future<StatusOr<google::longrunning::Operation>> TagKeysAuth::AsyncUpdateTagKey(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::resourcemanager::v3::UpdateTagKeyRequest const& request) {
+future<StatusOr<google::longrunning::Operation>>
+TagKeysAuth::AsyncUpdateTagKey(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::resourcemanager::v3::UpdateTagKeyRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncUpdateTagKey(cq, *std::move(context),
-                                        std::move(options), request);
+        return child->AsyncUpdateTagKey(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation> TagKeysAuth::UpdateTagKey(
-    grpc::ClientContext& context, Options options,
-    google::cloud::resourcemanager::v3::UpdateTagKeyRequest const& request) {
+StatusOr<google::longrunning::Operation>
+TagKeysAuth::UpdateTagKey(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::resourcemanager::v3::UpdateTagKeyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateTagKey(context, options, request);
 }
 
-future<StatusOr<google::longrunning::Operation>> TagKeysAuth::AsyncDeleteTagKey(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::resourcemanager::v3::DeleteTagKeyRequest const& request) {
+future<StatusOr<google::longrunning::Operation>>
+TagKeysAuth::AsyncDeleteTagKey(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::resourcemanager::v3::DeleteTagKeyRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDeleteTagKey(cq, *std::move(context),
-                                        std::move(options), request);
+        return child->AsyncDeleteTagKey(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation> TagKeysAuth::DeleteTagKey(
-    grpc::ClientContext& context, Options options,
-    google::cloud::resourcemanager::v3::DeleteTagKeyRequest const& request) {
+StatusOr<google::longrunning::Operation>
+TagKeysAuth::DeleteTagKey(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::resourcemanager::v3::DeleteTagKeyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteTagKey(context, options, request);
 }
 
 StatusOr<google::iam::v1::Policy> TagKeysAuth::GetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -148,16 +155,17 @@ StatusOr<google::iam::v1::Policy> TagKeysAuth::GetIamPolicy(
 }
 
 StatusOr<google::iam::v1::Policy> TagKeysAuth::SetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->SetIamPolicy(context, options, request);
 }
 
-StatusOr<google::iam::v1::TestIamPermissionsResponse>
-TagKeysAuth::TestIamPermissions(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::iam::v1::TestIamPermissionsResponse> TagKeysAuth::TestIamPermissions(
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -165,29 +173,30 @@ TagKeysAuth::TestIamPermissions(
 }
 
 StatusOr<google::longrunning::Operation> TagKeysAuth::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetOperation(context, options, request);
 }
 
-future<StatusOr<google::longrunning::Operation>> TagKeysAuth::AsyncGetOperation(
+future<StatusOr<google::longrunning::Operation>>
+TagKeysAuth::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncGetOperation(cq, *std::move(context),
-                                        std::move(options), request);
+        return child->AsyncGetOperation(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
@@ -196,14 +205,13 @@ future<Status> TagKeysAuth::AsyncCancelOperation(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) return make_ready_future(std::move(context).status());
-        return child->AsyncCancelOperation(cq, *std::move(context),
-                                           std::move(options), request);
+        return child->AsyncCancelOperation(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 

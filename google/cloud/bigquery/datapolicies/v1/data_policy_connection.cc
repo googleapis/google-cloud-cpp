@@ -17,12 +17,12 @@
 // source: google/cloud/bigquery/datapolicies/v1/datapolicy.proto
 
 #include "google/cloud/bigquery/datapolicies/v1/data_policy_connection.h"
+#include "google/cloud/background_threads.h"
 #include "google/cloud/bigquery/datapolicies/v1/data_policy_options.h"
 #include "google/cloud/bigquery/datapolicies/v1/internal/data_policy_connection_impl.h"
 #include "google/cloud/bigquery/datapolicies/v1/internal/data_policy_option_defaults.h"
 #include "google/cloud/bigquery/datapolicies/v1/internal/data_policy_stub_factory.h"
 #include "google/cloud/bigquery/datapolicies/v1/internal/data_policy_tracing_connection.h"
-#include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
@@ -56,7 +56,8 @@ DataPolicyServiceConnection::RenameDataPolicy(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status DataPolicyServiceConnection::DeleteDataPolicy(
+Status
+DataPolicyServiceConnection::DeleteDataPolicy(
     google::cloud::bigquery::datapolicies::v1::DeleteDataPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -67,20 +68,20 @@ DataPolicyServiceConnection::GetDataPolicy(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::bigquery::datapolicies::v1::DataPolicy>
-DataPolicyServiceConnection::ListDataPolicies(
-    google::cloud::bigquery::datapolicies::v1::
-        ListDataPoliciesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::bigquery::datapolicies::v1::DataPolicy> DataPolicyServiceConnection::ListDataPolicies(
+    google::cloud::bigquery::datapolicies::v1::ListDataPoliciesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::bigquery::datapolicies::v1::DataPolicy>>();
 }
 
-StatusOr<google::iam::v1::Policy> DataPolicyServiceConnection::GetIamPolicy(
+StatusOr<google::iam::v1::Policy>
+DataPolicyServiceConnection::GetIamPolicy(
     google::iam::v1::GetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::iam::v1::Policy> DataPolicyServiceConnection::SetIamPolicy(
+StatusOr<google::iam::v1::Policy>
+DataPolicyServiceConnection::SetIamPolicy(
     google::iam::v1::SetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -94,21 +95,17 @@ DataPolicyServiceConnection::TestIamPermissions(
 std::shared_ptr<DataPolicyServiceConnection> MakeDataPolicyServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 DataPolicyServicePolicyOptionList>(options,
-                                                                    __func__);
+      UnifiedCredentialsOptionList,
+      DataPolicyServicePolicyOptionList>(options, __func__);
   options = bigquery_datapolicies_v1_internal::DataPolicyServiceDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
-  auto stub =
-      bigquery_datapolicies_v1_internal::CreateDefaultDataPolicyServiceStub(
-          std::move(auth), options);
-  return bigquery_datapolicies_v1_internal::
-      MakeDataPolicyServiceTracingConnection(
-          std::make_shared<bigquery_datapolicies_v1_internal::
-                               DataPolicyServiceConnectionImpl>(
-              std::move(background), std::move(stub), std::move(options)));
+  auto stub = bigquery_datapolicies_v1_internal::CreateDefaultDataPolicyServiceStub(
+    std::move(auth), options);
+  return bigquery_datapolicies_v1_internal::MakeDataPolicyServiceTracingConnection(
+      std::make_shared<bigquery_datapolicies_v1_internal::DataPolicyServiceConnectionImpl>(
+      std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

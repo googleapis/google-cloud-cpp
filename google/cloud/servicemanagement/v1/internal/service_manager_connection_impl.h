@@ -19,16 +19,16 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SERVICEMANAGEMENT_V1_INTERNAL_SERVICE_MANAGER_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SERVICEMANAGEMENT_V1_INTERNAL_SERVICE_MANAGER_CONNECTION_IMPL_H
 
-#include "google/cloud/servicemanagement/v1/internal/service_manager_retry_traits.h"
-#include "google/cloud/servicemanagement/v1/internal/service_manager_stub.h"
-#include "google/cloud/servicemanagement/v1/service_manager_connection.h"
-#include "google/cloud/servicemanagement/v1/service_manager_connection_idempotency_policy.h"
-#include "google/cloud/servicemanagement/v1/service_manager_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
+#include "google/cloud/servicemanagement/v1/internal/service_manager_retry_traits.h"
+#include "google/cloud/servicemanagement/v1/internal/service_manager_stub.h"
+#include "google/cloud/servicemanagement/v1/service_manager_connection.h"
+#include "google/cloud/servicemanagement/v1/service_manager_connection_idempotency_policy.h"
+#include "google/cloud/servicemanagement/v1/service_manager_options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
@@ -46,121 +46,102 @@ class ServiceManagerConnectionImpl
   ~ServiceManagerConnectionImpl() override = default;
 
   ServiceManagerConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<servicemanagement_v1_internal::ServiceManagerStub> stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<servicemanagement_v1_internal::ServiceManagerStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
-  StreamRange<google::api::servicemanagement::v1::ManagedService> ListServices(
-      google::api::servicemanagement::v1::ListServicesRequest request) override;
+  StreamRange<google::api::servicemanagement::v1::ManagedService>
+  ListServices(google::api::servicemanagement::v1::ListServicesRequest request) override;
 
-  StatusOr<google::api::servicemanagement::v1::ManagedService> GetService(
-      google::api::servicemanagement::v1::GetServiceRequest const& request)
-      override;
-
-  future<StatusOr<google::api::servicemanagement::v1::ManagedService>>
-  CreateService(google::api::servicemanagement::v1::CreateServiceRequest const&
-                    request) override;
-
-  StatusOr<google::longrunning::Operation> CreateService(
-      NoAwaitTag,
-      google::api::servicemanagement::v1::CreateServiceRequest const& request)
-      override;
+  StatusOr<google::api::servicemanagement::v1::ManagedService>
+  GetService(google::api::servicemanagement::v1::GetServiceRequest const& request) override;
 
   future<StatusOr<google::api::servicemanagement::v1::ManagedService>>
-  CreateService(google::longrunning::Operation const& operation) override;
+  CreateService(google::api::servicemanagement::v1::CreateServiceRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  CreateService(NoAwaitTag,
+      google::api::servicemanagement::v1::CreateServiceRequest const& request) override;
+
+  future<StatusOr<google::api::servicemanagement::v1::ManagedService>>
+  CreateService(
+      google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::api::servicemanagement::v1::OperationMetadata>>
-  DeleteService(google::api::servicemanagement::v1::DeleteServiceRequest const&
-                    request) override;
+  DeleteService(google::api::servicemanagement::v1::DeleteServiceRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> DeleteService(
-      NoAwaitTag,
-      google::api::servicemanagement::v1::DeleteServiceRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  DeleteService(NoAwaitTag,
+      google::api::servicemanagement::v1::DeleteServiceRequest const& request) override;
 
   future<StatusOr<google::api::servicemanagement::v1::OperationMetadata>>
-  DeleteService(google::longrunning::Operation const& operation) override;
+  DeleteService(
+      google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::api::servicemanagement::v1::UndeleteServiceResponse>>
+  UndeleteService(google::api::servicemanagement::v1::UndeleteServiceRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  UndeleteService(NoAwaitTag,
+      google::api::servicemanagement::v1::UndeleteServiceRequest const& request) override;
 
   future<StatusOr<google::api::servicemanagement::v1::UndeleteServiceResponse>>
   UndeleteService(
-      google::api::servicemanagement::v1::UndeleteServiceRequest const& request)
-      override;
+      google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::longrunning::Operation> UndeleteService(
-      NoAwaitTag,
-      google::api::servicemanagement::v1::UndeleteServiceRequest const& request)
-      override;
+  StreamRange<google::api::Service>
+  ListServiceConfigs(google::api::servicemanagement::v1::ListServiceConfigsRequest request) override;
 
-  future<StatusOr<google::api::servicemanagement::v1::UndeleteServiceResponse>>
-  UndeleteService(google::longrunning::Operation const& operation) override;
+  StatusOr<google::api::Service>
+  GetServiceConfig(google::api::servicemanagement::v1::GetServiceConfigRequest const& request) override;
 
-  StreamRange<google::api::Service> ListServiceConfigs(
-      google::api::servicemanagement::v1::ListServiceConfigsRequest request)
-      override;
+  StatusOr<google::api::Service>
+  CreateServiceConfig(google::api::servicemanagement::v1::CreateServiceConfigRequest const& request) override;
 
-  StatusOr<google::api::Service> GetServiceConfig(
-      google::api::servicemanagement::v1::GetServiceConfigRequest const&
-          request) override;
+  future<StatusOr<google::api::servicemanagement::v1::SubmitConfigSourceResponse>>
+  SubmitConfigSource(google::api::servicemanagement::v1::SubmitConfigSourceRequest const& request) override;
 
-  StatusOr<google::api::Service> CreateServiceConfig(
-      google::api::servicemanagement::v1::CreateServiceConfigRequest const&
-          request) override;
+  StatusOr<google::longrunning::Operation>
+  SubmitConfigSource(NoAwaitTag,
+      google::api::servicemanagement::v1::SubmitConfigSourceRequest const& request) override;
 
-  future<
-      StatusOr<google::api::servicemanagement::v1::SubmitConfigSourceResponse>>
+  future<StatusOr<google::api::servicemanagement::v1::SubmitConfigSourceResponse>>
   SubmitConfigSource(
-      google::api::servicemanagement::v1::SubmitConfigSourceRequest const&
-          request) override;
+      google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::longrunning::Operation> SubmitConfigSource(
-      NoAwaitTag,
-      google::api::servicemanagement::v1::SubmitConfigSourceRequest const&
-          request) override;
+  StreamRange<google::api::servicemanagement::v1::Rollout>
+  ListServiceRollouts(google::api::servicemanagement::v1::ListServiceRolloutsRequest request) override;
 
-  future<
-      StatusOr<google::api::servicemanagement::v1::SubmitConfigSourceResponse>>
-  SubmitConfigSource(google::longrunning::Operation const& operation) override;
-
-  StreamRange<google::api::servicemanagement::v1::Rollout> ListServiceRollouts(
-      google::api::servicemanagement::v1::ListServiceRolloutsRequest request)
-      override;
-
-  StatusOr<google::api::servicemanagement::v1::Rollout> GetServiceRollout(
-      google::api::servicemanagement::v1::GetServiceRolloutRequest const&
-          request) override;
+  StatusOr<google::api::servicemanagement::v1::Rollout>
+  GetServiceRollout(google::api::servicemanagement::v1::GetServiceRolloutRequest const& request) override;
 
   future<StatusOr<google::api::servicemanagement::v1::Rollout>>
-  CreateServiceRollout(
-      google::api::servicemanagement::v1::CreateServiceRolloutRequest const&
-          request) override;
+  CreateServiceRollout(google::api::servicemanagement::v1::CreateServiceRolloutRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> CreateServiceRollout(
-      NoAwaitTag,
-      google::api::servicemanagement::v1::CreateServiceRolloutRequest const&
-          request) override;
+  StatusOr<google::longrunning::Operation>
+  CreateServiceRollout(NoAwaitTag,
+      google::api::servicemanagement::v1::CreateServiceRolloutRequest const& request) override;
 
   future<StatusOr<google::api::servicemanagement::v1::Rollout>>
   CreateServiceRollout(
       google::longrunning::Operation const& operation) override;
 
   StatusOr<google::api::servicemanagement::v1::GenerateConfigReportResponse>
-  GenerateConfigReport(
-      google::api::servicemanagement::v1::GenerateConfigReportRequest const&
-          request) override;
+  GenerateConfigReport(google::api::servicemanagement::v1::GenerateConfigReportRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request) override;
+  StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

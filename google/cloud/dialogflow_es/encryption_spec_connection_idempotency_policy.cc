@@ -26,53 +26,43 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-EncryptionSpecServiceConnectionIdempotencyPolicy::
-    ~EncryptionSpecServiceConnectionIdempotencyPolicy() = default;
+EncryptionSpecServiceConnectionIdempotencyPolicy::~EncryptionSpecServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<EncryptionSpecServiceConnectionIdempotencyPolicy>
 EncryptionSpecServiceConnectionIdempotencyPolicy::clone() const {
-  return std::make_unique<EncryptionSpecServiceConnectionIdempotencyPolicy>(
-      *this);
+  return std::make_unique<EncryptionSpecServiceConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency EncryptionSpecServiceConnectionIdempotencyPolicy::GetEncryptionSpec(
-    google::cloud::dialogflow::v2::GetEncryptionSpecRequest const&) {
+Idempotency EncryptionSpecServiceConnectionIdempotencyPolicy::GetEncryptionSpec(google::cloud::dialogflow::v2::GetEncryptionSpecRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency
-EncryptionSpecServiceConnectionIdempotencyPolicy::InitializeEncryptionSpec(
-    google::cloud::dialogflow::v2::InitializeEncryptionSpecRequest const&) {
+Idempotency EncryptionSpecServiceConnectionIdempotencyPolicy::InitializeEncryptionSpec(google::cloud::dialogflow::v2::InitializeEncryptionSpecRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency EncryptionSpecServiceConnectionIdempotencyPolicy::ListLocations(
-    google::cloud::location::ListLocationsRequest) {  // NOLINT
+Idempotency EncryptionSpecServiceConnectionIdempotencyPolicy::ListLocations(google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency EncryptionSpecServiceConnectionIdempotencyPolicy::GetLocation(
-    google::cloud::location::GetLocationRequest const&) {
+Idempotency EncryptionSpecServiceConnectionIdempotencyPolicy::GetLocation(google::cloud::location::GetLocationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency EncryptionSpecServiceConnectionIdempotencyPolicy::ListOperations(
-    google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency EncryptionSpecServiceConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency EncryptionSpecServiceConnectionIdempotencyPolicy::GetOperation(
-    google::longrunning::GetOperationRequest const&) {
+Idempotency EncryptionSpecServiceConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency EncryptionSpecServiceConnectionIdempotencyPolicy::CancelOperation(
-    google::longrunning::CancelOperationRequest const&) {
+Idempotency EncryptionSpecServiceConnectionIdempotencyPolicy::CancelOperation(google::longrunning::CancelOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<EncryptionSpecServiceConnectionIdempotencyPolicy>
-MakeDefaultEncryptionSpecServiceConnectionIdempotencyPolicy() {
+    MakeDefaultEncryptionSpecServiceConnectionIdempotencyPolicy() {
   return std::make_unique<EncryptionSpecServiceConnectionIdempotencyPolicy>();
 }
 

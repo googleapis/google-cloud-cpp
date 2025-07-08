@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BILLING_V1_CLOUD_CATALOG_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BILLING_V1_CLOUD_CATALOG_OPTIONS_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/billing/v1/cloud_catalog_connection.h"
 #include "google/cloud/billing/v1/cloud_catalog_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -64,7 +64,8 @@ struct CloudCatalogConnectionIdempotencyPolicyOption {
  * @ingroup google-cloud-billing-options
  */
 using CloudCatalogPolicyOptionList =
-    OptionList<CloudCatalogRetryPolicyOption, CloudCatalogBackoffPolicyOption,
+    OptionList<CloudCatalogRetryPolicyOption,
+               CloudCatalogBackoffPolicyOption,
                CloudCatalogConnectionIdempotencyPolicyOption>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MANAGEDKAFKA_V1_MANAGED_KAFKA_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MANAGEDKAFKA_V1_MANAGED_KAFKA_OPTIONS_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/managedkafka/v1/managed_kafka_connection.h"
 #include "google/cloud/managedkafka/v1/managed_kafka_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -74,7 +74,8 @@ struct ManagedKafkaPollingPolicyOption {
  * @ingroup google-cloud-managedkafka-options
  */
 using ManagedKafkaPolicyOptionList =
-    OptionList<ManagedKafkaRetryPolicyOption, ManagedKafkaBackoffPolicyOption,
+    OptionList<ManagedKafkaRetryPolicyOption,
+               ManagedKafkaBackoffPolicyOption,
                ManagedKafkaPollingPolicyOption,
                ManagedKafkaConnectionIdempotencyPolicyOption>;
 

@@ -36,300 +36,235 @@ class CertificateAuthorityServiceTracingConnection
   ~CertificateAuthorityServiceTracingConnection() override = default;
 
   explicit CertificateAuthorityServiceTracingConnection(
-      std::shared_ptr<privateca_v1::CertificateAuthorityServiceConnection>
-          child);
+    std::shared_ptr<privateca_v1::CertificateAuthorityServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
   StatusOr<google::cloud::security::privateca::v1::Certificate>
-  CreateCertificate(
-      google::cloud::security::privateca::v1::CreateCertificateRequest const&
-          request) override;
+  CreateCertificate(google::cloud::security::privateca::v1::CreateCertificateRequest const& request) override;
 
-  StatusOr<google::cloud::security::privateca::v1::Certificate> GetCertificate(
-      google::cloud::security::privateca::v1::GetCertificateRequest const&
-          request) override;
+  StatusOr<google::cloud::security::privateca::v1::Certificate>
+  GetCertificate(google::cloud::security::privateca::v1::GetCertificateRequest const& request) override;
 
   StreamRange<google::cloud::security::privateca::v1::Certificate>
-  ListCertificates(
-      google::cloud::security::privateca::v1::ListCertificatesRequest request)
-      override;
+  ListCertificates(google::cloud::security::privateca::v1::ListCertificatesRequest request) override;
 
   StatusOr<google::cloud::security::privateca::v1::Certificate>
-  RevokeCertificate(
-      google::cloud::security::privateca::v1::RevokeCertificateRequest const&
-          request) override;
+  RevokeCertificate(google::cloud::security::privateca::v1::RevokeCertificateRequest const& request) override;
 
   StatusOr<google::cloud::security::privateca::v1::Certificate>
-  UpdateCertificate(
-      google::cloud::security::privateca::v1::UpdateCertificateRequest const&
-          request) override;
+  UpdateCertificate(google::cloud::security::privateca::v1::UpdateCertificateRequest const& request) override;
 
   future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
-  ActivateCertificateAuthority(
-      google::cloud::security::privateca::v1::
-          ActivateCertificateAuthorityRequest const& request) override;
+  ActivateCertificateAuthority(google::cloud::security::privateca::v1::ActivateCertificateAuthorityRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> ActivateCertificateAuthority(
-      NoAwaitTag,
-      google::cloud::security::privateca::v1::
-          ActivateCertificateAuthorityRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  ActivateCertificateAuthority(NoAwaitTag,
+      google::cloud::security::privateca::v1::ActivateCertificateAuthorityRequest const& request) override;
 
   future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
   ActivateCertificateAuthority(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
-  CreateCertificateAuthority(
-      google::cloud::security::privateca::v1::
-          CreateCertificateAuthorityRequest const& request) override;
+  CreateCertificateAuthority(google::cloud::security::privateca::v1::CreateCertificateAuthorityRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> CreateCertificateAuthority(
-      NoAwaitTag,
-      google::cloud::security::privateca::v1::
-          CreateCertificateAuthorityRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  CreateCertificateAuthority(NoAwaitTag,
+      google::cloud::security::privateca::v1::CreateCertificateAuthorityRequest const& request) override;
 
   future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
   CreateCertificateAuthority(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
-  DisableCertificateAuthority(
-      google::cloud::security::privateca::v1::
-          DisableCertificateAuthorityRequest const& request) override;
+  DisableCertificateAuthority(google::cloud::security::privateca::v1::DisableCertificateAuthorityRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> DisableCertificateAuthority(
-      NoAwaitTag,
-      google::cloud::security::privateca::v1::
-          DisableCertificateAuthorityRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  DisableCertificateAuthority(NoAwaitTag,
+      google::cloud::security::privateca::v1::DisableCertificateAuthorityRequest const& request) override;
 
   future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
   DisableCertificateAuthority(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
-  EnableCertificateAuthority(
-      google::cloud::security::privateca::v1::
-          EnableCertificateAuthorityRequest const& request) override;
+  EnableCertificateAuthority(google::cloud::security::privateca::v1::EnableCertificateAuthorityRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> EnableCertificateAuthority(
-      NoAwaitTag,
-      google::cloud::security::privateca::v1::
-          EnableCertificateAuthorityRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  EnableCertificateAuthority(NoAwaitTag,
+      google::cloud::security::privateca::v1::EnableCertificateAuthorityRequest const& request) override;
 
   future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
   EnableCertificateAuthority(
       google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::cloud::security::privateca::v1::
-               FetchCertificateAuthorityCsrResponse>
-  FetchCertificateAuthorityCsr(
-      google::cloud::security::privateca::v1::
-          FetchCertificateAuthorityCsrRequest const& request) override;
+  StatusOr<google::cloud::security::privateca::v1::FetchCertificateAuthorityCsrResponse>
+  FetchCertificateAuthorityCsr(google::cloud::security::privateca::v1::FetchCertificateAuthorityCsrRequest const& request) override;
 
   StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>
-  GetCertificateAuthority(
-      google::cloud::security::privateca::v1::
-          GetCertificateAuthorityRequest const& request) override;
+  GetCertificateAuthority(google::cloud::security::privateca::v1::GetCertificateAuthorityRequest const& request) override;
 
   StreamRange<google::cloud::security::privateca::v1::CertificateAuthority>
-  ListCertificateAuthorities(
-      google::cloud::security::privateca::v1::ListCertificateAuthoritiesRequest
-          request) override;
+  ListCertificateAuthorities(google::cloud::security::privateca::v1::ListCertificateAuthoritiesRequest request) override;
 
   future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
-  UndeleteCertificateAuthority(
-      google::cloud::security::privateca::v1::
-          UndeleteCertificateAuthorityRequest const& request) override;
+  UndeleteCertificateAuthority(google::cloud::security::privateca::v1::UndeleteCertificateAuthorityRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> UndeleteCertificateAuthority(
-      NoAwaitTag,
-      google::cloud::security::privateca::v1::
-          UndeleteCertificateAuthorityRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  UndeleteCertificateAuthority(NoAwaitTag,
+      google::cloud::security::privateca::v1::UndeleteCertificateAuthorityRequest const& request) override;
 
   future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
   UndeleteCertificateAuthority(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
-  DeleteCertificateAuthority(
-      google::cloud::security::privateca::v1::
-          DeleteCertificateAuthorityRequest const& request) override;
+  DeleteCertificateAuthority(google::cloud::security::privateca::v1::DeleteCertificateAuthorityRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> DeleteCertificateAuthority(
-      NoAwaitTag,
-      google::cloud::security::privateca::v1::
-          DeleteCertificateAuthorityRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  DeleteCertificateAuthority(NoAwaitTag,
+      google::cloud::security::privateca::v1::DeleteCertificateAuthorityRequest const& request) override;
 
   future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
   DeleteCertificateAuthority(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
-  UpdateCertificateAuthority(
-      google::cloud::security::privateca::v1::
-          UpdateCertificateAuthorityRequest const& request) override;
+  UpdateCertificateAuthority(google::cloud::security::privateca::v1::UpdateCertificateAuthorityRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> UpdateCertificateAuthority(
-      NoAwaitTag,
-      google::cloud::security::privateca::v1::
-          UpdateCertificateAuthorityRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  UpdateCertificateAuthority(NoAwaitTag,
+      google::cloud::security::privateca::v1::UpdateCertificateAuthorityRequest const& request) override;
 
   future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
   UpdateCertificateAuthority(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::security::privateca::v1::CaPool>> CreateCaPool(
-      google::cloud::security::privateca::v1::CreateCaPoolRequest const&
-          request) override;
+  future<StatusOr<google::cloud::security::privateca::v1::CaPool>>
+  CreateCaPool(google::cloud::security::privateca::v1::CreateCaPoolRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> CreateCaPool(
-      NoAwaitTag,
-      google::cloud::security::privateca::v1::CreateCaPoolRequest const&
-          request) override;
+  StatusOr<google::longrunning::Operation>
+  CreateCaPool(NoAwaitTag,
+      google::cloud::security::privateca::v1::CreateCaPoolRequest const& request) override;
 
-  future<StatusOr<google::cloud::security::privateca::v1::CaPool>> CreateCaPool(
+  future<StatusOr<google::cloud::security::privateca::v1::CaPool>>
+  CreateCaPool(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::security::privateca::v1::CaPool>> UpdateCaPool(
-      google::cloud::security::privateca::v1::UpdateCaPoolRequest const&
-          request) override;
+  future<StatusOr<google::cloud::security::privateca::v1::CaPool>>
+  UpdateCaPool(google::cloud::security::privateca::v1::UpdateCaPoolRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> UpdateCaPool(
-      NoAwaitTag,
-      google::cloud::security::privateca::v1::UpdateCaPoolRequest const&
-          request) override;
+  StatusOr<google::longrunning::Operation>
+  UpdateCaPool(NoAwaitTag,
+      google::cloud::security::privateca::v1::UpdateCaPoolRequest const& request) override;
 
-  future<StatusOr<google::cloud::security::privateca::v1::CaPool>> UpdateCaPool(
+  future<StatusOr<google::cloud::security::privateca::v1::CaPool>>
+  UpdateCaPool(
       google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::cloud::security::privateca::v1::CaPool> GetCaPool(
-      google::cloud::security::privateca::v1::GetCaPoolRequest const& request)
-      override;
+  StatusOr<google::cloud::security::privateca::v1::CaPool>
+  GetCaPool(google::cloud::security::privateca::v1::GetCaPoolRequest const& request) override;
 
-  StreamRange<google::cloud::security::privateca::v1::CaPool> ListCaPools(
-      google::cloud::security::privateca::v1::ListCaPoolsRequest request)
-      override;
+  StreamRange<google::cloud::security::privateca::v1::CaPool>
+  ListCaPools(google::cloud::security::privateca::v1::ListCaPoolsRequest request) override;
+
+  future<StatusOr<google::cloud::security::privateca::v1::OperationMetadata>>
+  DeleteCaPool(google::cloud::security::privateca::v1::DeleteCaPoolRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  DeleteCaPool(NoAwaitTag,
+      google::cloud::security::privateca::v1::DeleteCaPoolRequest const& request) override;
 
   future<StatusOr<google::cloud::security::privateca::v1::OperationMetadata>>
   DeleteCaPool(
-      google::cloud::security::privateca::v1::DeleteCaPoolRequest const&
-          request) override;
-
-  StatusOr<google::longrunning::Operation> DeleteCaPool(
-      NoAwaitTag,
-      google::cloud::security::privateca::v1::DeleteCaPoolRequest const&
-          request) override;
-
-  future<StatusOr<google::cloud::security::privateca::v1::OperationMetadata>>
-  DeleteCaPool(google::longrunning::Operation const& operation) override;
+      google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::security::privateca::v1::FetchCaCertsResponse>
-  FetchCaCerts(
-      google::cloud::security::privateca::v1::FetchCaCertsRequest const&
-          request) override;
+  FetchCaCerts(google::cloud::security::privateca::v1::FetchCaCertsRequest const& request) override;
 
   StatusOr<google::cloud::security::privateca::v1::CertificateRevocationList>
-  GetCertificateRevocationList(
-      google::cloud::security::privateca::v1::
-          GetCertificateRevocationListRequest const& request) override;
+  GetCertificateRevocationList(google::cloud::security::privateca::v1::GetCertificateRevocationListRequest const& request) override;
 
   StreamRange<google::cloud::security::privateca::v1::CertificateRevocationList>
-  ListCertificateRevocationLists(
-      google::cloud::security::privateca::v1::
-          ListCertificateRevocationListsRequest request) override;
+  ListCertificateRevocationLists(google::cloud::security::privateca::v1::ListCertificateRevocationListsRequest request) override;
 
-  future<StatusOr<
-      google::cloud::security::privateca::v1::CertificateRevocationList>>
-  UpdateCertificateRevocationList(
-      google::cloud::security::privateca::v1::
-          UpdateCertificateRevocationListRequest const& request) override;
+  future<StatusOr<google::cloud::security::privateca::v1::CertificateRevocationList>>
+  UpdateCertificateRevocationList(google::cloud::security::privateca::v1::UpdateCertificateRevocationListRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> UpdateCertificateRevocationList(
-      NoAwaitTag,
-      google::cloud::security::privateca::v1::
-          UpdateCertificateRevocationListRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  UpdateCertificateRevocationList(NoAwaitTag,
+      google::cloud::security::privateca::v1::UpdateCertificateRevocationListRequest const& request) override;
 
-  future<StatusOr<
-      google::cloud::security::privateca::v1::CertificateRevocationList>>
+  future<StatusOr<google::cloud::security::privateca::v1::CertificateRevocationList>>
   UpdateCertificateRevocationList(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::security::privateca::v1::CertificateTemplate>>
-  CreateCertificateTemplate(
-      google::cloud::security::privateca::v1::
-          CreateCertificateTemplateRequest const& request) override;
+  CreateCertificateTemplate(google::cloud::security::privateca::v1::CreateCertificateTemplateRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> CreateCertificateTemplate(
-      NoAwaitTag, google::cloud::security::privateca::v1::
-                      CreateCertificateTemplateRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  CreateCertificateTemplate(NoAwaitTag,
+      google::cloud::security::privateca::v1::CreateCertificateTemplateRequest const& request) override;
 
   future<StatusOr<google::cloud::security::privateca::v1::CertificateTemplate>>
   CreateCertificateTemplate(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::security::privateca::v1::OperationMetadata>>
-  DeleteCertificateTemplate(
-      google::cloud::security::privateca::v1::
-          DeleteCertificateTemplateRequest const& request) override;
+  DeleteCertificateTemplate(google::cloud::security::privateca::v1::DeleteCertificateTemplateRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> DeleteCertificateTemplate(
-      NoAwaitTag, google::cloud::security::privateca::v1::
-                      DeleteCertificateTemplateRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  DeleteCertificateTemplate(NoAwaitTag,
+      google::cloud::security::privateca::v1::DeleteCertificateTemplateRequest const& request) override;
 
   future<StatusOr<google::cloud::security::privateca::v1::OperationMetadata>>
   DeleteCertificateTemplate(
       google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::security::privateca::v1::CertificateTemplate>
-  GetCertificateTemplate(
-      google::cloud::security::privateca::v1::
-          GetCertificateTemplateRequest const& request) override;
+  GetCertificateTemplate(google::cloud::security::privateca::v1::GetCertificateTemplateRequest const& request) override;
 
   StreamRange<google::cloud::security::privateca::v1::CertificateTemplate>
-  ListCertificateTemplates(
-      google::cloud::security::privateca::v1::ListCertificateTemplatesRequest
-          request) override;
+  ListCertificateTemplates(google::cloud::security::privateca::v1::ListCertificateTemplatesRequest request) override;
 
   future<StatusOr<google::cloud::security::privateca::v1::CertificateTemplate>>
-  UpdateCertificateTemplate(
-      google::cloud::security::privateca::v1::
-          UpdateCertificateTemplateRequest const& request) override;
+  UpdateCertificateTemplate(google::cloud::security::privateca::v1::UpdateCertificateTemplateRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> UpdateCertificateTemplate(
-      NoAwaitTag, google::cloud::security::privateca::v1::
-                      UpdateCertificateTemplateRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  UpdateCertificateTemplate(NoAwaitTag,
+      google::cloud::security::privateca::v1::UpdateCertificateTemplateRequest const& request) override;
 
   future<StatusOr<google::cloud::security::privateca::v1::CertificateTemplate>>
   UpdateCertificateTemplate(
       google::longrunning::Operation const& operation) override;
 
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request) override;
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request) override;
 
-  StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request) override;
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request) override;
+  StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request) override;
 
-  Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request) override;
+  Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request) override;
 
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request) override;
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::shared_ptr<privateca_v1::CertificateAuthorityServiceConnection> child_;

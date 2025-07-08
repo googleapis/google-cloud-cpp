@@ -28,8 +28,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 SqlIamPoliciesServiceClient::SqlIamPoliciesServiceClient(
     std::shared_ptr<SqlIamPoliciesServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 SqlIamPoliciesServiceClient::~SqlIamPoliciesServiceClient() = default;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

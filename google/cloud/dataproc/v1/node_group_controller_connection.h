@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAPROC_V1_NODE_GROUP_CONTROLLER_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAPROC_V1_NODE_GROUP_CONTROLLER_CONNECTION_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/dataproc/v1/internal/node_group_controller_retry_traits.h"
 #include "google/cloud/dataproc/v1/node_group_controller_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -30,8 +30,8 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/cloud/dataproc/v1/node_groups.pb.h>
 #include <google/cloud/dataproc/v1/operations.pb.h>
+#include <google/cloud/dataproc/v1/node_groups.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 #include <string>
@@ -58,8 +58,7 @@ class NodeGroupControllerRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class NodeGroupControllerLimitedErrorCountRetryPolicy
-    : public NodeGroupControllerRetryPolicy {
+class NodeGroupControllerLimitedErrorCountRetryPolicy : public NodeGroupControllerRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -69,16 +68,14 @@ class NodeGroupControllerLimitedErrorCountRetryPolicy
    *     @p maximum_failures == 0.
    */
   explicit NodeGroupControllerLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   NodeGroupControllerLimitedErrorCountRetryPolicy(
       NodeGroupControllerLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : NodeGroupControllerLimitedErrorCountRetryPolicy(
-            rhs.maximum_failures()) {}
+    : NodeGroupControllerLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   NodeGroupControllerLimitedErrorCountRetryPolicy(
       NodeGroupControllerLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : NodeGroupControllerLimitedErrorCountRetryPolicy(
-            rhs.maximum_failures()) {}
+    : NodeGroupControllerLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -98,9 +95,7 @@ class NodeGroupControllerLimitedErrorCountRetryPolicy
   using BaseType = NodeGroupControllerRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      dataproc_v1_internal::NodeGroupControllerRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<dataproc_v1_internal::NodeGroupControllerRetryTraits> impl_;
 };
 
 /**
@@ -113,8 +108,7 @@ class NodeGroupControllerLimitedErrorCountRetryPolicy
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class NodeGroupControllerLimitedTimeRetryPolicy
-    : public NodeGroupControllerRetryPolicy {
+class NodeGroupControllerLimitedTimeRetryPolicy : public NodeGroupControllerRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -139,14 +133,12 @@ class NodeGroupControllerLimitedTimeRetryPolicy
   template <typename DurationRep, typename DurationPeriod>
   explicit NodeGroupControllerLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  NodeGroupControllerLimitedTimeRetryPolicy(
-      NodeGroupControllerLimitedTimeRetryPolicy&& rhs) noexcept
-      : NodeGroupControllerLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  NodeGroupControllerLimitedTimeRetryPolicy(
-      NodeGroupControllerLimitedTimeRetryPolicy const& rhs) noexcept
-      : NodeGroupControllerLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  NodeGroupControllerLimitedTimeRetryPolicy(NodeGroupControllerLimitedTimeRetryPolicy&& rhs) noexcept
+    : NodeGroupControllerLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  NodeGroupControllerLimitedTimeRetryPolicy(NodeGroupControllerLimitedTimeRetryPolicy const& rhs) noexcept
+    : NodeGroupControllerLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -168,18 +160,16 @@ class NodeGroupControllerLimitedTimeRetryPolicy
   using BaseType = NodeGroupControllerRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      dataproc_v1_internal::NodeGroupControllerRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<dataproc_v1_internal::NodeGroupControllerRetryTraits> impl_;
 };
 
 /**
  * The `NodeGroupControllerConnection` object for `NodeGroupControllerClient`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `NodeGroupControllerClient`. This allows users to inject custom
- * behavior (e.g., with a Google Mock object) when writing tests that use
- * objects of type `NodeGroupControllerClient`.
+ * sets in `NodeGroupControllerClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `NodeGroupControllerClient`.
  *
  * To create a concrete instance, see `MakeNodeGroupControllerConnection()`.
  *
@@ -192,63 +182,57 @@ class NodeGroupControllerConnection {
   virtual Options options() { return Options{}; }
 
   virtual future<StatusOr<google::cloud::dataproc::v1::NodeGroup>>
-  CreateNodeGroup(
-      google::cloud::dataproc::v1::CreateNodeGroupRequest const& request);
+  CreateNodeGroup(google::cloud::dataproc::v1::CreateNodeGroupRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> CreateNodeGroup(
-      NoAwaitTag,
-      google::cloud::dataproc::v1::CreateNodeGroupRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  CreateNodeGroup(NoAwaitTag, google::cloud::dataproc::v1::CreateNodeGroupRequest const& request);
 
   virtual future<StatusOr<google::cloud::dataproc::v1::NodeGroup>>
-  CreateNodeGroup(google::longrunning::Operation const& operation);
+  CreateNodeGroup( google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::dataproc::v1::NodeGroup>>
-  ResizeNodeGroup(
-      google::cloud::dataproc::v1::ResizeNodeGroupRequest const& request);
+  ResizeNodeGroup(google::cloud::dataproc::v1::ResizeNodeGroupRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> ResizeNodeGroup(
-      NoAwaitTag,
-      google::cloud::dataproc::v1::ResizeNodeGroupRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  ResizeNodeGroup(NoAwaitTag, google::cloud::dataproc::v1::ResizeNodeGroupRequest const& request);
 
   virtual future<StatusOr<google::cloud::dataproc::v1::NodeGroup>>
-  ResizeNodeGroup(google::longrunning::Operation const& operation);
+  ResizeNodeGroup( google::longrunning::Operation const& operation);
 
-  virtual StatusOr<google::cloud::dataproc::v1::NodeGroup> GetNodeGroup(
-      google::cloud::dataproc::v1::GetNodeGroupRequest const& request);
+  virtual StatusOr<google::cloud::dataproc::v1::NodeGroup>
+  GetNodeGroup(google::cloud::dataproc::v1::GetNodeGroupRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
 
   virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
   TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
 
-  virtual StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 
-  virtual Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request);
+  virtual Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
 
-  virtual Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request);
+  virtual Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request);
 };
 
 /**
- * A factory function to construct an object of type
- * `NodeGroupControllerConnection`.
+ * A factory function to construct an object of type `NodeGroupControllerConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of
- * NodeGroupControllerClient.
+ * should be passed as an argument to the constructor of NodeGroupControllerClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `NodeGroupControllerConnection`. Expected options are any of the
- * types in the following option lists:
+ * returned `NodeGroupControllerConnection`. Expected options are any of the types in
+ * the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
@@ -259,12 +243,11 @@ class NodeGroupControllerConnection {
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
  * @param location Sets the prefix for the default `EndpointOption` value.
- * @param options (optional) Configure the `NodeGroupControllerConnection`
- * created by this function.
+ * @param options (optional) Configure the `NodeGroupControllerConnection` created by
+ * this function.
  */
-std::shared_ptr<NodeGroupControllerConnection>
-MakeNodeGroupControllerConnection(std::string const& location,
-                                  Options options = {});
+std::shared_ptr<NodeGroupControllerConnection> MakeNodeGroupControllerConnection(
+    std::string const& location, Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataproc_v1

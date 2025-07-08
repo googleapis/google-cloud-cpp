@@ -30,71 +30,75 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-class ServicesTracingConnection : public run_v2::ServicesConnection {
+class ServicesTracingConnection
+    : public run_v2::ServicesConnection {
  public:
   ~ServicesTracingConnection() override = default;
 
   explicit ServicesTracingConnection(
-      std::shared_ptr<run_v2::ServicesConnection> child);
+    std::shared_ptr<run_v2::ServicesConnection> child);
 
   Options options() override { return child_->options(); }
 
-  future<StatusOr<google::cloud::run::v2::Service>> CreateService(
+  future<StatusOr<google::cloud::run::v2::Service>>
+  CreateService(google::cloud::run::v2::CreateServiceRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  CreateService(NoAwaitTag,
       google::cloud::run::v2::CreateServiceRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> CreateService(
-      NoAwaitTag,
-      google::cloud::run::v2::CreateServiceRequest const& request) override;
-
-  future<StatusOr<google::cloud::run::v2::Service>> CreateService(
+  future<StatusOr<google::cloud::run::v2::Service>>
+  CreateService(
       google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::cloud::run::v2::Service> GetService(
-      google::cloud::run::v2::GetServiceRequest const& request) override;
+  StatusOr<google::cloud::run::v2::Service>
+  GetService(google::cloud::run::v2::GetServiceRequest const& request) override;
 
-  StreamRange<google::cloud::run::v2::Service> ListServices(
-      google::cloud::run::v2::ListServicesRequest request) override;
+  StreamRange<google::cloud::run::v2::Service>
+  ListServices(google::cloud::run::v2::ListServicesRequest request) override;
 
-  future<StatusOr<google::cloud::run::v2::Service>> UpdateService(
+  future<StatusOr<google::cloud::run::v2::Service>>
+  UpdateService(google::cloud::run::v2::UpdateServiceRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  UpdateService(NoAwaitTag,
       google::cloud::run::v2::UpdateServiceRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> UpdateService(
-      NoAwaitTag,
-      google::cloud::run::v2::UpdateServiceRequest const& request) override;
-
-  future<StatusOr<google::cloud::run::v2::Service>> UpdateService(
+  future<StatusOr<google::cloud::run::v2::Service>>
+  UpdateService(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::run::v2::Service>> DeleteService(
+  future<StatusOr<google::cloud::run::v2::Service>>
+  DeleteService(google::cloud::run::v2::DeleteServiceRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  DeleteService(NoAwaitTag,
       google::cloud::run::v2::DeleteServiceRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> DeleteService(
-      NoAwaitTag,
-      google::cloud::run::v2::DeleteServiceRequest const& request) override;
-
-  future<StatusOr<google::cloud::run::v2::Service>> DeleteService(
+  future<StatusOr<google::cloud::run::v2::Service>>
+  DeleteService(
       google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request) override;
+  StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request) override;
 
-  Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request) override;
+  Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> WaitOperation(
-      google::longrunning::WaitOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  WaitOperation(google::longrunning::WaitOperationRequest const& request) override;
 
  private:
   std::shared_ptr<run_v2::ServicesConnection> child_;
@@ -108,7 +112,8 @@ class ServicesTracingConnection : public run_v2::ServicesConnection {
  * The connection is only decorated if tracing is enabled (as determined by the
  * connection's options).
  */
-std::shared_ptr<run_v2::ServicesConnection> MakeServicesTracingConnection(
+std::shared_ptr<run_v2::ServicesConnection>
+MakeServicesTracingConnection(
     std::shared_ptr<run_v2::ServicesConnection> conn);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -30,47 +30,45 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-class PagesTracingConnection : public dialogflow_cx::PagesConnection {
+class PagesTracingConnection
+    : public dialogflow_cx::PagesConnection {
  public:
   ~PagesTracingConnection() override = default;
 
   explicit PagesTracingConnection(
-      std::shared_ptr<dialogflow_cx::PagesConnection> child);
+    std::shared_ptr<dialogflow_cx::PagesConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StreamRange<google::cloud::dialogflow::cx::v3::Page> ListPages(
-      google::cloud::dialogflow::cx::v3::ListPagesRequest request) override;
+  StreamRange<google::cloud::dialogflow::cx::v3::Page>
+  ListPages(google::cloud::dialogflow::cx::v3::ListPagesRequest request) override;
 
-  StatusOr<google::cloud::dialogflow::cx::v3::Page> GetPage(
-      google::cloud::dialogflow::cx::v3::GetPageRequest const& request)
-      override;
+  StatusOr<google::cloud::dialogflow::cx::v3::Page>
+  GetPage(google::cloud::dialogflow::cx::v3::GetPageRequest const& request) override;
 
-  StatusOr<google::cloud::dialogflow::cx::v3::Page> CreatePage(
-      google::cloud::dialogflow::cx::v3::CreatePageRequest const& request)
-      override;
+  StatusOr<google::cloud::dialogflow::cx::v3::Page>
+  CreatePage(google::cloud::dialogflow::cx::v3::CreatePageRequest const& request) override;
 
-  StatusOr<google::cloud::dialogflow::cx::v3::Page> UpdatePage(
-      google::cloud::dialogflow::cx::v3::UpdatePageRequest const& request)
-      override;
+  StatusOr<google::cloud::dialogflow::cx::v3::Page>
+  UpdatePage(google::cloud::dialogflow::cx::v3::UpdatePageRequest const& request) override;
 
-  Status DeletePage(google::cloud::dialogflow::cx::v3::DeletePageRequest const&
-                        request) override;
+  Status
+  DeletePage(google::cloud::dialogflow::cx::v3::DeletePageRequest const& request) override;
 
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request) override;
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request) override;
 
-  StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request) override;
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request) override;
 
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request) override;
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::shared_ptr<dialogflow_cx::PagesConnection> child_;
@@ -84,7 +82,8 @@ class PagesTracingConnection : public dialogflow_cx::PagesConnection {
  * The connection is only decorated if tracing is enabled (as determined by the
  * connection's options).
  */
-std::shared_ptr<dialogflow_cx::PagesConnection> MakePagesTracingConnection(
+std::shared_ptr<dialogflow_cx::PagesConnection>
+MakePagesTracingConnection(
     std::shared_ptr<dialogflow_cx::PagesConnection> conn);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -26,16 +26,11 @@ namespace cloud {
 namespace video {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use
-/// video_stitcher_v1::MakeDefaultVideoStitcherServiceConnectionIdempotencyPolicy
-/// directly.
-using ::google::cloud::video_stitcher_v1::
-    MakeDefaultVideoStitcherServiceConnectionIdempotencyPolicy;
+/// @deprecated Use video_stitcher_v1::MakeDefaultVideoStitcherServiceConnectionIdempotencyPolicy directly.
+using ::google::cloud::video_stitcher_v1::MakeDefaultVideoStitcherServiceConnectionIdempotencyPolicy;
 
-/// @deprecated Use
-/// video_stitcher_v1::VideoStitcherServiceConnectionIdempotencyPolicy directly.
-using ::google::cloud::video_stitcher_v1::
-    VideoStitcherServiceConnectionIdempotencyPolicy;
+/// @deprecated Use video_stitcher_v1::VideoStitcherServiceConnectionIdempotencyPolicy directly.
+using ::google::cloud::video_stitcher_v1::VideoStitcherServiceConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace video

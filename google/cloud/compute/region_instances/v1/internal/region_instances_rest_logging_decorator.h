@@ -39,36 +39,30 @@ class RegionInstancesRestLogging : public RegionInstancesRestStub {
  public:
   ~RegionInstancesRestLogging() override = default;
   RegionInstancesRestLogging(std::shared_ptr<RegionInstancesRestStub> child,
-                             TracingOptions tracing_options,
-                             std::set<std::string> components);
+                       TracingOptions tracing_options,
+                       std::set<std::string> components);
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncBulkInsert(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::region_instances::v1::
-          BulkInsertRequest const& request) override;
+      google::cloud::cpp::compute::region_instances::v1::BulkInsertRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> BulkInsert(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::region_instances::v1::
-          BulkInsertRequest const& request) override;
+      Options const& options, google::cloud::cpp::compute::region_instances::v1::BulkInsertRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncGetOperation(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::region_operations::v1::
-          GetOperationRequest const& request) override;
+      google::cloud::cpp::compute::region_operations::v1::GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::region_operations::v1::
-          DeleteOperationRequest const& request) override;
+      google::cloud::cpp::compute::region_operations::v1::DeleteOperationRequest const& request) override;
 
  private:
   std::shared_ptr<RegionInstancesRestStub> child_;

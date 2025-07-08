@@ -61,9 +61,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class SynonymSetServiceClient {
  public:
-  explicit SynonymSetServiceClient(
-      std::shared_ptr<SynonymSetServiceConnection> connection,
-      Options opts = {});
+  explicit SynonymSetServiceClient(std::shared_ptr<SynonymSetServiceConnection> connection, Options opts = {});
   ~SynonymSetServiceClient();
 
   ///@{
@@ -76,12 +74,10 @@ class SynonymSetServiceClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(SynonymSetServiceClient const& a,
-                         SynonymSetServiceClient const& b) {
+  friend bool operator==(SynonymSetServiceClient const& a, SynonymSetServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(SynonymSetServiceClient const& a,
-                         SynonymSetServiceClient const& b) {
+  friend bool operator!=(SynonymSetServiceClient const& a, SynonymSetServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -112,10 +108,8 @@ class SynonymSetServiceClient {
   /// [google.cloud.contentwarehouse.v1.SynonymSet]: @googleapis_reference_link{google/cloud/contentwarehouse/v1/synonymset.proto#L35}
   ///
   // clang-format on
-  StatusOr<google::cloud::contentwarehouse::v1::SynonymSet> CreateSynonymSet(
-      std::string const& parent,
-      google::cloud::contentwarehouse::v1::SynonymSet const& synonym_set,
-      Options opts = {});
+  StatusOr<google::cloud::contentwarehouse::v1::SynonymSet>
+  CreateSynonymSet(std::string const& parent, google::cloud::contentwarehouse::v1::SynonymSet const& synonym_set, Options opts = {});
 
   // clang-format off
   ///
@@ -146,10 +140,8 @@ class SynonymSetServiceClient {
   /// [google.cloud.contentwarehouse.v1.SynonymSet]: @googleapis_reference_link{google/cloud/contentwarehouse/v1/synonymset.proto#L35}
   ///
   // clang-format on
-  StatusOr<google::cloud::contentwarehouse::v1::SynonymSet> CreateSynonymSet(
-      google::cloud::contentwarehouse::v1::CreateSynonymSetRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::cloud::contentwarehouse::v1::SynonymSet>
+  CreateSynonymSet(google::cloud::contentwarehouse::v1::CreateSynonymSetRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -177,8 +169,8 @@ class SynonymSetServiceClient {
   /// [google.cloud.contentwarehouse.v1.SynonymSet]: @googleapis_reference_link{google/cloud/contentwarehouse/v1/synonymset.proto#L35}
   ///
   // clang-format on
-  StatusOr<google::cloud::contentwarehouse::v1::SynonymSet> GetSynonymSet(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::contentwarehouse::v1::SynonymSet>
+  GetSynonymSet(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -209,9 +201,8 @@ class SynonymSetServiceClient {
   /// [google.cloud.contentwarehouse.v1.SynonymSet]: @googleapis_reference_link{google/cloud/contentwarehouse/v1/synonymset.proto#L35}
   ///
   // clang-format on
-  StatusOr<google::cloud::contentwarehouse::v1::SynonymSet> GetSynonymSet(
-      google::cloud::contentwarehouse::v1::GetSynonymSetRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::contentwarehouse::v1::SynonymSet>
+  GetSynonymSet(google::cloud::contentwarehouse::v1::GetSynonymSetRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -240,10 +231,8 @@ class SynonymSetServiceClient {
   /// [google.cloud.contentwarehouse.v1.UpdateSynonymSetRequest]: @googleapis_reference_link{google/cloud/contentwarehouse/v1/synonymset_service_request.proto#L99}
   ///
   // clang-format on
-  StatusOr<google::cloud::contentwarehouse::v1::SynonymSet> UpdateSynonymSet(
-      std::string const& name,
-      google::cloud::contentwarehouse::v1::SynonymSet const& synonym_set,
-      Options opts = {});
+  StatusOr<google::cloud::contentwarehouse::v1::SynonymSet>
+  UpdateSynonymSet(std::string const& name, google::cloud::contentwarehouse::v1::SynonymSet const& synonym_set, Options opts = {});
 
   // clang-format off
   ///
@@ -274,10 +263,8 @@ class SynonymSetServiceClient {
   /// [google.cloud.contentwarehouse.v1.UpdateSynonymSetRequest]: @googleapis_reference_link{google/cloud/contentwarehouse/v1/synonymset_service_request.proto#L99}
   ///
   // clang-format on
-  StatusOr<google::cloud::contentwarehouse::v1::SynonymSet> UpdateSynonymSet(
-      google::cloud::contentwarehouse::v1::UpdateSynonymSetRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::cloud::contentwarehouse::v1::SynonymSet>
+  UpdateSynonymSet(google::cloud::contentwarehouse::v1::UpdateSynonymSetRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -301,7 +288,8 @@ class SynonymSetServiceClient {
   /// [google.cloud.contentwarehouse.v1.DeleteSynonymSetRequest]: @googleapis_reference_link{google/cloud/contentwarehouse/v1/synonymset_service_request.proto#L115}
   ///
   // clang-format on
-  Status DeleteSynonymSet(std::string const& name, Options opts = {});
+  Status
+  DeleteSynonymSet(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -328,10 +316,8 @@ class SynonymSetServiceClient {
   /// [google.cloud.contentwarehouse.v1.DeleteSynonymSetRequest]: @googleapis_reference_link{google/cloud/contentwarehouse/v1/synonymset_service_request.proto#L115}
   ///
   // clang-format on
-  Status DeleteSynonymSet(
-      google::cloud::contentwarehouse::v1::DeleteSynonymSetRequest const&
-          request,
-      Options opts = {});
+  Status
+  DeleteSynonymSet(google::cloud::contentwarehouse::v1::DeleteSynonymSetRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -365,8 +351,8 @@ class SynonymSetServiceClient {
   /// [google.cloud.contentwarehouse.v1.SynonymSet]: @googleapis_reference_link{google/cloud/contentwarehouse/v1/synonymset.proto#L35}
   ///
   // clang-format on
-  StreamRange<google::cloud::contentwarehouse::v1::SynonymSet> ListSynonymSets(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::contentwarehouse::v1::SynonymSet>
+  ListSynonymSets(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -404,9 +390,8 @@ class SynonymSetServiceClient {
   /// [google.cloud.contentwarehouse.v1.SynonymSet]: @googleapis_reference_link{google/cloud/contentwarehouse/v1/synonymset.proto#L35}
   ///
   // clang-format on
-  StreamRange<google::cloud::contentwarehouse::v1::SynonymSet> ListSynonymSets(
-      google::cloud::contentwarehouse::v1::ListSynonymSetsRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::contentwarehouse::v1::SynonymSet>
+  ListSynonymSets(google::cloud::contentwarehouse::v1::ListSynonymSetsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -432,8 +417,8 @@ class SynonymSetServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -464,9 +449,8 @@ class SynonymSetServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<SynonymSetServiceConnection> connection_;

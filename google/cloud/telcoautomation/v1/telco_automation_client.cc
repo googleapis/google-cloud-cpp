@@ -28,13 +28,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 TelcoAutomationClient::TelcoAutomationClient(
     std::shared_ptr<TelcoAutomationConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 TelcoAutomationClient::~TelcoAutomationClient() = default;
 
 StreamRange<google::cloud::telcoautomation::v1::OrchestrationCluster>
-TelcoAutomationClient::ListOrchestrationClusters(std::string const& parent,
-                                                 Options opts) {
+TelcoAutomationClient::ListOrchestrationClusters(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::telcoautomation::v1::ListOrchestrationClustersRequest request;
   request.set_parent(parent);
@@ -42,17 +41,13 @@ TelcoAutomationClient::ListOrchestrationClusters(std::string const& parent,
 }
 
 StreamRange<google::cloud::telcoautomation::v1::OrchestrationCluster>
-TelcoAutomationClient::ListOrchestrationClusters(
-    google::cloud::telcoautomation::v1::ListOrchestrationClustersRequest
-        request,
-    Options opts) {
+TelcoAutomationClient::ListOrchestrationClusters(google::cloud::telcoautomation::v1::ListOrchestrationClustersRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOrchestrationClusters(std::move(request));
 }
 
 StatusOr<google::cloud::telcoautomation::v1::OrchestrationCluster>
-TelcoAutomationClient::GetOrchestrationCluster(std::string const& name,
-                                               Options opts) {
+TelcoAutomationClient::GetOrchestrationCluster(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::telcoautomation::v1::GetOrchestrationClusterRequest request;
   request.set_name(name);
@@ -60,20 +55,13 @@ TelcoAutomationClient::GetOrchestrationCluster(std::string const& name,
 }
 
 StatusOr<google::cloud::telcoautomation::v1::OrchestrationCluster>
-TelcoAutomationClient::GetOrchestrationCluster(
-    google::cloud::telcoautomation::v1::GetOrchestrationClusterRequest const&
-        request,
-    Options opts) {
+TelcoAutomationClient::GetOrchestrationCluster(google::cloud::telcoautomation::v1::GetOrchestrationClusterRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOrchestrationCluster(request);
 }
 
 future<StatusOr<google::cloud::telcoautomation::v1::OrchestrationCluster>>
-TelcoAutomationClient::CreateOrchestrationCluster(
-    std::string const& parent,
-    google::cloud::telcoautomation::v1::OrchestrationCluster const&
-        orchestration_cluster,
-    std::string const& orchestration_cluster_id, Options opts) {
+TelcoAutomationClient::CreateOrchestrationCluster(std::string const& parent, google::cloud::telcoautomation::v1::OrchestrationCluster const& orchestration_cluster, std::string const& orchestration_cluster_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::telcoautomation::v1::CreateOrchestrationClusterRequest request;
   request.set_parent(parent);
@@ -83,11 +71,7 @@ TelcoAutomationClient::CreateOrchestrationCluster(
 }
 
 StatusOr<google::longrunning::Operation>
-TelcoAutomationClient::CreateOrchestrationCluster(
-    NoAwaitTag, std::string const& parent,
-    google::cloud::telcoautomation::v1::OrchestrationCluster const&
-        orchestration_cluster,
-    std::string const& orchestration_cluster_id, Options opts) {
+TelcoAutomationClient::CreateOrchestrationCluster(NoAwaitTag, std::string const& parent, google::cloud::telcoautomation::v1::OrchestrationCluster const& orchestration_cluster, std::string const& orchestration_cluster_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::telcoautomation::v1::CreateOrchestrationClusterRequest request;
   request.set_parent(parent);
@@ -97,34 +81,25 @@ TelcoAutomationClient::CreateOrchestrationCluster(
 }
 
 future<StatusOr<google::cloud::telcoautomation::v1::OrchestrationCluster>>
-TelcoAutomationClient::CreateOrchestrationCluster(
-    google::cloud::telcoautomation::v1::CreateOrchestrationClusterRequest const&
-        request,
-    Options opts) {
+TelcoAutomationClient::CreateOrchestrationCluster(google::cloud::telcoautomation::v1::CreateOrchestrationClusterRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateOrchestrationCluster(request);
 }
 
 StatusOr<google::longrunning::Operation>
-TelcoAutomationClient::CreateOrchestrationCluster(
-    NoAwaitTag,
-    google::cloud::telcoautomation::v1::CreateOrchestrationClusterRequest const&
-        request,
-    Options opts) {
+TelcoAutomationClient::CreateOrchestrationCluster(NoAwaitTag, google::cloud::telcoautomation::v1::CreateOrchestrationClusterRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateOrchestrationCluster(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::telcoautomation::v1::OrchestrationCluster>>
-TelcoAutomationClient::CreateOrchestrationCluster(
-    google::longrunning::Operation const& operation, Options opts) {
+TelcoAutomationClient::CreateOrchestrationCluster(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateOrchestrationCluster(operation);
 }
 
 future<StatusOr<google::cloud::telcoautomation::v1::OperationMetadata>>
-TelcoAutomationClient::DeleteOrchestrationCluster(std::string const& name,
-                                                  Options opts) {
+TelcoAutomationClient::DeleteOrchestrationCluster(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::telcoautomation::v1::DeleteOrchestrationClusterRequest request;
   request.set_name(name);
@@ -132,9 +107,7 @@ TelcoAutomationClient::DeleteOrchestrationCluster(std::string const& name,
 }
 
 StatusOr<google::longrunning::Operation>
-TelcoAutomationClient::DeleteOrchestrationCluster(NoAwaitTag,
-                                                  std::string const& name,
-                                                  Options opts) {
+TelcoAutomationClient::DeleteOrchestrationCluster(NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::telcoautomation::v1::DeleteOrchestrationClusterRequest request;
   request.set_name(name);
@@ -142,27 +115,19 @@ TelcoAutomationClient::DeleteOrchestrationCluster(NoAwaitTag,
 }
 
 future<StatusOr<google::cloud::telcoautomation::v1::OperationMetadata>>
-TelcoAutomationClient::DeleteOrchestrationCluster(
-    google::cloud::telcoautomation::v1::DeleteOrchestrationClusterRequest const&
-        request,
-    Options opts) {
+TelcoAutomationClient::DeleteOrchestrationCluster(google::cloud::telcoautomation::v1::DeleteOrchestrationClusterRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteOrchestrationCluster(request);
 }
 
 StatusOr<google::longrunning::Operation>
-TelcoAutomationClient::DeleteOrchestrationCluster(
-    NoAwaitTag,
-    google::cloud::telcoautomation::v1::DeleteOrchestrationClusterRequest const&
-        request,
-    Options opts) {
+TelcoAutomationClient::DeleteOrchestrationCluster(NoAwaitTag, google::cloud::telcoautomation::v1::DeleteOrchestrationClusterRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteOrchestrationCluster(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::telcoautomation::v1::OperationMetadata>>
-TelcoAutomationClient::DeleteOrchestrationCluster(
-    google::longrunning::Operation const& operation, Options opts) {
+TelcoAutomationClient::DeleteOrchestrationCluster(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteOrchestrationCluster(operation);
 }
@@ -176,9 +141,7 @@ TelcoAutomationClient::ListEdgeSlms(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::telcoautomation::v1::EdgeSlm>
-TelcoAutomationClient::ListEdgeSlms(
-    google::cloud::telcoautomation::v1::ListEdgeSlmsRequest request,
-    Options opts) {
+TelcoAutomationClient::ListEdgeSlms(google::cloud::telcoautomation::v1::ListEdgeSlmsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListEdgeSlms(std::move(request));
 }
@@ -192,18 +155,13 @@ TelcoAutomationClient::GetEdgeSlm(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::telcoautomation::v1::EdgeSlm>
-TelcoAutomationClient::GetEdgeSlm(
-    google::cloud::telcoautomation::v1::GetEdgeSlmRequest const& request,
-    Options opts) {
+TelcoAutomationClient::GetEdgeSlm(google::cloud::telcoautomation::v1::GetEdgeSlmRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetEdgeSlm(request);
 }
 
 future<StatusOr<google::cloud::telcoautomation::v1::EdgeSlm>>
-TelcoAutomationClient::CreateEdgeSlm(
-    std::string const& parent,
-    google::cloud::telcoautomation::v1::EdgeSlm const& edge_slm,
-    std::string const& edge_slm_id, Options opts) {
+TelcoAutomationClient::CreateEdgeSlm(std::string const& parent, google::cloud::telcoautomation::v1::EdgeSlm const& edge_slm, std::string const& edge_slm_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::telcoautomation::v1::CreateEdgeSlmRequest request;
   request.set_parent(parent);
@@ -212,10 +170,8 @@ TelcoAutomationClient::CreateEdgeSlm(
   return connection_->CreateEdgeSlm(request);
 }
 
-StatusOr<google::longrunning::Operation> TelcoAutomationClient::CreateEdgeSlm(
-    NoAwaitTag, std::string const& parent,
-    google::cloud::telcoautomation::v1::EdgeSlm const& edge_slm,
-    std::string const& edge_slm_id, Options opts) {
+StatusOr<google::longrunning::Operation>
+TelcoAutomationClient::CreateEdgeSlm(NoAwaitTag, std::string const& parent, google::cloud::telcoautomation::v1::EdgeSlm const& edge_slm, std::string const& edge_slm_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::telcoautomation::v1::CreateEdgeSlmRequest request;
   request.set_parent(parent);
@@ -225,24 +181,19 @@ StatusOr<google::longrunning::Operation> TelcoAutomationClient::CreateEdgeSlm(
 }
 
 future<StatusOr<google::cloud::telcoautomation::v1::EdgeSlm>>
-TelcoAutomationClient::CreateEdgeSlm(
-    google::cloud::telcoautomation::v1::CreateEdgeSlmRequest const& request,
-    Options opts) {
+TelcoAutomationClient::CreateEdgeSlm(google::cloud::telcoautomation::v1::CreateEdgeSlmRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateEdgeSlm(request);
 }
 
-StatusOr<google::longrunning::Operation> TelcoAutomationClient::CreateEdgeSlm(
-    NoAwaitTag,
-    google::cloud::telcoautomation::v1::CreateEdgeSlmRequest const& request,
-    Options opts) {
+StatusOr<google::longrunning::Operation>
+TelcoAutomationClient::CreateEdgeSlm(NoAwaitTag, google::cloud::telcoautomation::v1::CreateEdgeSlmRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateEdgeSlm(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::telcoautomation::v1::EdgeSlm>>
-TelcoAutomationClient::CreateEdgeSlm(
-    google::longrunning::Operation const& operation, Options opts) {
+TelcoAutomationClient::CreateEdgeSlm(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateEdgeSlm(operation);
 }
@@ -255,8 +206,8 @@ TelcoAutomationClient::DeleteEdgeSlm(std::string const& name, Options opts) {
   return connection_->DeleteEdgeSlm(request);
 }
 
-StatusOr<google::longrunning::Operation> TelcoAutomationClient::DeleteEdgeSlm(
-    NoAwaitTag, std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation>
+TelcoAutomationClient::DeleteEdgeSlm(NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::telcoautomation::v1::DeleteEdgeSlmRequest request;
   request.set_name(name);
@@ -264,33 +215,25 @@ StatusOr<google::longrunning::Operation> TelcoAutomationClient::DeleteEdgeSlm(
 }
 
 future<StatusOr<google::cloud::telcoautomation::v1::OperationMetadata>>
-TelcoAutomationClient::DeleteEdgeSlm(
-    google::cloud::telcoautomation::v1::DeleteEdgeSlmRequest const& request,
-    Options opts) {
+TelcoAutomationClient::DeleteEdgeSlm(google::cloud::telcoautomation::v1::DeleteEdgeSlmRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteEdgeSlm(request);
 }
 
-StatusOr<google::longrunning::Operation> TelcoAutomationClient::DeleteEdgeSlm(
-    NoAwaitTag,
-    google::cloud::telcoautomation::v1::DeleteEdgeSlmRequest const& request,
-    Options opts) {
+StatusOr<google::longrunning::Operation>
+TelcoAutomationClient::DeleteEdgeSlm(NoAwaitTag, google::cloud::telcoautomation::v1::DeleteEdgeSlmRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteEdgeSlm(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::telcoautomation::v1::OperationMetadata>>
-TelcoAutomationClient::DeleteEdgeSlm(
-    google::longrunning::Operation const& operation, Options opts) {
+TelcoAutomationClient::DeleteEdgeSlm(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteEdgeSlm(operation);
 }
 
 StatusOr<google::cloud::telcoautomation::v1::Blueprint>
-TelcoAutomationClient::CreateBlueprint(
-    std::string const& parent,
-    google::cloud::telcoautomation::v1::Blueprint const& blueprint,
-    std::string const& blueprint_id, Options opts) {
+TelcoAutomationClient::CreateBlueprint(std::string const& parent, google::cloud::telcoautomation::v1::Blueprint const& blueprint, std::string const& blueprint_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::telcoautomation::v1::CreateBlueprintRequest request;
   request.set_parent(parent);
@@ -300,17 +243,13 @@ TelcoAutomationClient::CreateBlueprint(
 }
 
 StatusOr<google::cloud::telcoautomation::v1::Blueprint>
-TelcoAutomationClient::CreateBlueprint(
-    google::cloud::telcoautomation::v1::CreateBlueprintRequest const& request,
-    Options opts) {
+TelcoAutomationClient::CreateBlueprint(google::cloud::telcoautomation::v1::CreateBlueprintRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateBlueprint(request);
 }
 
 StatusOr<google::cloud::telcoautomation::v1::Blueprint>
-TelcoAutomationClient::UpdateBlueprint(
-    google::cloud::telcoautomation::v1::Blueprint const& blueprint,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+TelcoAutomationClient::UpdateBlueprint(google::cloud::telcoautomation::v1::Blueprint const& blueprint, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::telcoautomation::v1::UpdateBlueprintRequest request;
   *request.mutable_blueprint() = blueprint;
@@ -319,9 +258,7 @@ TelcoAutomationClient::UpdateBlueprint(
 }
 
 StatusOr<google::cloud::telcoautomation::v1::Blueprint>
-TelcoAutomationClient::UpdateBlueprint(
-    google::cloud::telcoautomation::v1::UpdateBlueprintRequest const& request,
-    Options opts) {
+TelcoAutomationClient::UpdateBlueprint(google::cloud::telcoautomation::v1::UpdateBlueprintRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateBlueprint(request);
 }
@@ -335,24 +272,21 @@ TelcoAutomationClient::GetBlueprint(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::telcoautomation::v1::Blueprint>
-TelcoAutomationClient::GetBlueprint(
-    google::cloud::telcoautomation::v1::GetBlueprintRequest const& request,
-    Options opts) {
+TelcoAutomationClient::GetBlueprint(google::cloud::telcoautomation::v1::GetBlueprintRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetBlueprint(request);
 }
 
-Status TelcoAutomationClient::DeleteBlueprint(std::string const& name,
-                                              Options opts) {
+Status
+TelcoAutomationClient::DeleteBlueprint(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::telcoautomation::v1::DeleteBlueprintRequest request;
   request.set_name(name);
   return connection_->DeleteBlueprint(request);
 }
 
-Status TelcoAutomationClient::DeleteBlueprint(
-    google::cloud::telcoautomation::v1::DeleteBlueprintRequest const& request,
-    Options opts) {
+Status
+TelcoAutomationClient::DeleteBlueprint(google::cloud::telcoautomation::v1::DeleteBlueprintRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteBlueprint(request);
 }
@@ -366,9 +300,7 @@ TelcoAutomationClient::ListBlueprints(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::telcoautomation::v1::Blueprint>
-TelcoAutomationClient::ListBlueprints(
-    google::cloud::telcoautomation::v1::ListBlueprintsRequest request,
-    Options opts) {
+TelcoAutomationClient::ListBlueprints(google::cloud::telcoautomation::v1::ListBlueprintsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListBlueprints(std::move(request));
 }
@@ -382,9 +314,7 @@ TelcoAutomationClient::ApproveBlueprint(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::telcoautomation::v1::Blueprint>
-TelcoAutomationClient::ApproveBlueprint(
-    google::cloud::telcoautomation::v1::ApproveBlueprintRequest const& request,
-    Options opts) {
+TelcoAutomationClient::ApproveBlueprint(google::cloud::telcoautomation::v1::ApproveBlueprintRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ApproveBlueprint(request);
 }
@@ -398,9 +328,7 @@ TelcoAutomationClient::ProposeBlueprint(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::telcoautomation::v1::Blueprint>
-TelcoAutomationClient::ProposeBlueprint(
-    google::cloud::telcoautomation::v1::ProposeBlueprintRequest const& request,
-    Options opts) {
+TelcoAutomationClient::ProposeBlueprint(google::cloud::telcoautomation::v1::ProposeBlueprintRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ProposeBlueprint(request);
 }
@@ -414,16 +342,13 @@ TelcoAutomationClient::RejectBlueprint(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::telcoautomation::v1::Blueprint>
-TelcoAutomationClient::RejectBlueprint(
-    google::cloud::telcoautomation::v1::RejectBlueprintRequest const& request,
-    Options opts) {
+TelcoAutomationClient::RejectBlueprint(google::cloud::telcoautomation::v1::RejectBlueprintRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RejectBlueprint(request);
 }
 
 StreamRange<google::cloud::telcoautomation::v1::Blueprint>
-TelcoAutomationClient::ListBlueprintRevisions(std::string const& name,
-                                              Options opts) {
+TelcoAutomationClient::ListBlueprintRevisions(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::telcoautomation::v1::ListBlueprintRevisionsRequest request;
   request.set_name(name);
@@ -431,17 +356,13 @@ TelcoAutomationClient::ListBlueprintRevisions(std::string const& name,
 }
 
 StreamRange<google::cloud::telcoautomation::v1::Blueprint>
-TelcoAutomationClient::ListBlueprintRevisions(
-    google::cloud::telcoautomation::v1::ListBlueprintRevisionsRequest request,
-    Options opts) {
+TelcoAutomationClient::ListBlueprintRevisions(google::cloud::telcoautomation::v1::ListBlueprintRevisionsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListBlueprintRevisions(std::move(request));
 }
 
 StreamRange<google::cloud::telcoautomation::v1::Blueprint>
-TelcoAutomationClient::SearchBlueprintRevisions(std::string const& parent,
-                                                std::string const& query,
-                                                Options opts) {
+TelcoAutomationClient::SearchBlueprintRevisions(std::string const& parent, std::string const& query, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::telcoautomation::v1::SearchBlueprintRevisionsRequest request;
   request.set_parent(parent);
@@ -450,17 +371,13 @@ TelcoAutomationClient::SearchBlueprintRevisions(std::string const& parent,
 }
 
 StreamRange<google::cloud::telcoautomation::v1::Blueprint>
-TelcoAutomationClient::SearchBlueprintRevisions(
-    google::cloud::telcoautomation::v1::SearchBlueprintRevisionsRequest request,
-    Options opts) {
+TelcoAutomationClient::SearchBlueprintRevisions(google::cloud::telcoautomation::v1::SearchBlueprintRevisionsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SearchBlueprintRevisions(std::move(request));
 }
 
 StreamRange<google::cloud::telcoautomation::v1::Deployment>
-TelcoAutomationClient::SearchDeploymentRevisions(std::string const& parent,
-                                                 std::string const& query,
-                                                 Options opts) {
+TelcoAutomationClient::SearchDeploymentRevisions(std::string const& parent, std::string const& query, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::telcoautomation::v1::SearchDeploymentRevisionsRequest request;
   request.set_parent(parent);
@@ -469,17 +386,13 @@ TelcoAutomationClient::SearchDeploymentRevisions(std::string const& parent,
 }
 
 StreamRange<google::cloud::telcoautomation::v1::Deployment>
-TelcoAutomationClient::SearchDeploymentRevisions(
-    google::cloud::telcoautomation::v1::SearchDeploymentRevisionsRequest
-        request,
-    Options opts) {
+TelcoAutomationClient::SearchDeploymentRevisions(google::cloud::telcoautomation::v1::SearchDeploymentRevisionsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SearchDeploymentRevisions(std::move(request));
 }
 
 StatusOr<google::cloud::telcoautomation::v1::DiscardBlueprintChangesResponse>
-TelcoAutomationClient::DiscardBlueprintChanges(std::string const& name,
-                                               Options opts) {
+TelcoAutomationClient::DiscardBlueprintChanges(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::telcoautomation::v1::DiscardBlueprintChangesRequest request;
   request.set_name(name);
@@ -487,17 +400,13 @@ TelcoAutomationClient::DiscardBlueprintChanges(std::string const& name,
 }
 
 StatusOr<google::cloud::telcoautomation::v1::DiscardBlueprintChangesResponse>
-TelcoAutomationClient::DiscardBlueprintChanges(
-    google::cloud::telcoautomation::v1::DiscardBlueprintChangesRequest const&
-        request,
-    Options opts) {
+TelcoAutomationClient::DiscardBlueprintChanges(google::cloud::telcoautomation::v1::DiscardBlueprintChangesRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DiscardBlueprintChanges(request);
 }
 
 StreamRange<google::cloud::telcoautomation::v1::PublicBlueprint>
-TelcoAutomationClient::ListPublicBlueprints(std::string const& parent,
-                                            Options opts) {
+TelcoAutomationClient::ListPublicBlueprints(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::telcoautomation::v1::ListPublicBlueprintsRequest request;
   request.set_parent(parent);
@@ -505,16 +414,13 @@ TelcoAutomationClient::ListPublicBlueprints(std::string const& parent,
 }
 
 StreamRange<google::cloud::telcoautomation::v1::PublicBlueprint>
-TelcoAutomationClient::ListPublicBlueprints(
-    google::cloud::telcoautomation::v1::ListPublicBlueprintsRequest request,
-    Options opts) {
+TelcoAutomationClient::ListPublicBlueprints(google::cloud::telcoautomation::v1::ListPublicBlueprintsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListPublicBlueprints(std::move(request));
 }
 
 StatusOr<google::cloud::telcoautomation::v1::PublicBlueprint>
-TelcoAutomationClient::GetPublicBlueprint(std::string const& name,
-                                          Options opts) {
+TelcoAutomationClient::GetPublicBlueprint(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::telcoautomation::v1::GetPublicBlueprintRequest request;
   request.set_name(name);
@@ -522,19 +428,13 @@ TelcoAutomationClient::GetPublicBlueprint(std::string const& name,
 }
 
 StatusOr<google::cloud::telcoautomation::v1::PublicBlueprint>
-TelcoAutomationClient::GetPublicBlueprint(
-    google::cloud::telcoautomation::v1::GetPublicBlueprintRequest const&
-        request,
-    Options opts) {
+TelcoAutomationClient::GetPublicBlueprint(google::cloud::telcoautomation::v1::GetPublicBlueprintRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetPublicBlueprint(request);
 }
 
 StatusOr<google::cloud::telcoautomation::v1::Deployment>
-TelcoAutomationClient::CreateDeployment(
-    std::string const& parent,
-    google::cloud::telcoautomation::v1::Deployment const& deployment,
-    std::string const& deployment_id, Options opts) {
+TelcoAutomationClient::CreateDeployment(std::string const& parent, google::cloud::telcoautomation::v1::Deployment const& deployment, std::string const& deployment_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::telcoautomation::v1::CreateDeploymentRequest request;
   request.set_parent(parent);
@@ -544,17 +444,13 @@ TelcoAutomationClient::CreateDeployment(
 }
 
 StatusOr<google::cloud::telcoautomation::v1::Deployment>
-TelcoAutomationClient::CreateDeployment(
-    google::cloud::telcoautomation::v1::CreateDeploymentRequest const& request,
-    Options opts) {
+TelcoAutomationClient::CreateDeployment(google::cloud::telcoautomation::v1::CreateDeploymentRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateDeployment(request);
 }
 
 StatusOr<google::cloud::telcoautomation::v1::Deployment>
-TelcoAutomationClient::UpdateDeployment(
-    google::cloud::telcoautomation::v1::Deployment const& deployment,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+TelcoAutomationClient::UpdateDeployment(google::cloud::telcoautomation::v1::Deployment const& deployment, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::telcoautomation::v1::UpdateDeploymentRequest request;
   *request.mutable_deployment() = deployment;
@@ -563,9 +459,7 @@ TelcoAutomationClient::UpdateDeployment(
 }
 
 StatusOr<google::cloud::telcoautomation::v1::Deployment>
-TelcoAutomationClient::UpdateDeployment(
-    google::cloud::telcoautomation::v1::UpdateDeploymentRequest const& request,
-    Options opts) {
+TelcoAutomationClient::UpdateDeployment(google::cloud::telcoautomation::v1::UpdateDeploymentRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateDeployment(request);
 }
@@ -579,31 +473,27 @@ TelcoAutomationClient::GetDeployment(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::telcoautomation::v1::Deployment>
-TelcoAutomationClient::GetDeployment(
-    google::cloud::telcoautomation::v1::GetDeploymentRequest const& request,
-    Options opts) {
+TelcoAutomationClient::GetDeployment(google::cloud::telcoautomation::v1::GetDeploymentRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetDeployment(request);
 }
 
-Status TelcoAutomationClient::RemoveDeployment(std::string const& name,
-                                               Options opts) {
+Status
+TelcoAutomationClient::RemoveDeployment(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::telcoautomation::v1::RemoveDeploymentRequest request;
   request.set_name(name);
   return connection_->RemoveDeployment(request);
 }
 
-Status TelcoAutomationClient::RemoveDeployment(
-    google::cloud::telcoautomation::v1::RemoveDeploymentRequest const& request,
-    Options opts) {
+Status
+TelcoAutomationClient::RemoveDeployment(google::cloud::telcoautomation::v1::RemoveDeploymentRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RemoveDeployment(request);
 }
 
 StreamRange<google::cloud::telcoautomation::v1::Deployment>
-TelcoAutomationClient::ListDeployments(std::string const& parent,
-                                       Options opts) {
+TelcoAutomationClient::ListDeployments(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::telcoautomation::v1::ListDeploymentsRequest request;
   request.set_parent(parent);
@@ -611,16 +501,13 @@ TelcoAutomationClient::ListDeployments(std::string const& parent,
 }
 
 StreamRange<google::cloud::telcoautomation::v1::Deployment>
-TelcoAutomationClient::ListDeployments(
-    google::cloud::telcoautomation::v1::ListDeploymentsRequest request,
-    Options opts) {
+TelcoAutomationClient::ListDeployments(google::cloud::telcoautomation::v1::ListDeploymentsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListDeployments(std::move(request));
 }
 
 StreamRange<google::cloud::telcoautomation::v1::Deployment>
-TelcoAutomationClient::ListDeploymentRevisions(std::string const& name,
-                                               Options opts) {
+TelcoAutomationClient::ListDeploymentRevisions(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::telcoautomation::v1::ListDeploymentRevisionsRequest request;
   request.set_name(name);
@@ -628,16 +515,13 @@ TelcoAutomationClient::ListDeploymentRevisions(std::string const& name,
 }
 
 StreamRange<google::cloud::telcoautomation::v1::Deployment>
-TelcoAutomationClient::ListDeploymentRevisions(
-    google::cloud::telcoautomation::v1::ListDeploymentRevisionsRequest request,
-    Options opts) {
+TelcoAutomationClient::ListDeploymentRevisions(google::cloud::telcoautomation::v1::ListDeploymentRevisionsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListDeploymentRevisions(std::move(request));
 }
 
 StatusOr<google::cloud::telcoautomation::v1::DiscardDeploymentChangesResponse>
-TelcoAutomationClient::DiscardDeploymentChanges(std::string const& name,
-                                                Options opts) {
+TelcoAutomationClient::DiscardDeploymentChanges(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::telcoautomation::v1::DiscardDeploymentChangesRequest request;
   request.set_name(name);
@@ -645,10 +529,7 @@ TelcoAutomationClient::DiscardDeploymentChanges(std::string const& name,
 }
 
 StatusOr<google::cloud::telcoautomation::v1::DiscardDeploymentChangesResponse>
-TelcoAutomationClient::DiscardDeploymentChanges(
-    google::cloud::telcoautomation::v1::DiscardDeploymentChangesRequest const&
-        request,
-    Options opts) {
+TelcoAutomationClient::DiscardDeploymentChanges(google::cloud::telcoautomation::v1::DiscardDeploymentChangesRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DiscardDeploymentChanges(request);
 }
@@ -662,16 +543,13 @@ TelcoAutomationClient::ApplyDeployment(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::telcoautomation::v1::Deployment>
-TelcoAutomationClient::ApplyDeployment(
-    google::cloud::telcoautomation::v1::ApplyDeploymentRequest const& request,
-    Options opts) {
+TelcoAutomationClient::ApplyDeployment(google::cloud::telcoautomation::v1::ApplyDeploymentRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ApplyDeployment(request);
 }
 
 StatusOr<google::cloud::telcoautomation::v1::ComputeDeploymentStatusResponse>
-TelcoAutomationClient::ComputeDeploymentStatus(std::string const& name,
-                                               Options opts) {
+TelcoAutomationClient::ComputeDeploymentStatus(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::telcoautomation::v1::ComputeDeploymentStatusRequest request;
   request.set_name(name);
@@ -679,18 +557,13 @@ TelcoAutomationClient::ComputeDeploymentStatus(std::string const& name,
 }
 
 StatusOr<google::cloud::telcoautomation::v1::ComputeDeploymentStatusResponse>
-TelcoAutomationClient::ComputeDeploymentStatus(
-    google::cloud::telcoautomation::v1::ComputeDeploymentStatusRequest const&
-        request,
-    Options opts) {
+TelcoAutomationClient::ComputeDeploymentStatus(google::cloud::telcoautomation::v1::ComputeDeploymentStatusRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ComputeDeploymentStatus(request);
 }
 
 StatusOr<google::cloud::telcoautomation::v1::Deployment>
-TelcoAutomationClient::RollbackDeployment(std::string const& name,
-                                          std::string const& revision_id,
-                                          Options opts) {
+TelcoAutomationClient::RollbackDeployment(std::string const& name, std::string const& revision_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::telcoautomation::v1::RollbackDeploymentRequest request;
   request.set_name(name);
@@ -699,17 +572,13 @@ TelcoAutomationClient::RollbackDeployment(std::string const& name,
 }
 
 StatusOr<google::cloud::telcoautomation::v1::Deployment>
-TelcoAutomationClient::RollbackDeployment(
-    google::cloud::telcoautomation::v1::RollbackDeploymentRequest const&
-        request,
-    Options opts) {
+TelcoAutomationClient::RollbackDeployment(google::cloud::telcoautomation::v1::RollbackDeploymentRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RollbackDeployment(request);
 }
 
 StatusOr<google::cloud::telcoautomation::v1::HydratedDeployment>
-TelcoAutomationClient::GetHydratedDeployment(std::string const& name,
-                                             Options opts) {
+TelcoAutomationClient::GetHydratedDeployment(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::telcoautomation::v1::GetHydratedDeploymentRequest request;
   request.set_name(name);
@@ -717,17 +586,13 @@ TelcoAutomationClient::GetHydratedDeployment(std::string const& name,
 }
 
 StatusOr<google::cloud::telcoautomation::v1::HydratedDeployment>
-TelcoAutomationClient::GetHydratedDeployment(
-    google::cloud::telcoautomation::v1::GetHydratedDeploymentRequest const&
-        request,
-    Options opts) {
+TelcoAutomationClient::GetHydratedDeployment(google::cloud::telcoautomation::v1::GetHydratedDeploymentRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetHydratedDeployment(request);
 }
 
 StreamRange<google::cloud::telcoautomation::v1::HydratedDeployment>
-TelcoAutomationClient::ListHydratedDeployments(std::string const& parent,
-                                               Options opts) {
+TelcoAutomationClient::ListHydratedDeployments(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::telcoautomation::v1::ListHydratedDeploymentsRequest request;
   request.set_parent(parent);
@@ -735,18 +600,13 @@ TelcoAutomationClient::ListHydratedDeployments(std::string const& parent,
 }
 
 StreamRange<google::cloud::telcoautomation::v1::HydratedDeployment>
-TelcoAutomationClient::ListHydratedDeployments(
-    google::cloud::telcoautomation::v1::ListHydratedDeploymentsRequest request,
-    Options opts) {
+TelcoAutomationClient::ListHydratedDeployments(google::cloud::telcoautomation::v1::ListHydratedDeploymentsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListHydratedDeployments(std::move(request));
 }
 
 StatusOr<google::cloud::telcoautomation::v1::HydratedDeployment>
-TelcoAutomationClient::UpdateHydratedDeployment(
-    google::cloud::telcoautomation::v1::HydratedDeployment const&
-        hydrated_deployment,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+TelcoAutomationClient::UpdateHydratedDeployment(google::cloud::telcoautomation::v1::HydratedDeployment const& hydrated_deployment, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::telcoautomation::v1::UpdateHydratedDeploymentRequest request;
   *request.mutable_hydrated_deployment() = hydrated_deployment;
@@ -755,17 +615,13 @@ TelcoAutomationClient::UpdateHydratedDeployment(
 }
 
 StatusOr<google::cloud::telcoautomation::v1::HydratedDeployment>
-TelcoAutomationClient::UpdateHydratedDeployment(
-    google::cloud::telcoautomation::v1::UpdateHydratedDeploymentRequest const&
-        request,
-    Options opts) {
+TelcoAutomationClient::UpdateHydratedDeployment(google::cloud::telcoautomation::v1::UpdateHydratedDeploymentRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateHydratedDeployment(request);
 }
 
 StatusOr<google::cloud::telcoautomation::v1::HydratedDeployment>
-TelcoAutomationClient::ApplyHydratedDeployment(std::string const& name,
-                                               Options opts) {
+TelcoAutomationClient::ApplyHydratedDeployment(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::telcoautomation::v1::ApplyHydratedDeploymentRequest request;
   request.set_name(name);
@@ -773,30 +629,25 @@ TelcoAutomationClient::ApplyHydratedDeployment(std::string const& name,
 }
 
 StatusOr<google::cloud::telcoautomation::v1::HydratedDeployment>
-TelcoAutomationClient::ApplyHydratedDeployment(
-    google::cloud::telcoautomation::v1::ApplyHydratedDeploymentRequest const&
-        request,
-    Options opts) {
+TelcoAutomationClient::ApplyHydratedDeployment(google::cloud::telcoautomation::v1::ApplyHydratedDeploymentRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ApplyHydratedDeployment(request);
 }
 
 StreamRange<google::cloud::location::Location>
-TelcoAutomationClient::ListLocations(
-    google::cloud::location::ListLocationsRequest request, Options opts) {
+TelcoAutomationClient::ListLocations(google::cloud::location::ListLocationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListLocations(std::move(request));
 }
 
-StatusOr<google::cloud::location::Location> TelcoAutomationClient::GetLocation(
-    google::cloud::location::GetLocationRequest const& request, Options opts) {
+StatusOr<google::cloud::location::Location>
+TelcoAutomationClient::GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetLocation(request);
 }
 
 StreamRange<google::longrunning::Operation>
-TelcoAutomationClient::ListOperations(std::string const& name,
-                                      std::string const& filter, Options opts) {
+TelcoAutomationClient::ListOperations(std::string const& name, std::string const& filter, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::ListOperationsRequest request;
   request.set_name(name);
@@ -805,50 +656,49 @@ TelcoAutomationClient::ListOperations(std::string const& name,
 }
 
 StreamRange<google::longrunning::Operation>
-TelcoAutomationClient::ListOperations(
-    google::longrunning::ListOperationsRequest request, Options opts) {
+TelcoAutomationClient::ListOperations(google::longrunning::ListOperationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOperations(std::move(request));
 }
 
-StatusOr<google::longrunning::Operation> TelcoAutomationClient::GetOperation(
-    std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation>
+TelcoAutomationClient::GetOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
   return connection_->GetOperation(request);
 }
 
-StatusOr<google::longrunning::Operation> TelcoAutomationClient::GetOperation(
-    google::longrunning::GetOperationRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation>
+TelcoAutomationClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }
 
-Status TelcoAutomationClient::DeleteOperation(std::string const& name,
-                                              Options opts) {
+Status
+TelcoAutomationClient::DeleteOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::DeleteOperationRequest request;
   request.set_name(name);
   return connection_->DeleteOperation(request);
 }
 
-Status TelcoAutomationClient::DeleteOperation(
-    google::longrunning::DeleteOperationRequest const& request, Options opts) {
+Status
+TelcoAutomationClient::DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteOperation(request);
 }
 
-Status TelcoAutomationClient::CancelOperation(std::string const& name,
-                                              Options opts) {
+Status
+TelcoAutomationClient::CancelOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::CancelOperationRequest request;
   request.set_name(name);
   return connection_->CancelOperation(request);
 }
 
-Status TelcoAutomationClient::CancelOperation(
-    google::longrunning::CancelOperationRequest const& request, Options opts) {
+Status
+TelcoAutomationClient::CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelOperation(request);
 }

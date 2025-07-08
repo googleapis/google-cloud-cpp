@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_LICENSES_V1_LICENSES_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_LICENSES_V1_LICENSES_CONNECTION_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/licenses/v1/internal/licenses_retry_traits.h"
 #include "google/cloud/compute/licenses/v1/licenses_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -65,14 +65,14 @@ class LicensesLimitedErrorCountRetryPolicy : public LicensesRetryPolicy {
    *     @p maximum_failures == 0.
    */
   explicit LicensesLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   LicensesLimitedErrorCountRetryPolicy(
       LicensesLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : LicensesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : LicensesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   LicensesLimitedErrorCountRetryPolicy(
       LicensesLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : LicensesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : LicensesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -92,9 +92,7 @@ class LicensesLimitedErrorCountRetryPolicy : public LicensesRetryPolicy {
   using BaseType = LicensesRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      compute_licenses_v1_internal::LicensesRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<compute_licenses_v1_internal::LicensesRetryTraits> impl_;
 };
 
 /**
@@ -132,13 +130,12 @@ class LicensesLimitedTimeRetryPolicy : public LicensesRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit LicensesLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
   LicensesLimitedTimeRetryPolicy(LicensesLimitedTimeRetryPolicy&& rhs) noexcept
-      : LicensesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  LicensesLimitedTimeRetryPolicy(
-      LicensesLimitedTimeRetryPolicy const& rhs) noexcept
-      : LicensesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+    : LicensesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  LicensesLimitedTimeRetryPolicy(LicensesLimitedTimeRetryPolicy const& rhs) noexcept
+    : LicensesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -152,16 +149,15 @@ class LicensesLimitedTimeRetryPolicy : public LicensesRetryPolicy {
     return impl_.IsPermanentFailure(status);
   }
   std::unique_ptr<LicensesRetryPolicy> clone() const override {
-    return std::make_unique<LicensesLimitedTimeRetryPolicy>(maximum_duration());
+    return std::make_unique<LicensesLimitedTimeRetryPolicy>(
+        maximum_duration());
   }
 
   // This is provided only for backwards compatibility.
   using BaseType = LicensesRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      compute_licenses_v1_internal::LicensesRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<compute_licenses_v1_internal::LicensesRetryTraits> impl_;
 };
 
 /**
@@ -183,62 +179,46 @@ class LicensesConnection {
   virtual Options options() { return Options{}; }
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteLicense(
-      google::cloud::cpp::compute::licenses::v1::DeleteLicenseRequest const&
-          request);
+  DeleteLicense(google::cloud::cpp::compute::licenses::v1::DeleteLicenseRequest const& request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteLicense(
-      NoAwaitTag,
-      google::cloud::cpp::compute::licenses::v1::DeleteLicenseRequest const&
-          request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeleteLicense(NoAwaitTag, google::cloud::cpp::compute::licenses::v1::DeleteLicenseRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteLicense(google::cloud::cpp::compute::v1::Operation const& operation);
+  DeleteLicense( google::cloud::cpp::compute::v1::Operation const& operation);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::License> GetLicense(
-      google::cloud::cpp::compute::licenses::v1::GetLicenseRequest const&
-          request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::License>
+  GetLicense(google::cloud::cpp::compute::licenses::v1::GetLicenseRequest const& request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
-      google::cloud::cpp::compute::licenses::v1::GetIamPolicyRequest const&
-          request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Policy>
+  GetIamPolicy(google::cloud::cpp::compute::licenses::v1::GetIamPolicyRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertLicense(
-      google::cloud::cpp::compute::licenses::v1::InsertLicenseRequest const&
-          request);
+  InsertLicense(google::cloud::cpp::compute::licenses::v1::InsertLicenseRequest const& request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> InsertLicense(
-      NoAwaitTag,
-      google::cloud::cpp::compute::licenses::v1::InsertLicenseRequest const&
-          request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  InsertLicense(NoAwaitTag, google::cloud::cpp::compute::licenses::v1::InsertLicenseRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertLicense(google::cloud::cpp::compute::v1::Operation const& operation);
+  InsertLicense( google::cloud::cpp::compute::v1::Operation const& operation);
 
-  virtual StreamRange<google::cloud::cpp::compute::v1::License> ListLicenses(
-      google::cloud::cpp::compute::licenses::v1::ListLicensesRequest request);
+  virtual StreamRange<google::cloud::cpp::compute::v1::License>
+  ListLicenses(google::cloud::cpp::compute::licenses::v1::ListLicensesRequest request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
-      google::cloud::cpp::compute::licenses::v1::SetIamPolicyRequest const&
-          request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Policy>
+  SetIamPolicy(google::cloud::cpp::compute::licenses::v1::SetIamPolicyRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(google::cloud::cpp::compute::licenses::v1::
-                         TestIamPermissionsRequest const& request);
+  TestIamPermissions(google::cloud::cpp::compute::licenses::v1::TestIamPermissionsRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateLicense(
-      google::cloud::cpp::compute::licenses::v1::UpdateLicenseRequest const&
-          request);
+  UpdateLicense(google::cloud::cpp::compute::licenses::v1::UpdateLicenseRequest const& request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateLicense(
-      NoAwaitTag,
-      google::cloud::cpp::compute::licenses::v1::UpdateLicenseRequest const&
-          request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  UpdateLicense(NoAwaitTag, google::cloud::cpp::compute::licenses::v1::UpdateLicenseRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateLicense(google::cloud::cpp::compute::v1::Operation const& operation);
+  UpdateLicense( google::cloud::cpp::compute::v1::Operation const& operation);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

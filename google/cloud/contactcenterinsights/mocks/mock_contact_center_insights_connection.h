@@ -30,11 +30,8 @@ namespace cloud {
 namespace contactcenterinsights_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use
-/// contactcenterinsights_v1_mocks::MockContactCenterInsightsConnection
-/// directly.
-using ::google::cloud::contactcenterinsights_v1_mocks::
-    MockContactCenterInsightsConnection;
+/// @deprecated Use contactcenterinsights_v1_mocks::MockContactCenterInsightsConnection directly.
+using ::google::cloud::contactcenterinsights_v1_mocks::MockContactCenterInsightsConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace contactcenterinsights_mocks

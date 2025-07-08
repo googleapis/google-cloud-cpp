@@ -19,14 +19,14 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RECOMMENDER_V1_INTERNAL_RECOMMENDER_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RECOMMENDER_V1_INTERNAL_RECOMMENDER_CONNECTION_IMPL_H
 
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/options.h"
 #include "google/cloud/recommender/v1/internal/recommender_retry_traits.h"
 #include "google/cloud/recommender/v1/internal/recommender_stub.h"
 #include "google/cloud/recommender/v1/recommender_connection.h"
 #include "google/cloud/recommender/v1/recommender_connection_idempotency_policy.h"
 #include "google/cloud/recommender/v1/recommender_options.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
@@ -37,75 +37,56 @@ namespace cloud {
 namespace recommender_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class RecommenderConnectionImpl : public recommender_v1::RecommenderConnection {
+class RecommenderConnectionImpl
+    : public recommender_v1::RecommenderConnection {
  public:
   ~RecommenderConnectionImpl() override = default;
 
   RecommenderConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<recommender_v1_internal::RecommenderStub> stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<recommender_v1_internal::RecommenderStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
-  StreamRange<google::cloud::recommender::v1::Insight> ListInsights(
-      google::cloud::recommender::v1::ListInsightsRequest request) override;
+  StreamRange<google::cloud::recommender::v1::Insight>
+  ListInsights(google::cloud::recommender::v1::ListInsightsRequest request) override;
 
-  StatusOr<google::cloud::recommender::v1::Insight> GetInsight(
-      google::cloud::recommender::v1::GetInsightRequest const& request)
-      override;
+  StatusOr<google::cloud::recommender::v1::Insight>
+  GetInsight(google::cloud::recommender::v1::GetInsightRequest const& request) override;
 
-  StatusOr<google::cloud::recommender::v1::Insight> MarkInsightAccepted(
-      google::cloud::recommender::v1::MarkInsightAcceptedRequest const& request)
-      override;
+  StatusOr<google::cloud::recommender::v1::Insight>
+  MarkInsightAccepted(google::cloud::recommender::v1::MarkInsightAcceptedRequest const& request) override;
 
   StreamRange<google::cloud::recommender::v1::Recommendation>
-  ListRecommendations(google::cloud::recommender::v1::ListRecommendationsRequest
-                          request) override;
-
-  StatusOr<google::cloud::recommender::v1::Recommendation> GetRecommendation(
-      google::cloud::recommender::v1::GetRecommendationRequest const& request)
-      override;
+  ListRecommendations(google::cloud::recommender::v1::ListRecommendationsRequest request) override;
 
   StatusOr<google::cloud::recommender::v1::Recommendation>
-  MarkRecommendationDismissed(
-      google::cloud::recommender::v1::MarkRecommendationDismissedRequest const&
-          request) override;
+  GetRecommendation(google::cloud::recommender::v1::GetRecommendationRequest const& request) override;
 
   StatusOr<google::cloud::recommender::v1::Recommendation>
-  MarkRecommendationClaimed(
-      google::cloud::recommender::v1::MarkRecommendationClaimedRequest const&
-          request) override;
+  MarkRecommendationDismissed(google::cloud::recommender::v1::MarkRecommendationDismissedRequest const& request) override;
 
   StatusOr<google::cloud::recommender::v1::Recommendation>
-  MarkRecommendationSucceeded(
-      google::cloud::recommender::v1::MarkRecommendationSucceededRequest const&
-          request) override;
+  MarkRecommendationClaimed(google::cloud::recommender::v1::MarkRecommendationClaimedRequest const& request) override;
 
   StatusOr<google::cloud::recommender::v1::Recommendation>
-  MarkRecommendationFailed(
-      google::cloud::recommender::v1::MarkRecommendationFailedRequest const&
-          request) override;
+  MarkRecommendationSucceeded(google::cloud::recommender::v1::MarkRecommendationSucceededRequest const& request) override;
+
+  StatusOr<google::cloud::recommender::v1::Recommendation>
+  MarkRecommendationFailed(google::cloud::recommender::v1::MarkRecommendationFailedRequest const& request) override;
 
   StatusOr<google::cloud::recommender::v1::RecommenderConfig>
-  GetRecommenderConfig(
-      google::cloud::recommender::v1::GetRecommenderConfigRequest const&
-          request) override;
+  GetRecommenderConfig(google::cloud::recommender::v1::GetRecommenderConfigRequest const& request) override;
 
   StatusOr<google::cloud::recommender::v1::RecommenderConfig>
-  UpdateRecommenderConfig(
-      google::cloud::recommender::v1::UpdateRecommenderConfigRequest const&
-          request) override;
+  UpdateRecommenderConfig(google::cloud::recommender::v1::UpdateRecommenderConfigRequest const& request) override;
 
   StatusOr<google::cloud::recommender::v1::InsightTypeConfig>
-  GetInsightTypeConfig(
-      google::cloud::recommender::v1::GetInsightTypeConfigRequest const&
-          request) override;
+  GetInsightTypeConfig(google::cloud::recommender::v1::GetInsightTypeConfigRequest const& request) override;
 
   StatusOr<google::cloud::recommender::v1::InsightTypeConfig>
-  UpdateInsightTypeConfig(
-      google::cloud::recommender::v1::UpdateInsightTypeConfigRequest const&
-          request) override;
+  UpdateInsightTypeConfig(google::cloud::recommender::v1::UpdateInsightTypeConfigRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

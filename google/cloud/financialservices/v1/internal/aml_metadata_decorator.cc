@@ -33,9 +33,10 @@ namespace cloud {
 namespace financialservices_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-AMLMetadata::AMLMetadata(std::shared_ptr<AMLStub> child,
-                         std::multimap<std::string, std::string> fixed_metadata,
-                         std::string api_client_header)
+AMLMetadata::AMLMetadata(
+    std::shared_ptr<AMLStub> child,
+    std::multimap<std::string, std::string> fixed_metadata,
+    std::string api_client_header)
     : child_(std::move(child)),
       fixed_metadata_(std::move(fixed_metadata)),
       api_client_header_(
@@ -45,19 +46,19 @@ AMLMetadata::AMLMetadata(std::shared_ptr<AMLStub> child,
 
 StatusOr<google::cloud::financialservices::v1::ListInstancesResponse>
 AMLMetadata::ListInstances(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::financialservices::v1::ListInstancesRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListInstances(context, options, request);
 }
 
 StatusOr<google::cloud::financialservices::v1::Instance>
 AMLMetadata::GetInstance(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::financialservices::v1::GetInstanceRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetInstance(context, options, request);
 }
 
@@ -66,20 +67,18 @@ AMLMetadata::AsyncCreateInstance(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::financialservices::v1::CreateInstanceRequest const&
-        request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateInstance(cq, std::move(context), std::move(options),
-                                     request);
+    google::cloud::financialservices::v1::CreateInstanceRequest const& request) {
+  SetMetadata(*context, *options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateInstance(
+      cq, std::move(context), std::move(options), request);
 }
 
-StatusOr<google::longrunning::Operation> AMLMetadata::CreateInstance(
-    grpc::ClientContext& context, Options options,
-    google::cloud::financialservices::v1::CreateInstanceRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+StatusOr<google::longrunning::Operation>
+AMLMetadata::CreateInstance(
+    grpc::ClientContext& context,
+    Options options,
+    google::cloud::financialservices::v1::CreateInstanceRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateInstance(context, options, request);
 }
 
@@ -88,22 +87,18 @@ AMLMetadata::AsyncUpdateInstance(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::financialservices::v1::UpdateInstanceRequest const&
-        request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("instance.name=",
-                           internal::UrlEncode(request.instance().name())));
-  return child_->AsyncUpdateInstance(cq, std::move(context), std::move(options),
-                                     request);
+    google::cloud::financialservices::v1::UpdateInstanceRequest const& request) {
+  SetMetadata(*context, *options, absl::StrCat("instance.name=", internal::UrlEncode(request.instance().name())));
+  return child_->AsyncUpdateInstance(
+      cq, std::move(context), std::move(options), request);
 }
 
-StatusOr<google::longrunning::Operation> AMLMetadata::UpdateInstance(
-    grpc::ClientContext& context, Options options,
-    google::cloud::financialservices::v1::UpdateInstanceRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("instance.name=",
-                           internal::UrlEncode(request.instance().name())));
+StatusOr<google::longrunning::Operation>
+AMLMetadata::UpdateInstance(
+    grpc::ClientContext& context,
+    Options options,
+    google::cloud::financialservices::v1::UpdateInstanceRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("instance.name=", internal::UrlEncode(request.instance().name())));
   return child_->UpdateInstance(context, options, request);
 }
 
@@ -112,20 +107,18 @@ AMLMetadata::AsyncDeleteInstance(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::financialservices::v1::DeleteInstanceRequest const&
-        request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteInstance(cq, std::move(context), std::move(options),
-                                     request);
+    google::cloud::financialservices::v1::DeleteInstanceRequest const& request) {
+  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteInstance(
+      cq, std::move(context), std::move(options), request);
 }
 
-StatusOr<google::longrunning::Operation> AMLMetadata::DeleteInstance(
-    grpc::ClientContext& context, Options options,
-    google::cloud::financialservices::v1::DeleteInstanceRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+StatusOr<google::longrunning::Operation>
+AMLMetadata::DeleteInstance(
+    grpc::ClientContext& context,
+    Options options,
+    google::cloud::financialservices::v1::DeleteInstanceRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteInstance(context, options, request);
 }
 
@@ -134,20 +127,18 @@ AMLMetadata::AsyncImportRegisteredParties(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::financialservices::v1::ImportRegisteredPartiesRequest const&
-        request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncImportRegisteredParties(cq, std::move(context),
-                                              std::move(options), request);
+    google::cloud::financialservices::v1::ImportRegisteredPartiesRequest const& request) {
+  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncImportRegisteredParties(
+      cq, std::move(context), std::move(options), request);
 }
 
-StatusOr<google::longrunning::Operation> AMLMetadata::ImportRegisteredParties(
-    grpc::ClientContext& context, Options options,
-    google::cloud::financialservices::v1::ImportRegisteredPartiesRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+StatusOr<google::longrunning::Operation>
+AMLMetadata::ImportRegisteredParties(
+    grpc::ClientContext& context,
+    Options options,
+    google::cloud::financialservices::v1::ImportRegisteredPartiesRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ImportRegisteredParties(context, options, request);
 }
 
@@ -156,37 +147,36 @@ AMLMetadata::AsyncExportRegisteredParties(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::financialservices::v1::ExportRegisteredPartiesRequest const&
-        request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncExportRegisteredParties(cq, std::move(context),
-                                              std::move(options), request);
+    google::cloud::financialservices::v1::ExportRegisteredPartiesRequest const& request) {
+  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncExportRegisteredParties(
+      cq, std::move(context), std::move(options), request);
 }
 
-StatusOr<google::longrunning::Operation> AMLMetadata::ExportRegisteredParties(
-    grpc::ClientContext& context, Options options,
-    google::cloud::financialservices::v1::ExportRegisteredPartiesRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+StatusOr<google::longrunning::Operation>
+AMLMetadata::ExportRegisteredParties(
+    grpc::ClientContext& context,
+    Options options,
+    google::cloud::financialservices::v1::ExportRegisteredPartiesRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ExportRegisteredParties(context, options, request);
 }
 
 StatusOr<google::cloud::financialservices::v1::ListDatasetsResponse>
 AMLMetadata::ListDatasets(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::financialservices::v1::ListDatasetsRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListDatasets(context, options, request);
 }
 
-StatusOr<google::cloud::financialservices::v1::Dataset> AMLMetadata::GetDataset(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::financialservices::v1::Dataset>
+AMLMetadata::GetDataset(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::financialservices::v1::GetDatasetRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetDataset(context, options, request);
 }
 
@@ -196,17 +186,17 @@ AMLMetadata::AsyncCreateDataset(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::financialservices::v1::CreateDatasetRequest const& request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateDataset(cq, std::move(context), std::move(options),
-                                    request);
+  SetMetadata(*context, *options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateDataset(
+      cq, std::move(context), std::move(options), request);
 }
 
-StatusOr<google::longrunning::Operation> AMLMetadata::CreateDataset(
-    grpc::ClientContext& context, Options options,
+StatusOr<google::longrunning::Operation>
+AMLMetadata::CreateDataset(
+    grpc::ClientContext& context,
+    Options options,
     google::cloud::financialservices::v1::CreateDatasetRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateDataset(context, options, request);
 }
 
@@ -216,19 +206,17 @@ AMLMetadata::AsyncUpdateDataset(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::financialservices::v1::UpdateDatasetRequest const& request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("dataset.name=",
-                           internal::UrlEncode(request.dataset().name())));
-  return child_->AsyncUpdateDataset(cq, std::move(context), std::move(options),
-                                    request);
+  SetMetadata(*context, *options, absl::StrCat("dataset.name=", internal::UrlEncode(request.dataset().name())));
+  return child_->AsyncUpdateDataset(
+      cq, std::move(context), std::move(options), request);
 }
 
-StatusOr<google::longrunning::Operation> AMLMetadata::UpdateDataset(
-    grpc::ClientContext& context, Options options,
+StatusOr<google::longrunning::Operation>
+AMLMetadata::UpdateDataset(
+    grpc::ClientContext& context,
+    Options options,
     google::cloud::financialservices::v1::UpdateDatasetRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("dataset.name=",
-                           internal::UrlEncode(request.dataset().name())));
+  SetMetadata(context, options, absl::StrCat("dataset.name=", internal::UrlEncode(request.dataset().name())));
   return child_->UpdateDataset(context, options, request);
 }
 
@@ -238,74 +226,75 @@ AMLMetadata::AsyncDeleteDataset(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::financialservices::v1::DeleteDatasetRequest const& request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteDataset(cq, std::move(context), std::move(options),
-                                    request);
+  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteDataset(
+      cq, std::move(context), std::move(options), request);
 }
 
-StatusOr<google::longrunning::Operation> AMLMetadata::DeleteDataset(
-    grpc::ClientContext& context, Options options,
+StatusOr<google::longrunning::Operation>
+AMLMetadata::DeleteDataset(
+    grpc::ClientContext& context,
+    Options options,
     google::cloud::financialservices::v1::DeleteDatasetRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteDataset(context, options, request);
 }
 
 StatusOr<google::cloud::financialservices::v1::ListModelsResponse>
 AMLMetadata::ListModels(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::financialservices::v1::ListModelsRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListModels(context, options, request);
 }
 
-StatusOr<google::cloud::financialservices::v1::Model> AMLMetadata::GetModel(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::financialservices::v1::Model>
+AMLMetadata::GetModel(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::financialservices::v1::GetModelRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetModel(context, options, request);
 }
 
-future<StatusOr<google::longrunning::Operation>> AMLMetadata::AsyncCreateModel(
+future<StatusOr<google::longrunning::Operation>>
+AMLMetadata::AsyncCreateModel(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::financialservices::v1::CreateModelRequest const& request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateModel(cq, std::move(context), std::move(options),
-                                  request);
+  SetMetadata(*context, *options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateModel(
+      cq, std::move(context), std::move(options), request);
 }
 
-StatusOr<google::longrunning::Operation> AMLMetadata::CreateModel(
-    grpc::ClientContext& context, Options options,
+StatusOr<google::longrunning::Operation>
+AMLMetadata::CreateModel(
+    grpc::ClientContext& context,
+    Options options,
     google::cloud::financialservices::v1::CreateModelRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateModel(context, options, request);
 }
 
-future<StatusOr<google::longrunning::Operation>> AMLMetadata::AsyncUpdateModel(
+future<StatusOr<google::longrunning::Operation>>
+AMLMetadata::AsyncUpdateModel(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::financialservices::v1::UpdateModelRequest const& request) {
-  SetMetadata(
-      *context, *options,
-      absl::StrCat("model.name=", internal::UrlEncode(request.model().name())));
-  return child_->AsyncUpdateModel(cq, std::move(context), std::move(options),
-                                  request);
+  SetMetadata(*context, *options, absl::StrCat("model.name=", internal::UrlEncode(request.model().name())));
+  return child_->AsyncUpdateModel(
+      cq, std::move(context), std::move(options), request);
 }
 
-StatusOr<google::longrunning::Operation> AMLMetadata::UpdateModel(
-    grpc::ClientContext& context, Options options,
+StatusOr<google::longrunning::Operation>
+AMLMetadata::UpdateModel(
+    grpc::ClientContext& context,
+    Options options,
     google::cloud::financialservices::v1::UpdateModelRequest const& request) {
-  SetMetadata(
-      context, options,
-      absl::StrCat("model.name=", internal::UrlEncode(request.model().name())));
+  SetMetadata(context, options, absl::StrCat("model.name=", internal::UrlEncode(request.model().name())));
   return child_->UpdateModel(context, options, request);
 }
 
@@ -314,59 +303,56 @@ AMLMetadata::AsyncExportModelMetadata(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::financialservices::v1::ExportModelMetadataRequest const&
-        request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("model=", internal::UrlEncode(request.model())));
-  return child_->AsyncExportModelMetadata(cq, std::move(context),
-                                          std::move(options), request);
+    google::cloud::financialservices::v1::ExportModelMetadataRequest const& request) {
+  SetMetadata(*context, *options, absl::StrCat("model=", internal::UrlEncode(request.model())));
+  return child_->AsyncExportModelMetadata(
+      cq, std::move(context), std::move(options), request);
 }
 
-StatusOr<google::longrunning::Operation> AMLMetadata::ExportModelMetadata(
-    grpc::ClientContext& context, Options options,
-    google::cloud::financialservices::v1::ExportModelMetadataRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("model=", internal::UrlEncode(request.model())));
+StatusOr<google::longrunning::Operation>
+AMLMetadata::ExportModelMetadata(
+    grpc::ClientContext& context,
+    Options options,
+    google::cloud::financialservices::v1::ExportModelMetadataRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("model=", internal::UrlEncode(request.model())));
   return child_->ExportModelMetadata(context, options, request);
 }
 
-future<StatusOr<google::longrunning::Operation>> AMLMetadata::AsyncDeleteModel(
+future<StatusOr<google::longrunning::Operation>>
+AMLMetadata::AsyncDeleteModel(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::financialservices::v1::DeleteModelRequest const& request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteModel(cq, std::move(context), std::move(options),
-                                  request);
+  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteModel(
+      cq, std::move(context), std::move(options), request);
 }
 
-StatusOr<google::longrunning::Operation> AMLMetadata::DeleteModel(
-    grpc::ClientContext& context, Options options,
+StatusOr<google::longrunning::Operation>
+AMLMetadata::DeleteModel(
+    grpc::ClientContext& context,
+    Options options,
     google::cloud::financialservices::v1::DeleteModelRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteModel(context, options, request);
 }
 
 StatusOr<google::cloud::financialservices::v1::ListEngineConfigsResponse>
 AMLMetadata::ListEngineConfigs(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::financialservices::v1::ListEngineConfigsRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::financialservices::v1::ListEngineConfigsRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListEngineConfigs(context, options, request);
 }
 
 StatusOr<google::cloud::financialservices::v1::EngineConfig>
 AMLMetadata::GetEngineConfig(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::financialservices::v1::GetEngineConfigRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::financialservices::v1::GetEngineConfigRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetEngineConfig(context, options, request);
 }
 
@@ -375,20 +361,18 @@ AMLMetadata::AsyncCreateEngineConfig(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::financialservices::v1::CreateEngineConfigRequest const&
-        request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateEngineConfig(cq, std::move(context),
-                                         std::move(options), request);
+    google::cloud::financialservices::v1::CreateEngineConfigRequest const& request) {
+  SetMetadata(*context, *options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateEngineConfig(
+      cq, std::move(context), std::move(options), request);
 }
 
-StatusOr<google::longrunning::Operation> AMLMetadata::CreateEngineConfig(
-    grpc::ClientContext& context, Options options,
-    google::cloud::financialservices::v1::CreateEngineConfigRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+StatusOr<google::longrunning::Operation>
+AMLMetadata::CreateEngineConfig(
+    grpc::ClientContext& context,
+    Options options,
+    google::cloud::financialservices::v1::CreateEngineConfigRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateEngineConfig(context, options, request);
 }
 
@@ -397,24 +381,18 @@ AMLMetadata::AsyncUpdateEngineConfig(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::financialservices::v1::UpdateEngineConfigRequest const&
-        request) {
-  SetMetadata(
-      *context, *options,
-      absl::StrCat("engine_config.name=",
-                   internal::UrlEncode(request.engine_config().name())));
-  return child_->AsyncUpdateEngineConfig(cq, std::move(context),
-                                         std::move(options), request);
+    google::cloud::financialservices::v1::UpdateEngineConfigRequest const& request) {
+  SetMetadata(*context, *options, absl::StrCat("engine_config.name=", internal::UrlEncode(request.engine_config().name())));
+  return child_->AsyncUpdateEngineConfig(
+      cq, std::move(context), std::move(options), request);
 }
 
-StatusOr<google::longrunning::Operation> AMLMetadata::UpdateEngineConfig(
-    grpc::ClientContext& context, Options options,
-    google::cloud::financialservices::v1::UpdateEngineConfigRequest const&
-        request) {
-  SetMetadata(
-      context, options,
-      absl::StrCat("engine_config.name=",
-                   internal::UrlEncode(request.engine_config().name())));
+StatusOr<google::longrunning::Operation>
+AMLMetadata::UpdateEngineConfig(
+    grpc::ClientContext& context,
+    Options options,
+    google::cloud::financialservices::v1::UpdateEngineConfigRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("engine_config.name=", internal::UrlEncode(request.engine_config().name())));
   return child_->UpdateEngineConfig(context, options, request);
 }
 
@@ -423,23 +401,18 @@ AMLMetadata::AsyncExportEngineConfigMetadata(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::financialservices::v1::
-        ExportEngineConfigMetadataRequest const& request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("engine_config=",
-                           internal::UrlEncode(request.engine_config())));
-  return child_->AsyncExportEngineConfigMetadata(cq, std::move(context),
-                                                 std::move(options), request);
+    google::cloud::financialservices::v1::ExportEngineConfigMetadataRequest const& request) {
+  SetMetadata(*context, *options, absl::StrCat("engine_config=", internal::UrlEncode(request.engine_config())));
+  return child_->AsyncExportEngineConfigMetadata(
+      cq, std::move(context), std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 AMLMetadata::ExportEngineConfigMetadata(
-    grpc::ClientContext& context, Options options,
-    google::cloud::financialservices::v1::
-        ExportEngineConfigMetadataRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("engine_config=",
-                           internal::UrlEncode(request.engine_config())));
+    grpc::ClientContext& context,
+    Options options,
+    google::cloud::financialservices::v1::ExportEngineConfigMetadataRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("engine_config=", internal::UrlEncode(request.engine_config())));
   return child_->ExportEngineConfigMetadata(context, options, request);
 }
 
@@ -448,60 +421,54 @@ AMLMetadata::AsyncDeleteEngineConfig(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::financialservices::v1::DeleteEngineConfigRequest const&
-        request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteEngineConfig(cq, std::move(context),
-                                         std::move(options), request);
+    google::cloud::financialservices::v1::DeleteEngineConfigRequest const& request) {
+  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteEngineConfig(
+      cq, std::move(context), std::move(options), request);
 }
 
-StatusOr<google::longrunning::Operation> AMLMetadata::DeleteEngineConfig(
-    grpc::ClientContext& context, Options options,
-    google::cloud::financialservices::v1::DeleteEngineConfigRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+StatusOr<google::longrunning::Operation>
+AMLMetadata::DeleteEngineConfig(
+    grpc::ClientContext& context,
+    Options options,
+    google::cloud::financialservices::v1::DeleteEngineConfigRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteEngineConfig(context, options, request);
 }
 
 StatusOr<google::cloud::financialservices::v1::EngineVersion>
 AMLMetadata::GetEngineVersion(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::financialservices::v1::GetEngineVersionRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::financialservices::v1::GetEngineVersionRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetEngineVersion(context, options, request);
 }
 
 StatusOr<google::cloud::financialservices::v1::ListEngineVersionsResponse>
 AMLMetadata::ListEngineVersions(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::financialservices::v1::ListEngineVersionsRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::financialservices::v1::ListEngineVersionsRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListEngineVersions(context, options, request);
 }
 
 StatusOr<google::cloud::financialservices::v1::ListPredictionResultsResponse>
 AMLMetadata::ListPredictionResults(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::financialservices::v1::ListPredictionResultsRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::financialservices::v1::ListPredictionResultsRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListPredictionResults(context, options, request);
 }
 
 StatusOr<google::cloud::financialservices::v1::PredictionResult>
 AMLMetadata::GetPredictionResult(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::financialservices::v1::GetPredictionResultRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::financialservices::v1::GetPredictionResultRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetPredictionResult(context, options, request);
 }
 
@@ -510,20 +477,18 @@ AMLMetadata::AsyncCreatePredictionResult(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::financialservices::v1::CreatePredictionResultRequest const&
-        request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreatePredictionResult(cq, std::move(context),
-                                             std::move(options), request);
+    google::cloud::financialservices::v1::CreatePredictionResultRequest const& request) {
+  SetMetadata(*context, *options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreatePredictionResult(
+      cq, std::move(context), std::move(options), request);
 }
 
-StatusOr<google::longrunning::Operation> AMLMetadata::CreatePredictionResult(
-    grpc::ClientContext& context, Options options,
-    google::cloud::financialservices::v1::CreatePredictionResultRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+StatusOr<google::longrunning::Operation>
+AMLMetadata::CreatePredictionResult(
+    grpc::ClientContext& context,
+    Options options,
+    google::cloud::financialservices::v1::CreatePredictionResultRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreatePredictionResult(context, options, request);
 }
 
@@ -532,24 +497,18 @@ AMLMetadata::AsyncUpdatePredictionResult(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::financialservices::v1::UpdatePredictionResultRequest const&
-        request) {
-  SetMetadata(
-      *context, *options,
-      absl::StrCat("prediction_result.name=",
-                   internal::UrlEncode(request.prediction_result().name())));
-  return child_->AsyncUpdatePredictionResult(cq, std::move(context),
-                                             std::move(options), request);
+    google::cloud::financialservices::v1::UpdatePredictionResultRequest const& request) {
+  SetMetadata(*context, *options, absl::StrCat("prediction_result.name=", internal::UrlEncode(request.prediction_result().name())));
+  return child_->AsyncUpdatePredictionResult(
+      cq, std::move(context), std::move(options), request);
 }
 
-StatusOr<google::longrunning::Operation> AMLMetadata::UpdatePredictionResult(
-    grpc::ClientContext& context, Options options,
-    google::cloud::financialservices::v1::UpdatePredictionResultRequest const&
-        request) {
-  SetMetadata(
-      context, options,
-      absl::StrCat("prediction_result.name=",
-                   internal::UrlEncode(request.prediction_result().name())));
+StatusOr<google::longrunning::Operation>
+AMLMetadata::UpdatePredictionResult(
+    grpc::ClientContext& context,
+    Options options,
+    google::cloud::financialservices::v1::UpdatePredictionResultRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("prediction_result.name=", internal::UrlEncode(request.prediction_result().name())));
   return child_->UpdatePredictionResult(context, options, request);
 }
 
@@ -558,23 +517,18 @@ AMLMetadata::AsyncExportPredictionResultMetadata(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::financialservices::v1::
-        ExportPredictionResultMetadataRequest const& request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("prediction_result=",
-                           internal::UrlEncode(request.prediction_result())));
+    google::cloud::financialservices::v1::ExportPredictionResultMetadataRequest const& request) {
+  SetMetadata(*context, *options, absl::StrCat("prediction_result=", internal::UrlEncode(request.prediction_result())));
   return child_->AsyncExportPredictionResultMetadata(
       cq, std::move(context), std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 AMLMetadata::ExportPredictionResultMetadata(
-    grpc::ClientContext& context, Options options,
-    google::cloud::financialservices::v1::
-        ExportPredictionResultMetadataRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("prediction_result=",
-                           internal::UrlEncode(request.prediction_result())));
+    grpc::ClientContext& context,
+    Options options,
+    google::cloud::financialservices::v1::ExportPredictionResultMetadataRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("prediction_result=", internal::UrlEncode(request.prediction_result())));
   return child_->ExportPredictionResultMetadata(context, options, request);
 }
 
@@ -583,40 +537,36 @@ AMLMetadata::AsyncDeletePredictionResult(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::financialservices::v1::DeletePredictionResultRequest const&
-        request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeletePredictionResult(cq, std::move(context),
-                                             std::move(options), request);
+    google::cloud::financialservices::v1::DeletePredictionResultRequest const& request) {
+  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeletePredictionResult(
+      cq, std::move(context), std::move(options), request);
 }
 
-StatusOr<google::longrunning::Operation> AMLMetadata::DeletePredictionResult(
-    grpc::ClientContext& context, Options options,
-    google::cloud::financialservices::v1::DeletePredictionResultRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+StatusOr<google::longrunning::Operation>
+AMLMetadata::DeletePredictionResult(
+    grpc::ClientContext& context,
+    Options options,
+    google::cloud::financialservices::v1::DeletePredictionResultRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeletePredictionResult(context, options, request);
 }
 
 StatusOr<google::cloud::financialservices::v1::ListBacktestResultsResponse>
 AMLMetadata::ListBacktestResults(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::financialservices::v1::ListBacktestResultsRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::financialservices::v1::ListBacktestResultsRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListBacktestResults(context, options, request);
 }
 
 StatusOr<google::cloud::financialservices::v1::BacktestResult>
 AMLMetadata::GetBacktestResult(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::financialservices::v1::GetBacktestResultRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::financialservices::v1::GetBacktestResultRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetBacktestResult(context, options, request);
 }
 
@@ -625,20 +575,18 @@ AMLMetadata::AsyncCreateBacktestResult(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::financialservices::v1::CreateBacktestResultRequest const&
-        request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateBacktestResult(cq, std::move(context),
-                                           std::move(options), request);
+    google::cloud::financialservices::v1::CreateBacktestResultRequest const& request) {
+  SetMetadata(*context, *options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateBacktestResult(
+      cq, std::move(context), std::move(options), request);
 }
 
-StatusOr<google::longrunning::Operation> AMLMetadata::CreateBacktestResult(
-    grpc::ClientContext& context, Options options,
-    google::cloud::financialservices::v1::CreateBacktestResultRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+StatusOr<google::longrunning::Operation>
+AMLMetadata::CreateBacktestResult(
+    grpc::ClientContext& context,
+    Options options,
+    google::cloud::financialservices::v1::CreateBacktestResultRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateBacktestResult(context, options, request);
 }
 
@@ -647,24 +595,18 @@ AMLMetadata::AsyncUpdateBacktestResult(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::financialservices::v1::UpdateBacktestResultRequest const&
-        request) {
-  SetMetadata(
-      *context, *options,
-      absl::StrCat("backtest_result.name=",
-                   internal::UrlEncode(request.backtest_result().name())));
-  return child_->AsyncUpdateBacktestResult(cq, std::move(context),
-                                           std::move(options), request);
+    google::cloud::financialservices::v1::UpdateBacktestResultRequest const& request) {
+  SetMetadata(*context, *options, absl::StrCat("backtest_result.name=", internal::UrlEncode(request.backtest_result().name())));
+  return child_->AsyncUpdateBacktestResult(
+      cq, std::move(context), std::move(options), request);
 }
 
-StatusOr<google::longrunning::Operation> AMLMetadata::UpdateBacktestResult(
-    grpc::ClientContext& context, Options options,
-    google::cloud::financialservices::v1::UpdateBacktestResultRequest const&
-        request) {
-  SetMetadata(
-      context, options,
-      absl::StrCat("backtest_result.name=",
-                   internal::UrlEncode(request.backtest_result().name())));
+StatusOr<google::longrunning::Operation>
+AMLMetadata::UpdateBacktestResult(
+    grpc::ClientContext& context,
+    Options options,
+    google::cloud::financialservices::v1::UpdateBacktestResultRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("backtest_result.name=", internal::UrlEncode(request.backtest_result().name())));
   return child_->UpdateBacktestResult(context, options, request);
 }
 
@@ -673,23 +615,18 @@ AMLMetadata::AsyncExportBacktestResultMetadata(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::financialservices::v1::
-        ExportBacktestResultMetadataRequest const& request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("backtest_result=",
-                           internal::UrlEncode(request.backtest_result())));
-  return child_->AsyncExportBacktestResultMetadata(cq, std::move(context),
-                                                   std::move(options), request);
+    google::cloud::financialservices::v1::ExportBacktestResultMetadataRequest const& request) {
+  SetMetadata(*context, *options, absl::StrCat("backtest_result=", internal::UrlEncode(request.backtest_result())));
+  return child_->AsyncExportBacktestResultMetadata(
+      cq, std::move(context), std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 AMLMetadata::ExportBacktestResultMetadata(
-    grpc::ClientContext& context, Options options,
-    google::cloud::financialservices::v1::
-        ExportBacktestResultMetadataRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("backtest_result=",
-                           internal::UrlEncode(request.backtest_result())));
+    grpc::ClientContext& context,
+    Options options,
+    google::cloud::financialservices::v1::ExportBacktestResultMetadataRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("backtest_result=", internal::UrlEncode(request.backtest_result())));
   return child_->ExportBacktestResultMetadata(context, options, request);
 }
 
@@ -698,82 +635,85 @@ AMLMetadata::AsyncDeleteBacktestResult(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::financialservices::v1::DeleteBacktestResultRequest const&
-        request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteBacktestResult(cq, std::move(context),
-                                           std::move(options), request);
+    google::cloud::financialservices::v1::DeleteBacktestResultRequest const& request) {
+  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteBacktestResult(
+      cq, std::move(context), std::move(options), request);
 }
 
-StatusOr<google::longrunning::Operation> AMLMetadata::DeleteBacktestResult(
-    grpc::ClientContext& context, Options options,
-    google::cloud::financialservices::v1::DeleteBacktestResultRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+StatusOr<google::longrunning::Operation>
+AMLMetadata::DeleteBacktestResult(
+    grpc::ClientContext& context,
+    Options options,
+    google::cloud::financialservices::v1::DeleteBacktestResultRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteBacktestResult(context, options, request);
 }
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 AMLMetadata::ListLocations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ListLocations(context, options, request);
 }
 
-StatusOr<google::cloud::location::Location> AMLMetadata::GetLocation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::location::Location>
+AMLMetadata::GetLocation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetLocation(context, options, request);
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
 AMLMetadata::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ListOperations(context, options, request);
 }
 
-StatusOr<google::longrunning::Operation> AMLMetadata::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::Operation>
+AMLMetadata::GetOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetOperation(context, options, request);
 }
 
-Status AMLMetadata::DeleteOperation(
-    grpc::ClientContext& context, Options const& options,
+Status
+AMLMetadata::DeleteOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteOperation(context, options, request);
 }
 
-Status AMLMetadata::CancelOperation(
-    grpc::ClientContext& context, Options const& options,
+Status
+AMLMetadata::CancelOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->CancelOperation(context, options, request);
 }
 
-future<StatusOr<google::longrunning::Operation>> AMLMetadata::AsyncGetOperation(
+future<StatusOr<google::longrunning::Operation>>
+AMLMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(cq, std::move(context), std::move(options),
-                                   request);
+  return child_->AsyncGetOperation(
+      cq, std::move(context), std::move(options), request);
 }
 
 future<Status> AMLMetadata::AsyncCancelOperation(
@@ -783,21 +723,21 @@ future<Status> AMLMetadata::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(cq, std::move(context),
-                                      std::move(options), request);
+  return child_->AsyncCancelOperation(
+      cq, std::move(context), std::move(options), request);
 }
 
 void AMLMetadata::SetMetadata(grpc::ClientContext& context,
-                              Options const& options,
-                              std::string const& request_params) {
+                                        Options const& options,
+                                        std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
 void AMLMetadata::SetMetadata(grpc::ClientContext& context,
-                              Options const& options) {
-  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
-                                       api_client_header_);
+                                        Options const& options) {
+  google::cloud::internal::SetMetadata(
+      context, options, fixed_metadata_, api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

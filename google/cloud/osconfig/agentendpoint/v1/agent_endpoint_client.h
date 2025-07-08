@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_OSCONFIG_AGENTENDPOINT_V1_AGENT_ENDPOINT_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_OSCONFIG_AGENTENDPOINT_V1_AGENT_ENDPOINT_CLIENT_H
 
-#include "google/cloud/osconfig/agentendpoint/v1/agent_endpoint_connection.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
+#include "google/cloud/osconfig/agentendpoint/v1/agent_endpoint_connection.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
@@ -61,28 +61,23 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class AgentEndpointServiceClient {
  public:
-  explicit AgentEndpointServiceClient(
-      std::shared_ptr<AgentEndpointServiceConnection> connection,
-      Options opts = {});
+  explicit AgentEndpointServiceClient(std::shared_ptr<AgentEndpointServiceConnection> connection, Options opts = {});
   ~AgentEndpointServiceClient();
 
   ///@{
   /// @name Copy and move support
   AgentEndpointServiceClient(AgentEndpointServiceClient const&) = default;
-  AgentEndpointServiceClient& operator=(AgentEndpointServiceClient const&) =
-      default;
+  AgentEndpointServiceClient& operator=(AgentEndpointServiceClient const&) = default;
   AgentEndpointServiceClient(AgentEndpointServiceClient&&) = default;
   AgentEndpointServiceClient& operator=(AgentEndpointServiceClient&&) = default;
   ///@}
 
   ///@{
   /// @name Equality
-  friend bool operator==(AgentEndpointServiceClient const& a,
-                         AgentEndpointServiceClient const& b) {
+  friend bool operator==(AgentEndpointServiceClient const& a, AgentEndpointServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(AgentEndpointServiceClient const& a,
-                         AgentEndpointServiceClient const& b) {
+  friend bool operator!=(AgentEndpointServiceClient const& a, AgentEndpointServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -112,10 +107,8 @@ class AgentEndpointServiceClient {
   /// [google.cloud.osconfig.agentendpoint.v1.ReceiveTaskNotificationResponse]: @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L87}
   ///
   // clang-format on
-  StreamRange<google::cloud::osconfig::agentendpoint::v1::
-                  ReceiveTaskNotificationResponse>
-  ReceiveTaskNotification(std::string const& instance_id_token,
-                          std::string const& agent_version, Options opts = {});
+  StreamRange<google::cloud::osconfig::agentendpoint::v1::ReceiveTaskNotificationResponse>
+  ReceiveTaskNotification(std::string const& instance_id_token, std::string const& agent_version, Options opts = {});
 
   // clang-format off
   ///
@@ -144,11 +137,8 @@ class AgentEndpointServiceClient {
   /// [google.cloud.osconfig.agentendpoint.v1.ReceiveTaskNotificationResponse]: @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L87}
   ///
   // clang-format on
-  StreamRange<google::cloud::osconfig::agentendpoint::v1::
-                  ReceiveTaskNotificationResponse>
-  ReceiveTaskNotification(google::cloud::osconfig::agentendpoint::v1::
-                              ReceiveTaskNotificationRequest const& request,
-                          Options opts = {});
+  StreamRange<google::cloud::osconfig::agentendpoint::v1::ReceiveTaskNotificationResponse>
+  ReceiveTaskNotification(google::cloud::osconfig::agentendpoint::v1::ReceiveTaskNotificationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -205,10 +195,7 @@ class AgentEndpointServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::osconfig::agentendpoint::v1::StartNextTaskResponse>
-  StartNextTask(
-      google::cloud::osconfig::agentendpoint::v1::StartNextTaskRequest const&
-          request,
-      Options opts = {});
+  StartNextTask(google::cloud::osconfig::agentendpoint::v1::StartNextTaskRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -242,12 +229,8 @@ class AgentEndpointServiceClient {
   /// [google.cloud.osconfig.agentendpoint.v1.ReportTaskProgressResponse]: @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L137}
   ///
   // clang-format on
-  StatusOr<
-      google::cloud::osconfig::agentendpoint::v1::ReportTaskProgressResponse>
-  ReportTaskProgress(
-      std::string const& instance_id_token, std::string const& task_id,
-      google::cloud::osconfig::agentendpoint::v1::TaskType task_type,
-      Options opts = {});
+  StatusOr<google::cloud::osconfig::agentendpoint::v1::ReportTaskProgressResponse>
+  ReportTaskProgress(std::string const& instance_id_token, std::string const& task_id, google::cloud::osconfig::agentendpoint::v1::TaskType task_type, Options opts = {});
 
   // clang-format off
   ///
@@ -276,11 +259,8 @@ class AgentEndpointServiceClient {
   /// [google.cloud.osconfig.agentendpoint.v1.ReportTaskProgressResponse]: @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L137}
   ///
   // clang-format on
-  StatusOr<
-      google::cloud::osconfig::agentendpoint::v1::ReportTaskProgressResponse>
-  ReportTaskProgress(google::cloud::osconfig::agentendpoint::v1::
-                         ReportTaskProgressRequest const& request,
-                     Options opts = {});
+  StatusOr<google::cloud::osconfig::agentendpoint::v1::ReportTaskProgressResponse>
+  ReportTaskProgress(google::cloud::osconfig::agentendpoint::v1::ReportTaskProgressRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -316,12 +296,8 @@ class AgentEndpointServiceClient {
   /// [google.cloud.osconfig.agentendpoint.v1.ReportTaskCompleteResponse]: @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L178}
   ///
   // clang-format on
-  StatusOr<
-      google::cloud::osconfig::agentendpoint::v1::ReportTaskCompleteResponse>
-  ReportTaskComplete(
-      std::string const& instance_id_token, std::string const& task_id,
-      google::cloud::osconfig::agentendpoint::v1::TaskType task_type,
-      std::string const& error_message, Options opts = {});
+  StatusOr<google::cloud::osconfig::agentendpoint::v1::ReportTaskCompleteResponse>
+  ReportTaskComplete(std::string const& instance_id_token, std::string const& task_id, google::cloud::osconfig::agentendpoint::v1::TaskType task_type, std::string const& error_message, Options opts = {});
 
   // clang-format off
   ///
@@ -351,11 +327,8 @@ class AgentEndpointServiceClient {
   /// [google.cloud.osconfig.agentendpoint.v1.ReportTaskCompleteResponse]: @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L178}
   ///
   // clang-format on
-  StatusOr<
-      google::cloud::osconfig::agentendpoint::v1::ReportTaskCompleteResponse>
-  ReportTaskComplete(google::cloud::osconfig::agentendpoint::v1::
-                         ReportTaskCompleteRequest const& request,
-                     Options opts = {});
+  StatusOr<google::cloud::osconfig::agentendpoint::v1::ReportTaskCompleteResponse>
+  ReportTaskComplete(google::cloud::osconfig::agentendpoint::v1::ReportTaskCompleteRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -387,10 +360,7 @@ class AgentEndpointServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::osconfig::agentendpoint::v1::RegisterAgentResponse>
-  RegisterAgent(std::string const& instance_id_token,
-                std::string const& agent_version,
-                std::vector<std::string> const& supported_capabilities,
-                Options opts = {});
+  RegisterAgent(std::string const& instance_id_token, std::string const& agent_version, std::vector<std::string> const& supported_capabilities, Options opts = {});
 
   // clang-format off
   ///
@@ -420,10 +390,7 @@ class AgentEndpointServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::osconfig::agentendpoint::v1::RegisterAgentResponse>
-  RegisterAgent(
-      google::cloud::osconfig::agentendpoint::v1::RegisterAgentRequest const&
-          request,
-      Options opts = {});
+  RegisterAgent(google::cloud::osconfig::agentendpoint::v1::RegisterAgentRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -456,11 +423,7 @@ class AgentEndpointServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::osconfig::agentendpoint::v1::ReportInventoryResponse>
-  ReportInventory(
-      std::string const& instance_id_token,
-      std::string const& inventory_checksum,
-      google::cloud::osconfig::agentendpoint::v1::Inventory const& inventory,
-      Options opts = {});
+  ReportInventory(std::string const& instance_id_token, std::string const& inventory_checksum, google::cloud::osconfig::agentendpoint::v1::Inventory const& inventory, Options opts = {});
 
   // clang-format off
   ///
@@ -490,10 +453,7 @@ class AgentEndpointServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::osconfig::agentendpoint::v1::ReportInventoryResponse>
-  ReportInventory(
-      google::cloud::osconfig::agentendpoint::v1::ReportInventoryRequest const&
-          request,
-      Options opts = {});
+  ReportInventory(google::cloud::osconfig::agentendpoint::v1::ReportInventoryRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<AgentEndpointServiceConnection> connection_;

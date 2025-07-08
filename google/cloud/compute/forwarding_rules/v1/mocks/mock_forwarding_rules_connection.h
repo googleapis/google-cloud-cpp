@@ -42,33 +42,25 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockForwardingRulesConnection
-    : public compute_forwarding_rules_v1::ForwardingRulesConnection {
+class MockForwardingRulesConnection : public compute_forwarding_rules_v1::ForwardingRulesConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(
-      (StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::
-                                              ForwardingRulesScopedList>>),
-      AggregatedListForwardingRules,
-      (google::cloud::cpp::compute::forwarding_rules::v1::
-           AggregatedListForwardingRulesRequest request),
-      (override));
+  MOCK_METHOD((StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::ForwardingRulesScopedList>>),
+  AggregatedListForwardingRules,
+  (google::cloud::cpp::compute::forwarding_rules::v1::AggregatedListForwardingRulesRequest request), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteForwardingRule(Matcher<google::cloud::cpp::compute::forwarding_rules::v1::DeleteForwardingRuleRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteForwardingRule(Matcher<google::cloud::cpp::compute::forwarding_rules::v1::DeleteForwardingRuleRequest const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              DeleteForwardingRule,
-              (google::cloud::cpp::compute::forwarding_rules::v1::
-                   DeleteForwardingRuleRequest const& request),
-              (override));
+  DeleteForwardingRule,
+  (google::cloud::cpp::compute::forwarding_rules::v1::DeleteForwardingRuleRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -77,45 +69,36 @@ class MockForwardingRulesConnection
   /// EXPECT_CALL(*mock, DeleteForwardingRule(_, _))
   /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-              DeleteForwardingRule,
-              (NoAwaitTag, google::cloud::cpp::compute::forwarding_rules::v1::
-                               DeleteForwardingRuleRequest const& request),
-              (override));
+  DeleteForwardingRule, (NoAwaitTag,
+    google::cloud::cpp::compute::forwarding_rules::v1::DeleteForwardingRuleRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteForwardingRule(Matcher<google::cloud::cpp::compute::v1::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteForwardingRule(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              DeleteForwardingRule,
-              (google::cloud::cpp::compute::v1::Operation const& operation),
-              (override));
+  DeleteForwardingRule, (
+    google::cloud::cpp::compute::v1::Operation const& operation), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::ForwardingRule>,
-              GetForwardingRule,
-              (google::cloud::cpp::compute::forwarding_rules::v1::
-                   GetForwardingRuleRequest const& request),
-              (override));
+  GetForwardingRule,
+  (google::cloud::cpp::compute::forwarding_rules::v1::GetForwardingRuleRequest const& request), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// InsertForwardingRule(Matcher<google::cloud::cpp::compute::forwarding_rules::v1::InsertForwardingRuleRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, InsertForwardingRule(Matcher<google::cloud::cpp::compute::forwarding_rules::v1::InsertForwardingRuleRequest const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              InsertForwardingRule,
-              (google::cloud::cpp::compute::forwarding_rules::v1::
-                   InsertForwardingRuleRequest const& request),
-              (override));
+  InsertForwardingRule,
+  (google::cloud::cpp::compute::forwarding_rules::v1::InsertForwardingRuleRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -124,45 +107,36 @@ class MockForwardingRulesConnection
   /// EXPECT_CALL(*mock, InsertForwardingRule(_, _))
   /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-              InsertForwardingRule,
-              (NoAwaitTag, google::cloud::cpp::compute::forwarding_rules::v1::
-                               InsertForwardingRuleRequest const& request),
-              (override));
+  InsertForwardingRule, (NoAwaitTag,
+    google::cloud::cpp::compute::forwarding_rules::v1::InsertForwardingRuleRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// InsertForwardingRule(Matcher<google::cloud::cpp::compute::v1::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, InsertForwardingRule(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              InsertForwardingRule,
-              (google::cloud::cpp::compute::v1::Operation const& operation),
-              (override));
+  InsertForwardingRule, (
+    google::cloud::cpp::compute::v1::Operation const& operation), (override));
 
   MOCK_METHOD((StreamRange<google::cloud::cpp::compute::v1::ForwardingRule>),
-              ListForwardingRules,
-              (google::cloud::cpp::compute::forwarding_rules::v1::
-                   ListForwardingRulesRequest request),
-              (override));
+  ListForwardingRules,
+  (google::cloud::cpp::compute::forwarding_rules::v1::ListForwardingRulesRequest request), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// PatchForwardingRule(Matcher<google::cloud::cpp::compute::forwarding_rules::v1::PatchForwardingRuleRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, PatchForwardingRule(Matcher<google::cloud::cpp::compute::forwarding_rules::v1::PatchForwardingRuleRequest const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              PatchForwardingRule,
-              (google::cloud::cpp::compute::forwarding_rules::v1::
-                   PatchForwardingRuleRequest const& request),
-              (override));
+  PatchForwardingRule,
+  (google::cloud::cpp::compute::forwarding_rules::v1::PatchForwardingRuleRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -171,39 +145,32 @@ class MockForwardingRulesConnection
   /// EXPECT_CALL(*mock, PatchForwardingRule(_, _))
   /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-              PatchForwardingRule,
-              (NoAwaitTag, google::cloud::cpp::compute::forwarding_rules::v1::
-                               PatchForwardingRuleRequest const& request),
-              (override));
+  PatchForwardingRule, (NoAwaitTag,
+    google::cloud::cpp::compute::forwarding_rules::v1::PatchForwardingRuleRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// PatchForwardingRule(Matcher<google::cloud::cpp::compute::v1::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, PatchForwardingRule(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              PatchForwardingRule,
-              (google::cloud::cpp::compute::v1::Operation const& operation),
-              (override));
+  PatchForwardingRule, (
+    google::cloud::cpp::compute::v1::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// SetLabels(Matcher<google::cloud::cpp::compute::forwarding_rules::v1::SetLabelsRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, SetLabels(Matcher<google::cloud::cpp::compute::forwarding_rules::v1::SetLabelsRequest const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              SetLabels,
-              (google::cloud::cpp::compute::forwarding_rules::v1::
-                   SetLabelsRequest const& request),
-              (override));
+  SetLabels,
+  (google::cloud::cpp::compute::forwarding_rules::v1::SetLabelsRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -211,38 +178,33 @@ class MockForwardingRulesConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, SetLabels(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>, SetLabels,
-              (NoAwaitTag, google::cloud::cpp::compute::forwarding_rules::v1::
-                               SetLabelsRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+  SetLabels, (NoAwaitTag,
+    google::cloud::cpp::compute::forwarding_rules::v1::SetLabelsRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// SetLabels(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
+  /// EXPECT_CALL(*mock, SetLabels(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              SetLabels,
-              (google::cloud::cpp::compute::v1::Operation const& operation),
-              (override));
+  SetLabels, (
+    google::cloud::cpp::compute::v1::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// SetTarget(Matcher<google::cloud::cpp::compute::forwarding_rules::v1::SetTargetRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, SetTarget(Matcher<google::cloud::cpp::compute::forwarding_rules::v1::SetTargetRequest const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              SetTarget,
-              (google::cloud::cpp::compute::forwarding_rules::v1::
-                   SetTargetRequest const& request),
-              (override));
+  SetTarget,
+  (google::cloud::cpp::compute::forwarding_rules::v1::SetTargetRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -250,23 +212,21 @@ class MockForwardingRulesConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, SetTarget(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>, SetTarget,
-              (NoAwaitTag, google::cloud::cpp::compute::forwarding_rules::v1::
-                               SetTargetRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+  SetTarget, (NoAwaitTag,
+    google::cloud::cpp::compute::forwarding_rules::v1::SetTargetRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// SetTarget(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
+  /// EXPECT_CALL(*mock, SetTarget(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              SetTarget,
-              (google::cloud::cpp::compute::v1::Operation const& operation),
-              (override));
+  SetTarget, (
+    google::cloud::cpp::compute::v1::Operation const& operation), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -36,71 +36,57 @@ class ConversationsTracingConnection
   ~ConversationsTracingConnection() override = default;
 
   explicit ConversationsTracingConnection(
-      std::shared_ptr<dialogflow_es::ConversationsConnection> child);
+    std::shared_ptr<dialogflow_es::ConversationsConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::dialogflow::v2::Conversation> CreateConversation(
-      google::cloud::dialogflow::v2::CreateConversationRequest const& request)
-      override;
+  StatusOr<google::cloud::dialogflow::v2::Conversation>
+  CreateConversation(google::cloud::dialogflow::v2::CreateConversationRequest const& request) override;
 
-  StreamRange<google::cloud::dialogflow::v2::Conversation> ListConversations(
-      google::cloud::dialogflow::v2::ListConversationsRequest request) override;
+  StreamRange<google::cloud::dialogflow::v2::Conversation>
+  ListConversations(google::cloud::dialogflow::v2::ListConversationsRequest request) override;
 
-  StatusOr<google::cloud::dialogflow::v2::Conversation> GetConversation(
-      google::cloud::dialogflow::v2::GetConversationRequest const& request)
-      override;
+  StatusOr<google::cloud::dialogflow::v2::Conversation>
+  GetConversation(google::cloud::dialogflow::v2::GetConversationRequest const& request) override;
 
-  StatusOr<google::cloud::dialogflow::v2::Conversation> CompleteConversation(
-      google::cloud::dialogflow::v2::CompleteConversationRequest const& request)
-      override;
+  StatusOr<google::cloud::dialogflow::v2::Conversation>
+  CompleteConversation(google::cloud::dialogflow::v2::CompleteConversationRequest const& request) override;
 
   StatusOr<google::cloud::dialogflow::v2::IngestContextReferencesResponse>
-  IngestContextReferences(
-      google::cloud::dialogflow::v2::IngestContextReferencesRequest const&
-          request) override;
+  IngestContextReferences(google::cloud::dialogflow::v2::IngestContextReferencesRequest const& request) override;
 
-  StreamRange<google::cloud::dialogflow::v2::Message> ListMessages(
-      google::cloud::dialogflow::v2::ListMessagesRequest request) override;
+  StreamRange<google::cloud::dialogflow::v2::Message>
+  ListMessages(google::cloud::dialogflow::v2::ListMessagesRequest request) override;
 
   StatusOr<google::cloud::dialogflow::v2::SuggestConversationSummaryResponse>
-  SuggestConversationSummary(
-      google::cloud::dialogflow::v2::SuggestConversationSummaryRequest const&
-          request) override;
+  SuggestConversationSummary(google::cloud::dialogflow::v2::SuggestConversationSummaryRequest const& request) override;
 
   StatusOr<google::cloud::dialogflow::v2::GenerateStatelessSummaryResponse>
-  GenerateStatelessSummary(
-      google::cloud::dialogflow::v2::GenerateStatelessSummaryRequest const&
-          request) override;
+  GenerateStatelessSummary(google::cloud::dialogflow::v2::GenerateStatelessSummaryRequest const& request) override;
 
   StatusOr<google::cloud::dialogflow::v2::GenerateStatelessSuggestionResponse>
-  GenerateStatelessSuggestion(
-      google::cloud::dialogflow::v2::GenerateStatelessSuggestionRequest const&
-          request) override;
+  GenerateStatelessSuggestion(google::cloud::dialogflow::v2::GenerateStatelessSuggestionRequest const& request) override;
 
   StatusOr<google::cloud::dialogflow::v2::SearchKnowledgeResponse>
-  SearchKnowledge(google::cloud::dialogflow::v2::SearchKnowledgeRequest const&
-                      request) override;
+  SearchKnowledge(google::cloud::dialogflow::v2::SearchKnowledgeRequest const& request) override;
 
   StatusOr<google::cloud::dialogflow::v2::GenerateSuggestionsResponse>
-  GenerateSuggestions(
-      google::cloud::dialogflow::v2::GenerateSuggestionsRequest const& request)
-      override;
+  GenerateSuggestions(google::cloud::dialogflow::v2::GenerateSuggestionsRequest const& request) override;
 
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request) override;
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request) override;
 
-  StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request) override;
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request) override;
 
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request) override;
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::shared_ptr<dialogflow_es::ConversationsConnection> child_;

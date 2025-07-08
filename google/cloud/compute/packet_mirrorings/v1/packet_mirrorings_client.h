@@ -64,9 +64,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class PacketMirroringsClient {
  public:
-  explicit PacketMirroringsClient(
-      std::shared_ptr<PacketMirroringsConnection> connection,
-      Options opts = {});
+  explicit PacketMirroringsClient(std::shared_ptr<PacketMirroringsConnection> connection, Options opts = {});
   ~PacketMirroringsClient();
 
   ///@{
@@ -79,12 +77,10 @@ class PacketMirroringsClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(PacketMirroringsClient const& a,
-                         PacketMirroringsClient const& b) {
+  friend bool operator==(PacketMirroringsClient const& a, PacketMirroringsClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(PacketMirroringsClient const& a,
-                         PacketMirroringsClient const& b) {
+  friend bool operator!=(PacketMirroringsClient const& a, PacketMirroringsClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -123,8 +119,7 @@ class PacketMirroringsClient {
   /// [google.cloud.cpp.compute.v1.PacketMirroringsScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_093.proto#L392}
   ///
   // clang-format on
-  StreamRange<std::pair<
-      std::string, google::cloud::cpp::compute::v1::PacketMirroringsScopedList>>
+  StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::PacketMirroringsScopedList>>
   AggregatedListPacketMirrorings(std::string const& project, Options opts = {});
 
   // clang-format off
@@ -166,12 +161,8 @@ class PacketMirroringsClient {
   /// [google.cloud.cpp.compute.v1.PacketMirroringsScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_093.proto#L392}
   ///
   // clang-format on
-  StreamRange<std::pair<
-      std::string, google::cloud::cpp::compute::v1::PacketMirroringsScopedList>>
-  AggregatedListPacketMirrorings(
-      google::cloud::cpp::compute::packet_mirrorings::v1::
-          AggregatedListPacketMirroringsRequest request,
-      Options opts = {});
+  StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::PacketMirroringsScopedList>>
+  AggregatedListPacketMirrorings(google::cloud::cpp::compute::packet_mirrorings::v1::AggregatedListPacketMirroringsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -205,8 +196,7 @@ class PacketMirroringsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeletePacketMirroring(std::string const& project, std::string const& region,
-                        std::string const& packet_mirroring, Options opts = {});
+  DeletePacketMirroring(std::string const& project, std::string const& region, std::string const& packet_mirroring, Options opts = {});
 
   // clang-format off
   ///
@@ -219,9 +209,8 @@ class PacketMirroringsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> DeletePacketMirroring(
-      NoAwaitTag, std::string const& project, std::string const& region,
-      std::string const& packet_mirroring, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeletePacketMirroring(NoAwaitTag, std::string const& project, std::string const& region, std::string const& packet_mirroring, Options opts = {});
 
   // clang-format off
   ///
@@ -258,9 +247,7 @@ class PacketMirroringsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeletePacketMirroring(google::cloud::cpp::compute::packet_mirrorings::v1::
-                            DeletePacketMirroringRequest const& request,
-                        Options opts = {});
+  DeletePacketMirroring(google::cloud::cpp::compute::packet_mirrorings::v1::DeletePacketMirroringRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -273,11 +260,8 @@ class PacketMirroringsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> DeletePacketMirroring(
-      NoAwaitTag,
-      google::cloud::cpp::compute::packet_mirrorings::v1::
-          DeletePacketMirroringRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeletePacketMirroring(NoAwaitTag, google::cloud::cpp::compute::packet_mirrorings::v1::DeletePacketMirroringRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -289,9 +273,7 @@ class PacketMirroringsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeletePacketMirroring(
-      google::cloud::cpp::compute::v1::Operation const& operation,
-      Options opts = {});
+  DeletePacketMirroring(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -318,9 +300,8 @@ class PacketMirroringsClient {
   /// [google.cloud.cpp.compute.v1.PacketMirroring]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_093.proto#L29}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::PacketMirroring> GetPacketMirroring(
-      std::string const& project, std::string const& region,
-      std::string const& packet_mirroring, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::PacketMirroring>
+  GetPacketMirroring(std::string const& project, std::string const& region, std::string const& packet_mirroring, Options opts = {});
 
   // clang-format off
   ///
@@ -350,10 +331,8 @@ class PacketMirroringsClient {
   /// [google.cloud.cpp.compute.v1.PacketMirroring]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_093.proto#L29}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::PacketMirroring> GetPacketMirroring(
-      google::cloud::cpp::compute::packet_mirrorings::v1::
-          GetPacketMirroringRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::PacketMirroring>
+  GetPacketMirroring(google::cloud::cpp::compute::packet_mirrorings::v1::GetPacketMirroringRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -388,10 +367,7 @@ class PacketMirroringsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertPacketMirroring(std::string const& project, std::string const& region,
-                        google::cloud::cpp::compute::v1::PacketMirroring const&
-                            packet_mirroring_resource,
-                        Options opts = {});
+  InsertPacketMirroring(std::string const& project, std::string const& region, google::cloud::cpp::compute::v1::PacketMirroring const& packet_mirroring_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -404,11 +380,8 @@ class PacketMirroringsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertPacketMirroring(
-      NoAwaitTag, std::string const& project, std::string const& region,
-      google::cloud::cpp::compute::v1::PacketMirroring const&
-          packet_mirroring_resource,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  InsertPacketMirroring(NoAwaitTag, std::string const& project, std::string const& region, google::cloud::cpp::compute::v1::PacketMirroring const& packet_mirroring_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -446,9 +419,7 @@ class PacketMirroringsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertPacketMirroring(google::cloud::cpp::compute::packet_mirrorings::v1::
-                            InsertPacketMirroringRequest const& request,
-                        Options opts = {});
+  InsertPacketMirroring(google::cloud::cpp::compute::packet_mirrorings::v1::InsertPacketMirroringRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -461,11 +432,8 @@ class PacketMirroringsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertPacketMirroring(
-      NoAwaitTag,
-      google::cloud::cpp::compute::packet_mirrorings::v1::
-          InsertPacketMirroringRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  InsertPacketMirroring(NoAwaitTag, google::cloud::cpp::compute::packet_mirrorings::v1::InsertPacketMirroringRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -477,9 +445,7 @@ class PacketMirroringsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertPacketMirroring(
-      google::cloud::cpp::compute::v1::Operation const& operation,
-      Options opts = {});
+  InsertPacketMirroring(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -516,8 +482,7 @@ class PacketMirroringsClient {
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::PacketMirroring>
-  ListPacketMirrorings(std::string const& project, std::string const& region,
-                       Options opts = {});
+  ListPacketMirrorings(std::string const& project, std::string const& region, Options opts = {});
 
   // clang-format off
   ///
@@ -558,9 +523,7 @@ class PacketMirroringsClient {
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::PacketMirroring>
-  ListPacketMirrorings(google::cloud::cpp::compute::packet_mirrorings::v1::
-                           ListPacketMirroringsRequest request,
-                       Options opts = {});
+  ListPacketMirrorings(google::cloud::cpp::compute::packet_mirrorings::v1::ListPacketMirroringsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -597,11 +560,7 @@ class PacketMirroringsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchPacketMirroring(std::string const& project, std::string const& region,
-                       std::string const& packet_mirroring,
-                       google::cloud::cpp::compute::v1::PacketMirroring const&
-                           packet_mirroring_resource,
-                       Options opts = {});
+  PatchPacketMirroring(std::string const& project, std::string const& region, std::string const& packet_mirroring, google::cloud::cpp::compute::v1::PacketMirroring const& packet_mirroring_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -614,12 +573,8 @@ class PacketMirroringsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchPacketMirroring(
-      NoAwaitTag, std::string const& project, std::string const& region,
-      std::string const& packet_mirroring,
-      google::cloud::cpp::compute::v1::PacketMirroring const&
-          packet_mirroring_resource,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  PatchPacketMirroring(NoAwaitTag, std::string const& project, std::string const& region, std::string const& packet_mirroring, google::cloud::cpp::compute::v1::PacketMirroring const& packet_mirroring_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -658,9 +613,7 @@ class PacketMirroringsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchPacketMirroring(google::cloud::cpp::compute::packet_mirrorings::v1::
-                           PatchPacketMirroringRequest const& request,
-                       Options opts = {});
+  PatchPacketMirroring(google::cloud::cpp::compute::packet_mirrorings::v1::PatchPacketMirroringRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -673,11 +626,8 @@ class PacketMirroringsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchPacketMirroring(
-      NoAwaitTag,
-      google::cloud::cpp::compute::packet_mirrorings::v1::
-          PatchPacketMirroringRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  PatchPacketMirroring(NoAwaitTag, google::cloud::cpp::compute::packet_mirrorings::v1::PatchPacketMirroringRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -689,9 +639,7 @@ class PacketMirroringsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchPacketMirroring(
-      google::cloud::cpp::compute::v1::Operation const& operation,
-      Options opts = {});
+  PatchPacketMirroring(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -720,12 +668,7 @@ class PacketMirroringsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(
-      std::string const& project, std::string const& region,
-      std::string const& resource,
-      google::cloud::cpp::compute::v1::TestPermissionsRequest const&
-          test_permissions_request_resource,
-      Options opts = {});
+  TestIamPermissions(std::string const& project, std::string const& region, std::string const& resource, google::cloud::cpp::compute::v1::TestPermissionsRequest const& test_permissions_request_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -756,9 +699,7 @@ class PacketMirroringsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(google::cloud::cpp::compute::packet_mirrorings::v1::
-                         TestIamPermissionsRequest const& request,
-                     Options opts = {});
+  TestIamPermissions(google::cloud::cpp::compute::packet_mirrorings::v1::TestIamPermissionsRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<PacketMirroringsConnection> connection_;

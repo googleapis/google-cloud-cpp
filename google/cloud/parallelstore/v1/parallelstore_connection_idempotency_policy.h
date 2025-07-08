@@ -36,51 +36,50 @@ class ParallelstoreConnectionIdempotencyPolicy {
   virtual ~ParallelstoreConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<ParallelstoreConnectionIdempotencyPolicy> clone()
-      const;
+  virtual std::unique_ptr<ParallelstoreConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency ListInstances(
-      google::cloud::parallelstore::v1::ListInstancesRequest request);
+  virtual google::cloud::Idempotency
+  ListInstances(google::cloud::parallelstore::v1::ListInstancesRequest request);
 
-  virtual google::cloud::Idempotency GetInstance(
-      google::cloud::parallelstore::v1::GetInstanceRequest const& request);
+  virtual google::cloud::Idempotency
+  GetInstance(google::cloud::parallelstore::v1::GetInstanceRequest const& request);
 
-  virtual google::cloud::Idempotency CreateInstance(
-      google::cloud::parallelstore::v1::CreateInstanceRequest const& request);
+  virtual google::cloud::Idempotency
+  CreateInstance(google::cloud::parallelstore::v1::CreateInstanceRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateInstance(
-      google::cloud::parallelstore::v1::UpdateInstanceRequest const& request);
+  virtual google::cloud::Idempotency
+  UpdateInstance(google::cloud::parallelstore::v1::UpdateInstanceRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteInstance(
-      google::cloud::parallelstore::v1::DeleteInstanceRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteInstance(google::cloud::parallelstore::v1::DeleteInstanceRequest const& request);
 
-  virtual google::cloud::Idempotency ImportData(
-      google::cloud::parallelstore::v1::ImportDataRequest const& request);
+  virtual google::cloud::Idempotency
+  ImportData(google::cloud::parallelstore::v1::ImportDataRequest const& request);
 
-  virtual google::cloud::Idempotency ExportData(
-      google::cloud::parallelstore::v1::ExportDataRequest const& request);
+  virtual google::cloud::Idempotency
+  ExportData(google::cloud::parallelstore::v1::ExportDataRequest const& request);
 
-  virtual google::cloud::Idempotency ListLocations(
-      google::cloud::location::ListLocationsRequest request);
+  virtual google::cloud::Idempotency
+  ListLocations(google::cloud::location::ListLocationsRequest request);
 
-  virtual google::cloud::Idempotency GetLocation(
-      google::cloud::location::GetLocationRequest const& request);
+  virtual google::cloud::Idempotency
+  GetLocation(google::cloud::location::GetLocationRequest const& request);
 
-  virtual google::cloud::Idempotency ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual google::cloud::Idempotency
+  ListOperations(google::longrunning::ListOperationsRequest request);
 
-  virtual google::cloud::Idempotency GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
 
-  virtual google::cloud::Idempotency CancelOperation(
-      google::longrunning::CancelOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  CancelOperation(google::longrunning::CancelOperationRequest const& request);
 };
 
 std::unique_ptr<ParallelstoreConnectionIdempotencyPolicy>
-MakeDefaultParallelstoreConnectionIdempotencyPolicy();
+    MakeDefaultParallelstoreConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace parallelstore_v1

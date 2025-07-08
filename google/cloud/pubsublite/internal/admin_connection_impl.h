@@ -19,16 +19,16 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_ADMIN_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_ADMIN_CONNECTION_IMPL_H
 
-#include "google/cloud/pubsublite/admin_connection.h"
-#include "google/cloud/pubsublite/admin_connection_idempotency_policy.h"
-#include "google/cloud/pubsublite/admin_options.h"
-#include "google/cloud/pubsublite/internal/admin_retry_traits.h"
-#include "google/cloud/pubsublite/internal/admin_stub.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
+#include "google/cloud/pubsublite/admin_connection.h"
+#include "google/cloud/pubsublite/admin_connection_idempotency_policy.h"
+#include "google/cloud/pubsublite/admin_options.h"
+#include "google/cloud/pubsublite/internal/admin_retry_traits.h"
+#include "google/cloud/pubsublite/internal/admin_stub.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
@@ -40,112 +40,97 @@ namespace cloud {
 namespace pubsublite_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class AdminServiceConnectionImpl : public pubsublite::AdminServiceConnection {
+class AdminServiceConnectionImpl
+    : public pubsublite::AdminServiceConnection {
  public:
   ~AdminServiceConnectionImpl() override = default;
 
   AdminServiceConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<pubsublite_internal::AdminServiceStub> stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<pubsublite_internal::AdminServiceStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
-  StatusOr<google::cloud::pubsublite::v1::Topic> CreateTopic(
-      google::cloud::pubsublite::v1::CreateTopicRequest const& request)
-      override;
+  StatusOr<google::cloud::pubsublite::v1::Topic>
+  CreateTopic(google::cloud::pubsublite::v1::CreateTopicRequest const& request) override;
 
-  StatusOr<google::cloud::pubsublite::v1::Topic> GetTopic(
-      google::cloud::pubsublite::v1::GetTopicRequest const& request) override;
+  StatusOr<google::cloud::pubsublite::v1::Topic>
+  GetTopic(google::cloud::pubsublite::v1::GetTopicRequest const& request) override;
 
-  StatusOr<google::cloud::pubsublite::v1::TopicPartitions> GetTopicPartitions(
-      google::cloud::pubsublite::v1::GetTopicPartitionsRequest const& request)
-      override;
+  StatusOr<google::cloud::pubsublite::v1::TopicPartitions>
+  GetTopicPartitions(google::cloud::pubsublite::v1::GetTopicPartitionsRequest const& request) override;
 
-  StreamRange<google::cloud::pubsublite::v1::Topic> ListTopics(
-      google::cloud::pubsublite::v1::ListTopicsRequest request) override;
+  StreamRange<google::cloud::pubsublite::v1::Topic>
+  ListTopics(google::cloud::pubsublite::v1::ListTopicsRequest request) override;
 
-  StatusOr<google::cloud::pubsublite::v1::Topic> UpdateTopic(
-      google::cloud::pubsublite::v1::UpdateTopicRequest const& request)
-      override;
+  StatusOr<google::cloud::pubsublite::v1::Topic>
+  UpdateTopic(google::cloud::pubsublite::v1::UpdateTopicRequest const& request) override;
 
-  Status DeleteTopic(google::cloud::pubsublite::v1::DeleteTopicRequest const&
-                         request) override;
+  Status
+  DeleteTopic(google::cloud::pubsublite::v1::DeleteTopicRequest const& request) override;
 
-  StreamRange<std::string> ListTopicSubscriptions(
-      google::cloud::pubsublite::v1::ListTopicSubscriptionsRequest request)
-      override;
+  StreamRange<std::string>
+  ListTopicSubscriptions(google::cloud::pubsublite::v1::ListTopicSubscriptionsRequest request) override;
 
-  StatusOr<google::cloud::pubsublite::v1::Subscription> CreateSubscription(
-      google::cloud::pubsublite::v1::CreateSubscriptionRequest const& request)
-      override;
+  StatusOr<google::cloud::pubsublite::v1::Subscription>
+  CreateSubscription(google::cloud::pubsublite::v1::CreateSubscriptionRequest const& request) override;
 
-  StatusOr<google::cloud::pubsublite::v1::Subscription> GetSubscription(
-      google::cloud::pubsublite::v1::GetSubscriptionRequest const& request)
-      override;
+  StatusOr<google::cloud::pubsublite::v1::Subscription>
+  GetSubscription(google::cloud::pubsublite::v1::GetSubscriptionRequest const& request) override;
 
-  StreamRange<google::cloud::pubsublite::v1::Subscription> ListSubscriptions(
-      google::cloud::pubsublite::v1::ListSubscriptionsRequest request) override;
+  StreamRange<google::cloud::pubsublite::v1::Subscription>
+  ListSubscriptions(google::cloud::pubsublite::v1::ListSubscriptionsRequest request) override;
 
-  StatusOr<google::cloud::pubsublite::v1::Subscription> UpdateSubscription(
-      google::cloud::pubsublite::v1::UpdateSubscriptionRequest const& request)
-      override;
+  StatusOr<google::cloud::pubsublite::v1::Subscription>
+  UpdateSubscription(google::cloud::pubsublite::v1::UpdateSubscriptionRequest const& request) override;
 
-  Status DeleteSubscription(
-      google::cloud::pubsublite::v1::DeleteSubscriptionRequest const& request)
-      override;
+  Status
+  DeleteSubscription(google::cloud::pubsublite::v1::DeleteSubscriptionRequest const& request) override;
 
   future<StatusOr<google::cloud::pubsublite::v1::SeekSubscriptionResponse>>
-  SeekSubscription(google::cloud::pubsublite::v1::SeekSubscriptionRequest const&
-                       request) override;
+  SeekSubscription(google::cloud::pubsublite::v1::SeekSubscriptionRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> SeekSubscription(
-      NoAwaitTag,
-      google::cloud::pubsublite::v1::SeekSubscriptionRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  SeekSubscription(NoAwaitTag,
+      google::cloud::pubsublite::v1::SeekSubscriptionRequest const& request) override;
 
   future<StatusOr<google::cloud::pubsublite::v1::SeekSubscriptionResponse>>
-  SeekSubscription(google::longrunning::Operation const& operation) override;
+  SeekSubscription(
+      google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::cloud::pubsublite::v1::Reservation> CreateReservation(
-      google::cloud::pubsublite::v1::CreateReservationRequest const& request)
-      override;
+  StatusOr<google::cloud::pubsublite::v1::Reservation>
+  CreateReservation(google::cloud::pubsublite::v1::CreateReservationRequest const& request) override;
 
-  StatusOr<google::cloud::pubsublite::v1::Reservation> GetReservation(
-      google::cloud::pubsublite::v1::GetReservationRequest const& request)
-      override;
+  StatusOr<google::cloud::pubsublite::v1::Reservation>
+  GetReservation(google::cloud::pubsublite::v1::GetReservationRequest const& request) override;
 
-  StreamRange<google::cloud::pubsublite::v1::Reservation> ListReservations(
-      google::cloud::pubsublite::v1::ListReservationsRequest request) override;
+  StreamRange<google::cloud::pubsublite::v1::Reservation>
+  ListReservations(google::cloud::pubsublite::v1::ListReservationsRequest request) override;
 
-  StatusOr<google::cloud::pubsublite::v1::Reservation> UpdateReservation(
-      google::cloud::pubsublite::v1::UpdateReservationRequest const& request)
-      override;
+  StatusOr<google::cloud::pubsublite::v1::Reservation>
+  UpdateReservation(google::cloud::pubsublite::v1::UpdateReservationRequest const& request) override;
 
-  Status DeleteReservation(
-      google::cloud::pubsublite::v1::DeleteReservationRequest const& request)
-      override;
+  Status
+  DeleteReservation(google::cloud::pubsublite::v1::DeleteReservationRequest const& request) override;
 
-  StreamRange<std::string> ListReservationTopics(
-      google::cloud::pubsublite::v1::ListReservationTopicsRequest request)
-      override;
+  StreamRange<std::string>
+  ListReservationTopics(google::cloud::pubsublite::v1::ListReservationTopicsRequest request) override;
 
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request) override;
 
-  Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request) override;
+  Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request) override;
 
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request) override;
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
 
   future<StatusOr<google::cloud::pubsublite::v1::TopicPartitions>>
-  AsyncGetTopicPartitions(
-      google::cloud::pubsublite::v1::GetTopicPartitionsRequest const& request)
-      override;
+  AsyncGetTopicPartitions(google::cloud::pubsublite::v1::GetTopicPartitionsRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_KMS_V1_KEY_MANAGEMENT_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_KMS_V1_KEY_MANAGEMENT_CONNECTION_H
 
-#include "google/cloud/kms/v1/internal/key_management_retry_traits.h"
-#include "google/cloud/kms/v1/key_management_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/kms/v1/internal/key_management_retry_traits.h"
+#include "google/cloud/kms/v1/key_management_connection_idempotency_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -52,8 +52,7 @@ class KeyManagementServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class KeyManagementServiceLimitedErrorCountRetryPolicy
-    : public KeyManagementServiceRetryPolicy {
+class KeyManagementServiceLimitedErrorCountRetryPolicy : public KeyManagementServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -62,18 +61,15 @@ class KeyManagementServiceLimitedErrorCountRetryPolicy
    * @note Disable the retry loop by providing an instance of this policy with
    *     @p maximum_failures == 0.
    */
-  explicit KeyManagementServiceLimitedErrorCountRetryPolicy(
-      int maximum_failures)
-      : impl_(maximum_failures) {}
+  explicit KeyManagementServiceLimitedErrorCountRetryPolicy(int maximum_failures)
+    : impl_(maximum_failures) {}
 
   KeyManagementServiceLimitedErrorCountRetryPolicy(
       KeyManagementServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : KeyManagementServiceLimitedErrorCountRetryPolicy(
-            rhs.maximum_failures()) {}
+    : KeyManagementServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   KeyManagementServiceLimitedErrorCountRetryPolicy(
       KeyManagementServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : KeyManagementServiceLimitedErrorCountRetryPolicy(
-            rhs.maximum_failures()) {}
+    : KeyManagementServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -93,9 +89,7 @@ class KeyManagementServiceLimitedErrorCountRetryPolicy
   using BaseType = KeyManagementServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      kms_v1_internal::KeyManagementServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<kms_v1_internal::KeyManagementServiceRetryTraits> impl_;
 };
 
 /**
@@ -108,8 +102,7 @@ class KeyManagementServiceLimitedErrorCountRetryPolicy
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class KeyManagementServiceLimitedTimeRetryPolicy
-    : public KeyManagementServiceRetryPolicy {
+class KeyManagementServiceLimitedTimeRetryPolicy : public KeyManagementServiceRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -134,14 +127,12 @@ class KeyManagementServiceLimitedTimeRetryPolicy
   template <typename DurationRep, typename DurationPeriod>
   explicit KeyManagementServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  KeyManagementServiceLimitedTimeRetryPolicy(
-      KeyManagementServiceLimitedTimeRetryPolicy&& rhs) noexcept
-      : KeyManagementServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  KeyManagementServiceLimitedTimeRetryPolicy(
-      KeyManagementServiceLimitedTimeRetryPolicy const& rhs) noexcept
-      : KeyManagementServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  KeyManagementServiceLimitedTimeRetryPolicy(KeyManagementServiceLimitedTimeRetryPolicy&& rhs) noexcept
+    : KeyManagementServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  KeyManagementServiceLimitedTimeRetryPolicy(KeyManagementServiceLimitedTimeRetryPolicy const& rhs) noexcept
+    : KeyManagementServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -163,18 +154,16 @@ class KeyManagementServiceLimitedTimeRetryPolicy
   using BaseType = KeyManagementServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      kms_v1_internal::KeyManagementServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<kms_v1_internal::KeyManagementServiceRetryTraits> impl_;
 };
 
 /**
  * The `KeyManagementServiceConnection` object for `KeyManagementServiceClient`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `KeyManagementServiceClient`. This allows users to inject custom
- * behavior (e.g., with a Google Mock object) when writing tests that use
- * objects of type `KeyManagementServiceClient`.
+ * sets in `KeyManagementServiceClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `KeyManagementServiceClient`.
  *
  * To create a concrete instance, see `MakeKeyManagementServiceConnection()`.
  *
@@ -186,131 +175,118 @@ class KeyManagementServiceConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StreamRange<google::cloud::kms::v1::KeyRing> ListKeyRings(
-      google::cloud::kms::v1::ListKeyRingsRequest request);
+  virtual StreamRange<google::cloud::kms::v1::KeyRing>
+  ListKeyRings(google::cloud::kms::v1::ListKeyRingsRequest request);
 
-  virtual StreamRange<google::cloud::kms::v1::CryptoKey> ListCryptoKeys(
-      google::cloud::kms::v1::ListCryptoKeysRequest request);
+  virtual StreamRange<google::cloud::kms::v1::CryptoKey>
+  ListCryptoKeys(google::cloud::kms::v1::ListCryptoKeysRequest request);
 
   virtual StreamRange<google::cloud::kms::v1::CryptoKeyVersion>
-  ListCryptoKeyVersions(
-      google::cloud::kms::v1::ListCryptoKeyVersionsRequest request);
+  ListCryptoKeyVersions(google::cloud::kms::v1::ListCryptoKeyVersionsRequest request);
 
-  virtual StreamRange<google::cloud::kms::v1::ImportJob> ListImportJobs(
-      google::cloud::kms::v1::ListImportJobsRequest request);
+  virtual StreamRange<google::cloud::kms::v1::ImportJob>
+  ListImportJobs(google::cloud::kms::v1::ListImportJobsRequest request);
 
-  virtual StatusOr<google::cloud::kms::v1::KeyRing> GetKeyRing(
-      google::cloud::kms::v1::GetKeyRingRequest const& request);
-
-  virtual StatusOr<google::cloud::kms::v1::CryptoKey> GetCryptoKey(
-      google::cloud::kms::v1::GetCryptoKeyRequest const& request);
-
-  virtual StatusOr<google::cloud::kms::v1::CryptoKeyVersion>
-  GetCryptoKeyVersion(
-      google::cloud::kms::v1::GetCryptoKeyVersionRequest const& request);
-
-  virtual StatusOr<google::cloud::kms::v1::PublicKey> GetPublicKey(
-      google::cloud::kms::v1::GetPublicKeyRequest const& request);
-
-  virtual StatusOr<google::cloud::kms::v1::ImportJob> GetImportJob(
-      google::cloud::kms::v1::GetImportJobRequest const& request);
-
-  virtual StatusOr<google::cloud::kms::v1::KeyRing> CreateKeyRing(
-      google::cloud::kms::v1::CreateKeyRingRequest const& request);
-
-  virtual StatusOr<google::cloud::kms::v1::CryptoKey> CreateCryptoKey(
-      google::cloud::kms::v1::CreateCryptoKeyRequest const& request);
-
-  virtual StatusOr<google::cloud::kms::v1::CryptoKeyVersion>
-  CreateCryptoKeyVersion(
-      google::cloud::kms::v1::CreateCryptoKeyVersionRequest const& request);
-
-  virtual StatusOr<google::cloud::kms::v1::CryptoKeyVersion>
-  ImportCryptoKeyVersion(
-      google::cloud::kms::v1::ImportCryptoKeyVersionRequest const& request);
-
-  virtual StatusOr<google::cloud::kms::v1::ImportJob> CreateImportJob(
-      google::cloud::kms::v1::CreateImportJobRequest const& request);
-
-  virtual StatusOr<google::cloud::kms::v1::CryptoKey> UpdateCryptoKey(
-      google::cloud::kms::v1::UpdateCryptoKeyRequest const& request);
-
-  virtual StatusOr<google::cloud::kms::v1::CryptoKeyVersion>
-  UpdateCryptoKeyVersion(
-      google::cloud::kms::v1::UpdateCryptoKeyVersionRequest const& request);
+  virtual StatusOr<google::cloud::kms::v1::KeyRing>
+  GetKeyRing(google::cloud::kms::v1::GetKeyRingRequest const& request);
 
   virtual StatusOr<google::cloud::kms::v1::CryptoKey>
-  UpdateCryptoKeyPrimaryVersion(
-      google::cloud::kms::v1::UpdateCryptoKeyPrimaryVersionRequest const&
-          request);
+  GetCryptoKey(google::cloud::kms::v1::GetCryptoKeyRequest const& request);
 
   virtual StatusOr<google::cloud::kms::v1::CryptoKeyVersion>
-  DestroyCryptoKeyVersion(
-      google::cloud::kms::v1::DestroyCryptoKeyVersionRequest const& request);
+  GetCryptoKeyVersion(google::cloud::kms::v1::GetCryptoKeyVersionRequest const& request);
+
+  virtual StatusOr<google::cloud::kms::v1::PublicKey>
+  GetPublicKey(google::cloud::kms::v1::GetPublicKeyRequest const& request);
+
+  virtual StatusOr<google::cloud::kms::v1::ImportJob>
+  GetImportJob(google::cloud::kms::v1::GetImportJobRequest const& request);
+
+  virtual StatusOr<google::cloud::kms::v1::KeyRing>
+  CreateKeyRing(google::cloud::kms::v1::CreateKeyRingRequest const& request);
+
+  virtual StatusOr<google::cloud::kms::v1::CryptoKey>
+  CreateCryptoKey(google::cloud::kms::v1::CreateCryptoKeyRequest const& request);
 
   virtual StatusOr<google::cloud::kms::v1::CryptoKeyVersion>
-  RestoreCryptoKeyVersion(
-      google::cloud::kms::v1::RestoreCryptoKeyVersionRequest const& request);
+  CreateCryptoKeyVersion(google::cloud::kms::v1::CreateCryptoKeyVersionRequest const& request);
 
-  virtual StatusOr<google::cloud::kms::v1::EncryptResponse> Encrypt(
-      google::cloud::kms::v1::EncryptRequest const& request);
+  virtual StatusOr<google::cloud::kms::v1::CryptoKeyVersion>
+  ImportCryptoKeyVersion(google::cloud::kms::v1::ImportCryptoKeyVersionRequest const& request);
 
-  virtual StatusOr<google::cloud::kms::v1::DecryptResponse> Decrypt(
-      google::cloud::kms::v1::DecryptRequest const& request);
+  virtual StatusOr<google::cloud::kms::v1::ImportJob>
+  CreateImportJob(google::cloud::kms::v1::CreateImportJobRequest const& request);
 
-  virtual StatusOr<google::cloud::kms::v1::RawEncryptResponse> RawEncrypt(
-      google::cloud::kms::v1::RawEncryptRequest const& request);
+  virtual StatusOr<google::cloud::kms::v1::CryptoKey>
+  UpdateCryptoKey(google::cloud::kms::v1::UpdateCryptoKeyRequest const& request);
 
-  virtual StatusOr<google::cloud::kms::v1::RawDecryptResponse> RawDecrypt(
-      google::cloud::kms::v1::RawDecryptRequest const& request);
+  virtual StatusOr<google::cloud::kms::v1::CryptoKeyVersion>
+  UpdateCryptoKeyVersion(google::cloud::kms::v1::UpdateCryptoKeyVersionRequest const& request);
+
+  virtual StatusOr<google::cloud::kms::v1::CryptoKey>
+  UpdateCryptoKeyPrimaryVersion(google::cloud::kms::v1::UpdateCryptoKeyPrimaryVersionRequest const& request);
+
+  virtual StatusOr<google::cloud::kms::v1::CryptoKeyVersion>
+  DestroyCryptoKeyVersion(google::cloud::kms::v1::DestroyCryptoKeyVersionRequest const& request);
+
+  virtual StatusOr<google::cloud::kms::v1::CryptoKeyVersion>
+  RestoreCryptoKeyVersion(google::cloud::kms::v1::RestoreCryptoKeyVersionRequest const& request);
+
+  virtual StatusOr<google::cloud::kms::v1::EncryptResponse>
+  Encrypt(google::cloud::kms::v1::EncryptRequest const& request);
+
+  virtual StatusOr<google::cloud::kms::v1::DecryptResponse>
+  Decrypt(google::cloud::kms::v1::DecryptRequest const& request);
+
+  virtual StatusOr<google::cloud::kms::v1::RawEncryptResponse>
+  RawEncrypt(google::cloud::kms::v1::RawEncryptRequest const& request);
+
+  virtual StatusOr<google::cloud::kms::v1::RawDecryptResponse>
+  RawDecrypt(google::cloud::kms::v1::RawDecryptRequest const& request);
 
   virtual StatusOr<google::cloud::kms::v1::AsymmetricSignResponse>
   AsymmetricSign(google::cloud::kms::v1::AsymmetricSignRequest const& request);
 
   virtual StatusOr<google::cloud::kms::v1::AsymmetricDecryptResponse>
-  AsymmetricDecrypt(
-      google::cloud::kms::v1::AsymmetricDecryptRequest const& request);
+  AsymmetricDecrypt(google::cloud::kms::v1::AsymmetricDecryptRequest const& request);
 
-  virtual StatusOr<google::cloud::kms::v1::MacSignResponse> MacSign(
-      google::cloud::kms::v1::MacSignRequest const& request);
+  virtual StatusOr<google::cloud::kms::v1::MacSignResponse>
+  MacSign(google::cloud::kms::v1::MacSignRequest const& request);
 
-  virtual StatusOr<google::cloud::kms::v1::MacVerifyResponse> MacVerify(
-      google::cloud::kms::v1::MacVerifyRequest const& request);
+  virtual StatusOr<google::cloud::kms::v1::MacVerifyResponse>
+  MacVerify(google::cloud::kms::v1::MacVerifyRequest const& request);
 
   virtual StatusOr<google::cloud::kms::v1::GenerateRandomBytesResponse>
-  GenerateRandomBytes(
-      google::cloud::kms::v1::GenerateRandomBytesRequest const& request);
+  GenerateRandomBytes(google::cloud::kms::v1::GenerateRandomBytesRequest const& request);
 
-  virtual StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request);
+  virtual StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request);
 
-  virtual StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request);
+  virtual StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
 
   virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
   TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 };
 
 /**
- * A factory function to construct an object of type
- * `KeyManagementServiceConnection`.
+ * A factory function to construct an object of type `KeyManagementServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of
- * KeyManagementServiceClient.
+ * should be passed as an argument to the constructor of KeyManagementServiceClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `KeyManagementServiceConnection`. Expected options are any of the
- * types in the following option lists:
+ * returned `KeyManagementServiceConnection`. Expected options are any of the types in
+ * the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
@@ -320,11 +296,11 @@ class KeyManagementServiceConnection {
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
- * @param options (optional) Configure the `KeyManagementServiceConnection`
- * created by this function.
+ * @param options (optional) Configure the `KeyManagementServiceConnection` created by
+ * this function.
  */
-std::shared_ptr<KeyManagementServiceConnection>
-MakeKeyManagementServiceConnection(Options options = {});
+std::shared_ptr<KeyManagementServiceConnection> MakeKeyManagementServiceConnection(
+    Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace kms_v1

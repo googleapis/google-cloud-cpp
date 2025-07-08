@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RETAIL_V2_SEARCH_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RETAIL_V2_SEARCH_CLIENT_H
 
-#include "google/cloud/retail/v2/search_connection.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
+#include "google/cloud/retail/v2/search_connection.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <map>
@@ -65,8 +65,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class SearchServiceClient {
  public:
-  explicit SearchServiceClient(
-      std::shared_ptr<SearchServiceConnection> connection, Options opts = {});
+  explicit SearchServiceClient(std::shared_ptr<SearchServiceConnection> connection, Options opts = {});
   ~SearchServiceClient();
 
   ///@{
@@ -79,12 +78,10 @@ class SearchServiceClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(SearchServiceClient const& a,
-                         SearchServiceClient const& b) {
+  friend bool operator==(SearchServiceClient const& a, SearchServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(SearchServiceClient const& a,
-                         SearchServiceClient const& b) {
+  friend bool operator!=(SearchServiceClient const& a, SearchServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -125,11 +122,11 @@ class SearchServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.retail.v2.SearchRequest]: @googleapis_reference_link{google/cloud/retail/v2/search_service.proto#L105}
-  /// [google.cloud.retail.v2.SearchResponse.SearchResult]: @googleapis_reference_link{google/cloud/retail/v2/search_service.proto#L888}
+  /// [google.cloud.retail.v2.SearchResponse.SearchResult]: @googleapis_reference_link{google/cloud/retail/v2/search_service.proto#L912}
   ///
   // clang-format on
-  StreamRange<google::cloud::retail::v2::SearchResponse::SearchResult> Search(
-      google::cloud::retail::v2::SearchRequest request, Options opts = {});
+  StreamRange<google::cloud::retail::v2::SearchResponse::SearchResult>
+  Search(google::cloud::retail::v2::SearchRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -164,8 +161,8 @@ class SearchServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -204,8 +201,8 @@ class SearchServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -231,8 +228,8 @@ class SearchServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -263,9 +260,8 @@ class SearchServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<SearchServiceConnection> connection_;

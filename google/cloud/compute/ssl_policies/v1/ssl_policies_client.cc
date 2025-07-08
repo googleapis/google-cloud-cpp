@@ -28,35 +28,26 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 SslPoliciesClient::SslPoliciesClient(
     std::shared_ptr<SslPoliciesConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 SslPoliciesClient::~SslPoliciesClient() = default;
 
-StreamRange<std::pair<std::string,
-                      google::cloud::cpp::compute::v1::SslPoliciesScopedList>>
-SslPoliciesClient::AggregatedListSslPolicies(std::string const& project,
-                                             Options opts) {
+StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::SslPoliciesScopedList>>
+SslPoliciesClient::AggregatedListSslPolicies(std::string const& project, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::ssl_policies::v1::
-      AggregatedListSslPoliciesRequest request;
+  google::cloud::cpp::compute::ssl_policies::v1::AggregatedListSslPoliciesRequest request;
   request.set_project(project);
   return connection_->AggregatedListSslPolicies(request);
 }
 
-StreamRange<std::pair<std::string,
-                      google::cloud::cpp::compute::v1::SslPoliciesScopedList>>
-SslPoliciesClient::AggregatedListSslPolicies(
-    google::cloud::cpp::compute::ssl_policies::v1::
-        AggregatedListSslPoliciesRequest request,
-    Options opts) {
+StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::SslPoliciesScopedList>>
+SslPoliciesClient::AggregatedListSslPolicies(google::cloud::cpp::compute::ssl_policies::v1::AggregatedListSslPoliciesRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->AggregatedListSslPolicies(std::move(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-SslPoliciesClient::DeleteSslPolicy(std::string const& project,
-                                   std::string const& ssl_policy,
-                                   Options opts) {
+SslPoliciesClient::DeleteSslPolicy(std::string const& project, std::string const& ssl_policy, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::ssl_policies::v1::DeleteSslPolicyRequest request;
   request.set_project(project);
@@ -65,9 +56,7 @@ SslPoliciesClient::DeleteSslPolicy(std::string const& project,
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-SslPoliciesClient::DeleteSslPolicy(NoAwaitTag, std::string const& project,
-                                   std::string const& ssl_policy,
-                                   Options opts) {
+SslPoliciesClient::DeleteSslPolicy(NoAwaitTag, std::string const& project, std::string const& ssl_policy, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::ssl_policies::v1::DeleteSslPolicyRequest request;
   request.set_project(project);
@@ -76,34 +65,25 @@ SslPoliciesClient::DeleteSslPolicy(NoAwaitTag, std::string const& project,
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-SslPoliciesClient::DeleteSslPolicy(
-    google::cloud::cpp::compute::ssl_policies::v1::DeleteSslPolicyRequest const&
-        request,
-    Options opts) {
+SslPoliciesClient::DeleteSslPolicy(google::cloud::cpp::compute::ssl_policies::v1::DeleteSslPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteSslPolicy(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-SslPoliciesClient::DeleteSslPolicy(
-    NoAwaitTag,
-    google::cloud::cpp::compute::ssl_policies::v1::DeleteSslPolicyRequest const&
-        request,
-    Options opts) {
+SslPoliciesClient::DeleteSslPolicy(NoAwaitTag, google::cloud::cpp::compute::ssl_policies::v1::DeleteSslPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteSslPolicy(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-SslPoliciesClient::DeleteSslPolicy(
-    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+SslPoliciesClient::DeleteSslPolicy(google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteSslPolicy(operation);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::SslPolicy>
-SslPoliciesClient::GetSslPolicy(std::string const& project,
-                                std::string const& ssl_policy, Options opts) {
+SslPoliciesClient::GetSslPolicy(std::string const& project, std::string const& ssl_policy, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::ssl_policies::v1::GetSslPolicyRequest request;
   request.set_project(project);
@@ -112,19 +92,13 @@ SslPoliciesClient::GetSslPolicy(std::string const& project,
 }
 
 StatusOr<google::cloud::cpp::compute::v1::SslPolicy>
-SslPoliciesClient::GetSslPolicy(
-    google::cloud::cpp::compute::ssl_policies::v1::GetSslPolicyRequest const&
-        request,
-    Options opts) {
+SslPoliciesClient::GetSslPolicy(google::cloud::cpp::compute::ssl_policies::v1::GetSslPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetSslPolicy(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-SslPoliciesClient::InsertSslPolicy(
-    std::string const& project,
-    google::cloud::cpp::compute::v1::SslPolicy const& ssl_policy_resource,
-    Options opts) {
+SslPoliciesClient::InsertSslPolicy(std::string const& project, google::cloud::cpp::compute::v1::SslPolicy const& ssl_policy_resource, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::ssl_policies::v1::InsertSslPolicyRequest request;
   request.set_project(project);
@@ -133,10 +107,7 @@ SslPoliciesClient::InsertSslPolicy(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-SslPoliciesClient::InsertSslPolicy(
-    NoAwaitTag, std::string const& project,
-    google::cloud::cpp::compute::v1::SslPolicy const& ssl_policy_resource,
-    Options opts) {
+SslPoliciesClient::InsertSslPolicy(NoAwaitTag, std::string const& project, google::cloud::cpp::compute::v1::SslPolicy const& ssl_policy_resource, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::ssl_policies::v1::InsertSslPolicyRequest request;
   request.set_project(project);
@@ -145,27 +116,19 @@ SslPoliciesClient::InsertSslPolicy(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-SslPoliciesClient::InsertSslPolicy(
-    google::cloud::cpp::compute::ssl_policies::v1::InsertSslPolicyRequest const&
-        request,
-    Options opts) {
+SslPoliciesClient::InsertSslPolicy(google::cloud::cpp::compute::ssl_policies::v1::InsertSslPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->InsertSslPolicy(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-SslPoliciesClient::InsertSslPolicy(
-    NoAwaitTag,
-    google::cloud::cpp::compute::ssl_policies::v1::InsertSslPolicyRequest const&
-        request,
-    Options opts) {
+SslPoliciesClient::InsertSslPolicy(NoAwaitTag, google::cloud::cpp::compute::ssl_policies::v1::InsertSslPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->InsertSslPolicy(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-SslPoliciesClient::InsertSslPolicy(
-    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+SslPoliciesClient::InsertSslPolicy(google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->InsertSslPolicy(operation);
 }
@@ -179,40 +142,27 @@ SslPoliciesClient::ListSslPolicies(std::string const& project, Options opts) {
 }
 
 StreamRange<google::cloud::cpp::compute::v1::SslPolicy>
-SslPoliciesClient::ListSslPolicies(
-    google::cloud::cpp::compute::ssl_policies::v1::ListSslPoliciesRequest
-        request,
-    Options opts) {
+SslPoliciesClient::ListSslPolicies(google::cloud::cpp::compute::ssl_policies::v1::ListSslPoliciesRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListSslPolicies(std::move(request));
 }
 
-StatusOr<
-    google::cloud::cpp::compute::v1::SslPoliciesListAvailableFeaturesResponse>
-SslPoliciesClient::ListAvailableFeatures(std::string const& project,
-                                         Options opts) {
+StatusOr<google::cloud::cpp::compute::v1::SslPoliciesListAvailableFeaturesResponse>
+SslPoliciesClient::ListAvailableFeatures(std::string const& project, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::ssl_policies::v1::ListAvailableFeaturesRequest
-      request;
+  google::cloud::cpp::compute::ssl_policies::v1::ListAvailableFeaturesRequest request;
   request.set_project(project);
   return connection_->ListAvailableFeatures(request);
 }
 
-StatusOr<
-    google::cloud::cpp::compute::v1::SslPoliciesListAvailableFeaturesResponse>
-SslPoliciesClient::ListAvailableFeatures(
-    google::cloud::cpp::compute::ssl_policies::v1::
-        ListAvailableFeaturesRequest const& request,
-    Options opts) {
+StatusOr<google::cloud::cpp::compute::v1::SslPoliciesListAvailableFeaturesResponse>
+SslPoliciesClient::ListAvailableFeatures(google::cloud::cpp::compute::ssl_policies::v1::ListAvailableFeaturesRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListAvailableFeatures(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-SslPoliciesClient::PatchSslPolicy(
-    std::string const& project, std::string const& ssl_policy,
-    google::cloud::cpp::compute::v1::SslPolicy const& ssl_policy_resource,
-    Options opts) {
+SslPoliciesClient::PatchSslPolicy(std::string const& project, std::string const& ssl_policy, google::cloud::cpp::compute::v1::SslPolicy const& ssl_policy_resource, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::ssl_policies::v1::PatchSslPolicyRequest request;
   request.set_project(project);
@@ -222,10 +172,7 @@ SslPoliciesClient::PatchSslPolicy(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-SslPoliciesClient::PatchSslPolicy(
-    NoAwaitTag, std::string const& project, std::string const& ssl_policy,
-    google::cloud::cpp::compute::v1::SslPolicy const& ssl_policy_resource,
-    Options opts) {
+SslPoliciesClient::PatchSslPolicy(NoAwaitTag, std::string const& project, std::string const& ssl_policy, google::cloud::cpp::compute::v1::SslPolicy const& ssl_policy_resource, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::ssl_policies::v1::PatchSslPolicyRequest request;
   request.set_project(project);
@@ -235,27 +182,19 @@ SslPoliciesClient::PatchSslPolicy(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-SslPoliciesClient::PatchSslPolicy(
-    google::cloud::cpp::compute::ssl_policies::v1::PatchSslPolicyRequest const&
-        request,
-    Options opts) {
+SslPoliciesClient::PatchSslPolicy(google::cloud::cpp::compute::ssl_policies::v1::PatchSslPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PatchSslPolicy(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-SslPoliciesClient::PatchSslPolicy(
-    NoAwaitTag,
-    google::cloud::cpp::compute::ssl_policies::v1::PatchSslPolicyRequest const&
-        request,
-    Options opts) {
+SslPoliciesClient::PatchSslPolicy(NoAwaitTag, google::cloud::cpp::compute::ssl_policies::v1::PatchSslPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PatchSslPolicy(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-SslPoliciesClient::PatchSslPolicy(
-    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+SslPoliciesClient::PatchSslPolicy(google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PatchSslPolicy(operation);
 }

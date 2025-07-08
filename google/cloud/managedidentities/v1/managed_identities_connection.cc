@@ -17,17 +17,17 @@
 // source: google/cloud/managedidentities/v1/managed_identities_service.proto
 
 #include "google/cloud/managedidentities/v1/managed_identities_connection.h"
-#include "google/cloud/managedidentities/v1/internal/managed_identities_connection_impl.h"
-#include "google/cloud/managedidentities/v1/internal/managed_identities_option_defaults.h"
-#include "google/cloud/managedidentities/v1/internal/managed_identities_stub_factory.h"
-#include "google/cloud/managedidentities/v1/internal/managed_identities_tracing_connection.h"
-#include "google/cloud/managedidentities/v1/managed_identities_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/managedidentities/v1/internal/managed_identities_connection_impl.h"
+#include "google/cloud/managedidentities/v1/internal/managed_identities_option_defaults.h"
+#include "google/cloud/managedidentities/v1/internal/managed_identities_stub_factory.h"
+#include "google/cloud/managedidentities/v1/internal/managed_identities_tracing_connection.h"
+#include "google/cloud/managedidentities/v1/managed_identities_options.h"
 #include <memory>
 #include <utility>
 
@@ -36,32 +36,30 @@ namespace cloud {
 namespace managedidentities_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-ManagedIdentitiesServiceConnection::~ManagedIdentitiesServiceConnection() =
-    default;
+ManagedIdentitiesServiceConnection::~ManagedIdentitiesServiceConnection() = default;
 
 future<StatusOr<google::cloud::managedidentities::v1::Domain>>
 ManagedIdentitiesServiceConnection::CreateMicrosoftAdDomain(
-    google::cloud::managedidentities::v1::
-        CreateMicrosoftAdDomainRequest const&) {
+    google::cloud::managedidentities::v1::CreateMicrosoftAdDomainRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::managedidentities::v1::Domain>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::managedidentities::v1::Domain>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 ManagedIdentitiesServiceConnection::CreateMicrosoftAdDomain(
-    NoAwaitTag, google::cloud::managedidentities::v1::
-                    CreateMicrosoftAdDomainRequest const&) {
+    NoAwaitTag,
+    google::cloud::managedidentities::v1::CreateMicrosoftAdDomainRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::managedidentities::v1::Domain>>
 ManagedIdentitiesServiceConnection::CreateMicrosoftAdDomain(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::managedidentities::v1::Domain>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::managedidentities::v1::Domain>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::managedidentities::v1::ResetAdminPasswordResponse>
@@ -70,10 +68,8 @@ ManagedIdentitiesServiceConnection::ResetAdminPassword(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::managedidentities::v1::Domain>
-ManagedIdentitiesServiceConnection::ListDomains(
-    google::cloud::managedidentities::v1::
-        ListDomainsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::managedidentities::v1::Domain> ManagedIdentitiesServiceConnection::ListDomains(
+    google::cloud::managedidentities::v1::ListDomainsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::managedidentities::v1::Domain>>();
 }
@@ -88,8 +84,8 @@ future<StatusOr<google::cloud::managedidentities::v1::Domain>>
 ManagedIdentitiesServiceConnection::UpdateDomain(
     google::cloud::managedidentities::v1::UpdateDomainRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::managedidentities::v1::Domain>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::managedidentities::v1::Domain>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -97,23 +93,23 @@ ManagedIdentitiesServiceConnection::UpdateDomain(
     NoAwaitTag,
     google::cloud::managedidentities::v1::UpdateDomainRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::managedidentities::v1::Domain>>
 ManagedIdentitiesServiceConnection::UpdateDomain(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::managedidentities::v1::Domain>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::managedidentities::v1::Domain>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::managedidentities::v1::OpMetadata>>
 ManagedIdentitiesServiceConnection::DeleteDomain(
     google::cloud::managedidentities::v1::DeleteDomainRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::managedidentities::v1::OpMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::managedidentities::v1::OpMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -121,23 +117,23 @@ ManagedIdentitiesServiceConnection::DeleteDomain(
     NoAwaitTag,
     google::cloud::managedidentities::v1::DeleteDomainRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::managedidentities::v1::OpMetadata>>
 ManagedIdentitiesServiceConnection::DeleteDomain(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::managedidentities::v1::OpMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::managedidentities::v1::OpMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::managedidentities::v1::Domain>>
 ManagedIdentitiesServiceConnection::AttachTrust(
     google::cloud::managedidentities::v1::AttachTrustRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::managedidentities::v1::Domain>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::managedidentities::v1::Domain>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -145,23 +141,23 @@ ManagedIdentitiesServiceConnection::AttachTrust(
     NoAwaitTag,
     google::cloud::managedidentities::v1::AttachTrustRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::managedidentities::v1::Domain>>
 ManagedIdentitiesServiceConnection::AttachTrust(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::managedidentities::v1::Domain>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::managedidentities::v1::Domain>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::managedidentities::v1::Domain>>
 ManagedIdentitiesServiceConnection::ReconfigureTrust(
     google::cloud::managedidentities::v1::ReconfigureTrustRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::managedidentities::v1::Domain>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::managedidentities::v1::Domain>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -169,23 +165,23 @@ ManagedIdentitiesServiceConnection::ReconfigureTrust(
     NoAwaitTag,
     google::cloud::managedidentities::v1::ReconfigureTrustRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::managedidentities::v1::Domain>>
 ManagedIdentitiesServiceConnection::ReconfigureTrust(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::managedidentities::v1::Domain>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::managedidentities::v1::Domain>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::managedidentities::v1::Domain>>
 ManagedIdentitiesServiceConnection::DetachTrust(
     google::cloud::managedidentities::v1::DetachTrustRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::managedidentities::v1::Domain>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::managedidentities::v1::Domain>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -193,23 +189,23 @@ ManagedIdentitiesServiceConnection::DetachTrust(
     NoAwaitTag,
     google::cloud::managedidentities::v1::DetachTrustRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::managedidentities::v1::Domain>>
 ManagedIdentitiesServiceConnection::DetachTrust(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::managedidentities::v1::Domain>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::managedidentities::v1::Domain>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::managedidentities::v1::Domain>>
 ManagedIdentitiesServiceConnection::ValidateTrust(
     google::cloud::managedidentities::v1::ValidateTrustRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::managedidentities::v1::Domain>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::managedidentities::v1::Domain>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -217,36 +213,31 @@ ManagedIdentitiesServiceConnection::ValidateTrust(
     NoAwaitTag,
     google::cloud::managedidentities::v1::ValidateTrustRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::managedidentities::v1::Domain>>
 ManagedIdentitiesServiceConnection::ValidateTrust(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::managedidentities::v1::Domain>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::managedidentities::v1::Domain>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-std::shared_ptr<ManagedIdentitiesServiceConnection>
-MakeManagedIdentitiesServiceConnection(Options options) {
+std::shared_ptr<ManagedIdentitiesServiceConnection> MakeManagedIdentitiesServiceConnection(
+    Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 ManagedIdentitiesServicePolicyOptionList>(
-      options, __func__);
-  options =
-      managedidentities_v1_internal::ManagedIdentitiesServiceDefaultOptions(
-          std::move(options));
+      UnifiedCredentialsOptionList,
+      ManagedIdentitiesServicePolicyOptionList>(options, __func__);
+  options = managedidentities_v1_internal::ManagedIdentitiesServiceDefaultOptions(
+      std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
-  auto stub =
-      managedidentities_v1_internal::CreateDefaultManagedIdentitiesServiceStub(
-          std::move(auth), options);
-  return managedidentities_v1_internal::
-      MakeManagedIdentitiesServiceTracingConnection(
-          std::make_shared<managedidentities_v1_internal::
-                               ManagedIdentitiesServiceConnectionImpl>(
-              std::move(background), std::move(stub), std::move(options)));
+  auto stub = managedidentities_v1_internal::CreateDefaultManagedIdentitiesServiceStub(
+    std::move(auth), options);
+  return managedidentities_v1_internal::MakeManagedIdentitiesServiceTracingConnection(
+      std::make_shared<managedidentities_v1_internal::ManagedIdentitiesServiceConnectionImpl>(
+      std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

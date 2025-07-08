@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DISCOVERYENGINE_V1_USER_EVENT_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DISCOVERYENGINE_V1_USER_EVENT_CONNECTION_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/discoveryengine/v1/internal/user_event_retry_traits.h"
 #include "google/cloud/discoveryengine/v1/user_event_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -56,8 +56,7 @@ class UserEventServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class UserEventServiceLimitedErrorCountRetryPolicy
-    : public UserEventServiceRetryPolicy {
+class UserEventServiceLimitedErrorCountRetryPolicy : public UserEventServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -67,14 +66,14 @@ class UserEventServiceLimitedErrorCountRetryPolicy
    *     @p maximum_failures == 0.
    */
   explicit UserEventServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   UserEventServiceLimitedErrorCountRetryPolicy(
       UserEventServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : UserEventServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : UserEventServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   UserEventServiceLimitedErrorCountRetryPolicy(
       UserEventServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : UserEventServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : UserEventServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -94,9 +93,7 @@ class UserEventServiceLimitedErrorCountRetryPolicy
   using BaseType = UserEventServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      discoveryengine_v1_internal::UserEventServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<discoveryengine_v1_internal::UserEventServiceRetryTraits> impl_;
 };
 
 /**
@@ -109,8 +106,7 @@ class UserEventServiceLimitedErrorCountRetryPolicy
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class UserEventServiceLimitedTimeRetryPolicy
-    : public UserEventServiceRetryPolicy {
+class UserEventServiceLimitedTimeRetryPolicy : public UserEventServiceRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -135,14 +131,12 @@ class UserEventServiceLimitedTimeRetryPolicy
   template <typename DurationRep, typename DurationPeriod>
   explicit UserEventServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  UserEventServiceLimitedTimeRetryPolicy(
-      UserEventServiceLimitedTimeRetryPolicy&& rhs) noexcept
-      : UserEventServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  UserEventServiceLimitedTimeRetryPolicy(
-      UserEventServiceLimitedTimeRetryPolicy const& rhs) noexcept
-      : UserEventServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  UserEventServiceLimitedTimeRetryPolicy(UserEventServiceLimitedTimeRetryPolicy&& rhs) noexcept
+    : UserEventServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  UserEventServiceLimitedTimeRetryPolicy(UserEventServiceLimitedTimeRetryPolicy const& rhs) noexcept
+    : UserEventServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -164,9 +158,7 @@ class UserEventServiceLimitedTimeRetryPolicy
   using BaseType = UserEventServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      discoveryengine_v1_internal::UserEventServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<discoveryengine_v1_internal::UserEventServiceRetryTraits> impl_;
 };
 
 /**
@@ -188,63 +180,48 @@ class UserEventServiceConnection {
   virtual Options options() { return Options{}; }
 
   virtual StatusOr<google::cloud::discoveryengine::v1::UserEvent>
-  WriteUserEvent(
-      google::cloud::discoveryengine::v1::WriteUserEventRequest const& request);
+  WriteUserEvent(google::cloud::discoveryengine::v1::WriteUserEventRequest const& request);
 
-  virtual StatusOr<google::api::HttpBody> CollectUserEvent(
-      google::cloud::discoveryengine::v1::CollectUserEventRequest const&
-          request);
+  virtual StatusOr<google::api::HttpBody>
+  CollectUserEvent(google::cloud::discoveryengine::v1::CollectUserEventRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::discoveryengine::v1::PurgeUserEventsResponse>>
-  PurgeUserEvents(
-      google::cloud::discoveryengine::v1::PurgeUserEventsRequest const&
-          request);
+  virtual future<StatusOr<google::cloud::discoveryengine::v1::PurgeUserEventsResponse>>
+  PurgeUserEvents(google::cloud::discoveryengine::v1::PurgeUserEventsRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> PurgeUserEvents(
-      NoAwaitTag,
-      google::cloud::discoveryengine::v1::PurgeUserEventsRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  PurgeUserEvents(NoAwaitTag, google::cloud::discoveryengine::v1::PurgeUserEventsRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::discoveryengine::v1::PurgeUserEventsResponse>>
-  PurgeUserEvents(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::discoveryengine::v1::PurgeUserEventsResponse>>
+  PurgeUserEvents( google::longrunning::Operation const& operation);
 
-  virtual future<
-      StatusOr<google::cloud::discoveryengine::v1::ImportUserEventsResponse>>
-  ImportUserEvents(
-      google::cloud::discoveryengine::v1::ImportUserEventsRequest const&
-          request);
+  virtual future<StatusOr<google::cloud::discoveryengine::v1::ImportUserEventsResponse>>
+  ImportUserEvents(google::cloud::discoveryengine::v1::ImportUserEventsRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> ImportUserEvents(
-      NoAwaitTag,
-      google::cloud::discoveryengine::v1::ImportUserEventsRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  ImportUserEvents(NoAwaitTag, google::cloud::discoveryengine::v1::ImportUserEventsRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::discoveryengine::v1::ImportUserEventsResponse>>
-  ImportUserEvents(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::discoveryengine::v1::ImportUserEventsResponse>>
+  ImportUserEvents( google::longrunning::Operation const& operation);
 
-  virtual StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 
-  virtual Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request);
+  virtual Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request);
 };
 
 /**
- * A factory function to construct an object of type
- * `UserEventServiceConnection`.
+ * A factory function to construct an object of type `UserEventServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
  * should be passed as an argument to the constructor of UserEventServiceClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `UserEventServiceConnection`. Expected options are any of the types
- * in the following option lists:
+ * returned `UserEventServiceConnection`. Expected options are any of the types in
+ * the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
@@ -254,8 +231,8 @@ class UserEventServiceConnection {
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
- * @param options (optional) Configure the `UserEventServiceConnection` created
- * by this function.
+ * @param options (optional) Configure the `UserEventServiceConnection` created by
+ * this function.
  */
 std::shared_ptr<UserEventServiceConnection> MakeUserEventServiceConnection(
     Options options = {});

@@ -26,31 +26,26 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-MatchServiceConnectionIdempotencyPolicy::
-    ~MatchServiceConnectionIdempotencyPolicy() = default;
+MatchServiceConnectionIdempotencyPolicy::~MatchServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<MatchServiceConnectionIdempotencyPolicy>
 MatchServiceConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<MatchServiceConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency MatchServiceConnectionIdempotencyPolicy::FindNeighbors(
-    google::cloud::aiplatform::v1::FindNeighborsRequest const&) {
+Idempotency MatchServiceConnectionIdempotencyPolicy::FindNeighbors(google::cloud::aiplatform::v1::FindNeighborsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency MatchServiceConnectionIdempotencyPolicy::ReadIndexDatapoints(
-    google::cloud::aiplatform::v1::ReadIndexDatapointsRequest const&) {
+Idempotency MatchServiceConnectionIdempotencyPolicy::ReadIndexDatapoints(google::cloud::aiplatform::v1::ReadIndexDatapointsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency MatchServiceConnectionIdempotencyPolicy::ListLocations(
-    google::cloud::location::ListLocationsRequest) {  // NOLINT
+Idempotency MatchServiceConnectionIdempotencyPolicy::ListLocations(google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency MatchServiceConnectionIdempotencyPolicy::GetLocation(
-    google::cloud::location::GetLocationRequest const&) {
+Idempotency MatchServiceConnectionIdempotencyPolicy::GetLocation(google::cloud::location::GetLocationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
@@ -60,43 +55,36 @@ Idempotency MatchServiceConnectionIdempotencyPolicy::SetIamPolicy(
                                          : Idempotency::kIdempotent;
 }
 
-Idempotency MatchServiceConnectionIdempotencyPolicy::GetIamPolicy(
-    google::iam::v1::GetIamPolicyRequest const&) {
+Idempotency MatchServiceConnectionIdempotencyPolicy::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency MatchServiceConnectionIdempotencyPolicy::TestIamPermissions(
-    google::iam::v1::TestIamPermissionsRequest const&) {
+Idempotency MatchServiceConnectionIdempotencyPolicy::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency MatchServiceConnectionIdempotencyPolicy::ListOperations(
-    google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency MatchServiceConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency MatchServiceConnectionIdempotencyPolicy::GetOperation(
-    google::longrunning::GetOperationRequest const&) {
+Idempotency MatchServiceConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency MatchServiceConnectionIdempotencyPolicy::DeleteOperation(
-    google::longrunning::DeleteOperationRequest const&) {
+Idempotency MatchServiceConnectionIdempotencyPolicy::DeleteOperation(google::longrunning::DeleteOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency MatchServiceConnectionIdempotencyPolicy::CancelOperation(
-    google::longrunning::CancelOperationRequest const&) {
+Idempotency MatchServiceConnectionIdempotencyPolicy::CancelOperation(google::longrunning::CancelOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency MatchServiceConnectionIdempotencyPolicy::WaitOperation(
-    google::longrunning::WaitOperationRequest const&) {
+Idempotency MatchServiceConnectionIdempotencyPolicy::WaitOperation(google::longrunning::WaitOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<MatchServiceConnectionIdempotencyPolicy>
-MakeDefaultMatchServiceConnectionIdempotencyPolicy() {
+    MakeDefaultMatchServiceConnectionIdempotencyPolicy() {
   return std::make_unique<MatchServiceConnectionIdempotencyPolicy>();
 }
 

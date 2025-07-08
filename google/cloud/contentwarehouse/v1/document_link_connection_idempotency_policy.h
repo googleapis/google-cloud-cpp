@@ -35,30 +35,26 @@ class DocumentLinkServiceConnectionIdempotencyPolicy {
   virtual ~DocumentLinkServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<DocumentLinkServiceConnectionIdempotencyPolicy>
-  clone() const;
+  virtual std::unique_ptr<DocumentLinkServiceConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency ListLinkedTargets(
-      google::cloud::contentwarehouse::v1::ListLinkedTargetsRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  ListLinkedTargets(google::cloud::contentwarehouse::v1::ListLinkedTargetsRequest const& request);
 
-  virtual google::cloud::Idempotency ListLinkedSources(
-      google::cloud::contentwarehouse::v1::ListLinkedSourcesRequest request);
+  virtual google::cloud::Idempotency
+  ListLinkedSources(google::cloud::contentwarehouse::v1::ListLinkedSourcesRequest request);
 
-  virtual google::cloud::Idempotency CreateDocumentLink(
-      google::cloud::contentwarehouse::v1::CreateDocumentLinkRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  CreateDocumentLink(google::cloud::contentwarehouse::v1::CreateDocumentLinkRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteDocumentLink(
-      google::cloud::contentwarehouse::v1::DeleteDocumentLinkRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  DeleteDocumentLink(google::cloud::contentwarehouse::v1::DeleteDocumentLinkRequest const& request);
 
-  virtual google::cloud::Idempotency GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 };
 
 std::unique_ptr<DocumentLinkServiceConnectionIdempotencyPolicy>
-MakeDefaultDocumentLinkServiceConnectionIdempotencyPolicy();
+    MakeDefaultDocumentLinkServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace contentwarehouse_v1

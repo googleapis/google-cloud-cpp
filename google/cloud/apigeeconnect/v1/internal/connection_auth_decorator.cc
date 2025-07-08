@@ -31,9 +31,9 @@ ConnectionServiceAuth::ConnectionServiceAuth(
     std::shared_ptr<ConnectionServiceStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::apigeeconnect::v1::ListConnectionsResponse>
-ConnectionServiceAuth::ListConnections(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::apigeeconnect::v1::ListConnectionsResponse> ConnectionServiceAuth::ListConnections(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::apigeeconnect::v1::ListConnectionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;

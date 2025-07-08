@@ -47,8 +47,7 @@ class AssuredWorkloadsServiceRetryPolicy : public ::google::cloud::RetryPolicy {
 };
 
 /**
- * A retry policy for `AssuredWorkloadsServiceConnection` based on counting
- * errors.
+ * A retry policy for `AssuredWorkloadsServiceConnection` based on counting errors.
  *
  * This policy stops retrying if:
  * - An RPC returns a non-transient error.
@@ -57,8 +56,7 @@ class AssuredWorkloadsServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class AssuredWorkloadsServiceLimitedErrorCountRetryPolicy
-    : public AssuredWorkloadsServiceRetryPolicy {
+class AssuredWorkloadsServiceLimitedErrorCountRetryPolicy : public AssuredWorkloadsServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -67,18 +65,15 @@ class AssuredWorkloadsServiceLimitedErrorCountRetryPolicy
    * @note Disable the retry loop by providing an instance of this policy with
    *     @p maximum_failures == 0.
    */
-  explicit AssuredWorkloadsServiceLimitedErrorCountRetryPolicy(
-      int maximum_failures)
-      : impl_(maximum_failures) {}
+  explicit AssuredWorkloadsServiceLimitedErrorCountRetryPolicy(int maximum_failures)
+    : impl_(maximum_failures) {}
 
   AssuredWorkloadsServiceLimitedErrorCountRetryPolicy(
       AssuredWorkloadsServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : AssuredWorkloadsServiceLimitedErrorCountRetryPolicy(
-            rhs.maximum_failures()) {}
+    : AssuredWorkloadsServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   AssuredWorkloadsServiceLimitedErrorCountRetryPolicy(
       AssuredWorkloadsServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : AssuredWorkloadsServiceLimitedErrorCountRetryPolicy(
-            rhs.maximum_failures()) {}
+    : AssuredWorkloadsServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -90,8 +85,7 @@ class AssuredWorkloadsServiceLimitedErrorCountRetryPolicy
     return impl_.IsPermanentFailure(status);
   }
   std::unique_ptr<AssuredWorkloadsServiceRetryPolicy> clone() const override {
-    return std::make_unique<
-        AssuredWorkloadsServiceLimitedErrorCountRetryPolicy>(
+    return std::make_unique<AssuredWorkloadsServiceLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
 
@@ -99,9 +93,7 @@ class AssuredWorkloadsServiceLimitedErrorCountRetryPolicy
   using BaseType = AssuredWorkloadsServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      assuredworkloads_v1_internal::AssuredWorkloadsServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<assuredworkloads_v1_internal::AssuredWorkloadsServiceRetryTraits> impl_;
 };
 
 /**
@@ -114,8 +106,7 @@ class AssuredWorkloadsServiceLimitedErrorCountRetryPolicy
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class AssuredWorkloadsServiceLimitedTimeRetryPolicy
-    : public AssuredWorkloadsServiceRetryPolicy {
+class AssuredWorkloadsServiceLimitedTimeRetryPolicy : public AssuredWorkloadsServiceRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -140,14 +131,12 @@ class AssuredWorkloadsServiceLimitedTimeRetryPolicy
   template <typename DurationRep, typename DurationPeriod>
   explicit AssuredWorkloadsServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  AssuredWorkloadsServiceLimitedTimeRetryPolicy(
-      AssuredWorkloadsServiceLimitedTimeRetryPolicy&& rhs) noexcept
-      : AssuredWorkloadsServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  AssuredWorkloadsServiceLimitedTimeRetryPolicy(
-      AssuredWorkloadsServiceLimitedTimeRetryPolicy const& rhs) noexcept
-      : AssuredWorkloadsServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  AssuredWorkloadsServiceLimitedTimeRetryPolicy(AssuredWorkloadsServiceLimitedTimeRetryPolicy&& rhs) noexcept
+    : AssuredWorkloadsServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  AssuredWorkloadsServiceLimitedTimeRetryPolicy(AssuredWorkloadsServiceLimitedTimeRetryPolicy const& rhs) noexcept
+    : AssuredWorkloadsServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -169,24 +158,20 @@ class AssuredWorkloadsServiceLimitedTimeRetryPolicy
   using BaseType = AssuredWorkloadsServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      assuredworkloads_v1_internal::AssuredWorkloadsServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<assuredworkloads_v1_internal::AssuredWorkloadsServiceRetryTraits> impl_;
 };
 
 /**
- * The `AssuredWorkloadsServiceConnection` object for
- * `AssuredWorkloadsServiceClient`.
+ * The `AssuredWorkloadsServiceConnection` object for `AssuredWorkloadsServiceClient`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `AssuredWorkloadsServiceClient`. This allows users to inject custom
- * behavior (e.g., with a Google Mock object) when writing tests that use
- * objects of type `AssuredWorkloadsServiceClient`.
+ * sets in `AssuredWorkloadsServiceClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `AssuredWorkloadsServiceClient`.
  *
  * To create a concrete instance, see `MakeAssuredWorkloadsServiceConnection()`.
  *
- * For mocking, see
- * `assuredworkloads_v1_mocks::MockAssuredWorkloadsServiceConnection`.
+ * For mocking, see `assuredworkloads_v1_mocks::MockAssuredWorkloadsServiceConnection`.
  */
 class AssuredWorkloadsServiceConnection {
  public:
@@ -195,85 +180,68 @@ class AssuredWorkloadsServiceConnection {
   virtual Options options() { return Options{}; }
 
   virtual future<StatusOr<google::cloud::assuredworkloads::v1::Workload>>
-  CreateWorkload(
-      google::cloud::assuredworkloads::v1::CreateWorkloadRequest const&
-          request);
+  CreateWorkload(google::cloud::assuredworkloads::v1::CreateWorkloadRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> CreateWorkload(
-      NoAwaitTag,
-      google::cloud::assuredworkloads::v1::CreateWorkloadRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  CreateWorkload(NoAwaitTag, google::cloud::assuredworkloads::v1::CreateWorkloadRequest const& request);
 
   virtual future<StatusOr<google::cloud::assuredworkloads::v1::Workload>>
-  CreateWorkload(google::longrunning::Operation const& operation);
+  CreateWorkload( google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::assuredworkloads::v1::Workload>
-  UpdateWorkload(
-      google::cloud::assuredworkloads::v1::UpdateWorkloadRequest const&
-          request);
+  UpdateWorkload(google::cloud::assuredworkloads::v1::UpdateWorkloadRequest const& request);
 
-  virtual StatusOr<
-      google::cloud::assuredworkloads::v1::RestrictAllowedResourcesResponse>
-  RestrictAllowedResources(google::cloud::assuredworkloads::v1::
-                               RestrictAllowedResourcesRequest const& request);
+  virtual StatusOr<google::cloud::assuredworkloads::v1::RestrictAllowedResourcesResponse>
+  RestrictAllowedResources(google::cloud::assuredworkloads::v1::RestrictAllowedResourcesRequest const& request);
 
-  virtual Status DeleteWorkload(
-      google::cloud::assuredworkloads::v1::DeleteWorkloadRequest const&
-          request);
+  virtual Status
+  DeleteWorkload(google::cloud::assuredworkloads::v1::DeleteWorkloadRequest const& request);
 
-  virtual StatusOr<google::cloud::assuredworkloads::v1::Workload> GetWorkload(
-      google::cloud::assuredworkloads::v1::GetWorkloadRequest const& request);
+  virtual StatusOr<google::cloud::assuredworkloads::v1::Workload>
+  GetWorkload(google::cloud::assuredworkloads::v1::GetWorkloadRequest const& request);
 
   virtual StreamRange<google::cloud::assuredworkloads::v1::Workload>
-  ListWorkloads(
-      google::cloud::assuredworkloads::v1::ListWorkloadsRequest request);
+  ListWorkloads(google::cloud::assuredworkloads::v1::ListWorkloadsRequest request);
 
   virtual StreamRange<google::cloud::assuredworkloads::v1::Violation>
-  ListViolations(
-      google::cloud::assuredworkloads::v1::ListViolationsRequest request);
+  ListViolations(google::cloud::assuredworkloads::v1::ListViolationsRequest request);
 
-  virtual StatusOr<google::cloud::assuredworkloads::v1::Violation> GetViolation(
-      google::cloud::assuredworkloads::v1::GetViolationRequest const& request);
+  virtual StatusOr<google::cloud::assuredworkloads::v1::Violation>
+  GetViolation(google::cloud::assuredworkloads::v1::GetViolationRequest const& request);
 
-  virtual StatusOr<
-      google::cloud::assuredworkloads::v1::AcknowledgeViolationResponse>
-  AcknowledgeViolation(
-      google::cloud::assuredworkloads::v1::AcknowledgeViolationRequest const&
-          request);
+  virtual StatusOr<google::cloud::assuredworkloads::v1::AcknowledgeViolationResponse>
+  AcknowledgeViolation(google::cloud::assuredworkloads::v1::AcknowledgeViolationRequest const& request);
 
-  virtual StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 };
 
 /**
- * A factory function to construct an object of type
- * `AssuredWorkloadsServiceConnection`.
+ * A factory function to construct an object of type `AssuredWorkloadsServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of
- * AssuredWorkloadsServiceClient.
+ * should be passed as an argument to the constructor of AssuredWorkloadsServiceClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `AssuredWorkloadsServiceConnection`. Expected options are any of the
- * types in the following option lists:
+ * returned `AssuredWorkloadsServiceConnection`. Expected options are any of the types in
+ * the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * -
- * `google::cloud::assuredworkloads_v1::AssuredWorkloadsServicePolicyOptionList`
+ * - `google::cloud::assuredworkloads_v1::AssuredWorkloadsServicePolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
- * @param options (optional) Configure the `AssuredWorkloadsServiceConnection`
- * created by this function.
+ * @param options (optional) Configure the `AssuredWorkloadsServiceConnection` created by
+ * this function.
  */
-std::shared_ptr<AssuredWorkloadsServiceConnection>
-MakeAssuredWorkloadsServiceConnection(Options options = {});
+std::shared_ptr<AssuredWorkloadsServiceConnection> MakeAssuredWorkloadsServiceConnection(
+    Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace assuredworkloads_v1

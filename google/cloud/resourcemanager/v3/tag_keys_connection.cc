@@ -17,17 +17,17 @@
 // source: google/cloud/resourcemanager/v3/tag_keys.proto
 
 #include "google/cloud/resourcemanager/v3/tag_keys_connection.h"
-#include "google/cloud/resourcemanager/v3/internal/tag_keys_connection_impl.h"
-#include "google/cloud/resourcemanager/v3/internal/tag_keys_option_defaults.h"
-#include "google/cloud/resourcemanager/v3/internal/tag_keys_stub_factory.h"
-#include "google/cloud/resourcemanager/v3/internal/tag_keys_tracing_connection.h"
-#include "google/cloud/resourcemanager/v3/tag_keys_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/resourcemanager/v3/internal/tag_keys_connection_impl.h"
+#include "google/cloud/resourcemanager/v3/internal/tag_keys_option_defaults.h"
+#include "google/cloud/resourcemanager/v3/internal/tag_keys_stub_factory.h"
+#include "google/cloud/resourcemanager/v3/internal/tag_keys_tracing_connection.h"
+#include "google/cloud/resourcemanager/v3/tag_keys_options.h"
 #include <memory>
 #include <utility>
 
@@ -38,10 +38,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 TagKeysConnection::~TagKeysConnection() = default;
 
-StreamRange<google::cloud::resourcemanager::v3::TagKey>
-TagKeysConnection::ListTagKeys(
-    google::cloud::resourcemanager::v3::
-        ListTagKeysRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::resourcemanager::v3::TagKey> TagKeysConnection::ListTagKeys(
+    google::cloud::resourcemanager::v3::ListTagKeysRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::resourcemanager::v3::TagKey>>();
 }
@@ -62,74 +60,82 @@ future<StatusOr<google::cloud::resourcemanager::v3::TagKey>>
 TagKeysConnection::CreateTagKey(
     google::cloud::resourcemanager::v3::CreateTagKeyRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::resourcemanager::v3::TagKey>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::resourcemanager::v3::TagKey>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation> TagKeysConnection::CreateTagKey(
+StatusOr<google::longrunning::Operation>
+TagKeysConnection::CreateTagKey(
     NoAwaitTag,
     google::cloud::resourcemanager::v3::CreateTagKeyRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::TagKey>>
-TagKeysConnection::CreateTagKey(google::longrunning::Operation const&) {
+TagKeysConnection::CreateTagKey(
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::resourcemanager::v3::TagKey>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::resourcemanager::v3::TagKey>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::TagKey>>
 TagKeysConnection::UpdateTagKey(
     google::cloud::resourcemanager::v3::UpdateTagKeyRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::resourcemanager::v3::TagKey>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::resourcemanager::v3::TagKey>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation> TagKeysConnection::UpdateTagKey(
+StatusOr<google::longrunning::Operation>
+TagKeysConnection::UpdateTagKey(
     NoAwaitTag,
     google::cloud::resourcemanager::v3::UpdateTagKeyRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::TagKey>>
-TagKeysConnection::UpdateTagKey(google::longrunning::Operation const&) {
+TagKeysConnection::UpdateTagKey(
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::resourcemanager::v3::TagKey>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::resourcemanager::v3::TagKey>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::TagKey>>
 TagKeysConnection::DeleteTagKey(
     google::cloud::resourcemanager::v3::DeleteTagKeyRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::resourcemanager::v3::TagKey>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::resourcemanager::v3::TagKey>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation> TagKeysConnection::DeleteTagKey(
+StatusOr<google::longrunning::Operation>
+TagKeysConnection::DeleteTagKey(
     NoAwaitTag,
     google::cloud::resourcemanager::v3::DeleteTagKeyRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::TagKey>>
-TagKeysConnection::DeleteTagKey(google::longrunning::Operation const&) {
+TagKeysConnection::DeleteTagKey(
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::resourcemanager::v3::TagKey>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::resourcemanager::v3::TagKey>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::iam::v1::Policy> TagKeysConnection::GetIamPolicy(
+StatusOr<google::iam::v1::Policy>
+TagKeysConnection::GetIamPolicy(
     google::iam::v1::GetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::iam::v1::Policy> TagKeysConnection::SetIamPolicy(
+StatusOr<google::iam::v1::Policy>
+TagKeysConnection::SetIamPolicy(
     google::iam::v1::SetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -140,7 +146,8 @@ TagKeysConnection::TestIamPermissions(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::longrunning::Operation> TagKeysConnection::GetOperation(
+StatusOr<google::longrunning::Operation>
+TagKeysConnection::GetOperation(
     google::longrunning::GetOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -148,20 +155,21 @@ StatusOr<google::longrunning::Operation> TagKeysConnection::GetOperation(
 std::shared_ptr<TagKeysConnection> MakeTagKeysConnection(
     std::string const& location, Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 TagKeysPolicyOptionList>(options, __func__);
+      UnifiedCredentialsOptionList,
+      TagKeysPolicyOptionList>(options, __func__);
   options = resourcemanager_v3_internal::TagKeysDefaultOptions(
       location, std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = resourcemanager_v3_internal::CreateDefaultTagKeysStub(
-      std::move(auth), options);
+    std::move(auth), options);
   return resourcemanager_v3_internal::MakeTagKeysTracingConnection(
       std::make_shared<resourcemanager_v3_internal::TagKeysConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options)));
+      std::move(background), std::move(stub), std::move(options)));
 }
 
-std::shared_ptr<TagKeysConnection> MakeTagKeysConnection(Options options) {
+std::shared_ptr<TagKeysConnection> MakeTagKeysConnection(
+    Options options) {
   return MakeTagKeysConnection(std::string{}, std::move(options));
 }
 

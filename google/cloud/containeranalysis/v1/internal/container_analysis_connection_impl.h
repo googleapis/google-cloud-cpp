@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTAINERANALYSIS_V1_INTERNAL_CONTAINER_ANALYSIS_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTAINERANALYSIS_V1_INTERNAL_CONTAINER_ANALYSIS_CONNECTION_IMPL_H
 
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/containeranalysis/v1/container_analysis_connection.h"
 #include "google/cloud/containeranalysis/v1/container_analysis_connection_idempotency_policy.h"
 #include "google/cloud/containeranalysis/v1/container_analysis_options.h"
 #include "google/cloud/containeranalysis/v1/internal/container_analysis_retry_traits.h"
 #include "google/cloud/containeranalysis/v1/internal/container_analysis_stub.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
@@ -42,31 +42,26 @@ class ContainerAnalysisConnectionImpl
   ~ContainerAnalysisConnectionImpl() override = default;
 
   ContainerAnalysisConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<containeranalysis_v1_internal::ContainerAnalysisStub>
-          stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<containeranalysis_v1_internal::ContainerAnalysisStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
-  StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request) override;
+  StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) override;
 
-  StatusOr<
-      google::devtools::containeranalysis::v1::VulnerabilityOccurrencesSummary>
-  GetVulnerabilityOccurrencesSummary(
-      google::devtools::containeranalysis::v1::
-          GetVulnerabilityOccurrencesSummaryRequest const& request) override;
+  StatusOr<google::devtools::containeranalysis::v1::VulnerabilityOccurrencesSummary>
+  GetVulnerabilityOccurrencesSummary(google::devtools::containeranalysis::v1::GetVulnerabilityOccurrencesSummaryRequest const& request) override;
 
   StatusOr<google::devtools::containeranalysis::v1::ExportSBOMResponse>
-  ExportSBOM(google::devtools::containeranalysis::v1::ExportSBOMRequest const&
-                 request) override;
+  ExportSBOM(google::devtools::containeranalysis::v1::ExportSBOMRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

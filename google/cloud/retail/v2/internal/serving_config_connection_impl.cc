@@ -17,12 +17,12 @@
 // source: google/cloud/retail/v2/serving_config_service.proto
 
 #include "google/cloud/retail/v2/internal/serving_config_connection_impl.h"
-#include "google/cloud/retail/v2/internal/serving_config_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
+#include "google/cloud/retail/v2/internal/serving_config_option_defaults.h"
 #include <memory>
 #include <utility>
 
@@ -32,122 +32,106 @@ namespace retail_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<retail_v2::ServingConfigServiceRetryPolicy> retry_policy(
-    Options const& options) {
-  return options.get<retail_v2::ServingConfigServiceRetryPolicyOption>()
-      ->clone();
+std::unique_ptr<retail_v2::ServingConfigServiceRetryPolicy>
+retry_policy(Options const& options) {
+  return options.get<retail_v2::ServingConfigServiceRetryPolicyOption>()->clone();
 }
 
-std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-  return options.get<retail_v2::ServingConfigServiceBackoffPolicyOption>()
-      ->clone();
+std::unique_ptr<BackoffPolicy>
+backoff_policy(Options const& options) {
+  return options.get<retail_v2::ServingConfigServiceBackoffPolicyOption>()->clone();
 }
 
 std::unique_ptr<retail_v2::ServingConfigServiceConnectionIdempotencyPolicy>
 idempotency_policy(Options const& options) {
-  return options
-      .get<retail_v2::ServingConfigServiceConnectionIdempotencyPolicyOption>()
-      ->clone();
+  return options.get<retail_v2::ServingConfigServiceConnectionIdempotencyPolicyOption>()->clone();
 }
 
-}  // namespace
+} // namespace
 
 ServingConfigServiceConnectionImpl::ServingConfigServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<retail_v2_internal::ServingConfigServiceStub> stub,
     Options options)
-    : background_(std::move(background)),
-      stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options), ServingConfigServiceConnection::options())) {}
+  : background_(std::move(background)), stub_(std::move(stub)),
+    options_(internal::MergeOptions(
+        std::move(options),
+        ServingConfigServiceConnection::options())) {}
 
 StatusOr<google::cloud::retail::v2::ServingConfig>
-ServingConfigServiceConnectionImpl::CreateServingConfig(
-    google::cloud::retail::v2::CreateServingConfigRequest const& request) {
+ServingConfigServiceConnectionImpl::CreateServingConfig(google::cloud::retail::v2::CreateServingConfigRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateServingConfig(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::retail::v2::CreateServingConfigRequest const&
-                 request) {
+             google::cloud::retail::v2::CreateServingConfigRequest const& request) {
         return stub_->CreateServingConfig(context, options, request);
       },
       *current, request, __func__);
 }
 
-Status ServingConfigServiceConnectionImpl::DeleteServingConfig(
-    google::cloud::retail::v2::DeleteServingConfigRequest const& request) {
+Status
+ServingConfigServiceConnectionImpl::DeleteServingConfig(google::cloud::retail::v2::DeleteServingConfigRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteServingConfig(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::retail::v2::DeleteServingConfigRequest const&
-                 request) {
+             google::cloud::retail::v2::DeleteServingConfigRequest const& request) {
         return stub_->DeleteServingConfig(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::retail::v2::ServingConfig>
-ServingConfigServiceConnectionImpl::UpdateServingConfig(
-    google::cloud::retail::v2::UpdateServingConfigRequest const& request) {
+ServingConfigServiceConnectionImpl::UpdateServingConfig(google::cloud::retail::v2::UpdateServingConfigRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateServingConfig(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::retail::v2::UpdateServingConfigRequest const&
-                 request) {
+             google::cloud::retail::v2::UpdateServingConfigRequest const& request) {
         return stub_->UpdateServingConfig(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::retail::v2::ServingConfig>
-ServingConfigServiceConnectionImpl::GetServingConfig(
-    google::cloud::retail::v2::GetServingConfigRequest const& request) {
+ServingConfigServiceConnectionImpl::GetServingConfig(google::cloud::retail::v2::GetServingConfigRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetServingConfig(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::retail::v2::GetServingConfigRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::retail::v2::GetServingConfigRequest const& request) {
         return stub_->GetServingConfig(context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::cloud::retail::v2::ServingConfig>
-ServingConfigServiceConnectionImpl::ListServingConfigs(
-    google::cloud::retail::v2::ListServingConfigsRequest request) {
+ServingConfigServiceConnectionImpl::ListServingConfigs(google::cloud::retail::v2::ListServingConfigsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListServingConfigs(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::retail::v2::ServingConfig>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::retail::v2::ServingConfig>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<retail_v2::ServingConfigServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<retail_v2::ServingConfigServiceRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::retail::v2::ListServingConfigsRequest const& r) {
+          Options const& options, google::cloud::retail::v2::ListServingConfigsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::retail::v2::ListServingConfigsRequest const&
-                       request) {
+                   google::cloud::retail::v2::ListServingConfigsRequest const& request) {
               return stub->ListServingConfigs(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::retail::v2::ListServingConfigsResponse r) {
-        std::vector<google::cloud::retail::v2::ServingConfig> result(
-            r.serving_configs().size());
+        std::vector<google::cloud::retail::v2::ServingConfig> result(r.serving_configs().size());
         auto& messages = *r.mutable_serving_configs();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -155,8 +139,7 @@ ServingConfigServiceConnectionImpl::ListServingConfigs(
 }
 
 StatusOr<google::cloud::retail::v2::ServingConfig>
-ServingConfigServiceConnectionImpl::AddControl(
-    google::cloud::retail::v2::AddControlRequest const& request) {
+ServingConfigServiceConnectionImpl::AddControl(google::cloud::retail::v2::AddControlRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -169,8 +152,7 @@ ServingConfigServiceConnectionImpl::AddControl(
 }
 
 StatusOr<google::cloud::retail::v2::ServingConfig>
-ServingConfigServiceConnectionImpl::RemoveControl(
-    google::cloud::retail::v2::RemoveControlRequest const& request) {
+ServingConfigServiceConnectionImpl::RemoveControl(google::cloud::retail::v2::RemoveControlRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -183,21 +165,17 @@ ServingConfigServiceConnectionImpl::RemoveControl(
 }
 
 StreamRange<google::longrunning::Operation>
-ServingConfigServiceConnectionImpl::ListOperations(
-    google::longrunning::ListOperationsRequest request) {
+ServingConfigServiceConnectionImpl::ListOperations(google::longrunning::ListOperationsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListOperations(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::longrunning::Operation>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::longrunning::Operation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<retail_v2::ServingConfigServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<retail_v2::ServingConfigServiceRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::longrunning::ListOperationsRequest const& r) {
+          Options const& options, google::longrunning::ListOperationsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
@@ -207,8 +185,7 @@ ServingConfigServiceConnectionImpl::ListOperations(
             options, r, function_name);
       },
       [](google::longrunning::ListOperationsResponse r) {
-        std::vector<google::longrunning::Operation> result(
-            r.operations().size());
+        std::vector<google::longrunning::Operation> result(r.operations().size());
         auto& messages = *r.mutable_operations();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -216,8 +193,7 @@ ServingConfigServiceConnectionImpl::ListOperations(
 }
 
 StatusOr<google::longrunning::Operation>
-ServingConfigServiceConnectionImpl::GetOperation(
-    google::longrunning::GetOperationRequest const& request) {
+ServingConfigServiceConnectionImpl::GetOperation(google::longrunning::GetOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),

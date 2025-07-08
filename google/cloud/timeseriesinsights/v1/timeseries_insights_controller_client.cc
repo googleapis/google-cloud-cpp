@@ -26,17 +26,14 @@ namespace timeseriesinsights_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 TimeseriesInsightsControllerClient::TimeseriesInsightsControllerClient(
-    std::shared_ptr<TimeseriesInsightsControllerConnection> connection,
-    Options opts)
+    std::shared_ptr<TimeseriesInsightsControllerConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
-TimeseriesInsightsControllerClient::~TimeseriesInsightsControllerClient() =
-    default;
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
+TimeseriesInsightsControllerClient::~TimeseriesInsightsControllerClient() = default;
 
 StreamRange<google::cloud::timeseriesinsights::v1::DataSet>
-TimeseriesInsightsControllerClient::ListDataSets(std::string const& parent,
-                                                 Options opts) {
+TimeseriesInsightsControllerClient::ListDataSets(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::timeseriesinsights::v1::ListDataSetsRequest request;
   request.set_parent(parent);
@@ -44,18 +41,13 @@ TimeseriesInsightsControllerClient::ListDataSets(std::string const& parent,
 }
 
 StreamRange<google::cloud::timeseriesinsights::v1::DataSet>
-TimeseriesInsightsControllerClient::ListDataSets(
-    google::cloud::timeseriesinsights::v1::ListDataSetsRequest request,
-    Options opts) {
+TimeseriesInsightsControllerClient::ListDataSets(google::cloud::timeseriesinsights::v1::ListDataSetsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListDataSets(std::move(request));
 }
 
 StatusOr<google::cloud::timeseriesinsights::v1::DataSet>
-TimeseriesInsightsControllerClient::CreateDataSet(
-    std::string const& parent,
-    google::cloud::timeseriesinsights::v1::DataSet const& dataset,
-    Options opts) {
+TimeseriesInsightsControllerClient::CreateDataSet(std::string const& parent, google::cloud::timeseriesinsights::v1::DataSet const& dataset, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::timeseriesinsights::v1::CreateDataSetRequest request;
   request.set_parent(parent);
@@ -64,33 +56,27 @@ TimeseriesInsightsControllerClient::CreateDataSet(
 }
 
 StatusOr<google::cloud::timeseriesinsights::v1::DataSet>
-TimeseriesInsightsControllerClient::CreateDataSet(
-    google::cloud::timeseriesinsights::v1::CreateDataSetRequest const& request,
-    Options opts) {
+TimeseriesInsightsControllerClient::CreateDataSet(google::cloud::timeseriesinsights::v1::CreateDataSetRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateDataSet(request);
 }
 
-Status TimeseriesInsightsControllerClient::DeleteDataSet(
-    std::string const& name, Options opts) {
+Status
+TimeseriesInsightsControllerClient::DeleteDataSet(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::timeseriesinsights::v1::DeleteDataSetRequest request;
   request.set_name(name);
   return connection_->DeleteDataSet(request);
 }
 
-Status TimeseriesInsightsControllerClient::DeleteDataSet(
-    google::cloud::timeseriesinsights::v1::DeleteDataSetRequest const& request,
-    Options opts) {
+Status
+TimeseriesInsightsControllerClient::DeleteDataSet(google::cloud::timeseriesinsights::v1::DeleteDataSetRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteDataSet(request);
 }
 
 StatusOr<google::cloud::timeseriesinsights::v1::AppendEventsResponse>
-TimeseriesInsightsControllerClient::AppendEvents(
-    std::string const& dataset,
-    std::vector<google::cloud::timeseriesinsights::v1::Event> const& events,
-    Options opts) {
+TimeseriesInsightsControllerClient::AppendEvents(std::string const& dataset, std::vector<google::cloud::timeseriesinsights::v1::Event> const& events, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::timeseriesinsights::v1::AppendEventsRequest request;
   request.set_dataset(dataset);
@@ -99,34 +85,25 @@ TimeseriesInsightsControllerClient::AppendEvents(
 }
 
 StatusOr<google::cloud::timeseriesinsights::v1::AppendEventsResponse>
-TimeseriesInsightsControllerClient::AppendEvents(
-    google::cloud::timeseriesinsights::v1::AppendEventsRequest const& request,
-    Options opts) {
+TimeseriesInsightsControllerClient::AppendEvents(google::cloud::timeseriesinsights::v1::AppendEventsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->AppendEvents(request);
 }
 
 StatusOr<google::cloud::timeseriesinsights::v1::QueryDataSetResponse>
-TimeseriesInsightsControllerClient::QueryDataSet(
-    google::cloud::timeseriesinsights::v1::QueryDataSetRequest const& request,
-    Options opts) {
+TimeseriesInsightsControllerClient::QueryDataSet(google::cloud::timeseriesinsights::v1::QueryDataSetRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->QueryDataSet(request);
 }
 
 StatusOr<google::cloud::timeseriesinsights::v1::EvaluatedSlice>
-TimeseriesInsightsControllerClient::EvaluateSlice(
-    google::cloud::timeseriesinsights::v1::EvaluateSliceRequest const& request,
-    Options opts) {
+TimeseriesInsightsControllerClient::EvaluateSlice(google::cloud::timeseriesinsights::v1::EvaluateSliceRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->EvaluateSlice(request);
 }
 
 StatusOr<google::cloud::timeseriesinsights::v1::EvaluatedSlice>
-TimeseriesInsightsControllerClient::EvaluateTimeseries(
-    google::cloud::timeseriesinsights::v1::EvaluateTimeseriesRequest const&
-        request,
-    Options opts) {
+TimeseriesInsightsControllerClient::EvaluateTimeseries(google::cloud::timeseriesinsights::v1::EvaluateTimeseriesRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->EvaluateTimeseries(request);
 }

@@ -31,24 +31,25 @@ namespace retail_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 AnalyticsServiceLogging::AnalyticsServiceLogging(
-    std::shared_ptr<AnalyticsServiceStub> child, TracingOptions tracing_options,
+    std::shared_ptr<AnalyticsServiceStub> child,
+    TracingOptions tracing_options,
     std::set<std::string> const&)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)) {}
 
 future<StatusOr<google::longrunning::Operation>>
 AnalyticsServiceLogging::AsyncExportAnalyticsMetrics(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::retail::v2::ExportAnalyticsMetricsRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::retail::v2::ExportAnalyticsMetricsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::retail::v2::ExportAnalyticsMetricsRequest const&
-                 request) {
-        return child_->AsyncExportAnalyticsMetrics(cq, std::move(context),
-                                                   std::move(options), request);
+             google::cloud::retail::v2::ExportAnalyticsMetricsRequest const& request) {
+        return child_->AsyncExportAnalyticsMetrics(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -56,12 +57,13 @@ AnalyticsServiceLogging::AsyncExportAnalyticsMetrics(
 
 StatusOr<google::longrunning::Operation>
 AnalyticsServiceLogging::ExportAnalyticsMetrics(
-    grpc::ClientContext& context, Options options,
-    google::cloud::retail::v2::ExportAnalyticsMetricsRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::retail::v2::ExportAnalyticsMetricsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::retail::v2::ExportAnalyticsMetricsRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::retail::v2::ExportAnalyticsMetricsRequest const& request) {
         return child_->ExportAnalyticsMetrics(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -69,21 +71,26 @@ AnalyticsServiceLogging::ExportAnalyticsMetrics(
 
 StatusOr<google::longrunning::ListOperationsResponse>
 AnalyticsServiceLogging::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::ListOperationsRequest const& request) {
         return child_->ListOperations(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> AnalyticsServiceLogging::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::Operation>
+AnalyticsServiceLogging::GetOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::GetOperationRequest const& request) {
         return child_->GetOperation(context, options, request);
       },
@@ -101,8 +108,8 @@ AnalyticsServiceLogging::AsyncGetOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(cq, std::move(context),
-                                         std::move(options), request);
+        return child_->AsyncGetOperation(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -118,8 +125,8 @@ future<Status> AnalyticsServiceLogging::AsyncCancelOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::CancelOperationRequest const& request) {
-        return child_->AsyncCancelOperation(cq, std::move(context),
-                                            std::move(options), request);
+        return child_->AsyncCancelOperation(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);

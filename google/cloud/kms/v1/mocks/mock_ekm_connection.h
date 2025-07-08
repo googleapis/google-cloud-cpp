@@ -47,62 +47,56 @@ class MockEkmServiceConnection : public kms_v1::EkmServiceConnection {
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD((StreamRange<google::cloud::kms::v1::EkmConnection>),
-              ListEkmConnections,
-              (google::cloud::kms::v1::ListEkmConnectionsRequest request),
-              (override));
+  ListEkmConnections,
+  (google::cloud::kms::v1::ListEkmConnectionsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::kms::v1::EkmConnection>, GetEkmConnection,
-              (google::cloud::kms::v1::GetEkmConnectionRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::kms::v1::EkmConnection>,
+  GetEkmConnection,
+  (google::cloud::kms::v1::GetEkmConnectionRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::kms::v1::EkmConnection>, CreateEkmConnection,
-      (google::cloud::kms::v1::CreateEkmConnectionRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::kms::v1::EkmConnection>,
+  CreateEkmConnection,
+  (google::cloud::kms::v1::CreateEkmConnectionRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::kms::v1::EkmConnection>, UpdateEkmConnection,
-      (google::cloud::kms::v1::UpdateEkmConnectionRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::kms::v1::EkmConnection>,
+  UpdateEkmConnection,
+  (google::cloud::kms::v1::UpdateEkmConnectionRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::kms::v1::EkmConfig>, GetEkmConfig,
-              (google::cloud::kms::v1::GetEkmConfigRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::kms::v1::EkmConfig>,
+  GetEkmConfig,
+  (google::cloud::kms::v1::GetEkmConfigRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::kms::v1::EkmConfig>, UpdateEkmConfig,
-              (google::cloud::kms::v1::UpdateEkmConfigRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::kms::v1::EkmConfig>,
+  UpdateEkmConfig,
+  (google::cloud::kms::v1::UpdateEkmConfigRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::kms::v1::VerifyConnectivityResponse>,
-      VerifyConnectivity,
-      (google::cloud::kms::v1::VerifyConnectivityRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::kms::v1::VerifyConnectivityResponse>,
+  VerifyConnectivity,
+  (google::cloud::kms::v1::VerifyConnectivityRequest const& request), (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::location::Location>), ListLocations,
-              (google::cloud::location::ListLocationsRequest request),
-              (override));
+  MOCK_METHOD((StreamRange<google::cloud::location::Location>),
+  ListLocations,
+  (google::cloud::location::ListLocationsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::location::Location>, GetLocation,
-              (google::cloud::location::GetLocationRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::location::Location>,
+  GetLocation,
+  (google::cloud::location::GetLocationRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, SetIamPolicy,
-              (google::iam::v1::SetIamPolicyRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::iam::v1::Policy>,
+  SetIamPolicy,
+  (google::iam::v1::SetIamPolicyRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, GetIamPolicy,
-              (google::iam::v1::GetIamPolicyRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::iam::v1::Policy>,
+  GetIamPolicy,
+  (google::iam::v1::GetIamPolicyRequest const& request), (override));
 
   MOCK_METHOD(StatusOr<google::iam::v1::TestIamPermissionsResponse>,
-              TestIamPermissions,
-              (google::iam::v1::TestIamPermissionsRequest const& request),
-              (override));
+  TestIamPermissions,
+  (google::iam::v1::TestIamPermissionsRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
-              (google::longrunning::GetOperationRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  GetOperation,
+  (google::longrunning::GetOperationRequest const& request), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

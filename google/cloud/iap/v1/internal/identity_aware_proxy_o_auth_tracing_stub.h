@@ -32,59 +32,55 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-class IdentityAwareProxyOAuthServiceTracingStub
-    : public IdentityAwareProxyOAuthServiceStub {
+class IdentityAwareProxyOAuthServiceTracingStub : public IdentityAwareProxyOAuthServiceStub {
  public:
   ~IdentityAwareProxyOAuthServiceTracingStub() override = default;
 
-  explicit IdentityAwareProxyOAuthServiceTracingStub(
-      std::shared_ptr<IdentityAwareProxyOAuthServiceStub> child);
+  explicit IdentityAwareProxyOAuthServiceTracingStub(std::shared_ptr<IdentityAwareProxyOAuthServiceStub> child);
 
   StatusOr<google::cloud::iap::v1::ListBrandsResponse> ListBrands(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::iap::v1::ListBrandsRequest const& request) override;
 
   StatusOr<google::cloud::iap::v1::Brand> CreateBrand(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::iap::v1::CreateBrandRequest const& request) override;
 
   StatusOr<google::cloud::iap::v1::Brand> GetBrand(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::iap::v1::GetBrandRequest const& request) override;
 
-  StatusOr<google::cloud::iap::v1::IdentityAwareProxyClient>
-  CreateIdentityAwareProxyClient(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::iap::v1::CreateIdentityAwareProxyClientRequest const&
-          request) override;
+  StatusOr<google::cloud::iap::v1::IdentityAwareProxyClient> CreateIdentityAwareProxyClient(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::iap::v1::CreateIdentityAwareProxyClientRequest const& request) override;
 
-  StatusOr<google::cloud::iap::v1::ListIdentityAwareProxyClientsResponse>
-  ListIdentityAwareProxyClients(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::iap::v1::ListIdentityAwareProxyClientsRequest const&
-          request) override;
+  StatusOr<google::cloud::iap::v1::ListIdentityAwareProxyClientsResponse> ListIdentityAwareProxyClients(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::iap::v1::ListIdentityAwareProxyClientsRequest const& request) override;
 
-  StatusOr<google::cloud::iap::v1::IdentityAwareProxyClient>
-  GetIdentityAwareProxyClient(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::iap::v1::GetIdentityAwareProxyClientRequest const& request)
-      override;
+  StatusOr<google::cloud::iap::v1::IdentityAwareProxyClient> GetIdentityAwareProxyClient(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::iap::v1::GetIdentityAwareProxyClientRequest const& request) override;
 
-  StatusOr<google::cloud::iap::v1::IdentityAwareProxyClient>
-  ResetIdentityAwareProxyClientSecret(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::iap::v1::ResetIdentityAwareProxyClientSecretRequest const&
-          request) override;
+  StatusOr<google::cloud::iap::v1::IdentityAwareProxyClient> ResetIdentityAwareProxyClientSecret(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::iap::v1::ResetIdentityAwareProxyClientSecretRequest const& request) override;
 
   Status DeleteIdentityAwareProxyClient(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::iap::v1::DeleteIdentityAwareProxyClientRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::iap::v1::DeleteIdentityAwareProxyClientRequest const& request) override;
 
  private:
   std::shared_ptr<IdentityAwareProxyOAuthServiceStub> child_;
-  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
-      propagator_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -95,8 +91,7 @@ class IdentityAwareProxyOAuthServiceTracingStub
  * The stub is only decorated if the library has been compiled with
  * OpenTelemetry.
  */
-std::shared_ptr<IdentityAwareProxyOAuthServiceStub>
-MakeIdentityAwareProxyOAuthServiceTracingStub(
+std::shared_ptr<IdentityAwareProxyOAuthServiceStub> MakeIdentityAwareProxyOAuthServiceTracingStub(
     std::shared_ptr<IdentityAwareProxyOAuthServiceStub> stub);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

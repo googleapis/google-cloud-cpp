@@ -62,13 +62,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// and move-construction is a relatively efficient operation, consider using
 /// such a copy when using this class from multiple threads.
 ///
-/// [google.cloud.dialogflow.v2.EntityType]:
-/// @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L292}
+/// [google.cloud.dialogflow.v2.EntityType]: @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L292}
 ///
 class EntityTypesClient {
  public:
-  explicit EntityTypesClient(std::shared_ptr<EntityTypesConnection> connection,
-                             Options opts = {});
+  explicit EntityTypesClient(std::shared_ptr<EntityTypesConnection> connection, Options opts = {});
   ~EntityTypesClient();
 
   ///@{
@@ -81,12 +79,10 @@ class EntityTypesClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(EntityTypesClient const& a,
-                         EntityTypesClient const& b) {
+  friend bool operator==(EntityTypesClient const& a, EntityTypesClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(EntityTypesClient const& a,
-                         EntityTypesClient const& b) {
+  friend bool operator!=(EntityTypesClient const& a, EntityTypesClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -123,8 +119,8 @@ class EntityTypesClient {
   /// [google.cloud.dialogflow.v2.ListEntityTypesRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L385}
   ///
   // clang-format on
-  StreamRange<google::cloud::dialogflow::v2::EntityType> ListEntityTypes(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::dialogflow::v2::EntityType>
+  ListEntityTypes(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -163,9 +159,8 @@ class EntityTypesClient {
   /// [google.cloud.dialogflow.v2.ListEntityTypesRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L385}
   ///
   // clang-format on
-  StreamRange<google::cloud::dialogflow::v2::EntityType> ListEntityTypes(
-      std::string const& parent, std::string const& language_code,
-      Options opts = {});
+  StreamRange<google::cloud::dialogflow::v2::EntityType>
+  ListEntityTypes(std::string const& parent, std::string const& language_code, Options opts = {});
 
   // clang-format off
   ///
@@ -203,9 +198,8 @@ class EntityTypesClient {
   /// [google.cloud.dialogflow.v2.ListEntityTypesRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L385}
   ///
   // clang-format on
-  StreamRange<google::cloud::dialogflow::v2::EntityType> ListEntityTypes(
-      google::cloud::dialogflow::v2::ListEntityTypesRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::dialogflow::v2::EntityType>
+  ListEntityTypes(google::cloud::dialogflow::v2::ListEntityTypesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -230,8 +224,8 @@ class EntityTypesClient {
   /// [google.cloud.dialogflow.v2.GetEntityTypeRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L424}
   ///
   // clang-format on
-  StatusOr<google::cloud::dialogflow::v2::EntityType> GetEntityType(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::dialogflow::v2::EntityType>
+  GetEntityType(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -261,9 +255,8 @@ class EntityTypesClient {
   /// [google.cloud.dialogflow.v2.GetEntityTypeRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L424}
   ///
   // clang-format on
-  StatusOr<google::cloud::dialogflow::v2::EntityType> GetEntityType(
-      std::string const& name, std::string const& language_code,
-      Options opts = {});
+  StatusOr<google::cloud::dialogflow::v2::EntityType>
+  GetEntityType(std::string const& name, std::string const& language_code, Options opts = {});
 
   // clang-format off
   ///
@@ -292,9 +285,8 @@ class EntityTypesClient {
   /// [google.cloud.dialogflow.v2.GetEntityTypeRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L424}
   ///
   // clang-format on
-  StatusOr<google::cloud::dialogflow::v2::EntityType> GetEntityType(
-      google::cloud::dialogflow::v2::GetEntityTypeRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::dialogflow::v2::EntityType>
+  GetEntityType(google::cloud::dialogflow::v2::GetEntityTypeRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -324,10 +316,8 @@ class EntityTypesClient {
   /// [google.cloud.dialogflow.v2.EntityType]: @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L292}
   ///
   // clang-format on
-  StatusOr<google::cloud::dialogflow::v2::EntityType> CreateEntityType(
-      std::string const& parent,
-      google::cloud::dialogflow::v2::EntityType const& entity_type,
-      Options opts = {});
+  StatusOr<google::cloud::dialogflow::v2::EntityType>
+  CreateEntityType(std::string const& parent, google::cloud::dialogflow::v2::EntityType const& entity_type, Options opts = {});
 
   // clang-format off
   ///
@@ -362,10 +352,8 @@ class EntityTypesClient {
   /// [google.cloud.dialogflow.v2.EntityType]: @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L292}
   ///
   // clang-format on
-  StatusOr<google::cloud::dialogflow::v2::EntityType> CreateEntityType(
-      std::string const& parent,
-      google::cloud::dialogflow::v2::EntityType const& entity_type,
-      std::string const& language_code, Options opts = {});
+  StatusOr<google::cloud::dialogflow::v2::EntityType>
+  CreateEntityType(std::string const& parent, google::cloud::dialogflow::v2::EntityType const& entity_type, std::string const& language_code, Options opts = {});
 
   // clang-format off
   ///
@@ -398,9 +386,8 @@ class EntityTypesClient {
   /// [google.cloud.dialogflow.v2.EntityType]: @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L292}
   ///
   // clang-format on
-  StatusOr<google::cloud::dialogflow::v2::EntityType> CreateEntityType(
-      google::cloud::dialogflow::v2::CreateEntityTypeRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::dialogflow::v2::EntityType>
+  CreateEntityType(google::cloud::dialogflow::v2::CreateEntityTypeRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -428,9 +415,8 @@ class EntityTypesClient {
   /// [google.cloud.dialogflow.v2.UpdateEntityTypeRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L467}
   ///
   // clang-format on
-  StatusOr<google::cloud::dialogflow::v2::EntityType> UpdateEntityType(
-      google::cloud::dialogflow::v2::EntityType const& entity_type,
-      Options opts = {});
+  StatusOr<google::cloud::dialogflow::v2::EntityType>
+  UpdateEntityType(google::cloud::dialogflow::v2::EntityType const& entity_type, Options opts = {});
 
   // clang-format off
   ///
@@ -463,9 +449,8 @@ class EntityTypesClient {
   /// [google.cloud.dialogflow.v2.UpdateEntityTypeRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L467}
   ///
   // clang-format on
-  StatusOr<google::cloud::dialogflow::v2::EntityType> UpdateEntityType(
-      google::cloud::dialogflow::v2::EntityType const& entity_type,
-      std::string const& language_code, Options opts = {});
+  StatusOr<google::cloud::dialogflow::v2::EntityType>
+  UpdateEntityType(google::cloud::dialogflow::v2::EntityType const& entity_type, std::string const& language_code, Options opts = {});
 
   // clang-format off
   ///
@@ -498,9 +483,8 @@ class EntityTypesClient {
   /// [google.cloud.dialogflow.v2.UpdateEntityTypeRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L467}
   ///
   // clang-format on
-  StatusOr<google::cloud::dialogflow::v2::EntityType> UpdateEntityType(
-      google::cloud::dialogflow::v2::UpdateEntityTypeRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::dialogflow::v2::EntityType>
+  UpdateEntityType(google::cloud::dialogflow::v2::UpdateEntityTypeRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -526,7 +510,8 @@ class EntityTypesClient {
   /// [google.cloud.dialogflow.v2.DeleteEntityTypeRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L485}
   ///
   // clang-format on
-  Status DeleteEntityType(std::string const& name, Options opts = {});
+  Status
+  DeleteEntityType(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -556,9 +541,8 @@ class EntityTypesClient {
   /// [google.cloud.dialogflow.v2.DeleteEntityTypeRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L485}
   ///
   // clang-format on
-  Status DeleteEntityType(
-      google::cloud::dialogflow::v2::DeleteEntityTypeRequest const& request,
-      Options opts = {});
+  Status
+  DeleteEntityType(google::cloud::dialogflow::v2::DeleteEntityTypeRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -607,12 +591,8 @@ class EntityTypesClient {
   /// [google.cloud.dialogflow.v2.BatchUpdateEntityTypesResponse]: @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L539}
   ///
   // clang-format on
-  future<
-      StatusOr<google::cloud::dialogflow::v2::BatchUpdateEntityTypesResponse>>
-  BatchUpdateEntityTypes(
-      google::cloud::dialogflow::v2::BatchUpdateEntityTypesRequest const&
-          request,
-      Options opts = {});
+  future<StatusOr<google::cloud::dialogflow::v2::BatchUpdateEntityTypesResponse>>
+  BatchUpdateEntityTypes(google::cloud::dialogflow::v2::BatchUpdateEntityTypesRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -625,11 +605,8 @@ class EntityTypesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> BatchUpdateEntityTypes(
-      NoAwaitTag,
-      google::cloud::dialogflow::v2::BatchUpdateEntityTypesRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  BatchUpdateEntityTypes(NoAwaitTag, google::cloud::dialogflow::v2::BatchUpdateEntityTypesRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -640,10 +617,8 @@ class EntityTypesClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<
-      StatusOr<google::cloud::dialogflow::v2::BatchUpdateEntityTypesResponse>>
-  BatchUpdateEntityTypes(google::longrunning::Operation const& operation,
-                         Options opts = {});
+  future<StatusOr<google::cloud::dialogflow::v2::BatchUpdateEntityTypesResponse>>
+  BatchUpdateEntityTypes(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -690,9 +665,8 @@ class EntityTypesClient {
   /// [google.protobuf.Struct]: @googleapis_reference_link{google/protobuf/struct.proto#L51}
   ///
   // clang-format on
-  future<StatusOr<google::protobuf::Struct>> BatchDeleteEntityTypes(
-      std::string const& parent,
-      std::vector<std::string> const& entity_type_names, Options opts = {});
+  future<StatusOr<google::protobuf::Struct>>
+  BatchDeleteEntityTypes(std::string const& parent, std::vector<std::string> const& entity_type_names, Options opts = {});
 
   // clang-format off
   ///
@@ -705,9 +679,8 @@ class EntityTypesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> BatchDeleteEntityTypes(
-      NoAwaitTag, std::string const& parent,
-      std::vector<std::string> const& entity_type_names, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  BatchDeleteEntityTypes(NoAwaitTag, std::string const& parent, std::vector<std::string> const& entity_type_names, Options opts = {});
 
   // clang-format off
   ///
@@ -756,10 +729,8 @@ class EntityTypesClient {
   /// [google.protobuf.Struct]: @googleapis_reference_link{google/protobuf/struct.proto#L51}
   ///
   // clang-format on
-  future<StatusOr<google::protobuf::Struct>> BatchDeleteEntityTypes(
-      google::cloud::dialogflow::v2::BatchDeleteEntityTypesRequest const&
-          request,
-      Options opts = {});
+  future<StatusOr<google::protobuf::Struct>>
+  BatchDeleteEntityTypes(google::cloud::dialogflow::v2::BatchDeleteEntityTypesRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -772,11 +743,8 @@ class EntityTypesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> BatchDeleteEntityTypes(
-      NoAwaitTag,
-      google::cloud::dialogflow::v2::BatchDeleteEntityTypesRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  BatchDeleteEntityTypes(NoAwaitTag, google::cloud::dialogflow::v2::BatchDeleteEntityTypesRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -787,8 +755,8 @@ class EntityTypesClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::protobuf::Struct>> BatchDeleteEntityTypes(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::protobuf::Struct>>
+  BatchDeleteEntityTypes(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -834,11 +802,8 @@ class EntityTypesClient {
   /// [google.protobuf.Struct]: @googleapis_reference_link{google/protobuf/struct.proto#L51}
   ///
   // clang-format on
-  future<StatusOr<google::protobuf::Struct>> BatchCreateEntities(
-      std::string const& parent,
-      std::vector<google::cloud::dialogflow::v2::EntityType::Entity> const&
-          entities,
-      Options opts = {});
+  future<StatusOr<google::protobuf::Struct>>
+  BatchCreateEntities(std::string const& parent, std::vector<google::cloud::dialogflow::v2::EntityType::Entity> const& entities, Options opts = {});
 
   // clang-format off
   ///
@@ -851,11 +816,8 @@ class EntityTypesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> BatchCreateEntities(
-      NoAwaitTag, std::string const& parent,
-      std::vector<google::cloud::dialogflow::v2::EntityType::Entity> const&
-          entities,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  BatchCreateEntities(NoAwaitTag, std::string const& parent, std::vector<google::cloud::dialogflow::v2::EntityType::Entity> const& entities, Options opts = {});
 
   // clang-format off
   ///
@@ -906,11 +868,8 @@ class EntityTypesClient {
   /// [google.protobuf.Struct]: @googleapis_reference_link{google/protobuf/struct.proto#L51}
   ///
   // clang-format on
-  future<StatusOr<google::protobuf::Struct>> BatchCreateEntities(
-      std::string const& parent,
-      std::vector<google::cloud::dialogflow::v2::EntityType::Entity> const&
-          entities,
-      std::string const& language_code, Options opts = {});
+  future<StatusOr<google::protobuf::Struct>>
+  BatchCreateEntities(std::string const& parent, std::vector<google::cloud::dialogflow::v2::EntityType::Entity> const& entities, std::string const& language_code, Options opts = {});
 
   // clang-format off
   ///
@@ -923,11 +882,8 @@ class EntityTypesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> BatchCreateEntities(
-      NoAwaitTag, std::string const& parent,
-      std::vector<google::cloud::dialogflow::v2::EntityType::Entity> const&
-          entities,
-      std::string const& language_code, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  BatchCreateEntities(NoAwaitTag, std::string const& parent, std::vector<google::cloud::dialogflow::v2::EntityType::Entity> const& entities, std::string const& language_code, Options opts = {});
 
   // clang-format off
   ///
@@ -976,9 +932,8 @@ class EntityTypesClient {
   /// [google.protobuf.Struct]: @googleapis_reference_link{google/protobuf/struct.proto#L51}
   ///
   // clang-format on
-  future<StatusOr<google::protobuf::Struct>> BatchCreateEntities(
-      google::cloud::dialogflow::v2::BatchCreateEntitiesRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::protobuf::Struct>>
+  BatchCreateEntities(google::cloud::dialogflow::v2::BatchCreateEntitiesRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -991,10 +946,8 @@ class EntityTypesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> BatchCreateEntities(
-      NoAwaitTag,
-      google::cloud::dialogflow::v2::BatchCreateEntitiesRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  BatchCreateEntities(NoAwaitTag, google::cloud::dialogflow::v2::BatchCreateEntitiesRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1005,8 +958,8 @@ class EntityTypesClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::protobuf::Struct>> BatchCreateEntities(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::protobuf::Struct>>
+  BatchCreateEntities(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1055,11 +1008,8 @@ class EntityTypesClient {
   /// [google.protobuf.Struct]: @googleapis_reference_link{google/protobuf/struct.proto#L51}
   ///
   // clang-format on
-  future<StatusOr<google::protobuf::Struct>> BatchUpdateEntities(
-      std::string const& parent,
-      std::vector<google::cloud::dialogflow::v2::EntityType::Entity> const&
-          entities,
-      Options opts = {});
+  future<StatusOr<google::protobuf::Struct>>
+  BatchUpdateEntities(std::string const& parent, std::vector<google::cloud::dialogflow::v2::EntityType::Entity> const& entities, Options opts = {});
 
   // clang-format off
   ///
@@ -1072,11 +1022,8 @@ class EntityTypesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> BatchUpdateEntities(
-      NoAwaitTag, std::string const& parent,
-      std::vector<google::cloud::dialogflow::v2::EntityType::Entity> const&
-          entities,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  BatchUpdateEntities(NoAwaitTag, std::string const& parent, std::vector<google::cloud::dialogflow::v2::EntityType::Entity> const& entities, Options opts = {});
 
   // clang-format off
   ///
@@ -1130,11 +1077,8 @@ class EntityTypesClient {
   /// [google.protobuf.Struct]: @googleapis_reference_link{google/protobuf/struct.proto#L51}
   ///
   // clang-format on
-  future<StatusOr<google::protobuf::Struct>> BatchUpdateEntities(
-      std::string const& parent,
-      std::vector<google::cloud::dialogflow::v2::EntityType::Entity> const&
-          entities,
-      std::string const& language_code, Options opts = {});
+  future<StatusOr<google::protobuf::Struct>>
+  BatchUpdateEntities(std::string const& parent, std::vector<google::cloud::dialogflow::v2::EntityType::Entity> const& entities, std::string const& language_code, Options opts = {});
 
   // clang-format off
   ///
@@ -1147,11 +1091,8 @@ class EntityTypesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> BatchUpdateEntities(
-      NoAwaitTag, std::string const& parent,
-      std::vector<google::cloud::dialogflow::v2::EntityType::Entity> const&
-          entities,
-      std::string const& language_code, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  BatchUpdateEntities(NoAwaitTag, std::string const& parent, std::vector<google::cloud::dialogflow::v2::EntityType::Entity> const& entities, std::string const& language_code, Options opts = {});
 
   // clang-format off
   ///
@@ -1203,9 +1144,8 @@ class EntityTypesClient {
   /// [google.protobuf.Struct]: @googleapis_reference_link{google/protobuf/struct.proto#L51}
   ///
   // clang-format on
-  future<StatusOr<google::protobuf::Struct>> BatchUpdateEntities(
-      google::cloud::dialogflow::v2::BatchUpdateEntitiesRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::protobuf::Struct>>
+  BatchUpdateEntities(google::cloud::dialogflow::v2::BatchUpdateEntitiesRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1218,10 +1158,8 @@ class EntityTypesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> BatchUpdateEntities(
-      NoAwaitTag,
-      google::cloud::dialogflow::v2::BatchUpdateEntitiesRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  BatchUpdateEntities(NoAwaitTag, google::cloud::dialogflow::v2::BatchUpdateEntitiesRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1232,8 +1170,8 @@ class EntityTypesClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::protobuf::Struct>> BatchUpdateEntities(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::protobuf::Struct>>
+  BatchUpdateEntities(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1281,9 +1219,8 @@ class EntityTypesClient {
   /// [google.protobuf.Struct]: @googleapis_reference_link{google/protobuf/struct.proto#L51}
   ///
   // clang-format on
-  future<StatusOr<google::protobuf::Struct>> BatchDeleteEntities(
-      std::string const& parent, std::vector<std::string> const& entity_values,
-      Options opts = {});
+  future<StatusOr<google::protobuf::Struct>>
+  BatchDeleteEntities(std::string const& parent, std::vector<std::string> const& entity_values, Options opts = {});
 
   // clang-format off
   ///
@@ -1296,9 +1233,8 @@ class EntityTypesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> BatchDeleteEntities(
-      NoAwaitTag, std::string const& parent,
-      std::vector<std::string> const& entity_values, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  BatchDeleteEntities(NoAwaitTag, std::string const& parent, std::vector<std::string> const& entity_values, Options opts = {});
 
   // clang-format off
   ///
@@ -1351,9 +1287,8 @@ class EntityTypesClient {
   /// [google.protobuf.Struct]: @googleapis_reference_link{google/protobuf/struct.proto#L51}
   ///
   // clang-format on
-  future<StatusOr<google::protobuf::Struct>> BatchDeleteEntities(
-      std::string const& parent, std::vector<std::string> const& entity_values,
-      std::string const& language_code, Options opts = {});
+  future<StatusOr<google::protobuf::Struct>>
+  BatchDeleteEntities(std::string const& parent, std::vector<std::string> const& entity_values, std::string const& language_code, Options opts = {});
 
   // clang-format off
   ///
@@ -1366,10 +1301,8 @@ class EntityTypesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> BatchDeleteEntities(
-      NoAwaitTag, std::string const& parent,
-      std::vector<std::string> const& entity_values,
-      std::string const& language_code, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  BatchDeleteEntities(NoAwaitTag, std::string const& parent, std::vector<std::string> const& entity_values, std::string const& language_code, Options opts = {});
 
   // clang-format off
   ///
@@ -1418,9 +1351,8 @@ class EntityTypesClient {
   /// [google.protobuf.Struct]: @googleapis_reference_link{google/protobuf/struct.proto#L51}
   ///
   // clang-format on
-  future<StatusOr<google::protobuf::Struct>> BatchDeleteEntities(
-      google::cloud::dialogflow::v2::BatchDeleteEntitiesRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::protobuf::Struct>>
+  BatchDeleteEntities(google::cloud::dialogflow::v2::BatchDeleteEntitiesRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1433,10 +1365,8 @@ class EntityTypesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> BatchDeleteEntities(
-      NoAwaitTag,
-      google::cloud::dialogflow::v2::BatchDeleteEntitiesRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  BatchDeleteEntities(NoAwaitTag, google::cloud::dialogflow::v2::BatchDeleteEntitiesRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1447,8 +1377,8 @@ class EntityTypesClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::protobuf::Struct>> BatchDeleteEntities(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::protobuf::Struct>>
+  BatchDeleteEntities(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1486,8 +1416,8 @@ class EntityTypesClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request, Options opts = {});
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1516,9 +1446,8 @@ class EntityTypesClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1553,8 +1482,8 @@ class EntityTypesClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -1593,8 +1522,8 @@ class EntityTypesClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1620,8 +1549,8 @@ class EntityTypesClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1652,9 +1581,8 @@ class EntityTypesClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1688,7 +1616,8 @@ class EntityTypesClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(std::string const& name, Options opts = {});
+  Status
+  CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1727,9 +1656,8 @@ class EntityTypesClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request,
-      Options opts = {});
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<EntityTypesConnection> connection_;

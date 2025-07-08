@@ -32,18 +32,20 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 CloudControlsPartnerCoreLogging::CloudControlsPartnerCoreLogging(
     std::shared_ptr<CloudControlsPartnerCoreStub> child,
-    TracingOptions tracing_options, std::set<std::string> const&)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
+    TracingOptions tracing_options,
+    std::set<std::string> const&)
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::cloud::cloudcontrolspartner::v1::Workload>
 CloudControlsPartnerCoreLogging::GetWorkload(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::cloudcontrolspartner::v1::GetWorkloadRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::cloudcontrolspartner::v1::GetWorkloadRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::cloudcontrolspartner::v1::GetWorkloadRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::cloudcontrolspartner::v1::GetWorkloadRequest const& request) {
         return child_->GetWorkload(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -51,14 +53,13 @@ CloudControlsPartnerCoreLogging::GetWorkload(
 
 StatusOr<google::cloud::cloudcontrolspartner::v1::ListWorkloadsResponse>
 CloudControlsPartnerCoreLogging::ListWorkloads(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::cloudcontrolspartner::v1::ListWorkloadsRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::cloudcontrolspartner::v1::ListWorkloadsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::cloudcontrolspartner::v1::ListWorkloadsRequest const&
-              request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::cloudcontrolspartner::v1::ListWorkloadsRequest const& request) {
         return child_->ListWorkloads(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -66,13 +67,13 @@ CloudControlsPartnerCoreLogging::ListWorkloads(
 
 StatusOr<google::cloud::cloudcontrolspartner::v1::Customer>
 CloudControlsPartnerCoreLogging::GetCustomer(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::cloudcontrolspartner::v1::GetCustomerRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::cloudcontrolspartner::v1::GetCustomerRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::cloudcontrolspartner::v1::GetCustomerRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::cloudcontrolspartner::v1::GetCustomerRequest const& request) {
         return child_->GetCustomer(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -80,14 +81,13 @@ CloudControlsPartnerCoreLogging::GetCustomer(
 
 StatusOr<google::cloud::cloudcontrolspartner::v1::ListCustomersResponse>
 CloudControlsPartnerCoreLogging::ListCustomers(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::cloudcontrolspartner::v1::ListCustomersRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::cloudcontrolspartner::v1::ListCustomersRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::cloudcontrolspartner::v1::ListCustomersRequest const&
-              request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::cloudcontrolspartner::v1::ListCustomersRequest const& request) {
         return child_->ListCustomers(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -95,13 +95,13 @@ CloudControlsPartnerCoreLogging::ListCustomers(
 
 StatusOr<google::cloud::cloudcontrolspartner::v1::EkmConnections>
 CloudControlsPartnerCoreLogging::GetEkmConnections(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::cloudcontrolspartner::v1::GetEkmConnectionsRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::cloudcontrolspartner::v1::GetEkmConnectionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::cloudcontrolspartner::v1::
-                 GetEkmConnectionsRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::cloudcontrolspartner::v1::GetEkmConnectionsRequest const& request) {
         return child_->GetEkmConnections(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -109,28 +109,27 @@ CloudControlsPartnerCoreLogging::GetEkmConnections(
 
 StatusOr<google::cloud::cloudcontrolspartner::v1::PartnerPermissions>
 CloudControlsPartnerCoreLogging::GetPartnerPermissions(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::cloudcontrolspartner::v1::GetPartnerPermissionsRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::cloudcontrolspartner::v1::GetPartnerPermissionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::cloudcontrolspartner::v1::
-                 GetPartnerPermissionsRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::cloudcontrolspartner::v1::GetPartnerPermissionsRequest const& request) {
         return child_->GetPartnerPermissions(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<
-    google::cloud::cloudcontrolspartner::v1::ListAccessApprovalRequestsResponse>
+StatusOr<google::cloud::cloudcontrolspartner::v1::ListAccessApprovalRequestsResponse>
 CloudControlsPartnerCoreLogging::ListAccessApprovalRequests(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::cloudcontrolspartner::v1::
-        ListAccessApprovalRequestsRequest const& request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::cloudcontrolspartner::v1::ListAccessApprovalRequestsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::cloudcontrolspartner::v1::
-                 ListAccessApprovalRequestsRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::cloudcontrolspartner::v1::ListAccessApprovalRequestsRequest const& request) {
         return child_->ListAccessApprovalRequests(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -138,12 +137,13 @@ CloudControlsPartnerCoreLogging::ListAccessApprovalRequests(
 
 StatusOr<google::cloud::cloudcontrolspartner::v1::Partner>
 CloudControlsPartnerCoreLogging::GetPartner(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::cloudcontrolspartner::v1::GetPartnerRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::cloudcontrolspartner::v1::GetPartnerRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::cloudcontrolspartner::v1::GetPartnerRequest const& request) {
         return child_->GetPartner(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -151,14 +151,13 @@ CloudControlsPartnerCoreLogging::GetPartner(
 
 StatusOr<google::cloud::cloudcontrolspartner::v1::Customer>
 CloudControlsPartnerCoreLogging::CreateCustomer(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::cloudcontrolspartner::v1::CreateCustomerRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::cloudcontrolspartner::v1::CreateCustomerRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::cloudcontrolspartner::v1::CreateCustomerRequest const&
-              request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::cloudcontrolspartner::v1::CreateCustomerRequest const& request) {
         return child_->CreateCustomer(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -166,28 +165,27 @@ CloudControlsPartnerCoreLogging::CreateCustomer(
 
 StatusOr<google::cloud::cloudcontrolspartner::v1::Customer>
 CloudControlsPartnerCoreLogging::UpdateCustomer(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::cloudcontrolspartner::v1::UpdateCustomerRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::cloudcontrolspartner::v1::UpdateCustomerRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::cloudcontrolspartner::v1::UpdateCustomerRequest const&
-              request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::cloudcontrolspartner::v1::UpdateCustomerRequest const& request) {
         return child_->UpdateCustomer(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status CloudControlsPartnerCoreLogging::DeleteCustomer(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::cloudcontrolspartner::v1::DeleteCustomerRequest const&
-        request) {
+Status
+CloudControlsPartnerCoreLogging::DeleteCustomer(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::cloudcontrolspartner::v1::DeleteCustomerRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::cloudcontrolspartner::v1::DeleteCustomerRequest const&
-              request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::cloudcontrolspartner::v1::DeleteCustomerRequest const& request) {
         return child_->DeleteCustomer(context, options, request);
       },
       context, options, request, __func__, tracing_options_);

@@ -31,35 +31,38 @@ ApiKeysAuth::ApiKeysAuth(
     std::shared_ptr<ApiKeysStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-future<StatusOr<google::longrunning::Operation>> ApiKeysAuth::AsyncCreateKey(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::api::apikeys::v2::CreateKeyRequest const& request) {
+future<StatusOr<google::longrunning::Operation>>
+ApiKeysAuth::AsyncCreateKey(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::api::apikeys::v2::CreateKeyRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreateKey(cq, *std::move(context),
-                                     std::move(options), request);
+        return child->AsyncCreateKey(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation> ApiKeysAuth::CreateKey(
-    grpc::ClientContext& context, Options options,
-    google::api::apikeys::v2::CreateKeyRequest const& request) {
+StatusOr<google::longrunning::Operation>
+ApiKeysAuth::CreateKey(
+      grpc::ClientContext& context,
+      Options options,
+      google::api::apikeys::v2::CreateKeyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateKey(context, options, request);
 }
 
 StatusOr<google::api::apikeys::v2::ListKeysResponse> ApiKeysAuth::ListKeys(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::api::apikeys::v2::ListKeysRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -67,105 +70,113 @@ StatusOr<google::api::apikeys::v2::ListKeysResponse> ApiKeysAuth::ListKeys(
 }
 
 StatusOr<google::api::apikeys::v2::Key> ApiKeysAuth::GetKey(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::api::apikeys::v2::GetKeyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetKey(context, options, request);
 }
 
-StatusOr<google::api::apikeys::v2::GetKeyStringResponse>
-ApiKeysAuth::GetKeyString(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::api::apikeys::v2::GetKeyStringResponse> ApiKeysAuth::GetKeyString(
+    grpc::ClientContext& context,
+    Options const& options,
     google::api::apikeys::v2::GetKeyStringRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetKeyString(context, options, request);
 }
 
-future<StatusOr<google::longrunning::Operation>> ApiKeysAuth::AsyncUpdateKey(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::api::apikeys::v2::UpdateKeyRequest const& request) {
+future<StatusOr<google::longrunning::Operation>>
+ApiKeysAuth::AsyncUpdateKey(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::api::apikeys::v2::UpdateKeyRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncUpdateKey(cq, *std::move(context),
-                                     std::move(options), request);
+        return child->AsyncUpdateKey(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation> ApiKeysAuth::UpdateKey(
-    grpc::ClientContext& context, Options options,
-    google::api::apikeys::v2::UpdateKeyRequest const& request) {
+StatusOr<google::longrunning::Operation>
+ApiKeysAuth::UpdateKey(
+      grpc::ClientContext& context,
+      Options options,
+      google::api::apikeys::v2::UpdateKeyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateKey(context, options, request);
 }
 
-future<StatusOr<google::longrunning::Operation>> ApiKeysAuth::AsyncDeleteKey(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::api::apikeys::v2::DeleteKeyRequest const& request) {
+future<StatusOr<google::longrunning::Operation>>
+ApiKeysAuth::AsyncDeleteKey(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::api::apikeys::v2::DeleteKeyRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDeleteKey(cq, *std::move(context),
-                                     std::move(options), request);
+        return child->AsyncDeleteKey(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation> ApiKeysAuth::DeleteKey(
-    grpc::ClientContext& context, Options options,
-    google::api::apikeys::v2::DeleteKeyRequest const& request) {
+StatusOr<google::longrunning::Operation>
+ApiKeysAuth::DeleteKey(
+      grpc::ClientContext& context,
+      Options options,
+      google::api::apikeys::v2::DeleteKeyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteKey(context, options, request);
 }
 
-future<StatusOr<google::longrunning::Operation>> ApiKeysAuth::AsyncUndeleteKey(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::api::apikeys::v2::UndeleteKeyRequest const& request) {
+future<StatusOr<google::longrunning::Operation>>
+ApiKeysAuth::AsyncUndeleteKey(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::api::apikeys::v2::UndeleteKeyRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncUndeleteKey(cq, *std::move(context),
-                                       std::move(options), request);
+        return child->AsyncUndeleteKey(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation> ApiKeysAuth::UndeleteKey(
-    grpc::ClientContext& context, Options options,
-    google::api::apikeys::v2::UndeleteKeyRequest const& request) {
+StatusOr<google::longrunning::Operation>
+ApiKeysAuth::UndeleteKey(
+      grpc::ClientContext& context,
+      Options options,
+      google::api::apikeys::v2::UndeleteKeyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UndeleteKey(context, options, request);
 }
 
 StatusOr<google::api::apikeys::v2::LookupKeyResponse> ApiKeysAuth::LookupKey(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::api::apikeys::v2::LookupKeyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -173,29 +184,30 @@ StatusOr<google::api::apikeys::v2::LookupKeyResponse> ApiKeysAuth::LookupKey(
 }
 
 StatusOr<google::longrunning::Operation> ApiKeysAuth::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetOperation(context, options, request);
 }
 
-future<StatusOr<google::longrunning::Operation>> ApiKeysAuth::AsyncGetOperation(
+future<StatusOr<google::longrunning::Operation>>
+ApiKeysAuth::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncGetOperation(cq, *std::move(context),
-                                        std::move(options), request);
+        return child->AsyncGetOperation(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
@@ -204,14 +216,13 @@ future<Status> ApiKeysAuth::AsyncCancelOperation(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) return make_ready_future(std::move(context).status());
-        return child->AsyncCancelOperation(cq, *std::move(context),
-                                           std::move(options), request);
+        return child->AsyncCancelOperation(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 

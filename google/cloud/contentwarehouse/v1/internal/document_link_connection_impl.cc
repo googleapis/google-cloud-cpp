@@ -17,9 +17,9 @@
 // source: google/cloud/contentwarehouse/v1/document_link_service.proto
 
 #include "google/cloud/contentwarehouse/v1/internal/document_link_connection_impl.h"
-#include "google/cloud/contentwarehouse/v1/internal/document_link_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/contentwarehouse/v1/internal/document_link_option_defaults.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
@@ -34,84 +34,65 @@ namespace {
 
 std::unique_ptr<contentwarehouse_v1::DocumentLinkServiceRetryPolicy>
 retry_policy(Options const& options) {
-  return options
-      .get<contentwarehouse_v1::DocumentLinkServiceRetryPolicyOption>()
-      ->clone();
+  return options.get<contentwarehouse_v1::DocumentLinkServiceRetryPolicyOption>()->clone();
 }
 
-std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-  return options
-      .get<contentwarehouse_v1::DocumentLinkServiceBackoffPolicyOption>()
-      ->clone();
+std::unique_ptr<BackoffPolicy>
+backoff_policy(Options const& options) {
+  return options.get<contentwarehouse_v1::DocumentLinkServiceBackoffPolicyOption>()->clone();
 }
 
-std::unique_ptr<
-    contentwarehouse_v1::DocumentLinkServiceConnectionIdempotencyPolicy>
+std::unique_ptr<contentwarehouse_v1::DocumentLinkServiceConnectionIdempotencyPolicy>
 idempotency_policy(Options const& options) {
-  return options
-      .get<contentwarehouse_v1::
-               DocumentLinkServiceConnectionIdempotencyPolicyOption>()
-      ->clone();
+  return options.get<contentwarehouse_v1::DocumentLinkServiceConnectionIdempotencyPolicyOption>()->clone();
 }
 
-}  // namespace
+} // namespace
 
 DocumentLinkServiceConnectionImpl::DocumentLinkServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<contentwarehouse_v1_internal::DocumentLinkServiceStub> stub,
     Options options)
-    : background_(std::move(background)),
-      stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options), DocumentLinkServiceConnection::options())) {}
+  : background_(std::move(background)), stub_(std::move(stub)),
+    options_(internal::MergeOptions(
+        std::move(options),
+        DocumentLinkServiceConnection::options())) {}
 
 StatusOr<google::cloud::contentwarehouse::v1::ListLinkedTargetsResponse>
-DocumentLinkServiceConnectionImpl::ListLinkedTargets(
-    google::cloud::contentwarehouse::v1::ListLinkedTargetsRequest const&
-        request) {
+DocumentLinkServiceConnectionImpl::ListLinkedTargets(google::cloud::contentwarehouse::v1::ListLinkedTargetsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->ListLinkedTargets(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::contentwarehouse::v1::ListLinkedTargetsRequest const&
-              request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::contentwarehouse::v1::ListLinkedTargetsRequest const& request) {
         return stub_->ListLinkedTargets(context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::cloud::contentwarehouse::v1::DocumentLink>
-DocumentLinkServiceConnectionImpl::ListLinkedSources(
-    google::cloud::contentwarehouse::v1::ListLinkedSourcesRequest request) {
+DocumentLinkServiceConnectionImpl::ListLinkedSources(google::cloud::contentwarehouse::v1::ListLinkedSourcesRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListLinkedSources(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::contentwarehouse::v1::DocumentLink>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::contentwarehouse::v1::DocumentLink>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry =
-           std::shared_ptr<contentwarehouse_v1::DocumentLinkServiceRetryPolicy>(
-               retry_policy(*current)),
+       retry = std::shared_ptr<contentwarehouse_v1::DocumentLinkServiceRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::contentwarehouse::v1::ListLinkedSourcesRequest const&
-              r) {
+          Options const& options, google::cloud::contentwarehouse::v1::ListLinkedSourcesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::contentwarehouse::v1::
-                       ListLinkedSourcesRequest const& request) {
+                   google::cloud::contentwarehouse::v1::ListLinkedSourcesRequest const& request) {
               return stub->ListLinkedSources(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::contentwarehouse::v1::ListLinkedSourcesResponse r) {
-        std::vector<google::cloud::contentwarehouse::v1::DocumentLink> result(
-            r.document_links().size());
+        std::vector<google::cloud::contentwarehouse::v1::DocumentLink> result(r.document_links().size());
         auto& messages = *r.mutable_document_links();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -119,41 +100,33 @@ DocumentLinkServiceConnectionImpl::ListLinkedSources(
 }
 
 StatusOr<google::cloud::contentwarehouse::v1::DocumentLink>
-DocumentLinkServiceConnectionImpl::CreateDocumentLink(
-    google::cloud::contentwarehouse::v1::CreateDocumentLinkRequest const&
-        request) {
+DocumentLinkServiceConnectionImpl::CreateDocumentLink(google::cloud::contentwarehouse::v1::CreateDocumentLinkRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateDocumentLink(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::contentwarehouse::v1::CreateDocumentLinkRequest const&
-              request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::contentwarehouse::v1::CreateDocumentLinkRequest const& request) {
         return stub_->CreateDocumentLink(context, options, request);
       },
       *current, request, __func__);
 }
 
-Status DocumentLinkServiceConnectionImpl::DeleteDocumentLink(
-    google::cloud::contentwarehouse::v1::DeleteDocumentLinkRequest const&
-        request) {
+Status
+DocumentLinkServiceConnectionImpl::DeleteDocumentLink(google::cloud::contentwarehouse::v1::DeleteDocumentLinkRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteDocumentLink(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::contentwarehouse::v1::DeleteDocumentLinkRequest const&
-              request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::contentwarehouse::v1::DeleteDocumentLinkRequest const& request) {
         return stub_->DeleteDocumentLink(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::longrunning::Operation>
-DocumentLinkServiceConnectionImpl::GetOperation(
-    google::longrunning::GetOperationRequest const& request) {
+DocumentLinkServiceConnectionImpl::GetOperation(google::longrunning::GetOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),

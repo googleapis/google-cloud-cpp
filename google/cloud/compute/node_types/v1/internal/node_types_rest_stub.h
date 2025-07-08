@@ -36,24 +36,17 @@ class NodeTypesRestStub {
  public:
   virtual ~NodeTypesRestStub() = default;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::NodeTypeAggregatedList>
-  AggregatedListNodeTypes(
+  virtual StatusOr<google::cloud::cpp::compute::v1::NodeTypeAggregatedList> AggregatedListNodeTypes(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::node_types::v1::
-          AggregatedListNodeTypesRequest const& request) = 0;
+      Options const& options, google::cloud::cpp::compute::node_types::v1::AggregatedListNodeTypesRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::NodeType> GetNodeType(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::node_types::v1::GetNodeTypeRequest const&
-          request) = 0;
+      Options const& options, google::cloud::cpp::compute::node_types::v1::GetNodeTypeRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::NodeTypeList> ListNodeTypes(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::node_types::v1::ListNodeTypesRequest const&
-          request) = 0;
+      Options const& options, google::cloud::cpp::compute::node_types::v1::ListNodeTypesRequest const& request) = 0;
 };
 
 class DefaultNodeTypesRestStub : public NodeTypesRestStub {
@@ -61,27 +54,21 @@ class DefaultNodeTypesRestStub : public NodeTypesRestStub {
   ~DefaultNodeTypesRestStub() override = default;
 
   explicit DefaultNodeTypesRestStub(Options options);
-  DefaultNodeTypesRestStub(std::shared_ptr<rest_internal::RestClient> service,
-                           Options options);
+  DefaultNodeTypesRestStub(
+      std::shared_ptr<rest_internal::RestClient> service,
+      Options options);
 
-  StatusOr<google::cloud::cpp::compute::v1::NodeTypeAggregatedList>
-  AggregatedListNodeTypes(
+  StatusOr<google::cloud::cpp::compute::v1::NodeTypeAggregatedList> AggregatedListNodeTypes(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::node_types::v1::
-          AggregatedListNodeTypesRequest const& request) override;
+      Options const& options, google::cloud::cpp::compute::node_types::v1::AggregatedListNodeTypesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::NodeType> GetNodeType(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::node_types::v1::GetNodeTypeRequest const&
-          request) override;
+      Options const& options, google::cloud::cpp::compute::node_types::v1::GetNodeTypeRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::NodeTypeList> ListNodeTypes(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::node_types::v1::ListNodeTypesRequest const&
-          request) override;
+      Options const& options, google::cloud::cpp::compute::node_types::v1::ListNodeTypesRequest const& request) override;
 
  private:
   std::shared_ptr<rest_internal::RestClient> service_;

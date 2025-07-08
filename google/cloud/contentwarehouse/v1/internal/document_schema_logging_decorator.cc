@@ -32,18 +32,20 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 DocumentSchemaServiceLogging::DocumentSchemaServiceLogging(
     std::shared_ptr<DocumentSchemaServiceStub> child,
-    TracingOptions tracing_options, std::set<std::string> const&)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
+    TracingOptions tracing_options,
+    std::set<std::string> const&)
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::cloud::contentwarehouse::v1::DocumentSchema>
 DocumentSchemaServiceLogging::CreateDocumentSchema(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::contentwarehouse::v1::CreateDocumentSchemaRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::contentwarehouse::v1::CreateDocumentSchemaRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::contentwarehouse::v1::
-                 CreateDocumentSchemaRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::contentwarehouse::v1::CreateDocumentSchemaRequest const& request) {
         return child_->CreateDocumentSchema(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -51,13 +53,13 @@ DocumentSchemaServiceLogging::CreateDocumentSchema(
 
 StatusOr<google::cloud::contentwarehouse::v1::DocumentSchema>
 DocumentSchemaServiceLogging::UpdateDocumentSchema(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::contentwarehouse::v1::UpdateDocumentSchemaRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::contentwarehouse::v1::UpdateDocumentSchemaRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::contentwarehouse::v1::
-                 UpdateDocumentSchemaRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::contentwarehouse::v1::UpdateDocumentSchemaRequest const& request) {
         return child_->UpdateDocumentSchema(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -65,27 +67,27 @@ DocumentSchemaServiceLogging::UpdateDocumentSchema(
 
 StatusOr<google::cloud::contentwarehouse::v1::DocumentSchema>
 DocumentSchemaServiceLogging::GetDocumentSchema(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::contentwarehouse::v1::GetDocumentSchemaRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::contentwarehouse::v1::GetDocumentSchemaRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::contentwarehouse::v1::GetDocumentSchemaRequest const&
-              request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::contentwarehouse::v1::GetDocumentSchemaRequest const& request) {
         return child_->GetDocumentSchema(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status DocumentSchemaServiceLogging::DeleteDocumentSchema(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::contentwarehouse::v1::DeleteDocumentSchemaRequest const&
-        request) {
+Status
+DocumentSchemaServiceLogging::DeleteDocumentSchema(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::contentwarehouse::v1::DeleteDocumentSchemaRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::contentwarehouse::v1::
-                 DeleteDocumentSchemaRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::contentwarehouse::v1::DeleteDocumentSchemaRequest const& request) {
         return child_->DeleteDocumentSchema(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -93,14 +95,13 @@ Status DocumentSchemaServiceLogging::DeleteDocumentSchema(
 
 StatusOr<google::cloud::contentwarehouse::v1::ListDocumentSchemasResponse>
 DocumentSchemaServiceLogging::ListDocumentSchemas(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::contentwarehouse::v1::ListDocumentSchemasRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::contentwarehouse::v1::ListDocumentSchemasRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::contentwarehouse::v1::ListDocumentSchemasRequest const&
-              request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::contentwarehouse::v1::ListDocumentSchemasRequest const& request) {
         return child_->ListDocumentSchemas(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -108,10 +109,12 @@ DocumentSchemaServiceLogging::ListDocumentSchemas(
 
 StatusOr<google::longrunning::Operation>
 DocumentSchemaServiceLogging::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::GetOperationRequest const& request) {
         return child_->GetOperation(context, options, request);
       },

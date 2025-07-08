@@ -61,8 +61,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class ImageVersionsClient {
  public:
-  explicit ImageVersionsClient(
-      std::shared_ptr<ImageVersionsConnection> connection, Options opts = {});
+  explicit ImageVersionsClient(std::shared_ptr<ImageVersionsConnection> connection, Options opts = {});
   ~ImageVersionsClient();
 
   ///@{
@@ -75,12 +74,10 @@ class ImageVersionsClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(ImageVersionsClient const& a,
-                         ImageVersionsClient const& b) {
+  friend bool operator==(ImageVersionsClient const& a, ImageVersionsClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(ImageVersionsClient const& a,
-                         ImageVersionsClient const& b) {
+  friend bool operator!=(ImageVersionsClient const& a, ImageVersionsClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -157,9 +154,7 @@ class ImageVersionsClient {
   ///
   // clang-format on
   StreamRange<google::cloud::orchestration::airflow::service::v1::ImageVersion>
-  ListImageVersions(google::cloud::orchestration::airflow::service::v1::
-                        ListImageVersionsRequest request,
-                    Options opts = {});
+  ListImageVersions(google::cloud::orchestration::airflow::service::v1::ListImageVersionsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -194,8 +189,8 @@ class ImageVersionsClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -234,8 +229,8 @@ class ImageVersionsClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -261,8 +256,8 @@ class ImageVersionsClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -293,9 +288,8 @@ class ImageVersionsClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -319,7 +313,8 @@ class ImageVersionsClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status DeleteOperation(std::string const& name, Options opts = {});
+  Status
+  DeleteOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -348,9 +343,8 @@ class ImageVersionsClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request,
-      Options opts = {});
+  Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<ImageVersionsConnection> connection_;

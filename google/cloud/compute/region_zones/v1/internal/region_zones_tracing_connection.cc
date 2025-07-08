@@ -34,15 +34,12 @@ RegionZonesTracingConnection::RegionZonesTracingConnection(
     : child_(std::move(child)) {}
 
 StreamRange<google::cloud::cpp::compute::v1::Zone>
-RegionZonesTracingConnection::ListRegionZones(
-    google::cloud::cpp::compute::region_zones::v1::ListRegionZonesRequest
-        request) {
-  auto span = internal::MakeSpan(
-      "compute_region_zones_v1::RegionZonesConnection::ListRegionZones");
+RegionZonesTracingConnection::ListRegionZones(google::cloud::cpp::compute::region_zones::v1::ListRegionZonesRequest request) {
+  auto span = internal::MakeSpan("compute_region_zones_v1::RegionZonesConnection::ListRegionZones");
   internal::OTelScope scope(span);
   auto sr = child_->ListRegionZones(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::cpp::compute::v1::Zone>(
-      std::move(span), std::move(sr));
+        std::move(span), std::move(sr));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

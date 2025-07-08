@@ -36,7 +36,7 @@ class SearchServiceTracingConnection
   ~SearchServiceTracingConnection() override = default;
 
   explicit SearchServiceTracingConnection(
-      std::shared_ptr<discoveryengine_v1::SearchServiceConnection> child);
+    std::shared_ptr<discoveryengine_v1::SearchServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
@@ -44,17 +44,16 @@ class SearchServiceTracingConnection
   Search(google::cloud::discoveryengine::v1::SearchRequest request) override;
 
   StreamRange<google::cloud::discoveryengine::v1::SearchResponse::SearchResult>
-  SearchLite(
-      google::cloud::discoveryengine::v1::SearchRequest request) override;
+  SearchLite(google::cloud::discoveryengine::v1::SearchRequest request) override;
 
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request) override;
 
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request) override;
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::shared_ptr<discoveryengine_v1::SearchServiceConnection> child_;

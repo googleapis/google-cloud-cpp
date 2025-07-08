@@ -19,16 +19,16 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCEMANAGER_V3_INTERNAL_TAG_HOLDS_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCEMANAGER_V3_INTERNAL_TAG_HOLDS_CONNECTION_IMPL_H
 
-#include "google/cloud/resourcemanager/v3/internal/tag_holds_retry_traits.h"
-#include "google/cloud/resourcemanager/v3/internal/tag_holds_stub.h"
-#include "google/cloud/resourcemanager/v3/tag_holds_connection.h"
-#include "google/cloud/resourcemanager/v3/tag_holds_connection_idempotency_policy.h"
-#include "google/cloud/resourcemanager/v3/tag_holds_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
+#include "google/cloud/resourcemanager/v3/internal/tag_holds_retry_traits.h"
+#include "google/cloud/resourcemanager/v3/internal/tag_holds_stub.h"
+#include "google/cloud/resourcemanager/v3/tag_holds_connection.h"
+#include "google/cloud/resourcemanager/v3/tag_holds_connection_idempotency_policy.h"
+#include "google/cloud/resourcemanager/v3/tag_holds_options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
@@ -40,46 +40,45 @@ namespace cloud {
 namespace resourcemanager_v3_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class TagHoldsConnectionImpl : public resourcemanager_v3::TagHoldsConnection {
+class TagHoldsConnectionImpl
+    : public resourcemanager_v3::TagHoldsConnection {
  public:
   ~TagHoldsConnectionImpl() override = default;
 
   TagHoldsConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<resourcemanager_v3_internal::TagHoldsStub> stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<resourcemanager_v3_internal::TagHoldsStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
-  future<StatusOr<google::cloud::resourcemanager::v3::TagHold>> CreateTagHold(
-      google::cloud::resourcemanager::v3::CreateTagHoldRequest const& request)
-      override;
+  future<StatusOr<google::cloud::resourcemanager::v3::TagHold>>
+  CreateTagHold(google::cloud::resourcemanager::v3::CreateTagHoldRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> CreateTagHold(
-      NoAwaitTag,
-      google::cloud::resourcemanager::v3::CreateTagHoldRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  CreateTagHold(NoAwaitTag,
+      google::cloud::resourcemanager::v3::CreateTagHoldRequest const& request) override;
 
-  future<StatusOr<google::cloud::resourcemanager::v3::TagHold>> CreateTagHold(
+  future<StatusOr<google::cloud::resourcemanager::v3::TagHold>>
+  CreateTagHold(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::resourcemanager::v3::DeleteTagHoldMetadata>>
-  DeleteTagHold(google::cloud::resourcemanager::v3::DeleteTagHoldRequest const&
-                    request) override;
+  DeleteTagHold(google::cloud::resourcemanager::v3::DeleteTagHoldRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> DeleteTagHold(
-      NoAwaitTag,
-      google::cloud::resourcemanager::v3::DeleteTagHoldRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  DeleteTagHold(NoAwaitTag,
+      google::cloud::resourcemanager::v3::DeleteTagHoldRequest const& request) override;
 
   future<StatusOr<google::cloud::resourcemanager::v3::DeleteTagHoldMetadata>>
-  DeleteTagHold(google::longrunning::Operation const& operation) override;
+  DeleteTagHold(
+      google::longrunning::Operation const& operation) override;
 
-  StreamRange<google::cloud::resourcemanager::v3::TagHold> ListTagHolds(
-      google::cloud::resourcemanager::v3::ListTagHoldsRequest request) override;
+  StreamRange<google::cloud::resourcemanager::v3::TagHold>
+  ListTagHolds(google::cloud::resourcemanager::v3::ListTagHoldsRequest request) override;
 
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

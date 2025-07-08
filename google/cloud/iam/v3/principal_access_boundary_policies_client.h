@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAM_V3_PRINCIPAL_ACCESS_BOUNDARY_POLICIES_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAM_V3_PRINCIPAL_ACCESS_BOUNDARY_POLICIES_CLIENT_H
 
-#include "google/cloud/iam/v3/principal_access_boundary_policies_connection.h"
 #include "google/cloud/future.h"
+#include "google/cloud/iam/v3/principal_access_boundary_policies_connection.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -65,31 +65,23 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class PrincipalAccessBoundaryPoliciesClient {
  public:
-  explicit PrincipalAccessBoundaryPoliciesClient(
-      std::shared_ptr<PrincipalAccessBoundaryPoliciesConnection> connection,
-      Options opts = {});
+  explicit PrincipalAccessBoundaryPoliciesClient(std::shared_ptr<PrincipalAccessBoundaryPoliciesConnection> connection, Options opts = {});
   ~PrincipalAccessBoundaryPoliciesClient();
 
   ///@{
   /// @name Copy and move support
-  PrincipalAccessBoundaryPoliciesClient(
-      PrincipalAccessBoundaryPoliciesClient const&) = default;
-  PrincipalAccessBoundaryPoliciesClient& operator=(
-      PrincipalAccessBoundaryPoliciesClient const&) = default;
-  PrincipalAccessBoundaryPoliciesClient(
-      PrincipalAccessBoundaryPoliciesClient&&) = default;
-  PrincipalAccessBoundaryPoliciesClient& operator=(
-      PrincipalAccessBoundaryPoliciesClient&&) = default;
+  PrincipalAccessBoundaryPoliciesClient(PrincipalAccessBoundaryPoliciesClient const&) = default;
+  PrincipalAccessBoundaryPoliciesClient& operator=(PrincipalAccessBoundaryPoliciesClient const&) = default;
+  PrincipalAccessBoundaryPoliciesClient(PrincipalAccessBoundaryPoliciesClient&&) = default;
+  PrincipalAccessBoundaryPoliciesClient& operator=(PrincipalAccessBoundaryPoliciesClient&&) = default;
   ///@}
 
   ///@{
   /// @name Equality
-  friend bool operator==(PrincipalAccessBoundaryPoliciesClient const& a,
-                         PrincipalAccessBoundaryPoliciesClient const& b) {
+  friend bool operator==(PrincipalAccessBoundaryPoliciesClient const& a, PrincipalAccessBoundaryPoliciesClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(PrincipalAccessBoundaryPoliciesClient const& a,
-                         PrincipalAccessBoundaryPoliciesClient const& b) {
+  friend bool operator!=(PrincipalAccessBoundaryPoliciesClient const& a, PrincipalAccessBoundaryPoliciesClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -137,12 +129,7 @@ class PrincipalAccessBoundaryPoliciesClient {
   ///
   // clang-format on
   future<StatusOr<google::iam::v3::PrincipalAccessBoundaryPolicy>>
-  CreatePrincipalAccessBoundaryPolicy(
-      std::string const& parent,
-      google::iam::v3::PrincipalAccessBoundaryPolicy const&
-          principal_access_boundary_policy,
-      std::string const& principal_access_boundary_policy_id,
-      Options opts = {});
+  CreatePrincipalAccessBoundaryPolicy(std::string const& parent, google::iam::v3::PrincipalAccessBoundaryPolicy const& principal_access_boundary_policy, std::string const& principal_access_boundary_policy_id, Options opts = {});
 
   // clang-format off
   ///
@@ -155,12 +142,8 @@ class PrincipalAccessBoundaryPoliciesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreatePrincipalAccessBoundaryPolicy(
-      NoAwaitTag, std::string const& parent,
-      google::iam::v3::PrincipalAccessBoundaryPolicy const&
-          principal_access_boundary_policy,
-      std::string const& principal_access_boundary_policy_id,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreatePrincipalAccessBoundaryPolicy(NoAwaitTag, std::string const& parent, google::iam::v3::PrincipalAccessBoundaryPolicy const& principal_access_boundary_policy, std::string const& principal_access_boundary_policy_id, Options opts = {});
 
   // clang-format off
   ///
@@ -198,10 +181,7 @@ class PrincipalAccessBoundaryPoliciesClient {
   ///
   // clang-format on
   future<StatusOr<google::iam::v3::PrincipalAccessBoundaryPolicy>>
-  CreatePrincipalAccessBoundaryPolicy(
-      google::iam::v3::CreatePrincipalAccessBoundaryPolicyRequest const&
-          request,
-      Options opts = {});
+  CreatePrincipalAccessBoundaryPolicy(google::iam::v3::CreatePrincipalAccessBoundaryPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -214,11 +194,8 @@ class PrincipalAccessBoundaryPoliciesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreatePrincipalAccessBoundaryPolicy(
-      NoAwaitTag,
-      google::iam::v3::CreatePrincipalAccessBoundaryPolicyRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreatePrincipalAccessBoundaryPolicy(NoAwaitTag, google::iam::v3::CreatePrincipalAccessBoundaryPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -230,8 +207,7 @@ class PrincipalAccessBoundaryPoliciesClient {
   ///
   // clang-format on
   future<StatusOr<google::iam::v3::PrincipalAccessBoundaryPolicy>>
-  CreatePrincipalAccessBoundaryPolicy(
-      google::longrunning::Operation const& operation, Options opts = {});
+  CreatePrincipalAccessBoundaryPolicy(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -289,9 +265,7 @@ class PrincipalAccessBoundaryPoliciesClient {
   ///
   // clang-format on
   StatusOr<google::iam::v3::PrincipalAccessBoundaryPolicy>
-  GetPrincipalAccessBoundaryPolicy(
-      google::iam::v3::GetPrincipalAccessBoundaryPolicyRequest const& request,
-      Options opts = {});
+  GetPrincipalAccessBoundaryPolicy(google::iam::v3::GetPrincipalAccessBoundaryPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -327,10 +301,7 @@ class PrincipalAccessBoundaryPoliciesClient {
   ///
   // clang-format on
   future<StatusOr<google::iam::v3::PrincipalAccessBoundaryPolicy>>
-  UpdatePrincipalAccessBoundaryPolicy(
-      google::iam::v3::PrincipalAccessBoundaryPolicy const&
-          principal_access_boundary_policy,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  UpdatePrincipalAccessBoundaryPolicy(google::iam::v3::PrincipalAccessBoundaryPolicy const& principal_access_boundary_policy, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -343,11 +314,8 @@ class PrincipalAccessBoundaryPoliciesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdatePrincipalAccessBoundaryPolicy(
-      NoAwaitTag,
-      google::iam::v3::PrincipalAccessBoundaryPolicy const&
-          principal_access_boundary_policy,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdatePrincipalAccessBoundaryPolicy(NoAwaitTag, google::iam::v3::PrincipalAccessBoundaryPolicy const& principal_access_boundary_policy, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -384,10 +352,7 @@ class PrincipalAccessBoundaryPoliciesClient {
   ///
   // clang-format on
   future<StatusOr<google::iam::v3::PrincipalAccessBoundaryPolicy>>
-  UpdatePrincipalAccessBoundaryPolicy(
-      google::iam::v3::UpdatePrincipalAccessBoundaryPolicyRequest const&
-          request,
-      Options opts = {});
+  UpdatePrincipalAccessBoundaryPolicy(google::iam::v3::UpdatePrincipalAccessBoundaryPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -400,11 +365,8 @@ class PrincipalAccessBoundaryPoliciesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdatePrincipalAccessBoundaryPolicy(
-      NoAwaitTag,
-      google::iam::v3::UpdatePrincipalAccessBoundaryPolicyRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdatePrincipalAccessBoundaryPolicy(NoAwaitTag, google::iam::v3::UpdatePrincipalAccessBoundaryPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -416,8 +378,7 @@ class PrincipalAccessBoundaryPoliciesClient {
   ///
   // clang-format on
   future<StatusOr<google::iam::v3::PrincipalAccessBoundaryPolicy>>
-  UpdatePrincipalAccessBoundaryPolicy(
-      google::longrunning::Operation const& operation, Options opts = {});
+  UpdatePrincipalAccessBoundaryPolicy(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -452,8 +413,7 @@ class PrincipalAccessBoundaryPoliciesClient {
   ///
   // clang-format on
   future<StatusOr<google::iam::v3::OperationMetadata>>
-  DeletePrincipalAccessBoundaryPolicy(std::string const& name,
-                                      Options opts = {});
+  DeletePrincipalAccessBoundaryPolicy(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -466,8 +426,8 @@ class PrincipalAccessBoundaryPoliciesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeletePrincipalAccessBoundaryPolicy(
-      NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeletePrincipalAccessBoundaryPolicy(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -504,10 +464,7 @@ class PrincipalAccessBoundaryPoliciesClient {
   ///
   // clang-format on
   future<StatusOr<google::iam::v3::OperationMetadata>>
-  DeletePrincipalAccessBoundaryPolicy(
-      google::iam::v3::DeletePrincipalAccessBoundaryPolicyRequest const&
-          request,
-      Options opts = {});
+  DeletePrincipalAccessBoundaryPolicy(google::iam::v3::DeletePrincipalAccessBoundaryPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -520,11 +477,8 @@ class PrincipalAccessBoundaryPoliciesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeletePrincipalAccessBoundaryPolicy(
-      NoAwaitTag,
-      google::iam::v3::DeletePrincipalAccessBoundaryPolicyRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeletePrincipalAccessBoundaryPolicy(NoAwaitTag, google::iam::v3::DeletePrincipalAccessBoundaryPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -536,8 +490,7 @@ class PrincipalAccessBoundaryPoliciesClient {
   ///
   // clang-format on
   future<StatusOr<google::iam::v3::OperationMetadata>>
-  DeletePrincipalAccessBoundaryPolicy(
-      google::longrunning::Operation const& operation, Options opts = {});
+  DeletePrincipalAccessBoundaryPolicy(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -575,8 +528,7 @@ class PrincipalAccessBoundaryPoliciesClient {
   ///
   // clang-format on
   StreamRange<google::iam::v3::PrincipalAccessBoundaryPolicy>
-  ListPrincipalAccessBoundaryPolicies(std::string const& parent,
-                                      Options opts = {});
+  ListPrincipalAccessBoundaryPolicies(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -615,9 +567,7 @@ class PrincipalAccessBoundaryPoliciesClient {
   ///
   // clang-format on
   StreamRange<google::iam::v3::PrincipalAccessBoundaryPolicy>
-  ListPrincipalAccessBoundaryPolicies(
-      google::iam::v3::ListPrincipalAccessBoundaryPoliciesRequest request,
-      Options opts = {});
+  ListPrincipalAccessBoundaryPolicies(google::iam::v3::ListPrincipalAccessBoundaryPoliciesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -654,8 +604,7 @@ class PrincipalAccessBoundaryPoliciesClient {
   ///
   // clang-format on
   StreamRange<google::iam::v3::PolicyBinding>
-  SearchPrincipalAccessBoundaryPolicyBindings(std::string const& name,
-                                              Options opts = {});
+  SearchPrincipalAccessBoundaryPolicyBindings(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -695,10 +644,7 @@ class PrincipalAccessBoundaryPoliciesClient {
   ///
   // clang-format on
   StreamRange<google::iam::v3::PolicyBinding>
-  SearchPrincipalAccessBoundaryPolicyBindings(
-      google::iam::v3::SearchPrincipalAccessBoundaryPolicyBindingsRequest
-          request,
-      Options opts = {});
+  SearchPrincipalAccessBoundaryPolicyBindings(google::iam::v3::SearchPrincipalAccessBoundaryPolicyBindingsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -724,8 +670,8 @@ class PrincipalAccessBoundaryPoliciesClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -756,9 +702,8 @@ class PrincipalAccessBoundaryPoliciesClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<PrincipalAccessBoundaryPoliciesConnection> connection_;

@@ -56,8 +56,7 @@ class AssetServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class AssetServiceLimitedErrorCountRetryPolicy
-    : public AssetServiceRetryPolicy {
+class AssetServiceLimitedErrorCountRetryPolicy : public AssetServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -67,14 +66,14 @@ class AssetServiceLimitedErrorCountRetryPolicy
    *     @p maximum_failures == 0.
    */
   explicit AssetServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   AssetServiceLimitedErrorCountRetryPolicy(
       AssetServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : AssetServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : AssetServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   AssetServiceLimitedErrorCountRetryPolicy(
       AssetServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : AssetServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : AssetServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -94,9 +93,7 @@ class AssetServiceLimitedErrorCountRetryPolicy
   using BaseType = AssetServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      asset_v1_internal::AssetServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<asset_v1_internal::AssetServiceRetryTraits> impl_;
 };
 
 /**
@@ -134,14 +131,12 @@ class AssetServiceLimitedTimeRetryPolicy : public AssetServiceRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit AssetServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  AssetServiceLimitedTimeRetryPolicy(
-      AssetServiceLimitedTimeRetryPolicy&& rhs) noexcept
-      : AssetServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  AssetServiceLimitedTimeRetryPolicy(
-      AssetServiceLimitedTimeRetryPolicy const& rhs) noexcept
-      : AssetServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  AssetServiceLimitedTimeRetryPolicy(AssetServiceLimitedTimeRetryPolicy&& rhs) noexcept
+    : AssetServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  AssetServiceLimitedTimeRetryPolicy(AssetServiceLimitedTimeRetryPolicy const& rhs) noexcept
+    : AssetServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -163,9 +158,7 @@ class AssetServiceLimitedTimeRetryPolicy : public AssetServiceRetryPolicy {
   using BaseType = AssetServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      asset_v1_internal::AssetServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<asset_v1_internal::AssetServiceRetryTraits> impl_;
 };
 
 /**
@@ -189,107 +182,86 @@ class AssetServiceConnection {
   virtual future<StatusOr<google::cloud::asset::v1::ExportAssetsResponse>>
   ExportAssets(google::cloud::asset::v1::ExportAssetsRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> ExportAssets(
-      NoAwaitTag, google::cloud::asset::v1::ExportAssetsRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  ExportAssets(NoAwaitTag, google::cloud::asset::v1::ExportAssetsRequest const& request);
 
   virtual future<StatusOr<google::cloud::asset::v1::ExportAssetsResponse>>
-  ExportAssets(google::longrunning::Operation const& operation);
+  ExportAssets( google::longrunning::Operation const& operation);
 
-  virtual StreamRange<google::cloud::asset::v1::Asset> ListAssets(
-      google::cloud::asset::v1::ListAssetsRequest request);
+  virtual StreamRange<google::cloud::asset::v1::Asset>
+  ListAssets(google::cloud::asset::v1::ListAssetsRequest request);
 
   virtual StatusOr<google::cloud::asset::v1::BatchGetAssetsHistoryResponse>
-  BatchGetAssetsHistory(
-      google::cloud::asset::v1::BatchGetAssetsHistoryRequest const& request);
+  BatchGetAssetsHistory(google::cloud::asset::v1::BatchGetAssetsHistoryRequest const& request);
 
-  virtual StatusOr<google::cloud::asset::v1::Feed> CreateFeed(
-      google::cloud::asset::v1::CreateFeedRequest const& request);
+  virtual StatusOr<google::cloud::asset::v1::Feed>
+  CreateFeed(google::cloud::asset::v1::CreateFeedRequest const& request);
 
-  virtual StatusOr<google::cloud::asset::v1::Feed> GetFeed(
-      google::cloud::asset::v1::GetFeedRequest const& request);
+  virtual StatusOr<google::cloud::asset::v1::Feed>
+  GetFeed(google::cloud::asset::v1::GetFeedRequest const& request);
 
-  virtual StatusOr<google::cloud::asset::v1::ListFeedsResponse> ListFeeds(
-      google::cloud::asset::v1::ListFeedsRequest const& request);
+  virtual StatusOr<google::cloud::asset::v1::ListFeedsResponse>
+  ListFeeds(google::cloud::asset::v1::ListFeedsRequest const& request);
 
-  virtual StatusOr<google::cloud::asset::v1::Feed> UpdateFeed(
-      google::cloud::asset::v1::UpdateFeedRequest const& request);
+  virtual StatusOr<google::cloud::asset::v1::Feed>
+  UpdateFeed(google::cloud::asset::v1::UpdateFeedRequest const& request);
 
-  virtual Status DeleteFeed(
-      google::cloud::asset::v1::DeleteFeedRequest const& request);
+  virtual Status
+  DeleteFeed(google::cloud::asset::v1::DeleteFeedRequest const& request);
 
   virtual StreamRange<google::cloud::asset::v1::ResourceSearchResult>
-  SearchAllResources(
-      google::cloud::asset::v1::SearchAllResourcesRequest request);
+  SearchAllResources(google::cloud::asset::v1::SearchAllResourcesRequest request);
 
   virtual StreamRange<google::cloud::asset::v1::IamPolicySearchResult>
-  SearchAllIamPolicies(
-      google::cloud::asset::v1::SearchAllIamPoliciesRequest request);
+  SearchAllIamPolicies(google::cloud::asset::v1::SearchAllIamPoliciesRequest request);
 
   virtual StatusOr<google::cloud::asset::v1::AnalyzeIamPolicyResponse>
-  AnalyzeIamPolicy(
-      google::cloud::asset::v1::AnalyzeIamPolicyRequest const& request);
+  AnalyzeIamPolicy(google::cloud::asset::v1::AnalyzeIamPolicyRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::asset::v1::AnalyzeIamPolicyLongrunningResponse>>
-  AnalyzeIamPolicyLongrunning(
-      google::cloud::asset::v1::AnalyzeIamPolicyLongrunningRequest const&
-          request);
+  virtual future<StatusOr<google::cloud::asset::v1::AnalyzeIamPolicyLongrunningResponse>>
+  AnalyzeIamPolicyLongrunning(google::cloud::asset::v1::AnalyzeIamPolicyLongrunningRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> AnalyzeIamPolicyLongrunning(
-      NoAwaitTag,
-      google::cloud::asset::v1::AnalyzeIamPolicyLongrunningRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  AnalyzeIamPolicyLongrunning(NoAwaitTag, google::cloud::asset::v1::AnalyzeIamPolicyLongrunningRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::asset::v1::AnalyzeIamPolicyLongrunningResponse>>
-  AnalyzeIamPolicyLongrunning(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::asset::v1::AnalyzeIamPolicyLongrunningResponse>>
+  AnalyzeIamPolicyLongrunning( google::longrunning::Operation const& operation);
 
-  virtual StatusOr<google::cloud::asset::v1::AnalyzeMoveResponse> AnalyzeMove(
-      google::cloud::asset::v1::AnalyzeMoveRequest const& request);
+  virtual StatusOr<google::cloud::asset::v1::AnalyzeMoveResponse>
+  AnalyzeMove(google::cloud::asset::v1::AnalyzeMoveRequest const& request);
 
-  virtual StatusOr<google::cloud::asset::v1::QueryAssetsResponse> QueryAssets(
-      google::cloud::asset::v1::QueryAssetsRequest const& request);
+  virtual StatusOr<google::cloud::asset::v1::QueryAssetsResponse>
+  QueryAssets(google::cloud::asset::v1::QueryAssetsRequest const& request);
 
-  virtual StatusOr<google::cloud::asset::v1::SavedQuery> CreateSavedQuery(
-      google::cloud::asset::v1::CreateSavedQueryRequest const& request);
+  virtual StatusOr<google::cloud::asset::v1::SavedQuery>
+  CreateSavedQuery(google::cloud::asset::v1::CreateSavedQueryRequest const& request);
 
-  virtual StatusOr<google::cloud::asset::v1::SavedQuery> GetSavedQuery(
-      google::cloud::asset::v1::GetSavedQueryRequest const& request);
+  virtual StatusOr<google::cloud::asset::v1::SavedQuery>
+  GetSavedQuery(google::cloud::asset::v1::GetSavedQueryRequest const& request);
 
-  virtual StreamRange<google::cloud::asset::v1::SavedQuery> ListSavedQueries(
-      google::cloud::asset::v1::ListSavedQueriesRequest request);
+  virtual StreamRange<google::cloud::asset::v1::SavedQuery>
+  ListSavedQueries(google::cloud::asset::v1::ListSavedQueriesRequest request);
 
-  virtual StatusOr<google::cloud::asset::v1::SavedQuery> UpdateSavedQuery(
-      google::cloud::asset::v1::UpdateSavedQueryRequest const& request);
+  virtual StatusOr<google::cloud::asset::v1::SavedQuery>
+  UpdateSavedQuery(google::cloud::asset::v1::UpdateSavedQueryRequest const& request);
 
-  virtual Status DeleteSavedQuery(
-      google::cloud::asset::v1::DeleteSavedQueryRequest const& request);
+  virtual Status
+  DeleteSavedQuery(google::cloud::asset::v1::DeleteSavedQueryRequest const& request);
 
-  virtual StatusOr<
-      google::cloud::asset::v1::BatchGetEffectiveIamPoliciesResponse>
-  BatchGetEffectiveIamPolicies(
-      google::cloud::asset::v1::BatchGetEffectiveIamPoliciesRequest const&
-          request);
+  virtual StatusOr<google::cloud::asset::v1::BatchGetEffectiveIamPoliciesResponse>
+  BatchGetEffectiveIamPolicies(google::cloud::asset::v1::BatchGetEffectiveIamPoliciesRequest const& request);
 
-  virtual StreamRange<
-      google::cloud::asset::v1::AnalyzeOrgPoliciesResponse::OrgPolicyResult>
-  AnalyzeOrgPolicies(
-      google::cloud::asset::v1::AnalyzeOrgPoliciesRequest request);
+  virtual StreamRange<google::cloud::asset::v1::AnalyzeOrgPoliciesResponse::OrgPolicyResult>
+  AnalyzeOrgPolicies(google::cloud::asset::v1::AnalyzeOrgPoliciesRequest request);
 
-  virtual StreamRange<
-      google::cloud::asset::v1::AnalyzeOrgPolicyGovernedContainersResponse::
-          GovernedContainer>
-  AnalyzeOrgPolicyGovernedContainers(
-      google::cloud::asset::v1::AnalyzeOrgPolicyGovernedContainersRequest
-          request);
+  virtual StreamRange<google::cloud::asset::v1::AnalyzeOrgPolicyGovernedContainersResponse::GovernedContainer>
+  AnalyzeOrgPolicyGovernedContainers(google::cloud::asset::v1::AnalyzeOrgPolicyGovernedContainersRequest request);
 
-  virtual StreamRange<google::cloud::asset::v1::
-                          AnalyzeOrgPolicyGovernedAssetsResponse::GovernedAsset>
-  AnalyzeOrgPolicyGovernedAssets(
-      google::cloud::asset::v1::AnalyzeOrgPolicyGovernedAssetsRequest request);
+  virtual StreamRange<google::cloud::asset::v1::AnalyzeOrgPolicyGovernedAssetsResponse::GovernedAsset>
+  AnalyzeOrgPolicyGovernedAssets(google::cloud::asset::v1::AnalyzeOrgPolicyGovernedAssetsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 };
 
 /**

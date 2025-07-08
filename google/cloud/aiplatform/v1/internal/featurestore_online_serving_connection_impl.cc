@@ -36,128 +36,97 @@ namespace {
 
 std::unique_ptr<aiplatform_v1::FeaturestoreOnlineServingServiceRetryPolicy>
 retry_policy(Options const& options) {
-  return options
-      .get<aiplatform_v1::FeaturestoreOnlineServingServiceRetryPolicyOption>()
-      ->clone();
+  return options.get<aiplatform_v1::FeaturestoreOnlineServingServiceRetryPolicyOption>()->clone();
 }
 
-std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-  return options
-      .get<aiplatform_v1::FeaturestoreOnlineServingServiceBackoffPolicyOption>()
-      ->clone();
+std::unique_ptr<BackoffPolicy>
+backoff_policy(Options const& options) {
+  return options.get<aiplatform_v1::FeaturestoreOnlineServingServiceBackoffPolicyOption>()->clone();
 }
 
-std::unique_ptr<
-    aiplatform_v1::FeaturestoreOnlineServingServiceConnectionIdempotencyPolicy>
+std::unique_ptr<aiplatform_v1::FeaturestoreOnlineServingServiceConnectionIdempotencyPolicy>
 idempotency_policy(Options const& options) {
-  return options
-      .get<
-          aiplatform_v1::
-              FeaturestoreOnlineServingServiceConnectionIdempotencyPolicyOption>()
-      ->clone();
+  return options.get<aiplatform_v1::FeaturestoreOnlineServingServiceConnectionIdempotencyPolicyOption>()->clone();
 }
 
-}  // namespace
+} // namespace
 
 void FeaturestoreOnlineServingServiceStreamingReadFeatureValuesStreamingUpdater(
     google::cloud::aiplatform::v1::ReadFeatureValuesResponse const&,
     google::cloud::aiplatform::v1::StreamingReadFeatureValuesRequest&) {}
 
-FeaturestoreOnlineServingServiceConnectionImpl::
-    FeaturestoreOnlineServingServiceConnectionImpl(
-        std::unique_ptr<google::cloud::BackgroundThreads> background,
-        std::shared_ptr<
-            aiplatform_v1_internal::FeaturestoreOnlineServingServiceStub>
-            stub,
-        Options options)
-    : background_(std::move(background)),
-      stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options),
-          FeaturestoreOnlineServingServiceConnection::options())) {}
+FeaturestoreOnlineServingServiceConnectionImpl::FeaturestoreOnlineServingServiceConnectionImpl(
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<aiplatform_v1_internal::FeaturestoreOnlineServingServiceStub> stub,
+    Options options)
+  : background_(std::move(background)), stub_(std::move(stub)),
+    options_(internal::MergeOptions(
+        std::move(options),
+        FeaturestoreOnlineServingServiceConnection::options())) {}
 
 StatusOr<google::cloud::aiplatform::v1::ReadFeatureValuesResponse>
-FeaturestoreOnlineServingServiceConnectionImpl::ReadFeatureValues(
-    google::cloud::aiplatform::v1::ReadFeatureValuesRequest const& request) {
+FeaturestoreOnlineServingServiceConnectionImpl::ReadFeatureValues(google::cloud::aiplatform::v1::ReadFeatureValuesRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->ReadFeatureValues(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::aiplatform::v1::ReadFeatureValuesRequest const&
-                 request) {
+             google::cloud::aiplatform::v1::ReadFeatureValuesRequest const& request) {
         return stub_->ReadFeatureValues(context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::cloud::aiplatform::v1::ReadFeatureValuesResponse>
-FeaturestoreOnlineServingServiceConnectionImpl::StreamingReadFeatureValues(
-    google::cloud::aiplatform::v1::StreamingReadFeatureValuesRequest const&
-        request) {
+FeaturestoreOnlineServingServiceConnectionImpl::StreamingReadFeatureValues(google::cloud::aiplatform::v1::StreamingReadFeatureValuesRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  auto factory = [stub = stub_, current](
-                     google::cloud::aiplatform::v1::
-                         StreamingReadFeatureValuesRequest const& request) {
+  auto factory = [stub = stub_, current](google::cloud::aiplatform::v1::StreamingReadFeatureValuesRequest const& request) {
     return stub->StreamingReadFeatureValues(
         std::make_shared<grpc::ClientContext>(), *current, request);
   };
-  auto resumable = internal::MakeResumableStreamingReadRpc<
-      google::cloud::aiplatform::v1::ReadFeatureValuesResponse,
-      google::cloud::aiplatform::v1::StreamingReadFeatureValuesRequest>(
-      retry_policy(*current), backoff_policy(*current), factory,
-      FeaturestoreOnlineServingServiceStreamingReadFeatureValuesStreamingUpdater,
-      request);
-  return internal::MakeStreamRange(
-      internal::StreamReader<
-          google::cloud::aiplatform::v1::ReadFeatureValuesResponse>(
-          [resumable] { return resumable->Read(); }));
+  auto resumable =
+      internal::MakeResumableStreamingReadRpc<google::cloud::aiplatform::v1::ReadFeatureValuesResponse, google::cloud::aiplatform::v1::StreamingReadFeatureValuesRequest>(
+          retry_policy(*current), backoff_policy(*current), factory,
+          FeaturestoreOnlineServingServiceStreamingReadFeatureValuesStreamingUpdater, request);
+  return internal::MakeStreamRange(internal::StreamReader<google::cloud::aiplatform::v1::ReadFeatureValuesResponse>(
+      [resumable] { return resumable->Read(); }));
 }
 
 StatusOr<google::cloud::aiplatform::v1::WriteFeatureValuesResponse>
-FeaturestoreOnlineServingServiceConnectionImpl::WriteFeatureValues(
-    google::cloud::aiplatform::v1::WriteFeatureValuesRequest const& request) {
+FeaturestoreOnlineServingServiceConnectionImpl::WriteFeatureValues(google::cloud::aiplatform::v1::WriteFeatureValuesRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->WriteFeatureValues(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::aiplatform::v1::WriteFeatureValuesRequest const&
-                 request) {
+             google::cloud::aiplatform::v1::WriteFeatureValuesRequest const& request) {
         return stub_->WriteFeatureValues(context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::cloud::location::Location>
-FeaturestoreOnlineServingServiceConnectionImpl::ListLocations(
-    google::cloud::location::ListLocationsRequest request) {
+FeaturestoreOnlineServingServiceConnectionImpl::ListLocations(google::cloud::location::ListLocationsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListLocations(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::location::Location>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::location::Location>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<
-           aiplatform_v1::FeaturestoreOnlineServingServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<aiplatform_v1::FeaturestoreOnlineServingServiceRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::location::ListLocationsRequest const& r) {
+          Options const& options, google::cloud::location::ListLocationsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](
-                grpc::ClientContext& context, Options const& options,
-                google::cloud::location::ListLocationsRequest const& request) {
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::cloud::location::ListLocationsRequest const& request) {
               return stub->ListLocations(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::location::ListLocationsResponse r) {
-        std::vector<google::cloud::location::Location> result(
-            r.locations().size());
+        std::vector<google::cloud::location::Location> result(r.locations().size());
         auto& messages = *r.mutable_locations();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -165,8 +134,7 @@ FeaturestoreOnlineServingServiceConnectionImpl::ListLocations(
 }
 
 StatusOr<google::cloud::location::Location>
-FeaturestoreOnlineServingServiceConnectionImpl::GetLocation(
-    google::cloud::location::GetLocationRequest const& request) {
+FeaturestoreOnlineServingServiceConnectionImpl::GetLocation(google::cloud::location::GetLocationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -179,8 +147,7 @@ FeaturestoreOnlineServingServiceConnectionImpl::GetLocation(
 }
 
 StatusOr<google::iam::v1::Policy>
-FeaturestoreOnlineServingServiceConnectionImpl::SetIamPolicy(
-    google::iam::v1::SetIamPolicyRequest const& request) {
+FeaturestoreOnlineServingServiceConnectionImpl::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -193,8 +160,7 @@ FeaturestoreOnlineServingServiceConnectionImpl::SetIamPolicy(
 }
 
 StatusOr<google::iam::v1::Policy>
-FeaturestoreOnlineServingServiceConnectionImpl::GetIamPolicy(
-    google::iam::v1::GetIamPolicyRequest const& request) {
+FeaturestoreOnlineServingServiceConnectionImpl::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -207,8 +173,7 @@ FeaturestoreOnlineServingServiceConnectionImpl::GetIamPolicy(
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-FeaturestoreOnlineServingServiceConnectionImpl::TestIamPermissions(
-    google::iam::v1::TestIamPermissionsRequest const& request) {
+FeaturestoreOnlineServingServiceConnectionImpl::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -221,22 +186,17 @@ FeaturestoreOnlineServingServiceConnectionImpl::TestIamPermissions(
 }
 
 StreamRange<google::longrunning::Operation>
-FeaturestoreOnlineServingServiceConnectionImpl::ListOperations(
-    google::longrunning::ListOperationsRequest request) {
+FeaturestoreOnlineServingServiceConnectionImpl::ListOperations(google::longrunning::ListOperationsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListOperations(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::longrunning::Operation>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::longrunning::Operation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<
-           aiplatform_v1::FeaturestoreOnlineServingServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<aiplatform_v1::FeaturestoreOnlineServingServiceRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::longrunning::ListOperationsRequest const& r) {
+          Options const& options, google::longrunning::ListOperationsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
@@ -246,8 +206,7 @@ FeaturestoreOnlineServingServiceConnectionImpl::ListOperations(
             options, r, function_name);
       },
       [](google::longrunning::ListOperationsResponse r) {
-        std::vector<google::longrunning::Operation> result(
-            r.operations().size());
+        std::vector<google::longrunning::Operation> result(r.operations().size());
         auto& messages = *r.mutable_operations();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -255,8 +214,7 @@ FeaturestoreOnlineServingServiceConnectionImpl::ListOperations(
 }
 
 StatusOr<google::longrunning::Operation>
-FeaturestoreOnlineServingServiceConnectionImpl::GetOperation(
-    google::longrunning::GetOperationRequest const& request) {
+FeaturestoreOnlineServingServiceConnectionImpl::GetOperation(google::longrunning::GetOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -268,8 +226,8 @@ FeaturestoreOnlineServingServiceConnectionImpl::GetOperation(
       *current, request, __func__);
 }
 
-Status FeaturestoreOnlineServingServiceConnectionImpl::DeleteOperation(
-    google::longrunning::DeleteOperationRequest const& request) {
+Status
+FeaturestoreOnlineServingServiceConnectionImpl::DeleteOperation(google::longrunning::DeleteOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -281,8 +239,8 @@ Status FeaturestoreOnlineServingServiceConnectionImpl::DeleteOperation(
       *current, request, __func__);
 }
 
-Status FeaturestoreOnlineServingServiceConnectionImpl::CancelOperation(
-    google::longrunning::CancelOperationRequest const& request) {
+Status
+FeaturestoreOnlineServingServiceConnectionImpl::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -295,8 +253,7 @@ Status FeaturestoreOnlineServingServiceConnectionImpl::CancelOperation(
 }
 
 StatusOr<google::longrunning::Operation>
-FeaturestoreOnlineServingServiceConnectionImpl::WaitOperation(
-    google::longrunning::WaitOperationRequest const& request) {
+FeaturestoreOnlineServingServiceConnectionImpl::WaitOperation(google::longrunning::WaitOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),

@@ -32,166 +32,184 @@ DataAccessControlServiceStub::~DataAccessControlServiceStub() = default;
 
 StatusOr<google::cloud::chronicle::v1::DataAccessLabel>
 DefaultDataAccessControlServiceStub::CreateDataAccessLabel(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::chronicle::v1::CreateDataAccessLabelRequest const& request) {
-  google::cloud::chronicle::v1::DataAccessLabel response;
-  auto status = grpc_stub_->CreateDataAccessLabel(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::chronicle::v1::CreateDataAccessLabelRequest const& request) {
+    google::cloud::chronicle::v1::DataAccessLabel response;
+    auto status =
+        grpc_stub_->CreateDataAccessLabel(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::chronicle::v1::DataAccessLabel>
 DefaultDataAccessControlServiceStub::GetDataAccessLabel(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::chronicle::v1::GetDataAccessLabelRequest const& request) {
-  google::cloud::chronicle::v1::DataAccessLabel response;
-  auto status = grpc_stub_->GetDataAccessLabel(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::chronicle::v1::GetDataAccessLabelRequest const& request) {
+    google::cloud::chronicle::v1::DataAccessLabel response;
+    auto status =
+        grpc_stub_->GetDataAccessLabel(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::chronicle::v1::ListDataAccessLabelsResponse>
 DefaultDataAccessControlServiceStub::ListDataAccessLabels(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::chronicle::v1::ListDataAccessLabelsRequest const& request) {
-  google::cloud::chronicle::v1::ListDataAccessLabelsResponse response;
-  auto status = grpc_stub_->ListDataAccessLabels(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::chronicle::v1::ListDataAccessLabelsRequest const& request) {
+    google::cloud::chronicle::v1::ListDataAccessLabelsResponse response;
+    auto status =
+        grpc_stub_->ListDataAccessLabels(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::chronicle::v1::DataAccessLabel>
 DefaultDataAccessControlServiceStub::UpdateDataAccessLabel(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::chronicle::v1::UpdateDataAccessLabelRequest const& request) {
-  google::cloud::chronicle::v1::DataAccessLabel response;
-  auto status = grpc_stub_->UpdateDataAccessLabel(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::chronicle::v1::UpdateDataAccessLabelRequest const& request) {
+    google::cloud::chronicle::v1::DataAccessLabel response;
+    auto status =
+        grpc_stub_->UpdateDataAccessLabel(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-Status DefaultDataAccessControlServiceStub::DeleteDataAccessLabel(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::chronicle::v1::DeleteDataAccessLabelRequest const& request) {
-  google::protobuf::Empty response;
-  auto status = grpc_stub_->DeleteDataAccessLabel(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return google::cloud::Status();
+Status
+DefaultDataAccessControlServiceStub::DeleteDataAccessLabel(
+  grpc::ClientContext& context, Options const&,
+  google::cloud::chronicle::v1::DeleteDataAccessLabelRequest const& request) {
+    google::protobuf::Empty response;
+    auto status =
+        grpc_stub_->DeleteDataAccessLabel(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return google::cloud::Status();
 }
 
 StatusOr<google::cloud::chronicle::v1::DataAccessScope>
 DefaultDataAccessControlServiceStub::CreateDataAccessScope(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::chronicle::v1::CreateDataAccessScopeRequest const& request) {
-  google::cloud::chronicle::v1::DataAccessScope response;
-  auto status = grpc_stub_->CreateDataAccessScope(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::chronicle::v1::CreateDataAccessScopeRequest const& request) {
+    google::cloud::chronicle::v1::DataAccessScope response;
+    auto status =
+        grpc_stub_->CreateDataAccessScope(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::chronicle::v1::DataAccessScope>
 DefaultDataAccessControlServiceStub::GetDataAccessScope(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::chronicle::v1::GetDataAccessScopeRequest const& request) {
-  google::cloud::chronicle::v1::DataAccessScope response;
-  auto status = grpc_stub_->GetDataAccessScope(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::chronicle::v1::GetDataAccessScopeRequest const& request) {
+    google::cloud::chronicle::v1::DataAccessScope response;
+    auto status =
+        grpc_stub_->GetDataAccessScope(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::chronicle::v1::ListDataAccessScopesResponse>
 DefaultDataAccessControlServiceStub::ListDataAccessScopes(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::chronicle::v1::ListDataAccessScopesRequest const& request) {
-  google::cloud::chronicle::v1::ListDataAccessScopesResponse response;
-  auto status = grpc_stub_->ListDataAccessScopes(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::chronicle::v1::ListDataAccessScopesRequest const& request) {
+    google::cloud::chronicle::v1::ListDataAccessScopesResponse response;
+    auto status =
+        grpc_stub_->ListDataAccessScopes(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::chronicle::v1::DataAccessScope>
 DefaultDataAccessControlServiceStub::UpdateDataAccessScope(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::chronicle::v1::UpdateDataAccessScopeRequest const& request) {
-  google::cloud::chronicle::v1::DataAccessScope response;
-  auto status = grpc_stub_->UpdateDataAccessScope(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::chronicle::v1::UpdateDataAccessScopeRequest const& request) {
+    google::cloud::chronicle::v1::DataAccessScope response;
+    auto status =
+        grpc_stub_->UpdateDataAccessScope(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-Status DefaultDataAccessControlServiceStub::DeleteDataAccessScope(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::chronicle::v1::DeleteDataAccessScopeRequest const& request) {
-  google::protobuf::Empty response;
-  auto status = grpc_stub_->DeleteDataAccessScope(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return google::cloud::Status();
+Status
+DefaultDataAccessControlServiceStub::DeleteDataAccessScope(
+  grpc::ClientContext& context, Options const&,
+  google::cloud::chronicle::v1::DeleteDataAccessScopeRequest const& request) {
+    google::protobuf::Empty response;
+    auto status =
+        grpc_stub_->DeleteDataAccessScope(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return google::cloud::Status();
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
 DefaultDataAccessControlServiceStub::ListOperations(
-    grpc::ClientContext& context, Options const&,
-    google::longrunning::ListOperationsRequest const& request) {
-  google::longrunning::ListOperationsResponse response;
-  auto status = operations_stub_->ListOperations(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::longrunning::ListOperationsRequest const& request) {
+    google::longrunning::ListOperationsResponse response;
+    auto status =
+        operations_stub_->ListOperations(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::longrunning::Operation>
 DefaultDataAccessControlServiceStub::GetOperation(
-    grpc::ClientContext& context, Options const&,
-    google::longrunning::GetOperationRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = operations_stub_->GetOperation(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::longrunning::GetOperationRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        operations_stub_->GetOperation(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-Status DefaultDataAccessControlServiceStub::DeleteOperation(
-    grpc::ClientContext& context, Options const&,
-    google::longrunning::DeleteOperationRequest const& request) {
-  google::protobuf::Empty response;
-  auto status = operations_stub_->DeleteOperation(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return google::cloud::Status();
+Status
+DefaultDataAccessControlServiceStub::DeleteOperation(
+  grpc::ClientContext& context, Options const&,
+  google::longrunning::DeleteOperationRequest const& request) {
+    google::protobuf::Empty response;
+    auto status =
+        operations_stub_->DeleteOperation(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return google::cloud::Status();
 }
 
-Status DefaultDataAccessControlServiceStub::CancelOperation(
-    grpc::ClientContext& context, Options const&,
-    google::longrunning::CancelOperationRequest const& request) {
-  google::protobuf::Empty response;
-  auto status = operations_stub_->CancelOperation(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return google::cloud::Status();
+Status
+DefaultDataAccessControlServiceStub::CancelOperation(
+  grpc::ClientContext& context, Options const&,
+  google::longrunning::CancelOperationRequest const& request) {
+    google::protobuf::Empty response;
+    auto status =
+        operations_stub_->CancelOperation(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return google::cloud::Status();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

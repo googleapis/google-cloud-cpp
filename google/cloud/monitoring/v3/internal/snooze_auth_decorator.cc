@@ -32,16 +32,17 @@ SnoozeServiceAuth::SnoozeServiceAuth(
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
 StatusOr<google::monitoring::v3::Snooze> SnoozeServiceAuth::CreateSnooze(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::monitoring::v3::CreateSnoozeRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateSnooze(context, options, request);
 }
 
-StatusOr<google::monitoring::v3::ListSnoozesResponse>
-SnoozeServiceAuth::ListSnoozes(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::monitoring::v3::ListSnoozesResponse> SnoozeServiceAuth::ListSnoozes(
+    grpc::ClientContext& context,
+    Options const& options,
     google::monitoring::v3::ListSnoozesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -49,7 +50,8 @@ SnoozeServiceAuth::ListSnoozes(
 }
 
 StatusOr<google::monitoring::v3::Snooze> SnoozeServiceAuth::GetSnooze(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::monitoring::v3::GetSnoozeRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -57,7 +59,8 @@ StatusOr<google::monitoring::v3::Snooze> SnoozeServiceAuth::GetSnooze(
 }
 
 StatusOr<google::monitoring::v3::Snooze> SnoozeServiceAuth::UpdateSnooze(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::monitoring::v3::UpdateSnoozeRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;

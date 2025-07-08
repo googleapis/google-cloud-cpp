@@ -36,13 +36,12 @@ class KeyDashboardServiceTracingConnection
   ~KeyDashboardServiceTracingConnection() override = default;
 
   explicit KeyDashboardServiceTracingConnection(
-      std::shared_ptr<kms_inventory_v1::KeyDashboardServiceConnection> child);
+    std::shared_ptr<kms_inventory_v1::KeyDashboardServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StreamRange<google::cloud::kms::v1::CryptoKey> ListCryptoKeys(
-      google::cloud::kms::inventory::v1::ListCryptoKeysRequest request)
-      override;
+  StreamRange<google::cloud::kms::v1::CryptoKey>
+  ListCryptoKeys(google::cloud::kms::inventory::v1::ListCryptoKeysRequest request) override;
 
  private:
   std::shared_ptr<kms_inventory_v1::KeyDashboardServiceConnection> child_;

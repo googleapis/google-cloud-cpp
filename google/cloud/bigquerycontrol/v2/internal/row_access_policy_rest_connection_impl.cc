@@ -31,51 +31,38 @@ namespace cloud {
 namespace bigquerycontrol_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-RowAccessPolicyServiceRestConnectionImpl::
-    RowAccessPolicyServiceRestConnectionImpl(
-        std::unique_ptr<google::cloud::BackgroundThreads> background,
-        std::shared_ptr<
-            bigquerycontrol_v2_internal::RowAccessPolicyServiceRestStub>
-            stub,
-        Options options)
-    : background_(std::move(background)),
-      stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options), RowAccessPolicyServiceConnection::options())) {}
+RowAccessPolicyServiceRestConnectionImpl::RowAccessPolicyServiceRestConnectionImpl(
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<bigquerycontrol_v2_internal::RowAccessPolicyServiceRestStub> stub,
+    Options options)
+  : background_(std::move(background)), stub_(std::move(stub)),
+    options_(internal::MergeOptions(
+        std::move(options),
+        RowAccessPolicyServiceConnection::options())) {}
 
 StreamRange<google::cloud::bigquery::v2::RowAccessPolicy>
-RowAccessPolicyServiceRestConnectionImpl::ListRowAccessPolicies(
-    google::cloud::bigquery::v2::ListRowAccessPoliciesRequest request) {
+RowAccessPolicyServiceRestConnectionImpl::ListRowAccessPolicies(google::cloud::bigquery::v2::ListRowAccessPoliciesRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
-  auto idempotency =
-      idempotency_policy(*current)->ListRowAccessPolicies(request);
+  auto idempotency = idempotency_policy(*current)->ListRowAccessPolicies(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::bigquery::v2::RowAccessPolicy>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::bigquery::v2::RowAccessPolicy>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<
-           bigquerycontrol_v2::RowAccessPolicyServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<bigquerycontrol_v2::RowAccessPolicyServiceRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::bigquery::v2::ListRowAccessPoliciesRequest const& r) {
+          Options const& options, google::cloud::bigquery::v2::ListRowAccessPoliciesRequest const& r) {
         return google::cloud::rest_internal::RestRetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](
-                rest_internal::RestContext& rest_context,
-                Options const& options,
-                google::cloud::bigquery::v2::ListRowAccessPoliciesRequest const&
-                    request) {
-              return stub->ListRowAccessPolicies(rest_context, options,
-                                                 request);
+            [stub](rest_internal::RestContext& rest_context,
+                   Options const& options,
+                   google::cloud::bigquery::v2::ListRowAccessPoliciesRequest const& request) {
+              return stub->ListRowAccessPolicies(rest_context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::bigquery::v2::ListRowAccessPoliciesResponse r) {
-        std::vector<google::cloud::bigquery::v2::RowAccessPolicy> result(
-            r.row_access_policies().size());
+        std::vector<google::cloud::bigquery::v2::RowAccessPolicy> result(r.row_access_policies().size());
         auto& messages = *r.mutable_row_access_policies();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -83,76 +70,66 @@ RowAccessPolicyServiceRestConnectionImpl::ListRowAccessPolicies(
 }
 
 StatusOr<google::cloud::bigquery::v2::RowAccessPolicy>
-RowAccessPolicyServiceRestConnectionImpl::GetRowAccessPolicy(
-    google::cloud::bigquery::v2::GetRowAccessPolicyRequest const& request) {
+RowAccessPolicyServiceRestConnectionImpl::GetRowAccessPolicy(google::cloud::bigquery::v2::GetRowAccessPolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetRowAccessPolicy(request),
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::cloud::bigquery::v2::GetRowAccessPolicyRequest const&
-                 request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options, google::cloud::bigquery::v2::GetRowAccessPolicyRequest const& request) {
         return stub_->GetRowAccessPolicy(rest_context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::bigquery::v2::RowAccessPolicy>
-RowAccessPolicyServiceRestConnectionImpl::CreateRowAccessPolicy(
-    google::cloud::bigquery::v2::CreateRowAccessPolicyRequest const& request) {
+RowAccessPolicyServiceRestConnectionImpl::CreateRowAccessPolicy(google::cloud::bigquery::v2::CreateRowAccessPolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateRowAccessPolicy(request),
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::cloud::bigquery::v2::CreateRowAccessPolicyRequest const&
-                 request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options, google::cloud::bigquery::v2::CreateRowAccessPolicyRequest const& request) {
         return stub_->CreateRowAccessPolicy(rest_context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::bigquery::v2::RowAccessPolicy>
-RowAccessPolicyServiceRestConnectionImpl::UpdateRowAccessPolicy(
-    google::cloud::bigquery::v2::UpdateRowAccessPolicyRequest const& request) {
+RowAccessPolicyServiceRestConnectionImpl::UpdateRowAccessPolicy(google::cloud::bigquery::v2::UpdateRowAccessPolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateRowAccessPolicy(request),
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::cloud::bigquery::v2::UpdateRowAccessPolicyRequest const&
-                 request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options, google::cloud::bigquery::v2::UpdateRowAccessPolicyRequest const& request) {
         return stub_->UpdateRowAccessPolicy(rest_context, options, request);
       },
       *current, request, __func__);
 }
 
-Status RowAccessPolicyServiceRestConnectionImpl::DeleteRowAccessPolicy(
-    google::cloud::bigquery::v2::DeleteRowAccessPolicyRequest const& request) {
+Status
+RowAccessPolicyServiceRestConnectionImpl::DeleteRowAccessPolicy(google::cloud::bigquery::v2::DeleteRowAccessPolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteRowAccessPolicy(request),
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::cloud::bigquery::v2::DeleteRowAccessPolicyRequest const&
-                 request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options, google::cloud::bigquery::v2::DeleteRowAccessPolicyRequest const& request) {
         return stub_->DeleteRowAccessPolicy(rest_context, options, request);
       },
       *current, request, __func__);
 }
 
-Status RowAccessPolicyServiceRestConnectionImpl::BatchDeleteRowAccessPolicies(
-    google::cloud::bigquery::v2::BatchDeleteRowAccessPoliciesRequest const&
-        request) {
+Status
+RowAccessPolicyServiceRestConnectionImpl::BatchDeleteRowAccessPolicies(google::cloud::bigquery::v2::BatchDeleteRowAccessPoliciesRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->BatchDeleteRowAccessPolicies(request),
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::cloud::bigquery::v2::
-                 BatchDeleteRowAccessPoliciesRequest const& request) {
-        return stub_->BatchDeleteRowAccessPolicies(rest_context, options,
-                                                   request);
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options, google::cloud::bigquery::v2::BatchDeleteRowAccessPoliciesRequest const& request) {
+        return stub_->BatchDeleteRowAccessPolicies(rest_context, options, request);
       },
       *current, request, __func__);
 }

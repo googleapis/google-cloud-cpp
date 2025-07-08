@@ -16,12 +16,12 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/policytroubleshooter/v1/checker.proto
 
-#include "google/cloud/policytroubleshooter/v1/iam_checker_client.h"
-#include "google/cloud/policytroubleshooter/v1/iam_checker_connection_idempotency_policy.h"
-#include "google/cloud/policytroubleshooter/v1/iam_checker_options.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/getenv.h"
+#include "google/cloud/policytroubleshooter/v1/iam_checker_client.h"
+#include "google/cloud/policytroubleshooter/v1/iam_checker_connection_idempotency_policy.h"
+#include "google/cloud/policytroubleshooter/v1/iam_checker_options.h"
 #include "google/cloud/testing_util/example_driver.h"
 #include <fstream>
 #include <iostream>
@@ -43,19 +43,16 @@ void SetClientEndpoint(std::vector<std::string> const& argv) {
   auto options = google::cloud::Options{}.set<google::cloud::EndpointOption>(
       "private.googleapis.com");
   auto vpc_client = google::cloud::policytroubleshooter_v1::IamCheckerClient(
-      google::cloud::policytroubleshooter_v1::MakeIamCheckerConnection(
-          options));
+      google::cloud::policytroubleshooter_v1::MakeIamCheckerConnection(options));
   //! [set-client-endpoint]
 }
 
 //! [custom-idempotency-policy]
-class CustomIdempotencyPolicy : public google::cloud::policytroubleshooter_v1::
-                                    IamCheckerConnectionIdempotencyPolicy {
+class CustomIdempotencyPolicy
+   : public google::cloud::policytroubleshooter_v1::IamCheckerConnectionIdempotencyPolicy {
  public:
   ~CustomIdempotencyPolicy() override = default;
-  std::unique_ptr<google::cloud::policytroubleshooter_v1::
-                      IamCheckerConnectionIdempotencyPolicy>
-  clone() const override {
+  std::unique_ptr<google::cloud::policytroubleshooter_v1::IamCheckerConnectionIdempotencyPolicy> clone() const override {
     return std::make_unique<CustomIdempotencyPolicy>(*this);
   }
   // Override inherited functions to define as needed.
@@ -68,40 +65,26 @@ void SetRetryPolicy(std::vector<std::string> const& argv) {
   }
   //! [set-retry-policy]
   auto options = google::cloud::Options{}
-                     .set<google::cloud::policytroubleshooter_v1::
-                              IamCheckerConnectionIdempotencyPolicyOption>(
-                         CustomIdempotencyPolicy().clone())
-                     .set<google::cloud::policytroubleshooter_v1::
-                              IamCheckerRetryPolicyOption>(
-                         google::cloud::policytroubleshooter_v1::
-                             IamCheckerLimitedErrorCountRetryPolicy(3)
-                                 .clone())
-                     .set<google::cloud::policytroubleshooter_v1::
-                              IamCheckerBackoffPolicyOption>(
-                         google::cloud::ExponentialBackoffPolicy(
-                             /*initial_delay=*/std::chrono::milliseconds(200),
-                             /*maximum_delay=*/std::chrono::seconds(45),
-                             /*scaling=*/2.0)
-                             .clone());
-  auto connection =
-      google::cloud::policytroubleshooter_v1::MakeIamCheckerConnection(options);
+    .set<google::cloud::policytroubleshooter_v1::IamCheckerConnectionIdempotencyPolicyOption>(
+      CustomIdempotencyPolicy().clone())
+    .set<google::cloud::policytroubleshooter_v1::IamCheckerRetryPolicyOption>(
+      google::cloud::policytroubleshooter_v1::IamCheckerLimitedErrorCountRetryPolicy(3).clone())
+    .set<google::cloud::policytroubleshooter_v1::IamCheckerBackoffPolicyOption>(
+      google::cloud::ExponentialBackoffPolicy(
+          /*initial_delay=*/std::chrono::milliseconds(200),
+          /*maximum_delay=*/std::chrono::seconds(45),
+          /*scaling=*/2.0).clone());
+  auto connection = google::cloud::policytroubleshooter_v1::MakeIamCheckerConnection(options);
 
   // c1 and c2 share the same retry policies
-  auto c1 =
-      google::cloud::policytroubleshooter_v1::IamCheckerClient(connection);
-  auto c2 =
-      google::cloud::policytroubleshooter_v1::IamCheckerClient(connection);
+  auto c1 = google::cloud::policytroubleshooter_v1::IamCheckerClient(connection);
+  auto c2 = google::cloud::policytroubleshooter_v1::IamCheckerClient(connection);
 
   // You can override any of the policies in a new client. This new client
   // will share the policies from c1 (or c2) *except* for the retry policy.
   auto c3 = google::cloud::policytroubleshooter_v1::IamCheckerClient(
-      connection,
-      google::cloud::Options{}
-          .set<google::cloud::policytroubleshooter_v1::
-                   IamCheckerRetryPolicyOption>(
-              google::cloud::policytroubleshooter_v1::
-                  IamCheckerLimitedTimeRetryPolicy(std::chrono::minutes(5))
-                      .clone()));
+    connection, google::cloud::Options{}.set<google::cloud::policytroubleshooter_v1::IamCheckerRetryPolicyOption>(
+      google::cloud::policytroubleshooter_v1::IamCheckerLimitedTimeRetryPolicy(std::chrono::minutes(5)).clone()));
 
   // You can also override the policies in a single call:
   // c3.SomeRpc(..., google::cloud::Options{}
@@ -123,8 +106,7 @@ void WithServiceAccount(std::vector<std::string> const& argv) {
         google::cloud::Options{}.set<google::cloud::UnifiedCredentialsOption>(
             google::cloud::MakeServiceAccountCredentials(contents));
     return google::cloud::policytroubleshooter_v1::IamCheckerClient(
-        google::cloud::policytroubleshooter_v1::MakeIamCheckerConnection(
-            options));
+      google::cloud::policytroubleshooter_v1::MakeIamCheckerConnection(options));
   }
   //! [with-service-account]
   (argv.at(0));
@@ -134,8 +116,9 @@ void AutoRun(std::vector<std::string> const& argv) {
   namespace examples = ::google::cloud::testing_util;
   using ::google::cloud::internal::GetEnv;
   if (!argv.empty()) throw examples::Usage{"auto"};
-  examples::CheckEnvironmentVariablesAreSet(
-      {"GOOGLE_CLOUD_CPP_TEST_SERVICE_ACCOUNT_KEYFILE"});
+  examples::CheckEnvironmentVariablesAreSet({
+    "GOOGLE_CLOUD_CPP_TEST_SERVICE_ACCOUNT_KEYFILE"
+  });
   auto const keyfile =
       GetEnv("GOOGLE_CLOUD_CPP_TEST_SERVICE_ACCOUNT_KEYFILE").value();
 

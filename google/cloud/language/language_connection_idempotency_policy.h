@@ -26,13 +26,10 @@ namespace cloud {
 namespace language {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use
-/// language_v1::MakeDefaultLanguageServiceConnectionIdempotencyPolicy directly.
-using ::google::cloud::language_v1::
-    MakeDefaultLanguageServiceConnectionIdempotencyPolicy;
+/// @deprecated Use language_v1::MakeDefaultLanguageServiceConnectionIdempotencyPolicy directly.
+using ::google::cloud::language_v1::MakeDefaultLanguageServiceConnectionIdempotencyPolicy;
 
-/// @deprecated Use language_v1::LanguageServiceConnectionIdempotencyPolicy
-/// directly.
+/// @deprecated Use language_v1::LanguageServiceConnectionIdempotencyPolicy directly.
 using ::google::cloud::language_v1::LanguageServiceConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

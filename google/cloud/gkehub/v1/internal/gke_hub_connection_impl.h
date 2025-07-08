@@ -19,14 +19,14 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GKEHUB_V1_INTERNAL_GKE_HUB_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GKEHUB_V1_INTERNAL_GKE_HUB_CONNECTION_IMPL_H
 
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/future.h"
 #include "google/cloud/gkehub/v1/gke_hub_connection.h"
 #include "google/cloud/gkehub/v1/gke_hub_connection_idempotency_policy.h"
 #include "google/cloud/gkehub/v1/gke_hub_options.h"
 #include "google/cloud/gkehub/v1/internal/gke_hub_retry_traits.h"
 #include "google/cloud/gkehub/v1/internal/gke_hub_stub.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -40,98 +40,98 @@ namespace cloud {
 namespace gkehub_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class GkeHubConnectionImpl : public gkehub_v1::GkeHubConnection {
+class GkeHubConnectionImpl
+    : public gkehub_v1::GkeHubConnection {
  public:
   ~GkeHubConnectionImpl() override = default;
 
   GkeHubConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<gkehub_v1_internal::GkeHubStub> stub, Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<gkehub_v1_internal::GkeHubStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
-  StreamRange<google::cloud::gkehub::v1::Membership> ListMemberships(
-      google::cloud::gkehub::v1::ListMembershipsRequest request) override;
+  StreamRange<google::cloud::gkehub::v1::Membership>
+  ListMemberships(google::cloud::gkehub::v1::ListMembershipsRequest request) override;
 
-  StreamRange<google::cloud::gkehub::v1::Feature> ListFeatures(
-      google::cloud::gkehub::v1::ListFeaturesRequest request) override;
+  StreamRange<google::cloud::gkehub::v1::Feature>
+  ListFeatures(google::cloud::gkehub::v1::ListFeaturesRequest request) override;
 
-  StatusOr<google::cloud::gkehub::v1::Membership> GetMembership(
-      google::cloud::gkehub::v1::GetMembershipRequest const& request) override;
+  StatusOr<google::cloud::gkehub::v1::Membership>
+  GetMembership(google::cloud::gkehub::v1::GetMembershipRequest const& request) override;
 
-  StatusOr<google::cloud::gkehub::v1::Feature> GetFeature(
-      google::cloud::gkehub::v1::GetFeatureRequest const& request) override;
+  StatusOr<google::cloud::gkehub::v1::Feature>
+  GetFeature(google::cloud::gkehub::v1::GetFeatureRequest const& request) override;
 
-  future<StatusOr<google::cloud::gkehub::v1::Membership>> CreateMembership(
-      google::cloud::gkehub::v1::CreateMembershipRequest const& request)
-      override;
+  future<StatusOr<google::cloud::gkehub::v1::Membership>>
+  CreateMembership(google::cloud::gkehub::v1::CreateMembershipRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> CreateMembership(
-      NoAwaitTag,
-      google::cloud::gkehub::v1::CreateMembershipRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  CreateMembership(NoAwaitTag,
+      google::cloud::gkehub::v1::CreateMembershipRequest const& request) override;
 
-  future<StatusOr<google::cloud::gkehub::v1::Membership>> CreateMembership(
+  future<StatusOr<google::cloud::gkehub::v1::Membership>>
+  CreateMembership(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::gkehub::v1::Feature>> CreateFeature(
+  future<StatusOr<google::cloud::gkehub::v1::Feature>>
+  CreateFeature(google::cloud::gkehub::v1::CreateFeatureRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  CreateFeature(NoAwaitTag,
       google::cloud::gkehub::v1::CreateFeatureRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> CreateFeature(
-      NoAwaitTag,
-      google::cloud::gkehub::v1::CreateFeatureRequest const& request) override;
-
-  future<StatusOr<google::cloud::gkehub::v1::Feature>> CreateFeature(
+  future<StatusOr<google::cloud::gkehub::v1::Feature>>
+  CreateFeature(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>
-  DeleteMembership(google::cloud::gkehub::v1::DeleteMembershipRequest const&
-                       request) override;
+  DeleteMembership(google::cloud::gkehub::v1::DeleteMembershipRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> DeleteMembership(
-      NoAwaitTag,
-      google::cloud::gkehub::v1::DeleteMembershipRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  DeleteMembership(NoAwaitTag,
+      google::cloud::gkehub::v1::DeleteMembershipRequest const& request) override;
 
   future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>
-  DeleteMembership(google::longrunning::Operation const& operation) override;
-
-  future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>> DeleteFeature(
-      google::cloud::gkehub::v1::DeleteFeatureRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation> DeleteFeature(
-      NoAwaitTag,
-      google::cloud::gkehub::v1::DeleteFeatureRequest const& request) override;
-
-  future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>> DeleteFeature(
+  DeleteMembership(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::gkehub::v1::Membership>> UpdateMembership(
-      google::cloud::gkehub::v1::UpdateMembershipRequest const& request)
-      override;
+  future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>
+  DeleteFeature(google::cloud::gkehub::v1::DeleteFeatureRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> UpdateMembership(
-      NoAwaitTag,
-      google::cloud::gkehub::v1::UpdateMembershipRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  DeleteFeature(NoAwaitTag,
+      google::cloud::gkehub::v1::DeleteFeatureRequest const& request) override;
 
-  future<StatusOr<google::cloud::gkehub::v1::Membership>> UpdateMembership(
+  future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>
+  DeleteFeature(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::gkehub::v1::Feature>> UpdateFeature(
+  future<StatusOr<google::cloud::gkehub::v1::Membership>>
+  UpdateMembership(google::cloud::gkehub::v1::UpdateMembershipRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  UpdateMembership(NoAwaitTag,
+      google::cloud::gkehub::v1::UpdateMembershipRequest const& request) override;
+
+  future<StatusOr<google::cloud::gkehub::v1::Membership>>
+  UpdateMembership(
+      google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::gkehub::v1::Feature>>
+  UpdateFeature(google::cloud::gkehub::v1::UpdateFeatureRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  UpdateFeature(NoAwaitTag,
       google::cloud::gkehub::v1::UpdateFeatureRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> UpdateFeature(
-      NoAwaitTag,
-      google::cloud::gkehub::v1::UpdateFeatureRequest const& request) override;
-
-  future<StatusOr<google::cloud::gkehub::v1::Feature>> UpdateFeature(
+  future<StatusOr<google::cloud::gkehub::v1::Feature>>
+  UpdateFeature(
       google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::gkehub::v1::GenerateConnectManifestResponse>
-  GenerateConnectManifest(
-      google::cloud::gkehub::v1::GenerateConnectManifestRequest const& request)
-      override;
+  GenerateConnectManifest(google::cloud::gkehub::v1::GenerateConnectManifestRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

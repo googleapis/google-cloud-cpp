@@ -24,9 +24,9 @@
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/cloud/dialogflow/cx/v3/entity_type.grpc.pb.h>
 #include <google/cloud/location/locations.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
+#include <google/cloud/dialogflow/cx/v3/entity_type.grpc.pb.h>
 #include <memory>
 #include <utility>
 
@@ -40,84 +40,81 @@ class EntityTypesStub {
   virtual ~EntityTypesStub() = 0;
 
   virtual StatusOr<google::cloud::dialogflow::cx::v3::EntityType> GetEntityType(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::dialogflow::cx::v3::GetEntityTypeRequest const&
-          request) = 0;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::dialogflow::cx::v3::GetEntityTypeRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::dialogflow::cx::v3::EntityType>
-  CreateEntityType(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::dialogflow::cx::v3::CreateEntityTypeRequest const&
-          request) = 0;
+  virtual StatusOr<google::cloud::dialogflow::cx::v3::EntityType> CreateEntityType(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::dialogflow::cx::v3::CreateEntityTypeRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::dialogflow::cx::v3::EntityType>
-  UpdateEntityType(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::dialogflow::cx::v3::UpdateEntityTypeRequest const&
-          request) = 0;
+  virtual StatusOr<google::cloud::dialogflow::cx::v3::EntityType> UpdateEntityType(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::dialogflow::cx::v3::UpdateEntityTypeRequest const& request) = 0;
 
   virtual Status DeleteEntityType(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::dialogflow::cx::v3::DeleteEntityTypeRequest const&
-          request) = 0;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::dialogflow::cx::v3::DeleteEntityTypeRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::dialogflow::cx::v3::ListEntityTypesResponse>
-  ListEntityTypes(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::dialogflow::cx::v3::ListEntityTypesRequest const&
-          request) = 0;
+  virtual StatusOr<google::cloud::dialogflow::cx::v3::ListEntityTypesResponse> ListEntityTypes(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::dialogflow::cx::v3::ListEntityTypesRequest const& request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>>
-  AsyncExportEntityTypes(
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncExportEntityTypes(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::dialogflow::cx::v3::ExportEntityTypesRequest const&
-          request) = 0;
+      google::cloud::dialogflow::cx::v3::ExportEntityTypesRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> ExportEntityTypes(
-      grpc::ClientContext& context, Options options,
-      google::cloud::dialogflow::cx::v3::ExportEntityTypesRequest const&
-          request) = 0;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::dialogflow::cx::v3::ExportEntityTypesRequest const& request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>>
-  AsyncImportEntityTypes(
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncImportEntityTypes(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::dialogflow::cx::v3::ImportEntityTypesRequest const&
-          request) = 0;
+      google::cloud::dialogflow::cx::v3::ImportEntityTypesRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> ImportEntityTypes(
-      grpc::ClientContext& context, Options options,
-      google::cloud::dialogflow::cx::v3::ImportEntityTypesRequest const&
-          request) = 0;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::dialogflow::cx::v3::ImportEntityTypesRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::location::ListLocationsResponse>
-  ListLocations(
-      grpc::ClientContext& context, Options const& options,
+  virtual StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::location::ListLocationsRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::location::Location> GetLocation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::location::GetLocationRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::ListOperationsRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual Status CancelOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::CancelOperationRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
+    google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
@@ -130,85 +127,83 @@ class EntityTypesStub {
 class DefaultEntityTypesStub : public EntityTypesStub {
  public:
   DefaultEntityTypesStub(
-      std::unique_ptr<
-          google::cloud::dialogflow::cx::v3::EntityTypes::StubInterface>
-          grpc_stub,
-      std::unique_ptr<google::cloud::location::Locations::StubInterface>
-          locations_stub,
-      std::unique_ptr<google::longrunning::Operations::StubInterface>
-          operations_stub)
+      std::unique_ptr<google::cloud::dialogflow::cx::v3::EntityTypes::StubInterface> grpc_stub,
+      std::unique_ptr<google::cloud::location::Locations::StubInterface> locations_stub,
+      std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub)
       : grpc_stub_(std::move(grpc_stub)),
         locations_stub_(std::move(locations_stub)),
         operations_stub_(std::move(operations_stub)) {}
 
   StatusOr<google::cloud::dialogflow::cx::v3::EntityType> GetEntityType(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::dialogflow::cx::v3::GetEntityTypeRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::dialogflow::cx::v3::GetEntityTypeRequest const& request) override;
 
   StatusOr<google::cloud::dialogflow::cx::v3::EntityType> CreateEntityType(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::dialogflow::cx::v3::CreateEntityTypeRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::dialogflow::cx::v3::CreateEntityTypeRequest const& request) override;
 
   StatusOr<google::cloud::dialogflow::cx::v3::EntityType> UpdateEntityType(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::dialogflow::cx::v3::UpdateEntityTypeRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::dialogflow::cx::v3::UpdateEntityTypeRequest const& request) override;
 
   Status DeleteEntityType(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::dialogflow::cx::v3::DeleteEntityTypeRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::dialogflow::cx::v3::DeleteEntityTypeRequest const& request) override;
 
-  StatusOr<google::cloud::dialogflow::cx::v3::ListEntityTypesResponse>
-  ListEntityTypes(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::dialogflow::cx::v3::ListEntityTypesRequest const& request)
-      override;
+  StatusOr<google::cloud::dialogflow::cx::v3::ListEntityTypesResponse> ListEntityTypes(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::dialogflow::cx::v3::ListEntityTypesRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncExportEntityTypes(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::dialogflow::cx::v3::ExportEntityTypesRequest const&
-          request) override;
+      google::cloud::dialogflow::cx::v3::ExportEntityTypesRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> ExportEntityTypes(
-      grpc::ClientContext& context, Options options,
-      google::cloud::dialogflow::cx::v3::ExportEntityTypesRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::dialogflow::cx::v3::ExportEntityTypesRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncImportEntityTypes(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::dialogflow::cx::v3::ImportEntityTypesRequest const&
-          request) override;
+      google::cloud::dialogflow::cx::v3::ImportEntityTypesRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> ImportEntityTypes(
-      grpc::ClientContext& context, Options options,
-      google::cloud::dialogflow::cx::v3::ImportEntityTypesRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::dialogflow::cx::v3::ImportEntityTypesRequest const& request) override;
 
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::location::ListLocationsRequest const& request) override;
 
   StatusOr<google::cloud::location::Location> GetLocation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::location::GetLocationRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -224,12 +219,9 @@ class DefaultEntityTypesStub : public EntityTypesStub {
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  std::unique_ptr<google::cloud::dialogflow::cx::v3::EntityTypes::StubInterface>
-      grpc_stub_;
-  std::unique_ptr<google::cloud::location::Locations::StubInterface>
-      locations_stub_;
-  std::unique_ptr<google::longrunning::Operations::StubInterface>
-      operations_stub_;
+  std::unique_ptr<google::cloud::dialogflow::cx::v3::EntityTypes::StubInterface> grpc_stub_;
+  std::unique_ptr<google::cloud::location::Locations::StubInterface> locations_stub_;
+  std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

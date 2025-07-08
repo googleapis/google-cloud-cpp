@@ -36,40 +36,36 @@ class ServingConfigServiceTracingConnection
   ~ServingConfigServiceTracingConnection() override = default;
 
   explicit ServingConfigServiceTracingConnection(
-      std::shared_ptr<retail_v2::ServingConfigServiceConnection> child);
+    std::shared_ptr<retail_v2::ServingConfigServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::retail::v2::ServingConfig> CreateServingConfig(
-      google::cloud::retail::v2::CreateServingConfigRequest const& request)
-      override;
+  StatusOr<google::cloud::retail::v2::ServingConfig>
+  CreateServingConfig(google::cloud::retail::v2::CreateServingConfigRequest const& request) override;
 
-  Status DeleteServingConfig(
-      google::cloud::retail::v2::DeleteServingConfigRequest const& request)
-      override;
+  Status
+  DeleteServingConfig(google::cloud::retail::v2::DeleteServingConfigRequest const& request) override;
 
-  StatusOr<google::cloud::retail::v2::ServingConfig> UpdateServingConfig(
-      google::cloud::retail::v2::UpdateServingConfigRequest const& request)
-      override;
+  StatusOr<google::cloud::retail::v2::ServingConfig>
+  UpdateServingConfig(google::cloud::retail::v2::UpdateServingConfigRequest const& request) override;
 
-  StatusOr<google::cloud::retail::v2::ServingConfig> GetServingConfig(
-      google::cloud::retail::v2::GetServingConfigRequest const& request)
-      override;
+  StatusOr<google::cloud::retail::v2::ServingConfig>
+  GetServingConfig(google::cloud::retail::v2::GetServingConfigRequest const& request) override;
 
-  StreamRange<google::cloud::retail::v2::ServingConfig> ListServingConfigs(
-      google::cloud::retail::v2::ListServingConfigsRequest request) override;
+  StreamRange<google::cloud::retail::v2::ServingConfig>
+  ListServingConfigs(google::cloud::retail::v2::ListServingConfigsRequest request) override;
 
-  StatusOr<google::cloud::retail::v2::ServingConfig> AddControl(
-      google::cloud::retail::v2::AddControlRequest const& request) override;
+  StatusOr<google::cloud::retail::v2::ServingConfig>
+  AddControl(google::cloud::retail::v2::AddControlRequest const& request) override;
 
-  StatusOr<google::cloud::retail::v2::ServingConfig> RemoveControl(
-      google::cloud::retail::v2::RemoveControlRequest const& request) override;
+  StatusOr<google::cloud::retail::v2::ServingConfig>
+  RemoveControl(google::cloud::retail::v2::RemoveControlRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request) override;
 
  private:
   std::shared_ptr<retail_v2::ServingConfigServiceConnection> child_;

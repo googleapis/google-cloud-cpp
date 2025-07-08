@@ -19,11 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TIMESERIESINSIGHTS_V1_TIMESERIES_INSIGHTS_CONTROLLER_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TIMESERIESINSIGHTS_V1_TIMESERIES_INSIGHTS_CONTROLLER_CLIENT_H
 
-#include "google/cloud/timeseriesinsights/v1/timeseries_insights_controller_connection.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
+#include "google/cloud/timeseriesinsights/v1/timeseries_insights_controller_connection.h"
 #include "google/cloud/version.h"
 #include <memory>
 #include <string>
@@ -61,31 +61,23 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class TimeseriesInsightsControllerClient {
  public:
-  explicit TimeseriesInsightsControllerClient(
-      std::shared_ptr<TimeseriesInsightsControllerConnection> connection,
-      Options opts = {});
+  explicit TimeseriesInsightsControllerClient(std::shared_ptr<TimeseriesInsightsControllerConnection> connection, Options opts = {});
   ~TimeseriesInsightsControllerClient();
 
   ///@{
   /// @name Copy and move support
-  TimeseriesInsightsControllerClient(
-      TimeseriesInsightsControllerClient const&) = default;
-  TimeseriesInsightsControllerClient& operator=(
-      TimeseriesInsightsControllerClient const&) = default;
-  TimeseriesInsightsControllerClient(TimeseriesInsightsControllerClient&&) =
-      default;
-  TimeseriesInsightsControllerClient& operator=(
-      TimeseriesInsightsControllerClient&&) = default;
+  TimeseriesInsightsControllerClient(TimeseriesInsightsControllerClient const&) = default;
+  TimeseriesInsightsControllerClient& operator=(TimeseriesInsightsControllerClient const&) = default;
+  TimeseriesInsightsControllerClient(TimeseriesInsightsControllerClient&&) = default;
+  TimeseriesInsightsControllerClient& operator=(TimeseriesInsightsControllerClient&&) = default;
   ///@}
 
   ///@{
   /// @name Equality
-  friend bool operator==(TimeseriesInsightsControllerClient const& a,
-                         TimeseriesInsightsControllerClient const& b) {
+  friend bool operator==(TimeseriesInsightsControllerClient const& a, TimeseriesInsightsControllerClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(TimeseriesInsightsControllerClient const& a,
-                         TimeseriesInsightsControllerClient const& b) {
+  friend bool operator!=(TimeseriesInsightsControllerClient const& a, TimeseriesInsightsControllerClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -125,8 +117,8 @@ class TimeseriesInsightsControllerClient {
   /// [google.cloud.timeseriesinsights.v1.ListDataSetsRequest]: @googleapis_reference_link{google/cloud/timeseriesinsights/v1/timeseries_insights.proto#L362}
   ///
   // clang-format on
-  StreamRange<google::cloud::timeseriesinsights::v1::DataSet> ListDataSets(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::timeseriesinsights::v1::DataSet>
+  ListDataSets(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -168,9 +160,8 @@ class TimeseriesInsightsControllerClient {
   /// [google.cloud.timeseriesinsights.v1.ListDataSetsRequest]: @googleapis_reference_link{google/cloud/timeseriesinsights/v1/timeseries_insights.proto#L362}
   ///
   // clang-format on
-  StreamRange<google::cloud::timeseriesinsights::v1::DataSet> ListDataSets(
-      google::cloud::timeseriesinsights::v1::ListDataSetsRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::timeseriesinsights::v1::DataSet>
+  ListDataSets(google::cloud::timeseriesinsights::v1::ListDataSetsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -201,10 +192,8 @@ class TimeseriesInsightsControllerClient {
   /// [google.cloud.timeseriesinsights.v1.DataSet]: @googleapis_reference_link{google/cloud/timeseriesinsights/v1/timeseries_insights.proto#L173}
   ///
   // clang-format on
-  StatusOr<google::cloud::timeseriesinsights::v1::DataSet> CreateDataSet(
-      std::string const& parent,
-      google::cloud::timeseriesinsights::v1::DataSet const& dataset,
-      Options opts = {});
+  StatusOr<google::cloud::timeseriesinsights::v1::DataSet>
+  CreateDataSet(std::string const& parent, google::cloud::timeseriesinsights::v1::DataSet const& dataset, Options opts = {});
 
   // clang-format off
   ///
@@ -238,10 +227,8 @@ class TimeseriesInsightsControllerClient {
   /// [google.cloud.timeseriesinsights.v1.DataSet]: @googleapis_reference_link{google/cloud/timeseriesinsights/v1/timeseries_insights.proto#L173}
   ///
   // clang-format on
-  StatusOr<google::cloud::timeseriesinsights::v1::DataSet> CreateDataSet(
-      google::cloud::timeseriesinsights::v1::CreateDataSetRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::cloud::timeseriesinsights::v1::DataSet>
+  CreateDataSet(google::cloud::timeseriesinsights::v1::CreateDataSetRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -266,7 +253,8 @@ class TimeseriesInsightsControllerClient {
   /// [google.cloud.timeseriesinsights.v1.DeleteDataSetRequest]: @googleapis_reference_link{google/cloud/timeseriesinsights/v1/timeseries_insights.proto#L351}
   ///
   // clang-format on
-  Status DeleteDataSet(std::string const& name, Options opts = {});
+  Status
+  DeleteDataSet(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -296,10 +284,8 @@ class TimeseriesInsightsControllerClient {
   /// [google.cloud.timeseriesinsights.v1.DeleteDataSetRequest]: @googleapis_reference_link{google/cloud/timeseriesinsights/v1/timeseries_insights.proto#L351}
   ///
   // clang-format on
-  Status DeleteDataSet(
-      google::cloud::timeseriesinsights::v1::DeleteDataSetRequest const&
-          request,
-      Options opts = {});
+  Status
+  DeleteDataSet(google::cloud::timeseriesinsights::v1::DeleteDataSetRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -344,10 +330,7 @@ class TimeseriesInsightsControllerClient {
   ///
   // clang-format on
   StatusOr<google::cloud::timeseriesinsights::v1::AppendEventsResponse>
-  AppendEvents(
-      std::string const& dataset,
-      std::vector<google::cloud::timeseriesinsights::v1::Event> const& events,
-      Options opts = {});
+  AppendEvents(std::string const& dataset, std::vector<google::cloud::timeseriesinsights::v1::Event> const& events, Options opts = {});
 
   // clang-format off
   ///
@@ -378,9 +361,7 @@ class TimeseriesInsightsControllerClient {
   ///
   // clang-format on
   StatusOr<google::cloud::timeseriesinsights::v1::AppendEventsResponse>
-  AppendEvents(
-      google::cloud::timeseriesinsights::v1::AppendEventsRequest const& request,
-      Options opts = {});
+  AppendEvents(google::cloud::timeseriesinsights::v1::AppendEventsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -412,9 +393,7 @@ class TimeseriesInsightsControllerClient {
   ///
   // clang-format on
   StatusOr<google::cloud::timeseriesinsights::v1::QueryDataSetResponse>
-  QueryDataSet(
-      google::cloud::timeseriesinsights::v1::QueryDataSetRequest const& request,
-      Options opts = {});
+  QueryDataSet(google::cloud::timeseriesinsights::v1::QueryDataSetRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -444,10 +423,8 @@ class TimeseriesInsightsControllerClient {
   /// [google.cloud.timeseriesinsights.v1.EvaluatedSlice]: @googleapis_reference_link{google/cloud/timeseriesinsights/v1/timeseries_insights.proto#L499}
   ///
   // clang-format on
-  StatusOr<google::cloud::timeseriesinsights::v1::EvaluatedSlice> EvaluateSlice(
-      google::cloud::timeseriesinsights::v1::EvaluateSliceRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::cloud::timeseriesinsights::v1::EvaluatedSlice>
+  EvaluateSlice(google::cloud::timeseriesinsights::v1::EvaluateSliceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -477,10 +454,7 @@ class TimeseriesInsightsControllerClient {
   ///
   // clang-format on
   StatusOr<google::cloud::timeseriesinsights::v1::EvaluatedSlice>
-  EvaluateTimeseries(
-      google::cloud::timeseriesinsights::v1::EvaluateTimeseriesRequest const&
-          request,
-      Options opts = {});
+  EvaluateTimeseries(google::cloud::timeseriesinsights::v1::EvaluateTimeseriesRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<TimeseriesInsightsControllerConnection> connection_;

@@ -24,8 +24,8 @@
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/cloud/discoveryengine/v1/completion_service.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
+#include <google/cloud/discoveryengine/v1/completion_service.grpc.pb.h>
 #include <memory>
 #include <utility>
 
@@ -38,81 +38,74 @@ class CompletionServiceStub {
  public:
   virtual ~CompletionServiceStub() = 0;
 
-  virtual StatusOr<google::cloud::discoveryengine::v1::CompleteQueryResponse>
-  CompleteQuery(grpc::ClientContext& context, Options const& options,
-                google::cloud::discoveryengine::v1::CompleteQueryRequest const&
-                    request) = 0;
+  virtual StatusOr<google::cloud::discoveryengine::v1::CompleteQueryResponse> CompleteQuery(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::discoveryengine::v1::CompleteQueryRequest const& request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>>
-  AsyncImportSuggestionDenyListEntries(
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncImportSuggestionDenyListEntries(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::discoveryengine::v1::
-          ImportSuggestionDenyListEntriesRequest const& request) = 0;
+      google::cloud::discoveryengine::v1::ImportSuggestionDenyListEntriesRequest const& request) = 0;
 
-  virtual StatusOr<google::longrunning::Operation>
-  ImportSuggestionDenyListEntries(
-      grpc::ClientContext& context, Options options,
-      google::cloud::discoveryengine::v1::
-          ImportSuggestionDenyListEntriesRequest const& request) = 0;
+  virtual StatusOr<google::longrunning::Operation> ImportSuggestionDenyListEntries(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::discoveryengine::v1::ImportSuggestionDenyListEntriesRequest const& request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>>
-  AsyncPurgeSuggestionDenyListEntries(
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncPurgeSuggestionDenyListEntries(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::discoveryengine::v1::
-          PurgeSuggestionDenyListEntriesRequest const& request) = 0;
+      google::cloud::discoveryengine::v1::PurgeSuggestionDenyListEntriesRequest const& request) = 0;
 
-  virtual StatusOr<google::longrunning::Operation>
-  PurgeSuggestionDenyListEntries(
-      grpc::ClientContext& context, Options options,
-      google::cloud::discoveryengine::v1::
-          PurgeSuggestionDenyListEntriesRequest const& request) = 0;
+  virtual StatusOr<google::longrunning::Operation> PurgeSuggestionDenyListEntries(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::discoveryengine::v1::PurgeSuggestionDenyListEntriesRequest const& request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>>
-  AsyncImportCompletionSuggestions(
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncImportCompletionSuggestions(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::discoveryengine::v1::
-          ImportCompletionSuggestionsRequest const& request) = 0;
+      google::cloud::discoveryengine::v1::ImportCompletionSuggestionsRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> ImportCompletionSuggestions(
-      grpc::ClientContext& context, Options options,
-      google::cloud::discoveryengine::v1::
-          ImportCompletionSuggestionsRequest const& request) = 0;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::discoveryengine::v1::ImportCompletionSuggestionsRequest const& request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>>
-  AsyncPurgeCompletionSuggestions(
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncPurgeCompletionSuggestions(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::discoveryengine::v1::
-          PurgeCompletionSuggestionsRequest const& request) = 0;
+      google::cloud::discoveryengine::v1::PurgeCompletionSuggestionsRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> PurgeCompletionSuggestions(
-      grpc::ClientContext& context, Options options,
-      google::cloud::discoveryengine::v1::
-          PurgeCompletionSuggestionsRequest const& request) = 0;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::discoveryengine::v1::PurgeCompletionSuggestionsRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::ListOperationsRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual Status CancelOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::CancelOperationRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
+    google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
@@ -125,81 +118,73 @@ class CompletionServiceStub {
 class DefaultCompletionServiceStub : public CompletionServiceStub {
  public:
   DefaultCompletionServiceStub(
-      std::unique_ptr<
-          google::cloud::discoveryengine::v1::CompletionService::StubInterface>
-          grpc_stub,
-      std::unique_ptr<google::longrunning::Operations::StubInterface>
-          operations_stub)
+      std::unique_ptr<google::cloud::discoveryengine::v1::CompletionService::StubInterface> grpc_stub,
+      std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub)
       : grpc_stub_(std::move(grpc_stub)),
         operations_stub_(std::move(operations_stub)) {}
 
-  StatusOr<google::cloud::discoveryengine::v1::CompleteQueryResponse>
-  CompleteQuery(grpc::ClientContext& context, Options const& options,
-                google::cloud::discoveryengine::v1::CompleteQueryRequest const&
-                    request) override;
+  StatusOr<google::cloud::discoveryengine::v1::CompleteQueryResponse> CompleteQuery(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::discoveryengine::v1::CompleteQueryRequest const& request) override;
 
-  future<StatusOr<google::longrunning::Operation>>
-  AsyncImportSuggestionDenyListEntries(
+  future<StatusOr<google::longrunning::Operation>> AsyncImportSuggestionDenyListEntries(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::discoveryengine::v1::
-          ImportSuggestionDenyListEntriesRequest const& request) override;
+      google::cloud::discoveryengine::v1::ImportSuggestionDenyListEntriesRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> ImportSuggestionDenyListEntries(
-      grpc::ClientContext& context, Options options,
-      google::cloud::discoveryengine::v1::
-          ImportSuggestionDenyListEntriesRequest const& request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::discoveryengine::v1::ImportSuggestionDenyListEntriesRequest const& request) override;
 
-  future<StatusOr<google::longrunning::Operation>>
-  AsyncPurgeSuggestionDenyListEntries(
+  future<StatusOr<google::longrunning::Operation>> AsyncPurgeSuggestionDenyListEntries(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::discoveryengine::v1::
-          PurgeSuggestionDenyListEntriesRequest const& request) override;
+      google::cloud::discoveryengine::v1::PurgeSuggestionDenyListEntriesRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> PurgeSuggestionDenyListEntries(
-      grpc::ClientContext& context, Options options,
-      google::cloud::discoveryengine::v1::
-          PurgeSuggestionDenyListEntriesRequest const& request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::discoveryengine::v1::PurgeSuggestionDenyListEntriesRequest const& request) override;
 
-  future<StatusOr<google::longrunning::Operation>>
-  AsyncImportCompletionSuggestions(
+  future<StatusOr<google::longrunning::Operation>> AsyncImportCompletionSuggestions(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::discoveryengine::v1::
-          ImportCompletionSuggestionsRequest const& request) override;
+      google::cloud::discoveryengine::v1::ImportCompletionSuggestionsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> ImportCompletionSuggestions(
-      grpc::ClientContext& context, Options options,
-      google::cloud::discoveryengine::v1::
-          ImportCompletionSuggestionsRequest const& request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::discoveryengine::v1::ImportCompletionSuggestionsRequest const& request) override;
 
-  future<StatusOr<google::longrunning::Operation>>
-  AsyncPurgeCompletionSuggestions(
+  future<StatusOr<google::longrunning::Operation>> AsyncPurgeCompletionSuggestions(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::discoveryengine::v1::
-          PurgeCompletionSuggestionsRequest const& request) override;
+      google::cloud::discoveryengine::v1::PurgeCompletionSuggestionsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> PurgeCompletionSuggestions(
-      grpc::ClientContext& context, Options options,
-      google::cloud::discoveryengine::v1::
-          PurgeCompletionSuggestionsRequest const& request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::discoveryengine::v1::PurgeCompletionSuggestionsRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -215,11 +200,8 @@ class DefaultCompletionServiceStub : public CompletionServiceStub {
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  std::unique_ptr<
-      google::cloud::discoveryengine::v1::CompletionService::StubInterface>
-      grpc_stub_;
-  std::unique_ptr<google::longrunning::Operations::StubInterface>
-      operations_stub_;
+  std::unique_ptr<google::cloud::discoveryengine::v1::CompletionService::StubInterface> grpc_stub_;
+  std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

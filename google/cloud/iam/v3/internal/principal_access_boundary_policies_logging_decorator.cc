@@ -32,23 +32,22 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 PrincipalAccessBoundaryPoliciesLogging::PrincipalAccessBoundaryPoliciesLogging(
     std::shared_ptr<PrincipalAccessBoundaryPoliciesStub> child,
-    TracingOptions tracing_options, std::set<std::string> const&)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
+    TracingOptions tracing_options,
+    std::set<std::string> const&)
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)) {}
 
 future<StatusOr<google::longrunning::Operation>>
-PrincipalAccessBoundaryPoliciesLogging::
-    AsyncCreatePrincipalAccessBoundaryPolicy(
-        google::cloud::CompletionQueue& cq,
-        std::shared_ptr<grpc::ClientContext> context,
-        google::cloud::internal::ImmutableOptions options,
-        google::iam::v3::CreatePrincipalAccessBoundaryPolicyRequest const&
-            request) {
+PrincipalAccessBoundaryPoliciesLogging::AsyncCreatePrincipalAccessBoundaryPolicy(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::iam::v3::CreatePrincipalAccessBoundaryPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::iam::v3::CreatePrincipalAccessBoundaryPolicyRequest const&
-                 request) {
+             google::iam::v3::CreatePrincipalAccessBoundaryPolicyRequest const& request) {
         return child_->AsyncCreatePrincipalAccessBoundaryPolicy(
             cq, std::move(context), std::move(options), request);
       },
@@ -58,47 +57,43 @@ PrincipalAccessBoundaryPoliciesLogging::
 
 StatusOr<google::longrunning::Operation>
 PrincipalAccessBoundaryPoliciesLogging::CreatePrincipalAccessBoundaryPolicy(
-    grpc::ClientContext& context, Options options,
-    google::iam::v3::CreatePrincipalAccessBoundaryPolicyRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::iam::v3::CreatePrincipalAccessBoundaryPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::iam::v3::CreatePrincipalAccessBoundaryPolicyRequest const&
-                 request) {
-        return child_->CreatePrincipalAccessBoundaryPolicy(context, options,
-                                                           request);
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::iam::v3::CreatePrincipalAccessBoundaryPolicyRequest const& request) {
+        return child_->CreatePrincipalAccessBoundaryPolicy(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::iam::v3::PrincipalAccessBoundaryPolicy>
 PrincipalAccessBoundaryPoliciesLogging::GetPrincipalAccessBoundaryPolicy(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v3::GetPrincipalAccessBoundaryPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::iam::v3::GetPrincipalAccessBoundaryPolicyRequest const&
-                 request) {
-        return child_->GetPrincipalAccessBoundaryPolicy(context, options,
-                                                        request);
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::iam::v3::GetPrincipalAccessBoundaryPolicyRequest const& request) {
+        return child_->GetPrincipalAccessBoundaryPolicy(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
-PrincipalAccessBoundaryPoliciesLogging::
-    AsyncUpdatePrincipalAccessBoundaryPolicy(
-        google::cloud::CompletionQueue& cq,
-        std::shared_ptr<grpc::ClientContext> context,
-        google::cloud::internal::ImmutableOptions options,
-        google::iam::v3::UpdatePrincipalAccessBoundaryPolicyRequest const&
-            request) {
+PrincipalAccessBoundaryPoliciesLogging::AsyncUpdatePrincipalAccessBoundaryPolicy(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::iam::v3::UpdatePrincipalAccessBoundaryPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::iam::v3::UpdatePrincipalAccessBoundaryPolicyRequest const&
-                 request) {
+             google::iam::v3::UpdatePrincipalAccessBoundaryPolicyRequest const& request) {
         return child_->AsyncUpdatePrincipalAccessBoundaryPolicy(
             cq, std::move(context), std::move(options), request);
       },
@@ -108,33 +103,29 @@ PrincipalAccessBoundaryPoliciesLogging::
 
 StatusOr<google::longrunning::Operation>
 PrincipalAccessBoundaryPoliciesLogging::UpdatePrincipalAccessBoundaryPolicy(
-    grpc::ClientContext& context, Options options,
-    google::iam::v3::UpdatePrincipalAccessBoundaryPolicyRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::iam::v3::UpdatePrincipalAccessBoundaryPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::iam::v3::UpdatePrincipalAccessBoundaryPolicyRequest const&
-                 request) {
-        return child_->UpdatePrincipalAccessBoundaryPolicy(context, options,
-                                                           request);
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::iam::v3::UpdatePrincipalAccessBoundaryPolicyRequest const& request) {
+        return child_->UpdatePrincipalAccessBoundaryPolicy(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
-PrincipalAccessBoundaryPoliciesLogging::
-    AsyncDeletePrincipalAccessBoundaryPolicy(
-        google::cloud::CompletionQueue& cq,
-        std::shared_ptr<grpc::ClientContext> context,
-        google::cloud::internal::ImmutableOptions options,
-        google::iam::v3::DeletePrincipalAccessBoundaryPolicyRequest const&
-            request) {
+PrincipalAccessBoundaryPoliciesLogging::AsyncDeletePrincipalAccessBoundaryPolicy(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::iam::v3::DeletePrincipalAccessBoundaryPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::iam::v3::DeletePrincipalAccessBoundaryPolicyRequest const&
-                 request) {
+             google::iam::v3::DeletePrincipalAccessBoundaryPolicyRequest const& request) {
         return child_->AsyncDeletePrincipalAccessBoundaryPolicy(
             cq, std::move(context), std::move(options), request);
       },
@@ -144,57 +135,54 @@ PrincipalAccessBoundaryPoliciesLogging::
 
 StatusOr<google::longrunning::Operation>
 PrincipalAccessBoundaryPoliciesLogging::DeletePrincipalAccessBoundaryPolicy(
-    grpc::ClientContext& context, Options options,
-    google::iam::v3::DeletePrincipalAccessBoundaryPolicyRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::iam::v3::DeletePrincipalAccessBoundaryPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::iam::v3::DeletePrincipalAccessBoundaryPolicyRequest const&
-                 request) {
-        return child_->DeletePrincipalAccessBoundaryPolicy(context, options,
-                                                           request);
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::iam::v3::DeletePrincipalAccessBoundaryPolicyRequest const& request) {
+        return child_->DeletePrincipalAccessBoundaryPolicy(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::iam::v3::ListPrincipalAccessBoundaryPoliciesResponse>
 PrincipalAccessBoundaryPoliciesLogging::ListPrincipalAccessBoundaryPolicies(
-    grpc::ClientContext& context, Options const& options,
-    google::iam::v3::ListPrincipalAccessBoundaryPoliciesRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::iam::v3::ListPrincipalAccessBoundaryPoliciesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::iam::v3::ListPrincipalAccessBoundaryPoliciesRequest const&
-                 request) {
-        return child_->ListPrincipalAccessBoundaryPolicies(context, options,
-                                                           request);
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::iam::v3::ListPrincipalAccessBoundaryPoliciesRequest const& request) {
+        return child_->ListPrincipalAccessBoundaryPolicies(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::iam::v3::SearchPrincipalAccessBoundaryPolicyBindingsResponse>
-PrincipalAccessBoundaryPoliciesLogging::
-    SearchPrincipalAccessBoundaryPolicyBindings(
-        grpc::ClientContext& context, Options const& options,
-        google::iam::v3::
-            SearchPrincipalAccessBoundaryPolicyBindingsRequest const& request) {
+PrincipalAccessBoundaryPoliciesLogging::SearchPrincipalAccessBoundaryPolicyBindings(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::iam::v3::SearchPrincipalAccessBoundaryPolicyBindingsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::iam::v3::
-                 SearchPrincipalAccessBoundaryPolicyBindingsRequest const&
-                     request) {
-        return child_->SearchPrincipalAccessBoundaryPolicyBindings(
-            context, options, request);
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::iam::v3::SearchPrincipalAccessBoundaryPolicyBindingsRequest const& request) {
+        return child_->SearchPrincipalAccessBoundaryPolicyBindings(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::longrunning::Operation>
 PrincipalAccessBoundaryPoliciesLogging::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::GetOperationRequest const& request) {
         return child_->GetOperation(context, options, request);
       },
@@ -212,8 +200,8 @@ PrincipalAccessBoundaryPoliciesLogging::AsyncGetOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(cq, std::move(context),
-                                         std::move(options), request);
+        return child_->AsyncGetOperation(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -229,8 +217,8 @@ future<Status> PrincipalAccessBoundaryPoliciesLogging::AsyncCancelOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::CancelOperationRequest const& request) {
-        return child_->AsyncCancelOperation(cq, std::move(context),
-                                            std::move(options), request);
+        return child_->AsyncCancelOperation(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);

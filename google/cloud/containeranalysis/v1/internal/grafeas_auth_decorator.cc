@@ -32,7 +32,8 @@ GrafeasAuth::GrafeasAuth(
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
 StatusOr<grafeas::v1::Occurrence> GrafeasAuth::GetOccurrence(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     grafeas::v1::GetOccurrenceRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -40,7 +41,8 @@ StatusOr<grafeas::v1::Occurrence> GrafeasAuth::GetOccurrence(
 }
 
 StatusOr<grafeas::v1::ListOccurrencesResponse> GrafeasAuth::ListOccurrences(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     grafeas::v1::ListOccurrencesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -48,7 +50,8 @@ StatusOr<grafeas::v1::ListOccurrencesResponse> GrafeasAuth::ListOccurrences(
 }
 
 Status GrafeasAuth::DeleteOccurrence(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     grafeas::v1::DeleteOccurrenceRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -56,16 +59,17 @@ Status GrafeasAuth::DeleteOccurrence(
 }
 
 StatusOr<grafeas::v1::Occurrence> GrafeasAuth::CreateOccurrence(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     grafeas::v1::CreateOccurrenceRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateOccurrence(context, options, request);
 }
 
-StatusOr<grafeas::v1::BatchCreateOccurrencesResponse>
-GrafeasAuth::BatchCreateOccurrences(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<grafeas::v1::BatchCreateOccurrencesResponse> GrafeasAuth::BatchCreateOccurrences(
+    grpc::ClientContext& context,
+    Options const& options,
     grafeas::v1::BatchCreateOccurrencesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -73,7 +77,8 @@ GrafeasAuth::BatchCreateOccurrences(
 }
 
 StatusOr<grafeas::v1::Occurrence> GrafeasAuth::UpdateOccurrence(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     grafeas::v1::UpdateOccurrenceRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -81,7 +86,8 @@ StatusOr<grafeas::v1::Occurrence> GrafeasAuth::UpdateOccurrence(
 }
 
 StatusOr<grafeas::v1::Note> GrafeasAuth::GetOccurrenceNote(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     grafeas::v1::GetOccurrenceNoteRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -89,7 +95,8 @@ StatusOr<grafeas::v1::Note> GrafeasAuth::GetOccurrenceNote(
 }
 
 StatusOr<grafeas::v1::Note> GrafeasAuth::GetNote(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     grafeas::v1::GetNoteRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -97,23 +104,26 @@ StatusOr<grafeas::v1::Note> GrafeasAuth::GetNote(
 }
 
 StatusOr<grafeas::v1::ListNotesResponse> GrafeasAuth::ListNotes(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     grafeas::v1::ListNotesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListNotes(context, options, request);
 }
 
-Status GrafeasAuth::DeleteNote(grpc::ClientContext& context,
-                               Options const& options,
-                               grafeas::v1::DeleteNoteRequest const& request) {
+Status GrafeasAuth::DeleteNote(
+    grpc::ClientContext& context,
+    Options const& options,
+    grafeas::v1::DeleteNoteRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteNote(context, options, request);
 }
 
 StatusOr<grafeas::v1::Note> GrafeasAuth::CreateNote(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     grafeas::v1::CreateNoteRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -121,7 +131,8 @@ StatusOr<grafeas::v1::Note> GrafeasAuth::CreateNote(
 }
 
 StatusOr<grafeas::v1::BatchCreateNotesResponse> GrafeasAuth::BatchCreateNotes(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     grafeas::v1::BatchCreateNotesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -129,16 +140,17 @@ StatusOr<grafeas::v1::BatchCreateNotesResponse> GrafeasAuth::BatchCreateNotes(
 }
 
 StatusOr<grafeas::v1::Note> GrafeasAuth::UpdateNote(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     grafeas::v1::UpdateNoteRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateNote(context, options, request);
 }
 
-StatusOr<grafeas::v1::ListNoteOccurrencesResponse>
-GrafeasAuth::ListNoteOccurrences(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<grafeas::v1::ListNoteOccurrencesResponse> GrafeasAuth::ListNoteOccurrences(
+    grpc::ClientContext& context,
+    Options const& options,
     grafeas::v1::ListNoteOccurrencesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;

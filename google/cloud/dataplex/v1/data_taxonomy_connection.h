@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAPLEX_V1_DATA_TAXONOMY_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAPLEX_V1_DATA_TAXONOMY_CONNECTION_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/dataplex/v1/data_taxonomy_connection_idempotency_policy.h"
 #include "google/cloud/dataplex/v1/internal/data_taxonomy_retry_traits.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -56,8 +56,7 @@ class DataTaxonomyServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class DataTaxonomyServiceLimitedErrorCountRetryPolicy
-    : public DataTaxonomyServiceRetryPolicy {
+class DataTaxonomyServiceLimitedErrorCountRetryPolicy : public DataTaxonomyServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -67,16 +66,14 @@ class DataTaxonomyServiceLimitedErrorCountRetryPolicy
    *     @p maximum_failures == 0.
    */
   explicit DataTaxonomyServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   DataTaxonomyServiceLimitedErrorCountRetryPolicy(
       DataTaxonomyServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : DataTaxonomyServiceLimitedErrorCountRetryPolicy(
-            rhs.maximum_failures()) {}
+    : DataTaxonomyServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   DataTaxonomyServiceLimitedErrorCountRetryPolicy(
       DataTaxonomyServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : DataTaxonomyServiceLimitedErrorCountRetryPolicy(
-            rhs.maximum_failures()) {}
+    : DataTaxonomyServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -96,9 +93,7 @@ class DataTaxonomyServiceLimitedErrorCountRetryPolicy
   using BaseType = DataTaxonomyServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      dataplex_v1_internal::DataTaxonomyServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<dataplex_v1_internal::DataTaxonomyServiceRetryTraits> impl_;
 };
 
 /**
@@ -111,8 +106,7 @@ class DataTaxonomyServiceLimitedErrorCountRetryPolicy
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class DataTaxonomyServiceLimitedTimeRetryPolicy
-    : public DataTaxonomyServiceRetryPolicy {
+class DataTaxonomyServiceLimitedTimeRetryPolicy : public DataTaxonomyServiceRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -137,14 +131,12 @@ class DataTaxonomyServiceLimitedTimeRetryPolicy
   template <typename DurationRep, typename DurationPeriod>
   explicit DataTaxonomyServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  DataTaxonomyServiceLimitedTimeRetryPolicy(
-      DataTaxonomyServiceLimitedTimeRetryPolicy&& rhs) noexcept
-      : DataTaxonomyServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  DataTaxonomyServiceLimitedTimeRetryPolicy(
-      DataTaxonomyServiceLimitedTimeRetryPolicy const& rhs) noexcept
-      : DataTaxonomyServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  DataTaxonomyServiceLimitedTimeRetryPolicy(DataTaxonomyServiceLimitedTimeRetryPolicy&& rhs) noexcept
+    : DataTaxonomyServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  DataTaxonomyServiceLimitedTimeRetryPolicy(DataTaxonomyServiceLimitedTimeRetryPolicy const& rhs) noexcept
+    : DataTaxonomyServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -166,18 +158,16 @@ class DataTaxonomyServiceLimitedTimeRetryPolicy
   using BaseType = DataTaxonomyServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      dataplex_v1_internal::DataTaxonomyServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<dataplex_v1_internal::DataTaxonomyServiceRetryTraits> impl_;
 };
 
 /**
  * The `DataTaxonomyServiceConnection` object for `DataTaxonomyServiceClient`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `DataTaxonomyServiceClient`. This allows users to inject custom
- * behavior (e.g., with a Google Mock object) when writing tests that use
- * objects of type `DataTaxonomyServiceClient`.
+ * sets in `DataTaxonomyServiceClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `DataTaxonomyServiceClient`.
  *
  * To create a concrete instance, see `MakeDataTaxonomyServiceConnection()`.
  *
@@ -190,172 +180,141 @@ class DataTaxonomyServiceConnection {
   virtual Options options() { return Options{}; }
 
   virtual future<StatusOr<google::cloud::dataplex::v1::DataTaxonomy>>
-  CreateDataTaxonomy(
-      google::cloud::dataplex::v1::CreateDataTaxonomyRequest const& request);
+  CreateDataTaxonomy(google::cloud::dataplex::v1::CreateDataTaxonomyRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> CreateDataTaxonomy(
-      NoAwaitTag,
-      google::cloud::dataplex::v1::CreateDataTaxonomyRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  CreateDataTaxonomy(NoAwaitTag, google::cloud::dataplex::v1::CreateDataTaxonomyRequest const& request);
 
   virtual future<StatusOr<google::cloud::dataplex::v1::DataTaxonomy>>
-  CreateDataTaxonomy(google::longrunning::Operation const& operation);
+  CreateDataTaxonomy( google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::dataplex::v1::DataTaxonomy>>
-  UpdateDataTaxonomy(
-      google::cloud::dataplex::v1::UpdateDataTaxonomyRequest const& request);
+  UpdateDataTaxonomy(google::cloud::dataplex::v1::UpdateDataTaxonomyRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> UpdateDataTaxonomy(
-      NoAwaitTag,
-      google::cloud::dataplex::v1::UpdateDataTaxonomyRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  UpdateDataTaxonomy(NoAwaitTag, google::cloud::dataplex::v1::UpdateDataTaxonomyRequest const& request);
 
   virtual future<StatusOr<google::cloud::dataplex::v1::DataTaxonomy>>
-  UpdateDataTaxonomy(google::longrunning::Operation const& operation);
+  UpdateDataTaxonomy( google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
-  DeleteDataTaxonomy(
-      google::cloud::dataplex::v1::DeleteDataTaxonomyRequest const& request);
+  DeleteDataTaxonomy(google::cloud::dataplex::v1::DeleteDataTaxonomyRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> DeleteDataTaxonomy(
-      NoAwaitTag,
-      google::cloud::dataplex::v1::DeleteDataTaxonomyRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  DeleteDataTaxonomy(NoAwaitTag, google::cloud::dataplex::v1::DeleteDataTaxonomyRequest const& request);
 
   virtual future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
-  DeleteDataTaxonomy(google::longrunning::Operation const& operation);
+  DeleteDataTaxonomy( google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::dataplex::v1::DataTaxonomy>
-  ListDataTaxonomies(
-      google::cloud::dataplex::v1::ListDataTaxonomiesRequest request);
+  ListDataTaxonomies(google::cloud::dataplex::v1::ListDataTaxonomiesRequest request);
 
-  virtual StatusOr<google::cloud::dataplex::v1::DataTaxonomy> GetDataTaxonomy(
-      google::cloud::dataplex::v1::GetDataTaxonomyRequest const& request);
-
-  virtual future<StatusOr<google::cloud::dataplex::v1::DataAttributeBinding>>
-  CreateDataAttributeBinding(
-      google::cloud::dataplex::v1::CreateDataAttributeBindingRequest const&
-          request);
-
-  virtual StatusOr<google::longrunning::Operation> CreateDataAttributeBinding(
-      NoAwaitTag,
-      google::cloud::dataplex::v1::CreateDataAttributeBindingRequest const&
-          request);
+  virtual StatusOr<google::cloud::dataplex::v1::DataTaxonomy>
+  GetDataTaxonomy(google::cloud::dataplex::v1::GetDataTaxonomyRequest const& request);
 
   virtual future<StatusOr<google::cloud::dataplex::v1::DataAttributeBinding>>
-  CreateDataAttributeBinding(google::longrunning::Operation const& operation);
+  CreateDataAttributeBinding(google::cloud::dataplex::v1::CreateDataAttributeBindingRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation>
+  CreateDataAttributeBinding(NoAwaitTag, google::cloud::dataplex::v1::CreateDataAttributeBindingRequest const& request);
 
   virtual future<StatusOr<google::cloud::dataplex::v1::DataAttributeBinding>>
-  UpdateDataAttributeBinding(
-      google::cloud::dataplex::v1::UpdateDataAttributeBindingRequest const&
-          request);
-
-  virtual StatusOr<google::longrunning::Operation> UpdateDataAttributeBinding(
-      NoAwaitTag,
-      google::cloud::dataplex::v1::UpdateDataAttributeBindingRequest const&
-          request);
+  CreateDataAttributeBinding( google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::dataplex::v1::DataAttributeBinding>>
-  UpdateDataAttributeBinding(google::longrunning::Operation const& operation);
+  UpdateDataAttributeBinding(google::cloud::dataplex::v1::UpdateDataAttributeBindingRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation>
+  UpdateDataAttributeBinding(NoAwaitTag, google::cloud::dataplex::v1::UpdateDataAttributeBindingRequest const& request);
+
+  virtual future<StatusOr<google::cloud::dataplex::v1::DataAttributeBinding>>
+  UpdateDataAttributeBinding( google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
-  DeleteDataAttributeBinding(
-      google::cloud::dataplex::v1::DeleteDataAttributeBindingRequest const&
-          request);
+  DeleteDataAttributeBinding(google::cloud::dataplex::v1::DeleteDataAttributeBindingRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> DeleteDataAttributeBinding(
-      NoAwaitTag,
-      google::cloud::dataplex::v1::DeleteDataAttributeBindingRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  DeleteDataAttributeBinding(NoAwaitTag, google::cloud::dataplex::v1::DeleteDataAttributeBindingRequest const& request);
 
   virtual future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
-  DeleteDataAttributeBinding(google::longrunning::Operation const& operation);
+  DeleteDataAttributeBinding( google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::dataplex::v1::DataAttributeBinding>
-  ListDataAttributeBindings(
-      google::cloud::dataplex::v1::ListDataAttributeBindingsRequest request);
+  ListDataAttributeBindings(google::cloud::dataplex::v1::ListDataAttributeBindingsRequest request);
 
   virtual StatusOr<google::cloud::dataplex::v1::DataAttributeBinding>
-  GetDataAttributeBinding(
-      google::cloud::dataplex::v1::GetDataAttributeBindingRequest const&
-          request);
+  GetDataAttributeBinding(google::cloud::dataplex::v1::GetDataAttributeBindingRequest const& request);
 
   virtual future<StatusOr<google::cloud::dataplex::v1::DataAttribute>>
-  CreateDataAttribute(
-      google::cloud::dataplex::v1::CreateDataAttributeRequest const& request);
+  CreateDataAttribute(google::cloud::dataplex::v1::CreateDataAttributeRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> CreateDataAttribute(
-      NoAwaitTag,
-      google::cloud::dataplex::v1::CreateDataAttributeRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  CreateDataAttribute(NoAwaitTag, google::cloud::dataplex::v1::CreateDataAttributeRequest const& request);
 
   virtual future<StatusOr<google::cloud::dataplex::v1::DataAttribute>>
-  CreateDataAttribute(google::longrunning::Operation const& operation);
+  CreateDataAttribute( google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::dataplex::v1::DataAttribute>>
-  UpdateDataAttribute(
-      google::cloud::dataplex::v1::UpdateDataAttributeRequest const& request);
+  UpdateDataAttribute(google::cloud::dataplex::v1::UpdateDataAttributeRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> UpdateDataAttribute(
-      NoAwaitTag,
-      google::cloud::dataplex::v1::UpdateDataAttributeRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  UpdateDataAttribute(NoAwaitTag, google::cloud::dataplex::v1::UpdateDataAttributeRequest const& request);
 
   virtual future<StatusOr<google::cloud::dataplex::v1::DataAttribute>>
-  UpdateDataAttribute(google::longrunning::Operation const& operation);
+  UpdateDataAttribute( google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
-  DeleteDataAttribute(
-      google::cloud::dataplex::v1::DeleteDataAttributeRequest const& request);
+  DeleteDataAttribute(google::cloud::dataplex::v1::DeleteDataAttributeRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> DeleteDataAttribute(
-      NoAwaitTag,
-      google::cloud::dataplex::v1::DeleteDataAttributeRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  DeleteDataAttribute(NoAwaitTag, google::cloud::dataplex::v1::DeleteDataAttributeRequest const& request);
 
   virtual future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
-  DeleteDataAttribute(google::longrunning::Operation const& operation);
+  DeleteDataAttribute( google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::dataplex::v1::DataAttribute>
-  ListDataAttributes(
-      google::cloud::dataplex::v1::ListDataAttributesRequest request);
+  ListDataAttributes(google::cloud::dataplex::v1::ListDataAttributesRequest request);
 
-  virtual StatusOr<google::cloud::dataplex::v1::DataAttribute> GetDataAttribute(
-      google::cloud::dataplex::v1::GetDataAttributeRequest const& request);
+  virtual StatusOr<google::cloud::dataplex::v1::DataAttribute>
+  GetDataAttribute(google::cloud::dataplex::v1::GetDataAttributeRequest const& request);
 
-  virtual StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request);
+  virtual StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request);
 
-  virtual StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request);
+  virtual StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
 
   virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
   TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
 
-  virtual StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 
-  virtual Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request);
+  virtual Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
 
-  virtual Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request);
+  virtual Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request);
 };
 
 /**
- * A factory function to construct an object of type
- * `DataTaxonomyServiceConnection`.
+ * A factory function to construct an object of type `DataTaxonomyServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of
- * DataTaxonomyServiceClient.
+ * should be passed as an argument to the constructor of DataTaxonomyServiceClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `DataTaxonomyServiceConnection`. Expected options are any of the
- * types in the following option lists:
+ * returned `DataTaxonomyServiceConnection`. Expected options are any of the types in
+ * the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
@@ -365,11 +324,11 @@ class DataTaxonomyServiceConnection {
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
- * @param options (optional) Configure the `DataTaxonomyServiceConnection`
- * created by this function.
+ * @param options (optional) Configure the `DataTaxonomyServiceConnection` created by
+ * this function.
  */
-std::shared_ptr<DataTaxonomyServiceConnection>
-MakeDataTaxonomyServiceConnection(Options options = {});
+std::shared_ptr<DataTaxonomyServiceConnection> MakeDataTaxonomyServiceConnection(
+    Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataplex_v1

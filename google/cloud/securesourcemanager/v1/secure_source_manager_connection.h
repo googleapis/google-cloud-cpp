@@ -19,14 +19,14 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SECURESOURCEMANAGER_V1_SECURE_SOURCE_MANAGER_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SECURESOURCEMANAGER_V1_SECURE_SOURCE_MANAGER_CONNECTION_H
 
-#include "google/cloud/securesourcemanager/v1/internal/secure_source_manager_retry_traits.h"
-#include "google/cloud/securesourcemanager/v1/secure_source_manager_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
+#include "google/cloud/securesourcemanager/v1/internal/secure_source_manager_retry_traits.h"
+#include "google/cloud/securesourcemanager/v1/secure_source_manager_connection_idempotency_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
@@ -56,8 +56,7 @@ class SecureSourceManagerRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class SecureSourceManagerLimitedErrorCountRetryPolicy
-    : public SecureSourceManagerRetryPolicy {
+class SecureSourceManagerLimitedErrorCountRetryPolicy : public SecureSourceManagerRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -67,16 +66,14 @@ class SecureSourceManagerLimitedErrorCountRetryPolicy
    *     @p maximum_failures == 0.
    */
   explicit SecureSourceManagerLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   SecureSourceManagerLimitedErrorCountRetryPolicy(
       SecureSourceManagerLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : SecureSourceManagerLimitedErrorCountRetryPolicy(
-            rhs.maximum_failures()) {}
+    : SecureSourceManagerLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   SecureSourceManagerLimitedErrorCountRetryPolicy(
       SecureSourceManagerLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : SecureSourceManagerLimitedErrorCountRetryPolicy(
-            rhs.maximum_failures()) {}
+    : SecureSourceManagerLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -96,9 +93,7 @@ class SecureSourceManagerLimitedErrorCountRetryPolicy
   using BaseType = SecureSourceManagerRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      securesourcemanager_v1_internal::SecureSourceManagerRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<securesourcemanager_v1_internal::SecureSourceManagerRetryTraits> impl_;
 };
 
 /**
@@ -111,8 +106,7 @@ class SecureSourceManagerLimitedErrorCountRetryPolicy
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class SecureSourceManagerLimitedTimeRetryPolicy
-    : public SecureSourceManagerRetryPolicy {
+class SecureSourceManagerLimitedTimeRetryPolicy : public SecureSourceManagerRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -137,14 +131,12 @@ class SecureSourceManagerLimitedTimeRetryPolicy
   template <typename DurationRep, typename DurationPeriod>
   explicit SecureSourceManagerLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  SecureSourceManagerLimitedTimeRetryPolicy(
-      SecureSourceManagerLimitedTimeRetryPolicy&& rhs) noexcept
-      : SecureSourceManagerLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  SecureSourceManagerLimitedTimeRetryPolicy(
-      SecureSourceManagerLimitedTimeRetryPolicy const& rhs) noexcept
-      : SecureSourceManagerLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  SecureSourceManagerLimitedTimeRetryPolicy(SecureSourceManagerLimitedTimeRetryPolicy&& rhs) noexcept
+    : SecureSourceManagerLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  SecureSourceManagerLimitedTimeRetryPolicy(SecureSourceManagerLimitedTimeRetryPolicy const& rhs) noexcept
+    : SecureSourceManagerLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -166,23 +158,20 @@ class SecureSourceManagerLimitedTimeRetryPolicy
   using BaseType = SecureSourceManagerRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      securesourcemanager_v1_internal::SecureSourceManagerRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<securesourcemanager_v1_internal::SecureSourceManagerRetryTraits> impl_;
 };
 
 /**
  * The `SecureSourceManagerConnection` object for `SecureSourceManagerClient`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `SecureSourceManagerClient`. This allows users to inject custom
- * behavior (e.g., with a Google Mock object) when writing tests that use
- * objects of type `SecureSourceManagerClient`.
+ * sets in `SecureSourceManagerClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `SecureSourceManagerClient`.
  *
  * To create a concrete instance, see `MakeSecureSourceManagerConnection()`.
  *
- * For mocking, see
- * `securesourcemanager_v1_mocks::MockSecureSourceManagerConnection`.
+ * For mocking, see `securesourcemanager_v1_mocks::MockSecureSourceManagerConnection`.
  */
 class SecureSourceManagerConnection {
  public:
@@ -191,192 +180,146 @@ class SecureSourceManagerConnection {
   virtual Options options() { return Options{}; }
 
   virtual StreamRange<google::cloud::securesourcemanager::v1::Instance>
-  ListInstances(
-      google::cloud::securesourcemanager::v1::ListInstancesRequest request);
+  ListInstances(google::cloud::securesourcemanager::v1::ListInstancesRequest request);
 
   virtual StatusOr<google::cloud::securesourcemanager::v1::Instance>
-  GetInstance(google::cloud::securesourcemanager::v1::GetInstanceRequest const&
-                  request);
+  GetInstance(google::cloud::securesourcemanager::v1::GetInstanceRequest const& request);
 
   virtual future<StatusOr<google::cloud::securesourcemanager::v1::Instance>>
-  CreateInstance(
-      google::cloud::securesourcemanager::v1::CreateInstanceRequest const&
-          request);
+  CreateInstance(google::cloud::securesourcemanager::v1::CreateInstanceRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> CreateInstance(
-      NoAwaitTag,
-      google::cloud::securesourcemanager::v1::CreateInstanceRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  CreateInstance(NoAwaitTag, google::cloud::securesourcemanager::v1::CreateInstanceRequest const& request);
 
   virtual future<StatusOr<google::cloud::securesourcemanager::v1::Instance>>
-  CreateInstance(google::longrunning::Operation const& operation);
+  CreateInstance( google::longrunning::Operation const& operation);
 
-  virtual future<
-      StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
-  DeleteInstance(
-      google::cloud::securesourcemanager::v1::DeleteInstanceRequest const&
-          request);
+  virtual future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
+  DeleteInstance(google::cloud::securesourcemanager::v1::DeleteInstanceRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> DeleteInstance(
-      NoAwaitTag,
-      google::cloud::securesourcemanager::v1::DeleteInstanceRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  DeleteInstance(NoAwaitTag, google::cloud::securesourcemanager::v1::DeleteInstanceRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
-  DeleteInstance(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
+  DeleteInstance( google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::securesourcemanager::v1::Repository>
-  ListRepositories(
-      google::cloud::securesourcemanager::v1::ListRepositoriesRequest request);
+  ListRepositories(google::cloud::securesourcemanager::v1::ListRepositoriesRequest request);
 
   virtual StatusOr<google::cloud::securesourcemanager::v1::Repository>
-  GetRepository(
-      google::cloud::securesourcemanager::v1::GetRepositoryRequest const&
-          request);
+  GetRepository(google::cloud::securesourcemanager::v1::GetRepositoryRequest const& request);
 
   virtual future<StatusOr<google::cloud::securesourcemanager::v1::Repository>>
-  CreateRepository(
-      google::cloud::securesourcemanager::v1::CreateRepositoryRequest const&
-          request);
+  CreateRepository(google::cloud::securesourcemanager::v1::CreateRepositoryRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> CreateRepository(
-      NoAwaitTag,
-      google::cloud::securesourcemanager::v1::CreateRepositoryRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  CreateRepository(NoAwaitTag, google::cloud::securesourcemanager::v1::CreateRepositoryRequest const& request);
 
   virtual future<StatusOr<google::cloud::securesourcemanager::v1::Repository>>
-  CreateRepository(google::longrunning::Operation const& operation);
+  CreateRepository( google::longrunning::Operation const& operation);
 
-  virtual future<
-      StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
-  DeleteRepository(
-      google::cloud::securesourcemanager::v1::DeleteRepositoryRequest const&
-          request);
+  virtual future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
+  DeleteRepository(google::cloud::securesourcemanager::v1::DeleteRepositoryRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> DeleteRepository(
-      NoAwaitTag,
-      google::cloud::securesourcemanager::v1::DeleteRepositoryRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  DeleteRepository(NoAwaitTag, google::cloud::securesourcemanager::v1::DeleteRepositoryRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
-  DeleteRepository(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
+  DeleteRepository( google::longrunning::Operation const& operation);
 
-  virtual StatusOr<google::iam::v1::Policy> GetIamPolicyRepo(
-      google::iam::v1::GetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy>
+  GetIamPolicyRepo(google::iam::v1::GetIamPolicyRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy> SetIamPolicyRepo(
-      google::iam::v1::SetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy>
+  SetIamPolicyRepo(google::iam::v1::SetIamPolicyRequest const& request);
 
   virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
-  TestIamPermissionsRepo(
-      google::iam::v1::TestIamPermissionsRequest const& request);
+  TestIamPermissionsRepo(google::iam::v1::TestIamPermissionsRequest const& request);
 
   virtual future<StatusOr<google::cloud::securesourcemanager::v1::BranchRule>>
-  CreateBranchRule(
-      google::cloud::securesourcemanager::v1::CreateBranchRuleRequest const&
-          request);
+  CreateBranchRule(google::cloud::securesourcemanager::v1::CreateBranchRuleRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> CreateBranchRule(
-      NoAwaitTag,
-      google::cloud::securesourcemanager::v1::CreateBranchRuleRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  CreateBranchRule(NoAwaitTag, google::cloud::securesourcemanager::v1::CreateBranchRuleRequest const& request);
 
   virtual future<StatusOr<google::cloud::securesourcemanager::v1::BranchRule>>
-  CreateBranchRule(google::longrunning::Operation const& operation);
+  CreateBranchRule( google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::securesourcemanager::v1::BranchRule>
-  ListBranchRules(
-      google::cloud::securesourcemanager::v1::ListBranchRulesRequest request);
+  ListBranchRules(google::cloud::securesourcemanager::v1::ListBranchRulesRequest request);
 
   virtual StatusOr<google::cloud::securesourcemanager::v1::BranchRule>
-  GetBranchRule(
-      google::cloud::securesourcemanager::v1::GetBranchRuleRequest const&
-          request);
+  GetBranchRule(google::cloud::securesourcemanager::v1::GetBranchRuleRequest const& request);
 
   virtual future<StatusOr<google::cloud::securesourcemanager::v1::BranchRule>>
-  UpdateBranchRule(
-      google::cloud::securesourcemanager::v1::UpdateBranchRuleRequest const&
-          request);
+  UpdateBranchRule(google::cloud::securesourcemanager::v1::UpdateBranchRuleRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> UpdateBranchRule(
-      NoAwaitTag,
-      google::cloud::securesourcemanager::v1::UpdateBranchRuleRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  UpdateBranchRule(NoAwaitTag, google::cloud::securesourcemanager::v1::UpdateBranchRuleRequest const& request);
 
   virtual future<StatusOr<google::cloud::securesourcemanager::v1::BranchRule>>
-  UpdateBranchRule(google::longrunning::Operation const& operation);
+  UpdateBranchRule( google::longrunning::Operation const& operation);
 
-  virtual future<
-      StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
-  DeleteBranchRule(
-      google::cloud::securesourcemanager::v1::DeleteBranchRuleRequest const&
-          request);
+  virtual future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
+  DeleteBranchRule(google::cloud::securesourcemanager::v1::DeleteBranchRuleRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> DeleteBranchRule(
-      NoAwaitTag,
-      google::cloud::securesourcemanager::v1::DeleteBranchRuleRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  DeleteBranchRule(NoAwaitTag, google::cloud::securesourcemanager::v1::DeleteBranchRuleRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
-  DeleteBranchRule(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
+  DeleteBranchRule( google::longrunning::Operation const& operation);
 
-  virtual StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request);
+  virtual StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request);
 
-  virtual StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request);
+  virtual StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
 
   virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
   TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
 
-  virtual StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 
-  virtual Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request);
+  virtual Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
 
-  virtual Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request);
+  virtual Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request);
 };
 
 /**
- * A factory function to construct an object of type
- * `SecureSourceManagerConnection`.
+ * A factory function to construct an object of type `SecureSourceManagerConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of
- * SecureSourceManagerClient.
+ * should be passed as an argument to the constructor of SecureSourceManagerClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `SecureSourceManagerConnection`. Expected options are any of the
- * types in the following option lists:
+ * returned `SecureSourceManagerConnection`. Expected options are any of the types in
+ * the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * -
- * `google::cloud::securesourcemanager_v1::SecureSourceManagerPolicyOptionList`
+ * - `google::cloud::securesourcemanager_v1::SecureSourceManagerPolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
- * @param options (optional) Configure the `SecureSourceManagerConnection`
- * created by this function.
+ * @param options (optional) Configure the `SecureSourceManagerConnection` created by
+ * this function.
  */
-std::shared_ptr<SecureSourceManagerConnection>
-MakeSecureSourceManagerConnection(Options options = {});
+std::shared_ptr<SecureSourceManagerConnection> MakeSecureSourceManagerConnection(
+    Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace securesourcemanager_v1

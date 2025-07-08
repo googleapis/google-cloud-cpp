@@ -17,12 +17,12 @@
 // source: google/cloud/dialogflow/cx/v3/security_settings.proto
 
 #include "google/cloud/dialogflow_cx/internal/security_settings_stub_factory.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/dialogflow_cx/internal/security_settings_auth_decorator.h"
 #include "google/cloud/dialogflow_cx/internal/security_settings_logging_decorator.h"
 #include "google/cloud/dialogflow_cx/internal/security_settings_metadata_decorator.h"
 #include "google/cloud/dialogflow_cx/internal/security_settings_stub.h"
 #include "google/cloud/dialogflow_cx/internal/security_settings_tracing_stub.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/opentelemetry.h"
@@ -43,30 +43,26 @@ std::shared_ptr<SecuritySettingsServiceStub>
 CreateDefaultSecuritySettingsServiceStub(
     std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
     Options const& options) {
-  auto channel = auth->CreateChannel(options.get<EndpointOption>(),
-                                     internal::MakeChannelArguments(options));
-  auto service_grpc_stub =
-      google::cloud::dialogflow::cx::v3::SecuritySettingsService::NewStub(
-          channel);
-  auto service_operations_stub =
-      google::longrunning::Operations::NewStub(channel);
-  auto service_locations_stub =
-      google::cloud::location::Locations::NewStub(channel);
+  auto channel = auth->CreateChannel(
+    options.get<EndpointOption>(), internal::MakeChannelArguments(options));
+  auto service_grpc_stub = google::cloud::dialogflow::cx::v3::SecuritySettingsService::NewStub(channel);
+  auto service_operations_stub = google::longrunning::Operations::NewStub(channel);
+  auto service_locations_stub = google::cloud::location::Locations::NewStub(channel);
   std::shared_ptr<SecuritySettingsServiceStub> stub =
-      std::make_shared<DefaultSecuritySettingsServiceStub>(
-          std::move(service_grpc_stub), std::move(service_operations_stub),
-          std::move(service_locations_stub));
+    std::make_shared<DefaultSecuritySettingsServiceStub>(std::move(service_grpc_stub), std::move(service_operations_stub), std::move(service_locations_stub));
 
   if (auth->RequiresConfigureContext()) {
-    stub = std::make_shared<SecuritySettingsServiceAuth>(std::move(auth),
-                                                         std::move(stub));
+    stub = std::make_shared<SecuritySettingsServiceAuth>(
+        std::move(auth), std::move(stub));
   }
   stub = std::make_shared<SecuritySettingsServiceMetadata>(
       std::move(stub), std::multimap<std::string, std::string>{});
-  if (internal::Contains(options.get<LoggingComponentsOption>(), "rpc")) {
+  if (internal::Contains(
+      options.get<LoggingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<SecuritySettingsServiceLogging>(
-        std::move(stub), options.get<GrpcTracingOptionsOption>(),
+        std::move(stub),
+        options.get<GrpcTracingOptionsOption>(),
         options.get<LoggingComponentsOption>());
   }
   if (internal::TracingEnabled(options)) {

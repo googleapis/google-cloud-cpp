@@ -32,48 +32,44 @@ ProductSearchTracingStub::ProductSearchTracingStub(
     std::shared_ptr<ProductSearchStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
-StatusOr<google::cloud::vision::v1::ProductSet>
-ProductSearchTracingStub::CreateProductSet(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::vision::v1::ProductSet> ProductSearchTracingStub::CreateProductSet(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::vision::v1::CreateProductSetRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.vision.v1.ProductSearch",
-                                     "CreateProductSet");
+  auto span = internal::MakeSpanGrpc("google.cloud.vision.v1.ProductSearch", "CreateProductSet");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateProductSet(context, options, request));
 }
 
-StatusOr<google::cloud::vision::v1::ListProductSetsResponse>
-ProductSearchTracingStub::ListProductSets(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::vision::v1::ListProductSetsResponse> ProductSearchTracingStub::ListProductSets(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::vision::v1::ListProductSetsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.vision.v1.ProductSearch",
-                                     "ListProductSets");
+  auto span = internal::MakeSpanGrpc("google.cloud.vision.v1.ProductSearch", "ListProductSets");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListProductSets(context, options, request));
 }
 
-StatusOr<google::cloud::vision::v1::ProductSet>
-ProductSearchTracingStub::GetProductSet(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::vision::v1::ProductSet> ProductSearchTracingStub::GetProductSet(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::vision::v1::GetProductSetRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.vision.v1.ProductSearch",
-                                     "GetProductSet");
+  auto span = internal::MakeSpanGrpc("google.cloud.vision.v1.ProductSearch", "GetProductSet");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetProductSet(context, options, request));
 }
 
-StatusOr<google::cloud::vision::v1::ProductSet>
-ProductSearchTracingStub::UpdateProductSet(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::vision::v1::ProductSet> ProductSearchTracingStub::UpdateProductSet(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::vision::v1::UpdateProductSetRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.vision.v1.ProductSearch",
-                                     "UpdateProductSet");
+  auto span = internal::MakeSpanGrpc("google.cloud.vision.v1.ProductSearch", "UpdateProductSet");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -81,58 +77,54 @@ ProductSearchTracingStub::UpdateProductSet(
 }
 
 Status ProductSearchTracingStub::DeleteProductSet(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::vision::v1::DeleteProductSetRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.vision.v1.ProductSearch",
-                                     "DeleteProductSet");
+  auto span = internal::MakeSpanGrpc("google.cloud.vision.v1.ProductSearch", "DeleteProductSet");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeleteProductSet(context, options, request));
 }
 
-StatusOr<google::cloud::vision::v1::Product>
-ProductSearchTracingStub::CreateProduct(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::vision::v1::Product> ProductSearchTracingStub::CreateProduct(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::vision::v1::CreateProductRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.vision.v1.ProductSearch",
-                                     "CreateProduct");
+  auto span = internal::MakeSpanGrpc("google.cloud.vision.v1.ProductSearch", "CreateProduct");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateProduct(context, options, request));
 }
 
-StatusOr<google::cloud::vision::v1::ListProductsResponse>
-ProductSearchTracingStub::ListProducts(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::vision::v1::ListProductsResponse> ProductSearchTracingStub::ListProducts(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::vision::v1::ListProductsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.vision.v1.ProductSearch",
-                                     "ListProducts");
+  auto span = internal::MakeSpanGrpc("google.cloud.vision.v1.ProductSearch", "ListProducts");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListProducts(context, options, request));
 }
 
-StatusOr<google::cloud::vision::v1::Product>
-ProductSearchTracingStub::GetProduct(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::vision::v1::Product> ProductSearchTracingStub::GetProduct(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::vision::v1::GetProductRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.vision.v1.ProductSearch",
-                                     "GetProduct");
+  auto span = internal::MakeSpanGrpc("google.cloud.vision.v1.ProductSearch", "GetProduct");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetProduct(context, options, request));
 }
 
-StatusOr<google::cloud::vision::v1::Product>
-ProductSearchTracingStub::UpdateProduct(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::vision::v1::Product> ProductSearchTracingStub::UpdateProduct(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::vision::v1::UpdateProductRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.vision.v1.ProductSearch",
-                                     "UpdateProduct");
+  auto span = internal::MakeSpanGrpc("google.cloud.vision.v1.ProductSearch", "UpdateProduct");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -140,136 +132,125 @@ ProductSearchTracingStub::UpdateProduct(
 }
 
 Status ProductSearchTracingStub::DeleteProduct(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::vision::v1::DeleteProductRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.vision.v1.ProductSearch",
-                                     "DeleteProduct");
+  auto span = internal::MakeSpanGrpc("google.cloud.vision.v1.ProductSearch", "DeleteProduct");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeleteProduct(context, options, request));
 }
 
-StatusOr<google::cloud::vision::v1::ReferenceImage>
-ProductSearchTracingStub::CreateReferenceImage(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::vision::v1::ReferenceImage> ProductSearchTracingStub::CreateReferenceImage(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::vision::v1::CreateReferenceImageRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.vision.v1.ProductSearch",
-                                     "CreateReferenceImage");
+  auto span = internal::MakeSpanGrpc("google.cloud.vision.v1.ProductSearch", "CreateReferenceImage");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->CreateReferenceImage(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->CreateReferenceImage(context, options, request));
 }
 
 Status ProductSearchTracingStub::DeleteReferenceImage(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::vision::v1::DeleteReferenceImageRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.vision.v1.ProductSearch",
-                                     "DeleteReferenceImage");
+  auto span = internal::MakeSpanGrpc("google.cloud.vision.v1.ProductSearch", "DeleteReferenceImage");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->DeleteReferenceImage(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->DeleteReferenceImage(context, options, request));
 }
 
-StatusOr<google::cloud::vision::v1::ListReferenceImagesResponse>
-ProductSearchTracingStub::ListReferenceImages(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::vision::v1::ListReferenceImagesResponse> ProductSearchTracingStub::ListReferenceImages(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::vision::v1::ListReferenceImagesRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.vision.v1.ProductSearch",
-                                     "ListReferenceImages");
+  auto span = internal::MakeSpanGrpc("google.cloud.vision.v1.ProductSearch", "ListReferenceImages");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->ListReferenceImages(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->ListReferenceImages(context, options, request));
 }
 
-StatusOr<google::cloud::vision::v1::ReferenceImage>
-ProductSearchTracingStub::GetReferenceImage(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::vision::v1::ReferenceImage> ProductSearchTracingStub::GetReferenceImage(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::vision::v1::GetReferenceImageRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.vision.v1.ProductSearch",
-                                     "GetReferenceImage");
+  auto span = internal::MakeSpanGrpc("google.cloud.vision.v1.ProductSearch", "GetReferenceImage");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->GetReferenceImage(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->GetReferenceImage(context, options, request));
 }
 
 Status ProductSearchTracingStub::AddProductToProductSet(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::vision::v1::AddProductToProductSetRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.vision.v1.ProductSearch",
-                                     "AddProductToProductSet");
+  auto span = internal::MakeSpanGrpc("google.cloud.vision.v1.ProductSearch", "AddProductToProductSet");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span,
-      child_->AddProductToProductSet(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->AddProductToProductSet(context, options, request));
 }
 
 Status ProductSearchTracingStub::RemoveProductFromProductSet(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::vision::v1::RemoveProductFromProductSetRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.vision.v1.ProductSearch",
-                                     "RemoveProductFromProductSet");
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::vision::v1::RemoveProductFromProductSetRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.vision.v1.ProductSearch", "RemoveProductFromProductSet");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span,
-      child_->RemoveProductFromProductSet(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->RemoveProductFromProductSet(context, options, request));
 }
 
-StatusOr<google::cloud::vision::v1::ListProductsInProductSetResponse>
-ProductSearchTracingStub::ListProductsInProductSet(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::vision::v1::ListProductsInProductSetResponse> ProductSearchTracingStub::ListProductsInProductSet(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::vision::v1::ListProductsInProductSetRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.vision.v1.ProductSearch",
-                                     "ListProductsInProductSet");
+  auto span = internal::MakeSpanGrpc("google.cloud.vision.v1.ProductSearch", "ListProductsInProductSet");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span,
-      child_->ListProductsInProductSet(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->ListProductsInProductSet(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ProductSearchTracingStub::AsyncImportProductSets(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::vision::v1::ImportProductSetsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.vision.v1.ProductSearch",
-                                     "ImportProductSets");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::vision::v1::ImportProductSetsRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.vision.v1.ProductSearch", "ImportProductSets");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f =
-      child_->AsyncImportProductSets(cq, context, std::move(options), request);
+  auto f = child_->AsyncImportProductSets(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 ProductSearchTracingStub::ImportProductSets(
-    grpc::ClientContext& context, Options options,
-    google::cloud::vision::v1::ImportProductSetsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.vision.v1.ProductSearch",
-                                     "ImportProductSets");
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::vision::v1::ImportProductSetsRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.vision.v1.ProductSearch", "ImportProductSets");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->ImportProductSets(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->ImportProductSets(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ProductSearchTracingStub::AsyncPurgeProducts(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::vision::v1::PurgeProductsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.vision.v1.ProductSearch",
-                                     "PurgeProducts");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::vision::v1::PurgeProductsRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.vision.v1.ProductSearch", "PurgeProducts");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncPurgeProducts(cq, context, std::move(options), request);
@@ -278,10 +259,10 @@ ProductSearchTracingStub::AsyncPurgeProducts(
 
 StatusOr<google::longrunning::Operation>
 ProductSearchTracingStub::PurgeProducts(
-    grpc::ClientContext& context, Options options,
-    google::cloud::vision::v1::PurgeProductsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.vision.v1.ProductSearch",
-                                     "PurgeProducts");
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::vision::v1::PurgeProductsRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.vision.v1.ProductSearch", "PurgeProducts");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -289,10 +270,10 @@ ProductSearchTracingStub::PurgeProducts(
 }
 
 StatusOr<google::longrunning::Operation> ProductSearchTracingStub::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.vision.v1.ProductSearch",
-                                     "GetOperation");
+  auto span = internal::MakeSpanGrpc("google.cloud.vision.v1.ProductSearch", "GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -309,7 +290,8 @@ ProductSearchTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncGetOperation(cq, context, std::move(options), request);
+  auto f = child_->AsyncGetOperation(
+      cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -322,8 +304,8 @@ future<Status> ProductSearchTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f =
-      child_->AsyncCancelOperation(cq, context, std::move(options), request);
+  auto f = child_->AsyncCancelOperation(
+      cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 

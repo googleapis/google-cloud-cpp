@@ -39,39 +39,37 @@ class BigQueryWriteAuth : public BigQueryWriteStub {
       std::shared_ptr<BigQueryWriteStub> child);
 
   StatusOr<google::cloud::bigquery::storage::v1::WriteStream> CreateWriteStream(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::bigquery::storage::v1::CreateWriteStreamRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::bigquery::storage::v1::CreateWriteStreamRequest const& request) override;
 
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::bigquery::storage::v1::AppendRowsRequest,
       google::cloud::bigquery::storage::v1::AppendRowsResponse>>
-  AsyncAppendRows(google::cloud::CompletionQueue const& cq,
-                  std::shared_ptr<grpc::ClientContext> context,
-                  google::cloud::internal::ImmutableOptions options) override;
+  AsyncAppendRows(
+      google::cloud::CompletionQueue const& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options) override;
 
   StatusOr<google::cloud::bigquery::storage::v1::WriteStream> GetWriteStream(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::bigquery::storage::v1::GetWriteStreamRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::bigquery::storage::v1::GetWriteStreamRequest const& request) override;
 
-  StatusOr<google::cloud::bigquery::storage::v1::FinalizeWriteStreamResponse>
-  FinalizeWriteStream(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::bigquery::storage::v1::FinalizeWriteStreamRequest const&
-          request) override;
+  StatusOr<google::cloud::bigquery::storage::v1::FinalizeWriteStreamResponse> FinalizeWriteStream(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::bigquery::storage::v1::FinalizeWriteStreamRequest const& request) override;
 
-  StatusOr<
-      google::cloud::bigquery::storage::v1::BatchCommitWriteStreamsResponse>
-  BatchCommitWriteStreams(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::bigquery::storage::v1::
-          BatchCommitWriteStreamsRequest const& request) override;
+  StatusOr<google::cloud::bigquery::storage::v1::BatchCommitWriteStreamsResponse> BatchCommitWriteStreams(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::bigquery::storage::v1::BatchCommitWriteStreamsRequest const& request) override;
 
   StatusOr<google::cloud::bigquery::storage::v1::FlushRowsResponse> FlushRows(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::bigquery::storage::v1::FlushRowsRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::bigquery::storage::v1::FlushRowsRequest const& request) override;
 
  private:
   std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth_;

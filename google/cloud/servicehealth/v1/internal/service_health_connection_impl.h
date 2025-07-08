@@ -19,14 +19,14 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SERVICEHEALTH_V1_INTERNAL_SERVICE_HEALTH_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SERVICEHEALTH_V1_INTERNAL_SERVICE_HEALTH_CONNECTION_IMPL_H
 
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/options.h"
 #include "google/cloud/servicehealth/v1/internal/service_health_retry_traits.h"
 #include "google/cloud/servicehealth/v1/internal/service_health_stub.h"
 #include "google/cloud/servicehealth/v1/service_health_connection.h"
 #include "google/cloud/servicehealth/v1/service_health_connection_idempotency_policy.h"
 #include "google/cloud/servicehealth/v1/service_health_options.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
@@ -43,44 +43,35 @@ class ServiceHealthConnectionImpl
   ~ServiceHealthConnectionImpl() override = default;
 
   ServiceHealthConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<servicehealth_v1_internal::ServiceHealthStub> stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<servicehealth_v1_internal::ServiceHealthStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
-  StreamRange<google::cloud::servicehealth::v1::Event> ListEvents(
-      google::cloud::servicehealth::v1::ListEventsRequest request) override;
+  StreamRange<google::cloud::servicehealth::v1::Event>
+  ListEvents(google::cloud::servicehealth::v1::ListEventsRequest request) override;
 
-  StatusOr<google::cloud::servicehealth::v1::Event> GetEvent(
-      google::cloud::servicehealth::v1::GetEventRequest const& request)
-      override;
+  StatusOr<google::cloud::servicehealth::v1::Event>
+  GetEvent(google::cloud::servicehealth::v1::GetEventRequest const& request) override;
 
   StreamRange<google::cloud::servicehealth::v1::OrganizationEvent>
-  ListOrganizationEvents(
-      google::cloud::servicehealth::v1::ListOrganizationEventsRequest request)
-      override;
+  ListOrganizationEvents(google::cloud::servicehealth::v1::ListOrganizationEventsRequest request) override;
 
   StatusOr<google::cloud::servicehealth::v1::OrganizationEvent>
-  GetOrganizationEvent(
-      google::cloud::servicehealth::v1::GetOrganizationEventRequest const&
-          request) override;
+  GetOrganizationEvent(google::cloud::servicehealth::v1::GetOrganizationEventRequest const& request) override;
 
   StreamRange<google::cloud::servicehealth::v1::OrganizationImpact>
-  ListOrganizationImpacts(
-      google::cloud::servicehealth::v1::ListOrganizationImpactsRequest request)
-      override;
+  ListOrganizationImpacts(google::cloud::servicehealth::v1::ListOrganizationImpactsRequest request) override;
 
   StatusOr<google::cloud::servicehealth::v1::OrganizationImpact>
-  GetOrganizationImpact(
-      google::cloud::servicehealth::v1::GetOrganizationImpactRequest const&
-          request) override;
+  GetOrganizationImpact(google::cloud::servicehealth::v1::GetOrganizationImpactRequest const& request) override;
 
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request) override;
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request) override;
 
-  StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request) override;
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

@@ -28,13 +28,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 StorageBatchOperationsClient::StorageBatchOperationsClient(
     std::shared_ptr<StorageBatchOperationsConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 StorageBatchOperationsClient::~StorageBatchOperationsClient() = default;
 
 StreamRange<google::cloud::storagebatchoperations::v1::Job>
-StorageBatchOperationsClient::ListJobs(std::string const& parent,
-                                       Options opts) {
+StorageBatchOperationsClient::ListJobs(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::storagebatchoperations::v1::ListJobsRequest request;
   request.set_parent(parent);
@@ -42,9 +41,7 @@ StorageBatchOperationsClient::ListJobs(std::string const& parent,
 }
 
 StreamRange<google::cloud::storagebatchoperations::v1::Job>
-StorageBatchOperationsClient::ListJobs(
-    google::cloud::storagebatchoperations::v1::ListJobsRequest request,
-    Options opts) {
+StorageBatchOperationsClient::ListJobs(google::cloud::storagebatchoperations::v1::ListJobsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListJobs(std::move(request));
 }
@@ -58,18 +55,13 @@ StorageBatchOperationsClient::GetJob(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::storagebatchoperations::v1::Job>
-StorageBatchOperationsClient::GetJob(
-    google::cloud::storagebatchoperations::v1::GetJobRequest const& request,
-    Options opts) {
+StorageBatchOperationsClient::GetJob(google::cloud::storagebatchoperations::v1::GetJobRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetJob(request);
 }
 
 future<StatusOr<google::cloud::storagebatchoperations::v1::Job>>
-StorageBatchOperationsClient::CreateJob(
-    std::string const& parent,
-    google::cloud::storagebatchoperations::v1::Job const& job,
-    std::string const& job_id, Options opts) {
+StorageBatchOperationsClient::CreateJob(std::string const& parent, google::cloud::storagebatchoperations::v1::Job const& job, std::string const& job_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::storagebatchoperations::v1::CreateJobRequest request;
   request.set_parent(parent);
@@ -79,10 +71,7 @@ StorageBatchOperationsClient::CreateJob(
 }
 
 StatusOr<google::longrunning::Operation>
-StorageBatchOperationsClient::CreateJob(
-    NoAwaitTag, std::string const& parent,
-    google::cloud::storagebatchoperations::v1::Job const& job,
-    std::string const& job_id, Options opts) {
+StorageBatchOperationsClient::CreateJob(NoAwaitTag, std::string const& parent, google::cloud::storagebatchoperations::v1::Job const& job, std::string const& job_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::storagebatchoperations::v1::CreateJobRequest request;
   request.set_parent(parent);
@@ -92,40 +81,33 @@ StorageBatchOperationsClient::CreateJob(
 }
 
 future<StatusOr<google::cloud::storagebatchoperations::v1::Job>>
-StorageBatchOperationsClient::CreateJob(
-    google::cloud::storagebatchoperations::v1::CreateJobRequest const& request,
-    Options opts) {
+StorageBatchOperationsClient::CreateJob(google::cloud::storagebatchoperations::v1::CreateJobRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateJob(request);
 }
 
 StatusOr<google::longrunning::Operation>
-StorageBatchOperationsClient::CreateJob(
-    NoAwaitTag,
-    google::cloud::storagebatchoperations::v1::CreateJobRequest const& request,
-    Options opts) {
+StorageBatchOperationsClient::CreateJob(NoAwaitTag, google::cloud::storagebatchoperations::v1::CreateJobRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateJob(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::storagebatchoperations::v1::Job>>
-StorageBatchOperationsClient::CreateJob(
-    google::longrunning::Operation const& operation, Options opts) {
+StorageBatchOperationsClient::CreateJob(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateJob(operation);
 }
 
-Status StorageBatchOperationsClient::DeleteJob(std::string const& name,
-                                               Options opts) {
+Status
+StorageBatchOperationsClient::DeleteJob(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::storagebatchoperations::v1::DeleteJobRequest request;
   request.set_name(name);
   return connection_->DeleteJob(request);
 }
 
-Status StorageBatchOperationsClient::DeleteJob(
-    google::cloud::storagebatchoperations::v1::DeleteJobRequest const& request,
-    Options opts) {
+Status
+StorageBatchOperationsClient::DeleteJob(google::cloud::storagebatchoperations::v1::DeleteJobRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteJob(request);
 }
@@ -139,31 +121,25 @@ StorageBatchOperationsClient::CancelJob(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::storagebatchoperations::v1::CancelJobResponse>
-StorageBatchOperationsClient::CancelJob(
-    google::cloud::storagebatchoperations::v1::CancelJobRequest const& request,
-    Options opts) {
+StorageBatchOperationsClient::CancelJob(google::cloud::storagebatchoperations::v1::CancelJobRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelJob(request);
 }
 
 StreamRange<google::cloud::location::Location>
-StorageBatchOperationsClient::ListLocations(
-    google::cloud::location::ListLocationsRequest request, Options opts) {
+StorageBatchOperationsClient::ListLocations(google::cloud::location::ListLocationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListLocations(std::move(request));
 }
 
 StatusOr<google::cloud::location::Location>
-StorageBatchOperationsClient::GetLocation(
-    google::cloud::location::GetLocationRequest const& request, Options opts) {
+StorageBatchOperationsClient::GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetLocation(request);
 }
 
 StreamRange<google::longrunning::Operation>
-StorageBatchOperationsClient::ListOperations(std::string const& name,
-                                             std::string const& filter,
-                                             Options opts) {
+StorageBatchOperationsClient::ListOperations(std::string const& name, std::string const& filter, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::ListOperationsRequest request;
   request.set_name(name);
@@ -172,15 +148,13 @@ StorageBatchOperationsClient::ListOperations(std::string const& name,
 }
 
 StreamRange<google::longrunning::Operation>
-StorageBatchOperationsClient::ListOperations(
-    google::longrunning::ListOperationsRequest request, Options opts) {
+StorageBatchOperationsClient::ListOperations(google::longrunning::ListOperationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOperations(std::move(request));
 }
 
 StatusOr<google::longrunning::Operation>
-StorageBatchOperationsClient::GetOperation(std::string const& name,
-                                           Options opts) {
+StorageBatchOperationsClient::GetOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
@@ -188,36 +162,35 @@ StorageBatchOperationsClient::GetOperation(std::string const& name,
 }
 
 StatusOr<google::longrunning::Operation>
-StorageBatchOperationsClient::GetOperation(
-    google::longrunning::GetOperationRequest const& request, Options opts) {
+StorageBatchOperationsClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }
 
-Status StorageBatchOperationsClient::DeleteOperation(std::string const& name,
-                                                     Options opts) {
+Status
+StorageBatchOperationsClient::DeleteOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::DeleteOperationRequest request;
   request.set_name(name);
   return connection_->DeleteOperation(request);
 }
 
-Status StorageBatchOperationsClient::DeleteOperation(
-    google::longrunning::DeleteOperationRequest const& request, Options opts) {
+Status
+StorageBatchOperationsClient::DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteOperation(request);
 }
 
-Status StorageBatchOperationsClient::CancelOperation(std::string const& name,
-                                                     Options opts) {
+Status
+StorageBatchOperationsClient::CancelOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::CancelOperationRequest request;
   request.set_name(name);
   return connection_->CancelOperation(request);
 }
 
-Status StorageBatchOperationsClient::CancelOperation(
-    google::longrunning::CancelOperationRequest const& request, Options opts) {
+Status
+StorageBatchOperationsClient::CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelOperation(request);
 }

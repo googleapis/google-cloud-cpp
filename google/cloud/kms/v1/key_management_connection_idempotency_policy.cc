@@ -26,171 +26,130 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-KeyManagementServiceConnectionIdempotencyPolicy::
-    ~KeyManagementServiceConnectionIdempotencyPolicy() = default;
+KeyManagementServiceConnectionIdempotencyPolicy::~KeyManagementServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<KeyManagementServiceConnectionIdempotencyPolicy>
 KeyManagementServiceConnectionIdempotencyPolicy::clone() const {
-  return std::make_unique<KeyManagementServiceConnectionIdempotencyPolicy>(
-      *this);
+  return std::make_unique<KeyManagementServiceConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency KeyManagementServiceConnectionIdempotencyPolicy::ListKeyRings(
-    google::cloud::kms::v1::ListKeyRingsRequest) {  // NOLINT
+Idempotency KeyManagementServiceConnectionIdempotencyPolicy::ListKeyRings(google::cloud::kms::v1::ListKeyRingsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency KeyManagementServiceConnectionIdempotencyPolicy::ListCryptoKeys(
-    google::cloud::kms::v1::ListCryptoKeysRequest) {  // NOLINT
+Idempotency KeyManagementServiceConnectionIdempotencyPolicy::ListCryptoKeys(google::cloud::kms::v1::ListCryptoKeysRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency
-KeyManagementServiceConnectionIdempotencyPolicy::ListCryptoKeyVersions(
-    google::cloud::kms::v1::ListCryptoKeyVersionsRequest) {  // NOLINT
+Idempotency KeyManagementServiceConnectionIdempotencyPolicy::ListCryptoKeyVersions(google::cloud::kms::v1::ListCryptoKeyVersionsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency KeyManagementServiceConnectionIdempotencyPolicy::ListImportJobs(
-    google::cloud::kms::v1::ListImportJobsRequest) {  // NOLINT
+Idempotency KeyManagementServiceConnectionIdempotencyPolicy::ListImportJobs(google::cloud::kms::v1::ListImportJobsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency KeyManagementServiceConnectionIdempotencyPolicy::GetKeyRing(
-    google::cloud::kms::v1::GetKeyRingRequest const&) {
+Idempotency KeyManagementServiceConnectionIdempotencyPolicy::GetKeyRing(google::cloud::kms::v1::GetKeyRingRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency KeyManagementServiceConnectionIdempotencyPolicy::GetCryptoKey(
-    google::cloud::kms::v1::GetCryptoKeyRequest const&) {
+Idempotency KeyManagementServiceConnectionIdempotencyPolicy::GetCryptoKey(google::cloud::kms::v1::GetCryptoKeyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency
-KeyManagementServiceConnectionIdempotencyPolicy::GetCryptoKeyVersion(
-    google::cloud::kms::v1::GetCryptoKeyVersionRequest const&) {
+Idempotency KeyManagementServiceConnectionIdempotencyPolicy::GetCryptoKeyVersion(google::cloud::kms::v1::GetCryptoKeyVersionRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency KeyManagementServiceConnectionIdempotencyPolicy::GetPublicKey(
-    google::cloud::kms::v1::GetPublicKeyRequest const&) {
+Idempotency KeyManagementServiceConnectionIdempotencyPolicy::GetPublicKey(google::cloud::kms::v1::GetPublicKeyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency KeyManagementServiceConnectionIdempotencyPolicy::GetImportJob(
-    google::cloud::kms::v1::GetImportJobRequest const&) {
+Idempotency KeyManagementServiceConnectionIdempotencyPolicy::GetImportJob(google::cloud::kms::v1::GetImportJobRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency KeyManagementServiceConnectionIdempotencyPolicy::CreateKeyRing(
-    google::cloud::kms::v1::CreateKeyRingRequest const&) {
+Idempotency KeyManagementServiceConnectionIdempotencyPolicy::CreateKeyRing(google::cloud::kms::v1::CreateKeyRingRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency KeyManagementServiceConnectionIdempotencyPolicy::CreateCryptoKey(
-    google::cloud::kms::v1::CreateCryptoKeyRequest const&) {
+Idempotency KeyManagementServiceConnectionIdempotencyPolicy::CreateCryptoKey(google::cloud::kms::v1::CreateCryptoKeyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency
-KeyManagementServiceConnectionIdempotencyPolicy::CreateCryptoKeyVersion(
-    google::cloud::kms::v1::CreateCryptoKeyVersionRequest const&) {
+Idempotency KeyManagementServiceConnectionIdempotencyPolicy::CreateCryptoKeyVersion(google::cloud::kms::v1::CreateCryptoKeyVersionRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency
-KeyManagementServiceConnectionIdempotencyPolicy::ImportCryptoKeyVersion(
-    google::cloud::kms::v1::ImportCryptoKeyVersionRequest const&) {
+Idempotency KeyManagementServiceConnectionIdempotencyPolicy::ImportCryptoKeyVersion(google::cloud::kms::v1::ImportCryptoKeyVersionRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency KeyManagementServiceConnectionIdempotencyPolicy::CreateImportJob(
-    google::cloud::kms::v1::CreateImportJobRequest const&) {
+Idempotency KeyManagementServiceConnectionIdempotencyPolicy::CreateImportJob(google::cloud::kms::v1::CreateImportJobRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency KeyManagementServiceConnectionIdempotencyPolicy::UpdateCryptoKey(
-    google::cloud::kms::v1::UpdateCryptoKeyRequest const&) {
+Idempotency KeyManagementServiceConnectionIdempotencyPolicy::UpdateCryptoKey(google::cloud::kms::v1::UpdateCryptoKeyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency
-KeyManagementServiceConnectionIdempotencyPolicy::UpdateCryptoKeyVersion(
-    google::cloud::kms::v1::UpdateCryptoKeyVersionRequest const&) {
+Idempotency KeyManagementServiceConnectionIdempotencyPolicy::UpdateCryptoKeyVersion(google::cloud::kms::v1::UpdateCryptoKeyVersionRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency
-KeyManagementServiceConnectionIdempotencyPolicy::UpdateCryptoKeyPrimaryVersion(
-    google::cloud::kms::v1::UpdateCryptoKeyPrimaryVersionRequest const&) {
+Idempotency KeyManagementServiceConnectionIdempotencyPolicy::UpdateCryptoKeyPrimaryVersion(google::cloud::kms::v1::UpdateCryptoKeyPrimaryVersionRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency
-KeyManagementServiceConnectionIdempotencyPolicy::DestroyCryptoKeyVersion(
-    google::cloud::kms::v1::DestroyCryptoKeyVersionRequest const&) {
+Idempotency KeyManagementServiceConnectionIdempotencyPolicy::DestroyCryptoKeyVersion(google::cloud::kms::v1::DestroyCryptoKeyVersionRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency
-KeyManagementServiceConnectionIdempotencyPolicy::RestoreCryptoKeyVersion(
-    google::cloud::kms::v1::RestoreCryptoKeyVersionRequest const&) {
+Idempotency KeyManagementServiceConnectionIdempotencyPolicy::RestoreCryptoKeyVersion(google::cloud::kms::v1::RestoreCryptoKeyVersionRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency KeyManagementServiceConnectionIdempotencyPolicy::Encrypt(
-    google::cloud::kms::v1::EncryptRequest const&) {
+Idempotency KeyManagementServiceConnectionIdempotencyPolicy::Encrypt(google::cloud::kms::v1::EncryptRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency KeyManagementServiceConnectionIdempotencyPolicy::Decrypt(
-    google::cloud::kms::v1::DecryptRequest const&) {
+Idempotency KeyManagementServiceConnectionIdempotencyPolicy::Decrypt(google::cloud::kms::v1::DecryptRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency KeyManagementServiceConnectionIdempotencyPolicy::RawEncrypt(
-    google::cloud::kms::v1::RawEncryptRequest const&) {
+Idempotency KeyManagementServiceConnectionIdempotencyPolicy::RawEncrypt(google::cloud::kms::v1::RawEncryptRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency KeyManagementServiceConnectionIdempotencyPolicy::RawDecrypt(
-    google::cloud::kms::v1::RawDecryptRequest const&) {
+Idempotency KeyManagementServiceConnectionIdempotencyPolicy::RawDecrypt(google::cloud::kms::v1::RawDecryptRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency KeyManagementServiceConnectionIdempotencyPolicy::AsymmetricSign(
-    google::cloud::kms::v1::AsymmetricSignRequest const&) {
+Idempotency KeyManagementServiceConnectionIdempotencyPolicy::AsymmetricSign(google::cloud::kms::v1::AsymmetricSignRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency KeyManagementServiceConnectionIdempotencyPolicy::AsymmetricDecrypt(
-    google::cloud::kms::v1::AsymmetricDecryptRequest const&) {
+Idempotency KeyManagementServiceConnectionIdempotencyPolicy::AsymmetricDecrypt(google::cloud::kms::v1::AsymmetricDecryptRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency KeyManagementServiceConnectionIdempotencyPolicy::MacSign(
-    google::cloud::kms::v1::MacSignRequest const&) {
+Idempotency KeyManagementServiceConnectionIdempotencyPolicy::MacSign(google::cloud::kms::v1::MacSignRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency KeyManagementServiceConnectionIdempotencyPolicy::MacVerify(
-    google::cloud::kms::v1::MacVerifyRequest const&) {
+Idempotency KeyManagementServiceConnectionIdempotencyPolicy::MacVerify(google::cloud::kms::v1::MacVerifyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency
-KeyManagementServiceConnectionIdempotencyPolicy::GenerateRandomBytes(
-    google::cloud::kms::v1::GenerateRandomBytesRequest const&) {
+Idempotency KeyManagementServiceConnectionIdempotencyPolicy::GenerateRandomBytes(google::cloud::kms::v1::GenerateRandomBytesRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency KeyManagementServiceConnectionIdempotencyPolicy::ListLocations(
-    google::cloud::location::ListLocationsRequest) {  // NOLINT
+Idempotency KeyManagementServiceConnectionIdempotencyPolicy::ListLocations(google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency KeyManagementServiceConnectionIdempotencyPolicy::GetLocation(
-    google::cloud::location::GetLocationRequest const&) {
+Idempotency KeyManagementServiceConnectionIdempotencyPolicy::GetLocation(google::cloud::location::GetLocationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
@@ -200,23 +159,20 @@ Idempotency KeyManagementServiceConnectionIdempotencyPolicy::SetIamPolicy(
                                          : Idempotency::kIdempotent;
 }
 
-Idempotency KeyManagementServiceConnectionIdempotencyPolicy::GetIamPolicy(
-    google::iam::v1::GetIamPolicyRequest const&) {
+Idempotency KeyManagementServiceConnectionIdempotencyPolicy::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency KeyManagementServiceConnectionIdempotencyPolicy::TestIamPermissions(
-    google::iam::v1::TestIamPermissionsRequest const&) {
+Idempotency KeyManagementServiceConnectionIdempotencyPolicy::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency KeyManagementServiceConnectionIdempotencyPolicy::GetOperation(
-    google::longrunning::GetOperationRequest const&) {
+Idempotency KeyManagementServiceConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<KeyManagementServiceConnectionIdempotencyPolicy>
-MakeDefaultKeyManagementServiceConnectionIdempotencyPolicy() {
+    MakeDefaultKeyManagementServiceConnectionIdempotencyPolicy() {
   return std::make_unique<KeyManagementServiceConnectionIdempotencyPolicy>();
 }
 

@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_INTERNAL_CHANGELOGS_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_INTERNAL_CHANGELOGS_CONNECTION_IMPL_H
 
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/dialogflow_cx/changelogs_connection.h"
 #include "google/cloud/dialogflow_cx/changelogs_connection_idempotency_policy.h"
 #include "google/cloud/dialogflow_cx/changelogs_options.h"
 #include "google/cloud/dialogflow_cx/internal/changelogs_retry_traits.h"
 #include "google/cloud/dialogflow_cx/internal/changelogs_stub.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -37,39 +37,38 @@ namespace cloud {
 namespace dialogflow_cx_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class ChangelogsConnectionImpl : public dialogflow_cx::ChangelogsConnection {
+class ChangelogsConnectionImpl
+    : public dialogflow_cx::ChangelogsConnection {
  public:
   ~ChangelogsConnectionImpl() override = default;
 
   ChangelogsConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<dialogflow_cx_internal::ChangelogsStub> stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<dialogflow_cx_internal::ChangelogsStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
-  StreamRange<google::cloud::dialogflow::cx::v3::Changelog> ListChangelogs(
-      google::cloud::dialogflow::cx::v3::ListChangelogsRequest request)
-      override;
+  StreamRange<google::cloud::dialogflow::cx::v3::Changelog>
+  ListChangelogs(google::cloud::dialogflow::cx::v3::ListChangelogsRequest request) override;
 
-  StatusOr<google::cloud::dialogflow::cx::v3::Changelog> GetChangelog(
-      google::cloud::dialogflow::cx::v3::GetChangelogRequest const& request)
-      override;
+  StatusOr<google::cloud::dialogflow::cx::v3::Changelog>
+  GetChangelog(google::cloud::dialogflow::cx::v3::GetChangelogRequest const& request) override;
 
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request) override;
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request) override;
 
-  StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request) override;
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request) override;
 
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request) override;
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

@@ -46,76 +46,78 @@ TopicStatsServiceMetadata::TopicStatsServiceMetadata(
 
 StatusOr<google::cloud::pubsublite::v1::ComputeMessageStatsResponse>
 TopicStatsServiceMetadata::ComputeMessageStats(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::pubsublite::v1::ComputeMessageStatsRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("topic=", internal::UrlEncode(request.topic())));
+  SetMetadata(context, options, absl::StrCat("topic=", internal::UrlEncode(request.topic())));
   return child_->ComputeMessageStats(context, options, request);
 }
 
 StatusOr<google::cloud::pubsublite::v1::ComputeHeadCursorResponse>
 TopicStatsServiceMetadata::ComputeHeadCursor(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::pubsublite::v1::ComputeHeadCursorRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("topic=", internal::UrlEncode(request.topic())));
+  SetMetadata(context, options, absl::StrCat("topic=", internal::UrlEncode(request.topic())));
   return child_->ComputeHeadCursor(context, options, request);
 }
 
 StatusOr<google::cloud::pubsublite::v1::ComputeTimeCursorResponse>
 TopicStatsServiceMetadata::ComputeTimeCursor(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::pubsublite::v1::ComputeTimeCursorRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("topic=", internal::UrlEncode(request.topic())));
+  SetMetadata(context, options, absl::StrCat("topic=", internal::UrlEncode(request.topic())));
   return child_->ComputeTimeCursor(context, options, request);
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
 TopicStatsServiceMetadata::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ListOperations(context, options, request);
 }
 
 StatusOr<google::longrunning::Operation>
 TopicStatsServiceMetadata::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetOperation(context, options, request);
 }
 
-Status TopicStatsServiceMetadata::DeleteOperation(
-    grpc::ClientContext& context, Options const& options,
+Status
+TopicStatsServiceMetadata::DeleteOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteOperation(context, options, request);
 }
 
-Status TopicStatsServiceMetadata::CancelOperation(
-    grpc::ClientContext& context, Options const& options,
+Status
+TopicStatsServiceMetadata::CancelOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->CancelOperation(context, options, request);
 }
 
 void TopicStatsServiceMetadata::SetMetadata(grpc::ClientContext& context,
-                                            Options const& options,
-                                            std::string const& request_params) {
+                                        Options const& options,
+                                        std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
 void TopicStatsServiceMetadata::SetMetadata(grpc::ClientContext& context,
-                                            Options const& options) {
-  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
-                                       api_client_header_);
+                                        Options const& options) {
+  google::cloud::internal::SetMetadata(
+      context, options, fixed_metadata_, api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -30,73 +30,69 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-class TagKeysTracingConnection : public resourcemanager_v3::TagKeysConnection {
+class TagKeysTracingConnection
+    : public resourcemanager_v3::TagKeysConnection {
  public:
   ~TagKeysTracingConnection() override = default;
 
   explicit TagKeysTracingConnection(
-      std::shared_ptr<resourcemanager_v3::TagKeysConnection> child);
+    std::shared_ptr<resourcemanager_v3::TagKeysConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StreamRange<google::cloud::resourcemanager::v3::TagKey> ListTagKeys(
-      google::cloud::resourcemanager::v3::ListTagKeysRequest request) override;
+  StreamRange<google::cloud::resourcemanager::v3::TagKey>
+  ListTagKeys(google::cloud::resourcemanager::v3::ListTagKeysRequest request) override;
 
-  StatusOr<google::cloud::resourcemanager::v3::TagKey> GetTagKey(
-      google::cloud::resourcemanager::v3::GetTagKeyRequest const& request)
-      override;
+  StatusOr<google::cloud::resourcemanager::v3::TagKey>
+  GetTagKey(google::cloud::resourcemanager::v3::GetTagKeyRequest const& request) override;
 
-  StatusOr<google::cloud::resourcemanager::v3::TagKey> GetNamespacedTagKey(
-      google::cloud::resourcemanager::v3::GetNamespacedTagKeyRequest const&
-          request) override;
+  StatusOr<google::cloud::resourcemanager::v3::TagKey>
+  GetNamespacedTagKey(google::cloud::resourcemanager::v3::GetNamespacedTagKeyRequest const& request) override;
 
-  future<StatusOr<google::cloud::resourcemanager::v3::TagKey>> CreateTagKey(
-      google::cloud::resourcemanager::v3::CreateTagKeyRequest const& request)
-      override;
+  future<StatusOr<google::cloud::resourcemanager::v3::TagKey>>
+  CreateTagKey(google::cloud::resourcemanager::v3::CreateTagKeyRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> CreateTagKey(
-      NoAwaitTag,
-      google::cloud::resourcemanager::v3::CreateTagKeyRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  CreateTagKey(NoAwaitTag,
+      google::cloud::resourcemanager::v3::CreateTagKeyRequest const& request) override;
 
-  future<StatusOr<google::cloud::resourcemanager::v3::TagKey>> CreateTagKey(
+  future<StatusOr<google::cloud::resourcemanager::v3::TagKey>>
+  CreateTagKey(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::resourcemanager::v3::TagKey>> UpdateTagKey(
-      google::cloud::resourcemanager::v3::UpdateTagKeyRequest const& request)
-      override;
+  future<StatusOr<google::cloud::resourcemanager::v3::TagKey>>
+  UpdateTagKey(google::cloud::resourcemanager::v3::UpdateTagKeyRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> UpdateTagKey(
-      NoAwaitTag,
-      google::cloud::resourcemanager::v3::UpdateTagKeyRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  UpdateTagKey(NoAwaitTag,
+      google::cloud::resourcemanager::v3::UpdateTagKeyRequest const& request) override;
 
-  future<StatusOr<google::cloud::resourcemanager::v3::TagKey>> UpdateTagKey(
+  future<StatusOr<google::cloud::resourcemanager::v3::TagKey>>
+  UpdateTagKey(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::resourcemanager::v3::TagKey>> DeleteTagKey(
-      google::cloud::resourcemanager::v3::DeleteTagKeyRequest const& request)
-      override;
+  future<StatusOr<google::cloud::resourcemanager::v3::TagKey>>
+  DeleteTagKey(google::cloud::resourcemanager::v3::DeleteTagKeyRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> DeleteTagKey(
-      NoAwaitTag,
-      google::cloud::resourcemanager::v3::DeleteTagKeyRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  DeleteTagKey(NoAwaitTag,
+      google::cloud::resourcemanager::v3::DeleteTagKeyRequest const& request) override;
 
-  future<StatusOr<google::cloud::resourcemanager::v3::TagKey>> DeleteTagKey(
+  future<StatusOr<google::cloud::resourcemanager::v3::TagKey>>
+  DeleteTagKey(
       google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request) override;
+  StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request) override;
 
  private:
   std::shared_ptr<resourcemanager_v3::TagKeysConnection> child_;

@@ -31,9 +31,9 @@ RecommenderAuth::RecommenderAuth(
     std::shared_ptr<RecommenderStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::recommender::v1::ListInsightsResponse>
-RecommenderAuth::ListInsights(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::recommender::v1::ListInsightsResponse> RecommenderAuth::ListInsights(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::recommender::v1::ListInsightsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -41,115 +41,108 @@ RecommenderAuth::ListInsights(
 }
 
 StatusOr<google::cloud::recommender::v1::Insight> RecommenderAuth::GetInsight(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::recommender::v1::GetInsightRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetInsight(context, options, request);
 }
 
-StatusOr<google::cloud::recommender::v1::Insight>
-RecommenderAuth::MarkInsightAccepted(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::recommender::v1::Insight> RecommenderAuth::MarkInsightAccepted(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::recommender::v1::MarkInsightAcceptedRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->MarkInsightAccepted(context, options, request);
 }
 
-StatusOr<google::cloud::recommender::v1::ListRecommendationsResponse>
-RecommenderAuth::ListRecommendations(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::recommender::v1::ListRecommendationsResponse> RecommenderAuth::ListRecommendations(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::recommender::v1::ListRecommendationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListRecommendations(context, options, request);
 }
 
-StatusOr<google::cloud::recommender::v1::Recommendation>
-RecommenderAuth::GetRecommendation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::recommender::v1::Recommendation> RecommenderAuth::GetRecommendation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::recommender::v1::GetRecommendationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetRecommendation(context, options, request);
 }
 
-StatusOr<google::cloud::recommender::v1::Recommendation>
-RecommenderAuth::MarkRecommendationDismissed(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::recommender::v1::MarkRecommendationDismissedRequest const&
-        request) {
+StatusOr<google::cloud::recommender::v1::Recommendation> RecommenderAuth::MarkRecommendationDismissed(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::recommender::v1::MarkRecommendationDismissedRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->MarkRecommendationDismissed(context, options, request);
 }
 
-StatusOr<google::cloud::recommender::v1::Recommendation>
-RecommenderAuth::MarkRecommendationClaimed(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::recommender::v1::MarkRecommendationClaimedRequest const&
-        request) {
+StatusOr<google::cloud::recommender::v1::Recommendation> RecommenderAuth::MarkRecommendationClaimed(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::recommender::v1::MarkRecommendationClaimedRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->MarkRecommendationClaimed(context, options, request);
 }
 
-StatusOr<google::cloud::recommender::v1::Recommendation>
-RecommenderAuth::MarkRecommendationSucceeded(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::recommender::v1::MarkRecommendationSucceededRequest const&
-        request) {
+StatusOr<google::cloud::recommender::v1::Recommendation> RecommenderAuth::MarkRecommendationSucceeded(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::recommender::v1::MarkRecommendationSucceededRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->MarkRecommendationSucceeded(context, options, request);
 }
 
-StatusOr<google::cloud::recommender::v1::Recommendation>
-RecommenderAuth::MarkRecommendationFailed(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::recommender::v1::MarkRecommendationFailedRequest const&
-        request) {
+StatusOr<google::cloud::recommender::v1::Recommendation> RecommenderAuth::MarkRecommendationFailed(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::recommender::v1::MarkRecommendationFailedRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->MarkRecommendationFailed(context, options, request);
 }
 
-StatusOr<google::cloud::recommender::v1::RecommenderConfig>
-RecommenderAuth::GetRecommenderConfig(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::recommender::v1::GetRecommenderConfigRequest const&
-        request) {
+StatusOr<google::cloud::recommender::v1::RecommenderConfig> RecommenderAuth::GetRecommenderConfig(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::recommender::v1::GetRecommenderConfigRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetRecommenderConfig(context, options, request);
 }
 
-StatusOr<google::cloud::recommender::v1::RecommenderConfig>
-RecommenderAuth::UpdateRecommenderConfig(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::recommender::v1::UpdateRecommenderConfigRequest const&
-        request) {
+StatusOr<google::cloud::recommender::v1::RecommenderConfig> RecommenderAuth::UpdateRecommenderConfig(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::recommender::v1::UpdateRecommenderConfigRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateRecommenderConfig(context, options, request);
 }
 
-StatusOr<google::cloud::recommender::v1::InsightTypeConfig>
-RecommenderAuth::GetInsightTypeConfig(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::recommender::v1::GetInsightTypeConfigRequest const&
-        request) {
+StatusOr<google::cloud::recommender::v1::InsightTypeConfig> RecommenderAuth::GetInsightTypeConfig(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::recommender::v1::GetInsightTypeConfigRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetInsightTypeConfig(context, options, request);
 }
 
-StatusOr<google::cloud::recommender::v1::InsightTypeConfig>
-RecommenderAuth::UpdateInsightTypeConfig(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::recommender::v1::UpdateInsightTypeConfigRequest const&
-        request) {
+StatusOr<google::cloud::recommender::v1::InsightTypeConfig> RecommenderAuth::UpdateInsightTypeConfig(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::recommender::v1::UpdateInsightTypeConfigRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateInsightTypeConfig(context, options, request);

@@ -46,71 +46,56 @@ class AssuredWorkloadsServiceConnectionImpl
   ~AssuredWorkloadsServiceConnectionImpl() override = default;
 
   AssuredWorkloadsServiceConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<assuredworkloads_v1_internal::AssuredWorkloadsServiceStub>
-          stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<assuredworkloads_v1_internal::AssuredWorkloadsServiceStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
   future<StatusOr<google::cloud::assuredworkloads::v1::Workload>>
-  CreateWorkload(
-      google::cloud::assuredworkloads::v1::CreateWorkloadRequest const& request)
-      override;
+  CreateWorkload(google::cloud::assuredworkloads::v1::CreateWorkloadRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> CreateWorkload(
-      NoAwaitTag,
-      google::cloud::assuredworkloads::v1::CreateWorkloadRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  CreateWorkload(NoAwaitTag,
+      google::cloud::assuredworkloads::v1::CreateWorkloadRequest const& request) override;
 
   future<StatusOr<google::cloud::assuredworkloads::v1::Workload>>
-  CreateWorkload(google::longrunning::Operation const& operation) override;
+  CreateWorkload(
+      google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::cloud::assuredworkloads::v1::Workload> UpdateWorkload(
-      google::cloud::assuredworkloads::v1::UpdateWorkloadRequest const& request)
-      override;
+  StatusOr<google::cloud::assuredworkloads::v1::Workload>
+  UpdateWorkload(google::cloud::assuredworkloads::v1::UpdateWorkloadRequest const& request) override;
 
-  StatusOr<
-      google::cloud::assuredworkloads::v1::RestrictAllowedResourcesResponse>
-  RestrictAllowedResources(
-      google::cloud::assuredworkloads::v1::
-          RestrictAllowedResourcesRequest const& request) override;
+  StatusOr<google::cloud::assuredworkloads::v1::RestrictAllowedResourcesResponse>
+  RestrictAllowedResources(google::cloud::assuredworkloads::v1::RestrictAllowedResourcesRequest const& request) override;
 
-  Status DeleteWorkload(
-      google::cloud::assuredworkloads::v1::DeleteWorkloadRequest const& request)
-      override;
+  Status
+  DeleteWorkload(google::cloud::assuredworkloads::v1::DeleteWorkloadRequest const& request) override;
 
-  StatusOr<google::cloud::assuredworkloads::v1::Workload> GetWorkload(
-      google::cloud::assuredworkloads::v1::GetWorkloadRequest const& request)
-      override;
+  StatusOr<google::cloud::assuredworkloads::v1::Workload>
+  GetWorkload(google::cloud::assuredworkloads::v1::GetWorkloadRequest const& request) override;
 
-  StreamRange<google::cloud::assuredworkloads::v1::Workload> ListWorkloads(
-      google::cloud::assuredworkloads::v1::ListWorkloadsRequest request)
-      override;
+  StreamRange<google::cloud::assuredworkloads::v1::Workload>
+  ListWorkloads(google::cloud::assuredworkloads::v1::ListWorkloadsRequest request) override;
 
-  StreamRange<google::cloud::assuredworkloads::v1::Violation> ListViolations(
-      google::cloud::assuredworkloads::v1::ListViolationsRequest request)
-      override;
+  StreamRange<google::cloud::assuredworkloads::v1::Violation>
+  ListViolations(google::cloud::assuredworkloads::v1::ListViolationsRequest request) override;
 
-  StatusOr<google::cloud::assuredworkloads::v1::Violation> GetViolation(
-      google::cloud::assuredworkloads::v1::GetViolationRequest const& request)
-      override;
+  StatusOr<google::cloud::assuredworkloads::v1::Violation>
+  GetViolation(google::cloud::assuredworkloads::v1::GetViolationRequest const& request) override;
 
   StatusOr<google::cloud::assuredworkloads::v1::AcknowledgeViolationResponse>
-  AcknowledgeViolation(
-      google::cloud::assuredworkloads::v1::AcknowledgeViolationRequest const&
-          request) override;
+  AcknowledgeViolation(google::cloud::assuredworkloads::v1::AcknowledgeViolationRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<assuredworkloads_v1_internal::AssuredWorkloadsServiceStub>
-      stub_;
+  std::shared_ptr<assuredworkloads_v1_internal::AssuredWorkloadsServiceStub> stub_;
   Options options_;
 };
 

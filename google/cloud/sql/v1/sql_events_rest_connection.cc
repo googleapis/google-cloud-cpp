@@ -17,15 +17,15 @@
 // source: google/cloud/sql/v1/cloud_sql_events.proto
 
 #include "google/cloud/sql/v1/sql_events_rest_connection.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
+#include "google/cloud/internal/rest_background_threads_impl.h"
+#include "google/cloud/internal/rest_options.h"
 #include "google/cloud/sql/v1/internal/sql_events_option_defaults.h"
 #include "google/cloud/sql/v1/internal/sql_events_rest_connection_impl.h"
 #include "google/cloud/sql/v1/internal/sql_events_rest_stub_factory.h"
 #include "google/cloud/sql/v1/internal/sql_events_tracing_connection.h"
 #include "google/cloud/sql/v1/sql_events_options.h"
-#include "google/cloud/common_options.h"
-#include "google/cloud/credentials.h"
-#include "google/cloud/internal/rest_background_threads_impl.h"
-#include "google/cloud/internal/rest_options.h"
 #include <memory>
 #include <utility>
 
@@ -36,16 +36,18 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<SqlEventsServiceConnection> MakeSqlEventsServiceConnectionRest(
     Options options) {
-  internal::CheckExpectedOptions<
-      CommonOptionList, RestOptionList, UnifiedCredentialsOptionList,
-      rest_internal::TargetApiVersionOption, SqlEventsServicePolicyOptionList>(
-      options, __func__);
-  options = sql_v1_internal::SqlEventsServiceDefaultOptions(std::move(options));
+  internal::CheckExpectedOptions<CommonOptionList, RestOptionList,
+      UnifiedCredentialsOptionList, rest_internal::TargetApiVersionOption,
+      SqlEventsServicePolicyOptionList>(options, __func__);
+  options = sql_v1_internal::SqlEventsServiceDefaultOptions(
+      std::move(options));
   auto background = std::make_unique<
       rest_internal::AutomaticallyCreatedRestBackgroundThreads>();
-  auto stub = sql_v1_internal::CreateDefaultSqlEventsServiceRestStub(options);
+  auto stub = sql_v1_internal::CreateDefaultSqlEventsServiceRestStub(
+      options);
   return sql_v1_internal::MakeSqlEventsServiceTracingConnection(
-      std::make_shared<sql_v1_internal::SqlEventsServiceRestConnectionImpl>(
+      std::make_shared<
+          sql_v1_internal::SqlEventsServiceRestConnectionImpl>(
           std::move(background), std::move(stub), std::move(options)));
 }
 

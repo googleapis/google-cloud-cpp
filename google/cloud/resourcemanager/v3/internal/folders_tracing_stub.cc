@@ -28,39 +28,37 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-FoldersTracingStub::FoldersTracingStub(std::shared_ptr<FoldersStub> child)
+FoldersTracingStub::FoldersTracingStub(
+    std::shared_ptr<FoldersStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
-StatusOr<google::cloud::resourcemanager::v3::Folder>
-FoldersTracingStub::GetFolder(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::resourcemanager::v3::Folder> FoldersTracingStub::GetFolder(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::resourcemanager::v3::GetFolderRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.resourcemanager.v3.Folders",
-                                     "GetFolder");
+  auto span = internal::MakeSpanGrpc("google.cloud.resourcemanager.v3.Folders", "GetFolder");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetFolder(context, options, request));
 }
 
-StatusOr<google::cloud::resourcemanager::v3::ListFoldersResponse>
-FoldersTracingStub::ListFolders(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::resourcemanager::v3::ListFoldersResponse> FoldersTracingStub::ListFolders(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::resourcemanager::v3::ListFoldersRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.resourcemanager.v3.Folders",
-                                     "ListFolders");
+  auto span = internal::MakeSpanGrpc("google.cloud.resourcemanager.v3.Folders", "ListFolders");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListFolders(context, options, request));
 }
 
-StatusOr<google::cloud::resourcemanager::v3::SearchFoldersResponse>
-FoldersTracingStub::SearchFolders(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::resourcemanager::v3::SearchFoldersResponse> FoldersTracingStub::SearchFolders(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::resourcemanager::v3::SearchFoldersRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.resourcemanager.v3.Folders",
-                                     "SearchFolders");
+  auto span = internal::MakeSpanGrpc("google.cloud.resourcemanager.v3.Folders", "SearchFolders");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -69,23 +67,23 @@ FoldersTracingStub::SearchFolders(
 
 future<StatusOr<google::longrunning::Operation>>
 FoldersTracingStub::AsyncCreateFolder(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::resourcemanager::v3::CreateFolderRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.resourcemanager.v3.Folders",
-                                     "CreateFolder");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::resourcemanager::v3::CreateFolderRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.resourcemanager.v3.Folders", "CreateFolder");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCreateFolder(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
-StatusOr<google::longrunning::Operation> FoldersTracingStub::CreateFolder(
-    grpc::ClientContext& context, Options options,
-    google::cloud::resourcemanager::v3::CreateFolderRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.resourcemanager.v3.Folders",
-                                     "CreateFolder");
+StatusOr<google::longrunning::Operation>
+FoldersTracingStub::CreateFolder(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::resourcemanager::v3::CreateFolderRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.resourcemanager.v3.Folders", "CreateFolder");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -94,23 +92,23 @@ StatusOr<google::longrunning::Operation> FoldersTracingStub::CreateFolder(
 
 future<StatusOr<google::longrunning::Operation>>
 FoldersTracingStub::AsyncUpdateFolder(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::resourcemanager::v3::UpdateFolderRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.resourcemanager.v3.Folders",
-                                     "UpdateFolder");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::resourcemanager::v3::UpdateFolderRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.resourcemanager.v3.Folders", "UpdateFolder");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncUpdateFolder(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
-StatusOr<google::longrunning::Operation> FoldersTracingStub::UpdateFolder(
-    grpc::ClientContext& context, Options options,
-    google::cloud::resourcemanager::v3::UpdateFolderRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.resourcemanager.v3.Folders",
-                                     "UpdateFolder");
+StatusOr<google::longrunning::Operation>
+FoldersTracingStub::UpdateFolder(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::resourcemanager::v3::UpdateFolderRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.resourcemanager.v3.Folders", "UpdateFolder");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -119,23 +117,23 @@ StatusOr<google::longrunning::Operation> FoldersTracingStub::UpdateFolder(
 
 future<StatusOr<google::longrunning::Operation>>
 FoldersTracingStub::AsyncMoveFolder(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::resourcemanager::v3::MoveFolderRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.resourcemanager.v3.Folders",
-                                     "MoveFolder");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::resourcemanager::v3::MoveFolderRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.resourcemanager.v3.Folders", "MoveFolder");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncMoveFolder(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
-StatusOr<google::longrunning::Operation> FoldersTracingStub::MoveFolder(
-    grpc::ClientContext& context, Options options,
-    google::cloud::resourcemanager::v3::MoveFolderRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.resourcemanager.v3.Folders",
-                                     "MoveFolder");
+StatusOr<google::longrunning::Operation>
+FoldersTracingStub::MoveFolder(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::resourcemanager::v3::MoveFolderRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.resourcemanager.v3.Folders", "MoveFolder");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -144,23 +142,23 @@ StatusOr<google::longrunning::Operation> FoldersTracingStub::MoveFolder(
 
 future<StatusOr<google::longrunning::Operation>>
 FoldersTracingStub::AsyncDeleteFolder(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::resourcemanager::v3::DeleteFolderRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.resourcemanager.v3.Folders",
-                                     "DeleteFolder");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::resourcemanager::v3::DeleteFolderRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.resourcemanager.v3.Folders", "DeleteFolder");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncDeleteFolder(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
-StatusOr<google::longrunning::Operation> FoldersTracingStub::DeleteFolder(
-    grpc::ClientContext& context, Options options,
-    google::cloud::resourcemanager::v3::DeleteFolderRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.resourcemanager.v3.Folders",
-                                     "DeleteFolder");
+StatusOr<google::longrunning::Operation>
+FoldersTracingStub::DeleteFolder(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::resourcemanager::v3::DeleteFolderRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.resourcemanager.v3.Folders", "DeleteFolder");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -169,24 +167,23 @@ StatusOr<google::longrunning::Operation> FoldersTracingStub::DeleteFolder(
 
 future<StatusOr<google::longrunning::Operation>>
 FoldersTracingStub::AsyncUndeleteFolder(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::resourcemanager::v3::UndeleteFolderRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.resourcemanager.v3.Folders",
-                                     "UndeleteFolder");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::resourcemanager::v3::UndeleteFolderRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.resourcemanager.v3.Folders", "UndeleteFolder");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f =
-      child_->AsyncUndeleteFolder(cq, context, std::move(options), request);
+  auto f = child_->AsyncUndeleteFolder(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
-StatusOr<google::longrunning::Operation> FoldersTracingStub::UndeleteFolder(
-    grpc::ClientContext& context, Options options,
-    google::cloud::resourcemanager::v3::UndeleteFolderRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.resourcemanager.v3.Folders",
-                                     "UndeleteFolder");
+StatusOr<google::longrunning::Operation>
+FoldersTracingStub::UndeleteFolder(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::resourcemanager::v3::UndeleteFolderRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.resourcemanager.v3.Folders", "UndeleteFolder");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -194,10 +191,10 @@ StatusOr<google::longrunning::Operation> FoldersTracingStub::UndeleteFolder(
 }
 
 StatusOr<google::iam::v1::Policy> FoldersTracingStub::GetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.resourcemanager.v3.Folders",
-                                     "GetIamPolicy");
+  auto span = internal::MakeSpanGrpc("google.cloud.resourcemanager.v3.Folders", "GetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -205,33 +202,32 @@ StatusOr<google::iam::v1::Policy> FoldersTracingStub::GetIamPolicy(
 }
 
 StatusOr<google::iam::v1::Policy> FoldersTracingStub::SetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.resourcemanager.v3.Folders",
-                                     "SetIamPolicy");
+  auto span = internal::MakeSpanGrpc("google.cloud.resourcemanager.v3.Folders", "SetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->SetIamPolicy(context, options, request));
 }
 
-StatusOr<google::iam::v1::TestIamPermissionsResponse>
-FoldersTracingStub::TestIamPermissions(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::iam::v1::TestIamPermissionsResponse> FoldersTracingStub::TestIamPermissions(
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.resourcemanager.v3.Folders",
-                                     "TestIamPermissions");
+  auto span = internal::MakeSpanGrpc("google.cloud.resourcemanager.v3.Folders", "TestIamPermissions");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->TestIamPermissions(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->TestIamPermissions(context, options, request));
 }
 
 StatusOr<google::longrunning::Operation> FoldersTracingStub::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.resourcemanager.v3.Folders",
-                                     "GetOperation");
+  auto span = internal::MakeSpanGrpc("google.cloud.resourcemanager.v3.Folders", "GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -248,7 +244,8 @@ FoldersTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncGetOperation(cq, context, std::move(options), request);
+  auto f = child_->AsyncGetOperation(
+      cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -261,8 +258,8 @@ future<Status> FoldersTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f =
-      child_->AsyncCancelOperation(cq, context, std::move(options), request);
+  auto f = child_->AsyncCancelOperation(
+      cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 

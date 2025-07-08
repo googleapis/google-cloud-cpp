@@ -35,37 +35,23 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options AdvisoryNotificationsServiceDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options),
-      "GOOGLE_CLOUD_CPP_ADVISORY_NOTIFICATIONS_SERVICE_ENDPOINT", "",
-      "GOOGLE_CLOUD_CPP_ADVISORY_NOTIFICATIONS_SERVICE_AUTHORITY",
+      std::move(options), "GOOGLE_CLOUD_CPP_ADVISORY_NOTIFICATIONS_SERVICE_ENDPOINT",
+      "", "GOOGLE_CLOUD_CPP_ADVISORY_NOTIFICATIONS_SERVICE_AUTHORITY",
       "advisorynotifications.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
-  if (!options.has<advisorynotifications_v1::
-                       AdvisoryNotificationsServiceRetryPolicyOption>()) {
-    options.set<advisorynotifications_v1::
-                    AdvisoryNotificationsServiceRetryPolicyOption>(
-        advisorynotifications_v1::
-            AdvisoryNotificationsServiceLimitedTimeRetryPolicy(
-                std::chrono::minutes(30))
-                .clone());
+  if (!options.has<advisorynotifications_v1::AdvisoryNotificationsServiceRetryPolicyOption>()) {
+    options.set<advisorynotifications_v1::AdvisoryNotificationsServiceRetryPolicyOption>(
+        advisorynotifications_v1::AdvisoryNotificationsServiceLimitedTimeRetryPolicy(
+            std::chrono::minutes(30)).clone());
   }
-  if (!options.has<advisorynotifications_v1::
-                       AdvisoryNotificationsServiceBackoffPolicyOption>()) {
-    options.set<advisorynotifications_v1::
-                    AdvisoryNotificationsServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(
-            std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
-            .clone());
+  if (!options.has<advisorynotifications_v1::AdvisoryNotificationsServiceBackoffPolicyOption>()) {
+    options.set<advisorynotifications_v1::AdvisoryNotificationsServiceBackoffPolicyOption>(
+        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
   }
-  if (!options.has<
-          advisorynotifications_v1::
-              AdvisoryNotificationsServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<
-        advisorynotifications_v1::
-            AdvisoryNotificationsServiceConnectionIdempotencyPolicyOption>(
-        advisorynotifications_v1::
-            MakeDefaultAdvisoryNotificationsServiceConnectionIdempotencyPolicy());
+  if (!options.has<advisorynotifications_v1::AdvisoryNotificationsServiceConnectionIdempotencyPolicyOption>()) {
+    options.set<advisorynotifications_v1::AdvisoryNotificationsServiceConnectionIdempotencyPolicyOption>(
+        advisorynotifications_v1::MakeDefaultAdvisoryNotificationsServiceConnectionIdempotencyPolicy());
   }
 
   return options;

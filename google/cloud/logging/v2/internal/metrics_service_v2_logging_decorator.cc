@@ -31,27 +31,34 @@ namespace logging_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 MetricsServiceV2Logging::MetricsServiceV2Logging(
-    std::shared_ptr<MetricsServiceV2Stub> child, TracingOptions tracing_options,
+    std::shared_ptr<MetricsServiceV2Stub> child,
+    TracingOptions tracing_options,
     std::set<std::string> const&)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::logging::v2::ListLogMetricsResponse>
 MetricsServiceV2Logging::ListLogMetrics(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::logging::v2::ListLogMetricsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::logging::v2::ListLogMetricsRequest const& request) {
         return child_->ListLogMetrics(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::logging::v2::LogMetric> MetricsServiceV2Logging::GetLogMetric(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::logging::v2::LogMetric>
+MetricsServiceV2Logging::GetLogMetric(
+    grpc::ClientContext& context,
+    Options const& options,
     google::logging::v2::GetLogMetricRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::logging::v2::GetLogMetricRequest const& request) {
         return child_->GetLogMetric(context, options, request);
       },
@@ -60,10 +67,12 @@ StatusOr<google::logging::v2::LogMetric> MetricsServiceV2Logging::GetLogMetric(
 
 StatusOr<google::logging::v2::LogMetric>
 MetricsServiceV2Logging::CreateLogMetric(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::logging::v2::CreateLogMetricRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::logging::v2::CreateLogMetricRequest const& request) {
         return child_->CreateLogMetric(context, options, request);
       },
@@ -72,21 +81,26 @@ MetricsServiceV2Logging::CreateLogMetric(
 
 StatusOr<google::logging::v2::LogMetric>
 MetricsServiceV2Logging::UpdateLogMetric(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::logging::v2::UpdateLogMetricRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::logging::v2::UpdateLogMetricRequest const& request) {
         return child_->UpdateLogMetric(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status MetricsServiceV2Logging::DeleteLogMetric(
-    grpc::ClientContext& context, Options const& options,
+Status
+MetricsServiceV2Logging::DeleteLogMetric(
+    grpc::ClientContext& context,
+    Options const& options,
     google::logging::v2::DeleteLogMetricRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::logging::v2::DeleteLogMetricRequest const& request) {
         return child_->DeleteLogMetric(context, options, request);
       },
@@ -95,32 +109,40 @@ Status MetricsServiceV2Logging::DeleteLogMetric(
 
 StatusOr<google::longrunning::ListOperationsResponse>
 MetricsServiceV2Logging::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::ListOperationsRequest const& request) {
         return child_->ListOperations(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> MetricsServiceV2Logging::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::Operation>
+MetricsServiceV2Logging::GetOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::GetOperationRequest const& request) {
         return child_->GetOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status MetricsServiceV2Logging::CancelOperation(
-    grpc::ClientContext& context, Options const& options,
+Status
+MetricsServiceV2Logging::CancelOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::CancelOperationRequest const& request) {
         return child_->CancelOperation(context, options, request);
       },

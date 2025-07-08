@@ -46,51 +46,51 @@ IAMCredentialsMetadata::IAMCredentialsMetadata(
 
 StatusOr<google::iam::credentials::v1::GenerateAccessTokenResponse>
 IAMCredentialsMetadata::GenerateAccessToken(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::credentials::v1::GenerateAccessTokenRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GenerateAccessToken(context, options, request);
 }
 
 StatusOr<google::iam::credentials::v1::GenerateIdTokenResponse>
 IAMCredentialsMetadata::GenerateIdToken(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::credentials::v1::GenerateIdTokenRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GenerateIdToken(context, options, request);
 }
 
 StatusOr<google::iam::credentials::v1::SignBlobResponse>
 IAMCredentialsMetadata::SignBlob(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::credentials::v1::SignBlobRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->SignBlob(context, options, request);
 }
 
 StatusOr<google::iam::credentials::v1::SignJwtResponse>
 IAMCredentialsMetadata::SignJwt(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::credentials::v1::SignJwtRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->SignJwt(context, options, request);
 }
 
 void IAMCredentialsMetadata::SetMetadata(grpc::ClientContext& context,
-                                         Options const& options,
-                                         std::string const& request_params) {
+                                        Options const& options,
+                                        std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
 void IAMCredentialsMetadata::SetMetadata(grpc::ClientContext& context,
-                                         Options const& options) {
-  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
-                                       api_client_header_);
+                                        Options const& options) {
+  google::cloud::internal::SetMetadata(
+      context, options, fixed_metadata_, api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

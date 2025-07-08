@@ -32,118 +32,132 @@ WebhooksStub::~WebhooksStub() = default;
 
 StatusOr<google::cloud::dialogflow::cx::v3::ListWebhooksResponse>
 DefaultWebhooksStub::ListWebhooks(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::dialogflow::cx::v3::ListWebhooksRequest const& request) {
-  google::cloud::dialogflow::cx::v3::ListWebhooksResponse response;
-  auto status = grpc_stub_->ListWebhooks(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::dialogflow::cx::v3::ListWebhooksRequest const& request) {
+    google::cloud::dialogflow::cx::v3::ListWebhooksResponse response;
+    auto status =
+        grpc_stub_->ListWebhooks(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Webhook>
 DefaultWebhooksStub::GetWebhook(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::dialogflow::cx::v3::GetWebhookRequest const& request) {
-  google::cloud::dialogflow::cx::v3::Webhook response;
-  auto status = grpc_stub_->GetWebhook(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::dialogflow::cx::v3::GetWebhookRequest const& request) {
+    google::cloud::dialogflow::cx::v3::Webhook response;
+    auto status =
+        grpc_stub_->GetWebhook(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Webhook>
 DefaultWebhooksStub::CreateWebhook(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::dialogflow::cx::v3::CreateWebhookRequest const& request) {
-  google::cloud::dialogflow::cx::v3::Webhook response;
-  auto status = grpc_stub_->CreateWebhook(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::dialogflow::cx::v3::CreateWebhookRequest const& request) {
+    google::cloud::dialogflow::cx::v3::Webhook response;
+    auto status =
+        grpc_stub_->CreateWebhook(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Webhook>
 DefaultWebhooksStub::UpdateWebhook(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::dialogflow::cx::v3::UpdateWebhookRequest const& request) {
-  google::cloud::dialogflow::cx::v3::Webhook response;
-  auto status = grpc_stub_->UpdateWebhook(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::dialogflow::cx::v3::UpdateWebhookRequest const& request) {
+    google::cloud::dialogflow::cx::v3::Webhook response;
+    auto status =
+        grpc_stub_->UpdateWebhook(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-Status DefaultWebhooksStub::DeleteWebhook(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::dialogflow::cx::v3::DeleteWebhookRequest const& request) {
-  google::protobuf::Empty response;
-  auto status = grpc_stub_->DeleteWebhook(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return google::cloud::Status();
+Status
+DefaultWebhooksStub::DeleteWebhook(
+  grpc::ClientContext& context, Options const&,
+  google::cloud::dialogflow::cx::v3::DeleteWebhookRequest const& request) {
+    google::protobuf::Empty response;
+    auto status =
+        grpc_stub_->DeleteWebhook(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return google::cloud::Status();
 }
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 DefaultWebhooksStub::ListLocations(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::location::ListLocationsRequest const& request) {
-  google::cloud::location::ListLocationsResponse response;
-  auto status = locations_stub_->ListLocations(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::location::ListLocationsRequest const& request) {
+    google::cloud::location::ListLocationsResponse response;
+    auto status =
+        locations_stub_->ListLocations(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-StatusOr<google::cloud::location::Location> DefaultWebhooksStub::GetLocation(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::location::GetLocationRequest const& request) {
-  google::cloud::location::Location response;
-  auto status = locations_stub_->GetLocation(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::cloud::location::Location>
+DefaultWebhooksStub::GetLocation(
+  grpc::ClientContext& context, Options const&,
+  google::cloud::location::GetLocationRequest const& request) {
+    google::cloud::location::Location response;
+    auto status =
+        locations_stub_->GetLocation(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
 DefaultWebhooksStub::ListOperations(
-    grpc::ClientContext& context, Options const&,
-    google::longrunning::ListOperationsRequest const& request) {
-  google::longrunning::ListOperationsResponse response;
-  auto status = operations_stub_->ListOperations(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::longrunning::ListOperationsRequest const& request) {
+    google::longrunning::ListOperationsResponse response;
+    auto status =
+        operations_stub_->ListOperations(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-StatusOr<google::longrunning::Operation> DefaultWebhooksStub::GetOperation(
-    grpc::ClientContext& context, Options const&,
-    google::longrunning::GetOperationRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = operations_stub_->GetOperation(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::longrunning::Operation>
+DefaultWebhooksStub::GetOperation(
+  grpc::ClientContext& context, Options const&,
+  google::longrunning::GetOperationRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        operations_stub_->GetOperation(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-Status DefaultWebhooksStub::CancelOperation(
-    grpc::ClientContext& context, Options const&,
-    google::longrunning::CancelOperationRequest const& request) {
-  google::protobuf::Empty response;
-  auto status = operations_stub_->CancelOperation(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return google::cloud::Status();
+Status
+DefaultWebhooksStub::CancelOperation(
+  grpc::ClientContext& context, Options const&,
+  google::longrunning::CancelOperationRequest const& request) {
+    google::protobuf::Empty response;
+    auto status =
+        operations_stub_->CancelOperation(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return google::cloud::Status();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

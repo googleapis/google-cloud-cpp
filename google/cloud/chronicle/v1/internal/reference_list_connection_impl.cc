@@ -17,8 +17,8 @@
 // source: google/cloud/chronicle/v1/reference_list.proto
 
 #include "google/cloud/chronicle/v1/internal/reference_list_connection_impl.h"
-#include "google/cloud/chronicle/v1/internal/reference_list_option_defaults.h"
 #include "google/cloud/background_threads.h"
+#include "google/cloud/chronicle/v1/internal/reference_list_option_defaults.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
@@ -32,80 +32,67 @@ namespace chronicle_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<chronicle_v1::ReferenceListServiceRetryPolicy> retry_policy(
-    Options const& options) {
-  return options.get<chronicle_v1::ReferenceListServiceRetryPolicyOption>()
-      ->clone();
+std::unique_ptr<chronicle_v1::ReferenceListServiceRetryPolicy>
+retry_policy(Options const& options) {
+  return options.get<chronicle_v1::ReferenceListServiceRetryPolicyOption>()->clone();
 }
 
-std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-  return options.get<chronicle_v1::ReferenceListServiceBackoffPolicyOption>()
-      ->clone();
+std::unique_ptr<BackoffPolicy>
+backoff_policy(Options const& options) {
+  return options.get<chronicle_v1::ReferenceListServiceBackoffPolicyOption>()->clone();
 }
 
 std::unique_ptr<chronicle_v1::ReferenceListServiceConnectionIdempotencyPolicy>
 idempotency_policy(Options const& options) {
-  return options
-      .get<
-          chronicle_v1::ReferenceListServiceConnectionIdempotencyPolicyOption>()
-      ->clone();
+  return options.get<chronicle_v1::ReferenceListServiceConnectionIdempotencyPolicyOption>()->clone();
 }
 
-}  // namespace
+} // namespace
 
 ReferenceListServiceConnectionImpl::ReferenceListServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<chronicle_v1_internal::ReferenceListServiceStub> stub,
     Options options)
-    : background_(std::move(background)),
-      stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options), ReferenceListServiceConnection::options())) {}
+  : background_(std::move(background)), stub_(std::move(stub)),
+    options_(internal::MergeOptions(
+        std::move(options),
+        ReferenceListServiceConnection::options())) {}
 
 StatusOr<google::cloud::chronicle::v1::ReferenceList>
-ReferenceListServiceConnectionImpl::GetReferenceList(
-    google::cloud::chronicle::v1::GetReferenceListRequest const& request) {
+ReferenceListServiceConnectionImpl::GetReferenceList(google::cloud::chronicle::v1::GetReferenceListRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetReferenceList(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::chronicle::v1::GetReferenceListRequest const&
-                 request) {
+             google::cloud::chronicle::v1::GetReferenceListRequest const& request) {
         return stub_->GetReferenceList(context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::cloud::chronicle::v1::ReferenceList>
-ReferenceListServiceConnectionImpl::ListReferenceLists(
-    google::cloud::chronicle::v1::ListReferenceListsRequest request) {
+ReferenceListServiceConnectionImpl::ListReferenceLists(google::cloud::chronicle::v1::ListReferenceListsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListReferenceLists(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::chronicle::v1::ReferenceList>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::chronicle::v1::ReferenceList>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<chronicle_v1::ReferenceListServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<chronicle_v1::ReferenceListServiceRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::chronicle::v1::ListReferenceListsRequest const& r) {
+          Options const& options, google::cloud::chronicle::v1::ListReferenceListsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](
-                grpc::ClientContext& context, Options const& options,
-                google::cloud::chronicle::v1::ListReferenceListsRequest const&
-                    request) {
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::cloud::chronicle::v1::ListReferenceListsRequest const& request) {
               return stub->ListReferenceLists(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::chronicle::v1::ListReferenceListsResponse r) {
-        std::vector<google::cloud::chronicle::v1::ReferenceList> result(
-            r.reference_lists().size());
+        std::vector<google::cloud::chronicle::v1::ReferenceList> result(r.reference_lists().size());
         auto& messages = *r.mutable_reference_lists();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -113,51 +100,43 @@ ReferenceListServiceConnectionImpl::ListReferenceLists(
 }
 
 StatusOr<google::cloud::chronicle::v1::ReferenceList>
-ReferenceListServiceConnectionImpl::CreateReferenceList(
-    google::cloud::chronicle::v1::CreateReferenceListRequest const& request) {
+ReferenceListServiceConnectionImpl::CreateReferenceList(google::cloud::chronicle::v1::CreateReferenceListRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateReferenceList(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::chronicle::v1::CreateReferenceListRequest const&
-                 request) {
+             google::cloud::chronicle::v1::CreateReferenceListRequest const& request) {
         return stub_->CreateReferenceList(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::chronicle::v1::ReferenceList>
-ReferenceListServiceConnectionImpl::UpdateReferenceList(
-    google::cloud::chronicle::v1::UpdateReferenceListRequest const& request) {
+ReferenceListServiceConnectionImpl::UpdateReferenceList(google::cloud::chronicle::v1::UpdateReferenceListRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateReferenceList(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::chronicle::v1::UpdateReferenceListRequest const&
-                 request) {
+             google::cloud::chronicle::v1::UpdateReferenceListRequest const& request) {
         return stub_->UpdateReferenceList(context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::longrunning::Operation>
-ReferenceListServiceConnectionImpl::ListOperations(
-    google::longrunning::ListOperationsRequest request) {
+ReferenceListServiceConnectionImpl::ListOperations(google::longrunning::ListOperationsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListOperations(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::longrunning::Operation>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::longrunning::Operation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<chronicle_v1::ReferenceListServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<chronicle_v1::ReferenceListServiceRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::longrunning::ListOperationsRequest const& r) {
+          Options const& options, google::longrunning::ListOperationsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
@@ -167,8 +146,7 @@ ReferenceListServiceConnectionImpl::ListOperations(
             options, r, function_name);
       },
       [](google::longrunning::ListOperationsResponse r) {
-        std::vector<google::longrunning::Operation> result(
-            r.operations().size());
+        std::vector<google::longrunning::Operation> result(r.operations().size());
         auto& messages = *r.mutable_operations();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -176,8 +154,7 @@ ReferenceListServiceConnectionImpl::ListOperations(
 }
 
 StatusOr<google::longrunning::Operation>
-ReferenceListServiceConnectionImpl::GetOperation(
-    google::longrunning::GetOperationRequest const& request) {
+ReferenceListServiceConnectionImpl::GetOperation(google::longrunning::GetOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -189,8 +166,8 @@ ReferenceListServiceConnectionImpl::GetOperation(
       *current, request, __func__);
 }
 
-Status ReferenceListServiceConnectionImpl::DeleteOperation(
-    google::longrunning::DeleteOperationRequest const& request) {
+Status
+ReferenceListServiceConnectionImpl::DeleteOperation(google::longrunning::DeleteOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -202,8 +179,8 @@ Status ReferenceListServiceConnectionImpl::DeleteOperation(
       *current, request, __func__);
 }
 
-Status ReferenceListServiceConnectionImpl::CancelOperation(
-    google::longrunning::CancelOperationRequest const& request) {
+Status
+ReferenceListServiceConnectionImpl::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),

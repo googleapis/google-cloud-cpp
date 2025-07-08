@@ -42,18 +42,13 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockGatewayControlConnection
-    : public gkeconnect_gateway_v1::GatewayControlConnection {
+class MockGatewayControlConnection : public gkeconnect_gateway_v1::GatewayControlConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(
-      StatusOr<
-          google::cloud::gkeconnect::gateway::v1::GenerateCredentialsResponse>,
-      GenerateCredentials,
-      (google::cloud::gkeconnect::gateway::v1::GenerateCredentialsRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::gkeconnect::gateway::v1::GenerateCredentialsResponse>,
+  GenerateCredentials,
+  (google::cloud::gkeconnect::gateway::v1::GenerateCredentialsRequest const& request), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

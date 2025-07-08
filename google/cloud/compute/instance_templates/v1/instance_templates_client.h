@@ -64,9 +64,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class InstanceTemplatesClient {
  public:
-  explicit InstanceTemplatesClient(
-      std::shared_ptr<InstanceTemplatesConnection> connection,
-      Options opts = {});
+  explicit InstanceTemplatesClient(std::shared_ptr<InstanceTemplatesConnection> connection, Options opts = {});
   ~InstanceTemplatesClient();
 
   ///@{
@@ -79,12 +77,10 @@ class InstanceTemplatesClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(InstanceTemplatesClient const& a,
-                         InstanceTemplatesClient const& b) {
+  friend bool operator==(InstanceTemplatesClient const& a, InstanceTemplatesClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(InstanceTemplatesClient const& a,
-                         InstanceTemplatesClient const& b) {
+  friend bool operator!=(InstanceTemplatesClient const& a, InstanceTemplatesClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -123,11 +119,8 @@ class InstanceTemplatesClient {
   /// [google.cloud.cpp.compute.v1.InstanceTemplatesScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_065.proto#L134}
   ///
   // clang-format on
-  StreamRange<
-      std::pair<std::string,
-                google::cloud::cpp::compute::v1::InstanceTemplatesScopedList>>
-  AggregatedListInstanceTemplates(std::string const& project,
-                                  Options opts = {});
+  StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::InstanceTemplatesScopedList>>
+  AggregatedListInstanceTemplates(std::string const& project, Options opts = {});
 
   // clang-format off
   ///
@@ -168,13 +161,8 @@ class InstanceTemplatesClient {
   /// [google.cloud.cpp.compute.v1.InstanceTemplatesScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_065.proto#L134}
   ///
   // clang-format on
-  StreamRange<
-      std::pair<std::string,
-                google::cloud::cpp::compute::v1::InstanceTemplatesScopedList>>
-  AggregatedListInstanceTemplates(
-      google::cloud::cpp::compute::instance_templates::v1::
-          AggregatedListInstanceTemplatesRequest request,
-      Options opts = {});
+  StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::InstanceTemplatesScopedList>>
+  AggregatedListInstanceTemplates(google::cloud::cpp::compute::instance_templates::v1::AggregatedListInstanceTemplatesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -209,9 +197,7 @@ class InstanceTemplatesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteInstanceTemplate(std::string const& project,
-                         std::string const& instance_template,
-                         Options opts = {});
+  DeleteInstanceTemplate(std::string const& project, std::string const& instance_template, Options opts = {});
 
   // clang-format off
   ///
@@ -224,9 +210,8 @@ class InstanceTemplatesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteInstanceTemplate(
-      NoAwaitTag, std::string const& project,
-      std::string const& instance_template, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeleteInstanceTemplate(NoAwaitTag, std::string const& project, std::string const& instance_template, Options opts = {});
 
   // clang-format off
   ///
@@ -265,9 +250,7 @@ class InstanceTemplatesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteInstanceTemplate(google::cloud::cpp::compute::instance_templates::v1::
-                             DeleteInstanceTemplateRequest const& request,
-                         Options opts = {});
+  DeleteInstanceTemplate(google::cloud::cpp::compute::instance_templates::v1::DeleteInstanceTemplateRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -280,11 +263,8 @@ class InstanceTemplatesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteInstanceTemplate(
-      NoAwaitTag,
-      google::cloud::cpp::compute::instance_templates::v1::
-          DeleteInstanceTemplateRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeleteInstanceTemplate(NoAwaitTag, google::cloud::cpp::compute::instance_templates::v1::DeleteInstanceTemplateRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -296,9 +276,7 @@ class InstanceTemplatesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteInstanceTemplate(
-      google::cloud::cpp::compute::v1::Operation const& operation,
-      Options opts = {});
+  DeleteInstanceTemplate(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -325,8 +303,7 @@ class InstanceTemplatesClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::InstanceTemplate>
-  GetInstanceTemplate(std::string const& project,
-                      std::string const& instance_template, Options opts = {});
+  GetInstanceTemplate(std::string const& project, std::string const& instance_template, Options opts = {});
 
   // clang-format off
   ///
@@ -357,9 +334,7 @@ class InstanceTemplatesClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::InstanceTemplate>
-  GetInstanceTemplate(google::cloud::cpp::compute::instance_templates::v1::
-                          GetInstanceTemplateRequest const& request,
-                      Options opts = {});
+  GetInstanceTemplate(google::cloud::cpp::compute::instance_templates::v1::GetInstanceTemplateRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -386,9 +361,8 @@ class InstanceTemplatesClient {
   /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_007.proto#L178}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
-      std::string const& project, std::string const& resource,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Policy>
+  GetIamPolicy(std::string const& project, std::string const& resource, Options opts = {});
 
   // clang-format off
   ///
@@ -419,10 +393,8 @@ class InstanceTemplatesClient {
   /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_007.proto#L178}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
-      google::cloud::cpp::compute::instance_templates::v1::
-          GetIamPolicyRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Policy>
+  GetIamPolicy(google::cloud::cpp::compute::instance_templates::v1::GetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -458,11 +430,7 @@ class InstanceTemplatesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertInstanceTemplate(
-      std::string const& project,
-      google::cloud::cpp::compute::v1::InstanceTemplate const&
-          instance_template_resource,
-      Options opts = {});
+  InsertInstanceTemplate(std::string const& project, google::cloud::cpp::compute::v1::InstanceTemplate const& instance_template_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -475,11 +443,8 @@ class InstanceTemplatesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertInstanceTemplate(
-      NoAwaitTag, std::string const& project,
-      google::cloud::cpp::compute::v1::InstanceTemplate const&
-          instance_template_resource,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  InsertInstanceTemplate(NoAwaitTag, std::string const& project, google::cloud::cpp::compute::v1::InstanceTemplate const& instance_template_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -519,9 +484,7 @@ class InstanceTemplatesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertInstanceTemplate(google::cloud::cpp::compute::instance_templates::v1::
-                             InsertInstanceTemplateRequest const& request,
-                         Options opts = {});
+  InsertInstanceTemplate(google::cloud::cpp::compute::instance_templates::v1::InsertInstanceTemplateRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -534,11 +497,8 @@ class InstanceTemplatesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertInstanceTemplate(
-      NoAwaitTag,
-      google::cloud::cpp::compute::instance_templates::v1::
-          InsertInstanceTemplateRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  InsertInstanceTemplate(NoAwaitTag, google::cloud::cpp::compute::instance_templates::v1::InsertInstanceTemplateRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -550,9 +510,7 @@ class InstanceTemplatesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertInstanceTemplate(
-      google::cloud::cpp::compute::v1::Operation const& operation,
-      Options opts = {});
+  InsertInstanceTemplate(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -629,9 +587,7 @@ class InstanceTemplatesClient {
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::InstanceTemplate>
-  ListInstanceTemplates(google::cloud::cpp::compute::instance_templates::v1::
-                            ListInstanceTemplatesRequest request,
-                        Options opts = {});
+  ListInstanceTemplates(google::cloud::cpp::compute::instance_templates::v1::ListInstanceTemplatesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -659,11 +615,8 @@ class InstanceTemplatesClient {
   /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_007.proto#L178}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
-      std::string const& project, std::string const& resource,
-      google::cloud::cpp::compute::v1::GlobalSetPolicyRequest const&
-          global_set_policy_request_resource,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Policy>
+  SetIamPolicy(std::string const& project, std::string const& resource, google::cloud::cpp::compute::v1::GlobalSetPolicyRequest const& global_set_policy_request_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -694,10 +647,8 @@ class InstanceTemplatesClient {
   /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_007.proto#L178}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
-      google::cloud::cpp::compute::instance_templates::v1::
-          SetIamPolicyRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Policy>
+  SetIamPolicy(google::cloud::cpp::compute::instance_templates::v1::SetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -725,11 +676,7 @@ class InstanceTemplatesClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(
-      std::string const& project, std::string const& resource,
-      google::cloud::cpp::compute::v1::TestPermissionsRequest const&
-          test_permissions_request_resource,
-      Options opts = {});
+  TestIamPermissions(std::string const& project, std::string const& resource, google::cloud::cpp::compute::v1::TestPermissionsRequest const& test_permissions_request_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -760,9 +707,7 @@ class InstanceTemplatesClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(google::cloud::cpp::compute::instance_templates::v1::
-                         TestIamPermissionsRequest const& request,
-                     Options opts = {});
+  TestIamPermissions(google::cloud::cpp::compute::instance_templates::v1::TestIamPermissionsRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<InstanceTemplatesConnection> connection_;

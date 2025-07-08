@@ -46,61 +46,50 @@ class MockSessionsConnection : public dialogflow_cx::SessionsConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::cx::v3::DetectIntentResponse>,
-      DetectIntent,
-      (google::cloud::dialogflow::cx::v3::DetectIntentRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::dialogflow::cx::v3::DetectIntentResponse>,
+  DetectIntent,
+  (google::cloud::dialogflow::cx::v3::DetectIntentRequest const& request), (override));
 
-  MOCK_METHOD(
-      StreamRange<google::cloud::dialogflow::cx::v3::DetectIntentResponse>,
-      ServerStreamingDetectIntent,
-      (google::cloud::dialogflow::cx::v3::DetectIntentRequest const& request),
-      (override));
+  MOCK_METHOD(StreamRange<google::cloud::dialogflow::cx::v3::DetectIntentResponse>,
+  ServerStreamingDetectIntent,
+  (google::cloud::dialogflow::cx::v3::DetectIntentRequest const& request), (override));
 
-  MOCK_METHOD(
-      (std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
-           google::cloud::dialogflow::cx::v3::StreamingDetectIntentRequest,
-           google::cloud::dialogflow::cx::v3::StreamingDetectIntentResponse>>),
+  MOCK_METHOD((std::unique_ptr<
+      ::google::cloud::AsyncStreamingReadWriteRpc<
+          google::cloud::dialogflow::cx::v3::StreamingDetectIntentRequest, google::cloud::dialogflow::cx::v3::StreamingDetectIntentResponse>>),
       AsyncStreamingDetectIntent, (), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::cx::v3::MatchIntentResponse>,
-      MatchIntent,
-      (google::cloud::dialogflow::cx::v3::MatchIntentRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::dialogflow::cx::v3::MatchIntentResponse>,
+  MatchIntent,
+  (google::cloud::dialogflow::cx::v3::MatchIntentRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::cx::v3::FulfillIntentResponse>,
-      FulfillIntent,
-      (google::cloud::dialogflow::cx::v3::FulfillIntentRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::dialogflow::cx::v3::FulfillIntentResponse>,
+  FulfillIntent,
+  (google::cloud::dialogflow::cx::v3::FulfillIntentRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::cx::v3::AnswerFeedback>,
-      SubmitAnswerFeedback,
-      (google::cloud::dialogflow::cx::v3::SubmitAnswerFeedbackRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::dialogflow::cx::v3::AnswerFeedback>,
+  SubmitAnswerFeedback,
+  (google::cloud::dialogflow::cx::v3::SubmitAnswerFeedbackRequest const& request), (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::location::Location>), ListLocations,
-              (google::cloud::location::ListLocationsRequest request),
-              (override));
+  MOCK_METHOD((StreamRange<google::cloud::location::Location>),
+  ListLocations,
+  (google::cloud::location::ListLocationsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::location::Location>, GetLocation,
-              (google::cloud::location::GetLocationRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::location::Location>,
+  GetLocation,
+  (google::cloud::location::GetLocationRequest const& request), (override));
 
-  MOCK_METHOD((StreamRange<google::longrunning::Operation>), ListOperations,
-              (google::longrunning::ListOperationsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::longrunning::Operation>),
+  ListOperations,
+  (google::longrunning::ListOperationsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
-              (google::longrunning::GetOperationRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  GetOperation,
+  (google::longrunning::GetOperationRequest const& request), (override));
 
-  MOCK_METHOD(Status, CancelOperation,
-              (google::longrunning::CancelOperationRequest const& request),
-              (override));
+  MOCK_METHOD(Status,
+  CancelOperation,
+  (google::longrunning::CancelOperationRequest const& request), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -37,8 +37,8 @@ namespace aiplatform_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ///
-/// A service for creating and managing Vertex AI's pipelines. This includes
-/// both `TrainingPipeline` resources (used for AutoML and custom training) and
+/// A service for creating and managing Vertex AI's pipelines. This includes both
+/// `TrainingPipeline` resources (used for AutoML and custom training) and
 /// `PipelineJob` resources (used for Vertex AI Pipelines).
 ///
 /// @par Equality
@@ -66,8 +66,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class PipelineServiceClient {
  public:
-  explicit PipelineServiceClient(
-      std::shared_ptr<PipelineServiceConnection> connection, Options opts = {});
+  explicit PipelineServiceClient(std::shared_ptr<PipelineServiceConnection> connection, Options opts = {});
   ~PipelineServiceClient();
 
   ///@{
@@ -80,12 +79,10 @@ class PipelineServiceClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(PipelineServiceClient const& a,
-                         PipelineServiceClient const& b) {
+  friend bool operator==(PipelineServiceClient const& a, PipelineServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(PipelineServiceClient const& a,
-                         PipelineServiceClient const& b) {
+  friend bool operator!=(PipelineServiceClient const& a, PipelineServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -116,10 +113,7 @@ class PipelineServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::TrainingPipeline>
-  CreateTrainingPipeline(
-      std::string const& parent,
-      google::cloud::aiplatform::v1::TrainingPipeline const& training_pipeline,
-      Options opts = {});
+  CreateTrainingPipeline(std::string const& parent, google::cloud::aiplatform::v1::TrainingPipeline const& training_pipeline, Options opts = {});
 
   // clang-format off
   ///
@@ -150,10 +144,7 @@ class PipelineServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::TrainingPipeline>
-  CreateTrainingPipeline(
-      google::cloud::aiplatform::v1::CreateTrainingPipelineRequest const&
-          request,
-      Options opts = {});
+  CreateTrainingPipeline(google::cloud::aiplatform::v1::CreateTrainingPipelineRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -179,8 +170,8 @@ class PipelineServiceClient {
   /// [google.cloud.aiplatform.v1.TrainingPipeline]: @googleapis_reference_link{google/cloud/aiplatform/v1/training_pipeline.proto#L42}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::TrainingPipeline> GetTrainingPipeline(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::TrainingPipeline>
+  GetTrainingPipeline(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -209,9 +200,8 @@ class PipelineServiceClient {
   /// [google.cloud.aiplatform.v1.TrainingPipeline]: @googleapis_reference_link{google/cloud/aiplatform/v1/training_pipeline.proto#L42}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::TrainingPipeline> GetTrainingPipeline(
-      google::cloud::aiplatform::v1::GetTrainingPipelineRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::TrainingPipeline>
+  GetTrainingPipeline(google::cloud::aiplatform::v1::GetTrainingPipelineRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -285,9 +275,7 @@ class PipelineServiceClient {
   ///
   // clang-format on
   StreamRange<google::cloud::aiplatform::v1::TrainingPipeline>
-  ListTrainingPipelines(
-      google::cloud::aiplatform::v1::ListTrainingPipelinesRequest request,
-      Options opts = {});
+  ListTrainingPipelines(google::cloud::aiplatform::v1::ListTrainingPipelinesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -334,8 +322,8 @@ class PipelineServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteTrainingPipeline(
-      NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteTrainingPipeline(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -372,10 +360,7 @@ class PipelineServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteTrainingPipeline(
-      google::cloud::aiplatform::v1::DeleteTrainingPipelineRequest const&
-          request,
-      Options opts = {});
+  DeleteTrainingPipeline(google::cloud::aiplatform::v1::DeleteTrainingPipelineRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -388,11 +373,8 @@ class PipelineServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteTrainingPipeline(
-      NoAwaitTag,
-      google::cloud::aiplatform::v1::DeleteTrainingPipelineRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteTrainingPipeline(NoAwaitTag, google::cloud::aiplatform::v1::DeleteTrainingPipelineRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -404,8 +386,7 @@ class PipelineServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteTrainingPipeline(google::longrunning::Operation const& operation,
-                         Options opts = {});
+  DeleteTrainingPipeline(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -445,7 +426,8 @@ class PipelineServiceClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelTrainingPipeline(std::string const& name, Options opts = {});
+  Status
+  CancelTrainingPipeline(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -488,10 +470,8 @@ class PipelineServiceClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelTrainingPipeline(
-      google::cloud::aiplatform::v1::CancelTrainingPipelineRequest const&
-          request,
-      Options opts = {});
+  Status
+  CancelTrainingPipeline(google::cloud::aiplatform::v1::CancelTrainingPipelineRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -523,10 +503,8 @@ class PipelineServiceClient {
   /// [google.cloud.aiplatform.v1.PipelineJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_job.proto#L46}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::PipelineJob> CreatePipelineJob(
-      std::string const& parent,
-      google::cloud::aiplatform::v1::PipelineJob const& pipeline_job,
-      std::string const& pipeline_job_id, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::PipelineJob>
+  CreatePipelineJob(std::string const& parent, google::cloud::aiplatform::v1::PipelineJob const& pipeline_job, std::string const& pipeline_job_id, Options opts = {});
 
   // clang-format off
   ///
@@ -555,9 +533,8 @@ class PipelineServiceClient {
   /// [google.cloud.aiplatform.v1.PipelineJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_job.proto#L46}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::PipelineJob> CreatePipelineJob(
-      google::cloud::aiplatform::v1::CreatePipelineJobRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::PipelineJob>
+  CreatePipelineJob(google::cloud::aiplatform::v1::CreatePipelineJobRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -583,8 +560,8 @@ class PipelineServiceClient {
   /// [google.cloud.aiplatform.v1.PipelineJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_job.proto#L46}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::PipelineJob> GetPipelineJob(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::PipelineJob>
+  GetPipelineJob(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -613,9 +590,8 @@ class PipelineServiceClient {
   /// [google.cloud.aiplatform.v1.PipelineJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_job.proto#L46}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::PipelineJob> GetPipelineJob(
-      google::cloud::aiplatform::v1::GetPipelineJobRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::PipelineJob>
+  GetPipelineJob(google::cloud::aiplatform::v1::GetPipelineJobRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -649,8 +625,8 @@ class PipelineServiceClient {
   /// [google.cloud.aiplatform.v1.PipelineJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_job.proto#L46}
   ///
   // clang-format on
-  StreamRange<google::cloud::aiplatform::v1::PipelineJob> ListPipelineJobs(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::aiplatform::v1::PipelineJob>
+  ListPipelineJobs(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -688,9 +664,8 @@ class PipelineServiceClient {
   /// [google.cloud.aiplatform.v1.PipelineJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_job.proto#L46}
   ///
   // clang-format on
-  StreamRange<google::cloud::aiplatform::v1::PipelineJob> ListPipelineJobs(
-      google::cloud::aiplatform::v1::ListPipelineJobsRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::aiplatform::v1::PipelineJob>
+  ListPipelineJobs(google::cloud::aiplatform::v1::ListPipelineJobsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -737,8 +712,8 @@ class PipelineServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeletePipelineJob(
-      NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeletePipelineJob(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -775,9 +750,7 @@ class PipelineServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeletePipelineJob(
-      google::cloud::aiplatform::v1::DeletePipelineJobRequest const& request,
-      Options opts = {});
+  DeletePipelineJob(google::cloud::aiplatform::v1::DeletePipelineJobRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -790,10 +763,8 @@ class PipelineServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeletePipelineJob(
-      NoAwaitTag,
-      google::cloud::aiplatform::v1::DeletePipelineJobRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeletePipelineJob(NoAwaitTag, google::cloud::aiplatform::v1::DeletePipelineJobRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -805,8 +776,7 @@ class PipelineServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeletePipelineJob(google::longrunning::Operation const& operation,
-                    Options opts = {});
+  DeletePipelineJob(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -844,11 +814,8 @@ class PipelineServiceClient {
   /// [google.cloud.aiplatform.v1.BatchDeletePipelineJobsResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_service.proto#L507}
   ///
   // clang-format on
-  future<
-      StatusOr<google::cloud::aiplatform::v1::BatchDeletePipelineJobsResponse>>
-  BatchDeletePipelineJobs(std::string const& parent,
-                          std::vector<std::string> const& names,
-                          Options opts = {});
+  future<StatusOr<google::cloud::aiplatform::v1::BatchDeletePipelineJobsResponse>>
+  BatchDeletePipelineJobs(std::string const& parent, std::vector<std::string> const& names, Options opts = {});
 
   // clang-format off
   ///
@@ -861,9 +828,8 @@ class PipelineServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> BatchDeletePipelineJobs(
-      NoAwaitTag, std::string const& parent,
-      std::vector<std::string> const& names, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  BatchDeletePipelineJobs(NoAwaitTag, std::string const& parent, std::vector<std::string> const& names, Options opts = {});
 
   // clang-format off
   ///
@@ -901,12 +867,8 @@ class PipelineServiceClient {
   /// [google.cloud.aiplatform.v1.BatchDeletePipelineJobsResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_service.proto#L507}
   ///
   // clang-format on
-  future<
-      StatusOr<google::cloud::aiplatform::v1::BatchDeletePipelineJobsResponse>>
-  BatchDeletePipelineJobs(
-      google::cloud::aiplatform::v1::BatchDeletePipelineJobsRequest const&
-          request,
-      Options opts = {});
+  future<StatusOr<google::cloud::aiplatform::v1::BatchDeletePipelineJobsResponse>>
+  BatchDeletePipelineJobs(google::cloud::aiplatform::v1::BatchDeletePipelineJobsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -919,11 +881,8 @@ class PipelineServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> BatchDeletePipelineJobs(
-      NoAwaitTag,
-      google::cloud::aiplatform::v1::BatchDeletePipelineJobsRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  BatchDeletePipelineJobs(NoAwaitTag, google::cloud::aiplatform::v1::BatchDeletePipelineJobsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -934,10 +893,8 @@ class PipelineServiceClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<
-      StatusOr<google::cloud::aiplatform::v1::BatchDeletePipelineJobsResponse>>
-  BatchDeletePipelineJobs(google::longrunning::Operation const& operation,
-                          Options opts = {});
+  future<StatusOr<google::cloud::aiplatform::v1::BatchDeletePipelineJobsResponse>>
+  BatchDeletePipelineJobs(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -976,7 +933,8 @@ class PipelineServiceClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelPipelineJob(std::string const& name, Options opts = {});
+  Status
+  CancelPipelineJob(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1018,9 +976,8 @@ class PipelineServiceClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelPipelineJob(
-      google::cloud::aiplatform::v1::CancelPipelineJobRequest const& request,
-      Options opts = {});
+  Status
+  CancelPipelineJob(google::cloud::aiplatform::v1::CancelPipelineJobRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1062,11 +1019,8 @@ class PipelineServiceClient {
   /// [google.cloud.aiplatform.v1.BatchCancelPipelineJobsResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_service.proto#L552}
   ///
   // clang-format on
-  future<
-      StatusOr<google::cloud::aiplatform::v1::BatchCancelPipelineJobsResponse>>
-  BatchCancelPipelineJobs(std::string const& parent,
-                          std::vector<std::string> const& names,
-                          Options opts = {});
+  future<StatusOr<google::cloud::aiplatform::v1::BatchCancelPipelineJobsResponse>>
+  BatchCancelPipelineJobs(std::string const& parent, std::vector<std::string> const& names, Options opts = {});
 
   // clang-format off
   ///
@@ -1079,9 +1033,8 @@ class PipelineServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> BatchCancelPipelineJobs(
-      NoAwaitTag, std::string const& parent,
-      std::vector<std::string> const& names, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  BatchCancelPipelineJobs(NoAwaitTag, std::string const& parent, std::vector<std::string> const& names, Options opts = {});
 
   // clang-format off
   ///
@@ -1123,12 +1076,8 @@ class PipelineServiceClient {
   /// [google.cloud.aiplatform.v1.BatchCancelPipelineJobsResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_service.proto#L552}
   ///
   // clang-format on
-  future<
-      StatusOr<google::cloud::aiplatform::v1::BatchCancelPipelineJobsResponse>>
-  BatchCancelPipelineJobs(
-      google::cloud::aiplatform::v1::BatchCancelPipelineJobsRequest const&
-          request,
-      Options opts = {});
+  future<StatusOr<google::cloud::aiplatform::v1::BatchCancelPipelineJobsResponse>>
+  BatchCancelPipelineJobs(google::cloud::aiplatform::v1::BatchCancelPipelineJobsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1141,11 +1090,8 @@ class PipelineServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> BatchCancelPipelineJobs(
-      NoAwaitTag,
-      google::cloud::aiplatform::v1::BatchCancelPipelineJobsRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  BatchCancelPipelineJobs(NoAwaitTag, google::cloud::aiplatform::v1::BatchCancelPipelineJobsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1156,10 +1102,8 @@ class PipelineServiceClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<
-      StatusOr<google::cloud::aiplatform::v1::BatchCancelPipelineJobsResponse>>
-  BatchCancelPipelineJobs(google::longrunning::Operation const& operation,
-                          Options opts = {});
+  future<StatusOr<google::cloud::aiplatform::v1::BatchCancelPipelineJobsResponse>>
+  BatchCancelPipelineJobs(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1197,8 +1141,8 @@ class PipelineServiceClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request, Options opts = {});
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1227,9 +1171,8 @@ class PipelineServiceClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1261,8 +1204,8 @@ class PipelineServiceClient {
   /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L100}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1293,8 +1236,8 @@ class PipelineServiceClient {
   /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1329,9 +1272,8 @@ class PipelineServiceClient {
   /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L153}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request,
-      Options opts = {});
+  StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1366,8 +1308,8 @@ class PipelineServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -1406,8 +1348,8 @@ class PipelineServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1433,8 +1375,8 @@ class PipelineServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1465,9 +1407,8 @@ class PipelineServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1491,7 +1432,8 @@ class PipelineServiceClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status DeleteOperation(std::string const& name, Options opts = {});
+  Status
+  DeleteOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1520,9 +1462,8 @@ class PipelineServiceClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request,
-      Options opts = {});
+  Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1556,7 +1497,8 @@ class PipelineServiceClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(std::string const& name, Options opts = {});
+  Status
+  CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1595,9 +1537,8 @@ class PipelineServiceClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request,
-      Options opts = {});
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1634,9 +1575,8 @@ class PipelineServiceClient {
   /// [google.longrunning.WaitOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L207}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> WaitOperation(
-      google::longrunning::WaitOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  WaitOperation(google::longrunning::WaitOperationRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<PipelineServiceConnection> connection_;

@@ -44,73 +44,71 @@ AgentEndpointServiceMetadata::AgentEndpointServiceMetadata(
               ? google::cloud::internal::GeneratedLibClientHeader()
               : std::move(api_client_header)) {}
 
-std::unique_ptr<google::cloud::internal::StreamingReadRpc<
-    google::cloud::osconfig::agentendpoint::v1::
-        ReceiveTaskNotificationResponse>>
+std::unique_ptr<google::cloud::internal::StreamingReadRpc<google::cloud::osconfig::agentendpoint::v1::ReceiveTaskNotificationResponse>>
 AgentEndpointServiceMetadata::ReceiveTaskNotification(
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
-    google::cloud::osconfig::agentendpoint::v1::
-        ReceiveTaskNotificationRequest const& request) {
+    std::shared_ptr<grpc::ClientContext> context,
+    Options const& options,
+    google::cloud::osconfig::agentendpoint::v1::ReceiveTaskNotificationRequest const& request) {
   SetMetadata(*context, options);
   return child_->ReceiveTaskNotification(std::move(context), options, request);
 }
 
 StatusOr<google::cloud::osconfig::agentendpoint::v1::StartNextTaskResponse>
 AgentEndpointServiceMetadata::StartNextTask(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::osconfig::agentendpoint::v1::StartNextTaskRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::osconfig::agentendpoint::v1::StartNextTaskRequest const& request) {
   SetMetadata(context, options);
   return child_->StartNextTask(context, options, request);
 }
 
 StatusOr<google::cloud::osconfig::agentendpoint::v1::ReportTaskProgressResponse>
 AgentEndpointServiceMetadata::ReportTaskProgress(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::osconfig::agentendpoint::v1::ReportTaskProgressRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::osconfig::agentendpoint::v1::ReportTaskProgressRequest const& request) {
   SetMetadata(context, options);
   return child_->ReportTaskProgress(context, options, request);
 }
 
 StatusOr<google::cloud::osconfig::agentendpoint::v1::ReportTaskCompleteResponse>
 AgentEndpointServiceMetadata::ReportTaskComplete(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::osconfig::agentendpoint::v1::ReportTaskCompleteRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::osconfig::agentendpoint::v1::ReportTaskCompleteRequest const& request) {
   SetMetadata(context, options);
   return child_->ReportTaskComplete(context, options, request);
 }
 
 StatusOr<google::cloud::osconfig::agentendpoint::v1::RegisterAgentResponse>
 AgentEndpointServiceMetadata::RegisterAgent(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::osconfig::agentendpoint::v1::RegisterAgentRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::osconfig::agentendpoint::v1::RegisterAgentRequest const& request) {
   SetMetadata(context, options);
   return child_->RegisterAgent(context, options, request);
 }
 
 StatusOr<google::cloud::osconfig::agentendpoint::v1::ReportInventoryResponse>
 AgentEndpointServiceMetadata::ReportInventory(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::osconfig::agentendpoint::v1::ReportInventoryRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::osconfig::agentendpoint::v1::ReportInventoryRequest const& request) {
   SetMetadata(context, options);
   return child_->ReportInventory(context, options, request);
 }
 
-void AgentEndpointServiceMetadata::SetMetadata(
-    grpc::ClientContext& context, Options const& options,
-    std::string const& request_params) {
+void AgentEndpointServiceMetadata::SetMetadata(grpc::ClientContext& context,
+                                        Options const& options,
+                                        std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
 void AgentEndpointServiceMetadata::SetMetadata(grpc::ClientContext& context,
-                                               Options const& options) {
-  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
-                                       api_client_header_);
+                                        Options const& options) {
+  google::cloud::internal::SetMetadata(
+      context, options, fixed_metadata_, api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

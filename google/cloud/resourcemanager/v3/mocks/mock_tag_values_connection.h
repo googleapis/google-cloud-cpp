@@ -46,38 +46,29 @@ class MockTagValuesConnection : public resourcemanager_v3::TagValuesConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(
-      (StreamRange<google::cloud::resourcemanager::v3::TagValue>),
-      ListTagValues,
-      (google::cloud::resourcemanager::v3::ListTagValuesRequest request),
-      (override));
+  MOCK_METHOD((StreamRange<google::cloud::resourcemanager::v3::TagValue>),
+  ListTagValues,
+  (google::cloud::resourcemanager::v3::ListTagValuesRequest request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::resourcemanager::v3::TagValue>, GetTagValue,
-      (google::cloud::resourcemanager::v3::GetTagValueRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::resourcemanager::v3::TagValue>,
+  GetTagValue,
+  (google::cloud::resourcemanager::v3::GetTagValueRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::resourcemanager::v3::TagValue>,
-      GetNamespacedTagValue,
-      (google::cloud::resourcemanager::v3::GetNamespacedTagValueRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::resourcemanager::v3::TagValue>,
+  GetNamespacedTagValue,
+  (google::cloud::resourcemanager::v3::GetNamespacedTagValueRequest const& request), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// CreateTagValue(Matcher<google::cloud::resourcemanager::v3::CreateTagValueRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, CreateTagValue(Matcher<google::cloud::resourcemanager::v3::CreateTagValueRequest const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::resourcemanager::v3::TagValue>>,
-              CreateTagValue,
-              (google::cloud::resourcemanager::v3::CreateTagValueRequest const&
-                   request),
-              (override));
+  CreateTagValue,
+  (google::cloud::resourcemanager::v3::CreateTagValueRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -85,38 +76,33 @@ class MockTagValuesConnection : public resourcemanager_v3::TagValuesConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, CreateTagValue(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateTagValue,
-              (NoAwaitTag,
-               google::cloud::resourcemanager::v3::CreateTagValueRequest const&
-                   request),
-              (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  CreateTagValue, (NoAwaitTag,
+    google::cloud::resourcemanager::v3::CreateTagValueRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateTagValue(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, CreateTagValue(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::resourcemanager::v3::TagValue>>,
-              CreateTagValue, (google::longrunning::Operation const& operation),
-              (override));
+  CreateTagValue, (
+    google::longrunning::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// UpdateTagValue(Matcher<google::cloud::resourcemanager::v3::UpdateTagValueRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, UpdateTagValue(Matcher<google::cloud::resourcemanager::v3::UpdateTagValueRequest const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::resourcemanager::v3::TagValue>>,
-              UpdateTagValue,
-              (google::cloud::resourcemanager::v3::UpdateTagValueRequest const&
-                   request),
-              (override));
+  UpdateTagValue,
+  (google::cloud::resourcemanager::v3::UpdateTagValueRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -124,38 +110,33 @@ class MockTagValuesConnection : public resourcemanager_v3::TagValuesConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, UpdateTagValue(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, UpdateTagValue,
-              (NoAwaitTag,
-               google::cloud::resourcemanager::v3::UpdateTagValueRequest const&
-                   request),
-              (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  UpdateTagValue, (NoAwaitTag,
+    google::cloud::resourcemanager::v3::UpdateTagValueRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UpdateTagValue(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, UpdateTagValue(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::resourcemanager::v3::TagValue>>,
-              UpdateTagValue, (google::longrunning::Operation const& operation),
-              (override));
+  UpdateTagValue, (
+    google::longrunning::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteTagValue(Matcher<google::cloud::resourcemanager::v3::DeleteTagValueRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteTagValue(Matcher<google::cloud::resourcemanager::v3::DeleteTagValueRequest const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::resourcemanager::v3::TagValue>>,
-              DeleteTagValue,
-              (google::cloud::resourcemanager::v3::DeleteTagValueRequest const&
-                   request),
-              (override));
+  DeleteTagValue,
+  (google::cloud::resourcemanager::v3::DeleteTagValueRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -163,40 +144,37 @@ class MockTagValuesConnection : public resourcemanager_v3::TagValuesConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, DeleteTagValue(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteTagValue,
-              (NoAwaitTag,
-               google::cloud::resourcemanager::v3::DeleteTagValueRequest const&
-                   request),
-              (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  DeleteTagValue, (NoAwaitTag,
+    google::cloud::resourcemanager::v3::DeleteTagValueRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteTagValue(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteTagValue(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::resourcemanager::v3::TagValue>>,
-              DeleteTagValue, (google::longrunning::Operation const& operation),
-              (override));
+  DeleteTagValue, (
+    google::longrunning::Operation const& operation), (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, GetIamPolicy,
-              (google::iam::v1::GetIamPolicyRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::iam::v1::Policy>,
+  GetIamPolicy,
+  (google::iam::v1::GetIamPolicyRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, SetIamPolicy,
-              (google::iam::v1::SetIamPolicyRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::iam::v1::Policy>,
+  SetIamPolicy,
+  (google::iam::v1::SetIamPolicyRequest const& request), (override));
 
   MOCK_METHOD(StatusOr<google::iam::v1::TestIamPermissionsResponse>,
-              TestIamPermissions,
-              (google::iam::v1::TestIamPermissionsRequest const& request),
-              (override));
+  TestIamPermissions,
+  (google::iam::v1::TestIamPermissionsRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
-              (google::longrunning::GetOperationRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  GetOperation,
+  (google::longrunning::GetOperationRequest const& request), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

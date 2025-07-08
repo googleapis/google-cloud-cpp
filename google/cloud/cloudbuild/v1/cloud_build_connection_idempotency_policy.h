@@ -36,67 +36,63 @@ class CloudBuildConnectionIdempotencyPolicy {
   /// Create a new copy of this object.
   virtual std::unique_ptr<CloudBuildConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency CreateBuild(
-      google::devtools::cloudbuild::v1::CreateBuildRequest const& request);
+  virtual google::cloud::Idempotency
+  CreateBuild(google::devtools::cloudbuild::v1::CreateBuildRequest const& request);
 
-  virtual google::cloud::Idempotency GetBuild(
-      google::devtools::cloudbuild::v1::GetBuildRequest const& request);
+  virtual google::cloud::Idempotency
+  GetBuild(google::devtools::cloudbuild::v1::GetBuildRequest const& request);
 
-  virtual google::cloud::Idempotency ListBuilds(
-      google::devtools::cloudbuild::v1::ListBuildsRequest request);
+  virtual google::cloud::Idempotency
+  ListBuilds(google::devtools::cloudbuild::v1::ListBuildsRequest request);
 
-  virtual google::cloud::Idempotency CancelBuild(
-      google::devtools::cloudbuild::v1::CancelBuildRequest const& request);
+  virtual google::cloud::Idempotency
+  CancelBuild(google::devtools::cloudbuild::v1::CancelBuildRequest const& request);
 
-  virtual google::cloud::Idempotency RetryBuild(
-      google::devtools::cloudbuild::v1::RetryBuildRequest const& request);
+  virtual google::cloud::Idempotency
+  RetryBuild(google::devtools::cloudbuild::v1::RetryBuildRequest const& request);
 
-  virtual google::cloud::Idempotency ApproveBuild(
-      google::devtools::cloudbuild::v1::ApproveBuildRequest const& request);
+  virtual google::cloud::Idempotency
+  ApproveBuild(google::devtools::cloudbuild::v1::ApproveBuildRequest const& request);
 
-  virtual google::cloud::Idempotency CreateBuildTrigger(
-      google::devtools::cloudbuild::v1::CreateBuildTriggerRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  CreateBuildTrigger(google::devtools::cloudbuild::v1::CreateBuildTriggerRequest const& request);
 
-  virtual google::cloud::Idempotency GetBuildTrigger(
-      google::devtools::cloudbuild::v1::GetBuildTriggerRequest const& request);
+  virtual google::cloud::Idempotency
+  GetBuildTrigger(google::devtools::cloudbuild::v1::GetBuildTriggerRequest const& request);
 
-  virtual google::cloud::Idempotency ListBuildTriggers(
-      google::devtools::cloudbuild::v1::ListBuildTriggersRequest request);
+  virtual google::cloud::Idempotency
+  ListBuildTriggers(google::devtools::cloudbuild::v1::ListBuildTriggersRequest request);
 
-  virtual google::cloud::Idempotency DeleteBuildTrigger(
-      google::devtools::cloudbuild::v1::DeleteBuildTriggerRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  DeleteBuildTrigger(google::devtools::cloudbuild::v1::DeleteBuildTriggerRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateBuildTrigger(
-      google::devtools::cloudbuild::v1::UpdateBuildTriggerRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  UpdateBuildTrigger(google::devtools::cloudbuild::v1::UpdateBuildTriggerRequest const& request);
 
-  virtual google::cloud::Idempotency RunBuildTrigger(
-      google::devtools::cloudbuild::v1::RunBuildTriggerRequest const& request);
+  virtual google::cloud::Idempotency
+  RunBuildTrigger(google::devtools::cloudbuild::v1::RunBuildTriggerRequest const& request);
 
-  virtual google::cloud::Idempotency ReceiveTriggerWebhook(
-      google::devtools::cloudbuild::v1::ReceiveTriggerWebhookRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  ReceiveTriggerWebhook(google::devtools::cloudbuild::v1::ReceiveTriggerWebhookRequest const& request);
 
-  virtual google::cloud::Idempotency CreateWorkerPool(
-      google::devtools::cloudbuild::v1::CreateWorkerPoolRequest const& request);
+  virtual google::cloud::Idempotency
+  CreateWorkerPool(google::devtools::cloudbuild::v1::CreateWorkerPoolRequest const& request);
 
-  virtual google::cloud::Idempotency GetWorkerPool(
-      google::devtools::cloudbuild::v1::GetWorkerPoolRequest const& request);
+  virtual google::cloud::Idempotency
+  GetWorkerPool(google::devtools::cloudbuild::v1::GetWorkerPoolRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteWorkerPool(
-      google::devtools::cloudbuild::v1::DeleteWorkerPoolRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteWorkerPool(google::devtools::cloudbuild::v1::DeleteWorkerPoolRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateWorkerPool(
-      google::devtools::cloudbuild::v1::UpdateWorkerPoolRequest const& request);
+  virtual google::cloud::Idempotency
+  UpdateWorkerPool(google::devtools::cloudbuild::v1::UpdateWorkerPoolRequest const& request);
 
-  virtual google::cloud::Idempotency ListWorkerPools(
-      google::devtools::cloudbuild::v1::ListWorkerPoolsRequest request);
+  virtual google::cloud::Idempotency
+  ListWorkerPools(google::devtools::cloudbuild::v1::ListWorkerPoolsRequest request);
 };
 
 std::unique_ptr<CloudBuildConnectionIdempotencyPolicy>
-MakeDefaultCloudBuildConnectionIdempotencyPolicy();
+    MakeDefaultCloudBuildConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloudbuild_v1

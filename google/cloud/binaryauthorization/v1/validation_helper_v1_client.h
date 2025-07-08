@@ -61,28 +61,23 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class ValidationHelperV1Client {
  public:
-  explicit ValidationHelperV1Client(
-      std::shared_ptr<ValidationHelperV1Connection> connection,
-      Options opts = {});
+  explicit ValidationHelperV1Client(std::shared_ptr<ValidationHelperV1Connection> connection, Options opts = {});
   ~ValidationHelperV1Client();
 
   ///@{
   /// @name Copy and move support
   ValidationHelperV1Client(ValidationHelperV1Client const&) = default;
-  ValidationHelperV1Client& operator=(ValidationHelperV1Client const&) =
-      default;
+  ValidationHelperV1Client& operator=(ValidationHelperV1Client const&) = default;
   ValidationHelperV1Client(ValidationHelperV1Client&&) = default;
   ValidationHelperV1Client& operator=(ValidationHelperV1Client&&) = default;
   ///@}
 
   ///@{
   /// @name Equality
-  friend bool operator==(ValidationHelperV1Client const& a,
-                         ValidationHelperV1Client const& b) {
+  friend bool operator==(ValidationHelperV1Client const& a, ValidationHelperV1Client const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(ValidationHelperV1Client const& a,
-                         ValidationHelperV1Client const& b) {
+  friend bool operator!=(ValidationHelperV1Client const& a, ValidationHelperV1Client const& b) {
     return !(a == b);
   }
   ///@}
@@ -115,12 +110,8 @@ class ValidationHelperV1Client {
   /// [google.cloud.binaryauthorization.v1.ValidateAttestationOccurrenceResponse]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/service.proto#L294}
   ///
   // clang-format on
-  StatusOr<google::cloud::binaryauthorization::v1::
-               ValidateAttestationOccurrenceResponse>
-  ValidateAttestationOccurrence(
-      google::cloud::binaryauthorization::v1::
-          ValidateAttestationOccurrenceRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::binaryauthorization::v1::ValidateAttestationOccurrenceResponse>
+  ValidateAttestationOccurrence(google::cloud::binaryauthorization::v1::ValidateAttestationOccurrenceRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<ValidationHelperV1Connection> connection_;

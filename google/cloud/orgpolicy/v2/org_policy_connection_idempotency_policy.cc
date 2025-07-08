@@ -26,76 +26,63 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-OrgPolicyConnectionIdempotencyPolicy::~OrgPolicyConnectionIdempotencyPolicy() =
-    default;
+OrgPolicyConnectionIdempotencyPolicy::~OrgPolicyConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<OrgPolicyConnectionIdempotencyPolicy>
 OrgPolicyConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<OrgPolicyConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency OrgPolicyConnectionIdempotencyPolicy::ListConstraints(
-    google::cloud::orgpolicy::v2::ListConstraintsRequest) {  // NOLINT
+Idempotency OrgPolicyConnectionIdempotencyPolicy::ListConstraints(google::cloud::orgpolicy::v2::ListConstraintsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency OrgPolicyConnectionIdempotencyPolicy::ListPolicies(
-    google::cloud::orgpolicy::v2::ListPoliciesRequest) {  // NOLINT
+Idempotency OrgPolicyConnectionIdempotencyPolicy::ListPolicies(google::cloud::orgpolicy::v2::ListPoliciesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency OrgPolicyConnectionIdempotencyPolicy::GetPolicy(
-    google::cloud::orgpolicy::v2::GetPolicyRequest const&) {
+Idempotency OrgPolicyConnectionIdempotencyPolicy::GetPolicy(google::cloud::orgpolicy::v2::GetPolicyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency OrgPolicyConnectionIdempotencyPolicy::GetEffectivePolicy(
-    google::cloud::orgpolicy::v2::GetEffectivePolicyRequest const&) {
+Idempotency OrgPolicyConnectionIdempotencyPolicy::GetEffectivePolicy(google::cloud::orgpolicy::v2::GetEffectivePolicyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency OrgPolicyConnectionIdempotencyPolicy::CreatePolicy(
-    google::cloud::orgpolicy::v2::CreatePolicyRequest const&) {
+Idempotency OrgPolicyConnectionIdempotencyPolicy::CreatePolicy(google::cloud::orgpolicy::v2::CreatePolicyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency OrgPolicyConnectionIdempotencyPolicy::UpdatePolicy(
-    google::cloud::orgpolicy::v2::UpdatePolicyRequest const&) {
+Idempotency OrgPolicyConnectionIdempotencyPolicy::UpdatePolicy(google::cloud::orgpolicy::v2::UpdatePolicyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency OrgPolicyConnectionIdempotencyPolicy::DeletePolicy(
-    google::cloud::orgpolicy::v2::DeletePolicyRequest const&) {
+Idempotency OrgPolicyConnectionIdempotencyPolicy::DeletePolicy(google::cloud::orgpolicy::v2::DeletePolicyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency OrgPolicyConnectionIdempotencyPolicy::CreateCustomConstraint(
-    google::cloud::orgpolicy::v2::CreateCustomConstraintRequest const&) {
+Idempotency OrgPolicyConnectionIdempotencyPolicy::CreateCustomConstraint(google::cloud::orgpolicy::v2::CreateCustomConstraintRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency OrgPolicyConnectionIdempotencyPolicy::UpdateCustomConstraint(
-    google::cloud::orgpolicy::v2::UpdateCustomConstraintRequest const&) {
+Idempotency OrgPolicyConnectionIdempotencyPolicy::UpdateCustomConstraint(google::cloud::orgpolicy::v2::UpdateCustomConstraintRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency OrgPolicyConnectionIdempotencyPolicy::GetCustomConstraint(
-    google::cloud::orgpolicy::v2::GetCustomConstraintRequest const&) {
+Idempotency OrgPolicyConnectionIdempotencyPolicy::GetCustomConstraint(google::cloud::orgpolicy::v2::GetCustomConstraintRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency OrgPolicyConnectionIdempotencyPolicy::ListCustomConstraints(
-    google::cloud::orgpolicy::v2::ListCustomConstraintsRequest) {  // NOLINT
+Idempotency OrgPolicyConnectionIdempotencyPolicy::ListCustomConstraints(google::cloud::orgpolicy::v2::ListCustomConstraintsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency OrgPolicyConnectionIdempotencyPolicy::DeleteCustomConstraint(
-    google::cloud::orgpolicy::v2::DeleteCustomConstraintRequest const&) {
+Idempotency OrgPolicyConnectionIdempotencyPolicy::DeleteCustomConstraint(google::cloud::orgpolicy::v2::DeleteCustomConstraintRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<OrgPolicyConnectionIdempotencyPolicy>
-MakeDefaultOrgPolicyConnectionIdempotencyPolicy() {
+    MakeDefaultOrgPolicyConnectionIdempotencyPolicy() {
   return std::make_unique<OrgPolicyConnectionIdempotencyPolicy>();
 }
 

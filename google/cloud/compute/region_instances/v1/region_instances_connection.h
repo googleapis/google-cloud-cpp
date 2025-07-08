@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGION_INSTANCES_V1_REGION_INSTANCES_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGION_INSTANCES_V1_REGION_INSTANCES_CONNECTION_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/region_instances/v1/internal/region_instances_retry_traits.h"
 #include "google/cloud/compute/region_instances/v1/region_instances_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -54,8 +54,7 @@ class RegionInstancesRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class RegionInstancesLimitedErrorCountRetryPolicy
-    : public RegionInstancesRetryPolicy {
+class RegionInstancesLimitedErrorCountRetryPolicy : public RegionInstancesRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -65,14 +64,14 @@ class RegionInstancesLimitedErrorCountRetryPolicy
    *     @p maximum_failures == 0.
    */
   explicit RegionInstancesLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   RegionInstancesLimitedErrorCountRetryPolicy(
       RegionInstancesLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : RegionInstancesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : RegionInstancesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   RegionInstancesLimitedErrorCountRetryPolicy(
       RegionInstancesLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : RegionInstancesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : RegionInstancesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -92,9 +91,7 @@ class RegionInstancesLimitedErrorCountRetryPolicy
   using BaseType = RegionInstancesRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      compute_region_instances_v1_internal::RegionInstancesRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<compute_region_instances_v1_internal::RegionInstancesRetryTraits> impl_;
 };
 
 /**
@@ -107,8 +104,7 @@ class RegionInstancesLimitedErrorCountRetryPolicy
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class RegionInstancesLimitedTimeRetryPolicy
-    : public RegionInstancesRetryPolicy {
+class RegionInstancesLimitedTimeRetryPolicy : public RegionInstancesRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -133,14 +129,12 @@ class RegionInstancesLimitedTimeRetryPolicy
   template <typename DurationRep, typename DurationPeriod>
   explicit RegionInstancesLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  RegionInstancesLimitedTimeRetryPolicy(
-      RegionInstancesLimitedTimeRetryPolicy&& rhs) noexcept
-      : RegionInstancesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  RegionInstancesLimitedTimeRetryPolicy(
-      RegionInstancesLimitedTimeRetryPolicy const& rhs) noexcept
-      : RegionInstancesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  RegionInstancesLimitedTimeRetryPolicy(RegionInstancesLimitedTimeRetryPolicy&& rhs) noexcept
+    : RegionInstancesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  RegionInstancesLimitedTimeRetryPolicy(RegionInstancesLimitedTimeRetryPolicy const& rhs) noexcept
+    : RegionInstancesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -162,9 +156,7 @@ class RegionInstancesLimitedTimeRetryPolicy
   using BaseType = RegionInstancesRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      compute_region_instances_v1_internal::RegionInstancesRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<compute_region_instances_v1_internal::RegionInstancesRetryTraits> impl_;
 };
 
 /**
@@ -177,8 +169,7 @@ class RegionInstancesLimitedTimeRetryPolicy
  *
  * To create a concrete instance, see `MakeRegionInstancesConnection()`.
  *
- * For mocking, see
- * `compute_region_instances_v1_mocks::MockRegionInstancesConnection`.
+ * For mocking, see `compute_region_instances_v1_mocks::MockRegionInstancesConnection`.
  */
 class RegionInstancesConnection {
  public:
@@ -187,15 +178,13 @@ class RegionInstancesConnection {
   virtual Options options() { return Options{}; }
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  BulkInsert(google::cloud::cpp::compute::region_instances::v1::
-                 BulkInsertRequest const& request);
+  BulkInsert(google::cloud::cpp::compute::region_instances::v1::BulkInsertRequest const& request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> BulkInsert(
-      NoAwaitTag, google::cloud::cpp::compute::region_instances::v1::
-                      BulkInsertRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  BulkInsert(NoAwaitTag, google::cloud::cpp::compute::region_instances::v1::BulkInsertRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  BulkInsert(google::cloud::cpp::compute::v1::Operation const& operation);
+  BulkInsert( google::cloud::cpp::compute::v1::Operation const& operation);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

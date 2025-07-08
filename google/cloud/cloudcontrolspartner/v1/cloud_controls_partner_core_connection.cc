@@ -17,12 +17,12 @@
 // source: google/cloud/cloudcontrolspartner/v1/core.proto
 
 #include "google/cloud/cloudcontrolspartner/v1/cloud_controls_partner_core_connection.h"
+#include "google/cloud/background_threads.h"
 #include "google/cloud/cloudcontrolspartner/v1/cloud_controls_partner_core_options.h"
 #include "google/cloud/cloudcontrolspartner/v1/internal/cloud_controls_partner_core_connection_impl.h"
 #include "google/cloud/cloudcontrolspartner/v1/internal/cloud_controls_partner_core_option_defaults.h"
 #include "google/cloud/cloudcontrolspartner/v1/internal/cloud_controls_partner_core_stub_factory.h"
 #include "google/cloud/cloudcontrolspartner/v1/internal/cloud_controls_partner_core_tracing_connection.h"
-#include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
@@ -36,8 +36,7 @@ namespace cloud {
 namespace cloudcontrolspartner_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-CloudControlsPartnerCoreConnection::~CloudControlsPartnerCoreConnection() =
-    default;
+CloudControlsPartnerCoreConnection::~CloudControlsPartnerCoreConnection() = default;
 
 StatusOr<google::cloud::cloudcontrolspartner::v1::Workload>
 CloudControlsPartnerCoreConnection::GetWorkload(
@@ -45,10 +44,8 @@ CloudControlsPartnerCoreConnection::GetWorkload(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::cloudcontrolspartner::v1::Workload>
-CloudControlsPartnerCoreConnection::ListWorkloads(
-    google::cloud::cloudcontrolspartner::v1::
-        ListWorkloadsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::cloudcontrolspartner::v1::Workload> CloudControlsPartnerCoreConnection::ListWorkloads(
+    google::cloud::cloudcontrolspartner::v1::ListWorkloadsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::cloudcontrolspartner::v1::Workload>>();
 }
@@ -59,10 +56,8 @@ CloudControlsPartnerCoreConnection::GetCustomer(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::cloudcontrolspartner::v1::Customer>
-CloudControlsPartnerCoreConnection::ListCustomers(
-    google::cloud::cloudcontrolspartner::v1::
-        ListCustomersRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::cloudcontrolspartner::v1::Customer> CloudControlsPartnerCoreConnection::ListCustomers(
+    google::cloud::cloudcontrolspartner::v1::ListCustomersRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::cloudcontrolspartner::v1::Customer>>();
 }
@@ -75,17 +70,14 @@ CloudControlsPartnerCoreConnection::GetEkmConnections(
 
 StatusOr<google::cloud::cloudcontrolspartner::v1::PartnerPermissions>
 CloudControlsPartnerCoreConnection::GetPartnerPermissions(
-    google::cloud::cloudcontrolspartner::v1::
-        GetPartnerPermissionsRequest const&) {
+    google::cloud::cloudcontrolspartner::v1::GetPartnerPermissionsRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::cloudcontrolspartner::v1::AccessApprovalRequest>
-CloudControlsPartnerCoreConnection::ListAccessApprovalRequests(
-    google::cloud::cloudcontrolspartner::v1::
-        ListAccessApprovalRequestsRequest) {  // NOLINT(performance-unnecessary-value-param)
-  return google::cloud::internal::MakeUnimplementedPaginationRange<StreamRange<
-      google::cloud::cloudcontrolspartner::v1::AccessApprovalRequest>>();
+StreamRange<google::cloud::cloudcontrolspartner::v1::AccessApprovalRequest> CloudControlsPartnerCoreConnection::ListAccessApprovalRequests(
+    google::cloud::cloudcontrolspartner::v1::ListAccessApprovalRequestsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::cloudcontrolspartner::v1::AccessApprovalRequest>>();
 }
 
 StatusOr<google::cloud::cloudcontrolspartner::v1::Partner>
@@ -106,29 +98,26 @@ CloudControlsPartnerCoreConnection::UpdateCustomer(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status CloudControlsPartnerCoreConnection::DeleteCustomer(
+Status
+CloudControlsPartnerCoreConnection::DeleteCustomer(
     google::cloud::cloudcontrolspartner::v1::DeleteCustomerRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-std::shared_ptr<CloudControlsPartnerCoreConnection>
-MakeCloudControlsPartnerCoreConnection(Options options) {
+std::shared_ptr<CloudControlsPartnerCoreConnection> MakeCloudControlsPartnerCoreConnection(
+    Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 CloudControlsPartnerCorePolicyOptionList>(
-      options, __func__);
-  options =
-      cloudcontrolspartner_v1_internal::CloudControlsPartnerCoreDefaultOptions(
-          std::move(options));
+      UnifiedCredentialsOptionList,
+      CloudControlsPartnerCorePolicyOptionList>(options, __func__);
+  options = cloudcontrolspartner_v1_internal::CloudControlsPartnerCoreDefaultOptions(
+      std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
-  auto stub = cloudcontrolspartner_v1_internal::
-      CreateDefaultCloudControlsPartnerCoreStub(std::move(auth), options);
-  return cloudcontrolspartner_v1_internal::
-      MakeCloudControlsPartnerCoreTracingConnection(
-          std::make_shared<cloudcontrolspartner_v1_internal::
-                               CloudControlsPartnerCoreConnectionImpl>(
-              std::move(background), std::move(stub), std::move(options)));
+  auto stub = cloudcontrolspartner_v1_internal::CreateDefaultCloudControlsPartnerCoreStub(
+    std::move(auth), options);
+  return cloudcontrolspartner_v1_internal::MakeCloudControlsPartnerCoreTracingConnection(
+      std::make_shared<cloudcontrolspartner_v1_internal::CloudControlsPartnerCoreConnectionImpl>(
+      std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

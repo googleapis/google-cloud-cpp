@@ -36,127 +36,117 @@ class ClusterManagerTracingConnection
   ~ClusterManagerTracingConnection() override = default;
 
   explicit ClusterManagerTracingConnection(
-      std::shared_ptr<container_v1::ClusterManagerConnection> child);
+    std::shared_ptr<container_v1::ClusterManagerConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::container::v1::ListClustersResponse> ListClusters(
-      google::container::v1::ListClustersRequest const& request) override;
+  StatusOr<google::container::v1::ListClustersResponse>
+  ListClusters(google::container::v1::ListClustersRequest const& request) override;
 
-  StatusOr<google::container::v1::Cluster> GetCluster(
-      google::container::v1::GetClusterRequest const& request) override;
+  StatusOr<google::container::v1::Cluster>
+  GetCluster(google::container::v1::GetClusterRequest const& request) override;
 
-  StatusOr<google::container::v1::Operation> CreateCluster(
-      google::container::v1::CreateClusterRequest const& request) override;
+  StatusOr<google::container::v1::Operation>
+  CreateCluster(google::container::v1::CreateClusterRequest const& request) override;
 
-  StatusOr<google::container::v1::Operation> UpdateCluster(
-      google::container::v1::UpdateClusterRequest const& request) override;
+  StatusOr<google::container::v1::Operation>
+  UpdateCluster(google::container::v1::UpdateClusterRequest const& request) override;
 
-  StatusOr<google::container::v1::Operation> UpdateNodePool(
-      google::container::v1::UpdateNodePoolRequest const& request) override;
+  StatusOr<google::container::v1::Operation>
+  UpdateNodePool(google::container::v1::UpdateNodePoolRequest const& request) override;
 
-  StatusOr<google::container::v1::Operation> SetNodePoolAutoscaling(
-      google::container::v1::SetNodePoolAutoscalingRequest const& request)
-      override;
+  StatusOr<google::container::v1::Operation>
+  SetNodePoolAutoscaling(google::container::v1::SetNodePoolAutoscalingRequest const& request) override;
 
-  StatusOr<google::container::v1::Operation> SetLoggingService(
-      google::container::v1::SetLoggingServiceRequest const& request) override;
+  StatusOr<google::container::v1::Operation>
+  SetLoggingService(google::container::v1::SetLoggingServiceRequest const& request) override;
 
-  StatusOr<google::container::v1::Operation> SetMonitoringService(
-      google::container::v1::SetMonitoringServiceRequest const& request)
-      override;
+  StatusOr<google::container::v1::Operation>
+  SetMonitoringService(google::container::v1::SetMonitoringServiceRequest const& request) override;
 
-  StatusOr<google::container::v1::Operation> SetAddonsConfig(
-      google::container::v1::SetAddonsConfigRequest const& request) override;
+  StatusOr<google::container::v1::Operation>
+  SetAddonsConfig(google::container::v1::SetAddonsConfigRequest const& request) override;
 
-  StatusOr<google::container::v1::Operation> SetLocations(
-      google::container::v1::SetLocationsRequest const& request) override;
+  StatusOr<google::container::v1::Operation>
+  SetLocations(google::container::v1::SetLocationsRequest const& request) override;
 
-  StatusOr<google::container::v1::Operation> UpdateMaster(
-      google::container::v1::UpdateMasterRequest const& request) override;
+  StatusOr<google::container::v1::Operation>
+  UpdateMaster(google::container::v1::UpdateMasterRequest const& request) override;
 
-  StatusOr<google::container::v1::Operation> SetMasterAuth(
-      google::container::v1::SetMasterAuthRequest const& request) override;
+  StatusOr<google::container::v1::Operation>
+  SetMasterAuth(google::container::v1::SetMasterAuthRequest const& request) override;
 
-  StatusOr<google::container::v1::Operation> DeleteCluster(
-      google::container::v1::DeleteClusterRequest const& request) override;
+  StatusOr<google::container::v1::Operation>
+  DeleteCluster(google::container::v1::DeleteClusterRequest const& request) override;
 
-  StatusOr<google::container::v1::ListOperationsResponse> ListOperations(
-      google::container::v1::ListOperationsRequest const& request) override;
+  StatusOr<google::container::v1::ListOperationsResponse>
+  ListOperations(google::container::v1::ListOperationsRequest const& request) override;
 
-  StatusOr<google::container::v1::Operation> GetOperation(
-      google::container::v1::GetOperationRequest const& request) override;
+  StatusOr<google::container::v1::Operation>
+  GetOperation(google::container::v1::GetOperationRequest const& request) override;
 
-  Status CancelOperation(
-      google::container::v1::CancelOperationRequest const& request) override;
+  Status
+  CancelOperation(google::container::v1::CancelOperationRequest const& request) override;
 
-  StatusOr<google::container::v1::ServerConfig> GetServerConfig(
-      google::container::v1::GetServerConfigRequest const& request) override;
+  StatusOr<google::container::v1::ServerConfig>
+  GetServerConfig(google::container::v1::GetServerConfigRequest const& request) override;
 
-  StatusOr<google::container::v1::GetJSONWebKeysResponse> GetJSONWebKeys(
-      google::container::v1::GetJSONWebKeysRequest const& request) override;
+  StatusOr<google::container::v1::GetJSONWebKeysResponse>
+  GetJSONWebKeys(google::container::v1::GetJSONWebKeysRequest const& request) override;
 
-  StatusOr<google::container::v1::ListNodePoolsResponse> ListNodePools(
-      google::container::v1::ListNodePoolsRequest const& request) override;
+  StatusOr<google::container::v1::ListNodePoolsResponse>
+  ListNodePools(google::container::v1::ListNodePoolsRequest const& request) override;
 
-  StatusOr<google::container::v1::NodePool> GetNodePool(
-      google::container::v1::GetNodePoolRequest const& request) override;
+  StatusOr<google::container::v1::NodePool>
+  GetNodePool(google::container::v1::GetNodePoolRequest const& request) override;
 
-  StatusOr<google::container::v1::Operation> CreateNodePool(
-      google::container::v1::CreateNodePoolRequest const& request) override;
+  StatusOr<google::container::v1::Operation>
+  CreateNodePool(google::container::v1::CreateNodePoolRequest const& request) override;
 
-  StatusOr<google::container::v1::Operation> DeleteNodePool(
-      google::container::v1::DeleteNodePoolRequest const& request) override;
+  StatusOr<google::container::v1::Operation>
+  DeleteNodePool(google::container::v1::DeleteNodePoolRequest const& request) override;
 
-  Status CompleteNodePoolUpgrade(
-      google::container::v1::CompleteNodePoolUpgradeRequest const& request)
-      override;
+  Status
+  CompleteNodePoolUpgrade(google::container::v1::CompleteNodePoolUpgradeRequest const& request) override;
 
-  StatusOr<google::container::v1::Operation> RollbackNodePoolUpgrade(
-      google::container::v1::RollbackNodePoolUpgradeRequest const& request)
-      override;
+  StatusOr<google::container::v1::Operation>
+  RollbackNodePoolUpgrade(google::container::v1::RollbackNodePoolUpgradeRequest const& request) override;
 
-  StatusOr<google::container::v1::Operation> SetNodePoolManagement(
-      google::container::v1::SetNodePoolManagementRequest const& request)
-      override;
+  StatusOr<google::container::v1::Operation>
+  SetNodePoolManagement(google::container::v1::SetNodePoolManagementRequest const& request) override;
 
-  StatusOr<google::container::v1::Operation> SetLabels(
-      google::container::v1::SetLabelsRequest const& request) override;
+  StatusOr<google::container::v1::Operation>
+  SetLabels(google::container::v1::SetLabelsRequest const& request) override;
 
-  StatusOr<google::container::v1::Operation> SetLegacyAbac(
-      google::container::v1::SetLegacyAbacRequest const& request) override;
+  StatusOr<google::container::v1::Operation>
+  SetLegacyAbac(google::container::v1::SetLegacyAbacRequest const& request) override;
 
-  StatusOr<google::container::v1::Operation> StartIPRotation(
-      google::container::v1::StartIPRotationRequest const& request) override;
+  StatusOr<google::container::v1::Operation>
+  StartIPRotation(google::container::v1::StartIPRotationRequest const& request) override;
 
-  StatusOr<google::container::v1::Operation> CompleteIPRotation(
-      google::container::v1::CompleteIPRotationRequest const& request) override;
+  StatusOr<google::container::v1::Operation>
+  CompleteIPRotation(google::container::v1::CompleteIPRotationRequest const& request) override;
 
-  StatusOr<google::container::v1::Operation> SetNodePoolSize(
-      google::container::v1::SetNodePoolSizeRequest const& request) override;
+  StatusOr<google::container::v1::Operation>
+  SetNodePoolSize(google::container::v1::SetNodePoolSizeRequest const& request) override;
 
-  StatusOr<google::container::v1::Operation> SetNetworkPolicy(
-      google::container::v1::SetNetworkPolicyRequest const& request) override;
+  StatusOr<google::container::v1::Operation>
+  SetNetworkPolicy(google::container::v1::SetNetworkPolicyRequest const& request) override;
 
-  StatusOr<google::container::v1::Operation> SetMaintenancePolicy(
-      google::container::v1::SetMaintenancePolicyRequest const& request)
-      override;
+  StatusOr<google::container::v1::Operation>
+  SetMaintenancePolicy(google::container::v1::SetMaintenancePolicyRequest const& request) override;
 
-  StreamRange<google::container::v1::UsableSubnetwork> ListUsableSubnetworks(
-      google::container::v1::ListUsableSubnetworksRequest request) override;
+  StreamRange<google::container::v1::UsableSubnetwork>
+  ListUsableSubnetworks(google::container::v1::ListUsableSubnetworksRequest request) override;
 
   StatusOr<google::container::v1::CheckAutopilotCompatibilityResponse>
-  CheckAutopilotCompatibility(
-      google::container::v1::CheckAutopilotCompatibilityRequest const& request)
-      override;
+  CheckAutopilotCompatibility(google::container::v1::CheckAutopilotCompatibilityRequest const& request) override;
 
-  StatusOr<google::container::v1::ClusterUpgradeInfo> FetchClusterUpgradeInfo(
-      google::container::v1::FetchClusterUpgradeInfoRequest const& request)
-      override;
+  StatusOr<google::container::v1::ClusterUpgradeInfo>
+  FetchClusterUpgradeInfo(google::container::v1::FetchClusterUpgradeInfoRequest const& request) override;
 
-  StatusOr<google::container::v1::NodePoolUpgradeInfo> FetchNodePoolUpgradeInfo(
-      google::container::v1::FetchNodePoolUpgradeInfoRequest const& request)
-      override;
+  StatusOr<google::container::v1::NodePoolUpgradeInfo>
+  FetchNodePoolUpgradeInfo(google::container::v1::FetchNodePoolUpgradeInfoRequest const& request) override;
 
  private:
   std::shared_ptr<container_v1::ClusterManagerConnection> child_;

@@ -27,27 +27,19 @@ namespace cloud {
 namespace binaryauthorization {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use binaryauthorization_v1::MakeValidationHelperV1Connection
-/// directly.
+/// @deprecated Use binaryauthorization_v1::MakeValidationHelperV1Connection directly.
 using ::google::cloud::binaryauthorization_v1::MakeValidationHelperV1Connection;
 
-/// @deprecated Use binaryauthorization_v1::ValidationHelperV1Connection
-/// directly.
+/// @deprecated Use binaryauthorization_v1::ValidationHelperV1Connection directly.
 using ::google::cloud::binaryauthorization_v1::ValidationHelperV1Connection;
 
-/// @deprecated Use
-/// binaryauthorization_v1::ValidationHelperV1LimitedErrorCountRetryPolicy
-/// directly.
-using ::google::cloud::binaryauthorization_v1::
-    ValidationHelperV1LimitedErrorCountRetryPolicy;
+/// @deprecated Use binaryauthorization_v1::ValidationHelperV1LimitedErrorCountRetryPolicy directly.
+using ::google::cloud::binaryauthorization_v1::ValidationHelperV1LimitedErrorCountRetryPolicy;
 
-/// @deprecated Use
-/// binaryauthorization_v1::ValidationHelperV1LimitedTimeRetryPolicy directly.
-using ::google::cloud::binaryauthorization_v1::
-    ValidationHelperV1LimitedTimeRetryPolicy;
+/// @deprecated Use binaryauthorization_v1::ValidationHelperV1LimitedTimeRetryPolicy directly.
+using ::google::cloud::binaryauthorization_v1::ValidationHelperV1LimitedTimeRetryPolicy;
 
-/// @deprecated Use binaryauthorization_v1::ValidationHelperV1RetryPolicy
-/// directly.
+/// @deprecated Use binaryauthorization_v1::ValidationHelperV1RetryPolicy directly.
 using ::google::cloud::binaryauthorization_v1::ValidationHelperV1RetryPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

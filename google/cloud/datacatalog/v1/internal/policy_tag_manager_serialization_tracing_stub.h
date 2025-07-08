@@ -32,51 +32,50 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-class PolicyTagManagerSerializationTracingStub
-    : public PolicyTagManagerSerializationStub {
+class PolicyTagManagerSerializationTracingStub : public PolicyTagManagerSerializationStub {
  public:
   ~PolicyTagManagerSerializationTracingStub() override = default;
 
-  explicit PolicyTagManagerSerializationTracingStub(
-      std::shared_ptr<PolicyTagManagerSerializationStub> child);
+  explicit PolicyTagManagerSerializationTracingStub(std::shared_ptr<PolicyTagManagerSerializationStub> child);
 
   StatusOr<google::cloud::datacatalog::v1::Taxonomy> ReplaceTaxonomy(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::datacatalog::v1::ReplaceTaxonomyRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::datacatalog::v1::ReplaceTaxonomyRequest const& request) override;
 
-  StatusOr<google::cloud::datacatalog::v1::ImportTaxonomiesResponse>
-  ImportTaxonomies(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::datacatalog::v1::ImportTaxonomiesRequest const& request)
-      override;
+  StatusOr<google::cloud::datacatalog::v1::ImportTaxonomiesResponse> ImportTaxonomies(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::datacatalog::v1::ImportTaxonomiesRequest const& request) override;
 
-  StatusOr<google::cloud::datacatalog::v1::ExportTaxonomiesResponse>
-  ExportTaxonomies(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::datacatalog::v1::ExportTaxonomiesRequest const& request)
-      override;
+  StatusOr<google::cloud::datacatalog::v1::ExportTaxonomiesResponse> ExportTaxonomies(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::datacatalog::v1::ExportTaxonomiesRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status DeleteOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::DeleteOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::shared_ptr<PolicyTagManagerSerializationStub> child_;
-  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
-      propagator_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -87,8 +86,7 @@ class PolicyTagManagerSerializationTracingStub
  * The stub is only decorated if the library has been compiled with
  * OpenTelemetry.
  */
-std::shared_ptr<PolicyTagManagerSerializationStub>
-MakePolicyTagManagerSerializationTracingStub(
+std::shared_ptr<PolicyTagManagerSerializationStub> MakePolicyTagManagerSerializationTracingStub(
     std::shared_ptr<PolicyTagManagerSerializationStub> stub);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -74,7 +74,8 @@ struct IndexServicePollingPolicyOption {
  * @ingroup google-cloud-aiplatform-options
  */
 using IndexServicePolicyOptionList =
-    OptionList<IndexServiceRetryPolicyOption, IndexServiceBackoffPolicyOption,
+    OptionList<IndexServiceRetryPolicyOption,
+               IndexServiceBackoffPolicyOption,
                IndexServicePollingPolicyOption,
                IndexServiceConnectionIdempotencyPolicyOption>;
 

@@ -39,46 +39,28 @@ Options AssuredWorkloadsServiceDefaultOptions(Options options) {
       "", "GOOGLE_CLOUD_CPP_ASSURED_WORKLOADS_SERVICE_AUTHORITY",
       "assuredworkloads.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
-  if (!options.has<
-          assuredworkloads_v1::AssuredWorkloadsServiceRetryPolicyOption>()) {
+  if (!options.has<assuredworkloads_v1::AssuredWorkloadsServiceRetryPolicyOption>()) {
     options.set<assuredworkloads_v1::AssuredWorkloadsServiceRetryPolicyOption>(
         assuredworkloads_v1::AssuredWorkloadsServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
-            .clone());
+            std::chrono::minutes(30)).clone());
   }
-  if (!options.has<
-          assuredworkloads_v1::AssuredWorkloadsServiceBackoffPolicyOption>()) {
-    options
-        .set<assuredworkloads_v1::AssuredWorkloadsServiceBackoffPolicyOption>(
-            ExponentialBackoffPolicy(
-                std::chrono::seconds(0), std::chrono::seconds(1),
-                std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
-                .clone());
+  if (!options.has<assuredworkloads_v1::AssuredWorkloadsServiceBackoffPolicyOption>()) {
+    options.set<assuredworkloads_v1::AssuredWorkloadsServiceBackoffPolicyOption>(
+        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
   }
-  if (!options.has<
-          assuredworkloads_v1::AssuredWorkloadsServicePollingPolicyOption>()) {
-    options.set<
-        assuredworkloads_v1::AssuredWorkloadsServicePollingPolicyOption>(
+  if (!options.has<assuredworkloads_v1::AssuredWorkloadsServicePollingPolicyOption>()) {
+    options.set<assuredworkloads_v1::AssuredWorkloadsServicePollingPolicyOption>(
         GenericPollingPolicy<
             assuredworkloads_v1::AssuredWorkloadsServiceRetryPolicyOption::Type,
-            assuredworkloads_v1::AssuredWorkloadsServiceBackoffPolicyOption::
-                Type>(
-            options
-                .get<assuredworkloads_v1::
-                         AssuredWorkloadsServiceRetryPolicyOption>()
-                ->clone(),
+            assuredworkloads_v1::AssuredWorkloadsServiceBackoffPolicyOption::Type>(
+            options.get<assuredworkloads_v1::AssuredWorkloadsServiceRetryPolicyOption>()->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                     std::chrono::minutes(5), kBackoffScaling)
-                .clone())
-            .clone());
+            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
   }
-  if (!options.has<
-          assuredworkloads_v1::
-              AssuredWorkloadsServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<assuredworkloads_v1::
-                    AssuredWorkloadsServiceConnectionIdempotencyPolicyOption>(
-        assuredworkloads_v1::
-            MakeDefaultAssuredWorkloadsServiceConnectionIdempotencyPolicy());
+  if (!options.has<assuredworkloads_v1::AssuredWorkloadsServiceConnectionIdempotencyPolicyOption>()) {
+    options.set<assuredworkloads_v1::AssuredWorkloadsServiceConnectionIdempotencyPolicyOption>(
+        assuredworkloads_v1::MakeDefaultAssuredWorkloadsServiceConnectionIdempotencyPolicy());
   }
 
   return options;

@@ -17,8 +17,8 @@
 // source: google/cloud/cloudcontrolspartner/v1/core.proto
 
 #include "google/cloud/cloudcontrolspartner/v1/internal/cloud_controls_partner_core_connection_impl.h"
-#include "google/cloud/cloudcontrolspartner/v1/internal/cloud_controls_partner_core_option_defaults.h"
 #include "google/cloud/background_threads.h"
+#include "google/cloud/cloudcontrolspartner/v1/internal/cloud_controls_partner_core_option_defaults.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
@@ -34,86 +34,65 @@ namespace {
 
 std::unique_ptr<cloudcontrolspartner_v1::CloudControlsPartnerCoreRetryPolicy>
 retry_policy(Options const& options) {
-  return options
-      .get<cloudcontrolspartner_v1::CloudControlsPartnerCoreRetryPolicyOption>()
-      ->clone();
+  return options.get<cloudcontrolspartner_v1::CloudControlsPartnerCoreRetryPolicyOption>()->clone();
 }
 
-std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-  return options
-      .get<cloudcontrolspartner_v1::
-               CloudControlsPartnerCoreBackoffPolicyOption>()
-      ->clone();
+std::unique_ptr<BackoffPolicy>
+backoff_policy(Options const& options) {
+  return options.get<cloudcontrolspartner_v1::CloudControlsPartnerCoreBackoffPolicyOption>()->clone();
 }
 
-std::unique_ptr<cloudcontrolspartner_v1::
-                    CloudControlsPartnerCoreConnectionIdempotencyPolicy>
+std::unique_ptr<cloudcontrolspartner_v1::CloudControlsPartnerCoreConnectionIdempotencyPolicy>
 idempotency_policy(Options const& options) {
-  return options
-      .get<cloudcontrolspartner_v1::
-               CloudControlsPartnerCoreConnectionIdempotencyPolicyOption>()
-      ->clone();
+  return options.get<cloudcontrolspartner_v1::CloudControlsPartnerCoreConnectionIdempotencyPolicyOption>()->clone();
 }
 
-}  // namespace
+} // namespace
 
 CloudControlsPartnerCoreConnectionImpl::CloudControlsPartnerCoreConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<
-        cloudcontrolspartner_v1_internal::CloudControlsPartnerCoreStub>
-        stub,
+    std::shared_ptr<cloudcontrolspartner_v1_internal::CloudControlsPartnerCoreStub> stub,
     Options options)
-    : background_(std::move(background)),
-      stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options), CloudControlsPartnerCoreConnection::options())) {}
+  : background_(std::move(background)), stub_(std::move(stub)),
+    options_(internal::MergeOptions(
+        std::move(options),
+        CloudControlsPartnerCoreConnection::options())) {}
 
 StatusOr<google::cloud::cloudcontrolspartner::v1::Workload>
-CloudControlsPartnerCoreConnectionImpl::GetWorkload(
-    google::cloud::cloudcontrolspartner::v1::GetWorkloadRequest const&
-        request) {
+CloudControlsPartnerCoreConnectionImpl::GetWorkload(google::cloud::cloudcontrolspartner::v1::GetWorkloadRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetWorkload(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::cloudcontrolspartner::v1::GetWorkloadRequest const&
-                 request) {
+             google::cloud::cloudcontrolspartner::v1::GetWorkloadRequest const& request) {
         return stub_->GetWorkload(context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::cloud::cloudcontrolspartner::v1::Workload>
-CloudControlsPartnerCoreConnectionImpl::ListWorkloads(
-    google::cloud::cloudcontrolspartner::v1::ListWorkloadsRequest request) {
+CloudControlsPartnerCoreConnectionImpl::ListWorkloads(google::cloud::cloudcontrolspartner::v1::ListWorkloadsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListWorkloads(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::cloudcontrolspartner::v1::Workload>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::cloudcontrolspartner::v1::Workload>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<
-           cloudcontrolspartner_v1::CloudControlsPartnerCoreRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<cloudcontrolspartner_v1::CloudControlsPartnerCoreRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::cloudcontrolspartner::v1::ListWorkloadsRequest const&
-              r) {
+          Options const& options, google::cloud::cloudcontrolspartner::v1::ListWorkloadsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::cloudcontrolspartner::v1::
-                       ListWorkloadsRequest const& request) {
+                   google::cloud::cloudcontrolspartner::v1::ListWorkloadsRequest const& request) {
               return stub->ListWorkloads(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::cloudcontrolspartner::v1::ListWorkloadsResponse r) {
-        std::vector<google::cloud::cloudcontrolspartner::v1::Workload> result(
-            r.workloads().size());
+        std::vector<google::cloud::cloudcontrolspartner::v1::Workload> result(r.workloads().size());
         auto& messages = *r.mutable_workloads();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -121,51 +100,40 @@ CloudControlsPartnerCoreConnectionImpl::ListWorkloads(
 }
 
 StatusOr<google::cloud::cloudcontrolspartner::v1::Customer>
-CloudControlsPartnerCoreConnectionImpl::GetCustomer(
-    google::cloud::cloudcontrolspartner::v1::GetCustomerRequest const&
-        request) {
+CloudControlsPartnerCoreConnectionImpl::GetCustomer(google::cloud::cloudcontrolspartner::v1::GetCustomerRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetCustomer(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::cloudcontrolspartner::v1::GetCustomerRequest const&
-                 request) {
+             google::cloud::cloudcontrolspartner::v1::GetCustomerRequest const& request) {
         return stub_->GetCustomer(context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::cloud::cloudcontrolspartner::v1::Customer>
-CloudControlsPartnerCoreConnectionImpl::ListCustomers(
-    google::cloud::cloudcontrolspartner::v1::ListCustomersRequest request) {
+CloudControlsPartnerCoreConnectionImpl::ListCustomers(google::cloud::cloudcontrolspartner::v1::ListCustomersRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListCustomers(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::cloudcontrolspartner::v1::Customer>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::cloudcontrolspartner::v1::Customer>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<
-           cloudcontrolspartner_v1::CloudControlsPartnerCoreRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<cloudcontrolspartner_v1::CloudControlsPartnerCoreRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::cloudcontrolspartner::v1::ListCustomersRequest const&
-              r) {
+          Options const& options, google::cloud::cloudcontrolspartner::v1::ListCustomersRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::cloudcontrolspartner::v1::
-                       ListCustomersRequest const& request) {
+                   google::cloud::cloudcontrolspartner::v1::ListCustomersRequest const& request) {
               return stub->ListCustomers(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::cloudcontrolspartner::v1::ListCustomersResponse r) {
-        std::vector<google::cloud::cloudcontrolspartner::v1::Customer> result(
-            r.customers().size());
+        std::vector<google::cloud::cloudcontrolspartner::v1::Customer> result(r.customers().size());
         auto& messages = *r.mutable_customers();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -173,72 +141,53 @@ CloudControlsPartnerCoreConnectionImpl::ListCustomers(
 }
 
 StatusOr<google::cloud::cloudcontrolspartner::v1::EkmConnections>
-CloudControlsPartnerCoreConnectionImpl::GetEkmConnections(
-    google::cloud::cloudcontrolspartner::v1::GetEkmConnectionsRequest const&
-        request) {
+CloudControlsPartnerCoreConnectionImpl::GetEkmConnections(google::cloud::cloudcontrolspartner::v1::GetEkmConnectionsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetEkmConnections(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::cloudcontrolspartner::v1::
-                 GetEkmConnectionsRequest const& request) {
+             google::cloud::cloudcontrolspartner::v1::GetEkmConnectionsRequest const& request) {
         return stub_->GetEkmConnections(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::cloudcontrolspartner::v1::PartnerPermissions>
-CloudControlsPartnerCoreConnectionImpl::GetPartnerPermissions(
-    google::cloud::cloudcontrolspartner::v1::GetPartnerPermissionsRequest const&
-        request) {
+CloudControlsPartnerCoreConnectionImpl::GetPartnerPermissions(google::cloud::cloudcontrolspartner::v1::GetPartnerPermissionsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetPartnerPermissions(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::cloudcontrolspartner::v1::
-                 GetPartnerPermissionsRequest const& request) {
+             google::cloud::cloudcontrolspartner::v1::GetPartnerPermissionsRequest const& request) {
         return stub_->GetPartnerPermissions(context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::cloud::cloudcontrolspartner::v1::AccessApprovalRequest>
-CloudControlsPartnerCoreConnectionImpl::ListAccessApprovalRequests(
-    google::cloud::cloudcontrolspartner::v1::ListAccessApprovalRequestsRequest
-        request) {
+CloudControlsPartnerCoreConnectionImpl::ListAccessApprovalRequests(google::cloud::cloudcontrolspartner::v1::ListAccessApprovalRequestsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
-  auto idempotency =
-      idempotency_policy(*current)->ListAccessApprovalRequests(request);
+  auto idempotency = idempotency_policy(*current)->ListAccessApprovalRequests(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<
-      google::cloud::cloudcontrolspartner::v1::AccessApprovalRequest>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::cloudcontrolspartner::v1::AccessApprovalRequest>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<
-           cloudcontrolspartner_v1::CloudControlsPartnerCoreRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<cloudcontrolspartner_v1::CloudControlsPartnerCoreRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::cloudcontrolspartner::v1::
-              ListAccessApprovalRequestsRequest const& r) {
+          Options const& options, google::cloud::cloudcontrolspartner::v1::ListAccessApprovalRequestsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::cloudcontrolspartner::v1::
-                       ListAccessApprovalRequestsRequest const& request) {
-              return stub->ListAccessApprovalRequests(context, options,
-                                                      request);
+                   google::cloud::cloudcontrolspartner::v1::ListAccessApprovalRequestsRequest const& request) {
+              return stub->ListAccessApprovalRequests(context, options, request);
             },
             options, r, function_name);
       },
-      [](google::cloud::cloudcontrolspartner::v1::
-             ListAccessApprovalRequestsResponse r) {
-        std::vector<
-            google::cloud::cloudcontrolspartner::v1::AccessApprovalRequest>
-            result(r.access_approval_requests().size());
+      [](google::cloud::cloudcontrolspartner::v1::ListAccessApprovalRequestsResponse r) {
+        std::vector<google::cloud::cloudcontrolspartner::v1::AccessApprovalRequest> result(r.access_approval_requests().size());
         auto& messages = *r.mutable_access_approval_requests();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -246,65 +195,52 @@ CloudControlsPartnerCoreConnectionImpl::ListAccessApprovalRequests(
 }
 
 StatusOr<google::cloud::cloudcontrolspartner::v1::Partner>
-CloudControlsPartnerCoreConnectionImpl::GetPartner(
-    google::cloud::cloudcontrolspartner::v1::GetPartnerRequest const& request) {
+CloudControlsPartnerCoreConnectionImpl::GetPartner(google::cloud::cloudcontrolspartner::v1::GetPartnerRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetPartner(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::cloudcontrolspartner::v1::GetPartnerRequest const&
-                 request) {
+             google::cloud::cloudcontrolspartner::v1::GetPartnerRequest const& request) {
         return stub_->GetPartner(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::cloudcontrolspartner::v1::Customer>
-CloudControlsPartnerCoreConnectionImpl::CreateCustomer(
-    google::cloud::cloudcontrolspartner::v1::CreateCustomerRequest const&
-        request) {
+CloudControlsPartnerCoreConnectionImpl::CreateCustomer(google::cloud::cloudcontrolspartner::v1::CreateCustomerRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateCustomer(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::cloudcontrolspartner::v1::CreateCustomerRequest const&
-              request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::cloudcontrolspartner::v1::CreateCustomerRequest const& request) {
         return stub_->CreateCustomer(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::cloudcontrolspartner::v1::Customer>
-CloudControlsPartnerCoreConnectionImpl::UpdateCustomer(
-    google::cloud::cloudcontrolspartner::v1::UpdateCustomerRequest const&
-        request) {
+CloudControlsPartnerCoreConnectionImpl::UpdateCustomer(google::cloud::cloudcontrolspartner::v1::UpdateCustomerRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateCustomer(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::cloudcontrolspartner::v1::UpdateCustomerRequest const&
-              request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::cloudcontrolspartner::v1::UpdateCustomerRequest const& request) {
         return stub_->UpdateCustomer(context, options, request);
       },
       *current, request, __func__);
 }
 
-Status CloudControlsPartnerCoreConnectionImpl::DeleteCustomer(
-    google::cloud::cloudcontrolspartner::v1::DeleteCustomerRequest const&
-        request) {
+Status
+CloudControlsPartnerCoreConnectionImpl::DeleteCustomer(google::cloud::cloudcontrolspartner::v1::DeleteCustomerRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteCustomer(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::cloudcontrolspartner::v1::DeleteCustomerRequest const&
-              request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::cloudcontrolspartner::v1::DeleteCustomerRequest const& request) {
         return stub_->DeleteCustomer(context, options, request);
       },
       *current, request, __func__);

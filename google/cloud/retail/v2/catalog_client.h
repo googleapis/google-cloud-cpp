@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RETAIL_V2_CATALOG_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RETAIL_V2_CATALOG_CLIENT_H
 
-#include "google/cloud/retail/v2/catalog_connection.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
+#include "google/cloud/retail/v2/catalog_connection.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <map>
@@ -62,8 +62,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class CatalogServiceClient {
  public:
-  explicit CatalogServiceClient(
-      std::shared_ptr<CatalogServiceConnection> connection, Options opts = {});
+  explicit CatalogServiceClient(std::shared_ptr<CatalogServiceConnection> connection, Options opts = {});
   ~CatalogServiceClient();
 
   ///@{
@@ -76,12 +75,10 @@ class CatalogServiceClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(CatalogServiceClient const& a,
-                         CatalogServiceClient const& b) {
+  friend bool operator==(CatalogServiceClient const& a, CatalogServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(CatalogServiceClient const& a,
-                         CatalogServiceClient const& b) {
+  friend bool operator!=(CatalogServiceClient const& a, CatalogServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -123,8 +120,8 @@ class CatalogServiceClient {
   /// [google.cloud.retail.v2.ListCatalogsRequest]: @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L208}
   ///
   // clang-format on
-  StreamRange<google::cloud::retail::v2::Catalog> ListCatalogs(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::retail::v2::Catalog>
+  ListCatalogs(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -163,9 +160,8 @@ class CatalogServiceClient {
   /// [google.cloud.retail.v2.ListCatalogsRequest]: @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L208}
   ///
   // clang-format on
-  StreamRange<google::cloud::retail::v2::Catalog> ListCatalogs(
-      google::cloud::retail::v2::ListCatalogsRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::retail::v2::Catalog>
+  ListCatalogs(google::cloud::retail::v2::ListCatalogsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -201,9 +197,8 @@ class CatalogServiceClient {
   /// [google.cloud.retail.v2.UpdateCatalogRequest]: @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L259}
   ///
   // clang-format on
-  StatusOr<google::cloud::retail::v2::Catalog> UpdateCatalog(
-      google::cloud::retail::v2::Catalog const& catalog,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::cloud::retail::v2::Catalog>
+  UpdateCatalog(google::cloud::retail::v2::Catalog const& catalog, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -232,46 +227,45 @@ class CatalogServiceClient {
   /// [google.cloud.retail.v2.UpdateCatalogRequest]: @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L259}
   ///
   // clang-format on
-  StatusOr<google::cloud::retail::v2::Catalog> UpdateCatalog(
-      google::cloud::retail::v2::UpdateCatalogRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::retail::v2::Catalog>
+  UpdateCatalog(google::cloud::retail::v2::UpdateCatalogRequest const& request, Options opts = {});
 
   // clang-format off
   ///
   /// Set a specified branch id as default branch. API methods such as
-  ///  [SearchService.Search][google.cloud.retail.v2.SearchService.Search],
-  ///  [ProductService.GetProduct][google.cloud.retail.v2.ProductService.GetProduct],
-  ///  [ProductService.ListProducts][google.cloud.retail.v2.ProductService.ListProducts]
-  ///  will treat requests using "default_branch" to the actual branch id set as
-  ///  default.
+  /// [SearchService.Search][google.cloud.retail.v2.SearchService.Search],
+  /// [ProductService.GetProduct][google.cloud.retail.v2.ProductService.GetProduct],
+  /// [ProductService.ListProducts][google.cloud.retail.v2.ProductService.ListProducts]
+  /// will treat requests using "default_branch" to the actual branch id set as
+  /// default.
   ///
-  ///  For example, if `projects/*/locations/*/catalogs/*/branches/1` is set as
-  ///  default, setting
-  ///  [SearchRequest.branch][google.cloud.retail.v2.SearchRequest.branch] to
-  ///  `projects/*/locations/*/catalogs/*/branches/default_branch` is equivalent
-  ///  to setting
-  ///  [SearchRequest.branch][google.cloud.retail.v2.SearchRequest.branch] to
-  ///  `projects/*/locations/*/catalogs/*/branches/1`.
+  /// For example, if `projects/*/locations/*/catalogs/*/branches/1` is set as
+  /// default, setting
+  /// [SearchRequest.branch][google.cloud.retail.v2.SearchRequest.branch] to
+  /// `projects/*/locations/*/catalogs/*/branches/default_branch` is equivalent
+  /// to setting
+  /// [SearchRequest.branch][google.cloud.retail.v2.SearchRequest.branch] to
+  /// `projects/*/locations/*/catalogs/*/branches/1`.
   ///
-  ///  Using multiple branches can be useful when developers would like
-  ///  to have a staging branch to test and verify for future usage. When it
-  ///  becomes ready, developers switch on the staging branch using this API
-  ///  while keeping using
-  ///  `projects/*/locations/*/catalogs/*/branches/default_branch` as
-  ///  [SearchRequest.branch][google.cloud.retail.v2.SearchRequest.branch] to
-  ///  route the traffic to this staging branch.
+  /// Using multiple branches can be useful when developers would like
+  /// to have a staging branch to test and verify for future usage. When it
+  /// becomes ready, developers switch on the staging branch using this API
+  /// while keeping using
+  /// `projects/*/locations/*/catalogs/*/branches/default_branch` as
+  /// [SearchRequest.branch][google.cloud.retail.v2.SearchRequest.branch] to
+  /// route the traffic to this staging branch.
   ///
-  ///  CAUTION: If you have live predict/search traffic, switching the default
-  ///  branch could potentially cause outages if the ID space of the new branch
-  ///  is very different from the old one.
+  /// CAUTION: If you have live predict/search traffic, switching the default
+  /// branch could potentially cause outages if the ID space of the new branch
+  /// is very different from the old one.
   ///
-  ///  More specifically:
+  /// More specifically:
   ///
-  ///  * PredictionService will only return product IDs from branch {newBranch}.
-  ///  * SearchService will only return product IDs from branch {newBranch}
-  ///    (if branch is not explicitly set).
-  ///  * UserEventService will only join events with products from branch
-  ///    {newBranch}.
+  /// * PredictionService will only return product IDs from branch {newBranch}.
+  /// * SearchService will only return product IDs from branch {newBranch}
+  ///   (if branch is not explicitly set).
+  /// * UserEventService will only join events with products from branch
+  ///   {newBranch}.
   ///
   /// @param catalog  Full resource name of the catalog, such as
   ///  `projects/*/locations/global/catalogs/default_catalog`.
@@ -289,44 +283,45 @@ class CatalogServiceClient {
   /// [google.cloud.retail.v2.SetDefaultBranchRequest]: @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L279}
   ///
   // clang-format on
-  Status SetDefaultBranch(std::string const& catalog, Options opts = {});
+  Status
+  SetDefaultBranch(std::string const& catalog, Options opts = {});
 
   // clang-format off
   ///
   /// Set a specified branch id as default branch. API methods such as
-  ///  [SearchService.Search][google.cloud.retail.v2.SearchService.Search],
-  ///  [ProductService.GetProduct][google.cloud.retail.v2.ProductService.GetProduct],
-  ///  [ProductService.ListProducts][google.cloud.retail.v2.ProductService.ListProducts]
-  ///  will treat requests using "default_branch" to the actual branch id set as
-  ///  default.
+  /// [SearchService.Search][google.cloud.retail.v2.SearchService.Search],
+  /// [ProductService.GetProduct][google.cloud.retail.v2.ProductService.GetProduct],
+  /// [ProductService.ListProducts][google.cloud.retail.v2.ProductService.ListProducts]
+  /// will treat requests using "default_branch" to the actual branch id set as
+  /// default.
   ///
-  ///  For example, if `projects/*/locations/*/catalogs/*/branches/1` is set as
-  ///  default, setting
-  ///  [SearchRequest.branch][google.cloud.retail.v2.SearchRequest.branch] to
-  ///  `projects/*/locations/*/catalogs/*/branches/default_branch` is equivalent
-  ///  to setting
-  ///  [SearchRequest.branch][google.cloud.retail.v2.SearchRequest.branch] to
-  ///  `projects/*/locations/*/catalogs/*/branches/1`.
+  /// For example, if `projects/*/locations/*/catalogs/*/branches/1` is set as
+  /// default, setting
+  /// [SearchRequest.branch][google.cloud.retail.v2.SearchRequest.branch] to
+  /// `projects/*/locations/*/catalogs/*/branches/default_branch` is equivalent
+  /// to setting
+  /// [SearchRequest.branch][google.cloud.retail.v2.SearchRequest.branch] to
+  /// `projects/*/locations/*/catalogs/*/branches/1`.
   ///
-  ///  Using multiple branches can be useful when developers would like
-  ///  to have a staging branch to test and verify for future usage. When it
-  ///  becomes ready, developers switch on the staging branch using this API
-  ///  while keeping using
-  ///  `projects/*/locations/*/catalogs/*/branches/default_branch` as
-  ///  [SearchRequest.branch][google.cloud.retail.v2.SearchRequest.branch] to
-  ///  route the traffic to this staging branch.
+  /// Using multiple branches can be useful when developers would like
+  /// to have a staging branch to test and verify for future usage. When it
+  /// becomes ready, developers switch on the staging branch using this API
+  /// while keeping using
+  /// `projects/*/locations/*/catalogs/*/branches/default_branch` as
+  /// [SearchRequest.branch][google.cloud.retail.v2.SearchRequest.branch] to
+  /// route the traffic to this staging branch.
   ///
-  ///  CAUTION: If you have live predict/search traffic, switching the default
-  ///  branch could potentially cause outages if the ID space of the new branch
-  ///  is very different from the old one.
+  /// CAUTION: If you have live predict/search traffic, switching the default
+  /// branch could potentially cause outages if the ID space of the new branch
+  /// is very different from the old one.
   ///
-  ///  More specifically:
+  /// More specifically:
   ///
-  ///  * PredictionService will only return product IDs from branch {newBranch}.
-  ///  * SearchService will only return product IDs from branch {newBranch}
-  ///    (if branch is not explicitly set).
-  ///  * UserEventService will only join events with products from branch
-  ///    {newBranch}.
+  /// * PredictionService will only return product IDs from branch {newBranch}.
+  /// * SearchService will only return product IDs from branch {newBranch}
+  ///   (if branch is not explicitly set).
+  /// * UserEventService will only join events with products from branch
+  ///   {newBranch}.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -348,15 +343,14 @@ class CatalogServiceClient {
   /// [google.cloud.retail.v2.SetDefaultBranchRequest]: @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L279}
   ///
   // clang-format on
-  Status SetDefaultBranch(
-      google::cloud::retail::v2::SetDefaultBranchRequest const& request,
-      Options opts = {});
+  Status
+  SetDefaultBranch(google::cloud::retail::v2::SetDefaultBranchRequest const& request, Options opts = {});
 
   // clang-format off
   ///
   /// Get which branch is currently default branch set by
-  ///  [CatalogService.SetDefaultBranch][google.cloud.retail.v2.CatalogService.SetDefaultBranch]
-  ///  method under a specified parent catalog.
+  /// [CatalogService.SetDefaultBranch][google.cloud.retail.v2.CatalogService.SetDefaultBranch]
+  /// method under a specified parent catalog.
   ///
   /// @param catalog  The parent catalog resource name, such as
   ///  `projects/*/locations/global/catalogs/default_catalog`.
@@ -384,8 +378,8 @@ class CatalogServiceClient {
   // clang-format off
   ///
   /// Get which branch is currently default branch set by
-  ///  [CatalogService.SetDefaultBranch][google.cloud.retail.v2.CatalogService.SetDefaultBranch]
-  ///  method under a specified parent catalog.
+  /// [CatalogService.SetDefaultBranch][google.cloud.retail.v2.CatalogService.SetDefaultBranch]
+  /// method under a specified parent catalog.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -412,9 +406,7 @@ class CatalogServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::retail::v2::GetDefaultBranchResponse>
-  GetDefaultBranch(
-      google::cloud::retail::v2::GetDefaultBranchRequest const& request,
-      Options opts = {});
+  GetDefaultBranch(google::cloud::retail::v2::GetDefaultBranchRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -439,8 +431,8 @@ class CatalogServiceClient {
   /// [google.cloud.retail.v2.GetCompletionConfigRequest]: @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L341}
   ///
   // clang-format on
-  StatusOr<google::cloud::retail::v2::CompletionConfig> GetCompletionConfig(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::retail::v2::CompletionConfig>
+  GetCompletionConfig(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -469,9 +461,8 @@ class CatalogServiceClient {
   /// [google.cloud.retail.v2.GetCompletionConfigRequest]: @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L341}
   ///
   // clang-format on
-  StatusOr<google::cloud::retail::v2::CompletionConfig> GetCompletionConfig(
-      google::cloud::retail::v2::GetCompletionConfigRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::retail::v2::CompletionConfig>
+  GetCompletionConfig(google::cloud::retail::v2::GetCompletionConfigRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -517,9 +508,8 @@ class CatalogServiceClient {
   /// [google.cloud.retail.v2.UpdateCompletionConfigRequest]: @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L355}
   ///
   // clang-format on
-  StatusOr<google::cloud::retail::v2::CompletionConfig> UpdateCompletionConfig(
-      google::cloud::retail::v2::CompletionConfig const& completion_config,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::cloud::retail::v2::CompletionConfig>
+  UpdateCompletionConfig(google::cloud::retail::v2::CompletionConfig const& completion_config, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -548,9 +538,8 @@ class CatalogServiceClient {
   /// [google.cloud.retail.v2.UpdateCompletionConfigRequest]: @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L355}
   ///
   // clang-format on
-  StatusOr<google::cloud::retail::v2::CompletionConfig> UpdateCompletionConfig(
-      google::cloud::retail::v2::UpdateCompletionConfigRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::retail::v2::CompletionConfig>
+  UpdateCompletionConfig(google::cloud::retail::v2::UpdateCompletionConfigRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -575,8 +564,8 @@ class CatalogServiceClient {
   /// [google.cloud.retail.v2.GetAttributesConfigRequest]: @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L384}
   ///
   // clang-format on
-  StatusOr<google::cloud::retail::v2::AttributesConfig> GetAttributesConfig(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::retail::v2::AttributesConfig>
+  GetAttributesConfig(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -605,9 +594,8 @@ class CatalogServiceClient {
   /// [google.cloud.retail.v2.GetAttributesConfigRequest]: @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L384}
   ///
   // clang-format on
-  StatusOr<google::cloud::retail::v2::AttributesConfig> GetAttributesConfig(
-      google::cloud::retail::v2::GetAttributesConfigRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::retail::v2::AttributesConfig>
+  GetAttributesConfig(google::cloud::retail::v2::GetAttributesConfigRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -647,9 +635,8 @@ class CatalogServiceClient {
   /// [google.cloud.retail.v2.UpdateAttributesConfigRequest]: @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L398}
   ///
   // clang-format on
-  StatusOr<google::cloud::retail::v2::AttributesConfig> UpdateAttributesConfig(
-      google::cloud::retail::v2::AttributesConfig const& attributes_config,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::cloud::retail::v2::AttributesConfig>
+  UpdateAttributesConfig(google::cloud::retail::v2::AttributesConfig const& attributes_config, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -685,9 +672,8 @@ class CatalogServiceClient {
   /// [google.cloud.retail.v2.UpdateAttributesConfigRequest]: @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L398}
   ///
   // clang-format on
-  StatusOr<google::cloud::retail::v2::AttributesConfig> UpdateAttributesConfig(
-      google::cloud::retail::v2::UpdateAttributesConfigRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::retail::v2::AttributesConfig>
+  UpdateAttributesConfig(google::cloud::retail::v2::UpdateAttributesConfigRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -722,9 +708,8 @@ class CatalogServiceClient {
   /// [google.cloud.retail.v2.CatalogAttribute]: @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L90}
   ///
   // clang-format on
-  StatusOr<google::cloud::retail::v2::AttributesConfig> AddCatalogAttribute(
-      google::cloud::retail::v2::AddCatalogAttributeRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::retail::v2::AttributesConfig>
+  AddCatalogAttribute(google::cloud::retail::v2::AddCatalogAttributeRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -759,9 +744,8 @@ class CatalogServiceClient {
   /// [google.cloud.retail.v2.RemoveCatalogAttributeRequest]: @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L436}
   ///
   // clang-format on
-  StatusOr<google::cloud::retail::v2::AttributesConfig> RemoveCatalogAttribute(
-      google::cloud::retail::v2::RemoveCatalogAttributeRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::retail::v2::AttributesConfig>
+  RemoveCatalogAttribute(google::cloud::retail::v2::RemoveCatalogAttributeRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -799,9 +783,8 @@ class CatalogServiceClient {
   /// [google.cloud.retail.v2.ReplaceCatalogAttributeRequest]: @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L454}
   ///
   // clang-format on
-  StatusOr<google::cloud::retail::v2::AttributesConfig> ReplaceCatalogAttribute(
-      google::cloud::retail::v2::ReplaceCatalogAttributeRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::retail::v2::AttributesConfig>
+  ReplaceCatalogAttribute(google::cloud::retail::v2::ReplaceCatalogAttributeRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -836,8 +819,8 @@ class CatalogServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -876,8 +859,8 @@ class CatalogServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -903,8 +886,8 @@ class CatalogServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -935,9 +918,8 @@ class CatalogServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<CatalogServiceConnection> connection_;

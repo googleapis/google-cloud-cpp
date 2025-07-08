@@ -31,11 +31,10 @@ ContactCenterInsightsAuth::ContactCenterInsightsAuth(
     std::shared_ptr<ContactCenterInsightsStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::contactcenterinsights::v1::Conversation>
-ContactCenterInsightsAuth::CreateConversation(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::contactcenterinsights::v1::CreateConversationRequest const&
-        request) {
+StatusOr<google::cloud::contactcenterinsights::v1::Conversation> ContactCenterInsightsAuth::CreateConversation(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::contactcenterinsights::v1::CreateConversationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateConversation(context, options, request);
@@ -43,69 +42,64 @@ ContactCenterInsightsAuth::CreateConversation(
 
 future<StatusOr<google::longrunning::Operation>>
 ContactCenterInsightsAuth::AsyncUploadConversation(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::contactcenterinsights::v1::UploadConversationRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::contactcenterinsights::v1::UploadConversationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncUploadConversation(cq, *std::move(context),
-                                              std::move(options), request);
+        return child->AsyncUploadConversation(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 ContactCenterInsightsAuth::UploadConversation(
-    grpc::ClientContext& context, Options options,
-    google::cloud::contactcenterinsights::v1::UploadConversationRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::contactcenterinsights::v1::UploadConversationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UploadConversation(context, options, request);
 }
 
-StatusOr<google::cloud::contactcenterinsights::v1::Conversation>
-ContactCenterInsightsAuth::UpdateConversation(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::contactcenterinsights::v1::UpdateConversationRequest const&
-        request) {
+StatusOr<google::cloud::contactcenterinsights::v1::Conversation> ContactCenterInsightsAuth::UpdateConversation(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::contactcenterinsights::v1::UpdateConversationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateConversation(context, options, request);
 }
 
-StatusOr<google::cloud::contactcenterinsights::v1::Conversation>
-ContactCenterInsightsAuth::GetConversation(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::contactcenterinsights::v1::GetConversationRequest const&
-        request) {
+StatusOr<google::cloud::contactcenterinsights::v1::Conversation> ContactCenterInsightsAuth::GetConversation(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::contactcenterinsights::v1::GetConversationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetConversation(context, options, request);
 }
 
-StatusOr<google::cloud::contactcenterinsights::v1::ListConversationsResponse>
-ContactCenterInsightsAuth::ListConversations(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::contactcenterinsights::v1::ListConversationsRequest const&
-        request) {
+StatusOr<google::cloud::contactcenterinsights::v1::ListConversationsResponse> ContactCenterInsightsAuth::ListConversations(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::contactcenterinsights::v1::ListConversationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListConversations(context, options, request);
 }
 
 Status ContactCenterInsightsAuth::DeleteConversation(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::contactcenterinsights::v1::DeleteConversationRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::contactcenterinsights::v1::DeleteConversationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteConversation(context, options, request);
@@ -113,59 +107,55 @@ Status ContactCenterInsightsAuth::DeleteConversation(
 
 future<StatusOr<google::longrunning::Operation>>
 ContactCenterInsightsAuth::AsyncCreateAnalysis(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::contactcenterinsights::v1::CreateAnalysisRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::contactcenterinsights::v1::CreateAnalysisRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreateAnalysis(cq, *std::move(context),
-                                          std::move(options), request);
+        return child->AsyncCreateAnalysis(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 ContactCenterInsightsAuth::CreateAnalysis(
-    grpc::ClientContext& context, Options options,
-    google::cloud::contactcenterinsights::v1::CreateAnalysisRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::contactcenterinsights::v1::CreateAnalysisRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateAnalysis(context, options, request);
 }
 
-StatusOr<google::cloud::contactcenterinsights::v1::Analysis>
-ContactCenterInsightsAuth::GetAnalysis(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::contactcenterinsights::v1::GetAnalysisRequest const&
-        request) {
+StatusOr<google::cloud::contactcenterinsights::v1::Analysis> ContactCenterInsightsAuth::GetAnalysis(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::contactcenterinsights::v1::GetAnalysisRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetAnalysis(context, options, request);
 }
 
-StatusOr<google::cloud::contactcenterinsights::v1::ListAnalysesResponse>
-ContactCenterInsightsAuth::ListAnalyses(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::contactcenterinsights::v1::ListAnalysesRequest const&
-        request) {
+StatusOr<google::cloud::contactcenterinsights::v1::ListAnalysesResponse> ContactCenterInsightsAuth::ListAnalyses(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::contactcenterinsights::v1::ListAnalysesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListAnalyses(context, options, request);
 }
 
 Status ContactCenterInsightsAuth::DeleteAnalysis(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::contactcenterinsights::v1::DeleteAnalysisRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::contactcenterinsights::v1::DeleteAnalysisRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteAnalysis(context, options, request);
@@ -173,16 +163,14 @@ Status ContactCenterInsightsAuth::DeleteAnalysis(
 
 future<StatusOr<google::longrunning::Operation>>
 ContactCenterInsightsAuth::AsyncBulkAnalyzeConversations(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::contactcenterinsights::v1::
-        BulkAnalyzeConversationsRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::contactcenterinsights::v1::BulkAnalyzeConversationsRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
@@ -194,9 +182,9 @@ ContactCenterInsightsAuth::AsyncBulkAnalyzeConversations(
 
 StatusOr<google::longrunning::Operation>
 ContactCenterInsightsAuth::BulkAnalyzeConversations(
-    grpc::ClientContext& context, Options options,
-    google::cloud::contactcenterinsights::v1::
-        BulkAnalyzeConversationsRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::contactcenterinsights::v1::BulkAnalyzeConversationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->BulkAnalyzeConversations(context, options, request);
@@ -204,30 +192,28 @@ ContactCenterInsightsAuth::BulkAnalyzeConversations(
 
 future<StatusOr<google::longrunning::Operation>>
 ContactCenterInsightsAuth::AsyncBulkDeleteConversations(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::contactcenterinsights::v1::
-        BulkDeleteConversationsRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::contactcenterinsights::v1::BulkDeleteConversationsRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncBulkDeleteConversations(cq, *std::move(context),
-                                                   std::move(options), request);
+        return child->AsyncBulkDeleteConversations(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 ContactCenterInsightsAuth::BulkDeleteConversations(
-    grpc::ClientContext& context, Options options,
-    google::cloud::contactcenterinsights::v1::
-        BulkDeleteConversationsRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::contactcenterinsights::v1::BulkDeleteConversationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->BulkDeleteConversations(context, options, request);
@@ -235,30 +221,28 @@ ContactCenterInsightsAuth::BulkDeleteConversations(
 
 future<StatusOr<google::longrunning::Operation>>
 ContactCenterInsightsAuth::AsyncIngestConversations(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::contactcenterinsights::v1::IngestConversationsRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::contactcenterinsights::v1::IngestConversationsRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncIngestConversations(cq, *std::move(context),
-                                               std::move(options), request);
+        return child->AsyncIngestConversations(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 ContactCenterInsightsAuth::IngestConversations(
-    grpc::ClientContext& context, Options options,
-    google::cloud::contactcenterinsights::v1::IngestConversationsRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::contactcenterinsights::v1::IngestConversationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->IngestConversations(context, options, request);
@@ -266,30 +250,28 @@ ContactCenterInsightsAuth::IngestConversations(
 
 future<StatusOr<google::longrunning::Operation>>
 ContactCenterInsightsAuth::AsyncExportInsightsData(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::contactcenterinsights::v1::ExportInsightsDataRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::contactcenterinsights::v1::ExportInsightsDataRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncExportInsightsData(cq, *std::move(context),
-                                              std::move(options), request);
+        return child->AsyncExportInsightsData(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 ContactCenterInsightsAuth::ExportInsightsData(
-    grpc::ClientContext& context, Options options,
-    google::cloud::contactcenterinsights::v1::ExportInsightsDataRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::contactcenterinsights::v1::ExportInsightsDataRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ExportInsightsData(context, options, request);
@@ -297,60 +279,55 @@ ContactCenterInsightsAuth::ExportInsightsData(
 
 future<StatusOr<google::longrunning::Operation>>
 ContactCenterInsightsAuth::AsyncCreateIssueModel(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::contactcenterinsights::v1::CreateIssueModelRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::contactcenterinsights::v1::CreateIssueModelRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreateIssueModel(cq, *std::move(context),
-                                            std::move(options), request);
+        return child->AsyncCreateIssueModel(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 ContactCenterInsightsAuth::CreateIssueModel(
-    grpc::ClientContext& context, Options options,
-    google::cloud::contactcenterinsights::v1::CreateIssueModelRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::contactcenterinsights::v1::CreateIssueModelRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateIssueModel(context, options, request);
 }
 
-StatusOr<google::cloud::contactcenterinsights::v1::IssueModel>
-ContactCenterInsightsAuth::UpdateIssueModel(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::contactcenterinsights::v1::UpdateIssueModelRequest const&
-        request) {
+StatusOr<google::cloud::contactcenterinsights::v1::IssueModel> ContactCenterInsightsAuth::UpdateIssueModel(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::contactcenterinsights::v1::UpdateIssueModelRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateIssueModel(context, options, request);
 }
 
-StatusOr<google::cloud::contactcenterinsights::v1::IssueModel>
-ContactCenterInsightsAuth::GetIssueModel(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::contactcenterinsights::v1::GetIssueModelRequest const&
-        request) {
+StatusOr<google::cloud::contactcenterinsights::v1::IssueModel> ContactCenterInsightsAuth::GetIssueModel(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::contactcenterinsights::v1::GetIssueModelRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetIssueModel(context, options, request);
 }
 
-StatusOr<google::cloud::contactcenterinsights::v1::ListIssueModelsResponse>
-ContactCenterInsightsAuth::ListIssueModels(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::contactcenterinsights::v1::ListIssueModelsRequest const&
-        request) {
+StatusOr<google::cloud::contactcenterinsights::v1::ListIssueModelsResponse> ContactCenterInsightsAuth::ListIssueModels(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::contactcenterinsights::v1::ListIssueModelsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListIssueModels(context, options, request);
@@ -358,30 +335,28 @@ ContactCenterInsightsAuth::ListIssueModels(
 
 future<StatusOr<google::longrunning::Operation>>
 ContactCenterInsightsAuth::AsyncDeleteIssueModel(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::contactcenterinsights::v1::DeleteIssueModelRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::contactcenterinsights::v1::DeleteIssueModelRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDeleteIssueModel(cq, *std::move(context),
-                                            std::move(options), request);
+        return child->AsyncDeleteIssueModel(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 ContactCenterInsightsAuth::DeleteIssueModel(
-    grpc::ClientContext& context, Options options,
-    google::cloud::contactcenterinsights::v1::DeleteIssueModelRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::contactcenterinsights::v1::DeleteIssueModelRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteIssueModel(context, options, request);
@@ -389,30 +364,28 @@ ContactCenterInsightsAuth::DeleteIssueModel(
 
 future<StatusOr<google::longrunning::Operation>>
 ContactCenterInsightsAuth::AsyncDeployIssueModel(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::contactcenterinsights::v1::DeployIssueModelRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::contactcenterinsights::v1::DeployIssueModelRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDeployIssueModel(cq, *std::move(context),
-                                            std::move(options), request);
+        return child->AsyncDeployIssueModel(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 ContactCenterInsightsAuth::DeployIssueModel(
-    grpc::ClientContext& context, Options options,
-    google::cloud::contactcenterinsights::v1::DeployIssueModelRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::contactcenterinsights::v1::DeployIssueModelRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeployIssueModel(context, options, request);
@@ -420,30 +393,28 @@ ContactCenterInsightsAuth::DeployIssueModel(
 
 future<StatusOr<google::longrunning::Operation>>
 ContactCenterInsightsAuth::AsyncUndeployIssueModel(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::contactcenterinsights::v1::UndeployIssueModelRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::contactcenterinsights::v1::UndeployIssueModelRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncUndeployIssueModel(cq, *std::move(context),
-                                              std::move(options), request);
+        return child->AsyncUndeployIssueModel(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 ContactCenterInsightsAuth::UndeployIssueModel(
-    grpc::ClientContext& context, Options options,
-    google::cloud::contactcenterinsights::v1::UndeployIssueModelRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::contactcenterinsights::v1::UndeployIssueModelRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UndeployIssueModel(context, options, request);
@@ -451,30 +422,28 @@ ContactCenterInsightsAuth::UndeployIssueModel(
 
 future<StatusOr<google::longrunning::Operation>>
 ContactCenterInsightsAuth::AsyncExportIssueModel(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::contactcenterinsights::v1::ExportIssueModelRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::contactcenterinsights::v1::ExportIssueModelRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncExportIssueModel(cq, *std::move(context),
-                                            std::move(options), request);
+        return child->AsyncExportIssueModel(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 ContactCenterInsightsAuth::ExportIssueModel(
-    grpc::ClientContext& context, Options options,
-    google::cloud::contactcenterinsights::v1::ExportIssueModelRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::contactcenterinsights::v1::ExportIssueModelRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ExportIssueModel(context, options, request);
@@ -482,217 +451,199 @@ ContactCenterInsightsAuth::ExportIssueModel(
 
 future<StatusOr<google::longrunning::Operation>>
 ContactCenterInsightsAuth::AsyncImportIssueModel(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::contactcenterinsights::v1::ImportIssueModelRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::contactcenterinsights::v1::ImportIssueModelRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncImportIssueModel(cq, *std::move(context),
-                                            std::move(options), request);
+        return child->AsyncImportIssueModel(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 ContactCenterInsightsAuth::ImportIssueModel(
-    grpc::ClientContext& context, Options options,
-    google::cloud::contactcenterinsights::v1::ImportIssueModelRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::contactcenterinsights::v1::ImportIssueModelRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ImportIssueModel(context, options, request);
 }
 
-StatusOr<google::cloud::contactcenterinsights::v1::Issue>
-ContactCenterInsightsAuth::GetIssue(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::contactcenterinsights::v1::Issue> ContactCenterInsightsAuth::GetIssue(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::contactcenterinsights::v1::GetIssueRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetIssue(context, options, request);
 }
 
-StatusOr<google::cloud::contactcenterinsights::v1::ListIssuesResponse>
-ContactCenterInsightsAuth::ListIssues(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::contactcenterinsights::v1::ListIssuesRequest const&
-        request) {
+StatusOr<google::cloud::contactcenterinsights::v1::ListIssuesResponse> ContactCenterInsightsAuth::ListIssues(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::contactcenterinsights::v1::ListIssuesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListIssues(context, options, request);
 }
 
-StatusOr<google::cloud::contactcenterinsights::v1::Issue>
-ContactCenterInsightsAuth::UpdateIssue(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::contactcenterinsights::v1::UpdateIssueRequest const&
-        request) {
+StatusOr<google::cloud::contactcenterinsights::v1::Issue> ContactCenterInsightsAuth::UpdateIssue(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::contactcenterinsights::v1::UpdateIssueRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateIssue(context, options, request);
 }
 
 Status ContactCenterInsightsAuth::DeleteIssue(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::contactcenterinsights::v1::DeleteIssueRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::contactcenterinsights::v1::DeleteIssueRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteIssue(context, options, request);
 }
 
-StatusOr<
-    google::cloud::contactcenterinsights::v1::CalculateIssueModelStatsResponse>
-ContactCenterInsightsAuth::CalculateIssueModelStats(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::contactcenterinsights::v1::
-        CalculateIssueModelStatsRequest const& request) {
+StatusOr<google::cloud::contactcenterinsights::v1::CalculateIssueModelStatsResponse> ContactCenterInsightsAuth::CalculateIssueModelStats(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::contactcenterinsights::v1::CalculateIssueModelStatsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CalculateIssueModelStats(context, options, request);
 }
 
-StatusOr<google::cloud::contactcenterinsights::v1::PhraseMatcher>
-ContactCenterInsightsAuth::CreatePhraseMatcher(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::contactcenterinsights::v1::CreatePhraseMatcherRequest const&
-        request) {
+StatusOr<google::cloud::contactcenterinsights::v1::PhraseMatcher> ContactCenterInsightsAuth::CreatePhraseMatcher(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::contactcenterinsights::v1::CreatePhraseMatcherRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreatePhraseMatcher(context, options, request);
 }
 
-StatusOr<google::cloud::contactcenterinsights::v1::PhraseMatcher>
-ContactCenterInsightsAuth::GetPhraseMatcher(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::contactcenterinsights::v1::GetPhraseMatcherRequest const&
-        request) {
+StatusOr<google::cloud::contactcenterinsights::v1::PhraseMatcher> ContactCenterInsightsAuth::GetPhraseMatcher(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::contactcenterinsights::v1::GetPhraseMatcherRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetPhraseMatcher(context, options, request);
 }
 
-StatusOr<google::cloud::contactcenterinsights::v1::ListPhraseMatchersResponse>
-ContactCenterInsightsAuth::ListPhraseMatchers(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::contactcenterinsights::v1::ListPhraseMatchersRequest const&
-        request) {
+StatusOr<google::cloud::contactcenterinsights::v1::ListPhraseMatchersResponse> ContactCenterInsightsAuth::ListPhraseMatchers(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::contactcenterinsights::v1::ListPhraseMatchersRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListPhraseMatchers(context, options, request);
 }
 
 Status ContactCenterInsightsAuth::DeletePhraseMatcher(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::contactcenterinsights::v1::DeletePhraseMatcherRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::contactcenterinsights::v1::DeletePhraseMatcherRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeletePhraseMatcher(context, options, request);
 }
 
-StatusOr<google::cloud::contactcenterinsights::v1::PhraseMatcher>
-ContactCenterInsightsAuth::UpdatePhraseMatcher(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::contactcenterinsights::v1::UpdatePhraseMatcherRequest const&
-        request) {
+StatusOr<google::cloud::contactcenterinsights::v1::PhraseMatcher> ContactCenterInsightsAuth::UpdatePhraseMatcher(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::contactcenterinsights::v1::UpdatePhraseMatcherRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdatePhraseMatcher(context, options, request);
 }
 
-StatusOr<google::cloud::contactcenterinsights::v1::CalculateStatsResponse>
-ContactCenterInsightsAuth::CalculateStats(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::contactcenterinsights::v1::CalculateStatsRequest const&
-        request) {
+StatusOr<google::cloud::contactcenterinsights::v1::CalculateStatsResponse> ContactCenterInsightsAuth::CalculateStats(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::contactcenterinsights::v1::CalculateStatsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CalculateStats(context, options, request);
 }
 
-StatusOr<google::cloud::contactcenterinsights::v1::Settings>
-ContactCenterInsightsAuth::GetSettings(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::contactcenterinsights::v1::GetSettingsRequest const&
-        request) {
+StatusOr<google::cloud::contactcenterinsights::v1::Settings> ContactCenterInsightsAuth::GetSettings(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::contactcenterinsights::v1::GetSettingsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetSettings(context, options, request);
 }
 
-StatusOr<google::cloud::contactcenterinsights::v1::Settings>
-ContactCenterInsightsAuth::UpdateSettings(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::contactcenterinsights::v1::UpdateSettingsRequest const&
-        request) {
+StatusOr<google::cloud::contactcenterinsights::v1::Settings> ContactCenterInsightsAuth::UpdateSettings(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::contactcenterinsights::v1::UpdateSettingsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateSettings(context, options, request);
 }
 
-StatusOr<google::cloud::contactcenterinsights::v1::AnalysisRule>
-ContactCenterInsightsAuth::CreateAnalysisRule(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::contactcenterinsights::v1::CreateAnalysisRuleRequest const&
-        request) {
+StatusOr<google::cloud::contactcenterinsights::v1::AnalysisRule> ContactCenterInsightsAuth::CreateAnalysisRule(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::contactcenterinsights::v1::CreateAnalysisRuleRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateAnalysisRule(context, options, request);
 }
 
-StatusOr<google::cloud::contactcenterinsights::v1::AnalysisRule>
-ContactCenterInsightsAuth::GetAnalysisRule(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::contactcenterinsights::v1::GetAnalysisRuleRequest const&
-        request) {
+StatusOr<google::cloud::contactcenterinsights::v1::AnalysisRule> ContactCenterInsightsAuth::GetAnalysisRule(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::contactcenterinsights::v1::GetAnalysisRuleRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetAnalysisRule(context, options, request);
 }
 
-StatusOr<google::cloud::contactcenterinsights::v1::ListAnalysisRulesResponse>
-ContactCenterInsightsAuth::ListAnalysisRules(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::contactcenterinsights::v1::ListAnalysisRulesRequest const&
-        request) {
+StatusOr<google::cloud::contactcenterinsights::v1::ListAnalysisRulesResponse> ContactCenterInsightsAuth::ListAnalysisRules(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::contactcenterinsights::v1::ListAnalysisRulesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListAnalysisRules(context, options, request);
 }
 
-StatusOr<google::cloud::contactcenterinsights::v1::AnalysisRule>
-ContactCenterInsightsAuth::UpdateAnalysisRule(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::contactcenterinsights::v1::UpdateAnalysisRuleRequest const&
-        request) {
+StatusOr<google::cloud::contactcenterinsights::v1::AnalysisRule> ContactCenterInsightsAuth::UpdateAnalysisRule(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::contactcenterinsights::v1::UpdateAnalysisRuleRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateAnalysisRule(context, options, request);
 }
 
 Status ContactCenterInsightsAuth::DeleteAnalysisRule(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::contactcenterinsights::v1::DeleteAnalysisRuleRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::contactcenterinsights::v1::DeleteAnalysisRuleRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteAnalysisRule(context, options, request);
 }
 
-StatusOr<google::cloud::contactcenterinsights::v1::EncryptionSpec>
-ContactCenterInsightsAuth::GetEncryptionSpec(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::contactcenterinsights::v1::GetEncryptionSpecRequest const&
-        request) {
+StatusOr<google::cloud::contactcenterinsights::v1::EncryptionSpec> ContactCenterInsightsAuth::GetEncryptionSpec(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::contactcenterinsights::v1::GetEncryptionSpecRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetEncryptionSpec(context, options, request);
@@ -700,16 +651,14 @@ ContactCenterInsightsAuth::GetEncryptionSpec(
 
 future<StatusOr<google::longrunning::Operation>>
 ContactCenterInsightsAuth::AsyncInitializeEncryptionSpec(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::contactcenterinsights::v1::
-        InitializeEncryptionSpecRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::contactcenterinsights::v1::InitializeEncryptionSpecRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
@@ -721,56 +670,54 @@ ContactCenterInsightsAuth::AsyncInitializeEncryptionSpec(
 
 StatusOr<google::longrunning::Operation>
 ContactCenterInsightsAuth::InitializeEncryptionSpec(
-    grpc::ClientContext& context, Options options,
-    google::cloud::contactcenterinsights::v1::
-        InitializeEncryptionSpecRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::contactcenterinsights::v1::InitializeEncryptionSpecRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->InitializeEncryptionSpec(context, options, request);
 }
 
-StatusOr<google::cloud::contactcenterinsights::v1::View>
-ContactCenterInsightsAuth::CreateView(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::contactcenterinsights::v1::CreateViewRequest const&
-        request) {
+StatusOr<google::cloud::contactcenterinsights::v1::View> ContactCenterInsightsAuth::CreateView(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::contactcenterinsights::v1::CreateViewRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateView(context, options, request);
 }
 
-StatusOr<google::cloud::contactcenterinsights::v1::View>
-ContactCenterInsightsAuth::GetView(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::contactcenterinsights::v1::View> ContactCenterInsightsAuth::GetView(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::contactcenterinsights::v1::GetViewRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetView(context, options, request);
 }
 
-StatusOr<google::cloud::contactcenterinsights::v1::ListViewsResponse>
-ContactCenterInsightsAuth::ListViews(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::contactcenterinsights::v1::ListViewsResponse> ContactCenterInsightsAuth::ListViews(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::contactcenterinsights::v1::ListViewsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListViews(context, options, request);
 }
 
-StatusOr<google::cloud::contactcenterinsights::v1::View>
-ContactCenterInsightsAuth::UpdateView(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::contactcenterinsights::v1::UpdateViewRequest const&
-        request) {
+StatusOr<google::cloud::contactcenterinsights::v1::View> ContactCenterInsightsAuth::UpdateView(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::contactcenterinsights::v1::UpdateViewRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateView(context, options, request);
 }
 
 Status ContactCenterInsightsAuth::DeleteView(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::contactcenterinsights::v1::DeleteViewRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::contactcenterinsights::v1::DeleteViewRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteView(context, options, request);
@@ -778,148 +725,136 @@ Status ContactCenterInsightsAuth::DeleteView(
 
 future<StatusOr<google::longrunning::Operation>>
 ContactCenterInsightsAuth::AsyncQueryMetrics(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::contactcenterinsights::v1::QueryMetricsRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::contactcenterinsights::v1::QueryMetricsRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncQueryMetrics(cq, *std::move(context),
-                                        std::move(options), request);
+        return child->AsyncQueryMetrics(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 ContactCenterInsightsAuth::QueryMetrics(
-    grpc::ClientContext& context, Options options,
-    google::cloud::contactcenterinsights::v1::QueryMetricsRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::contactcenterinsights::v1::QueryMetricsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->QueryMetrics(context, options, request);
 }
 
-StatusOr<google::cloud::contactcenterinsights::v1::QaQuestion>
-ContactCenterInsightsAuth::CreateQaQuestion(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::contactcenterinsights::v1::CreateQaQuestionRequest const&
-        request) {
+StatusOr<google::cloud::contactcenterinsights::v1::QaQuestion> ContactCenterInsightsAuth::CreateQaQuestion(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::contactcenterinsights::v1::CreateQaQuestionRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateQaQuestion(context, options, request);
 }
 
-StatusOr<google::cloud::contactcenterinsights::v1::QaQuestion>
-ContactCenterInsightsAuth::GetQaQuestion(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::contactcenterinsights::v1::GetQaQuestionRequest const&
-        request) {
+StatusOr<google::cloud::contactcenterinsights::v1::QaQuestion> ContactCenterInsightsAuth::GetQaQuestion(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::contactcenterinsights::v1::GetQaQuestionRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetQaQuestion(context, options, request);
 }
 
-StatusOr<google::cloud::contactcenterinsights::v1::QaQuestion>
-ContactCenterInsightsAuth::UpdateQaQuestion(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::contactcenterinsights::v1::UpdateQaQuestionRequest const&
-        request) {
+StatusOr<google::cloud::contactcenterinsights::v1::QaQuestion> ContactCenterInsightsAuth::UpdateQaQuestion(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::contactcenterinsights::v1::UpdateQaQuestionRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateQaQuestion(context, options, request);
 }
 
 Status ContactCenterInsightsAuth::DeleteQaQuestion(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::contactcenterinsights::v1::DeleteQaQuestionRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::contactcenterinsights::v1::DeleteQaQuestionRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteQaQuestion(context, options, request);
 }
 
-StatusOr<google::cloud::contactcenterinsights::v1::ListQaQuestionsResponse>
-ContactCenterInsightsAuth::ListQaQuestions(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::contactcenterinsights::v1::ListQaQuestionsRequest const&
-        request) {
+StatusOr<google::cloud::contactcenterinsights::v1::ListQaQuestionsResponse> ContactCenterInsightsAuth::ListQaQuestions(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::contactcenterinsights::v1::ListQaQuestionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListQaQuestions(context, options, request);
 }
 
-StatusOr<google::cloud::contactcenterinsights::v1::QaScorecard>
-ContactCenterInsightsAuth::CreateQaScorecard(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::contactcenterinsights::v1::CreateQaScorecardRequest const&
-        request) {
+StatusOr<google::cloud::contactcenterinsights::v1::QaScorecard> ContactCenterInsightsAuth::CreateQaScorecard(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::contactcenterinsights::v1::CreateQaScorecardRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateQaScorecard(context, options, request);
 }
 
-StatusOr<google::cloud::contactcenterinsights::v1::QaScorecard>
-ContactCenterInsightsAuth::GetQaScorecard(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::contactcenterinsights::v1::GetQaScorecardRequest const&
-        request) {
+StatusOr<google::cloud::contactcenterinsights::v1::QaScorecard> ContactCenterInsightsAuth::GetQaScorecard(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::contactcenterinsights::v1::GetQaScorecardRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetQaScorecard(context, options, request);
 }
 
-StatusOr<google::cloud::contactcenterinsights::v1::QaScorecard>
-ContactCenterInsightsAuth::UpdateQaScorecard(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::contactcenterinsights::v1::UpdateQaScorecardRequest const&
-        request) {
+StatusOr<google::cloud::contactcenterinsights::v1::QaScorecard> ContactCenterInsightsAuth::UpdateQaScorecard(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::contactcenterinsights::v1::UpdateQaScorecardRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateQaScorecard(context, options, request);
 }
 
 Status ContactCenterInsightsAuth::DeleteQaScorecard(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::contactcenterinsights::v1::DeleteQaScorecardRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::contactcenterinsights::v1::DeleteQaScorecardRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteQaScorecard(context, options, request);
 }
 
-StatusOr<google::cloud::contactcenterinsights::v1::ListQaScorecardsResponse>
-ContactCenterInsightsAuth::ListQaScorecards(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::contactcenterinsights::v1::ListQaScorecardsRequest const&
-        request) {
+StatusOr<google::cloud::contactcenterinsights::v1::ListQaScorecardsResponse> ContactCenterInsightsAuth::ListQaScorecards(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::contactcenterinsights::v1::ListQaScorecardsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListQaScorecards(context, options, request);
 }
 
-StatusOr<google::cloud::contactcenterinsights::v1::QaScorecardRevision>
-ContactCenterInsightsAuth::CreateQaScorecardRevision(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::contactcenterinsights::v1::
-        CreateQaScorecardRevisionRequest const& request) {
+StatusOr<google::cloud::contactcenterinsights::v1::QaScorecardRevision> ContactCenterInsightsAuth::CreateQaScorecardRevision(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::contactcenterinsights::v1::CreateQaScorecardRevisionRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateQaScorecardRevision(context, options, request);
 }
 
-StatusOr<google::cloud::contactcenterinsights::v1::QaScorecardRevision>
-ContactCenterInsightsAuth::GetQaScorecardRevision(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::contactcenterinsights::v1::
-        GetQaScorecardRevisionRequest const& request) {
+StatusOr<google::cloud::contactcenterinsights::v1::QaScorecardRevision> ContactCenterInsightsAuth::GetQaScorecardRevision(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::contactcenterinsights::v1::GetQaScorecardRevisionRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetQaScorecardRevision(context, options, request);
@@ -927,130 +862,118 @@ ContactCenterInsightsAuth::GetQaScorecardRevision(
 
 future<StatusOr<google::longrunning::Operation>>
 ContactCenterInsightsAuth::AsyncTuneQaScorecardRevision(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::contactcenterinsights::v1::
-        TuneQaScorecardRevisionRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::contactcenterinsights::v1::TuneQaScorecardRevisionRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncTuneQaScorecardRevision(cq, *std::move(context),
-                                                   std::move(options), request);
+        return child->AsyncTuneQaScorecardRevision(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 ContactCenterInsightsAuth::TuneQaScorecardRevision(
-    grpc::ClientContext& context, Options options,
-    google::cloud::contactcenterinsights::v1::
-        TuneQaScorecardRevisionRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::contactcenterinsights::v1::TuneQaScorecardRevisionRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->TuneQaScorecardRevision(context, options, request);
 }
 
-StatusOr<google::cloud::contactcenterinsights::v1::QaScorecardRevision>
-ContactCenterInsightsAuth::DeployQaScorecardRevision(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::contactcenterinsights::v1::
-        DeployQaScorecardRevisionRequest const& request) {
+StatusOr<google::cloud::contactcenterinsights::v1::QaScorecardRevision> ContactCenterInsightsAuth::DeployQaScorecardRevision(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::contactcenterinsights::v1::DeployQaScorecardRevisionRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeployQaScorecardRevision(context, options, request);
 }
 
-StatusOr<google::cloud::contactcenterinsights::v1::QaScorecardRevision>
-ContactCenterInsightsAuth::UndeployQaScorecardRevision(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::contactcenterinsights::v1::
-        UndeployQaScorecardRevisionRequest const& request) {
+StatusOr<google::cloud::contactcenterinsights::v1::QaScorecardRevision> ContactCenterInsightsAuth::UndeployQaScorecardRevision(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::contactcenterinsights::v1::UndeployQaScorecardRevisionRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UndeployQaScorecardRevision(context, options, request);
 }
 
 Status ContactCenterInsightsAuth::DeleteQaScorecardRevision(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::contactcenterinsights::v1::
-        DeleteQaScorecardRevisionRequest const& request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::contactcenterinsights::v1::DeleteQaScorecardRevisionRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteQaScorecardRevision(context, options, request);
 }
 
-StatusOr<
-    google::cloud::contactcenterinsights::v1::ListQaScorecardRevisionsResponse>
-ContactCenterInsightsAuth::ListQaScorecardRevisions(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::contactcenterinsights::v1::
-        ListQaScorecardRevisionsRequest const& request) {
+StatusOr<google::cloud::contactcenterinsights::v1::ListQaScorecardRevisionsResponse> ContactCenterInsightsAuth::ListQaScorecardRevisions(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::contactcenterinsights::v1::ListQaScorecardRevisionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListQaScorecardRevisions(context, options, request);
 }
 
-StatusOr<google::cloud::contactcenterinsights::v1::FeedbackLabel>
-ContactCenterInsightsAuth::CreateFeedbackLabel(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::contactcenterinsights::v1::CreateFeedbackLabelRequest const&
-        request) {
+StatusOr<google::cloud::contactcenterinsights::v1::FeedbackLabel> ContactCenterInsightsAuth::CreateFeedbackLabel(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::contactcenterinsights::v1::CreateFeedbackLabelRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateFeedbackLabel(context, options, request);
 }
 
-StatusOr<google::cloud::contactcenterinsights::v1::ListFeedbackLabelsResponse>
-ContactCenterInsightsAuth::ListFeedbackLabels(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::contactcenterinsights::v1::ListFeedbackLabelsRequest const&
-        request) {
+StatusOr<google::cloud::contactcenterinsights::v1::ListFeedbackLabelsResponse> ContactCenterInsightsAuth::ListFeedbackLabels(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::contactcenterinsights::v1::ListFeedbackLabelsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListFeedbackLabels(context, options, request);
 }
 
-StatusOr<google::cloud::contactcenterinsights::v1::FeedbackLabel>
-ContactCenterInsightsAuth::GetFeedbackLabel(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::contactcenterinsights::v1::GetFeedbackLabelRequest const&
-        request) {
+StatusOr<google::cloud::contactcenterinsights::v1::FeedbackLabel> ContactCenterInsightsAuth::GetFeedbackLabel(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::contactcenterinsights::v1::GetFeedbackLabelRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetFeedbackLabel(context, options, request);
 }
 
-StatusOr<google::cloud::contactcenterinsights::v1::FeedbackLabel>
-ContactCenterInsightsAuth::UpdateFeedbackLabel(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::contactcenterinsights::v1::UpdateFeedbackLabelRequest const&
-        request) {
+StatusOr<google::cloud::contactcenterinsights::v1::FeedbackLabel> ContactCenterInsightsAuth::UpdateFeedbackLabel(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::contactcenterinsights::v1::UpdateFeedbackLabelRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateFeedbackLabel(context, options, request);
 }
 
 Status ContactCenterInsightsAuth::DeleteFeedbackLabel(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::contactcenterinsights::v1::DeleteFeedbackLabelRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::contactcenterinsights::v1::DeleteFeedbackLabelRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteFeedbackLabel(context, options, request);
 }
 
-StatusOr<
-    google::cloud::contactcenterinsights::v1::ListAllFeedbackLabelsResponse>
-ContactCenterInsightsAuth::ListAllFeedbackLabels(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::contactcenterinsights::v1::
-        ListAllFeedbackLabelsRequest const& request) {
+StatusOr<google::cloud::contactcenterinsights::v1::ListAllFeedbackLabelsResponse> ContactCenterInsightsAuth::ListAllFeedbackLabels(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::contactcenterinsights::v1::ListAllFeedbackLabelsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListAllFeedbackLabels(context, options, request);
@@ -1058,16 +981,14 @@ ContactCenterInsightsAuth::ListAllFeedbackLabels(
 
 future<StatusOr<google::longrunning::Operation>>
 ContactCenterInsightsAuth::AsyncBulkUploadFeedbackLabels(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::contactcenterinsights::v1::
-        BulkUploadFeedbackLabelsRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::contactcenterinsights::v1::BulkUploadFeedbackLabelsRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
@@ -1079,9 +1000,9 @@ ContactCenterInsightsAuth::AsyncBulkUploadFeedbackLabels(
 
 StatusOr<google::longrunning::Operation>
 ContactCenterInsightsAuth::BulkUploadFeedbackLabels(
-    grpc::ClientContext& context, Options options,
-    google::cloud::contactcenterinsights::v1::
-        BulkUploadFeedbackLabelsRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::contactcenterinsights::v1::BulkUploadFeedbackLabelsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->BulkUploadFeedbackLabels(context, options, request);
@@ -1089,16 +1010,14 @@ ContactCenterInsightsAuth::BulkUploadFeedbackLabels(
 
 future<StatusOr<google::longrunning::Operation>>
 ContactCenterInsightsAuth::AsyncBulkDownloadFeedbackLabels(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::contactcenterinsights::v1::
-        BulkDownloadFeedbackLabelsRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::contactcenterinsights::v1::BulkDownloadFeedbackLabelsRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
@@ -1110,26 +1029,26 @@ ContactCenterInsightsAuth::AsyncBulkDownloadFeedbackLabels(
 
 StatusOr<google::longrunning::Operation>
 ContactCenterInsightsAuth::BulkDownloadFeedbackLabels(
-    grpc::ClientContext& context, Options options,
-    google::cloud::contactcenterinsights::v1::
-        BulkDownloadFeedbackLabelsRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::contactcenterinsights::v1::BulkDownloadFeedbackLabelsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->BulkDownloadFeedbackLabels(context, options, request);
 }
 
-StatusOr<google::longrunning::ListOperationsResponse>
-ContactCenterInsightsAuth::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse> ContactCenterInsightsAuth::ListOperations(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListOperations(context, options, request);
 }
 
-StatusOr<google::longrunning::Operation>
-ContactCenterInsightsAuth::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::Operation> ContactCenterInsightsAuth::GetOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -1137,7 +1056,8 @@ ContactCenterInsightsAuth::GetOperation(
 }
 
 Status ContactCenterInsightsAuth::CancelOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -1151,16 +1071,15 @@ ContactCenterInsightsAuth::AsyncGetOperation(
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncGetOperation(cq, *std::move(context),
-                                        std::move(options), request);
+        return child->AsyncGetOperation(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
@@ -1169,14 +1088,13 @@ future<Status> ContactCenterInsightsAuth::AsyncCancelOperation(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) return make_ready_future(std::move(context).status());
-        return child->AsyncCancelOperation(cq, *std::move(context),
-                                           std::move(options), request);
+        return child->AsyncCancelOperation(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 

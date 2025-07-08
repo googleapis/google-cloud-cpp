@@ -35,33 +35,23 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options DataTransferServiceDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_DATA_TRANSFER_SERVICE_ENDPOINT", "",
-      "GOOGLE_CLOUD_CPP_DATA_TRANSFER_SERVICE_AUTHORITY",
+      std::move(options), "GOOGLE_CLOUD_CPP_DATA_TRANSFER_SERVICE_ENDPOINT",
+      "", "GOOGLE_CLOUD_CPP_DATA_TRANSFER_SERVICE_AUTHORITY",
       "bigquerydatatransfer.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
-  if (!options.has<
-          bigquery_datatransfer_v1::DataTransferServiceRetryPolicyOption>()) {
+  if (!options.has<bigquery_datatransfer_v1::DataTransferServiceRetryPolicyOption>()) {
     options.set<bigquery_datatransfer_v1::DataTransferServiceRetryPolicyOption>(
         bigquery_datatransfer_v1::DataTransferServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
-            .clone());
+            std::chrono::minutes(30)).clone());
   }
-  if (!options.has<
-          bigquery_datatransfer_v1::DataTransferServiceBackoffPolicyOption>()) {
-    options
-        .set<bigquery_datatransfer_v1::DataTransferServiceBackoffPolicyOption>(
-            ExponentialBackoffPolicy(
-                std::chrono::seconds(0), std::chrono::seconds(1),
-                std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
-                .clone());
+  if (!options.has<bigquery_datatransfer_v1::DataTransferServiceBackoffPolicyOption>()) {
+    options.set<bigquery_datatransfer_v1::DataTransferServiceBackoffPolicyOption>(
+        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
   }
-  if (!options
-           .has<bigquery_datatransfer_v1::
-                    DataTransferServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<bigquery_datatransfer_v1::
-                    DataTransferServiceConnectionIdempotencyPolicyOption>(
-        bigquery_datatransfer_v1::
-            MakeDefaultDataTransferServiceConnectionIdempotencyPolicy());
+  if (!options.has<bigquery_datatransfer_v1::DataTransferServiceConnectionIdempotencyPolicyOption>()) {
+    options.set<bigquery_datatransfer_v1::DataTransferServiceConnectionIdempotencyPolicyOption>(
+        bigquery_datatransfer_v1::MakeDefaultDataTransferServiceConnectionIdempotencyPolicy());
   }
 
   return options;

@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBLICCA_V1_INTERNAL_PUBLIC_CERTIFICATE_AUTHORITY_AUTH_DECORATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBLICCA_V1_INTERNAL_PUBLIC_CERTIFICATE_AUTHORITY_AUTH_DECORATOR_H
 
-#include "google/cloud/publicca/v1/internal/public_certificate_authority_stub.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/publicca/v1/internal/public_certificate_authority_stub.h"
 #include "google/cloud/version.h"
 #include <memory>
 #include <set>
@@ -31,19 +31,17 @@ namespace cloud {
 namespace publicca_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class PublicCertificateAuthorityServiceAuth
-    : public PublicCertificateAuthorityServiceStub {
+class PublicCertificateAuthorityServiceAuth : public PublicCertificateAuthorityServiceStub {
  public:
   ~PublicCertificateAuthorityServiceAuth() override = default;
   PublicCertificateAuthorityServiceAuth(
       std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth,
       std::shared_ptr<PublicCertificateAuthorityServiceStub> child);
 
-  StatusOr<google::cloud::security::publicca::v1::ExternalAccountKey>
-  CreateExternalAccountKey(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::security::publicca::v1::
-          CreateExternalAccountKeyRequest const& request) override;
+  StatusOr<google::cloud::security::publicca::v1::ExternalAccountKey> CreateExternalAccountKey(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::security::publicca::v1::CreateExternalAccountKeyRequest const& request) override;
 
  private:
   std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth_;

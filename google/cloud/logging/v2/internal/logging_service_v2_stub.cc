@@ -31,65 +31,69 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 LoggingServiceV2Stub::~LoggingServiceV2Stub() = default;
 
-Status DefaultLoggingServiceV2Stub::DeleteLog(
-    grpc::ClientContext& context, Options const&,
-    google::logging::v2::DeleteLogRequest const& request) {
-  google::protobuf::Empty response;
-  auto status = grpc_stub_->DeleteLog(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return google::cloud::Status();
+Status
+DefaultLoggingServiceV2Stub::DeleteLog(
+  grpc::ClientContext& context, Options const&,
+  google::logging::v2::DeleteLogRequest const& request) {
+    google::protobuf::Empty response;
+    auto status =
+        grpc_stub_->DeleteLog(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return google::cloud::Status();
 }
 
 StatusOr<google::logging::v2::WriteLogEntriesResponse>
 DefaultLoggingServiceV2Stub::WriteLogEntries(
-    grpc::ClientContext& context, Options const&,
-    google::logging::v2::WriteLogEntriesRequest const& request) {
-  google::logging::v2::WriteLogEntriesResponse response;
-  auto status = grpc_stub_->WriteLogEntries(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::logging::v2::WriteLogEntriesRequest const& request) {
+    google::logging::v2::WriteLogEntriesResponse response;
+    auto status =
+        grpc_stub_->WriteLogEntries(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::logging::v2::ListLogEntriesResponse>
 DefaultLoggingServiceV2Stub::ListLogEntries(
-    grpc::ClientContext& context, Options const&,
-    google::logging::v2::ListLogEntriesRequest const& request) {
-  google::logging::v2::ListLogEntriesResponse response;
-  auto status = grpc_stub_->ListLogEntries(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::logging::v2::ListLogEntriesRequest const& request) {
+    google::logging::v2::ListLogEntriesResponse response;
+    auto status =
+        grpc_stub_->ListLogEntries(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::logging::v2::ListMonitoredResourceDescriptorsResponse>
 DefaultLoggingServiceV2Stub::ListMonitoredResourceDescriptors(
-    grpc::ClientContext& context, Options const&,
-    google::logging::v2::ListMonitoredResourceDescriptorsRequest const&
-        request) {
-  google::logging::v2::ListMonitoredResourceDescriptorsResponse response;
-  auto status = grpc_stub_->ListMonitoredResourceDescriptors(&context, request,
-                                                             &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::logging::v2::ListMonitoredResourceDescriptorsRequest const& request) {
+    google::logging::v2::ListMonitoredResourceDescriptorsResponse response;
+    auto status =
+        grpc_stub_->ListMonitoredResourceDescriptors(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::logging::v2::ListLogsResponse>
 DefaultLoggingServiceV2Stub::ListLogs(
-    grpc::ClientContext& context, Options const&,
-    google::logging::v2::ListLogsRequest const& request) {
-  google::logging::v2::ListLogsResponse response;
-  auto status = grpc_stub_->ListLogs(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::logging::v2::ListLogsRequest const& request) {
+    google::logging::v2::ListLogsResponse response;
+    auto status =
+        grpc_stub_->ListLogs(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
@@ -99,9 +103,7 @@ DefaultLoggingServiceV2Stub::AsyncTailLogEntries(
     google::cloud::CompletionQueue const& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options) {
-  return google::cloud::internal::MakeStreamingReadWriteRpc<
-      google::logging::v2::TailLogEntriesRequest,
-      google::logging::v2::TailLogEntriesResponse>(
+  return google::cloud::internal::MakeStreamingReadWriteRpc<google::logging::v2::TailLogEntriesRequest, google::logging::v2::TailLogEntriesResponse>(
       cq, std::move(context), std::move(options),
       [this](grpc::ClientContext* context, grpc::CompletionQueue* cq) {
         return grpc_stub_->PrepareAsyncTailLogEntries(context, cq);
@@ -110,37 +112,41 @@ DefaultLoggingServiceV2Stub::AsyncTailLogEntries(
 
 StatusOr<google::longrunning::ListOperationsResponse>
 DefaultLoggingServiceV2Stub::ListOperations(
-    grpc::ClientContext& context, Options const&,
-    google::longrunning::ListOperationsRequest const& request) {
-  google::longrunning::ListOperationsResponse response;
-  auto status = operations_stub_->ListOperations(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::longrunning::ListOperationsRequest const& request) {
+    google::longrunning::ListOperationsResponse response;
+    auto status =
+        operations_stub_->ListOperations(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::longrunning::Operation>
 DefaultLoggingServiceV2Stub::GetOperation(
-    grpc::ClientContext& context, Options const&,
-    google::longrunning::GetOperationRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = operations_stub_->GetOperation(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::longrunning::GetOperationRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        operations_stub_->GetOperation(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-Status DefaultLoggingServiceV2Stub::CancelOperation(
-    grpc::ClientContext& context, Options const&,
-    google::longrunning::CancelOperationRequest const& request) {
-  google::protobuf::Empty response;
-  auto status = operations_stub_->CancelOperation(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return google::cloud::Status();
+Status
+DefaultLoggingServiceV2Stub::CancelOperation(
+  grpc::ClientContext& context, Options const&,
+  google::longrunning::CancelOperationRequest const& request) {
+    google::protobuf::Empty response;
+    auto status =
+        operations_stub_->CancelOperation(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return google::cloud::Status();
 }
 
 future<StatusOr<google::logging::v2::WriteLogEntriesResponse>>
@@ -150,9 +156,8 @@ DefaultLoggingServiceV2Stub::AsyncWriteLogEntries(
     // NOLINTNEXTLINE(performance-unnecessary-value-param)
     google::cloud::internal::ImmutableOptions,
     google::logging::v2::WriteLogEntriesRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::logging::v2::WriteLogEntriesRequest,
-      google::logging::v2::WriteLogEntriesResponse>(
+  return internal::MakeUnaryRpcImpl<google::logging::v2::WriteLogEntriesRequest,
+                                    google::logging::v2::WriteLogEntriesResponse>(
       cq,
       [this](grpc::ClientContext* context,
              google::logging::v2::WriteLogEntriesRequest const& request,

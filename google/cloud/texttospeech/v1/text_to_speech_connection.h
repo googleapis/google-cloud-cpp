@@ -19,14 +19,14 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TEXTTOSPEECH_V1_TEXT_TO_SPEECH_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TEXTTOSPEECH_V1_TEXT_TO_SPEECH_CONNECTION_H
 
-#include "google/cloud/texttospeech/v1/internal/text_to_speech_retry_traits.h"
-#include "google/cloud/texttospeech/v1/text_to_speech_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/async_read_write_stream_impl.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
+#include "google/cloud/texttospeech/v1/internal/text_to_speech_retry_traits.h"
+#include "google/cloud/texttospeech/v1/text_to_speech_connection_idempotency_policy.h"
 #include "google/cloud/version.h"
 #include <google/cloud/texttospeech/v1/cloud_tts.pb.h>
 #include <memory>
@@ -53,8 +53,7 @@ class TextToSpeechRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class TextToSpeechLimitedErrorCountRetryPolicy
-    : public TextToSpeechRetryPolicy {
+class TextToSpeechLimitedErrorCountRetryPolicy : public TextToSpeechRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -64,14 +63,14 @@ class TextToSpeechLimitedErrorCountRetryPolicy
    *     @p maximum_failures == 0.
    */
   explicit TextToSpeechLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   TextToSpeechLimitedErrorCountRetryPolicy(
       TextToSpeechLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : TextToSpeechLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : TextToSpeechLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   TextToSpeechLimitedErrorCountRetryPolicy(
       TextToSpeechLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : TextToSpeechLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : TextToSpeechLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -91,9 +90,7 @@ class TextToSpeechLimitedErrorCountRetryPolicy
   using BaseType = TextToSpeechRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      texttospeech_v1_internal::TextToSpeechRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<texttospeech_v1_internal::TextToSpeechRetryTraits> impl_;
 };
 
 /**
@@ -131,14 +128,12 @@ class TextToSpeechLimitedTimeRetryPolicy : public TextToSpeechRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit TextToSpeechLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  TextToSpeechLimitedTimeRetryPolicy(
-      TextToSpeechLimitedTimeRetryPolicy&& rhs) noexcept
-      : TextToSpeechLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  TextToSpeechLimitedTimeRetryPolicy(
-      TextToSpeechLimitedTimeRetryPolicy const& rhs) noexcept
-      : TextToSpeechLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  TextToSpeechLimitedTimeRetryPolicy(TextToSpeechLimitedTimeRetryPolicy&& rhs) noexcept
+    : TextToSpeechLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  TextToSpeechLimitedTimeRetryPolicy(TextToSpeechLimitedTimeRetryPolicy const& rhs) noexcept
+    : TextToSpeechLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -160,9 +155,7 @@ class TextToSpeechLimitedTimeRetryPolicy : public TextToSpeechRetryPolicy {
   using BaseType = TextToSpeechRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      texttospeech_v1_internal::TextToSpeechRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<texttospeech_v1_internal::TextToSpeechRetryTraits> impl_;
 };
 
 /**
@@ -187,19 +180,18 @@ class TextToSpeechConnection {
   ListVoices(google::cloud::texttospeech::v1::ListVoicesRequest const& request);
 
   virtual StatusOr<google::cloud::texttospeech::v1::SynthesizeSpeechResponse>
-  SynthesizeSpeech(
-      google::cloud::texttospeech::v1::SynthesizeSpeechRequest const& request);
+  SynthesizeSpeech(google::cloud::texttospeech::v1::SynthesizeSpeechRequest const& request);
 
   virtual std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::texttospeech::v1::StreamingSynthesizeRequest,
       google::cloud::texttospeech::v1::StreamingSynthesizeResponse>>
   AsyncStreamingSynthesize();
 
-  virtual StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 };
 
 /**

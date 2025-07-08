@@ -17,13 +17,13 @@
 // source: google/cloud/telcoautomation/v1/telcoautomation.proto
 
 #include "google/cloud/telcoautomation/v1/internal/telco_automation_connection_impl.h"
-#include "google/cloud/telcoautomation/v1/internal/telco_automation_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/async_long_running_operation.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
+#include "google/cloud/telcoautomation/v1/internal/telco_automation_option_defaults.h"
 #include <memory>
 #include <utility>
 
@@ -33,73 +33,58 @@ namespace telcoautomation_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<telcoautomation_v1::TelcoAutomationRetryPolicy> retry_policy(
-    Options const& options) {
-  return options.get<telcoautomation_v1::TelcoAutomationRetryPolicyOption>()
-      ->clone();
+std::unique_ptr<telcoautomation_v1::TelcoAutomationRetryPolicy>
+retry_policy(Options const& options) {
+  return options.get<telcoautomation_v1::TelcoAutomationRetryPolicyOption>()->clone();
 }
 
-std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-  return options.get<telcoautomation_v1::TelcoAutomationBackoffPolicyOption>()
-      ->clone();
+std::unique_ptr<BackoffPolicy>
+backoff_policy(Options const& options) {
+  return options.get<telcoautomation_v1::TelcoAutomationBackoffPolicyOption>()->clone();
 }
 
 std::unique_ptr<telcoautomation_v1::TelcoAutomationConnectionIdempotencyPolicy>
 idempotency_policy(Options const& options) {
-  return options
-      .get<telcoautomation_v1::
-               TelcoAutomationConnectionIdempotencyPolicyOption>()
-      ->clone();
+  return options.get<telcoautomation_v1::TelcoAutomationConnectionIdempotencyPolicyOption>()->clone();
 }
 
 std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-  return options.get<telcoautomation_v1::TelcoAutomationPollingPolicyOption>()
-      ->clone();
+  return options.get<telcoautomation_v1::TelcoAutomationPollingPolicyOption>()->clone();
 }
 
-}  // namespace
+} // namespace
 
 TelcoAutomationConnectionImpl::TelcoAutomationConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<telcoautomation_v1_internal::TelcoAutomationStub> stub,
     Options options)
-    : background_(std::move(background)),
-      stub_(std::move(stub)),
-      options_(internal::MergeOptions(std::move(options),
-                                      TelcoAutomationConnection::options())) {}
+  : background_(std::move(background)), stub_(std::move(stub)),
+    options_(internal::MergeOptions(
+        std::move(options),
+        TelcoAutomationConnection::options())) {}
 
 StreamRange<google::cloud::telcoautomation::v1::OrchestrationCluster>
-TelcoAutomationConnectionImpl::ListOrchestrationClusters(
-    google::cloud::telcoautomation::v1::ListOrchestrationClustersRequest
-        request) {
+TelcoAutomationConnectionImpl::ListOrchestrationClusters(google::cloud::telcoautomation::v1::ListOrchestrationClustersRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
-  auto idempotency =
-      idempotency_policy(*current)->ListOrchestrationClusters(request);
+  auto idempotency = idempotency_policy(*current)->ListOrchestrationClusters(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::telcoautomation::v1::OrchestrationCluster>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::telcoautomation::v1::OrchestrationCluster>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<telcoautomation_v1::TelcoAutomationRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<telcoautomation_v1::TelcoAutomationRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::telcoautomation::v1::
-              ListOrchestrationClustersRequest const& r) {
+          Options const& options, google::cloud::telcoautomation::v1::ListOrchestrationClustersRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::telcoautomation::v1::
-                       ListOrchestrationClustersRequest const& request) {
+                   google::cloud::telcoautomation::v1::ListOrchestrationClustersRequest const& request) {
               return stub->ListOrchestrationClusters(context, options, request);
             },
             options, r, function_name);
       },
-      [](google::cloud::telcoautomation::v1::ListOrchestrationClustersResponse
-             r) {
-        std::vector<google::cloud::telcoautomation::v1::OrchestrationCluster>
-            result(r.orchestration_clusters().size());
+      [](google::cloud::telcoautomation::v1::ListOrchestrationClustersResponse r) {
+        std::vector<google::cloud::telcoautomation::v1::OrchestrationCluster> result(r.orchestration_clusters().size());
         auto& messages = *r.mutable_orchestration_clusters();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -107,73 +92,62 @@ TelcoAutomationConnectionImpl::ListOrchestrationClusters(
 }
 
 StatusOr<google::cloud::telcoautomation::v1::OrchestrationCluster>
-TelcoAutomationConnectionImpl::GetOrchestrationCluster(
-    google::cloud::telcoautomation::v1::GetOrchestrationClusterRequest const&
-        request) {
+TelcoAutomationConnectionImpl::GetOrchestrationCluster(google::cloud::telcoautomation::v1::GetOrchestrationClusterRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetOrchestrationCluster(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::telcoautomation::v1::
-                 GetOrchestrationClusterRequest const& request) {
+             google::cloud::telcoautomation::v1::GetOrchestrationClusterRequest const& request) {
         return stub_->GetOrchestrationCluster(context, options, request);
       },
       *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::telcoautomation::v1::OrchestrationCluster>>
-TelcoAutomationConnectionImpl::CreateOrchestrationCluster(
-    google::cloud::telcoautomation::v1::CreateOrchestrationClusterRequest const&
-        request) {
+TelcoAutomationConnectionImpl::CreateOrchestrationCluster(google::cloud::telcoautomation::v1::CreateOrchestrationClusterRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->CreateOrchestrationCluster(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<
-      google::cloud::telcoautomation::v1::OrchestrationCluster>(
-      background_->cq(), current, std::move(request_copy),
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::cloud::telcoautomation::v1::
-                         CreateOrchestrationClusterRequest const& request) {
-        return stub->AsyncCreateOrchestrationCluster(
-            cq, std::move(context), std::move(options), request);
-      },
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::telcoautomation::v1::OrchestrationCluster>,
-      retry_policy(*current), backoff_policy(*current), idempotent,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::telcoautomation::v1::OrchestrationCluster>(
+    background_->cq(), current, std::move(request_copy),
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::cloud::telcoautomation::v1::CreateOrchestrationClusterRequest const& request) {
+     return stub->AsyncCreateOrchestrationCluster(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::telcoautomation::v1::OrchestrationCluster>,
+    retry_policy(*current), backoff_policy(*current), idempotent,
+    polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 TelcoAutomationConnectionImpl::CreateOrchestrationCluster(
-    NoAwaitTag,
-    google::cloud::telcoautomation::v1::CreateOrchestrationClusterRequest const&
-        request) {
+      NoAwaitTag, google::cloud::telcoautomation::v1::CreateOrchestrationClusterRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateOrchestrationCluster(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::telcoautomation::v1::
-                 CreateOrchestrationClusterRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::telcoautomation::v1::CreateOrchestrationClusterRequest const& request) {
         return stub_->CreateOrchestrationCluster(context, options, request);
       },
       *current, request, __func__);
@@ -181,94 +155,78 @@ TelcoAutomationConnectionImpl::CreateOrchestrationCluster(
 
 future<StatusOr<google::cloud::telcoautomation::v1::OrchestrationCluster>>
 TelcoAutomationConnectionImpl::CreateOrchestrationCluster(
-    google::longrunning::Operation const& operation) {
+      google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata()
-           .Is<typename google::cloud::telcoautomation::v1::
-                   OperationMetadata>()) {
-    return make_ready_future<
-        StatusOr<google::cloud::telcoautomation::v1::OrchestrationCluster>>(
-        internal::InvalidArgumentError(
-            "operation does not correspond to CreateOrchestrationCluster",
-            GCP_ERROR_INFO().WithMetadata("operation",
-                                          operation.metadata().DebugString())));
+  if (!operation.metadata().Is<typename google::cloud::telcoautomation::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::telcoautomation::v1::OrchestrationCluster>>(
+        internal::InvalidArgumentError("operation does not correspond to CreateOrchestrationCluster",
+                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<
-      google::cloud::telcoautomation::v1::OrchestrationCluster>(
-      background_->cq(), current, operation,
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::telcoautomation::v1::OrchestrationCluster>,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::telcoautomation::v1::OrchestrationCluster>(
+    background_->cq(), current, operation,
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::telcoautomation::v1::OrchestrationCluster>,
+    polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::telcoautomation::v1::OperationMetadata>>
-TelcoAutomationConnectionImpl::DeleteOrchestrationCluster(
-    google::cloud::telcoautomation::v1::DeleteOrchestrationClusterRequest const&
-        request) {
+TelcoAutomationConnectionImpl::DeleteOrchestrationCluster(google::cloud::telcoautomation::v1::DeleteOrchestrationClusterRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->DeleteOrchestrationCluster(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<
-      google::cloud::telcoautomation::v1::OperationMetadata>(
-      background_->cq(), current, std::move(request_copy),
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::cloud::telcoautomation::v1::
-                         DeleteOrchestrationClusterRequest const& request) {
-        return stub->AsyncDeleteOrchestrationCluster(
-            cq, std::move(context), std::move(options), request);
-      },
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultMetadata<
-          google::cloud::telcoautomation::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current), idempotent,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::telcoautomation::v1::OperationMetadata>(
+    background_->cq(), current, std::move(request_copy),
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::cloud::telcoautomation::v1::DeleteOrchestrationClusterRequest const& request) {
+     return stub->AsyncDeleteOrchestrationCluster(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultMetadata<google::cloud::telcoautomation::v1::OperationMetadata>,
+    retry_policy(*current), backoff_policy(*current), idempotent,
+    polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 TelcoAutomationConnectionImpl::DeleteOrchestrationCluster(
-    NoAwaitTag,
-    google::cloud::telcoautomation::v1::DeleteOrchestrationClusterRequest const&
-        request) {
+      NoAwaitTag, google::cloud::telcoautomation::v1::DeleteOrchestrationClusterRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteOrchestrationCluster(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::telcoautomation::v1::
-                 DeleteOrchestrationClusterRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::telcoautomation::v1::DeleteOrchestrationClusterRequest const& request) {
         return stub_->DeleteOrchestrationCluster(context, options, request);
       },
       *current, request, __func__);
@@ -276,71 +234,56 @@ TelcoAutomationConnectionImpl::DeleteOrchestrationCluster(
 
 future<StatusOr<google::cloud::telcoautomation::v1::OperationMetadata>>
 TelcoAutomationConnectionImpl::DeleteOrchestrationCluster(
-    google::longrunning::Operation const& operation) {
+      google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata()
-           .Is<typename google::cloud::telcoautomation::v1::
-                   OperationMetadata>()) {
-    return make_ready_future<
-        StatusOr<google::cloud::telcoautomation::v1::OperationMetadata>>(
-        internal::InvalidArgumentError(
-            "operation does not correspond to DeleteOrchestrationCluster",
-            GCP_ERROR_INFO().WithMetadata("operation",
-                                          operation.metadata().DebugString())));
+  if (!operation.metadata().Is<typename google::cloud::telcoautomation::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::telcoautomation::v1::OperationMetadata>>(
+        internal::InvalidArgumentError("operation does not correspond to DeleteOrchestrationCluster",
+                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<
-      google::cloud::telcoautomation::v1::OperationMetadata>(
-      background_->cq(), current, operation,
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultMetadata<
-          google::cloud::telcoautomation::v1::OperationMetadata>,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::telcoautomation::v1::OperationMetadata>(
+    background_->cq(), current, operation,
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultMetadata<google::cloud::telcoautomation::v1::OperationMetadata>,
+    polling_policy(*current), __func__);
 }
 
 StreamRange<google::cloud::telcoautomation::v1::EdgeSlm>
-TelcoAutomationConnectionImpl::ListEdgeSlms(
-    google::cloud::telcoautomation::v1::ListEdgeSlmsRequest request) {
+TelcoAutomationConnectionImpl::ListEdgeSlms(google::cloud::telcoautomation::v1::ListEdgeSlmsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListEdgeSlms(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::telcoautomation::v1::EdgeSlm>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::telcoautomation::v1::EdgeSlm>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<telcoautomation_v1::TelcoAutomationRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<telcoautomation_v1::TelcoAutomationRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::telcoautomation::v1::ListEdgeSlmsRequest const& r) {
+          Options const& options, google::cloud::telcoautomation::v1::ListEdgeSlmsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](
-                grpc::ClientContext& context, Options const& options,
-                google::cloud::telcoautomation::v1::ListEdgeSlmsRequest const&
-                    request) {
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::cloud::telcoautomation::v1::ListEdgeSlmsRequest const& request) {
               return stub->ListEdgeSlms(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::telcoautomation::v1::ListEdgeSlmsResponse r) {
-        std::vector<google::cloud::telcoautomation::v1::EdgeSlm> result(
-            r.edge_slms().size());
+        std::vector<google::cloud::telcoautomation::v1::EdgeSlm> result(r.edge_slms().size());
         auto& messages = *r.mutable_edge_slms();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -348,71 +291,62 @@ TelcoAutomationConnectionImpl::ListEdgeSlms(
 }
 
 StatusOr<google::cloud::telcoautomation::v1::EdgeSlm>
-TelcoAutomationConnectionImpl::GetEdgeSlm(
-    google::cloud::telcoautomation::v1::GetEdgeSlmRequest const& request) {
+TelcoAutomationConnectionImpl::GetEdgeSlm(google::cloud::telcoautomation::v1::GetEdgeSlmRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetEdgeSlm(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::telcoautomation::v1::GetEdgeSlmRequest const&
-                 request) {
+             google::cloud::telcoautomation::v1::GetEdgeSlmRequest const& request) {
         return stub_->GetEdgeSlm(context, options, request);
       },
       *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::telcoautomation::v1::EdgeSlm>>
-TelcoAutomationConnectionImpl::CreateEdgeSlm(
-    google::cloud::telcoautomation::v1::CreateEdgeSlmRequest const& request) {
+TelcoAutomationConnectionImpl::CreateEdgeSlm(google::cloud::telcoautomation::v1::CreateEdgeSlmRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->CreateEdgeSlm(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<
-      google::cloud::telcoautomation::v1::EdgeSlm>(
-      background_->cq(), current, std::move(request_copy),
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::telcoautomation::v1::CreateEdgeSlmRequest const&
-              request) {
-        return stub->AsyncCreateEdgeSlm(cq, std::move(context),
-                                        std::move(options), request);
-      },
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::telcoautomation::v1::EdgeSlm>,
-      retry_policy(*current), backoff_policy(*current), idempotent,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::telcoautomation::v1::EdgeSlm>(
+    background_->cq(), current, std::move(request_copy),
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::cloud::telcoautomation::v1::CreateEdgeSlmRequest const& request) {
+     return stub->AsyncCreateEdgeSlm(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::telcoautomation::v1::EdgeSlm>,
+    retry_policy(*current), backoff_policy(*current), idempotent,
+    polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 TelcoAutomationConnectionImpl::CreateEdgeSlm(
-    NoAwaitTag,
-    google::cloud::telcoautomation::v1::CreateEdgeSlmRequest const& request) {
+      NoAwaitTag, google::cloud::telcoautomation::v1::CreateEdgeSlmRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateEdgeSlm(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::telcoautomation::v1::CreateEdgeSlmRequest const&
-                 request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::telcoautomation::v1::CreateEdgeSlmRequest const& request) {
         return stub_->CreateEdgeSlm(context, options, request);
       },
       *current, request, __func__);
@@ -420,93 +354,78 @@ TelcoAutomationConnectionImpl::CreateEdgeSlm(
 
 future<StatusOr<google::cloud::telcoautomation::v1::EdgeSlm>>
 TelcoAutomationConnectionImpl::CreateEdgeSlm(
-    google::longrunning::Operation const& operation) {
+      google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata()
-           .Is<typename google::cloud::telcoautomation::v1::
-                   OperationMetadata>()) {
-    return make_ready_future<
-        StatusOr<google::cloud::telcoautomation::v1::EdgeSlm>>(
-        internal::InvalidArgumentError(
-            "operation does not correspond to CreateEdgeSlm",
-            GCP_ERROR_INFO().WithMetadata("operation",
-                                          operation.metadata().DebugString())));
+  if (!operation.metadata().Is<typename google::cloud::telcoautomation::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::telcoautomation::v1::EdgeSlm>>(
+        internal::InvalidArgumentError("operation does not correspond to CreateEdgeSlm",
+                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<
-      google::cloud::telcoautomation::v1::EdgeSlm>(
-      background_->cq(), current, operation,
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::telcoautomation::v1::EdgeSlm>,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::telcoautomation::v1::EdgeSlm>(
+    background_->cq(), current, operation,
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::telcoautomation::v1::EdgeSlm>,
+    polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::telcoautomation::v1::OperationMetadata>>
-TelcoAutomationConnectionImpl::DeleteEdgeSlm(
-    google::cloud::telcoautomation::v1::DeleteEdgeSlmRequest const& request) {
+TelcoAutomationConnectionImpl::DeleteEdgeSlm(google::cloud::telcoautomation::v1::DeleteEdgeSlmRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->DeleteEdgeSlm(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<
-      google::cloud::telcoautomation::v1::OperationMetadata>(
-      background_->cq(), current, std::move(request_copy),
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::telcoautomation::v1::DeleteEdgeSlmRequest const&
-              request) {
-        return stub->AsyncDeleteEdgeSlm(cq, std::move(context),
-                                        std::move(options), request);
-      },
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultMetadata<
-          google::cloud::telcoautomation::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current), idempotent,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::telcoautomation::v1::OperationMetadata>(
+    background_->cq(), current, std::move(request_copy),
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::cloud::telcoautomation::v1::DeleteEdgeSlmRequest const& request) {
+     return stub->AsyncDeleteEdgeSlm(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultMetadata<google::cloud::telcoautomation::v1::OperationMetadata>,
+    retry_policy(*current), backoff_policy(*current), idempotent,
+    polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 TelcoAutomationConnectionImpl::DeleteEdgeSlm(
-    NoAwaitTag,
-    google::cloud::telcoautomation::v1::DeleteEdgeSlmRequest const& request) {
+      NoAwaitTag, google::cloud::telcoautomation::v1::DeleteEdgeSlmRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteEdgeSlm(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::telcoautomation::v1::DeleteEdgeSlmRequest const&
-                 request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::telcoautomation::v1::DeleteEdgeSlmRequest const& request) {
         return stub_->DeleteEdgeSlm(context, options, request);
       },
       *current, request, __func__);
@@ -514,130 +433,108 @@ TelcoAutomationConnectionImpl::DeleteEdgeSlm(
 
 future<StatusOr<google::cloud::telcoautomation::v1::OperationMetadata>>
 TelcoAutomationConnectionImpl::DeleteEdgeSlm(
-    google::longrunning::Operation const& operation) {
+      google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata()
-           .Is<typename google::cloud::telcoautomation::v1::
-                   OperationMetadata>()) {
-    return make_ready_future<
-        StatusOr<google::cloud::telcoautomation::v1::OperationMetadata>>(
-        internal::InvalidArgumentError(
-            "operation does not correspond to DeleteEdgeSlm",
-            GCP_ERROR_INFO().WithMetadata("operation",
-                                          operation.metadata().DebugString())));
+  if (!operation.metadata().Is<typename google::cloud::telcoautomation::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::telcoautomation::v1::OperationMetadata>>(
+        internal::InvalidArgumentError("operation does not correspond to DeleteEdgeSlm",
+                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<
-      google::cloud::telcoautomation::v1::OperationMetadata>(
-      background_->cq(), current, operation,
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultMetadata<
-          google::cloud::telcoautomation::v1::OperationMetadata>,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::telcoautomation::v1::OperationMetadata>(
+    background_->cq(), current, operation,
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultMetadata<google::cloud::telcoautomation::v1::OperationMetadata>,
+    polling_policy(*current), __func__);
 }
 
 StatusOr<google::cloud::telcoautomation::v1::Blueprint>
-TelcoAutomationConnectionImpl::CreateBlueprint(
-    google::cloud::telcoautomation::v1::CreateBlueprintRequest const& request) {
+TelcoAutomationConnectionImpl::CreateBlueprint(google::cloud::telcoautomation::v1::CreateBlueprintRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateBlueprint(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::telcoautomation::v1::CreateBlueprintRequest const&
-                 request) {
+             google::cloud::telcoautomation::v1::CreateBlueprintRequest const& request) {
         return stub_->CreateBlueprint(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::telcoautomation::v1::Blueprint>
-TelcoAutomationConnectionImpl::UpdateBlueprint(
-    google::cloud::telcoautomation::v1::UpdateBlueprintRequest const& request) {
+TelcoAutomationConnectionImpl::UpdateBlueprint(google::cloud::telcoautomation::v1::UpdateBlueprintRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateBlueprint(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::telcoautomation::v1::UpdateBlueprintRequest const&
-                 request) {
+             google::cloud::telcoautomation::v1::UpdateBlueprintRequest const& request) {
         return stub_->UpdateBlueprint(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::telcoautomation::v1::Blueprint>
-TelcoAutomationConnectionImpl::GetBlueprint(
-    google::cloud::telcoautomation::v1::GetBlueprintRequest const& request) {
+TelcoAutomationConnectionImpl::GetBlueprint(google::cloud::telcoautomation::v1::GetBlueprintRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetBlueprint(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::telcoautomation::v1::GetBlueprintRequest const&
-                 request) {
+             google::cloud::telcoautomation::v1::GetBlueprintRequest const& request) {
         return stub_->GetBlueprint(context, options, request);
       },
       *current, request, __func__);
 }
 
-Status TelcoAutomationConnectionImpl::DeleteBlueprint(
-    google::cloud::telcoautomation::v1::DeleteBlueprintRequest const& request) {
+Status
+TelcoAutomationConnectionImpl::DeleteBlueprint(google::cloud::telcoautomation::v1::DeleteBlueprintRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteBlueprint(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::telcoautomation::v1::DeleteBlueprintRequest const&
-                 request) {
+             google::cloud::telcoautomation::v1::DeleteBlueprintRequest const& request) {
         return stub_->DeleteBlueprint(context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::cloud::telcoautomation::v1::Blueprint>
-TelcoAutomationConnectionImpl::ListBlueprints(
-    google::cloud::telcoautomation::v1::ListBlueprintsRequest request) {
+TelcoAutomationConnectionImpl::ListBlueprints(google::cloud::telcoautomation::v1::ListBlueprintsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListBlueprints(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::telcoautomation::v1::Blueprint>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::telcoautomation::v1::Blueprint>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<telcoautomation_v1::TelcoAutomationRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<telcoautomation_v1::TelcoAutomationRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::telcoautomation::v1::ListBlueprintsRequest const& r) {
+          Options const& options, google::cloud::telcoautomation::v1::ListBlueprintsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](
-                grpc::ClientContext& context, Options const& options,
-                google::cloud::telcoautomation::v1::ListBlueprintsRequest const&
-                    request) {
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::cloud::telcoautomation::v1::ListBlueprintsRequest const& request) {
               return stub->ListBlueprints(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::telcoautomation::v1::ListBlueprintsResponse r) {
-        std::vector<google::cloud::telcoautomation::v1::Blueprint> result(
-            r.blueprints().size());
+        std::vector<google::cloud::telcoautomation::v1::Blueprint> result(r.blueprints().size());
         auto& messages = *r.mutable_blueprints();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -645,81 +542,66 @@ TelcoAutomationConnectionImpl::ListBlueprints(
 }
 
 StatusOr<google::cloud::telcoautomation::v1::Blueprint>
-TelcoAutomationConnectionImpl::ApproveBlueprint(
-    google::cloud::telcoautomation::v1::ApproveBlueprintRequest const&
-        request) {
+TelcoAutomationConnectionImpl::ApproveBlueprint(google::cloud::telcoautomation::v1::ApproveBlueprintRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->ApproveBlueprint(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::telcoautomation::v1::ApproveBlueprintRequest const&
-                 request) {
+             google::cloud::telcoautomation::v1::ApproveBlueprintRequest const& request) {
         return stub_->ApproveBlueprint(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::telcoautomation::v1::Blueprint>
-TelcoAutomationConnectionImpl::ProposeBlueprint(
-    google::cloud::telcoautomation::v1::ProposeBlueprintRequest const&
-        request) {
+TelcoAutomationConnectionImpl::ProposeBlueprint(google::cloud::telcoautomation::v1::ProposeBlueprintRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->ProposeBlueprint(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::telcoautomation::v1::ProposeBlueprintRequest const&
-                 request) {
+             google::cloud::telcoautomation::v1::ProposeBlueprintRequest const& request) {
         return stub_->ProposeBlueprint(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::telcoautomation::v1::Blueprint>
-TelcoAutomationConnectionImpl::RejectBlueprint(
-    google::cloud::telcoautomation::v1::RejectBlueprintRequest const& request) {
+TelcoAutomationConnectionImpl::RejectBlueprint(google::cloud::telcoautomation::v1::RejectBlueprintRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->RejectBlueprint(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::telcoautomation::v1::RejectBlueprintRequest const&
-                 request) {
+             google::cloud::telcoautomation::v1::RejectBlueprintRequest const& request) {
         return stub_->RejectBlueprint(context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::cloud::telcoautomation::v1::Blueprint>
-TelcoAutomationConnectionImpl::ListBlueprintRevisions(
-    google::cloud::telcoautomation::v1::ListBlueprintRevisionsRequest request) {
+TelcoAutomationConnectionImpl::ListBlueprintRevisions(google::cloud::telcoautomation::v1::ListBlueprintRevisionsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
-  auto idempotency =
-      idempotency_policy(*current)->ListBlueprintRevisions(request);
+  auto idempotency = idempotency_policy(*current)->ListBlueprintRevisions(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::telcoautomation::v1::Blueprint>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::telcoautomation::v1::Blueprint>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<telcoautomation_v1::TelcoAutomationRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<telcoautomation_v1::TelcoAutomationRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::telcoautomation::v1::
-                                      ListBlueprintRevisionsRequest const& r) {
+          Options const& options, google::cloud::telcoautomation::v1::ListBlueprintRevisionsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::telcoautomation::v1::
-                       ListBlueprintRevisionsRequest const& request) {
+                   google::cloud::telcoautomation::v1::ListBlueprintRevisionsRequest const& request) {
               return stub->ListBlueprintRevisions(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::telcoautomation::v1::ListBlueprintRevisionsResponse r) {
-        std::vector<google::cloud::telcoautomation::v1::Blueprint> result(
-            r.blueprints().size());
+        std::vector<google::cloud::telcoautomation::v1::Blueprint> result(r.blueprints().size());
         auto& messages = *r.mutable_blueprints();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -727,37 +609,27 @@ TelcoAutomationConnectionImpl::ListBlueprintRevisions(
 }
 
 StreamRange<google::cloud::telcoautomation::v1::Blueprint>
-TelcoAutomationConnectionImpl::SearchBlueprintRevisions(
-    google::cloud::telcoautomation::v1::SearchBlueprintRevisionsRequest
-        request) {
+TelcoAutomationConnectionImpl::SearchBlueprintRevisions(google::cloud::telcoautomation::v1::SearchBlueprintRevisionsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
-  auto idempotency =
-      idempotency_policy(*current)->SearchBlueprintRevisions(request);
+  auto idempotency = idempotency_policy(*current)->SearchBlueprintRevisions(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::telcoautomation::v1::Blueprint>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::telcoautomation::v1::Blueprint>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<telcoautomation_v1::TelcoAutomationRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<telcoautomation_v1::TelcoAutomationRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::telcoautomation::v1::
-              SearchBlueprintRevisionsRequest const& r) {
+          Options const& options, google::cloud::telcoautomation::v1::SearchBlueprintRevisionsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::telcoautomation::v1::
-                       SearchBlueprintRevisionsRequest const& request) {
+                   google::cloud::telcoautomation::v1::SearchBlueprintRevisionsRequest const& request) {
               return stub->SearchBlueprintRevisions(context, options, request);
             },
             options, r, function_name);
       },
-      [](google::cloud::telcoautomation::v1::SearchBlueprintRevisionsResponse
-             r) {
-        std::vector<google::cloud::telcoautomation::v1::Blueprint> result(
-            r.blueprints().size());
+      [](google::cloud::telcoautomation::v1::SearchBlueprintRevisionsResponse r) {
+        std::vector<google::cloud::telcoautomation::v1::Blueprint> result(r.blueprints().size());
         auto& messages = *r.mutable_blueprints();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -765,37 +637,27 @@ TelcoAutomationConnectionImpl::SearchBlueprintRevisions(
 }
 
 StreamRange<google::cloud::telcoautomation::v1::Deployment>
-TelcoAutomationConnectionImpl::SearchDeploymentRevisions(
-    google::cloud::telcoautomation::v1::SearchDeploymentRevisionsRequest
-        request) {
+TelcoAutomationConnectionImpl::SearchDeploymentRevisions(google::cloud::telcoautomation::v1::SearchDeploymentRevisionsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
-  auto idempotency =
-      idempotency_policy(*current)->SearchDeploymentRevisions(request);
+  auto idempotency = idempotency_policy(*current)->SearchDeploymentRevisions(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::telcoautomation::v1::Deployment>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::telcoautomation::v1::Deployment>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<telcoautomation_v1::TelcoAutomationRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<telcoautomation_v1::TelcoAutomationRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::telcoautomation::v1::
-              SearchDeploymentRevisionsRequest const& r) {
+          Options const& options, google::cloud::telcoautomation::v1::SearchDeploymentRevisionsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::telcoautomation::v1::
-                       SearchDeploymentRevisionsRequest const& request) {
+                   google::cloud::telcoautomation::v1::SearchDeploymentRevisionsRequest const& request) {
               return stub->SearchDeploymentRevisions(context, options, request);
             },
             options, r, function_name);
       },
-      [](google::cloud::telcoautomation::v1::SearchDeploymentRevisionsResponse
-             r) {
-        std::vector<google::cloud::telcoautomation::v1::Deployment> result(
-            r.deployments().size());
+      [](google::cloud::telcoautomation::v1::SearchDeploymentRevisionsResponse r) {
+        std::vector<google::cloud::telcoautomation::v1::Deployment> result(r.deployments().size());
         auto& messages = *r.mutable_deployments();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -803,51 +665,40 @@ TelcoAutomationConnectionImpl::SearchDeploymentRevisions(
 }
 
 StatusOr<google::cloud::telcoautomation::v1::DiscardBlueprintChangesResponse>
-TelcoAutomationConnectionImpl::DiscardBlueprintChanges(
-    google::cloud::telcoautomation::v1::DiscardBlueprintChangesRequest const&
-        request) {
+TelcoAutomationConnectionImpl::DiscardBlueprintChanges(google::cloud::telcoautomation::v1::DiscardBlueprintChangesRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DiscardBlueprintChanges(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::telcoautomation::v1::
-                 DiscardBlueprintChangesRequest const& request) {
+             google::cloud::telcoautomation::v1::DiscardBlueprintChangesRequest const& request) {
         return stub_->DiscardBlueprintChanges(context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::cloud::telcoautomation::v1::PublicBlueprint>
-TelcoAutomationConnectionImpl::ListPublicBlueprints(
-    google::cloud::telcoautomation::v1::ListPublicBlueprintsRequest request) {
+TelcoAutomationConnectionImpl::ListPublicBlueprints(google::cloud::telcoautomation::v1::ListPublicBlueprintsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
-  auto idempotency =
-      idempotency_policy(*current)->ListPublicBlueprints(request);
+  auto idempotency = idempotency_policy(*current)->ListPublicBlueprints(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::telcoautomation::v1::PublicBlueprint>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::telcoautomation::v1::PublicBlueprint>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<telcoautomation_v1::TelcoAutomationRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<telcoautomation_v1::TelcoAutomationRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::telcoautomation::v1::ListPublicBlueprintsRequest const&
-              r) {
+          Options const& options, google::cloud::telcoautomation::v1::ListPublicBlueprintsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::telcoautomation::v1::
-                       ListPublicBlueprintsRequest const& request) {
+                   google::cloud::telcoautomation::v1::ListPublicBlueprintsRequest const& request) {
               return stub->ListPublicBlueprints(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::telcoautomation::v1::ListPublicBlueprintsResponse r) {
-        std::vector<google::cloud::telcoautomation::v1::PublicBlueprint> result(
-            r.public_blueprints().size());
+        std::vector<google::cloud::telcoautomation::v1::PublicBlueprint> result(r.public_blueprints().size());
         auto& messages = *r.mutable_public_blueprints();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -855,112 +706,92 @@ TelcoAutomationConnectionImpl::ListPublicBlueprints(
 }
 
 StatusOr<google::cloud::telcoautomation::v1::PublicBlueprint>
-TelcoAutomationConnectionImpl::GetPublicBlueprint(
-    google::cloud::telcoautomation::v1::GetPublicBlueprintRequest const&
-        request) {
+TelcoAutomationConnectionImpl::GetPublicBlueprint(google::cloud::telcoautomation::v1::GetPublicBlueprintRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetPublicBlueprint(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::telcoautomation::v1::GetPublicBlueprintRequest const&
-              request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::telcoautomation::v1::GetPublicBlueprintRequest const& request) {
         return stub_->GetPublicBlueprint(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::telcoautomation::v1::Deployment>
-TelcoAutomationConnectionImpl::CreateDeployment(
-    google::cloud::telcoautomation::v1::CreateDeploymentRequest const&
-        request) {
+TelcoAutomationConnectionImpl::CreateDeployment(google::cloud::telcoautomation::v1::CreateDeploymentRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateDeployment(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::telcoautomation::v1::CreateDeploymentRequest const&
-                 request) {
+             google::cloud::telcoautomation::v1::CreateDeploymentRequest const& request) {
         return stub_->CreateDeployment(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::telcoautomation::v1::Deployment>
-TelcoAutomationConnectionImpl::UpdateDeployment(
-    google::cloud::telcoautomation::v1::UpdateDeploymentRequest const&
-        request) {
+TelcoAutomationConnectionImpl::UpdateDeployment(google::cloud::telcoautomation::v1::UpdateDeploymentRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateDeployment(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::telcoautomation::v1::UpdateDeploymentRequest const&
-                 request) {
+             google::cloud::telcoautomation::v1::UpdateDeploymentRequest const& request) {
         return stub_->UpdateDeployment(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::telcoautomation::v1::Deployment>
-TelcoAutomationConnectionImpl::GetDeployment(
-    google::cloud::telcoautomation::v1::GetDeploymentRequest const& request) {
+TelcoAutomationConnectionImpl::GetDeployment(google::cloud::telcoautomation::v1::GetDeploymentRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetDeployment(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::telcoautomation::v1::GetDeploymentRequest const&
-                 request) {
+             google::cloud::telcoautomation::v1::GetDeploymentRequest const& request) {
         return stub_->GetDeployment(context, options, request);
       },
       *current, request, __func__);
 }
 
-Status TelcoAutomationConnectionImpl::RemoveDeployment(
-    google::cloud::telcoautomation::v1::RemoveDeploymentRequest const&
-        request) {
+Status
+TelcoAutomationConnectionImpl::RemoveDeployment(google::cloud::telcoautomation::v1::RemoveDeploymentRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->RemoveDeployment(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::telcoautomation::v1::RemoveDeploymentRequest const&
-                 request) {
+             google::cloud::telcoautomation::v1::RemoveDeploymentRequest const& request) {
         return stub_->RemoveDeployment(context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::cloud::telcoautomation::v1::Deployment>
-TelcoAutomationConnectionImpl::ListDeployments(
-    google::cloud::telcoautomation::v1::ListDeploymentsRequest request) {
+TelcoAutomationConnectionImpl::ListDeployments(google::cloud::telcoautomation::v1::ListDeploymentsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListDeployments(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::telcoautomation::v1::Deployment>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::telcoautomation::v1::Deployment>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<telcoautomation_v1::TelcoAutomationRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<telcoautomation_v1::TelcoAutomationRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::telcoautomation::v1::ListDeploymentsRequest const& r) {
+          Options const& options, google::cloud::telcoautomation::v1::ListDeploymentsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::telcoautomation::v1::
-                       ListDeploymentsRequest const& request) {
+                   google::cloud::telcoautomation::v1::ListDeploymentsRequest const& request) {
               return stub->ListDeployments(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::telcoautomation::v1::ListDeploymentsResponse r) {
-        std::vector<google::cloud::telcoautomation::v1::Deployment> result(
-            r.deployments().size());
+        std::vector<google::cloud::telcoautomation::v1::Deployment> result(r.deployments().size());
         auto& messages = *r.mutable_deployments();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -968,36 +799,27 @@ TelcoAutomationConnectionImpl::ListDeployments(
 }
 
 StreamRange<google::cloud::telcoautomation::v1::Deployment>
-TelcoAutomationConnectionImpl::ListDeploymentRevisions(
-    google::cloud::telcoautomation::v1::ListDeploymentRevisionsRequest
-        request) {
+TelcoAutomationConnectionImpl::ListDeploymentRevisions(google::cloud::telcoautomation::v1::ListDeploymentRevisionsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
-  auto idempotency =
-      idempotency_policy(*current)->ListDeploymentRevisions(request);
+  auto idempotency = idempotency_policy(*current)->ListDeploymentRevisions(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::telcoautomation::v1::Deployment>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::telcoautomation::v1::Deployment>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<telcoautomation_v1::TelcoAutomationRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<telcoautomation_v1::TelcoAutomationRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::telcoautomation::v1::
-                                      ListDeploymentRevisionsRequest const& r) {
+          Options const& options, google::cloud::telcoautomation::v1::ListDeploymentRevisionsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::telcoautomation::v1::
-                       ListDeploymentRevisionsRequest const& request) {
+                   google::cloud::telcoautomation::v1::ListDeploymentRevisionsRequest const& request) {
               return stub->ListDeploymentRevisions(context, options, request);
             },
             options, r, function_name);
       },
-      [](google::cloud::telcoautomation::v1::ListDeploymentRevisionsResponse
-             r) {
-        std::vector<google::cloud::telcoautomation::v1::Deployment> result(
-            r.deployments().size());
+      [](google::cloud::telcoautomation::v1::ListDeploymentRevisionsResponse r) {
+        std::vector<google::cloud::telcoautomation::v1::Deployment> result(r.deployments().size());
         auto& messages = *r.mutable_deployments();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -1005,116 +827,92 @@ TelcoAutomationConnectionImpl::ListDeploymentRevisions(
 }
 
 StatusOr<google::cloud::telcoautomation::v1::DiscardDeploymentChangesResponse>
-TelcoAutomationConnectionImpl::DiscardDeploymentChanges(
-    google::cloud::telcoautomation::v1::DiscardDeploymentChangesRequest const&
-        request) {
+TelcoAutomationConnectionImpl::DiscardDeploymentChanges(google::cloud::telcoautomation::v1::DiscardDeploymentChangesRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DiscardDeploymentChanges(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::telcoautomation::v1::
-                 DiscardDeploymentChangesRequest const& request) {
+             google::cloud::telcoautomation::v1::DiscardDeploymentChangesRequest const& request) {
         return stub_->DiscardDeploymentChanges(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::telcoautomation::v1::Deployment>
-TelcoAutomationConnectionImpl::ApplyDeployment(
-    google::cloud::telcoautomation::v1::ApplyDeploymentRequest const& request) {
+TelcoAutomationConnectionImpl::ApplyDeployment(google::cloud::telcoautomation::v1::ApplyDeploymentRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->ApplyDeployment(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::telcoautomation::v1::ApplyDeploymentRequest const&
-                 request) {
+             google::cloud::telcoautomation::v1::ApplyDeploymentRequest const& request) {
         return stub_->ApplyDeployment(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::telcoautomation::v1::ComputeDeploymentStatusResponse>
-TelcoAutomationConnectionImpl::ComputeDeploymentStatus(
-    google::cloud::telcoautomation::v1::ComputeDeploymentStatusRequest const&
-        request) {
+TelcoAutomationConnectionImpl::ComputeDeploymentStatus(google::cloud::telcoautomation::v1::ComputeDeploymentStatusRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->ComputeDeploymentStatus(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::telcoautomation::v1::
-                 ComputeDeploymentStatusRequest const& request) {
+             google::cloud::telcoautomation::v1::ComputeDeploymentStatusRequest const& request) {
         return stub_->ComputeDeploymentStatus(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::telcoautomation::v1::Deployment>
-TelcoAutomationConnectionImpl::RollbackDeployment(
-    google::cloud::telcoautomation::v1::RollbackDeploymentRequest const&
-        request) {
+TelcoAutomationConnectionImpl::RollbackDeployment(google::cloud::telcoautomation::v1::RollbackDeploymentRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->RollbackDeployment(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::telcoautomation::v1::RollbackDeploymentRequest const&
-              request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::telcoautomation::v1::RollbackDeploymentRequest const& request) {
         return stub_->RollbackDeployment(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::telcoautomation::v1::HydratedDeployment>
-TelcoAutomationConnectionImpl::GetHydratedDeployment(
-    google::cloud::telcoautomation::v1::GetHydratedDeploymentRequest const&
-        request) {
+TelcoAutomationConnectionImpl::GetHydratedDeployment(google::cloud::telcoautomation::v1::GetHydratedDeploymentRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetHydratedDeployment(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::telcoautomation::v1::
-                 GetHydratedDeploymentRequest const& request) {
+             google::cloud::telcoautomation::v1::GetHydratedDeploymentRequest const& request) {
         return stub_->GetHydratedDeployment(context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::cloud::telcoautomation::v1::HydratedDeployment>
-TelcoAutomationConnectionImpl::ListHydratedDeployments(
-    google::cloud::telcoautomation::v1::ListHydratedDeploymentsRequest
-        request) {
+TelcoAutomationConnectionImpl::ListHydratedDeployments(google::cloud::telcoautomation::v1::ListHydratedDeploymentsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
-  auto idempotency =
-      idempotency_policy(*current)->ListHydratedDeployments(request);
+  auto idempotency = idempotency_policy(*current)->ListHydratedDeployments(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::telcoautomation::v1::HydratedDeployment>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::telcoautomation::v1::HydratedDeployment>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<telcoautomation_v1::TelcoAutomationRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<telcoautomation_v1::TelcoAutomationRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::telcoautomation::v1::
-                                      ListHydratedDeploymentsRequest const& r) {
+          Options const& options, google::cloud::telcoautomation::v1::ListHydratedDeploymentsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::telcoautomation::v1::
-                       ListHydratedDeploymentsRequest const& request) {
+                   google::cloud::telcoautomation::v1::ListHydratedDeploymentsRequest const& request) {
               return stub->ListHydratedDeployments(context, options, request);
             },
             options, r, function_name);
       },
-      [](google::cloud::telcoautomation::v1::ListHydratedDeploymentsResponse
-             r) {
-        std::vector<google::cloud::telcoautomation::v1::HydratedDeployment>
-            result(r.hydrated_deployments().size());
+      [](google::cloud::telcoautomation::v1::ListHydratedDeploymentsResponse r) {
+        std::vector<google::cloud::telcoautomation::v1::HydratedDeployment> result(r.hydrated_deployments().size());
         auto& messages = *r.mutable_hydrated_deployments();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -1122,65 +920,53 @@ TelcoAutomationConnectionImpl::ListHydratedDeployments(
 }
 
 StatusOr<google::cloud::telcoautomation::v1::HydratedDeployment>
-TelcoAutomationConnectionImpl::UpdateHydratedDeployment(
-    google::cloud::telcoautomation::v1::UpdateHydratedDeploymentRequest const&
-        request) {
+TelcoAutomationConnectionImpl::UpdateHydratedDeployment(google::cloud::telcoautomation::v1::UpdateHydratedDeploymentRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateHydratedDeployment(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::telcoautomation::v1::
-                 UpdateHydratedDeploymentRequest const& request) {
+             google::cloud::telcoautomation::v1::UpdateHydratedDeploymentRequest const& request) {
         return stub_->UpdateHydratedDeployment(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::telcoautomation::v1::HydratedDeployment>
-TelcoAutomationConnectionImpl::ApplyHydratedDeployment(
-    google::cloud::telcoautomation::v1::ApplyHydratedDeploymentRequest const&
-        request) {
+TelcoAutomationConnectionImpl::ApplyHydratedDeployment(google::cloud::telcoautomation::v1::ApplyHydratedDeploymentRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->ApplyHydratedDeployment(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::telcoautomation::v1::
-                 ApplyHydratedDeploymentRequest const& request) {
+             google::cloud::telcoautomation::v1::ApplyHydratedDeploymentRequest const& request) {
         return stub_->ApplyHydratedDeployment(context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::cloud::location::Location>
-TelcoAutomationConnectionImpl::ListLocations(
-    google::cloud::location::ListLocationsRequest request) {
+TelcoAutomationConnectionImpl::ListLocations(google::cloud::location::ListLocationsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListLocations(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::location::Location>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::location::Location>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<telcoautomation_v1::TelcoAutomationRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<telcoautomation_v1::TelcoAutomationRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::location::ListLocationsRequest const& r) {
+          Options const& options, google::cloud::location::ListLocationsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](
-                grpc::ClientContext& context, Options const& options,
-                google::cloud::location::ListLocationsRequest const& request) {
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::cloud::location::ListLocationsRequest const& request) {
               return stub->ListLocations(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::location::ListLocationsResponse r) {
-        std::vector<google::cloud::location::Location> result(
-            r.locations().size());
+        std::vector<google::cloud::location::Location> result(r.locations().size());
         auto& messages = *r.mutable_locations();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -1188,8 +974,7 @@ TelcoAutomationConnectionImpl::ListLocations(
 }
 
 StatusOr<google::cloud::location::Location>
-TelcoAutomationConnectionImpl::GetLocation(
-    google::cloud::location::GetLocationRequest const& request) {
+TelcoAutomationConnectionImpl::GetLocation(google::cloud::location::GetLocationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -1202,21 +987,17 @@ TelcoAutomationConnectionImpl::GetLocation(
 }
 
 StreamRange<google::longrunning::Operation>
-TelcoAutomationConnectionImpl::ListOperations(
-    google::longrunning::ListOperationsRequest request) {
+TelcoAutomationConnectionImpl::ListOperations(google::longrunning::ListOperationsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListOperations(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::longrunning::Operation>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::longrunning::Operation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<telcoautomation_v1::TelcoAutomationRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<telcoautomation_v1::TelcoAutomationRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::longrunning::ListOperationsRequest const& r) {
+          Options const& options, google::longrunning::ListOperationsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
@@ -1226,8 +1007,7 @@ TelcoAutomationConnectionImpl::ListOperations(
             options, r, function_name);
       },
       [](google::longrunning::ListOperationsResponse r) {
-        std::vector<google::longrunning::Operation> result(
-            r.operations().size());
+        std::vector<google::longrunning::Operation> result(r.operations().size());
         auto& messages = *r.mutable_operations();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -1235,8 +1015,7 @@ TelcoAutomationConnectionImpl::ListOperations(
 }
 
 StatusOr<google::longrunning::Operation>
-TelcoAutomationConnectionImpl::GetOperation(
-    google::longrunning::GetOperationRequest const& request) {
+TelcoAutomationConnectionImpl::GetOperation(google::longrunning::GetOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -1248,8 +1027,8 @@ TelcoAutomationConnectionImpl::GetOperation(
       *current, request, __func__);
 }
 
-Status TelcoAutomationConnectionImpl::DeleteOperation(
-    google::longrunning::DeleteOperationRequest const& request) {
+Status
+TelcoAutomationConnectionImpl::DeleteOperation(google::longrunning::DeleteOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -1261,8 +1040,8 @@ Status TelcoAutomationConnectionImpl::DeleteOperation(
       *current, request, __func__);
 }
 
-Status TelcoAutomationConnectionImpl::CancelOperation(
-    google::longrunning::CancelOperationRequest const& request) {
+Status
+TelcoAutomationConnectionImpl::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),

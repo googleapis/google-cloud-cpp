@@ -34,100 +34,77 @@ SessionEntityTypesTracingConnection::SessionEntityTypesTracingConnection(
     : child_(std::move(child)) {}
 
 StreamRange<google::cloud::dialogflow::cx::v3::SessionEntityType>
-SessionEntityTypesTracingConnection::ListSessionEntityTypes(
-    google::cloud::dialogflow::cx::v3::ListSessionEntityTypesRequest request) {
-  auto span = internal::MakeSpan(
-      "dialogflow_cx::SessionEntityTypesConnection::ListSessionEntityTypes");
+SessionEntityTypesTracingConnection::ListSessionEntityTypes(google::cloud::dialogflow::cx::v3::ListSessionEntityTypesRequest request) {
+  auto span = internal::MakeSpan("dialogflow_cx::SessionEntityTypesConnection::ListSessionEntityTypes");
   internal::OTelScope scope(span);
   auto sr = child_->ListSessionEntityTypes(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::dialogflow::cx::v3::SessionEntityType>(std::move(span),
-                                                            std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::dialogflow::cx::v3::SessionEntityType>(
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::SessionEntityType>
-SessionEntityTypesTracingConnection::GetSessionEntityType(
-    google::cloud::dialogflow::cx::v3::GetSessionEntityTypeRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "dialogflow_cx::SessionEntityTypesConnection::GetSessionEntityType");
+SessionEntityTypesTracingConnection::GetSessionEntityType(google::cloud::dialogflow::cx::v3::GetSessionEntityTypeRequest const& request) {
+  auto span = internal::MakeSpan("dialogflow_cx::SessionEntityTypesConnection::GetSessionEntityType");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetSessionEntityType(request));
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::SessionEntityType>
-SessionEntityTypesTracingConnection::CreateSessionEntityType(
-    google::cloud::dialogflow::cx::v3::CreateSessionEntityTypeRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "dialogflow_cx::SessionEntityTypesConnection::CreateSessionEntityType");
+SessionEntityTypesTracingConnection::CreateSessionEntityType(google::cloud::dialogflow::cx::v3::CreateSessionEntityTypeRequest const& request) {
+  auto span = internal::MakeSpan("dialogflow_cx::SessionEntityTypesConnection::CreateSessionEntityType");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateSessionEntityType(request));
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::SessionEntityType>
-SessionEntityTypesTracingConnection::UpdateSessionEntityType(
-    google::cloud::dialogflow::cx::v3::UpdateSessionEntityTypeRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "dialogflow_cx::SessionEntityTypesConnection::UpdateSessionEntityType");
+SessionEntityTypesTracingConnection::UpdateSessionEntityType(google::cloud::dialogflow::cx::v3::UpdateSessionEntityTypeRequest const& request) {
+  auto span = internal::MakeSpan("dialogflow_cx::SessionEntityTypesConnection::UpdateSessionEntityType");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateSessionEntityType(request));
 }
 
-Status SessionEntityTypesTracingConnection::DeleteSessionEntityType(
-    google::cloud::dialogflow::cx::v3::DeleteSessionEntityTypeRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "dialogflow_cx::SessionEntityTypesConnection::DeleteSessionEntityType");
+Status
+SessionEntityTypesTracingConnection::DeleteSessionEntityType(google::cloud::dialogflow::cx::v3::DeleteSessionEntityTypeRequest const& request) {
+  auto span = internal::MakeSpan("dialogflow_cx::SessionEntityTypesConnection::DeleteSessionEntityType");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteSessionEntityType(request));
 }
 
 StreamRange<google::cloud::location::Location>
-SessionEntityTypesTracingConnection::ListLocations(
-    google::cloud::location::ListLocationsRequest request) {
-  auto span = internal::MakeSpan(
-      "dialogflow_cx::SessionEntityTypesConnection::ListLocations");
+SessionEntityTypesTracingConnection::ListLocations(google::cloud::location::ListLocationsRequest request) {
+  auto span = internal::MakeSpan("dialogflow_cx::SessionEntityTypesConnection::ListLocations");
   internal::OTelScope scope(span);
   auto sr = child_->ListLocations(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::location::Location>(
-      std::move(span), std::move(sr));
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::location::Location>
-SessionEntityTypesTracingConnection::GetLocation(
-    google::cloud::location::GetLocationRequest const& request) {
-  auto span = internal::MakeSpan(
-      "dialogflow_cx::SessionEntityTypesConnection::GetLocation");
+SessionEntityTypesTracingConnection::GetLocation(google::cloud::location::GetLocationRequest const& request) {
+  auto span = internal::MakeSpan("dialogflow_cx::SessionEntityTypesConnection::GetLocation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetLocation(request));
 }
 
 StreamRange<google::longrunning::Operation>
-SessionEntityTypesTracingConnection::ListOperations(
-    google::longrunning::ListOperationsRequest request) {
-  auto span = internal::MakeSpan(
-      "dialogflow_cx::SessionEntityTypesConnection::ListOperations");
+SessionEntityTypesTracingConnection::ListOperations(google::longrunning::ListOperationsRequest request) {
+  auto span = internal::MakeSpan("dialogflow_cx::SessionEntityTypesConnection::ListOperations");
   internal::OTelScope scope(span);
   auto sr = child_->ListOperations(std::move(request));
   return internal::MakeTracedStreamRange<google::longrunning::Operation>(
-      std::move(span), std::move(sr));
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::longrunning::Operation>
-SessionEntityTypesTracingConnection::GetOperation(
-    google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpan(
-      "dialogflow_cx::SessionEntityTypesConnection::GetOperation");
+SessionEntityTypesTracingConnection::GetOperation(google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpan("dialogflow_cx::SessionEntityTypesConnection::GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOperation(request));
 }
 
-Status SessionEntityTypesTracingConnection::CancelOperation(
-    google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpan(
-      "dialogflow_cx::SessionEntityTypesConnection::CancelOperation");
+Status
+SessionEntityTypesTracingConnection::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
+  auto span = internal::MakeSpan("dialogflow_cx::SessionEntityTypesConnection::CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CancelOperation(request));
 }
@@ -139,8 +116,7 @@ MakeSessionEntityTypesTracingConnection(
     std::shared_ptr<dialogflow_cx::SessionEntityTypesConnection> conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
-    conn =
-        std::make_shared<SessionEntityTypesTracingConnection>(std::move(conn));
+    conn = std::make_shared<SessionEntityTypesTracingConnection>(std::move(conn));
   }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;

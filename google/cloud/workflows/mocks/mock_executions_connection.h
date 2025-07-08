@@ -30,8 +30,7 @@ namespace cloud {
 namespace workflows_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use workflows_executions_v1_mocks::MockExecutionsConnection
-/// directly.
+/// @deprecated Use workflows_executions_v1_mocks::MockExecutionsConnection directly.
 using ::google::cloud::workflows_executions_v1_mocks::MockExecutionsConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

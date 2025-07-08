@@ -64,8 +64,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class ServicesClient {
  public:
-  explicit ServicesClient(std::shared_ptr<ServicesConnection> connection,
-                          Options opts = {});
+  explicit ServicesClient(std::shared_ptr<ServicesConnection> connection, Options opts = {});
   ~ServicesClient();
 
   ///@{
@@ -122,8 +121,8 @@ class ServicesClient {
   /// [google.appengine.v1.Service]: @googleapis_reference_link{google/appengine/v1/service.proto#L36}
   ///
   // clang-format on
-  StreamRange<google::appengine::v1::Service> ListServices(
-      google::appengine::v1::ListServicesRequest request, Options opts = {});
+  StreamRange<google::appengine::v1::Service>
+  ListServices(google::appengine::v1::ListServicesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -152,9 +151,8 @@ class ServicesClient {
   /// [google.appengine.v1.Service]: @googleapis_reference_link{google/appengine/v1/service.proto#L36}
   ///
   // clang-format on
-  StatusOr<google::appengine::v1::Service> GetService(
-      google::appengine::v1::GetServiceRequest const& request,
-      Options opts = {});
+  StatusOr<google::appengine::v1::Service>
+  GetService(google::appengine::v1::GetServiceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -190,9 +188,8 @@ class ServicesClient {
   /// [google.appengine.v1.UpdateServiceRequest]: @googleapis_reference_link{google/appengine/v1/appengine.proto#L218}
   ///
   // clang-format on
-  future<StatusOr<google::appengine::v1::Service>> UpdateService(
-      google::appengine::v1::UpdateServiceRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::appengine::v1::Service>>
+  UpdateService(google::appengine::v1::UpdateServiceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -205,9 +202,8 @@ class ServicesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateService(
-      NoAwaitTag, google::appengine::v1::UpdateServiceRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateService(NoAwaitTag, google::appengine::v1::UpdateServiceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -218,8 +214,8 @@ class ServicesClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::appengine::v1::Service>> UpdateService(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::appengine::v1::Service>>
+  UpdateService(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -255,9 +251,8 @@ class ServicesClient {
   /// [google.appengine.v1.OperationMetadataV1]: @googleapis_reference_link{google/appengine/v1/operation.proto#L30}
   ///
   // clang-format on
-  future<StatusOr<google::appengine::v1::OperationMetadataV1>> DeleteService(
-      google::appengine::v1::DeleteServiceRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::appengine::v1::OperationMetadataV1>>
+  DeleteService(google::appengine::v1::DeleteServiceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -270,9 +265,8 @@ class ServicesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteService(
-      NoAwaitTag, google::appengine::v1::DeleteServiceRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteService(NoAwaitTag, google::appengine::v1::DeleteServiceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -283,8 +277,8 @@ class ServicesClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::appengine::v1::OperationMetadataV1>> DeleteService(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::appengine::v1::OperationMetadataV1>>
+  DeleteService(google::longrunning::Operation const& operation, Options opts = {});
 
  private:
   std::shared_ptr<ServicesConnection> connection_;

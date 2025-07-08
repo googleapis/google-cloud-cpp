@@ -35,32 +35,35 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class ProjectServiceMetadata : public ProjectServiceStub {
  public:
   ~ProjectServiceMetadata() override = default;
-  ProjectServiceMetadata(std::shared_ptr<ProjectServiceStub> child,
-                         std::multimap<std::string, std::string> fixed_metadata,
-                         std::string api_client_header = "");
+  ProjectServiceMetadata(
+      std::shared_ptr<ProjectServiceStub> child,
+      std::multimap<std::string, std::string> fixed_metadata,
+      std::string api_client_header = "");
 
   future<StatusOr<google::longrunning::Operation>> AsyncProvisionProject(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::discoveryengine::v1::ProvisionProjectRequest const&
-          request) override;
+      google::cloud::discoveryengine::v1::ProvisionProjectRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> ProvisionProject(
-      grpc::ClientContext& context, Options options,
-      google::cloud::discoveryengine::v1::ProvisionProjectRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::discoveryengine::v1::ProvisionProjectRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -76,7 +79,8 @@ class ProjectServiceMetadata : public ProjectServiceStub {
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context, Options const& options,
+  void SetMetadata(grpc::ClientContext& context,
+                   Options const& options,
                    std::string const& request_params);
   void SetMetadata(grpc::ClientContext& context, Options const& options);
 

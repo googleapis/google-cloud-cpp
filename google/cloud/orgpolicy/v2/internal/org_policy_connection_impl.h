@@ -19,14 +19,14 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ORGPOLICY_V2_INTERNAL_ORG_POLICY_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ORGPOLICY_V2_INTERNAL_ORG_POLICY_CONNECTION_IMPL_H
 
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/options.h"
 #include "google/cloud/orgpolicy/v2/internal/org_policy_retry_traits.h"
 #include "google/cloud/orgpolicy/v2/internal/org_policy_stub.h"
 #include "google/cloud/orgpolicy/v2/org_policy_connection.h"
 #include "google/cloud/orgpolicy/v2/org_policy_connection_idempotency_policy.h"
 #include "google/cloud/orgpolicy/v2/org_policy_options.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
@@ -37,63 +37,53 @@ namespace cloud {
 namespace orgpolicy_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class OrgPolicyConnectionImpl : public orgpolicy_v2::OrgPolicyConnection {
+class OrgPolicyConnectionImpl
+    : public orgpolicy_v2::OrgPolicyConnection {
  public:
   ~OrgPolicyConnectionImpl() override = default;
 
   OrgPolicyConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<orgpolicy_v2_internal::OrgPolicyStub> stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<orgpolicy_v2_internal::OrgPolicyStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
-  StreamRange<google::cloud::orgpolicy::v2::Constraint> ListConstraints(
-      google::cloud::orgpolicy::v2::ListConstraintsRequest request) override;
+  StreamRange<google::cloud::orgpolicy::v2::Constraint>
+  ListConstraints(google::cloud::orgpolicy::v2::ListConstraintsRequest request) override;
 
-  StreamRange<google::cloud::orgpolicy::v2::Policy> ListPolicies(
-      google::cloud::orgpolicy::v2::ListPoliciesRequest request) override;
+  StreamRange<google::cloud::orgpolicy::v2::Policy>
+  ListPolicies(google::cloud::orgpolicy::v2::ListPoliciesRequest request) override;
 
-  StatusOr<google::cloud::orgpolicy::v2::Policy> GetPolicy(
-      google::cloud::orgpolicy::v2::GetPolicyRequest const& request) override;
+  StatusOr<google::cloud::orgpolicy::v2::Policy>
+  GetPolicy(google::cloud::orgpolicy::v2::GetPolicyRequest const& request) override;
 
-  StatusOr<google::cloud::orgpolicy::v2::Policy> GetEffectivePolicy(
-      google::cloud::orgpolicy::v2::GetEffectivePolicyRequest const& request)
-      override;
+  StatusOr<google::cloud::orgpolicy::v2::Policy>
+  GetEffectivePolicy(google::cloud::orgpolicy::v2::GetEffectivePolicyRequest const& request) override;
 
-  StatusOr<google::cloud::orgpolicy::v2::Policy> CreatePolicy(
-      google::cloud::orgpolicy::v2::CreatePolicyRequest const& request)
-      override;
+  StatusOr<google::cloud::orgpolicy::v2::Policy>
+  CreatePolicy(google::cloud::orgpolicy::v2::CreatePolicyRequest const& request) override;
 
-  StatusOr<google::cloud::orgpolicy::v2::Policy> UpdatePolicy(
-      google::cloud::orgpolicy::v2::UpdatePolicyRequest const& request)
-      override;
+  StatusOr<google::cloud::orgpolicy::v2::Policy>
+  UpdatePolicy(google::cloud::orgpolicy::v2::UpdatePolicyRequest const& request) override;
 
-  Status DeletePolicy(google::cloud::orgpolicy::v2::DeletePolicyRequest const&
-                          request) override;
+  Status
+  DeletePolicy(google::cloud::orgpolicy::v2::DeletePolicyRequest const& request) override;
 
   StatusOr<google::cloud::orgpolicy::v2::CustomConstraint>
-  CreateCustomConstraint(
-      google::cloud::orgpolicy::v2::CreateCustomConstraintRequest const&
-          request) override;
+  CreateCustomConstraint(google::cloud::orgpolicy::v2::CreateCustomConstraintRequest const& request) override;
 
   StatusOr<google::cloud::orgpolicy::v2::CustomConstraint>
-  UpdateCustomConstraint(
-      google::cloud::orgpolicy::v2::UpdateCustomConstraintRequest const&
-          request) override;
+  UpdateCustomConstraint(google::cloud::orgpolicy::v2::UpdateCustomConstraintRequest const& request) override;
 
-  StatusOr<google::cloud::orgpolicy::v2::CustomConstraint> GetCustomConstraint(
-      google::cloud::orgpolicy::v2::GetCustomConstraintRequest const& request)
-      override;
+  StatusOr<google::cloud::orgpolicy::v2::CustomConstraint>
+  GetCustomConstraint(google::cloud::orgpolicy::v2::GetCustomConstraintRequest const& request) override;
 
   StreamRange<google::cloud::orgpolicy::v2::CustomConstraint>
-  ListCustomConstraints(
-      google::cloud::orgpolicy::v2::ListCustomConstraintsRequest request)
-      override;
+  ListCustomConstraints(google::cloud::orgpolicy::v2::ListCustomConstraintsRequest request) override;
 
-  Status DeleteCustomConstraint(
-      google::cloud::orgpolicy::v2::DeleteCustomConstraintRequest const&
-          request) override;
+  Status
+  DeleteCustomConstraint(google::cloud::orgpolicy::v2::DeleteCustomConstraintRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

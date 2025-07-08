@@ -17,14 +17,14 @@
 // source: google/cloud/dialogflow/cx/v3/deployment.proto
 
 #include "google/cloud/dialogflow_cx/deployments_connection.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/dialogflow_cx/deployments_options.h"
 #include "google/cloud/dialogflow_cx/internal/deployments_connection_impl.h"
 #include "google/cloud/dialogflow_cx/internal/deployments_option_defaults.h"
 #include "google/cloud/dialogflow_cx/internal/deployments_stub_factory.h"
 #include "google/cloud/dialogflow_cx/internal/deployments_tracing_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
-#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
@@ -38,10 +38,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 DeploymentsConnection::~DeploymentsConnection() = default;
 
-StreamRange<google::cloud::dialogflow::cx::v3::Deployment>
-DeploymentsConnection::ListDeployments(
-    google::cloud::dialogflow::cx::v3::
-        ListDeploymentsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::dialogflow::cx::v3::Deployment> DeploymentsConnection::ListDeployments(
+    google::cloud::dialogflow::cx::v3::ListDeploymentsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::dialogflow::cx::v3::Deployment>>();
 }
@@ -52,33 +50,32 @@ DeploymentsConnection::GetDeployment(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::location::Location>
-DeploymentsConnection::ListLocations(
-    google::cloud::location::
-        ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::location::Location> DeploymentsConnection::ListLocations(
+    google::cloud::location::ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::location::Location>>();
 }
 
-StatusOr<google::cloud::location::Location> DeploymentsConnection::GetLocation(
+StatusOr<google::cloud::location::Location>
+DeploymentsConnection::GetLocation(
     google::cloud::location::GetLocationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::longrunning::Operation>
-DeploymentsConnection::ListOperations(
-    google::longrunning::
-        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::longrunning::Operation> DeploymentsConnection::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }
 
-StatusOr<google::longrunning::Operation> DeploymentsConnection::GetOperation(
+StatusOr<google::longrunning::Operation>
+DeploymentsConnection::GetOperation(
     google::longrunning::GetOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status DeploymentsConnection::CancelOperation(
+Status
+DeploymentsConnection::CancelOperation(
     google::longrunning::CancelOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -86,18 +83,17 @@ Status DeploymentsConnection::CancelOperation(
 std::shared_ptr<DeploymentsConnection> MakeDeploymentsConnection(
     std::string const& location, Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 DeploymentsPolicyOptionList>(options,
-                                                              __func__);
+      UnifiedCredentialsOptionList,
+      DeploymentsPolicyOptionList>(options, __func__);
   options = dialogflow_cx_internal::DeploymentsDefaultOptions(
       location, std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = dialogflow_cx_internal::CreateDefaultDeploymentsStub(
-      std::move(auth), options);
+    std::move(auth), options);
   return dialogflow_cx_internal::MakeDeploymentsTracingConnection(
       std::make_shared<dialogflow_cx_internal::DeploymentsConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options)));
+      std::move(background), std::move(stub), std::move(options)));
 }
 
 std::shared_ptr<DeploymentsConnection> MakeDeploymentsConnection(

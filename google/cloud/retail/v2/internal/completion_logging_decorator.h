@@ -36,31 +36,33 @@ class CompletionServiceLogging : public CompletionServiceStub {
  public:
   ~CompletionServiceLogging() override = default;
   CompletionServiceLogging(std::shared_ptr<CompletionServiceStub> child,
-                           TracingOptions tracing_options,
-                           std::set<std::string> const& components);
+                       TracingOptions tracing_options,
+                       std::set<std::string> const& components);
 
   StatusOr<google::cloud::retail::v2::CompleteQueryResponse> CompleteQuery(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::retail::v2::CompleteQueryRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncImportCompletionData(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::retail::v2::ImportCompletionDataRequest const& request)
-      override;
+      google::cloud::retail::v2::ImportCompletionDataRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> ImportCompletionData(
-      grpc::ClientContext& context, Options options,
-      google::cloud::retail::v2::ImportCompletionDataRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::retail::v2::ImportCompletionDataRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(

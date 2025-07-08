@@ -39,14 +39,14 @@ class AuthorizedDomainsMetadata : public AuthorizedDomainsStub {
       std::multimap<std::string, std::string> fixed_metadata,
       std::string api_client_header = "");
 
-  StatusOr<google::appengine::v1::ListAuthorizedDomainsResponse>
-  ListAuthorizedDomains(
-      grpc::ClientContext& context, Options const& options,
-      google::appengine::v1::ListAuthorizedDomainsRequest const& request)
-      override;
+  StatusOr<google::appengine::v1::ListAuthorizedDomainsResponse> ListAuthorizedDomains(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::appengine::v1::ListAuthorizedDomainsRequest const& request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context, Options const& options,
+  void SetMetadata(grpc::ClientContext& context,
+                   Options const& options,
                    std::string const& request_params);
   void SetMetadata(grpc::ClientContext& context, Options const& options);
 

@@ -31,10 +31,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * A class to mock `DocumentProcessorServiceConnection`.
  *
  * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `DocumentProcessorServiceClient`. To
- * do so, construct an object of type `DocumentProcessorServiceClient` with an
- * instance of this class. Then use the Google Test framework functions to
- * program the behavior of this mock.
+ * including errors, from an object of type `DocumentProcessorServiceClient`. To do so,
+ * construct an object of type `DocumentProcessorServiceClient` with an instance of this
+ * class. Then use the Google Test framework functions to program the behavior
+ * of this mock.
  *
  * @see [This example][bq-mock] for how to test your application with GoogleTest.
  * While the example showcases types from the BigQuery library, the underlying
@@ -42,30 +42,25 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockDocumentProcessorServiceConnection
-    : public documentai_v1::DocumentProcessorServiceConnection {
+class MockDocumentProcessorServiceConnection : public documentai_v1::DocumentProcessorServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::documentai::v1::ProcessResponse>,
-              ProcessDocument,
-              (google::cloud::documentai::v1::ProcessRequest const& request),
-              (override));
+  ProcessDocument,
+  (google::cloud::documentai::v1::ProcessRequest const& request), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// BatchProcessDocuments(Matcher<google::cloud::documentai::v1::BatchProcessRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, BatchProcessDocuments(Matcher<google::cloud::documentai::v1::BatchProcessRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::documentai::v1::BatchProcessResponse>>,
-      BatchProcessDocuments,
-      (google::cloud::documentai::v1::BatchProcessRequest const& request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::documentai::v1::BatchProcessResponse>>,
+  BatchProcessDocuments,
+  (google::cloud::documentai::v1::BatchProcessRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -73,69 +68,53 @@ class MockDocumentProcessorServiceConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, BatchProcessDocuments(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, BatchProcessDocuments,
-      (NoAwaitTag,
-       google::cloud::documentai::v1::BatchProcessRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  BatchProcessDocuments, (NoAwaitTag,
+    google::cloud::documentai::v1::BatchProcessRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// BatchProcessDocuments(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock, BatchProcessDocuments(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::documentai::v1::BatchProcessResponse>>,
-      BatchProcessDocuments, (google::longrunning::Operation const& operation),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::documentai::v1::BatchProcessResponse>>,
+  BatchProcessDocuments, (
+    google::longrunning::Operation const& operation), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::documentai::v1::FetchProcessorTypesResponse>,
-      FetchProcessorTypes,
-      (google::cloud::documentai::v1::FetchProcessorTypesRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::documentai::v1::FetchProcessorTypesResponse>,
+  FetchProcessorTypes,
+  (google::cloud::documentai::v1::FetchProcessorTypesRequest const& request), (override));
 
-  MOCK_METHOD(
-      (StreamRange<google::cloud::documentai::v1::ProcessorType>),
-      ListProcessorTypes,
-      (google::cloud::documentai::v1::ListProcessorTypesRequest request),
-      (override));
+  MOCK_METHOD((StreamRange<google::cloud::documentai::v1::ProcessorType>),
+  ListProcessorTypes,
+  (google::cloud::documentai::v1::ListProcessorTypesRequest request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::documentai::v1::ProcessorType>, GetProcessorType,
-      (google::cloud::documentai::v1::GetProcessorTypeRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::documentai::v1::ProcessorType>,
+  GetProcessorType,
+  (google::cloud::documentai::v1::GetProcessorTypeRequest const& request), (override));
 
   MOCK_METHOD((StreamRange<google::cloud::documentai::v1::Processor>),
-              ListProcessors,
-              (google::cloud::documentai::v1::ListProcessorsRequest request),
-              (override));
+  ListProcessors,
+  (google::cloud::documentai::v1::ListProcessorsRequest request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::documentai::v1::Processor>, GetProcessor,
-      (google::cloud::documentai::v1::GetProcessorRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::documentai::v1::Processor>,
+  GetProcessor,
+  (google::cloud::documentai::v1::GetProcessorRequest const& request), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// TrainProcessorVersion(Matcher<google::cloud::documentai::v1::TrainProcessorVersionRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, TrainProcessorVersion(Matcher<google::cloud::documentai::v1::TrainProcessorVersionRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<
-          google::cloud::documentai::v1::TrainProcessorVersionResponse>>,
-      TrainProcessorVersion,
-      (google::cloud::documentai::v1::TrainProcessorVersionRequest const&
-           request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::documentai::v1::TrainProcessorVersionResponse>>,
+  TrainProcessorVersion,
+  (google::cloud::documentai::v1::TrainProcessorVersionRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -143,55 +122,41 @@ class MockDocumentProcessorServiceConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, TrainProcessorVersion(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, TrainProcessorVersion,
-      (NoAwaitTag,
-       google::cloud::documentai::v1::TrainProcessorVersionRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  TrainProcessorVersion, (NoAwaitTag,
+    google::cloud::documentai::v1::TrainProcessorVersionRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// TrainProcessorVersion(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock, TrainProcessorVersion(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<
-          google::cloud::documentai::v1::TrainProcessorVersionResponse>>,
-      TrainProcessorVersion, (google::longrunning::Operation const& operation),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::documentai::v1::TrainProcessorVersionResponse>>,
+  TrainProcessorVersion, (
+    google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::documentai::v1::ProcessorVersion>,
-              GetProcessorVersion,
-              (google::cloud::documentai::v1::GetProcessorVersionRequest const&
-                   request),
-              (override));
+  GetProcessorVersion,
+  (google::cloud::documentai::v1::GetProcessorVersionRequest const& request), (override));
 
-  MOCK_METHOD(
-      (StreamRange<google::cloud::documentai::v1::ProcessorVersion>),
-      ListProcessorVersions,
-      (google::cloud::documentai::v1::ListProcessorVersionsRequest request),
-      (override));
+  MOCK_METHOD((StreamRange<google::cloud::documentai::v1::ProcessorVersion>),
+  ListProcessorVersions,
+  (google::cloud::documentai::v1::ListProcessorVersionsRequest request), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteProcessorVersion(Matcher<google::cloud::documentai::v1::DeleteProcessorVersionRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteProcessorVersion(Matcher<google::cloud::documentai::v1::DeleteProcessorVersionRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<
-          google::cloud::documentai::v1::DeleteProcessorVersionMetadata>>,
-      DeleteProcessorVersion,
-      (google::cloud::documentai::v1::DeleteProcessorVersionRequest const&
-           request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::documentai::v1::DeleteProcessorVersionMetadata>>,
+  DeleteProcessorVersion,
+  (google::cloud::documentai::v1::DeleteProcessorVersionRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -199,43 +164,33 @@ class MockDocumentProcessorServiceConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, DeleteProcessorVersion(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, DeleteProcessorVersion,
-      (NoAwaitTag,
-       google::cloud::documentai::v1::DeleteProcessorVersionRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  DeleteProcessorVersion, (NoAwaitTag,
+    google::cloud::documentai::v1::DeleteProcessorVersionRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteProcessorVersion(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteProcessorVersion(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<
-          google::cloud::documentai::v1::DeleteProcessorVersionMetadata>>,
-      DeleteProcessorVersion, (google::longrunning::Operation const& operation),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::documentai::v1::DeleteProcessorVersionMetadata>>,
+  DeleteProcessorVersion, (
+    google::longrunning::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeployProcessorVersion(Matcher<google::cloud::documentai::v1::DeployProcessorVersionRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, DeployProcessorVersion(Matcher<google::cloud::documentai::v1::DeployProcessorVersionRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<
-          google::cloud::documentai::v1::DeployProcessorVersionResponse>>,
-      DeployProcessorVersion,
-      (google::cloud::documentai::v1::DeployProcessorVersionRequest const&
-           request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::documentai::v1::DeployProcessorVersionResponse>>,
+  DeployProcessorVersion,
+  (google::cloud::documentai::v1::DeployProcessorVersionRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -243,43 +198,33 @@ class MockDocumentProcessorServiceConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, DeployProcessorVersion(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, DeployProcessorVersion,
-      (NoAwaitTag,
-       google::cloud::documentai::v1::DeployProcessorVersionRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  DeployProcessorVersion, (NoAwaitTag,
+    google::cloud::documentai::v1::DeployProcessorVersionRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeployProcessorVersion(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock, DeployProcessorVersion(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<
-          google::cloud::documentai::v1::DeployProcessorVersionResponse>>,
-      DeployProcessorVersion, (google::longrunning::Operation const& operation),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::documentai::v1::DeployProcessorVersionResponse>>,
+  DeployProcessorVersion, (
+    google::longrunning::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// UndeployProcessorVersion(Matcher<google::cloud::documentai::v1::UndeployProcessorVersionRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, UndeployProcessorVersion(Matcher<google::cloud::documentai::v1::UndeployProcessorVersionRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<
-          google::cloud::documentai::v1::UndeployProcessorVersionResponse>>,
-      UndeployProcessorVersion,
-      (google::cloud::documentai::v1::UndeployProcessorVersionRequest const&
-           request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::documentai::v1::UndeployProcessorVersionResponse>>,
+  UndeployProcessorVersion,
+  (google::cloud::documentai::v1::UndeployProcessorVersionRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -287,47 +232,37 @@ class MockDocumentProcessorServiceConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, UndeployProcessorVersion(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, UndeployProcessorVersion,
-      (NoAwaitTag,
-       google::cloud::documentai::v1::UndeployProcessorVersionRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  UndeployProcessorVersion, (NoAwaitTag,
+    google::cloud::documentai::v1::UndeployProcessorVersionRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// UndeployProcessorVersion(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, UndeployProcessorVersion(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<
-          google::cloud::documentai::v1::UndeployProcessorVersionResponse>>,
-      UndeployProcessorVersion,
-      (google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::documentai::v1::UndeployProcessorVersionResponse>>,
+  UndeployProcessorVersion, (
+    google::longrunning::Operation const& operation), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::documentai::v1::Processor>, CreateProcessor,
-      (google::cloud::documentai::v1::CreateProcessorRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::documentai::v1::Processor>,
+  CreateProcessor,
+  (google::cloud::documentai::v1::CreateProcessorRequest const& request), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteProcessor(Matcher<google::cloud::documentai::v1::DeleteProcessorRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteProcessor(Matcher<google::cloud::documentai::v1::DeleteProcessorRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::documentai::v1::DeleteProcessorMetadata>>,
-      DeleteProcessor,
-      (google::cloud::documentai::v1::DeleteProcessorRequest const& request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::documentai::v1::DeleteProcessorMetadata>>,
+  DeleteProcessor,
+  (google::cloud::documentai::v1::DeleteProcessorRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -335,39 +270,33 @@ class MockDocumentProcessorServiceConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, DeleteProcessor(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, DeleteProcessor,
-      (NoAwaitTag,
-       google::cloud::documentai::v1::DeleteProcessorRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  DeleteProcessor, (NoAwaitTag,
+    google::cloud::documentai::v1::DeleteProcessorRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteProcessor(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteProcessor(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::documentai::v1::DeleteProcessorMetadata>>,
-      DeleteProcessor, (google::longrunning::Operation const& operation),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::documentai::v1::DeleteProcessorMetadata>>,
+  DeleteProcessor, (
+    google::longrunning::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// EnableProcessor(Matcher<google::cloud::documentai::v1::EnableProcessorRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, EnableProcessor(Matcher<google::cloud::documentai::v1::EnableProcessorRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::documentai::v1::EnableProcessorResponse>>,
-      EnableProcessor,
-      (google::cloud::documentai::v1::EnableProcessorRequest const& request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::documentai::v1::EnableProcessorResponse>>,
+  EnableProcessor,
+  (google::cloud::documentai::v1::EnableProcessorRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -375,39 +304,33 @@ class MockDocumentProcessorServiceConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, EnableProcessor(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, EnableProcessor,
-      (NoAwaitTag,
-       google::cloud::documentai::v1::EnableProcessorRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  EnableProcessor, (NoAwaitTag,
+    google::cloud::documentai::v1::EnableProcessorRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, EnableProcessor(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, EnableProcessor(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::documentai::v1::EnableProcessorResponse>>,
-      EnableProcessor, (google::longrunning::Operation const& operation),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::documentai::v1::EnableProcessorResponse>>,
+  EnableProcessor, (
+    google::longrunning::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DisableProcessor(Matcher<google::cloud::documentai::v1::DisableProcessorRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, DisableProcessor(Matcher<google::cloud::documentai::v1::DisableProcessorRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::documentai::v1::DisableProcessorResponse>>,
-      DisableProcessor,
-      (google::cloud::documentai::v1::DisableProcessorRequest const& request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::documentai::v1::DisableProcessorResponse>>,
+  DisableProcessor,
+  (google::cloud::documentai::v1::DisableProcessorRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -415,41 +338,33 @@ class MockDocumentProcessorServiceConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, DisableProcessor(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, DisableProcessor,
-      (NoAwaitTag,
-       google::cloud::documentai::v1::DisableProcessorRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  DisableProcessor, (NoAwaitTag,
+    google::cloud::documentai::v1::DisableProcessorRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DisableProcessor(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, DisableProcessor(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::documentai::v1::DisableProcessorResponse>>,
-      DisableProcessor, (google::longrunning::Operation const& operation),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::documentai::v1::DisableProcessorResponse>>,
+  DisableProcessor, (
+    google::longrunning::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// SetDefaultProcessorVersion(Matcher<google::cloud::documentai::v1::SetDefaultProcessorVersionRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, SetDefaultProcessorVersion(Matcher<google::cloud::documentai::v1::SetDefaultProcessorVersionRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<
-          google::cloud::documentai::v1::SetDefaultProcessorVersionResponse>>,
-      SetDefaultProcessorVersion,
-      (google::cloud::documentai::v1::SetDefaultProcessorVersionRequest const&
-           request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::documentai::v1::SetDefaultProcessorVersionResponse>>,
+  SetDefaultProcessorVersion,
+  (google::cloud::documentai::v1::SetDefaultProcessorVersionRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -457,42 +372,33 @@ class MockDocumentProcessorServiceConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, SetDefaultProcessorVersion(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, SetDefaultProcessorVersion,
-      (NoAwaitTag,
-       google::cloud::documentai::v1::SetDefaultProcessorVersionRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  SetDefaultProcessorVersion, (NoAwaitTag,
+    google::cloud::documentai::v1::SetDefaultProcessorVersionRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// SetDefaultProcessorVersion(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, SetDefaultProcessorVersion(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<
-          google::cloud::documentai::v1::SetDefaultProcessorVersionResponse>>,
-      SetDefaultProcessorVersion,
-      (google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::documentai::v1::SetDefaultProcessorVersionResponse>>,
+  SetDefaultProcessorVersion, (
+    google::longrunning::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// ReviewDocument(Matcher<google::cloud::documentai::v1::ReviewDocumentRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, ReviewDocument(Matcher<google::cloud::documentai::v1::ReviewDocumentRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::documentai::v1::ReviewDocumentResponse>>,
-      ReviewDocument,
-      (google::cloud::documentai::v1::ReviewDocumentRequest const& request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::documentai::v1::ReviewDocumentResponse>>,
+  ReviewDocument,
+  (google::cloud::documentai::v1::ReviewDocumentRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -500,41 +406,33 @@ class MockDocumentProcessorServiceConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, ReviewDocument(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, ReviewDocument,
-      (NoAwaitTag,
-       google::cloud::documentai::v1::ReviewDocumentRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  ReviewDocument, (NoAwaitTag,
+    google::cloud::documentai::v1::ReviewDocumentRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, ReviewDocument(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, ReviewDocument(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::documentai::v1::ReviewDocumentResponse>>,
-      ReviewDocument, (google::longrunning::Operation const& operation),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::documentai::v1::ReviewDocumentResponse>>,
+  ReviewDocument, (
+    google::longrunning::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// EvaluateProcessorVersion(Matcher<google::cloud::documentai::v1::EvaluateProcessorVersionRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, EvaluateProcessorVersion(Matcher<google::cloud::documentai::v1::EvaluateProcessorVersionRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<
-          google::cloud::documentai::v1::EvaluateProcessorVersionResponse>>,
-      EvaluateProcessorVersion,
-      (google::cloud::documentai::v1::EvaluateProcessorVersionRequest const&
-           request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::documentai::v1::EvaluateProcessorVersionResponse>>,
+  EvaluateProcessorVersion,
+  (google::cloud::documentai::v1::EvaluateProcessorVersionRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -542,56 +440,49 @@ class MockDocumentProcessorServiceConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, EvaluateProcessorVersion(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, EvaluateProcessorVersion,
-      (NoAwaitTag,
-       google::cloud::documentai::v1::EvaluateProcessorVersionRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  EvaluateProcessorVersion, (NoAwaitTag,
+    google::cloud::documentai::v1::EvaluateProcessorVersionRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// EvaluateProcessorVersion(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, EvaluateProcessorVersion(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<
-          google::cloud::documentai::v1::EvaluateProcessorVersionResponse>>,
-      EvaluateProcessorVersion,
-      (google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::documentai::v1::EvaluateProcessorVersionResponse>>,
+  EvaluateProcessorVersion, (
+    google::longrunning::Operation const& operation), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::documentai::v1::Evaluation>, GetEvaluation,
-      (google::cloud::documentai::v1::GetEvaluationRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::documentai::v1::Evaluation>,
+  GetEvaluation,
+  (google::cloud::documentai::v1::GetEvaluationRequest const& request), (override));
 
   MOCK_METHOD((StreamRange<google::cloud::documentai::v1::Evaluation>),
-              ListEvaluations,
-              (google::cloud::documentai::v1::ListEvaluationsRequest request),
-              (override));
+  ListEvaluations,
+  (google::cloud::documentai::v1::ListEvaluationsRequest request), (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::location::Location>), ListLocations,
-              (google::cloud::location::ListLocationsRequest request),
-              (override));
+  MOCK_METHOD((StreamRange<google::cloud::location::Location>),
+  ListLocations,
+  (google::cloud::location::ListLocationsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::location::Location>, GetLocation,
-              (google::cloud::location::GetLocationRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::location::Location>,
+  GetLocation,
+  (google::cloud::location::GetLocationRequest const& request), (override));
 
-  MOCK_METHOD((StreamRange<google::longrunning::Operation>), ListOperations,
-              (google::longrunning::ListOperationsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::longrunning::Operation>),
+  ListOperations,
+  (google::longrunning::ListOperationsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
-              (google::longrunning::GetOperationRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  GetOperation,
+  (google::longrunning::GetOperationRequest const& request), (override));
 
-  MOCK_METHOD(Status, CancelOperation,
-              (google::longrunning::CancelOperationRequest const& request),
-              (override));
+  MOCK_METHOD(Status,
+  CancelOperation,
+  (google::longrunning::CancelOperationRequest const& request), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

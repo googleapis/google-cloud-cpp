@@ -31,110 +31,100 @@ CloudControlsPartnerCoreAuth::CloudControlsPartnerCoreAuth(
     std::shared_ptr<CloudControlsPartnerCoreStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::cloudcontrolspartner::v1::Workload>
-CloudControlsPartnerCoreAuth::GetWorkload(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::cloudcontrolspartner::v1::GetWorkloadRequest const&
-        request) {
+StatusOr<google::cloud::cloudcontrolspartner::v1::Workload> CloudControlsPartnerCoreAuth::GetWorkload(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::cloudcontrolspartner::v1::GetWorkloadRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetWorkload(context, options, request);
 }
 
-StatusOr<google::cloud::cloudcontrolspartner::v1::ListWorkloadsResponse>
-CloudControlsPartnerCoreAuth::ListWorkloads(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::cloudcontrolspartner::v1::ListWorkloadsRequest const&
-        request) {
+StatusOr<google::cloud::cloudcontrolspartner::v1::ListWorkloadsResponse> CloudControlsPartnerCoreAuth::ListWorkloads(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::cloudcontrolspartner::v1::ListWorkloadsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListWorkloads(context, options, request);
 }
 
-StatusOr<google::cloud::cloudcontrolspartner::v1::Customer>
-CloudControlsPartnerCoreAuth::GetCustomer(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::cloudcontrolspartner::v1::GetCustomerRequest const&
-        request) {
+StatusOr<google::cloud::cloudcontrolspartner::v1::Customer> CloudControlsPartnerCoreAuth::GetCustomer(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::cloudcontrolspartner::v1::GetCustomerRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetCustomer(context, options, request);
 }
 
-StatusOr<google::cloud::cloudcontrolspartner::v1::ListCustomersResponse>
-CloudControlsPartnerCoreAuth::ListCustomers(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::cloudcontrolspartner::v1::ListCustomersRequest const&
-        request) {
+StatusOr<google::cloud::cloudcontrolspartner::v1::ListCustomersResponse> CloudControlsPartnerCoreAuth::ListCustomers(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::cloudcontrolspartner::v1::ListCustomersRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListCustomers(context, options, request);
 }
 
-StatusOr<google::cloud::cloudcontrolspartner::v1::EkmConnections>
-CloudControlsPartnerCoreAuth::GetEkmConnections(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::cloudcontrolspartner::v1::GetEkmConnectionsRequest const&
-        request) {
+StatusOr<google::cloud::cloudcontrolspartner::v1::EkmConnections> CloudControlsPartnerCoreAuth::GetEkmConnections(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::cloudcontrolspartner::v1::GetEkmConnectionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetEkmConnections(context, options, request);
 }
 
-StatusOr<google::cloud::cloudcontrolspartner::v1::PartnerPermissions>
-CloudControlsPartnerCoreAuth::GetPartnerPermissions(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::cloudcontrolspartner::v1::GetPartnerPermissionsRequest const&
-        request) {
+StatusOr<google::cloud::cloudcontrolspartner::v1::PartnerPermissions> CloudControlsPartnerCoreAuth::GetPartnerPermissions(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::cloudcontrolspartner::v1::GetPartnerPermissionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetPartnerPermissions(context, options, request);
 }
 
-StatusOr<
-    google::cloud::cloudcontrolspartner::v1::ListAccessApprovalRequestsResponse>
-CloudControlsPartnerCoreAuth::ListAccessApprovalRequests(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::cloudcontrolspartner::v1::
-        ListAccessApprovalRequestsRequest const& request) {
+StatusOr<google::cloud::cloudcontrolspartner::v1::ListAccessApprovalRequestsResponse> CloudControlsPartnerCoreAuth::ListAccessApprovalRequests(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::cloudcontrolspartner::v1::ListAccessApprovalRequestsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListAccessApprovalRequests(context, options, request);
 }
 
-StatusOr<google::cloud::cloudcontrolspartner::v1::Partner>
-CloudControlsPartnerCoreAuth::GetPartner(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::cloudcontrolspartner::v1::Partner> CloudControlsPartnerCoreAuth::GetPartner(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::cloudcontrolspartner::v1::GetPartnerRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetPartner(context, options, request);
 }
 
-StatusOr<google::cloud::cloudcontrolspartner::v1::Customer>
-CloudControlsPartnerCoreAuth::CreateCustomer(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::cloudcontrolspartner::v1::CreateCustomerRequest const&
-        request) {
+StatusOr<google::cloud::cloudcontrolspartner::v1::Customer> CloudControlsPartnerCoreAuth::CreateCustomer(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::cloudcontrolspartner::v1::CreateCustomerRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateCustomer(context, options, request);
 }
 
-StatusOr<google::cloud::cloudcontrolspartner::v1::Customer>
-CloudControlsPartnerCoreAuth::UpdateCustomer(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::cloudcontrolspartner::v1::UpdateCustomerRequest const&
-        request) {
+StatusOr<google::cloud::cloudcontrolspartner::v1::Customer> CloudControlsPartnerCoreAuth::UpdateCustomer(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::cloudcontrolspartner::v1::UpdateCustomerRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateCustomer(context, options, request);
 }
 
 Status CloudControlsPartnerCoreAuth::DeleteCustomer(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::cloudcontrolspartner::v1::DeleteCustomerRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::cloudcontrolspartner::v1::DeleteCustomerRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteCustomer(context, options, request);

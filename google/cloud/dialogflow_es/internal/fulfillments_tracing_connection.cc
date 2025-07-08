@@ -34,67 +34,54 @@ FulfillmentsTracingConnection::FulfillmentsTracingConnection(
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::dialogflow::v2::Fulfillment>
-FulfillmentsTracingConnection::GetFulfillment(
-    google::cloud::dialogflow::v2::GetFulfillmentRequest const& request) {
-  auto span = internal::MakeSpan(
-      "dialogflow_es::FulfillmentsConnection::GetFulfillment");
+FulfillmentsTracingConnection::GetFulfillment(google::cloud::dialogflow::v2::GetFulfillmentRequest const& request) {
+  auto span = internal::MakeSpan("dialogflow_es::FulfillmentsConnection::GetFulfillment");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetFulfillment(request));
 }
 
 StatusOr<google::cloud::dialogflow::v2::Fulfillment>
-FulfillmentsTracingConnection::UpdateFulfillment(
-    google::cloud::dialogflow::v2::UpdateFulfillmentRequest const& request) {
-  auto span = internal::MakeSpan(
-      "dialogflow_es::FulfillmentsConnection::UpdateFulfillment");
+FulfillmentsTracingConnection::UpdateFulfillment(google::cloud::dialogflow::v2::UpdateFulfillmentRequest const& request) {
+  auto span = internal::MakeSpan("dialogflow_es::FulfillmentsConnection::UpdateFulfillment");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateFulfillment(request));
 }
 
 StreamRange<google::cloud::location::Location>
-FulfillmentsTracingConnection::ListLocations(
-    google::cloud::location::ListLocationsRequest request) {
-  auto span = internal::MakeSpan(
-      "dialogflow_es::FulfillmentsConnection::ListLocations");
+FulfillmentsTracingConnection::ListLocations(google::cloud::location::ListLocationsRequest request) {
+  auto span = internal::MakeSpan("dialogflow_es::FulfillmentsConnection::ListLocations");
   internal::OTelScope scope(span);
   auto sr = child_->ListLocations(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::location::Location>(
-      std::move(span), std::move(sr));
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::location::Location>
-FulfillmentsTracingConnection::GetLocation(
-    google::cloud::location::GetLocationRequest const& request) {
-  auto span =
-      internal::MakeSpan("dialogflow_es::FulfillmentsConnection::GetLocation");
+FulfillmentsTracingConnection::GetLocation(google::cloud::location::GetLocationRequest const& request) {
+  auto span = internal::MakeSpan("dialogflow_es::FulfillmentsConnection::GetLocation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetLocation(request));
 }
 
 StreamRange<google::longrunning::Operation>
-FulfillmentsTracingConnection::ListOperations(
-    google::longrunning::ListOperationsRequest request) {
-  auto span = internal::MakeSpan(
-      "dialogflow_es::FulfillmentsConnection::ListOperations");
+FulfillmentsTracingConnection::ListOperations(google::longrunning::ListOperationsRequest request) {
+  auto span = internal::MakeSpan("dialogflow_es::FulfillmentsConnection::ListOperations");
   internal::OTelScope scope(span);
   auto sr = child_->ListOperations(std::move(request));
   return internal::MakeTracedStreamRange<google::longrunning::Operation>(
-      std::move(span), std::move(sr));
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::longrunning::Operation>
-FulfillmentsTracingConnection::GetOperation(
-    google::longrunning::GetOperationRequest const& request) {
-  auto span =
-      internal::MakeSpan("dialogflow_es::FulfillmentsConnection::GetOperation");
+FulfillmentsTracingConnection::GetOperation(google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpan("dialogflow_es::FulfillmentsConnection::GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOperation(request));
 }
 
-Status FulfillmentsTracingConnection::CancelOperation(
-    google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpan(
-      "dialogflow_es::FulfillmentsConnection::CancelOperation");
+Status
+FulfillmentsTracingConnection::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
+  auto span = internal::MakeSpan("dialogflow_es::FulfillmentsConnection::CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CancelOperation(request));
 }

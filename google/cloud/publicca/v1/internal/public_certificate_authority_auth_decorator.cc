@@ -31,11 +31,10 @@ PublicCertificateAuthorityServiceAuth::PublicCertificateAuthorityServiceAuth(
     std::shared_ptr<PublicCertificateAuthorityServiceStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::security::publicca::v1::ExternalAccountKey>
-PublicCertificateAuthorityServiceAuth::CreateExternalAccountKey(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::security::publicca::v1::
-        CreateExternalAccountKeyRequest const& request) {
+StatusOr<google::cloud::security::publicca::v1::ExternalAccountKey> PublicCertificateAuthorityServiceAuth::CreateExternalAccountKey(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::security::publicca::v1::CreateExternalAccountKeyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateExternalAccountKey(context, options, request);

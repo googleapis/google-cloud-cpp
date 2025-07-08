@@ -34,51 +34,38 @@ DocumentLinkServiceTracingConnection::DocumentLinkServiceTracingConnection(
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::contentwarehouse::v1::ListLinkedTargetsResponse>
-DocumentLinkServiceTracingConnection::ListLinkedTargets(
-    google::cloud::contentwarehouse::v1::ListLinkedTargetsRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "contentwarehouse_v1::DocumentLinkServiceConnection::ListLinkedTargets");
+DocumentLinkServiceTracingConnection::ListLinkedTargets(google::cloud::contentwarehouse::v1::ListLinkedTargetsRequest const& request) {
+  auto span = internal::MakeSpan("contentwarehouse_v1::DocumentLinkServiceConnection::ListLinkedTargets");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->ListLinkedTargets(request));
 }
 
 StreamRange<google::cloud::contentwarehouse::v1::DocumentLink>
-DocumentLinkServiceTracingConnection::ListLinkedSources(
-    google::cloud::contentwarehouse::v1::ListLinkedSourcesRequest request) {
-  auto span = internal::MakeSpan(
-      "contentwarehouse_v1::DocumentLinkServiceConnection::ListLinkedSources");
+DocumentLinkServiceTracingConnection::ListLinkedSources(google::cloud::contentwarehouse::v1::ListLinkedSourcesRequest request) {
+  auto span = internal::MakeSpan("contentwarehouse_v1::DocumentLinkServiceConnection::ListLinkedSources");
   internal::OTelScope scope(span);
   auto sr = child_->ListLinkedSources(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::contentwarehouse::v1::DocumentLink>(std::move(span),
-                                                         std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::contentwarehouse::v1::DocumentLink>(
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::contentwarehouse::v1::DocumentLink>
-DocumentLinkServiceTracingConnection::CreateDocumentLink(
-    google::cloud::contentwarehouse::v1::CreateDocumentLinkRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "contentwarehouse_v1::DocumentLinkServiceConnection::CreateDocumentLink");
+DocumentLinkServiceTracingConnection::CreateDocumentLink(google::cloud::contentwarehouse::v1::CreateDocumentLinkRequest const& request) {
+  auto span = internal::MakeSpan("contentwarehouse_v1::DocumentLinkServiceConnection::CreateDocumentLink");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateDocumentLink(request));
 }
 
-Status DocumentLinkServiceTracingConnection::DeleteDocumentLink(
-    google::cloud::contentwarehouse::v1::DeleteDocumentLinkRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "contentwarehouse_v1::DocumentLinkServiceConnection::DeleteDocumentLink");
+Status
+DocumentLinkServiceTracingConnection::DeleteDocumentLink(google::cloud::contentwarehouse::v1::DeleteDocumentLinkRequest const& request) {
+  auto span = internal::MakeSpan("contentwarehouse_v1::DocumentLinkServiceConnection::DeleteDocumentLink");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteDocumentLink(request));
 }
 
 StatusOr<google::longrunning::Operation>
-DocumentLinkServiceTracingConnection::GetOperation(
-    google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpan(
-      "contentwarehouse_v1::DocumentLinkServiceConnection::GetOperation");
+DocumentLinkServiceTracingConnection::GetOperation(google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpan("contentwarehouse_v1::DocumentLinkServiceConnection::GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOperation(request));
 }
@@ -90,8 +77,7 @@ MakeDocumentLinkServiceTracingConnection(
     std::shared_ptr<contentwarehouse_v1::DocumentLinkServiceConnection> conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
-    conn =
-        std::make_shared<DocumentLinkServiceTracingConnection>(std::move(conn));
+    conn = std::make_shared<DocumentLinkServiceTracingConnection>(std::move(conn));
   }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;

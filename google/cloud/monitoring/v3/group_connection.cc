@@ -17,17 +17,17 @@
 // source: google/monitoring/v3/group_service.proto
 
 #include "google/cloud/monitoring/v3/group_connection.h"
-#include "google/cloud/monitoring/v3/group_options.h"
-#include "google/cloud/monitoring/v3/internal/group_connection_impl.h"
-#include "google/cloud/monitoring/v3/internal/group_option_defaults.h"
-#include "google/cloud/monitoring/v3/internal/group_stub_factory.h"
-#include "google/cloud/monitoring/v3/internal/group_tracing_connection.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/monitoring/v3/group_options.h"
+#include "google/cloud/monitoring/v3/internal/group_connection_impl.h"
+#include "google/cloud/monitoring/v3/internal/group_option_defaults.h"
+#include "google/cloud/monitoring/v3/internal/group_stub_factory.h"
+#include "google/cloud/monitoring/v3/internal/group_tracing_connection.h"
 #include <memory>
 #include <utility>
 
@@ -39,36 +39,37 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 GroupServiceConnection::~GroupServiceConnection() = default;
 
 StreamRange<google::monitoring::v3::Group> GroupServiceConnection::ListGroups(
-    google::monitoring::v3::
-        ListGroupsRequest) {  // NOLINT(performance-unnecessary-value-param)
+    google::monitoring::v3::ListGroupsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::monitoring::v3::Group>>();
 }
 
-StatusOr<google::monitoring::v3::Group> GroupServiceConnection::GetGroup(
+StatusOr<google::monitoring::v3::Group>
+GroupServiceConnection::GetGroup(
     google::monitoring::v3::GetGroupRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::monitoring::v3::Group> GroupServiceConnection::CreateGroup(
+StatusOr<google::monitoring::v3::Group>
+GroupServiceConnection::CreateGroup(
     google::monitoring::v3::CreateGroupRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::monitoring::v3::Group> GroupServiceConnection::UpdateGroup(
+StatusOr<google::monitoring::v3::Group>
+GroupServiceConnection::UpdateGroup(
     google::monitoring::v3::UpdateGroupRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status GroupServiceConnection::DeleteGroup(
+Status
+GroupServiceConnection::DeleteGroup(
     google::monitoring::v3::DeleteGroupRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::api::MonitoredResource>
-GroupServiceConnection::ListGroupMembers(
-    google::monitoring::v3::
-        ListGroupMembersRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::api::MonitoredResource> GroupServiceConnection::ListGroupMembers(
+    google::monitoring::v3::ListGroupMembersRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::api::MonitoredResource>>();
 }
@@ -76,18 +77,17 @@ GroupServiceConnection::ListGroupMembers(
 std::shared_ptr<GroupServiceConnection> MakeGroupServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 GroupServicePolicyOptionList>(options,
-                                                               __func__);
-  options =
-      monitoring_v3_internal::GroupServiceDefaultOptions(std::move(options));
+      UnifiedCredentialsOptionList,
+      GroupServicePolicyOptionList>(options, __func__);
+  options = monitoring_v3_internal::GroupServiceDefaultOptions(
+      std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = monitoring_v3_internal::CreateDefaultGroupServiceStub(
-      std::move(auth), options);
+    std::move(auth), options);
   return monitoring_v3_internal::MakeGroupServiceTracingConnection(
       std::make_shared<monitoring_v3_internal::GroupServiceConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options)));
+      std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

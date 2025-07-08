@@ -31,36 +31,36 @@ EntityServiceAuth::EntityServiceAuth(
     std::shared_ptr<EntityServiceStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::chronicle::v1::Watchlist>
-EntityServiceAuth::GetWatchlist(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::chronicle::v1::Watchlist> EntityServiceAuth::GetWatchlist(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::chronicle::v1::GetWatchlistRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetWatchlist(context, options, request);
 }
 
-StatusOr<google::cloud::chronicle::v1::ListWatchlistsResponse>
-EntityServiceAuth::ListWatchlists(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::chronicle::v1::ListWatchlistsResponse> EntityServiceAuth::ListWatchlists(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::chronicle::v1::ListWatchlistsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListWatchlists(context, options, request);
 }
 
-StatusOr<google::cloud::chronicle::v1::Watchlist>
-EntityServiceAuth::CreateWatchlist(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::chronicle::v1::Watchlist> EntityServiceAuth::CreateWatchlist(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::chronicle::v1::CreateWatchlistRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateWatchlist(context, options, request);
 }
 
-StatusOr<google::cloud::chronicle::v1::Watchlist>
-EntityServiceAuth::UpdateWatchlist(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::chronicle::v1::Watchlist> EntityServiceAuth::UpdateWatchlist(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::chronicle::v1::UpdateWatchlistRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -68,16 +68,17 @@ EntityServiceAuth::UpdateWatchlist(
 }
 
 Status EntityServiceAuth::DeleteWatchlist(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::chronicle::v1::DeleteWatchlistRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteWatchlist(context, options, request);
 }
 
-StatusOr<google::longrunning::ListOperationsResponse>
-EntityServiceAuth::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse> EntityServiceAuth::ListOperations(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -85,7 +86,8 @@ EntityServiceAuth::ListOperations(
 }
 
 StatusOr<google::longrunning::Operation> EntityServiceAuth::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -93,7 +95,8 @@ StatusOr<google::longrunning::Operation> EntityServiceAuth::GetOperation(
 }
 
 Status EntityServiceAuth::DeleteOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -101,7 +104,8 @@ Status EntityServiceAuth::DeleteOperation(
 }
 
 Status EntityServiceAuth::CancelOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;

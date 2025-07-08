@@ -19,11 +19,6 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_WEBRISK_V1_INTERNAL_WEB_RISK_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_WEBRISK_V1_INTERNAL_WEB_RISK_CONNECTION_IMPL_H
 
-#include "google/cloud/webrisk/v1/internal/web_risk_retry_traits.h"
-#include "google/cloud/webrisk/v1/internal/web_risk_stub.h"
-#include "google/cloud/webrisk/v1/web_risk_connection.h"
-#include "google/cloud/webrisk/v1/web_risk_connection_idempotency_policy.h"
-#include "google/cloud/webrisk/v1/web_risk_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
@@ -32,6 +27,11 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
+#include "google/cloud/webrisk/v1/internal/web_risk_retry_traits.h"
+#include "google/cloud/webrisk/v1/internal/web_risk_stub.h"
+#include "google/cloud/webrisk/v1/web_risk_connection.h"
+#include "google/cloud/webrisk/v1/web_risk_connection_idempotency_policy.h"
+#include "google/cloud/webrisk/v1/web_risk_options.h"
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 
@@ -46,48 +46,46 @@ class WebRiskServiceConnectionImpl
   ~WebRiskServiceConnectionImpl() override = default;
 
   WebRiskServiceConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<webrisk_v1_internal::WebRiskServiceStub> stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<webrisk_v1_internal::WebRiskServiceStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
   StatusOr<google::cloud::webrisk::v1::ComputeThreatListDiffResponse>
-  ComputeThreatListDiff(
-      google::cloud::webrisk::v1::ComputeThreatListDiffRequest const& request)
-      override;
+  ComputeThreatListDiff(google::cloud::webrisk::v1::ComputeThreatListDiffRequest const& request) override;
 
-  StatusOr<google::cloud::webrisk::v1::SearchUrisResponse> SearchUris(
-      google::cloud::webrisk::v1::SearchUrisRequest const& request) override;
+  StatusOr<google::cloud::webrisk::v1::SearchUrisResponse>
+  SearchUris(google::cloud::webrisk::v1::SearchUrisRequest const& request) override;
 
-  StatusOr<google::cloud::webrisk::v1::SearchHashesResponse> SearchHashes(
-      google::cloud::webrisk::v1::SearchHashesRequest const& request) override;
+  StatusOr<google::cloud::webrisk::v1::SearchHashesResponse>
+  SearchHashes(google::cloud::webrisk::v1::SearchHashesRequest const& request) override;
 
-  StatusOr<google::cloud::webrisk::v1::Submission> CreateSubmission(
-      google::cloud::webrisk::v1::CreateSubmissionRequest const& request)
-      override;
+  StatusOr<google::cloud::webrisk::v1::Submission>
+  CreateSubmission(google::cloud::webrisk::v1::CreateSubmissionRequest const& request) override;
 
-  future<StatusOr<google::cloud::webrisk::v1::Submission>> SubmitUri(
+  future<StatusOr<google::cloud::webrisk::v1::Submission>>
+  SubmitUri(google::cloud::webrisk::v1::SubmitUriRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  SubmitUri(NoAwaitTag,
       google::cloud::webrisk::v1::SubmitUriRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> SubmitUri(
-      NoAwaitTag,
-      google::cloud::webrisk::v1::SubmitUriRequest const& request) override;
-
-  future<StatusOr<google::cloud::webrisk::v1::Submission>> SubmitUri(
+  future<StatusOr<google::cloud::webrisk::v1::Submission>>
+  SubmitUri(
       google::longrunning::Operation const& operation) override;
 
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request) override;
 
-  Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request) override;
+  Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request) override;
 
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request) override;
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

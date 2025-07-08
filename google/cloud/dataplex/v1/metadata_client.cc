@@ -28,14 +28,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 MetadataServiceClient::MetadataServiceClient(
     std::shared_ptr<MetadataServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 MetadataServiceClient::~MetadataServiceClient() = default;
 
 StatusOr<google::cloud::dataplex::v1::Entity>
-MetadataServiceClient::CreateEntity(
-    std::string const& parent,
-    google::cloud::dataplex::v1::Entity const& entity, Options opts) {
+MetadataServiceClient::CreateEntity(std::string const& parent, google::cloud::dataplex::v1::Entity const& entity, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataplex::v1::CreateEntityRequest request;
   request.set_parent(parent);
@@ -44,47 +42,41 @@ MetadataServiceClient::CreateEntity(
 }
 
 StatusOr<google::cloud::dataplex::v1::Entity>
-MetadataServiceClient::CreateEntity(
-    google::cloud::dataplex::v1::CreateEntityRequest const& request,
-    Options opts) {
+MetadataServiceClient::CreateEntity(google::cloud::dataplex::v1::CreateEntityRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateEntity(request);
 }
 
 StatusOr<google::cloud::dataplex::v1::Entity>
-MetadataServiceClient::UpdateEntity(
-    google::cloud::dataplex::v1::UpdateEntityRequest const& request,
-    Options opts) {
+MetadataServiceClient::UpdateEntity(google::cloud::dataplex::v1::UpdateEntityRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateEntity(request);
 }
 
-Status MetadataServiceClient::DeleteEntity(std::string const& name,
-                                           Options opts) {
+Status
+MetadataServiceClient::DeleteEntity(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataplex::v1::DeleteEntityRequest request;
   request.set_name(name);
   return connection_->DeleteEntity(request);
 }
 
-Status MetadataServiceClient::DeleteEntity(
-    google::cloud::dataplex::v1::DeleteEntityRequest const& request,
-    Options opts) {
+Status
+MetadataServiceClient::DeleteEntity(google::cloud::dataplex::v1::DeleteEntityRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteEntity(request);
 }
 
-StatusOr<google::cloud::dataplex::v1::Entity> MetadataServiceClient::GetEntity(
-    std::string const& name, Options opts) {
+StatusOr<google::cloud::dataplex::v1::Entity>
+MetadataServiceClient::GetEntity(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataplex::v1::GetEntityRequest request;
   request.set_name(name);
   return connection_->GetEntity(request);
 }
 
-StatusOr<google::cloud::dataplex::v1::Entity> MetadataServiceClient::GetEntity(
-    google::cloud::dataplex::v1::GetEntityRequest const& request,
-    Options opts) {
+StatusOr<google::cloud::dataplex::v1::Entity>
+MetadataServiceClient::GetEntity(google::cloud::dataplex::v1::GetEntityRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetEntity(request);
 }
@@ -98,16 +90,13 @@ MetadataServiceClient::ListEntities(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::dataplex::v1::Entity>
-MetadataServiceClient::ListEntities(
-    google::cloud::dataplex::v1::ListEntitiesRequest request, Options opts) {
+MetadataServiceClient::ListEntities(google::cloud::dataplex::v1::ListEntitiesRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListEntities(std::move(request));
 }
 
 StatusOr<google::cloud::dataplex::v1::Partition>
-MetadataServiceClient::CreatePartition(
-    std::string const& parent,
-    google::cloud::dataplex::v1::Partition const& partition, Options opts) {
+MetadataServiceClient::CreatePartition(std::string const& parent, google::cloud::dataplex::v1::Partition const& partition, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataplex::v1::CreatePartitionRequest request;
   request.set_parent(parent);
@@ -116,24 +105,21 @@ MetadataServiceClient::CreatePartition(
 }
 
 StatusOr<google::cloud::dataplex::v1::Partition>
-MetadataServiceClient::CreatePartition(
-    google::cloud::dataplex::v1::CreatePartitionRequest const& request,
-    Options opts) {
+MetadataServiceClient::CreatePartition(google::cloud::dataplex::v1::CreatePartitionRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreatePartition(request);
 }
 
-Status MetadataServiceClient::DeletePartition(std::string const& name,
-                                              Options opts) {
+Status
+MetadataServiceClient::DeletePartition(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataplex::v1::DeletePartitionRequest request;
   request.set_name(name);
   return connection_->DeletePartition(request);
 }
 
-Status MetadataServiceClient::DeletePartition(
-    google::cloud::dataplex::v1::DeletePartitionRequest const& request,
-    Options opts) {
+Status
+MetadataServiceClient::DeletePartition(google::cloud::dataplex::v1::DeletePartitionRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeletePartition(request);
 }
@@ -147,9 +133,7 @@ MetadataServiceClient::GetPartition(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::dataplex::v1::Partition>
-MetadataServiceClient::GetPartition(
-    google::cloud::dataplex::v1::GetPartitionRequest const& request,
-    Options opts) {
+MetadataServiceClient::GetPartition(google::cloud::dataplex::v1::GetPartitionRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetPartition(request);
 }
@@ -163,47 +147,43 @@ MetadataServiceClient::ListPartitions(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::dataplex::v1::Partition>
-MetadataServiceClient::ListPartitions(
-    google::cloud::dataplex::v1::ListPartitionsRequest request, Options opts) {
+MetadataServiceClient::ListPartitions(google::cloud::dataplex::v1::ListPartitionsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListPartitions(std::move(request));
 }
 
 StreamRange<google::cloud::location::Location>
-MetadataServiceClient::ListLocations(
-    google::cloud::location::ListLocationsRequest request, Options opts) {
+MetadataServiceClient::ListLocations(google::cloud::location::ListLocationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListLocations(std::move(request));
 }
 
-StatusOr<google::cloud::location::Location> MetadataServiceClient::GetLocation(
-    google::cloud::location::GetLocationRequest const& request, Options opts) {
+StatusOr<google::cloud::location::Location>
+MetadataServiceClient::GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetLocation(request);
 }
 
-StatusOr<google::iam::v1::Policy> MetadataServiceClient::SetIamPolicy(
-    google::iam::v1::SetIamPolicyRequest const& request, Options opts) {
+StatusOr<google::iam::v1::Policy>
+MetadataServiceClient::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetIamPolicy(request);
 }
 
-StatusOr<google::iam::v1::Policy> MetadataServiceClient::GetIamPolicy(
-    google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
+StatusOr<google::iam::v1::Policy>
+MetadataServiceClient::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetIamPolicy(request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-MetadataServiceClient::TestIamPermissions(
-    google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
+MetadataServiceClient::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->TestIamPermissions(request);
 }
 
 StreamRange<google::longrunning::Operation>
-MetadataServiceClient::ListOperations(std::string const& name,
-                                      std::string const& filter, Options opts) {
+MetadataServiceClient::ListOperations(std::string const& name, std::string const& filter, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::ListOperationsRequest request;
   request.set_name(name);
@@ -212,50 +192,49 @@ MetadataServiceClient::ListOperations(std::string const& name,
 }
 
 StreamRange<google::longrunning::Operation>
-MetadataServiceClient::ListOperations(
-    google::longrunning::ListOperationsRequest request, Options opts) {
+MetadataServiceClient::ListOperations(google::longrunning::ListOperationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOperations(std::move(request));
 }
 
-StatusOr<google::longrunning::Operation> MetadataServiceClient::GetOperation(
-    std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation>
+MetadataServiceClient::GetOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
   return connection_->GetOperation(request);
 }
 
-StatusOr<google::longrunning::Operation> MetadataServiceClient::GetOperation(
-    google::longrunning::GetOperationRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation>
+MetadataServiceClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }
 
-Status MetadataServiceClient::DeleteOperation(std::string const& name,
-                                              Options opts) {
+Status
+MetadataServiceClient::DeleteOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::DeleteOperationRequest request;
   request.set_name(name);
   return connection_->DeleteOperation(request);
 }
 
-Status MetadataServiceClient::DeleteOperation(
-    google::longrunning::DeleteOperationRequest const& request, Options opts) {
+Status
+MetadataServiceClient::DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteOperation(request);
 }
 
-Status MetadataServiceClient::CancelOperation(std::string const& name,
-                                              Options opts) {
+Status
+MetadataServiceClient::CancelOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::CancelOperationRequest request;
   request.set_name(name);
   return connection_->CancelOperation(request);
 }
 
-Status MetadataServiceClient::CancelOperation(
-    google::longrunning::CancelOperationRequest const& request, Options opts) {
+Status
+MetadataServiceClient::CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelOperation(request);
 }

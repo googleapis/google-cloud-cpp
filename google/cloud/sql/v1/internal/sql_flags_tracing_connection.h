@@ -36,12 +36,12 @@ class SqlFlagsServiceTracingConnection
   ~SqlFlagsServiceTracingConnection() override = default;
 
   explicit SqlFlagsServiceTracingConnection(
-      std::shared_ptr<sql_v1::SqlFlagsServiceConnection> child);
+    std::shared_ptr<sql_v1::SqlFlagsServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::sql::v1::FlagsListResponse> List(
-      google::cloud::sql::v1::SqlFlagsListRequest const& request) override;
+  StatusOr<google::cloud::sql::v1::FlagsListResponse>
+  List(google::cloud::sql::v1::SqlFlagsListRequest const& request) override;
 
  private:
   std::shared_ptr<sql_v1::SqlFlagsServiceConnection> child_;

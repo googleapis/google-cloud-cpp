@@ -31,19 +31,21 @@ namespace spanner_admin_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 InstanceAdminLogging::InstanceAdminLogging(
-    std::shared_ptr<InstanceAdminStub> child, TracingOptions tracing_options,
+    std::shared_ptr<InstanceAdminStub> child,
+    TracingOptions tracing_options,
     std::set<std::string> const&)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::spanner::admin::instance::v1::ListInstanceConfigsResponse>
 InstanceAdminLogging::ListInstanceConfigs(
-    grpc::ClientContext& context, Options const& options,
-    google::spanner::admin::instance::v1::ListInstanceConfigsRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::spanner::admin::instance::v1::ListInstanceConfigsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::spanner::admin::instance::v1::
-                 ListInstanceConfigsRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::spanner::admin::instance::v1::ListInstanceConfigsRequest const& request) {
         return child_->ListInstanceConfigs(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -51,14 +53,13 @@ InstanceAdminLogging::ListInstanceConfigs(
 
 StatusOr<google::spanner::admin::instance::v1::InstanceConfig>
 InstanceAdminLogging::GetInstanceConfig(
-    grpc::ClientContext& context, Options const& options,
-    google::spanner::admin::instance::v1::GetInstanceConfigRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::spanner::admin::instance::v1::GetInstanceConfigRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::spanner::admin::instance::v1::GetInstanceConfigRequest const&
-              request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::spanner::admin::instance::v1::GetInstanceConfigRequest const& request) {
         return child_->GetInstanceConfig(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -66,19 +67,17 @@ InstanceAdminLogging::GetInstanceConfig(
 
 future<StatusOr<google::longrunning::Operation>>
 InstanceAdminLogging::AsyncCreateInstanceConfig(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::spanner::admin::instance::v1::CreateInstanceConfigRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::spanner::admin::instance::v1::CreateInstanceConfigRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::spanner::admin::instance::v1::
-                 CreateInstanceConfigRequest const& request) {
-        return child_->AsyncCreateInstanceConfig(cq, std::move(context),
-                                                 std::move(options), request);
+             google::spanner::admin::instance::v1::CreateInstanceConfigRequest const& request) {
+        return child_->AsyncCreateInstanceConfig(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -86,13 +85,13 @@ InstanceAdminLogging::AsyncCreateInstanceConfig(
 
 StatusOr<google::longrunning::Operation>
 InstanceAdminLogging::CreateInstanceConfig(
-    grpc::ClientContext& context, Options options,
-    google::spanner::admin::instance::v1::CreateInstanceConfigRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::spanner::admin::instance::v1::CreateInstanceConfigRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::spanner::admin::instance::v1::
-                 CreateInstanceConfigRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::spanner::admin::instance::v1::CreateInstanceConfigRequest const& request) {
         return child_->CreateInstanceConfig(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -100,19 +99,17 @@ InstanceAdminLogging::CreateInstanceConfig(
 
 future<StatusOr<google::longrunning::Operation>>
 InstanceAdminLogging::AsyncUpdateInstanceConfig(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::spanner::admin::instance::v1::UpdateInstanceConfigRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::spanner::admin::instance::v1::UpdateInstanceConfigRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::spanner::admin::instance::v1::
-                 UpdateInstanceConfigRequest const& request) {
-        return child_->AsyncUpdateInstanceConfig(cq, std::move(context),
-                                                 std::move(options), request);
+             google::spanner::admin::instance::v1::UpdateInstanceConfigRequest const& request) {
+        return child_->AsyncUpdateInstanceConfig(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -120,41 +117,41 @@ InstanceAdminLogging::AsyncUpdateInstanceConfig(
 
 StatusOr<google::longrunning::Operation>
 InstanceAdminLogging::UpdateInstanceConfig(
-    grpc::ClientContext& context, Options options,
-    google::spanner::admin::instance::v1::UpdateInstanceConfigRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::spanner::admin::instance::v1::UpdateInstanceConfigRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::spanner::admin::instance::v1::
-                 UpdateInstanceConfigRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::spanner::admin::instance::v1::UpdateInstanceConfigRequest const& request) {
         return child_->UpdateInstanceConfig(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status InstanceAdminLogging::DeleteInstanceConfig(
-    grpc::ClientContext& context, Options const& options,
-    google::spanner::admin::instance::v1::DeleteInstanceConfigRequest const&
-        request) {
+Status
+InstanceAdminLogging::DeleteInstanceConfig(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::spanner::admin::instance::v1::DeleteInstanceConfigRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::spanner::admin::instance::v1::
-                 DeleteInstanceConfigRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::spanner::admin::instance::v1::DeleteInstanceConfigRequest const& request) {
         return child_->DeleteInstanceConfig(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<
-    google::spanner::admin::instance::v1::ListInstanceConfigOperationsResponse>
+StatusOr<google::spanner::admin::instance::v1::ListInstanceConfigOperationsResponse>
 InstanceAdminLogging::ListInstanceConfigOperations(
-    grpc::ClientContext& context, Options const& options,
-    google::spanner::admin::instance::v1::
-        ListInstanceConfigOperationsRequest const& request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::spanner::admin::instance::v1::ListInstanceConfigOperationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::spanner::admin::instance::v1::
-                 ListInstanceConfigOperationsRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::spanner::admin::instance::v1::ListInstanceConfigOperationsRequest const& request) {
         return child_->ListInstanceConfigOperations(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -162,12 +159,13 @@ InstanceAdminLogging::ListInstanceConfigOperations(
 
 StatusOr<google::spanner::admin::instance::v1::ListInstancesResponse>
 InstanceAdminLogging::ListInstances(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::spanner::admin::instance::v1::ListInstancesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::spanner::admin::instance::v1::ListInstancesRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::spanner::admin::instance::v1::ListInstancesRequest const& request) {
         return child_->ListInstances(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -175,13 +173,13 @@ InstanceAdminLogging::ListInstances(
 
 StatusOr<google::spanner::admin::instance::v1::ListInstancePartitionsResponse>
 InstanceAdminLogging::ListInstancePartitions(
-    grpc::ClientContext& context, Options const& options,
-    google::spanner::admin::instance::v1::ListInstancePartitionsRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::spanner::admin::instance::v1::ListInstancePartitionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::spanner::admin::instance::v1::
-                 ListInstancePartitionsRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::spanner::admin::instance::v1::ListInstancePartitionsRequest const& request) {
         return child_->ListInstancePartitions(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -189,12 +187,13 @@ InstanceAdminLogging::ListInstancePartitions(
 
 StatusOr<google::spanner::admin::instance::v1::Instance>
 InstanceAdminLogging::GetInstance(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::spanner::admin::instance::v1::GetInstanceRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::spanner::admin::instance::v1::GetInstanceRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::spanner::admin::instance::v1::GetInstanceRequest const& request) {
         return child_->GetInstance(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -202,32 +201,31 @@ InstanceAdminLogging::GetInstance(
 
 future<StatusOr<google::longrunning::Operation>>
 InstanceAdminLogging::AsyncCreateInstance(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::spanner::admin::instance::v1::CreateInstanceRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::spanner::admin::instance::v1::CreateInstanceRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::spanner::admin::instance::v1::CreateInstanceRequest const&
-                 request) {
-        return child_->AsyncCreateInstance(cq, std::move(context),
-                                           std::move(options), request);
+             google::spanner::admin::instance::v1::CreateInstanceRequest const& request) {
+        return child_->AsyncCreateInstance(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> InstanceAdminLogging::CreateInstance(
-    grpc::ClientContext& context, Options options,
-    google::spanner::admin::instance::v1::CreateInstanceRequest const&
-        request) {
+StatusOr<google::longrunning::Operation>
+InstanceAdminLogging::CreateInstance(
+      grpc::ClientContext& context,
+      Options options,
+      google::spanner::admin::instance::v1::CreateInstanceRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::spanner::admin::instance::v1::CreateInstanceRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::spanner::admin::instance::v1::CreateInstanceRequest const& request) {
         return child_->CreateInstance(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -235,66 +233,72 @@ StatusOr<google::longrunning::Operation> InstanceAdminLogging::CreateInstance(
 
 future<StatusOr<google::longrunning::Operation>>
 InstanceAdminLogging::AsyncUpdateInstance(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::spanner::admin::instance::v1::UpdateInstanceRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::spanner::admin::instance::v1::UpdateInstanceRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::spanner::admin::instance::v1::UpdateInstanceRequest const&
-                 request) {
-        return child_->AsyncUpdateInstance(cq, std::move(context),
-                                           std::move(options), request);
+             google::spanner::admin::instance::v1::UpdateInstanceRequest const& request) {
+        return child_->AsyncUpdateInstance(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> InstanceAdminLogging::UpdateInstance(
-    grpc::ClientContext& context, Options options,
-    google::spanner::admin::instance::v1::UpdateInstanceRequest const&
-        request) {
+StatusOr<google::longrunning::Operation>
+InstanceAdminLogging::UpdateInstance(
+      grpc::ClientContext& context,
+      Options options,
+      google::spanner::admin::instance::v1::UpdateInstanceRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::spanner::admin::instance::v1::UpdateInstanceRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::spanner::admin::instance::v1::UpdateInstanceRequest const& request) {
         return child_->UpdateInstance(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status InstanceAdminLogging::DeleteInstance(
-    grpc::ClientContext& context, Options const& options,
-    google::spanner::admin::instance::v1::DeleteInstanceRequest const&
-        request) {
+Status
+InstanceAdminLogging::DeleteInstance(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::spanner::admin::instance::v1::DeleteInstanceRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::spanner::admin::instance::v1::DeleteInstanceRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::spanner::admin::instance::v1::DeleteInstanceRequest const& request) {
         return child_->DeleteInstance(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::iam::v1::Policy> InstanceAdminLogging::SetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::iam::v1::Policy>
+InstanceAdminLogging::SetIamPolicy(
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::iam::v1::SetIamPolicyRequest const& request) {
         return child_->SetIamPolicy(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::iam::v1::Policy> InstanceAdminLogging::GetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::iam::v1::Policy>
+InstanceAdminLogging::GetIamPolicy(
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::iam::v1::GetIamPolicyRequest const& request) {
         return child_->GetIamPolicy(context, options, request);
       },
@@ -303,10 +307,12 @@ StatusOr<google::iam::v1::Policy> InstanceAdminLogging::GetIamPolicy(
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 InstanceAdminLogging::TestIamPermissions(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::iam::v1::TestIamPermissionsRequest const& request) {
         return child_->TestIamPermissions(context, options, request);
       },
@@ -315,13 +321,13 @@ InstanceAdminLogging::TestIamPermissions(
 
 StatusOr<google::spanner::admin::instance::v1::InstancePartition>
 InstanceAdminLogging::GetInstancePartition(
-    grpc::ClientContext& context, Options const& options,
-    google::spanner::admin::instance::v1::GetInstancePartitionRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::spanner::admin::instance::v1::GetInstancePartitionRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::spanner::admin::instance::v1::
-                 GetInstancePartitionRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::spanner::admin::instance::v1::GetInstancePartitionRequest const& request) {
         return child_->GetInstancePartition(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -329,17 +335,15 @@ InstanceAdminLogging::GetInstancePartition(
 
 future<StatusOr<google::longrunning::Operation>>
 InstanceAdminLogging::AsyncCreateInstancePartition(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::spanner::admin::instance::v1::CreateInstancePartitionRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::spanner::admin::instance::v1::CreateInstancePartitionRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::spanner::admin::instance::v1::
-                 CreateInstancePartitionRequest const& request) {
+             google::spanner::admin::instance::v1::CreateInstancePartitionRequest const& request) {
         return child_->AsyncCreateInstancePartition(
             cq, std::move(context), std::move(options), request);
       },
@@ -349,26 +353,27 @@ InstanceAdminLogging::AsyncCreateInstancePartition(
 
 StatusOr<google::longrunning::Operation>
 InstanceAdminLogging::CreateInstancePartition(
-    grpc::ClientContext& context, Options options,
-    google::spanner::admin::instance::v1::CreateInstancePartitionRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::spanner::admin::instance::v1::CreateInstancePartitionRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::spanner::admin::instance::v1::
-                 CreateInstancePartitionRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::spanner::admin::instance::v1::CreateInstancePartitionRequest const& request) {
         return child_->CreateInstancePartition(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status InstanceAdminLogging::DeleteInstancePartition(
-    grpc::ClientContext& context, Options const& options,
-    google::spanner::admin::instance::v1::DeleteInstancePartitionRequest const&
-        request) {
+Status
+InstanceAdminLogging::DeleteInstancePartition(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::spanner::admin::instance::v1::DeleteInstancePartitionRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::spanner::admin::instance::v1::
-                 DeleteInstancePartitionRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::spanner::admin::instance::v1::DeleteInstancePartitionRequest const& request) {
         return child_->DeleteInstancePartition(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -376,17 +381,15 @@ Status InstanceAdminLogging::DeleteInstancePartition(
 
 future<StatusOr<google::longrunning::Operation>>
 InstanceAdminLogging::AsyncUpdateInstancePartition(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::spanner::admin::instance::v1::UpdateInstancePartitionRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::spanner::admin::instance::v1::UpdateInstancePartitionRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::spanner::admin::instance::v1::
-                 UpdateInstancePartitionRequest const& request) {
+             google::spanner::admin::instance::v1::UpdateInstancePartitionRequest const& request) {
         return child_->AsyncUpdateInstancePartition(
             cq, std::move(context), std::move(options), request);
       },
@@ -396,60 +399,59 @@ InstanceAdminLogging::AsyncUpdateInstancePartition(
 
 StatusOr<google::longrunning::Operation>
 InstanceAdminLogging::UpdateInstancePartition(
-    grpc::ClientContext& context, Options options,
-    google::spanner::admin::instance::v1::UpdateInstancePartitionRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::spanner::admin::instance::v1::UpdateInstancePartitionRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::spanner::admin::instance::v1::
-                 UpdateInstancePartitionRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::spanner::admin::instance::v1::UpdateInstancePartitionRequest const& request) {
         return child_->UpdateInstancePartition(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::spanner::admin::instance::v1::
-             ListInstancePartitionOperationsResponse>
+StatusOr<google::spanner::admin::instance::v1::ListInstancePartitionOperationsResponse>
 InstanceAdminLogging::ListInstancePartitionOperations(
-    grpc::ClientContext& context, Options const& options,
-    google::spanner::admin::instance::v1::
-        ListInstancePartitionOperationsRequest const& request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::spanner::admin::instance::v1::ListInstancePartitionOperationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::spanner::admin::instance::v1::
-                 ListInstancePartitionOperationsRequest const& request) {
-        return child_->ListInstancePartitionOperations(context, options,
-                                                       request);
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::spanner::admin::instance::v1::ListInstancePartitionOperationsRequest const& request) {
+        return child_->ListInstancePartitionOperations(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 InstanceAdminLogging::AsyncMoveInstance(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::spanner::admin::instance::v1::MoveInstanceRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::spanner::admin::instance::v1::MoveInstanceRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::spanner::admin::instance::v1::MoveInstanceRequest const&
-                 request) {
-        return child_->AsyncMoveInstance(cq, std::move(context),
-                                         std::move(options), request);
+             google::spanner::admin::instance::v1::MoveInstanceRequest const& request) {
+        return child_->AsyncMoveInstance(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> InstanceAdminLogging::MoveInstance(
-    grpc::ClientContext& context, Options options,
-    google::spanner::admin::instance::v1::MoveInstanceRequest const& request) {
+StatusOr<google::longrunning::Operation>
+InstanceAdminLogging::MoveInstance(
+      grpc::ClientContext& context,
+      Options options,
+      google::spanner::admin::instance::v1::MoveInstanceRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::spanner::admin::instance::v1::MoveInstanceRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::spanner::admin::instance::v1::MoveInstanceRequest const& request) {
         return child_->MoveInstance(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -457,43 +459,54 @@ StatusOr<google::longrunning::Operation> InstanceAdminLogging::MoveInstance(
 
 StatusOr<google::longrunning::ListOperationsResponse>
 InstanceAdminLogging::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::ListOperationsRequest const& request) {
         return child_->ListOperations(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> InstanceAdminLogging::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::Operation>
+InstanceAdminLogging::GetOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::GetOperationRequest const& request) {
         return child_->GetOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status InstanceAdminLogging::DeleteOperation(
-    grpc::ClientContext& context, Options const& options,
+Status
+InstanceAdminLogging::DeleteOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::DeleteOperationRequest const& request) {
         return child_->DeleteOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status InstanceAdminLogging::CancelOperation(
-    grpc::ClientContext& context, Options const& options,
+Status
+InstanceAdminLogging::CancelOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::CancelOperationRequest const& request) {
         return child_->CancelOperation(context, options, request);
       },
@@ -511,8 +524,8 @@ InstanceAdminLogging::AsyncGetOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(cq, std::move(context),
-                                         std::move(options), request);
+        return child_->AsyncGetOperation(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -528,8 +541,8 @@ future<Status> InstanceAdminLogging::AsyncCancelOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::CancelOperationRequest const& request) {
-        return child_->AsyncCancelOperation(cq, std::move(context),
-                                            std::move(options), request);
+        return child_->AsyncCancelOperation(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);

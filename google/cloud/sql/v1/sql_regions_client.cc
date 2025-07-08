@@ -28,8 +28,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 SqlRegionsServiceClient::SqlRegionsServiceClient(
     std::shared_ptr<SqlRegionsServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 SqlRegionsServiceClient::~SqlRegionsServiceClient() = default;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

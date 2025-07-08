@@ -34,15 +34,12 @@ ConnectionServiceTracingConnection::ConnectionServiceTracingConnection(
     : child_(std::move(child)) {}
 
 StreamRange<google::cloud::apigeeconnect::v1::Connection>
-ConnectionServiceTracingConnection::ListConnections(
-    google::cloud::apigeeconnect::v1::ListConnectionsRequest request) {
-  auto span = internal::MakeSpan(
-      "apigeeconnect_v1::ConnectionServiceConnection::ListConnections");
+ConnectionServiceTracingConnection::ListConnections(google::cloud::apigeeconnect::v1::ListConnectionsRequest request) {
+  auto span = internal::MakeSpan("apigeeconnect_v1::ConnectionServiceConnection::ListConnections");
   internal::OTelScope scope(span);
   auto sr = child_->ListConnections(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::apigeeconnect::v1::Connection>(std::move(span),
-                                                    std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::apigeeconnect::v1::Connection>(
+        std::move(span), std::move(sr));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -52,8 +49,7 @@ MakeConnectionServiceTracingConnection(
     std::shared_ptr<apigeeconnect_v1::ConnectionServiceConnection> conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
-    conn =
-        std::make_shared<ConnectionServiceTracingConnection>(std::move(conn));
+    conn = std::make_shared<ConnectionServiceTracingConnection>(std::move(conn));
   }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;

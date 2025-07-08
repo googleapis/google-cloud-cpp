@@ -31,8 +31,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// @deprecated Use dlp_v2::DlpServiceBackoffPolicyOption directly.
 using ::google::cloud::dlp_v2::DlpServiceBackoffPolicyOption;
 
-/// @deprecated Use dlp_v2::DlpServiceConnectionIdempotencyPolicyOption
-/// directly.
+/// @deprecated Use dlp_v2::DlpServiceConnectionIdempotencyPolicyOption directly.
 using ::google::cloud::dlp_v2::DlpServiceConnectionIdempotencyPolicyOption;
 
 /// @deprecated Use dlp_v2::DlpServicePolicyOptionList directly.

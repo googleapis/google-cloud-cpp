@@ -32,113 +32,119 @@ DataPolicyServiceStub::~DataPolicyServiceStub() = default;
 
 StatusOr<google::cloud::bigquery::datapolicies::v1::DataPolicy>
 DefaultDataPolicyServiceStub::CreateDataPolicy(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::bigquery::datapolicies::v1::CreateDataPolicyRequest const&
-        request) {
-  google::cloud::bigquery::datapolicies::v1::DataPolicy response;
-  auto status = grpc_stub_->CreateDataPolicy(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::bigquery::datapolicies::v1::CreateDataPolicyRequest const& request) {
+    google::cloud::bigquery::datapolicies::v1::DataPolicy response;
+    auto status =
+        grpc_stub_->CreateDataPolicy(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::bigquery::datapolicies::v1::DataPolicy>
 DefaultDataPolicyServiceStub::UpdateDataPolicy(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::bigquery::datapolicies::v1::UpdateDataPolicyRequest const&
-        request) {
-  google::cloud::bigquery::datapolicies::v1::DataPolicy response;
-  auto status = grpc_stub_->UpdateDataPolicy(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::bigquery::datapolicies::v1::UpdateDataPolicyRequest const& request) {
+    google::cloud::bigquery::datapolicies::v1::DataPolicy response;
+    auto status =
+        grpc_stub_->UpdateDataPolicy(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::bigquery::datapolicies::v1::DataPolicy>
 DefaultDataPolicyServiceStub::RenameDataPolicy(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::bigquery::datapolicies::v1::RenameDataPolicyRequest const&
-        request) {
-  google::cloud::bigquery::datapolicies::v1::DataPolicy response;
-  auto status = grpc_stub_->RenameDataPolicy(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::bigquery::datapolicies::v1::RenameDataPolicyRequest const& request) {
+    google::cloud::bigquery::datapolicies::v1::DataPolicy response;
+    auto status =
+        grpc_stub_->RenameDataPolicy(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-Status DefaultDataPolicyServiceStub::DeleteDataPolicy(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::bigquery::datapolicies::v1::DeleteDataPolicyRequest const&
-        request) {
-  google::protobuf::Empty response;
-  auto status = grpc_stub_->DeleteDataPolicy(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return google::cloud::Status();
+Status
+DefaultDataPolicyServiceStub::DeleteDataPolicy(
+  grpc::ClientContext& context, Options const&,
+  google::cloud::bigquery::datapolicies::v1::DeleteDataPolicyRequest const& request) {
+    google::protobuf::Empty response;
+    auto status =
+        grpc_stub_->DeleteDataPolicy(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return google::cloud::Status();
 }
 
 StatusOr<google::cloud::bigquery::datapolicies::v1::DataPolicy>
 DefaultDataPolicyServiceStub::GetDataPolicy(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::bigquery::datapolicies::v1::GetDataPolicyRequest const&
-        request) {
-  google::cloud::bigquery::datapolicies::v1::DataPolicy response;
-  auto status = grpc_stub_->GetDataPolicy(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::bigquery::datapolicies::v1::GetDataPolicyRequest const& request) {
+    google::cloud::bigquery::datapolicies::v1::DataPolicy response;
+    auto status =
+        grpc_stub_->GetDataPolicy(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::bigquery::datapolicies::v1::ListDataPoliciesResponse>
 DefaultDataPolicyServiceStub::ListDataPolicies(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::bigquery::datapolicies::v1::ListDataPoliciesRequest const&
-        request) {
-  google::cloud::bigquery::datapolicies::v1::ListDataPoliciesResponse response;
-  auto status = grpc_stub_->ListDataPolicies(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::bigquery::datapolicies::v1::ListDataPoliciesRequest const& request) {
+    google::cloud::bigquery::datapolicies::v1::ListDataPoliciesResponse response;
+    auto status =
+        grpc_stub_->ListDataPolicies(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-StatusOr<google::iam::v1::Policy> DefaultDataPolicyServiceStub::GetIamPolicy(
-    grpc::ClientContext& context, Options const&,
-    google::iam::v1::GetIamPolicyRequest const& request) {
-  google::iam::v1::Policy response;
-  auto status = grpc_stub_->GetIamPolicy(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::iam::v1::Policy>
+DefaultDataPolicyServiceStub::GetIamPolicy(
+  grpc::ClientContext& context, Options const&,
+  google::iam::v1::GetIamPolicyRequest const& request) {
+    google::iam::v1::Policy response;
+    auto status =
+        grpc_stub_->GetIamPolicy(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-StatusOr<google::iam::v1::Policy> DefaultDataPolicyServiceStub::SetIamPolicy(
-    grpc::ClientContext& context, Options const&,
-    google::iam::v1::SetIamPolicyRequest const& request) {
-  google::iam::v1::Policy response;
-  auto status = grpc_stub_->SetIamPolicy(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::iam::v1::Policy>
+DefaultDataPolicyServiceStub::SetIamPolicy(
+  grpc::ClientContext& context, Options const&,
+  google::iam::v1::SetIamPolicyRequest const& request) {
+    google::iam::v1::Policy response;
+    auto status =
+        grpc_stub_->SetIamPolicy(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 DefaultDataPolicyServiceStub::TestIamPermissions(
-    grpc::ClientContext& context, Options const&,
-    google::iam::v1::TestIamPermissionsRequest const& request) {
-  google::iam::v1::TestIamPermissionsResponse response;
-  auto status = grpc_stub_->TestIamPermissions(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::iam::v1::TestIamPermissionsRequest const& request) {
+    google::iam::v1::TestIamPermissionsResponse response;
+    auto status =
+        grpc_stub_->TestIamPermissions(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

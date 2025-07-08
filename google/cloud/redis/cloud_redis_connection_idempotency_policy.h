@@ -26,10 +26,8 @@ namespace cloud {
 namespace redis {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use redis_v1::MakeDefaultCloudRedisConnectionIdempotencyPolicy
-/// directly.
-using ::google::cloud::redis_v1::
-    MakeDefaultCloudRedisConnectionIdempotencyPolicy;
+/// @deprecated Use redis_v1::MakeDefaultCloudRedisConnectionIdempotencyPolicy directly.
+using ::google::cloud::redis_v1::MakeDefaultCloudRedisConnectionIdempotencyPolicy;
 
 /// @deprecated Use redis_v1::CloudRedisConnectionIdempotencyPolicy directly.
 using ::google::cloud::redis_v1::CloudRedisConnectionIdempotencyPolicy;

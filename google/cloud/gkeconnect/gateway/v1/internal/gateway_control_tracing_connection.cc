@@ -33,11 +33,8 @@ GatewayControlTracingConnection::GatewayControlTracingConnection(
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::gkeconnect::gateway::v1::GenerateCredentialsResponse>
-GatewayControlTracingConnection::GenerateCredentials(
-    google::cloud::gkeconnect::gateway::v1::GenerateCredentialsRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "gkeconnect_gateway_v1::GatewayControlConnection::GenerateCredentials");
+GatewayControlTracingConnection::GenerateCredentials(google::cloud::gkeconnect::gateway::v1::GenerateCredentialsRequest const& request) {
+  auto span = internal::MakeSpan("gkeconnect_gateway_v1::GatewayControlConnection::GenerateCredentials");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GenerateCredentials(request));
 }

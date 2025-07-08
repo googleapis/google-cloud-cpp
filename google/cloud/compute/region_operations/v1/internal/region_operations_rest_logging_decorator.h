@@ -38,32 +38,24 @@ class RegionOperationsRestLogging : public RegionOperationsRestStub {
  public:
   ~RegionOperationsRestLogging() override = default;
   RegionOperationsRestLogging(std::shared_ptr<RegionOperationsRestStub> child,
-                              TracingOptions tracing_options,
-                              std::set<std::string> components);
+                       TracingOptions tracing_options,
+                       std::set<std::string> components);
 
   Status DeleteOperation(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::region_operations::v1::
-          DeleteOperationRequest const& request) override;
+      Options const& options, google::cloud::cpp::compute::region_operations::v1::DeleteOperationRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> GetOperation(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::region_operations::v1::
-          GetOperationRequest const& request) override;
+      Options const& options, google::cloud::cpp::compute::region_operations::v1::GetOperationRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::OperationList> ListRegionOperations(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::region_operations::v1::
-          ListRegionOperationsRequest const& request) override;
+      Options const& options, google::cloud::cpp::compute::region_operations::v1::ListRegionOperationsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> Wait(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::region_operations::v1::WaitRequest const&
-          request) override;
+      Options const& options, google::cloud::cpp::compute::region_operations::v1::WaitRequest const& request) override;
 
  private:
   std::shared_ptr<RegionOperationsRestStub> child_;

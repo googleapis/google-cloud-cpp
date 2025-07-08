@@ -17,10 +17,10 @@
 // source: google/cloud/lustre/v1/lustre.proto
 
 #include "google/cloud/lustre/v1/internal/lustre_option_defaults.h"
-#include "google/cloud/lustre/v1/lustre_connection.h"
-#include "google/cloud/lustre/v1/lustre_options.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
+#include "google/cloud/lustre/v1/lustre_connection.h"
+#include "google/cloud/lustre/v1/lustre_options.h"
 #include <memory>
 #include <utility>
 
@@ -35,30 +35,28 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options LustreDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_LUSTRE_ENDPOINT", "",
-      "GOOGLE_CLOUD_CPP_LUSTRE_AUTHORITY", "lustre.googleapis.com");
+      std::move(options), "GOOGLE_CLOUD_CPP_LUSTRE_ENDPOINT",
+      "", "GOOGLE_CLOUD_CPP_LUSTRE_AUTHORITY",
+      "lustre.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<lustre_v1::LustreRetryPolicyOption>()) {
     options.set<lustre_v1::LustreRetryPolicyOption>(
-        lustre_v1::LustreLimitedTimeRetryPolicy(std::chrono::minutes(30))
-            .clone());
+        lustre_v1::LustreLimitedTimeRetryPolicy(
+            std::chrono::minutes(30)).clone());
   }
   if (!options.has<lustre_v1::LustreBackoffPolicyOption>()) {
     options.set<lustre_v1::LustreBackoffPolicyOption>(
-        ExponentialBackoffPolicy(
-            std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
-            .clone());
+        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
   }
   if (!options.has<lustre_v1::LustrePollingPolicyOption>()) {
     options.set<lustre_v1::LustrePollingPolicyOption>(
-        GenericPollingPolicy<lustre_v1::LustreRetryPolicyOption::Type,
-                             lustre_v1::LustreBackoffPolicyOption::Type>(
+        GenericPollingPolicy<
+            lustre_v1::LustreRetryPolicyOption::Type,
+            lustre_v1::LustreBackoffPolicyOption::Type>(
             options.get<lustre_v1::LustreRetryPolicyOption>()->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                     std::chrono::minutes(5), kBackoffScaling)
-                .clone())
-            .clone());
+            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
   }
   if (!options.has<lustre_v1::LustreConnectionIdempotencyPolicyOption>()) {
     options.set<lustre_v1::LustreConnectionIdempotencyPolicyOption>(

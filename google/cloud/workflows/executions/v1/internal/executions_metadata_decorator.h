@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_WORKFLOWS_EXECUTIONS_V1_INTERNAL_EXECUTIONS_METADATA_DECORATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_WORKFLOWS_EXECUTIONS_V1_INTERNAL_EXECUTIONS_METADATA_DECORATOR_H
 
-#include "google/cloud/workflows/executions/v1/internal/executions_stub.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
+#include "google/cloud/workflows/executions/v1/internal/executions_stub.h"
 #include <map>
 #include <memory>
 #include <string>
@@ -34,33 +34,34 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class ExecutionsMetadata : public ExecutionsStub {
  public:
   ~ExecutionsMetadata() override = default;
-  ExecutionsMetadata(std::shared_ptr<ExecutionsStub> child,
-                     std::multimap<std::string, std::string> fixed_metadata,
-                     std::string api_client_header = "");
+  ExecutionsMetadata(
+      std::shared_ptr<ExecutionsStub> child,
+      std::multimap<std::string, std::string> fixed_metadata,
+      std::string api_client_header = "");
 
-  StatusOr<google::cloud::workflows::executions::v1::ListExecutionsResponse>
-  ListExecutions(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::workflows::executions::v1::ListExecutionsRequest const&
-          request) override;
+  StatusOr<google::cloud::workflows::executions::v1::ListExecutionsResponse> ListExecutions(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::workflows::executions::v1::ListExecutionsRequest const& request) override;
 
   StatusOr<google::cloud::workflows::executions::v1::Execution> CreateExecution(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::workflows::executions::v1::CreateExecutionRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::workflows::executions::v1::CreateExecutionRequest const& request) override;
 
   StatusOr<google::cloud::workflows::executions::v1::Execution> GetExecution(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::workflows::executions::v1::GetExecutionRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::workflows::executions::v1::GetExecutionRequest const& request) override;
 
   StatusOr<google::cloud::workflows::executions::v1::Execution> CancelExecution(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::workflows::executions::v1::CancelExecutionRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::workflows::executions::v1::CancelExecutionRequest const& request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context, Options const& options,
+  void SetMetadata(grpc::ClientContext& context,
+                   Options const& options,
                    std::string const& request_params);
   void SetMetadata(grpc::ClientContext& context, Options const& options);
 

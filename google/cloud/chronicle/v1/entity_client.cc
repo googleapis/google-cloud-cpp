@@ -28,8 +28,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 EntityServiceClient::EntityServiceClient(
     std::shared_ptr<EntityServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 EntityServiceClient::~EntityServiceClient() = default;
 
 StatusOr<google::cloud::chronicle::v1::Watchlist>
@@ -41,9 +41,7 @@ EntityServiceClient::GetWatchlist(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::chronicle::v1::Watchlist>
-EntityServiceClient::GetWatchlist(
-    google::cloud::chronicle::v1::GetWatchlistRequest const& request,
-    Options opts) {
+EntityServiceClient::GetWatchlist(google::cloud::chronicle::v1::GetWatchlistRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetWatchlist(request);
 }
@@ -57,17 +55,13 @@ EntityServiceClient::ListWatchlists(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::chronicle::v1::Watchlist>
-EntityServiceClient::ListWatchlists(
-    google::cloud::chronicle::v1::ListWatchlistsRequest request, Options opts) {
+EntityServiceClient::ListWatchlists(google::cloud::chronicle::v1::ListWatchlistsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListWatchlists(std::move(request));
 }
 
 StatusOr<google::cloud::chronicle::v1::Watchlist>
-EntityServiceClient::CreateWatchlist(
-    std::string const& parent,
-    google::cloud::chronicle::v1::Watchlist const& watchlist,
-    std::string const& watchlist_id, Options opts) {
+EntityServiceClient::CreateWatchlist(std::string const& parent, google::cloud::chronicle::v1::Watchlist const& watchlist, std::string const& watchlist_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::chronicle::v1::CreateWatchlistRequest request;
   request.set_parent(parent);
@@ -77,17 +71,13 @@ EntityServiceClient::CreateWatchlist(
 }
 
 StatusOr<google::cloud::chronicle::v1::Watchlist>
-EntityServiceClient::CreateWatchlist(
-    google::cloud::chronicle::v1::CreateWatchlistRequest const& request,
-    Options opts) {
+EntityServiceClient::CreateWatchlist(google::cloud::chronicle::v1::CreateWatchlistRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateWatchlist(request);
 }
 
 StatusOr<google::cloud::chronicle::v1::Watchlist>
-EntityServiceClient::UpdateWatchlist(
-    google::cloud::chronicle::v1::Watchlist const& watchlist,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+EntityServiceClient::UpdateWatchlist(google::cloud::chronicle::v1::Watchlist const& watchlist, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::chronicle::v1::UpdateWatchlistRequest request;
   *request.mutable_watchlist() = watchlist;
@@ -96,15 +86,13 @@ EntityServiceClient::UpdateWatchlist(
 }
 
 StatusOr<google::cloud::chronicle::v1::Watchlist>
-EntityServiceClient::UpdateWatchlist(
-    google::cloud::chronicle::v1::UpdateWatchlistRequest const& request,
-    Options opts) {
+EntityServiceClient::UpdateWatchlist(google::cloud::chronicle::v1::UpdateWatchlistRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateWatchlist(request);
 }
 
-Status EntityServiceClient::DeleteWatchlist(std::string const& name, bool force,
-                                            Options opts) {
+Status
+EntityServiceClient::DeleteWatchlist(std::string const& name, bool force, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::chronicle::v1::DeleteWatchlistRequest request;
   request.set_name(name);
@@ -112,15 +100,14 @@ Status EntityServiceClient::DeleteWatchlist(std::string const& name, bool force,
   return connection_->DeleteWatchlist(request);
 }
 
-Status EntityServiceClient::DeleteWatchlist(
-    google::cloud::chronicle::v1::DeleteWatchlistRequest const& request,
-    Options opts) {
+Status
+EntityServiceClient::DeleteWatchlist(google::cloud::chronicle::v1::DeleteWatchlistRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteWatchlist(request);
 }
 
-StreamRange<google::longrunning::Operation> EntityServiceClient::ListOperations(
-    std::string const& name, std::string const& filter, Options opts) {
+StreamRange<google::longrunning::Operation>
+EntityServiceClient::ListOperations(std::string const& name, std::string const& filter, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::ListOperationsRequest request;
   request.set_name(name);
@@ -128,50 +115,50 @@ StreamRange<google::longrunning::Operation> EntityServiceClient::ListOperations(
   return connection_->ListOperations(request);
 }
 
-StreamRange<google::longrunning::Operation> EntityServiceClient::ListOperations(
-    google::longrunning::ListOperationsRequest request, Options opts) {
+StreamRange<google::longrunning::Operation>
+EntityServiceClient::ListOperations(google::longrunning::ListOperationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOperations(std::move(request));
 }
 
-StatusOr<google::longrunning::Operation> EntityServiceClient::GetOperation(
-    std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation>
+EntityServiceClient::GetOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
   return connection_->GetOperation(request);
 }
 
-StatusOr<google::longrunning::Operation> EntityServiceClient::GetOperation(
-    google::longrunning::GetOperationRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation>
+EntityServiceClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }
 
-Status EntityServiceClient::DeleteOperation(std::string const& name,
-                                            Options opts) {
+Status
+EntityServiceClient::DeleteOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::DeleteOperationRequest request;
   request.set_name(name);
   return connection_->DeleteOperation(request);
 }
 
-Status EntityServiceClient::DeleteOperation(
-    google::longrunning::DeleteOperationRequest const& request, Options opts) {
+Status
+EntityServiceClient::DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteOperation(request);
 }
 
-Status EntityServiceClient::CancelOperation(std::string const& name,
-                                            Options opts) {
+Status
+EntityServiceClient::CancelOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::CancelOperationRequest request;
   request.set_name(name);
   return connection_->CancelOperation(request);
 }
 
-Status EntityServiceClient::CancelOperation(
-    google::longrunning::CancelOperationRequest const& request, Options opts) {
+Status
+EntityServiceClient::CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelOperation(request);
 }

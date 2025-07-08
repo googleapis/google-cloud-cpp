@@ -17,10 +17,10 @@
 // source: google/cloud/sql/v1/cloud_sql_connect.proto
 
 #include "google/cloud/sql/v1/internal/sql_connect_option_defaults.h"
-#include "google/cloud/sql/v1/sql_connect_connection.h"
-#include "google/cloud/sql/v1/sql_connect_options.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
+#include "google/cloud/sql/v1/sql_connect_connection.h"
+#include "google/cloud/sql/v1/sql_connect_options.h"
 #include <memory>
 #include <utility>
 
@@ -35,25 +35,21 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options SqlConnectServiceDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_SQL_CONNECT_SERVICE_ENDPOINT", "",
-      "GOOGLE_CLOUD_CPP_SQL_CONNECT_SERVICE_AUTHORITY",
+      std::move(options), "GOOGLE_CLOUD_CPP_SQL_CONNECT_SERVICE_ENDPOINT",
+      "", "GOOGLE_CLOUD_CPP_SQL_CONNECT_SERVICE_AUTHORITY",
       "sqladmin.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<sql_v1::SqlConnectServiceRetryPolicyOption>()) {
     options.set<sql_v1::SqlConnectServiceRetryPolicyOption>(
         sql_v1::SqlConnectServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
-            .clone());
+            std::chrono::minutes(30)).clone());
   }
   if (!options.has<sql_v1::SqlConnectServiceBackoffPolicyOption>()) {
     options.set<sql_v1::SqlConnectServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(
-            std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
-            .clone());
+        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
   }
-  if (!options
-           .has<sql_v1::SqlConnectServiceConnectionIdempotencyPolicyOption>()) {
+  if (!options.has<sql_v1::SqlConnectServiceConnectionIdempotencyPolicyOption>()) {
     options.set<sql_v1::SqlConnectServiceConnectionIdempotencyPolicyOption>(
         sql_v1::MakeDefaultSqlConnectServiceConnectionIdempotencyPolicy());
   }

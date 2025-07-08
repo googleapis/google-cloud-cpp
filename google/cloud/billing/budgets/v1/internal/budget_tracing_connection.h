@@ -36,28 +36,24 @@ class BudgetServiceTracingConnection
   ~BudgetServiceTracingConnection() override = default;
 
   explicit BudgetServiceTracingConnection(
-      std::shared_ptr<billing_budgets_v1::BudgetServiceConnection> child);
+    std::shared_ptr<billing_budgets_v1::BudgetServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::billing::budgets::v1::Budget> CreateBudget(
-      google::cloud::billing::budgets::v1::CreateBudgetRequest const& request)
-      override;
+  StatusOr<google::cloud::billing::budgets::v1::Budget>
+  CreateBudget(google::cloud::billing::budgets::v1::CreateBudgetRequest const& request) override;
 
-  StatusOr<google::cloud::billing::budgets::v1::Budget> UpdateBudget(
-      google::cloud::billing::budgets::v1::UpdateBudgetRequest const& request)
-      override;
+  StatusOr<google::cloud::billing::budgets::v1::Budget>
+  UpdateBudget(google::cloud::billing::budgets::v1::UpdateBudgetRequest const& request) override;
 
-  StatusOr<google::cloud::billing::budgets::v1::Budget> GetBudget(
-      google::cloud::billing::budgets::v1::GetBudgetRequest const& request)
-      override;
+  StatusOr<google::cloud::billing::budgets::v1::Budget>
+  GetBudget(google::cloud::billing::budgets::v1::GetBudgetRequest const& request) override;
 
-  StreamRange<google::cloud::billing::budgets::v1::Budget> ListBudgets(
-      google::cloud::billing::budgets::v1::ListBudgetsRequest request) override;
+  StreamRange<google::cloud::billing::budgets::v1::Budget>
+  ListBudgets(google::cloud::billing::budgets::v1::ListBudgetsRequest request) override;
 
-  Status DeleteBudget(
-      google::cloud::billing::budgets::v1::DeleteBudgetRequest const& request)
-      override;
+  Status
+  DeleteBudget(google::cloud::billing::budgets::v1::DeleteBudgetRequest const& request) override;
 
  private:
   std::shared_ptr<billing_budgets_v1::BudgetServiceConnection> child_;

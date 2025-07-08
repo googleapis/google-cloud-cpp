@@ -22,8 +22,8 @@
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/cloud/contentwarehouse/v1/document_schema_service.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
+#include <google/cloud/contentwarehouse/v1/document_schema_service.grpc.pb.h>
 #include <memory>
 #include <utility>
 
@@ -36,91 +36,79 @@ class DocumentSchemaServiceStub {
  public:
   virtual ~DocumentSchemaServiceStub() = 0;
 
-  virtual StatusOr<google::cloud::contentwarehouse::v1::DocumentSchema>
-  CreateDocumentSchema(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::contentwarehouse::v1::CreateDocumentSchemaRequest const&
-          request) = 0;
+  virtual StatusOr<google::cloud::contentwarehouse::v1::DocumentSchema> CreateDocumentSchema(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::contentwarehouse::v1::CreateDocumentSchemaRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::contentwarehouse::v1::DocumentSchema>
-  UpdateDocumentSchema(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::contentwarehouse::v1::UpdateDocumentSchemaRequest const&
-          request) = 0;
+  virtual StatusOr<google::cloud::contentwarehouse::v1::DocumentSchema> UpdateDocumentSchema(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::contentwarehouse::v1::UpdateDocumentSchemaRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::contentwarehouse::v1::DocumentSchema>
-  GetDocumentSchema(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::contentwarehouse::v1::GetDocumentSchemaRequest const&
-          request) = 0;
+  virtual StatusOr<google::cloud::contentwarehouse::v1::DocumentSchema> GetDocumentSchema(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::contentwarehouse::v1::GetDocumentSchemaRequest const& request) = 0;
 
   virtual Status DeleteDocumentSchema(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::contentwarehouse::v1::DeleteDocumentSchemaRequest const&
-          request) = 0;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::contentwarehouse::v1::DeleteDocumentSchemaRequest const& request) = 0;
 
-  virtual StatusOr<
-      google::cloud::contentwarehouse::v1::ListDocumentSchemasResponse>
-  ListDocumentSchemas(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::contentwarehouse::v1::ListDocumentSchemasRequest const&
-          request) = 0;
+  virtual StatusOr<google::cloud::contentwarehouse::v1::ListDocumentSchemasResponse> ListDocumentSchemas(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::contentwarehouse::v1::ListDocumentSchemasRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) = 0;
 };
 
 class DefaultDocumentSchemaServiceStub : public DocumentSchemaServiceStub {
  public:
   explicit DefaultDocumentSchemaServiceStub(
-      std::unique_ptr<google::cloud::contentwarehouse::v1::
-                          DocumentSchemaService::StubInterface>
-          grpc_stub,
-      std::unique_ptr<google::longrunning::Operations::StubInterface>
-          operations_stub)
+      std::unique_ptr<google::cloud::contentwarehouse::v1::DocumentSchemaService::StubInterface> grpc_stub,
+      std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub
+)
       : grpc_stub_(std::move(grpc_stub)),
         operations_stub_(std::move(operations_stub)) {}
 
-  StatusOr<google::cloud::contentwarehouse::v1::DocumentSchema>
-  CreateDocumentSchema(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::contentwarehouse::v1::CreateDocumentSchemaRequest const&
-          request) override;
+  StatusOr<google::cloud::contentwarehouse::v1::DocumentSchema> CreateDocumentSchema(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::contentwarehouse::v1::CreateDocumentSchemaRequest const& request) override;
 
-  StatusOr<google::cloud::contentwarehouse::v1::DocumentSchema>
-  UpdateDocumentSchema(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::contentwarehouse::v1::UpdateDocumentSchemaRequest const&
-          request) override;
+  StatusOr<google::cloud::contentwarehouse::v1::DocumentSchema> UpdateDocumentSchema(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::contentwarehouse::v1::UpdateDocumentSchemaRequest const& request) override;
 
-  StatusOr<google::cloud::contentwarehouse::v1::DocumentSchema>
-  GetDocumentSchema(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::contentwarehouse::v1::GetDocumentSchemaRequest const&
-          request) override;
+  StatusOr<google::cloud::contentwarehouse::v1::DocumentSchema> GetDocumentSchema(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::contentwarehouse::v1::GetDocumentSchemaRequest const& request) override;
 
   Status DeleteDocumentSchema(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::contentwarehouse::v1::DeleteDocumentSchemaRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::contentwarehouse::v1::DeleteDocumentSchemaRequest const& request) override;
 
-  StatusOr<google::cloud::contentwarehouse::v1::ListDocumentSchemasResponse>
-  ListDocumentSchemas(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::contentwarehouse::v1::ListDocumentSchemasRequest const&
-          request) override;
+  StatusOr<google::cloud::contentwarehouse::v1::ListDocumentSchemasResponse> ListDocumentSchemas(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::contentwarehouse::v1::ListDocumentSchemasRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
  private:
-  std::unique_ptr<
-      google::cloud::contentwarehouse::v1::DocumentSchemaService::StubInterface>
-      grpc_stub_;
-  std::unique_ptr<google::longrunning::Operations::StubInterface>
-      operations_stub_;
+  std::unique_ptr<google::cloud::contentwarehouse::v1::DocumentSchemaService::StubInterface> grpc_stub_;
+  std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

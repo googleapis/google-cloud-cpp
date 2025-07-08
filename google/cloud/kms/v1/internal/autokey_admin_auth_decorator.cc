@@ -31,36 +31,36 @@ AutokeyAdminAuth::AutokeyAdminAuth(
     std::shared_ptr<AutokeyAdminStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::kms::v1::AutokeyConfig>
-AutokeyAdminAuth::UpdateAutokeyConfig(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::kms::v1::AutokeyConfig> AutokeyAdminAuth::UpdateAutokeyConfig(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::kms::v1::UpdateAutokeyConfigRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateAutokeyConfig(context, options, request);
 }
 
-StatusOr<google::cloud::kms::v1::AutokeyConfig>
-AutokeyAdminAuth::GetAutokeyConfig(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::kms::v1::AutokeyConfig> AutokeyAdminAuth::GetAutokeyConfig(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::kms::v1::GetAutokeyConfigRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetAutokeyConfig(context, options, request);
 }
 
-StatusOr<google::cloud::kms::v1::ShowEffectiveAutokeyConfigResponse>
-AutokeyAdminAuth::ShowEffectiveAutokeyConfig(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::kms::v1::ShowEffectiveAutokeyConfigResponse> AutokeyAdminAuth::ShowEffectiveAutokeyConfig(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::kms::v1::ShowEffectiveAutokeyConfigRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ShowEffectiveAutokeyConfig(context, options, request);
 }
 
-StatusOr<google::cloud::location::ListLocationsResponse>
-AutokeyAdminAuth::ListLocations(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::location::ListLocationsResponse> AutokeyAdminAuth::ListLocations(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -68,7 +68,8 @@ AutokeyAdminAuth::ListLocations(
 }
 
 StatusOr<google::cloud::location::Location> AutokeyAdminAuth::GetLocation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -76,7 +77,8 @@ StatusOr<google::cloud::location::Location> AutokeyAdminAuth::GetLocation(
 }
 
 StatusOr<google::iam::v1::Policy> AutokeyAdminAuth::SetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -84,16 +86,17 @@ StatusOr<google::iam::v1::Policy> AutokeyAdminAuth::SetIamPolicy(
 }
 
 StatusOr<google::iam::v1::Policy> AutokeyAdminAuth::GetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetIamPolicy(context, options, request);
 }
 
-StatusOr<google::iam::v1::TestIamPermissionsResponse>
-AutokeyAdminAuth::TestIamPermissions(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::iam::v1::TestIamPermissionsResponse> AutokeyAdminAuth::TestIamPermissions(
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -101,7 +104,8 @@ AutokeyAdminAuth::TestIamPermissions(
 }
 
 StatusOr<google::longrunning::Operation> AutokeyAdminAuth::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;

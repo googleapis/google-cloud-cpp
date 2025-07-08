@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LOGGING_V2_METRICS_SERVICE_V2_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LOGGING_V2_METRICS_SERVICE_V2_CONNECTION_H
 
-#include "google/cloud/logging/v2/internal/metrics_service_v2_retry_traits.h"
-#include "google/cloud/logging/v2/metrics_service_v2_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/logging/v2/internal/metrics_service_v2_retry_traits.h"
+#include "google/cloud/logging/v2/metrics_service_v2_connection_idempotency_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -52,8 +52,7 @@ class MetricsServiceV2RetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class MetricsServiceV2LimitedErrorCountRetryPolicy
-    : public MetricsServiceV2RetryPolicy {
+class MetricsServiceV2LimitedErrorCountRetryPolicy : public MetricsServiceV2RetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -63,14 +62,14 @@ class MetricsServiceV2LimitedErrorCountRetryPolicy
    *     @p maximum_failures == 0.
    */
   explicit MetricsServiceV2LimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   MetricsServiceV2LimitedErrorCountRetryPolicy(
       MetricsServiceV2LimitedErrorCountRetryPolicy&& rhs) noexcept
-      : MetricsServiceV2LimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : MetricsServiceV2LimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   MetricsServiceV2LimitedErrorCountRetryPolicy(
       MetricsServiceV2LimitedErrorCountRetryPolicy const& rhs) noexcept
-      : MetricsServiceV2LimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : MetricsServiceV2LimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -90,9 +89,7 @@ class MetricsServiceV2LimitedErrorCountRetryPolicy
   using BaseType = MetricsServiceV2RetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      logging_v2_internal::MetricsServiceV2RetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<logging_v2_internal::MetricsServiceV2RetryTraits> impl_;
 };
 
 /**
@@ -105,8 +102,7 @@ class MetricsServiceV2LimitedErrorCountRetryPolicy
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class MetricsServiceV2LimitedTimeRetryPolicy
-    : public MetricsServiceV2RetryPolicy {
+class MetricsServiceV2LimitedTimeRetryPolicy : public MetricsServiceV2RetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -131,14 +127,12 @@ class MetricsServiceV2LimitedTimeRetryPolicy
   template <typename DurationRep, typename DurationPeriod>
   explicit MetricsServiceV2LimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  MetricsServiceV2LimitedTimeRetryPolicy(
-      MetricsServiceV2LimitedTimeRetryPolicy&& rhs) noexcept
-      : MetricsServiceV2LimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  MetricsServiceV2LimitedTimeRetryPolicy(
-      MetricsServiceV2LimitedTimeRetryPolicy const& rhs) noexcept
-      : MetricsServiceV2LimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  MetricsServiceV2LimitedTimeRetryPolicy(MetricsServiceV2LimitedTimeRetryPolicy&& rhs) noexcept
+    : MetricsServiceV2LimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  MetricsServiceV2LimitedTimeRetryPolicy(MetricsServiceV2LimitedTimeRetryPolicy const& rhs) noexcept
+    : MetricsServiceV2LimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -160,9 +154,7 @@ class MetricsServiceV2LimitedTimeRetryPolicy
   using BaseType = MetricsServiceV2RetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      logging_v2_internal::MetricsServiceV2RetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<logging_v2_internal::MetricsServiceV2RetryTraits> impl_;
 };
 
 /**
@@ -183,41 +175,40 @@ class MetricsServiceV2Connection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StreamRange<google::logging::v2::LogMetric> ListLogMetrics(
-      google::logging::v2::ListLogMetricsRequest request);
+  virtual StreamRange<google::logging::v2::LogMetric>
+  ListLogMetrics(google::logging::v2::ListLogMetricsRequest request);
 
-  virtual StatusOr<google::logging::v2::LogMetric> GetLogMetric(
-      google::logging::v2::GetLogMetricRequest const& request);
+  virtual StatusOr<google::logging::v2::LogMetric>
+  GetLogMetric(google::logging::v2::GetLogMetricRequest const& request);
 
-  virtual StatusOr<google::logging::v2::LogMetric> CreateLogMetric(
-      google::logging::v2::CreateLogMetricRequest const& request);
+  virtual StatusOr<google::logging::v2::LogMetric>
+  CreateLogMetric(google::logging::v2::CreateLogMetricRequest const& request);
 
-  virtual StatusOr<google::logging::v2::LogMetric> UpdateLogMetric(
-      google::logging::v2::UpdateLogMetricRequest const& request);
+  virtual StatusOr<google::logging::v2::LogMetric>
+  UpdateLogMetric(google::logging::v2::UpdateLogMetricRequest const& request);
 
-  virtual Status DeleteLogMetric(
-      google::logging::v2::DeleteLogMetricRequest const& request);
+  virtual Status
+  DeleteLogMetric(google::logging::v2::DeleteLogMetricRequest const& request);
 
-  virtual StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 
-  virtual Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request);
+  virtual Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request);
 };
 
 /**
- * A factory function to construct an object of type
- * `MetricsServiceV2Connection`.
+ * A factory function to construct an object of type `MetricsServiceV2Connection`.
  *
  * The returned connection object should not be used directly; instead it
  * should be passed as an argument to the constructor of MetricsServiceV2Client.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `MetricsServiceV2Connection`. Expected options are any of the types
- * in the following option lists:
+ * returned `MetricsServiceV2Connection`. Expected options are any of the types in
+ * the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
@@ -227,8 +218,8 @@ class MetricsServiceV2Connection {
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
- * @param options (optional) Configure the `MetricsServiceV2Connection` created
- * by this function.
+ * @param options (optional) Configure the `MetricsServiceV2Connection` created by
+ * this function.
  */
 std::shared_ptr<MetricsServiceV2Connection> MakeMetricsServiceV2Connection(
     Options options = {});

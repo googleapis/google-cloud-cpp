@@ -34,21 +34,21 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class SessionsMetadata : public SessionsStub {
  public:
   ~SessionsMetadata() override = default;
-  SessionsMetadata(std::shared_ptr<SessionsStub> child,
-                   std::multimap<std::string, std::string> fixed_metadata,
-                   std::string api_client_header = "");
+  SessionsMetadata(
+      std::shared_ptr<SessionsStub> child,
+      std::multimap<std::string, std::string> fixed_metadata,
+      std::string api_client_header = "");
 
-  StatusOr<google::cloud::dialogflow::cx::v3::DetectIntentResponse>
-  DetectIntent(grpc::ClientContext& context, Options const& options,
-               google::cloud::dialogflow::cx::v3::DetectIntentRequest const&
-                   request) override;
+  StatusOr<google::cloud::dialogflow::cx::v3::DetectIntentResponse> DetectIntent(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::dialogflow::cx::v3::DetectIntentRequest const& request) override;
 
-  std::unique_ptr<google::cloud::internal::StreamingReadRpc<
-      google::cloud::dialogflow::cx::v3::DetectIntentResponse>>
+  std::unique_ptr<google::cloud::internal::StreamingReadRpc<google::cloud::dialogflow::cx::v3::DetectIntentResponse>>
   ServerStreamingDetectIntent(
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
-      google::cloud::dialogflow::cx::v3::DetectIntentRequest const& request)
-      override;
+      std::shared_ptr<grpc::ClientContext> context,
+      Options const& options,
+      google::cloud::dialogflow::cx::v3::DetectIntentRequest const& request) override;
 
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::dialogflow::cx::v3::StreamingDetectIntentRequest,
@@ -59,43 +59,48 @@ class SessionsMetadata : public SessionsStub {
       google::cloud::internal::ImmutableOptions options) override;
 
   StatusOr<google::cloud::dialogflow::cx::v3::MatchIntentResponse> MatchIntent(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::dialogflow::cx::v3::MatchIntentRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::dialogflow::cx::v3::MatchIntentRequest const& request) override;
 
-  StatusOr<google::cloud::dialogflow::cx::v3::FulfillIntentResponse>
-  FulfillIntent(grpc::ClientContext& context, Options const& options,
-                google::cloud::dialogflow::cx::v3::FulfillIntentRequest const&
-                    request) override;
+  StatusOr<google::cloud::dialogflow::cx::v3::FulfillIntentResponse> FulfillIntent(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::dialogflow::cx::v3::FulfillIntentRequest const& request) override;
 
-  StatusOr<google::cloud::dialogflow::cx::v3::AnswerFeedback>
-  SubmitAnswerFeedback(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::dialogflow::cx::v3::SubmitAnswerFeedbackRequest const&
-          request) override;
+  StatusOr<google::cloud::dialogflow::cx::v3::AnswerFeedback> SubmitAnswerFeedback(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::dialogflow::cx::v3::SubmitAnswerFeedbackRequest const& request) override;
 
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::location::ListLocationsRequest const& request) override;
 
   StatusOr<google::cloud::location::Location> GetLocation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::location::GetLocationRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context, Options const& options,
+  void SetMetadata(grpc::ClientContext& context,
+                   Options const& options,
                    std::string const& request_params);
   void SetMetadata(grpc::ClientContext& context, Options const& options);
 

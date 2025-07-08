@@ -42,35 +42,29 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockBudgetServiceConnection
-    : public billing_budgets_v1::BudgetServiceConnection {
+class MockBudgetServiceConnection : public billing_budgets_v1::BudgetServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::billing::budgets::v1::Budget>, CreateBudget,
-      (google::cloud::billing::budgets::v1::CreateBudgetRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::billing::budgets::v1::Budget>,
+  CreateBudget,
+  (google::cloud::billing::budgets::v1::CreateBudgetRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::billing::budgets::v1::Budget>, UpdateBudget,
-      (google::cloud::billing::budgets::v1::UpdateBudgetRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::billing::budgets::v1::Budget>,
+  UpdateBudget,
+  (google::cloud::billing::budgets::v1::UpdateBudgetRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::billing::budgets::v1::Budget>, GetBudget,
-      (google::cloud::billing::budgets::v1::GetBudgetRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::billing::budgets::v1::Budget>,
+  GetBudget,
+  (google::cloud::billing::budgets::v1::GetBudgetRequest const& request), (override));
 
   MOCK_METHOD((StreamRange<google::cloud::billing::budgets::v1::Budget>),
-              ListBudgets,
-              (google::cloud::billing::budgets::v1::ListBudgetsRequest request),
-              (override));
+  ListBudgets,
+  (google::cloud::billing::budgets::v1::ListBudgetsRequest request), (override));
 
-  MOCK_METHOD(
-      Status, DeleteBudget,
-      (google::cloud::billing::budgets::v1::DeleteBudgetRequest const& request),
-      (override));
+  MOCK_METHOD(Status,
+  DeleteBudget,
+  (google::cloud::billing::budgets::v1::DeleteBudgetRequest const& request), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

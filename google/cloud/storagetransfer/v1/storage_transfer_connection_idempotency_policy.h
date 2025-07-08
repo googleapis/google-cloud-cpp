@@ -35,66 +35,62 @@ class StorageTransferServiceConnectionIdempotencyPolicy {
   virtual ~StorageTransferServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<StorageTransferServiceConnectionIdempotencyPolicy>
-  clone() const;
+  virtual std::unique_ptr<StorageTransferServiceConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency GetGoogleServiceAccount(
-      google::storagetransfer::v1::GetGoogleServiceAccountRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  GetGoogleServiceAccount(google::storagetransfer::v1::GetGoogleServiceAccountRequest const& request);
 
-  virtual google::cloud::Idempotency CreateTransferJob(
-      google::storagetransfer::v1::CreateTransferJobRequest const& request);
+  virtual google::cloud::Idempotency
+  CreateTransferJob(google::storagetransfer::v1::CreateTransferJobRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateTransferJob(
-      google::storagetransfer::v1::UpdateTransferJobRequest const& request);
+  virtual google::cloud::Idempotency
+  UpdateTransferJob(google::storagetransfer::v1::UpdateTransferJobRequest const& request);
 
-  virtual google::cloud::Idempotency GetTransferJob(
-      google::storagetransfer::v1::GetTransferJobRequest const& request);
+  virtual google::cloud::Idempotency
+  GetTransferJob(google::storagetransfer::v1::GetTransferJobRequest const& request);
 
-  virtual google::cloud::Idempotency ListTransferJobs(
-      google::storagetransfer::v1::ListTransferJobsRequest request);
+  virtual google::cloud::Idempotency
+  ListTransferJobs(google::storagetransfer::v1::ListTransferJobsRequest request);
 
-  virtual google::cloud::Idempotency PauseTransferOperation(
-      google::storagetransfer::v1::PauseTransferOperationRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  PauseTransferOperation(google::storagetransfer::v1::PauseTransferOperationRequest const& request);
 
-  virtual google::cloud::Idempotency ResumeTransferOperation(
-      google::storagetransfer::v1::ResumeTransferOperationRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  ResumeTransferOperation(google::storagetransfer::v1::ResumeTransferOperationRequest const& request);
 
-  virtual google::cloud::Idempotency RunTransferJob(
-      google::storagetransfer::v1::RunTransferJobRequest const& request);
+  virtual google::cloud::Idempotency
+  RunTransferJob(google::storagetransfer::v1::RunTransferJobRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteTransferJob(
-      google::storagetransfer::v1::DeleteTransferJobRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteTransferJob(google::storagetransfer::v1::DeleteTransferJobRequest const& request);
 
-  virtual google::cloud::Idempotency CreateAgentPool(
-      google::storagetransfer::v1::CreateAgentPoolRequest const& request);
+  virtual google::cloud::Idempotency
+  CreateAgentPool(google::storagetransfer::v1::CreateAgentPoolRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateAgentPool(
-      google::storagetransfer::v1::UpdateAgentPoolRequest const& request);
+  virtual google::cloud::Idempotency
+  UpdateAgentPool(google::storagetransfer::v1::UpdateAgentPoolRequest const& request);
 
-  virtual google::cloud::Idempotency GetAgentPool(
-      google::storagetransfer::v1::GetAgentPoolRequest const& request);
+  virtual google::cloud::Idempotency
+  GetAgentPool(google::storagetransfer::v1::GetAgentPoolRequest const& request);
 
-  virtual google::cloud::Idempotency ListAgentPools(
-      google::storagetransfer::v1::ListAgentPoolsRequest request);
+  virtual google::cloud::Idempotency
+  ListAgentPools(google::storagetransfer::v1::ListAgentPoolsRequest request);
 
-  virtual google::cloud::Idempotency DeleteAgentPool(
-      google::storagetransfer::v1::DeleteAgentPoolRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteAgentPool(google::storagetransfer::v1::DeleteAgentPoolRequest const& request);
 
-  virtual google::cloud::Idempotency ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual google::cloud::Idempotency
+  ListOperations(google::longrunning::ListOperationsRequest request);
 
-  virtual google::cloud::Idempotency GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 
-  virtual google::cloud::Idempotency CancelOperation(
-      google::longrunning::CancelOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  CancelOperation(google::longrunning::CancelOperationRequest const& request);
 };
 
 std::unique_ptr<StorageTransferServiceConnectionIdempotencyPolicy>
-MakeDefaultStorageTransferServiceConnectionIdempotencyPolicy();
+    MakeDefaultStorageTransferServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storagetransfer_v1

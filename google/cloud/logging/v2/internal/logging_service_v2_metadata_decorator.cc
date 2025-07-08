@@ -44,18 +44,19 @@ LoggingServiceV2Metadata::LoggingServiceV2Metadata(
               ? google::cloud::internal::GeneratedLibClientHeader()
               : std::move(api_client_header)) {}
 
-Status LoggingServiceV2Metadata::DeleteLog(
-    grpc::ClientContext& context, Options const& options,
+Status
+LoggingServiceV2Metadata::DeleteLog(
+    grpc::ClientContext& context,
+    Options const& options,
     google::logging::v2::DeleteLogRequest const& request) {
-  SetMetadata(
-      context, options,
-      absl::StrCat("log_name=", internal::UrlEncode(request.log_name())));
+  SetMetadata(context, options, absl::StrCat("log_name=", internal::UrlEncode(request.log_name())));
   return child_->DeleteLog(context, options, request);
 }
 
 StatusOr<google::logging::v2::WriteLogEntriesResponse>
 LoggingServiceV2Metadata::WriteLogEntries(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::logging::v2::WriteLogEntriesRequest const& request) {
   SetMetadata(context, options);
   return child_->WriteLogEntries(context, options, request);
@@ -63,7 +64,8 @@ LoggingServiceV2Metadata::WriteLogEntries(
 
 StatusOr<google::logging::v2::ListLogEntriesResponse>
 LoggingServiceV2Metadata::ListLogEntries(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::logging::v2::ListLogEntriesRequest const& request) {
   SetMetadata(context, options);
   return child_->ListLogEntries(context, options, request);
@@ -71,81 +73,82 @@ LoggingServiceV2Metadata::ListLogEntries(
 
 StatusOr<google::logging::v2::ListMonitoredResourceDescriptorsResponse>
 LoggingServiceV2Metadata::ListMonitoredResourceDescriptors(
-    grpc::ClientContext& context, Options const& options,
-    google::logging::v2::ListMonitoredResourceDescriptorsRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::logging::v2::ListMonitoredResourceDescriptorsRequest const& request) {
   SetMetadata(context, options);
   return child_->ListMonitoredResourceDescriptors(context, options, request);
 }
 
 StatusOr<google::logging::v2::ListLogsResponse>
 LoggingServiceV2Metadata::ListLogs(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::logging::v2::ListLogsRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListLogs(context, options, request);
 }
 
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
-    google::logging::v2::TailLogEntriesRequest,
-    google::logging::v2::TailLogEntriesResponse>>
+      google::logging::v2::TailLogEntriesRequest,
+      google::logging::v2::TailLogEntriesResponse>>
 LoggingServiceV2Metadata::AsyncTailLogEntries(
     google::cloud::CompletionQueue const& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options) {
   SetMetadata(*context, *options);
-  return child_->AsyncTailLogEntries(cq, std::move(context),
-                                     std::move(options));
+  return child_->AsyncTailLogEntries(cq, std::move(context), std::move(options));
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
 LoggingServiceV2Metadata::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ListOperations(context, options, request);
 }
 
-StatusOr<google::longrunning::Operation> LoggingServiceV2Metadata::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::Operation>
+LoggingServiceV2Metadata::GetOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetOperation(context, options, request);
 }
 
-Status LoggingServiceV2Metadata::CancelOperation(
-    grpc::ClientContext& context, Options const& options,
+Status
+LoggingServiceV2Metadata::CancelOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->CancelOperation(context, options, request);
 }
 
 future<StatusOr<google::logging::v2::WriteLogEntriesResponse>>
 LoggingServiceV2Metadata::AsyncWriteLogEntries(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::logging::v2::WriteLogEntriesRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::logging::v2::WriteLogEntriesRequest const& request) {
   SetMetadata(*context, *options);
-  return child_->AsyncWriteLogEntries(cq, std::move(context),
-                                      std::move(options), request);
+  return child_->AsyncWriteLogEntries(
+      cq, std::move(context), std::move(options), request);
 }
 
 void LoggingServiceV2Metadata::SetMetadata(grpc::ClientContext& context,
-                                           Options const& options,
-                                           std::string const& request_params) {
+                                        Options const& options,
+                                        std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
 void LoggingServiceV2Metadata::SetMetadata(grpc::ClientContext& context,
-                                           Options const& options) {
-  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
-                                       api_client_header_);
+                                        Options const& options) {
+  google::cloud::internal::SetMetadata(
+      context, options, fixed_metadata_, api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

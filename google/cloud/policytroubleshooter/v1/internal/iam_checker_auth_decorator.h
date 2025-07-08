@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_POLICYTROUBLESHOOTER_V1_INTERNAL_IAM_CHECKER_AUTH_DECORATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_POLICYTROUBLESHOOTER_V1_INTERNAL_IAM_CHECKER_AUTH_DECORATOR_H
 
-#include "google/cloud/policytroubleshooter/v1/internal/iam_checker_stub.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/policytroubleshooter/v1/internal/iam_checker_stub.h"
 #include "google/cloud/version.h"
 #include <memory>
 #include <set>
@@ -38,12 +38,10 @@ class IamCheckerAuth : public IamCheckerStub {
       std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth,
       std::shared_ptr<IamCheckerStub> child);
 
-  StatusOr<
-      google::cloud::policytroubleshooter::v1::TroubleshootIamPolicyResponse>
-  TroubleshootIamPolicy(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::policytroubleshooter::v1::
-          TroubleshootIamPolicyRequest const& request) override;
+  StatusOr<google::cloud::policytroubleshooter::v1::TroubleshootIamPolicyResponse> TroubleshootIamPolicy(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::policytroubleshooter::v1::TroubleshootIamPolicyRequest const& request) override;
 
  private:
   std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth_;

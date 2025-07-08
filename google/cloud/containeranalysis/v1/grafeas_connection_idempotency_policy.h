@@ -36,51 +36,51 @@ class GrafeasConnectionIdempotencyPolicy {
   /// Create a new copy of this object.
   virtual std::unique_ptr<GrafeasConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency GetOccurrence(
-      grafeas::v1::GetOccurrenceRequest const& request);
+  virtual google::cloud::Idempotency
+  GetOccurrence(grafeas::v1::GetOccurrenceRequest const& request);
 
-  virtual google::cloud::Idempotency ListOccurrences(
-      grafeas::v1::ListOccurrencesRequest request);
+  virtual google::cloud::Idempotency
+  ListOccurrences(grafeas::v1::ListOccurrencesRequest request);
 
-  virtual google::cloud::Idempotency DeleteOccurrence(
-      grafeas::v1::DeleteOccurrenceRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteOccurrence(grafeas::v1::DeleteOccurrenceRequest const& request);
 
-  virtual google::cloud::Idempotency CreateOccurrence(
-      grafeas::v1::CreateOccurrenceRequest const& request);
+  virtual google::cloud::Idempotency
+  CreateOccurrence(grafeas::v1::CreateOccurrenceRequest const& request);
 
-  virtual google::cloud::Idempotency BatchCreateOccurrences(
-      grafeas::v1::BatchCreateOccurrencesRequest const& request);
+  virtual google::cloud::Idempotency
+  BatchCreateOccurrences(grafeas::v1::BatchCreateOccurrencesRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateOccurrence(
-      grafeas::v1::UpdateOccurrenceRequest const& request);
+  virtual google::cloud::Idempotency
+  UpdateOccurrence(grafeas::v1::UpdateOccurrenceRequest const& request);
 
-  virtual google::cloud::Idempotency GetOccurrenceNote(
-      grafeas::v1::GetOccurrenceNoteRequest const& request);
+  virtual google::cloud::Idempotency
+  GetOccurrenceNote(grafeas::v1::GetOccurrenceNoteRequest const& request);
 
-  virtual google::cloud::Idempotency GetNote(
-      grafeas::v1::GetNoteRequest const& request);
+  virtual google::cloud::Idempotency
+  GetNote(grafeas::v1::GetNoteRequest const& request);
 
-  virtual google::cloud::Idempotency ListNotes(
-      grafeas::v1::ListNotesRequest request);
+  virtual google::cloud::Idempotency
+  ListNotes(grafeas::v1::ListNotesRequest request);
 
-  virtual google::cloud::Idempotency DeleteNote(
-      grafeas::v1::DeleteNoteRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteNote(grafeas::v1::DeleteNoteRequest const& request);
 
-  virtual google::cloud::Idempotency CreateNote(
-      grafeas::v1::CreateNoteRequest const& request);
+  virtual google::cloud::Idempotency
+  CreateNote(grafeas::v1::CreateNoteRequest const& request);
 
-  virtual google::cloud::Idempotency BatchCreateNotes(
-      grafeas::v1::BatchCreateNotesRequest const& request);
+  virtual google::cloud::Idempotency
+  BatchCreateNotes(grafeas::v1::BatchCreateNotesRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateNote(
-      grafeas::v1::UpdateNoteRequest const& request);
+  virtual google::cloud::Idempotency
+  UpdateNote(grafeas::v1::UpdateNoteRequest const& request);
 
-  virtual google::cloud::Idempotency ListNoteOccurrences(
-      grafeas::v1::ListNoteOccurrencesRequest request);
+  virtual google::cloud::Idempotency
+  ListNoteOccurrences(grafeas::v1::ListNoteOccurrencesRequest request);
 };
 
 std::unique_ptr<GrafeasConnectionIdempotencyPolicy>
-MakeDefaultGrafeasConnectionIdempotencyPolicy();
+    MakeDefaultGrafeasConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace containeranalysis_v1

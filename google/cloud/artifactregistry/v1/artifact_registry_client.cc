@@ -28,13 +28,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ArtifactRegistryClient::ArtifactRegistryClient(
     std::shared_ptr<ArtifactRegistryConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 ArtifactRegistryClient::~ArtifactRegistryClient() = default;
 
 StreamRange<google::devtools::artifactregistry::v1::DockerImage>
-ArtifactRegistryClient::ListDockerImages(std::string const& parent,
-                                         Options opts) {
+ArtifactRegistryClient::ListDockerImages(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::devtools::artifactregistry::v1::ListDockerImagesRequest request;
   request.set_parent(parent);
@@ -42,9 +41,7 @@ ArtifactRegistryClient::ListDockerImages(std::string const& parent,
 }
 
 StreamRange<google::devtools::artifactregistry::v1::DockerImage>
-ArtifactRegistryClient::ListDockerImages(
-    google::devtools::artifactregistry::v1::ListDockerImagesRequest request,
-    Options opts) {
+ArtifactRegistryClient::ListDockerImages(google::devtools::artifactregistry::v1::ListDockerImagesRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListDockerImages(std::move(request));
 }
@@ -58,17 +55,13 @@ ArtifactRegistryClient::GetDockerImage(std::string const& name, Options opts) {
 }
 
 StatusOr<google::devtools::artifactregistry::v1::DockerImage>
-ArtifactRegistryClient::GetDockerImage(
-    google::devtools::artifactregistry::v1::GetDockerImageRequest const&
-        request,
-    Options opts) {
+ArtifactRegistryClient::GetDockerImage(google::devtools::artifactregistry::v1::GetDockerImageRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetDockerImage(request);
 }
 
 StreamRange<google::devtools::artifactregistry::v1::MavenArtifact>
-ArtifactRegistryClient::ListMavenArtifacts(std::string const& parent,
-                                           Options opts) {
+ArtifactRegistryClient::ListMavenArtifacts(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::devtools::artifactregistry::v1::ListMavenArtifactsRequest request;
   request.set_parent(parent);
@@ -76,16 +69,13 @@ ArtifactRegistryClient::ListMavenArtifacts(std::string const& parent,
 }
 
 StreamRange<google::devtools::artifactregistry::v1::MavenArtifact>
-ArtifactRegistryClient::ListMavenArtifacts(
-    google::devtools::artifactregistry::v1::ListMavenArtifactsRequest request,
-    Options opts) {
+ArtifactRegistryClient::ListMavenArtifacts(google::devtools::artifactregistry::v1::ListMavenArtifactsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListMavenArtifacts(std::move(request));
 }
 
 StatusOr<google::devtools::artifactregistry::v1::MavenArtifact>
-ArtifactRegistryClient::GetMavenArtifact(std::string const& name,
-                                         Options opts) {
+ArtifactRegistryClient::GetMavenArtifact(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::devtools::artifactregistry::v1::GetMavenArtifactRequest request;
   request.set_name(name);
@@ -93,17 +83,13 @@ ArtifactRegistryClient::GetMavenArtifact(std::string const& name,
 }
 
 StatusOr<google::devtools::artifactregistry::v1::MavenArtifact>
-ArtifactRegistryClient::GetMavenArtifact(
-    google::devtools::artifactregistry::v1::GetMavenArtifactRequest const&
-        request,
-    Options opts) {
+ArtifactRegistryClient::GetMavenArtifact(google::devtools::artifactregistry::v1::GetMavenArtifactRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetMavenArtifact(request);
 }
 
 StreamRange<google::devtools::artifactregistry::v1::NpmPackage>
-ArtifactRegistryClient::ListNpmPackages(std::string const& parent,
-                                        Options opts) {
+ArtifactRegistryClient::ListNpmPackages(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::devtools::artifactregistry::v1::ListNpmPackagesRequest request;
   request.set_parent(parent);
@@ -111,9 +97,7 @@ ArtifactRegistryClient::ListNpmPackages(std::string const& parent,
 }
 
 StreamRange<google::devtools::artifactregistry::v1::NpmPackage>
-ArtifactRegistryClient::ListNpmPackages(
-    google::devtools::artifactregistry::v1::ListNpmPackagesRequest request,
-    Options opts) {
+ArtifactRegistryClient::ListNpmPackages(google::devtools::artifactregistry::v1::ListNpmPackagesRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListNpmPackages(std::move(request));
 }
@@ -127,16 +111,13 @@ ArtifactRegistryClient::GetNpmPackage(std::string const& name, Options opts) {
 }
 
 StatusOr<google::devtools::artifactregistry::v1::NpmPackage>
-ArtifactRegistryClient::GetNpmPackage(
-    google::devtools::artifactregistry::v1::GetNpmPackageRequest const& request,
-    Options opts) {
+ArtifactRegistryClient::GetNpmPackage(google::devtools::artifactregistry::v1::GetNpmPackageRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetNpmPackage(request);
 }
 
 StreamRange<google::devtools::artifactregistry::v1::PythonPackage>
-ArtifactRegistryClient::ListPythonPackages(std::string const& parent,
-                                           Options opts) {
+ArtifactRegistryClient::ListPythonPackages(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::devtools::artifactregistry::v1::ListPythonPackagesRequest request;
   request.set_parent(parent);
@@ -144,16 +125,13 @@ ArtifactRegistryClient::ListPythonPackages(std::string const& parent,
 }
 
 StreamRange<google::devtools::artifactregistry::v1::PythonPackage>
-ArtifactRegistryClient::ListPythonPackages(
-    google::devtools::artifactregistry::v1::ListPythonPackagesRequest request,
-    Options opts) {
+ArtifactRegistryClient::ListPythonPackages(google::devtools::artifactregistry::v1::ListPythonPackagesRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListPythonPackages(std::move(request));
 }
 
 StatusOr<google::devtools::artifactregistry::v1::PythonPackage>
-ArtifactRegistryClient::GetPythonPackage(std::string const& name,
-                                         Options opts) {
+ArtifactRegistryClient::GetPythonPackage(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::devtools::artifactregistry::v1::GetPythonPackageRequest request;
   request.set_name(name);
@@ -161,73 +139,49 @@ ArtifactRegistryClient::GetPythonPackage(std::string const& name,
 }
 
 StatusOr<google::devtools::artifactregistry::v1::PythonPackage>
-ArtifactRegistryClient::GetPythonPackage(
-    google::devtools::artifactregistry::v1::GetPythonPackageRequest const&
-        request,
-    Options opts) {
+ArtifactRegistryClient::GetPythonPackage(google::devtools::artifactregistry::v1::GetPythonPackageRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetPythonPackage(request);
 }
 
-future<StatusOr<
-    google::devtools::artifactregistry::v1::ImportAptArtifactsResponse>>
-ArtifactRegistryClient::ImportAptArtifacts(
-    google::devtools::artifactregistry::v1::ImportAptArtifactsRequest const&
-        request,
-    Options opts) {
+future<StatusOr<google::devtools::artifactregistry::v1::ImportAptArtifactsResponse>>
+ArtifactRegistryClient::ImportAptArtifacts(google::devtools::artifactregistry::v1::ImportAptArtifactsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ImportAptArtifacts(request);
 }
 
 StatusOr<google::longrunning::Operation>
-ArtifactRegistryClient::ImportAptArtifacts(
-    NoAwaitTag,
-    google::devtools::artifactregistry::v1::ImportAptArtifactsRequest const&
-        request,
-    Options opts) {
+ArtifactRegistryClient::ImportAptArtifacts(NoAwaitTag, google::devtools::artifactregistry::v1::ImportAptArtifactsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ImportAptArtifacts(NoAwaitTag{}, request);
 }
 
-future<StatusOr<
-    google::devtools::artifactregistry::v1::ImportAptArtifactsResponse>>
-ArtifactRegistryClient::ImportAptArtifacts(
-    google::longrunning::Operation const& operation, Options opts) {
+future<StatusOr<google::devtools::artifactregistry::v1::ImportAptArtifactsResponse>>
+ArtifactRegistryClient::ImportAptArtifacts(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ImportAptArtifacts(operation);
 }
 
-future<StatusOr<
-    google::devtools::artifactregistry::v1::ImportYumArtifactsResponse>>
-ArtifactRegistryClient::ImportYumArtifacts(
-    google::devtools::artifactregistry::v1::ImportYumArtifactsRequest const&
-        request,
-    Options opts) {
+future<StatusOr<google::devtools::artifactregistry::v1::ImportYumArtifactsResponse>>
+ArtifactRegistryClient::ImportYumArtifacts(google::devtools::artifactregistry::v1::ImportYumArtifactsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ImportYumArtifacts(request);
 }
 
 StatusOr<google::longrunning::Operation>
-ArtifactRegistryClient::ImportYumArtifacts(
-    NoAwaitTag,
-    google::devtools::artifactregistry::v1::ImportYumArtifactsRequest const&
-        request,
-    Options opts) {
+ArtifactRegistryClient::ImportYumArtifacts(NoAwaitTag, google::devtools::artifactregistry::v1::ImportYumArtifactsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ImportYumArtifacts(NoAwaitTag{}, request);
 }
 
-future<StatusOr<
-    google::devtools::artifactregistry::v1::ImportYumArtifactsResponse>>
-ArtifactRegistryClient::ImportYumArtifacts(
-    google::longrunning::Operation const& operation, Options opts) {
+future<StatusOr<google::devtools::artifactregistry::v1::ImportYumArtifactsResponse>>
+ArtifactRegistryClient::ImportYumArtifacts(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ImportYumArtifacts(operation);
 }
 
 StreamRange<google::devtools::artifactregistry::v1::Repository>
-ArtifactRegistryClient::ListRepositories(std::string const& parent,
-                                         Options opts) {
+ArtifactRegistryClient::ListRepositories(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::devtools::artifactregistry::v1::ListRepositoriesRequest request;
   request.set_parent(parent);
@@ -235,9 +189,7 @@ ArtifactRegistryClient::ListRepositories(std::string const& parent,
 }
 
 StreamRange<google::devtools::artifactregistry::v1::Repository>
-ArtifactRegistryClient::ListRepositories(
-    google::devtools::artifactregistry::v1::ListRepositoriesRequest request,
-    Options opts) {
+ArtifactRegistryClient::ListRepositories(google::devtools::artifactregistry::v1::ListRepositoriesRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListRepositories(std::move(request));
 }
@@ -251,18 +203,13 @@ ArtifactRegistryClient::GetRepository(std::string const& name, Options opts) {
 }
 
 StatusOr<google::devtools::artifactregistry::v1::Repository>
-ArtifactRegistryClient::GetRepository(
-    google::devtools::artifactregistry::v1::GetRepositoryRequest const& request,
-    Options opts) {
+ArtifactRegistryClient::GetRepository(google::devtools::artifactregistry::v1::GetRepositoryRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetRepository(request);
 }
 
 future<StatusOr<google::devtools::artifactregistry::v1::Repository>>
-ArtifactRegistryClient::CreateRepository(
-    std::string const& parent,
-    google::devtools::artifactregistry::v1::Repository const& repository,
-    std::string const& repository_id, Options opts) {
+ArtifactRegistryClient::CreateRepository(std::string const& parent, google::devtools::artifactregistry::v1::Repository const& repository, std::string const& repository_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::devtools::artifactregistry::v1::CreateRepositoryRequest request;
   request.set_parent(parent);
@@ -272,10 +219,7 @@ ArtifactRegistryClient::CreateRepository(
 }
 
 StatusOr<google::longrunning::Operation>
-ArtifactRegistryClient::CreateRepository(
-    NoAwaitTag, std::string const& parent,
-    google::devtools::artifactregistry::v1::Repository const& repository,
-    std::string const& repository_id, Options opts) {
+ArtifactRegistryClient::CreateRepository(NoAwaitTag, std::string const& parent, google::devtools::artifactregistry::v1::Repository const& repository, std::string const& repository_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::devtools::artifactregistry::v1::CreateRepositoryRequest request;
   request.set_parent(parent);
@@ -285,35 +229,25 @@ ArtifactRegistryClient::CreateRepository(
 }
 
 future<StatusOr<google::devtools::artifactregistry::v1::Repository>>
-ArtifactRegistryClient::CreateRepository(
-    google::devtools::artifactregistry::v1::CreateRepositoryRequest const&
-        request,
-    Options opts) {
+ArtifactRegistryClient::CreateRepository(google::devtools::artifactregistry::v1::CreateRepositoryRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateRepository(request);
 }
 
 StatusOr<google::longrunning::Operation>
-ArtifactRegistryClient::CreateRepository(
-    NoAwaitTag,
-    google::devtools::artifactregistry::v1::CreateRepositoryRequest const&
-        request,
-    Options opts) {
+ArtifactRegistryClient::CreateRepository(NoAwaitTag, google::devtools::artifactregistry::v1::CreateRepositoryRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateRepository(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::devtools::artifactregistry::v1::Repository>>
-ArtifactRegistryClient::CreateRepository(
-    google::longrunning::Operation const& operation, Options opts) {
+ArtifactRegistryClient::CreateRepository(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateRepository(operation);
 }
 
 StatusOr<google::devtools::artifactregistry::v1::Repository>
-ArtifactRegistryClient::UpdateRepository(
-    google::devtools::artifactregistry::v1::Repository const& repository,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+ArtifactRegistryClient::UpdateRepository(google::devtools::artifactregistry::v1::Repository const& repository, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::devtools::artifactregistry::v1::UpdateRepositoryRequest request;
   *request.mutable_repository() = repository;
@@ -322,17 +256,13 @@ ArtifactRegistryClient::UpdateRepository(
 }
 
 StatusOr<google::devtools::artifactregistry::v1::Repository>
-ArtifactRegistryClient::UpdateRepository(
-    google::devtools::artifactregistry::v1::UpdateRepositoryRequest const&
-        request,
-    Options opts) {
+ArtifactRegistryClient::UpdateRepository(google::devtools::artifactregistry::v1::UpdateRepositoryRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateRepository(request);
 }
 
 future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
-ArtifactRegistryClient::DeleteRepository(std::string const& name,
-                                         Options opts) {
+ArtifactRegistryClient::DeleteRepository(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::devtools::artifactregistry::v1::DeleteRepositoryRequest request;
   request.set_name(name);
@@ -340,8 +270,7 @@ ArtifactRegistryClient::DeleteRepository(std::string const& name,
 }
 
 StatusOr<google::longrunning::Operation>
-ArtifactRegistryClient::DeleteRepository(NoAwaitTag, std::string const& name,
-                                         Options opts) {
+ArtifactRegistryClient::DeleteRepository(NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::devtools::artifactregistry::v1::DeleteRepositoryRequest request;
   request.set_name(name);
@@ -349,27 +278,19 @@ ArtifactRegistryClient::DeleteRepository(NoAwaitTag, std::string const& name,
 }
 
 future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
-ArtifactRegistryClient::DeleteRepository(
-    google::devtools::artifactregistry::v1::DeleteRepositoryRequest const&
-        request,
-    Options opts) {
+ArtifactRegistryClient::DeleteRepository(google::devtools::artifactregistry::v1::DeleteRepositoryRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteRepository(request);
 }
 
 StatusOr<google::longrunning::Operation>
-ArtifactRegistryClient::DeleteRepository(
-    NoAwaitTag,
-    google::devtools::artifactregistry::v1::DeleteRepositoryRequest const&
-        request,
-    Options opts) {
+ArtifactRegistryClient::DeleteRepository(NoAwaitTag, google::devtools::artifactregistry::v1::DeleteRepositoryRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteRepository(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
-ArtifactRegistryClient::DeleteRepository(
-    google::longrunning::Operation const& operation, Options opts) {
+ArtifactRegistryClient::DeleteRepository(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteRepository(operation);
 }
@@ -383,9 +304,7 @@ ArtifactRegistryClient::ListPackages(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::devtools::artifactregistry::v1::Package>
-ArtifactRegistryClient::ListPackages(
-    google::devtools::artifactregistry::v1::ListPackagesRequest request,
-    Options opts) {
+ArtifactRegistryClient::ListPackages(google::devtools::artifactregistry::v1::ListPackagesRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListPackages(std::move(request));
 }
@@ -399,9 +318,7 @@ ArtifactRegistryClient::GetPackage(std::string const& name, Options opts) {
 }
 
 StatusOr<google::devtools::artifactregistry::v1::Package>
-ArtifactRegistryClient::GetPackage(
-    google::devtools::artifactregistry::v1::GetPackageRequest const& request,
-    Options opts) {
+ArtifactRegistryClient::GetPackage(google::devtools::artifactregistry::v1::GetPackageRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetPackage(request);
 }
@@ -414,8 +331,8 @@ ArtifactRegistryClient::DeletePackage(std::string const& name, Options opts) {
   return connection_->DeletePackage(request);
 }
 
-StatusOr<google::longrunning::Operation> ArtifactRegistryClient::DeletePackage(
-    NoAwaitTag, std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation>
+ArtifactRegistryClient::DeletePackage(NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::devtools::artifactregistry::v1::DeletePackageRequest request;
   request.set_name(name);
@@ -423,24 +340,19 @@ StatusOr<google::longrunning::Operation> ArtifactRegistryClient::DeletePackage(
 }
 
 future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
-ArtifactRegistryClient::DeletePackage(
-    google::devtools::artifactregistry::v1::DeletePackageRequest const& request,
-    Options opts) {
+ArtifactRegistryClient::DeletePackage(google::devtools::artifactregistry::v1::DeletePackageRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeletePackage(request);
 }
 
-StatusOr<google::longrunning::Operation> ArtifactRegistryClient::DeletePackage(
-    NoAwaitTag,
-    google::devtools::artifactregistry::v1::DeletePackageRequest const& request,
-    Options opts) {
+StatusOr<google::longrunning::Operation>
+ArtifactRegistryClient::DeletePackage(NoAwaitTag, google::devtools::artifactregistry::v1::DeletePackageRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeletePackage(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
-ArtifactRegistryClient::DeletePackage(
-    google::longrunning::Operation const& operation, Options opts) {
+ArtifactRegistryClient::DeletePackage(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeletePackage(operation);
 }
@@ -454,9 +366,7 @@ ArtifactRegistryClient::ListVersions(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::devtools::artifactregistry::v1::Version>
-ArtifactRegistryClient::ListVersions(
-    google::devtools::artifactregistry::v1::ListVersionsRequest request,
-    Options opts) {
+ArtifactRegistryClient::ListVersions(google::devtools::artifactregistry::v1::ListVersionsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListVersions(std::move(request));
 }
@@ -470,9 +380,7 @@ ArtifactRegistryClient::GetVersion(std::string const& name, Options opts) {
 }
 
 StatusOr<google::devtools::artifactregistry::v1::Version>
-ArtifactRegistryClient::GetVersion(
-    google::devtools::artifactregistry::v1::GetVersionRequest const& request,
-    Options opts) {
+ArtifactRegistryClient::GetVersion(google::devtools::artifactregistry::v1::GetVersionRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetVersion(request);
 }
@@ -485,8 +393,8 @@ ArtifactRegistryClient::DeleteVersion(std::string const& name, Options opts) {
   return connection_->DeleteVersion(request);
 }
 
-StatusOr<google::longrunning::Operation> ArtifactRegistryClient::DeleteVersion(
-    NoAwaitTag, std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation>
+ArtifactRegistryClient::DeleteVersion(NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::devtools::artifactregistry::v1::DeleteVersionRequest request;
   request.set_name(name);
@@ -494,33 +402,25 @@ StatusOr<google::longrunning::Operation> ArtifactRegistryClient::DeleteVersion(
 }
 
 future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
-ArtifactRegistryClient::DeleteVersion(
-    google::devtools::artifactregistry::v1::DeleteVersionRequest const& request,
-    Options opts) {
+ArtifactRegistryClient::DeleteVersion(google::devtools::artifactregistry::v1::DeleteVersionRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteVersion(request);
 }
 
-StatusOr<google::longrunning::Operation> ArtifactRegistryClient::DeleteVersion(
-    NoAwaitTag,
-    google::devtools::artifactregistry::v1::DeleteVersionRequest const& request,
-    Options opts) {
+StatusOr<google::longrunning::Operation>
+ArtifactRegistryClient::DeleteVersion(NoAwaitTag, google::devtools::artifactregistry::v1::DeleteVersionRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteVersion(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
-ArtifactRegistryClient::DeleteVersion(
-    google::longrunning::Operation const& operation, Options opts) {
+ArtifactRegistryClient::DeleteVersion(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteVersion(operation);
 }
 
-future<StatusOr<
-    google::devtools::artifactregistry::v1::BatchDeleteVersionsMetadata>>
-ArtifactRegistryClient::BatchDeleteVersions(
-    std::string const& parent, std::vector<std::string> const& names,
-    Options opts) {
+future<StatusOr<google::devtools::artifactregistry::v1::BatchDeleteVersionsMetadata>>
+ArtifactRegistryClient::BatchDeleteVersions(std::string const& parent, std::vector<std::string> const& names, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::devtools::artifactregistry::v1::BatchDeleteVersionsRequest request;
   request.set_parent(parent);
@@ -529,9 +429,7 @@ ArtifactRegistryClient::BatchDeleteVersions(
 }
 
 StatusOr<google::longrunning::Operation>
-ArtifactRegistryClient::BatchDeleteVersions(
-    NoAwaitTag, std::string const& parent,
-    std::vector<std::string> const& names, Options opts) {
+ArtifactRegistryClient::BatchDeleteVersions(NoAwaitTag, std::string const& parent, std::vector<std::string> const& names, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::devtools::artifactregistry::v1::BatchDeleteVersionsRequest request;
   request.set_parent(parent);
@@ -539,38 +437,26 @@ ArtifactRegistryClient::BatchDeleteVersions(
   return connection_->BatchDeleteVersions(NoAwaitTag{}, request);
 }
 
-future<StatusOr<
-    google::devtools::artifactregistry::v1::BatchDeleteVersionsMetadata>>
-ArtifactRegistryClient::BatchDeleteVersions(
-    google::devtools::artifactregistry::v1::BatchDeleteVersionsRequest const&
-        request,
-    Options opts) {
+future<StatusOr<google::devtools::artifactregistry::v1::BatchDeleteVersionsMetadata>>
+ArtifactRegistryClient::BatchDeleteVersions(google::devtools::artifactregistry::v1::BatchDeleteVersionsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->BatchDeleteVersions(request);
 }
 
 StatusOr<google::longrunning::Operation>
-ArtifactRegistryClient::BatchDeleteVersions(
-    NoAwaitTag,
-    google::devtools::artifactregistry::v1::BatchDeleteVersionsRequest const&
-        request,
-    Options opts) {
+ArtifactRegistryClient::BatchDeleteVersions(NoAwaitTag, google::devtools::artifactregistry::v1::BatchDeleteVersionsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->BatchDeleteVersions(NoAwaitTag{}, request);
 }
 
-future<StatusOr<
-    google::devtools::artifactregistry::v1::BatchDeleteVersionsMetadata>>
-ArtifactRegistryClient::BatchDeleteVersions(
-    google::longrunning::Operation const& operation, Options opts) {
+future<StatusOr<google::devtools::artifactregistry::v1::BatchDeleteVersionsMetadata>>
+ArtifactRegistryClient::BatchDeleteVersions(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->BatchDeleteVersions(operation);
 }
 
 StatusOr<google::devtools::artifactregistry::v1::Version>
-ArtifactRegistryClient::UpdateVersion(
-    google::devtools::artifactregistry::v1::Version const& version,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+ArtifactRegistryClient::UpdateVersion(google::devtools::artifactregistry::v1::Version const& version, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::devtools::artifactregistry::v1::UpdateVersionRequest request;
   *request.mutable_version() = version;
@@ -579,9 +465,7 @@ ArtifactRegistryClient::UpdateVersion(
 }
 
 StatusOr<google::devtools::artifactregistry::v1::Version>
-ArtifactRegistryClient::UpdateVersion(
-    google::devtools::artifactregistry::v1::UpdateVersionRequest const& request,
-    Options opts) {
+ArtifactRegistryClient::UpdateVersion(google::devtools::artifactregistry::v1::UpdateVersionRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateVersion(request);
 }
@@ -595,9 +479,7 @@ ArtifactRegistryClient::ListFiles(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::devtools::artifactregistry::v1::File>
-ArtifactRegistryClient::ListFiles(
-    google::devtools::artifactregistry::v1::ListFilesRequest request,
-    Options opts) {
+ArtifactRegistryClient::ListFiles(google::devtools::artifactregistry::v1::ListFilesRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListFiles(std::move(request));
 }
@@ -611,9 +493,7 @@ ArtifactRegistryClient::GetFile(std::string const& name, Options opts) {
 }
 
 StatusOr<google::devtools::artifactregistry::v1::File>
-ArtifactRegistryClient::GetFile(
-    google::devtools::artifactregistry::v1::GetFileRequest const& request,
-    Options opts) {
+ArtifactRegistryClient::GetFile(google::devtools::artifactregistry::v1::GetFileRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetFile(request);
 }
@@ -626,8 +506,8 @@ ArtifactRegistryClient::DeleteFile(std::string const& name, Options opts) {
   return connection_->DeleteFile(request);
 }
 
-StatusOr<google::longrunning::Operation> ArtifactRegistryClient::DeleteFile(
-    NoAwaitTag, std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation>
+ArtifactRegistryClient::DeleteFile(NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::devtools::artifactregistry::v1::DeleteFileRequest request;
   request.set_name(name);
@@ -635,32 +515,25 @@ StatusOr<google::longrunning::Operation> ArtifactRegistryClient::DeleteFile(
 }
 
 future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
-ArtifactRegistryClient::DeleteFile(
-    google::devtools::artifactregistry::v1::DeleteFileRequest const& request,
-    Options opts) {
+ArtifactRegistryClient::DeleteFile(google::devtools::artifactregistry::v1::DeleteFileRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteFile(request);
 }
 
-StatusOr<google::longrunning::Operation> ArtifactRegistryClient::DeleteFile(
-    NoAwaitTag,
-    google::devtools::artifactregistry::v1::DeleteFileRequest const& request,
-    Options opts) {
+StatusOr<google::longrunning::Operation>
+ArtifactRegistryClient::DeleteFile(NoAwaitTag, google::devtools::artifactregistry::v1::DeleteFileRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteFile(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
-ArtifactRegistryClient::DeleteFile(
-    google::longrunning::Operation const& operation, Options opts) {
+ArtifactRegistryClient::DeleteFile(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteFile(operation);
 }
 
 StatusOr<google::devtools::artifactregistry::v1::File>
-ArtifactRegistryClient::UpdateFile(
-    google::devtools::artifactregistry::v1::File const& file,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+ArtifactRegistryClient::UpdateFile(google::devtools::artifactregistry::v1::File const& file, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::devtools::artifactregistry::v1::UpdateFileRequest request;
   *request.mutable_file() = file;
@@ -669,9 +542,7 @@ ArtifactRegistryClient::UpdateFile(
 }
 
 StatusOr<google::devtools::artifactregistry::v1::File>
-ArtifactRegistryClient::UpdateFile(
-    google::devtools::artifactregistry::v1::UpdateFileRequest const& request,
-    Options opts) {
+ArtifactRegistryClient::UpdateFile(google::devtools::artifactregistry::v1::UpdateFileRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateFile(request);
 }
@@ -685,9 +556,7 @@ ArtifactRegistryClient::ListTags(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::devtools::artifactregistry::v1::Tag>
-ArtifactRegistryClient::ListTags(
-    google::devtools::artifactregistry::v1::ListTagsRequest request,
-    Options opts) {
+ArtifactRegistryClient::ListTags(google::devtools::artifactregistry::v1::ListTagsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListTags(std::move(request));
 }
@@ -701,18 +570,13 @@ ArtifactRegistryClient::GetTag(std::string const& name, Options opts) {
 }
 
 StatusOr<google::devtools::artifactregistry::v1::Tag>
-ArtifactRegistryClient::GetTag(
-    google::devtools::artifactregistry::v1::GetTagRequest const& request,
-    Options opts) {
+ArtifactRegistryClient::GetTag(google::devtools::artifactregistry::v1::GetTagRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetTag(request);
 }
 
 StatusOr<google::devtools::artifactregistry::v1::Tag>
-ArtifactRegistryClient::CreateTag(
-    std::string const& parent,
-    google::devtools::artifactregistry::v1::Tag const& tag,
-    std::string const& tag_id, Options opts) {
+ArtifactRegistryClient::CreateTag(std::string const& parent, google::devtools::artifactregistry::v1::Tag const& tag, std::string const& tag_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::devtools::artifactregistry::v1::CreateTagRequest request;
   request.set_parent(parent);
@@ -722,17 +586,13 @@ ArtifactRegistryClient::CreateTag(
 }
 
 StatusOr<google::devtools::artifactregistry::v1::Tag>
-ArtifactRegistryClient::CreateTag(
-    google::devtools::artifactregistry::v1::CreateTagRequest const& request,
-    Options opts) {
+ArtifactRegistryClient::CreateTag(google::devtools::artifactregistry::v1::CreateTagRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateTag(request);
 }
 
 StatusOr<google::devtools::artifactregistry::v1::Tag>
-ArtifactRegistryClient::UpdateTag(
-    google::devtools::artifactregistry::v1::Tag const& tag,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+ArtifactRegistryClient::UpdateTag(google::devtools::artifactregistry::v1::Tag const& tag, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::devtools::artifactregistry::v1::UpdateTagRequest request;
   *request.mutable_tag() = tag;
@@ -741,33 +601,27 @@ ArtifactRegistryClient::UpdateTag(
 }
 
 StatusOr<google::devtools::artifactregistry::v1::Tag>
-ArtifactRegistryClient::UpdateTag(
-    google::devtools::artifactregistry::v1::UpdateTagRequest const& request,
-    Options opts) {
+ArtifactRegistryClient::UpdateTag(google::devtools::artifactregistry::v1::UpdateTagRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateTag(request);
 }
 
-Status ArtifactRegistryClient::DeleteTag(std::string const& name,
-                                         Options opts) {
+Status
+ArtifactRegistryClient::DeleteTag(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::devtools::artifactregistry::v1::DeleteTagRequest request;
   request.set_name(name);
   return connection_->DeleteTag(request);
 }
 
-Status ArtifactRegistryClient::DeleteTag(
-    google::devtools::artifactregistry::v1::DeleteTagRequest const& request,
-    Options opts) {
+Status
+ArtifactRegistryClient::DeleteTag(google::devtools::artifactregistry::v1::DeleteTagRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteTag(request);
 }
 
 StatusOr<google::devtools::artifactregistry::v1::Rule>
-ArtifactRegistryClient::CreateRule(
-    std::string const& parent,
-    google::devtools::artifactregistry::v1::Rule const& rule,
-    std::string const& rule_id, Options opts) {
+ArtifactRegistryClient::CreateRule(std::string const& parent, google::devtools::artifactregistry::v1::Rule const& rule, std::string const& rule_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::devtools::artifactregistry::v1::CreateRuleRequest request;
   request.set_parent(parent);
@@ -777,9 +631,7 @@ ArtifactRegistryClient::CreateRule(
 }
 
 StatusOr<google::devtools::artifactregistry::v1::Rule>
-ArtifactRegistryClient::CreateRule(
-    google::devtools::artifactregistry::v1::CreateRuleRequest const& request,
-    Options opts) {
+ArtifactRegistryClient::CreateRule(google::devtools::artifactregistry::v1::CreateRuleRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateRule(request);
 }
@@ -793,9 +645,7 @@ ArtifactRegistryClient::ListRules(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::devtools::artifactregistry::v1::Rule>
-ArtifactRegistryClient::ListRules(
-    google::devtools::artifactregistry::v1::ListRulesRequest request,
-    Options opts) {
+ArtifactRegistryClient::ListRules(google::devtools::artifactregistry::v1::ListRulesRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListRules(std::move(request));
 }
@@ -809,17 +659,13 @@ ArtifactRegistryClient::GetRule(std::string const& name, Options opts) {
 }
 
 StatusOr<google::devtools::artifactregistry::v1::Rule>
-ArtifactRegistryClient::GetRule(
-    google::devtools::artifactregistry::v1::GetRuleRequest const& request,
-    Options opts) {
+ArtifactRegistryClient::GetRule(google::devtools::artifactregistry::v1::GetRuleRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetRule(request);
 }
 
 StatusOr<google::devtools::artifactregistry::v1::Rule>
-ArtifactRegistryClient::UpdateRule(
-    google::devtools::artifactregistry::v1::Rule const& rule,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+ArtifactRegistryClient::UpdateRule(google::devtools::artifactregistry::v1::Rule const& rule, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::devtools::artifactregistry::v1::UpdateRuleRequest request;
   *request.mutable_rule() = rule;
@@ -828,50 +674,45 @@ ArtifactRegistryClient::UpdateRule(
 }
 
 StatusOr<google::devtools::artifactregistry::v1::Rule>
-ArtifactRegistryClient::UpdateRule(
-    google::devtools::artifactregistry::v1::UpdateRuleRequest const& request,
-    Options opts) {
+ArtifactRegistryClient::UpdateRule(google::devtools::artifactregistry::v1::UpdateRuleRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateRule(request);
 }
 
-Status ArtifactRegistryClient::DeleteRule(std::string const& name,
-                                          Options opts) {
+Status
+ArtifactRegistryClient::DeleteRule(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::devtools::artifactregistry::v1::DeleteRuleRequest request;
   request.set_name(name);
   return connection_->DeleteRule(request);
 }
 
-Status ArtifactRegistryClient::DeleteRule(
-    google::devtools::artifactregistry::v1::DeleteRuleRequest const& request,
-    Options opts) {
+Status
+ArtifactRegistryClient::DeleteRule(google::devtools::artifactregistry::v1::DeleteRuleRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteRule(request);
 }
 
-StatusOr<google::iam::v1::Policy> ArtifactRegistryClient::SetIamPolicy(
-    google::iam::v1::SetIamPolicyRequest const& request, Options opts) {
+StatusOr<google::iam::v1::Policy>
+ArtifactRegistryClient::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetIamPolicy(request);
 }
 
-StatusOr<google::iam::v1::Policy> ArtifactRegistryClient::GetIamPolicy(
-    google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
+StatusOr<google::iam::v1::Policy>
+ArtifactRegistryClient::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetIamPolicy(request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-ArtifactRegistryClient::TestIamPermissions(
-    google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
+ArtifactRegistryClient::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->TestIamPermissions(request);
 }
 
 StatusOr<google::devtools::artifactregistry::v1::ProjectSettings>
-ArtifactRegistryClient::GetProjectSettings(std::string const& name,
-                                           Options opts) {
+ArtifactRegistryClient::GetProjectSettings(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::devtools::artifactregistry::v1::GetProjectSettingsRequest request;
   request.set_name(name);
@@ -879,19 +720,13 @@ ArtifactRegistryClient::GetProjectSettings(std::string const& name,
 }
 
 StatusOr<google::devtools::artifactregistry::v1::ProjectSettings>
-ArtifactRegistryClient::GetProjectSettings(
-    google::devtools::artifactregistry::v1::GetProjectSettingsRequest const&
-        request,
-    Options opts) {
+ArtifactRegistryClient::GetProjectSettings(google::devtools::artifactregistry::v1::GetProjectSettingsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetProjectSettings(request);
 }
 
 StatusOr<google::devtools::artifactregistry::v1::ProjectSettings>
-ArtifactRegistryClient::UpdateProjectSettings(
-    google::devtools::artifactregistry::v1::ProjectSettings const&
-        project_settings,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+ArtifactRegistryClient::UpdateProjectSettings(google::devtools::artifactregistry::v1::ProjectSettings const& project_settings, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::devtools::artifactregistry::v1::UpdateProjectSettingsRequest request;
   *request.mutable_project_settings() = project_settings;
@@ -900,10 +735,7 @@ ArtifactRegistryClient::UpdateProjectSettings(
 }
 
 StatusOr<google::devtools::artifactregistry::v1::ProjectSettings>
-ArtifactRegistryClient::UpdateProjectSettings(
-    google::devtools::artifactregistry::v1::UpdateProjectSettingsRequest const&
-        request,
-    Options opts) {
+ArtifactRegistryClient::UpdateProjectSettings(google::devtools::artifactregistry::v1::UpdateProjectSettingsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateProjectSettings(request);
 }
@@ -917,18 +749,13 @@ ArtifactRegistryClient::GetVPCSCConfig(std::string const& name, Options opts) {
 }
 
 StatusOr<google::devtools::artifactregistry::v1::VPCSCConfig>
-ArtifactRegistryClient::GetVPCSCConfig(
-    google::devtools::artifactregistry::v1::GetVPCSCConfigRequest const&
-        request,
-    Options opts) {
+ArtifactRegistryClient::GetVPCSCConfig(google::devtools::artifactregistry::v1::GetVPCSCConfigRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetVPCSCConfig(request);
 }
 
 StatusOr<google::devtools::artifactregistry::v1::VPCSCConfig>
-ArtifactRegistryClient::UpdateVPCSCConfig(
-    google::devtools::artifactregistry::v1::VPCSCConfig const& vpcsc_config,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+ArtifactRegistryClient::UpdateVPCSCConfig(google::devtools::artifactregistry::v1::VPCSCConfig const& vpcsc_config, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::devtools::artifactregistry::v1::UpdateVPCSCConfigRequest request;
   *request.mutable_vpcsc_config() = vpcsc_config;
@@ -937,18 +764,13 @@ ArtifactRegistryClient::UpdateVPCSCConfig(
 }
 
 StatusOr<google::devtools::artifactregistry::v1::VPCSCConfig>
-ArtifactRegistryClient::UpdateVPCSCConfig(
-    google::devtools::artifactregistry::v1::UpdateVPCSCConfigRequest const&
-        request,
-    Options opts) {
+ArtifactRegistryClient::UpdateVPCSCConfig(google::devtools::artifactregistry::v1::UpdateVPCSCConfigRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateVPCSCConfig(request);
 }
 
 StatusOr<google::devtools::artifactregistry::v1::Package>
-ArtifactRegistryClient::UpdatePackage(
-    google::devtools::artifactregistry::v1::Package const& package,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+ArtifactRegistryClient::UpdatePackage(google::devtools::artifactregistry::v1::Package const& package, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::devtools::artifactregistry::v1::UpdatePackageRequest request;
   *request.mutable_package() = package;
@@ -957,16 +779,13 @@ ArtifactRegistryClient::UpdatePackage(
 }
 
 StatusOr<google::devtools::artifactregistry::v1::Package>
-ArtifactRegistryClient::UpdatePackage(
-    google::devtools::artifactregistry::v1::UpdatePackageRequest const& request,
-    Options opts) {
+ArtifactRegistryClient::UpdatePackage(google::devtools::artifactregistry::v1::UpdatePackageRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdatePackage(request);
 }
 
 StreamRange<google::devtools::artifactregistry::v1::Attachment>
-ArtifactRegistryClient::ListAttachments(std::string const& parent,
-                                        Options opts) {
+ArtifactRegistryClient::ListAttachments(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::devtools::artifactregistry::v1::ListAttachmentsRequest request;
   request.set_parent(parent);
@@ -974,9 +793,7 @@ ArtifactRegistryClient::ListAttachments(std::string const& parent,
 }
 
 StreamRange<google::devtools::artifactregistry::v1::Attachment>
-ArtifactRegistryClient::ListAttachments(
-    google::devtools::artifactregistry::v1::ListAttachmentsRequest request,
-    Options opts) {
+ArtifactRegistryClient::ListAttachments(google::devtools::artifactregistry::v1::ListAttachmentsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListAttachments(std::move(request));
 }
@@ -990,18 +807,13 @@ ArtifactRegistryClient::GetAttachment(std::string const& name, Options opts) {
 }
 
 StatusOr<google::devtools::artifactregistry::v1::Attachment>
-ArtifactRegistryClient::GetAttachment(
-    google::devtools::artifactregistry::v1::GetAttachmentRequest const& request,
-    Options opts) {
+ArtifactRegistryClient::GetAttachment(google::devtools::artifactregistry::v1::GetAttachmentRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetAttachment(request);
 }
 
 future<StatusOr<google::devtools::artifactregistry::v1::Attachment>>
-ArtifactRegistryClient::CreateAttachment(
-    std::string const& parent,
-    google::devtools::artifactregistry::v1::Attachment const& attachment,
-    std::string const& attachment_id, Options opts) {
+ArtifactRegistryClient::CreateAttachment(std::string const& parent, google::devtools::artifactregistry::v1::Attachment const& attachment, std::string const& attachment_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::devtools::artifactregistry::v1::CreateAttachmentRequest request;
   request.set_parent(parent);
@@ -1011,10 +823,7 @@ ArtifactRegistryClient::CreateAttachment(
 }
 
 StatusOr<google::longrunning::Operation>
-ArtifactRegistryClient::CreateAttachment(
-    NoAwaitTag, std::string const& parent,
-    google::devtools::artifactregistry::v1::Attachment const& attachment,
-    std::string const& attachment_id, Options opts) {
+ArtifactRegistryClient::CreateAttachment(NoAwaitTag, std::string const& parent, google::devtools::artifactregistry::v1::Attachment const& attachment, std::string const& attachment_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::devtools::artifactregistry::v1::CreateAttachmentRequest request;
   request.set_parent(parent);
@@ -1024,34 +833,25 @@ ArtifactRegistryClient::CreateAttachment(
 }
 
 future<StatusOr<google::devtools::artifactregistry::v1::Attachment>>
-ArtifactRegistryClient::CreateAttachment(
-    google::devtools::artifactregistry::v1::CreateAttachmentRequest const&
-        request,
-    Options opts) {
+ArtifactRegistryClient::CreateAttachment(google::devtools::artifactregistry::v1::CreateAttachmentRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateAttachment(request);
 }
 
 StatusOr<google::longrunning::Operation>
-ArtifactRegistryClient::CreateAttachment(
-    NoAwaitTag,
-    google::devtools::artifactregistry::v1::CreateAttachmentRequest const&
-        request,
-    Options opts) {
+ArtifactRegistryClient::CreateAttachment(NoAwaitTag, google::devtools::artifactregistry::v1::CreateAttachmentRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateAttachment(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::devtools::artifactregistry::v1::Attachment>>
-ArtifactRegistryClient::CreateAttachment(
-    google::longrunning::Operation const& operation, Options opts) {
+ArtifactRegistryClient::CreateAttachment(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateAttachment(operation);
 }
 
 future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
-ArtifactRegistryClient::DeleteAttachment(std::string const& name,
-                                         Options opts) {
+ArtifactRegistryClient::DeleteAttachment(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::devtools::artifactregistry::v1::DeleteAttachmentRequest request;
   request.set_name(name);
@@ -1059,8 +859,7 @@ ArtifactRegistryClient::DeleteAttachment(std::string const& name,
 }
 
 StatusOr<google::longrunning::Operation>
-ArtifactRegistryClient::DeleteAttachment(NoAwaitTag, std::string const& name,
-                                         Options opts) {
+ArtifactRegistryClient::DeleteAttachment(NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::devtools::artifactregistry::v1::DeleteAttachmentRequest request;
   request.set_name(name);
@@ -1068,54 +867,45 @@ ArtifactRegistryClient::DeleteAttachment(NoAwaitTag, std::string const& name,
 }
 
 future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
-ArtifactRegistryClient::DeleteAttachment(
-    google::devtools::artifactregistry::v1::DeleteAttachmentRequest const&
-        request,
-    Options opts) {
+ArtifactRegistryClient::DeleteAttachment(google::devtools::artifactregistry::v1::DeleteAttachmentRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteAttachment(request);
 }
 
 StatusOr<google::longrunning::Operation>
-ArtifactRegistryClient::DeleteAttachment(
-    NoAwaitTag,
-    google::devtools::artifactregistry::v1::DeleteAttachmentRequest const&
-        request,
-    Options opts) {
+ArtifactRegistryClient::DeleteAttachment(NoAwaitTag, google::devtools::artifactregistry::v1::DeleteAttachmentRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteAttachment(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
-ArtifactRegistryClient::DeleteAttachment(
-    google::longrunning::Operation const& operation, Options opts) {
+ArtifactRegistryClient::DeleteAttachment(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteAttachment(operation);
 }
 
 StreamRange<google::cloud::location::Location>
-ArtifactRegistryClient::ListLocations(
-    google::cloud::location::ListLocationsRequest request, Options opts) {
+ArtifactRegistryClient::ListLocations(google::cloud::location::ListLocationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListLocations(std::move(request));
 }
 
-StatusOr<google::cloud::location::Location> ArtifactRegistryClient::GetLocation(
-    google::cloud::location::GetLocationRequest const& request, Options opts) {
+StatusOr<google::cloud::location::Location>
+ArtifactRegistryClient::GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetLocation(request);
 }
 
-StatusOr<google::longrunning::Operation> ArtifactRegistryClient::GetOperation(
-    std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation>
+ArtifactRegistryClient::GetOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
   return connection_->GetOperation(request);
 }
 
-StatusOr<google::longrunning::Operation> ArtifactRegistryClient::GetOperation(
-    google::longrunning::GetOperationRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation>
+ArtifactRegistryClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }

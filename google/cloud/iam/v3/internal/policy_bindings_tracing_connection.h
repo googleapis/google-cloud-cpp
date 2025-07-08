@@ -36,51 +36,54 @@ class PolicyBindingsTracingConnection
   ~PolicyBindingsTracingConnection() override = default;
 
   explicit PolicyBindingsTracingConnection(
-      std::shared_ptr<iam_v3::PolicyBindingsConnection> child);
+    std::shared_ptr<iam_v3::PolicyBindingsConnection> child);
 
   Options options() override { return child_->options(); }
 
-  future<StatusOr<google::iam::v3::PolicyBinding>> CreatePolicyBinding(
+  future<StatusOr<google::iam::v3::PolicyBinding>>
+  CreatePolicyBinding(google::iam::v3::CreatePolicyBindingRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  CreatePolicyBinding(NoAwaitTag,
       google::iam::v3::CreatePolicyBindingRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> CreatePolicyBinding(
-      NoAwaitTag,
-      google::iam::v3::CreatePolicyBindingRequest const& request) override;
-
-  future<StatusOr<google::iam::v3::PolicyBinding>> CreatePolicyBinding(
+  future<StatusOr<google::iam::v3::PolicyBinding>>
+  CreatePolicyBinding(
       google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::iam::v3::PolicyBinding> GetPolicyBinding(
-      google::iam::v3::GetPolicyBindingRequest const& request) override;
+  StatusOr<google::iam::v3::PolicyBinding>
+  GetPolicyBinding(google::iam::v3::GetPolicyBindingRequest const& request) override;
 
-  future<StatusOr<google::iam::v3::PolicyBinding>> UpdatePolicyBinding(
+  future<StatusOr<google::iam::v3::PolicyBinding>>
+  UpdatePolicyBinding(google::iam::v3::UpdatePolicyBindingRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  UpdatePolicyBinding(NoAwaitTag,
       google::iam::v3::UpdatePolicyBindingRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> UpdatePolicyBinding(
-      NoAwaitTag,
-      google::iam::v3::UpdatePolicyBindingRequest const& request) override;
-
-  future<StatusOr<google::iam::v3::PolicyBinding>> UpdatePolicyBinding(
+  future<StatusOr<google::iam::v3::PolicyBinding>>
+  UpdatePolicyBinding(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::iam::v3::OperationMetadata>> DeletePolicyBinding(
+  future<StatusOr<google::iam::v3::OperationMetadata>>
+  DeletePolicyBinding(google::iam::v3::DeletePolicyBindingRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  DeletePolicyBinding(NoAwaitTag,
       google::iam::v3::DeletePolicyBindingRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> DeletePolicyBinding(
-      NoAwaitTag,
-      google::iam::v3::DeletePolicyBindingRequest const& request) override;
-
-  future<StatusOr<google::iam::v3::OperationMetadata>> DeletePolicyBinding(
+  future<StatusOr<google::iam::v3::OperationMetadata>>
+  DeletePolicyBinding(
       google::longrunning::Operation const& operation) override;
 
-  StreamRange<google::iam::v3::PolicyBinding> ListPolicyBindings(
-      google::iam::v3::ListPolicyBindingsRequest request) override;
+  StreamRange<google::iam::v3::PolicyBinding>
+  ListPolicyBindings(google::iam::v3::ListPolicyBindingsRequest request) override;
 
-  StreamRange<google::iam::v3::PolicyBinding> SearchTargetPolicyBindings(
-      google::iam::v3::SearchTargetPolicyBindingsRequest request) override;
+  StreamRange<google::iam::v3::PolicyBinding>
+  SearchTargetPolicyBindings(google::iam::v3::SearchTargetPolicyBindingsRequest request) override;
 
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request) override;
 
  private:
   std::shared_ptr<iam_v3::PolicyBindingsConnection> child_;

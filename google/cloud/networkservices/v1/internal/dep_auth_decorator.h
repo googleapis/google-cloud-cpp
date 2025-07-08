@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_NETWORKSERVICES_V1_INTERNAL_DEP_AUTH_DECORATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_NETWORKSERVICES_V1_INTERNAL_DEP_AUTH_DECORATOR_H
 
-#include "google/cloud/networkservices/v1/internal/dep_stub.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/networkservices/v1/internal/dep_stub.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
@@ -39,139 +39,178 @@ class DepServiceAuth : public DepServiceStub {
       std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth,
       std::shared_ptr<DepServiceStub> child);
 
-  StatusOr<google::cloud::networkservices::v1::ListLbTrafficExtensionsResponse>
-  ListLbTrafficExtensions(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::networkservices::v1::ListLbTrafficExtensionsRequest const&
-          request) override;
+  StatusOr<google::cloud::networkservices::v1::ListLbTrafficExtensionsResponse> ListLbTrafficExtensions(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::networkservices::v1::ListLbTrafficExtensionsRequest const& request) override;
 
-  StatusOr<google::cloud::networkservices::v1::LbTrafficExtension>
-  GetLbTrafficExtension(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::networkservices::v1::GetLbTrafficExtensionRequest const&
-          request) override;
+  StatusOr<google::cloud::networkservices::v1::LbTrafficExtension> GetLbTrafficExtension(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::networkservices::v1::GetLbTrafficExtensionRequest const& request) override;
 
-  future<StatusOr<google::longrunning::Operation>>
-  AsyncCreateLbTrafficExtension(
+  future<StatusOr<google::longrunning::Operation>> AsyncCreateLbTrafficExtension(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::networkservices::v1::CreateLbTrafficExtensionRequest const&
-          request) override;
+      google::cloud::networkservices::v1::CreateLbTrafficExtensionRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateLbTrafficExtension(
-      grpc::ClientContext& context, Options options,
-      google::cloud::networkservices::v1::CreateLbTrafficExtensionRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::networkservices::v1::CreateLbTrafficExtensionRequest const& request) override;
 
-  future<StatusOr<google::longrunning::Operation>>
-  AsyncUpdateLbTrafficExtension(
+  future<StatusOr<google::longrunning::Operation>> AsyncUpdateLbTrafficExtension(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::networkservices::v1::UpdateLbTrafficExtensionRequest const&
-          request) override;
+      google::cloud::networkservices::v1::UpdateLbTrafficExtensionRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateLbTrafficExtension(
-      grpc::ClientContext& context, Options options,
-      google::cloud::networkservices::v1::UpdateLbTrafficExtensionRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::networkservices::v1::UpdateLbTrafficExtensionRequest const& request) override;
 
-  future<StatusOr<google::longrunning::Operation>>
-  AsyncDeleteLbTrafficExtension(
+  future<StatusOr<google::longrunning::Operation>> AsyncDeleteLbTrafficExtension(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::networkservices::v1::DeleteLbTrafficExtensionRequest const&
-          request) override;
+      google::cloud::networkservices::v1::DeleteLbTrafficExtensionRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteLbTrafficExtension(
-      grpc::ClientContext& context, Options options,
-      google::cloud::networkservices::v1::DeleteLbTrafficExtensionRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::networkservices::v1::DeleteLbTrafficExtensionRequest const& request) override;
 
-  StatusOr<google::cloud::networkservices::v1::ListLbRouteExtensionsResponse>
-  ListLbRouteExtensions(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::networkservices::v1::ListLbRouteExtensionsRequest const&
-          request) override;
+  StatusOr<google::cloud::networkservices::v1::ListLbRouteExtensionsResponse> ListLbRouteExtensions(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::networkservices::v1::ListLbRouteExtensionsRequest const& request) override;
 
-  StatusOr<google::cloud::networkservices::v1::LbRouteExtension>
-  GetLbRouteExtension(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::networkservices::v1::GetLbRouteExtensionRequest const&
-          request) override;
+  StatusOr<google::cloud::networkservices::v1::LbRouteExtension> GetLbRouteExtension(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::networkservices::v1::GetLbRouteExtensionRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateLbRouteExtension(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::networkservices::v1::CreateLbRouteExtensionRequest const&
-          request) override;
+      google::cloud::networkservices::v1::CreateLbRouteExtensionRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateLbRouteExtension(
-      grpc::ClientContext& context, Options options,
-      google::cloud::networkservices::v1::CreateLbRouteExtensionRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::networkservices::v1::CreateLbRouteExtensionRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateLbRouteExtension(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::networkservices::v1::UpdateLbRouteExtensionRequest const&
-          request) override;
+      google::cloud::networkservices::v1::UpdateLbRouteExtensionRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateLbRouteExtension(
-      grpc::ClientContext& context, Options options,
-      google::cloud::networkservices::v1::UpdateLbRouteExtensionRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::networkservices::v1::UpdateLbRouteExtensionRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteLbRouteExtension(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::networkservices::v1::DeleteLbRouteExtensionRequest const&
-          request) override;
+      google::cloud::networkservices::v1::DeleteLbRouteExtensionRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteLbRouteExtension(
-      grpc::ClientContext& context, Options options,
-      google::cloud::networkservices::v1::DeleteLbRouteExtensionRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::networkservices::v1::DeleteLbRouteExtensionRequest const& request) override;
+
+  StatusOr<google::cloud::networkservices::v1::ListAuthzExtensionsResponse> ListAuthzExtensions(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::networkservices::v1::ListAuthzExtensionsRequest const& request) override;
+
+  StatusOr<google::cloud::networkservices::v1::AuthzExtension> GetAuthzExtension(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::networkservices::v1::GetAuthzExtensionRequest const& request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncCreateAuthzExtension(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::networkservices::v1::CreateAuthzExtensionRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> CreateAuthzExtension(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::networkservices::v1::CreateAuthzExtensionRequest const& request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncUpdateAuthzExtension(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::networkservices::v1::UpdateAuthzExtensionRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> UpdateAuthzExtension(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::networkservices::v1::UpdateAuthzExtensionRequest const& request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncDeleteAuthzExtension(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::networkservices::v1::DeleteAuthzExtensionRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteAuthzExtension(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::networkservices::v1::DeleteAuthzExtensionRequest const& request) override;
 
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::location::ListLocationsRequest const& request) override;
 
   StatusOr<google::cloud::location::Location> GetLocation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::location::GetLocationRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status DeleteOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::DeleteOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(

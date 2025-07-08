@@ -32,18 +32,20 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 AutoscalingPolicyServiceLogging::AutoscalingPolicyServiceLogging(
     std::shared_ptr<AutoscalingPolicyServiceStub> child,
-    TracingOptions tracing_options, std::set<std::string> const&)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
+    TracingOptions tracing_options,
+    std::set<std::string> const&)
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy>
 AutoscalingPolicyServiceLogging::CreateAutoscalingPolicy(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::dataproc::v1::CreateAutoscalingPolicyRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::dataproc::v1::CreateAutoscalingPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dataproc::v1::CreateAutoscalingPolicyRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::dataproc::v1::CreateAutoscalingPolicyRequest const& request) {
         return child_->CreateAutoscalingPolicy(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -51,13 +53,13 @@ AutoscalingPolicyServiceLogging::CreateAutoscalingPolicy(
 
 StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy>
 AutoscalingPolicyServiceLogging::UpdateAutoscalingPolicy(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::dataproc::v1::UpdateAutoscalingPolicyRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::dataproc::v1::UpdateAutoscalingPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dataproc::v1::UpdateAutoscalingPolicyRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::dataproc::v1::UpdateAutoscalingPolicyRequest const& request) {
         return child_->UpdateAutoscalingPolicy(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -65,12 +67,13 @@ AutoscalingPolicyServiceLogging::UpdateAutoscalingPolicy(
 
 StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy>
 AutoscalingPolicyServiceLogging::GetAutoscalingPolicy(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dataproc::v1::GetAutoscalingPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dataproc::v1::GetAutoscalingPolicyRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::dataproc::v1::GetAutoscalingPolicyRequest const& request) {
         return child_->GetAutoscalingPolicy(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -78,47 +81,54 @@ AutoscalingPolicyServiceLogging::GetAutoscalingPolicy(
 
 StatusOr<google::cloud::dataproc::v1::ListAutoscalingPoliciesResponse>
 AutoscalingPolicyServiceLogging::ListAutoscalingPolicies(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::dataproc::v1::ListAutoscalingPoliciesRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::dataproc::v1::ListAutoscalingPoliciesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dataproc::v1::ListAutoscalingPoliciesRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::dataproc::v1::ListAutoscalingPoliciesRequest const& request) {
         return child_->ListAutoscalingPolicies(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status AutoscalingPolicyServiceLogging::DeleteAutoscalingPolicy(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::dataproc::v1::DeleteAutoscalingPolicyRequest const&
-        request) {
+Status
+AutoscalingPolicyServiceLogging::DeleteAutoscalingPolicy(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::dataproc::v1::DeleteAutoscalingPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dataproc::v1::DeleteAutoscalingPolicyRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::dataproc::v1::DeleteAutoscalingPolicyRequest const& request) {
         return child_->DeleteAutoscalingPolicy(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::iam::v1::Policy> AutoscalingPolicyServiceLogging::SetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::iam::v1::Policy>
+AutoscalingPolicyServiceLogging::SetIamPolicy(
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::iam::v1::SetIamPolicyRequest const& request) {
         return child_->SetIamPolicy(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::iam::v1::Policy> AutoscalingPolicyServiceLogging::GetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::iam::v1::Policy>
+AutoscalingPolicyServiceLogging::GetIamPolicy(
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::iam::v1::GetIamPolicyRequest const& request) {
         return child_->GetIamPolicy(context, options, request);
       },
@@ -127,10 +137,12 @@ StatusOr<google::iam::v1::Policy> AutoscalingPolicyServiceLogging::GetIamPolicy(
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 AutoscalingPolicyServiceLogging::TestIamPermissions(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::iam::v1::TestIamPermissionsRequest const& request) {
         return child_->TestIamPermissions(context, options, request);
       },
@@ -139,10 +151,12 @@ AutoscalingPolicyServiceLogging::TestIamPermissions(
 
 StatusOr<google::longrunning::ListOperationsResponse>
 AutoscalingPolicyServiceLogging::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::ListOperationsRequest const& request) {
         return child_->ListOperations(context, options, request);
       },
@@ -151,32 +165,40 @@ AutoscalingPolicyServiceLogging::ListOperations(
 
 StatusOr<google::longrunning::Operation>
 AutoscalingPolicyServiceLogging::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::GetOperationRequest const& request) {
         return child_->GetOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status AutoscalingPolicyServiceLogging::DeleteOperation(
-    grpc::ClientContext& context, Options const& options,
+Status
+AutoscalingPolicyServiceLogging::DeleteOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::DeleteOperationRequest const& request) {
         return child_->DeleteOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status AutoscalingPolicyServiceLogging::CancelOperation(
-    grpc::ClientContext& context, Options const& options,
+Status
+AutoscalingPolicyServiceLogging::CancelOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::CancelOperationRequest const& request) {
         return child_->CancelOperation(context, options, request);
       },

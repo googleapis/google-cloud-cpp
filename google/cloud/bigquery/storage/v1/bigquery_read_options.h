@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_STORAGE_V1_BIGQUERY_READ_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_STORAGE_V1_BIGQUERY_READ_OPTIONS_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/bigquery/storage/v1/bigquery_read_connection.h"
 #include "google/cloud/bigquery/storage/v1/bigquery_read_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -64,7 +64,8 @@ struct BigQueryReadConnectionIdempotencyPolicyOption {
  * @ingroup google-cloud-bigquery-options
  */
 using BigQueryReadPolicyOptionList =
-    OptionList<BigQueryReadRetryPolicyOption, BigQueryReadBackoffPolicyOption,
+    OptionList<BigQueryReadRetryPolicyOption,
+               BigQueryReadBackoffPolicyOption,
                BigQueryReadConnectionIdempotencyPolicyOption>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

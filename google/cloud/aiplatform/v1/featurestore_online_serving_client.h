@@ -62,31 +62,23 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class FeaturestoreOnlineServingServiceClient {
  public:
-  explicit FeaturestoreOnlineServingServiceClient(
-      std::shared_ptr<FeaturestoreOnlineServingServiceConnection> connection,
-      Options opts = {});
+  explicit FeaturestoreOnlineServingServiceClient(std::shared_ptr<FeaturestoreOnlineServingServiceConnection> connection, Options opts = {});
   ~FeaturestoreOnlineServingServiceClient();
 
   ///@{
   /// @name Copy and move support
-  FeaturestoreOnlineServingServiceClient(
-      FeaturestoreOnlineServingServiceClient const&) = default;
-  FeaturestoreOnlineServingServiceClient& operator=(
-      FeaturestoreOnlineServingServiceClient const&) = default;
-  FeaturestoreOnlineServingServiceClient(
-      FeaturestoreOnlineServingServiceClient&&) = default;
-  FeaturestoreOnlineServingServiceClient& operator=(
-      FeaturestoreOnlineServingServiceClient&&) = default;
+  FeaturestoreOnlineServingServiceClient(FeaturestoreOnlineServingServiceClient const&) = default;
+  FeaturestoreOnlineServingServiceClient& operator=(FeaturestoreOnlineServingServiceClient const&) = default;
+  FeaturestoreOnlineServingServiceClient(FeaturestoreOnlineServingServiceClient&&) = default;
+  FeaturestoreOnlineServingServiceClient& operator=(FeaturestoreOnlineServingServiceClient&&) = default;
   ///@}
 
   ///@{
   /// @name Equality
-  friend bool operator==(FeaturestoreOnlineServingServiceClient const& a,
-                         FeaturestoreOnlineServingServiceClient const& b) {
+  friend bool operator==(FeaturestoreOnlineServingServiceClient const& a, FeaturestoreOnlineServingServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(FeaturestoreOnlineServingServiceClient const& a,
-                         FeaturestoreOnlineServingServiceClient const& b) {
+  friend bool operator!=(FeaturestoreOnlineServingServiceClient const& a, FeaturestoreOnlineServingServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -152,9 +144,7 @@ class FeaturestoreOnlineServingServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::ReadFeatureValuesResponse>
-  ReadFeatureValues(
-      google::cloud::aiplatform::v1::ReadFeatureValuesRequest const& request,
-      Options opts = {});
+  ReadFeatureValues(google::cloud::aiplatform::v1::ReadFeatureValuesRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -218,10 +208,7 @@ class FeaturestoreOnlineServingServiceClient {
   ///
   // clang-format on
   StreamRange<google::cloud::aiplatform::v1::ReadFeatureValuesResponse>
-  StreamingReadFeatureValues(
-      google::cloud::aiplatform::v1::StreamingReadFeatureValuesRequest const&
-          request,
-      Options opts = {});
+  StreamingReadFeatureValues(google::cloud::aiplatform::v1::StreamingReadFeatureValuesRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -257,12 +244,7 @@ class FeaturestoreOnlineServingServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::WriteFeatureValuesResponse>
-  WriteFeatureValues(
-      std::string const& entity_type,
-      std::vector<
-          google::cloud::aiplatform::v1::WriteFeatureValuesPayload> const&
-          payloads,
-      Options opts = {});
+  WriteFeatureValues(std::string const& entity_type, std::vector<google::cloud::aiplatform::v1::WriteFeatureValuesPayload> const& payloads, Options opts = {});
 
   // clang-format off
   ///
@@ -296,9 +278,7 @@ class FeaturestoreOnlineServingServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::WriteFeatureValuesResponse>
-  WriteFeatureValues(
-      google::cloud::aiplatform::v1::WriteFeatureValuesRequest const& request,
-      Options opts = {});
+  WriteFeatureValues(google::cloud::aiplatform::v1::WriteFeatureValuesRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -336,8 +316,8 @@ class FeaturestoreOnlineServingServiceClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request, Options opts = {});
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -366,9 +346,8 @@ class FeaturestoreOnlineServingServiceClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -400,8 +379,8 @@ class FeaturestoreOnlineServingServiceClient {
   /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L100}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -432,8 +411,8 @@ class FeaturestoreOnlineServingServiceClient {
   /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -468,9 +447,8 @@ class FeaturestoreOnlineServingServiceClient {
   /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L153}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request,
-      Options opts = {});
+  StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -505,8 +483,8 @@ class FeaturestoreOnlineServingServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -545,8 +523,8 @@ class FeaturestoreOnlineServingServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -572,8 +550,8 @@ class FeaturestoreOnlineServingServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -604,9 +582,8 @@ class FeaturestoreOnlineServingServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -630,7 +607,8 @@ class FeaturestoreOnlineServingServiceClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status DeleteOperation(std::string const& name, Options opts = {});
+  Status
+  DeleteOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -659,9 +637,8 @@ class FeaturestoreOnlineServingServiceClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request,
-      Options opts = {});
+  Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -695,7 +672,8 @@ class FeaturestoreOnlineServingServiceClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(std::string const& name, Options opts = {});
+  Status
+  CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -734,9 +712,8 @@ class FeaturestoreOnlineServingServiceClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request,
-      Options opts = {});
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -773,9 +750,8 @@ class FeaturestoreOnlineServingServiceClient {
   /// [google.longrunning.WaitOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L207}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> WaitOperation(
-      google::longrunning::WaitOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  WaitOperation(google::longrunning::WaitOperationRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<FeaturestoreOnlineServingServiceConnection> connection_;

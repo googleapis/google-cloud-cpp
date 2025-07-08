@@ -26,16 +26,11 @@ namespace cloud {
 namespace edgecontainer {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use
-/// edgecontainer_v1::MakeDefaultEdgeContainerConnectionIdempotencyPolicy
-/// directly.
-using ::google::cloud::edgecontainer_v1::
-    MakeDefaultEdgeContainerConnectionIdempotencyPolicy;
+/// @deprecated Use edgecontainer_v1::MakeDefaultEdgeContainerConnectionIdempotencyPolicy directly.
+using ::google::cloud::edgecontainer_v1::MakeDefaultEdgeContainerConnectionIdempotencyPolicy;
 
-/// @deprecated Use edgecontainer_v1::EdgeContainerConnectionIdempotencyPolicy
-/// directly.
-using ::google::cloud::edgecontainer_v1::
-    EdgeContainerConnectionIdempotencyPolicy;
+/// @deprecated Use edgecontainer_v1::EdgeContainerConnectionIdempotencyPolicy directly.
+using ::google::cloud::edgecontainer_v1::EdgeContainerConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace edgecontainer

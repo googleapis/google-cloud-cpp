@@ -36,7 +36,7 @@ class SqlInstanceNamesServiceTracingConnection
   ~SqlInstanceNamesServiceTracingConnection() override = default;
 
   explicit SqlInstanceNamesServiceTracingConnection(
-      std::shared_ptr<sql_v1::SqlInstanceNamesServiceConnection> child);
+    std::shared_ptr<sql_v1::SqlInstanceNamesServiceConnection> child);
 
   Options options() override { return child_->options(); }
 

@@ -32,19 +32,20 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 RecaptchaEnterpriseServiceLogging::RecaptchaEnterpriseServiceLogging(
     std::shared_ptr<RecaptchaEnterpriseServiceStub> child,
-    TracingOptions tracing_options, std::set<std::string> const&)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
+    TracingOptions tracing_options,
+    std::set<std::string> const&)
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::cloud::recaptchaenterprise::v1::Assessment>
 RecaptchaEnterpriseServiceLogging::CreateAssessment(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::recaptchaenterprise::v1::CreateAssessmentRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::recaptchaenterprise::v1::CreateAssessmentRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::recaptchaenterprise::v1::CreateAssessmentRequest const&
-              request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::recaptchaenterprise::v1::CreateAssessmentRequest const& request) {
         return child_->CreateAssessment(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -52,13 +53,13 @@ RecaptchaEnterpriseServiceLogging::CreateAssessment(
 
 StatusOr<google::cloud::recaptchaenterprise::v1::AnnotateAssessmentResponse>
 RecaptchaEnterpriseServiceLogging::AnnotateAssessment(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::recaptchaenterprise::v1::AnnotateAssessmentRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::recaptchaenterprise::v1::AnnotateAssessmentRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::recaptchaenterprise::v1::
-                 AnnotateAssessmentRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::recaptchaenterprise::v1::AnnotateAssessmentRequest const& request) {
         return child_->AnnotateAssessment(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -66,12 +67,13 @@ RecaptchaEnterpriseServiceLogging::AnnotateAssessment(
 
 StatusOr<google::cloud::recaptchaenterprise::v1::Key>
 RecaptchaEnterpriseServiceLogging::CreateKey(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::recaptchaenterprise::v1::CreateKeyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::recaptchaenterprise::v1::CreateKeyRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::recaptchaenterprise::v1::CreateKeyRequest const& request) {
         return child_->CreateKey(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -79,27 +81,27 @@ RecaptchaEnterpriseServiceLogging::CreateKey(
 
 StatusOr<google::cloud::recaptchaenterprise::v1::ListKeysResponse>
 RecaptchaEnterpriseServiceLogging::ListKeys(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::recaptchaenterprise::v1::ListKeysRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::recaptchaenterprise::v1::ListKeysRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::recaptchaenterprise::v1::ListKeysRequest const& request) {
         return child_->ListKeys(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<
-    google::cloud::recaptchaenterprise::v1::RetrieveLegacySecretKeyResponse>
+StatusOr<google::cloud::recaptchaenterprise::v1::RetrieveLegacySecretKeyResponse>
 RecaptchaEnterpriseServiceLogging::RetrieveLegacySecretKey(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::recaptchaenterprise::v1::
-        RetrieveLegacySecretKeyRequest const& request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::recaptchaenterprise::v1::RetrieveLegacySecretKeyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::recaptchaenterprise::v1::
-                 RetrieveLegacySecretKeyRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::recaptchaenterprise::v1::RetrieveLegacySecretKeyRequest const& request) {
         return child_->RetrieveLegacySecretKey(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -107,35 +109,41 @@ RecaptchaEnterpriseServiceLogging::RetrieveLegacySecretKey(
 
 StatusOr<google::cloud::recaptchaenterprise::v1::Key>
 RecaptchaEnterpriseServiceLogging::GetKey(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::recaptchaenterprise::v1::GetKeyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::recaptchaenterprise::v1::GetKeyRequest const&
-                 request) { return child_->GetKey(context, options, request); },
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::recaptchaenterprise::v1::GetKeyRequest const& request) {
+        return child_->GetKey(context, options, request);
+      },
       context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::recaptchaenterprise::v1::Key>
 RecaptchaEnterpriseServiceLogging::UpdateKey(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::recaptchaenterprise::v1::UpdateKeyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::recaptchaenterprise::v1::UpdateKeyRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::recaptchaenterprise::v1::UpdateKeyRequest const& request) {
         return child_->UpdateKey(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status RecaptchaEnterpriseServiceLogging::DeleteKey(
-    grpc::ClientContext& context, Options const& options,
+Status
+RecaptchaEnterpriseServiceLogging::DeleteKey(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::recaptchaenterprise::v1::DeleteKeyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::recaptchaenterprise::v1::DeleteKeyRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::recaptchaenterprise::v1::DeleteKeyRequest const& request) {
         return child_->DeleteKey(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -143,12 +151,13 @@ Status RecaptchaEnterpriseServiceLogging::DeleteKey(
 
 StatusOr<google::cloud::recaptchaenterprise::v1::Key>
 RecaptchaEnterpriseServiceLogging::MigrateKey(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::recaptchaenterprise::v1::MigrateKeyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::recaptchaenterprise::v1::MigrateKeyRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::recaptchaenterprise::v1::MigrateKeyRequest const& request) {
         return child_->MigrateKey(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -156,13 +165,13 @@ RecaptchaEnterpriseServiceLogging::MigrateKey(
 
 StatusOr<google::cloud::recaptchaenterprise::v1::AddIpOverrideResponse>
 RecaptchaEnterpriseServiceLogging::AddIpOverride(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::recaptchaenterprise::v1::AddIpOverrideRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::recaptchaenterprise::v1::AddIpOverrideRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::recaptchaenterprise::v1::AddIpOverrideRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::recaptchaenterprise::v1::AddIpOverrideRequest const& request) {
         return child_->AddIpOverride(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -170,14 +179,13 @@ RecaptchaEnterpriseServiceLogging::AddIpOverride(
 
 StatusOr<google::cloud::recaptchaenterprise::v1::RemoveIpOverrideResponse>
 RecaptchaEnterpriseServiceLogging::RemoveIpOverride(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::recaptchaenterprise::v1::RemoveIpOverrideRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::recaptchaenterprise::v1::RemoveIpOverrideRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::recaptchaenterprise::v1::RemoveIpOverrideRequest const&
-              request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::recaptchaenterprise::v1::RemoveIpOverrideRequest const& request) {
         return child_->RemoveIpOverride(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -185,14 +193,13 @@ RecaptchaEnterpriseServiceLogging::RemoveIpOverride(
 
 StatusOr<google::cloud::recaptchaenterprise::v1::ListIpOverridesResponse>
 RecaptchaEnterpriseServiceLogging::ListIpOverrides(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::recaptchaenterprise::v1::ListIpOverridesRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::recaptchaenterprise::v1::ListIpOverridesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::recaptchaenterprise::v1::ListIpOverridesRequest const&
-              request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::recaptchaenterprise::v1::ListIpOverridesRequest const& request) {
         return child_->ListIpOverrides(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -200,12 +207,13 @@ RecaptchaEnterpriseServiceLogging::ListIpOverrides(
 
 StatusOr<google::cloud::recaptchaenterprise::v1::Metrics>
 RecaptchaEnterpriseServiceLogging::GetMetrics(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::recaptchaenterprise::v1::GetMetricsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::recaptchaenterprise::v1::GetMetricsRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::recaptchaenterprise::v1::GetMetricsRequest const& request) {
         return child_->GetMetrics(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -213,13 +221,13 @@ RecaptchaEnterpriseServiceLogging::GetMetrics(
 
 StatusOr<google::cloud::recaptchaenterprise::v1::FirewallPolicy>
 RecaptchaEnterpriseServiceLogging::CreateFirewallPolicy(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::recaptchaenterprise::v1::CreateFirewallPolicyRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::recaptchaenterprise::v1::CreateFirewallPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::recaptchaenterprise::v1::
-                 CreateFirewallPolicyRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::recaptchaenterprise::v1::CreateFirewallPolicyRequest const& request) {
         return child_->CreateFirewallPolicy(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -227,13 +235,13 @@ RecaptchaEnterpriseServiceLogging::CreateFirewallPolicy(
 
 StatusOr<google::cloud::recaptchaenterprise::v1::ListFirewallPoliciesResponse>
 RecaptchaEnterpriseServiceLogging::ListFirewallPolicies(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::recaptchaenterprise::v1::ListFirewallPoliciesRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::recaptchaenterprise::v1::ListFirewallPoliciesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::recaptchaenterprise::v1::
-                 ListFirewallPoliciesRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::recaptchaenterprise::v1::ListFirewallPoliciesRequest const& request) {
         return child_->ListFirewallPolicies(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -241,13 +249,13 @@ RecaptchaEnterpriseServiceLogging::ListFirewallPolicies(
 
 StatusOr<google::cloud::recaptchaenterprise::v1::FirewallPolicy>
 RecaptchaEnterpriseServiceLogging::GetFirewallPolicy(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::recaptchaenterprise::v1::GetFirewallPolicyRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::recaptchaenterprise::v1::GetFirewallPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::recaptchaenterprise::v1::
-                 GetFirewallPolicyRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::recaptchaenterprise::v1::GetFirewallPolicyRequest const& request) {
         return child_->GetFirewallPolicy(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -255,89 +263,84 @@ RecaptchaEnterpriseServiceLogging::GetFirewallPolicy(
 
 StatusOr<google::cloud::recaptchaenterprise::v1::FirewallPolicy>
 RecaptchaEnterpriseServiceLogging::UpdateFirewallPolicy(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::recaptchaenterprise::v1::UpdateFirewallPolicyRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::recaptchaenterprise::v1::UpdateFirewallPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::recaptchaenterprise::v1::
-                 UpdateFirewallPolicyRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::recaptchaenterprise::v1::UpdateFirewallPolicyRequest const& request) {
         return child_->UpdateFirewallPolicy(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status RecaptchaEnterpriseServiceLogging::DeleteFirewallPolicy(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::recaptchaenterprise::v1::DeleteFirewallPolicyRequest const&
-        request) {
+Status
+RecaptchaEnterpriseServiceLogging::DeleteFirewallPolicy(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::recaptchaenterprise::v1::DeleteFirewallPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::recaptchaenterprise::v1::
-                 DeleteFirewallPolicyRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::recaptchaenterprise::v1::DeleteFirewallPolicyRequest const& request) {
         return child_->DeleteFirewallPolicy(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<
-    google::cloud::recaptchaenterprise::v1::ReorderFirewallPoliciesResponse>
+StatusOr<google::cloud::recaptchaenterprise::v1::ReorderFirewallPoliciesResponse>
 RecaptchaEnterpriseServiceLogging::ReorderFirewallPolicies(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::recaptchaenterprise::v1::
-        ReorderFirewallPoliciesRequest const& request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::recaptchaenterprise::v1::ReorderFirewallPoliciesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::recaptchaenterprise::v1::
-                 ReorderFirewallPoliciesRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::recaptchaenterprise::v1::ReorderFirewallPoliciesRequest const& request) {
         return child_->ReorderFirewallPolicies(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<
-    google::cloud::recaptchaenterprise::v1::ListRelatedAccountGroupsResponse>
+StatusOr<google::cloud::recaptchaenterprise::v1::ListRelatedAccountGroupsResponse>
 RecaptchaEnterpriseServiceLogging::ListRelatedAccountGroups(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::recaptchaenterprise::v1::
-        ListRelatedAccountGroupsRequest const& request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::recaptchaenterprise::v1::ListRelatedAccountGroupsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::recaptchaenterprise::v1::
-                 ListRelatedAccountGroupsRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::recaptchaenterprise::v1::ListRelatedAccountGroupsRequest const& request) {
         return child_->ListRelatedAccountGroups(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::cloud::recaptchaenterprise::v1::
-             ListRelatedAccountGroupMembershipsResponse>
+StatusOr<google::cloud::recaptchaenterprise::v1::ListRelatedAccountGroupMembershipsResponse>
 RecaptchaEnterpriseServiceLogging::ListRelatedAccountGroupMemberships(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::recaptchaenterprise::v1::
-        ListRelatedAccountGroupMembershipsRequest const& request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::recaptchaenterprise::v1::ListRelatedAccountGroupMembershipsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::recaptchaenterprise::v1::
-                 ListRelatedAccountGroupMembershipsRequest const& request) {
-        return child_->ListRelatedAccountGroupMemberships(context, options,
-                                                          request);
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::recaptchaenterprise::v1::ListRelatedAccountGroupMembershipsRequest const& request) {
+        return child_->ListRelatedAccountGroupMemberships(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::cloud::recaptchaenterprise::v1::
-             SearchRelatedAccountGroupMembershipsResponse>
+StatusOr<google::cloud::recaptchaenterprise::v1::SearchRelatedAccountGroupMembershipsResponse>
 RecaptchaEnterpriseServiceLogging::SearchRelatedAccountGroupMemberships(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::recaptchaenterprise::v1::
-        SearchRelatedAccountGroupMembershipsRequest const& request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::recaptchaenterprise::v1::SearchRelatedAccountGroupMembershipsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::recaptchaenterprise::v1::
-                 SearchRelatedAccountGroupMembershipsRequest const& request) {
-        return child_->SearchRelatedAccountGroupMemberships(context, options,
-                                                            request);
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::recaptchaenterprise::v1::SearchRelatedAccountGroupMembershipsRequest const& request) {
+        return child_->SearchRelatedAccountGroupMemberships(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }

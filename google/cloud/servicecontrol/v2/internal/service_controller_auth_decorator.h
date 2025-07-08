@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SERVICECONTROL_V2_INTERNAL_SERVICE_CONTROLLER_AUTH_DECORATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SERVICECONTROL_V2_INTERNAL_SERVICE_CONTROLLER_AUTH_DECORATOR_H
 
-#include "google/cloud/servicecontrol/v2/internal/service_controller_stub.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/servicecontrol/v2/internal/service_controller_stub.h"
 #include "google/cloud/version.h"
 #include <memory>
 #include <set>
@@ -39,11 +39,13 @@ class ServiceControllerAuth : public ServiceControllerStub {
       std::shared_ptr<ServiceControllerStub> child);
 
   StatusOr<google::api::servicecontrol::v2::CheckResponse> Check(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::api::servicecontrol::v2::CheckRequest const& request) override;
 
   StatusOr<google::api::servicecontrol::v2::ReportResponse> Report(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::api::servicecontrol::v2::ReportRequest const& request) override;
 
  private:

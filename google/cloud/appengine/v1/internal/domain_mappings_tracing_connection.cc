@@ -34,44 +34,37 @@ DomainMappingsTracingConnection::DomainMappingsTracingConnection(
     : child_(std::move(child)) {}
 
 StreamRange<google::appengine::v1::DomainMapping>
-DomainMappingsTracingConnection::ListDomainMappings(
-    google::appengine::v1::ListDomainMappingsRequest request) {
-  auto span = internal::MakeSpan(
-      "appengine_v1::DomainMappingsConnection::ListDomainMappings");
+DomainMappingsTracingConnection::ListDomainMappings(google::appengine::v1::ListDomainMappingsRequest request) {
+  auto span = internal::MakeSpan("appengine_v1::DomainMappingsConnection::ListDomainMappings");
   internal::OTelScope scope(span);
   auto sr = child_->ListDomainMappings(std::move(request));
   return internal::MakeTracedStreamRange<google::appengine::v1::DomainMapping>(
-      std::move(span), std::move(sr));
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::appengine::v1::DomainMapping>
-DomainMappingsTracingConnection::GetDomainMapping(
-    google::appengine::v1::GetDomainMappingRequest const& request) {
-  auto span = internal::MakeSpan(
-      "appengine_v1::DomainMappingsConnection::GetDomainMapping");
+DomainMappingsTracingConnection::GetDomainMapping(google::appengine::v1::GetDomainMappingRequest const& request) {
+  auto span = internal::MakeSpan("appengine_v1::DomainMappingsConnection::GetDomainMapping");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetDomainMapping(request));
 }
 
 future<StatusOr<google::appengine::v1::DomainMapping>>
-DomainMappingsTracingConnection::CreateDomainMapping(
-    google::appengine::v1::CreateDomainMappingRequest const& request) {
+DomainMappingsTracingConnection::CreateDomainMapping(google::appengine::v1::CreateDomainMappingRequest const& request) {
   auto span = internal::MakeSpan(
       "appengine_v1::DomainMappingsConnection::CreateDomainMapping");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->CreateDomainMapping(request));
+  return internal::EndSpan(std::move(span), child_->CreateDomainMapping(request));
 }
 
 StatusOr<google::longrunning::Operation>
 DomainMappingsTracingConnection::CreateDomainMapping(
-    NoAwaitTag,
-    google::appengine::v1::CreateDomainMappingRequest const& request) {
+    NoAwaitTag, google::appengine::v1::CreateDomainMappingRequest const& request) {
   auto span = internal::MakeSpan(
       "appengine_v1::DomainMappingsConnection::CreateDomainMapping");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span,
-                           child_->CreateDomainMapping(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->CreateDomainMapping(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::appengine::v1::DomainMapping>>
@@ -81,28 +74,25 @@ DomainMappingsTracingConnection::CreateDomainMapping(
       "appengine_v1::DomainMappingsConnection::CreateDomainMapping");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->CreateDomainMapping(operation));
+      child_->CreateDomainMapping(operation));
 }
 
 future<StatusOr<google::appengine::v1::DomainMapping>>
-DomainMappingsTracingConnection::UpdateDomainMapping(
-    google::appengine::v1::UpdateDomainMappingRequest const& request) {
+DomainMappingsTracingConnection::UpdateDomainMapping(google::appengine::v1::UpdateDomainMappingRequest const& request) {
   auto span = internal::MakeSpan(
       "appengine_v1::DomainMappingsConnection::UpdateDomainMapping");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->UpdateDomainMapping(request));
+  return internal::EndSpan(std::move(span), child_->UpdateDomainMapping(request));
 }
 
 StatusOr<google::longrunning::Operation>
 DomainMappingsTracingConnection::UpdateDomainMapping(
-    NoAwaitTag,
-    google::appengine::v1::UpdateDomainMappingRequest const& request) {
+    NoAwaitTag, google::appengine::v1::UpdateDomainMappingRequest const& request) {
   auto span = internal::MakeSpan(
       "appengine_v1::DomainMappingsConnection::UpdateDomainMapping");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span,
-                           child_->UpdateDomainMapping(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->UpdateDomainMapping(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::appengine::v1::DomainMapping>>
@@ -112,28 +102,25 @@ DomainMappingsTracingConnection::UpdateDomainMapping(
       "appengine_v1::DomainMappingsConnection::UpdateDomainMapping");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->UpdateDomainMapping(operation));
+      child_->UpdateDomainMapping(operation));
 }
 
 future<StatusOr<google::appengine::v1::OperationMetadataV1>>
-DomainMappingsTracingConnection::DeleteDomainMapping(
-    google::appengine::v1::DeleteDomainMappingRequest const& request) {
+DomainMappingsTracingConnection::DeleteDomainMapping(google::appengine::v1::DeleteDomainMappingRequest const& request) {
   auto span = internal::MakeSpan(
       "appengine_v1::DomainMappingsConnection::DeleteDomainMapping");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->DeleteDomainMapping(request));
+  return internal::EndSpan(std::move(span), child_->DeleteDomainMapping(request));
 }
 
 StatusOr<google::longrunning::Operation>
 DomainMappingsTracingConnection::DeleteDomainMapping(
-    NoAwaitTag,
-    google::appengine::v1::DeleteDomainMappingRequest const& request) {
+    NoAwaitTag, google::appengine::v1::DeleteDomainMappingRequest const& request) {
   auto span = internal::MakeSpan(
       "appengine_v1::DomainMappingsConnection::DeleteDomainMapping");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span,
-                           child_->DeleteDomainMapping(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->DeleteDomainMapping(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::appengine::v1::OperationMetadataV1>>
@@ -143,7 +130,7 @@ DomainMappingsTracingConnection::DeleteDomainMapping(
       "appengine_v1::DomainMappingsConnection::DeleteDomainMapping");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->DeleteDomainMapping(operation));
+      child_->DeleteDomainMapping(operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

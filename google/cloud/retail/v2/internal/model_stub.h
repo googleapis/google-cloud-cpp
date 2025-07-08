@@ -24,8 +24,8 @@
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/cloud/retail/v2/model_service.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
+#include <google/cloud/retail/v2/model_service.grpc.pb.h>
 #include <memory>
 #include <utility>
 
@@ -45,31 +45,38 @@ class ModelServiceStub {
       google::cloud::retail::v2::CreateModelRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> CreateModel(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::cloud::retail::v2::CreateModelRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::retail::v2::Model> GetModel(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::retail::v2::GetModelRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::retail::v2::Model> PauseModel(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::retail::v2::PauseModelRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::retail::v2::Model> ResumeModel(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::retail::v2::ResumeModelRequest const& request) = 0;
 
   virtual Status DeleteModel(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::retail::v2::DeleteModelRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::retail::v2::ListModelsResponse> ListModels(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::retail::v2::ListModelsRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::retail::v2::Model> UpdateModel(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::retail::v2::UpdateModelRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncTuneModel(
@@ -79,21 +86,24 @@ class ModelServiceStub {
       google::cloud::retail::v2::TuneModelRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> TuneModel(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::cloud::retail::v2::TuneModelRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::ListOperationsRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
+    google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
@@ -106,10 +116,8 @@ class ModelServiceStub {
 class DefaultModelServiceStub : public ModelServiceStub {
  public:
   DefaultModelServiceStub(
-      std::unique_ptr<google::cloud::retail::v2::ModelService::StubInterface>
-          grpc_stub,
-      std::unique_ptr<google::longrunning::Operations::StubInterface>
-          operations_stub)
+      std::unique_ptr<google::cloud::retail::v2::ModelService::StubInterface> grpc_stub,
+      std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub)
       : grpc_stub_(std::move(grpc_stub)),
         operations_stub_(std::move(operations_stub)) {}
 
@@ -120,31 +128,38 @@ class DefaultModelServiceStub : public ModelServiceStub {
       google::cloud::retail::v2::CreateModelRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateModel(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::cloud::retail::v2::CreateModelRequest const& request) override;
 
   StatusOr<google::cloud::retail::v2::Model> GetModel(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::retail::v2::GetModelRequest const& request) override;
 
   StatusOr<google::cloud::retail::v2::Model> PauseModel(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::retail::v2::PauseModelRequest const& request) override;
 
   StatusOr<google::cloud::retail::v2::Model> ResumeModel(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::retail::v2::ResumeModelRequest const& request) override;
 
   Status DeleteModel(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::retail::v2::DeleteModelRequest const& request) override;
 
   StatusOr<google::cloud::retail::v2::ListModelsResponse> ListModels(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::retail::v2::ListModelsRequest const& request) override;
 
   StatusOr<google::cloud::retail::v2::Model> UpdateModel(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::retail::v2::UpdateModelRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncTuneModel(
@@ -154,15 +169,18 @@ class DefaultModelServiceStub : public ModelServiceStub {
       google::cloud::retail::v2::TuneModelRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> TuneModel(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::cloud::retail::v2::TuneModelRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -178,10 +196,8 @@ class DefaultModelServiceStub : public ModelServiceStub {
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  std::unique_ptr<google::cloud::retail::v2::ModelService::StubInterface>
-      grpc_stub_;
-  std::unique_ptr<google::longrunning::Operations::StubInterface>
-      operations_stub_;
+  std::unique_ptr<google::cloud::retail::v2::ModelService::StubInterface> grpc_stub_;
+  std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

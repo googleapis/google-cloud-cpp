@@ -26,31 +26,27 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-ProfilerServiceConnectionIdempotencyPolicy::
-    ~ProfilerServiceConnectionIdempotencyPolicy() = default;
+ProfilerServiceConnectionIdempotencyPolicy::~ProfilerServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<ProfilerServiceConnectionIdempotencyPolicy>
 ProfilerServiceConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<ProfilerServiceConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency ProfilerServiceConnectionIdempotencyPolicy::CreateProfile(
-    google::devtools::cloudprofiler::v2::CreateProfileRequest const&) {
+Idempotency ProfilerServiceConnectionIdempotencyPolicy::CreateProfile(google::devtools::cloudprofiler::v2::CreateProfileRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ProfilerServiceConnectionIdempotencyPolicy::CreateOfflineProfile(
-    google::devtools::cloudprofiler::v2::CreateOfflineProfileRequest const&) {
+Idempotency ProfilerServiceConnectionIdempotencyPolicy::CreateOfflineProfile(google::devtools::cloudprofiler::v2::CreateOfflineProfileRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ProfilerServiceConnectionIdempotencyPolicy::UpdateProfile(
-    google::devtools::cloudprofiler::v2::UpdateProfileRequest const&) {
+Idempotency ProfilerServiceConnectionIdempotencyPolicy::UpdateProfile(google::devtools::cloudprofiler::v2::UpdateProfileRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<ProfilerServiceConnectionIdempotencyPolicy>
-MakeDefaultProfilerServiceConnectionIdempotencyPolicy() {
+    MakeDefaultProfilerServiceConnectionIdempotencyPolicy() {
   return std::make_unique<ProfilerServiceConnectionIdempotencyPolicy>();
 }
 

@@ -63,8 +63,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class InstancesClient {
  public:
-  explicit InstancesClient(std::shared_ptr<InstancesConnection> connection,
-                           Options opts = {});
+  explicit InstancesClient(std::shared_ptr<InstancesConnection> connection, Options opts = {});
   ~InstancesClient();
 
   ///@{
@@ -124,8 +123,8 @@ class InstancesClient {
   /// [google.appengine.v1.ListInstancesRequest]: @googleapis_reference_link{google/appengine/v1/appengine.proto#L492}
   ///
   // clang-format on
-  StreamRange<google::appengine::v1::Instance> ListInstances(
-      google::appengine::v1::ListInstancesRequest request, Options opts = {});
+  StreamRange<google::appengine::v1::Instance>
+  ListInstances(google::appengine::v1::ListInstancesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -154,9 +153,8 @@ class InstancesClient {
   /// [google.appengine.v1.Instance]: @googleapis_reference_link{google/appengine/v1/instance.proto#L33}
   ///
   // clang-format on
-  StatusOr<google::appengine::v1::Instance> GetInstance(
-      google::appengine::v1::GetInstanceRequest const& request,
-      Options opts = {});
+  StatusOr<google::appengine::v1::Instance>
+  GetInstance(google::appengine::v1::GetInstanceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -203,9 +201,8 @@ class InstancesClient {
   /// [google.appengine.v1.OperationMetadataV1]: @googleapis_reference_link{google/appengine/v1/operation.proto#L30}
   ///
   // clang-format on
-  future<StatusOr<google::appengine::v1::OperationMetadataV1>> DeleteInstance(
-      google::appengine::v1::DeleteInstanceRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::appengine::v1::OperationMetadataV1>>
+  DeleteInstance(google::appengine::v1::DeleteInstanceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -218,9 +215,8 @@ class InstancesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteInstance(
-      NoAwaitTag, google::appengine::v1::DeleteInstanceRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteInstance(NoAwaitTag, google::appengine::v1::DeleteInstanceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -231,8 +227,8 @@ class InstancesClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::appengine::v1::OperationMetadataV1>> DeleteInstance(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::appengine::v1::OperationMetadataV1>>
+  DeleteInstance(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -275,9 +271,8 @@ class InstancesClient {
   /// [google.appengine.v1.Instance]: @googleapis_reference_link{google/appengine/v1/instance.proto#L33}
   ///
   // clang-format on
-  future<StatusOr<google::appengine::v1::Instance>> DebugInstance(
-      google::appengine::v1::DebugInstanceRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::appengine::v1::Instance>>
+  DebugInstance(google::appengine::v1::DebugInstanceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -290,9 +285,8 @@ class InstancesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DebugInstance(
-      NoAwaitTag, google::appengine::v1::DebugInstanceRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DebugInstance(NoAwaitTag, google::appengine::v1::DebugInstanceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -303,8 +297,8 @@ class InstancesClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::appengine::v1::Instance>> DebugInstance(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::appengine::v1::Instance>>
+  DebugInstance(google::longrunning::Operation const& operation, Options opts = {});
 
  private:
   std::shared_ptr<InstancesConnection> connection_;

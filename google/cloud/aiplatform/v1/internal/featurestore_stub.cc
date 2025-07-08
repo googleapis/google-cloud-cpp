@@ -33,17 +33,15 @@ FeaturestoreServiceStub::~FeaturestoreServiceStub() = default;
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultFeaturestoreServiceStub::AsyncCreateFeaturestore(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::aiplatform::v1::CreateFeaturestoreRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::aiplatform::v1::CreateFeaturestoreRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::aiplatform::v1::CreateFeaturestoreRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::aiplatform::v1::CreateFeaturestoreRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::aiplatform::v1::CreateFeaturestoreRequest const&
-                 request,
+             google::cloud::aiplatform::v1::CreateFeaturestoreRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncCreateFeaturestore(context, request, cq);
       },
@@ -52,53 +50,55 @@ DefaultFeaturestoreServiceStub::AsyncCreateFeaturestore(
 
 StatusOr<google::longrunning::Operation>
 DefaultFeaturestoreServiceStub::CreateFeaturestore(
-    grpc::ClientContext& context, Options,
-    google::cloud::aiplatform::v1::CreateFeaturestoreRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->CreateFeaturestore(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::aiplatform::v1::CreateFeaturestoreRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->CreateFeaturestore(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::aiplatform::v1::Featurestore>
 DefaultFeaturestoreServiceStub::GetFeaturestore(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::aiplatform::v1::GetFeaturestoreRequest const& request) {
-  google::cloud::aiplatform::v1::Featurestore response;
-  auto status = grpc_stub_->GetFeaturestore(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::aiplatform::v1::GetFeaturestoreRequest const& request) {
+    google::cloud::aiplatform::v1::Featurestore response;
+    auto status =
+        grpc_stub_->GetFeaturestore(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::aiplatform::v1::ListFeaturestoresResponse>
 DefaultFeaturestoreServiceStub::ListFeaturestores(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::aiplatform::v1::ListFeaturestoresRequest const& request) {
-  google::cloud::aiplatform::v1::ListFeaturestoresResponse response;
-  auto status = grpc_stub_->ListFeaturestores(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::aiplatform::v1::ListFeaturestoresRequest const& request) {
+    google::cloud::aiplatform::v1::ListFeaturestoresResponse response;
+    auto status =
+        grpc_stub_->ListFeaturestores(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultFeaturestoreServiceStub::AsyncUpdateFeaturestore(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::aiplatform::v1::UpdateFeaturestoreRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::aiplatform::v1::UpdateFeaturestoreRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::aiplatform::v1::UpdateFeaturestoreRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::aiplatform::v1::UpdateFeaturestoreRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::aiplatform::v1::UpdateFeaturestoreRequest const&
-                 request,
+             google::cloud::aiplatform::v1::UpdateFeaturestoreRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncUpdateFeaturestore(context, request, cq);
       },
@@ -107,29 +107,29 @@ DefaultFeaturestoreServiceStub::AsyncUpdateFeaturestore(
 
 StatusOr<google::longrunning::Operation>
 DefaultFeaturestoreServiceStub::UpdateFeaturestore(
-    grpc::ClientContext& context, Options,
-    google::cloud::aiplatform::v1::UpdateFeaturestoreRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->UpdateFeaturestore(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::aiplatform::v1::UpdateFeaturestoreRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->UpdateFeaturestore(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultFeaturestoreServiceStub::AsyncDeleteFeaturestore(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::aiplatform::v1::DeleteFeaturestoreRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::aiplatform::v1::DeleteFeaturestoreRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::aiplatform::v1::DeleteFeaturestoreRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::aiplatform::v1::DeleteFeaturestoreRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::aiplatform::v1::DeleteFeaturestoreRequest const&
-                 request,
+             google::cloud::aiplatform::v1::DeleteFeaturestoreRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncDeleteFeaturestore(context, request, cq);
       },
@@ -138,30 +138,30 @@ DefaultFeaturestoreServiceStub::AsyncDeleteFeaturestore(
 
 StatusOr<google::longrunning::Operation>
 DefaultFeaturestoreServiceStub::DeleteFeaturestore(
-    grpc::ClientContext& context, Options,
-    google::cloud::aiplatform::v1::DeleteFeaturestoreRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->DeleteFeaturestore(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::aiplatform::v1::DeleteFeaturestoreRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->DeleteFeaturestore(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultFeaturestoreServiceStub::AsyncCreateEntityType(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::aiplatform::v1::CreateEntityTypeRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::aiplatform::v1::CreateEntityTypeRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::aiplatform::v1::CreateEntityTypeRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::aiplatform::v1::CreateEntityTypeRequest,
+                                    google::longrunning::Operation>(
       cq,
-      [this](
-          grpc::ClientContext* context,
-          google::cloud::aiplatform::v1::CreateEntityTypeRequest const& request,
-          grpc::CompletionQueue* cq) {
+      [this](grpc::ClientContext* context,
+             google::cloud::aiplatform::v1::CreateEntityTypeRequest const& request,
+             grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncCreateEntityType(context, request, cq);
       },
       request, std::move(context));
@@ -169,66 +169,69 @@ DefaultFeaturestoreServiceStub::AsyncCreateEntityType(
 
 StatusOr<google::longrunning::Operation>
 DefaultFeaturestoreServiceStub::CreateEntityType(
-    grpc::ClientContext& context, Options,
-    google::cloud::aiplatform::v1::CreateEntityTypeRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->CreateEntityType(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::aiplatform::v1::CreateEntityTypeRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->CreateEntityType(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::aiplatform::v1::EntityType>
 DefaultFeaturestoreServiceStub::GetEntityType(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::aiplatform::v1::GetEntityTypeRequest const& request) {
-  google::cloud::aiplatform::v1::EntityType response;
-  auto status = grpc_stub_->GetEntityType(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::aiplatform::v1::GetEntityTypeRequest const& request) {
+    google::cloud::aiplatform::v1::EntityType response;
+    auto status =
+        grpc_stub_->GetEntityType(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::aiplatform::v1::ListEntityTypesResponse>
 DefaultFeaturestoreServiceStub::ListEntityTypes(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::aiplatform::v1::ListEntityTypesRequest const& request) {
-  google::cloud::aiplatform::v1::ListEntityTypesResponse response;
-  auto status = grpc_stub_->ListEntityTypes(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::aiplatform::v1::ListEntityTypesRequest const& request) {
+    google::cloud::aiplatform::v1::ListEntityTypesResponse response;
+    auto status =
+        grpc_stub_->ListEntityTypes(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::aiplatform::v1::EntityType>
 DefaultFeaturestoreServiceStub::UpdateEntityType(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::aiplatform::v1::UpdateEntityTypeRequest const& request) {
-  google::cloud::aiplatform::v1::EntityType response;
-  auto status = grpc_stub_->UpdateEntityType(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::aiplatform::v1::UpdateEntityTypeRequest const& request) {
+    google::cloud::aiplatform::v1::EntityType response;
+    auto status =
+        grpc_stub_->UpdateEntityType(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultFeaturestoreServiceStub::AsyncDeleteEntityType(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::aiplatform::v1::DeleteEntityTypeRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::aiplatform::v1::DeleteEntityTypeRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::aiplatform::v1::DeleteEntityTypeRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::aiplatform::v1::DeleteEntityTypeRequest,
+                                    google::longrunning::Operation>(
       cq,
-      [this](
-          grpc::ClientContext* context,
-          google::cloud::aiplatform::v1::DeleteEntityTypeRequest const& request,
-          grpc::CompletionQueue* cq) {
+      [this](grpc::ClientContext* context,
+             google::cloud::aiplatform::v1::DeleteEntityTypeRequest const& request,
+             grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncDeleteEntityType(context, request, cq);
       },
       request, std::move(context));
@@ -236,25 +239,26 @@ DefaultFeaturestoreServiceStub::AsyncDeleteEntityType(
 
 StatusOr<google::longrunning::Operation>
 DefaultFeaturestoreServiceStub::DeleteEntityType(
-    grpc::ClientContext& context, Options,
-    google::cloud::aiplatform::v1::DeleteEntityTypeRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->DeleteEntityType(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::aiplatform::v1::DeleteEntityTypeRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->DeleteEntityType(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultFeaturestoreServiceStub::AsyncCreateFeature(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::aiplatform::v1::CreateFeatureRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::aiplatform::v1::CreateFeatureRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::aiplatform::v1::CreateFeatureRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::aiplatform::v1::CreateFeatureRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
              google::cloud::aiplatform::v1::CreateFeatureRequest const& request,
@@ -266,29 +270,29 @@ DefaultFeaturestoreServiceStub::AsyncCreateFeature(
 
 StatusOr<google::longrunning::Operation>
 DefaultFeaturestoreServiceStub::CreateFeature(
-    grpc::ClientContext& context, Options,
-    google::cloud::aiplatform::v1::CreateFeatureRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->CreateFeature(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::aiplatform::v1::CreateFeatureRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->CreateFeature(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultFeaturestoreServiceStub::AsyncBatchCreateFeatures(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::aiplatform::v1::BatchCreateFeaturesRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::aiplatform::v1::BatchCreateFeaturesRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::aiplatform::v1::BatchCreateFeaturesRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::aiplatform::v1::BatchCreateFeaturesRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::aiplatform::v1::BatchCreateFeaturesRequest const&
-                 request,
+             google::cloud::aiplatform::v1::BatchCreateFeaturesRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncBatchCreateFeatures(context, request, cq);
       },
@@ -297,61 +301,65 @@ DefaultFeaturestoreServiceStub::AsyncBatchCreateFeatures(
 
 StatusOr<google::longrunning::Operation>
 DefaultFeaturestoreServiceStub::BatchCreateFeatures(
-    grpc::ClientContext& context, Options,
-    google::cloud::aiplatform::v1::BatchCreateFeaturesRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->BatchCreateFeatures(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::aiplatform::v1::BatchCreateFeaturesRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->BatchCreateFeatures(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::aiplatform::v1::Feature>
 DefaultFeaturestoreServiceStub::GetFeature(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::aiplatform::v1::GetFeatureRequest const& request) {
-  google::cloud::aiplatform::v1::Feature response;
-  auto status = grpc_stub_->GetFeature(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::aiplatform::v1::GetFeatureRequest const& request) {
+    google::cloud::aiplatform::v1::Feature response;
+    auto status =
+        grpc_stub_->GetFeature(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::aiplatform::v1::ListFeaturesResponse>
 DefaultFeaturestoreServiceStub::ListFeatures(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::aiplatform::v1::ListFeaturesRequest const& request) {
-  google::cloud::aiplatform::v1::ListFeaturesResponse response;
-  auto status = grpc_stub_->ListFeatures(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::aiplatform::v1::ListFeaturesRequest const& request) {
+    google::cloud::aiplatform::v1::ListFeaturesResponse response;
+    auto status =
+        grpc_stub_->ListFeatures(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::aiplatform::v1::Feature>
 DefaultFeaturestoreServiceStub::UpdateFeature(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::aiplatform::v1::UpdateFeatureRequest const& request) {
-  google::cloud::aiplatform::v1::Feature response;
-  auto status = grpc_stub_->UpdateFeature(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::aiplatform::v1::UpdateFeatureRequest const& request) {
+    google::cloud::aiplatform::v1::Feature response;
+    auto status =
+        grpc_stub_->UpdateFeature(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultFeaturestoreServiceStub::AsyncDeleteFeature(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::aiplatform::v1::DeleteFeatureRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::aiplatform::v1::DeleteFeatureRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::aiplatform::v1::DeleteFeatureRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::aiplatform::v1::DeleteFeatureRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
              google::cloud::aiplatform::v1::DeleteFeatureRequest const& request,
@@ -363,29 +371,29 @@ DefaultFeaturestoreServiceStub::AsyncDeleteFeature(
 
 StatusOr<google::longrunning::Operation>
 DefaultFeaturestoreServiceStub::DeleteFeature(
-    grpc::ClientContext& context, Options,
-    google::cloud::aiplatform::v1::DeleteFeatureRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->DeleteFeature(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::aiplatform::v1::DeleteFeatureRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->DeleteFeature(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultFeaturestoreServiceStub::AsyncImportFeatureValues(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::aiplatform::v1::ImportFeatureValuesRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::aiplatform::v1::ImportFeatureValuesRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::aiplatform::v1::ImportFeatureValuesRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::aiplatform::v1::ImportFeatureValuesRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::aiplatform::v1::ImportFeatureValuesRequest const&
-                 request,
+             google::cloud::aiplatform::v1::ImportFeatureValuesRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncImportFeatureValues(context, request, cq);
       },
@@ -394,30 +402,29 @@ DefaultFeaturestoreServiceStub::AsyncImportFeatureValues(
 
 StatusOr<google::longrunning::Operation>
 DefaultFeaturestoreServiceStub::ImportFeatureValues(
-    grpc::ClientContext& context, Options,
-    google::cloud::aiplatform::v1::ImportFeatureValuesRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->ImportFeatureValues(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::aiplatform::v1::ImportFeatureValuesRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->ImportFeatureValues(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultFeaturestoreServiceStub::AsyncBatchReadFeatureValues(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::aiplatform::v1::BatchReadFeatureValuesRequest const&
-        request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::aiplatform::v1::BatchReadFeatureValuesRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::aiplatform::v1::BatchReadFeatureValuesRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::aiplatform::v1::BatchReadFeatureValuesRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::aiplatform::v1::BatchReadFeatureValuesRequest const&
-                 request,
+             google::cloud::aiplatform::v1::BatchReadFeatureValuesRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncBatchReadFeatureValues(context, request, cq);
       },
@@ -426,31 +433,29 @@ DefaultFeaturestoreServiceStub::AsyncBatchReadFeatureValues(
 
 StatusOr<google::longrunning::Operation>
 DefaultFeaturestoreServiceStub::BatchReadFeatureValues(
-    grpc::ClientContext& context, Options,
-    google::cloud::aiplatform::v1::BatchReadFeatureValuesRequest const&
-        request) {
-  google::longrunning::Operation response;
-  auto status =
-      grpc_stub_->BatchReadFeatureValues(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::aiplatform::v1::BatchReadFeatureValuesRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->BatchReadFeatureValues(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultFeaturestoreServiceStub::AsyncExportFeatureValues(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::aiplatform::v1::ExportFeatureValuesRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::aiplatform::v1::ExportFeatureValuesRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::aiplatform::v1::ExportFeatureValuesRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::aiplatform::v1::ExportFeatureValuesRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::aiplatform::v1::ExportFeatureValuesRequest const&
-                 request,
+             google::cloud::aiplatform::v1::ExportFeatureValuesRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncExportFeatureValues(context, request, cq);
       },
@@ -459,29 +464,29 @@ DefaultFeaturestoreServiceStub::AsyncExportFeatureValues(
 
 StatusOr<google::longrunning::Operation>
 DefaultFeaturestoreServiceStub::ExportFeatureValues(
-    grpc::ClientContext& context, Options,
-    google::cloud::aiplatform::v1::ExportFeatureValuesRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->ExportFeatureValues(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::aiplatform::v1::ExportFeatureValuesRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->ExportFeatureValues(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultFeaturestoreServiceStub::AsyncDeleteFeatureValues(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::aiplatform::v1::DeleteFeatureValuesRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::aiplatform::v1::DeleteFeatureValuesRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::aiplatform::v1::DeleteFeatureValuesRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::aiplatform::v1::DeleteFeatureValuesRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::aiplatform::v1::DeleteFeatureValuesRequest const&
-                 request,
+             google::cloud::aiplatform::v1::DeleteFeatureValuesRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncDeleteFeatureValues(context, request, cq);
       },
@@ -490,143 +495,159 @@ DefaultFeaturestoreServiceStub::AsyncDeleteFeatureValues(
 
 StatusOr<google::longrunning::Operation>
 DefaultFeaturestoreServiceStub::DeleteFeatureValues(
-    grpc::ClientContext& context, Options,
-    google::cloud::aiplatform::v1::DeleteFeatureValuesRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->DeleteFeatureValues(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::aiplatform::v1::DeleteFeatureValuesRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->DeleteFeatureValues(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::aiplatform::v1::SearchFeaturesResponse>
 DefaultFeaturestoreServiceStub::SearchFeatures(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::aiplatform::v1::SearchFeaturesRequest const& request) {
-  google::cloud::aiplatform::v1::SearchFeaturesResponse response;
-  auto status = grpc_stub_->SearchFeatures(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::aiplatform::v1::SearchFeaturesRequest const& request) {
+    google::cloud::aiplatform::v1::SearchFeaturesResponse response;
+    auto status =
+        grpc_stub_->SearchFeatures(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 DefaultFeaturestoreServiceStub::ListLocations(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::location::ListLocationsRequest const& request) {
-  google::cloud::location::ListLocationsResponse response;
-  auto status = locations_stub_->ListLocations(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::location::ListLocationsRequest const& request) {
+    google::cloud::location::ListLocationsResponse response;
+    auto status =
+        locations_stub_->ListLocations(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::location::Location>
 DefaultFeaturestoreServiceStub::GetLocation(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::location::GetLocationRequest const& request) {
-  google::cloud::location::Location response;
-  auto status = locations_stub_->GetLocation(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::location::GetLocationRequest const& request) {
+    google::cloud::location::Location response;
+    auto status =
+        locations_stub_->GetLocation(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-StatusOr<google::iam::v1::Policy> DefaultFeaturestoreServiceStub::SetIamPolicy(
-    grpc::ClientContext& context, Options const&,
-    google::iam::v1::SetIamPolicyRequest const& request) {
-  google::iam::v1::Policy response;
-  auto status = iampolicy_stub_->SetIamPolicy(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::iam::v1::Policy>
+DefaultFeaturestoreServiceStub::SetIamPolicy(
+  grpc::ClientContext& context, Options const&,
+  google::iam::v1::SetIamPolicyRequest const& request) {
+    google::iam::v1::Policy response;
+    auto status =
+        iampolicy_stub_->SetIamPolicy(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-StatusOr<google::iam::v1::Policy> DefaultFeaturestoreServiceStub::GetIamPolicy(
-    grpc::ClientContext& context, Options const&,
-    google::iam::v1::GetIamPolicyRequest const& request) {
-  google::iam::v1::Policy response;
-  auto status = iampolicy_stub_->GetIamPolicy(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::iam::v1::Policy>
+DefaultFeaturestoreServiceStub::GetIamPolicy(
+  grpc::ClientContext& context, Options const&,
+  google::iam::v1::GetIamPolicyRequest const& request) {
+    google::iam::v1::Policy response;
+    auto status =
+        iampolicy_stub_->GetIamPolicy(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 DefaultFeaturestoreServiceStub::TestIamPermissions(
-    grpc::ClientContext& context, Options const&,
-    google::iam::v1::TestIamPermissionsRequest const& request) {
-  google::iam::v1::TestIamPermissionsResponse response;
-  auto status =
-      iampolicy_stub_->TestIamPermissions(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::iam::v1::TestIamPermissionsRequest const& request) {
+    google::iam::v1::TestIamPermissionsResponse response;
+    auto status =
+        iampolicy_stub_->TestIamPermissions(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
 DefaultFeaturestoreServiceStub::ListOperations(
-    grpc::ClientContext& context, Options const&,
-    google::longrunning::ListOperationsRequest const& request) {
-  google::longrunning::ListOperationsResponse response;
-  auto status = operations_stub_->ListOperations(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::longrunning::ListOperationsRequest const& request) {
+    google::longrunning::ListOperationsResponse response;
+    auto status =
+        operations_stub_->ListOperations(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::longrunning::Operation>
 DefaultFeaturestoreServiceStub::GetOperation(
-    grpc::ClientContext& context, Options const&,
-    google::longrunning::GetOperationRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = operations_stub_->GetOperation(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::longrunning::GetOperationRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        operations_stub_->GetOperation(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-Status DefaultFeaturestoreServiceStub::DeleteOperation(
-    grpc::ClientContext& context, Options const&,
-    google::longrunning::DeleteOperationRequest const& request) {
-  google::protobuf::Empty response;
-  auto status = operations_stub_->DeleteOperation(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return google::cloud::Status();
+Status
+DefaultFeaturestoreServiceStub::DeleteOperation(
+  grpc::ClientContext& context, Options const&,
+  google::longrunning::DeleteOperationRequest const& request) {
+    google::protobuf::Empty response;
+    auto status =
+        operations_stub_->DeleteOperation(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return google::cloud::Status();
 }
 
-Status DefaultFeaturestoreServiceStub::CancelOperation(
-    grpc::ClientContext& context, Options const&,
-    google::longrunning::CancelOperationRequest const& request) {
-  google::protobuf::Empty response;
-  auto status = operations_stub_->CancelOperation(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return google::cloud::Status();
+Status
+DefaultFeaturestoreServiceStub::CancelOperation(
+  grpc::ClientContext& context, Options const&,
+  google::longrunning::CancelOperationRequest const& request) {
+    google::protobuf::Empty response;
+    auto status =
+        operations_stub_->CancelOperation(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return google::cloud::Status();
 }
 
 StatusOr<google::longrunning::Operation>
 DefaultFeaturestoreServiceStub::WaitOperation(
-    grpc::ClientContext& context, Options const&,
-    google::longrunning::WaitOperationRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = operations_stub_->WaitOperation(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::longrunning::WaitOperationRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        operations_stub_->WaitOperation(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -655,14 +676,13 @@ future<Status> DefaultFeaturestoreServiceStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(
-             cq,
-             [this](grpc::ClientContext* context,
-                    google::longrunning::CancelOperationRequest const& request,
-                    grpc::CompletionQueue* cq) {
-               return operations_stub_->AsyncCancelOperation(context, request,
-                                                             cq);
-             },
-             request, std::move(context))
+      cq,
+      [this](grpc::ClientContext* context,
+             google::longrunning::CancelOperationRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return operations_stub_->AsyncCancelOperation(context, request, cq);
+      },
+      request, std::move(context))
       .then([](future<StatusOr<google::protobuf::Empty>> f) {
         return f.get().status();
       });

@@ -34,48 +34,38 @@ BudgetServiceTracingConnection::BudgetServiceTracingConnection(
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::billing::budgets::v1::Budget>
-BudgetServiceTracingConnection::CreateBudget(
-    google::cloud::billing::budgets::v1::CreateBudgetRequest const& request) {
-  auto span = internal::MakeSpan(
-      "billing_budgets_v1::BudgetServiceConnection::CreateBudget");
+BudgetServiceTracingConnection::CreateBudget(google::cloud::billing::budgets::v1::CreateBudgetRequest const& request) {
+  auto span = internal::MakeSpan("billing_budgets_v1::BudgetServiceConnection::CreateBudget");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateBudget(request));
 }
 
 StatusOr<google::cloud::billing::budgets::v1::Budget>
-BudgetServiceTracingConnection::UpdateBudget(
-    google::cloud::billing::budgets::v1::UpdateBudgetRequest const& request) {
-  auto span = internal::MakeSpan(
-      "billing_budgets_v1::BudgetServiceConnection::UpdateBudget");
+BudgetServiceTracingConnection::UpdateBudget(google::cloud::billing::budgets::v1::UpdateBudgetRequest const& request) {
+  auto span = internal::MakeSpan("billing_budgets_v1::BudgetServiceConnection::UpdateBudget");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateBudget(request));
 }
 
 StatusOr<google::cloud::billing::budgets::v1::Budget>
-BudgetServiceTracingConnection::GetBudget(
-    google::cloud::billing::budgets::v1::GetBudgetRequest const& request) {
-  auto span = internal::MakeSpan(
-      "billing_budgets_v1::BudgetServiceConnection::GetBudget");
+BudgetServiceTracingConnection::GetBudget(google::cloud::billing::budgets::v1::GetBudgetRequest const& request) {
+  auto span = internal::MakeSpan("billing_budgets_v1::BudgetServiceConnection::GetBudget");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetBudget(request));
 }
 
 StreamRange<google::cloud::billing::budgets::v1::Budget>
-BudgetServiceTracingConnection::ListBudgets(
-    google::cloud::billing::budgets::v1::ListBudgetsRequest request) {
-  auto span = internal::MakeSpan(
-      "billing_budgets_v1::BudgetServiceConnection::ListBudgets");
+BudgetServiceTracingConnection::ListBudgets(google::cloud::billing::budgets::v1::ListBudgetsRequest request) {
+  auto span = internal::MakeSpan("billing_budgets_v1::BudgetServiceConnection::ListBudgets");
   internal::OTelScope scope(span);
   auto sr = child_->ListBudgets(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::billing::budgets::v1::Budget>(std::move(span),
-                                                   std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::billing::budgets::v1::Budget>(
+        std::move(span), std::move(sr));
 }
 
-Status BudgetServiceTracingConnection::DeleteBudget(
-    google::cloud::billing::budgets::v1::DeleteBudgetRequest const& request) {
-  auto span = internal::MakeSpan(
-      "billing_budgets_v1::BudgetServiceConnection::DeleteBudget");
+Status
+BudgetServiceTracingConnection::DeleteBudget(google::cloud::billing::budgets::v1::DeleteBudgetRequest const& request) {
+  auto span = internal::MakeSpan("billing_budgets_v1::BudgetServiceConnection::DeleteBudget");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteBudget(request));
 }

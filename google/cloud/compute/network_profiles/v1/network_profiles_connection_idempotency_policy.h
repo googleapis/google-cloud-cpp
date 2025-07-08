@@ -34,20 +34,17 @@ class NetworkProfilesConnectionIdempotencyPolicy {
   virtual ~NetworkProfilesConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<NetworkProfilesConnectionIdempotencyPolicy> clone()
-      const;
+  virtual std::unique_ptr<NetworkProfilesConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency GetNetworkProfile(
-      google::cloud::cpp::compute::network_profiles::v1::
-          GetNetworkProfileRequest const& request);
+  virtual google::cloud::Idempotency
+  GetNetworkProfile(google::cloud::cpp::compute::network_profiles::v1::GetNetworkProfileRequest const& request);
 
-  virtual google::cloud::Idempotency ListNetworkProfiles(
-      google::cloud::cpp::compute::network_profiles::v1::
-          ListNetworkProfilesRequest request);
+  virtual google::cloud::Idempotency
+  ListNetworkProfiles(google::cloud::cpp::compute::network_profiles::v1::ListNetworkProfilesRequest request);
 };
 
 std::unique_ptr<NetworkProfilesConnectionIdempotencyPolicy>
-MakeDefaultNetworkProfilesConnectionIdempotencyPolicy();
+    MakeDefaultNetworkProfilesConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_network_profiles_v1

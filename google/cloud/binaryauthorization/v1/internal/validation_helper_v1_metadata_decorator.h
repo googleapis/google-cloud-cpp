@@ -39,15 +39,14 @@ class ValidationHelperV1Metadata : public ValidationHelperV1Stub {
       std::multimap<std::string, std::string> fixed_metadata,
       std::string api_client_header = "");
 
-  StatusOr<google::cloud::binaryauthorization::v1::
-               ValidateAttestationOccurrenceResponse>
-  ValidateAttestationOccurrence(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::binaryauthorization::v1::
-          ValidateAttestationOccurrenceRequest const& request) override;
+  StatusOr<google::cloud::binaryauthorization::v1::ValidateAttestationOccurrenceResponse> ValidateAttestationOccurrence(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::binaryauthorization::v1::ValidateAttestationOccurrenceRequest const& request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context, Options const& options,
+  void SetMetadata(grpc::ClientContext& context,
+                   Options const& options,
                    std::string const& request_params);
   void SetMetadata(grpc::ClientContext& context, Options const& options);
 

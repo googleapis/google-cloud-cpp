@@ -34,92 +34,77 @@ class RecaptchaEnterpriseServiceConnectionIdempotencyPolicy {
   virtual ~RecaptchaEnterpriseServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<RecaptchaEnterpriseServiceConnectionIdempotencyPolicy>
-  clone() const;
+  virtual std::unique_ptr<RecaptchaEnterpriseServiceConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency CreateAssessment(
-      google::cloud::recaptchaenterprise::v1::CreateAssessmentRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  CreateAssessment(google::cloud::recaptchaenterprise::v1::CreateAssessmentRequest const& request);
 
-  virtual google::cloud::Idempotency AnnotateAssessment(
-      google::cloud::recaptchaenterprise::v1::AnnotateAssessmentRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  AnnotateAssessment(google::cloud::recaptchaenterprise::v1::AnnotateAssessmentRequest const& request);
 
-  virtual google::cloud::Idempotency CreateKey(
-      google::cloud::recaptchaenterprise::v1::CreateKeyRequest const& request);
+  virtual google::cloud::Idempotency
+  CreateKey(google::cloud::recaptchaenterprise::v1::CreateKeyRequest const& request);
 
-  virtual google::cloud::Idempotency ListKeys(
-      google::cloud::recaptchaenterprise::v1::ListKeysRequest request);
+  virtual google::cloud::Idempotency
+  ListKeys(google::cloud::recaptchaenterprise::v1::ListKeysRequest request);
 
-  virtual google::cloud::Idempotency RetrieveLegacySecretKey(
-      google::cloud::recaptchaenterprise::v1::
-          RetrieveLegacySecretKeyRequest const& request);
+  virtual google::cloud::Idempotency
+  RetrieveLegacySecretKey(google::cloud::recaptchaenterprise::v1::RetrieveLegacySecretKeyRequest const& request);
 
-  virtual google::cloud::Idempotency GetKey(
-      google::cloud::recaptchaenterprise::v1::GetKeyRequest const& request);
+  virtual google::cloud::Idempotency
+  GetKey(google::cloud::recaptchaenterprise::v1::GetKeyRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateKey(
-      google::cloud::recaptchaenterprise::v1::UpdateKeyRequest const& request);
+  virtual google::cloud::Idempotency
+  UpdateKey(google::cloud::recaptchaenterprise::v1::UpdateKeyRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteKey(
-      google::cloud::recaptchaenterprise::v1::DeleteKeyRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteKey(google::cloud::recaptchaenterprise::v1::DeleteKeyRequest const& request);
 
-  virtual google::cloud::Idempotency MigrateKey(
-      google::cloud::recaptchaenterprise::v1::MigrateKeyRequest const& request);
+  virtual google::cloud::Idempotency
+  MigrateKey(google::cloud::recaptchaenterprise::v1::MigrateKeyRequest const& request);
 
-  virtual google::cloud::Idempotency AddIpOverride(
-      google::cloud::recaptchaenterprise::v1::AddIpOverrideRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  AddIpOverride(google::cloud::recaptchaenterprise::v1::AddIpOverrideRequest const& request);
 
-  virtual google::cloud::Idempotency RemoveIpOverride(
-      google::cloud::recaptchaenterprise::v1::RemoveIpOverrideRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  RemoveIpOverride(google::cloud::recaptchaenterprise::v1::RemoveIpOverrideRequest const& request);
 
-  virtual google::cloud::Idempotency ListIpOverrides(
-      google::cloud::recaptchaenterprise::v1::ListIpOverridesRequest request);
+  virtual google::cloud::Idempotency
+  ListIpOverrides(google::cloud::recaptchaenterprise::v1::ListIpOverridesRequest request);
 
-  virtual google::cloud::Idempotency GetMetrics(
-      google::cloud::recaptchaenterprise::v1::GetMetricsRequest const& request);
+  virtual google::cloud::Idempotency
+  GetMetrics(google::cloud::recaptchaenterprise::v1::GetMetricsRequest const& request);
 
-  virtual google::cloud::Idempotency CreateFirewallPolicy(
-      google::cloud::recaptchaenterprise::v1::CreateFirewallPolicyRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  CreateFirewallPolicy(google::cloud::recaptchaenterprise::v1::CreateFirewallPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency ListFirewallPolicies(
-      google::cloud::recaptchaenterprise::v1::ListFirewallPoliciesRequest
-          request);
+  virtual google::cloud::Idempotency
+  ListFirewallPolicies(google::cloud::recaptchaenterprise::v1::ListFirewallPoliciesRequest request);
 
-  virtual google::cloud::Idempotency GetFirewallPolicy(
-      google::cloud::recaptchaenterprise::v1::GetFirewallPolicyRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  GetFirewallPolicy(google::cloud::recaptchaenterprise::v1::GetFirewallPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateFirewallPolicy(
-      google::cloud::recaptchaenterprise::v1::UpdateFirewallPolicyRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  UpdateFirewallPolicy(google::cloud::recaptchaenterprise::v1::UpdateFirewallPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteFirewallPolicy(
-      google::cloud::recaptchaenterprise::v1::DeleteFirewallPolicyRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  DeleteFirewallPolicy(google::cloud::recaptchaenterprise::v1::DeleteFirewallPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency ReorderFirewallPolicies(
-      google::cloud::recaptchaenterprise::v1::
-          ReorderFirewallPoliciesRequest const& request);
+  virtual google::cloud::Idempotency
+  ReorderFirewallPolicies(google::cloud::recaptchaenterprise::v1::ReorderFirewallPoliciesRequest const& request);
 
-  virtual google::cloud::Idempotency ListRelatedAccountGroups(
-      google::cloud::recaptchaenterprise::v1::ListRelatedAccountGroupsRequest
-          request);
+  virtual google::cloud::Idempotency
+  ListRelatedAccountGroups(google::cloud::recaptchaenterprise::v1::ListRelatedAccountGroupsRequest request);
 
-  virtual google::cloud::Idempotency ListRelatedAccountGroupMemberships(
-      google::cloud::recaptchaenterprise::v1::
-          ListRelatedAccountGroupMembershipsRequest request);
+  virtual google::cloud::Idempotency
+  ListRelatedAccountGroupMemberships(google::cloud::recaptchaenterprise::v1::ListRelatedAccountGroupMembershipsRequest request);
 
-  virtual google::cloud::Idempotency SearchRelatedAccountGroupMemberships(
-      google::cloud::recaptchaenterprise::v1::
-          SearchRelatedAccountGroupMembershipsRequest request);
+  virtual google::cloud::Idempotency
+  SearchRelatedAccountGroupMemberships(google::cloud::recaptchaenterprise::v1::SearchRelatedAccountGroupMembershipsRequest request);
 };
 
 std::unique_ptr<RecaptchaEnterpriseServiceConnectionIdempotencyPolicy>
-MakeDefaultRecaptchaEnterpriseServiceConnectionIdempotencyPolicy();
+    MakeDefaultRecaptchaEnterpriseServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace recaptchaenterprise_v1

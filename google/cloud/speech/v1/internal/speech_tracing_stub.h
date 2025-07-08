@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPEECH_V1_INTERNAL_SPEECH_TRACING_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPEECH_V1_INTERNAL_SPEECH_TRACING_STUB_H
 
-#include "google/cloud/speech/v1/internal/speech_stub.h"
 #include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/options.h"
+#include "google/cloud/speech/v1/internal/speech_stub.h"
 #include "google/cloud/version.h"
 #include <memory>
 
@@ -39,20 +39,20 @@ class SpeechTracingStub : public SpeechStub {
   explicit SpeechTracingStub(std::shared_ptr<SpeechStub> child);
 
   StatusOr<google::cloud::speech::v1::RecognizeResponse> Recognize(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::speech::v1::RecognizeRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncLongRunningRecognize(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::speech::v1::LongRunningRecognizeRequest const& request)
-      override;
+      google::cloud::speech::v1::LongRunningRecognizeRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> LongRunningRecognize(
-      grpc::ClientContext& context, Options options,
-      google::cloud::speech::v1::LongRunningRecognizeRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::speech::v1::LongRunningRecognizeRequest const& request) override;
 
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::speech::v1::StreamingRecognizeRequest,
@@ -63,11 +63,13 @@ class SpeechTracingStub : public SpeechStub {
       google::cloud::internal::ImmutableOptions options) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -84,8 +86,7 @@ class SpeechTracingStub : public SpeechStub {
 
  private:
   std::shared_ptr<SpeechStub> child_;
-  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
-      propagator_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

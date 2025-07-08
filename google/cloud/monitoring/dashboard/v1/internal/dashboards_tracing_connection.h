@@ -36,30 +36,24 @@ class DashboardsServiceTracingConnection
   ~DashboardsServiceTracingConnection() override = default;
 
   explicit DashboardsServiceTracingConnection(
-      std::shared_ptr<monitoring_dashboard_v1::DashboardsServiceConnection>
-          child);
+    std::shared_ptr<monitoring_dashboard_v1::DashboardsServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::monitoring::dashboard::v1::Dashboard> CreateDashboard(
-      google::monitoring::dashboard::v1::CreateDashboardRequest const& request)
-      override;
+  StatusOr<google::monitoring::dashboard::v1::Dashboard>
+  CreateDashboard(google::monitoring::dashboard::v1::CreateDashboardRequest const& request) override;
 
-  StreamRange<google::monitoring::dashboard::v1::Dashboard> ListDashboards(
-      google::monitoring::dashboard::v1::ListDashboardsRequest request)
-      override;
+  StreamRange<google::monitoring::dashboard::v1::Dashboard>
+  ListDashboards(google::monitoring::dashboard::v1::ListDashboardsRequest request) override;
 
-  StatusOr<google::monitoring::dashboard::v1::Dashboard> GetDashboard(
-      google::monitoring::dashboard::v1::GetDashboardRequest const& request)
-      override;
+  StatusOr<google::monitoring::dashboard::v1::Dashboard>
+  GetDashboard(google::monitoring::dashboard::v1::GetDashboardRequest const& request) override;
 
-  Status DeleteDashboard(
-      google::monitoring::dashboard::v1::DeleteDashboardRequest const& request)
-      override;
+  Status
+  DeleteDashboard(google::monitoring::dashboard::v1::DeleteDashboardRequest const& request) override;
 
-  StatusOr<google::monitoring::dashboard::v1::Dashboard> UpdateDashboard(
-      google::monitoring::dashboard::v1::UpdateDashboardRequest const& request)
-      override;
+  StatusOr<google::monitoring::dashboard::v1::Dashboard>
+  UpdateDashboard(google::monitoring::dashboard::v1::UpdateDashboardRequest const& request) override;
 
  private:
   std::shared_ptr<monitoring_dashboard_v1::DashboardsServiceConnection> child_;

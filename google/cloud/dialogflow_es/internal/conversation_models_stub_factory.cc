@@ -17,12 +17,12 @@
 // source: google/cloud/dialogflow/v2/conversation_model.proto
 
 #include "google/cloud/dialogflow_es/internal/conversation_models_stub_factory.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/dialogflow_es/internal/conversation_models_auth_decorator.h"
 #include "google/cloud/dialogflow_es/internal/conversation_models_logging_decorator.h"
 #include "google/cloud/dialogflow_es/internal/conversation_models_metadata_decorator.h"
 #include "google/cloud/dialogflow_es/internal/conversation_models_stub.h"
 #include "google/cloud/dialogflow_es/internal/conversation_models_tracing_stub.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/opentelemetry.h"
@@ -39,30 +39,31 @@ namespace cloud {
 namespace dialogflow_es_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<ConversationModelsStub> CreateDefaultConversationModelsStub(
+std::shared_ptr<ConversationModelsStub>
+CreateDefaultConversationModelsStub(
     std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
     Options const& options) {
-  auto channel = auth->CreateChannel(options.get<EndpointOption>(),
-                                     internal::MakeChannelArguments(options));
-  auto service_grpc_stub =
-      google::cloud::dialogflow::v2::ConversationModels::NewStub(channel);
-  auto service_locations_stub =
-      google::cloud::location::Locations::NewStub(channel);
+  auto channel = auth->CreateChannel(
+    options.get<EndpointOption>(), internal::MakeChannelArguments(options));
+  auto service_grpc_stub = google::cloud::dialogflow::v2::ConversationModels::NewStub(channel);
+  auto service_locations_stub = google::cloud::location::Locations::NewStub(channel);
   std::shared_ptr<ConversationModelsStub> stub =
-      std::make_shared<DefaultConversationModelsStub>(
-          std::move(service_grpc_stub), std::move(service_locations_stub),
-          google::longrunning::Operations::NewStub(channel));
+    std::make_shared<DefaultConversationModelsStub>(
+      std::move(service_grpc_stub), std::move(service_locations_stub),
+      google::longrunning::Operations::NewStub(channel));
 
   if (auth->RequiresConfigureContext()) {
-    stub = std::make_shared<ConversationModelsAuth>(std::move(auth),
-                                                    std::move(stub));
+    stub = std::make_shared<ConversationModelsAuth>(
+        std::move(auth), std::move(stub));
   }
   stub = std::make_shared<ConversationModelsMetadata>(
       std::move(stub), std::multimap<std::string, std::string>{});
-  if (internal::Contains(options.get<LoggingComponentsOption>(), "rpc")) {
+  if (internal::Contains(
+      options.get<LoggingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<ConversationModelsLogging>(
-        std::move(stub), options.get<GrpcTracingOptionsOption>(),
+        std::move(stub),
+        options.get<GrpcTracingOptionsOption>(),
         options.get<LoggingComponentsOption>());
   }
   if (internal::TracingEnabled(options)) {

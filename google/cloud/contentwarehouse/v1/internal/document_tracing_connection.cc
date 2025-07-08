@@ -34,85 +34,66 @@ DocumentServiceTracingConnection::DocumentServiceTracingConnection(
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::contentwarehouse::v1::CreateDocumentResponse>
-DocumentServiceTracingConnection::CreateDocument(
-    google::cloud::contentwarehouse::v1::CreateDocumentRequest const& request) {
-  auto span = internal::MakeSpan(
-      "contentwarehouse_v1::DocumentServiceConnection::CreateDocument");
+DocumentServiceTracingConnection::CreateDocument(google::cloud::contentwarehouse::v1::CreateDocumentRequest const& request) {
+  auto span = internal::MakeSpan("contentwarehouse_v1::DocumentServiceConnection::CreateDocument");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateDocument(request));
 }
 
 StatusOr<google::cloud::contentwarehouse::v1::Document>
-DocumentServiceTracingConnection::GetDocument(
-    google::cloud::contentwarehouse::v1::GetDocumentRequest const& request) {
-  auto span = internal::MakeSpan(
-      "contentwarehouse_v1::DocumentServiceConnection::GetDocument");
+DocumentServiceTracingConnection::GetDocument(google::cloud::contentwarehouse::v1::GetDocumentRequest const& request) {
+  auto span = internal::MakeSpan("contentwarehouse_v1::DocumentServiceConnection::GetDocument");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetDocument(request));
 }
 
 StatusOr<google::cloud::contentwarehouse::v1::UpdateDocumentResponse>
-DocumentServiceTracingConnection::UpdateDocument(
-    google::cloud::contentwarehouse::v1::UpdateDocumentRequest const& request) {
-  auto span = internal::MakeSpan(
-      "contentwarehouse_v1::DocumentServiceConnection::UpdateDocument");
+DocumentServiceTracingConnection::UpdateDocument(google::cloud::contentwarehouse::v1::UpdateDocumentRequest const& request) {
+  auto span = internal::MakeSpan("contentwarehouse_v1::DocumentServiceConnection::UpdateDocument");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateDocument(request));
 }
 
-Status DocumentServiceTracingConnection::DeleteDocument(
-    google::cloud::contentwarehouse::v1::DeleteDocumentRequest const& request) {
-  auto span = internal::MakeSpan(
-      "contentwarehouse_v1::DocumentServiceConnection::DeleteDocument");
+Status
+DocumentServiceTracingConnection::DeleteDocument(google::cloud::contentwarehouse::v1::DeleteDocumentRequest const& request) {
+  auto span = internal::MakeSpan("contentwarehouse_v1::DocumentServiceConnection::DeleteDocument");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteDocument(request));
 }
 
-StreamRange<google::cloud::contentwarehouse::v1::SearchDocumentsResponse::
-                MatchingDocument>
-DocumentServiceTracingConnection::SearchDocuments(
-    google::cloud::contentwarehouse::v1::SearchDocumentsRequest request) {
-  auto span = internal::MakeSpan(
-      "contentwarehouse_v1::DocumentServiceConnection::SearchDocuments");
+StreamRange<google::cloud::contentwarehouse::v1::SearchDocumentsResponse::MatchingDocument>
+DocumentServiceTracingConnection::SearchDocuments(google::cloud::contentwarehouse::v1::SearchDocumentsRequest request) {
+  auto span = internal::MakeSpan("contentwarehouse_v1::DocumentServiceConnection::SearchDocuments");
   internal::OTelScope scope(span);
   auto sr = child_->SearchDocuments(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::contentwarehouse::v1::SearchDocumentsResponse::
-          MatchingDocument>(std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::contentwarehouse::v1::SearchDocumentsResponse::MatchingDocument>(
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::contentwarehouse::v1::Document>
-DocumentServiceTracingConnection::LockDocument(
-    google::cloud::contentwarehouse::v1::LockDocumentRequest const& request) {
-  auto span = internal::MakeSpan(
-      "contentwarehouse_v1::DocumentServiceConnection::LockDocument");
+DocumentServiceTracingConnection::LockDocument(google::cloud::contentwarehouse::v1::LockDocumentRequest const& request) {
+  auto span = internal::MakeSpan("contentwarehouse_v1::DocumentServiceConnection::LockDocument");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->LockDocument(request));
 }
 
 StatusOr<google::cloud::contentwarehouse::v1::FetchAclResponse>
-DocumentServiceTracingConnection::FetchAcl(
-    google::cloud::contentwarehouse::v1::FetchAclRequest const& request) {
-  auto span = internal::MakeSpan(
-      "contentwarehouse_v1::DocumentServiceConnection::FetchAcl");
+DocumentServiceTracingConnection::FetchAcl(google::cloud::contentwarehouse::v1::FetchAclRequest const& request) {
+  auto span = internal::MakeSpan("contentwarehouse_v1::DocumentServiceConnection::FetchAcl");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->FetchAcl(request));
 }
 
 StatusOr<google::cloud::contentwarehouse::v1::SetAclResponse>
-DocumentServiceTracingConnection::SetAcl(
-    google::cloud::contentwarehouse::v1::SetAclRequest const& request) {
-  auto span = internal::MakeSpan(
-      "contentwarehouse_v1::DocumentServiceConnection::SetAcl");
+DocumentServiceTracingConnection::SetAcl(google::cloud::contentwarehouse::v1::SetAclRequest const& request) {
+  auto span = internal::MakeSpan("contentwarehouse_v1::DocumentServiceConnection::SetAcl");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->SetAcl(request));
 }
 
 StatusOr<google::longrunning::Operation>
-DocumentServiceTracingConnection::GetOperation(
-    google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpan(
-      "contentwarehouse_v1::DocumentServiceConnection::GetOperation");
+DocumentServiceTracingConnection::GetOperation(google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpan("contentwarehouse_v1::DocumentServiceConnection::GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOperation(request));
 }

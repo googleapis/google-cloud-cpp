@@ -32,23 +32,24 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 RepositoryManagerLogging::RepositoryManagerLogging(
     std::shared_ptr<RepositoryManagerStub> child,
-    TracingOptions tracing_options, std::set<std::string> const&)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
+    TracingOptions tracing_options,
+    std::set<std::string> const&)
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)) {}
 
 future<StatusOr<google::longrunning::Operation>>
 RepositoryManagerLogging::AsyncCreateConnection(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::devtools::cloudbuild::v2::CreateConnectionRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::devtools::cloudbuild::v2::CreateConnectionRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::devtools::cloudbuild::v2::CreateConnectionRequest const&
-                 request) {
-        return child_->AsyncCreateConnection(cq, std::move(context),
-                                             std::move(options), request);
+             google::devtools::cloudbuild::v2::CreateConnectionRequest const& request) {
+        return child_->AsyncCreateConnection(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -56,12 +57,13 @@ RepositoryManagerLogging::AsyncCreateConnection(
 
 StatusOr<google::longrunning::Operation>
 RepositoryManagerLogging::CreateConnection(
-    grpc::ClientContext& context, Options options,
-    google::devtools::cloudbuild::v2::CreateConnectionRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::devtools::cloudbuild::v2::CreateConnectionRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::devtools::cloudbuild::v2::CreateConnectionRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::devtools::cloudbuild::v2::CreateConnectionRequest const& request) {
         return child_->CreateConnection(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -69,12 +71,13 @@ RepositoryManagerLogging::CreateConnection(
 
 StatusOr<google::devtools::cloudbuild::v2::Connection>
 RepositoryManagerLogging::GetConnection(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::devtools::cloudbuild::v2::GetConnectionRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::devtools::cloudbuild::v2::GetConnectionRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::devtools::cloudbuild::v2::GetConnectionRequest const& request) {
         return child_->GetConnection(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -82,12 +85,13 @@ RepositoryManagerLogging::GetConnection(
 
 StatusOr<google::devtools::cloudbuild::v2::ListConnectionsResponse>
 RepositoryManagerLogging::ListConnections(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::devtools::cloudbuild::v2::ListConnectionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::devtools::cloudbuild::v2::ListConnectionsRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::devtools::cloudbuild::v2::ListConnectionsRequest const& request) {
         return child_->ListConnections(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -95,18 +99,17 @@ RepositoryManagerLogging::ListConnections(
 
 future<StatusOr<google::longrunning::Operation>>
 RepositoryManagerLogging::AsyncUpdateConnection(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::devtools::cloudbuild::v2::UpdateConnectionRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::devtools::cloudbuild::v2::UpdateConnectionRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::devtools::cloudbuild::v2::UpdateConnectionRequest const&
-                 request) {
-        return child_->AsyncUpdateConnection(cq, std::move(context),
-                                             std::move(options), request);
+             google::devtools::cloudbuild::v2::UpdateConnectionRequest const& request) {
+        return child_->AsyncUpdateConnection(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -114,12 +117,13 @@ RepositoryManagerLogging::AsyncUpdateConnection(
 
 StatusOr<google::longrunning::Operation>
 RepositoryManagerLogging::UpdateConnection(
-    grpc::ClientContext& context, Options options,
-    google::devtools::cloudbuild::v2::UpdateConnectionRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::devtools::cloudbuild::v2::UpdateConnectionRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::devtools::cloudbuild::v2::UpdateConnectionRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::devtools::cloudbuild::v2::UpdateConnectionRequest const& request) {
         return child_->UpdateConnection(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -127,18 +131,17 @@ RepositoryManagerLogging::UpdateConnection(
 
 future<StatusOr<google::longrunning::Operation>>
 RepositoryManagerLogging::AsyncDeleteConnection(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::devtools::cloudbuild::v2::DeleteConnectionRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::devtools::cloudbuild::v2::DeleteConnectionRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::devtools::cloudbuild::v2::DeleteConnectionRequest const&
-                 request) {
-        return child_->AsyncDeleteConnection(cq, std::move(context),
-                                             std::move(options), request);
+             google::devtools::cloudbuild::v2::DeleteConnectionRequest const& request) {
+        return child_->AsyncDeleteConnection(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -146,12 +149,13 @@ RepositoryManagerLogging::AsyncDeleteConnection(
 
 StatusOr<google::longrunning::Operation>
 RepositoryManagerLogging::DeleteConnection(
-    grpc::ClientContext& context, Options options,
-    google::devtools::cloudbuild::v2::DeleteConnectionRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::devtools::cloudbuild::v2::DeleteConnectionRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::devtools::cloudbuild::v2::DeleteConnectionRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::devtools::cloudbuild::v2::DeleteConnectionRequest const& request) {
         return child_->DeleteConnection(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -159,18 +163,17 @@ RepositoryManagerLogging::DeleteConnection(
 
 future<StatusOr<google::longrunning::Operation>>
 RepositoryManagerLogging::AsyncCreateRepository(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::devtools::cloudbuild::v2::CreateRepositoryRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::devtools::cloudbuild::v2::CreateRepositoryRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::devtools::cloudbuild::v2::CreateRepositoryRequest const&
-                 request) {
-        return child_->AsyncCreateRepository(cq, std::move(context),
-                                             std::move(options), request);
+             google::devtools::cloudbuild::v2::CreateRepositoryRequest const& request) {
+        return child_->AsyncCreateRepository(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -178,12 +181,13 @@ RepositoryManagerLogging::AsyncCreateRepository(
 
 StatusOr<google::longrunning::Operation>
 RepositoryManagerLogging::CreateRepository(
-    grpc::ClientContext& context, Options options,
-    google::devtools::cloudbuild::v2::CreateRepositoryRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::devtools::cloudbuild::v2::CreateRepositoryRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::devtools::cloudbuild::v2::CreateRepositoryRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::devtools::cloudbuild::v2::CreateRepositoryRequest const& request) {
         return child_->CreateRepository(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -191,17 +195,15 @@ RepositoryManagerLogging::CreateRepository(
 
 future<StatusOr<google::longrunning::Operation>>
 RepositoryManagerLogging::AsyncBatchCreateRepositories(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::devtools::cloudbuild::v2::BatchCreateRepositoriesRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::devtools::cloudbuild::v2::BatchCreateRepositoriesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::devtools::cloudbuild::v2::
-                 BatchCreateRepositoriesRequest const& request) {
+             google::devtools::cloudbuild::v2::BatchCreateRepositoriesRequest const& request) {
         return child_->AsyncBatchCreateRepositories(
             cq, std::move(context), std::move(options), request);
       },
@@ -211,13 +213,13 @@ RepositoryManagerLogging::AsyncBatchCreateRepositories(
 
 StatusOr<google::longrunning::Operation>
 RepositoryManagerLogging::BatchCreateRepositories(
-    grpc::ClientContext& context, Options options,
-    google::devtools::cloudbuild::v2::BatchCreateRepositoriesRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::devtools::cloudbuild::v2::BatchCreateRepositoriesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::devtools::cloudbuild::v2::
-                 BatchCreateRepositoriesRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::devtools::cloudbuild::v2::BatchCreateRepositoriesRequest const& request) {
         return child_->BatchCreateRepositories(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -225,12 +227,13 @@ RepositoryManagerLogging::BatchCreateRepositories(
 
 StatusOr<google::devtools::cloudbuild::v2::Repository>
 RepositoryManagerLogging::GetRepository(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::devtools::cloudbuild::v2::GetRepositoryRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::devtools::cloudbuild::v2::GetRepositoryRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::devtools::cloudbuild::v2::GetRepositoryRequest const& request) {
         return child_->GetRepository(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -238,12 +241,13 @@ RepositoryManagerLogging::GetRepository(
 
 StatusOr<google::devtools::cloudbuild::v2::ListRepositoriesResponse>
 RepositoryManagerLogging::ListRepositories(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::devtools::cloudbuild::v2::ListRepositoriesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::devtools::cloudbuild::v2::ListRepositoriesRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::devtools::cloudbuild::v2::ListRepositoriesRequest const& request) {
         return child_->ListRepositories(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -251,18 +255,17 @@ RepositoryManagerLogging::ListRepositories(
 
 future<StatusOr<google::longrunning::Operation>>
 RepositoryManagerLogging::AsyncDeleteRepository(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::devtools::cloudbuild::v2::DeleteRepositoryRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::devtools::cloudbuild::v2::DeleteRepositoryRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::devtools::cloudbuild::v2::DeleteRepositoryRequest const&
-                 request) {
-        return child_->AsyncDeleteRepository(cq, std::move(context),
-                                             std::move(options), request);
+             google::devtools::cloudbuild::v2::DeleteRepositoryRequest const& request) {
+        return child_->AsyncDeleteRepository(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -270,12 +273,13 @@ RepositoryManagerLogging::AsyncDeleteRepository(
 
 StatusOr<google::longrunning::Operation>
 RepositoryManagerLogging::DeleteRepository(
-    grpc::ClientContext& context, Options options,
-    google::devtools::cloudbuild::v2::DeleteRepositoryRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::devtools::cloudbuild::v2::DeleteRepositoryRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::devtools::cloudbuild::v2::DeleteRepositoryRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::devtools::cloudbuild::v2::DeleteRepositoryRequest const& request) {
         return child_->DeleteRepository(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -283,13 +287,13 @@ RepositoryManagerLogging::DeleteRepository(
 
 StatusOr<google::devtools::cloudbuild::v2::FetchReadWriteTokenResponse>
 RepositoryManagerLogging::FetchReadWriteToken(
-    grpc::ClientContext& context, Options const& options,
-    google::devtools::cloudbuild::v2::FetchReadWriteTokenRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::devtools::cloudbuild::v2::FetchReadWriteTokenRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::devtools::cloudbuild::v2::FetchReadWriteTokenRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::devtools::cloudbuild::v2::FetchReadWriteTokenRequest const& request) {
         return child_->FetchReadWriteToken(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -297,12 +301,13 @@ RepositoryManagerLogging::FetchReadWriteToken(
 
 StatusOr<google::devtools::cloudbuild::v2::FetchReadTokenResponse>
 RepositoryManagerLogging::FetchReadToken(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::devtools::cloudbuild::v2::FetchReadTokenRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::devtools::cloudbuild::v2::FetchReadTokenRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::devtools::cloudbuild::v2::FetchReadTokenRequest const& request) {
         return child_->FetchReadToken(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -310,13 +315,13 @@ RepositoryManagerLogging::FetchReadToken(
 
 StatusOr<google::devtools::cloudbuild::v2::FetchLinkableRepositoriesResponse>
 RepositoryManagerLogging::FetchLinkableRepositories(
-    grpc::ClientContext& context, Options const& options,
-    google::devtools::cloudbuild::v2::FetchLinkableRepositoriesRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::devtools::cloudbuild::v2::FetchLinkableRepositoriesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::devtools::cloudbuild::v2::
-                 FetchLinkableRepositoriesRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::devtools::cloudbuild::v2::FetchLinkableRepositoriesRequest const& request) {
         return child_->FetchLinkableRepositories(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -324,33 +329,40 @@ RepositoryManagerLogging::FetchLinkableRepositories(
 
 StatusOr<google::devtools::cloudbuild::v2::FetchGitRefsResponse>
 RepositoryManagerLogging::FetchGitRefs(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::devtools::cloudbuild::v2::FetchGitRefsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::devtools::cloudbuild::v2::FetchGitRefsRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::devtools::cloudbuild::v2::FetchGitRefsRequest const& request) {
         return child_->FetchGitRefs(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::iam::v1::Policy> RepositoryManagerLogging::SetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::iam::v1::Policy>
+RepositoryManagerLogging::SetIamPolicy(
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::iam::v1::SetIamPolicyRequest const& request) {
         return child_->SetIamPolicy(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::iam::v1::Policy> RepositoryManagerLogging::GetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::iam::v1::Policy>
+RepositoryManagerLogging::GetIamPolicy(
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::iam::v1::GetIamPolicyRequest const& request) {
         return child_->GetIamPolicy(context, options, request);
       },
@@ -359,32 +371,40 @@ StatusOr<google::iam::v1::Policy> RepositoryManagerLogging::GetIamPolicy(
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 RepositoryManagerLogging::TestIamPermissions(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::iam::v1::TestIamPermissionsRequest const& request) {
         return child_->TestIamPermissions(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> RepositoryManagerLogging::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::Operation>
+RepositoryManagerLogging::GetOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::GetOperationRequest const& request) {
         return child_->GetOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status RepositoryManagerLogging::CancelOperation(
-    grpc::ClientContext& context, Options const& options,
+Status
+RepositoryManagerLogging::CancelOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::CancelOperationRequest const& request) {
         return child_->CancelOperation(context, options, request);
       },
@@ -402,8 +422,8 @@ RepositoryManagerLogging::AsyncGetOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(cq, std::move(context),
-                                         std::move(options), request);
+        return child_->AsyncGetOperation(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -419,8 +439,8 @@ future<Status> RepositoryManagerLogging::AsyncCancelOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::CancelOperationRequest const& request) {
-        return child_->AsyncCancelOperation(cq, std::move(context),
-                                            std::move(options), request);
+        return child_->AsyncCancelOperation(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);

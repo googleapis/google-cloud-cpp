@@ -36,7 +36,7 @@ class SqlRegionsServiceTracingConnection
   ~SqlRegionsServiceTracingConnection() override = default;
 
   explicit SqlRegionsServiceTracingConnection(
-      std::shared_ptr<sql_v1::SqlRegionsServiceConnection> child);
+    std::shared_ptr<sql_v1::SqlRegionsServiceConnection> child);
 
   Options options() override { return child_->options(); }
 

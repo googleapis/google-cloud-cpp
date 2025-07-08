@@ -17,10 +17,10 @@
 // source: google/cloud/sql/v1/cloud_sql_available_database_versions.proto
 
 #include "google/cloud/sql/v1/internal/sql_available_database_versions_option_defaults.h"
-#include "google/cloud/sql/v1/sql_available_database_versions_connection.h"
-#include "google/cloud/sql/v1/sql_available_database_versions_options.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
+#include "google/cloud/sql/v1/sql_available_database_versions_connection.h"
+#include "google/cloud/sql/v1/sql_available_database_versions_options.h"
 #include <memory>
 #include <utility>
 
@@ -35,34 +35,23 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options SqlAvailableDatabaseVersionsServiceDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options),
-      "GOOGLE_CLOUD_CPP_SQL_AVAILABLE_DATABASE_VERSIONS_SERVICE_ENDPOINT", "",
-      "GOOGLE_CLOUD_CPP_SQL_AVAILABLE_DATABASE_VERSIONS_SERVICE_AUTHORITY",
+      std::move(options), "GOOGLE_CLOUD_CPP_SQL_AVAILABLE_DATABASE_VERSIONS_SERVICE_ENDPOINT",
+      "", "GOOGLE_CLOUD_CPP_SQL_AVAILABLE_DATABASE_VERSIONS_SERVICE_AUTHORITY",
       "sqladmin.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
-  if (!options.has<
-          sql_v1::SqlAvailableDatabaseVersionsServiceRetryPolicyOption>()) {
+  if (!options.has<sql_v1::SqlAvailableDatabaseVersionsServiceRetryPolicyOption>()) {
     options.set<sql_v1::SqlAvailableDatabaseVersionsServiceRetryPolicyOption>(
         sql_v1::SqlAvailableDatabaseVersionsServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
-            .clone());
+            std::chrono::minutes(30)).clone());
   }
-  if (!options.has<
-          sql_v1::SqlAvailableDatabaseVersionsServiceBackoffPolicyOption>()) {
+  if (!options.has<sql_v1::SqlAvailableDatabaseVersionsServiceBackoffPolicyOption>()) {
     options.set<sql_v1::SqlAvailableDatabaseVersionsServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(
-            std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
-            .clone());
+        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
   }
-  if (!options.has<
-          sql_v1::
-              SqlAvailableDatabaseVersionsServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<
-        sql_v1::
-            SqlAvailableDatabaseVersionsServiceConnectionIdempotencyPolicyOption>(
-        sql_v1::
-            MakeDefaultSqlAvailableDatabaseVersionsServiceConnectionIdempotencyPolicy());
+  if (!options.has<sql_v1::SqlAvailableDatabaseVersionsServiceConnectionIdempotencyPolicyOption>()) {
+    options.set<sql_v1::SqlAvailableDatabaseVersionsServiceConnectionIdempotencyPolicyOption>(
+        sql_v1::MakeDefaultSqlAvailableDatabaseVersionsServiceConnectionIdempotencyPolicy());
   }
 
   return options;

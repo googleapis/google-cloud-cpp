@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_POLICYTROUBLESHOOTER_V1_INTERNAL_IAM_CHECKER_METADATA_DECORATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_POLICYTROUBLESHOOTER_V1_INTERNAL_IAM_CHECKER_METADATA_DECORATOR_H
 
-#include "google/cloud/policytroubleshooter/v1/internal/iam_checker_stub.h"
 #include "google/cloud/options.h"
+#include "google/cloud/policytroubleshooter/v1/internal/iam_checker_stub.h"
 #include "google/cloud/version.h"
 #include <map>
 #include <memory>
@@ -34,19 +34,19 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class IamCheckerMetadata : public IamCheckerStub {
  public:
   ~IamCheckerMetadata() override = default;
-  IamCheckerMetadata(std::shared_ptr<IamCheckerStub> child,
-                     std::multimap<std::string, std::string> fixed_metadata,
-                     std::string api_client_header = "");
+  IamCheckerMetadata(
+      std::shared_ptr<IamCheckerStub> child,
+      std::multimap<std::string, std::string> fixed_metadata,
+      std::string api_client_header = "");
 
-  StatusOr<
-      google::cloud::policytroubleshooter::v1::TroubleshootIamPolicyResponse>
-  TroubleshootIamPolicy(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::policytroubleshooter::v1::
-          TroubleshootIamPolicyRequest const& request) override;
+  StatusOr<google::cloud::policytroubleshooter::v1::TroubleshootIamPolicyResponse> TroubleshootIamPolicy(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::policytroubleshooter::v1::TroubleshootIamPolicyRequest const& request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context, Options const& options,
+  void SetMetadata(grpc::ClientContext& context,
+                   Options const& options,
                    std::string const& request_params);
   void SetMetadata(grpc::ClientContext& context, Options const& options);
 

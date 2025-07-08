@@ -26,16 +26,11 @@ namespace cloud {
 namespace video {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use
-/// video_transcoder_v1::MakeDefaultTranscoderServiceConnectionIdempotencyPolicy
-/// directly.
-using ::google::cloud::video_transcoder_v1::
-    MakeDefaultTranscoderServiceConnectionIdempotencyPolicy;
+/// @deprecated Use video_transcoder_v1::MakeDefaultTranscoderServiceConnectionIdempotencyPolicy directly.
+using ::google::cloud::video_transcoder_v1::MakeDefaultTranscoderServiceConnectionIdempotencyPolicy;
 
-/// @deprecated Use
-/// video_transcoder_v1::TranscoderServiceConnectionIdempotencyPolicy directly.
-using ::google::cloud::video_transcoder_v1::
-    TranscoderServiceConnectionIdempotencyPolicy;
+/// @deprecated Use video_transcoder_v1::TranscoderServiceConnectionIdempotencyPolicy directly.
+using ::google::cloud::video_transcoder_v1::TranscoderServiceConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace video

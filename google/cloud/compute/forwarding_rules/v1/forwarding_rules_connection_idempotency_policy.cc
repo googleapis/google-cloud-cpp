@@ -26,65 +26,47 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-ForwardingRulesConnectionIdempotencyPolicy::
-    ~ForwardingRulesConnectionIdempotencyPolicy() = default;
+ForwardingRulesConnectionIdempotencyPolicy::~ForwardingRulesConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<ForwardingRulesConnectionIdempotencyPolicy>
 ForwardingRulesConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<ForwardingRulesConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency
-ForwardingRulesConnectionIdempotencyPolicy::AggregatedListForwardingRules(
-    google::cloud::cpp::compute::forwarding_rules::v1::
-        AggregatedListForwardingRulesRequest) {  // NOLINT
+Idempotency ForwardingRulesConnectionIdempotencyPolicy::AggregatedListForwardingRules(google::cloud::cpp::compute::forwarding_rules::v1::AggregatedListForwardingRulesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency ForwardingRulesConnectionIdempotencyPolicy::DeleteForwardingRule(
-    google::cloud::cpp::compute::forwarding_rules::v1::
-        DeleteForwardingRuleRequest const&) {
+Idempotency ForwardingRulesConnectionIdempotencyPolicy::DeleteForwardingRule(google::cloud::cpp::compute::forwarding_rules::v1::DeleteForwardingRuleRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ForwardingRulesConnectionIdempotencyPolicy::GetForwardingRule(
-    google::cloud::cpp::compute::forwarding_rules::v1::
-        GetForwardingRuleRequest const&) {
+Idempotency ForwardingRulesConnectionIdempotencyPolicy::GetForwardingRule(google::cloud::cpp::compute::forwarding_rules::v1::GetForwardingRuleRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ForwardingRulesConnectionIdempotencyPolicy::InsertForwardingRule(
-    google::cloud::cpp::compute::forwarding_rules::v1::
-        InsertForwardingRuleRequest const&) {
+Idempotency ForwardingRulesConnectionIdempotencyPolicy::InsertForwardingRule(google::cloud::cpp::compute::forwarding_rules::v1::InsertForwardingRuleRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ForwardingRulesConnectionIdempotencyPolicy::ListForwardingRules(
-    google::cloud::cpp::compute::forwarding_rules::v1::
-        ListForwardingRulesRequest) {  // NOLINT
+Idempotency ForwardingRulesConnectionIdempotencyPolicy::ListForwardingRules(google::cloud::cpp::compute::forwarding_rules::v1::ListForwardingRulesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency ForwardingRulesConnectionIdempotencyPolicy::PatchForwardingRule(
-    google::cloud::cpp::compute::forwarding_rules::v1::
-        PatchForwardingRuleRequest const&) {
+Idempotency ForwardingRulesConnectionIdempotencyPolicy::PatchForwardingRule(google::cloud::cpp::compute::forwarding_rules::v1::PatchForwardingRuleRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ForwardingRulesConnectionIdempotencyPolicy::SetLabels(
-    google::cloud::cpp::compute::forwarding_rules::v1::
-        SetLabelsRequest const&) {
+Idempotency ForwardingRulesConnectionIdempotencyPolicy::SetLabels(google::cloud::cpp::compute::forwarding_rules::v1::SetLabelsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ForwardingRulesConnectionIdempotencyPolicy::SetTarget(
-    google::cloud::cpp::compute::forwarding_rules::v1::
-        SetTargetRequest const&) {
+Idempotency ForwardingRulesConnectionIdempotencyPolicy::SetTarget(google::cloud::cpp::compute::forwarding_rules::v1::SetTargetRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<ForwardingRulesConnectionIdempotencyPolicy>
-MakeDefaultForwardingRulesConnectionIdempotencyPolicy() {
+    MakeDefaultForwardingRulesConnectionIdempotencyPolicy() {
   return std::make_unique<ForwardingRulesConnectionIdempotencyPolicy>();
 }
 

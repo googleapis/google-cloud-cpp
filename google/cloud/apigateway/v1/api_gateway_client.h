@@ -64,9 +64,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class ApiGatewayServiceClient {
  public:
-  explicit ApiGatewayServiceClient(
-      std::shared_ptr<ApiGatewayServiceConnection> connection,
-      Options opts = {});
+  explicit ApiGatewayServiceClient(std::shared_ptr<ApiGatewayServiceConnection> connection, Options opts = {});
   ~ApiGatewayServiceClient();
 
   ///@{
@@ -79,12 +77,10 @@ class ApiGatewayServiceClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(ApiGatewayServiceClient const& a,
-                         ApiGatewayServiceClient const& b) {
+  friend bool operator==(ApiGatewayServiceClient const& a, ApiGatewayServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(ApiGatewayServiceClient const& a,
-                         ApiGatewayServiceClient const& b) {
+  friend bool operator!=(ApiGatewayServiceClient const& a, ApiGatewayServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -121,8 +117,8 @@ class ApiGatewayServiceClient {
   /// [google.cloud.apigateway.v1.ListGatewaysRequest]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L305}
   ///
   // clang-format on
-  StreamRange<google::cloud::apigateway::v1::Gateway> ListGateways(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::apigateway::v1::Gateway>
+  ListGateways(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -160,9 +156,8 @@ class ApiGatewayServiceClient {
   /// [google.cloud.apigateway.v1.ListGatewaysRequest]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L305}
   ///
   // clang-format on
-  StreamRange<google::cloud::apigateway::v1::Gateway> ListGateways(
-      google::cloud::apigateway::v1::ListGatewaysRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::apigateway::v1::Gateway>
+  ListGateways(google::cloud::apigateway::v1::ListGatewaysRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -187,8 +182,8 @@ class ApiGatewayServiceClient {
   /// [google.cloud.apigateway.v1.GetGatewayRequest]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L341}
   ///
   // clang-format on
-  StatusOr<google::cloud::apigateway::v1::Gateway> GetGateway(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::apigateway::v1::Gateway>
+  GetGateway(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -217,9 +212,8 @@ class ApiGatewayServiceClient {
   /// [google.cloud.apigateway.v1.GetGatewayRequest]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L341}
   ///
   // clang-format on
-  StatusOr<google::cloud::apigateway::v1::Gateway> GetGateway(
-      google::cloud::apigateway::v1::GetGatewayRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::apigateway::v1::Gateway>
+  GetGateway(google::cloud::apigateway::v1::GetGatewayRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -254,10 +248,8 @@ class ApiGatewayServiceClient {
   /// [google.cloud.apigateway.v1.Gateway]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L242}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::apigateway::v1::Gateway>> CreateGateway(
-      std::string const& parent,
-      google::cloud::apigateway::v1::Gateway const& gateway,
-      std::string const& gateway_id, Options opts = {});
+  future<StatusOr<google::cloud::apigateway::v1::Gateway>>
+  CreateGateway(std::string const& parent, google::cloud::apigateway::v1::Gateway const& gateway, std::string const& gateway_id, Options opts = {});
 
   // clang-format off
   ///
@@ -270,10 +262,8 @@ class ApiGatewayServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateGateway(
-      NoAwaitTag, std::string const& parent,
-      google::cloud::apigateway::v1::Gateway const& gateway,
-      std::string const& gateway_id, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateGateway(NoAwaitTag, std::string const& parent, google::cloud::apigateway::v1::Gateway const& gateway, std::string const& gateway_id, Options opts = {});
 
   // clang-format off
   ///
@@ -309,9 +299,8 @@ class ApiGatewayServiceClient {
   /// [google.cloud.apigateway.v1.Gateway]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L242}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::apigateway::v1::Gateway>> CreateGateway(
-      google::cloud::apigateway::v1::CreateGatewayRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::apigateway::v1::Gateway>>
+  CreateGateway(google::cloud::apigateway::v1::CreateGatewayRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -324,10 +313,8 @@ class ApiGatewayServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateGateway(
-      NoAwaitTag,
-      google::cloud::apigateway::v1::CreateGatewayRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateGateway(NoAwaitTag, google::cloud::apigateway::v1::CreateGatewayRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -338,8 +325,8 @@ class ApiGatewayServiceClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::apigateway::v1::Gateway>> CreateGateway(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::apigateway::v1::Gateway>>
+  CreateGateway(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -375,9 +362,8 @@ class ApiGatewayServiceClient {
   /// [google.cloud.apigateway.v1.UpdateGatewayRequest]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L372}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::apigateway::v1::Gateway>> UpdateGateway(
-      google::cloud::apigateway::v1::Gateway const& gateway,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  future<StatusOr<google::cloud::apigateway::v1::Gateway>>
+  UpdateGateway(google::cloud::apigateway::v1::Gateway const& gateway, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -390,9 +376,8 @@ class ApiGatewayServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateGateway(
-      NoAwaitTag, google::cloud::apigateway::v1::Gateway const& gateway,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateGateway(NoAwaitTag, google::cloud::apigateway::v1::Gateway const& gateway, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -428,9 +413,8 @@ class ApiGatewayServiceClient {
   /// [google.cloud.apigateway.v1.UpdateGatewayRequest]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L372}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::apigateway::v1::Gateway>> UpdateGateway(
-      google::cloud::apigateway::v1::UpdateGatewayRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::apigateway::v1::Gateway>>
+  UpdateGateway(google::cloud::apigateway::v1::UpdateGatewayRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -443,10 +427,8 @@ class ApiGatewayServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateGateway(
-      NoAwaitTag,
-      google::cloud::apigateway::v1::UpdateGatewayRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateGateway(NoAwaitTag, google::cloud::apigateway::v1::UpdateGatewayRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -457,8 +439,8 @@ class ApiGatewayServiceClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::apigateway::v1::Gateway>> UpdateGateway(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::apigateway::v1::Gateway>>
+  UpdateGateway(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -504,8 +486,8 @@ class ApiGatewayServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteGateway(
-      NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteGateway(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -542,9 +524,7 @@ class ApiGatewayServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>>
-  DeleteGateway(
-      google::cloud::apigateway::v1::DeleteGatewayRequest const& request,
-      Options opts = {});
+  DeleteGateway(google::cloud::apigateway::v1::DeleteGatewayRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -557,10 +537,8 @@ class ApiGatewayServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteGateway(
-      NoAwaitTag,
-      google::cloud::apigateway::v1::DeleteGatewayRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteGateway(NoAwaitTag, google::cloud::apigateway::v1::DeleteGatewayRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -572,8 +550,7 @@ class ApiGatewayServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>>
-  DeleteGateway(google::longrunning::Operation const& operation,
-                Options opts = {});
+  DeleteGateway(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -607,8 +584,8 @@ class ApiGatewayServiceClient {
   /// [google.cloud.apigateway.v1.ListApisRequest]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L397}
   ///
   // clang-format on
-  StreamRange<google::cloud::apigateway::v1::Api> ListApis(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::apigateway::v1::Api>
+  ListApis(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -646,9 +623,8 @@ class ApiGatewayServiceClient {
   /// [google.cloud.apigateway.v1.ListApisRequest]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L397}
   ///
   // clang-format on
-  StreamRange<google::cloud::apigateway::v1::Api> ListApis(
-      google::cloud::apigateway::v1::ListApisRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::apigateway::v1::Api>
+  ListApis(google::cloud::apigateway::v1::ListApisRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -673,8 +649,8 @@ class ApiGatewayServiceClient {
   /// [google.cloud.apigateway.v1.GetApiRequest]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L433}
   ///
   // clang-format on
-  StatusOr<google::cloud::apigateway::v1::Api> GetApi(std::string const& name,
-                                                      Options opts = {});
+  StatusOr<google::cloud::apigateway::v1::Api>
+  GetApi(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -703,9 +679,8 @@ class ApiGatewayServiceClient {
   /// [google.cloud.apigateway.v1.GetApiRequest]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L433}
   ///
   // clang-format on
-  StatusOr<google::cloud::apigateway::v1::Api> GetApi(
-      google::cloud::apigateway::v1::GetApiRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::apigateway::v1::Api>
+  GetApi(google::cloud::apigateway::v1::GetApiRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -740,9 +715,8 @@ class ApiGatewayServiceClient {
   /// [google.cloud.apigateway.v1.CreateApiRequest]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L445}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::apigateway::v1::Api>> CreateApi(
-      std::string const& parent, google::cloud::apigateway::v1::Api const& api,
-      std::string const& api_id, Options opts = {});
+  future<StatusOr<google::cloud::apigateway::v1::Api>>
+  CreateApi(std::string const& parent, google::cloud::apigateway::v1::Api const& api, std::string const& api_id, Options opts = {});
 
   // clang-format off
   ///
@@ -755,10 +729,8 @@ class ApiGatewayServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateApi(
-      NoAwaitTag, std::string const& parent,
-      google::cloud::apigateway::v1::Api const& api, std::string const& api_id,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateApi(NoAwaitTag, std::string const& parent, google::cloud::apigateway::v1::Api const& api, std::string const& api_id, Options opts = {});
 
   // clang-format off
   ///
@@ -794,9 +766,8 @@ class ApiGatewayServiceClient {
   /// [google.cloud.apigateway.v1.CreateApiRequest]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L445}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::apigateway::v1::Api>> CreateApi(
-      google::cloud::apigateway::v1::CreateApiRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::apigateway::v1::Api>>
+  CreateApi(google::cloud::apigateway::v1::CreateApiRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -809,10 +780,8 @@ class ApiGatewayServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateApi(
-      NoAwaitTag,
-      google::cloud::apigateway::v1::CreateApiRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateApi(NoAwaitTag, google::cloud::apigateway::v1::CreateApiRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -823,8 +792,8 @@ class ApiGatewayServiceClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::apigateway::v1::Api>> CreateApi(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::apigateway::v1::Api>>
+  CreateApi(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -860,9 +829,8 @@ class ApiGatewayServiceClient {
   /// [google.cloud.apigateway.v1.UpdateApiRequest]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L464}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::apigateway::v1::Api>> UpdateApi(
-      google::cloud::apigateway::v1::Api const& api,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  future<StatusOr<google::cloud::apigateway::v1::Api>>
+  UpdateApi(google::cloud::apigateway::v1::Api const& api, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -875,9 +843,8 @@ class ApiGatewayServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateApi(
-      NoAwaitTag, google::cloud::apigateway::v1::Api const& api,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateApi(NoAwaitTag, google::cloud::apigateway::v1::Api const& api, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -913,9 +880,8 @@ class ApiGatewayServiceClient {
   /// [google.cloud.apigateway.v1.UpdateApiRequest]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L464}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::apigateway::v1::Api>> UpdateApi(
-      google::cloud::apigateway::v1::UpdateApiRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::apigateway::v1::Api>>
+  UpdateApi(google::cloud::apigateway::v1::UpdateApiRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -928,10 +894,8 @@ class ApiGatewayServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateApi(
-      NoAwaitTag,
-      google::cloud::apigateway::v1::UpdateApiRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateApi(NoAwaitTag, google::cloud::apigateway::v1::UpdateApiRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -942,8 +906,8 @@ class ApiGatewayServiceClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::apigateway::v1::Api>> UpdateApi(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::apigateway::v1::Api>>
+  UpdateApi(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -975,8 +939,8 @@ class ApiGatewayServiceClient {
   /// [google.cloud.apigateway.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L596}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>> DeleteApi(
-      std::string const& name, Options opts = {});
+  future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>>
+  DeleteApi(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -989,9 +953,8 @@ class ApiGatewayServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteApi(NoAwaitTag,
-                                                     std::string const& name,
-                                                     Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteApi(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1027,9 +990,8 @@ class ApiGatewayServiceClient {
   /// [google.cloud.apigateway.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L596}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>> DeleteApi(
-      google::cloud::apigateway::v1::DeleteApiRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>>
+  DeleteApi(google::cloud::apigateway::v1::DeleteApiRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1042,10 +1004,8 @@ class ApiGatewayServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteApi(
-      NoAwaitTag,
-      google::cloud::apigateway::v1::DeleteApiRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteApi(NoAwaitTag, google::cloud::apigateway::v1::DeleteApiRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1056,8 +1016,8 @@ class ApiGatewayServiceClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>> DeleteApi(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>>
+  DeleteApi(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1091,8 +1051,8 @@ class ApiGatewayServiceClient {
   /// [google.cloud.apigateway.v1.ListApiConfigsRequest]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L489}
   ///
   // clang-format on
-  StreamRange<google::cloud::apigateway::v1::ApiConfig> ListApiConfigs(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::apigateway::v1::ApiConfig>
+  ListApiConfigs(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -1130,9 +1090,8 @@ class ApiGatewayServiceClient {
   /// [google.cloud.apigateway.v1.ListApiConfigsRequest]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L489}
   ///
   // clang-format on
-  StreamRange<google::cloud::apigateway::v1::ApiConfig> ListApiConfigs(
-      google::cloud::apigateway::v1::ListApiConfigsRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::apigateway::v1::ApiConfig>
+  ListApiConfigs(google::cloud::apigateway::v1::ListApiConfigsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1157,8 +1116,8 @@ class ApiGatewayServiceClient {
   /// [google.cloud.apigateway.v1.GetApiConfigRequest]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L525}
   ///
   // clang-format on
-  StatusOr<google::cloud::apigateway::v1::ApiConfig> GetApiConfig(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::apigateway::v1::ApiConfig>
+  GetApiConfig(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1187,9 +1146,8 @@ class ApiGatewayServiceClient {
   /// [google.cloud.apigateway.v1.GetApiConfigRequest]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L525}
   ///
   // clang-format on
-  StatusOr<google::cloud::apigateway::v1::ApiConfig> GetApiConfig(
-      google::cloud::apigateway::v1::GetApiConfigRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::apigateway::v1::ApiConfig>
+  GetApiConfig(google::cloud::apigateway::v1::GetApiConfigRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1224,10 +1182,8 @@ class ApiGatewayServiceClient {
   /// [google.cloud.apigateway.v1.CreateApiConfigRequest]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L552}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::apigateway::v1::ApiConfig>> CreateApiConfig(
-      std::string const& parent,
-      google::cloud::apigateway::v1::ApiConfig const& api_config,
-      std::string const& api_config_id, Options opts = {});
+  future<StatusOr<google::cloud::apigateway::v1::ApiConfig>>
+  CreateApiConfig(std::string const& parent, google::cloud::apigateway::v1::ApiConfig const& api_config, std::string const& api_config_id, Options opts = {});
 
   // clang-format off
   ///
@@ -1240,10 +1196,8 @@ class ApiGatewayServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateApiConfig(
-      NoAwaitTag, std::string const& parent,
-      google::cloud::apigateway::v1::ApiConfig const& api_config,
-      std::string const& api_config_id, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateApiConfig(NoAwaitTag, std::string const& parent, google::cloud::apigateway::v1::ApiConfig const& api_config, std::string const& api_config_id, Options opts = {});
 
   // clang-format off
   ///
@@ -1279,9 +1233,8 @@ class ApiGatewayServiceClient {
   /// [google.cloud.apigateway.v1.CreateApiConfigRequest]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L552}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::apigateway::v1::ApiConfig>> CreateApiConfig(
-      google::cloud::apigateway::v1::CreateApiConfigRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::apigateway::v1::ApiConfig>>
+  CreateApiConfig(google::cloud::apigateway::v1::CreateApiConfigRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1294,10 +1247,8 @@ class ApiGatewayServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateApiConfig(
-      NoAwaitTag,
-      google::cloud::apigateway::v1::CreateApiConfigRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateApiConfig(NoAwaitTag, google::cloud::apigateway::v1::CreateApiConfigRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1308,8 +1259,8 @@ class ApiGatewayServiceClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::apigateway::v1::ApiConfig>> CreateApiConfig(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::apigateway::v1::ApiConfig>>
+  CreateApiConfig(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1345,9 +1296,8 @@ class ApiGatewayServiceClient {
   /// [google.cloud.apigateway.v1.UpdateApiConfigRequest]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L571}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::apigateway::v1::ApiConfig>> UpdateApiConfig(
-      google::cloud::apigateway::v1::ApiConfig const& api_config,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  future<StatusOr<google::cloud::apigateway::v1::ApiConfig>>
+  UpdateApiConfig(google::cloud::apigateway::v1::ApiConfig const& api_config, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -1360,9 +1310,8 @@ class ApiGatewayServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateApiConfig(
-      NoAwaitTag, google::cloud::apigateway::v1::ApiConfig const& api_config,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateApiConfig(NoAwaitTag, google::cloud::apigateway::v1::ApiConfig const& api_config, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -1398,9 +1347,8 @@ class ApiGatewayServiceClient {
   /// [google.cloud.apigateway.v1.UpdateApiConfigRequest]: @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L571}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::apigateway::v1::ApiConfig>> UpdateApiConfig(
-      google::cloud::apigateway::v1::UpdateApiConfigRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::apigateway::v1::ApiConfig>>
+  UpdateApiConfig(google::cloud::apigateway::v1::UpdateApiConfigRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1413,10 +1361,8 @@ class ApiGatewayServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateApiConfig(
-      NoAwaitTag,
-      google::cloud::apigateway::v1::UpdateApiConfigRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateApiConfig(NoAwaitTag, google::cloud::apigateway::v1::UpdateApiConfigRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1427,8 +1373,8 @@ class ApiGatewayServiceClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::apigateway::v1::ApiConfig>> UpdateApiConfig(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::apigateway::v1::ApiConfig>>
+  UpdateApiConfig(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1474,8 +1420,8 @@ class ApiGatewayServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteApiConfig(
-      NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteApiConfig(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1512,9 +1458,7 @@ class ApiGatewayServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>>
-  DeleteApiConfig(
-      google::cloud::apigateway::v1::DeleteApiConfigRequest const& request,
-      Options opts = {});
+  DeleteApiConfig(google::cloud::apigateway::v1::DeleteApiConfigRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1527,10 +1471,8 @@ class ApiGatewayServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteApiConfig(
-      NoAwaitTag,
-      google::cloud::apigateway::v1::DeleteApiConfigRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteApiConfig(NoAwaitTag, google::cloud::apigateway::v1::DeleteApiConfigRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1542,8 +1484,7 @@ class ApiGatewayServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>>
-  DeleteApiConfig(google::longrunning::Operation const& operation,
-                  Options opts = {});
+  DeleteApiConfig(google::longrunning::Operation const& operation, Options opts = {});
 
  private:
   std::shared_ptr<ApiGatewayServiceConnection> connection_;

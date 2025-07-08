@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_ADDRESSES_V1_ADDRESSES_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_ADDRESSES_V1_ADDRESSES_CONNECTION_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/addresses/v1/addresses_connection_idempotency_policy.h"
 #include "google/cloud/compute/addresses/v1/internal/addresses_retry_traits.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -65,14 +65,14 @@ class AddressesLimitedErrorCountRetryPolicy : public AddressesRetryPolicy {
    *     @p maximum_failures == 0.
    */
   explicit AddressesLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   AddressesLimitedErrorCountRetryPolicy(
       AddressesLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : AddressesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : AddressesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   AddressesLimitedErrorCountRetryPolicy(
       AddressesLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : AddressesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : AddressesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -92,9 +92,7 @@ class AddressesLimitedErrorCountRetryPolicy : public AddressesRetryPolicy {
   using BaseType = AddressesRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      compute_addresses_v1_internal::AddressesRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<compute_addresses_v1_internal::AddressesRetryTraits> impl_;
 };
 
 /**
@@ -132,14 +130,12 @@ class AddressesLimitedTimeRetryPolicy : public AddressesRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit AddressesLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  AddressesLimitedTimeRetryPolicy(
-      AddressesLimitedTimeRetryPolicy&& rhs) noexcept
-      : AddressesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  AddressesLimitedTimeRetryPolicy(
-      AddressesLimitedTimeRetryPolicy const& rhs) noexcept
-      : AddressesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  AddressesLimitedTimeRetryPolicy(AddressesLimitedTimeRetryPolicy&& rhs) noexcept
+    : AddressesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  AddressesLimitedTimeRetryPolicy(AddressesLimitedTimeRetryPolicy const& rhs) noexcept
+    : AddressesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -161,9 +157,7 @@ class AddressesLimitedTimeRetryPolicy : public AddressesRetryPolicy {
   using BaseType = AddressesRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      compute_addresses_v1_internal::AddressesRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<compute_addresses_v1_internal::AddressesRetryTraits> impl_;
 };
 
 /**
@@ -184,66 +178,50 @@ class AddressesConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StreamRange<std::pair<
-      std::string, google::cloud::cpp::compute::v1::AddressesScopedList>>
-  AggregatedListAddresses(
-      google::cloud::cpp::compute::addresses::v1::AggregatedListAddressesRequest
-          request);
+  virtual StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::AddressesScopedList>>
+  AggregatedListAddresses(google::cloud::cpp::compute::addresses::v1::AggregatedListAddressesRequest request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteAddress(
-      google::cloud::cpp::compute::addresses::v1::DeleteAddressRequest const&
-          request);
+  DeleteAddress(google::cloud::cpp::compute::addresses::v1::DeleteAddressRequest const& request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteAddress(
-      NoAwaitTag,
-      google::cloud::cpp::compute::addresses::v1::DeleteAddressRequest const&
-          request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeleteAddress(NoAwaitTag, google::cloud::cpp::compute::addresses::v1::DeleteAddressRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteAddress(google::cloud::cpp::compute::v1::Operation const& operation);
+  DeleteAddress( google::cloud::cpp::compute::v1::Operation const& operation);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Address> GetAddress(
-      google::cloud::cpp::compute::addresses::v1::GetAddressRequest const&
-          request);
-
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertAddress(
-      google::cloud::cpp::compute::addresses::v1::InsertAddressRequest const&
-          request);
-
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> InsertAddress(
-      NoAwaitTag,
-      google::cloud::cpp::compute::addresses::v1::InsertAddressRequest const&
-          request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Address>
+  GetAddress(google::cloud::cpp::compute::addresses::v1::GetAddressRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertAddress(google::cloud::cpp::compute::v1::Operation const& operation);
+  InsertAddress(google::cloud::cpp::compute::addresses::v1::InsertAddressRequest const& request);
 
-  virtual StreamRange<google::cloud::cpp::compute::v1::Address> ListAddresses(
-      google::cloud::cpp::compute::addresses::v1::ListAddressesRequest request);
-
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Move(
-      google::cloud::cpp::compute::addresses::v1::MoveRequest const& request);
-
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> Move(
-      NoAwaitTag,
-      google::cloud::cpp::compute::addresses::v1::MoveRequest const& request);
-
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Move(
-      google::cloud::cpp::compute::v1::Operation const& operation);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  InsertAddress(NoAwaitTag, google::cloud::cpp::compute::addresses::v1::InsertAddressRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetLabels(google::cloud::cpp::compute::addresses::v1::SetLabelsRequest const&
-                request);
+  InsertAddress( google::cloud::cpp::compute::v1::Operation const& operation);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
-      NoAwaitTag,
-      google::cloud::cpp::compute::addresses::v1::SetLabelsRequest const&
-          request);
+  virtual StreamRange<google::cloud::cpp::compute::v1::Address>
+  ListAddresses(google::cloud::cpp::compute::addresses::v1::ListAddressesRequest request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetLabels(google::cloud::cpp::compute::v1::Operation const& operation);
+  Move(google::cloud::cpp::compute::addresses::v1::MoveRequest const& request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  Move(NoAwaitTag, google::cloud::cpp::compute::addresses::v1::MoveRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  Move( google::cloud::cpp::compute::v1::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  SetLabels(google::cloud::cpp::compute::addresses::v1::SetLabelsRequest const& request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  SetLabels(NoAwaitTag, google::cloud::cpp::compute::addresses::v1::SetLabelsRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  SetLabels( google::cloud::cpp::compute::v1::Operation const& operation);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

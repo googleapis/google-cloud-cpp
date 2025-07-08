@@ -19,16 +19,16 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SUPPORT_V2_INTERNAL_CASE_ATTACHMENT_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SUPPORT_V2_INTERNAL_CASE_ATTACHMENT_CONNECTION_IMPL_H
 
-#include "google/cloud/support/v2/case_attachment_connection.h"
-#include "google/cloud/support/v2/case_attachment_connection_idempotency_policy.h"
-#include "google/cloud/support/v2/case_attachment_options.h"
-#include "google/cloud/support/v2/internal/case_attachment_retry_traits.h"
-#include "google/cloud/support/v2/internal/case_attachment_stub.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
+#include "google/cloud/support/v2/case_attachment_connection.h"
+#include "google/cloud/support/v2/case_attachment_connection_idempotency_policy.h"
+#include "google/cloud/support/v2/case_attachment_options.h"
+#include "google/cloud/support/v2/internal/case_attachment_retry_traits.h"
+#include "google/cloud/support/v2/internal/case_attachment_stub.h"
 #include "google/cloud/version.h"
 #include <memory>
 
@@ -43,14 +43,14 @@ class CaseAttachmentServiceConnectionImpl
   ~CaseAttachmentServiceConnectionImpl() override = default;
 
   CaseAttachmentServiceConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<support_v2_internal::CaseAttachmentServiceStub> stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<support_v2_internal::CaseAttachmentServiceStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
-  StreamRange<google::cloud::support::v2::Attachment> ListAttachments(
-      google::cloud::support::v2::ListAttachmentsRequest request) override;
+  StreamRange<google::cloud::support::v2::Attachment>
+  ListAttachments(google::cloud::support::v2::ListAttachmentsRequest request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

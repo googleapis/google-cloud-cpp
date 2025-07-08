@@ -34,75 +34,71 @@ RoutineServiceRestConnectionImpl::RoutineServiceRestConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<bigquerycontrol_v2_internal::RoutineServiceRestStub> stub,
     Options options)
-    : background_(std::move(background)),
-      stub_(std::move(stub)),
-      options_(internal::MergeOptions(std::move(options),
-                                      RoutineServiceConnection::options())) {}
+  : background_(std::move(background)), stub_(std::move(stub)),
+    options_(internal::MergeOptions(
+        std::move(options),
+        RoutineServiceConnection::options())) {}
 
 StatusOr<google::cloud::bigquery::v2::Routine>
-RoutineServiceRestConnectionImpl::GetRoutine(
-    google::cloud::bigquery::v2::GetRoutineRequest const& request) {
+RoutineServiceRestConnectionImpl::GetRoutine(google::cloud::bigquery::v2::GetRoutineRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetRoutine(request),
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::cloud::bigquery::v2::GetRoutineRequest const& request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options, google::cloud::bigquery::v2::GetRoutineRequest const& request) {
         return stub_->GetRoutine(rest_context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::bigquery::v2::Routine>
-RoutineServiceRestConnectionImpl::InsertRoutine(
-    google::cloud::bigquery::v2::InsertRoutineRequest const& request) {
+RoutineServiceRestConnectionImpl::InsertRoutine(google::cloud::bigquery::v2::InsertRoutineRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->InsertRoutine(request),
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::cloud::bigquery::v2::InsertRoutineRequest const& request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options, google::cloud::bigquery::v2::InsertRoutineRequest const& request) {
         return stub_->InsertRoutine(rest_context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::bigquery::v2::Routine>
-RoutineServiceRestConnectionImpl::UpdateRoutine(
-    google::cloud::bigquery::v2::UpdateRoutineRequest const& request) {
+RoutineServiceRestConnectionImpl::UpdateRoutine(google::cloud::bigquery::v2::UpdateRoutineRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateRoutine(request),
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::cloud::bigquery::v2::UpdateRoutineRequest const& request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options, google::cloud::bigquery::v2::UpdateRoutineRequest const& request) {
         return stub_->UpdateRoutine(rest_context, options, request);
       },
       *current, request, __func__);
 }
 
-Status RoutineServiceRestConnectionImpl::DeleteRoutine(
-    google::cloud::bigquery::v2::DeleteRoutineRequest const& request) {
+Status
+RoutineServiceRestConnectionImpl::DeleteRoutine(google::cloud::bigquery::v2::DeleteRoutineRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteRoutine(request),
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::cloud::bigquery::v2::DeleteRoutineRequest const& request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options, google::cloud::bigquery::v2::DeleteRoutineRequest const& request) {
         return stub_->DeleteRoutine(rest_context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::bigquery::v2::ListRoutinesResponse>
-RoutineServiceRestConnectionImpl::ListRoutines(
-    google::cloud::bigquery::v2::ListRoutinesRequest const& request) {
+RoutineServiceRestConnectionImpl::ListRoutines(google::cloud::bigquery::v2::ListRoutinesRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->ListRoutines(request),
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::cloud::bigquery::v2::ListRoutinesRequest const& request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options, google::cloud::bigquery::v2::ListRoutinesRequest const& request) {
         return stub_->ListRoutines(rest_context, options, request);
       },
       *current, request, __func__);

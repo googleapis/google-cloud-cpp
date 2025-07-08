@@ -26,14 +26,10 @@ namespace cloud {
 namespace serviceusage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use
-/// serviceusage_v1::MakeDefaultServiceUsageConnectionIdempotencyPolicy
-/// directly.
-using ::google::cloud::serviceusage_v1::
-    MakeDefaultServiceUsageConnectionIdempotencyPolicy;
+/// @deprecated Use serviceusage_v1::MakeDefaultServiceUsageConnectionIdempotencyPolicy directly.
+using ::google::cloud::serviceusage_v1::MakeDefaultServiceUsageConnectionIdempotencyPolicy;
 
-/// @deprecated Use serviceusage_v1::ServiceUsageConnectionIdempotencyPolicy
-/// directly.
+/// @deprecated Use serviceusage_v1::ServiceUsageConnectionIdempotencyPolicy directly.
 using ::google::cloud::serviceusage_v1::ServiceUsageConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

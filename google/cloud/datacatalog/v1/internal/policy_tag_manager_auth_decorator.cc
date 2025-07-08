@@ -31,9 +31,9 @@ PolicyTagManagerAuth::PolicyTagManagerAuth(
     std::shared_ptr<PolicyTagManagerStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::datacatalog::v1::Taxonomy>
-PolicyTagManagerAuth::CreateTaxonomy(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::datacatalog::v1::Taxonomy> PolicyTagManagerAuth::CreateTaxonomy(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::datacatalog::v1::CreateTaxonomyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -41,43 +41,44 @@ PolicyTagManagerAuth::CreateTaxonomy(
 }
 
 Status PolicyTagManagerAuth::DeleteTaxonomy(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::datacatalog::v1::DeleteTaxonomyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteTaxonomy(context, options, request);
 }
 
-StatusOr<google::cloud::datacatalog::v1::Taxonomy>
-PolicyTagManagerAuth::UpdateTaxonomy(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::datacatalog::v1::Taxonomy> PolicyTagManagerAuth::UpdateTaxonomy(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::datacatalog::v1::UpdateTaxonomyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateTaxonomy(context, options, request);
 }
 
-StatusOr<google::cloud::datacatalog::v1::ListTaxonomiesResponse>
-PolicyTagManagerAuth::ListTaxonomies(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::datacatalog::v1::ListTaxonomiesResponse> PolicyTagManagerAuth::ListTaxonomies(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::datacatalog::v1::ListTaxonomiesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListTaxonomies(context, options, request);
 }
 
-StatusOr<google::cloud::datacatalog::v1::Taxonomy>
-PolicyTagManagerAuth::GetTaxonomy(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::datacatalog::v1::Taxonomy> PolicyTagManagerAuth::GetTaxonomy(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::datacatalog::v1::GetTaxonomyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetTaxonomy(context, options, request);
 }
 
-StatusOr<google::cloud::datacatalog::v1::PolicyTag>
-PolicyTagManagerAuth::CreatePolicyTag(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::datacatalog::v1::PolicyTag> PolicyTagManagerAuth::CreatePolicyTag(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::datacatalog::v1::CreatePolicyTagRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -85,34 +86,35 @@ PolicyTagManagerAuth::CreatePolicyTag(
 }
 
 Status PolicyTagManagerAuth::DeletePolicyTag(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::datacatalog::v1::DeletePolicyTagRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeletePolicyTag(context, options, request);
 }
 
-StatusOr<google::cloud::datacatalog::v1::PolicyTag>
-PolicyTagManagerAuth::UpdatePolicyTag(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::datacatalog::v1::PolicyTag> PolicyTagManagerAuth::UpdatePolicyTag(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::datacatalog::v1::UpdatePolicyTagRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdatePolicyTag(context, options, request);
 }
 
-StatusOr<google::cloud::datacatalog::v1::ListPolicyTagsResponse>
-PolicyTagManagerAuth::ListPolicyTags(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::datacatalog::v1::ListPolicyTagsResponse> PolicyTagManagerAuth::ListPolicyTags(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::datacatalog::v1::ListPolicyTagsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListPolicyTags(context, options, request);
 }
 
-StatusOr<google::cloud::datacatalog::v1::PolicyTag>
-PolicyTagManagerAuth::GetPolicyTag(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::datacatalog::v1::PolicyTag> PolicyTagManagerAuth::GetPolicyTag(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::datacatalog::v1::GetPolicyTagRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -120,7 +122,8 @@ PolicyTagManagerAuth::GetPolicyTag(
 }
 
 StatusOr<google::iam::v1::Policy> PolicyTagManagerAuth::GetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -128,25 +131,26 @@ StatusOr<google::iam::v1::Policy> PolicyTagManagerAuth::GetIamPolicy(
 }
 
 StatusOr<google::iam::v1::Policy> PolicyTagManagerAuth::SetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->SetIamPolicy(context, options, request);
 }
 
-StatusOr<google::iam::v1::TestIamPermissionsResponse>
-PolicyTagManagerAuth::TestIamPermissions(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::iam::v1::TestIamPermissionsResponse> PolicyTagManagerAuth::TestIamPermissions(
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->TestIamPermissions(context, options, request);
 }
 
-StatusOr<google::longrunning::ListOperationsResponse>
-PolicyTagManagerAuth::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse> PolicyTagManagerAuth::ListOperations(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -154,7 +158,8 @@ PolicyTagManagerAuth::ListOperations(
 }
 
 StatusOr<google::longrunning::Operation> PolicyTagManagerAuth::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -162,7 +167,8 @@ StatusOr<google::longrunning::Operation> PolicyTagManagerAuth::GetOperation(
 }
 
 Status PolicyTagManagerAuth::DeleteOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -170,7 +176,8 @@ Status PolicyTagManagerAuth::DeleteOperation(
 }
 
 Status PolicyTagManagerAuth::CancelOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;

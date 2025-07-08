@@ -32,17 +32,20 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 AuthorizedDomainsLogging::AuthorizedDomainsLogging(
     std::shared_ptr<AuthorizedDomainsStub> child,
-    TracingOptions tracing_options, std::set<std::string> const&)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
+    TracingOptions tracing_options,
+    std::set<std::string> const&)
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::appengine::v1::ListAuthorizedDomainsResponse>
 AuthorizedDomainsLogging::ListAuthorizedDomains(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::appengine::v1::ListAuthorizedDomainsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::appengine::v1::ListAuthorizedDomainsRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::appengine::v1::ListAuthorizedDomainsRequest const& request) {
         return child_->ListAuthorizedDomains(context, options, request);
       },
       context, options, request, __func__, tracing_options_);

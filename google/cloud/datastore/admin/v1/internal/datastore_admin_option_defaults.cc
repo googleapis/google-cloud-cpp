@@ -42,34 +42,25 @@ Options DatastoreAdminDefaultOptions(Options options) {
   if (!options.has<datastore_admin_v1::DatastoreAdminRetryPolicyOption>()) {
     options.set<datastore_admin_v1::DatastoreAdminRetryPolicyOption>(
         datastore_admin_v1::DatastoreAdminLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
-            .clone());
+            std::chrono::minutes(30)).clone());
   }
   if (!options.has<datastore_admin_v1::DatastoreAdminBackoffPolicyOption>()) {
     options.set<datastore_admin_v1::DatastoreAdminBackoffPolicyOption>(
-        ExponentialBackoffPolicy(
-            std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
-            .clone());
+        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
   }
   if (!options.has<datastore_admin_v1::DatastoreAdminPollingPolicyOption>()) {
     options.set<datastore_admin_v1::DatastoreAdminPollingPolicyOption>(
         GenericPollingPolicy<
             datastore_admin_v1::DatastoreAdminRetryPolicyOption::Type,
             datastore_admin_v1::DatastoreAdminBackoffPolicyOption::Type>(
-            options.get<datastore_admin_v1::DatastoreAdminRetryPolicyOption>()
-                ->clone(),
+            options.get<datastore_admin_v1::DatastoreAdminRetryPolicyOption>()->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                     std::chrono::minutes(5), kBackoffScaling)
-                .clone())
-            .clone());
+            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
   }
-  if (!options.has<datastore_admin_v1::
-                       DatastoreAdminConnectionIdempotencyPolicyOption>()) {
-    options.set<
-        datastore_admin_v1::DatastoreAdminConnectionIdempotencyPolicyOption>(
-        datastore_admin_v1::
-            MakeDefaultDatastoreAdminConnectionIdempotencyPolicy());
+  if (!options.has<datastore_admin_v1::DatastoreAdminConnectionIdempotencyPolicyOption>()) {
+    options.set<datastore_admin_v1::DatastoreAdminConnectionIdempotencyPolicyOption>(
+        datastore_admin_v1::MakeDefaultDatastoreAdminConnectionIdempotencyPolicy());
   }
 
   return options;

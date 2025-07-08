@@ -34,49 +34,45 @@ RepositoryManagerTracingStub::RepositoryManagerTracingStub(
 
 future<StatusOr<google::longrunning::Operation>>
 RepositoryManagerTracingStub::AsyncCreateConnection(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::devtools::cloudbuild::v2::CreateConnectionRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.devtools.cloudbuild.v2.RepositoryManager", "CreateConnection");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::devtools::cloudbuild::v2::CreateConnectionRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.devtools.cloudbuild.v2.RepositoryManager", "CreateConnection");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f =
-      child_->AsyncCreateConnection(cq, context, std::move(options), request);
+  auto f = child_->AsyncCreateConnection(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 RepositoryManagerTracingStub::CreateConnection(
-    grpc::ClientContext& context, Options options,
-    google::devtools::cloudbuild::v2::CreateConnectionRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.devtools.cloudbuild.v2.RepositoryManager", "CreateConnection");
+      grpc::ClientContext& context,
+      Options options,
+      google::devtools::cloudbuild::v2::CreateConnectionRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.devtools.cloudbuild.v2.RepositoryManager", "CreateConnection");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateConnection(context, options, request));
 }
 
-StatusOr<google::devtools::cloudbuild::v2::Connection>
-RepositoryManagerTracingStub::GetConnection(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::devtools::cloudbuild::v2::Connection> RepositoryManagerTracingStub::GetConnection(
+    grpc::ClientContext& context,
+    Options const& options,
     google::devtools::cloudbuild::v2::GetConnectionRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.devtools.cloudbuild.v2.RepositoryManager", "GetConnection");
+  auto span = internal::MakeSpanGrpc("google.devtools.cloudbuild.v2.RepositoryManager", "GetConnection");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetConnection(context, options, request));
 }
 
-StatusOr<google::devtools::cloudbuild::v2::ListConnectionsResponse>
-RepositoryManagerTracingStub::ListConnections(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::devtools::cloudbuild::v2::ListConnectionsResponse> RepositoryManagerTracingStub::ListConnections(
+    grpc::ClientContext& context,
+    Options const& options,
     google::devtools::cloudbuild::v2::ListConnectionsRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.devtools.cloudbuild.v2.RepositoryManager", "ListConnections");
+  auto span = internal::MakeSpanGrpc("google.devtools.cloudbuild.v2.RepositoryManager", "ListConnections");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -85,25 +81,23 @@ RepositoryManagerTracingStub::ListConnections(
 
 future<StatusOr<google::longrunning::Operation>>
 RepositoryManagerTracingStub::AsyncUpdateConnection(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::devtools::cloudbuild::v2::UpdateConnectionRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.devtools.cloudbuild.v2.RepositoryManager", "UpdateConnection");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::devtools::cloudbuild::v2::UpdateConnectionRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.devtools.cloudbuild.v2.RepositoryManager", "UpdateConnection");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f =
-      child_->AsyncUpdateConnection(cq, context, std::move(options), request);
+  auto f = child_->AsyncUpdateConnection(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 RepositoryManagerTracingStub::UpdateConnection(
-    grpc::ClientContext& context, Options options,
-    google::devtools::cloudbuild::v2::UpdateConnectionRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.devtools.cloudbuild.v2.RepositoryManager", "UpdateConnection");
+      grpc::ClientContext& context,
+      Options options,
+      google::devtools::cloudbuild::v2::UpdateConnectionRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.devtools.cloudbuild.v2.RepositoryManager", "UpdateConnection");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -112,25 +106,23 @@ RepositoryManagerTracingStub::UpdateConnection(
 
 future<StatusOr<google::longrunning::Operation>>
 RepositoryManagerTracingStub::AsyncDeleteConnection(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::devtools::cloudbuild::v2::DeleteConnectionRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.devtools.cloudbuild.v2.RepositoryManager", "DeleteConnection");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::devtools::cloudbuild::v2::DeleteConnectionRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.devtools.cloudbuild.v2.RepositoryManager", "DeleteConnection");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f =
-      child_->AsyncDeleteConnection(cq, context, std::move(options), request);
+  auto f = child_->AsyncDeleteConnection(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 RepositoryManagerTracingStub::DeleteConnection(
-    grpc::ClientContext& context, Options options,
-    google::devtools::cloudbuild::v2::DeleteConnectionRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.devtools.cloudbuild.v2.RepositoryManager", "DeleteConnection");
+      grpc::ClientContext& context,
+      Options options,
+      google::devtools::cloudbuild::v2::DeleteConnectionRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.devtools.cloudbuild.v2.RepositoryManager", "DeleteConnection");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -139,25 +131,23 @@ RepositoryManagerTracingStub::DeleteConnection(
 
 future<StatusOr<google::longrunning::Operation>>
 RepositoryManagerTracingStub::AsyncCreateRepository(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::devtools::cloudbuild::v2::CreateRepositoryRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.devtools.cloudbuild.v2.RepositoryManager", "CreateRepository");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::devtools::cloudbuild::v2::CreateRepositoryRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.devtools.cloudbuild.v2.RepositoryManager", "CreateRepository");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f =
-      child_->AsyncCreateRepository(cq, context, std::move(options), request);
+  auto f = child_->AsyncCreateRepository(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 RepositoryManagerTracingStub::CreateRepository(
-    grpc::ClientContext& context, Options options,
-    google::devtools::cloudbuild::v2::CreateRepositoryRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.devtools.cloudbuild.v2.RepositoryManager", "CreateRepository");
+      grpc::ClientContext& context,
+      Options options,
+      google::devtools::cloudbuild::v2::CreateRepositoryRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.devtools.cloudbuild.v2.RepositoryManager", "CreateRepository");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -166,54 +156,45 @@ RepositoryManagerTracingStub::CreateRepository(
 
 future<StatusOr<google::longrunning::Operation>>
 RepositoryManagerTracingStub::AsyncBatchCreateRepositories(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::devtools::cloudbuild::v2::BatchCreateRepositoriesRequest const&
-        request) {
-  auto span =
-      internal::MakeSpanGrpc("google.devtools.cloudbuild.v2.RepositoryManager",
-                             "BatchCreateRepositories");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::devtools::cloudbuild::v2::BatchCreateRepositoriesRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.devtools.cloudbuild.v2.RepositoryManager", "BatchCreateRepositories");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncBatchCreateRepositories(cq, context, std::move(options),
-                                                request);
+  auto f = child_->AsyncBatchCreateRepositories(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 RepositoryManagerTracingStub::BatchCreateRepositories(
-    grpc::ClientContext& context, Options options,
-    google::devtools::cloudbuild::v2::BatchCreateRepositoriesRequest const&
-        request) {
-  auto span =
-      internal::MakeSpanGrpc("google.devtools.cloudbuild.v2.RepositoryManager",
-                             "BatchCreateRepositories");
+      grpc::ClientContext& context,
+      Options options,
+      google::devtools::cloudbuild::v2::BatchCreateRepositoriesRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.devtools.cloudbuild.v2.RepositoryManager", "BatchCreateRepositories");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span,
-      child_->BatchCreateRepositories(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->BatchCreateRepositories(context, options, request));
 }
 
-StatusOr<google::devtools::cloudbuild::v2::Repository>
-RepositoryManagerTracingStub::GetRepository(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::devtools::cloudbuild::v2::Repository> RepositoryManagerTracingStub::GetRepository(
+    grpc::ClientContext& context,
+    Options const& options,
     google::devtools::cloudbuild::v2::GetRepositoryRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.devtools.cloudbuild.v2.RepositoryManager", "GetRepository");
+  auto span = internal::MakeSpanGrpc("google.devtools.cloudbuild.v2.RepositoryManager", "GetRepository");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetRepository(context, options, request));
 }
 
-StatusOr<google::devtools::cloudbuild::v2::ListRepositoriesResponse>
-RepositoryManagerTracingStub::ListRepositories(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::devtools::cloudbuild::v2::ListRepositoriesResponse> RepositoryManagerTracingStub::ListRepositories(
+    grpc::ClientContext& context,
+    Options const& options,
     google::devtools::cloudbuild::v2::ListRepositoriesRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.devtools.cloudbuild.v2.RepositoryManager", "ListRepositories");
+  auto span = internal::MakeSpanGrpc("google.devtools.cloudbuild.v2.RepositoryManager", "ListRepositories");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -222,77 +203,67 @@ RepositoryManagerTracingStub::ListRepositories(
 
 future<StatusOr<google::longrunning::Operation>>
 RepositoryManagerTracingStub::AsyncDeleteRepository(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::devtools::cloudbuild::v2::DeleteRepositoryRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.devtools.cloudbuild.v2.RepositoryManager", "DeleteRepository");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::devtools::cloudbuild::v2::DeleteRepositoryRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.devtools.cloudbuild.v2.RepositoryManager", "DeleteRepository");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f =
-      child_->AsyncDeleteRepository(cq, context, std::move(options), request);
+  auto f = child_->AsyncDeleteRepository(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 RepositoryManagerTracingStub::DeleteRepository(
-    grpc::ClientContext& context, Options options,
-    google::devtools::cloudbuild::v2::DeleteRepositoryRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.devtools.cloudbuild.v2.RepositoryManager", "DeleteRepository");
+      grpc::ClientContext& context,
+      Options options,
+      google::devtools::cloudbuild::v2::DeleteRepositoryRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.devtools.cloudbuild.v2.RepositoryManager", "DeleteRepository");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeleteRepository(context, options, request));
 }
 
-StatusOr<google::devtools::cloudbuild::v2::FetchReadWriteTokenResponse>
-RepositoryManagerTracingStub::FetchReadWriteToken(
-    grpc::ClientContext& context, Options const& options,
-    google::devtools::cloudbuild::v2::FetchReadWriteTokenRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.devtools.cloudbuild.v2.RepositoryManager", "FetchReadWriteToken");
+StatusOr<google::devtools::cloudbuild::v2::FetchReadWriteTokenResponse> RepositoryManagerTracingStub::FetchReadWriteToken(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::devtools::cloudbuild::v2::FetchReadWriteTokenRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.devtools.cloudbuild.v2.RepositoryManager", "FetchReadWriteToken");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->FetchReadWriteToken(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->FetchReadWriteToken(context, options, request));
 }
 
-StatusOr<google::devtools::cloudbuild::v2::FetchReadTokenResponse>
-RepositoryManagerTracingStub::FetchReadToken(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::devtools::cloudbuild::v2::FetchReadTokenResponse> RepositoryManagerTracingStub::FetchReadToken(
+    grpc::ClientContext& context,
+    Options const& options,
     google::devtools::cloudbuild::v2::FetchReadTokenRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.devtools.cloudbuild.v2.RepositoryManager", "FetchReadToken");
+  auto span = internal::MakeSpanGrpc("google.devtools.cloudbuild.v2.RepositoryManager", "FetchReadToken");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->FetchReadToken(context, options, request));
 }
 
-StatusOr<google::devtools::cloudbuild::v2::FetchLinkableRepositoriesResponse>
-RepositoryManagerTracingStub::FetchLinkableRepositories(
-    grpc::ClientContext& context, Options const& options,
-    google::devtools::cloudbuild::v2::FetchLinkableRepositoriesRequest const&
-        request) {
-  auto span =
-      internal::MakeSpanGrpc("google.devtools.cloudbuild.v2.RepositoryManager",
-                             "FetchLinkableRepositories");
+StatusOr<google::devtools::cloudbuild::v2::FetchLinkableRepositoriesResponse> RepositoryManagerTracingStub::FetchLinkableRepositories(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::devtools::cloudbuild::v2::FetchLinkableRepositoriesRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.devtools.cloudbuild.v2.RepositoryManager", "FetchLinkableRepositories");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span,
-      child_->FetchLinkableRepositories(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->FetchLinkableRepositories(context, options, request));
 }
 
-StatusOr<google::devtools::cloudbuild::v2::FetchGitRefsResponse>
-RepositoryManagerTracingStub::FetchGitRefs(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::devtools::cloudbuild::v2::FetchGitRefsResponse> RepositoryManagerTracingStub::FetchGitRefs(
+    grpc::ClientContext& context,
+    Options const& options,
     google::devtools::cloudbuild::v2::FetchGitRefsRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.devtools.cloudbuild.v2.RepositoryManager", "FetchGitRefs");
+  auto span = internal::MakeSpanGrpc("google.devtools.cloudbuild.v2.RepositoryManager", "FetchGitRefs");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -300,10 +271,10 @@ RepositoryManagerTracingStub::FetchGitRefs(
 }
 
 StatusOr<google::iam::v1::Policy> RepositoryManagerTracingStub::SetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.devtools.cloudbuild.v2.RepositoryManager", "SetIamPolicy");
+  auto span = internal::MakeSpanGrpc("google.devtools.cloudbuild.v2.RepositoryManager", "SetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -311,34 +282,32 @@ StatusOr<google::iam::v1::Policy> RepositoryManagerTracingStub::SetIamPolicy(
 }
 
 StatusOr<google::iam::v1::Policy> RepositoryManagerTracingStub::GetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.devtools.cloudbuild.v2.RepositoryManager", "GetIamPolicy");
+  auto span = internal::MakeSpanGrpc("google.devtools.cloudbuild.v2.RepositoryManager", "GetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetIamPolicy(context, options, request));
 }
 
-StatusOr<google::iam::v1::TestIamPermissionsResponse>
-RepositoryManagerTracingStub::TestIamPermissions(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::iam::v1::TestIamPermissionsResponse> RepositoryManagerTracingStub::TestIamPermissions(
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.devtools.cloudbuild.v2.RepositoryManager", "TestIamPermissions");
+  auto span = internal::MakeSpanGrpc("google.devtools.cloudbuild.v2.RepositoryManager", "TestIamPermissions");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->TestIamPermissions(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->TestIamPermissions(context, options, request));
 }
 
-StatusOr<google::longrunning::Operation>
-RepositoryManagerTracingStub::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::Operation> RepositoryManagerTracingStub::GetOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.devtools.cloudbuild.v2.RepositoryManager", "GetOperation");
+  auto span = internal::MakeSpanGrpc("google.devtools.cloudbuild.v2.RepositoryManager", "GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -346,10 +315,10 @@ RepositoryManagerTracingStub::GetOperation(
 }
 
 Status RepositoryManagerTracingStub::CancelOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.devtools.cloudbuild.v2.RepositoryManager", "CancelOperation");
+  auto span = internal::MakeSpanGrpc("google.devtools.cloudbuild.v2.RepositoryManager", "CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -366,7 +335,8 @@ RepositoryManagerTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncGetOperation(cq, context, std::move(options), request);
+  auto f = child_->AsyncGetOperation(
+      cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -379,8 +349,8 @@ future<Status> RepositoryManagerTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f =
-      child_->AsyncCancelOperation(cq, context, std::move(options), request);
+  auto f = child_->AsyncCancelOperation(
+      cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 

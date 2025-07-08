@@ -29,85 +29,57 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-BinauthzManagementServiceV1TracingConnection::
-    BinauthzManagementServiceV1TracingConnection(
-        std::shared_ptr<
-            binaryauthorization_v1::BinauthzManagementServiceV1Connection>
-            child)
+BinauthzManagementServiceV1TracingConnection::BinauthzManagementServiceV1TracingConnection(
+    std::shared_ptr<binaryauthorization_v1::BinauthzManagementServiceV1Connection> child)
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::binaryauthorization::v1::Policy>
-BinauthzManagementServiceV1TracingConnection::GetPolicy(
-    google::cloud::binaryauthorization::v1::GetPolicyRequest const& request) {
-  auto span = internal::MakeSpan(
-      "binaryauthorization_v1::BinauthzManagementServiceV1Connection::"
-      "GetPolicy");
+BinauthzManagementServiceV1TracingConnection::GetPolicy(google::cloud::binaryauthorization::v1::GetPolicyRequest const& request) {
+  auto span = internal::MakeSpan("binaryauthorization_v1::BinauthzManagementServiceV1Connection::GetPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetPolicy(request));
 }
 
 StatusOr<google::cloud::binaryauthorization::v1::Policy>
-BinauthzManagementServiceV1TracingConnection::UpdatePolicy(
-    google::cloud::binaryauthorization::v1::UpdatePolicyRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "binaryauthorization_v1::BinauthzManagementServiceV1Connection::"
-      "UpdatePolicy");
+BinauthzManagementServiceV1TracingConnection::UpdatePolicy(google::cloud::binaryauthorization::v1::UpdatePolicyRequest const& request) {
+  auto span = internal::MakeSpan("binaryauthorization_v1::BinauthzManagementServiceV1Connection::UpdatePolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdatePolicy(request));
 }
 
 StatusOr<google::cloud::binaryauthorization::v1::Attestor>
-BinauthzManagementServiceV1TracingConnection::CreateAttestor(
-    google::cloud::binaryauthorization::v1::CreateAttestorRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "binaryauthorization_v1::BinauthzManagementServiceV1Connection::"
-      "CreateAttestor");
+BinauthzManagementServiceV1TracingConnection::CreateAttestor(google::cloud::binaryauthorization::v1::CreateAttestorRequest const& request) {
+  auto span = internal::MakeSpan("binaryauthorization_v1::BinauthzManagementServiceV1Connection::CreateAttestor");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateAttestor(request));
 }
 
 StatusOr<google::cloud::binaryauthorization::v1::Attestor>
-BinauthzManagementServiceV1TracingConnection::GetAttestor(
-    google::cloud::binaryauthorization::v1::GetAttestorRequest const& request) {
-  auto span = internal::MakeSpan(
-      "binaryauthorization_v1::BinauthzManagementServiceV1Connection::"
-      "GetAttestor");
+BinauthzManagementServiceV1TracingConnection::GetAttestor(google::cloud::binaryauthorization::v1::GetAttestorRequest const& request) {
+  auto span = internal::MakeSpan("binaryauthorization_v1::BinauthzManagementServiceV1Connection::GetAttestor");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetAttestor(request));
 }
 
 StatusOr<google::cloud::binaryauthorization::v1::Attestor>
-BinauthzManagementServiceV1TracingConnection::UpdateAttestor(
-    google::cloud::binaryauthorization::v1::UpdateAttestorRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "binaryauthorization_v1::BinauthzManagementServiceV1Connection::"
-      "UpdateAttestor");
+BinauthzManagementServiceV1TracingConnection::UpdateAttestor(google::cloud::binaryauthorization::v1::UpdateAttestorRequest const& request) {
+  auto span = internal::MakeSpan("binaryauthorization_v1::BinauthzManagementServiceV1Connection::UpdateAttestor");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateAttestor(request));
 }
 
 StreamRange<google::cloud::binaryauthorization::v1::Attestor>
-BinauthzManagementServiceV1TracingConnection::ListAttestors(
-    google::cloud::binaryauthorization::v1::ListAttestorsRequest request) {
-  auto span = internal::MakeSpan(
-      "binaryauthorization_v1::BinauthzManagementServiceV1Connection::"
-      "ListAttestors");
+BinauthzManagementServiceV1TracingConnection::ListAttestors(google::cloud::binaryauthorization::v1::ListAttestorsRequest request) {
+  auto span = internal::MakeSpan("binaryauthorization_v1::BinauthzManagementServiceV1Connection::ListAttestors");
   internal::OTelScope scope(span);
   auto sr = child_->ListAttestors(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::binaryauthorization::v1::Attestor>(std::move(span),
-                                                        std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::binaryauthorization::v1::Attestor>(
+        std::move(span), std::move(sr));
 }
 
-Status BinauthzManagementServiceV1TracingConnection::DeleteAttestor(
-    google::cloud::binaryauthorization::v1::DeleteAttestorRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "binaryauthorization_v1::BinauthzManagementServiceV1Connection::"
-      "DeleteAttestor");
+Status
+BinauthzManagementServiceV1TracingConnection::DeleteAttestor(google::cloud::binaryauthorization::v1::DeleteAttestorRequest const& request) {
+  auto span = internal::MakeSpan("binaryauthorization_v1::BinauthzManagementServiceV1Connection::DeleteAttestor");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteAttestor(request));
 }
@@ -116,13 +88,10 @@ Status BinauthzManagementServiceV1TracingConnection::DeleteAttestor(
 
 std::shared_ptr<binaryauthorization_v1::BinauthzManagementServiceV1Connection>
 MakeBinauthzManagementServiceV1TracingConnection(
-    std::shared_ptr<
-        binaryauthorization_v1::BinauthzManagementServiceV1Connection>
-        conn) {
+    std::shared_ptr<binaryauthorization_v1::BinauthzManagementServiceV1Connection> conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
-    conn = std::make_shared<BinauthzManagementServiceV1TracingConnection>(
-        std::move(conn));
+    conn = std::make_shared<BinauthzManagementServiceV1TracingConnection>(std::move(conn));
   }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;

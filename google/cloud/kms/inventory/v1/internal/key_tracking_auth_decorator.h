@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_KMS_INVENTORY_V1_INTERNAL_KEY_TRACKING_AUTH_DECORATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_KMS_INVENTORY_V1_INTERNAL_KEY_TRACKING_AUTH_DECORATOR_H
 
-#include "google/cloud/kms/inventory/v1/internal/key_tracking_stub.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/kms/inventory/v1/internal/key_tracking_stub.h"
 #include "google/cloud/version.h"
 #include <memory>
 #include <set>
@@ -38,17 +38,15 @@ class KeyTrackingServiceAuth : public KeyTrackingServiceStub {
       std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth,
       std::shared_ptr<KeyTrackingServiceStub> child);
 
-  StatusOr<google::cloud::kms::inventory::v1::ProtectedResourcesSummary>
-  GetProtectedResourcesSummary(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::kms::inventory::v1::
-          GetProtectedResourcesSummaryRequest const& request) override;
+  StatusOr<google::cloud::kms::inventory::v1::ProtectedResourcesSummary> GetProtectedResourcesSummary(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::kms::inventory::v1::GetProtectedResourcesSummaryRequest const& request) override;
 
-  StatusOr<google::cloud::kms::inventory::v1::SearchProtectedResourcesResponse>
-  SearchProtectedResources(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::kms::inventory::v1::SearchProtectedResourcesRequest const&
-          request) override;
+  StatusOr<google::cloud::kms::inventory::v1::SearchProtectedResourcesResponse> SearchProtectedResources(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::kms::inventory::v1::SearchProtectedResourcesRequest const& request) override;
 
  private:
   std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth_;

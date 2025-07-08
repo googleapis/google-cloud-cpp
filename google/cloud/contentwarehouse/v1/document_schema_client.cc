@@ -28,15 +28,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 DocumentSchemaServiceClient::DocumentSchemaServiceClient(
     std::shared_ptr<DocumentSchemaServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 DocumentSchemaServiceClient::~DocumentSchemaServiceClient() = default;
 
 StatusOr<google::cloud::contentwarehouse::v1::DocumentSchema>
-DocumentSchemaServiceClient::CreateDocumentSchema(
-    std::string const& parent,
-    google::cloud::contentwarehouse::v1::DocumentSchema const& document_schema,
-    Options opts) {
+DocumentSchemaServiceClient::CreateDocumentSchema(std::string const& parent, google::cloud::contentwarehouse::v1::DocumentSchema const& document_schema, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::contentwarehouse::v1::CreateDocumentSchemaRequest request;
   request.set_parent(parent);
@@ -45,19 +42,13 @@ DocumentSchemaServiceClient::CreateDocumentSchema(
 }
 
 StatusOr<google::cloud::contentwarehouse::v1::DocumentSchema>
-DocumentSchemaServiceClient::CreateDocumentSchema(
-    google::cloud::contentwarehouse::v1::CreateDocumentSchemaRequest const&
-        request,
-    Options opts) {
+DocumentSchemaServiceClient::CreateDocumentSchema(google::cloud::contentwarehouse::v1::CreateDocumentSchemaRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateDocumentSchema(request);
 }
 
 StatusOr<google::cloud::contentwarehouse::v1::DocumentSchema>
-DocumentSchemaServiceClient::UpdateDocumentSchema(
-    std::string const& name,
-    google::cloud::contentwarehouse::v1::DocumentSchema const& document_schema,
-    Options opts) {
+DocumentSchemaServiceClient::UpdateDocumentSchema(std::string const& name, google::cloud::contentwarehouse::v1::DocumentSchema const& document_schema, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::contentwarehouse::v1::UpdateDocumentSchemaRequest request;
   request.set_name(name);
@@ -66,17 +57,13 @@ DocumentSchemaServiceClient::UpdateDocumentSchema(
 }
 
 StatusOr<google::cloud::contentwarehouse::v1::DocumentSchema>
-DocumentSchemaServiceClient::UpdateDocumentSchema(
-    google::cloud::contentwarehouse::v1::UpdateDocumentSchemaRequest const&
-        request,
-    Options opts) {
+DocumentSchemaServiceClient::UpdateDocumentSchema(google::cloud::contentwarehouse::v1::UpdateDocumentSchemaRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateDocumentSchema(request);
 }
 
 StatusOr<google::cloud::contentwarehouse::v1::DocumentSchema>
-DocumentSchemaServiceClient::GetDocumentSchema(std::string const& name,
-                                               Options opts) {
+DocumentSchemaServiceClient::GetDocumentSchema(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::contentwarehouse::v1::GetDocumentSchemaRequest request;
   request.set_name(name);
@@ -84,33 +71,27 @@ DocumentSchemaServiceClient::GetDocumentSchema(std::string const& name,
 }
 
 StatusOr<google::cloud::contentwarehouse::v1::DocumentSchema>
-DocumentSchemaServiceClient::GetDocumentSchema(
-    google::cloud::contentwarehouse::v1::GetDocumentSchemaRequest const&
-        request,
-    Options opts) {
+DocumentSchemaServiceClient::GetDocumentSchema(google::cloud::contentwarehouse::v1::GetDocumentSchemaRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetDocumentSchema(request);
 }
 
-Status DocumentSchemaServiceClient::DeleteDocumentSchema(
-    std::string const& name, Options opts) {
+Status
+DocumentSchemaServiceClient::DeleteDocumentSchema(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::contentwarehouse::v1::DeleteDocumentSchemaRequest request;
   request.set_name(name);
   return connection_->DeleteDocumentSchema(request);
 }
 
-Status DocumentSchemaServiceClient::DeleteDocumentSchema(
-    google::cloud::contentwarehouse::v1::DeleteDocumentSchemaRequest const&
-        request,
-    Options opts) {
+Status
+DocumentSchemaServiceClient::DeleteDocumentSchema(google::cloud::contentwarehouse::v1::DeleteDocumentSchemaRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteDocumentSchema(request);
 }
 
 StreamRange<google::cloud::contentwarehouse::v1::DocumentSchema>
-DocumentSchemaServiceClient::ListDocumentSchemas(std::string const& parent,
-                                                 Options opts) {
+DocumentSchemaServiceClient::ListDocumentSchemas(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::contentwarehouse::v1::ListDocumentSchemasRequest request;
   request.set_parent(parent);
@@ -118,16 +99,13 @@ DocumentSchemaServiceClient::ListDocumentSchemas(std::string const& parent,
 }
 
 StreamRange<google::cloud::contentwarehouse::v1::DocumentSchema>
-DocumentSchemaServiceClient::ListDocumentSchemas(
-    google::cloud::contentwarehouse::v1::ListDocumentSchemasRequest request,
-    Options opts) {
+DocumentSchemaServiceClient::ListDocumentSchemas(google::cloud::contentwarehouse::v1::ListDocumentSchemasRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListDocumentSchemas(std::move(request));
 }
 
 StatusOr<google::longrunning::Operation>
-DocumentSchemaServiceClient::GetOperation(std::string const& name,
-                                          Options opts) {
+DocumentSchemaServiceClient::GetOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
@@ -135,8 +113,7 @@ DocumentSchemaServiceClient::GetOperation(std::string const& name,
 }
 
 StatusOr<google::longrunning::Operation>
-DocumentSchemaServiceClient::GetOperation(
-    google::longrunning::GetOperationRequest const& request, Options opts) {
+DocumentSchemaServiceClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }

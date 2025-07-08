@@ -32,17 +32,20 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 DashboardsServiceLogging::DashboardsServiceLogging(
     std::shared_ptr<DashboardsServiceStub> child,
-    TracingOptions tracing_options, std::set<std::string> const&)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
+    TracingOptions tracing_options,
+    std::set<std::string> const&)
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::monitoring::dashboard::v1::Dashboard>
 DashboardsServiceLogging::CreateDashboard(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::monitoring::dashboard::v1::CreateDashboardRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::monitoring::dashboard::v1::CreateDashboardRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::monitoring::dashboard::v1::CreateDashboardRequest const& request) {
         return child_->CreateDashboard(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -50,12 +53,13 @@ DashboardsServiceLogging::CreateDashboard(
 
 StatusOr<google::monitoring::dashboard::v1::ListDashboardsResponse>
 DashboardsServiceLogging::ListDashboards(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::monitoring::dashboard::v1::ListDashboardsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::monitoring::dashboard::v1::ListDashboardsRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::monitoring::dashboard::v1::ListDashboardsRequest const& request) {
         return child_->ListDashboards(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -63,24 +67,27 @@ DashboardsServiceLogging::ListDashboards(
 
 StatusOr<google::monitoring::dashboard::v1::Dashboard>
 DashboardsServiceLogging::GetDashboard(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::monitoring::dashboard::v1::GetDashboardRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::monitoring::dashboard::v1::GetDashboardRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::monitoring::dashboard::v1::GetDashboardRequest const& request) {
         return child_->GetDashboard(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status DashboardsServiceLogging::DeleteDashboard(
-    grpc::ClientContext& context, Options const& options,
+Status
+DashboardsServiceLogging::DeleteDashboard(
+    grpc::ClientContext& context,
+    Options const& options,
     google::monitoring::dashboard::v1::DeleteDashboardRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::monitoring::dashboard::v1::DeleteDashboardRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::monitoring::dashboard::v1::DeleteDashboardRequest const& request) {
         return child_->DeleteDashboard(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -88,12 +95,13 @@ Status DashboardsServiceLogging::DeleteDashboard(
 
 StatusOr<google::monitoring::dashboard::v1::Dashboard>
 DashboardsServiceLogging::UpdateDashboard(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::monitoring::dashboard::v1::UpdateDashboardRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::monitoring::dashboard::v1::UpdateDashboardRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::monitoring::dashboard::v1::UpdateDashboardRequest const& request) {
         return child_->UpdateDashboard(context, options, request);
       },
       context, options, request, __func__, tracing_options_);

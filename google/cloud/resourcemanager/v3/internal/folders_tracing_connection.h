@@ -30,97 +30,91 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-class FoldersTracingConnection : public resourcemanager_v3::FoldersConnection {
+class FoldersTracingConnection
+    : public resourcemanager_v3::FoldersConnection {
  public:
   ~FoldersTracingConnection() override = default;
 
   explicit FoldersTracingConnection(
-      std::shared_ptr<resourcemanager_v3::FoldersConnection> child);
+    std::shared_ptr<resourcemanager_v3::FoldersConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::resourcemanager::v3::Folder> GetFolder(
-      google::cloud::resourcemanager::v3::GetFolderRequest const& request)
-      override;
+  StatusOr<google::cloud::resourcemanager::v3::Folder>
+  GetFolder(google::cloud::resourcemanager::v3::GetFolderRequest const& request) override;
 
-  StreamRange<google::cloud::resourcemanager::v3::Folder> ListFolders(
-      google::cloud::resourcemanager::v3::ListFoldersRequest request) override;
+  StreamRange<google::cloud::resourcemanager::v3::Folder>
+  ListFolders(google::cloud::resourcemanager::v3::ListFoldersRequest request) override;
 
-  StreamRange<google::cloud::resourcemanager::v3::Folder> SearchFolders(
-      google::cloud::resourcemanager::v3::SearchFoldersRequest request)
-      override;
+  StreamRange<google::cloud::resourcemanager::v3::Folder>
+  SearchFolders(google::cloud::resourcemanager::v3::SearchFoldersRequest request) override;
 
-  future<StatusOr<google::cloud::resourcemanager::v3::Folder>> CreateFolder(
-      google::cloud::resourcemanager::v3::CreateFolderRequest const& request)
-      override;
+  future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
+  CreateFolder(google::cloud::resourcemanager::v3::CreateFolderRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> CreateFolder(
-      NoAwaitTag,
-      google::cloud::resourcemanager::v3::CreateFolderRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  CreateFolder(NoAwaitTag,
+      google::cloud::resourcemanager::v3::CreateFolderRequest const& request) override;
 
-  future<StatusOr<google::cloud::resourcemanager::v3::Folder>> CreateFolder(
+  future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
+  CreateFolder(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::resourcemanager::v3::Folder>> UpdateFolder(
-      google::cloud::resourcemanager::v3::UpdateFolderRequest const& request)
-      override;
+  future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
+  UpdateFolder(google::cloud::resourcemanager::v3::UpdateFolderRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> UpdateFolder(
-      NoAwaitTag,
-      google::cloud::resourcemanager::v3::UpdateFolderRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  UpdateFolder(NoAwaitTag,
+      google::cloud::resourcemanager::v3::UpdateFolderRequest const& request) override;
 
-  future<StatusOr<google::cloud::resourcemanager::v3::Folder>> UpdateFolder(
+  future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
+  UpdateFolder(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::resourcemanager::v3::Folder>> MoveFolder(
-      google::cloud::resourcemanager::v3::MoveFolderRequest const& request)
-      override;
+  future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
+  MoveFolder(google::cloud::resourcemanager::v3::MoveFolderRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> MoveFolder(
-      NoAwaitTag,
-      google::cloud::resourcemanager::v3::MoveFolderRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  MoveFolder(NoAwaitTag,
+      google::cloud::resourcemanager::v3::MoveFolderRequest const& request) override;
 
-  future<StatusOr<google::cloud::resourcemanager::v3::Folder>> MoveFolder(
+  future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
+  MoveFolder(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::resourcemanager::v3::Folder>> DeleteFolder(
-      google::cloud::resourcemanager::v3::DeleteFolderRequest const& request)
-      override;
+  future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
+  DeleteFolder(google::cloud::resourcemanager::v3::DeleteFolderRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> DeleteFolder(
-      NoAwaitTag,
-      google::cloud::resourcemanager::v3::DeleteFolderRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  DeleteFolder(NoAwaitTag,
+      google::cloud::resourcemanager::v3::DeleteFolderRequest const& request) override;
 
-  future<StatusOr<google::cloud::resourcemanager::v3::Folder>> DeleteFolder(
+  future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
+  DeleteFolder(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::resourcemanager::v3::Folder>> UndeleteFolder(
-      google::cloud::resourcemanager::v3::UndeleteFolderRequest const& request)
-      override;
+  future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
+  UndeleteFolder(google::cloud::resourcemanager::v3::UndeleteFolderRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> UndeleteFolder(
-      NoAwaitTag,
-      google::cloud::resourcemanager::v3::UndeleteFolderRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  UndeleteFolder(NoAwaitTag,
+      google::cloud::resourcemanager::v3::UndeleteFolderRequest const& request) override;
 
-  future<StatusOr<google::cloud::resourcemanager::v3::Folder>> UndeleteFolder(
+  future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
+  UndeleteFolder(
       google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request) override;
+  StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request) override;
 
  private:
   std::shared_ptr<resourcemanager_v3::FoldersConnection> child_;

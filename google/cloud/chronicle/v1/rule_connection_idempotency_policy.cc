@@ -26,96 +26,79 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-RuleServiceConnectionIdempotencyPolicy::
-    ~RuleServiceConnectionIdempotencyPolicy() = default;
+RuleServiceConnectionIdempotencyPolicy::~RuleServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<RuleServiceConnectionIdempotencyPolicy>
 RuleServiceConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<RuleServiceConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency RuleServiceConnectionIdempotencyPolicy::CreateRule(
-    google::cloud::chronicle::v1::CreateRuleRequest const&) {
+Idempotency RuleServiceConnectionIdempotencyPolicy::CreateRule(google::cloud::chronicle::v1::CreateRuleRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency RuleServiceConnectionIdempotencyPolicy::GetRule(
-    google::cloud::chronicle::v1::GetRuleRequest const&) {
+Idempotency RuleServiceConnectionIdempotencyPolicy::GetRule(google::cloud::chronicle::v1::GetRuleRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency RuleServiceConnectionIdempotencyPolicy::ListRules(
-    google::cloud::chronicle::v1::ListRulesRequest) {  // NOLINT
+Idempotency RuleServiceConnectionIdempotencyPolicy::ListRules(google::cloud::chronicle::v1::ListRulesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency RuleServiceConnectionIdempotencyPolicy::UpdateRule(
-    google::cloud::chronicle::v1::UpdateRuleRequest const&) {
+Idempotency RuleServiceConnectionIdempotencyPolicy::UpdateRule(google::cloud::chronicle::v1::UpdateRuleRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency RuleServiceConnectionIdempotencyPolicy::DeleteRule(
-    google::cloud::chronicle::v1::DeleteRuleRequest const&) {
+Idempotency RuleServiceConnectionIdempotencyPolicy::DeleteRule(google::cloud::chronicle::v1::DeleteRuleRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency RuleServiceConnectionIdempotencyPolicy::ListRuleRevisions(
-    google::cloud::chronicle::v1::ListRuleRevisionsRequest) {  // NOLINT
+Idempotency RuleServiceConnectionIdempotencyPolicy::ListRuleRevisions(google::cloud::chronicle::v1::ListRuleRevisionsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency RuleServiceConnectionIdempotencyPolicy::CreateRetrohunt(
-    google::cloud::chronicle::v1::CreateRetrohuntRequest const&) {
+Idempotency RuleServiceConnectionIdempotencyPolicy::CreateRetrohunt(google::cloud::chronicle::v1::CreateRetrohuntRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency RuleServiceConnectionIdempotencyPolicy::GetRetrohunt(
-    google::cloud::chronicle::v1::GetRetrohuntRequest const&) {
+Idempotency RuleServiceConnectionIdempotencyPolicy::GetRetrohunt(google::cloud::chronicle::v1::GetRetrohuntRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency RuleServiceConnectionIdempotencyPolicy::ListRetrohunts(
-    google::cloud::chronicle::v1::ListRetrohuntsRequest) {  // NOLINT
+Idempotency RuleServiceConnectionIdempotencyPolicy::ListRetrohunts(google::cloud::chronicle::v1::ListRetrohuntsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency RuleServiceConnectionIdempotencyPolicy::GetRuleDeployment(
-    google::cloud::chronicle::v1::GetRuleDeploymentRequest const&) {
+Idempotency RuleServiceConnectionIdempotencyPolicy::GetRuleDeployment(google::cloud::chronicle::v1::GetRuleDeploymentRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency RuleServiceConnectionIdempotencyPolicy::ListRuleDeployments(
-    google::cloud::chronicle::v1::ListRuleDeploymentsRequest) {  // NOLINT
+Idempotency RuleServiceConnectionIdempotencyPolicy::ListRuleDeployments(google::cloud::chronicle::v1::ListRuleDeploymentsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency RuleServiceConnectionIdempotencyPolicy::UpdateRuleDeployment(
-    google::cloud::chronicle::v1::UpdateRuleDeploymentRequest const&) {
+Idempotency RuleServiceConnectionIdempotencyPolicy::UpdateRuleDeployment(google::cloud::chronicle::v1::UpdateRuleDeploymentRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency RuleServiceConnectionIdempotencyPolicy::ListOperations(
-    google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency RuleServiceConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency RuleServiceConnectionIdempotencyPolicy::GetOperation(
-    google::longrunning::GetOperationRequest const&) {
+Idempotency RuleServiceConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency RuleServiceConnectionIdempotencyPolicy::DeleteOperation(
-    google::longrunning::DeleteOperationRequest const&) {
+Idempotency RuleServiceConnectionIdempotencyPolicy::DeleteOperation(google::longrunning::DeleteOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency RuleServiceConnectionIdempotencyPolicy::CancelOperation(
-    google::longrunning::CancelOperationRequest const&) {
+Idempotency RuleServiceConnectionIdempotencyPolicy::CancelOperation(google::longrunning::CancelOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<RuleServiceConnectionIdempotencyPolicy>
-MakeDefaultRuleServiceConnectionIdempotencyPolicy() {
+    MakeDefaultRuleServiceConnectionIdempotencyPolicy() {
   return std::make_unique<RuleServiceConnectionIdempotencyPolicy>();
 }
 

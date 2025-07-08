@@ -26,43 +26,35 @@ namespace discoveryengine_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 GroundedGenerationServiceClient::GroundedGenerationServiceClient(
-    std::shared_ptr<GroundedGenerationServiceConnection> connection,
-    Options opts)
+    std::shared_ptr<GroundedGenerationServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 GroundedGenerationServiceClient::~GroundedGenerationServiceClient() = default;
 
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::cloud::discoveryengine::v1::GenerateGroundedContentRequest,
     google::cloud::discoveryengine::v1::GenerateGroundedContentResponse>>
-GroundedGenerationServiceClient::AsyncStreamGenerateGroundedContent(
-    Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+GroundedGenerationServiceClient::AsyncStreamGenerateGroundedContent(Options opts) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(opts), options_));
   return connection_->AsyncStreamGenerateGroundedContent();
 }
 
 StatusOr<google::cloud::discoveryengine::v1::GenerateGroundedContentResponse>
-GroundedGenerationServiceClient::GenerateGroundedContent(
-    google::cloud::discoveryengine::v1::GenerateGroundedContentRequest const&
-        request,
-    Options opts) {
+GroundedGenerationServiceClient::GenerateGroundedContent(google::cloud::discoveryengine::v1::GenerateGroundedContentRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GenerateGroundedContent(request);
 }
 
 StatusOr<google::cloud::discoveryengine::v1::CheckGroundingResponse>
-GroundedGenerationServiceClient::CheckGrounding(
-    google::cloud::discoveryengine::v1::CheckGroundingRequest const& request,
-    Options opts) {
+GroundedGenerationServiceClient::CheckGrounding(google::cloud::discoveryengine::v1::CheckGroundingRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CheckGrounding(request);
 }
 
 StreamRange<google::longrunning::Operation>
-GroundedGenerationServiceClient::ListOperations(std::string const& name,
-                                                std::string const& filter,
-                                                Options opts) {
+GroundedGenerationServiceClient::ListOperations(std::string const& name, std::string const& filter, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::ListOperationsRequest request;
   request.set_name(name);
@@ -71,15 +63,13 @@ GroundedGenerationServiceClient::ListOperations(std::string const& name,
 }
 
 StreamRange<google::longrunning::Operation>
-GroundedGenerationServiceClient::ListOperations(
-    google::longrunning::ListOperationsRequest request, Options opts) {
+GroundedGenerationServiceClient::ListOperations(google::longrunning::ListOperationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOperations(std::move(request));
 }
 
 StatusOr<google::longrunning::Operation>
-GroundedGenerationServiceClient::GetOperation(std::string const& name,
-                                              Options opts) {
+GroundedGenerationServiceClient::GetOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
@@ -87,22 +77,21 @@ GroundedGenerationServiceClient::GetOperation(std::string const& name,
 }
 
 StatusOr<google::longrunning::Operation>
-GroundedGenerationServiceClient::GetOperation(
-    google::longrunning::GetOperationRequest const& request, Options opts) {
+GroundedGenerationServiceClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }
 
-Status GroundedGenerationServiceClient::CancelOperation(std::string const& name,
-                                                        Options opts) {
+Status
+GroundedGenerationServiceClient::CancelOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::CancelOperationRequest request;
   request.set_name(name);
   return connection_->CancelOperation(request);
 }
 
-Status GroundedGenerationServiceClient::CancelOperation(
-    google::longrunning::CancelOperationRequest const& request, Options opts) {
+Status
+GroundedGenerationServiceClient::CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelOperation(request);
 }

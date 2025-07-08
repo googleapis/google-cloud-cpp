@@ -31,10 +31,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * A class to mock `ConfidentialComputingConnection`.
  *
  * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `ConfidentialComputingClient`. To do
- * so, construct an object of type `ConfidentialComputingClient` with an
- * instance of this class. Then use the Google Test framework functions to
- * program the behavior of this mock.
+ * including errors, from an object of type `ConfidentialComputingClient`. To do so,
+ * construct an object of type `ConfidentialComputingClient` with an instance of this
+ * class. Then use the Google Test framework functions to program the behavior
+ * of this mock.
  *
  * @see [This example][bq-mock] for how to test your application with GoogleTest.
  * While the example showcases types from the BigQuery library, the underlying
@@ -42,33 +42,25 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockConfidentialComputingConnection
-    : public confidentialcomputing_v1::ConfidentialComputingConnection {
+class MockConfidentialComputingConnection : public confidentialcomputing_v1::ConfidentialComputingConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::confidentialcomputing::v1::Challenge>,
-      CreateChallenge,
-      (google::cloud::confidentialcomputing::v1::CreateChallengeRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::confidentialcomputing::v1::Challenge>,
+  CreateChallenge,
+  (google::cloud::confidentialcomputing::v1::CreateChallengeRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<
-          google::cloud::confidentialcomputing::v1::VerifyAttestationResponse>,
-      VerifyAttestation,
-      (google::cloud::confidentialcomputing::v1::VerifyAttestationRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::confidentialcomputing::v1::VerifyAttestationResponse>,
+  VerifyAttestation,
+  (google::cloud::confidentialcomputing::v1::VerifyAttestationRequest const& request), (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::location::Location>), ListLocations,
-              (google::cloud::location::ListLocationsRequest request),
-              (override));
+  MOCK_METHOD((StreamRange<google::cloud::location::Location>),
+  ListLocations,
+  (google::cloud::location::ListLocationsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::location::Location>, GetLocation,
-              (google::cloud::location::GetLocationRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::location::Location>,
+  GetLocation,
+  (google::cloud::location::GetLocationRequest const& request), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

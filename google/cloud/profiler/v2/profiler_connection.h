@@ -19,11 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PROFILER_V2_PROFILER_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PROFILER_V2_PROFILER_CONNECTION_H
 
-#include "google/cloud/profiler/v2/internal/profiler_retry_traits.h"
-#include "google/cloud/profiler/v2/profiler_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
+#include "google/cloud/profiler/v2/internal/profiler_retry_traits.h"
+#include "google/cloud/profiler/v2/profiler_connection_idempotency_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/devtools/cloudprofiler/v2/profiler.pb.h>
@@ -51,8 +51,7 @@ class ProfilerServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class ProfilerServiceLimitedErrorCountRetryPolicy
-    : public ProfilerServiceRetryPolicy {
+class ProfilerServiceLimitedErrorCountRetryPolicy : public ProfilerServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -62,14 +61,14 @@ class ProfilerServiceLimitedErrorCountRetryPolicy
    *     @p maximum_failures == 0.
    */
   explicit ProfilerServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   ProfilerServiceLimitedErrorCountRetryPolicy(
       ProfilerServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : ProfilerServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : ProfilerServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   ProfilerServiceLimitedErrorCountRetryPolicy(
       ProfilerServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : ProfilerServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : ProfilerServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -89,9 +88,7 @@ class ProfilerServiceLimitedErrorCountRetryPolicy
   using BaseType = ProfilerServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      profiler_v2_internal::ProfilerServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<profiler_v2_internal::ProfilerServiceRetryTraits> impl_;
 };
 
 /**
@@ -104,8 +101,7 @@ class ProfilerServiceLimitedErrorCountRetryPolicy
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class ProfilerServiceLimitedTimeRetryPolicy
-    : public ProfilerServiceRetryPolicy {
+class ProfilerServiceLimitedTimeRetryPolicy : public ProfilerServiceRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -130,14 +126,12 @@ class ProfilerServiceLimitedTimeRetryPolicy
   template <typename DurationRep, typename DurationPeriod>
   explicit ProfilerServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  ProfilerServiceLimitedTimeRetryPolicy(
-      ProfilerServiceLimitedTimeRetryPolicy&& rhs) noexcept
-      : ProfilerServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  ProfilerServiceLimitedTimeRetryPolicy(
-      ProfilerServiceLimitedTimeRetryPolicy const& rhs) noexcept
-      : ProfilerServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  ProfilerServiceLimitedTimeRetryPolicy(ProfilerServiceLimitedTimeRetryPolicy&& rhs) noexcept
+    : ProfilerServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  ProfilerServiceLimitedTimeRetryPolicy(ProfilerServiceLimitedTimeRetryPolicy const& rhs) noexcept
+    : ProfilerServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -159,9 +153,7 @@ class ProfilerServiceLimitedTimeRetryPolicy
   using BaseType = ProfilerServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      profiler_v2_internal::ProfilerServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<profiler_v2_internal::ProfilerServiceRetryTraits> impl_;
 };
 
 /**
@@ -182,28 +174,25 @@ class ProfilerServiceConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<google::devtools::cloudprofiler::v2::Profile> CreateProfile(
-      google::devtools::cloudprofiler::v2::CreateProfileRequest const& request);
+  virtual StatusOr<google::devtools::cloudprofiler::v2::Profile>
+  CreateProfile(google::devtools::cloudprofiler::v2::CreateProfileRequest const& request);
 
   virtual StatusOr<google::devtools::cloudprofiler::v2::Profile>
-  CreateOfflineProfile(
-      google::devtools::cloudprofiler::v2::CreateOfflineProfileRequest const&
-          request);
+  CreateOfflineProfile(google::devtools::cloudprofiler::v2::CreateOfflineProfileRequest const& request);
 
-  virtual StatusOr<google::devtools::cloudprofiler::v2::Profile> UpdateProfile(
-      google::devtools::cloudprofiler::v2::UpdateProfileRequest const& request);
+  virtual StatusOr<google::devtools::cloudprofiler::v2::Profile>
+  UpdateProfile(google::devtools::cloudprofiler::v2::UpdateProfileRequest const& request);
 };
 
 /**
- * A factory function to construct an object of type
- * `ProfilerServiceConnection`.
+ * A factory function to construct an object of type `ProfilerServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
  * should be passed as an argument to the constructor of ProfilerServiceClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `ProfilerServiceConnection`. Expected options are any of the types
- * in the following option lists:
+ * returned `ProfilerServiceConnection`. Expected options are any of the types in
+ * the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
@@ -213,8 +202,8 @@ class ProfilerServiceConnection {
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
- * @param options (optional) Configure the `ProfilerServiceConnection` created
- * by this function.
+ * @param options (optional) Configure the `ProfilerServiceConnection` created by
+ * this function.
  */
 std::shared_ptr<ProfilerServiceConnection> MakeProfilerServiceConnection(
     Options options = {});

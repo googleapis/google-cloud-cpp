@@ -17,17 +17,17 @@
 // source: google/logging/v2/logging_metrics.proto
 
 #include "google/cloud/logging/v2/metrics_service_v2_connection.h"
-#include "google/cloud/logging/v2/internal/metrics_service_v2_connection_impl.h"
-#include "google/cloud/logging/v2/internal/metrics_service_v2_option_defaults.h"
-#include "google/cloud/logging/v2/internal/metrics_service_v2_stub_factory.h"
-#include "google/cloud/logging/v2/internal/metrics_service_v2_tracing_connection.h"
-#include "google/cloud/logging/v2/metrics_service_v2_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/logging/v2/internal/metrics_service_v2_connection_impl.h"
+#include "google/cloud/logging/v2/internal/metrics_service_v2_option_defaults.h"
+#include "google/cloud/logging/v2/internal/metrics_service_v2_stub_factory.h"
+#include "google/cloud/logging/v2/internal/metrics_service_v2_tracing_connection.h"
+#include "google/cloud/logging/v2/metrics_service_v2_options.h"
 #include <memory>
 #include <utility>
 
@@ -38,10 +38,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 MetricsServiceV2Connection::~MetricsServiceV2Connection() = default;
 
-StreamRange<google::logging::v2::LogMetric>
-MetricsServiceV2Connection::ListLogMetrics(
-    google::logging::v2::
-        ListLogMetricsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::logging::v2::LogMetric> MetricsServiceV2Connection::ListLogMetrics(
+    google::logging::v2::ListLogMetricsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::logging::v2::LogMetric>>();
 }
@@ -64,15 +62,14 @@ MetricsServiceV2Connection::UpdateLogMetric(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status MetricsServiceV2Connection::DeleteLogMetric(
+Status
+MetricsServiceV2Connection::DeleteLogMetric(
     google::logging::v2::DeleteLogMetricRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::longrunning::Operation>
-MetricsServiceV2Connection::ListOperations(
-    google::longrunning::
-        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::longrunning::Operation> MetricsServiceV2Connection::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }
@@ -83,7 +80,8 @@ MetricsServiceV2Connection::GetOperation(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status MetricsServiceV2Connection::CancelOperation(
+Status
+MetricsServiceV2Connection::CancelOperation(
     google::longrunning::CancelOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -91,18 +89,17 @@ Status MetricsServiceV2Connection::CancelOperation(
 std::shared_ptr<MetricsServiceV2Connection> MakeMetricsServiceV2Connection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 MetricsServiceV2PolicyOptionList>(options,
-                                                                   __func__);
-  options =
-      logging_v2_internal::MetricsServiceV2DefaultOptions(std::move(options));
+      UnifiedCredentialsOptionList,
+      MetricsServiceV2PolicyOptionList>(options, __func__);
+  options = logging_v2_internal::MetricsServiceV2DefaultOptions(
+      std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = logging_v2_internal::CreateDefaultMetricsServiceV2Stub(
-      std::move(auth), options);
+    std::move(auth), options);
   return logging_v2_internal::MakeMetricsServiceV2TracingConnection(
       std::make_shared<logging_v2_internal::MetricsServiceV2ConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options)));
+      std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

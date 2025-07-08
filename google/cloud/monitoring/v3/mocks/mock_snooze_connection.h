@@ -42,25 +42,25 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockSnoozeServiceConnection
-    : public monitoring_v3::SnoozeServiceConnection {
+class MockSnoozeServiceConnection : public monitoring_v3::SnoozeServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::monitoring::v3::Snooze>, CreateSnooze,
-              (google::monitoring::v3::CreateSnoozeRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::monitoring::v3::Snooze>,
+  CreateSnooze,
+  (google::monitoring::v3::CreateSnoozeRequest const& request), (override));
 
-  MOCK_METHOD((StreamRange<google::monitoring::v3::Snooze>), ListSnoozes,
-              (google::monitoring::v3::ListSnoozesRequest request), (override));
+  MOCK_METHOD((StreamRange<google::monitoring::v3::Snooze>),
+  ListSnoozes,
+  (google::monitoring::v3::ListSnoozesRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::monitoring::v3::Snooze>, GetSnooze,
-              (google::monitoring::v3::GetSnoozeRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::monitoring::v3::Snooze>,
+  GetSnooze,
+  (google::monitoring::v3::GetSnoozeRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::monitoring::v3::Snooze>, UpdateSnooze,
-              (google::monitoring::v3::UpdateSnoozeRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::monitoring::v3::Snooze>,
+  UpdateSnooze,
+  (google::monitoring::v3::UpdateSnoozeRequest const& request), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

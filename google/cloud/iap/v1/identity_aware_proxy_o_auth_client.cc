@@ -26,73 +26,56 @@ namespace iap_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 IdentityAwareProxyOAuthServiceClient::IdentityAwareProxyOAuthServiceClient(
-    std::shared_ptr<IdentityAwareProxyOAuthServiceConnection> connection,
-    Options opts)
+    std::shared_ptr<IdentityAwareProxyOAuthServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
-IdentityAwareProxyOAuthServiceClient::~IdentityAwareProxyOAuthServiceClient() =
-    default;
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
+IdentityAwareProxyOAuthServiceClient::~IdentityAwareProxyOAuthServiceClient() = default;
 
 StatusOr<google::cloud::iap::v1::ListBrandsResponse>
-IdentityAwareProxyOAuthServiceClient::ListBrands(
-    google::cloud::iap::v1::ListBrandsRequest const& request, Options opts) {
+IdentityAwareProxyOAuthServiceClient::ListBrands(google::cloud::iap::v1::ListBrandsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListBrands(request);
 }
 
 StatusOr<google::cloud::iap::v1::Brand>
-IdentityAwareProxyOAuthServiceClient::CreateBrand(
-    google::cloud::iap::v1::CreateBrandRequest const& request, Options opts) {
+IdentityAwareProxyOAuthServiceClient::CreateBrand(google::cloud::iap::v1::CreateBrandRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateBrand(request);
 }
 
 StatusOr<google::cloud::iap::v1::Brand>
-IdentityAwareProxyOAuthServiceClient::GetBrand(
-    google::cloud::iap::v1::GetBrandRequest const& request, Options opts) {
+IdentityAwareProxyOAuthServiceClient::GetBrand(google::cloud::iap::v1::GetBrandRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetBrand(request);
 }
 
 StatusOr<google::cloud::iap::v1::IdentityAwareProxyClient>
-IdentityAwareProxyOAuthServiceClient::CreateIdentityAwareProxyClient(
-    google::cloud::iap::v1::CreateIdentityAwareProxyClientRequest const&
-        request,
-    Options opts) {
+IdentityAwareProxyOAuthServiceClient::CreateIdentityAwareProxyClient(google::cloud::iap::v1::CreateIdentityAwareProxyClientRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateIdentityAwareProxyClient(request);
 }
 
 StreamRange<google::cloud::iap::v1::IdentityAwareProxyClient>
-IdentityAwareProxyOAuthServiceClient::ListIdentityAwareProxyClients(
-    google::cloud::iap::v1::ListIdentityAwareProxyClientsRequest request,
-    Options opts) {
+IdentityAwareProxyOAuthServiceClient::ListIdentityAwareProxyClients(google::cloud::iap::v1::ListIdentityAwareProxyClientsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListIdentityAwareProxyClients(std::move(request));
 }
 
 StatusOr<google::cloud::iap::v1::IdentityAwareProxyClient>
-IdentityAwareProxyOAuthServiceClient::GetIdentityAwareProxyClient(
-    google::cloud::iap::v1::GetIdentityAwareProxyClientRequest const& request,
-    Options opts) {
+IdentityAwareProxyOAuthServiceClient::GetIdentityAwareProxyClient(google::cloud::iap::v1::GetIdentityAwareProxyClientRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetIdentityAwareProxyClient(request);
 }
 
 StatusOr<google::cloud::iap::v1::IdentityAwareProxyClient>
-IdentityAwareProxyOAuthServiceClient::ResetIdentityAwareProxyClientSecret(
-    google::cloud::iap::v1::ResetIdentityAwareProxyClientSecretRequest const&
-        request,
-    Options opts) {
+IdentityAwareProxyOAuthServiceClient::ResetIdentityAwareProxyClientSecret(google::cloud::iap::v1::ResetIdentityAwareProxyClientSecretRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ResetIdentityAwareProxyClientSecret(request);
 }
 
-Status IdentityAwareProxyOAuthServiceClient::DeleteIdentityAwareProxyClient(
-    google::cloud::iap::v1::DeleteIdentityAwareProxyClientRequest const&
-        request,
-    Options opts) {
+Status
+IdentityAwareProxyOAuthServiceClient::DeleteIdentityAwareProxyClient(google::cloud::iap::v1::DeleteIdentityAwareProxyClientRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteIdentityAwareProxyClient(request);
 }

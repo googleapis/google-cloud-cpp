@@ -42,30 +42,21 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockBigQueryReadConnection
-    : public bigquery_storage_v1::BigQueryReadConnection {
+class MockBigQueryReadConnection : public bigquery_storage_v1::BigQueryReadConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::bigquery::storage::v1::ReadSession>,
-      CreateReadSession,
-      (google::cloud::bigquery::storage::v1::CreateReadSessionRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::bigquery::storage::v1::ReadSession>,
+  CreateReadSession,
+  (google::cloud::bigquery::storage::v1::CreateReadSessionRequest const& request), (override));
 
-  MOCK_METHOD(
-      StreamRange<google::cloud::bigquery::storage::v1::ReadRowsResponse>,
-      ReadRows,
-      (google::cloud::bigquery::storage::v1::ReadRowsRequest const& request),
-      (override));
+  MOCK_METHOD(StreamRange<google::cloud::bigquery::storage::v1::ReadRowsResponse>,
+  ReadRows,
+  (google::cloud::bigquery::storage::v1::ReadRowsRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::bigquery::storage::v1::SplitReadStreamResponse>,
-      SplitReadStream,
-      (google::cloud::bigquery::storage::v1::SplitReadStreamRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::bigquery::storage::v1::SplitReadStreamResponse>,
+  SplitReadStream,
+  (google::cloud::bigquery::storage::v1::SplitReadStreamRequest const& request), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

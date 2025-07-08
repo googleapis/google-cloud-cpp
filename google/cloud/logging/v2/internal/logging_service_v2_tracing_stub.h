@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LOGGING_V2_INTERNAL_LOGGING_SERVICE_V2_TRACING_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LOGGING_V2_INTERNAL_LOGGING_SERVICE_V2_TRACING_STUB_H
 
-#include "google/cloud/logging/v2/internal/logging_service_v2_stub.h"
 #include "google/cloud/internal/trace_propagator.h"
+#include "google/cloud/logging/v2/internal/logging_service_v2_stub.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -36,29 +36,31 @@ class LoggingServiceV2TracingStub : public LoggingServiceV2Stub {
  public:
   ~LoggingServiceV2TracingStub() override = default;
 
-  explicit LoggingServiceV2TracingStub(
-      std::shared_ptr<LoggingServiceV2Stub> child);
+  explicit LoggingServiceV2TracingStub(std::shared_ptr<LoggingServiceV2Stub> child);
 
   Status DeleteLog(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::logging::v2::DeleteLogRequest const& request) override;
 
   StatusOr<google::logging::v2::WriteLogEntriesResponse> WriteLogEntries(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::logging::v2::WriteLogEntriesRequest const& request) override;
 
   StatusOr<google::logging::v2::ListLogEntriesResponse> ListLogEntries(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::logging::v2::ListLogEntriesRequest const& request) override;
 
-  StatusOr<google::logging::v2::ListMonitoredResourceDescriptorsResponse>
-  ListMonitoredResourceDescriptors(
-      grpc::ClientContext& context, Options const& options,
-      google::logging::v2::ListMonitoredResourceDescriptorsRequest const&
-          request) override;
+  StatusOr<google::logging::v2::ListMonitoredResourceDescriptorsResponse> ListMonitoredResourceDescriptors(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::logging::v2::ListMonitoredResourceDescriptorsRequest const& request) override;
 
   StatusOr<google::logging::v2::ListLogsResponse> ListLogs(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::logging::v2::ListLogsRequest const& request) override;
 
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
@@ -70,19 +72,21 @@ class LoggingServiceV2TracingStub : public LoggingServiceV2Stub {
       google::cloud::internal::ImmutableOptions options) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
-  future<StatusOr<google::logging::v2::WriteLogEntriesResponse>>
-  AsyncWriteLogEntries(
+  future<StatusOr<google::logging::v2::WriteLogEntriesResponse>> AsyncWriteLogEntries(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
@@ -90,8 +94,7 @@ class LoggingServiceV2TracingStub : public LoggingServiceV2Stub {
 
  private:
   std::shared_ptr<LoggingServiceV2Stub> child_;
-  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
-      propagator_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

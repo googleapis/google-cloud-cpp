@@ -17,10 +17,10 @@
 // source: google/cloud/pubsublite/v1/topic_stats.proto
 
 #include "google/cloud/pubsublite/internal/topic_stats_option_defaults.h"
-#include "google/cloud/pubsublite/topic_stats_connection.h"
-#include "google/cloud/pubsublite/topic_stats_options.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
+#include "google/cloud/pubsublite/topic_stats_connection.h"
+#include "google/cloud/pubsublite/topic_stats_options.h"
 #include <memory>
 #include <utility>
 
@@ -35,25 +35,21 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options TopicStatsServiceDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_TOPIC_STATS_SERVICE_ENDPOINT", "",
-      "GOOGLE_CLOUD_CPP_TOPIC_STATS_SERVICE_AUTHORITY",
+      std::move(options), "GOOGLE_CLOUD_CPP_TOPIC_STATS_SERVICE_ENDPOINT",
+      "", "GOOGLE_CLOUD_CPP_TOPIC_STATS_SERVICE_AUTHORITY",
       "pubsublite.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<pubsublite::TopicStatsServiceRetryPolicyOption>()) {
     options.set<pubsublite::TopicStatsServiceRetryPolicyOption>(
         pubsublite::TopicStatsServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
-            .clone());
+            std::chrono::minutes(30)).clone());
   }
   if (!options.has<pubsublite::TopicStatsServiceBackoffPolicyOption>()) {
     options.set<pubsublite::TopicStatsServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(
-            std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
-            .clone());
+        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
   }
-  if (!options.has<
-          pubsublite::TopicStatsServiceConnectionIdempotencyPolicyOption>()) {
+  if (!options.has<pubsublite::TopicStatsServiceConnectionIdempotencyPolicyOption>()) {
     options.set<pubsublite::TopicStatsServiceConnectionIdempotencyPolicyOption>(
         pubsublite::MakeDefaultTopicStatsServiceConnectionIdempotencyPolicy());
   }

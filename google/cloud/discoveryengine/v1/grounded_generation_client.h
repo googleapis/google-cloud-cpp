@@ -62,30 +62,23 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class GroundedGenerationServiceClient {
  public:
-  explicit GroundedGenerationServiceClient(
-      std::shared_ptr<GroundedGenerationServiceConnection> connection,
-      Options opts = {});
+  explicit GroundedGenerationServiceClient(std::shared_ptr<GroundedGenerationServiceConnection> connection, Options opts = {});
   ~GroundedGenerationServiceClient();
 
   ///@{
   /// @name Copy and move support
-  GroundedGenerationServiceClient(GroundedGenerationServiceClient const&) =
-      default;
-  GroundedGenerationServiceClient& operator=(
-      GroundedGenerationServiceClient const&) = default;
+  GroundedGenerationServiceClient(GroundedGenerationServiceClient const&) = default;
+  GroundedGenerationServiceClient& operator=(GroundedGenerationServiceClient const&) = default;
   GroundedGenerationServiceClient(GroundedGenerationServiceClient&&) = default;
-  GroundedGenerationServiceClient& operator=(
-      GroundedGenerationServiceClient&&) = default;
+  GroundedGenerationServiceClient& operator=(GroundedGenerationServiceClient&&) = default;
   ///@}
 
   ///@{
   /// @name Equality
-  friend bool operator==(GroundedGenerationServiceClient const& a,
-                         GroundedGenerationServiceClient const& b) {
+  friend bool operator==(GroundedGenerationServiceClient const& a, GroundedGenerationServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(GroundedGenerationServiceClient const& a,
-                         GroundedGenerationServiceClient const& b) {
+  friend bool operator!=(GroundedGenerationServiceClient const& a, GroundedGenerationServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -148,10 +141,7 @@ class GroundedGenerationServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::discoveryengine::v1::GenerateGroundedContentResponse>
-  GenerateGroundedContent(
-      google::cloud::discoveryengine::v1::GenerateGroundedContentRequest const&
-          request,
-      Options opts = {});
+  GenerateGroundedContent(google::cloud::discoveryengine::v1::GenerateGroundedContentRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -181,9 +171,7 @@ class GroundedGenerationServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::discoveryengine::v1::CheckGroundingResponse>
-  CheckGrounding(
-      google::cloud::discoveryengine::v1::CheckGroundingRequest const& request,
-      Options opts = {});
+  CheckGrounding(google::cloud::discoveryengine::v1::CheckGroundingRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -218,8 +206,8 @@ class GroundedGenerationServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -258,8 +246,8 @@ class GroundedGenerationServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -285,8 +273,8 @@ class GroundedGenerationServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -317,9 +305,8 @@ class GroundedGenerationServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -353,7 +340,8 @@ class GroundedGenerationServiceClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(std::string const& name, Options opts = {});
+  Status
+  CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -392,9 +380,8 @@ class GroundedGenerationServiceClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request,
-      Options opts = {});
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<GroundedGenerationServiceConnection> connection_;

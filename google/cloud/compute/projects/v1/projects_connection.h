@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_PROJECTS_V1_PROJECTS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_PROJECTS_V1_PROJECTS_CONNECTION_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/projects/v1/internal/projects_retry_traits.h"
 #include "google/cloud/compute/projects/v1/projects_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -65,14 +65,14 @@ class ProjectsLimitedErrorCountRetryPolicy : public ProjectsRetryPolicy {
    *     @p maximum_failures == 0.
    */
   explicit ProjectsLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   ProjectsLimitedErrorCountRetryPolicy(
       ProjectsLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : ProjectsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : ProjectsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   ProjectsLimitedErrorCountRetryPolicy(
       ProjectsLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : ProjectsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : ProjectsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -92,9 +92,7 @@ class ProjectsLimitedErrorCountRetryPolicy : public ProjectsRetryPolicy {
   using BaseType = ProjectsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      compute_projects_v1_internal::ProjectsRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<compute_projects_v1_internal::ProjectsRetryTraits> impl_;
 };
 
 /**
@@ -132,13 +130,12 @@ class ProjectsLimitedTimeRetryPolicy : public ProjectsRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit ProjectsLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
   ProjectsLimitedTimeRetryPolicy(ProjectsLimitedTimeRetryPolicy&& rhs) noexcept
-      : ProjectsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  ProjectsLimitedTimeRetryPolicy(
-      ProjectsLimitedTimeRetryPolicy const& rhs) noexcept
-      : ProjectsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+    : ProjectsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  ProjectsLimitedTimeRetryPolicy(ProjectsLimitedTimeRetryPolicy const& rhs) noexcept
+    : ProjectsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -152,16 +149,15 @@ class ProjectsLimitedTimeRetryPolicy : public ProjectsRetryPolicy {
     return impl_.IsPermanentFailure(status);
   }
   std::unique_ptr<ProjectsRetryPolicy> clone() const override {
-    return std::make_unique<ProjectsLimitedTimeRetryPolicy>(maximum_duration());
+    return std::make_unique<ProjectsLimitedTimeRetryPolicy>(
+        maximum_duration());
   }
 
   // This is provided only for backwards compatibility.
   using BaseType = ProjectsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      compute_projects_v1_internal::ProjectsRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<compute_projects_v1_internal::ProjectsRetryTraits> impl_;
 };
 
 /**
@@ -183,153 +179,106 @@ class ProjectsConnection {
   virtual Options options() { return Options{}; }
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DisableXpnHost(
-      google::cloud::cpp::compute::projects::v1::DisableXpnHostRequest const&
-          request);
-
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> DisableXpnHost(
-      NoAwaitTag,
-      google::cloud::cpp::compute::projects::v1::DisableXpnHostRequest const&
-          request);
-
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DisableXpnHost(google::cloud::cpp::compute::v1::Operation const& operation);
-
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DisableXpnResource(google::cloud::cpp::compute::projects::v1::
-                         DisableXpnResourceRequest const& request);
+  DisableXpnHost(google::cloud::cpp::compute::projects::v1::DisableXpnHostRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DisableXpnResource(NoAwaitTag, google::cloud::cpp::compute::projects::v1::
-                                     DisableXpnResourceRequest const& request);
+  DisableXpnHost(NoAwaitTag, google::cloud::cpp::compute::projects::v1::DisableXpnHostRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DisableXpnResource(
-      google::cloud::cpp::compute::v1::Operation const& operation);
+  DisableXpnHost( google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  EnableXpnHost(
-      google::cloud::cpp::compute::projects::v1::EnableXpnHostRequest const&
-          request);
-
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> EnableXpnHost(
-      NoAwaitTag,
-      google::cloud::cpp::compute::projects::v1::EnableXpnHostRequest const&
-          request);
-
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  EnableXpnHost(google::cloud::cpp::compute::v1::Operation const& operation);
-
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  EnableXpnResource(
-      google::cloud::cpp::compute::projects::v1::EnableXpnResourceRequest const&
-          request);
+  DisableXpnResource(google::cloud::cpp::compute::projects::v1::DisableXpnResourceRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  EnableXpnResource(
-      NoAwaitTag,
-      google::cloud::cpp::compute::projects::v1::EnableXpnResourceRequest const&
-          request);
+  DisableXpnResource(NoAwaitTag, google::cloud::cpp::compute::projects::v1::DisableXpnResourceRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  EnableXpnResource(
-      google::cloud::cpp::compute::v1::Operation const& operation);
+  DisableXpnResource( google::cloud::cpp::compute::v1::Operation const& operation);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Project> GetProject(
-      google::cloud::cpp::compute::projects::v1::GetProjectRequest const&
-          request);
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  EnableXpnHost(google::cloud::cpp::compute::projects::v1::EnableXpnHostRequest const& request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Project> GetXpnHost(
-      google::cloud::cpp::compute::projects::v1::GetXpnHostRequest const&
-          request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  EnableXpnHost(NoAwaitTag, google::cloud::cpp::compute::projects::v1::EnableXpnHostRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  EnableXpnHost( google::cloud::cpp::compute::v1::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  EnableXpnResource(google::cloud::cpp::compute::projects::v1::EnableXpnResourceRequest const& request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  EnableXpnResource(NoAwaitTag, google::cloud::cpp::compute::projects::v1::EnableXpnResourceRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  EnableXpnResource( google::cloud::cpp::compute::v1::Operation const& operation);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Project>
+  GetProject(google::cloud::cpp::compute::projects::v1::GetProjectRequest const& request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Project>
+  GetXpnHost(google::cloud::cpp::compute::projects::v1::GetXpnHostRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::ProjectsGetXpnResources>
-  GetXpnResources(
-      google::cloud::cpp::compute::projects::v1::GetXpnResourcesRequest const&
-          request);
+  GetXpnResources(google::cloud::cpp::compute::projects::v1::GetXpnResourcesRequest const& request);
 
-  virtual StreamRange<google::cloud::cpp::compute::v1::Project> ListXpnHosts(
-      google::cloud::cpp::compute::projects::v1::ListXpnHostsRequest request);
-
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> MoveDisk(
-      google::cloud::cpp::compute::projects::v1::MoveDiskRequest const&
-          request);
-
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> MoveDisk(
-      NoAwaitTag,
-      google::cloud::cpp::compute::projects::v1::MoveDiskRequest const&
-          request);
-
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> MoveDisk(
-      google::cloud::cpp::compute::v1::Operation const& operation);
+  virtual StreamRange<google::cloud::cpp::compute::v1::Project>
+  ListXpnHosts(google::cloud::cpp::compute::projects::v1::ListXpnHostsRequest request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  MoveInstance(
-      google::cloud::cpp::compute::projects::v1::MoveInstanceRequest const&
-          request);
-
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> MoveInstance(
-      NoAwaitTag,
-      google::cloud::cpp::compute::projects::v1::MoveInstanceRequest const&
-          request);
-
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  MoveInstance(google::cloud::cpp::compute::v1::Operation const& operation);
-
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetCloudArmorTier(
-      google::cloud::cpp::compute::projects::v1::SetCloudArmorTierRequest const&
-          request);
+  MoveDisk(google::cloud::cpp::compute::projects::v1::MoveDiskRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetCloudArmorTier(
-      NoAwaitTag,
-      google::cloud::cpp::compute::projects::v1::SetCloudArmorTierRequest const&
-          request);
+  MoveDisk(NoAwaitTag, google::cloud::cpp::compute::projects::v1::MoveDiskRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetCloudArmorTier(
-      google::cloud::cpp::compute::v1::Operation const& operation);
+  MoveDisk( google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetCommonInstanceMetadata(
-      google::cloud::cpp::compute::projects::v1::
-          SetCommonInstanceMetadataRequest const& request);
+  MoveInstance(google::cloud::cpp::compute::projects::v1::MoveInstanceRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetCommonInstanceMetadata(
-      NoAwaitTag, google::cloud::cpp::compute::projects::v1::
-                      SetCommonInstanceMetadataRequest const& request);
+  MoveInstance(NoAwaitTag, google::cloud::cpp::compute::projects::v1::MoveInstanceRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetCommonInstanceMetadata(
-      google::cloud::cpp::compute::v1::Operation const& operation);
+  MoveInstance( google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetDefaultNetworkTier(google::cloud::cpp::compute::projects::v1::
-                            SetDefaultNetworkTierRequest const& request);
+  SetCloudArmorTier(google::cloud::cpp::compute::projects::v1::SetCloudArmorTierRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetDefaultNetworkTier(NoAwaitTag,
-                        google::cloud::cpp::compute::projects::v1::
-                            SetDefaultNetworkTierRequest const& request);
+  SetCloudArmorTier(NoAwaitTag, google::cloud::cpp::compute::projects::v1::SetCloudArmorTierRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetDefaultNetworkTier(
-      google::cloud::cpp::compute::v1::Operation const& operation);
+  SetCloudArmorTier( google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetUsageExportBucket(google::cloud::cpp::compute::projects::v1::
-                           SetUsageExportBucketRequest const& request);
+  SetCommonInstanceMetadata(google::cloud::cpp::compute::projects::v1::SetCommonInstanceMetadataRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetUsageExportBucket(NoAwaitTag,
-                       google::cloud::cpp::compute::projects::v1::
-                           SetUsageExportBucketRequest const& request);
+  SetCommonInstanceMetadata(NoAwaitTag, google::cloud::cpp::compute::projects::v1::SetCommonInstanceMetadataRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetUsageExportBucket(
-      google::cloud::cpp::compute::v1::Operation const& operation);
+  SetCommonInstanceMetadata( google::cloud::cpp::compute::v1::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  SetDefaultNetworkTier(google::cloud::cpp::compute::projects::v1::SetDefaultNetworkTierRequest const& request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  SetDefaultNetworkTier(NoAwaitTag, google::cloud::cpp::compute::projects::v1::SetDefaultNetworkTierRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  SetDefaultNetworkTier( google::cloud::cpp::compute::v1::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  SetUsageExportBucket(google::cloud::cpp::compute::projects::v1::SetUsageExportBucketRequest const& request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  SetUsageExportBucket(NoAwaitTag, google::cloud::cpp::compute::projects::v1::SetUsageExportBucketRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  SetUsageExportBucket( google::cloud::cpp::compute::v1::Operation const& operation);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

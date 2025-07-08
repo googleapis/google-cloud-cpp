@@ -17,14 +17,14 @@
 // source: google/cloud/gkemulticloud/v1/attached_service.proto
 
 #include "google/cloud/gkemulticloud/v1/attached_clusters_connection.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/gkemulticloud/v1/attached_clusters_options.h"
 #include "google/cloud/gkemulticloud/v1/internal/attached_clusters_connection_impl.h"
 #include "google/cloud/gkemulticloud/v1/internal/attached_clusters_option_defaults.h"
 #include "google/cloud/gkemulticloud/v1/internal/attached_clusters_stub_factory.h"
 #include "google/cloud/gkemulticloud/v1/internal/attached_clusters_tracing_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
-#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
@@ -42,8 +42,8 @@ future<StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>
 AttachedClustersConnection::CreateAttachedCluster(
     google::cloud::gkemulticloud::v1::CreateAttachedClusterRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -51,23 +51,23 @@ AttachedClustersConnection::CreateAttachedCluster(
     NoAwaitTag,
     google::cloud::gkemulticloud::v1::CreateAttachedClusterRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>
 AttachedClustersConnection::CreateAttachedCluster(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>
 AttachedClustersConnection::UpdateAttachedCluster(
     google::cloud::gkemulticloud::v1::UpdateAttachedClusterRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -75,23 +75,23 @@ AttachedClustersConnection::UpdateAttachedCluster(
     NoAwaitTag,
     google::cloud::gkemulticloud::v1::UpdateAttachedClusterRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>
 AttachedClustersConnection::UpdateAttachedCluster(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>
 AttachedClustersConnection::ImportAttachedCluster(
     google::cloud::gkemulticloud::v1::ImportAttachedClusterRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -99,15 +99,15 @@ AttachedClustersConnection::ImportAttachedCluster(
     NoAwaitTag,
     google::cloud::gkemulticloud::v1::ImportAttachedClusterRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>
 AttachedClustersConnection::ImportAttachedCluster(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>
@@ -116,10 +116,8 @@ AttachedClustersConnection::GetAttachedCluster(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::gkemulticloud::v1::AttachedCluster>
-AttachedClustersConnection::ListAttachedClusters(
-    google::cloud::gkemulticloud::v1::
-        ListAttachedClustersRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::gkemulticloud::v1::AttachedCluster> AttachedClustersConnection::ListAttachedClusters(
+    google::cloud::gkemulticloud::v1::ListAttachedClustersRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::gkemulticloud::v1::AttachedCluster>>();
 }
@@ -128,8 +126,8 @@ future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
 AttachedClustersConnection::DeleteAttachedCluster(
     google::cloud::gkemulticloud::v1::DeleteAttachedClusterRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -137,15 +135,15 @@ AttachedClustersConnection::DeleteAttachedCluster(
     NoAwaitTag,
     google::cloud::gkemulticloud::v1::DeleteAttachedClusterRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
 AttachedClustersConnection::DeleteAttachedCluster(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::AttachedServerConfig>
@@ -154,26 +152,20 @@ AttachedClustersConnection::GetAttachedServerConfig(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::cloud::gkemulticloud::v1::
-             GenerateAttachedClusterInstallManifestResponse>
+StatusOr<google::cloud::gkemulticloud::v1::GenerateAttachedClusterInstallManifestResponse>
 AttachedClustersConnection::GenerateAttachedClusterInstallManifest(
-    google::cloud::gkemulticloud::v1::
-        GenerateAttachedClusterInstallManifestRequest const&) {
+    google::cloud::gkemulticloud::v1::GenerateAttachedClusterInstallManifestRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<
-    google::cloud::gkemulticloud::v1::GenerateAttachedClusterAgentTokenResponse>
+StatusOr<google::cloud::gkemulticloud::v1::GenerateAttachedClusterAgentTokenResponse>
 AttachedClustersConnection::GenerateAttachedClusterAgentToken(
-    google::cloud::gkemulticloud::v1::
-        GenerateAttachedClusterAgentTokenRequest const&) {
+    google::cloud::gkemulticloud::v1::GenerateAttachedClusterAgentTokenRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::longrunning::Operation>
-AttachedClustersConnection::ListOperations(
-    google::longrunning::
-        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::longrunning::Operation> AttachedClustersConnection::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }
@@ -184,12 +176,14 @@ AttachedClustersConnection::GetOperation(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status AttachedClustersConnection::DeleteOperation(
+Status
+AttachedClustersConnection::DeleteOperation(
     google::longrunning::DeleteOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status AttachedClustersConnection::CancelOperation(
+Status
+AttachedClustersConnection::CancelOperation(
     google::longrunning::CancelOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -197,19 +191,17 @@ Status AttachedClustersConnection::CancelOperation(
 std::shared_ptr<AttachedClustersConnection> MakeAttachedClustersConnection(
     std::string const& location, Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 AttachedClustersPolicyOptionList>(options,
-                                                                   __func__);
+      UnifiedCredentialsOptionList,
+      AttachedClustersPolicyOptionList>(options, __func__);
   options = gkemulticloud_v1_internal::AttachedClustersDefaultOptions(
       location, std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = gkemulticloud_v1_internal::CreateDefaultAttachedClustersStub(
-      std::move(auth), options);
+    std::move(auth), options);
   return gkemulticloud_v1_internal::MakeAttachedClustersTracingConnection(
-      std::make_shared<
-          gkemulticloud_v1_internal::AttachedClustersConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options)));
+      std::make_shared<gkemulticloud_v1_internal::AttachedClustersConnectionImpl>(
+      std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

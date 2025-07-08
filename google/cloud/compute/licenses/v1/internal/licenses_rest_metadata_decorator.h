@@ -36,95 +36,71 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class LicensesRestMetadata : public LicensesRestStub {
  public:
   ~LicensesRestMetadata() override = default;
-  explicit LicensesRestMetadata(std::shared_ptr<LicensesRestStub> child,
-                                std::string api_client_header = "");
+  explicit LicensesRestMetadata(
+      std::shared_ptr<LicensesRestStub> child,
+      std::string api_client_header = "");
 
-  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncDeleteLicense(
+  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncDeleteLicense(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::licenses::v1::DeleteLicenseRequest const&
-          request) override;
+      google::cloud::cpp::compute::licenses::v1::DeleteLicenseRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteLicense(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::licenses::v1::DeleteLicenseRequest const&
-          request) override;
+      Options const& options, google::cloud::cpp::compute::licenses::v1::DeleteLicenseRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::License> GetLicense(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::licenses::v1::GetLicenseRequest const&
-          request) override;
+      Options const& options, google::cloud::cpp::compute::licenses::v1::GetLicenseRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::licenses::v1::GetIamPolicyRequest const&
-          request) override;
+      Options const& options, google::cloud::cpp::compute::licenses::v1::GetIamPolicyRequest const& request) override;
 
-  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncInsertLicense(
+  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncInsertLicense(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::licenses::v1::InsertLicenseRequest const&
-          request) override;
+      google::cloud::cpp::compute::licenses::v1::InsertLicenseRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertLicense(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::licenses::v1::InsertLicenseRequest const&
-          request) override;
+      Options const& options, google::cloud::cpp::compute::licenses::v1::InsertLicenseRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::LicensesListResponse> ListLicenses(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::licenses::v1::ListLicensesRequest const&
-          request) override;
+      Options const& options, google::cloud::cpp::compute::licenses::v1::ListLicensesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::licenses::v1::SetIamPolicyRequest const&
-          request) override;
+      Options const& options, google::cloud::cpp::compute::licenses::v1::SetIamPolicyRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(google::cloud::rest_internal::RestContext& rest_context,
-                     Options const& options,
-                     google::cloud::cpp::compute::licenses::v1::
-                         TestIamPermissionsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse> TestIamPermissions(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options, google::cloud::cpp::compute::licenses::v1::TestIamPermissionsRequest const& request) override;
 
-  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncUpdateLicense(
+  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncUpdateLicense(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::licenses::v1::UpdateLicenseRequest const&
-          request) override;
+      google::cloud::cpp::compute::licenses::v1::UpdateLicenseRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateLicense(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::licenses::v1::UpdateLicenseRequest const&
-          request) override;
+      Options const& options, google::cloud::cpp::compute::licenses::v1::UpdateLicenseRequest const& request) override;
 
-  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncGetOperation(
+  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::global_operations::v1::
-          GetOperationRequest const& request) override;
+      google::cloud::cpp::compute::global_operations::v1::GetOperationRequest const& request) override;
 
   google::cloud::future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::global_operations::v1::
-          DeleteOperationRequest const& request) override;
+      google::cloud::cpp::compute::global_operations::v1::DeleteOperationRequest const& request) override;
 
  private:
   void SetMetadata(rest_internal::RestContext& rest_context,

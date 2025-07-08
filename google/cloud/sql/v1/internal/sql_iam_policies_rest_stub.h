@@ -37,14 +37,14 @@ class SqlIamPoliciesServiceRestStub {
   virtual ~SqlIamPoliciesServiceRestStub() = default;
 };
 
-class DefaultSqlIamPoliciesServiceRestStub
-    : public SqlIamPoliciesServiceRestStub {
+class DefaultSqlIamPoliciesServiceRestStub : public SqlIamPoliciesServiceRestStub {
  public:
   ~DefaultSqlIamPoliciesServiceRestStub() override = default;
 
   explicit DefaultSqlIamPoliciesServiceRestStub(Options options);
   DefaultSqlIamPoliciesServiceRestStub(
-      std::shared_ptr<rest_internal::RestClient> service, Options options);
+      std::shared_ptr<rest_internal::RestClient> service,
+      Options options);
 
  private:
   std::shared_ptr<rest_internal::RestClient> service_;

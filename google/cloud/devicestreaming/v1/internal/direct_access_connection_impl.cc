@@ -17,9 +17,9 @@
 // source: google/cloud/devicestreaming/v1/service.proto
 
 #include "google/cloud/devicestreaming/v1/internal/direct_access_connection_impl.h"
-#include "google/cloud/devicestreaming/v1/internal/direct_access_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/devicestreaming/v1/internal/direct_access_option_defaults.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
@@ -34,84 +34,65 @@ namespace {
 
 std::unique_ptr<devicestreaming_v1::DirectAccessServiceRetryPolicy>
 retry_policy(Options const& options) {
-  return options
-      .get<devicestreaming_v1::DirectAccessServiceRetryPolicyOption>()
-      ->clone();
+  return options.get<devicestreaming_v1::DirectAccessServiceRetryPolicyOption>()->clone();
 }
 
-std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-  return options
-      .get<devicestreaming_v1::DirectAccessServiceBackoffPolicyOption>()
-      ->clone();
+std::unique_ptr<BackoffPolicy>
+backoff_policy(Options const& options) {
+  return options.get<devicestreaming_v1::DirectAccessServiceBackoffPolicyOption>()->clone();
 }
 
-std::unique_ptr<
-    devicestreaming_v1::DirectAccessServiceConnectionIdempotencyPolicy>
+std::unique_ptr<devicestreaming_v1::DirectAccessServiceConnectionIdempotencyPolicy>
 idempotency_policy(Options const& options) {
-  return options
-      .get<devicestreaming_v1::
-               DirectAccessServiceConnectionIdempotencyPolicyOption>()
-      ->clone();
+  return options.get<devicestreaming_v1::DirectAccessServiceConnectionIdempotencyPolicyOption>()->clone();
 }
 
-}  // namespace
+} // namespace
 
 DirectAccessServiceConnectionImpl::DirectAccessServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<devicestreaming_v1_internal::DirectAccessServiceStub> stub,
     Options options)
-    : background_(std::move(background)),
-      stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options), DirectAccessServiceConnection::options())) {}
+  : background_(std::move(background)), stub_(std::move(stub)),
+    options_(internal::MergeOptions(
+        std::move(options),
+        DirectAccessServiceConnection::options())) {}
 
 StatusOr<google::cloud::devicestreaming::v1::DeviceSession>
-DirectAccessServiceConnectionImpl::CreateDeviceSession(
-    google::cloud::devicestreaming::v1::CreateDeviceSessionRequest const&
-        request) {
+DirectAccessServiceConnectionImpl::CreateDeviceSession(google::cloud::devicestreaming::v1::CreateDeviceSessionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateDeviceSession(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::devicestreaming::v1::CreateDeviceSessionRequest const&
-              request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::devicestreaming::v1::CreateDeviceSessionRequest const& request) {
         return stub_->CreateDeviceSession(context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::cloud::devicestreaming::v1::DeviceSession>
-DirectAccessServiceConnectionImpl::ListDeviceSessions(
-    google::cloud::devicestreaming::v1::ListDeviceSessionsRequest request) {
+DirectAccessServiceConnectionImpl::ListDeviceSessions(google::cloud::devicestreaming::v1::ListDeviceSessionsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListDeviceSessions(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::devicestreaming::v1::DeviceSession>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::devicestreaming::v1::DeviceSession>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry =
-           std::shared_ptr<devicestreaming_v1::DirectAccessServiceRetryPolicy>(
-               retry_policy(*current)),
+       retry = std::shared_ptr<devicestreaming_v1::DirectAccessServiceRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::devicestreaming::v1::ListDeviceSessionsRequest const&
-              r) {
+          Options const& options, google::cloud::devicestreaming::v1::ListDeviceSessionsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::devicestreaming::v1::
-                       ListDeviceSessionsRequest const& request) {
+                   google::cloud::devicestreaming::v1::ListDeviceSessionsRequest const& request) {
               return stub->ListDeviceSessions(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::devicestreaming::v1::ListDeviceSessionsResponse r) {
-        std::vector<google::cloud::devicestreaming::v1::DeviceSession> result(
-            r.device_sessions().size());
+        std::vector<google::cloud::devicestreaming::v1::DeviceSession> result(r.device_sessions().size());
         auto& messages = *r.mutable_device_sessions();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -119,49 +100,39 @@ DirectAccessServiceConnectionImpl::ListDeviceSessions(
 }
 
 StatusOr<google::cloud::devicestreaming::v1::DeviceSession>
-DirectAccessServiceConnectionImpl::GetDeviceSession(
-    google::cloud::devicestreaming::v1::GetDeviceSessionRequest const&
-        request) {
+DirectAccessServiceConnectionImpl::GetDeviceSession(google::cloud::devicestreaming::v1::GetDeviceSessionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetDeviceSession(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::devicestreaming::v1::GetDeviceSessionRequest const&
-                 request) {
+             google::cloud::devicestreaming::v1::GetDeviceSessionRequest const& request) {
         return stub_->GetDeviceSession(context, options, request);
       },
       *current, request, __func__);
 }
 
-Status DirectAccessServiceConnectionImpl::CancelDeviceSession(
-    google::cloud::devicestreaming::v1::CancelDeviceSessionRequest const&
-        request) {
+Status
+DirectAccessServiceConnectionImpl::CancelDeviceSession(google::cloud::devicestreaming::v1::CancelDeviceSessionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CancelDeviceSession(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::devicestreaming::v1::CancelDeviceSessionRequest const&
-              request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::devicestreaming::v1::CancelDeviceSessionRequest const& request) {
         return stub_->CancelDeviceSession(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::devicestreaming::v1::DeviceSession>
-DirectAccessServiceConnectionImpl::UpdateDeviceSession(
-    google::cloud::devicestreaming::v1::UpdateDeviceSessionRequest const&
-        request) {
+DirectAccessServiceConnectionImpl::UpdateDeviceSession(google::cloud::devicestreaming::v1::UpdateDeviceSessionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateDeviceSession(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::devicestreaming::v1::UpdateDeviceSessionRequest const&
-              request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::devicestreaming::v1::UpdateDeviceSessionRequest const& request) {
         return stub_->UpdateDeviceSession(context, options, request);
       },
       *current, request, __func__);

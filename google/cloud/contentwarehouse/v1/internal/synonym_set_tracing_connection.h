@@ -36,32 +36,27 @@ class SynonymSetServiceTracingConnection
   ~SynonymSetServiceTracingConnection() override = default;
 
   explicit SynonymSetServiceTracingConnection(
-      std::shared_ptr<contentwarehouse_v1::SynonymSetServiceConnection> child);
+    std::shared_ptr<contentwarehouse_v1::SynonymSetServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::contentwarehouse::v1::SynonymSet> CreateSynonymSet(
-      google::cloud::contentwarehouse::v1::CreateSynonymSetRequest const&
-          request) override;
+  StatusOr<google::cloud::contentwarehouse::v1::SynonymSet>
+  CreateSynonymSet(google::cloud::contentwarehouse::v1::CreateSynonymSetRequest const& request) override;
 
-  StatusOr<google::cloud::contentwarehouse::v1::SynonymSet> GetSynonymSet(
-      google::cloud::contentwarehouse::v1::GetSynonymSetRequest const& request)
-      override;
+  StatusOr<google::cloud::contentwarehouse::v1::SynonymSet>
+  GetSynonymSet(google::cloud::contentwarehouse::v1::GetSynonymSetRequest const& request) override;
 
-  StatusOr<google::cloud::contentwarehouse::v1::SynonymSet> UpdateSynonymSet(
-      google::cloud::contentwarehouse::v1::UpdateSynonymSetRequest const&
-          request) override;
+  StatusOr<google::cloud::contentwarehouse::v1::SynonymSet>
+  UpdateSynonymSet(google::cloud::contentwarehouse::v1::UpdateSynonymSetRequest const& request) override;
 
-  Status DeleteSynonymSet(
-      google::cloud::contentwarehouse::v1::DeleteSynonymSetRequest const&
-          request) override;
+  Status
+  DeleteSynonymSet(google::cloud::contentwarehouse::v1::DeleteSynonymSetRequest const& request) override;
 
-  StreamRange<google::cloud::contentwarehouse::v1::SynonymSet> ListSynonymSets(
-      google::cloud::contentwarehouse::v1::ListSynonymSetsRequest request)
-      override;
+  StreamRange<google::cloud::contentwarehouse::v1::SynonymSet>
+  ListSynonymSets(google::cloud::contentwarehouse::v1::ListSynonymSetsRequest request) override;
 
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request) override;
 
  private:
   std::shared_ptr<contentwarehouse_v1::SynonymSetServiceConnection> child_;

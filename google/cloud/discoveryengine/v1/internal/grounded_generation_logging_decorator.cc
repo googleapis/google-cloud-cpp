@@ -33,7 +33,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 GroundedGenerationServiceLogging::GroundedGenerationServiceLogging(
     std::shared_ptr<GroundedGenerationServiceStub> child,
-    TracingOptions tracing_options, std::set<std::string> const& components)
+    TracingOptions tracing_options,
+    std::set<std::string> const& components)
     : child_(std::move(child)),
       tracing_options_(std::move(tracing_options)),
       stream_logging_(components.find("rpc-streams") != components.end()) {}
@@ -46,9 +47,7 @@ GroundedGenerationServiceLogging::AsyncStreamGenerateGroundedContent(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options) {
   using LoggingStream =
-      ::google::cloud::internal::AsyncStreamingReadWriteRpcLogging<
-          google::cloud::discoveryengine::v1::GenerateGroundedContentRequest,
-          google::cloud::discoveryengine::v1::GenerateGroundedContentResponse>;
+     ::google::cloud::internal::AsyncStreamingReadWriteRpcLogging<google::cloud::discoveryengine::v1::GenerateGroundedContentRequest, google::cloud::discoveryengine::v1::GenerateGroundedContentResponse>;
 
   auto request_id = google::cloud::internal::RequestIdForLogging();
   GCP_LOG(DEBUG) << __func__ << "(" << request_id << ")";
@@ -63,13 +62,13 @@ GroundedGenerationServiceLogging::AsyncStreamGenerateGroundedContent(
 
 StatusOr<google::cloud::discoveryengine::v1::GenerateGroundedContentResponse>
 GroundedGenerationServiceLogging::GenerateGroundedContent(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::discoveryengine::v1::GenerateGroundedContentRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::discoveryengine::v1::GenerateGroundedContentRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::discoveryengine::v1::
-                 GenerateGroundedContentRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::discoveryengine::v1::GenerateGroundedContentRequest const& request) {
         return child_->GenerateGroundedContent(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -77,12 +76,13 @@ GroundedGenerationServiceLogging::GenerateGroundedContent(
 
 StatusOr<google::cloud::discoveryengine::v1::CheckGroundingResponse>
 GroundedGenerationServiceLogging::CheckGrounding(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::discoveryengine::v1::CheckGroundingRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::discoveryengine::v1::CheckGroundingRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::discoveryengine::v1::CheckGroundingRequest const& request) {
         return child_->CheckGrounding(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -90,10 +90,12 @@ GroundedGenerationServiceLogging::CheckGrounding(
 
 StatusOr<google::longrunning::ListOperationsResponse>
 GroundedGenerationServiceLogging::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::ListOperationsRequest const& request) {
         return child_->ListOperations(context, options, request);
       },
@@ -102,21 +104,26 @@ GroundedGenerationServiceLogging::ListOperations(
 
 StatusOr<google::longrunning::Operation>
 GroundedGenerationServiceLogging::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::GetOperationRequest const& request) {
         return child_->GetOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status GroundedGenerationServiceLogging::CancelOperation(
-    grpc::ClientContext& context, Options const& options,
+Status
+GroundedGenerationServiceLogging::CancelOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::CancelOperationRequest const& request) {
         return child_->CancelOperation(context, options, request);
       },

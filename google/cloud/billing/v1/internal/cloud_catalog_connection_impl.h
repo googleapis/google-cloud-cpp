@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BILLING_V1_INTERNAL_CLOUD_CATALOG_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BILLING_V1_INTERNAL_CLOUD_CATALOG_CONNECTION_IMPL_H
 
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/billing/v1/cloud_catalog_connection.h"
 #include "google/cloud/billing/v1/cloud_catalog_connection_idempotency_policy.h"
 #include "google/cloud/billing/v1/cloud_catalog_options.h"
 #include "google/cloud/billing/v1/internal/cloud_catalog_retry_traits.h"
 #include "google/cloud/billing/v1/internal/cloud_catalog_stub.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -37,22 +37,23 @@ namespace cloud {
 namespace billing_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class CloudCatalogConnectionImpl : public billing_v1::CloudCatalogConnection {
+class CloudCatalogConnectionImpl
+    : public billing_v1::CloudCatalogConnection {
  public:
   ~CloudCatalogConnectionImpl() override = default;
 
   CloudCatalogConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<billing_v1_internal::CloudCatalogStub> stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<billing_v1_internal::CloudCatalogStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
-  StreamRange<google::cloud::billing::v1::Service> ListServices(
-      google::cloud::billing::v1::ListServicesRequest request) override;
+  StreamRange<google::cloud::billing::v1::Service>
+  ListServices(google::cloud::billing::v1::ListServicesRequest request) override;
 
-  StreamRange<google::cloud::billing::v1::Sku> ListSkus(
-      google::cloud::billing::v1::ListSkusRequest request) override;
+  StreamRange<google::cloud::billing::v1::Sku>
+  ListSkus(google::cloud::billing::v1::ListSkusRequest request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

@@ -17,14 +17,14 @@
 // source: google/cloud/sql/v1/cloud_sql_backup_runs.proto
 
 #include "google/cloud/sql/v1/sql_backup_runs_connection.h"
-#include "google/cloud/sql/v1/internal/sql_backup_runs_option_defaults.h"
-#include "google/cloud/sql/v1/internal/sql_backup_runs_tracing_connection.h"
-#include "google/cloud/sql/v1/sql_backup_runs_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/sql/v1/internal/sql_backup_runs_option_defaults.h"
+#include "google/cloud/sql/v1/internal/sql_backup_runs_tracing_connection.h"
+#include "google/cloud/sql/v1/sql_backup_runs_options.h"
 #include <memory>
 #include <utility>
 
@@ -41,7 +41,8 @@ SqlBackupRunsServiceConnection::Delete(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::cloud::sql::v1::BackupRun> SqlBackupRunsServiceConnection::Get(
+StatusOr<google::cloud::sql::v1::BackupRun>
+SqlBackupRunsServiceConnection::Get(
     google::cloud::sql::v1::SqlBackupRunsGetRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }

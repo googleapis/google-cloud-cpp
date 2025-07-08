@@ -32,18 +32,20 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 TransitionRouteGroupsLogging::TransitionRouteGroupsLogging(
     std::shared_ptr<TransitionRouteGroupsStub> child,
-    TracingOptions tracing_options, std::set<std::string> const&)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
+    TracingOptions tracing_options,
+    std::set<std::string> const&)
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::cloud::dialogflow::cx::v3::ListTransitionRouteGroupsResponse>
 TransitionRouteGroupsLogging::ListTransitionRouteGroups(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::dialogflow::cx::v3::ListTransitionRouteGroupsRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::dialogflow::cx::v3::ListTransitionRouteGroupsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dialogflow::cx::v3::
-                 ListTransitionRouteGroupsRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::dialogflow::cx::v3::ListTransitionRouteGroupsRequest const& request) {
         return child_->ListTransitionRouteGroups(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -51,13 +53,13 @@ TransitionRouteGroupsLogging::ListTransitionRouteGroups(
 
 StatusOr<google::cloud::dialogflow::cx::v3::TransitionRouteGroup>
 TransitionRouteGroupsLogging::GetTransitionRouteGroup(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::dialogflow::cx::v3::GetTransitionRouteGroupRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::dialogflow::cx::v3::GetTransitionRouteGroupRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dialogflow::cx::v3::
-                 GetTransitionRouteGroupRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::dialogflow::cx::v3::GetTransitionRouteGroupRequest const& request) {
         return child_->GetTransitionRouteGroup(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -65,13 +67,13 @@ TransitionRouteGroupsLogging::GetTransitionRouteGroup(
 
 StatusOr<google::cloud::dialogflow::cx::v3::TransitionRouteGroup>
 TransitionRouteGroupsLogging::CreateTransitionRouteGroup(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::dialogflow::cx::v3::CreateTransitionRouteGroupRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::dialogflow::cx::v3::CreateTransitionRouteGroupRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dialogflow::cx::v3::
-                 CreateTransitionRouteGroupRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::dialogflow::cx::v3::CreateTransitionRouteGroupRequest const& request) {
         return child_->CreateTransitionRouteGroup(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -79,26 +81,27 @@ TransitionRouteGroupsLogging::CreateTransitionRouteGroup(
 
 StatusOr<google::cloud::dialogflow::cx::v3::TransitionRouteGroup>
 TransitionRouteGroupsLogging::UpdateTransitionRouteGroup(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::dialogflow::cx::v3::UpdateTransitionRouteGroupRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::dialogflow::cx::v3::UpdateTransitionRouteGroupRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dialogflow::cx::v3::
-                 UpdateTransitionRouteGroupRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::dialogflow::cx::v3::UpdateTransitionRouteGroupRequest const& request) {
         return child_->UpdateTransitionRouteGroup(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status TransitionRouteGroupsLogging::DeleteTransitionRouteGroup(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::dialogflow::cx::v3::DeleteTransitionRouteGroupRequest const&
-        request) {
+Status
+TransitionRouteGroupsLogging::DeleteTransitionRouteGroup(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::dialogflow::cx::v3::DeleteTransitionRouteGroupRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dialogflow::cx::v3::
-                 DeleteTransitionRouteGroupRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::dialogflow::cx::v3::DeleteTransitionRouteGroupRequest const& request) {
         return child_->DeleteTransitionRouteGroup(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -106,10 +109,12 @@ Status TransitionRouteGroupsLogging::DeleteTransitionRouteGroup(
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 TransitionRouteGroupsLogging::ListLocations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::location::ListLocationsRequest const& request) {
         return child_->ListLocations(context, options, request);
       },
@@ -118,10 +123,12 @@ TransitionRouteGroupsLogging::ListLocations(
 
 StatusOr<google::cloud::location::Location>
 TransitionRouteGroupsLogging::GetLocation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::location::GetLocationRequest const& request) {
         return child_->GetLocation(context, options, request);
       },
@@ -130,10 +137,12 @@ TransitionRouteGroupsLogging::GetLocation(
 
 StatusOr<google::longrunning::ListOperationsResponse>
 TransitionRouteGroupsLogging::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::ListOperationsRequest const& request) {
         return child_->ListOperations(context, options, request);
       },
@@ -142,21 +151,26 @@ TransitionRouteGroupsLogging::ListOperations(
 
 StatusOr<google::longrunning::Operation>
 TransitionRouteGroupsLogging::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::GetOperationRequest const& request) {
         return child_->GetOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status TransitionRouteGroupsLogging::CancelOperation(
-    grpc::ClientContext& context, Options const& options,
+Status
+TransitionRouteGroupsLogging::CancelOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::CancelOperationRequest const& request) {
         return child_->CancelOperation(context, options, request);
       },

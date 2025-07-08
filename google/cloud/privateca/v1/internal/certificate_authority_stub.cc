@@ -33,374 +33,336 @@ CertificateAuthorityServiceStub::~CertificateAuthorityServiceStub() = default;
 
 StatusOr<google::cloud::security::privateca::v1::Certificate>
 DefaultCertificateAuthorityServiceStub::CreateCertificate(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::security::privateca::v1::CreateCertificateRequest const&
-        request) {
-  google::cloud::security::privateca::v1::Certificate response;
-  auto status = grpc_stub_->CreateCertificate(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::security::privateca::v1::CreateCertificateRequest const& request) {
+    google::cloud::security::privateca::v1::Certificate response;
+    auto status =
+        grpc_stub_->CreateCertificate(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::security::privateca::v1::Certificate>
 DefaultCertificateAuthorityServiceStub::GetCertificate(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::security::privateca::v1::GetCertificateRequest const&
-        request) {
-  google::cloud::security::privateca::v1::Certificate response;
-  auto status = grpc_stub_->GetCertificate(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::security::privateca::v1::GetCertificateRequest const& request) {
+    google::cloud::security::privateca::v1::Certificate response;
+    auto status =
+        grpc_stub_->GetCertificate(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::security::privateca::v1::ListCertificatesResponse>
 DefaultCertificateAuthorityServiceStub::ListCertificates(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::security::privateca::v1::ListCertificatesRequest const&
-        request) {
-  google::cloud::security::privateca::v1::ListCertificatesResponse response;
-  auto status = grpc_stub_->ListCertificates(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::security::privateca::v1::ListCertificatesRequest const& request) {
+    google::cloud::security::privateca::v1::ListCertificatesResponse response;
+    auto status =
+        grpc_stub_->ListCertificates(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::security::privateca::v1::Certificate>
 DefaultCertificateAuthorityServiceStub::RevokeCertificate(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::security::privateca::v1::RevokeCertificateRequest const&
-        request) {
-  google::cloud::security::privateca::v1::Certificate response;
-  auto status = grpc_stub_->RevokeCertificate(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::security::privateca::v1::RevokeCertificateRequest const& request) {
+    google::cloud::security::privateca::v1::Certificate response;
+    auto status =
+        grpc_stub_->RevokeCertificate(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::security::privateca::v1::Certificate>
 DefaultCertificateAuthorityServiceStub::UpdateCertificate(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::security::privateca::v1::UpdateCertificateRequest const&
-        request) {
-  google::cloud::security::privateca::v1::Certificate response;
-  auto status = grpc_stub_->UpdateCertificate(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::security::privateca::v1::UpdateCertificateRequest const& request) {
+    google::cloud::security::privateca::v1::Certificate response;
+    auto status =
+        grpc_stub_->UpdateCertificate(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultCertificateAuthorityServiceStub::AsyncActivateCertificateAuthority(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::security::privateca::v1::
-        ActivateCertificateAuthorityRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::security::privateca::v1::
-                                        ActivateCertificateAuthorityRequest,
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::security::privateca::v1::ActivateCertificateAuthorityRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::security::privateca::v1::ActivateCertificateAuthorityRequest,
                                     google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::security::privateca::v1::
-                 ActivateCertificateAuthorityRequest const& request,
+             google::cloud::security::privateca::v1::ActivateCertificateAuthorityRequest const& request,
              grpc::CompletionQueue* cq) {
-        return grpc_stub_->AsyncActivateCertificateAuthority(context, request,
-                                                             cq);
+        return grpc_stub_->AsyncActivateCertificateAuthority(context, request, cq);
       },
       request, std::move(context));
 }
 
 StatusOr<google::longrunning::Operation>
 DefaultCertificateAuthorityServiceStub::ActivateCertificateAuthority(
-    grpc::ClientContext& context, Options,
-    google::cloud::security::privateca::v1::
-        ActivateCertificateAuthorityRequest const& request) {
-  google::longrunning::Operation response;
-  auto status =
-      grpc_stub_->ActivateCertificateAuthority(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::security::privateca::v1::ActivateCertificateAuthorityRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->ActivateCertificateAuthority(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultCertificateAuthorityServiceStub::AsyncCreateCertificateAuthority(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::security::privateca::v1::
-        CreateCertificateAuthorityRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::security::privateca::v1::CreateCertificateAuthorityRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::security::privateca::v1::CreateCertificateAuthorityRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::security::privateca::v1::CreateCertificateAuthorityRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::security::privateca::v1::
-                 CreateCertificateAuthorityRequest const& request,
+             google::cloud::security::privateca::v1::CreateCertificateAuthorityRequest const& request,
              grpc::CompletionQueue* cq) {
-        return grpc_stub_->AsyncCreateCertificateAuthority(context, request,
-                                                           cq);
+        return grpc_stub_->AsyncCreateCertificateAuthority(context, request, cq);
       },
       request, std::move(context));
 }
 
 StatusOr<google::longrunning::Operation>
 DefaultCertificateAuthorityServiceStub::CreateCertificateAuthority(
-    grpc::ClientContext& context, Options,
-    google::cloud::security::privateca::v1::
-        CreateCertificateAuthorityRequest const& request) {
-  google::longrunning::Operation response;
-  auto status =
-      grpc_stub_->CreateCertificateAuthority(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::security::privateca::v1::CreateCertificateAuthorityRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->CreateCertificateAuthority(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultCertificateAuthorityServiceStub::AsyncDisableCertificateAuthority(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::security::privateca::v1::
-        DisableCertificateAuthorityRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::security::privateca::v1::
-                                        DisableCertificateAuthorityRequest,
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::security::privateca::v1::DisableCertificateAuthorityRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::security::privateca::v1::DisableCertificateAuthorityRequest,
                                     google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::security::privateca::v1::
-                 DisableCertificateAuthorityRequest const& request,
+             google::cloud::security::privateca::v1::DisableCertificateAuthorityRequest const& request,
              grpc::CompletionQueue* cq) {
-        return grpc_stub_->AsyncDisableCertificateAuthority(context, request,
-                                                            cq);
+        return grpc_stub_->AsyncDisableCertificateAuthority(context, request, cq);
       },
       request, std::move(context));
 }
 
 StatusOr<google::longrunning::Operation>
 DefaultCertificateAuthorityServiceStub::DisableCertificateAuthority(
-    grpc::ClientContext& context, Options,
-    google::cloud::security::privateca::v1::
-        DisableCertificateAuthorityRequest const& request) {
-  google::longrunning::Operation response;
-  auto status =
-      grpc_stub_->DisableCertificateAuthority(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::security::privateca::v1::DisableCertificateAuthorityRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->DisableCertificateAuthority(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultCertificateAuthorityServiceStub::AsyncEnableCertificateAuthority(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::security::privateca::v1::
-        EnableCertificateAuthorityRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::security::privateca::v1::EnableCertificateAuthorityRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::security::privateca::v1::EnableCertificateAuthorityRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::security::privateca::v1::EnableCertificateAuthorityRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::security::privateca::v1::
-                 EnableCertificateAuthorityRequest const& request,
+             google::cloud::security::privateca::v1::EnableCertificateAuthorityRequest const& request,
              grpc::CompletionQueue* cq) {
-        return grpc_stub_->AsyncEnableCertificateAuthority(context, request,
-                                                           cq);
+        return grpc_stub_->AsyncEnableCertificateAuthority(context, request, cq);
       },
       request, std::move(context));
 }
 
 StatusOr<google::longrunning::Operation>
 DefaultCertificateAuthorityServiceStub::EnableCertificateAuthority(
-    grpc::ClientContext& context, Options,
-    google::cloud::security::privateca::v1::
-        EnableCertificateAuthorityRequest const& request) {
-  google::longrunning::Operation response;
-  auto status =
-      grpc_stub_->EnableCertificateAuthority(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::security::privateca::v1::EnableCertificateAuthorityRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->EnableCertificateAuthority(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-StatusOr<google::cloud::security::privateca::v1::
-             FetchCertificateAuthorityCsrResponse>
+StatusOr<google::cloud::security::privateca::v1::FetchCertificateAuthorityCsrResponse>
 DefaultCertificateAuthorityServiceStub::FetchCertificateAuthorityCsr(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::security::privateca::v1::
-        FetchCertificateAuthorityCsrRequest const& request) {
-  google::cloud::security::privateca::v1::FetchCertificateAuthorityCsrResponse
-      response;
-  auto status =
-      grpc_stub_->FetchCertificateAuthorityCsr(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::security::privateca::v1::FetchCertificateAuthorityCsrRequest const& request) {
+    google::cloud::security::privateca::v1::FetchCertificateAuthorityCsrResponse response;
+    auto status =
+        grpc_stub_->FetchCertificateAuthorityCsr(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>
 DefaultCertificateAuthorityServiceStub::GetCertificateAuthority(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::security::privateca::v1::
-        GetCertificateAuthorityRequest const& request) {
-  google::cloud::security::privateca::v1::CertificateAuthority response;
-  auto status =
-      grpc_stub_->GetCertificateAuthority(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::security::privateca::v1::GetCertificateAuthorityRequest const& request) {
+    google::cloud::security::privateca::v1::CertificateAuthority response;
+    auto status =
+        grpc_stub_->GetCertificateAuthority(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-StatusOr<
-    google::cloud::security::privateca::v1::ListCertificateAuthoritiesResponse>
+StatusOr<google::cloud::security::privateca::v1::ListCertificateAuthoritiesResponse>
 DefaultCertificateAuthorityServiceStub::ListCertificateAuthorities(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::security::privateca::v1::
-        ListCertificateAuthoritiesRequest const& request) {
-  google::cloud::security::privateca::v1::ListCertificateAuthoritiesResponse
-      response;
-  auto status =
-      grpc_stub_->ListCertificateAuthorities(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::security::privateca::v1::ListCertificateAuthoritiesRequest const& request) {
+    google::cloud::security::privateca::v1::ListCertificateAuthoritiesResponse response;
+    auto status =
+        grpc_stub_->ListCertificateAuthorities(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultCertificateAuthorityServiceStub::AsyncUndeleteCertificateAuthority(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::security::privateca::v1::
-        UndeleteCertificateAuthorityRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::security::privateca::v1::
-                                        UndeleteCertificateAuthorityRequest,
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::security::privateca::v1::UndeleteCertificateAuthorityRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::security::privateca::v1::UndeleteCertificateAuthorityRequest,
                                     google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::security::privateca::v1::
-                 UndeleteCertificateAuthorityRequest const& request,
+             google::cloud::security::privateca::v1::UndeleteCertificateAuthorityRequest const& request,
              grpc::CompletionQueue* cq) {
-        return grpc_stub_->AsyncUndeleteCertificateAuthority(context, request,
-                                                             cq);
+        return grpc_stub_->AsyncUndeleteCertificateAuthority(context, request, cq);
       },
       request, std::move(context));
 }
 
 StatusOr<google::longrunning::Operation>
 DefaultCertificateAuthorityServiceStub::UndeleteCertificateAuthority(
-    grpc::ClientContext& context, Options,
-    google::cloud::security::privateca::v1::
-        UndeleteCertificateAuthorityRequest const& request) {
-  google::longrunning::Operation response;
-  auto status =
-      grpc_stub_->UndeleteCertificateAuthority(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::security::privateca::v1::UndeleteCertificateAuthorityRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->UndeleteCertificateAuthority(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultCertificateAuthorityServiceStub::AsyncDeleteCertificateAuthority(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::security::privateca::v1::
-        DeleteCertificateAuthorityRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::security::privateca::v1::DeleteCertificateAuthorityRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::security::privateca::v1::DeleteCertificateAuthorityRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::security::privateca::v1::DeleteCertificateAuthorityRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::security::privateca::v1::
-                 DeleteCertificateAuthorityRequest const& request,
+             google::cloud::security::privateca::v1::DeleteCertificateAuthorityRequest const& request,
              grpc::CompletionQueue* cq) {
-        return grpc_stub_->AsyncDeleteCertificateAuthority(context, request,
-                                                           cq);
+        return grpc_stub_->AsyncDeleteCertificateAuthority(context, request, cq);
       },
       request, std::move(context));
 }
 
 StatusOr<google::longrunning::Operation>
 DefaultCertificateAuthorityServiceStub::DeleteCertificateAuthority(
-    grpc::ClientContext& context, Options,
-    google::cloud::security::privateca::v1::
-        DeleteCertificateAuthorityRequest const& request) {
-  google::longrunning::Operation response;
-  auto status =
-      grpc_stub_->DeleteCertificateAuthority(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::security::privateca::v1::DeleteCertificateAuthorityRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->DeleteCertificateAuthority(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultCertificateAuthorityServiceStub::AsyncUpdateCertificateAuthority(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::security::privateca::v1::
-        UpdateCertificateAuthorityRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::security::privateca::v1::UpdateCertificateAuthorityRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::security::privateca::v1::UpdateCertificateAuthorityRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::security::privateca::v1::UpdateCertificateAuthorityRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::security::privateca::v1::
-                 UpdateCertificateAuthorityRequest const& request,
+             google::cloud::security::privateca::v1::UpdateCertificateAuthorityRequest const& request,
              grpc::CompletionQueue* cq) {
-        return grpc_stub_->AsyncUpdateCertificateAuthority(context, request,
-                                                           cq);
+        return grpc_stub_->AsyncUpdateCertificateAuthority(context, request, cq);
       },
       request, std::move(context));
 }
 
 StatusOr<google::longrunning::Operation>
 DefaultCertificateAuthorityServiceStub::UpdateCertificateAuthority(
-    grpc::ClientContext& context, Options,
-    google::cloud::security::privateca::v1::
-        UpdateCertificateAuthorityRequest const& request) {
-  google::longrunning::Operation response;
-  auto status =
-      grpc_stub_->UpdateCertificateAuthority(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::security::privateca::v1::UpdateCertificateAuthorityRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->UpdateCertificateAuthority(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultCertificateAuthorityServiceStub::AsyncCreateCaPool(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::security::privateca::v1::CreateCaPoolRequest const&
-        request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::security::privateca::v1::CreateCaPoolRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::security::privateca::v1::CreateCaPoolRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::security::privateca::v1::CreateCaPoolRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::security::privateca::v1::CreateCaPoolRequest const&
-                 request,
+             google::cloud::security::privateca::v1::CreateCaPoolRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncCreateCaPool(context, request, cq);
       },
@@ -409,31 +371,29 @@ DefaultCertificateAuthorityServiceStub::AsyncCreateCaPool(
 
 StatusOr<google::longrunning::Operation>
 DefaultCertificateAuthorityServiceStub::CreateCaPool(
-    grpc::ClientContext& context, Options,
-    google::cloud::security::privateca::v1::CreateCaPoolRequest const&
-        request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->CreateCaPool(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::security::privateca::v1::CreateCaPoolRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->CreateCaPool(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultCertificateAuthorityServiceStub::AsyncUpdateCaPool(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::security::privateca::v1::UpdateCaPoolRequest const&
-        request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::security::privateca::v1::UpdateCaPoolRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::security::privateca::v1::UpdateCaPoolRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::security::privateca::v1::UpdateCaPoolRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::security::privateca::v1::UpdateCaPoolRequest const&
-                 request,
+             google::cloud::security::privateca::v1::UpdateCaPoolRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncUpdateCaPool(context, request, cq);
       },
@@ -442,55 +402,55 @@ DefaultCertificateAuthorityServiceStub::AsyncUpdateCaPool(
 
 StatusOr<google::longrunning::Operation>
 DefaultCertificateAuthorityServiceStub::UpdateCaPool(
-    grpc::ClientContext& context, Options,
-    google::cloud::security::privateca::v1::UpdateCaPoolRequest const&
-        request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->UpdateCaPool(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::security::privateca::v1::UpdateCaPoolRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->UpdateCaPool(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::security::privateca::v1::CaPool>
 DefaultCertificateAuthorityServiceStub::GetCaPool(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::security::privateca::v1::GetCaPoolRequest const& request) {
-  google::cloud::security::privateca::v1::CaPool response;
-  auto status = grpc_stub_->GetCaPool(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::security::privateca::v1::GetCaPoolRequest const& request) {
+    google::cloud::security::privateca::v1::CaPool response;
+    auto status =
+        grpc_stub_->GetCaPool(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::security::privateca::v1::ListCaPoolsResponse>
 DefaultCertificateAuthorityServiceStub::ListCaPools(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::security::privateca::v1::ListCaPoolsRequest const& request) {
-  google::cloud::security::privateca::v1::ListCaPoolsResponse response;
-  auto status = grpc_stub_->ListCaPools(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::security::privateca::v1::ListCaPoolsRequest const& request) {
+    google::cloud::security::privateca::v1::ListCaPoolsResponse response;
+    auto status =
+        grpc_stub_->ListCaPools(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultCertificateAuthorityServiceStub::AsyncDeleteCaPool(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::security::privateca::v1::DeleteCaPoolRequest const&
-        request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::security::privateca::v1::DeleteCaPoolRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::security::privateca::v1::DeleteCaPoolRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::security::privateca::v1::DeleteCaPoolRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::security::privateca::v1::DeleteCaPoolRequest const&
-                 request,
+             google::cloud::security::privateca::v1::DeleteCaPoolRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncDeleteCaPool(context, request, cq);
       },
@@ -499,109 +459,99 @@ DefaultCertificateAuthorityServiceStub::AsyncDeleteCaPool(
 
 StatusOr<google::longrunning::Operation>
 DefaultCertificateAuthorityServiceStub::DeleteCaPool(
-    grpc::ClientContext& context, Options,
-    google::cloud::security::privateca::v1::DeleteCaPoolRequest const&
-        request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->DeleteCaPool(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::security::privateca::v1::DeleteCaPoolRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->DeleteCaPool(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::security::privateca::v1::FetchCaCertsResponse>
 DefaultCertificateAuthorityServiceStub::FetchCaCerts(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::security::privateca::v1::FetchCaCertsRequest const&
-        request) {
-  google::cloud::security::privateca::v1::FetchCaCertsResponse response;
-  auto status = grpc_stub_->FetchCaCerts(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::security::privateca::v1::FetchCaCertsRequest const& request) {
+    google::cloud::security::privateca::v1::FetchCaCertsResponse response;
+    auto status =
+        grpc_stub_->FetchCaCerts(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::security::privateca::v1::CertificateRevocationList>
 DefaultCertificateAuthorityServiceStub::GetCertificateRevocationList(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::security::privateca::v1::
-        GetCertificateRevocationListRequest const& request) {
-  google::cloud::security::privateca::v1::CertificateRevocationList response;
-  auto status =
-      grpc_stub_->GetCertificateRevocationList(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::security::privateca::v1::GetCertificateRevocationListRequest const& request) {
+    google::cloud::security::privateca::v1::CertificateRevocationList response;
+    auto status =
+        grpc_stub_->GetCertificateRevocationList(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-StatusOr<google::cloud::security::privateca::v1::
-             ListCertificateRevocationListsResponse>
+StatusOr<google::cloud::security::privateca::v1::ListCertificateRevocationListsResponse>
 DefaultCertificateAuthorityServiceStub::ListCertificateRevocationLists(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::security::privateca::v1::
-        ListCertificateRevocationListsRequest const& request) {
-  google::cloud::security::privateca::v1::ListCertificateRevocationListsResponse
-      response;
-  auto status =
-      grpc_stub_->ListCertificateRevocationLists(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::security::privateca::v1::ListCertificateRevocationListsRequest const& request) {
+    google::cloud::security::privateca::v1::ListCertificateRevocationListsResponse response;
+    auto status =
+        grpc_stub_->ListCertificateRevocationLists(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultCertificateAuthorityServiceStub::AsyncUpdateCertificateRevocationList(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::security::privateca::v1::
-        UpdateCertificateRevocationListRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::security::privateca::v1::
-                                        UpdateCertificateRevocationListRequest,
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::security::privateca::v1::UpdateCertificateRevocationListRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::security::privateca::v1::UpdateCertificateRevocationListRequest,
                                     google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::security::privateca::v1::
-                 UpdateCertificateRevocationListRequest const& request,
+             google::cloud::security::privateca::v1::UpdateCertificateRevocationListRequest const& request,
              grpc::CompletionQueue* cq) {
-        return grpc_stub_->AsyncUpdateCertificateRevocationList(context,
-                                                                request, cq);
+        return grpc_stub_->AsyncUpdateCertificateRevocationList(context, request, cq);
       },
       request, std::move(context));
 }
 
 StatusOr<google::longrunning::Operation>
 DefaultCertificateAuthorityServiceStub::UpdateCertificateRevocationList(
-    grpc::ClientContext& context, Options,
-    google::cloud::security::privateca::v1::
-        UpdateCertificateRevocationListRequest const& request) {
-  google::longrunning::Operation response;
-  auto status =
-      grpc_stub_->UpdateCertificateRevocationList(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::security::privateca::v1::UpdateCertificateRevocationListRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->UpdateCertificateRevocationList(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultCertificateAuthorityServiceStub::AsyncCreateCertificateTemplate(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::security::privateca::v1::
-        CreateCertificateTemplateRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::security::privateca::v1::CreateCertificateTemplateRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::security::privateca::v1::CreateCertificateTemplateRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::security::privateca::v1::CreateCertificateTemplateRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::security::privateca::v1::
-                 CreateCertificateTemplateRequest const& request,
+             google::cloud::security::privateca::v1::CreateCertificateTemplateRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncCreateCertificateTemplate(context, request, cq);
       },
@@ -610,32 +560,29 @@ DefaultCertificateAuthorityServiceStub::AsyncCreateCertificateTemplate(
 
 StatusOr<google::longrunning::Operation>
 DefaultCertificateAuthorityServiceStub::CreateCertificateTemplate(
-    grpc::ClientContext& context, Options,
-    google::cloud::security::privateca::v1::
-        CreateCertificateTemplateRequest const& request) {
-  google::longrunning::Operation response;
-  auto status =
-      grpc_stub_->CreateCertificateTemplate(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::security::privateca::v1::CreateCertificateTemplateRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->CreateCertificateTemplate(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultCertificateAuthorityServiceStub::AsyncDeleteCertificateTemplate(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::security::privateca::v1::
-        DeleteCertificateTemplateRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::security::privateca::v1::DeleteCertificateTemplateRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::security::privateca::v1::DeleteCertificateTemplateRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::security::privateca::v1::DeleteCertificateTemplateRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::security::privateca::v1::
-                 DeleteCertificateTemplateRequest const& request,
+             google::cloud::security::privateca::v1::DeleteCertificateTemplateRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncDeleteCertificateTemplate(context, request, cq);
       },
@@ -644,62 +591,55 @@ DefaultCertificateAuthorityServiceStub::AsyncDeleteCertificateTemplate(
 
 StatusOr<google::longrunning::Operation>
 DefaultCertificateAuthorityServiceStub::DeleteCertificateTemplate(
-    grpc::ClientContext& context, Options,
-    google::cloud::security::privateca::v1::
-        DeleteCertificateTemplateRequest const& request) {
-  google::longrunning::Operation response;
-  auto status =
-      grpc_stub_->DeleteCertificateTemplate(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::security::privateca::v1::DeleteCertificateTemplateRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->DeleteCertificateTemplate(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::security::privateca::v1::CertificateTemplate>
 DefaultCertificateAuthorityServiceStub::GetCertificateTemplate(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::security::privateca::v1::GetCertificateTemplateRequest const&
-        request) {
-  google::cloud::security::privateca::v1::CertificateTemplate response;
-  auto status =
-      grpc_stub_->GetCertificateTemplate(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::security::privateca::v1::GetCertificateTemplateRequest const& request) {
+    google::cloud::security::privateca::v1::CertificateTemplate response;
+    auto status =
+        grpc_stub_->GetCertificateTemplate(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-StatusOr<
-    google::cloud::security::privateca::v1::ListCertificateTemplatesResponse>
+StatusOr<google::cloud::security::privateca::v1::ListCertificateTemplatesResponse>
 DefaultCertificateAuthorityServiceStub::ListCertificateTemplates(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::security::privateca::v1::
-        ListCertificateTemplatesRequest const& request) {
-  google::cloud::security::privateca::v1::ListCertificateTemplatesResponse
-      response;
-  auto status =
-      grpc_stub_->ListCertificateTemplates(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::security::privateca::v1::ListCertificateTemplatesRequest const& request) {
+    google::cloud::security::privateca::v1::ListCertificateTemplatesResponse response;
+    auto status =
+        grpc_stub_->ListCertificateTemplates(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultCertificateAuthorityServiceStub::AsyncUpdateCertificateTemplate(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::security::privateca::v1::
-        UpdateCertificateTemplateRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::security::privateca::v1::UpdateCertificateTemplateRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::security::privateca::v1::UpdateCertificateTemplateRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::security::privateca::v1::UpdateCertificateTemplateRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::security::privateca::v1::
-                 UpdateCertificateTemplateRequest const& request,
+             google::cloud::security::privateca::v1::UpdateCertificateTemplateRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncUpdateCertificateTemplate(context, request, cq);
       },
@@ -708,123 +648,133 @@ DefaultCertificateAuthorityServiceStub::AsyncUpdateCertificateTemplate(
 
 StatusOr<google::longrunning::Operation>
 DefaultCertificateAuthorityServiceStub::UpdateCertificateTemplate(
-    grpc::ClientContext& context, Options,
-    google::cloud::security::privateca::v1::
-        UpdateCertificateTemplateRequest const& request) {
-  google::longrunning::Operation response;
-  auto status =
-      grpc_stub_->UpdateCertificateTemplate(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::security::privateca::v1::UpdateCertificateTemplateRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->UpdateCertificateTemplate(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 DefaultCertificateAuthorityServiceStub::ListLocations(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::location::ListLocationsRequest const& request) {
-  google::cloud::location::ListLocationsResponse response;
-  auto status = locations_stub_->ListLocations(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::location::ListLocationsRequest const& request) {
+    google::cloud::location::ListLocationsResponse response;
+    auto status =
+        locations_stub_->ListLocations(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::location::Location>
 DefaultCertificateAuthorityServiceStub::GetLocation(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::location::GetLocationRequest const& request) {
-  google::cloud::location::Location response;
-  auto status = locations_stub_->GetLocation(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::location::GetLocationRequest const& request) {
+    google::cloud::location::Location response;
+    auto status =
+        locations_stub_->GetLocation(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::iam::v1::Policy>
 DefaultCertificateAuthorityServiceStub::SetIamPolicy(
-    grpc::ClientContext& context, Options const&,
-    google::iam::v1::SetIamPolicyRequest const& request) {
-  google::iam::v1::Policy response;
-  auto status = iampolicy_stub_->SetIamPolicy(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::iam::v1::SetIamPolicyRequest const& request) {
+    google::iam::v1::Policy response;
+    auto status =
+        iampolicy_stub_->SetIamPolicy(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::iam::v1::Policy>
 DefaultCertificateAuthorityServiceStub::GetIamPolicy(
-    grpc::ClientContext& context, Options const&,
-    google::iam::v1::GetIamPolicyRequest const& request) {
-  google::iam::v1::Policy response;
-  auto status = iampolicy_stub_->GetIamPolicy(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::iam::v1::GetIamPolicyRequest const& request) {
+    google::iam::v1::Policy response;
+    auto status =
+        iampolicy_stub_->GetIamPolicy(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 DefaultCertificateAuthorityServiceStub::TestIamPermissions(
-    grpc::ClientContext& context, Options const&,
-    google::iam::v1::TestIamPermissionsRequest const& request) {
-  google::iam::v1::TestIamPermissionsResponse response;
-  auto status =
-      iampolicy_stub_->TestIamPermissions(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::iam::v1::TestIamPermissionsRequest const& request) {
+    google::iam::v1::TestIamPermissionsResponse response;
+    auto status =
+        iampolicy_stub_->TestIamPermissions(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
 DefaultCertificateAuthorityServiceStub::ListOperations(
-    grpc::ClientContext& context, Options const&,
-    google::longrunning::ListOperationsRequest const& request) {
-  google::longrunning::ListOperationsResponse response;
-  auto status = operations_stub_->ListOperations(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::longrunning::ListOperationsRequest const& request) {
+    google::longrunning::ListOperationsResponse response;
+    auto status =
+        operations_stub_->ListOperations(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::longrunning::Operation>
 DefaultCertificateAuthorityServiceStub::GetOperation(
-    grpc::ClientContext& context, Options const&,
-    google::longrunning::GetOperationRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = operations_stub_->GetOperation(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::longrunning::GetOperationRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        operations_stub_->GetOperation(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-Status DefaultCertificateAuthorityServiceStub::DeleteOperation(
-    grpc::ClientContext& context, Options const&,
-    google::longrunning::DeleteOperationRequest const& request) {
-  google::protobuf::Empty response;
-  auto status = operations_stub_->DeleteOperation(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return google::cloud::Status();
+Status
+DefaultCertificateAuthorityServiceStub::DeleteOperation(
+  grpc::ClientContext& context, Options const&,
+  google::longrunning::DeleteOperationRequest const& request) {
+    google::protobuf::Empty response;
+    auto status =
+        operations_stub_->DeleteOperation(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return google::cloud::Status();
 }
 
-Status DefaultCertificateAuthorityServiceStub::CancelOperation(
-    grpc::ClientContext& context, Options const&,
-    google::longrunning::CancelOperationRequest const& request) {
-  google::protobuf::Empty response;
-  auto status = operations_stub_->CancelOperation(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return google::cloud::Status();
+Status
+DefaultCertificateAuthorityServiceStub::CancelOperation(
+  grpc::ClientContext& context, Options const&,
+  google::longrunning::CancelOperationRequest const& request) {
+    google::protobuf::Empty response;
+    auto status =
+        operations_stub_->CancelOperation(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return google::cloud::Status();
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -853,14 +803,13 @@ future<Status> DefaultCertificateAuthorityServiceStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(
-             cq,
-             [this](grpc::ClientContext* context,
-                    google::longrunning::CancelOperationRequest const& request,
-                    grpc::CompletionQueue* cq) {
-               return operations_stub_->AsyncCancelOperation(context, request,
-                                                             cq);
-             },
-             request, std::move(context))
+      cq,
+      [this](grpc::ClientContext* context,
+             google::longrunning::CancelOperationRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return operations_stub_->AsyncCancelOperation(context, request, cq);
+      },
+      request, std::move(context))
       .then([](future<StatusOr<google::protobuf::Empty>> f) {
         return f.get().status();
       });

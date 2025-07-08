@@ -33,8 +33,7 @@ using ::google::cloud::language_v1::MakeLanguageServiceConnection;
 /// @deprecated Use language_v1::LanguageServiceConnection directly.
 using ::google::cloud::language_v1::LanguageServiceConnection;
 
-/// @deprecated Use language_v1::LanguageServiceLimitedErrorCountRetryPolicy
-/// directly.
+/// @deprecated Use language_v1::LanguageServiceLimitedErrorCountRetryPolicy directly.
 using ::google::cloud::language_v1::LanguageServiceLimitedErrorCountRetryPolicy;
 
 /// @deprecated Use language_v1::LanguageServiceLimitedTimeRetryPolicy directly.

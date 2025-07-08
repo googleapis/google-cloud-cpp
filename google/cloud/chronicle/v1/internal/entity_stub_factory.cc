@@ -38,29 +38,29 @@ namespace cloud {
 namespace chronicle_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<EntityServiceStub> CreateDefaultEntityServiceStub(
+std::shared_ptr<EntityServiceStub>
+CreateDefaultEntityServiceStub(
     std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
     Options const& options) {
-  auto channel = auth->CreateChannel(options.get<EndpointOption>(),
-                                     internal::MakeChannelArguments(options));
-  auto service_grpc_stub =
-      google::cloud::chronicle::v1::EntityService::NewStub(channel);
-  auto service_operations_stub =
-      google::longrunning::Operations::NewStub(channel);
+  auto channel = auth->CreateChannel(
+    options.get<EndpointOption>(), internal::MakeChannelArguments(options));
+  auto service_grpc_stub = google::cloud::chronicle::v1::EntityService::NewStub(channel);
+  auto service_operations_stub = google::longrunning::Operations::NewStub(channel);
   std::shared_ptr<EntityServiceStub> stub =
-      std::make_shared<DefaultEntityServiceStub>(
-          std::move(service_grpc_stub), std::move(service_operations_stub));
+    std::make_shared<DefaultEntityServiceStub>(std::move(service_grpc_stub), std::move(service_operations_stub));
 
   if (auth->RequiresConfigureContext()) {
-    stub =
-        std::make_shared<EntityServiceAuth>(std::move(auth), std::move(stub));
+    stub = std::make_shared<EntityServiceAuth>(
+        std::move(auth), std::move(stub));
   }
   stub = std::make_shared<EntityServiceMetadata>(
       std::move(stub), std::multimap<std::string, std::string>{});
-  if (internal::Contains(options.get<LoggingComponentsOption>(), "rpc")) {
+  if (internal::Contains(
+      options.get<LoggingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<EntityServiceLogging>(
-        std::move(stub), options.get<GrpcTracingOptionsOption>(),
+        std::move(stub),
+        options.get<GrpcTracingOptionsOption>(),
         options.get<LoggingComponentsOption>());
   }
   if (internal::TracingEnabled(options)) {

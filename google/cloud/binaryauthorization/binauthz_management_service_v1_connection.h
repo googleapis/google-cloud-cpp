@@ -27,32 +27,20 @@ namespace cloud {
 namespace binaryauthorization {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use
-/// binaryauthorization_v1::MakeBinauthzManagementServiceV1Connection directly.
-using ::google::cloud::binaryauthorization_v1::
-    MakeBinauthzManagementServiceV1Connection;
+/// @deprecated Use binaryauthorization_v1::MakeBinauthzManagementServiceV1Connection directly.
+using ::google::cloud::binaryauthorization_v1::MakeBinauthzManagementServiceV1Connection;
 
-/// @deprecated Use
-/// binaryauthorization_v1::BinauthzManagementServiceV1Connection directly.
-using ::google::cloud::binaryauthorization_v1::
-    BinauthzManagementServiceV1Connection;
+/// @deprecated Use binaryauthorization_v1::BinauthzManagementServiceV1Connection directly.
+using ::google::cloud::binaryauthorization_v1::BinauthzManagementServiceV1Connection;
 
-/// @deprecated Use
-/// binaryauthorization_v1::BinauthzManagementServiceV1LimitedErrorCountRetryPolicy
-/// directly.
-using ::google::cloud::binaryauthorization_v1::
-    BinauthzManagementServiceV1LimitedErrorCountRetryPolicy;
+/// @deprecated Use binaryauthorization_v1::BinauthzManagementServiceV1LimitedErrorCountRetryPolicy directly.
+using ::google::cloud::binaryauthorization_v1::BinauthzManagementServiceV1LimitedErrorCountRetryPolicy;
 
-/// @deprecated Use
-/// binaryauthorization_v1::BinauthzManagementServiceV1LimitedTimeRetryPolicy
-/// directly.
-using ::google::cloud::binaryauthorization_v1::
-    BinauthzManagementServiceV1LimitedTimeRetryPolicy;
+/// @deprecated Use binaryauthorization_v1::BinauthzManagementServiceV1LimitedTimeRetryPolicy directly.
+using ::google::cloud::binaryauthorization_v1::BinauthzManagementServiceV1LimitedTimeRetryPolicy;
 
-/// @deprecated Use
-/// binaryauthorization_v1::BinauthzManagementServiceV1RetryPolicy directly.
-using ::google::cloud::binaryauthorization_v1::
-    BinauthzManagementServiceV1RetryPolicy;
+/// @deprecated Use binaryauthorization_v1::BinauthzManagementServiceV1RetryPolicy directly.
+using ::google::cloud::binaryauthorization_v1::BinauthzManagementServiceV1RetryPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace binaryauthorization

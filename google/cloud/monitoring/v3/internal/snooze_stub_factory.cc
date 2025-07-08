@@ -17,16 +17,16 @@
 // source: google/monitoring/v3/snooze_service.proto
 
 #include "google/cloud/monitoring/v3/internal/snooze_stub_factory.h"
-#include "google/cloud/monitoring/v3/internal/snooze_auth_decorator.h"
-#include "google/cloud/monitoring/v3/internal/snooze_logging_decorator.h"
-#include "google/cloud/monitoring/v3/internal/snooze_metadata_decorator.h"
-#include "google/cloud/monitoring/v3/internal/snooze_stub.h"
-#include "google/cloud/monitoring/v3/internal/snooze_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
+#include "google/cloud/monitoring/v3/internal/snooze_auth_decorator.h"
+#include "google/cloud/monitoring/v3/internal/snooze_logging_decorator.h"
+#include "google/cloud/monitoring/v3/internal/snooze_metadata_decorator.h"
+#include "google/cloud/monitoring/v3/internal/snooze_stub.h"
+#include "google/cloud/monitoring/v3/internal/snooze_tracing_stub.h"
 #include "google/cloud/options.h"
 #include <google/monitoring/v3/snooze_service.grpc.pb.h>
 #include <memory>
@@ -37,26 +37,28 @@ namespace cloud {
 namespace monitoring_v3_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<SnoozeServiceStub> CreateDefaultSnoozeServiceStub(
+std::shared_ptr<SnoozeServiceStub>
+CreateDefaultSnoozeServiceStub(
     std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
     Options const& options) {
-  auto channel = auth->CreateChannel(options.get<EndpointOption>(),
-                                     internal::MakeChannelArguments(options));
-  auto service_grpc_stub =
-      google::monitoring::v3::SnoozeService::NewStub(channel);
+  auto channel = auth->CreateChannel(
+    options.get<EndpointOption>(), internal::MakeChannelArguments(options));
+  auto service_grpc_stub = google::monitoring::v3::SnoozeService::NewStub(channel);
   std::shared_ptr<SnoozeServiceStub> stub =
-      std::make_shared<DefaultSnoozeServiceStub>(std::move(service_grpc_stub));
+    std::make_shared<DefaultSnoozeServiceStub>(std::move(service_grpc_stub));
 
   if (auth->RequiresConfigureContext()) {
-    stub =
-        std::make_shared<SnoozeServiceAuth>(std::move(auth), std::move(stub));
+    stub = std::make_shared<SnoozeServiceAuth>(
+        std::move(auth), std::move(stub));
   }
   stub = std::make_shared<SnoozeServiceMetadata>(
       std::move(stub), std::multimap<std::string, std::string>{});
-  if (internal::Contains(options.get<LoggingComponentsOption>(), "rpc")) {
+  if (internal::Contains(
+      options.get<LoggingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<SnoozeServiceLogging>(
-        std::move(stub), options.get<GrpcTracingOptionsOption>(),
+        std::move(stub),
+        options.get<GrpcTracingOptionsOption>(),
         options.get<LoggingComponentsOption>());
   }
   if (internal::TracingEnabled(options)) {

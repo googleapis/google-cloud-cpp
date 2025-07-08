@@ -31,18 +31,18 @@ SchemaServiceAuth::SchemaServiceAuth(
     std::shared_ptr<SchemaServiceStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::discoveryengine::v1::Schema>
-SchemaServiceAuth::GetSchema(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::discoveryengine::v1::Schema> SchemaServiceAuth::GetSchema(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::discoveryengine::v1::GetSchemaRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetSchema(context, options, request);
 }
 
-StatusOr<google::cloud::discoveryengine::v1::ListSchemasResponse>
-SchemaServiceAuth::ListSchemas(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::discoveryengine::v1::ListSchemasResponse> SchemaServiceAuth::ListSchemas(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::discoveryengine::v1::ListSchemasRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -51,27 +51,28 @@ SchemaServiceAuth::ListSchemas(
 
 future<StatusOr<google::longrunning::Operation>>
 SchemaServiceAuth::AsyncCreateSchema(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::discoveryengine::v1::CreateSchemaRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::discoveryengine::v1::CreateSchemaRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreateSchema(cq, *std::move(context),
-                                        std::move(options), request);
+        return child->AsyncCreateSchema(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation> SchemaServiceAuth::CreateSchema(
-    grpc::ClientContext& context, Options options,
-    google::cloud::discoveryengine::v1::CreateSchemaRequest const& request) {
+StatusOr<google::longrunning::Operation>
+SchemaServiceAuth::CreateSchema(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::discoveryengine::v1::CreateSchemaRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateSchema(context, options, request);
@@ -79,27 +80,28 @@ StatusOr<google::longrunning::Operation> SchemaServiceAuth::CreateSchema(
 
 future<StatusOr<google::longrunning::Operation>>
 SchemaServiceAuth::AsyncUpdateSchema(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::discoveryengine::v1::UpdateSchemaRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::discoveryengine::v1::UpdateSchemaRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncUpdateSchema(cq, *std::move(context),
-                                        std::move(options), request);
+        return child->AsyncUpdateSchema(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation> SchemaServiceAuth::UpdateSchema(
-    grpc::ClientContext& context, Options options,
-    google::cloud::discoveryengine::v1::UpdateSchemaRequest const& request) {
+StatusOr<google::longrunning::Operation>
+SchemaServiceAuth::UpdateSchema(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::discoveryengine::v1::UpdateSchemaRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateSchema(context, options, request);
@@ -107,35 +109,36 @@ StatusOr<google::longrunning::Operation> SchemaServiceAuth::UpdateSchema(
 
 future<StatusOr<google::longrunning::Operation>>
 SchemaServiceAuth::AsyncDeleteSchema(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::discoveryengine::v1::DeleteSchemaRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::discoveryengine::v1::DeleteSchemaRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDeleteSchema(cq, *std::move(context),
-                                        std::move(options), request);
+        return child->AsyncDeleteSchema(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation> SchemaServiceAuth::DeleteSchema(
-    grpc::ClientContext& context, Options options,
-    google::cloud::discoveryengine::v1::DeleteSchemaRequest const& request) {
+StatusOr<google::longrunning::Operation>
+SchemaServiceAuth::DeleteSchema(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::discoveryengine::v1::DeleteSchemaRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteSchema(context, options, request);
 }
 
-StatusOr<google::longrunning::ListOperationsResponse>
-SchemaServiceAuth::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse> SchemaServiceAuth::ListOperations(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -143,7 +146,8 @@ SchemaServiceAuth::ListOperations(
 }
 
 StatusOr<google::longrunning::Operation> SchemaServiceAuth::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -151,7 +155,8 @@ StatusOr<google::longrunning::Operation> SchemaServiceAuth::GetOperation(
 }
 
 Status SchemaServiceAuth::CancelOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -165,16 +170,15 @@ SchemaServiceAuth::AsyncGetOperation(
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncGetOperation(cq, *std::move(context),
-                                        std::move(options), request);
+        return child->AsyncGetOperation(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
@@ -183,14 +187,13 @@ future<Status> SchemaServiceAuth::AsyncCancelOperation(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) return make_ready_future(std::move(context).status());
-        return child->AsyncCancelOperation(cq, *std::move(context),
-                                           std::move(options), request);
+        return child->AsyncCancelOperation(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 

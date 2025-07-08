@@ -35,31 +35,23 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options ValidationHelperV1DefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_VALIDATION_HELPER_V1_ENDPOINT", "",
-      "GOOGLE_CLOUD_CPP_VALIDATION_HELPER_V1_AUTHORITY",
+      std::move(options), "GOOGLE_CLOUD_CPP_VALIDATION_HELPER_V1_ENDPOINT",
+      "", "GOOGLE_CLOUD_CPP_VALIDATION_HELPER_V1_AUTHORITY",
       "binaryauthorization.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
-  if (!options.has<
-          binaryauthorization_v1::ValidationHelperV1RetryPolicyOption>()) {
+  if (!options.has<binaryauthorization_v1::ValidationHelperV1RetryPolicyOption>()) {
     options.set<binaryauthorization_v1::ValidationHelperV1RetryPolicyOption>(
         binaryauthorization_v1::ValidationHelperV1LimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
-            .clone());
+            std::chrono::minutes(30)).clone());
   }
-  if (!options.has<
-          binaryauthorization_v1::ValidationHelperV1BackoffPolicyOption>()) {
+  if (!options.has<binaryauthorization_v1::ValidationHelperV1BackoffPolicyOption>()) {
     options.set<binaryauthorization_v1::ValidationHelperV1BackoffPolicyOption>(
-        ExponentialBackoffPolicy(
-            std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
-            .clone());
+        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
   }
-  if (!options.has<binaryauthorization_v1::
-                       ValidationHelperV1ConnectionIdempotencyPolicyOption>()) {
-    options.set<binaryauthorization_v1::
-                    ValidationHelperV1ConnectionIdempotencyPolicyOption>(
-        binaryauthorization_v1::
-            MakeDefaultValidationHelperV1ConnectionIdempotencyPolicy());
+  if (!options.has<binaryauthorization_v1::ValidationHelperV1ConnectionIdempotencyPolicyOption>()) {
+    options.set<binaryauthorization_v1::ValidationHelperV1ConnectionIdempotencyPolicyOption>(
+        binaryauthorization_v1::MakeDefaultValidationHelperV1ConnectionIdempotencyPolicy());
   }
 
   return options;

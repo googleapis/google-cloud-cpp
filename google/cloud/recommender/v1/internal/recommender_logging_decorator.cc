@@ -30,19 +30,22 @@ namespace cloud {
 namespace recommender_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-RecommenderLogging::RecommenderLogging(std::shared_ptr<RecommenderStub> child,
-                                       TracingOptions tracing_options,
-                                       std::set<std::string> const&)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
+RecommenderLogging::RecommenderLogging(
+    std::shared_ptr<RecommenderStub> child,
+    TracingOptions tracing_options,
+    std::set<std::string> const&)
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::cloud::recommender::v1::ListInsightsResponse>
 RecommenderLogging::ListInsights(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::recommender::v1::ListInsightsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::recommender::v1::ListInsightsRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::recommender::v1::ListInsightsRequest const& request) {
         return child_->ListInsights(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -50,10 +53,12 @@ RecommenderLogging::ListInsights(
 
 StatusOr<google::cloud::recommender::v1::Insight>
 RecommenderLogging::GetInsight(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::recommender::v1::GetInsightRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::recommender::v1::GetInsightRequest const& request) {
         return child_->GetInsight(context, options, request);
       },
@@ -62,12 +67,13 @@ RecommenderLogging::GetInsight(
 
 StatusOr<google::cloud::recommender::v1::Insight>
 RecommenderLogging::MarkInsightAccepted(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::recommender::v1::MarkInsightAcceptedRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::recommender::v1::MarkInsightAcceptedRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::recommender::v1::MarkInsightAcceptedRequest const& request) {
         return child_->MarkInsightAccepted(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -75,12 +81,13 @@ RecommenderLogging::MarkInsightAccepted(
 
 StatusOr<google::cloud::recommender::v1::ListRecommendationsResponse>
 RecommenderLogging::ListRecommendations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::recommender::v1::ListRecommendationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::recommender::v1::ListRecommendationsRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::recommender::v1::ListRecommendationsRequest const& request) {
         return child_->ListRecommendations(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -88,12 +95,13 @@ RecommenderLogging::ListRecommendations(
 
 StatusOr<google::cloud::recommender::v1::Recommendation>
 RecommenderLogging::GetRecommendation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::recommender::v1::GetRecommendationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::recommender::v1::GetRecommendationRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::recommender::v1::GetRecommendationRequest const& request) {
         return child_->GetRecommendation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -101,13 +109,13 @@ RecommenderLogging::GetRecommendation(
 
 StatusOr<google::cloud::recommender::v1::Recommendation>
 RecommenderLogging::MarkRecommendationDismissed(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::recommender::v1::MarkRecommendationDismissedRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::recommender::v1::MarkRecommendationDismissedRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::recommender::v1::
-                 MarkRecommendationDismissedRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::recommender::v1::MarkRecommendationDismissedRequest const& request) {
         return child_->MarkRecommendationDismissed(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -115,13 +123,13 @@ RecommenderLogging::MarkRecommendationDismissed(
 
 StatusOr<google::cloud::recommender::v1::Recommendation>
 RecommenderLogging::MarkRecommendationClaimed(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::recommender::v1::MarkRecommendationClaimedRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::recommender::v1::MarkRecommendationClaimedRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::recommender::v1::
-                 MarkRecommendationClaimedRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::recommender::v1::MarkRecommendationClaimedRequest const& request) {
         return child_->MarkRecommendationClaimed(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -129,13 +137,13 @@ RecommenderLogging::MarkRecommendationClaimed(
 
 StatusOr<google::cloud::recommender::v1::Recommendation>
 RecommenderLogging::MarkRecommendationSucceeded(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::recommender::v1::MarkRecommendationSucceededRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::recommender::v1::MarkRecommendationSucceededRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::recommender::v1::
-                 MarkRecommendationSucceededRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::recommender::v1::MarkRecommendationSucceededRequest const& request) {
         return child_->MarkRecommendationSucceeded(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -143,14 +151,13 @@ RecommenderLogging::MarkRecommendationSucceeded(
 
 StatusOr<google::cloud::recommender::v1::Recommendation>
 RecommenderLogging::MarkRecommendationFailed(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::recommender::v1::MarkRecommendationFailedRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::recommender::v1::MarkRecommendationFailedRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::recommender::v1::MarkRecommendationFailedRequest const&
-              request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::recommender::v1::MarkRecommendationFailedRequest const& request) {
         return child_->MarkRecommendationFailed(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -158,13 +165,13 @@ RecommenderLogging::MarkRecommendationFailed(
 
 StatusOr<google::cloud::recommender::v1::RecommenderConfig>
 RecommenderLogging::GetRecommenderConfig(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::recommender::v1::GetRecommenderConfigRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::recommender::v1::GetRecommenderConfigRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::recommender::v1::GetRecommenderConfigRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::recommender::v1::GetRecommenderConfigRequest const& request) {
         return child_->GetRecommenderConfig(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -172,14 +179,13 @@ RecommenderLogging::GetRecommenderConfig(
 
 StatusOr<google::cloud::recommender::v1::RecommenderConfig>
 RecommenderLogging::UpdateRecommenderConfig(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::recommender::v1::UpdateRecommenderConfigRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::recommender::v1::UpdateRecommenderConfigRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::recommender::v1::UpdateRecommenderConfigRequest const&
-              request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::recommender::v1::UpdateRecommenderConfigRequest const& request) {
         return child_->UpdateRecommenderConfig(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -187,13 +193,13 @@ RecommenderLogging::UpdateRecommenderConfig(
 
 StatusOr<google::cloud::recommender::v1::InsightTypeConfig>
 RecommenderLogging::GetInsightTypeConfig(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::recommender::v1::GetInsightTypeConfigRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::recommender::v1::GetInsightTypeConfigRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::recommender::v1::GetInsightTypeConfigRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::recommender::v1::GetInsightTypeConfigRequest const& request) {
         return child_->GetInsightTypeConfig(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -201,14 +207,13 @@ RecommenderLogging::GetInsightTypeConfig(
 
 StatusOr<google::cloud::recommender::v1::InsightTypeConfig>
 RecommenderLogging::UpdateInsightTypeConfig(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::recommender::v1::UpdateInsightTypeConfigRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::recommender::v1::UpdateInsightTypeConfigRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::recommender::v1::UpdateInsightTypeConfigRequest const&
-              request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::recommender::v1::UpdateInsightTypeConfigRequest const& request) {
         return child_->UpdateInsightTypeConfig(context, options, request);
       },
       context, options, request, __func__, tracing_options_);

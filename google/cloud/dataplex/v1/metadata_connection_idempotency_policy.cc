@@ -26,66 +26,54 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-MetadataServiceConnectionIdempotencyPolicy::
-    ~MetadataServiceConnectionIdempotencyPolicy() = default;
+MetadataServiceConnectionIdempotencyPolicy::~MetadataServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<MetadataServiceConnectionIdempotencyPolicy>
 MetadataServiceConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<MetadataServiceConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency MetadataServiceConnectionIdempotencyPolicy::CreateEntity(
-    google::cloud::dataplex::v1::CreateEntityRequest const&) {
+Idempotency MetadataServiceConnectionIdempotencyPolicy::CreateEntity(google::cloud::dataplex::v1::CreateEntityRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency MetadataServiceConnectionIdempotencyPolicy::UpdateEntity(
-    google::cloud::dataplex::v1::UpdateEntityRequest const&) {
+Idempotency MetadataServiceConnectionIdempotencyPolicy::UpdateEntity(google::cloud::dataplex::v1::UpdateEntityRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency MetadataServiceConnectionIdempotencyPolicy::DeleteEntity(
-    google::cloud::dataplex::v1::DeleteEntityRequest const&) {
+Idempotency MetadataServiceConnectionIdempotencyPolicy::DeleteEntity(google::cloud::dataplex::v1::DeleteEntityRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency MetadataServiceConnectionIdempotencyPolicy::GetEntity(
-    google::cloud::dataplex::v1::GetEntityRequest const&) {
+Idempotency MetadataServiceConnectionIdempotencyPolicy::GetEntity(google::cloud::dataplex::v1::GetEntityRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency MetadataServiceConnectionIdempotencyPolicy::ListEntities(
-    google::cloud::dataplex::v1::ListEntitiesRequest) {  // NOLINT
+Idempotency MetadataServiceConnectionIdempotencyPolicy::ListEntities(google::cloud::dataplex::v1::ListEntitiesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency MetadataServiceConnectionIdempotencyPolicy::CreatePartition(
-    google::cloud::dataplex::v1::CreatePartitionRequest const&) {
+Idempotency MetadataServiceConnectionIdempotencyPolicy::CreatePartition(google::cloud::dataplex::v1::CreatePartitionRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency MetadataServiceConnectionIdempotencyPolicy::DeletePartition(
-    google::cloud::dataplex::v1::DeletePartitionRequest const&) {
+Idempotency MetadataServiceConnectionIdempotencyPolicy::DeletePartition(google::cloud::dataplex::v1::DeletePartitionRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency MetadataServiceConnectionIdempotencyPolicy::GetPartition(
-    google::cloud::dataplex::v1::GetPartitionRequest const&) {
+Idempotency MetadataServiceConnectionIdempotencyPolicy::GetPartition(google::cloud::dataplex::v1::GetPartitionRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency MetadataServiceConnectionIdempotencyPolicy::ListPartitions(
-    google::cloud::dataplex::v1::ListPartitionsRequest) {  // NOLINT
+Idempotency MetadataServiceConnectionIdempotencyPolicy::ListPartitions(google::cloud::dataplex::v1::ListPartitionsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency MetadataServiceConnectionIdempotencyPolicy::ListLocations(
-    google::cloud::location::ListLocationsRequest) {  // NOLINT
+Idempotency MetadataServiceConnectionIdempotencyPolicy::ListLocations(google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency MetadataServiceConnectionIdempotencyPolicy::GetLocation(
-    google::cloud::location::GetLocationRequest const&) {
+Idempotency MetadataServiceConnectionIdempotencyPolicy::GetLocation(google::cloud::location::GetLocationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
@@ -95,38 +83,32 @@ Idempotency MetadataServiceConnectionIdempotencyPolicy::SetIamPolicy(
                                          : Idempotency::kIdempotent;
 }
 
-Idempotency MetadataServiceConnectionIdempotencyPolicy::GetIamPolicy(
-    google::iam::v1::GetIamPolicyRequest const&) {
+Idempotency MetadataServiceConnectionIdempotencyPolicy::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency MetadataServiceConnectionIdempotencyPolicy::TestIamPermissions(
-    google::iam::v1::TestIamPermissionsRequest const&) {
+Idempotency MetadataServiceConnectionIdempotencyPolicy::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency MetadataServiceConnectionIdempotencyPolicy::ListOperations(
-    google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency MetadataServiceConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency MetadataServiceConnectionIdempotencyPolicy::GetOperation(
-    google::longrunning::GetOperationRequest const&) {
+Idempotency MetadataServiceConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency MetadataServiceConnectionIdempotencyPolicy::DeleteOperation(
-    google::longrunning::DeleteOperationRequest const&) {
+Idempotency MetadataServiceConnectionIdempotencyPolicy::DeleteOperation(google::longrunning::DeleteOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency MetadataServiceConnectionIdempotencyPolicy::CancelOperation(
-    google::longrunning::CancelOperationRequest const&) {
+Idempotency MetadataServiceConnectionIdempotencyPolicy::CancelOperation(google::longrunning::CancelOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<MetadataServiceConnectionIdempotencyPolicy>
-MakeDefaultMetadataServiceConnectionIdempotencyPolicy() {
+    MakeDefaultMetadataServiceConnectionIdempotencyPolicy() {
   return std::make_unique<MetadataServiceConnectionIdempotencyPolicy>();
 }
 

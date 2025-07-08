@@ -17,12 +17,12 @@
 // source: google/devtools/cloudbuild/v1/cloudbuild.proto
 
 #include "google/cloud/cloudbuild/v1/cloud_build_connection.h"
+#include "google/cloud/background_threads.h"
 #include "google/cloud/cloudbuild/v1/cloud_build_options.h"
 #include "google/cloud/cloudbuild/v1/internal/cloud_build_connection_impl.h"
 #include "google/cloud/cloudbuild/v1/internal/cloud_build_option_defaults.h"
 #include "google/cloud/cloudbuild/v1/internal/cloud_build_stub_factory.h"
 #include "google/cloud/cloudbuild/v1/internal/cloud_build_tracing_connection.h"
-#include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
@@ -42,21 +42,24 @@ future<StatusOr<google::devtools::cloudbuild::v1::Build>>
 CloudBuildConnection::CreateBuild(
     google::devtools::cloudbuild::v1::CreateBuildRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::devtools::cloudbuild::v1::Build>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::devtools::cloudbuild::v1::Build>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation> CloudBuildConnection::CreateBuild(
-    NoAwaitTag, google::devtools::cloudbuild::v1::CreateBuildRequest const&) {
+StatusOr<google::longrunning::Operation>
+CloudBuildConnection::CreateBuild(
+    NoAwaitTag,
+    google::devtools::cloudbuild::v1::CreateBuildRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::devtools::cloudbuild::v1::Build>>
-CloudBuildConnection::CreateBuild(google::longrunning::Operation const&) {
+CloudBuildConnection::CreateBuild(
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::devtools::cloudbuild::v1::Build>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::devtools::cloudbuild::v1::Build>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::devtools::cloudbuild::v1::Build>
@@ -65,10 +68,8 @@ CloudBuildConnection::GetBuild(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::devtools::cloudbuild::v1::Build>
-CloudBuildConnection::ListBuilds(
-    google::devtools::cloudbuild::v1::
-        ListBuildsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::devtools::cloudbuild::v1::Build> CloudBuildConnection::ListBuilds(
+    google::devtools::cloudbuild::v1::ListBuildsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::devtools::cloudbuild::v1::Build>>();
 }
@@ -83,42 +84,48 @@ future<StatusOr<google::devtools::cloudbuild::v1::Build>>
 CloudBuildConnection::RetryBuild(
     google::devtools::cloudbuild::v1::RetryBuildRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::devtools::cloudbuild::v1::Build>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::devtools::cloudbuild::v1::Build>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation> CloudBuildConnection::RetryBuild(
-    NoAwaitTag, google::devtools::cloudbuild::v1::RetryBuildRequest const&) {
+StatusOr<google::longrunning::Operation>
+CloudBuildConnection::RetryBuild(
+    NoAwaitTag,
+    google::devtools::cloudbuild::v1::RetryBuildRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::devtools::cloudbuild::v1::Build>>
-CloudBuildConnection::RetryBuild(google::longrunning::Operation const&) {
+CloudBuildConnection::RetryBuild(
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::devtools::cloudbuild::v1::Build>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::devtools::cloudbuild::v1::Build>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::devtools::cloudbuild::v1::Build>>
 CloudBuildConnection::ApproveBuild(
     google::devtools::cloudbuild::v1::ApproveBuildRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::devtools::cloudbuild::v1::Build>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::devtools::cloudbuild::v1::Build>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation> CloudBuildConnection::ApproveBuild(
-    NoAwaitTag, google::devtools::cloudbuild::v1::ApproveBuildRequest const&) {
+StatusOr<google::longrunning::Operation>
+CloudBuildConnection::ApproveBuild(
+    NoAwaitTag,
+    google::devtools::cloudbuild::v1::ApproveBuildRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::devtools::cloudbuild::v1::Build>>
-CloudBuildConnection::ApproveBuild(google::longrunning::Operation const&) {
+CloudBuildConnection::ApproveBuild(
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::devtools::cloudbuild::v1::Build>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::devtools::cloudbuild::v1::Build>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::devtools::cloudbuild::v1::BuildTrigger>
@@ -133,15 +140,14 @@ CloudBuildConnection::GetBuildTrigger(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::devtools::cloudbuild::v1::BuildTrigger>
-CloudBuildConnection::ListBuildTriggers(
-    google::devtools::cloudbuild::v1::
-        ListBuildTriggersRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::devtools::cloudbuild::v1::BuildTrigger> CloudBuildConnection::ListBuildTriggers(
+    google::devtools::cloudbuild::v1::ListBuildTriggersRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::devtools::cloudbuild::v1::BuildTrigger>>();
 }
 
-Status CloudBuildConnection::DeleteBuildTrigger(
+Status
+CloudBuildConnection::DeleteBuildTrigger(
     google::devtools::cloudbuild::v1::DeleteBuildTriggerRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -156,22 +162,24 @@ future<StatusOr<google::devtools::cloudbuild::v1::Build>>
 CloudBuildConnection::RunBuildTrigger(
     google::devtools::cloudbuild::v1::RunBuildTriggerRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::devtools::cloudbuild::v1::Build>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::devtools::cloudbuild::v1::Build>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation> CloudBuildConnection::RunBuildTrigger(
+StatusOr<google::longrunning::Operation>
+CloudBuildConnection::RunBuildTrigger(
     NoAwaitTag,
     google::devtools::cloudbuild::v1::RunBuildTriggerRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::devtools::cloudbuild::v1::Build>>
-CloudBuildConnection::RunBuildTrigger(google::longrunning::Operation const&) {
+CloudBuildConnection::RunBuildTrigger(
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::devtools::cloudbuild::v1::Build>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::devtools::cloudbuild::v1::Build>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::devtools::cloudbuild::v1::ReceiveTriggerWebhookResponse>
@@ -184,22 +192,24 @@ future<StatusOr<google::devtools::cloudbuild::v1::WorkerPool>>
 CloudBuildConnection::CreateWorkerPool(
     google::devtools::cloudbuild::v1::CreateWorkerPoolRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::devtools::cloudbuild::v1::WorkerPool>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::devtools::cloudbuild::v1::WorkerPool>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation> CloudBuildConnection::CreateWorkerPool(
+StatusOr<google::longrunning::Operation>
+CloudBuildConnection::CreateWorkerPool(
     NoAwaitTag,
     google::devtools::cloudbuild::v1::CreateWorkerPoolRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::devtools::cloudbuild::v1::WorkerPool>>
-CloudBuildConnection::CreateWorkerPool(google::longrunning::Operation const&) {
+CloudBuildConnection::CreateWorkerPool(
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::devtools::cloudbuild::v1::WorkerPool>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::devtools::cloudbuild::v1::WorkerPool>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::devtools::cloudbuild::v1::WorkerPool>
@@ -208,56 +218,56 @@ CloudBuildConnection::GetWorkerPool(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-future<StatusOr<
-    google::devtools::cloudbuild::v1::DeleteWorkerPoolOperationMetadata>>
+future<StatusOr<google::devtools::cloudbuild::v1::DeleteWorkerPoolOperationMetadata>>
 CloudBuildConnection::DeleteWorkerPool(
     google::devtools::cloudbuild::v1::DeleteWorkerPoolRequest const&) {
-  return google::cloud::make_ready_future<StatusOr<
-      google::devtools::cloudbuild::v1::DeleteWorkerPoolOperationMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+  return google::cloud::make_ready_future<
+    StatusOr<google::devtools::cloudbuild::v1::DeleteWorkerPoolOperationMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation> CloudBuildConnection::DeleteWorkerPool(
+StatusOr<google::longrunning::Operation>
+CloudBuildConnection::DeleteWorkerPool(
     NoAwaitTag,
     google::devtools::cloudbuild::v1::DeleteWorkerPoolRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<StatusOr<
-    google::devtools::cloudbuild::v1::DeleteWorkerPoolOperationMetadata>>
-CloudBuildConnection::DeleteWorkerPool(google::longrunning::Operation const&) {
-  return google::cloud::make_ready_future<StatusOr<
-      google::devtools::cloudbuild::v1::DeleteWorkerPoolOperationMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+future<StatusOr<google::devtools::cloudbuild::v1::DeleteWorkerPoolOperationMetadata>>
+CloudBuildConnection::DeleteWorkerPool(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+    StatusOr<google::devtools::cloudbuild::v1::DeleteWorkerPoolOperationMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::devtools::cloudbuild::v1::WorkerPool>>
 CloudBuildConnection::UpdateWorkerPool(
     google::devtools::cloudbuild::v1::UpdateWorkerPoolRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::devtools::cloudbuild::v1::WorkerPool>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::devtools::cloudbuild::v1::WorkerPool>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation> CloudBuildConnection::UpdateWorkerPool(
+StatusOr<google::longrunning::Operation>
+CloudBuildConnection::UpdateWorkerPool(
     NoAwaitTag,
     google::devtools::cloudbuild::v1::UpdateWorkerPoolRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::devtools::cloudbuild::v1::WorkerPool>>
-CloudBuildConnection::UpdateWorkerPool(google::longrunning::Operation const&) {
+CloudBuildConnection::UpdateWorkerPool(
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::devtools::cloudbuild::v1::WorkerPool>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::devtools::cloudbuild::v1::WorkerPool>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StreamRange<google::devtools::cloudbuild::v1::WorkerPool>
-CloudBuildConnection::ListWorkerPools(
-    google::devtools::cloudbuild::v1::
-        ListWorkerPoolsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::devtools::cloudbuild::v1::WorkerPool> CloudBuildConnection::ListWorkerPools(
+    google::devtools::cloudbuild::v1::ListWorkerPoolsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::devtools::cloudbuild::v1::WorkerPool>>();
 }
@@ -265,17 +275,17 @@ CloudBuildConnection::ListWorkerPools(
 std::shared_ptr<CloudBuildConnection> MakeCloudBuildConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 CloudBuildPolicyOptionList>(options, __func__);
-  options =
-      cloudbuild_v1_internal::CloudBuildDefaultOptions(std::move(options));
+      UnifiedCredentialsOptionList,
+      CloudBuildPolicyOptionList>(options, __func__);
+  options = cloudbuild_v1_internal::CloudBuildDefaultOptions(
+      std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = cloudbuild_v1_internal::CreateDefaultCloudBuildStub(
-      std::move(auth), options);
+    std::move(auth), options);
   return cloudbuild_v1_internal::MakeCloudBuildTracingConnection(
       std::make_shared<cloudbuild_v1_internal::CloudBuildConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options)));
+      std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -36,145 +36,135 @@ class AnalyticsHubServiceLogging : public AnalyticsHubServiceStub {
  public:
   ~AnalyticsHubServiceLogging() override = default;
   AnalyticsHubServiceLogging(std::shared_ptr<AnalyticsHubServiceStub> child,
-                             TracingOptions tracing_options,
-                             std::set<std::string> const& components);
+                       TracingOptions tracing_options,
+                       std::set<std::string> const& components);
 
-  StatusOr<google::cloud::bigquery::analyticshub::v1::ListDataExchangesResponse>
-  ListDataExchanges(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::bigquery::analyticshub::v1::ListDataExchangesRequest const&
-          request) override;
+  StatusOr<google::cloud::bigquery::analyticshub::v1::ListDataExchangesResponse> ListDataExchanges(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::bigquery::analyticshub::v1::ListDataExchangesRequest const& request) override;
 
-  StatusOr<
-      google::cloud::bigquery::analyticshub::v1::ListOrgDataExchangesResponse>
-  ListOrgDataExchanges(grpc::ClientContext& context, Options const& options,
-                       google::cloud::bigquery::analyticshub::v1::
-                           ListOrgDataExchangesRequest const& request) override;
+  StatusOr<google::cloud::bigquery::analyticshub::v1::ListOrgDataExchangesResponse> ListOrgDataExchanges(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::bigquery::analyticshub::v1::ListOrgDataExchangesRequest const& request) override;
 
-  StatusOr<google::cloud::bigquery::analyticshub::v1::DataExchange>
-  GetDataExchange(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::bigquery::analyticshub::v1::GetDataExchangeRequest const&
-          request) override;
+  StatusOr<google::cloud::bigquery::analyticshub::v1::DataExchange> GetDataExchange(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::bigquery::analyticshub::v1::GetDataExchangeRequest const& request) override;
 
-  StatusOr<google::cloud::bigquery::analyticshub::v1::DataExchange>
-  CreateDataExchange(grpc::ClientContext& context, Options const& options,
-                     google::cloud::bigquery::analyticshub::v1::
-                         CreateDataExchangeRequest const& request) override;
+  StatusOr<google::cloud::bigquery::analyticshub::v1::DataExchange> CreateDataExchange(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::bigquery::analyticshub::v1::CreateDataExchangeRequest const& request) override;
 
-  StatusOr<google::cloud::bigquery::analyticshub::v1::DataExchange>
-  UpdateDataExchange(grpc::ClientContext& context, Options const& options,
-                     google::cloud::bigquery::analyticshub::v1::
-                         UpdateDataExchangeRequest const& request) override;
+  StatusOr<google::cloud::bigquery::analyticshub::v1::DataExchange> UpdateDataExchange(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::bigquery::analyticshub::v1::UpdateDataExchangeRequest const& request) override;
 
   Status DeleteDataExchange(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::bigquery::analyticshub::v1::
-          DeleteDataExchangeRequest const& request) override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::bigquery::analyticshub::v1::DeleteDataExchangeRequest const& request) override;
 
-  StatusOr<google::cloud::bigquery::analyticshub::v1::ListListingsResponse>
-  ListListings(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::bigquery::analyticshub::v1::ListListingsRequest const&
-          request) override;
+  StatusOr<google::cloud::bigquery::analyticshub::v1::ListListingsResponse> ListListings(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::bigquery::analyticshub::v1::ListListingsRequest const& request) override;
 
   StatusOr<google::cloud::bigquery::analyticshub::v1::Listing> GetListing(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::bigquery::analyticshub::v1::GetListingRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::bigquery::analyticshub::v1::GetListingRequest const& request) override;
 
   StatusOr<google::cloud::bigquery::analyticshub::v1::Listing> CreateListing(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::bigquery::analyticshub::v1::CreateListingRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::bigquery::analyticshub::v1::CreateListingRequest const& request) override;
 
   StatusOr<google::cloud::bigquery::analyticshub::v1::Listing> UpdateListing(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::bigquery::analyticshub::v1::UpdateListingRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::bigquery::analyticshub::v1::UpdateListingRequest const& request) override;
 
   Status DeleteListing(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::bigquery::analyticshub::v1::DeleteListingRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::bigquery::analyticshub::v1::DeleteListingRequest const& request) override;
 
-  StatusOr<google::cloud::bigquery::analyticshub::v1::SubscribeListingResponse>
-  SubscribeListing(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::bigquery::analyticshub::v1::SubscribeListingRequest const&
-          request) override;
+  StatusOr<google::cloud::bigquery::analyticshub::v1::SubscribeListingResponse> SubscribeListing(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::bigquery::analyticshub::v1::SubscribeListingRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncSubscribeDataExchange(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::bigquery::analyticshub::v1::
-          SubscribeDataExchangeRequest const& request) override;
+      google::cloud::bigquery::analyticshub::v1::SubscribeDataExchangeRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> SubscribeDataExchange(
-      grpc::ClientContext& context, Options options,
-      google::cloud::bigquery::analyticshub::v1::
-          SubscribeDataExchangeRequest const& request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::bigquery::analyticshub::v1::SubscribeDataExchangeRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncRefreshSubscription(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::bigquery::analyticshub::v1::
-          RefreshSubscriptionRequest const& request) override;
+      google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> RefreshSubscription(
-      grpc::ClientContext& context, Options options,
-      google::cloud::bigquery::analyticshub::v1::
-          RefreshSubscriptionRequest const& request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionRequest const& request) override;
 
-  StatusOr<google::cloud::bigquery::analyticshub::v1::Subscription>
-  GetSubscription(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::bigquery::analyticshub::v1::GetSubscriptionRequest const&
-          request) override;
+  StatusOr<google::cloud::bigquery::analyticshub::v1::Subscription> GetSubscription(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::bigquery::analyticshub::v1::GetSubscriptionRequest const& request) override;
 
-  StatusOr<google::cloud::bigquery::analyticshub::v1::ListSubscriptionsResponse>
-  ListSubscriptions(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::bigquery::analyticshub::v1::ListSubscriptionsRequest const&
-          request) override;
+  StatusOr<google::cloud::bigquery::analyticshub::v1::ListSubscriptionsResponse> ListSubscriptions(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::bigquery::analyticshub::v1::ListSubscriptionsRequest const& request) override;
 
-  StatusOr<google::cloud::bigquery::analyticshub::v1::
-               ListSharedResourceSubscriptionsResponse>
-  ListSharedResourceSubscriptions(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::bigquery::analyticshub::v1::
-          ListSharedResourceSubscriptionsRequest const& request) override;
+  StatusOr<google::cloud::bigquery::analyticshub::v1::ListSharedResourceSubscriptionsResponse> ListSharedResourceSubscriptions(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::bigquery::analyticshub::v1::ListSharedResourceSubscriptionsRequest const& request) override;
 
-  StatusOr<
-      google::cloud::bigquery::analyticshub::v1::RevokeSubscriptionResponse>
-  RevokeSubscription(grpc::ClientContext& context, Options const& options,
-                     google::cloud::bigquery::analyticshub::v1::
-                         RevokeSubscriptionRequest const& request) override;
+  StatusOr<google::cloud::bigquery::analyticshub::v1::RevokeSubscriptionResponse> RevokeSubscription(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::bigquery::analyticshub::v1::RevokeSubscriptionRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteSubscription(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::bigquery::analyticshub::v1::
-          DeleteSubscriptionRequest const& request) override;
+      google::cloud::bigquery::analyticshub::v1::DeleteSubscriptionRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteSubscription(
-      grpc::ClientContext& context, Options options,
-      google::cloud::bigquery::analyticshub::v1::
-          DeleteSubscriptionRequest const& request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::bigquery::analyticshub::v1::DeleteSubscriptionRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(

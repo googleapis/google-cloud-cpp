@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SERVICEHEALTH_V1_SERVICE_HEALTH_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SERVICEHEALTH_V1_SERVICE_HEALTH_OPTIONS_H
 
-#include "google/cloud/servicehealth/v1/service_health_connection.h"
-#include "google/cloud/servicehealth/v1/service_health_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
+#include "google/cloud/servicehealth/v1/service_health_connection.h"
+#include "google/cloud/servicehealth/v1/service_health_connection_idempotency_policy.h"
 #include "google/cloud/version.h"
 #include <memory>
 
@@ -64,7 +64,8 @@ struct ServiceHealthConnectionIdempotencyPolicyOption {
  * @ingroup google-cloud-servicehealth-options
  */
 using ServiceHealthPolicyOptionList =
-    OptionList<ServiceHealthRetryPolicyOption, ServiceHealthBackoffPolicyOption,
+    OptionList<ServiceHealthRetryPolicyOption,
+               ServiceHealthBackoffPolicyOption,
                ServiceHealthConnectionIdempotencyPolicyOption>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

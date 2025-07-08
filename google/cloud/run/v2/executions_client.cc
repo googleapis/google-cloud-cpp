@@ -28,34 +28,34 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ExecutionsClient::ExecutionsClient(
     std::shared_ptr<ExecutionsConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 ExecutionsClient::~ExecutionsClient() = default;
 
-StatusOr<google::cloud::run::v2::Execution> ExecutionsClient::GetExecution(
-    std::string const& name, Options opts) {
+StatusOr<google::cloud::run::v2::Execution>
+ExecutionsClient::GetExecution(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::run::v2::GetExecutionRequest request;
   request.set_name(name);
   return connection_->GetExecution(request);
 }
 
-StatusOr<google::cloud::run::v2::Execution> ExecutionsClient::GetExecution(
-    google::cloud::run::v2::GetExecutionRequest const& request, Options opts) {
+StatusOr<google::cloud::run::v2::Execution>
+ExecutionsClient::GetExecution(google::cloud::run::v2::GetExecutionRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetExecution(request);
 }
 
-StreamRange<google::cloud::run::v2::Execution> ExecutionsClient::ListExecutions(
-    std::string const& parent, Options opts) {
+StreamRange<google::cloud::run::v2::Execution>
+ExecutionsClient::ListExecutions(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::run::v2::ListExecutionsRequest request;
   request.set_parent(parent);
   return connection_->ListExecutions(request);
 }
 
-StreamRange<google::cloud::run::v2::Execution> ExecutionsClient::ListExecutions(
-    google::cloud::run::v2::ListExecutionsRequest request, Options opts) {
+StreamRange<google::cloud::run::v2::Execution>
+ExecutionsClient::ListExecutions(google::cloud::run::v2::ListExecutionsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListExecutions(std::move(request));
 }
@@ -68,8 +68,8 @@ ExecutionsClient::DeleteExecution(std::string const& name, Options opts) {
   return connection_->DeleteExecution(request);
 }
 
-StatusOr<google::longrunning::Operation> ExecutionsClient::DeleteExecution(
-    NoAwaitTag, std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation>
+ExecutionsClient::DeleteExecution(NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::run::v2::DeleteExecutionRequest request;
   request.set_name(name);
@@ -77,23 +77,19 @@ StatusOr<google::longrunning::Operation> ExecutionsClient::DeleteExecution(
 }
 
 future<StatusOr<google::cloud::run::v2::Execution>>
-ExecutionsClient::DeleteExecution(
-    google::cloud::run::v2::DeleteExecutionRequest const& request,
-    Options opts) {
+ExecutionsClient::DeleteExecution(google::cloud::run::v2::DeleteExecutionRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteExecution(request);
 }
 
-StatusOr<google::longrunning::Operation> ExecutionsClient::DeleteExecution(
-    NoAwaitTag, google::cloud::run::v2::DeleteExecutionRequest const& request,
-    Options opts) {
+StatusOr<google::longrunning::Operation>
+ExecutionsClient::DeleteExecution(NoAwaitTag, google::cloud::run::v2::DeleteExecutionRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteExecution(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::run::v2::Execution>>
-ExecutionsClient::DeleteExecution(
-    google::longrunning::Operation const& operation, Options opts) {
+ExecutionsClient::DeleteExecution(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteExecution(operation);
 }
@@ -106,8 +102,8 @@ ExecutionsClient::CancelExecution(std::string const& name, Options opts) {
   return connection_->CancelExecution(request);
 }
 
-StatusOr<google::longrunning::Operation> ExecutionsClient::CancelExecution(
-    NoAwaitTag, std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation>
+ExecutionsClient::CancelExecution(NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::run::v2::CancelExecutionRequest request;
   request.set_name(name);
@@ -115,29 +111,25 @@ StatusOr<google::longrunning::Operation> ExecutionsClient::CancelExecution(
 }
 
 future<StatusOr<google::cloud::run::v2::Execution>>
-ExecutionsClient::CancelExecution(
-    google::cloud::run::v2::CancelExecutionRequest const& request,
-    Options opts) {
+ExecutionsClient::CancelExecution(google::cloud::run::v2::CancelExecutionRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelExecution(request);
 }
 
-StatusOr<google::longrunning::Operation> ExecutionsClient::CancelExecution(
-    NoAwaitTag, google::cloud::run::v2::CancelExecutionRequest const& request,
-    Options opts) {
+StatusOr<google::longrunning::Operation>
+ExecutionsClient::CancelExecution(NoAwaitTag, google::cloud::run::v2::CancelExecutionRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelExecution(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::run::v2::Execution>>
-ExecutionsClient::CancelExecution(
-    google::longrunning::Operation const& operation, Options opts) {
+ExecutionsClient::CancelExecution(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelExecution(operation);
 }
 
-StreamRange<google::longrunning::Operation> ExecutionsClient::ListOperations(
-    std::string const& name, std::string const& filter, Options opts) {
+StreamRange<google::longrunning::Operation>
+ExecutionsClient::ListOperations(std::string const& name, std::string const& filter, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::ListOperationsRequest request;
   request.set_name(name);
@@ -145,42 +137,42 @@ StreamRange<google::longrunning::Operation> ExecutionsClient::ListOperations(
   return connection_->ListOperations(request);
 }
 
-StreamRange<google::longrunning::Operation> ExecutionsClient::ListOperations(
-    google::longrunning::ListOperationsRequest request, Options opts) {
+StreamRange<google::longrunning::Operation>
+ExecutionsClient::ListOperations(google::longrunning::ListOperationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOperations(std::move(request));
 }
 
-StatusOr<google::longrunning::Operation> ExecutionsClient::GetOperation(
-    std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation>
+ExecutionsClient::GetOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
   return connection_->GetOperation(request);
 }
 
-StatusOr<google::longrunning::Operation> ExecutionsClient::GetOperation(
-    google::longrunning::GetOperationRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation>
+ExecutionsClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }
 
-Status ExecutionsClient::DeleteOperation(std::string const& name,
-                                         Options opts) {
+Status
+ExecutionsClient::DeleteOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::DeleteOperationRequest request;
   request.set_name(name);
   return connection_->DeleteOperation(request);
 }
 
-Status ExecutionsClient::DeleteOperation(
-    google::longrunning::DeleteOperationRequest const& request, Options opts) {
+Status
+ExecutionsClient::DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteOperation(request);
 }
 
-StatusOr<google::longrunning::Operation> ExecutionsClient::WaitOperation(
-    google::longrunning::WaitOperationRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation>
+ExecutionsClient::WaitOperation(google::longrunning::WaitOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->WaitOperation(request);
 }

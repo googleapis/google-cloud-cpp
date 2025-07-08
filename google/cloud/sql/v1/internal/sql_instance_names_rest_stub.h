@@ -37,14 +37,14 @@ class SqlInstanceNamesServiceRestStub {
   virtual ~SqlInstanceNamesServiceRestStub() = default;
 };
 
-class DefaultSqlInstanceNamesServiceRestStub
-    : public SqlInstanceNamesServiceRestStub {
+class DefaultSqlInstanceNamesServiceRestStub : public SqlInstanceNamesServiceRestStub {
  public:
   ~DefaultSqlInstanceNamesServiceRestStub() override = default;
 
   explicit DefaultSqlInstanceNamesServiceRestStub(Options options);
   DefaultSqlInstanceNamesServiceRestStub(
-      std::shared_ptr<rest_internal::RestClient> service, Options options);
+      std::shared_ptr<rest_internal::RestClient> service,
+      Options options);
 
  private:
   std::shared_ptr<rest_internal::RestClient> service_;

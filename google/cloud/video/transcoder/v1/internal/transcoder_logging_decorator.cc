@@ -32,17 +32,20 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 TranscoderServiceLogging::TranscoderServiceLogging(
     std::shared_ptr<TranscoderServiceStub> child,
-    TracingOptions tracing_options, std::set<std::string> const&)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
+    TracingOptions tracing_options,
+    std::set<std::string> const&)
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::cloud::video::transcoder::v1::Job>
 TranscoderServiceLogging::CreateJob(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::video::transcoder::v1::CreateJobRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::video::transcoder::v1::CreateJobRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::video::transcoder::v1::CreateJobRequest const& request) {
         return child_->CreateJob(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -50,12 +53,13 @@ TranscoderServiceLogging::CreateJob(
 
 StatusOr<google::cloud::video::transcoder::v1::ListJobsResponse>
 TranscoderServiceLogging::ListJobs(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::video::transcoder::v1::ListJobsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::video::transcoder::v1::ListJobsRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::video::transcoder::v1::ListJobsRequest const& request) {
         return child_->ListJobs(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -63,24 +67,27 @@ TranscoderServiceLogging::ListJobs(
 
 StatusOr<google::cloud::video::transcoder::v1::Job>
 TranscoderServiceLogging::GetJob(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::video::transcoder::v1::GetJobRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::video::transcoder::v1::GetJobRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::video::transcoder::v1::GetJobRequest const& request) {
         return child_->GetJob(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status TranscoderServiceLogging::DeleteJob(
-    grpc::ClientContext& context, Options const& options,
+Status
+TranscoderServiceLogging::DeleteJob(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::video::transcoder::v1::DeleteJobRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::video::transcoder::v1::DeleteJobRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::video::transcoder::v1::DeleteJobRequest const& request) {
         return child_->DeleteJob(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -88,14 +95,13 @@ Status TranscoderServiceLogging::DeleteJob(
 
 StatusOr<google::cloud::video::transcoder::v1::JobTemplate>
 TranscoderServiceLogging::CreateJobTemplate(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::video::transcoder::v1::CreateJobTemplateRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::video::transcoder::v1::CreateJobTemplateRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::video::transcoder::v1::CreateJobTemplateRequest const&
-              request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::video::transcoder::v1::CreateJobTemplateRequest const& request) {
         return child_->CreateJobTemplate(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -103,14 +109,13 @@ TranscoderServiceLogging::CreateJobTemplate(
 
 StatusOr<google::cloud::video::transcoder::v1::ListJobTemplatesResponse>
 TranscoderServiceLogging::ListJobTemplates(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::video::transcoder::v1::ListJobTemplatesRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::video::transcoder::v1::ListJobTemplatesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::video::transcoder::v1::ListJobTemplatesRequest const&
-              request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::video::transcoder::v1::ListJobTemplatesRequest const& request) {
         return child_->ListJobTemplates(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -118,27 +123,27 @@ TranscoderServiceLogging::ListJobTemplates(
 
 StatusOr<google::cloud::video::transcoder::v1::JobTemplate>
 TranscoderServiceLogging::GetJobTemplate(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::video::transcoder::v1::GetJobTemplateRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::video::transcoder::v1::GetJobTemplateRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::video::transcoder::v1::GetJobTemplateRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::video::transcoder::v1::GetJobTemplateRequest const& request) {
         return child_->GetJobTemplate(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status TranscoderServiceLogging::DeleteJobTemplate(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::video::transcoder::v1::DeleteJobTemplateRequest const&
-        request) {
+Status
+TranscoderServiceLogging::DeleteJobTemplate(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::video::transcoder::v1::DeleteJobTemplateRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::video::transcoder::v1::DeleteJobTemplateRequest const&
-              request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::video::transcoder::v1::DeleteJobTemplateRequest const& request) {
         return child_->DeleteJobTemplate(context, options, request);
       },
       context, options, request, __func__, tracing_options_);

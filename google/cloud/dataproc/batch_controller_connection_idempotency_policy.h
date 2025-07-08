@@ -26,13 +26,10 @@ namespace cloud {
 namespace dataproc {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use
-/// dataproc_v1::MakeDefaultBatchControllerConnectionIdempotencyPolicy directly.
-using ::google::cloud::dataproc_v1::
-    MakeDefaultBatchControllerConnectionIdempotencyPolicy;
+/// @deprecated Use dataproc_v1::MakeDefaultBatchControllerConnectionIdempotencyPolicy directly.
+using ::google::cloud::dataproc_v1::MakeDefaultBatchControllerConnectionIdempotencyPolicy;
 
-/// @deprecated Use dataproc_v1::BatchControllerConnectionIdempotencyPolicy
-/// directly.
+/// @deprecated Use dataproc_v1::BatchControllerConnectionIdempotencyPolicy directly.
 using ::google::cloud::dataproc_v1::BatchControllerConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

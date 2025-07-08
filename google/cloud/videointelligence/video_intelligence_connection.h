@@ -27,31 +27,20 @@ namespace cloud {
 namespace videointelligence {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use videointelligence_v1::MakeVideoIntelligenceServiceConnection
-/// directly.
-using ::google::cloud::videointelligence_v1::
-    MakeVideoIntelligenceServiceConnection;
+/// @deprecated Use videointelligence_v1::MakeVideoIntelligenceServiceConnection directly.
+using ::google::cloud::videointelligence_v1::MakeVideoIntelligenceServiceConnection;
 
-/// @deprecated Use videointelligence_v1::VideoIntelligenceServiceConnection
-/// directly.
+/// @deprecated Use videointelligence_v1::VideoIntelligenceServiceConnection directly.
 using ::google::cloud::videointelligence_v1::VideoIntelligenceServiceConnection;
 
-/// @deprecated Use
-/// videointelligence_v1::VideoIntelligenceServiceLimitedErrorCountRetryPolicy
-/// directly.
-using ::google::cloud::videointelligence_v1::
-    VideoIntelligenceServiceLimitedErrorCountRetryPolicy;
+/// @deprecated Use videointelligence_v1::VideoIntelligenceServiceLimitedErrorCountRetryPolicy directly.
+using ::google::cloud::videointelligence_v1::VideoIntelligenceServiceLimitedErrorCountRetryPolicy;
 
-/// @deprecated Use
-/// videointelligence_v1::VideoIntelligenceServiceLimitedTimeRetryPolicy
-/// directly.
-using ::google::cloud::videointelligence_v1::
-    VideoIntelligenceServiceLimitedTimeRetryPolicy;
+/// @deprecated Use videointelligence_v1::VideoIntelligenceServiceLimitedTimeRetryPolicy directly.
+using ::google::cloud::videointelligence_v1::VideoIntelligenceServiceLimitedTimeRetryPolicy;
 
-/// @deprecated Use videointelligence_v1::VideoIntelligenceServiceRetryPolicy
-/// directly.
-using ::google::cloud::videointelligence_v1::
-    VideoIntelligenceServiceRetryPolicy;
+/// @deprecated Use videointelligence_v1::VideoIntelligenceServiceRetryPolicy directly.
+using ::google::cloud::videointelligence_v1::VideoIntelligenceServiceRetryPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace videointelligence

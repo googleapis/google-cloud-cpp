@@ -19,14 +19,14 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IDS_V1_INTERNAL_IDS_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IDS_V1_INTERNAL_IDS_CONNECTION_IMPL_H
 
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/future.h"
 #include "google/cloud/ids/v1/ids_connection.h"
 #include "google/cloud/ids/v1/ids_connection_idempotency_policy.h"
 #include "google/cloud/ids/v1/ids_options.h"
 #include "google/cloud/ids/v1/internal/ids_retry_traits.h"
 #include "google/cloud/ids/v1/internal/ids_stub.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -40,40 +40,44 @@ namespace cloud {
 namespace ids_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class IDSConnectionImpl : public ids_v1::IDSConnection {
+class IDSConnectionImpl
+    : public ids_v1::IDSConnection {
  public:
   ~IDSConnectionImpl() override = default;
 
   IDSConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<ids_v1_internal::IDSStub> stub, Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<ids_v1_internal::IDSStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
-  StreamRange<google::cloud::ids::v1::Endpoint> ListEndpoints(
-      google::cloud::ids::v1::ListEndpointsRequest request) override;
+  StreamRange<google::cloud::ids::v1::Endpoint>
+  ListEndpoints(google::cloud::ids::v1::ListEndpointsRequest request) override;
 
-  StatusOr<google::cloud::ids::v1::Endpoint> GetEndpoint(
-      google::cloud::ids::v1::GetEndpointRequest const& request) override;
+  StatusOr<google::cloud::ids::v1::Endpoint>
+  GetEndpoint(google::cloud::ids::v1::GetEndpointRequest const& request) override;
 
-  future<StatusOr<google::cloud::ids::v1::Endpoint>> CreateEndpoint(
+  future<StatusOr<google::cloud::ids::v1::Endpoint>>
+  CreateEndpoint(google::cloud::ids::v1::CreateEndpointRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  CreateEndpoint(NoAwaitTag,
       google::cloud::ids::v1::CreateEndpointRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> CreateEndpoint(
-      NoAwaitTag,
-      google::cloud::ids::v1::CreateEndpointRequest const& request) override;
-
-  future<StatusOr<google::cloud::ids::v1::Endpoint>> CreateEndpoint(
+  future<StatusOr<google::cloud::ids::v1::Endpoint>>
+  CreateEndpoint(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::ids::v1::OperationMetadata>> DeleteEndpoint(
+  future<StatusOr<google::cloud::ids::v1::OperationMetadata>>
+  DeleteEndpoint(google::cloud::ids::v1::DeleteEndpointRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  DeleteEndpoint(NoAwaitTag,
       google::cloud::ids::v1::DeleteEndpointRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> DeleteEndpoint(
-      NoAwaitTag,
-      google::cloud::ids::v1::DeleteEndpointRequest const& request) override;
-
-  future<StatusOr<google::cloud::ids::v1::OperationMetadata>> DeleteEndpoint(
+  future<StatusOr<google::cloud::ids::v1::OperationMetadata>>
+  DeleteEndpoint(
       google::longrunning::Operation const& operation) override;
 
  private:

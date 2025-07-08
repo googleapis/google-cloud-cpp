@@ -39,30 +39,19 @@ Options ConfidentialComputingDefaultOptions(Options options) {
       "", "GOOGLE_CLOUD_CPP_CONFIDENTIAL_COMPUTING_AUTHORITY",
       "confidentialcomputing.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
-  if (!options.has<
-          confidentialcomputing_v1::ConfidentialComputingRetryPolicyOption>()) {
-    options.set<
-        confidentialcomputing_v1::ConfidentialComputingRetryPolicyOption>(
+  if (!options.has<confidentialcomputing_v1::ConfidentialComputingRetryPolicyOption>()) {
+    options.set<confidentialcomputing_v1::ConfidentialComputingRetryPolicyOption>(
         confidentialcomputing_v1::ConfidentialComputingLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
-            .clone());
+            std::chrono::minutes(30)).clone());
   }
-  if (!options.has<confidentialcomputing_v1::
-                       ConfidentialComputingBackoffPolicyOption>()) {
-    options.set<
-        confidentialcomputing_v1::ConfidentialComputingBackoffPolicyOption>(
-        ExponentialBackoffPolicy(
-            std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
-            .clone());
+  if (!options.has<confidentialcomputing_v1::ConfidentialComputingBackoffPolicyOption>()) {
+    options.set<confidentialcomputing_v1::ConfidentialComputingBackoffPolicyOption>(
+        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
   }
-  if (!options
-           .has<confidentialcomputing_v1::
-                    ConfidentialComputingConnectionIdempotencyPolicyOption>()) {
-    options.set<confidentialcomputing_v1::
-                    ConfidentialComputingConnectionIdempotencyPolicyOption>(
-        confidentialcomputing_v1::
-            MakeDefaultConfidentialComputingConnectionIdempotencyPolicy());
+  if (!options.has<confidentialcomputing_v1::ConfidentialComputingConnectionIdempotencyPolicyOption>()) {
+    options.set<confidentialcomputing_v1::ConfidentialComputingConnectionIdempotencyPolicyOption>(
+        confidentialcomputing_v1::MakeDefaultConfidentialComputingConnectionIdempotencyPolicy());
   }
 
   return options;

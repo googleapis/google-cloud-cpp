@@ -31,41 +31,49 @@ namespace trace_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 TraceServiceLogging::TraceServiceLogging(
-    std::shared_ptr<TraceServiceStub> child, TracingOptions tracing_options,
+    std::shared_ptr<TraceServiceStub> child,
+    TracingOptions tracing_options,
     std::set<std::string> const&)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::devtools::cloudtrace::v1::ListTracesResponse>
 TraceServiceLogging::ListTraces(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::devtools::cloudtrace::v1::ListTracesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::devtools::cloudtrace::v1::ListTracesRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::devtools::cloudtrace::v1::ListTracesRequest const& request) {
         return child_->ListTraces(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::devtools::cloudtrace::v1::Trace> TraceServiceLogging::GetTrace(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::devtools::cloudtrace::v1::Trace>
+TraceServiceLogging::GetTrace(
+    grpc::ClientContext& context,
+    Options const& options,
     google::devtools::cloudtrace::v1::GetTraceRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::devtools::cloudtrace::v1::GetTraceRequest const& request) {
         return child_->GetTrace(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status TraceServiceLogging::PatchTraces(
-    grpc::ClientContext& context, Options const& options,
+Status
+TraceServiceLogging::PatchTraces(
+    grpc::ClientContext& context,
+    Options const& options,
     google::devtools::cloudtrace::v1::PatchTracesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::devtools::cloudtrace::v1::PatchTracesRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::devtools::cloudtrace::v1::PatchTracesRequest const& request) {
         return child_->PatchTraces(context, options, request);
       },
       context, options, request, __func__, tracing_options_);

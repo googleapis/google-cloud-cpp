@@ -32,18 +32,20 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ReachabilityServiceLogging::ReachabilityServiceLogging(
     std::shared_ptr<ReachabilityServiceStub> child,
-    TracingOptions tracing_options, std::set<std::string> const&)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
+    TracingOptions tracing_options,
+    std::set<std::string> const&)
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::cloud::networkmanagement::v1::ListConnectivityTestsResponse>
 ReachabilityServiceLogging::ListConnectivityTests(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::networkmanagement::v1::ListConnectivityTestsRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::networkmanagement::v1::ListConnectivityTestsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::networkmanagement::v1::
-                 ListConnectivityTestsRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::networkmanagement::v1::ListConnectivityTestsRequest const& request) {
         return child_->ListConnectivityTests(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -51,13 +53,13 @@ ReachabilityServiceLogging::ListConnectivityTests(
 
 StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>
 ReachabilityServiceLogging::GetConnectivityTest(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::networkmanagement::v1::GetConnectivityTestRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::networkmanagement::v1::GetConnectivityTestRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::networkmanagement::v1::
-                 GetConnectivityTestRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::networkmanagement::v1::GetConnectivityTestRequest const& request) {
         return child_->GetConnectivityTest(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -65,19 +67,17 @@ ReachabilityServiceLogging::GetConnectivityTest(
 
 future<StatusOr<google::longrunning::Operation>>
 ReachabilityServiceLogging::AsyncCreateConnectivityTest(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::networkmanagement::v1::CreateConnectivityTestRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::networkmanagement::v1::CreateConnectivityTestRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::networkmanagement::v1::
-                 CreateConnectivityTestRequest const& request) {
-        return child_->AsyncCreateConnectivityTest(cq, std::move(context),
-                                                   std::move(options), request);
+             google::cloud::networkmanagement::v1::CreateConnectivityTestRequest const& request) {
+        return child_->AsyncCreateConnectivityTest(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -85,13 +85,13 @@ ReachabilityServiceLogging::AsyncCreateConnectivityTest(
 
 StatusOr<google::longrunning::Operation>
 ReachabilityServiceLogging::CreateConnectivityTest(
-    grpc::ClientContext& context, Options options,
-    google::cloud::networkmanagement::v1::CreateConnectivityTestRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::networkmanagement::v1::CreateConnectivityTestRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::networkmanagement::v1::
-                 CreateConnectivityTestRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::networkmanagement::v1::CreateConnectivityTestRequest const& request) {
         return child_->CreateConnectivityTest(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -99,19 +99,17 @@ ReachabilityServiceLogging::CreateConnectivityTest(
 
 future<StatusOr<google::longrunning::Operation>>
 ReachabilityServiceLogging::AsyncUpdateConnectivityTest(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::networkmanagement::v1::UpdateConnectivityTestRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::networkmanagement::v1::UpdateConnectivityTestRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::networkmanagement::v1::
-                 UpdateConnectivityTestRequest const& request) {
-        return child_->AsyncUpdateConnectivityTest(cq, std::move(context),
-                                                   std::move(options), request);
+             google::cloud::networkmanagement::v1::UpdateConnectivityTestRequest const& request) {
+        return child_->AsyncUpdateConnectivityTest(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -119,13 +117,13 @@ ReachabilityServiceLogging::AsyncUpdateConnectivityTest(
 
 StatusOr<google::longrunning::Operation>
 ReachabilityServiceLogging::UpdateConnectivityTest(
-    grpc::ClientContext& context, Options options,
-    google::cloud::networkmanagement::v1::UpdateConnectivityTestRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::networkmanagement::v1::UpdateConnectivityTestRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::networkmanagement::v1::
-                 UpdateConnectivityTestRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::networkmanagement::v1::UpdateConnectivityTestRequest const& request) {
         return child_->UpdateConnectivityTest(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -133,19 +131,17 @@ ReachabilityServiceLogging::UpdateConnectivityTest(
 
 future<StatusOr<google::longrunning::Operation>>
 ReachabilityServiceLogging::AsyncRerunConnectivityTest(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::networkmanagement::v1::RerunConnectivityTestRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::networkmanagement::v1::RerunConnectivityTestRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::networkmanagement::v1::
-                 RerunConnectivityTestRequest const& request) {
-        return child_->AsyncRerunConnectivityTest(cq, std::move(context),
-                                                  std::move(options), request);
+             google::cloud::networkmanagement::v1::RerunConnectivityTestRequest const& request) {
+        return child_->AsyncRerunConnectivityTest(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -153,13 +149,13 @@ ReachabilityServiceLogging::AsyncRerunConnectivityTest(
 
 StatusOr<google::longrunning::Operation>
 ReachabilityServiceLogging::RerunConnectivityTest(
-    grpc::ClientContext& context, Options options,
-    google::cloud::networkmanagement::v1::RerunConnectivityTestRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::networkmanagement::v1::RerunConnectivityTestRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::networkmanagement::v1::
-                 RerunConnectivityTestRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::networkmanagement::v1::RerunConnectivityTestRequest const& request) {
         return child_->RerunConnectivityTest(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -167,19 +163,17 @@ ReachabilityServiceLogging::RerunConnectivityTest(
 
 future<StatusOr<google::longrunning::Operation>>
 ReachabilityServiceLogging::AsyncDeleteConnectivityTest(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::networkmanagement::v1::DeleteConnectivityTestRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::networkmanagement::v1::DeleteConnectivityTestRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::networkmanagement::v1::
-                 DeleteConnectivityTestRequest const& request) {
-        return child_->AsyncDeleteConnectivityTest(cq, std::move(context),
-                                                   std::move(options), request);
+             google::cloud::networkmanagement::v1::DeleteConnectivityTestRequest const& request) {
+        return child_->AsyncDeleteConnectivityTest(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -187,13 +181,13 @@ ReachabilityServiceLogging::AsyncDeleteConnectivityTest(
 
 StatusOr<google::longrunning::Operation>
 ReachabilityServiceLogging::DeleteConnectivityTest(
-    grpc::ClientContext& context, Options options,
-    google::cloud::networkmanagement::v1::DeleteConnectivityTestRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::networkmanagement::v1::DeleteConnectivityTestRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::networkmanagement::v1::
-                 DeleteConnectivityTestRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::networkmanagement::v1::DeleteConnectivityTestRequest const& request) {
         return child_->DeleteConnectivityTest(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -201,10 +195,12 @@ ReachabilityServiceLogging::DeleteConnectivityTest(
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 ReachabilityServiceLogging::ListLocations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::location::ListLocationsRequest const& request) {
         return child_->ListLocations(context, options, request);
       },
@@ -213,32 +209,40 @@ ReachabilityServiceLogging::ListLocations(
 
 StatusOr<google::cloud::location::Location>
 ReachabilityServiceLogging::GetLocation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::location::GetLocationRequest const& request) {
         return child_->GetLocation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::iam::v1::Policy> ReachabilityServiceLogging::SetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::iam::v1::Policy>
+ReachabilityServiceLogging::SetIamPolicy(
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::iam::v1::SetIamPolicyRequest const& request) {
         return child_->SetIamPolicy(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::iam::v1::Policy> ReachabilityServiceLogging::GetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::iam::v1::Policy>
+ReachabilityServiceLogging::GetIamPolicy(
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::iam::v1::GetIamPolicyRequest const& request) {
         return child_->GetIamPolicy(context, options, request);
       },
@@ -247,10 +251,12 @@ StatusOr<google::iam::v1::Policy> ReachabilityServiceLogging::GetIamPolicy(
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 ReachabilityServiceLogging::TestIamPermissions(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::iam::v1::TestIamPermissionsRequest const& request) {
         return child_->TestIamPermissions(context, options, request);
       },
@@ -259,10 +265,12 @@ ReachabilityServiceLogging::TestIamPermissions(
 
 StatusOr<google::longrunning::ListOperationsResponse>
 ReachabilityServiceLogging::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::ListOperationsRequest const& request) {
         return child_->ListOperations(context, options, request);
       },
@@ -271,32 +279,40 @@ ReachabilityServiceLogging::ListOperations(
 
 StatusOr<google::longrunning::Operation>
 ReachabilityServiceLogging::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::GetOperationRequest const& request) {
         return child_->GetOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status ReachabilityServiceLogging::DeleteOperation(
-    grpc::ClientContext& context, Options const& options,
+Status
+ReachabilityServiceLogging::DeleteOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::DeleteOperationRequest const& request) {
         return child_->DeleteOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status ReachabilityServiceLogging::CancelOperation(
-    grpc::ClientContext& context, Options const& options,
+Status
+ReachabilityServiceLogging::CancelOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::CancelOperationRequest const& request) {
         return child_->CancelOperation(context, options, request);
       },
@@ -314,8 +330,8 @@ ReachabilityServiceLogging::AsyncGetOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(cq, std::move(context),
-                                         std::move(options), request);
+        return child_->AsyncGetOperation(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -331,8 +347,8 @@ future<Status> ReachabilityServiceLogging::AsyncCancelOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::CancelOperationRequest const& request) {
-        return child_->AsyncCancelOperation(cq, std::move(context),
-                                            std::move(options), request);
+        return child_->AsyncCancelOperation(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);

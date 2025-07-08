@@ -17,17 +17,17 @@
 // source: google/monitoring/v3/alert_service.proto
 
 #include "google/cloud/monitoring/v3/alert_policy_connection.h"
-#include "google/cloud/monitoring/v3/alert_policy_options.h"
-#include "google/cloud/monitoring/v3/internal/alert_policy_connection_impl.h"
-#include "google/cloud/monitoring/v3/internal/alert_policy_option_defaults.h"
-#include "google/cloud/monitoring/v3/internal/alert_policy_stub_factory.h"
-#include "google/cloud/monitoring/v3/internal/alert_policy_tracing_connection.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/monitoring/v3/alert_policy_options.h"
+#include "google/cloud/monitoring/v3/internal/alert_policy_connection_impl.h"
+#include "google/cloud/monitoring/v3/internal/alert_policy_option_defaults.h"
+#include "google/cloud/monitoring/v3/internal/alert_policy_stub_factory.h"
+#include "google/cloud/monitoring/v3/internal/alert_policy_tracing_connection.h"
 #include <memory>
 #include <utility>
 
@@ -38,10 +38,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 AlertPolicyServiceConnection::~AlertPolicyServiceConnection() = default;
 
-StreamRange<google::monitoring::v3::AlertPolicy>
-AlertPolicyServiceConnection::ListAlertPolicies(
-    google::monitoring::v3::
-        ListAlertPoliciesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::monitoring::v3::AlertPolicy> AlertPolicyServiceConnection::ListAlertPolicies(
+    google::monitoring::v3::ListAlertPoliciesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::monitoring::v3::AlertPolicy>>();
 }
@@ -58,7 +56,8 @@ AlertPolicyServiceConnection::CreateAlertPolicy(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status AlertPolicyServiceConnection::DeleteAlertPolicy(
+Status
+AlertPolicyServiceConnection::DeleteAlertPolicy(
     google::monitoring::v3::DeleteAlertPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -72,19 +71,17 @@ AlertPolicyServiceConnection::UpdateAlertPolicy(
 std::shared_ptr<AlertPolicyServiceConnection> MakeAlertPolicyServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 AlertPolicyServicePolicyOptionList>(options,
-                                                                     __func__);
+      UnifiedCredentialsOptionList,
+      AlertPolicyServicePolicyOptionList>(options, __func__);
   options = monitoring_v3_internal::AlertPolicyServiceDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = monitoring_v3_internal::CreateDefaultAlertPolicyServiceStub(
-      std::move(auth), options);
+    std::move(auth), options);
   return monitoring_v3_internal::MakeAlertPolicyServiceTracingConnection(
-      std::make_shared<
-          monitoring_v3_internal::AlertPolicyServiceConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options)));
+      std::make_shared<monitoring_v3_internal::AlertPolicyServiceConnectionImpl>(
+      std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

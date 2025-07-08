@@ -22,8 +22,8 @@
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/cloud/contentwarehouse/v1/document_link_service.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
+#include <google/cloud/contentwarehouse/v1/document_link_service.grpc.pb.h>
 #include <memory>
 #include <utility>
 
@@ -36,80 +36,69 @@ class DocumentLinkServiceStub {
  public:
   virtual ~DocumentLinkServiceStub() = 0;
 
-  virtual StatusOr<
-      google::cloud::contentwarehouse::v1::ListLinkedTargetsResponse>
-  ListLinkedTargets(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::contentwarehouse::v1::ListLinkedTargetsRequest const&
-          request) = 0;
+  virtual StatusOr<google::cloud::contentwarehouse::v1::ListLinkedTargetsResponse> ListLinkedTargets(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::contentwarehouse::v1::ListLinkedTargetsRequest const& request) = 0;
 
-  virtual StatusOr<
-      google::cloud::contentwarehouse::v1::ListLinkedSourcesResponse>
-  ListLinkedSources(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::contentwarehouse::v1::ListLinkedSourcesRequest const&
-          request) = 0;
+  virtual StatusOr<google::cloud::contentwarehouse::v1::ListLinkedSourcesResponse> ListLinkedSources(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::contentwarehouse::v1::ListLinkedSourcesRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::contentwarehouse::v1::DocumentLink>
-  CreateDocumentLink(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::contentwarehouse::v1::CreateDocumentLinkRequest const&
-          request) = 0;
+  virtual StatusOr<google::cloud::contentwarehouse::v1::DocumentLink> CreateDocumentLink(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::contentwarehouse::v1::CreateDocumentLinkRequest const& request) = 0;
 
   virtual Status DeleteDocumentLink(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::contentwarehouse::v1::DeleteDocumentLinkRequest const&
-          request) = 0;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::contentwarehouse::v1::DeleteDocumentLinkRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) = 0;
 };
 
 class DefaultDocumentLinkServiceStub : public DocumentLinkServiceStub {
  public:
   explicit DefaultDocumentLinkServiceStub(
-      std::unique_ptr<google::cloud::contentwarehouse::v1::DocumentLinkService::
-                          StubInterface>
-          grpc_stub,
-      std::unique_ptr<google::longrunning::Operations::StubInterface>
-          operations_stub)
+      std::unique_ptr<google::cloud::contentwarehouse::v1::DocumentLinkService::StubInterface> grpc_stub,
+      std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub
+)
       : grpc_stub_(std::move(grpc_stub)),
         operations_stub_(std::move(operations_stub)) {}
 
-  StatusOr<google::cloud::contentwarehouse::v1::ListLinkedTargetsResponse>
-  ListLinkedTargets(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::contentwarehouse::v1::ListLinkedTargetsRequest const&
-          request) override;
+  StatusOr<google::cloud::contentwarehouse::v1::ListLinkedTargetsResponse> ListLinkedTargets(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::contentwarehouse::v1::ListLinkedTargetsRequest const& request) override;
 
-  StatusOr<google::cloud::contentwarehouse::v1::ListLinkedSourcesResponse>
-  ListLinkedSources(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::contentwarehouse::v1::ListLinkedSourcesRequest const&
-          request) override;
+  StatusOr<google::cloud::contentwarehouse::v1::ListLinkedSourcesResponse> ListLinkedSources(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::contentwarehouse::v1::ListLinkedSourcesRequest const& request) override;
 
-  StatusOr<google::cloud::contentwarehouse::v1::DocumentLink>
-  CreateDocumentLink(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::contentwarehouse::v1::CreateDocumentLinkRequest const&
-          request) override;
+  StatusOr<google::cloud::contentwarehouse::v1::DocumentLink> CreateDocumentLink(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::contentwarehouse::v1::CreateDocumentLinkRequest const& request) override;
 
   Status DeleteDocumentLink(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::contentwarehouse::v1::DeleteDocumentLinkRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::contentwarehouse::v1::DeleteDocumentLinkRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
  private:
-  std::unique_ptr<
-      google::cloud::contentwarehouse::v1::DocumentLinkService::StubInterface>
-      grpc_stub_;
-  std::unique_ptr<google::longrunning::Operations::StubInterface>
-      operations_stub_;
+  std::unique_ptr<google::cloud::contentwarehouse::v1::DocumentLinkService::StubInterface> grpc_stub_;
+  std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

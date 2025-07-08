@@ -33,15 +33,11 @@ using ::google::cloud::servicemanagement_v1::MakeServiceManagerConnection;
 /// @deprecated Use servicemanagement_v1::ServiceManagerConnection directly.
 using ::google::cloud::servicemanagement_v1::ServiceManagerConnection;
 
-/// @deprecated Use
-/// servicemanagement_v1::ServiceManagerLimitedErrorCountRetryPolicy directly.
-using ::google::cloud::servicemanagement_v1::
-    ServiceManagerLimitedErrorCountRetryPolicy;
+/// @deprecated Use servicemanagement_v1::ServiceManagerLimitedErrorCountRetryPolicy directly.
+using ::google::cloud::servicemanagement_v1::ServiceManagerLimitedErrorCountRetryPolicy;
 
-/// @deprecated Use servicemanagement_v1::ServiceManagerLimitedTimeRetryPolicy
-/// directly.
-using ::google::cloud::servicemanagement_v1::
-    ServiceManagerLimitedTimeRetryPolicy;
+/// @deprecated Use servicemanagement_v1::ServiceManagerLimitedTimeRetryPolicy directly.
+using ::google::cloud::servicemanagement_v1::ServiceManagerLimitedTimeRetryPolicy;
 
 /// @deprecated Use servicemanagement_v1::ServiceManagerRetryPolicy directly.
 using ::google::cloud::servicemanagement_v1::ServiceManagerRetryPolicy;

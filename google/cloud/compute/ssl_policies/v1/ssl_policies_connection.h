@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_SSL_POLICIES_V1_SSL_POLICIES_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_SSL_POLICIES_V1_SSL_POLICIES_CONNECTION_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/ssl_policies/v1/internal/ssl_policies_retry_traits.h"
 #include "google/cloud/compute/ssl_policies/v1/ssl_policies_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -65,14 +65,14 @@ class SslPoliciesLimitedErrorCountRetryPolicy : public SslPoliciesRetryPolicy {
    *     @p maximum_failures == 0.
    */
   explicit SslPoliciesLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   SslPoliciesLimitedErrorCountRetryPolicy(
       SslPoliciesLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : SslPoliciesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : SslPoliciesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   SslPoliciesLimitedErrorCountRetryPolicy(
       SslPoliciesLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : SslPoliciesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : SslPoliciesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -92,9 +92,7 @@ class SslPoliciesLimitedErrorCountRetryPolicy : public SslPoliciesRetryPolicy {
   using BaseType = SslPoliciesRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      compute_ssl_policies_v1_internal::SslPoliciesRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<compute_ssl_policies_v1_internal::SslPoliciesRetryTraits> impl_;
 };
 
 /**
@@ -132,14 +130,12 @@ class SslPoliciesLimitedTimeRetryPolicy : public SslPoliciesRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit SslPoliciesLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  SslPoliciesLimitedTimeRetryPolicy(
-      SslPoliciesLimitedTimeRetryPolicy&& rhs) noexcept
-      : SslPoliciesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  SslPoliciesLimitedTimeRetryPolicy(
-      SslPoliciesLimitedTimeRetryPolicy const& rhs) noexcept
-      : SslPoliciesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  SslPoliciesLimitedTimeRetryPolicy(SslPoliciesLimitedTimeRetryPolicy&& rhs) noexcept
+    : SslPoliciesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  SslPoliciesLimitedTimeRetryPolicy(SslPoliciesLimitedTimeRetryPolicy const& rhs) noexcept
+    : SslPoliciesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -161,9 +157,7 @@ class SslPoliciesLimitedTimeRetryPolicy : public SslPoliciesRetryPolicy {
   using BaseType = SslPoliciesRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      compute_ssl_policies_v1_internal::SslPoliciesRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<compute_ssl_policies_v1_internal::SslPoliciesRetryTraits> impl_;
 };
 
 /**
@@ -184,57 +178,44 @@ class SslPoliciesConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StreamRange<std::pair<
-      std::string, google::cloud::cpp::compute::v1::SslPoliciesScopedList>>
-  AggregatedListSslPolicies(google::cloud::cpp::compute::ssl_policies::v1::
-                                AggregatedListSslPoliciesRequest request);
+  virtual StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::SslPoliciesScopedList>>
+  AggregatedListSslPolicies(google::cloud::cpp::compute::ssl_policies::v1::AggregatedListSslPoliciesRequest request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteSslPolicy(google::cloud::cpp::compute::ssl_policies::v1::
-                      DeleteSslPolicyRequest const& request);
+  DeleteSslPolicy(google::cloud::cpp::compute::ssl_policies::v1::DeleteSslPolicyRequest const& request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteSslPolicy(
-      NoAwaitTag, google::cloud::cpp::compute::ssl_policies::v1::
-                      DeleteSslPolicyRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeleteSslPolicy(NoAwaitTag, google::cloud::cpp::compute::ssl_policies::v1::DeleteSslPolicyRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteSslPolicy(google::cloud::cpp::compute::v1::Operation const& operation);
+  DeleteSslPolicy( google::cloud::cpp::compute::v1::Operation const& operation);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::SslPolicy> GetSslPolicy(
-      google::cloud::cpp::compute::ssl_policies::v1::GetSslPolicyRequest const&
-          request);
-
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertSslPolicy(google::cloud::cpp::compute::ssl_policies::v1::
-                      InsertSslPolicyRequest const& request);
-
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> InsertSslPolicy(
-      NoAwaitTag, google::cloud::cpp::compute::ssl_policies::v1::
-                      InsertSslPolicyRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::SslPolicy>
+  GetSslPolicy(google::cloud::cpp::compute::ssl_policies::v1::GetSslPolicyRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertSslPolicy(google::cloud::cpp::compute::v1::Operation const& operation);
+  InsertSslPolicy(google::cloud::cpp::compute::ssl_policies::v1::InsertSslPolicyRequest const& request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  InsertSslPolicy(NoAwaitTag, google::cloud::cpp::compute::ssl_policies::v1::InsertSslPolicyRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  InsertSslPolicy( google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::SslPolicy>
-  ListSslPolicies(
-      google::cloud::cpp::compute::ssl_policies::v1::ListSslPoliciesRequest
-          request);
+  ListSslPolicies(google::cloud::cpp::compute::ssl_policies::v1::ListSslPoliciesRequest request);
 
-  virtual StatusOr<
-      google::cloud::cpp::compute::v1::SslPoliciesListAvailableFeaturesResponse>
-  ListAvailableFeatures(google::cloud::cpp::compute::ssl_policies::v1::
-                            ListAvailableFeaturesRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::SslPoliciesListAvailableFeaturesResponse>
+  ListAvailableFeatures(google::cloud::cpp::compute::ssl_policies::v1::ListAvailableFeaturesRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchSslPolicy(google::cloud::cpp::compute::ssl_policies::v1::
-                     PatchSslPolicyRequest const& request);
+  PatchSslPolicy(google::cloud::cpp::compute::ssl_policies::v1::PatchSslPolicyRequest const& request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> PatchSslPolicy(
-      NoAwaitTag, google::cloud::cpp::compute::ssl_policies::v1::
-                      PatchSslPolicyRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  PatchSslPolicy(NoAwaitTag, google::cloud::cpp::compute::ssl_policies::v1::PatchSslPolicyRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchSslPolicy(google::cloud::cpp::compute::v1::Operation const& operation);
+  PatchSslPolicy( google::cloud::cpp::compute::v1::Operation const& operation);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

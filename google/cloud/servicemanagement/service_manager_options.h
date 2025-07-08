@@ -28,26 +28,19 @@ namespace cloud {
 namespace servicemanagement {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use servicemanagement_v1::ServiceManagerPollingPolicyOption
-/// directly.
+/// @deprecated Use servicemanagement_v1::ServiceManagerPollingPolicyOption directly.
 using ::google::cloud::servicemanagement_v1::ServiceManagerPollingPolicyOption;
 
-/// @deprecated Use servicemanagement_v1::ServiceManagerBackoffPolicyOption
-/// directly.
+/// @deprecated Use servicemanagement_v1::ServiceManagerBackoffPolicyOption directly.
 using ::google::cloud::servicemanagement_v1::ServiceManagerBackoffPolicyOption;
 
-/// @deprecated Use
-/// servicemanagement_v1::ServiceManagerConnectionIdempotencyPolicyOption
-/// directly.
-using ::google::cloud::servicemanagement_v1::
-    ServiceManagerConnectionIdempotencyPolicyOption;
+/// @deprecated Use servicemanagement_v1::ServiceManagerConnectionIdempotencyPolicyOption directly.
+using ::google::cloud::servicemanagement_v1::ServiceManagerConnectionIdempotencyPolicyOption;
 
-/// @deprecated Use servicemanagement_v1::ServiceManagerPolicyOptionList
-/// directly.
+/// @deprecated Use servicemanagement_v1::ServiceManagerPolicyOptionList directly.
 using ::google::cloud::servicemanagement_v1::ServiceManagerPolicyOptionList;
 
-/// @deprecated Use servicemanagement_v1::ServiceManagerRetryPolicyOption
-/// directly.
+/// @deprecated Use servicemanagement_v1::ServiceManagerRetryPolicyOption directly.
 using ::google::cloud::servicemanagement_v1::ServiceManagerRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

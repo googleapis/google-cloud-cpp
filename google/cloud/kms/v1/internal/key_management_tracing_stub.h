@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_KMS_V1_INTERNAL_KEY_MANAGEMENT_TRACING_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_KMS_V1_INTERNAL_KEY_MANAGEMENT_TRACING_STUB_H
 
-#include "google/cloud/kms/v1/internal/key_management_stub.h"
 #include "google/cloud/internal/trace_propagator.h"
+#include "google/cloud/kms/v1/internal/key_management_stub.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -36,159 +36,181 @@ class KeyManagementServiceTracingStub : public KeyManagementServiceStub {
  public:
   ~KeyManagementServiceTracingStub() override = default;
 
-  explicit KeyManagementServiceTracingStub(
-      std::shared_ptr<KeyManagementServiceStub> child);
+  explicit KeyManagementServiceTracingStub(std::shared_ptr<KeyManagementServiceStub> child);
 
   StatusOr<google::cloud::kms::v1::ListKeyRingsResponse> ListKeyRings(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::kms::v1::ListKeyRingsRequest const& request) override;
 
   StatusOr<google::cloud::kms::v1::ListCryptoKeysResponse> ListCryptoKeys(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::kms::v1::ListCryptoKeysRequest const& request) override;
 
-  StatusOr<google::cloud::kms::v1::ListCryptoKeyVersionsResponse>
-  ListCryptoKeyVersions(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::kms::v1::ListCryptoKeyVersionsRequest const& request)
-      override;
+  StatusOr<google::cloud::kms::v1::ListCryptoKeyVersionsResponse> ListCryptoKeyVersions(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::kms::v1::ListCryptoKeyVersionsRequest const& request) override;
 
   StatusOr<google::cloud::kms::v1::ListImportJobsResponse> ListImportJobs(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::kms::v1::ListImportJobsRequest const& request) override;
 
   StatusOr<google::cloud::kms::v1::KeyRing> GetKeyRing(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::kms::v1::GetKeyRingRequest const& request) override;
 
   StatusOr<google::cloud::kms::v1::CryptoKey> GetCryptoKey(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::kms::v1::GetCryptoKeyRequest const& request) override;
 
   StatusOr<google::cloud::kms::v1::CryptoKeyVersion> GetCryptoKeyVersion(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::kms::v1::GetCryptoKeyVersionRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::kms::v1::GetCryptoKeyVersionRequest const& request) override;
 
   StatusOr<google::cloud::kms::v1::PublicKey> GetPublicKey(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::kms::v1::GetPublicKeyRequest const& request) override;
 
   StatusOr<google::cloud::kms::v1::ImportJob> GetImportJob(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::kms::v1::GetImportJobRequest const& request) override;
 
   StatusOr<google::cloud::kms::v1::KeyRing> CreateKeyRing(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::kms::v1::CreateKeyRingRequest const& request) override;
 
   StatusOr<google::cloud::kms::v1::CryptoKey> CreateCryptoKey(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::kms::v1::CreateCryptoKeyRequest const& request) override;
 
   StatusOr<google::cloud::kms::v1::CryptoKeyVersion> CreateCryptoKeyVersion(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::kms::v1::CreateCryptoKeyVersionRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::kms::v1::CreateCryptoKeyVersionRequest const& request) override;
 
   StatusOr<google::cloud::kms::v1::CryptoKeyVersion> ImportCryptoKeyVersion(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::kms::v1::ImportCryptoKeyVersionRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::kms::v1::ImportCryptoKeyVersionRequest const& request) override;
 
   StatusOr<google::cloud::kms::v1::ImportJob> CreateImportJob(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::kms::v1::CreateImportJobRequest const& request) override;
 
   StatusOr<google::cloud::kms::v1::CryptoKey> UpdateCryptoKey(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::kms::v1::UpdateCryptoKeyRequest const& request) override;
 
   StatusOr<google::cloud::kms::v1::CryptoKeyVersion> UpdateCryptoKeyVersion(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::kms::v1::UpdateCryptoKeyVersionRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::kms::v1::UpdateCryptoKeyVersionRequest const& request) override;
 
   StatusOr<google::cloud::kms::v1::CryptoKey> UpdateCryptoKeyPrimaryVersion(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::kms::v1::UpdateCryptoKeyPrimaryVersionRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::kms::v1::UpdateCryptoKeyPrimaryVersionRequest const& request) override;
 
   StatusOr<google::cloud::kms::v1::CryptoKeyVersion> DestroyCryptoKeyVersion(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::kms::v1::DestroyCryptoKeyVersionRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::kms::v1::DestroyCryptoKeyVersionRequest const& request) override;
 
   StatusOr<google::cloud::kms::v1::CryptoKeyVersion> RestoreCryptoKeyVersion(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::kms::v1::RestoreCryptoKeyVersionRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::kms::v1::RestoreCryptoKeyVersionRequest const& request) override;
 
   StatusOr<google::cloud::kms::v1::EncryptResponse> Encrypt(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::kms::v1::EncryptRequest const& request) override;
 
   StatusOr<google::cloud::kms::v1::DecryptResponse> Decrypt(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::kms::v1::DecryptRequest const& request) override;
 
   StatusOr<google::cloud::kms::v1::RawEncryptResponse> RawEncrypt(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::kms::v1::RawEncryptRequest const& request) override;
 
   StatusOr<google::cloud::kms::v1::RawDecryptResponse> RawDecrypt(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::kms::v1::RawDecryptRequest const& request) override;
 
   StatusOr<google::cloud::kms::v1::AsymmetricSignResponse> AsymmetricSign(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::kms::v1::AsymmetricSignRequest const& request) override;
 
   StatusOr<google::cloud::kms::v1::AsymmetricDecryptResponse> AsymmetricDecrypt(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::kms::v1::AsymmetricDecryptRequest const& request) override;
 
   StatusOr<google::cloud::kms::v1::MacSignResponse> MacSign(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::kms::v1::MacSignRequest const& request) override;
 
   StatusOr<google::cloud::kms::v1::MacVerifyResponse> MacVerify(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::kms::v1::MacVerifyRequest const& request) override;
 
-  StatusOr<google::cloud::kms::v1::GenerateRandomBytesResponse>
-  GenerateRandomBytes(grpc::ClientContext& context, Options const& options,
-                      google::cloud::kms::v1::GenerateRandomBytesRequest const&
-                          request) override;
+  StatusOr<google::cloud::kms::v1::GenerateRandomBytesResponse> GenerateRandomBytes(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::kms::v1::GenerateRandomBytesRequest const& request) override;
 
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::location::ListLocationsRequest const& request) override;
 
   StatusOr<google::cloud::location::Location> GetLocation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::location::GetLocationRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
  private:
   std::shared_ptr<KeyManagementServiceStub> child_;
-  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
-      propagator_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

@@ -37,26 +37,24 @@ class TagBindingsConnectionIdempotencyPolicy {
   /// Create a new copy of this object.
   virtual std::unique_ptr<TagBindingsConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency ListTagBindings(
-      google::cloud::resourcemanager::v3::ListTagBindingsRequest request);
+  virtual google::cloud::Idempotency
+  ListTagBindings(google::cloud::resourcemanager::v3::ListTagBindingsRequest request);
 
-  virtual google::cloud::Idempotency CreateTagBinding(
-      google::cloud::resourcemanager::v3::CreateTagBindingRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  CreateTagBinding(google::cloud::resourcemanager::v3::CreateTagBindingRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteTagBinding(
-      google::cloud::resourcemanager::v3::DeleteTagBindingRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  DeleteTagBinding(google::cloud::resourcemanager::v3::DeleteTagBindingRequest const& request);
 
-  virtual google::cloud::Idempotency ListEffectiveTags(
-      google::cloud::resourcemanager::v3::ListEffectiveTagsRequest request);
+  virtual google::cloud::Idempotency
+  ListEffectiveTags(google::cloud::resourcemanager::v3::ListEffectiveTagsRequest request);
 
-  virtual google::cloud::Idempotency GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 };
 
 std::unique_ptr<TagBindingsConnectionIdempotencyPolicy>
-MakeDefaultTagBindingsConnectionIdempotencyPolicy();
+    MakeDefaultTagBindingsConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace resourcemanager_v3

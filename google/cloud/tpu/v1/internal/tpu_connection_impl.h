@@ -19,11 +19,6 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TPU_V1_INTERNAL_TPU_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TPU_V1_INTERNAL_TPU_CONNECTION_IMPL_H
 
-#include "google/cloud/tpu/v1/internal/tpu_retry_traits.h"
-#include "google/cloud/tpu/v1/internal/tpu_stub.h"
-#include "google/cloud/tpu/v1/tpu_connection.h"
-#include "google/cloud/tpu/v1/tpu_connection_idempotency_policy.h"
-#include "google/cloud/tpu/v1/tpu_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
@@ -31,6 +26,11 @@
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
+#include "google/cloud/tpu/v1/internal/tpu_retry_traits.h"
+#include "google/cloud/tpu/v1/internal/tpu_stub.h"
+#include "google/cloud/tpu/v1/tpu_connection.h"
+#include "google/cloud/tpu/v1/tpu_connection_idempotency_policy.h"
+#include "google/cloud/tpu/v1/tpu_options.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
@@ -40,103 +40,108 @@ namespace cloud {
 namespace tpu_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class TpuConnectionImpl : public tpu_v1::TpuConnection {
+class TpuConnectionImpl
+    : public tpu_v1::TpuConnection {
  public:
   ~TpuConnectionImpl() override = default;
 
   TpuConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<tpu_v1_internal::TpuStub> stub, Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<tpu_v1_internal::TpuStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
-  StreamRange<google::cloud::tpu::v1::Node> ListNodes(
-      google::cloud::tpu::v1::ListNodesRequest request) override;
+  StreamRange<google::cloud::tpu::v1::Node>
+  ListNodes(google::cloud::tpu::v1::ListNodesRequest request) override;
 
-  StatusOr<google::cloud::tpu::v1::Node> GetNode(
-      google::cloud::tpu::v1::GetNodeRequest const& request) override;
+  StatusOr<google::cloud::tpu::v1::Node>
+  GetNode(google::cloud::tpu::v1::GetNodeRequest const& request) override;
 
-  future<StatusOr<google::cloud::tpu::v1::Node>> CreateNode(
+  future<StatusOr<google::cloud::tpu::v1::Node>>
+  CreateNode(google::cloud::tpu::v1::CreateNodeRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  CreateNode(NoAwaitTag,
       google::cloud::tpu::v1::CreateNodeRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> CreateNode(
-      NoAwaitTag,
-      google::cloud::tpu::v1::CreateNodeRequest const& request) override;
-
-  future<StatusOr<google::cloud::tpu::v1::Node>> CreateNode(
+  future<StatusOr<google::cloud::tpu::v1::Node>>
+  CreateNode(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::tpu::v1::Node>> DeleteNode(
+  future<StatusOr<google::cloud::tpu::v1::Node>>
+  DeleteNode(google::cloud::tpu::v1::DeleteNodeRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  DeleteNode(NoAwaitTag,
       google::cloud::tpu::v1::DeleteNodeRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> DeleteNode(
-      NoAwaitTag,
-      google::cloud::tpu::v1::DeleteNodeRequest const& request) override;
-
-  future<StatusOr<google::cloud::tpu::v1::Node>> DeleteNode(
+  future<StatusOr<google::cloud::tpu::v1::Node>>
+  DeleteNode(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::tpu::v1::Node>> ReimageNode(
+  future<StatusOr<google::cloud::tpu::v1::Node>>
+  ReimageNode(google::cloud::tpu::v1::ReimageNodeRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  ReimageNode(NoAwaitTag,
       google::cloud::tpu::v1::ReimageNodeRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> ReimageNode(
-      NoAwaitTag,
-      google::cloud::tpu::v1::ReimageNodeRequest const& request) override;
-
-  future<StatusOr<google::cloud::tpu::v1::Node>> ReimageNode(
+  future<StatusOr<google::cloud::tpu::v1::Node>>
+  ReimageNode(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::tpu::v1::Node>> StopNode(
+  future<StatusOr<google::cloud::tpu::v1::Node>>
+  StopNode(google::cloud::tpu::v1::StopNodeRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  StopNode(NoAwaitTag,
       google::cloud::tpu::v1::StopNodeRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> StopNode(
-      NoAwaitTag,
-      google::cloud::tpu::v1::StopNodeRequest const& request) override;
-
-  future<StatusOr<google::cloud::tpu::v1::Node>> StopNode(
+  future<StatusOr<google::cloud::tpu::v1::Node>>
+  StopNode(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::tpu::v1::Node>> StartNode(
+  future<StatusOr<google::cloud::tpu::v1::Node>>
+  StartNode(google::cloud::tpu::v1::StartNodeRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  StartNode(NoAwaitTag,
       google::cloud::tpu::v1::StartNodeRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> StartNode(
-      NoAwaitTag,
-      google::cloud::tpu::v1::StartNodeRequest const& request) override;
-
-  future<StatusOr<google::cloud::tpu::v1::Node>> StartNode(
+  future<StatusOr<google::cloud::tpu::v1::Node>>
+  StartNode(
       google::longrunning::Operation const& operation) override;
 
-  StreamRange<google::cloud::tpu::v1::TensorFlowVersion> ListTensorFlowVersions(
-      google::cloud::tpu::v1::ListTensorFlowVersionsRequest request) override;
+  StreamRange<google::cloud::tpu::v1::TensorFlowVersion>
+  ListTensorFlowVersions(google::cloud::tpu::v1::ListTensorFlowVersionsRequest request) override;
 
-  StatusOr<google::cloud::tpu::v1::TensorFlowVersion> GetTensorFlowVersion(
-      google::cloud::tpu::v1::GetTensorFlowVersionRequest const& request)
-      override;
+  StatusOr<google::cloud::tpu::v1::TensorFlowVersion>
+  GetTensorFlowVersion(google::cloud::tpu::v1::GetTensorFlowVersionRequest const& request) override;
 
-  StreamRange<google::cloud::tpu::v1::AcceleratorType> ListAcceleratorTypes(
-      google::cloud::tpu::v1::ListAcceleratorTypesRequest request) override;
+  StreamRange<google::cloud::tpu::v1::AcceleratorType>
+  ListAcceleratorTypes(google::cloud::tpu::v1::ListAcceleratorTypesRequest request) override;
 
-  StatusOr<google::cloud::tpu::v1::AcceleratorType> GetAcceleratorType(
-      google::cloud::tpu::v1::GetAcceleratorTypeRequest const& request)
-      override;
+  StatusOr<google::cloud::tpu::v1::AcceleratorType>
+  GetAcceleratorType(google::cloud::tpu::v1::GetAcceleratorTypeRequest const& request) override;
 
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request) override;
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request) override;
 
-  StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request) override;
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request) override;
 
-  Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request) override;
+  Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request) override;
 
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request) override;
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

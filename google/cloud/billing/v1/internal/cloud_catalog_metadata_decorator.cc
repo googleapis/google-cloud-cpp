@@ -46,7 +46,8 @@ CloudCatalogMetadata::CloudCatalogMetadata(
 
 StatusOr<google::cloud::billing::v1::ListServicesResponse>
 CloudCatalogMetadata::ListServices(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::billing::v1::ListServicesRequest const& request) {
   SetMetadata(context, options);
   return child_->ListServices(context, options, request);
@@ -54,24 +55,24 @@ CloudCatalogMetadata::ListServices(
 
 StatusOr<google::cloud::billing::v1::ListSkusResponse>
 CloudCatalogMetadata::ListSkus(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::billing::v1::ListSkusRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListSkus(context, options, request);
 }
 
 void CloudCatalogMetadata::SetMetadata(grpc::ClientContext& context,
-                                       Options const& options,
-                                       std::string const& request_params) {
+                                        Options const& options,
+                                        std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
 void CloudCatalogMetadata::SetMetadata(grpc::ClientContext& context,
-                                       Options const& options) {
-  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
-                                       api_client_header_);
+                                        Options const& options) {
+  google::cloud::internal::SetMetadata(
+      context, options, fixed_metadata_, api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

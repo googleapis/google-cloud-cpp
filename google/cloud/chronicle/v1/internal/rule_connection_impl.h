@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CHRONICLE_V1_INTERNAL_RULE_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CHRONICLE_V1_INTERNAL_RULE_CONNECTION_IMPL_H
 
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/chronicle/v1/internal/rule_retry_traits.h"
 #include "google/cloud/chronicle/v1/internal/rule_stub.h"
 #include "google/cloud/chronicle/v1/rule_connection.h"
 #include "google/cloud/chronicle/v1/rule_connection_idempotency_policy.h"
 #include "google/cloud/chronicle/v1/rule_options.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -40,77 +40,73 @@ namespace cloud {
 namespace chronicle_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class RuleServiceConnectionImpl : public chronicle_v1::RuleServiceConnection {
+class RuleServiceConnectionImpl
+    : public chronicle_v1::RuleServiceConnection {
  public:
   ~RuleServiceConnectionImpl() override = default;
 
   RuleServiceConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<chronicle_v1_internal::RuleServiceStub> stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<chronicle_v1_internal::RuleServiceStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
-  StatusOr<google::cloud::chronicle::v1::Rule> CreateRule(
-      google::cloud::chronicle::v1::CreateRuleRequest const& request) override;
+  StatusOr<google::cloud::chronicle::v1::Rule>
+  CreateRule(google::cloud::chronicle::v1::CreateRuleRequest const& request) override;
 
-  StatusOr<google::cloud::chronicle::v1::Rule> GetRule(
-      google::cloud::chronicle::v1::GetRuleRequest const& request) override;
+  StatusOr<google::cloud::chronicle::v1::Rule>
+  GetRule(google::cloud::chronicle::v1::GetRuleRequest const& request) override;
 
-  StreamRange<google::cloud::chronicle::v1::Rule> ListRules(
-      google::cloud::chronicle::v1::ListRulesRequest request) override;
+  StreamRange<google::cloud::chronicle::v1::Rule>
+  ListRules(google::cloud::chronicle::v1::ListRulesRequest request) override;
 
-  StatusOr<google::cloud::chronicle::v1::Rule> UpdateRule(
-      google::cloud::chronicle::v1::UpdateRuleRequest const& request) override;
+  StatusOr<google::cloud::chronicle::v1::Rule>
+  UpdateRule(google::cloud::chronicle::v1::UpdateRuleRequest const& request) override;
 
-  Status DeleteRule(
-      google::cloud::chronicle::v1::DeleteRuleRequest const& request) override;
+  Status
+  DeleteRule(google::cloud::chronicle::v1::DeleteRuleRequest const& request) override;
 
-  StreamRange<google::cloud::chronicle::v1::Rule> ListRuleRevisions(
-      google::cloud::chronicle::v1::ListRuleRevisionsRequest request) override;
+  StreamRange<google::cloud::chronicle::v1::Rule>
+  ListRuleRevisions(google::cloud::chronicle::v1::ListRuleRevisionsRequest request) override;
 
-  future<StatusOr<google::cloud::chronicle::v1::Retrohunt>> CreateRetrohunt(
-      google::cloud::chronicle::v1::CreateRetrohuntRequest const& request)
-      override;
+  future<StatusOr<google::cloud::chronicle::v1::Retrohunt>>
+  CreateRetrohunt(google::cloud::chronicle::v1::CreateRetrohuntRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> CreateRetrohunt(
-      NoAwaitTag,
-      google::cloud::chronicle::v1::CreateRetrohuntRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  CreateRetrohunt(NoAwaitTag,
+      google::cloud::chronicle::v1::CreateRetrohuntRequest const& request) override;
 
-  future<StatusOr<google::cloud::chronicle::v1::Retrohunt>> CreateRetrohunt(
+  future<StatusOr<google::cloud::chronicle::v1::Retrohunt>>
+  CreateRetrohunt(
       google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::cloud::chronicle::v1::Retrohunt> GetRetrohunt(
-      google::cloud::chronicle::v1::GetRetrohuntRequest const& request)
-      override;
+  StatusOr<google::cloud::chronicle::v1::Retrohunt>
+  GetRetrohunt(google::cloud::chronicle::v1::GetRetrohuntRequest const& request) override;
 
-  StreamRange<google::cloud::chronicle::v1::Retrohunt> ListRetrohunts(
-      google::cloud::chronicle::v1::ListRetrohuntsRequest request) override;
+  StreamRange<google::cloud::chronicle::v1::Retrohunt>
+  ListRetrohunts(google::cloud::chronicle::v1::ListRetrohuntsRequest request) override;
 
-  StatusOr<google::cloud::chronicle::v1::RuleDeployment> GetRuleDeployment(
-      google::cloud::chronicle::v1::GetRuleDeploymentRequest const& request)
-      override;
+  StatusOr<google::cloud::chronicle::v1::RuleDeployment>
+  GetRuleDeployment(google::cloud::chronicle::v1::GetRuleDeploymentRequest const& request) override;
 
-  StreamRange<google::cloud::chronicle::v1::RuleDeployment> ListRuleDeployments(
-      google::cloud::chronicle::v1::ListRuleDeploymentsRequest request)
-      override;
+  StreamRange<google::cloud::chronicle::v1::RuleDeployment>
+  ListRuleDeployments(google::cloud::chronicle::v1::ListRuleDeploymentsRequest request) override;
 
-  StatusOr<google::cloud::chronicle::v1::RuleDeployment> UpdateRuleDeployment(
-      google::cloud::chronicle::v1::UpdateRuleDeploymentRequest const& request)
-      override;
+  StatusOr<google::cloud::chronicle::v1::RuleDeployment>
+  UpdateRuleDeployment(google::cloud::chronicle::v1::UpdateRuleDeploymentRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request) override;
 
-  Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request) override;
+  Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request) override;
 
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request) override;
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

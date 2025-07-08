@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SUPPORT_V2_COMMENT_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SUPPORT_V2_COMMENT_CONNECTION_H
 
-#include "google/cloud/support/v2/comment_connection_idempotency_policy.h"
-#include "google/cloud/support/v2/internal/comment_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
+#include "google/cloud/support/v2/comment_connection_idempotency_policy.h"
+#include "google/cloud/support/v2/internal/comment_retry_traits.h"
 #include "google/cloud/version.h"
 #include <google/cloud/support/v2/comment_service.pb.h>
 #include <memory>
@@ -52,8 +52,7 @@ class CommentServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class CommentServiceLimitedErrorCountRetryPolicy
-    : public CommentServiceRetryPolicy {
+class CommentServiceLimitedErrorCountRetryPolicy : public CommentServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -63,14 +62,14 @@ class CommentServiceLimitedErrorCountRetryPolicy
    *     @p maximum_failures == 0.
    */
   explicit CommentServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   CommentServiceLimitedErrorCountRetryPolicy(
       CommentServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : CommentServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : CommentServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   CommentServiceLimitedErrorCountRetryPolicy(
       CommentServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : CommentServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : CommentServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -90,9 +89,7 @@ class CommentServiceLimitedErrorCountRetryPolicy
   using BaseType = CommentServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      support_v2_internal::CommentServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<support_v2_internal::CommentServiceRetryTraits> impl_;
 };
 
 /**
@@ -130,14 +127,12 @@ class CommentServiceLimitedTimeRetryPolicy : public CommentServiceRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit CommentServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  CommentServiceLimitedTimeRetryPolicy(
-      CommentServiceLimitedTimeRetryPolicy&& rhs) noexcept
-      : CommentServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  CommentServiceLimitedTimeRetryPolicy(
-      CommentServiceLimitedTimeRetryPolicy const& rhs) noexcept
-      : CommentServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  CommentServiceLimitedTimeRetryPolicy(CommentServiceLimitedTimeRetryPolicy&& rhs) noexcept
+    : CommentServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  CommentServiceLimitedTimeRetryPolicy(CommentServiceLimitedTimeRetryPolicy const& rhs) noexcept
+    : CommentServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -159,9 +154,7 @@ class CommentServiceLimitedTimeRetryPolicy : public CommentServiceRetryPolicy {
   using BaseType = CommentServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      support_v2_internal::CommentServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<support_v2_internal::CommentServiceRetryTraits> impl_;
 };
 
 /**
@@ -182,11 +175,11 @@ class CommentServiceConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StreamRange<google::cloud::support::v2::Comment> ListComments(
-      google::cloud::support::v2::ListCommentsRequest request);
+  virtual StreamRange<google::cloud::support::v2::Comment>
+  ListComments(google::cloud::support::v2::ListCommentsRequest request);
 
-  virtual StatusOr<google::cloud::support::v2::Comment> CreateComment(
-      google::cloud::support::v2::CreateCommentRequest const& request);
+  virtual StatusOr<google::cloud::support::v2::Comment>
+  CreateComment(google::cloud::support::v2::CreateCommentRequest const& request);
 };
 
 /**

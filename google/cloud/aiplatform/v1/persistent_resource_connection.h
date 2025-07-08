@@ -41,17 +41,14 @@ namespace aiplatform_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `PersistentResourceServiceConnection`.
-class PersistentResourceServiceRetryPolicy
-    : public ::google::cloud::RetryPolicy {
+class PersistentResourceServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  public:
   /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<PersistentResourceServiceRetryPolicy> clone()
-      const = 0;
+  virtual std::unique_ptr<PersistentResourceServiceRetryPolicy> clone() const = 0;
 };
 
 /**
- * A retry policy for `PersistentResourceServiceConnection` based on counting
- * errors.
+ * A retry policy for `PersistentResourceServiceConnection` based on counting errors.
  *
  * This policy stops retrying if:
  * - An RPC returns a non-transient error.
@@ -60,8 +57,7 @@ class PersistentResourceServiceRetryPolicy
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class PersistentResourceServiceLimitedErrorCountRetryPolicy
-    : public PersistentResourceServiceRetryPolicy {
+class PersistentResourceServiceLimitedErrorCountRetryPolicy : public PersistentResourceServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -70,18 +66,15 @@ class PersistentResourceServiceLimitedErrorCountRetryPolicy
    * @note Disable the retry loop by providing an instance of this policy with
    *     @p maximum_failures == 0.
    */
-  explicit PersistentResourceServiceLimitedErrorCountRetryPolicy(
-      int maximum_failures)
-      : impl_(maximum_failures) {}
+  explicit PersistentResourceServiceLimitedErrorCountRetryPolicy(int maximum_failures)
+    : impl_(maximum_failures) {}
 
   PersistentResourceServiceLimitedErrorCountRetryPolicy(
       PersistentResourceServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : PersistentResourceServiceLimitedErrorCountRetryPolicy(
-            rhs.maximum_failures()) {}
+    : PersistentResourceServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   PersistentResourceServiceLimitedErrorCountRetryPolicy(
       PersistentResourceServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : PersistentResourceServiceLimitedErrorCountRetryPolicy(
-            rhs.maximum_failures()) {}
+    : PersistentResourceServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -93,8 +86,7 @@ class PersistentResourceServiceLimitedErrorCountRetryPolicy
     return impl_.IsPermanentFailure(status);
   }
   std::unique_ptr<PersistentResourceServiceRetryPolicy> clone() const override {
-    return std::make_unique<
-        PersistentResourceServiceLimitedErrorCountRetryPolicy>(
+    return std::make_unique<PersistentResourceServiceLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
 
@@ -102,14 +94,11 @@ class PersistentResourceServiceLimitedErrorCountRetryPolicy
   using BaseType = PersistentResourceServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      aiplatform_v1_internal::PersistentResourceServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<aiplatform_v1_internal::PersistentResourceServiceRetryTraits> impl_;
 };
 
 /**
- * A retry policy for `PersistentResourceServiceConnection` based on elapsed
- * time.
+ * A retry policy for `PersistentResourceServiceConnection` based on elapsed time.
  *
  * This policy stops retrying if:
  * - An RPC returns a non-transient error.
@@ -118,8 +107,7 @@ class PersistentResourceServiceLimitedErrorCountRetryPolicy
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class PersistentResourceServiceLimitedTimeRetryPolicy
-    : public PersistentResourceServiceRetryPolicy {
+class PersistentResourceServiceLimitedTimeRetryPolicy : public PersistentResourceServiceRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -144,16 +132,12 @@ class PersistentResourceServiceLimitedTimeRetryPolicy
   template <typename DurationRep, typename DurationPeriod>
   explicit PersistentResourceServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  PersistentResourceServiceLimitedTimeRetryPolicy(
-      PersistentResourceServiceLimitedTimeRetryPolicy&& rhs) noexcept
-      : PersistentResourceServiceLimitedTimeRetryPolicy(
-            rhs.maximum_duration()) {}
-  PersistentResourceServiceLimitedTimeRetryPolicy(
-      PersistentResourceServiceLimitedTimeRetryPolicy const& rhs) noexcept
-      : PersistentResourceServiceLimitedTimeRetryPolicy(
-            rhs.maximum_duration()) {}
+  PersistentResourceServiceLimitedTimeRetryPolicy(PersistentResourceServiceLimitedTimeRetryPolicy&& rhs) noexcept
+    : PersistentResourceServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  PersistentResourceServiceLimitedTimeRetryPolicy(PersistentResourceServiceLimitedTimeRetryPolicy const& rhs) noexcept
+    : PersistentResourceServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -175,25 +159,20 @@ class PersistentResourceServiceLimitedTimeRetryPolicy
   using BaseType = PersistentResourceServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      aiplatform_v1_internal::PersistentResourceServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<aiplatform_v1_internal::PersistentResourceServiceRetryTraits> impl_;
 };
 
 /**
- * The `PersistentResourceServiceConnection` object for
- * `PersistentResourceServiceClient`.
+ * The `PersistentResourceServiceConnection` object for `PersistentResourceServiceClient`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `PersistentResourceServiceClient`. This allows users to inject custom
- * behavior (e.g., with a Google Mock object) when writing tests that use
- * objects of type `PersistentResourceServiceClient`.
+ * sets in `PersistentResourceServiceClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `PersistentResourceServiceClient`.
  *
- * To create a concrete instance, see
- * `MakePersistentResourceServiceConnection()`.
+ * To create a concrete instance, see `MakePersistentResourceServiceConnection()`.
  *
- * For mocking, see
- * `aiplatform_v1_mocks::MockPersistentResourceServiceConnection`.
+ * For mocking, see `aiplatform_v1_mocks::MockPersistentResourceServiceConnection`.
  */
 class PersistentResourceServiceConnection {
  public:
@@ -202,110 +181,87 @@ class PersistentResourceServiceConnection {
   virtual Options options() { return Options{}; }
 
   virtual future<StatusOr<google::cloud::aiplatform::v1::PersistentResource>>
-  CreatePersistentResource(
-      google::cloud::aiplatform::v1::CreatePersistentResourceRequest const&
-          request);
+  CreatePersistentResource(google::cloud::aiplatform::v1::CreatePersistentResourceRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> CreatePersistentResource(
-      NoAwaitTag,
-      google::cloud::aiplatform::v1::CreatePersistentResourceRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  CreatePersistentResource(NoAwaitTag, google::cloud::aiplatform::v1::CreatePersistentResourceRequest const& request);
 
   virtual future<StatusOr<google::cloud::aiplatform::v1::PersistentResource>>
-  CreatePersistentResource(google::longrunning::Operation const& operation);
+  CreatePersistentResource( google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::aiplatform::v1::PersistentResource>
-  GetPersistentResource(
-      google::cloud::aiplatform::v1::GetPersistentResourceRequest const&
-          request);
+  GetPersistentResource(google::cloud::aiplatform::v1::GetPersistentResourceRequest const& request);
 
   virtual StreamRange<google::cloud::aiplatform::v1::PersistentResource>
-  ListPersistentResources(
-      google::cloud::aiplatform::v1::ListPersistentResourcesRequest request);
+  ListPersistentResources(google::cloud::aiplatform::v1::ListPersistentResourcesRequest request);
 
-  virtual future<
-      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeletePersistentResource(
-      google::cloud::aiplatform::v1::DeletePersistentResourceRequest const&
-          request);
+  virtual future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeletePersistentResource(google::cloud::aiplatform::v1::DeletePersistentResourceRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> DeletePersistentResource(
-      NoAwaitTag,
-      google::cloud::aiplatform::v1::DeletePersistentResourceRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  DeletePersistentResource(NoAwaitTag, google::cloud::aiplatform::v1::DeletePersistentResourceRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeletePersistentResource(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeletePersistentResource( google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::aiplatform::v1::PersistentResource>>
-  UpdatePersistentResource(
-      google::cloud::aiplatform::v1::UpdatePersistentResourceRequest const&
-          request);
+  UpdatePersistentResource(google::cloud::aiplatform::v1::UpdatePersistentResourceRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> UpdatePersistentResource(
-      NoAwaitTag,
-      google::cloud::aiplatform::v1::UpdatePersistentResourceRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  UpdatePersistentResource(NoAwaitTag, google::cloud::aiplatform::v1::UpdatePersistentResourceRequest const& request);
 
   virtual future<StatusOr<google::cloud::aiplatform::v1::PersistentResource>>
-  UpdatePersistentResource(google::longrunning::Operation const& operation);
+  UpdatePersistentResource( google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::aiplatform::v1::PersistentResource>>
-  RebootPersistentResource(
-      google::cloud::aiplatform::v1::RebootPersistentResourceRequest const&
-          request);
+  RebootPersistentResource(google::cloud::aiplatform::v1::RebootPersistentResourceRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> RebootPersistentResource(
-      NoAwaitTag,
-      google::cloud::aiplatform::v1::RebootPersistentResourceRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  RebootPersistentResource(NoAwaitTag, google::cloud::aiplatform::v1::RebootPersistentResourceRequest const& request);
 
   virtual future<StatusOr<google::cloud::aiplatform::v1::PersistentResource>>
-  RebootPersistentResource(google::longrunning::Operation const& operation);
+  RebootPersistentResource( google::longrunning::Operation const& operation);
 
-  virtual StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request);
+  virtual StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request);
 
-  virtual StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request);
+  virtual StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
 
   virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
   TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
 
-  virtual StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 
-  virtual Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request);
+  virtual Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
 
-  virtual Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request);
+  virtual Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> WaitOperation(
-      google::longrunning::WaitOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  WaitOperation(google::longrunning::WaitOperationRequest const& request);
 };
 
 /**
- * A factory function to construct an object of type
- * `PersistentResourceServiceConnection`.
+ * A factory function to construct an object of type `PersistentResourceServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of
- * PersistentResourceServiceClient.
+ * should be passed as an argument to the constructor of PersistentResourceServiceClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `PersistentResourceServiceConnection`. Expected options are any of
- * the types in the following option lists:
+ * returned `PersistentResourceServiceConnection`. Expected options are any of the types in
+ * the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
@@ -316,12 +272,11 @@ class PersistentResourceServiceConnection {
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
  * @param location Sets the prefix for the default `EndpointOption` value.
- * @param options (optional) Configure the `PersistentResourceServiceConnection`
- * created by this function.
+ * @param options (optional) Configure the `PersistentResourceServiceConnection` created by
+ * this function.
  */
-std::shared_ptr<PersistentResourceServiceConnection>
-MakePersistentResourceServiceConnection(std::string const& location,
-                                        Options options = {});
+std::shared_ptr<PersistentResourceServiceConnection> MakePersistentResourceServiceConnection(
+    std::string const& location, Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace aiplatform_v1

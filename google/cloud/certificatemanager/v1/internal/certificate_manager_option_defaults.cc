@@ -35,46 +35,32 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options CertificateManagerDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_CERTIFICATE_MANAGER_ENDPOINT", "",
-      "GOOGLE_CLOUD_CPP_CERTIFICATE_MANAGER_AUTHORITY",
+      std::move(options), "GOOGLE_CLOUD_CPP_CERTIFICATE_MANAGER_ENDPOINT",
+      "", "GOOGLE_CLOUD_CPP_CERTIFICATE_MANAGER_AUTHORITY",
       "certificatemanager.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
-  if (!options
-           .has<certificatemanager_v1::CertificateManagerRetryPolicyOption>()) {
+  if (!options.has<certificatemanager_v1::CertificateManagerRetryPolicyOption>()) {
     options.set<certificatemanager_v1::CertificateManagerRetryPolicyOption>(
         certificatemanager_v1::CertificateManagerLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
-            .clone());
+            std::chrono::minutes(30)).clone());
   }
-  if (!options.has<
-          certificatemanager_v1::CertificateManagerBackoffPolicyOption>()) {
+  if (!options.has<certificatemanager_v1::CertificateManagerBackoffPolicyOption>()) {
     options.set<certificatemanager_v1::CertificateManagerBackoffPolicyOption>(
-        ExponentialBackoffPolicy(
-            std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
-            .clone());
+        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
   }
-  if (!options.has<
-          certificatemanager_v1::CertificateManagerPollingPolicyOption>()) {
+  if (!options.has<certificatemanager_v1::CertificateManagerPollingPolicyOption>()) {
     options.set<certificatemanager_v1::CertificateManagerPollingPolicyOption>(
         GenericPollingPolicy<
             certificatemanager_v1::CertificateManagerRetryPolicyOption::Type,
             certificatemanager_v1::CertificateManagerBackoffPolicyOption::Type>(
-            options
-                .get<certificatemanager_v1::
-                         CertificateManagerRetryPolicyOption>()
-                ->clone(),
+            options.get<certificatemanager_v1::CertificateManagerRetryPolicyOption>()->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                     std::chrono::minutes(5), kBackoffScaling)
-                .clone())
-            .clone());
+            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
   }
-  if (!options.has<certificatemanager_v1::
-                       CertificateManagerConnectionIdempotencyPolicyOption>()) {
-    options.set<certificatemanager_v1::
-                    CertificateManagerConnectionIdempotencyPolicyOption>(
-        certificatemanager_v1::
-            MakeDefaultCertificateManagerConnectionIdempotencyPolicy());
+  if (!options.has<certificatemanager_v1::CertificateManagerConnectionIdempotencyPolicyOption>()) {
+    options.set<certificatemanager_v1::CertificateManagerConnectionIdempotencyPolicyOption>(
+        certificatemanager_v1::MakeDefaultCertificateManagerConnectionIdempotencyPolicy());
   }
 
   return options;

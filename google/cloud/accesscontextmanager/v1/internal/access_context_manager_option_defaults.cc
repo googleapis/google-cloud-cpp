@@ -39,46 +39,28 @@ Options AccessContextManagerDefaultOptions(Options options) {
       "", "GOOGLE_CLOUD_CPP_ACCESS_CONTEXT_MANAGER_AUTHORITY",
       "accesscontextmanager.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
-  if (!options.has<
-          accesscontextmanager_v1::AccessContextManagerRetryPolicyOption>()) {
+  if (!options.has<accesscontextmanager_v1::AccessContextManagerRetryPolicyOption>()) {
     options.set<accesscontextmanager_v1::AccessContextManagerRetryPolicyOption>(
         accesscontextmanager_v1::AccessContextManagerLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
-            .clone());
+            std::chrono::minutes(30)).clone());
   }
-  if (!options.has<
-          accesscontextmanager_v1::AccessContextManagerBackoffPolicyOption>()) {
-    options
-        .set<accesscontextmanager_v1::AccessContextManagerBackoffPolicyOption>(
-            ExponentialBackoffPolicy(
-                std::chrono::seconds(0), std::chrono::seconds(1),
-                std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
-                .clone());
+  if (!options.has<accesscontextmanager_v1::AccessContextManagerBackoffPolicyOption>()) {
+    options.set<accesscontextmanager_v1::AccessContextManagerBackoffPolicyOption>(
+        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
   }
-  if (!options.has<
-          accesscontextmanager_v1::AccessContextManagerPollingPolicyOption>()) {
-    options.set<
-        accesscontextmanager_v1::AccessContextManagerPollingPolicyOption>(
-        GenericPollingPolicy<accesscontextmanager_v1::
-                                 AccessContextManagerRetryPolicyOption::Type,
-                             accesscontextmanager_v1::
-                                 AccessContextManagerBackoffPolicyOption::Type>(
-            options
-                .get<accesscontextmanager_v1::
-                         AccessContextManagerRetryPolicyOption>()
-                ->clone(),
+  if (!options.has<accesscontextmanager_v1::AccessContextManagerPollingPolicyOption>()) {
+    options.set<accesscontextmanager_v1::AccessContextManagerPollingPolicyOption>(
+        GenericPollingPolicy<
+            accesscontextmanager_v1::AccessContextManagerRetryPolicyOption::Type,
+            accesscontextmanager_v1::AccessContextManagerBackoffPolicyOption::Type>(
+            options.get<accesscontextmanager_v1::AccessContextManagerRetryPolicyOption>()->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                     std::chrono::minutes(5), kBackoffScaling)
-                .clone())
-            .clone());
+            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
   }
-  if (!options
-           .has<accesscontextmanager_v1::
-                    AccessContextManagerConnectionIdempotencyPolicyOption>()) {
-    options.set<accesscontextmanager_v1::
-                    AccessContextManagerConnectionIdempotencyPolicyOption>(
-        accesscontextmanager_v1::
-            MakeDefaultAccessContextManagerConnectionIdempotencyPolicy());
+  if (!options.has<accesscontextmanager_v1::AccessContextManagerConnectionIdempotencyPolicyOption>()) {
+    options.set<accesscontextmanager_v1::AccessContextManagerConnectionIdempotencyPolicyOption>(
+        accesscontextmanager_v1::MakeDefaultAccessContextManagerConnectionIdempotencyPolicy());
   }
 
   return options;

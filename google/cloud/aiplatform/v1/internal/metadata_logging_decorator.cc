@@ -31,24 +31,25 @@ namespace aiplatform_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 MetadataServiceLogging::MetadataServiceLogging(
-    std::shared_ptr<MetadataServiceStub> child, TracingOptions tracing_options,
+    std::shared_ptr<MetadataServiceStub> child,
+    TracingOptions tracing_options,
     std::set<std::string> const&)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)) {}
 
 future<StatusOr<google::longrunning::Operation>>
 MetadataServiceLogging::AsyncCreateMetadataStore(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::aiplatform::v1::CreateMetadataStoreRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::CreateMetadataStoreRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::aiplatform::v1::CreateMetadataStoreRequest const&
-                 request) {
-        return child_->AsyncCreateMetadataStore(cq, std::move(context),
-                                                std::move(options), request);
+             google::cloud::aiplatform::v1::CreateMetadataStoreRequest const& request) {
+        return child_->AsyncCreateMetadataStore(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -56,12 +57,13 @@ MetadataServiceLogging::AsyncCreateMetadataStore(
 
 StatusOr<google::longrunning::Operation>
 MetadataServiceLogging::CreateMetadataStore(
-    grpc::ClientContext& context, Options options,
-    google::cloud::aiplatform::v1::CreateMetadataStoreRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::aiplatform::v1::CreateMetadataStoreRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::aiplatform::v1::CreateMetadataStoreRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::aiplatform::v1::CreateMetadataStoreRequest const& request) {
         return child_->CreateMetadataStore(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -69,12 +71,13 @@ MetadataServiceLogging::CreateMetadataStore(
 
 StatusOr<google::cloud::aiplatform::v1::MetadataStore>
 MetadataServiceLogging::GetMetadataStore(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::GetMetadataStoreRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::aiplatform::v1::GetMetadataStoreRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::aiplatform::v1::GetMetadataStoreRequest const& request) {
         return child_->GetMetadataStore(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -82,12 +85,13 @@ MetadataServiceLogging::GetMetadataStore(
 
 StatusOr<google::cloud::aiplatform::v1::ListMetadataStoresResponse>
 MetadataServiceLogging::ListMetadataStores(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::ListMetadataStoresRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::aiplatform::v1::ListMetadataStoresRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::aiplatform::v1::ListMetadataStoresRequest const& request) {
         return child_->ListMetadataStores(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -95,18 +99,17 @@ MetadataServiceLogging::ListMetadataStores(
 
 future<StatusOr<google::longrunning::Operation>>
 MetadataServiceLogging::AsyncDeleteMetadataStore(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::aiplatform::v1::DeleteMetadataStoreRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::DeleteMetadataStoreRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::aiplatform::v1::DeleteMetadataStoreRequest const&
-                 request) {
-        return child_->AsyncDeleteMetadataStore(cq, std::move(context),
-                                                std::move(options), request);
+             google::cloud::aiplatform::v1::DeleteMetadataStoreRequest const& request) {
+        return child_->AsyncDeleteMetadataStore(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -114,12 +117,13 @@ MetadataServiceLogging::AsyncDeleteMetadataStore(
 
 StatusOr<google::longrunning::Operation>
 MetadataServiceLogging::DeleteMetadataStore(
-    grpc::ClientContext& context, Options options,
-    google::cloud::aiplatform::v1::DeleteMetadataStoreRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::aiplatform::v1::DeleteMetadataStoreRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::aiplatform::v1::DeleteMetadataStoreRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::aiplatform::v1::DeleteMetadataStoreRequest const& request) {
         return child_->DeleteMetadataStore(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -127,12 +131,13 @@ MetadataServiceLogging::DeleteMetadataStore(
 
 StatusOr<google::cloud::aiplatform::v1::Artifact>
 MetadataServiceLogging::CreateArtifact(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::CreateArtifactRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::aiplatform::v1::CreateArtifactRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::aiplatform::v1::CreateArtifactRequest const& request) {
         return child_->CreateArtifact(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -140,10 +145,12 @@ MetadataServiceLogging::CreateArtifact(
 
 StatusOr<google::cloud::aiplatform::v1::Artifact>
 MetadataServiceLogging::GetArtifact(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::GetArtifactRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::aiplatform::v1::GetArtifactRequest const& request) {
         return child_->GetArtifact(context, options, request);
       },
@@ -152,12 +159,13 @@ MetadataServiceLogging::GetArtifact(
 
 StatusOr<google::cloud::aiplatform::v1::ListArtifactsResponse>
 MetadataServiceLogging::ListArtifacts(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::ListArtifactsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::aiplatform::v1::ListArtifactsRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::aiplatform::v1::ListArtifactsRequest const& request) {
         return child_->ListArtifacts(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -165,12 +173,13 @@ MetadataServiceLogging::ListArtifacts(
 
 StatusOr<google::cloud::aiplatform::v1::Artifact>
 MetadataServiceLogging::UpdateArtifact(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::UpdateArtifactRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::aiplatform::v1::UpdateArtifactRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::aiplatform::v1::UpdateArtifactRequest const& request) {
         return child_->UpdateArtifact(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -178,30 +187,31 @@ MetadataServiceLogging::UpdateArtifact(
 
 future<StatusOr<google::longrunning::Operation>>
 MetadataServiceLogging::AsyncDeleteArtifact(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::aiplatform::v1::DeleteArtifactRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::DeleteArtifactRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::aiplatform::v1::DeleteArtifactRequest const& request) {
-        return child_->AsyncDeleteArtifact(cq, std::move(context),
-                                           std::move(options), request);
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::aiplatform::v1::DeleteArtifactRequest const& request) {
+        return child_->AsyncDeleteArtifact(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> MetadataServiceLogging::DeleteArtifact(
-    grpc::ClientContext& context, Options options,
-    google::cloud::aiplatform::v1::DeleteArtifactRequest const& request) {
+StatusOr<google::longrunning::Operation>
+MetadataServiceLogging::DeleteArtifact(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::aiplatform::v1::DeleteArtifactRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::aiplatform::v1::DeleteArtifactRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::aiplatform::v1::DeleteArtifactRequest const& request) {
         return child_->DeleteArtifact(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -209,30 +219,31 @@ StatusOr<google::longrunning::Operation> MetadataServiceLogging::DeleteArtifact(
 
 future<StatusOr<google::longrunning::Operation>>
 MetadataServiceLogging::AsyncPurgeArtifacts(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::aiplatform::v1::PurgeArtifactsRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::PurgeArtifactsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::aiplatform::v1::PurgeArtifactsRequest const& request) {
-        return child_->AsyncPurgeArtifacts(cq, std::move(context),
-                                           std::move(options), request);
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::aiplatform::v1::PurgeArtifactsRequest const& request) {
+        return child_->AsyncPurgeArtifacts(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> MetadataServiceLogging::PurgeArtifacts(
-    grpc::ClientContext& context, Options options,
-    google::cloud::aiplatform::v1::PurgeArtifactsRequest const& request) {
+StatusOr<google::longrunning::Operation>
+MetadataServiceLogging::PurgeArtifacts(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::aiplatform::v1::PurgeArtifactsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::aiplatform::v1::PurgeArtifactsRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::aiplatform::v1::PurgeArtifactsRequest const& request) {
         return child_->PurgeArtifacts(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -240,12 +251,13 @@ StatusOr<google::longrunning::Operation> MetadataServiceLogging::PurgeArtifacts(
 
 StatusOr<google::cloud::aiplatform::v1::Context>
 MetadataServiceLogging::CreateContext(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::CreateContextRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::aiplatform::v1::CreateContextRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::aiplatform::v1::CreateContextRequest const& request) {
         return child_->CreateContext(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -253,10 +265,12 @@ MetadataServiceLogging::CreateContext(
 
 StatusOr<google::cloud::aiplatform::v1::Context>
 MetadataServiceLogging::GetContext(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::GetContextRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::aiplatform::v1::GetContextRequest const& request) {
         return child_->GetContext(context, options, request);
       },
@@ -265,12 +279,13 @@ MetadataServiceLogging::GetContext(
 
 StatusOr<google::cloud::aiplatform::v1::ListContextsResponse>
 MetadataServiceLogging::ListContexts(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::ListContextsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::aiplatform::v1::ListContextsRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::aiplatform::v1::ListContextsRequest const& request) {
         return child_->ListContexts(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -278,12 +293,13 @@ MetadataServiceLogging::ListContexts(
 
 StatusOr<google::cloud::aiplatform::v1::Context>
 MetadataServiceLogging::UpdateContext(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::UpdateContextRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::aiplatform::v1::UpdateContextRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::aiplatform::v1::UpdateContextRequest const& request) {
         return child_->UpdateContext(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -291,30 +307,31 @@ MetadataServiceLogging::UpdateContext(
 
 future<StatusOr<google::longrunning::Operation>>
 MetadataServiceLogging::AsyncDeleteContext(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::aiplatform::v1::DeleteContextRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::DeleteContextRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::aiplatform::v1::DeleteContextRequest const& request) {
-        return child_->AsyncDeleteContext(cq, std::move(context),
-                                          std::move(options), request);
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::aiplatform::v1::DeleteContextRequest const& request) {
+        return child_->AsyncDeleteContext(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> MetadataServiceLogging::DeleteContext(
-    grpc::ClientContext& context, Options options,
-    google::cloud::aiplatform::v1::DeleteContextRequest const& request) {
+StatusOr<google::longrunning::Operation>
+MetadataServiceLogging::DeleteContext(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::aiplatform::v1::DeleteContextRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::aiplatform::v1::DeleteContextRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::aiplatform::v1::DeleteContextRequest const& request) {
         return child_->DeleteContext(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -322,59 +339,59 @@ StatusOr<google::longrunning::Operation> MetadataServiceLogging::DeleteContext(
 
 future<StatusOr<google::longrunning::Operation>>
 MetadataServiceLogging::AsyncPurgeContexts(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::aiplatform::v1::PurgeContextsRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::PurgeContextsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::aiplatform::v1::PurgeContextsRequest const& request) {
-        return child_->AsyncPurgeContexts(cq, std::move(context),
-                                          std::move(options), request);
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::aiplatform::v1::PurgeContextsRequest const& request) {
+        return child_->AsyncPurgeContexts(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> MetadataServiceLogging::PurgeContexts(
-    grpc::ClientContext& context, Options options,
-    google::cloud::aiplatform::v1::PurgeContextsRequest const& request) {
+StatusOr<google::longrunning::Operation>
+MetadataServiceLogging::PurgeContexts(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::aiplatform::v1::PurgeContextsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::aiplatform::v1::PurgeContextsRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::aiplatform::v1::PurgeContextsRequest const& request) {
         return child_->PurgeContexts(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<
-    google::cloud::aiplatform::v1::AddContextArtifactsAndExecutionsResponse>
+StatusOr<google::cloud::aiplatform::v1::AddContextArtifactsAndExecutionsResponse>
 MetadataServiceLogging::AddContextArtifactsAndExecutions(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::aiplatform::v1::
-        AddContextArtifactsAndExecutionsRequest const& request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::aiplatform::v1::AddContextArtifactsAndExecutionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::aiplatform::v1::
-                 AddContextArtifactsAndExecutionsRequest const& request) {
-        return child_->AddContextArtifactsAndExecutions(context, options,
-                                                        request);
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::aiplatform::v1::AddContextArtifactsAndExecutionsRequest const& request) {
+        return child_->AddContextArtifactsAndExecutions(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::aiplatform::v1::AddContextChildrenResponse>
 MetadataServiceLogging::AddContextChildren(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::AddContextChildrenRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::aiplatform::v1::AddContextChildrenRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::aiplatform::v1::AddContextChildrenRequest const& request) {
         return child_->AddContextChildren(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -382,13 +399,13 @@ MetadataServiceLogging::AddContextChildren(
 
 StatusOr<google::cloud::aiplatform::v1::RemoveContextChildrenResponse>
 MetadataServiceLogging::RemoveContextChildren(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::aiplatform::v1::RemoveContextChildrenRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::aiplatform::v1::RemoveContextChildrenRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::aiplatform::v1::RemoveContextChildrenRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::aiplatform::v1::RemoveContextChildrenRequest const& request) {
         return child_->RemoveContextChildren(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -396,13 +413,13 @@ MetadataServiceLogging::RemoveContextChildren(
 
 StatusOr<google::cloud::aiplatform::v1::LineageSubgraph>
 MetadataServiceLogging::QueryContextLineageSubgraph(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::aiplatform::v1::QueryContextLineageSubgraphRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::aiplatform::v1::QueryContextLineageSubgraphRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::aiplatform::v1::
-                 QueryContextLineageSubgraphRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::aiplatform::v1::QueryContextLineageSubgraphRequest const& request) {
         return child_->QueryContextLineageSubgraph(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -410,12 +427,13 @@ MetadataServiceLogging::QueryContextLineageSubgraph(
 
 StatusOr<google::cloud::aiplatform::v1::Execution>
 MetadataServiceLogging::CreateExecution(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::CreateExecutionRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::aiplatform::v1::CreateExecutionRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::aiplatform::v1::CreateExecutionRequest const& request) {
         return child_->CreateExecution(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -423,12 +441,13 @@ MetadataServiceLogging::CreateExecution(
 
 StatusOr<google::cloud::aiplatform::v1::Execution>
 MetadataServiceLogging::GetExecution(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::GetExecutionRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::aiplatform::v1::GetExecutionRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::aiplatform::v1::GetExecutionRequest const& request) {
         return child_->GetExecution(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -436,12 +455,13 @@ MetadataServiceLogging::GetExecution(
 
 StatusOr<google::cloud::aiplatform::v1::ListExecutionsResponse>
 MetadataServiceLogging::ListExecutions(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::ListExecutionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::aiplatform::v1::ListExecutionsRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::aiplatform::v1::ListExecutionsRequest const& request) {
         return child_->ListExecutions(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -449,12 +469,13 @@ MetadataServiceLogging::ListExecutions(
 
 StatusOr<google::cloud::aiplatform::v1::Execution>
 MetadataServiceLogging::UpdateExecution(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::UpdateExecutionRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::aiplatform::v1::UpdateExecutionRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::aiplatform::v1::UpdateExecutionRequest const& request) {
         return child_->UpdateExecution(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -462,18 +483,17 @@ MetadataServiceLogging::UpdateExecution(
 
 future<StatusOr<google::longrunning::Operation>>
 MetadataServiceLogging::AsyncDeleteExecution(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::aiplatform::v1::DeleteExecutionRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::DeleteExecutionRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::aiplatform::v1::DeleteExecutionRequest const&
-                 request) {
-        return child_->AsyncDeleteExecution(cq, std::move(context),
-                                            std::move(options), request);
+             google::cloud::aiplatform::v1::DeleteExecutionRequest const& request) {
+        return child_->AsyncDeleteExecution(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -481,12 +501,13 @@ MetadataServiceLogging::AsyncDeleteExecution(
 
 StatusOr<google::longrunning::Operation>
 MetadataServiceLogging::DeleteExecution(
-    grpc::ClientContext& context, Options options,
-    google::cloud::aiplatform::v1::DeleteExecutionRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::aiplatform::v1::DeleteExecutionRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::aiplatform::v1::DeleteExecutionRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::aiplatform::v1::DeleteExecutionRequest const& request) {
         return child_->DeleteExecution(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -494,18 +515,17 @@ MetadataServiceLogging::DeleteExecution(
 
 future<StatusOr<google::longrunning::Operation>>
 MetadataServiceLogging::AsyncPurgeExecutions(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::aiplatform::v1::PurgeExecutionsRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::PurgeExecutionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::aiplatform::v1::PurgeExecutionsRequest const&
-                 request) {
-        return child_->AsyncPurgeExecutions(cq, std::move(context),
-                                            std::move(options), request);
+             google::cloud::aiplatform::v1::PurgeExecutionsRequest const& request) {
+        return child_->AsyncPurgeExecutions(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -513,12 +533,13 @@ MetadataServiceLogging::AsyncPurgeExecutions(
 
 StatusOr<google::longrunning::Operation>
 MetadataServiceLogging::PurgeExecutions(
-    grpc::ClientContext& context, Options options,
-    google::cloud::aiplatform::v1::PurgeExecutionsRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::aiplatform::v1::PurgeExecutionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::aiplatform::v1::PurgeExecutionsRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::aiplatform::v1::PurgeExecutionsRequest const& request) {
         return child_->PurgeExecutions(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -526,12 +547,13 @@ MetadataServiceLogging::PurgeExecutions(
 
 StatusOr<google::cloud::aiplatform::v1::AddExecutionEventsResponse>
 MetadataServiceLogging::AddExecutionEvents(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::AddExecutionEventsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::aiplatform::v1::AddExecutionEventsRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::aiplatform::v1::AddExecutionEventsRequest const& request) {
         return child_->AddExecutionEvents(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -539,27 +561,27 @@ MetadataServiceLogging::AddExecutionEvents(
 
 StatusOr<google::cloud::aiplatform::v1::LineageSubgraph>
 MetadataServiceLogging::QueryExecutionInputsAndOutputs(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::aiplatform::v1::QueryExecutionInputsAndOutputsRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::aiplatform::v1::QueryExecutionInputsAndOutputsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::aiplatform::v1::
-                 QueryExecutionInputsAndOutputsRequest const& request) {
-        return child_->QueryExecutionInputsAndOutputs(context, options,
-                                                      request);
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::aiplatform::v1::QueryExecutionInputsAndOutputsRequest const& request) {
+        return child_->QueryExecutionInputsAndOutputs(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::aiplatform::v1::MetadataSchema>
 MetadataServiceLogging::CreateMetadataSchema(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::CreateMetadataSchemaRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::aiplatform::v1::CreateMetadataSchemaRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::aiplatform::v1::CreateMetadataSchemaRequest const& request) {
         return child_->CreateMetadataSchema(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -567,12 +589,13 @@ MetadataServiceLogging::CreateMetadataSchema(
 
 StatusOr<google::cloud::aiplatform::v1::MetadataSchema>
 MetadataServiceLogging::GetMetadataSchema(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::GetMetadataSchemaRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::aiplatform::v1::GetMetadataSchemaRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::aiplatform::v1::GetMetadataSchemaRequest const& request) {
         return child_->GetMetadataSchema(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -580,12 +603,13 @@ MetadataServiceLogging::GetMetadataSchema(
 
 StatusOr<google::cloud::aiplatform::v1::ListMetadataSchemasResponse>
 MetadataServiceLogging::ListMetadataSchemas(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::ListMetadataSchemasRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::aiplatform::v1::ListMetadataSchemasRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::aiplatform::v1::ListMetadataSchemasRequest const& request) {
         return child_->ListMetadataSchemas(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -593,13 +617,13 @@ MetadataServiceLogging::ListMetadataSchemas(
 
 StatusOr<google::cloud::aiplatform::v1::LineageSubgraph>
 MetadataServiceLogging::QueryArtifactLineageSubgraph(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::aiplatform::v1::QueryArtifactLineageSubgraphRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::aiplatform::v1::QueryArtifactLineageSubgraphRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::aiplatform::v1::
-                 QueryArtifactLineageSubgraphRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::aiplatform::v1::QueryArtifactLineageSubgraphRequest const& request) {
         return child_->QueryArtifactLineageSubgraph(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -607,43 +631,54 @@ MetadataServiceLogging::QueryArtifactLineageSubgraph(
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 MetadataServiceLogging::ListLocations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::location::ListLocationsRequest const& request) {
         return child_->ListLocations(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::cloud::location::Location> MetadataServiceLogging::GetLocation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::location::Location>
+MetadataServiceLogging::GetLocation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::location::GetLocationRequest const& request) {
         return child_->GetLocation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::iam::v1::Policy> MetadataServiceLogging::SetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::iam::v1::Policy>
+MetadataServiceLogging::SetIamPolicy(
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::iam::v1::SetIamPolicyRequest const& request) {
         return child_->SetIamPolicy(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::iam::v1::Policy> MetadataServiceLogging::GetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::iam::v1::Policy>
+MetadataServiceLogging::GetIamPolicy(
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::iam::v1::GetIamPolicyRequest const& request) {
         return child_->GetIamPolicy(context, options, request);
       },
@@ -652,10 +687,12 @@ StatusOr<google::iam::v1::Policy> MetadataServiceLogging::GetIamPolicy(
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 MetadataServiceLogging::TestIamPermissions(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::iam::v1::TestIamPermissionsRequest const& request) {
         return child_->TestIamPermissions(context, options, request);
       },
@@ -664,54 +701,68 @@ MetadataServiceLogging::TestIamPermissions(
 
 StatusOr<google::longrunning::ListOperationsResponse>
 MetadataServiceLogging::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::ListOperationsRequest const& request) {
         return child_->ListOperations(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> MetadataServiceLogging::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::Operation>
+MetadataServiceLogging::GetOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::GetOperationRequest const& request) {
         return child_->GetOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status MetadataServiceLogging::DeleteOperation(
-    grpc::ClientContext& context, Options const& options,
+Status
+MetadataServiceLogging::DeleteOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::DeleteOperationRequest const& request) {
         return child_->DeleteOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status MetadataServiceLogging::CancelOperation(
-    grpc::ClientContext& context, Options const& options,
+Status
+MetadataServiceLogging::CancelOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::CancelOperationRequest const& request) {
         return child_->CancelOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> MetadataServiceLogging::WaitOperation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::Operation>
+MetadataServiceLogging::WaitOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::WaitOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::WaitOperationRequest const& request) {
         return child_->WaitOperation(context, options, request);
       },
@@ -729,8 +780,8 @@ MetadataServiceLogging::AsyncGetOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(cq, std::move(context),
-                                         std::move(options), request);
+        return child_->AsyncGetOperation(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -746,8 +797,8 @@ future<Status> MetadataServiceLogging::AsyncCancelOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::CancelOperationRequest const& request) {
-        return child_->AsyncCancelOperation(cq, std::move(context),
-                                            std::move(options), request);
+        return child_->AsyncCancelOperation(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);

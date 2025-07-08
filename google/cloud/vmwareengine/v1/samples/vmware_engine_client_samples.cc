@@ -16,14 +16,14 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/vmwareengine/v1/vmwareengine.proto
 
-#include "google/cloud/vmwareengine/v1/vmware_engine_client.h"
-#include "google/cloud/vmwareengine/v1/vmware_engine_connection_idempotency_policy.h"
-#include "google/cloud/vmwareengine/v1/vmware_engine_options.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/testing_util/example_driver.h"
+#include "google/cloud/vmwareengine/v1/vmware_engine_client.h"
+#include "google/cloud/vmwareengine/v1/vmware_engine_connection_idempotency_policy.h"
+#include "google/cloud/vmwareengine/v1/vmware_engine_options.h"
 #include <fstream>
 #include <iostream>
 #include <string>
@@ -50,13 +50,11 @@ void SetClientEndpoint(std::vector<std::string> const& argv) {
 }
 
 //! [custom-idempotency-policy]
-class CustomIdempotencyPolicy : public google::cloud::vmwareengine_v1::
-                                    VmwareEngineConnectionIdempotencyPolicy {
+class CustomIdempotencyPolicy
+   : public google::cloud::vmwareengine_v1::VmwareEngineConnectionIdempotencyPolicy {
  public:
   ~CustomIdempotencyPolicy() override = default;
-  std::unique_ptr<
-      google::cloud::vmwareengine_v1::VmwareEngineConnectionIdempotencyPolicy>
-  clone() const override {
+  std::unique_ptr<google::cloud::vmwareengine_v1::VmwareEngineConnectionIdempotencyPolicy> clone() const override {
     return std::make_unique<CustomIdempotencyPolicy>(*this);
   }
   // Override inherited functions to define as needed.
@@ -68,23 +66,17 @@ void SetRetryPolicy(std::vector<std::string> const& argv) {
     throw google::cloud::testing_util::Usage{"set-client-retry-policy"};
   }
   //! [set-retry-policy]
-  auto options =
-      google::cloud::Options{}
-          .set<google::cloud::vmwareengine_v1::
-                   VmwareEngineConnectionIdempotencyPolicyOption>(
-              CustomIdempotencyPolicy().clone())
-          .set<google::cloud::vmwareengine_v1::VmwareEngineRetryPolicyOption>(
-              google::cloud::vmwareengine_v1::
-                  VmwareEngineLimitedErrorCountRetryPolicy(3)
-                      .clone())
-          .set<google::cloud::vmwareengine_v1::VmwareEngineBackoffPolicyOption>(
-              google::cloud::ExponentialBackoffPolicy(
-                  /*initial_delay=*/std::chrono::milliseconds(200),
-                  /*maximum_delay=*/std::chrono::seconds(45),
-                  /*scaling=*/2.0)
-                  .clone());
-  auto connection =
-      google::cloud::vmwareengine_v1::MakeVmwareEngineConnection(options);
+  auto options = google::cloud::Options{}
+    .set<google::cloud::vmwareengine_v1::VmwareEngineConnectionIdempotencyPolicyOption>(
+      CustomIdempotencyPolicy().clone())
+    .set<google::cloud::vmwareengine_v1::VmwareEngineRetryPolicyOption>(
+      google::cloud::vmwareengine_v1::VmwareEngineLimitedErrorCountRetryPolicy(3).clone())
+    .set<google::cloud::vmwareengine_v1::VmwareEngineBackoffPolicyOption>(
+      google::cloud::ExponentialBackoffPolicy(
+          /*initial_delay=*/std::chrono::milliseconds(200),
+          /*maximum_delay=*/std::chrono::seconds(45),
+          /*scaling=*/2.0).clone());
+  auto connection = google::cloud::vmwareengine_v1::MakeVmwareEngineConnection(options);
 
   // c1 and c2 share the same retry policies
   auto c1 = google::cloud::vmwareengine_v1::VmwareEngineClient(connection);
@@ -93,12 +85,8 @@ void SetRetryPolicy(std::vector<std::string> const& argv) {
   // You can override any of the policies in a new client. This new client
   // will share the policies from c1 (or c2) *except* for the retry policy.
   auto c3 = google::cloud::vmwareengine_v1::VmwareEngineClient(
-      connection,
-      google::cloud::Options{}
-          .set<google::cloud::vmwareengine_v1::VmwareEngineRetryPolicyOption>(
-              google::cloud::vmwareengine_v1::
-                  VmwareEngineLimitedTimeRetryPolicy(std::chrono::minutes(5))
-                      .clone()));
+    connection, google::cloud::Options{}.set<google::cloud::vmwareengine_v1::VmwareEngineRetryPolicyOption>(
+      google::cloud::vmwareengine_v1::VmwareEngineLimitedTimeRetryPolicy(std::chrono::minutes(5)).clone()));
 
   // You can also override the policies in a single call:
   // c3.SomeRpc(..., google::cloud::Options{}
@@ -119,27 +107,21 @@ void SetPollingPolicy(std::vector<std::string> const& argv) {
   // or error) or 45 minutes, whichever happens first. Initially pause for
   // 10 seconds between polling requests, increasing the pause by a factor
   // of 4 until it becomes 2 minutes.
-  auto options =
-      google::cloud::Options{}
-          .set<google::cloud::vmwareengine_v1::VmwareEnginePollingPolicyOption>(
-              google::cloud::GenericPollingPolicy<
-                  google::cloud::vmwareengine_v1::
-                      VmwareEngineRetryPolicyOption::Type,
-                  google::cloud::vmwareengine_v1::
-                      VmwareEngineBackoffPolicyOption::Type>(
-                  google::cloud::vmwareengine_v1::
-                      VmwareEngineLimitedTimeRetryPolicy(
-                          /*maximum_duration=*/std::chrono::minutes(45))
-                          .clone(),
-                  google::cloud::ExponentialBackoffPolicy(
-                      /*initial_delay=*/std::chrono::seconds(10),
-                      /*maximum_delay=*/std::chrono::minutes(2),
-                      /*scaling=*/4.0)
-                      .clone())
-                  .clone());
+  auto options = google::cloud::Options{}
+    .set<google::cloud::vmwareengine_v1::VmwareEnginePollingPolicyOption>(
+        google::cloud::GenericPollingPolicy<
+            google::cloud::vmwareengine_v1::VmwareEngineRetryPolicyOption::Type,
+            google::cloud::vmwareengine_v1::VmwareEngineBackoffPolicyOption::Type>(
+            google::cloud::vmwareengine_v1::VmwareEngineLimitedTimeRetryPolicy(
+                /*maximum_duration=*/std::chrono::minutes(45))
+                .clone(),
+            google::cloud::ExponentialBackoffPolicy(
+                /*initial_delay=*/std::chrono::seconds(10),
+                /*maximum_delay=*/std::chrono::minutes(2),
+                /*scaling=*/4.0).clone())
+            .clone());
 
-  auto connection =
-      google::cloud::vmwareengine_v1::MakeVmwareEngineConnection(options);
+  auto connection = google::cloud::vmwareengine_v1::MakeVmwareEngineConnection(options);
 
   // c1 and c2 share the same polling policies.
   auto c1 = google::cloud::vmwareengine_v1::VmwareEngineClient(connection);
@@ -160,7 +142,7 @@ void WithServiceAccount(std::vector<std::string> const& argv) {
         google::cloud::Options{}.set<google::cloud::UnifiedCredentialsOption>(
             google::cloud::MakeServiceAccountCredentials(contents));
     return google::cloud::vmwareengine_v1::VmwareEngineClient(
-        google::cloud::vmwareengine_v1::MakeVmwareEngineConnection(options));
+      google::cloud::vmwareengine_v1::MakeVmwareEngineConnection(options));
   }
   //! [with-service-account]
   (argv.at(0));
@@ -170,8 +152,9 @@ void AutoRun(std::vector<std::string> const& argv) {
   namespace examples = ::google::cloud::testing_util;
   using ::google::cloud::internal::GetEnv;
   if (!argv.empty()) throw examples::Usage{"auto"};
-  examples::CheckEnvironmentVariablesAreSet(
-      {"GOOGLE_CLOUD_CPP_TEST_SERVICE_ACCOUNT_KEYFILE"});
+  examples::CheckEnvironmentVariablesAreSet({
+    "GOOGLE_CLOUD_CPP_TEST_SERVICE_ACCOUNT_KEYFILE"
+  });
   auto const keyfile =
       GetEnv("GOOGLE_CLOUD_CPP_TEST_SERVICE_ACCOUNT_KEYFILE").value();
 

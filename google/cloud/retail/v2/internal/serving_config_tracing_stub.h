@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RETAIL_V2_INTERNAL_SERVING_CONFIG_TRACING_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RETAIL_V2_INTERNAL_SERVING_CONFIG_TRACING_STUB_H
 
-#include "google/cloud/retail/v2/internal/serving_config_stub.h"
 #include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/options.h"
+#include "google/cloud/retail/v2/internal/serving_config_stub.h"
 #include "google/cloud/version.h"
 #include <memory>
 
@@ -36,54 +36,56 @@ class ServingConfigServiceTracingStub : public ServingConfigServiceStub {
  public:
   ~ServingConfigServiceTracingStub() override = default;
 
-  explicit ServingConfigServiceTracingStub(
-      std::shared_ptr<ServingConfigServiceStub> child);
+  explicit ServingConfigServiceTracingStub(std::shared_ptr<ServingConfigServiceStub> child);
 
   StatusOr<google::cloud::retail::v2::ServingConfig> CreateServingConfig(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::retail::v2::CreateServingConfigRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::retail::v2::CreateServingConfigRequest const& request) override;
 
   Status DeleteServingConfig(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::retail::v2::DeleteServingConfigRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::retail::v2::DeleteServingConfigRequest const& request) override;
 
   StatusOr<google::cloud::retail::v2::ServingConfig> UpdateServingConfig(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::retail::v2::UpdateServingConfigRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::retail::v2::UpdateServingConfigRequest const& request) override;
 
   StatusOr<google::cloud::retail::v2::ServingConfig> GetServingConfig(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::retail::v2::GetServingConfigRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::retail::v2::GetServingConfigRequest const& request) override;
 
-  StatusOr<google::cloud::retail::v2::ListServingConfigsResponse>
-  ListServingConfigs(grpc::ClientContext& context, Options const& options,
-                     google::cloud::retail::v2::ListServingConfigsRequest const&
-                         request) override;
+  StatusOr<google::cloud::retail::v2::ListServingConfigsResponse> ListServingConfigs(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::retail::v2::ListServingConfigsRequest const& request) override;
 
   StatusOr<google::cloud::retail::v2::ServingConfig> AddControl(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::retail::v2::AddControlRequest const& request) override;
 
   StatusOr<google::cloud::retail::v2::ServingConfig> RemoveControl(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::retail::v2::RemoveControlRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
  private:
   std::shared_ptr<ServingConfigServiceStub> child_;
-  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
-      propagator_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

@@ -34,10 +34,8 @@ using ::google::cloud::webrisk_v1::WebRiskServicePollingPolicyOption;
 /// @deprecated Use webrisk_v1::WebRiskServiceBackoffPolicyOption directly.
 using ::google::cloud::webrisk_v1::WebRiskServiceBackoffPolicyOption;
 
-/// @deprecated Use webrisk_v1::WebRiskServiceConnectionIdempotencyPolicyOption
-/// directly.
-using ::google::cloud::webrisk_v1::
-    WebRiskServiceConnectionIdempotencyPolicyOption;
+/// @deprecated Use webrisk_v1::WebRiskServiceConnectionIdempotencyPolicyOption directly.
+using ::google::cloud::webrisk_v1::WebRiskServiceConnectionIdempotencyPolicyOption;
 
 /// @deprecated Use webrisk_v1::WebRiskServicePolicyOptionList directly.
 using ::google::cloud::webrisk_v1::WebRiskServicePolicyOptionList;

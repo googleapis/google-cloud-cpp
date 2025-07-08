@@ -38,39 +38,31 @@ class JobServiceRestStub {
 
   virtual StatusOr<google::cloud::bigquery::v2::JobCancelResponse> CancelJob(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::bigquery::v2::CancelJobRequest const& request) = 0;
+      Options const& options, google::cloud::bigquery::v2::CancelJobRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::bigquery::v2::Job> GetJob(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::bigquery::v2::GetJobRequest const& request) = 0;
+      Options const& options, google::cloud::bigquery::v2::GetJobRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::bigquery::v2::Job> InsertJob(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::bigquery::v2::InsertJobRequest const& request) = 0;
+      Options const& options, google::cloud::bigquery::v2::InsertJobRequest const& request) = 0;
 
   virtual Status DeleteJob(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::bigquery::v2::DeleteJobRequest const& request) = 0;
+      Options const& options, google::cloud::bigquery::v2::DeleteJobRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::bigquery::v2::JobList> ListJobs(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::bigquery::v2::ListJobsRequest const& request) = 0;
+      Options const& options, google::cloud::bigquery::v2::ListJobsRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::bigquery::v2::GetQueryResultsResponse>
-  GetQueryResults(
+  virtual StatusOr<google::cloud::bigquery::v2::GetQueryResultsResponse> GetQueryResults(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::bigquery::v2::GetQueryResultsRequest const& request) = 0;
+      Options const& options, google::cloud::bigquery::v2::GetQueryResultsRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::bigquery::v2::QueryResponse> Query(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::bigquery::v2::PostQueryRequest const& request) = 0;
+      Options const& options, google::cloud::bigquery::v2::PostQueryRequest const& request) = 0;
 };
 
 class DefaultJobServiceRestStub : public JobServiceRestStub {
@@ -78,44 +70,37 @@ class DefaultJobServiceRestStub : public JobServiceRestStub {
   ~DefaultJobServiceRestStub() override = default;
 
   explicit DefaultJobServiceRestStub(Options options);
-  DefaultJobServiceRestStub(std::shared_ptr<rest_internal::RestClient> service,
-                            Options options);
+  DefaultJobServiceRestStub(
+      std::shared_ptr<rest_internal::RestClient> service,
+      Options options);
 
   StatusOr<google::cloud::bigquery::v2::JobCancelResponse> CancelJob(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::bigquery::v2::CancelJobRequest const& request) override;
+      Options const& options, google::cloud::bigquery::v2::CancelJobRequest const& request) override;
 
   StatusOr<google::cloud::bigquery::v2::Job> GetJob(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::bigquery::v2::GetJobRequest const& request) override;
+      Options const& options, google::cloud::bigquery::v2::GetJobRequest const& request) override;
 
   StatusOr<google::cloud::bigquery::v2::Job> InsertJob(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::bigquery::v2::InsertJobRequest const& request) override;
+      Options const& options, google::cloud::bigquery::v2::InsertJobRequest const& request) override;
 
   Status DeleteJob(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::bigquery::v2::DeleteJobRequest const& request) override;
+      Options const& options, google::cloud::bigquery::v2::DeleteJobRequest const& request) override;
 
   StatusOr<google::cloud::bigquery::v2::JobList> ListJobs(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::bigquery::v2::ListJobsRequest const& request) override;
+      Options const& options, google::cloud::bigquery::v2::ListJobsRequest const& request) override;
 
-  StatusOr<google::cloud::bigquery::v2::GetQueryResultsResponse>
-  GetQueryResults(google::cloud::rest_internal::RestContext& rest_context,
-                  Options const& options,
-                  google::cloud::bigquery::v2::GetQueryResultsRequest const&
-                      request) override;
+  StatusOr<google::cloud::bigquery::v2::GetQueryResultsResponse> GetQueryResults(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options, google::cloud::bigquery::v2::GetQueryResultsRequest const& request) override;
 
   StatusOr<google::cloud::bigquery::v2::QueryResponse> Query(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::bigquery::v2::PostQueryRequest const& request) override;
+      Options const& options, google::cloud::bigquery::v2::PostQueryRequest const& request) override;
 
  private:
   std::shared_ptr<rest_internal::RestClient> service_;

@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_MACHINE_TYPES_V1_MACHINE_TYPES_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_MACHINE_TYPES_V1_MACHINE_TYPES_CONNECTION_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/machine_types/v1/internal/machine_types_retry_traits.h"
 #include "google/cloud/compute/machine_types/v1/machine_types_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -52,8 +52,7 @@ class MachineTypesRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class MachineTypesLimitedErrorCountRetryPolicy
-    : public MachineTypesRetryPolicy {
+class MachineTypesLimitedErrorCountRetryPolicy : public MachineTypesRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -63,14 +62,14 @@ class MachineTypesLimitedErrorCountRetryPolicy
    *     @p maximum_failures == 0.
    */
   explicit MachineTypesLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   MachineTypesLimitedErrorCountRetryPolicy(
       MachineTypesLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : MachineTypesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : MachineTypesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   MachineTypesLimitedErrorCountRetryPolicy(
       MachineTypesLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : MachineTypesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : MachineTypesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -90,9 +89,7 @@ class MachineTypesLimitedErrorCountRetryPolicy
   using BaseType = MachineTypesRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      compute_machine_types_v1_internal::MachineTypesRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<compute_machine_types_v1_internal::MachineTypesRetryTraits> impl_;
 };
 
 /**
@@ -130,14 +127,12 @@ class MachineTypesLimitedTimeRetryPolicy : public MachineTypesRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit MachineTypesLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  MachineTypesLimitedTimeRetryPolicy(
-      MachineTypesLimitedTimeRetryPolicy&& rhs) noexcept
-      : MachineTypesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  MachineTypesLimitedTimeRetryPolicy(
-      MachineTypesLimitedTimeRetryPolicy const& rhs) noexcept
-      : MachineTypesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  MachineTypesLimitedTimeRetryPolicy(MachineTypesLimitedTimeRetryPolicy&& rhs) noexcept
+    : MachineTypesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  MachineTypesLimitedTimeRetryPolicy(MachineTypesLimitedTimeRetryPolicy const& rhs) noexcept
+    : MachineTypesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -159,9 +154,7 @@ class MachineTypesLimitedTimeRetryPolicy : public MachineTypesRetryPolicy {
   using BaseType = MachineTypesRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      compute_machine_types_v1_internal::MachineTypesRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<compute_machine_types_v1_internal::MachineTypesRetryTraits> impl_;
 };
 
 /**
@@ -174,8 +167,7 @@ class MachineTypesLimitedTimeRetryPolicy : public MachineTypesRetryPolicy {
  *
  * To create a concrete instance, see `MakeMachineTypesConnection()`.
  *
- * For mocking, see
- * `compute_machine_types_v1_mocks::MockMachineTypesConnection`.
+ * For mocking, see `compute_machine_types_v1_mocks::MockMachineTypesConnection`.
  */
 class MachineTypesConnection {
  public:
@@ -183,19 +175,14 @@ class MachineTypesConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StreamRange<std::pair<
-      std::string, google::cloud::cpp::compute::v1::MachineTypesScopedList>>
-  AggregatedListMachineTypes(google::cloud::cpp::compute::machine_types::v1::
-                                 AggregatedListMachineTypesRequest request);
+  virtual StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::MachineTypesScopedList>>
+  AggregatedListMachineTypes(google::cloud::cpp::compute::machine_types::v1::AggregatedListMachineTypesRequest request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::MachineType> GetMachineType(
-      google::cloud::cpp::compute::machine_types::v1::
-          GetMachineTypeRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::MachineType>
+  GetMachineType(google::cloud::cpp::compute::machine_types::v1::GetMachineTypeRequest const& request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::MachineType>
-  ListMachineTypes(
-      google::cloud::cpp::compute::machine_types::v1::ListMachineTypesRequest
-          request);
+  ListMachineTypes(google::cloud::cpp::compute::machine_types::v1::ListMachineTypesRequest request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

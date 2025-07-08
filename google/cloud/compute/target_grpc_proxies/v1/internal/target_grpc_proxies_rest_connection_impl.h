@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_TARGET_GRPC_PROXIES_V1_INTERNAL_TARGET_GRPC_PROXIES_REST_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_TARGET_GRPC_PROXIES_V1_INTERNAL_TARGET_GRPC_PROXIES_REST_CONNECTION_IMPL_H
 
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/target_grpc_proxies/v1/internal/target_grpc_proxies_rest_stub.h"
 #include "google/cloud/compute/target_grpc_proxies/v1/internal/target_grpc_proxies_retry_traits.h"
 #include "google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies_connection.h"
 #include "google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies_connection_idempotency_policy.h"
 #include "google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies_options.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -44,97 +44,72 @@ class TargetGrpcProxiesRestConnectionImpl
   ~TargetGrpcProxiesRestConnectionImpl() override = default;
 
   TargetGrpcProxiesRestConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<
-          compute_target_grpc_proxies_v1_internal::TargetGrpcProxiesRestStub>
-          stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<compute_target_grpc_proxies_v1_internal::TargetGrpcProxiesRestStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteTargetGrpcProxy(
-      google::cloud::cpp::compute::target_grpc_proxies::v1::
-          DeleteTargetGrpcProxyRequest const& request) override;
+  DeleteTargetGrpcProxy(google::cloud::cpp::compute::target_grpc_proxies::v1::DeleteTargetGrpcProxyRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteTargetGrpcProxy(
-      NoAwaitTag, google::cloud::cpp::compute::target_grpc_proxies::v1::
-                      DeleteTargetGrpcProxyRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeleteTargetGrpcProxy(NoAwaitTag,
+      google::cloud::cpp::compute::target_grpc_proxies::v1::DeleteTargetGrpcProxyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteTargetGrpcProxy(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::TargetGrpcProxy> GetTargetGrpcProxy(
-      google::cloud::cpp::compute::target_grpc_proxies::v1::
-          GetTargetGrpcProxyRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::TargetGrpcProxy>
+  GetTargetGrpcProxy(google::cloud::cpp::compute::target_grpc_proxies::v1::GetTargetGrpcProxyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertTargetGrpcProxy(
-      google::cloud::cpp::compute::target_grpc_proxies::v1::
-          InsertTargetGrpcProxyRequest const& request) override;
+  InsertTargetGrpcProxy(google::cloud::cpp::compute::target_grpc_proxies::v1::InsertTargetGrpcProxyRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertTargetGrpcProxy(
-      NoAwaitTag, google::cloud::cpp::compute::target_grpc_proxies::v1::
-                      InsertTargetGrpcProxyRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  InsertTargetGrpcProxy(NoAwaitTag,
+      google::cloud::cpp::compute::target_grpc_proxies::v1::InsertTargetGrpcProxyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertTargetGrpcProxy(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StreamRange<google::cloud::cpp::compute::v1::TargetGrpcProxy>
-  ListTargetGrpcProxies(google::cloud::cpp::compute::target_grpc_proxies::v1::
-                            ListTargetGrpcProxiesRequest request) override;
+  ListTargetGrpcProxies(google::cloud::cpp::compute::target_grpc_proxies::v1::ListTargetGrpcProxiesRequest request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchTargetGrpcProxy(google::cloud::cpp::compute::target_grpc_proxies::v1::
-                           PatchTargetGrpcProxyRequest const& request) override;
+  PatchTargetGrpcProxy(google::cloud::cpp::compute::target_grpc_proxies::v1::PatchTargetGrpcProxyRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchTargetGrpcProxy(
-      NoAwaitTag, google::cloud::cpp::compute::target_grpc_proxies::v1::
-                      PatchTargetGrpcProxyRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  PatchTargetGrpcProxy(NoAwaitTag,
+      google::cloud::cpp::compute::target_grpc_proxies::v1::PatchTargetGrpcProxyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   PatchTargetGrpcProxy(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
  private:
-  static std::unique_ptr<
-      compute_target_grpc_proxies_v1::TargetGrpcProxiesRetryPolicy>
+  static std::unique_ptr<compute_target_grpc_proxies_v1::TargetGrpcProxiesRetryPolicy>
   retry_policy(Options const& options) {
-    return options
-        .get<compute_target_grpc_proxies_v1::
-                 TargetGrpcProxiesRetryPolicyOption>()
-        ->clone();
+    return options.get<compute_target_grpc_proxies_v1::TargetGrpcProxiesRetryPolicyOption>()->clone();
   }
 
   static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options
-        .get<compute_target_grpc_proxies_v1::
-                 TargetGrpcProxiesBackoffPolicyOption>()
-        ->clone();
+    return options.get<compute_target_grpc_proxies_v1::TargetGrpcProxiesBackoffPolicyOption>()->clone();
   }
 
-  static std::unique_ptr<compute_target_grpc_proxies_v1::
-                             TargetGrpcProxiesConnectionIdempotencyPolicy>
+  static std::unique_ptr<compute_target_grpc_proxies_v1::TargetGrpcProxiesConnectionIdempotencyPolicy>
   idempotency_policy(Options const& options) {
-    return options
-        .get<compute_target_grpc_proxies_v1::
-                 TargetGrpcProxiesConnectionIdempotencyPolicyOption>()
-        ->clone();
+    return options.get<compute_target_grpc_proxies_v1::TargetGrpcProxiesConnectionIdempotencyPolicyOption>()->clone();
   }
 
   static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-    return options
-        .get<compute_target_grpc_proxies_v1::
-                 TargetGrpcProxiesPollingPolicyOption>()
-        ->clone();
+    return options.get<compute_target_grpc_proxies_v1::TargetGrpcProxiesPollingPolicyOption>()->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<
-      compute_target_grpc_proxies_v1_internal::TargetGrpcProxiesRestStub>
-      stub_;
+  std::shared_ptr<compute_target_grpc_proxies_v1_internal::TargetGrpcProxiesRestStub> stub_;
   Options options_;
 };
 

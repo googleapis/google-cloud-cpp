@@ -36,91 +36,78 @@ class ReservationsTracingConnection
   ~ReservationsTracingConnection() override = default;
 
   explicit ReservationsTracingConnection(
-      std::shared_ptr<compute_reservations_v1::ReservationsConnection> child);
+    std::shared_ptr<compute_reservations_v1::ReservationsConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StreamRange<std::pair<
-      std::string, google::cloud::cpp::compute::v1::ReservationsScopedList>>
-  AggregatedListReservations(
-      google::cloud::cpp::compute::reservations::v1::
-          AggregatedListReservationsRequest request) override;
+  StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::ReservationsScopedList>>
+  AggregatedListReservations(google::cloud::cpp::compute::reservations::v1::AggregatedListReservationsRequest request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteReservation(google::cloud::cpp::compute::reservations::v1::
-                        DeleteReservationRequest const& request) override;
+  DeleteReservation(google::cloud::cpp::compute::reservations::v1::DeleteReservationRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteReservation(
-      NoAwaitTag, google::cloud::cpp::compute::reservations::v1::
-                      DeleteReservationRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeleteReservation(NoAwaitTag,
+      google::cloud::cpp::compute::reservations::v1::DeleteReservationRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteReservation(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Reservation> GetReservation(
-      google::cloud::cpp::compute::reservations::v1::
-          GetReservationRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Reservation>
+  GetReservation(google::cloud::cpp::compute::reservations::v1::GetReservationRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
-      google::cloud::cpp::compute::reservations::v1::GetIamPolicyRequest const&
-          request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Policy>
+  GetIamPolicy(google::cloud::cpp::compute::reservations::v1::GetIamPolicyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertReservation(google::cloud::cpp::compute::reservations::v1::
-                        InsertReservationRequest const& request) override;
+  InsertReservation(google::cloud::cpp::compute::reservations::v1::InsertReservationRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertReservation(
-      NoAwaitTag, google::cloud::cpp::compute::reservations::v1::
-                      InsertReservationRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  InsertReservation(NoAwaitTag,
+      google::cloud::cpp::compute::reservations::v1::InsertReservationRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertReservation(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
-  StreamRange<google::cloud::cpp::compute::v1::Reservation> ListReservations(
-      google::cloud::cpp::compute::reservations::v1::ListReservationsRequest
-          request) override;
+  StreamRange<google::cloud::cpp::compute::v1::Reservation>
+  ListReservations(google::cloud::cpp::compute::reservations::v1::ListReservationsRequest request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PerformMaintenance(google::cloud::cpp::compute::reservations::v1::
-                         PerformMaintenanceRequest const& request) override;
+  PerformMaintenance(google::cloud::cpp::compute::reservations::v1::PerformMaintenanceRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation> PerformMaintenance(
-      NoAwaitTag, google::cloud::cpp::compute::reservations::v1::
-                      PerformMaintenanceRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  PerformMaintenance(NoAwaitTag,
+      google::cloud::cpp::compute::reservations::v1::PerformMaintenanceRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   PerformMaintenance(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Resize(
-      google::cloud::cpp::compute::reservations::v1::ResizeRequest const&
-          request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  Resize(google::cloud::cpp::compute::reservations::v1::ResizeRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation> Resize(
-      NoAwaitTag,
-      google::cloud::cpp::compute::reservations::v1::ResizeRequest const&
-          request) override;
-
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Resize(
-      google::cloud::cpp::compute::v1::Operation const& operation) override;
-
-  StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
-      google::cloud::cpp::compute::reservations::v1::SetIamPolicyRequest const&
-          request) override;
-
-  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(google::cloud::cpp::compute::reservations::v1::
-                         TestIamPermissionsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  Resize(NoAwaitTag,
+      google::cloud::cpp::compute::reservations::v1::ResizeRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateReservation(google::cloud::cpp::compute::reservations::v1::
-                        UpdateReservationRequest const& request) override;
+  Resize(
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateReservation(
-      NoAwaitTag, google::cloud::cpp::compute::reservations::v1::
-                      UpdateReservationRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Policy>
+  SetIamPolicy(google::cloud::cpp::compute::reservations::v1::SetIamPolicyRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+  TestIamPermissions(google::cloud::cpp::compute::reservations::v1::TestIamPermissionsRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  UpdateReservation(google::cloud::cpp::compute::reservations::v1::UpdateReservationRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  UpdateReservation(NoAwaitTag,
+      google::cloud::cpp::compute::reservations::v1::UpdateReservationRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   UpdateReservation(

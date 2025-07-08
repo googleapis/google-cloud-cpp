@@ -39,83 +39,89 @@ class RuleServiceTracingStub : public RuleServiceStub {
   explicit RuleServiceTracingStub(std::shared_ptr<RuleServiceStub> child);
 
   StatusOr<google::cloud::chronicle::v1::Rule> CreateRule(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::chronicle::v1::CreateRuleRequest const& request) override;
 
   StatusOr<google::cloud::chronicle::v1::Rule> GetRule(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::chronicle::v1::GetRuleRequest const& request) override;
 
   StatusOr<google::cloud::chronicle::v1::ListRulesResponse> ListRules(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::chronicle::v1::ListRulesRequest const& request) override;
 
   StatusOr<google::cloud::chronicle::v1::Rule> UpdateRule(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::chronicle::v1::UpdateRuleRequest const& request) override;
 
   Status DeleteRule(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::chronicle::v1::DeleteRuleRequest const& request) override;
 
-  StatusOr<google::cloud::chronicle::v1::ListRuleRevisionsResponse>
-  ListRuleRevisions(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::chronicle::v1::ListRuleRevisionsRequest const& request)
-      override;
+  StatusOr<google::cloud::chronicle::v1::ListRuleRevisionsResponse> ListRuleRevisions(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::chronicle::v1::ListRuleRevisionsRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateRetrohunt(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::chronicle::v1::CreateRetrohuntRequest const& request)
-      override;
+      google::cloud::chronicle::v1::CreateRetrohuntRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateRetrohunt(
-      grpc::ClientContext& context, Options options,
-      google::cloud::chronicle::v1::CreateRetrohuntRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::chronicle::v1::CreateRetrohuntRequest const& request) override;
 
   StatusOr<google::cloud::chronicle::v1::Retrohunt> GetRetrohunt(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::chronicle::v1::GetRetrohuntRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::chronicle::v1::GetRetrohuntRequest const& request) override;
 
   StatusOr<google::cloud::chronicle::v1::ListRetrohuntsResponse> ListRetrohunts(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::chronicle::v1::ListRetrohuntsRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::chronicle::v1::ListRetrohuntsRequest const& request) override;
 
   StatusOr<google::cloud::chronicle::v1::RuleDeployment> GetRuleDeployment(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::chronicle::v1::GetRuleDeploymentRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::chronicle::v1::GetRuleDeploymentRequest const& request) override;
 
-  StatusOr<google::cloud::chronicle::v1::ListRuleDeploymentsResponse>
-  ListRuleDeployments(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::chronicle::v1::ListRuleDeploymentsRequest const& request)
-      override;
+  StatusOr<google::cloud::chronicle::v1::ListRuleDeploymentsResponse> ListRuleDeployments(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::chronicle::v1::ListRuleDeploymentsRequest const& request) override;
 
   StatusOr<google::cloud::chronicle::v1::RuleDeployment> UpdateRuleDeployment(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::chronicle::v1::UpdateRuleDeploymentRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::chronicle::v1::UpdateRuleDeploymentRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status DeleteOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::DeleteOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -132,8 +138,7 @@ class RuleServiceTracingStub : public RuleServiceStub {
 
  private:
   std::shared_ptr<RuleServiceStub> child_;
-  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
-      propagator_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

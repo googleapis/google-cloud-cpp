@@ -19,11 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCEMANAGER_V3_TAG_BINDINGS_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCEMANAGER_V3_TAG_BINDINGS_CLIENT_H
 
-#include "google/cloud/resourcemanager/v3/tag_bindings_connection.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
+#include "google/cloud/resourcemanager/v3/tag_bindings_connection.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
@@ -64,8 +64,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class TagBindingsClient {
  public:
-  explicit TagBindingsClient(std::shared_ptr<TagBindingsConnection> connection,
-                             Options opts = {});
+  explicit TagBindingsClient(std::shared_ptr<TagBindingsConnection> connection, Options opts = {});
   ~TagBindingsClient();
 
   ///@{
@@ -78,12 +77,10 @@ class TagBindingsClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(TagBindingsClient const& a,
-                         TagBindingsClient const& b) {
+  friend bool operator==(TagBindingsClient const& a, TagBindingsClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(TagBindingsClient const& a,
-                         TagBindingsClient const& b) {
+  friend bool operator!=(TagBindingsClient const& a, TagBindingsClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -125,8 +122,8 @@ class TagBindingsClient {
   /// [google.cloud.resourcemanager.v3.TagBinding]: @googleapis_reference_link{google/cloud/resourcemanager/v3/tag_bindings.proto#L96}
   ///
   // clang-format on
-  StreamRange<google::cloud::resourcemanager::v3::TagBinding> ListTagBindings(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::resourcemanager::v3::TagBinding>
+  ListTagBindings(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -168,9 +165,8 @@ class TagBindingsClient {
   /// [google.cloud.resourcemanager.v3.TagBinding]: @googleapis_reference_link{google/cloud/resourcemanager/v3/tag_bindings.proto#L96}
   ///
   // clang-format on
-  StreamRange<google::cloud::resourcemanager::v3::TagBinding> ListTagBindings(
-      google::cloud::resourcemanager::v3::ListTagBindingsRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::resourcemanager::v3::TagBinding>
+  ListTagBindings(google::cloud::resourcemanager::v3::ListTagBindingsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -202,9 +198,7 @@ class TagBindingsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::resourcemanager::v3::TagBinding>>
-  CreateTagBinding(
-      google::cloud::resourcemanager::v3::TagBinding const& tag_binding,
-      Options opts = {});
+  CreateTagBinding(google::cloud::resourcemanager::v3::TagBinding const& tag_binding, Options opts = {});
 
   // clang-format off
   ///
@@ -217,10 +211,8 @@ class TagBindingsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateTagBinding(
-      NoAwaitTag,
-      google::cloud::resourcemanager::v3::TagBinding const& tag_binding,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateTagBinding(NoAwaitTag, google::cloud::resourcemanager::v3::TagBinding const& tag_binding, Options opts = {});
 
   // clang-format off
   ///
@@ -257,10 +249,7 @@ class TagBindingsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::resourcemanager::v3::TagBinding>>
-  CreateTagBinding(
-      google::cloud::resourcemanager::v3::CreateTagBindingRequest const&
-          request,
-      Options opts = {});
+  CreateTagBinding(google::cloud::resourcemanager::v3::CreateTagBindingRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -273,11 +262,8 @@ class TagBindingsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateTagBinding(
-      NoAwaitTag,
-      google::cloud::resourcemanager::v3::CreateTagBindingRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateTagBinding(NoAwaitTag, google::cloud::resourcemanager::v3::CreateTagBindingRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -289,8 +275,7 @@ class TagBindingsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::resourcemanager::v3::TagBinding>>
-  CreateTagBinding(google::longrunning::Operation const& operation,
-                   Options opts = {});
+  CreateTagBinding(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -337,8 +322,8 @@ class TagBindingsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteTagBinding(
-      NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteTagBinding(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -375,10 +360,7 @@ class TagBindingsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::resourcemanager::v3::DeleteTagBindingMetadata>>
-  DeleteTagBinding(
-      google::cloud::resourcemanager::v3::DeleteTagBindingRequest const&
-          request,
-      Options opts = {});
+  DeleteTagBinding(google::cloud::resourcemanager::v3::DeleteTagBindingRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -391,11 +373,8 @@ class TagBindingsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteTagBinding(
-      NoAwaitTag,
-      google::cloud::resourcemanager::v3::DeleteTagBindingRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteTagBinding(NoAwaitTag, google::cloud::resourcemanager::v3::DeleteTagBindingRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -407,8 +386,7 @@ class TagBindingsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::resourcemanager::v3::DeleteTagBindingMetadata>>
-  DeleteTagBinding(google::longrunning::Operation const& operation,
-                   Options opts = {});
+  DeleteTagBinding(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -485,9 +463,7 @@ class TagBindingsClient {
   ///
   // clang-format on
   StreamRange<google::cloud::resourcemanager::v3::EffectiveTag>
-  ListEffectiveTags(
-      google::cloud::resourcemanager::v3::ListEffectiveTagsRequest request,
-      Options opts = {});
+  ListEffectiveTags(google::cloud::resourcemanager::v3::ListEffectiveTagsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -513,8 +489,8 @@ class TagBindingsClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -545,9 +521,8 @@ class TagBindingsClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<TagBindingsConnection> connection_;

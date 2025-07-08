@@ -29,35 +29,34 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 AcceleratorTypesRestLogging::AcceleratorTypesRestLogging(
     std::shared_ptr<AcceleratorTypesRestStub> child,
-    TracingOptions tracing_options, std::set<std::string> components)
-    : child_(std::move(child)),
-      tracing_options_(std::move(tracing_options)),
+    TracingOptions tracing_options,
+    std::set<std::string> components)
+    : child_(std::move(child)), tracing_options_(std::move(tracing_options)),
       components_(std::move(components)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::AcceleratorTypeAggregatedList>
 AcceleratorTypesRestLogging::AggregatedListAcceleratorTypes(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::accelerator_types::v1::
-        AggregatedListAcceleratorTypesRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::accelerator_types::v1::AggregatedListAcceleratorTypesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::cloud::cpp::compute::accelerator_types::v1::
-                 AggregatedListAcceleratorTypesRequest const& request) {
-        return child_->AggregatedListAcceleratorTypes(rest_context, options,
-                                                      request);
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
+             google::cloud::cpp::compute::accelerator_types::v1::AggregatedListAcceleratorTypesRequest const& request) {
+        return child_->AggregatedListAcceleratorTypes(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::AcceleratorType>
 AcceleratorTypesRestLogging::GetAcceleratorType(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::accelerator_types::v1::
-        GetAcceleratorTypeRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::accelerator_types::v1::GetAcceleratorTypeRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::cloud::cpp::compute::accelerator_types::v1::
-                 GetAcceleratorTypeRequest const& request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
+             google::cloud::cpp::compute::accelerator_types::v1::GetAcceleratorTypeRequest const& request) {
         return child_->GetAcceleratorType(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -65,13 +64,13 @@ AcceleratorTypesRestLogging::GetAcceleratorType(
 
 StatusOr<google::cloud::cpp::compute::v1::AcceleratorTypeList>
 AcceleratorTypesRestLogging::ListAcceleratorTypes(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::accelerator_types::v1::
-        ListAcceleratorTypesRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::accelerator_types::v1::ListAcceleratorTypesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::cloud::cpp::compute::accelerator_types::v1::
-                 ListAcceleratorTypesRequest const& request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
+             google::cloud::cpp::compute::accelerator_types::v1::ListAcceleratorTypesRequest const& request) {
         return child_->ListAcceleratorTypes(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);

@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ORACLEDATABASE_V1_ORACLE_DATABASE_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ORACLEDATABASE_V1_ORACLE_DATABASE_CONNECTION_H
 
-#include "google/cloud/oracledatabase/v1/internal/oracle_database_retry_traits.h"
-#include "google/cloud/oracledatabase/v1/oracle_database_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
+#include "google/cloud/oracledatabase/v1/internal/oracle_database_retry_traits.h"
+#include "google/cloud/oracledatabase/v1/oracle_database_connection_idempotency_policy.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -57,8 +57,7 @@ class OracleDatabaseRetryPolicy : public ::google::cloud::RetryPolicy {
  * - [`kDeadlineExceeded`](@ref google::cloud::StatusCode)
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class OracleDatabaseLimitedErrorCountRetryPolicy
-    : public OracleDatabaseRetryPolicy {
+class OracleDatabaseLimitedErrorCountRetryPolicy : public OracleDatabaseRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -68,14 +67,14 @@ class OracleDatabaseLimitedErrorCountRetryPolicy
    *     @p maximum_failures == 0.
    */
   explicit OracleDatabaseLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   OracleDatabaseLimitedErrorCountRetryPolicy(
       OracleDatabaseLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : OracleDatabaseLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : OracleDatabaseLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   OracleDatabaseLimitedErrorCountRetryPolicy(
       OracleDatabaseLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : OracleDatabaseLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : OracleDatabaseLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -95,9 +94,7 @@ class OracleDatabaseLimitedErrorCountRetryPolicy
   using BaseType = OracleDatabaseRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      oracledatabase_v1_internal::OracleDatabaseRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<oracledatabase_v1_internal::OracleDatabaseRetryTraits> impl_;
 };
 
 /**
@@ -136,14 +133,12 @@ class OracleDatabaseLimitedTimeRetryPolicy : public OracleDatabaseRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit OracleDatabaseLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  OracleDatabaseLimitedTimeRetryPolicy(
-      OracleDatabaseLimitedTimeRetryPolicy&& rhs) noexcept
-      : OracleDatabaseLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  OracleDatabaseLimitedTimeRetryPolicy(
-      OracleDatabaseLimitedTimeRetryPolicy const& rhs) noexcept
-      : OracleDatabaseLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  OracleDatabaseLimitedTimeRetryPolicy(OracleDatabaseLimitedTimeRetryPolicy&& rhs) noexcept
+    : OracleDatabaseLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  OracleDatabaseLimitedTimeRetryPolicy(OracleDatabaseLimitedTimeRetryPolicy const& rhs) noexcept
+    : OracleDatabaseLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -165,9 +160,7 @@ class OracleDatabaseLimitedTimeRetryPolicy : public OracleDatabaseRetryPolicy {
   using BaseType = OracleDatabaseRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      oracledatabase_v1_internal::OracleDatabaseRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<oracledatabase_v1_internal::OracleDatabaseRetryTraits> impl_;
 };
 
 /**
@@ -188,240 +181,158 @@ class OracleDatabaseConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StreamRange<
-      google::cloud::oracledatabase::v1::CloudExadataInfrastructure>
-  ListCloudExadataInfrastructures(
-      google::cloud::oracledatabase::v1::ListCloudExadataInfrastructuresRequest
-          request);
+  virtual StreamRange<google::cloud::oracledatabase::v1::CloudExadataInfrastructure>
+  ListCloudExadataInfrastructures(google::cloud::oracledatabase::v1::ListCloudExadataInfrastructuresRequest request);
 
-  virtual StatusOr<
-      google::cloud::oracledatabase::v1::CloudExadataInfrastructure>
-  GetCloudExadataInfrastructure(
-      google::cloud::oracledatabase::v1::
-          GetCloudExadataInfrastructureRequest const& request);
+  virtual StatusOr<google::cloud::oracledatabase::v1::CloudExadataInfrastructure>
+  GetCloudExadataInfrastructure(google::cloud::oracledatabase::v1::GetCloudExadataInfrastructureRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::oracledatabase::v1::CloudExadataInfrastructure>>
-  CreateCloudExadataInfrastructure(
-      google::cloud::oracledatabase::v1::
-          CreateCloudExadataInfrastructureRequest const& request);
+  virtual future<StatusOr<google::cloud::oracledatabase::v1::CloudExadataInfrastructure>>
+  CreateCloudExadataInfrastructure(google::cloud::oracledatabase::v1::CreateCloudExadataInfrastructureRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation>
-  CreateCloudExadataInfrastructure(
-      NoAwaitTag, google::cloud::oracledatabase::v1::
-                      CreateCloudExadataInfrastructureRequest const& request);
+  CreateCloudExadataInfrastructure(NoAwaitTag, google::cloud::oracledatabase::v1::CreateCloudExadataInfrastructureRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::oracledatabase::v1::CloudExadataInfrastructure>>
-  CreateCloudExadataInfrastructure(
-      google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::oracledatabase::v1::CloudExadataInfrastructure>>
+  CreateCloudExadataInfrastructure( google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
-  DeleteCloudExadataInfrastructure(
-      google::cloud::oracledatabase::v1::
-          DeleteCloudExadataInfrastructureRequest const& request);
+  DeleteCloudExadataInfrastructure(google::cloud::oracledatabase::v1::DeleteCloudExadataInfrastructureRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation>
-  DeleteCloudExadataInfrastructure(
-      NoAwaitTag, google::cloud::oracledatabase::v1::
-                      DeleteCloudExadataInfrastructureRequest const& request);
+  DeleteCloudExadataInfrastructure(NoAwaitTag, google::cloud::oracledatabase::v1::DeleteCloudExadataInfrastructureRequest const& request);
 
   virtual future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
-  DeleteCloudExadataInfrastructure(
-      google::longrunning::Operation const& operation);
+  DeleteCloudExadataInfrastructure( google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::oracledatabase::v1::CloudVmCluster>
-  ListCloudVmClusters(
-      google::cloud::oracledatabase::v1::ListCloudVmClustersRequest request);
+  ListCloudVmClusters(google::cloud::oracledatabase::v1::ListCloudVmClustersRequest request);
 
   virtual StatusOr<google::cloud::oracledatabase::v1::CloudVmCluster>
-  GetCloudVmCluster(
-      google::cloud::oracledatabase::v1::GetCloudVmClusterRequest const&
-          request);
+  GetCloudVmCluster(google::cloud::oracledatabase::v1::GetCloudVmClusterRequest const& request);
 
   virtual future<StatusOr<google::cloud::oracledatabase::v1::CloudVmCluster>>
-  CreateCloudVmCluster(
-      google::cloud::oracledatabase::v1::CreateCloudVmClusterRequest const&
-          request);
+  CreateCloudVmCluster(google::cloud::oracledatabase::v1::CreateCloudVmClusterRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> CreateCloudVmCluster(
-      NoAwaitTag,
-      google::cloud::oracledatabase::v1::CreateCloudVmClusterRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  CreateCloudVmCluster(NoAwaitTag, google::cloud::oracledatabase::v1::CreateCloudVmClusterRequest const& request);
 
   virtual future<StatusOr<google::cloud::oracledatabase::v1::CloudVmCluster>>
-  CreateCloudVmCluster(google::longrunning::Operation const& operation);
+  CreateCloudVmCluster( google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
-  DeleteCloudVmCluster(
-      google::cloud::oracledatabase::v1::DeleteCloudVmClusterRequest const&
-          request);
+  DeleteCloudVmCluster(google::cloud::oracledatabase::v1::DeleteCloudVmClusterRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> DeleteCloudVmCluster(
-      NoAwaitTag,
-      google::cloud::oracledatabase::v1::DeleteCloudVmClusterRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  DeleteCloudVmCluster(NoAwaitTag, google::cloud::oracledatabase::v1::DeleteCloudVmClusterRequest const& request);
 
   virtual future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
-  DeleteCloudVmCluster(google::longrunning::Operation const& operation);
+  DeleteCloudVmCluster( google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::oracledatabase::v1::Entitlement>
-  ListEntitlements(
-      google::cloud::oracledatabase::v1::ListEntitlementsRequest request);
+  ListEntitlements(google::cloud::oracledatabase::v1::ListEntitlementsRequest request);
 
   virtual StreamRange<google::cloud::oracledatabase::v1::DbServer>
-  ListDbServers(
-      google::cloud::oracledatabase::v1::ListDbServersRequest request);
+  ListDbServers(google::cloud::oracledatabase::v1::ListDbServersRequest request);
 
-  virtual StreamRange<google::cloud::oracledatabase::v1::DbNode> ListDbNodes(
-      google::cloud::oracledatabase::v1::ListDbNodesRequest request);
+  virtual StreamRange<google::cloud::oracledatabase::v1::DbNode>
+  ListDbNodes(google::cloud::oracledatabase::v1::ListDbNodesRequest request);
 
   virtual StreamRange<google::cloud::oracledatabase::v1::GiVersion>
-  ListGiVersions(
-      google::cloud::oracledatabase::v1::ListGiVersionsRequest request);
+  ListGiVersions(google::cloud::oracledatabase::v1::ListGiVersionsRequest request);
 
   virtual StreamRange<google::cloud::oracledatabase::v1::DbSystemShape>
-  ListDbSystemShapes(
-      google::cloud::oracledatabase::v1::ListDbSystemShapesRequest request);
+  ListDbSystemShapes(google::cloud::oracledatabase::v1::ListDbSystemShapesRequest request);
 
   virtual StreamRange<google::cloud::oracledatabase::v1::AutonomousDatabase>
-  ListAutonomousDatabases(
-      google::cloud::oracledatabase::v1::ListAutonomousDatabasesRequest
-          request);
+  ListAutonomousDatabases(google::cloud::oracledatabase::v1::ListAutonomousDatabasesRequest request);
 
   virtual StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>
-  GetAutonomousDatabase(
-      google::cloud::oracledatabase::v1::GetAutonomousDatabaseRequest const&
-          request);
+  GetAutonomousDatabase(google::cloud::oracledatabase::v1::GetAutonomousDatabaseRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
-  CreateAutonomousDatabase(
-      google::cloud::oracledatabase::v1::CreateAutonomousDatabaseRequest const&
-          request);
+  virtual future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
+  CreateAutonomousDatabase(google::cloud::oracledatabase::v1::CreateAutonomousDatabaseRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> CreateAutonomousDatabase(
-      NoAwaitTag,
-      google::cloud::oracledatabase::v1::CreateAutonomousDatabaseRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  CreateAutonomousDatabase(NoAwaitTag, google::cloud::oracledatabase::v1::CreateAutonomousDatabaseRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
-  CreateAutonomousDatabase(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
+  CreateAutonomousDatabase( google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
-  DeleteAutonomousDatabase(
-      google::cloud::oracledatabase::v1::DeleteAutonomousDatabaseRequest const&
-          request);
+  DeleteAutonomousDatabase(google::cloud::oracledatabase::v1::DeleteAutonomousDatabaseRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> DeleteAutonomousDatabase(
-      NoAwaitTag,
-      google::cloud::oracledatabase::v1::DeleteAutonomousDatabaseRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  DeleteAutonomousDatabase(NoAwaitTag, google::cloud::oracledatabase::v1::DeleteAutonomousDatabaseRequest const& request);
 
   virtual future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
-  DeleteAutonomousDatabase(google::longrunning::Operation const& operation);
+  DeleteAutonomousDatabase( google::longrunning::Operation const& operation);
 
-  virtual future<
-      StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
-  RestoreAutonomousDatabase(
-      google::cloud::oracledatabase::v1::RestoreAutonomousDatabaseRequest const&
-          request);
+  virtual future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
+  RestoreAutonomousDatabase(google::cloud::oracledatabase::v1::RestoreAutonomousDatabaseRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> RestoreAutonomousDatabase(
-      NoAwaitTag,
-      google::cloud::oracledatabase::v1::RestoreAutonomousDatabaseRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  RestoreAutonomousDatabase(NoAwaitTag, google::cloud::oracledatabase::v1::RestoreAutonomousDatabaseRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
-  RestoreAutonomousDatabase(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
+  RestoreAutonomousDatabase( google::longrunning::Operation const& operation);
 
-  virtual StatusOr<google::cloud::oracledatabase::v1::
-                       GenerateAutonomousDatabaseWalletResponse>
-  GenerateAutonomousDatabaseWallet(
-      google::cloud::oracledatabase::v1::
-          GenerateAutonomousDatabaseWalletRequest const& request);
+  virtual StatusOr<google::cloud::oracledatabase::v1::GenerateAutonomousDatabaseWalletResponse>
+  GenerateAutonomousDatabaseWallet(google::cloud::oracledatabase::v1::GenerateAutonomousDatabaseWalletRequest const& request);
 
   virtual StreamRange<google::cloud::oracledatabase::v1::AutonomousDbVersion>
-  ListAutonomousDbVersions(
-      google::cloud::oracledatabase::v1::ListAutonomousDbVersionsRequest
-          request);
+  ListAutonomousDbVersions(google::cloud::oracledatabase::v1::ListAutonomousDbVersionsRequest request);
 
-  virtual StreamRange<
-      google::cloud::oracledatabase::v1::AutonomousDatabaseCharacterSet>
-  ListAutonomousDatabaseCharacterSets(
-      google::cloud::oracledatabase::v1::
-          ListAutonomousDatabaseCharacterSetsRequest request);
+  virtual StreamRange<google::cloud::oracledatabase::v1::AutonomousDatabaseCharacterSet>
+  ListAutonomousDatabaseCharacterSets(google::cloud::oracledatabase::v1::ListAutonomousDatabaseCharacterSetsRequest request);
 
-  virtual StreamRange<
-      google::cloud::oracledatabase::v1::AutonomousDatabaseBackup>
-  ListAutonomousDatabaseBackups(
-      google::cloud::oracledatabase::v1::ListAutonomousDatabaseBackupsRequest
-          request);
+  virtual StreamRange<google::cloud::oracledatabase::v1::AutonomousDatabaseBackup>
+  ListAutonomousDatabaseBackups(google::cloud::oracledatabase::v1::ListAutonomousDatabaseBackupsRequest request);
 
-  virtual future<
-      StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
-  StopAutonomousDatabase(
-      google::cloud::oracledatabase::v1::StopAutonomousDatabaseRequest const&
-          request);
+  virtual future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
+  StopAutonomousDatabase(google::cloud::oracledatabase::v1::StopAutonomousDatabaseRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> StopAutonomousDatabase(
-      NoAwaitTag,
-      google::cloud::oracledatabase::v1::StopAutonomousDatabaseRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  StopAutonomousDatabase(NoAwaitTag, google::cloud::oracledatabase::v1::StopAutonomousDatabaseRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
-  StopAutonomousDatabase(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
+  StopAutonomousDatabase( google::longrunning::Operation const& operation);
 
-  virtual future<
-      StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
-  StartAutonomousDatabase(
-      google::cloud::oracledatabase::v1::StartAutonomousDatabaseRequest const&
-          request);
+  virtual future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
+  StartAutonomousDatabase(google::cloud::oracledatabase::v1::StartAutonomousDatabaseRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> StartAutonomousDatabase(
-      NoAwaitTag,
-      google::cloud::oracledatabase::v1::StartAutonomousDatabaseRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  StartAutonomousDatabase(NoAwaitTag, google::cloud::oracledatabase::v1::StartAutonomousDatabaseRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
-  StartAutonomousDatabase(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
+  StartAutonomousDatabase( google::longrunning::Operation const& operation);
 
-  virtual future<
-      StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
-  RestartAutonomousDatabase(
-      google::cloud::oracledatabase::v1::RestartAutonomousDatabaseRequest const&
-          request);
+  virtual future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
+  RestartAutonomousDatabase(google::cloud::oracledatabase::v1::RestartAutonomousDatabaseRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> RestartAutonomousDatabase(
-      NoAwaitTag,
-      google::cloud::oracledatabase::v1::RestartAutonomousDatabaseRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  RestartAutonomousDatabase(NoAwaitTag, google::cloud::oracledatabase::v1::RestartAutonomousDatabaseRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
-  RestartAutonomousDatabase(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
+  RestartAutonomousDatabase( google::longrunning::Operation const& operation);
 
-  virtual StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request);
+  virtual StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request);
 
-  virtual StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request);
+  virtual StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request);
 
-  virtual StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 
-  virtual Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request);
+  virtual Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
 
-  virtual Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request);
+  virtual Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request);
 };
 
 /**

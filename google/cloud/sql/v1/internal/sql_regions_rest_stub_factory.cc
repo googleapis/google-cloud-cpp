@@ -17,16 +17,16 @@
 // source: google/cloud/sql/v1/cloud_sql_regions.proto
 
 #include "google/cloud/sql/v1/internal/sql_regions_rest_stub_factory.h"
-#include "google/cloud/sql/v1/internal/sql_regions_rest_logging_decorator.h"
-#include "google/cloud/sql/v1/internal/sql_regions_rest_metadata_decorator.h"
-#include "google/cloud/sql/v1/internal/sql_regions_rest_stub.h"
+#include "absl/strings/match.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/populate_rest_options.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include "google/cloud/rest_options.h"
-#include "absl/strings/match.h"
+#include "google/cloud/sql/v1/internal/sql_regions_rest_logging_decorator.h"
+#include "google/cloud/sql/v1/internal/sql_regions_rest_metadata_decorator.h"
+#include "google/cloud/sql/v1/internal/sql_regions_rest_stub.h"
 #include <memory>
 #include <utility>
 
@@ -41,10 +41,12 @@ CreateDefaultSqlRegionsServiceRestStub(Options const& options) {
   std::shared_ptr<SqlRegionsServiceRestStub> stub =
       std::make_shared<DefaultSqlRegionsServiceRestStub>(std::move(opts));
   stub = std::make_shared<SqlRegionsServiceRestMetadata>(std::move(stub));
-  if (internal::Contains(options.get<LoggingComponentsOption>(), "rpc")) {
+  if (internal::Contains(
+      options.get<LoggingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for REST rpc calls";
     stub = std::make_shared<SqlRegionsServiceRestLogging>(
-        std::move(stub), options.get<RestTracingOptionsOption>(),
+        std::move(stub),
+        options.get<RestTracingOptionsOption>(),
         options.get<LoggingComponentsOption>());
   }
   return stub;

@@ -33,19 +33,15 @@ ServiceControllerTracingConnection::ServiceControllerTracingConnection(
     : child_(std::move(child)) {}
 
 StatusOr<google::api::servicecontrol::v2::CheckResponse>
-ServiceControllerTracingConnection::Check(
-    google::api::servicecontrol::v2::CheckRequest const& request) {
-  auto span = internal::MakeSpan(
-      "servicecontrol_v2::ServiceControllerConnection::Check");
+ServiceControllerTracingConnection::Check(google::api::servicecontrol::v2::CheckRequest const& request) {
+  auto span = internal::MakeSpan("servicecontrol_v2::ServiceControllerConnection::Check");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->Check(request));
 }
 
 StatusOr<google::api::servicecontrol::v2::ReportResponse>
-ServiceControllerTracingConnection::Report(
-    google::api::servicecontrol::v2::ReportRequest const& request) {
-  auto span = internal::MakeSpan(
-      "servicecontrol_v2::ServiceControllerConnection::Report");
+ServiceControllerTracingConnection::Report(google::api::servicecontrol::v2::ReportRequest const& request) {
+  auto span = internal::MakeSpan("servicecontrol_v2::ServiceControllerConnection::Report");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->Report(request));
 }
@@ -57,8 +53,7 @@ MakeServiceControllerTracingConnection(
     std::shared_ptr<servicecontrol_v2::ServiceControllerConnection> conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
-    conn =
-        std::make_shared<ServiceControllerTracingConnection>(std::move(conn));
+    conn = std::make_shared<ServiceControllerTracingConnection>(std::move(conn));
   }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;

@@ -17,8 +17,8 @@
 // source: google/cloud/compute/license_codes/v1/license_codes.proto
 
 #include "google/cloud/compute/license_codes/v1/internal/license_codes_rest_connection_impl.h"
-#include "google/cloud/compute/license_codes/v1/internal/license_codes_rest_stub_factory.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/compute/license_codes/v1/internal/license_codes_rest_stub_factory.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/rest_retry_loop.h"
 #include "google/cloud/rest_options.h"
@@ -32,41 +32,34 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 LicenseCodesRestConnectionImpl::LicenseCodesRestConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<compute_license_codes_v1_internal::LicenseCodesRestStub>
-        stub,
+    std::shared_ptr<compute_license_codes_v1_internal::LicenseCodesRestStub> stub,
     Options options)
-    : background_(std::move(background)),
-      stub_(std::move(stub)),
-      options_(internal::MergeOptions(std::move(options),
-                                      LicenseCodesConnection::options())) {}
+  : background_(std::move(background)), stub_(std::move(stub)),
+    options_(internal::MergeOptions(
+        std::move(options),
+        LicenseCodesConnection::options())) {}
 
 StatusOr<google::cloud::cpp::compute::v1::LicenseCode>
-LicenseCodesRestConnectionImpl::GetLicenseCode(
-    google::cloud::cpp::compute::license_codes::v1::GetLicenseCodeRequest const&
-        request) {
+LicenseCodesRestConnectionImpl::GetLicenseCode(google::cloud::cpp::compute::license_codes::v1::GetLicenseCodeRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetLicenseCode(request),
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::cloud::cpp::compute::license_codes::v1::
-                 GetLicenseCodeRequest const& request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options, google::cloud::cpp::compute::license_codes::v1::GetLicenseCodeRequest const& request) {
         return stub_->GetLicenseCode(rest_context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-LicenseCodesRestConnectionImpl::TestIamPermissions(
-    google::cloud::cpp::compute::license_codes::v1::
-        TestIamPermissionsRequest const& request) {
+LicenseCodesRestConnectionImpl::TestIamPermissions(google::cloud::cpp::compute::license_codes::v1::TestIamPermissionsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->TestIamPermissions(request),
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::cloud::cpp::compute::license_codes::v1::
-                 TestIamPermissionsRequest const& request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options, google::cloud::cpp::compute::license_codes::v1::TestIamPermissionsRequest const& request) {
         return stub_->TestIamPermissions(rest_context, options, request);
       },
       *current, request, __func__);

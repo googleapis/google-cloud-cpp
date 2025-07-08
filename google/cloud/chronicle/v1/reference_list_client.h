@@ -61,28 +61,23 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class ReferenceListServiceClient {
  public:
-  explicit ReferenceListServiceClient(
-      std::shared_ptr<ReferenceListServiceConnection> connection,
-      Options opts = {});
+  explicit ReferenceListServiceClient(std::shared_ptr<ReferenceListServiceConnection> connection, Options opts = {});
   ~ReferenceListServiceClient();
 
   ///@{
   /// @name Copy and move support
   ReferenceListServiceClient(ReferenceListServiceClient const&) = default;
-  ReferenceListServiceClient& operator=(ReferenceListServiceClient const&) =
-      default;
+  ReferenceListServiceClient& operator=(ReferenceListServiceClient const&) = default;
   ReferenceListServiceClient(ReferenceListServiceClient&&) = default;
   ReferenceListServiceClient& operator=(ReferenceListServiceClient&&) = default;
   ///@}
 
   ///@{
   /// @name Equality
-  friend bool operator==(ReferenceListServiceClient const& a,
-                         ReferenceListServiceClient const& b) {
+  friend bool operator==(ReferenceListServiceClient const& a, ReferenceListServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(ReferenceListServiceClient const& a,
-                         ReferenceListServiceClient const& b) {
+  friend bool operator!=(ReferenceListServiceClient const& a, ReferenceListServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -111,8 +106,8 @@ class ReferenceListServiceClient {
   /// [google.cloud.chronicle.v1.ReferenceList]: @googleapis_reference_link{google/cloud/chronicle/v1/reference_list.proto#L225}
   ///
   // clang-format on
-  StatusOr<google::cloud::chronicle::v1::ReferenceList> GetReferenceList(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::chronicle::v1::ReferenceList>
+  GetReferenceList(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -141,9 +136,8 @@ class ReferenceListServiceClient {
   /// [google.cloud.chronicle.v1.ReferenceList]: @googleapis_reference_link{google/cloud/chronicle/v1/reference_list.proto#L225}
   ///
   // clang-format on
-  StatusOr<google::cloud::chronicle::v1::ReferenceList> GetReferenceList(
-      google::cloud::chronicle::v1::GetReferenceListRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::chronicle::v1::ReferenceList>
+  GetReferenceList(google::cloud::chronicle::v1::GetReferenceListRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -178,8 +172,8 @@ class ReferenceListServiceClient {
   /// [google.cloud.chronicle.v1.ReferenceList]: @googleapis_reference_link{google/cloud/chronicle/v1/reference_list.proto#L225}
   ///
   // clang-format on
-  StreamRange<google::cloud::chronicle::v1::ReferenceList> ListReferenceLists(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::chronicle::v1::ReferenceList>
+  ListReferenceLists(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -217,9 +211,8 @@ class ReferenceListServiceClient {
   /// [google.cloud.chronicle.v1.ReferenceList]: @googleapis_reference_link{google/cloud/chronicle/v1/reference_list.proto#L225}
   ///
   // clang-format on
-  StreamRange<google::cloud::chronicle::v1::ReferenceList> ListReferenceLists(
-      google::cloud::chronicle::v1::ListReferenceListsRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::chronicle::v1::ReferenceList>
+  ListReferenceLists(google::cloud::chronicle::v1::ListReferenceListsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -251,10 +244,8 @@ class ReferenceListServiceClient {
   /// [google.cloud.chronicle.v1.ReferenceList]: @googleapis_reference_link{google/cloud/chronicle/v1/reference_list.proto#L225}
   ///
   // clang-format on
-  StatusOr<google::cloud::chronicle::v1::ReferenceList> CreateReferenceList(
-      std::string const& parent,
-      google::cloud::chronicle::v1::ReferenceList const& reference_list,
-      std::string const& reference_list_id, Options opts = {});
+  StatusOr<google::cloud::chronicle::v1::ReferenceList>
+  CreateReferenceList(std::string const& parent, google::cloud::chronicle::v1::ReferenceList const& reference_list, std::string const& reference_list_id, Options opts = {});
 
   // clang-format off
   ///
@@ -283,9 +274,8 @@ class ReferenceListServiceClient {
   /// [google.cloud.chronicle.v1.ReferenceList]: @googleapis_reference_link{google/cloud/chronicle/v1/reference_list.proto#L225}
   ///
   // clang-format on
-  StatusOr<google::cloud::chronicle::v1::ReferenceList> CreateReferenceList(
-      google::cloud::chronicle::v1::CreateReferenceListRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::chronicle::v1::ReferenceList>
+  CreateReferenceList(google::cloud::chronicle::v1::CreateReferenceListRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -317,9 +307,8 @@ class ReferenceListServiceClient {
   /// [google.cloud.chronicle.v1.UpdateReferenceListRequest]: @googleapis_reference_link{google/cloud/chronicle/v1/reference_list.proto#L207}
   ///
   // clang-format on
-  StatusOr<google::cloud::chronicle::v1::ReferenceList> UpdateReferenceList(
-      google::cloud::chronicle::v1::ReferenceList const& reference_list,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::cloud::chronicle::v1::ReferenceList>
+  UpdateReferenceList(google::cloud::chronicle::v1::ReferenceList const& reference_list, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -348,9 +337,8 @@ class ReferenceListServiceClient {
   /// [google.cloud.chronicle.v1.UpdateReferenceListRequest]: @googleapis_reference_link{google/cloud/chronicle/v1/reference_list.proto#L207}
   ///
   // clang-format on
-  StatusOr<google::cloud::chronicle::v1::ReferenceList> UpdateReferenceList(
-      google::cloud::chronicle::v1::UpdateReferenceListRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::chronicle::v1::ReferenceList>
+  UpdateReferenceList(google::cloud::chronicle::v1::UpdateReferenceListRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -385,8 +373,8 @@ class ReferenceListServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -425,8 +413,8 @@ class ReferenceListServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -452,8 +440,8 @@ class ReferenceListServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -484,9 +472,8 @@ class ReferenceListServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -510,7 +497,8 @@ class ReferenceListServiceClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status DeleteOperation(std::string const& name, Options opts = {});
+  Status
+  DeleteOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -539,9 +527,8 @@ class ReferenceListServiceClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request,
-      Options opts = {});
+  Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -575,7 +562,8 @@ class ReferenceListServiceClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(std::string const& name, Options opts = {});
+  Status
+  CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -614,9 +602,8 @@ class ReferenceListServiceClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request,
-      Options opts = {});
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<ReferenceListServiceConnection> connection_;

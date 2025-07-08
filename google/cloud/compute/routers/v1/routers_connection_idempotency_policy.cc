@@ -26,102 +26,83 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-RoutersConnectionIdempotencyPolicy::~RoutersConnectionIdempotencyPolicy() =
-    default;
+RoutersConnectionIdempotencyPolicy::~RoutersConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<RoutersConnectionIdempotencyPolicy>
 RoutersConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<RoutersConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency RoutersConnectionIdempotencyPolicy::AggregatedListRouters(
-    google::cloud::cpp::compute::routers::v1::
-        AggregatedListRoutersRequest) {  // NOLINT
+Idempotency RoutersConnectionIdempotencyPolicy::AggregatedListRouters(google::cloud::cpp::compute::routers::v1::AggregatedListRoutersRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency RoutersConnectionIdempotencyPolicy::DeleteRouter(
-    google::cloud::cpp::compute::routers::v1::DeleteRouterRequest const&) {
+Idempotency RoutersConnectionIdempotencyPolicy::DeleteRouter(google::cloud::cpp::compute::routers::v1::DeleteRouterRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency RoutersConnectionIdempotencyPolicy::DeleteRoutePolicy(
-    google::cloud::cpp::compute::routers::v1::DeleteRoutePolicyRequest const&) {
+Idempotency RoutersConnectionIdempotencyPolicy::DeleteRoutePolicy(google::cloud::cpp::compute::routers::v1::DeleteRoutePolicyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency RoutersConnectionIdempotencyPolicy::GetRouter(
-    google::cloud::cpp::compute::routers::v1::GetRouterRequest const&) {
+Idempotency RoutersConnectionIdempotencyPolicy::GetRouter(google::cloud::cpp::compute::routers::v1::GetRouterRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency RoutersConnectionIdempotencyPolicy::GetNatIpInfo(
-    google::cloud::cpp::compute::routers::v1::GetNatIpInfoRequest const&) {
+Idempotency RoutersConnectionIdempotencyPolicy::GetNatIpInfo(google::cloud::cpp::compute::routers::v1::GetNatIpInfoRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency RoutersConnectionIdempotencyPolicy::GetNatMappingInfo(
-    google::cloud::cpp::compute::routers::v1::GetNatMappingInfoRequest const&) {
+Idempotency RoutersConnectionIdempotencyPolicy::GetNatMappingInfo(google::cloud::cpp::compute::routers::v1::GetNatMappingInfoRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency RoutersConnectionIdempotencyPolicy::GetRoutePolicy(
-    google::cloud::cpp::compute::routers::v1::GetRoutePolicyRequest const&) {
+Idempotency RoutersConnectionIdempotencyPolicy::GetRoutePolicy(google::cloud::cpp::compute::routers::v1::GetRoutePolicyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency RoutersConnectionIdempotencyPolicy::GetRouterStatus(
-    google::cloud::cpp::compute::routers::v1::GetRouterStatusRequest const&) {
+Idempotency RoutersConnectionIdempotencyPolicy::GetRouterStatus(google::cloud::cpp::compute::routers::v1::GetRouterStatusRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency RoutersConnectionIdempotencyPolicy::InsertRouter(
-    google::cloud::cpp::compute::routers::v1::InsertRouterRequest const&) {
+Idempotency RoutersConnectionIdempotencyPolicy::InsertRouter(google::cloud::cpp::compute::routers::v1::InsertRouterRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency RoutersConnectionIdempotencyPolicy::ListRouters(
-    google::cloud::cpp::compute::routers::v1::ListRoutersRequest) {  // NOLINT
+Idempotency RoutersConnectionIdempotencyPolicy::ListRouters(google::cloud::cpp::compute::routers::v1::ListRoutersRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency RoutersConnectionIdempotencyPolicy::ListBgpRoutes(
-    google::cloud::cpp::compute::routers::v1::ListBgpRoutesRequest const&) {
+Idempotency RoutersConnectionIdempotencyPolicy::ListBgpRoutes(google::cloud::cpp::compute::routers::v1::ListBgpRoutesRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency RoutersConnectionIdempotencyPolicy::ListRoutePolicies(
-    google::cloud::cpp::compute::routers::v1::ListRoutePoliciesRequest const&) {
+Idempotency RoutersConnectionIdempotencyPolicy::ListRoutePolicies(google::cloud::cpp::compute::routers::v1::ListRoutePoliciesRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency RoutersConnectionIdempotencyPolicy::PatchRouter(
-    google::cloud::cpp::compute::routers::v1::PatchRouterRequest const&) {
+Idempotency RoutersConnectionIdempotencyPolicy::PatchRouter(google::cloud::cpp::compute::routers::v1::PatchRouterRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency RoutersConnectionIdempotencyPolicy::PatchRoutePolicy(
-    google::cloud::cpp::compute::routers::v1::PatchRoutePolicyRequest const&) {
+Idempotency RoutersConnectionIdempotencyPolicy::PatchRoutePolicy(google::cloud::cpp::compute::routers::v1::PatchRoutePolicyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency RoutersConnectionIdempotencyPolicy::Preview(
-    google::cloud::cpp::compute::routers::v1::PreviewRequest const&) {
+Idempotency RoutersConnectionIdempotencyPolicy::Preview(google::cloud::cpp::compute::routers::v1::PreviewRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency RoutersConnectionIdempotencyPolicy::UpdateRouter(
-    google::cloud::cpp::compute::routers::v1::UpdateRouterRequest const&) {
+Idempotency RoutersConnectionIdempotencyPolicy::UpdateRouter(google::cloud::cpp::compute::routers::v1::UpdateRouterRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency RoutersConnectionIdempotencyPolicy::UpdateRoutePolicy(
-    google::cloud::cpp::compute::routers::v1::UpdateRoutePolicyRequest const&) {
+Idempotency RoutersConnectionIdempotencyPolicy::UpdateRoutePolicy(google::cloud::cpp::compute::routers::v1::UpdateRoutePolicyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<RoutersConnectionIdempotencyPolicy>
-MakeDefaultRoutersConnectionIdempotencyPolicy() {
+    MakeDefaultRoutersConnectionIdempotencyPolicy() {
   return std::make_unique<RoutersConnectionIdempotencyPolicy>();
 }
 

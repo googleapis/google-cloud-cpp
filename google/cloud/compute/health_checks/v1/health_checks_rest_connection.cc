@@ -17,12 +17,12 @@
 // source: google/cloud/compute/health_checks/v1/health_checks.proto
 
 #include "google/cloud/compute/health_checks/v1/health_checks_rest_connection.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/compute/health_checks/v1/health_checks_options.h"
 #include "google/cloud/compute/health_checks/v1/internal/health_checks_option_defaults.h"
 #include "google/cloud/compute/health_checks/v1/internal/health_checks_rest_connection_impl.h"
 #include "google/cloud/compute/health_checks/v1/internal/health_checks_rest_stub_factory.h"
 #include "google/cloud/compute/health_checks/v1/internal/health_checks_tracing_connection.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/rest_background_threads_impl.h"
 #include "google/cloud/internal/rest_options.h"
@@ -36,17 +36,15 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<HealthChecksConnection> MakeHealthChecksConnectionRest(
     Options options) {
-  internal::CheckExpectedOptions<
-      CommonOptionList, RestOptionList, UnifiedCredentialsOptionList,
-      rest_internal::TargetApiVersionOption, HealthChecksPolicyOptionList>(
-      options, __func__);
+  internal::CheckExpectedOptions<CommonOptionList, RestOptionList,
+      UnifiedCredentialsOptionList, rest_internal::TargetApiVersionOption,
+      HealthChecksPolicyOptionList>(options, __func__);
   options = compute_health_checks_v1_internal::HealthChecksDefaultOptions(
       std::move(options));
   auto background = std::make_unique<
       rest_internal::AutomaticallyCreatedRestBackgroundThreads>();
-  auto stub =
-      compute_health_checks_v1_internal::CreateDefaultHealthChecksRestStub(
-          options);
+  auto stub = compute_health_checks_v1_internal::CreateDefaultHealthChecksRestStub(
+      options);
   return compute_health_checks_v1_internal::MakeHealthChecksTracingConnection(
       std::make_shared<
           compute_health_checks_v1_internal::HealthChecksRestConnectionImpl>(

@@ -28,33 +28,32 @@ namespace cloud {
 namespace cloudcontrolspartner_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-CloudControlsPartnerMonitoringStub::~CloudControlsPartnerMonitoringStub() =
-    default;
+CloudControlsPartnerMonitoringStub::~CloudControlsPartnerMonitoringStub() = default;
 
 StatusOr<google::cloud::cloudcontrolspartner::v1::ListViolationsResponse>
 DefaultCloudControlsPartnerMonitoringStub::ListViolations(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::cloudcontrolspartner::v1::ListViolationsRequest const&
-        request) {
-  google::cloud::cloudcontrolspartner::v1::ListViolationsResponse response;
-  auto status = grpc_stub_->ListViolations(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::cloudcontrolspartner::v1::ListViolationsRequest const& request) {
+    google::cloud::cloudcontrolspartner::v1::ListViolationsResponse response;
+    auto status =
+        grpc_stub_->ListViolations(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::cloudcontrolspartner::v1::Violation>
 DefaultCloudControlsPartnerMonitoringStub::GetViolation(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::cloudcontrolspartner::v1::GetViolationRequest const&
-        request) {
-  google::cloud::cloudcontrolspartner::v1::Violation response;
-  auto status = grpc_stub_->GetViolation(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::cloudcontrolspartner::v1::GetViolationRequest const& request) {
+    google::cloud::cloudcontrolspartner::v1::Violation response;
+    auto status =
+        grpc_stub_->GetViolation(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

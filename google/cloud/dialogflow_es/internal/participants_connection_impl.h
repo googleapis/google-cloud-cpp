@@ -19,14 +19,14 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_ES_INTERNAL_PARTICIPANTS_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_ES_INTERNAL_PARTICIPANTS_CONNECTION_IMPL_H
 
+#include "google/cloud/async_streaming_read_write_rpc.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/dialogflow_es/internal/participants_retry_traits.h"
 #include "google/cloud/dialogflow_es/internal/participants_stub.h"
 #include "google/cloud/dialogflow_es/participants_connection.h"
 #include "google/cloud/dialogflow_es/participants_connection_idempotency_policy.h"
 #include "google/cloud/dialogflow_es/participants_options.h"
-#include "google/cloud/async_streaming_read_write_rpc.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -44,30 +44,26 @@ class ParticipantsConnectionImpl
   ~ParticipantsConnectionImpl() override = default;
 
   ParticipantsConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<dialogflow_es_internal::ParticipantsStub> stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<dialogflow_es_internal::ParticipantsStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
-  StatusOr<google::cloud::dialogflow::v2::Participant> CreateParticipant(
-      google::cloud::dialogflow::v2::CreateParticipantRequest const& request)
-      override;
+  StatusOr<google::cloud::dialogflow::v2::Participant>
+  CreateParticipant(google::cloud::dialogflow::v2::CreateParticipantRequest const& request) override;
 
-  StatusOr<google::cloud::dialogflow::v2::Participant> GetParticipant(
-      google::cloud::dialogflow::v2::GetParticipantRequest const& request)
-      override;
+  StatusOr<google::cloud::dialogflow::v2::Participant>
+  GetParticipant(google::cloud::dialogflow::v2::GetParticipantRequest const& request) override;
 
-  StreamRange<google::cloud::dialogflow::v2::Participant> ListParticipants(
-      google::cloud::dialogflow::v2::ListParticipantsRequest request) override;
+  StreamRange<google::cloud::dialogflow::v2::Participant>
+  ListParticipants(google::cloud::dialogflow::v2::ListParticipantsRequest request) override;
 
-  StatusOr<google::cloud::dialogflow::v2::Participant> UpdateParticipant(
-      google::cloud::dialogflow::v2::UpdateParticipantRequest const& request)
-      override;
+  StatusOr<google::cloud::dialogflow::v2::Participant>
+  UpdateParticipant(google::cloud::dialogflow::v2::UpdateParticipantRequest const& request) override;
 
   StatusOr<google::cloud::dialogflow::v2::AnalyzeContentResponse>
-  AnalyzeContent(google::cloud::dialogflow::v2::AnalyzeContentRequest const&
-                     request) override;
+  AnalyzeContent(google::cloud::dialogflow::v2::AnalyzeContentRequest const& request) override;
 
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::dialogflow::v2::StreamingAnalyzeContentRequest,
@@ -75,38 +71,31 @@ class ParticipantsConnectionImpl
   AsyncStreamingAnalyzeContent() override;
 
   StatusOr<google::cloud::dialogflow::v2::SuggestArticlesResponse>
-  SuggestArticles(google::cloud::dialogflow::v2::SuggestArticlesRequest const&
-                      request) override;
+  SuggestArticles(google::cloud::dialogflow::v2::SuggestArticlesRequest const& request) override;
 
   StatusOr<google::cloud::dialogflow::v2::SuggestFaqAnswersResponse>
-  SuggestFaqAnswers(
-      google::cloud::dialogflow::v2::SuggestFaqAnswersRequest const& request)
-      override;
+  SuggestFaqAnswers(google::cloud::dialogflow::v2::SuggestFaqAnswersRequest const& request) override;
 
   StatusOr<google::cloud::dialogflow::v2::SuggestSmartRepliesResponse>
-  SuggestSmartReplies(
-      google::cloud::dialogflow::v2::SuggestSmartRepliesRequest const& request)
-      override;
+  SuggestSmartReplies(google::cloud::dialogflow::v2::SuggestSmartRepliesRequest const& request) override;
 
   StatusOr<google::cloud::dialogflow::v2::SuggestKnowledgeAssistResponse>
-  SuggestKnowledgeAssist(
-      google::cloud::dialogflow::v2::SuggestKnowledgeAssistRequest const&
-          request) override;
+  SuggestKnowledgeAssist(google::cloud::dialogflow::v2::SuggestKnowledgeAssistRequest const& request) override;
 
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request) override;
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request) override;
 
-  StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request) override;
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request) override;
 
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request) override;
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

@@ -27,27 +27,19 @@ namespace cloud {
 namespace bigquery {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use bigquery_connection_v1::MakeConnectionServiceConnection
-/// directly.
+/// @deprecated Use bigquery_connection_v1::MakeConnectionServiceConnection directly.
 using ::google::cloud::bigquery_connection_v1::MakeConnectionServiceConnection;
 
-/// @deprecated Use bigquery_connection_v1::ConnectionServiceConnection
-/// directly.
+/// @deprecated Use bigquery_connection_v1::ConnectionServiceConnection directly.
 using ::google::cloud::bigquery_connection_v1::ConnectionServiceConnection;
 
-/// @deprecated Use
-/// bigquery_connection_v1::ConnectionServiceLimitedErrorCountRetryPolicy
-/// directly.
-using ::google::cloud::bigquery_connection_v1::
-    ConnectionServiceLimitedErrorCountRetryPolicy;
+/// @deprecated Use bigquery_connection_v1::ConnectionServiceLimitedErrorCountRetryPolicy directly.
+using ::google::cloud::bigquery_connection_v1::ConnectionServiceLimitedErrorCountRetryPolicy;
 
-/// @deprecated Use
-/// bigquery_connection_v1::ConnectionServiceLimitedTimeRetryPolicy directly.
-using ::google::cloud::bigquery_connection_v1::
-    ConnectionServiceLimitedTimeRetryPolicy;
+/// @deprecated Use bigquery_connection_v1::ConnectionServiceLimitedTimeRetryPolicy directly.
+using ::google::cloud::bigquery_connection_v1::ConnectionServiceLimitedTimeRetryPolicy;
 
-/// @deprecated Use bigquery_connection_v1::ConnectionServiceRetryPolicy
-/// directly.
+/// @deprecated Use bigquery_connection_v1::ConnectionServiceRetryPolicy directly.
 using ::google::cloud::bigquery_connection_v1::ConnectionServiceRetryPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

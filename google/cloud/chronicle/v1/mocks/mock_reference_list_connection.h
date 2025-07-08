@@ -31,10 +31,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * A class to mock `ReferenceListServiceConnection`.
  *
  * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `ReferenceListServiceClient`. To do
- * so, construct an object of type `ReferenceListServiceClient` with an instance
- * of this class. Then use the Google Test framework functions to program the
- * behavior of this mock.
+ * including errors, from an object of type `ReferenceListServiceClient`. To do so,
+ * construct an object of type `ReferenceListServiceClient` with an instance of this
+ * class. Then use the Google Test framework functions to program the behavior
+ * of this mock.
  *
  * @see [This example][bq-mock] for how to test your application with GoogleTest.
  * While the example showcases types from the BigQuery library, the underlying
@@ -42,47 +42,41 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockReferenceListServiceConnection
-    : public chronicle_v1::ReferenceListServiceConnection {
+class MockReferenceListServiceConnection : public chronicle_v1::ReferenceListServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::chronicle::v1::ReferenceList>, GetReferenceList,
-      (google::cloud::chronicle::v1::GetReferenceListRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::chronicle::v1::ReferenceList>,
+  GetReferenceList,
+  (google::cloud::chronicle::v1::GetReferenceListRequest const& request), (override));
 
   MOCK_METHOD((StreamRange<google::cloud::chronicle::v1::ReferenceList>),
-              ListReferenceLists,
-              (google::cloud::chronicle::v1::ListReferenceListsRequest request),
-              (override));
+  ListReferenceLists,
+  (google::cloud::chronicle::v1::ListReferenceListsRequest request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::chronicle::v1::ReferenceList>,
-      CreateReferenceList,
-      (google::cloud::chronicle::v1::CreateReferenceListRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::chronicle::v1::ReferenceList>,
+  CreateReferenceList,
+  (google::cloud::chronicle::v1::CreateReferenceListRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::chronicle::v1::ReferenceList>,
-      UpdateReferenceList,
-      (google::cloud::chronicle::v1::UpdateReferenceListRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::chronicle::v1::ReferenceList>,
+  UpdateReferenceList,
+  (google::cloud::chronicle::v1::UpdateReferenceListRequest const& request), (override));
 
-  MOCK_METHOD((StreamRange<google::longrunning::Operation>), ListOperations,
-              (google::longrunning::ListOperationsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::longrunning::Operation>),
+  ListOperations,
+  (google::longrunning::ListOperationsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
-              (google::longrunning::GetOperationRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  GetOperation,
+  (google::longrunning::GetOperationRequest const& request), (override));
 
-  MOCK_METHOD(Status, DeleteOperation,
-              (google::longrunning::DeleteOperationRequest const& request),
-              (override));
+  MOCK_METHOD(Status,
+  DeleteOperation,
+  (google::longrunning::DeleteOperationRequest const& request), (override));
 
-  MOCK_METHOD(Status, CancelOperation,
-              (google::longrunning::CancelOperationRequest const& request),
-              (override));
+  MOCK_METHOD(Status,
+  CancelOperation,
+  (google::longrunning::CancelOperationRequest const& request), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -34,28 +34,23 @@ class MetricsScopesConnectionIdempotencyPolicy {
   virtual ~MetricsScopesConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<MetricsScopesConnectionIdempotencyPolicy> clone()
-      const;
+  virtual std::unique_ptr<MetricsScopesConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency GetMetricsScope(
-      google::monitoring::metricsscope::v1::GetMetricsScopeRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  GetMetricsScope(google::monitoring::metricsscope::v1::GetMetricsScopeRequest const& request);
 
-  virtual google::cloud::Idempotency ListMetricsScopesByMonitoredProject(
-      google::monitoring::metricsscope::v1::
-          ListMetricsScopesByMonitoredProjectRequest const& request);
+  virtual google::cloud::Idempotency
+  ListMetricsScopesByMonitoredProject(google::monitoring::metricsscope::v1::ListMetricsScopesByMonitoredProjectRequest const& request);
 
-  virtual google::cloud::Idempotency CreateMonitoredProject(
-      google::monitoring::metricsscope::v1::CreateMonitoredProjectRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  CreateMonitoredProject(google::monitoring::metricsscope::v1::CreateMonitoredProjectRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteMonitoredProject(
-      google::monitoring::metricsscope::v1::DeleteMonitoredProjectRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  DeleteMonitoredProject(google::monitoring::metricsscope::v1::DeleteMonitoredProjectRequest const& request);
 };
 
 std::unique_ptr<MetricsScopesConnectionIdempotencyPolicy>
-MakeDefaultMetricsScopesConnectionIdempotencyPolicy();
+    MakeDefaultMetricsScopesConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace monitoring_metricsscope_v1

@@ -28,13 +28,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 AccessApprovalClient::AccessApprovalClient(
     std::shared_ptr<AccessApprovalConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 AccessApprovalClient::~AccessApprovalClient() = default;
 
 StreamRange<google::cloud::accessapproval::v1::ApprovalRequest>
-AccessApprovalClient::ListApprovalRequests(std::string const& parent,
-                                           Options opts) {
+AccessApprovalClient::ListApprovalRequests(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::accessapproval::v1::ListApprovalRequestsMessage request;
   request.set_parent(parent);
@@ -42,16 +41,13 @@ AccessApprovalClient::ListApprovalRequests(std::string const& parent,
 }
 
 StreamRange<google::cloud::accessapproval::v1::ApprovalRequest>
-AccessApprovalClient::ListApprovalRequests(
-    google::cloud::accessapproval::v1::ListApprovalRequestsMessage request,
-    Options opts) {
+AccessApprovalClient::ListApprovalRequests(google::cloud::accessapproval::v1::ListApprovalRequestsMessage request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListApprovalRequests(std::move(request));
 }
 
 StatusOr<google::cloud::accessapproval::v1::ApprovalRequest>
-AccessApprovalClient::GetApprovalRequest(std::string const& name,
-                                         Options opts) {
+AccessApprovalClient::GetApprovalRequest(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::accessapproval::v1::GetApprovalRequestMessage request;
   request.set_name(name);
@@ -59,43 +55,31 @@ AccessApprovalClient::GetApprovalRequest(std::string const& name,
 }
 
 StatusOr<google::cloud::accessapproval::v1::ApprovalRequest>
-AccessApprovalClient::GetApprovalRequest(
-    google::cloud::accessapproval::v1::GetApprovalRequestMessage const& request,
-    Options opts) {
+AccessApprovalClient::GetApprovalRequest(google::cloud::accessapproval::v1::GetApprovalRequestMessage const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetApprovalRequest(request);
 }
 
 StatusOr<google::cloud::accessapproval::v1::ApprovalRequest>
-AccessApprovalClient::ApproveApprovalRequest(
-    google::cloud::accessapproval::v1::ApproveApprovalRequestMessage const&
-        request,
-    Options opts) {
+AccessApprovalClient::ApproveApprovalRequest(google::cloud::accessapproval::v1::ApproveApprovalRequestMessage const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ApproveApprovalRequest(request);
 }
 
 StatusOr<google::cloud::accessapproval::v1::ApprovalRequest>
-AccessApprovalClient::DismissApprovalRequest(
-    google::cloud::accessapproval::v1::DismissApprovalRequestMessage const&
-        request,
-    Options opts) {
+AccessApprovalClient::DismissApprovalRequest(google::cloud::accessapproval::v1::DismissApprovalRequestMessage const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DismissApprovalRequest(request);
 }
 
 StatusOr<google::cloud::accessapproval::v1::ApprovalRequest>
-AccessApprovalClient::InvalidateApprovalRequest(
-    google::cloud::accessapproval::v1::InvalidateApprovalRequestMessage const&
-        request,
-    Options opts) {
+AccessApprovalClient::InvalidateApprovalRequest(google::cloud::accessapproval::v1::InvalidateApprovalRequestMessage const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->InvalidateApprovalRequest(request);
 }
 
 StatusOr<google::cloud::accessapproval::v1::AccessApprovalSettings>
-AccessApprovalClient::GetAccessApprovalSettings(std::string const& name,
-                                                Options opts) {
+AccessApprovalClient::GetAccessApprovalSettings(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::accessapproval::v1::GetAccessApprovalSettingsMessage request;
   request.set_name(name);
@@ -103,67 +87,50 @@ AccessApprovalClient::GetAccessApprovalSettings(std::string const& name,
 }
 
 StatusOr<google::cloud::accessapproval::v1::AccessApprovalSettings>
-AccessApprovalClient::GetAccessApprovalSettings(
-    google::cloud::accessapproval::v1::GetAccessApprovalSettingsMessage const&
-        request,
-    Options opts) {
+AccessApprovalClient::GetAccessApprovalSettings(google::cloud::accessapproval::v1::GetAccessApprovalSettingsMessage const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetAccessApprovalSettings(request);
 }
 
 StatusOr<google::cloud::accessapproval::v1::AccessApprovalSettings>
-AccessApprovalClient::UpdateAccessApprovalSettings(
-    google::cloud::accessapproval::v1::AccessApprovalSettings const& settings,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+AccessApprovalClient::UpdateAccessApprovalSettings(google::cloud::accessapproval::v1::AccessApprovalSettings const& settings, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::accessapproval::v1::UpdateAccessApprovalSettingsMessage
-      request;
+  google::cloud::accessapproval::v1::UpdateAccessApprovalSettingsMessage request;
   *request.mutable_settings() = settings;
   *request.mutable_update_mask() = update_mask;
   return connection_->UpdateAccessApprovalSettings(request);
 }
 
 StatusOr<google::cloud::accessapproval::v1::AccessApprovalSettings>
-AccessApprovalClient::UpdateAccessApprovalSettings(
-    google::cloud::accessapproval::v1::
-        UpdateAccessApprovalSettingsMessage const& request,
-    Options opts) {
+AccessApprovalClient::UpdateAccessApprovalSettings(google::cloud::accessapproval::v1::UpdateAccessApprovalSettingsMessage const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateAccessApprovalSettings(request);
 }
 
-Status AccessApprovalClient::DeleteAccessApprovalSettings(
-    std::string const& name, Options opts) {
+Status
+AccessApprovalClient::DeleteAccessApprovalSettings(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::accessapproval::v1::DeleteAccessApprovalSettingsMessage
-      request;
+  google::cloud::accessapproval::v1::DeleteAccessApprovalSettingsMessage request;
   request.set_name(name);
   return connection_->DeleteAccessApprovalSettings(request);
 }
 
-Status AccessApprovalClient::DeleteAccessApprovalSettings(
-    google::cloud::accessapproval::v1::
-        DeleteAccessApprovalSettingsMessage const& request,
-    Options opts) {
+Status
+AccessApprovalClient::DeleteAccessApprovalSettings(google::cloud::accessapproval::v1::DeleteAccessApprovalSettingsMessage const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteAccessApprovalSettings(request);
 }
 
 StatusOr<google::cloud::accessapproval::v1::AccessApprovalServiceAccount>
-AccessApprovalClient::GetAccessApprovalServiceAccount(std::string const& name,
-                                                      Options opts) {
+AccessApprovalClient::GetAccessApprovalServiceAccount(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::accessapproval::v1::GetAccessApprovalServiceAccountMessage
-      request;
+  google::cloud::accessapproval::v1::GetAccessApprovalServiceAccountMessage request;
   request.set_name(name);
   return connection_->GetAccessApprovalServiceAccount(request);
 }
 
 StatusOr<google::cloud::accessapproval::v1::AccessApprovalServiceAccount>
-AccessApprovalClient::GetAccessApprovalServiceAccount(
-    google::cloud::accessapproval::v1::
-        GetAccessApprovalServiceAccountMessage const& request,
-    Options opts) {
+AccessApprovalClient::GetAccessApprovalServiceAccount(google::cloud::accessapproval::v1::GetAccessApprovalServiceAccountMessage const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetAccessApprovalServiceAccount(request);
 }

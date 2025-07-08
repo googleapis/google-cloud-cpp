@@ -39,48 +39,28 @@ Options ContactCenterInsightsDefaultOptions(Options options) {
       "", "GOOGLE_CLOUD_CPP_CONTACT_CENTER_INSIGHTS_AUTHORITY",
       "contactcenterinsights.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
-  if (!options.has<
-          contactcenterinsights_v1::ContactCenterInsightsRetryPolicyOption>()) {
-    options.set<
-        contactcenterinsights_v1::ContactCenterInsightsRetryPolicyOption>(
+  if (!options.has<contactcenterinsights_v1::ContactCenterInsightsRetryPolicyOption>()) {
+    options.set<contactcenterinsights_v1::ContactCenterInsightsRetryPolicyOption>(
         contactcenterinsights_v1::ContactCenterInsightsLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
-            .clone());
+            std::chrono::minutes(30)).clone());
   }
-  if (!options.has<contactcenterinsights_v1::
-                       ContactCenterInsightsBackoffPolicyOption>()) {
-    options.set<
-        contactcenterinsights_v1::ContactCenterInsightsBackoffPolicyOption>(
-        ExponentialBackoffPolicy(
-            std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
-            .clone());
+  if (!options.has<contactcenterinsights_v1::ContactCenterInsightsBackoffPolicyOption>()) {
+    options.set<contactcenterinsights_v1::ContactCenterInsightsBackoffPolicyOption>(
+        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
   }
-  if (!options.has<contactcenterinsights_v1::
-                       ContactCenterInsightsPollingPolicyOption>()) {
-    options.set<
-        contactcenterinsights_v1::ContactCenterInsightsPollingPolicyOption>(
+  if (!options.has<contactcenterinsights_v1::ContactCenterInsightsPollingPolicyOption>()) {
+    options.set<contactcenterinsights_v1::ContactCenterInsightsPollingPolicyOption>(
         GenericPollingPolicy<
-            contactcenterinsights_v1::ContactCenterInsightsRetryPolicyOption::
-                Type,
-            contactcenterinsights_v1::ContactCenterInsightsBackoffPolicyOption::
-                Type>(
-            options
-                .get<contactcenterinsights_v1::
-                         ContactCenterInsightsRetryPolicyOption>()
-                ->clone(),
+            contactcenterinsights_v1::ContactCenterInsightsRetryPolicyOption::Type,
+            contactcenterinsights_v1::ContactCenterInsightsBackoffPolicyOption::Type>(
+            options.get<contactcenterinsights_v1::ContactCenterInsightsRetryPolicyOption>()->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                     std::chrono::minutes(5), kBackoffScaling)
-                .clone())
-            .clone());
+            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
   }
-  if (!options
-           .has<contactcenterinsights_v1::
-                    ContactCenterInsightsConnectionIdempotencyPolicyOption>()) {
-    options.set<contactcenterinsights_v1::
-                    ContactCenterInsightsConnectionIdempotencyPolicyOption>(
-        contactcenterinsights_v1::
-            MakeDefaultContactCenterInsightsConnectionIdempotencyPolicy());
+  if (!options.has<contactcenterinsights_v1::ContactCenterInsightsConnectionIdempotencyPolicyOption>()) {
+    options.set<contactcenterinsights_v1::ContactCenterInsightsConnectionIdempotencyPolicyOption>(
+        contactcenterinsights_v1::MakeDefaultContactCenterInsightsConnectionIdempotencyPolicy());
   }
 
   return options;

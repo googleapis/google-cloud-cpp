@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAPLEX_V1_CONTENT_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAPLEX_V1_CONTENT_CONNECTION_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/dataplex/v1/content_connection_idempotency_policy.h"
 #include "google/cloud/dataplex/v1/internal/content_retry_traits.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -52,8 +52,7 @@ class ContentServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class ContentServiceLimitedErrorCountRetryPolicy
-    : public ContentServiceRetryPolicy {
+class ContentServiceLimitedErrorCountRetryPolicy : public ContentServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -63,14 +62,14 @@ class ContentServiceLimitedErrorCountRetryPolicy
    *     @p maximum_failures == 0.
    */
   explicit ContentServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   ContentServiceLimitedErrorCountRetryPolicy(
       ContentServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : ContentServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : ContentServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   ContentServiceLimitedErrorCountRetryPolicy(
       ContentServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : ContentServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : ContentServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -90,9 +89,7 @@ class ContentServiceLimitedErrorCountRetryPolicy
   using BaseType = ContentServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      dataplex_v1_internal::ContentServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<dataplex_v1_internal::ContentServiceRetryTraits> impl_;
 };
 
 /**
@@ -130,14 +127,12 @@ class ContentServiceLimitedTimeRetryPolicy : public ContentServiceRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit ContentServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  ContentServiceLimitedTimeRetryPolicy(
-      ContentServiceLimitedTimeRetryPolicy&& rhs) noexcept
-      : ContentServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  ContentServiceLimitedTimeRetryPolicy(
-      ContentServiceLimitedTimeRetryPolicy const& rhs) noexcept
-      : ContentServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  ContentServiceLimitedTimeRetryPolicy(ContentServiceLimitedTimeRetryPolicy&& rhs) noexcept
+    : ContentServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  ContentServiceLimitedTimeRetryPolicy(ContentServiceLimitedTimeRetryPolicy const& rhs) noexcept
+    : ContentServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -159,9 +154,7 @@ class ContentServiceLimitedTimeRetryPolicy : public ContentServiceRetryPolicy {
   using BaseType = ContentServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      dataplex_v1_internal::ContentServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<dataplex_v1_internal::ContentServiceRetryTraits> impl_;
 };
 
 /**
@@ -182,47 +175,47 @@ class ContentServiceConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<google::cloud::dataplex::v1::Content> CreateContent(
-      google::cloud::dataplex::v1::CreateContentRequest const& request);
+  virtual StatusOr<google::cloud::dataplex::v1::Content>
+  CreateContent(google::cloud::dataplex::v1::CreateContentRequest const& request);
 
-  virtual StatusOr<google::cloud::dataplex::v1::Content> UpdateContent(
-      google::cloud::dataplex::v1::UpdateContentRequest const& request);
+  virtual StatusOr<google::cloud::dataplex::v1::Content>
+  UpdateContent(google::cloud::dataplex::v1::UpdateContentRequest const& request);
 
-  virtual Status DeleteContent(
-      google::cloud::dataplex::v1::DeleteContentRequest const& request);
+  virtual Status
+  DeleteContent(google::cloud::dataplex::v1::DeleteContentRequest const& request);
 
-  virtual StatusOr<google::cloud::dataplex::v1::Content> GetContent(
-      google::cloud::dataplex::v1::GetContentRequest const& request);
+  virtual StatusOr<google::cloud::dataplex::v1::Content>
+  GetContent(google::cloud::dataplex::v1::GetContentRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
 
   virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
   TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
 
-  virtual StreamRange<google::cloud::dataplex::v1::Content> ListContent(
-      google::cloud::dataplex::v1::ListContentRequest request);
+  virtual StreamRange<google::cloud::dataplex::v1::Content>
+  ListContent(google::cloud::dataplex::v1::ListContentRequest request);
 
-  virtual StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request);
+  virtual StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request);
 
-  virtual StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request);
+  virtual StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request);
 
-  virtual StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 
-  virtual Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request);
+  virtual Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
 
-  virtual Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request);
+  virtual Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request);
 };
 
 /**

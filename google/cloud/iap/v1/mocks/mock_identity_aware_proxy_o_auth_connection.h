@@ -31,10 +31,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * A class to mock `IdentityAwareProxyOAuthServiceConnection`.
  *
  * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type
- * `IdentityAwareProxyOAuthServiceClient`. To do so, construct an object of type
- * `IdentityAwareProxyOAuthServiceClient` with an instance of this class. Then
- * use the Google Test framework functions to program the behavior of this mock.
+ * including errors, from an object of type `IdentityAwareProxyOAuthServiceClient`. To do so,
+ * construct an object of type `IdentityAwareProxyOAuthServiceClient` with an instance of this
+ * class. Then use the Google Test framework functions to program the behavior
+ * of this mock.
  *
  * @see [This example][bq-mock] for how to test your application with GoogleTest.
  * While the example showcases types from the BigQuery library, the underlying
@@ -42,54 +42,41 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockIdentityAwareProxyOAuthServiceConnection
-    : public iap_v1::IdentityAwareProxyOAuthServiceConnection {
+class MockIdentityAwareProxyOAuthServiceConnection : public iap_v1::IdentityAwareProxyOAuthServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::iap::v1::ListBrandsResponse>, ListBrands,
-              (google::cloud::iap::v1::ListBrandsRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::iap::v1::ListBrandsResponse>,
+  ListBrands,
+  (google::cloud::iap::v1::ListBrandsRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::iap::v1::Brand>, CreateBrand,
-              (google::cloud::iap::v1::CreateBrandRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::iap::v1::Brand>,
+  CreateBrand,
+  (google::cloud::iap::v1::CreateBrandRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::iap::v1::Brand>, GetBrand,
-              (google::cloud::iap::v1::GetBrandRequest const& request),
-              (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::iap::v1::IdentityAwareProxyClient>,
-      CreateIdentityAwareProxyClient,
-      (google::cloud::iap::v1::CreateIdentityAwareProxyClientRequest const&
-           request),
-      (override));
-
-  MOCK_METHOD(
-      (StreamRange<google::cloud::iap::v1::IdentityAwareProxyClient>),
-      ListIdentityAwareProxyClients,
-      (google::cloud::iap::v1::ListIdentityAwareProxyClientsRequest request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::iap::v1::Brand>,
+  GetBrand,
+  (google::cloud::iap::v1::GetBrandRequest const& request), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::iap::v1::IdentityAwareProxyClient>,
-              GetIdentityAwareProxyClient,
-              (google::cloud::iap::v1::GetIdentityAwareProxyClientRequest const&
-                   request),
-              (override));
+  CreateIdentityAwareProxyClient,
+  (google::cloud::iap::v1::CreateIdentityAwareProxyClientRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::iap::v1::IdentityAwareProxyClient>,
-      ResetIdentityAwareProxyClientSecret,
-      (google::cloud::iap::v1::ResetIdentityAwareProxyClientSecretRequest const&
-           request),
-      (override));
+  MOCK_METHOD((StreamRange<google::cloud::iap::v1::IdentityAwareProxyClient>),
+  ListIdentityAwareProxyClients,
+  (google::cloud::iap::v1::ListIdentityAwareProxyClientsRequest request), (override));
 
-  MOCK_METHOD(
-      Status, DeleteIdentityAwareProxyClient,
-      (google::cloud::iap::v1::DeleteIdentityAwareProxyClientRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::iap::v1::IdentityAwareProxyClient>,
+  GetIdentityAwareProxyClient,
+  (google::cloud::iap::v1::GetIdentityAwareProxyClientRequest const& request), (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::iap::v1::IdentityAwareProxyClient>,
+  ResetIdentityAwareProxyClientSecret,
+  (google::cloud::iap::v1::ResetIdentityAwareProxyClientSecretRequest const& request), (override));
+
+  MOCK_METHOD(Status,
+  DeleteIdentityAwareProxyClient,
+  (google::cloud::iap::v1::DeleteIdentityAwareProxyClientRequest const& request), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

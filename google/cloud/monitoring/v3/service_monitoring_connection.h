@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_V3_SERVICE_MONITORING_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_V3_SERVICE_MONITORING_CONNECTION_H
 
-#include "google/cloud/monitoring/v3/internal/service_monitoring_retry_traits.h"
-#include "google/cloud/monitoring/v3/service_monitoring_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/monitoring/v3/internal/service_monitoring_retry_traits.h"
+#include "google/cloud/monitoring/v3/service_monitoring_connection_idempotency_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -36,17 +36,14 @@ namespace monitoring_v3 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `ServiceMonitoringServiceConnection`.
-class ServiceMonitoringServiceRetryPolicy
-    : public ::google::cloud::RetryPolicy {
+class ServiceMonitoringServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  public:
   /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<ServiceMonitoringServiceRetryPolicy> clone()
-      const = 0;
+  virtual std::unique_ptr<ServiceMonitoringServiceRetryPolicy> clone() const = 0;
 };
 
 /**
- * A retry policy for `ServiceMonitoringServiceConnection` based on counting
- * errors.
+ * A retry policy for `ServiceMonitoringServiceConnection` based on counting errors.
  *
  * This policy stops retrying if:
  * - An RPC returns a non-transient error.
@@ -55,8 +52,7 @@ class ServiceMonitoringServiceRetryPolicy
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class ServiceMonitoringServiceLimitedErrorCountRetryPolicy
-    : public ServiceMonitoringServiceRetryPolicy {
+class ServiceMonitoringServiceLimitedErrorCountRetryPolicy : public ServiceMonitoringServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -65,18 +61,15 @@ class ServiceMonitoringServiceLimitedErrorCountRetryPolicy
    * @note Disable the retry loop by providing an instance of this policy with
    *     @p maximum_failures == 0.
    */
-  explicit ServiceMonitoringServiceLimitedErrorCountRetryPolicy(
-      int maximum_failures)
-      : impl_(maximum_failures) {}
+  explicit ServiceMonitoringServiceLimitedErrorCountRetryPolicy(int maximum_failures)
+    : impl_(maximum_failures) {}
 
   ServiceMonitoringServiceLimitedErrorCountRetryPolicy(
       ServiceMonitoringServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : ServiceMonitoringServiceLimitedErrorCountRetryPolicy(
-            rhs.maximum_failures()) {}
+    : ServiceMonitoringServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   ServiceMonitoringServiceLimitedErrorCountRetryPolicy(
       ServiceMonitoringServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : ServiceMonitoringServiceLimitedErrorCountRetryPolicy(
-            rhs.maximum_failures()) {}
+    : ServiceMonitoringServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -88,8 +81,7 @@ class ServiceMonitoringServiceLimitedErrorCountRetryPolicy
     return impl_.IsPermanentFailure(status);
   }
   std::unique_ptr<ServiceMonitoringServiceRetryPolicy> clone() const override {
-    return std::make_unique<
-        ServiceMonitoringServiceLimitedErrorCountRetryPolicy>(
+    return std::make_unique<ServiceMonitoringServiceLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
 
@@ -97,14 +89,11 @@ class ServiceMonitoringServiceLimitedErrorCountRetryPolicy
   using BaseType = ServiceMonitoringServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      monitoring_v3_internal::ServiceMonitoringServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<monitoring_v3_internal::ServiceMonitoringServiceRetryTraits> impl_;
 };
 
 /**
- * A retry policy for `ServiceMonitoringServiceConnection` based on elapsed
- * time.
+ * A retry policy for `ServiceMonitoringServiceConnection` based on elapsed time.
  *
  * This policy stops retrying if:
  * - An RPC returns a non-transient error.
@@ -113,8 +102,7 @@ class ServiceMonitoringServiceLimitedErrorCountRetryPolicy
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class ServiceMonitoringServiceLimitedTimeRetryPolicy
-    : public ServiceMonitoringServiceRetryPolicy {
+class ServiceMonitoringServiceLimitedTimeRetryPolicy : public ServiceMonitoringServiceRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -139,16 +127,12 @@ class ServiceMonitoringServiceLimitedTimeRetryPolicy
   template <typename DurationRep, typename DurationPeriod>
   explicit ServiceMonitoringServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  ServiceMonitoringServiceLimitedTimeRetryPolicy(
-      ServiceMonitoringServiceLimitedTimeRetryPolicy&& rhs) noexcept
-      : ServiceMonitoringServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {
-  }
-  ServiceMonitoringServiceLimitedTimeRetryPolicy(
-      ServiceMonitoringServiceLimitedTimeRetryPolicy const& rhs) noexcept
-      : ServiceMonitoringServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {
-  }
+  ServiceMonitoringServiceLimitedTimeRetryPolicy(ServiceMonitoringServiceLimitedTimeRetryPolicy&& rhs) noexcept
+    : ServiceMonitoringServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  ServiceMonitoringServiceLimitedTimeRetryPolicy(ServiceMonitoringServiceLimitedTimeRetryPolicy const& rhs) noexcept
+    : ServiceMonitoringServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -170,25 +154,20 @@ class ServiceMonitoringServiceLimitedTimeRetryPolicy
   using BaseType = ServiceMonitoringServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      monitoring_v3_internal::ServiceMonitoringServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<monitoring_v3_internal::ServiceMonitoringServiceRetryTraits> impl_;
 };
 
 /**
- * The `ServiceMonitoringServiceConnection` object for
- * `ServiceMonitoringServiceClient`.
+ * The `ServiceMonitoringServiceConnection` object for `ServiceMonitoringServiceClient`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `ServiceMonitoringServiceClient`. This allows users to inject custom
- * behavior (e.g., with a Google Mock object) when writing tests that use
- * objects of type `ServiceMonitoringServiceClient`.
+ * sets in `ServiceMonitoringServiceClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `ServiceMonitoringServiceClient`.
  *
- * To create a concrete instance, see
- * `MakeServiceMonitoringServiceConnection()`.
+ * To create a concrete instance, see `MakeServiceMonitoringServiceConnection()`.
  *
- * For mocking, see
- * `monitoring_v3_mocks::MockServiceMonitoringServiceConnection`.
+ * For mocking, see `monitoring_v3_mocks::MockServiceMonitoringServiceConnection`.
  */
 class ServiceMonitoringServiceConnection {
  public:
@@ -196,55 +175,46 @@ class ServiceMonitoringServiceConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<google::monitoring::v3::Service> CreateService(
-      google::monitoring::v3::CreateServiceRequest const& request);
+  virtual StatusOr<google::monitoring::v3::Service>
+  CreateService(google::monitoring::v3::CreateServiceRequest const& request);
 
-  virtual StatusOr<google::monitoring::v3::Service> GetService(
-      google::monitoring::v3::GetServiceRequest const& request);
+  virtual StatusOr<google::monitoring::v3::Service>
+  GetService(google::monitoring::v3::GetServiceRequest const& request);
 
-  virtual StreamRange<google::monitoring::v3::Service> ListServices(
-      google::monitoring::v3::ListServicesRequest request);
+  virtual StreamRange<google::monitoring::v3::Service>
+  ListServices(google::monitoring::v3::ListServicesRequest request);
 
-  virtual StatusOr<google::monitoring::v3::Service> UpdateService(
-      google::monitoring::v3::UpdateServiceRequest const& request);
+  virtual StatusOr<google::monitoring::v3::Service>
+  UpdateService(google::monitoring::v3::UpdateServiceRequest const& request);
 
-  virtual Status DeleteService(
-      google::monitoring::v3::DeleteServiceRequest const& request);
-
-  virtual StatusOr<google::monitoring::v3::ServiceLevelObjective>
-  CreateServiceLevelObjective(
-      google::monitoring::v3::CreateServiceLevelObjectiveRequest const&
-          request);
+  virtual Status
+  DeleteService(google::monitoring::v3::DeleteServiceRequest const& request);
 
   virtual StatusOr<google::monitoring::v3::ServiceLevelObjective>
-  GetServiceLevelObjective(
-      google::monitoring::v3::GetServiceLevelObjectiveRequest const& request);
+  CreateServiceLevelObjective(google::monitoring::v3::CreateServiceLevelObjectiveRequest const& request);
+
+  virtual StatusOr<google::monitoring::v3::ServiceLevelObjective>
+  GetServiceLevelObjective(google::monitoring::v3::GetServiceLevelObjectiveRequest const& request);
 
   virtual StreamRange<google::monitoring::v3::ServiceLevelObjective>
-  ListServiceLevelObjectives(
-      google::monitoring::v3::ListServiceLevelObjectivesRequest request);
+  ListServiceLevelObjectives(google::monitoring::v3::ListServiceLevelObjectivesRequest request);
 
   virtual StatusOr<google::monitoring::v3::ServiceLevelObjective>
-  UpdateServiceLevelObjective(
-      google::monitoring::v3::UpdateServiceLevelObjectiveRequest const&
-          request);
+  UpdateServiceLevelObjective(google::monitoring::v3::UpdateServiceLevelObjectiveRequest const& request);
 
-  virtual Status DeleteServiceLevelObjective(
-      google::monitoring::v3::DeleteServiceLevelObjectiveRequest const&
-          request);
+  virtual Status
+  DeleteServiceLevelObjective(google::monitoring::v3::DeleteServiceLevelObjectiveRequest const& request);
 };
 
 /**
- * A factory function to construct an object of type
- * `ServiceMonitoringServiceConnection`.
+ * A factory function to construct an object of type `ServiceMonitoringServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of
- * ServiceMonitoringServiceClient.
+ * should be passed as an argument to the constructor of ServiceMonitoringServiceClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `ServiceMonitoringServiceConnection`. Expected options are any of
- * the types in the following option lists:
+ * returned `ServiceMonitoringServiceConnection`. Expected options are any of the types in
+ * the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
@@ -254,11 +224,11 @@ class ServiceMonitoringServiceConnection {
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
- * @param options (optional) Configure the `ServiceMonitoringServiceConnection`
- * created by this function.
+ * @param options (optional) Configure the `ServiceMonitoringServiceConnection` created by
+ * this function.
  */
-std::shared_ptr<ServiceMonitoringServiceConnection>
-MakeServiceMonitoringServiceConnection(Options options = {});
+std::shared_ptr<ServiceMonitoringServiceConnection> MakeServiceMonitoringServiceConnection(
+    Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace monitoring_v3

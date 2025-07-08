@@ -32,661 +32,717 @@ DlpServiceStub::~DlpServiceStub() = default;
 
 StatusOr<google::privacy::dlp::v2::InspectContentResponse>
 DefaultDlpServiceStub::InspectContent(
-    grpc::ClientContext& context, Options const&,
-    google::privacy::dlp::v2::InspectContentRequest const& request) {
-  google::privacy::dlp::v2::InspectContentResponse response;
-  auto status = grpc_stub_->InspectContent(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::privacy::dlp::v2::InspectContentRequest const& request) {
+    google::privacy::dlp::v2::InspectContentResponse response;
+    auto status =
+        grpc_stub_->InspectContent(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::privacy::dlp::v2::RedactImageResponse>
 DefaultDlpServiceStub::RedactImage(
-    grpc::ClientContext& context, Options const&,
-    google::privacy::dlp::v2::RedactImageRequest const& request) {
-  google::privacy::dlp::v2::RedactImageResponse response;
-  auto status = grpc_stub_->RedactImage(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::privacy::dlp::v2::RedactImageRequest const& request) {
+    google::privacy::dlp::v2::RedactImageResponse response;
+    auto status =
+        grpc_stub_->RedactImage(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::privacy::dlp::v2::DeidentifyContentResponse>
 DefaultDlpServiceStub::DeidentifyContent(
-    grpc::ClientContext& context, Options const&,
-    google::privacy::dlp::v2::DeidentifyContentRequest const& request) {
-  google::privacy::dlp::v2::DeidentifyContentResponse response;
-  auto status = grpc_stub_->DeidentifyContent(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::privacy::dlp::v2::DeidentifyContentRequest const& request) {
+    google::privacy::dlp::v2::DeidentifyContentResponse response;
+    auto status =
+        grpc_stub_->DeidentifyContent(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::privacy::dlp::v2::ReidentifyContentResponse>
 DefaultDlpServiceStub::ReidentifyContent(
-    grpc::ClientContext& context, Options const&,
-    google::privacy::dlp::v2::ReidentifyContentRequest const& request) {
-  google::privacy::dlp::v2::ReidentifyContentResponse response;
-  auto status = grpc_stub_->ReidentifyContent(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::privacy::dlp::v2::ReidentifyContentRequest const& request) {
+    google::privacy::dlp::v2::ReidentifyContentResponse response;
+    auto status =
+        grpc_stub_->ReidentifyContent(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::privacy::dlp::v2::ListInfoTypesResponse>
 DefaultDlpServiceStub::ListInfoTypes(
-    grpc::ClientContext& context, Options const&,
-    google::privacy::dlp::v2::ListInfoTypesRequest const& request) {
-  google::privacy::dlp::v2::ListInfoTypesResponse response;
-  auto status = grpc_stub_->ListInfoTypes(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::privacy::dlp::v2::ListInfoTypesRequest const& request) {
+    google::privacy::dlp::v2::ListInfoTypesResponse response;
+    auto status =
+        grpc_stub_->ListInfoTypes(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::privacy::dlp::v2::InspectTemplate>
 DefaultDlpServiceStub::CreateInspectTemplate(
-    grpc::ClientContext& context, Options const&,
-    google::privacy::dlp::v2::CreateInspectTemplateRequest const& request) {
-  google::privacy::dlp::v2::InspectTemplate response;
-  auto status = grpc_stub_->CreateInspectTemplate(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::privacy::dlp::v2::CreateInspectTemplateRequest const& request) {
+    google::privacy::dlp::v2::InspectTemplate response;
+    auto status =
+        grpc_stub_->CreateInspectTemplate(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::privacy::dlp::v2::InspectTemplate>
 DefaultDlpServiceStub::UpdateInspectTemplate(
-    grpc::ClientContext& context, Options const&,
-    google::privacy::dlp::v2::UpdateInspectTemplateRequest const& request) {
-  google::privacy::dlp::v2::InspectTemplate response;
-  auto status = grpc_stub_->UpdateInspectTemplate(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::privacy::dlp::v2::UpdateInspectTemplateRequest const& request) {
+    google::privacy::dlp::v2::InspectTemplate response;
+    auto status =
+        grpc_stub_->UpdateInspectTemplate(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::privacy::dlp::v2::InspectTemplate>
 DefaultDlpServiceStub::GetInspectTemplate(
-    grpc::ClientContext& context, Options const&,
-    google::privacy::dlp::v2::GetInspectTemplateRequest const& request) {
-  google::privacy::dlp::v2::InspectTemplate response;
-  auto status = grpc_stub_->GetInspectTemplate(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::privacy::dlp::v2::GetInspectTemplateRequest const& request) {
+    google::privacy::dlp::v2::InspectTemplate response;
+    auto status =
+        grpc_stub_->GetInspectTemplate(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::privacy::dlp::v2::ListInspectTemplatesResponse>
 DefaultDlpServiceStub::ListInspectTemplates(
-    grpc::ClientContext& context, Options const&,
-    google::privacy::dlp::v2::ListInspectTemplatesRequest const& request) {
-  google::privacy::dlp::v2::ListInspectTemplatesResponse response;
-  auto status = grpc_stub_->ListInspectTemplates(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::privacy::dlp::v2::ListInspectTemplatesRequest const& request) {
+    google::privacy::dlp::v2::ListInspectTemplatesResponse response;
+    auto status =
+        grpc_stub_->ListInspectTemplates(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-Status DefaultDlpServiceStub::DeleteInspectTemplate(
-    grpc::ClientContext& context, Options const&,
-    google::privacy::dlp::v2::DeleteInspectTemplateRequest const& request) {
-  google::protobuf::Empty response;
-  auto status = grpc_stub_->DeleteInspectTemplate(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return google::cloud::Status();
+Status
+DefaultDlpServiceStub::DeleteInspectTemplate(
+  grpc::ClientContext& context, Options const&,
+  google::privacy::dlp::v2::DeleteInspectTemplateRequest const& request) {
+    google::protobuf::Empty response;
+    auto status =
+        grpc_stub_->DeleteInspectTemplate(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return google::cloud::Status();
 }
 
 StatusOr<google::privacy::dlp::v2::DeidentifyTemplate>
 DefaultDlpServiceStub::CreateDeidentifyTemplate(
-    grpc::ClientContext& context, Options const&,
-    google::privacy::dlp::v2::CreateDeidentifyTemplateRequest const& request) {
-  google::privacy::dlp::v2::DeidentifyTemplate response;
-  auto status =
-      grpc_stub_->CreateDeidentifyTemplate(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::privacy::dlp::v2::CreateDeidentifyTemplateRequest const& request) {
+    google::privacy::dlp::v2::DeidentifyTemplate response;
+    auto status =
+        grpc_stub_->CreateDeidentifyTemplate(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::privacy::dlp::v2::DeidentifyTemplate>
 DefaultDlpServiceStub::UpdateDeidentifyTemplate(
-    grpc::ClientContext& context, Options const&,
-    google::privacy::dlp::v2::UpdateDeidentifyTemplateRequest const& request) {
-  google::privacy::dlp::v2::DeidentifyTemplate response;
-  auto status =
-      grpc_stub_->UpdateDeidentifyTemplate(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::privacy::dlp::v2::UpdateDeidentifyTemplateRequest const& request) {
+    google::privacy::dlp::v2::DeidentifyTemplate response;
+    auto status =
+        grpc_stub_->UpdateDeidentifyTemplate(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::privacy::dlp::v2::DeidentifyTemplate>
 DefaultDlpServiceStub::GetDeidentifyTemplate(
-    grpc::ClientContext& context, Options const&,
-    google::privacy::dlp::v2::GetDeidentifyTemplateRequest const& request) {
-  google::privacy::dlp::v2::DeidentifyTemplate response;
-  auto status = grpc_stub_->GetDeidentifyTemplate(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::privacy::dlp::v2::GetDeidentifyTemplateRequest const& request) {
+    google::privacy::dlp::v2::DeidentifyTemplate response;
+    auto status =
+        grpc_stub_->GetDeidentifyTemplate(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::privacy::dlp::v2::ListDeidentifyTemplatesResponse>
 DefaultDlpServiceStub::ListDeidentifyTemplates(
-    grpc::ClientContext& context, Options const&,
-    google::privacy::dlp::v2::ListDeidentifyTemplatesRequest const& request) {
-  google::privacy::dlp::v2::ListDeidentifyTemplatesResponse response;
-  auto status =
-      grpc_stub_->ListDeidentifyTemplates(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::privacy::dlp::v2::ListDeidentifyTemplatesRequest const& request) {
+    google::privacy::dlp::v2::ListDeidentifyTemplatesResponse response;
+    auto status =
+        grpc_stub_->ListDeidentifyTemplates(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-Status DefaultDlpServiceStub::DeleteDeidentifyTemplate(
-    grpc::ClientContext& context, Options const&,
-    google::privacy::dlp::v2::DeleteDeidentifyTemplateRequest const& request) {
-  google::protobuf::Empty response;
-  auto status =
-      grpc_stub_->DeleteDeidentifyTemplate(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return google::cloud::Status();
+Status
+DefaultDlpServiceStub::DeleteDeidentifyTemplate(
+  grpc::ClientContext& context, Options const&,
+  google::privacy::dlp::v2::DeleteDeidentifyTemplateRequest const& request) {
+    google::protobuf::Empty response;
+    auto status =
+        grpc_stub_->DeleteDeidentifyTemplate(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return google::cloud::Status();
 }
 
 StatusOr<google::privacy::dlp::v2::JobTrigger>
 DefaultDlpServiceStub::CreateJobTrigger(
-    grpc::ClientContext& context, Options const&,
-    google::privacy::dlp::v2::CreateJobTriggerRequest const& request) {
-  google::privacy::dlp::v2::JobTrigger response;
-  auto status = grpc_stub_->CreateJobTrigger(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::privacy::dlp::v2::CreateJobTriggerRequest const& request) {
+    google::privacy::dlp::v2::JobTrigger response;
+    auto status =
+        grpc_stub_->CreateJobTrigger(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::privacy::dlp::v2::JobTrigger>
 DefaultDlpServiceStub::UpdateJobTrigger(
-    grpc::ClientContext& context, Options const&,
-    google::privacy::dlp::v2::UpdateJobTriggerRequest const& request) {
-  google::privacy::dlp::v2::JobTrigger response;
-  auto status = grpc_stub_->UpdateJobTrigger(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::privacy::dlp::v2::UpdateJobTriggerRequest const& request) {
+    google::privacy::dlp::v2::JobTrigger response;
+    auto status =
+        grpc_stub_->UpdateJobTrigger(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::privacy::dlp::v2::HybridInspectResponse>
 DefaultDlpServiceStub::HybridInspectJobTrigger(
-    grpc::ClientContext& context, Options const&,
-    google::privacy::dlp::v2::HybridInspectJobTriggerRequest const& request) {
-  google::privacy::dlp::v2::HybridInspectResponse response;
-  auto status =
-      grpc_stub_->HybridInspectJobTrigger(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::privacy::dlp::v2::HybridInspectJobTriggerRequest const& request) {
+    google::privacy::dlp::v2::HybridInspectResponse response;
+    auto status =
+        grpc_stub_->HybridInspectJobTrigger(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::privacy::dlp::v2::JobTrigger>
 DefaultDlpServiceStub::GetJobTrigger(
-    grpc::ClientContext& context, Options const&,
-    google::privacy::dlp::v2::GetJobTriggerRequest const& request) {
-  google::privacy::dlp::v2::JobTrigger response;
-  auto status = grpc_stub_->GetJobTrigger(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::privacy::dlp::v2::GetJobTriggerRequest const& request) {
+    google::privacy::dlp::v2::JobTrigger response;
+    auto status =
+        grpc_stub_->GetJobTrigger(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::privacy::dlp::v2::ListJobTriggersResponse>
 DefaultDlpServiceStub::ListJobTriggers(
-    grpc::ClientContext& context, Options const&,
-    google::privacy::dlp::v2::ListJobTriggersRequest const& request) {
-  google::privacy::dlp::v2::ListJobTriggersResponse response;
-  auto status = grpc_stub_->ListJobTriggers(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::privacy::dlp::v2::ListJobTriggersRequest const& request) {
+    google::privacy::dlp::v2::ListJobTriggersResponse response;
+    auto status =
+        grpc_stub_->ListJobTriggers(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-Status DefaultDlpServiceStub::DeleteJobTrigger(
-    grpc::ClientContext& context, Options const&,
-    google::privacy::dlp::v2::DeleteJobTriggerRequest const& request) {
-  google::protobuf::Empty response;
-  auto status = grpc_stub_->DeleteJobTrigger(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return google::cloud::Status();
+Status
+DefaultDlpServiceStub::DeleteJobTrigger(
+  grpc::ClientContext& context, Options const&,
+  google::privacy::dlp::v2::DeleteJobTriggerRequest const& request) {
+    google::protobuf::Empty response;
+    auto status =
+        grpc_stub_->DeleteJobTrigger(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return google::cloud::Status();
 }
 
 StatusOr<google::privacy::dlp::v2::DlpJob>
 DefaultDlpServiceStub::ActivateJobTrigger(
-    grpc::ClientContext& context, Options const&,
-    google::privacy::dlp::v2::ActivateJobTriggerRequest const& request) {
-  google::privacy::dlp::v2::DlpJob response;
-  auto status = grpc_stub_->ActivateJobTrigger(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::privacy::dlp::v2::ActivateJobTriggerRequest const& request) {
+    google::privacy::dlp::v2::DlpJob response;
+    auto status =
+        grpc_stub_->ActivateJobTrigger(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::privacy::dlp::v2::DiscoveryConfig>
 DefaultDlpServiceStub::CreateDiscoveryConfig(
-    grpc::ClientContext& context, Options const&,
-    google::privacy::dlp::v2::CreateDiscoveryConfigRequest const& request) {
-  google::privacy::dlp::v2::DiscoveryConfig response;
-  auto status = grpc_stub_->CreateDiscoveryConfig(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::privacy::dlp::v2::CreateDiscoveryConfigRequest const& request) {
+    google::privacy::dlp::v2::DiscoveryConfig response;
+    auto status =
+        grpc_stub_->CreateDiscoveryConfig(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::privacy::dlp::v2::DiscoveryConfig>
 DefaultDlpServiceStub::UpdateDiscoveryConfig(
-    grpc::ClientContext& context, Options const&,
-    google::privacy::dlp::v2::UpdateDiscoveryConfigRequest const& request) {
-  google::privacy::dlp::v2::DiscoveryConfig response;
-  auto status = grpc_stub_->UpdateDiscoveryConfig(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::privacy::dlp::v2::UpdateDiscoveryConfigRequest const& request) {
+    google::privacy::dlp::v2::DiscoveryConfig response;
+    auto status =
+        grpc_stub_->UpdateDiscoveryConfig(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::privacy::dlp::v2::DiscoveryConfig>
 DefaultDlpServiceStub::GetDiscoveryConfig(
-    grpc::ClientContext& context, Options const&,
-    google::privacy::dlp::v2::GetDiscoveryConfigRequest const& request) {
-  google::privacy::dlp::v2::DiscoveryConfig response;
-  auto status = grpc_stub_->GetDiscoveryConfig(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::privacy::dlp::v2::GetDiscoveryConfigRequest const& request) {
+    google::privacy::dlp::v2::DiscoveryConfig response;
+    auto status =
+        grpc_stub_->GetDiscoveryConfig(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::privacy::dlp::v2::ListDiscoveryConfigsResponse>
 DefaultDlpServiceStub::ListDiscoveryConfigs(
-    grpc::ClientContext& context, Options const&,
-    google::privacy::dlp::v2::ListDiscoveryConfigsRequest const& request) {
-  google::privacy::dlp::v2::ListDiscoveryConfigsResponse response;
-  auto status = grpc_stub_->ListDiscoveryConfigs(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::privacy::dlp::v2::ListDiscoveryConfigsRequest const& request) {
+    google::privacy::dlp::v2::ListDiscoveryConfigsResponse response;
+    auto status =
+        grpc_stub_->ListDiscoveryConfigs(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-Status DefaultDlpServiceStub::DeleteDiscoveryConfig(
-    grpc::ClientContext& context, Options const&,
-    google::privacy::dlp::v2::DeleteDiscoveryConfigRequest const& request) {
-  google::protobuf::Empty response;
-  auto status = grpc_stub_->DeleteDiscoveryConfig(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return google::cloud::Status();
+Status
+DefaultDlpServiceStub::DeleteDiscoveryConfig(
+  grpc::ClientContext& context, Options const&,
+  google::privacy::dlp::v2::DeleteDiscoveryConfigRequest const& request) {
+    google::protobuf::Empty response;
+    auto status =
+        grpc_stub_->DeleteDiscoveryConfig(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return google::cloud::Status();
 }
 
-StatusOr<google::privacy::dlp::v2::DlpJob> DefaultDlpServiceStub::CreateDlpJob(
-    grpc::ClientContext& context, Options const&,
-    google::privacy::dlp::v2::CreateDlpJobRequest const& request) {
-  google::privacy::dlp::v2::DlpJob response;
-  auto status = grpc_stub_->CreateDlpJob(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::privacy::dlp::v2::DlpJob>
+DefaultDlpServiceStub::CreateDlpJob(
+  grpc::ClientContext& context, Options const&,
+  google::privacy::dlp::v2::CreateDlpJobRequest const& request) {
+    google::privacy::dlp::v2::DlpJob response;
+    auto status =
+        grpc_stub_->CreateDlpJob(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::privacy::dlp::v2::ListDlpJobsResponse>
 DefaultDlpServiceStub::ListDlpJobs(
-    grpc::ClientContext& context, Options const&,
-    google::privacy::dlp::v2::ListDlpJobsRequest const& request) {
-  google::privacy::dlp::v2::ListDlpJobsResponse response;
-  auto status = grpc_stub_->ListDlpJobs(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::privacy::dlp::v2::ListDlpJobsRequest const& request) {
+    google::privacy::dlp::v2::ListDlpJobsResponse response;
+    auto status =
+        grpc_stub_->ListDlpJobs(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-StatusOr<google::privacy::dlp::v2::DlpJob> DefaultDlpServiceStub::GetDlpJob(
-    grpc::ClientContext& context, Options const&,
-    google::privacy::dlp::v2::GetDlpJobRequest const& request) {
-  google::privacy::dlp::v2::DlpJob response;
-  auto status = grpc_stub_->GetDlpJob(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::privacy::dlp::v2::DlpJob>
+DefaultDlpServiceStub::GetDlpJob(
+  grpc::ClientContext& context, Options const&,
+  google::privacy::dlp::v2::GetDlpJobRequest const& request) {
+    google::privacy::dlp::v2::DlpJob response;
+    auto status =
+        grpc_stub_->GetDlpJob(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-Status DefaultDlpServiceStub::DeleteDlpJob(
-    grpc::ClientContext& context, Options const&,
-    google::privacy::dlp::v2::DeleteDlpJobRequest const& request) {
-  google::protobuf::Empty response;
-  auto status = grpc_stub_->DeleteDlpJob(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return google::cloud::Status();
+Status
+DefaultDlpServiceStub::DeleteDlpJob(
+  grpc::ClientContext& context, Options const&,
+  google::privacy::dlp::v2::DeleteDlpJobRequest const& request) {
+    google::protobuf::Empty response;
+    auto status =
+        grpc_stub_->DeleteDlpJob(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return google::cloud::Status();
 }
 
-Status DefaultDlpServiceStub::CancelDlpJob(
-    grpc::ClientContext& context, Options const&,
-    google::privacy::dlp::v2::CancelDlpJobRequest const& request) {
-  google::protobuf::Empty response;
-  auto status = grpc_stub_->CancelDlpJob(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return google::cloud::Status();
+Status
+DefaultDlpServiceStub::CancelDlpJob(
+  grpc::ClientContext& context, Options const&,
+  google::privacy::dlp::v2::CancelDlpJobRequest const& request) {
+    google::protobuf::Empty response;
+    auto status =
+        grpc_stub_->CancelDlpJob(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return google::cloud::Status();
 }
 
 StatusOr<google::privacy::dlp::v2::StoredInfoType>
 DefaultDlpServiceStub::CreateStoredInfoType(
-    grpc::ClientContext& context, Options const&,
-    google::privacy::dlp::v2::CreateStoredInfoTypeRequest const& request) {
-  google::privacy::dlp::v2::StoredInfoType response;
-  auto status = grpc_stub_->CreateStoredInfoType(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::privacy::dlp::v2::CreateStoredInfoTypeRequest const& request) {
+    google::privacy::dlp::v2::StoredInfoType response;
+    auto status =
+        grpc_stub_->CreateStoredInfoType(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::privacy::dlp::v2::StoredInfoType>
 DefaultDlpServiceStub::UpdateStoredInfoType(
-    grpc::ClientContext& context, Options const&,
-    google::privacy::dlp::v2::UpdateStoredInfoTypeRequest const& request) {
-  google::privacy::dlp::v2::StoredInfoType response;
-  auto status = grpc_stub_->UpdateStoredInfoType(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::privacy::dlp::v2::UpdateStoredInfoTypeRequest const& request) {
+    google::privacy::dlp::v2::StoredInfoType response;
+    auto status =
+        grpc_stub_->UpdateStoredInfoType(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::privacy::dlp::v2::StoredInfoType>
 DefaultDlpServiceStub::GetStoredInfoType(
-    grpc::ClientContext& context, Options const&,
-    google::privacy::dlp::v2::GetStoredInfoTypeRequest const& request) {
-  google::privacy::dlp::v2::StoredInfoType response;
-  auto status = grpc_stub_->GetStoredInfoType(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::privacy::dlp::v2::GetStoredInfoTypeRequest const& request) {
+    google::privacy::dlp::v2::StoredInfoType response;
+    auto status =
+        grpc_stub_->GetStoredInfoType(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::privacy::dlp::v2::ListStoredInfoTypesResponse>
 DefaultDlpServiceStub::ListStoredInfoTypes(
-    grpc::ClientContext& context, Options const&,
-    google::privacy::dlp::v2::ListStoredInfoTypesRequest const& request) {
-  google::privacy::dlp::v2::ListStoredInfoTypesResponse response;
-  auto status = grpc_stub_->ListStoredInfoTypes(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::privacy::dlp::v2::ListStoredInfoTypesRequest const& request) {
+    google::privacy::dlp::v2::ListStoredInfoTypesResponse response;
+    auto status =
+        grpc_stub_->ListStoredInfoTypes(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-Status DefaultDlpServiceStub::DeleteStoredInfoType(
-    grpc::ClientContext& context, Options const&,
-    google::privacy::dlp::v2::DeleteStoredInfoTypeRequest const& request) {
-  google::protobuf::Empty response;
-  auto status = grpc_stub_->DeleteStoredInfoType(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return google::cloud::Status();
+Status
+DefaultDlpServiceStub::DeleteStoredInfoType(
+  grpc::ClientContext& context, Options const&,
+  google::privacy::dlp::v2::DeleteStoredInfoTypeRequest const& request) {
+    google::protobuf::Empty response;
+    auto status =
+        grpc_stub_->DeleteStoredInfoType(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return google::cloud::Status();
 }
 
 StatusOr<google::privacy::dlp::v2::ListProjectDataProfilesResponse>
 DefaultDlpServiceStub::ListProjectDataProfiles(
-    grpc::ClientContext& context, Options const&,
-    google::privacy::dlp::v2::ListProjectDataProfilesRequest const& request) {
-  google::privacy::dlp::v2::ListProjectDataProfilesResponse response;
-  auto status =
-      grpc_stub_->ListProjectDataProfiles(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::privacy::dlp::v2::ListProjectDataProfilesRequest const& request) {
+    google::privacy::dlp::v2::ListProjectDataProfilesResponse response;
+    auto status =
+        grpc_stub_->ListProjectDataProfiles(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::privacy::dlp::v2::ListTableDataProfilesResponse>
 DefaultDlpServiceStub::ListTableDataProfiles(
-    grpc::ClientContext& context, Options const&,
-    google::privacy::dlp::v2::ListTableDataProfilesRequest const& request) {
-  google::privacy::dlp::v2::ListTableDataProfilesResponse response;
-  auto status = grpc_stub_->ListTableDataProfiles(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::privacy::dlp::v2::ListTableDataProfilesRequest const& request) {
+    google::privacy::dlp::v2::ListTableDataProfilesResponse response;
+    auto status =
+        grpc_stub_->ListTableDataProfiles(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::privacy::dlp::v2::ListColumnDataProfilesResponse>
 DefaultDlpServiceStub::ListColumnDataProfiles(
-    grpc::ClientContext& context, Options const&,
-    google::privacy::dlp::v2::ListColumnDataProfilesRequest const& request) {
-  google::privacy::dlp::v2::ListColumnDataProfilesResponse response;
-  auto status =
-      grpc_stub_->ListColumnDataProfiles(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::privacy::dlp::v2::ListColumnDataProfilesRequest const& request) {
+    google::privacy::dlp::v2::ListColumnDataProfilesResponse response;
+    auto status =
+        grpc_stub_->ListColumnDataProfiles(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::privacy::dlp::v2::ProjectDataProfile>
 DefaultDlpServiceStub::GetProjectDataProfile(
-    grpc::ClientContext& context, Options const&,
-    google::privacy::dlp::v2::GetProjectDataProfileRequest const& request) {
-  google::privacy::dlp::v2::ProjectDataProfile response;
-  auto status = grpc_stub_->GetProjectDataProfile(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::privacy::dlp::v2::GetProjectDataProfileRequest const& request) {
+    google::privacy::dlp::v2::ProjectDataProfile response;
+    auto status =
+        grpc_stub_->GetProjectDataProfile(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::privacy::dlp::v2::ListFileStoreDataProfilesResponse>
 DefaultDlpServiceStub::ListFileStoreDataProfiles(
-    grpc::ClientContext& context, Options const&,
-    google::privacy::dlp::v2::ListFileStoreDataProfilesRequest const& request) {
-  google::privacy::dlp::v2::ListFileStoreDataProfilesResponse response;
-  auto status =
-      grpc_stub_->ListFileStoreDataProfiles(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::privacy::dlp::v2::ListFileStoreDataProfilesRequest const& request) {
+    google::privacy::dlp::v2::ListFileStoreDataProfilesResponse response;
+    auto status =
+        grpc_stub_->ListFileStoreDataProfiles(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::privacy::dlp::v2::FileStoreDataProfile>
 DefaultDlpServiceStub::GetFileStoreDataProfile(
-    grpc::ClientContext& context, Options const&,
-    google::privacy::dlp::v2::GetFileStoreDataProfileRequest const& request) {
-  google::privacy::dlp::v2::FileStoreDataProfile response;
-  auto status =
-      grpc_stub_->GetFileStoreDataProfile(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::privacy::dlp::v2::GetFileStoreDataProfileRequest const& request) {
+    google::privacy::dlp::v2::FileStoreDataProfile response;
+    auto status =
+        grpc_stub_->GetFileStoreDataProfile(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-Status DefaultDlpServiceStub::DeleteFileStoreDataProfile(
-    grpc::ClientContext& context, Options const&,
-    google::privacy::dlp::v2::DeleteFileStoreDataProfileRequest const&
-        request) {
-  google::protobuf::Empty response;
-  auto status =
-      grpc_stub_->DeleteFileStoreDataProfile(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return google::cloud::Status();
+Status
+DefaultDlpServiceStub::DeleteFileStoreDataProfile(
+  grpc::ClientContext& context, Options const&,
+  google::privacy::dlp::v2::DeleteFileStoreDataProfileRequest const& request) {
+    google::protobuf::Empty response;
+    auto status =
+        grpc_stub_->DeleteFileStoreDataProfile(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return google::cloud::Status();
 }
 
 StatusOr<google::privacy::dlp::v2::TableDataProfile>
 DefaultDlpServiceStub::GetTableDataProfile(
-    grpc::ClientContext& context, Options const&,
-    google::privacy::dlp::v2::GetTableDataProfileRequest const& request) {
-  google::privacy::dlp::v2::TableDataProfile response;
-  auto status = grpc_stub_->GetTableDataProfile(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::privacy::dlp::v2::GetTableDataProfileRequest const& request) {
+    google::privacy::dlp::v2::TableDataProfile response;
+    auto status =
+        grpc_stub_->GetTableDataProfile(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::privacy::dlp::v2::ColumnDataProfile>
 DefaultDlpServiceStub::GetColumnDataProfile(
-    grpc::ClientContext& context, Options const&,
-    google::privacy::dlp::v2::GetColumnDataProfileRequest const& request) {
-  google::privacy::dlp::v2::ColumnDataProfile response;
-  auto status = grpc_stub_->GetColumnDataProfile(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::privacy::dlp::v2::GetColumnDataProfileRequest const& request) {
+    google::privacy::dlp::v2::ColumnDataProfile response;
+    auto status =
+        grpc_stub_->GetColumnDataProfile(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-Status DefaultDlpServiceStub::DeleteTableDataProfile(
-    grpc::ClientContext& context, Options const&,
-    google::privacy::dlp::v2::DeleteTableDataProfileRequest const& request) {
-  google::protobuf::Empty response;
-  auto status =
-      grpc_stub_->DeleteTableDataProfile(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return google::cloud::Status();
+Status
+DefaultDlpServiceStub::DeleteTableDataProfile(
+  grpc::ClientContext& context, Options const&,
+  google::privacy::dlp::v2::DeleteTableDataProfileRequest const& request) {
+    google::protobuf::Empty response;
+    auto status =
+        grpc_stub_->DeleteTableDataProfile(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return google::cloud::Status();
 }
 
 StatusOr<google::privacy::dlp::v2::HybridInspectResponse>
 DefaultDlpServiceStub::HybridInspectDlpJob(
-    grpc::ClientContext& context, Options const&,
-    google::privacy::dlp::v2::HybridInspectDlpJobRequest const& request) {
-  google::privacy::dlp::v2::HybridInspectResponse response;
-  auto status = grpc_stub_->HybridInspectDlpJob(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::privacy::dlp::v2::HybridInspectDlpJobRequest const& request) {
+    google::privacy::dlp::v2::HybridInspectResponse response;
+    auto status =
+        grpc_stub_->HybridInspectDlpJob(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-Status DefaultDlpServiceStub::FinishDlpJob(
-    grpc::ClientContext& context, Options const&,
-    google::privacy::dlp::v2::FinishDlpJobRequest const& request) {
-  google::protobuf::Empty response;
-  auto status = grpc_stub_->FinishDlpJob(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return google::cloud::Status();
+Status
+DefaultDlpServiceStub::FinishDlpJob(
+  grpc::ClientContext& context, Options const&,
+  google::privacy::dlp::v2::FinishDlpJobRequest const& request) {
+    google::protobuf::Empty response;
+    auto status =
+        grpc_stub_->FinishDlpJob(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return google::cloud::Status();
 }
 
 StatusOr<google::privacy::dlp::v2::Connection>
 DefaultDlpServiceStub::CreateConnection(
-    grpc::ClientContext& context, Options const&,
-    google::privacy::dlp::v2::CreateConnectionRequest const& request) {
-  google::privacy::dlp::v2::Connection response;
-  auto status = grpc_stub_->CreateConnection(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::privacy::dlp::v2::CreateConnectionRequest const& request) {
+    google::privacy::dlp::v2::Connection response;
+    auto status =
+        grpc_stub_->CreateConnection(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::privacy::dlp::v2::Connection>
 DefaultDlpServiceStub::GetConnection(
-    grpc::ClientContext& context, Options const&,
-    google::privacy::dlp::v2::GetConnectionRequest const& request) {
-  google::privacy::dlp::v2::Connection response;
-  auto status = grpc_stub_->GetConnection(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::privacy::dlp::v2::GetConnectionRequest const& request) {
+    google::privacy::dlp::v2::Connection response;
+    auto status =
+        grpc_stub_->GetConnection(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::privacy::dlp::v2::ListConnectionsResponse>
 DefaultDlpServiceStub::ListConnections(
-    grpc::ClientContext& context, Options const&,
-    google::privacy::dlp::v2::ListConnectionsRequest const& request) {
-  google::privacy::dlp::v2::ListConnectionsResponse response;
-  auto status = grpc_stub_->ListConnections(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::privacy::dlp::v2::ListConnectionsRequest const& request) {
+    google::privacy::dlp::v2::ListConnectionsResponse response;
+    auto status =
+        grpc_stub_->ListConnections(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::privacy::dlp::v2::SearchConnectionsResponse>
 DefaultDlpServiceStub::SearchConnections(
-    grpc::ClientContext& context, Options const&,
-    google::privacy::dlp::v2::SearchConnectionsRequest const& request) {
-  google::privacy::dlp::v2::SearchConnectionsResponse response;
-  auto status = grpc_stub_->SearchConnections(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::privacy::dlp::v2::SearchConnectionsRequest const& request) {
+    google::privacy::dlp::v2::SearchConnectionsResponse response;
+    auto status =
+        grpc_stub_->SearchConnections(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-Status DefaultDlpServiceStub::DeleteConnection(
-    grpc::ClientContext& context, Options const&,
-    google::privacy::dlp::v2::DeleteConnectionRequest const& request) {
-  google::protobuf::Empty response;
-  auto status = grpc_stub_->DeleteConnection(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return google::cloud::Status();
+Status
+DefaultDlpServiceStub::DeleteConnection(
+  grpc::ClientContext& context, Options const&,
+  google::privacy::dlp::v2::DeleteConnectionRequest const& request) {
+    google::protobuf::Empty response;
+    auto status =
+        grpc_stub_->DeleteConnection(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return google::cloud::Status();
 }
 
 StatusOr<google::privacy::dlp::v2::Connection>
 DefaultDlpServiceStub::UpdateConnection(
-    grpc::ClientContext& context, Options const&,
-    google::privacy::dlp::v2::UpdateConnectionRequest const& request) {
-  google::privacy::dlp::v2::Connection response;
-  auto status = grpc_stub_->UpdateConnection(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::privacy::dlp::v2::UpdateConnectionRequest const& request) {
+    google::privacy::dlp::v2::Connection response;
+    auto status =
+        grpc_stub_->UpdateConnection(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

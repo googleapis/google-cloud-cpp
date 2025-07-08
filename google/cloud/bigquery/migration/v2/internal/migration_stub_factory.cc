@@ -37,28 +37,28 @@ namespace cloud {
 namespace bigquery_migration_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<MigrationServiceStub> CreateDefaultMigrationServiceStub(
+std::shared_ptr<MigrationServiceStub>
+CreateDefaultMigrationServiceStub(
     std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
     Options const& options) {
-  auto channel = auth->CreateChannel(options.get<EndpointOption>(),
-                                     internal::MakeChannelArguments(options));
-  auto service_grpc_stub =
-      google::cloud::bigquery::migration::v2::MigrationService::NewStub(
-          channel);
+  auto channel = auth->CreateChannel(
+    options.get<EndpointOption>(), internal::MakeChannelArguments(options));
+  auto service_grpc_stub = google::cloud::bigquery::migration::v2::MigrationService::NewStub(channel);
   std::shared_ptr<MigrationServiceStub> stub =
-      std::make_shared<DefaultMigrationServiceStub>(
-          std::move(service_grpc_stub));
+    std::make_shared<DefaultMigrationServiceStub>(std::move(service_grpc_stub));
 
   if (auth->RequiresConfigureContext()) {
-    stub = std::make_shared<MigrationServiceAuth>(std::move(auth),
-                                                  std::move(stub));
+    stub = std::make_shared<MigrationServiceAuth>(
+        std::move(auth), std::move(stub));
   }
   stub = std::make_shared<MigrationServiceMetadata>(
       std::move(stub), std::multimap<std::string, std::string>{});
-  if (internal::Contains(options.get<LoggingComponentsOption>(), "rpc")) {
+  if (internal::Contains(
+      options.get<LoggingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<MigrationServiceLogging>(
-        std::move(stub), options.get<GrpcTracingOptionsOption>(),
+        std::move(stub),
+        options.get<GrpcTracingOptionsOption>(),
         options.get<LoggingComponentsOption>());
   }
   if (internal::TracingEnabled(options)) {

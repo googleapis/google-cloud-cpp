@@ -32,571 +32,459 @@ OracleDatabaseTracingStub::OracleDatabaseTracingStub(
     std::shared_ptr<OracleDatabaseStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
-StatusOr<
-    google::cloud::oracledatabase::v1::ListCloudExadataInfrastructuresResponse>
-OracleDatabaseTracingStub::ListCloudExadataInfrastructures(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::oracledatabase::v1::
-        ListCloudExadataInfrastructuresRequest const& request) {
-  auto span =
-      internal::MakeSpanGrpc("google.cloud.oracledatabase.v1.OracleDatabase",
-                             "ListCloudExadataInfrastructures");
+StatusOr<google::cloud::oracledatabase::v1::ListCloudExadataInfrastructuresResponse> OracleDatabaseTracingStub::ListCloudExadataInfrastructures(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::oracledatabase::v1::ListCloudExadataInfrastructuresRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.oracledatabase.v1.OracleDatabase", "ListCloudExadataInfrastructures");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span,
-      child_->ListCloudExadataInfrastructures(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->ListCloudExadataInfrastructures(context, options, request));
 }
 
-StatusOr<google::cloud::oracledatabase::v1::CloudExadataInfrastructure>
-OracleDatabaseTracingStub::GetCloudExadataInfrastructure(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::oracledatabase::v1::
-        GetCloudExadataInfrastructureRequest const& request) {
-  auto span =
-      internal::MakeSpanGrpc("google.cloud.oracledatabase.v1.OracleDatabase",
-                             "GetCloudExadataInfrastructure");
+StatusOr<google::cloud::oracledatabase::v1::CloudExadataInfrastructure> OracleDatabaseTracingStub::GetCloudExadataInfrastructure(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::oracledatabase::v1::GetCloudExadataInfrastructureRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.oracledatabase.v1.OracleDatabase", "GetCloudExadataInfrastructure");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span,
-      child_->GetCloudExadataInfrastructure(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->GetCloudExadataInfrastructure(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 OracleDatabaseTracingStub::AsyncCreateCloudExadataInfrastructure(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::oracledatabase::v1::
-        CreateCloudExadataInfrastructureRequest const& request) {
-  auto span =
-      internal::MakeSpanGrpc("google.cloud.oracledatabase.v1.OracleDatabase",
-                             "CreateCloudExadataInfrastructure");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::oracledatabase::v1::CreateCloudExadataInfrastructureRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.oracledatabase.v1.OracleDatabase", "CreateCloudExadataInfrastructure");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCreateCloudExadataInfrastructure(
-      cq, context, std::move(options), request);
+  auto f = child_->AsyncCreateCloudExadataInfrastructure(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 OracleDatabaseTracingStub::CreateCloudExadataInfrastructure(
-    grpc::ClientContext& context, Options options,
-    google::cloud::oracledatabase::v1::
-        CreateCloudExadataInfrastructureRequest const& request) {
-  auto span =
-      internal::MakeSpanGrpc("google.cloud.oracledatabase.v1.OracleDatabase",
-                             "CreateCloudExadataInfrastructure");
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::oracledatabase::v1::CreateCloudExadataInfrastructureRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.oracledatabase.v1.OracleDatabase", "CreateCloudExadataInfrastructure");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span,
-      child_->CreateCloudExadataInfrastructure(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->CreateCloudExadataInfrastructure(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 OracleDatabaseTracingStub::AsyncDeleteCloudExadataInfrastructure(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::oracledatabase::v1::
-        DeleteCloudExadataInfrastructureRequest const& request) {
-  auto span =
-      internal::MakeSpanGrpc("google.cloud.oracledatabase.v1.OracleDatabase",
-                             "DeleteCloudExadataInfrastructure");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::oracledatabase::v1::DeleteCloudExadataInfrastructureRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.oracledatabase.v1.OracleDatabase", "DeleteCloudExadataInfrastructure");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncDeleteCloudExadataInfrastructure(
-      cq, context, std::move(options), request);
+  auto f = child_->AsyncDeleteCloudExadataInfrastructure(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 OracleDatabaseTracingStub::DeleteCloudExadataInfrastructure(
-    grpc::ClientContext& context, Options options,
-    google::cloud::oracledatabase::v1::
-        DeleteCloudExadataInfrastructureRequest const& request) {
-  auto span =
-      internal::MakeSpanGrpc("google.cloud.oracledatabase.v1.OracleDatabase",
-                             "DeleteCloudExadataInfrastructure");
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::oracledatabase::v1::DeleteCloudExadataInfrastructureRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.oracledatabase.v1.OracleDatabase", "DeleteCloudExadataInfrastructure");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span,
-      child_->DeleteCloudExadataInfrastructure(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->DeleteCloudExadataInfrastructure(context, options, request));
 }
 
-StatusOr<google::cloud::oracledatabase::v1::ListCloudVmClustersResponse>
-OracleDatabaseTracingStub::ListCloudVmClusters(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::oracledatabase::v1::ListCloudVmClustersRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.oracledatabase.v1.OracleDatabase", "ListCloudVmClusters");
+StatusOr<google::cloud::oracledatabase::v1::ListCloudVmClustersResponse> OracleDatabaseTracingStub::ListCloudVmClusters(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::oracledatabase::v1::ListCloudVmClustersRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.oracledatabase.v1.OracleDatabase", "ListCloudVmClusters");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->ListCloudVmClusters(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->ListCloudVmClusters(context, options, request));
 }
 
-StatusOr<google::cloud::oracledatabase::v1::CloudVmCluster>
-OracleDatabaseTracingStub::GetCloudVmCluster(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::oracledatabase::v1::GetCloudVmClusterRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.oracledatabase.v1.OracleDatabase", "GetCloudVmCluster");
+StatusOr<google::cloud::oracledatabase::v1::CloudVmCluster> OracleDatabaseTracingStub::GetCloudVmCluster(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::oracledatabase::v1::GetCloudVmClusterRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.oracledatabase.v1.OracleDatabase", "GetCloudVmCluster");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->GetCloudVmCluster(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->GetCloudVmCluster(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 OracleDatabaseTracingStub::AsyncCreateCloudVmCluster(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::oracledatabase::v1::CreateCloudVmClusterRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.oracledatabase.v1.OracleDatabase", "CreateCloudVmCluster");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::oracledatabase::v1::CreateCloudVmClusterRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.oracledatabase.v1.OracleDatabase", "CreateCloudVmCluster");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCreateCloudVmCluster(cq, context, std::move(options),
-                                             request);
+  auto f = child_->AsyncCreateCloudVmCluster(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 OracleDatabaseTracingStub::CreateCloudVmCluster(
-    grpc::ClientContext& context, Options options,
-    google::cloud::oracledatabase::v1::CreateCloudVmClusterRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.oracledatabase.v1.OracleDatabase", "CreateCloudVmCluster");
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::oracledatabase::v1::CreateCloudVmClusterRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.oracledatabase.v1.OracleDatabase", "CreateCloudVmCluster");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->CreateCloudVmCluster(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->CreateCloudVmCluster(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 OracleDatabaseTracingStub::AsyncDeleteCloudVmCluster(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::oracledatabase::v1::DeleteCloudVmClusterRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.oracledatabase.v1.OracleDatabase", "DeleteCloudVmCluster");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::oracledatabase::v1::DeleteCloudVmClusterRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.oracledatabase.v1.OracleDatabase", "DeleteCloudVmCluster");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncDeleteCloudVmCluster(cq, context, std::move(options),
-                                             request);
+  auto f = child_->AsyncDeleteCloudVmCluster(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 OracleDatabaseTracingStub::DeleteCloudVmCluster(
-    grpc::ClientContext& context, Options options,
-    google::cloud::oracledatabase::v1::DeleteCloudVmClusterRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.oracledatabase.v1.OracleDatabase", "DeleteCloudVmCluster");
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::oracledatabase::v1::DeleteCloudVmClusterRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.oracledatabase.v1.OracleDatabase", "DeleteCloudVmCluster");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->DeleteCloudVmCluster(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->DeleteCloudVmCluster(context, options, request));
 }
 
-StatusOr<google::cloud::oracledatabase::v1::ListEntitlementsResponse>
-OracleDatabaseTracingStub::ListEntitlements(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::oracledatabase::v1::ListEntitlementsResponse> OracleDatabaseTracingStub::ListEntitlements(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::oracledatabase::v1::ListEntitlementsRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.oracledatabase.v1.OracleDatabase", "ListEntitlements");
+  auto span = internal::MakeSpanGrpc("google.cloud.oracledatabase.v1.OracleDatabase", "ListEntitlements");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListEntitlements(context, options, request));
 }
 
-StatusOr<google::cloud::oracledatabase::v1::ListDbServersResponse>
-OracleDatabaseTracingStub::ListDbServers(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::oracledatabase::v1::ListDbServersResponse> OracleDatabaseTracingStub::ListDbServers(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::oracledatabase::v1::ListDbServersRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.oracledatabase.v1.OracleDatabase", "ListDbServers");
+  auto span = internal::MakeSpanGrpc("google.cloud.oracledatabase.v1.OracleDatabase", "ListDbServers");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListDbServers(context, options, request));
 }
 
-StatusOr<google::cloud::oracledatabase::v1::ListDbNodesResponse>
-OracleDatabaseTracingStub::ListDbNodes(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::oracledatabase::v1::ListDbNodesResponse> OracleDatabaseTracingStub::ListDbNodes(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::oracledatabase::v1::ListDbNodesRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.oracledatabase.v1.OracleDatabase", "ListDbNodes");
+  auto span = internal::MakeSpanGrpc("google.cloud.oracledatabase.v1.OracleDatabase", "ListDbNodes");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListDbNodes(context, options, request));
 }
 
-StatusOr<google::cloud::oracledatabase::v1::ListGiVersionsResponse>
-OracleDatabaseTracingStub::ListGiVersions(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::oracledatabase::v1::ListGiVersionsResponse> OracleDatabaseTracingStub::ListGiVersions(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::oracledatabase::v1::ListGiVersionsRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.oracledatabase.v1.OracleDatabase", "ListGiVersions");
+  auto span = internal::MakeSpanGrpc("google.cloud.oracledatabase.v1.OracleDatabase", "ListGiVersions");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListGiVersions(context, options, request));
 }
 
-StatusOr<google::cloud::oracledatabase::v1::ListDbSystemShapesResponse>
-OracleDatabaseTracingStub::ListDbSystemShapes(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::oracledatabase::v1::ListDbSystemShapesRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.oracledatabase.v1.OracleDatabase", "ListDbSystemShapes");
+StatusOr<google::cloud::oracledatabase::v1::ListDbSystemShapesResponse> OracleDatabaseTracingStub::ListDbSystemShapes(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::oracledatabase::v1::ListDbSystemShapesRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.oracledatabase.v1.OracleDatabase", "ListDbSystemShapes");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->ListDbSystemShapes(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->ListDbSystemShapes(context, options, request));
 }
 
-StatusOr<google::cloud::oracledatabase::v1::ListAutonomousDatabasesResponse>
-OracleDatabaseTracingStub::ListAutonomousDatabases(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::oracledatabase::v1::ListAutonomousDatabasesRequest const&
-        request) {
-  auto span =
-      internal::MakeSpanGrpc("google.cloud.oracledatabase.v1.OracleDatabase",
-                             "ListAutonomousDatabases");
+StatusOr<google::cloud::oracledatabase::v1::ListAutonomousDatabasesResponse> OracleDatabaseTracingStub::ListAutonomousDatabases(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::oracledatabase::v1::ListAutonomousDatabasesRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.oracledatabase.v1.OracleDatabase", "ListAutonomousDatabases");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span,
-      child_->ListAutonomousDatabases(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->ListAutonomousDatabases(context, options, request));
 }
 
-StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>
-OracleDatabaseTracingStub::GetAutonomousDatabase(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::oracledatabase::v1::GetAutonomousDatabaseRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.oracledatabase.v1.OracleDatabase", "GetAutonomousDatabase");
+StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase> OracleDatabaseTracingStub::GetAutonomousDatabase(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::oracledatabase::v1::GetAutonomousDatabaseRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.oracledatabase.v1.OracleDatabase", "GetAutonomousDatabase");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->GetAutonomousDatabase(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->GetAutonomousDatabase(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 OracleDatabaseTracingStub::AsyncCreateAutonomousDatabase(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::oracledatabase::v1::CreateAutonomousDatabaseRequest const&
-        request) {
-  auto span =
-      internal::MakeSpanGrpc("google.cloud.oracledatabase.v1.OracleDatabase",
-                             "CreateAutonomousDatabase");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::oracledatabase::v1::CreateAutonomousDatabaseRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.oracledatabase.v1.OracleDatabase", "CreateAutonomousDatabase");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCreateAutonomousDatabase(cq, context,
-                                                 std::move(options), request);
+  auto f = child_->AsyncCreateAutonomousDatabase(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 OracleDatabaseTracingStub::CreateAutonomousDatabase(
-    grpc::ClientContext& context, Options options,
-    google::cloud::oracledatabase::v1::CreateAutonomousDatabaseRequest const&
-        request) {
-  auto span =
-      internal::MakeSpanGrpc("google.cloud.oracledatabase.v1.OracleDatabase",
-                             "CreateAutonomousDatabase");
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::oracledatabase::v1::CreateAutonomousDatabaseRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.oracledatabase.v1.OracleDatabase", "CreateAutonomousDatabase");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span,
-      child_->CreateAutonomousDatabase(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->CreateAutonomousDatabase(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 OracleDatabaseTracingStub::AsyncDeleteAutonomousDatabase(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::oracledatabase::v1::DeleteAutonomousDatabaseRequest const&
-        request) {
-  auto span =
-      internal::MakeSpanGrpc("google.cloud.oracledatabase.v1.OracleDatabase",
-                             "DeleteAutonomousDatabase");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::oracledatabase::v1::DeleteAutonomousDatabaseRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.oracledatabase.v1.OracleDatabase", "DeleteAutonomousDatabase");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncDeleteAutonomousDatabase(cq, context,
-                                                 std::move(options), request);
+  auto f = child_->AsyncDeleteAutonomousDatabase(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 OracleDatabaseTracingStub::DeleteAutonomousDatabase(
-    grpc::ClientContext& context, Options options,
-    google::cloud::oracledatabase::v1::DeleteAutonomousDatabaseRequest const&
-        request) {
-  auto span =
-      internal::MakeSpanGrpc("google.cloud.oracledatabase.v1.OracleDatabase",
-                             "DeleteAutonomousDatabase");
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::oracledatabase::v1::DeleteAutonomousDatabaseRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.oracledatabase.v1.OracleDatabase", "DeleteAutonomousDatabase");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span,
-      child_->DeleteAutonomousDatabase(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->DeleteAutonomousDatabase(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 OracleDatabaseTracingStub::AsyncRestoreAutonomousDatabase(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::oracledatabase::v1::RestoreAutonomousDatabaseRequest const&
-        request) {
-  auto span =
-      internal::MakeSpanGrpc("google.cloud.oracledatabase.v1.OracleDatabase",
-                             "RestoreAutonomousDatabase");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::oracledatabase::v1::RestoreAutonomousDatabaseRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.oracledatabase.v1.OracleDatabase", "RestoreAutonomousDatabase");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncRestoreAutonomousDatabase(cq, context,
-                                                  std::move(options), request);
+  auto f = child_->AsyncRestoreAutonomousDatabase(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 OracleDatabaseTracingStub::RestoreAutonomousDatabase(
-    grpc::ClientContext& context, Options options,
-    google::cloud::oracledatabase::v1::RestoreAutonomousDatabaseRequest const&
-        request) {
-  auto span =
-      internal::MakeSpanGrpc("google.cloud.oracledatabase.v1.OracleDatabase",
-                             "RestoreAutonomousDatabase");
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::oracledatabase::v1::RestoreAutonomousDatabaseRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.oracledatabase.v1.OracleDatabase", "RestoreAutonomousDatabase");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span,
-      child_->RestoreAutonomousDatabase(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->RestoreAutonomousDatabase(context, options, request));
 }
 
-StatusOr<
-    google::cloud::oracledatabase::v1::GenerateAutonomousDatabaseWalletResponse>
-OracleDatabaseTracingStub::GenerateAutonomousDatabaseWallet(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::oracledatabase::v1::
-        GenerateAutonomousDatabaseWalletRequest const& request) {
-  auto span =
-      internal::MakeSpanGrpc("google.cloud.oracledatabase.v1.OracleDatabase",
-                             "GenerateAutonomousDatabaseWallet");
+StatusOr<google::cloud::oracledatabase::v1::GenerateAutonomousDatabaseWalletResponse> OracleDatabaseTracingStub::GenerateAutonomousDatabaseWallet(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::oracledatabase::v1::GenerateAutonomousDatabaseWalletRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.oracledatabase.v1.OracleDatabase", "GenerateAutonomousDatabaseWallet");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span,
-      child_->GenerateAutonomousDatabaseWallet(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->GenerateAutonomousDatabaseWallet(context, options, request));
 }
 
-StatusOr<google::cloud::oracledatabase::v1::ListAutonomousDbVersionsResponse>
-OracleDatabaseTracingStub::ListAutonomousDbVersions(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::oracledatabase::v1::ListAutonomousDbVersionsRequest const&
-        request) {
-  auto span =
-      internal::MakeSpanGrpc("google.cloud.oracledatabase.v1.OracleDatabase",
-                             "ListAutonomousDbVersions");
+StatusOr<google::cloud::oracledatabase::v1::ListAutonomousDbVersionsResponse> OracleDatabaseTracingStub::ListAutonomousDbVersions(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::oracledatabase::v1::ListAutonomousDbVersionsRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.oracledatabase.v1.OracleDatabase", "ListAutonomousDbVersions");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span,
-      child_->ListAutonomousDbVersions(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->ListAutonomousDbVersions(context, options, request));
 }
 
-StatusOr<google::cloud::oracledatabase::v1::
-             ListAutonomousDatabaseCharacterSetsResponse>
-OracleDatabaseTracingStub::ListAutonomousDatabaseCharacterSets(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::oracledatabase::v1::
-        ListAutonomousDatabaseCharacterSetsRequest const& request) {
-  auto span =
-      internal::MakeSpanGrpc("google.cloud.oracledatabase.v1.OracleDatabase",
-                             "ListAutonomousDatabaseCharacterSets");
+StatusOr<google::cloud::oracledatabase::v1::ListAutonomousDatabaseCharacterSetsResponse> OracleDatabaseTracingStub::ListAutonomousDatabaseCharacterSets(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::oracledatabase::v1::ListAutonomousDatabaseCharacterSetsRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.oracledatabase.v1.OracleDatabase", "ListAutonomousDatabaseCharacterSets");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span,
-      child_->ListAutonomousDatabaseCharacterSets(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->ListAutonomousDatabaseCharacterSets(context, options, request));
 }
 
-StatusOr<
-    google::cloud::oracledatabase::v1::ListAutonomousDatabaseBackupsResponse>
-OracleDatabaseTracingStub::ListAutonomousDatabaseBackups(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::oracledatabase::v1::
-        ListAutonomousDatabaseBackupsRequest const& request) {
-  auto span =
-      internal::MakeSpanGrpc("google.cloud.oracledatabase.v1.OracleDatabase",
-                             "ListAutonomousDatabaseBackups");
+StatusOr<google::cloud::oracledatabase::v1::ListAutonomousDatabaseBackupsResponse> OracleDatabaseTracingStub::ListAutonomousDatabaseBackups(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::oracledatabase::v1::ListAutonomousDatabaseBackupsRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.oracledatabase.v1.OracleDatabase", "ListAutonomousDatabaseBackups");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span,
-      child_->ListAutonomousDatabaseBackups(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->ListAutonomousDatabaseBackups(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 OracleDatabaseTracingStub::AsyncStopAutonomousDatabase(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::oracledatabase::v1::StopAutonomousDatabaseRequest const&
-        request) {
-  auto span =
-      internal::MakeSpanGrpc("google.cloud.oracledatabase.v1.OracleDatabase",
-                             "StopAutonomousDatabase");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::oracledatabase::v1::StopAutonomousDatabaseRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.oracledatabase.v1.OracleDatabase", "StopAutonomousDatabase");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncStopAutonomousDatabase(cq, context, std::move(options),
-                                               request);
+  auto f = child_->AsyncStopAutonomousDatabase(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 OracleDatabaseTracingStub::StopAutonomousDatabase(
-    grpc::ClientContext& context, Options options,
-    google::cloud::oracledatabase::v1::StopAutonomousDatabaseRequest const&
-        request) {
-  auto span =
-      internal::MakeSpanGrpc("google.cloud.oracledatabase.v1.OracleDatabase",
-                             "StopAutonomousDatabase");
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::oracledatabase::v1::StopAutonomousDatabaseRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.oracledatabase.v1.OracleDatabase", "StopAutonomousDatabase");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span,
-      child_->StopAutonomousDatabase(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->StopAutonomousDatabase(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 OracleDatabaseTracingStub::AsyncStartAutonomousDatabase(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::oracledatabase::v1::StartAutonomousDatabaseRequest const&
-        request) {
-  auto span =
-      internal::MakeSpanGrpc("google.cloud.oracledatabase.v1.OracleDatabase",
-                             "StartAutonomousDatabase");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::oracledatabase::v1::StartAutonomousDatabaseRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.oracledatabase.v1.OracleDatabase", "StartAutonomousDatabase");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncStartAutonomousDatabase(cq, context, std::move(options),
-                                                request);
+  auto f = child_->AsyncStartAutonomousDatabase(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 OracleDatabaseTracingStub::StartAutonomousDatabase(
-    grpc::ClientContext& context, Options options,
-    google::cloud::oracledatabase::v1::StartAutonomousDatabaseRequest const&
-        request) {
-  auto span =
-      internal::MakeSpanGrpc("google.cloud.oracledatabase.v1.OracleDatabase",
-                             "StartAutonomousDatabase");
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::oracledatabase::v1::StartAutonomousDatabaseRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.oracledatabase.v1.OracleDatabase", "StartAutonomousDatabase");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span,
-      child_->StartAutonomousDatabase(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->StartAutonomousDatabase(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 OracleDatabaseTracingStub::AsyncRestartAutonomousDatabase(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::oracledatabase::v1::RestartAutonomousDatabaseRequest const&
-        request) {
-  auto span =
-      internal::MakeSpanGrpc("google.cloud.oracledatabase.v1.OracleDatabase",
-                             "RestartAutonomousDatabase");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::oracledatabase::v1::RestartAutonomousDatabaseRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.oracledatabase.v1.OracleDatabase", "RestartAutonomousDatabase");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncRestartAutonomousDatabase(cq, context,
-                                                  std::move(options), request);
+  auto f = child_->AsyncRestartAutonomousDatabase(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 OracleDatabaseTracingStub::RestartAutonomousDatabase(
-    grpc::ClientContext& context, Options options,
-    google::cloud::oracledatabase::v1::RestartAutonomousDatabaseRequest const&
-        request) {
-  auto span =
-      internal::MakeSpanGrpc("google.cloud.oracledatabase.v1.OracleDatabase",
-                             "RestartAutonomousDatabase");
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::oracledatabase::v1::RestartAutonomousDatabaseRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.oracledatabase.v1.OracleDatabase", "RestartAutonomousDatabase");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span,
-      child_->RestartAutonomousDatabase(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->RestartAutonomousDatabase(context, options, request));
 }
 
-StatusOr<google::cloud::location::ListLocationsResponse>
-OracleDatabaseTracingStub::ListLocations(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::location::ListLocationsResponse> OracleDatabaseTracingStub::ListLocations(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.oracledatabase.v1.OracleDatabase", "ListLocations");
+  auto span = internal::MakeSpanGrpc("google.cloud.oracledatabase.v1.OracleDatabase", "ListLocations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListLocations(context, options, request));
 }
 
-StatusOr<google::cloud::location::Location>
-OracleDatabaseTracingStub::GetLocation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::location::Location> OracleDatabaseTracingStub::GetLocation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.oracledatabase.v1.OracleDatabase", "GetLocation");
+  auto span = internal::MakeSpanGrpc("google.cloud.oracledatabase.v1.OracleDatabase", "GetLocation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetLocation(context, options, request));
 }
 
-StatusOr<google::longrunning::ListOperationsResponse>
-OracleDatabaseTracingStub::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse> OracleDatabaseTracingStub::ListOperations(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.oracledatabase.v1.OracleDatabase", "ListOperations");
+  auto span = internal::MakeSpanGrpc("google.cloud.oracledatabase.v1.OracleDatabase", "ListOperations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListOperations(context, options, request));
 }
 
-StatusOr<google::longrunning::Operation>
-OracleDatabaseTracingStub::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::Operation> OracleDatabaseTracingStub::GetOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.oracledatabase.v1.OracleDatabase", "GetOperation");
+  auto span = internal::MakeSpanGrpc("google.cloud.oracledatabase.v1.OracleDatabase", "GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -604,10 +492,10 @@ OracleDatabaseTracingStub::GetOperation(
 }
 
 Status OracleDatabaseTracingStub::DeleteOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.oracledatabase.v1.OracleDatabase", "DeleteOperation");
+  auto span = internal::MakeSpanGrpc("google.cloud.oracledatabase.v1.OracleDatabase", "DeleteOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -615,10 +503,10 @@ Status OracleDatabaseTracingStub::DeleteOperation(
 }
 
 Status OracleDatabaseTracingStub::CancelOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.oracledatabase.v1.OracleDatabase", "CancelOperation");
+  auto span = internal::MakeSpanGrpc("google.cloud.oracledatabase.v1.OracleDatabase", "CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -635,7 +523,8 @@ OracleDatabaseTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncGetOperation(cq, context, std::move(options), request);
+  auto f = child_->AsyncGetOperation(
+      cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -648,8 +537,8 @@ future<Status> OracleDatabaseTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f =
-      child_->AsyncCancelOperation(cq, context, std::move(options), request);
+  auto f = child_->AsyncCancelOperation(
+      cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 

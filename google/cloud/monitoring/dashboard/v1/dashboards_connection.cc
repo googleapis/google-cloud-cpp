@@ -17,17 +17,17 @@
 // source: google/monitoring/dashboard/v1/dashboards_service.proto
 
 #include "google/cloud/monitoring/dashboard/v1/dashboards_connection.h"
-#include "google/cloud/monitoring/dashboard/v1/dashboards_options.h"
-#include "google/cloud/monitoring/dashboard/v1/internal/dashboards_connection_impl.h"
-#include "google/cloud/monitoring/dashboard/v1/internal/dashboards_option_defaults.h"
-#include "google/cloud/monitoring/dashboard/v1/internal/dashboards_stub_factory.h"
-#include "google/cloud/monitoring/dashboard/v1/internal/dashboards_tracing_connection.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/monitoring/dashboard/v1/dashboards_options.h"
+#include "google/cloud/monitoring/dashboard/v1/internal/dashboards_connection_impl.h"
+#include "google/cloud/monitoring/dashboard/v1/internal/dashboards_option_defaults.h"
+#include "google/cloud/monitoring/dashboard/v1/internal/dashboards_stub_factory.h"
+#include "google/cloud/monitoring/dashboard/v1/internal/dashboards_tracing_connection.h"
 #include <memory>
 #include <utility>
 
@@ -44,10 +44,8 @@ DashboardsServiceConnection::CreateDashboard(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::monitoring::dashboard::v1::Dashboard>
-DashboardsServiceConnection::ListDashboards(
-    google::monitoring::dashboard::v1::
-        ListDashboardsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::monitoring::dashboard::v1::Dashboard> DashboardsServiceConnection::ListDashboards(
+    google::monitoring::dashboard::v1::ListDashboardsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::monitoring::dashboard::v1::Dashboard>>();
 }
@@ -58,7 +56,8 @@ DashboardsServiceConnection::GetDashboard(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status DashboardsServiceConnection::DeleteDashboard(
+Status
+DashboardsServiceConnection::DeleteDashboard(
     google::monitoring::dashboard::v1::DeleteDashboardRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -72,21 +71,17 @@ DashboardsServiceConnection::UpdateDashboard(
 std::shared_ptr<DashboardsServiceConnection> MakeDashboardsServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 DashboardsServicePolicyOptionList>(options,
-                                                                    __func__);
+      UnifiedCredentialsOptionList,
+      DashboardsServicePolicyOptionList>(options, __func__);
   options = monitoring_dashboard_v1_internal::DashboardsServiceDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
-  auto stub =
-      monitoring_dashboard_v1_internal::CreateDefaultDashboardsServiceStub(
-          std::move(auth), options);
-  return monitoring_dashboard_v1_internal::
-      MakeDashboardsServiceTracingConnection(
-          std::make_shared<monitoring_dashboard_v1_internal::
-                               DashboardsServiceConnectionImpl>(
-              std::move(background), std::move(stub), std::move(options)));
+  auto stub = monitoring_dashboard_v1_internal::CreateDefaultDashboardsServiceStub(
+    std::move(auth), options);
+  return monitoring_dashboard_v1_internal::MakeDashboardsServiceTracingConnection(
+      std::make_shared<monitoring_dashboard_v1_internal::DashboardsServiceConnectionImpl>(
+      std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

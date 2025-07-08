@@ -34,157 +34,126 @@ PolicyTagManagerTracingConnection::PolicyTagManagerTracingConnection(
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::datacatalog::v1::Taxonomy>
-PolicyTagManagerTracingConnection::CreateTaxonomy(
-    google::cloud::datacatalog::v1::CreateTaxonomyRequest const& request) {
-  auto span = internal::MakeSpan(
-      "datacatalog_v1::PolicyTagManagerConnection::CreateTaxonomy");
+PolicyTagManagerTracingConnection::CreateTaxonomy(google::cloud::datacatalog::v1::CreateTaxonomyRequest const& request) {
+  auto span = internal::MakeSpan("datacatalog_v1::PolicyTagManagerConnection::CreateTaxonomy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateTaxonomy(request));
 }
 
-Status PolicyTagManagerTracingConnection::DeleteTaxonomy(
-    google::cloud::datacatalog::v1::DeleteTaxonomyRequest const& request) {
-  auto span = internal::MakeSpan(
-      "datacatalog_v1::PolicyTagManagerConnection::DeleteTaxonomy");
+Status
+PolicyTagManagerTracingConnection::DeleteTaxonomy(google::cloud::datacatalog::v1::DeleteTaxonomyRequest const& request) {
+  auto span = internal::MakeSpan("datacatalog_v1::PolicyTagManagerConnection::DeleteTaxonomy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteTaxonomy(request));
 }
 
 StatusOr<google::cloud::datacatalog::v1::Taxonomy>
-PolicyTagManagerTracingConnection::UpdateTaxonomy(
-    google::cloud::datacatalog::v1::UpdateTaxonomyRequest const& request) {
-  auto span = internal::MakeSpan(
-      "datacatalog_v1::PolicyTagManagerConnection::UpdateTaxonomy");
+PolicyTagManagerTracingConnection::UpdateTaxonomy(google::cloud::datacatalog::v1::UpdateTaxonomyRequest const& request) {
+  auto span = internal::MakeSpan("datacatalog_v1::PolicyTagManagerConnection::UpdateTaxonomy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateTaxonomy(request));
 }
 
 StreamRange<google::cloud::datacatalog::v1::Taxonomy>
-PolicyTagManagerTracingConnection::ListTaxonomies(
-    google::cloud::datacatalog::v1::ListTaxonomiesRequest request) {
-  auto span = internal::MakeSpan(
-      "datacatalog_v1::PolicyTagManagerConnection::ListTaxonomies");
+PolicyTagManagerTracingConnection::ListTaxonomies(google::cloud::datacatalog::v1::ListTaxonomiesRequest request) {
+  auto span = internal::MakeSpan("datacatalog_v1::PolicyTagManagerConnection::ListTaxonomies");
   internal::OTelScope scope(span);
   auto sr = child_->ListTaxonomies(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::datacatalog::v1::Taxonomy>(std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::datacatalog::v1::Taxonomy>(
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::datacatalog::v1::Taxonomy>
-PolicyTagManagerTracingConnection::GetTaxonomy(
-    google::cloud::datacatalog::v1::GetTaxonomyRequest const& request) {
-  auto span = internal::MakeSpan(
-      "datacatalog_v1::PolicyTagManagerConnection::GetTaxonomy");
+PolicyTagManagerTracingConnection::GetTaxonomy(google::cloud::datacatalog::v1::GetTaxonomyRequest const& request) {
+  auto span = internal::MakeSpan("datacatalog_v1::PolicyTagManagerConnection::GetTaxonomy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetTaxonomy(request));
 }
 
 StatusOr<google::cloud::datacatalog::v1::PolicyTag>
-PolicyTagManagerTracingConnection::CreatePolicyTag(
-    google::cloud::datacatalog::v1::CreatePolicyTagRequest const& request) {
-  auto span = internal::MakeSpan(
-      "datacatalog_v1::PolicyTagManagerConnection::CreatePolicyTag");
+PolicyTagManagerTracingConnection::CreatePolicyTag(google::cloud::datacatalog::v1::CreatePolicyTagRequest const& request) {
+  auto span = internal::MakeSpan("datacatalog_v1::PolicyTagManagerConnection::CreatePolicyTag");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreatePolicyTag(request));
 }
 
-Status PolicyTagManagerTracingConnection::DeletePolicyTag(
-    google::cloud::datacatalog::v1::DeletePolicyTagRequest const& request) {
-  auto span = internal::MakeSpan(
-      "datacatalog_v1::PolicyTagManagerConnection::DeletePolicyTag");
+Status
+PolicyTagManagerTracingConnection::DeletePolicyTag(google::cloud::datacatalog::v1::DeletePolicyTagRequest const& request) {
+  auto span = internal::MakeSpan("datacatalog_v1::PolicyTagManagerConnection::DeletePolicyTag");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeletePolicyTag(request));
 }
 
 StatusOr<google::cloud::datacatalog::v1::PolicyTag>
-PolicyTagManagerTracingConnection::UpdatePolicyTag(
-    google::cloud::datacatalog::v1::UpdatePolicyTagRequest const& request) {
-  auto span = internal::MakeSpan(
-      "datacatalog_v1::PolicyTagManagerConnection::UpdatePolicyTag");
+PolicyTagManagerTracingConnection::UpdatePolicyTag(google::cloud::datacatalog::v1::UpdatePolicyTagRequest const& request) {
+  auto span = internal::MakeSpan("datacatalog_v1::PolicyTagManagerConnection::UpdatePolicyTag");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdatePolicyTag(request));
 }
 
 StreamRange<google::cloud::datacatalog::v1::PolicyTag>
-PolicyTagManagerTracingConnection::ListPolicyTags(
-    google::cloud::datacatalog::v1::ListPolicyTagsRequest request) {
-  auto span = internal::MakeSpan(
-      "datacatalog_v1::PolicyTagManagerConnection::ListPolicyTags");
+PolicyTagManagerTracingConnection::ListPolicyTags(google::cloud::datacatalog::v1::ListPolicyTagsRequest request) {
+  auto span = internal::MakeSpan("datacatalog_v1::PolicyTagManagerConnection::ListPolicyTags");
   internal::OTelScope scope(span);
   auto sr = child_->ListPolicyTags(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::datacatalog::v1::PolicyTag>(std::move(span),
-                                                 std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::datacatalog::v1::PolicyTag>(
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::datacatalog::v1::PolicyTag>
-PolicyTagManagerTracingConnection::GetPolicyTag(
-    google::cloud::datacatalog::v1::GetPolicyTagRequest const& request) {
-  auto span = internal::MakeSpan(
-      "datacatalog_v1::PolicyTagManagerConnection::GetPolicyTag");
+PolicyTagManagerTracingConnection::GetPolicyTag(google::cloud::datacatalog::v1::GetPolicyTagRequest const& request) {
+  auto span = internal::MakeSpan("datacatalog_v1::PolicyTagManagerConnection::GetPolicyTag");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetPolicyTag(request));
 }
 
 StatusOr<google::iam::v1::Policy>
-PolicyTagManagerTracingConnection::GetIamPolicy(
-    google::iam::v1::GetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpan(
-      "datacatalog_v1::PolicyTagManagerConnection::GetIamPolicy");
+PolicyTagManagerTracingConnection::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) {
+  auto span = internal::MakeSpan("datacatalog_v1::PolicyTagManagerConnection::GetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetIamPolicy(request));
 }
 
 StatusOr<google::iam::v1::Policy>
-PolicyTagManagerTracingConnection::SetIamPolicy(
-    google::iam::v1::SetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpan(
-      "datacatalog_v1::PolicyTagManagerConnection::SetIamPolicy");
+PolicyTagManagerTracingConnection::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) {
+  auto span = internal::MakeSpan("datacatalog_v1::PolicyTagManagerConnection::SetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->SetIamPolicy(request));
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-PolicyTagManagerTracingConnection::TestIamPermissions(
-    google::iam::v1::TestIamPermissionsRequest const& request) {
-  auto span = internal::MakeSpan(
-      "datacatalog_v1::PolicyTagManagerConnection::TestIamPermissions");
+PolicyTagManagerTracingConnection::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) {
+  auto span = internal::MakeSpan("datacatalog_v1::PolicyTagManagerConnection::TestIamPermissions");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->TestIamPermissions(request));
 }
 
 StreamRange<google::longrunning::Operation>
-PolicyTagManagerTracingConnection::ListOperations(
-    google::longrunning::ListOperationsRequest request) {
-  auto span = internal::MakeSpan(
-      "datacatalog_v1::PolicyTagManagerConnection::ListOperations");
+PolicyTagManagerTracingConnection::ListOperations(google::longrunning::ListOperationsRequest request) {
+  auto span = internal::MakeSpan("datacatalog_v1::PolicyTagManagerConnection::ListOperations");
   internal::OTelScope scope(span);
   auto sr = child_->ListOperations(std::move(request));
   return internal::MakeTracedStreamRange<google::longrunning::Operation>(
-      std::move(span), std::move(sr));
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::longrunning::Operation>
-PolicyTagManagerTracingConnection::GetOperation(
-    google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpan(
-      "datacatalog_v1::PolicyTagManagerConnection::GetOperation");
+PolicyTagManagerTracingConnection::GetOperation(google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpan("datacatalog_v1::PolicyTagManagerConnection::GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOperation(request));
 }
 
-Status PolicyTagManagerTracingConnection::DeleteOperation(
-    google::longrunning::DeleteOperationRequest const& request) {
-  auto span = internal::MakeSpan(
-      "datacatalog_v1::PolicyTagManagerConnection::DeleteOperation");
+Status
+PolicyTagManagerTracingConnection::DeleteOperation(google::longrunning::DeleteOperationRequest const& request) {
+  auto span = internal::MakeSpan("datacatalog_v1::PolicyTagManagerConnection::DeleteOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteOperation(request));
 }
 
-Status PolicyTagManagerTracingConnection::CancelOperation(
-    google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpan(
-      "datacatalog_v1::PolicyTagManagerConnection::CancelOperation");
+Status
+PolicyTagManagerTracingConnection::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
+  auto span = internal::MakeSpan("datacatalog_v1::PolicyTagManagerConnection::CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CancelOperation(request));
 }

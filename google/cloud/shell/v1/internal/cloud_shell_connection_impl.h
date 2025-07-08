@@ -19,16 +19,16 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SHELL_V1_INTERNAL_CLOUD_SHELL_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SHELL_V1_INTERNAL_CLOUD_SHELL_CONNECTION_IMPL_H
 
-#include "google/cloud/shell/v1/cloud_shell_connection.h"
-#include "google/cloud/shell/v1/cloud_shell_connection_idempotency_policy.h"
-#include "google/cloud/shell/v1/cloud_shell_options.h"
-#include "google/cloud/shell/v1/internal/cloud_shell_retry_traits.h"
-#include "google/cloud/shell/v1/internal/cloud_shell_stub.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
+#include "google/cloud/shell/v1/cloud_shell_connection.h"
+#include "google/cloud/shell/v1/cloud_shell_connection_idempotency_policy.h"
+#include "google/cloud/shell/v1/cloud_shell_options.h"
+#include "google/cloud/shell/v1/internal/cloud_shell_retry_traits.h"
+#include "google/cloud/shell/v1/internal/cloud_shell_stub.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
@@ -45,61 +45,58 @@ class CloudShellServiceConnectionImpl
   ~CloudShellServiceConnectionImpl() override = default;
 
   CloudShellServiceConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<shell_v1_internal::CloudShellServiceStub> stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<shell_v1_internal::CloudShellServiceStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
-  StatusOr<google::cloud::shell::v1::Environment> GetEnvironment(
-      google::cloud::shell::v1::GetEnvironmentRequest const& request) override;
+  StatusOr<google::cloud::shell::v1::Environment>
+  GetEnvironment(google::cloud::shell::v1::GetEnvironmentRequest const& request) override;
 
   future<StatusOr<google::cloud::shell::v1::StartEnvironmentResponse>>
-  StartEnvironment(google::cloud::shell::v1::StartEnvironmentRequest const&
-                       request) override;
+  StartEnvironment(google::cloud::shell::v1::StartEnvironmentRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> StartEnvironment(
-      NoAwaitTag,
-      google::cloud::shell::v1::StartEnvironmentRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  StartEnvironment(NoAwaitTag,
+      google::cloud::shell::v1::StartEnvironmentRequest const& request) override;
 
   future<StatusOr<google::cloud::shell::v1::StartEnvironmentResponse>>
-  StartEnvironment(google::longrunning::Operation const& operation) override;
+  StartEnvironment(
+      google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::shell::v1::AuthorizeEnvironmentResponse>>
-  AuthorizeEnvironment(
-      google::cloud::shell::v1::AuthorizeEnvironmentRequest const& request)
-      override;
+  AuthorizeEnvironment(google::cloud::shell::v1::AuthorizeEnvironmentRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> AuthorizeEnvironment(
-      NoAwaitTag,
-      google::cloud::shell::v1::AuthorizeEnvironmentRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  AuthorizeEnvironment(NoAwaitTag,
+      google::cloud::shell::v1::AuthorizeEnvironmentRequest const& request) override;
 
   future<StatusOr<google::cloud::shell::v1::AuthorizeEnvironmentResponse>>
   AuthorizeEnvironment(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::shell::v1::AddPublicKeyResponse>> AddPublicKey(
+  future<StatusOr<google::cloud::shell::v1::AddPublicKeyResponse>>
+  AddPublicKey(google::cloud::shell::v1::AddPublicKeyRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  AddPublicKey(NoAwaitTag,
       google::cloud::shell::v1::AddPublicKeyRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> AddPublicKey(
-      NoAwaitTag,
-      google::cloud::shell::v1::AddPublicKeyRequest const& request) override;
-
-  future<StatusOr<google::cloud::shell::v1::AddPublicKeyResponse>> AddPublicKey(
+  future<StatusOr<google::cloud::shell::v1::AddPublicKeyResponse>>
+  AddPublicKey(
       google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::shell::v1::RemovePublicKeyResponse>>
+  RemovePublicKey(google::cloud::shell::v1::RemovePublicKeyRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  RemovePublicKey(NoAwaitTag,
+      google::cloud::shell::v1::RemovePublicKeyRequest const& request) override;
 
   future<StatusOr<google::cloud::shell::v1::RemovePublicKeyResponse>>
   RemovePublicKey(
-      google::cloud::shell::v1::RemovePublicKeyRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation> RemovePublicKey(
-      NoAwaitTag,
-      google::cloud::shell::v1::RemovePublicKeyRequest const& request) override;
-
-  future<StatusOr<google::cloud::shell::v1::RemovePublicKeyResponse>>
-  RemovePublicKey(google::longrunning::Operation const& operation) override;
+      google::longrunning::Operation const& operation) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

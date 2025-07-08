@@ -34,56 +34,45 @@ CompanyServiceTracingConnection::CompanyServiceTracingConnection(
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::talent::v4::Company>
-CompanyServiceTracingConnection::CreateCompany(
-    google::cloud::talent::v4::CreateCompanyRequest const& request) {
-  auto span =
-      internal::MakeSpan("talent_v4::CompanyServiceConnection::CreateCompany");
+CompanyServiceTracingConnection::CreateCompany(google::cloud::talent::v4::CreateCompanyRequest const& request) {
+  auto span = internal::MakeSpan("talent_v4::CompanyServiceConnection::CreateCompany");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateCompany(request));
 }
 
 StatusOr<google::cloud::talent::v4::Company>
-CompanyServiceTracingConnection::GetCompany(
-    google::cloud::talent::v4::GetCompanyRequest const& request) {
-  auto span =
-      internal::MakeSpan("talent_v4::CompanyServiceConnection::GetCompany");
+CompanyServiceTracingConnection::GetCompany(google::cloud::talent::v4::GetCompanyRequest const& request) {
+  auto span = internal::MakeSpan("talent_v4::CompanyServiceConnection::GetCompany");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetCompany(request));
 }
 
 StatusOr<google::cloud::talent::v4::Company>
-CompanyServiceTracingConnection::UpdateCompany(
-    google::cloud::talent::v4::UpdateCompanyRequest const& request) {
-  auto span =
-      internal::MakeSpan("talent_v4::CompanyServiceConnection::UpdateCompany");
+CompanyServiceTracingConnection::UpdateCompany(google::cloud::talent::v4::UpdateCompanyRequest const& request) {
+  auto span = internal::MakeSpan("talent_v4::CompanyServiceConnection::UpdateCompany");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateCompany(request));
 }
 
-Status CompanyServiceTracingConnection::DeleteCompany(
-    google::cloud::talent::v4::DeleteCompanyRequest const& request) {
-  auto span =
-      internal::MakeSpan("talent_v4::CompanyServiceConnection::DeleteCompany");
+Status
+CompanyServiceTracingConnection::DeleteCompany(google::cloud::talent::v4::DeleteCompanyRequest const& request) {
+  auto span = internal::MakeSpan("talent_v4::CompanyServiceConnection::DeleteCompany");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteCompany(request));
 }
 
 StreamRange<google::cloud::talent::v4::Company>
-CompanyServiceTracingConnection::ListCompanies(
-    google::cloud::talent::v4::ListCompaniesRequest request) {
-  auto span =
-      internal::MakeSpan("talent_v4::CompanyServiceConnection::ListCompanies");
+CompanyServiceTracingConnection::ListCompanies(google::cloud::talent::v4::ListCompaniesRequest request) {
+  auto span = internal::MakeSpan("talent_v4::CompanyServiceConnection::ListCompanies");
   internal::OTelScope scope(span);
   auto sr = child_->ListCompanies(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::talent::v4::Company>(
-      std::move(span), std::move(sr));
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::longrunning::Operation>
-CompanyServiceTracingConnection::GetOperation(
-    google::longrunning::GetOperationRequest const& request) {
-  auto span =
-      internal::MakeSpan("talent_v4::CompanyServiceConnection::GetOperation");
+CompanyServiceTracingConnection::GetOperation(google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpan("talent_v4::CompanyServiceConnection::GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOperation(request));
 }

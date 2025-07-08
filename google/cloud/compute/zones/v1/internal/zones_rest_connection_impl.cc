@@ -17,8 +17,8 @@
 // source: google/cloud/compute/zones/v1/zones.proto
 
 #include "google/cloud/compute/zones/v1/internal/zones_rest_connection_impl.h"
-#include "google/cloud/compute/zones/v1/internal/zones_rest_stub_factory.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/compute/zones/v1/internal/zones_rest_stub_factory.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/rest_retry_loop.h"
@@ -35,56 +35,47 @@ ZonesRestConnectionImpl::ZonesRestConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<compute_zones_v1_internal::ZonesRestStub> stub,
     Options options)
-    : background_(std::move(background)),
-      stub_(std::move(stub)),
-      options_(internal::MergeOptions(std::move(options),
-                                      ZonesConnection::options())) {}
+  : background_(std::move(background)), stub_(std::move(stub)),
+    options_(internal::MergeOptions(
+        std::move(options),
+        ZonesConnection::options())) {}
 
 StatusOr<google::cloud::cpp::compute::v1::Zone>
-ZonesRestConnectionImpl::GetZone(
-    google::cloud::cpp::compute::zones::v1::GetZoneRequest const& request) {
+ZonesRestConnectionImpl::GetZone(google::cloud::cpp::compute::zones::v1::GetZoneRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetZone(request),
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::cloud::cpp::compute::zones::v1::GetZoneRequest const&
-                 request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options, google::cloud::cpp::compute::zones::v1::GetZoneRequest const& request) {
         return stub_->GetZone(rest_context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::Zone>
-ZonesRestConnectionImpl::ListZones(
-    google::cloud::cpp::compute::zones::v1::ListZonesRequest request) {
+ZonesRestConnectionImpl::ListZones(google::cloud::cpp::compute::zones::v1::ListZonesRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListZones(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::cpp::compute::v1::Zone>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::cpp::compute::v1::Zone>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<compute_zones_v1::ZonesRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<compute_zones_v1::ZonesRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::cpp::compute::zones::v1::ListZonesRequest const& r) {
+          Options const& options, google::cloud::cpp::compute::zones::v1::ListZonesRequest const& r) {
         return google::cloud::rest_internal::RestRetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](
-                rest_internal::RestContext& rest_context,
-                Options const& options,
-                google::cloud::cpp::compute::zones::v1::ListZonesRequest const&
-                    request) {
+            [stub](rest_internal::RestContext& rest_context,
+                   Options const& options,
+                   google::cloud::cpp::compute::zones::v1::ListZonesRequest const& request) {
               return stub->ListZones(rest_context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::cpp::compute::v1::ZoneList r) {
-        std::vector<google::cloud::cpp::compute::v1::Zone> result(
-            r.items().size());
+        std::vector<google::cloud::cpp::compute::v1::Zone> result(r.items().size());
         auto& messages = *r.mutable_items();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;

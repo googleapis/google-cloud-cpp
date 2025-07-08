@@ -28,134 +28,90 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 CompletionServiceClient::CompletionServiceClient(
     std::shared_ptr<CompletionServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 CompletionServiceClient::~CompletionServiceClient() = default;
 
 StatusOr<google::cloud::discoveryengine::v1::CompleteQueryResponse>
-CompletionServiceClient::CompleteQuery(
-    google::cloud::discoveryengine::v1::CompleteQueryRequest const& request,
-    Options opts) {
+CompletionServiceClient::CompleteQuery(google::cloud::discoveryengine::v1::CompleteQueryRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CompleteQuery(request);
 }
 
-future<StatusOr<google::cloud::discoveryengine::v1::
-                    ImportSuggestionDenyListEntriesResponse>>
-CompletionServiceClient::ImportSuggestionDenyListEntries(
-    google::cloud::discoveryengine::v1::
-        ImportSuggestionDenyListEntriesRequest const& request,
-    Options opts) {
+future<StatusOr<google::cloud::discoveryengine::v1::ImportSuggestionDenyListEntriesResponse>>
+CompletionServiceClient::ImportSuggestionDenyListEntries(google::cloud::discoveryengine::v1::ImportSuggestionDenyListEntriesRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ImportSuggestionDenyListEntries(request);
 }
 
 StatusOr<google::longrunning::Operation>
-CompletionServiceClient::ImportSuggestionDenyListEntries(
-    NoAwaitTag,
-    google::cloud::discoveryengine::v1::
-        ImportSuggestionDenyListEntriesRequest const& request,
-    Options opts) {
+CompletionServiceClient::ImportSuggestionDenyListEntries(NoAwaitTag, google::cloud::discoveryengine::v1::ImportSuggestionDenyListEntriesRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ImportSuggestionDenyListEntries(NoAwaitTag{}, request);
 }
 
-future<StatusOr<google::cloud::discoveryengine::v1::
-                    ImportSuggestionDenyListEntriesResponse>>
-CompletionServiceClient::ImportSuggestionDenyListEntries(
-    google::longrunning::Operation const& operation, Options opts) {
+future<StatusOr<google::cloud::discoveryengine::v1::ImportSuggestionDenyListEntriesResponse>>
+CompletionServiceClient::ImportSuggestionDenyListEntries(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ImportSuggestionDenyListEntries(operation);
 }
 
-future<StatusOr<
-    google::cloud::discoveryengine::v1::PurgeSuggestionDenyListEntriesResponse>>
-CompletionServiceClient::PurgeSuggestionDenyListEntries(
-    google::cloud::discoveryengine::v1::
-        PurgeSuggestionDenyListEntriesRequest const& request,
-    Options opts) {
+future<StatusOr<google::cloud::discoveryengine::v1::PurgeSuggestionDenyListEntriesResponse>>
+CompletionServiceClient::PurgeSuggestionDenyListEntries(google::cloud::discoveryengine::v1::PurgeSuggestionDenyListEntriesRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PurgeSuggestionDenyListEntries(request);
 }
 
 StatusOr<google::longrunning::Operation>
-CompletionServiceClient::PurgeSuggestionDenyListEntries(
-    NoAwaitTag,
-    google::cloud::discoveryengine::v1::
-        PurgeSuggestionDenyListEntriesRequest const& request,
-    Options opts) {
+CompletionServiceClient::PurgeSuggestionDenyListEntries(NoAwaitTag, google::cloud::discoveryengine::v1::PurgeSuggestionDenyListEntriesRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PurgeSuggestionDenyListEntries(NoAwaitTag{}, request);
 }
 
-future<StatusOr<
-    google::cloud::discoveryengine::v1::PurgeSuggestionDenyListEntriesResponse>>
-CompletionServiceClient::PurgeSuggestionDenyListEntries(
-    google::longrunning::Operation const& operation, Options opts) {
+future<StatusOr<google::cloud::discoveryengine::v1::PurgeSuggestionDenyListEntriesResponse>>
+CompletionServiceClient::PurgeSuggestionDenyListEntries(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PurgeSuggestionDenyListEntries(operation);
 }
 
-future<StatusOr<
-    google::cloud::discoveryengine::v1::ImportCompletionSuggestionsResponse>>
-CompletionServiceClient::ImportCompletionSuggestions(
-    google::cloud::discoveryengine::v1::
-        ImportCompletionSuggestionsRequest const& request,
-    Options opts) {
+future<StatusOr<google::cloud::discoveryengine::v1::ImportCompletionSuggestionsResponse>>
+CompletionServiceClient::ImportCompletionSuggestions(google::cloud::discoveryengine::v1::ImportCompletionSuggestionsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ImportCompletionSuggestions(request);
 }
 
 StatusOr<google::longrunning::Operation>
-CompletionServiceClient::ImportCompletionSuggestions(
-    NoAwaitTag,
-    google::cloud::discoveryengine::v1::
-        ImportCompletionSuggestionsRequest const& request,
-    Options opts) {
+CompletionServiceClient::ImportCompletionSuggestions(NoAwaitTag, google::cloud::discoveryengine::v1::ImportCompletionSuggestionsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ImportCompletionSuggestions(NoAwaitTag{}, request);
 }
 
-future<StatusOr<
-    google::cloud::discoveryengine::v1::ImportCompletionSuggestionsResponse>>
-CompletionServiceClient::ImportCompletionSuggestions(
-    google::longrunning::Operation const& operation, Options opts) {
+future<StatusOr<google::cloud::discoveryengine::v1::ImportCompletionSuggestionsResponse>>
+CompletionServiceClient::ImportCompletionSuggestions(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ImportCompletionSuggestions(operation);
 }
 
-future<StatusOr<
-    google::cloud::discoveryengine::v1::PurgeCompletionSuggestionsResponse>>
-CompletionServiceClient::PurgeCompletionSuggestions(
-    google::cloud::discoveryengine::v1::PurgeCompletionSuggestionsRequest const&
-        request,
-    Options opts) {
+future<StatusOr<google::cloud::discoveryengine::v1::PurgeCompletionSuggestionsResponse>>
+CompletionServiceClient::PurgeCompletionSuggestions(google::cloud::discoveryengine::v1::PurgeCompletionSuggestionsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PurgeCompletionSuggestions(request);
 }
 
 StatusOr<google::longrunning::Operation>
-CompletionServiceClient::PurgeCompletionSuggestions(
-    NoAwaitTag,
-    google::cloud::discoveryengine::v1::PurgeCompletionSuggestionsRequest const&
-        request,
-    Options opts) {
+CompletionServiceClient::PurgeCompletionSuggestions(NoAwaitTag, google::cloud::discoveryengine::v1::PurgeCompletionSuggestionsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PurgeCompletionSuggestions(NoAwaitTag{}, request);
 }
 
-future<StatusOr<
-    google::cloud::discoveryengine::v1::PurgeCompletionSuggestionsResponse>>
-CompletionServiceClient::PurgeCompletionSuggestions(
-    google::longrunning::Operation const& operation, Options opts) {
+future<StatusOr<google::cloud::discoveryengine::v1::PurgeCompletionSuggestionsResponse>>
+CompletionServiceClient::PurgeCompletionSuggestions(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PurgeCompletionSuggestions(operation);
 }
 
 StreamRange<google::longrunning::Operation>
-CompletionServiceClient::ListOperations(std::string const& name,
-                                        std::string const& filter,
-                                        Options opts) {
+CompletionServiceClient::ListOperations(std::string const& name, std::string const& filter, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::ListOperationsRequest request;
   request.set_name(name);
@@ -164,36 +120,35 @@ CompletionServiceClient::ListOperations(std::string const& name,
 }
 
 StreamRange<google::longrunning::Operation>
-CompletionServiceClient::ListOperations(
-    google::longrunning::ListOperationsRequest request, Options opts) {
+CompletionServiceClient::ListOperations(google::longrunning::ListOperationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOperations(std::move(request));
 }
 
-StatusOr<google::longrunning::Operation> CompletionServiceClient::GetOperation(
-    std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation>
+CompletionServiceClient::GetOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
   return connection_->GetOperation(request);
 }
 
-StatusOr<google::longrunning::Operation> CompletionServiceClient::GetOperation(
-    google::longrunning::GetOperationRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation>
+CompletionServiceClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }
 
-Status CompletionServiceClient::CancelOperation(std::string const& name,
-                                                Options opts) {
+Status
+CompletionServiceClient::CancelOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::CancelOperationRequest request;
   request.set_name(name);
   return connection_->CancelOperation(request);
 }
 
-Status CompletionServiceClient::CancelOperation(
-    google::longrunning::CancelOperationRequest const& request, Options opts) {
+Status
+CompletionServiceClient::CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelOperation(request);
 }

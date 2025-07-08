@@ -35,39 +35,38 @@ class EntityServiceConnectionIdempotencyPolicy {
   virtual ~EntityServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<EntityServiceConnectionIdempotencyPolicy> clone()
-      const;
+  virtual std::unique_ptr<EntityServiceConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency GetWatchlist(
-      google::cloud::chronicle::v1::GetWatchlistRequest const& request);
+  virtual google::cloud::Idempotency
+  GetWatchlist(google::cloud::chronicle::v1::GetWatchlistRequest const& request);
 
-  virtual google::cloud::Idempotency ListWatchlists(
-      google::cloud::chronicle::v1::ListWatchlistsRequest request);
+  virtual google::cloud::Idempotency
+  ListWatchlists(google::cloud::chronicle::v1::ListWatchlistsRequest request);
 
-  virtual google::cloud::Idempotency CreateWatchlist(
-      google::cloud::chronicle::v1::CreateWatchlistRequest const& request);
+  virtual google::cloud::Idempotency
+  CreateWatchlist(google::cloud::chronicle::v1::CreateWatchlistRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateWatchlist(
-      google::cloud::chronicle::v1::UpdateWatchlistRequest const& request);
+  virtual google::cloud::Idempotency
+  UpdateWatchlist(google::cloud::chronicle::v1::UpdateWatchlistRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteWatchlist(
-      google::cloud::chronicle::v1::DeleteWatchlistRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteWatchlist(google::cloud::chronicle::v1::DeleteWatchlistRequest const& request);
 
-  virtual google::cloud::Idempotency ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual google::cloud::Idempotency
+  ListOperations(google::longrunning::ListOperationsRequest request);
 
-  virtual google::cloud::Idempotency GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
 
-  virtual google::cloud::Idempotency CancelOperation(
-      google::longrunning::CancelOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  CancelOperation(google::longrunning::CancelOperationRequest const& request);
 };
 
 std::unique_ptr<EntityServiceConnectionIdempotencyPolicy>
-MakeDefaultEntityServiceConnectionIdempotencyPolicy();
+    MakeDefaultEntityServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace chronicle_v1

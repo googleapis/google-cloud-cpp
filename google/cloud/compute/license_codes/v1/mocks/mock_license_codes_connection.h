@@ -42,23 +42,17 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockLicenseCodesConnection
-    : public compute_license_codes_v1::LicenseCodesConnection {
+class MockLicenseCodesConnection : public compute_license_codes_v1::LicenseCodesConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::LicenseCode>,
-              GetLicenseCode,
-              (google::cloud::cpp::compute::license_codes::v1::
-                   GetLicenseCodeRequest const& request),
-              (override));
+  GetLicenseCode,
+  (google::cloud::cpp::compute::license_codes::v1::GetLicenseCodeRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>,
-      TestIamPermissions,
-      (google::cloud::cpp::compute::license_codes::v1::
-           TestIamPermissionsRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>,
+  TestIamPermissions,
+  (google::cloud::cpp::compute::license_codes::v1::TestIamPermissionsRequest const& request), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

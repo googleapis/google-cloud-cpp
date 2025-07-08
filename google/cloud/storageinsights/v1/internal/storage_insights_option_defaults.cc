@@ -17,10 +17,10 @@
 // source: google/cloud/storageinsights/v1/storageinsights.proto
 
 #include "google/cloud/storageinsights/v1/internal/storage_insights_option_defaults.h"
-#include "google/cloud/storageinsights/v1/storage_insights_connection.h"
-#include "google/cloud/storageinsights/v1/storage_insights_options.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
+#include "google/cloud/storageinsights/v1/storage_insights_connection.h"
+#include "google/cloud/storageinsights/v1/storage_insights_options.h"
 #include <memory>
 #include <utility>
 
@@ -35,41 +35,32 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options StorageInsightsDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_STORAGE_INSIGHTS_ENDPOINT", "",
-      "GOOGLE_CLOUD_CPP_STORAGE_INSIGHTS_AUTHORITY",
+      std::move(options), "GOOGLE_CLOUD_CPP_STORAGE_INSIGHTS_ENDPOINT",
+      "", "GOOGLE_CLOUD_CPP_STORAGE_INSIGHTS_AUTHORITY",
       "storageinsights.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<storageinsights_v1::StorageInsightsRetryPolicyOption>()) {
     options.set<storageinsights_v1::StorageInsightsRetryPolicyOption>(
         storageinsights_v1::StorageInsightsLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
-            .clone());
+            std::chrono::minutes(30)).clone());
   }
   if (!options.has<storageinsights_v1::StorageInsightsBackoffPolicyOption>()) {
     options.set<storageinsights_v1::StorageInsightsBackoffPolicyOption>(
-        ExponentialBackoffPolicy(
-            std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
-            .clone());
+        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
   }
   if (!options.has<storageinsights_v1::StorageInsightsPollingPolicyOption>()) {
     options.set<storageinsights_v1::StorageInsightsPollingPolicyOption>(
         GenericPollingPolicy<
             storageinsights_v1::StorageInsightsRetryPolicyOption::Type,
             storageinsights_v1::StorageInsightsBackoffPolicyOption::Type>(
-            options.get<storageinsights_v1::StorageInsightsRetryPolicyOption>()
-                ->clone(),
+            options.get<storageinsights_v1::StorageInsightsRetryPolicyOption>()->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                     std::chrono::minutes(5), kBackoffScaling)
-                .clone())
-            .clone());
+            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
   }
-  if (!options.has<storageinsights_v1::
-                       StorageInsightsConnectionIdempotencyPolicyOption>()) {
-    options.set<
-        storageinsights_v1::StorageInsightsConnectionIdempotencyPolicyOption>(
-        storageinsights_v1::
-            MakeDefaultStorageInsightsConnectionIdempotencyPolicy());
+  if (!options.has<storageinsights_v1::StorageInsightsConnectionIdempotencyPolicyOption>()) {
+    options.set<storageinsights_v1::StorageInsightsConnectionIdempotencyPolicyOption>(
+        storageinsights_v1::MakeDefaultStorageInsightsConnectionIdempotencyPolicy());
   }
 
   return options;

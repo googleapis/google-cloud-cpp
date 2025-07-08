@@ -31,20 +31,21 @@ namespace binaryauthorization_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 SystemPolicyV1Logging::SystemPolicyV1Logging(
-    std::shared_ptr<SystemPolicyV1Stub> child, TracingOptions tracing_options,
+    std::shared_ptr<SystemPolicyV1Stub> child,
+    TracingOptions tracing_options,
     std::set<std::string> const&)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::cloud::binaryauthorization::v1::Policy>
 SystemPolicyV1Logging::GetSystemPolicy(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::binaryauthorization::v1::GetSystemPolicyRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::binaryauthorization::v1::GetSystemPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::binaryauthorization::v1::GetSystemPolicyRequest const&
-              request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::binaryauthorization::v1::GetSystemPolicyRequest const& request) {
         return child_->GetSystemPolicy(context, options, request);
       },
       context, options, request, __func__, tracing_options_);

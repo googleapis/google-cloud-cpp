@@ -32,26 +32,28 @@ CloudCatalogStub::~CloudCatalogStub() = default;
 
 StatusOr<google::cloud::billing::v1::ListServicesResponse>
 DefaultCloudCatalogStub::ListServices(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::billing::v1::ListServicesRequest const& request) {
-  google::cloud::billing::v1::ListServicesResponse response;
-  auto status = grpc_stub_->ListServices(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::billing::v1::ListServicesRequest const& request) {
+    google::cloud::billing::v1::ListServicesResponse response;
+    auto status =
+        grpc_stub_->ListServices(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::billing::v1::ListSkusResponse>
 DefaultCloudCatalogStub::ListSkus(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::billing::v1::ListSkusRequest const& request) {
-  google::cloud::billing::v1::ListSkusResponse response;
-  auto status = grpc_stub_->ListSkus(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::billing::v1::ListSkusRequest const& request) {
+    google::cloud::billing::v1::ListSkusResponse response;
+    auto status =
+        grpc_stub_->ListSkus(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

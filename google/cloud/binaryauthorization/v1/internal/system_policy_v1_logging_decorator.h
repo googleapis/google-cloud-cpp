@@ -35,13 +35,13 @@ class SystemPolicyV1Logging : public SystemPolicyV1Stub {
  public:
   ~SystemPolicyV1Logging() override = default;
   SystemPolicyV1Logging(std::shared_ptr<SystemPolicyV1Stub> child,
-                        TracingOptions tracing_options,
-                        std::set<std::string> const& components);
+                       TracingOptions tracing_options,
+                       std::set<std::string> const& components);
 
   StatusOr<google::cloud::binaryauthorization::v1::Policy> GetSystemPolicy(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::binaryauthorization::v1::GetSystemPolicyRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::binaryauthorization::v1::GetSystemPolicyRequest const& request) override;
 
  private:
   std::shared_ptr<SystemPolicyV1Stub> child_;

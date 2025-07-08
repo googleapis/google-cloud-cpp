@@ -33,41 +33,41 @@ ParallelstoreStub::~ParallelstoreStub() = default;
 
 StatusOr<google::cloud::parallelstore::v1::ListInstancesResponse>
 DefaultParallelstoreStub::ListInstances(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::parallelstore::v1::ListInstancesRequest const& request) {
-  google::cloud::parallelstore::v1::ListInstancesResponse response;
-  auto status = grpc_stub_->ListInstances(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::parallelstore::v1::ListInstancesRequest const& request) {
+    google::cloud::parallelstore::v1::ListInstancesResponse response;
+    auto status =
+        grpc_stub_->ListInstances(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::parallelstore::v1::Instance>
 DefaultParallelstoreStub::GetInstance(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::parallelstore::v1::GetInstanceRequest const& request) {
-  google::cloud::parallelstore::v1::Instance response;
-  auto status = grpc_stub_->GetInstance(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::parallelstore::v1::GetInstanceRequest const& request) {
+    google::cloud::parallelstore::v1::Instance response;
+    auto status =
+        grpc_stub_->GetInstance(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultParallelstoreStub::AsyncCreateInstance(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::parallelstore::v1::CreateInstanceRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::parallelstore::v1::CreateInstanceRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::parallelstore::v1::CreateInstanceRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::parallelstore::v1::CreateInstanceRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::parallelstore::v1::CreateInstanceRequest const&
-                 request,
+             google::cloud::parallelstore::v1::CreateInstanceRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncCreateInstance(context, request, cq);
       },
@@ -76,29 +76,29 @@ DefaultParallelstoreStub::AsyncCreateInstance(
 
 StatusOr<google::longrunning::Operation>
 DefaultParallelstoreStub::CreateInstance(
-    grpc::ClientContext& context, Options,
-    google::cloud::parallelstore::v1::CreateInstanceRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->CreateInstance(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::parallelstore::v1::CreateInstanceRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->CreateInstance(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultParallelstoreStub::AsyncUpdateInstance(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::parallelstore::v1::UpdateInstanceRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::parallelstore::v1::UpdateInstanceRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::parallelstore::v1::UpdateInstanceRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::parallelstore::v1::UpdateInstanceRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::parallelstore::v1::UpdateInstanceRequest const&
-                 request,
+             google::cloud::parallelstore::v1::UpdateInstanceRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncUpdateInstance(context, request, cq);
       },
@@ -107,29 +107,29 @@ DefaultParallelstoreStub::AsyncUpdateInstance(
 
 StatusOr<google::longrunning::Operation>
 DefaultParallelstoreStub::UpdateInstance(
-    grpc::ClientContext& context, Options,
-    google::cloud::parallelstore::v1::UpdateInstanceRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->UpdateInstance(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::parallelstore::v1::UpdateInstanceRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->UpdateInstance(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultParallelstoreStub::AsyncDeleteInstance(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::parallelstore::v1::DeleteInstanceRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::parallelstore::v1::DeleteInstanceRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::parallelstore::v1::DeleteInstanceRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::parallelstore::v1::DeleteInstanceRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::parallelstore::v1::DeleteInstanceRequest const&
-                 request,
+             google::cloud::parallelstore::v1::DeleteInstanceRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncDeleteInstance(context, request, cq);
       },
@@ -138,25 +138,26 @@ DefaultParallelstoreStub::AsyncDeleteInstance(
 
 StatusOr<google::longrunning::Operation>
 DefaultParallelstoreStub::DeleteInstance(
-    grpc::ClientContext& context, Options,
-    google::cloud::parallelstore::v1::DeleteInstanceRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->DeleteInstance(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::parallelstore::v1::DeleteInstanceRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->DeleteInstance(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultParallelstoreStub::AsyncImportData(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::parallelstore::v1::ImportDataRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::parallelstore::v1::ImportDataRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::parallelstore::v1::ImportDataRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::parallelstore::v1::ImportDataRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
              google::cloud::parallelstore::v1::ImportDataRequest const& request,
@@ -166,26 +167,28 @@ DefaultParallelstoreStub::AsyncImportData(
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation> DefaultParallelstoreStub::ImportData(
-    grpc::ClientContext& context, Options,
-    google::cloud::parallelstore::v1::ImportDataRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->ImportData(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::longrunning::Operation>
+DefaultParallelstoreStub::ImportData(
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::parallelstore::v1::ImportDataRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->ImportData(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultParallelstoreStub::AsyncExportData(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::parallelstore::v1::ExportDataRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::parallelstore::v1::ExportDataRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::parallelstore::v1::ExportDataRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::parallelstore::v1::ExportDataRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
              google::cloud::parallelstore::v1::ExportDataRequest const& request,
@@ -195,84 +198,96 @@ DefaultParallelstoreStub::AsyncExportData(
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation> DefaultParallelstoreStub::ExportData(
-    grpc::ClientContext& context, Options,
-    google::cloud::parallelstore::v1::ExportDataRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->ExportData(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::longrunning::Operation>
+DefaultParallelstoreStub::ExportData(
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::parallelstore::v1::ExportDataRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->ExportData(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 DefaultParallelstoreStub::ListLocations(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::location::ListLocationsRequest const& request) {
-  google::cloud::location::ListLocationsResponse response;
-  auto status = locations_stub_->ListLocations(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::location::ListLocationsRequest const& request) {
+    google::cloud::location::ListLocationsResponse response;
+    auto status =
+        locations_stub_->ListLocations(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::location::Location>
 DefaultParallelstoreStub::GetLocation(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::location::GetLocationRequest const& request) {
-  google::cloud::location::Location response;
-  auto status = locations_stub_->GetLocation(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::location::GetLocationRequest const& request) {
+    google::cloud::location::Location response;
+    auto status =
+        locations_stub_->GetLocation(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
 DefaultParallelstoreStub::ListOperations(
-    grpc::ClientContext& context, Options const&,
-    google::longrunning::ListOperationsRequest const& request) {
-  google::longrunning::ListOperationsResponse response;
-  auto status = operations_stub_->ListOperations(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::longrunning::ListOperationsRequest const& request) {
+    google::longrunning::ListOperationsResponse response;
+    auto status =
+        operations_stub_->ListOperations(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-StatusOr<google::longrunning::Operation> DefaultParallelstoreStub::GetOperation(
-    grpc::ClientContext& context, Options const&,
-    google::longrunning::GetOperationRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = operations_stub_->GetOperation(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+StatusOr<google::longrunning::Operation>
+DefaultParallelstoreStub::GetOperation(
+  grpc::ClientContext& context, Options const&,
+  google::longrunning::GetOperationRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        operations_stub_->GetOperation(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-Status DefaultParallelstoreStub::DeleteOperation(
-    grpc::ClientContext& context, Options const&,
-    google::longrunning::DeleteOperationRequest const& request) {
-  google::protobuf::Empty response;
-  auto status = operations_stub_->DeleteOperation(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return google::cloud::Status();
+Status
+DefaultParallelstoreStub::DeleteOperation(
+  grpc::ClientContext& context, Options const&,
+  google::longrunning::DeleteOperationRequest const& request) {
+    google::protobuf::Empty response;
+    auto status =
+        operations_stub_->DeleteOperation(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return google::cloud::Status();
 }
 
-Status DefaultParallelstoreStub::CancelOperation(
-    grpc::ClientContext& context, Options const&,
-    google::longrunning::CancelOperationRequest const& request) {
-  google::protobuf::Empty response;
-  auto status = operations_stub_->CancelOperation(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return google::cloud::Status();
+Status
+DefaultParallelstoreStub::CancelOperation(
+  grpc::ClientContext& context, Options const&,
+  google::longrunning::CancelOperationRequest const& request) {
+    google::protobuf::Empty response;
+    auto status =
+        operations_stub_->CancelOperation(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return google::cloud::Status();
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -301,14 +316,13 @@ future<Status> DefaultParallelstoreStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(
-             cq,
-             [this](grpc::ClientContext* context,
-                    google::longrunning::CancelOperationRequest const& request,
-                    grpc::CompletionQueue* cq) {
-               return operations_stub_->AsyncCancelOperation(context, request,
-                                                             cq);
-             },
-             request, std::move(context))
+      cq,
+      [this](grpc::ClientContext* context,
+             google::longrunning::CancelOperationRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return operations_stub_->AsyncCancelOperation(context, request, cq);
+      },
+      request, std::move(context))
       .then([](future<StatusOr<google::protobuf::Empty>> f) {
         return f.get().status();
       });

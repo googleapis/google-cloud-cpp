@@ -33,13 +33,10 @@ using ::google::cloud::servicedirectory_v1::MakeLookupServiceConnection;
 /// @deprecated Use servicedirectory_v1::LookupServiceConnection directly.
 using ::google::cloud::servicedirectory_v1::LookupServiceConnection;
 
-/// @deprecated Use
-/// servicedirectory_v1::LookupServiceLimitedErrorCountRetryPolicy directly.
-using ::google::cloud::servicedirectory_v1::
-    LookupServiceLimitedErrorCountRetryPolicy;
+/// @deprecated Use servicedirectory_v1::LookupServiceLimitedErrorCountRetryPolicy directly.
+using ::google::cloud::servicedirectory_v1::LookupServiceLimitedErrorCountRetryPolicy;
 
-/// @deprecated Use servicedirectory_v1::LookupServiceLimitedTimeRetryPolicy
-/// directly.
+/// @deprecated Use servicedirectory_v1::LookupServiceLimitedTimeRetryPolicy directly.
 using ::google::cloud::servicedirectory_v1::LookupServiceLimitedTimeRetryPolicy;
 
 /// @deprecated Use servicedirectory_v1::LookupServiceRetryPolicy directly.

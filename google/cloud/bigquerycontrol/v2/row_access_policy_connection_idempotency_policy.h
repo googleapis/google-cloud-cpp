@@ -34,31 +34,29 @@ class RowAccessPolicyServiceConnectionIdempotencyPolicy {
   virtual ~RowAccessPolicyServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<RowAccessPolicyServiceConnectionIdempotencyPolicy>
-  clone() const;
+  virtual std::unique_ptr<RowAccessPolicyServiceConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency ListRowAccessPolicies(
-      google::cloud::bigquery::v2::ListRowAccessPoliciesRequest request);
+  virtual google::cloud::Idempotency
+  ListRowAccessPolicies(google::cloud::bigquery::v2::ListRowAccessPoliciesRequest request);
 
-  virtual google::cloud::Idempotency GetRowAccessPolicy(
-      google::cloud::bigquery::v2::GetRowAccessPolicyRequest const& request);
+  virtual google::cloud::Idempotency
+  GetRowAccessPolicy(google::cloud::bigquery::v2::GetRowAccessPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency CreateRowAccessPolicy(
-      google::cloud::bigquery::v2::CreateRowAccessPolicyRequest const& request);
+  virtual google::cloud::Idempotency
+  CreateRowAccessPolicy(google::cloud::bigquery::v2::CreateRowAccessPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateRowAccessPolicy(
-      google::cloud::bigquery::v2::UpdateRowAccessPolicyRequest const& request);
+  virtual google::cloud::Idempotency
+  UpdateRowAccessPolicy(google::cloud::bigquery::v2::UpdateRowAccessPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteRowAccessPolicy(
-      google::cloud::bigquery::v2::DeleteRowAccessPolicyRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteRowAccessPolicy(google::cloud::bigquery::v2::DeleteRowAccessPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency BatchDeleteRowAccessPolicies(
-      google::cloud::bigquery::v2::BatchDeleteRowAccessPoliciesRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  BatchDeleteRowAccessPolicies(google::cloud::bigquery::v2::BatchDeleteRowAccessPoliciesRequest const& request);
 };
 
 std::unique_ptr<RowAccessPolicyServiceConnectionIdempotencyPolicy>
-MakeDefaultRowAccessPolicyServiceConnectionIdempotencyPolicy();
+    MakeDefaultRowAccessPolicyServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquerycontrol_v2

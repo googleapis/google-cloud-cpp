@@ -42,8 +42,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockProjectServiceConnection
-    : public discoveryengine_v1::ProjectServiceConnection {
+class MockProjectServiceConnection : public discoveryengine_v1::ProjectServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
@@ -52,16 +51,12 @@ class MockProjectServiceConnection
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// ProvisionProject(Matcher<google::cloud::discoveryengine::v1::ProvisionProjectRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, ProvisionProject(Matcher<google::cloud::discoveryengine::v1::ProvisionProjectRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::discoveryengine::v1::Project>>,
-      ProvisionProject,
-      (google::cloud::discoveryengine::v1::ProvisionProjectRequest const&
-           request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::discoveryengine::v1::Project>>,
+  ProvisionProject,
+  (google::cloud::discoveryengine::v1::ProvisionProjectRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -69,35 +64,33 @@ class MockProjectServiceConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, ProvisionProject(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, ProvisionProject,
-      (NoAwaitTag,
-       google::cloud::discoveryengine::v1::ProvisionProjectRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  ProvisionProject, (NoAwaitTag,
+    google::cloud::discoveryengine::v1::ProvisionProjectRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, ProvisionProject(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, ProvisionProject(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::discoveryengine::v1::Project>>,
-              ProvisionProject,
-              (google::longrunning::Operation const& operation), (override));
+  ProvisionProject, (
+    google::longrunning::Operation const& operation), (override));
 
-  MOCK_METHOD((StreamRange<google::longrunning::Operation>), ListOperations,
-              (google::longrunning::ListOperationsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::longrunning::Operation>),
+  ListOperations,
+  (google::longrunning::ListOperationsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
-              (google::longrunning::GetOperationRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  GetOperation,
+  (google::longrunning::GetOperationRequest const& request), (override));
 
-  MOCK_METHOD(Status, CancelOperation,
-              (google::longrunning::CancelOperationRequest const& request),
-              (override));
+  MOCK_METHOD(Status,
+  CancelOperation,
+  (google::longrunning::CancelOperationRequest const& request), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

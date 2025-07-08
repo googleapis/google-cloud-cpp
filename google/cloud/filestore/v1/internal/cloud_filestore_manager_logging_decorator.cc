@@ -32,17 +32,20 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 CloudFilestoreManagerLogging::CloudFilestoreManagerLogging(
     std::shared_ptr<CloudFilestoreManagerStub> child,
-    TracingOptions tracing_options, std::set<std::string> const&)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
+    TracingOptions tracing_options,
+    std::set<std::string> const&)
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::cloud::filestore::v1::ListInstancesResponse>
 CloudFilestoreManagerLogging::ListInstances(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::filestore::v1::ListInstancesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::filestore::v1::ListInstancesRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::filestore::v1::ListInstancesRequest const& request) {
         return child_->ListInstances(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -50,10 +53,12 @@ CloudFilestoreManagerLogging::ListInstances(
 
 StatusOr<google::cloud::filestore::v1::Instance>
 CloudFilestoreManagerLogging::GetInstance(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::filestore::v1::GetInstanceRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::filestore::v1::GetInstanceRequest const& request) {
         return child_->GetInstance(context, options, request);
       },
@@ -62,18 +67,17 @@ CloudFilestoreManagerLogging::GetInstance(
 
 future<StatusOr<google::longrunning::Operation>>
 CloudFilestoreManagerLogging::AsyncCreateInstance(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::filestore::v1::CreateInstanceRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::filestore::v1::CreateInstanceRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::filestore::v1::CreateInstanceRequest const& request) {
-        return child_->AsyncCreateInstance(cq, std::move(context),
-                                           std::move(options), request);
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::filestore::v1::CreateInstanceRequest const& request) {
+        return child_->AsyncCreateInstance(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -81,12 +85,13 @@ CloudFilestoreManagerLogging::AsyncCreateInstance(
 
 StatusOr<google::longrunning::Operation>
 CloudFilestoreManagerLogging::CreateInstance(
-    grpc::ClientContext& context, Options options,
-    google::cloud::filestore::v1::CreateInstanceRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::filestore::v1::CreateInstanceRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::filestore::v1::CreateInstanceRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::filestore::v1::CreateInstanceRequest const& request) {
         return child_->CreateInstance(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -94,18 +99,17 @@ CloudFilestoreManagerLogging::CreateInstance(
 
 future<StatusOr<google::longrunning::Operation>>
 CloudFilestoreManagerLogging::AsyncUpdateInstance(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::filestore::v1::UpdateInstanceRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::filestore::v1::UpdateInstanceRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::filestore::v1::UpdateInstanceRequest const& request) {
-        return child_->AsyncUpdateInstance(cq, std::move(context),
-                                           std::move(options), request);
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::filestore::v1::UpdateInstanceRequest const& request) {
+        return child_->AsyncUpdateInstance(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -113,12 +117,13 @@ CloudFilestoreManagerLogging::AsyncUpdateInstance(
 
 StatusOr<google::longrunning::Operation>
 CloudFilestoreManagerLogging::UpdateInstance(
-    grpc::ClientContext& context, Options options,
-    google::cloud::filestore::v1::UpdateInstanceRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::filestore::v1::UpdateInstanceRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::filestore::v1::UpdateInstanceRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::filestore::v1::UpdateInstanceRequest const& request) {
         return child_->UpdateInstance(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -126,18 +131,17 @@ CloudFilestoreManagerLogging::UpdateInstance(
 
 future<StatusOr<google::longrunning::Operation>>
 CloudFilestoreManagerLogging::AsyncRestoreInstance(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::filestore::v1::RestoreInstanceRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::filestore::v1::RestoreInstanceRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::filestore::v1::RestoreInstanceRequest const& request) {
-        return child_->AsyncRestoreInstance(cq, std::move(context),
-                                            std::move(options), request);
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::filestore::v1::RestoreInstanceRequest const& request) {
+        return child_->AsyncRestoreInstance(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -145,12 +149,13 @@ CloudFilestoreManagerLogging::AsyncRestoreInstance(
 
 StatusOr<google::longrunning::Operation>
 CloudFilestoreManagerLogging::RestoreInstance(
-    grpc::ClientContext& context, Options options,
-    google::cloud::filestore::v1::RestoreInstanceRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::filestore::v1::RestoreInstanceRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::filestore::v1::RestoreInstanceRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::filestore::v1::RestoreInstanceRequest const& request) {
         return child_->RestoreInstance(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -158,18 +163,17 @@ CloudFilestoreManagerLogging::RestoreInstance(
 
 future<StatusOr<google::longrunning::Operation>>
 CloudFilestoreManagerLogging::AsyncRevertInstance(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::filestore::v1::RevertInstanceRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::filestore::v1::RevertInstanceRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::filestore::v1::RevertInstanceRequest const& request) {
-        return child_->AsyncRevertInstance(cq, std::move(context),
-                                           std::move(options), request);
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::filestore::v1::RevertInstanceRequest const& request) {
+        return child_->AsyncRevertInstance(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -177,12 +181,13 @@ CloudFilestoreManagerLogging::AsyncRevertInstance(
 
 StatusOr<google::longrunning::Operation>
 CloudFilestoreManagerLogging::RevertInstance(
-    grpc::ClientContext& context, Options options,
-    google::cloud::filestore::v1::RevertInstanceRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::filestore::v1::RevertInstanceRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::filestore::v1::RevertInstanceRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::filestore::v1::RevertInstanceRequest const& request) {
         return child_->RevertInstance(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -190,18 +195,17 @@ CloudFilestoreManagerLogging::RevertInstance(
 
 future<StatusOr<google::longrunning::Operation>>
 CloudFilestoreManagerLogging::AsyncDeleteInstance(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::filestore::v1::DeleteInstanceRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::filestore::v1::DeleteInstanceRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::filestore::v1::DeleteInstanceRequest const& request) {
-        return child_->AsyncDeleteInstance(cq, std::move(context),
-                                           std::move(options), request);
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::filestore::v1::DeleteInstanceRequest const& request) {
+        return child_->AsyncDeleteInstance(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -209,12 +213,13 @@ CloudFilestoreManagerLogging::AsyncDeleteInstance(
 
 StatusOr<google::longrunning::Operation>
 CloudFilestoreManagerLogging::DeleteInstance(
-    grpc::ClientContext& context, Options options,
-    google::cloud::filestore::v1::DeleteInstanceRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::filestore::v1::DeleteInstanceRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::filestore::v1::DeleteInstanceRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::filestore::v1::DeleteInstanceRequest const& request) {
         return child_->DeleteInstance(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -222,12 +227,13 @@ CloudFilestoreManagerLogging::DeleteInstance(
 
 StatusOr<google::cloud::filestore::v1::ListSnapshotsResponse>
 CloudFilestoreManagerLogging::ListSnapshots(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::filestore::v1::ListSnapshotsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::filestore::v1::ListSnapshotsRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::filestore::v1::ListSnapshotsRequest const& request) {
         return child_->ListSnapshots(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -235,10 +241,12 @@ CloudFilestoreManagerLogging::ListSnapshots(
 
 StatusOr<google::cloud::filestore::v1::Snapshot>
 CloudFilestoreManagerLogging::GetSnapshot(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::filestore::v1::GetSnapshotRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::filestore::v1::GetSnapshotRequest const& request) {
         return child_->GetSnapshot(context, options, request);
       },
@@ -247,18 +255,17 @@ CloudFilestoreManagerLogging::GetSnapshot(
 
 future<StatusOr<google::longrunning::Operation>>
 CloudFilestoreManagerLogging::AsyncCreateSnapshot(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::filestore::v1::CreateSnapshotRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::filestore::v1::CreateSnapshotRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::filestore::v1::CreateSnapshotRequest const& request) {
-        return child_->AsyncCreateSnapshot(cq, std::move(context),
-                                           std::move(options), request);
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::filestore::v1::CreateSnapshotRequest const& request) {
+        return child_->AsyncCreateSnapshot(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -266,12 +273,13 @@ CloudFilestoreManagerLogging::AsyncCreateSnapshot(
 
 StatusOr<google::longrunning::Operation>
 CloudFilestoreManagerLogging::CreateSnapshot(
-    grpc::ClientContext& context, Options options,
-    google::cloud::filestore::v1::CreateSnapshotRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::filestore::v1::CreateSnapshotRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::filestore::v1::CreateSnapshotRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::filestore::v1::CreateSnapshotRequest const& request) {
         return child_->CreateSnapshot(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -279,18 +287,17 @@ CloudFilestoreManagerLogging::CreateSnapshot(
 
 future<StatusOr<google::longrunning::Operation>>
 CloudFilestoreManagerLogging::AsyncDeleteSnapshot(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::filestore::v1::DeleteSnapshotRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::filestore::v1::DeleteSnapshotRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::filestore::v1::DeleteSnapshotRequest const& request) {
-        return child_->AsyncDeleteSnapshot(cq, std::move(context),
-                                           std::move(options), request);
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::filestore::v1::DeleteSnapshotRequest const& request) {
+        return child_->AsyncDeleteSnapshot(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -298,12 +305,13 @@ CloudFilestoreManagerLogging::AsyncDeleteSnapshot(
 
 StatusOr<google::longrunning::Operation>
 CloudFilestoreManagerLogging::DeleteSnapshot(
-    grpc::ClientContext& context, Options options,
-    google::cloud::filestore::v1::DeleteSnapshotRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::filestore::v1::DeleteSnapshotRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::filestore::v1::DeleteSnapshotRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::filestore::v1::DeleteSnapshotRequest const& request) {
         return child_->DeleteSnapshot(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -311,18 +319,17 @@ CloudFilestoreManagerLogging::DeleteSnapshot(
 
 future<StatusOr<google::longrunning::Operation>>
 CloudFilestoreManagerLogging::AsyncUpdateSnapshot(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::filestore::v1::UpdateSnapshotRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::filestore::v1::UpdateSnapshotRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::filestore::v1::UpdateSnapshotRequest const& request) {
-        return child_->AsyncUpdateSnapshot(cq, std::move(context),
-                                           std::move(options), request);
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::filestore::v1::UpdateSnapshotRequest const& request) {
+        return child_->AsyncUpdateSnapshot(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -330,12 +337,13 @@ CloudFilestoreManagerLogging::AsyncUpdateSnapshot(
 
 StatusOr<google::longrunning::Operation>
 CloudFilestoreManagerLogging::UpdateSnapshot(
-    grpc::ClientContext& context, Options options,
-    google::cloud::filestore::v1::UpdateSnapshotRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::filestore::v1::UpdateSnapshotRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::filestore::v1::UpdateSnapshotRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::filestore::v1::UpdateSnapshotRequest const& request) {
         return child_->UpdateSnapshot(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -343,10 +351,12 @@ CloudFilestoreManagerLogging::UpdateSnapshot(
 
 StatusOr<google::cloud::filestore::v1::ListBackupsResponse>
 CloudFilestoreManagerLogging::ListBackups(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::filestore::v1::ListBackupsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::filestore::v1::ListBackupsRequest const& request) {
         return child_->ListBackups(context, options, request);
       },
@@ -355,10 +365,12 @@ CloudFilestoreManagerLogging::ListBackups(
 
 StatusOr<google::cloud::filestore::v1::Backup>
 CloudFilestoreManagerLogging::GetBackup(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::filestore::v1::GetBackupRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::filestore::v1::GetBackupRequest const& request) {
         return child_->GetBackup(context, options, request);
       },
@@ -367,17 +379,17 @@ CloudFilestoreManagerLogging::GetBackup(
 
 future<StatusOr<google::longrunning::Operation>>
 CloudFilestoreManagerLogging::AsyncCreateBackup(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::filestore::v1::CreateBackupRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::filestore::v1::CreateBackupRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::cloud::filestore::v1::CreateBackupRequest const& request) {
-        return child_->AsyncCreateBackup(cq, std::move(context),
-                                         std::move(options), request);
+        return child_->AsyncCreateBackup(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -385,10 +397,12 @@ CloudFilestoreManagerLogging::AsyncCreateBackup(
 
 StatusOr<google::longrunning::Operation>
 CloudFilestoreManagerLogging::CreateBackup(
-    grpc::ClientContext& context, Options options,
-    google::cloud::filestore::v1::CreateBackupRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::filestore::v1::CreateBackupRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::filestore::v1::CreateBackupRequest const& request) {
         return child_->CreateBackup(context, options, request);
       },
@@ -397,17 +411,17 @@ CloudFilestoreManagerLogging::CreateBackup(
 
 future<StatusOr<google::longrunning::Operation>>
 CloudFilestoreManagerLogging::AsyncDeleteBackup(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::filestore::v1::DeleteBackupRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::filestore::v1::DeleteBackupRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::cloud::filestore::v1::DeleteBackupRequest const& request) {
-        return child_->AsyncDeleteBackup(cq, std::move(context),
-                                         std::move(options), request);
+        return child_->AsyncDeleteBackup(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -415,10 +429,12 @@ CloudFilestoreManagerLogging::AsyncDeleteBackup(
 
 StatusOr<google::longrunning::Operation>
 CloudFilestoreManagerLogging::DeleteBackup(
-    grpc::ClientContext& context, Options options,
-    google::cloud::filestore::v1::DeleteBackupRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::filestore::v1::DeleteBackupRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::filestore::v1::DeleteBackupRequest const& request) {
         return child_->DeleteBackup(context, options, request);
       },
@@ -427,17 +443,17 @@ CloudFilestoreManagerLogging::DeleteBackup(
 
 future<StatusOr<google::longrunning::Operation>>
 CloudFilestoreManagerLogging::AsyncUpdateBackup(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::filestore::v1::UpdateBackupRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::filestore::v1::UpdateBackupRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::cloud::filestore::v1::UpdateBackupRequest const& request) {
-        return child_->AsyncUpdateBackup(cq, std::move(context),
-                                         std::move(options), request);
+        return child_->AsyncUpdateBackup(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -445,10 +461,12 @@ CloudFilestoreManagerLogging::AsyncUpdateBackup(
 
 StatusOr<google::longrunning::Operation>
 CloudFilestoreManagerLogging::UpdateBackup(
-    grpc::ClientContext& context, Options options,
-    google::cloud::filestore::v1::UpdateBackupRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::filestore::v1::UpdateBackupRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::filestore::v1::UpdateBackupRequest const& request) {
         return child_->UpdateBackup(context, options, request);
       },
@@ -457,18 +475,17 @@ CloudFilestoreManagerLogging::UpdateBackup(
 
 future<StatusOr<google::longrunning::Operation>>
 CloudFilestoreManagerLogging::AsyncPromoteReplica(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::filestore::v1::PromoteReplicaRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::filestore::v1::PromoteReplicaRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::filestore::v1::PromoteReplicaRequest const& request) {
-        return child_->AsyncPromoteReplica(cq, std::move(context),
-                                           std::move(options), request);
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::filestore::v1::PromoteReplicaRequest const& request) {
+        return child_->AsyncPromoteReplica(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -476,12 +493,13 @@ CloudFilestoreManagerLogging::AsyncPromoteReplica(
 
 StatusOr<google::longrunning::Operation>
 CloudFilestoreManagerLogging::PromoteReplica(
-    grpc::ClientContext& context, Options options,
-    google::cloud::filestore::v1::PromoteReplicaRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::filestore::v1::PromoteReplicaRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::filestore::v1::PromoteReplicaRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::filestore::v1::PromoteReplicaRequest const& request) {
         return child_->PromoteReplica(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -489,10 +507,12 @@ CloudFilestoreManagerLogging::PromoteReplica(
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 CloudFilestoreManagerLogging::ListLocations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::location::ListLocationsRequest const& request) {
         return child_->ListLocations(context, options, request);
       },
@@ -501,10 +521,12 @@ CloudFilestoreManagerLogging::ListLocations(
 
 StatusOr<google::cloud::location::Location>
 CloudFilestoreManagerLogging::GetLocation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::location::GetLocationRequest const& request) {
         return child_->GetLocation(context, options, request);
       },
@@ -513,10 +535,12 @@ CloudFilestoreManagerLogging::GetLocation(
 
 StatusOr<google::longrunning::ListOperationsResponse>
 CloudFilestoreManagerLogging::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::ListOperationsRequest const& request) {
         return child_->ListOperations(context, options, request);
       },
@@ -525,32 +549,40 @@ CloudFilestoreManagerLogging::ListOperations(
 
 StatusOr<google::longrunning::Operation>
 CloudFilestoreManagerLogging::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::GetOperationRequest const& request) {
         return child_->GetOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status CloudFilestoreManagerLogging::DeleteOperation(
-    grpc::ClientContext& context, Options const& options,
+Status
+CloudFilestoreManagerLogging::DeleteOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::DeleteOperationRequest const& request) {
         return child_->DeleteOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status CloudFilestoreManagerLogging::CancelOperation(
-    grpc::ClientContext& context, Options const& options,
+Status
+CloudFilestoreManagerLogging::CancelOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::CancelOperationRequest const& request) {
         return child_->CancelOperation(context, options, request);
       },
@@ -568,8 +600,8 @@ CloudFilestoreManagerLogging::AsyncGetOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(cq, std::move(context),
-                                         std::move(options), request);
+        return child_->AsyncGetOperation(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -585,8 +617,8 @@ future<Status> CloudFilestoreManagerLogging::AsyncCancelOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::CancelOperationRequest const& request) {
-        return child_->AsyncCancelOperation(cq, std::move(context),
-                                            std::move(options), request);
+        return child_->AsyncCancelOperation(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);

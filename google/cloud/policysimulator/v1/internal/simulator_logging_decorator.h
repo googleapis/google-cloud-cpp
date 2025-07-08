@@ -36,38 +36,38 @@ class SimulatorLogging : public SimulatorStub {
  public:
   ~SimulatorLogging() override = default;
   SimulatorLogging(std::shared_ptr<SimulatorStub> child,
-                   TracingOptions tracing_options,
-                   std::set<std::string> const& components);
+                       TracingOptions tracing_options,
+                       std::set<std::string> const& components);
 
   StatusOr<google::cloud::policysimulator::v1::Replay> GetReplay(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::policysimulator::v1::GetReplayRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::policysimulator::v1::GetReplayRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateReplay(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::policysimulator::v1::CreateReplayRequest const& request)
-      override;
+      google::cloud::policysimulator::v1::CreateReplayRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateReplay(
-      grpc::ClientContext& context, Options options,
-      google::cloud::policysimulator::v1::CreateReplayRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::policysimulator::v1::CreateReplayRequest const& request) override;
 
-  StatusOr<google::cloud::policysimulator::v1::ListReplayResultsResponse>
-  ListReplayResults(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::policysimulator::v1::ListReplayResultsRequest const&
-          request) override;
+  StatusOr<google::cloud::policysimulator::v1::ListReplayResultsResponse> ListReplayResults(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::policysimulator::v1::ListReplayResultsRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(

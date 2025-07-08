@@ -26,17 +26,14 @@ namespace managedidentities_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ManagedIdentitiesServiceClient::ManagedIdentitiesServiceClient(
-    std::shared_ptr<ManagedIdentitiesServiceConnection> connection,
-    Options opts)
+    std::shared_ptr<ManagedIdentitiesServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 ManagedIdentitiesServiceClient::~ManagedIdentitiesServiceClient() = default;
 
 future<StatusOr<google::cloud::managedidentities::v1::Domain>>
-ManagedIdentitiesServiceClient::CreateMicrosoftAdDomain(
-    std::string const& parent, std::string const& domain_name,
-    google::cloud::managedidentities::v1::Domain const& domain, Options opts) {
+ManagedIdentitiesServiceClient::CreateMicrosoftAdDomain(std::string const& parent, std::string const& domain_name, google::cloud::managedidentities::v1::Domain const& domain, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::managedidentities::v1::CreateMicrosoftAdDomainRequest request;
   request.set_parent(parent);
@@ -46,9 +43,7 @@ ManagedIdentitiesServiceClient::CreateMicrosoftAdDomain(
 }
 
 StatusOr<google::longrunning::Operation>
-ManagedIdentitiesServiceClient::CreateMicrosoftAdDomain(
-    NoAwaitTag, std::string const& parent, std::string const& domain_name,
-    google::cloud::managedidentities::v1::Domain const& domain, Options opts) {
+ManagedIdentitiesServiceClient::CreateMicrosoftAdDomain(NoAwaitTag, std::string const& parent, std::string const& domain_name, google::cloud::managedidentities::v1::Domain const& domain, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::managedidentities::v1::CreateMicrosoftAdDomainRequest request;
   request.set_parent(parent);
@@ -58,34 +53,25 @@ ManagedIdentitiesServiceClient::CreateMicrosoftAdDomain(
 }
 
 future<StatusOr<google::cloud::managedidentities::v1::Domain>>
-ManagedIdentitiesServiceClient::CreateMicrosoftAdDomain(
-    google::cloud::managedidentities::v1::CreateMicrosoftAdDomainRequest const&
-        request,
-    Options opts) {
+ManagedIdentitiesServiceClient::CreateMicrosoftAdDomain(google::cloud::managedidentities::v1::CreateMicrosoftAdDomainRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateMicrosoftAdDomain(request);
 }
 
 StatusOr<google::longrunning::Operation>
-ManagedIdentitiesServiceClient::CreateMicrosoftAdDomain(
-    NoAwaitTag,
-    google::cloud::managedidentities::v1::CreateMicrosoftAdDomainRequest const&
-        request,
-    Options opts) {
+ManagedIdentitiesServiceClient::CreateMicrosoftAdDomain(NoAwaitTag, google::cloud::managedidentities::v1::CreateMicrosoftAdDomainRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateMicrosoftAdDomain(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::managedidentities::v1::Domain>>
-ManagedIdentitiesServiceClient::CreateMicrosoftAdDomain(
-    google::longrunning::Operation const& operation, Options opts) {
+ManagedIdentitiesServiceClient::CreateMicrosoftAdDomain(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateMicrosoftAdDomain(operation);
 }
 
 StatusOr<google::cloud::managedidentities::v1::ResetAdminPasswordResponse>
-ManagedIdentitiesServiceClient::ResetAdminPassword(std::string const& name,
-                                                   Options opts) {
+ManagedIdentitiesServiceClient::ResetAdminPassword(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::managedidentities::v1::ResetAdminPasswordRequest request;
   request.set_name(name);
@@ -93,17 +79,13 @@ ManagedIdentitiesServiceClient::ResetAdminPassword(std::string const& name,
 }
 
 StatusOr<google::cloud::managedidentities::v1::ResetAdminPasswordResponse>
-ManagedIdentitiesServiceClient::ResetAdminPassword(
-    google::cloud::managedidentities::v1::ResetAdminPasswordRequest const&
-        request,
-    Options opts) {
+ManagedIdentitiesServiceClient::ResetAdminPassword(google::cloud::managedidentities::v1::ResetAdminPasswordRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ResetAdminPassword(request);
 }
 
 StreamRange<google::cloud::managedidentities::v1::Domain>
-ManagedIdentitiesServiceClient::ListDomains(std::string const& parent,
-                                            Options opts) {
+ManagedIdentitiesServiceClient::ListDomains(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::managedidentities::v1::ListDomainsRequest request;
   request.set_parent(parent);
@@ -111,16 +93,13 @@ ManagedIdentitiesServiceClient::ListDomains(std::string const& parent,
 }
 
 StreamRange<google::cloud::managedidentities::v1::Domain>
-ManagedIdentitiesServiceClient::ListDomains(
-    google::cloud::managedidentities::v1::ListDomainsRequest request,
-    Options opts) {
+ManagedIdentitiesServiceClient::ListDomains(google::cloud::managedidentities::v1::ListDomainsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListDomains(std::move(request));
 }
 
 StatusOr<google::cloud::managedidentities::v1::Domain>
-ManagedIdentitiesServiceClient::GetDomain(std::string const& name,
-                                          Options opts) {
+ManagedIdentitiesServiceClient::GetDomain(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::managedidentities::v1::GetDomainRequest request;
   request.set_name(name);
@@ -128,17 +107,13 @@ ManagedIdentitiesServiceClient::GetDomain(std::string const& name,
 }
 
 StatusOr<google::cloud::managedidentities::v1::Domain>
-ManagedIdentitiesServiceClient::GetDomain(
-    google::cloud::managedidentities::v1::GetDomainRequest const& request,
-    Options opts) {
+ManagedIdentitiesServiceClient::GetDomain(google::cloud::managedidentities::v1::GetDomainRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetDomain(request);
 }
 
 future<StatusOr<google::cloud::managedidentities::v1::Domain>>
-ManagedIdentitiesServiceClient::UpdateDomain(
-    google::cloud::managedidentities::v1::Domain const& domain,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+ManagedIdentitiesServiceClient::UpdateDomain(google::cloud::managedidentities::v1::Domain const& domain, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::managedidentities::v1::UpdateDomainRequest request;
   *request.mutable_domain() = domain;
@@ -147,9 +122,7 @@ ManagedIdentitiesServiceClient::UpdateDomain(
 }
 
 StatusOr<google::longrunning::Operation>
-ManagedIdentitiesServiceClient::UpdateDomain(
-    NoAwaitTag, google::cloud::managedidentities::v1::Domain const& domain,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+ManagedIdentitiesServiceClient::UpdateDomain(NoAwaitTag, google::cloud::managedidentities::v1::Domain const& domain, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::managedidentities::v1::UpdateDomainRequest request;
   *request.mutable_domain() = domain;
@@ -158,32 +131,25 @@ ManagedIdentitiesServiceClient::UpdateDomain(
 }
 
 future<StatusOr<google::cloud::managedidentities::v1::Domain>>
-ManagedIdentitiesServiceClient::UpdateDomain(
-    google::cloud::managedidentities::v1::UpdateDomainRequest const& request,
-    Options opts) {
+ManagedIdentitiesServiceClient::UpdateDomain(google::cloud::managedidentities::v1::UpdateDomainRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateDomain(request);
 }
 
 StatusOr<google::longrunning::Operation>
-ManagedIdentitiesServiceClient::UpdateDomain(
-    NoAwaitTag,
-    google::cloud::managedidentities::v1::UpdateDomainRequest const& request,
-    Options opts) {
+ManagedIdentitiesServiceClient::UpdateDomain(NoAwaitTag, google::cloud::managedidentities::v1::UpdateDomainRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateDomain(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::managedidentities::v1::Domain>>
-ManagedIdentitiesServiceClient::UpdateDomain(
-    google::longrunning::Operation const& operation, Options opts) {
+ManagedIdentitiesServiceClient::UpdateDomain(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateDomain(operation);
 }
 
 future<StatusOr<google::cloud::managedidentities::v1::OpMetadata>>
-ManagedIdentitiesServiceClient::DeleteDomain(std::string const& name,
-                                             Options opts) {
+ManagedIdentitiesServiceClient::DeleteDomain(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::managedidentities::v1::DeleteDomainRequest request;
   request.set_name(name);
@@ -191,9 +157,7 @@ ManagedIdentitiesServiceClient::DeleteDomain(std::string const& name,
 }
 
 StatusOr<google::longrunning::Operation>
-ManagedIdentitiesServiceClient::DeleteDomain(NoAwaitTag,
-                                             std::string const& name,
-                                             Options opts) {
+ManagedIdentitiesServiceClient::DeleteDomain(NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::managedidentities::v1::DeleteDomainRequest request;
   request.set_name(name);
@@ -201,33 +165,25 @@ ManagedIdentitiesServiceClient::DeleteDomain(NoAwaitTag,
 }
 
 future<StatusOr<google::cloud::managedidentities::v1::OpMetadata>>
-ManagedIdentitiesServiceClient::DeleteDomain(
-    google::cloud::managedidentities::v1::DeleteDomainRequest const& request,
-    Options opts) {
+ManagedIdentitiesServiceClient::DeleteDomain(google::cloud::managedidentities::v1::DeleteDomainRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteDomain(request);
 }
 
 StatusOr<google::longrunning::Operation>
-ManagedIdentitiesServiceClient::DeleteDomain(
-    NoAwaitTag,
-    google::cloud::managedidentities::v1::DeleteDomainRequest const& request,
-    Options opts) {
+ManagedIdentitiesServiceClient::DeleteDomain(NoAwaitTag, google::cloud::managedidentities::v1::DeleteDomainRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteDomain(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::managedidentities::v1::OpMetadata>>
-ManagedIdentitiesServiceClient::DeleteDomain(
-    google::longrunning::Operation const& operation, Options opts) {
+ManagedIdentitiesServiceClient::DeleteDomain(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteDomain(operation);
 }
 
 future<StatusOr<google::cloud::managedidentities::v1::Domain>>
-ManagedIdentitiesServiceClient::AttachTrust(
-    std::string const& name,
-    google::cloud::managedidentities::v1::Trust const& trust, Options opts) {
+ManagedIdentitiesServiceClient::AttachTrust(std::string const& name, google::cloud::managedidentities::v1::Trust const& trust, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::managedidentities::v1::AttachTrustRequest request;
   request.set_name(name);
@@ -236,9 +192,7 @@ ManagedIdentitiesServiceClient::AttachTrust(
 }
 
 StatusOr<google::longrunning::Operation>
-ManagedIdentitiesServiceClient::AttachTrust(
-    NoAwaitTag, std::string const& name,
-    google::cloud::managedidentities::v1::Trust const& trust, Options opts) {
+ManagedIdentitiesServiceClient::AttachTrust(NoAwaitTag, std::string const& name, google::cloud::managedidentities::v1::Trust const& trust, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::managedidentities::v1::AttachTrustRequest request;
   request.set_name(name);
@@ -247,85 +201,63 @@ ManagedIdentitiesServiceClient::AttachTrust(
 }
 
 future<StatusOr<google::cloud::managedidentities::v1::Domain>>
-ManagedIdentitiesServiceClient::AttachTrust(
-    google::cloud::managedidentities::v1::AttachTrustRequest const& request,
-    Options opts) {
+ManagedIdentitiesServiceClient::AttachTrust(google::cloud::managedidentities::v1::AttachTrustRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->AttachTrust(request);
 }
 
 StatusOr<google::longrunning::Operation>
-ManagedIdentitiesServiceClient::AttachTrust(
-    NoAwaitTag,
-    google::cloud::managedidentities::v1::AttachTrustRequest const& request,
-    Options opts) {
+ManagedIdentitiesServiceClient::AttachTrust(NoAwaitTag, google::cloud::managedidentities::v1::AttachTrustRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->AttachTrust(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::managedidentities::v1::Domain>>
-ManagedIdentitiesServiceClient::AttachTrust(
-    google::longrunning::Operation const& operation, Options opts) {
+ManagedIdentitiesServiceClient::AttachTrust(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->AttachTrust(operation);
 }
 
 future<StatusOr<google::cloud::managedidentities::v1::Domain>>
-ManagedIdentitiesServiceClient::ReconfigureTrust(
-    std::string const& name, std::string const& target_domain_name,
-    std::vector<std::string> const& target_dns_ip_addresses, Options opts) {
+ManagedIdentitiesServiceClient::ReconfigureTrust(std::string const& name, std::string const& target_domain_name, std::vector<std::string> const& target_dns_ip_addresses, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::managedidentities::v1::ReconfigureTrustRequest request;
   request.set_name(name);
   request.set_target_domain_name(target_domain_name);
-  *request.mutable_target_dns_ip_addresses() = {target_dns_ip_addresses.begin(),
-                                                target_dns_ip_addresses.end()};
+  *request.mutable_target_dns_ip_addresses() = {target_dns_ip_addresses.begin(), target_dns_ip_addresses.end()};
   return connection_->ReconfigureTrust(request);
 }
 
 StatusOr<google::longrunning::Operation>
-ManagedIdentitiesServiceClient::ReconfigureTrust(
-    NoAwaitTag, std::string const& name, std::string const& target_domain_name,
-    std::vector<std::string> const& target_dns_ip_addresses, Options opts) {
+ManagedIdentitiesServiceClient::ReconfigureTrust(NoAwaitTag, std::string const& name, std::string const& target_domain_name, std::vector<std::string> const& target_dns_ip_addresses, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::managedidentities::v1::ReconfigureTrustRequest request;
   request.set_name(name);
   request.set_target_domain_name(target_domain_name);
-  *request.mutable_target_dns_ip_addresses() = {target_dns_ip_addresses.begin(),
-                                                target_dns_ip_addresses.end()};
+  *request.mutable_target_dns_ip_addresses() = {target_dns_ip_addresses.begin(), target_dns_ip_addresses.end()};
   return connection_->ReconfigureTrust(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::managedidentities::v1::Domain>>
-ManagedIdentitiesServiceClient::ReconfigureTrust(
-    google::cloud::managedidentities::v1::ReconfigureTrustRequest const&
-        request,
-    Options opts) {
+ManagedIdentitiesServiceClient::ReconfigureTrust(google::cloud::managedidentities::v1::ReconfigureTrustRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ReconfigureTrust(request);
 }
 
 StatusOr<google::longrunning::Operation>
-ManagedIdentitiesServiceClient::ReconfigureTrust(
-    NoAwaitTag,
-    google::cloud::managedidentities::v1::ReconfigureTrustRequest const&
-        request,
-    Options opts) {
+ManagedIdentitiesServiceClient::ReconfigureTrust(NoAwaitTag, google::cloud::managedidentities::v1::ReconfigureTrustRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ReconfigureTrust(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::managedidentities::v1::Domain>>
-ManagedIdentitiesServiceClient::ReconfigureTrust(
-    google::longrunning::Operation const& operation, Options opts) {
+ManagedIdentitiesServiceClient::ReconfigureTrust(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ReconfigureTrust(operation);
 }
 
 future<StatusOr<google::cloud::managedidentities::v1::Domain>>
-ManagedIdentitiesServiceClient::DetachTrust(
-    std::string const& name,
-    google::cloud::managedidentities::v1::Trust const& trust, Options opts) {
+ManagedIdentitiesServiceClient::DetachTrust(std::string const& name, google::cloud::managedidentities::v1::Trust const& trust, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::managedidentities::v1::DetachTrustRequest request;
   request.set_name(name);
@@ -334,9 +266,7 @@ ManagedIdentitiesServiceClient::DetachTrust(
 }
 
 StatusOr<google::longrunning::Operation>
-ManagedIdentitiesServiceClient::DetachTrust(
-    NoAwaitTag, std::string const& name,
-    google::cloud::managedidentities::v1::Trust const& trust, Options opts) {
+ManagedIdentitiesServiceClient::DetachTrust(NoAwaitTag, std::string const& name, google::cloud::managedidentities::v1::Trust const& trust, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::managedidentities::v1::DetachTrustRequest request;
   request.set_name(name);
@@ -345,33 +275,25 @@ ManagedIdentitiesServiceClient::DetachTrust(
 }
 
 future<StatusOr<google::cloud::managedidentities::v1::Domain>>
-ManagedIdentitiesServiceClient::DetachTrust(
-    google::cloud::managedidentities::v1::DetachTrustRequest const& request,
-    Options opts) {
+ManagedIdentitiesServiceClient::DetachTrust(google::cloud::managedidentities::v1::DetachTrustRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DetachTrust(request);
 }
 
 StatusOr<google::longrunning::Operation>
-ManagedIdentitiesServiceClient::DetachTrust(
-    NoAwaitTag,
-    google::cloud::managedidentities::v1::DetachTrustRequest const& request,
-    Options opts) {
+ManagedIdentitiesServiceClient::DetachTrust(NoAwaitTag, google::cloud::managedidentities::v1::DetachTrustRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DetachTrust(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::managedidentities::v1::Domain>>
-ManagedIdentitiesServiceClient::DetachTrust(
-    google::longrunning::Operation const& operation, Options opts) {
+ManagedIdentitiesServiceClient::DetachTrust(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DetachTrust(operation);
 }
 
 future<StatusOr<google::cloud::managedidentities::v1::Domain>>
-ManagedIdentitiesServiceClient::ValidateTrust(
-    std::string const& name,
-    google::cloud::managedidentities::v1::Trust const& trust, Options opts) {
+ManagedIdentitiesServiceClient::ValidateTrust(std::string const& name, google::cloud::managedidentities::v1::Trust const& trust, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::managedidentities::v1::ValidateTrustRequest request;
   request.set_name(name);
@@ -380,9 +302,7 @@ ManagedIdentitiesServiceClient::ValidateTrust(
 }
 
 StatusOr<google::longrunning::Operation>
-ManagedIdentitiesServiceClient::ValidateTrust(
-    NoAwaitTag, std::string const& name,
-    google::cloud::managedidentities::v1::Trust const& trust, Options opts) {
+ManagedIdentitiesServiceClient::ValidateTrust(NoAwaitTag, std::string const& name, google::cloud::managedidentities::v1::Trust const& trust, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::managedidentities::v1::ValidateTrustRequest request;
   request.set_name(name);
@@ -391,25 +311,19 @@ ManagedIdentitiesServiceClient::ValidateTrust(
 }
 
 future<StatusOr<google::cloud::managedidentities::v1::Domain>>
-ManagedIdentitiesServiceClient::ValidateTrust(
-    google::cloud::managedidentities::v1::ValidateTrustRequest const& request,
-    Options opts) {
+ManagedIdentitiesServiceClient::ValidateTrust(google::cloud::managedidentities::v1::ValidateTrustRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ValidateTrust(request);
 }
 
 StatusOr<google::longrunning::Operation>
-ManagedIdentitiesServiceClient::ValidateTrust(
-    NoAwaitTag,
-    google::cloud::managedidentities::v1::ValidateTrustRequest const& request,
-    Options opts) {
+ManagedIdentitiesServiceClient::ValidateTrust(NoAwaitTag, google::cloud::managedidentities::v1::ValidateTrustRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ValidateTrust(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::managedidentities::v1::Domain>>
-ManagedIdentitiesServiceClient::ValidateTrust(
-    google::longrunning::Operation const& operation, Options opts) {
+ManagedIdentitiesServiceClient::ValidateTrust(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ValidateTrust(operation);
 }

@@ -17,12 +17,12 @@
 // source: google/cloud/datacatalog/lineage/v1/lineage.proto
 
 #include "google/cloud/datacatalog/lineage/v1/internal/lineage_stub_factory.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/datacatalog/lineage/v1/internal/lineage_auth_decorator.h"
 #include "google/cloud/datacatalog/lineage/v1/internal/lineage_logging_decorator.h"
 #include "google/cloud/datacatalog/lineage/v1/internal/lineage_metadata_decorator.h"
 #include "google/cloud/datacatalog/lineage/v1/internal/lineage_stub.h"
 #include "google/cloud/datacatalog/lineage/v1/internal/lineage_tracing_stub.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/opentelemetry.h"
@@ -38,26 +38,30 @@ namespace cloud {
 namespace datacatalog_lineage_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<LineageStub> CreateDefaultLineageStub(
+std::shared_ptr<LineageStub>
+CreateDefaultLineageStub(
     std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
     Options const& options) {
-  auto channel = auth->CreateChannel(options.get<EndpointOption>(),
-                                     internal::MakeChannelArguments(options));
-  auto service_grpc_stub =
-      google::cloud::datacatalog::lineage::v1::Lineage::NewStub(channel);
-  std::shared_ptr<LineageStub> stub = std::make_shared<DefaultLineageStub>(
+  auto channel = auth->CreateChannel(
+    options.get<EndpointOption>(), internal::MakeChannelArguments(options));
+  auto service_grpc_stub = google::cloud::datacatalog::lineage::v1::Lineage::NewStub(channel);
+  std::shared_ptr<LineageStub> stub =
+    std::make_shared<DefaultLineageStub>(
       std::move(service_grpc_stub),
       google::longrunning::Operations::NewStub(channel));
 
   if (auth->RequiresConfigureContext()) {
-    stub = std::make_shared<LineageAuth>(std::move(auth), std::move(stub));
+    stub = std::make_shared<LineageAuth>(
+        std::move(auth), std::move(stub));
   }
   stub = std::make_shared<LineageMetadata>(
       std::move(stub), std::multimap<std::string, std::string>{});
-  if (internal::Contains(options.get<LoggingComponentsOption>(), "rpc")) {
+  if (internal::Contains(
+      options.get<LoggingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<LineageLogging>(
-        std::move(stub), options.get<GrpcTracingOptionsOption>(),
+        std::move(stub),
+        options.get<GrpcTracingOptionsOption>(),
         options.get<LoggingComponentsOption>());
   }
   if (internal::TracingEnabled(options)) {

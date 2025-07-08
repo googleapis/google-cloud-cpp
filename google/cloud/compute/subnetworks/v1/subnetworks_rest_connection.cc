@@ -17,12 +17,12 @@
 // source: google/cloud/compute/subnetworks/v1/subnetworks.proto
 
 #include "google/cloud/compute/subnetworks/v1/subnetworks_rest_connection.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/compute/subnetworks/v1/internal/subnetworks_option_defaults.h"
 #include "google/cloud/compute/subnetworks/v1/internal/subnetworks_rest_connection_impl.h"
 #include "google/cloud/compute/subnetworks/v1/internal/subnetworks_rest_stub_factory.h"
 #include "google/cloud/compute/subnetworks/v1/internal/subnetworks_tracing_connection.h"
 #include "google/cloud/compute/subnetworks/v1/subnetworks_options.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/rest_background_threads_impl.h"
 #include "google/cloud/internal/rest_options.h"
@@ -36,10 +36,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<SubnetworksConnection> MakeSubnetworksConnectionRest(
     Options options) {
-  internal::CheckExpectedOptions<
-      CommonOptionList, RestOptionList, UnifiedCredentialsOptionList,
-      rest_internal::TargetApiVersionOption, SubnetworksPolicyOptionList>(
-      options, __func__);
+  internal::CheckExpectedOptions<CommonOptionList, RestOptionList,
+      UnifiedCredentialsOptionList, rest_internal::TargetApiVersionOption,
+      SubnetworksPolicyOptionList>(options, __func__);
   options = compute_subnetworks_v1_internal::SubnetworksDefaultOptions(
       std::move(options));
   auto background = std::make_unique<

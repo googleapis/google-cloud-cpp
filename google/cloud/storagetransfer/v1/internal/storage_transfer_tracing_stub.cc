@@ -32,63 +32,55 @@ StorageTransferServiceTracingStub::StorageTransferServiceTracingStub(
     std::shared_ptr<StorageTransferServiceStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
-StatusOr<google::storagetransfer::v1::GoogleServiceAccount>
-StorageTransferServiceTracingStub::GetGoogleServiceAccount(
-    grpc::ClientContext& context, Options const& options,
-    google::storagetransfer::v1::GetGoogleServiceAccountRequest const&
-        request) {
-  auto span =
-      internal::MakeSpanGrpc("google.storagetransfer.v1.StorageTransferService",
-                             "GetGoogleServiceAccount");
+StatusOr<google::storagetransfer::v1::GoogleServiceAccount> StorageTransferServiceTracingStub::GetGoogleServiceAccount(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::storagetransfer::v1::GetGoogleServiceAccountRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.storagetransfer.v1.StorageTransferService", "GetGoogleServiceAccount");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span,
-      child_->GetGoogleServiceAccount(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->GetGoogleServiceAccount(context, options, request));
 }
 
-StatusOr<google::storagetransfer::v1::TransferJob>
-StorageTransferServiceTracingStub::CreateTransferJob(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::storagetransfer::v1::TransferJob> StorageTransferServiceTracingStub::CreateTransferJob(
+    grpc::ClientContext& context,
+    Options const& options,
     google::storagetransfer::v1::CreateTransferJobRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.storagetransfer.v1.StorageTransferService", "CreateTransferJob");
+  auto span = internal::MakeSpanGrpc("google.storagetransfer.v1.StorageTransferService", "CreateTransferJob");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->CreateTransferJob(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->CreateTransferJob(context, options, request));
 }
 
-StatusOr<google::storagetransfer::v1::TransferJob>
-StorageTransferServiceTracingStub::UpdateTransferJob(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::storagetransfer::v1::TransferJob> StorageTransferServiceTracingStub::UpdateTransferJob(
+    grpc::ClientContext& context,
+    Options const& options,
     google::storagetransfer::v1::UpdateTransferJobRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.storagetransfer.v1.StorageTransferService", "UpdateTransferJob");
+  auto span = internal::MakeSpanGrpc("google.storagetransfer.v1.StorageTransferService", "UpdateTransferJob");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->UpdateTransferJob(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->UpdateTransferJob(context, options, request));
 }
 
-StatusOr<google::storagetransfer::v1::TransferJob>
-StorageTransferServiceTracingStub::GetTransferJob(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::storagetransfer::v1::TransferJob> StorageTransferServiceTracingStub::GetTransferJob(
+    grpc::ClientContext& context,
+    Options const& options,
     google::storagetransfer::v1::GetTransferJobRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.storagetransfer.v1.StorageTransferService", "GetTransferJob");
+  auto span = internal::MakeSpanGrpc("google.storagetransfer.v1.StorageTransferService", "GetTransferJob");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetTransferJob(context, options, request));
 }
 
-StatusOr<google::storagetransfer::v1::ListTransferJobsResponse>
-StorageTransferServiceTracingStub::ListTransferJobs(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::storagetransfer::v1::ListTransferJobsResponse> StorageTransferServiceTracingStub::ListTransferJobs(
+    grpc::ClientContext& context,
+    Options const& options,
     google::storagetransfer::v1::ListTransferJobsRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.storagetransfer.v1.StorageTransferService", "ListTransferJobs");
+  auto span = internal::MakeSpanGrpc("google.storagetransfer.v1.StorageTransferService", "ListTransferJobs");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -96,53 +88,46 @@ StorageTransferServiceTracingStub::ListTransferJobs(
 }
 
 Status StorageTransferServiceTracingStub::PauseTransferOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::storagetransfer::v1::PauseTransferOperationRequest const& request) {
-  auto span =
-      internal::MakeSpanGrpc("google.storagetransfer.v1.StorageTransferService",
-                             "PauseTransferOperation");
+  auto span = internal::MakeSpanGrpc("google.storagetransfer.v1.StorageTransferService", "PauseTransferOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span,
-      child_->PauseTransferOperation(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->PauseTransferOperation(context, options, request));
 }
 
 Status StorageTransferServiceTracingStub::ResumeTransferOperation(
-    grpc::ClientContext& context, Options const& options,
-    google::storagetransfer::v1::ResumeTransferOperationRequest const&
-        request) {
-  auto span =
-      internal::MakeSpanGrpc("google.storagetransfer.v1.StorageTransferService",
-                             "ResumeTransferOperation");
+    grpc::ClientContext& context,
+    Options const& options,
+    google::storagetransfer::v1::ResumeTransferOperationRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.storagetransfer.v1.StorageTransferService", "ResumeTransferOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span,
-      child_->ResumeTransferOperation(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->ResumeTransferOperation(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 StorageTransferServiceTracingStub::AsyncRunTransferJob(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::storagetransfer::v1::RunTransferJobRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.storagetransfer.v1.StorageTransferService", "RunTransferJob");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::storagetransfer::v1::RunTransferJobRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.storagetransfer.v1.StorageTransferService", "RunTransferJob");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f =
-      child_->AsyncRunTransferJob(cq, context, std::move(options), request);
+  auto f = child_->AsyncRunTransferJob(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 StorageTransferServiceTracingStub::RunTransferJob(
-    grpc::ClientContext& context, Options options,
-    google::storagetransfer::v1::RunTransferJobRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.storagetransfer.v1.StorageTransferService", "RunTransferJob");
+      grpc::ClientContext& context,
+      Options options,
+      google::storagetransfer::v1::RunTransferJobRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.storagetransfer.v1.StorageTransferService", "RunTransferJob");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -150,58 +135,54 @@ StorageTransferServiceTracingStub::RunTransferJob(
 }
 
 Status StorageTransferServiceTracingStub::DeleteTransferJob(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::storagetransfer::v1::DeleteTransferJobRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.storagetransfer.v1.StorageTransferService", "DeleteTransferJob");
+  auto span = internal::MakeSpanGrpc("google.storagetransfer.v1.StorageTransferService", "DeleteTransferJob");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->DeleteTransferJob(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->DeleteTransferJob(context, options, request));
 }
 
-StatusOr<google::storagetransfer::v1::AgentPool>
-StorageTransferServiceTracingStub::CreateAgentPool(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::storagetransfer::v1::AgentPool> StorageTransferServiceTracingStub::CreateAgentPool(
+    grpc::ClientContext& context,
+    Options const& options,
     google::storagetransfer::v1::CreateAgentPoolRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.storagetransfer.v1.StorageTransferService", "CreateAgentPool");
+  auto span = internal::MakeSpanGrpc("google.storagetransfer.v1.StorageTransferService", "CreateAgentPool");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateAgentPool(context, options, request));
 }
 
-StatusOr<google::storagetransfer::v1::AgentPool>
-StorageTransferServiceTracingStub::UpdateAgentPool(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::storagetransfer::v1::AgentPool> StorageTransferServiceTracingStub::UpdateAgentPool(
+    grpc::ClientContext& context,
+    Options const& options,
     google::storagetransfer::v1::UpdateAgentPoolRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.storagetransfer.v1.StorageTransferService", "UpdateAgentPool");
+  auto span = internal::MakeSpanGrpc("google.storagetransfer.v1.StorageTransferService", "UpdateAgentPool");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->UpdateAgentPool(context, options, request));
 }
 
-StatusOr<google::storagetransfer::v1::AgentPool>
-StorageTransferServiceTracingStub::GetAgentPool(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::storagetransfer::v1::AgentPool> StorageTransferServiceTracingStub::GetAgentPool(
+    grpc::ClientContext& context,
+    Options const& options,
     google::storagetransfer::v1::GetAgentPoolRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.storagetransfer.v1.StorageTransferService", "GetAgentPool");
+  auto span = internal::MakeSpanGrpc("google.storagetransfer.v1.StorageTransferService", "GetAgentPool");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetAgentPool(context, options, request));
 }
 
-StatusOr<google::storagetransfer::v1::ListAgentPoolsResponse>
-StorageTransferServiceTracingStub::ListAgentPools(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::storagetransfer::v1::ListAgentPoolsResponse> StorageTransferServiceTracingStub::ListAgentPools(
+    grpc::ClientContext& context,
+    Options const& options,
     google::storagetransfer::v1::ListAgentPoolsRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.storagetransfer.v1.StorageTransferService", "ListAgentPools");
+  auto span = internal::MakeSpanGrpc("google.storagetransfer.v1.StorageTransferService", "ListAgentPools");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -209,34 +190,32 @@ StorageTransferServiceTracingStub::ListAgentPools(
 }
 
 Status StorageTransferServiceTracingStub::DeleteAgentPool(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::storagetransfer::v1::DeleteAgentPoolRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.storagetransfer.v1.StorageTransferService", "DeleteAgentPool");
+  auto span = internal::MakeSpanGrpc("google.storagetransfer.v1.StorageTransferService", "DeleteAgentPool");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeleteAgentPool(context, options, request));
 }
 
-StatusOr<google::longrunning::ListOperationsResponse>
-StorageTransferServiceTracingStub::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse> StorageTransferServiceTracingStub::ListOperations(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.storagetransfer.v1.StorageTransferService", "ListOperations");
+  auto span = internal::MakeSpanGrpc("google.storagetransfer.v1.StorageTransferService", "ListOperations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListOperations(context, options, request));
 }
 
-StatusOr<google::longrunning::Operation>
-StorageTransferServiceTracingStub::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::Operation> StorageTransferServiceTracingStub::GetOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.storagetransfer.v1.StorageTransferService", "GetOperation");
+  auto span = internal::MakeSpanGrpc("google.storagetransfer.v1.StorageTransferService", "GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -244,10 +223,10 @@ StorageTransferServiceTracingStub::GetOperation(
 }
 
 Status StorageTransferServiceTracingStub::CancelOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.storagetransfer.v1.StorageTransferService", "CancelOperation");
+  auto span = internal::MakeSpanGrpc("google.storagetransfer.v1.StorageTransferService", "CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -264,7 +243,8 @@ StorageTransferServiceTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncGetOperation(cq, context, std::move(options), request);
+  auto f = child_->AsyncGetOperation(
+      cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -277,15 +257,14 @@ future<Status> StorageTransferServiceTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f =
-      child_->AsyncCancelOperation(cq, context, std::move(options), request);
+  auto f = child_->AsyncCancelOperation(
+      cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-std::shared_ptr<StorageTransferServiceStub>
-MakeStorageTransferServiceTracingStub(
+std::shared_ptr<StorageTransferServiceStub> MakeStorageTransferServiceTracingStub(
     std::shared_ptr<StorageTransferServiceStub> stub) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return std::make_shared<StorageTransferServiceTracingStub>(std::move(stub));

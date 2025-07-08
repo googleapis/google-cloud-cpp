@@ -19,11 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_NETWORKCONNECTIVITY_V1_HUB_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_NETWORKCONNECTIVITY_V1_HUB_CONNECTION_H
 
-#include "google/cloud/networkconnectivity/v1/hub_connection_idempotency_policy.h"
-#include "google/cloud/networkconnectivity/v1/internal/hub_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/networkconnectivity/v1/hub_connection_idempotency_policy.h"
+#include "google/cloud/networkconnectivity/v1/internal/hub_retry_traits.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -67,14 +67,14 @@ class HubServiceLimitedErrorCountRetryPolicy : public HubServiceRetryPolicy {
    *     @p maximum_failures == 0.
    */
   explicit HubServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   HubServiceLimitedErrorCountRetryPolicy(
       HubServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : HubServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : HubServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   HubServiceLimitedErrorCountRetryPolicy(
       HubServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : HubServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : HubServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -94,9 +94,7 @@ class HubServiceLimitedErrorCountRetryPolicy : public HubServiceRetryPolicy {
   using BaseType = HubServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      networkconnectivity_v1_internal::HubServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<networkconnectivity_v1_internal::HubServiceRetryTraits> impl_;
 };
 
 /**
@@ -134,14 +132,12 @@ class HubServiceLimitedTimeRetryPolicy : public HubServiceRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit HubServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  HubServiceLimitedTimeRetryPolicy(
-      HubServiceLimitedTimeRetryPolicy&& rhs) noexcept
-      : HubServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  HubServiceLimitedTimeRetryPolicy(
-      HubServiceLimitedTimeRetryPolicy const& rhs) noexcept
-      : HubServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  HubServiceLimitedTimeRetryPolicy(HubServiceLimitedTimeRetryPolicy&& rhs) noexcept
+    : HubServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  HubServiceLimitedTimeRetryPolicy(HubServiceLimitedTimeRetryPolicy const& rhs) noexcept
+    : HubServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -163,9 +159,7 @@ class HubServiceLimitedTimeRetryPolicy : public HubServiceRetryPolicy {
   using BaseType = HubServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      networkconnectivity_v1_internal::HubServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<networkconnectivity_v1_internal::HubServiceRetryTraits> impl_;
 };
 
 /**
@@ -186,218 +180,167 @@ class HubServiceConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StreamRange<google::cloud::networkconnectivity::v1::Hub> ListHubs(
-      google::cloud::networkconnectivity::v1::ListHubsRequest request);
+  virtual StreamRange<google::cloud::networkconnectivity::v1::Hub>
+  ListHubs(google::cloud::networkconnectivity::v1::ListHubsRequest request);
 
-  virtual StatusOr<google::cloud::networkconnectivity::v1::Hub> GetHub(
-      google::cloud::networkconnectivity::v1::GetHubRequest const& request);
-
-  virtual future<StatusOr<google::cloud::networkconnectivity::v1::Hub>>
-  CreateHub(
-      google::cloud::networkconnectivity::v1::CreateHubRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation> CreateHub(
-      NoAwaitTag,
-      google::cloud::networkconnectivity::v1::CreateHubRequest const& request);
+  virtual StatusOr<google::cloud::networkconnectivity::v1::Hub>
+  GetHub(google::cloud::networkconnectivity::v1::GetHubRequest const& request);
 
   virtual future<StatusOr<google::cloud::networkconnectivity::v1::Hub>>
-  CreateHub(google::longrunning::Operation const& operation);
+  CreateHub(google::cloud::networkconnectivity::v1::CreateHubRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation>
+  CreateHub(NoAwaitTag, google::cloud::networkconnectivity::v1::CreateHubRequest const& request);
 
   virtual future<StatusOr<google::cloud::networkconnectivity::v1::Hub>>
-  UpdateHub(
-      google::cloud::networkconnectivity::v1::UpdateHubRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation> UpdateHub(
-      NoAwaitTag,
-      google::cloud::networkconnectivity::v1::UpdateHubRequest const& request);
+  CreateHub( google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::networkconnectivity::v1::Hub>>
-  UpdateHub(google::longrunning::Operation const& operation);
+  UpdateHub(google::cloud::networkconnectivity::v1::UpdateHubRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
-  DeleteHub(
-      google::cloud::networkconnectivity::v1::DeleteHubRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  UpdateHub(NoAwaitTag, google::cloud::networkconnectivity::v1::UpdateHubRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> DeleteHub(
-      NoAwaitTag,
-      google::cloud::networkconnectivity::v1::DeleteHubRequest const& request);
+  virtual future<StatusOr<google::cloud::networkconnectivity::v1::Hub>>
+  UpdateHub( google::longrunning::Operation const& operation);
 
-  virtual future<
-      StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
-  DeleteHub(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
+  DeleteHub(google::cloud::networkconnectivity::v1::DeleteHubRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation>
+  DeleteHub(NoAwaitTag, google::cloud::networkconnectivity::v1::DeleteHubRequest const& request);
+
+  virtual future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
+  DeleteHub( google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::networkconnectivity::v1::Spoke>
-  ListHubSpokes(
-      google::cloud::networkconnectivity::v1::ListHubSpokesRequest request);
+  ListHubSpokes(google::cloud::networkconnectivity::v1::ListHubSpokesRequest request);
 
   virtual StreamRange<google::cloud::networkconnectivity::v1::HubStatusEntry>
-  QueryHubStatus(
-      google::cloud::networkconnectivity::v1::QueryHubStatusRequest request);
+  QueryHubStatus(google::cloud::networkconnectivity::v1::QueryHubStatusRequest request);
 
-  virtual StreamRange<google::cloud::networkconnectivity::v1::Spoke> ListSpokes(
-      google::cloud::networkconnectivity::v1::ListSpokesRequest request);
+  virtual StreamRange<google::cloud::networkconnectivity::v1::Spoke>
+  ListSpokes(google::cloud::networkconnectivity::v1::ListSpokesRequest request);
 
-  virtual StatusOr<google::cloud::networkconnectivity::v1::Spoke> GetSpoke(
-      google::cloud::networkconnectivity::v1::GetSpokeRequest const& request);
-
-  virtual future<StatusOr<google::cloud::networkconnectivity::v1::Spoke>>
-  CreateSpoke(google::cloud::networkconnectivity::v1::CreateSpokeRequest const&
-                  request);
-
-  virtual StatusOr<google::longrunning::Operation> CreateSpoke(
-      NoAwaitTag,
-      google::cloud::networkconnectivity::v1::CreateSpokeRequest const&
-          request);
+  virtual StatusOr<google::cloud::networkconnectivity::v1::Spoke>
+  GetSpoke(google::cloud::networkconnectivity::v1::GetSpokeRequest const& request);
 
   virtual future<StatusOr<google::cloud::networkconnectivity::v1::Spoke>>
-  CreateSpoke(google::longrunning::Operation const& operation);
+  CreateSpoke(google::cloud::networkconnectivity::v1::CreateSpokeRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation>
+  CreateSpoke(NoAwaitTag, google::cloud::networkconnectivity::v1::CreateSpokeRequest const& request);
 
   virtual future<StatusOr<google::cloud::networkconnectivity::v1::Spoke>>
-  UpdateSpoke(google::cloud::networkconnectivity::v1::UpdateSpokeRequest const&
-                  request);
-
-  virtual StatusOr<google::longrunning::Operation> UpdateSpoke(
-      NoAwaitTag,
-      google::cloud::networkconnectivity::v1::UpdateSpokeRequest const&
-          request);
+  CreateSpoke( google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::networkconnectivity::v1::Spoke>>
-  UpdateSpoke(google::longrunning::Operation const& operation);
+  UpdateSpoke(google::cloud::networkconnectivity::v1::UpdateSpokeRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::networkconnectivity::v1::RejectHubSpokeResponse>>
-  RejectHubSpoke(
-      google::cloud::networkconnectivity::v1::RejectHubSpokeRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  UpdateSpoke(NoAwaitTag, google::cloud::networkconnectivity::v1::UpdateSpokeRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> RejectHubSpoke(
-      NoAwaitTag,
-      google::cloud::networkconnectivity::v1::RejectHubSpokeRequest const&
-          request);
+  virtual future<StatusOr<google::cloud::networkconnectivity::v1::Spoke>>
+  UpdateSpoke( google::longrunning::Operation const& operation);
 
-  virtual future<
-      StatusOr<google::cloud::networkconnectivity::v1::RejectHubSpokeResponse>>
-  RejectHubSpoke(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::networkconnectivity::v1::RejectHubSpokeResponse>>
+  RejectHubSpoke(google::cloud::networkconnectivity::v1::RejectHubSpokeRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::networkconnectivity::v1::AcceptHubSpokeResponse>>
-  AcceptHubSpoke(
-      google::cloud::networkconnectivity::v1::AcceptHubSpokeRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  RejectHubSpoke(NoAwaitTag, google::cloud::networkconnectivity::v1::RejectHubSpokeRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> AcceptHubSpoke(
-      NoAwaitTag,
-      google::cloud::networkconnectivity::v1::AcceptHubSpokeRequest const&
-          request);
+  virtual future<StatusOr<google::cloud::networkconnectivity::v1::RejectHubSpokeResponse>>
+  RejectHubSpoke( google::longrunning::Operation const& operation);
 
-  virtual future<
-      StatusOr<google::cloud::networkconnectivity::v1::AcceptHubSpokeResponse>>
-  AcceptHubSpoke(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::networkconnectivity::v1::AcceptHubSpokeResponse>>
+  AcceptHubSpoke(google::cloud::networkconnectivity::v1::AcceptHubSpokeRequest const& request);
 
-  virtual future<StatusOr<
-      google::cloud::networkconnectivity::v1::AcceptSpokeUpdateResponse>>
-  AcceptSpokeUpdate(
-      google::cloud::networkconnectivity::v1::AcceptSpokeUpdateRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  AcceptHubSpoke(NoAwaitTag, google::cloud::networkconnectivity::v1::AcceptHubSpokeRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> AcceptSpokeUpdate(
-      NoAwaitTag,
-      google::cloud::networkconnectivity::v1::AcceptSpokeUpdateRequest const&
-          request);
+  virtual future<StatusOr<google::cloud::networkconnectivity::v1::AcceptHubSpokeResponse>>
+  AcceptHubSpoke( google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<
-      google::cloud::networkconnectivity::v1::AcceptSpokeUpdateResponse>>
-  AcceptSpokeUpdate(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::networkconnectivity::v1::AcceptSpokeUpdateResponse>>
+  AcceptSpokeUpdate(google::cloud::networkconnectivity::v1::AcceptSpokeUpdateRequest const& request);
 
-  virtual future<StatusOr<
-      google::cloud::networkconnectivity::v1::RejectSpokeUpdateResponse>>
-  RejectSpokeUpdate(
-      google::cloud::networkconnectivity::v1::RejectSpokeUpdateRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  AcceptSpokeUpdate(NoAwaitTag, google::cloud::networkconnectivity::v1::AcceptSpokeUpdateRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> RejectSpokeUpdate(
-      NoAwaitTag,
-      google::cloud::networkconnectivity::v1::RejectSpokeUpdateRequest const&
-          request);
+  virtual future<StatusOr<google::cloud::networkconnectivity::v1::AcceptSpokeUpdateResponse>>
+  AcceptSpokeUpdate( google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<
-      google::cloud::networkconnectivity::v1::RejectSpokeUpdateResponse>>
-  RejectSpokeUpdate(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::networkconnectivity::v1::RejectSpokeUpdateResponse>>
+  RejectSpokeUpdate(google::cloud::networkconnectivity::v1::RejectSpokeUpdateRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
-  DeleteSpoke(google::cloud::networkconnectivity::v1::DeleteSpokeRequest const&
-                  request);
+  virtual StatusOr<google::longrunning::Operation>
+  RejectSpokeUpdate(NoAwaitTag, google::cloud::networkconnectivity::v1::RejectSpokeUpdateRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> DeleteSpoke(
-      NoAwaitTag,
-      google::cloud::networkconnectivity::v1::DeleteSpokeRequest const&
-          request);
+  virtual future<StatusOr<google::cloud::networkconnectivity::v1::RejectSpokeUpdateResponse>>
+  RejectSpokeUpdate( google::longrunning::Operation const& operation);
 
-  virtual future<
-      StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
-  DeleteSpoke(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
+  DeleteSpoke(google::cloud::networkconnectivity::v1::DeleteSpokeRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation>
+  DeleteSpoke(NoAwaitTag, google::cloud::networkconnectivity::v1::DeleteSpokeRequest const& request);
+
+  virtual future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
+  DeleteSpoke( google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::networkconnectivity::v1::RouteTable>
-  GetRouteTable(
-      google::cloud::networkconnectivity::v1::GetRouteTableRequest const&
-          request);
+  GetRouteTable(google::cloud::networkconnectivity::v1::GetRouteTableRequest const& request);
 
-  virtual StatusOr<google::cloud::networkconnectivity::v1::Route> GetRoute(
-      google::cloud::networkconnectivity::v1::GetRouteRequest const& request);
+  virtual StatusOr<google::cloud::networkconnectivity::v1::Route>
+  GetRoute(google::cloud::networkconnectivity::v1::GetRouteRequest const& request);
 
-  virtual StreamRange<google::cloud::networkconnectivity::v1::Route> ListRoutes(
-      google::cloud::networkconnectivity::v1::ListRoutesRequest request);
+  virtual StreamRange<google::cloud::networkconnectivity::v1::Route>
+  ListRoutes(google::cloud::networkconnectivity::v1::ListRoutesRequest request);
 
   virtual StreamRange<google::cloud::networkconnectivity::v1::RouteTable>
-  ListRouteTables(
-      google::cloud::networkconnectivity::v1::ListRouteTablesRequest request);
+  ListRouteTables(google::cloud::networkconnectivity::v1::ListRouteTablesRequest request);
 
-  virtual StatusOr<google::cloud::networkconnectivity::v1::Group> GetGroup(
-      google::cloud::networkconnectivity::v1::GetGroupRequest const& request);
+  virtual StatusOr<google::cloud::networkconnectivity::v1::Group>
+  GetGroup(google::cloud::networkconnectivity::v1::GetGroupRequest const& request);
 
-  virtual StreamRange<google::cloud::networkconnectivity::v1::Group> ListGroups(
-      google::cloud::networkconnectivity::v1::ListGroupsRequest request);
-
-  virtual future<StatusOr<google::cloud::networkconnectivity::v1::Group>>
-  UpdateGroup(google::cloud::networkconnectivity::v1::UpdateGroupRequest const&
-                  request);
-
-  virtual StatusOr<google::longrunning::Operation> UpdateGroup(
-      NoAwaitTag,
-      google::cloud::networkconnectivity::v1::UpdateGroupRequest const&
-          request);
+  virtual StreamRange<google::cloud::networkconnectivity::v1::Group>
+  ListGroups(google::cloud::networkconnectivity::v1::ListGroupsRequest request);
 
   virtual future<StatusOr<google::cloud::networkconnectivity::v1::Group>>
-  UpdateGroup(google::longrunning::Operation const& operation);
+  UpdateGroup(google::cloud::networkconnectivity::v1::UpdateGroupRequest const& request);
 
-  virtual StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request);
+  virtual StatusOr<google::longrunning::Operation>
+  UpdateGroup(NoAwaitTag, google::cloud::networkconnectivity::v1::UpdateGroupRequest const& request);
 
-  virtual StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request);
+  virtual future<StatusOr<google::cloud::networkconnectivity::v1::Group>>
+  UpdateGroup( google::longrunning::Operation const& operation);
 
-  virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request);
+  virtual StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request);
 
-  virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request);
+  virtual StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request);
+
+  virtual StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
+
+  virtual StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
 
   virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
   TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
 
-  virtual StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 
-  virtual Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request);
+  virtual Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
 
-  virtual Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request);
+  virtual Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request);
 };
 
 /**

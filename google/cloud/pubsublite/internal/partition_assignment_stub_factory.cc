@@ -17,17 +17,17 @@
 // source: google/cloud/pubsublite/v1/subscriber.proto
 
 #include "google/cloud/pubsublite/internal/partition_assignment_stub_factory.h"
-#include "google/cloud/pubsublite/internal/partition_assignment_auth_decorator.h"
-#include "google/cloud/pubsublite/internal/partition_assignment_logging_decorator.h"
-#include "google/cloud/pubsublite/internal/partition_assignment_metadata_decorator.h"
-#include "google/cloud/pubsublite/internal/partition_assignment_stub.h"
-#include "google/cloud/pubsublite/internal/partition_assignment_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
+#include "google/cloud/pubsublite/internal/partition_assignment_auth_decorator.h"
+#include "google/cloud/pubsublite/internal/partition_assignment_logging_decorator.h"
+#include "google/cloud/pubsublite/internal/partition_assignment_metadata_decorator.h"
+#include "google/cloud/pubsublite/internal/partition_assignment_stub.h"
+#include "google/cloud/pubsublite/internal/partition_assignment_tracing_stub.h"
 #include <google/cloud/pubsublite/v1/subscriber.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
@@ -42,27 +42,25 @@ std::shared_ptr<PartitionAssignmentServiceStub>
 CreateDefaultPartitionAssignmentServiceStub(
     std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
     Options const& options) {
-  auto channel = auth->CreateChannel(options.get<EndpointOption>(),
-                                     internal::MakeChannelArguments(options));
-  auto service_grpc_stub =
-      google::cloud::pubsublite::v1::PartitionAssignmentService::NewStub(
-          channel);
-  auto service_operations_stub =
-      google::longrunning::Operations::NewStub(channel);
+  auto channel = auth->CreateChannel(
+    options.get<EndpointOption>(), internal::MakeChannelArguments(options));
+  auto service_grpc_stub = google::cloud::pubsublite::v1::PartitionAssignmentService::NewStub(channel);
+  auto service_operations_stub = google::longrunning::Operations::NewStub(channel);
   std::shared_ptr<PartitionAssignmentServiceStub> stub =
-      std::make_shared<DefaultPartitionAssignmentServiceStub>(
-          std::move(service_grpc_stub), std::move(service_operations_stub));
+    std::make_shared<DefaultPartitionAssignmentServiceStub>(std::move(service_grpc_stub), std::move(service_operations_stub));
 
   if (auth->RequiresConfigureContext()) {
-    stub = std::make_shared<PartitionAssignmentServiceAuth>(std::move(auth),
-                                                            std::move(stub));
+    stub = std::make_shared<PartitionAssignmentServiceAuth>(
+        std::move(auth), std::move(stub));
   }
   stub = std::make_shared<PartitionAssignmentServiceMetadata>(
       std::move(stub), std::multimap<std::string, std::string>{});
-  if (internal::Contains(options.get<LoggingComponentsOption>(), "rpc")) {
+  if (internal::Contains(
+      options.get<LoggingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<PartitionAssignmentServiceLogging>(
-        std::move(stub), options.get<GrpcTracingOptionsOption>(),
+        std::move(stub),
+        options.get<GrpcTracingOptionsOption>(),
         options.get<LoggingComponentsOption>());
   }
   if (internal::TracingEnabled(options)) {

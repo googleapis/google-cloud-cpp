@@ -36,27 +36,24 @@ class PredictionServiceTracingConnection
   ~PredictionServiceTracingConnection() override = default;
 
   explicit PredictionServiceTracingConnection(
-      std::shared_ptr<aiplatform_v1::PredictionServiceConnection> child);
+    std::shared_ptr<aiplatform_v1::PredictionServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::aiplatform::v1::PredictResponse> Predict(
-      google::cloud::aiplatform::v1::PredictRequest const& request) override;
+  StatusOr<google::cloud::aiplatform::v1::PredictResponse>
+  Predict(google::cloud::aiplatform::v1::PredictRequest const& request) override;
 
-  StatusOr<google::api::HttpBody> RawPredict(
-      google::cloud::aiplatform::v1::RawPredictRequest const& request) override;
+  StatusOr<google::api::HttpBody>
+  RawPredict(google::cloud::aiplatform::v1::RawPredictRequest const& request) override;
 
-  StreamRange<google::api::HttpBody> StreamRawPredict(
-      google::cloud::aiplatform::v1::StreamRawPredictRequest const& request)
-      override;
+  StreamRange<google::api::HttpBody>
+  StreamRawPredict(google::cloud::aiplatform::v1::StreamRawPredictRequest const& request) override;
 
-  StatusOr<google::cloud::aiplatform::v1::DirectPredictResponse> DirectPredict(
-      google::cloud::aiplatform::v1::DirectPredictRequest const& request)
-      override;
+  StatusOr<google::cloud::aiplatform::v1::DirectPredictResponse>
+  DirectPredict(google::cloud::aiplatform::v1::DirectPredictRequest const& request) override;
 
   StatusOr<google::cloud::aiplatform::v1::DirectRawPredictResponse>
-  DirectRawPredict(google::cloud::aiplatform::v1::DirectRawPredictRequest const&
-                       request) override;
+  DirectRawPredict(google::cloud::aiplatform::v1::DirectRawPredictRequest const& request) override;
 
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::aiplatform::v1::StreamDirectPredictRequest,
@@ -74,56 +71,51 @@ class PredictionServiceTracingConnection
   AsyncStreamingPredict() override;
 
   StreamRange<google::cloud::aiplatform::v1::StreamingPredictResponse>
-  ServerStreamingPredict(
-      google::cloud::aiplatform::v1::StreamingPredictRequest const& request)
-      override;
+  ServerStreamingPredict(google::cloud::aiplatform::v1::StreamingPredictRequest const& request) override;
 
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::aiplatform::v1::StreamingRawPredictRequest,
       google::cloud::aiplatform::v1::StreamingRawPredictResponse>>
   AsyncStreamingRawPredict() override;
 
-  StatusOr<google::cloud::aiplatform::v1::ExplainResponse> Explain(
-      google::cloud::aiplatform::v1::ExplainRequest const& request) override;
+  StatusOr<google::cloud::aiplatform::v1::ExplainResponse>
+  Explain(google::cloud::aiplatform::v1::ExplainRequest const& request) override;
 
   StatusOr<google::cloud::aiplatform::v1::GenerateContentResponse>
-  GenerateContent(google::cloud::aiplatform::v1::GenerateContentRequest const&
-                      request) override;
+  GenerateContent(google::cloud::aiplatform::v1::GenerateContentRequest const& request) override;
 
   StreamRange<google::cloud::aiplatform::v1::GenerateContentResponse>
-  StreamGenerateContent(
-      google::cloud::aiplatform::v1::GenerateContentRequest const& request)
-      override;
+  StreamGenerateContent(google::cloud::aiplatform::v1::GenerateContentRequest const& request) override;
 
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request) override;
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request) override;
 
-  StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request) override;
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request) override;
+  StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request) override;
 
-  Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request) override;
+  Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request) override;
 
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request) override;
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> WaitOperation(
-      google::longrunning::WaitOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  WaitOperation(google::longrunning::WaitOperationRequest const& request) override;
 
  private:
   std::shared_ptr<aiplatform_v1::PredictionServiceConnection> child_;

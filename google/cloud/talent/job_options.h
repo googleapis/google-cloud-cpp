@@ -34,8 +34,7 @@ using ::google::cloud::talent_v4::JobServicePollingPolicyOption;
 /// @deprecated Use talent_v4::JobServiceBackoffPolicyOption directly.
 using ::google::cloud::talent_v4::JobServiceBackoffPolicyOption;
 
-/// @deprecated Use talent_v4::JobServiceConnectionIdempotencyPolicyOption
-/// directly.
+/// @deprecated Use talent_v4::JobServiceConnectionIdempotencyPolicyOption directly.
 using ::google::cloud::talent_v4::JobServiceConnectionIdempotencyPolicyOption;
 
 /// @deprecated Use talent_v4::JobServicePolicyOptionList directly.

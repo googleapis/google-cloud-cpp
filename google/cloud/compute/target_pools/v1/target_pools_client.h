@@ -64,8 +64,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class TargetPoolsClient {
  public:
-  explicit TargetPoolsClient(std::shared_ptr<TargetPoolsConnection> connection,
-                             Options opts = {});
+  explicit TargetPoolsClient(std::shared_ptr<TargetPoolsConnection> connection, Options opts = {});
   ~TargetPoolsClient();
 
   ///@{
@@ -78,12 +77,10 @@ class TargetPoolsClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(TargetPoolsClient const& a,
-                         TargetPoolsClient const& b) {
+  friend bool operator==(TargetPoolsClient const& a, TargetPoolsClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(TargetPoolsClient const& a,
-                         TargetPoolsClient const& b) {
+  friend bool operator!=(TargetPoolsClient const& a, TargetPoolsClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -120,12 +117,8 @@ class TargetPoolsClient {
   /// [google.cloud.cpp.compute.target_pools.v1.AddHealthCheckRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L194}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddHealthCheck(
-      std::string const& project, std::string const& region,
-      std::string const& target_pool,
-      google::cloud::cpp::compute::v1::TargetPoolsAddHealthCheckRequest const&
-          target_pools_add_health_check_request_resource,
-      Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AddHealthCheck(std::string const& project, std::string const& region, std::string const& target_pool, google::cloud::cpp::compute::v1::TargetPoolsAddHealthCheckRequest const& target_pools_add_health_check_request_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -138,12 +131,8 @@ class TargetPoolsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> AddHealthCheck(
-      NoAwaitTag, std::string const& project, std::string const& region,
-      std::string const& target_pool,
-      google::cloud::cpp::compute::v1::TargetPoolsAddHealthCheckRequest const&
-          target_pools_add_health_check_request_resource,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  AddHealthCheck(NoAwaitTag, std::string const& project, std::string const& region, std::string const& target_pool, google::cloud::cpp::compute::v1::TargetPoolsAddHealthCheckRequest const& target_pools_add_health_check_request_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -179,10 +168,8 @@ class TargetPoolsClient {
   /// [google.cloud.cpp.compute.target_pools.v1.AddHealthCheckRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L194}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddHealthCheck(
-      google::cloud::cpp::compute::target_pools::v1::
-          AddHealthCheckRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AddHealthCheck(google::cloud::cpp::compute::target_pools::v1::AddHealthCheckRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -195,11 +182,8 @@ class TargetPoolsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> AddHealthCheck(
-      NoAwaitTag,
-      google::cloud::cpp::compute::target_pools::v1::
-          AddHealthCheckRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  AddHealthCheck(NoAwaitTag, google::cloud::cpp::compute::target_pools::v1::AddHealthCheckRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -210,9 +194,8 @@ class TargetPoolsClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddHealthCheck(
-      google::cloud::cpp::compute::v1::Operation const& operation,
-      Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AddHealthCheck(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -246,12 +229,8 @@ class TargetPoolsClient {
   /// [google.cloud.cpp.compute.target_pools.v1.AddInstanceRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L232}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddInstance(
-      std::string const& project, std::string const& region,
-      std::string const& target_pool,
-      google::cloud::cpp::compute::v1::TargetPoolsAddInstanceRequest const&
-          target_pools_add_instance_request_resource,
-      Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AddInstance(std::string const& project, std::string const& region, std::string const& target_pool, google::cloud::cpp::compute::v1::TargetPoolsAddInstanceRequest const& target_pools_add_instance_request_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -264,12 +243,8 @@ class TargetPoolsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> AddInstance(
-      NoAwaitTag, std::string const& project, std::string const& region,
-      std::string const& target_pool,
-      google::cloud::cpp::compute::v1::TargetPoolsAddInstanceRequest const&
-          target_pools_add_instance_request_resource,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  AddInstance(NoAwaitTag, std::string const& project, std::string const& region, std::string const& target_pool, google::cloud::cpp::compute::v1::TargetPoolsAddInstanceRequest const& target_pools_add_instance_request_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -305,10 +280,8 @@ class TargetPoolsClient {
   /// [google.cloud.cpp.compute.target_pools.v1.AddInstanceRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L232}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddInstance(
-      google::cloud::cpp::compute::target_pools::v1::AddInstanceRequest const&
-          request,
-      Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AddInstance(google::cloud::cpp::compute::target_pools::v1::AddInstanceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -321,11 +294,8 @@ class TargetPoolsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> AddInstance(
-      NoAwaitTag,
-      google::cloud::cpp::compute::target_pools::v1::AddInstanceRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  AddInstance(NoAwaitTag, google::cloud::cpp::compute::target_pools::v1::AddInstanceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -336,9 +306,8 @@ class TargetPoolsClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddInstance(
-      google::cloud::cpp::compute::v1::Operation const& operation,
-      Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AddInstance(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -373,8 +342,7 @@ class TargetPoolsClient {
   /// [google.cloud.cpp.compute.v1.TargetPoolsScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_139.proto#L398}
   ///
   // clang-format on
-  StreamRange<std::pair<std::string,
-                        google::cloud::cpp::compute::v1::TargetPoolsScopedList>>
+  StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::TargetPoolsScopedList>>
   AggregatedListTargetPools(std::string const& project, Options opts = {});
 
   // clang-format off
@@ -415,11 +383,8 @@ class TargetPoolsClient {
   /// [google.cloud.cpp.compute.v1.TargetPoolsScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_139.proto#L398}
   ///
   // clang-format on
-  StreamRange<std::pair<std::string,
-                        google::cloud::cpp::compute::v1::TargetPoolsScopedList>>
-  AggregatedListTargetPools(google::cloud::cpp::compute::target_pools::v1::
-                                AggregatedListTargetPoolsRequest request,
-                            Options opts = {});
+  StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::TargetPoolsScopedList>>
+  AggregatedListTargetPools(google::cloud::cpp::compute::target_pools::v1::AggregatedListTargetPoolsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -452,9 +417,8 @@ class TargetPoolsClient {
   /// [google.cloud.cpp.compute.target_pools.v1.DeleteTargetPoolRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L352}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteTargetPool(
-      std::string const& project, std::string const& region,
-      std::string const& target_pool, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteTargetPool(std::string const& project, std::string const& region, std::string const& target_pool, Options opts = {});
 
   // clang-format off
   ///
@@ -467,9 +431,8 @@ class TargetPoolsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteTargetPool(
-      NoAwaitTag, std::string const& project, std::string const& region,
-      std::string const& target_pool, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeleteTargetPool(NoAwaitTag, std::string const& project, std::string const& region, std::string const& target_pool, Options opts = {});
 
   // clang-format off
   ///
@@ -505,10 +468,8 @@ class TargetPoolsClient {
   /// [google.cloud.cpp.compute.target_pools.v1.DeleteTargetPoolRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L352}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteTargetPool(
-      google::cloud::cpp::compute::target_pools::v1::
-          DeleteTargetPoolRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteTargetPool(google::cloud::cpp::compute::target_pools::v1::DeleteTargetPoolRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -521,11 +482,8 @@ class TargetPoolsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteTargetPool(
-      NoAwaitTag,
-      google::cloud::cpp::compute::target_pools::v1::
-          DeleteTargetPoolRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeleteTargetPool(NoAwaitTag, google::cloud::cpp::compute::target_pools::v1::DeleteTargetPoolRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -536,9 +494,8 @@ class TargetPoolsClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteTargetPool(
-      google::cloud::cpp::compute::v1::Operation const& operation,
-      Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteTargetPool(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -565,9 +522,8 @@ class TargetPoolsClient {
   /// [google.cloud.cpp.compute.v1.TargetPool]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_139.proto#L32}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::TargetPool> GetTargetPool(
-      std::string const& project, std::string const& region,
-      std::string const& target_pool, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::TargetPool>
+  GetTargetPool(std::string const& project, std::string const& region, std::string const& target_pool, Options opts = {});
 
   // clang-format off
   ///
@@ -597,10 +553,8 @@ class TargetPoolsClient {
   /// [google.cloud.cpp.compute.v1.TargetPool]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_139.proto#L32}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::TargetPool> GetTargetPool(
-      google::cloud::cpp::compute::target_pools::v1::GetTargetPoolRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::TargetPool>
+  GetTargetPool(google::cloud::cpp::compute::target_pools::v1::GetTargetPoolRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -629,12 +583,8 @@ class TargetPoolsClient {
   /// [google.cloud.cpp.compute.v1.TargetPoolInstanceHealth]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_139.proto#L251}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::TargetPoolInstanceHealth> GetHealth(
-      std::string const& project, std::string const& region,
-      std::string const& target_pool,
-      google::cloud::cpp::compute::v1::InstanceReference const&
-          instance_reference_resource,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::TargetPoolInstanceHealth>
+  GetHealth(std::string const& project, std::string const& region, std::string const& target_pool, google::cloud::cpp::compute::v1::InstanceReference const& instance_reference_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -665,10 +615,8 @@ class TargetPoolsClient {
   /// [google.cloud.cpp.compute.v1.TargetPoolInstanceHealth]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_139.proto#L251}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::TargetPoolInstanceHealth> GetHealth(
-      google::cloud::cpp::compute::target_pools::v1::GetHealthRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::TargetPoolInstanceHealth>
+  GetHealth(google::cloud::cpp::compute::target_pools::v1::GetHealthRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -702,10 +650,8 @@ class TargetPoolsClient {
   /// [google.cloud.cpp.compute.target_pools.v1.InsertTargetPoolRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L419}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertTargetPool(
-      std::string const& project, std::string const& region,
-      google::cloud::cpp::compute::v1::TargetPool const& target_pool_resource,
-      Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  InsertTargetPool(std::string const& project, std::string const& region, google::cloud::cpp::compute::v1::TargetPool const& target_pool_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -718,10 +664,8 @@ class TargetPoolsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertTargetPool(
-      NoAwaitTag, std::string const& project, std::string const& region,
-      google::cloud::cpp::compute::v1::TargetPool const& target_pool_resource,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  InsertTargetPool(NoAwaitTag, std::string const& project, std::string const& region, google::cloud::cpp::compute::v1::TargetPool const& target_pool_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -758,10 +702,8 @@ class TargetPoolsClient {
   /// [google.cloud.cpp.compute.target_pools.v1.InsertTargetPoolRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L419}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertTargetPool(
-      google::cloud::cpp::compute::target_pools::v1::
-          InsertTargetPoolRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  InsertTargetPool(google::cloud::cpp::compute::target_pools::v1::InsertTargetPoolRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -774,11 +716,8 @@ class TargetPoolsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertTargetPool(
-      NoAwaitTag,
-      google::cloud::cpp::compute::target_pools::v1::
-          InsertTargetPoolRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  InsertTargetPool(NoAwaitTag, google::cloud::cpp::compute::target_pools::v1::InsertTargetPoolRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -789,9 +728,8 @@ class TargetPoolsClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertTargetPool(
-      google::cloud::cpp::compute::v1::Operation const& operation,
-      Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  InsertTargetPool(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -827,8 +765,8 @@ class TargetPoolsClient {
   /// [google.cloud.cpp.compute.v1.TargetPool]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_139.proto#L32}
   ///
   // clang-format on
-  StreamRange<google::cloud::cpp::compute::v1::TargetPool> ListTargetPools(
-      std::string const& project, std::string const& region, Options opts = {});
+  StreamRange<google::cloud::cpp::compute::v1::TargetPool>
+  ListTargetPools(std::string const& project, std::string const& region, Options opts = {});
 
   // clang-format off
   ///
@@ -868,10 +806,8 @@ class TargetPoolsClient {
   /// [google.cloud.cpp.compute.v1.TargetPool]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_139.proto#L32}
   ///
   // clang-format on
-  StreamRange<google::cloud::cpp::compute::v1::TargetPool> ListTargetPools(
-      google::cloud::cpp::compute::target_pools::v1::ListTargetPoolsRequest
-          request,
-      Options opts = {});
+  StreamRange<google::cloud::cpp::compute::v1::TargetPool>
+  ListTargetPools(google::cloud::cpp::compute::target_pools::v1::ListTargetPoolsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -906,12 +842,7 @@ class TargetPoolsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  RemoveHealthCheck(std::string const& project, std::string const& region,
-                    std::string const& target_pool,
-                    google::cloud::cpp::compute::v1::
-                        TargetPoolsRemoveHealthCheckRequest const&
-                            target_pools_remove_health_check_request_resource,
-                    Options opts = {});
+  RemoveHealthCheck(std::string const& project, std::string const& region, std::string const& target_pool, google::cloud::cpp::compute::v1::TargetPoolsRemoveHealthCheckRequest const& target_pools_remove_health_check_request_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -924,13 +855,8 @@ class TargetPoolsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> RemoveHealthCheck(
-      NoAwaitTag, std::string const& project, std::string const& region,
-      std::string const& target_pool,
-      google::cloud::cpp::compute::v1::
-          TargetPoolsRemoveHealthCheckRequest const&
-              target_pools_remove_health_check_request_resource,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  RemoveHealthCheck(NoAwaitTag, std::string const& project, std::string const& region, std::string const& target_pool, google::cloud::cpp::compute::v1::TargetPoolsRemoveHealthCheckRequest const& target_pools_remove_health_check_request_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -967,9 +893,7 @@ class TargetPoolsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  RemoveHealthCheck(google::cloud::cpp::compute::target_pools::v1::
-                        RemoveHealthCheckRequest const& request,
-                    Options opts = {});
+  RemoveHealthCheck(google::cloud::cpp::compute::target_pools::v1::RemoveHealthCheckRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -982,11 +906,8 @@ class TargetPoolsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> RemoveHealthCheck(
-      NoAwaitTag,
-      google::cloud::cpp::compute::target_pools::v1::
-          RemoveHealthCheckRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  RemoveHealthCheck(NoAwaitTag, google::cloud::cpp::compute::target_pools::v1::RemoveHealthCheckRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -998,8 +919,7 @@ class TargetPoolsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  RemoveHealthCheck(google::cloud::cpp::compute::v1::Operation const& operation,
-                    Options opts = {});
+  RemoveHealthCheck(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1033,12 +953,8 @@ class TargetPoolsClient {
   /// [google.cloud.cpp.compute.target_pools.v1.RemoveInstanceRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L562}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> RemoveInstance(
-      std::string const& project, std::string const& region,
-      std::string const& target_pool,
-      google::cloud::cpp::compute::v1::TargetPoolsRemoveInstanceRequest const&
-          target_pools_remove_instance_request_resource,
-      Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  RemoveInstance(std::string const& project, std::string const& region, std::string const& target_pool, google::cloud::cpp::compute::v1::TargetPoolsRemoveInstanceRequest const& target_pools_remove_instance_request_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -1051,12 +967,8 @@ class TargetPoolsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> RemoveInstance(
-      NoAwaitTag, std::string const& project, std::string const& region,
-      std::string const& target_pool,
-      google::cloud::cpp::compute::v1::TargetPoolsRemoveInstanceRequest const&
-          target_pools_remove_instance_request_resource,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  RemoveInstance(NoAwaitTag, std::string const& project, std::string const& region, std::string const& target_pool, google::cloud::cpp::compute::v1::TargetPoolsRemoveInstanceRequest const& target_pools_remove_instance_request_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -1092,10 +1004,8 @@ class TargetPoolsClient {
   /// [google.cloud.cpp.compute.target_pools.v1.RemoveInstanceRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L562}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> RemoveInstance(
-      google::cloud::cpp::compute::target_pools::v1::
-          RemoveInstanceRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  RemoveInstance(google::cloud::cpp::compute::target_pools::v1::RemoveInstanceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1108,11 +1018,8 @@ class TargetPoolsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> RemoveInstance(
-      NoAwaitTag,
-      google::cloud::cpp::compute::target_pools::v1::
-          RemoveInstanceRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  RemoveInstance(NoAwaitTag, google::cloud::cpp::compute::target_pools::v1::RemoveInstanceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1123,9 +1030,8 @@ class TargetPoolsClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> RemoveInstance(
-      google::cloud::cpp::compute::v1::Operation const& operation,
-      Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  RemoveInstance(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1159,12 +1065,8 @@ class TargetPoolsClient {
   /// [google.cloud.cpp.compute.target_pools.v1.SetBackupRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L600}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetBackup(
-      std::string const& project, std::string const& region,
-      std::string const& target_pool,
-      google::cloud::cpp::compute::v1::TargetReference const&
-          target_reference_resource,
-      Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  SetBackup(std::string const& project, std::string const& region, std::string const& target_pool, google::cloud::cpp::compute::v1::TargetReference const& target_reference_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -1177,12 +1079,8 @@ class TargetPoolsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> SetBackup(
-      NoAwaitTag, std::string const& project, std::string const& region,
-      std::string const& target_pool,
-      google::cloud::cpp::compute::v1::TargetReference const&
-          target_reference_resource,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  SetBackup(NoAwaitTag, std::string const& project, std::string const& region, std::string const& target_pool, google::cloud::cpp::compute::v1::TargetReference const& target_reference_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -1218,10 +1116,8 @@ class TargetPoolsClient {
   /// [google.cloud.cpp.compute.target_pools.v1.SetBackupRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L600}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetBackup(
-      google::cloud::cpp::compute::target_pools::v1::SetBackupRequest const&
-          request,
-      Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  SetBackup(google::cloud::cpp::compute::target_pools::v1::SetBackupRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1234,11 +1130,8 @@ class TargetPoolsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> SetBackup(
-      NoAwaitTag,
-      google::cloud::cpp::compute::target_pools::v1::SetBackupRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  SetBackup(NoAwaitTag, google::cloud::cpp::compute::target_pools::v1::SetBackupRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1249,9 +1142,8 @@ class TargetPoolsClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetBackup(
-      google::cloud::cpp::compute::v1::Operation const& operation,
-      Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  SetBackup(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1288,12 +1180,7 @@ class TargetPoolsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetSecurityPolicy(
-      std::string const& project, std::string const& region,
-      std::string const& target_pool,
-      google::cloud::cpp::compute::v1::SecurityPolicyReference const&
-          security_policy_reference_resource,
-      Options opts = {});
+  SetSecurityPolicy(std::string const& project, std::string const& region, std::string const& target_pool, google::cloud::cpp::compute::v1::SecurityPolicyReference const& security_policy_reference_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -1306,12 +1193,8 @@ class TargetPoolsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> SetSecurityPolicy(
-      NoAwaitTag, std::string const& project, std::string const& region,
-      std::string const& target_pool,
-      google::cloud::cpp::compute::v1::SecurityPolicyReference const&
-          security_policy_reference_resource,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  SetSecurityPolicy(NoAwaitTag, std::string const& project, std::string const& region, std::string const& target_pool, google::cloud::cpp::compute::v1::SecurityPolicyReference const& security_policy_reference_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -1349,9 +1232,7 @@ class TargetPoolsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetSecurityPolicy(google::cloud::cpp::compute::target_pools::v1::
-                        SetSecurityPolicyRequest const& request,
-                    Options opts = {});
+  SetSecurityPolicy(google::cloud::cpp::compute::target_pools::v1::SetSecurityPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1364,11 +1245,8 @@ class TargetPoolsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> SetSecurityPolicy(
-      NoAwaitTag,
-      google::cloud::cpp::compute::target_pools::v1::
-          SetSecurityPolicyRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  SetSecurityPolicy(NoAwaitTag, google::cloud::cpp::compute::target_pools::v1::SetSecurityPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1380,8 +1258,7 @@ class TargetPoolsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetSecurityPolicy(google::cloud::cpp::compute::v1::Operation const& operation,
-                    Options opts = {});
+  SetSecurityPolicy(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
 
  private:
   std::shared_ptr<TargetPoolsConnection> connection_;

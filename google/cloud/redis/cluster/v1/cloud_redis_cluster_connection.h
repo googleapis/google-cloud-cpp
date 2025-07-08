@@ -19,14 +19,14 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_REDIS_CLUSTER_V1_CLOUD_REDIS_CLUSTER_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_REDIS_CLUSTER_V1_CLOUD_REDIS_CLUSTER_CONNECTION_H
 
-#include "google/cloud/redis/cluster/v1/cloud_redis_cluster_connection_idempotency_policy.h"
-#include "google/cloud/redis/cluster/v1/internal/cloud_redis_cluster_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
+#include "google/cloud/redis/cluster/v1/cloud_redis_cluster_connection_idempotency_policy.h"
+#include "google/cloud/redis/cluster/v1/internal/cloud_redis_cluster_retry_traits.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
@@ -56,8 +56,7 @@ class CloudRedisClusterRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class CloudRedisClusterLimitedErrorCountRetryPolicy
-    : public CloudRedisClusterRetryPolicy {
+class CloudRedisClusterLimitedErrorCountRetryPolicy : public CloudRedisClusterRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -67,14 +66,14 @@ class CloudRedisClusterLimitedErrorCountRetryPolicy
    *     @p maximum_failures == 0.
    */
   explicit CloudRedisClusterLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   CloudRedisClusterLimitedErrorCountRetryPolicy(
       CloudRedisClusterLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : CloudRedisClusterLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : CloudRedisClusterLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   CloudRedisClusterLimitedErrorCountRetryPolicy(
       CloudRedisClusterLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : CloudRedisClusterLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : CloudRedisClusterLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -94,9 +93,7 @@ class CloudRedisClusterLimitedErrorCountRetryPolicy
   using BaseType = CloudRedisClusterRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      redis_cluster_v1_internal::CloudRedisClusterRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<redis_cluster_v1_internal::CloudRedisClusterRetryTraits> impl_;
 };
 
 /**
@@ -109,8 +106,7 @@ class CloudRedisClusterLimitedErrorCountRetryPolicy
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class CloudRedisClusterLimitedTimeRetryPolicy
-    : public CloudRedisClusterRetryPolicy {
+class CloudRedisClusterLimitedTimeRetryPolicy : public CloudRedisClusterRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -135,14 +131,12 @@ class CloudRedisClusterLimitedTimeRetryPolicy
   template <typename DurationRep, typename DurationPeriod>
   explicit CloudRedisClusterLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  CloudRedisClusterLimitedTimeRetryPolicy(
-      CloudRedisClusterLimitedTimeRetryPolicy&& rhs) noexcept
-      : CloudRedisClusterLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  CloudRedisClusterLimitedTimeRetryPolicy(
-      CloudRedisClusterLimitedTimeRetryPolicy const& rhs) noexcept
-      : CloudRedisClusterLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  CloudRedisClusterLimitedTimeRetryPolicy(CloudRedisClusterLimitedTimeRetryPolicy&& rhs) noexcept
+    : CloudRedisClusterLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  CloudRedisClusterLimitedTimeRetryPolicy(CloudRedisClusterLimitedTimeRetryPolicy const& rhs) noexcept
+    : CloudRedisClusterLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -164,18 +158,16 @@ class CloudRedisClusterLimitedTimeRetryPolicy
   using BaseType = CloudRedisClusterRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      redis_cluster_v1_internal::CloudRedisClusterRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<redis_cluster_v1_internal::CloudRedisClusterRetryTraits> impl_;
 };
 
 /**
  * The `CloudRedisClusterConnection` object for `CloudRedisClusterClient`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `CloudRedisClusterClient`. This allows users to inject custom
- * behavior (e.g., with a Google Mock object) when writing tests that use
- * objects of type `CloudRedisClusterClient`.
+ * sets in `CloudRedisClusterClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `CloudRedisClusterClient`.
  *
  * To create a concrete instance, see `MakeCloudRedisClusterConnection()`.
  *
@@ -187,138 +179,118 @@ class CloudRedisClusterConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StreamRange<google::cloud::redis::cluster::v1::Cluster> ListClusters(
-      google::cloud::redis::cluster::v1::ListClustersRequest request);
+  virtual StreamRange<google::cloud::redis::cluster::v1::Cluster>
+  ListClusters(google::cloud::redis::cluster::v1::ListClustersRequest request);
 
-  virtual StatusOr<google::cloud::redis::cluster::v1::Cluster> GetCluster(
-      google::cloud::redis::cluster::v1::GetClusterRequest const& request);
-
-  virtual future<StatusOr<google::cloud::redis::cluster::v1::Cluster>>
-  UpdateCluster(
-      google::cloud::redis::cluster::v1::UpdateClusterRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation> UpdateCluster(
-      NoAwaitTag,
-      google::cloud::redis::cluster::v1::UpdateClusterRequest const& request);
+  virtual StatusOr<google::cloud::redis::cluster::v1::Cluster>
+  GetCluster(google::cloud::redis::cluster::v1::GetClusterRequest const& request);
 
   virtual future<StatusOr<google::cloud::redis::cluster::v1::Cluster>>
-  UpdateCluster(google::longrunning::Operation const& operation);
+  UpdateCluster(google::cloud::redis::cluster::v1::UpdateClusterRequest const& request);
 
-  virtual future<StatusOr<google::protobuf::Any>> DeleteCluster(
-      google::cloud::redis::cluster::v1::DeleteClusterRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation> DeleteCluster(
-      NoAwaitTag,
-      google::cloud::redis::cluster::v1::DeleteClusterRequest const& request);
-
-  virtual future<StatusOr<google::protobuf::Any>> DeleteCluster(
-      google::longrunning::Operation const& operation);
+  virtual StatusOr<google::longrunning::Operation>
+  UpdateCluster(NoAwaitTag, google::cloud::redis::cluster::v1::UpdateClusterRequest const& request);
 
   virtual future<StatusOr<google::cloud::redis::cluster::v1::Cluster>>
-  CreateCluster(
-      google::cloud::redis::cluster::v1::CreateClusterRequest const& request);
+  UpdateCluster( google::longrunning::Operation const& operation);
 
-  virtual StatusOr<google::longrunning::Operation> CreateCluster(
-      NoAwaitTag,
-      google::cloud::redis::cluster::v1::CreateClusterRequest const& request);
+  virtual future<StatusOr<google::protobuf::Any>>
+  DeleteCluster(google::cloud::redis::cluster::v1::DeleteClusterRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation>
+  DeleteCluster(NoAwaitTag, google::cloud::redis::cluster::v1::DeleteClusterRequest const& request);
+
+  virtual future<StatusOr<google::protobuf::Any>>
+  DeleteCluster( google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::redis::cluster::v1::Cluster>>
-  CreateCluster(google::longrunning::Operation const& operation);
+  CreateCluster(google::cloud::redis::cluster::v1::CreateClusterRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation>
+  CreateCluster(NoAwaitTag, google::cloud::redis::cluster::v1::CreateClusterRequest const& request);
+
+  virtual future<StatusOr<google::cloud::redis::cluster::v1::Cluster>>
+  CreateCluster( google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::redis::cluster::v1::CertificateAuthority>
-  GetClusterCertificateAuthority(
-      google::cloud::redis::cluster::v1::
-          GetClusterCertificateAuthorityRequest const& request);
+  GetClusterCertificateAuthority(google::cloud::redis::cluster::v1::GetClusterCertificateAuthorityRequest const& request);
 
   virtual future<StatusOr<google::cloud::redis::cluster::v1::Cluster>>
-  RescheduleClusterMaintenance(
-      google::cloud::redis::cluster::v1::
-          RescheduleClusterMaintenanceRequest const& request);
+  RescheduleClusterMaintenance(google::cloud::redis::cluster::v1::RescheduleClusterMaintenanceRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> RescheduleClusterMaintenance(
-      NoAwaitTag, google::cloud::redis::cluster::v1::
-                      RescheduleClusterMaintenanceRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  RescheduleClusterMaintenance(NoAwaitTag, google::cloud::redis::cluster::v1::RescheduleClusterMaintenanceRequest const& request);
 
   virtual future<StatusOr<google::cloud::redis::cluster::v1::Cluster>>
-  RescheduleClusterMaintenance(google::longrunning::Operation const& operation);
+  RescheduleClusterMaintenance( google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::redis::cluster::v1::BackupCollection>
-  ListBackupCollections(
-      google::cloud::redis::cluster::v1::ListBackupCollectionsRequest request);
+  ListBackupCollections(google::cloud::redis::cluster::v1::ListBackupCollectionsRequest request);
 
   virtual StatusOr<google::cloud::redis::cluster::v1::BackupCollection>
-  GetBackupCollection(
-      google::cloud::redis::cluster::v1::GetBackupCollectionRequest const&
-          request);
+  GetBackupCollection(google::cloud::redis::cluster::v1::GetBackupCollectionRequest const& request);
 
-  virtual StreamRange<google::cloud::redis::cluster::v1::Backup> ListBackups(
-      google::cloud::redis::cluster::v1::ListBackupsRequest request);
+  virtual StreamRange<google::cloud::redis::cluster::v1::Backup>
+  ListBackups(google::cloud::redis::cluster::v1::ListBackupsRequest request);
 
-  virtual StatusOr<google::cloud::redis::cluster::v1::Backup> GetBackup(
-      google::cloud::redis::cluster::v1::GetBackupRequest const& request);
+  virtual StatusOr<google::cloud::redis::cluster::v1::Backup>
+  GetBackup(google::cloud::redis::cluster::v1::GetBackupRequest const& request);
 
-  virtual future<StatusOr<google::protobuf::Any>> DeleteBackup(
-      google::cloud::redis::cluster::v1::DeleteBackupRequest const& request);
+  virtual future<StatusOr<google::protobuf::Any>>
+  DeleteBackup(google::cloud::redis::cluster::v1::DeleteBackupRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> DeleteBackup(
-      NoAwaitTag,
-      google::cloud::redis::cluster::v1::DeleteBackupRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  DeleteBackup(NoAwaitTag, google::cloud::redis::cluster::v1::DeleteBackupRequest const& request);
 
-  virtual future<StatusOr<google::protobuf::Any>> DeleteBackup(
-      google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::protobuf::Any>>
+  DeleteBackup( google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::redis::cluster::v1::Backup>>
-  ExportBackup(
-      google::cloud::redis::cluster::v1::ExportBackupRequest const& request);
+  ExportBackup(google::cloud::redis::cluster::v1::ExportBackupRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> ExportBackup(
-      NoAwaitTag,
-      google::cloud::redis::cluster::v1::ExportBackupRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  ExportBackup(NoAwaitTag, google::cloud::redis::cluster::v1::ExportBackupRequest const& request);
 
   virtual future<StatusOr<google::cloud::redis::cluster::v1::Backup>>
-  ExportBackup(google::longrunning::Operation const& operation);
+  ExportBackup( google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::redis::cluster::v1::Cluster>>
-  BackupCluster(
-      google::cloud::redis::cluster::v1::BackupClusterRequest const& request);
+  BackupCluster(google::cloud::redis::cluster::v1::BackupClusterRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> BackupCluster(
-      NoAwaitTag,
-      google::cloud::redis::cluster::v1::BackupClusterRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  BackupCluster(NoAwaitTag, google::cloud::redis::cluster::v1::BackupClusterRequest const& request);
 
   virtual future<StatusOr<google::cloud::redis::cluster::v1::Cluster>>
-  BackupCluster(google::longrunning::Operation const& operation);
+  BackupCluster( google::longrunning::Operation const& operation);
 
-  virtual StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request);
+  virtual StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request);
 
-  virtual StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request);
+  virtual StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request);
 
-  virtual StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 
-  virtual Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request);
+  virtual Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
 
-  virtual Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request);
+  virtual Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request);
 };
 
 /**
- * A factory function to construct an object of type
- * `CloudRedisClusterConnection`.
+ * A factory function to construct an object of type `CloudRedisClusterConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of
- * CloudRedisClusterClient.
+ * should be passed as an argument to the constructor of CloudRedisClusterClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `CloudRedisClusterConnection`. Expected options are any of the types
- * in the following option lists:
+ * returned `CloudRedisClusterConnection`. Expected options are any of the types in
+ * the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
@@ -328,8 +300,8 @@ class CloudRedisClusterConnection {
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
- * @param options (optional) Configure the `CloudRedisClusterConnection` created
- * by this function.
+ * @param options (optional) Configure the `CloudRedisClusterConnection` created by
+ * this function.
  */
 std::shared_ptr<CloudRedisClusterConnection> MakeCloudRedisClusterConnection(
     Options options = {});

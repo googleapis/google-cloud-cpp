@@ -24,9 +24,9 @@
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/cloud/documentai/v1/document_processor_service.grpc.pb.h>
 #include <google/cloud/location/locations.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
+#include <google/cloud/documentai/v1/document_processor_service.grpc.pb.h>
 #include <memory>
 #include <utility>
 
@@ -39,114 +39,104 @@ class DocumentProcessorServiceStub {
  public:
   virtual ~DocumentProcessorServiceStub() = 0;
 
-  virtual StatusOr<google::cloud::documentai::v1::ProcessResponse>
-  ProcessDocument(
-      grpc::ClientContext& context, Options const& options,
+  virtual StatusOr<google::cloud::documentai::v1::ProcessResponse> ProcessDocument(
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::documentai::v1::ProcessRequest const& request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>>
-  AsyncBatchProcessDocuments(
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncBatchProcessDocuments(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
       google::cloud::documentai::v1::BatchProcessRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> BatchProcessDocuments(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::cloud::documentai::v1::BatchProcessRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::documentai::v1::FetchProcessorTypesResponse>
-  FetchProcessorTypes(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::documentai::v1::FetchProcessorTypesRequest const&
-          request) = 0;
+  virtual StatusOr<google::cloud::documentai::v1::FetchProcessorTypesResponse> FetchProcessorTypes(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::documentai::v1::FetchProcessorTypesRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::documentai::v1::ListProcessorTypesResponse>
-  ListProcessorTypes(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::documentai::v1::ListProcessorTypesRequest const&
-          request) = 0;
+  virtual StatusOr<google::cloud::documentai::v1::ListProcessorTypesResponse> ListProcessorTypes(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::documentai::v1::ListProcessorTypesRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::documentai::v1::ProcessorType>
-  GetProcessorType(grpc::ClientContext& context, Options const& options,
-                   google::cloud::documentai::v1::GetProcessorTypeRequest const&
-                       request) = 0;
+  virtual StatusOr<google::cloud::documentai::v1::ProcessorType> GetProcessorType(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::documentai::v1::GetProcessorTypeRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::documentai::v1::ListProcessorsResponse>
-  ListProcessors(
-      grpc::ClientContext& context, Options const& options,
+  virtual StatusOr<google::cloud::documentai::v1::ListProcessorsResponse> ListProcessors(
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::documentai::v1::ListProcessorsRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::documentai::v1::Processor> GetProcessor(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::documentai::v1::GetProcessorRequest const& request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>>
-  AsyncTrainProcessorVersion(
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncTrainProcessorVersion(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::documentai::v1::TrainProcessorVersionRequest const&
-          request) = 0;
+      google::cloud::documentai::v1::TrainProcessorVersionRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> TrainProcessorVersion(
-      grpc::ClientContext& context, Options options,
-      google::cloud::documentai::v1::TrainProcessorVersionRequest const&
-          request) = 0;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::documentai::v1::TrainProcessorVersionRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::documentai::v1::ProcessorVersion>
-  GetProcessorVersion(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::documentai::v1::GetProcessorVersionRequest const&
-          request) = 0;
+  virtual StatusOr<google::cloud::documentai::v1::ProcessorVersion> GetProcessorVersion(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::documentai::v1::GetProcessorVersionRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::documentai::v1::ListProcessorVersionsResponse>
-  ListProcessorVersions(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::documentai::v1::ListProcessorVersionsRequest const&
-          request) = 0;
+  virtual StatusOr<google::cloud::documentai::v1::ListProcessorVersionsResponse> ListProcessorVersions(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::documentai::v1::ListProcessorVersionsRequest const& request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>>
-  AsyncDeleteProcessorVersion(
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteProcessorVersion(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::documentai::v1::DeleteProcessorVersionRequest const&
-          request) = 0;
+      google::cloud::documentai::v1::DeleteProcessorVersionRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> DeleteProcessorVersion(
-      grpc::ClientContext& context, Options options,
-      google::cloud::documentai::v1::DeleteProcessorVersionRequest const&
-          request) = 0;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::documentai::v1::DeleteProcessorVersionRequest const& request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>>
-  AsyncDeployProcessorVersion(
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncDeployProcessorVersion(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::documentai::v1::DeployProcessorVersionRequest const&
-          request) = 0;
+      google::cloud::documentai::v1::DeployProcessorVersionRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> DeployProcessorVersion(
-      grpc::ClientContext& context, Options options,
-      google::cloud::documentai::v1::DeployProcessorVersionRequest const&
-          request) = 0;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::documentai::v1::DeployProcessorVersionRequest const& request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>>
-  AsyncUndeployProcessorVersion(
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncUndeployProcessorVersion(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::documentai::v1::UndeployProcessorVersionRequest const&
-          request) = 0;
+      google::cloud::documentai::v1::UndeployProcessorVersionRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> UndeployProcessorVersion(
-      grpc::ClientContext& context, Options options,
-      google::cloud::documentai::v1::UndeployProcessorVersionRequest const&
-          request) = 0;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::documentai::v1::UndeployProcessorVersionRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::documentai::v1::Processor> CreateProcessor(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::documentai::v1::CreateProcessorRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteProcessor(
@@ -156,7 +146,8 @@ class DocumentProcessorServiceStub {
       google::cloud::documentai::v1::DeleteProcessorRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> DeleteProcessor(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::cloud::documentai::v1::DeleteProcessorRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncEnableProcessor(
@@ -166,34 +157,31 @@ class DocumentProcessorServiceStub {
       google::cloud::documentai::v1::EnableProcessorRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> EnableProcessor(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::cloud::documentai::v1::EnableProcessorRequest const& request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>>
-  AsyncDisableProcessor(
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncDisableProcessor(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::documentai::v1::DisableProcessorRequest const&
-          request) = 0;
+      google::cloud::documentai::v1::DisableProcessorRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> DisableProcessor(
-      grpc::ClientContext& context, Options options,
-      google::cloud::documentai::v1::DisableProcessorRequest const&
-          request) = 0;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::documentai::v1::DisableProcessorRequest const& request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>>
-  AsyncSetDefaultProcessorVersion(
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncSetDefaultProcessorVersion(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::documentai::v1::SetDefaultProcessorVersionRequest const&
-          request) = 0;
+      google::cloud::documentai::v1::SetDefaultProcessorVersionRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> SetDefaultProcessorVersion(
-      grpc::ClientContext& context, Options options,
-      google::cloud::documentai::v1::SetDefaultProcessorVersionRequest const&
-          request) = 0;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::documentai::v1::SetDefaultProcessorVersionRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncReviewDocument(
       google::cloud::CompletionQueue& cq,
@@ -202,56 +190,60 @@ class DocumentProcessorServiceStub {
       google::cloud::documentai::v1::ReviewDocumentRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> ReviewDocument(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::cloud::documentai::v1::ReviewDocumentRequest const& request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>>
-  AsyncEvaluateProcessorVersion(
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncEvaluateProcessorVersion(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::documentai::v1::EvaluateProcessorVersionRequest const&
-          request) = 0;
+      google::cloud::documentai::v1::EvaluateProcessorVersionRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> EvaluateProcessorVersion(
-      grpc::ClientContext& context, Options options,
-      google::cloud::documentai::v1::EvaluateProcessorVersionRequest const&
-          request) = 0;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::documentai::v1::EvaluateProcessorVersionRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::documentai::v1::Evaluation> GetEvaluation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::documentai::v1::GetEvaluationRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::documentai::v1::ListEvaluationsResponse>
-  ListEvaluations(
-      grpc::ClientContext& context, Options const& options,
+  virtual StatusOr<google::cloud::documentai::v1::ListEvaluationsResponse> ListEvaluations(
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::documentai::v1::ListEvaluationsRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::location::ListLocationsResponse>
-  ListLocations(
-      grpc::ClientContext& context, Options const& options,
+  virtual StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::location::ListLocationsRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::location::Location> GetLocation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::location::GetLocationRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::ListOperationsRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual Status CancelOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::CancelOperationRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
+    google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
@@ -261,231 +253,215 @@ class DocumentProcessorServiceStub {
       google::longrunning::CancelOperationRequest const& request) = 0;
 };
 
-class DefaultDocumentProcessorServiceStub
-    : public DocumentProcessorServiceStub {
+class DefaultDocumentProcessorServiceStub : public DocumentProcessorServiceStub {
  public:
   DefaultDocumentProcessorServiceStub(
-      std::unique_ptr<google::cloud::documentai::v1::DocumentProcessorService::
-                          StubInterface>
-          grpc_stub,
-      std::unique_ptr<google::cloud::location::Locations::StubInterface>
-          locations_stub,
-      std::unique_ptr<google::longrunning::Operations::StubInterface>
-          operations_stub)
+      std::unique_ptr<google::cloud::documentai::v1::DocumentProcessorService::StubInterface> grpc_stub,
+      std::unique_ptr<google::cloud::location::Locations::StubInterface> locations_stub,
+      std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub)
       : grpc_stub_(std::move(grpc_stub)),
         locations_stub_(std::move(locations_stub)),
         operations_stub_(std::move(operations_stub)) {}
 
   StatusOr<google::cloud::documentai::v1::ProcessResponse> ProcessDocument(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::documentai::v1::ProcessRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncBatchProcessDocuments(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::documentai::v1::BatchProcessRequest const& request)
-      override;
+      google::cloud::documentai::v1::BatchProcessRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> BatchProcessDocuments(
-      grpc::ClientContext& context, Options options,
-      google::cloud::documentai::v1::BatchProcessRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::documentai::v1::BatchProcessRequest const& request) override;
 
-  StatusOr<google::cloud::documentai::v1::FetchProcessorTypesResponse>
-  FetchProcessorTypes(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::documentai::v1::FetchProcessorTypesRequest const& request)
-      override;
+  StatusOr<google::cloud::documentai::v1::FetchProcessorTypesResponse> FetchProcessorTypes(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::documentai::v1::FetchProcessorTypesRequest const& request) override;
 
-  StatusOr<google::cloud::documentai::v1::ListProcessorTypesResponse>
-  ListProcessorTypes(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::documentai::v1::ListProcessorTypesRequest const& request)
-      override;
+  StatusOr<google::cloud::documentai::v1::ListProcessorTypesResponse> ListProcessorTypes(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::documentai::v1::ListProcessorTypesRequest const& request) override;
 
   StatusOr<google::cloud::documentai::v1::ProcessorType> GetProcessorType(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::documentai::v1::GetProcessorTypeRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::documentai::v1::GetProcessorTypeRequest const& request) override;
 
-  StatusOr<google::cloud::documentai::v1::ListProcessorsResponse>
-  ListProcessors(grpc::ClientContext& context, Options const& options,
-                 google::cloud::documentai::v1::ListProcessorsRequest const&
-                     request) override;
+  StatusOr<google::cloud::documentai::v1::ListProcessorsResponse> ListProcessors(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::documentai::v1::ListProcessorsRequest const& request) override;
 
   StatusOr<google::cloud::documentai::v1::Processor> GetProcessor(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::documentai::v1::GetProcessorRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::documentai::v1::GetProcessorRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncTrainProcessorVersion(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::documentai::v1::TrainProcessorVersionRequest const&
-          request) override;
+      google::cloud::documentai::v1::TrainProcessorVersionRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> TrainProcessorVersion(
-      grpc::ClientContext& context, Options options,
-      google::cloud::documentai::v1::TrainProcessorVersionRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::documentai::v1::TrainProcessorVersionRequest const& request) override;
 
   StatusOr<google::cloud::documentai::v1::ProcessorVersion> GetProcessorVersion(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::documentai::v1::GetProcessorVersionRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::documentai::v1::GetProcessorVersionRequest const& request) override;
 
-  StatusOr<google::cloud::documentai::v1::ListProcessorVersionsResponse>
-  ListProcessorVersions(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::documentai::v1::ListProcessorVersionsRequest const&
-          request) override;
+  StatusOr<google::cloud::documentai::v1::ListProcessorVersionsResponse> ListProcessorVersions(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::documentai::v1::ListProcessorVersionsRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteProcessorVersion(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::documentai::v1::DeleteProcessorVersionRequest const&
-          request) override;
+      google::cloud::documentai::v1::DeleteProcessorVersionRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteProcessorVersion(
-      grpc::ClientContext& context, Options options,
-      google::cloud::documentai::v1::DeleteProcessorVersionRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::documentai::v1::DeleteProcessorVersionRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeployProcessorVersion(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::documentai::v1::DeployProcessorVersionRequest const&
-          request) override;
+      google::cloud::documentai::v1::DeployProcessorVersionRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeployProcessorVersion(
-      grpc::ClientContext& context, Options options,
-      google::cloud::documentai::v1::DeployProcessorVersionRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::documentai::v1::DeployProcessorVersionRequest const& request) override;
 
-  future<StatusOr<google::longrunning::Operation>>
-  AsyncUndeployProcessorVersion(
+  future<StatusOr<google::longrunning::Operation>> AsyncUndeployProcessorVersion(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::documentai::v1::UndeployProcessorVersionRequest const&
-          request) override;
+      google::cloud::documentai::v1::UndeployProcessorVersionRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UndeployProcessorVersion(
-      grpc::ClientContext& context, Options options,
-      google::cloud::documentai::v1::UndeployProcessorVersionRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::documentai::v1::UndeployProcessorVersionRequest const& request) override;
 
   StatusOr<google::cloud::documentai::v1::Processor> CreateProcessor(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::documentai::v1::CreateProcessorRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::documentai::v1::CreateProcessorRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteProcessor(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::documentai::v1::DeleteProcessorRequest const& request)
-      override;
+      google::cloud::documentai::v1::DeleteProcessorRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteProcessor(
-      grpc::ClientContext& context, Options options,
-      google::cloud::documentai::v1::DeleteProcessorRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::documentai::v1::DeleteProcessorRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncEnableProcessor(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::documentai::v1::EnableProcessorRequest const& request)
-      override;
+      google::cloud::documentai::v1::EnableProcessorRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> EnableProcessor(
-      grpc::ClientContext& context, Options options,
-      google::cloud::documentai::v1::EnableProcessorRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::documentai::v1::EnableProcessorRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDisableProcessor(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::documentai::v1::DisableProcessorRequest const& request)
-      override;
+      google::cloud::documentai::v1::DisableProcessorRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DisableProcessor(
-      grpc::ClientContext& context, Options options,
-      google::cloud::documentai::v1::DisableProcessorRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::documentai::v1::DisableProcessorRequest const& request) override;
 
-  future<StatusOr<google::longrunning::Operation>>
-  AsyncSetDefaultProcessorVersion(
+  future<StatusOr<google::longrunning::Operation>> AsyncSetDefaultProcessorVersion(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::documentai::v1::SetDefaultProcessorVersionRequest const&
-          request) override;
+      google::cloud::documentai::v1::SetDefaultProcessorVersionRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> SetDefaultProcessorVersion(
-      grpc::ClientContext& context, Options options,
-      google::cloud::documentai::v1::SetDefaultProcessorVersionRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::documentai::v1::SetDefaultProcessorVersionRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncReviewDocument(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::documentai::v1::ReviewDocumentRequest const& request)
-      override;
+      google::cloud::documentai::v1::ReviewDocumentRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> ReviewDocument(
-      grpc::ClientContext& context, Options options,
-      google::cloud::documentai::v1::ReviewDocumentRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::documentai::v1::ReviewDocumentRequest const& request) override;
 
-  future<StatusOr<google::longrunning::Operation>>
-  AsyncEvaluateProcessorVersion(
+  future<StatusOr<google::longrunning::Operation>> AsyncEvaluateProcessorVersion(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::documentai::v1::EvaluateProcessorVersionRequest const&
-          request) override;
+      google::cloud::documentai::v1::EvaluateProcessorVersionRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> EvaluateProcessorVersion(
-      grpc::ClientContext& context, Options options,
-      google::cloud::documentai::v1::EvaluateProcessorVersionRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::documentai::v1::EvaluateProcessorVersionRequest const& request) override;
 
   StatusOr<google::cloud::documentai::v1::Evaluation> GetEvaluation(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::documentai::v1::GetEvaluationRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::documentai::v1::GetEvaluationRequest const& request) override;
 
-  StatusOr<google::cloud::documentai::v1::ListEvaluationsResponse>
-  ListEvaluations(grpc::ClientContext& context, Options const& options,
-                  google::cloud::documentai::v1::ListEvaluationsRequest const&
-                      request) override;
+  StatusOr<google::cloud::documentai::v1::ListEvaluationsResponse> ListEvaluations(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::documentai::v1::ListEvaluationsRequest const& request) override;
 
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::location::ListLocationsRequest const& request) override;
 
   StatusOr<google::cloud::location::Location> GetLocation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::location::GetLocationRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -501,13 +477,9 @@ class DefaultDocumentProcessorServiceStub
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  std::unique_ptr<
-      google::cloud::documentai::v1::DocumentProcessorService::StubInterface>
-      grpc_stub_;
-  std::unique_ptr<google::cloud::location::Locations::StubInterface>
-      locations_stub_;
-  std::unique_ptr<google::longrunning::Operations::StubInterface>
-      operations_stub_;
+  std::unique_ptr<google::cloud::documentai::v1::DocumentProcessorService::StubInterface> grpc_stub_;
+  std::unique_ptr<google::cloud::location::Locations::StubInterface> locations_stub_;
+  std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

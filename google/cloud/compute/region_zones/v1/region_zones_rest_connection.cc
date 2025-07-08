@@ -17,12 +17,12 @@
 // source: google/cloud/compute/region_zones/v1/region_zones.proto
 
 #include "google/cloud/compute/region_zones/v1/region_zones_rest_connection.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/compute/region_zones/v1/internal/region_zones_option_defaults.h"
 #include "google/cloud/compute/region_zones/v1/internal/region_zones_rest_connection_impl.h"
 #include "google/cloud/compute/region_zones/v1/internal/region_zones_rest_stub_factory.h"
 #include "google/cloud/compute/region_zones/v1/internal/region_zones_tracing_connection.h"
 #include "google/cloud/compute/region_zones/v1/region_zones_options.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/rest_background_threads_impl.h"
 #include "google/cloud/internal/rest_options.h"
@@ -36,17 +36,15 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<RegionZonesConnection> MakeRegionZonesConnectionRest(
     Options options) {
-  internal::CheckExpectedOptions<
-      CommonOptionList, RestOptionList, UnifiedCredentialsOptionList,
-      rest_internal::TargetApiVersionOption, RegionZonesPolicyOptionList>(
-      options, __func__);
+  internal::CheckExpectedOptions<CommonOptionList, RestOptionList,
+      UnifiedCredentialsOptionList, rest_internal::TargetApiVersionOption,
+      RegionZonesPolicyOptionList>(options, __func__);
   options = compute_region_zones_v1_internal::RegionZonesDefaultOptions(
       std::move(options));
   auto background = std::make_unique<
       rest_internal::AutomaticallyCreatedRestBackgroundThreads>();
-  auto stub =
-      compute_region_zones_v1_internal::CreateDefaultRegionZonesRestStub(
-          options);
+  auto stub = compute_region_zones_v1_internal::CreateDefaultRegionZonesRestStub(
+      options);
   return compute_region_zones_v1_internal::MakeRegionZonesTracingConnection(
       std::make_shared<
           compute_region_zones_v1_internal::RegionZonesRestConnectionImpl>(

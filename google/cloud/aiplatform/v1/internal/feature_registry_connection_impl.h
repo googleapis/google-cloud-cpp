@@ -46,142 +46,130 @@ class FeatureRegistryServiceConnectionImpl
   ~FeatureRegistryServiceConnectionImpl() override = default;
 
   FeatureRegistryServiceConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<aiplatform_v1_internal::FeatureRegistryServiceStub> stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<aiplatform_v1_internal::FeatureRegistryServiceStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
   future<StatusOr<google::cloud::aiplatform::v1::FeatureGroup>>
-  CreateFeatureGroup(
-      google::cloud::aiplatform::v1::CreateFeatureGroupRequest const& request)
-      override;
+  CreateFeatureGroup(google::cloud::aiplatform::v1::CreateFeatureGroupRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> CreateFeatureGroup(
-      NoAwaitTag,
-      google::cloud::aiplatform::v1::CreateFeatureGroupRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  CreateFeatureGroup(NoAwaitTag,
+      google::cloud::aiplatform::v1::CreateFeatureGroupRequest const& request) override;
 
   future<StatusOr<google::cloud::aiplatform::v1::FeatureGroup>>
-  CreateFeatureGroup(google::longrunning::Operation const& operation) override;
+  CreateFeatureGroup(
+      google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::cloud::aiplatform::v1::FeatureGroup> GetFeatureGroup(
-      google::cloud::aiplatform::v1::GetFeatureGroupRequest const& request)
-      override;
+  StatusOr<google::cloud::aiplatform::v1::FeatureGroup>
+  GetFeatureGroup(google::cloud::aiplatform::v1::GetFeatureGroupRequest const& request) override;
 
-  StreamRange<google::cloud::aiplatform::v1::FeatureGroup> ListFeatureGroups(
-      google::cloud::aiplatform::v1::ListFeatureGroupsRequest request) override;
+  StreamRange<google::cloud::aiplatform::v1::FeatureGroup>
+  ListFeatureGroups(google::cloud::aiplatform::v1::ListFeatureGroupsRequest request) override;
+
+  future<StatusOr<google::cloud::aiplatform::v1::FeatureGroup>>
+  UpdateFeatureGroup(google::cloud::aiplatform::v1::UpdateFeatureGroupRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  UpdateFeatureGroup(NoAwaitTag,
+      google::cloud::aiplatform::v1::UpdateFeatureGroupRequest const& request) override;
 
   future<StatusOr<google::cloud::aiplatform::v1::FeatureGroup>>
   UpdateFeatureGroup(
-      google::cloud::aiplatform::v1::UpdateFeatureGroupRequest const& request)
-      override;
+      google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::longrunning::Operation> UpdateFeatureGroup(
-      NoAwaitTag,
-      google::cloud::aiplatform::v1::UpdateFeatureGroupRequest const& request)
-      override;
+  future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteFeatureGroup(google::cloud::aiplatform::v1::DeleteFeatureGroupRequest const& request) override;
 
-  future<StatusOr<google::cloud::aiplatform::v1::FeatureGroup>>
-  UpdateFeatureGroup(google::longrunning::Operation const& operation) override;
+  StatusOr<google::longrunning::Operation>
+  DeleteFeatureGroup(NoAwaitTag,
+      google::cloud::aiplatform::v1::DeleteFeatureGroupRequest const& request) override;
 
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
   DeleteFeatureGroup(
-      google::cloud::aiplatform::v1::DeleteFeatureGroupRequest const& request)
-      override;
-
-  StatusOr<google::longrunning::Operation> DeleteFeatureGroup(
-      NoAwaitTag,
-      google::cloud::aiplatform::v1::DeleteFeatureGroupRequest const& request)
-      override;
-
-  future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteFeatureGroup(google::longrunning::Operation const& operation) override;
-
-  future<StatusOr<google::cloud::aiplatform::v1::Feature>> CreateFeature(
-      google::cloud::aiplatform::v1::CreateFeatureRequest const& request)
-      override;
-
-  StatusOr<google::longrunning::Operation> CreateFeature(
-      NoAwaitTag,
-      google::cloud::aiplatform::v1::CreateFeatureRequest const& request)
-      override;
-
-  future<StatusOr<google::cloud::aiplatform::v1::Feature>> CreateFeature(
       google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::aiplatform::v1::Feature>>
+  CreateFeature(google::cloud::aiplatform::v1::CreateFeatureRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  CreateFeature(NoAwaitTag,
+      google::cloud::aiplatform::v1::CreateFeatureRequest const& request) override;
+
+  future<StatusOr<google::cloud::aiplatform::v1::Feature>>
+  CreateFeature(
+      google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::aiplatform::v1::BatchCreateFeaturesResponse>>
+  BatchCreateFeatures(google::cloud::aiplatform::v1::BatchCreateFeaturesRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  BatchCreateFeatures(NoAwaitTag,
+      google::cloud::aiplatform::v1::BatchCreateFeaturesRequest const& request) override;
 
   future<StatusOr<google::cloud::aiplatform::v1::BatchCreateFeaturesResponse>>
   BatchCreateFeatures(
-      google::cloud::aiplatform::v1::BatchCreateFeaturesRequest const& request)
-      override;
+      google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::longrunning::Operation> BatchCreateFeatures(
-      NoAwaitTag,
-      google::cloud::aiplatform::v1::BatchCreateFeaturesRequest const& request)
-      override;
+  StatusOr<google::cloud::aiplatform::v1::Feature>
+  GetFeature(google::cloud::aiplatform::v1::GetFeatureRequest const& request) override;
 
-  future<StatusOr<google::cloud::aiplatform::v1::BatchCreateFeaturesResponse>>
-  BatchCreateFeatures(google::longrunning::Operation const& operation) override;
+  StreamRange<google::cloud::aiplatform::v1::Feature>
+  ListFeatures(google::cloud::aiplatform::v1::ListFeaturesRequest request) override;
 
-  StatusOr<google::cloud::aiplatform::v1::Feature> GetFeature(
-      google::cloud::aiplatform::v1::GetFeatureRequest const& request) override;
+  future<StatusOr<google::cloud::aiplatform::v1::Feature>>
+  UpdateFeature(google::cloud::aiplatform::v1::UpdateFeatureRequest const& request) override;
 
-  StreamRange<google::cloud::aiplatform::v1::Feature> ListFeatures(
-      google::cloud::aiplatform::v1::ListFeaturesRequest request) override;
+  StatusOr<google::longrunning::Operation>
+  UpdateFeature(NoAwaitTag,
+      google::cloud::aiplatform::v1::UpdateFeatureRequest const& request) override;
 
-  future<StatusOr<google::cloud::aiplatform::v1::Feature>> UpdateFeature(
-      google::cloud::aiplatform::v1::UpdateFeatureRequest const& request)
-      override;
-
-  StatusOr<google::longrunning::Operation> UpdateFeature(
-      NoAwaitTag,
-      google::cloud::aiplatform::v1::UpdateFeatureRequest const& request)
-      override;
-
-  future<StatusOr<google::cloud::aiplatform::v1::Feature>> UpdateFeature(
+  future<StatusOr<google::cloud::aiplatform::v1::Feature>>
+  UpdateFeature(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteFeature(google::cloud::aiplatform::v1::DeleteFeatureRequest const&
-                    request) override;
+  DeleteFeature(google::cloud::aiplatform::v1::DeleteFeatureRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> DeleteFeature(
-      NoAwaitTag,
-      google::cloud::aiplatform::v1::DeleteFeatureRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  DeleteFeature(NoAwaitTag,
+      google::cloud::aiplatform::v1::DeleteFeatureRequest const& request) override;
 
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteFeature(google::longrunning::Operation const& operation) override;
+  DeleteFeature(
+      google::longrunning::Operation const& operation) override;
 
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request) override;
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request) override;
 
-  StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request) override;
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request) override;
+  StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request) override;
 
-  Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request) override;
+  Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request) override;
 
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request) override;
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> WaitOperation(
-      google::longrunning::WaitOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  WaitOperation(google::longrunning::WaitOperationRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

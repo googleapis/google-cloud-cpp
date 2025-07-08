@@ -28,13 +28,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 TransitionRouteGroupsClient::TransitionRouteGroupsClient(
     std::shared_ptr<TransitionRouteGroupsConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 TransitionRouteGroupsClient::~TransitionRouteGroupsClient() = default;
 
 StreamRange<google::cloud::dialogflow::cx::v3::TransitionRouteGroup>
-TransitionRouteGroupsClient::ListTransitionRouteGroups(
-    std::string const& parent, Options opts) {
+TransitionRouteGroupsClient::ListTransitionRouteGroups(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dialogflow::cx::v3::ListTransitionRouteGroupsRequest request;
   request.set_parent(parent);
@@ -42,16 +41,13 @@ TransitionRouteGroupsClient::ListTransitionRouteGroups(
 }
 
 StreamRange<google::cloud::dialogflow::cx::v3::TransitionRouteGroup>
-TransitionRouteGroupsClient::ListTransitionRouteGroups(
-    google::cloud::dialogflow::cx::v3::ListTransitionRouteGroupsRequest request,
-    Options opts) {
+TransitionRouteGroupsClient::ListTransitionRouteGroups(google::cloud::dialogflow::cx::v3::ListTransitionRouteGroupsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListTransitionRouteGroups(std::move(request));
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::TransitionRouteGroup>
-TransitionRouteGroupsClient::GetTransitionRouteGroup(std::string const& name,
-                                                     Options opts) {
+TransitionRouteGroupsClient::GetTransitionRouteGroup(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dialogflow::cx::v3::GetTransitionRouteGroupRequest request;
   request.set_name(name);
@@ -59,20 +55,13 @@ TransitionRouteGroupsClient::GetTransitionRouteGroup(std::string const& name,
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::TransitionRouteGroup>
-TransitionRouteGroupsClient::GetTransitionRouteGroup(
-    google::cloud::dialogflow::cx::v3::GetTransitionRouteGroupRequest const&
-        request,
-    Options opts) {
+TransitionRouteGroupsClient::GetTransitionRouteGroup(google::cloud::dialogflow::cx::v3::GetTransitionRouteGroupRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetTransitionRouteGroup(request);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::TransitionRouteGroup>
-TransitionRouteGroupsClient::CreateTransitionRouteGroup(
-    std::string const& parent,
-    google::cloud::dialogflow::cx::v3::TransitionRouteGroup const&
-        transition_route_group,
-    Options opts) {
+TransitionRouteGroupsClient::CreateTransitionRouteGroup(std::string const& parent, google::cloud::dialogflow::cx::v3::TransitionRouteGroup const& transition_route_group, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dialogflow::cx::v3::CreateTransitionRouteGroupRequest request;
   request.set_parent(parent);
@@ -81,19 +70,13 @@ TransitionRouteGroupsClient::CreateTransitionRouteGroup(
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::TransitionRouteGroup>
-TransitionRouteGroupsClient::CreateTransitionRouteGroup(
-    google::cloud::dialogflow::cx::v3::CreateTransitionRouteGroupRequest const&
-        request,
-    Options opts) {
+TransitionRouteGroupsClient::CreateTransitionRouteGroup(google::cloud::dialogflow::cx::v3::CreateTransitionRouteGroupRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateTransitionRouteGroup(request);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::TransitionRouteGroup>
-TransitionRouteGroupsClient::UpdateTransitionRouteGroup(
-    google::cloud::dialogflow::cx::v3::TransitionRouteGroup const&
-        transition_route_group,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+TransitionRouteGroupsClient::UpdateTransitionRouteGroup(google::cloud::dialogflow::cx::v3::TransitionRouteGroup const& transition_route_group, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dialogflow::cx::v3::UpdateTransitionRouteGroupRequest request;
   *request.mutable_transition_route_group() = transition_route_group;
@@ -102,48 +85,39 @@ TransitionRouteGroupsClient::UpdateTransitionRouteGroup(
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::TransitionRouteGroup>
-TransitionRouteGroupsClient::UpdateTransitionRouteGroup(
-    google::cloud::dialogflow::cx::v3::UpdateTransitionRouteGroupRequest const&
-        request,
-    Options opts) {
+TransitionRouteGroupsClient::UpdateTransitionRouteGroup(google::cloud::dialogflow::cx::v3::UpdateTransitionRouteGroupRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateTransitionRouteGroup(request);
 }
 
-Status TransitionRouteGroupsClient::DeleteTransitionRouteGroup(
-    std::string const& name, Options opts) {
+Status
+TransitionRouteGroupsClient::DeleteTransitionRouteGroup(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dialogflow::cx::v3::DeleteTransitionRouteGroupRequest request;
   request.set_name(name);
   return connection_->DeleteTransitionRouteGroup(request);
 }
 
-Status TransitionRouteGroupsClient::DeleteTransitionRouteGroup(
-    google::cloud::dialogflow::cx::v3::DeleteTransitionRouteGroupRequest const&
-        request,
-    Options opts) {
+Status
+TransitionRouteGroupsClient::DeleteTransitionRouteGroup(google::cloud::dialogflow::cx::v3::DeleteTransitionRouteGroupRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteTransitionRouteGroup(request);
 }
 
 StreamRange<google::cloud::location::Location>
-TransitionRouteGroupsClient::ListLocations(
-    google::cloud::location::ListLocationsRequest request, Options opts) {
+TransitionRouteGroupsClient::ListLocations(google::cloud::location::ListLocationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListLocations(std::move(request));
 }
 
 StatusOr<google::cloud::location::Location>
-TransitionRouteGroupsClient::GetLocation(
-    google::cloud::location::GetLocationRequest const& request, Options opts) {
+TransitionRouteGroupsClient::GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetLocation(request);
 }
 
 StreamRange<google::longrunning::Operation>
-TransitionRouteGroupsClient::ListOperations(std::string const& name,
-                                            std::string const& filter,
-                                            Options opts) {
+TransitionRouteGroupsClient::ListOperations(std::string const& name, std::string const& filter, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::ListOperationsRequest request;
   request.set_name(name);
@@ -152,15 +126,13 @@ TransitionRouteGroupsClient::ListOperations(std::string const& name,
 }
 
 StreamRange<google::longrunning::Operation>
-TransitionRouteGroupsClient::ListOperations(
-    google::longrunning::ListOperationsRequest request, Options opts) {
+TransitionRouteGroupsClient::ListOperations(google::longrunning::ListOperationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOperations(std::move(request));
 }
 
 StatusOr<google::longrunning::Operation>
-TransitionRouteGroupsClient::GetOperation(std::string const& name,
-                                          Options opts) {
+TransitionRouteGroupsClient::GetOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
@@ -168,22 +140,21 @@ TransitionRouteGroupsClient::GetOperation(std::string const& name,
 }
 
 StatusOr<google::longrunning::Operation>
-TransitionRouteGroupsClient::GetOperation(
-    google::longrunning::GetOperationRequest const& request, Options opts) {
+TransitionRouteGroupsClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }
 
-Status TransitionRouteGroupsClient::CancelOperation(std::string const& name,
-                                                    Options opts) {
+Status
+TransitionRouteGroupsClient::CancelOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::CancelOperationRequest request;
   request.set_name(name);
   return connection_->CancelOperation(request);
 }
 
-Status TransitionRouteGroupsClient::CancelOperation(
-    google::longrunning::CancelOperationRequest const& request, Options opts) {
+Status
+TransitionRouteGroupsClient::CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelOperation(request);
 }

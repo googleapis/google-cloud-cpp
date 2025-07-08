@@ -28,15 +28,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 SubscriptionAdminClient::SubscriptionAdminClient(
     std::shared_ptr<SubscriptionAdminConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 SubscriptionAdminClient::~SubscriptionAdminClient() = default;
 
 StatusOr<google::pubsub::v1::Subscription>
-SubscriptionAdminClient::CreateSubscription(
-    std::string const& name, std::string const& topic,
-    google::pubsub::v1::PushConfig const& push_config,
-    std::int32_t ack_deadline_seconds, Options opts) {
+SubscriptionAdminClient::CreateSubscription(std::string const& name, std::string const& topic, google::pubsub::v1::PushConfig const& push_config, std::int32_t ack_deadline_seconds, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::pubsub::v1::Subscription request;
   request.set_name(name);
@@ -47,15 +44,13 @@ SubscriptionAdminClient::CreateSubscription(
 }
 
 StatusOr<google::pubsub::v1::Subscription>
-SubscriptionAdminClient::CreateSubscription(
-    google::pubsub::v1::Subscription const& request, Options opts) {
+SubscriptionAdminClient::CreateSubscription(google::pubsub::v1::Subscription const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateSubscription(request);
 }
 
 StatusOr<google::pubsub::v1::Subscription>
-SubscriptionAdminClient::GetSubscription(std::string const& subscription,
-                                         Options opts) {
+SubscriptionAdminClient::GetSubscription(std::string const& subscription, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::pubsub::v1::GetSubscriptionRequest request;
   request.set_subscription(subscription);
@@ -63,16 +58,13 @@ SubscriptionAdminClient::GetSubscription(std::string const& subscription,
 }
 
 StatusOr<google::pubsub::v1::Subscription>
-SubscriptionAdminClient::GetSubscription(
-    google::pubsub::v1::GetSubscriptionRequest const& request, Options opts) {
+SubscriptionAdminClient::GetSubscription(google::pubsub::v1::GetSubscriptionRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetSubscription(request);
 }
 
 StatusOr<google::pubsub::v1::Subscription>
-SubscriptionAdminClient::UpdateSubscription(
-    google::pubsub::v1::Subscription const& subscription,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+SubscriptionAdminClient::UpdateSubscription(google::pubsub::v1::Subscription const& subscription, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::pubsub::v1::UpdateSubscriptionRequest request;
   *request.mutable_subscription() = subscription;
@@ -81,16 +73,13 @@ SubscriptionAdminClient::UpdateSubscription(
 }
 
 StatusOr<google::pubsub::v1::Subscription>
-SubscriptionAdminClient::UpdateSubscription(
-    google::pubsub::v1::UpdateSubscriptionRequest const& request,
-    Options opts) {
+SubscriptionAdminClient::UpdateSubscription(google::pubsub::v1::UpdateSubscriptionRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateSubscription(request);
 }
 
 StreamRange<google::pubsub::v1::Subscription>
-SubscriptionAdminClient::ListSubscriptions(std::string const& project,
-                                           Options opts) {
+SubscriptionAdminClient::ListSubscriptions(std::string const& project, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::pubsub::v1::ListSubscriptionsRequest request;
   request.set_project(project);
@@ -98,30 +87,27 @@ SubscriptionAdminClient::ListSubscriptions(std::string const& project,
 }
 
 StreamRange<google::pubsub::v1::Subscription>
-SubscriptionAdminClient::ListSubscriptions(
-    google::pubsub::v1::ListSubscriptionsRequest request, Options opts) {
+SubscriptionAdminClient::ListSubscriptions(google::pubsub::v1::ListSubscriptionsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListSubscriptions(std::move(request));
 }
 
-Status SubscriptionAdminClient::DeleteSubscription(
-    std::string const& subscription, Options opts) {
+Status
+SubscriptionAdminClient::DeleteSubscription(std::string const& subscription, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::pubsub::v1::DeleteSubscriptionRequest request;
   request.set_subscription(subscription);
   return connection_->DeleteSubscription(request);
 }
 
-Status SubscriptionAdminClient::DeleteSubscription(
-    google::pubsub::v1::DeleteSubscriptionRequest const& request,
-    Options opts) {
+Status
+SubscriptionAdminClient::DeleteSubscription(google::pubsub::v1::DeleteSubscriptionRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteSubscription(request);
 }
 
-Status SubscriptionAdminClient::ModifyPushConfig(
-    std::string const& subscription,
-    google::pubsub::v1::PushConfig const& push_config, Options opts) {
+Status
+SubscriptionAdminClient::ModifyPushConfig(std::string const& subscription, google::pubsub::v1::PushConfig const& push_config, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::pubsub::v1::ModifyPushConfigRequest request;
   request.set_subscription(subscription);
@@ -129,29 +115,28 @@ Status SubscriptionAdminClient::ModifyPushConfig(
   return connection_->ModifyPushConfig(request);
 }
 
-Status SubscriptionAdminClient::ModifyPushConfig(
-    google::pubsub::v1::ModifyPushConfigRequest const& request, Options opts) {
+Status
+SubscriptionAdminClient::ModifyPushConfig(google::pubsub::v1::ModifyPushConfigRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ModifyPushConfig(request);
 }
 
-StatusOr<google::pubsub::v1::Snapshot> SubscriptionAdminClient::GetSnapshot(
-    std::string const& snapshot, Options opts) {
+StatusOr<google::pubsub::v1::Snapshot>
+SubscriptionAdminClient::GetSnapshot(std::string const& snapshot, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::pubsub::v1::GetSnapshotRequest request;
   request.set_snapshot(snapshot);
   return connection_->GetSnapshot(request);
 }
 
-StatusOr<google::pubsub::v1::Snapshot> SubscriptionAdminClient::GetSnapshot(
-    google::pubsub::v1::GetSnapshotRequest const& request, Options opts) {
+StatusOr<google::pubsub::v1::Snapshot>
+SubscriptionAdminClient::GetSnapshot(google::pubsub::v1::GetSnapshotRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetSnapshot(request);
 }
 
 StreamRange<google::pubsub::v1::Snapshot>
-SubscriptionAdminClient::ListSnapshots(std::string const& project,
-                                       Options opts) {
+SubscriptionAdminClient::ListSnapshots(std::string const& project, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::pubsub::v1::ListSnapshotsRequest request;
   request.set_project(project);
@@ -159,14 +144,13 @@ SubscriptionAdminClient::ListSnapshots(std::string const& project,
 }
 
 StreamRange<google::pubsub::v1::Snapshot>
-SubscriptionAdminClient::ListSnapshots(
-    google::pubsub::v1::ListSnapshotsRequest request, Options opts) {
+SubscriptionAdminClient::ListSnapshots(google::pubsub::v1::ListSnapshotsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListSnapshots(std::move(request));
 }
 
-StatusOr<google::pubsub::v1::Snapshot> SubscriptionAdminClient::CreateSnapshot(
-    std::string const& name, std::string const& subscription, Options opts) {
+StatusOr<google::pubsub::v1::Snapshot>
+SubscriptionAdminClient::CreateSnapshot(std::string const& name, std::string const& subscription, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::pubsub::v1::CreateSnapshotRequest request;
   request.set_name(name);
@@ -174,15 +158,14 @@ StatusOr<google::pubsub::v1::Snapshot> SubscriptionAdminClient::CreateSnapshot(
   return connection_->CreateSnapshot(request);
 }
 
-StatusOr<google::pubsub::v1::Snapshot> SubscriptionAdminClient::CreateSnapshot(
-    google::pubsub::v1::CreateSnapshotRequest const& request, Options opts) {
+StatusOr<google::pubsub::v1::Snapshot>
+SubscriptionAdminClient::CreateSnapshot(google::pubsub::v1::CreateSnapshotRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateSnapshot(request);
 }
 
-StatusOr<google::pubsub::v1::Snapshot> SubscriptionAdminClient::UpdateSnapshot(
-    google::pubsub::v1::Snapshot const& snapshot,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+StatusOr<google::pubsub::v1::Snapshot>
+SubscriptionAdminClient::UpdateSnapshot(google::pubsub::v1::Snapshot const& snapshot, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::pubsub::v1::UpdateSnapshotRequest request;
   *request.mutable_snapshot() = snapshot;
@@ -190,47 +173,46 @@ StatusOr<google::pubsub::v1::Snapshot> SubscriptionAdminClient::UpdateSnapshot(
   return connection_->UpdateSnapshot(request);
 }
 
-StatusOr<google::pubsub::v1::Snapshot> SubscriptionAdminClient::UpdateSnapshot(
-    google::pubsub::v1::UpdateSnapshotRequest const& request, Options opts) {
+StatusOr<google::pubsub::v1::Snapshot>
+SubscriptionAdminClient::UpdateSnapshot(google::pubsub::v1::UpdateSnapshotRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateSnapshot(request);
 }
 
-Status SubscriptionAdminClient::DeleteSnapshot(std::string const& snapshot,
-                                               Options opts) {
+Status
+SubscriptionAdminClient::DeleteSnapshot(std::string const& snapshot, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::pubsub::v1::DeleteSnapshotRequest request;
   request.set_snapshot(snapshot);
   return connection_->DeleteSnapshot(request);
 }
 
-Status SubscriptionAdminClient::DeleteSnapshot(
-    google::pubsub::v1::DeleteSnapshotRequest const& request, Options opts) {
+Status
+SubscriptionAdminClient::DeleteSnapshot(google::pubsub::v1::DeleteSnapshotRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteSnapshot(request);
 }
 
-StatusOr<google::pubsub::v1::SeekResponse> SubscriptionAdminClient::Seek(
-    google::pubsub::v1::SeekRequest const& request, Options opts) {
+StatusOr<google::pubsub::v1::SeekResponse>
+SubscriptionAdminClient::Seek(google::pubsub::v1::SeekRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->Seek(request);
 }
 
-StatusOr<google::iam::v1::Policy> SubscriptionAdminClient::SetIamPolicy(
-    google::iam::v1::SetIamPolicyRequest const& request, Options opts) {
+StatusOr<google::iam::v1::Policy>
+SubscriptionAdminClient::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetIamPolicy(request);
 }
 
-StatusOr<google::iam::v1::Policy> SubscriptionAdminClient::GetIamPolicy(
-    google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
+StatusOr<google::iam::v1::Policy>
+SubscriptionAdminClient::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetIamPolicy(request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-SubscriptionAdminClient::TestIamPermissions(
-    google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
+SubscriptionAdminClient::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->TestIamPermissions(request);
 }

@@ -29,35 +29,28 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-DataprocMetastoreFederationTracingConnection::
-    DataprocMetastoreFederationTracingConnection(
-        std::shared_ptr<metastore_v1::DataprocMetastoreFederationConnection>
-            child)
+DataprocMetastoreFederationTracingConnection::DataprocMetastoreFederationTracingConnection(
+    std::shared_ptr<metastore_v1::DataprocMetastoreFederationConnection> child)
     : child_(std::move(child)) {}
 
 StreamRange<google::cloud::metastore::v1::Federation>
-DataprocMetastoreFederationTracingConnection::ListFederations(
-    google::cloud::metastore::v1::ListFederationsRequest request) {
-  auto span = internal::MakeSpan(
-      "metastore_v1::DataprocMetastoreFederationConnection::ListFederations");
+DataprocMetastoreFederationTracingConnection::ListFederations(google::cloud::metastore::v1::ListFederationsRequest request) {
+  auto span = internal::MakeSpan("metastore_v1::DataprocMetastoreFederationConnection::ListFederations");
   internal::OTelScope scope(span);
   auto sr = child_->ListFederations(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::metastore::v1::Federation>(std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::metastore::v1::Federation>(
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::metastore::v1::Federation>
-DataprocMetastoreFederationTracingConnection::GetFederation(
-    google::cloud::metastore::v1::GetFederationRequest const& request) {
-  auto span = internal::MakeSpan(
-      "metastore_v1::DataprocMetastoreFederationConnection::GetFederation");
+DataprocMetastoreFederationTracingConnection::GetFederation(google::cloud::metastore::v1::GetFederationRequest const& request) {
+  auto span = internal::MakeSpan("metastore_v1::DataprocMetastoreFederationConnection::GetFederation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetFederation(request));
 }
 
 future<StatusOr<google::cloud::metastore::v1::Federation>>
-DataprocMetastoreFederationTracingConnection::CreateFederation(
-    google::cloud::metastore::v1::CreateFederationRequest const& request) {
+DataprocMetastoreFederationTracingConnection::CreateFederation(google::cloud::metastore::v1::CreateFederationRequest const& request) {
   auto span = internal::MakeSpan(
       "metastore_v1::DataprocMetastoreFederationConnection::CreateFederation");
   internal::OTelScope scope(span);
@@ -66,13 +59,12 @@ DataprocMetastoreFederationTracingConnection::CreateFederation(
 
 StatusOr<google::longrunning::Operation>
 DataprocMetastoreFederationTracingConnection::CreateFederation(
-    NoAwaitTag,
-    google::cloud::metastore::v1::CreateFederationRequest const& request) {
+    NoAwaitTag, google::cloud::metastore::v1::CreateFederationRequest const& request) {
   auto span = internal::MakeSpan(
       "metastore_v1::DataprocMetastoreFederationConnection::CreateFederation");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span,
-                           child_->CreateFederation(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->CreateFederation(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::metastore::v1::Federation>>
@@ -82,12 +74,11 @@ DataprocMetastoreFederationTracingConnection::CreateFederation(
       "metastore_v1::DataprocMetastoreFederationConnection::CreateFederation");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->CreateFederation(operation));
+      child_->CreateFederation(operation));
 }
 
 future<StatusOr<google::cloud::metastore::v1::Federation>>
-DataprocMetastoreFederationTracingConnection::UpdateFederation(
-    google::cloud::metastore::v1::UpdateFederationRequest const& request) {
+DataprocMetastoreFederationTracingConnection::UpdateFederation(google::cloud::metastore::v1::UpdateFederationRequest const& request) {
   auto span = internal::MakeSpan(
       "metastore_v1::DataprocMetastoreFederationConnection::UpdateFederation");
   internal::OTelScope scope(span);
@@ -96,13 +87,12 @@ DataprocMetastoreFederationTracingConnection::UpdateFederation(
 
 StatusOr<google::longrunning::Operation>
 DataprocMetastoreFederationTracingConnection::UpdateFederation(
-    NoAwaitTag,
-    google::cloud::metastore::v1::UpdateFederationRequest const& request) {
+    NoAwaitTag, google::cloud::metastore::v1::UpdateFederationRequest const& request) {
   auto span = internal::MakeSpan(
       "metastore_v1::DataprocMetastoreFederationConnection::UpdateFederation");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span,
-                           child_->UpdateFederation(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->UpdateFederation(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::metastore::v1::Federation>>
@@ -112,12 +102,11 @@ DataprocMetastoreFederationTracingConnection::UpdateFederation(
       "metastore_v1::DataprocMetastoreFederationConnection::UpdateFederation");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->UpdateFederation(operation));
+      child_->UpdateFederation(operation));
 }
 
 future<StatusOr<google::cloud::metastore::v1::OperationMetadata>>
-DataprocMetastoreFederationTracingConnection::DeleteFederation(
-    google::cloud::metastore::v1::DeleteFederationRequest const& request) {
+DataprocMetastoreFederationTracingConnection::DeleteFederation(google::cloud::metastore::v1::DeleteFederationRequest const& request) {
   auto span = internal::MakeSpan(
       "metastore_v1::DataprocMetastoreFederationConnection::DeleteFederation");
   internal::OTelScope scope(span);
@@ -126,13 +115,12 @@ DataprocMetastoreFederationTracingConnection::DeleteFederation(
 
 StatusOr<google::longrunning::Operation>
 DataprocMetastoreFederationTracingConnection::DeleteFederation(
-    NoAwaitTag,
-    google::cloud::metastore::v1::DeleteFederationRequest const& request) {
+    NoAwaitTag, google::cloud::metastore::v1::DeleteFederationRequest const& request) {
   auto span = internal::MakeSpan(
       "metastore_v1::DataprocMetastoreFederationConnection::DeleteFederation");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span,
-                           child_->DeleteFederation(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->DeleteFederation(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::metastore::v1::OperationMetadata>>
@@ -142,89 +130,72 @@ DataprocMetastoreFederationTracingConnection::DeleteFederation(
       "metastore_v1::DataprocMetastoreFederationConnection::DeleteFederation");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->DeleteFederation(operation));
+      child_->DeleteFederation(operation));
 }
 
 StreamRange<google::cloud::location::Location>
-DataprocMetastoreFederationTracingConnection::ListLocations(
-    google::cloud::location::ListLocationsRequest request) {
-  auto span = internal::MakeSpan(
-      "metastore_v1::DataprocMetastoreFederationConnection::ListLocations");
+DataprocMetastoreFederationTracingConnection::ListLocations(google::cloud::location::ListLocationsRequest request) {
+  auto span = internal::MakeSpan("metastore_v1::DataprocMetastoreFederationConnection::ListLocations");
   internal::OTelScope scope(span);
   auto sr = child_->ListLocations(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::location::Location>(
-      std::move(span), std::move(sr));
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::location::Location>
-DataprocMetastoreFederationTracingConnection::GetLocation(
-    google::cloud::location::GetLocationRequest const& request) {
-  auto span = internal::MakeSpan(
-      "metastore_v1::DataprocMetastoreFederationConnection::GetLocation");
+DataprocMetastoreFederationTracingConnection::GetLocation(google::cloud::location::GetLocationRequest const& request) {
+  auto span = internal::MakeSpan("metastore_v1::DataprocMetastoreFederationConnection::GetLocation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetLocation(request));
 }
 
 StatusOr<google::iam::v1::Policy>
-DataprocMetastoreFederationTracingConnection::SetIamPolicy(
-    google::iam::v1::SetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpan(
-      "metastore_v1::DataprocMetastoreFederationConnection::SetIamPolicy");
+DataprocMetastoreFederationTracingConnection::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) {
+  auto span = internal::MakeSpan("metastore_v1::DataprocMetastoreFederationConnection::SetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->SetIamPolicy(request));
 }
 
 StatusOr<google::iam::v1::Policy>
-DataprocMetastoreFederationTracingConnection::GetIamPolicy(
-    google::iam::v1::GetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpan(
-      "metastore_v1::DataprocMetastoreFederationConnection::GetIamPolicy");
+DataprocMetastoreFederationTracingConnection::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) {
+  auto span = internal::MakeSpan("metastore_v1::DataprocMetastoreFederationConnection::GetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetIamPolicy(request));
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-DataprocMetastoreFederationTracingConnection::TestIamPermissions(
-    google::iam::v1::TestIamPermissionsRequest const& request) {
-  auto span = internal::MakeSpan(
-      "metastore_v1::DataprocMetastoreFederationConnection::"
-      "TestIamPermissions");
+DataprocMetastoreFederationTracingConnection::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) {
+  auto span = internal::MakeSpan("metastore_v1::DataprocMetastoreFederationConnection::TestIamPermissions");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->TestIamPermissions(request));
 }
 
 StreamRange<google::longrunning::Operation>
-DataprocMetastoreFederationTracingConnection::ListOperations(
-    google::longrunning::ListOperationsRequest request) {
-  auto span = internal::MakeSpan(
-      "metastore_v1::DataprocMetastoreFederationConnection::ListOperations");
+DataprocMetastoreFederationTracingConnection::ListOperations(google::longrunning::ListOperationsRequest request) {
+  auto span = internal::MakeSpan("metastore_v1::DataprocMetastoreFederationConnection::ListOperations");
   internal::OTelScope scope(span);
   auto sr = child_->ListOperations(std::move(request));
   return internal::MakeTracedStreamRange<google::longrunning::Operation>(
-      std::move(span), std::move(sr));
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::longrunning::Operation>
-DataprocMetastoreFederationTracingConnection::GetOperation(
-    google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpan(
-      "metastore_v1::DataprocMetastoreFederationConnection::GetOperation");
+DataprocMetastoreFederationTracingConnection::GetOperation(google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpan("metastore_v1::DataprocMetastoreFederationConnection::GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOperation(request));
 }
 
-Status DataprocMetastoreFederationTracingConnection::DeleteOperation(
-    google::longrunning::DeleteOperationRequest const& request) {
-  auto span = internal::MakeSpan(
-      "metastore_v1::DataprocMetastoreFederationConnection::DeleteOperation");
+Status
+DataprocMetastoreFederationTracingConnection::DeleteOperation(google::longrunning::DeleteOperationRequest const& request) {
+  auto span = internal::MakeSpan("metastore_v1::DataprocMetastoreFederationConnection::DeleteOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteOperation(request));
 }
 
-Status DataprocMetastoreFederationTracingConnection::CancelOperation(
-    google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpan(
-      "metastore_v1::DataprocMetastoreFederationConnection::CancelOperation");
+Status
+DataprocMetastoreFederationTracingConnection::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
+  auto span = internal::MakeSpan("metastore_v1::DataprocMetastoreFederationConnection::CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CancelOperation(request));
 }
@@ -236,8 +207,7 @@ MakeDataprocMetastoreFederationTracingConnection(
     std::shared_ptr<metastore_v1::DataprocMetastoreFederationConnection> conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
-    conn = std::make_shared<DataprocMetastoreFederationTracingConnection>(
-        std::move(conn));
+    conn = std::make_shared<DataprocMetastoreFederationTracingConnection>(std::move(conn));
   }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;

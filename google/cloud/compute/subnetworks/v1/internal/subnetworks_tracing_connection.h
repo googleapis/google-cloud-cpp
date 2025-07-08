@@ -36,97 +36,85 @@ class SubnetworksTracingConnection
   ~SubnetworksTracingConnection() override = default;
 
   explicit SubnetworksTracingConnection(
-      std::shared_ptr<compute_subnetworks_v1::SubnetworksConnection> child);
+    std::shared_ptr<compute_subnetworks_v1::SubnetworksConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StreamRange<std::pair<std::string,
-                        google::cloud::cpp::compute::v1::SubnetworksScopedList>>
-  AggregatedListSubnetworks(
-      google::cloud::cpp::compute::subnetworks::v1::
-          AggregatedListSubnetworksRequest request) override;
+  StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::SubnetworksScopedList>>
+  AggregatedListSubnetworks(google::cloud::cpp::compute::subnetworks::v1::AggregatedListSubnetworksRequest request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteSubnetwork(
-      google::cloud::cpp::compute::subnetworks::v1::
-          DeleteSubnetworkRequest const& request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteSubnetwork(google::cloud::cpp::compute::subnetworks::v1::DeleteSubnetworkRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteSubnetwork(
-      NoAwaitTag, google::cloud::cpp::compute::subnetworks::v1::
-                      DeleteSubnetworkRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeleteSubnetwork(NoAwaitTag,
+      google::cloud::cpp::compute::subnetworks::v1::DeleteSubnetworkRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteSubnetwork(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteSubnetwork(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  ExpandIpCidrRange(google::cloud::cpp::compute::subnetworks::v1::
-                        ExpandIpCidrRangeRequest const& request) override;
+  ExpandIpCidrRange(google::cloud::cpp::compute::subnetworks::v1::ExpandIpCidrRangeRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation> ExpandIpCidrRange(
-      NoAwaitTag, google::cloud::cpp::compute::subnetworks::v1::
-                      ExpandIpCidrRangeRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  ExpandIpCidrRange(NoAwaitTag,
+      google::cloud::cpp::compute::subnetworks::v1::ExpandIpCidrRangeRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   ExpandIpCidrRange(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Subnetwork> GetSubnetwork(
-      google::cloud::cpp::compute::subnetworks::v1::GetSubnetworkRequest const&
-          request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Subnetwork>
+  GetSubnetwork(google::cloud::cpp::compute::subnetworks::v1::GetSubnetworkRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
-      google::cloud::cpp::compute::subnetworks::v1::GetIamPolicyRequest const&
-          request) override;
-
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertSubnetwork(
-      google::cloud::cpp::compute::subnetworks::v1::
-          InsertSubnetworkRequest const& request) override;
-
-  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertSubnetwork(
-      NoAwaitTag, google::cloud::cpp::compute::subnetworks::v1::
-                      InsertSubnetworkRequest const& request) override;
-
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertSubnetwork(
-      google::cloud::cpp::compute::v1::Operation const& operation) override;
-
-  StreamRange<google::cloud::cpp::compute::v1::Subnetwork> ListSubnetworks(
-      google::cloud::cpp::compute::subnetworks::v1::ListSubnetworksRequest
-          request) override;
-
-  StreamRange<google::cloud::cpp::compute::v1::UsableSubnetwork> ListUsable(
-      google::cloud::cpp::compute::subnetworks::v1::ListUsableRequest request)
-      override;
-
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchSubnetwork(
-      google::cloud::cpp::compute::subnetworks::v1::
-          PatchSubnetworkRequest const& request) override;
-
-  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchSubnetwork(
-      NoAwaitTag, google::cloud::cpp::compute::subnetworks::v1::
-                      PatchSubnetworkRequest const& request) override;
-
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchSubnetwork(
-      google::cloud::cpp::compute::v1::Operation const& operation) override;
-
-  StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
-      google::cloud::cpp::compute::subnetworks::v1::SetIamPolicyRequest const&
-          request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Policy>
+  GetIamPolicy(google::cloud::cpp::compute::subnetworks::v1::GetIamPolicyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetPrivateIpGoogleAccess(
-      google::cloud::cpp::compute::subnetworks::v1::
-          SetPrivateIpGoogleAccessRequest const& request) override;
+  InsertSubnetwork(google::cloud::cpp::compute::subnetworks::v1::InsertSubnetworkRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation> SetPrivateIpGoogleAccess(
-      NoAwaitTag, google::cloud::cpp::compute::subnetworks::v1::
-                      SetPrivateIpGoogleAccessRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  InsertSubnetwork(NoAwaitTag,
+      google::cloud::cpp::compute::subnetworks::v1::InsertSubnetworkRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  InsertSubnetwork(
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
+
+  StreamRange<google::cloud::cpp::compute::v1::Subnetwork>
+  ListSubnetworks(google::cloud::cpp::compute::subnetworks::v1::ListSubnetworksRequest request) override;
+
+  StreamRange<google::cloud::cpp::compute::v1::UsableSubnetwork>
+  ListUsable(google::cloud::cpp::compute::subnetworks::v1::ListUsableRequest request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  PatchSubnetwork(google::cloud::cpp::compute::subnetworks::v1::PatchSubnetworkRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  PatchSubnetwork(NoAwaitTag,
+      google::cloud::cpp::compute::subnetworks::v1::PatchSubnetworkRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  PatchSubnetwork(
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Policy>
+  SetIamPolicy(google::cloud::cpp::compute::subnetworks::v1::SetIamPolicyRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  SetPrivateIpGoogleAccess(google::cloud::cpp::compute::subnetworks::v1::SetPrivateIpGoogleAccessRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  SetPrivateIpGoogleAccess(NoAwaitTag,
+      google::cloud::cpp::compute::subnetworks::v1::SetPrivateIpGoogleAccessRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SetPrivateIpGoogleAccess(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(google::cloud::cpp::compute::subnetworks::v1::
-                         TestIamPermissionsRequest const& request) override;
+  TestIamPermissions(google::cloud::cpp::compute::subnetworks::v1::TestIamPermissionsRequest const& request) override;
 
  private:
   std::shared_ptr<compute_subnetworks_v1::SubnetworksConnection> child_;

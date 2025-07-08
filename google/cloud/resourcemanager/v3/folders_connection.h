@@ -19,14 +19,14 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCEMANAGER_V3_FOLDERS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCEMANAGER_V3_FOLDERS_CONNECTION_H
 
-#include "google/cloud/resourcemanager/v3/folders_connection_idempotency_policy.h"
-#include "google/cloud/resourcemanager/v3/internal/folders_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
+#include "google/cloud/resourcemanager/v3/folders_connection_idempotency_policy.h"
+#include "google/cloud/resourcemanager/v3/internal/folders_retry_traits.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
@@ -67,14 +67,14 @@ class FoldersLimitedErrorCountRetryPolicy : public FoldersRetryPolicy {
    *     @p maximum_failures == 0.
    */
   explicit FoldersLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   FoldersLimitedErrorCountRetryPolicy(
       FoldersLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : FoldersLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : FoldersLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   FoldersLimitedErrorCountRetryPolicy(
       FoldersLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : FoldersLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : FoldersLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -94,9 +94,7 @@ class FoldersLimitedErrorCountRetryPolicy : public FoldersRetryPolicy {
   using BaseType = FoldersRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      resourcemanager_v3_internal::FoldersRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<resourcemanager_v3_internal::FoldersRetryTraits> impl_;
 };
 
 /**
@@ -134,13 +132,12 @@ class FoldersLimitedTimeRetryPolicy : public FoldersRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit FoldersLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
   FoldersLimitedTimeRetryPolicy(FoldersLimitedTimeRetryPolicy&& rhs) noexcept
-      : FoldersLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  FoldersLimitedTimeRetryPolicy(
-      FoldersLimitedTimeRetryPolicy const& rhs) noexcept
-      : FoldersLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+    : FoldersLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  FoldersLimitedTimeRetryPolicy(FoldersLimitedTimeRetryPolicy const& rhs) noexcept
+    : FoldersLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -154,16 +151,15 @@ class FoldersLimitedTimeRetryPolicy : public FoldersRetryPolicy {
     return impl_.IsPermanentFailure(status);
   }
   std::unique_ptr<FoldersRetryPolicy> clone() const override {
-    return std::make_unique<FoldersLimitedTimeRetryPolicy>(maximum_duration());
+    return std::make_unique<FoldersLimitedTimeRetryPolicy>(
+        maximum_duration());
   }
 
   // This is provided only for backwards compatibility.
   using BaseType = FoldersRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      resourcemanager_v3_internal::FoldersRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<resourcemanager_v3_internal::FoldersRetryTraits> impl_;
 };
 
 /**
@@ -184,81 +180,71 @@ class FoldersConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<google::cloud::resourcemanager::v3::Folder> GetFolder(
-      google::cloud::resourcemanager::v3::GetFolderRequest const& request);
+  virtual StatusOr<google::cloud::resourcemanager::v3::Folder>
+  GetFolder(google::cloud::resourcemanager::v3::GetFolderRequest const& request);
 
-  virtual StreamRange<google::cloud::resourcemanager::v3::Folder> ListFolders(
-      google::cloud::resourcemanager::v3::ListFoldersRequest request);
+  virtual StreamRange<google::cloud::resourcemanager::v3::Folder>
+  ListFolders(google::cloud::resourcemanager::v3::ListFoldersRequest request);
 
-  virtual StreamRange<google::cloud::resourcemanager::v3::Folder> SearchFolders(
-      google::cloud::resourcemanager::v3::SearchFoldersRequest request);
-
-  virtual future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
-  CreateFolder(
-      google::cloud::resourcemanager::v3::CreateFolderRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation> CreateFolder(
-      NoAwaitTag,
-      google::cloud::resourcemanager::v3::CreateFolderRequest const& request);
+  virtual StreamRange<google::cloud::resourcemanager::v3::Folder>
+  SearchFolders(google::cloud::resourcemanager::v3::SearchFoldersRequest request);
 
   virtual future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
-  CreateFolder(google::longrunning::Operation const& operation);
+  CreateFolder(google::cloud::resourcemanager::v3::CreateFolderRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation>
+  CreateFolder(NoAwaitTag, google::cloud::resourcemanager::v3::CreateFolderRequest const& request);
 
   virtual future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
-  UpdateFolder(
-      google::cloud::resourcemanager::v3::UpdateFolderRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation> UpdateFolder(
-      NoAwaitTag,
-      google::cloud::resourcemanager::v3::UpdateFolderRequest const& request);
+  CreateFolder( google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
-  UpdateFolder(google::longrunning::Operation const& operation);
+  UpdateFolder(google::cloud::resourcemanager::v3::UpdateFolderRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation>
+  UpdateFolder(NoAwaitTag, google::cloud::resourcemanager::v3::UpdateFolderRequest const& request);
 
   virtual future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
-  MoveFolder(
-      google::cloud::resourcemanager::v3::MoveFolderRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation> MoveFolder(
-      NoAwaitTag,
-      google::cloud::resourcemanager::v3::MoveFolderRequest const& request);
+  UpdateFolder( google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
-  MoveFolder(google::longrunning::Operation const& operation);
+  MoveFolder(google::cloud::resourcemanager::v3::MoveFolderRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation>
+  MoveFolder(NoAwaitTag, google::cloud::resourcemanager::v3::MoveFolderRequest const& request);
 
   virtual future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
-  DeleteFolder(
-      google::cloud::resourcemanager::v3::DeleteFolderRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation> DeleteFolder(
-      NoAwaitTag,
-      google::cloud::resourcemanager::v3::DeleteFolderRequest const& request);
+  MoveFolder( google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
-  DeleteFolder(google::longrunning::Operation const& operation);
+  DeleteFolder(google::cloud::resourcemanager::v3::DeleteFolderRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation>
+  DeleteFolder(NoAwaitTag, google::cloud::resourcemanager::v3::DeleteFolderRequest const& request);
 
   virtual future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
-  UndeleteFolder(
-      google::cloud::resourcemanager::v3::UndeleteFolderRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation> UndeleteFolder(
-      NoAwaitTag,
-      google::cloud::resourcemanager::v3::UndeleteFolderRequest const& request);
+  DeleteFolder( google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
-  UndeleteFolder(google::longrunning::Operation const& operation);
+  UndeleteFolder(google::cloud::resourcemanager::v3::UndeleteFolderRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  UndeleteFolder(NoAwaitTag, google::cloud::resourcemanager::v3::UndeleteFolderRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request);
+  virtual future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
+  UndeleteFolder( google::longrunning::Operation const& operation);
+
+  virtual StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
+
+  virtual StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
 
   virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
   TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 };
 
 /**
@@ -292,7 +278,8 @@ std::shared_ptr<FoldersConnection> MakeFoldersConnection(
  * This overload of `MakeFoldersConnection` does not require a location
  * argument, creating a connection to the global service endpoint.
  */
-std::shared_ptr<FoldersConnection> MakeFoldersConnection(Options options = {});
+std::shared_ptr<FoldersConnection> MakeFoldersConnection(
+    Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace resourcemanager_v3

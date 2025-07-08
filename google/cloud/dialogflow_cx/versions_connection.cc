@@ -17,14 +17,14 @@
 // source: google/cloud/dialogflow/cx/v3/version.proto
 
 #include "google/cloud/dialogflow_cx/versions_connection.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/dialogflow_cx/internal/versions_connection_impl.h"
 #include "google/cloud/dialogflow_cx/internal/versions_option_defaults.h"
 #include "google/cloud/dialogflow_cx/internal/versions_stub_factory.h"
 #include "google/cloud/dialogflow_cx/internal/versions_tracing_connection.h"
 #include "google/cloud/dialogflow_cx/versions_options.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
-#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
@@ -38,10 +38,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 VersionsConnection::~VersionsConnection() = default;
 
-StreamRange<google::cloud::dialogflow::cx::v3::Version>
-VersionsConnection::ListVersions(
-    google::cloud::dialogflow::cx::v3::
-        ListVersionsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::dialogflow::cx::v3::Version> VersionsConnection::ListVersions(
+    google::cloud::dialogflow::cx::v3::ListVersionsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::dialogflow::cx::v3::Version>>();
 }
@@ -56,22 +54,24 @@ future<StatusOr<google::cloud::dialogflow::cx::v3::Version>>
 VersionsConnection::CreateVersion(
     google::cloud::dialogflow::cx::v3::CreateVersionRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::dialogflow::cx::v3::Version>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::dialogflow::cx::v3::Version>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation> VersionsConnection::CreateVersion(
+StatusOr<google::longrunning::Operation>
+VersionsConnection::CreateVersion(
     NoAwaitTag,
     google::cloud::dialogflow::cx::v3::CreateVersionRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::dialogflow::cx::v3::Version>>
-VersionsConnection::CreateVersion(google::longrunning::Operation const&) {
+VersionsConnection::CreateVersion(
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::dialogflow::cx::v3::Version>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::dialogflow::cx::v3::Version>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Version>
@@ -80,27 +80,34 @@ VersionsConnection::UpdateVersion(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status VersionsConnection::DeleteVersion(
+Status
+VersionsConnection::DeleteVersion(
     google::cloud::dialogflow::cx::v3::DeleteVersionRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-future<StatusOr<google::protobuf::Struct>> VersionsConnection::LoadVersion(
+future<StatusOr<google::protobuf::Struct>>
+VersionsConnection::LoadVersion(
     google::cloud::dialogflow::cx::v3::LoadVersionRequest const&) {
-  return google::cloud::make_ready_future<StatusOr<google::protobuf::Struct>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+  return google::cloud::make_ready_future<
+    StatusOr<google::protobuf::Struct>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation> VersionsConnection::LoadVersion(
-    NoAwaitTag, google::cloud::dialogflow::cx::v3::LoadVersionRequest const&) {
+StatusOr<google::longrunning::Operation>
+VersionsConnection::LoadVersion(
+    NoAwaitTag,
+    google::cloud::dialogflow::cx::v3::LoadVersionRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<StatusOr<google::protobuf::Struct>> VersionsConnection::LoadVersion(
+future<StatusOr<google::protobuf::Struct>>
+VersionsConnection::LoadVersion(
     google::longrunning::Operation const&) {
-  return google::cloud::make_ready_future<StatusOr<google::protobuf::Struct>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+  return google::cloud::make_ready_future<
+    StatusOr<google::protobuf::Struct>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::CompareVersionsResponse>
@@ -109,32 +116,32 @@ VersionsConnection::CompareVersions(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::location::Location>
-VersionsConnection::ListLocations(
-    google::cloud::location::
-        ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::location::Location> VersionsConnection::ListLocations(
+    google::cloud::location::ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::location::Location>>();
 }
 
-StatusOr<google::cloud::location::Location> VersionsConnection::GetLocation(
+StatusOr<google::cloud::location::Location>
+VersionsConnection::GetLocation(
     google::cloud::location::GetLocationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StreamRange<google::longrunning::Operation> VersionsConnection::ListOperations(
-    google::longrunning::
-        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+    google::longrunning::ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }
 
-StatusOr<google::longrunning::Operation> VersionsConnection::GetOperation(
+StatusOr<google::longrunning::Operation>
+VersionsConnection::GetOperation(
     google::longrunning::GetOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status VersionsConnection::CancelOperation(
+Status
+VersionsConnection::CancelOperation(
     google::longrunning::CancelOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -142,20 +149,21 @@ Status VersionsConnection::CancelOperation(
 std::shared_ptr<VersionsConnection> MakeVersionsConnection(
     std::string const& location, Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 VersionsPolicyOptionList>(options, __func__);
-  options = dialogflow_cx_internal::VersionsDefaultOptions(location,
-                                                           std::move(options));
+      UnifiedCredentialsOptionList,
+      VersionsPolicyOptionList>(options, __func__);
+  options = dialogflow_cx_internal::VersionsDefaultOptions(
+      location, std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
-  auto stub = dialogflow_cx_internal::CreateDefaultVersionsStub(std::move(auth),
-                                                                options);
+  auto stub = dialogflow_cx_internal::CreateDefaultVersionsStub(
+    std::move(auth), options);
   return dialogflow_cx_internal::MakeVersionsTracingConnection(
       std::make_shared<dialogflow_cx_internal::VersionsConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options)));
+      std::move(background), std::move(stub), std::move(options)));
 }
 
-std::shared_ptr<VersionsConnection> MakeVersionsConnection(Options options) {
+std::shared_ptr<VersionsConnection> MakeVersionsConnection(
+    Options options) {
   return MakeVersionsConnection(std::string{}, std::move(options));
 }
 

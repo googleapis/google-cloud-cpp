@@ -46,25 +46,24 @@ QuotaControllerMetadata::QuotaControllerMetadata(
 
 StatusOr<google::api::servicecontrol::v1::AllocateQuotaResponse>
 QuotaControllerMetadata::AllocateQuota(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::api::servicecontrol::v1::AllocateQuotaRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("service_name=",
-                           internal::UrlEncode(request.service_name())));
+  SetMetadata(context, options, absl::StrCat("service_name=", internal::UrlEncode(request.service_name())));
   return child_->AllocateQuota(context, options, request);
 }
 
 void QuotaControllerMetadata::SetMetadata(grpc::ClientContext& context,
-                                          Options const& options,
-                                          std::string const& request_params) {
+                                        Options const& options,
+                                        std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
 void QuotaControllerMetadata::SetMetadata(grpc::ClientContext& context,
-                                          Options const& options) {
-  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
-                                       api_client_header_);
+                                        Options const& options) {
+  google::cloud::internal::SetMetadata(
+      context, options, fixed_metadata_, api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

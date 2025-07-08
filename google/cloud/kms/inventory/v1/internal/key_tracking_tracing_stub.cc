@@ -32,34 +32,26 @@ KeyTrackingServiceTracingStub::KeyTrackingServiceTracingStub(
     std::shared_ptr<KeyTrackingServiceStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
-StatusOr<google::cloud::kms::inventory::v1::ProtectedResourcesSummary>
-KeyTrackingServiceTracingStub::GetProtectedResourcesSummary(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::kms::inventory::v1::
-        GetProtectedResourcesSummaryRequest const& request) {
-  auto span =
-      internal::MakeSpanGrpc("google.cloud.kms.inventory.v1.KeyTrackingService",
-                             "GetProtectedResourcesSummary");
+StatusOr<google::cloud::kms::inventory::v1::ProtectedResourcesSummary> KeyTrackingServiceTracingStub::GetProtectedResourcesSummary(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::kms::inventory::v1::GetProtectedResourcesSummaryRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.kms.inventory.v1.KeyTrackingService", "GetProtectedResourcesSummary");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span,
-      child_->GetProtectedResourcesSummary(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->GetProtectedResourcesSummary(context, options, request));
 }
 
-StatusOr<google::cloud::kms::inventory::v1::SearchProtectedResourcesResponse>
-KeyTrackingServiceTracingStub::SearchProtectedResources(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::kms::inventory::v1::SearchProtectedResourcesRequest const&
-        request) {
-  auto span =
-      internal::MakeSpanGrpc("google.cloud.kms.inventory.v1.KeyTrackingService",
-                             "SearchProtectedResources");
+StatusOr<google::cloud::kms::inventory::v1::SearchProtectedResourcesResponse> KeyTrackingServiceTracingStub::SearchProtectedResources(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::kms::inventory::v1::SearchProtectedResourcesRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.kms.inventory.v1.KeyTrackingService", "SearchProtectedResources");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span,
-      child_->SearchProtectedResources(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->SearchProtectedResources(context, options, request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

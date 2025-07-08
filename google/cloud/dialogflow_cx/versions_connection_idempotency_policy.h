@@ -38,45 +38,45 @@ class VersionsConnectionIdempotencyPolicy {
   /// Create a new copy of this object.
   virtual std::unique_ptr<VersionsConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency ListVersions(
-      google::cloud::dialogflow::cx::v3::ListVersionsRequest request);
+  virtual google::cloud::Idempotency
+  ListVersions(google::cloud::dialogflow::cx::v3::ListVersionsRequest request);
 
-  virtual google::cloud::Idempotency GetVersion(
-      google::cloud::dialogflow::cx::v3::GetVersionRequest const& request);
+  virtual google::cloud::Idempotency
+  GetVersion(google::cloud::dialogflow::cx::v3::GetVersionRequest const& request);
 
-  virtual google::cloud::Idempotency CreateVersion(
-      google::cloud::dialogflow::cx::v3::CreateVersionRequest const& request);
+  virtual google::cloud::Idempotency
+  CreateVersion(google::cloud::dialogflow::cx::v3::CreateVersionRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateVersion(
-      google::cloud::dialogflow::cx::v3::UpdateVersionRequest const& request);
+  virtual google::cloud::Idempotency
+  UpdateVersion(google::cloud::dialogflow::cx::v3::UpdateVersionRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteVersion(
-      google::cloud::dialogflow::cx::v3::DeleteVersionRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteVersion(google::cloud::dialogflow::cx::v3::DeleteVersionRequest const& request);
 
-  virtual google::cloud::Idempotency LoadVersion(
-      google::cloud::dialogflow::cx::v3::LoadVersionRequest const& request);
+  virtual google::cloud::Idempotency
+  LoadVersion(google::cloud::dialogflow::cx::v3::LoadVersionRequest const& request);
 
-  virtual google::cloud::Idempotency CompareVersions(
-      google::cloud::dialogflow::cx::v3::CompareVersionsRequest const& request);
+  virtual google::cloud::Idempotency
+  CompareVersions(google::cloud::dialogflow::cx::v3::CompareVersionsRequest const& request);
 
-  virtual google::cloud::Idempotency ListLocations(
-      google::cloud::location::ListLocationsRequest request);
+  virtual google::cloud::Idempotency
+  ListLocations(google::cloud::location::ListLocationsRequest request);
 
-  virtual google::cloud::Idempotency GetLocation(
-      google::cloud::location::GetLocationRequest const& request);
+  virtual google::cloud::Idempotency
+  GetLocation(google::cloud::location::GetLocationRequest const& request);
 
-  virtual google::cloud::Idempotency ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual google::cloud::Idempotency
+  ListOperations(google::longrunning::ListOperationsRequest request);
 
-  virtual google::cloud::Idempotency GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 
-  virtual google::cloud::Idempotency CancelOperation(
-      google::longrunning::CancelOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  CancelOperation(google::longrunning::CancelOperationRequest const& request);
 };
 
 std::unique_ptr<VersionsConnectionIdempotencyPolicy>
-MakeDefaultVersionsConnectionIdempotencyPolicy();
+    MakeDefaultVersionsConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_cx

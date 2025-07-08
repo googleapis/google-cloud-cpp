@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DISCOVERYENGINE_V1_RANK_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DISCOVERYENGINE_V1_RANK_CONNECTION_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/discoveryengine/v1/internal/rank_retry_traits.h"
 #include "google/cloud/discoveryengine/v1/rank_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -62,14 +62,14 @@ class RankServiceLimitedErrorCountRetryPolicy : public RankServiceRetryPolicy {
    *     @p maximum_failures == 0.
    */
   explicit RankServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   RankServiceLimitedErrorCountRetryPolicy(
       RankServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : RankServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : RankServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   RankServiceLimitedErrorCountRetryPolicy(
       RankServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : RankServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : RankServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -89,9 +89,7 @@ class RankServiceLimitedErrorCountRetryPolicy : public RankServiceRetryPolicy {
   using BaseType = RankServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      discoveryengine_v1_internal::RankServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<discoveryengine_v1_internal::RankServiceRetryTraits> impl_;
 };
 
 /**
@@ -129,14 +127,12 @@ class RankServiceLimitedTimeRetryPolicy : public RankServiceRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit RankServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  RankServiceLimitedTimeRetryPolicy(
-      RankServiceLimitedTimeRetryPolicy&& rhs) noexcept
-      : RankServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  RankServiceLimitedTimeRetryPolicy(
-      RankServiceLimitedTimeRetryPolicy const& rhs) noexcept
-      : RankServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  RankServiceLimitedTimeRetryPolicy(RankServiceLimitedTimeRetryPolicy&& rhs) noexcept
+    : RankServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  RankServiceLimitedTimeRetryPolicy(RankServiceLimitedTimeRetryPolicy const& rhs) noexcept
+    : RankServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -158,9 +154,7 @@ class RankServiceLimitedTimeRetryPolicy : public RankServiceRetryPolicy {
   using BaseType = RankServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      discoveryengine_v1_internal::RankServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<discoveryengine_v1_internal::RankServiceRetryTraits> impl_;
 };
 
 /**
@@ -181,17 +175,17 @@ class RankServiceConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<google::cloud::discoveryengine::v1::RankResponse> Rank(
-      google::cloud::discoveryengine::v1::RankRequest const& request);
+  virtual StatusOr<google::cloud::discoveryengine::v1::RankResponse>
+  Rank(google::cloud::discoveryengine::v1::RankRequest const& request);
 
-  virtual StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 
-  virtual Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request);
+  virtual Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request);
 };
 
 /**

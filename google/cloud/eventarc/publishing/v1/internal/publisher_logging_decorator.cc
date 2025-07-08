@@ -30,37 +30,36 @@ namespace cloud {
 namespace eventarc_publishing_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-PublisherLogging::PublisherLogging(std::shared_ptr<PublisherStub> child,
-                                   TracingOptions tracing_options,
-                                   std::set<std::string> const&)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
+PublisherLogging::PublisherLogging(
+    std::shared_ptr<PublisherStub> child,
+    TracingOptions tracing_options,
+    std::set<std::string> const&)
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)) {}
 
-StatusOr<google::cloud::eventarc::publishing::v1::
-             PublishChannelConnectionEventsResponse>
+StatusOr<google::cloud::eventarc::publishing::v1::PublishChannelConnectionEventsResponse>
 PublisherLogging::PublishChannelConnectionEvents(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::eventarc::publishing::v1::
-        PublishChannelConnectionEventsRequest const& request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::eventarc::publishing::v1::PublishChannelConnectionEventsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::eventarc::publishing::v1::
-                 PublishChannelConnectionEventsRequest const& request) {
-        return child_->PublishChannelConnectionEvents(context, options,
-                                                      request);
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::eventarc::publishing::v1::PublishChannelConnectionEventsRequest const& request) {
+        return child_->PublishChannelConnectionEvents(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::eventarc::publishing::v1::PublishEventsResponse>
 PublisherLogging::PublishEvents(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::eventarc::publishing::v1::PublishEventsRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::eventarc::publishing::v1::PublishEventsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::eventarc::publishing::v1::PublishEventsRequest const&
-              request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::eventarc::publishing::v1::PublishEventsRequest const& request) {
         return child_->PublishEvents(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -68,12 +67,13 @@ PublisherLogging::PublishEvents(
 
 StatusOr<google::cloud::eventarc::publishing::v1::PublishResponse>
 PublisherLogging::Publish(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::eventarc::publishing::v1::PublishRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::eventarc::publishing::v1::PublishRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::eventarc::publishing::v1::PublishRequest const& request) {
         return child_->Publish(context, options, request);
       },
       context, options, request, __func__, tracing_options_);

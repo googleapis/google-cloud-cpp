@@ -36,90 +36,74 @@ class InterconnectGroupsTracingConnection
   ~InterconnectGroupsTracingConnection() override = default;
 
   explicit InterconnectGroupsTracingConnection(
-      std::shared_ptr<
-          compute_interconnect_groups_v1::InterconnectGroupsConnection>
-          child);
+    std::shared_ptr<compute_interconnect_groups_v1::InterconnectGroupsConnection> child);
 
   Options options() override { return child_->options(); }
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> CreateMembers(
-      google::cloud::cpp::compute::interconnect_groups::v1::
-          CreateMembersRequest const& request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  CreateMembers(google::cloud::cpp::compute::interconnect_groups::v1::CreateMembersRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation> CreateMembers(
-      NoAwaitTag, google::cloud::cpp::compute::interconnect_groups::v1::
-                      CreateMembersRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  CreateMembers(NoAwaitTag,
+      google::cloud::cpp::compute::interconnect_groups::v1::CreateMembersRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> CreateMembers(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  CreateMembers(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteInterconnectGroup(
-      google::cloud::cpp::compute::interconnect_groups::v1::
-          DeleteInterconnectGroupRequest const& request) override;
+  DeleteInterconnectGroup(google::cloud::cpp::compute::interconnect_groups::v1::DeleteInterconnectGroupRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteInterconnectGroup(
-      NoAwaitTag, google::cloud::cpp::compute::interconnect_groups::v1::
-                      DeleteInterconnectGroupRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeleteInterconnectGroup(NoAwaitTag,
+      google::cloud::cpp::compute::interconnect_groups::v1::DeleteInterconnectGroupRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteInterconnectGroup(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StatusOr<google::cloud::cpp::compute::v1::InterconnectGroup>
-  GetInterconnectGroup(google::cloud::cpp::compute::interconnect_groups::v1::
-                           GetInterconnectGroupRequest const& request) override;
+  GetInterconnectGroup(google::cloud::cpp::compute::interconnect_groups::v1::GetInterconnectGroupRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
-      google::cloud::cpp::compute::interconnect_groups::v1::
-          GetIamPolicyRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Policy>
+  GetIamPolicy(google::cloud::cpp::compute::interconnect_groups::v1::GetIamPolicyRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::
-               InterconnectGroupsGetOperationalStatusResponse>
-  GetOperationalStatus(google::cloud::cpp::compute::interconnect_groups::v1::
-                           GetOperationalStatusRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::InterconnectGroupsGetOperationalStatusResponse>
+  GetOperationalStatus(google::cloud::cpp::compute::interconnect_groups::v1::GetOperationalStatusRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertInterconnectGroup(
-      google::cloud::cpp::compute::interconnect_groups::v1::
-          InsertInterconnectGroupRequest const& request) override;
+  InsertInterconnectGroup(google::cloud::cpp::compute::interconnect_groups::v1::InsertInterconnectGroupRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertInterconnectGroup(
-      NoAwaitTag, google::cloud::cpp::compute::interconnect_groups::v1::
-                      InsertInterconnectGroupRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  InsertInterconnectGroup(NoAwaitTag,
+      google::cloud::cpp::compute::interconnect_groups::v1::InsertInterconnectGroupRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertInterconnectGroup(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StreamRange<google::cloud::cpp::compute::v1::InterconnectGroup>
-  ListInterconnectGroups(google::cloud::cpp::compute::interconnect_groups::v1::
-                             ListInterconnectGroupsRequest request) override;
+  ListInterconnectGroups(google::cloud::cpp::compute::interconnect_groups::v1::ListInterconnectGroupsRequest request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchInterconnectGroup(
-      google::cloud::cpp::compute::interconnect_groups::v1::
-          PatchInterconnectGroupRequest const& request) override;
+  PatchInterconnectGroup(google::cloud::cpp::compute::interconnect_groups::v1::PatchInterconnectGroupRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchInterconnectGroup(
-      NoAwaitTag, google::cloud::cpp::compute::interconnect_groups::v1::
-                      PatchInterconnectGroupRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  PatchInterconnectGroup(NoAwaitTag,
+      google::cloud::cpp::compute::interconnect_groups::v1::PatchInterconnectGroupRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   PatchInterconnectGroup(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
-      google::cloud::cpp::compute::interconnect_groups::v1::
-          SetIamPolicyRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Policy>
+  SetIamPolicy(google::cloud::cpp::compute::interconnect_groups::v1::SetIamPolicyRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(google::cloud::cpp::compute::interconnect_groups::v1::
-                         TestIamPermissionsRequest const& request) override;
+  TestIamPermissions(google::cloud::cpp::compute::interconnect_groups::v1::TestIamPermissionsRequest const& request) override;
 
  private:
-  std::shared_ptr<compute_interconnect_groups_v1::InterconnectGroupsConnection>
-      child_;
+  std::shared_ptr<compute_interconnect_groups_v1::InterconnectGroupsConnection> child_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -132,9 +116,7 @@ class InterconnectGroupsTracingConnection
  */
 std::shared_ptr<compute_interconnect_groups_v1::InterconnectGroupsConnection>
 MakeInterconnectGroupsTracingConnection(
-    std::shared_ptr<
-        compute_interconnect_groups_v1::InterconnectGroupsConnection>
-        conn);
+    std::shared_ptr<compute_interconnect_groups_v1::InterconnectGroupsConnection> conn);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_interconnect_groups_v1_internal

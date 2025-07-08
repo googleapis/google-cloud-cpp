@@ -41,9 +41,7 @@ class ImageFamilyViewsRestMetadata : public ImageFamilyViewsRestStub {
 
   StatusOr<google::cloud::cpp::compute::v1::ImageFamilyView> GetImageFamilyView(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::image_family_views::v1::
-          GetImageFamilyViewRequest const& request) override;
+      Options const& options, google::cloud::cpp::compute::image_family_views::v1::GetImageFamilyViewRequest const& request) override;
 
  private:
   void SetMetadata(rest_internal::RestContext& rest_context,

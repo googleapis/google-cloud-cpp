@@ -28,46 +28,35 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 NetworkProfilesClient::NetworkProfilesClient(
     std::shared_ptr<NetworkProfilesConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 NetworkProfilesClient::~NetworkProfilesClient() = default;
 
 StatusOr<google::cloud::cpp::compute::v1::NetworkProfile>
-NetworkProfilesClient::GetNetworkProfile(std::string const& project,
-                                         std::string const& network_profile,
-                                         Options opts) {
+NetworkProfilesClient::GetNetworkProfile(std::string const& project, std::string const& network_profile, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::network_profiles::v1::GetNetworkProfileRequest
-      request;
+  google::cloud::cpp::compute::network_profiles::v1::GetNetworkProfileRequest request;
   request.set_project(project);
   request.set_network_profile(network_profile);
   return connection_->GetNetworkProfile(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NetworkProfile>
-NetworkProfilesClient::GetNetworkProfile(
-    google::cloud::cpp::compute::network_profiles::v1::
-        GetNetworkProfileRequest const& request,
-    Options opts) {
+NetworkProfilesClient::GetNetworkProfile(google::cloud::cpp::compute::network_profiles::v1::GetNetworkProfileRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetNetworkProfile(request);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::NetworkProfile>
-NetworkProfilesClient::ListNetworkProfiles(std::string const& project,
-                                           Options opts) {
+NetworkProfilesClient::ListNetworkProfiles(std::string const& project, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::network_profiles::v1::ListNetworkProfilesRequest
-      request;
+  google::cloud::cpp::compute::network_profiles::v1::ListNetworkProfilesRequest request;
   request.set_project(project);
   return connection_->ListNetworkProfiles(request);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::NetworkProfile>
-NetworkProfilesClient::ListNetworkProfiles(
-    google::cloud::cpp::compute::network_profiles::v1::
-        ListNetworkProfilesRequest request,
-    Options opts) {
+NetworkProfilesClient::ListNetworkProfiles(google::cloud::cpp::compute::network_profiles::v1::ListNetworkProfilesRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListNetworkProfiles(std::move(request));
 }

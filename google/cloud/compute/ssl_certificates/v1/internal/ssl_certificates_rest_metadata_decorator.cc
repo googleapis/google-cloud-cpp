@@ -17,11 +17,11 @@
 // source: google/cloud/compute/ssl_certificates/v1/ssl_certificates.proto
 
 #include "google/cloud/compute/ssl_certificates/v1/internal/ssl_certificates_rest_metadata_decorator.h"
+#include "absl/strings/str_format.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/internal/rest_set_metadata.h"
 #include "google/cloud/status_or.h"
-#include "absl/strings/str_format.h"
 #include <memory>
 #include <utility>
 
@@ -41,69 +41,62 @@ SslCertificatesRestMetadata::SslCertificatesRestMetadata(
 
 StatusOr<google::cloud::cpp::compute::v1::SslCertificateAggregatedList>
 SslCertificatesRestMetadata::AggregatedListSslCertificates(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::ssl_certificates::v1::
-        AggregatedListSslCertificatesRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::ssl_certificates::v1::AggregatedListSslCertificatesRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->AggregatedListSslCertificates(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 SslCertificatesRestMetadata::AsyncDeleteSslCertificate(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::ssl_certificates::v1::
-        DeleteSslCertificateRequest const& request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::ssl_certificates::v1::DeleteSslCertificateRequest const& request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncDeleteSslCertificate(cq, std::move(rest_context),
-                                           std::move(options), request);
+  return child_->AsyncDeleteSslCertificate(
+      cq, std::move(rest_context), std::move(options), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 SslCertificatesRestMetadata::DeleteSslCertificate(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::ssl_certificates::v1::
-        DeleteSslCertificateRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::ssl_certificates::v1::DeleteSslCertificateRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->DeleteSslCertificate(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::SslCertificate>
 SslCertificatesRestMetadata::GetSslCertificate(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::ssl_certificates::v1::
-        GetSslCertificateRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::ssl_certificates::v1::GetSslCertificateRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->GetSslCertificate(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 SslCertificatesRestMetadata::AsyncInsertSslCertificate(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::ssl_certificates::v1::
-        InsertSslCertificateRequest const& request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::ssl_certificates::v1::InsertSslCertificateRequest const& request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncInsertSslCertificate(cq, std::move(rest_context),
-                                           std::move(options), request);
+  return child_->AsyncInsertSslCertificate(
+      cq, std::move(rest_context), std::move(options), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 SslCertificatesRestMetadata::InsertSslCertificate(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::ssl_certificates::v1::
-        InsertSslCertificateRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::ssl_certificates::v1::InsertSslCertificateRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->InsertSslCertificate(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::SslCertificateList>
 SslCertificatesRestMetadata::ListSslCertificates(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::ssl_certificates::v1::
-        ListSslCertificatesRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::cpp::compute::ssl_certificates::v1::ListSslCertificatesRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->ListSslCertificates(rest_context, options, request);
 }
@@ -113,29 +106,28 @@ SslCertificatesRestMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::global_operations::v1::
-        GetOperationRequest const& request) {
+    google::cloud::cpp::compute::global_operations::v1::GetOperationRequest const& request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncGetOperation(cq, std::move(rest_context),
-                                   std::move(options), request);
+  return child_->AsyncGetOperation(
+      cq, std::move(rest_context), std::move(options), request);
 }
 
-future<Status> SslCertificatesRestMetadata::AsyncCancelOperation(
+future<Status>
+SslCertificatesRestMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::global_operations::v1::
-        DeleteOperationRequest const& request) {
+    google::cloud::cpp::compute::global_operations::v1::DeleteOperationRequest const& request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncCancelOperation(cq, std::move(rest_context),
-                                      std::move(options), request);
+  return child_->AsyncCancelOperation(
+      cq, std::move(rest_context), std::move(options), request);
 }
 
 void SslCertificatesRestMetadata::SetMetadata(
-    rest_internal::RestContext& rest_context, Options const& options,
-    std::vector<std::string> const& params) {
-  google::cloud::rest_internal::SetMetadata(rest_context, options, params,
-                                            api_client_header_);
+      rest_internal::RestContext& rest_context,
+      Options const& options, std::vector<std::string> const& params) {
+  google::cloud::rest_internal::SetMetadata(
+      rest_context, options, params, api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -17,17 +17,17 @@
 // source: google/cloud/securitycenter/v1/securitycenter_service.proto
 
 #include "google/cloud/securitycenter/v1/security_center_connection.h"
-#include "google/cloud/securitycenter/v1/internal/security_center_connection_impl.h"
-#include "google/cloud/securitycenter/v1/internal/security_center_option_defaults.h"
-#include "google/cloud/securitycenter/v1/internal/security_center_stub_factory.h"
-#include "google/cloud/securitycenter/v1/internal/security_center_tracing_connection.h"
-#include "google/cloud/securitycenter/v1/security_center_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/securitycenter/v1/internal/security_center_connection_impl.h"
+#include "google/cloud/securitycenter/v1/internal/security_center_option_defaults.h"
+#include "google/cloud/securitycenter/v1/internal/security_center_stub_factory.h"
+#include "google/cloud/securitycenter/v1/internal/security_center_tracing_connection.h"
+#include "google/cloud/securitycenter/v1/security_center_options.h"
 #include <memory>
 #include <utility>
 
@@ -42,8 +42,8 @@ future<StatusOr<google::cloud::securitycenter::v1::BulkMuteFindingsResponse>>
 SecurityCenterConnection::BulkMuteFindings(
     google::cloud::securitycenter::v1::BulkMuteFindingsRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::securitycenter::v1::BulkMuteFindingsResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::securitycenter::v1::BulkMuteFindingsResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -51,21 +51,20 @@ SecurityCenterConnection::BulkMuteFindings(
     NoAwaitTag,
     google::cloud::securitycenter::v1::BulkMuteFindingsRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::securitycenter::v1::BulkMuteFindingsResponse>>
 SecurityCenterConnection::BulkMuteFindings(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::securitycenter::v1::BulkMuteFindingsResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::securitycenter::v1::BulkMuteFindingsResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::securitycenter::v1::SecurityHealthAnalyticsCustomModule>
 SecurityCenterConnection::CreateSecurityHealthAnalyticsCustomModule(
-    google::cloud::securitycenter::v1::
-        CreateSecurityHealthAnalyticsCustomModuleRequest const&) {
+    google::cloud::securitycenter::v1::CreateSecurityHealthAnalyticsCustomModuleRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
@@ -93,19 +92,21 @@ SecurityCenterConnection::CreateNotificationConfig(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status SecurityCenterConnection::DeleteMuteConfig(
+Status
+SecurityCenterConnection::DeleteMuteConfig(
     google::cloud::securitycenter::v1::DeleteMuteConfigRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status SecurityCenterConnection::DeleteNotificationConfig(
+Status
+SecurityCenterConnection::DeleteNotificationConfig(
     google::cloud::securitycenter::v1::DeleteNotificationConfigRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status SecurityCenterConnection::DeleteSecurityHealthAnalyticsCustomModule(
-    google::cloud::securitycenter::v1::
-        DeleteSecurityHealthAnalyticsCustomModuleRequest const&) {
+Status
+SecurityCenterConnection::DeleteSecurityHealthAnalyticsCustomModule(
+    google::cloud::securitycenter::v1::DeleteSecurityHealthAnalyticsCustomModuleRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
@@ -127,7 +128,8 @@ SecurityCenterConnection::GetBigQueryExport(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::iam::v1::Policy> SecurityCenterConnection::GetIamPolicy(
+StatusOr<google::iam::v1::Policy>
+SecurityCenterConnection::GetIamPolicy(
     google::iam::v1::GetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -150,18 +152,15 @@ SecurityCenterConnection::GetOrganizationSettings(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::cloud::securitycenter::v1::
-             EffectiveSecurityHealthAnalyticsCustomModule>
+StatusOr<google::cloud::securitycenter::v1::EffectiveSecurityHealthAnalyticsCustomModule>
 SecurityCenterConnection::GetEffectiveSecurityHealthAnalyticsCustomModule(
-    google::cloud::securitycenter::v1::
-        GetEffectiveSecurityHealthAnalyticsCustomModuleRequest const&) {
+    google::cloud::securitycenter::v1::GetEffectiveSecurityHealthAnalyticsCustomModuleRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::securitycenter::v1::SecurityHealthAnalyticsCustomModule>
 SecurityCenterConnection::GetSecurityHealthAnalyticsCustomModule(
-    google::cloud::securitycenter::v1::
-        GetSecurityHealthAnalyticsCustomModuleRequest const&) {
+    google::cloud::securitycenter::v1::GetSecurityHealthAnalyticsCustomModuleRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
@@ -171,92 +170,62 @@ SecurityCenterConnection::GetSource(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::securitycenter::v1::GroupResult>
-SecurityCenterConnection::GroupAssets(
-    google::cloud::securitycenter::v1::
-        GroupAssetsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::securitycenter::v1::GroupResult> SecurityCenterConnection::GroupAssets(
+    google::cloud::securitycenter::v1::GroupAssetsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::securitycenter::v1::GroupResult>>();
 }
 
-StreamRange<google::cloud::securitycenter::v1::GroupResult>
-SecurityCenterConnection::GroupFindings(
-    google::cloud::securitycenter::v1::
-        GroupFindingsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::securitycenter::v1::GroupResult> SecurityCenterConnection::GroupFindings(
+    google::cloud::securitycenter::v1::GroupFindingsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::securitycenter::v1::GroupResult>>();
 }
 
-StreamRange<
-    google::cloud::securitycenter::v1::ListAssetsResponse::ListAssetsResult>
-SecurityCenterConnection::ListAssets(
-    google::cloud::securitycenter::v1::
-        ListAssetsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::securitycenter::v1::ListAssetsResponse::ListAssetsResult> SecurityCenterConnection::ListAssets(
+    google::cloud::securitycenter::v1::ListAssetsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
-      StreamRange<google::cloud::securitycenter::v1::ListAssetsResponse::
-                      ListAssetsResult>>();
+      StreamRange<google::cloud::securitycenter::v1::ListAssetsResponse::ListAssetsResult>>();
 }
 
-StreamRange<
-    google::cloud::securitycenter::v1::SecurityHealthAnalyticsCustomModule>
-SecurityCenterConnection::ListDescendantSecurityHealthAnalyticsCustomModules(
-    google::cloud::securitycenter::v1::
-        ListDescendantSecurityHealthAnalyticsCustomModulesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::securitycenter::v1::SecurityHealthAnalyticsCustomModule> SecurityCenterConnection::ListDescendantSecurityHealthAnalyticsCustomModules(
+    google::cloud::securitycenter::v1::ListDescendantSecurityHealthAnalyticsCustomModulesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
-      StreamRange<google::cloud::securitycenter::v1::
-                      SecurityHealthAnalyticsCustomModule>>();
+      StreamRange<google::cloud::securitycenter::v1::SecurityHealthAnalyticsCustomModule>>();
 }
 
-StreamRange<
-    google::cloud::securitycenter::v1::ListFindingsResponse::ListFindingsResult>
-SecurityCenterConnection::ListFindings(
-    google::cloud::securitycenter::v1::
-        ListFindingsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::securitycenter::v1::ListFindingsResponse::ListFindingsResult> SecurityCenterConnection::ListFindings(
+    google::cloud::securitycenter::v1::ListFindingsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
-      StreamRange<google::cloud::securitycenter::v1::ListFindingsResponse::
-                      ListFindingsResult>>();
+      StreamRange<google::cloud::securitycenter::v1::ListFindingsResponse::ListFindingsResult>>();
 }
 
-StreamRange<google::cloud::securitycenter::v1::MuteConfig>
-SecurityCenterConnection::ListMuteConfigs(
-    google::cloud::securitycenter::v1::
-        ListMuteConfigsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::securitycenter::v1::MuteConfig> SecurityCenterConnection::ListMuteConfigs(
+    google::cloud::securitycenter::v1::ListMuteConfigsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::securitycenter::v1::MuteConfig>>();
 }
 
-StreamRange<google::cloud::securitycenter::v1::NotificationConfig>
-SecurityCenterConnection::ListNotificationConfigs(
-    google::cloud::securitycenter::v1::
-        ListNotificationConfigsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::securitycenter::v1::NotificationConfig> SecurityCenterConnection::ListNotificationConfigs(
+    google::cloud::securitycenter::v1::ListNotificationConfigsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::securitycenter::v1::NotificationConfig>>();
 }
 
-StreamRange<google::cloud::securitycenter::v1::
-                EffectiveSecurityHealthAnalyticsCustomModule>
-SecurityCenterConnection::ListEffectiveSecurityHealthAnalyticsCustomModules(
-    google::cloud::securitycenter::v1::
-        ListEffectiveSecurityHealthAnalyticsCustomModulesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::securitycenter::v1::EffectiveSecurityHealthAnalyticsCustomModule> SecurityCenterConnection::ListEffectiveSecurityHealthAnalyticsCustomModules(
+    google::cloud::securitycenter::v1::ListEffectiveSecurityHealthAnalyticsCustomModulesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
-      StreamRange<google::cloud::securitycenter::v1::
-                      EffectiveSecurityHealthAnalyticsCustomModule>>();
+      StreamRange<google::cloud::securitycenter::v1::EffectiveSecurityHealthAnalyticsCustomModule>>();
 }
 
-StreamRange<
-    google::cloud::securitycenter::v1::SecurityHealthAnalyticsCustomModule>
-SecurityCenterConnection::ListSecurityHealthAnalyticsCustomModules(
-    google::cloud::securitycenter::v1::
-        ListSecurityHealthAnalyticsCustomModulesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::securitycenter::v1::SecurityHealthAnalyticsCustomModule> SecurityCenterConnection::ListSecurityHealthAnalyticsCustomModules(
+    google::cloud::securitycenter::v1::ListSecurityHealthAnalyticsCustomModulesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
-      StreamRange<google::cloud::securitycenter::v1::
-                      SecurityHealthAnalyticsCustomModule>>();
+      StreamRange<google::cloud::securitycenter::v1::SecurityHealthAnalyticsCustomModule>>();
 }
 
-StreamRange<google::cloud::securitycenter::v1::Source>
-SecurityCenterConnection::ListSources(
-    google::cloud::securitycenter::v1::
-        ListSourcesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::securitycenter::v1::Source> SecurityCenterConnection::ListSources(
+    google::cloud::securitycenter::v1::ListSourcesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::securitycenter::v1::Source>>();
 }
@@ -265,8 +234,8 @@ future<StatusOr<google::cloud::securitycenter::v1::RunAssetDiscoveryResponse>>
 SecurityCenterConnection::RunAssetDiscovery(
     google::cloud::securitycenter::v1::RunAssetDiscoveryRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::securitycenter::v1::RunAssetDiscoveryResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::securitycenter::v1::RunAssetDiscoveryResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -274,15 +243,15 @@ SecurityCenterConnection::RunAssetDiscovery(
     NoAwaitTag,
     google::cloud::securitycenter::v1::RunAssetDiscoveryRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::securitycenter::v1::RunAssetDiscoveryResponse>>
 SecurityCenterConnection::RunAssetDiscovery(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::securitycenter::v1::RunAssetDiscoveryResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::securitycenter::v1::RunAssetDiscoveryResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::securitycenter::v1::Finding>
@@ -297,7 +266,8 @@ SecurityCenterConnection::SetMute(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::iam::v1::Policy> SecurityCenterConnection::SetIamPolicy(
+StatusOr<google::iam::v1::Policy>
+SecurityCenterConnection::SetIamPolicy(
     google::iam::v1::SetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -308,11 +278,9 @@ SecurityCenterConnection::TestIamPermissions(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::cloud::securitycenter::v1::
-             SimulateSecurityHealthAnalyticsCustomModuleResponse>
+StatusOr<google::cloud::securitycenter::v1::SimulateSecurityHealthAnalyticsCustomModuleResponse>
 SecurityCenterConnection::SimulateSecurityHealthAnalyticsCustomModule(
-    google::cloud::securitycenter::v1::
-        SimulateSecurityHealthAnalyticsCustomModuleRequest const&) {
+    google::cloud::securitycenter::v1::SimulateSecurityHealthAnalyticsCustomModuleRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
@@ -342,15 +310,13 @@ SecurityCenterConnection::UpdateNotificationConfig(
 
 StatusOr<google::cloud::securitycenter::v1::OrganizationSettings>
 SecurityCenterConnection::UpdateOrganizationSettings(
-    google::cloud::securitycenter::v1::
-        UpdateOrganizationSettingsRequest const&) {
+    google::cloud::securitycenter::v1::UpdateOrganizationSettingsRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::securitycenter::v1::SecurityHealthAnalyticsCustomModule>
 SecurityCenterConnection::UpdateSecurityHealthAnalyticsCustomModule(
-    google::cloud::securitycenter::v1::
-        UpdateSecurityHealthAnalyticsCustomModuleRequest const&) {
+    google::cloud::securitycenter::v1::UpdateSecurityHealthAnalyticsCustomModuleRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
@@ -372,7 +338,8 @@ SecurityCenterConnection::CreateBigQueryExport(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status SecurityCenterConnection::DeleteBigQueryExport(
+Status
+SecurityCenterConnection::DeleteBigQueryExport(
     google::cloud::securitycenter::v1::DeleteBigQueryExportRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -383,94 +350,75 @@ SecurityCenterConnection::UpdateBigQueryExport(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::securitycenter::v1::BigQueryExport>
-SecurityCenterConnection::ListBigQueryExports(
-    google::cloud::securitycenter::v1::
-        ListBigQueryExportsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::securitycenter::v1::BigQueryExport> SecurityCenterConnection::ListBigQueryExports(
+    google::cloud::securitycenter::v1::ListBigQueryExportsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::securitycenter::v1::BigQueryExport>>();
 }
 
 StatusOr<google::cloud::securitycenter::v1::EventThreatDetectionCustomModule>
 SecurityCenterConnection::CreateEventThreatDetectionCustomModule(
-    google::cloud::securitycenter::v1::
-        CreateEventThreatDetectionCustomModuleRequest const&) {
+    google::cloud::securitycenter::v1::CreateEventThreatDetectionCustomModuleRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status SecurityCenterConnection::DeleteEventThreatDetectionCustomModule(
-    google::cloud::securitycenter::v1::
-        DeleteEventThreatDetectionCustomModuleRequest const&) {
+Status
+SecurityCenterConnection::DeleteEventThreatDetectionCustomModule(
+    google::cloud::securitycenter::v1::DeleteEventThreatDetectionCustomModuleRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::securitycenter::v1::EventThreatDetectionCustomModule>
 SecurityCenterConnection::GetEventThreatDetectionCustomModule(
-    google::cloud::securitycenter::v1::
-        GetEventThreatDetectionCustomModuleRequest const&) {
+    google::cloud::securitycenter::v1::GetEventThreatDetectionCustomModuleRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::securitycenter::v1::EventThreatDetectionCustomModule>
-SecurityCenterConnection::ListDescendantEventThreatDetectionCustomModules(
-    google::cloud::securitycenter::v1::
-        ListDescendantEventThreatDetectionCustomModulesRequest) {  // NOLINT(performance-unnecessary-value-param)
-  return google::cloud::internal::MakeUnimplementedPaginationRange<StreamRange<
-      google::cloud::securitycenter::v1::EventThreatDetectionCustomModule>>();
+StreamRange<google::cloud::securitycenter::v1::EventThreatDetectionCustomModule> SecurityCenterConnection::ListDescendantEventThreatDetectionCustomModules(
+    google::cloud::securitycenter::v1::ListDescendantEventThreatDetectionCustomModulesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::securitycenter::v1::EventThreatDetectionCustomModule>>();
 }
 
-StreamRange<google::cloud::securitycenter::v1::EventThreatDetectionCustomModule>
-SecurityCenterConnection::ListEventThreatDetectionCustomModules(
-    google::cloud::securitycenter::v1::
-        ListEventThreatDetectionCustomModulesRequest) {  // NOLINT(performance-unnecessary-value-param)
-  return google::cloud::internal::MakeUnimplementedPaginationRange<StreamRange<
-      google::cloud::securitycenter::v1::EventThreatDetectionCustomModule>>();
+StreamRange<google::cloud::securitycenter::v1::EventThreatDetectionCustomModule> SecurityCenterConnection::ListEventThreatDetectionCustomModules(
+    google::cloud::securitycenter::v1::ListEventThreatDetectionCustomModulesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::securitycenter::v1::EventThreatDetectionCustomModule>>();
 }
 
 StatusOr<google::cloud::securitycenter::v1::EventThreatDetectionCustomModule>
 SecurityCenterConnection::UpdateEventThreatDetectionCustomModule(
-    google::cloud::securitycenter::v1::
-        UpdateEventThreatDetectionCustomModuleRequest const&) {
+    google::cloud::securitycenter::v1::UpdateEventThreatDetectionCustomModuleRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::cloud::securitycenter::v1::
-             ValidateEventThreatDetectionCustomModuleResponse>
+StatusOr<google::cloud::securitycenter::v1::ValidateEventThreatDetectionCustomModuleResponse>
 SecurityCenterConnection::ValidateEventThreatDetectionCustomModule(
-    google::cloud::securitycenter::v1::
-        ValidateEventThreatDetectionCustomModuleRequest const&) {
+    google::cloud::securitycenter::v1::ValidateEventThreatDetectionCustomModuleRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::cloud::securitycenter::v1::
-             EffectiveEventThreatDetectionCustomModule>
+StatusOr<google::cloud::securitycenter::v1::EffectiveEventThreatDetectionCustomModule>
 SecurityCenterConnection::GetEffectiveEventThreatDetectionCustomModule(
-    google::cloud::securitycenter::v1::
-        GetEffectiveEventThreatDetectionCustomModuleRequest const&) {
+    google::cloud::securitycenter::v1::GetEffectiveEventThreatDetectionCustomModuleRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::securitycenter::v1::
-                EffectiveEventThreatDetectionCustomModule>
-SecurityCenterConnection::ListEffectiveEventThreatDetectionCustomModules(
-    google::cloud::securitycenter::v1::
-        ListEffectiveEventThreatDetectionCustomModulesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::securitycenter::v1::EffectiveEventThreatDetectionCustomModule> SecurityCenterConnection::ListEffectiveEventThreatDetectionCustomModules(
+    google::cloud::securitycenter::v1::ListEffectiveEventThreatDetectionCustomModulesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
-      StreamRange<google::cloud::securitycenter::v1::
-                      EffectiveEventThreatDetectionCustomModule>>();
+      StreamRange<google::cloud::securitycenter::v1::EffectiveEventThreatDetectionCustomModule>>();
 }
 
-StatusOr<
-    google::cloud::securitycenter::v1::BatchCreateResourceValueConfigsResponse>
+StatusOr<google::cloud::securitycenter::v1::BatchCreateResourceValueConfigsResponse>
 SecurityCenterConnection::BatchCreateResourceValueConfigs(
-    google::cloud::securitycenter::v1::
-        BatchCreateResourceValueConfigsRequest const&) {
+    google::cloud::securitycenter::v1::BatchCreateResourceValueConfigsRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status SecurityCenterConnection::DeleteResourceValueConfig(
-    google::cloud::securitycenter::v1::
-        DeleteResourceValueConfigRequest const&) {
+Status
+SecurityCenterConnection::DeleteResourceValueConfig(
+    google::cloud::securitycenter::v1::DeleteResourceValueConfigRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
@@ -480,56 +428,50 @@ SecurityCenterConnection::GetResourceValueConfig(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::securitycenter::v1::ResourceValueConfig>
-SecurityCenterConnection::ListResourceValueConfigs(
-    google::cloud::securitycenter::v1::
-        ListResourceValueConfigsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::securitycenter::v1::ResourceValueConfig> SecurityCenterConnection::ListResourceValueConfigs(
+    google::cloud::securitycenter::v1::ListResourceValueConfigsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::securitycenter::v1::ResourceValueConfig>>();
 }
 
 StatusOr<google::cloud::securitycenter::v1::ResourceValueConfig>
 SecurityCenterConnection::UpdateResourceValueConfig(
-    google::cloud::securitycenter::v1::
-        UpdateResourceValueConfigRequest const&) {
+    google::cloud::securitycenter::v1::UpdateResourceValueConfigRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::securitycenter::v1::ValuedResource>
-SecurityCenterConnection::ListValuedResources(
-    google::cloud::securitycenter::v1::
-        ListValuedResourcesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::securitycenter::v1::ValuedResource> SecurityCenterConnection::ListValuedResources(
+    google::cloud::securitycenter::v1::ListValuedResourcesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::securitycenter::v1::ValuedResource>>();
 }
 
-StreamRange<google::cloud::securitycenter::v1::AttackPath>
-SecurityCenterConnection::ListAttackPaths(
-    google::cloud::securitycenter::v1::
-        ListAttackPathsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::securitycenter::v1::AttackPath> SecurityCenterConnection::ListAttackPaths(
+    google::cloud::securitycenter::v1::ListAttackPathsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::securitycenter::v1::AttackPath>>();
 }
 
-StreamRange<google::longrunning::Operation>
-SecurityCenterConnection::ListOperations(
-    google::longrunning::
-        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::longrunning::Operation> SecurityCenterConnection::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }
 
-StatusOr<google::longrunning::Operation> SecurityCenterConnection::GetOperation(
+StatusOr<google::longrunning::Operation>
+SecurityCenterConnection::GetOperation(
     google::longrunning::GetOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status SecurityCenterConnection::DeleteOperation(
+Status
+SecurityCenterConnection::DeleteOperation(
     google::longrunning::DeleteOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status SecurityCenterConnection::CancelOperation(
+Status
+SecurityCenterConnection::CancelOperation(
     google::longrunning::CancelOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -537,19 +479,17 @@ Status SecurityCenterConnection::CancelOperation(
 std::shared_ptr<SecurityCenterConnection> MakeSecurityCenterConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 SecurityCenterPolicyOptionList>(options,
-                                                                 __func__);
+      UnifiedCredentialsOptionList,
+      SecurityCenterPolicyOptionList>(options, __func__);
   options = securitycenter_v1_internal::SecurityCenterDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = securitycenter_v1_internal::CreateDefaultSecurityCenterStub(
-      std::move(auth), options);
+    std::move(auth), options);
   return securitycenter_v1_internal::MakeSecurityCenterTracingConnection(
-      std::make_shared<
-          securitycenter_v1_internal::SecurityCenterConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options)));
+      std::make_shared<securitycenter_v1_internal::SecurityCenterConnectionImpl>(
+      std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

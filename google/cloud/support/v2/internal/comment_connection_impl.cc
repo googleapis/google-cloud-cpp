@@ -17,12 +17,12 @@
 // source: google/cloud/support/v2/comment_service.proto
 
 #include "google/cloud/support/v2/internal/comment_connection_impl.h"
-#include "google/cloud/support/v2/internal/comment_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
+#include "google/cloud/support/v2/internal/comment_option_defaults.h"
 #include <memory>
 #include <utility>
 
@@ -32,61 +32,54 @@ namespace support_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<support_v2::CommentServiceRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<support_v2::CommentServiceRetryPolicy>
+retry_policy(Options const& options) {
   return options.get<support_v2::CommentServiceRetryPolicyOption>()->clone();
 }
 
-std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+std::unique_ptr<BackoffPolicy>
+backoff_policy(Options const& options) {
   return options.get<support_v2::CommentServiceBackoffPolicyOption>()->clone();
 }
 
 std::unique_ptr<support_v2::CommentServiceConnectionIdempotencyPolicy>
 idempotency_policy(Options const& options) {
-  return options
-      .get<support_v2::CommentServiceConnectionIdempotencyPolicyOption>()
-      ->clone();
+  return options.get<support_v2::CommentServiceConnectionIdempotencyPolicyOption>()->clone();
 }
 
-}  // namespace
+} // namespace
 
 CommentServiceConnectionImpl::CommentServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<support_v2_internal::CommentServiceStub> stub,
     Options options)
-    : background_(std::move(background)),
-      stub_(std::move(stub)),
-      options_(internal::MergeOptions(std::move(options),
-                                      CommentServiceConnection::options())) {}
+  : background_(std::move(background)), stub_(std::move(stub)),
+    options_(internal::MergeOptions(
+        std::move(options),
+        CommentServiceConnection::options())) {}
 
 StreamRange<google::cloud::support::v2::Comment>
-CommentServiceConnectionImpl::ListComments(
-    google::cloud::support::v2::ListCommentsRequest request) {
+CommentServiceConnectionImpl::ListComments(google::cloud::support::v2::ListCommentsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListComments(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::support::v2::Comment>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::support::v2::Comment>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<support_v2::CommentServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<support_v2::CommentServiceRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::support::v2::ListCommentsRequest const& r) {
+          Options const& options, google::cloud::support::v2::ListCommentsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::support::v2::ListCommentsRequest const&
-                       request) {
+                   google::cloud::support::v2::ListCommentsRequest const& request) {
               return stub->ListComments(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::support::v2::ListCommentsResponse r) {
-        std::vector<google::cloud::support::v2::Comment> result(
-            r.comments().size());
+        std::vector<google::cloud::support::v2::Comment> result(r.comments().size());
         auto& messages = *r.mutable_comments();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -94,8 +87,7 @@ CommentServiceConnectionImpl::ListComments(
 }
 
 StatusOr<google::cloud::support::v2::Comment>
-CommentServiceConnectionImpl::CreateComment(
-    google::cloud::support::v2::CreateCommentRequest const& request) {
+CommentServiceConnectionImpl::CreateComment(google::cloud::support::v2::CreateCommentRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),

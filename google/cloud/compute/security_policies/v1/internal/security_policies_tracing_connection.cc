@@ -30,14 +30,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 SecurityPoliciesTracingConnection::SecurityPoliciesTracingConnection(
-    std::shared_ptr<compute_security_policies_v1::SecurityPoliciesConnection>
-        child)
+    std::shared_ptr<compute_security_policies_v1::SecurityPoliciesConnection> child)
     : child_(std::move(child)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-SecurityPoliciesTracingConnection::AddRule(
-    google::cloud::cpp::compute::security_policies::v1::AddRuleRequest const&
-        request) {
+SecurityPoliciesTracingConnection::AddRule(google::cloud::cpp::compute::security_policies::v1::AddRuleRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_security_policies_v1::SecurityPoliciesConnection::AddRule");
   internal::OTelScope scope(span);
@@ -46,13 +43,12 @@ SecurityPoliciesTracingConnection::AddRule(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 SecurityPoliciesTracingConnection::AddRule(
-    NoAwaitTag,
-    google::cloud::cpp::compute::security_policies::v1::AddRuleRequest const&
-        request) {
+    NoAwaitTag, google::cloud::cpp::compute::security_policies::v1::AddRuleRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_security_policies_v1::SecurityPoliciesConnection::AddRule");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->AddRule(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->AddRule(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -61,182 +57,135 @@ SecurityPoliciesTracingConnection::AddRule(
   auto span = internal::MakeSpan(
       "compute_security_policies_v1::SecurityPoliciesConnection::AddRule");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->AddRule(operation));
+  return internal::EndSpan(std::move(span),
+      child_->AddRule(operation));
 }
 
-StreamRange<std::pair<
-    std::string, google::cloud::cpp::compute::v1::SecurityPoliciesScopedList>>
-SecurityPoliciesTracingConnection::AggregatedListSecurityPolicies(
-    google::cloud::cpp::compute::security_policies::v1::
-        AggregatedListSecurityPoliciesRequest request) {
-  auto span = internal::MakeSpan(
-      "compute_security_policies_v1::SecurityPoliciesConnection::"
-      "AggregatedListSecurityPolicies");
+StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::SecurityPoliciesScopedList>>
+SecurityPoliciesTracingConnection::AggregatedListSecurityPolicies(google::cloud::cpp::compute::security_policies::v1::AggregatedListSecurityPoliciesRequest request) {
+  auto span = internal::MakeSpan("compute_security_policies_v1::SecurityPoliciesConnection::AggregatedListSecurityPolicies");
   internal::OTelScope scope(span);
   auto sr = child_->AggregatedListSecurityPolicies(std::move(request));
-  return internal::MakeTracedStreamRange<
-      std::pair<std::string,
-                google::cloud::cpp::compute::v1::SecurityPoliciesScopedList>>(
-      std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::SecurityPoliciesScopedList>>(
+        std::move(span), std::move(sr));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-SecurityPoliciesTracingConnection::DeleteSecurityPolicy(
-    google::cloud::cpp::compute::security_policies::v1::
-        DeleteSecurityPolicyRequest const& request) {
+SecurityPoliciesTracingConnection::DeleteSecurityPolicy(google::cloud::cpp::compute::security_policies::v1::DeleteSecurityPolicyRequest const& request) {
   auto span = internal::MakeSpan(
-      "compute_security_policies_v1::SecurityPoliciesConnection::"
-      "DeleteSecurityPolicy");
+      "compute_security_policies_v1::SecurityPoliciesConnection::DeleteSecurityPolicy");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->DeleteSecurityPolicy(request));
+  return internal::EndSpan(std::move(span), child_->DeleteSecurityPolicy(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 SecurityPoliciesTracingConnection::DeleteSecurityPolicy(
-    NoAwaitTag, google::cloud::cpp::compute::security_policies::v1::
-                    DeleteSecurityPolicyRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::security_policies::v1::DeleteSecurityPolicyRequest const& request) {
   auto span = internal::MakeSpan(
-      "compute_security_policies_v1::SecurityPoliciesConnection::"
-      "DeleteSecurityPolicy");
+      "compute_security_policies_v1::SecurityPoliciesConnection::DeleteSecurityPolicy");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span,
-                           child_->DeleteSecurityPolicy(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->DeleteSecurityPolicy(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 SecurityPoliciesTracingConnection::DeleteSecurityPolicy(
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
-      "compute_security_policies_v1::SecurityPoliciesConnection::"
-      "DeleteSecurityPolicy");
+      "compute_security_policies_v1::SecurityPoliciesConnection::DeleteSecurityPolicy");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->DeleteSecurityPolicy(operation));
+      child_->DeleteSecurityPolicy(operation));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::SecurityPolicy>
-SecurityPoliciesTracingConnection::GetSecurityPolicy(
-    google::cloud::cpp::compute::security_policies::v1::
-        GetSecurityPolicyRequest const& request) {
-  auto span = internal::MakeSpan(
-      "compute_security_policies_v1::SecurityPoliciesConnection::"
-      "GetSecurityPolicy");
+SecurityPoliciesTracingConnection::GetSecurityPolicy(google::cloud::cpp::compute::security_policies::v1::GetSecurityPolicyRequest const& request) {
+  auto span = internal::MakeSpan("compute_security_policies_v1::SecurityPoliciesConnection::GetSecurityPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetSecurityPolicy(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::SecurityPolicyRule>
-SecurityPoliciesTracingConnection::GetRule(
-    google::cloud::cpp::compute::security_policies::v1::GetRuleRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "compute_security_policies_v1::SecurityPoliciesConnection::GetRule");
+SecurityPoliciesTracingConnection::GetRule(google::cloud::cpp::compute::security_policies::v1::GetRuleRequest const& request) {
+  auto span = internal::MakeSpan("compute_security_policies_v1::SecurityPoliciesConnection::GetRule");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetRule(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-SecurityPoliciesTracingConnection::InsertSecurityPolicy(
-    google::cloud::cpp::compute::security_policies::v1::
-        InsertSecurityPolicyRequest const& request) {
+SecurityPoliciesTracingConnection::InsertSecurityPolicy(google::cloud::cpp::compute::security_policies::v1::InsertSecurityPolicyRequest const& request) {
   auto span = internal::MakeSpan(
-      "compute_security_policies_v1::SecurityPoliciesConnection::"
-      "InsertSecurityPolicy");
+      "compute_security_policies_v1::SecurityPoliciesConnection::InsertSecurityPolicy");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->InsertSecurityPolicy(request));
+  return internal::EndSpan(std::move(span), child_->InsertSecurityPolicy(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 SecurityPoliciesTracingConnection::InsertSecurityPolicy(
-    NoAwaitTag, google::cloud::cpp::compute::security_policies::v1::
-                    InsertSecurityPolicyRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::security_policies::v1::InsertSecurityPolicyRequest const& request) {
   auto span = internal::MakeSpan(
-      "compute_security_policies_v1::SecurityPoliciesConnection::"
-      "InsertSecurityPolicy");
+      "compute_security_policies_v1::SecurityPoliciesConnection::InsertSecurityPolicy");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span,
-                           child_->InsertSecurityPolicy(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->InsertSecurityPolicy(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 SecurityPoliciesTracingConnection::InsertSecurityPolicy(
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
-      "compute_security_policies_v1::SecurityPoliciesConnection::"
-      "InsertSecurityPolicy");
+      "compute_security_policies_v1::SecurityPoliciesConnection::InsertSecurityPolicy");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->InsertSecurityPolicy(operation));
+      child_->InsertSecurityPolicy(operation));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::SecurityPolicy>
-SecurityPoliciesTracingConnection::ListSecurityPolicies(
-    google::cloud::cpp::compute::security_policies::v1::
-        ListSecurityPoliciesRequest request) {
-  auto span = internal::MakeSpan(
-      "compute_security_policies_v1::SecurityPoliciesConnection::"
-      "ListSecurityPolicies");
+SecurityPoliciesTracingConnection::ListSecurityPolicies(google::cloud::cpp::compute::security_policies::v1::ListSecurityPoliciesRequest request) {
+  auto span = internal::MakeSpan("compute_security_policies_v1::SecurityPoliciesConnection::ListSecurityPolicies");
   internal::OTelScope scope(span);
   auto sr = child_->ListSecurityPolicies(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::cpp::compute::v1::SecurityPolicy>(std::move(span),
-                                                       std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::cpp::compute::v1::SecurityPolicy>(
+        std::move(span), std::move(sr));
 }
 
-StatusOr<google::cloud::cpp::compute::v1::
-             SecurityPoliciesListPreconfiguredExpressionSetsResponse>
-SecurityPoliciesTracingConnection::ListPreconfiguredExpressionSets(
-    google::cloud::cpp::compute::security_policies::v1::
-        ListPreconfiguredExpressionSetsRequest const& request) {
-  auto span = internal::MakeSpan(
-      "compute_security_policies_v1::SecurityPoliciesConnection::"
-      "ListPreconfiguredExpressionSets");
+StatusOr<google::cloud::cpp::compute::v1::SecurityPoliciesListPreconfiguredExpressionSetsResponse>
+SecurityPoliciesTracingConnection::ListPreconfiguredExpressionSets(google::cloud::cpp::compute::security_policies::v1::ListPreconfiguredExpressionSetsRequest const& request) {
+  auto span = internal::MakeSpan("compute_security_policies_v1::SecurityPoliciesConnection::ListPreconfiguredExpressionSets");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span,
-                           child_->ListPreconfiguredExpressionSets(request));
+  return internal::EndSpan(*span, child_->ListPreconfiguredExpressionSets(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-SecurityPoliciesTracingConnection::PatchSecurityPolicy(
-    google::cloud::cpp::compute::security_policies::v1::
-        PatchSecurityPolicyRequest const& request) {
+SecurityPoliciesTracingConnection::PatchSecurityPolicy(google::cloud::cpp::compute::security_policies::v1::PatchSecurityPolicyRequest const& request) {
   auto span = internal::MakeSpan(
-      "compute_security_policies_v1::SecurityPoliciesConnection::"
-      "PatchSecurityPolicy");
+      "compute_security_policies_v1::SecurityPoliciesConnection::PatchSecurityPolicy");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->PatchSecurityPolicy(request));
+  return internal::EndSpan(std::move(span), child_->PatchSecurityPolicy(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 SecurityPoliciesTracingConnection::PatchSecurityPolicy(
-    NoAwaitTag, google::cloud::cpp::compute::security_policies::v1::
-                    PatchSecurityPolicyRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::security_policies::v1::PatchSecurityPolicyRequest const& request) {
   auto span = internal::MakeSpan(
-      "compute_security_policies_v1::SecurityPoliciesConnection::"
-      "PatchSecurityPolicy");
+      "compute_security_policies_v1::SecurityPoliciesConnection::PatchSecurityPolicy");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span,
-                           child_->PatchSecurityPolicy(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->PatchSecurityPolicy(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 SecurityPoliciesTracingConnection::PatchSecurityPolicy(
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
-      "compute_security_policies_v1::SecurityPoliciesConnection::"
-      "PatchSecurityPolicy");
+      "compute_security_policies_v1::SecurityPoliciesConnection::PatchSecurityPolicy");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->PatchSecurityPolicy(operation));
+      child_->PatchSecurityPolicy(operation));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-SecurityPoliciesTracingConnection::PatchRule(
-    google::cloud::cpp::compute::security_policies::v1::PatchRuleRequest const&
-        request) {
+SecurityPoliciesTracingConnection::PatchRule(google::cloud::cpp::compute::security_policies::v1::PatchRuleRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_security_policies_v1::SecurityPoliciesConnection::PatchRule");
   internal::OTelScope scope(span);
@@ -245,13 +194,12 @@ SecurityPoliciesTracingConnection::PatchRule(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 SecurityPoliciesTracingConnection::PatchRule(
-    NoAwaitTag,
-    google::cloud::cpp::compute::security_policies::v1::PatchRuleRequest const&
-        request) {
+    NoAwaitTag, google::cloud::cpp::compute::security_policies::v1::PatchRuleRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_security_policies_v1::SecurityPoliciesConnection::PatchRule");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->PatchRule(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->PatchRule(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -260,13 +208,12 @@ SecurityPoliciesTracingConnection::PatchRule(
   auto span = internal::MakeSpan(
       "compute_security_policies_v1::SecurityPoliciesConnection::PatchRule");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->PatchRule(operation));
+  return internal::EndSpan(std::move(span),
+      child_->PatchRule(operation));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-SecurityPoliciesTracingConnection::RemoveRule(
-    google::cloud::cpp::compute::security_policies::v1::RemoveRuleRequest const&
-        request) {
+SecurityPoliciesTracingConnection::RemoveRule(google::cloud::cpp::compute::security_policies::v1::RemoveRuleRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_security_policies_v1::SecurityPoliciesConnection::RemoveRule");
   internal::OTelScope scope(span);
@@ -275,13 +222,12 @@ SecurityPoliciesTracingConnection::RemoveRule(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 SecurityPoliciesTracingConnection::RemoveRule(
-    NoAwaitTag,
-    google::cloud::cpp::compute::security_policies::v1::RemoveRuleRequest const&
-        request) {
+    NoAwaitTag, google::cloud::cpp::compute::security_policies::v1::RemoveRuleRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_security_policies_v1::SecurityPoliciesConnection::RemoveRule");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->RemoveRule(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->RemoveRule(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -290,13 +236,12 @@ SecurityPoliciesTracingConnection::RemoveRule(
   auto span = internal::MakeSpan(
       "compute_security_policies_v1::SecurityPoliciesConnection::RemoveRule");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->RemoveRule(operation));
+  return internal::EndSpan(std::move(span),
+      child_->RemoveRule(operation));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-SecurityPoliciesTracingConnection::SetLabels(
-    google::cloud::cpp::compute::security_policies::v1::SetLabelsRequest const&
-        request) {
+SecurityPoliciesTracingConnection::SetLabels(google::cloud::cpp::compute::security_policies::v1::SetLabelsRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_security_policies_v1::SecurityPoliciesConnection::SetLabels");
   internal::OTelScope scope(span);
@@ -305,13 +250,12 @@ SecurityPoliciesTracingConnection::SetLabels(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 SecurityPoliciesTracingConnection::SetLabels(
-    NoAwaitTag,
-    google::cloud::cpp::compute::security_policies::v1::SetLabelsRequest const&
-        request) {
+    NoAwaitTag, google::cloud::cpp::compute::security_policies::v1::SetLabelsRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_security_policies_v1::SecurityPoliciesConnection::SetLabels");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->SetLabels(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->SetLabels(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -320,15 +264,15 @@ SecurityPoliciesTracingConnection::SetLabels(
   auto span = internal::MakeSpan(
       "compute_security_policies_v1::SecurityPoliciesConnection::SetLabels");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->SetLabels(operation));
+  return internal::EndSpan(std::move(span),
+      child_->SetLabels(operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<compute_security_policies_v1::SecurityPoliciesConnection>
 MakeSecurityPoliciesTracingConnection(
-    std::shared_ptr<compute_security_policies_v1::SecurityPoliciesConnection>
-        conn) {
+    std::shared_ptr<compute_security_policies_v1::SecurityPoliciesConnection> conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<SecurityPoliciesTracingConnection>(std::move(conn));

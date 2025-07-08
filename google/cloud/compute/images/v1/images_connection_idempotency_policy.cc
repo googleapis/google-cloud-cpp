@@ -26,71 +26,59 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-ImagesConnectionIdempotencyPolicy::~ImagesConnectionIdempotencyPolicy() =
-    default;
+ImagesConnectionIdempotencyPolicy::~ImagesConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<ImagesConnectionIdempotencyPolicy>
 ImagesConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<ImagesConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency ImagesConnectionIdempotencyPolicy::DeleteImage(
-    google::cloud::cpp::compute::images::v1::DeleteImageRequest const&) {
+Idempotency ImagesConnectionIdempotencyPolicy::DeleteImage(google::cloud::cpp::compute::images::v1::DeleteImageRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ImagesConnectionIdempotencyPolicy::Deprecate(
-    google::cloud::cpp::compute::images::v1::DeprecateRequest const&) {
+Idempotency ImagesConnectionIdempotencyPolicy::Deprecate(google::cloud::cpp::compute::images::v1::DeprecateRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ImagesConnectionIdempotencyPolicy::GetImage(
-    google::cloud::cpp::compute::images::v1::GetImageRequest const&) {
+Idempotency ImagesConnectionIdempotencyPolicy::GetImage(google::cloud::cpp::compute::images::v1::GetImageRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ImagesConnectionIdempotencyPolicy::GetFromFamily(
-    google::cloud::cpp::compute::images::v1::GetFromFamilyRequest const&) {
+Idempotency ImagesConnectionIdempotencyPolicy::GetFromFamily(google::cloud::cpp::compute::images::v1::GetFromFamilyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ImagesConnectionIdempotencyPolicy::GetIamPolicy(
-    google::cloud::cpp::compute::images::v1::GetIamPolicyRequest const&) {
+Idempotency ImagesConnectionIdempotencyPolicy::GetIamPolicy(google::cloud::cpp::compute::images::v1::GetIamPolicyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ImagesConnectionIdempotencyPolicy::InsertImage(
-    google::cloud::cpp::compute::images::v1::InsertImageRequest const&) {
+Idempotency ImagesConnectionIdempotencyPolicy::InsertImage(google::cloud::cpp::compute::images::v1::InsertImageRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ImagesConnectionIdempotencyPolicy::ListImages(
-    google::cloud::cpp::compute::images::v1::ListImagesRequest) {  // NOLINT
+Idempotency ImagesConnectionIdempotencyPolicy::ListImages(google::cloud::cpp::compute::images::v1::ListImagesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency ImagesConnectionIdempotencyPolicy::PatchImage(
-    google::cloud::cpp::compute::images::v1::PatchImageRequest const&) {
+Idempotency ImagesConnectionIdempotencyPolicy::PatchImage(google::cloud::cpp::compute::images::v1::PatchImageRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ImagesConnectionIdempotencyPolicy::SetIamPolicy(
-    google::cloud::cpp::compute::images::v1::SetIamPolicyRequest const&) {
+Idempotency ImagesConnectionIdempotencyPolicy::SetIamPolicy(google::cloud::cpp::compute::images::v1::SetIamPolicyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ImagesConnectionIdempotencyPolicy::SetLabels(
-    google::cloud::cpp::compute::images::v1::SetLabelsRequest const&) {
+Idempotency ImagesConnectionIdempotencyPolicy::SetLabels(google::cloud::cpp::compute::images::v1::SetLabelsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ImagesConnectionIdempotencyPolicy::TestIamPermissions(
-    google::cloud::cpp::compute::images::v1::TestIamPermissionsRequest const&) {
+Idempotency ImagesConnectionIdempotencyPolicy::TestIamPermissions(google::cloud::cpp::compute::images::v1::TestIamPermissionsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<ImagesConnectionIdempotencyPolicy>
-MakeDefaultImagesConnectionIdempotencyPolicy() {
+    MakeDefaultImagesConnectionIdempotencyPolicy() {
   return std::make_unique<ImagesConnectionIdempotencyPolicy>();
 }
 

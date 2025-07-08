@@ -30,126 +30,95 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 SslCertificatesTracingConnection::SslCertificatesTracingConnection(
-    std::shared_ptr<compute_ssl_certificates_v1::SslCertificatesConnection>
-        child)
+    std::shared_ptr<compute_ssl_certificates_v1::SslCertificatesConnection> child)
     : child_(std::move(child)) {}
 
-StreamRange<std::pair<
-    std::string, google::cloud::cpp::compute::v1::SslCertificatesScopedList>>
-SslCertificatesTracingConnection::AggregatedListSslCertificates(
-    google::cloud::cpp::compute::ssl_certificates::v1::
-        AggregatedListSslCertificatesRequest request) {
-  auto span = internal::MakeSpan(
-      "compute_ssl_certificates_v1::SslCertificatesConnection::"
-      "AggregatedListSslCertificates");
+StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::SslCertificatesScopedList>>
+SslCertificatesTracingConnection::AggregatedListSslCertificates(google::cloud::cpp::compute::ssl_certificates::v1::AggregatedListSslCertificatesRequest request) {
+  auto span = internal::MakeSpan("compute_ssl_certificates_v1::SslCertificatesConnection::AggregatedListSslCertificates");
   internal::OTelScope scope(span);
   auto sr = child_->AggregatedListSslCertificates(std::move(request));
-  return internal::MakeTracedStreamRange<std::pair<
-      std::string, google::cloud::cpp::compute::v1::SslCertificatesScopedList>>(
-      std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::SslCertificatesScopedList>>(
+        std::move(span), std::move(sr));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-SslCertificatesTracingConnection::DeleteSslCertificate(
-    google::cloud::cpp::compute::ssl_certificates::v1::
-        DeleteSslCertificateRequest const& request) {
+SslCertificatesTracingConnection::DeleteSslCertificate(google::cloud::cpp::compute::ssl_certificates::v1::DeleteSslCertificateRequest const& request) {
   auto span = internal::MakeSpan(
-      "compute_ssl_certificates_v1::SslCertificatesConnection::"
-      "DeleteSslCertificate");
+      "compute_ssl_certificates_v1::SslCertificatesConnection::DeleteSslCertificate");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->DeleteSslCertificate(request));
+  return internal::EndSpan(std::move(span), child_->DeleteSslCertificate(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 SslCertificatesTracingConnection::DeleteSslCertificate(
-    NoAwaitTag, google::cloud::cpp::compute::ssl_certificates::v1::
-                    DeleteSslCertificateRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::ssl_certificates::v1::DeleteSslCertificateRequest const& request) {
   auto span = internal::MakeSpan(
-      "compute_ssl_certificates_v1::SslCertificatesConnection::"
-      "DeleteSslCertificate");
+      "compute_ssl_certificates_v1::SslCertificatesConnection::DeleteSslCertificate");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span,
-                           child_->DeleteSslCertificate(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->DeleteSslCertificate(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 SslCertificatesTracingConnection::DeleteSslCertificate(
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
-      "compute_ssl_certificates_v1::SslCertificatesConnection::"
-      "DeleteSslCertificate");
+      "compute_ssl_certificates_v1::SslCertificatesConnection::DeleteSslCertificate");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->DeleteSslCertificate(operation));
+      child_->DeleteSslCertificate(operation));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::SslCertificate>
-SslCertificatesTracingConnection::GetSslCertificate(
-    google::cloud::cpp::compute::ssl_certificates::v1::
-        GetSslCertificateRequest const& request) {
-  auto span = internal::MakeSpan(
-      "compute_ssl_certificates_v1::SslCertificatesConnection::"
-      "GetSslCertificate");
+SslCertificatesTracingConnection::GetSslCertificate(google::cloud::cpp::compute::ssl_certificates::v1::GetSslCertificateRequest const& request) {
+  auto span = internal::MakeSpan("compute_ssl_certificates_v1::SslCertificatesConnection::GetSslCertificate");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetSslCertificate(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-SslCertificatesTracingConnection::InsertSslCertificate(
-    google::cloud::cpp::compute::ssl_certificates::v1::
-        InsertSslCertificateRequest const& request) {
+SslCertificatesTracingConnection::InsertSslCertificate(google::cloud::cpp::compute::ssl_certificates::v1::InsertSslCertificateRequest const& request) {
   auto span = internal::MakeSpan(
-      "compute_ssl_certificates_v1::SslCertificatesConnection::"
-      "InsertSslCertificate");
+      "compute_ssl_certificates_v1::SslCertificatesConnection::InsertSslCertificate");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->InsertSslCertificate(request));
+  return internal::EndSpan(std::move(span), child_->InsertSslCertificate(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 SslCertificatesTracingConnection::InsertSslCertificate(
-    NoAwaitTag, google::cloud::cpp::compute::ssl_certificates::v1::
-                    InsertSslCertificateRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::ssl_certificates::v1::InsertSslCertificateRequest const& request) {
   auto span = internal::MakeSpan(
-      "compute_ssl_certificates_v1::SslCertificatesConnection::"
-      "InsertSslCertificate");
+      "compute_ssl_certificates_v1::SslCertificatesConnection::InsertSslCertificate");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span,
-                           child_->InsertSslCertificate(NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->InsertSslCertificate(
+      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 SslCertificatesTracingConnection::InsertSslCertificate(
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
-      "compute_ssl_certificates_v1::SslCertificatesConnection::"
-      "InsertSslCertificate");
+      "compute_ssl_certificates_v1::SslCertificatesConnection::InsertSslCertificate");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->InsertSslCertificate(operation));
+      child_->InsertSslCertificate(operation));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::SslCertificate>
-SslCertificatesTracingConnection::ListSslCertificates(
-    google::cloud::cpp::compute::ssl_certificates::v1::
-        ListSslCertificatesRequest request) {
-  auto span = internal::MakeSpan(
-      "compute_ssl_certificates_v1::SslCertificatesConnection::"
-      "ListSslCertificates");
+SslCertificatesTracingConnection::ListSslCertificates(google::cloud::cpp::compute::ssl_certificates::v1::ListSslCertificatesRequest request) {
+  auto span = internal::MakeSpan("compute_ssl_certificates_v1::SslCertificatesConnection::ListSslCertificates");
   internal::OTelScope scope(span);
   auto sr = child_->ListSslCertificates(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::cpp::compute::v1::SslCertificate>(std::move(span),
-                                                       std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::cpp::compute::v1::SslCertificate>(
+        std::move(span), std::move(sr));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<compute_ssl_certificates_v1::SslCertificatesConnection>
 MakeSslCertificatesTracingConnection(
-    std::shared_ptr<compute_ssl_certificates_v1::SslCertificatesConnection>
-        conn) {
+    std::shared_ptr<compute_ssl_certificates_v1::SslCertificatesConnection> conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<SslCertificatesTracingConnection>(std::move(conn));

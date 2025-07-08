@@ -32,136 +32,140 @@ MetricServiceStub::~MetricServiceStub() = default;
 
 StatusOr<google::monitoring::v3::ListMonitoredResourceDescriptorsResponse>
 DefaultMetricServiceStub::ListMonitoredResourceDescriptors(
-    grpc::ClientContext& context, Options const&,
-    google::monitoring::v3::ListMonitoredResourceDescriptorsRequest const&
-        request) {
-  google::monitoring::v3::ListMonitoredResourceDescriptorsResponse response;
-  auto status = grpc_stub_->ListMonitoredResourceDescriptors(&context, request,
-                                                             &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::monitoring::v3::ListMonitoredResourceDescriptorsRequest const& request) {
+    google::monitoring::v3::ListMonitoredResourceDescriptorsResponse response;
+    auto status =
+        grpc_stub_->ListMonitoredResourceDescriptors(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::api::MonitoredResourceDescriptor>
 DefaultMetricServiceStub::GetMonitoredResourceDescriptor(
-    grpc::ClientContext& context, Options const&,
-    google::monitoring::v3::GetMonitoredResourceDescriptorRequest const&
-        request) {
-  google::api::MonitoredResourceDescriptor response;
-  auto status =
-      grpc_stub_->GetMonitoredResourceDescriptor(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::monitoring::v3::GetMonitoredResourceDescriptorRequest const& request) {
+    google::api::MonitoredResourceDescriptor response;
+    auto status =
+        grpc_stub_->GetMonitoredResourceDescriptor(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::monitoring::v3::ListMetricDescriptorsResponse>
 DefaultMetricServiceStub::ListMetricDescriptors(
-    grpc::ClientContext& context, Options const&,
-    google::monitoring::v3::ListMetricDescriptorsRequest const& request) {
-  google::monitoring::v3::ListMetricDescriptorsResponse response;
-  auto status = grpc_stub_->ListMetricDescriptors(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::monitoring::v3::ListMetricDescriptorsRequest const& request) {
+    google::monitoring::v3::ListMetricDescriptorsResponse response;
+    auto status =
+        grpc_stub_->ListMetricDescriptors(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::api::MetricDescriptor>
 DefaultMetricServiceStub::GetMetricDescriptor(
-    grpc::ClientContext& context, Options const&,
-    google::monitoring::v3::GetMetricDescriptorRequest const& request) {
-  google::api::MetricDescriptor response;
-  auto status = grpc_stub_->GetMetricDescriptor(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::monitoring::v3::GetMetricDescriptorRequest const& request) {
+    google::api::MetricDescriptor response;
+    auto status =
+        grpc_stub_->GetMetricDescriptor(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::api::MetricDescriptor>
 DefaultMetricServiceStub::CreateMetricDescriptor(
-    grpc::ClientContext& context, Options const&,
-    google::monitoring::v3::CreateMetricDescriptorRequest const& request) {
-  google::api::MetricDescriptor response;
-  auto status =
-      grpc_stub_->CreateMetricDescriptor(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::monitoring::v3::CreateMetricDescriptorRequest const& request) {
+    google::api::MetricDescriptor response;
+    auto status =
+        grpc_stub_->CreateMetricDescriptor(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-Status DefaultMetricServiceStub::DeleteMetricDescriptor(
-    grpc::ClientContext& context, Options const&,
-    google::monitoring::v3::DeleteMetricDescriptorRequest const& request) {
-  google::protobuf::Empty response;
-  auto status =
-      grpc_stub_->DeleteMetricDescriptor(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return google::cloud::Status();
+Status
+DefaultMetricServiceStub::DeleteMetricDescriptor(
+  grpc::ClientContext& context, Options const&,
+  google::monitoring::v3::DeleteMetricDescriptorRequest const& request) {
+    google::protobuf::Empty response;
+    auto status =
+        grpc_stub_->DeleteMetricDescriptor(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return google::cloud::Status();
 }
 
 StatusOr<google::monitoring::v3::ListTimeSeriesResponse>
 DefaultMetricServiceStub::ListTimeSeries(
-    grpc::ClientContext& context, Options const&,
-    google::monitoring::v3::ListTimeSeriesRequest const& request) {
-  google::monitoring::v3::ListTimeSeriesResponse response;
-  auto status = grpc_stub_->ListTimeSeries(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::monitoring::v3::ListTimeSeriesRequest const& request) {
+    google::monitoring::v3::ListTimeSeriesResponse response;
+    auto status =
+        grpc_stub_->ListTimeSeries(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-Status DefaultMetricServiceStub::CreateTimeSeries(
-    grpc::ClientContext& context, Options const&,
-    google::monitoring::v3::CreateTimeSeriesRequest const& request) {
-  google::protobuf::Empty response;
-  auto status = grpc_stub_->CreateTimeSeries(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return google::cloud::Status();
+Status
+DefaultMetricServiceStub::CreateTimeSeries(
+  grpc::ClientContext& context, Options const&,
+  google::monitoring::v3::CreateTimeSeriesRequest const& request) {
+    google::protobuf::Empty response;
+    auto status =
+        grpc_stub_->CreateTimeSeries(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return google::cloud::Status();
 }
 
-Status DefaultMetricServiceStub::CreateServiceTimeSeries(
-    grpc::ClientContext& context, Options const&,
-    google::monitoring::v3::CreateTimeSeriesRequest const& request) {
-  google::protobuf::Empty response;
-  auto status =
-      grpc_stub_->CreateServiceTimeSeries(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return google::cloud::Status();
+Status
+DefaultMetricServiceStub::CreateServiceTimeSeries(
+  grpc::ClientContext& context, Options const&,
+  google::monitoring::v3::CreateTimeSeriesRequest const& request) {
+    google::protobuf::Empty response;
+    auto status =
+        grpc_stub_->CreateServiceTimeSeries(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return google::cloud::Status();
 }
 
-future<Status> DefaultMetricServiceStub::AsyncCreateTimeSeries(
+future<Status>
+DefaultMetricServiceStub::AsyncCreateTimeSeries(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     // NOLINTNEXTLINE(performance-unnecessary-value-param)
     google::cloud::internal::ImmutableOptions,
     google::monitoring::v3::CreateTimeSeriesRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-             google::monitoring::v3::CreateTimeSeriesRequest,
-             google::protobuf::Empty>(
-             cq,
-             [this](
-                 grpc::ClientContext* context,
-                 google::monitoring::v3::CreateTimeSeriesRequest const& request,
-                 grpc::CompletionQueue* cq) {
-               return grpc_stub_->AsyncCreateTimeSeries(context, request, cq);
-             },
-             request, std::move(context))
-      .then([](future<StatusOr<google::protobuf::Empty>> f) {
-        return f.get().status();
-      });
+  return internal::MakeUnaryRpcImpl<google::monitoring::v3::CreateTimeSeriesRequest,
+                                    google::protobuf::Empty>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::monitoring::v3::CreateTimeSeriesRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncCreateTimeSeries(context, request, cq);
+      },
+      request, std::move(context))
+          .then([](future<StatusOr<google::protobuf::Empty>> f) {
+            return f.get().status();
+          });
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

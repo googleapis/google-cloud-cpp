@@ -42,8 +42,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockMachineImagesConnection
-    : public compute_machine_images_v1::MachineImagesConnection {
+class MockMachineImagesConnection : public compute_machine_images_v1::MachineImagesConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
@@ -52,15 +51,12 @@ class MockMachineImagesConnection
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteMachineImage(Matcher<google::cloud::cpp::compute::machine_images::v1::DeleteMachineImageRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteMachineImage(Matcher<google::cloud::cpp::compute::machine_images::v1::DeleteMachineImageRequest const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              DeleteMachineImage,
-              (google::cloud::cpp::compute::machine_images::v1::
-                   DeleteMachineImageRequest const& request),
-              (override));
+  DeleteMachineImage,
+  (google::cloud::cpp::compute::machine_images::v1::DeleteMachineImageRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -69,50 +65,40 @@ class MockMachineImagesConnection
   /// EXPECT_CALL(*mock, DeleteMachineImage(_, _))
   /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-              DeleteMachineImage,
-              (NoAwaitTag, google::cloud::cpp::compute::machine_images::v1::
-                               DeleteMachineImageRequest const& request),
-              (override));
+  DeleteMachineImage, (NoAwaitTag,
+    google::cloud::cpp::compute::machine_images::v1::DeleteMachineImageRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteMachineImage(Matcher<google::cloud::cpp::compute::v1::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteMachineImage(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              DeleteMachineImage,
-              (google::cloud::cpp::compute::v1::Operation const& operation),
-              (override));
+  DeleteMachineImage, (
+    google::cloud::cpp::compute::v1::Operation const& operation), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::MachineImage>,
-              GetMachineImage,
-              (google::cloud::cpp::compute::machine_images::v1::
-                   GetMachineImageRequest const& request),
-              (override));
+  GetMachineImage,
+  (google::cloud::cpp::compute::machine_images::v1::GetMachineImageRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Policy>, GetIamPolicy,
-              (google::cloud::cpp::compute::machine_images::v1::
-                   GetIamPolicyRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Policy>,
+  GetIamPolicy,
+  (google::cloud::cpp::compute::machine_images::v1::GetIamPolicyRequest const& request), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// InsertMachineImage(Matcher<google::cloud::cpp::compute::machine_images::v1::InsertMachineImageRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, InsertMachineImage(Matcher<google::cloud::cpp::compute::machine_images::v1::InsertMachineImageRequest const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              InsertMachineImage,
-              (google::cloud::cpp::compute::machine_images::v1::
-                   InsertMachineImageRequest const& request),
-              (override));
+  InsertMachineImage,
+  (google::cloud::cpp::compute::machine_images::v1::InsertMachineImageRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -121,51 +107,40 @@ class MockMachineImagesConnection
   /// EXPECT_CALL(*mock, InsertMachineImage(_, _))
   /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-              InsertMachineImage,
-              (NoAwaitTag, google::cloud::cpp::compute::machine_images::v1::
-                               InsertMachineImageRequest const& request),
-              (override));
+  InsertMachineImage, (NoAwaitTag,
+    google::cloud::cpp::compute::machine_images::v1::InsertMachineImageRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// InsertMachineImage(Matcher<google::cloud::cpp::compute::v1::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, InsertMachineImage(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              InsertMachineImage,
-              (google::cloud::cpp::compute::v1::Operation const& operation),
-              (override));
+  InsertMachineImage, (
+    google::cloud::cpp::compute::v1::Operation const& operation), (override));
 
-  MOCK_METHOD(
-      (StreamRange<google::cloud::cpp::compute::v1::MachineImage>),
-      ListMachineImages,
-      (google::cloud::cpp::compute::machine_images::v1::ListMachineImagesRequest
-           request),
-      (override));
+  MOCK_METHOD((StreamRange<google::cloud::cpp::compute::v1::MachineImage>),
+  ListMachineImages,
+  (google::cloud::cpp::compute::machine_images::v1::ListMachineImagesRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Policy>, SetIamPolicy,
-              (google::cloud::cpp::compute::machine_images::v1::
-                   SetIamPolicyRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Policy>,
+  SetIamPolicy,
+  (google::cloud::cpp::compute::machine_images::v1::SetIamPolicyRequest const& request), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// SetLabels(Matcher<google::cloud::cpp::compute::machine_images::v1::SetLabelsRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, SetLabels(Matcher<google::cloud::cpp::compute::machine_images::v1::SetLabelsRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::cpp::compute::v1::Operation>>, SetLabels,
-      (google::cloud::cpp::compute::machine_images::v1::SetLabelsRequest const&
-           request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+  SetLabels,
+  (google::cloud::cpp::compute::machine_images::v1::SetLabelsRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -173,32 +148,25 @@ class MockMachineImagesConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, SetLabels(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::Operation>, SetLabels,
-      (NoAwaitTag,
-       google::cloud::cpp::compute::machine_images::v1::SetLabelsRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+  SetLabels, (NoAwaitTag,
+    google::cloud::cpp::compute::machine_images::v1::SetLabelsRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// SetLabels(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
+  /// EXPECT_CALL(*mock, SetLabels(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              SetLabels,
-              (google::cloud::cpp::compute::v1::Operation const& operation),
-              (override));
+  SetLabels, (
+    google::cloud::cpp::compute::v1::Operation const& operation), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>,
-      TestIamPermissions,
-      (google::cloud::cpp::compute::machine_images::v1::
-           TestIamPermissionsRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>,
+  TestIamPermissions,
+  (google::cloud::cpp::compute::machine_images::v1::TestIamPermissionsRequest const& request), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

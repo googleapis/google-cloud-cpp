@@ -47,31 +47,24 @@ class MockDomainsConnection : public domains_v1::DomainsConnection {
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::domains::v1::SearchDomainsResponse>,
-              SearchDomains,
-              (google::cloud::domains::v1::SearchDomainsRequest const& request),
-              (override));
+  SearchDomains,
+  (google::cloud::domains::v1::SearchDomainsRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::domains::v1::RetrieveRegisterParametersResponse>,
-      RetrieveRegisterParameters,
-      (google::cloud::domains::v1::RetrieveRegisterParametersRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::domains::v1::RetrieveRegisterParametersResponse>,
+  RetrieveRegisterParameters,
+  (google::cloud::domains::v1::RetrieveRegisterParametersRequest const& request), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// RegisterDomain(Matcher<google::cloud::domains::v1::RegisterDomainRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, RegisterDomain(Matcher<google::cloud::domains::v1::RegisterDomainRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::domains::v1::Registration>>,
-      RegisterDomain,
-      (google::cloud::domains::v1::RegisterDomainRequest const& request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::domains::v1::Registration>>,
+  RegisterDomain,
+  (google::cloud::domains::v1::RegisterDomainRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -79,45 +72,37 @@ class MockDomainsConnection : public domains_v1::DomainsConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, RegisterDomain(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, RegisterDomain,
-      (NoAwaitTag,
-       google::cloud::domains::v1::RegisterDomainRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  RegisterDomain, (NoAwaitTag,
+    google::cloud::domains::v1::RegisterDomainRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, RegisterDomain(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, RegisterDomain(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::domains::v1::Registration>>,
-              RegisterDomain, (google::longrunning::Operation const& operation),
-              (override));
+  RegisterDomain, (
+    google::longrunning::Operation const& operation), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::domains::v1::RetrieveTransferParametersResponse>,
-      RetrieveTransferParameters,
-      (google::cloud::domains::v1::RetrieveTransferParametersRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::domains::v1::RetrieveTransferParametersResponse>,
+  RetrieveTransferParameters,
+  (google::cloud::domains::v1::RetrieveTransferParametersRequest const& request), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// TransferDomain(Matcher<google::cloud::domains::v1::TransferDomainRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, TransferDomain(Matcher<google::cloud::domains::v1::TransferDomainRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::domains::v1::Registration>>,
-      TransferDomain,
-      (google::cloud::domains::v1::TransferDomainRequest const& request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::domains::v1::Registration>>,
+  TransferDomain,
+  (google::cloud::domains::v1::TransferDomainRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -125,48 +110,41 @@ class MockDomainsConnection : public domains_v1::DomainsConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, TransferDomain(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, TransferDomain,
-      (NoAwaitTag,
-       google::cloud::domains::v1::TransferDomainRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  TransferDomain, (NoAwaitTag,
+    google::cloud::domains::v1::TransferDomainRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, TransferDomain(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, TransferDomain(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::domains::v1::Registration>>,
-              TransferDomain, (google::longrunning::Operation const& operation),
-              (override));
+  TransferDomain, (
+    google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD((StreamRange<google::cloud::domains::v1::Registration>),
-              ListRegistrations,
-              (google::cloud::domains::v1::ListRegistrationsRequest request),
-              (override));
+  ListRegistrations,
+  (google::cloud::domains::v1::ListRegistrationsRequest request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::domains::v1::Registration>, GetRegistration,
-      (google::cloud::domains::v1::GetRegistrationRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::domains::v1::Registration>,
+  GetRegistration,
+  (google::cloud::domains::v1::GetRegistrationRequest const& request), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// UpdateRegistration(Matcher<google::cloud::domains::v1::UpdateRegistrationRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, UpdateRegistration(Matcher<google::cloud::domains::v1::UpdateRegistrationRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::domains::v1::Registration>>,
-      UpdateRegistration,
-      (google::cloud::domains::v1::UpdateRegistrationRequest const& request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::domains::v1::Registration>>,
+  UpdateRegistration,
+  (google::cloud::domains::v1::UpdateRegistrationRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -174,39 +152,33 @@ class MockDomainsConnection : public domains_v1::DomainsConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, UpdateRegistration(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, UpdateRegistration,
-      (NoAwaitTag,
-       google::cloud::domains::v1::UpdateRegistrationRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  UpdateRegistration, (NoAwaitTag,
+    google::cloud::domains::v1::UpdateRegistrationRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// UpdateRegistration(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock, UpdateRegistration(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::domains::v1::Registration>>,
-              UpdateRegistration,
-              (google::longrunning::Operation const& operation), (override));
+  UpdateRegistration, (
+    google::longrunning::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// ConfigureManagementSettings(Matcher<google::cloud::domains::v1::ConfigureManagementSettingsRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, ConfigureManagementSettings(Matcher<google::cloud::domains::v1::ConfigureManagementSettingsRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::domains::v1::Registration>>,
-      ConfigureManagementSettings,
-      (google::cloud::domains::v1::ConfigureManagementSettingsRequest const&
-           request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::domains::v1::Registration>>,
+  ConfigureManagementSettings,
+  (google::cloud::domains::v1::ConfigureManagementSettingsRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -214,40 +186,33 @@ class MockDomainsConnection : public domains_v1::DomainsConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, ConfigureManagementSettings(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, ConfigureManagementSettings,
-      (NoAwaitTag,
-       google::cloud::domains::v1::ConfigureManagementSettingsRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  ConfigureManagementSettings, (NoAwaitTag,
+    google::cloud::domains::v1::ConfigureManagementSettingsRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// ConfigureManagementSettings(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, ConfigureManagementSettings(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::domains::v1::Registration>>,
-              ConfigureManagementSettings,
-              (google::longrunning::Operation const& operation), (override));
+  ConfigureManagementSettings, (
+    google::longrunning::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// ConfigureDnsSettings(Matcher<google::cloud::domains::v1::ConfigureDnsSettingsRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, ConfigureDnsSettings(Matcher<google::cloud::domains::v1::ConfigureDnsSettingsRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::domains::v1::Registration>>,
-      ConfigureDnsSettings,
-      (google::cloud::domains::v1::ConfigureDnsSettingsRequest const& request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::domains::v1::Registration>>,
+  ConfigureDnsSettings,
+  (google::cloud::domains::v1::ConfigureDnsSettingsRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -255,39 +220,33 @@ class MockDomainsConnection : public domains_v1::DomainsConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, ConfigureDnsSettings(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, ConfigureDnsSettings,
-      (NoAwaitTag,
-       google::cloud::domains::v1::ConfigureDnsSettingsRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  ConfigureDnsSettings, (NoAwaitTag,
+    google::cloud::domains::v1::ConfigureDnsSettingsRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// ConfigureDnsSettings(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock, ConfigureDnsSettings(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::domains::v1::Registration>>,
-              ConfigureDnsSettings,
-              (google::longrunning::Operation const& operation), (override));
+  ConfigureDnsSettings, (
+    google::longrunning::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// ConfigureContactSettings(Matcher<google::cloud::domains::v1::ConfigureContactSettingsRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, ConfigureContactSettings(Matcher<google::cloud::domains::v1::ConfigureContactSettingsRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::domains::v1::Registration>>,
-      ConfigureContactSettings,
-      (google::cloud::domains::v1::ConfigureContactSettingsRequest const&
-           request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::domains::v1::Registration>>,
+  ConfigureContactSettings,
+  (google::cloud::domains::v1::ConfigureContactSettingsRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -295,40 +254,33 @@ class MockDomainsConnection : public domains_v1::DomainsConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, ConfigureContactSettings(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, ConfigureContactSettings,
-      (NoAwaitTag,
-       google::cloud::domains::v1::ConfigureContactSettingsRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  ConfigureContactSettings, (NoAwaitTag,
+    google::cloud::domains::v1::ConfigureContactSettingsRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// ConfigureContactSettings(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, ConfigureContactSettings(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::domains::v1::Registration>>,
-              ConfigureContactSettings,
-              (google::longrunning::Operation const& operation), (override));
+  ConfigureContactSettings, (
+    google::longrunning::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// ExportRegistration(Matcher<google::cloud::domains::v1::ExportRegistrationRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, ExportRegistration(Matcher<google::cloud::domains::v1::ExportRegistrationRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::domains::v1::Registration>>,
-      ExportRegistration,
-      (google::cloud::domains::v1::ExportRegistrationRequest const& request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::domains::v1::Registration>>,
+  ExportRegistration,
+  (google::cloud::domains::v1::ExportRegistrationRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -336,38 +288,33 @@ class MockDomainsConnection : public domains_v1::DomainsConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, ExportRegistration(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, ExportRegistration,
-      (NoAwaitTag,
-       google::cloud::domains::v1::ExportRegistrationRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  ExportRegistration, (NoAwaitTag,
+    google::cloud::domains::v1::ExportRegistrationRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// ExportRegistration(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock, ExportRegistration(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::domains::v1::Registration>>,
-              ExportRegistration,
-              (google::longrunning::Operation const& operation), (override));
+  ExportRegistration, (
+    google::longrunning::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteRegistration(Matcher<google::cloud::domains::v1::DeleteRegistrationRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteRegistration(Matcher<google::cloud::domains::v1::DeleteRegistrationRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::domains::v1::OperationMetadata>>,
-      DeleteRegistration,
-      (google::cloud::domains::v1::DeleteRegistrationRequest const& request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::domains::v1::OperationMetadata>>,
+  DeleteRegistration,
+  (google::cloud::domains::v1::DeleteRegistrationRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -375,36 +322,29 @@ class MockDomainsConnection : public domains_v1::DomainsConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, DeleteRegistration(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, DeleteRegistration,
-      (NoAwaitTag,
-       google::cloud::domains::v1::DeleteRegistrationRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  DeleteRegistration, (NoAwaitTag,
+    google::cloud::domains::v1::DeleteRegistrationRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteRegistration(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteRegistration(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::domains::v1::OperationMetadata>>,
-              DeleteRegistration,
-              (google::longrunning::Operation const& operation), (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::domains::v1::AuthorizationCode>,
-      RetrieveAuthorizationCode,
-      (google::cloud::domains::v1::RetrieveAuthorizationCodeRequest const&
-           request),
-      (override));
+  DeleteRegistration, (
+    google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::domains::v1::AuthorizationCode>,
-              ResetAuthorizationCode,
-              (google::cloud::domains::v1::ResetAuthorizationCodeRequest const&
-                   request),
-              (override));
+  RetrieveAuthorizationCode,
+  (google::cloud::domains::v1::RetrieveAuthorizationCodeRequest const& request), (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::domains::v1::AuthorizationCode>,
+  ResetAuthorizationCode,
+  (google::cloud::domains::v1::ResetAuthorizationCodeRequest const& request), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -26,26 +26,23 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-PipelineServiceConnectionIdempotencyPolicy::
-    ~PipelineServiceConnectionIdempotencyPolicy() = default;
+PipelineServiceConnectionIdempotencyPolicy::~PipelineServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<PipelineServiceConnectionIdempotencyPolicy>
 PipelineServiceConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<PipelineServiceConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency PipelineServiceConnectionIdempotencyPolicy::RunPipeline(
-    google::cloud::contentwarehouse::v1::RunPipelineRequest const&) {
+Idempotency PipelineServiceConnectionIdempotencyPolicy::RunPipeline(google::cloud::contentwarehouse::v1::RunPipelineRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency PipelineServiceConnectionIdempotencyPolicy::GetOperation(
-    google::longrunning::GetOperationRequest const&) {
+Idempotency PipelineServiceConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<PipelineServiceConnectionIdempotencyPolicy>
-MakeDefaultPipelineServiceConnectionIdempotencyPolicy() {
+    MakeDefaultPipelineServiceConnectionIdempotencyPolicy() {
   return std::make_unique<PipelineServiceConnectionIdempotencyPolicy>();
 }
 

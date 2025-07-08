@@ -35,49 +35,32 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options AppGatewaysServiceDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_APP_GATEWAYS_SERVICE_ENDPOINT", "",
-      "GOOGLE_CLOUD_CPP_APP_GATEWAYS_SERVICE_AUTHORITY",
+      std::move(options), "GOOGLE_CLOUD_CPP_APP_GATEWAYS_SERVICE_ENDPOINT",
+      "", "GOOGLE_CLOUD_CPP_APP_GATEWAYS_SERVICE_AUTHORITY",
       "beyondcorp.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
-  if (!options.has<
-          beyondcorp_appgateways_v1::AppGatewaysServiceRetryPolicyOption>()) {
+  if (!options.has<beyondcorp_appgateways_v1::AppGatewaysServiceRetryPolicyOption>()) {
     options.set<beyondcorp_appgateways_v1::AppGatewaysServiceRetryPolicyOption>(
         beyondcorp_appgateways_v1::AppGatewaysServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
-            .clone());
+            std::chrono::minutes(30)).clone());
   }
-  if (!options.has<
-          beyondcorp_appgateways_v1::AppGatewaysServiceBackoffPolicyOption>()) {
-    options
-        .set<beyondcorp_appgateways_v1::AppGatewaysServiceBackoffPolicyOption>(
-            ExponentialBackoffPolicy(
-                std::chrono::seconds(0), std::chrono::seconds(1),
-                std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
-                .clone());
+  if (!options.has<beyondcorp_appgateways_v1::AppGatewaysServiceBackoffPolicyOption>()) {
+    options.set<beyondcorp_appgateways_v1::AppGatewaysServiceBackoffPolicyOption>(
+        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
   }
-  if (!options.has<
-          beyondcorp_appgateways_v1::AppGatewaysServicePollingPolicyOption>()) {
-    options.set<
-        beyondcorp_appgateways_v1::AppGatewaysServicePollingPolicyOption>(
-        GenericPollingPolicy<beyondcorp_appgateways_v1::
-                                 AppGatewaysServiceRetryPolicyOption::Type,
-                             beyondcorp_appgateways_v1::
-                                 AppGatewaysServiceBackoffPolicyOption::Type>(
-            options
-                .get<beyondcorp_appgateways_v1::
-                         AppGatewaysServiceRetryPolicyOption>()
-                ->clone(),
+  if (!options.has<beyondcorp_appgateways_v1::AppGatewaysServicePollingPolicyOption>()) {
+    options.set<beyondcorp_appgateways_v1::AppGatewaysServicePollingPolicyOption>(
+        GenericPollingPolicy<
+            beyondcorp_appgateways_v1::AppGatewaysServiceRetryPolicyOption::Type,
+            beyondcorp_appgateways_v1::AppGatewaysServiceBackoffPolicyOption::Type>(
+            options.get<beyondcorp_appgateways_v1::AppGatewaysServiceRetryPolicyOption>()->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                     std::chrono::minutes(5), kBackoffScaling)
-                .clone())
-            .clone());
+            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
   }
-  if (!options.has<beyondcorp_appgateways_v1::
-                       AppGatewaysServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<beyondcorp_appgateways_v1::
-                    AppGatewaysServiceConnectionIdempotencyPolicyOption>(
-        beyondcorp_appgateways_v1::
-            MakeDefaultAppGatewaysServiceConnectionIdempotencyPolicy());
+  if (!options.has<beyondcorp_appgateways_v1::AppGatewaysServiceConnectionIdempotencyPolicyOption>()) {
+    options.set<beyondcorp_appgateways_v1::AppGatewaysServiceConnectionIdempotencyPolicyOption>(
+        beyondcorp_appgateways_v1::MakeDefaultAppGatewaysServiceConnectionIdempotencyPolicy());
   }
 
   return options;

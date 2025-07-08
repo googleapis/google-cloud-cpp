@@ -17,10 +17,10 @@
 // source: google/devtools/cloudprofiler/v2/profiler.proto
 
 #include "google/cloud/profiler/v2/internal/profiler_option_defaults.h"
-#include "google/cloud/profiler/v2/profiler_connection.h"
-#include "google/cloud/profiler/v2/profiler_options.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
+#include "google/cloud/profiler/v2/profiler_connection.h"
+#include "google/cloud/profiler/v2/profiler_options.h"
 #include <memory>
 #include <utility>
 
@@ -35,25 +35,21 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options ProfilerServiceDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_PROFILER_SERVICE_ENDPOINT", "",
-      "GOOGLE_CLOUD_CPP_PROFILER_SERVICE_AUTHORITY",
+      std::move(options), "GOOGLE_CLOUD_CPP_PROFILER_SERVICE_ENDPOINT",
+      "", "GOOGLE_CLOUD_CPP_PROFILER_SERVICE_AUTHORITY",
       "cloudprofiler.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<profiler_v2::ProfilerServiceRetryPolicyOption>()) {
     options.set<profiler_v2::ProfilerServiceRetryPolicyOption>(
         profiler_v2::ProfilerServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
-            .clone());
+            std::chrono::minutes(30)).clone());
   }
   if (!options.has<profiler_v2::ProfilerServiceBackoffPolicyOption>()) {
     options.set<profiler_v2::ProfilerServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(
-            std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
-            .clone());
+        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
   }
-  if (!options.has<
-          profiler_v2::ProfilerServiceConnectionIdempotencyPolicyOption>()) {
+  if (!options.has<profiler_v2::ProfilerServiceConnectionIdempotencyPolicyOption>()) {
     options.set<profiler_v2::ProfilerServiceConnectionIdempotencyPolicyOption>(
         profiler_v2::MakeDefaultProfilerServiceConnectionIdempotencyPolicy());
   }

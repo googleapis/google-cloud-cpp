@@ -17,17 +17,17 @@
 // source: google/api/serviceusage/v1/serviceusage.proto
 
 #include "google/cloud/serviceusage/v1/service_usage_connection.h"
-#include "google/cloud/serviceusage/v1/internal/service_usage_connection_impl.h"
-#include "google/cloud/serviceusage/v1/internal/service_usage_option_defaults.h"
-#include "google/cloud/serviceusage/v1/internal/service_usage_stub_factory.h"
-#include "google/cloud/serviceusage/v1/internal/service_usage_tracing_connection.h"
-#include "google/cloud/serviceusage/v1/service_usage_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/serviceusage/v1/internal/service_usage_connection_impl.h"
+#include "google/cloud/serviceusage/v1/internal/service_usage_option_defaults.h"
+#include "google/cloud/serviceusage/v1/internal/service_usage_stub_factory.h"
+#include "google/cloud/serviceusage/v1/internal/service_usage_tracing_connection.h"
+#include "google/cloud/serviceusage/v1/service_usage_options.h"
 #include <memory>
 #include <utility>
 
@@ -42,42 +42,48 @@ future<StatusOr<google::api::serviceusage::v1::EnableServiceResponse>>
 ServiceUsageConnection::EnableService(
     google::api::serviceusage::v1::EnableServiceRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::api::serviceusage::v1::EnableServiceResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::api::serviceusage::v1::EnableServiceResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation> ServiceUsageConnection::EnableService(
-    NoAwaitTag, google::api::serviceusage::v1::EnableServiceRequest const&) {
+StatusOr<google::longrunning::Operation>
+ServiceUsageConnection::EnableService(
+    NoAwaitTag,
+    google::api::serviceusage::v1::EnableServiceRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::api::serviceusage::v1::EnableServiceResponse>>
-ServiceUsageConnection::EnableService(google::longrunning::Operation const&) {
+ServiceUsageConnection::EnableService(
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::api::serviceusage::v1::EnableServiceResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::api::serviceusage::v1::EnableServiceResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::api::serviceusage::v1::DisableServiceResponse>>
 ServiceUsageConnection::DisableService(
     google::api::serviceusage::v1::DisableServiceRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::api::serviceusage::v1::DisableServiceResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::api::serviceusage::v1::DisableServiceResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation> ServiceUsageConnection::DisableService(
-    NoAwaitTag, google::api::serviceusage::v1::DisableServiceRequest const&) {
+StatusOr<google::longrunning::Operation>
+ServiceUsageConnection::DisableService(
+    NoAwaitTag,
+    google::api::serviceusage::v1::DisableServiceRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::api::serviceusage::v1::DisableServiceResponse>>
-ServiceUsageConnection::DisableService(google::longrunning::Operation const&) {
+ServiceUsageConnection::DisableService(
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::api::serviceusage::v1::DisableServiceResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::api::serviceusage::v1::DisableServiceResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::api::serviceusage::v1::Service>
@@ -86,10 +92,8 @@ ServiceUsageConnection::GetService(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::api::serviceusage::v1::Service>
-ServiceUsageConnection::ListServices(
-    google::api::serviceusage::v1::
-        ListServicesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::api::serviceusage::v1::Service> ServiceUsageConnection::ListServices(
+    google::api::serviceusage::v1::ListServicesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::api::serviceusage::v1::Service>>();
 }
@@ -98,8 +102,8 @@ future<StatusOr<google::api::serviceusage::v1::BatchEnableServicesResponse>>
 ServiceUsageConnection::BatchEnableServices(
     google::api::serviceusage::v1::BatchEnableServicesRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::api::serviceusage::v1::BatchEnableServicesResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::api::serviceusage::v1::BatchEnableServicesResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -107,15 +111,15 @@ ServiceUsageConnection::BatchEnableServices(
     NoAwaitTag,
     google::api::serviceusage::v1::BatchEnableServicesRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::api::serviceusage::v1::BatchEnableServicesResponse>>
 ServiceUsageConnection::BatchEnableServices(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::api::serviceusage::v1::BatchEnableServicesResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::api::serviceusage::v1::BatchEnableServicesResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::api::serviceusage::v1::BatchGetServicesResponse>
@@ -124,15 +128,14 @@ ServiceUsageConnection::BatchGetServices(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::longrunning::Operation>
-ServiceUsageConnection::ListOperations(
-    google::longrunning::
-        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::longrunning::Operation> ServiceUsageConnection::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }
 
-StatusOr<google::longrunning::Operation> ServiceUsageConnection::GetOperation(
+StatusOr<google::longrunning::Operation>
+ServiceUsageConnection::GetOperation(
     google::longrunning::GetOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -140,18 +143,17 @@ StatusOr<google::longrunning::Operation> ServiceUsageConnection::GetOperation(
 std::shared_ptr<ServiceUsageConnection> MakeServiceUsageConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 ServiceUsagePolicyOptionList>(options,
-                                                               __func__);
-  options =
-      serviceusage_v1_internal::ServiceUsageDefaultOptions(std::move(options));
+      UnifiedCredentialsOptionList,
+      ServiceUsagePolicyOptionList>(options, __func__);
+  options = serviceusage_v1_internal::ServiceUsageDefaultOptions(
+      std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = serviceusage_v1_internal::CreateDefaultServiceUsageStub(
-      std::move(auth), options);
+    std::move(auth), options);
   return serviceusage_v1_internal::MakeServiceUsageTracingConnection(
       std::make_shared<serviceusage_v1_internal::ServiceUsageConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options)));
+      std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

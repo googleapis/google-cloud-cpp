@@ -33,8 +33,7 @@ SqlFlagsServiceTracingConnection::SqlFlagsServiceTracingConnection(
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::sql::v1::FlagsListResponse>
-SqlFlagsServiceTracingConnection::List(
-    google::cloud::sql::v1::SqlFlagsListRequest const& request) {
+SqlFlagsServiceTracingConnection::List(google::cloud::sql::v1::SqlFlagsListRequest const& request) {
   auto span = internal::MakeSpan("sql_v1::SqlFlagsServiceConnection::List");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->List(request));

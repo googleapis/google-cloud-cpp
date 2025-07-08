@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAM_CREDENTIALS_V1_IAM_CREDENTIALS_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAM_CREDENTIALS_V1_IAM_CREDENTIALS_CLIENT_H
 
-#include "google/cloud/iam/credentials/v1/iam_credentials_connection.h"
 #include "google/cloud/future.h"
+#include "google/cloud/iam/credentials/v1/iam_credentials_connection.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -70,8 +70,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class IAMCredentialsClient {
  public:
-  explicit IAMCredentialsClient(
-      std::shared_ptr<IAMCredentialsConnection> connection, Options opts = {});
+  explicit IAMCredentialsClient(std::shared_ptr<IAMCredentialsConnection> connection, Options opts = {});
   ~IAMCredentialsClient();
 
   ///@{
@@ -84,12 +83,10 @@ class IAMCredentialsClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(IAMCredentialsClient const& a,
-                         IAMCredentialsClient const& b) {
+  friend bool operator==(IAMCredentialsClient const& a, IAMCredentialsClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(IAMCredentialsClient const& a,
-                         IAMCredentialsClient const& b) {
+  friend bool operator!=(IAMCredentialsClient const& a, IAMCredentialsClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -138,11 +135,7 @@ class IAMCredentialsClient {
   ///
   // clang-format on
   StatusOr<google::iam::credentials::v1::GenerateAccessTokenResponse>
-  GenerateAccessToken(std::string const& name,
-                      std::vector<std::string> const& delegates,
-                      std::vector<std::string> const& scope,
-                      google::protobuf::Duration const& lifetime,
-                      Options opts = {});
+  GenerateAccessToken(std::string const& name, std::vector<std::string> const& delegates, std::vector<std::string> const& scope, google::protobuf::Duration const& lifetime, Options opts = {});
 
   // clang-format off
   ///
@@ -172,9 +165,7 @@ class IAMCredentialsClient {
   ///
   // clang-format on
   StatusOr<google::iam::credentials::v1::GenerateAccessTokenResponse>
-  GenerateAccessToken(
-      google::iam::credentials::v1::GenerateAccessTokenRequest const& request,
-      Options opts = {});
+  GenerateAccessToken(google::iam::credentials::v1::GenerateAccessTokenRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -216,10 +207,7 @@ class IAMCredentialsClient {
   ///
   // clang-format on
   StatusOr<google::iam::credentials::v1::GenerateIdTokenResponse>
-  GenerateIdToken(std::string const& name,
-                  std::vector<std::string> const& delegates,
-                  std::string const& audience, bool include_email,
-                  Options opts = {});
+  GenerateIdToken(std::string const& name, std::vector<std::string> const& delegates, std::string const& audience, bool include_email, Options opts = {});
 
   // clang-format off
   ///
@@ -249,9 +237,7 @@ class IAMCredentialsClient {
   ///
   // clang-format on
   StatusOr<google::iam::credentials::v1::GenerateIdTokenResponse>
-  GenerateIdToken(
-      google::iam::credentials::v1::GenerateIdTokenRequest const& request,
-      Options opts = {});
+  GenerateIdToken(google::iam::credentials::v1::GenerateIdTokenRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -289,9 +275,8 @@ class IAMCredentialsClient {
   /// [google.iam.credentials.v1.SignBlobResponse]: @googleapis_reference_link{google/iam/credentials/v1/common.proto#L110}
   ///
   // clang-format on
-  StatusOr<google::iam::credentials::v1::SignBlobResponse> SignBlob(
-      std::string const& name, std::vector<std::string> const& delegates,
-      std::string const& payload, Options opts = {});
+  StatusOr<google::iam::credentials::v1::SignBlobResponse>
+  SignBlob(std::string const& name, std::vector<std::string> const& delegates, std::string const& payload, Options opts = {});
 
   // clang-format off
   ///
@@ -320,9 +305,8 @@ class IAMCredentialsClient {
   /// [google.iam.credentials.v1.SignBlobResponse]: @googleapis_reference_link{google/iam/credentials/v1/common.proto#L110}
   ///
   // clang-format on
-  StatusOr<google::iam::credentials::v1::SignBlobResponse> SignBlob(
-      google::iam::credentials::v1::SignBlobRequest const& request,
-      Options opts = {});
+  StatusOr<google::iam::credentials::v1::SignBlobResponse>
+  SignBlob(google::iam::credentials::v1::SignBlobRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -360,9 +344,8 @@ class IAMCredentialsClient {
   /// [google.iam.credentials.v1.SignJwtResponse]: @googleapis_reference_link{google/iam/credentials/v1/common.proto#L146}
   ///
   // clang-format on
-  StatusOr<google::iam::credentials::v1::SignJwtResponse> SignJwt(
-      std::string const& name, std::vector<std::string> const& delegates,
-      std::string const& payload, Options opts = {});
+  StatusOr<google::iam::credentials::v1::SignJwtResponse>
+  SignJwt(std::string const& name, std::vector<std::string> const& delegates, std::string const& payload, Options opts = {});
 
   // clang-format off
   ///
@@ -391,9 +374,8 @@ class IAMCredentialsClient {
   /// [google.iam.credentials.v1.SignJwtResponse]: @googleapis_reference_link{google/iam/credentials/v1/common.proto#L146}
   ///
   // clang-format on
-  StatusOr<google::iam::credentials::v1::SignJwtResponse> SignJwt(
-      google::iam::credentials::v1::SignJwtRequest const& request,
-      Options opts = {});
+  StatusOr<google::iam::credentials::v1::SignJwtResponse>
+  SignJwt(google::iam::credentials::v1::SignJwtRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<IAMCredentialsConnection> connection_;
@@ -401,7 +383,7 @@ class IAMCredentialsClient {
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS;  // NOLINT(misc-unused-alias-decls)
+namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS; // NOLINT(misc-unused-alias-decls)
 }  // namespace iam_credentials_v1
 }  // namespace cloud
 }  // namespace google

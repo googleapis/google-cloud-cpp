@@ -28,14 +28,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 TranscoderServiceClient::TranscoderServiceClient(
     std::shared_ptr<TranscoderServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 TranscoderServiceClient::~TranscoderServiceClient() = default;
 
 StatusOr<google::cloud::video::transcoder::v1::Job>
-TranscoderServiceClient::CreateJob(
-    std::string const& parent,
-    google::cloud::video::transcoder::v1::Job const& job, Options opts) {
+TranscoderServiceClient::CreateJob(std::string const& parent, google::cloud::video::transcoder::v1::Job const& job, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::video::transcoder::v1::CreateJobRequest request;
   request.set_parent(parent);
@@ -44,9 +42,7 @@ TranscoderServiceClient::CreateJob(
 }
 
 StatusOr<google::cloud::video::transcoder::v1::Job>
-TranscoderServiceClient::CreateJob(
-    google::cloud::video::transcoder::v1::CreateJobRequest const& request,
-    Options opts) {
+TranscoderServiceClient::CreateJob(google::cloud::video::transcoder::v1::CreateJobRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateJob(request);
 }
@@ -60,9 +56,7 @@ TranscoderServiceClient::ListJobs(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::video::transcoder::v1::Job>
-TranscoderServiceClient::ListJobs(
-    google::cloud::video::transcoder::v1::ListJobsRequest request,
-    Options opts) {
+TranscoderServiceClient::ListJobs(google::cloud::video::transcoder::v1::ListJobsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListJobs(std::move(request));
 }
@@ -76,33 +70,27 @@ TranscoderServiceClient::GetJob(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::video::transcoder::v1::Job>
-TranscoderServiceClient::GetJob(
-    google::cloud::video::transcoder::v1::GetJobRequest const& request,
-    Options opts) {
+TranscoderServiceClient::GetJob(google::cloud::video::transcoder::v1::GetJobRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetJob(request);
 }
 
-Status TranscoderServiceClient::DeleteJob(std::string const& name,
-                                          Options opts) {
+Status
+TranscoderServiceClient::DeleteJob(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::video::transcoder::v1::DeleteJobRequest request;
   request.set_name(name);
   return connection_->DeleteJob(request);
 }
 
-Status TranscoderServiceClient::DeleteJob(
-    google::cloud::video::transcoder::v1::DeleteJobRequest const& request,
-    Options opts) {
+Status
+TranscoderServiceClient::DeleteJob(google::cloud::video::transcoder::v1::DeleteJobRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteJob(request);
 }
 
 StatusOr<google::cloud::video::transcoder::v1::JobTemplate>
-TranscoderServiceClient::CreateJobTemplate(
-    std::string const& parent,
-    google::cloud::video::transcoder::v1::JobTemplate const& job_template,
-    std::string const& job_template_id, Options opts) {
+TranscoderServiceClient::CreateJobTemplate(std::string const& parent, google::cloud::video::transcoder::v1::JobTemplate const& job_template, std::string const& job_template_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::video::transcoder::v1::CreateJobTemplateRequest request;
   request.set_parent(parent);
@@ -112,17 +100,13 @@ TranscoderServiceClient::CreateJobTemplate(
 }
 
 StatusOr<google::cloud::video::transcoder::v1::JobTemplate>
-TranscoderServiceClient::CreateJobTemplate(
-    google::cloud::video::transcoder::v1::CreateJobTemplateRequest const&
-        request,
-    Options opts) {
+TranscoderServiceClient::CreateJobTemplate(google::cloud::video::transcoder::v1::CreateJobTemplateRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateJobTemplate(request);
 }
 
 StreamRange<google::cloud::video::transcoder::v1::JobTemplate>
-TranscoderServiceClient::ListJobTemplates(std::string const& parent,
-                                          Options opts) {
+TranscoderServiceClient::ListJobTemplates(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::video::transcoder::v1::ListJobTemplatesRequest request;
   request.set_parent(parent);
@@ -130,9 +114,7 @@ TranscoderServiceClient::ListJobTemplates(std::string const& parent,
 }
 
 StreamRange<google::cloud::video::transcoder::v1::JobTemplate>
-TranscoderServiceClient::ListJobTemplates(
-    google::cloud::video::transcoder::v1::ListJobTemplatesRequest request,
-    Options opts) {
+TranscoderServiceClient::ListJobTemplates(google::cloud::video::transcoder::v1::ListJobTemplatesRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListJobTemplates(std::move(request));
 }
@@ -146,25 +128,21 @@ TranscoderServiceClient::GetJobTemplate(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::video::transcoder::v1::JobTemplate>
-TranscoderServiceClient::GetJobTemplate(
-    google::cloud::video::transcoder::v1::GetJobTemplateRequest const& request,
-    Options opts) {
+TranscoderServiceClient::GetJobTemplate(google::cloud::video::transcoder::v1::GetJobTemplateRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetJobTemplate(request);
 }
 
-Status TranscoderServiceClient::DeleteJobTemplate(std::string const& name,
-                                                  Options opts) {
+Status
+TranscoderServiceClient::DeleteJobTemplate(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::video::transcoder::v1::DeleteJobTemplateRequest request;
   request.set_name(name);
   return connection_->DeleteJobTemplate(request);
 }
 
-Status TranscoderServiceClient::DeleteJobTemplate(
-    google::cloud::video::transcoder::v1::DeleteJobTemplateRequest const&
-        request,
-    Options opts) {
+Status
+TranscoderServiceClient::DeleteJobTemplate(google::cloud::video::transcoder::v1::DeleteJobTemplateRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteJobTemplate(request);
 }

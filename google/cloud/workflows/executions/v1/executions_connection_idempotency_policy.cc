@@ -26,37 +26,31 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-ExecutionsConnectionIdempotencyPolicy::
-    ~ExecutionsConnectionIdempotencyPolicy() = default;
+ExecutionsConnectionIdempotencyPolicy::~ExecutionsConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<ExecutionsConnectionIdempotencyPolicy>
 ExecutionsConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<ExecutionsConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency ExecutionsConnectionIdempotencyPolicy::ListExecutions(
-    google::cloud::workflows::executions::v1::
-        ListExecutionsRequest) {  // NOLINT
+Idempotency ExecutionsConnectionIdempotencyPolicy::ListExecutions(google::cloud::workflows::executions::v1::ListExecutionsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency ExecutionsConnectionIdempotencyPolicy::CreateExecution(
-    google::cloud::workflows::executions::v1::CreateExecutionRequest const&) {
+Idempotency ExecutionsConnectionIdempotencyPolicy::CreateExecution(google::cloud::workflows::executions::v1::CreateExecutionRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ExecutionsConnectionIdempotencyPolicy::GetExecution(
-    google::cloud::workflows::executions::v1::GetExecutionRequest const&) {
+Idempotency ExecutionsConnectionIdempotencyPolicy::GetExecution(google::cloud::workflows::executions::v1::GetExecutionRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ExecutionsConnectionIdempotencyPolicy::CancelExecution(
-    google::cloud::workflows::executions::v1::CancelExecutionRequest const&) {
+Idempotency ExecutionsConnectionIdempotencyPolicy::CancelExecution(google::cloud::workflows::executions::v1::CancelExecutionRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<ExecutionsConnectionIdempotencyPolicy>
-MakeDefaultExecutionsConnectionIdempotencyPolicy() {
+    MakeDefaultExecutionsConnectionIdempotencyPolicy() {
   return std::make_unique<ExecutionsConnectionIdempotencyPolicy>();
 }
 

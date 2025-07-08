@@ -28,26 +28,19 @@ namespace cloud {
 namespace filestore {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use filestore_v1::CloudFilestoreManagerPollingPolicyOption
-/// directly.
+/// @deprecated Use filestore_v1::CloudFilestoreManagerPollingPolicyOption directly.
 using ::google::cloud::filestore_v1::CloudFilestoreManagerPollingPolicyOption;
 
-/// @deprecated Use filestore_v1::CloudFilestoreManagerBackoffPolicyOption
-/// directly.
+/// @deprecated Use filestore_v1::CloudFilestoreManagerBackoffPolicyOption directly.
 using ::google::cloud::filestore_v1::CloudFilestoreManagerBackoffPolicyOption;
 
-/// @deprecated Use
-/// filestore_v1::CloudFilestoreManagerConnectionIdempotencyPolicyOption
-/// directly.
-using ::google::cloud::filestore_v1::
-    CloudFilestoreManagerConnectionIdempotencyPolicyOption;
+/// @deprecated Use filestore_v1::CloudFilestoreManagerConnectionIdempotencyPolicyOption directly.
+using ::google::cloud::filestore_v1::CloudFilestoreManagerConnectionIdempotencyPolicyOption;
 
-/// @deprecated Use filestore_v1::CloudFilestoreManagerPolicyOptionList
-/// directly.
+/// @deprecated Use filestore_v1::CloudFilestoreManagerPolicyOptionList directly.
 using ::google::cloud::filestore_v1::CloudFilestoreManagerPolicyOptionList;
 
-/// @deprecated Use filestore_v1::CloudFilestoreManagerRetryPolicyOption
-/// directly.
+/// @deprecated Use filestore_v1::CloudFilestoreManagerRetryPolicyOption directly.
 using ::google::cloud::filestore_v1::CloudFilestoreManagerRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

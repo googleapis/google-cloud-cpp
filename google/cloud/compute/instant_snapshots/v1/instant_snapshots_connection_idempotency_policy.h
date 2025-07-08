@@ -34,48 +34,38 @@ class InstantSnapshotsConnectionIdempotencyPolicy {
   virtual ~InstantSnapshotsConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<InstantSnapshotsConnectionIdempotencyPolicy> clone()
-      const;
+  virtual std::unique_ptr<InstantSnapshotsConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency AggregatedListInstantSnapshots(
-      google::cloud::cpp::compute::instant_snapshots::v1::
-          AggregatedListInstantSnapshotsRequest request);
+  virtual google::cloud::Idempotency
+  AggregatedListInstantSnapshots(google::cloud::cpp::compute::instant_snapshots::v1::AggregatedListInstantSnapshotsRequest request);
 
-  virtual google::cloud::Idempotency DeleteInstantSnapshot(
-      google::cloud::cpp::compute::instant_snapshots::v1::
-          DeleteInstantSnapshotRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteInstantSnapshot(google::cloud::cpp::compute::instant_snapshots::v1::DeleteInstantSnapshotRequest const& request);
 
-  virtual google::cloud::Idempotency GetInstantSnapshot(
-      google::cloud::cpp::compute::instant_snapshots::v1::
-          GetInstantSnapshotRequest const& request);
+  virtual google::cloud::Idempotency
+  GetInstantSnapshot(google::cloud::cpp::compute::instant_snapshots::v1::GetInstantSnapshotRequest const& request);
 
-  virtual google::cloud::Idempotency GetIamPolicy(
-      google::cloud::cpp::compute::instant_snapshots::v1::
-          GetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency
+  GetIamPolicy(google::cloud::cpp::compute::instant_snapshots::v1::GetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency InsertInstantSnapshot(
-      google::cloud::cpp::compute::instant_snapshots::v1::
-          InsertInstantSnapshotRequest const& request);
+  virtual google::cloud::Idempotency
+  InsertInstantSnapshot(google::cloud::cpp::compute::instant_snapshots::v1::InsertInstantSnapshotRequest const& request);
 
-  virtual google::cloud::Idempotency ListInstantSnapshots(
-      google::cloud::cpp::compute::instant_snapshots::v1::
-          ListInstantSnapshotsRequest request);
+  virtual google::cloud::Idempotency
+  ListInstantSnapshots(google::cloud::cpp::compute::instant_snapshots::v1::ListInstantSnapshotsRequest request);
 
-  virtual google::cloud::Idempotency SetIamPolicy(
-      google::cloud::cpp::compute::instant_snapshots::v1::
-          SetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency
+  SetIamPolicy(google::cloud::cpp::compute::instant_snapshots::v1::SetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency SetLabels(
-      google::cloud::cpp::compute::instant_snapshots::v1::
-          SetLabelsRequest const& request);
+  virtual google::cloud::Idempotency
+  SetLabels(google::cloud::cpp::compute::instant_snapshots::v1::SetLabelsRequest const& request);
 
-  virtual google::cloud::Idempotency TestIamPermissions(
-      google::cloud::cpp::compute::instant_snapshots::v1::
-          TestIamPermissionsRequest const& request);
+  virtual google::cloud::Idempotency
+  TestIamPermissions(google::cloud::cpp::compute::instant_snapshots::v1::TestIamPermissionsRequest const& request);
 };
 
 std::unique_ptr<InstantSnapshotsConnectionIdempotencyPolicy>
-MakeDefaultInstantSnapshotsConnectionIdempotencyPolicy();
+    MakeDefaultInstantSnapshotsConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_instant_snapshots_v1

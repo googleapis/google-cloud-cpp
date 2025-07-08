@@ -36,58 +36,54 @@ class UserEventServiceTracingConnection
   ~UserEventServiceTracingConnection() override = default;
 
   explicit UserEventServiceTracingConnection(
-      std::shared_ptr<retail_v2::UserEventServiceConnection> child);
+    std::shared_ptr<retail_v2::UserEventServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::retail::v2::UserEvent> WriteUserEvent(
-      google::cloud::retail::v2::WriteUserEventRequest const& request) override;
+  StatusOr<google::cloud::retail::v2::UserEvent>
+  WriteUserEvent(google::cloud::retail::v2::WriteUserEventRequest const& request) override;
 
-  StatusOr<google::api::HttpBody> CollectUserEvent(
-      google::cloud::retail::v2::CollectUserEventRequest const& request)
-      override;
-
-  future<StatusOr<google::cloud::retail::v2::PurgeUserEventsResponse>>
-  PurgeUserEvents(google::cloud::retail::v2::PurgeUserEventsRequest const&
-                      request) override;
-
-  StatusOr<google::longrunning::Operation> PurgeUserEvents(
-      NoAwaitTag,
-      google::cloud::retail::v2::PurgeUserEventsRequest const& request)
-      override;
+  StatusOr<google::api::HttpBody>
+  CollectUserEvent(google::cloud::retail::v2::CollectUserEventRequest const& request) override;
 
   future<StatusOr<google::cloud::retail::v2::PurgeUserEventsResponse>>
-  PurgeUserEvents(google::longrunning::Operation const& operation) override;
+  PurgeUserEvents(google::cloud::retail::v2::PurgeUserEventsRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  PurgeUserEvents(NoAwaitTag,
+      google::cloud::retail::v2::PurgeUserEventsRequest const& request) override;
+
+  future<StatusOr<google::cloud::retail::v2::PurgeUserEventsResponse>>
+  PurgeUserEvents(
+      google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::retail::v2::ImportUserEventsResponse>>
-  ImportUserEvents(google::cloud::retail::v2::ImportUserEventsRequest const&
-                       request) override;
+  ImportUserEvents(google::cloud::retail::v2::ImportUserEventsRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> ImportUserEvents(
-      NoAwaitTag,
-      google::cloud::retail::v2::ImportUserEventsRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  ImportUserEvents(NoAwaitTag,
+      google::cloud::retail::v2::ImportUserEventsRequest const& request) override;
 
   future<StatusOr<google::cloud::retail::v2::ImportUserEventsResponse>>
-  ImportUserEvents(google::longrunning::Operation const& operation) override;
+  ImportUserEvents(
+      google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::retail::v2::RejoinUserEventsResponse>>
-  RejoinUserEvents(google::cloud::retail::v2::RejoinUserEventsRequest const&
-                       request) override;
+  RejoinUserEvents(google::cloud::retail::v2::RejoinUserEventsRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> RejoinUserEvents(
-      NoAwaitTag,
-      google::cloud::retail::v2::RejoinUserEventsRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  RejoinUserEvents(NoAwaitTag,
+      google::cloud::retail::v2::RejoinUserEventsRequest const& request) override;
 
   future<StatusOr<google::cloud::retail::v2::RejoinUserEventsResponse>>
-  RejoinUserEvents(google::longrunning::Operation const& operation) override;
+  RejoinUserEvents(
+      google::longrunning::Operation const& operation) override;
 
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request) override;
 
  private:
   std::shared_ptr<retail_v2::UserEventServiceConnection> child_;

@@ -46,35 +46,33 @@ KeyTrackingServiceMetadata::KeyTrackingServiceMetadata(
 
 StatusOr<google::cloud::kms::inventory::v1::ProtectedResourcesSummary>
 KeyTrackingServiceMetadata::GetProtectedResourcesSummary(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::kms::inventory::v1::
-        GetProtectedResourcesSummaryRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::kms::inventory::v1::GetProtectedResourcesSummaryRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetProtectedResourcesSummary(context, options, request);
 }
 
 StatusOr<google::cloud::kms::inventory::v1::SearchProtectedResourcesResponse>
 KeyTrackingServiceMetadata::SearchProtectedResources(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::kms::inventory::v1::SearchProtectedResourcesRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("scope=", internal::UrlEncode(request.scope())));
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::kms::inventory::v1::SearchProtectedResourcesRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("scope=", internal::UrlEncode(request.scope())));
   return child_->SearchProtectedResources(context, options, request);
 }
 
-void KeyTrackingServiceMetadata::SetMetadata(
-    grpc::ClientContext& context, Options const& options,
-    std::string const& request_params) {
+void KeyTrackingServiceMetadata::SetMetadata(grpc::ClientContext& context,
+                                        Options const& options,
+                                        std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
 void KeyTrackingServiceMetadata::SetMetadata(grpc::ClientContext& context,
-                                             Options const& options) {
-  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
-                                       api_client_header_);
+                                        Options const& options) {
+  google::cloud::internal::SetMetadata(
+      context, options, fixed_metadata_, api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

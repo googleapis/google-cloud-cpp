@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_WEBRISK_V1_INTERNAL_WEB_RISK_TRACING_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_WEBRISK_V1_INTERNAL_WEB_RISK_TRACING_CONNECTION_H
 
-#include "google/cloud/webrisk/v1/web_risk_connection.h"
 #include "google/cloud/version.h"
+#include "google/cloud/webrisk/v1/web_risk_connection.h"
 #include <memory>
 
 namespace google {
@@ -36,46 +36,44 @@ class WebRiskServiceTracingConnection
   ~WebRiskServiceTracingConnection() override = default;
 
   explicit WebRiskServiceTracingConnection(
-      std::shared_ptr<webrisk_v1::WebRiskServiceConnection> child);
+    std::shared_ptr<webrisk_v1::WebRiskServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
   StatusOr<google::cloud::webrisk::v1::ComputeThreatListDiffResponse>
-  ComputeThreatListDiff(
-      google::cloud::webrisk::v1::ComputeThreatListDiffRequest const& request)
-      override;
+  ComputeThreatListDiff(google::cloud::webrisk::v1::ComputeThreatListDiffRequest const& request) override;
 
-  StatusOr<google::cloud::webrisk::v1::SearchUrisResponse> SearchUris(
-      google::cloud::webrisk::v1::SearchUrisRequest const& request) override;
+  StatusOr<google::cloud::webrisk::v1::SearchUrisResponse>
+  SearchUris(google::cloud::webrisk::v1::SearchUrisRequest const& request) override;
 
-  StatusOr<google::cloud::webrisk::v1::SearchHashesResponse> SearchHashes(
-      google::cloud::webrisk::v1::SearchHashesRequest const& request) override;
+  StatusOr<google::cloud::webrisk::v1::SearchHashesResponse>
+  SearchHashes(google::cloud::webrisk::v1::SearchHashesRequest const& request) override;
 
-  StatusOr<google::cloud::webrisk::v1::Submission> CreateSubmission(
-      google::cloud::webrisk::v1::CreateSubmissionRequest const& request)
-      override;
+  StatusOr<google::cloud::webrisk::v1::Submission>
+  CreateSubmission(google::cloud::webrisk::v1::CreateSubmissionRequest const& request) override;
 
-  future<StatusOr<google::cloud::webrisk::v1::Submission>> SubmitUri(
+  future<StatusOr<google::cloud::webrisk::v1::Submission>>
+  SubmitUri(google::cloud::webrisk::v1::SubmitUriRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  SubmitUri(NoAwaitTag,
       google::cloud::webrisk::v1::SubmitUriRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> SubmitUri(
-      NoAwaitTag,
-      google::cloud::webrisk::v1::SubmitUriRequest const& request) override;
-
-  future<StatusOr<google::cloud::webrisk::v1::Submission>> SubmitUri(
+  future<StatusOr<google::cloud::webrisk::v1::Submission>>
+  SubmitUri(
       google::longrunning::Operation const& operation) override;
 
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request) override;
 
-  Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request) override;
+  Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request) override;
 
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request) override;
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::shared_ptr<webrisk_v1::WebRiskServiceConnection> child_;

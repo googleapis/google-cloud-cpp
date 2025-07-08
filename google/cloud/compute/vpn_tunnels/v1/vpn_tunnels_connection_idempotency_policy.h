@@ -36,33 +36,27 @@ class VpnTunnelsConnectionIdempotencyPolicy {
   /// Create a new copy of this object.
   virtual std::unique_ptr<VpnTunnelsConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency AggregatedListVpnTunnels(
-      google::cloud::cpp::compute::vpn_tunnels::v1::
-          AggregatedListVpnTunnelsRequest request);
+  virtual google::cloud::Idempotency
+  AggregatedListVpnTunnels(google::cloud::cpp::compute::vpn_tunnels::v1::AggregatedListVpnTunnelsRequest request);
 
-  virtual google::cloud::Idempotency DeleteVpnTunnel(
-      google::cloud::cpp::compute::vpn_tunnels::v1::
-          DeleteVpnTunnelRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteVpnTunnel(google::cloud::cpp::compute::vpn_tunnels::v1::DeleteVpnTunnelRequest const& request);
 
-  virtual google::cloud::Idempotency GetVpnTunnel(
-      google::cloud::cpp::compute::vpn_tunnels::v1::GetVpnTunnelRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  GetVpnTunnel(google::cloud::cpp::compute::vpn_tunnels::v1::GetVpnTunnelRequest const& request);
 
-  virtual google::cloud::Idempotency InsertVpnTunnel(
-      google::cloud::cpp::compute::vpn_tunnels::v1::
-          InsertVpnTunnelRequest const& request);
+  virtual google::cloud::Idempotency
+  InsertVpnTunnel(google::cloud::cpp::compute::vpn_tunnels::v1::InsertVpnTunnelRequest const& request);
 
-  virtual google::cloud::Idempotency ListVpnTunnels(
-      google::cloud::cpp::compute::vpn_tunnels::v1::ListVpnTunnelsRequest
-          request);
+  virtual google::cloud::Idempotency
+  ListVpnTunnels(google::cloud::cpp::compute::vpn_tunnels::v1::ListVpnTunnelsRequest request);
 
-  virtual google::cloud::Idempotency SetLabels(
-      google::cloud::cpp::compute::vpn_tunnels::v1::SetLabelsRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  SetLabels(google::cloud::cpp::compute::vpn_tunnels::v1::SetLabelsRequest const& request);
 };
 
 std::unique_ptr<VpnTunnelsConnectionIdempotencyPolicy>
-MakeDefaultVpnTunnelsConnectionIdempotencyPolicy();
+    MakeDefaultVpnTunnelsConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_vpn_tunnels_v1

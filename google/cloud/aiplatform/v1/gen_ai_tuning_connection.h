@@ -57,8 +57,7 @@ class GenAiTuningServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class GenAiTuningServiceLimitedErrorCountRetryPolicy
-    : public GenAiTuningServiceRetryPolicy {
+class GenAiTuningServiceLimitedErrorCountRetryPolicy : public GenAiTuningServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -68,16 +67,14 @@ class GenAiTuningServiceLimitedErrorCountRetryPolicy
    *     @p maximum_failures == 0.
    */
   explicit GenAiTuningServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   GenAiTuningServiceLimitedErrorCountRetryPolicy(
       GenAiTuningServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : GenAiTuningServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {
-  }
+    : GenAiTuningServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   GenAiTuningServiceLimitedErrorCountRetryPolicy(
       GenAiTuningServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : GenAiTuningServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {
-  }
+    : GenAiTuningServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -97,9 +94,7 @@ class GenAiTuningServiceLimitedErrorCountRetryPolicy
   using BaseType = GenAiTuningServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      aiplatform_v1_internal::GenAiTuningServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<aiplatform_v1_internal::GenAiTuningServiceRetryTraits> impl_;
 };
 
 /**
@@ -112,8 +107,7 @@ class GenAiTuningServiceLimitedErrorCountRetryPolicy
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class GenAiTuningServiceLimitedTimeRetryPolicy
-    : public GenAiTuningServiceRetryPolicy {
+class GenAiTuningServiceLimitedTimeRetryPolicy : public GenAiTuningServiceRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -138,14 +132,12 @@ class GenAiTuningServiceLimitedTimeRetryPolicy
   template <typename DurationRep, typename DurationPeriod>
   explicit GenAiTuningServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  GenAiTuningServiceLimitedTimeRetryPolicy(
-      GenAiTuningServiceLimitedTimeRetryPolicy&& rhs) noexcept
-      : GenAiTuningServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  GenAiTuningServiceLimitedTimeRetryPolicy(
-      GenAiTuningServiceLimitedTimeRetryPolicy const& rhs) noexcept
-      : GenAiTuningServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  GenAiTuningServiceLimitedTimeRetryPolicy(GenAiTuningServiceLimitedTimeRetryPolicy&& rhs) noexcept
+    : GenAiTuningServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  GenAiTuningServiceLimitedTimeRetryPolicy(GenAiTuningServiceLimitedTimeRetryPolicy const& rhs) noexcept
+    : GenAiTuningServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -167,18 +159,16 @@ class GenAiTuningServiceLimitedTimeRetryPolicy
   using BaseType = GenAiTuningServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      aiplatform_v1_internal::GenAiTuningServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<aiplatform_v1_internal::GenAiTuningServiceRetryTraits> impl_;
 };
 
 /**
  * The `GenAiTuningServiceConnection` object for `GenAiTuningServiceClient`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `GenAiTuningServiceClient`. This allows users to inject custom
- * behavior (e.g., with a Google Mock object) when writing tests that use
- * objects of type `GenAiTuningServiceClient`.
+ * sets in `GenAiTuningServiceClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `GenAiTuningServiceClient`.
  *
  * To create a concrete instance, see `MakeGenAiTuningServiceConnection()`.
  *
@@ -190,71 +180,67 @@ class GenAiTuningServiceConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<google::cloud::aiplatform::v1::TuningJob> CreateTuningJob(
-      google::cloud::aiplatform::v1::CreateTuningJobRequest const& request);
+  virtual StatusOr<google::cloud::aiplatform::v1::TuningJob>
+  CreateTuningJob(google::cloud::aiplatform::v1::CreateTuningJobRequest const& request);
 
-  virtual StatusOr<google::cloud::aiplatform::v1::TuningJob> GetTuningJob(
-      google::cloud::aiplatform::v1::GetTuningJobRequest const& request);
+  virtual StatusOr<google::cloud::aiplatform::v1::TuningJob>
+  GetTuningJob(google::cloud::aiplatform::v1::GetTuningJobRequest const& request);
 
-  virtual StreamRange<google::cloud::aiplatform::v1::TuningJob> ListTuningJobs(
-      google::cloud::aiplatform::v1::ListTuningJobsRequest request);
+  virtual StreamRange<google::cloud::aiplatform::v1::TuningJob>
+  ListTuningJobs(google::cloud::aiplatform::v1::ListTuningJobsRequest request);
 
-  virtual Status CancelTuningJob(
-      google::cloud::aiplatform::v1::CancelTuningJobRequest const& request);
-
-  virtual future<StatusOr<google::cloud::aiplatform::v1::TuningJob>>
-  RebaseTunedModel(
-      google::cloud::aiplatform::v1::RebaseTunedModelRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation> RebaseTunedModel(
-      NoAwaitTag,
-      google::cloud::aiplatform::v1::RebaseTunedModelRequest const& request);
+  virtual Status
+  CancelTuningJob(google::cloud::aiplatform::v1::CancelTuningJobRequest const& request);
 
   virtual future<StatusOr<google::cloud::aiplatform::v1::TuningJob>>
-  RebaseTunedModel(google::longrunning::Operation const& operation);
+  RebaseTunedModel(google::cloud::aiplatform::v1::RebaseTunedModelRequest const& request);
 
-  virtual StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request);
+  virtual StatusOr<google::longrunning::Operation>
+  RebaseTunedModel(NoAwaitTag, google::cloud::aiplatform::v1::RebaseTunedModelRequest const& request);
 
-  virtual StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request);
+  virtual future<StatusOr<google::cloud::aiplatform::v1::TuningJob>>
+  RebaseTunedModel( google::longrunning::Operation const& operation);
 
-  virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request);
+  virtual StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request);
 
-  virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request);
+  virtual StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request);
+
+  virtual StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
+
+  virtual StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
 
   virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
   TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
 
-  virtual StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 
-  virtual Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request);
+  virtual Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
 
-  virtual Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request);
+  virtual Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> WaitOperation(
-      google::longrunning::WaitOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  WaitOperation(google::longrunning::WaitOperationRequest const& request);
 };
 
 /**
- * A factory function to construct an object of type
- * `GenAiTuningServiceConnection`.
+ * A factory function to construct an object of type `GenAiTuningServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of
- * GenAiTuningServiceClient.
+ * should be passed as an argument to the constructor of GenAiTuningServiceClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `GenAiTuningServiceConnection`. Expected options are any of the
- * types in the following option lists:
+ * returned `GenAiTuningServiceConnection`. Expected options are any of the types in
+ * the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
@@ -265,8 +251,8 @@ class GenAiTuningServiceConnection {
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
  * @param location Sets the prefix for the default `EndpointOption` value.
- * @param options (optional) Configure the `GenAiTuningServiceConnection`
- * created by this function.
+ * @param options (optional) Configure the `GenAiTuningServiceConnection` created by
+ * this function.
  */
 std::shared_ptr<GenAiTuningServiceConnection> MakeGenAiTuningServiceConnection(
     std::string const& location, Options options = {});

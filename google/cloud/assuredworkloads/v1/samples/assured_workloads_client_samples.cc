@@ -44,22 +44,17 @@ void SetClientEndpoint(std::vector<std::string> const& argv) {
   //     https://cloud.google.com/vpc/docs/private-google-access
   auto options = google::cloud::Options{}.set<google::cloud::EndpointOption>(
       "private.googleapis.com");
-  auto vpc_client =
-      google::cloud::assuredworkloads_v1::AssuredWorkloadsServiceClient(
-          google::cloud::assuredworkloads_v1::
-              MakeAssuredWorkloadsServiceConnection(options));
+  auto vpc_client = google::cloud::assuredworkloads_v1::AssuredWorkloadsServiceClient(
+      google::cloud::assuredworkloads_v1::MakeAssuredWorkloadsServiceConnection(options));
   //! [set-client-endpoint]
 }
 
 //! [custom-idempotency-policy]
 class CustomIdempotencyPolicy
-    : public google::cloud::assuredworkloads_v1::
-          AssuredWorkloadsServiceConnectionIdempotencyPolicy {
+   : public google::cloud::assuredworkloads_v1::AssuredWorkloadsServiceConnectionIdempotencyPolicy {
  public:
   ~CustomIdempotencyPolicy() override = default;
-  std::unique_ptr<google::cloud::assuredworkloads_v1::
-                      AssuredWorkloadsServiceConnectionIdempotencyPolicy>
-  clone() const override {
+  std::unique_ptr<google::cloud::assuredworkloads_v1::AssuredWorkloadsServiceConnectionIdempotencyPolicy> clone() const override {
     return std::make_unique<CustomIdempotencyPolicy>(*this);
   }
   // Override inherited functions to define as needed.
@@ -71,43 +66,27 @@ void SetRetryPolicy(std::vector<std::string> const& argv) {
     throw google::cloud::testing_util::Usage{"set-client-retry-policy"};
   }
   //! [set-retry-policy]
-  auto options =
-      google::cloud::Options{}
-          .set<google::cloud::assuredworkloads_v1::
-                   AssuredWorkloadsServiceConnectionIdempotencyPolicyOption>(
-              CustomIdempotencyPolicy().clone())
-          .set<google::cloud::assuredworkloads_v1::
-                   AssuredWorkloadsServiceRetryPolicyOption>(
-              google::cloud::assuredworkloads_v1::
-                  AssuredWorkloadsServiceLimitedErrorCountRetryPolicy(3)
-                      .clone())
-          .set<google::cloud::assuredworkloads_v1::
-                   AssuredWorkloadsServiceBackoffPolicyOption>(
-              google::cloud::ExponentialBackoffPolicy(
-                  /*initial_delay=*/std::chrono::milliseconds(200),
-                  /*maximum_delay=*/std::chrono::seconds(45),
-                  /*scaling=*/2.0)
-                  .clone());
-  auto connection =
-      google::cloud::assuredworkloads_v1::MakeAssuredWorkloadsServiceConnection(
-          options);
+  auto options = google::cloud::Options{}
+    .set<google::cloud::assuredworkloads_v1::AssuredWorkloadsServiceConnectionIdempotencyPolicyOption>(
+      CustomIdempotencyPolicy().clone())
+    .set<google::cloud::assuredworkloads_v1::AssuredWorkloadsServiceRetryPolicyOption>(
+      google::cloud::assuredworkloads_v1::AssuredWorkloadsServiceLimitedErrorCountRetryPolicy(3).clone())
+    .set<google::cloud::assuredworkloads_v1::AssuredWorkloadsServiceBackoffPolicyOption>(
+      google::cloud::ExponentialBackoffPolicy(
+          /*initial_delay=*/std::chrono::milliseconds(200),
+          /*maximum_delay=*/std::chrono::seconds(45),
+          /*scaling=*/2.0).clone());
+  auto connection = google::cloud::assuredworkloads_v1::MakeAssuredWorkloadsServiceConnection(options);
 
   // c1 and c2 share the same retry policies
-  auto c1 = google::cloud::assuredworkloads_v1::AssuredWorkloadsServiceClient(
-      connection);
-  auto c2 = google::cloud::assuredworkloads_v1::AssuredWorkloadsServiceClient(
-      connection);
+  auto c1 = google::cloud::assuredworkloads_v1::AssuredWorkloadsServiceClient(connection);
+  auto c2 = google::cloud::assuredworkloads_v1::AssuredWorkloadsServiceClient(connection);
 
   // You can override any of the policies in a new client. This new client
   // will share the policies from c1 (or c2) *except* for the retry policy.
   auto c3 = google::cloud::assuredworkloads_v1::AssuredWorkloadsServiceClient(
-      connection, google::cloud::Options{}
-                      .set<google::cloud::assuredworkloads_v1::
-                               AssuredWorkloadsServiceRetryPolicyOption>(
-                          google::cloud::assuredworkloads_v1::
-                              AssuredWorkloadsServiceLimitedTimeRetryPolicy(
-                                  std::chrono::minutes(5))
-                                  .clone()));
+    connection, google::cloud::Options{}.set<google::cloud::assuredworkloads_v1::AssuredWorkloadsServiceRetryPolicyOption>(
+      google::cloud::assuredworkloads_v1::AssuredWorkloadsServiceLimitedTimeRetryPolicy(std::chrono::minutes(5)).clone()));
 
   // You can also override the policies in a single call:
   // c3.SomeRpc(..., google::cloud::Options{}
@@ -128,35 +107,25 @@ void SetPollingPolicy(std::vector<std::string> const& argv) {
   // or error) or 45 minutes, whichever happens first. Initially pause for
   // 10 seconds between polling requests, increasing the pause by a factor
   // of 4 until it becomes 2 minutes.
-  auto options =
-      google::cloud::Options{}
-          .set<google::cloud::assuredworkloads_v1::
-                   AssuredWorkloadsServicePollingPolicyOption>(
-              google::cloud::GenericPollingPolicy<
-                  google::cloud::assuredworkloads_v1::
-                      AssuredWorkloadsServiceRetryPolicyOption::Type,
-                  google::cloud::assuredworkloads_v1::
-                      AssuredWorkloadsServiceBackoffPolicyOption::Type>(
-                  google::cloud::assuredworkloads_v1::
-                      AssuredWorkloadsServiceLimitedTimeRetryPolicy(
-                          /*maximum_duration=*/std::chrono::minutes(45))
-                          .clone(),
-                  google::cloud::ExponentialBackoffPolicy(
-                      /*initial_delay=*/std::chrono::seconds(10),
-                      /*maximum_delay=*/std::chrono::minutes(2),
-                      /*scaling=*/4.0)
-                      .clone())
-                  .clone());
+  auto options = google::cloud::Options{}
+    .set<google::cloud::assuredworkloads_v1::AssuredWorkloadsServicePollingPolicyOption>(
+        google::cloud::GenericPollingPolicy<
+            google::cloud::assuredworkloads_v1::AssuredWorkloadsServiceRetryPolicyOption::Type,
+            google::cloud::assuredworkloads_v1::AssuredWorkloadsServiceBackoffPolicyOption::Type>(
+            google::cloud::assuredworkloads_v1::AssuredWorkloadsServiceLimitedTimeRetryPolicy(
+                /*maximum_duration=*/std::chrono::minutes(45))
+                .clone(),
+            google::cloud::ExponentialBackoffPolicy(
+                /*initial_delay=*/std::chrono::seconds(10),
+                /*maximum_delay=*/std::chrono::minutes(2),
+                /*scaling=*/4.0).clone())
+            .clone());
 
-  auto connection =
-      google::cloud::assuredworkloads_v1::MakeAssuredWorkloadsServiceConnection(
-          options);
+  auto connection = google::cloud::assuredworkloads_v1::MakeAssuredWorkloadsServiceConnection(options);
 
   // c1 and c2 share the same polling policies.
-  auto c1 = google::cloud::assuredworkloads_v1::AssuredWorkloadsServiceClient(
-      connection);
-  auto c2 = google::cloud::assuredworkloads_v1::AssuredWorkloadsServiceClient(
-      connection);
+  auto c1 = google::cloud::assuredworkloads_v1::AssuredWorkloadsServiceClient(connection);
+  auto c2 = google::cloud::assuredworkloads_v1::AssuredWorkloadsServiceClient(connection);
   //! [set-polling-policy]
 }
 
@@ -173,8 +142,7 @@ void WithServiceAccount(std::vector<std::string> const& argv) {
         google::cloud::Options{}.set<google::cloud::UnifiedCredentialsOption>(
             google::cloud::MakeServiceAccountCredentials(contents));
     return google::cloud::assuredworkloads_v1::AssuredWorkloadsServiceClient(
-        google::cloud::assuredworkloads_v1::
-            MakeAssuredWorkloadsServiceConnection(options));
+      google::cloud::assuredworkloads_v1::MakeAssuredWorkloadsServiceConnection(options));
   }
   //! [with-service-account]
   (argv.at(0));
@@ -184,8 +152,9 @@ void AutoRun(std::vector<std::string> const& argv) {
   namespace examples = ::google::cloud::testing_util;
   using ::google::cloud::internal::GetEnv;
   if (!argv.empty()) throw examples::Usage{"auto"};
-  examples::CheckEnvironmentVariablesAreSet(
-      {"GOOGLE_CLOUD_CPP_TEST_SERVICE_ACCOUNT_KEYFILE"});
+  examples::CheckEnvironmentVariablesAreSet({
+    "GOOGLE_CLOUD_CPP_TEST_SERVICE_ACCOUNT_KEYFILE"
+  });
   auto const keyfile =
       GetEnv("GOOGLE_CLOUD_CPP_TEST_SERVICE_ACCOUNT_KEYFILE").value();
 

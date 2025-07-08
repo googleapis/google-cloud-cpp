@@ -35,164 +35,188 @@ class ClusterManagerLogging : public ClusterManagerStub {
  public:
   ~ClusterManagerLogging() override = default;
   ClusterManagerLogging(std::shared_ptr<ClusterManagerStub> child,
-                        TracingOptions tracing_options,
-                        std::set<std::string> const& components);
+                       TracingOptions tracing_options,
+                       std::set<std::string> const& components);
 
   StatusOr<google::container::v1::ListClustersResponse> ListClusters(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::container::v1::ListClustersRequest const& request) override;
 
   StatusOr<google::container::v1::Cluster> GetCluster(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::container::v1::GetClusterRequest const& request) override;
 
   StatusOr<google::container::v1::Operation> CreateCluster(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::container::v1::CreateClusterRequest const& request) override;
 
   StatusOr<google::container::v1::Operation> UpdateCluster(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::container::v1::UpdateClusterRequest const& request) override;
 
   StatusOr<google::container::v1::Operation> UpdateNodePool(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::container::v1::UpdateNodePoolRequest const& request) override;
 
   StatusOr<google::container::v1::Operation> SetNodePoolAutoscaling(
-      grpc::ClientContext& context, Options const& options,
-      google::container::v1::SetNodePoolAutoscalingRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::container::v1::SetNodePoolAutoscalingRequest const& request) override;
 
   StatusOr<google::container::v1::Operation> SetLoggingService(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::container::v1::SetLoggingServiceRequest const& request) override;
 
   StatusOr<google::container::v1::Operation> SetMonitoringService(
-      grpc::ClientContext& context, Options const& options,
-      google::container::v1::SetMonitoringServiceRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::container::v1::SetMonitoringServiceRequest const& request) override;
 
   StatusOr<google::container::v1::Operation> SetAddonsConfig(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::container::v1::SetAddonsConfigRequest const& request) override;
 
   StatusOr<google::container::v1::Operation> SetLocations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::container::v1::SetLocationsRequest const& request) override;
 
   StatusOr<google::container::v1::Operation> UpdateMaster(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::container::v1::UpdateMasterRequest const& request) override;
 
   StatusOr<google::container::v1::Operation> SetMasterAuth(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::container::v1::SetMasterAuthRequest const& request) override;
 
   StatusOr<google::container::v1::Operation> DeleteCluster(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::container::v1::DeleteClusterRequest const& request) override;
 
   StatusOr<google::container::v1::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::container::v1::ListOperationsRequest const& request) override;
 
   StatusOr<google::container::v1::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::container::v1::GetOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::container::v1::CancelOperationRequest const& request) override;
 
   StatusOr<google::container::v1::ServerConfig> GetServerConfig(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::container::v1::GetServerConfigRequest const& request) override;
 
   StatusOr<google::container::v1::GetJSONWebKeysResponse> GetJSONWebKeys(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::container::v1::GetJSONWebKeysRequest const& request) override;
 
   StatusOr<google::container::v1::ListNodePoolsResponse> ListNodePools(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::container::v1::ListNodePoolsRequest const& request) override;
 
   StatusOr<google::container::v1::NodePool> GetNodePool(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::container::v1::GetNodePoolRequest const& request) override;
 
   StatusOr<google::container::v1::Operation> CreateNodePool(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::container::v1::CreateNodePoolRequest const& request) override;
 
   StatusOr<google::container::v1::Operation> DeleteNodePool(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::container::v1::DeleteNodePoolRequest const& request) override;
 
   Status CompleteNodePoolUpgrade(
-      grpc::ClientContext& context, Options const& options,
-      google::container::v1::CompleteNodePoolUpgradeRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::container::v1::CompleteNodePoolUpgradeRequest const& request) override;
 
   StatusOr<google::container::v1::Operation> RollbackNodePoolUpgrade(
-      grpc::ClientContext& context, Options const& options,
-      google::container::v1::RollbackNodePoolUpgradeRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::container::v1::RollbackNodePoolUpgradeRequest const& request) override;
 
   StatusOr<google::container::v1::Operation> SetNodePoolManagement(
-      grpc::ClientContext& context, Options const& options,
-      google::container::v1::SetNodePoolManagementRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::container::v1::SetNodePoolManagementRequest const& request) override;
 
   StatusOr<google::container::v1::Operation> SetLabels(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::container::v1::SetLabelsRequest const& request) override;
 
   StatusOr<google::container::v1::Operation> SetLegacyAbac(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::container::v1::SetLegacyAbacRequest const& request) override;
 
   StatusOr<google::container::v1::Operation> StartIPRotation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::container::v1::StartIPRotationRequest const& request) override;
 
   StatusOr<google::container::v1::Operation> CompleteIPRotation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::container::v1::CompleteIPRotationRequest const& request) override;
 
   StatusOr<google::container::v1::Operation> SetNodePoolSize(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::container::v1::SetNodePoolSizeRequest const& request) override;
 
   StatusOr<google::container::v1::Operation> SetNetworkPolicy(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::container::v1::SetNetworkPolicyRequest const& request) override;
 
   StatusOr<google::container::v1::Operation> SetMaintenancePolicy(
-      grpc::ClientContext& context, Options const& options,
-      google::container::v1::SetMaintenancePolicyRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::container::v1::SetMaintenancePolicyRequest const& request) override;
 
-  StatusOr<google::container::v1::ListUsableSubnetworksResponse>
-  ListUsableSubnetworks(
-      grpc::ClientContext& context, Options const& options,
-      google::container::v1::ListUsableSubnetworksRequest const& request)
-      override;
+  StatusOr<google::container::v1::ListUsableSubnetworksResponse> ListUsableSubnetworks(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::container::v1::ListUsableSubnetworksRequest const& request) override;
 
-  StatusOr<google::container::v1::CheckAutopilotCompatibilityResponse>
-  CheckAutopilotCompatibility(
-      grpc::ClientContext& context, Options const& options,
-      google::container::v1::CheckAutopilotCompatibilityRequest const& request)
-      override;
+  StatusOr<google::container::v1::CheckAutopilotCompatibilityResponse> CheckAutopilotCompatibility(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::container::v1::CheckAutopilotCompatibilityRequest const& request) override;
 
   StatusOr<google::container::v1::ClusterUpgradeInfo> FetchClusterUpgradeInfo(
-      grpc::ClientContext& context, Options const& options,
-      google::container::v1::FetchClusterUpgradeInfoRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::container::v1::FetchClusterUpgradeInfoRequest const& request) override;
 
   StatusOr<google::container::v1::NodePoolUpgradeInfo> FetchNodePoolUpgradeInfo(
-      grpc::ClientContext& context, Options const& options,
-      google::container::v1::FetchNodePoolUpgradeInfoRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::container::v1::FetchNodePoolUpgradeInfoRequest const& request) override;
 
  private:
   std::shared_ptr<ClusterManagerStub> child_;

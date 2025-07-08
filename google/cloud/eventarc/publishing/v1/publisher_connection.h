@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_EVENTARC_PUBLISHING_V1_PUBLISHER_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_EVENTARC_PUBLISHING_V1_PUBLISHER_CONNECTION_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/eventarc/publishing/v1/internal/publisher_retry_traits.h"
 #include "google/cloud/eventarc/publishing/v1/publisher_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -61,14 +61,14 @@ class PublisherLimitedErrorCountRetryPolicy : public PublisherRetryPolicy {
    *     @p maximum_failures == 0.
    */
   explicit PublisherLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   PublisherLimitedErrorCountRetryPolicy(
       PublisherLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : PublisherLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : PublisherLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   PublisherLimitedErrorCountRetryPolicy(
       PublisherLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : PublisherLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : PublisherLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -88,9 +88,7 @@ class PublisherLimitedErrorCountRetryPolicy : public PublisherRetryPolicy {
   using BaseType = PublisherRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      eventarc_publishing_v1_internal::PublisherRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<eventarc_publishing_v1_internal::PublisherRetryTraits> impl_;
 };
 
 /**
@@ -128,14 +126,12 @@ class PublisherLimitedTimeRetryPolicy : public PublisherRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit PublisherLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  PublisherLimitedTimeRetryPolicy(
-      PublisherLimitedTimeRetryPolicy&& rhs) noexcept
-      : PublisherLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  PublisherLimitedTimeRetryPolicy(
-      PublisherLimitedTimeRetryPolicy const& rhs) noexcept
-      : PublisherLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  PublisherLimitedTimeRetryPolicy(PublisherLimitedTimeRetryPolicy&& rhs) noexcept
+    : PublisherLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  PublisherLimitedTimeRetryPolicy(PublisherLimitedTimeRetryPolicy const& rhs) noexcept
+    : PublisherLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -157,9 +153,7 @@ class PublisherLimitedTimeRetryPolicy : public PublisherRetryPolicy {
   using BaseType = PublisherRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      eventarc_publishing_v1_internal::PublisherRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<eventarc_publishing_v1_internal::PublisherRetryTraits> impl_;
 };
 
 /**
@@ -180,21 +174,14 @@ class PublisherConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<google::cloud::eventarc::publishing::v1::
-                       PublishChannelConnectionEventsResponse>
-  PublishChannelConnectionEvents(
-      google::cloud::eventarc::publishing::v1::
-          PublishChannelConnectionEventsRequest const& request);
+  virtual StatusOr<google::cloud::eventarc::publishing::v1::PublishChannelConnectionEventsResponse>
+  PublishChannelConnectionEvents(google::cloud::eventarc::publishing::v1::PublishChannelConnectionEventsRequest const& request);
 
-  virtual StatusOr<
-      google::cloud::eventarc::publishing::v1::PublishEventsResponse>
-  PublishEvents(
-      google::cloud::eventarc::publishing::v1::PublishEventsRequest const&
-          request);
+  virtual StatusOr<google::cloud::eventarc::publishing::v1::PublishEventsResponse>
+  PublishEvents(google::cloud::eventarc::publishing::v1::PublishEventsRequest const& request);
 
   virtual StatusOr<google::cloud::eventarc::publishing::v1::PublishResponse>
-  Publish(
-      google::cloud::eventarc::publishing::v1::PublishRequest const& request);
+  Publish(google::cloud::eventarc::publishing::v1::PublishRequest const& request);
 };
 
 /**

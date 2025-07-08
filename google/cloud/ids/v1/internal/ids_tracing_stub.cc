@@ -28,15 +28,15 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-IDSTracingStub::IDSTracingStub(std::shared_ptr<IDSStub> child)
+IDSTracingStub::IDSTracingStub(
+    std::shared_ptr<IDSStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
-StatusOr<google::cloud::ids::v1::ListEndpointsResponse>
-IDSTracingStub::ListEndpoints(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::ids::v1::ListEndpointsResponse> IDSTracingStub::ListEndpoints(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::ids::v1::ListEndpointsRequest const& request) {
-  auto span =
-      internal::MakeSpanGrpc("google.cloud.ids.v1.IDS", "ListEndpoints");
+  auto span = internal::MakeSpanGrpc("google.cloud.ids.v1.IDS", "ListEndpoints");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -44,7 +44,8 @@ IDSTracingStub::ListEndpoints(
 }
 
 StatusOr<google::cloud::ids::v1::Endpoint> IDSTracingStub::GetEndpoint(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::ids::v1::GetEndpointRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.ids.v1.IDS", "GetEndpoint");
   auto scope = opentelemetry::trace::Scope(span);
@@ -55,24 +56,23 @@ StatusOr<google::cloud::ids::v1::Endpoint> IDSTracingStub::GetEndpoint(
 
 future<StatusOr<google::longrunning::Operation>>
 IDSTracingStub::AsyncCreateEndpoint(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::ids::v1::CreateEndpointRequest const& request) {
-  auto span =
-      internal::MakeSpanGrpc("google.cloud.ids.v1.IDS", "CreateEndpoint");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::ids::v1::CreateEndpointRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.ids.v1.IDS", "CreateEndpoint");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f =
-      child_->AsyncCreateEndpoint(cq, context, std::move(options), request);
+  auto f = child_->AsyncCreateEndpoint(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
-StatusOr<google::longrunning::Operation> IDSTracingStub::CreateEndpoint(
-    grpc::ClientContext& context, Options options,
-    google::cloud::ids::v1::CreateEndpointRequest const& request) {
-  auto span =
-      internal::MakeSpanGrpc("google.cloud.ids.v1.IDS", "CreateEndpoint");
+StatusOr<google::longrunning::Operation>
+IDSTracingStub::CreateEndpoint(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::ids::v1::CreateEndpointRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.ids.v1.IDS", "CreateEndpoint");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -81,24 +81,23 @@ StatusOr<google::longrunning::Operation> IDSTracingStub::CreateEndpoint(
 
 future<StatusOr<google::longrunning::Operation>>
 IDSTracingStub::AsyncDeleteEndpoint(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::ids::v1::DeleteEndpointRequest const& request) {
-  auto span =
-      internal::MakeSpanGrpc("google.cloud.ids.v1.IDS", "DeleteEndpoint");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::ids::v1::DeleteEndpointRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.ids.v1.IDS", "DeleteEndpoint");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f =
-      child_->AsyncDeleteEndpoint(cq, context, std::move(options), request);
+  auto f = child_->AsyncDeleteEndpoint(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
-StatusOr<google::longrunning::Operation> IDSTracingStub::DeleteEndpoint(
-    grpc::ClientContext& context, Options options,
-    google::cloud::ids::v1::DeleteEndpointRequest const& request) {
-  auto span =
-      internal::MakeSpanGrpc("google.cloud.ids.v1.IDS", "DeleteEndpoint");
+StatusOr<google::longrunning::Operation>
+IDSTracingStub::DeleteEndpoint(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::ids::v1::DeleteEndpointRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.ids.v1.IDS", "DeleteEndpoint");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -115,7 +114,8 @@ IDSTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncGetOperation(cq, context, std::move(options), request);
+  auto f = child_->AsyncGetOperation(
+      cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -128,14 +128,15 @@ future<Status> IDSTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f =
-      child_->AsyncCancelOperation(cq, context, std::move(options), request);
+  auto f = child_->AsyncCancelOperation(
+      cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-std::shared_ptr<IDSStub> MakeIDSTracingStub(std::shared_ptr<IDSStub> stub) {
+std::shared_ptr<IDSStub> MakeIDSTracingStub(
+    std::shared_ptr<IDSStub> stub) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return std::make_shared<IDSTracingStub>(std::move(stub));
 #else

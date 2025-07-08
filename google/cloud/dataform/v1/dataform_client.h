@@ -63,8 +63,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class DataformClient {
  public:
-  explicit DataformClient(std::shared_ptr<DataformConnection> connection,
-                          Options opts = {});
+  explicit DataformClient(std::shared_ptr<DataformConnection> connection, Options opts = {});
   ~DataformClient();
 
   ///@{
@@ -120,8 +119,8 @@ class DataformClient {
   /// [google.cloud.dataform.v1.Repository]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L566}
   ///
   // clang-format on
-  StreamRange<google::cloud::dataform::v1::Repository> ListRepositories(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::dataform::v1::Repository>
+  ListRepositories(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -162,9 +161,8 @@ class DataformClient {
   /// [google.cloud.dataform.v1.Repository]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L566}
   ///
   // clang-format on
-  StreamRange<google::cloud::dataform::v1::Repository> ListRepositories(
-      google::cloud::dataform::v1::ListRepositoriesRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::dataform::v1::Repository>
+  ListRepositories(google::cloud::dataform::v1::ListRepositoriesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -188,8 +186,8 @@ class DataformClient {
   /// [google.cloud.dataform.v1.Repository]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L566}
   ///
   // clang-format on
-  StatusOr<google::cloud::dataform::v1::Repository> GetRepository(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::dataform::v1::Repository>
+  GetRepository(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -218,9 +216,8 @@ class DataformClient {
   /// [google.cloud.dataform.v1.Repository]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L566}
   ///
   // clang-format on
-  StatusOr<google::cloud::dataform::v1::Repository> GetRepository(
-      google::cloud::dataform::v1::GetRepositoryRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::dataform::v1::Repository>
+  GetRepository(google::cloud::dataform::v1::GetRepositoryRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -248,10 +245,8 @@ class DataformClient {
   /// [google.cloud.dataform.v1.Repository]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L566}
   ///
   // clang-format on
-  StatusOr<google::cloud::dataform::v1::Repository> CreateRepository(
-      std::string const& parent,
-      google::cloud::dataform::v1::Repository const& repository,
-      std::string const& repository_id, Options opts = {});
+  StatusOr<google::cloud::dataform::v1::Repository>
+  CreateRepository(std::string const& parent, google::cloud::dataform::v1::Repository const& repository, std::string const& repository_id, Options opts = {});
 
   // clang-format off
   ///
@@ -280,9 +275,8 @@ class DataformClient {
   /// [google.cloud.dataform.v1.Repository]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L566}
   ///
   // clang-format on
-  StatusOr<google::cloud::dataform::v1::Repository> CreateRepository(
-      google::cloud::dataform::v1::CreateRepositoryRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::dataform::v1::Repository>
+  CreateRepository(google::cloud::dataform::v1::CreateRepositoryRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -313,9 +307,8 @@ class DataformClient {
   /// [google.cloud.dataform.v1.UpdateRepositoryRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L794}
   ///
   // clang-format on
-  StatusOr<google::cloud::dataform::v1::Repository> UpdateRepository(
-      google::cloud::dataform::v1::Repository const& repository,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::cloud::dataform::v1::Repository>
+  UpdateRepository(google::cloud::dataform::v1::Repository const& repository, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -349,9 +342,8 @@ class DataformClient {
   /// [google.cloud.dataform.v1.UpdateRepositoryRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L794}
   ///
   // clang-format on
-  StatusOr<google::cloud::dataform::v1::Repository> UpdateRepository(
-      google::cloud::dataform::v1::UpdateRepositoryRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::dataform::v1::Repository>
+  UpdateRepository(google::cloud::dataform::v1::UpdateRepositoryRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -372,7 +364,8 @@ class DataformClient {
   /// [google.cloud.dataform.v1.DeleteRepositoryRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L805}
   ///
   // clang-format on
-  Status DeleteRepository(std::string const& name, Options opts = {});
+  Status
+  DeleteRepository(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -398,9 +391,8 @@ class DataformClient {
   /// [google.cloud.dataform.v1.DeleteRepositoryRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L805}
   ///
   // clang-format on
-  Status DeleteRepository(
-      google::cloud::dataform::v1::DeleteRepositoryRequest const& request,
-      Options opts = {});
+  Status
+  DeleteRepository(google::cloud::dataform::v1::DeleteRepositoryRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -431,10 +423,7 @@ class DataformClient {
   ///
   // clang-format on
   StatusOr<google::cloud::dataform::v1::CommitRepositoryChangesResponse>
-  CommitRepositoryChanges(
-      google::cloud::dataform::v1::CommitRepositoryChangesRequest const&
-          request,
-      Options opts = {});
+  CommitRepositoryChanges(google::cloud::dataform::v1::CommitRepositoryChangesRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -465,9 +454,7 @@ class DataformClient {
   ///
   // clang-format on
   StatusOr<google::cloud::dataform::v1::ReadRepositoryFileResponse>
-  ReadRepositoryFile(
-      google::cloud::dataform::v1::ReadRepositoryFileRequest const& request,
-      Options opts = {});
+  ReadRepositoryFile(google::cloud::dataform::v1::ReadRepositoryFileRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -507,10 +494,7 @@ class DataformClient {
   ///
   // clang-format on
   StreamRange<google::cloud::dataform::v1::DirectoryEntry>
-  QueryRepositoryDirectoryContents(
-      google::cloud::dataform::v1::QueryRepositoryDirectoryContentsRequest
-          request,
-      Options opts = {});
+  QueryRepositoryDirectoryContents(google::cloud::dataform::v1::QueryRepositoryDirectoryContentsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -550,9 +534,7 @@ class DataformClient {
   ///
   // clang-format on
   StreamRange<google::cloud::dataform::v1::CommitLogEntry>
-  FetchRepositoryHistory(
-      google::cloud::dataform::v1::FetchRepositoryHistoryRequest request,
-      Options opts = {});
+  FetchRepositoryHistory(google::cloud::dataform::v1::FetchRepositoryHistoryRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -581,12 +563,8 @@ class DataformClient {
   /// [google.cloud.dataform.v1.ComputeRepositoryAccessTokenStatusResponse]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1008}
   ///
   // clang-format on
-  StatusOr<
-      google::cloud::dataform::v1::ComputeRepositoryAccessTokenStatusResponse>
-  ComputeRepositoryAccessTokenStatus(
-      google::cloud::dataform::v1::
-          ComputeRepositoryAccessTokenStatusRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::dataform::v1::ComputeRepositoryAccessTokenStatusResponse>
+  ComputeRepositoryAccessTokenStatus(google::cloud::dataform::v1::ComputeRepositoryAccessTokenStatusRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -616,9 +594,7 @@ class DataformClient {
   ///
   // clang-format on
   StatusOr<google::cloud::dataform::v1::FetchRemoteBranchesResponse>
-  FetchRemoteBranches(
-      google::cloud::dataform::v1::FetchRemoteBranchesRequest const& request,
-      Options opts = {});
+  FetchRemoteBranches(google::cloud::dataform::v1::FetchRemoteBranchesRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -652,8 +628,8 @@ class DataformClient {
   /// [google.cloud.dataform.v1.Workspace]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1047}
   ///
   // clang-format on
-  StreamRange<google::cloud::dataform::v1::Workspace> ListWorkspaces(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::dataform::v1::Workspace>
+  ListWorkspaces(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -691,9 +667,8 @@ class DataformClient {
   /// [google.cloud.dataform.v1.Workspace]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1047}
   ///
   // clang-format on
-  StreamRange<google::cloud::dataform::v1::Workspace> ListWorkspaces(
-      google::cloud::dataform::v1::ListWorkspacesRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::dataform::v1::Workspace>
+  ListWorkspaces(google::cloud::dataform::v1::ListWorkspacesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -717,8 +692,8 @@ class DataformClient {
   /// [google.cloud.dataform.v1.Workspace]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1047}
   ///
   // clang-format on
-  StatusOr<google::cloud::dataform::v1::Workspace> GetWorkspace(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::dataform::v1::Workspace>
+  GetWorkspace(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -747,9 +722,8 @@ class DataformClient {
   /// [google.cloud.dataform.v1.Workspace]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1047}
   ///
   // clang-format on
-  StatusOr<google::cloud::dataform::v1::Workspace> GetWorkspace(
-      google::cloud::dataform::v1::GetWorkspaceRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::dataform::v1::Workspace>
+  GetWorkspace(google::cloud::dataform::v1::GetWorkspaceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -777,10 +751,8 @@ class DataformClient {
   /// [google.cloud.dataform.v1.Workspace]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1047}
   ///
   // clang-format on
-  StatusOr<google::cloud::dataform::v1::Workspace> CreateWorkspace(
-      std::string const& parent,
-      google::cloud::dataform::v1::Workspace const& workspace,
-      std::string const& workspace_id, Options opts = {});
+  StatusOr<google::cloud::dataform::v1::Workspace>
+  CreateWorkspace(std::string const& parent, google::cloud::dataform::v1::Workspace const& workspace, std::string const& workspace_id, Options opts = {});
 
   // clang-format off
   ///
@@ -809,9 +781,8 @@ class DataformClient {
   /// [google.cloud.dataform.v1.Workspace]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1047}
   ///
   // clang-format on
-  StatusOr<google::cloud::dataform::v1::Workspace> CreateWorkspace(
-      google::cloud::dataform::v1::CreateWorkspaceRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::dataform::v1::Workspace>
+  CreateWorkspace(google::cloud::dataform::v1::CreateWorkspaceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -832,7 +803,8 @@ class DataformClient {
   /// [google.cloud.dataform.v1.DeleteWorkspaceRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1151}
   ///
   // clang-format on
-  Status DeleteWorkspace(std::string const& name, Options opts = {});
+  Status
+  DeleteWorkspace(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -858,9 +830,8 @@ class DataformClient {
   /// [google.cloud.dataform.v1.DeleteWorkspaceRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1151}
   ///
   // clang-format on
-  Status DeleteWorkspace(
-      google::cloud::dataform::v1::DeleteWorkspaceRequest const& request,
-      Options opts = {});
+  Status
+  DeleteWorkspace(google::cloud::dataform::v1::DeleteWorkspaceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -890,9 +861,7 @@ class DataformClient {
   ///
   // clang-format on
   StatusOr<google::cloud::dataform::v1::InstallNpmPackagesResponse>
-  InstallNpmPackages(
-      google::cloud::dataform::v1::InstallNpmPackagesRequest const& request,
-      Options opts = {});
+  InstallNpmPackages(google::cloud::dataform::v1::InstallNpmPackagesRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -921,9 +890,8 @@ class DataformClient {
   /// [google.cloud.dataform.v1.PullGitCommitsResponse]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1190}
   ///
   // clang-format on
-  StatusOr<google::cloud::dataform::v1::PullGitCommitsResponse> PullGitCommits(
-      google::cloud::dataform::v1::PullGitCommitsRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::dataform::v1::PullGitCommitsResponse>
+  PullGitCommits(google::cloud::dataform::v1::PullGitCommitsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -952,9 +920,8 @@ class DataformClient {
   /// [google.cloud.dataform.v1.PushGitCommitsResponse]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1209}
   ///
   // clang-format on
-  StatusOr<google::cloud::dataform::v1::PushGitCommitsResponse> PushGitCommits(
-      google::cloud::dataform::v1::PushGitCommitsRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::dataform::v1::PushGitCommitsResponse>
+  PushGitCommits(google::cloud::dataform::v1::PushGitCommitsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -984,9 +951,7 @@ class DataformClient {
   ///
   // clang-format on
   StatusOr<google::cloud::dataform::v1::FetchFileGitStatusesResponse>
-  FetchFileGitStatuses(
-      google::cloud::dataform::v1::FetchFileGitStatusesRequest const& request,
-      Options opts = {});
+  FetchFileGitStatuses(google::cloud::dataform::v1::FetchFileGitStatusesRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1016,9 +981,7 @@ class DataformClient {
   ///
   // clang-format on
   StatusOr<google::cloud::dataform::v1::FetchGitAheadBehindResponse>
-  FetchGitAheadBehind(
-      google::cloud::dataform::v1::FetchGitAheadBehindRequest const& request,
-      Options opts = {});
+  FetchGitAheadBehind(google::cloud::dataform::v1::FetchGitAheadBehindRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1048,9 +1011,7 @@ class DataformClient {
   ///
   // clang-format on
   StatusOr<google::cloud::dataform::v1::CommitWorkspaceChangesResponse>
-  CommitWorkspaceChanges(
-      google::cloud::dataform::v1::CommitWorkspaceChangesRequest const& request,
-      Options opts = {});
+  CommitWorkspaceChanges(google::cloud::dataform::v1::CommitWorkspaceChangesRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1080,9 +1041,7 @@ class DataformClient {
   ///
   // clang-format on
   StatusOr<google::cloud::dataform::v1::ResetWorkspaceChangesResponse>
-  ResetWorkspaceChanges(
-      google::cloud::dataform::v1::ResetWorkspaceChangesRequest const& request,
-      Options opts = {});
+  ResetWorkspaceChanges(google::cloud::dataform::v1::ResetWorkspaceChangesRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1111,9 +1070,8 @@ class DataformClient {
   /// [google.cloud.dataform.v1.FetchFileDiffResponse]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1342}
   ///
   // clang-format on
-  StatusOr<google::cloud::dataform::v1::FetchFileDiffResponse> FetchFileDiff(
-      google::cloud::dataform::v1::FetchFileDiffRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::dataform::v1::FetchFileDiffResponse>
+  FetchFileDiff(google::cloud::dataform::v1::FetchFileDiffRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1152,9 +1110,7 @@ class DataformClient {
   ///
   // clang-format on
   StreamRange<google::cloud::dataform::v1::DirectoryEntry>
-  QueryDirectoryContents(
-      google::cloud::dataform::v1::QueryDirectoryContentsRequest request,
-      Options opts = {});
+  QueryDirectoryContents(google::cloud::dataform::v1::QueryDirectoryContentsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1192,9 +1148,8 @@ class DataformClient {
   /// [google.cloud.dataform.v1.SearchResult]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1437}
   ///
   // clang-format on
-  StreamRange<google::cloud::dataform::v1::SearchResult> SearchFiles(
-      google::cloud::dataform::v1::SearchFilesRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::dataform::v1::SearchResult>
+  SearchFiles(google::cloud::dataform::v1::SearchFilesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1223,9 +1178,8 @@ class DataformClient {
   /// [google.cloud.dataform.v1.MakeDirectoryResponse]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1476}
   ///
   // clang-format on
-  StatusOr<google::cloud::dataform::v1::MakeDirectoryResponse> MakeDirectory(
-      google::cloud::dataform::v1::MakeDirectoryRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::dataform::v1::MakeDirectoryResponse>
+  MakeDirectory(google::cloud::dataform::v1::MakeDirectoryRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1255,9 +1209,7 @@ class DataformClient {
   ///
   // clang-format on
   StatusOr<google::cloud::dataform::v1::RemoveDirectoryResponse>
-  RemoveDirectory(
-      google::cloud::dataform::v1::RemoveDirectoryRequest const& request,
-      Options opts = {});
+  RemoveDirectory(google::cloud::dataform::v1::RemoveDirectoryRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1287,9 +1239,8 @@ class DataformClient {
   /// [google.cloud.dataform.v1.MoveDirectoryResponse]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1516}
   ///
   // clang-format on
-  StatusOr<google::cloud::dataform::v1::MoveDirectoryResponse> MoveDirectory(
-      google::cloud::dataform::v1::MoveDirectoryRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::dataform::v1::MoveDirectoryResponse>
+  MoveDirectory(google::cloud::dataform::v1::MoveDirectoryRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1318,9 +1269,8 @@ class DataformClient {
   /// [google.cloud.dataform.v1.ReadFileResponse]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1538}
   ///
   // clang-format on
-  StatusOr<google::cloud::dataform::v1::ReadFileResponse> ReadFile(
-      google::cloud::dataform::v1::ReadFileRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::dataform::v1::ReadFileResponse>
+  ReadFile(google::cloud::dataform::v1::ReadFileRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1349,9 +1299,8 @@ class DataformClient {
   /// [google.cloud.dataform.v1.RemoveFileResponse]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1559}
   ///
   // clang-format on
-  StatusOr<google::cloud::dataform::v1::RemoveFileResponse> RemoveFile(
-      google::cloud::dataform::v1::RemoveFileRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::dataform::v1::RemoveFileResponse>
+  RemoveFile(google::cloud::dataform::v1::RemoveFileRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1380,9 +1329,8 @@ class DataformClient {
   /// [google.cloud.dataform.v1.MoveFileResponse]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1581}
   ///
   // clang-format on
-  StatusOr<google::cloud::dataform::v1::MoveFileResponse> MoveFile(
-      google::cloud::dataform::v1::MoveFileRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::dataform::v1::MoveFileResponse>
+  MoveFile(google::cloud::dataform::v1::MoveFileRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1411,9 +1359,8 @@ class DataformClient {
   /// [google.cloud.dataform.v1.WriteFileResponse]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1601}
   ///
   // clang-format on
-  StatusOr<google::cloud::dataform::v1::WriteFileResponse> WriteFile(
-      google::cloud::dataform::v1::WriteFileRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::dataform::v1::WriteFileResponse>
+  WriteFile(google::cloud::dataform::v1::WriteFileRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1447,8 +1394,8 @@ class DataformClient {
   /// [google.cloud.dataform.v1.ReleaseConfig]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1618}
   ///
   // clang-format on
-  StreamRange<google::cloud::dataform::v1::ReleaseConfig> ListReleaseConfigs(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::dataform::v1::ReleaseConfig>
+  ListReleaseConfigs(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -1486,9 +1433,8 @@ class DataformClient {
   /// [google.cloud.dataform.v1.ReleaseConfig]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1618}
   ///
   // clang-format on
-  StreamRange<google::cloud::dataform::v1::ReleaseConfig> ListReleaseConfigs(
-      google::cloud::dataform::v1::ListReleaseConfigsRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::dataform::v1::ReleaseConfig>
+  ListReleaseConfigs(google::cloud::dataform::v1::ListReleaseConfigsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1512,8 +1458,8 @@ class DataformClient {
   /// [google.cloud.dataform.v1.ReleaseConfig]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1618}
   ///
   // clang-format on
-  StatusOr<google::cloud::dataform::v1::ReleaseConfig> GetReleaseConfig(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::dataform::v1::ReleaseConfig>
+  GetReleaseConfig(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1542,9 +1488,8 @@ class DataformClient {
   /// [google.cloud.dataform.v1.ReleaseConfig]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1618}
   ///
   // clang-format on
-  StatusOr<google::cloud::dataform::v1::ReleaseConfig> GetReleaseConfig(
-      google::cloud::dataform::v1::GetReleaseConfigRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::dataform::v1::ReleaseConfig>
+  GetReleaseConfig(google::cloud::dataform::v1::GetReleaseConfigRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1572,10 +1517,8 @@ class DataformClient {
   /// [google.cloud.dataform.v1.ReleaseConfig]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1618}
   ///
   // clang-format on
-  StatusOr<google::cloud::dataform::v1::ReleaseConfig> CreateReleaseConfig(
-      std::string const& parent,
-      google::cloud::dataform::v1::ReleaseConfig const& release_config,
-      std::string const& release_config_id, Options opts = {});
+  StatusOr<google::cloud::dataform::v1::ReleaseConfig>
+  CreateReleaseConfig(std::string const& parent, google::cloud::dataform::v1::ReleaseConfig const& release_config, std::string const& release_config_id, Options opts = {});
 
   // clang-format off
   ///
@@ -1604,9 +1547,8 @@ class DataformClient {
   /// [google.cloud.dataform.v1.ReleaseConfig]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1618}
   ///
   // clang-format on
-  StatusOr<google::cloud::dataform::v1::ReleaseConfig> CreateReleaseConfig(
-      google::cloud::dataform::v1::CreateReleaseConfigRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::dataform::v1::ReleaseConfig>
+  CreateReleaseConfig(google::cloud::dataform::v1::CreateReleaseConfigRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1637,9 +1579,8 @@ class DataformClient {
   /// [google.cloud.dataform.v1.UpdateReleaseConfigRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1772}
   ///
   // clang-format on
-  StatusOr<google::cloud::dataform::v1::ReleaseConfig> UpdateReleaseConfig(
-      google::cloud::dataform::v1::ReleaseConfig const& release_config,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::cloud::dataform::v1::ReleaseConfig>
+  UpdateReleaseConfig(google::cloud::dataform::v1::ReleaseConfig const& release_config, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -1673,9 +1614,8 @@ class DataformClient {
   /// [google.cloud.dataform.v1.UpdateReleaseConfigRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1772}
   ///
   // clang-format on
-  StatusOr<google::cloud::dataform::v1::ReleaseConfig> UpdateReleaseConfig(
-      google::cloud::dataform::v1::UpdateReleaseConfigRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::dataform::v1::ReleaseConfig>
+  UpdateReleaseConfig(google::cloud::dataform::v1::UpdateReleaseConfigRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1696,7 +1636,8 @@ class DataformClient {
   /// [google.cloud.dataform.v1.DeleteReleaseConfigRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1783}
   ///
   // clang-format on
-  Status DeleteReleaseConfig(std::string const& name, Options opts = {});
+  Status
+  DeleteReleaseConfig(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1722,9 +1663,8 @@ class DataformClient {
   /// [google.cloud.dataform.v1.DeleteReleaseConfigRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1783}
   ///
   // clang-format on
-  Status DeleteReleaseConfig(
-      google::cloud::dataform::v1::DeleteReleaseConfigRequest const& request,
-      Options opts = {});
+  Status
+  DeleteReleaseConfig(google::cloud::dataform::v1::DeleteReleaseConfigRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1798,9 +1738,7 @@ class DataformClient {
   ///
   // clang-format on
   StreamRange<google::cloud::dataform::v1::CompilationResult>
-  ListCompilationResults(
-      google::cloud::dataform::v1::ListCompilationResultsRequest request,
-      Options opts = {});
+  ListCompilationResults(google::cloud::dataform::v1::ListCompilationResultsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1824,8 +1762,8 @@ class DataformClient {
   /// [google.cloud.dataform.v1.GetCompilationResultRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1990}
   ///
   // clang-format on
-  StatusOr<google::cloud::dataform::v1::CompilationResult> GetCompilationResult(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::dataform::v1::CompilationResult>
+  GetCompilationResult(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1854,9 +1792,8 @@ class DataformClient {
   /// [google.cloud.dataform.v1.GetCompilationResultRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L1990}
   ///
   // clang-format on
-  StatusOr<google::cloud::dataform::v1::CompilationResult> GetCompilationResult(
-      google::cloud::dataform::v1::GetCompilationResultRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::dataform::v1::CompilationResult>
+  GetCompilationResult(google::cloud::dataform::v1::GetCompilationResultRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1883,10 +1820,7 @@ class DataformClient {
   ///
   // clang-format on
   StatusOr<google::cloud::dataform::v1::CompilationResult>
-  CreateCompilationResult(
-      std::string const& parent,
-      google::cloud::dataform::v1::CompilationResult const& compilation_result,
-      Options opts = {});
+  CreateCompilationResult(std::string const& parent, google::cloud::dataform::v1::CompilationResult const& compilation_result, Options opts = {});
 
   // clang-format off
   ///
@@ -1916,10 +1850,7 @@ class DataformClient {
   ///
   // clang-format on
   StatusOr<google::cloud::dataform::v1::CompilationResult>
-  CreateCompilationResult(
-      google::cloud::dataform::v1::CreateCompilationResultRequest const&
-          request,
-      Options opts = {});
+  CreateCompilationResult(google::cloud::dataform::v1::CreateCompilationResultRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1958,9 +1889,7 @@ class DataformClient {
   ///
   // clang-format on
   StreamRange<google::cloud::dataform::v1::CompilationResultAction>
-  QueryCompilationResultActions(
-      google::cloud::dataform::v1::QueryCompilationResultActionsRequest request,
-      Options opts = {});
+  QueryCompilationResultActions(google::cloud::dataform::v1::QueryCompilationResultActionsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1994,8 +1923,8 @@ class DataformClient {
   /// [google.cloud.dataform.v1.WorkflowConfig]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L2378}
   ///
   // clang-format on
-  StreamRange<google::cloud::dataform::v1::WorkflowConfig> ListWorkflowConfigs(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::dataform::v1::WorkflowConfig>
+  ListWorkflowConfigs(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -2033,9 +1962,8 @@ class DataformClient {
   /// [google.cloud.dataform.v1.WorkflowConfig]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L2378}
   ///
   // clang-format on
-  StreamRange<google::cloud::dataform::v1::WorkflowConfig> ListWorkflowConfigs(
-      google::cloud::dataform::v1::ListWorkflowConfigsRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::dataform::v1::WorkflowConfig>
+  ListWorkflowConfigs(google::cloud::dataform::v1::ListWorkflowConfigsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -2059,8 +1987,8 @@ class DataformClient {
   /// [google.cloud.dataform.v1.WorkflowConfig]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L2378}
   ///
   // clang-format on
-  StatusOr<google::cloud::dataform::v1::WorkflowConfig> GetWorkflowConfig(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::dataform::v1::WorkflowConfig>
+  GetWorkflowConfig(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2089,9 +2017,8 @@ class DataformClient {
   /// [google.cloud.dataform.v1.WorkflowConfig]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L2378}
   ///
   // clang-format on
-  StatusOr<google::cloud::dataform::v1::WorkflowConfig> GetWorkflowConfig(
-      google::cloud::dataform::v1::GetWorkflowConfigRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::dataform::v1::WorkflowConfig>
+  GetWorkflowConfig(google::cloud::dataform::v1::GetWorkflowConfigRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2119,10 +2046,8 @@ class DataformClient {
   /// [google.cloud.dataform.v1.WorkflowConfig]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L2378}
   ///
   // clang-format on
-  StatusOr<google::cloud::dataform::v1::WorkflowConfig> CreateWorkflowConfig(
-      std::string const& parent,
-      google::cloud::dataform::v1::WorkflowConfig const& workflow_config,
-      std::string const& workflow_config_id, Options opts = {});
+  StatusOr<google::cloud::dataform::v1::WorkflowConfig>
+  CreateWorkflowConfig(std::string const& parent, google::cloud::dataform::v1::WorkflowConfig const& workflow_config, std::string const& workflow_config_id, Options opts = {});
 
   // clang-format off
   ///
@@ -2151,9 +2076,8 @@ class DataformClient {
   /// [google.cloud.dataform.v1.WorkflowConfig]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L2378}
   ///
   // clang-format on
-  StatusOr<google::cloud::dataform::v1::WorkflowConfig> CreateWorkflowConfig(
-      google::cloud::dataform::v1::CreateWorkflowConfigRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::dataform::v1::WorkflowConfig>
+  CreateWorkflowConfig(google::cloud::dataform::v1::CreateWorkflowConfigRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2184,9 +2108,8 @@ class DataformClient {
   /// [google.cloud.dataform.v1.WorkflowConfig]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L2378}
   ///
   // clang-format on
-  StatusOr<google::cloud::dataform::v1::WorkflowConfig> UpdateWorkflowConfig(
-      google::cloud::dataform::v1::WorkflowConfig const& workflow_config,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::cloud::dataform::v1::WorkflowConfig>
+  UpdateWorkflowConfig(google::cloud::dataform::v1::WorkflowConfig const& workflow_config, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -2220,9 +2143,8 @@ class DataformClient {
   /// [google.cloud.dataform.v1.WorkflowConfig]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L2378}
   ///
   // clang-format on
-  StatusOr<google::cloud::dataform::v1::WorkflowConfig> UpdateWorkflowConfig(
-      google::cloud::dataform::v1::UpdateWorkflowConfigRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::dataform::v1::WorkflowConfig>
+  UpdateWorkflowConfig(google::cloud::dataform::v1::UpdateWorkflowConfigRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2243,7 +2165,8 @@ class DataformClient {
   /// [google.cloud.dataform.v1.DeleteWorkflowConfigRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L2567}
   ///
   // clang-format on
-  Status DeleteWorkflowConfig(std::string const& name, Options opts = {});
+  Status
+  DeleteWorkflowConfig(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2269,9 +2192,8 @@ class DataformClient {
   /// [google.cloud.dataform.v1.DeleteWorkflowConfigRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L2567}
   ///
   // clang-format on
-  Status DeleteWorkflowConfig(
-      google::cloud::dataform::v1::DeleteWorkflowConfigRequest const& request,
-      Options opts = {});
+  Status
+  DeleteWorkflowConfig(google::cloud::dataform::v1::DeleteWorkflowConfigRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2345,9 +2267,7 @@ class DataformClient {
   ///
   // clang-format on
   StreamRange<google::cloud::dataform::v1::WorkflowInvocation>
-  ListWorkflowInvocations(
-      google::cloud::dataform::v1::ListWorkflowInvocationsRequest request,
-      Options opts = {});
+  ListWorkflowInvocations(google::cloud::dataform::v1::ListWorkflowInvocationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -2402,9 +2322,7 @@ class DataformClient {
   ///
   // clang-format on
   StatusOr<google::cloud::dataform::v1::WorkflowInvocation>
-  GetWorkflowInvocation(
-      google::cloud::dataform::v1::GetWorkflowInvocationRequest const& request,
-      Options opts = {});
+  GetWorkflowInvocation(google::cloud::dataform::v1::GetWorkflowInvocationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2431,11 +2349,7 @@ class DataformClient {
   ///
   // clang-format on
   StatusOr<google::cloud::dataform::v1::WorkflowInvocation>
-  CreateWorkflowInvocation(
-      std::string const& parent,
-      google::cloud::dataform::v1::WorkflowInvocation const&
-          workflow_invocation,
-      Options opts = {});
+  CreateWorkflowInvocation(std::string const& parent, google::cloud::dataform::v1::WorkflowInvocation const& workflow_invocation, Options opts = {});
 
   // clang-format off
   ///
@@ -2465,10 +2379,7 @@ class DataformClient {
   ///
   // clang-format on
   StatusOr<google::cloud::dataform::v1::WorkflowInvocation>
-  CreateWorkflowInvocation(
-      google::cloud::dataform::v1::CreateWorkflowInvocationRequest const&
-          request,
-      Options opts = {});
+  CreateWorkflowInvocation(google::cloud::dataform::v1::CreateWorkflowInvocationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2489,7 +2400,8 @@ class DataformClient {
   /// [google.cloud.dataform.v1.DeleteWorkflowInvocationRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L2739}
   ///
   // clang-format on
-  Status DeleteWorkflowInvocation(std::string const& name, Options opts = {});
+  Status
+  DeleteWorkflowInvocation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2515,10 +2427,8 @@ class DataformClient {
   /// [google.cloud.dataform.v1.DeleteWorkflowInvocationRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L2739}
   ///
   // clang-format on
-  Status DeleteWorkflowInvocation(
-      google::cloud::dataform::v1::DeleteWorkflowInvocationRequest const&
-          request,
-      Options opts = {});
+  Status
+  DeleteWorkflowInvocation(google::cloud::dataform::v1::DeleteWorkflowInvocationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2548,10 +2458,7 @@ class DataformClient {
   ///
   // clang-format on
   StatusOr<google::cloud::dataform::v1::CancelWorkflowInvocationResponse>
-  CancelWorkflowInvocation(
-      google::cloud::dataform::v1::CancelWorkflowInvocationRequest const&
-          request,
-      Options opts = {});
+  CancelWorkflowInvocation(google::cloud::dataform::v1::CancelWorkflowInvocationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2590,10 +2497,7 @@ class DataformClient {
   ///
   // clang-format on
   StreamRange<google::cloud::dataform::v1::WorkflowInvocationAction>
-  QueryWorkflowInvocationActions(
-      google::cloud::dataform::v1::QueryWorkflowInvocationActionsRequest
-          request,
-      Options opts = {});
+  QueryWorkflowInvocationActions(google::cloud::dataform::v1::QueryWorkflowInvocationActionsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -2617,8 +2521,8 @@ class DataformClient {
   /// [google.cloud.dataform.v1.GetConfigRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L2990}
   ///
   // clang-format on
-  StatusOr<google::cloud::dataform::v1::Config> GetConfig(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::dataform::v1::Config>
+  GetConfig(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2647,9 +2551,8 @@ class DataformClient {
   /// [google.cloud.dataform.v1.GetConfigRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L2990}
   ///
   // clang-format on
-  StatusOr<google::cloud::dataform::v1::Config> GetConfig(
-      google::cloud::dataform::v1::GetConfigRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::dataform::v1::Config>
+  GetConfig(google::cloud::dataform::v1::GetConfigRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2679,9 +2582,8 @@ class DataformClient {
   /// [google.cloud.dataform.v1.UpdateConfigRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L2999}
   ///
   // clang-format on
-  StatusOr<google::cloud::dataform::v1::Config> UpdateConfig(
-      google::cloud::dataform::v1::Config const& config,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::cloud::dataform::v1::Config>
+  UpdateConfig(google::cloud::dataform::v1::Config const& config, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -2715,9 +2617,8 @@ class DataformClient {
   /// [google.cloud.dataform.v1.UpdateConfigRequest]: @googleapis_reference_link{google/cloud/dataform/v1/dataform.proto#L2999}
   ///
   // clang-format on
-  StatusOr<google::cloud::dataform::v1::Config> UpdateConfig(
-      google::cloud::dataform::v1::UpdateConfigRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::dataform::v1::Config>
+  UpdateConfig(google::cloud::dataform::v1::UpdateConfigRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2755,8 +2656,8 @@ class DataformClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request, Options opts = {});
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -2785,9 +2686,8 @@ class DataformClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2819,8 +2719,8 @@ class DataformClient {
   /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L100}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2851,8 +2751,8 @@ class DataformClient {
   /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2887,9 +2787,8 @@ class DataformClient {
   /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L153}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request,
-      Options opts = {});
+  StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<DataformConnection> connection_;

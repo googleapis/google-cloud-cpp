@@ -32,17 +32,20 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 SecretManagerServiceLogging::SecretManagerServiceLogging(
     std::shared_ptr<SecretManagerServiceStub> child,
-    TracingOptions tracing_options, std::set<std::string> const&)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
+    TracingOptions tracing_options,
+    std::set<std::string> const&)
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::cloud::secretmanager::v1::ListSecretsResponse>
 SecretManagerServiceLogging::ListSecrets(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::secretmanager::v1::ListSecretsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::secretmanager::v1::ListSecretsRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::secretmanager::v1::ListSecretsRequest const& request) {
         return child_->ListSecrets(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -50,12 +53,13 @@ SecretManagerServiceLogging::ListSecrets(
 
 StatusOr<google::cloud::secretmanager::v1::Secret>
 SecretManagerServiceLogging::CreateSecret(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::secretmanager::v1::CreateSecretRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::secretmanager::v1::CreateSecretRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::secretmanager::v1::CreateSecretRequest const& request) {
         return child_->CreateSecret(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -63,12 +67,13 @@ SecretManagerServiceLogging::CreateSecret(
 
 StatusOr<google::cloud::secretmanager::v1::SecretVersion>
 SecretManagerServiceLogging::AddSecretVersion(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::secretmanager::v1::AddSecretVersionRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::secretmanager::v1::AddSecretVersionRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::secretmanager::v1::AddSecretVersionRequest const& request) {
         return child_->AddSecretVersion(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -76,12 +81,13 @@ SecretManagerServiceLogging::AddSecretVersion(
 
 StatusOr<google::cloud::secretmanager::v1::Secret>
 SecretManagerServiceLogging::GetSecret(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::secretmanager::v1::GetSecretRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::secretmanager::v1::GetSecretRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::secretmanager::v1::GetSecretRequest const& request) {
         return child_->GetSecret(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -89,24 +95,27 @@ SecretManagerServiceLogging::GetSecret(
 
 StatusOr<google::cloud::secretmanager::v1::Secret>
 SecretManagerServiceLogging::UpdateSecret(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::secretmanager::v1::UpdateSecretRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::secretmanager::v1::UpdateSecretRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::secretmanager::v1::UpdateSecretRequest const& request) {
         return child_->UpdateSecret(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status SecretManagerServiceLogging::DeleteSecret(
-    grpc::ClientContext& context, Options const& options,
+Status
+SecretManagerServiceLogging::DeleteSecret(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::secretmanager::v1::DeleteSecretRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::secretmanager::v1::DeleteSecretRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::secretmanager::v1::DeleteSecretRequest const& request) {
         return child_->DeleteSecret(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -114,13 +123,13 @@ Status SecretManagerServiceLogging::DeleteSecret(
 
 StatusOr<google::cloud::secretmanager::v1::ListSecretVersionsResponse>
 SecretManagerServiceLogging::ListSecretVersions(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::secretmanager::v1::ListSecretVersionsRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::secretmanager::v1::ListSecretVersionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::secretmanager::v1::ListSecretVersionsRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::secretmanager::v1::ListSecretVersionsRequest const& request) {
         return child_->ListSecretVersions(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -128,12 +137,13 @@ SecretManagerServiceLogging::ListSecretVersions(
 
 StatusOr<google::cloud::secretmanager::v1::SecretVersion>
 SecretManagerServiceLogging::GetSecretVersion(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::secretmanager::v1::GetSecretVersionRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::secretmanager::v1::GetSecretVersionRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::secretmanager::v1::GetSecretVersionRequest const& request) {
         return child_->GetSecretVersion(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -141,13 +151,13 @@ SecretManagerServiceLogging::GetSecretVersion(
 
 StatusOr<google::cloud::secretmanager::v1::AccessSecretVersionResponse>
 SecretManagerServiceLogging::AccessSecretVersion(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::secretmanager::v1::AccessSecretVersionRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::secretmanager::v1::AccessSecretVersionRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::secretmanager::v1::AccessSecretVersionRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::secretmanager::v1::AccessSecretVersionRequest const& request) {
         return child_->AccessSecretVersion(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -155,14 +165,13 @@ SecretManagerServiceLogging::AccessSecretVersion(
 
 StatusOr<google::cloud::secretmanager::v1::SecretVersion>
 SecretManagerServiceLogging::DisableSecretVersion(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::secretmanager::v1::DisableSecretVersionRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::secretmanager::v1::DisableSecretVersionRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::secretmanager::v1::DisableSecretVersionRequest const&
-              request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::secretmanager::v1::DisableSecretVersionRequest const& request) {
         return child_->DisableSecretVersion(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -170,13 +179,13 @@ SecretManagerServiceLogging::DisableSecretVersion(
 
 StatusOr<google::cloud::secretmanager::v1::SecretVersion>
 SecretManagerServiceLogging::EnableSecretVersion(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::secretmanager::v1::EnableSecretVersionRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::secretmanager::v1::EnableSecretVersionRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::secretmanager::v1::EnableSecretVersionRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::secretmanager::v1::EnableSecretVersionRequest const& request) {
         return child_->EnableSecretVersion(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -184,35 +193,40 @@ SecretManagerServiceLogging::EnableSecretVersion(
 
 StatusOr<google::cloud::secretmanager::v1::SecretVersion>
 SecretManagerServiceLogging::DestroySecretVersion(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::secretmanager::v1::DestroySecretVersionRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::secretmanager::v1::DestroySecretVersionRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::secretmanager::v1::DestroySecretVersionRequest const&
-              request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::secretmanager::v1::DestroySecretVersionRequest const& request) {
         return child_->DestroySecretVersion(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::iam::v1::Policy> SecretManagerServiceLogging::SetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::iam::v1::Policy>
+SecretManagerServiceLogging::SetIamPolicy(
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::iam::v1::SetIamPolicyRequest const& request) {
         return child_->SetIamPolicy(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::iam::v1::Policy> SecretManagerServiceLogging::GetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::iam::v1::Policy>
+SecretManagerServiceLogging::GetIamPolicy(
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::iam::v1::GetIamPolicyRequest const& request) {
         return child_->GetIamPolicy(context, options, request);
       },
@@ -221,10 +235,12 @@ StatusOr<google::iam::v1::Policy> SecretManagerServiceLogging::GetIamPolicy(
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 SecretManagerServiceLogging::TestIamPermissions(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::iam::v1::TestIamPermissionsRequest const& request) {
         return child_->TestIamPermissions(context, options, request);
       },
@@ -233,10 +249,12 @@ SecretManagerServiceLogging::TestIamPermissions(
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 SecretManagerServiceLogging::ListLocations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::location::ListLocationsRequest const& request) {
         return child_->ListLocations(context, options, request);
       },
@@ -245,10 +263,12 @@ SecretManagerServiceLogging::ListLocations(
 
 StatusOr<google::cloud::location::Location>
 SecretManagerServiceLogging::GetLocation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::location::GetLocationRequest const& request) {
         return child_->GetLocation(context, options, request);
       },

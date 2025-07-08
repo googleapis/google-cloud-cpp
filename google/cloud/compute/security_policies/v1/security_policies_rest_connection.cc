@@ -17,12 +17,12 @@
 // source: google/cloud/compute/security_policies/v1/security_policies.proto
 
 #include "google/cloud/compute/security_policies/v1/security_policies_rest_connection.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/compute/security_policies/v1/internal/security_policies_option_defaults.h"
 #include "google/cloud/compute/security_policies/v1/internal/security_policies_rest_connection_impl.h"
 #include "google/cloud/compute/security_policies/v1/internal/security_policies_rest_stub_factory.h"
 #include "google/cloud/compute/security_policies/v1/internal/security_policies_tracing_connection.h"
 #include "google/cloud/compute/security_policies/v1/security_policies_options.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/rest_background_threads_impl.h"
 #include "google/cloud/internal/rest_options.h"
@@ -36,22 +36,19 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<SecurityPoliciesConnection> MakeSecurityPoliciesConnectionRest(
     Options options) {
-  internal::CheckExpectedOptions<
-      CommonOptionList, RestOptionList, UnifiedCredentialsOptionList,
-      rest_internal::TargetApiVersionOption, SecurityPoliciesPolicyOptionList>(
-      options, __func__);
-  options =
-      compute_security_policies_v1_internal::SecurityPoliciesDefaultOptions(
-          std::move(options));
+  internal::CheckExpectedOptions<CommonOptionList, RestOptionList,
+      UnifiedCredentialsOptionList, rest_internal::TargetApiVersionOption,
+      SecurityPoliciesPolicyOptionList>(options, __func__);
+  options = compute_security_policies_v1_internal::SecurityPoliciesDefaultOptions(
+      std::move(options));
   auto background = std::make_unique<
       rest_internal::AutomaticallyCreatedRestBackgroundThreads>();
-  auto stub = compute_security_policies_v1_internal::
-      CreateDefaultSecurityPoliciesRestStub(options);
-  return compute_security_policies_v1_internal::
-      MakeSecurityPoliciesTracingConnection(
-          std::make_shared<compute_security_policies_v1_internal::
-                               SecurityPoliciesRestConnectionImpl>(
-              std::move(background), std::move(stub), std::move(options)));
+  auto stub = compute_security_policies_v1_internal::CreateDefaultSecurityPoliciesRestStub(
+      options);
+  return compute_security_policies_v1_internal::MakeSecurityPoliciesTracingConnection(
+      std::make_shared<
+          compute_security_policies_v1_internal::SecurityPoliciesRestConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

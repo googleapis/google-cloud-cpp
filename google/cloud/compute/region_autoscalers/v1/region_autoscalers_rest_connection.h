@@ -30,33 +30,31 @@ namespace compute_region_autoscalers_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /**
- * A factory function to construct an object of type
- * `RegionAutoscalersConnection` that uses REST over HTTP as transport in lieu
- * of gRPC. REST transport should only be used for services that do not support
- * gRPC or if the existing network configuration precludes using gRPC.
+ * A factory function to construct an object of type `RegionAutoscalersConnection`
+ * that uses REST over HTTP as transport in lieu of gRPC. REST transport should
+ * only be used for services that do not support gRPC or if the existing network
+ * configuration precludes using gRPC.
  *
  * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of
- * RegionAutoscalersClient.
+ * should be passed as an argument to the constructor of RegionAutoscalersClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `RegionAutoscalersConnection`. Expected options are any of the types
- * in the following option lists:
+ * returned `RegionAutoscalersConnection`. Expected options are any of the types in
+ * the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::RestOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * -
- * `google::cloud::compute_region_autoscalers_v1::RegionAutoscalersPolicyOptionList`
+ * - `google::cloud::compute_region_autoscalers_v1::RegionAutoscalersPolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
- * @param options (optional) Configure the `RegionAutoscalersConnection` created
- * by this function.
+ * @param options (optional) Configure the `RegionAutoscalersConnection` created by
+ * this function.
  */
-std::shared_ptr<RegionAutoscalersConnection>
-MakeRegionAutoscalersConnectionRest(Options options = {});
+std::shared_ptr<RegionAutoscalersConnection> MakeRegionAutoscalersConnectionRest(
+    Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_region_autoscalers_v1

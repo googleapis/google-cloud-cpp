@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_FLOWS_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_FLOWS_OPTIONS_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/dialogflow_cx/flows_connection.h"
 #include "google/cloud/dialogflow_cx/flows_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -74,7 +74,8 @@ struct FlowsPollingPolicyOption {
  * @ingroup google-cloud-dialogflow_cx-options
  */
 using FlowsPolicyOptionList =
-    OptionList<FlowsRetryPolicyOption, FlowsBackoffPolicyOption,
+    OptionList<FlowsRetryPolicyOption,
+               FlowsBackoffPolicyOption,
                FlowsPollingPolicyOption,
                FlowsConnectionIdempotencyPolicyOption>;
 

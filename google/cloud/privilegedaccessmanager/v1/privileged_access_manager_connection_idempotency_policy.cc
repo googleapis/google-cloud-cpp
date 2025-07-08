@@ -26,125 +26,91 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-PrivilegedAccessManagerConnectionIdempotencyPolicy::
-    ~PrivilegedAccessManagerConnectionIdempotencyPolicy() = default;
+PrivilegedAccessManagerConnectionIdempotencyPolicy::~PrivilegedAccessManagerConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<PrivilegedAccessManagerConnectionIdempotencyPolicy>
 PrivilegedAccessManagerConnectionIdempotencyPolicy::clone() const {
-  return std::make_unique<PrivilegedAccessManagerConnectionIdempotencyPolicy>(
-      *this);
+  return std::make_unique<PrivilegedAccessManagerConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency
-PrivilegedAccessManagerConnectionIdempotencyPolicy::CheckOnboardingStatus(
-    google::cloud::privilegedaccessmanager::v1::
-        CheckOnboardingStatusRequest const&) {
+Idempotency PrivilegedAccessManagerConnectionIdempotencyPolicy::CheckOnboardingStatus(google::cloud::privilegedaccessmanager::v1::CheckOnboardingStatusRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency
-PrivilegedAccessManagerConnectionIdempotencyPolicy::ListEntitlements(
-    google::cloud::privilegedaccessmanager::v1::
-        ListEntitlementsRequest) {  // NOLINT
+Idempotency PrivilegedAccessManagerConnectionIdempotencyPolicy::ListEntitlements(google::cloud::privilegedaccessmanager::v1::ListEntitlementsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency
-PrivilegedAccessManagerConnectionIdempotencyPolicy::SearchEntitlements(
-    google::cloud::privilegedaccessmanager::v1::
-        SearchEntitlementsRequest) {  // NOLINT
+Idempotency PrivilegedAccessManagerConnectionIdempotencyPolicy::SearchEntitlements(google::cloud::privilegedaccessmanager::v1::SearchEntitlementsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency PrivilegedAccessManagerConnectionIdempotencyPolicy::GetEntitlement(
-    google::cloud::privilegedaccessmanager::v1::GetEntitlementRequest const&) {
+Idempotency PrivilegedAccessManagerConnectionIdempotencyPolicy::GetEntitlement(google::cloud::privilegedaccessmanager::v1::GetEntitlementRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency
-PrivilegedAccessManagerConnectionIdempotencyPolicy::CreateEntitlement(
-    google::cloud::privilegedaccessmanager::v1::
-        CreateEntitlementRequest const&) {
+Idempotency PrivilegedAccessManagerConnectionIdempotencyPolicy::CreateEntitlement(google::cloud::privilegedaccessmanager::v1::CreateEntitlementRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency
-PrivilegedAccessManagerConnectionIdempotencyPolicy::DeleteEntitlement(
-    google::cloud::privilegedaccessmanager::v1::
-        DeleteEntitlementRequest const&) {
+Idempotency PrivilegedAccessManagerConnectionIdempotencyPolicy::DeleteEntitlement(google::cloud::privilegedaccessmanager::v1::DeleteEntitlementRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency
-PrivilegedAccessManagerConnectionIdempotencyPolicy::UpdateEntitlement(
-    google::cloud::privilegedaccessmanager::v1::
-        UpdateEntitlementRequest const&) {
+Idempotency PrivilegedAccessManagerConnectionIdempotencyPolicy::UpdateEntitlement(google::cloud::privilegedaccessmanager::v1::UpdateEntitlementRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency PrivilegedAccessManagerConnectionIdempotencyPolicy::ListGrants(
-    google::cloud::privilegedaccessmanager::v1::ListGrantsRequest) {  // NOLINT
+Idempotency PrivilegedAccessManagerConnectionIdempotencyPolicy::ListGrants(google::cloud::privilegedaccessmanager::v1::ListGrantsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency PrivilegedAccessManagerConnectionIdempotencyPolicy::SearchGrants(
-    google::cloud::privilegedaccessmanager::v1::
-        SearchGrantsRequest) {  // NOLINT
+Idempotency PrivilegedAccessManagerConnectionIdempotencyPolicy::SearchGrants(google::cloud::privilegedaccessmanager::v1::SearchGrantsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency PrivilegedAccessManagerConnectionIdempotencyPolicy::GetGrant(
-    google::cloud::privilegedaccessmanager::v1::GetGrantRequest const&) {
+Idempotency PrivilegedAccessManagerConnectionIdempotencyPolicy::GetGrant(google::cloud::privilegedaccessmanager::v1::GetGrantRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency PrivilegedAccessManagerConnectionIdempotencyPolicy::CreateGrant(
-    google::cloud::privilegedaccessmanager::v1::CreateGrantRequest const&) {
+Idempotency PrivilegedAccessManagerConnectionIdempotencyPolicy::CreateGrant(google::cloud::privilegedaccessmanager::v1::CreateGrantRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency PrivilegedAccessManagerConnectionIdempotencyPolicy::ApproveGrant(
-    google::cloud::privilegedaccessmanager::v1::ApproveGrantRequest const&) {
+Idempotency PrivilegedAccessManagerConnectionIdempotencyPolicy::ApproveGrant(google::cloud::privilegedaccessmanager::v1::ApproveGrantRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency PrivilegedAccessManagerConnectionIdempotencyPolicy::DenyGrant(
-    google::cloud::privilegedaccessmanager::v1::DenyGrantRequest const&) {
+Idempotency PrivilegedAccessManagerConnectionIdempotencyPolicy::DenyGrant(google::cloud::privilegedaccessmanager::v1::DenyGrantRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency PrivilegedAccessManagerConnectionIdempotencyPolicy::RevokeGrant(
-    google::cloud::privilegedaccessmanager::v1::RevokeGrantRequest const&) {
+Idempotency PrivilegedAccessManagerConnectionIdempotencyPolicy::RevokeGrant(google::cloud::privilegedaccessmanager::v1::RevokeGrantRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency PrivilegedAccessManagerConnectionIdempotencyPolicy::ListLocations(
-    google::cloud::location::ListLocationsRequest) {  // NOLINT
+Idempotency PrivilegedAccessManagerConnectionIdempotencyPolicy::ListLocations(google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency PrivilegedAccessManagerConnectionIdempotencyPolicy::GetLocation(
-    google::cloud::location::GetLocationRequest const&) {
+Idempotency PrivilegedAccessManagerConnectionIdempotencyPolicy::GetLocation(google::cloud::location::GetLocationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency PrivilegedAccessManagerConnectionIdempotencyPolicy::ListOperations(
-    google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency PrivilegedAccessManagerConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency PrivilegedAccessManagerConnectionIdempotencyPolicy::GetOperation(
-    google::longrunning::GetOperationRequest const&) {
+Idempotency PrivilegedAccessManagerConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency PrivilegedAccessManagerConnectionIdempotencyPolicy::DeleteOperation(
-    google::longrunning::DeleteOperationRequest const&) {
+Idempotency PrivilegedAccessManagerConnectionIdempotencyPolicy::DeleteOperation(google::longrunning::DeleteOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<PrivilegedAccessManagerConnectionIdempotencyPolicy>
-MakeDefaultPrivilegedAccessManagerConnectionIdempotencyPolicy() {
+    MakeDefaultPrivilegedAccessManagerConnectionIdempotencyPolicy() {
   return std::make_unique<PrivilegedAccessManagerConnectionIdempotencyPolicy>();
 }
 

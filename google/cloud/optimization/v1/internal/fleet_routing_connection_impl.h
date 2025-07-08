@@ -19,14 +19,14 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_OPTIMIZATION_V1_INTERNAL_FLEET_ROUTING_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_OPTIMIZATION_V1_INTERNAL_FLEET_ROUTING_CONNECTION_IMPL_H
 
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/future.h"
 #include "google/cloud/optimization/v1/fleet_routing_connection.h"
 #include "google/cloud/optimization/v1/fleet_routing_connection_idempotency_policy.h"
 #include "google/cloud/optimization/v1/fleet_routing_options.h"
 #include "google/cloud/optimization/v1/internal/fleet_routing_retry_traits.h"
 #include "google/cloud/optimization/v1/internal/fleet_routing_stub.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -45,31 +45,28 @@ class FleetRoutingConnectionImpl
   ~FleetRoutingConnectionImpl() override = default;
 
   FleetRoutingConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<optimization_v1_internal::FleetRoutingStub> stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<optimization_v1_internal::FleetRoutingStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
   StatusOr<google::cloud::optimization::v1::OptimizeToursResponse>
-  OptimizeTours(google::cloud::optimization::v1::OptimizeToursRequest const&
-                    request) override;
+  OptimizeTours(google::cloud::optimization::v1::OptimizeToursRequest const& request) override;
+
+  future<StatusOr<google::cloud::optimization::v1::BatchOptimizeToursResponse>>
+  BatchOptimizeTours(google::cloud::optimization::v1::BatchOptimizeToursRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  BatchOptimizeTours(NoAwaitTag,
+      google::cloud::optimization::v1::BatchOptimizeToursRequest const& request) override;
 
   future<StatusOr<google::cloud::optimization::v1::BatchOptimizeToursResponse>>
   BatchOptimizeTours(
-      google::cloud::optimization::v1::BatchOptimizeToursRequest const& request)
-      override;
+      google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::longrunning::Operation> BatchOptimizeTours(
-      NoAwaitTag,
-      google::cloud::optimization::v1::BatchOptimizeToursRequest const& request)
-      override;
-
-  future<StatusOr<google::cloud::optimization::v1::BatchOptimizeToursResponse>>
-  BatchOptimizeTours(google::longrunning::Operation const& operation) override;
-
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

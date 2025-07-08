@@ -36,86 +36,65 @@ class CompletionServiceTracingConnection
   ~CompletionServiceTracingConnection() override = default;
 
   explicit CompletionServiceTracingConnection(
-      std::shared_ptr<discoveryengine_v1::CompletionServiceConnection> child);
+    std::shared_ptr<discoveryengine_v1::CompletionServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
   StatusOr<google::cloud::discoveryengine::v1::CompleteQueryResponse>
-  CompleteQuery(google::cloud::discoveryengine::v1::CompleteQueryRequest const&
-                    request) override;
+  CompleteQuery(google::cloud::discoveryengine::v1::CompleteQueryRequest const& request) override;
 
-  future<StatusOr<google::cloud::discoveryengine::v1::
-                      ImportSuggestionDenyListEntriesResponse>>
-  ImportSuggestionDenyListEntries(
-      google::cloud::discoveryengine::v1::
-          ImportSuggestionDenyListEntriesRequest const& request) override;
+  future<StatusOr<google::cloud::discoveryengine::v1::ImportSuggestionDenyListEntriesResponse>>
+  ImportSuggestionDenyListEntries(google::cloud::discoveryengine::v1::ImportSuggestionDenyListEntriesRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> ImportSuggestionDenyListEntries(
-      NoAwaitTag,
-      google::cloud::discoveryengine::v1::
-          ImportSuggestionDenyListEntriesRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  ImportSuggestionDenyListEntries(NoAwaitTag,
+      google::cloud::discoveryengine::v1::ImportSuggestionDenyListEntriesRequest const& request) override;
 
-  future<StatusOr<google::cloud::discoveryengine::v1::
-                      ImportSuggestionDenyListEntriesResponse>>
+  future<StatusOr<google::cloud::discoveryengine::v1::ImportSuggestionDenyListEntriesResponse>>
   ImportSuggestionDenyListEntries(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::discoveryengine::v1::
-                      PurgeSuggestionDenyListEntriesResponse>>
-  PurgeSuggestionDenyListEntries(
-      google::cloud::discoveryengine::v1::
-          PurgeSuggestionDenyListEntriesRequest const& request) override;
+  future<StatusOr<google::cloud::discoveryengine::v1::PurgeSuggestionDenyListEntriesResponse>>
+  PurgeSuggestionDenyListEntries(google::cloud::discoveryengine::v1::PurgeSuggestionDenyListEntriesRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> PurgeSuggestionDenyListEntries(
-      NoAwaitTag,
-      google::cloud::discoveryengine::v1::
-          PurgeSuggestionDenyListEntriesRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  PurgeSuggestionDenyListEntries(NoAwaitTag,
+      google::cloud::discoveryengine::v1::PurgeSuggestionDenyListEntriesRequest const& request) override;
 
-  future<StatusOr<google::cloud::discoveryengine::v1::
-                      PurgeSuggestionDenyListEntriesResponse>>
+  future<StatusOr<google::cloud::discoveryengine::v1::PurgeSuggestionDenyListEntriesResponse>>
   PurgeSuggestionDenyListEntries(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<
-      google::cloud::discoveryengine::v1::ImportCompletionSuggestionsResponse>>
-  ImportCompletionSuggestions(
-      google::cloud::discoveryengine::v1::
-          ImportCompletionSuggestionsRequest const& request) override;
+  future<StatusOr<google::cloud::discoveryengine::v1::ImportCompletionSuggestionsResponse>>
+  ImportCompletionSuggestions(google::cloud::discoveryengine::v1::ImportCompletionSuggestionsRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> ImportCompletionSuggestions(
-      NoAwaitTag,
-      google::cloud::discoveryengine::v1::
-          ImportCompletionSuggestionsRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  ImportCompletionSuggestions(NoAwaitTag,
+      google::cloud::discoveryengine::v1::ImportCompletionSuggestionsRequest const& request) override;
 
-  future<StatusOr<
-      google::cloud::discoveryengine::v1::ImportCompletionSuggestionsResponse>>
+  future<StatusOr<google::cloud::discoveryengine::v1::ImportCompletionSuggestionsResponse>>
   ImportCompletionSuggestions(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<
-      google::cloud::discoveryengine::v1::PurgeCompletionSuggestionsResponse>>
-  PurgeCompletionSuggestions(
-      google::cloud::discoveryengine::v1::
-          PurgeCompletionSuggestionsRequest const& request) override;
+  future<StatusOr<google::cloud::discoveryengine::v1::PurgeCompletionSuggestionsResponse>>
+  PurgeCompletionSuggestions(google::cloud::discoveryengine::v1::PurgeCompletionSuggestionsRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> PurgeCompletionSuggestions(
-      NoAwaitTag,
-      google::cloud::discoveryengine::v1::
-          PurgeCompletionSuggestionsRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  PurgeCompletionSuggestions(NoAwaitTag,
+      google::cloud::discoveryengine::v1::PurgeCompletionSuggestionsRequest const& request) override;
 
-  future<StatusOr<
-      google::cloud::discoveryengine::v1::PurgeCompletionSuggestionsResponse>>
+  future<StatusOr<google::cloud::discoveryengine::v1::PurgeCompletionSuggestionsResponse>>
   PurgeCompletionSuggestions(
       google::longrunning::Operation const& operation) override;
 
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request) override;
 
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request) override;
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::shared_ptr<discoveryengine_v1::CompletionServiceConnection> child_;

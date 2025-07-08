@@ -17,9 +17,9 @@
 // source: google/cloud/dialogflow/cx/v3/experiment.proto
 
 #include "google/cloud/dialogflow_cx/internal/experiments_connection_impl.h"
-#include "google/cloud/dialogflow_cx/internal/experiments_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/dialogflow_cx/internal/experiments_option_defaults.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
@@ -32,62 +32,54 @@ namespace dialogflow_cx_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<dialogflow_cx::ExperimentsRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<dialogflow_cx::ExperimentsRetryPolicy>
+retry_policy(Options const& options) {
   return options.get<dialogflow_cx::ExperimentsRetryPolicyOption>()->clone();
 }
 
-std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+std::unique_ptr<BackoffPolicy>
+backoff_policy(Options const& options) {
   return options.get<dialogflow_cx::ExperimentsBackoffPolicyOption>()->clone();
 }
 
 std::unique_ptr<dialogflow_cx::ExperimentsConnectionIdempotencyPolicy>
 idempotency_policy(Options const& options) {
-  return options
-      .get<dialogflow_cx::ExperimentsConnectionIdempotencyPolicyOption>()
-      ->clone();
+  return options.get<dialogflow_cx::ExperimentsConnectionIdempotencyPolicyOption>()->clone();
 }
 
-}  // namespace
+} // namespace
 
 ExperimentsConnectionImpl::ExperimentsConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<dialogflow_cx_internal::ExperimentsStub> stub,
     Options options)
-    : background_(std::move(background)),
-      stub_(std::move(stub)),
-      options_(internal::MergeOptions(std::move(options),
-                                      ExperimentsConnection::options())) {}
+  : background_(std::move(background)), stub_(std::move(stub)),
+    options_(internal::MergeOptions(
+        std::move(options),
+        ExperimentsConnection::options())) {}
 
 StreamRange<google::cloud::dialogflow::cx::v3::Experiment>
-ExperimentsConnectionImpl::ListExperiments(
-    google::cloud::dialogflow::cx::v3::ListExperimentsRequest request) {
+ExperimentsConnectionImpl::ListExperiments(google::cloud::dialogflow::cx::v3::ListExperimentsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListExperiments(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::dialogflow::cx::v3::Experiment>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::dialogflow::cx::v3::Experiment>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<dialogflow_cx::ExperimentsRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<dialogflow_cx::ExperimentsRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::dialogflow::cx::v3::ListExperimentsRequest const& r) {
+          Options const& options, google::cloud::dialogflow::cx::v3::ListExperimentsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](
-                grpc::ClientContext& context, Options const& options,
-                google::cloud::dialogflow::cx::v3::ListExperimentsRequest const&
-                    request) {
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::cloud::dialogflow::cx::v3::ListExperimentsRequest const& request) {
               return stub->ListExperiments(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::dialogflow::cx::v3::ListExperimentsResponse r) {
-        std::vector<google::cloud::dialogflow::cx::v3::Experiment> result(
-            r.experiments().size());
+        std::vector<google::cloud::dialogflow::cx::v3::Experiment> result(r.experiments().size());
         auto& messages = *r.mutable_experiments();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -95,122 +87,105 @@ ExperimentsConnectionImpl::ListExperiments(
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Experiment>
-ExperimentsConnectionImpl::GetExperiment(
-    google::cloud::dialogflow::cx::v3::GetExperimentRequest const& request) {
+ExperimentsConnectionImpl::GetExperiment(google::cloud::dialogflow::cx::v3::GetExperimentRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetExperiment(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dialogflow::cx::v3::GetExperimentRequest const&
-                 request) {
+             google::cloud::dialogflow::cx::v3::GetExperimentRequest const& request) {
         return stub_->GetExperiment(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Experiment>
-ExperimentsConnectionImpl::CreateExperiment(
-    google::cloud::dialogflow::cx::v3::CreateExperimentRequest const& request) {
+ExperimentsConnectionImpl::CreateExperiment(google::cloud::dialogflow::cx::v3::CreateExperimentRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateExperiment(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dialogflow::cx::v3::CreateExperimentRequest const&
-                 request) {
+             google::cloud::dialogflow::cx::v3::CreateExperimentRequest const& request) {
         return stub_->CreateExperiment(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Experiment>
-ExperimentsConnectionImpl::UpdateExperiment(
-    google::cloud::dialogflow::cx::v3::UpdateExperimentRequest const& request) {
+ExperimentsConnectionImpl::UpdateExperiment(google::cloud::dialogflow::cx::v3::UpdateExperimentRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateExperiment(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dialogflow::cx::v3::UpdateExperimentRequest const&
-                 request) {
+             google::cloud::dialogflow::cx::v3::UpdateExperimentRequest const& request) {
         return stub_->UpdateExperiment(context, options, request);
       },
       *current, request, __func__);
 }
 
-Status ExperimentsConnectionImpl::DeleteExperiment(
-    google::cloud::dialogflow::cx::v3::DeleteExperimentRequest const& request) {
+Status
+ExperimentsConnectionImpl::DeleteExperiment(google::cloud::dialogflow::cx::v3::DeleteExperimentRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteExperiment(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dialogflow::cx::v3::DeleteExperimentRequest const&
-                 request) {
+             google::cloud::dialogflow::cx::v3::DeleteExperimentRequest const& request) {
         return stub_->DeleteExperiment(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Experiment>
-ExperimentsConnectionImpl::StartExperiment(
-    google::cloud::dialogflow::cx::v3::StartExperimentRequest const& request) {
+ExperimentsConnectionImpl::StartExperiment(google::cloud::dialogflow::cx::v3::StartExperimentRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->StartExperiment(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dialogflow::cx::v3::StartExperimentRequest const&
-                 request) {
+             google::cloud::dialogflow::cx::v3::StartExperimentRequest const& request) {
         return stub_->StartExperiment(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Experiment>
-ExperimentsConnectionImpl::StopExperiment(
-    google::cloud::dialogflow::cx::v3::StopExperimentRequest const& request) {
+ExperimentsConnectionImpl::StopExperiment(google::cloud::dialogflow::cx::v3::StopExperimentRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->StopExperiment(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dialogflow::cx::v3::StopExperimentRequest const&
-                 request) {
+             google::cloud::dialogflow::cx::v3::StopExperimentRequest const& request) {
         return stub_->StopExperiment(context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::cloud::location::Location>
-ExperimentsConnectionImpl::ListLocations(
-    google::cloud::location::ListLocationsRequest request) {
+ExperimentsConnectionImpl::ListLocations(google::cloud::location::ListLocationsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListLocations(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::location::Location>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::location::Location>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<dialogflow_cx::ExperimentsRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<dialogflow_cx::ExperimentsRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::location::ListLocationsRequest const& r) {
+          Options const& options, google::cloud::location::ListLocationsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](
-                grpc::ClientContext& context, Options const& options,
-                google::cloud::location::ListLocationsRequest const& request) {
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::cloud::location::ListLocationsRequest const& request) {
               return stub->ListLocations(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::location::ListLocationsResponse r) {
-        std::vector<google::cloud::location::Location> result(
-            r.locations().size());
+        std::vector<google::cloud::location::Location> result(r.locations().size());
         auto& messages = *r.mutable_locations();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -218,8 +193,7 @@ ExperimentsConnectionImpl::ListLocations(
 }
 
 StatusOr<google::cloud::location::Location>
-ExperimentsConnectionImpl::GetLocation(
-    google::cloud::location::GetLocationRequest const& request) {
+ExperimentsConnectionImpl::GetLocation(google::cloud::location::GetLocationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -232,21 +206,17 @@ ExperimentsConnectionImpl::GetLocation(
 }
 
 StreamRange<google::longrunning::Operation>
-ExperimentsConnectionImpl::ListOperations(
-    google::longrunning::ListOperationsRequest request) {
+ExperimentsConnectionImpl::ListOperations(google::longrunning::ListOperationsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListOperations(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::longrunning::Operation>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::longrunning::Operation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<dialogflow_cx::ExperimentsRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<dialogflow_cx::ExperimentsRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::longrunning::ListOperationsRequest const& r) {
+          Options const& options, google::longrunning::ListOperationsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
@@ -256,8 +226,7 @@ ExperimentsConnectionImpl::ListOperations(
             options, r, function_name);
       },
       [](google::longrunning::ListOperationsResponse r) {
-        std::vector<google::longrunning::Operation> result(
-            r.operations().size());
+        std::vector<google::longrunning::Operation> result(r.operations().size());
         auto& messages = *r.mutable_operations();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -265,8 +234,7 @@ ExperimentsConnectionImpl::ListOperations(
 }
 
 StatusOr<google::longrunning::Operation>
-ExperimentsConnectionImpl::GetOperation(
-    google::longrunning::GetOperationRequest const& request) {
+ExperimentsConnectionImpl::GetOperation(google::longrunning::GetOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -278,8 +246,8 @@ ExperimentsConnectionImpl::GetOperation(
       *current, request, __func__);
 }
 
-Status ExperimentsConnectionImpl::CancelOperation(
-    google::longrunning::CancelOperationRequest const& request) {
+Status
+ExperimentsConnectionImpl::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),

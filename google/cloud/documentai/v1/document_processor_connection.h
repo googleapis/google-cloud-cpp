@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DOCUMENTAI_V1_DOCUMENT_PROCESSOR_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DOCUMENTAI_V1_DOCUMENT_PROCESSOR_CONNECTION_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/documentai/v1/document_processor_connection_idempotency_policy.h"
 #include "google/cloud/documentai/v1/internal/document_processor_retry_traits.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -41,17 +41,14 @@ namespace documentai_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `DocumentProcessorServiceConnection`.
-class DocumentProcessorServiceRetryPolicy
-    : public ::google::cloud::RetryPolicy {
+class DocumentProcessorServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  public:
   /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<DocumentProcessorServiceRetryPolicy> clone()
-      const = 0;
+  virtual std::unique_ptr<DocumentProcessorServiceRetryPolicy> clone() const = 0;
 };
 
 /**
- * A retry policy for `DocumentProcessorServiceConnection` based on counting
- * errors.
+ * A retry policy for `DocumentProcessorServiceConnection` based on counting errors.
  *
  * This policy stops retrying if:
  * - An RPC returns a non-transient error.
@@ -60,8 +57,7 @@ class DocumentProcessorServiceRetryPolicy
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class DocumentProcessorServiceLimitedErrorCountRetryPolicy
-    : public DocumentProcessorServiceRetryPolicy {
+class DocumentProcessorServiceLimitedErrorCountRetryPolicy : public DocumentProcessorServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -70,18 +66,15 @@ class DocumentProcessorServiceLimitedErrorCountRetryPolicy
    * @note Disable the retry loop by providing an instance of this policy with
    *     @p maximum_failures == 0.
    */
-  explicit DocumentProcessorServiceLimitedErrorCountRetryPolicy(
-      int maximum_failures)
-      : impl_(maximum_failures) {}
+  explicit DocumentProcessorServiceLimitedErrorCountRetryPolicy(int maximum_failures)
+    : impl_(maximum_failures) {}
 
   DocumentProcessorServiceLimitedErrorCountRetryPolicy(
       DocumentProcessorServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : DocumentProcessorServiceLimitedErrorCountRetryPolicy(
-            rhs.maximum_failures()) {}
+    : DocumentProcessorServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   DocumentProcessorServiceLimitedErrorCountRetryPolicy(
       DocumentProcessorServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : DocumentProcessorServiceLimitedErrorCountRetryPolicy(
-            rhs.maximum_failures()) {}
+    : DocumentProcessorServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -93,8 +86,7 @@ class DocumentProcessorServiceLimitedErrorCountRetryPolicy
     return impl_.IsPermanentFailure(status);
   }
   std::unique_ptr<DocumentProcessorServiceRetryPolicy> clone() const override {
-    return std::make_unique<
-        DocumentProcessorServiceLimitedErrorCountRetryPolicy>(
+    return std::make_unique<DocumentProcessorServiceLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
 
@@ -102,14 +94,11 @@ class DocumentProcessorServiceLimitedErrorCountRetryPolicy
   using BaseType = DocumentProcessorServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      documentai_v1_internal::DocumentProcessorServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<documentai_v1_internal::DocumentProcessorServiceRetryTraits> impl_;
 };
 
 /**
- * A retry policy for `DocumentProcessorServiceConnection` based on elapsed
- * time.
+ * A retry policy for `DocumentProcessorServiceConnection` based on elapsed time.
  *
  * This policy stops retrying if:
  * - An RPC returns a non-transient error.
@@ -118,8 +107,7 @@ class DocumentProcessorServiceLimitedErrorCountRetryPolicy
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class DocumentProcessorServiceLimitedTimeRetryPolicy
-    : public DocumentProcessorServiceRetryPolicy {
+class DocumentProcessorServiceLimitedTimeRetryPolicy : public DocumentProcessorServiceRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -144,16 +132,12 @@ class DocumentProcessorServiceLimitedTimeRetryPolicy
   template <typename DurationRep, typename DurationPeriod>
   explicit DocumentProcessorServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  DocumentProcessorServiceLimitedTimeRetryPolicy(
-      DocumentProcessorServiceLimitedTimeRetryPolicy&& rhs) noexcept
-      : DocumentProcessorServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {
-  }
-  DocumentProcessorServiceLimitedTimeRetryPolicy(
-      DocumentProcessorServiceLimitedTimeRetryPolicy const& rhs) noexcept
-      : DocumentProcessorServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {
-  }
+  DocumentProcessorServiceLimitedTimeRetryPolicy(DocumentProcessorServiceLimitedTimeRetryPolicy&& rhs) noexcept
+    : DocumentProcessorServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  DocumentProcessorServiceLimitedTimeRetryPolicy(DocumentProcessorServiceLimitedTimeRetryPolicy const& rhs) noexcept
+    : DocumentProcessorServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -175,25 +159,20 @@ class DocumentProcessorServiceLimitedTimeRetryPolicy
   using BaseType = DocumentProcessorServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      documentai_v1_internal::DocumentProcessorServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<documentai_v1_internal::DocumentProcessorServiceRetryTraits> impl_;
 };
 
 /**
- * The `DocumentProcessorServiceConnection` object for
- * `DocumentProcessorServiceClient`.
+ * The `DocumentProcessorServiceConnection` object for `DocumentProcessorServiceClient`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `DocumentProcessorServiceClient`. This allows users to inject custom
- * behavior (e.g., with a Google Mock object) when writing tests that use
- * objects of type `DocumentProcessorServiceClient`.
+ * sets in `DocumentProcessorServiceClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `DocumentProcessorServiceClient`.
  *
- * To create a concrete instance, see
- * `MakeDocumentProcessorServiceConnection()`.
+ * To create a concrete instance, see `MakeDocumentProcessorServiceConnection()`.
  *
- * For mocking, see
- * `documentai_v1_mocks::MockDocumentProcessorServiceConnection`.
+ * For mocking, see `documentai_v1_mocks::MockDocumentProcessorServiceConnection`.
  */
 class DocumentProcessorServiceConnection {
  public:
@@ -205,221 +184,159 @@ class DocumentProcessorServiceConnection {
   ProcessDocument(google::cloud::documentai::v1::ProcessRequest const& request);
 
   virtual future<StatusOr<google::cloud::documentai::v1::BatchProcessResponse>>
-  BatchProcessDocuments(
-      google::cloud::documentai::v1::BatchProcessRequest const& request);
+  BatchProcessDocuments(google::cloud::documentai::v1::BatchProcessRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> BatchProcessDocuments(
-      NoAwaitTag,
-      google::cloud::documentai::v1::BatchProcessRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  BatchProcessDocuments(NoAwaitTag, google::cloud::documentai::v1::BatchProcessRequest const& request);
 
   virtual future<StatusOr<google::cloud::documentai::v1::BatchProcessResponse>>
-  BatchProcessDocuments(google::longrunning::Operation const& operation);
+  BatchProcessDocuments( google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::documentai::v1::FetchProcessorTypesResponse>
-  FetchProcessorTypes(
-      google::cloud::documentai::v1::FetchProcessorTypesRequest const& request);
+  FetchProcessorTypes(google::cloud::documentai::v1::FetchProcessorTypesRequest const& request);
 
   virtual StreamRange<google::cloud::documentai::v1::ProcessorType>
-  ListProcessorTypes(
-      google::cloud::documentai::v1::ListProcessorTypesRequest request);
+  ListProcessorTypes(google::cloud::documentai::v1::ListProcessorTypesRequest request);
 
   virtual StatusOr<google::cloud::documentai::v1::ProcessorType>
-  GetProcessorType(
-      google::cloud::documentai::v1::GetProcessorTypeRequest const& request);
+  GetProcessorType(google::cloud::documentai::v1::GetProcessorTypeRequest const& request);
 
-  virtual StreamRange<google::cloud::documentai::v1::Processor> ListProcessors(
-      google::cloud::documentai::v1::ListProcessorsRequest request);
+  virtual StreamRange<google::cloud::documentai::v1::Processor>
+  ListProcessors(google::cloud::documentai::v1::ListProcessorsRequest request);
 
-  virtual StatusOr<google::cloud::documentai::v1::Processor> GetProcessor(
-      google::cloud::documentai::v1::GetProcessorRequest const& request);
+  virtual StatusOr<google::cloud::documentai::v1::Processor>
+  GetProcessor(google::cloud::documentai::v1::GetProcessorRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::documentai::v1::TrainProcessorVersionResponse>>
-  TrainProcessorVersion(
-      google::cloud::documentai::v1::TrainProcessorVersionRequest const&
-          request);
+  virtual future<StatusOr<google::cloud::documentai::v1::TrainProcessorVersionResponse>>
+  TrainProcessorVersion(google::cloud::documentai::v1::TrainProcessorVersionRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> TrainProcessorVersion(
-      NoAwaitTag,
-      google::cloud::documentai::v1::TrainProcessorVersionRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  TrainProcessorVersion(NoAwaitTag, google::cloud::documentai::v1::TrainProcessorVersionRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::documentai::v1::TrainProcessorVersionResponse>>
-  TrainProcessorVersion(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::documentai::v1::TrainProcessorVersionResponse>>
+  TrainProcessorVersion( google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::documentai::v1::ProcessorVersion>
-  GetProcessorVersion(
-      google::cloud::documentai::v1::GetProcessorVersionRequest const& request);
+  GetProcessorVersion(google::cloud::documentai::v1::GetProcessorVersionRequest const& request);
 
   virtual StreamRange<google::cloud::documentai::v1::ProcessorVersion>
-  ListProcessorVersions(
-      google::cloud::documentai::v1::ListProcessorVersionsRequest request);
+  ListProcessorVersions(google::cloud::documentai::v1::ListProcessorVersionsRequest request);
 
-  virtual future<
-      StatusOr<google::cloud::documentai::v1::DeleteProcessorVersionMetadata>>
-  DeleteProcessorVersion(
-      google::cloud::documentai::v1::DeleteProcessorVersionRequest const&
-          request);
+  virtual future<StatusOr<google::cloud::documentai::v1::DeleteProcessorVersionMetadata>>
+  DeleteProcessorVersion(google::cloud::documentai::v1::DeleteProcessorVersionRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> DeleteProcessorVersion(
-      NoAwaitTag,
-      google::cloud::documentai::v1::DeleteProcessorVersionRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  DeleteProcessorVersion(NoAwaitTag, google::cloud::documentai::v1::DeleteProcessorVersionRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::documentai::v1::DeleteProcessorVersionMetadata>>
-  DeleteProcessorVersion(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::documentai::v1::DeleteProcessorVersionMetadata>>
+  DeleteProcessorVersion( google::longrunning::Operation const& operation);
 
-  virtual future<
-      StatusOr<google::cloud::documentai::v1::DeployProcessorVersionResponse>>
-  DeployProcessorVersion(
-      google::cloud::documentai::v1::DeployProcessorVersionRequest const&
-          request);
+  virtual future<StatusOr<google::cloud::documentai::v1::DeployProcessorVersionResponse>>
+  DeployProcessorVersion(google::cloud::documentai::v1::DeployProcessorVersionRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> DeployProcessorVersion(
-      NoAwaitTag,
-      google::cloud::documentai::v1::DeployProcessorVersionRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  DeployProcessorVersion(NoAwaitTag, google::cloud::documentai::v1::DeployProcessorVersionRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::documentai::v1::DeployProcessorVersionResponse>>
-  DeployProcessorVersion(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::documentai::v1::DeployProcessorVersionResponse>>
+  DeployProcessorVersion( google::longrunning::Operation const& operation);
 
-  virtual future<
-      StatusOr<google::cloud::documentai::v1::UndeployProcessorVersionResponse>>
-  UndeployProcessorVersion(
-      google::cloud::documentai::v1::UndeployProcessorVersionRequest const&
-          request);
+  virtual future<StatusOr<google::cloud::documentai::v1::UndeployProcessorVersionResponse>>
+  UndeployProcessorVersion(google::cloud::documentai::v1::UndeployProcessorVersionRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> UndeployProcessorVersion(
-      NoAwaitTag,
-      google::cloud::documentai::v1::UndeployProcessorVersionRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  UndeployProcessorVersion(NoAwaitTag, google::cloud::documentai::v1::UndeployProcessorVersionRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::documentai::v1::UndeployProcessorVersionResponse>>
-  UndeployProcessorVersion(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::documentai::v1::UndeployProcessorVersionResponse>>
+  UndeployProcessorVersion( google::longrunning::Operation const& operation);
 
-  virtual StatusOr<google::cloud::documentai::v1::Processor> CreateProcessor(
-      google::cloud::documentai::v1::CreateProcessorRequest const& request);
+  virtual StatusOr<google::cloud::documentai::v1::Processor>
+  CreateProcessor(google::cloud::documentai::v1::CreateProcessorRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::documentai::v1::DeleteProcessorMetadata>>
-  DeleteProcessor(
-      google::cloud::documentai::v1::DeleteProcessorRequest const& request);
+  virtual future<StatusOr<google::cloud::documentai::v1::DeleteProcessorMetadata>>
+  DeleteProcessor(google::cloud::documentai::v1::DeleteProcessorRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> DeleteProcessor(
-      NoAwaitTag,
-      google::cloud::documentai::v1::DeleteProcessorRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  DeleteProcessor(NoAwaitTag, google::cloud::documentai::v1::DeleteProcessorRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::documentai::v1::DeleteProcessorMetadata>>
-  DeleteProcessor(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::documentai::v1::DeleteProcessorMetadata>>
+  DeleteProcessor( google::longrunning::Operation const& operation);
 
-  virtual future<
-      StatusOr<google::cloud::documentai::v1::EnableProcessorResponse>>
-  EnableProcessor(
-      google::cloud::documentai::v1::EnableProcessorRequest const& request);
+  virtual future<StatusOr<google::cloud::documentai::v1::EnableProcessorResponse>>
+  EnableProcessor(google::cloud::documentai::v1::EnableProcessorRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> EnableProcessor(
-      NoAwaitTag,
-      google::cloud::documentai::v1::EnableProcessorRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  EnableProcessor(NoAwaitTag, google::cloud::documentai::v1::EnableProcessorRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::documentai::v1::EnableProcessorResponse>>
-  EnableProcessor(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::documentai::v1::EnableProcessorResponse>>
+  EnableProcessor( google::longrunning::Operation const& operation);
 
-  virtual future<
-      StatusOr<google::cloud::documentai::v1::DisableProcessorResponse>>
-  DisableProcessor(
-      google::cloud::documentai::v1::DisableProcessorRequest const& request);
+  virtual future<StatusOr<google::cloud::documentai::v1::DisableProcessorResponse>>
+  DisableProcessor(google::cloud::documentai::v1::DisableProcessorRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> DisableProcessor(
-      NoAwaitTag,
-      google::cloud::documentai::v1::DisableProcessorRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  DisableProcessor(NoAwaitTag, google::cloud::documentai::v1::DisableProcessorRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::documentai::v1::DisableProcessorResponse>>
-  DisableProcessor(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::documentai::v1::DisableProcessorResponse>>
+  DisableProcessor( google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<
-      google::cloud::documentai::v1::SetDefaultProcessorVersionResponse>>
-  SetDefaultProcessorVersion(
-      google::cloud::documentai::v1::SetDefaultProcessorVersionRequest const&
-          request);
+  virtual future<StatusOr<google::cloud::documentai::v1::SetDefaultProcessorVersionResponse>>
+  SetDefaultProcessorVersion(google::cloud::documentai::v1::SetDefaultProcessorVersionRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> SetDefaultProcessorVersion(
-      NoAwaitTag,
-      google::cloud::documentai::v1::SetDefaultProcessorVersionRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  SetDefaultProcessorVersion(NoAwaitTag, google::cloud::documentai::v1::SetDefaultProcessorVersionRequest const& request);
 
-  virtual future<StatusOr<
-      google::cloud::documentai::v1::SetDefaultProcessorVersionResponse>>
-  SetDefaultProcessorVersion(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::documentai::v1::SetDefaultProcessorVersionResponse>>
+  SetDefaultProcessorVersion( google::longrunning::Operation const& operation);
 
-  virtual future<
-      StatusOr<google::cloud::documentai::v1::ReviewDocumentResponse>>
-  ReviewDocument(
-      google::cloud::documentai::v1::ReviewDocumentRequest const& request);
+  virtual future<StatusOr<google::cloud::documentai::v1::ReviewDocumentResponse>>
+  ReviewDocument(google::cloud::documentai::v1::ReviewDocumentRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> ReviewDocument(
-      NoAwaitTag,
-      google::cloud::documentai::v1::ReviewDocumentRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  ReviewDocument(NoAwaitTag, google::cloud::documentai::v1::ReviewDocumentRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::documentai::v1::ReviewDocumentResponse>>
-  ReviewDocument(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::documentai::v1::ReviewDocumentResponse>>
+  ReviewDocument( google::longrunning::Operation const& operation);
 
-  virtual future<
-      StatusOr<google::cloud::documentai::v1::EvaluateProcessorVersionResponse>>
-  EvaluateProcessorVersion(
-      google::cloud::documentai::v1::EvaluateProcessorVersionRequest const&
-          request);
+  virtual future<StatusOr<google::cloud::documentai::v1::EvaluateProcessorVersionResponse>>
+  EvaluateProcessorVersion(google::cloud::documentai::v1::EvaluateProcessorVersionRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> EvaluateProcessorVersion(
-      NoAwaitTag,
-      google::cloud::documentai::v1::EvaluateProcessorVersionRequest const&
-          request);
+  virtual StatusOr<google::longrunning::Operation>
+  EvaluateProcessorVersion(NoAwaitTag, google::cloud::documentai::v1::EvaluateProcessorVersionRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::documentai::v1::EvaluateProcessorVersionResponse>>
-  EvaluateProcessorVersion(google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::documentai::v1::EvaluateProcessorVersionResponse>>
+  EvaluateProcessorVersion( google::longrunning::Operation const& operation);
 
-  virtual StatusOr<google::cloud::documentai::v1::Evaluation> GetEvaluation(
-      google::cloud::documentai::v1::GetEvaluationRequest const& request);
+  virtual StatusOr<google::cloud::documentai::v1::Evaluation>
+  GetEvaluation(google::cloud::documentai::v1::GetEvaluationRequest const& request);
 
   virtual StreamRange<google::cloud::documentai::v1::Evaluation>
-  ListEvaluations(
-      google::cloud::documentai::v1::ListEvaluationsRequest request);
+  ListEvaluations(google::cloud::documentai::v1::ListEvaluationsRequest request);
 
-  virtual StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request);
+  virtual StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request);
 
-  virtual StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request);
+  virtual StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request);
 
-  virtual StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 
-  virtual Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request);
+  virtual Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request);
 };
 
 /**
- * A factory function to construct an object of type
- * `DocumentProcessorServiceConnection`.
+ * A factory function to construct an object of type `DocumentProcessorServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of
- * DocumentProcessorServiceClient.
+ * should be passed as an argument to the constructor of DocumentProcessorServiceClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `DocumentProcessorServiceConnection`. Expected options are any of
- * the types in the following option lists:
+ * returned `DocumentProcessorServiceConnection`. Expected options are any of the types in
+ * the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
@@ -430,12 +347,11 @@ class DocumentProcessorServiceConnection {
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
  * @param location Sets the prefix for the default `EndpointOption` value.
- * @param options (optional) Configure the `DocumentProcessorServiceConnection`
- * created by this function.
+ * @param options (optional) Configure the `DocumentProcessorServiceConnection` created by
+ * this function.
  */
-std::shared_ptr<DocumentProcessorServiceConnection>
-MakeDocumentProcessorServiceConnection(std::string const& location,
-                                       Options options = {});
+std::shared_ptr<DocumentProcessorServiceConnection> MakeDocumentProcessorServiceConnection(
+    std::string const& location, Options options = {});
 
 /**
  * A backwards-compatible version of the previous factory function.  Unless
@@ -444,8 +360,8 @@ MakeDocumentProcessorServiceConnection(std::string const& location,
  *
  * @deprecated Please use the `location` overload instead.
  */
-std::shared_ptr<DocumentProcessorServiceConnection>
-MakeDocumentProcessorServiceConnection(Options options = {});
+std::shared_ptr<DocumentProcessorServiceConnection> MakeDocumentProcessorServiceConnection(
+    Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace documentai_v1

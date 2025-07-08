@@ -19,14 +19,14 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCEMANAGER_V3_TAG_KEYS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCEMANAGER_V3_TAG_KEYS_CONNECTION_H
 
-#include "google/cloud/resourcemanager/v3/internal/tag_keys_retry_traits.h"
-#include "google/cloud/resourcemanager/v3/tag_keys_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
+#include "google/cloud/resourcemanager/v3/internal/tag_keys_retry_traits.h"
+#include "google/cloud/resourcemanager/v3/tag_keys_connection_idempotency_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
@@ -67,14 +67,14 @@ class TagKeysLimitedErrorCountRetryPolicy : public TagKeysRetryPolicy {
    *     @p maximum_failures == 0.
    */
   explicit TagKeysLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   TagKeysLimitedErrorCountRetryPolicy(
       TagKeysLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : TagKeysLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : TagKeysLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   TagKeysLimitedErrorCountRetryPolicy(
       TagKeysLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : TagKeysLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : TagKeysLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -94,9 +94,7 @@ class TagKeysLimitedErrorCountRetryPolicy : public TagKeysRetryPolicy {
   using BaseType = TagKeysRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      resourcemanager_v3_internal::TagKeysRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<resourcemanager_v3_internal::TagKeysRetryTraits> impl_;
 };
 
 /**
@@ -134,13 +132,12 @@ class TagKeysLimitedTimeRetryPolicy : public TagKeysRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit TagKeysLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
   TagKeysLimitedTimeRetryPolicy(TagKeysLimitedTimeRetryPolicy&& rhs) noexcept
-      : TagKeysLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  TagKeysLimitedTimeRetryPolicy(
-      TagKeysLimitedTimeRetryPolicy const& rhs) noexcept
-      : TagKeysLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+    : TagKeysLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  TagKeysLimitedTimeRetryPolicy(TagKeysLimitedTimeRetryPolicy const& rhs) noexcept
+    : TagKeysLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -154,16 +151,15 @@ class TagKeysLimitedTimeRetryPolicy : public TagKeysRetryPolicy {
     return impl_.IsPermanentFailure(status);
   }
   std::unique_ptr<TagKeysRetryPolicy> clone() const override {
-    return std::make_unique<TagKeysLimitedTimeRetryPolicy>(maximum_duration());
+    return std::make_unique<TagKeysLimitedTimeRetryPolicy>(
+        maximum_duration());
   }
 
   // This is provided only for backwards compatibility.
   using BaseType = TagKeysRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      resourcemanager_v3_internal::TagKeysRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<resourcemanager_v3_internal::TagKeysRetryTraits> impl_;
 };
 
 /**
@@ -184,61 +180,53 @@ class TagKeysConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StreamRange<google::cloud::resourcemanager::v3::TagKey> ListTagKeys(
-      google::cloud::resourcemanager::v3::ListTagKeysRequest request);
-
-  virtual StatusOr<google::cloud::resourcemanager::v3::TagKey> GetTagKey(
-      google::cloud::resourcemanager::v3::GetTagKeyRequest const& request);
+  virtual StreamRange<google::cloud::resourcemanager::v3::TagKey>
+  ListTagKeys(google::cloud::resourcemanager::v3::ListTagKeysRequest request);
 
   virtual StatusOr<google::cloud::resourcemanager::v3::TagKey>
-  GetNamespacedTagKey(
-      google::cloud::resourcemanager::v3::GetNamespacedTagKeyRequest const&
-          request);
+  GetTagKey(google::cloud::resourcemanager::v3::GetTagKeyRequest const& request);
+
+  virtual StatusOr<google::cloud::resourcemanager::v3::TagKey>
+  GetNamespacedTagKey(google::cloud::resourcemanager::v3::GetNamespacedTagKeyRequest const& request);
 
   virtual future<StatusOr<google::cloud::resourcemanager::v3::TagKey>>
-  CreateTagKey(
-      google::cloud::resourcemanager::v3::CreateTagKeyRequest const& request);
+  CreateTagKey(google::cloud::resourcemanager::v3::CreateTagKeyRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> CreateTagKey(
-      NoAwaitTag,
-      google::cloud::resourcemanager::v3::CreateTagKeyRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  CreateTagKey(NoAwaitTag, google::cloud::resourcemanager::v3::CreateTagKeyRequest const& request);
 
   virtual future<StatusOr<google::cloud::resourcemanager::v3::TagKey>>
-  CreateTagKey(google::longrunning::Operation const& operation);
+  CreateTagKey( google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::resourcemanager::v3::TagKey>>
-  UpdateTagKey(
-      google::cloud::resourcemanager::v3::UpdateTagKeyRequest const& request);
+  UpdateTagKey(google::cloud::resourcemanager::v3::UpdateTagKeyRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> UpdateTagKey(
-      NoAwaitTag,
-      google::cloud::resourcemanager::v3::UpdateTagKeyRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  UpdateTagKey(NoAwaitTag, google::cloud::resourcemanager::v3::UpdateTagKeyRequest const& request);
 
   virtual future<StatusOr<google::cloud::resourcemanager::v3::TagKey>>
-  UpdateTagKey(google::longrunning::Operation const& operation);
+  UpdateTagKey( google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::resourcemanager::v3::TagKey>>
-  DeleteTagKey(
-      google::cloud::resourcemanager::v3::DeleteTagKeyRequest const& request);
+  DeleteTagKey(google::cloud::resourcemanager::v3::DeleteTagKeyRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> DeleteTagKey(
-      NoAwaitTag,
-      google::cloud::resourcemanager::v3::DeleteTagKeyRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  DeleteTagKey(NoAwaitTag, google::cloud::resourcemanager::v3::DeleteTagKeyRequest const& request);
 
   virtual future<StatusOr<google::cloud::resourcemanager::v3::TagKey>>
-  DeleteTagKey(google::longrunning::Operation const& operation);
+  DeleteTagKey( google::longrunning::Operation const& operation);
 
-  virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
 
   virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
   TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 };
 
 /**
@@ -272,7 +260,8 @@ std::shared_ptr<TagKeysConnection> MakeTagKeysConnection(
  * This overload of `MakeTagKeysConnection` does not require a location
  * argument, creating a connection to the global service endpoint.
  */
-std::shared_ptr<TagKeysConnection> MakeTagKeysConnection(Options options = {});
+std::shared_ptr<TagKeysConnection> MakeTagKeysConnection(
+    Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace resourcemanager_v3

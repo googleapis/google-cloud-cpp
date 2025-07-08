@@ -17,15 +17,15 @@
 // source: google/cloud/kms/inventory/v1/key_tracking_service.proto
 
 #include "google/cloud/kms/inventory/v1/internal/key_tracking_stub_factory.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/grpc_options.h"
+#include "google/cloud/internal/algorithm.h"
+#include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/kms/inventory/v1/internal/key_tracking_auth_decorator.h"
 #include "google/cloud/kms/inventory/v1/internal/key_tracking_logging_decorator.h"
 #include "google/cloud/kms/inventory/v1/internal/key_tracking_metadata_decorator.h"
 #include "google/cloud/kms/inventory/v1/internal/key_tracking_stub.h"
 #include "google/cloud/kms/inventory/v1/internal/key_tracking_tracing_stub.h"
-#include "google/cloud/common_options.h"
-#include "google/cloud/grpc_options.h"
-#include "google/cloud/internal/algorithm.h"
-#include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include <google/cloud/kms/inventory/v1/key_tracking_service.grpc.pb.h>
@@ -37,27 +37,28 @@ namespace cloud {
 namespace kms_inventory_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<KeyTrackingServiceStub> CreateDefaultKeyTrackingServiceStub(
+std::shared_ptr<KeyTrackingServiceStub>
+CreateDefaultKeyTrackingServiceStub(
     std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
     Options const& options) {
-  auto channel = auth->CreateChannel(options.get<EndpointOption>(),
-                                     internal::MakeChannelArguments(options));
-  auto service_grpc_stub =
-      google::cloud::kms::inventory::v1::KeyTrackingService::NewStub(channel);
+  auto channel = auth->CreateChannel(
+    options.get<EndpointOption>(), internal::MakeChannelArguments(options));
+  auto service_grpc_stub = google::cloud::kms::inventory::v1::KeyTrackingService::NewStub(channel);
   std::shared_ptr<KeyTrackingServiceStub> stub =
-      std::make_shared<DefaultKeyTrackingServiceStub>(
-          std::move(service_grpc_stub));
+    std::make_shared<DefaultKeyTrackingServiceStub>(std::move(service_grpc_stub));
 
   if (auth->RequiresConfigureContext()) {
-    stub = std::make_shared<KeyTrackingServiceAuth>(std::move(auth),
-                                                    std::move(stub));
+    stub = std::make_shared<KeyTrackingServiceAuth>(
+        std::move(auth), std::move(stub));
   }
   stub = std::make_shared<KeyTrackingServiceMetadata>(
       std::move(stub), std::multimap<std::string, std::string>{});
-  if (internal::Contains(options.get<LoggingComponentsOption>(), "rpc")) {
+  if (internal::Contains(
+      options.get<LoggingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<KeyTrackingServiceLogging>(
-        std::move(stub), options.get<GrpcTracingOptionsOption>(),
+        std::move(stub),
+        options.get<GrpcTracingOptionsOption>(),
         options.get<LoggingComponentsOption>());
   }
   if (internal::TracingEnabled(options)) {

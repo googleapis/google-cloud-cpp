@@ -19,12 +19,12 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_WEBSECURITYSCANNER_V1_WEB_SECURITY_SCANNER_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_WEBSECURITYSCANNER_V1_WEB_SECURITY_SCANNER_CLIENT_H
 
-#include "google/cloud/websecurityscanner/v1/web_security_scanner_connection.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
+#include "google/cloud/websecurityscanner/v1/web_security_scanner_connection.h"
 #include <memory>
 #include <string>
 
@@ -63,28 +63,23 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class WebSecurityScannerClient {
  public:
-  explicit WebSecurityScannerClient(
-      std::shared_ptr<WebSecurityScannerConnection> connection,
-      Options opts = {});
+  explicit WebSecurityScannerClient(std::shared_ptr<WebSecurityScannerConnection> connection, Options opts = {});
   ~WebSecurityScannerClient();
 
   ///@{
   /// @name Copy and move support
   WebSecurityScannerClient(WebSecurityScannerClient const&) = default;
-  WebSecurityScannerClient& operator=(WebSecurityScannerClient const&) =
-      default;
+  WebSecurityScannerClient& operator=(WebSecurityScannerClient const&) = default;
   WebSecurityScannerClient(WebSecurityScannerClient&&) = default;
   WebSecurityScannerClient& operator=(WebSecurityScannerClient&&) = default;
   ///@}
 
   ///@{
   /// @name Equality
-  friend bool operator==(WebSecurityScannerClient const& a,
-                         WebSecurityScannerClient const& b) {
+  friend bool operator==(WebSecurityScannerClient const& a, WebSecurityScannerClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(WebSecurityScannerClient const& a,
-                         WebSecurityScannerClient const& b) {
+  friend bool operator!=(WebSecurityScannerClient const& a, WebSecurityScannerClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -116,10 +111,8 @@ class WebSecurityScannerClient {
   /// [google.cloud.websecurityscanner.v1.ScanConfig]: @googleapis_reference_link{google/cloud/websecurityscanner/v1/scan_config.proto#L31}
   ///
   // clang-format on
-  StatusOr<google::cloud::websecurityscanner::v1::ScanConfig> CreateScanConfig(
-      google::cloud::websecurityscanner::v1::CreateScanConfigRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::cloud::websecurityscanner::v1::ScanConfig>
+  CreateScanConfig(google::cloud::websecurityscanner::v1::CreateScanConfigRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -145,10 +138,8 @@ class WebSecurityScannerClient {
   /// [google.cloud.websecurityscanner.v1.DeleteScanConfigRequest]: @googleapis_reference_link{google/cloud/websecurityscanner/v1/web_security_scanner.proto#L152}
   ///
   // clang-format on
-  Status DeleteScanConfig(
-      google::cloud::websecurityscanner::v1::DeleteScanConfigRequest const&
-          request,
-      Options opts = {});
+  Status
+  DeleteScanConfig(google::cloud::websecurityscanner::v1::DeleteScanConfigRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -177,10 +168,8 @@ class WebSecurityScannerClient {
   /// [google.cloud.websecurityscanner.v1.ScanConfig]: @googleapis_reference_link{google/cloud/websecurityscanner/v1/scan_config.proto#L31}
   ///
   // clang-format on
-  StatusOr<google::cloud::websecurityscanner::v1::ScanConfig> GetScanConfig(
-      google::cloud::websecurityscanner::v1::GetScanConfigRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::cloud::websecurityscanner::v1::ScanConfig>
+  GetScanConfig(google::cloud::websecurityscanner::v1::GetScanConfigRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -219,9 +208,7 @@ class WebSecurityScannerClient {
   ///
   // clang-format on
   StreamRange<google::cloud::websecurityscanner::v1::ScanConfig>
-  ListScanConfigs(
-      google::cloud::websecurityscanner::v1::ListScanConfigsRequest request,
-      Options opts = {});
+  ListScanConfigs(google::cloud::websecurityscanner::v1::ListScanConfigsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -250,10 +237,8 @@ class WebSecurityScannerClient {
   /// [google.cloud.websecurityscanner.v1.UpdateScanConfigRequest]: @googleapis_reference_link{google/cloud/websecurityscanner/v1/web_security_scanner.proto#L183}
   ///
   // clang-format on
-  StatusOr<google::cloud::websecurityscanner::v1::ScanConfig> UpdateScanConfig(
-      google::cloud::websecurityscanner::v1::UpdateScanConfigRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::cloud::websecurityscanner::v1::ScanConfig>
+  UpdateScanConfig(google::cloud::websecurityscanner::v1::UpdateScanConfigRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -282,9 +267,8 @@ class WebSecurityScannerClient {
   /// [google.cloud.websecurityscanner.v1.StartScanRunRequest]: @googleapis_reference_link{google/cloud/websecurityscanner/v1/web_security_scanner.proto#L206}
   ///
   // clang-format on
-  StatusOr<google::cloud::websecurityscanner::v1::ScanRun> StartScanRun(
-      google::cloud::websecurityscanner::v1::StartScanRunRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::websecurityscanner::v1::ScanRun>
+  StartScanRun(google::cloud::websecurityscanner::v1::StartScanRunRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -313,9 +297,8 @@ class WebSecurityScannerClient {
   /// [google.cloud.websecurityscanner.v1.ScanRun]: @googleapis_reference_link{google/cloud/websecurityscanner/v1/scan_run.proto#L33}
   ///
   // clang-format on
-  StatusOr<google::cloud::websecurityscanner::v1::ScanRun> GetScanRun(
-      google::cloud::websecurityscanner::v1::GetScanRunRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::websecurityscanner::v1::ScanRun>
+  GetScanRun(google::cloud::websecurityscanner::v1::GetScanRunRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -354,9 +337,8 @@ class WebSecurityScannerClient {
   /// [google.cloud.websecurityscanner.v1.ScanRun]: @googleapis_reference_link{google/cloud/websecurityscanner/v1/scan_run.proto#L33}
   ///
   // clang-format on
-  StreamRange<google::cloud::websecurityscanner::v1::ScanRun> ListScanRuns(
-      google::cloud::websecurityscanner::v1::ListScanRunsRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::websecurityscanner::v1::ScanRun>
+  ListScanRuns(google::cloud::websecurityscanner::v1::ListScanRunsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -385,9 +367,8 @@ class WebSecurityScannerClient {
   /// [google.cloud.websecurityscanner.v1.StopScanRunRequest]: @googleapis_reference_link{google/cloud/websecurityscanner/v1/web_security_scanner.proto#L248}
   ///
   // clang-format on
-  StatusOr<google::cloud::websecurityscanner::v1::ScanRun> StopScanRun(
-      google::cloud::websecurityscanner::v1::StopScanRunRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::websecurityscanner::v1::ScanRun>
+  StopScanRun(google::cloud::websecurityscanner::v1::StopScanRunRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -426,9 +407,7 @@ class WebSecurityScannerClient {
   ///
   // clang-format on
   StreamRange<google::cloud::websecurityscanner::v1::CrawledUrl>
-  ListCrawledUrls(
-      google::cloud::websecurityscanner::v1::ListCrawledUrlsRequest request,
-      Options opts = {});
+  ListCrawledUrls(google::cloud::websecurityscanner::v1::ListCrawledUrlsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -457,9 +436,8 @@ class WebSecurityScannerClient {
   /// [google.cloud.websecurityscanner.v1.GetFindingRequest]: @googleapis_reference_link{google/cloud/websecurityscanner/v1/web_security_scanner.proto#L284}
   ///
   // clang-format on
-  StatusOr<google::cloud::websecurityscanner::v1::Finding> GetFinding(
-      google::cloud::websecurityscanner::v1::GetFindingRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::websecurityscanner::v1::Finding>
+  GetFinding(google::cloud::websecurityscanner::v1::GetFindingRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -497,9 +475,8 @@ class WebSecurityScannerClient {
   /// [google.cloud.websecurityscanner.v1.ListFindingsRequest]: @googleapis_reference_link{google/cloud/websecurityscanner/v1/web_security_scanner.proto#L292}
   ///
   // clang-format on
-  StreamRange<google::cloud::websecurityscanner::v1::Finding> ListFindings(
-      google::cloud::websecurityscanner::v1::ListFindingsRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::websecurityscanner::v1::Finding>
+  ListFindings(google::cloud::websecurityscanner::v1::ListFindingsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -529,10 +506,7 @@ class WebSecurityScannerClient {
   ///
   // clang-format on
   StatusOr<google::cloud::websecurityscanner::v1::ListFindingTypeStatsResponse>
-  ListFindingTypeStats(
-      google::cloud::websecurityscanner::v1::ListFindingTypeStatsRequest const&
-          request,
-      Options opts = {});
+  ListFindingTypeStats(google::cloud::websecurityscanner::v1::ListFindingTypeStatsRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<WebSecurityScannerConnection> connection_;

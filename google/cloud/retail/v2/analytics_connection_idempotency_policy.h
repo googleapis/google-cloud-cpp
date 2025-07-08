@@ -35,21 +35,20 @@ class AnalyticsServiceConnectionIdempotencyPolicy {
   virtual ~AnalyticsServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<AnalyticsServiceConnectionIdempotencyPolicy> clone()
-      const;
+  virtual std::unique_ptr<AnalyticsServiceConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency ExportAnalyticsMetrics(
-      google::cloud::retail::v2::ExportAnalyticsMetricsRequest const& request);
+  virtual google::cloud::Idempotency
+  ExportAnalyticsMetrics(google::cloud::retail::v2::ExportAnalyticsMetricsRequest const& request);
 
-  virtual google::cloud::Idempotency ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual google::cloud::Idempotency
+  ListOperations(google::longrunning::ListOperationsRequest request);
 
-  virtual google::cloud::Idempotency GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 };
 
 std::unique_ptr<AnalyticsServiceConnectionIdempotencyPolicy>
-MakeDefaultAnalyticsServiceConnectionIdempotencyPolicy();
+    MakeDefaultAnalyticsServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace retail_v2

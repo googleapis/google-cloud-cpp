@@ -46,26 +46,25 @@ class MockBatchServiceConnection : public batch_v1::BatchServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::batch::v1::Job>, CreateJob,
-              (google::cloud::batch::v1::CreateJobRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::batch::v1::Job>,
+  CreateJob,
+  (google::cloud::batch::v1::CreateJobRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::batch::v1::Job>, GetJob,
-              (google::cloud::batch::v1::GetJobRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::batch::v1::Job>,
+  GetJob,
+  (google::cloud::batch::v1::GetJobRequest const& request), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteJob(Matcher<google::cloud::batch::v1::DeleteJobRequest const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteJob(Matcher<google::cloud::batch::v1::DeleteJobRequest const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::batch::v1::OperationMetadata>>,
-              DeleteJob,
-              (google::cloud::batch::v1::DeleteJobRequest const& request),
-              (override));
+  DeleteJob,
+  (google::cloud::batch::v1::DeleteJobRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -73,35 +72,33 @@ class MockBatchServiceConnection : public batch_v1::BatchServiceConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, DeleteJob(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteJob,
-              (NoAwaitTag,
-               google::cloud::batch::v1::DeleteJobRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  DeleteJob, (NoAwaitTag,
+    google::cloud::batch::v1::DeleteJobRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteJob(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteJob(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::batch::v1::OperationMetadata>>,
-              DeleteJob, (google::longrunning::Operation const& operation),
-              (override));
+  DeleteJob, (
+    google::longrunning::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// CancelJob(Matcher<google::cloud::batch::v1::CancelJobRequest const&>(_)))
+  /// EXPECT_CALL(*mock, CancelJob(Matcher<google::cloud::batch::v1::CancelJobRequest const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::batch::v1::CancelJobResponse>>,
-              CancelJob,
-              (google::cloud::batch::v1::CancelJobRequest const& request),
-              (override));
+  CancelJob,
+  (google::cloud::batch::v1::CancelJobRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -109,55 +106,57 @@ class MockBatchServiceConnection : public batch_v1::BatchServiceConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, CancelJob(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, CancelJob,
-              (NoAwaitTag,
-               google::cloud::batch::v1::CancelJobRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  CancelJob, (NoAwaitTag,
+    google::cloud::batch::v1::CancelJobRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CancelJob(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, CancelJob(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::batch::v1::CancelJobResponse>>,
-              CancelJob, (google::longrunning::Operation const& operation),
-              (override));
+  CancelJob, (
+    google::longrunning::Operation const& operation), (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::batch::v1::Job>), ListJobs,
-              (google::cloud::batch::v1::ListJobsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::cloud::batch::v1::Job>),
+  ListJobs,
+  (google::cloud::batch::v1::ListJobsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::batch::v1::Task>, GetTask,
-              (google::cloud::batch::v1::GetTaskRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::batch::v1::Task>,
+  GetTask,
+  (google::cloud::batch::v1::GetTaskRequest const& request), (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::batch::v1::Task>), ListTasks,
-              (google::cloud::batch::v1::ListTasksRequest request), (override));
+  MOCK_METHOD((StreamRange<google::cloud::batch::v1::Task>),
+  ListTasks,
+  (google::cloud::batch::v1::ListTasksRequest request), (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::location::Location>), ListLocations,
-              (google::cloud::location::ListLocationsRequest request),
-              (override));
+  MOCK_METHOD((StreamRange<google::cloud::location::Location>),
+  ListLocations,
+  (google::cloud::location::ListLocationsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::location::Location>, GetLocation,
-              (google::cloud::location::GetLocationRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::location::Location>,
+  GetLocation,
+  (google::cloud::location::GetLocationRequest const& request), (override));
 
-  MOCK_METHOD((StreamRange<google::longrunning::Operation>), ListOperations,
-              (google::longrunning::ListOperationsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::longrunning::Operation>),
+  ListOperations,
+  (google::longrunning::ListOperationsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
-              (google::longrunning::GetOperationRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  GetOperation,
+  (google::longrunning::GetOperationRequest const& request), (override));
 
-  MOCK_METHOD(Status, DeleteOperation,
-              (google::longrunning::DeleteOperationRequest const& request),
-              (override));
+  MOCK_METHOD(Status,
+  DeleteOperation,
+  (google::longrunning::DeleteOperationRequest const& request), (override));
 
-  MOCK_METHOD(Status, CancelOperation,
-              (google::longrunning::CancelOperationRequest const& request),
-              (override));
+  MOCK_METHOD(Status,
+  CancelOperation,
+  (google::longrunning::CancelOperationRequest const& request), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

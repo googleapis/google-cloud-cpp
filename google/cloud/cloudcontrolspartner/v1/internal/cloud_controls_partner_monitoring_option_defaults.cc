@@ -35,37 +35,23 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options CloudControlsPartnerMonitoringDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options),
-      "GOOGLE_CLOUD_CPP_CLOUD_CONTROLS_PARTNER_MONITORING_ENDPOINT", "",
-      "GOOGLE_CLOUD_CPP_CLOUD_CONTROLS_PARTNER_MONITORING_AUTHORITY",
+      std::move(options), "GOOGLE_CLOUD_CPP_CLOUD_CONTROLS_PARTNER_MONITORING_ENDPOINT",
+      "", "GOOGLE_CLOUD_CPP_CLOUD_CONTROLS_PARTNER_MONITORING_AUTHORITY",
       "cloudcontrolspartner.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
-  if (!options.has<cloudcontrolspartner_v1::
-                       CloudControlsPartnerMonitoringRetryPolicyOption>()) {
-    options.set<cloudcontrolspartner_v1::
-                    CloudControlsPartnerMonitoringRetryPolicyOption>(
-        cloudcontrolspartner_v1::
-            CloudControlsPartnerMonitoringLimitedTimeRetryPolicy(
-                std::chrono::minutes(30))
-                .clone());
+  if (!options.has<cloudcontrolspartner_v1::CloudControlsPartnerMonitoringRetryPolicyOption>()) {
+    options.set<cloudcontrolspartner_v1::CloudControlsPartnerMonitoringRetryPolicyOption>(
+        cloudcontrolspartner_v1::CloudControlsPartnerMonitoringLimitedTimeRetryPolicy(
+            std::chrono::minutes(30)).clone());
   }
-  if (!options.has<cloudcontrolspartner_v1::
-                       CloudControlsPartnerMonitoringBackoffPolicyOption>()) {
-    options.set<cloudcontrolspartner_v1::
-                    CloudControlsPartnerMonitoringBackoffPolicyOption>(
-        ExponentialBackoffPolicy(
-            std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
-            .clone());
+  if (!options.has<cloudcontrolspartner_v1::CloudControlsPartnerMonitoringBackoffPolicyOption>()) {
+    options.set<cloudcontrolspartner_v1::CloudControlsPartnerMonitoringBackoffPolicyOption>(
+        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
   }
-  if (!options.has<
-          cloudcontrolspartner_v1::
-              CloudControlsPartnerMonitoringConnectionIdempotencyPolicyOption>()) {
-    options.set<
-        cloudcontrolspartner_v1::
-            CloudControlsPartnerMonitoringConnectionIdempotencyPolicyOption>(
-        cloudcontrolspartner_v1::
-            MakeDefaultCloudControlsPartnerMonitoringConnectionIdempotencyPolicy());
+  if (!options.has<cloudcontrolspartner_v1::CloudControlsPartnerMonitoringConnectionIdempotencyPolicyOption>()) {
+    options.set<cloudcontrolspartner_v1::CloudControlsPartnerMonitoringConnectionIdempotencyPolicyOption>(
+        cloudcontrolspartner_v1::MakeDefaultCloudControlsPartnerMonitoringConnectionIdempotencyPolicy());
   }
 
   return options;

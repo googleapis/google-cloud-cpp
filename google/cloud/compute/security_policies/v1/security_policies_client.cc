@@ -28,163 +28,115 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 SecurityPoliciesClient::SecurityPoliciesClient(
     std::shared_ptr<SecurityPoliciesConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 SecurityPoliciesClient::~SecurityPoliciesClient() = default;
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-SecurityPoliciesClient::AddRule(
-    std::string const& project, std::string const& security_policy,
-    google::cloud::cpp::compute::v1::SecurityPolicyRule const&
-        security_policy_rule_resource,
-    Options opts) {
+SecurityPoliciesClient::AddRule(std::string const& project, std::string const& security_policy, google::cloud::cpp::compute::v1::SecurityPolicyRule const& security_policy_rule_resource, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::security_policies::v1::AddRuleRequest request;
   request.set_project(project);
   request.set_security_policy(security_policy);
-  *request.mutable_security_policy_rule_resource() =
-      security_policy_rule_resource;
+  *request.mutable_security_policy_rule_resource() = security_policy_rule_resource;
   return connection_->AddRule(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-SecurityPoliciesClient::AddRule(
-    NoAwaitTag, std::string const& project, std::string const& security_policy,
-    google::cloud::cpp::compute::v1::SecurityPolicyRule const&
-        security_policy_rule_resource,
-    Options opts) {
+SecurityPoliciesClient::AddRule(NoAwaitTag, std::string const& project, std::string const& security_policy, google::cloud::cpp::compute::v1::SecurityPolicyRule const& security_policy_rule_resource, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::security_policies::v1::AddRuleRequest request;
   request.set_project(project);
   request.set_security_policy(security_policy);
-  *request.mutable_security_policy_rule_resource() =
-      security_policy_rule_resource;
+  *request.mutable_security_policy_rule_resource() = security_policy_rule_resource;
   return connection_->AddRule(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-SecurityPoliciesClient::AddRule(
-    google::cloud::cpp::compute::security_policies::v1::AddRuleRequest const&
-        request,
-    Options opts) {
+SecurityPoliciesClient::AddRule(google::cloud::cpp::compute::security_policies::v1::AddRuleRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->AddRule(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-SecurityPoliciesClient::AddRule(
-    NoAwaitTag,
-    google::cloud::cpp::compute::security_policies::v1::AddRuleRequest const&
-        request,
-    Options opts) {
+SecurityPoliciesClient::AddRule(NoAwaitTag, google::cloud::cpp::compute::security_policies::v1::AddRuleRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->AddRule(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-SecurityPoliciesClient::AddRule(
-    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+SecurityPoliciesClient::AddRule(google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->AddRule(operation);
 }
 
-StreamRange<std::pair<
-    std::string, google::cloud::cpp::compute::v1::SecurityPoliciesScopedList>>
-SecurityPoliciesClient::AggregatedListSecurityPolicies(
-    std::string const& project, Options opts) {
+StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::SecurityPoliciesScopedList>>
+SecurityPoliciesClient::AggregatedListSecurityPolicies(std::string const& project, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::security_policies::v1::
-      AggregatedListSecurityPoliciesRequest request;
+  google::cloud::cpp::compute::security_policies::v1::AggregatedListSecurityPoliciesRequest request;
   request.set_project(project);
   return connection_->AggregatedListSecurityPolicies(request);
 }
 
-StreamRange<std::pair<
-    std::string, google::cloud::cpp::compute::v1::SecurityPoliciesScopedList>>
-SecurityPoliciesClient::AggregatedListSecurityPolicies(
-    google::cloud::cpp::compute::security_policies::v1::
-        AggregatedListSecurityPoliciesRequest request,
-    Options opts) {
+StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::SecurityPoliciesScopedList>>
+SecurityPoliciesClient::AggregatedListSecurityPolicies(google::cloud::cpp::compute::security_policies::v1::AggregatedListSecurityPoliciesRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->AggregatedListSecurityPolicies(std::move(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-SecurityPoliciesClient::DeleteSecurityPolicy(std::string const& project,
-                                             std::string const& security_policy,
-                                             Options opts) {
+SecurityPoliciesClient::DeleteSecurityPolicy(std::string const& project, std::string const& security_policy, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::security_policies::v1::
-      DeleteSecurityPolicyRequest request;
+  google::cloud::cpp::compute::security_policies::v1::DeleteSecurityPolicyRequest request;
   request.set_project(project);
   request.set_security_policy(security_policy);
   return connection_->DeleteSecurityPolicy(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-SecurityPoliciesClient::DeleteSecurityPolicy(NoAwaitTag,
-                                             std::string const& project,
-                                             std::string const& security_policy,
-                                             Options opts) {
+SecurityPoliciesClient::DeleteSecurityPolicy(NoAwaitTag, std::string const& project, std::string const& security_policy, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::security_policies::v1::
-      DeleteSecurityPolicyRequest request;
+  google::cloud::cpp::compute::security_policies::v1::DeleteSecurityPolicyRequest request;
   request.set_project(project);
   request.set_security_policy(security_policy);
   return connection_->DeleteSecurityPolicy(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-SecurityPoliciesClient::DeleteSecurityPolicy(
-    google::cloud::cpp::compute::security_policies::v1::
-        DeleteSecurityPolicyRequest const& request,
-    Options opts) {
+SecurityPoliciesClient::DeleteSecurityPolicy(google::cloud::cpp::compute::security_policies::v1::DeleteSecurityPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteSecurityPolicy(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-SecurityPoliciesClient::DeleteSecurityPolicy(
-    NoAwaitTag,
-    google::cloud::cpp::compute::security_policies::v1::
-        DeleteSecurityPolicyRequest const& request,
-    Options opts) {
+SecurityPoliciesClient::DeleteSecurityPolicy(NoAwaitTag, google::cloud::cpp::compute::security_policies::v1::DeleteSecurityPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteSecurityPolicy(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-SecurityPoliciesClient::DeleteSecurityPolicy(
-    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+SecurityPoliciesClient::DeleteSecurityPolicy(google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteSecurityPolicy(operation);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::SecurityPolicy>
-SecurityPoliciesClient::GetSecurityPolicy(std::string const& project,
-                                          std::string const& security_policy,
-                                          Options opts) {
+SecurityPoliciesClient::GetSecurityPolicy(std::string const& project, std::string const& security_policy, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::security_policies::v1::GetSecurityPolicyRequest
-      request;
+  google::cloud::cpp::compute::security_policies::v1::GetSecurityPolicyRequest request;
   request.set_project(project);
   request.set_security_policy(security_policy);
   return connection_->GetSecurityPolicy(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::SecurityPolicy>
-SecurityPoliciesClient::GetSecurityPolicy(
-    google::cloud::cpp::compute::security_policies::v1::
-        GetSecurityPolicyRequest const& request,
-    Options opts) {
+SecurityPoliciesClient::GetSecurityPolicy(google::cloud::cpp::compute::security_policies::v1::GetSecurityPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetSecurityPolicy(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::SecurityPolicyRule>
-SecurityPoliciesClient::GetRule(std::string const& project,
-                                std::string const& security_policy,
-                                Options opts) {
+SecurityPoliciesClient::GetRule(std::string const& project, std::string const& security_policy, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::security_policies::v1::GetRuleRequest request;
   request.set_project(project);
@@ -193,118 +145,79 @@ SecurityPoliciesClient::GetRule(std::string const& project,
 }
 
 StatusOr<google::cloud::cpp::compute::v1::SecurityPolicyRule>
-SecurityPoliciesClient::GetRule(
-    google::cloud::cpp::compute::security_policies::v1::GetRuleRequest const&
-        request,
-    Options opts) {
+SecurityPoliciesClient::GetRule(google::cloud::cpp::compute::security_policies::v1::GetRuleRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetRule(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-SecurityPoliciesClient::InsertSecurityPolicy(
-    std::string const& project,
-    google::cloud::cpp::compute::v1::SecurityPolicy const&
-        security_policy_resource,
-    Options opts) {
+SecurityPoliciesClient::InsertSecurityPolicy(std::string const& project, google::cloud::cpp::compute::v1::SecurityPolicy const& security_policy_resource, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::security_policies::v1::
-      InsertSecurityPolicyRequest request;
+  google::cloud::cpp::compute::security_policies::v1::InsertSecurityPolicyRequest request;
   request.set_project(project);
   *request.mutable_security_policy_resource() = security_policy_resource;
   return connection_->InsertSecurityPolicy(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-SecurityPoliciesClient::InsertSecurityPolicy(
-    NoAwaitTag, std::string const& project,
-    google::cloud::cpp::compute::v1::SecurityPolicy const&
-        security_policy_resource,
-    Options opts) {
+SecurityPoliciesClient::InsertSecurityPolicy(NoAwaitTag, std::string const& project, google::cloud::cpp::compute::v1::SecurityPolicy const& security_policy_resource, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::security_policies::v1::
-      InsertSecurityPolicyRequest request;
+  google::cloud::cpp::compute::security_policies::v1::InsertSecurityPolicyRequest request;
   request.set_project(project);
   *request.mutable_security_policy_resource() = security_policy_resource;
   return connection_->InsertSecurityPolicy(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-SecurityPoliciesClient::InsertSecurityPolicy(
-    google::cloud::cpp::compute::security_policies::v1::
-        InsertSecurityPolicyRequest const& request,
-    Options opts) {
+SecurityPoliciesClient::InsertSecurityPolicy(google::cloud::cpp::compute::security_policies::v1::InsertSecurityPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->InsertSecurityPolicy(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-SecurityPoliciesClient::InsertSecurityPolicy(
-    NoAwaitTag,
-    google::cloud::cpp::compute::security_policies::v1::
-        InsertSecurityPolicyRequest const& request,
-    Options opts) {
+SecurityPoliciesClient::InsertSecurityPolicy(NoAwaitTag, google::cloud::cpp::compute::security_policies::v1::InsertSecurityPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->InsertSecurityPolicy(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-SecurityPoliciesClient::InsertSecurityPolicy(
-    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+SecurityPoliciesClient::InsertSecurityPolicy(google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->InsertSecurityPolicy(operation);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::SecurityPolicy>
-SecurityPoliciesClient::ListSecurityPolicies(std::string const& project,
-                                             Options opts) {
+SecurityPoliciesClient::ListSecurityPolicies(std::string const& project, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::security_policies::v1::
-      ListSecurityPoliciesRequest request;
+  google::cloud::cpp::compute::security_policies::v1::ListSecurityPoliciesRequest request;
   request.set_project(project);
   return connection_->ListSecurityPolicies(request);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::SecurityPolicy>
-SecurityPoliciesClient::ListSecurityPolicies(
-    google::cloud::cpp::compute::security_policies::v1::
-        ListSecurityPoliciesRequest request,
-    Options opts) {
+SecurityPoliciesClient::ListSecurityPolicies(google::cloud::cpp::compute::security_policies::v1::ListSecurityPoliciesRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListSecurityPolicies(std::move(request));
 }
 
-StatusOr<google::cloud::cpp::compute::v1::
-             SecurityPoliciesListPreconfiguredExpressionSetsResponse>
-SecurityPoliciesClient::ListPreconfiguredExpressionSets(
-    std::string const& project, Options opts) {
+StatusOr<google::cloud::cpp::compute::v1::SecurityPoliciesListPreconfiguredExpressionSetsResponse>
+SecurityPoliciesClient::ListPreconfiguredExpressionSets(std::string const& project, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::security_policies::v1::
-      ListPreconfiguredExpressionSetsRequest request;
+  google::cloud::cpp::compute::security_policies::v1::ListPreconfiguredExpressionSetsRequest request;
   request.set_project(project);
   return connection_->ListPreconfiguredExpressionSets(request);
 }
 
-StatusOr<google::cloud::cpp::compute::v1::
-             SecurityPoliciesListPreconfiguredExpressionSetsResponse>
-SecurityPoliciesClient::ListPreconfiguredExpressionSets(
-    google::cloud::cpp::compute::security_policies::v1::
-        ListPreconfiguredExpressionSetsRequest const& request,
-    Options opts) {
+StatusOr<google::cloud::cpp::compute::v1::SecurityPoliciesListPreconfiguredExpressionSetsResponse>
+SecurityPoliciesClient::ListPreconfiguredExpressionSets(google::cloud::cpp::compute::security_policies::v1::ListPreconfiguredExpressionSetsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListPreconfiguredExpressionSets(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-SecurityPoliciesClient::PatchSecurityPolicy(
-    std::string const& project, std::string const& security_policy,
-    std::string const& update_mask,
-    google::cloud::cpp::compute::v1::SecurityPolicy const&
-        security_policy_resource,
-    Options opts) {
+SecurityPoliciesClient::PatchSecurityPolicy(std::string const& project, std::string const& security_policy, std::string const& update_mask, google::cloud::cpp::compute::v1::SecurityPolicy const& security_policy_resource, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::security_policies::v1::PatchSecurityPolicyRequest
-      request;
+  google::cloud::cpp::compute::security_policies::v1::PatchSecurityPolicyRequest request;
   request.set_project(project);
   request.set_security_policy(security_policy);
   request.set_update_mask(update_mask);
@@ -313,15 +226,9 @@ SecurityPoliciesClient::PatchSecurityPolicy(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-SecurityPoliciesClient::PatchSecurityPolicy(
-    NoAwaitTag, std::string const& project, std::string const& security_policy,
-    std::string const& update_mask,
-    google::cloud::cpp::compute::v1::SecurityPolicy const&
-        security_policy_resource,
-    Options opts) {
+SecurityPoliciesClient::PatchSecurityPolicy(NoAwaitTag, std::string const& project, std::string const& security_policy, std::string const& update_mask, google::cloud::cpp::compute::v1::SecurityPolicy const& security_policy_resource, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::security_policies::v1::PatchSecurityPolicyRequest
-      request;
+  google::cloud::cpp::compute::security_policies::v1::PatchSecurityPolicyRequest request;
   request.set_project(project);
   request.set_security_policy(security_policy);
   request.set_update_mask(update_mask);
@@ -330,91 +237,63 @@ SecurityPoliciesClient::PatchSecurityPolicy(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-SecurityPoliciesClient::PatchSecurityPolicy(
-    google::cloud::cpp::compute::security_policies::v1::
-        PatchSecurityPolicyRequest const& request,
-    Options opts) {
+SecurityPoliciesClient::PatchSecurityPolicy(google::cloud::cpp::compute::security_policies::v1::PatchSecurityPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PatchSecurityPolicy(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-SecurityPoliciesClient::PatchSecurityPolicy(
-    NoAwaitTag,
-    google::cloud::cpp::compute::security_policies::v1::
-        PatchSecurityPolicyRequest const& request,
-    Options opts) {
+SecurityPoliciesClient::PatchSecurityPolicy(NoAwaitTag, google::cloud::cpp::compute::security_policies::v1::PatchSecurityPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PatchSecurityPolicy(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-SecurityPoliciesClient::PatchSecurityPolicy(
-    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+SecurityPoliciesClient::PatchSecurityPolicy(google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PatchSecurityPolicy(operation);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-SecurityPoliciesClient::PatchRule(
-    std::string const& project, std::string const& security_policy,
-    google::cloud::cpp::compute::v1::SecurityPolicyRule const&
-        security_policy_rule_resource,
-    Options opts) {
+SecurityPoliciesClient::PatchRule(std::string const& project, std::string const& security_policy, google::cloud::cpp::compute::v1::SecurityPolicyRule const& security_policy_rule_resource, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::security_policies::v1::PatchRuleRequest request;
   request.set_project(project);
   request.set_security_policy(security_policy);
-  *request.mutable_security_policy_rule_resource() =
-      security_policy_rule_resource;
+  *request.mutable_security_policy_rule_resource() = security_policy_rule_resource;
   return connection_->PatchRule(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-SecurityPoliciesClient::PatchRule(
-    NoAwaitTag, std::string const& project, std::string const& security_policy,
-    google::cloud::cpp::compute::v1::SecurityPolicyRule const&
-        security_policy_rule_resource,
-    Options opts) {
+SecurityPoliciesClient::PatchRule(NoAwaitTag, std::string const& project, std::string const& security_policy, google::cloud::cpp::compute::v1::SecurityPolicyRule const& security_policy_rule_resource, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::security_policies::v1::PatchRuleRequest request;
   request.set_project(project);
   request.set_security_policy(security_policy);
-  *request.mutable_security_policy_rule_resource() =
-      security_policy_rule_resource;
+  *request.mutable_security_policy_rule_resource() = security_policy_rule_resource;
   return connection_->PatchRule(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-SecurityPoliciesClient::PatchRule(
-    google::cloud::cpp::compute::security_policies::v1::PatchRuleRequest const&
-        request,
-    Options opts) {
+SecurityPoliciesClient::PatchRule(google::cloud::cpp::compute::security_policies::v1::PatchRuleRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PatchRule(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-SecurityPoliciesClient::PatchRule(
-    NoAwaitTag,
-    google::cloud::cpp::compute::security_policies::v1::PatchRuleRequest const&
-        request,
-    Options opts) {
+SecurityPoliciesClient::PatchRule(NoAwaitTag, google::cloud::cpp::compute::security_policies::v1::PatchRuleRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PatchRule(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-SecurityPoliciesClient::PatchRule(
-    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+SecurityPoliciesClient::PatchRule(google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PatchRule(operation);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-SecurityPoliciesClient::RemoveRule(std::string const& project,
-                                   std::string const& security_policy,
-                                   Options opts) {
+SecurityPoliciesClient::RemoveRule(std::string const& project, std::string const& security_policy, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::security_policies::v1::RemoveRuleRequest request;
   request.set_project(project);
@@ -423,9 +302,7 @@ SecurityPoliciesClient::RemoveRule(std::string const& project,
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-SecurityPoliciesClient::RemoveRule(NoAwaitTag, std::string const& project,
-                                   std::string const& security_policy,
-                                   Options opts) {
+SecurityPoliciesClient::RemoveRule(NoAwaitTag, std::string const& project, std::string const& security_policy, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::security_policies::v1::RemoveRuleRequest request;
   request.set_project(project);
@@ -434,83 +311,57 @@ SecurityPoliciesClient::RemoveRule(NoAwaitTag, std::string const& project,
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-SecurityPoliciesClient::RemoveRule(
-    google::cloud::cpp::compute::security_policies::v1::RemoveRuleRequest const&
-        request,
-    Options opts) {
+SecurityPoliciesClient::RemoveRule(google::cloud::cpp::compute::security_policies::v1::RemoveRuleRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RemoveRule(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-SecurityPoliciesClient::RemoveRule(
-    NoAwaitTag,
-    google::cloud::cpp::compute::security_policies::v1::RemoveRuleRequest const&
-        request,
-    Options opts) {
+SecurityPoliciesClient::RemoveRule(NoAwaitTag, google::cloud::cpp::compute::security_policies::v1::RemoveRuleRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RemoveRule(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-SecurityPoliciesClient::RemoveRule(
-    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+SecurityPoliciesClient::RemoveRule(google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RemoveRule(operation);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-SecurityPoliciesClient::SetLabels(
-    std::string const& project, std::string const& resource,
-    google::cloud::cpp::compute::v1::GlobalSetLabelsRequest const&
-        global_set_labels_request_resource,
-    Options opts) {
+SecurityPoliciesClient::SetLabels(std::string const& project, std::string const& resource, google::cloud::cpp::compute::v1::GlobalSetLabelsRequest const& global_set_labels_request_resource, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::security_policies::v1::SetLabelsRequest request;
   request.set_project(project);
   request.set_resource(resource);
-  *request.mutable_global_set_labels_request_resource() =
-      global_set_labels_request_resource;
+  *request.mutable_global_set_labels_request_resource() = global_set_labels_request_resource;
   return connection_->SetLabels(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-SecurityPoliciesClient::SetLabels(
-    NoAwaitTag, std::string const& project, std::string const& resource,
-    google::cloud::cpp::compute::v1::GlobalSetLabelsRequest const&
-        global_set_labels_request_resource,
-    Options opts) {
+SecurityPoliciesClient::SetLabels(NoAwaitTag, std::string const& project, std::string const& resource, google::cloud::cpp::compute::v1::GlobalSetLabelsRequest const& global_set_labels_request_resource, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::security_policies::v1::SetLabelsRequest request;
   request.set_project(project);
   request.set_resource(resource);
-  *request.mutable_global_set_labels_request_resource() =
-      global_set_labels_request_resource;
+  *request.mutable_global_set_labels_request_resource() = global_set_labels_request_resource;
   return connection_->SetLabels(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-SecurityPoliciesClient::SetLabels(
-    google::cloud::cpp::compute::security_policies::v1::SetLabelsRequest const&
-        request,
-    Options opts) {
+SecurityPoliciesClient::SetLabels(google::cloud::cpp::compute::security_policies::v1::SetLabelsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetLabels(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-SecurityPoliciesClient::SetLabels(
-    NoAwaitTag,
-    google::cloud::cpp::compute::security_policies::v1::SetLabelsRequest const&
-        request,
-    Options opts) {
+SecurityPoliciesClient::SetLabels(NoAwaitTag, google::cloud::cpp::compute::security_policies::v1::SetLabelsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetLabels(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-SecurityPoliciesClient::SetLabels(
-    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+SecurityPoliciesClient::SetLabels(google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetLabels(operation);
 }

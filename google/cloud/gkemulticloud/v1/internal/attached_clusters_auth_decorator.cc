@@ -33,30 +33,28 @@ AttachedClustersAuth::AttachedClustersAuth(
 
 future<StatusOr<google::longrunning::Operation>>
 AttachedClustersAuth::AsyncCreateAttachedCluster(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::gkemulticloud::v1::CreateAttachedClusterRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::gkemulticloud::v1::CreateAttachedClusterRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreateAttachedCluster(cq, *std::move(context),
-                                                 std::move(options), request);
+        return child->AsyncCreateAttachedCluster(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 AttachedClustersAuth::CreateAttachedCluster(
-    grpc::ClientContext& context, Options options,
-    google::cloud::gkemulticloud::v1::CreateAttachedClusterRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::gkemulticloud::v1::CreateAttachedClusterRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateAttachedCluster(context, options, request);
@@ -64,30 +62,28 @@ AttachedClustersAuth::CreateAttachedCluster(
 
 future<StatusOr<google::longrunning::Operation>>
 AttachedClustersAuth::AsyncUpdateAttachedCluster(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::gkemulticloud::v1::UpdateAttachedClusterRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::gkemulticloud::v1::UpdateAttachedClusterRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncUpdateAttachedCluster(cq, *std::move(context),
-                                                 std::move(options), request);
+        return child->AsyncUpdateAttachedCluster(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 AttachedClustersAuth::UpdateAttachedCluster(
-    grpc::ClientContext& context, Options options,
-    google::cloud::gkemulticloud::v1::UpdateAttachedClusterRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::gkemulticloud::v1::UpdateAttachedClusterRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateAttachedCluster(context, options, request);
@@ -95,50 +91,46 @@ AttachedClustersAuth::UpdateAttachedCluster(
 
 future<StatusOr<google::longrunning::Operation>>
 AttachedClustersAuth::AsyncImportAttachedCluster(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::gkemulticloud::v1::ImportAttachedClusterRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::gkemulticloud::v1::ImportAttachedClusterRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncImportAttachedCluster(cq, *std::move(context),
-                                                 std::move(options), request);
+        return child->AsyncImportAttachedCluster(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 AttachedClustersAuth::ImportAttachedCluster(
-    grpc::ClientContext& context, Options options,
-    google::cloud::gkemulticloud::v1::ImportAttachedClusterRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::gkemulticloud::v1::ImportAttachedClusterRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ImportAttachedCluster(context, options, request);
 }
 
-StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>
-AttachedClustersAuth::GetAttachedCluster(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::gkemulticloud::v1::GetAttachedClusterRequest const&
-        request) {
+StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster> AttachedClustersAuth::GetAttachedCluster(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::gkemulticloud::v1::GetAttachedClusterRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetAttachedCluster(context, options, request);
 }
 
-StatusOr<google::cloud::gkemulticloud::v1::ListAttachedClustersResponse>
-AttachedClustersAuth::ListAttachedClusters(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::gkemulticloud::v1::ListAttachedClustersRequest const&
-        request) {
+StatusOr<google::cloud::gkemulticloud::v1::ListAttachedClustersResponse> AttachedClustersAuth::ListAttachedClusters(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::gkemulticloud::v1::ListAttachedClustersRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListAttachedClusters(context, options, request);
@@ -146,71 +138,63 @@ AttachedClustersAuth::ListAttachedClusters(
 
 future<StatusOr<google::longrunning::Operation>>
 AttachedClustersAuth::AsyncDeleteAttachedCluster(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::gkemulticloud::v1::DeleteAttachedClusterRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::gkemulticloud::v1::DeleteAttachedClusterRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDeleteAttachedCluster(cq, *std::move(context),
-                                                 std::move(options), request);
+        return child->AsyncDeleteAttachedCluster(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 AttachedClustersAuth::DeleteAttachedCluster(
-    grpc::ClientContext& context, Options options,
-    google::cloud::gkemulticloud::v1::DeleteAttachedClusterRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::gkemulticloud::v1::DeleteAttachedClusterRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteAttachedCluster(context, options, request);
 }
 
-StatusOr<google::cloud::gkemulticloud::v1::AttachedServerConfig>
-AttachedClustersAuth::GetAttachedServerConfig(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::gkemulticloud::v1::GetAttachedServerConfigRequest const&
-        request) {
+StatusOr<google::cloud::gkemulticloud::v1::AttachedServerConfig> AttachedClustersAuth::GetAttachedServerConfig(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::gkemulticloud::v1::GetAttachedServerConfigRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetAttachedServerConfig(context, options, request);
 }
 
-StatusOr<google::cloud::gkemulticloud::v1::
-             GenerateAttachedClusterInstallManifestResponse>
-AttachedClustersAuth::GenerateAttachedClusterInstallManifest(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::gkemulticloud::v1::
-        GenerateAttachedClusterInstallManifestRequest const& request) {
+StatusOr<google::cloud::gkemulticloud::v1::GenerateAttachedClusterInstallManifestResponse> AttachedClustersAuth::GenerateAttachedClusterInstallManifest(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::gkemulticloud::v1::GenerateAttachedClusterInstallManifestRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GenerateAttachedClusterInstallManifest(context, options,
-                                                        request);
+  return child_->GenerateAttachedClusterInstallManifest(context, options, request);
 }
 
-StatusOr<
-    google::cloud::gkemulticloud::v1::GenerateAttachedClusterAgentTokenResponse>
-AttachedClustersAuth::GenerateAttachedClusterAgentToken(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::gkemulticloud::v1::
-        GenerateAttachedClusterAgentTokenRequest const& request) {
+StatusOr<google::cloud::gkemulticloud::v1::GenerateAttachedClusterAgentTokenResponse> AttachedClustersAuth::GenerateAttachedClusterAgentToken(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::gkemulticloud::v1::GenerateAttachedClusterAgentTokenRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GenerateAttachedClusterAgentToken(context, options, request);
 }
 
-StatusOr<google::longrunning::ListOperationsResponse>
-AttachedClustersAuth::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse> AttachedClustersAuth::ListOperations(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -218,7 +202,8 @@ AttachedClustersAuth::ListOperations(
 }
 
 StatusOr<google::longrunning::Operation> AttachedClustersAuth::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -226,7 +211,8 @@ StatusOr<google::longrunning::Operation> AttachedClustersAuth::GetOperation(
 }
 
 Status AttachedClustersAuth::DeleteOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -234,7 +220,8 @@ Status AttachedClustersAuth::DeleteOperation(
 }
 
 Status AttachedClustersAuth::CancelOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -248,16 +235,15 @@ AttachedClustersAuth::AsyncGetOperation(
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncGetOperation(cq, *std::move(context),
-                                        std::move(options), request);
+        return child->AsyncGetOperation(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
@@ -266,14 +252,13 @@ future<Status> AttachedClustersAuth::AsyncCancelOperation(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) return make_ready_future(std::move(context).status());
-        return child->AsyncCancelOperation(cq, *std::move(context),
-                                           std::move(options), request);
+        return child->AsyncCancelOperation(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 

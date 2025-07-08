@@ -26,17 +26,11 @@ namespace cloud {
 namespace managedidentities {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use
-/// managedidentities_v1::MakeDefaultManagedIdentitiesServiceConnectionIdempotencyPolicy
-/// directly.
-using ::google::cloud::managedidentities_v1::
-    MakeDefaultManagedIdentitiesServiceConnectionIdempotencyPolicy;
+/// @deprecated Use managedidentities_v1::MakeDefaultManagedIdentitiesServiceConnectionIdempotencyPolicy directly.
+using ::google::cloud::managedidentities_v1::MakeDefaultManagedIdentitiesServiceConnectionIdempotencyPolicy;
 
-/// @deprecated Use
-/// managedidentities_v1::ManagedIdentitiesServiceConnectionIdempotencyPolicy
-/// directly.
-using ::google::cloud::managedidentities_v1::
-    ManagedIdentitiesServiceConnectionIdempotencyPolicy;
+/// @deprecated Use managedidentities_v1::ManagedIdentitiesServiceConnectionIdempotencyPolicy directly.
+using ::google::cloud::managedidentities_v1::ManagedIdentitiesServiceConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace managedidentities

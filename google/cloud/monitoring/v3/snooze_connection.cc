@@ -17,17 +17,17 @@
 // source: google/monitoring/v3/snooze_service.proto
 
 #include "google/cloud/monitoring/v3/snooze_connection.h"
-#include "google/cloud/monitoring/v3/internal/snooze_connection_impl.h"
-#include "google/cloud/monitoring/v3/internal/snooze_option_defaults.h"
-#include "google/cloud/monitoring/v3/internal/snooze_stub_factory.h"
-#include "google/cloud/monitoring/v3/internal/snooze_tracing_connection.h"
-#include "google/cloud/monitoring/v3/snooze_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/monitoring/v3/internal/snooze_connection_impl.h"
+#include "google/cloud/monitoring/v3/internal/snooze_option_defaults.h"
+#include "google/cloud/monitoring/v3/internal/snooze_stub_factory.h"
+#include "google/cloud/monitoring/v3/internal/snooze_tracing_connection.h"
+#include "google/cloud/monitoring/v3/snooze_options.h"
 #include <memory>
 #include <utility>
 
@@ -38,25 +38,26 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 SnoozeServiceConnection::~SnoozeServiceConnection() = default;
 
-StatusOr<google::monitoring::v3::Snooze> SnoozeServiceConnection::CreateSnooze(
+StatusOr<google::monitoring::v3::Snooze>
+SnoozeServiceConnection::CreateSnooze(
     google::monitoring::v3::CreateSnoozeRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::monitoring::v3::Snooze>
-SnoozeServiceConnection::ListSnoozes(
-    google::monitoring::v3::
-        ListSnoozesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::monitoring::v3::Snooze> SnoozeServiceConnection::ListSnoozes(
+    google::monitoring::v3::ListSnoozesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::monitoring::v3::Snooze>>();
 }
 
-StatusOr<google::monitoring::v3::Snooze> SnoozeServiceConnection::GetSnooze(
+StatusOr<google::monitoring::v3::Snooze>
+SnoozeServiceConnection::GetSnooze(
     google::monitoring::v3::GetSnoozeRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::monitoring::v3::Snooze> SnoozeServiceConnection::UpdateSnooze(
+StatusOr<google::monitoring::v3::Snooze>
+SnoozeServiceConnection::UpdateSnooze(
     google::monitoring::v3::UpdateSnoozeRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -64,18 +65,17 @@ StatusOr<google::monitoring::v3::Snooze> SnoozeServiceConnection::UpdateSnooze(
 std::shared_ptr<SnoozeServiceConnection> MakeSnoozeServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 SnoozeServicePolicyOptionList>(options,
-                                                                __func__);
-  options =
-      monitoring_v3_internal::SnoozeServiceDefaultOptions(std::move(options));
+      UnifiedCredentialsOptionList,
+      SnoozeServicePolicyOptionList>(options, __func__);
+  options = monitoring_v3_internal::SnoozeServiceDefaultOptions(
+      std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = monitoring_v3_internal::CreateDefaultSnoozeServiceStub(
-      std::move(auth), options);
+    std::move(auth), options);
   return monitoring_v3_internal::MakeSnoozeServiceTracingConnection(
       std::make_shared<monitoring_v3_internal::SnoozeServiceConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options)));
+      std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

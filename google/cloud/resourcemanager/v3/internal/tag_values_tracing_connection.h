@@ -36,69 +36,63 @@ class TagValuesTracingConnection
   ~TagValuesTracingConnection() override = default;
 
   explicit TagValuesTracingConnection(
-      std::shared_ptr<resourcemanager_v3::TagValuesConnection> child);
+    std::shared_ptr<resourcemanager_v3::TagValuesConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StreamRange<google::cloud::resourcemanager::v3::TagValue> ListTagValues(
-      google::cloud::resourcemanager::v3::ListTagValuesRequest request)
-      override;
+  StreamRange<google::cloud::resourcemanager::v3::TagValue>
+  ListTagValues(google::cloud::resourcemanager::v3::ListTagValuesRequest request) override;
 
-  StatusOr<google::cloud::resourcemanager::v3::TagValue> GetTagValue(
-      google::cloud::resourcemanager::v3::GetTagValueRequest const& request)
-      override;
+  StatusOr<google::cloud::resourcemanager::v3::TagValue>
+  GetTagValue(google::cloud::resourcemanager::v3::GetTagValueRequest const& request) override;
 
-  StatusOr<google::cloud::resourcemanager::v3::TagValue> GetNamespacedTagValue(
-      google::cloud::resourcemanager::v3::GetNamespacedTagValueRequest const&
-          request) override;
+  StatusOr<google::cloud::resourcemanager::v3::TagValue>
+  GetNamespacedTagValue(google::cloud::resourcemanager::v3::GetNamespacedTagValueRequest const& request) override;
 
-  future<StatusOr<google::cloud::resourcemanager::v3::TagValue>> CreateTagValue(
-      google::cloud::resourcemanager::v3::CreateTagValueRequest const& request)
-      override;
+  future<StatusOr<google::cloud::resourcemanager::v3::TagValue>>
+  CreateTagValue(google::cloud::resourcemanager::v3::CreateTagValueRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> CreateTagValue(
-      NoAwaitTag,
-      google::cloud::resourcemanager::v3::CreateTagValueRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  CreateTagValue(NoAwaitTag,
+      google::cloud::resourcemanager::v3::CreateTagValueRequest const& request) override;
 
-  future<StatusOr<google::cloud::resourcemanager::v3::TagValue>> CreateTagValue(
+  future<StatusOr<google::cloud::resourcemanager::v3::TagValue>>
+  CreateTagValue(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::resourcemanager::v3::TagValue>> UpdateTagValue(
-      google::cloud::resourcemanager::v3::UpdateTagValueRequest const& request)
-      override;
+  future<StatusOr<google::cloud::resourcemanager::v3::TagValue>>
+  UpdateTagValue(google::cloud::resourcemanager::v3::UpdateTagValueRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> UpdateTagValue(
-      NoAwaitTag,
-      google::cloud::resourcemanager::v3::UpdateTagValueRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  UpdateTagValue(NoAwaitTag,
+      google::cloud::resourcemanager::v3::UpdateTagValueRequest const& request) override;
 
-  future<StatusOr<google::cloud::resourcemanager::v3::TagValue>> UpdateTagValue(
+  future<StatusOr<google::cloud::resourcemanager::v3::TagValue>>
+  UpdateTagValue(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::resourcemanager::v3::TagValue>> DeleteTagValue(
-      google::cloud::resourcemanager::v3::DeleteTagValueRequest const& request)
-      override;
+  future<StatusOr<google::cloud::resourcemanager::v3::TagValue>>
+  DeleteTagValue(google::cloud::resourcemanager::v3::DeleteTagValueRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> DeleteTagValue(
-      NoAwaitTag,
-      google::cloud::resourcemanager::v3::DeleteTagValueRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  DeleteTagValue(NoAwaitTag,
+      google::cloud::resourcemanager::v3::DeleteTagValueRequest const& request) override;
 
-  future<StatusOr<google::cloud::resourcemanager::v3::TagValue>> DeleteTagValue(
+  future<StatusOr<google::cloud::resourcemanager::v3::TagValue>>
+  DeleteTagValue(
       google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request) override;
+  StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request) override;
 
  private:
   std::shared_ptr<resourcemanager_v3::TagValuesConnection> child_;

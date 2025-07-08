@@ -46,133 +46,109 @@ class PipelineServiceConnectionImpl
   ~PipelineServiceConnectionImpl() override = default;
 
   PipelineServiceConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<aiplatform_v1_internal::PipelineServiceStub> stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<aiplatform_v1_internal::PipelineServiceStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
   StatusOr<google::cloud::aiplatform::v1::TrainingPipeline>
-  CreateTrainingPipeline(
-      google::cloud::aiplatform::v1::CreateTrainingPipelineRequest const&
-          request) override;
+  CreateTrainingPipeline(google::cloud::aiplatform::v1::CreateTrainingPipelineRequest const& request) override;
 
-  StatusOr<google::cloud::aiplatform::v1::TrainingPipeline> GetTrainingPipeline(
-      google::cloud::aiplatform::v1::GetTrainingPipelineRequest const& request)
-      override;
+  StatusOr<google::cloud::aiplatform::v1::TrainingPipeline>
+  GetTrainingPipeline(google::cloud::aiplatform::v1::GetTrainingPipelineRequest const& request) override;
 
   StreamRange<google::cloud::aiplatform::v1::TrainingPipeline>
-  ListTrainingPipelines(
-      google::cloud::aiplatform::v1::ListTrainingPipelinesRequest request)
-      override;
+  ListTrainingPipelines(google::cloud::aiplatform::v1::ListTrainingPipelinesRequest request) override;
 
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteTrainingPipeline(
-      google::cloud::aiplatform::v1::DeleteTrainingPipelineRequest const&
-          request) override;
+  DeleteTrainingPipeline(google::cloud::aiplatform::v1::DeleteTrainingPipelineRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> DeleteTrainingPipeline(
-      NoAwaitTag,
-      google::cloud::aiplatform::v1::DeleteTrainingPipelineRequest const&
-          request) override;
+  StatusOr<google::longrunning::Operation>
+  DeleteTrainingPipeline(NoAwaitTag,
+      google::cloud::aiplatform::v1::DeleteTrainingPipelineRequest const& request) override;
 
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
   DeleteTrainingPipeline(
       google::longrunning::Operation const& operation) override;
 
-  Status CancelTrainingPipeline(
-      google::cloud::aiplatform::v1::CancelTrainingPipelineRequest const&
-          request) override;
+  Status
+  CancelTrainingPipeline(google::cloud::aiplatform::v1::CancelTrainingPipelineRequest const& request) override;
 
-  StatusOr<google::cloud::aiplatform::v1::PipelineJob> CreatePipelineJob(
-      google::cloud::aiplatform::v1::CreatePipelineJobRequest const& request)
-      override;
+  StatusOr<google::cloud::aiplatform::v1::PipelineJob>
+  CreatePipelineJob(google::cloud::aiplatform::v1::CreatePipelineJobRequest const& request) override;
 
-  StatusOr<google::cloud::aiplatform::v1::PipelineJob> GetPipelineJob(
-      google::cloud::aiplatform::v1::GetPipelineJobRequest const& request)
-      override;
+  StatusOr<google::cloud::aiplatform::v1::PipelineJob>
+  GetPipelineJob(google::cloud::aiplatform::v1::GetPipelineJobRequest const& request) override;
 
-  StreamRange<google::cloud::aiplatform::v1::PipelineJob> ListPipelineJobs(
-      google::cloud::aiplatform::v1::ListPipelineJobsRequest request) override;
+  StreamRange<google::cloud::aiplatform::v1::PipelineJob>
+  ListPipelineJobs(google::cloud::aiplatform::v1::ListPipelineJobsRequest request) override;
+
+  future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeletePipelineJob(google::cloud::aiplatform::v1::DeletePipelineJobRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  DeletePipelineJob(NoAwaitTag,
+      google::cloud::aiplatform::v1::DeletePipelineJobRequest const& request) override;
 
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
   DeletePipelineJob(
-      google::cloud::aiplatform::v1::DeletePipelineJobRequest const& request)
-      override;
+      google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::longrunning::Operation> DeletePipelineJob(
-      NoAwaitTag,
-      google::cloud::aiplatform::v1::DeletePipelineJobRequest const& request)
-      override;
+  future<StatusOr<google::cloud::aiplatform::v1::BatchDeletePipelineJobsResponse>>
+  BatchDeletePipelineJobs(google::cloud::aiplatform::v1::BatchDeletePipelineJobsRequest const& request) override;
 
-  future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeletePipelineJob(google::longrunning::Operation const& operation) override;
+  StatusOr<google::longrunning::Operation>
+  BatchDeletePipelineJobs(NoAwaitTag,
+      google::cloud::aiplatform::v1::BatchDeletePipelineJobsRequest const& request) override;
 
-  future<
-      StatusOr<google::cloud::aiplatform::v1::BatchDeletePipelineJobsResponse>>
-  BatchDeletePipelineJobs(
-      google::cloud::aiplatform::v1::BatchDeletePipelineJobsRequest const&
-          request) override;
-
-  StatusOr<google::longrunning::Operation> BatchDeletePipelineJobs(
-      NoAwaitTag,
-      google::cloud::aiplatform::v1::BatchDeletePipelineJobsRequest const&
-          request) override;
-
-  future<
-      StatusOr<google::cloud::aiplatform::v1::BatchDeletePipelineJobsResponse>>
+  future<StatusOr<google::cloud::aiplatform::v1::BatchDeletePipelineJobsResponse>>
   BatchDeletePipelineJobs(
       google::longrunning::Operation const& operation) override;
 
-  Status CancelPipelineJob(
-      google::cloud::aiplatform::v1::CancelPipelineJobRequest const& request)
-      override;
+  Status
+  CancelPipelineJob(google::cloud::aiplatform::v1::CancelPipelineJobRequest const& request) override;
 
-  future<
-      StatusOr<google::cloud::aiplatform::v1::BatchCancelPipelineJobsResponse>>
-  BatchCancelPipelineJobs(
-      google::cloud::aiplatform::v1::BatchCancelPipelineJobsRequest const&
-          request) override;
+  future<StatusOr<google::cloud::aiplatform::v1::BatchCancelPipelineJobsResponse>>
+  BatchCancelPipelineJobs(google::cloud::aiplatform::v1::BatchCancelPipelineJobsRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> BatchCancelPipelineJobs(
-      NoAwaitTag,
-      google::cloud::aiplatform::v1::BatchCancelPipelineJobsRequest const&
-          request) override;
+  StatusOr<google::longrunning::Operation>
+  BatchCancelPipelineJobs(NoAwaitTag,
+      google::cloud::aiplatform::v1::BatchCancelPipelineJobsRequest const& request) override;
 
-  future<
-      StatusOr<google::cloud::aiplatform::v1::BatchCancelPipelineJobsResponse>>
+  future<StatusOr<google::cloud::aiplatform::v1::BatchCancelPipelineJobsResponse>>
   BatchCancelPipelineJobs(
       google::longrunning::Operation const& operation) override;
 
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request) override;
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request) override;
 
-  StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request) override;
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request) override;
+  StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request) override;
 
-  Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request) override;
+  Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request) override;
 
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request) override;
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> WaitOperation(
-      google::longrunning::WaitOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  WaitOperation(google::longrunning::WaitOperationRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

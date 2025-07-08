@@ -36,22 +36,21 @@ class ImageVersionsTracingConnection
   ~ImageVersionsTracingConnection() override = default;
 
   explicit ImageVersionsTracingConnection(
-      std::shared_ptr<composer_v1::ImageVersionsConnection> child);
+    std::shared_ptr<composer_v1::ImageVersionsConnection> child);
 
   Options options() override { return child_->options(); }
 
   StreamRange<google::cloud::orchestration::airflow::service::v1::ImageVersion>
-  ListImageVersions(google::cloud::orchestration::airflow::service::v1::
-                        ListImageVersionsRequest request) override;
+  ListImageVersions(google::cloud::orchestration::airflow::service::v1::ListImageVersionsRequest request) override;
 
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request) override;
 
-  Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request) override;
+  Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request) override;
 
  private:
   std::shared_ptr<composer_v1::ImageVersionsConnection> child_;

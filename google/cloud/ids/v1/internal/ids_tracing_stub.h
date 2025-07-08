@@ -39,11 +39,13 @@ class IDSTracingStub : public IDSStub {
   explicit IDSTracingStub(std::shared_ptr<IDSStub> child);
 
   StatusOr<google::cloud::ids::v1::ListEndpointsResponse> ListEndpoints(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::ids::v1::ListEndpointsRequest const& request) override;
 
   StatusOr<google::cloud::ids::v1::Endpoint> GetEndpoint(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::ids::v1::GetEndpointRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateEndpoint(
@@ -53,7 +55,8 @@ class IDSTracingStub : public IDSStub {
       google::cloud::ids::v1::CreateEndpointRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateEndpoint(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::cloud::ids::v1::CreateEndpointRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteEndpoint(
@@ -63,7 +66,8 @@ class IDSTracingStub : public IDSStub {
       google::cloud::ids::v1::DeleteEndpointRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteEndpoint(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::cloud::ids::v1::DeleteEndpointRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -80,8 +84,7 @@ class IDSTracingStub : public IDSStub {
 
  private:
   std::shared_ptr<IDSStub> child_;
-  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
-      propagator_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -92,7 +95,8 @@ class IDSTracingStub : public IDSStub {
  * The stub is only decorated if the library has been compiled with
  * OpenTelemetry.
  */
-std::shared_ptr<IDSStub> MakeIDSTracingStub(std::shared_ptr<IDSStub> stub);
+std::shared_ptr<IDSStub> MakeIDSTracingStub(
+    std::shared_ptr<IDSStub> stub);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace ids_v1_internal

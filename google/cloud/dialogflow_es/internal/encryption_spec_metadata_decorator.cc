@@ -46,10 +46,10 @@ EncryptionSpecServiceMetadata::EncryptionSpecServiceMetadata(
 
 StatusOr<google::cloud::dialogflow::v2::EncryptionSpec>
 EncryptionSpecServiceMetadata::GetEncryptionSpec(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::dialogflow::v2::GetEncryptionSpecRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetEncryptionSpec(context, options, request);
 }
 
@@ -58,69 +58,63 @@ EncryptionSpecServiceMetadata::AsyncInitializeEncryptionSpec(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::dialogflow::v2::InitializeEncryptionSpecRequest const&
-        request) {
-  SetMetadata(
-      *context, *options,
-      absl::StrCat("encryption_spec.name=",
-                   internal::UrlEncode(request.encryption_spec().name())));
-  return child_->AsyncInitializeEncryptionSpec(cq, std::move(context),
-                                               std::move(options), request);
+    google::cloud::dialogflow::v2::InitializeEncryptionSpecRequest const& request) {
+  SetMetadata(*context, *options, absl::StrCat("encryption_spec.name=", internal::UrlEncode(request.encryption_spec().name())));
+  return child_->AsyncInitializeEncryptionSpec(
+      cq, std::move(context), std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 EncryptionSpecServiceMetadata::InitializeEncryptionSpec(
-    grpc::ClientContext& context, Options options,
-    google::cloud::dialogflow::v2::InitializeEncryptionSpecRequest const&
-        request) {
-  SetMetadata(
-      context, options,
-      absl::StrCat("encryption_spec.name=",
-                   internal::UrlEncode(request.encryption_spec().name())));
+    grpc::ClientContext& context,
+    Options options,
+    google::cloud::dialogflow::v2::InitializeEncryptionSpecRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("encryption_spec.name=", internal::UrlEncode(request.encryption_spec().name())));
   return child_->InitializeEncryptionSpec(context, options, request);
 }
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 EncryptionSpecServiceMetadata::ListLocations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ListLocations(context, options, request);
 }
 
 StatusOr<google::cloud::location::Location>
 EncryptionSpecServiceMetadata::GetLocation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetLocation(context, options, request);
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
 EncryptionSpecServiceMetadata::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ListOperations(context, options, request);
 }
 
 StatusOr<google::longrunning::Operation>
 EncryptionSpecServiceMetadata::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetOperation(context, options, request);
 }
 
-Status EncryptionSpecServiceMetadata::CancelOperation(
-    grpc::ClientContext& context, Options const& options,
+Status
+EncryptionSpecServiceMetadata::CancelOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->CancelOperation(context, options, request);
 }
 
@@ -132,8 +126,8 @@ EncryptionSpecServiceMetadata::AsyncGetOperation(
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(cq, std::move(context), std::move(options),
-                                   request);
+  return child_->AsyncGetOperation(
+      cq, std::move(context), std::move(options), request);
 }
 
 future<Status> EncryptionSpecServiceMetadata::AsyncCancelOperation(
@@ -143,21 +137,21 @@ future<Status> EncryptionSpecServiceMetadata::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(cq, std::move(context),
-                                      std::move(options), request);
+  return child_->AsyncCancelOperation(
+      cq, std::move(context), std::move(options), request);
 }
 
-void EncryptionSpecServiceMetadata::SetMetadata(
-    grpc::ClientContext& context, Options const& options,
-    std::string const& request_params) {
+void EncryptionSpecServiceMetadata::SetMetadata(grpc::ClientContext& context,
+                                        Options const& options,
+                                        std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
 void EncryptionSpecServiceMetadata::SetMetadata(grpc::ClientContext& context,
-                                                Options const& options) {
-  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
-                                       api_client_header_);
+                                        Options const& options) {
+  google::cloud::internal::SetMetadata(
+      context, options, fixed_metadata_, api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

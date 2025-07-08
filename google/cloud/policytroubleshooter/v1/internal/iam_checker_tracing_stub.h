@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_POLICYTROUBLESHOOTER_V1_INTERNAL_IAM_CHECKER_TRACING_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_POLICYTROUBLESHOOTER_V1_INTERNAL_IAM_CHECKER_TRACING_STUB_H
 
-#include "google/cloud/policytroubleshooter/v1/internal/iam_checker_stub.h"
 #include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/options.h"
+#include "google/cloud/policytroubleshooter/v1/internal/iam_checker_stub.h"
 #include "google/cloud/version.h"
 #include <memory>
 
@@ -38,17 +38,14 @@ class IamCheckerTracingStub : public IamCheckerStub {
 
   explicit IamCheckerTracingStub(std::shared_ptr<IamCheckerStub> child);
 
-  StatusOr<
-      google::cloud::policytroubleshooter::v1::TroubleshootIamPolicyResponse>
-  TroubleshootIamPolicy(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::policytroubleshooter::v1::
-          TroubleshootIamPolicyRequest const& request) override;
+  StatusOr<google::cloud::policytroubleshooter::v1::TroubleshootIamPolicyResponse> TroubleshootIamPolicy(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::policytroubleshooter::v1::TroubleshootIamPolicyRequest const& request) override;
 
  private:
   std::shared_ptr<IamCheckerStub> child_;
-  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
-      propagator_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

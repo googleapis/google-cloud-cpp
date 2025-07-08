@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CLOUDQUOTAS_V1_INTERNAL_CLOUD_QUOTAS_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CLOUDQUOTAS_V1_INTERNAL_CLOUD_QUOTAS_CONNECTION_IMPL_H
 
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/cloudquotas/v1/cloud_quotas_connection.h"
 #include "google/cloud/cloudquotas/v1/cloud_quotas_connection_idempotency_policy.h"
 #include "google/cloud/cloudquotas/v1/cloud_quotas_options.h"
 #include "google/cloud/cloudquotas/v1/internal/cloud_quotas_retry_traits.h"
 #include "google/cloud/cloudquotas/v1/internal/cloud_quotas_stub.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -37,39 +37,35 @@ namespace cloud {
 namespace cloudquotas_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class CloudQuotasConnectionImpl : public cloudquotas_v1::CloudQuotasConnection {
+class CloudQuotasConnectionImpl
+    : public cloudquotas_v1::CloudQuotasConnection {
  public:
   ~CloudQuotasConnectionImpl() override = default;
 
   CloudQuotasConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<cloudquotas_v1_internal::CloudQuotasStub> stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<cloudquotas_v1_internal::CloudQuotasStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
-  StreamRange<google::api::cloudquotas::v1::QuotaInfo> ListQuotaInfos(
-      google::api::cloudquotas::v1::ListQuotaInfosRequest request) override;
+  StreamRange<google::api::cloudquotas::v1::QuotaInfo>
+  ListQuotaInfos(google::api::cloudquotas::v1::ListQuotaInfosRequest request) override;
 
-  StatusOr<google::api::cloudquotas::v1::QuotaInfo> GetQuotaInfo(
-      google::api::cloudquotas::v1::GetQuotaInfoRequest const& request)
-      override;
+  StatusOr<google::api::cloudquotas::v1::QuotaInfo>
+  GetQuotaInfo(google::api::cloudquotas::v1::GetQuotaInfoRequest const& request) override;
 
   StreamRange<google::api::cloudquotas::v1::QuotaPreference>
-  ListQuotaPreferences(google::api::cloudquotas::v1::ListQuotaPreferencesRequest
-                           request) override;
+  ListQuotaPreferences(google::api::cloudquotas::v1::ListQuotaPreferencesRequest request) override;
 
-  StatusOr<google::api::cloudquotas::v1::QuotaPreference> GetQuotaPreference(
-      google::api::cloudquotas::v1::GetQuotaPreferenceRequest const& request)
-      override;
+  StatusOr<google::api::cloudquotas::v1::QuotaPreference>
+  GetQuotaPreference(google::api::cloudquotas::v1::GetQuotaPreferenceRequest const& request) override;
 
-  StatusOr<google::api::cloudquotas::v1::QuotaPreference> CreateQuotaPreference(
-      google::api::cloudquotas::v1::CreateQuotaPreferenceRequest const& request)
-      override;
+  StatusOr<google::api::cloudquotas::v1::QuotaPreference>
+  CreateQuotaPreference(google::api::cloudquotas::v1::CreateQuotaPreferenceRequest const& request) override;
 
-  StatusOr<google::api::cloudquotas::v1::QuotaPreference> UpdateQuotaPreference(
-      google::api::cloudquotas::v1::UpdateQuotaPreferenceRequest const& request)
-      override;
+  StatusOr<google::api::cloudquotas::v1::QuotaPreference>
+  UpdateQuotaPreference(google::api::cloudquotas::v1::UpdateQuotaPreferenceRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_GLOBAL_ADDRESSES_V1_INTERNAL_GLOBAL_ADDRESSES_REST_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_GLOBAL_ADDRESSES_V1_INTERNAL_GLOBAL_ADDRESSES_REST_CONNECTION_IMPL_H
 
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/global_addresses/v1/global_addresses_connection.h"
 #include "google/cloud/compute/global_addresses/v1/global_addresses_connection_idempotency_policy.h"
 #include "google/cloud/compute/global_addresses/v1/global_addresses_options.h"
 #include "google/cloud/compute/global_addresses/v1/internal/global_addresses_rest_stub.h"
 #include "google/cloud/compute/global_addresses/v1/internal/global_addresses_retry_traits.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -44,101 +44,83 @@ class GlobalAddressesRestConnectionImpl
   ~GlobalAddressesRestConnectionImpl() override = default;
 
   GlobalAddressesRestConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<
-          compute_global_addresses_v1_internal::GlobalAddressesRestStub>
-          stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<compute_global_addresses_v1_internal::GlobalAddressesRestStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteAddress(
-      google::cloud::cpp::compute::global_addresses::v1::
-          DeleteAddressRequest const& request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteAddress(google::cloud::cpp::compute::global_addresses::v1::DeleteAddressRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteAddress(
-      NoAwaitTag, google::cloud::cpp::compute::global_addresses::v1::
-                      DeleteAddressRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeleteAddress(NoAwaitTag,
+      google::cloud::cpp::compute::global_addresses::v1::DeleteAddressRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteAddress(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteAddress(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Address> GetAddress(
-      google::cloud::cpp::compute::global_addresses::v1::
-          GetAddressRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Address>
+  GetAddress(google::cloud::cpp::compute::global_addresses::v1::GetAddressRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertAddress(
-      google::cloud::cpp::compute::global_addresses::v1::
-          InsertAddressRequest const& request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  InsertAddress(google::cloud::cpp::compute::global_addresses::v1::InsertAddressRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertAddress(
-      NoAwaitTag, google::cloud::cpp::compute::global_addresses::v1::
-                      InsertAddressRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  InsertAddress(NoAwaitTag,
+      google::cloud::cpp::compute::global_addresses::v1::InsertAddressRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertAddress(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  InsertAddress(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
-  StreamRange<google::cloud::cpp::compute::v1::Address> ListGlobalAddresses(
-      google::cloud::cpp::compute::global_addresses::v1::
-          ListGlobalAddressesRequest request) override;
+  StreamRange<google::cloud::cpp::compute::v1::Address>
+  ListGlobalAddresses(google::cloud::cpp::compute::global_addresses::v1::ListGlobalAddressesRequest request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Move(
-      google::cloud::cpp::compute::global_addresses::v1::MoveRequest const&
-          request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  Move(google::cloud::cpp::compute::global_addresses::v1::MoveRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation> Move(
-      NoAwaitTag,
-      google::cloud::cpp::compute::global_addresses::v1::MoveRequest const&
-          request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  Move(NoAwaitTag,
+      google::cloud::cpp::compute::global_addresses::v1::MoveRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Move(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  Move(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
-      google::cloud::cpp::compute::global_addresses::v1::SetLabelsRequest const&
-          request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  SetLabels(google::cloud::cpp::compute::global_addresses::v1::SetLabelsRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
-      NoAwaitTag,
-      google::cloud::cpp::compute::global_addresses::v1::SetLabelsRequest const&
-          request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  SetLabels(NoAwaitTag,
+      google::cloud::cpp::compute::global_addresses::v1::SetLabelsRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  SetLabels(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
  private:
-  static std::unique_ptr<
-      compute_global_addresses_v1::GlobalAddressesRetryPolicy>
+  static std::unique_ptr<compute_global_addresses_v1::GlobalAddressesRetryPolicy>
   retry_policy(Options const& options) {
-    return options
-        .get<compute_global_addresses_v1::GlobalAddressesRetryPolicyOption>()
-        ->clone();
+    return options.get<compute_global_addresses_v1::GlobalAddressesRetryPolicyOption>()->clone();
   }
 
   static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options
-        .get<compute_global_addresses_v1::GlobalAddressesBackoffPolicyOption>()
-        ->clone();
+    return options.get<compute_global_addresses_v1::GlobalAddressesBackoffPolicyOption>()->clone();
   }
 
-  static std::unique_ptr<
-      compute_global_addresses_v1::GlobalAddressesConnectionIdempotencyPolicy>
+  static std::unique_ptr<compute_global_addresses_v1::GlobalAddressesConnectionIdempotencyPolicy>
   idempotency_policy(Options const& options) {
-    return options
-        .get<compute_global_addresses_v1::
-                 GlobalAddressesConnectionIdempotencyPolicyOption>()
-        ->clone();
+    return options.get<compute_global_addresses_v1::GlobalAddressesConnectionIdempotencyPolicyOption>()->clone();
   }
 
   static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-    return options
-        .get<compute_global_addresses_v1::GlobalAddressesPollingPolicyOption>()
-        ->clone();
+    return options.get<compute_global_addresses_v1::GlobalAddressesPollingPolicyOption>()->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<compute_global_addresses_v1_internal::GlobalAddressesRestStub>
-      stub_;
+  std::shared_ptr<compute_global_addresses_v1_internal::GlobalAddressesRestStub> stub_;
   Options options_;
 };
 

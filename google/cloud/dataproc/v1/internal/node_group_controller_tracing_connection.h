@@ -36,57 +36,55 @@ class NodeGroupControllerTracingConnection
   ~NodeGroupControllerTracingConnection() override = default;
 
   explicit NodeGroupControllerTracingConnection(
-      std::shared_ptr<dataproc_v1::NodeGroupControllerConnection> child);
+    std::shared_ptr<dataproc_v1::NodeGroupControllerConnection> child);
 
   Options options() override { return child_->options(); }
 
-  future<StatusOr<google::cloud::dataproc::v1::NodeGroup>> CreateNodeGroup(
-      google::cloud::dataproc::v1::CreateNodeGroupRequest const& request)
-      override;
+  future<StatusOr<google::cloud::dataproc::v1::NodeGroup>>
+  CreateNodeGroup(google::cloud::dataproc::v1::CreateNodeGroupRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> CreateNodeGroup(
-      NoAwaitTag,
-      google::cloud::dataproc::v1::CreateNodeGroupRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  CreateNodeGroup(NoAwaitTag,
+      google::cloud::dataproc::v1::CreateNodeGroupRequest const& request) override;
 
-  future<StatusOr<google::cloud::dataproc::v1::NodeGroup>> CreateNodeGroup(
+  future<StatusOr<google::cloud::dataproc::v1::NodeGroup>>
+  CreateNodeGroup(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::dataproc::v1::NodeGroup>> ResizeNodeGroup(
-      google::cloud::dataproc::v1::ResizeNodeGroupRequest const& request)
-      override;
+  future<StatusOr<google::cloud::dataproc::v1::NodeGroup>>
+  ResizeNodeGroup(google::cloud::dataproc::v1::ResizeNodeGroupRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> ResizeNodeGroup(
-      NoAwaitTag,
-      google::cloud::dataproc::v1::ResizeNodeGroupRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  ResizeNodeGroup(NoAwaitTag,
+      google::cloud::dataproc::v1::ResizeNodeGroupRequest const& request) override;
 
-  future<StatusOr<google::cloud::dataproc::v1::NodeGroup>> ResizeNodeGroup(
+  future<StatusOr<google::cloud::dataproc::v1::NodeGroup>>
+  ResizeNodeGroup(
       google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::cloud::dataproc::v1::NodeGroup> GetNodeGroup(
-      google::cloud::dataproc::v1::GetNodeGroupRequest const& request) override;
+  StatusOr<google::cloud::dataproc::v1::NodeGroup>
+  GetNodeGroup(google::cloud::dataproc::v1::GetNodeGroupRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request) override;
+  StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request) override;
 
-  Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request) override;
+  Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request) override;
 
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request) override;
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::shared_ptr<dataproc_v1::NodeGroupControllerConnection> child_;

@@ -34,10 +34,8 @@ using ::google::cloud::composer_v1::EnvironmentsPollingPolicyOption;
 /// @deprecated Use composer_v1::EnvironmentsBackoffPolicyOption directly.
 using ::google::cloud::composer_v1::EnvironmentsBackoffPolicyOption;
 
-/// @deprecated Use composer_v1::EnvironmentsConnectionIdempotencyPolicyOption
-/// directly.
-using ::google::cloud::composer_v1::
-    EnvironmentsConnectionIdempotencyPolicyOption;
+/// @deprecated Use composer_v1::EnvironmentsConnectionIdempotencyPolicyOption directly.
+using ::google::cloud::composer_v1::EnvironmentsConnectionIdempotencyPolicyOption;
 
 /// @deprecated Use composer_v1::EnvironmentsPolicyOptionList directly.
 using ::google::cloud::composer_v1::EnvironmentsPolicyOptionList;

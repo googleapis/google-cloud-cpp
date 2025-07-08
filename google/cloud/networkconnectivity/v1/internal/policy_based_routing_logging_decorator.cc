@@ -32,18 +32,20 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 PolicyBasedRoutingServiceLogging::PolicyBasedRoutingServiceLogging(
     std::shared_ptr<PolicyBasedRoutingServiceStub> child,
-    TracingOptions tracing_options, std::set<std::string> const&)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
+    TracingOptions tracing_options,
+    std::set<std::string> const&)
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::cloud::networkconnectivity::v1::ListPolicyBasedRoutesResponse>
 PolicyBasedRoutingServiceLogging::ListPolicyBasedRoutes(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::networkconnectivity::v1::ListPolicyBasedRoutesRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::networkconnectivity::v1::ListPolicyBasedRoutesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::networkconnectivity::v1::
-                 ListPolicyBasedRoutesRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::networkconnectivity::v1::ListPolicyBasedRoutesRequest const& request) {
         return child_->ListPolicyBasedRoutes(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -51,13 +53,13 @@ PolicyBasedRoutingServiceLogging::ListPolicyBasedRoutes(
 
 StatusOr<google::cloud::networkconnectivity::v1::PolicyBasedRoute>
 PolicyBasedRoutingServiceLogging::GetPolicyBasedRoute(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::networkconnectivity::v1::GetPolicyBasedRouteRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::networkconnectivity::v1::GetPolicyBasedRouteRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::networkconnectivity::v1::
-                 GetPolicyBasedRouteRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::networkconnectivity::v1::GetPolicyBasedRouteRequest const& request) {
         return child_->GetPolicyBasedRoute(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -65,19 +67,17 @@ PolicyBasedRoutingServiceLogging::GetPolicyBasedRoute(
 
 future<StatusOr<google::longrunning::Operation>>
 PolicyBasedRoutingServiceLogging::AsyncCreatePolicyBasedRoute(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::networkconnectivity::v1::CreatePolicyBasedRouteRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::networkconnectivity::v1::CreatePolicyBasedRouteRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::networkconnectivity::v1::
-                 CreatePolicyBasedRouteRequest const& request) {
-        return child_->AsyncCreatePolicyBasedRoute(cq, std::move(context),
-                                                   std::move(options), request);
+             google::cloud::networkconnectivity::v1::CreatePolicyBasedRouteRequest const& request) {
+        return child_->AsyncCreatePolicyBasedRoute(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -85,13 +85,13 @@ PolicyBasedRoutingServiceLogging::AsyncCreatePolicyBasedRoute(
 
 StatusOr<google::longrunning::Operation>
 PolicyBasedRoutingServiceLogging::CreatePolicyBasedRoute(
-    grpc::ClientContext& context, Options options,
-    google::cloud::networkconnectivity::v1::CreatePolicyBasedRouteRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::networkconnectivity::v1::CreatePolicyBasedRouteRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::networkconnectivity::v1::
-                 CreatePolicyBasedRouteRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::networkconnectivity::v1::CreatePolicyBasedRouteRequest const& request) {
         return child_->CreatePolicyBasedRoute(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -99,19 +99,17 @@ PolicyBasedRoutingServiceLogging::CreatePolicyBasedRoute(
 
 future<StatusOr<google::longrunning::Operation>>
 PolicyBasedRoutingServiceLogging::AsyncDeletePolicyBasedRoute(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::networkconnectivity::v1::DeletePolicyBasedRouteRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::networkconnectivity::v1::DeletePolicyBasedRouteRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::networkconnectivity::v1::
-                 DeletePolicyBasedRouteRequest const& request) {
-        return child_->AsyncDeletePolicyBasedRoute(cq, std::move(context),
-                                                   std::move(options), request);
+             google::cloud::networkconnectivity::v1::DeletePolicyBasedRouteRequest const& request) {
+        return child_->AsyncDeletePolicyBasedRoute(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -119,13 +117,13 @@ PolicyBasedRoutingServiceLogging::AsyncDeletePolicyBasedRoute(
 
 StatusOr<google::longrunning::Operation>
 PolicyBasedRoutingServiceLogging::DeletePolicyBasedRoute(
-    grpc::ClientContext& context, Options options,
-    google::cloud::networkconnectivity::v1::DeletePolicyBasedRouteRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::networkconnectivity::v1::DeletePolicyBasedRouteRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::networkconnectivity::v1::
-                 DeletePolicyBasedRouteRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::networkconnectivity::v1::DeletePolicyBasedRouteRequest const& request) {
         return child_->DeletePolicyBasedRoute(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -133,10 +131,12 @@ PolicyBasedRoutingServiceLogging::DeletePolicyBasedRoute(
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 PolicyBasedRoutingServiceLogging::ListLocations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::location::ListLocationsRequest const& request) {
         return child_->ListLocations(context, options, request);
       },
@@ -145,10 +145,12 @@ PolicyBasedRoutingServiceLogging::ListLocations(
 
 StatusOr<google::cloud::location::Location>
 PolicyBasedRoutingServiceLogging::GetLocation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::location::GetLocationRequest const& request) {
         return child_->GetLocation(context, options, request);
       },
@@ -157,10 +159,12 @@ PolicyBasedRoutingServiceLogging::GetLocation(
 
 StatusOr<google::iam::v1::Policy>
 PolicyBasedRoutingServiceLogging::SetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::iam::v1::SetIamPolicyRequest const& request) {
         return child_->SetIamPolicy(context, options, request);
       },
@@ -169,10 +173,12 @@ PolicyBasedRoutingServiceLogging::SetIamPolicy(
 
 StatusOr<google::iam::v1::Policy>
 PolicyBasedRoutingServiceLogging::GetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::iam::v1::GetIamPolicyRequest const& request) {
         return child_->GetIamPolicy(context, options, request);
       },
@@ -181,10 +187,12 @@ PolicyBasedRoutingServiceLogging::GetIamPolicy(
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 PolicyBasedRoutingServiceLogging::TestIamPermissions(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::iam::v1::TestIamPermissionsRequest const& request) {
         return child_->TestIamPermissions(context, options, request);
       },
@@ -193,10 +201,12 @@ PolicyBasedRoutingServiceLogging::TestIamPermissions(
 
 StatusOr<google::longrunning::ListOperationsResponse>
 PolicyBasedRoutingServiceLogging::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::ListOperationsRequest const& request) {
         return child_->ListOperations(context, options, request);
       },
@@ -205,32 +215,40 @@ PolicyBasedRoutingServiceLogging::ListOperations(
 
 StatusOr<google::longrunning::Operation>
 PolicyBasedRoutingServiceLogging::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::GetOperationRequest const& request) {
         return child_->GetOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status PolicyBasedRoutingServiceLogging::DeleteOperation(
-    grpc::ClientContext& context, Options const& options,
+Status
+PolicyBasedRoutingServiceLogging::DeleteOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::DeleteOperationRequest const& request) {
         return child_->DeleteOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status PolicyBasedRoutingServiceLogging::CancelOperation(
-    grpc::ClientContext& context, Options const& options,
+Status
+PolicyBasedRoutingServiceLogging::CancelOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::CancelOperationRequest const& request) {
         return child_->CancelOperation(context, options, request);
       },
@@ -248,8 +266,8 @@ PolicyBasedRoutingServiceLogging::AsyncGetOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(cq, std::move(context),
-                                         std::move(options), request);
+        return child_->AsyncGetOperation(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -265,8 +283,8 @@ future<Status> PolicyBasedRoutingServiceLogging::AsyncCancelOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::CancelOperationRequest const& request) {
-        return child_->AsyncCancelOperation(cq, std::move(context),
-                                            std::move(options), request);
+        return child_->AsyncCancelOperation(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);

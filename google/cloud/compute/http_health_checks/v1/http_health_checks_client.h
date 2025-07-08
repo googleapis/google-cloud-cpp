@@ -63,9 +63,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class HttpHealthChecksClient {
  public:
-  explicit HttpHealthChecksClient(
-      std::shared_ptr<HttpHealthChecksConnection> connection,
-      Options opts = {});
+  explicit HttpHealthChecksClient(std::shared_ptr<HttpHealthChecksConnection> connection, Options opts = {});
   ~HttpHealthChecksClient();
 
   ///@{
@@ -78,12 +76,10 @@ class HttpHealthChecksClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(HttpHealthChecksClient const& a,
-                         HttpHealthChecksClient const& b) {
+  friend bool operator==(HttpHealthChecksClient const& a, HttpHealthChecksClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(HttpHealthChecksClient const& a,
-                         HttpHealthChecksClient const& b) {
+  friend bool operator!=(HttpHealthChecksClient const& a, HttpHealthChecksClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -119,9 +115,7 @@ class HttpHealthChecksClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteHttpHealthCheck(std::string const& project,
-                        std::string const& http_health_check,
-                        Options opts = {});
+  DeleteHttpHealthCheck(std::string const& project, std::string const& http_health_check, Options opts = {});
 
   // clang-format off
   ///
@@ -134,9 +128,8 @@ class HttpHealthChecksClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteHttpHealthCheck(
-      NoAwaitTag, std::string const& project,
-      std::string const& http_health_check, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeleteHttpHealthCheck(NoAwaitTag, std::string const& project, std::string const& http_health_check, Options opts = {});
 
   // clang-format off
   ///
@@ -173,9 +166,7 @@ class HttpHealthChecksClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteHttpHealthCheck(google::cloud::cpp::compute::http_health_checks::v1::
-                            DeleteHttpHealthCheckRequest const& request,
-                        Options opts = {});
+  DeleteHttpHealthCheck(google::cloud::cpp::compute::http_health_checks::v1::DeleteHttpHealthCheckRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -188,11 +179,8 @@ class HttpHealthChecksClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteHttpHealthCheck(
-      NoAwaitTag,
-      google::cloud::cpp::compute::http_health_checks::v1::
-          DeleteHttpHealthCheckRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeleteHttpHealthCheck(NoAwaitTag, google::cloud::cpp::compute::http_health_checks::v1::DeleteHttpHealthCheckRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -204,9 +192,7 @@ class HttpHealthChecksClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteHttpHealthCheck(
-      google::cloud::cpp::compute::v1::Operation const& operation,
-      Options opts = {});
+  DeleteHttpHealthCheck(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -232,9 +218,8 @@ class HttpHealthChecksClient {
   /// [google.cloud.cpp.compute.v1.HttpHealthCheck]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_053.proto#L29}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::HttpHealthCheck> GetHttpHealthCheck(
-      std::string const& project, std::string const& http_health_check,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::HttpHealthCheck>
+  GetHttpHealthCheck(std::string const& project, std::string const& http_health_check, Options opts = {});
 
   // clang-format off
   ///
@@ -264,10 +249,8 @@ class HttpHealthChecksClient {
   /// [google.cloud.cpp.compute.v1.HttpHealthCheck]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_053.proto#L29}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::HttpHealthCheck> GetHttpHealthCheck(
-      google::cloud::cpp::compute::http_health_checks::v1::
-          GetHttpHealthCheckRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::HttpHealthCheck>
+  GetHttpHealthCheck(google::cloud::cpp::compute::http_health_checks::v1::GetHttpHealthCheckRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -301,10 +284,7 @@ class HttpHealthChecksClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertHttpHealthCheck(std::string const& project,
-                        google::cloud::cpp::compute::v1::HttpHealthCheck const&
-                            http_health_check_resource,
-                        Options opts = {});
+  InsertHttpHealthCheck(std::string const& project, google::cloud::cpp::compute::v1::HttpHealthCheck const& http_health_check_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -317,11 +297,8 @@ class HttpHealthChecksClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertHttpHealthCheck(
-      NoAwaitTag, std::string const& project,
-      google::cloud::cpp::compute::v1::HttpHealthCheck const&
-          http_health_check_resource,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  InsertHttpHealthCheck(NoAwaitTag, std::string const& project, google::cloud::cpp::compute::v1::HttpHealthCheck const& http_health_check_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -359,9 +336,7 @@ class HttpHealthChecksClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertHttpHealthCheck(google::cloud::cpp::compute::http_health_checks::v1::
-                            InsertHttpHealthCheckRequest const& request,
-                        Options opts = {});
+  InsertHttpHealthCheck(google::cloud::cpp::compute::http_health_checks::v1::InsertHttpHealthCheckRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -374,11 +349,8 @@ class HttpHealthChecksClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertHttpHealthCheck(
-      NoAwaitTag,
-      google::cloud::cpp::compute::http_health_checks::v1::
-          InsertHttpHealthCheckRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  InsertHttpHealthCheck(NoAwaitTag, google::cloud::cpp::compute::http_health_checks::v1::InsertHttpHealthCheckRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -390,9 +362,7 @@ class HttpHealthChecksClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertHttpHealthCheck(
-      google::cloud::cpp::compute::v1::Operation const& operation,
-      Options opts = {});
+  InsertHttpHealthCheck(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -469,9 +439,7 @@ class HttpHealthChecksClient {
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::HttpHealthCheck>
-  ListHttpHealthChecks(google::cloud::cpp::compute::http_health_checks::v1::
-                           ListHttpHealthChecksRequest request,
-                       Options opts = {});
+  ListHttpHealthChecks(google::cloud::cpp::compute::http_health_checks::v1::ListHttpHealthChecksRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -507,11 +475,7 @@ class HttpHealthChecksClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchHttpHealthCheck(std::string const& project,
-                       std::string const& http_health_check,
-                       google::cloud::cpp::compute::v1::HttpHealthCheck const&
-                           http_health_check_resource,
-                       Options opts = {});
+  PatchHttpHealthCheck(std::string const& project, std::string const& http_health_check, google::cloud::cpp::compute::v1::HttpHealthCheck const& http_health_check_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -524,12 +488,8 @@ class HttpHealthChecksClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchHttpHealthCheck(
-      NoAwaitTag, std::string const& project,
-      std::string const& http_health_check,
-      google::cloud::cpp::compute::v1::HttpHealthCheck const&
-          http_health_check_resource,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  PatchHttpHealthCheck(NoAwaitTag, std::string const& project, std::string const& http_health_check, google::cloud::cpp::compute::v1::HttpHealthCheck const& http_health_check_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -568,9 +528,7 @@ class HttpHealthChecksClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchHttpHealthCheck(google::cloud::cpp::compute::http_health_checks::v1::
-                           PatchHttpHealthCheckRequest const& request,
-                       Options opts = {});
+  PatchHttpHealthCheck(google::cloud::cpp::compute::http_health_checks::v1::PatchHttpHealthCheckRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -583,11 +541,8 @@ class HttpHealthChecksClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchHttpHealthCheck(
-      NoAwaitTag,
-      google::cloud::cpp::compute::http_health_checks::v1::
-          PatchHttpHealthCheckRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  PatchHttpHealthCheck(NoAwaitTag, google::cloud::cpp::compute::http_health_checks::v1::PatchHttpHealthCheckRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -599,9 +554,7 @@ class HttpHealthChecksClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchHttpHealthCheck(
-      google::cloud::cpp::compute::v1::Operation const& operation,
-      Options opts = {});
+  PatchHttpHealthCheck(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -636,11 +589,7 @@ class HttpHealthChecksClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateHttpHealthCheck(std::string const& project,
-                        std::string const& http_health_check,
-                        google::cloud::cpp::compute::v1::HttpHealthCheck const&
-                            http_health_check_resource,
-                        Options opts = {});
+  UpdateHttpHealthCheck(std::string const& project, std::string const& http_health_check, google::cloud::cpp::compute::v1::HttpHealthCheck const& http_health_check_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -653,12 +602,8 @@ class HttpHealthChecksClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateHttpHealthCheck(
-      NoAwaitTag, std::string const& project,
-      std::string const& http_health_check,
-      google::cloud::cpp::compute::v1::HttpHealthCheck const&
-          http_health_check_resource,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  UpdateHttpHealthCheck(NoAwaitTag, std::string const& project, std::string const& http_health_check, google::cloud::cpp::compute::v1::HttpHealthCheck const& http_health_check_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -696,9 +641,7 @@ class HttpHealthChecksClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateHttpHealthCheck(google::cloud::cpp::compute::http_health_checks::v1::
-                            UpdateHttpHealthCheckRequest const& request,
-                        Options opts = {});
+  UpdateHttpHealthCheck(google::cloud::cpp::compute::http_health_checks::v1::UpdateHttpHealthCheckRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -711,11 +654,8 @@ class HttpHealthChecksClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateHttpHealthCheck(
-      NoAwaitTag,
-      google::cloud::cpp::compute::http_health_checks::v1::
-          UpdateHttpHealthCheckRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  UpdateHttpHealthCheck(NoAwaitTag, google::cloud::cpp::compute::http_health_checks::v1::UpdateHttpHealthCheckRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -727,9 +667,7 @@ class HttpHealthChecksClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateHttpHealthCheck(
-      google::cloud::cpp::compute::v1::Operation const& operation,
-      Options opts = {});
+  UpdateHttpHealthCheck(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
 
  private:
   std::shared_ptr<HttpHealthChecksConnection> connection_;

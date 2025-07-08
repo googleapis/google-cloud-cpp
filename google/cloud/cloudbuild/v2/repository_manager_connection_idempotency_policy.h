@@ -36,72 +36,68 @@ class RepositoryManagerConnectionIdempotencyPolicy {
   virtual ~RepositoryManagerConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<RepositoryManagerConnectionIdempotencyPolicy> clone()
-      const;
+  virtual std::unique_ptr<RepositoryManagerConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency CreateConnection(
-      google::devtools::cloudbuild::v2::CreateConnectionRequest const& request);
+  virtual google::cloud::Idempotency
+  CreateConnection(google::devtools::cloudbuild::v2::CreateConnectionRequest const& request);
 
-  virtual google::cloud::Idempotency GetConnection(
-      google::devtools::cloudbuild::v2::GetConnectionRequest const& request);
+  virtual google::cloud::Idempotency
+  GetConnection(google::devtools::cloudbuild::v2::GetConnectionRequest const& request);
 
-  virtual google::cloud::Idempotency ListConnections(
-      google::devtools::cloudbuild::v2::ListConnectionsRequest request);
+  virtual google::cloud::Idempotency
+  ListConnections(google::devtools::cloudbuild::v2::ListConnectionsRequest request);
 
-  virtual google::cloud::Idempotency UpdateConnection(
-      google::devtools::cloudbuild::v2::UpdateConnectionRequest const& request);
+  virtual google::cloud::Idempotency
+  UpdateConnection(google::devtools::cloudbuild::v2::UpdateConnectionRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteConnection(
-      google::devtools::cloudbuild::v2::DeleteConnectionRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteConnection(google::devtools::cloudbuild::v2::DeleteConnectionRequest const& request);
 
-  virtual google::cloud::Idempotency CreateRepository(
-      google::devtools::cloudbuild::v2::CreateRepositoryRequest const& request);
+  virtual google::cloud::Idempotency
+  CreateRepository(google::devtools::cloudbuild::v2::CreateRepositoryRequest const& request);
 
-  virtual google::cloud::Idempotency BatchCreateRepositories(
-      google::devtools::cloudbuild::v2::BatchCreateRepositoriesRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  BatchCreateRepositories(google::devtools::cloudbuild::v2::BatchCreateRepositoriesRequest const& request);
 
-  virtual google::cloud::Idempotency GetRepository(
-      google::devtools::cloudbuild::v2::GetRepositoryRequest const& request);
+  virtual google::cloud::Idempotency
+  GetRepository(google::devtools::cloudbuild::v2::GetRepositoryRequest const& request);
 
-  virtual google::cloud::Idempotency ListRepositories(
-      google::devtools::cloudbuild::v2::ListRepositoriesRequest request);
+  virtual google::cloud::Idempotency
+  ListRepositories(google::devtools::cloudbuild::v2::ListRepositoriesRequest request);
 
-  virtual google::cloud::Idempotency DeleteRepository(
-      google::devtools::cloudbuild::v2::DeleteRepositoryRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteRepository(google::devtools::cloudbuild::v2::DeleteRepositoryRequest const& request);
 
-  virtual google::cloud::Idempotency FetchReadWriteToken(
-      google::devtools::cloudbuild::v2::FetchReadWriteTokenRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  FetchReadWriteToken(google::devtools::cloudbuild::v2::FetchReadWriteTokenRequest const& request);
 
-  virtual google::cloud::Idempotency FetchReadToken(
-      google::devtools::cloudbuild::v2::FetchReadTokenRequest const& request);
+  virtual google::cloud::Idempotency
+  FetchReadToken(google::devtools::cloudbuild::v2::FetchReadTokenRequest const& request);
 
-  virtual google::cloud::Idempotency FetchLinkableRepositories(
-      google::devtools::cloudbuild::v2::FetchLinkableRepositoriesRequest
-          request);
+  virtual google::cloud::Idempotency
+  FetchLinkableRepositories(google::devtools::cloudbuild::v2::FetchLinkableRepositoriesRequest request);
 
-  virtual google::cloud::Idempotency FetchGitRefs(
-      google::devtools::cloudbuild::v2::FetchGitRefsRequest const& request);
+  virtual google::cloud::Idempotency
+  FetchGitRefs(google::devtools::cloudbuild::v2::FetchGitRefsRequest const& request);
 
-  virtual google::cloud::Idempotency SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request);
+  virtual google::cloud::Idempotency
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
 
-  virtual google::cloud::Idempotency GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 
-  virtual google::cloud::Idempotency CancelOperation(
-      google::longrunning::CancelOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  CancelOperation(google::longrunning::CancelOperationRequest const& request);
 };
 
 std::unique_ptr<RepositoryManagerConnectionIdempotencyPolicy>
-MakeDefaultRepositoryManagerConnectionIdempotencyPolicy();
+    MakeDefaultRepositoryManagerConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloudbuild_v2

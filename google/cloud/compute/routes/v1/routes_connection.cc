@@ -17,11 +17,11 @@
 // source: google/cloud/compute/routes/v1/routes.proto
 
 #include "google/cloud/compute/routes/v1/routes_connection.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/compute/routes/v1/internal/routes_option_defaults.h"
 #include "google/cloud/compute/routes/v1/internal/routes_tracing_connection.h"
 #include "google/cloud/compute/routes/v1/routes_options.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
@@ -40,8 +40,8 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RoutesConnection::DeleteRoute(
     google::cloud::cpp::compute::routes::v1::DeleteRouteRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
@@ -49,18 +49,19 @@ RoutesConnection::DeleteRoute(
     NoAwaitTag,
     google::cloud::cpp::compute::routes::v1::DeleteRouteRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RoutesConnection::DeleteRoute(
     google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::cloud::cpp::compute::v1::Route> RoutesConnection::GetRoute(
+StatusOr<google::cloud::cpp::compute::v1::Route>
+RoutesConnection::GetRoute(
     google::cloud::cpp::compute::routes::v1::GetRouteRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -69,8 +70,8 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RoutesConnection::InsertRoute(
     google::cloud::cpp::compute::routes::v1::InsertRouteRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
@@ -78,21 +79,19 @@ RoutesConnection::InsertRoute(
     NoAwaitTag,
     google::cloud::cpp::compute::routes::v1::InsertRouteRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RoutesConnection::InsertRoute(
     google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StreamRange<google::cloud::cpp::compute::v1::Route>
-RoutesConnection::ListRoutes(
-    google::cloud::cpp::compute::routes::v1::
-        ListRoutesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::cpp::compute::v1::Route> RoutesConnection::ListRoutes(
+    google::cloud::cpp::compute::routes::v1::ListRoutesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::cpp::compute::v1::Route>>();
 }

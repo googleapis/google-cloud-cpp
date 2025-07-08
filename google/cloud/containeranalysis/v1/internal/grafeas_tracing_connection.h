@@ -36,50 +36,51 @@ class GrafeasTracingConnection
   ~GrafeasTracingConnection() override = default;
 
   explicit GrafeasTracingConnection(
-      std::shared_ptr<containeranalysis_v1::GrafeasConnection> child);
+    std::shared_ptr<containeranalysis_v1::GrafeasConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StatusOr<grafeas::v1::Occurrence> GetOccurrence(
-      grafeas::v1::GetOccurrenceRequest const& request) override;
+  StatusOr<grafeas::v1::Occurrence>
+  GetOccurrence(grafeas::v1::GetOccurrenceRequest const& request) override;
 
-  StreamRange<grafeas::v1::Occurrence> ListOccurrences(
-      grafeas::v1::ListOccurrencesRequest request) override;
+  StreamRange<grafeas::v1::Occurrence>
+  ListOccurrences(grafeas::v1::ListOccurrencesRequest request) override;
 
-  Status DeleteOccurrence(
-      grafeas::v1::DeleteOccurrenceRequest const& request) override;
+  Status
+  DeleteOccurrence(grafeas::v1::DeleteOccurrenceRequest const& request) override;
 
-  StatusOr<grafeas::v1::Occurrence> CreateOccurrence(
-      grafeas::v1::CreateOccurrenceRequest const& request) override;
+  StatusOr<grafeas::v1::Occurrence>
+  CreateOccurrence(grafeas::v1::CreateOccurrenceRequest const& request) override;
 
-  StatusOr<grafeas::v1::BatchCreateOccurrencesResponse> BatchCreateOccurrences(
-      grafeas::v1::BatchCreateOccurrencesRequest const& request) override;
+  StatusOr<grafeas::v1::BatchCreateOccurrencesResponse>
+  BatchCreateOccurrences(grafeas::v1::BatchCreateOccurrencesRequest const& request) override;
 
-  StatusOr<grafeas::v1::Occurrence> UpdateOccurrence(
-      grafeas::v1::UpdateOccurrenceRequest const& request) override;
+  StatusOr<grafeas::v1::Occurrence>
+  UpdateOccurrence(grafeas::v1::UpdateOccurrenceRequest const& request) override;
 
-  StatusOr<grafeas::v1::Note> GetOccurrenceNote(
-      grafeas::v1::GetOccurrenceNoteRequest const& request) override;
+  StatusOr<grafeas::v1::Note>
+  GetOccurrenceNote(grafeas::v1::GetOccurrenceNoteRequest const& request) override;
 
-  StatusOr<grafeas::v1::Note> GetNote(
-      grafeas::v1::GetNoteRequest const& request) override;
+  StatusOr<grafeas::v1::Note>
+  GetNote(grafeas::v1::GetNoteRequest const& request) override;
 
-  StreamRange<grafeas::v1::Note> ListNotes(
-      grafeas::v1::ListNotesRequest request) override;
+  StreamRange<grafeas::v1::Note>
+  ListNotes(grafeas::v1::ListNotesRequest request) override;
 
-  Status DeleteNote(grafeas::v1::DeleteNoteRequest const& request) override;
+  Status
+  DeleteNote(grafeas::v1::DeleteNoteRequest const& request) override;
 
-  StatusOr<grafeas::v1::Note> CreateNote(
-      grafeas::v1::CreateNoteRequest const& request) override;
+  StatusOr<grafeas::v1::Note>
+  CreateNote(grafeas::v1::CreateNoteRequest const& request) override;
 
-  StatusOr<grafeas::v1::BatchCreateNotesResponse> BatchCreateNotes(
-      grafeas::v1::BatchCreateNotesRequest const& request) override;
+  StatusOr<grafeas::v1::BatchCreateNotesResponse>
+  BatchCreateNotes(grafeas::v1::BatchCreateNotesRequest const& request) override;
 
-  StatusOr<grafeas::v1::Note> UpdateNote(
-      grafeas::v1::UpdateNoteRequest const& request) override;
+  StatusOr<grafeas::v1::Note>
+  UpdateNote(grafeas::v1::UpdateNoteRequest const& request) override;
 
-  StreamRange<grafeas::v1::Occurrence> ListNoteOccurrences(
-      grafeas::v1::ListNoteOccurrencesRequest request) override;
+  StreamRange<grafeas::v1::Occurrence>
+  ListNoteOccurrences(grafeas::v1::ListNoteOccurrencesRequest request) override;
 
  private:
   std::shared_ptr<containeranalysis_v1::GrafeasConnection> child_;

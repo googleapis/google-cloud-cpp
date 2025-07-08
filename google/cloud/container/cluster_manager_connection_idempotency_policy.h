@@ -26,13 +26,10 @@ namespace cloud {
 namespace container {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use
-/// container_v1::MakeDefaultClusterManagerConnectionIdempotencyPolicy directly.
-using ::google::cloud::container_v1::
-    MakeDefaultClusterManagerConnectionIdempotencyPolicy;
+/// @deprecated Use container_v1::MakeDefaultClusterManagerConnectionIdempotencyPolicy directly.
+using ::google::cloud::container_v1::MakeDefaultClusterManagerConnectionIdempotencyPolicy;
 
-/// @deprecated Use container_v1::ClusterManagerConnectionIdempotencyPolicy
-/// directly.
+/// @deprecated Use container_v1::ClusterManagerConnectionIdempotencyPolicy directly.
 using ::google::cloud::container_v1::ClusterManagerConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

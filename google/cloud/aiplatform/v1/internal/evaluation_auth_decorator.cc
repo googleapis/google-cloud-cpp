@@ -31,18 +31,18 @@ EvaluationServiceAuth::EvaluationServiceAuth(
     std::shared_ptr<EvaluationServiceStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::aiplatform::v1::EvaluateInstancesResponse>
-EvaluationServiceAuth::EvaluateInstances(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::aiplatform::v1::EvaluateInstancesResponse> EvaluationServiceAuth::EvaluateInstances(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::EvaluateInstancesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->EvaluateInstances(context, options, request);
 }
 
-StatusOr<google::cloud::location::ListLocationsResponse>
-EvaluationServiceAuth::ListLocations(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::location::ListLocationsResponse> EvaluationServiceAuth::ListLocations(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -50,7 +50,8 @@ EvaluationServiceAuth::ListLocations(
 }
 
 StatusOr<google::cloud::location::Location> EvaluationServiceAuth::GetLocation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -58,7 +59,8 @@ StatusOr<google::cloud::location::Location> EvaluationServiceAuth::GetLocation(
 }
 
 StatusOr<google::iam::v1::Policy> EvaluationServiceAuth::SetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -66,25 +68,26 @@ StatusOr<google::iam::v1::Policy> EvaluationServiceAuth::SetIamPolicy(
 }
 
 StatusOr<google::iam::v1::Policy> EvaluationServiceAuth::GetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetIamPolicy(context, options, request);
 }
 
-StatusOr<google::iam::v1::TestIamPermissionsResponse>
-EvaluationServiceAuth::TestIamPermissions(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::iam::v1::TestIamPermissionsResponse> EvaluationServiceAuth::TestIamPermissions(
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->TestIamPermissions(context, options, request);
 }
 
-StatusOr<google::longrunning::ListOperationsResponse>
-EvaluationServiceAuth::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse> EvaluationServiceAuth::ListOperations(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -92,7 +95,8 @@ EvaluationServiceAuth::ListOperations(
 }
 
 StatusOr<google::longrunning::Operation> EvaluationServiceAuth::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -100,7 +104,8 @@ StatusOr<google::longrunning::Operation> EvaluationServiceAuth::GetOperation(
 }
 
 Status EvaluationServiceAuth::DeleteOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -108,7 +113,8 @@ Status EvaluationServiceAuth::DeleteOperation(
 }
 
 Status EvaluationServiceAuth::CancelOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -116,7 +122,8 @@ Status EvaluationServiceAuth::CancelOperation(
 }
 
 StatusOr<google::longrunning::Operation> EvaluationServiceAuth::WaitOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::WaitOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;

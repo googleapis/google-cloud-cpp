@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VIDEOINTELLIGENCE_V1_INTERNAL_VIDEO_INTELLIGENCE_METADATA_DECORATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VIDEOINTELLIGENCE_V1_INTERNAL_VIDEO_INTELLIGENCE_METADATA_DECORATOR_H
 
-#include "google/cloud/videointelligence/v1/internal/video_intelligence_stub.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
+#include "google/cloud/videointelligence/v1/internal/video_intelligence_stub.h"
 #include <google/longrunning/operations.grpc.pb.h>
 #include <map>
 #include <memory>
@@ -44,13 +44,12 @@ class VideoIntelligenceServiceMetadata : public VideoIntelligenceServiceStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::videointelligence::v1::AnnotateVideoRequest const& request)
-      override;
+      google::cloud::videointelligence::v1::AnnotateVideoRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> AnnotateVideo(
-      grpc::ClientContext& context, Options options,
-      google::cloud::videointelligence::v1::AnnotateVideoRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::videointelligence::v1::AnnotateVideoRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
@@ -65,7 +64,8 @@ class VideoIntelligenceServiceMetadata : public VideoIntelligenceServiceStub {
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context, Options const& options,
+  void SetMetadata(grpc::ClientContext& context,
+                   Options const& options,
                    std::string const& request_params);
   void SetMetadata(grpc::ClientContext& context, Options const& options);
 

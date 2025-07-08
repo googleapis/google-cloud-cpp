@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_V3_INTERNAL_SERVICE_MONITORING_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_V3_INTERNAL_SERVICE_MONITORING_CONNECTION_IMPL_H
 
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/monitoring/v3/internal/service_monitoring_retry_traits.h"
 #include "google/cloud/monitoring/v3/internal/service_monitoring_stub.h"
 #include "google/cloud/monitoring/v3/service_monitoring_connection.h"
 #include "google/cloud/monitoring/v3/service_monitoring_connection_idempotency_policy.h"
 #include "google/cloud/monitoring/v3/service_monitoring_options.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -43,51 +43,41 @@ class ServiceMonitoringServiceConnectionImpl
   ~ServiceMonitoringServiceConnectionImpl() override = default;
 
   ServiceMonitoringServiceConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<monitoring_v3_internal::ServiceMonitoringServiceStub>
-          stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<monitoring_v3_internal::ServiceMonitoringServiceStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
-  StatusOr<google::monitoring::v3::Service> CreateService(
-      google::monitoring::v3::CreateServiceRequest const& request) override;
+  StatusOr<google::monitoring::v3::Service>
+  CreateService(google::monitoring::v3::CreateServiceRequest const& request) override;
 
-  StatusOr<google::monitoring::v3::Service> GetService(
-      google::monitoring::v3::GetServiceRequest const& request) override;
+  StatusOr<google::monitoring::v3::Service>
+  GetService(google::monitoring::v3::GetServiceRequest const& request) override;
 
-  StreamRange<google::monitoring::v3::Service> ListServices(
-      google::monitoring::v3::ListServicesRequest request) override;
+  StreamRange<google::monitoring::v3::Service>
+  ListServices(google::monitoring::v3::ListServicesRequest request) override;
 
-  StatusOr<google::monitoring::v3::Service> UpdateService(
-      google::monitoring::v3::UpdateServiceRequest const& request) override;
+  StatusOr<google::monitoring::v3::Service>
+  UpdateService(google::monitoring::v3::UpdateServiceRequest const& request) override;
 
-  Status DeleteService(
-      google::monitoring::v3::DeleteServiceRequest const& request) override;
-
-  StatusOr<google::monitoring::v3::ServiceLevelObjective>
-  CreateServiceLevelObjective(
-      google::monitoring::v3::CreateServiceLevelObjectiveRequest const& request)
-      override;
+  Status
+  DeleteService(google::monitoring::v3::DeleteServiceRequest const& request) override;
 
   StatusOr<google::monitoring::v3::ServiceLevelObjective>
-  GetServiceLevelObjective(
-      google::monitoring::v3::GetServiceLevelObjectiveRequest const& request)
-      override;
+  CreateServiceLevelObjective(google::monitoring::v3::CreateServiceLevelObjectiveRequest const& request) override;
+
+  StatusOr<google::monitoring::v3::ServiceLevelObjective>
+  GetServiceLevelObjective(google::monitoring::v3::GetServiceLevelObjectiveRequest const& request) override;
 
   StreamRange<google::monitoring::v3::ServiceLevelObjective>
-  ListServiceLevelObjectives(
-      google::monitoring::v3::ListServiceLevelObjectivesRequest request)
-      override;
+  ListServiceLevelObjectives(google::monitoring::v3::ListServiceLevelObjectivesRequest request) override;
 
   StatusOr<google::monitoring::v3::ServiceLevelObjective>
-  UpdateServiceLevelObjective(
-      google::monitoring::v3::UpdateServiceLevelObjectiveRequest const& request)
-      override;
+  UpdateServiceLevelObjective(google::monitoring::v3::UpdateServiceLevelObjectiveRequest const& request) override;
 
-  Status DeleteServiceLevelObjective(
-      google::monitoring::v3::DeleteServiceLevelObjectiveRequest const& request)
-      override;
+  Status
+  DeleteServiceLevelObjective(google::monitoring::v3::DeleteServiceLevelObjectiveRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

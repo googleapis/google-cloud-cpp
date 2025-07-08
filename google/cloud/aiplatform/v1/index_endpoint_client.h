@@ -64,28 +64,23 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class IndexEndpointServiceClient {
  public:
-  explicit IndexEndpointServiceClient(
-      std::shared_ptr<IndexEndpointServiceConnection> connection,
-      Options opts = {});
+  explicit IndexEndpointServiceClient(std::shared_ptr<IndexEndpointServiceConnection> connection, Options opts = {});
   ~IndexEndpointServiceClient();
 
   ///@{
   /// @name Copy and move support
   IndexEndpointServiceClient(IndexEndpointServiceClient const&) = default;
-  IndexEndpointServiceClient& operator=(IndexEndpointServiceClient const&) =
-      default;
+  IndexEndpointServiceClient& operator=(IndexEndpointServiceClient const&) = default;
   IndexEndpointServiceClient(IndexEndpointServiceClient&&) = default;
   IndexEndpointServiceClient& operator=(IndexEndpointServiceClient&&) = default;
   ///@}
 
   ///@{
   /// @name Equality
-  friend bool operator==(IndexEndpointServiceClient const& a,
-                         IndexEndpointServiceClient const& b) {
+  friend bool operator==(IndexEndpointServiceClient const& a, IndexEndpointServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(IndexEndpointServiceClient const& a,
-                         IndexEndpointServiceClient const& b) {
+  friend bool operator!=(IndexEndpointServiceClient const& a, IndexEndpointServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -122,10 +117,7 @@ class IndexEndpointServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::IndexEndpoint>>
-  CreateIndexEndpoint(
-      std::string const& parent,
-      google::cloud::aiplatform::v1::IndexEndpoint const& index_endpoint,
-      Options opts = {});
+  CreateIndexEndpoint(std::string const& parent, google::cloud::aiplatform::v1::IndexEndpoint const& index_endpoint, Options opts = {});
 
   // clang-format off
   ///
@@ -138,10 +130,8 @@ class IndexEndpointServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateIndexEndpoint(
-      NoAwaitTag, std::string const& parent,
-      google::cloud::aiplatform::v1::IndexEndpoint const& index_endpoint,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateIndexEndpoint(NoAwaitTag, std::string const& parent, google::cloud::aiplatform::v1::IndexEndpoint const& index_endpoint, Options opts = {});
 
   // clang-format off
   ///
@@ -178,9 +168,7 @@ class IndexEndpointServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::IndexEndpoint>>
-  CreateIndexEndpoint(
-      google::cloud::aiplatform::v1::CreateIndexEndpointRequest const& request,
-      Options opts = {});
+  CreateIndexEndpoint(google::cloud::aiplatform::v1::CreateIndexEndpointRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -193,10 +181,8 @@ class IndexEndpointServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateIndexEndpoint(
-      NoAwaitTag,
-      google::cloud::aiplatform::v1::CreateIndexEndpointRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateIndexEndpoint(NoAwaitTag, google::cloud::aiplatform::v1::CreateIndexEndpointRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -208,8 +194,7 @@ class IndexEndpointServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::IndexEndpoint>>
-  CreateIndexEndpoint(google::longrunning::Operation const& operation,
-                      Options opts = {});
+  CreateIndexEndpoint(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -235,8 +220,8 @@ class IndexEndpointServiceClient {
   /// [google.cloud.aiplatform.v1.IndexEndpoint]: @googleapis_reference_link{google/cloud/aiplatform/v1/index_endpoint.proto#L36}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::IndexEndpoint> GetIndexEndpoint(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::IndexEndpoint>
+  GetIndexEndpoint(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -265,9 +250,8 @@ class IndexEndpointServiceClient {
   /// [google.cloud.aiplatform.v1.IndexEndpoint]: @googleapis_reference_link{google/cloud/aiplatform/v1/index_endpoint.proto#L36}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::IndexEndpoint> GetIndexEndpoint(
-      google::cloud::aiplatform::v1::GetIndexEndpointRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::IndexEndpoint>
+  GetIndexEndpoint(google::cloud::aiplatform::v1::GetIndexEndpointRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -301,8 +285,8 @@ class IndexEndpointServiceClient {
   /// [google.cloud.aiplatform.v1.ListIndexEndpointsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/index_endpoint_service.proto#L180}
   ///
   // clang-format on
-  StreamRange<google::cloud::aiplatform::v1::IndexEndpoint> ListIndexEndpoints(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::aiplatform::v1::IndexEndpoint>
+  ListIndexEndpoints(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -340,9 +324,8 @@ class IndexEndpointServiceClient {
   /// [google.cloud.aiplatform.v1.ListIndexEndpointsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/index_endpoint_service.proto#L180}
   ///
   // clang-format on
-  StreamRange<google::cloud::aiplatform::v1::IndexEndpoint> ListIndexEndpoints(
-      google::cloud::aiplatform::v1::ListIndexEndpointsRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::aiplatform::v1::IndexEndpoint>
+  ListIndexEndpoints(google::cloud::aiplatform::v1::ListIndexEndpointsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -369,9 +352,8 @@ class IndexEndpointServiceClient {
   /// [google.protobuf.FieldMask]: @googleapis_reference_link{google/protobuf/field_mask.proto#L242}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::IndexEndpoint> UpdateIndexEndpoint(
-      google::cloud::aiplatform::v1::IndexEndpoint const& index_endpoint,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::IndexEndpoint>
+  UpdateIndexEndpoint(google::cloud::aiplatform::v1::IndexEndpoint const& index_endpoint, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -400,9 +382,8 @@ class IndexEndpointServiceClient {
   /// [google.cloud.aiplatform.v1.UpdateIndexEndpointRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/index_endpoint_service.proto#L241}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::IndexEndpoint> UpdateIndexEndpoint(
-      google::cloud::aiplatform::v1::UpdateIndexEndpointRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::IndexEndpoint>
+  UpdateIndexEndpoint(google::cloud::aiplatform::v1::UpdateIndexEndpointRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -449,8 +430,8 @@ class IndexEndpointServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteIndexEndpoint(
-      NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteIndexEndpoint(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -487,9 +468,7 @@ class IndexEndpointServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteIndexEndpoint(
-      google::cloud::aiplatform::v1::DeleteIndexEndpointRequest const& request,
-      Options opts = {});
+  DeleteIndexEndpoint(google::cloud::aiplatform::v1::DeleteIndexEndpointRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -502,10 +481,8 @@ class IndexEndpointServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteIndexEndpoint(
-      NoAwaitTag,
-      google::cloud::aiplatform::v1::DeleteIndexEndpointRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteIndexEndpoint(NoAwaitTag, google::cloud::aiplatform::v1::DeleteIndexEndpointRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -517,8 +494,7 @@ class IndexEndpointServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteIndexEndpoint(google::longrunning::Operation const& operation,
-                      Options opts = {});
+  DeleteIndexEndpoint(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -555,10 +531,7 @@ class IndexEndpointServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeployIndexResponse>>
-  DeployIndex(
-      std::string const& index_endpoint,
-      google::cloud::aiplatform::v1::DeployedIndex const& deployed_index,
-      Options opts = {});
+  DeployIndex(std::string const& index_endpoint, google::cloud::aiplatform::v1::DeployedIndex const& deployed_index, Options opts = {});
 
   // clang-format off
   ///
@@ -571,10 +544,8 @@ class IndexEndpointServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeployIndex(
-      NoAwaitTag, std::string const& index_endpoint,
-      google::cloud::aiplatform::v1::DeployedIndex const& deployed_index,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeployIndex(NoAwaitTag, std::string const& index_endpoint, google::cloud::aiplatform::v1::DeployedIndex const& deployed_index, Options opts = {});
 
   // clang-format off
   ///
@@ -613,8 +584,7 @@ class IndexEndpointServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeployIndexResponse>>
-  DeployIndex(google::cloud::aiplatform::v1::DeployIndexRequest const& request,
-              Options opts = {});
+  DeployIndex(google::cloud::aiplatform::v1::DeployIndexRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -627,10 +597,8 @@ class IndexEndpointServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeployIndex(
-      NoAwaitTag,
-      google::cloud::aiplatform::v1::DeployIndexRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeployIndex(NoAwaitTag, google::cloud::aiplatform::v1::DeployIndexRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -642,8 +610,7 @@ class IndexEndpointServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeployIndexResponse>>
-  DeployIndex(google::longrunning::Operation const& operation,
-              Options opts = {});
+  DeployIndex(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -680,8 +647,7 @@ class IndexEndpointServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::UndeployIndexResponse>>
-  UndeployIndex(std::string const& index_endpoint,
-                std::string const& deployed_index_id, Options opts = {});
+  UndeployIndex(std::string const& index_endpoint, std::string const& deployed_index_id, Options opts = {});
 
   // clang-format off
   ///
@@ -694,9 +660,8 @@ class IndexEndpointServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UndeployIndex(
-      NoAwaitTag, std::string const& index_endpoint,
-      std::string const& deployed_index_id, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UndeployIndex(NoAwaitTag, std::string const& index_endpoint, std::string const& deployed_index_id, Options opts = {});
 
   // clang-format off
   ///
@@ -734,9 +699,7 @@ class IndexEndpointServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::UndeployIndexResponse>>
-  UndeployIndex(
-      google::cloud::aiplatform::v1::UndeployIndexRequest const& request,
-      Options opts = {});
+  UndeployIndex(google::cloud::aiplatform::v1::UndeployIndexRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -749,10 +712,8 @@ class IndexEndpointServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UndeployIndex(
-      NoAwaitTag,
-      google::cloud::aiplatform::v1::UndeployIndexRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UndeployIndex(NoAwaitTag, google::cloud::aiplatform::v1::UndeployIndexRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -764,8 +725,7 @@ class IndexEndpointServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::UndeployIndexResponse>>
-  UndeployIndex(google::longrunning::Operation const& operation,
-                Options opts = {});
+  UndeployIndex(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -806,10 +766,7 @@ class IndexEndpointServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::MutateDeployedIndexResponse>>
-  MutateDeployedIndex(
-      std::string const& index_endpoint,
-      google::cloud::aiplatform::v1::DeployedIndex const& deployed_index,
-      Options opts = {});
+  MutateDeployedIndex(std::string const& index_endpoint, google::cloud::aiplatform::v1::DeployedIndex const& deployed_index, Options opts = {});
 
   // clang-format off
   ///
@@ -822,10 +779,8 @@ class IndexEndpointServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> MutateDeployedIndex(
-      NoAwaitTag, std::string const& index_endpoint,
-      google::cloud::aiplatform::v1::DeployedIndex const& deployed_index,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  MutateDeployedIndex(NoAwaitTag, std::string const& index_endpoint, google::cloud::aiplatform::v1::DeployedIndex const& deployed_index, Options opts = {});
 
   // clang-format off
   ///
@@ -862,9 +817,7 @@ class IndexEndpointServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::MutateDeployedIndexResponse>>
-  MutateDeployedIndex(
-      google::cloud::aiplatform::v1::MutateDeployedIndexRequest const& request,
-      Options opts = {});
+  MutateDeployedIndex(google::cloud::aiplatform::v1::MutateDeployedIndexRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -877,10 +830,8 @@ class IndexEndpointServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> MutateDeployedIndex(
-      NoAwaitTag,
-      google::cloud::aiplatform::v1::MutateDeployedIndexRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  MutateDeployedIndex(NoAwaitTag, google::cloud::aiplatform::v1::MutateDeployedIndexRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -892,8 +843,7 @@ class IndexEndpointServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::MutateDeployedIndexResponse>>
-  MutateDeployedIndex(google::longrunning::Operation const& operation,
-                      Options opts = {});
+  MutateDeployedIndex(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -931,8 +881,8 @@ class IndexEndpointServiceClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request, Options opts = {});
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -961,9 +911,8 @@ class IndexEndpointServiceClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -995,8 +944,8 @@ class IndexEndpointServiceClient {
   /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L100}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1027,8 +976,8 @@ class IndexEndpointServiceClient {
   /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1063,9 +1012,8 @@ class IndexEndpointServiceClient {
   /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L153}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request,
-      Options opts = {});
+  StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1100,8 +1048,8 @@ class IndexEndpointServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -1140,8 +1088,8 @@ class IndexEndpointServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1167,8 +1115,8 @@ class IndexEndpointServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1199,9 +1147,8 @@ class IndexEndpointServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1225,7 +1172,8 @@ class IndexEndpointServiceClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status DeleteOperation(std::string const& name, Options opts = {});
+  Status
+  DeleteOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1254,9 +1202,8 @@ class IndexEndpointServiceClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request,
-      Options opts = {});
+  Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1290,7 +1237,8 @@ class IndexEndpointServiceClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(std::string const& name, Options opts = {});
+  Status
+  CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1329,9 +1277,8 @@ class IndexEndpointServiceClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request,
-      Options opts = {});
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1368,9 +1315,8 @@ class IndexEndpointServiceClient {
   /// [google.longrunning.WaitOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L207}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> WaitOperation(
-      google::longrunning::WaitOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  WaitOperation(google::longrunning::WaitOperationRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<IndexEndpointServiceConnection> connection_;

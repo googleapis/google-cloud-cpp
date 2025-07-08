@@ -17,14 +17,14 @@
 // source: google/cloud/discoveryengine/v1/document_service.proto
 
 #include "google/cloud/discoveryengine/v1/document_connection.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/discoveryengine/v1/document_options.h"
 #include "google/cloud/discoveryengine/v1/internal/document_connection_impl.h"
 #include "google/cloud/discoveryengine/v1/internal/document_option_defaults.h"
 #include "google/cloud/discoveryengine/v1/internal/document_stub_factory.h"
 #include "google/cloud/discoveryengine/v1/internal/document_tracing_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
-#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
@@ -44,10 +44,8 @@ DocumentServiceConnection::GetDocument(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::discoveryengine::v1::Document>
-DocumentServiceConnection::ListDocuments(
-    google::cloud::discoveryengine::v1::
-        ListDocumentsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::discoveryengine::v1::Document> DocumentServiceConnection::ListDocuments(
+    google::cloud::discoveryengine::v1::ListDocumentsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::discoveryengine::v1::Document>>();
 }
@@ -64,7 +62,8 @@ DocumentServiceConnection::UpdateDocument(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status DocumentServiceConnection::DeleteDocument(
+Status
+DocumentServiceConnection::DeleteDocument(
     google::cloud::discoveryengine::v1::DeleteDocumentRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -73,8 +72,8 @@ future<StatusOr<google::cloud::discoveryengine::v1::ImportDocumentsResponse>>
 DocumentServiceConnection::ImportDocuments(
     google::cloud::discoveryengine::v1::ImportDocumentsRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::discoveryengine::v1::ImportDocumentsResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::discoveryengine::v1::ImportDocumentsResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -82,23 +81,23 @@ DocumentServiceConnection::ImportDocuments(
     NoAwaitTag,
     google::cloud::discoveryengine::v1::ImportDocumentsRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::discoveryengine::v1::ImportDocumentsResponse>>
 DocumentServiceConnection::ImportDocuments(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::discoveryengine::v1::ImportDocumentsResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::discoveryengine::v1::ImportDocumentsResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::discoveryengine::v1::PurgeDocumentsResponse>>
 DocumentServiceConnection::PurgeDocuments(
     google::cloud::discoveryengine::v1::PurgeDocumentsRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::discoveryengine::v1::PurgeDocumentsResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::discoveryengine::v1::PurgeDocumentsResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -106,28 +105,25 @@ DocumentServiceConnection::PurgeDocuments(
     NoAwaitTag,
     google::cloud::discoveryengine::v1::PurgeDocumentsRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::discoveryengine::v1::PurgeDocumentsResponse>>
 DocumentServiceConnection::PurgeDocuments(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::discoveryengine::v1::PurgeDocumentsResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::discoveryengine::v1::PurgeDocumentsResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::discoveryengine::v1::BatchGetDocumentsMetadataResponse>
 DocumentServiceConnection::BatchGetDocumentsMetadata(
-    google::cloud::discoveryengine::v1::
-        BatchGetDocumentsMetadataRequest const&) {
+    google::cloud::discoveryengine::v1::BatchGetDocumentsMetadataRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::longrunning::Operation>
-DocumentServiceConnection::ListOperations(
-    google::longrunning::
-        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::longrunning::Operation> DocumentServiceConnection::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }
@@ -138,7 +134,8 @@ DocumentServiceConnection::GetOperation(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status DocumentServiceConnection::CancelOperation(
+Status
+DocumentServiceConnection::CancelOperation(
     google::longrunning::CancelOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -146,19 +143,17 @@ Status DocumentServiceConnection::CancelOperation(
 std::shared_ptr<DocumentServiceConnection> MakeDocumentServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 DocumentServicePolicyOptionList>(options,
-                                                                  __func__);
+      UnifiedCredentialsOptionList,
+      DocumentServicePolicyOptionList>(options, __func__);
   options = discoveryengine_v1_internal::DocumentServiceDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = discoveryengine_v1_internal::CreateDefaultDocumentServiceStub(
-      std::move(auth), options);
+    std::move(auth), options);
   return discoveryengine_v1_internal::MakeDocumentServiceTracingConnection(
-      std::make_shared<
-          discoveryengine_v1_internal::DocumentServiceConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options)));
+      std::make_shared<discoveryengine_v1_internal::DocumentServiceConnectionImpl>(
+      std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

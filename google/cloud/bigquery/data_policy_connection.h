@@ -27,28 +27,19 @@ namespace cloud {
 namespace bigquery {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use bigquery_datapolicies_v1::MakeDataPolicyServiceConnection
-/// directly.
-using ::google::cloud::bigquery_datapolicies_v1::
-    MakeDataPolicyServiceConnection;
+/// @deprecated Use bigquery_datapolicies_v1::MakeDataPolicyServiceConnection directly.
+using ::google::cloud::bigquery_datapolicies_v1::MakeDataPolicyServiceConnection;
 
-/// @deprecated Use bigquery_datapolicies_v1::DataPolicyServiceConnection
-/// directly.
+/// @deprecated Use bigquery_datapolicies_v1::DataPolicyServiceConnection directly.
 using ::google::cloud::bigquery_datapolicies_v1::DataPolicyServiceConnection;
 
-/// @deprecated Use
-/// bigquery_datapolicies_v1::DataPolicyServiceLimitedErrorCountRetryPolicy
-/// directly.
-using ::google::cloud::bigquery_datapolicies_v1::
-    DataPolicyServiceLimitedErrorCountRetryPolicy;
+/// @deprecated Use bigquery_datapolicies_v1::DataPolicyServiceLimitedErrorCountRetryPolicy directly.
+using ::google::cloud::bigquery_datapolicies_v1::DataPolicyServiceLimitedErrorCountRetryPolicy;
 
-/// @deprecated Use
-/// bigquery_datapolicies_v1::DataPolicyServiceLimitedTimeRetryPolicy directly.
-using ::google::cloud::bigquery_datapolicies_v1::
-    DataPolicyServiceLimitedTimeRetryPolicy;
+/// @deprecated Use bigquery_datapolicies_v1::DataPolicyServiceLimitedTimeRetryPolicy directly.
+using ::google::cloud::bigquery_datapolicies_v1::DataPolicyServiceLimitedTimeRetryPolicy;
 
-/// @deprecated Use bigquery_datapolicies_v1::DataPolicyServiceRetryPolicy
-/// directly.
+/// @deprecated Use bigquery_datapolicies_v1::DataPolicyServiceRetryPolicy directly.
 using ::google::cloud::bigquery_datapolicies_v1::DataPolicyServiceRetryPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

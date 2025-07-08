@@ -34,96 +34,77 @@ WebhooksTracingConnection::WebhooksTracingConnection(
     : child_(std::move(child)) {}
 
 StreamRange<google::cloud::dialogflow::cx::v3::Webhook>
-WebhooksTracingConnection::ListWebhooks(
-    google::cloud::dialogflow::cx::v3::ListWebhooksRequest request) {
-  auto span =
-      internal::MakeSpan("dialogflow_cx::WebhooksConnection::ListWebhooks");
+WebhooksTracingConnection::ListWebhooks(google::cloud::dialogflow::cx::v3::ListWebhooksRequest request) {
+  auto span = internal::MakeSpan("dialogflow_cx::WebhooksConnection::ListWebhooks");
   internal::OTelScope scope(span);
   auto sr = child_->ListWebhooks(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::dialogflow::cx::v3::Webhook>(std::move(span),
-                                                  std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::dialogflow::cx::v3::Webhook>(
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Webhook>
-WebhooksTracingConnection::GetWebhook(
-    google::cloud::dialogflow::cx::v3::GetWebhookRequest const& request) {
-  auto span =
-      internal::MakeSpan("dialogflow_cx::WebhooksConnection::GetWebhook");
+WebhooksTracingConnection::GetWebhook(google::cloud::dialogflow::cx::v3::GetWebhookRequest const& request) {
+  auto span = internal::MakeSpan("dialogflow_cx::WebhooksConnection::GetWebhook");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetWebhook(request));
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Webhook>
-WebhooksTracingConnection::CreateWebhook(
-    google::cloud::dialogflow::cx::v3::CreateWebhookRequest const& request) {
-  auto span =
-      internal::MakeSpan("dialogflow_cx::WebhooksConnection::CreateWebhook");
+WebhooksTracingConnection::CreateWebhook(google::cloud::dialogflow::cx::v3::CreateWebhookRequest const& request) {
+  auto span = internal::MakeSpan("dialogflow_cx::WebhooksConnection::CreateWebhook");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateWebhook(request));
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Webhook>
-WebhooksTracingConnection::UpdateWebhook(
-    google::cloud::dialogflow::cx::v3::UpdateWebhookRequest const& request) {
-  auto span =
-      internal::MakeSpan("dialogflow_cx::WebhooksConnection::UpdateWebhook");
+WebhooksTracingConnection::UpdateWebhook(google::cloud::dialogflow::cx::v3::UpdateWebhookRequest const& request) {
+  auto span = internal::MakeSpan("dialogflow_cx::WebhooksConnection::UpdateWebhook");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateWebhook(request));
 }
 
-Status WebhooksTracingConnection::DeleteWebhook(
-    google::cloud::dialogflow::cx::v3::DeleteWebhookRequest const& request) {
-  auto span =
-      internal::MakeSpan("dialogflow_cx::WebhooksConnection::DeleteWebhook");
+Status
+WebhooksTracingConnection::DeleteWebhook(google::cloud::dialogflow::cx::v3::DeleteWebhookRequest const& request) {
+  auto span = internal::MakeSpan("dialogflow_cx::WebhooksConnection::DeleteWebhook");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteWebhook(request));
 }
 
 StreamRange<google::cloud::location::Location>
-WebhooksTracingConnection::ListLocations(
-    google::cloud::location::ListLocationsRequest request) {
-  auto span =
-      internal::MakeSpan("dialogflow_cx::WebhooksConnection::ListLocations");
+WebhooksTracingConnection::ListLocations(google::cloud::location::ListLocationsRequest request) {
+  auto span = internal::MakeSpan("dialogflow_cx::WebhooksConnection::ListLocations");
   internal::OTelScope scope(span);
   auto sr = child_->ListLocations(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::location::Location>(
-      std::move(span), std::move(sr));
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::location::Location>
-WebhooksTracingConnection::GetLocation(
-    google::cloud::location::GetLocationRequest const& request) {
-  auto span =
-      internal::MakeSpan("dialogflow_cx::WebhooksConnection::GetLocation");
+WebhooksTracingConnection::GetLocation(google::cloud::location::GetLocationRequest const& request) {
+  auto span = internal::MakeSpan("dialogflow_cx::WebhooksConnection::GetLocation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetLocation(request));
 }
 
 StreamRange<google::longrunning::Operation>
-WebhooksTracingConnection::ListOperations(
-    google::longrunning::ListOperationsRequest request) {
-  auto span =
-      internal::MakeSpan("dialogflow_cx::WebhooksConnection::ListOperations");
+WebhooksTracingConnection::ListOperations(google::longrunning::ListOperationsRequest request) {
+  auto span = internal::MakeSpan("dialogflow_cx::WebhooksConnection::ListOperations");
   internal::OTelScope scope(span);
   auto sr = child_->ListOperations(std::move(request));
   return internal::MakeTracedStreamRange<google::longrunning::Operation>(
-      std::move(span), std::move(sr));
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::longrunning::Operation>
-WebhooksTracingConnection::GetOperation(
-    google::longrunning::GetOperationRequest const& request) {
-  auto span =
-      internal::MakeSpan("dialogflow_cx::WebhooksConnection::GetOperation");
+WebhooksTracingConnection::GetOperation(google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpan("dialogflow_cx::WebhooksConnection::GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOperation(request));
 }
 
-Status WebhooksTracingConnection::CancelOperation(
-    google::longrunning::CancelOperationRequest const& request) {
-  auto span =
-      internal::MakeSpan("dialogflow_cx::WebhooksConnection::CancelOperation");
+Status
+WebhooksTracingConnection::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
+  auto span = internal::MakeSpan("dialogflow_cx::WebhooksConnection::CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CancelOperation(request));
 }

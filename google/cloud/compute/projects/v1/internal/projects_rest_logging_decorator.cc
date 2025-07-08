@@ -28,27 +28,25 @@ namespace compute_projects_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ProjectsRestLogging::ProjectsRestLogging(
-    std::shared_ptr<ProjectsRestStub> child, TracingOptions tracing_options,
+    std::shared_ptr<ProjectsRestStub> child,
+    TracingOptions tracing_options,
     std::set<std::string> components)
-    : child_(std::move(child)),
-      tracing_options_(std::move(tracing_options)),
+    : child_(std::move(child)), tracing_options_(std::move(tracing_options)),
       components_(std::move(components)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ProjectsRestLogging::AsyncDisableXpnHost(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::projects::v1::DisableXpnHostRequest const&
-        request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::projects::v1::DisableXpnHostRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::cpp::compute::projects::v1::
-                 DisableXpnHostRequest const& request) {
-        return child_->AsyncDisableXpnHost(cq, std::move(rest_context),
-                                           std::move(options), request);
+             google::cloud::cpp::compute::projects::v1::DisableXpnHostRequest const& request) {
+        return child_->AsyncDisableXpnHost(
+            cq, std::move(rest_context), std::move(options), request);
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
@@ -56,13 +54,13 @@ ProjectsRestLogging::AsyncDisableXpnHost(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ProjectsRestLogging::DisableXpnHost(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::projects::v1::DisableXpnHostRequest const&
-        request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::projects::v1::DisableXpnHostRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::cloud::cpp::compute::projects::v1::
-                 DisableXpnHostRequest const& request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
+             google::cloud::cpp::compute::projects::v1::DisableXpnHostRequest const& request) {
         return child_->DisableXpnHost(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -70,19 +68,17 @@ ProjectsRestLogging::DisableXpnHost(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ProjectsRestLogging::AsyncDisableXpnResource(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::projects::v1::DisableXpnResourceRequest const&
-        request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::projects::v1::DisableXpnResourceRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::cpp::compute::projects::v1::
-                 DisableXpnResourceRequest const& request) {
-        return child_->AsyncDisableXpnResource(cq, std::move(rest_context),
-                                               std::move(options), request);
+             google::cloud::cpp::compute::projects::v1::DisableXpnResourceRequest const& request) {
+        return child_->AsyncDisableXpnResource(
+            cq, std::move(rest_context), std::move(options), request);
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
@@ -90,13 +86,13 @@ ProjectsRestLogging::AsyncDisableXpnResource(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ProjectsRestLogging::DisableXpnResource(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::projects::v1::DisableXpnResourceRequest const&
-        request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::projects::v1::DisableXpnResourceRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::cloud::cpp::compute::projects::v1::
-                 DisableXpnResourceRequest const& request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
+             google::cloud::cpp::compute::projects::v1::DisableXpnResourceRequest const& request) {
         return child_->DisableXpnResource(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -104,20 +100,17 @@ ProjectsRestLogging::DisableXpnResource(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ProjectsRestLogging::AsyncEnableXpnHost(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::projects::v1::EnableXpnHostRequest const&
-        request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::projects::v1::EnableXpnHostRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          CompletionQueue& cq,
-          std::unique_ptr<rest_internal::RestContext> rest_context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::cpp::compute::projects::v1::EnableXpnHostRequest const&
-              request) {
-        return child_->AsyncEnableXpnHost(cq, std::move(rest_context),
-                                          std::move(options), request);
+      [this](CompletionQueue& cq,
+             std::unique_ptr<rest_internal::RestContext> rest_context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::cpp::compute::projects::v1::EnableXpnHostRequest const& request) {
+        return child_->AsyncEnableXpnHost(
+            cq, std::move(rest_context), std::move(options), request);
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
@@ -125,14 +118,13 @@ ProjectsRestLogging::AsyncEnableXpnHost(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ProjectsRestLogging::EnableXpnHost(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::projects::v1::EnableXpnHostRequest const&
-        request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::projects::v1::EnableXpnHostRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          rest_internal::RestContext& rest_context, Options const& options,
-          google::cloud::cpp::compute::projects::v1::EnableXpnHostRequest const&
-              request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
+             google::cloud::cpp::compute::projects::v1::EnableXpnHostRequest const& request) {
         return child_->EnableXpnHost(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -140,19 +132,17 @@ ProjectsRestLogging::EnableXpnHost(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ProjectsRestLogging::AsyncEnableXpnResource(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::projects::v1::EnableXpnResourceRequest const&
-        request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::projects::v1::EnableXpnResourceRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::cpp::compute::projects::v1::
-                 EnableXpnResourceRequest const& request) {
-        return child_->AsyncEnableXpnResource(cq, std::move(rest_context),
-                                              std::move(options), request);
+             google::cloud::cpp::compute::projects::v1::EnableXpnResourceRequest const& request) {
+        return child_->AsyncEnableXpnResource(
+            cq, std::move(rest_context), std::move(options), request);
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
@@ -160,13 +150,13 @@ ProjectsRestLogging::AsyncEnableXpnResource(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ProjectsRestLogging::EnableXpnResource(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::projects::v1::EnableXpnResourceRequest const&
-        request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::projects::v1::EnableXpnResourceRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::cloud::cpp::compute::projects::v1::
-                 EnableXpnResourceRequest const& request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
+             google::cloud::cpp::compute::projects::v1::EnableXpnResourceRequest const& request) {
         return child_->EnableXpnResource(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -174,13 +164,13 @@ ProjectsRestLogging::EnableXpnResource(
 
 StatusOr<google::cloud::cpp::compute::v1::Project>
 ProjectsRestLogging::GetProject(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::projects::v1::GetProjectRequest const&
-        request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::projects::v1::GetProjectRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::cloud::cpp::compute::projects::v1::GetProjectRequest const&
-                 request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
+             google::cloud::cpp::compute::projects::v1::GetProjectRequest const& request) {
         return child_->GetProject(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -188,13 +178,13 @@ ProjectsRestLogging::GetProject(
 
 StatusOr<google::cloud::cpp::compute::v1::Project>
 ProjectsRestLogging::GetXpnHost(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::projects::v1::GetXpnHostRequest const&
-        request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::projects::v1::GetXpnHostRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::cloud::cpp::compute::projects::v1::GetXpnHostRequest const&
-                 request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
+             google::cloud::cpp::compute::projects::v1::GetXpnHostRequest const& request) {
         return child_->GetXpnHost(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -202,13 +192,13 @@ ProjectsRestLogging::GetXpnHost(
 
 StatusOr<google::cloud::cpp::compute::v1::ProjectsGetXpnResources>
 ProjectsRestLogging::GetXpnResources(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::projects::v1::GetXpnResourcesRequest const&
-        request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::projects::v1::GetXpnResourcesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::cloud::cpp::compute::projects::v1::
-                 GetXpnResourcesRequest const& request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
+             google::cloud::cpp::compute::projects::v1::GetXpnResourcesRequest const& request) {
         return child_->GetXpnResources(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -216,14 +206,13 @@ ProjectsRestLogging::GetXpnResources(
 
 StatusOr<google::cloud::cpp::compute::v1::XpnHostList>
 ProjectsRestLogging::ListXpnHosts(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::projects::v1::ListXpnHostsRequest const&
-        request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::projects::v1::ListXpnHostsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          rest_internal::RestContext& rest_context, Options const& options,
-          google::cloud::cpp::compute::projects::v1::ListXpnHostsRequest const&
-              request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
+             google::cloud::cpp::compute::projects::v1::ListXpnHostsRequest const& request) {
         return child_->ListXpnHosts(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -231,18 +220,17 @@ ProjectsRestLogging::ListXpnHosts(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ProjectsRestLogging::AsyncMoveDisk(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::projects::v1::MoveDiskRequest const& request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::projects::v1::MoveDiskRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::cpp::compute::projects::v1::MoveDiskRequest const&
-                 request) {
-        return child_->AsyncMoveDisk(cq, std::move(rest_context),
-                                     std::move(options), request);
+             google::cloud::cpp::compute::projects::v1::MoveDiskRequest const& request) {
+        return child_->AsyncMoveDisk(
+            cq, std::move(rest_context), std::move(options), request);
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
@@ -250,12 +238,13 @@ ProjectsRestLogging::AsyncMoveDisk(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ProjectsRestLogging::MoveDisk(
-    rest_internal::RestContext& rest_context, Options const& options,
+    rest_internal::RestContext& rest_context,
+    Options const& options,
     google::cloud::cpp::compute::projects::v1::MoveDiskRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::cloud::cpp::compute::projects::v1::MoveDiskRequest const&
-                 request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
+             google::cloud::cpp::compute::projects::v1::MoveDiskRequest const& request) {
         return child_->MoveDisk(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -263,20 +252,17 @@ ProjectsRestLogging::MoveDisk(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ProjectsRestLogging::AsyncMoveInstance(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::projects::v1::MoveInstanceRequest const&
-        request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::projects::v1::MoveInstanceRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          CompletionQueue& cq,
-          std::unique_ptr<rest_internal::RestContext> rest_context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::cpp::compute::projects::v1::MoveInstanceRequest const&
-              request) {
-        return child_->AsyncMoveInstance(cq, std::move(rest_context),
-                                         std::move(options), request);
+      [this](CompletionQueue& cq,
+             std::unique_ptr<rest_internal::RestContext> rest_context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::cpp::compute::projects::v1::MoveInstanceRequest const& request) {
+        return child_->AsyncMoveInstance(
+            cq, std::move(rest_context), std::move(options), request);
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
@@ -284,14 +270,13 @@ ProjectsRestLogging::AsyncMoveInstance(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ProjectsRestLogging::MoveInstance(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::projects::v1::MoveInstanceRequest const&
-        request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::projects::v1::MoveInstanceRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          rest_internal::RestContext& rest_context, Options const& options,
-          google::cloud::cpp::compute::projects::v1::MoveInstanceRequest const&
-              request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
+             google::cloud::cpp::compute::projects::v1::MoveInstanceRequest const& request) {
         return child_->MoveInstance(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -299,19 +284,17 @@ ProjectsRestLogging::MoveInstance(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ProjectsRestLogging::AsyncSetCloudArmorTier(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::projects::v1::SetCloudArmorTierRequest const&
-        request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::projects::v1::SetCloudArmorTierRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::cpp::compute::projects::v1::
-                 SetCloudArmorTierRequest const& request) {
-        return child_->AsyncSetCloudArmorTier(cq, std::move(rest_context),
-                                              std::move(options), request);
+             google::cloud::cpp::compute::projects::v1::SetCloudArmorTierRequest const& request) {
+        return child_->AsyncSetCloudArmorTier(
+            cq, std::move(rest_context), std::move(options), request);
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
@@ -319,13 +302,13 @@ ProjectsRestLogging::AsyncSetCloudArmorTier(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ProjectsRestLogging::SetCloudArmorTier(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::projects::v1::SetCloudArmorTierRequest const&
-        request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::projects::v1::SetCloudArmorTierRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::cloud::cpp::compute::projects::v1::
-                 SetCloudArmorTierRequest const& request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
+             google::cloud::cpp::compute::projects::v1::SetCloudArmorTierRequest const& request) {
         return child_->SetCloudArmorTier(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -333,17 +316,15 @@ ProjectsRestLogging::SetCloudArmorTier(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ProjectsRestLogging::AsyncSetCommonInstanceMetadata(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::projects::v1::
-        SetCommonInstanceMetadataRequest const& request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::projects::v1::SetCommonInstanceMetadataRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::cpp::compute::projects::v1::
-                 SetCommonInstanceMetadataRequest const& request) {
+             google::cloud::cpp::compute::projects::v1::SetCommonInstanceMetadataRequest const& request) {
         return child_->AsyncSetCommonInstanceMetadata(
             cq, std::move(rest_context), std::move(options), request);
       },
@@ -353,34 +334,31 @@ ProjectsRestLogging::AsyncSetCommonInstanceMetadata(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ProjectsRestLogging::SetCommonInstanceMetadata(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::projects::v1::
-        SetCommonInstanceMetadataRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::projects::v1::SetCommonInstanceMetadataRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::cloud::cpp::compute::projects::v1::
-                 SetCommonInstanceMetadataRequest const& request) {
-        return child_->SetCommonInstanceMetadata(rest_context, options,
-                                                 request);
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
+             google::cloud::cpp::compute::projects::v1::SetCommonInstanceMetadataRequest const& request) {
+        return child_->SetCommonInstanceMetadata(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ProjectsRestLogging::AsyncSetDefaultNetworkTier(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::projects::v1::
-        SetDefaultNetworkTierRequest const& request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::projects::v1::SetDefaultNetworkTierRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::cpp::compute::projects::v1::
-                 SetDefaultNetworkTierRequest const& request) {
-        return child_->AsyncSetDefaultNetworkTier(cq, std::move(rest_context),
-                                                  std::move(options), request);
+             google::cloud::cpp::compute::projects::v1::SetDefaultNetworkTierRequest const& request) {
+        return child_->AsyncSetDefaultNetworkTier(
+            cq, std::move(rest_context), std::move(options), request);
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
@@ -388,13 +366,13 @@ ProjectsRestLogging::AsyncSetDefaultNetworkTier(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ProjectsRestLogging::SetDefaultNetworkTier(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::projects::v1::
-        SetDefaultNetworkTierRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::projects::v1::SetDefaultNetworkTierRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::cloud::cpp::compute::projects::v1::
-                 SetDefaultNetworkTierRequest const& request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
+             google::cloud::cpp::compute::projects::v1::SetDefaultNetworkTierRequest const& request) {
         return child_->SetDefaultNetworkTier(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -402,19 +380,17 @@ ProjectsRestLogging::SetDefaultNetworkTier(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ProjectsRestLogging::AsyncSetUsageExportBucket(
-    CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::projects::v1::
-        SetUsageExportBucketRequest const& request) {
+      CompletionQueue& cq,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::projects::v1::SetUsageExportBucketRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::cpp::compute::projects::v1::
-                 SetUsageExportBucketRequest const& request) {
-        return child_->AsyncSetUsageExportBucket(cq, std::move(rest_context),
-                                                 std::move(options), request);
+             google::cloud::cpp::compute::projects::v1::SetUsageExportBucketRequest const& request) {
+        return child_->AsyncSetUsageExportBucket(
+            cq, std::move(rest_context), std::move(options), request);
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
@@ -422,13 +398,13 @@ ProjectsRestLogging::AsyncSetUsageExportBucket(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ProjectsRestLogging::SetUsageExportBucket(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::cpp::compute::projects::v1::
-        SetUsageExportBucketRequest const& request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::projects::v1::SetUsageExportBucketRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::cloud::cpp::compute::projects::v1::
-                 SetUsageExportBucketRequest const& request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
+             google::cloud::cpp::compute::projects::v1::SetUsageExportBucketRequest const& request) {
         return child_->SetUsageExportBucket(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -439,35 +415,32 @@ ProjectsRestLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::global_operations::v1::
-        GetOperationRequest const& request) {
+    google::cloud::cpp::compute::global_operations::v1::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::cpp::compute::global_operations::v1::
-                 GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(cq, std::move(rest_context),
-                                         std::move(options), request);
+             google::cloud::cpp::compute::global_operations::v1::GetOperationRequest const& request) {
+        return child_->AsyncGetOperation(
+            cq, std::move(rest_context), std::move(options), request);
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-future<Status> ProjectsRestLogging::AsyncCancelOperation(
+future<Status>
+ProjectsRestLogging::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::global_operations::v1::
-        DeleteOperationRequest const& request) {
+    google::cloud::cpp::compute::global_operations::v1::DeleteOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::cpp::compute::global_operations::v1::
-                 DeleteOperationRequest const& request) {
-        return child_->AsyncCancelOperation(cq, std::move(rest_context),
-                                            std::move(options), request);
+             google::cloud::cpp::compute::global_operations::v1::DeleteOperationRequest const& request) {
+        return child_->AsyncCancelOperation(
+            cq, std::move(rest_context), std::move(options), request);
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);

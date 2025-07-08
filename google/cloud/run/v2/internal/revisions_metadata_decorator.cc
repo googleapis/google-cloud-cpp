@@ -46,22 +46,22 @@ RevisionsMetadata::RevisionsMetadata(
               ? google::cloud::internal::GeneratedLibClientHeader()
               : std::move(api_client_header)) {}
 
-StatusOr<google::cloud::run::v2::Revision> RevisionsMetadata::GetRevision(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::run::v2::Revision>
+RevisionsMetadata::GetRevision(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::run::v2::GetRevisionRequest const& request) {
   std::vector<std::string> params;
   params.reserve(1);
 
-  static auto* location_matcher = [] {
-    return new google::cloud::internal::RoutingMatcher<
-        google::cloud::run::v2::GetRevisionRequest>{
-        "location=",
-        {
-            {[](google::cloud::run::v2::GetRevisionRequest const& request)
-                 -> std::string const& { return request.name(); },
-             std::regex{"projects/[^/]+/locations/([^/]+)/.*",
-                        std::regex::optimize}},
-        }};
+  static auto* location_matcher = []{
+    return new google::cloud::internal::RoutingMatcher<google::cloud::run::v2::GetRevisionRequest>{
+      "location=", {
+      {[](google::cloud::run::v2::GetRevisionRequest const& request) -> std::string const& {
+        return request.name();
+      },
+      std::regex{"projects/[^/]+/locations/([^/]+)/.*", std::regex::optimize}},
+      }};
   }();
   location_matcher->AppendParam(request, params);
 
@@ -75,21 +75,20 @@ StatusOr<google::cloud::run::v2::Revision> RevisionsMetadata::GetRevision(
 
 StatusOr<google::cloud::run::v2::ListRevisionsResponse>
 RevisionsMetadata::ListRevisions(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::run::v2::ListRevisionsRequest const& request) {
   std::vector<std::string> params;
   params.reserve(1);
 
-  static auto* location_matcher = [] {
-    return new google::cloud::internal::RoutingMatcher<
-        google::cloud::run::v2::ListRevisionsRequest>{
-        "location=",
-        {
-            {[](google::cloud::run::v2::ListRevisionsRequest const& request)
-                 -> std::string const& { return request.parent(); },
-             std::regex{"projects/[^/]+/locations/([^/]+)/.*",
-                        std::regex::optimize}},
-        }};
+  static auto* location_matcher = []{
+    return new google::cloud::internal::RoutingMatcher<google::cloud::run::v2::ListRevisionsRequest>{
+      "location=", {
+      {[](google::cloud::run::v2::ListRevisionsRequest const& request) -> std::string const& {
+        return request.parent();
+      },
+      std::regex{"projects/[^/]+/locations/([^/]+)/.*", std::regex::optimize}},
+      }};
   }();
   location_matcher->AppendParam(request, params);
 
@@ -110,16 +109,14 @@ RevisionsMetadata::AsyncDeleteRevision(
   std::vector<std::string> params;
   params.reserve(1);
 
-  static auto* location_matcher = [] {
-    return new google::cloud::internal::RoutingMatcher<
-        google::cloud::run::v2::DeleteRevisionRequest>{
-        "location=",
-        {
-            {[](google::cloud::run::v2::DeleteRevisionRequest const& request)
-                 -> std::string const& { return request.name(); },
-             std::regex{"projects/[^/]+/locations/([^/]+)/.*",
-                        std::regex::optimize}},
-        }};
+  static auto* location_matcher = []{
+    return new google::cloud::internal::RoutingMatcher<google::cloud::run::v2::DeleteRevisionRequest>{
+      "location=", {
+      {[](google::cloud::run::v2::DeleteRevisionRequest const& request) -> std::string const& {
+        return request.name();
+      },
+      std::regex{"projects/[^/]+/locations/([^/]+)/.*", std::regex::optimize}},
+      }};
   }();
   location_matcher->AppendParam(request, params);
 
@@ -128,26 +125,26 @@ RevisionsMetadata::AsyncDeleteRevision(
   } else {
     SetMetadata(*context, *options, absl::StrJoin(params, "&"));
   }
-  return child_->AsyncDeleteRevision(cq, std::move(context), std::move(options),
-                                     request);
+  return child_->AsyncDeleteRevision(
+      cq, std::move(context), std::move(options), request);
 }
 
-StatusOr<google::longrunning::Operation> RevisionsMetadata::DeleteRevision(
-    grpc::ClientContext& context, Options options,
+StatusOr<google::longrunning::Operation>
+RevisionsMetadata::DeleteRevision(
+    grpc::ClientContext& context,
+    Options options,
     google::cloud::run::v2::DeleteRevisionRequest const& request) {
   std::vector<std::string> params;
   params.reserve(1);
 
-  static auto* location_matcher = [] {
-    return new google::cloud::internal::RoutingMatcher<
-        google::cloud::run::v2::DeleteRevisionRequest>{
-        "location=",
-        {
-            {[](google::cloud::run::v2::DeleteRevisionRequest const& request)
-                 -> std::string const& { return request.name(); },
-             std::regex{"projects/[^/]+/locations/([^/]+)/.*",
-                        std::regex::optimize}},
-        }};
+  static auto* location_matcher = []{
+    return new google::cloud::internal::RoutingMatcher<google::cloud::run::v2::DeleteRevisionRequest>{
+      "location=", {
+      {[](google::cloud::run::v2::DeleteRevisionRequest const& request) -> std::string const& {
+        return request.name();
+      },
+      std::regex{"projects/[^/]+/locations/([^/]+)/.*", std::regex::optimize}},
+      }};
   }();
   location_matcher->AppendParam(request, params);
 
@@ -161,31 +158,35 @@ StatusOr<google::longrunning::Operation> RevisionsMetadata::DeleteRevision(
 
 StatusOr<google::longrunning::ListOperationsResponse>
 RevisionsMetadata::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ListOperations(context, options, request);
 }
 
-StatusOr<google::longrunning::Operation> RevisionsMetadata::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::Operation>
+RevisionsMetadata::GetOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetOperation(context, options, request);
 }
 
-Status RevisionsMetadata::DeleteOperation(
-    grpc::ClientContext& context, Options const& options,
+Status
+RevisionsMetadata::DeleteOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteOperation(context, options, request);
 }
 
-StatusOr<google::longrunning::Operation> RevisionsMetadata::WaitOperation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::Operation>
+RevisionsMetadata::WaitOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::WaitOperationRequest const& request) {
   SetMetadata(context, options);
   return child_->WaitOperation(context, options, request);
@@ -199,8 +200,8 @@ RevisionsMetadata::AsyncGetOperation(
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(cq, std::move(context), std::move(options),
-                                   request);
+  return child_->AsyncGetOperation(
+      cq, std::move(context), std::move(options), request);
 }
 
 future<Status> RevisionsMetadata::AsyncCancelOperation(
@@ -210,21 +211,21 @@ future<Status> RevisionsMetadata::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(cq, std::move(context),
-                                      std::move(options), request);
+  return child_->AsyncCancelOperation(
+      cq, std::move(context), std::move(options), request);
 }
 
 void RevisionsMetadata::SetMetadata(grpc::ClientContext& context,
-                                    Options const& options,
-                                    std::string const& request_params) {
+                                        Options const& options,
+                                        std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
 void RevisionsMetadata::SetMetadata(grpc::ClientContext& context,
-                                    Options const& options) {
-  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
-                                       api_client_header_);
+                                        Options const& options) {
+  google::cloud::internal::SetMetadata(
+      context, options, fixed_metadata_, api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

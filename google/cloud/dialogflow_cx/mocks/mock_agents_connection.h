@@ -47,44 +47,36 @@ class MockAgentsConnection : public dialogflow_cx::AgentsConnection {
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD((StreamRange<google::cloud::dialogflow::cx::v3::Agent>),
-              ListAgents,
-              (google::cloud::dialogflow::cx::v3::ListAgentsRequest request),
-              (override));
+  ListAgents,
+  (google::cloud::dialogflow::cx::v3::ListAgentsRequest request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::cx::v3::Agent>, GetAgent,
-      (google::cloud::dialogflow::cx::v3::GetAgentRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::dialogflow::cx::v3::Agent>,
+  GetAgent,
+  (google::cloud::dialogflow::cx::v3::GetAgentRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::cx::v3::Agent>, CreateAgent,
-      (google::cloud::dialogflow::cx::v3::CreateAgentRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::dialogflow::cx::v3::Agent>,
+  CreateAgent,
+  (google::cloud::dialogflow::cx::v3::CreateAgentRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::cx::v3::Agent>, UpdateAgent,
-      (google::cloud::dialogflow::cx::v3::UpdateAgentRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::dialogflow::cx::v3::Agent>,
+  UpdateAgent,
+  (google::cloud::dialogflow::cx::v3::UpdateAgentRequest const& request), (override));
 
-  MOCK_METHOD(
-      Status, DeleteAgent,
-      (google::cloud::dialogflow::cx::v3::DeleteAgentRequest const& request),
-      (override));
+  MOCK_METHOD(Status,
+  DeleteAgent,
+  (google::cloud::dialogflow::cx::v3::DeleteAgentRequest const& request), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// ExportAgent(Matcher<google::cloud::dialogflow::cx::v3::ExportAgentRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, ExportAgent(Matcher<google::cloud::dialogflow::cx::v3::ExportAgentRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::dialogflow::cx::v3::ExportAgentResponse>>,
-      ExportAgent,
-      (google::cloud::dialogflow::cx::v3::ExportAgentRequest const& request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::dialogflow::cx::v3::ExportAgentResponse>>,
+  ExportAgent,
+  (google::cloud::dialogflow::cx::v3::ExportAgentRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -92,38 +84,33 @@ class MockAgentsConnection : public dialogflow_cx::AgentsConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, ExportAgent(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, ExportAgent,
-      (NoAwaitTag,
-       google::cloud::dialogflow::cx::v3::ExportAgentRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  ExportAgent, (NoAwaitTag,
+    google::cloud::dialogflow::cx::v3::ExportAgentRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, ExportAgent(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, ExportAgent(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::dialogflow::cx::v3::ExportAgentResponse>>,
-      ExportAgent, (google::longrunning::Operation const& operation),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::dialogflow::cx::v3::ExportAgentResponse>>,
+  ExportAgent, (
+    google::longrunning::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// RestoreAgent(Matcher<google::cloud::dialogflow::cx::v3::RestoreAgentRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, RestoreAgent(Matcher<google::cloud::dialogflow::cx::v3::RestoreAgentRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::protobuf::Struct>>, RestoreAgent,
-      (google::cloud::dialogflow::cx::v3::RestoreAgentRequest const& request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::protobuf::Struct>>,
+  RestoreAgent,
+  (google::cloud::dialogflow::cx::v3::RestoreAgentRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -131,68 +118,57 @@ class MockAgentsConnection : public dialogflow_cx::AgentsConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, RestoreAgent(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, RestoreAgent,
-      (NoAwaitTag,
-       google::cloud::dialogflow::cx::v3::RestoreAgentRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  RestoreAgent, (NoAwaitTag,
+    google::cloud::dialogflow::cx::v3::RestoreAgentRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, RestoreAgent(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, RestoreAgent(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::protobuf::Struct>>, RestoreAgent,
-              (google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(future<StatusOr<google::protobuf::Struct>>,
+  RestoreAgent, (
+    google::longrunning::Operation const& operation), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::cx::v3::AgentValidationResult>,
-      ValidateAgent,
-      (google::cloud::dialogflow::cx::v3::ValidateAgentRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::dialogflow::cx::v3::AgentValidationResult>,
+  ValidateAgent,
+  (google::cloud::dialogflow::cx::v3::ValidateAgentRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::cx::v3::AgentValidationResult>,
-      GetAgentValidationResult,
-      (google::cloud::dialogflow::cx::v3::GetAgentValidationResultRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::dialogflow::cx::v3::AgentValidationResult>,
+  GetAgentValidationResult,
+  (google::cloud::dialogflow::cx::v3::GetAgentValidationResultRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::cx::v3::GenerativeSettings>,
-      GetGenerativeSettings,
-      (google::cloud::dialogflow::cx::v3::GetGenerativeSettingsRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::dialogflow::cx::v3::GenerativeSettings>,
+  GetGenerativeSettings,
+  (google::cloud::dialogflow::cx::v3::GetGenerativeSettingsRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::cx::v3::GenerativeSettings>,
-      UpdateGenerativeSettings,
-      (google::cloud::dialogflow::cx::v3::UpdateGenerativeSettingsRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::dialogflow::cx::v3::GenerativeSettings>,
+  UpdateGenerativeSettings,
+  (google::cloud::dialogflow::cx::v3::UpdateGenerativeSettingsRequest const& request), (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::location::Location>), ListLocations,
-              (google::cloud::location::ListLocationsRequest request),
-              (override));
+  MOCK_METHOD((StreamRange<google::cloud::location::Location>),
+  ListLocations,
+  (google::cloud::location::ListLocationsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::location::Location>, GetLocation,
-              (google::cloud::location::GetLocationRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::location::Location>,
+  GetLocation,
+  (google::cloud::location::GetLocationRequest const& request), (override));
 
-  MOCK_METHOD((StreamRange<google::longrunning::Operation>), ListOperations,
-              (google::longrunning::ListOperationsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::longrunning::Operation>),
+  ListOperations,
+  (google::longrunning::ListOperationsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
-              (google::longrunning::GetOperationRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  GetOperation,
+  (google::longrunning::GetOperationRequest const& request), (override));
 
-  MOCK_METHOD(Status, CancelOperation,
-              (google::longrunning::CancelOperationRequest const& request),
-              (override));
+  MOCK_METHOD(Status,
+  CancelOperation,
+  (google::longrunning::CancelOperationRequest const& request), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

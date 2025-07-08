@@ -28,26 +28,17 @@ namespace cloud {
 namespace monitoring {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use monitoring_v3::NotificationChannelServiceBackoffPolicyOption
-/// directly.
-using ::google::cloud::monitoring_v3::
-    NotificationChannelServiceBackoffPolicyOption;
+/// @deprecated Use monitoring_v3::NotificationChannelServiceBackoffPolicyOption directly.
+using ::google::cloud::monitoring_v3::NotificationChannelServiceBackoffPolicyOption;
 
-/// @deprecated Use
-/// monitoring_v3::NotificationChannelServiceConnectionIdempotencyPolicyOption
-/// directly.
-using ::google::cloud::monitoring_v3::
-    NotificationChannelServiceConnectionIdempotencyPolicyOption;
+/// @deprecated Use monitoring_v3::NotificationChannelServiceConnectionIdempotencyPolicyOption directly.
+using ::google::cloud::monitoring_v3::NotificationChannelServiceConnectionIdempotencyPolicyOption;
 
-/// @deprecated Use monitoring_v3::NotificationChannelServicePolicyOptionList
-/// directly.
-using ::google::cloud::monitoring_v3::
-    NotificationChannelServicePolicyOptionList;
+/// @deprecated Use monitoring_v3::NotificationChannelServicePolicyOptionList directly.
+using ::google::cloud::monitoring_v3::NotificationChannelServicePolicyOptionList;
 
-/// @deprecated Use monitoring_v3::NotificationChannelServiceRetryPolicyOption
-/// directly.
-using ::google::cloud::monitoring_v3::
-    NotificationChannelServiceRetryPolicyOption;
+/// @deprecated Use monitoring_v3::NotificationChannelServiceRetryPolicyOption directly.
+using ::google::cloud::monitoring_v3::NotificationChannelServiceRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace monitoring

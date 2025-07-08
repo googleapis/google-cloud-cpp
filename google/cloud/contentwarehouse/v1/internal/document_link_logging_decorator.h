@@ -35,34 +35,32 @@ class DocumentLinkServiceLogging : public DocumentLinkServiceStub {
  public:
   ~DocumentLinkServiceLogging() override = default;
   DocumentLinkServiceLogging(std::shared_ptr<DocumentLinkServiceStub> child,
-                             TracingOptions tracing_options,
-                             std::set<std::string> const& components);
+                       TracingOptions tracing_options,
+                       std::set<std::string> const& components);
 
-  StatusOr<google::cloud::contentwarehouse::v1::ListLinkedTargetsResponse>
-  ListLinkedTargets(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::contentwarehouse::v1::ListLinkedTargetsRequest const&
-          request) override;
+  StatusOr<google::cloud::contentwarehouse::v1::ListLinkedTargetsResponse> ListLinkedTargets(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::contentwarehouse::v1::ListLinkedTargetsRequest const& request) override;
 
-  StatusOr<google::cloud::contentwarehouse::v1::ListLinkedSourcesResponse>
-  ListLinkedSources(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::contentwarehouse::v1::ListLinkedSourcesRequest const&
-          request) override;
+  StatusOr<google::cloud::contentwarehouse::v1::ListLinkedSourcesResponse> ListLinkedSources(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::contentwarehouse::v1::ListLinkedSourcesRequest const& request) override;
 
-  StatusOr<google::cloud::contentwarehouse::v1::DocumentLink>
-  CreateDocumentLink(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::contentwarehouse::v1::CreateDocumentLinkRequest const&
-          request) override;
+  StatusOr<google::cloud::contentwarehouse::v1::DocumentLink> CreateDocumentLink(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::contentwarehouse::v1::CreateDocumentLinkRequest const& request) override;
 
   Status DeleteDocumentLink(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::contentwarehouse::v1::DeleteDocumentLinkRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::contentwarehouse::v1::DeleteDocumentLinkRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
  private:

@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_OPTIMIZATION_V1_FLEET_ROUTING_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_OPTIMIZATION_V1_FLEET_ROUTING_CLIENT_H
 
-#include "google/cloud/optimization/v1/fleet_routing_connection.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
+#include "google/cloud/optimization/v1/fleet_routing_connection.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -79,8 +79,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class FleetRoutingClient {
  public:
-  explicit FleetRoutingClient(
-      std::shared_ptr<FleetRoutingConnection> connection, Options opts = {});
+  explicit FleetRoutingClient(std::shared_ptr<FleetRoutingConnection> connection, Options opts = {});
   ~FleetRoutingClient();
 
   ///@{
@@ -93,12 +92,10 @@ class FleetRoutingClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(FleetRoutingClient const& a,
-                         FleetRoutingClient const& b) {
+  friend bool operator==(FleetRoutingClient const& a, FleetRoutingClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(FleetRoutingClient const& a,
-                         FleetRoutingClient const& b) {
+  friend bool operator!=(FleetRoutingClient const& a, FleetRoutingClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -144,9 +141,7 @@ class FleetRoutingClient {
   ///
   // clang-format on
   StatusOr<google::cloud::optimization::v1::OptimizeToursResponse>
-  OptimizeTours(
-      google::cloud::optimization::v1::OptimizeToursRequest const& request,
-      Options opts = {});
+  OptimizeTours(google::cloud::optimization::v1::OptimizeToursRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -192,9 +187,7 @@ class FleetRoutingClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::optimization::v1::BatchOptimizeToursResponse>>
-  BatchOptimizeTours(
-      google::cloud::optimization::v1::BatchOptimizeToursRequest const& request,
-      Options opts = {});
+  BatchOptimizeTours(google::cloud::optimization::v1::BatchOptimizeToursRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -207,10 +200,8 @@ class FleetRoutingClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> BatchOptimizeTours(
-      NoAwaitTag,
-      google::cloud::optimization::v1::BatchOptimizeToursRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  BatchOptimizeTours(NoAwaitTag, google::cloud::optimization::v1::BatchOptimizeToursRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -222,8 +213,7 @@ class FleetRoutingClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::optimization::v1::BatchOptimizeToursResponse>>
-  BatchOptimizeTours(google::longrunning::Operation const& operation,
-                     Options opts = {});
+  BatchOptimizeTours(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -249,8 +239,8 @@ class FleetRoutingClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -281,9 +271,8 @@ class FleetRoutingClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<FleetRoutingConnection> connection_;

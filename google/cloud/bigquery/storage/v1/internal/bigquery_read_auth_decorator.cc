@@ -31,21 +31,20 @@ BigQueryReadAuth::BigQueryReadAuth(
     std::shared_ptr<BigQueryReadStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::bigquery::storage::v1::ReadSession>
-BigQueryReadAuth::CreateReadSession(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::storage::v1::CreateReadSessionRequest const&
-        request) {
+StatusOr<google::cloud::bigquery::storage::v1::ReadSession> BigQueryReadAuth::CreateReadSession(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::storage::v1::CreateReadSessionRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateReadSession(context, options, request);
 }
 
-std::unique_ptr<google::cloud::internal::StreamingReadRpc<
-    google::cloud::bigquery::storage::v1::ReadRowsResponse>>
+std::unique_ptr<google::cloud::internal::StreamingReadRpc<google::cloud::bigquery::storage::v1::ReadRowsResponse>>
 BigQueryReadAuth::ReadRows(
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
-    google::cloud::bigquery::storage::v1::ReadRowsRequest const& request) {
+   std::shared_ptr<grpc::ClientContext> context,
+   Options const& options,
+   google::cloud::bigquery::storage::v1::ReadRowsRequest const& request) {
   using ErrorStream = ::google::cloud::internal::StreamingReadRpcError<
       google::cloud::bigquery::storage::v1::ReadRowsResponse>;
   auto status = auth_->ConfigureContext(*context);
@@ -53,11 +52,10 @@ BigQueryReadAuth::ReadRows(
   return child_->ReadRows(std::move(context), options, request);
 }
 
-StatusOr<google::cloud::bigquery::storage::v1::SplitReadStreamResponse>
-BigQueryReadAuth::SplitReadStream(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::storage::v1::SplitReadStreamRequest const&
-        request) {
+StatusOr<google::cloud::bigquery::storage::v1::SplitReadStreamResponse> BigQueryReadAuth::SplitReadStream(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::storage::v1::SplitReadStreamRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->SplitReadStream(context, options, request);

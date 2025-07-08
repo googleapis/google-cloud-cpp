@@ -34,27 +34,26 @@ class CloudShellServiceConnectionIdempotencyPolicy {
   virtual ~CloudShellServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<CloudShellServiceConnectionIdempotencyPolicy> clone()
-      const;
+  virtual std::unique_ptr<CloudShellServiceConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency GetEnvironment(
-      google::cloud::shell::v1::GetEnvironmentRequest const& request);
+  virtual google::cloud::Idempotency
+  GetEnvironment(google::cloud::shell::v1::GetEnvironmentRequest const& request);
 
-  virtual google::cloud::Idempotency StartEnvironment(
-      google::cloud::shell::v1::StartEnvironmentRequest const& request);
+  virtual google::cloud::Idempotency
+  StartEnvironment(google::cloud::shell::v1::StartEnvironmentRequest const& request);
 
-  virtual google::cloud::Idempotency AuthorizeEnvironment(
-      google::cloud::shell::v1::AuthorizeEnvironmentRequest const& request);
+  virtual google::cloud::Idempotency
+  AuthorizeEnvironment(google::cloud::shell::v1::AuthorizeEnvironmentRequest const& request);
 
-  virtual google::cloud::Idempotency AddPublicKey(
-      google::cloud::shell::v1::AddPublicKeyRequest const& request);
+  virtual google::cloud::Idempotency
+  AddPublicKey(google::cloud::shell::v1::AddPublicKeyRequest const& request);
 
-  virtual google::cloud::Idempotency RemovePublicKey(
-      google::cloud::shell::v1::RemovePublicKeyRequest const& request);
+  virtual google::cloud::Idempotency
+  RemovePublicKey(google::cloud::shell::v1::RemovePublicKeyRequest const& request);
 };
 
 std::unique_ptr<CloudShellServiceConnectionIdempotencyPolicy>
-MakeDefaultCloudShellServiceConnectionIdempotencyPolicy();
+    MakeDefaultCloudShellServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace shell_v1

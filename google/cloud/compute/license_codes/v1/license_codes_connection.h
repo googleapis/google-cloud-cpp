@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_LICENSE_CODES_V1_LICENSE_CODES_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_LICENSE_CODES_V1_LICENSE_CODES_CONNECTION_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/license_codes/v1/internal/license_codes_retry_traits.h"
 #include "google/cloud/compute/license_codes/v1/license_codes_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -51,8 +51,7 @@ class LicenseCodesRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class LicenseCodesLimitedErrorCountRetryPolicy
-    : public LicenseCodesRetryPolicy {
+class LicenseCodesLimitedErrorCountRetryPolicy : public LicenseCodesRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -62,14 +61,14 @@ class LicenseCodesLimitedErrorCountRetryPolicy
    *     @p maximum_failures == 0.
    */
   explicit LicenseCodesLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   LicenseCodesLimitedErrorCountRetryPolicy(
       LicenseCodesLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : LicenseCodesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : LicenseCodesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   LicenseCodesLimitedErrorCountRetryPolicy(
       LicenseCodesLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : LicenseCodesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : LicenseCodesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -89,9 +88,7 @@ class LicenseCodesLimitedErrorCountRetryPolicy
   using BaseType = LicenseCodesRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      compute_license_codes_v1_internal::LicenseCodesRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<compute_license_codes_v1_internal::LicenseCodesRetryTraits> impl_;
 };
 
 /**
@@ -129,14 +126,12 @@ class LicenseCodesLimitedTimeRetryPolicy : public LicenseCodesRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit LicenseCodesLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  LicenseCodesLimitedTimeRetryPolicy(
-      LicenseCodesLimitedTimeRetryPolicy&& rhs) noexcept
-      : LicenseCodesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  LicenseCodesLimitedTimeRetryPolicy(
-      LicenseCodesLimitedTimeRetryPolicy const& rhs) noexcept
-      : LicenseCodesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  LicenseCodesLimitedTimeRetryPolicy(LicenseCodesLimitedTimeRetryPolicy&& rhs) noexcept
+    : LicenseCodesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  LicenseCodesLimitedTimeRetryPolicy(LicenseCodesLimitedTimeRetryPolicy const& rhs) noexcept
+    : LicenseCodesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -158,9 +153,7 @@ class LicenseCodesLimitedTimeRetryPolicy : public LicenseCodesRetryPolicy {
   using BaseType = LicenseCodesRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      compute_license_codes_v1_internal::LicenseCodesRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<compute_license_codes_v1_internal::LicenseCodesRetryTraits> impl_;
 };
 
 /**
@@ -173,8 +166,7 @@ class LicenseCodesLimitedTimeRetryPolicy : public LicenseCodesRetryPolicy {
  *
  * To create a concrete instance, see `MakeLicenseCodesConnection()`.
  *
- * For mocking, see
- * `compute_license_codes_v1_mocks::MockLicenseCodesConnection`.
+ * For mocking, see `compute_license_codes_v1_mocks::MockLicenseCodesConnection`.
  */
 class LicenseCodesConnection {
  public:
@@ -182,13 +174,11 @@ class LicenseCodesConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::LicenseCode> GetLicenseCode(
-      google::cloud::cpp::compute::license_codes::v1::
-          GetLicenseCodeRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::LicenseCode>
+  GetLicenseCode(google::cloud::cpp::compute::license_codes::v1::GetLicenseCodeRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(google::cloud::cpp::compute::license_codes::v1::
-                         TestIamPermissionsRequest const& request);
+  TestIamPermissions(google::cloud::cpp::compute::license_codes::v1::TestIamPermissionsRequest const& request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

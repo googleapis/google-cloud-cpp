@@ -74,7 +74,8 @@ struct AlloyDBAdminPollingPolicyOption {
  * @ingroup google-cloud-alloydb-options
  */
 using AlloyDBAdminPolicyOptionList =
-    OptionList<AlloyDBAdminRetryPolicyOption, AlloyDBAdminBackoffPolicyOption,
+    OptionList<AlloyDBAdminRetryPolicyOption,
+               AlloyDBAdminBackoffPolicyOption,
                AlloyDBAdminPollingPolicyOption,
                AlloyDBAdminConnectionIdempotencyPolicyOption>;
 

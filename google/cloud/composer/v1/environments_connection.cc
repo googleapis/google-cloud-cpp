@@ -17,13 +17,13 @@
 // source: google/cloud/orchestration/airflow/service/v1/environments.proto
 
 #include "google/cloud/composer/v1/environments_connection.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/composer/v1/environments_options.h"
 #include "google/cloud/composer/v1/internal/environments_connection_impl.h"
 #include "google/cloud/composer/v1/internal/environments_option_defaults.h"
 #include "google/cloud/composer/v1/internal/environments_stub_factory.h"
 #include "google/cloud/composer/v1/internal/environments_tracing_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
@@ -38,348 +38,290 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 EnvironmentsConnection::~EnvironmentsConnection() = default;
 
-future<
-    StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>>
+future<StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>>
 EnvironmentsConnection::CreateEnvironment(
-    google::cloud::orchestration::airflow::service::v1::
-        CreateEnvironmentRequest const&) {
-  return google::cloud::make_ready_future<StatusOr<
-      google::cloud::orchestration::airflow::service::v1::Environment>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    google::cloud::orchestration::airflow::service::v1::CreateEnvironmentRequest const&) {
+  return google::cloud::make_ready_future<
+    StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 EnvironmentsConnection::CreateEnvironment(
-    NoAwaitTag, google::cloud::orchestration::airflow::service::v1::
-                    CreateEnvironmentRequest const&) {
+    NoAwaitTag,
+    google::cloud::orchestration::airflow::service::v1::CreateEnvironmentRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<
-    StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>>
+future<StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>>
 EnvironmentsConnection::CreateEnvironment(
     google::longrunning::Operation const&) {
-  return google::cloud::make_ready_future<StatusOr<
-      google::cloud::orchestration::airflow::service::v1::Environment>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+  return google::cloud::make_ready_future<
+    StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>
 EnvironmentsConnection::GetEnvironment(
-    google::cloud::orchestration::airflow::service::v1::
-        GetEnvironmentRequest const&) {
+    google::cloud::orchestration::airflow::service::v1::GetEnvironmentRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::orchestration::airflow::service::v1::Environment>
-EnvironmentsConnection::ListEnvironments(
-    google::cloud::orchestration::airflow::service::v1::
-        ListEnvironmentsRequest) {  // NOLINT(performance-unnecessary-value-param)
-  return google::cloud::internal::MakeUnimplementedPaginationRange<StreamRange<
-      google::cloud::orchestration::airflow::service::v1::Environment>>();
+StreamRange<google::cloud::orchestration::airflow::service::v1::Environment> EnvironmentsConnection::ListEnvironments(
+    google::cloud::orchestration::airflow::service::v1::ListEnvironmentsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::orchestration::airflow::service::v1::Environment>>();
 }
 
-future<
-    StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>>
+future<StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>>
 EnvironmentsConnection::UpdateEnvironment(
-    google::cloud::orchestration::airflow::service::v1::
-        UpdateEnvironmentRequest const&) {
-  return google::cloud::make_ready_future<StatusOr<
-      google::cloud::orchestration::airflow::service::v1::Environment>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    google::cloud::orchestration::airflow::service::v1::UpdateEnvironmentRequest const&) {
+  return google::cloud::make_ready_future<
+    StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 EnvironmentsConnection::UpdateEnvironment(
-    NoAwaitTag, google::cloud::orchestration::airflow::service::v1::
-                    UpdateEnvironmentRequest const&) {
+    NoAwaitTag,
+    google::cloud::orchestration::airflow::service::v1::UpdateEnvironmentRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<
-    StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>>
+future<StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>>
 EnvironmentsConnection::UpdateEnvironment(
     google::longrunning::Operation const&) {
-  return google::cloud::make_ready_future<StatusOr<
-      google::cloud::orchestration::airflow::service::v1::Environment>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+  return google::cloud::make_ready_future<
+    StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<StatusOr<
-    google::cloud::orchestration::airflow::service::v1::OperationMetadata>>
+future<StatusOr<google::cloud::orchestration::airflow::service::v1::OperationMetadata>>
 EnvironmentsConnection::DeleteEnvironment(
-    google::cloud::orchestration::airflow::service::v1::
-        DeleteEnvironmentRequest const&) {
-  return google::cloud::make_ready_future<StatusOr<
-      google::cloud::orchestration::airflow::service::v1::OperationMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    google::cloud::orchestration::airflow::service::v1::DeleteEnvironmentRequest const&) {
+  return google::cloud::make_ready_future<
+    StatusOr<google::cloud::orchestration::airflow::service::v1::OperationMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 EnvironmentsConnection::DeleteEnvironment(
-    NoAwaitTag, google::cloud::orchestration::airflow::service::v1::
-                    DeleteEnvironmentRequest const&) {
+    NoAwaitTag,
+    google::cloud::orchestration::airflow::service::v1::DeleteEnvironmentRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<StatusOr<
-    google::cloud::orchestration::airflow::service::v1::OperationMetadata>>
+future<StatusOr<google::cloud::orchestration::airflow::service::v1::OperationMetadata>>
 EnvironmentsConnection::DeleteEnvironment(
     google::longrunning::Operation const&) {
-  return google::cloud::make_ready_future<StatusOr<
-      google::cloud::orchestration::airflow::service::v1::OperationMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+  return google::cloud::make_ready_future<
+    StatusOr<google::cloud::orchestration::airflow::service::v1::OperationMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::cloud::orchestration::airflow::service::v1::
-             ExecuteAirflowCommandResponse>
+StatusOr<google::cloud::orchestration::airflow::service::v1::ExecuteAirflowCommandResponse>
 EnvironmentsConnection::ExecuteAirflowCommand(
-    google::cloud::orchestration::airflow::service::v1::
-        ExecuteAirflowCommandRequest const&) {
+    google::cloud::orchestration::airflow::service::v1::ExecuteAirflowCommandRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::cloud::orchestration::airflow::service::v1::
-             StopAirflowCommandResponse>
+StatusOr<google::cloud::orchestration::airflow::service::v1::StopAirflowCommandResponse>
 EnvironmentsConnection::StopAirflowCommand(
-    google::cloud::orchestration::airflow::service::v1::
-        StopAirflowCommandRequest const&) {
+    google::cloud::orchestration::airflow::service::v1::StopAirflowCommandRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::cloud::orchestration::airflow::service::v1::
-             PollAirflowCommandResponse>
+StatusOr<google::cloud::orchestration::airflow::service::v1::PollAirflowCommandResponse>
 EnvironmentsConnection::PollAirflowCommand(
-    google::cloud::orchestration::airflow::service::v1::
-        PollAirflowCommandRequest const&) {
+    google::cloud::orchestration::airflow::service::v1::PollAirflowCommandRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::orchestration::airflow::service::v1::
-                ListWorkloadsResponse::ComposerWorkload>
-EnvironmentsConnection::ListWorkloads(
-    google::cloud::orchestration::airflow::service::v1::
-        ListWorkloadsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::orchestration::airflow::service::v1::ListWorkloadsResponse::ComposerWorkload> EnvironmentsConnection::ListWorkloads(
+    google::cloud::orchestration::airflow::service::v1::ListWorkloadsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
-      StreamRange<google::cloud::orchestration::airflow::service::v1::
-                      ListWorkloadsResponse::ComposerWorkload>>();
+      StreamRange<google::cloud::orchestration::airflow::service::v1::ListWorkloadsResponse::ComposerWorkload>>();
 }
 
-future<StatusOr<
-    google::cloud::orchestration::airflow::service::v1::CheckUpgradeResponse>>
+future<StatusOr<google::cloud::orchestration::airflow::service::v1::CheckUpgradeResponse>>
 EnvironmentsConnection::CheckUpgrade(
-    google::cloud::orchestration::airflow::service::v1::
-        CheckUpgradeRequest const&) {
+    google::cloud::orchestration::airflow::service::v1::CheckUpgradeRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::orchestration::airflow::service::v1::
-                   CheckUpgradeResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::orchestration::airflow::service::v1::CheckUpgradeResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation> EnvironmentsConnection::CheckUpgrade(
-    NoAwaitTag, google::cloud::orchestration::airflow::service::v1::
-                    CheckUpgradeRequest const&) {
+StatusOr<google::longrunning::Operation>
+EnvironmentsConnection::CheckUpgrade(
+    NoAwaitTag,
+    google::cloud::orchestration::airflow::service::v1::CheckUpgradeRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<StatusOr<
-    google::cloud::orchestration::airflow::service::v1::CheckUpgradeResponse>>
-EnvironmentsConnection::CheckUpgrade(google::longrunning::Operation const&) {
+future<StatusOr<google::cloud::orchestration::airflow::service::v1::CheckUpgradeResponse>>
+EnvironmentsConnection::CheckUpgrade(
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::orchestration::airflow::service::v1::
-                   CheckUpgradeResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::orchestration::airflow::service::v1::CheckUpgradeResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<
-    google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
+StatusOr<google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
 EnvironmentsConnection::CreateUserWorkloadsSecret(
-    google::cloud::orchestration::airflow::service::v1::
-        CreateUserWorkloadsSecretRequest const&) {
+    google::cloud::orchestration::airflow::service::v1::CreateUserWorkloadsSecretRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<
-    google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
+StatusOr<google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
 EnvironmentsConnection::GetUserWorkloadsSecret(
-    google::cloud::orchestration::airflow::service::v1::
-        GetUserWorkloadsSecretRequest const&) {
+    google::cloud::orchestration::airflow::service::v1::GetUserWorkloadsSecretRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<
-    google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
-EnvironmentsConnection::ListUserWorkloadsSecrets(
-    google::cloud::orchestration::airflow::service::v1::
-        ListUserWorkloadsSecretsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret> EnvironmentsConnection::ListUserWorkloadsSecrets(
+    google::cloud::orchestration::airflow::service::v1::ListUserWorkloadsSecretsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
-      StreamRange<google::cloud::orchestration::airflow::service::v1::
-                      UserWorkloadsSecret>>();
+      StreamRange<google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>>();
 }
 
-StatusOr<
-    google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
+StatusOr<google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
 EnvironmentsConnection::UpdateUserWorkloadsSecret(
-    google::cloud::orchestration::airflow::service::v1::
-        UpdateUserWorkloadsSecretRequest const&) {
+    google::cloud::orchestration::airflow::service::v1::UpdateUserWorkloadsSecretRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status EnvironmentsConnection::DeleteUserWorkloadsSecret(
-    google::cloud::orchestration::airflow::service::v1::
-        DeleteUserWorkloadsSecretRequest const&) {
+Status
+EnvironmentsConnection::DeleteUserWorkloadsSecret(
+    google::cloud::orchestration::airflow::service::v1::DeleteUserWorkloadsSecretRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<
-    google::cloud::orchestration::airflow::service::v1::UserWorkloadsConfigMap>
+StatusOr<google::cloud::orchestration::airflow::service::v1::UserWorkloadsConfigMap>
 EnvironmentsConnection::CreateUserWorkloadsConfigMap(
-    google::cloud::orchestration::airflow::service::v1::
-        CreateUserWorkloadsConfigMapRequest const&) {
+    google::cloud::orchestration::airflow::service::v1::CreateUserWorkloadsConfigMapRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<
-    google::cloud::orchestration::airflow::service::v1::UserWorkloadsConfigMap>
+StatusOr<google::cloud::orchestration::airflow::service::v1::UserWorkloadsConfigMap>
 EnvironmentsConnection::GetUserWorkloadsConfigMap(
-    google::cloud::orchestration::airflow::service::v1::
-        GetUserWorkloadsConfigMapRequest const&) {
+    google::cloud::orchestration::airflow::service::v1::GetUserWorkloadsConfigMapRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<
-    google::cloud::orchestration::airflow::service::v1::UserWorkloadsConfigMap>
-EnvironmentsConnection::ListUserWorkloadsConfigMaps(
-    google::cloud::orchestration::airflow::service::v1::
-        ListUserWorkloadsConfigMapsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::orchestration::airflow::service::v1::UserWorkloadsConfigMap> EnvironmentsConnection::ListUserWorkloadsConfigMaps(
+    google::cloud::orchestration::airflow::service::v1::ListUserWorkloadsConfigMapsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
-      StreamRange<google::cloud::orchestration::airflow::service::v1::
-                      UserWorkloadsConfigMap>>();
+      StreamRange<google::cloud::orchestration::airflow::service::v1::UserWorkloadsConfigMap>>();
 }
 
-StatusOr<
-    google::cloud::orchestration::airflow::service::v1::UserWorkloadsConfigMap>
+StatusOr<google::cloud::orchestration::airflow::service::v1::UserWorkloadsConfigMap>
 EnvironmentsConnection::UpdateUserWorkloadsConfigMap(
-    google::cloud::orchestration::airflow::service::v1::
-        UpdateUserWorkloadsConfigMapRequest const&) {
+    google::cloud::orchestration::airflow::service::v1::UpdateUserWorkloadsConfigMapRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status EnvironmentsConnection::DeleteUserWorkloadsConfigMap(
-    google::cloud::orchestration::airflow::service::v1::
-        DeleteUserWorkloadsConfigMapRequest const&) {
+Status
+EnvironmentsConnection::DeleteUserWorkloadsConfigMap(
+    google::cloud::orchestration::airflow::service::v1::DeleteUserWorkloadsConfigMapRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-future<StatusOr<
-    google::cloud::orchestration::airflow::service::v1::SaveSnapshotResponse>>
+future<StatusOr<google::cloud::orchestration::airflow::service::v1::SaveSnapshotResponse>>
 EnvironmentsConnection::SaveSnapshot(
-    google::cloud::orchestration::airflow::service::v1::
-        SaveSnapshotRequest const&) {
+    google::cloud::orchestration::airflow::service::v1::SaveSnapshotRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::orchestration::airflow::service::v1::
-                   SaveSnapshotResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::orchestration::airflow::service::v1::SaveSnapshotResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation> EnvironmentsConnection::SaveSnapshot(
-    NoAwaitTag, google::cloud::orchestration::airflow::service::v1::
-                    SaveSnapshotRequest const&) {
+StatusOr<google::longrunning::Operation>
+EnvironmentsConnection::SaveSnapshot(
+    NoAwaitTag,
+    google::cloud::orchestration::airflow::service::v1::SaveSnapshotRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<StatusOr<
-    google::cloud::orchestration::airflow::service::v1::SaveSnapshotResponse>>
-EnvironmentsConnection::SaveSnapshot(google::longrunning::Operation const&) {
+future<StatusOr<google::cloud::orchestration::airflow::service::v1::SaveSnapshotResponse>>
+EnvironmentsConnection::SaveSnapshot(
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::orchestration::airflow::service::v1::
-                   SaveSnapshotResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::orchestration::airflow::service::v1::SaveSnapshotResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<StatusOr<
-    google::cloud::orchestration::airflow::service::v1::LoadSnapshotResponse>>
+future<StatusOr<google::cloud::orchestration::airflow::service::v1::LoadSnapshotResponse>>
 EnvironmentsConnection::LoadSnapshot(
-    google::cloud::orchestration::airflow::service::v1::
-        LoadSnapshotRequest const&) {
+    google::cloud::orchestration::airflow::service::v1::LoadSnapshotRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::orchestration::airflow::service::v1::
-                   LoadSnapshotResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::orchestration::airflow::service::v1::LoadSnapshotResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation> EnvironmentsConnection::LoadSnapshot(
-    NoAwaitTag, google::cloud::orchestration::airflow::service::v1::
-                    LoadSnapshotRequest const&) {
+StatusOr<google::longrunning::Operation>
+EnvironmentsConnection::LoadSnapshot(
+    NoAwaitTag,
+    google::cloud::orchestration::airflow::service::v1::LoadSnapshotRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<StatusOr<
-    google::cloud::orchestration::airflow::service::v1::LoadSnapshotResponse>>
-EnvironmentsConnection::LoadSnapshot(google::longrunning::Operation const&) {
+future<StatusOr<google::cloud::orchestration::airflow::service::v1::LoadSnapshotResponse>>
+EnvironmentsConnection::LoadSnapshot(
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::orchestration::airflow::service::v1::
-                   LoadSnapshotResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::orchestration::airflow::service::v1::LoadSnapshotResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<StatusOr<google::cloud::orchestration::airflow::service::v1::
-                    DatabaseFailoverResponse>>
+future<StatusOr<google::cloud::orchestration::airflow::service::v1::DatabaseFailoverResponse>>
 EnvironmentsConnection::DatabaseFailover(
-    google::cloud::orchestration::airflow::service::v1::
-        DatabaseFailoverRequest const&) {
+    google::cloud::orchestration::airflow::service::v1::DatabaseFailoverRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::orchestration::airflow::service::v1::
-                   DatabaseFailoverResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::orchestration::airflow::service::v1::DatabaseFailoverResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 EnvironmentsConnection::DatabaseFailover(
-    NoAwaitTag, google::cloud::orchestration::airflow::service::v1::
-                    DatabaseFailoverRequest const&) {
+    NoAwaitTag,
+    google::cloud::orchestration::airflow::service::v1::DatabaseFailoverRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<StatusOr<google::cloud::orchestration::airflow::service::v1::
-                    DatabaseFailoverResponse>>
+future<StatusOr<google::cloud::orchestration::airflow::service::v1::DatabaseFailoverResponse>>
 EnvironmentsConnection::DatabaseFailover(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::orchestration::airflow::service::v1::
-                   DatabaseFailoverResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::orchestration::airflow::service::v1::DatabaseFailoverResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::cloud::orchestration::airflow::service::v1::
-             FetchDatabasePropertiesResponse>
+StatusOr<google::cloud::orchestration::airflow::service::v1::FetchDatabasePropertiesResponse>
 EnvironmentsConnection::FetchDatabaseProperties(
-    google::cloud::orchestration::airflow::service::v1::
-        FetchDatabasePropertiesRequest const&) {
+    google::cloud::orchestration::airflow::service::v1::FetchDatabasePropertiesRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::longrunning::Operation>
-EnvironmentsConnection::ListOperations(
-    google::longrunning::
-        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::longrunning::Operation> EnvironmentsConnection::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }
 
-StatusOr<google::longrunning::Operation> EnvironmentsConnection::GetOperation(
+StatusOr<google::longrunning::Operation>
+EnvironmentsConnection::GetOperation(
     google::longrunning::GetOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status EnvironmentsConnection::DeleteOperation(
+Status
+EnvironmentsConnection::DeleteOperation(
     google::longrunning::DeleteOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -387,18 +329,17 @@ Status EnvironmentsConnection::DeleteOperation(
 std::shared_ptr<EnvironmentsConnection> MakeEnvironmentsConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 EnvironmentsPolicyOptionList>(options,
-                                                               __func__);
-  options =
-      composer_v1_internal::EnvironmentsDefaultOptions(std::move(options));
+      UnifiedCredentialsOptionList,
+      EnvironmentsPolicyOptionList>(options, __func__);
+  options = composer_v1_internal::EnvironmentsDefaultOptions(
+      std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = composer_v1_internal::CreateDefaultEnvironmentsStub(
-      std::move(auth), options);
+    std::move(auth), options);
   return composer_v1_internal::MakeEnvironmentsTracingConnection(
       std::make_shared<composer_v1_internal::EnvironmentsConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options)));
+      std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

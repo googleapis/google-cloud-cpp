@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTENTWAREHOUSE_V1_INTERNAL_PIPELINE_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTENTWAREHOUSE_V1_INTERNAL_PIPELINE_CONNECTION_IMPL_H
 
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/contentwarehouse/v1/internal/pipeline_retry_traits.h"
 #include "google/cloud/contentwarehouse/v1/internal/pipeline_stub.h"
 #include "google/cloud/contentwarehouse/v1/pipeline_connection.h"
 #include "google/cloud/contentwarehouse/v1/pipeline_connection_idempotency_policy.h"
 #include "google/cloud/contentwarehouse/v1/pipeline_options.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -45,26 +45,25 @@ class PipelineServiceConnectionImpl
   ~PipelineServiceConnectionImpl() override = default;
 
   PipelineServiceConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<contentwarehouse_v1_internal::PipelineServiceStub> stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<contentwarehouse_v1_internal::PipelineServiceStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
   future<StatusOr<google::cloud::contentwarehouse::v1::RunPipelineResponse>>
-  RunPipeline(google::cloud::contentwarehouse::v1::RunPipelineRequest const&
-                  request) override;
+  RunPipeline(google::cloud::contentwarehouse::v1::RunPipelineRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> RunPipeline(
-      NoAwaitTag,
-      google::cloud::contentwarehouse::v1::RunPipelineRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  RunPipeline(NoAwaitTag,
+      google::cloud::contentwarehouse::v1::RunPipelineRequest const& request) override;
 
   future<StatusOr<google::cloud::contentwarehouse::v1::RunPipelineResponse>>
-  RunPipeline(google::longrunning::Operation const& operation) override;
+  RunPipeline(
+      google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

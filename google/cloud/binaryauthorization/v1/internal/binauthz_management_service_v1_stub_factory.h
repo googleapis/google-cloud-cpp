@@ -30,8 +30,7 @@ namespace cloud {
 namespace binaryauthorization_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<BinauthzManagementServiceV1Stub>
-CreateDefaultBinauthzManagementServiceV1Stub(
+std::shared_ptr<BinauthzManagementServiceV1Stub> CreateDefaultBinauthzManagementServiceV1Stub(
     std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
     Options const& options);
 

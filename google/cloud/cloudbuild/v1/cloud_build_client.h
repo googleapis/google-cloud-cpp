@@ -71,8 +71,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class CloudBuildClient {
  public:
-  explicit CloudBuildClient(std::shared_ptr<CloudBuildConnection> connection,
-                            Options opts = {});
+  explicit CloudBuildClient(std::shared_ptr<CloudBuildConnection> connection, Options opts = {});
   ~CloudBuildClient();
 
   ///@{
@@ -127,9 +126,8 @@ class CloudBuildClient {
   /// [google.devtools.cloudbuild.v1.CreateBuildRequest]: @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1574}
   ///
   // clang-format on
-  future<StatusOr<google::devtools::cloudbuild::v1::Build>> CreateBuild(
-      std::string const& project_id,
-      google::devtools::cloudbuild::v1::Build const& build, Options opts = {});
+  future<StatusOr<google::devtools::cloudbuild::v1::Build>>
+  CreateBuild(std::string const& project_id, google::devtools::cloudbuild::v1::Build const& build, Options opts = {});
 
   // clang-format off
   ///
@@ -142,9 +140,8 @@ class CloudBuildClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateBuild(
-      NoAwaitTag, std::string const& project_id,
-      google::devtools::cloudbuild::v1::Build const& build, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateBuild(NoAwaitTag, std::string const& project_id, google::devtools::cloudbuild::v1::Build const& build, Options opts = {});
 
   // clang-format off
   ///
@@ -184,9 +181,8 @@ class CloudBuildClient {
   /// [google.devtools.cloudbuild.v1.CreateBuildRequest]: @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1574}
   ///
   // clang-format on
-  future<StatusOr<google::devtools::cloudbuild::v1::Build>> CreateBuild(
-      google::devtools::cloudbuild::v1::CreateBuildRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::devtools::cloudbuild::v1::Build>>
+  CreateBuild(google::devtools::cloudbuild::v1::CreateBuildRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -199,10 +195,8 @@ class CloudBuildClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateBuild(
-      NoAwaitTag,
-      google::devtools::cloudbuild::v1::CreateBuildRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateBuild(NoAwaitTag, google::devtools::cloudbuild::v1::CreateBuildRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -213,8 +207,8 @@ class CloudBuildClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::devtools::cloudbuild::v1::Build>> CreateBuild(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::devtools::cloudbuild::v1::Build>>
+  CreateBuild(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -242,8 +236,8 @@ class CloudBuildClient {
   /// [google.devtools.cloudbuild.v1.GetBuildRequest]: @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1589}
   ///
   // clang-format on
-  StatusOr<google::devtools::cloudbuild::v1::Build> GetBuild(
-      std::string const& project_id, std::string const& id, Options opts = {});
+  StatusOr<google::devtools::cloudbuild::v1::Build>
+  GetBuild(std::string const& project_id, std::string const& id, Options opts = {});
 
   // clang-format off
   ///
@@ -275,9 +269,8 @@ class CloudBuildClient {
   /// [google.devtools.cloudbuild.v1.GetBuildRequest]: @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1589}
   ///
   // clang-format on
-  StatusOr<google::devtools::cloudbuild::v1::Build> GetBuild(
-      google::devtools::cloudbuild::v1::GetBuildRequest const& request,
-      Options opts = {});
+  StatusOr<google::devtools::cloudbuild::v1::Build>
+  GetBuild(google::devtools::cloudbuild::v1::GetBuildRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -314,9 +307,8 @@ class CloudBuildClient {
   /// [google.devtools.cloudbuild.v1.ListBuildsRequest]: @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1604}
   ///
   // clang-format on
-  StreamRange<google::devtools::cloudbuild::v1::Build> ListBuilds(
-      std::string const& project_id, std::string const& filter,
-      Options opts = {});
+  StreamRange<google::devtools::cloudbuild::v1::Build>
+  ListBuilds(std::string const& project_id, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -357,9 +349,8 @@ class CloudBuildClient {
   /// [google.devtools.cloudbuild.v1.ListBuildsRequest]: @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1604}
   ///
   // clang-format on
-  StreamRange<google::devtools::cloudbuild::v1::Build> ListBuilds(
-      google::devtools::cloudbuild::v1::ListBuildsRequest request,
-      Options opts = {});
+  StreamRange<google::devtools::cloudbuild::v1::Build>
+  ListBuilds(google::devtools::cloudbuild::v1::ListBuildsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -384,8 +375,8 @@ class CloudBuildClient {
   /// [google.devtools.cloudbuild.v1.CancelBuildRequest]: @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1643}
   ///
   // clang-format on
-  StatusOr<google::devtools::cloudbuild::v1::Build> CancelBuild(
-      std::string const& project_id, std::string const& id, Options opts = {});
+  StatusOr<google::devtools::cloudbuild::v1::Build>
+  CancelBuild(std::string const& project_id, std::string const& id, Options opts = {});
 
   // clang-format off
   ///
@@ -414,9 +405,8 @@ class CloudBuildClient {
   /// [google.devtools.cloudbuild.v1.CancelBuildRequest]: @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1643}
   ///
   // clang-format on
-  StatusOr<google::devtools::cloudbuild::v1::Build> CancelBuild(
-      google::devtools::cloudbuild::v1::CancelBuildRequest const& request,
-      Options opts = {});
+  StatusOr<google::devtools::cloudbuild::v1::Build>
+  CancelBuild(google::devtools::cloudbuild::v1::CancelBuildRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -474,8 +464,8 @@ class CloudBuildClient {
   /// [google.devtools.cloudbuild.v1.RetryBuildRequest]: @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L490}
   ///
   // clang-format on
-  future<StatusOr<google::devtools::cloudbuild::v1::Build>> RetryBuild(
-      std::string const& project_id, std::string const& id, Options opts = {});
+  future<StatusOr<google::devtools::cloudbuild::v1::Build>>
+  RetryBuild(std::string const& project_id, std::string const& id, Options opts = {});
 
   // clang-format off
   ///
@@ -488,9 +478,8 @@ class CloudBuildClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> RetryBuild(
-      NoAwaitTag, std::string const& project_id, std::string const& id,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  RetryBuild(NoAwaitTag, std::string const& project_id, std::string const& id, Options opts = {});
 
   // clang-format off
   ///
@@ -552,9 +541,8 @@ class CloudBuildClient {
   /// [google.devtools.cloudbuild.v1.RetryBuildRequest]: @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L490}
   ///
   // clang-format on
-  future<StatusOr<google::devtools::cloudbuild::v1::Build>> RetryBuild(
-      google::devtools::cloudbuild::v1::RetryBuildRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::devtools::cloudbuild::v1::Build>>
+  RetryBuild(google::devtools::cloudbuild::v1::RetryBuildRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -567,10 +555,8 @@ class CloudBuildClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> RetryBuild(
-      NoAwaitTag,
-      google::devtools::cloudbuild::v1::RetryBuildRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  RetryBuild(NoAwaitTag, google::devtools::cloudbuild::v1::RetryBuildRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -581,8 +567,8 @@ class CloudBuildClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::devtools::cloudbuild::v1::Build>> RetryBuild(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::devtools::cloudbuild::v1::Build>>
+  RetryBuild(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -620,10 +606,8 @@ class CloudBuildClient {
   /// [google.devtools.cloudbuild.v1.Build]: @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L939}
   ///
   // clang-format on
-  future<StatusOr<google::devtools::cloudbuild::v1::Build>> ApproveBuild(
-      std::string const& name,
-      google::devtools::cloudbuild::v1::ApprovalResult const& approval_result,
-      Options opts = {});
+  future<StatusOr<google::devtools::cloudbuild::v1::Build>>
+  ApproveBuild(std::string const& name, google::devtools::cloudbuild::v1::ApprovalResult const& approval_result, Options opts = {});
 
   // clang-format off
   ///
@@ -636,10 +620,8 @@ class CloudBuildClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> ApproveBuild(
-      NoAwaitTag, std::string const& name,
-      google::devtools::cloudbuild::v1::ApprovalResult const& approval_result,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  ApproveBuild(NoAwaitTag, std::string const& name, google::devtools::cloudbuild::v1::ApprovalResult const& approval_result, Options opts = {});
 
   // clang-format off
   ///
@@ -680,9 +662,8 @@ class CloudBuildClient {
   /// [google.devtools.cloudbuild.v1.Build]: @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L939}
   ///
   // clang-format on
-  future<StatusOr<google::devtools::cloudbuild::v1::Build>> ApproveBuild(
-      google::devtools::cloudbuild::v1::ApproveBuildRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::devtools::cloudbuild::v1::Build>>
+  ApproveBuild(google::devtools::cloudbuild::v1::ApproveBuildRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -695,10 +676,8 @@ class CloudBuildClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> ApproveBuild(
-      NoAwaitTag,
-      google::devtools::cloudbuild::v1::ApproveBuildRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  ApproveBuild(NoAwaitTag, google::devtools::cloudbuild::v1::ApproveBuildRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -709,8 +688,8 @@ class CloudBuildClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::devtools::cloudbuild::v1::Build>> ApproveBuild(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::devtools::cloudbuild::v1::Build>>
+  ApproveBuild(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -737,10 +716,8 @@ class CloudBuildClient {
   /// [google.devtools.cloudbuild.v1.CreateBuildTriggerRequest]: @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L2206}
   ///
   // clang-format on
-  StatusOr<google::devtools::cloudbuild::v1::BuildTrigger> CreateBuildTrigger(
-      std::string const& project_id,
-      google::devtools::cloudbuild::v1::BuildTrigger const& trigger,
-      Options opts = {});
+  StatusOr<google::devtools::cloudbuild::v1::BuildTrigger>
+  CreateBuildTrigger(std::string const& project_id, google::devtools::cloudbuild::v1::BuildTrigger const& trigger, Options opts = {});
 
   // clang-format off
   ///
@@ -771,10 +748,8 @@ class CloudBuildClient {
   /// [google.devtools.cloudbuild.v1.CreateBuildTriggerRequest]: @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L2206}
   ///
   // clang-format on
-  StatusOr<google::devtools::cloudbuild::v1::BuildTrigger> CreateBuildTrigger(
-      google::devtools::cloudbuild::v1::CreateBuildTriggerRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::devtools::cloudbuild::v1::BuildTrigger>
+  CreateBuildTrigger(google::devtools::cloudbuild::v1::CreateBuildTriggerRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -801,9 +776,8 @@ class CloudBuildClient {
   /// [google.devtools.cloudbuild.v1.GetBuildTriggerRequest]: @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L2221}
   ///
   // clang-format on
-  StatusOr<google::devtools::cloudbuild::v1::BuildTrigger> GetBuildTrigger(
-      std::string const& project_id, std::string const& trigger_id,
-      Options opts = {});
+  StatusOr<google::devtools::cloudbuild::v1::BuildTrigger>
+  GetBuildTrigger(std::string const& project_id, std::string const& trigger_id, Options opts = {});
 
   // clang-format off
   ///
@@ -834,9 +808,8 @@ class CloudBuildClient {
   /// [google.devtools.cloudbuild.v1.GetBuildTriggerRequest]: @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L2221}
   ///
   // clang-format on
-  StatusOr<google::devtools::cloudbuild::v1::BuildTrigger> GetBuildTrigger(
-      google::devtools::cloudbuild::v1::GetBuildTriggerRequest const& request,
-      Options opts = {});
+  StatusOr<google::devtools::cloudbuild::v1::BuildTrigger>
+  GetBuildTrigger(google::devtools::cloudbuild::v1::GetBuildTriggerRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -871,8 +844,8 @@ class CloudBuildClient {
   /// [google.devtools.cloudbuild.v1.ListBuildTriggersRequest]: @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L2236}
   ///
   // clang-format on
-  StreamRange<google::devtools::cloudbuild::v1::BuildTrigger> ListBuildTriggers(
-      std::string const& project_id, Options opts = {});
+  StreamRange<google::devtools::cloudbuild::v1::BuildTrigger>
+  ListBuildTriggers(std::string const& project_id, Options opts = {});
 
   // clang-format off
   ///
@@ -912,9 +885,8 @@ class CloudBuildClient {
   /// [google.devtools.cloudbuild.v1.ListBuildTriggersRequest]: @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L2236}
   ///
   // clang-format on
-  StreamRange<google::devtools::cloudbuild::v1::BuildTrigger> ListBuildTriggers(
-      google::devtools::cloudbuild::v1::ListBuildTriggersRequest request,
-      Options opts = {});
+  StreamRange<google::devtools::cloudbuild::v1::BuildTrigger>
+  ListBuildTriggers(google::devtools::cloudbuild::v1::ListBuildTriggersRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -938,8 +910,8 @@ class CloudBuildClient {
   /// [google.devtools.cloudbuild.v1.DeleteBuildTriggerRequest]: @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L2263}
   ///
   // clang-format on
-  Status DeleteBuildTrigger(std::string const& project_id,
-                            std::string const& trigger_id, Options opts = {});
+  Status
+  DeleteBuildTrigger(std::string const& project_id, std::string const& trigger_id, Options opts = {});
 
   // clang-format off
   ///
@@ -967,10 +939,8 @@ class CloudBuildClient {
   /// [google.devtools.cloudbuild.v1.DeleteBuildTriggerRequest]: @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L2263}
   ///
   // clang-format on
-  Status DeleteBuildTrigger(
-      google::devtools::cloudbuild::v1::DeleteBuildTriggerRequest const&
-          request,
-      Options opts = {});
+  Status
+  DeleteBuildTrigger(google::devtools::cloudbuild::v1::DeleteBuildTriggerRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -998,10 +968,8 @@ class CloudBuildClient {
   /// [google.devtools.cloudbuild.v1.UpdateBuildTriggerRequest]: @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L2278}
   ///
   // clang-format on
-  StatusOr<google::devtools::cloudbuild::v1::BuildTrigger> UpdateBuildTrigger(
-      std::string const& project_id, std::string const& trigger_id,
-      google::devtools::cloudbuild::v1::BuildTrigger const& trigger,
-      Options opts = {});
+  StatusOr<google::devtools::cloudbuild::v1::BuildTrigger>
+  UpdateBuildTrigger(std::string const& project_id, std::string const& trigger_id, google::devtools::cloudbuild::v1::BuildTrigger const& trigger, Options opts = {});
 
   // clang-format off
   ///
@@ -1032,10 +1000,8 @@ class CloudBuildClient {
   /// [google.devtools.cloudbuild.v1.UpdateBuildTriggerRequest]: @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L2278}
   ///
   // clang-format on
-  StatusOr<google::devtools::cloudbuild::v1::BuildTrigger> UpdateBuildTrigger(
-      google::devtools::cloudbuild::v1::UpdateBuildTriggerRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::devtools::cloudbuild::v1::BuildTrigger>
+  UpdateBuildTrigger(google::devtools::cloudbuild::v1::UpdateBuildTriggerRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1075,10 +1041,8 @@ class CloudBuildClient {
   /// [google.devtools.cloudbuild.v1.RunBuildTriggerRequest]: @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L505}
   ///
   // clang-format on
-  future<StatusOr<google::devtools::cloudbuild::v1::Build>> RunBuildTrigger(
-      std::string const& project_id, std::string const& trigger_id,
-      google::devtools::cloudbuild::v1::RepoSource const& source,
-      Options opts = {});
+  future<StatusOr<google::devtools::cloudbuild::v1::Build>>
+  RunBuildTrigger(std::string const& project_id, std::string const& trigger_id, google::devtools::cloudbuild::v1::RepoSource const& source, Options opts = {});
 
   // clang-format off
   ///
@@ -1091,10 +1055,8 @@ class CloudBuildClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> RunBuildTrigger(
-      NoAwaitTag, std::string const& project_id, std::string const& trigger_id,
-      google::devtools::cloudbuild::v1::RepoSource const& source,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  RunBuildTrigger(NoAwaitTag, std::string const& project_id, std::string const& trigger_id, google::devtools::cloudbuild::v1::RepoSource const& source, Options opts = {});
 
   // clang-format off
   ///
@@ -1136,9 +1098,8 @@ class CloudBuildClient {
   /// [google.devtools.cloudbuild.v1.RunBuildTriggerRequest]: @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L505}
   ///
   // clang-format on
-  future<StatusOr<google::devtools::cloudbuild::v1::Build>> RunBuildTrigger(
-      google::devtools::cloudbuild::v1::RunBuildTriggerRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::devtools::cloudbuild::v1::Build>>
+  RunBuildTrigger(google::devtools::cloudbuild::v1::RunBuildTriggerRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1151,10 +1112,8 @@ class CloudBuildClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> RunBuildTrigger(
-      NoAwaitTag,
-      google::devtools::cloudbuild::v1::RunBuildTriggerRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  RunBuildTrigger(NoAwaitTag, google::devtools::cloudbuild::v1::RunBuildTriggerRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1165,8 +1124,8 @@ class CloudBuildClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::devtools::cloudbuild::v1::Build>> RunBuildTrigger(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::devtools::cloudbuild::v1::Build>>
+  RunBuildTrigger(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1197,10 +1156,7 @@ class CloudBuildClient {
   ///
   // clang-format on
   StatusOr<google::devtools::cloudbuild::v1::ReceiveTriggerWebhookResponse>
-  ReceiveTriggerWebhook(
-      google::devtools::cloudbuild::v1::ReceiveTriggerWebhookRequest const&
-          request,
-      Options opts = {});
+  ReceiveTriggerWebhook(google::devtools::cloudbuild::v1::ReceiveTriggerWebhookRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1239,10 +1195,7 @@ class CloudBuildClient {
   ///
   // clang-format on
   future<StatusOr<google::devtools::cloudbuild::v1::WorkerPool>>
-  CreateWorkerPool(
-      std::string const& parent,
-      google::devtools::cloudbuild::v1::WorkerPool const& worker_pool,
-      std::string const& worker_pool_id, Options opts = {});
+  CreateWorkerPool(std::string const& parent, google::devtools::cloudbuild::v1::WorkerPool const& worker_pool, std::string const& worker_pool_id, Options opts = {});
 
   // clang-format off
   ///
@@ -1255,10 +1208,8 @@ class CloudBuildClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateWorkerPool(
-      NoAwaitTag, std::string const& parent,
-      google::devtools::cloudbuild::v1::WorkerPool const& worker_pool,
-      std::string const& worker_pool_id, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateWorkerPool(NoAwaitTag, std::string const& parent, google::devtools::cloudbuild::v1::WorkerPool const& worker_pool, std::string const& worker_pool_id, Options opts = {});
 
   // clang-format off
   ///
@@ -1295,9 +1246,7 @@ class CloudBuildClient {
   ///
   // clang-format on
   future<StatusOr<google::devtools::cloudbuild::v1::WorkerPool>>
-  CreateWorkerPool(
-      google::devtools::cloudbuild::v1::CreateWorkerPoolRequest const& request,
-      Options opts = {});
+  CreateWorkerPool(google::devtools::cloudbuild::v1::CreateWorkerPoolRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1310,10 +1259,8 @@ class CloudBuildClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateWorkerPool(
-      NoAwaitTag,
-      google::devtools::cloudbuild::v1::CreateWorkerPoolRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateWorkerPool(NoAwaitTag, google::devtools::cloudbuild::v1::CreateWorkerPoolRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1325,8 +1272,7 @@ class CloudBuildClient {
   ///
   // clang-format on
   future<StatusOr<google::devtools::cloudbuild::v1::WorkerPool>>
-  CreateWorkerPool(google::longrunning::Operation const& operation,
-                   Options opts = {});
+  CreateWorkerPool(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1351,8 +1297,8 @@ class CloudBuildClient {
   /// [google.devtools.cloudbuild.v1.WorkerPool]: @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L2618}
   ///
   // clang-format on
-  StatusOr<google::devtools::cloudbuild::v1::WorkerPool> GetWorkerPool(
-      std::string const& name, Options opts = {});
+  StatusOr<google::devtools::cloudbuild::v1::WorkerPool>
+  GetWorkerPool(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1381,9 +1327,8 @@ class CloudBuildClient {
   /// [google.devtools.cloudbuild.v1.WorkerPool]: @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L2618}
   ///
   // clang-format on
-  StatusOr<google::devtools::cloudbuild::v1::WorkerPool> GetWorkerPool(
-      google::devtools::cloudbuild::v1::GetWorkerPoolRequest const& request,
-      Options opts = {});
+  StatusOr<google::devtools::cloudbuild::v1::WorkerPool>
+  GetWorkerPool(google::devtools::cloudbuild::v1::GetWorkerPoolRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1416,8 +1361,7 @@ class CloudBuildClient {
   /// [google.devtools.cloudbuild.v1.DeleteWorkerPoolRequest]: @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L2854}
   ///
   // clang-format on
-  future<StatusOr<
-      google::devtools::cloudbuild::v1::DeleteWorkerPoolOperationMetadata>>
+  future<StatusOr<google::devtools::cloudbuild::v1::DeleteWorkerPoolOperationMetadata>>
   DeleteWorkerPool(std::string const& name, Options opts = {});
 
   // clang-format off
@@ -1431,8 +1375,8 @@ class CloudBuildClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteWorkerPool(
-      NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteWorkerPool(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1468,11 +1412,8 @@ class CloudBuildClient {
   /// [google.devtools.cloudbuild.v1.DeleteWorkerPoolRequest]: @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L2854}
   ///
   // clang-format on
-  future<StatusOr<
-      google::devtools::cloudbuild::v1::DeleteWorkerPoolOperationMetadata>>
-  DeleteWorkerPool(
-      google::devtools::cloudbuild::v1::DeleteWorkerPoolRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::devtools::cloudbuild::v1::DeleteWorkerPoolOperationMetadata>>
+  DeleteWorkerPool(google::devtools::cloudbuild::v1::DeleteWorkerPoolRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1485,10 +1426,8 @@ class CloudBuildClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteWorkerPool(
-      NoAwaitTag,
-      google::devtools::cloudbuild::v1::DeleteWorkerPoolRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteWorkerPool(NoAwaitTag, google::devtools::cloudbuild::v1::DeleteWorkerPoolRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1499,10 +1438,8 @@ class CloudBuildClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<
-      google::devtools::cloudbuild::v1::DeleteWorkerPoolOperationMetadata>>
-  DeleteWorkerPool(google::longrunning::Operation const& operation,
-                   Options opts = {});
+  future<StatusOr<google::devtools::cloudbuild::v1::DeleteWorkerPoolOperationMetadata>>
+  DeleteWorkerPool(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1538,9 +1475,7 @@ class CloudBuildClient {
   ///
   // clang-format on
   future<StatusOr<google::devtools::cloudbuild::v1::WorkerPool>>
-  UpdateWorkerPool(
-      google::devtools::cloudbuild::v1::WorkerPool const& worker_pool,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  UpdateWorkerPool(google::devtools::cloudbuild::v1::WorkerPool const& worker_pool, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -1553,10 +1488,8 @@ class CloudBuildClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateWorkerPool(
-      NoAwaitTag,
-      google::devtools::cloudbuild::v1::WorkerPool const& worker_pool,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateWorkerPool(NoAwaitTag, google::devtools::cloudbuild::v1::WorkerPool const& worker_pool, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -1593,9 +1526,7 @@ class CloudBuildClient {
   ///
   // clang-format on
   future<StatusOr<google::devtools::cloudbuild::v1::WorkerPool>>
-  UpdateWorkerPool(
-      google::devtools::cloudbuild::v1::UpdateWorkerPoolRequest const& request,
-      Options opts = {});
+  UpdateWorkerPool(google::devtools::cloudbuild::v1::UpdateWorkerPoolRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1608,10 +1539,8 @@ class CloudBuildClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateWorkerPool(
-      NoAwaitTag,
-      google::devtools::cloudbuild::v1::UpdateWorkerPoolRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateWorkerPool(NoAwaitTag, google::devtools::cloudbuild::v1::UpdateWorkerPoolRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1623,8 +1552,7 @@ class CloudBuildClient {
   ///
   // clang-format on
   future<StatusOr<google::devtools::cloudbuild::v1::WorkerPool>>
-  UpdateWorkerPool(google::longrunning::Operation const& operation,
-                   Options opts = {});
+  UpdateWorkerPool(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1658,8 +1586,8 @@ class CloudBuildClient {
   /// [google.devtools.cloudbuild.v1.WorkerPool]: @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L2618}
   ///
   // clang-format on
-  StreamRange<google::devtools::cloudbuild::v1::WorkerPool> ListWorkerPools(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::devtools::cloudbuild::v1::WorkerPool>
+  ListWorkerPools(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -1697,9 +1625,8 @@ class CloudBuildClient {
   /// [google.devtools.cloudbuild.v1.WorkerPool]: @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L2618}
   ///
   // clang-format on
-  StreamRange<google::devtools::cloudbuild::v1::WorkerPool> ListWorkerPools(
-      google::devtools::cloudbuild::v1::ListWorkerPoolsRequest request,
-      Options opts = {});
+  StreamRange<google::devtools::cloudbuild::v1::WorkerPool>
+  ListWorkerPools(google::devtools::cloudbuild::v1::ListWorkerPoolsRequest request, Options opts = {});
 
  private:
   std::shared_ptr<CloudBuildConnection> connection_;

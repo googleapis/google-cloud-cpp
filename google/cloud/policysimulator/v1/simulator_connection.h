@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_POLICYSIMULATOR_V1_SIMULATOR_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_POLICYSIMULATOR_V1_SIMULATOR_CONNECTION_H
 
-#include "google/cloud/policysimulator/v1/internal/simulator_retry_traits.h"
-#include "google/cloud/policysimulator/v1/simulator_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
+#include "google/cloud/policysimulator/v1/internal/simulator_retry_traits.h"
+#include "google/cloud/policysimulator/v1/simulator_connection_idempotency_policy.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -66,14 +66,14 @@ class SimulatorLimitedErrorCountRetryPolicy : public SimulatorRetryPolicy {
    *     @p maximum_failures == 0.
    */
   explicit SimulatorLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   SimulatorLimitedErrorCountRetryPolicy(
       SimulatorLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : SimulatorLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : SimulatorLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   SimulatorLimitedErrorCountRetryPolicy(
       SimulatorLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : SimulatorLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : SimulatorLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -93,9 +93,7 @@ class SimulatorLimitedErrorCountRetryPolicy : public SimulatorRetryPolicy {
   using BaseType = SimulatorRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      policysimulator_v1_internal::SimulatorRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<policysimulator_v1_internal::SimulatorRetryTraits> impl_;
 };
 
 /**
@@ -133,14 +131,12 @@ class SimulatorLimitedTimeRetryPolicy : public SimulatorRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit SimulatorLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  SimulatorLimitedTimeRetryPolicy(
-      SimulatorLimitedTimeRetryPolicy&& rhs) noexcept
-      : SimulatorLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  SimulatorLimitedTimeRetryPolicy(
-      SimulatorLimitedTimeRetryPolicy const& rhs) noexcept
-      : SimulatorLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  SimulatorLimitedTimeRetryPolicy(SimulatorLimitedTimeRetryPolicy&& rhs) noexcept
+    : SimulatorLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  SimulatorLimitedTimeRetryPolicy(SimulatorLimitedTimeRetryPolicy const& rhs) noexcept
+    : SimulatorLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -162,9 +158,7 @@ class SimulatorLimitedTimeRetryPolicy : public SimulatorRetryPolicy {
   using BaseType = SimulatorRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      policysimulator_v1_internal::SimulatorRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<policysimulator_v1_internal::SimulatorRetryTraits> impl_;
 };
 
 /**
@@ -185,29 +179,26 @@ class SimulatorConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<google::cloud::policysimulator::v1::Replay> GetReplay(
-      google::cloud::policysimulator::v1::GetReplayRequest const& request);
+  virtual StatusOr<google::cloud::policysimulator::v1::Replay>
+  GetReplay(google::cloud::policysimulator::v1::GetReplayRequest const& request);
 
   virtual future<StatusOr<google::cloud::policysimulator::v1::Replay>>
-  CreateReplay(
-      google::cloud::policysimulator::v1::CreateReplayRequest const& request);
+  CreateReplay(google::cloud::policysimulator::v1::CreateReplayRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> CreateReplay(
-      NoAwaitTag,
-      google::cloud::policysimulator::v1::CreateReplayRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  CreateReplay(NoAwaitTag, google::cloud::policysimulator::v1::CreateReplayRequest const& request);
 
   virtual future<StatusOr<google::cloud::policysimulator::v1::Replay>>
-  CreateReplay(google::longrunning::Operation const& operation);
+  CreateReplay( google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::policysimulator::v1::ReplayResult>
-  ListReplayResults(
-      google::cloud::policysimulator::v1::ListReplayResultsRequest request);
+  ListReplayResults(google::cloud::policysimulator::v1::ListReplayResultsRequest request);
 
-  virtual StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 };
 
 /**

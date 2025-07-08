@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAPROC_V1_SESSION_CONTROLLER_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAPROC_V1_SESSION_CONTROLLER_CONNECTION_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/dataproc/v1/internal/session_controller_retry_traits.h"
 #include "google/cloud/dataproc/v1/session_controller_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -58,8 +58,7 @@ class SessionControllerRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class SessionControllerLimitedErrorCountRetryPolicy
-    : public SessionControllerRetryPolicy {
+class SessionControllerLimitedErrorCountRetryPolicy : public SessionControllerRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -69,14 +68,14 @@ class SessionControllerLimitedErrorCountRetryPolicy
    *     @p maximum_failures == 0.
    */
   explicit SessionControllerLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   SessionControllerLimitedErrorCountRetryPolicy(
       SessionControllerLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : SessionControllerLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : SessionControllerLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   SessionControllerLimitedErrorCountRetryPolicy(
       SessionControllerLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : SessionControllerLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : SessionControllerLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -96,9 +95,7 @@ class SessionControllerLimitedErrorCountRetryPolicy
   using BaseType = SessionControllerRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      dataproc_v1_internal::SessionControllerRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<dataproc_v1_internal::SessionControllerRetryTraits> impl_;
 };
 
 /**
@@ -111,8 +108,7 @@ class SessionControllerLimitedErrorCountRetryPolicy
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class SessionControllerLimitedTimeRetryPolicy
-    : public SessionControllerRetryPolicy {
+class SessionControllerLimitedTimeRetryPolicy : public SessionControllerRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -137,14 +133,12 @@ class SessionControllerLimitedTimeRetryPolicy
   template <typename DurationRep, typename DurationPeriod>
   explicit SessionControllerLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  SessionControllerLimitedTimeRetryPolicy(
-      SessionControllerLimitedTimeRetryPolicy&& rhs) noexcept
-      : SessionControllerLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  SessionControllerLimitedTimeRetryPolicy(
-      SessionControllerLimitedTimeRetryPolicy const& rhs) noexcept
-      : SessionControllerLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  SessionControllerLimitedTimeRetryPolicy(SessionControllerLimitedTimeRetryPolicy&& rhs) noexcept
+    : SessionControllerLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  SessionControllerLimitedTimeRetryPolicy(SessionControllerLimitedTimeRetryPolicy const& rhs) noexcept
+    : SessionControllerLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -166,18 +160,16 @@ class SessionControllerLimitedTimeRetryPolicy
   using BaseType = SessionControllerRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      dataproc_v1_internal::SessionControllerRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<dataproc_v1_internal::SessionControllerRetryTraits> impl_;
 };
 
 /**
  * The `SessionControllerConnection` object for `SessionControllerClient`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `SessionControllerClient`. This allows users to inject custom
- * behavior (e.g., with a Google Mock object) when writing tests that use
- * objects of type `SessionControllerClient`.
+ * sets in `SessionControllerClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `SessionControllerClient`.
  *
  * To create a concrete instance, see `MakeSessionControllerConnection()`.
  *
@@ -189,76 +181,70 @@ class SessionControllerConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual future<StatusOr<google::cloud::dataproc::v1::Session>> CreateSession(
-      google::cloud::dataproc::v1::CreateSessionRequest const& request);
+  virtual future<StatusOr<google::cloud::dataproc::v1::Session>>
+  CreateSession(google::cloud::dataproc::v1::CreateSessionRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> CreateSession(
-      NoAwaitTag,
-      google::cloud::dataproc::v1::CreateSessionRequest const& request);
-
-  virtual future<StatusOr<google::cloud::dataproc::v1::Session>> CreateSession(
-      google::longrunning::Operation const& operation);
-
-  virtual StatusOr<google::cloud::dataproc::v1::Session> GetSession(
-      google::cloud::dataproc::v1::GetSessionRequest const& request);
-
-  virtual StreamRange<google::cloud::dataproc::v1::Session> ListSessions(
-      google::cloud::dataproc::v1::ListSessionsRequest request);
+  virtual StatusOr<google::longrunning::Operation>
+  CreateSession(NoAwaitTag, google::cloud::dataproc::v1::CreateSessionRequest const& request);
 
   virtual future<StatusOr<google::cloud::dataproc::v1::Session>>
-  TerminateSession(
-      google::cloud::dataproc::v1::TerminateSessionRequest const& request);
+  CreateSession( google::longrunning::Operation const& operation);
 
-  virtual StatusOr<google::longrunning::Operation> TerminateSession(
-      NoAwaitTag,
-      google::cloud::dataproc::v1::TerminateSessionRequest const& request);
+  virtual StatusOr<google::cloud::dataproc::v1::Session>
+  GetSession(google::cloud::dataproc::v1::GetSessionRequest const& request);
+
+  virtual StreamRange<google::cloud::dataproc::v1::Session>
+  ListSessions(google::cloud::dataproc::v1::ListSessionsRequest request);
 
   virtual future<StatusOr<google::cloud::dataproc::v1::Session>>
-  TerminateSession(google::longrunning::Operation const& operation);
+  TerminateSession(google::cloud::dataproc::v1::TerminateSessionRequest const& request);
 
-  virtual future<StatusOr<google::cloud::dataproc::v1::Session>> DeleteSession(
-      google::cloud::dataproc::v1::DeleteSessionRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  TerminateSession(NoAwaitTag, google::cloud::dataproc::v1::TerminateSessionRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation> DeleteSession(
-      NoAwaitTag,
-      google::cloud::dataproc::v1::DeleteSessionRequest const& request);
+  virtual future<StatusOr<google::cloud::dataproc::v1::Session>>
+  TerminateSession( google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<google::cloud::dataproc::v1::Session>> DeleteSession(
-      google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::dataproc::v1::Session>>
+  DeleteSession(google::cloud::dataproc::v1::DeleteSessionRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  DeleteSession(NoAwaitTag, google::cloud::dataproc::v1::DeleteSessionRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request);
+  virtual future<StatusOr<google::cloud::dataproc::v1::Session>>
+  DeleteSession( google::longrunning::Operation const& operation);
+
+  virtual StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
+
+  virtual StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
 
   virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
   TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
 
-  virtual StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 
-  virtual Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request);
+  virtual Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
 
-  virtual Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request);
+  virtual Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request);
 };
 
 /**
- * A factory function to construct an object of type
- * `SessionControllerConnection`.
+ * A factory function to construct an object of type `SessionControllerConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of
- * SessionControllerClient.
+ * should be passed as an argument to the constructor of SessionControllerClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `SessionControllerConnection`. Expected options are any of the types
- * in the following option lists:
+ * returned `SessionControllerConnection`. Expected options are any of the types in
+ * the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
@@ -269,8 +255,8 @@ class SessionControllerConnection {
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
  * @param location Sets the prefix for the default `EndpointOption` value.
- * @param options (optional) Configure the `SessionControllerConnection` created
- * by this function.
+ * @param options (optional) Configure the `SessionControllerConnection` created by
+ * this function.
  */
 std::shared_ptr<SessionControllerConnection> MakeSessionControllerConnection(
     std::string const& location, Options options = {});

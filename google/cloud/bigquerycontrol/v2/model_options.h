@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERYCONTROL_V2_MODEL_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERYCONTROL_V2_MODEL_OPTIONS_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/bigquerycontrol/v2/model_connection.h"
 #include "google/cloud/bigquerycontrol/v2/model_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -64,7 +64,8 @@ struct ModelServiceConnectionIdempotencyPolicyOption {
  * @ingroup google-cloud-bigquerycontrol-options
  */
 using ModelServicePolicyOptionList =
-    OptionList<ModelServiceRetryPolicyOption, ModelServiceBackoffPolicyOption,
+    OptionList<ModelServiceRetryPolicyOption,
+               ModelServiceBackoffPolicyOption,
                ModelServiceConnectionIdempotencyPolicyOption>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

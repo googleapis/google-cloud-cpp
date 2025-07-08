@@ -26,26 +26,23 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-CloudCatalogConnectionIdempotencyPolicy::
-    ~CloudCatalogConnectionIdempotencyPolicy() = default;
+CloudCatalogConnectionIdempotencyPolicy::~CloudCatalogConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<CloudCatalogConnectionIdempotencyPolicy>
 CloudCatalogConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<CloudCatalogConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency CloudCatalogConnectionIdempotencyPolicy::ListServices(
-    google::cloud::billing::v1::ListServicesRequest) {  // NOLINT
+Idempotency CloudCatalogConnectionIdempotencyPolicy::ListServices(google::cloud::billing::v1::ListServicesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency CloudCatalogConnectionIdempotencyPolicy::ListSkus(
-    google::cloud::billing::v1::ListSkusRequest) {  // NOLINT
+Idempotency CloudCatalogConnectionIdempotencyPolicy::ListSkus(google::cloud::billing::v1::ListSkusRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<CloudCatalogConnectionIdempotencyPolicy>
-MakeDefaultCloudCatalogConnectionIdempotencyPolicy() {
+    MakeDefaultCloudCatalogConnectionIdempotencyPolicy() {
   return std::make_unique<CloudCatalogConnectionIdempotencyPolicy>();
 }
 

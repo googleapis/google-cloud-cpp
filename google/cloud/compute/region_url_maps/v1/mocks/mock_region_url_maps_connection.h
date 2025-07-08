@@ -42,8 +42,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockRegionUrlMapsConnection
-    : public compute_region_url_maps_v1::RegionUrlMapsConnection {
+class MockRegionUrlMapsConnection : public compute_region_url_maps_v1::RegionUrlMapsConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
@@ -52,15 +51,12 @@ class MockRegionUrlMapsConnection
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteUrlMap(Matcher<google::cloud::cpp::compute::region_url_maps::v1::DeleteUrlMapRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteUrlMap(Matcher<google::cloud::cpp::compute::region_url_maps::v1::DeleteUrlMapRequest const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              DeleteUrlMap,
-              (google::cloud::cpp::compute::region_url_maps::v1::
-                   DeleteUrlMapRequest const& request),
-              (override));
+  DeleteUrlMap,
+  (google::cloud::cpp::compute::region_url_maps::v1::DeleteUrlMapRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -69,45 +65,36 @@ class MockRegionUrlMapsConnection
   /// EXPECT_CALL(*mock, DeleteUrlMap(_, _))
   /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-              DeleteUrlMap,
-              (NoAwaitTag, google::cloud::cpp::compute::region_url_maps::v1::
-                               DeleteUrlMapRequest const& request),
-              (override));
+  DeleteUrlMap, (NoAwaitTag,
+    google::cloud::cpp::compute::region_url_maps::v1::DeleteUrlMapRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteUrlMap(Matcher<google::cloud::cpp::compute::v1::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteUrlMap(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              DeleteUrlMap,
-              (google::cloud::cpp::compute::v1::Operation const& operation),
-              (override));
+  DeleteUrlMap, (
+    google::cloud::cpp::compute::v1::Operation const& operation), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::UrlMap>, GetUrlMap,
-      (google::cloud::cpp::compute::region_url_maps::v1::GetUrlMapRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::UrlMap>,
+  GetUrlMap,
+  (google::cloud::cpp::compute::region_url_maps::v1::GetUrlMapRequest const& request), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// InsertUrlMap(Matcher<google::cloud::cpp::compute::region_url_maps::v1::InsertUrlMapRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, InsertUrlMap(Matcher<google::cloud::cpp::compute::region_url_maps::v1::InsertUrlMapRequest const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              InsertUrlMap,
-              (google::cloud::cpp::compute::region_url_maps::v1::
-                   InsertUrlMapRequest const& request),
-              (override));
+  InsertUrlMap,
+  (google::cloud::cpp::compute::region_url_maps::v1::InsertUrlMapRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -116,45 +103,36 @@ class MockRegionUrlMapsConnection
   /// EXPECT_CALL(*mock, InsertUrlMap(_, _))
   /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-              InsertUrlMap,
-              (NoAwaitTag, google::cloud::cpp::compute::region_url_maps::v1::
-                               InsertUrlMapRequest const& request),
-              (override));
+  InsertUrlMap, (NoAwaitTag,
+    google::cloud::cpp::compute::region_url_maps::v1::InsertUrlMapRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// InsertUrlMap(Matcher<google::cloud::cpp::compute::v1::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, InsertUrlMap(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              InsertUrlMap,
-              (google::cloud::cpp::compute::v1::Operation const& operation),
-              (override));
+  InsertUrlMap, (
+    google::cloud::cpp::compute::v1::Operation const& operation), (override));
 
   MOCK_METHOD((StreamRange<google::cloud::cpp::compute::v1::UrlMap>),
-              ListRegionUrlMaps,
-              (google::cloud::cpp::compute::region_url_maps::v1::
-                   ListRegionUrlMapsRequest request),
-              (override));
+  ListRegionUrlMaps,
+  (google::cloud::cpp::compute::region_url_maps::v1::ListRegionUrlMapsRequest request), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// PatchUrlMap(Matcher<google::cloud::cpp::compute::region_url_maps::v1::PatchUrlMapRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, PatchUrlMap(Matcher<google::cloud::cpp::compute::region_url_maps::v1::PatchUrlMapRequest const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              PatchUrlMap,
-              (google::cloud::cpp::compute::region_url_maps::v1::
-                   PatchUrlMapRequest const& request),
-              (override));
+  PatchUrlMap,
+  (google::cloud::cpp::compute::region_url_maps::v1::PatchUrlMapRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -162,39 +140,33 @@ class MockRegionUrlMapsConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, PatchUrlMap(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>, PatchUrlMap,
-              (NoAwaitTag, google::cloud::cpp::compute::region_url_maps::v1::
-                               PatchUrlMapRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+  PatchUrlMap, (NoAwaitTag,
+    google::cloud::cpp::compute::region_url_maps::v1::PatchUrlMapRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// PatchUrlMap(Matcher<google::cloud::cpp::compute::v1::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, PatchUrlMap(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              PatchUrlMap,
-              (google::cloud::cpp::compute::v1::Operation const& operation),
-              (override));
+  PatchUrlMap, (
+    google::cloud::cpp::compute::v1::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// UpdateUrlMap(Matcher<google::cloud::cpp::compute::region_url_maps::v1::UpdateUrlMapRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, UpdateUrlMap(Matcher<google::cloud::cpp::compute::region_url_maps::v1::UpdateUrlMapRequest const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              UpdateUrlMap,
-              (google::cloud::cpp::compute::region_url_maps::v1::
-                   UpdateUrlMapRequest const& request),
-              (override));
+  UpdateUrlMap,
+  (google::cloud::cpp::compute::region_url_maps::v1::UpdateUrlMapRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -203,31 +175,24 @@ class MockRegionUrlMapsConnection
   /// EXPECT_CALL(*mock, UpdateUrlMap(_, _))
   /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-              UpdateUrlMap,
-              (NoAwaitTag, google::cloud::cpp::compute::region_url_maps::v1::
-                               UpdateUrlMapRequest const& request),
-              (override));
+  UpdateUrlMap, (NoAwaitTag,
+    google::cloud::cpp::compute::region_url_maps::v1::UpdateUrlMapRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// UpdateUrlMap(Matcher<google::cloud::cpp::compute::v1::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, UpdateUrlMap(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              UpdateUrlMap,
-              (google::cloud::cpp::compute::v1::Operation const& operation),
-              (override));
+  UpdateUrlMap, (
+    google::cloud::cpp::compute::v1::Operation const& operation), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::UrlMapsValidateResponse>,
-      Validate,
-      (google::cloud::cpp::compute::region_url_maps::v1::ValidateRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::UrlMapsValidateResponse>,
+  Validate,
+  (google::cloud::cpp::compute::region_url_maps::v1::ValidateRequest const& request), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

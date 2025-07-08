@@ -17,17 +17,17 @@
 // source: google/cloud/resourcemanager/v3/projects.proto
 
 #include "google/cloud/resourcemanager/v3/projects_connection.h"
-#include "google/cloud/resourcemanager/v3/internal/projects_connection_impl.h"
-#include "google/cloud/resourcemanager/v3/internal/projects_option_defaults.h"
-#include "google/cloud/resourcemanager/v3/internal/projects_stub_factory.h"
-#include "google/cloud/resourcemanager/v3/internal/projects_tracing_connection.h"
-#include "google/cloud/resourcemanager/v3/projects_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/resourcemanager/v3/internal/projects_connection_impl.h"
+#include "google/cloud/resourcemanager/v3/internal/projects_option_defaults.h"
+#include "google/cloud/resourcemanager/v3/internal/projects_stub_factory.h"
+#include "google/cloud/resourcemanager/v3/internal/projects_tracing_connection.h"
+#include "google/cloud/resourcemanager/v3/projects_options.h"
 #include <memory>
 #include <utility>
 
@@ -44,18 +44,14 @@ ProjectsConnection::GetProject(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::resourcemanager::v3::Project>
-ProjectsConnection::ListProjects(
-    google::cloud::resourcemanager::v3::
-        ListProjectsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::resourcemanager::v3::Project> ProjectsConnection::ListProjects(
+    google::cloud::resourcemanager::v3::ListProjectsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::resourcemanager::v3::Project>>();
 }
 
-StreamRange<google::cloud::resourcemanager::v3::Project>
-ProjectsConnection::SearchProjects(
-    google::cloud::resourcemanager::v3::
-        SearchProjectsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::resourcemanager::v3::Project> ProjectsConnection::SearchProjects(
+    google::cloud::resourcemanager::v3::SearchProjectsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::resourcemanager::v3::Project>>();
 }
@@ -64,117 +60,130 @@ future<StatusOr<google::cloud::resourcemanager::v3::Project>>
 ProjectsConnection::CreateProject(
     google::cloud::resourcemanager::v3::CreateProjectRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::resourcemanager::v3::Project>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::resourcemanager::v3::Project>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation> ProjectsConnection::CreateProject(
+StatusOr<google::longrunning::Operation>
+ProjectsConnection::CreateProject(
     NoAwaitTag,
     google::cloud::resourcemanager::v3::CreateProjectRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::Project>>
-ProjectsConnection::CreateProject(google::longrunning::Operation const&) {
+ProjectsConnection::CreateProject(
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::resourcemanager::v3::Project>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::resourcemanager::v3::Project>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::Project>>
 ProjectsConnection::UpdateProject(
     google::cloud::resourcemanager::v3::UpdateProjectRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::resourcemanager::v3::Project>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::resourcemanager::v3::Project>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation> ProjectsConnection::UpdateProject(
+StatusOr<google::longrunning::Operation>
+ProjectsConnection::UpdateProject(
     NoAwaitTag,
     google::cloud::resourcemanager::v3::UpdateProjectRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::Project>>
-ProjectsConnection::UpdateProject(google::longrunning::Operation const&) {
+ProjectsConnection::UpdateProject(
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::resourcemanager::v3::Project>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::resourcemanager::v3::Project>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::Project>>
 ProjectsConnection::MoveProject(
     google::cloud::resourcemanager::v3::MoveProjectRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::resourcemanager::v3::Project>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::resourcemanager::v3::Project>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation> ProjectsConnection::MoveProject(
-    NoAwaitTag, google::cloud::resourcemanager::v3::MoveProjectRequest const&) {
+StatusOr<google::longrunning::Operation>
+ProjectsConnection::MoveProject(
+    NoAwaitTag,
+    google::cloud::resourcemanager::v3::MoveProjectRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::Project>>
-ProjectsConnection::MoveProject(google::longrunning::Operation const&) {
+ProjectsConnection::MoveProject(
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::resourcemanager::v3::Project>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::resourcemanager::v3::Project>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::Project>>
 ProjectsConnection::DeleteProject(
     google::cloud::resourcemanager::v3::DeleteProjectRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::resourcemanager::v3::Project>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::resourcemanager::v3::Project>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation> ProjectsConnection::DeleteProject(
+StatusOr<google::longrunning::Operation>
+ProjectsConnection::DeleteProject(
     NoAwaitTag,
     google::cloud::resourcemanager::v3::DeleteProjectRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::Project>>
-ProjectsConnection::DeleteProject(google::longrunning::Operation const&) {
+ProjectsConnection::DeleteProject(
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::resourcemanager::v3::Project>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::resourcemanager::v3::Project>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::Project>>
 ProjectsConnection::UndeleteProject(
     google::cloud::resourcemanager::v3::UndeleteProjectRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::resourcemanager::v3::Project>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::resourcemanager::v3::Project>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation> ProjectsConnection::UndeleteProject(
+StatusOr<google::longrunning::Operation>
+ProjectsConnection::UndeleteProject(
     NoAwaitTag,
     google::cloud::resourcemanager::v3::UndeleteProjectRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::Project>>
-ProjectsConnection::UndeleteProject(google::longrunning::Operation const&) {
+ProjectsConnection::UndeleteProject(
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::resourcemanager::v3::Project>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::resourcemanager::v3::Project>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::iam::v1::Policy> ProjectsConnection::GetIamPolicy(
+StatusOr<google::iam::v1::Policy>
+ProjectsConnection::GetIamPolicy(
     google::iam::v1::GetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::iam::v1::Policy> ProjectsConnection::SetIamPolicy(
+StatusOr<google::iam::v1::Policy>
+ProjectsConnection::SetIamPolicy(
     google::iam::v1::SetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -185,7 +194,8 @@ ProjectsConnection::TestIamPermissions(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::longrunning::Operation> ProjectsConnection::GetOperation(
+StatusOr<google::longrunning::Operation>
+ProjectsConnection::GetOperation(
     google::longrunning::GetOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -193,20 +203,21 @@ StatusOr<google::longrunning::Operation> ProjectsConnection::GetOperation(
 std::shared_ptr<ProjectsConnection> MakeProjectsConnection(
     std::string const& location, Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 ProjectsPolicyOptionList>(options, __func__);
+      UnifiedCredentialsOptionList,
+      ProjectsPolicyOptionList>(options, __func__);
   options = resourcemanager_v3_internal::ProjectsDefaultOptions(
       location, std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = resourcemanager_v3_internal::CreateDefaultProjectsStub(
-      std::move(auth), options);
+    std::move(auth), options);
   return resourcemanager_v3_internal::MakeProjectsTracingConnection(
       std::make_shared<resourcemanager_v3_internal::ProjectsConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options)));
+      std::move(background), std::move(stub), std::move(options)));
 }
 
-std::shared_ptr<ProjectsConnection> MakeProjectsConnection(Options options) {
+std::shared_ptr<ProjectsConnection> MakeProjectsConnection(
+    Options options) {
   return MakeProjectsConnection(std::string{}, std::move(options));
 }
 

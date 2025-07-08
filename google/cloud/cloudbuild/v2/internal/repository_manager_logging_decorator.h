@@ -36,143 +36,138 @@ class RepositoryManagerLogging : public RepositoryManagerStub {
  public:
   ~RepositoryManagerLogging() override = default;
   RepositoryManagerLogging(std::shared_ptr<RepositoryManagerStub> child,
-                           TracingOptions tracing_options,
-                           std::set<std::string> const& components);
+                       TracingOptions tracing_options,
+                       std::set<std::string> const& components);
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateConnection(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::devtools::cloudbuild::v2::CreateConnectionRequest const& request)
-      override;
+      google::devtools::cloudbuild::v2::CreateConnectionRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateConnection(
-      grpc::ClientContext& context, Options options,
-      google::devtools::cloudbuild::v2::CreateConnectionRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::devtools::cloudbuild::v2::CreateConnectionRequest const& request) override;
 
   StatusOr<google::devtools::cloudbuild::v2::Connection> GetConnection(
-      grpc::ClientContext& context, Options const& options,
-      google::devtools::cloudbuild::v2::GetConnectionRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::devtools::cloudbuild::v2::GetConnectionRequest const& request) override;
 
-  StatusOr<google::devtools::cloudbuild::v2::ListConnectionsResponse>
-  ListConnections(
-      grpc::ClientContext& context, Options const& options,
-      google::devtools::cloudbuild::v2::ListConnectionsRequest const& request)
-      override;
+  StatusOr<google::devtools::cloudbuild::v2::ListConnectionsResponse> ListConnections(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::devtools::cloudbuild::v2::ListConnectionsRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateConnection(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::devtools::cloudbuild::v2::UpdateConnectionRequest const& request)
-      override;
+      google::devtools::cloudbuild::v2::UpdateConnectionRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateConnection(
-      grpc::ClientContext& context, Options options,
-      google::devtools::cloudbuild::v2::UpdateConnectionRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::devtools::cloudbuild::v2::UpdateConnectionRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteConnection(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::devtools::cloudbuild::v2::DeleteConnectionRequest const& request)
-      override;
+      google::devtools::cloudbuild::v2::DeleteConnectionRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteConnection(
-      grpc::ClientContext& context, Options options,
-      google::devtools::cloudbuild::v2::DeleteConnectionRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::devtools::cloudbuild::v2::DeleteConnectionRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateRepository(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::devtools::cloudbuild::v2::CreateRepositoryRequest const& request)
-      override;
+      google::devtools::cloudbuild::v2::CreateRepositoryRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateRepository(
-      grpc::ClientContext& context, Options options,
-      google::devtools::cloudbuild::v2::CreateRepositoryRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::devtools::cloudbuild::v2::CreateRepositoryRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncBatchCreateRepositories(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::devtools::cloudbuild::v2::BatchCreateRepositoriesRequest const&
-          request) override;
+      google::devtools::cloudbuild::v2::BatchCreateRepositoriesRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> BatchCreateRepositories(
-      grpc::ClientContext& context, Options options,
-      google::devtools::cloudbuild::v2::BatchCreateRepositoriesRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::devtools::cloudbuild::v2::BatchCreateRepositoriesRequest const& request) override;
 
   StatusOr<google::devtools::cloudbuild::v2::Repository> GetRepository(
-      grpc::ClientContext& context, Options const& options,
-      google::devtools::cloudbuild::v2::GetRepositoryRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::devtools::cloudbuild::v2::GetRepositoryRequest const& request) override;
 
-  StatusOr<google::devtools::cloudbuild::v2::ListRepositoriesResponse>
-  ListRepositories(
-      grpc::ClientContext& context, Options const& options,
-      google::devtools::cloudbuild::v2::ListRepositoriesRequest const& request)
-      override;
+  StatusOr<google::devtools::cloudbuild::v2::ListRepositoriesResponse> ListRepositories(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::devtools::cloudbuild::v2::ListRepositoriesRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteRepository(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::devtools::cloudbuild::v2::DeleteRepositoryRequest const& request)
-      override;
+      google::devtools::cloudbuild::v2::DeleteRepositoryRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteRepository(
-      grpc::ClientContext& context, Options options,
-      google::devtools::cloudbuild::v2::DeleteRepositoryRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::devtools::cloudbuild::v2::DeleteRepositoryRequest const& request) override;
 
-  StatusOr<google::devtools::cloudbuild::v2::FetchReadWriteTokenResponse>
-  FetchReadWriteToken(
-      grpc::ClientContext& context, Options const& options,
-      google::devtools::cloudbuild::v2::FetchReadWriteTokenRequest const&
-          request) override;
+  StatusOr<google::devtools::cloudbuild::v2::FetchReadWriteTokenResponse> FetchReadWriteToken(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::devtools::cloudbuild::v2::FetchReadWriteTokenRequest const& request) override;
 
-  StatusOr<google::devtools::cloudbuild::v2::FetchReadTokenResponse>
-  FetchReadToken(grpc::ClientContext& context, Options const& options,
-                 google::devtools::cloudbuild::v2::FetchReadTokenRequest const&
-                     request) override;
+  StatusOr<google::devtools::cloudbuild::v2::FetchReadTokenResponse> FetchReadToken(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::devtools::cloudbuild::v2::FetchReadTokenRequest const& request) override;
 
-  StatusOr<google::devtools::cloudbuild::v2::FetchLinkableRepositoriesResponse>
-  FetchLinkableRepositories(
-      grpc::ClientContext& context, Options const& options,
-      google::devtools::cloudbuild::v2::FetchLinkableRepositoriesRequest const&
-          request) override;
+  StatusOr<google::devtools::cloudbuild::v2::FetchLinkableRepositoriesResponse> FetchLinkableRepositories(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::devtools::cloudbuild::v2::FetchLinkableRepositoriesRequest const& request) override;
 
   StatusOr<google::devtools::cloudbuild::v2::FetchGitRefsResponse> FetchGitRefs(
-      grpc::ClientContext& context, Options const& options,
-      google::devtools::cloudbuild::v2::FetchGitRefsRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::devtools::cloudbuild::v2::FetchGitRefsRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(

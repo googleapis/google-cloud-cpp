@@ -35,8 +35,7 @@ namespace dialogflow_cx {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ///
-/// Service for managing
-/// [Experiments][google.cloud.dialogflow.cx.v3.Experiment].
+/// Service for managing [Experiments][google.cloud.dialogflow.cx.v3.Experiment].
 ///
 /// @par Equality
 ///
@@ -61,13 +60,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// and move-construction is a relatively efficient operation, consider using
 /// such a copy when using this class from multiple threads.
 ///
-/// [google.cloud.dialogflow.cx.v3.Experiment]:
-/// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/experiment.proto#L115}
+/// [google.cloud.dialogflow.cx.v3.Experiment]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/experiment.proto#L115}
 ///
 class ExperimentsClient {
  public:
-  explicit ExperimentsClient(std::shared_ptr<ExperimentsConnection> connection,
-                             Options opts = {});
+  explicit ExperimentsClient(std::shared_ptr<ExperimentsConnection> connection, Options opts = {});
   ~ExperimentsClient();
 
   ///@{
@@ -80,12 +77,10 @@ class ExperimentsClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(ExperimentsClient const& a,
-                         ExperimentsClient const& b) {
+  friend bool operator==(ExperimentsClient const& a, ExperimentsClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(ExperimentsClient const& a,
-                         ExperimentsClient const& b) {
+  friend bool operator!=(ExperimentsClient const& a, ExperimentsClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -124,8 +119,8 @@ class ExperimentsClient {
   /// [google.cloud.dialogflow.cx.v3.ListExperimentsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/experiment.proto#L404}
   ///
   // clang-format on
-  StreamRange<google::cloud::dialogflow::cx::v3::Experiment> ListExperiments(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::dialogflow::cx::v3::Experiment>
+  ListExperiments(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -164,9 +159,8 @@ class ExperimentsClient {
   /// [google.cloud.dialogflow.cx.v3.ListExperimentsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/experiment.proto#L404}
   ///
   // clang-format on
-  StreamRange<google::cloud::dialogflow::cx::v3::Experiment> ListExperiments(
-      google::cloud::dialogflow::cx::v3::ListExperimentsRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::dialogflow::cx::v3::Experiment>
+  ListExperiments(google::cloud::dialogflow::cx::v3::ListExperimentsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -193,8 +187,8 @@ class ExperimentsClient {
   /// [google.cloud.dialogflow.cx.v3.GetExperimentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/experiment.proto#L439}
   ///
   // clang-format on
-  StatusOr<google::cloud::dialogflow::cx::v3::Experiment> GetExperiment(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::dialogflow::cx::v3::Experiment>
+  GetExperiment(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -224,9 +218,8 @@ class ExperimentsClient {
   /// [google.cloud.dialogflow.cx.v3.GetExperimentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/experiment.proto#L439}
   ///
   // clang-format on
-  StatusOr<google::cloud::dialogflow::cx::v3::Experiment> GetExperiment(
-      google::cloud::dialogflow::cx::v3::GetExperimentRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::dialogflow::cx::v3::Experiment>
+  GetExperiment(google::cloud::dialogflow::cx::v3::GetExperimentRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -254,10 +247,8 @@ class ExperimentsClient {
   /// [google.cloud.dialogflow.cx.v3.Experiment]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/experiment.proto#L115}
   ///
   // clang-format on
-  StatusOr<google::cloud::dialogflow::cx::v3::Experiment> CreateExperiment(
-      std::string const& parent,
-      google::cloud::dialogflow::cx::v3::Experiment const& experiment,
-      Options opts = {});
+  StatusOr<google::cloud::dialogflow::cx::v3::Experiment>
+  CreateExperiment(std::string const& parent, google::cloud::dialogflow::cx::v3::Experiment const& experiment, Options opts = {});
 
   // clang-format off
   ///
@@ -287,9 +278,8 @@ class ExperimentsClient {
   /// [google.cloud.dialogflow.cx.v3.Experiment]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/experiment.proto#L115}
   ///
   // clang-format on
-  StatusOr<google::cloud::dialogflow::cx::v3::Experiment> CreateExperiment(
-      google::cloud::dialogflow::cx::v3::CreateExperimentRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::dialogflow::cx::v3::Experiment>
+  CreateExperiment(google::cloud::dialogflow::cx::v3::CreateExperimentRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -315,9 +305,8 @@ class ExperimentsClient {
   /// [google.cloud.dialogflow.cx.v3.UpdateExperimentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/experiment.proto#L470}
   ///
   // clang-format on
-  StatusOr<google::cloud::dialogflow::cx::v3::Experiment> UpdateExperiment(
-      google::cloud::dialogflow::cx::v3::Experiment const& experiment,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::cloud::dialogflow::cx::v3::Experiment>
+  UpdateExperiment(google::cloud::dialogflow::cx::v3::Experiment const& experiment, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -347,9 +336,8 @@ class ExperimentsClient {
   /// [google.cloud.dialogflow.cx.v3.UpdateExperimentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/experiment.proto#L470}
   ///
   // clang-format on
-  StatusOr<google::cloud::dialogflow::cx::v3::Experiment> UpdateExperiment(
-      google::cloud::dialogflow::cx::v3::UpdateExperimentRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::dialogflow::cx::v3::Experiment>
+  UpdateExperiment(google::cloud::dialogflow::cx::v3::UpdateExperimentRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -374,7 +362,8 @@ class ExperimentsClient {
   /// [google.cloud.dialogflow.cx.v3.Experiment]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/experiment.proto#L115}
   ///
   // clang-format on
-  Status DeleteExperiment(std::string const& name, Options opts = {});
+  Status
+  DeleteExperiment(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -402,9 +391,8 @@ class ExperimentsClient {
   /// [google.cloud.dialogflow.cx.v3.Experiment]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/experiment.proto#L115}
   ///
   // clang-format on
-  Status DeleteExperiment(
-      google::cloud::dialogflow::cx::v3::DeleteExperimentRequest const& request,
-      Options opts = {});
+  Status
+  DeleteExperiment(google::cloud::dialogflow::cx::v3::DeleteExperimentRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -432,8 +420,8 @@ class ExperimentsClient {
   /// [google.cloud.dialogflow.cx.v3.StartExperimentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/experiment.proto#L495}
   ///
   // clang-format on
-  StatusOr<google::cloud::dialogflow::cx::v3::Experiment> StartExperiment(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::dialogflow::cx::v3::Experiment>
+  StartExperiment(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -464,9 +452,8 @@ class ExperimentsClient {
   /// [google.cloud.dialogflow.cx.v3.StartExperimentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/experiment.proto#L495}
   ///
   // clang-format on
-  StatusOr<google::cloud::dialogflow::cx::v3::Experiment> StartExperiment(
-      google::cloud::dialogflow::cx::v3::StartExperimentRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::dialogflow::cx::v3::Experiment>
+  StartExperiment(google::cloud::dialogflow::cx::v3::StartExperimentRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -493,8 +480,8 @@ class ExperimentsClient {
   /// [google.cloud.dialogflow.cx.v3.StopExperimentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/experiment.proto#L509}
   ///
   // clang-format on
-  StatusOr<google::cloud::dialogflow::cx::v3::Experiment> StopExperiment(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::dialogflow::cx::v3::Experiment>
+  StopExperiment(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -524,9 +511,8 @@ class ExperimentsClient {
   /// [google.cloud.dialogflow.cx.v3.StopExperimentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/experiment.proto#L509}
   ///
   // clang-format on
-  StatusOr<google::cloud::dialogflow::cx::v3::Experiment> StopExperiment(
-      google::cloud::dialogflow::cx::v3::StopExperimentRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::dialogflow::cx::v3::Experiment>
+  StopExperiment(google::cloud::dialogflow::cx::v3::StopExperimentRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -564,8 +550,8 @@ class ExperimentsClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request, Options opts = {});
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -594,9 +580,8 @@ class ExperimentsClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -631,8 +616,8 @@ class ExperimentsClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -671,8 +656,8 @@ class ExperimentsClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -698,8 +683,8 @@ class ExperimentsClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -730,9 +715,8 @@ class ExperimentsClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -766,7 +750,8 @@ class ExperimentsClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(std::string const& name, Options opts = {});
+  Status
+  CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -805,9 +790,8 @@ class ExperimentsClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request,
-      Options opts = {});
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<ExperimentsConnection> connection_;

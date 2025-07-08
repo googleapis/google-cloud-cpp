@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBLICCA_V1_PUBLIC_CERTIFICATE_AUTHORITY_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBLICCA_V1_PUBLIC_CERTIFICATE_AUTHORITY_CLIENT_H
 
-#include "google/cloud/publicca/v1/public_certificate_authority_connection.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
+#include "google/cloud/publicca/v1/public_certificate_authority_connection.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -63,31 +63,23 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class PublicCertificateAuthorityServiceClient {
  public:
-  explicit PublicCertificateAuthorityServiceClient(
-      std::shared_ptr<PublicCertificateAuthorityServiceConnection> connection,
-      Options opts = {});
+  explicit PublicCertificateAuthorityServiceClient(std::shared_ptr<PublicCertificateAuthorityServiceConnection> connection, Options opts = {});
   ~PublicCertificateAuthorityServiceClient();
 
   ///@{
   /// @name Copy and move support
-  PublicCertificateAuthorityServiceClient(
-      PublicCertificateAuthorityServiceClient const&) = default;
-  PublicCertificateAuthorityServiceClient& operator=(
-      PublicCertificateAuthorityServiceClient const&) = default;
-  PublicCertificateAuthorityServiceClient(
-      PublicCertificateAuthorityServiceClient&&) = default;
-  PublicCertificateAuthorityServiceClient& operator=(
-      PublicCertificateAuthorityServiceClient&&) = default;
+  PublicCertificateAuthorityServiceClient(PublicCertificateAuthorityServiceClient const&) = default;
+  PublicCertificateAuthorityServiceClient& operator=(PublicCertificateAuthorityServiceClient const&) = default;
+  PublicCertificateAuthorityServiceClient(PublicCertificateAuthorityServiceClient&&) = default;
+  PublicCertificateAuthorityServiceClient& operator=(PublicCertificateAuthorityServiceClient&&) = default;
   ///@}
 
   ///@{
   /// @name Equality
-  friend bool operator==(PublicCertificateAuthorityServiceClient const& a,
-                         PublicCertificateAuthorityServiceClient const& b) {
+  friend bool operator==(PublicCertificateAuthorityServiceClient const& a, PublicCertificateAuthorityServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(PublicCertificateAuthorityServiceClient const& a,
-                         PublicCertificateAuthorityServiceClient const& b) {
+  friend bool operator!=(PublicCertificateAuthorityServiceClient const& a, PublicCertificateAuthorityServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -123,11 +115,7 @@ class PublicCertificateAuthorityServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::security::publicca::v1::ExternalAccountKey>
-  CreateExternalAccountKey(
-      std::string const& parent,
-      google::cloud::security::publicca::v1::ExternalAccountKey const&
-          external_account_key,
-      Options opts = {});
+  CreateExternalAccountKey(std::string const& parent, google::cloud::security::publicca::v1::ExternalAccountKey const& external_account_key, Options opts = {});
 
   // clang-format off
   ///
@@ -159,9 +147,7 @@ class PublicCertificateAuthorityServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::security::publicca::v1::ExternalAccountKey>
-  CreateExternalAccountKey(google::cloud::security::publicca::v1::
-                               CreateExternalAccountKeyRequest const& request,
-                           Options opts = {});
+  CreateExternalAccountKey(google::cloud::security::publicca::v1::CreateExternalAccountKeyRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<PublicCertificateAuthorityServiceConnection> connection_;

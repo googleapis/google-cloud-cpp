@@ -31,18 +31,18 @@ ServiceControllerAuth::ServiceControllerAuth(
     std::shared_ptr<ServiceControllerStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::api::servicecontrol::v2::CheckResponse>
-ServiceControllerAuth::Check(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::api::servicecontrol::v2::CheckResponse> ServiceControllerAuth::Check(
+    grpc::ClientContext& context,
+    Options const& options,
     google::api::servicecontrol::v2::CheckRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->Check(context, options, request);
 }
 
-StatusOr<google::api::servicecontrol::v2::ReportResponse>
-ServiceControllerAuth::Report(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::api::servicecontrol::v2::ReportResponse> ServiceControllerAuth::Report(
+    grpc::ClientContext& context,
+    Options const& options,
     google::api::servicecontrol::v2::ReportRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;

@@ -26,30 +26,23 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-KeyTrackingServiceConnectionIdempotencyPolicy::
-    ~KeyTrackingServiceConnectionIdempotencyPolicy() = default;
+KeyTrackingServiceConnectionIdempotencyPolicy::~KeyTrackingServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<KeyTrackingServiceConnectionIdempotencyPolicy>
 KeyTrackingServiceConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<KeyTrackingServiceConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency
-KeyTrackingServiceConnectionIdempotencyPolicy::GetProtectedResourcesSummary(
-    google::cloud::kms::inventory::v1::
-        GetProtectedResourcesSummaryRequest const&) {
+Idempotency KeyTrackingServiceConnectionIdempotencyPolicy::GetProtectedResourcesSummary(google::cloud::kms::inventory::v1::GetProtectedResourcesSummaryRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency
-KeyTrackingServiceConnectionIdempotencyPolicy::SearchProtectedResources(
-    google::cloud::kms::inventory::v1::
-        SearchProtectedResourcesRequest) {  // NOLINT
+Idempotency KeyTrackingServiceConnectionIdempotencyPolicy::SearchProtectedResources(google::cloud::kms::inventory::v1::SearchProtectedResourcesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<KeyTrackingServiceConnectionIdempotencyPolicy>
-MakeDefaultKeyTrackingServiceConnectionIdempotencyPolicy() {
+    MakeDefaultKeyTrackingServiceConnectionIdempotencyPolicy() {
   return std::make_unique<KeyTrackingServiceConnectionIdempotencyPolicy>();
 }
 

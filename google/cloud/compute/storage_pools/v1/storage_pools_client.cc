@@ -28,39 +28,28 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 StoragePoolsClient::StoragePoolsClient(
     std::shared_ptr<StoragePoolsConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 StoragePoolsClient::~StoragePoolsClient() = default;
 
-StreamRange<std::pair<std::string,
-                      google::cloud::cpp::compute::v1::StoragePoolsScopedList>>
-StoragePoolsClient::AggregatedListStoragePools(std::string const& project,
-                                               Options opts) {
+StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::StoragePoolsScopedList>>
+StoragePoolsClient::AggregatedListStoragePools(std::string const& project, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::storage_pools::v1::
-      AggregatedListStoragePoolsRequest request;
+  google::cloud::cpp::compute::storage_pools::v1::AggregatedListStoragePoolsRequest request;
   request.set_project(project);
   return connection_->AggregatedListStoragePools(request);
 }
 
-StreamRange<std::pair<std::string,
-                      google::cloud::cpp::compute::v1::StoragePoolsScopedList>>
-StoragePoolsClient::AggregatedListStoragePools(
-    google::cloud::cpp::compute::storage_pools::v1::
-        AggregatedListStoragePoolsRequest request,
-    Options opts) {
+StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::StoragePoolsScopedList>>
+StoragePoolsClient::AggregatedListStoragePools(google::cloud::cpp::compute::storage_pools::v1::AggregatedListStoragePoolsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->AggregatedListStoragePools(std::move(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-StoragePoolsClient::DeleteStoragePool(std::string const& project,
-                                      std::string const& zone,
-                                      std::string const& storage_pool,
-                                      Options opts) {
+StoragePoolsClient::DeleteStoragePool(std::string const& project, std::string const& zone, std::string const& storage_pool, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::storage_pools::v1::DeleteStoragePoolRequest
-      request;
+  google::cloud::cpp::compute::storage_pools::v1::DeleteStoragePoolRequest request;
   request.set_project(project);
   request.set_zone(zone);
   request.set_storage_pool(storage_pool);
@@ -68,13 +57,9 @@ StoragePoolsClient::DeleteStoragePool(std::string const& project,
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-StoragePoolsClient::DeleteStoragePool(NoAwaitTag, std::string const& project,
-                                      std::string const& zone,
-                                      std::string const& storage_pool,
-                                      Options opts) {
+StoragePoolsClient::DeleteStoragePool(NoAwaitTag, std::string const& project, std::string const& zone, std::string const& storage_pool, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::storage_pools::v1::DeleteStoragePoolRequest
-      request;
+  google::cloud::cpp::compute::storage_pools::v1::DeleteStoragePoolRequest request;
   request.set_project(project);
   request.set_zone(zone);
   request.set_storage_pool(storage_pool);
@@ -82,36 +67,25 @@ StoragePoolsClient::DeleteStoragePool(NoAwaitTag, std::string const& project,
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-StoragePoolsClient::DeleteStoragePool(
-    google::cloud::cpp::compute::storage_pools::v1::
-        DeleteStoragePoolRequest const& request,
-    Options opts) {
+StoragePoolsClient::DeleteStoragePool(google::cloud::cpp::compute::storage_pools::v1::DeleteStoragePoolRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteStoragePool(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-StoragePoolsClient::DeleteStoragePool(
-    NoAwaitTag,
-    google::cloud::cpp::compute::storage_pools::v1::
-        DeleteStoragePoolRequest const& request,
-    Options opts) {
+StoragePoolsClient::DeleteStoragePool(NoAwaitTag, google::cloud::cpp::compute::storage_pools::v1::DeleteStoragePoolRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteStoragePool(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-StoragePoolsClient::DeleteStoragePool(
-    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+StoragePoolsClient::DeleteStoragePool(google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteStoragePool(operation);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::StoragePool>
-StoragePoolsClient::GetStoragePool(std::string const& project,
-                                   std::string const& zone,
-                                   std::string const& storage_pool,
-                                   Options opts) {
+StoragePoolsClient::GetStoragePool(std::string const& project, std::string const& zone, std::string const& storage_pool, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::storage_pools::v1::GetStoragePoolRequest request;
   request.set_project(project);
@@ -121,18 +95,13 @@ StoragePoolsClient::GetStoragePool(std::string const& project,
 }
 
 StatusOr<google::cloud::cpp::compute::v1::StoragePool>
-StoragePoolsClient::GetStoragePool(
-    google::cloud::cpp::compute::storage_pools::v1::GetStoragePoolRequest const&
-        request,
-    Options opts) {
+StoragePoolsClient::GetStoragePool(google::cloud::cpp::compute::storage_pools::v1::GetStoragePoolRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetStoragePool(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
-StoragePoolsClient::GetIamPolicy(std::string const& project,
-                                 std::string const& zone,
-                                 std::string const& resource, Options opts) {
+StoragePoolsClient::GetIamPolicy(std::string const& project, std::string const& zone, std::string const& resource, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::storage_pools::v1::GetIamPolicyRequest request;
   request.set_project(project);
@@ -142,22 +111,15 @@ StoragePoolsClient::GetIamPolicy(std::string const& project,
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
-StoragePoolsClient::GetIamPolicy(
-    google::cloud::cpp::compute::storage_pools::v1::GetIamPolicyRequest const&
-        request,
-    Options opts) {
+StoragePoolsClient::GetIamPolicy(google::cloud::cpp::compute::storage_pools::v1::GetIamPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetIamPolicy(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-StoragePoolsClient::InsertStoragePool(
-    std::string const& project, std::string const& zone,
-    google::cloud::cpp::compute::v1::StoragePool const& storage_pool_resource,
-    Options opts) {
+StoragePoolsClient::InsertStoragePool(std::string const& project, std::string const& zone, google::cloud::cpp::compute::v1::StoragePool const& storage_pool_resource, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::storage_pools::v1::InsertStoragePoolRequest
-      request;
+  google::cloud::cpp::compute::storage_pools::v1::InsertStoragePoolRequest request;
   request.set_project(project);
   request.set_zone(zone);
   *request.mutable_storage_pool_resource() = storage_pool_resource;
@@ -165,13 +127,9 @@ StoragePoolsClient::InsertStoragePool(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-StoragePoolsClient::InsertStoragePool(
-    NoAwaitTag, std::string const& project, std::string const& zone,
-    google::cloud::cpp::compute::v1::StoragePool const& storage_pool_resource,
-    Options opts) {
+StoragePoolsClient::InsertStoragePool(NoAwaitTag, std::string const& project, std::string const& zone, google::cloud::cpp::compute::v1::StoragePool const& storage_pool_resource, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::storage_pools::v1::InsertStoragePoolRequest
-      request;
+  google::cloud::cpp::compute::storage_pools::v1::InsertStoragePoolRequest request;
   request.set_project(project);
   request.set_zone(zone);
   *request.mutable_storage_pool_resource() = storage_pool_resource;
@@ -179,55 +137,40 @@ StoragePoolsClient::InsertStoragePool(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-StoragePoolsClient::InsertStoragePool(
-    google::cloud::cpp::compute::storage_pools::v1::
-        InsertStoragePoolRequest const& request,
-    Options opts) {
+StoragePoolsClient::InsertStoragePool(google::cloud::cpp::compute::storage_pools::v1::InsertStoragePoolRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->InsertStoragePool(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-StoragePoolsClient::InsertStoragePool(
-    NoAwaitTag,
-    google::cloud::cpp::compute::storage_pools::v1::
-        InsertStoragePoolRequest const& request,
-    Options opts) {
+StoragePoolsClient::InsertStoragePool(NoAwaitTag, google::cloud::cpp::compute::storage_pools::v1::InsertStoragePoolRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->InsertStoragePool(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-StoragePoolsClient::InsertStoragePool(
-    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+StoragePoolsClient::InsertStoragePool(google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->InsertStoragePool(operation);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::StoragePool>
-StoragePoolsClient::ListStoragePools(std::string const& project,
-                                     std::string const& zone, Options opts) {
+StoragePoolsClient::ListStoragePools(std::string const& project, std::string const& zone, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::storage_pools::v1::ListStoragePoolsRequest
-      request;
+  google::cloud::cpp::compute::storage_pools::v1::ListStoragePoolsRequest request;
   request.set_project(project);
   request.set_zone(zone);
   return connection_->ListStoragePools(request);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::StoragePool>
-StoragePoolsClient::ListStoragePools(
-    google::cloud::cpp::compute::storage_pools::v1::ListStoragePoolsRequest
-        request,
-    Options opts) {
+StoragePoolsClient::ListStoragePools(google::cloud::cpp::compute::storage_pools::v1::ListStoragePoolsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListStoragePools(std::move(request));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::StoragePoolDisk>
-StoragePoolsClient::ListDisks(std::string const& project,
-                              std::string const& zone,
-                              std::string const& storage_pool, Options opts) {
+StoragePoolsClient::ListDisks(std::string const& project, std::string const& zone, std::string const& storage_pool, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::storage_pools::v1::ListDisksRequest request;
   request.set_project(project);
@@ -237,75 +180,49 @@ StoragePoolsClient::ListDisks(std::string const& project,
 }
 
 StreamRange<google::cloud::cpp::compute::v1::StoragePoolDisk>
-StoragePoolsClient::ListDisks(
-    google::cloud::cpp::compute::storage_pools::v1::ListDisksRequest request,
-    Options opts) {
+StoragePoolsClient::ListDisks(google::cloud::cpp::compute::storage_pools::v1::ListDisksRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListDisks(std::move(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
-StoragePoolsClient::SetIamPolicy(
-    std::string const& project, std::string const& zone,
-    std::string const& resource,
-    google::cloud::cpp::compute::v1::ZoneSetPolicyRequest const&
-        zone_set_policy_request_resource,
-    Options opts) {
+StoragePoolsClient::SetIamPolicy(std::string const& project, std::string const& zone, std::string const& resource, google::cloud::cpp::compute::v1::ZoneSetPolicyRequest const& zone_set_policy_request_resource, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::storage_pools::v1::SetIamPolicyRequest request;
   request.set_project(project);
   request.set_zone(zone);
   request.set_resource(resource);
-  *request.mutable_zone_set_policy_request_resource() =
-      zone_set_policy_request_resource;
+  *request.mutable_zone_set_policy_request_resource() = zone_set_policy_request_resource;
   return connection_->SetIamPolicy(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
-StoragePoolsClient::SetIamPolicy(
-    google::cloud::cpp::compute::storage_pools::v1::SetIamPolicyRequest const&
-        request,
-    Options opts) {
+StoragePoolsClient::SetIamPolicy(google::cloud::cpp::compute::storage_pools::v1::SetIamPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetIamPolicy(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-StoragePoolsClient::TestIamPermissions(
-    std::string const& project, std::string const& zone,
-    std::string const& resource,
-    google::cloud::cpp::compute::v1::TestPermissionsRequest const&
-        test_permissions_request_resource,
-    Options opts) {
+StoragePoolsClient::TestIamPermissions(std::string const& project, std::string const& zone, std::string const& resource, google::cloud::cpp::compute::v1::TestPermissionsRequest const& test_permissions_request_resource, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::storage_pools::v1::TestIamPermissionsRequest
-      request;
+  google::cloud::cpp::compute::storage_pools::v1::TestIamPermissionsRequest request;
   request.set_project(project);
   request.set_zone(zone);
   request.set_resource(resource);
-  *request.mutable_test_permissions_request_resource() =
-      test_permissions_request_resource;
+  *request.mutable_test_permissions_request_resource() = test_permissions_request_resource;
   return connection_->TestIamPermissions(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-StoragePoolsClient::TestIamPermissions(
-    google::cloud::cpp::compute::storage_pools::v1::
-        TestIamPermissionsRequest const& request,
-    Options opts) {
+StoragePoolsClient::TestIamPermissions(google::cloud::cpp::compute::storage_pools::v1::TestIamPermissionsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->TestIamPermissions(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-StoragePoolsClient::UpdateStoragePool(
-    std::string const& project, std::string const& zone,
-    std::string const& storage_pool, std::string const& update_mask,
-    google::cloud::cpp::compute::v1::StoragePool const& storage_pool_resource,
-    Options opts) {
+StoragePoolsClient::UpdateStoragePool(std::string const& project, std::string const& zone, std::string const& storage_pool, std::string const& update_mask, google::cloud::cpp::compute::v1::StoragePool const& storage_pool_resource, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::storage_pools::v1::UpdateStoragePoolRequest
-      request;
+  google::cloud::cpp::compute::storage_pools::v1::UpdateStoragePoolRequest request;
   request.set_project(project);
   request.set_zone(zone);
   request.set_storage_pool(storage_pool);
@@ -315,14 +232,9 @@ StoragePoolsClient::UpdateStoragePool(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-StoragePoolsClient::UpdateStoragePool(
-    NoAwaitTag, std::string const& project, std::string const& zone,
-    std::string const& storage_pool, std::string const& update_mask,
-    google::cloud::cpp::compute::v1::StoragePool const& storage_pool_resource,
-    Options opts) {
+StoragePoolsClient::UpdateStoragePool(NoAwaitTag, std::string const& project, std::string const& zone, std::string const& storage_pool, std::string const& update_mask, google::cloud::cpp::compute::v1::StoragePool const& storage_pool_resource, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::storage_pools::v1::UpdateStoragePoolRequest
-      request;
+  google::cloud::cpp::compute::storage_pools::v1::UpdateStoragePoolRequest request;
   request.set_project(project);
   request.set_zone(zone);
   request.set_storage_pool(storage_pool);
@@ -332,27 +244,19 @@ StoragePoolsClient::UpdateStoragePool(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-StoragePoolsClient::UpdateStoragePool(
-    google::cloud::cpp::compute::storage_pools::v1::
-        UpdateStoragePoolRequest const& request,
-    Options opts) {
+StoragePoolsClient::UpdateStoragePool(google::cloud::cpp::compute::storage_pools::v1::UpdateStoragePoolRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateStoragePool(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-StoragePoolsClient::UpdateStoragePool(
-    NoAwaitTag,
-    google::cloud::cpp::compute::storage_pools::v1::
-        UpdateStoragePoolRequest const& request,
-    Options opts) {
+StoragePoolsClient::UpdateStoragePool(NoAwaitTag, google::cloud::cpp::compute::storage_pools::v1::UpdateStoragePoolRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateStoragePool(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-StoragePoolsClient::UpdateStoragePool(
-    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+StoragePoolsClient::UpdateStoragePool(google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateStoragePool(operation);
 }

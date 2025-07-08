@@ -19,16 +19,16 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_REDIS_V1_INTERNAL_CLOUD_REDIS_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_REDIS_V1_INTERNAL_CLOUD_REDIS_CONNECTION_IMPL_H
 
-#include "google/cloud/redis/v1/cloud_redis_connection.h"
-#include "google/cloud/redis/v1/cloud_redis_connection_idempotency_policy.h"
-#include "google/cloud/redis/v1/cloud_redis_options.h"
-#include "google/cloud/redis/v1/internal/cloud_redis_retry_traits.h"
-#include "google/cloud/redis/v1/internal/cloud_redis_stub.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
+#include "google/cloud/redis/v1/cloud_redis_connection.h"
+#include "google/cloud/redis/v1/cloud_redis_connection_idempotency_policy.h"
+#include "google/cloud/redis/v1/cloud_redis_options.h"
+#include "google/cloud/redis/v1/internal/cloud_redis_retry_traits.h"
+#include "google/cloud/redis/v1/internal/cloud_redis_stub.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
@@ -40,127 +40,132 @@ namespace cloud {
 namespace redis_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class CloudRedisConnectionImpl : public redis_v1::CloudRedisConnection {
+class CloudRedisConnectionImpl
+    : public redis_v1::CloudRedisConnection {
  public:
   ~CloudRedisConnectionImpl() override = default;
 
   CloudRedisConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<redis_v1_internal::CloudRedisStub> stub, Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<redis_v1_internal::CloudRedisStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
-  StreamRange<google::cloud::redis::v1::Instance> ListInstances(
-      google::cloud::redis::v1::ListInstancesRequest request) override;
+  StreamRange<google::cloud::redis::v1::Instance>
+  ListInstances(google::cloud::redis::v1::ListInstancesRequest request) override;
 
-  StatusOr<google::cloud::redis::v1::Instance> GetInstance(
-      google::cloud::redis::v1::GetInstanceRequest const& request) override;
+  StatusOr<google::cloud::redis::v1::Instance>
+  GetInstance(google::cloud::redis::v1::GetInstanceRequest const& request) override;
 
-  StatusOr<google::cloud::redis::v1::InstanceAuthString> GetInstanceAuthString(
-      google::cloud::redis::v1::GetInstanceAuthStringRequest const& request)
-      override;
+  StatusOr<google::cloud::redis::v1::InstanceAuthString>
+  GetInstanceAuthString(google::cloud::redis::v1::GetInstanceAuthStringRequest const& request) override;
 
-  future<StatusOr<google::cloud::redis::v1::Instance>> CreateInstance(
+  future<StatusOr<google::cloud::redis::v1::Instance>>
+  CreateInstance(google::cloud::redis::v1::CreateInstanceRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  CreateInstance(NoAwaitTag,
       google::cloud::redis::v1::CreateInstanceRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> CreateInstance(
-      NoAwaitTag,
-      google::cloud::redis::v1::CreateInstanceRequest const& request) override;
-
-  future<StatusOr<google::cloud::redis::v1::Instance>> CreateInstance(
+  future<StatusOr<google::cloud::redis::v1::Instance>>
+  CreateInstance(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::redis::v1::Instance>> UpdateInstance(
+  future<StatusOr<google::cloud::redis::v1::Instance>>
+  UpdateInstance(google::cloud::redis::v1::UpdateInstanceRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  UpdateInstance(NoAwaitTag,
       google::cloud::redis::v1::UpdateInstanceRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> UpdateInstance(
-      NoAwaitTag,
-      google::cloud::redis::v1::UpdateInstanceRequest const& request) override;
-
-  future<StatusOr<google::cloud::redis::v1::Instance>> UpdateInstance(
+  future<StatusOr<google::cloud::redis::v1::Instance>>
+  UpdateInstance(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::redis::v1::Instance>> UpgradeInstance(
+  future<StatusOr<google::cloud::redis::v1::Instance>>
+  UpgradeInstance(google::cloud::redis::v1::UpgradeInstanceRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  UpgradeInstance(NoAwaitTag,
       google::cloud::redis::v1::UpgradeInstanceRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> UpgradeInstance(
-      NoAwaitTag,
-      google::cloud::redis::v1::UpgradeInstanceRequest const& request) override;
-
-  future<StatusOr<google::cloud::redis::v1::Instance>> UpgradeInstance(
+  future<StatusOr<google::cloud::redis::v1::Instance>>
+  UpgradeInstance(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::redis::v1::Instance>> ImportInstance(
+  future<StatusOr<google::cloud::redis::v1::Instance>>
+  ImportInstance(google::cloud::redis::v1::ImportInstanceRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  ImportInstance(NoAwaitTag,
       google::cloud::redis::v1::ImportInstanceRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> ImportInstance(
-      NoAwaitTag,
-      google::cloud::redis::v1::ImportInstanceRequest const& request) override;
-
-  future<StatusOr<google::cloud::redis::v1::Instance>> ImportInstance(
+  future<StatusOr<google::cloud::redis::v1::Instance>>
+  ImportInstance(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::redis::v1::Instance>> ExportInstance(
+  future<StatusOr<google::cloud::redis::v1::Instance>>
+  ExportInstance(google::cloud::redis::v1::ExportInstanceRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  ExportInstance(NoAwaitTag,
       google::cloud::redis::v1::ExportInstanceRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> ExportInstance(
-      NoAwaitTag,
-      google::cloud::redis::v1::ExportInstanceRequest const& request) override;
-
-  future<StatusOr<google::cloud::redis::v1::Instance>> ExportInstance(
+  future<StatusOr<google::cloud::redis::v1::Instance>>
+  ExportInstance(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::redis::v1::Instance>> FailoverInstance(
-      google::cloud::redis::v1::FailoverInstanceRequest const& request)
-      override;
+  future<StatusOr<google::cloud::redis::v1::Instance>>
+  FailoverInstance(google::cloud::redis::v1::FailoverInstanceRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> FailoverInstance(
-      NoAwaitTag,
-      google::cloud::redis::v1::FailoverInstanceRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  FailoverInstance(NoAwaitTag,
+      google::cloud::redis::v1::FailoverInstanceRequest const& request) override;
 
-  future<StatusOr<google::cloud::redis::v1::Instance>> FailoverInstance(
+  future<StatusOr<google::cloud::redis::v1::Instance>>
+  FailoverInstance(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::redis::v1::OperationMetadata>> DeleteInstance(
+  future<StatusOr<google::cloud::redis::v1::OperationMetadata>>
+  DeleteInstance(google::cloud::redis::v1::DeleteInstanceRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  DeleteInstance(NoAwaitTag,
       google::cloud::redis::v1::DeleteInstanceRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> DeleteInstance(
-      NoAwaitTag,
-      google::cloud::redis::v1::DeleteInstanceRequest const& request) override;
-
-  future<StatusOr<google::cloud::redis::v1::OperationMetadata>> DeleteInstance(
+  future<StatusOr<google::cloud::redis::v1::OperationMetadata>>
+  DeleteInstance(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::redis::v1::Instance>> RescheduleMaintenance(
-      google::cloud::redis::v1::RescheduleMaintenanceRequest const& request)
-      override;
+  future<StatusOr<google::cloud::redis::v1::Instance>>
+  RescheduleMaintenance(google::cloud::redis::v1::RescheduleMaintenanceRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> RescheduleMaintenance(
-      NoAwaitTag,
-      google::cloud::redis::v1::RescheduleMaintenanceRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  RescheduleMaintenance(NoAwaitTag,
+      google::cloud::redis::v1::RescheduleMaintenanceRequest const& request) override;
 
-  future<StatusOr<google::cloud::redis::v1::Instance>> RescheduleMaintenance(
+  future<StatusOr<google::cloud::redis::v1::Instance>>
+  RescheduleMaintenance(
       google::longrunning::Operation const& operation) override;
 
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request) override;
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request) override;
 
-  StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request) override;
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request) override;
 
-  Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request) override;
+  Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request) override;
 
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request) override;
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

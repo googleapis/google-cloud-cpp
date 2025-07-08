@@ -17,13 +17,13 @@
 // source: google/cloud/managedkafka/v1/managed_kafka.proto
 
 #include "google/cloud/managedkafka/v1/internal/managed_kafka_connection_impl.h"
-#include "google/cloud/managedkafka/v1/internal/managed_kafka_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/async_long_running_operation.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
+#include "google/cloud/managedkafka/v1/internal/managed_kafka_option_defaults.h"
 #include <memory>
 #include <utility>
 
@@ -33,67 +33,58 @@ namespace managedkafka_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<managedkafka_v1::ManagedKafkaRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<managedkafka_v1::ManagedKafkaRetryPolicy>
+retry_policy(Options const& options) {
   return options.get<managedkafka_v1::ManagedKafkaRetryPolicyOption>()->clone();
 }
 
-std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-  return options.get<managedkafka_v1::ManagedKafkaBackoffPolicyOption>()
-      ->clone();
+std::unique_ptr<BackoffPolicy>
+backoff_policy(Options const& options) {
+  return options.get<managedkafka_v1::ManagedKafkaBackoffPolicyOption>()->clone();
 }
 
 std::unique_ptr<managedkafka_v1::ManagedKafkaConnectionIdempotencyPolicy>
 idempotency_policy(Options const& options) {
-  return options
-      .get<managedkafka_v1::ManagedKafkaConnectionIdempotencyPolicyOption>()
-      ->clone();
+  return options.get<managedkafka_v1::ManagedKafkaConnectionIdempotencyPolicyOption>()->clone();
 }
 
 std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-  return options.get<managedkafka_v1::ManagedKafkaPollingPolicyOption>()
-      ->clone();
+  return options.get<managedkafka_v1::ManagedKafkaPollingPolicyOption>()->clone();
 }
 
-}  // namespace
+} // namespace
 
 ManagedKafkaConnectionImpl::ManagedKafkaConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<managedkafka_v1_internal::ManagedKafkaStub> stub,
     Options options)
-    : background_(std::move(background)),
-      stub_(std::move(stub)),
-      options_(internal::MergeOptions(std::move(options),
-                                      ManagedKafkaConnection::options())) {}
+  : background_(std::move(background)), stub_(std::move(stub)),
+    options_(internal::MergeOptions(
+        std::move(options),
+        ManagedKafkaConnection::options())) {}
 
 StreamRange<google::cloud::managedkafka::v1::Cluster>
-ManagedKafkaConnectionImpl::ListClusters(
-    google::cloud::managedkafka::v1::ListClustersRequest request) {
+ManagedKafkaConnectionImpl::ListClusters(google::cloud::managedkafka::v1::ListClustersRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListClusters(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::managedkafka::v1::Cluster>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::managedkafka::v1::Cluster>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<managedkafka_v1::ManagedKafkaRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<managedkafka_v1::ManagedKafkaRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::managedkafka::v1::ListClustersRequest const& r) {
+          Options const& options, google::cloud::managedkafka::v1::ListClustersRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::managedkafka::v1::ListClustersRequest const&
-                       request) {
+                   google::cloud::managedkafka::v1::ListClustersRequest const& request) {
               return stub->ListClusters(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::managedkafka::v1::ListClustersResponse r) {
-        std::vector<google::cloud::managedkafka::v1::Cluster> result(
-            r.clusters().size());
+        std::vector<google::cloud::managedkafka::v1::Cluster> result(r.clusters().size());
         auto& messages = *r.mutable_clusters();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -101,71 +92,62 @@ ManagedKafkaConnectionImpl::ListClusters(
 }
 
 StatusOr<google::cloud::managedkafka::v1::Cluster>
-ManagedKafkaConnectionImpl::GetCluster(
-    google::cloud::managedkafka::v1::GetClusterRequest const& request) {
+ManagedKafkaConnectionImpl::GetCluster(google::cloud::managedkafka::v1::GetClusterRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetCluster(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::managedkafka::v1::GetClusterRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::managedkafka::v1::GetClusterRequest const& request) {
         return stub_->GetCluster(context, options, request);
       },
       *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::managedkafka::v1::Cluster>>
-ManagedKafkaConnectionImpl::CreateCluster(
-    google::cloud::managedkafka::v1::CreateClusterRequest const& request) {
+ManagedKafkaConnectionImpl::CreateCluster(google::cloud::managedkafka::v1::CreateClusterRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->CreateCluster(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<
-      google::cloud::managedkafka::v1::Cluster>(
-      background_->cq(), current, std::move(request_copy),
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::managedkafka::v1::CreateClusterRequest const&
-              request) {
-        return stub->AsyncCreateCluster(cq, std::move(context),
-                                        std::move(options), request);
-      },
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::managedkafka::v1::Cluster>,
-      retry_policy(*current), backoff_policy(*current), idempotent,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::managedkafka::v1::Cluster>(
+    background_->cq(), current, std::move(request_copy),
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::cloud::managedkafka::v1::CreateClusterRequest const& request) {
+     return stub->AsyncCreateCluster(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::managedkafka::v1::Cluster>,
+    retry_policy(*current), backoff_policy(*current), idempotent,
+    polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 ManagedKafkaConnectionImpl::CreateCluster(
-    NoAwaitTag,
-    google::cloud::managedkafka::v1::CreateClusterRequest const& request) {
+      NoAwaitTag, google::cloud::managedkafka::v1::CreateClusterRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateCluster(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::managedkafka::v1::CreateClusterRequest const&
-                 request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::managedkafka::v1::CreateClusterRequest const& request) {
         return stub_->CreateCluster(context, options, request);
       },
       *current, request, __func__);
@@ -173,92 +155,78 @@ ManagedKafkaConnectionImpl::CreateCluster(
 
 future<StatusOr<google::cloud::managedkafka::v1::Cluster>>
 ManagedKafkaConnectionImpl::CreateCluster(
-    google::longrunning::Operation const& operation) {
+      google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata()
-           .Is<typename google::cloud::managedkafka::v1::OperationMetadata>()) {
-    return make_ready_future<
-        StatusOr<google::cloud::managedkafka::v1::Cluster>>(
-        internal::InvalidArgumentError(
-            "operation does not correspond to CreateCluster",
-            GCP_ERROR_INFO().WithMetadata("operation",
-                                          operation.metadata().DebugString())));
+  if (!operation.metadata().Is<typename google::cloud::managedkafka::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::managedkafka::v1::Cluster>>(
+        internal::InvalidArgumentError("operation does not correspond to CreateCluster",
+                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<
-      google::cloud::managedkafka::v1::Cluster>(
-      background_->cq(), current, operation,
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::managedkafka::v1::Cluster>,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::managedkafka::v1::Cluster>(
+    background_->cq(), current, operation,
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::managedkafka::v1::Cluster>,
+    polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::managedkafka::v1::Cluster>>
-ManagedKafkaConnectionImpl::UpdateCluster(
-    google::cloud::managedkafka::v1::UpdateClusterRequest const& request) {
+ManagedKafkaConnectionImpl::UpdateCluster(google::cloud::managedkafka::v1::UpdateClusterRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->UpdateCluster(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<
-      google::cloud::managedkafka::v1::Cluster>(
-      background_->cq(), current, std::move(request_copy),
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::managedkafka::v1::UpdateClusterRequest const&
-              request) {
-        return stub->AsyncUpdateCluster(cq, std::move(context),
-                                        std::move(options), request);
-      },
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::managedkafka::v1::Cluster>,
-      retry_policy(*current), backoff_policy(*current), idempotent,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::managedkafka::v1::Cluster>(
+    background_->cq(), current, std::move(request_copy),
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::cloud::managedkafka::v1::UpdateClusterRequest const& request) {
+     return stub->AsyncUpdateCluster(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::managedkafka::v1::Cluster>,
+    retry_policy(*current), backoff_policy(*current), idempotent,
+    polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 ManagedKafkaConnectionImpl::UpdateCluster(
-    NoAwaitTag,
-    google::cloud::managedkafka::v1::UpdateClusterRequest const& request) {
+      NoAwaitTag, google::cloud::managedkafka::v1::UpdateClusterRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateCluster(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::managedkafka::v1::UpdateClusterRequest const&
-                 request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::managedkafka::v1::UpdateClusterRequest const& request) {
         return stub_->UpdateCluster(context, options, request);
       },
       *current, request, __func__);
@@ -266,92 +234,78 @@ ManagedKafkaConnectionImpl::UpdateCluster(
 
 future<StatusOr<google::cloud::managedkafka::v1::Cluster>>
 ManagedKafkaConnectionImpl::UpdateCluster(
-    google::longrunning::Operation const& operation) {
+      google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata()
-           .Is<typename google::cloud::managedkafka::v1::OperationMetadata>()) {
-    return make_ready_future<
-        StatusOr<google::cloud::managedkafka::v1::Cluster>>(
-        internal::InvalidArgumentError(
-            "operation does not correspond to UpdateCluster",
-            GCP_ERROR_INFO().WithMetadata("operation",
-                                          operation.metadata().DebugString())));
+  if (!operation.metadata().Is<typename google::cloud::managedkafka::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::managedkafka::v1::Cluster>>(
+        internal::InvalidArgumentError("operation does not correspond to UpdateCluster",
+                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<
-      google::cloud::managedkafka::v1::Cluster>(
-      background_->cq(), current, operation,
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::managedkafka::v1::Cluster>,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::managedkafka::v1::Cluster>(
+    background_->cq(), current, operation,
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::managedkafka::v1::Cluster>,
+    polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::managedkafka::v1::OperationMetadata>>
-ManagedKafkaConnectionImpl::DeleteCluster(
-    google::cloud::managedkafka::v1::DeleteClusterRequest const& request) {
+ManagedKafkaConnectionImpl::DeleteCluster(google::cloud::managedkafka::v1::DeleteClusterRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->DeleteCluster(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<
-      google::cloud::managedkafka::v1::OperationMetadata>(
-      background_->cq(), current, std::move(request_copy),
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::managedkafka::v1::DeleteClusterRequest const&
-              request) {
-        return stub->AsyncDeleteCluster(cq, std::move(context),
-                                        std::move(options), request);
-      },
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultMetadata<
-          google::cloud::managedkafka::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current), idempotent,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::managedkafka::v1::OperationMetadata>(
+    background_->cq(), current, std::move(request_copy),
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::cloud::managedkafka::v1::DeleteClusterRequest const& request) {
+     return stub->AsyncDeleteCluster(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultMetadata<google::cloud::managedkafka::v1::OperationMetadata>,
+    retry_policy(*current), backoff_policy(*current), idempotent,
+    polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 ManagedKafkaConnectionImpl::DeleteCluster(
-    NoAwaitTag,
-    google::cloud::managedkafka::v1::DeleteClusterRequest const& request) {
+      NoAwaitTag, google::cloud::managedkafka::v1::DeleteClusterRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteCluster(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::managedkafka::v1::DeleteClusterRequest const&
-                 request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::managedkafka::v1::DeleteClusterRequest const& request) {
         return stub_->DeleteCluster(context, options, request);
       },
       *current, request, __func__);
@@ -359,69 +313,56 @@ ManagedKafkaConnectionImpl::DeleteCluster(
 
 future<StatusOr<google::cloud::managedkafka::v1::OperationMetadata>>
 ManagedKafkaConnectionImpl::DeleteCluster(
-    google::longrunning::Operation const& operation) {
+      google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata()
-           .Is<typename google::cloud::managedkafka::v1::OperationMetadata>()) {
-    return make_ready_future<
-        StatusOr<google::cloud::managedkafka::v1::OperationMetadata>>(
-        internal::InvalidArgumentError(
-            "operation does not correspond to DeleteCluster",
-            GCP_ERROR_INFO().WithMetadata("operation",
-                                          operation.metadata().DebugString())));
+  if (!operation.metadata().Is<typename google::cloud::managedkafka::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::managedkafka::v1::OperationMetadata>>(
+        internal::InvalidArgumentError("operation does not correspond to DeleteCluster",
+                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<
-      google::cloud::managedkafka::v1::OperationMetadata>(
-      background_->cq(), current, operation,
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultMetadata<
-          google::cloud::managedkafka::v1::OperationMetadata>,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::managedkafka::v1::OperationMetadata>(
+    background_->cq(), current, operation,
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultMetadata<google::cloud::managedkafka::v1::OperationMetadata>,
+    polling_policy(*current), __func__);
 }
 
 StreamRange<google::cloud::managedkafka::v1::Topic>
-ManagedKafkaConnectionImpl::ListTopics(
-    google::cloud::managedkafka::v1::ListTopicsRequest request) {
+ManagedKafkaConnectionImpl::ListTopics(google::cloud::managedkafka::v1::ListTopicsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListTopics(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::managedkafka::v1::Topic>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::managedkafka::v1::Topic>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<managedkafka_v1::ManagedKafkaRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<managedkafka_v1::ManagedKafkaRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::managedkafka::v1::ListTopicsRequest const& r) {
+          Options const& options, google::cloud::managedkafka::v1::ListTopicsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::managedkafka::v1::ListTopicsRequest const&
-                       request) {
+                   google::cloud::managedkafka::v1::ListTopicsRequest const& request) {
               return stub->ListTopics(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::managedkafka::v1::ListTopicsResponse r) {
-        std::vector<google::cloud::managedkafka::v1::Topic> result(
-            r.topics().size());
+        std::vector<google::cloud::managedkafka::v1::Topic> result(r.topics().size());
         auto& messages = *r.mutable_topics();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -429,8 +370,7 @@ ManagedKafkaConnectionImpl::ListTopics(
 }
 
 StatusOr<google::cloud::managedkafka::v1::Topic>
-ManagedKafkaConnectionImpl::GetTopic(
-    google::cloud::managedkafka::v1::GetTopicRequest const& request) {
+ManagedKafkaConnectionImpl::GetTopic(google::cloud::managedkafka::v1::GetTopicRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -443,77 +383,66 @@ ManagedKafkaConnectionImpl::GetTopic(
 }
 
 StatusOr<google::cloud::managedkafka::v1::Topic>
-ManagedKafkaConnectionImpl::CreateTopic(
-    google::cloud::managedkafka::v1::CreateTopicRequest const& request) {
+ManagedKafkaConnectionImpl::CreateTopic(google::cloud::managedkafka::v1::CreateTopicRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateTopic(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::managedkafka::v1::CreateTopicRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::managedkafka::v1::CreateTopicRequest const& request) {
         return stub_->CreateTopic(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::managedkafka::v1::Topic>
-ManagedKafkaConnectionImpl::UpdateTopic(
-    google::cloud::managedkafka::v1::UpdateTopicRequest const& request) {
+ManagedKafkaConnectionImpl::UpdateTopic(google::cloud::managedkafka::v1::UpdateTopicRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateTopic(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::managedkafka::v1::UpdateTopicRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::managedkafka::v1::UpdateTopicRequest const& request) {
         return stub_->UpdateTopic(context, options, request);
       },
       *current, request, __func__);
 }
 
-Status ManagedKafkaConnectionImpl::DeleteTopic(
-    google::cloud::managedkafka::v1::DeleteTopicRequest const& request) {
+Status
+ManagedKafkaConnectionImpl::DeleteTopic(google::cloud::managedkafka::v1::DeleteTopicRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteTopic(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::managedkafka::v1::DeleteTopicRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::managedkafka::v1::DeleteTopicRequest const& request) {
         return stub_->DeleteTopic(context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::cloud::managedkafka::v1::ConsumerGroup>
-ManagedKafkaConnectionImpl::ListConsumerGroups(
-    google::cloud::managedkafka::v1::ListConsumerGroupsRequest request) {
+ManagedKafkaConnectionImpl::ListConsumerGroups(google::cloud::managedkafka::v1::ListConsumerGroupsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListConsumerGroups(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::managedkafka::v1::ConsumerGroup>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::managedkafka::v1::ConsumerGroup>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<managedkafka_v1::ManagedKafkaRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<managedkafka_v1::ManagedKafkaRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::managedkafka::v1::ListConsumerGroupsRequest const& r) {
+          Options const& options, google::cloud::managedkafka::v1::ListConsumerGroupsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::managedkafka::v1::
-                       ListConsumerGroupsRequest const& request) {
+                   google::cloud::managedkafka::v1::ListConsumerGroupsRequest const& request) {
               return stub->ListConsumerGroups(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::managedkafka::v1::ListConsumerGroupsResponse r) {
-        std::vector<google::cloud::managedkafka::v1::ConsumerGroup> result(
-            r.consumer_groups().size());
+        std::vector<google::cloud::managedkafka::v1::ConsumerGroup> result(r.consumer_groups().size());
         auto& messages = *r.mutable_consumer_groups();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -521,79 +450,66 @@ ManagedKafkaConnectionImpl::ListConsumerGroups(
 }
 
 StatusOr<google::cloud::managedkafka::v1::ConsumerGroup>
-ManagedKafkaConnectionImpl::GetConsumerGroup(
-    google::cloud::managedkafka::v1::GetConsumerGroupRequest const& request) {
+ManagedKafkaConnectionImpl::GetConsumerGroup(google::cloud::managedkafka::v1::GetConsumerGroupRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetConsumerGroup(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::managedkafka::v1::GetConsumerGroupRequest const&
-                 request) {
+             google::cloud::managedkafka::v1::GetConsumerGroupRequest const& request) {
         return stub_->GetConsumerGroup(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::managedkafka::v1::ConsumerGroup>
-ManagedKafkaConnectionImpl::UpdateConsumerGroup(
-    google::cloud::managedkafka::v1::UpdateConsumerGroupRequest const&
-        request) {
+ManagedKafkaConnectionImpl::UpdateConsumerGroup(google::cloud::managedkafka::v1::UpdateConsumerGroupRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateConsumerGroup(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::managedkafka::v1::UpdateConsumerGroupRequest const&
-                 request) {
+             google::cloud::managedkafka::v1::UpdateConsumerGroupRequest const& request) {
         return stub_->UpdateConsumerGroup(context, options, request);
       },
       *current, request, __func__);
 }
 
-Status ManagedKafkaConnectionImpl::DeleteConsumerGroup(
-    google::cloud::managedkafka::v1::DeleteConsumerGroupRequest const&
-        request) {
+Status
+ManagedKafkaConnectionImpl::DeleteConsumerGroup(google::cloud::managedkafka::v1::DeleteConsumerGroupRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteConsumerGroup(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::managedkafka::v1::DeleteConsumerGroupRequest const&
-                 request) {
+             google::cloud::managedkafka::v1::DeleteConsumerGroupRequest const& request) {
         return stub_->DeleteConsumerGroup(context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::cloud::managedkafka::v1::Acl>
-ManagedKafkaConnectionImpl::ListAcls(
-    google::cloud::managedkafka::v1::ListAclsRequest request) {
+ManagedKafkaConnectionImpl::ListAcls(google::cloud::managedkafka::v1::ListAclsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListAcls(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::managedkafka::v1::Acl>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::managedkafka::v1::Acl>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<managedkafka_v1::ManagedKafkaRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<managedkafka_v1::ManagedKafkaRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::managedkafka::v1::ListAclsRequest const& r) {
+          Options const& options, google::cloud::managedkafka::v1::ListAclsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::managedkafka::v1::ListAclsRequest const&
-                       request) {
+                   google::cloud::managedkafka::v1::ListAclsRequest const& request) {
               return stub->ListAcls(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::managedkafka::v1::ListAclsResponse r) {
-        std::vector<google::cloud::managedkafka::v1::Acl> result(
-            r.acls().size());
+        std::vector<google::cloud::managedkafka::v1::Acl> result(r.acls().size());
         auto& messages = *r.mutable_acls();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -601,8 +517,7 @@ ManagedKafkaConnectionImpl::ListAcls(
 }
 
 StatusOr<google::cloud::managedkafka::v1::Acl>
-ManagedKafkaConnectionImpl::GetAcl(
-    google::cloud::managedkafka::v1::GetAclRequest const& request) {
+ManagedKafkaConnectionImpl::GetAcl(google::cloud::managedkafka::v1::GetAclRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -615,8 +530,7 @@ ManagedKafkaConnectionImpl::GetAcl(
 }
 
 StatusOr<google::cloud::managedkafka::v1::Acl>
-ManagedKafkaConnectionImpl::CreateAcl(
-    google::cloud::managedkafka::v1::CreateAclRequest const& request) {
+ManagedKafkaConnectionImpl::CreateAcl(google::cloud::managedkafka::v1::CreateAclRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -629,8 +543,7 @@ ManagedKafkaConnectionImpl::CreateAcl(
 }
 
 StatusOr<google::cloud::managedkafka::v1::Acl>
-ManagedKafkaConnectionImpl::UpdateAcl(
-    google::cloud::managedkafka::v1::UpdateAclRequest const& request) {
+ManagedKafkaConnectionImpl::UpdateAcl(google::cloud::managedkafka::v1::UpdateAclRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -642,8 +555,8 @@ ManagedKafkaConnectionImpl::UpdateAcl(
       *current, request, __func__);
 }
 
-Status ManagedKafkaConnectionImpl::DeleteAcl(
-    google::cloud::managedkafka::v1::DeleteAclRequest const& request) {
+Status
+ManagedKafkaConnectionImpl::DeleteAcl(google::cloud::managedkafka::v1::DeleteAclRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -656,63 +569,53 @@ Status ManagedKafkaConnectionImpl::DeleteAcl(
 }
 
 StatusOr<google::cloud::managedkafka::v1::AddAclEntryResponse>
-ManagedKafkaConnectionImpl::AddAclEntry(
-    google::cloud::managedkafka::v1::AddAclEntryRequest const& request) {
+ManagedKafkaConnectionImpl::AddAclEntry(google::cloud::managedkafka::v1::AddAclEntryRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->AddAclEntry(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::managedkafka::v1::AddAclEntryRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::managedkafka::v1::AddAclEntryRequest const& request) {
         return stub_->AddAclEntry(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::managedkafka::v1::RemoveAclEntryResponse>
-ManagedKafkaConnectionImpl::RemoveAclEntry(
-    google::cloud::managedkafka::v1::RemoveAclEntryRequest const& request) {
+ManagedKafkaConnectionImpl::RemoveAclEntry(google::cloud::managedkafka::v1::RemoveAclEntryRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->RemoveAclEntry(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::managedkafka::v1::RemoveAclEntryRequest const&
-                 request) {
+             google::cloud::managedkafka::v1::RemoveAclEntryRequest const& request) {
         return stub_->RemoveAclEntry(context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::cloud::location::Location>
-ManagedKafkaConnectionImpl::ListLocations(
-    google::cloud::location::ListLocationsRequest request) {
+ManagedKafkaConnectionImpl::ListLocations(google::cloud::location::ListLocationsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListLocations(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::location::Location>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::location::Location>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<managedkafka_v1::ManagedKafkaRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<managedkafka_v1::ManagedKafkaRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::location::ListLocationsRequest const& r) {
+          Options const& options, google::cloud::location::ListLocationsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](
-                grpc::ClientContext& context, Options const& options,
-                google::cloud::location::ListLocationsRequest const& request) {
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::cloud::location::ListLocationsRequest const& request) {
               return stub->ListLocations(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::location::ListLocationsResponse r) {
-        std::vector<google::cloud::location::Location> result(
-            r.locations().size());
+        std::vector<google::cloud::location::Location> result(r.locations().size());
         auto& messages = *r.mutable_locations();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -720,8 +623,7 @@ ManagedKafkaConnectionImpl::ListLocations(
 }
 
 StatusOr<google::cloud::location::Location>
-ManagedKafkaConnectionImpl::GetLocation(
-    google::cloud::location::GetLocationRequest const& request) {
+ManagedKafkaConnectionImpl::GetLocation(google::cloud::location::GetLocationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -734,21 +636,17 @@ ManagedKafkaConnectionImpl::GetLocation(
 }
 
 StreamRange<google::longrunning::Operation>
-ManagedKafkaConnectionImpl::ListOperations(
-    google::longrunning::ListOperationsRequest request) {
+ManagedKafkaConnectionImpl::ListOperations(google::longrunning::ListOperationsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListOperations(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::longrunning::Operation>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::longrunning::Operation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<managedkafka_v1::ManagedKafkaRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<managedkafka_v1::ManagedKafkaRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::longrunning::ListOperationsRequest const& r) {
+          Options const& options, google::longrunning::ListOperationsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
@@ -758,8 +656,7 @@ ManagedKafkaConnectionImpl::ListOperations(
             options, r, function_name);
       },
       [](google::longrunning::ListOperationsResponse r) {
-        std::vector<google::longrunning::Operation> result(
-            r.operations().size());
+        std::vector<google::longrunning::Operation> result(r.operations().size());
         auto& messages = *r.mutable_operations();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -767,8 +664,7 @@ ManagedKafkaConnectionImpl::ListOperations(
 }
 
 StatusOr<google::longrunning::Operation>
-ManagedKafkaConnectionImpl::GetOperation(
-    google::longrunning::GetOperationRequest const& request) {
+ManagedKafkaConnectionImpl::GetOperation(google::longrunning::GetOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -780,8 +676,8 @@ ManagedKafkaConnectionImpl::GetOperation(
       *current, request, __func__);
 }
 
-Status ManagedKafkaConnectionImpl::DeleteOperation(
-    google::longrunning::DeleteOperationRequest const& request) {
+Status
+ManagedKafkaConnectionImpl::DeleteOperation(google::longrunning::DeleteOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -793,8 +689,8 @@ Status ManagedKafkaConnectionImpl::DeleteOperation(
       *current, request, __func__);
 }
 
-Status ManagedKafkaConnectionImpl::CancelOperation(
-    google::longrunning::CancelOperationRequest const& request) {
+Status
+ManagedKafkaConnectionImpl::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),

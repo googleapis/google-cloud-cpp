@@ -26,16 +26,11 @@ namespace cloud {
 namespace servicecontrol {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use
-/// servicecontrol_v1::MakeDefaultServiceControllerConnectionIdempotencyPolicy
-/// directly.
-using ::google::cloud::servicecontrol_v1::
-    MakeDefaultServiceControllerConnectionIdempotencyPolicy;
+/// @deprecated Use servicecontrol_v1::MakeDefaultServiceControllerConnectionIdempotencyPolicy directly.
+using ::google::cloud::servicecontrol_v1::MakeDefaultServiceControllerConnectionIdempotencyPolicy;
 
-/// @deprecated Use
-/// servicecontrol_v1::ServiceControllerConnectionIdempotencyPolicy directly.
-using ::google::cloud::servicecontrol_v1::
-    ServiceControllerConnectionIdempotencyPolicy;
+/// @deprecated Use servicecontrol_v1::ServiceControllerConnectionIdempotencyPolicy directly.
+using ::google::cloud::servicecontrol_v1::ServiceControllerConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace servicecontrol

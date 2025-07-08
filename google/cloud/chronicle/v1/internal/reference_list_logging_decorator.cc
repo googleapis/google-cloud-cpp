@@ -32,17 +32,20 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ReferenceListServiceLogging::ReferenceListServiceLogging(
     std::shared_ptr<ReferenceListServiceStub> child,
-    TracingOptions tracing_options, std::set<std::string> const&)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
+    TracingOptions tracing_options,
+    std::set<std::string> const&)
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::cloud::chronicle::v1::ReferenceList>
 ReferenceListServiceLogging::GetReferenceList(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::chronicle::v1::GetReferenceListRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::chronicle::v1::GetReferenceListRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::chronicle::v1::GetReferenceListRequest const& request) {
         return child_->GetReferenceList(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -50,12 +53,13 @@ ReferenceListServiceLogging::GetReferenceList(
 
 StatusOr<google::cloud::chronicle::v1::ListReferenceListsResponse>
 ReferenceListServiceLogging::ListReferenceLists(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::chronicle::v1::ListReferenceListsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::chronicle::v1::ListReferenceListsRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::chronicle::v1::ListReferenceListsRequest const& request) {
         return child_->ListReferenceLists(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -63,12 +67,13 @@ ReferenceListServiceLogging::ListReferenceLists(
 
 StatusOr<google::cloud::chronicle::v1::ReferenceList>
 ReferenceListServiceLogging::CreateReferenceList(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::chronicle::v1::CreateReferenceListRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::chronicle::v1::CreateReferenceListRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::chronicle::v1::CreateReferenceListRequest const& request) {
         return child_->CreateReferenceList(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -76,12 +81,13 @@ ReferenceListServiceLogging::CreateReferenceList(
 
 StatusOr<google::cloud::chronicle::v1::ReferenceList>
 ReferenceListServiceLogging::UpdateReferenceList(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::chronicle::v1::UpdateReferenceListRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::chronicle::v1::UpdateReferenceListRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::chronicle::v1::UpdateReferenceListRequest const& request) {
         return child_->UpdateReferenceList(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -89,10 +95,12 @@ ReferenceListServiceLogging::UpdateReferenceList(
 
 StatusOr<google::longrunning::ListOperationsResponse>
 ReferenceListServiceLogging::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::ListOperationsRequest const& request) {
         return child_->ListOperations(context, options, request);
       },
@@ -101,32 +109,40 @@ ReferenceListServiceLogging::ListOperations(
 
 StatusOr<google::longrunning::Operation>
 ReferenceListServiceLogging::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::GetOperationRequest const& request) {
         return child_->GetOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status ReferenceListServiceLogging::DeleteOperation(
-    grpc::ClientContext& context, Options const& options,
+Status
+ReferenceListServiceLogging::DeleteOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::DeleteOperationRequest const& request) {
         return child_->DeleteOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status ReferenceListServiceLogging::CancelOperation(
-    grpc::ClientContext& context, Options const& options,
+Status
+ReferenceListServiceLogging::CancelOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::longrunning::CancelOperationRequest const& request) {
         return child_->CancelOperation(context, options, request);
       },

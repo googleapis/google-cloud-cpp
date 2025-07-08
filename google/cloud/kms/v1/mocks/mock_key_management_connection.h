@@ -31,10 +31,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * A class to mock `KeyManagementServiceConnection`.
  *
  * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `KeyManagementServiceClient`. To do
- * so, construct an object of type `KeyManagementServiceClient` with an instance
- * of this class. Then use the Google Test framework functions to program the
- * behavior of this mock.
+ * including errors, from an object of type `KeyManagementServiceClient`. To do so,
+ * construct an object of type `KeyManagementServiceClient` with an instance of this
+ * class. Then use the Google Test framework functions to program the behavior
+ * of this mock.
  *
  * @see [This example][bq-mock] for how to test your application with GoogleTest.
  * While the example showcases types from the BigQuery library, the underlying
@@ -42,166 +42,145 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockKeyManagementServiceConnection
-    : public kms_v1::KeyManagementServiceConnection {
+class MockKeyManagementServiceConnection : public kms_v1::KeyManagementServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::kms::v1::KeyRing>), ListKeyRings,
-              (google::cloud::kms::v1::ListKeyRingsRequest request),
-              (override));
+  MOCK_METHOD((StreamRange<google::cloud::kms::v1::KeyRing>),
+  ListKeyRings,
+  (google::cloud::kms::v1::ListKeyRingsRequest request), (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::kms::v1::CryptoKey>), ListCryptoKeys,
-              (google::cloud::kms::v1::ListCryptoKeysRequest request),
-              (override));
+  MOCK_METHOD((StreamRange<google::cloud::kms::v1::CryptoKey>),
+  ListCryptoKeys,
+  (google::cloud::kms::v1::ListCryptoKeysRequest request), (override));
 
   MOCK_METHOD((StreamRange<google::cloud::kms::v1::CryptoKeyVersion>),
-              ListCryptoKeyVersions,
-              (google::cloud::kms::v1::ListCryptoKeyVersionsRequest request),
-              (override));
+  ListCryptoKeyVersions,
+  (google::cloud::kms::v1::ListCryptoKeyVersionsRequest request), (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::kms::v1::ImportJob>), ListImportJobs,
-              (google::cloud::kms::v1::ListImportJobsRequest request),
-              (override));
+  MOCK_METHOD((StreamRange<google::cloud::kms::v1::ImportJob>),
+  ListImportJobs,
+  (google::cloud::kms::v1::ListImportJobsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::kms::v1::KeyRing>, GetKeyRing,
-              (google::cloud::kms::v1::GetKeyRingRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::kms::v1::KeyRing>,
+  GetKeyRing,
+  (google::cloud::kms::v1::GetKeyRingRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::kms::v1::CryptoKey>, GetCryptoKey,
-              (google::cloud::kms::v1::GetCryptoKeyRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::kms::v1::CryptoKey>,
+  GetCryptoKey,
+  (google::cloud::kms::v1::GetCryptoKeyRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::kms::v1::CryptoKeyVersion>, GetCryptoKeyVersion,
-      (google::cloud::kms::v1::GetCryptoKeyVersionRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::kms::v1::CryptoKeyVersion>,
+  GetCryptoKeyVersion,
+  (google::cloud::kms::v1::GetCryptoKeyVersionRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::kms::v1::PublicKey>, GetPublicKey,
-              (google::cloud::kms::v1::GetPublicKeyRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::kms::v1::PublicKey>,
+  GetPublicKey,
+  (google::cloud::kms::v1::GetPublicKeyRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::kms::v1::ImportJob>, GetImportJob,
-              (google::cloud::kms::v1::GetImportJobRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::kms::v1::ImportJob>,
+  GetImportJob,
+  (google::cloud::kms::v1::GetImportJobRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::kms::v1::KeyRing>, CreateKeyRing,
-              (google::cloud::kms::v1::CreateKeyRingRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::kms::v1::KeyRing>,
+  CreateKeyRing,
+  (google::cloud::kms::v1::CreateKeyRingRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::kms::v1::CryptoKey>, CreateCryptoKey,
-              (google::cloud::kms::v1::CreateCryptoKeyRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::kms::v1::CryptoKey>,
+  CreateCryptoKey,
+  (google::cloud::kms::v1::CreateCryptoKeyRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::kms::v1::CryptoKeyVersion>,
-      CreateCryptoKeyVersion,
-      (google::cloud::kms::v1::CreateCryptoKeyVersionRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::kms::v1::CryptoKeyVersion>,
+  CreateCryptoKeyVersion,
+  (google::cloud::kms::v1::CreateCryptoKeyVersionRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::kms::v1::CryptoKeyVersion>,
-      ImportCryptoKeyVersion,
-      (google::cloud::kms::v1::ImportCryptoKeyVersionRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::kms::v1::CryptoKeyVersion>,
+  ImportCryptoKeyVersion,
+  (google::cloud::kms::v1::ImportCryptoKeyVersionRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::kms::v1::ImportJob>, CreateImportJob,
-              (google::cloud::kms::v1::CreateImportJobRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::kms::v1::ImportJob>,
+  CreateImportJob,
+  (google::cloud::kms::v1::CreateImportJobRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::kms::v1::CryptoKey>, UpdateCryptoKey,
-              (google::cloud::kms::v1::UpdateCryptoKeyRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::kms::v1::CryptoKey>,
+  UpdateCryptoKey,
+  (google::cloud::kms::v1::UpdateCryptoKeyRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::kms::v1::CryptoKeyVersion>,
-      UpdateCryptoKeyVersion,
-      (google::cloud::kms::v1::UpdateCryptoKeyVersionRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::kms::v1::CryptoKeyVersion>,
+  UpdateCryptoKeyVersion,
+  (google::cloud::kms::v1::UpdateCryptoKeyVersionRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::kms::v1::CryptoKey>,
-      UpdateCryptoKeyPrimaryVersion,
-      (google::cloud::kms::v1::UpdateCryptoKeyPrimaryVersionRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::kms::v1::CryptoKey>,
+  UpdateCryptoKeyPrimaryVersion,
+  (google::cloud::kms::v1::UpdateCryptoKeyPrimaryVersionRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::kms::v1::CryptoKeyVersion>,
-      DestroyCryptoKeyVersion,
-      (google::cloud::kms::v1::DestroyCryptoKeyVersionRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::kms::v1::CryptoKeyVersion>,
+  DestroyCryptoKeyVersion,
+  (google::cloud::kms::v1::DestroyCryptoKeyVersionRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::kms::v1::CryptoKeyVersion>,
-      RestoreCryptoKeyVersion,
-      (google::cloud::kms::v1::RestoreCryptoKeyVersionRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::kms::v1::CryptoKeyVersion>,
+  RestoreCryptoKeyVersion,
+  (google::cloud::kms::v1::RestoreCryptoKeyVersionRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::kms::v1::EncryptResponse>, Encrypt,
-              (google::cloud::kms::v1::EncryptRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::kms::v1::EncryptResponse>,
+  Encrypt,
+  (google::cloud::kms::v1::EncryptRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::kms::v1::DecryptResponse>, Decrypt,
-              (google::cloud::kms::v1::DecryptRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::kms::v1::DecryptResponse>,
+  Decrypt,
+  (google::cloud::kms::v1::DecryptRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::kms::v1::RawEncryptResponse>, RawEncrypt,
-              (google::cloud::kms::v1::RawEncryptRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::kms::v1::RawEncryptResponse>,
+  RawEncrypt,
+  (google::cloud::kms::v1::RawEncryptRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::kms::v1::RawDecryptResponse>, RawDecrypt,
-              (google::cloud::kms::v1::RawDecryptRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::kms::v1::RawDecryptResponse>,
+  RawDecrypt,
+  (google::cloud::kms::v1::RawDecryptRequest const& request), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::kms::v1::AsymmetricSignResponse>,
-              AsymmetricSign,
-              (google::cloud::kms::v1::AsymmetricSignRequest const& request),
-              (override));
+  AsymmetricSign,
+  (google::cloud::kms::v1::AsymmetricSignRequest const& request), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::kms::v1::AsymmetricDecryptResponse>,
-              AsymmetricDecrypt,
-              (google::cloud::kms::v1::AsymmetricDecryptRequest const& request),
-              (override));
+  AsymmetricDecrypt,
+  (google::cloud::kms::v1::AsymmetricDecryptRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::kms::v1::MacSignResponse>, MacSign,
-              (google::cloud::kms::v1::MacSignRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::kms::v1::MacSignResponse>,
+  MacSign,
+  (google::cloud::kms::v1::MacSignRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::kms::v1::MacVerifyResponse>, MacVerify,
-              (google::cloud::kms::v1::MacVerifyRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::kms::v1::MacVerifyResponse>,
+  MacVerify,
+  (google::cloud::kms::v1::MacVerifyRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::kms::v1::GenerateRandomBytesResponse>,
-      GenerateRandomBytes,
-      (google::cloud::kms::v1::GenerateRandomBytesRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::kms::v1::GenerateRandomBytesResponse>,
+  GenerateRandomBytes,
+  (google::cloud::kms::v1::GenerateRandomBytesRequest const& request), (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::location::Location>), ListLocations,
-              (google::cloud::location::ListLocationsRequest request),
-              (override));
+  MOCK_METHOD((StreamRange<google::cloud::location::Location>),
+  ListLocations,
+  (google::cloud::location::ListLocationsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::location::Location>, GetLocation,
-              (google::cloud::location::GetLocationRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::location::Location>,
+  GetLocation,
+  (google::cloud::location::GetLocationRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, SetIamPolicy,
-              (google::iam::v1::SetIamPolicyRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::iam::v1::Policy>,
+  SetIamPolicy,
+  (google::iam::v1::SetIamPolicyRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, GetIamPolicy,
-              (google::iam::v1::GetIamPolicyRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::iam::v1::Policy>,
+  GetIamPolicy,
+  (google::iam::v1::GetIamPolicyRequest const& request), (override));
 
   MOCK_METHOD(StatusOr<google::iam::v1::TestIamPermissionsResponse>,
-              TestIamPermissions,
-              (google::iam::v1::TestIamPermissionsRequest const& request),
-              (override));
+  TestIamPermissions,
+  (google::iam::v1::TestIamPermissionsRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
-              (google::longrunning::GetOperationRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  GetOperation,
+  (google::longrunning::GetOperationRequest const& request), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

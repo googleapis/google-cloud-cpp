@@ -17,12 +17,12 @@
 // source: google/cloud/compute/image_family_views/v1/image_family_views.proto
 
 #include "google/cloud/compute/image_family_views/v1/image_family_views_rest_connection.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/compute/image_family_views/v1/image_family_views_options.h"
 #include "google/cloud/compute/image_family_views/v1/internal/image_family_views_option_defaults.h"
 #include "google/cloud/compute/image_family_views/v1/internal/image_family_views_rest_connection_impl.h"
 #include "google/cloud/compute/image_family_views/v1/internal/image_family_views_rest_stub_factory.h"
 #include "google/cloud/compute/image_family_views/v1/internal/image_family_views_tracing_connection.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/rest_background_threads_impl.h"
 #include "google/cloud/internal/rest_options.h"
@@ -36,22 +36,19 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<ImageFamilyViewsConnection> MakeImageFamilyViewsConnectionRest(
     Options options) {
-  internal::CheckExpectedOptions<
-      CommonOptionList, RestOptionList, UnifiedCredentialsOptionList,
-      rest_internal::TargetApiVersionOption, ImageFamilyViewsPolicyOptionList>(
-      options, __func__);
-  options =
-      compute_image_family_views_v1_internal::ImageFamilyViewsDefaultOptions(
-          std::move(options));
+  internal::CheckExpectedOptions<CommonOptionList, RestOptionList,
+      UnifiedCredentialsOptionList, rest_internal::TargetApiVersionOption,
+      ImageFamilyViewsPolicyOptionList>(options, __func__);
+  options = compute_image_family_views_v1_internal::ImageFamilyViewsDefaultOptions(
+      std::move(options));
   auto background = std::make_unique<
       rest_internal::AutomaticallyCreatedRestBackgroundThreads>();
-  auto stub = compute_image_family_views_v1_internal::
-      CreateDefaultImageFamilyViewsRestStub(options);
-  return compute_image_family_views_v1_internal::
-      MakeImageFamilyViewsTracingConnection(
-          std::make_shared<compute_image_family_views_v1_internal::
-                               ImageFamilyViewsRestConnectionImpl>(
-              std::move(background), std::move(stub), std::move(options)));
+  auto stub = compute_image_family_views_v1_internal::CreateDefaultImageFamilyViewsRestStub(
+      options);
+  return compute_image_family_views_v1_internal::MakeImageFamilyViewsTracingConnection(
+      std::make_shared<
+          compute_image_family_views_v1_internal::ImageFamilyViewsRestConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

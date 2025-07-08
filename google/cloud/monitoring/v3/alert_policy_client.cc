@@ -28,13 +28,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 AlertPolicyServiceClient::AlertPolicyServiceClient(
     std::shared_ptr<AlertPolicyServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 AlertPolicyServiceClient::~AlertPolicyServiceClient() = default;
 
 StreamRange<google::monitoring::v3::AlertPolicy>
-AlertPolicyServiceClient::ListAlertPolicies(std::string const& name,
-                                            Options opts) {
+AlertPolicyServiceClient::ListAlertPolicies(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::monitoring::v3::ListAlertPoliciesRequest request;
   request.set_name(name);
@@ -42,15 +41,13 @@ AlertPolicyServiceClient::ListAlertPolicies(std::string const& name,
 }
 
 StreamRange<google::monitoring::v3::AlertPolicy>
-AlertPolicyServiceClient::ListAlertPolicies(
-    google::monitoring::v3::ListAlertPoliciesRequest request, Options opts) {
+AlertPolicyServiceClient::ListAlertPolicies(google::monitoring::v3::ListAlertPoliciesRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListAlertPolicies(std::move(request));
 }
 
 StatusOr<google::monitoring::v3::AlertPolicy>
-AlertPolicyServiceClient::GetAlertPolicy(std::string const& name,
-                                         Options opts) {
+AlertPolicyServiceClient::GetAlertPolicy(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::monitoring::v3::GetAlertPolicyRequest request;
   request.set_name(name);
@@ -58,17 +55,13 @@ AlertPolicyServiceClient::GetAlertPolicy(std::string const& name,
 }
 
 StatusOr<google::monitoring::v3::AlertPolicy>
-AlertPolicyServiceClient::GetAlertPolicy(
-    google::monitoring::v3::GetAlertPolicyRequest const& request,
-    Options opts) {
+AlertPolicyServiceClient::GetAlertPolicy(google::monitoring::v3::GetAlertPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetAlertPolicy(request);
 }
 
 StatusOr<google::monitoring::v3::AlertPolicy>
-AlertPolicyServiceClient::CreateAlertPolicy(
-    std::string const& name,
-    google::monitoring::v3::AlertPolicy const& alert_policy, Options opts) {
+AlertPolicyServiceClient::CreateAlertPolicy(std::string const& name, google::monitoring::v3::AlertPolicy const& alert_policy, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::monitoring::v3::CreateAlertPolicyRequest request;
   request.set_name(name);
@@ -77,32 +70,27 @@ AlertPolicyServiceClient::CreateAlertPolicy(
 }
 
 StatusOr<google::monitoring::v3::AlertPolicy>
-AlertPolicyServiceClient::CreateAlertPolicy(
-    google::monitoring::v3::CreateAlertPolicyRequest const& request,
-    Options opts) {
+AlertPolicyServiceClient::CreateAlertPolicy(google::monitoring::v3::CreateAlertPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateAlertPolicy(request);
 }
 
-Status AlertPolicyServiceClient::DeleteAlertPolicy(std::string const& name,
-                                                   Options opts) {
+Status
+AlertPolicyServiceClient::DeleteAlertPolicy(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::monitoring::v3::DeleteAlertPolicyRequest request;
   request.set_name(name);
   return connection_->DeleteAlertPolicy(request);
 }
 
-Status AlertPolicyServiceClient::DeleteAlertPolicy(
-    google::monitoring::v3::DeleteAlertPolicyRequest const& request,
-    Options opts) {
+Status
+AlertPolicyServiceClient::DeleteAlertPolicy(google::monitoring::v3::DeleteAlertPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteAlertPolicy(request);
 }
 
 StatusOr<google::monitoring::v3::AlertPolicy>
-AlertPolicyServiceClient::UpdateAlertPolicy(
-    google::protobuf::FieldMask const& update_mask,
-    google::monitoring::v3::AlertPolicy const& alert_policy, Options opts) {
+AlertPolicyServiceClient::UpdateAlertPolicy(google::protobuf::FieldMask const& update_mask, google::monitoring::v3::AlertPolicy const& alert_policy, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::monitoring::v3::UpdateAlertPolicyRequest request;
   *request.mutable_update_mask() = update_mask;
@@ -111,9 +99,7 @@ AlertPolicyServiceClient::UpdateAlertPolicy(
 }
 
 StatusOr<google::monitoring::v3::AlertPolicy>
-AlertPolicyServiceClient::UpdateAlertPolicy(
-    google::monitoring::v3::UpdateAlertPolicyRequest const& request,
-    Options opts) {
+AlertPolicyServiceClient::UpdateAlertPolicy(google::monitoring::v3::UpdateAlertPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateAlertPolicy(request);
 }

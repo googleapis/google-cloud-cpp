@@ -36,16 +36,12 @@ class ValidationHelperV1TracingConnection
   ~ValidationHelperV1TracingConnection() override = default;
 
   explicit ValidationHelperV1TracingConnection(
-      std::shared_ptr<binaryauthorization_v1::ValidationHelperV1Connection>
-          child);
+    std::shared_ptr<binaryauthorization_v1::ValidationHelperV1Connection> child);
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::binaryauthorization::v1::
-               ValidateAttestationOccurrenceResponse>
-  ValidateAttestationOccurrence(
-      google::cloud::binaryauthorization::v1::
-          ValidateAttestationOccurrenceRequest const& request) override;
+  StatusOr<google::cloud::binaryauthorization::v1::ValidateAttestationOccurrenceResponse>
+  ValidateAttestationOccurrence(google::cloud::binaryauthorization::v1::ValidateAttestationOccurrenceRequest const& request) override;
 
  private:
   std::shared_ptr<binaryauthorization_v1::ValidationHelperV1Connection> child_;

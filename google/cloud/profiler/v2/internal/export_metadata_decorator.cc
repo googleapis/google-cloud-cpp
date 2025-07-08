@@ -46,10 +46,10 @@ ExportServiceMetadata::ExportServiceMetadata(
 
 StatusOr<google::devtools::cloudprofiler::v2::ListProfilesResponse>
 ExportServiceMetadata::ListProfiles(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::devtools::cloudprofiler::v2::ListProfilesRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListProfiles(context, options, request);
 }
 
@@ -62,8 +62,8 @@ void ExportServiceMetadata::SetMetadata(grpc::ClientContext& context,
 
 void ExportServiceMetadata::SetMetadata(grpc::ClientContext& context,
                                         Options const& options) {
-  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
-                                       api_client_header_);
+  google::cloud::internal::SetMetadata(
+      context, options, fixed_metadata_, api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

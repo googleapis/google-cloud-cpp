@@ -31,8 +31,7 @@ namespace cloud {
 namespace advisorynotifications_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class AdvisoryNotificationsServiceMetadata
-    : public AdvisoryNotificationsServiceStub {
+class AdvisoryNotificationsServiceMetadata : public AdvisoryNotificationsServiceStub {
  public:
   ~AdvisoryNotificationsServiceMetadata() override = default;
   AdvisoryNotificationsServiceMetadata(
@@ -40,30 +39,29 @@ class AdvisoryNotificationsServiceMetadata
       std::multimap<std::string, std::string> fixed_metadata,
       std::string api_client_header = "");
 
-  StatusOr<google::cloud::advisorynotifications::v1::ListNotificationsResponse>
-  ListNotifications(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::advisorynotifications::v1::ListNotificationsRequest const&
-          request) override;
+  StatusOr<google::cloud::advisorynotifications::v1::ListNotificationsResponse> ListNotifications(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::advisorynotifications::v1::ListNotificationsRequest const& request) override;
 
-  StatusOr<google::cloud::advisorynotifications::v1::Notification>
-  GetNotification(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::advisorynotifications::v1::GetNotificationRequest const&
-          request) override;
+  StatusOr<google::cloud::advisorynotifications::v1::Notification> GetNotification(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::advisorynotifications::v1::GetNotificationRequest const& request) override;
 
   StatusOr<google::cloud::advisorynotifications::v1::Settings> GetSettings(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::advisorynotifications::v1::GetSettingsRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::advisorynotifications::v1::GetSettingsRequest const& request) override;
 
   StatusOr<google::cloud::advisorynotifications::v1::Settings> UpdateSettings(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::advisorynotifications::v1::UpdateSettingsRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::advisorynotifications::v1::UpdateSettingsRequest const& request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context, Options const& options,
+  void SetMetadata(grpc::ClientContext& context,
+                   Options const& options,
                    std::string const& request_params);
   void SetMetadata(grpc::ClientContext& context, Options const& options);
 

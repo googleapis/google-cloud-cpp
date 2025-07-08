@@ -34,16 +34,14 @@ class VideoIntelligenceServiceConnectionIdempotencyPolicy {
   virtual ~VideoIntelligenceServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<VideoIntelligenceServiceConnectionIdempotencyPolicy>
-  clone() const;
+  virtual std::unique_ptr<VideoIntelligenceServiceConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency AnnotateVideo(
-      google::cloud::videointelligence::v1::AnnotateVideoRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  AnnotateVideo(google::cloud::videointelligence::v1::AnnotateVideoRequest const& request);
 };
 
 std::unique_ptr<VideoIntelligenceServiceConnectionIdempotencyPolicy>
-MakeDefaultVideoIntelligenceServiceConnectionIdempotencyPolicy();
+    MakeDefaultVideoIntelligenceServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace videointelligence_v1

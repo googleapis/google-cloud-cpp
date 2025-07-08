@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_MACHINE_TYPES_V1_MACHINE_TYPES_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_MACHINE_TYPES_V1_MACHINE_TYPES_OPTIONS_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/machine_types/v1/machine_types_connection.h"
 #include "google/cloud/compute/machine_types/v1/machine_types_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -64,7 +64,8 @@ struct MachineTypesConnectionIdempotencyPolicyOption {
  * @ingroup google-cloud-compute-options
  */
 using MachineTypesPolicyOptionList =
-    OptionList<MachineTypesRetryPolicyOption, MachineTypesBackoffPolicyOption,
+    OptionList<MachineTypesRetryPolicyOption,
+               MachineTypesBackoffPolicyOption,
                MachineTypesConnectionIdempotencyPolicyOption>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

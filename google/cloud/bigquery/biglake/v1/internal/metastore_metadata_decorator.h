@@ -40,83 +40,83 @@ class MetastoreServiceMetadata : public MetastoreServiceStub {
       std::string api_client_header = "");
 
   StatusOr<google::cloud::bigquery::biglake::v1::Catalog> CreateCatalog(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::bigquery::biglake::v1::CreateCatalogRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::bigquery::biglake::v1::CreateCatalogRequest const& request) override;
 
   StatusOr<google::cloud::bigquery::biglake::v1::Catalog> DeleteCatalog(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::bigquery::biglake::v1::DeleteCatalogRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::bigquery::biglake::v1::DeleteCatalogRequest const& request) override;
 
   StatusOr<google::cloud::bigquery::biglake::v1::Catalog> GetCatalog(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::bigquery::biglake::v1::GetCatalogRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::bigquery::biglake::v1::GetCatalogRequest const& request) override;
 
-  StatusOr<google::cloud::bigquery::biglake::v1::ListCatalogsResponse>
-  ListCatalogs(grpc::ClientContext& context, Options const& options,
-               google::cloud::bigquery::biglake::v1::ListCatalogsRequest const&
-                   request) override;
+  StatusOr<google::cloud::bigquery::biglake::v1::ListCatalogsResponse> ListCatalogs(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::bigquery::biglake::v1::ListCatalogsRequest const& request) override;
 
   StatusOr<google::cloud::bigquery::biglake::v1::Database> CreateDatabase(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::bigquery::biglake::v1::CreateDatabaseRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::bigquery::biglake::v1::CreateDatabaseRequest const& request) override;
 
   StatusOr<google::cloud::bigquery::biglake::v1::Database> DeleteDatabase(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::bigquery::biglake::v1::DeleteDatabaseRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::bigquery::biglake::v1::DeleteDatabaseRequest const& request) override;
 
   StatusOr<google::cloud::bigquery::biglake::v1::Database> UpdateDatabase(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::bigquery::biglake::v1::UpdateDatabaseRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::bigquery::biglake::v1::UpdateDatabaseRequest const& request) override;
 
   StatusOr<google::cloud::bigquery::biglake::v1::Database> GetDatabase(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::bigquery::biglake::v1::GetDatabaseRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::bigquery::biglake::v1::GetDatabaseRequest const& request) override;
 
-  StatusOr<google::cloud::bigquery::biglake::v1::ListDatabasesResponse>
-  ListDatabases(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::bigquery::biglake::v1::ListDatabasesRequest const& request)
-      override;
+  StatusOr<google::cloud::bigquery::biglake::v1::ListDatabasesResponse> ListDatabases(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::bigquery::biglake::v1::ListDatabasesRequest const& request) override;
 
   StatusOr<google::cloud::bigquery::biglake::v1::Table> CreateTable(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::bigquery::biglake::v1::CreateTableRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::bigquery::biglake::v1::CreateTableRequest const& request) override;
 
   StatusOr<google::cloud::bigquery::biglake::v1::Table> DeleteTable(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::bigquery::biglake::v1::DeleteTableRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::bigquery::biglake::v1::DeleteTableRequest const& request) override;
 
   StatusOr<google::cloud::bigquery::biglake::v1::Table> UpdateTable(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::bigquery::biglake::v1::UpdateTableRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::bigquery::biglake::v1::UpdateTableRequest const& request) override;
 
   StatusOr<google::cloud::bigquery::biglake::v1::Table> RenameTable(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::bigquery::biglake::v1::RenameTableRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::bigquery::biglake::v1::RenameTableRequest const& request) override;
 
   StatusOr<google::cloud::bigquery::biglake::v1::Table> GetTable(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::bigquery::biglake::v1::GetTableRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::bigquery::biglake::v1::GetTableRequest const& request) override;
 
   StatusOr<google::cloud::bigquery::biglake::v1::ListTablesResponse> ListTables(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::bigquery::biglake::v1::ListTablesRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::bigquery::biglake::v1::ListTablesRequest const& request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context, Options const& options,
+  void SetMetadata(grpc::ClientContext& context,
+                   Options const& options,
                    std::string const& request_params);
   void SetMetadata(grpc::ClientContext& context, Options const& options);
 

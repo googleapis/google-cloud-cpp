@@ -36,62 +36,61 @@ class SessionEntityTypesTracingStub : public SessionEntityTypesStub {
  public:
   ~SessionEntityTypesTracingStub() override = default;
 
-  explicit SessionEntityTypesTracingStub(
-      std::shared_ptr<SessionEntityTypesStub> child);
+  explicit SessionEntityTypesTracingStub(std::shared_ptr<SessionEntityTypesStub> child);
 
-  StatusOr<google::cloud::dialogflow::v2::ListSessionEntityTypesResponse>
-  ListSessionEntityTypes(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::dialogflow::v2::ListSessionEntityTypesRequest const&
-          request) override;
+  StatusOr<google::cloud::dialogflow::v2::ListSessionEntityTypesResponse> ListSessionEntityTypes(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::dialogflow::v2::ListSessionEntityTypesRequest const& request) override;
 
-  StatusOr<google::cloud::dialogflow::v2::SessionEntityType>
-  GetSessionEntityType(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::dialogflow::v2::GetSessionEntityTypeRequest const& request)
-      override;
+  StatusOr<google::cloud::dialogflow::v2::SessionEntityType> GetSessionEntityType(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::dialogflow::v2::GetSessionEntityTypeRequest const& request) override;
 
-  StatusOr<google::cloud::dialogflow::v2::SessionEntityType>
-  CreateSessionEntityType(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::dialogflow::v2::CreateSessionEntityTypeRequest const&
-          request) override;
+  StatusOr<google::cloud::dialogflow::v2::SessionEntityType> CreateSessionEntityType(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::dialogflow::v2::CreateSessionEntityTypeRequest const& request) override;
 
-  StatusOr<google::cloud::dialogflow::v2::SessionEntityType>
-  UpdateSessionEntityType(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::dialogflow::v2::UpdateSessionEntityTypeRequest const&
-          request) override;
+  StatusOr<google::cloud::dialogflow::v2::SessionEntityType> UpdateSessionEntityType(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::dialogflow::v2::UpdateSessionEntityTypeRequest const& request) override;
 
   Status DeleteSessionEntityType(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::dialogflow::v2::DeleteSessionEntityTypeRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::dialogflow::v2::DeleteSessionEntityTypeRequest const& request) override;
 
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::location::ListLocationsRequest const& request) override;
 
   StatusOr<google::cloud::location::Location> GetLocation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::location::GetLocationRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::shared_ptr<SessionEntityTypesStub> child_;
-  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
-      propagator_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

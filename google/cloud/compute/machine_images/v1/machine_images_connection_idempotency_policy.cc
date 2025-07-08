@@ -26,63 +26,47 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-MachineImagesConnectionIdempotencyPolicy::
-    ~MachineImagesConnectionIdempotencyPolicy() = default;
+MachineImagesConnectionIdempotencyPolicy::~MachineImagesConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<MachineImagesConnectionIdempotencyPolicy>
 MachineImagesConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<MachineImagesConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency MachineImagesConnectionIdempotencyPolicy::DeleteMachineImage(
-    google::cloud::cpp::compute::machine_images::v1::
-        DeleteMachineImageRequest const&) {
+Idempotency MachineImagesConnectionIdempotencyPolicy::DeleteMachineImage(google::cloud::cpp::compute::machine_images::v1::DeleteMachineImageRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency MachineImagesConnectionIdempotencyPolicy::GetMachineImage(
-    google::cloud::cpp::compute::machine_images::v1::
-        GetMachineImageRequest const&) {
+Idempotency MachineImagesConnectionIdempotencyPolicy::GetMachineImage(google::cloud::cpp::compute::machine_images::v1::GetMachineImageRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency MachineImagesConnectionIdempotencyPolicy::GetIamPolicy(
-    google::cloud::cpp::compute::machine_images::v1::
-        GetIamPolicyRequest const&) {
+Idempotency MachineImagesConnectionIdempotencyPolicy::GetIamPolicy(google::cloud::cpp::compute::machine_images::v1::GetIamPolicyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency MachineImagesConnectionIdempotencyPolicy::InsertMachineImage(
-    google::cloud::cpp::compute::machine_images::v1::
-        InsertMachineImageRequest const&) {
+Idempotency MachineImagesConnectionIdempotencyPolicy::InsertMachineImage(google::cloud::cpp::compute::machine_images::v1::InsertMachineImageRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency MachineImagesConnectionIdempotencyPolicy::ListMachineImages(
-    google::cloud::cpp::compute::machine_images::v1::
-        ListMachineImagesRequest) {  // NOLINT
+Idempotency MachineImagesConnectionIdempotencyPolicy::ListMachineImages(google::cloud::cpp::compute::machine_images::v1::ListMachineImagesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency MachineImagesConnectionIdempotencyPolicy::SetIamPolicy(
-    google::cloud::cpp::compute::machine_images::v1::
-        SetIamPolicyRequest const&) {
+Idempotency MachineImagesConnectionIdempotencyPolicy::SetIamPolicy(google::cloud::cpp::compute::machine_images::v1::SetIamPolicyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency MachineImagesConnectionIdempotencyPolicy::SetLabels(
-    google::cloud::cpp::compute::machine_images::v1::SetLabelsRequest const&) {
+Idempotency MachineImagesConnectionIdempotencyPolicy::SetLabels(google::cloud::cpp::compute::machine_images::v1::SetLabelsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency MachineImagesConnectionIdempotencyPolicy::TestIamPermissions(
-    google::cloud::cpp::compute::machine_images::v1::
-        TestIamPermissionsRequest const&) {
+Idempotency MachineImagesConnectionIdempotencyPolicy::TestIamPermissions(google::cloud::cpp::compute::machine_images::v1::TestIamPermissionsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<MachineImagesConnectionIdempotencyPolicy>
-MakeDefaultMachineImagesConnectionIdempotencyPolicy() {
+    MakeDefaultMachineImagesConnectionIdempotencyPolicy() {
   return std::make_unique<MachineImagesConnectionIdempotencyPolicy>();
 }
 

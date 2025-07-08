@@ -36,42 +36,41 @@ class KnowledgeBasesConnectionIdempotencyPolicy {
   virtual ~KnowledgeBasesConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<KnowledgeBasesConnectionIdempotencyPolicy> clone()
-      const;
+  virtual std::unique_ptr<KnowledgeBasesConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency ListKnowledgeBases(
-      google::cloud::dialogflow::v2::ListKnowledgeBasesRequest request);
+  virtual google::cloud::Idempotency
+  ListKnowledgeBases(google::cloud::dialogflow::v2::ListKnowledgeBasesRequest request);
 
-  virtual google::cloud::Idempotency GetKnowledgeBase(
-      google::cloud::dialogflow::v2::GetKnowledgeBaseRequest const& request);
+  virtual google::cloud::Idempotency
+  GetKnowledgeBase(google::cloud::dialogflow::v2::GetKnowledgeBaseRequest const& request);
 
-  virtual google::cloud::Idempotency CreateKnowledgeBase(
-      google::cloud::dialogflow::v2::CreateKnowledgeBaseRequest const& request);
+  virtual google::cloud::Idempotency
+  CreateKnowledgeBase(google::cloud::dialogflow::v2::CreateKnowledgeBaseRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteKnowledgeBase(
-      google::cloud::dialogflow::v2::DeleteKnowledgeBaseRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteKnowledgeBase(google::cloud::dialogflow::v2::DeleteKnowledgeBaseRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateKnowledgeBase(
-      google::cloud::dialogflow::v2::UpdateKnowledgeBaseRequest const& request);
+  virtual google::cloud::Idempotency
+  UpdateKnowledgeBase(google::cloud::dialogflow::v2::UpdateKnowledgeBaseRequest const& request);
 
-  virtual google::cloud::Idempotency ListLocations(
-      google::cloud::location::ListLocationsRequest request);
+  virtual google::cloud::Idempotency
+  ListLocations(google::cloud::location::ListLocationsRequest request);
 
-  virtual google::cloud::Idempotency GetLocation(
-      google::cloud::location::GetLocationRequest const& request);
+  virtual google::cloud::Idempotency
+  GetLocation(google::cloud::location::GetLocationRequest const& request);
 
-  virtual google::cloud::Idempotency ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual google::cloud::Idempotency
+  ListOperations(google::longrunning::ListOperationsRequest request);
 
-  virtual google::cloud::Idempotency GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 
-  virtual google::cloud::Idempotency CancelOperation(
-      google::longrunning::CancelOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  CancelOperation(google::longrunning::CancelOperationRequest const& request);
 };
 
 std::unique_ptr<KnowledgeBasesConnectionIdempotencyPolicy>
-MakeDefaultKnowledgeBasesConnectionIdempotencyPolicy();
+    MakeDefaultKnowledgeBasesConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_es

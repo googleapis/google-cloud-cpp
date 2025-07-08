@@ -31,120 +31,109 @@ AnalyticsHubServiceAuth::AnalyticsHubServiceAuth(
     std::shared_ptr<AnalyticsHubServiceStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::bigquery::analyticshub::v1::ListDataExchangesResponse>
-AnalyticsHubServiceAuth::ListDataExchanges(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::analyticshub::v1::ListDataExchangesRequest const&
-        request) {
+StatusOr<google::cloud::bigquery::analyticshub::v1::ListDataExchangesResponse> AnalyticsHubServiceAuth::ListDataExchanges(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::analyticshub::v1::ListDataExchangesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListDataExchanges(context, options, request);
 }
 
-StatusOr<
-    google::cloud::bigquery::analyticshub::v1::ListOrgDataExchangesResponse>
-AnalyticsHubServiceAuth::ListOrgDataExchanges(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::analyticshub::v1::
-        ListOrgDataExchangesRequest const& request) {
+StatusOr<google::cloud::bigquery::analyticshub::v1::ListOrgDataExchangesResponse> AnalyticsHubServiceAuth::ListOrgDataExchanges(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::analyticshub::v1::ListOrgDataExchangesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListOrgDataExchanges(context, options, request);
 }
 
-StatusOr<google::cloud::bigquery::analyticshub::v1::DataExchange>
-AnalyticsHubServiceAuth::GetDataExchange(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::analyticshub::v1::GetDataExchangeRequest const&
-        request) {
+StatusOr<google::cloud::bigquery::analyticshub::v1::DataExchange> AnalyticsHubServiceAuth::GetDataExchange(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::analyticshub::v1::GetDataExchangeRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetDataExchange(context, options, request);
 }
 
-StatusOr<google::cloud::bigquery::analyticshub::v1::DataExchange>
-AnalyticsHubServiceAuth::CreateDataExchange(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::analyticshub::v1::CreateDataExchangeRequest const&
-        request) {
+StatusOr<google::cloud::bigquery::analyticshub::v1::DataExchange> AnalyticsHubServiceAuth::CreateDataExchange(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::analyticshub::v1::CreateDataExchangeRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateDataExchange(context, options, request);
 }
 
-StatusOr<google::cloud::bigquery::analyticshub::v1::DataExchange>
-AnalyticsHubServiceAuth::UpdateDataExchange(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::analyticshub::v1::UpdateDataExchangeRequest const&
-        request) {
+StatusOr<google::cloud::bigquery::analyticshub::v1::DataExchange> AnalyticsHubServiceAuth::UpdateDataExchange(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::analyticshub::v1::UpdateDataExchangeRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateDataExchange(context, options, request);
 }
 
 Status AnalyticsHubServiceAuth::DeleteDataExchange(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::analyticshub::v1::DeleteDataExchangeRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::analyticshub::v1::DeleteDataExchangeRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteDataExchange(context, options, request);
 }
 
-StatusOr<google::cloud::bigquery::analyticshub::v1::ListListingsResponse>
-AnalyticsHubServiceAuth::ListListings(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::analyticshub::v1::ListListingsRequest const&
-        request) {
+StatusOr<google::cloud::bigquery::analyticshub::v1::ListListingsResponse> AnalyticsHubServiceAuth::ListListings(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::analyticshub::v1::ListListingsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListListings(context, options, request);
 }
 
-StatusOr<google::cloud::bigquery::analyticshub::v1::Listing>
-AnalyticsHubServiceAuth::GetListing(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::analyticshub::v1::GetListingRequest const&
-        request) {
+StatusOr<google::cloud::bigquery::analyticshub::v1::Listing> AnalyticsHubServiceAuth::GetListing(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::analyticshub::v1::GetListingRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetListing(context, options, request);
 }
 
-StatusOr<google::cloud::bigquery::analyticshub::v1::Listing>
-AnalyticsHubServiceAuth::CreateListing(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::analyticshub::v1::CreateListingRequest const&
-        request) {
+StatusOr<google::cloud::bigquery::analyticshub::v1::Listing> AnalyticsHubServiceAuth::CreateListing(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::analyticshub::v1::CreateListingRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateListing(context, options, request);
 }
 
-StatusOr<google::cloud::bigquery::analyticshub::v1::Listing>
-AnalyticsHubServiceAuth::UpdateListing(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::analyticshub::v1::UpdateListingRequest const&
-        request) {
+StatusOr<google::cloud::bigquery::analyticshub::v1::Listing> AnalyticsHubServiceAuth::UpdateListing(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::analyticshub::v1::UpdateListingRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateListing(context, options, request);
 }
 
 Status AnalyticsHubServiceAuth::DeleteListing(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::analyticshub::v1::DeleteListingRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::analyticshub::v1::DeleteListingRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteListing(context, options, request);
 }
 
-StatusOr<google::cloud::bigquery::analyticshub::v1::SubscribeListingResponse>
-AnalyticsHubServiceAuth::SubscribeListing(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::analyticshub::v1::SubscribeListingRequest const&
-        request) {
+StatusOr<google::cloud::bigquery::analyticshub::v1::SubscribeListingResponse> AnalyticsHubServiceAuth::SubscribeListing(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::analyticshub::v1::SubscribeListingRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->SubscribeListing(context, options, request);
@@ -152,30 +141,28 @@ AnalyticsHubServiceAuth::SubscribeListing(
 
 future<StatusOr<google::longrunning::Operation>>
 AnalyticsHubServiceAuth::AsyncSubscribeDataExchange(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::bigquery::analyticshub::v1::
-        SubscribeDataExchangeRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::bigquery::analyticshub::v1::SubscribeDataExchangeRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncSubscribeDataExchange(cq, *std::move(context),
-                                                 std::move(options), request);
+        return child->AsyncSubscribeDataExchange(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 AnalyticsHubServiceAuth::SubscribeDataExchange(
-    grpc::ClientContext& context, Options options,
-    google::cloud::bigquery::analyticshub::v1::
-        SubscribeDataExchangeRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::bigquery::analyticshub::v1::SubscribeDataExchangeRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->SubscribeDataExchange(context, options, request);
@@ -183,71 +170,64 @@ AnalyticsHubServiceAuth::SubscribeDataExchange(
 
 future<StatusOr<google::longrunning::Operation>>
 AnalyticsHubServiceAuth::AsyncRefreshSubscription(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncRefreshSubscription(cq, *std::move(context),
-                                               std::move(options), request);
+        return child->AsyncRefreshSubscription(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 AnalyticsHubServiceAuth::RefreshSubscription(
-    grpc::ClientContext& context, Options options,
-    google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->RefreshSubscription(context, options, request);
 }
 
-StatusOr<google::cloud::bigquery::analyticshub::v1::Subscription>
-AnalyticsHubServiceAuth::GetSubscription(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::analyticshub::v1::GetSubscriptionRequest const&
-        request) {
+StatusOr<google::cloud::bigquery::analyticshub::v1::Subscription> AnalyticsHubServiceAuth::GetSubscription(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::analyticshub::v1::GetSubscriptionRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetSubscription(context, options, request);
 }
 
-StatusOr<google::cloud::bigquery::analyticshub::v1::ListSubscriptionsResponse>
-AnalyticsHubServiceAuth::ListSubscriptions(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::analyticshub::v1::ListSubscriptionsRequest const&
-        request) {
+StatusOr<google::cloud::bigquery::analyticshub::v1::ListSubscriptionsResponse> AnalyticsHubServiceAuth::ListSubscriptions(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::analyticshub::v1::ListSubscriptionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListSubscriptions(context, options, request);
 }
 
-StatusOr<google::cloud::bigquery::analyticshub::v1::
-             ListSharedResourceSubscriptionsResponse>
-AnalyticsHubServiceAuth::ListSharedResourceSubscriptions(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::analyticshub::v1::
-        ListSharedResourceSubscriptionsRequest const& request) {
+StatusOr<google::cloud::bigquery::analyticshub::v1::ListSharedResourceSubscriptionsResponse> AnalyticsHubServiceAuth::ListSharedResourceSubscriptions(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::analyticshub::v1::ListSharedResourceSubscriptionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListSharedResourceSubscriptions(context, options, request);
 }
 
-StatusOr<google::cloud::bigquery::analyticshub::v1::RevokeSubscriptionResponse>
-AnalyticsHubServiceAuth::RevokeSubscription(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::bigquery::analyticshub::v1::RevokeSubscriptionRequest const&
-        request) {
+StatusOr<google::cloud::bigquery::analyticshub::v1::RevokeSubscriptionResponse> AnalyticsHubServiceAuth::RevokeSubscription(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::bigquery::analyticshub::v1::RevokeSubscriptionRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->RevokeSubscription(context, options, request);
@@ -255,37 +235,36 @@ AnalyticsHubServiceAuth::RevokeSubscription(
 
 future<StatusOr<google::longrunning::Operation>>
 AnalyticsHubServiceAuth::AsyncDeleteSubscription(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::bigquery::analyticshub::v1::DeleteSubscriptionRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::bigquery::analyticshub::v1::DeleteSubscriptionRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDeleteSubscription(cq, *std::move(context),
-                                              std::move(options), request);
+        return child->AsyncDeleteSubscription(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 AnalyticsHubServiceAuth::DeleteSubscription(
-    grpc::ClientContext& context, Options options,
-    google::cloud::bigquery::analyticshub::v1::DeleteSubscriptionRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::bigquery::analyticshub::v1::DeleteSubscriptionRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteSubscription(context, options, request);
 }
 
 StatusOr<google::iam::v1::Policy> AnalyticsHubServiceAuth::GetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -293,16 +272,17 @@ StatusOr<google::iam::v1::Policy> AnalyticsHubServiceAuth::GetIamPolicy(
 }
 
 StatusOr<google::iam::v1::Policy> AnalyticsHubServiceAuth::SetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->SetIamPolicy(context, options, request);
 }
 
-StatusOr<google::iam::v1::TestIamPermissionsResponse>
-AnalyticsHubServiceAuth::TestIamPermissions(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::iam::v1::TestIamPermissionsResponse> AnalyticsHubServiceAuth::TestIamPermissions(
+    grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -316,16 +296,15 @@ AnalyticsHubServiceAuth::AsyncGetOperation(
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncGetOperation(cq, *std::move(context),
-                                        std::move(options), request);
+        return child->AsyncGetOperation(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
@@ -334,14 +313,13 @@ future<Status> AnalyticsHubServiceAuth::AsyncCancelOperation(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) return make_ready_future(std::move(context).status());
-        return child->AsyncCancelOperation(cq, *std::move(context),
-                                           std::move(options), request);
+        return child->AsyncCancelOperation(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 

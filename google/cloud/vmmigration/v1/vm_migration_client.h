@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VMMIGRATION_V1_VM_MIGRATION_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VMMIGRATION_V1_VM_MIGRATION_CLIENT_H
 
-#include "google/cloud/vmmigration/v1/vm_migration_connection.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
+#include "google/cloud/vmmigration/v1/vm_migration_connection.h"
 #include <google/longrunning/operations.grpc.pb.h>
 #include <map>
 #include <memory>
@@ -64,8 +64,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class VmMigrationClient {
  public:
-  explicit VmMigrationClient(std::shared_ptr<VmMigrationConnection> connection,
-                             Options opts = {});
+  explicit VmMigrationClient(std::shared_ptr<VmMigrationConnection> connection, Options opts = {});
   ~VmMigrationClient();
 
   ///@{
@@ -78,12 +77,10 @@ class VmMigrationClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(VmMigrationClient const& a,
-                         VmMigrationClient const& b) {
+  friend bool operator==(VmMigrationClient const& a, VmMigrationClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(VmMigrationClient const& a,
-                         VmMigrationClient const& b) {
+  friend bool operator!=(VmMigrationClient const& a, VmMigrationClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -119,8 +116,8 @@ class VmMigrationClient {
   /// [google.cloud.vmmigration.v1.Source]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1237}
   ///
   // clang-format on
-  StreamRange<google::cloud::vmmigration::v1::Source> ListSources(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::vmmigration::v1::Source>
+  ListSources(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -158,9 +155,8 @@ class VmMigrationClient {
   /// [google.cloud.vmmigration.v1.Source]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1237}
   ///
   // clang-format on
-  StreamRange<google::cloud::vmmigration::v1::Source> ListSources(
-      google::cloud::vmmigration::v1::ListSourcesRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::vmmigration::v1::Source>
+  ListSources(google::cloud::vmmigration::v1::ListSourcesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -184,8 +180,8 @@ class VmMigrationClient {
   /// [google.cloud.vmmigration.v1.Source]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1237}
   ///
   // clang-format on
-  StatusOr<google::cloud::vmmigration::v1::Source> GetSource(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::vmmigration::v1::Source>
+  GetSource(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -214,9 +210,8 @@ class VmMigrationClient {
   /// [google.cloud.vmmigration.v1.Source]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1237}
   ///
   // clang-format on
-  StatusOr<google::cloud::vmmigration::v1::Source> GetSource(
-      google::cloud::vmmigration::v1::GetSourceRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::vmmigration::v1::Source>
+  GetSource(google::cloud::vmmigration::v1::GetSourceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -249,10 +244,8 @@ class VmMigrationClient {
   /// [google.cloud.vmmigration.v1.Source]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1237}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::vmmigration::v1::Source>> CreateSource(
-      std::string const& parent,
-      google::cloud::vmmigration::v1::Source const& source,
-      std::string const& source_id, Options opts = {});
+  future<StatusOr<google::cloud::vmmigration::v1::Source>>
+  CreateSource(std::string const& parent, google::cloud::vmmigration::v1::Source const& source, std::string const& source_id, Options opts = {});
 
   // clang-format off
   ///
@@ -265,10 +258,8 @@ class VmMigrationClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateSource(
-      NoAwaitTag, std::string const& parent,
-      google::cloud::vmmigration::v1::Source const& source,
-      std::string const& source_id, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateSource(NoAwaitTag, std::string const& parent, google::cloud::vmmigration::v1::Source const& source, std::string const& source_id, Options opts = {});
 
   // clang-format off
   ///
@@ -304,9 +295,8 @@ class VmMigrationClient {
   /// [google.cloud.vmmigration.v1.Source]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1237}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::vmmigration::v1::Source>> CreateSource(
-      google::cloud::vmmigration::v1::CreateSourceRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::vmmigration::v1::Source>>
+  CreateSource(google::cloud::vmmigration::v1::CreateSourceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -319,10 +309,8 @@ class VmMigrationClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateSource(
-      NoAwaitTag,
-      google::cloud::vmmigration::v1::CreateSourceRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateSource(NoAwaitTag, google::cloud::vmmigration::v1::CreateSourceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -333,8 +321,8 @@ class VmMigrationClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::vmmigration::v1::Source>> CreateSource(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::vmmigration::v1::Source>>
+  CreateSource(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -370,9 +358,8 @@ class VmMigrationClient {
   /// [google.cloud.vmmigration.v1.UpdateSourceRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1598}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::vmmigration::v1::Source>> UpdateSource(
-      google::cloud::vmmigration::v1::Source const& source,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  future<StatusOr<google::cloud::vmmigration::v1::Source>>
+  UpdateSource(google::cloud::vmmigration::v1::Source const& source, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -385,9 +372,8 @@ class VmMigrationClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateSource(
-      NoAwaitTag, google::cloud::vmmigration::v1::Source const& source,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateSource(NoAwaitTag, google::cloud::vmmigration::v1::Source const& source, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -423,9 +409,8 @@ class VmMigrationClient {
   /// [google.cloud.vmmigration.v1.UpdateSourceRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1598}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::vmmigration::v1::Source>> UpdateSource(
-      google::cloud::vmmigration::v1::UpdateSourceRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::vmmigration::v1::Source>>
+  UpdateSource(google::cloud::vmmigration::v1::UpdateSourceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -438,10 +423,8 @@ class VmMigrationClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateSource(
-      NoAwaitTag,
-      google::cloud::vmmigration::v1::UpdateSourceRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateSource(NoAwaitTag, google::cloud::vmmigration::v1::UpdateSourceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -452,8 +435,8 @@ class VmMigrationClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::vmmigration::v1::Source>> UpdateSource(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::vmmigration::v1::Source>>
+  UpdateSource(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -498,9 +481,8 @@ class VmMigrationClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteSource(NoAwaitTag,
-                                                        std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteSource(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -537,9 +519,7 @@ class VmMigrationClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
-  DeleteSource(
-      google::cloud::vmmigration::v1::DeleteSourceRequest const& request,
-      Options opts = {});
+  DeleteSource(google::cloud::vmmigration::v1::DeleteSourceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -552,10 +532,8 @@ class VmMigrationClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteSource(
-      NoAwaitTag,
-      google::cloud::vmmigration::v1::DeleteSourceRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteSource(NoAwaitTag, google::cloud::vmmigration::v1::DeleteSourceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -567,8 +545,7 @@ class VmMigrationClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
-  DeleteSource(google::longrunning::Operation const& operation,
-               Options opts = {});
+  DeleteSource(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -631,9 +608,7 @@ class VmMigrationClient {
   ///
   // clang-format on
   StatusOr<google::cloud::vmmigration::v1::FetchInventoryResponse>
-  FetchInventory(
-      google::cloud::vmmigration::v1::FetchInventoryRequest const& request,
-      Options opts = {});
+  FetchInventory(google::cloud::vmmigration::v1::FetchInventoryRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -706,9 +681,7 @@ class VmMigrationClient {
   ///
   // clang-format on
   StreamRange<google::cloud::vmmigration::v1::UtilizationReport>
-  ListUtilizationReports(
-      google::cloud::vmmigration::v1::ListUtilizationReportsRequest request,
-      Options opts = {});
+  ListUtilizationReports(google::cloud::vmmigration::v1::ListUtilizationReportsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -763,10 +736,7 @@ class VmMigrationClient {
   ///
   // clang-format on
   StatusOr<google::cloud::vmmigration::v1::UtilizationReport>
-  GetUtilizationReport(
-      google::cloud::vmmigration::v1::GetUtilizationReportRequest const&
-          request,
-      Options opts = {});
+  GetUtilizationReport(google::cloud::vmmigration::v1::GetUtilizationReportRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -805,11 +775,7 @@ class VmMigrationClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmmigration::v1::UtilizationReport>>
-  CreateUtilizationReport(
-      std::string const& parent,
-      google::cloud::vmmigration::v1::UtilizationReport const&
-          utilization_report,
-      std::string const& utilization_report_id, Options opts = {});
+  CreateUtilizationReport(std::string const& parent, google::cloud::vmmigration::v1::UtilizationReport const& utilization_report, std::string const& utilization_report_id, Options opts = {});
 
   // clang-format off
   ///
@@ -822,11 +788,8 @@ class VmMigrationClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateUtilizationReport(
-      NoAwaitTag, std::string const& parent,
-      google::cloud::vmmigration::v1::UtilizationReport const&
-          utilization_report,
-      std::string const& utilization_report_id, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateUtilizationReport(NoAwaitTag, std::string const& parent, google::cloud::vmmigration::v1::UtilizationReport const& utilization_report, std::string const& utilization_report_id, Options opts = {});
 
   // clang-format off
   ///
@@ -863,10 +826,7 @@ class VmMigrationClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmmigration::v1::UtilizationReport>>
-  CreateUtilizationReport(
-      google::cloud::vmmigration::v1::CreateUtilizationReportRequest const&
-          request,
-      Options opts = {});
+  CreateUtilizationReport(google::cloud::vmmigration::v1::CreateUtilizationReportRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -879,11 +839,8 @@ class VmMigrationClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateUtilizationReport(
-      NoAwaitTag,
-      google::cloud::vmmigration::v1::CreateUtilizationReportRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateUtilizationReport(NoAwaitTag, google::cloud::vmmigration::v1::CreateUtilizationReportRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -895,8 +852,7 @@ class VmMigrationClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmmigration::v1::UtilizationReport>>
-  CreateUtilizationReport(google::longrunning::Operation const& operation,
-                          Options opts = {});
+  CreateUtilizationReport(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -941,8 +897,8 @@ class VmMigrationClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteUtilizationReport(
-      NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteUtilizationReport(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -979,10 +935,7 @@ class VmMigrationClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
-  DeleteUtilizationReport(
-      google::cloud::vmmigration::v1::DeleteUtilizationReportRequest const&
-          request,
-      Options opts = {});
+  DeleteUtilizationReport(google::cloud::vmmigration::v1::DeleteUtilizationReportRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -995,11 +948,8 @@ class VmMigrationClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteUtilizationReport(
-      NoAwaitTag,
-      google::cloud::vmmigration::v1::DeleteUtilizationReportRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteUtilizationReport(NoAwaitTag, google::cloud::vmmigration::v1::DeleteUtilizationReportRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1011,8 +961,7 @@ class VmMigrationClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
-  DeleteUtilizationReport(google::longrunning::Operation const& operation,
-                          Options opts = {});
+  DeleteUtilizationReport(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1085,9 +1034,7 @@ class VmMigrationClient {
   ///
   // clang-format on
   StreamRange<google::cloud::vmmigration::v1::DatacenterConnector>
-  ListDatacenterConnectors(
-      google::cloud::vmmigration::v1::ListDatacenterConnectorsRequest request,
-      Options opts = {});
+  ListDatacenterConnectors(google::cloud::vmmigration::v1::ListDatacenterConnectorsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1142,10 +1089,7 @@ class VmMigrationClient {
   ///
   // clang-format on
   StatusOr<google::cloud::vmmigration::v1::DatacenterConnector>
-  GetDatacenterConnector(
-      google::cloud::vmmigration::v1::GetDatacenterConnectorRequest const&
-          request,
-      Options opts = {});
+  GetDatacenterConnector(google::cloud::vmmigration::v1::GetDatacenterConnectorRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1182,11 +1126,7 @@ class VmMigrationClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmmigration::v1::DatacenterConnector>>
-  CreateDatacenterConnector(
-      std::string const& parent,
-      google::cloud::vmmigration::v1::DatacenterConnector const&
-          datacenter_connector,
-      std::string const& datacenter_connector_id, Options opts = {});
+  CreateDatacenterConnector(std::string const& parent, google::cloud::vmmigration::v1::DatacenterConnector const& datacenter_connector, std::string const& datacenter_connector_id, Options opts = {});
 
   // clang-format off
   ///
@@ -1199,11 +1139,8 @@ class VmMigrationClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateDatacenterConnector(
-      NoAwaitTag, std::string const& parent,
-      google::cloud::vmmigration::v1::DatacenterConnector const&
-          datacenter_connector,
-      std::string const& datacenter_connector_id, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateDatacenterConnector(NoAwaitTag, std::string const& parent, google::cloud::vmmigration::v1::DatacenterConnector const& datacenter_connector, std::string const& datacenter_connector_id, Options opts = {});
 
   // clang-format off
   ///
@@ -1240,10 +1177,7 @@ class VmMigrationClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmmigration::v1::DatacenterConnector>>
-  CreateDatacenterConnector(
-      google::cloud::vmmigration::v1::CreateDatacenterConnectorRequest const&
-          request,
-      Options opts = {});
+  CreateDatacenterConnector(google::cloud::vmmigration::v1::CreateDatacenterConnectorRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1256,11 +1190,8 @@ class VmMigrationClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateDatacenterConnector(
-      NoAwaitTag,
-      google::cloud::vmmigration::v1::CreateDatacenterConnectorRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateDatacenterConnector(NoAwaitTag, google::cloud::vmmigration::v1::CreateDatacenterConnectorRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1272,8 +1203,7 @@ class VmMigrationClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmmigration::v1::DatacenterConnector>>
-  CreateDatacenterConnector(google::longrunning::Operation const& operation,
-                            Options opts = {});
+  CreateDatacenterConnector(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1318,8 +1248,8 @@ class VmMigrationClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteDatacenterConnector(
-      NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteDatacenterConnector(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1356,10 +1286,7 @@ class VmMigrationClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
-  DeleteDatacenterConnector(
-      google::cloud::vmmigration::v1::DeleteDatacenterConnectorRequest const&
-          request,
-      Options opts = {});
+  DeleteDatacenterConnector(google::cloud::vmmigration::v1::DeleteDatacenterConnectorRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1372,11 +1299,8 @@ class VmMigrationClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteDatacenterConnector(
-      NoAwaitTag,
-      google::cloud::vmmigration::v1::DeleteDatacenterConnectorRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteDatacenterConnector(NoAwaitTag, google::cloud::vmmigration::v1::DeleteDatacenterConnectorRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1388,8 +1312,7 @@ class VmMigrationClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
-  DeleteDatacenterConnector(google::longrunning::Operation const& operation,
-                            Options opts = {});
+  DeleteDatacenterConnector(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1427,9 +1350,7 @@ class VmMigrationClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmmigration::v1::UpgradeApplianceResponse>>
-  UpgradeAppliance(
-      google::cloud::vmmigration::v1::UpgradeApplianceRequest const& request,
-      Options opts = {});
+  UpgradeAppliance(google::cloud::vmmigration::v1::UpgradeApplianceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1442,10 +1363,8 @@ class VmMigrationClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpgradeAppliance(
-      NoAwaitTag,
-      google::cloud::vmmigration::v1::UpgradeApplianceRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpgradeAppliance(NoAwaitTag, google::cloud::vmmigration::v1::UpgradeApplianceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1457,8 +1376,7 @@ class VmMigrationClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmmigration::v1::UpgradeApplianceResponse>>
-  UpgradeAppliance(google::longrunning::Operation const& operation,
-                   Options opts = {});
+  UpgradeAppliance(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1492,10 +1410,7 @@ class VmMigrationClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmmigration::v1::MigratingVm>>
-  CreateMigratingVm(
-      std::string const& parent,
-      google::cloud::vmmigration::v1::MigratingVm const& migrating_vm,
-      std::string const& migrating_vm_id, Options opts = {});
+  CreateMigratingVm(std::string const& parent, google::cloud::vmmigration::v1::MigratingVm const& migrating_vm, std::string const& migrating_vm_id, Options opts = {});
 
   // clang-format off
   ///
@@ -1508,10 +1423,8 @@ class VmMigrationClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateMigratingVm(
-      NoAwaitTag, std::string const& parent,
-      google::cloud::vmmigration::v1::MigratingVm const& migrating_vm,
-      std::string const& migrating_vm_id, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateMigratingVm(NoAwaitTag, std::string const& parent, google::cloud::vmmigration::v1::MigratingVm const& migrating_vm, std::string const& migrating_vm_id, Options opts = {});
 
   // clang-format off
   ///
@@ -1548,9 +1461,7 @@ class VmMigrationClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmmigration::v1::MigratingVm>>
-  CreateMigratingVm(
-      google::cloud::vmmigration::v1::CreateMigratingVmRequest const& request,
-      Options opts = {});
+  CreateMigratingVm(google::cloud::vmmigration::v1::CreateMigratingVmRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1563,10 +1474,8 @@ class VmMigrationClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateMigratingVm(
-      NoAwaitTag,
-      google::cloud::vmmigration::v1::CreateMigratingVmRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateMigratingVm(NoAwaitTag, google::cloud::vmmigration::v1::CreateMigratingVmRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1578,8 +1487,7 @@ class VmMigrationClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmmigration::v1::MigratingVm>>
-  CreateMigratingVm(google::longrunning::Operation const& operation,
-                    Options opts = {});
+  CreateMigratingVm(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1612,8 +1520,8 @@ class VmMigrationClient {
   /// [google.cloud.vmmigration.v1.MigratingVm]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L780}
   ///
   // clang-format on
-  StreamRange<google::cloud::vmmigration::v1::MigratingVm> ListMigratingVms(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::vmmigration::v1::MigratingVm>
+  ListMigratingVms(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -1651,9 +1559,8 @@ class VmMigrationClient {
   /// [google.cloud.vmmigration.v1.MigratingVm]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L780}
   ///
   // clang-format on
-  StreamRange<google::cloud::vmmigration::v1::MigratingVm> ListMigratingVms(
-      google::cloud::vmmigration::v1::ListMigratingVmsRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::vmmigration::v1::MigratingVm>
+  ListMigratingVms(google::cloud::vmmigration::v1::ListMigratingVmsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1677,8 +1584,8 @@ class VmMigrationClient {
   /// [google.cloud.vmmigration.v1.MigratingVm]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L780}
   ///
   // clang-format on
-  StatusOr<google::cloud::vmmigration::v1::MigratingVm> GetMigratingVm(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::vmmigration::v1::MigratingVm>
+  GetMigratingVm(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1707,9 +1614,8 @@ class VmMigrationClient {
   /// [google.cloud.vmmigration.v1.MigratingVm]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L780}
   ///
   // clang-format on
-  StatusOr<google::cloud::vmmigration::v1::MigratingVm> GetMigratingVm(
-      google::cloud::vmmigration::v1::GetMigratingVmRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::vmmigration::v1::MigratingVm>
+  GetMigratingVm(google::cloud::vmmigration::v1::GetMigratingVmRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1746,9 +1652,7 @@ class VmMigrationClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmmigration::v1::MigratingVm>>
-  UpdateMigratingVm(
-      google::cloud::vmmigration::v1::MigratingVm const& migrating_vm,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  UpdateMigratingVm(google::cloud::vmmigration::v1::MigratingVm const& migrating_vm, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -1761,10 +1665,8 @@ class VmMigrationClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateMigratingVm(
-      NoAwaitTag,
-      google::cloud::vmmigration::v1::MigratingVm const& migrating_vm,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateMigratingVm(NoAwaitTag, google::cloud::vmmigration::v1::MigratingVm const& migrating_vm, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -1801,9 +1703,7 @@ class VmMigrationClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmmigration::v1::MigratingVm>>
-  UpdateMigratingVm(
-      google::cloud::vmmigration::v1::UpdateMigratingVmRequest const& request,
-      Options opts = {});
+  UpdateMigratingVm(google::cloud::vmmigration::v1::UpdateMigratingVmRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1816,10 +1716,8 @@ class VmMigrationClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateMigratingVm(
-      NoAwaitTag,
-      google::cloud::vmmigration::v1::UpdateMigratingVmRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateMigratingVm(NoAwaitTag, google::cloud::vmmigration::v1::UpdateMigratingVmRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1831,8 +1729,7 @@ class VmMigrationClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmmigration::v1::MigratingVm>>
-  UpdateMigratingVm(google::longrunning::Operation const& operation,
-                    Options opts = {});
+  UpdateMigratingVm(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1877,8 +1774,8 @@ class VmMigrationClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteMigratingVm(
-      NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteMigratingVm(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1915,9 +1812,7 @@ class VmMigrationClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
-  DeleteMigratingVm(
-      google::cloud::vmmigration::v1::DeleteMigratingVmRequest const& request,
-      Options opts = {});
+  DeleteMigratingVm(google::cloud::vmmigration::v1::DeleteMigratingVmRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1930,10 +1825,8 @@ class VmMigrationClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteMigratingVm(
-      NoAwaitTag,
-      google::cloud::vmmigration::v1::DeleteMigratingVmRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteMigratingVm(NoAwaitTag, google::cloud::vmmigration::v1::DeleteMigratingVmRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1945,8 +1838,7 @@ class VmMigrationClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
-  DeleteMigratingVm(google::longrunning::Operation const& operation,
-                    Options opts = {});
+  DeleteMigratingVm(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1992,8 +1884,8 @@ class VmMigrationClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> StartMigration(
-      NoAwaitTag, std::string const& migrating_vm, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  StartMigration(NoAwaitTag, std::string const& migrating_vm, Options opts = {});
 
   // clang-format off
   ///
@@ -2031,9 +1923,7 @@ class VmMigrationClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmmigration::v1::StartMigrationResponse>>
-  StartMigration(
-      google::cloud::vmmigration::v1::StartMigrationRequest const& request,
-      Options opts = {});
+  StartMigration(google::cloud::vmmigration::v1::StartMigrationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2046,10 +1936,8 @@ class VmMigrationClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> StartMigration(
-      NoAwaitTag,
-      google::cloud::vmmigration::v1::StartMigrationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  StartMigration(NoAwaitTag, google::cloud::vmmigration::v1::StartMigrationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2061,8 +1949,7 @@ class VmMigrationClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmmigration::v1::StartMigrationResponse>>
-  StartMigration(google::longrunning::Operation const& operation,
-                 Options opts = {});
+  StartMigration(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -2102,9 +1989,7 @@ class VmMigrationClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmmigration::v1::ResumeMigrationResponse>>
-  ResumeMigration(
-      google::cloud::vmmigration::v1::ResumeMigrationRequest const& request,
-      Options opts = {});
+  ResumeMigration(google::cloud::vmmigration::v1::ResumeMigrationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2117,10 +2002,8 @@ class VmMigrationClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> ResumeMigration(
-      NoAwaitTag,
-      google::cloud::vmmigration::v1::ResumeMigrationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  ResumeMigration(NoAwaitTag, google::cloud::vmmigration::v1::ResumeMigrationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2132,8 +2015,7 @@ class VmMigrationClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmmigration::v1::ResumeMigrationResponse>>
-  ResumeMigration(google::longrunning::Operation const& operation,
-                  Options opts = {});
+  ResumeMigration(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -2172,9 +2054,7 @@ class VmMigrationClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmmigration::v1::PauseMigrationResponse>>
-  PauseMigration(
-      google::cloud::vmmigration::v1::PauseMigrationRequest const& request,
-      Options opts = {});
+  PauseMigration(google::cloud::vmmigration::v1::PauseMigrationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2187,10 +2067,8 @@ class VmMigrationClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> PauseMigration(
-      NoAwaitTag,
-      google::cloud::vmmigration::v1::PauseMigrationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  PauseMigration(NoAwaitTag, google::cloud::vmmigration::v1::PauseMigrationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2202,8 +2080,7 @@ class VmMigrationClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmmigration::v1::PauseMigrationResponse>>
-  PauseMigration(google::longrunning::Operation const& operation,
-                 Options opts = {});
+  PauseMigration(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -2249,8 +2126,8 @@ class VmMigrationClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> FinalizeMigration(
-      NoAwaitTag, std::string const& migrating_vm, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  FinalizeMigration(NoAwaitTag, std::string const& migrating_vm, Options opts = {});
 
   // clang-format off
   ///
@@ -2288,9 +2165,7 @@ class VmMigrationClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmmigration::v1::FinalizeMigrationResponse>>
-  FinalizeMigration(
-      google::cloud::vmmigration::v1::FinalizeMigrationRequest const& request,
-      Options opts = {});
+  FinalizeMigration(google::cloud::vmmigration::v1::FinalizeMigrationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2303,10 +2178,8 @@ class VmMigrationClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> FinalizeMigration(
-      NoAwaitTag,
-      google::cloud::vmmigration::v1::FinalizeMigrationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  FinalizeMigration(NoAwaitTag, google::cloud::vmmigration::v1::FinalizeMigrationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2318,8 +2191,7 @@ class VmMigrationClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmmigration::v1::FinalizeMigrationResponse>>
-  FinalizeMigration(google::longrunning::Operation const& operation,
-                    Options opts = {});
+  FinalizeMigration(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -2352,10 +2224,8 @@ class VmMigrationClient {
   /// [google.cloud.vmmigration.v1.CreateCloneJobRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1136}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::vmmigration::v1::CloneJob>> CreateCloneJob(
-      std::string const& parent,
-      google::cloud::vmmigration::v1::CloneJob const& clone_job,
-      std::string const& clone_job_id, Options opts = {});
+  future<StatusOr<google::cloud::vmmigration::v1::CloneJob>>
+  CreateCloneJob(std::string const& parent, google::cloud::vmmigration::v1::CloneJob const& clone_job, std::string const& clone_job_id, Options opts = {});
 
   // clang-format off
   ///
@@ -2368,10 +2238,8 @@ class VmMigrationClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateCloneJob(
-      NoAwaitTag, std::string const& parent,
-      google::cloud::vmmigration::v1::CloneJob const& clone_job,
-      std::string const& clone_job_id, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateCloneJob(NoAwaitTag, std::string const& parent, google::cloud::vmmigration::v1::CloneJob const& clone_job, std::string const& clone_job_id, Options opts = {});
 
   // clang-format off
   ///
@@ -2407,9 +2275,8 @@ class VmMigrationClient {
   /// [google.cloud.vmmigration.v1.CreateCloneJobRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1136}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::vmmigration::v1::CloneJob>> CreateCloneJob(
-      google::cloud::vmmigration::v1::CreateCloneJobRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::vmmigration::v1::CloneJob>>
+  CreateCloneJob(google::cloud::vmmigration::v1::CreateCloneJobRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2422,10 +2289,8 @@ class VmMigrationClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateCloneJob(
-      NoAwaitTag,
-      google::cloud::vmmigration::v1::CreateCloneJobRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateCloneJob(NoAwaitTag, google::cloud::vmmigration::v1::CreateCloneJobRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2436,8 +2301,8 @@ class VmMigrationClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::vmmigration::v1::CloneJob>> CreateCloneJob(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::vmmigration::v1::CloneJob>>
+  CreateCloneJob(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -2482,8 +2347,8 @@ class VmMigrationClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CancelCloneJob(
-      NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CancelCloneJob(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2520,9 +2385,7 @@ class VmMigrationClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmmigration::v1::CancelCloneJobResponse>>
-  CancelCloneJob(
-      google::cloud::vmmigration::v1::CancelCloneJobRequest const& request,
-      Options opts = {});
+  CancelCloneJob(google::cloud::vmmigration::v1::CancelCloneJobRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2535,10 +2398,8 @@ class VmMigrationClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CancelCloneJob(
-      NoAwaitTag,
-      google::cloud::vmmigration::v1::CancelCloneJobRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CancelCloneJob(NoAwaitTag, google::cloud::vmmigration::v1::CancelCloneJobRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2550,8 +2411,7 @@ class VmMigrationClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmmigration::v1::CancelCloneJobResponse>>
-  CancelCloneJob(google::longrunning::Operation const& operation,
-                 Options opts = {});
+  CancelCloneJob(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -2584,8 +2444,8 @@ class VmMigrationClient {
   /// [google.cloud.vmmigration.v1.ListCloneJobsRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1182}
   ///
   // clang-format on
-  StreamRange<google::cloud::vmmigration::v1::CloneJob> ListCloneJobs(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::vmmigration::v1::CloneJob>
+  ListCloneJobs(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -2623,9 +2483,8 @@ class VmMigrationClient {
   /// [google.cloud.vmmigration.v1.ListCloneJobsRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1182}
   ///
   // clang-format on
-  StreamRange<google::cloud::vmmigration::v1::CloneJob> ListCloneJobs(
-      google::cloud::vmmigration::v1::ListCloneJobsRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::vmmigration::v1::CloneJob>
+  ListCloneJobs(google::cloud::vmmigration::v1::ListCloneJobsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -2649,8 +2508,8 @@ class VmMigrationClient {
   /// [google.cloud.vmmigration.v1.GetCloneJobRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1225}
   ///
   // clang-format on
-  StatusOr<google::cloud::vmmigration::v1::CloneJob> GetCloneJob(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::vmmigration::v1::CloneJob>
+  GetCloneJob(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2679,9 +2538,8 @@ class VmMigrationClient {
   /// [google.cloud.vmmigration.v1.GetCloneJobRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1225}
   ///
   // clang-format on
-  StatusOr<google::cloud::vmmigration::v1::CloneJob> GetCloneJob(
-      google::cloud::vmmigration::v1::GetCloneJobRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::vmmigration::v1::CloneJob>
+  GetCloneJob(google::cloud::vmmigration::v1::GetCloneJobRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2716,10 +2574,8 @@ class VmMigrationClient {
   /// [google.cloud.vmmigration.v1.CutoverJob]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1031}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::vmmigration::v1::CutoverJob>> CreateCutoverJob(
-      std::string const& parent,
-      google::cloud::vmmigration::v1::CutoverJob const& cutover_job,
-      std::string const& cutover_job_id, Options opts = {});
+  future<StatusOr<google::cloud::vmmigration::v1::CutoverJob>>
+  CreateCutoverJob(std::string const& parent, google::cloud::vmmigration::v1::CutoverJob const& cutover_job, std::string const& cutover_job_id, Options opts = {});
 
   // clang-format off
   ///
@@ -2732,10 +2588,8 @@ class VmMigrationClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateCutoverJob(
-      NoAwaitTag, std::string const& parent,
-      google::cloud::vmmigration::v1::CutoverJob const& cutover_job,
-      std::string const& cutover_job_id, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateCutoverJob(NoAwaitTag, std::string const& parent, google::cloud::vmmigration::v1::CutoverJob const& cutover_job, std::string const& cutover_job_id, Options opts = {});
 
   // clang-format off
   ///
@@ -2773,9 +2627,8 @@ class VmMigrationClient {
   /// [google.cloud.vmmigration.v1.CutoverJob]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1031}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::vmmigration::v1::CutoverJob>> CreateCutoverJob(
-      google::cloud::vmmigration::v1::CreateCutoverJobRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::vmmigration::v1::CutoverJob>>
+  CreateCutoverJob(google::cloud::vmmigration::v1::CreateCutoverJobRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2788,10 +2641,8 @@ class VmMigrationClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateCutoverJob(
-      NoAwaitTag,
-      google::cloud::vmmigration::v1::CreateCutoverJobRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateCutoverJob(NoAwaitTag, google::cloud::vmmigration::v1::CreateCutoverJobRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2802,8 +2653,8 @@ class VmMigrationClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::vmmigration::v1::CutoverJob>> CreateCutoverJob(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::vmmigration::v1::CutoverJob>>
+  CreateCutoverJob(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -2848,8 +2699,8 @@ class VmMigrationClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CancelCutoverJob(
-      NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CancelCutoverJob(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2886,9 +2737,7 @@ class VmMigrationClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmmigration::v1::CancelCutoverJobResponse>>
-  CancelCutoverJob(
-      google::cloud::vmmigration::v1::CancelCutoverJobRequest const& request,
-      Options opts = {});
+  CancelCutoverJob(google::cloud::vmmigration::v1::CancelCutoverJobRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2901,10 +2750,8 @@ class VmMigrationClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CancelCutoverJob(
-      NoAwaitTag,
-      google::cloud::vmmigration::v1::CancelCutoverJobRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CancelCutoverJob(NoAwaitTag, google::cloud::vmmigration::v1::CancelCutoverJobRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2916,8 +2763,7 @@ class VmMigrationClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmmigration::v1::CancelCutoverJobResponse>>
-  CancelCutoverJob(google::longrunning::Operation const& operation,
-                   Options opts = {});
+  CancelCutoverJob(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -2950,8 +2796,8 @@ class VmMigrationClient {
   /// [google.cloud.vmmigration.v1.ListCutoverJobsRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3150}
   ///
   // clang-format on
-  StreamRange<google::cloud::vmmigration::v1::CutoverJob> ListCutoverJobs(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::vmmigration::v1::CutoverJob>
+  ListCutoverJobs(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -2989,9 +2835,8 @@ class VmMigrationClient {
   /// [google.cloud.vmmigration.v1.ListCutoverJobsRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3150}
   ///
   // clang-format on
-  StreamRange<google::cloud::vmmigration::v1::CutoverJob> ListCutoverJobs(
-      google::cloud::vmmigration::v1::ListCutoverJobsRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::vmmigration::v1::CutoverJob>
+  ListCutoverJobs(google::cloud::vmmigration::v1::ListCutoverJobsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -3015,8 +2860,8 @@ class VmMigrationClient {
   /// [google.cloud.vmmigration.v1.GetCutoverJobRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3194}
   ///
   // clang-format on
-  StatusOr<google::cloud::vmmigration::v1::CutoverJob> GetCutoverJob(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::vmmigration::v1::CutoverJob>
+  GetCutoverJob(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -3045,9 +2890,8 @@ class VmMigrationClient {
   /// [google.cloud.vmmigration.v1.GetCutoverJobRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3194}
   ///
   // clang-format on
-  StatusOr<google::cloud::vmmigration::v1::CutoverJob> GetCutoverJob(
-      google::cloud::vmmigration::v1::GetCutoverJobRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::vmmigration::v1::CutoverJob>
+  GetCutoverJob(google::cloud::vmmigration::v1::GetCutoverJobRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -3080,8 +2924,8 @@ class VmMigrationClient {
   /// [google.cloud.vmmigration.v1.ListGroupsRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2926}
   ///
   // clang-format on
-  StreamRange<google::cloud::vmmigration::v1::Group> ListGroups(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::vmmigration::v1::Group>
+  ListGroups(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -3119,9 +2963,8 @@ class VmMigrationClient {
   /// [google.cloud.vmmigration.v1.ListGroupsRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2926}
   ///
   // clang-format on
-  StreamRange<google::cloud::vmmigration::v1::Group> ListGroups(
-      google::cloud::vmmigration::v1::ListGroupsRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::vmmigration::v1::Group>
+  ListGroups(google::cloud::vmmigration::v1::ListGroupsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -3145,8 +2988,8 @@ class VmMigrationClient {
   /// [google.cloud.vmmigration.v1.Group]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2901}
   ///
   // clang-format on
-  StatusOr<google::cloud::vmmigration::v1::Group> GetGroup(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::vmmigration::v1::Group>
+  GetGroup(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -3175,9 +3018,8 @@ class VmMigrationClient {
   /// [google.cloud.vmmigration.v1.Group]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2901}
   ///
   // clang-format on
-  StatusOr<google::cloud::vmmigration::v1::Group> GetGroup(
-      google::cloud::vmmigration::v1::GetGroupRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::vmmigration::v1::Group>
+  GetGroup(google::cloud::vmmigration::v1::GetGroupRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -3210,10 +3052,8 @@ class VmMigrationClient {
   /// [google.cloud.vmmigration.v1.Group]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2901}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::vmmigration::v1::Group>> CreateGroup(
-      std::string const& parent,
-      google::cloud::vmmigration::v1::Group const& group,
-      std::string const& group_id, Options opts = {});
+  future<StatusOr<google::cloud::vmmigration::v1::Group>>
+  CreateGroup(std::string const& parent, google::cloud::vmmigration::v1::Group const& group, std::string const& group_id, Options opts = {});
 
   // clang-format off
   ///
@@ -3226,10 +3066,8 @@ class VmMigrationClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateGroup(
-      NoAwaitTag, std::string const& parent,
-      google::cloud::vmmigration::v1::Group const& group,
-      std::string const& group_id, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateGroup(NoAwaitTag, std::string const& parent, google::cloud::vmmigration::v1::Group const& group, std::string const& group_id, Options opts = {});
 
   // clang-format off
   ///
@@ -3265,9 +3103,8 @@ class VmMigrationClient {
   /// [google.cloud.vmmigration.v1.Group]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2901}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::vmmigration::v1::Group>> CreateGroup(
-      google::cloud::vmmigration::v1::CreateGroupRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::vmmigration::v1::Group>>
+  CreateGroup(google::cloud::vmmigration::v1::CreateGroupRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -3280,10 +3117,8 @@ class VmMigrationClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateGroup(
-      NoAwaitTag,
-      google::cloud::vmmigration::v1::CreateGroupRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateGroup(NoAwaitTag, google::cloud::vmmigration::v1::CreateGroupRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -3294,8 +3129,8 @@ class VmMigrationClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::vmmigration::v1::Group>> CreateGroup(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::vmmigration::v1::Group>>
+  CreateGroup(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -3331,9 +3166,8 @@ class VmMigrationClient {
   /// [google.cloud.vmmigration.v1.UpdateGroupRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3012}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::vmmigration::v1::Group>> UpdateGroup(
-      google::cloud::vmmigration::v1::Group const& group,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  future<StatusOr<google::cloud::vmmigration::v1::Group>>
+  UpdateGroup(google::cloud::vmmigration::v1::Group const& group, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -3346,9 +3180,8 @@ class VmMigrationClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateGroup(
-      NoAwaitTag, google::cloud::vmmigration::v1::Group const& group,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateGroup(NoAwaitTag, google::cloud::vmmigration::v1::Group const& group, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -3384,9 +3217,8 @@ class VmMigrationClient {
   /// [google.cloud.vmmigration.v1.UpdateGroupRequest]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3012}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::vmmigration::v1::Group>> UpdateGroup(
-      google::cloud::vmmigration::v1::UpdateGroupRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::vmmigration::v1::Group>>
+  UpdateGroup(google::cloud::vmmigration::v1::UpdateGroupRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -3399,10 +3231,8 @@ class VmMigrationClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateGroup(
-      NoAwaitTag,
-      google::cloud::vmmigration::v1::UpdateGroupRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateGroup(NoAwaitTag, google::cloud::vmmigration::v1::UpdateGroupRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -3413,8 +3243,8 @@ class VmMigrationClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::vmmigration::v1::Group>> UpdateGroup(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::vmmigration::v1::Group>>
+  UpdateGroup(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -3459,9 +3289,8 @@ class VmMigrationClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteGroup(NoAwaitTag,
-                                                       std::string const& name,
-                                                       Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteGroup(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -3498,8 +3327,7 @@ class VmMigrationClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
-  DeleteGroup(google::cloud::vmmigration::v1::DeleteGroupRequest const& request,
-              Options opts = {});
+  DeleteGroup(google::cloud::vmmigration::v1::DeleteGroupRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -3512,10 +3340,8 @@ class VmMigrationClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteGroup(
-      NoAwaitTag,
-      google::cloud::vmmigration::v1::DeleteGroupRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteGroup(NoAwaitTag, google::cloud::vmmigration::v1::DeleteGroupRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -3527,8 +3353,7 @@ class VmMigrationClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
-  DeleteGroup(google::longrunning::Operation const& operation,
-              Options opts = {});
+  DeleteGroup(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -3573,8 +3398,8 @@ class VmMigrationClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> AddGroupMigration(
-      NoAwaitTag, std::string const& group, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  AddGroupMigration(NoAwaitTag, std::string const& group, Options opts = {});
 
   // clang-format off
   ///
@@ -3611,9 +3436,7 @@ class VmMigrationClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmmigration::v1::AddGroupMigrationResponse>>
-  AddGroupMigration(
-      google::cloud::vmmigration::v1::AddGroupMigrationRequest const& request,
-      Options opts = {});
+  AddGroupMigration(google::cloud::vmmigration::v1::AddGroupMigrationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -3626,10 +3449,8 @@ class VmMigrationClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> AddGroupMigration(
-      NoAwaitTag,
-      google::cloud::vmmigration::v1::AddGroupMigrationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  AddGroupMigration(NoAwaitTag, google::cloud::vmmigration::v1::AddGroupMigrationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -3641,8 +3462,7 @@ class VmMigrationClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmmigration::v1::AddGroupMigrationResponse>>
-  AddGroupMigration(google::longrunning::Operation const& operation,
-                    Options opts = {});
+  AddGroupMigration(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -3687,8 +3507,8 @@ class VmMigrationClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> RemoveGroupMigration(
-      NoAwaitTag, std::string const& group, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  RemoveGroupMigration(NoAwaitTag, std::string const& group, Options opts = {});
 
   // clang-format off
   ///
@@ -3725,10 +3545,7 @@ class VmMigrationClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmmigration::v1::RemoveGroupMigrationResponse>>
-  RemoveGroupMigration(
-      google::cloud::vmmigration::v1::RemoveGroupMigrationRequest const&
-          request,
-      Options opts = {});
+  RemoveGroupMigration(google::cloud::vmmigration::v1::RemoveGroupMigrationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -3741,11 +3558,8 @@ class VmMigrationClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> RemoveGroupMigration(
-      NoAwaitTag,
-      google::cloud::vmmigration::v1::RemoveGroupMigrationRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  RemoveGroupMigration(NoAwaitTag, google::cloud::vmmigration::v1::RemoveGroupMigrationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -3757,8 +3571,7 @@ class VmMigrationClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmmigration::v1::RemoveGroupMigrationResponse>>
-  RemoveGroupMigration(google::longrunning::Operation const& operation,
-                       Options opts = {});
+  RemoveGroupMigration(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -3794,8 +3607,8 @@ class VmMigrationClient {
   /// [google.cloud.vmmigration.v1.TargetProject]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2733}
   ///
   // clang-format on
-  StreamRange<google::cloud::vmmigration::v1::TargetProject> ListTargetProjects(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::vmmigration::v1::TargetProject>
+  ListTargetProjects(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -3836,9 +3649,8 @@ class VmMigrationClient {
   /// [google.cloud.vmmigration.v1.TargetProject]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2733}
   ///
   // clang-format on
-  StreamRange<google::cloud::vmmigration::v1::TargetProject> ListTargetProjects(
-      google::cloud::vmmigration::v1::ListTargetProjectsRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::vmmigration::v1::TargetProject>
+  ListTargetProjects(google::cloud::vmmigration::v1::ListTargetProjectsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -3865,8 +3677,8 @@ class VmMigrationClient {
   /// [google.cloud.vmmigration.v1.TargetProject]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2733}
   ///
   // clang-format on
-  StatusOr<google::cloud::vmmigration::v1::TargetProject> GetTargetProject(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::vmmigration::v1::TargetProject>
+  GetTargetProject(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -3898,9 +3710,8 @@ class VmMigrationClient {
   /// [google.cloud.vmmigration.v1.TargetProject]: @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2733}
   ///
   // clang-format on
-  StatusOr<google::cloud::vmmigration::v1::TargetProject> GetTargetProject(
-      google::cloud::vmmigration::v1::GetTargetProjectRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::vmmigration::v1::TargetProject>
+  GetTargetProject(google::cloud::vmmigration::v1::GetTargetProjectRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -3937,10 +3748,7 @@ class VmMigrationClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmmigration::v1::TargetProject>>
-  CreateTargetProject(
-      std::string const& parent,
-      google::cloud::vmmigration::v1::TargetProject const& target_project,
-      std::string const& target_project_id, Options opts = {});
+  CreateTargetProject(std::string const& parent, google::cloud::vmmigration::v1::TargetProject const& target_project, std::string const& target_project_id, Options opts = {});
 
   // clang-format off
   ///
@@ -3953,10 +3761,8 @@ class VmMigrationClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateTargetProject(
-      NoAwaitTag, std::string const& parent,
-      google::cloud::vmmigration::v1::TargetProject const& target_project,
-      std::string const& target_project_id, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateTargetProject(NoAwaitTag, std::string const& parent, google::cloud::vmmigration::v1::TargetProject const& target_project, std::string const& target_project_id, Options opts = {});
 
   // clang-format off
   ///
@@ -3996,9 +3802,7 @@ class VmMigrationClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmmigration::v1::TargetProject>>
-  CreateTargetProject(
-      google::cloud::vmmigration::v1::CreateTargetProjectRequest const& request,
-      Options opts = {});
+  CreateTargetProject(google::cloud::vmmigration::v1::CreateTargetProjectRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -4011,10 +3815,8 @@ class VmMigrationClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateTargetProject(
-      NoAwaitTag,
-      google::cloud::vmmigration::v1::CreateTargetProjectRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateTargetProject(NoAwaitTag, google::cloud::vmmigration::v1::CreateTargetProjectRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -4026,8 +3828,7 @@ class VmMigrationClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmmigration::v1::TargetProject>>
-  CreateTargetProject(google::longrunning::Operation const& operation,
-                      Options opts = {});
+  CreateTargetProject(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -4067,9 +3868,7 @@ class VmMigrationClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmmigration::v1::TargetProject>>
-  UpdateTargetProject(
-      google::cloud::vmmigration::v1::TargetProject const& target_project,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  UpdateTargetProject(google::cloud::vmmigration::v1::TargetProject const& target_project, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -4082,10 +3881,8 @@ class VmMigrationClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateTargetProject(
-      NoAwaitTag,
-      google::cloud::vmmigration::v1::TargetProject const& target_project,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateTargetProject(NoAwaitTag, google::cloud::vmmigration::v1::TargetProject const& target_project, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -4125,9 +3922,7 @@ class VmMigrationClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmmigration::v1::TargetProject>>
-  UpdateTargetProject(
-      google::cloud::vmmigration::v1::UpdateTargetProjectRequest const& request,
-      Options opts = {});
+  UpdateTargetProject(google::cloud::vmmigration::v1::UpdateTargetProjectRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -4140,10 +3935,8 @@ class VmMigrationClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateTargetProject(
-      NoAwaitTag,
-      google::cloud::vmmigration::v1::UpdateTargetProjectRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateTargetProject(NoAwaitTag, google::cloud::vmmigration::v1::UpdateTargetProjectRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -4155,8 +3948,7 @@ class VmMigrationClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmmigration::v1::TargetProject>>
-  UpdateTargetProject(google::longrunning::Operation const& operation,
-                      Options opts = {});
+  UpdateTargetProject(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -4204,8 +3996,8 @@ class VmMigrationClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteTargetProject(
-      NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteTargetProject(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -4245,9 +4037,7 @@ class VmMigrationClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
-  DeleteTargetProject(
-      google::cloud::vmmigration::v1::DeleteTargetProjectRequest const& request,
-      Options opts = {});
+  DeleteTargetProject(google::cloud::vmmigration::v1::DeleteTargetProjectRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -4260,10 +4050,8 @@ class VmMigrationClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteTargetProject(
-      NoAwaitTag,
-      google::cloud::vmmigration::v1::DeleteTargetProjectRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteTargetProject(NoAwaitTag, google::cloud::vmmigration::v1::DeleteTargetProjectRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -4275,8 +4063,7 @@ class VmMigrationClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
-  DeleteTargetProject(google::longrunning::Operation const& operation,
-                      Options opts = {});
+  DeleteTargetProject(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -4349,9 +4136,7 @@ class VmMigrationClient {
   ///
   // clang-format on
   StreamRange<google::cloud::vmmigration::v1::ReplicationCycle>
-  ListReplicationCycles(
-      google::cloud::vmmigration::v1::ListReplicationCyclesRequest request,
-      Options opts = {});
+  ListReplicationCycles(google::cloud::vmmigration::v1::ListReplicationCyclesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -4406,9 +4191,7 @@ class VmMigrationClient {
   ///
   // clang-format on
   StatusOr<google::cloud::vmmigration::v1::ReplicationCycle>
-  GetReplicationCycle(
-      google::cloud::vmmigration::v1::GetReplicationCycleRequest const& request,
-      Options opts = {});
+  GetReplicationCycle(google::cloud::vmmigration::v1::GetReplicationCycleRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -4446,8 +4229,8 @@ class VmMigrationClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request, Options opts = {});
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -4476,9 +4259,8 @@ class VmMigrationClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -4513,8 +4295,8 @@ class VmMigrationClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -4553,8 +4335,8 @@ class VmMigrationClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -4580,8 +4362,8 @@ class VmMigrationClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -4612,9 +4394,8 @@ class VmMigrationClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -4638,7 +4419,8 @@ class VmMigrationClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status DeleteOperation(std::string const& name, Options opts = {});
+  Status
+  DeleteOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -4667,9 +4449,8 @@ class VmMigrationClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request,
-      Options opts = {});
+  Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -4703,7 +4484,8 @@ class VmMigrationClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(std::string const& name, Options opts = {});
+  Status
+  CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -4742,9 +4524,8 @@ class VmMigrationClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request,
-      Options opts = {});
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<VmMigrationConnection> connection_;

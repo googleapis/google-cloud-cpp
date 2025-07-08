@@ -32,24 +32,22 @@ CommentServiceTracingStub::CommentServiceTracingStub(
     std::shared_ptr<CommentServiceStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
-StatusOr<google::cloud::support::v2::ListCommentsResponse>
-CommentServiceTracingStub::ListComments(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::support::v2::ListCommentsResponse> CommentServiceTracingStub::ListComments(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::support::v2::ListCommentsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.support.v2.CommentService",
-                                     "ListComments");
+  auto span = internal::MakeSpanGrpc("google.cloud.support.v2.CommentService", "ListComments");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListComments(context, options, request));
 }
 
-StatusOr<google::cloud::support::v2::Comment>
-CommentServiceTracingStub::CreateComment(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::support::v2::Comment> CommentServiceTracingStub::CreateComment(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::support::v2::CreateCommentRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.support.v2.CommentService",
-                                     "CreateComment");
+  auto span = internal::MakeSpanGrpc("google.cloud.support.v2.CommentService", "CreateComment");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,

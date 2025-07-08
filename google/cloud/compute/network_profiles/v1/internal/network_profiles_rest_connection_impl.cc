@@ -17,8 +17,8 @@
 // source: google/cloud/compute/network_profiles/v1/network_profiles.proto
 
 #include "google/cloud/compute/network_profiles/v1/internal/network_profiles_rest_connection_impl.h"
-#include "google/cloud/compute/network_profiles/v1/internal/network_profiles_rest_stub_factory.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/compute/network_profiles/v1/internal/network_profiles_rest_stub_factory.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/rest_retry_loop.h"
@@ -33,63 +33,49 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 NetworkProfilesRestConnectionImpl::NetworkProfilesRestConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<
-        compute_network_profiles_v1_internal::NetworkProfilesRestStub>
-        stub,
+    std::shared_ptr<compute_network_profiles_v1_internal::NetworkProfilesRestStub> stub,
     Options options)
-    : background_(std::move(background)),
-      stub_(std::move(stub)),
-      options_(internal::MergeOptions(std::move(options),
-                                      NetworkProfilesConnection::options())) {}
+  : background_(std::move(background)), stub_(std::move(stub)),
+    options_(internal::MergeOptions(
+        std::move(options),
+        NetworkProfilesConnection::options())) {}
 
 StatusOr<google::cloud::cpp::compute::v1::NetworkProfile>
-NetworkProfilesRestConnectionImpl::GetNetworkProfile(
-    google::cloud::cpp::compute::network_profiles::v1::
-        GetNetworkProfileRequest const& request) {
+NetworkProfilesRestConnectionImpl::GetNetworkProfile(google::cloud::cpp::compute::network_profiles::v1::GetNetworkProfileRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetNetworkProfile(request),
-      [this](rest_internal::RestContext& rest_context, Options const& options,
-             google::cloud::cpp::compute::network_profiles::v1::
-                 GetNetworkProfileRequest const& request) {
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options, google::cloud::cpp::compute::network_profiles::v1::GetNetworkProfileRequest const& request) {
         return stub_->GetNetworkProfile(rest_context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::NetworkProfile>
-NetworkProfilesRestConnectionImpl::ListNetworkProfiles(
-    google::cloud::cpp::compute::network_profiles::v1::
-        ListNetworkProfilesRequest request) {
+NetworkProfilesRestConnectionImpl::ListNetworkProfiles(google::cloud::cpp::compute::network_profiles::v1::ListNetworkProfilesRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListNetworkProfiles(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::cpp::compute::v1::NetworkProfile>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::cpp::compute::v1::NetworkProfile>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<
-           compute_network_profiles_v1::NetworkProfilesRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<compute_network_profiles_v1::NetworkProfilesRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::cpp::compute::network_profiles::v1::
-              ListNetworkProfilesRequest const& r) {
+          Options const& options, google::cloud::cpp::compute::network_profiles::v1::ListNetworkProfilesRequest const& r) {
         return google::cloud::rest_internal::RestRetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](rest_internal::RestContext& rest_context,
                    Options const& options,
-                   google::cloud::cpp::compute::network_profiles::v1::
-                       ListNetworkProfilesRequest const& request) {
+                   google::cloud::cpp::compute::network_profiles::v1::ListNetworkProfilesRequest const& request) {
               return stub->ListNetworkProfiles(rest_context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::cpp::compute::v1::NetworkProfilesListResponse r) {
-        std::vector<google::cloud::cpp::compute::v1::NetworkProfile> result(
-            r.items().size());
+        std::vector<google::cloud::cpp::compute::v1::NetworkProfile> result(r.items().size());
         auto& messages = *r.mutable_items();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;

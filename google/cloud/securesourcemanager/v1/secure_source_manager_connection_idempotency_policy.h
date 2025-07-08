@@ -37,97 +37,86 @@ class SecureSourceManagerConnectionIdempotencyPolicy {
   virtual ~SecureSourceManagerConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<SecureSourceManagerConnectionIdempotencyPolicy>
-  clone() const;
+  virtual std::unique_ptr<SecureSourceManagerConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency ListInstances(
-      google::cloud::securesourcemanager::v1::ListInstancesRequest request);
+  virtual google::cloud::Idempotency
+  ListInstances(google::cloud::securesourcemanager::v1::ListInstancesRequest request);
 
-  virtual google::cloud::Idempotency GetInstance(
-      google::cloud::securesourcemanager::v1::GetInstanceRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  GetInstance(google::cloud::securesourcemanager::v1::GetInstanceRequest const& request);
 
-  virtual google::cloud::Idempotency CreateInstance(
-      google::cloud::securesourcemanager::v1::CreateInstanceRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  CreateInstance(google::cloud::securesourcemanager::v1::CreateInstanceRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteInstance(
-      google::cloud::securesourcemanager::v1::DeleteInstanceRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  DeleteInstance(google::cloud::securesourcemanager::v1::DeleteInstanceRequest const& request);
 
-  virtual google::cloud::Idempotency ListRepositories(
-      google::cloud::securesourcemanager::v1::ListRepositoriesRequest request);
+  virtual google::cloud::Idempotency
+  ListRepositories(google::cloud::securesourcemanager::v1::ListRepositoriesRequest request);
 
-  virtual google::cloud::Idempotency GetRepository(
-      google::cloud::securesourcemanager::v1::GetRepositoryRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  GetRepository(google::cloud::securesourcemanager::v1::GetRepositoryRequest const& request);
 
-  virtual google::cloud::Idempotency CreateRepository(
-      google::cloud::securesourcemanager::v1::CreateRepositoryRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  CreateRepository(google::cloud::securesourcemanager::v1::CreateRepositoryRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteRepository(
-      google::cloud::securesourcemanager::v1::DeleteRepositoryRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  DeleteRepository(google::cloud::securesourcemanager::v1::DeleteRepositoryRequest const& request);
 
-  virtual google::cloud::Idempotency GetIamPolicyRepo(
-      google::iam::v1::GetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency
+  GetIamPolicyRepo(google::iam::v1::GetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency SetIamPolicyRepo(
-      google::iam::v1::SetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency
+  SetIamPolicyRepo(google::iam::v1::SetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency TestIamPermissionsRepo(
-      google::iam::v1::TestIamPermissionsRequest const& request);
+  virtual google::cloud::Idempotency
+  TestIamPermissionsRepo(google::iam::v1::TestIamPermissionsRequest const& request);
 
-  virtual google::cloud::Idempotency CreateBranchRule(
-      google::cloud::securesourcemanager::v1::CreateBranchRuleRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  CreateBranchRule(google::cloud::securesourcemanager::v1::CreateBranchRuleRequest const& request);
 
-  virtual google::cloud::Idempotency ListBranchRules(
-      google::cloud::securesourcemanager::v1::ListBranchRulesRequest request);
+  virtual google::cloud::Idempotency
+  ListBranchRules(google::cloud::securesourcemanager::v1::ListBranchRulesRequest request);
 
-  virtual google::cloud::Idempotency GetBranchRule(
-      google::cloud::securesourcemanager::v1::GetBranchRuleRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  GetBranchRule(google::cloud::securesourcemanager::v1::GetBranchRuleRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateBranchRule(
-      google::cloud::securesourcemanager::v1::UpdateBranchRuleRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  UpdateBranchRule(google::cloud::securesourcemanager::v1::UpdateBranchRuleRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteBranchRule(
-      google::cloud::securesourcemanager::v1::DeleteBranchRuleRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  DeleteBranchRule(google::cloud::securesourcemanager::v1::DeleteBranchRuleRequest const& request);
 
-  virtual google::cloud::Idempotency ListLocations(
-      google::cloud::location::ListLocationsRequest request);
+  virtual google::cloud::Idempotency
+  ListLocations(google::cloud::location::ListLocationsRequest request);
 
-  virtual google::cloud::Idempotency GetLocation(
-      google::cloud::location::GetLocationRequest const& request);
+  virtual google::cloud::Idempotency
+  GetLocation(google::cloud::location::GetLocationRequest const& request);
 
-  virtual google::cloud::Idempotency SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request);
+  virtual google::cloud::Idempotency
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
 
-  virtual google::cloud::Idempotency ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual google::cloud::Idempotency
+  ListOperations(google::longrunning::ListOperationsRequest request);
 
-  virtual google::cloud::Idempotency GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
 
-  virtual google::cloud::Idempotency CancelOperation(
-      google::longrunning::CancelOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  CancelOperation(google::longrunning::CancelOperationRequest const& request);
 };
 
 std::unique_ptr<SecureSourceManagerConnectionIdempotencyPolicy>
-MakeDefaultSecureSourceManagerConnectionIdempotencyPolicy();
+    MakeDefaultSecureSourceManagerConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace securesourcemanager_v1

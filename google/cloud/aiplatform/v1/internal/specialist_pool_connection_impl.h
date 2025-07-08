@@ -46,91 +46,80 @@ class SpecialistPoolServiceConnectionImpl
   ~SpecialistPoolServiceConnectionImpl() override = default;
 
   SpecialistPoolServiceConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<aiplatform_v1_internal::SpecialistPoolServiceStub> stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<aiplatform_v1_internal::SpecialistPoolServiceStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
   future<StatusOr<google::cloud::aiplatform::v1::SpecialistPool>>
-  CreateSpecialistPool(
-      google::cloud::aiplatform::v1::CreateSpecialistPoolRequest const& request)
-      override;
+  CreateSpecialistPool(google::cloud::aiplatform::v1::CreateSpecialistPoolRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> CreateSpecialistPool(
-      NoAwaitTag,
-      google::cloud::aiplatform::v1::CreateSpecialistPoolRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  CreateSpecialistPool(NoAwaitTag,
+      google::cloud::aiplatform::v1::CreateSpecialistPoolRequest const& request) override;
 
   future<StatusOr<google::cloud::aiplatform::v1::SpecialistPool>>
   CreateSpecialistPool(
       google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::cloud::aiplatform::v1::SpecialistPool> GetSpecialistPool(
-      google::cloud::aiplatform::v1::GetSpecialistPoolRequest const& request)
-      override;
+  StatusOr<google::cloud::aiplatform::v1::SpecialistPool>
+  GetSpecialistPool(google::cloud::aiplatform::v1::GetSpecialistPoolRequest const& request) override;
 
   StreamRange<google::cloud::aiplatform::v1::SpecialistPool>
-  ListSpecialistPools(google::cloud::aiplatform::v1::ListSpecialistPoolsRequest
-                          request) override;
+  ListSpecialistPools(google::cloud::aiplatform::v1::ListSpecialistPoolsRequest request) override;
 
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteSpecialistPool(
-      google::cloud::aiplatform::v1::DeleteSpecialistPoolRequest const& request)
-      override;
+  DeleteSpecialistPool(google::cloud::aiplatform::v1::DeleteSpecialistPoolRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> DeleteSpecialistPool(
-      NoAwaitTag,
-      google::cloud::aiplatform::v1::DeleteSpecialistPoolRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  DeleteSpecialistPool(NoAwaitTag,
+      google::cloud::aiplatform::v1::DeleteSpecialistPoolRequest const& request) override;
 
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
   DeleteSpecialistPool(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::aiplatform::v1::SpecialistPool>>
-  UpdateSpecialistPool(
-      google::cloud::aiplatform::v1::UpdateSpecialistPoolRequest const& request)
-      override;
+  UpdateSpecialistPool(google::cloud::aiplatform::v1::UpdateSpecialistPoolRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> UpdateSpecialistPool(
-      NoAwaitTag,
-      google::cloud::aiplatform::v1::UpdateSpecialistPoolRequest const& request)
-      override;
+  StatusOr<google::longrunning::Operation>
+  UpdateSpecialistPool(NoAwaitTag,
+      google::cloud::aiplatform::v1::UpdateSpecialistPoolRequest const& request) override;
 
   future<StatusOr<google::cloud::aiplatform::v1::SpecialistPool>>
   UpdateSpecialistPool(
       google::longrunning::Operation const& operation) override;
 
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request) override;
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request) override;
 
-  StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request) override;
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request) override;
+  StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request) override;
 
-  Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request) override;
+  Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request) override;
 
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request) override;
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> WaitOperation(
-      google::longrunning::WaitOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  WaitOperation(google::longrunning::WaitOperationRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

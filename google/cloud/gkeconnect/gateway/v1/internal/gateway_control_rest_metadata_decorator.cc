@@ -17,11 +17,11 @@
 // source: google/cloud/gkeconnect/gateway/v1/control.proto
 
 #include "google/cloud/gkeconnect/gateway/v1/internal/gateway_control_rest_metadata_decorator.h"
+#include "absl/strings/str_format.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/internal/rest_set_metadata.h"
 #include "google/cloud/status_or.h"
-#include "absl/strings/str_format.h"
 #include <memory>
 #include <utility>
 
@@ -41,18 +41,17 @@ GatewayControlRestMetadata::GatewayControlRestMetadata(
 
 StatusOr<google::cloud::gkeconnect::gateway::v1::GenerateCredentialsResponse>
 GatewayControlRestMetadata::GenerateCredentials(
-    rest_internal::RestContext& rest_context, Options const& options,
-    google::cloud::gkeconnect::gateway::v1::GenerateCredentialsRequest const&
-        request) {
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::gkeconnect::gateway::v1::GenerateCredentialsRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->GenerateCredentials(rest_context, options, request);
 }
 
 void GatewayControlRestMetadata::SetMetadata(
-    rest_internal::RestContext& rest_context, Options const& options,
-    std::vector<std::string> const& params) {
-  google::cloud::rest_internal::SetMetadata(rest_context, options, params,
-                                            api_client_header_);
+      rest_internal::RestContext& rest_context,
+      Options const& options, std::vector<std::string> const& params) {
+  google::cloud::rest_internal::SetMetadata(
+      rest_context, options, params, api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -34,44 +34,35 @@ class MachineImagesConnectionIdempotencyPolicy {
   virtual ~MachineImagesConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<MachineImagesConnectionIdempotencyPolicy> clone()
-      const;
+  virtual std::unique_ptr<MachineImagesConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency DeleteMachineImage(
-      google::cloud::cpp::compute::machine_images::v1::
-          DeleteMachineImageRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteMachineImage(google::cloud::cpp::compute::machine_images::v1::DeleteMachineImageRequest const& request);
 
-  virtual google::cloud::Idempotency GetMachineImage(
-      google::cloud::cpp::compute::machine_images::v1::
-          GetMachineImageRequest const& request);
+  virtual google::cloud::Idempotency
+  GetMachineImage(google::cloud::cpp::compute::machine_images::v1::GetMachineImageRequest const& request);
 
-  virtual google::cloud::Idempotency GetIamPolicy(
-      google::cloud::cpp::compute::machine_images::v1::
-          GetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency
+  GetIamPolicy(google::cloud::cpp::compute::machine_images::v1::GetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency InsertMachineImage(
-      google::cloud::cpp::compute::machine_images::v1::
-          InsertMachineImageRequest const& request);
+  virtual google::cloud::Idempotency
+  InsertMachineImage(google::cloud::cpp::compute::machine_images::v1::InsertMachineImageRequest const& request);
 
-  virtual google::cloud::Idempotency ListMachineImages(
-      google::cloud::cpp::compute::machine_images::v1::ListMachineImagesRequest
-          request);
+  virtual google::cloud::Idempotency
+  ListMachineImages(google::cloud::cpp::compute::machine_images::v1::ListMachineImagesRequest request);
 
-  virtual google::cloud::Idempotency SetIamPolicy(
-      google::cloud::cpp::compute::machine_images::v1::
-          SetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency
+  SetIamPolicy(google::cloud::cpp::compute::machine_images::v1::SetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency SetLabels(
-      google::cloud::cpp::compute::machine_images::v1::SetLabelsRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  SetLabels(google::cloud::cpp::compute::machine_images::v1::SetLabelsRequest const& request);
 
-  virtual google::cloud::Idempotency TestIamPermissions(
-      google::cloud::cpp::compute::machine_images::v1::
-          TestIamPermissionsRequest const& request);
+  virtual google::cloud::Idempotency
+  TestIamPermissions(google::cloud::cpp::compute::machine_images::v1::TestIamPermissionsRequest const& request);
 };
 
 std::unique_ptr<MachineImagesConnectionIdempotencyPolicy>
-MakeDefaultMachineImagesConnectionIdempotencyPolicy();
+    MakeDefaultMachineImagesConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_machine_images_v1

@@ -17,11 +17,11 @@
 // source: google/api/servicecontrol/v1/service_controller.proto
 
 #include "google/cloud/servicecontrol/v1/internal/service_controller_connection_impl.h"
-#include "google/cloud/servicecontrol/v1/internal/service_controller_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/retry_loop.h"
+#include "google/cloud/servicecontrol/v1/internal/service_controller_option_defaults.h"
 #include <memory>
 #include <utility>
 
@@ -31,39 +31,34 @@ namespace servicecontrol_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<servicecontrol_v1::ServiceControllerRetryPolicy> retry_policy(
-    Options const& options) {
-  return options.get<servicecontrol_v1::ServiceControllerRetryPolicyOption>()
-      ->clone();
+std::unique_ptr<servicecontrol_v1::ServiceControllerRetryPolicy>
+retry_policy(Options const& options) {
+  return options.get<servicecontrol_v1::ServiceControllerRetryPolicyOption>()->clone();
 }
 
-std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-  return options.get<servicecontrol_v1::ServiceControllerBackoffPolicyOption>()
-      ->clone();
+std::unique_ptr<BackoffPolicy>
+backoff_policy(Options const& options) {
+  return options.get<servicecontrol_v1::ServiceControllerBackoffPolicyOption>()->clone();
 }
 
 std::unique_ptr<servicecontrol_v1::ServiceControllerConnectionIdempotencyPolicy>
 idempotency_policy(Options const& options) {
-  return options
-      .get<servicecontrol_v1::
-               ServiceControllerConnectionIdempotencyPolicyOption>()
-      ->clone();
+  return options.get<servicecontrol_v1::ServiceControllerConnectionIdempotencyPolicyOption>()->clone();
 }
 
-}  // namespace
+} // namespace
 
 ServiceControllerConnectionImpl::ServiceControllerConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<servicecontrol_v1_internal::ServiceControllerStub> stub,
     Options options)
-    : background_(std::move(background)),
-      stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options), ServiceControllerConnection::options())) {}
+  : background_(std::move(background)), stub_(std::move(stub)),
+    options_(internal::MergeOptions(
+        std::move(options),
+        ServiceControllerConnection::options())) {}
 
 StatusOr<google::api::servicecontrol::v1::CheckResponse>
-ServiceControllerConnectionImpl::Check(
-    google::api::servicecontrol::v1::CheckRequest const& request) {
+ServiceControllerConnectionImpl::Check(google::api::servicecontrol::v1::CheckRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -76,8 +71,7 @@ ServiceControllerConnectionImpl::Check(
 }
 
 StatusOr<google::api::servicecontrol::v1::ReportResponse>
-ServiceControllerConnectionImpl::Report(
-    google::api::servicecontrol::v1::ReportRequest const& request) {
+ServiceControllerConnectionImpl::Report(google::api::servicecontrol::v1::ReportRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),

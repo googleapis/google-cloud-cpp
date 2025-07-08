@@ -33,8 +33,7 @@ using ::google::cloud::vmmigration_v1::MakeVmMigrationConnection;
 /// @deprecated Use vmmigration_v1::VmMigrationConnection directly.
 using ::google::cloud::vmmigration_v1::VmMigrationConnection;
 
-/// @deprecated Use vmmigration_v1::VmMigrationLimitedErrorCountRetryPolicy
-/// directly.
+/// @deprecated Use vmmigration_v1::VmMigrationLimitedErrorCountRetryPolicy directly.
 using ::google::cloud::vmmigration_v1::VmMigrationLimitedErrorCountRetryPolicy;
 
 /// @deprecated Use vmmigration_v1::VmMigrationLimitedTimeRetryPolicy directly.

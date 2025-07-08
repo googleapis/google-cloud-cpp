@@ -31,8 +31,7 @@ namespace cloud {
 namespace cloudcontrolspartner_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class CloudControlsPartnerMonitoringMetadata
-    : public CloudControlsPartnerMonitoringStub {
+class CloudControlsPartnerMonitoringMetadata : public CloudControlsPartnerMonitoringStub {
  public:
   ~CloudControlsPartnerMonitoringMetadata() override = default;
   CloudControlsPartnerMonitoringMetadata(
@@ -40,19 +39,19 @@ class CloudControlsPartnerMonitoringMetadata
       std::multimap<std::string, std::string> fixed_metadata,
       std::string api_client_header = "");
 
-  StatusOr<google::cloud::cloudcontrolspartner::v1::ListViolationsResponse>
-  ListViolations(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::cloudcontrolspartner::v1::ListViolationsRequest const&
-          request) override;
+  StatusOr<google::cloud::cloudcontrolspartner::v1::ListViolationsResponse> ListViolations(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::cloudcontrolspartner::v1::ListViolationsRequest const& request) override;
 
   StatusOr<google::cloud::cloudcontrolspartner::v1::Violation> GetViolation(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::cloudcontrolspartner::v1::GetViolationRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::cloudcontrolspartner::v1::GetViolationRequest const& request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context, Options const& options,
+  void SetMetadata(grpc::ClientContext& context,
+                   Options const& options,
                    std::string const& request_params);
   void SetMetadata(grpc::ClientContext& context, Options const& options);
 

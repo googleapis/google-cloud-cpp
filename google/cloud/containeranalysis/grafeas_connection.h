@@ -33,13 +33,10 @@ using ::google::cloud::containeranalysis_v1::MakeGrafeasConnection;
 /// @deprecated Use containeranalysis_v1::GrafeasConnection directly.
 using ::google::cloud::containeranalysis_v1::GrafeasConnection;
 
-/// @deprecated Use containeranalysis_v1::GrafeasLimitedErrorCountRetryPolicy
-/// directly.
-using ::google::cloud::containeranalysis_v1::
-    GrafeasLimitedErrorCountRetryPolicy;
+/// @deprecated Use containeranalysis_v1::GrafeasLimitedErrorCountRetryPolicy directly.
+using ::google::cloud::containeranalysis_v1::GrafeasLimitedErrorCountRetryPolicy;
 
-/// @deprecated Use containeranalysis_v1::GrafeasLimitedTimeRetryPolicy
-/// directly.
+/// @deprecated Use containeranalysis_v1::GrafeasLimitedTimeRetryPolicy directly.
 using ::google::cloud::containeranalysis_v1::GrafeasLimitedTimeRetryPolicy;
 
 /// @deprecated Use containeranalysis_v1::GrafeasRetryPolicy directly.
